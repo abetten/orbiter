@@ -24,6 +24,9 @@ unipoly_domain::unipoly_domain(finite_field *F)
 	factor_degree = 0;
 	factor_coeffs = NULL;
 	factor_poly = NULL;
+	f_print_sub = FALSE;
+	//f_use_variable_name = FALSE;
+	//std::string variable_name;
 }
 
 unipoly_domain::unipoly_domain(finite_field *F, unipoly_object m, int verbose_level)
@@ -37,6 +40,7 @@ unipoly_domain::unipoly_domain(finite_field *F, unipoly_object m, int verbose_le
 		cout << " of degree " << ((int *)m)[0] << endl;
 	}
 	unipoly_domain::F = F;
+	variable_name.assign("X");
 	f_factorring = TRUE;
 	factor_degree = ((int *)m)[0];
 	factor_coeffs = NEW_int(factor_degree + 1);
@@ -352,31 +356,23 @@ int unipoly_domain::degree(unipoly_object p)
 	return i;
 }
 
-int unip_f_print_sub = FALSE;
-int unip_f_use_variable_name = FALSE;
-char unip_variable_name[128];
 
 ostream& unipoly_domain::print_object(unipoly_object p, ostream& ost)
 {
 	int i, k;
 	int f_prev = FALSE;
-	char *x, *y;
+	string x, y;
 	int f_nothing_printed_at_all = TRUE;
 	int *rep = (int *) p;
 	int d = rep[0]; // degree
 	int *coeff = rep + 1;
 	
-	if (unip_f_use_variable_name) {
-		x = unip_variable_name;
+	x.assign(variable_name);
+	if (f_print_sub) {
+		y.assign("_");
 	}
 	else {
-		x = (char *) "X";
-	}
-	if (unip_f_print_sub) {
-		y = (char *) "_";
-	}
-	else {
-		y = (char *) "^";
+		y.assign("^");
 	}
 	// ost << "(";
 	for (i = d; i >= 0; i--) {
@@ -397,21 +393,19 @@ ostream& unipoly_domain::print_object(unipoly_object p, ostream& ost)
 		if (k < 0) {
 			k = -k;
 		}
-		if (k != 1 || (i == 0 && !unip_f_use_variable_name)) {
+		if (k != 1 || (i == 0 /*&& !unip_f_use_variable_name*/)) {
 			//l = F->log_alpha(k);
 			//ost << "\\alpha^{" << l << "}";
 			ost << k;
 		}
 		if (i == 0) {
-			if (unip_f_use_variable_name) {
-				ost << x;
-				ost << y;
-				ost << "0";
-			}
+			//ost << x;
+			//ost << y;
+			//ost << "0";
 		}
 		else if (i == 1) {
 			ost << x;
-			if (unip_f_print_sub) {
+			if (f_print_sub) {
 				ost << y;
 				ost << "1";
 			}
@@ -1285,6 +1279,9 @@ void unipoly_domain::greatest_common_divisor(
 		print_object(g, cout);
 		cout << endl;
 	}
+	if (f_v) {
+		cout << "unipoly::greatest_common_divisor done" << endl;
+	}
 
 }
 
@@ -1294,10 +1291,14 @@ void unipoly_domain::extended_gcd(
 	unipoly_object &g, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	int c;
 	
 	if (f_v) {
-		cout << "unipoly::extended_gcd m=";
+		cout << "unipoly::extended_gcd" << endl;
+	}
+	if (f_vv) {
+		cout << "m=";
 		print_object(m, cout);
 		cout << " n=";
 		print_object(n, cout);
@@ -1342,7 +1343,7 @@ void unipoly_domain::extended_gcd(
 	assign(n, N, 0 /*verbose_level*/);
 
 	while (TRUE) {
-		if (f_v) {
+		if (f_vv) {
 			cout << "M=";
 			print_object(M, cout);
 			cout << " N=";
@@ -1350,7 +1351,7 @@ void unipoly_domain::extended_gcd(
 			cout << endl;
 		}
 		division_with_remainder(M, N, Q, R, 0);
-		if (f_v) {
+		if (f_vv) {
 			cout << "Q=";
 			print_object(Q, cout);
 			cout << " R=";
@@ -1381,7 +1382,7 @@ void unipoly_domain::extended_gcd(
 	assign(u2, u, 0 /*verbose_level*/);
 	assign(v2, v, 0 /*verbose_level*/);
 	assign(N, g, 0 /*verbose_level*/);
-	if (f_v) {
+	if (f_vv) {
 		cout << "g=";
 		print_object(g, cout);
 		cout << " u=";
@@ -1410,6 +1411,7 @@ void unipoly_domain::extended_gcd(
 int unipoly_domain::is_squarefree(unipoly_object p, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	unipoly_object a, b, u, v, g;
 	int d;
 	
@@ -1423,14 +1425,26 @@ int unipoly_domain::is_squarefree(unipoly_object p, int verbose_level)
 	create_object_by_rank(g, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
 	
 	assign(p, a, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "unipoly::is_squarefree before derivative" << endl;
+	}
 	derivative(a, b);
 	if (f_v) {
+		cout << "unipoly::is_squarefree after derivative" << endl;
+	}
+	if (f_vv) {
 		cout << "unipoly::is_squarefree derivative p' = ";
 		print_object(b, cout);
 		cout << endl;
 	}
+	if (f_v) {
+		cout << "unipoly::is_squarefree before extended_gcd" << endl;
+	}
 	extended_gcd(a, b, u, v, g, verbose_level - 1);
 	if (f_v) {
+		cout << "unipoly::is_squarefree after extended_gcd" << endl;
+	}
+	if (f_vv) {
 		cout << "unipoly::is_squarefree gcd(p, p') = ";
 		print_object(g, cout);
 		cout << endl;
@@ -1483,9 +1497,15 @@ void unipoly_domain::compute_normal_basis(int d,
 	create_object_by_rank(R2, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
 
 	i = 0;
+	if (f_v) {
+		cout << "unipoly_domain::compute_normal_basis before order_ideal_generator" << endl;
+	}
 	order_ideal_generator(d, i, mue, 
 		A, Frobenius, 
 		verbose_level - 10);
+	if (f_v) {
+		cout << "unipoly_domain::compute_normal_basis after order_ideal_generator" << endl;
+	}
 	
 	if (f_v) {
 		cout << "unipoly_domain::compute_normal_basis "
@@ -1509,13 +1529,17 @@ void unipoly_domain::compute_normal_basis(int d,
 			exit(1);
 		}
 
-		if (f_vv) {
+		if (f_v) {
 			cout << "unipoly_domain::compute_normal_basis "
 					"before order_ideal_generator" << endl;
 		}
 		order_ideal_generator(d, i, lambda, 
 			A, Frobenius, 
 			verbose_level - 10);
+		if (f_v) {
+			cout << "unipoly_domain::compute_normal_basis "
+					"after order_ideal_generator" << endl;
+		}
 		if (f_vv) {
 			cout << "unipoly_domain::compute_normal_basis "
 					"Ideal(e_" << i << ") = ( lambda ),  "
@@ -1650,7 +1674,7 @@ void unipoly_domain::compute_normal_basis(int d,
 			}
 
 			// now: Orderideal(b) = Ideal(r2) 
-			// b = b *(lambda/R2)(Frobenius) = v * Q(Frobenius)
+			// b = b * (lambda/R2)(Frobenius) = v * Q(Frobenius)
 			
 			for (j = 0; j < deg; j++) {
 				v[j] = F->add(v[j], b[j]);
@@ -1676,13 +1700,13 @@ void unipoly_domain::compute_normal_basis(int d,
 		cout << endl;
 	}
 
-	if (f_vv) {
+	if (f_v) {
 		cout << "unipoly_domain::compute_normal_basis "
 			"before span_cyclic_module" << endl;
 	}
 	F->span_cyclic_module(Normal_basis,
 			v, deg, Frobenius, 0 /* verbose_level */);
-	if (f_vv) {
+	if (f_v) {
 		cout << "unipoly_domain::compute_normal_basis "
 			"after span_cyclic_module" << endl;
 	}
@@ -1731,13 +1755,15 @@ void unipoly_domain::order_ideal_generator(
 	
 
 	if (f_v) {
-		cout << "unipoly_domain::order_ideal_generator before F->order_ideal_generator" << endl;
+		cout << "unipoly_domain::order_ideal_generator "
+				"before F->order_ideal_generator" << endl;
 	}
 	F->order_ideal_generator(d, idx, my_mue, mue_deg,
 		A, Frobenius, 
 		verbose_level - 1);
 	if (f_v) {
-		cout << "unipoly_domain::order_ideal_generator after F->order_ideal_generator" << endl;
+		cout << "unipoly_domain::order_ideal_generator "
+				"after F->order_ideal_generator" << endl;
 	}
 
 
@@ -1770,12 +1796,14 @@ void unipoly_domain::order_ideal_generator(
 	v[idx] = 1;
 	
 	if (f_v) {
-		cout << "unipoly_domain::order_ideal_generator before module_structure_apply" << endl;
+		cout << "unipoly_domain::order_ideal_generator "
+				"before module_structure_apply" << endl;
 	}
 	module_structure_apply(v,
 			Frobenius, d, mue, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "unipoly_domain::order_ideal_generator after module_structure_apply" << endl;
+		cout << "unipoly_domain::order_ideal_generator "
+				"after module_structure_apply" << endl;
 	}
 	for (i = 0; i < d; i++) {
 		if (v[i]) {
@@ -2212,8 +2240,8 @@ int unipoly_domain::is_primitive(unipoly_object &m,
 	for (i = 0; i < nb_primes; i++) {
 
 		if (f_v) {
-			cout << "unipoly_domain::is_primitive prime " << i << " / "
-					<< nb_primes << " is " << primes[i] << endl;
+			cout << "unipoly_domain::is_primitive testing prime " << i << " / "
+					<< nb_primes << " which is " << primes[i] << endl;
 		}
 
 
@@ -2485,12 +2513,10 @@ void unipoly_domain::get_an_irreducible_polynomial(
 		}
 		if (is_irreducible(x, verbose_level - 3)) {
 			if (f_vv) {
-				cout << "is irreducible" << endl;
-			}
-			if (f_v) {
-				cout << "unipoly::get_an_irreducible_polynomial ";
+				cout << "unipoly::get_an_irreducible_polynomial "
+					"candidate " << current << " : ";
 				print_object(x, cout);
-				cout << endl;
+				cout << " is irreducible" << endl;
 			}
 			assign(x, m, 0 /*verbose_level*/);
 			delete_object(x);
@@ -2535,7 +2561,7 @@ void unipoly_domain::power_int(unipoly_object &a,
 	assign(a, b, verbose_level);
 	while (n) {
 		if (f_vv) {
-			cout << "n=" << n;
+			cout << "unipoly_domain::power_int n=" << n;
 			cout << " b=";
 			print_object(b, cout);
 			cout << " c=";
@@ -2569,7 +2595,7 @@ void unipoly_domain::power_int(unipoly_object &a,
 		}
 		mult(b, b, d, verbose_level - 1);
 		if (f_vv) {
-			cout << "b*b=d";
+			cout << "unipoly_domain::power_int b*b=d";
 			print_object(d, cout);
 			cout << endl;
 		}
@@ -2699,20 +2725,20 @@ void unipoly_domain::minimum_polynomial(
 		}
 		power_coefficients(v, p);
 		if (f_vv) {
-			cout << "conjugate = ";
+			cout << "unipoly_domain::minimum_polynomial conjugate = ";
 			print_object(v, cout);
 			cout << endl;
 		}
 		u0 = ((int *)v)[1];
 		if (u0 == m_alpha) {
 			if (f_vv) {
-				cout << "finished" << endl;
+				cout << "unipoly_domain::minimum_polynomial finished" << endl;
 			}
 			break;
 		}
 		mult(u, v, w, verbose_level - 1);
 		if (f_vv) {
-			cout << "product = ";
+			cout << "unipoly_domain::minimum_polynomial product = ";
 			print_object(w, cout);
 			cout << endl;
 		}
@@ -2745,6 +2771,7 @@ void unipoly_domain::minimum_polynomial(
 
 int unipoly_domain::minimum_polynomial_factorring(
 		int alpha, int p, int verbose_level)
+// compute the minimum polynomial of alpha over F_p.
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -2763,7 +2790,7 @@ int unipoly_domain::minimum_polynomial_factorring(
 	unipoly_object b, c, d;
 	int a0, ai, i, j;
 
-	// create the polynomial X - a:
+	// create the polynomial Y - alpha:
 	for (i = 0; i <= factor_degree; i++) {
 		if (i == 1) {
 			create_object_by_rank(coeffs[i], 1, __FILE__, __LINE__, 0 /*verbose_level*/);
@@ -2796,7 +2823,8 @@ int unipoly_domain::minimum_polynomial_factorring(
 	i = 1;
 	while (TRUE) {
 		if (f_vv) {
-			cout << "i=" << i << " b=";
+			cout << "unipoly_domain::minimum_polynomial_factorring "
+					"i=" << i << " b=";
 			print_object(b, cout);
 			cout << " the polynomial is ";
 			for (j = i; j >= 0; j--) {
@@ -2822,20 +2850,24 @@ int unipoly_domain::minimum_polynomial_factorring(
 		}
 		
 		unipoly_object tmp = coeffs[i + 1];
+
 		for (j = i; j >= 0; j--) {
 			coeffs[j + 1] = coeffs[j];
 		}
 		coeffs[0] = tmp;
+
 		for (j = 1; j <= i + 1; j++) {
 			mult(coeffs[j], b, c, verbose_level - 1);
 			add(c, coeffs[j - 1], d);
 			assign(d, coeffs[j - 1], verbose_level);
+
+			// coeffs[j - 1] = coeffs[j] * b + coeffs[j - 1]
 		}
 		
 		i++;
 	}
 	if (f_v) {
-		cout << "is: ";
+		cout << "unipoly_domain::minimum_polynomial_factorring minimum polynomial is: ";
 		for (j = i; j >= 0; j--) {
 			print_object(coeffs[j], cout);
 			if (j > 0) {
@@ -2866,6 +2898,7 @@ int unipoly_domain::minimum_polynomial_factorring(
 void unipoly_domain::minimum_polynomial_factorring_longinteger(
 	longinteger_object &alpha, longinteger_object &rk_minpoly, 
 	int p, int verbose_level)
+// compute the minimum polynomial of alpha over F_p.
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -2878,12 +2911,34 @@ void unipoly_domain::minimum_polynomial_factorring_longinteger(
 	if (f_vv) {
 		cout << "factor_degree = " << factor_degree << endl;
 	}
-	unipoly_object *coeffs = NEW_OBJECTS(
-			unipoly_object, factor_degree + 1);
+
+
+	// Let M(Y) be the minimum polynomial of alpha over F_p.
+
+	// M(Y) has the form
+
+	// M(Y) = (Y - alpha) * (Y - alpha^\varphi) * (Y - alpha^{\varphi^2}) * ...
+
+	// Using b = -alpha, we write
+
+	// M(Y) = (Y + b) * (Y + b^\varphi)*(Y + b^{\varphi^2}) * ...
+
+	// we will maintain a vector of polynomials to represent M(Y)
+	// In the end, all coefficients will be constant polynomials.
+	// The constants are the coefficients of the minimum polynomial.
+
+	unipoly_object *coeffs = NEW_OBJECTS(unipoly_object, factor_degree + 1);
+
 	unipoly_object b, c, d;
 	int i, j;
 
-	// create the polynomial X - a:
+
+
+
+	// create the polynomial Y - alpha:
+
+
+	// we first create (0,1,0,0,...) as vector of polynomials
 	for (i = 0; i <= factor_degree; i++) {
 		if (i == 1) {
 			create_object_by_rank(coeffs[i], 1, __FILE__, __LINE__, 0 /*verbose_level*/);
@@ -2892,9 +2947,14 @@ void unipoly_domain::minimum_polynomial_factorring_longinteger(
 			create_object_by_rank(coeffs[i], 0, __FILE__, __LINE__, 0 /*verbose_level*/);
 		}
 	}
+
+	// b = alpha (constant polynomial)
 	create_object_by_rank_longinteger(b, alpha, __FILE__, __LINE__, 0 /*verbose_level*/);
+
+	// c and d are needed later:
 	create_object_by_rank(c, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
 	create_object_by_rank(d, 0, __FILE__, __LINE__, 0 /*verbose_level*/);
+
 	if (f_v) {
 		cout << "unipoly_domain::minimum_polynomial_factorring_longinteger "
 				"minimum polynomial of ";
@@ -2907,18 +2967,35 @@ void unipoly_domain::minimum_polynomial_factorring_longinteger(
 		print_object(b, cout);
 		cout << endl;
 	}
+	// now b = -alpha
 	
 	longinteger_object a0, ai;
 	longinteger_domain D;
 	
+	// we remember the rank of b (=-alpha) so that we can
+	// easily detect when the orbit under the Frobenius closes.
+	// Let a0 be the rank of b = -alpha
+
 	rank_longinteger(b, a0);
+		// here we use rank_longinteger and not rank
+
 	if (f_vv) {
 		cout << "a0 = " << a0 << endl;
 	}
+
 	assign(b, coeffs[0], 0 /*verbose_level*/);
+
+	// now we have the vector of polynomials (-alpha,1,0,0,...)
+	// which represents Y + b = Y - alpha.
+	// Y - alpha is the first factor in the minimum polynomial
+	// Next, we apply the Frobenius automorphism to b and multiply up.
+	// Thus, we loop over the conjugates of b.
+	// We do this until the orbit of b closes.
+	// Then we have M(Y) = (Y + b) * (Y + b^\varphi) * (Y + b^{\varphi^2}) * ...
 	
 	i = 1;
 	while (TRUE) {
+
 		if (f_vv) {
 			cout << "i=" << i << " b=";
 			print_object(b, cout);
@@ -2932,10 +3009,19 @@ void unipoly_domain::minimum_polynomial_factorring_longinteger(
 			cout << endl;
 		}
 		
+		// apply the Frobenius automorphism to b.
+		// this gives another conjugate of -alpha
+
 		power_int(b, p, 0 /* verbose_level */);
+
+		// test if the orbit has closed:
 		
 		rank_longinteger(b, ai);
+
 		if (D.compare(ai, a0) == 0) {
+
+			// yes, the orbit has closed. Now b = -alpha
+
 			break;
 		}
 		
@@ -2945,11 +3031,18 @@ void unipoly_domain::minimum_polynomial_factorring_longinteger(
 			exit(1);
 		}
 		
+		// every coefficient is a polynomial
+		// move every coefficient up by one,
+		// move the next unused coefficient to the constant term at the bottom.
+		// We are only switching pointers.
+		// There is no copying going on here
+
 		unipoly_object tmp = coeffs[i + 1];
 		for (j = i; j >= 0; j--) {
 			coeffs[j + 1] = coeffs[j];
 		}
 		coeffs[0] = tmp;
+
 		for (j = 1; j <= i + 1; j++) {
 			mult(coeffs[j], b, c, verbose_level - 1);
 			add(c, coeffs[j - 1], d);
@@ -2977,6 +3070,7 @@ void unipoly_domain::minimum_polynomial_factorring_longinteger(
 		rank_longinteger(coeffs[j], r);
 		D.mult(rk, p_object, rk1);
 		D.add(rk1, r, rk);
+
 	}
 	if (f_v) {
 		cout << "the rank of this polynomial over "

@@ -1489,7 +1489,8 @@ void algebra_global::make_all_irreducible_polynomials_of_degree_d(
 			((int *) g)[1 + i] = w[i];
 		}
 
-		FX.minimum_polynomial_extension_field(g, m, minpol, d, Frobenius, verbose_level - 3);
+		FX.minimum_polynomial_extension_field(g, m, minpol, d, Frobenius,
+				verbose_level - 3);
 		if (f_vv) {
 			cout << "algebra_global::make_all_irreducible_polynomials_"
 					"of_degree_d regular word " << cnt << " : v = ";
@@ -1590,8 +1591,8 @@ int algebra_global::count_all_irreducible_polynomials_of_degree_d(finite_field *
 		cout << endl;
 	}
 
-	FX.create_object_by_rank(g, 0, __FILE__, __LINE__, verbose_level);
-	FX.create_object_by_rank(minpol, 0, __FILE__, __LINE__, verbose_level);
+	FX.create_object_by_rank(g, 0, __FILE__, __LINE__, 0 /* verbose_level */);
+	FX.create_object_by_rank(minpol, 0, __FILE__, __LINE__, 0 /* verbose_level */);
 
 	int *Frobenius;
 	//int *F2;
@@ -1714,7 +1715,8 @@ int algebra_global::count_all_irreducible_polynomials_of_degree_d(finite_field *
 }
 
 void algebra_global::polynomial_division(finite_field *F,
-		std::string &A_coeffs, std::string &B_coeffs, int verbose_level)
+		std::string &A_coeffs, std::string &B_coeffs,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1772,7 +1774,8 @@ void algebra_global::polynomial_division(finite_field *F,
 
 
 	if (f_v) {
-		cout << "algebra_global::polynomial_division before FX.division_with_remainder" << endl;
+		cout << "algebra_global::polynomial_division "
+				"before FX.division_with_remainder" << endl;
 	}
 
 	FX.division_with_remainder(
@@ -1781,7 +1784,8 @@ void algebra_global::polynomial_division(finite_field *F,
 		verbose_level);
 
 	if (f_v) {
-		cout << "algebra_global::polynomial_division after FX.division_with_remainder" << endl;
+		cout << "algebra_global::polynomial_division "
+				"after FX.division_with_remainder" << endl;
 	}
 
 	if (f_v) {
@@ -2185,8 +2189,8 @@ void algebra_global::compute_normal_basis(finite_field *F, int d, int verbose_le
 		cout << endl;
 	}
 
-	FX.create_object_by_rank(g, 0, __FILE__, __LINE__, verbose_level);
-	FX.create_object_by_rank(minpol, 0, __FILE__, __LINE__, verbose_level);
+	FX.create_object_by_rank(g, 0, __FILE__, __LINE__, 0 /* verbose_level */);
+	FX.create_object_by_rank(minpol, 0, __FILE__, __LINE__, 0 /* verbose_level */);
 
 	int *Frobenius;
 	int *Normal_basis;
@@ -2240,7 +2244,7 @@ void algebra_global::do_nullspace(finite_field *F,
 	latex_interface Li;
 
 	if (f_v) {
-		cout << "do_nullspace" << endl;
+		cout << "algebra_global::do_nullspace" << endl;
 	}
 
 
@@ -2260,11 +2264,19 @@ void algebra_global::do_nullspace(finite_field *F,
 	base_cols = NEW_int(n);
 	int_vec_copy(M, A, m * n);
 
-	rk = F->perp_standard(n, m, A, verbose_level);
+	if (f_v) {
+		cout << "algebra_global::do_nullspace before F->perp_standard" << endl;
+	}
+
+	rk = F->perp_standard(n, m, A, 0 /*verbose_level*/);
+
+	if (f_v) {
+		cout << "algebra_global::do_nullspace after F->perp_standard" << endl;
+	}
 
 
 	if (f_v) {
-		cout << "after perp_standard:" << endl;
+		cout << "algebra_global::do_nullspace after perp_standard:" << endl;
 		int_matrix_print(A, n, n);
 		cout << "rk=" << rk << endl;
 	}
@@ -2276,11 +2288,11 @@ void algebra_global::do_nullspace(finite_field *F,
 
 
 	if (f_v) {
-		cout << "after RREF" << endl;
+		cout << "algebra_global::do_nullspace after RREF" << endl;
 		int_matrix_print(A + rk * n, rk1, n);
 		cout << "rank of nullspace = " << rk1 << endl;
 
-		cout << "coefficients:" << endl;
+		cout << "algebra_global::do_nullspace coefficients:" << endl;
 		int_vec_print(cout, A + rk * n, rk1 * n);
 		cout << endl;
 
@@ -2293,7 +2305,7 @@ void algebra_global::do_nullspace(finite_field *F,
 
 	if (f_normalize_from_the_left) {
 		if (f_v) {
-			cout << "normalizing from the left" << endl;
+			cout << "algebra_global::do_nullspace normalizing from the left" << endl;
 		}
 		for (i = rk; i < n; i++) {
 			F->PG_element_normalize_from_front(
@@ -2301,7 +2313,7 @@ void algebra_global::do_nullspace(finite_field *F,
 		}
 
 		if (f_v) {
-			cout << "after normalize from the left:" << endl;
+			cout << "algebra_global::do_nullspace after normalize from the left:" << endl;
 			int_matrix_print(A, n, n);
 			cout << "rk=" << rk << endl;
 
@@ -2315,7 +2327,7 @@ void algebra_global::do_nullspace(finite_field *F,
 
 	if (f_normalize_from_the_right) {
 		if (f_v) {
-			cout << "normalizing from the right" << endl;
+			cout << "algebra_global::do_nullspace normalizing from the right" << endl;
 		}
 		for (i = rk; i < n; i++) {
 			F->PG_element_normalize(
@@ -2323,7 +2335,7 @@ void algebra_global::do_nullspace(finite_field *F,
 		}
 
 		if (f_v) {
-			cout << "after normalize from the right:" << endl;
+			cout << "algebra_global::do_nullspace after normalize from the right:" << endl;
 			int_matrix_print(A, n, n);
 			cout << "rk=" << rk << endl;
 
@@ -2336,12 +2348,85 @@ void algebra_global::do_nullspace(finite_field *F,
 	}
 
 
+	{
+		char str[1000];
+		string fname;
+		char title[1000];
+		char author[1000];
+
+		snprintf(str, 1000, "nullspace_%d_%d.tex", m, n);
+		fname.assign(str);
+		snprintf(title, 1000, "Nullspace");
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		{
+			ofstream ost(fname);
+			latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "algebra_global::do_nullspace before report" << endl;
+			}
+			//report(ost, verbose_level);
+
+			ost << "\\noindent Input matrix:" << endl;
+			ost << "$$" << endl;
+			ost << "\\left[" << endl;
+			Li.int_matrix_print_tex(ost, M, m, n);
+			ost << "\\right]" << endl;
+			ost << "$$" << endl;
+
+			ost << "RREF:" << endl;
+			ost << "$$" << endl;
+			ost << "\\left[" << endl;
+			Li.int_matrix_print_tex(ost, A, rk, n);
+			ost << "\\right]" << endl;
+			ost << "$$" << endl;
+
+			ost << "Basis for Perp:" << endl;
+			ost << "$$" << endl;
+			ost << "\\left[" << endl;
+			Li.int_matrix_print_tex(ost, A + rk * n, rk1, n);
+			ost << "\\right]" << endl;
+			ost << "$$" << endl;
+
+
+			if (f_v) {
+				cout << "algebra_global::do_nullspace after report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		file_io Fio;
+
+		cout << "algebra_global::do_nullspace written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+
+
 	FREE_int(M);
 	FREE_int(A);
 	FREE_int(base_cols);
 
 	if (f_v) {
-		cout << "do_nullspace done" << endl;
+		cout << "algebra_global::do_nullspace done" << endl;
 	}
 }
 
@@ -2364,7 +2449,8 @@ void algebra_global::do_RREF(finite_field *F,
 
 	int_vec_scan(text, M, len);
 	if (len != m * n) {
-		cout << "number of coordinates received differs from m * n" << endl;
+		cout << "algebra_global::do_RREF "
+				"number of coordinates received differs from m * n" << endl;
 		cout << "received " << len << endl;
 		exit(1);
 	}
@@ -2434,7 +2520,7 @@ void algebra_global::do_RREF(finite_field *F,
 	FREE_int(base_cols);
 
 	if (f_v) {
-		cout << "do_RREF done" << endl;
+		cout << "algebra_global::do_RREF done" << endl;
 	}
 }
 
@@ -2450,7 +2536,7 @@ void algebra_global::do_trace(finite_field *F, int verbose_level)
 
 
 	if (f_v) {
-		cout << "do_trace" << endl;
+		cout << "algebra_global::do_trace" << endl;
 	}
 
 	int q = F->q;
@@ -2515,7 +2601,7 @@ void algebra_global::do_trace(finite_field *F, int verbose_level)
 
 
 	if (f_v) {
-		cout << "do_trace done" << endl;
+		cout << "algebra_global::do_trace done" << endl;
 	}
 }
 
@@ -2529,7 +2615,7 @@ void algebra_global::do_norm(finite_field *F, int verbose_level)
 	int nb_T1 = 0;
 
 	if (f_v) {
-		cout << "do_norm" << endl;
+		cout << "algebra_global::do_norm" << endl;
 	}
 
 	int q = F->q;
@@ -2574,7 +2660,7 @@ void algebra_global::do_norm(finite_field *F, int verbose_level)
 
 
 	if (f_v) {
-		cout << "do_norm done" << endl;
+		cout << "algebra_global::do_norm done" << endl;
 	}
 }
 
@@ -2586,7 +2672,7 @@ void algebra_global::do_equivalence_class_of_fractions(int N, int verbose_level)
 	file_io Fio;
 
 	if (f_v) {
-		cout << "do_equivalence_class_of_fractions" << endl;
+		cout << "algebra_global::do_equivalence_class_of_fractions" << endl;
 	}
 
 	int *Pairs;
@@ -2631,7 +2717,7 @@ void algebra_global::do_equivalence_class_of_fractions(int N, int verbose_level)
 	FREE_int(Pairs);
 
 	if (f_v) {
-		cout << "do_equivalence_class_of_fractions done" << endl;
+		cout << "algebra_global::do_equivalence_class_of_fractions done" << endl;
 	}
 }
 
@@ -2753,7 +2839,8 @@ void algebra_global::do_search_for_primitive_polynomial_in_range(
 	}
 }
 
-void algebra_global::do_make_table_of_irreducible_polynomials(int deg, finite_field *F, int verbose_level)
+void algebra_global::do_make_table_of_irreducible_polynomials(int deg,
+		finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2762,6 +2849,7 @@ void algebra_global::do_make_table_of_irreducible_polynomials(int deg, finite_fi
 		cout << "deg=" << deg << endl;
 		cout << "q=" << F->q << endl;
 	}
+
 	int nb;
 	//int *Table;
 	std::vector<std::vector<int>> Table;
@@ -2884,14 +2972,18 @@ void algebra_global::find_CRC_polynomials(finite_field *F,
 
 	//int dc = 4; //dc is the number of parity bits & degree of g(x)
 	//int da = 4; //da is the degree of the information polynomial
-	int A[da + 1 + dc]; //
+	int A[da + dc];
+		// we have da information bits, which we can think of
+		// as the coefficients of a polynomial.
+		// After multiplying by x^dc,
+		// A(x) has degree at most ad + dc - 1.
 	long int nb_sol = 0;
 
-	//int dc2 = dc; //This is also the degree of C/ # of parity bits
 
 
 	int C[dc + 1]; //Array C (what we divide by)
-	//int p = 2; //this is the number of possible coefficients (1 & 0 in this case)
+		// C(x) has the leading coefficeint of one included,
+		// hence we need one more array element
 
 	int i = 0;
 
@@ -2927,8 +3019,10 @@ void algebra_global::find_CRC_polynomials(finite_field *F,
 }
 
 void algebra_global::search_for_CRC_polynomials(int t,
-		int da, int *A, int dc, int *C, int i, finite_field *F,
-		long int &nb_sol, std::vector<std::vector<int> > &Solutions,
+		int da, int *A, int dc, int *C,
+		int i, finite_field *F,
+		long int &nb_sol,
+		std::vector<std::vector<int> > &Solutions,
 		int verbose_level)
 {
 
@@ -2969,8 +3063,10 @@ void algebra_global::search_for_CRC_polynomials(int t,
 
 	if (i == dc) {
 
+		// C(x) has a leading coefficient of one:
 		C[i] = 1;
-		search_for_CRC_polynomials(t, da, A, dc, C, i + 1, F, nb_sol, Solutions, verbose_level);
+		search_for_CRC_polynomials(t, da, A, dc, C,
+				i + 1, F, nb_sol, Solutions, verbose_level);
 
 
 	}
@@ -2981,14 +3077,16 @@ void algebra_global::search_for_CRC_polynomials(int t,
 
 			C[i] = c;
 
-			search_for_CRC_polynomials(t, da, A, dc, C, i + 1, F, nb_sol, Solutions, verbose_level);
+			search_for_CRC_polynomials(t, da, A, dc, C,
+					i + 1, F, nb_sol, Solutions, verbose_level);
 		}
 	}
 }
 
 void algebra_global::search_for_CRC_polynomials_binary(int t,
 		int da, int *A, int dc, int *C, int i,
-		long int &nb_sol, std::vector<std::vector<int> > &Solutions,
+		long int &nb_sol,
+		std::vector<std::vector<int> > &Solutions,
 		int verbose_level)
 {
 
@@ -3030,7 +3128,8 @@ void algebra_global::search_for_CRC_polynomials_binary(int t,
 	if (i == dc) {
 
 		C[i] = 1;
-		search_for_CRC_polynomials_binary(t, da, A, dc, C, i + 1, nb_sol, Solutions, verbose_level);
+		search_for_CRC_polynomials_binary(t, da, A, dc, C,
+				i + 1, nb_sol, Solutions, verbose_level);
 
 
 	}
@@ -3041,14 +3140,17 @@ void algebra_global::search_for_CRC_polynomials_binary(int t,
 
 			C[i] = c;
 
-			search_for_CRC_polynomials_binary(t, da, A, dc, C, i + 1, nb_sol, Solutions, verbose_level);
+			search_for_CRC_polynomials_binary(t, da, A, dc, C,
+					i + 1, nb_sol, Solutions, verbose_level);
 		}
 	}
 }
 
 
-int algebra_global::test_all_two_bit_patterns(int da, int *A, int dc, int *C,
-		finite_field *F, int verbose_level)
+int algebra_global::test_all_two_bit_patterns(int da, int *A,
+		int dc, int *C,
+		finite_field *F,
+		int verbose_level)
 // returns true if division by C leaves a nonzero remainder for all two bit error patters
 {
 
@@ -3061,7 +3163,7 @@ int algebra_global::test_all_two_bit_patterns(int da, int *A, int dc, int *C,
 	int k;
 	int ai, aj;
 	int ret;
-	int B[da + dc + 1];
+	int B[da + dc];
 
 	if (f_v) {
 		cout << "testing polynomial: ";
@@ -3071,36 +3173,35 @@ int algebra_global::test_all_two_bit_patterns(int da, int *A, int dc, int *C,
 		cout << endl;
 	}
 
-	for (i = 0; i <= da; i++) {
+	for (i = 0; i < da; i++) {
 		A[i] = 0;
 	}
 
-	for (i = 0; i <= da; i++) {
+	for (i = 0; i < da; i++) {
 
 		for (ai = 1; ai < F->q; ai++) {
 
 			A[i] = ai;
 
-			for (j = i + 1; j <= da; j++) {
+			for (j = i + 1; j < da; j++) {
 
 				for (aj = 1; aj < F->q; aj++) {
 
 					A[j] = aj;
 
-					for (k = 0; k <= da; k++) {
-						B[dc + k] = A[k];
-					}
 					for (k = 0; k < dc; k++) {
 						B[k] = 0;
+					}
+					for (k = 0; k < da; k++) {
+						B[dc + k] = A[k];
 					}
 
 					if (f_v) {
 						cout << "testing error pattern: ";
-						for (k = dc + da; k >= 0; k--) {
+						for (k = dc + da - 1; k >= 0; k--) {
 							cout << B[k];
 						}
 					}
-					//cout << endl;
 
 
 
@@ -3108,7 +3209,7 @@ int algebra_global::test_all_two_bit_patterns(int da, int *A, int dc, int *C,
 
 					if (f_v) {
 						cout << " : ";
-						for (k = dc; k >= 0; k--) {
+						for (k = dc - 1; k >= 0; k--) {
 							cout << B[k];
 						}
 						cout << endl;
@@ -3122,15 +3223,16 @@ int algebra_global::test_all_two_bit_patterns(int da, int *A, int dc, int *C,
 				A[j] = 0;
 			}
 
-			//cout << endl;
 		}
 		A[i] = 0;
 	}
 	return true;
 }
 
-int algebra_global::test_all_three_bit_patterns(int da, int *A, int dc, int *C,
-		finite_field *F, int verbose_level)
+int algebra_global::test_all_three_bit_patterns(int da, int *A,
+		int dc, int *C,
+		finite_field *F,
+		int verbose_level)
 // returns true if division by C leaves a nonzero remainder for all two bit error patters
 {
 
@@ -3142,7 +3244,7 @@ int algebra_global::test_all_three_bit_patterns(int da, int *A, int dc, int *C,
 	int k;
 	int a1, a2, a3;
 	int ret;
-	int B[da + dc + 1];
+	int B[da + dc];
 
 	if (f_v) {
 		cout << "testing polynomial: ";
@@ -3152,38 +3254,38 @@ int algebra_global::test_all_three_bit_patterns(int da, int *A, int dc, int *C,
 		cout << endl;
 	}
 
-	for (int h = 0; h <= da; h++) {
+	for (int h = 0; h < da; h++) {
 		A[h] = 0;
 	}
 
-	for (i1 = 0; i1 <= da; i1++) {
+	for (i1 = 0; i1 < da; i1++) {
 
 		for (a1 = 1; a1 < F->q; a1++) {
 
 			A[i1] = a1;
 
-			for (i2 = i1 + 1; i2 <= da; i2++) {
+			for (i2 = i1 + 1; i2 < da; i2++) {
 
 				for (a2 = 1; a2 < F->q; a2++) {
 
 					A[i2] = a2;
 
-					for (i3 = i2 + 1; i3 <= da; i3++) {
+					for (i3 = i2 + 1; i3 < da; i3++) {
 
 						for (a3 = 1; a3 < F->q; a3++) {
 
 							A[i3] = a3;
 
-							for (int h = 0; h <= da; h++) {
-								B[dc + h] = A[h];
-							}
 							for (int h = 0; h < dc; h++) {
 								B[h] = 0;
+							}
+							for (int h = 0; h < da; h++) {
+								B[dc + h] = A[h];
 							}
 
 							if (f_v) {
 								cout << "testing error pattern: ";
-								for (int h = dc + da; h >= 0; h--) {
+								for (int h = dc + da - 1; h >= 0; h--) {
 									cout << B[h];
 								}
 							}
@@ -3194,7 +3296,7 @@ int algebra_global::test_all_three_bit_patterns(int da, int *A, int dc, int *C,
 
 							if (f_v) {
 								cout << " : ";
-								for (int h = dc; h >= 0; h--) {
+								for (int h = dc - 1; h >= 0; h--) {
 									cout << B[h];
 								}
 								cout << endl;
@@ -3216,7 +3318,8 @@ int algebra_global::test_all_three_bit_patterns(int da, int *A, int dc, int *C,
 	return true;
 }
 
-int algebra_global::test_all_two_bit_patterns_binary(int da, int *A, int dc, int *C,
+int algebra_global::test_all_two_bit_patterns_binary(int da, int *A,
+		int dc, int *C,
 		int verbose_level)
 // returns true if division by C leaves a nonzero remainder for all two bit error patters
 {
@@ -3229,7 +3332,7 @@ int algebra_global::test_all_two_bit_patterns_binary(int da, int *A, int dc, int
 	int j;
 	int k;
 	int ret;
-	int B[da + dc + 1];
+	int B[da + dc];
 
 	if (f_v) {
 		cout << "testing polynomial: ";
@@ -3239,30 +3342,30 @@ int algebra_global::test_all_two_bit_patterns_binary(int da, int *A, int dc, int
 		cout << endl;
 	}
 
-	for (i = 0; i <= da; i++) {
+	for (i = 0; i < da; i++) {
 		A[i] = 0;
 	}
 
-	for (i = 0; i <= da; i++) {
+	for (i = 0; i < da; i++) {
 
 
 		A[i] = 1;
 
-		for (j = i + 1; j <= da; j++) {
+		for (j = i + 1; j < da; j++) {
 
 
 			A[j] = 1;
 
-			for (k = 0; k <= da; k++) {
-				B[dc + k] = A[k];
-			}
 			for (k = 0; k < dc; k++) {
 				B[k] = 0;
+			}
+			for (k = 0; k < da; k++) {
+				B[dc + k] = A[k];
 			}
 
 			if (f_v) {
 				cout << "testing error pattern: ";
-				for (k = dc + da; k >= 0; k--) {
+				for (k = dc + da - 1; k >= 0; k--) {
 					cout << B[k];
 				}
 			}
@@ -3273,7 +3376,7 @@ int algebra_global::test_all_two_bit_patterns_binary(int da, int *A, int dc, int
 
 			if (f_v) {
 				cout << " : ";
-				for (k = dc; k >= 0; k--) {
+				for (k = dc - 1; k >= 0; k--) {
 					cout << B[k];
 				}
 				cout << endl;
@@ -3291,7 +3394,8 @@ int algebra_global::test_all_two_bit_patterns_binary(int da, int *A, int dc, int
 	return true;
 }
 
-int algebra_global::test_all_three_bit_patterns_binary(int da, int *A, int dc, int *C,
+int algebra_global::test_all_three_bit_patterns_binary(int da, int *A,
+		int dc, int *C,
 		int verbose_level)
 // returns true if division by C leaves a nonzero remainder for all two bit error patters
 {
@@ -3303,7 +3407,7 @@ int algebra_global::test_all_three_bit_patterns_binary(int da, int *A, int dc, i
 	int i1, i2, i3;
 	int k;
 	int ret;
-	int B[da + dc + 1];
+	int B[da + dc];
 
 	if (f_v) {
 		cout << "testing polynomial: ";
@@ -3313,34 +3417,34 @@ int algebra_global::test_all_three_bit_patterns_binary(int da, int *A, int dc, i
 		cout << endl;
 	}
 
-	for (int h = 0; h <= da; h++) {
+	for (int h = 0; h < da; h++) {
 		A[h] = 0;
 	}
 
-	for (i1 = 0; i1 <= da; i1++) {
+	for (i1 = 0; i1 < da; i1++) {
 
 		A[i1] = 1;
 
-		for (i2 = i1 + 1; i2 <= da; i2++) {
+		for (i2 = i1 + 1; i2 < da; i2++) {
 
 
 			A[i2] = 1;
 
-			for (i3 = i2 + 1; i3 <= da; i3++) {
+			for (i3 = i2 + 1; i3 < da; i3++) {
 
 
 				A[i3] = 1;
 
-				for (int h = 0; h <= da; h++) {
-					B[dc + h] = A[h];
-				}
 				for (int h = 0; h < dc; h++) {
 					B[h] = 0;
+				}
+				for (int h = 0; h < da; h++) {
+					B[dc + h] = A[h];
 				}
 
 				if (f_v) {
 					cout << "testing error pattern: ";
-					for (int h = dc + da; h >= 0; h--) {
+					for (int h = dc + da - 1; h >= 0; h--) {
 						cout << B[h];
 					}
 				}
@@ -3351,7 +3455,7 @@ int algebra_global::test_all_three_bit_patterns_binary(int da, int *A, int dc, i
 
 				if (f_v) {
 					cout << " : ";
-					for (int h = dc; h >= 0; h--) {
+					for (int h = dc - 1; h >= 0; h--) {
 						cout << B[h];
 					}
 					cout << endl;
@@ -3372,13 +3476,14 @@ int algebra_global::test_all_three_bit_patterns_binary(int da, int *A, int dc, i
 }
 
 
-int algebra_global::remainder_is_nonzero(int da, int *A, int db, int *B, finite_field *F)
+int algebra_global::remainder_is_nonzero(int da, int *A,
+		int db, int *B, finite_field *F)
 // returns true if the remainder of A after division by B is nonzero
 {
 
 	int i, j, k, a, mav;
 
-	for (i = da + db; i >= db; i--) {
+	for (i = da + db - 1; i >= db; i--) {
 
 		a = A[i];
 
@@ -3397,7 +3502,7 @@ int algebra_global::remainder_is_nonzero(int da, int *A, int db, int *B, finite_
 	}
 
 
-	for (int k = da + db; k >= 0; k--) {
+	for (int k = db - 1; k >= 0; k--) {
 		if (A[k]) {
 			return true;
 		}
@@ -3406,13 +3511,14 @@ int algebra_global::remainder_is_nonzero(int da, int *A, int db, int *B, finite_
 }
 
 
-int algebra_global::remainder_is_nonzero_binary(int da, int *A, int db, int *B)
+int algebra_global::remainder_is_nonzero_binary(int da, int *A,
+		int db, int *B)
 // returns true if the remainder of A after division by B is nonzero
 {
 
 	int i, j, k, a;
 
-	for (i = da + db; i >= db; i--) {
+	for (i = da + db - 1; i >= db; i--) {
 
 		a = A[i];
 
@@ -3431,7 +3537,7 @@ int algebra_global::remainder_is_nonzero_binary(int da, int *A, int db, int *B)
 	}
 
 
-	for (int k = da + db; k >= 0; k--) {
+	for (int k = db - 1; k >= 0; k--) {
 		if (A[k]) {
 			return true;
 		}
