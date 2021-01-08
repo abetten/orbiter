@@ -132,10 +132,6 @@ finite_field_activity_description::finite_field_activity_description()
 	//decomposition_by_element_fname_base
 
 
-	f_canonical_form_PG = FALSE;
-	canonical_form_PG_n = 0;
-	Canonical_form_PG_Descr = NULL;
-
 	f_transversal = FALSE;
 	//transversal_line_1_basis = NULL;
 	//transversal_line_2_basis = NULL;
@@ -397,6 +393,8 @@ int finite_field_activity_description::read_arguments(
 			polynomial_reduce_mod_p_A.assign(argv[++i]);
 			cout << "-polynomial_reduce_mod_p " << polynomial_reduce_mod_p_A << endl;
 		}
+
+
 		else if (stringcmp(argv[i], "-cheat_sheet_PG") == 0) {
 			f_cheat_sheet_PG = TRUE;
 			cheat_sheet_PG_n = strtoi(argv[++i]);
@@ -408,6 +406,8 @@ int finite_field_activity_description::read_arguments(
 			cheat_sheet_Gr_k = strtoi(argv[++i]);
 			cout << "-cheat_sheet_Gr " << cheat_sheet_Gr_n << " " << cheat_sheet_Gr_k << endl;
 		}
+
+
 		else if (stringcmp(argv[i], "-cheat_sheet_orthogonal") == 0) {
 			f_cheat_sheet_orthogonal = TRUE;
 			cheat_sheet_orthogonal_epsilon = strtoi(argv[++i]);
@@ -445,21 +445,10 @@ int finite_field_activity_description::read_arguments(
 					<< " " << decomposition_by_element_data
 					<< " " << decomposition_by_element_fname_base << endl;
 		}
-		else if (stringcmp(argv[i], "-canonical_form_PG") == 0) {
-			f_canonical_form_PG = TRUE;
-			canonical_form_PG_n = strtoi(argv[++i]);
-			cout << "-canonical_form_PG " << canonical_form_PG_n << ", reading extra arguments" << endl;
 
-			Canonical_form_PG_Descr = NEW_OBJECT(projective_space_object_classifier_description);
 
-			i += Canonical_form_PG_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
-			cout << "done reading -canonical_form_PG " << canonical_form_PG_n << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
+
+
 		else if (stringcmp(argv[i], "-transversal") == 0) {
 			f_transversal = TRUE;
 			transversal_line_1_basis.assign(argv[++i]);

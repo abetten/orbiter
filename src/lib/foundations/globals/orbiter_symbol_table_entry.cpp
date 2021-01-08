@@ -84,6 +84,23 @@ void orbiter_symbol_table_entry::init_linear_group(std::string &label,
 	}
 }
 
+void orbiter_symbol_table_entry::init_projective_space(std::string &label,
+		void *p, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_projective_space" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_projective_space;
+	ptr = p;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_projective_space done" << endl;
+	}
+}
+
 void orbiter_symbol_table_entry::print()
 {
 	if (type == t_intvec) {
@@ -96,6 +113,12 @@ void orbiter_symbol_table_entry::print()
 
 			F = (finite_field *) ptr;
 			F->print();
+		}
+		else if (object_type == t_linear_group) {
+			cout << "linear group" << endl;
+		}
+		else if (object_type == t_projective_space) {
+			cout << "projective space" << endl;
 		}
 #if 0
 		else if (object_type == t_action) {

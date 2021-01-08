@@ -149,6 +149,36 @@ void projective_space_with_action::init_group(
 	}
 }
 
+void projective_space_with_action::canonical_form(
+		projective_space_object_classifier_description *Canonical_form_PG_Descr,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	projective_space_object_classifier *OC;
+
+	if (f_v) {
+		cout << "projective_space_with_action::canonical_form" << endl;
+	}
+
+	OC = NEW_OBJECT(projective_space_object_classifier);
+
+	if (f_v) {
+		cout << "projective_space_with_action::canonical_form before OC->do_the_work" << endl;
+	}
+	OC->do_the_work(
+			Canonical_form_PG_Descr,
+			this,
+			verbose_level);
+	if (f_v) {
+		cout << "projective_space_with_action::canonical_form after OC->do_the_work" << endl;
+	}
+
+	FREE_OBJECT(OC);
+
+	if (f_v) {
+		cout << "projective_space_with_action::canonical_form done" << endl;
+	}
+}
 
 void projective_space_with_action::canonical_labeling(
 	object_in_projective_space *OiP,

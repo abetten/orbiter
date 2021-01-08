@@ -465,9 +465,11 @@ void linear_set_classify::init(
 		Control = NEW_OBJECT(poset_classification_control);
 		LG = NEW_OBJECT(linear_group); // hack !!! ToDo
 
-		T->init(LG, k, Control,
+		T->init(LG, k, //Control,
 				TRUE /* f_recoordinatize */,
 				verbose_level - 2);
+
+		T->init2(Control, verbose_level);
 
 #if 0
 		T->init(order, n, k, max_depth,

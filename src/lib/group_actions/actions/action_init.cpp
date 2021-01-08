@@ -587,19 +587,28 @@ void action::init_matrix_group_strong_generators_builtin(
 				"getting strong generators" << endl;
 	}
 	if (M->f_projective) {
-		F->strong_generators_for_projective_linear_group(n,
+
+		group_generators_domain GGD;
+
+		GGD.strong_generators_for_projective_linear_group(n, F,
 			M->f_semilinear, 
 			data, size, nb_gens, 
 			0 /*verbose_level - 1*/);
 	}
 	else if (M->f_affine) {
-		F->strong_generators_for_affine_linear_group(n,
+
+		group_generators_domain GGD;
+
+		GGD.strong_generators_for_affine_linear_group(n, F,
 			M->f_semilinear, 
 			data, size, nb_gens, 
 			0 /*verbose_level - 1*/);
 	}
 	else if (M->f_general_linear) {
-		F->strong_generators_for_general_linear_group(n,
+
+		group_generators_domain GGD;
+
+		GGD.strong_generators_for_general_linear_group(n, F,
 			M->f_semilinear, 
 			data, size, nb_gens, 
 			0 /*verbose_level - 1*/);
@@ -906,7 +915,10 @@ void action::init_affine_group(int n, int q,
 	F.finite_field_init(q, verbose_level - 1);
 	
 	
-	F.affine_generators(n, f_translations, 
+	group_generators_domain GGD;
+
+
+	GGD.affine_generators(n, &F, f_translations,
 		f_semilinear, frobenius_power, 
 		f_multiplication, multiplication_order, 
 		nb_gens, degree, gens, 

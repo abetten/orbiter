@@ -273,7 +273,7 @@ void orbits_on_something::report_type(ostream &ost, long int *orbit_type, long i
 
 	latex_interface L;
 
-
+#if 0
 	ost << "\\left[" << endl;
 	L.print_lint_matrix_tex(ost,
 			orbit_type,
@@ -281,6 +281,7 @@ void orbits_on_something::report_type(ostream &ost, long int *orbit_type, long i
 	ost << "\\right]" << endl;
 
 	ost << " = ";
+#endif
 
 	long int *compact_type;
 	long int *row_labels;
@@ -422,7 +423,7 @@ void orbits_on_something::classify_orbits_by_length(int verbose_level)
 	}
 }
 
-void orbits_on_something::report_classified_orbit_lengths(ostream &ost)
+void orbits_on_something::report_classified_orbit_lengths(std::ostream &ost)
 {
 	int i;
 
@@ -432,6 +433,26 @@ void orbits_on_something::report_classified_orbit_lengths(ostream &ost)
 		ost << i << " : " << Orbits_classified_length[i] << " : "
 				<< Orbits_classified->Set_size[i] << "\\\\" << endl;
 		}
+}
+
+void orbits_on_something::report_classified_orbits_by_lengths(std::ostream &ost)
+{
+	int i, j;
+	long int a;
+	latex_interface L;
+
+	for (i = 0; i < Orbits_classified->nb_sets; i++) {
+		ost << "Set " << i << " has size " << Orbits_classified->Set_size[i] << " : ";
+		for (j = 0; j < Orbits_classified->Set_size[i]; j++) {
+			a = Orbits_classified->Sets[i][j];
+			ost << a;
+			if (j < Orbits_classified->Set_size[i] - 1) {
+				ost << ", ";
+			}
+
+		}
+		ost << "\\\\" << endl;
+	}
 }
 
 int orbits_on_something::get_orbit_type_index(int orbit_length)

@@ -2141,6 +2141,7 @@ public:
 			int *Partial_packings, int nb_pp, int sz,
 			int *&Iso_type_invariant,
 			int verbose_level);
+	void report_one_spread(std::ostream &ost, int a);
 
 };
 

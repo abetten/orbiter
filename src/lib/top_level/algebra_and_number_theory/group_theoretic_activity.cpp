@@ -2340,14 +2340,21 @@ void group_theoretic_activity::do_spread_classify(int k, int verbose_level)
 	SC->init(
 			LG,
 			k,
-			Control,
+			//Control,
 			TRUE /* f_recoordinatize */,
 			verbose_level - 1);
-
-
 	if (f_v) {
 		cout << "group_theoretic_activity::do_spread_classify after SC->init" << endl;
 	}
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_spread_classify before SC->init2" << endl;
+	}
+	SC->init2(Control, verbose_level);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_spread_classify after SC->init2" << endl;
+	}
+
 
 	if (f_v) {
 		cout << "group_theoretic_activity::do_spread_classify before SC->compute" << endl;
@@ -2380,6 +2387,7 @@ void group_theoretic_activity::do_spread_table_init(int dimension_of_spread_elem
 		cout << "group_theoretic_activity::do_spread_table_init" << endl;
 	}
 
+#if 0
 	poset_classification_control *Control;
 
 	if (!Descr->f_poset_classification_control) {
@@ -2389,13 +2397,15 @@ void group_theoretic_activity::do_spread_table_init(int dimension_of_spread_elem
 	else {
 		Control = Descr->Control;
 	}
+#endif
 
 
 
 	P = NEW_OBJECT(packing_classify);
 
 	P->spread_table_init(
-			Control, LG,
+			//Control,
+			LG,
 			dimension_of_spread_elements,
 			TRUE /* f_select_spread */, spread_selection_text,
 			spread_tables_prefix,

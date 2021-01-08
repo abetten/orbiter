@@ -86,7 +86,7 @@ public:
 	long int *dual_packing; // [size_of_packing]
 	long int *list_of_lines; // [size_of_packing * spread_size]
 	long int *list_of_lines_klein_image; // [size_of_packing * spread_size]
-	grassmann *Gr;
+	grassmann *Gr; // the Grassmannian Gr_{6,3}
 
 
 
@@ -104,7 +104,8 @@ public:
 	void null();
 	void freeself();
 	void spread_table_init(
-			poset_classification_control *Control, linear_group *LG,
+			//poset_classification_control *Control,
+			linear_group *LG,
 			int dimension_of_spread_elements,
 			int f_select_spread, std::string &select_spread_text,
 			std::string &path_to_spread_tables,
@@ -316,10 +317,6 @@ public:
 	packing_long_orbits();
 	~packing_long_orbits();
 	void init(packing_was_fixpoints *PWF,
-			//int fixpoints_idx,
-			//int fixpoints_clique_case_number,
-			//int f_solution_path,
-			//std::string &solution_path,
 			int verbose_level);
 	void list_of_cases_from_file(int verbose_level);
 	void save_packings_by_case(std::vector<std::vector<std::vector<int> > > &Packings_by_case, int verbose_level);
@@ -360,17 +357,16 @@ int packing_long_orbit_test_function(long int *orbit1, int len1,
 
 class packing_was_description {
 public:
-	int f_spreads_invariant_under_H;
+	//int f_spreads_invariant_under_H;
+
 	int f_cliques_on_fixpoint_graph;
 	int clique_size_on_fixpoint_graph;
+
 	int f_cliques_on_fixpoint_graph_control;
 	poset_classification_control *cliques_on_fixpoint_graph_control;
 
 	int f_process_long_orbits;
 	packing_long_orbits_description *Long_Orbits_Descr;
-
-
-
 
 	int f_problem_label;
 	std::string problem_label;
@@ -588,6 +584,8 @@ public:
 	void report_orbit_invariant(std::ostream &ost);
 	void report2(std::ostream &ost, int verbose_level);
 	void report(int verbose_level);
+	void report_line_orbits_under_H(std::ostream &ost, int verbose_level);
+	void report_reduced_spread_orbits(std::ostream &ost, int verbose_level);
 };
 
 // gloabls:
@@ -722,7 +720,7 @@ public:
 	linear_group *LG;
 	matrix_group *Mtx;
 
-	poset_classification_control *Control;
+	//poset_classification_control *Control;
 
 	int order;
 	int spread_size; // = order + 1
@@ -791,10 +789,10 @@ public:
 	void freeself();
 	void init(
 			linear_group *LG,
-			int k, poset_classification_control *Control,
+			int k, //poset_classification_control *Control,
 			int f_recoordinatize,
 			int verbose_level);
-	void init2(int verbose_level);
+	void init2(poset_classification_control *Control, int verbose_level);
 	void unrank_point(int *v, long int a);
 	long int rank_point(int *v);
 	void unrank_subspace(int *M, long int a);

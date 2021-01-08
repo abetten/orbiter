@@ -1140,7 +1140,7 @@ void packing_was::report_orbit_invariant(ostream &ost)
 
 }
 
-void packing_was::report2(ostream &ost, int verbose_level)
+void packing_was::report2(std::ostream &ost, int verbose_level)
 {
 	ost << "\\section{Fixed Objects of $H$}" << endl;
 	ost << endl;
@@ -1152,7 +1152,8 @@ void packing_was::report2(ostream &ost, int verbose_level)
 
 	ost << "\\section{Line Orbits of $H$}" << endl;
 	ost << endl;
-	Line_orbits_under_H->report_orbit_lengths(ost);
+	//Line_orbits_under_H->report_orbit_lengths(ost);
+	report_line_orbits_under_H(ost, verbose_level);
 	ost << endl;
 
 	ost << "\\section{Spread Orbits of $H$}" << endl;
@@ -1169,8 +1170,7 @@ void packing_was::report2(ostream &ost, int verbose_level)
 	ost << endl;
 
 	ost << "\\section{Reduced Spread Orbits}" << endl;
-	reduced_spread_orbits_under_H->report_classified_orbit_lengths(ost);
-	ost << endl;
+	report_reduced_spread_orbits(ost, verbose_level);
 
 	ost << "\\section{Reduced Spread Orbits: Spread invariant}" << endl;
 	report_orbit_invariant(ost);
@@ -1249,6 +1249,257 @@ void packing_was::report(int verbose_level)
 
 }
 
+void packing_was::report_line_orbits_under_H(std::ostream &ost, int verbose_level)
+{
+	Line_orbits_under_H->report_classified_orbit_lengths(ost);
+	ost << endl;
+
+
+	//Line_orbits_under_H->report_classified_orbits_by_lengths(ost);
+	int i, j, h;
+	long int a, b;
+	latex_interface L;
+
+
+
+
+	ost << "\\bigskip" << endl;
+	ost << "\\noindent" << endl;
+
+	for (i = 0; i < Line_orbits_under_H->Orbits_classified->nb_sets; i++) {
+		ost << "Set " << i << " has size " << Line_orbits_under_H->Orbits_classified->Set_size[i] << "\\\\" << endl;
+
+		for (j = 0; j < Line_orbits_under_H->Orbits_classified->Set_size[i]; j++) {
+			a = Line_orbits_under_H->Orbits_classified->Sets[i][j];
+			ost << "Line orbit " << a << " is:\\\\" << endl;
+
+
+			std::vector<int> Orb;
+
+
+			Line_orbits_under_H->Sch->get_orbit_in_order(Orb,
+					a /* orbit_idx */, 0 /* verbose_level */);
+
+			for (h = 0; h < Orb.size(); h++) {
+				ost << Orb[h];
+				if (h < Orb.size() - 1) {
+					ost << ", ";
+				}
+			}
+			ost << "\\\\" << endl;
+			ost << "The orbit consists of the following lines:\\\\" << endl;
+			for (h = 0; h < Orb.size(); h++) {
+				b = Orb[h];
+				ost << "$";
+				P->T->Grass->print_single_generator_matrix_tex(ost, b);
+				ost << "_{" << b << "}";
+				ost << "$";
+				if (i < Orb.size() - 1) {
+					ost << ", ";
+				}
+			}
+			ost << "\\\\" << endl;
+		}
+	}
+
+}
+
+
+void packing_was::report_reduced_spread_orbits(std::ostream &ost, int verbose_level)
+{
+	reduced_spread_orbits_under_H->report_classified_orbit_lengths(ost);
+	ost << endl;
+
+	ost << "\\bigskip" << endl;
+	ost << "\\noindent" << endl;
+
+	//reduced_spread_orbits_under_H->report_classified_orbits_by_lengths(ost);
+	int i, j, h;
+	long int a, b;
+	long int *spreads_in_reduced_orbits;
+	int nb_spreads, spread_cnt;
+	int orbit_length;
+	latex_interface L;
+
+
+	nb_spreads = 0;
+	orbit_length = -1;
+	for (i = 0; i < reduced_spread_orbits_under_H->Orbits_classified->nb_sets; i++) {
+
+
+		nb_spreads += reduced_spread_orbits_under_H->Orbits_classified->Set_size[i];
+
+		for (j = 0; j < reduced_spread_orbits_under_H->Orbits_classified->Set_size[i]; j++) {
+			a = reduced_spread_orbits_under_H->Orbits_classified->Sets[i][j];
+
+			std::vector<int> Orb;
+
+
+			reduced_spread_orbits_under_H->Sch->get_orbit_in_order(Orb,
+					a /* orbit_idx */, 0 /* verbose_level */);
+
+			if (orbit_length == -1) {
+				orbit_length = Orb.size();
+			}
+			else if (orbit_length != Orb.size()) {
+				cout << "we have orbits of different lengths" << endl;
+				exit(1);
+			}
+
+		}
+	}
+
+	spreads_in_reduced_orbits = NEW_lint(nb_spreads * orbit_length);
+	lint_vec_zero(spreads_in_reduced_orbits, nb_spreads * orbit_length);
+
+
+	spread_cnt = 0;
+
+	for (i = 0; i < reduced_spread_orbits_under_H->Orbits_classified->nb_sets; i++) {
+
+		ost << "Set " << i << " has size " << reduced_spread_orbits_under_H->Orbits_classified->Set_size[i] << "\\\\" << endl;
+
+		for (j = 0; j < reduced_spread_orbits_under_H->Orbits_classified->Set_size[i]; j++, spread_cnt++) {
+			a = reduced_spread_orbits_under_H->Orbits_classified->Sets[i][j];
+			ost << "Spread orbit " << a << " is:\\\\" << endl;
+
+
+			std::vector<int> Orb;
+
+
+			reduced_spread_orbits_under_H->Sch->get_orbit_in_order(Orb,
+					a /* orbit_idx */, 0 /* verbose_level */);
+
+			for (h = 0; h < Orb.size(); h++) {
+				spreads_in_reduced_orbits[spread_cnt * orbit_length + h] = Orb[h];
+			}
+
+			for (h = 0; h < Orb.size(); h++) {
+				ost << Orb[h];
+				if (h < Orb.size() - 1) {
+					ost << ", ";
+				}
+			}
+			ost << "\\\\" << endl;
+		}
+	}
+
+	ost << "Table of spreads in reduced orbits:\\\\" << endl;
+	ost << "$$" << endl;
+	L.lint_matrix_print_tex(ost, spreads_in_reduced_orbits, nb_spreads, orbit_length);
+	ost << "$$" << endl;
+
+	tally T1;
+
+	T1.init_lint(spreads_in_reduced_orbits, nb_spreads * orbit_length, FALSE, 0);
+
+	ost << "$$" << endl;
+	T1.print_naked_tex(ost, TRUE /* f_backwards */);
+	ost << "$$" << endl;
+
+#if 0
+	ost << "$$" << endl;
+	T1.print_array_tex(ost, TRUE /* f_backwards */);
+	ost << "$$" << endl;
+#endif
+
+	int *lines_in_spreads;
+
+
+	lines_in_spreads = NEW_int(nb_spreads * orbit_length * Spread_tables_reduced->spread_size);
+	for (i = 0; i < nb_spreads * orbit_length; i++) {
+		a = spreads_in_reduced_orbits[i];
+		for (j = 0; j < Spread_tables_reduced->spread_size; j++) {
+			b = Spread_tables_reduced->spread_table[a * Spread_tables_reduced->spread_size + j];
+			lines_in_spreads[i * Spread_tables_reduced->spread_size + j] = b;
+		}
+	}
+
+	tally T2;
+
+	T2.init(lines_in_spreads,
+			nb_spreads * orbit_length * Spread_tables_reduced->spread_size,
+			FALSE, 0);
+
+	ost << "Frequencies of lines appearing in spreads appearing in these orbits:\\\\" << endl;
+	ost << "$$" << endl;
+	T2.print_naked_tex(ost, TRUE /* f_backwards */);
+	ost << "$$" << endl;
+
+	long int *spreads_in_reduced_orbits_with_original_labels;
+
+	spreads_in_reduced_orbits_with_original_labels = NEW_lint(nb_spreads * orbit_length);
+	for (i = 0; i < nb_spreads * orbit_length; i++) {
+		a = spreads_in_reduced_orbits[i];
+		b = good_spreads[a];
+		spreads_in_reduced_orbits_with_original_labels[i] = b;
+	}
+
+	string fname_reduced_orbits;
+
+	if (Descr->f_output_path) {
+		fname_reduced_orbits.assign(Descr->output_path);
+	}
+	else {
+		fname_reduced_orbits.assign("");
+	}
+	fname_reduced_orbits.append(H_LG->label);
+	if (Descr->f_problem_label) {
+		fname_reduced_orbits.append(Descr->problem_label);
+	}
+	fname_reduced_orbits.append("_reduced_orbits.csv");
+
+	file_io Fio;
+
+	Fio.lint_matrix_write_csv(fname_reduced_orbits,
+				spreads_in_reduced_orbits_with_original_labels,
+				nb_spreads, orbit_length);
+
+	cout << "Written file " << fname_reduced_orbits << " of size " << Fio.file_size(fname_reduced_orbits) << endl;
+
+
+
+
+	FREE_int(lines_in_spreads);
+	FREE_lint(spreads_in_reduced_orbits);
+	FREE_lint(spreads_in_reduced_orbits_with_original_labels);
+
+
+	ost << "\\bigskip" << endl;
+	ost << "\\noindent" << endl;
+
+	for (i = 0; i < reduced_spread_orbits_under_H->Orbits_classified->nb_sets; i++) {
+		ost << "Set " << i << " has size " << reduced_spread_orbits_under_H->Orbits_classified->Set_size[i] << "\\\\" << endl;
+
+		for (j = 0; j < reduced_spread_orbits_under_H->Orbits_classified->Set_size[i]; j++) {
+			a = reduced_spread_orbits_under_H->Orbits_classified->Sets[i][j];
+			ost << "Spread orbit " << a << " is:\\\\" << endl;
+
+
+			std::vector<int> Orb;
+
+
+			reduced_spread_orbits_under_H->Sch->get_orbit_in_order(Orb,
+					a /* orbit_idx */, 0 /* verbose_level */);
+
+			for (h = 0; h < Orb.size(); h++) {
+				ost << Orb[h];
+				if (h < Orb.size() - 1) {
+					ost << ", ";
+				}
+			}
+			ost << "\\\\" << endl;
+			ost << "The orbit consists of the following spreads:\\\\" << endl;
+			for (h = 0; h < Orb.size(); h++) {
+				b = Orb[h];
+				ost << "Spread " << b << " is:\\\\" << endl;
+				Spread_tables_reduced->report_one_spread(ost, b);
+				ost << "\\\\" << endl;
+			}
+		}
+	}
+
+}
 
 // #############################################################################
 // global functions:

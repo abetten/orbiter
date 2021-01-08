@@ -850,6 +850,25 @@ void spread_tables::compute_iso_type_invariant(
 	}
 }
 
+void spread_tables::report_one_spread(std::ostream &ost, int a)
+{
+	long int *p;
+	long int b;
+	int i;
+
+	p = spread_table + a * spread_size;
+	for (i = 0; i < spread_size; i++) {
+		ost << "$";
+		b = p[i];
+		Gr->print_single_generator_matrix_tex(ost, b);
+		ost << "_{" << b << "}";
+		ost << "$";
+		if (i < spread_size - 1) {
+			ost << ", ";
+		}
+	}
+}
+
 
 }}
 

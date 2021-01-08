@@ -673,6 +673,31 @@ public:
 
 
 // #############################################################################
+// projective_space_with_action_description.cpp
+// #############################################################################
+
+
+//! description of a projective space with action
+
+class projective_space_with_action_description {
+public:
+
+	int n;
+	std::string input_q;
+	finite_field *F;
+
+	projective_space_with_action_description();
+	~projective_space_with_action_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+
+
+// #############################################################################
 // projective_space_with_action.cpp
 // #############################################################################
 
@@ -710,6 +735,9 @@ public:
 	void init(finite_field *F, int n, int f_semilinear, 
 		int f_init_incidence_structure, int verbose_level);
 	void init_group(int f_semilinear, int verbose_level);
+	void canonical_form(
+			projective_space_object_classifier_description *Canonical_form_PG_Descr,
+			int verbose_level);
 	void canonical_labeling(
 		object_in_projective_space *OiP,
 		int *canonical_labeling,

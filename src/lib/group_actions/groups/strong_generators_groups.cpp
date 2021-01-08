@@ -2304,7 +2304,10 @@ void strong_generators::generators_for_parabolic_subgroup(
 				"before generators_for_parabolic_subgroup" << endl;
 	}
 
-	F->generators_for_parabolic_subgroup(n,
+
+	group_generators_domain GGD;
+
+	GGD.generators_for_parabolic_subgroup(n, F,
 		Mtx->f_semilinear, k, 
 		data, size, nb_gens, 
 		verbose_level - 2);
@@ -2406,8 +2409,10 @@ strong_generators::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 				"for_stabilizer_of_three_collinear_points_in_PGL4" << endl;
 	}
 
-	F->generators_for_stabilizer_of_three_collinear_points_in_PGL4(
-		Mtx->f_semilinear, 
+	group_generators_domain GGD;
+
+	GGD.generators_for_stabilizer_of_three_collinear_points_in_PGL4(
+		Mtx->f_semilinear, F,
 		data, size, nb_gens, 
 		verbose_level);
 
@@ -2506,8 +2511,10 @@ void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
 				"before generators_for_stabilizer_of_triangle_in_PGL4" << endl;
 	}
 
-	F->generators_for_stabilizer_of_triangle_in_PGL4(
-		Mtx->f_semilinear, 
+	group_generators_domain GGD;
+
+	GGD.generators_for_stabilizer_of_triangle_in_PGL4(
+		Mtx->f_semilinear, F,
 		data, size, nb_gens, 
 		verbose_level);
 

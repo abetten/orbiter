@@ -20,6 +20,7 @@ namespace foundations {
 unipoly_domain::unipoly_domain(finite_field *F)
 {
 	unipoly_domain::F = F;
+	variable_name.assign("X");
 	f_factorring = FALSE;
 	factor_degree = 0;
 	factor_coeffs = NULL;

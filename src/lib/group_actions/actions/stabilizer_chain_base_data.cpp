@@ -315,7 +315,11 @@ void stabilizer_chain_base_data::init_projective_matrix_group(
 		cout << "stabilizer_chain_base_data::init_projective_matrix_group" << endl;
 	}
 	if (A->degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
-		F->projective_matrix_group_base_and_orbits(n,
+
+		group_generators_domain GGD;
+
+
+		GGD.projective_matrix_group_base_and_orbits(n, F,
 			f_semilinear,
 			base_len, degree,
 			base, transversal_length,
@@ -341,7 +345,10 @@ void stabilizer_chain_base_data::init_affine_matrix_group(
 		cout << "stabilizer_chain_base_data::init_affine_matrix_group" << endl;
 	}
 	if (A->degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
-		F->affine_matrix_group_base_and_transversal_length(n,
+
+		group_generators_domain GGD;
+
+		GGD.affine_matrix_group_base_and_transversal_length(n, F,
 			f_semilinear,
 			base_len, degree,
 			base, transversal_length,
@@ -369,7 +376,10 @@ void stabilizer_chain_base_data::init_linear_matrix_group(
 		cout << "stabilizer_chain_base_data::init_linear_matrix_group" << endl;
 	}
 	if (A->degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
-		F->general_linear_matrix_group_base_and_transversal_length(n,
+
+		group_generators_domain GGD;
+
+		GGD.general_linear_matrix_group_base_and_transversal_length(n, F,
 			f_semilinear,
 			base_len, degree,
 			base, transversal_length,

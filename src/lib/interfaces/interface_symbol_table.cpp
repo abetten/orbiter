@@ -27,6 +27,9 @@ interface_symbol_table::interface_symbol_table()
 	f_finite_field = FALSE;
 	Finite_field_description = NULL;
 
+	f_projective_space = FALSE;
+	Projective_space_with_action_description = NULL;
+
 	f_linear_group = FALSE;
 	Linear_group_description = NULL;
 
@@ -35,7 +38,10 @@ interface_symbol_table::interface_symbol_table()
 	//std::vector<std::string> with_labels;
 
 	f_finite_field_activity = FALSE;
-	Finite_field_activity_description = FALSE;
+	Finite_field_activity_description = NULL;
+
+	f_projective_space_activity = FALSE;
+	Projective_space_activity_description = NULL;
 
 	f_group_theoretic_activity = FALSE;
 	Group_theoretic_activity_description = NULL;
@@ -89,6 +95,19 @@ int interface_symbol_table::read_arguments(int argc,
 					argv + i + 1, verbose_level);
 
 				cout << "-finite_field" << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+			}
+			else if (stringcmp(argv[i], "-projective_space") == 0) {
+				f_projective_space = TRUE;
+				Projective_space_with_action_description = NEW_OBJECT(projective_space_with_action_description);
+				cout << "reading -projective_space" << endl;
+				i += Projective_space_with_action_description->read_arguments(argc - (i + 1),
+					argv + i + 1, verbose_level);
+				cout << "-projective_space" << endl;
 				cout << "i = " << i << endl;
 				cout << "argc = " << argc << endl;
 				if (i < argc) {
@@ -184,6 +203,22 @@ void interface_symbol_table::read_activity_arguments(int argc,
 		}
 		i++;
 	}
+	else if (stringcmp(argv[i], "-projective_space_activity") == 0) {
+		f_projective_space_activity = TRUE;
+		Projective_space_activity_description =
+				NEW_OBJECT(projective_space_activity_description);
+		cout << "reading -projective_space_activity" << endl;
+		i += Projective_space_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		cout << "-projective_space_activity" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+		i++;
+	}
 	else if (stringcmp(argv[i], "-group_theoretic_activities") == 0) {
 		f_group_theoretic_activity = TRUE;
 		Group_theoretic_activity_description =
@@ -235,6 +270,14 @@ void interface_symbol_table::worker(orbiter_top_level_session *Orbiter_top_level
 		do_finite_field_activity(Orbiter_top_level_session, verbose_level);
 
 	}
+	else if (f_projective_space_activity) {
+
+		if (f_v) {
+			cout << "interface_symbol_table::worker f_projective_space_activity" << endl;
+		}
+		do_projective_space_activity(Orbiter_top_level_session, verbose_level);
+
+	}
 	else if (f_group_theoretic_activity) {
 
 		if (f_v) {
@@ -275,6 +318,72 @@ void interface_symbol_table::definition(orbiter_top_level_session *Orbiter_top_l
 		}
 		Orbiter_top_level_session->add_symbol_table_entry(
 				define_label, &Symb, verbose_level);
+
+	}
+	else if (f_projective_space) {
+
+		if (f_v) {
+			cout << "interface_symbol_table::definition f_projective_space" << endl;
+		}
+		finite_field *F;
+
+		if (string_starts_with_a_number(Projective_space_with_action_description->input_q)) {
+			int q;
+
+			q = strtoi(Projective_space_with_action_description->input_q);
+			if (f_v) {
+				cout << "interface_symbol_table::definition "
+						"creating finite field of order " << q << endl;
+			}
+			F = NEW_OBJECT(finite_field);
+			F->finite_field_init(q, 0);
+		}
+		else {
+			if (f_v) {
+				cout << "interface_symbol_table::definition "
+						"using existing finite field " << Projective_space_with_action_description->input_q << endl;
+			}
+			int idx;
+			idx = Orbiter_top_level_session->find_symbol(Projective_space_with_action_description->input_q);
+			F = (finite_field *) Orbiter_top_level_session->get_object(idx);
+		}
+
+		Projective_space_with_action_description->F = F;
+
+		int f_semilinear;
+		number_theory_domain NT;
+
+
+		if (NT.is_prime(F->q)) {
+			f_semilinear = FALSE;
+		}
+		else {
+			f_semilinear = TRUE;
+		}
+
+		projective_space_with_action *PA;
+
+		PA = NEW_OBJECT(projective_space_with_action);
+
+		if (f_v) {
+			cout << "interface_symbol_table::definition before PA->init" << endl;
+		}
+		PA->init(Projective_space_with_action_description->F, Projective_space_with_action_description->n,
+			f_semilinear,
+			TRUE /*f_init_incidence_structure*/,
+			0 /* verbose_level */);
+		if (f_v) {
+			cout << "interface_symbol_table::definition after PA->init" << endl;
+		}
+
+		orbiter_symbol_table_entry Symb;
+		Symb.init_projective_space(define_label, PA, verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::definition before add_symbol_table_entry" << endl;
+		}
+		Orbiter_top_level_session->add_symbol_table_entry(
+				define_label, &Symb, verbose_level);
+
 
 	}
 	else if (f_linear_group) {
@@ -318,7 +427,7 @@ void interface_symbol_table::definition(orbiter_top_level_session *Orbiter_top_l
 		else {
 			if (f_v) {
 				cout << "interface_symbol_table::definition "
-						"using extisting finite field " << Linear_group_description->input_q << endl;
+						"using existing finite field " << Linear_group_description->input_q << endl;
 			}
 			int idx;
 			idx = Orbiter_top_level_session->find_symbol(Linear_group_description->input_q);
@@ -405,6 +514,56 @@ void interface_symbol_table::do_finite_field_activity(
 	if (f_v) {
 		cout << "interface_symbol_table::do_finite_field_activity "
 				"after FA.perform_activity" << endl;
+	}
+
+	FREE_int(Idx);
+
+}
+
+void interface_symbol_table::do_projective_space_activity(
+		orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_symbol_table::do_projective_space_activity "
+				"projective space activity for " << with_labels.size() << " objects" << endl;
+	}
+
+	int *Idx;
+
+
+	Orbiter_top_level_session->find_symbols(with_labels, Idx);
+
+	if (with_labels.size() < 1) {
+		cout << "-finite_field_activity requires at least one input" << endl;
+		exit(1);
+	}
+	projective_space_with_action *PA;
+
+	PA = (projective_space_with_action *) Orbiter_top_level_session->get_object(Idx[0]);
+
+	projective_space_activity Activity;
+	Activity.Descr = Projective_space_activity_description;
+	Activity.PA = PA;
+
+#if 0
+	if (with_labels.size() == 2) {
+		cout << "-finite_field_activity has two inputs" << endl;
+		FA.F_secondary = (finite_field *) Orbiter_top_level_session->get_object(Idx[1]);
+	}
+#endif
+
+
+	if (f_v) {
+		cout << "interface_symbol_table::do_projective_space_activity "
+				"before Activity.perform_activity" << endl;
+	}
+	Activity.perform_activity(verbose_level);
+	if (f_v) {
+		cout << "interface_symbol_table::do_projective_space_activity "
+				"after Activity.perform_activity" << endl;
 	}
 
 	FREE_int(Idx);

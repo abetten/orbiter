@@ -22,7 +22,7 @@ spread_classify::spread_classify()
 	LG = NULL;
 	Mtx = NULL;
 	//f_semilinear = FALSE;
-	Control = NULL;
+	//Control = NULL;
 
 	order = 0;
 	spread_size = 0;
@@ -149,7 +149,7 @@ void spread_classify::freeself()
 
 void spread_classify::init(
 		linear_group *LG,
-		int k, poset_classification_control *Control,
+		int k, //poset_classification_control *Control,
 		int f_recoordinatize,
 		int verbose_level)
 {
@@ -165,7 +165,7 @@ void spread_classify::init(
 	}
 	
 	spread_classify::k = k;
-	spread_classify::Control = Control;
+	//spread_classify::Control = Control;
 
 	spread_classify::LG = LG;
 	A = LG->A_linear;
@@ -183,6 +183,7 @@ void spread_classify::init(
 		cout << "spread_size=" << spread_size << endl;
 	}
 
+#if 0
 	Control->f_depth = TRUE;
 	Control->depth = spread_size;
 	if (f_v) {
@@ -190,6 +191,8 @@ void spread_classify::init(
 		cout << "Control:" << endl;
 		Control->print();
 	}
+#endif
+
 
 	kn = k * n;
 	
@@ -428,6 +431,7 @@ void spread_classify::init(
 		Klein = NULL;
 	}
 	
+#if 0
 	if (f_v) {
 		cout << "spread_classify::init before init2" << endl;
 	}
@@ -435,13 +439,15 @@ void spread_classify::init(
 	if (f_v) {
 		cout << "spread_classify::init after init2" << endl;
 	}
+#endif
 
 	if (f_v) {
 		cout << "spread_classify::init done" << endl;
 	}
 }
 
-void spread_classify::init2(int verbose_level)
+void spread_classify::init2(poset_classification_control *Control,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -650,9 +656,9 @@ void spread_classify::compute(int verbose_level)
 
 	if (f_v) {
 		cout << "spread_classify::compute" << endl;
-		cout << "spread_classify::compute Control->max_depth=" << Control->depth << endl;
+		cout << "spread_classify::compute Control->max_depth=" << gen->get_control()->depth << endl;
 	}
-	schreier_depth = Control->depth;
+	schreier_depth = gen->get_control()->depth;
 	
 	if (f_v) {
 		cout << "spread_classify::compute calling generator_main" << endl;
@@ -673,10 +679,10 @@ void spread_classify::compute(int verbose_level)
 	if (f_v) {
 		cout << "spread_classify::compute done with generator_main" << endl;
 	}
-	length = gen->nb_orbits_at_level(Control->depth);
+	length = gen->nb_orbits_at_level(gen->get_control()->depth);
 	if (f_v) {
 		cout << "spread_classify::compute We found " << length << " orbits on "
-			<< Control->depth << "-sets of " << k
+			<< gen->get_control()->depth << "-sets of " << k
 			<< "-subspaces in PG(" << n - 1 << "," << q << ")" 
 			<< " satisfying the partial spread condition" << endl;
 	}
