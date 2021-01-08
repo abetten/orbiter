@@ -97,7 +97,8 @@ void packing_classify::freeself()
 }
 
 void packing_classify::spread_table_init(
-		poset_classification_control *Control, linear_group *LG,
+		//poset_classification_control *Control,
+		linear_group *LG,
 		int dimension_of_spread_elements,
 		int f_select_spread, std::string &select_spread_text,
 		std::string &path_to_spread_tables,
@@ -133,11 +134,23 @@ void packing_classify::spread_table_init(
 	}
 
 
-	T->init(LG, dimension_of_spread_elements, Control, TRUE /* f_recoordinatize */, verbose_level - 1);
+	T->init(LG, dimension_of_spread_elements, //Control,
+			TRUE /* f_recoordinatize */, verbose_level - 1);
 
 	if (f_v) {
 		cout << "packing_classify::spread_table_init after T->init" << endl;
 	}
+
+#if 0
+	if (f_v) {
+		cout << "packing_classify::spread_table_init before T->init2" << endl;
+	}
+	T->init2(Control, verbose_level);
+	if (f_v) {
+		cout << "packing_classify::spread_table_init after T->init2" << endl;
+	}
+#endif
+
 
 
 	spread_table_with_selection *Spread_table_with_selection;

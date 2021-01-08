@@ -519,6 +519,7 @@ public:
 	void report_orbit_lengths(std::ostream &ost);
 	void classify_orbits_by_length(int verbose_level);
 	void report_classified_orbit_lengths(std::ostream &ost);
+	void report_classified_orbits_by_lengths(std::ostream &ost);
 	int get_orbit_type_index(int orbit_length);
 	int get_orbit_type_index_if_present(int orbit_length);
 	void test_orbits_of_a_certain_length(

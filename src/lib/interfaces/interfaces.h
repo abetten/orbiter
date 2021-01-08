@@ -173,7 +173,7 @@ class interface_combinatorics {
 	std::string fname_prefix;
 
 	int f_process_combinatorial_objects;
-	projective_space_job_description *Job;
+	projective_space_job_description *Job_description;
 
 	int f_bent;
 	int bent_n;
@@ -516,6 +516,9 @@ class interface_symbol_table {
 	int f_finite_field;
 	finite_field_description *Finite_field_description;
 
+	int f_projective_space;
+	projective_space_with_action_description *Projective_space_with_action_description;
+
 	int f_linear_group;
 	linear_group_description *Linear_group_description;
 
@@ -526,6 +529,9 @@ class interface_symbol_table {
 
 	int f_finite_field_activity;
 	finite_field_activity_description *Finite_field_activity_description;
+
+	int f_projective_space_activity;
+	projective_space_activity_description *Projective_space_activity_description;
 
 	int f_group_theoretic_activity;
 	group_theoretic_activity_description *Group_theoretic_activity_description;
@@ -544,6 +550,9 @@ public:
 	void definition(orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 	void do_finite_field_activity(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void do_projective_space_activity(
+			orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 	void do_group_theoretic_activity(orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);

@@ -161,6 +161,8 @@ class finite_field_activity_description;
 class finite_field_activity;
 class semifield_classify_description;
 class orbits_on_polynomials;
+class projective_space_activity_description;
+class projective_space_activity;
 
 // #############################################################################
 // representatives.cpp

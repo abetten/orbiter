@@ -16,6 +16,7 @@ MODULES = \
 	projective_space_job.o \
 	projective_space_object_classifier_description.o \
 	projective_space_object_classifier.o \
+	projective_space_with_action_description.o \
 	projective_space_with_action.o \
 	schreier_vector_handler.o \
 	schreier_vector.o \

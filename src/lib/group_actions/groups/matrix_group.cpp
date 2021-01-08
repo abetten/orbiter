@@ -2269,21 +2269,30 @@ void matrix_group::base_and_transversal_length(
 		cout << "matrix_group::base_and_transversal_length" << endl;
 	}
 	if (f_projective) {
-		GFq->projective_matrix_group_base_and_transversal_length(n,
+
+		group_generators_domain GGD;
+
+		GGD.projective_matrix_group_base_and_transversal_length(n, GFq,
 			f_semilinear,
 			base_len, degree,
 			base, transversal_length,
 			verbose_level);
 	}
 	else if (f_affine) {
-		GFq->affine_matrix_group_base_and_transversal_length(n,
+
+		group_generators_domain GGD;
+
+		GGD.affine_matrix_group_base_and_transversal_length(n, GFq,
 			f_semilinear,
 			base_len, degree,
 			base, transversal_length,
 			verbose_level);
 	}
 	else if (f_general_linear) {
-		GFq->general_linear_matrix_group_base_and_transversal_length(n,
+
+		group_generators_domain GGD;
+
+		GGD.general_linear_matrix_group_base_and_transversal_length(n, GFq,
 			f_semilinear,
 			base_len, degree,
 			base, transversal_length,
@@ -2303,22 +2312,31 @@ void matrix_group::strong_generators_low_level(int *&data,
 		cout << "matrix_group::strong_generators_low_level" << endl;
 	}
 	if (f_projective) {
-		GFq->strong_generators_for_projective_linear_group(
-			n,
+
+		group_generators_domain GGD;
+
+		GGD.strong_generators_for_projective_linear_group(
+			n, GFq,
 			f_semilinear,
 			data, size, nb_gens,
 			verbose_level - 1);
 	}
 	else if (f_affine) {
-		GFq->strong_generators_for_affine_linear_group(
-				n,
+
+		group_generators_domain GGD;
+
+		GGD.strong_generators_for_affine_linear_group(
+				n, GFq,
 				f_semilinear,
 				data, size, nb_gens,
 				verbose_level - 1);
 	}
 	else if (f_general_linear) {
-		GFq->strong_generators_for_general_linear_group(
-			n,
+
+		group_generators_domain GGD;
+
+		GGD.strong_generators_for_general_linear_group(
+			n, GFq,
 			f_semilinear,
 			data, size, nb_gens,
 			verbose_level);

@@ -333,15 +333,6 @@ void finite_field_activity::perform_activity(int verbose_level)
 				Descr->decomposition_by_element_fname_base,
 				verbose_level);
 	}
-	else if (Descr->f_canonical_form_PG) {
-
-		algebra_global_with_action Algebra;
-
-		Algebra.do_canonical_form_PG(F,
-				Descr->Canonical_form_PG_Descr,
-				Descr->canonical_form_PG_n,
-				verbose_level);
-	}
 	else if (Descr->f_transversal) {
 
 		geometry_global GG;

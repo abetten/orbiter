@@ -3974,67 +3974,6 @@ void algebra_global_with_action::do_cheat_sheet_for_decomposition_by_element_PG(
 
 }
 
-void algebra_global_with_action::do_canonical_form_PG(finite_field *F,
-		projective_space_object_classifier_description *Canonical_form_PG_Descr,
-		int n, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	//int i;
-
-	if (f_v) {
-		cout << "algebra_global_with_action::do_canonical_form_PG" << endl;
-	}
-
-
-
-	int f_semilinear;
-	number_theory_domain NT;
-
-
-	if (NT.is_prime(F->q)) {
-		f_semilinear = FALSE;
-	}
-	else {
-		f_semilinear = TRUE;
-	}
-
-
-	projective_space_with_action *PA;
-
-	PA = NEW_OBJECT(projective_space_with_action);
-
-	PA->init(F, n,
-		f_semilinear,
-		TRUE /*f_init_incidence_structure*/,
-		0 /* verbose_level */);
-
-
-
-	projective_space_object_classifier *OC;
-
-	OC = NEW_OBJECT(projective_space_object_classifier);
-
-	if (f_v) {
-		cout << "algebra_global_with_action::do_canonical_form_PG before OC->do_the_work" << endl;
-	}
-	OC->do_the_work(
-			Canonical_form_PG_Descr,
-			PA,
-			verbose_level);
-	if (f_v) {
-		cout << "algebra_global_with_action::do_canonical_form_PG after OC->do_the_work" << endl;
-	}
-
-	FREE_OBJECT(OC);
-	FREE_OBJECT(PA);
-
-
-
-	if (f_v) {
-		cout << "algebra_global_with_action::do_canonical_form_PG done" << endl;
-	}
-}
-
 void algebra_global_with_action::do_study_surface(finite_field *F, int nb, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -35,7 +35,7 @@ interface_combinatorics::interface_combinatorics()
 	//fname_prefix;
 
 	f_process_combinatorial_objects = FALSE;
-	Job = NULL;
+	Job_description = NULL;
 
 	f_bent = FALSE;
 	bent_n = 0;
@@ -349,8 +349,8 @@ int interface_combinatorics::read_arguments(int argc,
 
 			cout << "-process_combinatorial_objects " << endl;
 
-			Job = NEW_OBJECT(projective_space_job_description);
-			i += Job->read_arguments(argc - i - 1,
+			Job_description = NEW_OBJECT(projective_space_job_description);
+			i += Job_description->read_arguments(argc - i - 1,
 				argv + i + 1, verbose_level);
 			cout << "interface_combinatorics::read_arguments finished "
 					"reading -process_combinatorial_objects" << endl;
@@ -1122,16 +1122,16 @@ void interface_combinatorics::do_process_combinatorial_object(int verbose_level)
 		cout << "interface_combinatorics::do_process_combinatorial_object" << endl;
 	}
 
-	if (!Job->f_q) {
+	if (!Job_description->f_q) {
 		cout << "please use option -q <q> within the job description" << endl;
 		exit(1);
 	}
-	if (!Job->f_n) {
+	if (!Job_description->f_n) {
 		cout << "please use option -n <n> to specify the projective "
 				"dimension within the job description" << endl;
 		exit(1);
 	}
-	if (!Job->f_fname_base_out) {
+	if (!Job_description->f_fname_base_out) {
 		cout << "please use option -fname_base_out <fname_base_out> "
 				"within the job description" << endl;
 		exit(1);
@@ -1139,7 +1139,7 @@ void interface_combinatorics::do_process_combinatorial_object(int verbose_level)
 
 	projective_space_job J;
 
-	J.perform_job(Job, verbose_level);
+	J.perform_job(Job_description, verbose_level);
 
 	if (f_v) {
 		cout << "interface_combinatorics::do_process_combinatorial_object done" << endl;

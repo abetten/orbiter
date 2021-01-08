@@ -11,7 +11,6 @@ MODULES= \
 		foundations/algebra_and_number_theory/finite_field_io.o \
 		foundations/algebra_and_number_theory/finite_field_linear_algebra.o \
 		foundations/algebra_and_number_theory/finite_field_linear_algebra2.o \
-		foundations/algebra_and_number_theory/finite_field_linear_groups.o \
 		foundations/algebra_and_number_theory/finite_field_orthogonal.o \
 		foundations/algebra_and_number_theory/finite_field_projective.o \
 		foundations/algebra_and_number_theory/finite_field_representations.o \
@@ -209,6 +208,7 @@ MODULES= \
 		group_actions/data_structures/projective_space_job.o \
 		group_actions/data_structures/projective_space_object_classifier_description.o \
 		group_actions/data_structures/projective_space_object_classifier.o \
+		group_actions/data_structures/projective_space_with_action_description.o \
 		group_actions/data_structures/projective_space_with_action.o \
 		group_actions/data_structures/schreier_vector_handler.o \
 		group_actions/data_structures/schreier_vector.o \
@@ -322,6 +322,8 @@ MODULES= \
 		top_level/algebra_and_number_theory/group_theoretic_activity.o \
 		top_level/algebra_and_number_theory/group_theoretic_activity_for_surfaces.o \
 		top_level/algebra_and_number_theory/orbits_on_polynomials.o \
+		top_level/algebra_and_number_theory/projective_space_activity_description.o \
+		top_level/algebra_and_number_theory/projective_space_activity.o \
 		top_level/algebra_and_number_theory/young.o \
 		top_level/combinatorics/boolean_function_classify.o \
 		top_level/combinatorics/cayley_graph_search.o \

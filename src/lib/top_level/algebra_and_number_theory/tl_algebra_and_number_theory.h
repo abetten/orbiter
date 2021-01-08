@@ -142,9 +142,7 @@ public:
 			int decomposition_by_element_power,
 			std::string &decomposition_by_element_data, std::string &fname_base,
 			int verbose_level);
-	void do_canonical_form_PG(finite_field *F,
-			projective_space_object_classifier_description *Canonical_form_PG_Descr,
-			int n, int verbose_level);
+
 	void do_study_surface(finite_field *F, int nb, int verbose_level);
 	void do_cubic_surface_properties(
 			linear_group *LG,
@@ -400,10 +398,6 @@ public:
 	int decomposition_by_element_power;
 	std::string decomposition_by_element_data;
 	std::string decomposition_by_element_fname_base;
-
-	int f_canonical_form_PG;
-	int canonical_form_PG_n;
-	projective_space_object_classifier_description *Canonical_form_PG_Descr;
 
 
 	int f_transversal;
@@ -898,6 +892,61 @@ public:
 
 };
 
+
+// #############################################################################
+// projective_space_activity_description.cpp
+// #############################################################################
+
+//! description of an activity that requires a projective space
+
+
+class projective_space_activity_description {
+public:
+
+	int f_input;
+	data_input_stream *Data;
+
+
+	int f_fname_base_out;
+	std::string fname_base_out;
+
+	int f_canonical_form_PG;
+	//int canonical_form_PG_n;
+	projective_space_object_classifier_description *Canonical_form_PG_Descr;
+
+
+
+	projective_space_activity_description();
+	~projective_space_activity_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+
+
+};
+
+
+// #############################################################################
+// projective_space_activity.cpp
+// #############################################################################
+
+//! an activity that requires a projective space
+
+
+class projective_space_activity {
+public:
+
+	projective_space_activity_description *Descr;
+
+	projective_space_with_action *PA;
+
+
+	projective_space_activity();
+	~projective_space_activity();
+	void perform_activity(int verbose_level);
+
+
+};
 
 
 

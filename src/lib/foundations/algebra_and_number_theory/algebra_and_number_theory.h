@@ -714,91 +714,6 @@ public:
 			int *Omega, int verbose_level);
 
 	// #########################################################################
-	// finite_field_linear_groups.cpp
-	// #########################################################################
-
-	void diagonal_orbit_perm(int n,
-			long int *orbit, long int *orbit_inv, int verbose_level);
-	void frobenius_orbit_perm(int n,
-		long int *orbit, long int *orbit_inv,
-		int verbose_level);
-	void projective_matrix_group_base_and_orbits(int n,
-		int f_semilinear,
-		int base_len, int degree,
-		long int *base, int *transversal_length,
-		long int **orbit, long int **orbit_inv,
-		int verbose_level);
-	void projective_matrix_group_base_and_transversal_length(int n,
-		int f_semilinear,
-		int base_len, int degree,
-		long int *base, int *transversal_length,
-		int verbose_level);
-	void affine_matrix_group_base_and_transversal_length(int n,
-		int f_semilinear,
-		int base_len, int degree,
-		long int *base, int *transversal_length,
-		int verbose_level);
-	void general_linear_matrix_group_base_and_transversal_length(int n,
-		int f_semilinear,
-		int base_len, int degree,
-		long int *base, int *transversal_length,
-		int verbose_level);
-	void strong_generators_for_projective_linear_group(
-		int n,
-		int f_semilinear,
-		int *&data, int &size, int &nb_gens,
-		int verbose_level);
-	void strong_generators_for_affine_linear_group(
-		int n,
-		int f_semilinear,
-		int *&data, int &size, int &nb_gens,
-		int verbose_level);
-	void strong_generators_for_general_linear_group(
-		int n,
-		int f_semilinear,
-		int *&data, int &size, int &nb_gens,
-		int verbose_level);
-	void generators_for_parabolic_subgroup(
-		int n,
-		int f_semilinear, int k,
-		int *&data, int &size, int &nb_gens,
-		int verbose_level);
-	void generators_for_stabilizer_of_three_collinear_points_in_PGL4(
-		int f_semilinear,
-		int *&data, int &size, int &nb_gens,
-		int verbose_level);
-	void generators_for_stabilizer_of_triangle_in_PGL4(
-		int f_semilinear,
-		int *&data, int &size, int &nb_gens,
-		int verbose_level);
-	void builtin_transversal_rep_GLnq(int *A, int n,
-		int f_semilinear, int i, int j, int verbose_level);
-	void affine_translation(int n, int coordinate_idx,
-		int field_base_idx, int *perm, int verbose_level);
-		// perm points to q^n int's
-		// field_base_idx is the base element whose
-		// translation we compute, 0 \le field_base_idx < e
-		// coordinate_idx is the coordinate in which we shift,
-		// 0 \le coordinate_idx < n
-	void affine_multiplication(int n,
-		int multiplication_order, int *perm, int verbose_level);
-		// perm points to q^n int's
-		// compute the diagonal multiplication by alpha, i.e.
-		// the multiplication by alpha of each component
-	void affine_frobenius(int n, int k, int *perm, int verbose_level);
-		// perm points to q^n int's
-		// compute the diagonal action of the Frobenius
-		// automorphism to the power k, i.e.,
-		// raises each component to the p^k-th power
-	int all_affine_translations_nb_gens(int n);
-	void all_affine_translations(int n, int *gens);
-	void affine_generators(int n, int f_translations,
-		int f_semilinear, int frobenius_power,
-		int f_multiplication, int multiplication_order,
-		int &nb_gens, int &degree, int *&gens,
-		int &base_len, long int *&the_base, int verbose_level);
-
-	// #########################################################################
 	// finite_field_orthogonal.cpp
 	// #########################################################################
 
@@ -1612,6 +1527,93 @@ public:
 		int verbose_level);
 	// m = Witt index, the dimension is n = 2m + 1
 	int index_POmega_in_PO(int epsilon, int m, int q, int verbose_level);
+
+
+	void diagonal_orbit_perm(int n, finite_field *F,
+			long int *orbit, long int *orbit_inv, int verbose_level);
+	void frobenius_orbit_perm(int n, finite_field *F,
+		long int *orbit, long int *orbit_inv,
+		int verbose_level);
+	void projective_matrix_group_base_and_orbits(int n, finite_field *F,
+		int f_semilinear,
+		int base_len, int degree,
+		long int *base, int *transversal_length,
+		long int **orbit, long int **orbit_inv,
+		int verbose_level);
+	void projective_matrix_group_base_and_transversal_length(int n, finite_field *F,
+		int f_semilinear,
+		int base_len, int degree,
+		long int *base, int *transversal_length,
+		int verbose_level);
+	void affine_matrix_group_base_and_transversal_length(int n, finite_field *F,
+		int f_semilinear,
+		int base_len, int degree,
+		long int *base, int *transversal_length,
+		int verbose_level);
+	void general_linear_matrix_group_base_and_transversal_length(int n, finite_field *F,
+		int f_semilinear,
+		int base_len, int degree,
+		long int *base, int *transversal_length,
+		int verbose_level);
+	void strong_generators_for_projective_linear_group(
+		int n, finite_field *F,
+		int f_semilinear,
+		int *&data, int &size, int &nb_gens,
+		int verbose_level);
+	void strong_generators_for_affine_linear_group(
+		int n, finite_field *F,
+		int f_semilinear,
+		int *&data, int &size, int &nb_gens,
+		int verbose_level);
+	void strong_generators_for_general_linear_group(
+		int n, finite_field *F,
+		int f_semilinear,
+		int *&data, int &size, int &nb_gens,
+		int verbose_level);
+	void generators_for_parabolic_subgroup(
+		int n, finite_field *F,
+		int f_semilinear, int k,
+		int *&data, int &size, int &nb_gens,
+		int verbose_level);
+	void generators_for_stabilizer_of_three_collinear_points_in_PGL4(
+		int f_semilinear, finite_field *F,
+		int *&data, int &size, int &nb_gens,
+		int verbose_level);
+	void generators_for_stabilizer_of_triangle_in_PGL4(
+		int f_semilinear, finite_field *F,
+		int *&data, int &size, int &nb_gens,
+		int verbose_level);
+	void builtin_transversal_rep_GLnq(int *A, int n, finite_field *F,
+		int f_semilinear, int i, int j, int verbose_level);
+	void affine_translation(int n, finite_field *F,
+			int coordinate_idx,
+			int field_base_idx, int *perm, int verbose_level);
+		// perm points to q^n int's
+		// field_base_idx is the base element whose
+		// translation we compute, 0 \le field_base_idx < e
+		// coordinate_idx is the coordinate in which we shift,
+		// 0 \le coordinate_idx < n
+	void affine_multiplication(int n, finite_field *F,
+		int multiplication_order, int *perm, int verbose_level);
+		// perm points to q^n int's
+		// compute the diagonal multiplication by alpha, i.e.
+		// the multiplication by alpha of each component
+	void affine_frobenius(int n, finite_field *F,
+			int k, int *perm, int verbose_level);
+		// perm points to q^n int's
+		// compute the diagonal action of the Frobenius
+		// automorphism to the power k, i.e.,
+		// raises each component to the p^k-th power
+	int all_affine_translations_nb_gens(int n, finite_field *F);
+	void all_affine_translations(int n, finite_field *F, int *gens);
+	void affine_generators(int n, finite_field *F,
+			int f_translations,
+			int f_semilinear, int frobenius_power,
+			int f_multiplication, int multiplication_order,
+			int &nb_gens, int &degree, int *&gens,
+			int &base_len, long int *&the_base, int verbose_level);
+
+
 };
 
 

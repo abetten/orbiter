@@ -18,7 +18,7 @@ namespace top_level {
 
 packing_was_description::packing_was_description()
 {
-	f_spreads_invariant_under_H = FALSE;
+	//f_spreads_invariant_under_H = FALSE;
 	f_cliques_on_fixpoint_graph = FALSE;
 	clique_size_on_fixpoint_graph = 0;
 
@@ -105,11 +105,12 @@ int packing_was_description::read_arguments(int argc, std::string *argv,
 			}
 		}
 
+#if 0
 		else if (stringcmp(argv[i], "-spreads_invariant_under_H") == 0) {
 			f_spreads_invariant_under_H = TRUE;
 			cout << "-spreads_invariant_under_H " << endl;
 		}
-
+#endif
 
 		else if (stringcmp(argv[i], "-cliques_on_fixpoint_graph") == 0) {
 			f_cliques_on_fixpoint_graph = TRUE;
