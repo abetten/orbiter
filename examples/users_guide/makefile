@@ -2358,7 +2358,7 @@ orbits_cubic_curves_q2:
 
 
 
-orbits_cubic_surfaces_q2:
+poly_orbits_d3_n3_q2.csv:
 	$(ORBITER_PATH)/orbiter.out -v 4 \
 		-draw_options -yout 500000 -rad 15 -nodes_empty -line_width 0.5 -y_stretch 0.25 -embedded -end \
 		-define G -linear_group -PGL 4 2 -end -end \
@@ -3100,8 +3100,8 @@ Hirschfeld4c_set:
 				-classification_prefix Hirschfeld_surface_q4 \
 				-save_canonical_labeling \
 				-save_ago \
-				-save_cumulative_canonical_labeling \
-				-save_cumulative_data \
+				-save_cumulative_canonical_labeling Hirschfeld_surface_q4_can_lab.csv \
+				-save_cumulative_data Hirschfeld_surface_q4_data.csv \
 				-report \
 			-end \
 		-end 
@@ -3135,8 +3135,8 @@ Dickson_set_stabilizer:
 				-classification_prefix Dickson_set \
 				-save_canonical_labeling \
 				-save_ago \
-				-save_cumulative_canonical_labeling \
-				-save_cumulative_data \
+				-save_cumulative_canonical_labeling Dickson_sets_can_lab.csv \
+				-save_cumulative_data Dickson_sets_data.csv \
 				-report \
 			-end \
 		-end 
@@ -4006,50 +4006,52 @@ surface_table:
 # Dickson:
 
 D1="1,4,1,7,1,12,1,15"
-D2=	"1,1,1,2,1,3,1,4,1,7,1,11,1,14,1,15,1,19"
+D2= "1,1,1,2,1,3,1,4,1,7,1,11,1,14,1,15,1,19"
 D3="1,4,1,7,1,12,1,14,1,15,1,19"
-D4="1,3,1,4,1,8,1,9,1,10,1,14,1,17,1,18,1,19"
-D5="1,2,1,3,1,4,1,7,1,15"
-D6="1,2,1,3,1,5,1,9,1,10,1,14,1,15"
-D7="1,3,1,4,1,5,1,7,1,10,1,11,1,19"
-D8="1,3,1,4,1,7,1,11,1,12,1,15,1,19"
-D9="1,4,1,7,1,8,1,9,1,10,1,13,1,15,1,16,1,17"
-D10:="1,4,1,7,1,8,1,10,1,13,1,14,1,15,1,16,1,17"
-D11="1,4,1,6,1,7,1,8,1,9,1,10,1,15,1,16,1,17"
-D12="1,6,1,8,1,9,1,10,1,15,1,16,1,17"
-D13="1,6,1,7,1,10,1,11,1,14,1,15"
-D14="1,4,1,5,1,6,1,8,1,12,1,14,1,16"
-D15="1,4,1,5,1,8,1,12,1,13,1,14,1,16"
-D16="1,4,1,5,1,8,1,9,1,12,1,13,1,16"
-D17=""
-D18=""
-D19="1,4,1,5,1,6,1,7,1,8,1,10,1,13,1,14,1,15"
-D20="1,5,1,6,1,8,1,10,1,13,1,14,1,15"
-D21="1,4,1,5,1,7,1,9,1,10,1,11,1,13,1,14,1,15,1,18,1,19"
-D22="1,4,1,7,1,9,1,11,1,13,1,14,1,15,1,18,1,19"
-D23="1,5,1,8,1,9,1,10,1,13,1,14,1,15,1,18,1,19"
-D24="1,4,1,5,1,7,1,10,1,11,1,12,1,13,1,14,1,17,1,18"
-D25="1,4,1,5,1,7,1,10,1,11,1,13,1,14,1,15,1,17,1,18"
-D26="1,4,1,5,1,6,1,7,1,10,1,11,1,14,1,15,1,17,1,18"
-D27="1,4,1,7,1,5,1,10,1,6,1,11,1,9,1,15,1,17,1,18"
-D28="1,4,1,7,1,13,1,11,1,9,1,15,1,17,1,18"
-D29="1,0,1,1,1,2,1,5,1,7,1,11,1,13,1,14,1,15,1,17,1,18,1,19"
-D30="1,0,1,1,1,2,1,3,1,7,1,8,1,10,1,11,1,12,1,15,1,16,1,19"
-D31="1,0,1,1,1,2,1,3,1,6,1,7,1,10,1,12,1,13,1,15,1,16,1,19"
-D32="1,0,1,1,1,2,1,3,1,6,1,7,1,8,1,11,1,13,1,15"
-D33="1,0,1,1,1,2,1,3,1,7,1,15"
-D34="1,0,1,1,1,2,1,3,1,7,1,12,1,15,1,19"
-D35="1,0,1,1,1,2,1,3,1,6,1,7,1,12,1,13,1,15,1,19"
-D36="1,0,1,1,1,2,1,3,1,5,1,7,1,10,1,12,1,15,1,19"
-D37="1,0,1,1,1,2,1,3,1,7,1,8,1,11,1,19"
-D38="1,0,1,1,1,2,1,3,1,6,1,7,1,8,1,11,1,13,1,19"
-D39="1,0,1,1,1,2,1,3,1,5,1,7,1,8,1,10,1,11,1,19"
-D40="1,0,1,1,1,2,1,3,1,7,1,8,1,11,1,19"
-D41="1,0,1,1,1,2,1,3,1,7,1,12,1,15,1,19"
-D42="1,2,1,4,1,7,1,5,1,10,1,11,1,14,1,19"
-D43="1,2,1,4,1,7,1,11,1,12,1,14,1,15,1,19"
+D4="1,3,1,4,1,11,1,9,1,10,1,14,1,17,1,18,1,19"
+D5="1,3,1,4,1,8,1,10,1,17,1,18,1,19"
+D6="1,2,1,3,1,4,1,7,1,15"
+D7="1,2,1,3,1,5,1,9,1,10,1,14,1,15"
+D8="1,3,1,4,1,5,1,7,1,10,1,11,1,19"
+D9="1,3,1,4,1,7,1,11,1,12,1,15,1,19"
+D10="1,4,1,7,1,8,1,9,1,10,1,13,1,15,1,16,1,17"
+D11:="1,4,1,7,1,8,1,10,1,13,1,14,1,15,1,16,1,17"
+D12="1,4,1,6,1,7,1,8,1,9,1,10,1,15,1,16,1,17"
+D13="1,6,1,8,1,9,1,10,1,15,1,16,1,17"
+D14="1,6,1,7,1,10,1,11,1,14,1,15"
+D15="1,4,1,5,1,6,1,8,1,12,1,14,1,16"
+D16=" 1,4,1,7,1,3,1,15,1,12"  
+D17="1,4,1,7,1,8,1,9,1,11,1,13,1,15,1,16,1,17,1,18,1,19"
+D18="1,4,1,7,1,8,1,11,1,13,1,14,1,15,1,16,1,17,1,18,1,19"
+D19= "1,4,1,7,1,6,1,8,1,11,1,14,1,12,1,16,1,17,1,18,1,19 "   
+D20="1,4,1,5,1,6,1,7,1,8,1,10,1,13,1,14,1,15"
+D21="1,5,1,6,1,8,1,10,1,13,1,14,1,15"
+D22="1,4,1,5,1,7,1,9,1,10,1,11,1,13,1,14,1,15,1,18,1,19"
+D23="1,4,1,7,1,9,1,11,1,13,1,14,1,15,1,18,1,19"
+D24="1,5,1,8,1,9,1,10,1,13,1,14,1,15,1,18,1,19"
+D25= "1,5,1,10,1,13,1,11,1,9,1,14,1,15,1,18,1,19 "   
+D26="1,5,1,6,1,8,1,10,1,15,1,18,1,19"
+D27="1,4,1,5,1,7,1,10,1,11,1,12,1,13,1,14,1,17,1,18"
+D28="1,4,1,5,1,6,1,7,1,10,1,11,1,14,1,15,1,17,1,18"
+D29="1,4,1,7,1,13,1,11,1,9,1,15,1,17,1,18"
+D30= "1,0,1,1,1,2,1,3,1,7,1,10,1,11,1,16"   
+D31="1,0,1,1,1,2,1,5,1,7,1,11,1,13,1,14,1,15,1,17,1,18,1,19"
+D32="1,0,1,1,1,2,1,3,1,7,1,8,1,10,1,11,1,12,1,15,1,16,1,19"
+D33="1,0,1,1,1,2,1,3,1,6,1,7,1,10,1,12,1,13,1,15,1,16,1,19"
+D34= "1,0,1,1,1,2,1,3,1,7,1,10,1,16,1,19"  
+D35="1,0,1,1,1,2,1,3,1,6,1,7,1,8,1,11,1,13,1,15"
+D36="1,0,1,1,1,2,1,3,1,7,1,15"
+D37="1,0,1,1,1,2,1,3,1,7,1,12,1,15,1,19"
+D38="1,0,1,1,1,2,1,3,1,6,1,7,1,12,1,13,1,15,1,19"
+D39= "1,0,1,1,1,2,1,3,1,7,1,5,1,10,1,6,1,13,1,8,1,11,1,9,1,14,1,12,1,15,1,19"  
+D40= "1,0,1,1,1,2,1,3,1,7,1,5,1,10,1,6,1,13,1,19 "   
+D41="1,2,1,4,1,7,1,5,1,10,1,11,1,14,1,19"
+D42="1,2,1,4,1,7,1,11,1,12,1,14,1,15,1,19"
+D43= "1,0,1,1,1,2,1,7,1,13,1,8,1,11,1,14,1,15,1,17 "   
 D44="1,0,1,1,1,2,1,6,1,8,1,11,1,12,1,14"
 D45="1,6,1,8,1,9,1,11,1,12,1,13,1,14,1,15,1,16,1,17,1,18,1,19"
+D46="1,5,1,10,1,6,1,13,1,8,1,11,1,9,1,14,1,12,1,15,1,16,1,17,1,18,1,19" 
+D47="1,5,1,10,1,6,1,13,1,8,1,11,1,9,1,14,1,16,1,17,1,18,1,19 "
 
 
 D6_q2:
@@ -6567,10 +6569,6 @@ design_27c:
 	pdflatex design_classification.tex
 	open design_classification.pdf
 
-#		-save_canonical_labeling \
-#		-save_ago \
-#		-save_cumulative_canonical_labeling \
-#		-save_cumulative_data \
 
 
 design_27_line_type:
@@ -8978,8 +8976,58 @@ DICKSON:
 
 #
 
+# Dickson nonsingular:
 
 
+Dickson1_q4:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-define G -linear_group -PGL 4 4 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+			-control_six_arcs -end \
+			-create_surface -by_coefficients $(D1) -q 4 \
+			-end \
+		-end 
+	pdflatex surface_by_coefficients_q4_report.tex
+	open surface_by_coefficients_q4_report.pdf
+	mv surface_by_coefficients_q4_points.txt D1_points.txt
+
+
+Dickson16_q4:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-define G -linear_group -PGL 4 4 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+			-control_six_arcs -end \
+			-create_surface -by_coefficients $(D16) -q 4 \
+			-end \
+		-end 
+	pdflatex surface_by_coefficients_q4_report.tex
+	open surface_by_coefficients_q4_report.pdf
+	mv surface_by_coefficients_q4_points.txt D16_points.txt
+
+
+Dickson_q4_aut:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-define F -finite_field -q 4 -end -end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
+			-canonical_form_PG \
+				-input \
+					-file_of_points D1_points.txt \
+					-file_of_points D16_points.txt \
+				-end \
+				-classification_prefix D \
+				-save_canonical_labeling \
+				-save_ago \
+				-save_cumulative_canonical_labeling D_can_lab.csv \
+				-save_cumulative_data D_data.csv  \
+				-report \
+			-end \
+		-end 
+	pdflatex D_classification.tex
+	open D_classification.pdf
 
 Dickson_13_S:
 	$(ORBITER_PATH)/orbiter.out -v 4 -finite_field_activity -q 19 -rank_point_in_PG 2 \
@@ -9061,72 +9109,89 @@ orbits_cubic_curves_q3:
 
 
 
-Dickson_q2:
+poly_orbits_d3_n3_q2_F2.csv: poly_orbits_d3_n3_q2.csv
 	$(ORBITER_PATH)/orbiter.out -v 4 \
-		-define G \
-		-linear_group -PGL 4 2 \
-		-end -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-cubic_surface_properties poly_orbits_d3_n3_q2.csv 2 \
+		-define F -finite_field -q 2 -end -end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
+		-table_of_cubic_surfaces_compute_properties poly_orbits_d3_n3_q2.csv 2 0 \
 		-end 
 
-Dickson_q2_analyze:
+Dickson_q2_analyze: poly_orbits_d3_n3_q2_F2.csv
 	$(ORBITER_PATH)/orbiter.out -v 4 \
-		-draw_options -end \
-		-define G \
-		-linear_group -PGL 4 2 \
-		-end -end \
-		-with G -do \
-		-group_theoretic_activities \
+		-define F -finite_field -q 2 -end -end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
 		-cubic_surface_properties_analyze poly_orbits_d3_n3_q2_F2.csv 2 \
 		-end 
 	pdflatex poly_orbits_d3_n3_q2_F2_report.tex
 	open poly_orbits_d3_n3_q2_F2_report.pdf
 
-Dickson_q4:
+poly_orbits_d3_n3_q2_F4.csv: poly_orbits_d3_n3_q2.csv
 	$(ORBITER_PATH)/orbiter.out -v 4 \
-		-define G \
-		-linear_group -PGGL 4 4 \
-		-end -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-cubic_surface_properties poly_orbits_d3_n3_q2.csv 2 \
+		-define F -finite_field -q 4 -end -end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
+		-table_of_cubic_surfaces_compute_properties poly_orbits_d3_n3_q2.csv 2 0 \
 		-end 
 
-Dickson_q4_analyze:
+Dickson_q4_analyze: poly_orbits_d3_n3_q2_F4.csv
 	$(ORBITER_PATH)/orbiter.out -v 4 \
-		-define G \
-		-linear_group -PGGL 4 4 \
-		-end -end \
-		-with G -do \
-		-group_theoretic_activities \
+		-define F -finite_field -q 4 -end -end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
 		-cubic_surface_properties_analyze poly_orbits_d3_n3_q2_F4.csv 2 \
 		-end 
 	pdflatex poly_orbits_d3_n3_q2_F4_report.tex
 	open poly_orbits_d3_n3_q2_F4_report.pdf
 
-Dickson_q8:
+poly_orbits_d3_n3_q2_F8.csv: poly_orbits_d3_n3_q2.csv
 	$(ORBITER_PATH)/orbiter.out -v 4 \
-		-define G \
-		-linear_group -PGGL 4 8 \
-		-end -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-cubic_surface_properties poly_orbits_d3_n3_q2.csv 2 \
+		-define F -finite_field -q 8 -end -end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
+		-table_of_cubic_surfaces_compute_properties poly_orbits_d3_n3_q2.csv 2 0 \
 		-end 
 
-Dickson_q8_analyze:
+Dickson_q8_analyze: poly_orbits_d3_n3_q2_F8.csv
 	$(ORBITER_PATH)/orbiter.out -v 4 \
-		-define G \
-		-linear_group -PGGL 4 8 \
-		-end -end \
-		-with G -do \
-		-group_theoretic_activities \
+		-define F -finite_field -q 8 -end -end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
 		-cubic_surface_properties_analyze poly_orbits_d3_n3_q2_F8.csv 2 \
 		-end 
 	pdflatex poly_orbits_d3_n3_q2_F8_report.tex
 	open poly_orbits_d3_n3_q2_F8_report.pdf
+
+
+poly_orbits_d3_n3_q2_F16.csv: poly_orbits_d3_n3_q2.csv
+	$(ORBITER_PATH)/orbiter.out -v 4 \
+		-define F -finite_field -q 16 -end -end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
+		-table_of_cubic_surfaces_compute_properties poly_orbits_d3_n3_q2.csv 2 0 \
+		-end 
+
+
+Dickson_q16_analyze: poly_orbits_d3_n3_q2_F16.csv
+	$(ORBITER_PATH)/orbiter.out -v 4 \
+		-define F -finite_field -q 16 -end -end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
+		-cubic_surface_properties_analyze poly_orbits_d3_n3_q2_F16.csv 2 \
+		-end 
+	pdflatex poly_orbits_d3_n3_q2_F16_report.tex
+	open poly_orbits_d3_n3_q2_F16_report.pdf
+
+
 
 Dickson_q8_surface_canonical:
 	$(ORBITER_PATH)/orbiter.out -v 3 \
@@ -9141,8 +9206,8 @@ Dickson_q8_surface_canonical:
 				-classification_prefix design \
 				-save_canonical_labeling \
 				-save_ago \
-				-save_cumulative_canonical_labeling \
-				-save_cumulative_data \
+				-save_cumulative_canonical_labeling D_can_lab.csv \
+				-save_cumulative_data D_data.csv \
 				-report \
 			-end \
 		-end 

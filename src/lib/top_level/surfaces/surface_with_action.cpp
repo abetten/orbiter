@@ -82,8 +82,27 @@ void surface_with_action::freeself()
 	null();
 }
 
-void surface_with_action::init(surface_domain *Surf,
+void surface_with_action::init_with_linear_group(surface_domain *Surf,
 		linear_group *LG,
+		int f_recoordinatize,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_with_action::init_with_linear_group" << endl;
+	}
+	init(Surf,
+			LG->A_linear,
+			f_recoordinatize,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_with_action::init_with_linear_group done" << endl;
+	}
+}
+
+void surface_with_action::init(surface_domain *Surf,
+		action *A_linear,
 		int f_recoordinatize,
 		int verbose_level)
 {
@@ -99,7 +118,7 @@ void surface_with_action::init(surface_domain *Surf,
 
 
 	//init_group(f_semilinear, verbose_level);
-	A = LG->A_linear;
+	A = A_linear;
 	f_semilinear = A->is_semilinear_matrix_group();
 	if (f_v) {
 		cout << "surface_with_action::init f_semilinear=" << f_semilinear << endl;
@@ -211,23 +230,27 @@ int surface_with_action::create_double_six_safely(
 	}
 
 	if (f_v) {
-		cout << "surface_with_action::create_double_six_safely before create_double_six_from_five_lines_with_a_common_transversal (1)" << endl;
+		cout << "surface_with_action::create_double_six_safely "
+				"before create_double_six_from_five_lines_with_a_common_transversal (1)" << endl;
 	}
 	r1 = create_double_six_from_five_lines_with_a_common_transversal(
 		five_lines, transversal_line, double_six1,
 		0 /* verbose_level */);
 	if (f_v) {
-		cout << "surface_with_action::create_double_six_safely after create_double_six_from_five_lines_with_a_common_transversal (1)" << endl;
+		cout << "surface_with_action::create_double_six_safely "
+				"after create_double_six_from_five_lines_with_a_common_transversal (1)" << endl;
 	}
 
 	if (f_v) {
-		cout << "surface_with_action::create_double_six_safely before create_double_six_from_five_lines_with_a_common_transversal (2)" << endl;
+		cout << "surface_with_action::create_double_six_safely "
+				"before create_double_six_from_five_lines_with_a_common_transversal (2)" << endl;
 	}
 	r2 = Surf->create_double_six_from_five_lines_with_a_common_transversal(
 			five_lines, double_six2,
 			0 /* verbose_level */);
 	if (f_v) {
-		cout << "surface_with_action::create_double_six_safely after create_double_six_from_five_lines_with_a_common_transversal (2)" << endl;
+		cout << "surface_with_action::create_double_six_safely "
+				"after create_double_six_from_five_lines_with_a_common_transversal (2)" << endl;
 	}
 
 	if (r1 && !r2) {
@@ -303,7 +326,8 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	}
 
 	if (Recoordinatize == NULL) {
-		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal Recoordinatize == NULL" << endl;
+		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
+				"Recoordinatize == NULL" << endl;
 		exit(1);
 	}
 

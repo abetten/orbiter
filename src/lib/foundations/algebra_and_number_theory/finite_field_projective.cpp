@@ -478,16 +478,17 @@ void finite_field::PG_element_normalize(
 	for (i = len - 1; i >= 0; i--) {
 		a = v[i * stride];
 		if (a) {
-			if (a == 1)
+			if (a == 1) {
 				return;
+			}
 			a = inverse(a);
 			v[i * stride] = 1;
 			for (j = i - 1; j >= 0; j--) {
 				v[j * stride] = mult(v[j * stride], a);
-				}
-			return;
 			}
+			return;
 		}
+	}
 	cout << "finite_field::PG_element_normalize zero vector" << endl;
 	exit(1);
 }
@@ -501,16 +502,17 @@ void finite_field::PG_element_normalize_from_front(
 	for (i = 0; i < len; i++) {
 		a = v[i * stride];
 		if (a) {
-			if (a == 1)
+			if (a == 1) {
 				return;
+			}
 			a = inverse(a);
 			v[i * stride] = 1;
 			for (j = i + 1; j < len; j++) {
 				v[j * stride] = mult(v[j * stride], a);
-				}
-			return;
 			}
+			return;
 		}
+	}
 	cout << "finite_field::PG_element_normalize_from_front "
 			"zero vector" << endl;
 	exit(1);
@@ -1285,7 +1287,7 @@ int finite_field::evaluate_symplectic_form(int len, int *x, int *y)
 				"len must be even" << endl;
 		cout << "len=" << len << endl;
 		exit(1);
-		}
+	}
 	c = 0;
 	n = len >> 1;
 	for (i = 0; i < n; i++) {
@@ -1293,7 +1295,7 @@ int finite_field::evaluate_symplectic_form(int len, int *x, int *y)
 				mult(x[2 * i + 0], y[2 * i + 1]),
 				negate(mult(x[2 * i + 1], y[2 * i + 0]))
 				));
-		}
+	}
 	return c;
 }
 
@@ -1306,7 +1308,7 @@ int finite_field::evaluate_symmetric_form(int len, int *x, int *y)
 				"len must be even" << endl;
 		cout << "len=" << len << endl;
 		exit(1);
-		}
+	}
 	c = 0;
 	n = len >> 1;
 	for (i = 0; i < n; i++) {
@@ -1314,7 +1316,7 @@ int finite_field::evaluate_symmetric_form(int len, int *x, int *y)
 				mult(x[2 * i + 0], y[2 * i + 1]),
 				mult(x[2 * i + 1], y[2 * i + 0])
 				));
-		}
+	}
 	return c;
 }
 
@@ -1335,9 +1337,9 @@ int finite_field::is_totally_isotropic_wrt_symplectic_form(
 		for (j = i + 1; j < k; j++) {
 			if (evaluate_symplectic_form(n, Basis + i * n, Basis + j * n)) {
 				return FALSE;
-				}
 			}
 		}
+	}
 	return TRUE;
 }
 
@@ -1352,8 +1354,8 @@ int finite_field::evaluate_monomial(int *monomial,
 		x = variables[i];
 		for (j = 0; j < b; j++) {
 			a = mult(a, x);
-			}
 		}
+	}
 	return a;
 }
 
@@ -1384,7 +1386,7 @@ void finite_field::create_BLT_point(
 
 	if (f_v) {
 		cout << "finite_field::create_BLT_point" << endl;
-		}
+	}
 	four = 4 % p;
 	half = inverse(2);
 	quarter = inverse(four);
@@ -1398,7 +1400,7 @@ void finite_field::create_BLT_point(
 				"quarter=" << quarter << endl;
 		cout << "finite_field::create_BLT_point "
 				"minus_one=" << minus_one << endl;
-		}
+	}
 
 	v0 = mult(minus_one, mult(b, half));
 	v1 = mult(minus_one, c);
@@ -1409,8 +1411,7 @@ void finite_field::create_BLT_point(
 	int_vec_init5(v5, v0, v1, v2, v3, v4);
 	if (f_v) {
 		cout << "finite_field::create_BLT_point done" << endl;
-		}
-
+	}
 }
 
 void finite_field::Segre_hyperoval(
@@ -1423,11 +1424,11 @@ void finite_field::Segre_hyperoval(
 
 	if (f_v) {
 		cout << "finite_field::Segre_hyperoval q=" << q << endl;
-		}
+	}
 	if (EVEN(e)) {
 		cout << "finite_field::Segre_hyperoval needs e odd" << endl;
 		exit(1);
-		}
+	}
 
 	nb_pts = N;
 
@@ -1439,7 +1440,7 @@ void finite_field::Segre_hyperoval(
 		Mtx[t * 3 + 0] = 1;
 		Mtx[t * 3 + 1] = t;
 		Mtx[t * 3 + 2] = t6;
-		}
+	}
 	t = q;
 	Mtx[t * 3 + 0] = 0;
 	Mtx[t * 3 + 1] = 1;
@@ -1451,13 +1452,13 @@ void finite_field::Segre_hyperoval(
 	for (i = 0; i < N; i++) {
 		PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
 		Pts[i] = a;
-		}
+	}
 
 	FREE_int(Mtx);
 	if (f_v) {
 		cout << "finite_field::Segre_hyperoval "
 				"q=" << q << " done" << endl;
-		}
+	}
 }
 
 
@@ -1473,24 +1474,24 @@ void finite_field::GlynnI_hyperoval(
 
 	if (f_v) {
 		cout << "finite_field::GlynnI_hyperoval q=" << q << endl;
-		}
+	}
 	if (EVEN(e)) {
 		cout << "finite_field::GlynnI_hyperoval needs e odd" << endl;
 		exit(1);
-		}
+	}
 
 	sigma = e - 1;
 	for (i = 0; i < e; i++) {
 		if (((i * i) % e) == sigma) {
 			gamma = i;
 			break;
-			}
 		}
+	}
 	if (i == e) {
 		cout << "finite_field::GlynnI_hyperoval "
 				"did not find gamma" << endl;
 		exit(1);
-		}
+	}
 
 	cout << "finite_field::GlynnI_hyperoval sigma = " << sigma
 			<< " gamma = " << gamma << endl;
@@ -1509,7 +1510,7 @@ void finite_field::GlynnI_hyperoval(
 		Mtx[t * 3 + 0] = 1;
 		Mtx[t * 3 + 1] = t;
 		Mtx[t * 3 + 2] = te;
-		}
+	}
 	t = q;
 	Mtx[t * 3 + 0] = 0;
 	Mtx[t * 3 + 1] = 1;
@@ -1521,13 +1522,13 @@ void finite_field::GlynnI_hyperoval(
 	for (i = 0; i < N; i++) {
 		PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
 		Pts[i] = a;
-		}
+	}
 
 	FREE_int(Mtx);
 	if (f_v) {
 		cout << "finite_field::GlynnI_hyperoval "
 				"q=" << q << " done" << endl;
-		}
+	}
 }
 
 void finite_field::GlynnII_hyperoval(
@@ -1542,25 +1543,25 @@ void finite_field::GlynnII_hyperoval(
 
 	if (f_v) {
 		cout << "finite_field::GlynnII_hyperoval q=" << q << endl;
-		}
+	}
 	if (EVEN(e)) {
 		cout << "finite_field::GlynnII_hyperoval "
 				"needs e odd" << endl;
 		exit(1);
-		}
+	}
 
 	sigma = e - 1;
 	for (i = 0; i < e; i++) {
 		if (((i * i) % e) == sigma) {
 			gamma = i;
 			break;
-			}
 		}
+	}
 	if (i == e) {
 		cout << "finite_field::GlynnII_hyperoval "
 				"did not find gamma" << endl;
 		exit(1);
-		}
+	}
 
 	cout << "finite_field::GlynnII_hyperoval "
 			"sigma = " << sigma << " gamma = " << i << endl;
@@ -1579,7 +1580,7 @@ void finite_field::GlynnII_hyperoval(
 		Mtx[t * 3 + 0] = 1;
 		Mtx[t * 3 + 1] = t;
 		Mtx[t * 3 + 2] = te;
-		}
+	}
 	t = q;
 	Mtx[t * 3 + 0] = 0;
 	Mtx[t * 3 + 1] = 1;
@@ -1591,13 +1592,13 @@ void finite_field::GlynnII_hyperoval(
 	for (i = 0; i < N; i++) {
 		PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
 		Pts[i] = a;
-		}
+	}
 
 	FREE_int(Mtx);
 	if (f_v) {
 		cout << "finite_field::GlynnII_hyperoval "
 				"q=" << q << " done" << endl;
-		}
+	}
 }
 
 
@@ -1618,21 +1619,21 @@ void finite_field::Subiaco_oval(
 	if (f_v) {
 		cout << "finite_field::Subiaco_oval "
 				"q=" << q << " f_short=" << f_short << endl;
-		}
+	}
 
 	nb_pts = N;
 	k = (q - 1) / 3;
 	if (k * 3 != q - 1) {
 		cout << "Subiaco_oval k * 3 != q - 1" << endl;
 		exit(1);
-		}
+	}
 	omega = power(alpha, k);
 	omega2 = mult(omega, omega);
 	if (add3(omega2, omega, 1) != 0) {
 		cout << "finite_field::Subiaco_oval "
 				"add3(omega2, omega, 1) != 0" << endl;
 		exit(1);
-		}
+	}
 	Pts = NEW_lint(N);
 	Mtx = NEW_int(N * 3);
 	int_vec_zero(Mtx, N * 3);
@@ -1645,30 +1646,30 @@ void finite_field::Subiaco_oval(
 			cout << "finite_field::Subiaco_oval "
 					"mult(sqrt_t, sqrt_t) != t" << endl;
 			exit(1);
-			}
+		}
 		bottom = add3(t4, mult(omega2, t2), 1);
 		if (f_short) {
 			top = mult(omega2, add(t4, t));
-			}
+		}
 		else {
 			top = add3(t3, t2, mult(omega2, t));
-			}
+		}
 		if (FALSE) {
 			cout << "t=" << t << " top=" << top
 					<< " bottom=" << bottom << endl;
-			}
+		}
 		a = mult(top, inverse(bottom));
 		if (f_short) {
 			b = sqrt_t;
-			}
+		}
 		else {
 			b = mult(omega, sqrt_t);
-			}
+		}
 		h = add(a, b);
 		Mtx[t * 3 + 0] = 1;
 		Mtx[t * 3 + 1] = t;
 		Mtx[t * 3 + 2] = h;
-		}
+	}
 	t = q;
 	Mtx[t * 3 + 0] = 0;
 	Mtx[t * 3 + 1] = 1;
@@ -1676,13 +1677,13 @@ void finite_field::Subiaco_oval(
 	for (i = 0; i < N; i++) {
 		PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
 		Pts[i] = a;
-		}
+	}
 
 	FREE_int(Mtx);
 	if (f_v) {
 		cout << "finite_field::Subiaco_oval "
 				"q=" << q << " done" << endl;
-		}
+	}
 }
 
 
@@ -1713,20 +1714,20 @@ void finite_field::Subiaco_hyperoval(
 
 	if (f_v) {
 		cout << "finite_field::Subiaco_hyperoval q=" << q << endl;
-		}
+	}
 
 	nb_pts = N;
 	for (d = 1; d < q; d++) {
 		dv = inverse(d);
 		if (absolute_trace(dv) == 1) {
 			break;
-			}
 		}
+	}
 	if (d == q) {
 		cout << "finite_field::Subiaco_hyperoval "
 				"cannot find element d" << endl;
 		exit(1);
-		}
+	}
 	d2 = mult(d, d);
 	one_d_d2 = add3(1, d, d2);
 
@@ -1742,7 +1743,7 @@ void finite_field::Subiaco_hyperoval(
 			cout << "finite_field::Subiaco_hyperoval "
 					"mult(sqrt_t, sqrt_t) != t" << endl;
 			exit(1);
-			}
+		}
 
 
 		bottom = add3(t4, mult(d2, t2), 1);
@@ -1759,13 +1760,13 @@ void finite_field::Subiaco_hyperoval(
 		if (f_v) {
 			cout << "t=" << t << " top=" << top
 					<< " bottom=" << bottom << endl;
-			}
+		}
 		a = mult(top, inverse(bottom));
 		h = add(a, sqrt_t);
 		Mtx[t * 3 + 0] = 1;
 		Mtx[t * 3 + 1] = t;
 		Mtx[t * 3 + 2] = h;
-		}
+	}
 	t = q;
 	Mtx[t * 3 + 0] = 0;
 	Mtx[t * 3 + 1] = 1;
@@ -1777,13 +1778,13 @@ void finite_field::Subiaco_hyperoval(
 	for (i = 0; i < N; i++) {
 		PG_element_rank_modified(Mtx + i * 3, 1, 3, a);
 		Pts[i] = a;
-		}
+	}
 
 	FREE_int(Mtx);
 	if (f_v) {
 		cout << "finite_field::Subiaco_hyperoval "
 				"q=" << q << " done" << endl;
-		}
+	}
 }
 
 
@@ -1926,7 +1927,7 @@ void finite_field::LunelliSce(int *pts18, int verbose_level)
 
 	if (f_v) {
 		cout << "finite_field::LunelliSce" << endl;
-		}
+	}
 	//F.init(q), verbose_level - 2);
 	//F.init_override_polynomial(q, override_poly, verbose_level);
 
@@ -1945,7 +1946,7 @@ void finite_field::LunelliSce(int *pts18, int verbose_level)
 		cout << "finite_field::LunelliSce "
 				"field order must be 16" << endl;
 		exit(1);
-		}
+	}
 	N = Gg.nb_PG_elements(2, 16);
 	sz = 0;
 	for (i = 0; i < N; i++) {
@@ -1960,18 +1961,18 @@ void finite_field::LunelliSce(int *pts18, int verbose_level)
 		// form the symmetric difference of the two cubics:
 		if ((a == 0 && b) || (b == 0 && a)) {
 			pts18[sz++] = i;
-			}
 		}
+	}
 	if (sz != 18) {
 		cout << "sz != 18" << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "the size of the LinelliSce hyperoval is " << sz << endl;
 		cout << "the LinelliSce hyperoval is:" << endl;
 		int_vec_print(cout, pts18, sz);
 		cout << endl;
-		}
+	}
 
 #if 0
 	cout << "the size of cubic1 is " << cubic1_size << endl;
@@ -2034,7 +2035,7 @@ void finite_field::O4_isomorphism_4to2(
 
 	if (f_v) {
 		cout << "finite_field::O4_isomorphism_4to2" << endl;
-		}
+	}
 	//b11 = B[0 * 4 + 0];
 	b12 = B[0 * 4 + 1];
 	b13 = B[0 * 4 + 2];
@@ -2057,14 +2058,14 @@ void finite_field::O4_isomorphism_4to2(
 		cout << "grid point (0,0) = ";
 		int_vec_print(cout, P, 4);
 		cout << endl;
-		}
+	}
 	O4_grid_coordinates_unrank(Q[0], Q[1], Q[2], Q[3],
 			1, 0, verbose_level);
 	if (f_vv) {
 		cout << "grid point (1,0) = ";
 		int_vec_print(cout, Q, 4);
 		cout << endl;
-		}
+	}
 	mult_vector_from_the_left(P, B, R, 4, 4);
 	mult_vector_from_the_left(Q, B, S, 4, 4);
 	O4_grid_coordinates_rank(R[0], R[1], R[2], R[3],
@@ -2074,16 +2075,16 @@ void finite_field::O4_isomorphism_4to2(
 	if (f_vv) {
 		cout << "Rx=" << Rx << " Ry=" << Ry
 				<< " Sx=" << Sx << " Sy=" << Sy << endl;
-		}
+	}
 	if (Ry == Sy) {
 		f_switch = FALSE;
-		}
+	}
 	else {
 		f_switch = TRUE;
-		}
+	}
 	if (f_vv) {
 		cout << "f_switch=" << f_switch << endl;
-		}
+	}
 	if (f_switch) {
 		if (b22 == 0 && b24 == 0 && b32 == 0 && b34 == 0) {
 			a = 0;
@@ -2096,13 +2097,13 @@ void finite_field::O4_isomorphism_4to2(
 				fv = inverse(f);
 				c = mult(fv, b33);
 				d = negate(mult(fv, b13));
-				}
+			}
 			else {
 				ev = inverse(e);
 				c = negate(mult(ev, b23));
 				d = negate(mult(ev, b43));
-				}
 			}
+		}
 		else {
 			a = 1;
 			e = b22;
@@ -2114,15 +2115,15 @@ void finite_field::O4_isomorphism_4to2(
 				b = mult(fv, b12);
 				c = mult(fv, b33);
 				d = negate(mult(fv, b13));
-				}
+			}
 			else {
 				ev = inverse(e);
 				b = mult(ev, b42);
 				c = negate(mult(ev, b23));
 				d = negate(mult(ev, b43));
-				}
 			}
 		}
+	}
 	else {
 		// no switch
 		if (b22 == 0 && b24 == 0 && b42 == 0 && b44 == 0) {
@@ -2136,13 +2137,13 @@ void finite_field::O4_isomorphism_4to2(
 				fv = inverse(f);
 				c = negate(mult(fv, b43));
 				d = negate(mult(fv, b13));
-				}
+			}
 			else {
 				ev = inverse(e);
 				c = negate(mult(ev, b23));
 				d = mult(ev, b33);
-				}
 			}
+		}
 		else {
 			a = 1;
 			e = b22;
@@ -2154,19 +2155,19 @@ void finite_field::O4_isomorphism_4to2(
 				b = mult(fv, b12);
 				c = negate(mult(fv, b43));
 				d = negate(mult(fv, b13));
-				}
+			}
 			else {
 				ev = inverse(e);
 				b = negate(mult(ev, b32));
 				c = negate(mult(ev, b23));
 				d = mult(ev, b33);
-				}
 			}
 		}
+	}
 	if (f_vv) {
 		cout << "a=" << a << " b=" << b << " c=" << c << " d=" << d << endl;
 		cout << "e=" << e << " f=" << f << " g=" << g << " h=" << h << endl;
-		}
+	}
 	At[0] = d;
 	At[1] = b;
 	At[2] = c;
@@ -2180,7 +2181,7 @@ void finite_field::O4_isomorphism_4to2(
 		print_integer_matrix_width(cout, At, 2, 2, 2, log10_of_q);
 		cout << "As:" << endl;
 		print_integer_matrix_width(cout, As, 2, 2, 2, log10_of_q);
-		}
+	}
 
 }
 
@@ -2214,7 +2215,7 @@ void finite_field::O4_isomorphism_2to4(
 		B[3 * 4 + 1] = mult(e, b);
 		B[3 * 4 + 2] = negate(mult(e, d));
 		B[3 * 4 + 3] = mult(g, b);
-		}
+	}
 	else {
 		B[0 * 4 + 0] = mult(h, d);
 		B[0 * 4 + 1] = mult(f, b);
@@ -2232,7 +2233,7 @@ void finite_field::O4_isomorphism_2to4(
 		B[3 * 4 + 1] = mult(f, a);
 		B[3 * 4 + 2] = negate(mult(f, c));
 		B[3 * 4 + 3] = mult(h, a);
-		}
+	}
 }
 
 void finite_field::O4_grid_coordinates_rank(
@@ -2254,7 +2255,7 @@ void finite_field::O4_grid_coordinates_rank(
 			b = mult(b, av);
 			c = mult(c, av);
 			d = mult(d, av);
-			}
+		}
 		v[0] = 1;
 		w[0] = 1;
 		v[1] = c;
@@ -2264,31 +2265,31 @@ void finite_field::O4_grid_coordinates_rank(
 			cout << "finite_field::O4_grid_coordinates_rank "
 					"e != d" << endl;
 			exit(1);
-			}
 		}
+	}
 	else if (b == 0) {
 		v[0] = 0;
 		v[1] = 1;
 		w[0] = c;
 		w[1] = d;
-		}
+	}
 	else {
 		if (c) {
 			cout << "a is zero, b and c are not" << endl;
 			exit(1);
-			}
+		}
 		w[0] = 0;
 		w[1] = 1;
 		v[0] = b;
 		v[1] = d;
-		}
+	}
 	PG_element_normalize_from_front(v, 1, 2);
 	PG_element_normalize_from_front(w, 1, 2);
 	if (f_v) {
 		int_vec_print(cout, v, 2);
 		int_vec_print(cout, w, 2);
 		cout << endl;
-		}
+	}
 
 	PG_element_rank_modified(v, 1, 2, grid_x);
 	PG_element_rank_modified(w, 1, 2, grid_y);
@@ -2311,7 +2312,7 @@ void finite_field::O4_grid_coordinates_unrank(
 		int_vec_print(cout, v, 2);
 		int_vec_print(cout, w, 2);
 		cout << endl;
-		}
+	}
 
 	a = mult(v[0], w[0]);
 	b = mult(v[0], w[1]);
@@ -2328,6 +2329,7 @@ void finite_field::O4_find_tangent_plane(
 		int *tangent_plane,
 		int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	//int A[4];
 	int C[3 * 4];
 	int size, x, y, z, xx, yy, zz, h, k;
@@ -2341,10 +2343,12 @@ void finite_field::O4_find_tangent_plane(
 	int vec2[2];
 
 
-	cout << "O4_find_tangent_plane pt_x1=" << pt_x1
-		<< " pt_x2=" << pt_x2
-		<< " pt_x3=" << pt_x3
-		<< " pt_x4=" << pt_x4 << endl;
+	if (f_v) {
+		cout << "O4_find_tangent_plane pt_x1=" << pt_x1
+				<< " pt_x2=" << pt_x2
+				<< " pt_x3=" << pt_x3
+				<< " pt_x4=" << pt_x4 << endl;
+	}
 	size = q + 1;
 #if 0
 	A[0] = pt_x1;
@@ -2385,11 +2389,12 @@ void finite_field::O4_find_tangent_plane(
 				det = add(mult(y1, y2), mult(y3, y4));
 				if (det != 0) {
 					continue;
-					}
+				}
 				O4_grid_coordinates_rank(y1, y2, y3, y4, xx, yy, 0);
 				zz = xx * size + yy;
-				if (zz == z)
+				if (zz == z) {
 					continue;
+				}
 				C[0] = pt_x1;
 				C[1] = pt_x2;
 				C[2] = pt_x3;
@@ -2411,9 +2416,9 @@ void finite_field::O4_find_tangent_plane(
 					secants1[nb_secants] = z;
 					secants2[nb_secants] = zz;
 					nb_secants++;
-					}
-
 				}
+
+			}
 
 #if 0
 
@@ -2452,25 +2457,29 @@ void finite_field::O4_find_tangent_plane(
 #endif
 
 
-			}
 		}
-	cout << "nb_secants=" << nb_secants << endl;
-	int_vec_print(cout, secants1, nb_secants);
-	cout << endl;
-	int_vec_print(cout, secants2, nb_secants);
-	cout << endl;
+	}
+	if (f_v) {
+		cout << "nb_secants=" << nb_secants << endl;
+		int_vec_print(cout, secants1, nb_secants);
+		cout << endl;
+		int_vec_print(cout, secants2, nb_secants);
+		cout << endl;
+	}
 	h = 0;
 	for (zz = 0; zz < size * size; zz++) {
 		if (secants1[h] > zz) {
 			complement[nb_complement++] = zz;
-			}
+		}
 		else {
 			h++;
-			}
 		}
-	cout << "complement = tangents:" << endl;
-	int_vec_print(cout, complement, nb_complement);
-	cout << endl;
+	}
+	if (f_v) {
+		cout << "complement = tangents:" << endl;
+		int_vec_print(cout, complement, nb_complement);
+		cout << endl;
+	}
 
 	int *T;
 	T = NEW_int(4 * nb_complement);
@@ -2479,33 +2488,39 @@ void finite_field::O4_find_tangent_plane(
 		z = complement[h];
 		x = z / size;
 		y = z % size;
-		cout << setw(3) << h << " : " << setw(4) << z
-				<< " : " << x << "," << y << " : ";
+		if (f_v) {
+			cout << setw(3) << h << " : " << setw(4) << z
+					<< " : " << x << "," << y << " : ";
+		}
 		O4_grid_coordinates_unrank(y1, y2, y3, y4,
 				x, y, verbose_level);
-		cout << "y1=" << y1 << " y2=" << y2
-				<< " y3=" << y3 << " y4=" << y4 << endl;
+		if (f_v) {
+			cout << "y1=" << y1 << " y2=" << y2
+					<< " y3=" << y3 << " y4=" << y4 << endl;
+		}
 		T[h * 4 + 0] = y1;
 		T[h * 4 + 1] = y2;
 		T[h * 4 + 2] = y3;
 		T[h * 4 + 3] = y4;
-		}
+	}
 
 
 	rk = Gauss_int(T, f_special, f_complete, base_cols,
 		f_P, NULL, nb_complement, 4, 4, 0);
-	cout << "the rank of the tangent space is " << rk << endl;
-	cout << "basis:" << endl;
-	print_integer_matrix_width(cout, T, rk, 4, 4, log10_of_q);
+	if (f_v) {
+		cout << "the rank of the tangent space is " << rk << endl;
+		cout << "basis:" << endl;
+		print_integer_matrix_width(cout, T, rk, 4, 4, log10_of_q);
+	}
 
 	if (rk != 3) {
 		cout << "rk = " << rk << " not equal to 3" << endl;
 		exit(1);
-		}
+	}
 	int i;
 	for (i = 0; i < 12; i++) {
 		tangent_plane[i] = T[i];
-		}
+	}
 	FREE_int(secants1);
 	FREE_int(secants2);
 	FREE_int(complement);
@@ -2528,7 +2543,7 @@ void finite_field::O4_find_tangent_plane(
 		O4_grid_coordinates_unrank(F, y1, y2, y3, y4, xx, yy, verbose_level);
 		cout << "y1=" << y1 << " y2=" << y2
 				<< " y3=" << y3 << " y4=" << y4 << endl;
-		}
+	}
 #endif
 }
 
@@ -2542,7 +2557,7 @@ void finite_field::oval_polynomial(
 
 	if (f_v) {
 		cout << "finite_field::oval_polynomial" << endl;
-		}
+	}
 	map = NEW_int(q);
 	for (i = 0; i < q; i++) {
 		PG_element_unrank_modified(
@@ -2551,26 +2566,26 @@ void finite_field::oval_polynomial(
 			cout << "finite_field::oval_polynomial "
 					"not an affine point" << endl;
 			exit(1);
-			}
+		}
 		x = v[0];
 		//y = v[1];
 		//cout << "map[" << i << "] = " << xx << endl;
 		map[i] = x;
-		}
+	}
 	if (f_v) {
 		cout << "the map" << endl;
 		for (i = 0; i < q; i++) {
 			cout << map[i] << " ";
-			}
-		cout << endl;
 		}
+		cout << endl;
+	}
 
 	D.create_Dickson_polynomial(poly, map);
 
 	FREE_int(map);
 	if (f_v) {
 		cout << "finite_field::oval_polynomial done" << endl;
-		}
+	}
 }
 
 
@@ -2588,7 +2603,7 @@ void finite_field::all_PG_elements_in_subspace(
 
 	if (f_v) {
 		cout << "finite_field::all_PG_elements_in_subspace" << endl;
-		}
+	}
 	message = NEW_int(k);
 	word = NEW_int(n);
 	nb_points = Combi.generalized_binomial(k, 1, q);
@@ -2600,26 +2615,26 @@ void finite_field::all_PG_elements_in_subspace(
 			cout << "message " << i << " / " << nb_points << " is ";
 			int_vec_print(cout, message, k);
 			cout << endl;
-			}
+		}
 		mult_vector_from_the_left(message, genma, word, k, n);
 		if (f_vv) {
 			cout << "yields word ";
 			int_vec_print(cout, word, n);
 			cout << endl;
-			}
+		}
 		PG_element_rank_modified_lint(word, 1, n, a);
 		if (f_vv) {
 			cout << "which has rank " << a << endl;
-			}
-		point_list[i] = a;
 		}
+		point_list[i] = a;
+	}
 
 	FREE_int(message);
 	FREE_int(word);
 	if (f_v) {
 		cout << "finite_field::all_PG_elements_in_subspace "
 				"done" << endl;
-		}
+	}
 }
 
 void finite_field::all_PG_elements_in_subspace_array_is_given(
@@ -2636,7 +2651,7 @@ void finite_field::all_PG_elements_in_subspace_array_is_given(
 	if (f_v) {
 		cout << "finite_field::all_PG_elements_in_"
 				"subspace_array_is_given" << endl;
-		}
+	}
 	message = NEW_int(k);
 	word = NEW_int(n);
 	nb_points = Combi.generalized_binomial(k, 1, q);
@@ -2648,19 +2663,19 @@ void finite_field::all_PG_elements_in_subspace_array_is_given(
 			cout << "message " << i << " / " << nb_points << " is ";
 			int_vec_print(cout, message, k);
 			cout << endl;
-			}
+		}
 		mult_vector_from_the_left(message, genma, word, k, n);
 		if (f_vv) {
 			cout << "yields word ";
 			int_vec_print(cout, word, n);
 			cout << endl;
-			}
+		}
 		PG_element_rank_modified(word, 1, n, j);
 		if (f_vv) {
 			cout << "which has rank " << j << endl;
-			}
-		point_list[i] = j;
 		}
+		point_list[i] = j;
+	}
 
 	FREE_int(message);
 	FREE_int(word);
@@ -2668,7 +2683,7 @@ void finite_field::all_PG_elements_in_subspace_array_is_given(
 		cout << "finite_field::all_PG_elements_in_"
 				"subspace_array_is_given "
 				"done" << endl;
-		}
+	}
 }
 
 void finite_field::display_all_PG_elements(int n)
@@ -2683,10 +2698,10 @@ void finite_field::display_all_PG_elements(int n)
 		cout << i << " : ";
 		for (j = 0; j < n + 1; j++) {
 			cout << v[j] << " ";
-			}
+		}
 		PG_element_rank_modified(v, 1, n + 1, a);
 		cout << " : " << a << endl;
-		}
+	}
 	FREE_int(v);
 }
 
@@ -2702,10 +2717,10 @@ void finite_field::display_all_PG_elements_not_in_subspace(int n, int m)
 		cout << i << " : ";
 		for (j = 0; j < n + 1; j++) {
 			cout << v[j] << " ";
-			}
+		}
 		PG_element_rank_modified_not_in_subspace(v, 1, n + 1, m, a);
 		cout << " : " << a << endl;
-		}
+	}
 	FREE_int(v);
 }
 
@@ -2721,9 +2736,9 @@ void finite_field::display_all_AG_elements(int n)
 		cout << i << " : ";
 		for (j = 0; j < n; j++) {
 			cout << v[j] << " ";
-			}
-		cout << endl;
 		}
+		cout << endl;
+	}
 	FREE_int(v);
 }
 
@@ -2741,13 +2756,14 @@ void finite_field::do_cone_over(int n,
 
 	if (f_v) {
 		cout << "finite_field::do_cone_over" << endl;
-		}
+	}
 	P1 = NEW_OBJECT(projective_space);
 	P2 = NEW_OBJECT(projective_space);
 
 	P1->init(n, this,
 		FALSE /* f_init_incidence_structure */,
 		verbose_level - 2  /*MINIMUM(verbose_level - 1, 3)*/);
+
 	P2->init(n + 1, this,
 		FALSE /* f_init_incidence_structure */,
 		verbose_level - 2  /*MINIMUM(verbose_level - 1, 3)*/);
@@ -2777,17 +2793,20 @@ void finite_field::do_cone_over(int n,
 			v[d - 1] = u;
 			b = P2->rank_point(v);
 			set_out[cnt++] = b;
-			}
 		}
+	}
 
 	if (cnt != set_size_out) {
 		cout << "finite_field::do_cone_over cnt != set_size_out" << endl;
 		exit(1);
-		}
+	}
 
 	FREE_int(v);
 	FREE_OBJECT(P1);
 	FREE_OBJECT(P2);
+	if (f_v) {
+		cout << "finite_field::do_cone_over done" << endl;
+	}
 }
 
 
@@ -2803,17 +2822,17 @@ void finite_field::do_blocking_set_family_3(int n,
 		cout << "finite_field::do_blocking_set_family_3 "
 				"we need n = 2" << endl;
 		exit(1);
-		}
+	}
 	if (ODD(q)) {
 		cout << "finite_field::do_blocking_set_family_3 "
 				"we need q even" << endl;
 		exit(1);
-		}
+	}
 	if (set_size != q + 2) {
 		cout << "finite_field::do_blocking_set_family_3 "
 				"we need set_size == q + 2" << endl;
 		exit(1);
-		}
+	}
 	P = NEW_OBJECT(projective_space);
 
 	P->init(n, this,

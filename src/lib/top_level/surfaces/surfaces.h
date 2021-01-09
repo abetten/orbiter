@@ -1085,8 +1085,12 @@ public:
 	~surface_with_action();
 	void null();
 	void freeself();
-	void init(surface_domain *Surf,
+	void init_with_linear_group(surface_domain *Surf,
 			linear_group *LG,
+			int f_recoordinatize,
+			int verbose_level);
+	void init(surface_domain *Surf,
+			action *A_linear,
 			int f_recoordinatize,
 			int verbose_level);
 	int create_double_six_safely(

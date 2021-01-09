@@ -331,6 +331,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 				Descr->f_filter_by_nb_Eckardt_points, Descr->nb_Eckardt_points,
 				verbose_level);
 	}
+#if 0
 	else if (Descr->f_cubic_surface_properties) {
 
 		algebra_global_with_action Algebra;
@@ -354,6 +355,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 				Descr->cubic_surface_properties_defining_q,
 				verbose_level);
 	}
+#endif
 
 	// spreads:
 
