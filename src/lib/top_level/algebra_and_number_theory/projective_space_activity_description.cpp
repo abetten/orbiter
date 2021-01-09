@@ -30,6 +30,15 @@ projective_space_activity_description::projective_space_activity_description()
 	//canonical_form_PG_n = 0;
 	Canonical_form_PG_Descr = NULL;
 
+	f_table_of_cubic_surfaces_compute_properties = FALSE;
+	//std::string _table_of_cubic_surfaces_compute_fname_csv;
+	table_of_cubic_surfaces_compute_defining_q = 0;
+	table_of_cubic_surfaces_compute_column_offset = 0;
+
+	f_cubic_surface_properties_analyze = FALSE;
+	//std::string cubic_surface_properties_fname_csv;
+	cubic_surface_properties_defining_q = 0;
+
 
 }
 
@@ -81,8 +90,25 @@ int projective_space_activity_description::read_arguments(
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
-
-
+		else if (stringcmp(argv[i], "-table_of_cubic_surfaces_compute_properties") == 0) {
+			f_table_of_cubic_surfaces_compute_properties = TRUE;
+			cout << "-table_of_cubic_surfaces_compute_properties next argument is " << argv[i + 1] << endl;
+			table_of_cubic_surfaces_compute_fname_csv.assign(argv[++i]);
+			table_of_cubic_surfaces_compute_defining_q = strtoi(argv[++i]);
+			table_of_cubic_surfaces_compute_column_offset = strtoi(argv[++i]);
+			cout << "-table_of_cubic_surfaces_compute_properties "
+					<< table_of_cubic_surfaces_compute_fname_csv << " "
+					<< table_of_cubic_surfaces_compute_defining_q << " "
+					<< table_of_cubic_surfaces_compute_column_offset << " "
+					<< endl;
+		}
+		else if (stringcmp(argv[i], "-cubic_surface_properties_analyze") == 0) {
+			f_cubic_surface_properties_analyze = TRUE;
+			cubic_surface_properties_fname_csv.assign(argv[++i]);
+			cubic_surface_properties_defining_q = strtoi(argv[++i]);
+			cout << "-cubic_surface_properties " << cubic_surface_properties_fname_csv
+					<< " " << cubic_surface_properties_defining_q << endl;
+		}
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;

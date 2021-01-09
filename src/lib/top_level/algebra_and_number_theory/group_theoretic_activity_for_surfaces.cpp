@@ -67,11 +67,11 @@ void group_theoretic_activity::do_create_surface(
 	Surf_A = NEW_OBJECT(surface_with_action);
 
 	if (f_v) {
-		cout << "group_theoretic_activity::do_create_surface before Surf_A->init" << endl;
+		cout << "group_theoretic_activity::do_create_surface before Surf_A->init_with_linear_group" << endl;
 		}
-	Surf_A->init(Surf, LG, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
+	Surf_A->init_with_linear_group(Surf, LG, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "group_theoretic_activity::do_create_surface after Surf_A->init" << endl;
+		cout << "group_theoretic_activity::do_create_surface after Surf_A->init_with_linear_group" << endl;
 		}
 
 
@@ -991,12 +991,12 @@ void group_theoretic_activity::do_classify_surfaces_through_arcs_and_two_lines(
 
 	if (f_v) {
 		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_two_lines "
-				"before Surf_A->init" << endl;
+				"before Surf_A->init_with_linear_group" << endl;
 	}
-	Surf_A->init(Surf, LG, TRUE /* f_recoordinatize */, 0 /*verbose_level - 1*/);
+	Surf_A->init_with_linear_group(Surf, LG, TRUE /* f_recoordinatize */, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_two_lines "
-				"after Surf_A->init" << endl;
+				"after Surf_A->init_with_linear_group" << endl;
 	}
 
 
@@ -1087,12 +1087,12 @@ void group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_p
 
 	if (f_v) {
 		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_pairs "
-				"before Surf_A->init" << endl;
+				"before Surf_A->init_with_linear_group" << endl;
 	}
-	Surf_A->init(Surf, LG, TRUE /* f_recoordinatize */, verbose_level - 1);
+	Surf_A->init_with_linear_group(Surf, LG, TRUE /* f_recoordinatize */, verbose_level - 1);
 	if (f_v) {
 		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_pairs "
-				"after Surf_A->init" << endl;
+				"after Surf_A->init_with_linear_group" << endl;
 	}
 
 

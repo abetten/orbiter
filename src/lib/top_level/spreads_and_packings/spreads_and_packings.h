@@ -104,7 +104,6 @@ public:
 	void null();
 	void freeself();
 	void spread_table_init(
-			//poset_classification_control *Control,
 			linear_group *LG,
 			int dimension_of_spread_elements,
 			int f_select_spread, std::string &select_spread_text,

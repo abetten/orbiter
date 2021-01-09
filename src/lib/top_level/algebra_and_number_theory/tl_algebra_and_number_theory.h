@@ -608,11 +608,15 @@ public:
 	int f_surface_clebsch;
 	int f_surface_codes;
 
+#if 0
 	int f_cubic_surface_properties;
 	std::string cubic_surface_properties_fname_csv;
 	int cubic_surface_properties_defining_q;
 	int cubic_surface_properties_column_offset;
 	int f_cubic_surface_properties_analyze;
+	std::string cubic_surface_properties_fname_csv;
+	int cubic_surface_properties_defining_q;
+#endif
 
 
 		// subspace orbits:
@@ -914,6 +918,14 @@ public:
 	//int canonical_form_PG_n;
 	projective_space_object_classifier_description *Canonical_form_PG_Descr;
 
+	int f_table_of_cubic_surfaces_compute_properties;
+	std::string table_of_cubic_surfaces_compute_fname_csv;
+	int table_of_cubic_surfaces_compute_defining_q;
+	int table_of_cubic_surfaces_compute_column_offset;
+
+	int f_cubic_surface_properties_analyze;
+	std::string cubic_surface_properties_fname_csv;
+	int cubic_surface_properties_defining_q;
 
 
 	projective_space_activity_description();
@@ -944,6 +956,21 @@ public:
 	projective_space_activity();
 	~projective_space_activity();
 	void perform_activity(int verbose_level);
+	void do_cubic_surface_properties(
+			projective_space_with_action *PA,
+			std::string fname_csv, int defining_q,
+			int column_offset,
+			int verbose_level);
+	void do_cubic_surface_properties_analyze(
+			projective_space_with_action *PA,
+			std::string fname_csv, int defining_q,
+			int verbose_level);
+	void report_singular_surfaces(std::ostream &ost,
+			struct cubic_surface_data_set *Data, int nb_orbits, int verbose_level);
+	void report_non_singular_surfaces(std::ostream &ost,
+			struct cubic_surface_data_set *Data, int nb_orbits, int verbose_level);
+	void report_surfaces_by_lines(std::ostream &ost,
+			struct cubic_surface_data_set *Data, tally &T, int verbose_level);
 
 
 };

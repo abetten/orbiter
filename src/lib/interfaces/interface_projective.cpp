@@ -686,11 +686,11 @@ void interface_projective::do_create_surface_atlas(int q_max, int verbose_level)
 		T[cur].Surf_A = NEW_OBJECT(surface_with_action);
 
 		if (f_v) {
-			cout << "do_create_surface_atlas before Surf_A->init" << endl;
+			cout << "do_create_surface_atlas before Surf_A->init_with_linear_group" << endl;
 		}
-		T[cur].Surf_A->init(T[cur].Surf, T[cur].LG, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
+		T[cur].Surf_A->init_with_linear_group(T[cur].Surf, T[cur].LG, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
 		if (f_v) {
-			cout << "do_create_surface_atlas after Surf_A->init" << endl;
+			cout << "do_create_surface_atlas after Surf_A->init_with_linear_group" << endl;
 		}
 
 
