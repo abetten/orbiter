@@ -1535,7 +1535,7 @@ void surface_object_properties::print_adjacency_matrix_with_intersection_points(
 
 void surface_object_properties::print_neighbor_sets(std::ostream &ost)
 {
-	int i, j, h, p, idx;
+	int i, j, h, p;
 	sorting Sorting;
 
 	//ost << "\\clearpage" << endl;
@@ -2290,7 +2290,7 @@ void surface_object_properties::print_single_points(std::ostream &ost)
 			// "$P_{" << Single_points_index[i] << "}=";
 			p = Single_points_index[i];
 			a = lines_on_point->Sets[p][0];
-			ost << "P_{" << Single_points[i] << "}=";
+			ost << "$P_{" << Single_points[i] << "}=";
 			int_vec_print_fully(ost, v, 4);
 			ost << "$";
 			if (SO->nb_lines == 27) {
