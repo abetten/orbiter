@@ -1374,7 +1374,7 @@ void orthogonal::lines_on_point_by_line_rank(long int pt,
 	sorting Sorting;
 	
 	if (f_v) {
-		cout << "orthogonal::lines_on_point_by_line_rank pt=" << pt << " pt_P=" << pt_P << endl;
+		cout << "orthogonal::lines_on_point_by_line_rank verbose_level = " << verbose_level << " pt=" << pt << " pt_P=" << pt_P << endl;
 	}
 	t = subspace_point_type;
 	if (f_vv) {
