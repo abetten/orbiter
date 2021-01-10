@@ -1792,8 +1792,8 @@ void schreier::write_to_file_binary(std::ofstream &fp, int verbose_level)
 		fp.write((char *) &label[i], sizeof(int));
 		//fp.write((char *) &orbit_no[i], sizeof(int));
 	}
-	gens.write_to_file_binary(fp, verbose_level - 1);
-	gens_inv.write_to_file_binary(fp, verbose_level - 1);
+	gens.write_to_file_binary(fp, 0 /*verbose_level - 1*/);
+	gens_inv.write_to_file_binary(fp, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "schreier::write_to_file_binary done" << endl;
 	}
@@ -1846,10 +1846,10 @@ void schreier::read_from_file_binary(std::ifstream &fp, int verbose_level)
 	}
 	Combi.perm_inverse(orbit, orbit_inv, A->degree);
 
-	gens.init(A, verbose_level - 2);
-	gens.read_from_file_binary(fp, verbose_level - 1);
-	gens_inv.init(A, verbose_level - 2);
-	gens_inv.read_from_file_binary(fp, verbose_level - 1);
+	gens.init(A, 0 /*verbose_level - 1*/);
+	gens.read_from_file_binary(fp, 0 /*verbose_level - 1*/);
+	gens_inv.init(A, 0 /*verbose_level - 1*/);
+	gens_inv.read_from_file_binary(fp, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "schreier::read_from_file_binary done" << endl;
 	}

@@ -382,7 +382,15 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 			cout << "group_theoretic_activity::perform_activity after PW->init" << endl;
 		}
 
-		PW->report(verbose_level);
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity before PW->report" << endl;
+		}
+
+		PW->report(0 /* verbose_level */);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity after PW->report" << endl;
+		}
 
 		packing_was_fixpoints *PWF;
 

@@ -533,12 +533,12 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 		}
 
 		if (f_v) {
-			cout << "subset " << rk << " / " << nb_subsets << " : " << endl;
+			cout << "surface_domain::create_double_six_from_five_lines_with_a_common_transversal subset " << rk << " / " << nb_subsets << " : " << endl;
 		}
 		O->perp_of_k_points(pts, 4,
 			Perp[rk], Perp_sz[rk], verbose_level - 1);
 		if (f_v) {
-			cout << "the perp of the subset ";
+			cout << "surface_domain::create_double_six_from_five_lines_with_a_common_transversal the perp of the subset ";
 			int_vec_print(cout, subset, 4);
 			cout << " has size " << Perp_sz[rk] << " : ";
 			lint_vec_print(cout, Perp[rk], Perp_sz[rk]);
@@ -604,8 +604,14 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 	long int transversal_opp;
 
 	//Perp_opp = NEW_int(O->alpha * (O->q + 1));
+	if (f_v) {
+		cout << "surface_domain::create_double_six_from_five_lines_with_a_common_transversal before O->perp_of_k_points" << endl;
+	}
 	O->perp_of_k_points(opposites, 4, Perp_opp, Perp_opp_sz,
-			0 /*verbose_level*/);
+			verbose_level - 1);
+	if (f_v) {
+		cout << "surface_domain::create_double_six_from_five_lines_with_a_common_transversal after O->perp_of_k_points" << endl;
+	}
 	if (f_v) {
 		cout << "the perp of the opposite subset ";
 		lint_vec_print(cout, opposites, 4);

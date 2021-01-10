@@ -1061,7 +1061,7 @@ void classify_double_sixes::downstep(int verbose_level)
 
 		c = Surf_A->create_double_six_from_five_lines_with_a_common_transversal(
 				dataset + 5, pt0_line, double_six,
-				0 /*verbose_level*/);
+				verbose_level - 2);
 		
 		if (c) {
 
