@@ -1859,8 +1859,7 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 					<< " / " << nb_pts << ":" << endl;
 			}
 		Perp_without_pt[i] = NEW_lint(sz0);
-		perp(pts[i], Perp_without_pt[i], perp_sz,
-				verbose_level - 1);
+		perp(pts[i], Perp_without_pt[i], perp_sz, verbose_level - 1);
 		if (f_vv) {
 			cout << "orthogonal::perp_of_k_points perp of pt "
 					<< i << " / " << nb_pts << " has size "
