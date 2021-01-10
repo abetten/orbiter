@@ -322,7 +322,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	combinatorics_domain Combi;
 	
 	if (f_v) {
-		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal" << endl;
+		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal, verbose_level = " << verbose_level << endl;
 	}
 
 	if (Recoordinatize == NULL) {
