@@ -282,6 +282,7 @@ void group_theoretic_activity::do_create_surface(
 				exit(1);
 			}
 
+#if 0
 			if (f_v) {
 				cout << "group_theoretic_activity::do_create_surface "
 						"before SC->SO->SOP->print_everything" << endl;
@@ -291,6 +292,18 @@ void group_theoretic_activity::do_create_surface(
 				cout << "group_theoretic_activity::do_create_surface "
 						"after SC->SO->SOP->print_everything" << endl;
 			}
+#else
+			if (f_v) {
+				cout << "group_theoretic_activity::do_create_surface "
+						"before SC->SO->SOP->report_properties_simple" << endl;
+			}
+			SC->SO->SOP->report_properties_simple(ost, verbose_level);
+			if (f_v) {
+				cout << "group_theoretic_activity::do_create_surface "
+						"after SC->SO->SOP->report_properties_simple" << endl;
+			}
+#endif
+
 
 			L.foot(ost);
 		}
