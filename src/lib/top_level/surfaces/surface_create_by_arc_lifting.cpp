@@ -381,12 +381,12 @@ void surface_create_by_arc_lifting::report(std::ostream &ost,
 
 	if (f_v) {
 		cout << "surface_create_by_arc_lifting::report "
-				"before report_properties" << endl;
+				"before report_properties_simple" << endl;
 	}
-	SOA->SO->SOP->report_properties(ost, verbose_level);
+	SOA->SO->SOP->report_properties_simple(ost, verbose_level);
 	if (f_v) {
 		cout << "surface_create_by_arc_lifting::report "
-				"after report_properties" << endl;
+				"after report_properties_simple" << endl;
 	}
 
 

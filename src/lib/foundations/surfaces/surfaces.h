@@ -845,6 +845,10 @@ public:
 	int *Double_points_index;
 	int nb_Double_points;
 
+	long int *Single_points;
+	int *Single_points_index;
+	int nb_Single_points;
+
 	long int *Pts_not_on_lines;
 	int nb_pts_not_on_lines;
 
@@ -897,6 +901,7 @@ public:
 	void compute_planes_and_dual_point_ranks(int verbose_level);
 	void print_everything(std::ostream &ost, int verbose_level);
 	void report_properties(std::ostream &ost, int verbose_level);
+	void report_properties_simple(std::ostream &ost, int verbose_level);
 	void print_line_intersection_graph(std::ostream &ost);
 	void print_adjacency_list(std::ostream &ost);
 	void print_adjacency_matrix(std::ostream &ost);
@@ -920,7 +925,9 @@ public:
 	void print_axes(std::ostream &ost);
 	void print_singular_points(std::ostream &ost);
 	void print_double_points(std::ostream &ost);
+	void print_single_points(std::ostream &ost);
 	void print_points_on_surface(std::ostream &ost);
+	void print_all_points_on_surface(std::ostream &ost);
 	void print_points_on_lines(std::ostream &ost);
 	void print_points_on_surface_but_not_on_a_line(std::ostream &ost);
 	void print_double_sixes(std::ostream &ost);
