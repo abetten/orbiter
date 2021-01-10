@@ -1170,7 +1170,10 @@ void packing_was::report2(std::ostream &ost, int verbose_level)
 	ost << endl;
 
 	ost << "\\section{Reduced Spread Orbits}" << endl;
-	report_reduced_spread_orbits(ost, verbose_level);
+	reduced_spread_orbits_under_H->report_classified_orbit_lengths(ost);
+	ost << endl;
+
+	//report_reduced_spread_orbits(ost, verbose_level);
 
 	ost << "\\section{Reduced Spread Orbits: Spread invariant}" << endl;
 	report_orbit_invariant(ost);
@@ -1307,9 +1310,6 @@ void packing_was::report_line_orbits_under_H(std::ostream &ost, int verbose_leve
 
 void packing_was::report_reduced_spread_orbits(std::ostream &ost, int verbose_level)
 {
-	reduced_spread_orbits_under_H->report_classified_orbit_lengths(ost);
-	ost << endl;
-
 	ost << "\\bigskip" << endl;
 	ost << "\\noindent" << endl;
 

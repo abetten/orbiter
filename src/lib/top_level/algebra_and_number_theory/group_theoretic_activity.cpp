@@ -168,9 +168,12 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		print_elements_tex(verbose_level);
 	}
 
+#if 0
 	if (Descr->f_search_subgroup) {
 		search_subgroup(verbose_level);
 	}
+#endif
+
 	if (Descr->f_find_singer_cycle) {
 		find_singer_cycle(verbose_level);
 	}
@@ -331,31 +334,6 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 				Descr->f_filter_by_nb_Eckardt_points, Descr->nb_Eckardt_points,
 				verbose_level);
 	}
-#if 0
-	else if (Descr->f_cubic_surface_properties) {
-
-		algebra_global_with_action Algebra;
-
-
-		Algebra.do_cubic_surface_properties(
-				LG,
-				Descr->cubic_surface_properties_fname_csv,
-				Descr->cubic_surface_properties_defining_q,
-				Descr->cubic_surface_properties_column_offset,
-				verbose_level);
-
-	}
-	else if (Descr->f_cubic_surface_properties_analyze) {
-
-		algebra_global_with_action Algebra;
-
-		Algebra.do_cubic_surface_properties_analyze(
-				LG,
-				Descr->cubic_surface_properties_fname_csv,
-				Descr->cubic_surface_properties_defining_q,
-				verbose_level);
-	}
-#endif
 
 	// spreads:
 
@@ -1136,6 +1114,7 @@ void group_theoretic_activity::print_elements_tex(int verbose_level)
 	}
 }
 
+#if 0
 void group_theoretic_activity::search_subgroup(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1190,6 +1169,7 @@ void group_theoretic_activity::search_subgroup(int verbose_level)
 		cout << "group_theoretic_activity::search_subgroup done" << endl;
 	}
 }
+#endif
 
 void group_theoretic_activity::find_singer_cycle(int verbose_level)
 {
@@ -1654,8 +1634,10 @@ void group_theoretic_activity::orbits_on_set_system_from_file(int verbose_level)
 	if (f_v) {
 		cout << "group_theoretic_activity::orbits_on_set_system_from_file" << endl;
 	}
-	cout << "computing orbits on set system from file "
+	if (f_v) {
+		cout << "computing orbits on set system from file "
 			<< Descr->orbits_on_set_system_from_file_fname << ":" << endl;
+	}
 	file_io Fio;
 	int *M;
 	int m, n;
@@ -1664,7 +1646,9 @@ void group_theoretic_activity::orbits_on_set_system_from_file(int verbose_level)
 
 	Fio.int_matrix_read_csv(Descr->orbits_on_set_system_from_file_fname, M,
 			m, n, verbose_level);
-	cout << "read a matrix of size " << m << " x " << n << endl;
+	if (f_v) {
+		cout << "read a matrix of size " << m << " x " << n << endl;
+	}
 
 
 	//orbits_on_set_system_first_column = atoi(argv[++i]);
@@ -1683,7 +1667,9 @@ void group_theoretic_activity::orbits_on_set_system_from_file(int verbose_level)
 
 	set_size = Descr->orbits_on_set_system_number_of_columns;
 
-	cout << "creating action on sets:" << endl;
+	if (f_v) {
+		cout << "creating action on sets:" << endl;
+	}
 	A_on_sets = A2->create_induced_action_on_sets(m /* nb_sets */,
 			set_size, Table,
 			verbose_level);
@@ -1691,27 +1677,33 @@ void group_theoretic_activity::orbits_on_set_system_from_file(int verbose_level)
 	schreier *Sch;
 	int first, a;
 
-	cout << "computing orbits on sets:" << endl;
+	if (f_v) {
+		cout << "computing orbits on sets:" << endl;
+	}
 	A_on_sets->compute_orbits_on_points(Sch,
 			LG->Strong_gens->gens, verbose_level);
 
-	cout << "The orbit lengths are:" << endl;
-	Sch->print_orbit_lengths(cout);
+	if (f_v) {
+		cout << "The orbit lengths are:" << endl;
+		Sch->print_orbit_lengths(cout);
+	}
 
-	cout << "The orbits are:" << endl;
-	//Sch->print_and_list_orbits(cout);
-	for (i = 0; i < Sch->nb_orbits; i++) {
-		cout << " Orbit " << i << " / " << Sch->nb_orbits
-				<< " : " << Sch->orbit_first[i] << " : " << Sch->orbit_len[i];
-		cout << " : ";
+	if (f_v) {
+		cout << "The orbits are:" << endl;
+		//Sch->print_and_list_orbits(cout);
+		for (i = 0; i < Sch->nb_orbits; i++) {
+			cout << " Orbit " << i << " / " << Sch->nb_orbits
+					<< " : " << Sch->orbit_first[i] << " : " << Sch->orbit_len[i];
+			cout << " : ";
 
-		first = Sch->orbit_first[i];
-		a = Sch->orbit[first + 0];
-		cout << a << " : ";
-		lint_vec_print(cout, Table + a * set_size, set_size);
-		cout << endl;
-		//Sch->print_and_list_orbit_tex(i, ost);
+			first = Sch->orbit_first[i];
+			a = Sch->orbit[first + 0];
+			cout << a << " : ";
+			lint_vec_print(cout, Table + a * set_size, set_size);
+			cout << endl;
+			//Sch->print_and_list_orbit_tex(i, ost);
 		}
+	}
 	string fname;
 
 	fname.assign(Descr->orbits_on_set_system_from_file_fname);
@@ -1893,7 +1885,6 @@ void group_theoretic_activity::orbits_on_points(int verbose_level)
 			f_load_save,
 			prefix,
 			Orb,
-			//Descr->f_stabilizer, Descr->f_export_trees, Descr->f_shallow_tree, Descr->f_report,
 			verbose_level);
 
 	if (Descr->f_report) {

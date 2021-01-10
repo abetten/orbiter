@@ -29,6 +29,7 @@ public:
 			vector_ge *Transporter,
 			int verbose_level);
 	void create_subgroups(
+			strong_generators *SG,
 			long int *the_set, int set_size, sims *S, action *A_conj,
 			schreier *Classes,
 			vector_ge *Transporter,
@@ -481,7 +482,7 @@ public:
 // #############################################################################
 
 
-//! description of a group theoretic actvity
+//! description of a group theoretic activity
 
 class group_theoretic_activity_description {
 public:
@@ -494,7 +495,7 @@ public:
 
 	int f_orbits_on_points;
 	int f_export_trees;
-	int f_shallow_tree;
+	//int f_shallow_tree;
 	int f_stabilizer;
 	int f_orbits_on_subsets;
 	int orbits_on_subsets_size;
@@ -526,7 +527,7 @@ public:
 	int orbits_on_set_system_number_of_columns;
 	int f_orbit_of_set_from_file;
 	std::string orbit_of_set_from_file_fname;
-	int f_search_subgroup;
+	//int f_search_subgroup;
 	int f_find_singer_cycle;
 	int f_search_element_of_order;
 	int search_element_order;
@@ -608,15 +609,6 @@ public:
 	int f_surface_clebsch;
 	int f_surface_codes;
 
-#if 0
-	int f_cubic_surface_properties;
-	std::string cubic_surface_properties_fname_csv;
-	int cubic_surface_properties_defining_q;
-	int cubic_surface_properties_column_offset;
-	int f_cubic_surface_properties_analyze;
-	std::string cubic_surface_properties_fname_csv;
-	int cubic_surface_properties_defining_q;
-#endif
 
 
 		// subspace orbits:
@@ -735,7 +727,7 @@ public:
 			int verbose_level);
 	void print_elements(int verbose_level);
 	void print_elements_tex(int verbose_level);
-	void search_subgroup(int verbose_level);
+	//void search_subgroup(int verbose_level);
 	void find_singer_cycle(int verbose_level);
 	void search_element_of_order(int order, int verbose_level);
 	void element_rank(std::string &elt_data, int verbose_level);

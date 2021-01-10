@@ -2301,7 +2301,8 @@ T3r1_orbits_draw:
 # write GL_2_2_wreath_Sym3_res27_0.layered_graph
 
 
-PGGL_4_4_class_of_2C:
+
+2C_orbit_under_PGGL_4_4_elements_coded.csv: 
 	$(ORBITER_PATH)/orbiter.out -v 6 -define G \
 		-linear_group -PGGL 4 4 -end -end \
 		-with G -do \
@@ -2317,7 +2318,7 @@ PGGL_4_4_class_of_2C:
 # 2C_orbit_under_PGGL_4_4_transporter.csv
 # 1:33 on Mac
 
-PGGL_4_4_subgroups_of_type_2C_2C:
+PGGL_4_4_subgroups_of_type_2C_2C: 2C_orbit_under_PGGL_4_4_elements_coded.csv
 	$(ORBITER_PATH)/orbiter.out -v 6 -define G \
 		-linear_group -PGGL 4 4 \
 		-subgroup_by_generators "centralizer_2C" "30720" 9 \
@@ -2335,6 +2336,8 @@ PGGL_4_4_subgroups_of_type_2C_2C:
 		-group_theoretic_activities \
 		-orbits_on_group_elements_under_conjugation 2C_orbit_under_PGGL_4_4_elements_coded.csv 2C_orbit_under_PGGL_4_4_transporter.csv \
 		-end
+	pdflatex subgroups_of_order_4.tex
+	open subgroups_of_order_4.pdf
 
 
 #The distribution of orbit lengths is: ( 1, 2, 15, 20, 24^3, 30, 40, 240, 256, 480, 512, 960^2, 1280, 1920^2, 2560^4, 3840, 5120, 6144^3, 7680, 10240 )
@@ -8328,6 +8331,117 @@ packing_solution_tally:
 	$(ORBITER_PATH)/orbiter.out -v 5 \
 		-read_solutions_and_tally PGL_4_5_Subgroup_3B_3_reg_spreads_fpc0_sol.txt 10
 
+
+
+
+######################################################
+
+#elementary abelian subgroups of order 4 with 3 elements of class 2C:
+
+
+PGGL_4_4_SUBGROUP_2Cx2_0=-PGGL 4 4 \
+	-subgroup_by_generators "2Cx2_0" 4 2 \
+	"1,0,0,0,1,1,0,0,0,0,1,0,0,0,1,1,0" \
+	"1,0,0,0,0,1,0,0,1,0,1,0,0,1,0,1,0"
+PGGL_4_4_SUBGROUP_2Cx2_0_NORMALIZER=-PGGL 4 4 \
+	-subgroup_by_generators "normalizer_2Cx2_0" "768" 8 \
+	"1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,1" \
+	"1,0,0,0,0,1,0,0,0,0,1,0,2,0,0,1,0" \
+	"1,0,0,0,0,1,0,0,1,0,1,0,3,1,0,1,1" \
+	"1,0,0,0,0,1,0,0,3,0,1,0,2,3,0,1,1" \
+	"1,0,0,0,0,1,0,0,0,1,1,0,0,1,0,1,0" \
+	"1,0,0,0,2,1,1,0,1,0,1,0,1,1,2,1,1" \
+	"1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0" \
+	"1,0,0,0,3,1,0,0,1,0,1,0,0,1,3,1,1"
+
+
+PGGL_4_4_Subgroup_2Cx2_0_4_fixp_graph_cliques.csv:
+	- mkdir SPREAD_TABLES_4
+	$(ORBITER_PATH)/orbiter.out -v 5 \
+		-define G \
+		-linear_group -PGGL 4 4 -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+			-spread_table_init 2 "0,1,2" "SPREAD_TABLES_4/" \
+			-packing_with_assumed_symmetry \
+				-H $(PGGL_4_4_SUBGROUP_2Cx2_0) -end \
+				-N $(PGGL_4_4_SUBGROUP_2Cx2_0_NORMALIZER) -end \
+				-cliques_on_fixpoint_graph 1 \
+				-cliques_on_fixpoint_graph_control -W \
+					-problem_label PGGL_4_4_Subgroup_2Cx2_0_4_fixp_graph_cliques \
+				-end \
+				-fixp_clique_types_save_individually \
+			-end \
+		-end
+
+# PGGL_4_4_Subgroup_2Cx2_0_4_line_orbits_orbits_report.tex
+# H_spread_orbits_orbit_types_report.tex
+# H_spread_orbits_reduced_orbit_types_report.tex
+# PGGL_4_4_Subgroup_2Cx2_0_4_graph.bin
+# PGGL_4_4_Subgroup_2Cx2_0_fixp_graph_cliques_lvl_1
+
+# line orbits: 1^5, 2^{24}, 4^{76}
+
+#i : type[i] : number of orbits
+#0 : 1 : 192
+#1 : 2 : 7776
+#2 : 4 : 1270176
+
+#after reduce:
+#i : type[i] : number of orbits
+#0 : 1 : 192
+#1 : 4 : 38912
+
+
+# orbits on fixed points:
+#depth 6 completed, found 0 orbits
+#0 : 1 orbits
+#1 : 5 orbits
+#2 : 46 orbits
+#3 : 207 orbits
+#4 : 123 orbits
+#5 : 8 orbits
+#6 : 0 orbits
+#total: 390
+
+# 5 types of fixed spreads
+#PGGL_4_4_Subgroup_2Cx2_0_fixp_graph_cliques_lvl_1
+
+packing_2Cx2_0_long_orbits:
+	- mkdir SPREAD_TABLES_4
+	$(ORBITER_PATH)/orbiter.out -v 5 \
+		-orbiter_path $(ORBITER_PATH) \
+		-define G \
+		-linear_group -PGGL 4 4 -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+			-spread_table_init 2 "0,1,2" "SPREAD_TABLES_4/" \
+			-packing_with_assumed_symmetry \
+				-H $(PGGL_4_4_SUBGROUP_2Cx2_0) -end \
+				-N $(PGGL_4_4_SUBGROUP_2Cx2_0_NORMALIZER) -end \
+				-cliques_on_fixpoint_graph 1 \
+				-cliques_on_fixpoint_graph_control -W \
+					-problem_label PGGL_4_4_Subgroup_2Cx2_0_4_fixp_graph_cliques \
+				-end \
+				-fixp_clique_types_save_individually \
+				-process_long_orbits \
+					-list_of_cases_from_file \
+						PGGL_4_4_Subgroup_2Cx2_0_4_graph_cliques_by_type__all_in_one.csv \
+					-create_graphs \
+					-solve \
+					-read_solutions \
+					-clique_size 5 \
+					-orbit_length 4 \
+				-end \
+			-end \
+		-end
+
+#packing_long_orbits::create_graph_on_remaining_long_orbits fname_graph = PGGL_4_4_Subgroup_2Cx2_0_4_fpc0.graph
+#packing_long_orbits::create_graph_on_remaining_long_orbits fname_solutions = PGGL_4_4_Subgroup_2Cx2_0_4_fpc0_sol.txt
+#packing_long_orbits::create_graph_on_remaining_long_orbits creating the graph on long orbits with 26260 vertices
+
+
+
 #############################################################################################################
 # Section 47: BLT-sets
 
@@ -9217,65 +9331,7 @@ Dickson_q8_surface_canonical:
 
 
 
-Dickson_q16:
-	$(ORBITER_PATH)/orbiter.out -v 4 \
-		-define G \
-		-linear_group -PGGL 4 16 \
-		-end -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-cubic_surface_properties poly_orbits_d3_n3_q2.csv 2 \
-		-end 
 
-# too big for nauty
-
-
-Surfaces_q3:
-	$(ORBITER_PATH)/orbiter.out -v 4 \
-		-define G \
-		-linear_group -PGL 4 3 \
-		-end -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-cubic_surface_properties poly_orbits_d3_n3_q3.csv 3 \
-		-end 
-
-Surfaces_q3_analyze:
-	$(ORBITER_PATH)/orbiter.out -v 4 \
-		-draw_options -end \
-		-define G \
-		-linear_group -PGL 4 3 \
-		-end -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-cubic_surface_properties_analyze poly_orbits_d3_n3_q3_F3.csv 2 \
-		-end 
-	pdflatex poly_orbits_d3_n3_q3_F3_report.tex
-	open poly_orbits_d3_n3_q3_F3_report.pdf
-
-
-Surfaces_q9:
-	$(ORBITER_PATH)/orbiter.out -v 4 \
-		-define G \
-		-linear_group -PGGL 4 9 \
-		-end -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-cubic_surface_properties poly_orbits_d3_n3_q3.csv 3 \
-		-end 
-
-Surfaces_q9_analyze:
-	$(ORBITER_PATH)/orbiter.out -v 4 \
-		-draw_options -end \
-		-define  G \
-		-linear_group -PGGL 4 9 \
-		-end -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-cubic_surface_properties_analyze poly_orbits_d3_n3_q3_F9.csv 2 \
-		-end 
-	pdflatex poly_orbits_d3_n3_q3_F9_report.tex
-	open poly_orbits_d3_n3_q3_F9_report.pdf
 
 
 
@@ -9675,6 +9731,29 @@ semifields_32:
 
 
 
+###
 
+d42_41_31_rec:
+	$(ORBITER_PATH)/orbiter.out -v 5 -define G -linear_group -PGGL 4 64 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities -surface_recognize -q 64 \
+		-by_coefficients "1,2,1,4,1,7,1,11,1,12,1,14,1,15,1,19" -end \
+		-by_coefficients "1,2,1,4,1,7,1,5,1,10,1,11,1,14,1,19" -end \
+		-by_coefficients "1,0,1,1,1,2,1,5,1,7,1,11,1,13,1,14,1,15,1,17,1,18,1,19" -end \
+		-end
+		
+d41_rec:
+	$(ORBITER_PATH)/orbiter.out -v 5 -define G -linear_group -PGGL 4 64 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities -surface_recognize -q 64 \
+		-by_coefficients "1,2,1,4,1,7,1,5,1,10,1,11,1,14,1,19" -end \
+		-end
+		
+d31_rec:
+	$(ORBITER_PATH)/orbiter.out -v 5 -define G -linear_group -PGGL 4 64 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities -surface_recognize -q 64 \
+		-by_coefficients "1,0,1,1,1,2,1,5,1,7,1,11,1,13,1,14,1,15,1,17,1,18,1,19" -end \
+		-end
 
 
