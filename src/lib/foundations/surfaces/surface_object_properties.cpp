@@ -2294,7 +2294,7 @@ void surface_object_properties::print_single_points(std::ostream &ost)
 			int_vec_print_fully(ost, v, 4);
 			ost << "$";
 			if (SO->nb_lines == 27) {
-				ost << " lies on line " << SO->Surf->Schlaefli->Line_label_tex[a];
+				ost << " lies on line $" << SO->Surf->Schlaefli->Line_label_tex[a] << "$";
 			}
 			ost << "\\\\" << endl;
 		}
