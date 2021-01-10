@@ -1717,13 +1717,13 @@ void orthogonal::perp(long int pt,
 	sorting Sorting;
 	
 	if (f_v) {
-		cout << "orthogonal::perp pt=" << pt << endl;
+		cout << "orthogonal::perp verbose_level=" << verbose_level << " pt=" << pt << endl;
 	}
 	
 	if (f_v) {
 		cout << "orthogonal::perp before lines_on_point_by_line_rank" << endl;
 	}
-	lines_on_point_by_line_rank(pt, line_pencil, 0 /*verbose_level - 3*/);
+	lines_on_point_by_line_rank(pt, line_pencil, verbose_level - 3);
 	if (f_v) {
 		cout << "orthogonal::perp after lines_on_point_by_line_rank" << endl;
 	}
@@ -1850,6 +1850,12 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 	int sz0, perp_sz = 0;
 	sorting Sorting;
 
+
+	if (f_v) {
+		cout << "orthogonal::perp_of_k_points computing the perps of the points" << endl;
+	}
+
+
 	sz0 = alpha * q;
 	Perp_without_pt = NEW_plint(nb_pts);
 	for (i = 0; i < nb_pts; i++) {
@@ -1859,7 +1865,11 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 					<< " / " << nb_pts << ":" << endl;
 			}
 		Perp_without_pt[i] = NEW_lint(sz0);
+
+
 		perp(pts[i], Perp_without_pt[i], perp_sz, verbose_level - 1);
+
+
 		if (f_vv) {
 			cout << "orthogonal::perp_of_k_points perp of pt "
 					<< i << " / " << nb_pts << " has size "
@@ -1872,6 +1882,17 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 			exit(1);
 			}
 		}
+
+
+	if (f_v) {
+		cout << "orthogonal::perp_of_k_points computing the perps of the points done" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "orthogonal::perp_of_k_points computing the intersections of the perps" << endl;
+	}
+
 	Sorting.vec_intersect(Perp_without_pt[0], perp_sz,
 			Perp_without_pt[1], perp_sz, Intersection1, sz1);
 	if (f_v) {
@@ -1900,6 +1921,11 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 		Intersection2 = NULL;
 		sz1 = sz2;
 		}
+
+	if (f_v) {
+		cout << "orthogonal::perp_of_k_points computing the intersections of the perps done" << endl;
+	}
+
 
 	Perp = NEW_lint(sz1);
 	lint_vec_copy(Intersection1, Perp, sz1);
