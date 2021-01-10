@@ -24,10 +24,15 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	//draw_options = NULL;
 	f_orbits_on_points = FALSE;
 	f_export_trees = FALSE;
-	f_shallow_tree = FALSE;
+	//f_shallow_tree = FALSE;
 	f_stabilizer = FALSE;
+
 	f_orbits_on_subsets = FALSE;
 	orbits_on_subsets_size = 0;
+
+	f_orbits_on_subspaces = FALSE;
+	orbits_on_subspaces_depth = 0;
+
 	f_classes_based_on_normal_form = FALSE;
 	f_classes = FALSE;
 	f_group_table = FALSE;
@@ -56,7 +61,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	orbits_on_set_system_number_of_columns = 0;
 	f_orbit_of_set_from_file = FALSE;
 	//orbit_of_set_from_file_fname = NULL;
-	f_search_subgroup = FALSE;
+	//f_search_subgroup = FALSE;
 	f_find_singer_cycle = FALSE;
 	f_search_element_of_order = FALSE;
 	search_element_order = 0;
@@ -134,20 +139,6 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_surface_clebsch = FALSE;
 	f_surface_codes = FALSE;
 
-#if 0
-	f_cubic_surface_properties = FALSE;
-	//std::string cubic_surface_properties_fname_csv;
-	cubic_surface_properties_defining_q = 0;
-	cubic_surface_properties_column_offset = 0;
-
-	f_cubic_surface_properties_analyze = FALSE;
-	//std::string cubic_surface_properties_fname_csv;
-	cubic_surface_properties_defining_q = 0;
-#endif
-
-
-	f_orbits_on_subspaces = FALSE;
-	orbits_on_subspaces_depth = 0;
 	f_mindist = FALSE;
 	mindist = 0;
 	f_self_orthogonal = FALSE;
@@ -219,12 +210,7 @@ int group_theoretic_activity_description::read_arguments(
 
 	cout << "group_theoretic_activity_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
-		if (stringcmp(argv[i], "-orbits_on_subsets") == 0) {
-			f_orbits_on_subsets = TRUE;
-			orbits_on_subsets_size = strtoi(argv[++i]);
-			cout << "-orbits_on_subsets " << orbits_on_subsets_size << endl;
-		}
-		else if (stringcmp(argv[i], "-poset_classification_control") == 0) {
+		if (stringcmp(argv[i], "-poset_classification_control") == 0) {
 			f_poset_classification_control = TRUE;
 			Control = NEW_OBJECT(poset_classification_control);
 			cout << "-poset_classification_control " << endl;
@@ -242,14 +228,30 @@ int group_theoretic_activity_description::read_arguments(
 			f_orbits_on_points = TRUE;
 			cout << "-orbits_on_points" << endl;
 		}
+
+		else if (stringcmp(argv[i], "-orbits_on_subsets") == 0) {
+			f_orbits_on_subsets = TRUE;
+			orbits_on_subsets_size = strtoi(argv[++i]);
+			cout << "-orbits_on_subsets " << orbits_on_subsets_size << endl;
+		}
+
+		else if (stringcmp(argv[i], "-orbits_on_subspaces") == 0) {
+			f_orbits_on_subspaces = TRUE;
+			orbits_on_subspaces_depth = strtoi(argv[++i]);
+			cout << "-orbits_on_subspaces " << orbits_on_subspaces_depth << endl;
+		}
+
 		else if (stringcmp(argv[i], "-export_trees") == 0) {
 			f_export_trees = TRUE;
 			cout << "-export_trees" << endl;
 		}
+#if 0
 		else if (stringcmp(argv[i], "-shallow_tree") == 0) {
 			f_shallow_tree = TRUE;
 			cout << "-shallow_tree" << endl;
 		}
+#endif
+
 		else if (stringcmp(argv[i], "-stabilizer") == 0) {
 			f_stabilizer = TRUE;
 			cout << "-stabilizer" << endl;
@@ -345,10 +347,12 @@ int group_theoretic_activity_description::read_arguments(
 					<< " " << orbits_on_set_system_first_column << " "
 					<< orbits_on_set_system_number_of_columns << endl;
 		}
+#if 0
 		else if (stringcmp(argv[i], "-search_subgroup") == 0) {
 			f_search_subgroup = TRUE;
 			cout << "-search_subgroup " << endl;
 		}
+#endif
 		else if (stringcmp(argv[i], "-find_singer_cycle") == 0) {
 			f_find_singer_cycle = TRUE;
 			cout << "-find_singer_cycle " << endl;
@@ -636,33 +640,11 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
-#if 0
-		else if (stringcmp(argv[i], "-cubic_surface_properties") == 0) {
-			f_cubic_surface_properties = TRUE;
-			cubic_surface_properties_fname_csv.assign(argv[++i]);
-			cubic_surface_properties_defining_q = strtoi(argv[++i]);
-			cubic_surface_properties_column_offset = strtoi(argv[++i]);
-			cout << "-cubic_surface_properties " << cubic_surface_properties_fname_csv
-					<< " " << cubic_surface_properties_defining_q << " "
-					<< cubic_surface_properties_column_offset << endl;
-		}
-		else if (stringcmp(argv[i], "-cubic_surface_properties_analyze") == 0) {
-			f_cubic_surface_properties_analyze = TRUE;
-			cubic_surface_properties_fname_csv.assign(argv[++i]);
-			cubic_surface_properties_defining_q = strtoi(argv[++i]);
-			cout << "-cubic_surface_properties " << cubic_surface_properties_fname_csv
-					<< " " << cubic_surface_properties_defining_q << endl;
-		}
-#endif
 
 
 
 
-		else if (stringcmp(argv[i], "-orbits_on_subspaces") == 0) {
-			f_orbits_on_subspaces = TRUE;
-			orbits_on_subspaces_depth = strtoi(argv[++i]);
-			cout << "-orbits_on_subspaces " << orbits_on_subspaces_depth << endl;
-		}
+
 		else if (stringcmp(argv[i], "-mindist") == 0) {
 			f_mindist = TRUE;
 			mindist = strtoi(argv[++i]);
