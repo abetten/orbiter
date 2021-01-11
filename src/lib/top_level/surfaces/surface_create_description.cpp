@@ -36,6 +36,7 @@ surface_create_description::surface_create_description()
 
 	f_by_rank = FALSE;
 	//std::string rank_text;
+	rank_defining_q = 0;
 
 
 	f_family_HCV = FALSE;
@@ -117,7 +118,8 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 		else if (stringcmp(argv[i], "-by_rank") == 0) {
 			f_by_rank = TRUE;
 			rank_text.assign(argv[++i]);
-			cout << "-by_rank " << rank_text << endl;
+			rank_defining_q = strtoi(argv[++i]);
+			cout << "-by_rank " << rank_text << " " << rank_defining_q << endl;
 		}
 		else if (stringcmp(argv[i], "-family_HCV") == 0) {
 			f_family_HCV = TRUE;

@@ -983,7 +983,7 @@ void surface_create::create_surface_by_coefficient_vector(int *coeffs20,
 
 }
 
-void surface_create::create_surface_by_rank(std::string &rank_text,
+void surface_create::create_surface_by_rank(std::string &rank_text, int defining_q,
 		std::vector<std::string> &select_double_six_string,
 		int verbose_level)
 {
@@ -1003,8 +1003,18 @@ void surface_create::create_surface_by_rank(std::string &rank_text,
 
 	rank = strtolint(rank_text);
 
-	F->PG_element_unrank_modified_lint(coeffs20, 1, 20, rank);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_rank surface is given "
+				"by the rank, rank = " << rank << endl;
+	}
 
+	{
+		finite_field F0;
+
+		F0.finite_field_init(defining_q, 0);
+
+		F0.PG_element_unrank_modified_lint(coeffs20, 1, 20, rank);
+	}
 
 	create_surface_by_coefficient_vector(coeffs20,
 			select_double_six_string,
