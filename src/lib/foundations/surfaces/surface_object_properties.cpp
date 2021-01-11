@@ -1380,169 +1380,185 @@ void surface_object_properties::print_line_intersection_graph(std::ostream &ost)
 
 void surface_object_properties::print_adjacency_list(std::ostream &ost)
 {
-	int i, j, m, n, h;
-	int *p;
-	int *set;
+	if (SO->nb_lines < 128) {
+		int i, j, m, n, h;
+		int *p;
+		int *set;
 
 
-	set = NEW_int(SO->nb_lines);
-	m = SO->nb_lines;
-	n = SO->nb_lines;
-	p = Adj_line_intersection_graph;
-	ost << "{\\arraycolsep=1pt" << endl;
+		set = NEW_int(SO->nb_lines);
+		m = SO->nb_lines;
+		n = SO->nb_lines;
+		p = Adj_line_intersection_graph;
+		ost << "{\\arraycolsep=1pt" << endl;
 
-	ost << "$$" << endl;
-	ost << "\\begin{array}{rr|l|l}" << endl;
-	ost << " &  & \\mbox{intersecting} & \\mbox{non-intersecting}";
-	ost << "\\\\" << endl;
-	ost << "\\hline" << endl;
-	for (i = 0; i < m; i++) {
-		ost << i << " & ";
-		if (SO->nb_lines == 27) {
-			ost << SO->Surf->Schlaefli->Line_label_tex[i];
-		}
-		else {
-			ost << i;
-		}
-		ost << " & ";
-		h = 0;
-		for (j = 0; j < n; j++) {
-			if (p[i * n + j]) {
-				set[h++] = j;
-			}
-		}
-		for (j = 0; j < h; j++) {
+		ost << "$$" << endl;
+		ost << "\\begin{array}{rr|l|l}" << endl;
+		ost << " &  & \\mbox{intersecting} & \\mbox{non-intersecting}";
+		ost << "\\\\" << endl;
+		ost << "\\hline" << endl;
+		for (i = 0; i < m; i++) {
+			ost << i << " & ";
 			if (SO->nb_lines == 27) {
-				ost << SO->Surf->Schlaefli->Line_label_tex[set[j]];
+				ost << SO->Surf->Schlaefli->Line_label_tex[i];
 			}
 			else {
-				ost << set[j];
+				ost << i;
 			}
-			if (j < h - 1) {
-				ost << ", ";
+			ost << " & ";
+			h = 0;
+			for (j = 0; j < n; j++) {
+				if (p[i * n + j]) {
+					set[h++] = j;
+				}
 			}
-		}
-		ost << " & ";
-		h = 0;
-		for (j = 0; j < n; j++) {
-			if (p[i * n + j] == 0) {
-				set[h++] = j;
+			for (j = 0; j < h; j++) {
+				if (SO->nb_lines == 27) {
+					ost << SO->Surf->Schlaefli->Line_label_tex[set[j]];
+				}
+				else {
+					ost << set[j];
+				}
+				if (j < h - 1) {
+					ost << ", ";
+				}
 			}
-		}
-		for (j = 0; j < h; j++) {
-			if (SO->nb_lines == 27) {
-				ost << SO->Surf->Schlaefli->Line_label_tex[set[j]];
+			ost << " & ";
+			h = 0;
+			for (j = 0; j < n; j++) {
+				if (p[i * n + j] == 0) {
+					set[h++] = j;
+				}
 			}
-			else {
-				ost << set[j];
+			for (j = 0; j < h; j++) {
+				if (SO->nb_lines == 27) {
+					ost << SO->Surf->Schlaefli->Line_label_tex[set[j]];
+				}
+				else {
+					ost << set[j];
+				}
+				if (j < h - 1) {
+					ost << ", ";
+				}
 			}
-			if (j < h - 1) {
-				ost << ", ";
+			ost << "\\\\";
+			ost << endl;
 			}
-		}
-		ost << "\\\\";
-		ost << endl;
-		}
-	ost << "\\end{array}" << endl;
-	ost << "$$" << endl;
-	ost << "}%%" << endl;
+		ost << "\\end{array}" << endl;
+		ost << "$$" << endl;
+		ost << "}%%" << endl;
 
-	FREE_int(set);
+		FREE_int(set);
+	}
+	else {
+		ost << "Too many lines to print.\\\\" << endl;
+	}
 
 }
 
 
 void surface_object_properties::print_adjacency_matrix(std::ostream &ost)
 {
-	int i, j, m, n;
-	int *p;
+	if (SO->nb_lines < 128) {
+		int i, j, m, n;
+		int *p;
 
-	m = SO->nb_lines;
-	n = SO->nb_lines;
-	p = Adj_line_intersection_graph;
-	ost << "{\\arraycolsep=1pt" << endl;
-	ost << "$$" << endl;
-	ost << "\\begin{array}{rr|*{" << n << "}r}" << endl;
-	ost << " & ";
-	for (j = 0; j < n; j++) {
-		ost << " & " << j;
-	}
-	ost << "\\\\" << endl;
-	if (SO->nb_lines == 27) {
+		m = SO->nb_lines;
+		n = SO->nb_lines;
+		p = Adj_line_intersection_graph;
+		ost << "{\\arraycolsep=1pt" << endl;
+		ost << "$$" << endl;
+		ost << "\\begin{array}{rr|*{" << n << "}r}" << endl;
 		ost << " & ";
 		for (j = 0; j < n; j++) {
-			ost << " & " << SO->Surf->Schlaefli->Line_label_tex[j];
+			ost << " & " << j;
 		}
 		ost << "\\\\" << endl;
-	}
-	ost << "\\hline" << endl;
-	for (i = 0; i < m; i++) {
-		ost << i << " & ";
 		if (SO->nb_lines == 27) {
-			ost << SO->Surf->Schlaefli->Line_label_tex[i];
+			ost << " & ";
+			for (j = 0; j < n; j++) {
+				ost << " & " << SO->Surf->Schlaefli->Line_label_tex[j];
+			}
+			ost << "\\\\" << endl;
 		}
-		for (j = 0; j < n; j++) {
-			ost << " & " << p[i * n + j];
+		ost << "\\hline" << endl;
+		for (i = 0; i < m; i++) {
+			ost << i << " & ";
+			if (SO->nb_lines == 27) {
+				ost << SO->Surf->Schlaefli->Line_label_tex[i];
+			}
+			for (j = 0; j < n; j++) {
+				ost << " & " << p[i * n + j];
+			}
+			ost << "\\\\";
+			ost << endl;
 		}
-		ost << "\\\\";
-		ost << endl;
+		ost << "\\end{array}" << endl;
+		ost << "$$" << endl;
+		ost << "}%%" << endl;
 	}
-	ost << "\\end{array}" << endl;
-	ost << "$$" << endl;
-	ost << "}%%" << endl;
+	else {
+		ost << "Too many lines to print.\\\\" << endl;
+	}
 }
 
 void surface_object_properties::print_adjacency_matrix_with_intersection_points(
 		std::ostream &ost)
 {
-	int i, j, m, n, idx;
-	int *p;
 
-	m = SO->nb_lines;
-	n = SO->nb_lines;
-	p = Adj_line_intersection_graph;
-	ost << "{\\arraycolsep=1pt" << endl;
-	ost << "$$" << endl;
-	ost << "\\begin{array}{rr|*{" << n << "}r}" << endl;
-	ost << " & ";
-	for (j = 0; j < n; j++) {
-		ost << " & " << j;
-	}
-	ost << "\\\\" << endl;
+	if (SO->nb_lines < 128) {
+		int i, j, m, n, idx;
+		int *p;
 
-	if (SO->nb_lines == 27) {
+		m = SO->nb_lines;
+		n = SO->nb_lines;
+		p = Adj_line_intersection_graph;
+		ost << "{\\arraycolsep=1pt" << endl;
+		ost << "$$" << endl;
+		ost << "\\begin{array}{rr|*{" << n << "}r}" << endl;
 		ost << " & ";
 		for (j = 0; j < n; j++) {
-			ost << " & " << SO->Surf->Schlaefli->Line_label_tex[j];
+			ost << " & " << j;
 		}
 		ost << "\\\\" << endl;
-	}
-	ost << "\\hline" << endl;
-	for (i = 0; i < m; i++) {
-		ost << i;
+
 		if (SO->nb_lines == 27) {
-			ost << " & " << SO->Surf->Schlaefli->Line_label_tex[i];
-		}
-		else {
 			ost << " & ";
+			for (j = 0; j < n; j++) {
+				ost << " & " << SO->Surf->Schlaefli->Line_label_tex[j];
+			}
+			ost << "\\\\" << endl;
 		}
-		for (j = 0; j < n; j++) {
-			ost << " & ";
-			if (p[i * n + j]) {
-				//a = Line_intersection_pt[i * n + j];
-				idx = Line_intersection_pt_idx[i * n + j];
-				ost << "P_{" << idx << "}";
+		ost << "\\hline" << endl;
+		for (i = 0; i < m; i++) {
+			ost << i;
+			if (SO->nb_lines == 27) {
+				ost << " & " << SO->Surf->Schlaefli->Line_label_tex[i];
 			}
 			else {
-				ost << ".";
+				ost << " & ";
 			}
+			for (j = 0; j < n; j++) {
+				ost << " & ";
+				if (p[i * n + j]) {
+					//a = Line_intersection_pt[i * n + j];
+					idx = Line_intersection_pt_idx[i * n + j];
+					ost << "P_{" << idx << "}";
+				}
+				else {
+					ost << ".";
+				}
+			}
+			ost << "\\\\";
+			ost << endl;
 		}
-		ost << "\\\\";
-		ost << endl;
+		ost << "\\end{array}" << endl;
+		ost << "$$" << endl;
+		ost << "}%%" << endl;
 	}
-	ost << "\\end{array}" << endl;
-	ost << "$$" << endl;
-	ost << "}%%" << endl;
+	else {
+		ost << "Too many lines to print.\\\\" << endl;
+	}
 }
 
 void surface_object_properties::print_neighbor_sets(std::ostream &ost)
@@ -1553,41 +1569,46 @@ void surface_object_properties::print_neighbor_sets(std::ostream &ost)
 	//ost << "\\clearpage" << endl;
 	ost << "Neighbor sets in the line intersection graph:\\\\" << endl;
 	//Line_neighbors->print_table_tex(ost);
-	for (i = 0; i < Line_neighbors->nb_sets; i++) {
-		ost << "Line " << i << " intersects " << endl;
-		ost << "$$" << endl;
-		ost << "\\begin{array}{|r*{"
-				<< Line_neighbors->Set_size[i] << "}{|c}|}" << endl;
-		//int_set_print_tex(ost, Line_neighbors->Sets[i],
-		//Line_neighbors->Set_size[i]);
-		ost << "\\hline" << endl;
-		ost << "\\mbox{Line} ";
-		for (h = 0; h < Line_neighbors->Set_size[i]; h++) {
-			j = Line_neighbors->Sets[i][h];
-			ost << " & " << "\\ell_{" << j << "}";
-		}
-		ost << "\\\\" << endl;
-		ost << "\\hline" << endl;
-		ost << "\\mbox{in point} ";
-		for (h = 0; h < Line_neighbors->Set_size[i]; h++) {
-			j = Line_neighbors->Sets[i][h];
-			p = Line_intersection_pt[i * SO->nb_lines + j];
+	if (Line_neighbors->nb_sets < 1028) {
+		for (i = 0; i < Line_neighbors->nb_sets; i++) {
+			ost << "Line " << i << " intersects " << endl;
+			ost << "$$" << endl;
+			ost << "\\begin{array}{|r*{"
+					<< Line_neighbors->Set_size[i] << "}{|c}|}" << endl;
+			//int_set_print_tex(ost, Line_neighbors->Sets[i],
+			//Line_neighbors->Set_size[i]);
+			ost << "\\hline" << endl;
+			ost << "\\mbox{Line} ";
+			for (h = 0; h < Line_neighbors->Set_size[i]; h++) {
+				j = Line_neighbors->Sets[i][h];
+				ost << " & " << "\\ell_{" << j << "}";
+			}
+			ost << "\\\\" << endl;
+			ost << "\\hline" << endl;
+			ost << "\\mbox{in point} ";
+			for (h = 0; h < Line_neighbors->Set_size[i]; h++) {
+				j = Line_neighbors->Sets[i][h];
+				p = Line_intersection_pt[i * SO->nb_lines + j];
 
 #if 0
-			if (!Sorting.lint_vec_search_linear(SO->Pts, SO->nb_pts, p, idx)) {
-				cout << "surface_object::print_line_intersection_graph "
-						"did not find intersection point" << endl;
-				exit(1);
-			}
-			ost << " & " << idx;
+				if (!Sorting.lint_vec_search_linear(SO->Pts, SO->nb_pts, p, idx)) {
+					cout << "surface_object::print_line_intersection_graph "
+							"did not find intersection point" << endl;
+					exit(1);
+				}
+				ost << " & " << idx;
 #else
-			ost << " & " << "P_{" << p << "}";
+				ost << " & " << "P_{" << p << "}";
 #endif
+			}
+			ost << "\\\\" << endl;
+			ost << "\\hline" << endl;
+			ost << "\\end{array}" << endl;
+			ost << "$$" << endl;
 		}
-		ost << "\\\\" << endl;
-		ost << "\\hline" << endl;
-		ost << "\\end{array}" << endl;
-		ost << "$$" << endl;
+	}
+	else {
+		ost << "Too many lines to print.\\\\" << endl;
 	}
 }
 
@@ -1793,60 +1814,64 @@ void surface_object_properties::print_lines_with_points_on_them(std::ostream &os
 	int i, j;
 	int pt;
 
+	if (SO->nb_lines < 128) {
+		for (i = 0; i < SO->nb_lines; i++) {
+			//fp << "Line " << i << " is " << v[i] << ":\\\\" << endl;
+			SO->Surf->Gr->unrank_lint(SO->Lines[i], 0 /*verbose_level*/);
+			ost << "$$" << endl;
+			ost << "\\ell_{" << i << "} ";
+			if (SO->nb_lines == 27) {
+				ost << " = " << SO->Surf->Schlaefli->Line_label_tex[i];
+			}
+			ost << " = \\left[" << endl;
+			//print_integer_matrix_width(cout, Gr->M,
+			// k, n, n, F->log10_of_q + 1);
+			L.print_integer_matrix_tex(ost, SO->Surf->Gr->M, 2, 4);
+			ost << "\\right]_{" << SO->Lines[i] << "}" << endl;
+			ost << "$$" << endl;
+			ost << "which contains the point set " << endl;
+			ost << "$$" << endl;
+			ost << "\\{ P_{i} \\mid i \\in ";
+			L.lint_set_print_tex(ost, pts_on_lines->Sets[i],
+					pts_on_lines->Set_size[i]);
+			ost << "\\}." << endl;
+			ost << "$$" << endl;
 
-	for (i = 0; i < SO->nb_lines; i++) {
-		//fp << "Line " << i << " is " << v[i] << ":\\\\" << endl;
-		SO->Surf->Gr->unrank_lint(SO->Lines[i], 0 /*verbose_level*/);
-		ost << "$$" << endl;
-		ost << "\\ell_{" << i << "} ";
-		if (SO->nb_lines == 27) {
-			ost << " = " << SO->Surf->Schlaefli->Line_label_tex[i];
-		}
-		ost << " = \\left[" << endl;
-		//print_integer_matrix_width(cout, Gr->M,
-		// k, n, n, F->log10_of_q + 1);
-		L.print_integer_matrix_tex(ost, SO->Surf->Gr->M, 2, 4);
-		ost << "\\right]_{" << SO->Lines[i] << "}" << endl;
-		ost << "$$" << endl;
-		ost << "which contains the point set " << endl;
-		ost << "$$" << endl;
-		ost << "\\{ P_{i} \\mid i \\in ";
-		L.lint_set_print_tex(ost, pts_on_lines->Sets[i],
-				pts_on_lines->Set_size[i]);
-		ost << "\\}." << endl;
-		ost << "$$" << endl;
+			{
+				std::vector<long int> plane_ranks;
 
-		{
-			std::vector<long int> plane_ranks;
+				SO->Surf->P->planes_through_a_line(
+						SO->Lines[i], plane_ranks,
+						0 /*verbose_level*/);
 
-			SO->Surf->P->planes_through_a_line(
-					SO->Lines[i], plane_ranks,
-					0 /*verbose_level*/);
+				// print the tangent planes associated with the points on the line:
+				ost << "The tangent planes associated with the points on this line are:\\\\" << endl;
+				for (j = 0; j < pts_on_lines->Set_size[i]; j++) {
 
-			// print the tangent planes associated with the points on the line:
-			ost << "The tangent planes associated with the points on this line are:\\\\" << endl;
-			for (j = 0; j < pts_on_lines->Set_size[i]; j++) {
+					int w[4];
 
-				int w[4];
-
-				pt = pts_on_lines->Sets[i][j];
-				ost << j << " : " << pt << " : ";
-				SO->Surf->unrank_point(w, SO->Pts[pt]);
-				int_vec_print(ost, w, 4);
-				ost << " : ";
-				if (tangent_plane_rank_global[pt] == -1) {
-					ost << " is singular\\\\" << endl;
+					pt = pts_on_lines->Sets[i][j];
+					ost << j << " : " << pt << " : ";
+					SO->Surf->unrank_point(w, SO->Pts[pt]);
+					int_vec_print(ost, w, 4);
+					ost << " : ";
+					if (tangent_plane_rank_global[pt] == -1) {
+						ost << " is singular\\\\" << endl;
+					}
+					else {
+						ost << tangent_plane_rank_global[pt] << "\\\\" << endl;
+					}
 				}
-				else {
-					ost << tangent_plane_rank_global[pt] << "\\\\" << endl;
+				ost << "The planes in the pencil through the line are:\\\\" << endl;
+				for (j = 0; j < plane_ranks.size(); j++) {
+					ost << j << " : " << plane_ranks[j] << "\\\\" << endl;
+
 				}
 			}
-			ost << "The planes in the pencil through the line are:\\\\" << endl;
-			for (j = 0; j < plane_ranks.size(); j++) {
-				ost << j << " : " << plane_ranks[j] << "\\\\" << endl;
-
-			}
 		}
+	}
+	else {
+		ost << "Too many to print.\\\\" << endl;
 	}
 }
 
@@ -2383,7 +2408,7 @@ void surface_object_properties::print_all_points_on_surface(std::ostream &ost)
 	//ost << "\\clearpage" << endl;
 	ost << "The surface has " << SO->nb_pts << " points:\\\\" << endl;
 
-	if (TRUE /*SO->nb_pts < 1000*/) {
+	if (SO->nb_pts < 1000) {
 		//ost << "$$" << endl;
 		//L.lint_vec_print_as_matrix(ost, SO->Pts, SO->nb_pts, 10, TRUE /* f_tex */);
 		//ost << "$$" << endl;
@@ -2415,20 +2440,25 @@ void surface_object_properties::print_points_on_lines(std::ostream &ost)
 	//ost << "\\clearpage" << endl;
 	//pts_on_lines->print_table_tex(ost);
 	ost << "\\noindent" << endl;
-	for (i = 0; i < pts_on_lines->nb_sets; i++) {
-		ost << "Line " << i;
+	if (pts_on_lines->nb_sets < 1000) {
+		for (i = 0; i < pts_on_lines->nb_sets; i++) {
+			ost << "Line " << i;
 
-		if (SO->nb_lines == 27) {
-			ost << " = "
-				"$" << SO->Surf->Schlaefli->Line_label_tex[i]
-			<< "$ " << endl;
+			if (SO->nb_lines == 27) {
+				ost << " = "
+					"$" << SO->Surf->Schlaefli->Line_label_tex[i]
+				<< "$ " << endl;
+			}
+
+			ost << "has " << pts_on_lines->Set_size[i]
+				<< " points: $\\{ P_{i} \\mid i \\in ";
+			L.lint_set_print_tex(ost, pts_on_lines->Sets[i],
+					pts_on_lines->Set_size[i]);
+			ost << "\\}$\\\\" << endl;
 		}
-
-		ost << "has " << pts_on_lines->Set_size[i]
-			<< " points: $\\{ P_{i} \\mid i \\in ";
-		L.lint_set_print_tex(ost, pts_on_lines->Sets[i],
-				pts_on_lines->Set_size[i]);
-		ost << "\\}$\\\\" << endl;
+	}
+	else {
+		ost << "Too many to print.\\\\" << endl;
 	}
 
 	//ost << "\\clearpage" << endl;
@@ -2443,7 +2473,7 @@ void surface_object_properties::print_points_on_surface_but_not_on_a_line(std::o
 	//ost << "\\clearpage" << endl;
 	ost << "The surface has " << nb_pts_not_on_lines
 			<< " points not on any line:\\\\" << endl;
-	if (TRUE /*nb_pts_not_on_lines < 1000*/) {
+	if (nb_pts_not_on_lines < 1000) {
 #if 0
 		ost << "$$" << endl;
 		L.lint_vec_print_as_matrix(ost,
@@ -2465,6 +2495,9 @@ void surface_object_properties::print_points_on_surface_but_not_on_a_line(std::o
 			ost << "$\\\\" << endl;
 			}
 		ost << "\\end{multicols}" << endl;
+	}
+	else {
+		ost << "Too many to print.\\\\" << endl;
 	}
 }
 
