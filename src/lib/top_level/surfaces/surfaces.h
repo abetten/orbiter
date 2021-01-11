@@ -706,6 +706,12 @@ public:
 	void create_surface_by_coefficients(std::string &coefficients_text,
 			std::vector<std::string> &select_double_six_string,
 			int verbose_level);
+	void create_surface_by_coefficient_vector(int *coeffs20,
+			std::vector<std::string> &select_double_six_string,
+			int verbose_level);
+	void create_surface_by_rank(std::string &rank_text,
+			std::vector<std::string> &select_double_six_string,
+			int verbose_level);
 	void create_surface_from_catalogue(int iso,
 			std::vector<std::string> &select_double_six_string,
 			int verbose_level);
@@ -741,10 +747,21 @@ public:
 
 	int f_q;
 	int q;
+
+	int f_label_txt;
+	std::string label_txt;
+
+	int f_label_tex;
+	std::string label_tex;
+
 	int f_catalogue;
 	int iso;
 	int f_by_coefficients;
 	std::string coefficients_text;
+
+	int f_by_rank;
+	std::string rank_text;
+
 	int f_family_HCV;
 	int family_HCV_a;
 	int family_HCV_b;

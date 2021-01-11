@@ -21,10 +21,23 @@ surface_create_description::surface_create_description()
 {
 	f_q = FALSE;
 	q = 0;
+
+	f_label_txt = FALSE;
+	//label_txt
+
+	f_label_tex = FALSE;
+	//label_tex
+
+
 	f_catalogue = FALSE;
 	iso = 0;
 	f_by_coefficients = FALSE;
 	//coefficients_text = NULL;
+
+	f_by_rank = FALSE;
+	//std::string rank_text;
+
+
 	f_family_HCV = FALSE;
 	family_HCV_a = 0;
 	family_HCV_b = 0;
@@ -44,6 +57,7 @@ surface_create_description::surface_create_description()
 	//arc_lifting_text = NULL;
 	//arc_lifting_two_lines_text = NULL;
 	f_arc_lifting_with_two_lines = FALSE;
+
 	//nb_select_double_six = 0;
 	//select_double_six_string[];
 
@@ -80,6 +94,16 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 			q = strtoi(argv[++i]);
 			cout << "-q " << q << endl;
 		}
+		else if (stringcmp(argv[i], "-label_txt") == 0) {
+			f_label_txt = TRUE;
+			label_txt.assign(argv[++i]);
+			cout << "-label_txt " << label_txt << endl;
+		}
+		else if (stringcmp(argv[i], "-label_tex") == 0) {
+			f_label_tex = TRUE;
+			label_tex.assign(argv[++i]);
+			cout << "-label_tex " << label_tex << endl;
+		}
 		else if (stringcmp(argv[i], "-catalogue") == 0) {
 			f_catalogue = TRUE;
 			iso = strtoi(argv[++i]);
@@ -89,6 +113,11 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 			f_by_coefficients = TRUE;
 			coefficients_text.assign(argv[++i]);
 			cout << "-by_coefficients " << coefficients_text << endl;
+		}
+		else if (stringcmp(argv[i], "-by_rank") == 0) {
+			f_by_rank = TRUE;
+			rank_text.assign(argv[++i]);
+			cout << "-by_rank " << rank_text << endl;
 		}
 		else if (stringcmp(argv[i], "-family_HCV") == 0) {
 			f_family_HCV = TRUE;
