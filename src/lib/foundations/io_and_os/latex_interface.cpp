@@ -490,7 +490,7 @@ void latex_interface::head(ostream& ost,
 		ost << "%\\date{}\n";
 		ost << "\\maketitle%\n";
 		}
-	ost << "\\pagenumbering{roman}\n";
+	ost << "%\\pagenumbering{roman}\n";
 	ost << "%\\thispagestyle{empty}\n";
 	if (f_toc) {
 		ost << "\\tableofcontents\n";
@@ -504,7 +504,7 @@ void latex_interface::head(ostream& ost,
 		ost << "\\clearpage\n";
 		ost << endl;
 		}
-	ost << "\\pagenumbering{arabic}\n";
+	ost << "%\\pagenumbering{arabic}\n";
 	ost << "%\\pagenumbering{roman}\n";
 	ost << endl;
 	ost << endl;

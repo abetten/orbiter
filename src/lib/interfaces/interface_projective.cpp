@@ -41,25 +41,24 @@ interface_projective::interface_projective()
 	//smooth_curve_Polish = NULL;
 	FP_descr = NULL;
 
-	f_create_BLT_set = FALSE;
-	BLT_set_descr = NULL;
-	//nb_transform = 0;
-	//const char *transform_coeffs[1000];
-	//int f_inverse_transform[1000];
 
 	f_create_spread = FALSE;
 	Spread_create_description = FALSE;
 
 
-
-
 	f_make_table_of_surfaces = FALSE;
-
 
 	f_create_surface_reports = FALSE;
 	f_create_surface_atlas = FALSE;
 	create_surface_atlas_q_max = 0;
 
+	f_create_dickson_atlas = FALSE;
+
+	f_create_BLT_set = FALSE;
+	BLT_set_descr = NULL;
+	//nb_transform = 0;
+	//const char *transform_coeffs[1000];
+	//int f_inverse_transform[1000];
 
 }
 
@@ -96,6 +95,9 @@ void interface_projective::print_help(int argc,
 	}
 	else if (stringcmp(argv[i], "-create_surface_atlas") == 0) {
 		cout << "-create_surface_atlas <int : q_max>" << endl;
+	}
+	else if (stringcmp(argv[i], "-create_dickson_atlas") == 0) {
+		cout << "-create_dickson_atlas" << endl;
 	}
 }
 
@@ -135,6 +137,9 @@ int interface_projective::recognize_keyword(int argc,
 		return true;
 	}
 	else if (stringcmp(argv[i], "-create_surface_atlas") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-create_dickson_atlas") == 0) {
 		return true;
 	}
 	return false;
@@ -251,6 +256,11 @@ int interface_projective::read_arguments(int argc,
 			create_surface_atlas_q_max = strtoi(argv[++i]);
 			cout << "-create_surface_reports " << create_surface_atlas_q_max << endl;
 		}
+		else if (stringcmp(argv[i], "-create_dickson_atlas") == 0) {
+			f_create_dickson_atlas = TRUE;
+			cout << "-create_dickson_atlas " << endl;
+			//i++;
+		}
 		else {
 			break;
 		}
@@ -318,6 +328,12 @@ void interface_projective::worker(int verbose_level)
 	else if (f_create_surface_atlas) {
 
 		do_create_surface_atlas(create_surface_atlas_q_max, verbose_level);
+
+	}
+
+	else if (f_create_dickson_atlas) {
+
+		do_create_dickson_atlas(verbose_level);
 
 	}
 
@@ -966,7 +982,7 @@ void interface_projective::do_create_surface_atlas_q_e(int q_max,
 
 				make_fname_surface_report_pdf(fname, T->q, Idx[i]);
 
-				ost << " & ";
+				ost << " & " << endl;
 				ost << "%%tth: \\begin{html} <a href=\"" << fname << "\"> report </a> \\end{html}" << endl;
 
 				ost << "\\\\" << endl;
@@ -991,6 +1007,147 @@ void interface_projective::do_create_surface_atlas_q_e(int q_max,
 	}
 
 }
+
+void interface_projective::do_create_dickson_atlas(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "do_create_dickson_atlas" << endl;
+		cout << "do_create_dickson_atlas verbose_level=" << verbose_level << endl;
+	}
+
+	file_io Fio;
+
+
+
+
+
+	{
+		string fname_report;
+
+		fname_report.assign("dickson_surfaces");
+		fname_report.append(".tex");
+
+		{
+			ofstream ost(fname_report);
+
+
+			const char *title = "ATLAS of Dickson Surfaces";
+			const char *author = "Fatma Karaoglu";
+
+			latex_interface L;
+
+			//latex_head_easy(fp);
+			L.head(ost,
+				FALSE /* f_book */,
+				TRUE /* f_title */,
+				title, author,
+				FALSE /*f_toc */,
+				FALSE /* f_landscape */,
+				FALSE /* f_12pt */,
+				TRUE /*f_enlarged_page */,
+				TRUE /* f_pagenumbers*/,
+				NULL /* extra_praeamble */);
+
+
+			int field_orders[] = {2,4,8,16,32,64};
+			int nb_of_fields = sizeof(field_orders) / sizeof(int);
+			int i, j, c;
+			int I, N;
+
+			N = (141 + 24) / 25;
+			for (I = 0; I < N; I++) {
+
+				ost << "$$" << endl;
+				ost << "\\begin{array}{|r|*{" << nb_of_fields << "}{r|}}" << endl;
+				ost << "\\hline" << endl;
+				ost << "\\ \\ D-i \\ \\ ";
+				for (j = 0; j < nb_of_fields; j++) {
+					ost << "&\\ \\ " << field_orders[j] << "\\ \\ ";
+				}
+				ost << "\\\\" << endl;
+				ost << "\\hline" << endl;
+				for (i = 0; i < 25; i++) {
+					c = I * 25 + i;
+
+
+					if (c >= 141) {
+						continue;
+					}
+
+					cout << "creating line " << c << endl;
+
+					ost << c << " " << endl;
+
+
+					for (j = 0; j < nb_of_fields; j++) {
+
+						string fname_base;
+						string fname_tex;
+						string fname_pdf;
+						string fname_surface_report;
+
+
+						char str[1000];
+
+
+						sprintf(str, "Orb%d_q%d", c, field_orders[j]);
+						fname_base.assign(str);
+						fname_tex.assign(fname_base);
+						fname_tex.append(".tex");
+						fname_pdf.assign(fname_base);
+						fname_pdf.append(".pdf");
+						fname_surface_report.assign(fname_base);
+						fname_surface_report.append(".pdf");
+
+
+						ost << " & " << endl;
+						ost << "%%tth: \\begin{html} <a href=\"" << fname_surface_report << "\"> " << fname_surface_report << " </a> \\end{html}" << endl;
+
+
+						if (Fio.file_size(fname_tex.c_str()) > 0) {
+
+							if (Fio.file_size(fname_pdf.c_str()) <= 0) {
+								string cmd;
+
+								cmd.assign("pdflatex ");
+								cmd.append(fname_tex);
+								cmd.append(" ");
+								system(cmd.c_str());
+							}
+						}
+
+					}
+					ost << "\\\\" << endl;
+					ost << "\\hline" << endl;
+				}
+
+				//
+
+				ost << "\\end{array}" << endl;
+
+				ost << "$$" << endl;
+			}
+
+			L.foot(ost);
+		}
+		file_io Fio;
+
+		cout << "Written file " << fname_report << " of size "
+			<< Fio.file_size(fname_report) << endl;
+
+
+	}
+
+
+	if (f_v) {
+		cout << "do_create_dickson_atlas done" << endl;
+	}
+}
+
+
+
 
 void interface_projective::make_fname_surface_report_tex(std::string &fname, int q, int ocn)
 {

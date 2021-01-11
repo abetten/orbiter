@@ -464,6 +464,7 @@ class interface_projective {
 	int f_create_surface_atlas;
 	int create_surface_atlas_q_max;
 
+	int f_create_dickson_atlas;
 
 	int f_create_BLT_set;
 	BLT_set_create_description *BLT_set_descr;
@@ -496,6 +497,7 @@ public:
 			struct table_surfaces_field_order *T, int nb_e, int *Idx, int nb,
 			std::string &fname_report_tex,
 			int verbose_level);
+	void do_create_dickson_atlas(int verbose_level);
 	void make_fname_surface_report_tex(std::string &fname, int q, int ocn);
 	void make_fname_surface_report_pdf(std::string &fname, int q, int ocn);
 
