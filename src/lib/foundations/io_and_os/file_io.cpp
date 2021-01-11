@@ -3132,6 +3132,27 @@ void file_io::create_file(create_file_description *Descr, int verbose_level)
 
 }
 
+void file_io::fix_escape_characers(char *str)
+{
+	int i, j, l;
+
+	l = strlen(str);
+	for (i = 0, j = 0; i < l; i++, j++) {
+		if (str[i] == '\\' && i < l - 1 && str[i + 1] == 't') {
+			str[j] = '\t';
+			i++;
+		}
+		else if (str[i] == '\\' && i < l - 1 && str[i + 1] == 'D') {
+			str[j] = '$';
+			i++;
+		}
+		else {
+			str[j] = str[i];
+		}
+	}
+	str[j] = 0;
+}
+
 void file_io::create_files(create_file_description *Descr,
 	int verbose_level)
 {
@@ -3165,32 +3186,9 @@ void file_io::create_files(create_file_description *Descr,
 
 				cout << "mask='" << Descr->lines[j].c_str() << "'" << endl;
 				sprintf(str, Descr->lines[j].c_str(), i, i, i, i, i, i, i, i);
-				int l;
 
 
-				l = strlen(str);
-
-				cout << "searching for tabs" << endl;
-				cout << "str='" << str << "'" << endl;
-				{
-					int i, j;
-
-					for (i = 0, j = 0; i < l; i++, j++) {
-						if (str[i] == '\\' && i < l - 1 && str[i + 1] == 't') {
-							str[j] = '\t';
-							i++;
-						}
-						else if (str[i] == '\\' && i < l - 1 && str[i + 1] == 'D') {
-							str[j] = '$';
-							i++;
-						}
-						else {
-							str[j] = str[i];
-						}
-					}
-					str[j] = 0;
-
-				}
+				fix_escape_characers(str);
 				cout << "str='" << str << "'" << endl;
 				fp << str << endl;
 			}
@@ -3200,6 +3198,7 @@ void file_io::create_files(create_file_description *Descr,
 						for (j = 0; j < Descr->repeat_N; j++) {
 							if ((j % Descr->split_m) == r) {
 								sprintf(str, Descr->repeat_mask.c_str(), j);
+								fix_escape_characers(str);
 								fp << str << endl;
 							}
 						}
@@ -3218,6 +3217,7 @@ void file_io::create_files(create_file_description *Descr,
 					for (j = 0; j < Descr->repeat_N; j++) {
 						c = Descr->repeat_start + j * Descr->repeat_increment;
 						sprintf(str, Descr->command.c_str(), c, c, c, c);
+						fix_escape_characers(str);
 						fp << str << endl;
 					}
 				}
@@ -3291,6 +3291,7 @@ void file_io::create_files_list_of_cases(spreadsheet *S,
 					//NT = Descr->N * Descr->nb_tasks;
 					for (t = 0; t < Descr->nb_tasks; t++) {
 						sprintf(str, Descr->command.c_str(), i, t, i, t);
+						fix_escape_characers(str);
 						fp << str; // << " \\" << endl;
 						for (j = 0; j < nb_cases; j++) {
 							if ((j % Descr->N) != i) {
@@ -3346,6 +3347,7 @@ void file_io::create_files_list_of_cases(spreadsheet *S,
 
 				for (j = 0; j < Descr->nb_final_lines; j++) {
 					sprintf(str, Descr->final_lines[j].c_str(), i, i, i, i, i, i, i, i);
+					fix_escape_characers(str);
 					fp << str << endl;
 				} // next j
 

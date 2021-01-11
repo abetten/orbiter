@@ -237,6 +237,7 @@ public:
 	void write_decomposition_stack(char *fname, int m, int n,
 			int *v, int *b, int *aij, int verbose_level);
 	void create_file(create_file_description *Descr, int verbose_level);
+	void fix_escape_characers(char *str);
 	void create_files(create_file_description *Descr,
 		int verbose_level);
 	void create_files_list_of_cases(spreadsheet *S,
