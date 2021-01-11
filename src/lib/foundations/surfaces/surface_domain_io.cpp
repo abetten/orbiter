@@ -209,6 +209,8 @@ void surface_domain::print_lines_tex(ostream &ost, long int *Lines, int nb_lines
 
 	Rk = NEW_lint(nb_lines);
 
+	ost << "The lines and their Pluecker coordinates are:\\\\" << endl;
+
 	for (i = 0; i < nb_lines; i++) {
 		//fp << "Line " << i << " is " << v[i] << ":\\\\" << endl;
 		Gr->unrank_lint(Lines[i], 0 /*verbose_level*/);

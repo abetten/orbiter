@@ -1211,6 +1211,10 @@ void surface_object_properties::report_properties(std::ostream &ost, int verbose
 		cout << "surface_object_properties::report_properties" << endl;
 	}
 
+	if (f_v) {
+		cout << "surface_object_properties::report_properties_simple before print_equation" << endl;
+	}
+	print_equation(ost);
 
 	if (f_v) {
 		cout << "surface_object_properties::report_properties before print_general" << endl;
@@ -1270,6 +1274,11 @@ void surface_object_properties::report_properties_simple(std::ostream &ost, int 
 		cout << "surface_object_properties::report_properties_simple" << endl;
 	}
 
+
+	if (f_v) {
+		cout << "surface_object_properties::report_properties_simple before print_equation" << endl;
+	}
+	print_equation(ost);
 
 	if (f_v) {
 		cout << "surface_object_properties::report_properties_simple before print_general" << endl;
@@ -2434,7 +2443,8 @@ void surface_object_properties::print_points_on_surface_but_not_on_a_line(std::o
 	//ost << "\\clearpage" << endl;
 	ost << "The surface has " << nb_pts_not_on_lines
 			<< " points not on any line:\\\\" << endl;
-	if (nb_pts_not_on_lines < 1000) {
+	if (TRUE /*nb_pts_not_on_lines < 1000*/) {
+#if 0
 		ost << "$$" << endl;
 		L.lint_vec_print_as_matrix(ost,
 				Pts_not_on_lines, nb_pts_not_on_lines, 10,
@@ -2442,6 +2452,7 @@ void surface_object_properties::print_points_on_surface_but_not_on_a_line(std::o
 		//print_integer_matrix_with_standard_labels(ost, Pts3,
 		//(nb_pts_not_on_lines + 9) / 10, 10, TRUE /* f_tex */);
 		ost << "$$" << endl;
+#endif
 		//ost << "%%\\clearpage" << endl;
 		ost << "The points on the surface but not "
 				"on lines are:\\\\" << endl;
@@ -2454,9 +2465,6 @@ void surface_object_properties::print_points_on_surface_but_not_on_a_line(std::o
 			ost << "$\\\\" << endl;
 			}
 		ost << "\\end{multicols}" << endl;
-	}
-	else {
-		ost << "Too many to print.\\\\" << endl;
 	}
 }
 
