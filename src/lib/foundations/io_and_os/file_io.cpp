@@ -3161,7 +3161,37 @@ void file_io::create_files(create_file_description *Descr,
 			ofstream fp(fname);
 
 			for (j = 0; j < Descr->nb_lines; j++) {
+
+
+				cout << "mask='" << Descr->lines[j].c_str() << "'" << endl;
 				sprintf(str, Descr->lines[j].c_str(), i, i, i, i, i, i, i, i);
+				int l;
+
+
+				l = strlen(str);
+
+				cout << "searching for tabs" << endl;
+				cout << "str='" << str << "'" << endl;
+				{
+					int i, j;
+
+					for (i = 0, j = 0; i < l; i++, j++) {
+						if (str[i] == '\\' && i < l - 1 && str[i + 1] == 't') {
+							str[j] = '\t';
+							i++;
+						}
+						else if (str[i] == '\\' && i < l - 1 && str[i + 1] == 'D') {
+							str[j] = '$';
+							i++;
+						}
+						else {
+							str[j] = str[i];
+						}
+					}
+					str[j] = 0;
+
+				}
+				cout << "str='" << str << "'" << endl;
 				fp << str << endl;
 			}
 			if (Descr->f_repeat) {
@@ -3187,7 +3217,7 @@ void file_io::create_files(create_file_description *Descr,
 					}
 					for (j = 0; j < Descr->repeat_N; j++) {
 						c = Descr->repeat_start + j * Descr->repeat_increment;
-						sprintf(str, Descr->command.c_str(), i, i, c, c);
+						sprintf(str, Descr->command.c_str(), c, c, c, c);
 						fp << str << endl;
 					}
 				}
@@ -3446,6 +3476,9 @@ void file_io::do_csv_file_select_cols(std::string &fname,
 	int nb_rows;
 
 	nb_rows = S.nb_rows;
+	if (f_v) {
+		cout << "file_io::do_csv_file_select_cols nb_rows=" << nb_rows << endl;
+	}
 
 
 	string fname_out;
@@ -3458,7 +3491,7 @@ void file_io::do_csv_file_select_cols(std::string &fname,
 		ofstream ost(fname_out);
 		ost << "Row,";
 		S.print_table_row_with_column_selection(0, FALSE, Cols, nb_cols, ost);
-		for (i = 0; i < nb_rows; i++) {
+		for (i = 0; i < nb_rows - 1; i++) {
 			ost << i << ",";
 			S.print_table_row_with_column_selection(i + 1, FALSE,
 					Cols, nb_cols, ost);
@@ -3467,6 +3500,22 @@ void file_io::do_csv_file_select_cols(std::string &fname,
 	}
 	cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
 
+	fname_out.assign(fname);
+	chop_off_extension(fname_out);
+	fname_out.append("_special.csv");
+
+	{
+		ofstream ost(fname_out);
+		//ost << "Row,";
+		//S.print_table_row_with_column_selection(0, FALSE, Cols, nb_cols, ost);
+		for (i = 0; i < nb_rows - 1; i++) {
+			ost << "Orb" << i << "=";
+			S.print_table_row_with_column_selection(i + 1, FALSE,
+					Cols, nb_cols, ost);
+			}
+		ost << "END" << endl;
+	}
+	cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
 
 	FREE_int(Cols);
 	if (f_v) {
