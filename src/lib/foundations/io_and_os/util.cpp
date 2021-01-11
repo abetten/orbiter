@@ -2801,6 +2801,14 @@ int strtoi(std::string &str)
 	return i;
 }
 
+long int strtolint(std::string &str)
+{
+	long int i;
+
+	i = atol(str.c_str());
+	return i;
+}
+
 double strtof(std::string &str)
 {
 	double f;

@@ -1437,7 +1437,19 @@ void orthogonal::lines_on_point_by_line_rank(long int pt,
 	}
 	for (i = 0; i < alpha; i++) {
 		pt2 = rank_point(lines_on_point_coords2 + i * n, 1, 0/*verbose_level - 5*/);
-		line_pencil_line_ranks[i] = rank_line(pt, pt2, 0 /*verbose_level - 5*/);
+		if (f_v) {
+			cout << "orthogonal::lines_on_point_by_line_rank "
+					"i=" << i << " / " << alpha << " pt=" << pt << " pt2=" << pt2  << endl;
+			cout << "orthogonal::lines_on_point_by_line_rank "
+					"before rank_line" << endl;
+		}
+		line_pencil_line_ranks[i] = rank_line(pt, pt2, verbose_level);
+		if (f_v) {
+			cout << "orthogonal::lines_on_point_by_line_rank "
+					"after rank_line" << endl;
+			cout << "orthogonal::lines_on_point_by_line_rank "
+					"i=" << i << " / " << alpha << " line_pencil_line_ranks[i]=" << line_pencil_line_ranks[i] << endl;
+		}
 	}
 	Sorting.lint_vec_quicksort_increasingly(line_pencil_line_ranks, alpha);
 	if (f_vv) {

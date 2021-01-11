@@ -233,6 +233,18 @@ void surface_create::create_surface_from_description(int verbose_level)
 
 
 	}
+
+	else if (Descr->f_by_rank) {
+
+
+		create_surface_by_rank(
+				Descr->rank_text,
+				Descr->select_double_six_string,
+				verbose_level);
+
+
+	}
+
 	else if (Descr->f_catalogue) {
 
 
@@ -707,6 +719,9 @@ void surface_create::create_surface_by_coefficients(std::string &coefficients_te
 	FREE_int(surface_coeffs);
 
 
+#if 0
+
+
 	SO = NEW_OBJECT(surface_object);
 
 	if (f_v) {
@@ -811,6 +826,11 @@ void surface_create::create_surface_by_coefficients(std::string &coefficients_te
 	}
 
 
+#else
+	create_surface_by_coefficient_vector(coeffs20,
+			select_double_six_string,
+			verbose_level);
+#endif
 
 
 
@@ -833,6 +853,186 @@ void surface_create::create_surface_by_coefficients(std::string &coefficients_te
 	}
 
 }
+
+void surface_create::create_surface_by_coefficient_vector(int *coeffs20,
+		std::vector<std::string> &select_double_six_string,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_coefficient_vector" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_coefficient_vector surface is given "
+				"by the coefficients" << endl;
+	}
+
+
+
+	SO = NEW_OBJECT(surface_object);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_coefficient_vector "
+				"before SO->init_equation" << endl;
+	}
+	SO->init_equation(Surf, coeffs20, verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_coefficient_vector "
+				"after SO->init_equation" << endl;
+	}
+
+#if 0
+	// compute the group of the surface:
+	projective_space_with_action *PA;
+
+	PA = NEW_OBJECT(projective_space_with_action);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::create_surface_by_coefficient_vector before PA->init" << endl;
+	}
+	PA->init(
+		F, 3 /*n*/, f_semilinear,
+		TRUE /* f_init_incidence_structure */,
+		verbose_level);
+	if (f_v) {
+		cout << "group_theoretic_activity::create_surface_by_coefficient_vector after PA->init" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_coefficient_vector "
+				"before SC->compute_group" << endl;
+	}
+	compute_group(PA, verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_coefficient_vector "
+				"after SC->compute_group" << endl;
+	}
+
+	FREE_OBJECT(PA);
+#endif
+
+
+
+
+	int nb_select_double_six;
+
+	nb_select_double_six = select_double_six_string.size();
+
+	if (nb_select_double_six) {
+		int i;
+
+		for (i = 0; i < nb_select_double_six; i++) {
+			int *select_double_six;
+			int sz;
+			long int New_lines[27];
+
+			if (f_v) {
+				cout << "surface_create::create_surface_by_coefficient_vector selecting "
+						"double six " << i << " / " << nb_select_double_six << endl;
+			}
+			int_vec_scan(select_double_six_string[i], select_double_six, sz);
+			if (sz != 12) {
+				cout << "surface_create::create_surface_by_coefficient_vector "
+						"f_select_double_six double six must consist of 12 numbers" << endl;
+				exit(1);
+			}
+
+			if (f_v) {
+				cout << "surface_create::create_surface_by_coefficient_vector select_double_six = ";
+				int_vec_print(cout, select_double_six, 12);
+				cout << endl;
+			}
+
+
+			if (f_v) {
+				cout << "surface_create::create_surface_by_coefficient_vector before "
+						"Surf->rearrange_lines_according_to_a_given_double_six" << endl;
+			}
+			Surf->rearrange_lines_according_to_a_given_double_six(
+					SO->Lines, select_double_six, New_lines, 0 /* verbose_level */);
+
+			lint_vec_copy(New_lines, SO->Lines, 27);
+			FREE_int(select_double_six);
+
+
+		}
+
+
+		if (f_v) {
+			cout << "surface_create::create_surface_by_coefficient_vector before "
+					"compute_properties" << endl;
+		}
+		SO->compute_properties(verbose_level - 2);
+		if (f_v) {
+			cout << "surface_create::create_surface_by_coefficient_vector after "
+					"compute_properties" << endl;
+		}
+
+
+	}
+
+
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_coefficient_vector done" << endl;
+	}
+
+}
+
+void surface_create::create_surface_by_rank(std::string &rank_text,
+		std::vector<std::string> &select_double_six_string,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_rank" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_rank surface is given "
+				"by the rank" << endl;
+	}
+
+	int coeffs20[20];
+	long int rank;
+
+	rank = strtolint(rank_text);
+
+	F->PG_element_unrank_modified_lint(coeffs20, 1, 20, rank);
+
+
+	create_surface_by_coefficient_vector(coeffs20,
+			select_double_six_string,
+			verbose_level);
+
+
+
+	char str_q[1000];
+
+	sprintf(str_q, "%d", F->q);
+
+
+	prefix.assign("by_rank_q");
+	prefix.append(str_q);
+
+	label_txt.assign("by_rank_q");
+	label_txt.append(str_q);
+
+	label_tex.assign("by\\_rank\\_q");
+	label_tex.append(str_q);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_rank done" << endl;
+	}
+
+}
+
+
 
 void surface_create::create_surface_from_catalogue(int iso,
 		std::vector<std::string> &select_double_six_string,

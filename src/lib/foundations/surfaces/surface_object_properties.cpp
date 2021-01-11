@@ -1277,10 +1277,6 @@ void surface_object_properties::report_properties_simple(std::ostream &ost, int 
 	print_general(ost);
 
 
-	if (f_v) {
-		cout << "surface_object_properties::report_properties_simple before print_all_points_on_surface" << endl;
-	}
-	print_all_points_on_surface(ost);
 
 
 	ost << "\\subsubsection*{Singular Points}" << endl;
@@ -1350,6 +1346,13 @@ void surface_object_properties::report_properties_simple(std::ostream &ost, int 
 	if (f_v) {
 		cout << "surface_object_properties::report_properties_simple done" << endl;
 	}
+
+
+	if (f_v) {
+		cout << "surface_object_properties::report_properties_simple before print_all_points_on_surface" << endl;
+	}
+	print_all_points_on_surface(ost);
+
 }
 
 void surface_object_properties::print_line_intersection_graph(std::ostream &ost)
@@ -1552,7 +1555,7 @@ void surface_object_properties::print_neighbor_sets(std::ostream &ost)
 		ost << "\\mbox{Line} ";
 		for (h = 0; h < Line_neighbors->Set_size[i]; h++) {
 			j = Line_neighbors->Sets[i][h];
-			ost << " & " << j;
+			ost << " & " << "\\ell_{" << j << "}";
 		}
 		ost << "\\\\" << endl;
 		ost << "\\hline" << endl;
@@ -1569,7 +1572,7 @@ void surface_object_properties::print_neighbor_sets(std::ostream &ost)
 			}
 			ost << " & " << idx;
 #else
-			ost << " & " << p;
+			ost << " & " << "P_{" << p << "}";
 #endif
 		}
 		ost << "\\\\" << endl;
@@ -2007,8 +2010,8 @@ void surface_object_properties::print_Eckardt_points(std::ostream &ost)
 		ost << "\\; T= " << tangent_plane_rank_global[p];
 		ost << "$\\\\" << endl;
 		if (tangent_plane_rank_global[p] == -1) {
-			cout << "Eckardt point is singular. This should not happen" << endl;
-			exit(1);
+			cout << "Eckardt point is singular. " << endl;
+			//exit(1);
 		}
 		}
 	//ost << "\\end{align*}" << endl;
@@ -2184,28 +2187,37 @@ void surface_object_properties::print_double_points(std::ostream &ost)
 	ost << "The surface has " << nb_Double_points
 			<< " Double points:\\\\" << endl;
 	if (nb_Double_points < 1000) {
+
+#if 0
 		ost << "$$" << endl;
 		L.lint_vec_print_as_matrix(ost,
 				Double_points, nb_Double_points, 10,
 				TRUE /* f_tex */);
 		ost << "$$" << endl;
+
 		ost << "$$" << endl;
 		L.int_vec_print_as_matrix(ost,
 				Double_points_index, nb_Double_points, 10,
 				TRUE /* f_tex */);
 		ost << "$$" << endl;
+#endif
+
+#if 0
 		//ost << "\\clearpage" << endl;
 		ost << "The Double points on the surface are:\\\\" << endl;
 		ost << "\\begin{multicols}{2}" << endl;
 		ost << "\\noindent" << endl;
 		for (i = 0; i < nb_Double_points; i++) {
 			SO->Surf->unrank_point(v, Double_points[i]);
-			ost << i << " : $P_{" << Double_points_index[i]
-					<< "} = P_{" << Double_points[i] << "}=";
+			ost << i << " : $";
+			//ost << P_{" << Double_points_index[i] << "}=";
+			ost << "P_{" << Double_points[i] << "}=";
 			int_vec_print_fully(ost, v, 4);
 			ost << "$\\\\" << endl;
 			}
 		ost << "\\end{multicols}" << endl;
+#endif
+
 		ost << "The double points on the surface are:\\\\" << endl;
 		//ost << "\\begin{multicols}{2}" << endl;
 
@@ -2227,7 +2239,8 @@ void surface_object_properties::print_double_points(std::ostream &ost)
 			}
 			pt_idx[a * SO->nb_lines + b] = p;
 		}
-		ost << "\\begin{align*}" << endl;
+		ost << "\\begin{multicols}{2}" << endl;
+		ost << "\\noindent" << endl;
 		for (a = 0; a < SO->nb_lines; a++) {
 			for (b = a + 1; b < SO->nb_lines; b++) {
 				p = pt_idx[a * SO->nb_lines + b];
@@ -2235,8 +2248,9 @@ void surface_object_properties::print_double_points(std::ostream &ost)
 					continue;
 				}
 				SO->Surf->unrank_point(v, SO->Pts[p]);
-				ost << "P_{" << p
-						<< "} = P_{" << SO->Pts[p] << "}=";
+				//ost << "P_{" << p << "} = ";
+				ost << "$P_{" << SO->Pts[p] << "}";
+				ost << " = ";
 				int_vec_print_fully(ost, v, 4);
 
 
@@ -2248,10 +2262,15 @@ void surface_object_properties::print_double_points(std::ostream &ost)
 					ost << SO->Surf->Schlaefli->Line_label_tex[a] << " \\cap ";
 					ost << SO->Surf->Schlaefli->Line_label_tex[b];
 				}
-				ost << "\\\\" << endl;
+				else {
+					ost << " = ";
+					ost << "\\ell_{" << a << "} \\cap ";
+					ost << "\\ell_{" << b << "} ";
+				}
+				ost << "$\\\\" << endl;
 			}
 		}
-		ost << "\\end{align*}" << endl;
+		ost << "\\end{multicols}" << endl;
 
 		FREE_int(pt_idx);
 	}
@@ -2270,6 +2289,8 @@ void surface_object_properties::print_single_points(std::ostream &ost)
 	ost << "The surface has " << nb_Single_points
 			<< " single points:\\\\" << endl;
 	if (TRUE /* nb_Single_points < 1000*/) {
+
+#if 0
 		ost << "$$" << endl;
 		L.lint_vec_print_as_matrix(ost,
 				Single_points, nb_Single_points, 10,
@@ -2280,6 +2301,8 @@ void surface_object_properties::print_single_points(std::ostream &ost)
 				Single_points_index, nb_Single_points, 10,
 				TRUE /* f_tex */);
 		ost << "$$" << endl;
+#endif
+
 		//ost << "\\clearpage" << endl;
 		ost << "The single points on the surface are:\\\\" << endl;
 		ost << "\\begin{multicols}{2}" << endl;
@@ -2295,6 +2318,9 @@ void surface_object_properties::print_single_points(std::ostream &ost)
 			ost << "$";
 			if (SO->nb_lines == 27) {
 				ost << " lies on line $" << SO->Surf->Schlaefli->Line_label_tex[a] << "$";
+			}
+			else {
+				ost << " lies on line $\\ell_{" << a << "}$";
 			}
 			ost << "\\\\" << endl;
 		}
