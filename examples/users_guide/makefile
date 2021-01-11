@@ -2370,8 +2370,12 @@ poly_orbits_d3_n3_q2.csv:
 		-orbits_on_polynomials 3 \
 		-orbits_on_polynomials_draw_tree 6 \
 		-end 
-	pdflatex poly_orbits_d3_n3_q2.tex
-	open poly_orbits_d3_n3_q2.pdf
+
+select_cols:
+	$(ORBITER_PATH)/orbiter.out -v 4 \
+		-csv_file_select_cols poly_orbits_d3_n3_q2.csv 0
+	#pdflatex poly_orbits_d3_n3_q2.tex
+	#open poly_orbits_d3_n3_q2.pdf
 
 
 
@@ -8366,7 +8370,7 @@ PGGL_4_4_Subgroup_2Cx2_0_4_fixp_graph_cliques.csv:
 			-packing_with_assumed_symmetry \
 				-H $(PGGL_4_4_SUBGROUP_2Cx2_0) -end \
 				-N $(PGGL_4_4_SUBGROUP_2Cx2_0_NORMALIZER) -end \
-				-cliques_on_fixpoint_graph 1 \
+				-cliques_on_fixpoint_graph 5 \
 				-cliques_on_fixpoint_graph_control -W \
 					-problem_label PGGL_4_4_Subgroup_2Cx2_0_4_fixp_graph_cliques \
 				-end \
@@ -8407,7 +8411,7 @@ PGGL_4_4_Subgroup_2Cx2_0_4_fixp_graph_cliques.csv:
 # 5 types of fixed spreads
 #PGGL_4_4_Subgroup_2Cx2_0_fixp_graph_cliques_lvl_1
 
-packing_2Cx2_0_long_orbits:
+packing_2Cx2_0_long_orbits_1_fixpoint:
 	- mkdir SPREAD_TABLES_4
 	$(ORBITER_PATH)/orbiter.out -v 5 \
 		-orbiter_path $(ORBITER_PATH) \
@@ -8439,6 +8443,38 @@ packing_2Cx2_0_long_orbits:
 #packing_long_orbits::create_graph_on_remaining_long_orbits fname_graph = PGGL_4_4_Subgroup_2Cx2_0_4_fpc0.graph
 #packing_long_orbits::create_graph_on_remaining_long_orbits fname_solutions = PGGL_4_4_Subgroup_2Cx2_0_4_fpc0_sol.txt
 #packing_long_orbits::create_graph_on_remaining_long_orbits creating the graph on long orbits with 26260 vertices
+
+
+
+
+packing_2Cx2_0_long_orbits_5_fixpoints:
+	- mkdir SPREAD_TABLES_4
+	$(ORBITER_PATH)/orbiter.out -v 5 \
+		-orbiter_path $(ORBITER_PATH) \
+		-define G \
+		-linear_group -PGGL 4 4 -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+			-spread_table_init 2 "0,1,2" "SPREAD_TABLES_4/" \
+			-packing_with_assumed_symmetry \
+				-H $(PGGL_4_4_SUBGROUP_2Cx2_0) -end \
+				-N $(PGGL_4_4_SUBGROUP_2Cx2_0_NORMALIZER) -end \
+				-cliques_on_fixpoint_graph 5 \
+				-cliques_on_fixpoint_graph_control -W \
+					-problem_label PGGL_4_4_Subgroup_2Cx2_0_4_fixp_graph_cliques \
+				-end \
+				-fixp_clique_types_save_individually \
+				-process_long_orbits \
+					-list_of_cases_from_file \
+						PGGL_4_4_Subgroup_2Cx2_0_4_graph_cliques_by_type__all_in_one.csv \
+					-create_graphs \
+					-solve \
+					-read_solutions \
+					-clique_size 4 \
+					-orbit_length 4 \
+				-end \
+			-end \
+		-end
 
 
 
@@ -9736,24 +9772,256 @@ semifields_32:
 d42_41_31_rec:
 	$(ORBITER_PATH)/orbiter.out -v 5 -define G -linear_group -PGGL 4 64 -wedge -end -end \
 		-with G -do \
-		-group_theoretic_activities -surface_recognize -q 64 \
+		-group_theoretic_activities \
+		-surface_recognize -q 64 \
 		-by_coefficients "1,2,1,4,1,7,1,11,1,12,1,14,1,15,1,19" -end \
-		-by_coefficients "1,2,1,4,1,7,1,5,1,10,1,11,1,14,1,19" -end \
-		-by_coefficients "1,0,1,1,1,2,1,5,1,7,1,11,1,13,1,14,1,15,1,17,1,18,1,19" -end \
 		-end
 		
 d41_rec:
 	$(ORBITER_PATH)/orbiter.out -v 5 -define G -linear_group -PGGL 4 64 -wedge -end -end \
 		-with G -do \
-		-group_theoretic_activities -surface_recognize -q 64 \
+		-group_theoretic_activities \
+		-surface_recognize -q 64 \
 		-by_coefficients "1,2,1,4,1,7,1,5,1,10,1,11,1,14,1,19" -end \
 		-end
 		
 d31_rec:
 	$(ORBITER_PATH)/orbiter.out -v 5 -define G -linear_group -PGGL 4 64 -wedge -end -end \
 		-with G -do \
-		-group_theoretic_activities -surface_recognize -q 64 \
+		-group_theoretic_activities \
+		-surface_recognize -q 64 \
 		-by_coefficients "1,0,1,1,1,2,1,5,1,7,1,11,1,13,1,14,1,15,1,17,1,18,1,19" -end \
 		-end
 
+D9_q64:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-linear_group -PGL 4 64 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -by_coefficients $(D9) -q 64 \
+		-end \
+		-end 
+	mv surface_by_coefficients_q64_report.tex D9_q64.tex
 
+
+D: D16_q64 D47_q64 
+	
+
+D47_q64:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-linear_group -PGL 4 64 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -label_txt "D47_q64" -label_tex "D-47" -by_coefficients $(D47) -q 64 \
+		-end \
+		-end 
+	pdflatex D47_q64.tex
+	open D47_q64.pdf
+
+R10566_q64:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-linear_group -PGL 4 64 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -label_txt "Rk_10566_q64" -label_tex "Orb-10566" -by_rank 10566 2 -q 64 \
+		-end \
+		-end 
+	pdflatex Rk_10566_q64.tex
+	open Rk_10566_q64.pdf
+
+
+
+D16_q64:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-linear_group -PGL 4 64 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -by_coefficients $(D16) -q 64 \
+		-end \
+		-end 
+	mv surface_by_coefficients_q64_report.tex D16_q64.tex
+
+D42_q64:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-linear_group -PGL 4 64 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -by_coefficients $(D42) -q 64 \
+		-end \
+		-end 
+	mv surface_by_coefficients_q64_report.tex D16_q64.tex
+
+
+
+
+Orb0="0"
+Orb1="4"
+Orb2="16"
+Orb3="20"
+Orb4="21"
+Orb5="24"
+Orb6="31"
+Orb7="34"
+Orb8="35"
+Orb9="38"
+Orb10="43"
+Orb11="46"
+Orb12="68"
+Orb13="69"
+Orb14="76"
+Orb15="77"
+Orb16="139"
+Orb17="140"
+Orb18="156"
+Orb19="192"
+Orb20="264"
+Orb21="265"
+Orb22="331"
+Orb23="337"
+Orb24="346"
+Orb25="355"
+Orb26="362"
+Orb27="487"
+Orb28="10566"
+Orb29="65540"
+Orb30="65542"
+Orb31="65546"
+Orb32="65547"
+Orb33="65548"
+Orb34="65550"
+Orb35="65554"
+Orb36="65561"
+Orb37="65562"
+Orb38="65569"
+Orb39="65570"
+Orb40="65603"
+Orb41="65605"
+Orb42="65609"
+Orb43="65611"
+Orb44="65612"
+Orb45="65613"
+Orb46="65614"
+Orb47="65617"
+Orb48="65618"
+Orb49="65633"
+Orb50="65634"
+Orb51="65665"
+Orb52="65666"
+Orb53="65687"
+Orb54="65695"
+Orb55="65735"
+Orb56="65743"
+Orb57="65744"
+Orb58="65759"
+Orb59="65760"
+Orb60="65831"
+Orb61="65839"
+Orb62="65843"
+Orb63="65850"
+Orb64="65851"
+Orb65="65858"
+Orb66="65859"
+Orb67="65863"
+Orb68="65865"
+Orb69="65867"
+Orb70="65868"
+Orb71="65869"
+Orb72="65871"
+Orb73="65872"
+Orb74="65873"
+Orb75="65874"
+Orb76="65887"
+Orb77="65899"
+Orb78="65900"
+Orb79="65903"
+Orb80="65904"
+Orb81="65915"
+Orb82="65919"
+Orb83="65921"
+Orb84="65922"
+Orb85="66755"
+Orb86="66763"
+Orb87="66764"
+Orb88="67107"
+Orb89="67115"
+Orb90="67117"
+Orb91="67150"
+Orb92="67243"
+Orb93="73731"
+Orb94="73733"
+Orb95="73737"
+Orb96="73753"
+Orb97="73795"
+Orb98="73796"
+Orb99="73797"
+Orb100="73798"
+Orb101="73801"
+Orb102="73802"
+Orb103="73987"
+Orb104="73993"
+Orb105="74007"
+Orb106="74051"
+Orb107="74052"
+Orb108="74053"
+Orb109="74055"
+Orb110="74057"
+Orb111="74099"
+Orb112="74105"
+Orb113="74106"
+Orb114="74243"
+Orb115="74247"
+Orb116="74248"
+Orb117="74263"
+Orb118="74264"
+Orb119="74275"
+Orb120="74276"
+Orb121="74279"
+Orb122="74280"
+Orb123="74295"
+Orb124="74296"
+Orb125="74499"
+Orb126="74500"
+Orb127="74531"
+Orb128="74532"
+Orb129="76051"
+Orb130="76099"
+Orb131="76100"
+Orb132="76291"
+Orb133="76292"
+Orb134="76307"
+Orb135="76308"
+Orb136="76323"
+Orb137="76355"
+Orb138="76356"
+Orb139="76387"
+Orb140="76389"
+
+Surface_Orb0_q4:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-linear_group -PGL 4 4 -wedge -end \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -label_txt "Orb0_q4" -label_tex "Rank-$(Orb0)" -by_rank $(Orb0) 2 -q 4 \
+		-end \
+		-end 
+
+
+create_dickson_makefiles_q4:
+	$(ORBITER_PATH)/orbiter.out -create_files -file_mask dickson_q4_%03d \
+		-N 141  \
+		-line_numeric "Surface_Orb%d_q4:" \
+		-line_numeric "\t\D(ORBITER_PATH)/orbiter.out -v 3 \\" \
+		-line_numeric "\t\t-linear_group -PGL 4 4 -wedge -end \\" \
+		-line_numeric "\t\t-group_theoretic_activities \\" \
+		-line_numeric "\t\t-control_six_arcs -end \\" \
+		-line_numeric "\t\t-create_surface -label_txt \"Orb%d_q4\" -label_tex \"Rank-\D(Orb%d)\" -by_rank \D(Orb%d) 2 -q 4 \\" \
+		-line_numeric "\t\t-end \\" \
+		-line_numeric "\t\t-end" \
+		-line_numeric "" \
+		-end
+	cat dickson_q4_* >dickson_q4
+
+
+create_dickson_makefiles_top_line_q4:
+	$(ORBITER_PATH)/orbiter.out -create_files -file_mask dickson_q4_top -N 1 -repeat 141 0 1  "Surface_Orb%d_q4: \\" -command "Surface_Orb%d_q4 \\" \
+		-end
