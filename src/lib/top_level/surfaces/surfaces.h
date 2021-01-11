@@ -754,6 +754,9 @@ public:
 	int f_label_tex;
 	std::string label_tex;
 
+	int f_label_for_summary;
+	std::string label_for_summary;
+
 	int f_catalogue;
 	int iso;
 	int f_by_coefficients;

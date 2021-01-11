@@ -295,6 +295,41 @@ void group_theoretic_activity::do_create_surface(
 				exit(1);
 			}
 
+
+			string summary_file_name;
+			string col_postfix;
+
+			if (SC->Descr->f_label_txt) {
+				summary_file_name.assign(SC->Descr->label_txt);
+			}
+			else {
+				summary_file_name.assign(SC->label_txt);
+			}
+			summary_file_name.append("_summary.csv");
+
+			char str[1000];
+
+			sprintf(str, "-Q%d", F->q);
+			col_postfix.assign(str);
+
+			if (f_v) {
+				cout << "group_theoretic_activity::do_create_surface "
+						"before SC->SO->SOP->create_summary_file" << endl;
+			}
+			if (SC->Descr->f_label_for_summary) {
+				SC->SO->SOP->create_summary_file(summary_file_name,
+						SC->Descr->label_for_summary, col_postfix, verbose_level);
+			}
+			else {
+				SC->SO->SOP->create_summary_file(summary_file_name,
+						SC->label_txt, col_postfix, verbose_level);
+			}
+			if (f_v) {
+				cout << "group_theoretic_activity::do_create_surface "
+						"after SC->SO->SOP->create_summary_file" << endl;
+			}
+
+
 #if 0
 			if (f_v) {
 				cout << "group_theoretic_activity::do_create_surface "

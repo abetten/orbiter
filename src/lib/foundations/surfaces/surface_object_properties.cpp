@@ -1201,7 +1201,107 @@ void surface_object_properties::print_everything(ostream &ost, int verbose_level
 }
 
 
+void surface_object_properties::create_summary_file(std::string &fname,
+		std::string &surface_label, std::string &col_postfix, int verbose_level)
+{
+	string col_lab_surface_label;
+	string col_lab_nb_lines;
+	string col_lab_nb_points;
+	string col_lab_nb_singular_points;
+	string col_lab_nb_Eckardt_points;
+	string col_lab_nb_double_points;
+	string col_lab_nb_Single_points;
+	string col_lab_nb_pts_not_on_lines;
+	string col_lab_nb_Hesse_planes;
+	string col_lab_nb_axes;
 
+
+	col_lab_surface_label.assign("Surface");
+
+
+	col_lab_nb_lines.assign("#L");
+	col_lab_nb_lines.append(col_postfix);
+
+	col_lab_nb_points.assign("#P");
+	col_lab_nb_points.append(col_postfix);
+
+	col_lab_nb_singular_points.assign("#S");
+	col_lab_nb_singular_points.append(col_postfix);
+
+	col_lab_nb_Eckardt_points.assign("#E");
+	col_lab_nb_Eckardt_points.append(col_postfix);
+
+	col_lab_nb_double_points.assign("#D");
+	col_lab_nb_double_points.append(col_postfix);
+
+	col_lab_nb_Single_points.assign("#U");
+	col_lab_nb_Single_points.append(col_postfix);
+
+	col_lab_nb_pts_not_on_lines.assign("#OFF");
+	col_lab_nb_pts_not_on_lines.append(col_postfix);
+
+	col_lab_nb_Hesse_planes.assign("#H");
+	col_lab_nb_Hesse_planes.append(col_postfix);
+
+	col_lab_nb_axes.assign("#AX");
+	col_lab_nb_axes.append(col_postfix);
+
+#if 0
+	SO->nb_lines;
+
+	SO->nb_pts;
+
+	nb_singular_pts;
+
+	nb_Eckardt_points;
+
+	nb_Double_points;
+
+	nb_Single_points;
+
+	nb_pts_not_on_lines;
+
+	nb_Hesse_planes;
+
+	nb_axes;
+#endif
+
+
+	file_io Fio;
+
+	{
+		ofstream f(fname);
+
+		f << col_lab_surface_label << ",";
+		f << col_lab_nb_lines << ",";
+		f << col_lab_nb_points << ",";
+		f << col_lab_nb_singular_points << ",";
+		f << col_lab_nb_Eckardt_points << ",";
+		f << col_lab_nb_double_points << ",";
+		f << col_lab_nb_Single_points << ",";
+		f << col_lab_nb_pts_not_on_lines << ",";
+		f << col_lab_nb_Hesse_planes << ",";
+		f << col_lab_nb_axes << ",";
+		f << endl;
+
+		f << surface_label << ",";
+		f << SO->nb_lines << ",";
+		f << SO->nb_pts << ",";
+		f << nb_singular_pts << ",";
+		f << nb_Eckardt_points << ",";
+		f << nb_Double_points << ",";
+		f << nb_Single_points << ",";
+		f << nb_pts_not_on_lines << ",";
+		f << nb_Hesse_planes << ",";
+		f << nb_axes << ",";
+		f << endl;
+
+		f << "END" << endl;
+	}
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+}
 
 void surface_object_properties::report_properties(std::ostream &ost, int verbose_level)
 {
@@ -2322,7 +2422,7 @@ void surface_object_properties::print_single_points(std::ostream &ost)
 	//ost << "\\clearpage" << endl;
 	ost << "The surface has " << nb_Single_points
 			<< " single points:\\\\" << endl;
-	if (TRUE /* nb_Single_points < 1000*/) {
+	if (nb_Single_points < 1000) {
 
 #if 0
 		ost << "$$" << endl;
