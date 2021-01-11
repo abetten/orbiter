@@ -10023,5 +10023,15 @@ create_dickson_makefiles_q4:
 
 
 create_dickson_makefiles_top_line_q4:
-	$(ORBITER_PATH)/orbiter.out -create_files -file_mask dickson_q4_top -N 1 -repeat 141 0 1  "Surface_Orb%d_q4: \\" -command "Surface_Orb%d_q4 \\" \
+	$(ORBITER_PATH)/orbiter.out -create_files -file_mask dickson_q4_top -N 1 -repeat 141 0 1  "Surface_q4: \\" -command "Surface_Orb%d_q4 \\" \
 		-end
+
+
+#problem:
+#orthogonal::lines_on_point_by_line_rank i=1366 / 4225 pt=15447347 pt2=15225451
+#orthogonal::lines_on_point_by_line_rank before rank_line
+#orthogonal::rank_line p1=15447347 p2=15225451
+
+create_dickson_atlas:
+	$(ORBITER_PATH)/orbiter.out -create_dickson_atlas
+	~/bin/tth dickson_surfaces.tex
