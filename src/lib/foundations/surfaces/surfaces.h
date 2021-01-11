@@ -900,6 +900,8 @@ public:
 
 	void compute_planes_and_dual_point_ranks(int verbose_level);
 	void print_everything(std::ostream &ost, int verbose_level);
+	void create_summary_file(std::string &fname,
+			std::string &surface_label, std::string &col_postfix, int verbose_level);
 	void report_properties(std::ostream &ost, int verbose_level);
 	void report_properties_simple(std::ostream &ost, int verbose_level);
 	void print_line_intersection_graph(std::ostream &ost);

@@ -28,6 +28,9 @@ surface_create_description::surface_create_description()
 	f_label_tex = FALSE;
 	//label_tex
 
+	f_label_for_summary = FALSE;
+	//label_for_summary
+
 
 	f_catalogue = FALSE;
 	iso = 0;
@@ -104,6 +107,11 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 			f_label_tex = TRUE;
 			label_tex.assign(argv[++i]);
 			cout << "-label_tex " << label_tex << endl;
+		}
+		else if (stringcmp(argv[i], "-label_for_summary") == 0) {
+			f_label_for_summary = TRUE;
+			label_for_summary.assign(argv[++i]);
+			cout << "-label_for_summary " << label_for_summary << endl;
 		}
 		else if (stringcmp(argv[i], "-catalogue") == 0) {
 			f_catalogue = TRUE;

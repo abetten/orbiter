@@ -3071,6 +3071,7 @@ void file_io::create_file(create_file_description *Descr, int verbose_level)
 					else {
 						sprintf(str, Descr->lines[j].c_str(), S.get_string(c, 0));
 					}
+					fix_escape_characers(str);
 					fp << str << endl;
 				}
 			}
@@ -3146,6 +3147,14 @@ void file_io::fix_escape_characers(char *str)
 			str[j] = '$';
 			i++;
 		}
+		else if (str[i] == '\\' && i < l - 1 && str[i + 1] == 'B') {
+			str[j] = '\\';
+			i++;
+		}
+		else if (str[i] == '\\' && i < l - 1 && str[i + 1] == 'n') {
+			str[j] = '\n';
+			i++;
+		}
 		else {
 			str[j] = str[i];
 		}
@@ -3209,6 +3218,7 @@ void file_io::create_files(create_file_description *Descr,
 					int c;
 
 					sprintf(str, Descr->repeat_mask.c_str(), Descr->repeat_N);
+					fix_escape_characers(str);
 					fp << str << endl;
 					if (!Descr->f_command) {
 						cout << "please use option -command when using -repeat" << endl;
@@ -3278,6 +3288,7 @@ void file_io::create_files_list_of_cases(spreadsheet *S,
 
 				for (j = 0; j < Descr->nb_lines; j++) {
 					sprintf(str, Descr->lines[j].c_str(), i, i, i, i, i, i, i, i);
+					fix_escape_characers(str);
 					fp << str << endl;
 				}
 
@@ -3320,6 +3331,7 @@ void file_io::create_files_list_of_cases(spreadsheet *S,
 				} // if
 				else {
 					sprintf(str, Descr->command.c_str(), i);
+					fix_escape_characers(str);
 					fp << str << " \\" << endl;
 					//fp << command << " \\" << endl;
 					for (j = 0; j < nb_cases; j++) {
