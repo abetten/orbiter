@@ -239,6 +239,7 @@ void surface_create::create_surface_from_description(int verbose_level)
 
 		create_surface_by_rank(
 				Descr->rank_text,
+				Descr->rank_defining_q,
 				Descr->select_double_six_string,
 				verbose_level);
 
