@@ -590,6 +590,9 @@ class interface_toolkit {
 	std::vector<std::string> csv_file_join_fname;
 	std::vector<std::string> csv_file_join_identifier;
 
+	int f_csv_file_latex;
+	std::string csv_file_latex_fname;
+
 
 public:
 

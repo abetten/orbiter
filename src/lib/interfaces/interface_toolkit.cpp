@@ -39,6 +39,9 @@ interface_toolkit::interface_toolkit()
 	//csv_file_join_fname
 	//csv_file_join_identifier
 
+	f_csv_file_latex = FALSE;
+	//std::vector<std::string> csv_file_latex_fname;
+
 }
 
 
@@ -56,6 +59,9 @@ void interface_toolkit::print_help(int argc,
 	}
 	else if (stringcmp(argv[i], "-csv_file_join") == 0) {
 		cout << "-cvs_file_join <string : file_name> <string : column label by which we join>" << endl;
+	}
+	else if (stringcmp(argv[i], "-csv_file_latex") == 0) {
+		cout << "-cvs_file_latex <string : file_name>" << endl;
 	}
 }
 
@@ -75,6 +81,9 @@ int interface_toolkit::recognize_keyword(int argc,
 		return true;
 	}
 	else if (stringcmp(argv[i], "-csv_file_join") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-csv_file_latex") == 0) {
 		return true;
 	}
 	return false;
@@ -122,6 +131,11 @@ int interface_toolkit::read_arguments(int argc,
 			cout << "-join " << csv_file_join_fname[csv_file_join_fname.size() - 1] << " "
 					<< csv_file_join_identifier[csv_file_join_identifier.size() - 1] << endl;
 		}
+		else if (stringcmp(argv[i], "-csv_file_latex") == 0) {
+			f_csv_file_latex = TRUE;
+			csv_file_latex_fname.assign(argv[++i]);
+			cout << "-csv_file_latex " << csv_file_latex_fname << endl;
+		}
 		else {
 			break;
 		}
@@ -167,6 +181,12 @@ void interface_toolkit::worker(int verbose_level)
 
 		Fio.do_csv_file_join(csv_file_join_fname,
 				csv_file_join_identifier, verbose_level);
+	}
+	else if (f_csv_file_latex) {
+
+		file_io Fio;
+
+		Fio.do_csv_file_latex(csv_file_latex_fname, verbose_level);
 	}
 
 	if (f_v) {
