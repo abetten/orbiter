@@ -337,6 +337,60 @@ public:
 };
 
 
+
+// #############################################################################
+// orthogonal_space_with_action_description.cpp
+// #############################################################################
+
+
+//! description of an orthogonal space with action
+
+class orthogonal_space_with_action_description {
+public:
+
+	int epsilon;
+	int n;
+	std::string input_q;
+	finite_field *F;
+
+	orthogonal_space_with_action_description();
+	~orthogonal_space_with_action_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+
+
+// #############################################################################
+// orthogonal_space_with_action.cpp
+// #############################################################################
+
+
+//! an orthogonal space with action
+
+class orthogonal_space_with_action {
+public:
+
+	orthogonal_space_with_action_description *Descr;
+
+
+	orthogonal *O;
+
+
+	orthogonal_space_with_action();
+	~orthogonal_space_with_action();
+	void init(
+			orthogonal_space_with_action_description *Descr,
+			int verbose_level);
+	void init_group(int verbose_level);
+
+};
+
+
+
 // #############################################################################
 // projective_space_job_description.cpp
 // #############################################################################

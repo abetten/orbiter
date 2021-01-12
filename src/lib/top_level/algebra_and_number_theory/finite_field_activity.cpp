@@ -282,6 +282,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 		Geo.do_cheat_sheet_Gr(F, Descr->cheat_sheet_Gr_n, Descr->cheat_sheet_Gr_k,
 				verbose_level);
 	}
+#if 0
 	else if (Descr->f_cheat_sheet_orthogonal) {
 
 		geometry_global Geo;
@@ -291,6 +292,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 				Descr->cheat_sheet_orthogonal_n,
 				verbose_level);
 	}
+#endif
 	else if (Descr->f_cheat_sheet_hermitian) {
 
 		geometry_global Geo;

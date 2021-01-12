@@ -101,6 +101,23 @@ void orbiter_symbol_table_entry::init_projective_space(std::string &label,
 	}
 }
 
+void orbiter_symbol_table_entry::init_orthogonal_space(std::string &label,
+		void *p, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_orthogonal_space" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_orthogonal_space;
+	ptr = p;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_orthogonal_space done" << endl;
+	}
+}
+
 void orbiter_symbol_table_entry::print()
 {
 	if (type == t_intvec) {
@@ -119,6 +136,9 @@ void orbiter_symbol_table_entry::print()
 		}
 		else if (object_type == t_projective_space) {
 			cout << "projective space" << endl;
+		}
+		else if (object_type == t_orthogonal_space) {
+			cout << "orthogonal space" << endl;
 		}
 #if 0
 		else if (object_type == t_action) {

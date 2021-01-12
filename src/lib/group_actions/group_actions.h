@@ -87,6 +87,8 @@ class incidence_structure_with_group;
 class action_global;
 class projective_space_object_classifier;
 class projective_space_with_action_description;
+class orthogonal_space_with_action_description;
+class orthogonal_space_with_action;
 
 //! enumeration to distinguish between the various types of group actions
 

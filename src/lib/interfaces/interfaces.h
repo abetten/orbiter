@@ -521,6 +521,9 @@ class interface_symbol_table {
 	int f_projective_space;
 	projective_space_with_action_description *Projective_space_with_action_description;
 
+	int f_orthogonal_space;
+	orthogonal_space_with_action_description *Orthogonal_space_with_action_description;
+
 	int f_linear_group;
 	linear_group_description *Linear_group_description;
 
@@ -534,6 +537,9 @@ class interface_symbol_table {
 
 	int f_projective_space_activity;
 	projective_space_activity_description *Projective_space_activity_description;
+
+	int f_orthogonal_space_activity;
+	orthogonal_space_activity_description *Orthogonal_space_activity_description;
 
 	int f_group_theoretic_activity;
 	group_theoretic_activity_description *Group_theoretic_activity_description;
@@ -551,9 +557,16 @@ public:
 	void worker(orbiter_top_level_session *Orbiter_top_level_session, int verbose_level);
 	void definition(orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
+	void definition_of_projective_space(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void definition_of_orthogonal_space(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
 	void do_finite_field_activity(orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 	void do_projective_space_activity(
+			orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void do_orthogonal_space_activity(
 			orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 	void do_group_theoretic_activity(orbiter_top_level_session *Orbiter_top_level_session,
