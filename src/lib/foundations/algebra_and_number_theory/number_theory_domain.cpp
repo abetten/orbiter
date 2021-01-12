@@ -221,6 +221,19 @@ long int number_theory_domain::add_mod(long int a, long int b, long int p)
 	return r;
 }
 
+long int number_theory_domain::ab_over_c(long int a, long int b, long int c)
+{
+	longinteger_domain D;
+	longinteger_object A, B, C, AB, Q;
+	long int r;
+
+	A.create(a, __FILE__, __LINE__);
+	B.create(b, __FILE__, __LINE__);
+	D.mult(A, B, AB);
+	D.integral_division_by_lint(AB, c, Q, r);
+	return Q.as_lint();
+}
+
 long int number_theory_domain::int_abs(long int a)
 {
 	if (a < 0) {

@@ -87,11 +87,16 @@ void orthogonal::report_points(std::ostream &ost, int verbose_level)
 	long int rk;
 
 	ost << "points:\\\\" << endl;
-	for (rk = 0; rk < nb_points; rk++) {
-		unrank_point(v1, 1, rk, 0 /*verbose_level*/);
-		ost << "$P_{" << rk << "} = ";
-		int_vec_print(ost, v1, n);
-		ost << "$\\\\" << endl;
+	if (nb_points < 1000) {
+		for (rk = 0; rk < nb_points; rk++) {
+			unrank_point(v1, 1, rk, 0 /*verbose_level*/);
+			ost << "$P_{" << rk << "} = ";
+			int_vec_print(ost, v1, n);
+			ost << "$\\\\" << endl;
+		}
+	}
+	else {
+		ost << "Too many points to print.\\\\" << endl;
 	}
 	//ost << endl;
 }
@@ -105,77 +110,83 @@ void orthogonal::report_lines(std::ostream &ost, int verbose_level)
 	sorting Sorting;
 
 	ost << "The number of lines is " << nb_lines << "\\\\" << endl;
-	len = nb_lines; // O.L[0] + O.L[1] + O.L[2];
+
+	if (nb_lines < 1000) {
+
+		len = nb_lines; // O.L[0] + O.L[1] + O.L[2];
 
 
-	long int *Line;
-	int *L;
+		long int *Line;
+		int *L;
 
-	Line = NEW_lint(q + 1);
-	L = NEW_int(2 * d);
+		Line = NEW_lint(q + 1);
+		L = NEW_int(2 * d);
 
-	for (i = 0; i < len; i++) {
-		ost << "$L_{" << i << "} = ";
-		unrank_line(p1, p2, i, 0 /* verbose_level - 1*/);
-		//cout << "(" << p1 << "," << p2 << ") : ";
+		for (i = 0; i < len; i++) {
+			ost << "$L_{" << i << "} = ";
+			unrank_line(p1, p2, i, 0 /* verbose_level - 1*/);
+			//cout << "(" << p1 << "," << p2 << ") : ";
 
-		unrank_point(v1, 1, p1, 0);
-		unrank_point(v2, 1, p2, 0);
+			unrank_point(v1, 1, p1, 0);
+			unrank_point(v2, 1, p2, 0);
 
-		int_vec_copy(v1, L, d);
-		int_vec_copy(v2, L + d, d);
+			int_vec_copy(v1, L, d);
+			int_vec_copy(v2, L + d, d);
 
-		ost << "\\left[" << endl;
-		Li.print_integer_matrix_tex(ost, L, 2, d);
-		ost << "\\right]" << endl;
+			ost << "\\left[" << endl;
+			Li.print_integer_matrix_tex(ost, L, 2, d);
+			ost << "\\right]" << endl;
 
-		a = evaluate_bilinear_form(v1, v2, 1);
-		if (a) {
-			cout << "not orthogonal" << endl;
-			exit(1);
-		}
+			a = evaluate_bilinear_form(v1, v2, 1);
+			if (a) {
+				cout << "not orthogonal" << endl;
+				exit(1);
+			}
 
-#if 0
-		cout << " & ";
-		j = O.rank_line(p1, p2, 0 /*verbose_level - 1*/);
-		if (i != j) {
-			cout << "error: i != j" << endl;
-			exit(1);
-		}
-#endif
+	#if 0
+			cout << " & ";
+			j = O.rank_line(p1, p2, 0 /*verbose_level - 1*/);
+			if (i != j) {
+				cout << "error: i != j" << endl;
+				exit(1);
+			}
+	#endif
 
-#if 1
+	#if 1
 
-		points_on_line(p1, p2, Line, 0 /*verbose_level - 1*/);
-		Sorting.lint_vec_heapsort(Line, q + 1);
+			points_on_line(p1, p2, Line, 0 /*verbose_level - 1*/);
+			Sorting.lint_vec_heapsort(Line, q + 1);
 
-		Li.lint_set_print_masked_tex(ost, Line, q + 1, "P_{", "}");
-		ost << "$\\\\" << endl;
-#if 0
-		for (r1 = 0; r1 <= q; r1++) {
-			for (r2 = 0; r2 <= q; r2++) {
-				if (r1 == r2)
-					continue;
-				//p3 = p1;
-				//p4 = p2;
-				p3 = O.line1[r1];
-				p4 = O.line1[r2];
-				cout << p3 << "," << p4 << " : ";
-				j = O.rank_line(p3, p4, verbose_level - 1);
-				cout << " : " << j << endl;
-				if (i != j) {
-					cout << "error: i != j" << endl;
-					exit(1);
+			Li.lint_set_print_masked_tex(ost, Line, q + 1, "P_{", "}");
+			ost << "$\\\\" << endl;
+	#if 0
+			for (r1 = 0; r1 <= q; r1++) {
+				for (r2 = 0; r2 <= q; r2++) {
+					if (r1 == r2)
+						continue;
+					//p3 = p1;
+					//p4 = p2;
+					p3 = O.line1[r1];
+					p4 = O.line1[r2];
+					cout << p3 << "," << p4 << " : ";
+					j = O.rank_line(p3, p4, verbose_level - 1);
+					cout << " : " << j << endl;
+					if (i != j) {
+						cout << "error: i != j" << endl;
+						exit(1);
+					}
 				}
 			}
+			cout << endl;
+	#endif
+	#endif
 		}
-		cout << endl;
-#endif
-#endif
+		FREE_lint(Line);
+		FREE_int(L);
 	}
-	FREE_lint(Line);
-	FREE_int(L);
-
+	else {
+		ost << "Too many lines to print. \\\\" << endl;
+	}
 }
 void orthogonal::list_all_points_vs_points(int verbose_level)
 {
@@ -271,13 +282,41 @@ void orthogonal::report(std::ostream &ost, int verbose_level)
 		cout << "orthogonal::report" << endl;
 	}
 
+	if (f_v) {
+		cout << "orthogonal::report before report_schemes" << endl;
+	}
+
 	report_schemes(ost);
+
+	if (f_v) {
+		cout << "orthogonal::report after report_schemes" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "orthogonal::report before report_points" << endl;
+	}
 
 	report_points(ost, verbose_level);
 
+	if (f_v) {
+		cout << "orthogonal::report after report_points" << endl;
+	}
+
+
 	//report_points_by_type(ost, verbose_level);
 
+	if (f_v) {
+		cout << "orthogonal::report before report_lines" << endl;
+	}
+
+
 	report_lines(ost, verbose_level);
+
+	if (f_v) {
+		cout << "orthogonal::report after report_lines" << endl;
+	}
+
 
 	if (f_v) {
 		cout << "orthogonal::report done" << endl;

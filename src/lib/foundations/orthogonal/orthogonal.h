@@ -122,6 +122,10 @@ public:
 	~orthogonal();
 	void init(int epsilon, int n, finite_field *F,
 		int verbose_level);
+	void allocate();
+	void init_form_and_Gram_matrix(int verbose_level);
+	void init_counting_functions(int verbose_level);
+	void init_decomposition(int verbose_level);
 	void init_parabolic(int verbose_level);
 	void init_parabolic_even(int verbose_level);
 	void init_parabolic_odd(int verbose_level);

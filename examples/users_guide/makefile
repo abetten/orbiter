@@ -1054,9 +1054,18 @@ Op_6_2:
 
 
 Op_6_64:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
+	$(ORBITER_PATH)/orbiter.out -v 20 \
 		-define F -finite_field -q 64 -end -end \
-		-define O -orthogonal_space 1 4 F -end \
+		-define O -orthogonal_space 1 6 F -end \
+		-with O -do -orthogonal_space_activity -cheat_sheet_orthogonal -end
+	pdflatex O_1_6_64.tex 
+	open O_1_6_64.pdf
+
+
+Op_6_64_unrank_line:
+	$(ORBITER_PATH)/orbiter.out -v 20 \
+		-define F -finite_field -q 64 -end -end \
+		-define O -orthogonal_space 1 6 F -end \
 		-with O -do -orthogonal_space_activity \
 			-unrank_line_through_two_points 15447347 15225451 \
 		-end
