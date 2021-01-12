@@ -10005,6 +10005,21 @@ Surface_Orb0_q4:
 		-end \
 		-end 
 
+create_dickson_makefiles_q2:
+	$(ORBITER_PATH)/orbiter.out -create_files -file_mask dickson_q2_%03d \
+		-N 141  \
+		-line_numeric "Surface_Orb%d_q2:" \
+		-line_numeric "\t\D(ORBITER_PATH)/orbiter.out -v 3 \\" \
+		-line_numeric "\t\t-linear_group -PGL 4 2 -wedge -end \\" \
+		-line_numeric "\t\t-group_theoretic_activities \\" \
+		-line_numeric "\t\t-control_six_arcs -end \\" \
+		-line_numeric "\t\t-create_surface -label_txt \"Orb%d_q2\" -label_tex \"Rank-\D(Orb%d)\" -label_for_summary \"Orb%d\" -by_rank \D(Orb%d) 2 -q 2 \\" \
+		-line_numeric "\t\t-end \\" \
+		-line_numeric "\t\t-end" \
+		-line_numeric "" \
+		-end
+	cat dickson_q2_* >dickson_q2
+
 
 create_dickson_makefiles_q4:
 	$(ORBITER_PATH)/orbiter.out -create_files -file_mask dickson_q4_%03d \
@@ -10014,17 +10029,119 @@ create_dickson_makefiles_q4:
 		-line_numeric "\t\t-linear_group -PGL 4 4 -wedge -end \\" \
 		-line_numeric "\t\t-group_theoretic_activities \\" \
 		-line_numeric "\t\t-control_six_arcs -end \\" \
-		-line_numeric "\t\t-create_surface -label_txt \"Orb%d_q4\" -label_tex \"Rank-\D(Orb%d)\" -by_rank \D(Orb%d) 2 -q 4 \\" \
+		-line_numeric "\t\t-create_surface -label_txt \"Orb%d_q4\" -label_tex \"Rank-\D(Orb%d)\" -label_for_summary \"Orb%d\" -by_rank \D(Orb%d) 2 -q 4 \\" \
 		-line_numeric "\t\t-end \\" \
 		-line_numeric "\t\t-end" \
 		-line_numeric "" \
 		-end
 	cat dickson_q4_* >dickson_q4
 
+create_dickson_makefiles_q8:
+	$(ORBITER_PATH)/orbiter.out -create_files -file_mask dickson_q8_%03d \
+		-N 141  \
+		-line_numeric "Surface_Orb%d_q8:" \
+		-line_numeric "\t\D(ORBITER_PATH)/orbiter.out -v 3 \\" \
+		-line_numeric "\t\t-linear_group -PGL 4 8 -wedge -end \\" \
+		-line_numeric "\t\t-group_theoretic_activities \\" \
+		-line_numeric "\t\t-control_six_arcs -end \\" \
+		-line_numeric "\t\t-create_surface -label_txt \"Orb%d_q8\" -label_tex \"Rank-\D(Orb%d)\" -by_rank \D(Orb%d) 2 -q 8 \\" \
+		-line_numeric "\t\t-end \\" \
+		-line_numeric "\t\t-end" \
+		-line_numeric "" \
+		-end
+	cat dickson_q8_* >q8
+
+create_dickson_makefiles_q16:
+	$(ORBITER_PATH)/orbiter.out -create_files -file_mask dickson_q16_%03d \
+		-N 141  \
+		-line_numeric "Surface_Orb%d_q16:" \
+		-line_numeric "\t\D(ORBITER_PATH)/orbiter.out -v 3 \\" \
+		-line_numeric "\t\t-linear_group -PGL 4 16 -wedge -end \\" \
+		-line_numeric "\t\t-group_theoretic_activities \\" \
+		-line_numeric "\t\t-control_six_arcs -end \\" \
+		-line_numeric "\t\t-create_surface -label_txt \"Orb%d_q16\" -label_tex \"Rank-\D(Orb%d)\" -by_rank \D(Orb%d) 2 -q 16 \\" \
+		-line_numeric "\t\t-end \\" \
+		-line_numeric "\t\t-end" \
+		-line_numeric "" \
+		-end
+	cat dickson_q16_* >q16
+
+create_dickson_makefiles_q32:
+	$(ORBITER_PATH)/orbiter.out -create_files -file_mask dickson_q32_%03d \
+		-N 141  \
+		-line_numeric "Surface_Orb%d_q32:" \
+		-line_numeric "\t\D(ORBITER_PATH)/orbiter.out -v 3 \\" \
+		-line_numeric "\t\t-linear_group -PGL 4 32 -wedge -end \\" \
+		-line_numeric "\t\t-group_theoretic_activities \\" \
+		-line_numeric "\t\t-control_six_arcs -end \\" \
+		-line_numeric "\t\t-create_surface -label_txt \"Orb%d_q32\" -label_tex \"Rank-\D(Orb%d)\" -by_rank \D(Orb%d) 2 -q 32 \\" \
+		-line_numeric "\t\t-end \\" \
+		-line_numeric "\t\t-end" \
+		-line_numeric "" \
+		-end
+	cat dickson_q32_* >q32
+
+create_dickson_makefiles_q64:
+	$(ORBITER_PATH)/orbiter.out -create_files -file_mask dickson_q64_%03d \
+		-N 141  \
+		-line_numeric "Surface_Orb%d_q64:" \
+		-line_numeric "\t\D(ORBITER_PATH)/orbiter.out -v 3 \\" \
+		-line_numeric "\t\t-linear_group -PGL 4 64 -wedge -end \\" \
+		-line_numeric "\t\t-group_theoretic_activities \\" \
+		-line_numeric "\t\t-control_six_arcs -end \\" \
+		-line_numeric "\t\t-create_surface -label_txt \"Orb%d_q64\" -label_tex \"Rank-\D(Orb%d)\" -by_rank \D(Orb%d) 2 -q 64 \\" \
+		-line_numeric "\t\t-end \\" \
+		-line_numeric "\t\t-end" \
+		-line_numeric "" \
+		-end
+	cat dickson_q64_* >q64
+
+
+create_dickson_makefiles_top_line_q2:
+	$(ORBITER_PATH)/orbiter.out -create_files -file_mask dickson_q2_top -N 1 -repeat 141 0 1  "Surface_q2: \\" -command "\tSurface_Orb%d_q2 \\" \
+		-end
+
 
 create_dickson_makefiles_top_line_q4:
-	$(ORBITER_PATH)/orbiter.out -create_files -file_mask dickson_q4_top -N 1 -repeat 141 0 1  "Surface_q4: \\" -command "Surface_Orb%d_q4 \\" \
+	$(ORBITER_PATH)/orbiter.out -create_files -file_mask dickson_q4_top -N 1 -repeat 141 0 1  "Surface_q4: \\" -command "\tSurface_Orb%d_q4 \\" \
 		-end
+
+create_dickson_makefiles_top_line_q8:
+	$(ORBITER_PATH)/orbiter.out -create_files -file_mask dickson_q8_top -N 1 -repeat 141 0 1  "Surface_q8: \\" -command "\tSurface_Orb%d_q8 \\" \
+		-end
+
+create_dickson_makefiles_top_line_q16:
+	$(ORBITER_PATH)/orbiter.out -create_files -file_mask dickson_q16_top -N 1 -repeat 141 0 1  "Surface_q16: \\" -command "\tSurface_Orb%d_q16 \\" \
+		-end
+
+create_dickson_makefiles_top_line_q32:
+	$(ORBITER_PATH)/orbiter.out -create_files -file_mask dickson_q32_top -N 1 -repeat 141 0 1  "Surface_q32: \\" -command "\tSurface_Orb%d_q32 \\" \
+		-end
+
+create_dickson_makefiles_top_line_q64:
+	$(ORBITER_PATH)/orbiter.out -create_files -file_mask dickson_q64_top -N 1 -repeat 141 0 1  "Surface_q64: \\" -command "\tSurface_Orb%d_q64 \\" \
+		-end
+
+
+surfaces_q4_join:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-csv_file_join Orb0_q4_summary.csv "Surface" \
+		-csv_file_join Orb1_q4_summary.csv "Surface" \
+		-csv_file_join Orb2_q4_summary.csv "Surface"
+
+create_dickson_makefiles_join_q2:
+	$(ORBITER_PATH)/orbiter.out -create_files -file_mask dickson_q2_join -N 1 -repeat 141 0 1  "join: \n\t\D(ORBITER_PATH)/orbiter.out -v 3 \B" \
+		-command "\t\t-csv_file_join Orb%d_q2_summary.csv \"Surface\" \B" \
+		-end
+
+
+
+create_dickson_makefiles_join_q4:
+	$(ORBITER_PATH)/orbiter.out -create_files -file_mask dickson_q4_join -N 1 -repeat 141 0 1  "join: \n\t\D(ORBITER_PATH)/orbiter.out -v 3 \B" \
+		-command "\t\t-csv_file_join Orb%d_q4_summary.csv \"Surface\" \B" \
+		-end
+
+
 
 
 #problem:

@@ -1001,6 +1001,7 @@ public:
 	void init_equation(surface_domain *Surf, int *eqn, int verbose_level);
 	void enumerate_points(int verbose_level);
 	void enumerate_points_and_lines(int verbose_level);
+	void find_real_lines(std::vector<long int> &The_Lines, int verbose_level);
 	void init_with_27_lines(surface_domain *Surf, long int *Lines27, int *eqn,
 		int f_find_double_six_and_rearrange_lines, int verbose_level);
 	void compute_properties(int verbose_level);

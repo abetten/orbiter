@@ -725,6 +725,7 @@ int int_vec_count_number_of_nonzero_entries(int *v, int len);
 int int_vec_find_first_nonzero_entry(int *v, int len);
 void int_vec_zero(int *v, long int len);
 void lint_vec_zero(long int *v, long int len);
+int int_vec_is_zero(int *v, long int len);
 void int_vec_mone(int *v, long int len);
 void lint_vec_mone(long int *v, long int len);
 void int_vec_copy(int *from, int *to, long int len);

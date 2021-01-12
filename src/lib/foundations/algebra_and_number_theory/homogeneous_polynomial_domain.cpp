@@ -727,24 +727,6 @@ void homogeneous_polynomial_domain::print_monomial(ostream &ost, int i)
 	}
 }
 
-#if 0
-void homogeneous_polynomial_domain::print_monomial_latex(ostream &ost, int i)
-{
-	int j, a;
-
-	for (j = 0; j < nb_variables; j++) {
-		a = Monomials[i * nb_variables + j];
-		if (a == 0) {
-			continue;
-		}
-		ost << symbols_latex[j];
-		if (a > 1) {
-			ost << "^" << a;
-		}
-	}
-}
-#endif
-
 void homogeneous_polynomial_domain::print_monomial(ostream &ost, int *mon)
 {
 	int j, a, f_first = TRUE;
@@ -826,28 +808,6 @@ void homogeneous_polynomial_domain::print_monomial_latex(std::string &s, int i)
 	print_monomial_latex(s, mon);
 }
 
-
-#if 0
-void homogeneous_polynomial_domain::print_monomial(char *str, int i)
-{
-	int j, a;
-	
-	str[0] = 0;
-	for (j = 0; j < nb_variables; j++) {
-		a = Monomials[i * nb_variables + j];
-		if (a == 0) {
-			continue;
-		}
-		strcat(str + strlen(str), symbols_latex[j].c_str());
-		if (a >= 10) {
-			sprintf(str + strlen(str), "^{%d}", a);
-		}
-		else if (a > 1) {
-			sprintf(str + strlen(str), "^%d", a);
-		}
-	}
-}
-#endif
 
 void homogeneous_polynomial_domain::print_monomial_str(stringstream &ost, int i)
 {

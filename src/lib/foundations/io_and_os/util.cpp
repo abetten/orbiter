@@ -172,6 +172,19 @@ void lint_vec_zero(long int *v, long int len)
 	}
 }
 
+int int_vec_is_zero(int *v, long int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		if (v[i]) {
+			return FALSE;
+		}
+	}
+	return TRUE;
+}
+
+
 void int_vec_mone(int *v, long int len)
 {
 	int i;
