@@ -30,6 +30,9 @@ interface_symbol_table::interface_symbol_table()
 	f_projective_space = FALSE;
 	Projective_space_with_action_description = NULL;
 
+	f_orthogonal_space = FALSE;
+	Orthogonal_space_with_action_description = NULL;
+
 	f_linear_group = FALSE;
 	Linear_group_description = NULL;
 
@@ -42,6 +45,9 @@ interface_symbol_table::interface_symbol_table()
 
 	f_projective_space_activity = FALSE;
 	Projective_space_activity_description = NULL;
+
+	f_orthogonal_space_activity = FALSE;
+	Orthogonal_space_activity_description = NULL;
 
 	f_group_theoretic_activity = FALSE;
 	Group_theoretic_activity_description = NULL;
@@ -108,6 +114,19 @@ int interface_symbol_table::read_arguments(int argc,
 				i += Projective_space_with_action_description->read_arguments(argc - (i + 1),
 					argv + i + 1, verbose_level);
 				cout << "-projective_space" << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+			}
+			else if (stringcmp(argv[i], "-orthogonal_space") == 0) {
+				f_orthogonal_space = TRUE;
+				Orthogonal_space_with_action_description = NEW_OBJECT(orthogonal_space_with_action_description);
+				cout << "reading -orthogonal_space" << endl;
+				i += Orthogonal_space_with_action_description->read_arguments(argc - (i + 1),
+					argv + i + 1, verbose_level);
+				cout << "-orthogonal_space" << endl;
 				cout << "i = " << i << endl;
 				cout << "argc = " << argc << endl;
 				if (i < argc) {
@@ -219,6 +238,22 @@ void interface_symbol_table::read_activity_arguments(int argc,
 		}
 		i++;
 	}
+	else if (stringcmp(argv[i], "-orthogonal_space_activity") == 0) {
+		f_orthogonal_space_activity = TRUE;
+		Orthogonal_space_activity_description =
+				NEW_OBJECT(orthogonal_space_activity_description);
+		cout << "reading -orthogonal_space_activity" << endl;
+		i += Orthogonal_space_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		cout << "-orthogonal_space_activity" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+		i++;
+	}
 	else if (stringcmp(argv[i], "-group_theoretic_activities") == 0) {
 		f_group_theoretic_activity = TRUE;
 		Group_theoretic_activity_description =
@@ -278,6 +313,14 @@ void interface_symbol_table::worker(orbiter_top_level_session *Orbiter_top_level
 		do_projective_space_activity(Orbiter_top_level_session, verbose_level);
 
 	}
+	else if (f_orthogonal_space_activity) {
+
+		if (f_v) {
+			cout << "interface_symbol_table::worker f_orthogonal_space_activity" << endl;
+		}
+		do_orthogonal_space_activity(Orbiter_top_level_session, verbose_level);
+
+	}
 	else if (f_group_theoretic_activity) {
 
 		if (f_v) {
@@ -325,64 +368,18 @@ void interface_symbol_table::definition(orbiter_top_level_session *Orbiter_top_l
 		if (f_v) {
 			cout << "interface_symbol_table::definition f_projective_space" << endl;
 		}
-		finite_field *F;
 
-		if (string_starts_with_a_number(Projective_space_with_action_description->input_q)) {
-			int q;
-
-			q = strtoi(Projective_space_with_action_description->input_q);
-			if (f_v) {
-				cout << "interface_symbol_table::definition "
-						"creating finite field of order " << q << endl;
-			}
-			F = NEW_OBJECT(finite_field);
-			F->finite_field_init(q, 0);
-		}
-		else {
-			if (f_v) {
-				cout << "interface_symbol_table::definition "
-						"using existing finite field " << Projective_space_with_action_description->input_q << endl;
-			}
-			int idx;
-			idx = Orbiter_top_level_session->find_symbol(Projective_space_with_action_description->input_q);
-			F = (finite_field *) Orbiter_top_level_session->get_object(idx);
-		}
-
-		Projective_space_with_action_description->F = F;
-
-		int f_semilinear;
-		number_theory_domain NT;
+		definition_of_projective_space(Orbiter_top_level_session, verbose_level);
 
 
-		if (NT.is_prime(F->q)) {
-			f_semilinear = FALSE;
-		}
-		else {
-			f_semilinear = TRUE;
-		}
-
-		projective_space_with_action *PA;
-
-		PA = NEW_OBJECT(projective_space_with_action);
+	}
+	else if (f_orthogonal_space) {
 
 		if (f_v) {
-			cout << "interface_symbol_table::definition before PA->init" << endl;
-		}
-		PA->init(Projective_space_with_action_description->F, Projective_space_with_action_description->n,
-			f_semilinear,
-			TRUE /*f_init_incidence_structure*/,
-			0 /* verbose_level */);
-		if (f_v) {
-			cout << "interface_symbol_table::definition after PA->init" << endl;
+			cout << "interface_symbol_table::definition f_orthogonal_space" << endl;
 		}
 
-		orbiter_symbol_table_entry Symb;
-		Symb.init_projective_space(define_label, PA, verbose_level);
-		if (f_v) {
-			cout << "interface_symbol_table::definition before add_symbol_table_entry" << endl;
-		}
-		Orbiter_top_level_session->add_symbol_table_entry(
-				define_label, &Symb, verbose_level);
+		definition_of_orthogonal_space(Orbiter_top_level_session, verbose_level);
 
 
 	}
@@ -465,8 +462,147 @@ void interface_symbol_table::definition(orbiter_top_level_session *Orbiter_top_l
 }
 
 
+void interface_symbol_table::definition_of_projective_space(orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_projective_space" << endl;
+	}
+	finite_field *F;
+
+	if (string_starts_with_a_number(Projective_space_with_action_description->input_q)) {
+		int q;
+
+		q = strtoi(Projective_space_with_action_description->input_q);
+		if (f_v) {
+			cout << "interface_symbol_table::definition_of_projective_space "
+					"creating finite field of order " << q << endl;
+		}
+		F = NEW_OBJECT(finite_field);
+		F->finite_field_init(q, 0);
+	}
+	else {
+		if (f_v) {
+			cout << "interface_symbol_table::definition_of_projective_space "
+					"using existing finite field " << Projective_space_with_action_description->input_q << endl;
+		}
+		int idx;
+		idx = Orbiter_top_level_session->find_symbol(Projective_space_with_action_description->input_q);
+		F = (finite_field *) Orbiter_top_level_session->get_object(idx);
+	}
+
+	Projective_space_with_action_description->F = F;
+
+	int f_semilinear;
+	number_theory_domain NT;
 
 
+	if (NT.is_prime(F->q)) {
+		f_semilinear = FALSE;
+	}
+	else {
+		f_semilinear = TRUE;
+	}
+
+	projective_space_with_action *PA;
+
+	PA = NEW_OBJECT(projective_space_with_action);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_projective_space before PA->init" << endl;
+	}
+	PA->init(Projective_space_with_action_description->F, Projective_space_with_action_description->n,
+		f_semilinear,
+		TRUE /*f_init_incidence_structure*/,
+		0 /* verbose_level */);
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_projective_space after PA->init" << endl;
+	}
+
+	orbiter_symbol_table_entry Symb;
+	Symb.init_projective_space(define_label, PA, verbose_level);
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_projective_space before add_symbol_table_entry" << endl;
+	}
+	Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, &Symb, verbose_level);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_projective_space done" << endl;
+	}
+}
+
+void interface_symbol_table::definition_of_orthogonal_space(orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_orthogonal_space" << endl;
+	}
+	finite_field *F;
+
+	if (string_starts_with_a_number(Orthogonal_space_with_action_description->input_q)) {
+		int q;
+
+		q = strtoi(Orthogonal_space_with_action_description->input_q);
+		if (f_v) {
+			cout << "interface_symbol_table::definition_of_orthogonal_space "
+					"creating finite field of order " << q << endl;
+		}
+		F = NEW_OBJECT(finite_field);
+		F->finite_field_init(q, 0);
+	}
+	else {
+		if (f_v) {
+			cout << "interface_symbol_table::definition_of_orthogonal_space "
+					"using existing finite field " << Orthogonal_space_with_action_description->input_q << endl;
+		}
+		int idx;
+		idx = Orbiter_top_level_session->find_symbol(Orthogonal_space_with_action_description->input_q);
+		F = (finite_field *) Orbiter_top_level_session->get_object(idx);
+	}
+
+	Orthogonal_space_with_action_description->F = F;
+
+	int f_semilinear;
+	number_theory_domain NT;
+
+
+	if (NT.is_prime(F->q)) {
+		f_semilinear = FALSE;
+	}
+	else {
+		f_semilinear = TRUE;
+	}
+
+	orthogonal_space_with_action *OA;
+
+	OA = NEW_OBJECT(orthogonal_space_with_action);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_orthogonal_space before OA->init" << endl;
+	}
+	OA->init(Orthogonal_space_with_action_description,
+		0 /* verbose_level */);
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_orthogonal_space after OA->init" << endl;
+	}
+
+	orbiter_symbol_table_entry Symb;
+	Symb.init_orthogonal_space(define_label, OA, verbose_level);
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_orthogonal_space before add_symbol_table_entry" << endl;
+	}
+	Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, &Symb, verbose_level);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_orthogonal_space done" << endl;
+	}
+}
 
 void interface_symbol_table::do_finite_field_activity(
 		orbiter_top_level_session *Orbiter_top_level_session,
@@ -563,6 +699,56 @@ void interface_symbol_table::do_projective_space_activity(
 	Activity.perform_activity(verbose_level);
 	if (f_v) {
 		cout << "interface_symbol_table::do_projective_space_activity "
+				"after Activity.perform_activity" << endl;
+	}
+
+	FREE_int(Idx);
+
+}
+
+void interface_symbol_table::do_orthogonal_space_activity(
+		orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_symbol_table::do_orthogonal_space_activity "
+				"orthogonal space activity for " << with_labels.size() << " objects" << endl;
+	}
+
+	int *Idx;
+
+
+	Orbiter_top_level_session->find_symbols(with_labels, Idx);
+
+	if (with_labels.size() < 1) {
+		cout << "-finite_field_activity requires at least one input" << endl;
+		exit(1);
+	}
+	orthogonal_space_with_action *OA;
+
+	OA = (orthogonal_space_with_action *) Orbiter_top_level_session->get_object(Idx[0]);
+
+	orthogonal_space_activity Activity;
+	Activity.Descr = Orthogonal_space_activity_description;
+	Activity.OA = OA;
+
+#if 0
+	if (with_labels.size() == 2) {
+		cout << "-finite_field_activity has two inputs" << endl;
+		FA.F_secondary = (finite_field *) Orbiter_top_level_session->get_object(Idx[1]);
+	}
+#endif
+
+
+	if (f_v) {
+		cout << "interface_symbol_table::do_orthogonal_space_activity "
+				"before Activity.perform_activity" << endl;
+	}
+	Activity.perform_activity(verbose_level);
+	if (f_v) {
+		cout << "interface_symbol_table::do_orthogonal_space_activity "
 				"after Activity.perform_activity" << endl;
 	}
 

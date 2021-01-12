@@ -1998,6 +1998,7 @@ void geometry_global::do_cheat_sheet_Gr(finite_field *F,
 
 }
 
+#if 0
 void geometry_global::do_cheat_sheet_orthogonal(finite_field *F,
 		int epsilon, int n,
 		int verbose_level)
@@ -2015,6 +2016,10 @@ void geometry_global::do_cheat_sheet_orthogonal(finite_field *F,
 
 	O = NEW_OBJECT(orthogonal);
 
+
+
+
+
 	if (f_v) {
 		cout << "geometry_global::do_cheat_sheet_orthogonal before O->init" << endl;
 	}
@@ -2022,6 +2027,23 @@ void geometry_global::do_cheat_sheet_orthogonal(finite_field *F,
 	if (f_v) {
 		cout << "geometry_global::do_cheat_sheet_orthogonal after O->init" << endl;
 	}
+
+
+
+
+	if (F->q == 64 && n == 6) {
+
+		long int p1 = 15447347;
+		long int p2 = 15225451;
+		long int rk;
+
+		cout << "p1 = " << p1 << endl;
+		cout << "p2 = " << p2 << endl;
+		rk = O->rank_line(p1, p2, verbose_level);
+		cout << "rk = " << rk << endl;
+	}
+
+
 
 	if (f_v) {
 		cout << "geometry_global::do_cheat_sheet_orthogonal before O->create_latex_report" << endl;
@@ -2032,7 +2054,6 @@ void geometry_global::do_cheat_sheet_orthogonal(finite_field *F,
 	}
 
 
-
 	FREE_OBJECT(O);
 
 	if (f_v) {
@@ -2040,6 +2061,7 @@ void geometry_global::do_cheat_sheet_orthogonal(finite_field *F,
 	}
 
 }
+#endif
 
 void geometry_global::do_cheat_sheet_hermitian(finite_field *F,
 		int projective_dimension,

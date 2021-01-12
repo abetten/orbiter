@@ -1,0 +1,110 @@
+/*
+ * orthogonal_space_activity.cpp
+ *
+ *  Created on: Jan 12, 2021
+ *      Author: betten
+ */
+
+
+
+
+#include "orbiter.h"
+
+using namespace std;
+
+namespace orbiter {
+namespace top_level {
+
+
+orthogonal_space_activity::orthogonal_space_activity()
+{
+	Descr = NULL;
+	OA = NULL;
+
+
+}
+
+orthogonal_space_activity::~orthogonal_space_activity()
+{
+	if (OA) {
+		FREE_OBJECT(OA);
+	}
+}
+
+void orthogonal_space_activity::init(orthogonal_space_activity_description *Descr,
+		orthogonal_space_with_action *OA,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orthogonal_space_activity::init" << endl;
+	}
+
+	orthogonal_space_activity::Descr = Descr;
+	orthogonal_space_activity::OA = OA;
+
+
+
+	if (f_v) {
+		cout << "orthogonal_space_activity::init done" << endl;
+	}
+}
+
+
+void orthogonal_space_activity::perform_activity(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orthogonal_space_activity::perform_activity" << endl;
+	}
+
+	if (Descr->f_cheat_sheet_orthogonal) {
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity before OA->O->create_latex_report" << endl;
+		}
+		OA->O->create_latex_report(verbose_level);
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity after OA->O->create_latex_report" << endl;
+		}
+
+	}
+
+	else if (Descr->f_unrank_line_through_two_points) {
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity f_unrank_line_through_two_points" << endl;
+		}
+
+		long int p1;
+		long int p2;
+		long int rk;
+
+		p1 = strtolint(Descr->unrank_line_through_two_points_p1);
+		p2 = strtolint(Descr->unrank_line_through_two_points_p2);
+
+		cout << "point rank p1 = " << p1 << endl;
+		cout << "point rank p2 = " << p2 << endl;
+
+		rk = OA->O->rank_line(p1, p2, verbose_level);
+
+		cout << "line rank = " << rk << endl;
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity f_unrank_line_through_two_points done" << endl;
+		}
+
+	}
+
+
+
+	if (f_v) {
+		cout << "orthogonal_space_activity::perform_activity done" << endl;
+	}
+
+}
+
+
+}}

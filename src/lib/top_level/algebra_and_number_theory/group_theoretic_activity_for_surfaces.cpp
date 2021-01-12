@@ -59,7 +59,7 @@ void group_theoretic_activity::do_create_surface(
 		cout << "group_theoretic_activity::do_create_surface before Surf->init" << endl;
 		}
 	Surf = NEW_OBJECT(surface_domain);
-	Surf->init(F, verbose_level - 1);
+	Surf->init(F, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "group_theoretic_activity::do_create_surface after Surf->init" << endl;
 		}
@@ -1128,7 +1128,7 @@ void group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_p
 		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_pairs "
 				"before Surf->init" << endl;
 	}
-	Surf->init(F, verbose_level);
+	Surf->init(F, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_pairs "
 				"after Surf->init" << endl;

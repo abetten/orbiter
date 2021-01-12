@@ -2918,7 +2918,7 @@ void algebra_global_with_action::classify_surfaces(
 		cout << "algebra_global_with_action::classify_surfaces before Surf->init" << endl;
 	}
 	Surf = NEW_OBJECT(surface_domain);
-	Surf->init(F, verbose_level - 3);
+	Surf->init(F, 0 /*verbose_level - 3*/);
 	if (f_v) {
 		cout << "algebra_global_with_action::classify_surfaces after Surf->init" << endl;
 	}

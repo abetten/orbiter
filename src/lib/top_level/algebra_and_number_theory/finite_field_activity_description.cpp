@@ -110,10 +110,6 @@ finite_field_activity_description::finite_field_activity_description()
 	cheat_sheet_Gr_n = 0;
 	cheat_sheet_Gr_k = 0;
 
-	f_cheat_sheet_orthogonal = FALSE;
-	cheat_sheet_orthogonal_epsilon = 0;
-	cheat_sheet_orthogonal_n = 0;
-
 	f_cheat_sheet_hermitian = FALSE;
 	cheat_sheet_hermitian_projective_dimension = 0;
 
@@ -408,12 +404,6 @@ int finite_field_activity_description::read_arguments(
 		}
 
 
-		else if (stringcmp(argv[i], "-cheat_sheet_orthogonal") == 0) {
-			f_cheat_sheet_orthogonal = TRUE;
-			cheat_sheet_orthogonal_epsilon = strtoi(argv[++i]);
-			cheat_sheet_orthogonal_n = strtoi(argv[++i]);
-			cout << "-cheat_sheet_orthogonal " << cheat_sheet_orthogonal_epsilon << " " << cheat_sheet_orthogonal_n << endl;
-		}
 		else if (stringcmp(argv[i], "-cheat_sheet_hermitian") == 0) {
 			f_cheat_sheet_hermitian = TRUE;
 			cheat_sheet_hermitian_projective_dimension = strtoi(argv[++i]);

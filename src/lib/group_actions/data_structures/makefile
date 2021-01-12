@@ -12,6 +12,8 @@ MODULES = \
 	orbit_rep.o \
 	orbit_transversal.o \
 	orbit_type_repository.o \
+	orthogonal_space_with_action_description.o \
+	orthogonal_space_with_action.o \
 	projective_space_job_description.o \
 	projective_space_job.o \
 	projective_space_object_classifier_description.o \

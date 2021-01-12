@@ -204,6 +204,8 @@ MODULES= \
 		group_actions/data_structures/orbit_rep.o \
 		group_actions/data_structures/orbit_transversal.o \
 		group_actions/data_structures/orbit_type_repository.o \
+		group_actions/data_structures/orthogonal_space_with_action_description.o \
+		group_actions/data_structures/orthogonal_space_with_action.o \
 		group_actions/data_structures/projective_space_job_description.o \
 		group_actions/data_structures/projective_space_job.o \
 		group_actions/data_structures/projective_space_object_classifier_description.o \
@@ -322,6 +324,8 @@ MODULES= \
 		top_level/algebra_and_number_theory/group_theoretic_activity.o \
 		top_level/algebra_and_number_theory/group_theoretic_activity_for_surfaces.o \
 		top_level/algebra_and_number_theory/orbits_on_polynomials.o \
+		top_level/algebra_and_number_theory/orthogonal_space_activity_description.o \
+		top_level/algebra_and_number_theory/orthogonal_space_activity.o \
 		top_level/algebra_and_number_theory/projective_space_activity_description.o \
 		top_level/algebra_and_number_theory/projective_space_activity.o \
 		top_level/algebra_and_number_theory/young.o \

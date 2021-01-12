@@ -1036,18 +1036,30 @@ ORTHOGONAL_SPACES:
 
 
 Op_4_2:
-	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 2 -end -end \
-		-with F -do -finite_field_activity -cheat_sheet_orthogonal 1 4 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end -end \
+		-define O -orthogonal_space 1 4 F -end \
+		-with O -do -orthogonal_space_activity -cheat_sheet_orthogonal -end
 	pdflatex O_1_4_2.tex 
 	open O_1_4_2.pdf
 
 
 Op_6_2:
-	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 2 -end -end \
-		-with F -do -finite_field_activity -cheat_sheet_orthogonal 1 6 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end -end \
+		-define O -orthogonal_space 1 6 F -end \
+		-with O -do -orthogonal_space_activity -cheat_sheet_orthogonal -end
 	pdflatex O_1_6_2.tex 
 	open O_1_6_2.pdf
 
+
+Op_6_64:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 64 -end -end \
+		-define O -orthogonal_space 1 4 F -end \
+		-with O -do -orthogonal_space_activity \
+			-unrank_line_through_two_points 15447347 15225451 \
+		-end
 
 #############################################################################################################
 # Section 19: Hermitian varieties

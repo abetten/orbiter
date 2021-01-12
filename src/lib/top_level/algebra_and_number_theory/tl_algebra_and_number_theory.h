@@ -379,10 +379,6 @@ public:
 	int cheat_sheet_Gr_n;
 	int cheat_sheet_Gr_k;
 
-	int f_cheat_sheet_orthogonal;
-	int cheat_sheet_orthogonal_epsilon;
-	int cheat_sheet_orthogonal_n;
-
 	int f_cheat_sheet_hermitian;
 	int cheat_sheet_hermitian_projective_dimension;
 
@@ -884,6 +880,67 @@ public:
 	void report(int verbose_level);
 	void report_detailed_list(std::ostream &ost,
 			int verbose_level);
+
+
+};
+
+
+// #############################################################################
+// orthogonal_space_activity_description.cpp
+// #############################################################################
+
+//! description of an activity that requires an orthogonal space
+
+
+class orthogonal_space_activity_description {
+public:
+
+	int f_input;
+	data_input_stream *Data;
+
+
+	int f_fname_base_out;
+	std::string fname_base_out;
+
+
+	int f_cheat_sheet_orthogonal;
+
+	int f_unrank_line_through_two_points;
+	std::string unrank_line_through_two_points_p1;
+	std::string unrank_line_through_two_points_p2;
+
+
+
+	orthogonal_space_activity_description();
+	~orthogonal_space_activity_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+
+
+};
+
+// #############################################################################
+// orthogonal_space_activity.cpp
+// #############################################################################
+
+//! an activity that requires an orthogonal space
+
+
+class orthogonal_space_activity {
+public:
+
+	orthogonal_space_activity_description *Descr;
+
+	orthogonal_space_with_action *OA;
+
+
+	orthogonal_space_activity();
+	~orthogonal_space_activity();
+	void init(orthogonal_space_activity_description *Descr,
+			orthogonal_space_with_action *OA,
+			int verbose_level);
+	void perform_activity(int verbose_level);
 
 
 };

@@ -410,6 +410,7 @@ enum symbol_table_object_type {
 	t_finite_field,
 	t_linear_group,
 	t_projective_space,
+	t_orthogonal_space,
 	t_action,
 	t_poset,
 	t_poset_classification,
@@ -439,6 +440,8 @@ public:
 	void init_linear_group(std::string &label,
 			void *p, int verbose_level);
 	void init_projective_space(std::string &label,
+			void *p, int verbose_level);
+	void init_orthogonal_space(std::string &label,
 			void *p, int verbose_level);
 	void print();
 };

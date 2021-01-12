@@ -163,6 +163,8 @@ class semifield_classify_description;
 class orbits_on_polynomials;
 class projective_space_activity_description;
 class projective_space_activity;
+class orthogonal_space_activity_description;
+class orthogonal_space_activity;
 
 // #############################################################################
 // representatives.cpp

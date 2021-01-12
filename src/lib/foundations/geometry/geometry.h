@@ -737,9 +737,11 @@ public:
 	void do_cheat_sheet_Gr(finite_field *F,
 			int n, int k,
 			int verbose_level);
+#if 0
 	void do_cheat_sheet_orthogonal(finite_field *F,
 			int epsilon, int n,
 			int verbose_level);
+#endif
 	void do_cheat_sheet_hermitian(finite_field *F,
 			int projective_dimension,
 			int verbose_level);
