@@ -586,7 +586,7 @@ void interface_symbol_table::definition_of_orthogonal_space(orbiter_top_level_se
 		cout << "interface_symbol_table::definition_of_orthogonal_space before OA->init" << endl;
 	}
 	OA->init(Orthogonal_space_with_action_description,
-		0 /* verbose_level */);
+		verbose_level - 2);
 	if (f_v) {
 		cout << "interface_symbol_table::definition_of_orthogonal_space after OA->init" << endl;
 	}

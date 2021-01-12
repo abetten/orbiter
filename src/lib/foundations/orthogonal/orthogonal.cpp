@@ -253,16 +253,17 @@ void orthogonal::init(int epsilon, int n,
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	int f_vvv = (verbose_level >= 3);
+	//int f_vvv = (verbose_level >= 3);
 	int i, j;
 	geometry_global Gg;
 
 
 	orthogonal::epsilon = epsilon;
-	orthogonal::m = Gg.Witt_index(epsilon, n - 1);
 	orthogonal::F = F;
-	orthogonal::q = F->q;
 	orthogonal::n = n;
+
+	q = F->q;
+	m = Gg.Witt_index(epsilon, n - 1);
 
 	if (f_v) {
 		cout << "orthogonal::init: epsilon=" << epsilon
@@ -271,15 +272,142 @@ void orthogonal::init(int epsilon, int n,
 			<< " q=" << q
 			<< " verbose_level=" << verbose_level
 			<< endl;
-		}
+	}
 
 	if (EVEN(q)) {
 		f_even = TRUE;
-		}
+	}
 	else {
 		f_even = FALSE;
-		}
+	}
 
+	allocate();
+
+	if (f_v) {
+		cout << "orthogonal::init before init_form_and_Gram_matrix" << endl;
+	}
+	init_form_and_Gram_matrix(verbose_level - 2);
+	if (f_v) {
+		cout << "orthogonal::init after init_form_and_Gram_matrix" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "orthogonal::init before init_counting_functions" << endl;
+	}
+	init_counting_functions(verbose_level - 2);
+	if (f_v) {
+		cout << "orthogonal::init after init_counting_functions" << endl;
+	}
+
+	if (f_v) {
+		cout << "orthogonal::init before init_decomposition" << endl;
+	}
+	init_decomposition(verbose_level - 2);
+	if (f_v) {
+		cout << "orthogonal::init after init_decomposition" << endl;
+	}
+
+	if (epsilon == -1) {
+		return;
+	}
+
+
+
+
+	lines_on_point_coords1 = NEW_int(alpha * n);
+	lines_on_point_coords2 = NEW_int(alpha * n);
+
+	if (m > 1) {
+		subspace = NEW_OBJECT(orthogonal);
+		if (f_v) {
+			cout << "orthogonal::init initializing subspace" << endl;
+		}
+		subspace->init(epsilon, n - 2, F, 0 /*verbose_level - 1*/);
+		if (f_v) {
+			cout << "orthogonal::init initializing subspace finished" << endl;
+			cout << "orthogonal::init subspace->epsilon=" << subspace->epsilon << endl;
+			cout << "orthogonal::init subspace->n=" << subspace->n << endl;
+			cout << "orthogonal::init subspace->m=" << subspace->m << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "orthogonal::init no subspace" << endl;
+		}
+		subspace = NULL;
+	}
+
+	if (f_v) {
+		cout << "orthogonal::init O^" << epsilon << "(" << n << "," << q << ")" << endl;
+		cout << "epsilon=" << epsilon
+				<< " n=" << n << " m=" << m << " q=" << q << endl;
+		cout << "pt_P = " << pt_P << endl;
+		cout << "pt_Q=" << pt_Q << endl;
+		cout << "nb_points = " << nb_points << endl;
+		cout << "nb_lines = " << nb_lines << endl;
+		cout << "alpha = " << alpha << endl;
+		cout << "beta = " << beta << endl;
+		cout << "gamma = " << gamma << endl;
+	}
+
+
+	if (f_v) {
+		cout << "orthogonal::init before allocating line_pencil of size " << alpha << endl;
+	}
+	line_pencil = NEW_lint(alpha);
+	if (f_v) {
+		cout << "orthogonal::init before allocating Perp1 of size "
+				<< alpha * (q + 1) << endl;
+	}
+	Perp1 = NEW_lint(alpha * (q + 1));
+	if (f_v) {
+		cout << "orthogonal::init after allocating Perp1" << endl;
+	}
+
+
+
+	if (f_v) {
+		print_schemes();
+		cout << "orthogonal::init Gram matrix:" << endl;
+		print_integer_matrix_width(cout,
+				Gram_matrix, n, n, n, F->log10_of_q + 1);
+	}
+	if (FALSE) {
+		for (i = 0; i < T1_m; i++) {
+			F->Q_epsilon_unrank(v1, 1, epsilon, n - 1,
+					form_c1, form_c2, form_c3, i, verbose_level);
+			cout << i << " : ";
+			int_vec_print(cout, v1, n);
+			j = F->Q_epsilon_rank(v1, 1, epsilon, n - 1,
+					form_c1, form_c2, form_c3, verbose_level);
+			cout << " : " << j << endl;
+		}
+	}
+	if (FALSE) {
+		if (nb_points < 300) {
+			cout << "points of O^" << epsilon
+					<< "(" << n << "," << q << ") by type:" << endl;
+			list_points_by_type(verbose_level);
+		}
+		if (nb_points < 300 && nb_lines < 300) {
+			cout << "points and lines of O^" << epsilon
+					<< "(" << n << "," << q << ") by type:" << endl;
+			list_all_points_vs_points(verbose_level);
+		}
+	}
+	if (f_v) {
+		if (subspace) {
+			cout << "orthogonal::init subspace->epsilon=" << subspace->epsilon << endl;
+			cout << "orthogonal::init subspace->n=" << subspace->n << endl;
+			cout << "orthogonal::init subspace->m=" << subspace->m << endl;
+		}
+		cout << "orthogonal::init finished" << endl;
+	}
+}
+
+void orthogonal::allocate()
+{
 	v1 = NEW_int(n);
 	v2 = NEW_int(n);
 	v3 = NEW_int(n);
@@ -315,6 +443,15 @@ void orthogonal::init(int epsilon, int n,
 	determine_line_v2 = NEW_int(n);
 	determine_line_v3 = NEW_int(n);
 
+}
+
+void orthogonal::init_form_and_Gram_matrix(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orthogonal::init_form_and_Gram_matrix" << endl;
+	}
 	form_c1 = 1;
 	form_c2 = 0;
 	form_c3 = 0;
@@ -323,29 +460,42 @@ void orthogonal::init(int epsilon, int n,
 				form_c1, form_c2, form_c3, verbose_level);
 	}
 	if (f_v) {
-		cout << "orthogonal::init computing Gram matrix" << endl;
+		cout << "orthogonal::init_form_and_Gram_matrix computing Gram matrix" << endl;
 	}
 	F->Gram_matrix(
 			epsilon, n - 1,
 			form_c1, form_c2, form_c3, Gram_matrix);
 	if (f_v) {
-		cout << "orthogonal::init "
+		cout << "orthogonal::init_form_and_Gram_matrix "
 				"computing Gram matrix done" << endl;
+	}
+	if (f_v) {
+		cout << "orthogonal::init_form_and_Gram_matrix done" << endl;
+	}
+}
+
+void orthogonal::init_counting_functions(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	geometry_global Gg;
+
+	if (f_v) {
+		cout << "orthogonal::init_counting_functions" << endl;
 	}
 
 	T1_m = Gg.count_T1(epsilon, m, q);
-	if (f_vvv) {
+	if (f_v) {
 		cout << "T1_m(" << epsilon << ","
 				<< m << "," << q << ") = " << T1_m << endl;
 	}
 	T1_mm1 = Gg.count_T1(epsilon, m - 1, q);
-	if (f_vvv) {
+	if (f_v) {
 		cout << "T1_mm1(" << epsilon << ","
 				<< m - 1 << "," << q << ") = " << T1_mm1 << endl;
 	}
 	if (m > 1) {
 		T1_mm2 = Gg.count_T1(epsilon, m - 2, q);
-		if (f_vvv) {
+		if (f_v) {
 			cout << "T1_mm2(" << epsilon << ","
 					<< m - 2 << "," << q << ") = " << T1_mm2 << endl;
 		}
@@ -386,7 +536,7 @@ void orthogonal::init(int epsilon, int n,
 		Sbar_mm2 = 0;
 	}
 
-	if (f_vvv) {
+	if (f_v) {
 		cout << "T1(" << m << "," << q << ") = " << T1_m << endl;
 		if (m >= 1) {
 			cout << "T1(" << m - 1 << "," << q << ") = " << T1_mm1 << endl;
@@ -420,7 +570,20 @@ void orthogonal::init(int epsilon, int n,
 		cout << "N1_mm1=" << N1_mm1 << endl;
 		cout << "N1_mm2=" << N1_mm2 << endl;
 	}
+	if (f_v) {
+		cout << "orthogonal::init_counting_functions done" << endl;
+	}
+}
 
+void orthogonal::init_decomposition(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	geometry_global Gg;
+	int i;
+
+	if (f_v) {
+		cout << "orthogonal::init_decomposition" << endl;
+	}
 
 	if (epsilon == 1) {
 #if 1
@@ -434,15 +597,21 @@ void orthogonal::init(int epsilon, int n,
 			exit(1);
 		}
 #endif
-		init_hyperbolic(verbose_level - 3);
 		if (f_v) {
-			cout << "after init_hyperbolic" << endl;
+			cout << "orthogonal::init_decomposition before init_hyperbolic" << endl;
+		}
+		init_hyperbolic(verbose_level /*- 3*/);
+		if (f_v) {
+			cout << "orthogonal::init_decomposition after init_hyperbolic" << endl;
 		}
 	}
 	else if (epsilon == 0) {
+		if (f_v) {
+			cout << "orthogonal::init_decomposition before init_parabolic" << endl;
+		}
 		init_parabolic(verbose_level /*- 3*/);
 		if (f_v) {
-			cout << "after init_parabolic" << endl;
+			cout << "orthogonal::init_decomposition after init_parabolic" << endl;
 		}
 	}
 	else if (epsilon == -1) {
@@ -456,9 +625,20 @@ void orthogonal::init(int epsilon, int n,
 		//exit(1);
 	}
 	else {
-		cout << "epsilon = " << epsilon << " unknown" << endl;
+		cout << "orthogonal::init_decomposition epsilon = " << epsilon << " is illegal" << endl;
+		exit(1);
 	}
 
+	if (f_v) {
+		cout << "orthogonal::init_decomposition Point partition:" << endl;
+		for (i = 0; i < nb_point_classes; i++) {
+			cout << P[i] << endl;
+		}
+		cout << "orthogonal::init_decomposition Line partition:" << endl;
+		for (i = 0; i < nb_line_classes; i++) {
+			cout << L[i] << endl;
+		}
+	}
 	nb_points = 0;
 	for (i = 0; i < nb_point_classes; i++) {
 		nb_points += P[i];
@@ -467,97 +647,15 @@ void orthogonal::init(int epsilon, int n,
 	for (i = 0; i < nb_line_classes; i++) {
 		nb_lines += L[i];
 	}
-	lines_on_point_coords1 = NEW_int(alpha * n);
-	lines_on_point_coords2 = NEW_int(alpha * n);
-
-	if (m > 1) {
-		subspace = NEW_OBJECT(orthogonal);
-		if (f_v) {
-			cout << "initializing subspace" << endl;
-		}
-		subspace->init(epsilon, n - 2, F, 0 /*verbose_level - 1*/);
-		if (f_v) {
-			cout << "initializing subspace finished" << endl;
-			cout << "subspace->epsilon=" << subspace->epsilon << endl;
-			cout << "subspace->n=" << subspace->n << endl;
-			cout << "subspace->m=" << subspace->m << endl;
-		}
-	}
-	else {
-		if (f_v) {
-			cout << "no subspace" << endl;
-		}
-		subspace = NULL;
-	}
-
 	if (f_v) {
-		cout << "O^" << epsilon << "(" << n << "," << q << ")" << endl;
-		cout << "epsilon=" << epsilon
-				<< " n=" << n << " m=" << m << " q=" << q << endl;
-		cout << "pt_P = " << pt_P << endl;
-		cout << "pt_Q=" << pt_Q << endl;
-		cout << "nb_points = " << nb_points << endl;
-		cout << "nb_lines = " << nb_lines << endl;
-		cout << "alpha = " << alpha << endl;
-		cout << "beta = " << beta << endl;
-		cout << "gamma = " << gamma << endl;
-	}
-
-
-	if (f_v) {
-		cout << "before allocating line_pencil of size " << alpha << endl;
-	}
-	line_pencil = NEW_lint(alpha);
-	if (f_v) {
-		cout << "before allocating Perp1 of size "
-				<< alpha * (q + 1) << endl;
-	}
-	Perp1 = NEW_lint(alpha * (q + 1));
-	if (f_v) {
-		cout << "after allocating Perp1" << endl;
-	}
-
-
-
-	if (f_v) {
-		print_schemes();
-		cout << "Gram matrix:" << endl;
-		print_integer_matrix_width(cout,
-				Gram_matrix, n, n, n, F->log10_of_q + 1);
-	}
-	if (FALSE) {
-		for (i = 0; i < T1_m; i++) {
-			F->Q_epsilon_unrank(v1, 1, epsilon, n - 1,
-					form_c1, form_c2, form_c3, i, verbose_level);
-			cout << i << " : ";
-			int_vec_print(cout, v1, n);
-			j = F->Q_epsilon_rank(v1, 1, epsilon, n - 1,
-					form_c1, form_c2, form_c3, verbose_level);
-			cout << " : " << j << endl;
-		}
-	}
-	if (FALSE) {
-		if (nb_points < 300) {
-			cout << "points of O^" << epsilon
-					<< "(" << n << "," << q << ") by type:" << endl;
-			list_points_by_type(verbose_level);
-		}
-		if (nb_points < 300 && nb_lines < 300) {
-			cout << "points and lines of O^" << epsilon
-					<< "(" << n << "," << q << ") by type:" << endl;
-			list_all_points_vs_points(verbose_level);
-		}
+		cout << "orthogonal::init_decomposition nb_points = " << nb_points << endl;
+		cout << "orthogonal::init_decomposition nb_lines = " << nb_lines << endl;
 	}
 	if (f_v) {
-		cout << "orthogonal::init finished" << endl;
-		if (subspace) {
-			cout << "subspace->epsilon=" << subspace->epsilon << endl;
-			cout << "subspace->n=" << subspace->n << endl;
-			cout << "subspace->m=" << subspace->m << endl;
-		}
+		cout << "orthogonal::init_decomposition done" << endl;
 	}
+
 }
-
 void orthogonal::init_parabolic(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1025,16 +1123,31 @@ void orthogonal::init_hyperbolic(int verbose_level)
 	if (p1 == 0) {
 		//cout << "orthogonal::init_hyperbolic p1 == 0" << endl;
 		a12 = 0;
-		}
+	}
 	else {
-		a12 = l2 * (q - 1) / p1;
-		}
+		//a12 = l2 * (q - 1) / p1;
+		a12 = NT.number_theory_domain::ab_over_c(l2, q - 1, p1);
+	}
 	a11 = T1_mm1 - a12;
-	l1 = a11 * p1 / q;
-	if (l1 < 0) {
-		cout << "orthogonal::init_hyperbolic l1 < 0, overflow" << endl;
+
+
+
+	//l1 = a11 * p1 / q;
+
+	l1 = NT.number_theory_domain::ab_over_c(a11, p1, q);
+	if (f_v) {
+		cout << "orthogonal::init_hyperbolic a11 = " << a11 << endl;
+		cout << "orthogonal::init_hyperbolic p1 = " << p1 << endl;
+		cout << "orthogonal::init_hyperbolic l1 = " << l1 << endl;
+	}
+
+
+#if 0
+	if (l1 * q != a11 * p1) {
+		cout << "orthogonal::init_hyperbolic l1 * q != a11 * p1, overflow" << endl;
 		exit(1);
 	}
+#endif
 
 	//a41 = l1 / T1_mm1;
 
@@ -1044,8 +1157,9 @@ void orthogonal::init_hyperbolic(int verbose_level)
 	P = NEW_lint(6);
 	L = NEW_lint(7);
 
-	for (i = 0; i < 6 * 7; i++)
+	for (i = 0; i < 6 * 7; i++) {
 		A[i] = B[i] = 0;
+	}
 	P[0] = p1;
 	P[1] = p2;
 	P[2] = p3;

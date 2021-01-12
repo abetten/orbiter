@@ -2183,6 +2183,7 @@ public:
 	long int inverse_mod(long int a, long int p);
 	long int mult_mod(long int a, long int b, long int p);
 	long int add_mod(long int a, long int b, long int p);
+	long int ab_over_c(long int a, long int b, long int c);
 	long int int_abs(long int a);
 	long int gcd_lint(long int m, long int n);
 	void extended_gcd_int(int m, int n, int &g, int &u, int &v);
