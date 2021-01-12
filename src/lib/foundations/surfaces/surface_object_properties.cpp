@@ -1985,7 +1985,15 @@ void surface_object_properties::print_equation(std::ostream &ost)
 	ost << endl << "=0\n$$" << endl;
 	int_vec_print(ost, SO->eqn, 20);
 	ost << "\\\\" << endl;
-	ost << "Number of points on the surface " << SO->nb_pts << "\\\\" << endl;
+
+	long int rk;
+
+	SO->F->PG_element_rank_modified_lint(SO->eqn, 1, 20, rk);
+	ost << "The point rank of the equation over GF$(" << SO->F->q << ")$ is " << rk << "\\\\" << endl;
+
+	//ost << "Number of points on the surface " << SO->nb_pts << "\\\\" << endl;
+
+
 }
 
 void surface_object_properties::print_general(std::ostream &ost)
@@ -1993,7 +2001,39 @@ void surface_object_properties::print_general(std::ostream &ost)
 	ost << "\\subsection*{General information}" << endl;
 
 
-
+	ost << "{\\renewcommand{\\arraystretch}{1.5}" << endl;
+	ost << "$$" << endl;
+	ost << "\\begin{array}{|l|r|}" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\mbox{Number of lines} & " << SO->nb_lines << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\mbox{Number of points} & " << SO->nb_pts << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\mbox{Number of singular points} & " << nb_singular_pts << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\mbox{Number of Eckardt points} & " << nb_Eckardt_points << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\mbox{Number of double points} & " << nb_Double_points << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\mbox{Number of single points} & " << nb_Single_points << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\mbox{Number of points off lines} & " << nb_pts_not_on_lines << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\mbox{Number of Hesse planes} & " << nb_Hesse_planes << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\mbox{Number of axes} & " << nb_axes << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\mbox{Type of points on lines} & ";
+	Type_pts_on_lines->print_naked_tex(ost, TRUE);
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\mbox{Type of lines on points} & ";
+	Type_lines_on_point->print_naked_tex(ost, TRUE);
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+	ost << "$$}" << endl;
+#if 0
 	ost << "Points on lines:" << endl;
 	ost << "$$" << endl;
 	Type_pts_on_lines->print_naked_tex(ost, TRUE);
@@ -2002,6 +2042,7 @@ void surface_object_properties::print_general(std::ostream &ost)
 	ost << "$$" << endl;
 	Type_lines_on_point->print_naked_tex(ost, TRUE);
 	ost << "$$" << endl;
+#endif
 }
 
 void surface_object_properties::print_affine_points_in_source_code(std::ostream &ost)
@@ -2279,14 +2320,14 @@ void surface_object_properties::print_singular_points(std::ostream &ost)
 
 
 
-	//ost << "%%\\clearpage" << endl;
 	//ost << "The Eckardt points are:\\\\" << endl;
-	//ost << "\\begin{multicols}{2}" << endl;
-	ost << "\\begin{align*}" << endl;
+	ost << "\\noindent" << endl;
+	ost << "\\begin{multicols}{2}" << endl;
+	//ost << "\\begin{align*}" << endl;
 	for (i = 0; i < nb_singular_pts; i++) {
 		p = singular_pts[i];
 		SO->Surf->unrank_point(v, p);
-		ost << "S_{" << i << "} &= P_{" << p << "}=\\bP(";
+		ost << i << " :  $P_{" << p << "}=\\bP(";
 		//int_vec_print_fully(ost, v, 4);
 		for (j = 0; j < 4; j++) {
 			SO->F->print_element(ost, v[j]);
@@ -2304,9 +2345,10 @@ void surface_object_properties::print_singular_points(std::ostream &ost)
 		}
 		ost << ")";
 
-		ost << "\\\\" << endl;
+		ost << "$\\\\" << endl;
 		}
-	ost << "\\end{align*}" << endl;
+	//ost << "\\end{align*}" << endl;
+	ost << "\\end{multicols}" << endl;
 }
 
 

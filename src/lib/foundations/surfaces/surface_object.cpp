@@ -224,7 +224,7 @@ void surface_object::enumerate_points_and_lines(int verbose_level)
 		cout << "surface_object::enumerate_points_and_lines before "
 				"Surf->enumerate_points" << endl;
 	}
-	Surf->enumerate_points(surface_object::eqn,
+	Surf->enumerate_points(eqn,
 		Points,
 		0 /*verbose_level - 1*/);
 	if (f_v) {
@@ -268,6 +268,21 @@ void surface_object::enumerate_points_and_lines(int verbose_level)
 	}
 #endif
 
+
+#if 1
+	if (F->q == 2) {
+		if (f_v) {
+			cout << "surface_object::enumerate_points_and_lines before find_real_lines" << endl;
+		}
+
+		find_real_lines(The_Lines, verbose_level);
+
+		if (f_v) {
+			cout << "surface_object::enumerate_points_and_lines after find_real_lines" << endl;
+		}
+	}
+#endif
+
 	nb_lines = The_Lines.size();
 	Lines = NEW_lint(nb_lines);
 	for (i = 0; i < nb_lines; i++) {
@@ -283,8 +298,55 @@ void surface_object::enumerate_points_and_lines(int verbose_level)
 
 
 
+
 	if (f_v) {
 		cout << "surface_object::enumerate_points_and_lines done" << endl;
+	}
+}
+
+void surface_object::find_real_lines(std::vector<long int> &The_Lines, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+	long int rk;
+	int M[8];
+	int coeff_out[4];
+
+	if (f_v) {
+		cout << "surface_object::find_real_lines" << endl;
+	}
+	for (i = 0, j = 0; i < The_Lines.size(); i++) {
+		rk = The_Lines[i];
+		Surf->P->Grass_lines->unrank_lint_here(M, rk, 0 /* verbose_level */);
+		if (f_v) {
+			cout << "surface_object::find_real_lines testing line" << endl;
+			int_matrix_print(M, 2, 4);
+		}
+
+		Surf->Poly3_4->substitute_line(
+			eqn /* coeff_in */, coeff_out,
+			M /* Pt1_coeff */, M + 4 /* Pt2_coeff */,
+			verbose_level - 3);
+		// coeff_in[nb_monomials], coeff_out[degree + 1]
+
+		if (f_v) {
+			cout << "surface_object::find_real_lines coeff_out=";
+			int_vec_print(cout, coeff_out, 4);
+			cout << endl;
+		}
+		if (!int_vec_is_zero(coeff_out, 4)) {
+			if (f_v) {
+				cout << "surface_object::find_real_lines not a real line" << endl;
+			}
+		}
+		else {
+			The_Lines[j] = rk;
+			j++;
+		}
+	}
+	The_Lines.resize(j);
+	if (f_v) {
+		cout << "surface_object::find_real_lines done" << endl;
 	}
 }
 
