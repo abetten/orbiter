@@ -3692,6 +3692,40 @@ void file_io::do_csv_file_join(
 	}
 }
 
+void file_io::do_csv_file_latex(std::string &fname,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::do_csv_file_latex" << endl;
+	}
+	spreadsheet S;
+
+	S.read_spreadsheet(fname, verbose_level);
+
+
+
+
+	string fname_out;
+
+	fname_out.assign(fname);
+	chop_off_extension(fname_out);
+	fname_out.append(".tex");
+
+	{
+		ofstream ost(fname_out);
+
+		S.print_table_latex_all_columns(ost, FALSE /* f_enclose_in_parentheses */);
+	}
+	cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
+
+
+	if (f_v) {
+		cout << "file_io::do_csv_file_select_rows done" << endl;
+	}
+}
+
 }}
 
 

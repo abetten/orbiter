@@ -10141,6 +10141,8 @@ create_dickson_makefiles_join_q4:
 		-command "\t\t-csv_file_join Orb%d_q4_summary.csv \"Surface\" \B" \
 		-end
 
+dickson_q2_latex:
+	$(ORBITER_PATH)/orbiter.out -csv_file_latex q2.csv
 
 
 
