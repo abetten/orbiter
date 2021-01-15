@@ -1594,6 +1594,74 @@ void latex_interface::latexable_string(stringstream &str,
 	}
 }
 
+void latex_interface::print_row_tactical_decomposition_scheme_tex(
+	std::ostream &ost, int f_enter_math_mode,
+	long int *row_class_size, int nb_row_classes,
+	long int *col_class_size, int nb_col_classes,
+	long int *row_scheme)
+{
+	int i, j;
+
+	ost << "%{\\renewcommand{\\arraycolsep}{1pt}" << endl;
+	if (f_enter_math_mode) {
+		ost << "$$" << endl;
+		}
+	ost << "\\begin{array}{r|*{" << nb_col_classes << "}{r}}" << endl;
+	ost << "\\rightarrow ";
+	for (j = 0; j < nb_col_classes; j++) {
+		ost << " & ";
+		ost << setw(6) << col_class_size[j];
+		}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < nb_row_classes; i++) {
+		ost << setw(6) << row_class_size[i];
+		for (j = 0; j < nb_col_classes; j++) {
+			ost << " & " << setw(12) << row_scheme[i * nb_col_classes + j];
+			}
+		ost << "\\\\" << endl;
+		}
+	ost << "\\end{array}" << endl;
+	if (f_enter_math_mode) {
+		ost << "$$" << endl;
+		}
+	ost << "%}" << endl;
+}
+
+void latex_interface::print_column_tactical_decomposition_scheme_tex(
+	std::ostream &ost, int f_enter_math_mode,
+	long int *row_class_size, int nb_row_classes,
+	long int *col_class_size, int nb_col_classes,
+	long int *col_scheme)
+{
+	int i, j;
+
+	ost << "%{\\renewcommand{\\arraycolsep}{1pt}" << endl;
+	if (f_enter_math_mode) {
+		ost << "$$" << endl;
+		}
+	ost << "\\begin{array}{r|*{" << nb_col_classes << "}{r}}" << endl;
+	ost << "\\downarrow ";
+	for (j = 0; j < nb_col_classes; j++) {
+		ost << " & ";
+		ost << setw(6) << col_class_size[j];
+		}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < nb_row_classes; i++) {
+		ost << setw(6) << row_class_size[i];
+		for (j = 0; j < nb_col_classes; j++) {
+			ost << " & " << setw(12) << col_scheme[i * nb_col_classes + j];
+			}
+		ost << "\\\\" << endl;
+		}
+	ost << "\\end{array}" << endl;
+	if (f_enter_math_mode) {
+		ost << "$$" << endl;
+		}
+	ost << "%}" << endl;
+}
+
 
 }}
 

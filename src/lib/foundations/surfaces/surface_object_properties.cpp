@@ -1983,9 +1983,14 @@ void surface_object_properties::print_equation(std::ostream &ost)
 	ost << "\\subsection*{The equation}" << endl;
 	ost << "The equation of the surface ";
 	ost << " is :" << endl;
+
+#if 0
 	ost << "$$" << endl;
 	SO->Surf->print_equation_tex(ost, SO->eqn);
 	ost << endl << "=0\n$$" << endl;
+#else
+	SO->Surf->print_equation_with_line_breaks_tex(ost, SO->eqn);
+#endif
 	int_vec_print(ost, SO->eqn, 20);
 	ost << "\\\\" << endl;
 
@@ -2185,12 +2190,16 @@ void surface_object_properties::print_Eckardt_points(std::ostream &ost)
 		else {
 			ost << ".";
 		}
-		ost << "\\; T= " << tangent_plane_rank_global[p];
+
+		//ost << "\\; T= " << tangent_plane_rank_global[p];
 		ost << "$\\\\" << endl;
+#if 0
 		if (tangent_plane_rank_global[p] == -1) {
 			cout << "Eckardt point is singular. " << endl;
 			//exit(1);
 		}
+#endif
+
 		}
 	//ost << "\\end{align*}" << endl;
 
@@ -2324,9 +2333,9 @@ void surface_object_properties::print_singular_points(std::ostream &ost)
 
 
 	//ost << "The Eckardt points are:\\\\" << endl;
-	ost << "\\noindent" << endl;
 	ost << "\\begin{multicols}{2}" << endl;
 	//ost << "\\begin{align*}" << endl;
+	ost << "\\noindent" << endl;
 	for (i = 0; i < nb_singular_pts; i++) {
 		p = singular_pts[i];
 		SO->Surf->unrank_point(v, p);

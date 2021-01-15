@@ -85,11 +85,9 @@ void projective_space_activity::do_cubic_surface_properties(
 	finite_field *F;
 	surface_domain *Surf;
 	surface_with_action *Surf_A;
-	//projective_space_with_action *PA;
 	number_theory_domain NT;
 	sorting Sorting;
 	file_io Fio;
-	//int f_semilinear;
 
 
 
@@ -97,55 +95,11 @@ void projective_space_activity::do_cubic_surface_properties(
 	F0 = NEW_OBJECT(finite_field);
 	F0->finite_field_init(defining_q, 0);
 
-#if 0
-	F = LG->F;
-
-	f_semilinear = LG->A_linear->is_semilinear_matrix_group();
-
-
-	if (f_v) {
-		cout << "projective_space_activity::do_cubic_surface_properties "
-				"before Surf->init" << endl;
-	}
-	Surf = NEW_OBJECT(surface_domain);
-	Surf->init(F, verbose_level - 1);
-	if (f_v) {
-		cout << "projective_space_activity::do_cubic_surface_properties "
-				"after Surf->init" << endl;
-	}
-
-	Surf_A = NEW_OBJECT(surface_with_action);
-
-	if (f_v) {
-		cout << "projective_space_activity::do_cubic_surface_properties "
-				"before Surf_A->init" << endl;
-	}
-	Surf_A->init(Surf, LG, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
-	if (f_v) {
-		cout << "projective_space_activity::do_cubic_surface_properties "
-				"after Surf_A->init" << endl;
-	}
-
-	PA = NEW_OBJECT(projective_space_with_action);
-
-	if (f_v) {
-		cout << "projective_space_activity::do_cubic_surface_properties "
-				"before PA->init" << endl;
-	}
-	PA->init(
-		F, 3 /*n*/, f_semilinear,
-		TRUE /* f_init_incidence_structure */,
-		verbose_level);
-	if (f_v) {
-		cout << "projective_space_activity::do_cubic_surface_properties "
-				"after PA->init" << endl;
-	}
-#else
 	F = PA->P->F;
 
 
 	Surf = NEW_OBJECT(surface_domain);
-	Surf->init(F, verbose_level - 1);
+	Surf->init(F, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "projective_space_activity::do_cubic_surface_properties "
 				"after Surf->init" << endl;
@@ -163,7 +117,7 @@ void projective_space_activity::do_cubic_surface_properties(
 				"after Surf_A->init" << endl;
 	}
 
-#endif
+
 
 
 
@@ -411,71 +365,24 @@ void projective_space_activity::do_cubic_surface_properties_analyze(
 		cout << "projective_space_activity::do_cubic_surface_properties_analyze" << endl;
 	}
 
-	//int i;
 	finite_field *F0;
 	finite_field *F;
 	surface_domain *Surf;
 	surface_with_action *Surf_A;
-	//projective_space_with_action *PA;
 	number_theory_domain NT;
 	sorting Sorting;
 	file_io Fio;
-	//int f_semilinear;
 
 
 
 	F0 = NEW_OBJECT(finite_field);
 	F0->finite_field_init(defining_q, 0);
 
-#if 0
-	F = LG->F;
-
-	f_semilinear = LG->A_linear->is_semilinear_matrix_group();
-
-
-	if (f_v) {
-		cout << "projective_space_activity::do_cubic_surface_properties_analyze "
-				"before Surf->init" << endl;
-	}
-	Surf = NEW_OBJECT(surface_domain);
-	Surf->init(F, verbose_level - 1);
-	if (f_v) {
-		cout << "projective_space_activity::do_cubic_surface_properties_analyze "
-				"after Surf->init" << endl;
-	}
-
-	Surf_A = NEW_OBJECT(surface_with_action);
-
-	if (f_v) {
-		cout << "projective_space_activity::do_cubic_surface_properties_analyze "
-				"before Surf_A->init_with_linear_group" << endl;
-	}
-	Surf_A->init_with_linear_group(Surf, LG, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
-	if (f_v) {
-		cout << "projective_space_activity::do_cubic_surface_properties_analyze "
-				"after Surf_A->init_with_linear_group" << endl;
-	}
-
-	PA = NEW_OBJECT(projective_space_with_action);
-
-	if (f_v) {
-		cout << "projective_space_activity::do_cubic_surface_properties_analyze "
-				"before PA->init" << endl;
-	}
-	PA->init(
-		F, 3 /*n*/, f_semilinear,
-		TRUE /* f_init_incidence_structure */,
-		verbose_level);
-	if (f_v) {
-		cout << "projective_space_activity::do_cubic_surface_properties_analyze "
-				"after PA->init" << endl;
-	}
-#else
 	F = PA->P->F;
 
 
 	Surf = NEW_OBJECT(surface_domain);
-	Surf->init(F, verbose_level - 1);
+	Surf->init(F, 0 /* verbose_level - 1 */);
 	if (f_v) {
 		cout << "projective_space_activity::do_cubic_surface_properties_analyze "
 				"after Surf->init" << endl;
@@ -492,7 +399,7 @@ void projective_space_activity::do_cubic_surface_properties_analyze(
 		cout << "projective_space_activity::do_cubic_surface_properties_analyze "
 				"after Surf_A->init" << endl;
 	}
-#endif
+
 
 	int nb_orbits, n;
 	int orbit_idx;

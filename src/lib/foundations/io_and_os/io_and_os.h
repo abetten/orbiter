@@ -404,6 +404,16 @@ public:
 			long int *v, int len);
 	void latexable_string(std::stringstream &str,
 			const char *p, int max_len, int line_skip);
+	void print_row_tactical_decomposition_scheme_tex(
+		std::ostream &ost, int f_enter_math_mode,
+		long int *row_class_size, int nb_row_classes,
+		long int *col_class_size, int nb_col_classes,
+		long int *row_scheme);
+	void print_column_tactical_decomposition_scheme_tex(
+		std::ostream &ost, int f_enter_math_mode,
+		long int *row_class_size, int nb_row_classes,
+		long int *col_class_size, int nb_col_classes,
+		long int *col_scheme);
 
 };
 

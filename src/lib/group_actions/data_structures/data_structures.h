@@ -352,6 +352,11 @@ public:
 	int n;
 	std::string input_q;
 	finite_field *F;
+	int f_label_txt;
+	std::string label_txt;
+	int f_label_tex;
+	std::string label_tex;
+	int f_without_group;
 
 	orthogonal_space_with_action_description();
 	~orthogonal_space_with_action_description();
@@ -376,8 +381,15 @@ public:
 
 	orthogonal_space_with_action_description *Descr;
 
+	std::string label_txt;
+	std::string label_tex;
 
 	orthogonal *O;
+
+	int f_semilinear;
+
+	action *A;
+	action_on_orthogonal *AO;
 
 
 	orthogonal_space_with_action();
@@ -386,6 +398,11 @@ public:
 			orthogonal_space_with_action_description *Descr,
 			int verbose_level);
 	void init_group(int verbose_level);
+	void report(layered_graph_draw_options *LG_Draw_options,
+			int verbose_level);
+	void report2(std::ostream &ost,
+			layered_graph_draw_options *LG_Draw_options,
+			int verbose_level);
 
 };
 

@@ -330,8 +330,8 @@ class BLT_set_create_description {
 
 public:
 
-	int f_q;
-	int q;
+	//int f_q;
+	//int q;
 	int f_catalogue;
 	int iso;
 	int f_family;
@@ -367,6 +367,9 @@ public:
 	std::string label_txt;
 	std::string label_tex;
 
+
+
+#if 0
 	int q;
 	finite_field *F;
 
@@ -375,6 +378,9 @@ public:
 	action *A; // orthogonal group
 	int degree;
 	orthogonal *O;
+#else
+	orthogonal_space_with_action *OA;
+#endif
 
 	int *set;
 	int f_has_group;
@@ -387,7 +393,9 @@ public:
 	~BLT_set_create();
 	void null();
 	void freeself();
-	void init(BLT_set_create_description *Descr, int verbose_level);
+	void init(BLT_set_create_description *Descr,
+			orthogonal_space_with_action *OA,
+			int verbose_level);
 	void apply_transformations(
 			std::vector<std::string> transform_coeffs,
 			std::vector<int> f_inverse_transform, int verbose_level);

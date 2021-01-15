@@ -902,12 +902,14 @@ public:
 	int f_fname_base_out;
 	std::string fname_base_out;
 
-
 	int f_cheat_sheet_orthogonal;
 
 	int f_unrank_line_through_two_points;
 	std::string unrank_line_through_two_points_p1;
 	std::string unrank_line_through_two_points_p2;
+
+	int f_create_BLT_set;
+	BLT_set_create_description * BLT_Set_create_description;
 
 
 

@@ -744,6 +744,7 @@ public:
 	// surface_domain_io.cpp:
 	void print_equation(std::ostream &ost, int *coeffs);
 	void print_equation_tex(std::ostream &ost, int *coeffs);
+	void print_equation_with_line_breaks_tex(std::ostream &ost, int *coeffs);
 	void print_equation_tex_lint(std::ostream &ost, long int *coeffs);
 	void latex_double_six(std::ostream &ost, long int *double_six);
 	void make_spreadsheet_of_lines_in_three_kinds(spreadsheet *&Sp,

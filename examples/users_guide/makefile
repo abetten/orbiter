@@ -291,6 +291,11 @@ roots_over_F8:
 
 # degree and then order of the field of coefficients:
 
+irred_3_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -finite_field_activity -q 2 -make_table_of_irreducible_polynomials 3 -end
+
+
+
 irred_4_2:
 	$(ORBITER_PATH)/orbiter.out -v 3 -finite_field_activity -q 2 -make_table_of_irreducible_polynomials 4 -end
 
@@ -1038,37 +1043,56 @@ ORTHOGONAL_SPACES:
 Op_4_2:
 	$(ORBITER_PATH)/orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end -end \
-		-define O -orthogonal_space 1 4 F -end \
+		-define O -orthogonal_space 1 4 F -without_group -end -end \
 		-with O -do -orthogonal_space_activity -cheat_sheet_orthogonal -end
-	pdflatex O_1_4_2.tex 
-	open O_1_4_2.pdf
+	pdflatex O_1_4_2_report.tex 
+	open O_1_4_2_report.pdf
 
 
 Op_6_2:
 	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-draw_options -end \
 		-define F -finite_field -q 2 -end -end \
-		-define O -orthogonal_space 1 6 F -end \
+		-define O -orthogonal_space 1 6 F -without_group -end -end \
 		-with O -do -orthogonal_space_activity -cheat_sheet_orthogonal -end
-	pdflatex O_1_6_2.tex 
-	open O_1_6_2.pdf
+	pdflatex O_1_6_2_report.tex 
+	open O_1_6_2_report.pdf
+
+Op_6_2_with_group:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-draw_options -end \
+		-define F -finite_field -q 2 -end -end \
+		-define O -orthogonal_space 1 6 F -end -end \
+		-with O -do -orthogonal_space_activity -cheat_sheet_orthogonal -end
+	pdflatex O_1_6_2_report.tex 
+	open O_1_6_2_report.pdf
 
 
 Op_6_64:
 	$(ORBITER_PATH)/orbiter.out -v 20 \
 		-define F -finite_field -q 64 -end -end \
-		-define O -orthogonal_space 1 6 F -end \
+		-define O -orthogonal_space 1 6 F -without_group -end -end \
 		-with O -do -orthogonal_space_activity -cheat_sheet_orthogonal -end
-	pdflatex O_1_6_64.tex 
-	open O_1_6_64.pdf
+	pdflatex O_1_6_64_report.tex 
+	open O_1_6_64_report.pdf
 
-
-Op_6_64_unrank_line:
+Op_6_64_line_rank:
 	$(ORBITER_PATH)/orbiter.out -v 20 \
 		-define F -finite_field -q 64 -end -end \
-		-define O -orthogonal_space 1 6 F -end \
+		-define O -orthogonal_space 1 6 F -without_group -end -end \
 		-with O -do -orthogonal_space_activity \
 			-unrank_line_through_two_points 15447347 15225451 \
 		-end
+
+Op_6_8_2:
+	$(ORBITER_PATH)/orbiter.out -v 20 \
+		-define F -finite_field -q 8 -end -end \
+		-define O -orthogonal_space 1 4 F -without_group -end -end \
+		-with O -do -orthogonal_space_activity \
+			-cheat_sheet_orthogonal \
+		-end
+	pdflatex O_1_4_8_report.tex
+	open O_1_4_8_report.pdf
 
 #############################################################################################################
 # Section 19: Hermitian varieties
@@ -2392,7 +2416,7 @@ poly_orbits_d3_n3_q2.csv:
 		-orbits_on_polynomials_draw_tree 6 \
 		-end 
 
-select_cols:
+poly_orbits_d3_n3_q2_get_ranks:
 	$(ORBITER_PATH)/orbiter.out -v 4 \
 		-csv_file_select_cols poly_orbits_d3_n3_q2.csv 0
 	#pdflatex poly_orbits_d3_n3_q2.tex
@@ -8504,8 +8528,27 @@ packing_2Cx2_0_long_orbits_5_fixpoints:
 
 BLT_SETS:
 
+BLT_5_1:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-draw_options -end \
+		-define F -finite_field -q 5 -end -end \
+		-define O -orthogonal_space 0 5 F -end -end \
+		-with O -do -orthogonal_space_activity \
+			-create_BLT_set -catalogue 1 -end \
+		-end
 
-BLT_5:
+BLT_11_0:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-draw_options -end \
+		-define F -finite_field -q 11 -end -end \
+		-define O -orthogonal_space 0 5 F -end -end \
+		-with O -do -orthogonal_space_activity \
+			-create_BLT_set -catalogue 0 -end \
+		-end
+	#pdflatex O_1_6_2_report.tex 
+	#open O_1_6_2_report.pdf
+
+BLT_5_classify:
 	$(ORBITER_PATH)/orbiter.out -v 3 \
 		-orbiter_path $(ORBITER_PATH) \
 		-define F -finite_field -q 5 -end -end \

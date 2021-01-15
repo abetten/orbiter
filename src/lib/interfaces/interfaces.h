@@ -466,8 +466,10 @@ class interface_projective {
 
 	int f_create_dickson_atlas;
 
+#if 0
 	int f_create_BLT_set;
 	BLT_set_create_description *BLT_set_descr;
+#endif
 
 	std::vector<std::string> transform_coeffs;
 	std::vector<int> f_inverse_transform;

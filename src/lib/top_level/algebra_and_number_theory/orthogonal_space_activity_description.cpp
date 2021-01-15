@@ -31,6 +31,9 @@ orthogonal_space_activity_description::orthogonal_space_activity_description()
 	//std::string unrank_line_through_two_points_p1;
 	//std::string unrank_line_through_two_points_p2;
 
+	f_create_BLT_set = FALSE;
+	BLT_Set_create_description = NULL;
+
 }
 
 orthogonal_space_activity_description::~orthogonal_space_activity_description()
@@ -55,6 +58,19 @@ int orthogonal_space_activity_description::read_arguments(
 			i += Data->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 			cout << "orthogonal_space_activity_description::read_arguments finished reading -input" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-create_BLT_set") == 0) {
+			f_create_BLT_set = TRUE;
+			BLT_Set_create_description = NEW_OBJECT(BLT_set_create_description);
+			cout << "-create_BLT_set" << endl;
+			i += BLT_Set_create_description->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+			cout << "orthogonal_space_activity_description::read_arguments finished reading -create_BLT_set" << endl;
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
