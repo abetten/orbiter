@@ -514,15 +514,6 @@ class partitionstack {
 	int level, int verbose_level);
 	int cellSizeAtLevel(int cell, int level);
 
-	// TDO for orthogonal:
-	int compute_TDO(orthogonal &O, int ht0, 
-		int marker1, int marker2, int depth, int verbose_level);
-	void get_and_print_row_decomposition_scheme(orthogonal &O, 
-		int marker1, int marker2);
-	void get_and_print_col_decomposition_scheme(orthogonal &O, 
-		int marker1, int marker2);
-	void get_and_print_decomposition_schemes(orthogonal &O, 
-		int marker1, int marker2);
 	void print_decomposition_tex(std::ostream &ost,
 		int *row_classes, int nb_row_classes,
 		int *col_classes, int nb_col_classes);
@@ -558,20 +549,6 @@ class partitionstack {
 		int *row_classes, int nb_row_classes,
 		int *col_classes, int nb_col_classes, 
 		int f_print_subscripts);
-	void row_scheme_to_col_scheme(orthogonal &O, 
-		int *row_classes, int *row_class_inv, int nb_row_classes,
-		int *col_classes, int *col_class_inv, int nb_col_classes, 
-		int *row_scheme, int *col_scheme, int verbose_level);
-	void get_row_decomposition_scheme(orthogonal &O, 
-		int *row_classes, int *row_class_inv, int nb_row_classes,
-		int *col_classes, int *col_class_inv, int nb_col_classes, 
-		int *row_scheme, int verbose_level);
-	void get_col_decomposition_scheme(orthogonal &O, 
-		int *row_classes, int *row_class_inv, int nb_row_classes,
-		int *col_classes, int *col_class_inv, int nb_col_classes, 
-		int *col_scheme, int verbose_level);
-	int refine_column_partition(orthogonal &O, int ht0, int verbose_level);
-	int refine_row_partition(orthogonal &O, int ht0, int verbose_level);
 	int hash_column_refinement_info(int ht0, int *data, int depth, 
 		int hash0);
 	int hash_row_refinement_info(int ht0, int *data, int depth, int hash0);

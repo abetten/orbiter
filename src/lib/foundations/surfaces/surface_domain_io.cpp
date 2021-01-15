@@ -18,22 +18,35 @@ namespace orbiter {
 namespace foundations {
 
 
-void surface_domain::print_equation(ostream &ost, int *coeffs)
+void surface_domain::print_equation(std::ostream &ost, int *coeffs)
 {
 	Poly3_4->print_equation(ost, coeffs);
 }
 
-void surface_domain::print_equation_tex(ostream &ost, int *coeffs)
+void surface_domain::print_equation_tex(std::ostream &ost, int *coeffs)
 {
 	Poly3_4->print_equation_tex(ost, coeffs);
 }
 
-void surface_domain::print_equation_tex_lint(ostream &ost, long int *coeffs)
+void surface_domain::print_equation_with_line_breaks_tex(std::ostream &ost, int *coeffs)
+{
+	ost << "{\\renewcommand{\\arraystretch}{1.5}" << endl;
+	ost << "$$" << endl;
+	ost << "\\begin{array}{c}" << endl;
+	Poly3_4->print_equation_with_line_breaks_tex(
+			ost, coeffs, 10 /* nb_terms_per_line*/,
+			"\\\\\n" /* const char *new_line_text*/);
+	ost << "=0" << endl;
+	ost << "\\end{array}" << endl;
+	ost << "$$}" << endl;
+}
+
+void surface_domain::print_equation_tex_lint(std::ostream &ost, long int *coeffs)
 {
 	Poly3_4->print_equation_lint_tex(ost, coeffs);
 }
 
-void surface_domain::latex_double_six(ostream &ost, long int *double_six)
+void surface_domain::latex_double_six(std::ostream &ost, long int *double_six)
 {
 	long int i, j, a, u, v;
 

@@ -19,8 +19,8 @@ namespace top_level {
 
 BLT_set_create_description::BLT_set_create_description()
 {
-	f_q = FALSE;
-	q = 0;
+	//f_q = FALSE;
+	//q = 0;
 	f_catalogue = FALSE;
 	iso = 0;
 	f_family = FALSE;
@@ -50,12 +50,14 @@ int BLT_set_create_description::read_arguments(int argc, std::string *argv,
 	cout << "BLT_set_create_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
+#if 0
 		if (stringcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
 			q = strtoi(argv[++i]);
 			cout << "-q " << q << endl;
 		}
-		else if (stringcmp(argv[i], "-catalogue") == 0) {
+#endif
+		if (stringcmp(argv[i], "-catalogue") == 0) {
 			f_catalogue = TRUE;
 			iso = strtoi(argv[++i]);
 			cout << "-catalogue " << iso << endl;

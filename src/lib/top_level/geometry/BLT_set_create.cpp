@@ -18,8 +18,11 @@ namespace top_level {
 
 BLT_set_create::BLT_set_create()
 {
+#if 0
 	F = NULL;
 	A = NULL;
+#endif
+	OA = NULL;
 	set = NULL;
 	f_has_group = FALSE;
 	Sg = NULL;
@@ -37,9 +40,11 @@ void BLT_set_create::null()
 
 void BLT_set_create::freeself()
 {
+#if 0
 	if (F) {
 		FREE_OBJECT(F);
 	}
+#endif
 	if (set) {
 		FREE_int(set);
 	}
@@ -49,7 +54,9 @@ void BLT_set_create::freeself()
 	null();
 }
 
-void BLT_set_create::init(BLT_set_create_description *Descr, int verbose_level)
+void BLT_set_create::init(BLT_set_create_description *Descr,
+		orthogonal_space_with_action *OA,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	number_theory_domain NT;
@@ -59,10 +66,14 @@ void BLT_set_create::init(BLT_set_create_description *Descr, int verbose_level)
 		cout << "BLT_set_create::init" << endl;
 		}
 	BLT_set_create::Descr = Descr;
-	if (!Descr->f_q) {
-		cout << "BLT_set_create::init !Descr->f_q" << endl;
+	BLT_set_create::OA = OA;
+
+	if (OA->Descr->n != 5) {
+		cout << "BLT_set_create::init OA->Descr->n != 5" << endl;
 		exit(1);
 	}
+
+#if 0
 	q = Descr->q;
 	if (f_v) {
 		cout << "BLT_set_create::init q = " << q << endl;
@@ -122,7 +133,7 @@ void BLT_set_create::init(BLT_set_create_description *Descr, int verbose_level)
 
 	AO = A->G.AO;
 	O = AO->O;
-
+#endif
 
 
 	
@@ -133,7 +144,7 @@ void BLT_set_create::init(BLT_set_create_description *Descr, int verbose_level)
 					<< Descr->family_name << endl;
 		}
 
-		if (strcmp(Descr->family_name.c_str(), "linear") == 0) {
+		if (stringcmp(Descr->family_name, "linear") == 0) {
 			if (f_v) {
 				cout << "BLT_set_create::init creating object of family linear" << endl;
 			}
@@ -150,15 +161,15 @@ void BLT_set_create::init(BLT_set_create_description *Descr, int verbose_level)
 		int nb_iso;
 		knowledge_base K;
 
-		nb_iso = K.BLT_nb_reps(q);
+		nb_iso = K.BLT_nb_reps(OA->Descr->F->q);
 		if (Descr->iso >= nb_iso) {
 			cout << "BLT_set_create::init iso >= nb_iso, "
 					"this BLT set does not exist" << endl;
 			exit(1);
 		}
 
-		set = NEW_int(q + 1);
-		int_vec_copy(K.BLT_representative(q, Descr->iso), set, q + 1);
+		set = NEW_int(OA->Descr->F->q + 1);
+		int_vec_copy(K.BLT_representative(OA->Descr->F->q, Descr->iso), set, OA->Descr->F->q + 1);
 
 		Sg = NEW_OBJECT(strong_generators);
 
@@ -167,15 +178,15 @@ void BLT_set_create::init(BLT_set_create_description *Descr, int verbose_level)
 					"Sg->BLT_set_from_catalogue_stabilizer" << endl;
 		}
 
-		Sg->BLT_set_from_catalogue_stabilizer(A, 
-			F, Descr->iso, 
-			verbose_level);
+		Sg->BLT_set_from_catalogue_stabilizer(OA->A,
+				OA->Descr->F, Descr->iso,
+				verbose_level);
 		f_has_group = TRUE;
 
 		char str_q[1000];
 		char str_iso[1000];
 
-		sprintf(str_q, "%d", F->q);
+		sprintf(str_q, "%d", OA->Descr->F->q);
 		sprintf(str_iso, "%d", Descr->iso);
 
 		prefix.assign("catalogue_q");
@@ -207,7 +218,7 @@ void BLT_set_create::init(BLT_set_create_description *Descr, int verbose_level)
 
 	if (f_v) {
 		cout << "BLT_set_create::init set = ";
-		int_vec_print(cout, set, q + 1);
+		int_vec_print(cout, set, OA->Descr->F->q + 1);
 		cout << endl;
 	}
 

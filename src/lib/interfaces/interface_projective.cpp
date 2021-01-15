@@ -54,11 +54,13 @@ interface_projective::interface_projective()
 
 	f_create_dickson_atlas = FALSE;
 
+#if 0
 	f_create_BLT_set = FALSE;
 	BLT_set_descr = NULL;
 	//nb_transform = 0;
 	//const char *transform_coeffs[1000];
 	//int f_inverse_transform[1000];
+#endif
 
 }
 
@@ -81,9 +83,11 @@ void interface_projective::print_help(int argc,
 	else if (stringcmp(argv[i], "-smooth_curve") == 0) {
 		cout << "-smooth_curve <string : label> <double : desired_distance> <int : N> <double : boundary> <double : t_min> <double : t_max> <function>" << endl;
 	}
+#if 0
 	else if (stringcmp(argv[i], "-create_BLT_set") == 0) {
 		cout << "-create_BLT_set <description>" << endl;
 	}
+#endif
 	else if (stringcmp(argv[i], "-create_spread") == 0) {
 		cout << "-create_spread <description>" << endl;
 	}
@@ -124,9 +128,11 @@ int interface_projective::recognize_keyword(int argc,
 	else if (stringcmp(argv[i], "-smooth_curve") == 0) {
 		return true;
 	}
+#if 0
 	else if (stringcmp(argv[i], "-create_BLT_set") == 0) {
 		return true;
 	}
+#endif
 	else if (stringcmp(argv[i], "-create_spread") == 0) {
 		return true;
 	}
@@ -195,6 +201,7 @@ int interface_projective::read_arguments(int argc,
 					<< endl;
 			//i++;
 		}
+#if 0
 		else if (stringcmp(argv[i], "-create_BLT_set") == 0) {
 			f_create_BLT_set = TRUE;
 			cout << "-create_BLT_set" << endl;
@@ -210,6 +217,7 @@ int interface_projective::read_arguments(int argc,
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
+#endif
 		else if (stringcmp(argv[i], "-create_spread") == 0) {
 			f_create_spread = TRUE;
 			cout << "-create_spread" << endl;
@@ -300,11 +308,13 @@ void interface_projective::worker(int verbose_level)
 				smooth_curve_t_min, smooth_curve_t_max, smooth_curve_boundary,
 				FP_descr, verbose_level);
 	}
+#if 0
 	else if (f_create_BLT_set) {
 
 		do_create_BLT_set(BLT_set_descr, verbose_level);
 
 	}
+#endif
 	else if (f_create_spread) {
 
 		do_create_spread(Spread_create_description, verbose_level);
@@ -348,7 +358,7 @@ void interface_projective::worker(int verbose_level)
 
 
 
-
+#if 0
 void interface_projective::do_create_BLT_set(BLT_set_create_description *Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -429,6 +439,7 @@ void interface_projective::do_create_BLT_set(BLT_set_create_description *Descr, 
 	}
 
 }
+#endif
 
 void interface_projective::do_create_spread(spread_create_description *Descr, int verbose_level)
 {

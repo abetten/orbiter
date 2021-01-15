@@ -326,7 +326,8 @@ public:
 		int verbose_level);
 	void print_schemes();
 	void report(std::ostream &ost, int verbose_level);
-	void report_schemes(std::ostream &ost);
+	void report_schemes(std::ostream &ost, int verbose_level);
+	void report_schemes_easy(std::ostream &ost);
 	void create_latex_report(int verbose_level);
 
 

@@ -86,8 +86,9 @@ void orthogonal::report_points(std::ostream &ost, int verbose_level)
 {
 	long int rk;
 
-	ost << "points:\\\\" << endl;
+	ost << "The number of points is " << nb_points << "\\\\" << endl;
 	if (nb_points < 1000) {
+		ost << "points:\\\\" << endl;
 		for (rk = 0; rk < nb_points; rk++) {
 			unrank_point(v1, 1, rk, 0 /*verbose_level*/);
 			ost << "$P_{" << rk << "} = ";
@@ -96,7 +97,7 @@ void orthogonal::report_points(std::ostream &ost, int verbose_level)
 		}
 	}
 	else {
-		ost << "Too many points to print.\\\\" << endl;
+		//ost << "Too many points to print.\\\\" << endl;
 	}
 	//ost << endl;
 }
@@ -185,7 +186,7 @@ void orthogonal::report_lines(std::ostream &ost, int verbose_level)
 		FREE_int(L);
 	}
 	else {
-		ost << "Too many lines to print. \\\\" << endl;
+		//ost << "Too many lines to print. \\\\" << endl;
 	}
 }
 void orthogonal::list_all_points_vs_points(int verbose_level)
@@ -283,15 +284,26 @@ void orthogonal::report(std::ostream &ost, int verbose_level)
 	}
 
 	if (f_v) {
+		cout << "orthogonal::report before report_schemes_easy" << endl;
+	}
+
+	report_schemes_easy(ost);
+
+	if (f_v) {
+		cout << "orthogonal::report after report_schemes_easy" << endl;
+	}
+
+#if 0
+	if (f_v) {
 		cout << "orthogonal::report before report_schemes" << endl;
 	}
 
-	report_schemes(ost);
+	report_schemes(ost, verbose_level);
 
 	if (f_v) {
 		cout << "orthogonal::report after report_schemes" << endl;
 	}
-
+#endif
 
 	if (f_v) {
 		cout << "orthogonal::report before report_points" << endl;
@@ -323,8 +335,9 @@ void orthogonal::report(std::ostream &ost, int verbose_level)
 	}
 }
 
-void orthogonal::report_schemes(std::ostream &ost)
+void orthogonal::report_schemes(std::ostream &ost, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i, j;
 	int f, l;
 	int nb_rows = 0;
@@ -336,155 +349,197 @@ void orthogonal::report_schemes(std::ostream &ost)
 	int *row_scheme;
 	int *col_scheme;
 
-	Stack = NEW_OBJECT(partitionstack);
-	Stack->allocate(nb_points + nb_lines, 0 /* verbose_level */);
-	Stack->subset_continguous(nb_points, nb_lines);
-	Stack->split_cell(0 /* verbose_level */);
-	Stack->sort_cells();
-#if 0
-	row_classes = NEW_int(nb_point_classes);
-	for (i = 0; i < nb_point_classes; i++) {
-		row_classes[i] = P[i];
+	if (f_v) {
+		cout << "orthogonal::report_schemes" << endl;
 	}
-	col_classes = NEW_int(nb_line_classes);
-	for (i = 0; i < nb_line_classes; i++) {
-		col_classes[i] = L[i];
-	}
-#endif
-
-	int *original_row_class;
-	int *original_col_class;
-
-	original_row_class = NEW_int(nb_point_classes);
-	original_col_class = NEW_int(nb_line_classes);
-	nb_rows = 0;
-	for (i = 0; i < nb_point_classes; i++) {
-		if (P[i]) {
-			original_row_class[nb_rows] = i;
-			nb_rows++;
-		}
-	}
-	nb_cols = 0;
-	for (i = 0; i < nb_line_classes; i++) {
-		if (L[i]) {
-			original_col_class[nb_cols] = i;
-			nb_cols++;
-		}
-	}
-	row_scheme = NEW_int(nb_rows * nb_cols);
-	for (i = 0; i < nb_rows; i++) {
-		for (j = 0; j < nb_cols; j++) {
-			row_scheme[i * nb_cols + j] = A[original_row_class[i] * nb_line_classes + original_col_class[j]];
-		}
-	}
-	col_scheme = NEW_int(nb_rows * nb_cols);
-	for (i = 0; i < nb_rows; i++) {
-		for (j = 0; j < nb_cols; j++) {
-			col_scheme[i * nb_cols + j] = B[original_row_class[i] * nb_line_classes + original_col_class[j]];
-		}
-	}
-	set = NEW_int(nb_points);
-	f = 0;
-	for (i = 0; i < nb_rows - 1; i++) {
-		l = P[original_row_class[i]];
-		if (l == 0) {
-			cout << "l == 0" << endl;
-			exit(1);
-		}
-		for (j = 0; j < l; j++) {
-			set[j] = f + j;
-		}
-		Stack->split_cell_front_or_back(set, l, TRUE /* f_front */, 0 /*verbose_level*/);
-		f += l;
-	}
-	FREE_int(set);
-	set = NEW_int(nb_lines);
-	f = nb_points;
-	for (i = 0; i < nb_cols - 1; i++) {
-		l = L[original_col_class[i]];
-		if (l == 0) {
-			cout << "l == 0" << endl;
-			exit(1);
-		}
-		for (j = 0; j < l; j++) {
-			set[j] = f + j;
-		}
-		Stack->split_cell_front_or_back(set, l, TRUE /* f_front */, 0 /*verbose_level*/);
-		f += l;
-	}
-	FREE_int(set);
 
 
-	int nb_row_classes;
-	int nb_col_classes;
+	if (nb_points < 10000 && nb_lines < 1000) {
+		Stack = NEW_OBJECT(partitionstack);
 
-	row_classes = NEW_int(Stack->ht);
-	col_classes = NEW_int(Stack->ht);
 
-	Stack->get_row_and_col_classes(
-		row_classes, nb_row_classes,
-		col_classes, nb_col_classes, 0 /* verbose_level*/);
+		if (f_v) {
+			cout << "orthogonal::report_schemes nb_points=" << nb_points << endl;
+			cout << "orthogonal::report_schemes nb_lines=" << nb_lines << endl;
+		}
 
-	Stack->print_row_tactical_decomposition_scheme_tex(ost, TRUE /*f_enter_math*/,
+		if (f_v) {
+			cout << "orthogonal::report_schemes before Stack->allocate" << endl;
+		}
+
+		Stack->allocate(nb_points + nb_lines, verbose_level);
+		if (f_v) {
+			cout << "orthogonal::report_schemes after Stack->allocate" << endl;
+		}
+
+		if (f_v) {
+			cout << "orthogonal::report_schemes before Stack->subset_continguous" << endl;
+		}
+
+		Stack->subset_continguous(nb_points, nb_lines);
+		if (f_v) {
+			cout << "orthogonal::report_schemes after Stack->subset_continguous" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "orthogonal::report_schemes before Stack->split_cell" << endl;
+		}
+
+		Stack->split_cell(0 /* verbose_level */);
+
+		if (f_v) {
+			cout << "orthogonal::report_schemes before Stack->sort_cells" << endl;
+		}
+		Stack->sort_cells();
+		if (f_v) {
+			cout << "orthogonal::report_schemes after Stack->sort_cells" << endl;
+		}
+	#if 0
+		row_classes = NEW_int(nb_point_classes);
+		for (i = 0; i < nb_point_classes; i++) {
+			row_classes[i] = P[i];
+		}
+		col_classes = NEW_int(nb_line_classes);
+		for (i = 0; i < nb_line_classes; i++) {
+			col_classes[i] = L[i];
+		}
+	#endif
+
+		int *original_row_class;
+		int *original_col_class;
+
+		original_row_class = NEW_int(nb_point_classes);
+		original_col_class = NEW_int(nb_line_classes);
+		nb_rows = 0;
+		for (i = 0; i < nb_point_classes; i++) {
+			if (P[i]) {
+				original_row_class[nb_rows] = i;
+				nb_rows++;
+			}
+		}
+		nb_cols = 0;
+		for (i = 0; i < nb_line_classes; i++) {
+			if (L[i]) {
+				original_col_class[nb_cols] = i;
+				nb_cols++;
+			}
+		}
+		row_scheme = NEW_int(nb_rows * nb_cols);
+		for (i = 0; i < nb_rows; i++) {
+			for (j = 0; j < nb_cols; j++) {
+				row_scheme[i * nb_cols + j] = A[original_row_class[i] * nb_line_classes + original_col_class[j]];
+			}
+		}
+		col_scheme = NEW_int(nb_rows * nb_cols);
+		for (i = 0; i < nb_rows; i++) {
+			for (j = 0; j < nb_cols; j++) {
+				col_scheme[i * nb_cols + j] = B[original_row_class[i] * nb_line_classes + original_col_class[j]];
+			}
+		}
+		set = NEW_int(nb_points);
+		f = 0;
+		for (i = 0; i < nb_rows - 1; i++) {
+			l = P[original_row_class[i]];
+			if (l == 0) {
+				cout << "l == 0" << endl;
+				exit(1);
+			}
+			for (j = 0; j < l; j++) {
+				set[j] = f + j;
+			}
+			if (f_v) {
+				cout << "orthogonal::report_schemes before Stack->split_cell_front_or_back for points" << endl;
+			}
+			Stack->split_cell_front_or_back(set, l, TRUE /* f_front */, 0 /*verbose_level*/);
+			f += l;
+		}
+		FREE_int(set);
+
+
+		set = NEW_int(nb_lines);
+		f = nb_points;
+		for (i = 0; i < nb_cols - 1; i++) {
+			l = L[original_col_class[i]];
+			if (l == 0) {
+				cout << "l == 0" << endl;
+				exit(1);
+			}
+			for (j = 0; j < l; j++) {
+				set[j] = f + j;
+			}
+			if (f_v) {
+				cout << "orthogonal::report_schemes before Stack->split_cell_front_or_back for lines" << endl;
+			}
+			Stack->split_cell_front_or_back(set, l, TRUE /* f_front */, 0 /*verbose_level*/);
+			f += l;
+		}
+		FREE_int(set);
+
+
+		int nb_row_classes;
+		int nb_col_classes;
+
+		row_classes = NEW_int(Stack->ht);
+		col_classes = NEW_int(Stack->ht);
+
+		if (f_v) {
+			cout << "orthogonal::report_schemes before Stack->get_row_and_col_classes" << endl;
+		}
+		Stack->get_row_and_col_classes(
 			row_classes, nb_row_classes,
-			col_classes, nb_col_classes,
-			row_scheme, FALSE /* f_print_subscripts */);
+			col_classes, nb_col_classes, 0 /* verbose_level*/);
 
-	Stack->print_column_tactical_decomposition_scheme_tex(ost, TRUE /*f_enter_math*/,
-			row_classes, nb_row_classes,
-			col_classes, nb_col_classes,
-			col_scheme, FALSE /* f_print_subscripts */);
-
-	FREE_int(row_classes);
-	FREE_int(col_classes);
-	FREE_int(row_scheme);
-	FREE_int(col_scheme);
-
-	FREE_int(original_row_class);
-	FREE_int(original_col_class);
-
-#if 1
-	ost << "$$" << endl;
-	ost << "\\begin{array}{r||*{" << nb_line_classes << "}{r}}" << endl;
-	ost << "       ";
-	for (j = 0; j < nb_line_classes; j++) {
-		ost << " & " << setw(7) << L[j];
-	}
-	ost << "\\\\" << endl;
-	ost << "\\hline" << endl;
-	ost << "\\hline" << endl;
-	for (i = 0; i < nb_point_classes; i++) {
-		ost << setw(7) << P[i];
-		for (j = 0; j < nb_line_classes; j++) {
-			ost << " & " << setw(7) << A[i * nb_line_classes + j];
+		if (f_v) {
+			cout << "orthogonal::report_schemes before Stack->print_row_tactical_decomposition_scheme_tex" << endl;
 		}
-		ost << "\\\\" << endl;
-	}
-	ost << "\\end{array}" << endl;
-	ost << "$$" << endl;
-	ost << "$$" << endl;
-	ost << "\\begin{array}{r||*{" << nb_line_classes << "}{r}}" << endl;
-	ost << "       ";
-	for (j = 0; j < nb_line_classes; j++) {
-		ost << " & " << setw(7) << L[j];
-	}
-	ost << "\\\\" << endl;
-	ost << "\\hline" << endl;
-	ost << "\\hline" << endl;
-	for (i = 0; i < nb_point_classes; i++) {
-		ost << setw(7) << P[i];
-		for (j = 0; j < nb_line_classes; j++) {
-			ost << " & " << setw(7) << B[i * nb_line_classes + j];
-		}
-		ost << "\\\\" << endl;
-	}
-	ost << "\\end{array}" << endl;
-	ost << "$$" << endl;
-#endif
+		Stack->print_row_tactical_decomposition_scheme_tex(ost, TRUE /*f_enter_math*/,
+				row_classes, nb_row_classes,
+				col_classes, nb_col_classes,
+				row_scheme, FALSE /* f_print_subscripts */);
 
-	FREE_OBJECT(Stack);
+		if (f_v) {
+			cout << "orthogonal::report_schemes before Stack->print_column_tactical_decomposition_scheme_tex" << endl;
+		}
+		Stack->print_column_tactical_decomposition_scheme_tex(ost, TRUE /*f_enter_math*/,
+				row_classes, nb_row_classes,
+				col_classes, nb_col_classes,
+				col_scheme, FALSE /* f_print_subscripts */);
+
+		FREE_int(row_classes);
+		FREE_int(col_classes);
+		FREE_int(row_scheme);
+		FREE_int(col_scheme);
+
+		FREE_int(original_row_class);
+		FREE_int(original_col_class);
+
+
+		FREE_OBJECT(Stack);
+	}
+	if (f_v) {
+		cout << "orthogonal::report_schemes done" << endl;
+	}
 }
 
+
+void orthogonal::report_schemes_easy(std::ostream &ost)
+{
+	latex_interface Li;
+
+	Li.print_row_tactical_decomposition_scheme_tex(
+			ost, TRUE /* f_enter_math_mode */,
+			P, nb_point_classes,
+			L, nb_line_classes,
+			A);
+
+	Li.print_column_tactical_decomposition_scheme_tex(
+			ost, TRUE /* f_enter_math_mode */,
+			P, nb_point_classes,
+			L, nb_line_classes,
+			B);
+
+}
 
 void orthogonal::create_latex_report(int verbose_level)
 {
