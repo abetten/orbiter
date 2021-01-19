@@ -16,8 +16,63 @@ using namespace std;
 namespace orbiter {
 namespace foundations {
 
+#if 0
+void orthogonal::create_Linear_BLT_set(long int *set, int *ABC, int verbose_level)
+// a(t)= 1, b(t) = t, c(t) = t^2, all t \in GF(q)
+// together with the point (0, 0, 0, 1, 0)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int v[5];
+	int i, a, b, c;
 
-void orthogonal::create_FTWKB_BLT_set(long int *set, int verbose_level)
+	int q = F->q;
+
+	if (f_v) {
+		cout << "orthogonal::create_Linear_BLT_set" << endl;
+	}
+	int_vec_zero(ABC, 3 * (q + 1));
+	for (i = 0; i < q; i++) {
+		a = i;
+		b = F->power(i, 2);
+		c = F->power(i, 3);
+		if (f_vv) {
+			cout << "i=" << i << " a=" << a
+					<< " b=" << b << " c=" << c << endl;
+		}
+		ABC[i * 3 + 0] = a;
+		ABC[i * 3 + 1] = b;
+		ABC[i * 3 + 2] = c;
+		F->create_BLT_point(v, a, b, c, verbose_level - 2);
+		if (f_vv) {
+			cout << "point " << i << " : ";
+			int_vec_print(cout, v, 5);
+			cout << endl;
+		}
+		set[i] = rank_point(v, 1, 0);
+		if (f_vv) {
+			cout << "rank " << set[i] << endl;
+		}
+	}
+	int_vec_init5(v, 0, 0, 0, 1, 0);
+	if (f_vv) {
+		cout << "point : ";
+		int_vec_print(cout, v, 5);
+		cout << endl;
+	}
+	set[q] = rank_point(v, 1, 0);
+	if (f_vv) {
+		cout << "rank " << set[q] << endl;
+	}
+	if (f_v) {
+		cout << "orthogonal::create_Linear_BLT_set done" << endl;
+	}
+}
+
+#endif
+
+
+void orthogonal::create_FTWKB_BLT_set(long int *set, int *ABC, int verbose_level)
 // for q congruent 2 mod 3
 // a(t)= t, b(t) = 3*t^2, c(t) = 3*t^3, all t \in GF(q)
 // together with the point (0, 0, 0, 1, 0)
@@ -32,12 +87,13 @@ void orthogonal::create_FTWKB_BLT_set(long int *set, int verbose_level)
 	if (q <= 5) {
 		cout << "orthogonal::create_FTWKB_BLT_set q <= 5" << endl;
 		exit(1);
-		}
+	}
 	r = q % 3;
 	if (r != 2) {
 		cout << "orthogonal::create_FTWKB_BLT_set q mod 3 must be 2" << endl;
 		exit(1);
-		}
+	}
+	int_vec_zero(ABC, 3 * (q + 1));
 	for (i = 0; i < q; i++) {
 		a = i;
 		b = F->mult(3, F->power(i, 2));
@@ -45,36 +101,39 @@ void orthogonal::create_FTWKB_BLT_set(long int *set, int verbose_level)
 		if (f_vv) {
 			cout << "i=" << i << " a=" << a
 					<< " b=" << b << " c=" << c << endl;
-			}
+		}
+		ABC[i * 3 + 0] = a;
+		ABC[i * 3 + 1] = b;
+		ABC[i * 3 + 2] = c;
 		F->create_BLT_point(v, a, b, c, verbose_level - 2);
 		if (f_vv) {
 			cout << "point " << i << " : ";
 			int_vec_print(cout, v, 5);
 			cout << endl;
-			}
+		}
 		set[i] = rank_point(v, 1, 0);
 		if (f_vv) {
 			cout << "rank " << set[i] << endl;
-			}
 		}
+	}
 	int_vec_init5(v, 0, 0, 0, 1, 0);
 	if (f_vv) {
 		cout << "point : ";
 		int_vec_print(cout, v, 5);
 		cout << endl;
-		}
+	}
 	set[q] = rank_point(v, 1, 0);
 	if (f_vv) {
 		cout << "rank " << set[q] << endl;
-		}
+	}
 	if (f_v) {
 		cout << "orthogonal::create_FTWKB_BLT_set the BLT set FTWKB is ";
 		lint_vec_print(cout, set, q + 1);
 		cout << endl;
-		}
+	}
 }
 
-void orthogonal::create_K1_BLT_set(long int *set, int verbose_level)
+void orthogonal::create_K1_BLT_set(long int *set, int *ABC, int verbose_level)
 // for a nonsquare m, and q=p^e
 // a(t)= t, b(t) = 0, c(t) = -m*t^p, all t \in GF(q)
 // together with the point (0, 0, 0, 1, 0)
@@ -94,6 +153,7 @@ void orthogonal::create_K1_BLT_set(long int *set, int verbose_level)
 		cout << "exponent=" << exponent << endl;
 		cout << "minus_one=" << minus_one << endl;
 		}
+	int_vec_zero(ABC, 3 * (q + 1));
 	for (i = 0; i < q; i++) {
 		a = i;
 		b = 0;
@@ -103,6 +163,9 @@ void orthogonal::create_K1_BLT_set(long int *set, int verbose_level)
 					<< " b=" << b << " c=" << c << endl;
 			}
 		F->create_BLT_point(v, a, b, c, verbose_level - 2);
+		ABC[i * 3 + 0] = a;
+		ABC[i * 3 + 1] = b;
+		ABC[i * 3 + 2] = c;
 		if (f_vv) {
 			cout << "point " << i << " : ";
 			int_vec_print(cout, v, 5);
@@ -130,7 +193,7 @@ void orthogonal::create_K1_BLT_set(long int *set, int verbose_level)
 		}
 }
 
-void orthogonal::create_K2_BLT_set(long int *set, int verbose_level)
+void orthogonal::create_K2_BLT_set(long int *set, int *ABC, int verbose_level)
 // for q congruent 2 or 3 mod 5
 // a(t)= t, b(t) = 5*t^3, c(t) = 5*t^5, all t \in GF(q)
 // together with the point (0, 0, 0, 1, 0)
@@ -153,6 +216,7 @@ void orthogonal::create_K2_BLT_set(long int *set, int verbose_level)
 		return;
 		}
 	five = 5 % F->p;
+	int_vec_zero(ABC, 3 * (q + 1));
 	for (i = 0; i < q; i++) {
 		a = i;
 		b = F->mult(five, F->power(i, 3));
@@ -162,6 +226,9 @@ void orthogonal::create_K2_BLT_set(long int *set, int verbose_level)
 					<< " b=" << b << " c=" << c << endl;
 			}
 		F->create_BLT_point(v, a, b, c, verbose_level - 2);
+		ABC[i * 3 + 0] = a;
+		ABC[i * 3 + 1] = b;
+		ABC[i * 3 + 2] = c;
 		if (f_vv) {
 			cout << "point " << i << " : ";
 			int_vec_print(cout, v, 5);

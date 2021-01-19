@@ -936,6 +936,7 @@ public:
 
 	orthogonal_space_with_action *OA;
 
+	blt_set_domain *Blt_set_domain;
 
 	orthogonal_space_activity();
 	~orthogonal_space_activity();

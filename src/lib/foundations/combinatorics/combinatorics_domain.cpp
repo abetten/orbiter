@@ -3521,7 +3521,7 @@ void combinatorics_domain::make_orthogonal_collinearity_graph(int *&Adj, int &N,
 		//cout << "incma.cpp: epsilon == -1, need irreducible polynomial" << endl;
 		//exit(1);
 	}
-	F->Gram_matrix(epsilon, n, c1, c2, c3, Gram);
+	F->Gram_matrix(epsilon, n, c1, c2, c3, Gram, verbose_level - 1);
 	if (f_v) {
 		cout << "Gram matrix" << endl;
 		print_integer_matrix_width(cout, Gram, d, d, d, 2);

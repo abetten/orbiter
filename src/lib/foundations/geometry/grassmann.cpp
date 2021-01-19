@@ -692,7 +692,7 @@ void grassmann::unrank_longinteger(
 		cout << "grassmann::unrank_longinteger coset " << b << " = ";
 		int_vec_print(cout, coset, nb_free_cols);
 		cout << endl;
-		}
+	}
 	
 	//unrank the subspace (if there is one)
 	if (k > 1) {

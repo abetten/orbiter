@@ -640,12 +640,12 @@ public:
 		longinteger_object &a);
 	int PG_element_modified_is_in_subspace(int n, int m, int *v);
 	void test_PG(int n, int q);
-	void create_Fisher_BLT_set(long int *Fisher_BLT, int q,
-			std::string &poly_q, std::string &poly_Q, int verbose_level);
-	void create_Linear_BLT_set(long int *BLT, int q,
-			std::string &poly_q, std::string &poly_Q, int verbose_level);
-	void create_Mondello_BLT_set(long int *BLT, int q,
-			std::string &poly_q, std::string &poly_Q, int verbose_level);
+	void create_Fisher_BLT_set(long int *Fisher_BLT, int *ABC,
+			finite_field *FQ, finite_field *Fq, int verbose_level);
+	void create_Linear_BLT_set(long int *BLT, int *ABC,
+			finite_field *FQ, finite_field *Fq, int verbose_level);
+	void create_Mondello_BLT_set(long int *BLT, int *ABC,
+			finite_field *FQ, finite_field *Fq, int verbose_level);
 	void print_quadratic_form_list_coded(int form_nb_terms,
 		int *form_i, int *form_j, int *form_coeff);
 	void make_Gram_matrix_from_list_coded_quadratic_form(
@@ -737,11 +737,6 @@ public:
 	void do_cheat_sheet_Gr(finite_field *F,
 			int n, int k,
 			int verbose_level);
-#if 0
-	void do_cheat_sheet_orthogonal(finite_field *F,
-			int epsilon, int n,
-			int verbose_level);
-#endif
 	void do_cheat_sheet_hermitian(finite_field *F,
 			int projective_dimension,
 			int verbose_level);
@@ -1309,7 +1304,7 @@ public:
 	projective_space *P5;
 	grassmann *G63;
 	finite_field *F;
-	int *BLT;
+	long int *BLT;
 	int *BLT_line_idx;
 	int *Basis;
 	int *Basis2;
@@ -1379,7 +1374,7 @@ public:
 		int &data_size, const char *&stab_order);
 
 	int BLT_nb_reps(int q);
-	int *BLT_representative(int q, int no);
+	long int *BLT_representative(int q, int no);
 	void BLT_stab_gens(int q, int no, int *&data, int &nb_gens,
 		int &data_size, const char *&stab_order);
 
@@ -2157,9 +2152,10 @@ public:
 
 class unusual_model {
 public:
-	finite_field F, f;
+	finite_field *FQ;
+	finite_field *Fq;
 	int q;
-	int qq;
+	int Q;
 	int alpha;
 	int T_alpha, N_alpha;
 	int nb_terms, *form_i, *form_j, *form_coeff, *Gram;
@@ -2175,15 +2171,11 @@ public:
 	
 	unusual_model();
 	~unusual_model();
-	void setup_sum_of_squares(int q,
-			std::string &poly_q, std::string &poly_Q,
+	void setup(finite_field *FQ, finite_field *Fq,
 			int verbose_level);
-	void setup(int q,
-			std::string &poly_q, std::string &poly_Q,
-		int verbose_level);
-	void setup2(int q,
-			std::string &poly_q, std::string &poly_Q,
-		int f_sum_of_squares, int verbose_level);
+	void setup2(
+			finite_field *FQ, finite_field *Fq,
+			int f_sum_of_squares, int verbose_level);
 	void convert_to_ranks(int n, int *unusual_coordinates, 
 		long int *ranks, int verbose_level);
 	void convert_from_ranks(int n, long int *ranks,
@@ -2193,11 +2185,11 @@ public:
 		int verbose_level);
 	void convert_to_usual(int n, int *unusual_coordinates, 
 		int *usual_coordinates, int verbose_level);
-	void create_Fisher_BLT_set(long int *Fisher_BLT, int verbose_level);
+	void create_Fisher_BLT_set(long int *Fisher_BLT, int *ABC, int verbose_level);
 	void convert_from_usual(int n, int *usual_coordinates, 
 		int *unusual_coordinates, int verbose_level);
-	void create_Linear_BLT_set(long int *BLT, int verbose_level);
-	void create_Mondello_BLT_set(long int *BLT, int verbose_level);
+	void create_Linear_BLT_set(long int *BLT, int *ABC, int verbose_level);
+	void create_Mondello_BLT_set(long int *BLT, int *ABC, int verbose_level);
 	int N2(int a);
 	int T2(int a);
 	int quadratic_form(int a, int b, int c, int verbose_level);

@@ -220,39 +220,57 @@ void geometry_global::test_PG(int n, int q)
 
 }
 
-void geometry_global::create_Fisher_BLT_set(long int *Fisher_BLT,
-		int q, std::string &poly_q, std::string &poly_Q, int verbose_level)
+void geometry_global::create_Fisher_BLT_set(long int *Fisher_BLT, int *ABC,
+		finite_field *FQ, finite_field *Fq, int verbose_level)
 {
-	//int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "geometry_global::create_Fisher_BLT_set" << endl;
+	}
 	unusual_model U;
 
-	U.setup(q, poly_q, poly_Q, verbose_level);
-	U.create_Fisher_BLT_set(Fisher_BLT, verbose_level);
+	U.setup(FQ, Fq, verbose_level);
+	U.create_Fisher_BLT_set(Fisher_BLT, ABC, verbose_level);
+	if (f_v) {
+		cout << "geometry_global::create_Fisher_BLT_set done" << endl;
+	}
 
 }
 
-void geometry_global::create_Linear_BLT_set(long int *BLT, int q,
-		std::string &poly_q, std::string &poly_Q, int verbose_level)
+void geometry_global::create_Linear_BLT_set(long int *BLT, int *ABC,
+		finite_field *FQ, finite_field *Fq, int verbose_level)
 {
-	//int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "geometry_global::create_Linear_BLT_set" << endl;
+	}
 	unusual_model U;
 
-	U.setup(q, poly_q, poly_Q, verbose_level);
-	U.create_Linear_BLT_set(BLT, verbose_level);
+	U.setup(FQ, Fq, verbose_level);
+	U.create_Linear_BLT_set(BLT, ABC, verbose_level);
+	if (f_v) {
+		cout << "geometry_global::create_Linear_BLT_set done" << endl;
+	}
 
 }
 
-void geometry_global::create_Mondello_BLT_set(long int *BLT, int q,
-		std::string &poly_q, std::string &poly_Q, int verbose_level)
+void geometry_global::create_Mondello_BLT_set(long int *BLT, int *ABC,
+		finite_field *FQ, finite_field *Fq, int verbose_level)
 {
-	//int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "geometry_global::create_Mondello_BLT_set" << endl;
+	}
 	unusual_model U;
 
-	U.setup(q, poly_q, poly_Q, verbose_level);
-	U.create_Mondello_BLT_set(BLT, verbose_level);
+	U.setup(FQ, Fq, verbose_level);
+	U.create_Mondello_BLT_set(BLT, ABC, verbose_level);
+	if (f_v) {
+		cout << "geometry_global::create_Mondello_BLT_set done" << endl;
+	}
 
 }
 
@@ -1998,70 +2016,6 @@ void geometry_global::do_cheat_sheet_Gr(finite_field *F,
 
 }
 
-#if 0
-void geometry_global::do_cheat_sheet_orthogonal(finite_field *F,
-		int epsilon, int n,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-
-	if (f_v) {
-		cout << "geometry_global::do_cheat_sheet_orthogonal verbose_level="
-				<< verbose_level << endl;
-	}
-
-
-	orthogonal *O;
-
-	O = NEW_OBJECT(orthogonal);
-
-
-
-
-
-	if (f_v) {
-		cout << "geometry_global::do_cheat_sheet_orthogonal before O->init" << endl;
-	}
-	O->init(epsilon, n, F, verbose_level);
-	if (f_v) {
-		cout << "geometry_global::do_cheat_sheet_orthogonal after O->init" << endl;
-	}
-
-
-
-
-	if (F->q == 64 && n == 6) {
-
-		long int p1 = 15447347;
-		long int p2 = 15225451;
-		long int rk;
-
-		cout << "p1 = " << p1 << endl;
-		cout << "p2 = " << p2 << endl;
-		rk = O->rank_line(p1, p2, verbose_level);
-		cout << "rk = " << rk << endl;
-	}
-
-
-
-	if (f_v) {
-		cout << "geometry_global::do_cheat_sheet_orthogonal before O->create_latex_report" << endl;
-	}
-	O->create_latex_report(verbose_level);
-	if (f_v) {
-		cout << "geometry_global::do_cheat_sheet_orthogonal after O->create_latex_report" << endl;
-	}
-
-
-	FREE_OBJECT(O);
-
-	if (f_v) {
-		cout << "geometry_global::do_cheat_sheet_orthogonal done" << endl;
-	}
-
-}
-#endif
 
 void geometry_global::do_cheat_sheet_hermitian(finite_field *F,
 		int projective_dimension,

@@ -18,14 +18,13 @@ namespace top_level {
 
 BLT_set_create::BLT_set_create()
 {
-#if 0
-	F = NULL;
-	A = NULL;
-#endif
 	OA = NULL;
 	set = NULL;
+	ABC = NULL;
 	f_has_group = FALSE;
 	Sg = NULL;
+	Blt_set_domain = NULL;
+	BA = NULL;
 	null();
 }
 
@@ -40,21 +39,27 @@ void BLT_set_create::null()
 
 void BLT_set_create::freeself()
 {
-#if 0
-	if (F) {
-		FREE_OBJECT(F);
-	}
-#endif
 	if (set) {
-		FREE_int(set);
+		FREE_lint(set);
+	}
+	if (ABC) {
+		FREE_int(ABC);
 	}
 	if (Sg) {
 		FREE_OBJECT(Sg);
 	}
+	if (Blt_set_domain) {
+		FREE_OBJECT(Blt_set_domain);
+	}
+	if (BA) {
+		FREE_OBJECT(BA);
+	}
 	null();
 }
 
-void BLT_set_create::init(BLT_set_create_description *Descr,
+void BLT_set_create::init(
+		blt_set_domain *Blt_set_domain,
+		BLT_set_create_description *Descr,
 		orthogonal_space_with_action *OA,
 		int verbose_level)
 {
@@ -73,68 +78,6 @@ void BLT_set_create::init(BLT_set_create_description *Descr,
 		exit(1);
 	}
 
-#if 0
-	q = Descr->q;
-	if (f_v) {
-		cout << "BLT_set_create::init q = " << q << endl;
-	}
-	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(q, 0);
-	
-
-
-	if (NT.is_prime(q)) {
-		f_semilinear = FALSE;
-	}
-	else {
-		f_semilinear = TRUE;
-	}
-
-
-	A = NEW_OBJECT(action);
-
-	if (f_v) {
-		cout << "BLT_set_create::init before "
-				"A->init_orthogonal_group" << endl;
-	}
-	A->init_orthogonal_group(0 /* epsilon */, 5 /* n */, F, 
-		TRUE /* f_on_points */, 
-		FALSE /* f_on_lines */, 
-		FALSE /* f_on_points_and_lines */, 
-		f_semilinear, TRUE /* f_basis */, verbose_level - 1);
-
-	if (f_v) {
-		cout << "BLT_set_create::init "
-				"after A->init_orthogonal_group" << endl;
-	}
-	degree = A->degree;
-
-	if (f_v) {
-		cout << "A->make_element_size = "
-			<< A->make_element_size << endl;
-		cout << "BLT_set_create::init "
-				"degree = " << degree << endl;
-	}
-	
-	if (f_v) {
-		cout << "BLT_set_create::init computing "
-				"lex least base" << endl;
-	}
-	A->lex_least_base_in_place(0 /*verbose_level - 2*/);
-	if (f_v) {
-		cout << "BLT_set_create::init computing "
-				"lex least base done" << endl;
-		cout << "BLT_set_create::init base: ";
-		lint_vec_print(cout, A->get_base(), A->base_len());
-		cout << endl;
-	}
-	
-	action_on_orthogonal *AO;
-
-	AO = A->G.AO;
-	O = AO->O;
-#endif
-
 
 	
 	if (Descr->f_family) {
@@ -144,11 +87,173 @@ void BLT_set_create::init(BLT_set_create_description *Descr,
 					<< Descr->family_name << endl;
 		}
 
-		if (stringcmp(Descr->family_name, "linear") == 0) {
+		char str[1000];
+		char str_q[1000];
+		f_has_group = FALSE;
+
+		if (stringcmp(Descr->family_name, "Linear") == 0) {
 			if (f_v) {
-				cout << "BLT_set_create::init creating object of family linear" << endl;
+				cout << "BLT_set_create::init creating object of family Linear" << endl;
 			}
+			set = NEW_lint(OA->Descr->F->q + 1);
+			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
+
+			geometry_global GG;
+			finite_field *FQ;
+			int q, Q;
+
+			FQ = NEW_OBJECT(finite_field);
+			q = OA->Descr->F->q;
+			Q = q * q;
+			FQ->finite_field_init(Q, 0 /* verbose_level */);
+			GG.create_Linear_BLT_set(set, ABC,
+							FQ, OA->Descr->F, verbose_level);
+
+			FREE_OBJECT(FQ);
+			sprintf(str, "Linear");
+			sprintf(str_q, "q%d", OA->Descr->F->q);
+
 		}
+
+		else if (stringcmp(Descr->family_name, "Fisher") == 0) {
+			if (f_v) {
+				cout << "BLT_set_create::init creating object of family Fisher" << endl;
+			}
+			set = NEW_lint(OA->Descr->F->q + 1);
+			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
+
+			geometry_global GG;
+			finite_field *FQ;
+			int q, Q;
+
+			FQ = NEW_OBJECT(finite_field);
+			q = OA->Descr->F->q;
+			Q = q * q;
+			FQ->finite_field_init(Q, 0 /* verbose_level */);
+			GG.create_Fisher_BLT_set(set, ABC,
+							FQ, OA->Descr->F, verbose_level);
+
+			FREE_OBJECT(FQ);
+			sprintf(str, "Fisher");
+			sprintf(str_q, "q%d", OA->Descr->F->q);
+
+		}
+
+		else if (stringcmp(Descr->family_name, "Mondello") == 0) {
+			if (f_v) {
+				cout << "BLT_set_create::init creating object of family Mondello" << endl;
+			}
+			set = NEW_lint(OA->Descr->F->q + 1);
+			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
+
+			geometry_global GG;
+			finite_field *FQ;
+			int q, Q;
+
+			FQ = NEW_OBJECT(finite_field);
+			q = OA->Descr->F->q;
+			Q = q * q;
+			FQ->finite_field_init(Q, 0 /* verbose_level */);
+			GG.create_Mondello_BLT_set(set, ABC,
+							FQ, OA->Descr->F, verbose_level);
+
+			FREE_OBJECT(FQ);
+			sprintf(str, "Mondello");
+			sprintf(str_q, "q%d", OA->Descr->F->q);
+
+		}
+
+
+		else if (stringcmp(Descr->family_name, "FTWKB") == 0) {
+			if (f_v) {
+				cout << "BLT_set_create::init creating object of family FTWKB" << endl;
+			}
+			set = NEW_lint(OA->Descr->F->q + 1);
+			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
+			OA->O->create_FTWKB_BLT_set(set, ABC, verbose_level);
+			// for q congruent 2 mod 3
+			// a(t)= t, b(t) = 3*t^2, c(t) = 3*t^3, all t \in GF(q)
+			// together with the point (0, 0, 0, 1, 0)
+			sprintf(str, "FTWKB");
+			sprintf(str_q, "q%d", OA->Descr->F->q);
+
+		}
+		else if (stringcmp(Descr->family_name, "Kantor1") == 0) {
+			if (f_v) {
+				cout << "BLT_set_create::init creating object of family Kantor1" << endl;
+			}
+			set = NEW_lint(OA->Descr->F->q + 1);
+			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
+			OA->O->create_K1_BLT_set(set, ABC, verbose_level);
+			// for a nonsquare m, and q=p^e
+			// a(t)= t, b(t) = 0, c(t) = -m*t^p, all t \in GF(q)
+			// together with the point (0, 0, 0, 1, 0)
+			sprintf(str, "K1");
+			sprintf(str_q, "q%d", OA->Descr->F->q);
+		}
+		else if (stringcmp(Descr->family_name, "Kantor2") == 0) {
+			if (f_v) {
+				cout << "BLT_set_create::init creating object of family Kantor2" << endl;
+			}
+			set = NEW_lint(OA->Descr->F->q + 1);
+			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
+			OA->O->create_K2_BLT_set(set, ABC, verbose_level);
+			// for q congruent 2 or 3 mod 5
+			// a(t)= t, b(t) = 5*t^3, c(t) = 5*t^5, all t \in GF(q)
+			// together with the point (0, 0, 0, 1, 0)
+			sprintf(str, "K2");
+			sprintf(str_q, "q%d", OA->Descr->F->q);
+		}
+		else if (stringcmp(Descr->family_name, "LP_37_72") == 0) {
+			if (f_v) {
+				cout << "BLT_set_create::init creating object LP_37_72" << endl;
+			}
+			set = NEW_lint(OA->Descr->F->q + 1);
+			OA->O->create_LP_37_72_BLT_set(set, verbose_level);
+			sprintf(str, "LP_ago72");
+			sprintf(str_q, "q%d", OA->Descr->F->q);
+		}
+		else if (stringcmp(Descr->family_name, "LP_37_4a") == 0) {
+			if (f_v) {
+				cout << "BLT_set_create::init creating object LP_37_4a" << endl;
+			}
+			set = NEW_lint(OA->Descr->F->q + 1);
+			OA->O->create_LP_37_4a_BLT_set(set, verbose_level);
+			sprintf(str, "LP_ago4a");
+			sprintf(str_q, "q%d", OA->Descr->F->q);
+		}
+		else if (stringcmp(Descr->family_name, "LP_37_4b") == 0) {
+			if (f_v) {
+				cout << "BLT_set_create::init creating object LP_37_4b" << endl;
+			}
+			set = NEW_lint(OA->Descr->F->q + 1);
+			OA->O->create_LP_37_4b_BLT_set(set, verbose_level);
+			sprintf(str, "LP_ago4b");
+			sprintf(str_q, "q%d", OA->Descr->F->q);
+		}
+		else if (stringcmp(Descr->family_name, "LP_71") == 0) {
+			if (f_v) {
+				cout << "BLT_set_create::init creating object LP_71" << endl;
+			}
+			set = NEW_lint(OA->Descr->F->q + 1);
+			OA->O->create_Law_71_BLT_set(set, verbose_level);
+			sprintf(str, "LP");
+			sprintf(str_q, "q%d", OA->Descr->F->q);
+		}
+		else {
+			cout << "BLT_set_create::init family name not recognized" << endl;
+			exit(1);
+		}
+
+		prefix.assign(str);
+
+		label_txt.assign(prefix);
+		label_txt.append("_");
+		label_txt.append(str_q);
+
+		label_tex.assign(prefix);
+		label_tex.append("\\_");
+		label_tex.append(str_q);
 
 	}
 
@@ -168,8 +273,8 @@ void BLT_set_create::init(BLT_set_create_description *Descr,
 			exit(1);
 		}
 
-		set = NEW_int(OA->Descr->F->q + 1);
-		int_vec_copy(K.BLT_representative(OA->Descr->F->q, Descr->iso), set, OA->Descr->F->q + 1);
+		set = NEW_lint(OA->Descr->F->q + 1);
+		lint_vec_copy(K.BLT_representative(OA->Descr->F->q, Descr->iso), set, OA->Descr->F->q + 1);
 
 		Sg = NEW_OBJECT(strong_generators);
 
@@ -218,13 +323,29 @@ void BLT_set_create::init(BLT_set_create_description *Descr,
 
 	if (f_v) {
 		cout << "BLT_set_create::init set = ";
-		int_vec_print(cout, set, OA->Descr->F->q + 1);
+		lint_vec_print(cout, set, OA->Descr->F->q + 1);
 		cout << endl;
 	}
 
 	if (f_has_group) {
 		cout << "BLT_set_create::init the stabilizer is:" << endl;
 		Sg->print_generators_tex(cout);
+	}
+
+
+	BA = NEW_OBJECT(blt_set_with_action);
+
+	if (f_v) {
+		cout << "BLT_set_create::init before BA->init_set" << endl;
+	}
+	BA->init_set(
+			OA->A,
+			Blt_set_domain,
+			set,
+			Sg,
+			verbose_level);
+	if (f_v) {
+		cout << "BLT_set_create::init after BA->init_set" << endl;
 	}
 
 
@@ -244,6 +365,159 @@ void BLT_set_create::apply_transformations(
 		cout << "BLT_set_create::apply_transformations done" << endl;
 	}
 }
+
+void BLT_set_create::report(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "BLT_set_create::report" << endl;
+	}
+
+	string fname;
+
+	fname.assign("BLT_");
+	fname.append(label_txt);
+	fname.append(".tex");
+	ofstream ost(fname);
+
+	report2(ost, verbose_level);
+
+
+	if (f_v) {
+		cout << "BLT_set_create::report done" << endl;
+	}
+}
+
+void BLT_set_create::report2(std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "BLT_set_create::report2" << endl;
+	}
+
+	int f_book = FALSE;
+	int f_title = TRUE;
+	char title[1000];
+	const char *author = "Orbiter";
+	int f_toc = FALSE;
+	int f_landscape = FALSE;
+	int f_12pt = FALSE;
+	int f_enlarged_page = TRUE;
+	int f_pagenumbers = TRUE;
+	latex_interface L;
+
+	sprintf(title, "BLT-set %s", label_tex.c_str());
+
+	L.head(ost, f_book, f_title,
+		title,
+		author,
+		f_toc,
+		f_landscape,
+		f_12pt,
+		f_enlarged_page,
+		f_pagenumbers,
+		NULL /* extra_praeamble */);
+
+
+	OA->O->report_quadratic_form(ost, verbose_level - 1);
+
+	if (ABC) {
+		print_set_of_points_with_ABC(ost, set, OA->O->F->q + 1);
+	}
+	else {
+		print_set_of_points(ost, set, OA->O->F->q + 1);
+	}
+
+	BA->report(ost, verbose_level);
+
+	L.foot(ost);
+
+	if (f_v) {
+		cout << "BLT_set_create::report2 done" << endl;
+	}
+}
+
+void BLT_set_create::print_set_of_points(std::ostream &ost, long int *Pts, int nb_pts)
+{
+	int h, I;
+	int *v;
+	int n = 4;
+
+	v = NEW_int(n + 1);
+
+	ost << "The BLT-set is:\\\\" << endl;
+	for (I = 0; I < (nb_pts + 39) / 40; I++) {
+		ost << "$$" << endl;
+		ost << "\\begin{array}{|r|r|r|}" << endl;
+		ost << "\\hline" << endl;
+		ost << "i & \\mbox{Rank} & \\mbox{Point} \\\\" << endl;
+		ost << "\\hline" << endl;
+		ost << "\\hline" << endl;
+		for (h = 0; h < 40; h++) {
+			if (I * 40 + h < nb_pts) {
+
+				OA->O->unrank_point(v, 1, Pts[I * 40 + h], 0 /* verbose_level */);
+
+				ost << I * 40 + h << " & " << Pts[I * 40 + h] << " & ";
+				int_vec_print(ost, v, n + 1);
+				ost << "\\\\" << endl;
+			}
+		}
+		ost << "\\hline" << endl;
+		ost << "\\end{array}" << endl;
+		ost << "$$" << endl;
+	}
+	FREE_int(v);
+}
+
+void BLT_set_create::print_set_of_points_with_ABC(std::ostream &ost, long int *Pts, int nb_pts)
+{
+	int h, I;
+	int *v;
+	int n = 4;
+	int a, b, c;
+
+	v = NEW_int(n + 1);
+
+	ost << "The BLT-set is:\\\\" << endl;
+	for (I = 0; I < (nb_pts + 39) / 40; I++) {
+		ost << "$$" << endl;
+		ost << "\\begin{array}{|r|r|r|r|}" << endl;
+		ost << "\\hline" << endl;
+		ost << "i & \\mbox{Rank} & \\mbox{Point} & (a,b,c) \\\\" << endl;
+		ost << "\\hline" << endl;
+		ost << "\\hline" << endl;
+		for (h = 0; h < 40; h++) {
+			if (I * 40 + h < nb_pts) {
+
+				OA->O->unrank_point(v, 1, Pts[I * 40 + h], 0 /* verbose_level */);
+
+				a = ABC[3 * (I * 40 + h) + 0];
+				b = ABC[3 * (I * 40 + h) + 1];
+				c = ABC[3 * (I * 40 + h) + 2];
+
+				ost << I * 40 + h << " & " << Pts[I * 40 + h] << " & ";
+				int_vec_print(ost, v, n + 1);
+				ost << " & ";
+				ost << "(";
+				ost << a;
+				ost << ", ";
+				ost << b;
+				ost << ", ";
+				ost << c;
+				ost << ")";
+				ost << "\\\\" << endl;
+			}
+		}
+		ost << "\\hline" << endl;
+		ost << "\\end{array}" << endl;
+		ost << "$$" << endl;
+	}
+	FREE_int(v);
+}
+
 
 
 }}

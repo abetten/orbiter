@@ -101,7 +101,15 @@ void blt_set_invariants::init(blt_set_domain *D, long int *the_set,
 	for (i = 0; i < set_size; i++) {
 		D->O->unrank_point(v5, 1, the_set[i], 0 /* verbose_level */);
 		the_set_in_PG[i] = D->P->rank_point(v5);
-		}
+	}
+
+	if (f_v) {
+		cout << "blt_set_invariants::init before compute" << endl;
+	}
+	compute(verbose_level);
+	if (f_v) {
+		cout << "blt_set_invariants::init after compute" << endl;
+	}
 
 	if (f_v) {
 		cout << "blt_set_invariants::init done" << endl;
@@ -127,7 +135,7 @@ void blt_set_invariants::compute(int verbose_level)
 
 	if (f_v) {
 		cout << "blt_set::report before P->plane_intersections" << endl;
-		}
+	}
 	D->P->plane_intersections(D->G53,
 			the_set_in_PG, set_size, R, *Sos, verbose_level);
 
@@ -135,7 +143,7 @@ void blt_set_invariants::compute(int verbose_level)
 
 	if (f_v) {
 		cout << "blt_set::report before intersection_matrix" << endl;
-		}
+	}
 	Sos->intersection_matrix(
 		intersection_type, highest_intersection_number,
 		intersection_matrix, nb_planes,
@@ -144,21 +152,21 @@ void blt_set_invariants::compute(int verbose_level)
 	if (f_v) {
 		cout << "blt_set::report before "
 				"extract_largest_sets" << endl;
-		}
+	}
 	Sos->extract_largest_sets(*Sos2,
 			Sos2_idx, verbose_level);
 
 	if (f_v) {
 		cout << "blt_set::report before "
 				"remove_sets_of_given_size" << endl;
-		}
+	}
 	Sos->remove_sets_of_given_size(3,
 			*Sos3, Sos3_idx, verbose_level);
 
 	if (f_v) {
 		cout << "blt_set::report before "
 				"Sos2->compute_tdo_decomposition" << endl;
-		}
+	}
 	Sos2->compute_tdo_decomposition(*D2, verbose_level);
 
 
@@ -168,11 +176,11 @@ void blt_set_invariants::compute(int verbose_level)
 		if (f_v) {
 			cout << "blt_set::report before "
 					"Sos3[h].compute_tdo_decomposition" << endl;
-			}
+		}
 		Sos3->compute_tdo_decomposition(*D3, verbose_level);
 		D3->get_row_scheme(verbose_level);
 		D3->get_col_scheme(verbose_level);
-		}
+	}
 #if 0
 	P->plane_intersection_invariant(G,
 		data2, set_size,
@@ -188,7 +196,7 @@ void blt_set_invariants::compute(int verbose_level)
 	}
 }
 
-void blt_set_invariants::latex(ostream &ost, int verbose_level)
+void blt_set_invariants::latex(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	sorting Sorting;
@@ -204,17 +212,18 @@ void blt_set_invariants::latex(ostream &ost, int verbose_level)
 	for (i = highest_intersection_number; i >= 0; i--) {
 
 		a = intersection_type[i];
-		if (a == 0)
+		if (a == 0) {
 			continue;
+		}
 		ost << "$" << i;
 		if (a > 9) {
 			ost << "^{" << a << "}";
-			}
+		}
 		else if (a > 1) {
 			ost << "^" << a;
-			}
-		ost << "$ ";
 		}
+		ost << "$ ";
+	}
 	ost << "\\\\" << endl;
 	ost << "Plane invariant is ";
 
@@ -227,17 +236,17 @@ void blt_set_invariants::latex(ostream &ost, int verbose_level)
 				ost << intersection_matrix[i * nb_planes + j];
 				if (j < nb_planes - 1) {
 					ost << " & ";
-					}
 				}
-			ost << "\\\\" << endl;
 			}
+			ost << "\\\\" << endl;
+		}
 		ost << "\\end{array}" << endl;
 		ost << "\\right]" << endl;
 		ost << "$$" << endl;
-		}
+	}
 	else {
 		ost << "too big (" << nb_planes << " planes)\\\\" << endl;
-		}
+	}
 
 	int f_enter_math = FALSE;
 	int f_print_subscripts = TRUE;
@@ -269,7 +278,7 @@ void blt_set_invariants::latex(ostream &ost, int verbose_level)
 		for (t = 0; t < D3->Stack->ht; t++) {
 			if (!D3->Stack->is_col_class(t)) {
 				continue;
-				}
+			}
 			ost << "Column cell " << t << ":\\\\" << endl;
 			len = D3->Stack->cellSize[t];
 			fst = D3->Stack->startCell[t];
@@ -278,7 +287,7 @@ void blt_set_invariants::latex(ostream &ost, int verbose_level)
 			for (u = 0; u < len; u++) {
 				a = D3->Stack->pointList[fst + u] - fst_col;
 				Cell[u] = a;
-				}
+			}
 			Sorting.int_vec_heapsort(Cell, len);
 #if 0
 			for (u = 0; u < len; u++) {
@@ -296,17 +305,17 @@ void blt_set_invariants::latex(ostream &ost, int verbose_level)
 						f << c;
 						if (j < 4) {
 							f << "&";
-							}
 						}
-					f << "\\\\" << endl;
 					}
+					f << "\\\\" << endl;
+				}
 				f << "\\end{array}" << endl;
 				f << "\\right]$\\\\" << endl;
-				}
+			}
 #endif
 			FREE_int(Cell);
-			}
 		}
+	}
 
 	int tt, u, v;
 	tt = (set_size + 3) / 4;
@@ -324,11 +333,11 @@ void blt_set_invariants::latex(ostream &ost, int verbose_level)
 			if (v < set_size) {
 				ost << "$" << v << "$ & $" << the_set_in_orthogonal[v]
 					<< "$ \\\\" << endl;
-				}
 			}
+		}
 		ost << "\\hline" << endl;
 		ost << "\\end{tabular}" << endl;
-		}
+	}
 	ost << "\\end{center}" << endl;
 
 	ost << "The points:\\\\" << endl;
@@ -340,9 +349,9 @@ void blt_set_invariants::latex(ostream &ost, int verbose_level)
 		if ((i % 4) == 0) {
 			if (i) {
 				ost << "$$" << endl;
-				}
-			ost << "$$" << endl;
 			}
+			ost << "$$" << endl;
+		}
 		//f << "\\left[" << endl;
 		//f << "\\begin{array}{c}" << endl;
 		ost << "P_{" << i /*data[i]*/ << "}=";
@@ -351,13 +360,13 @@ void blt_set_invariants::latex(ostream &ost, int verbose_level)
 		for (u = 0; u < 5; u++) {
 			for (v = 0; v < n; v++) {
 				f << Grass->M[u * n + v];
-				}
-			ost << "\\\\" << endl;
 			}
+			ost << "\\\\" << endl;
+		}
 #endif
 		//f << "\\end{array}" << endl;
 		//f << "\\right]" << endl;
-		}
+	}
 	ost << "$$" << endl;
 
 

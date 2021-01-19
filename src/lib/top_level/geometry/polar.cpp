@@ -1242,8 +1242,6 @@ long int polar_callback_rank_point_func(int *v, void *data)
 	long int rk;
 	
 	rk = P->O->rank_point(v, 1, 0);
-	//PG_element_rank_modified(*gen->F, v, 1,
-	// gen->vector_space_dimension, rk);
 	return rk;
 }
 

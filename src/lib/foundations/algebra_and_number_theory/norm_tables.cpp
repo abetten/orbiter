@@ -63,7 +63,7 @@ norm_tables::~norm_tables()
 
 void norm_tables::init(unusual_model &U, int verbose_level)
 {
-	int qq = U.F.q;
+	int qq = U.FQ->q;
 	int i, f, l, j, a, b, c, jj;
 	sorting Sorting;
 	

@@ -301,6 +301,8 @@ public:
 		int verbose_level);
 	void report_from_iso(isomorph &Iso, int verbose_level);
 	void report(orbit_transversal *T, int verbose_level);
+	void report2(std::ostream &ost,
+			orbit_transversal *T, int verbose_level);
 };
 
 // global functions:
@@ -369,36 +371,37 @@ public:
 
 
 
-#if 0
-	int q;
-	finite_field *F;
-
-	int f_semilinear;
-
-	action *A; // orthogonal group
-	int degree;
-	orthogonal *O;
-#else
 	orthogonal_space_with_action *OA;
-#endif
 
-	int *set;
+	long int *set;
+
+	int *ABC;
+
+
 	int f_has_group;
 	strong_generators *Sg;
 
-
+	blt_set_domain *Blt_set_domain;
+	blt_set_with_action *BA;
 
 
 	BLT_set_create();
 	~BLT_set_create();
 	void null();
 	void freeself();
-	void init(BLT_set_create_description *Descr,
+	void init(
+			blt_set_domain *Blt_set_domain,
+			BLT_set_create_description *Descr,
 			orthogonal_space_with_action *OA,
 			int verbose_level);
 	void apply_transformations(
 			std::vector<std::string> transform_coeffs,
 			std::vector<int> f_inverse_transform, int verbose_level);
+	void report(int verbose_level);
+	void report2(std::ostream &ost, int verbose_level);
+	void print_set_of_points(std::ostream &ost, long int *Pts, int nb_pts);
+	void print_set_of_points_with_ABC(std::ostream &ost, long int *Pts, int nb_pts);
+
 };
 
 // #############################################################################
@@ -413,8 +416,11 @@ class blt_set_with_action {
 
 public:
 
-	blt_set_classify *Blt_set;
+	action *A;
 	blt_set_domain *Blt_set_domain;
+
+	long int *set;
+
 	strong_generators *Aut_gens;
 	blt_set_invariants *Inv;
 
@@ -426,12 +432,15 @@ public:
 	void null();
 	void freeself();
 	void init_set(
-			blt_set_classify *Blt_set, long int *set,
+			action *A,
+			blt_set_domain *Blt_set_domain,
+			long int *set,
 			strong_generators *Aut_gens, int verbose_level);
 	void init_orbits_on_points(
 			int verbose_level);
 	void print_automorphism_group(
 		std::ostream &ost);
+	void report(std::ostream &ost, int verbose_level);
 };
 
 
