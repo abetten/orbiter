@@ -1263,34 +1263,42 @@ void finite_field::Nbar_rank(int *v, int stride, int n, long int &a)
 
 void finite_field::Gram_matrix(int epsilon, int k,
 	int form_c1, int form_c2, int form_c3,
-	int *&Gram)
+	int *&Gram, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int d = k + 1;
-	int n, i, j, offset = 0;
+	int n, i, j, u, offset = 0;
 	geometry_global Gg;
 
+	if (f_v) {
+		cout << "finite_field::Gram_matrix" << endl;
+	}
 	Gram = NEW_int(d * d);
-	for (i = 0; i < d * d; i++) {
-		Gram[i] = 0;
-		}
+	int_vec_zero(Gram, d * d);
 	n = Gg.Witt_index(epsilon, k);
 	if (epsilon == 0) {
 		Gram[0 * d + 0] = add(form_c1, form_c1);
 		offset = 1;
-		}
+	}
 	else if (epsilon == 1) {
-		}
+	}
 	else if (epsilon == -1) {
 		Gram[(d - 2) * d + d - 2] = add(form_c1, form_c1);
 		Gram[(d - 2) * d + d - 1] = form_c2;
 		Gram[(d - 1) * d + d - 2] = form_c2;
 		Gram[(d - 1) * d + d - 1] = add(form_c3, form_c3);
-		}
+	}
 	for (i = 0; i < n; i++) {
 		j = 2 * i;
-		Gram[(offset + j) * d + offset + j + 1] = 1;
-		Gram[(offset + j + 1) * d + offset + j] = 1;
-		}
+		u = offset + j;
+		Gram[u * d + u + 1] = 1;
+			// X_u * Y_{u+1}
+		Gram[(u + 1) * d + u] = 1;
+			// X_{u+1} * Y_u
+	}
+	if (f_v) {
+		cout << "finite_field::Gram_matrix done" << endl;
+	}
 }
 
 int finite_field::evaluate_bilinear_form(
@@ -1531,7 +1539,7 @@ void finite_field::Siegel_Transformation(
 		cout << endl;
 	}
 	Gram_matrix(epsilon, k,
-			form_c1, form_c2, form_c3, Gram);
+			form_c1, form_c2, form_c3, Gram, verbose_level);
 	Qv = evaluate_quadratic_form(v, 1 /*stride*/,
 			epsilon, k, form_c1, form_c2, form_c3);
 	if (f_v) {

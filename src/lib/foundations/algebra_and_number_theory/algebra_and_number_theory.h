@@ -756,7 +756,7 @@ public:
 	void Nbar_rank(int *v, int stride, int n, long int &a);
 	void Gram_matrix(int epsilon, int k,
 		int form_c1, int form_c2, int form_c3,
-		int *&Gram);
+		int *&Gram, int verbose_level);
 	int evaluate_bilinear_form(
 			int *u, int *v, int d, int *Gram);
 	int evaluate_quadratic_form(int *v, int stride,

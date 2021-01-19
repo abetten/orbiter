@@ -113,7 +113,9 @@ void algebra_global_with_action::create_subgroups(
 	longinteger_object go;
 
 	SG->group_order(go);
-	cout << "The group has order " << go << endl;
+	if (f_v) {
+		cout << "The group has order " << go << endl;
+	}
 
 	the_set_sorted = NEW_lint(set_size);
 	position = NEW_lint(set_size);
@@ -2457,43 +2459,43 @@ void algebra_global_with_action::A5_in_PSL_(int q, int verbose_level)
 	domain *dom;
 
 	if (f_v) {
-		cout << "a5_in_psl.out: "
+		cout << "algebra_global_with_action::A5_in_PSL_ "
 				"q=" << q << ", p=" << p << ", f=" << f << endl;
-		}
+	}
 	dom = allocate_finite_field_domain(q, verbose_level);
 
 	A5_in_PSL_2_q(q, A, B, dom, verbose_level);
 
 	{
-	with w(dom);
-	D.mult(A, B);
+		with w(dom);
+		D.mult(A, B);
 
-	if (f_v) {
-		cout << "finished with A5_in_PSL_2_q()" << endl;
-		cout << "A=\n" << A << endl;
-		cout << "B=\n" << B << endl;
-		cout << "AB=\n" << D << endl;
-		int AA[4], BB[4], DD[4];
-		matrix_convert_to_numerical(A, AA, q);
-		matrix_convert_to_numerical(B, BB, q);
-		matrix_convert_to_numerical(D, DD, q);
-		cout << "A=" << endl;
-		print_integer_matrix_width(cout, AA, 2, 2, 2, 7);
-		cout << "B=" << endl;
-		print_integer_matrix_width(cout, BB, 2, 2, 2, 7);
-		cout << "AB=" << endl;
-		print_integer_matrix_width(cout, DD, 2, 2, 2, 7);
+		if (f_v) {
+			cout << "A5_in_PSL_2_q done" << endl;
+			cout << "A=\n" << A << endl;
+			cout << "B=\n" << B << endl;
+			cout << "AB=\n" << D << endl;
+			int AA[4], BB[4], DD[4];
+			matrix_convert_to_numerical(A, AA, q);
+			matrix_convert_to_numerical(B, BB, q);
+			matrix_convert_to_numerical(D, DD, q);
+			cout << "A=" << endl;
+			print_integer_matrix_width(cout, AA, 2, 2, 2, 7);
+			cout << "B=" << endl;
+			print_integer_matrix_width(cout, BB, 2, 2, 2, 7);
+			cout << "AB=" << endl;
+			print_integer_matrix_width(cout, DD, 2, 2, 2, 7);
 		}
 
-	int oA, oB, oD;
+		int oA, oB, oD;
 
-	oA = proj_order(A);
-	oB = proj_order(B);
-	oD = proj_order(D);
-	if (f_v) {
-		cout << "projective order of A = " << oA << endl;
-		cout << "projective order of B = " << oB << endl;
-		cout << "projective order of AB = " << oD << endl;
+		oA = proj_order(A);
+		oB = proj_order(B);
+		oD = proj_order(D);
+		if (f_v) {
+			cout << "projective order of A = " << oA << endl;
+			cout << "projective order of B = " << oB << endl;
+			cout << "projective order of AB = " << oD << endl;
 		}
 
 
@@ -2506,14 +2508,14 @@ void algebra_global_with_action::A5_in_PSL_2_q(int q,
 {
 	if (((q - 1) % 5) == 0) {
 		A5_in_PSL_2_q_easy(q, A, B, dom_GFq, verbose_level);
-		}
+	}
 	else if (((q + 1) % 5) == 0) {
 		A5_in_PSL_2_q_hard(q, A, B, dom_GFq, verbose_level);
-		}
+	}
 	else {
 		cout << "either q + 1 or q - 1 must be divisible by 5!" << endl;
 		exit(1);
-		}
+	}
 }
 
 void algebra_global_with_action::A5_in_PSL_2_q_easy(int q,
@@ -2524,8 +2526,8 @@ void algebra_global_with_action::A5_in_PSL_2_q_easy(int q,
 	integer zeta5, zeta5v, b, c, d, b2, e;
 
 	if (f_v) {
-		cout << "A5_in_PSL_2_q_easy verbose_level=" << verbose_level << endl;
-		}
+		cout << "algebra_global_with_action::A5_in_PSL_2_q_easy verbose_level=" << verbose_level << endl;
+	}
 	with w(dom_GFq);
 
 	i = (q - 1) / 5;
@@ -2538,7 +2540,7 @@ void algebra_global_with_action::A5_in_PSL_2_q_easy(int q,
 	if (f_v) {
 		cout << "zeta5=" << zeta5 << endl;
 		cout << "zeta5v=" << zeta5v << endl;
-		}
+	}
 
 	A.m_mn_n(2, 2);
 	B.m_mn_n(2, 2);
@@ -2549,7 +2551,7 @@ void algebra_global_with_action::A5_in_PSL_2_q_easy(int q,
 
 	if (f_v) {
 		cout << "A=\n" << A << endl;
-		}
+	}
 
 	// b := (zeta5 - zeta5^{-1})^{-1}:
 	b = zeta5v;
@@ -2573,7 +2575,10 @@ void algebra_global_with_action::A5_in_PSL_2_q_easy(int q,
 
 	if (f_v) {
 		cout << "B=\n" << B << endl;
-		}
+	}
+	if (f_v) {
+		cout << "algebra_global_with_action::A5_in_PSL_2_q_easy done" << endl;
+	}
 }
 
 
@@ -2588,6 +2593,9 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 	integer a, b, m1;
 	int norm_alpha, l;
 
+	if (f_v) {
+		cout << "algebra_global_with_action::A5_in_PSL_2_q_hard" << endl;
+	}
 #if 0
 	m.get_an_irreducible_polynomial(2, verbose_level);
 #else
@@ -2603,12 +2611,12 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 
 	if (f_v) {
 		cout << "searching for element of norm -1:" << endl;
-		}
+	}
 	S.m_mn_n(2, 2);
 	m1.m_one();
 	if (f_v) {
 		cout << "-1=" << m1 << endl;
-		}
+	}
 #if 0
 	for (i = q; i < q2; i++) {
 		// cout << "i=" << i;
@@ -2632,11 +2640,11 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 	if (!b.is_m_one()) {
 		cout << "fatal: element a does not have norm -1" << endl;
 		exit(1);
-		}
+	}
 #endif
 	if (f_v) {
 		cout << "element of norm -1:" << a << endl;
-		}
+	}
 #if 1
 	S[0][0] = a;
 	S[0][1].one();
@@ -2653,14 +2661,14 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 #endif
 	if (f_v) {
 		cout << "S=\n" << S << endl;
-		}
+	}
 	Sv = S;
 	Sv.invert();
 	E.mult(S, Sv);
 	if (f_v) {
 		cout << "S^{-1}=\n" << Sv << endl;
 		cout << "S \\cdot S^{-1}=\n" << E << endl;
-		}
+	}
 
 #if 0
 	Sbart = S;
@@ -2686,7 +2694,7 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 	if (f_v) {
 		cout << "zeta5=" << zeta5 << endl;
 		cout << "zeta5v=" << zeta5v << endl;
-		}
+	}
 
 	AA.m_mn_n(2, 2);
 	BB.m_mn_n(2, 2);
@@ -2697,7 +2705,7 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 
 	if (f_v) {
 		cout << "AA=\n" << AA << endl;
-		}
+	}
 
 	integer bb, c, d, e, f, c1, b1;
 
@@ -2709,7 +2717,7 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 
 	if (f_v) {
 		cout << "b=" << b << endl;
-		}
+	}
 
 	// compute $c$ with $N(c) = c \cdot \bar{c} = 1 - N(b) = 1 - b \cdot \bar{b}$:
 	b1 = b;
@@ -2721,18 +2729,19 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 	e += bb;
 	if (f_v) {
 		cout << "1 - b \\cdot \\bar{b}=" << e << endl;
-		}
+	}
 #if 1
 	for (l = 0; l < q; l++) {
 		c.m_i(norm_alpha);
 		f = c;
 		f.power_int(l);
-		if (f.compare_with(e) == 0)
+		if (f.compare_with(e) == 0) {
 			break;
 		}
+	}
 	if (f_v) {
 		cout << "the discrete log with respect to " << norm_alpha << " is " << l << endl;
-		}
+	}
 	c.m_i(q);
 	c.power_int(l);
 
@@ -2741,23 +2750,24 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 	if (f.compare_with(e) != 0) {
 		cout << "fatal: norm of " << c << " is not " << e << endl;
 		exit(1);
-		}
+	}
 #else
 	for (i = q; i < q2; i++) {
 		c.m_i(i);
 		f = c;
 		f.power_int(q + 1);
-		if (f.compare_with(e) == 0)
+		if (f.compare_with(e) == 0) {
 			break;
 		}
+	}
 	if (i == q2) {
 		cout << "A5_in_PSL_2_q_hard() couldn't find element c" << endl;
 		exit(1);
-		}
+	}
 #endif
 	if (f_v) {
 		cout << "element c=" << c << endl;
-		}
+	}
 	c1 = c;
 	c1.power_int(q);
 
@@ -2768,7 +2778,7 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 	BB[1][1] = b1;
 	if (f_v) {
 		cout << "BB=\n" << BB << endl;
-		}
+	}
 	A.mult(S, AA);
 	A *= Sv;
 	B.mult(S, BB);
@@ -2777,7 +2787,10 @@ void algebra_global_with_action::A5_in_PSL_2_q_hard(int q,
 	if (f_v) {
 		cout << "A=\n" << A << endl;
 		cout << "B=\n" << B << endl;
-		}
+	}
+	if (f_v) {
+		cout << "algebra_global_with_action::A5_in_PSL_2_q_hard done" << endl;
+	}
 }
 
 int algebra_global_with_action::proj_order(discreta_matrix &A)
@@ -2789,7 +2802,7 @@ int algebra_global_with_action::proj_order(discreta_matrix &A)
 	m = A.s_m();
 	n = A.s_n();
 	if (m != n) {
-		cout << "matrix::proj_order_mod m != n" << endl;
+		cout << "algebra_global_with_action::proj_order m != n" << endl;
 		exit(1);
 	}
 	if (A.is_zero()) {
@@ -3042,12 +3055,14 @@ void algebra_global_with_action::young_symmetrizer(int n, int verbose_level)
 		for (i = n - 1; i >= 0; i--) {
 			for (j = 0; j < part[i]; j++) {
 				parts[nb_parts++] = i + 1;
-				}
 			}
+		}
 
-		cout << "partition ";
-		int_vec_print(cout, parts, nb_parts);
-		cout << endl;
+		if (f_v) {
+			cout << "partition ";
+			int_vec_print(cout, parts, nb_parts);
+			cout << endl;
+		}
 
 
 			// Create the young symmetrizer based on the partition.
@@ -3058,22 +3073,26 @@ void algebra_global_with_action::young_symmetrizer(int n, int verbose_level)
 		tableau = NEW_int(n);
 		for (i = 0; i < n; i++) {
 			tableau[i] = i;
-			}
+		}
 		Y->young_symmetrizer(parts, nb_parts, tableau, elt1, elt2, h_alpha, verbose_level);
 		FREE_int(tableau);
 
 
-		cout << "h_alpha =" << endl;
-		Y->group_ring_element_print(Y->A, Y->S, h_alpha);
-		cout << endl;
+		if (f_v) {
+			cout << "h_alpha =" << endl;
+			Y->group_ring_element_print(Y->A, Y->S, h_alpha);
+			cout << endl;
+		}
 
 
 		Y->group_ring_element_copy(Y->A, Y->S, h_alpha, elt4);
 		Y->group_ring_element_mult(Y->A, Y->S, elt4, elt4, elt5);
 
-		cout << "h_alpha * h_alpha=" << endl;
-		Y->group_ring_element_print(Y->A, Y->S, elt5);
-		cout << endl;
+		if (f_v) {
+			cout << "h_alpha * h_alpha=" << endl;
+			Y->group_ring_element_print(Y->A, Y->S, elt5);
+			cout << endl;
+		}
 
 		int *Module_Base;
 		int *base_cols;
@@ -3084,16 +3103,18 @@ void algebra_global_with_action::young_symmetrizer(int n, int verbose_level)
 			Module_Base, base_cols, rk,
 			verbose_level);
 
-		cout << "Module_Basis=" << endl;
-		Y->D->print_matrix(Module_Base, rk, Y->goi);
+		if (f_v) {
+			cout << "Module_Basis=" << endl;
+			Y->D->print_matrix(Module_Base, rk, Y->goi);
+		}
 
 
 		for (i = 0; i < rk; i++) {
 			for (j = 0; j < Y->goi; j++) {
 				Y->D->copy(Y->D->offset(Module_Base, i * Y->goi + j), Y->D->offset(Base, s * Y->goi + j), 0);
-				}
-			s++;
 			}
+			s++;
+		}
 		Len[cnt] = s - Fst[cnt];
 		Fst[cnt + 1] = s;
 
@@ -3107,24 +3128,32 @@ void algebra_global_with_action::young_symmetrizer(int n, int verbose_level)
 			// create the next partition in exponential notation:
 		if (!Combi.partition_next(part, n)) {
 			break;
-			}
-		cnt++;
 		}
+		cnt++;
+	}
 
-	cout << "Basis of submodule=" << endl;
-	Y->D->print_matrix(Base, s, Y->goi);
+	if (f_v) {
+		cout << "Basis of submodule=" << endl;
+		Y->D->print_matrix(Base, s, Y->goi);
+	}
 
 
 	FREE_int(part);
 	FREE_int(parts);
 	FREE_int(Fst);
 	FREE_int(Len);
-	cout << "before freeing Base" << endl;
+	if (f_v) {
+		cout << "before freeing Base" << endl;
+	}
 	FREE_int(Base);
 	FREE_int(Base_inv);
-	cout << "before freeing Y" << endl;
+	if (f_v) {
+		cout << "before freeing Y" << endl;
+	}
 	FREE_OBJECT(Y);
-	cout << "before freeing elt1" << endl;
+	if (f_v) {
+		cout << "before freeing elt1" << endl;
+	}
 	FREE_int(elt1);
 	FREE_int(elt2);
 	FREE_int(h_alpha);
@@ -3221,9 +3250,11 @@ void algebra_global_with_action::young_symmetrizer_sym_4(int verbose_level)
 			nb_parts++;
 			}
 
-		cout << "partition ";
-		int_vec_print(cout, parts, nb_parts);
-		cout << endl;
+		if (f_v) {
+			cout << "partition ";
+			int_vec_print(cout, parts, nb_parts);
+			cout << endl;
+		}
 
 
 			// Create the young symmetrizer based on the partition.
@@ -3232,17 +3263,21 @@ void algebra_global_with_action::young_symmetrizer_sym_4(int verbose_level)
 		Y->young_symmetrizer(parts, nb_parts, Tableau[cnt], elt1, elt2, h_alpha, verbose_level);
 
 
-		cout << "h_alpha =" << endl;
-		Y->group_ring_element_print(Y->A, Y->S, h_alpha);
-		cout << endl;
+		if (f_v) {
+			cout << "h_alpha =" << endl;
+			Y->group_ring_element_print(Y->A, Y->S, h_alpha);
+			cout << endl;
+		}
 
 
 		Y->group_ring_element_copy(Y->A, Y->S, h_alpha, elt4);
 		Y->group_ring_element_mult(Y->A, Y->S, elt4, elt4, elt5);
 
-		cout << "h_alpha * h_alpha=" << endl;
-		Y->group_ring_element_print(Y->A, Y->S, elt5);
-		cout << endl;
+		if (f_v) {
+			cout << "h_alpha * h_alpha=" << endl;
+			Y->group_ring_element_print(Y->A, Y->S, elt5);
+			cout << endl;
+		}
 
 		int *Module_Base;
 		int *base_cols;
@@ -3253,8 +3288,10 @@ void algebra_global_with_action::young_symmetrizer_sym_4(int verbose_level)
 			Module_Base, base_cols, rk,
 			verbose_level);
 
-		cout << "Module_Basis=" << endl;
-		Y->D->print_matrix(Module_Base, rk, Y->goi);
+		if (f_v) {
+			cout << "Module_Basis=" << endl;
+			Y->D->print_matrix(Module_Base, rk, Y->goi);
+		}
 
 
 		for (i = 0; i < rk; i++) {
@@ -3275,20 +3312,28 @@ void algebra_global_with_action::young_symmetrizer_sym_4(int verbose_level)
 
 		}
 
-	cout << "Basis of submodule=" << endl;
-	//Y->D->print_matrix(Base, s, Y->goi);
-	Y->D->print_matrix_for_maple(Base, s, Y->goi);
+	if (f_v) {
+		cout << "Basis of submodule=" << endl;
+		//Y->D->print_matrix(Base, s, Y->goi);
+		Y->D->print_matrix_for_maple(Base, s, Y->goi);
+	}
 
 	FREE_int(part);
 	FREE_int(parts);
 	FREE_int(Fst);
 	FREE_int(Len);
-	cout << "before freeing Base" << endl;
+	if (f_v) {
+		cout << "before freeing Base" << endl;
+	}
 	FREE_int(Base);
 	FREE_int(Base_inv);
-	cout << "before freeing Y" << endl;
+	if (f_v) {
+		cout << "before freeing Y" << endl;
+	}
 	FREE_OBJECT(Y);
-	cout << "before freeing elt1" << endl;
+	if (f_v) {
+		cout << "before freeing elt1" << endl;
+	}
 	FREE_int(elt1);
 	FREE_int(elt2);
 	FREE_int(h_alpha);
@@ -3556,8 +3601,10 @@ void algebra_global_with_action::centralizer_of_element(
 		//A2->element_print_as_permutation(Elt, cout);
 	}
 
-	cout << "algebra_global_with_action::centralizer_of_element "
-			"the element has order " << o << endl;
+	if (f_v) {
+		cout << "algebra_global_with_action::centralizer_of_element "
+				"the element has order " << o << endl;
+	}
 
 
 
@@ -3578,8 +3625,10 @@ void algebra_global_with_action::centralizer_of_element(
 	}
 
 
-	cout << "generators for the centralizer are:" << endl;
-	gens->print_generators_tex();
+	if (f_v) {
+		cout << "generators for the centralizer are:" << endl;
+		gens->print_generators_tex();
+	}
 
 
 	string fname;
@@ -3628,8 +3677,10 @@ void algebra_global_with_action::centralizer_of_element(
 		}
 		file_io Fio;
 
-		cout << "written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
+		if (f_v) {
+			cout << "written file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
+		}
 	}
 
 
@@ -3699,8 +3750,10 @@ void algebra_global_with_action::normalizer_of_cyclic_subgroup(
 		//A2->element_print_as_permutation(Elt, cout);
 	}
 
-	cout << "algebra_global_with_action::normalizer_of_cyclic_subgroup "
-			"the element has order " << o << endl;
+	if (f_v) {
+		cout << "algebra_global_with_action::normalizer_of_cyclic_subgroup "
+				"the element has order " << o << endl;
+	}
 
 
 
@@ -3781,8 +3834,10 @@ void algebra_global_with_action::normalizer_of_cyclic_subgroup(
 		}
 		file_io Fio;
 
-		cout << "written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
+		if (f_v) {
+			cout << "written file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
+		}
 	}
 
 
@@ -3972,11 +4027,15 @@ void algebra_global_with_action::representation_on_polynomials(
 
 	n = A->matrix_group_dimension();
 
-	cout << "n = " << n << endl;
+	if (f_v) {
+		cout << "n = " << n << endl;
+	}
 
-	cout << "strong generators:" << endl;
-	//A->Strong_gens->print_generators();
-	A->Strong_gens->print_generators_tex();
+	if (f_v) {
+		cout << "strong generators:" << endl;
+		//A->Strong_gens->print_generators();
+		A->Strong_gens->print_generators_tex();
+	}
 
 	homogeneous_polynomial_domain *HPD;
 
@@ -3999,8 +4058,10 @@ void algebra_global_with_action::representation_on_polynomials(
 		FALSE /* f_induce_action */, NULL,
 		verbose_level);
 
-	cout << "created action A2" << endl;
-	A2->print_info();
+	if (f_v) {
+		cout << "created action A2" << endl;
+		A2->print_info();
+	}
 
 
 	action_on_homogeneous_polynomials *A_on_HPD;
@@ -4215,8 +4276,10 @@ void algebra_global_with_action::do_cheat_sheet_for_decomposition_by_element_PG(
 		}
 		file_io Fio;
 
-		cout << "written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
+		if (f_v) {
+			cout << "written file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
+		}
 	}
 
 
@@ -4336,8 +4399,10 @@ void algebra_global_with_action::find_singer_cycle(linear_group *LG,
 	//G = LG->initial_strong_gens->create_sims(verbose_level);
 	H = LG->Strong_gens->create_sims(verbose_level);
 
-	//cout << "group order G = " << G->group_order_int() << endl;
-	cout << "group order H = " << H->group_order_lint() << endl;
+	if (f_v) {
+		//cout << "group order G = " << G->group_order_int() << endl;
+		cout << "group order H = " << H->group_order_lint() << endl;
+	}
 
 	int *Elt;
 	longinteger_object go;
@@ -4390,15 +4455,19 @@ void algebra_global_with_action::find_singer_cycle(linear_group *LG,
 		if (!M->has_shape_of_singer_cycle(Elt)) {
 			continue;
 		}
-		cout << "Element " << setw(5) << i << " / "
-					<< go.as_int() << " = " << cnt << ":" << endl;
-		A2->element_print(Elt, cout);
-		cout << endl;
-		A2->element_print_as_permutation(Elt, cout);
-		cout << endl;
+		if (f_v) {
+			cout << "Element " << setw(5) << i << " / "
+						<< go.as_int() << " = " << cnt << ":" << endl;
+			A2->element_print(Elt, cout);
+			cout << endl;
+			A2->element_print_as_permutation(Elt, cout);
+			cout << endl;
+		}
 		cnt++;
 	}
-	cout << "we found " << cnt << " group elements of order " << order << endl;
+	if (f_v) {
+		cout << "we found " << cnt << " group elements of order " << order << endl;
+	}
 
 	FREE_int(Elt);
 	if (f_v) {
@@ -4449,15 +4518,19 @@ void algebra_global_with_action::search_element_of_order(linear_group *LG,
 		if (ord != order) {
 			continue;
 		}
-		cout << "Element " << setw(5) << i << " / "
-					<< go.as_int() << " = " << cnt << ":" << endl;
-		A2->element_print(Elt, cout);
-		cout << endl;
-		A2->element_print_as_permutation(Elt, cout);
-		cout << endl;
+		if (f_v) {
+			cout << "Element " << setw(5) << i << " / "
+						<< go.as_int() << " = " << cnt << ":" << endl;
+			A2->element_print(Elt, cout);
+			cout << endl;
+			A2->element_print_as_permutation(Elt, cout);
+			cout << endl;
+		}
 		cnt++;
 	}
-	cout << "we found " << cnt << " group elements of order " << order << endl;
+	if (f_v) {
+		cout << "we found " << cnt << " group elements of order " << order << endl;
+	}
 
 	FREE_int(Elt);
 	if (f_v) {
@@ -4479,23 +4552,31 @@ void algebra_global_with_action::element_rank(linear_group *LG,
 	//G = LG->initial_strong_gens->create_sims(verbose_level);
 	H = LG->Strong_gens->create_sims(verbose_level);
 
-	//cout << "group order G = " << G->group_order_int() << endl;
-	cout << "group order H = " << H->group_order_lint() << endl;
+	if (f_v) {
+		//cout << "group order G = " << G->group_order_int() << endl;
+		cout << "group order H = " << H->group_order_lint() << endl;
+	}
 
-	cout << "creating element " << elt_data << endl;
+	if (f_v) {
+		cout << "creating element " << elt_data << endl;
+	}
 	int *Elt;
 
 	Elt = NEW_int(A1->elt_size_in_int);
 	A1->make_element_from_string(Elt, elt_data, 0);
 
-	cout << "Element :" << endl;
-	A1->element_print(Elt, cout);
-	cout << endl;
+	if (f_v) {
+		cout << "Element :" << endl;
+		A1->element_print(Elt, cout);
+		cout << endl;
+	}
 
 	longinteger_object a;
 	H->element_rank(a, Elt);
 
-	cout << "The rank of the element is " << a << endl;
+	if (f_v) {
+		cout << "The rank of the element is " << a << endl;
+	}
 
 
 	FREE_int(Elt);
@@ -4521,7 +4602,9 @@ void algebra_global_with_action::element_unrank(linear_group *LG,
 	H = LG->Strong_gens->create_sims(verbose_level);
 
 	//cout << "group order G = " << G->group_order_int() << endl;
-	cout << "group order H = " << H->group_order_lint() << endl;
+	if (f_v) {
+		cout << "group order H = " << H->group_order_lint() << endl;
+	}
 
 	int *Elt;
 
@@ -4532,13 +4615,17 @@ void algebra_global_with_action::element_unrank(linear_group *LG,
 
 	a.create_from_base_10_string(rank_string.c_str(), 0 /*verbose_level*/);
 
-	cout << "Creating element of rank " << a << endl;
+	if (f_v) {
+		cout << "Creating element of rank " << a << endl;
+	}
 
 	H->element_unrank(a, Elt);
 
-	cout << "Element :" << endl;
-	A1->element_print(Elt, cout);
-	cout << endl;
+	if (f_v) {
+		cout << "Element :" << endl;
+		A1->element_print(Elt, cout);
+		cout << endl;
+	}
 
 
 	FREE_int(Elt);

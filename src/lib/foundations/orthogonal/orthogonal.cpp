@@ -23,6 +23,11 @@ orthogonal::orthogonal()
 	epsilon = n = m = q = 0;
 	f_even = FALSE;
 	form_c1 = form_c2 = form_c3 = 0;
+
+	Poly = NULL;
+	the_quadratic_form = NULL;
+	the_monomial = NULL;
+
 	Gram_matrix = NULL;
 	T1 = NULL;
 	T2 = NULL;
@@ -90,11 +95,6 @@ orthogonal::orthogonal()
 	find_root_x = NULL;
 	find_root_y = NULL;
 	find_root_z = NULL;
-#if 0
-	line1 = NULL;
-	line2 = NULL;
-	line3 = NULL;
-#endif
 	F = NULL;
 
 	rk_pt_v = NULL;
@@ -126,122 +126,179 @@ orthogonal::orthogonal()
 
 orthogonal::~orthogonal()
 {
-	//cout << "orthogonal::~orthogonal freeing v1" << endl;
-	if (v1)
-		FREE_int(v1);
-	//cout << "orthogonal::~orthogonal freeing v2" << endl;
-	if (v2)
-		FREE_int(v2);
-	//cout << "orthogonal::~orthogonal freeing v3" << endl;
-	if (v3)
-		FREE_int(v3);
-	if (v4)
-		FREE_int(v4);
-	if (v5)
-		FREE_int(v5);
-	if (v_tmp)
-		FREE_int(v_tmp);
-	if (v_tmp2)
-		FREE_int(v_tmp2);
-	if (v_neighbor5)
-		FREE_int(v_neighbor5);
-	if (find_root_x)
-		FREE_int(find_root_x);
-	if (find_root_y)
-		FREE_int(find_root_y);
-	if (find_root_z)
-		FREE_int(find_root_z);
-	if (T1)
-		FREE_int(T1);
-	if (T2)
-		FREE_int(T2);
-	if (T3)
-		FREE_int(T3);
+	if (Poly) {
+		FREE_OBJECT(Poly);
+	}
+	if (the_quadratic_form) {
+		FREE_int(the_quadratic_form);
+	}
+	if (the_monomial) {
+		FREE_int(the_monomial);
+	}
+	if (Gram_matrix) {
+		FREE_int(Gram_matrix);
+	}
 
+	if (T1) {
+		FREE_int(T1);
+	}
+	if (T2) {
+		FREE_int(T2);
+	}
+	if (T3) {
+		FREE_int(T3);
+	}
 
 	//cout << "orthogonal::~orthogonal freeing A" << endl;
-	if (A)
+	if (A) {
 		FREE_lint(A);
+	}
 	//cout << "orthogonal::~orthogonal freeing B" << endl;
-	if (B)
+	if (B) {
 		FREE_lint(B);
+	}
 	//cout << "orthogonal::~orthogonal freeing P" << endl;
-	if (P)
+	if (P) {
 		FREE_lint(P);
+	}
 	//cout << "orthogonal::~orthogonal freeing L" << endl;
-	if (L)
+	if (L) {
 		FREE_lint(L);
-	if (Gram_matrix)
-		FREE_int(Gram_matrix);
-	if (subspace)
-		delete subspace;
-#if 0
-	if (line1)
-		FREE_int(line1);
-	if (line2)
-		FREE_int(line2);
-	if (line3)
-		FREE_int(line3);
-#endif
-	if (minus_squares)
+	}
+
+
+
+	if (minus_squares) {
 		FREE_int(minus_squares);
-	if (minus_squares_without)
+	}
+	if (minus_squares_without) {
 		FREE_int(minus_squares_without);
-	if (minus_nonsquares)
+	}
+	if (minus_nonsquares) {
 		FREE_int(minus_nonsquares);
-	if (f_is_minus_square)
+	}
+	if (f_is_minus_square) {
 		FREE_int(f_is_minus_square);
-	if (index_minus_square)
+	}
+	if (index_minus_square) {
 		FREE_int(index_minus_square);
-	if (index_minus_square_without)
+	}
+	if (index_minus_square_without) {
 		FREE_int(index_minus_square_without);
-	if (index_minus_nonsquare)
+	}
+	if (index_minus_nonsquare) {
 		FREE_int(index_minus_nonsquare);
-	if (rk_pt_v)
+	}
+
+
+
+
+	//cout << "orthogonal::~orthogonal freeing v1" << endl;
+	if (v1) {
+		FREE_int(v1);
+	}
+	//cout << "orthogonal::~orthogonal freeing v2" << endl;
+	if (v2) {
+		FREE_int(v2);
+	}
+	//cout << "orthogonal::~orthogonal freeing v3" << endl;
+	if (v3) {
+		FREE_int(v3);
+	}
+	if (v4) {
+		FREE_int(v4);
+	}
+	if (v5) {
+		FREE_int(v5);
+	}
+	if (v_tmp) {
+		FREE_int(v_tmp);
+	}
+	if (v_tmp2) {
+		FREE_int(v_tmp2);
+	}
+	if (v_neighbor5) {
+		FREE_int(v_neighbor5);
+	}
+	if (find_root_x) {
+		FREE_int(find_root_x);
+	}
+	if (find_root_y) {
+		FREE_int(find_root_y);
+	}
+	if (find_root_z) {
+		FREE_int(find_root_z);
+	}
+
+
+	if (rk_pt_v) {
 		FREE_int(rk_pt_v);
-	if (Sv1)
+	}
+	if (Sv1) {
 		FREE_int(Sv1);
-	if (Sv2)
+	}
+	if (Sv2) {
 		FREE_int(Sv2);
-	if (Sv3)
+	}
+	if (Sv3) {
 		FREE_int(Sv3);
-	if (Sv4)
+	}
+	if (Sv4) {
 		FREE_int(Sv4);
-	if (Gram2)
+	}
+	if (Gram2) {
 		FREE_int(Gram2);
-	if (ST_N1)
+	}
+	if (ST_N1) {
 		FREE_int(ST_N1);
-	if (ST_N2)
+	}
+	if (ST_N2) {
 		FREE_int(ST_N2);
-	if (ST_w)
+	}
+	if (ST_w) {
 		FREE_int(ST_w);
-	if (STr_B)
+	}
+	if (STr_B) {
 		FREE_int(STr_B);
-	if (STr_Bv)
+	}
+	if (STr_Bv) {
 		FREE_int(STr_Bv);
-	if (STr_w)
+	}
+	if (STr_w) {
 		FREE_int(STr_w);
-	if (STr_z)
+	}
+	if (STr_z) {
 		FREE_int(STr_z);
-	if (STr_x)
+	}
+	if (STr_x) {
 		FREE_int(STr_x);
-	if (determine_line_v1)
+	}
+	if (determine_line_v1) {
 		FREE_int(determine_line_v1);
-	if (determine_line_v2)
+	}
+	if (determine_line_v2) {
 		FREE_int(determine_line_v2);
-	if (determine_line_v3)
+	}
+	if (determine_line_v3) {
 		FREE_int(determine_line_v3);
-	if (lines_on_point_coords1)
+	}
+	if (lines_on_point_coords1) {
 		FREE_int(lines_on_point_coords1);
-	if (lines_on_point_coords2)
+	}
+	if (lines_on_point_coords2) {
 		FREE_int(lines_on_point_coords2);
+	}
+
+	if (subspace) {
+		FREE_OBJECT(subspace);
+	}
 
 	if (line_pencil) {
 		FREE_lint(line_pencil);
-		}
+	}
 	if (Perp1) {
 		FREE_lint(Perp1);
-		}
+	}
 	//cout << "orthogonal::~orthogonal finished" << endl;
 }
 
@@ -252,8 +309,6 @@ void orthogonal::init(int epsilon, int n,
 		finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
-	//int f_vvv = (verbose_level >= 3);
 	int i, j;
 	geometry_global Gg;
 
@@ -448,6 +503,7 @@ void orthogonal::allocate()
 void orthogonal::init_form_and_Gram_matrix(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int idx;
 
 	if (f_v) {
 		cout << "orthogonal::init_form_and_Gram_matrix" << endl;
@@ -455,16 +511,92 @@ void orthogonal::init_form_and_Gram_matrix(int verbose_level)
 	form_c1 = 1;
 	form_c2 = 0;
 	form_c3 = 0;
+
+	Poly = NEW_OBJECT(homogeneous_polynomial_domain);
+
+	if (f_v) {
+		cout << "orthogonal::init_form_and_Gram_matrix before Poly->init" << endl;
+	}
+	Poly->init(F,
+			n /* nb_vars */, 2 /* degree */, FALSE /* f_init_incidence_structure */,
+			t_LEX,
+			verbose_level);
+	if (f_v) {
+		cout << "orthogonal::init_form_and_Gram_matrix after Poly->init" << endl;
+	}
+	the_quadratic_form = NEW_int(Poly->get_nb_monomials());
+	int_vec_zero(the_quadratic_form, Poly->get_nb_monomials());
+
+	the_monomial = NEW_int(n);
+	int_vec_zero(the_monomial, n);
+
 	if (epsilon == -1) {
 		F->choose_anisotropic_form(
 				form_c1, form_c2, form_c3, verbose_level);
+
+		int_vec_zero(the_monomial, n);
+		the_monomial[n - 2] = 2;
+		idx = Poly->index_of_monomial(the_monomial);
+		the_quadratic_form[idx] = F->add(the_quadratic_form[idx], form_c1);
+
+		int_vec_zero(the_monomial, n);
+		the_monomial[n - 2] = 1;
+		the_monomial[n - 1] = 1;
+		idx = Poly->index_of_monomial(the_monomial);
+		the_quadratic_form[idx] = F->add(the_quadratic_form[idx], form_c2);
+
+		int_vec_zero(the_monomial, n);
+		the_monomial[n - 1] = 2;
+		idx = Poly->index_of_monomial(the_monomial);
+		the_quadratic_form[idx] = F->add(the_quadratic_form[idx], form_c3);
+
 	}
+	else if (epsilon == 0) {
+
+		int_vec_zero(the_monomial, n);
+		the_monomial[0] = 2;
+		idx = Poly->index_of_monomial(the_monomial);
+		the_quadratic_form[idx] = F->add(the_quadratic_form[idx], form_c1);
+
+	}
+
+	int i, j, u;
+	int offset;
+
+	if (epsilon == 0) {
+		offset = 1;
+	}
+	else {
+		offset = 0;
+	}
+
+	for (i = 0; i < m; i++) {
+		j = 2 * i;
+		u = offset + j;
+
+		int_vec_zero(the_monomial, n);
+		the_monomial[u] = 1;
+		the_monomial[u + 1] = 1;
+		idx = Poly->index_of_monomial(the_monomial);
+		the_quadratic_form[idx] = F->add(the_quadratic_form[idx], 1);
+
+			// X_u * X_{u+1}
+	}
+
+	if (f_v) {
+		cout << "orthogonal::init_form_and_Gram_matrix the quadratic form is: ";
+		Poly->print_equation_tex(cout, the_quadratic_form);
+		cout << endl;
+	}
+
+
 	if (f_v) {
 		cout << "orthogonal::init_form_and_Gram_matrix computing Gram matrix" << endl;
 	}
 	F->Gram_matrix(
 			epsilon, n - 1,
-			form_c1, form_c2, form_c3, Gram_matrix);
+			form_c1, form_c2, form_c3, Gram_matrix,
+			verbose_level);
 	if (f_v) {
 		cout << "orthogonal::init_form_and_Gram_matrix "
 				"computing Gram matrix done" << endl;
@@ -2070,6 +2202,7 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 		cout << "orthogonal::perp_of_k_points done" << endl;
 		} 
 }
+
 
 
 

@@ -69,13 +69,13 @@ void orthogonal::Siegel_map_between_singular_points_hyperbolic(int *T,
 		cout << "orthogonal::Siegel_map_between_singular_points_hyperbolic" << endl;
 	}
 	F->Gram_matrix(
-			1, 2 * m - 1, 0,0,0, Gram);
+			1, 2 * m - 1, 0,0,0, Gram, verbose_level - 1);
 	F->Siegel_map_between_singular_points(T,
 		rk_from, rk_to, root,
 		epsilon, 2 * m,
 		0, 0, 0, Gram,
 		verbose_level);
-	delete [] Gram;
+	FREE_int(Gram);
 	if (f_v) {
 		cout << "orthogonal::Siegel_map_between_singular_points_hyperbolic done" << endl;
 	}

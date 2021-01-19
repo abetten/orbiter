@@ -28,6 +28,12 @@ public:
 	int q;
 	int f_even;
 	int form_c1, form_c2, form_c3;
+
+	homogeneous_polynomial_domain *Poly;
+	int *the_quadratic_form;
+	int *the_monomial;
+
+
 	int *Gram_matrix;
 	int *T1, *T2, *T3; // [n * n]
 	long int pt_P, pt_Q;
@@ -92,7 +98,6 @@ public:
 	int *v_neighbor5;
 
 	int *find_root_x, *find_root_y, *find_root_z;
-	//int *line1, *line2, *line3;
 	finite_field *F;
 
 	// stuff for rank_point
@@ -172,9 +177,9 @@ public:
 
 
 	// orthogonal_blt.cpp:
-	void create_FTWKB_BLT_set(long int *set, int verbose_level);
-	void create_K1_BLT_set(long int *set, int verbose_level);
-	void create_K2_BLT_set(long int *set, int verbose_level);
+	void create_FTWKB_BLT_set(long int *set, int *ABC, int verbose_level);
+	void create_K1_BLT_set(long int *set, int *ABC, int verbose_level);
+	void create_K2_BLT_set(long int *set, int *ABC, int verbose_level);
 	void create_LP_37_72_BLT_set(long int *set, int verbose_level);
 	void create_LP_37_4a_BLT_set(long int *set, int verbose_level);
 	void create_LP_37_4b_BLT_set(long int *set, int verbose_level);
@@ -325,6 +330,7 @@ public:
 	void list_points_vs_points(int t1, int t2,
 		int verbose_level);
 	void print_schemes();
+	void report_quadratic_form(std::ostream &ost, int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
 	void report_schemes(std::ostream &ost, int verbose_level);
 	void report_schemes_easy(std::ostream &ost);

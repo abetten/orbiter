@@ -1869,10 +1869,11 @@ int knowledge_base::BLT_nb_reps(int q)
 	return nb;
 }
 
-int *knowledge_base::BLT_representative(int q, int no)
+long int *knowledge_base::BLT_representative(int q, int no)
 // i starts from 0
 {
-	int *p, nb, sz;
+	long int *p;
+	int nb, sz;
 
 	if (q == 3) {
 		p = BLT_3_reps;

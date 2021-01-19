@@ -28,7 +28,6 @@ void finite_field::PG_element_apply_frobenius(int n,
 }
 
 
-
 void finite_field::number_of_conditions_satisfied(
 		std::string &variety_label,
 		int variety_nb_vars, int variety_degree,
@@ -3384,12 +3383,13 @@ void finite_field::create_BLT_from_database(int f_embedded,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j;
+	int i;
+	long int j;
 	int epsilon = 0;
 	int n = 4;
 	int c1 = 0, c2 = 0, c3 = 0;
 	int d = 5;
-	int *BLT;
+	long int *BLT;
 	int *v;
 	knowledge_base K;
 
@@ -3406,7 +3406,7 @@ void finite_field::create_BLT_from_database(int f_embedded,
 	for (i = 0; i < nb_pts; i++) {
 		Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, BLT[i], 0 /* verbose_level */);
 		if (f_embedded) {
-			PG_element_rank_modified(v, 1, d, j);
+			PG_element_rank_modified_lint(v, 1, d, j);
 			}
 		else {
 			j = BLT[i];

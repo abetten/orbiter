@@ -275,6 +275,27 @@ void orthogonal::print_schemes()
 
 }
 
+void orthogonal::report_quadratic_form(std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orthogonal::report_quadratic_form" << endl;
+	}
+
+	ost << "The quadratic form is: " << endl;
+	ost << "$$" << endl;
+	Poly->print_equation_tex(ost, the_quadratic_form);
+	ost << " = 0";
+	ost << "$$" << endl;
+
+	if (f_v) {
+		cout << "orthogonal::report_quadratic_form done" << endl;
+	}
+
+}
+
+
 void orthogonal::report(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -282,6 +303,9 @@ void orthogonal::report(std::ostream &ost, int verbose_level)
 	if (f_v) {
 		cout << "orthogonal::report" << endl;
 	}
+
+	report_quadratic_form(ost, verbose_level);
+
 
 	if (f_v) {
 		cout << "orthogonal::report before report_schemes_easy" << endl;
