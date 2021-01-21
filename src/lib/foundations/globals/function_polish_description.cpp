@@ -32,45 +32,6 @@ function_polish_description::~function_polish_description()
 }
 
 
-#if 0
-void function_polish_description::read_arguments_from_string(
-		const char *str, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-
-	int argc;
-	char **argv;
-	int i;
-
-	if (f_v) {
-		cout << "function_polish_description::read_arguments_from_string" << endl;
-	}
-	chop_string(str, argc, argv);
-
-	if (f_vv) {
-		cout << "argv:" << endl;
-		for (i = 0; i < argc; i++) {
-			cout << i << " : " << argv[i] << endl;
-		}
-	}
-
-
-	read_arguments(
-		argc, (const char **) argv,
-		verbose_level);
-
-	for (i = 0; i < argc; i++) {
-		FREE_char(argv[i]);
-	}
-	FREE_pchar(argv);
-	if (f_v) {
-		cout << "function_polish_description::read_arguments_from_string "
-				"done" << endl;
-	}
-}
-#endif
-
 int function_polish_description::read_arguments(
 	int argc, std::string *argv,
 	int verbose_level)
@@ -90,8 +51,6 @@ int function_polish_description::read_arguments(
 			}
 			if (i < argc) {
 				nb_constants = (i - i0) >> 1;
-				//const_names = NEW_pchar(nb_constants);
-				//const_values = NEW_pchar(nb_constants);
 
 				for (h = 0; h < nb_constants; h++) {
 
@@ -105,19 +64,11 @@ int function_polish_description::read_arguments(
 
 					const_values.push_back(str);
 
-#if 0
-					l = strlen(argv[i0 + 2 * h + 0]);
-					const_names[h] = NEW_char(l + 1);
-					strcpy(const_names[h], argv[i0 + 2 * h + 0]);
-					l = strlen(argv[i0 + 2 * h + 1]);
-					const_values[h] = NEW_char(l + 1);
-					strcpy(const_values[h], argv[i0 + 2 * h + 1]);
-#endif
 				}
 				cout << "read " << nb_constants << " constants" << endl;
 			}
 			else {
-				cout << "cannod find -cost_end command" << endl;
+				cout << "cannot find -cost_end command" << endl;
 				exit(1);
 			}
 		}
@@ -133,7 +84,6 @@ int function_polish_description::read_arguments(
 				nb_variables = i - i0;
 
 
-				//variable_names = NEW_pchar(nb_variables);
 				for (h = 0; h < nb_variables; h++) {
 
 					string str;
@@ -142,16 +92,11 @@ int function_polish_description::read_arguments(
 
 					variable_names.push_back(str);
 
-#if 0
-					l = strlen(argv[i0 + h]);
-					variable_names[h] = NEW_char(l + 1);
-					strcpy(variable_names[h], argv[i0 + h]);
-#endif
 				}
 				cout << "read " << nb_variables << " variables" << endl;
 			}
 			else {
-				cout << "cannod find -var_end command" << endl;
+				cout << "cannot find -var_end command" << endl;
 				exit(1);
 			}
 		}
@@ -165,7 +110,6 @@ int function_polish_description::read_arguments(
 			}
 			if (i < argc) {
 				code_sz = i - i0;
-				//code = NEW_pchar(code_sz);
 				for (h = 0; h < code_sz; h++) {
 
 					string str;
@@ -173,11 +117,6 @@ int function_polish_description::read_arguments(
 					str.assign(argv[i0 + h]);
 
 					code.push_back(str);
-#if 0
-					l = strlen(argv[i0 + h]);
-					code[h] = NEW_char(l + 1);
-					strcpy(code[h], argv[i0 + h]);
-#endif
 				}
 				cout << "read " << code_sz << " code items" << endl;
 				for (h = 0; h < code_sz; h++) {
@@ -185,7 +124,7 @@ int function_polish_description::read_arguments(
 				}
 			}
 			else {
-				cout << "cannod find -code_end command" << endl;
+				cout << "cannot find -code_end command" << endl;
 				exit(1);
 			}
 		}

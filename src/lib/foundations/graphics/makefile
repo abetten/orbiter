@@ -17,6 +17,7 @@ MODULES = \
 	plot_tools.o \
 	povray_interface.o \
 	scene.o \
+	scene2.o \
 	tree.o \
 	tree_node.o \
 	video_draw_options.o 

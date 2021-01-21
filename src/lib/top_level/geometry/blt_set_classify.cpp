@@ -71,7 +71,7 @@ void blt_set_classify::freeself()
 		Poset = NULL;
 	}
 	if (gen) {
-		delete gen;
+		FREE_OBJECT(gen);
 		gen = NULL;
 	}
 	null();

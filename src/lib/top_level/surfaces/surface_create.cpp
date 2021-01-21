@@ -706,9 +706,16 @@ void surface_create::create_surface_by_coefficients(std::string &coefficients_te
 		a = surface_coeffs[2 * i + 0];
 		b = surface_coeffs[2 * i + 1];
 		if (a < 0 || a >= q) {
-			cout << "surface_create::create_surface_by_coefficients "
-					"coefficient out of range" << endl;
-			exit(1);
+			if (F->e == 1) {
+				number_theory_domain NT;
+
+				a = NT.mod(a, F->q);
+			}
+			else {
+				cout << "surface_create::create_surface_by_coefficients "
+						"coefficient out of range" << endl;
+				exit(1);
+			}
 		}
 		if (b < 0 || b >= 20) {
 			cout << "surface_create::create_surface_by_coefficients "

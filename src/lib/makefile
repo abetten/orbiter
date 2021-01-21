@@ -133,6 +133,7 @@ MODULES= \
 		foundations/graphics/plot_tools.o \
 		foundations/graphics/povray_interface.o \
 		foundations/graphics/scene.o \
+		foundations/graphics/scene2.o \
 		foundations/graphics/tree.o \
 		foundations/graphics/tree_node.o \
 		foundations/graphics/video_draw_options.o \
