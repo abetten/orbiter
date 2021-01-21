@@ -72,10 +72,6 @@ public:
 	~function_polish_description();
 	void null();
 	void freeself();
-#if 0
-	void read_arguments_from_string(
-			const char *str, int verbose_level);
-#endif
 	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 };
@@ -104,18 +100,11 @@ public:
 
 	function_polish();
 	~function_polish();
-#if 0
-	void init_from_description(
-			function_polish_description *Descr,
-			int verbose_level);
-#endif
 	void init(
 			function_polish_description *Descr,
-#if 0
-			int nb_variables, char **variable_names,
-			int nb_constants, char **constant_names, char **constant_values,
-			int nb_commands, char **cmds,
-#endif
+			int verbose_level);
+	void print_code(
+			int i0,  int len,
 			int verbose_level);
 	void evaluate(
 			double *variable_values,

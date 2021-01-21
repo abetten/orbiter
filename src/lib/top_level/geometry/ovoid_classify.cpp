@@ -52,13 +52,13 @@ ovoid_classify::~ovoid_classify()
 
 	if (f_v) {
 		cout << "ovoid_classify::~ovoid_classify" << endl;
-		}
+	}
 	if (Poset) {
 		FREE_OBJECT(Poset);
-		}
+	}
 	if (A) {
 		FREE_OBJECT(A);
-		}
+	}
 	if (K) {
 		FREE_OBJECT(K);
 	}
@@ -85,8 +85,7 @@ ovoid_classify::~ovoid_classify()
 	}
 	
 	if (f_v) {
-		cout << "ovoid_classify::~ovoid_classify "
-				"finished" << endl;
+		cout << "ovoid_classify::~ovoid_classify finished" << endl;
 	}
 	
 }
@@ -322,7 +321,7 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 	}
 	if (f_v) {
 		cout << "init finished" << endl;
-		}
+	}
 }
 
 

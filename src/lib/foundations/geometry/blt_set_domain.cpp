@@ -59,7 +59,7 @@ void blt_set_domain::freeself()
 			cout << "blt_set_domain::freeself before O" << endl;
 		}
 		if (O) {
-			delete O;
+			FREE_OBJECT(O);
 		}
 		f_orthogonal_allocated = FALSE;
 		O = NULL;
@@ -165,9 +165,6 @@ void blt_set_domain::compute_adjacency_list_fast(
 	int first_point_of_starter,
 	long int *points, int nb_points, int *point_color,
 	bitvector *&Bitvec,
-	//uchar *&bitvector_adjacency,
-	//long int &bitvector_length_in_bits,
-	//long int &bitvector_length,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -186,18 +183,10 @@ void blt_set_domain::compute_adjacency_list_fast(
 
 	if (f_v) {
 		cout << "blt_set_domain::compute_adjacency_list_fast" << endl;
-		}
+	}
 	L = ((long int) nb_points * ((long int) nb_points - 1)) >> 1;
 
 	Bitvec->allocate(L);
-#if 0
-	bitvector_length_in_bits = L;
-	bitvector_length = (L + 7) >> 3;
-	bitvector_adjacency = NEW_uchar(bitvector_length);
-	for (i = 0; i < bitvector_length; i++) {
-		bitvector_adjacency[i] = 0;
-	}
-#endif
 
 	Pts = NEW_int(nb_points * 5);
 	form_value = NEW_int(nb_points);

@@ -27,46 +27,9 @@ function_polish::~function_polish()
 {
 }
 
-#if 0
-void function_polish::init_from_description(
-		function_polish_description *Descr,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "function_polish::init_from_description" << endl;
-	}
-
-	function_polish::Descr = Descr;
-
-
-	if (f_v) {
-		cout << "function_polish::init_from_description before init" << endl;
-	}
-	init(Descr->nb_variables, Descr->variable_names,
-			Descr->nb_constants, Descr->const_names, Descr->const_values,
-			Descr->code_sz, Descr->code,
-			verbose_level);
-	if (f_v) {
-		cout << "function_polish::init_from_description after init" << endl;
-	}
-
-
-
-	if (f_v) {
-		cout << "function_polish::init_from_description done" << endl;
-	}
-}
-#endif
 
 void function_polish::init(
 		function_polish_description *Descr,
-#if 0
-		int nb_variables, char **variable_names,
-		int nb_constants, char **constant_names, char **constant_values,
-		int nb_commands, char **cmds,
-#endif
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -232,6 +195,66 @@ void function_polish::init(
 	}
 }
 
+void function_polish::print_code(
+		int i0,  int len,
+		int verbose_level)
+{
+	int i, j, t;
+	double f;
+
+	for (j = 0; j < len; j++) {
+		i = i0 + j;
+		if (i >= Code.size()) {
+			break;
+		}
+		t = Code[i].type;
+		if (t == 1) {
+			// push a labeled constant
+			cout << i << " : push " << Constants[Code[i].arg].first << endl;
+		}
+		else if (t == 2) {
+			// push a immediate constant
+			f = Code[i].val;
+			cout << i << " : push " << f << endl;
+		}
+		else if (t == 3) {
+			// push a variable
+			cout << i << " : push " << Variables[Code[i].arg] << endl;
+		}
+		else if (t == 4) {
+			// store to a variable, pop the stack
+			cout << i << " : store " << Variables[Code[i].arg] << endl;
+		}
+		else if (t == 5) {
+			// mult
+			cout << i << " : mult" << endl;
+		}
+		else if (t == 6) {
+			// add
+			cout << i << " : add" << endl;
+		}
+		else if (t == 7) {
+			// cos
+			cout << i << " : cos" << endl;
+		}
+		else if (t == 8) {
+			// sin
+			cout << i << " : sin" << endl;
+		}
+		else if (t == 10) {
+			// sqrt
+			cout << i << " : sqrt" << endl;
+		}
+		else if (t == 9) {
+			cout << i << " : return" << endl;
+		}
+		else {
+			cout << "unknown type, error. t = " << t << endl;
+			exit(1);
+		}
+	} //next j
+}
+
 void function_polish::evaluate(
 		double *variable_values,
 		double *output_values,
@@ -291,8 +314,8 @@ void function_polish::evaluate(
 				// store to a variable, pop the stack
 				f = Stack[Stack.size() - 1];
 				variable_values[Code[i].arg] = f;
-				if (f_v) {
-					cout << "storing constant " << f << " to variable " << Code[i].arg << endl;
+				if (f_v || TRUE) {
+					cout << "storing value " << f << " to variable " << Variables[Code[i].arg] << endl;
 				}
 				Stack.pop_back();
 			}
@@ -300,6 +323,7 @@ void function_polish::evaluate(
 				// mult
 				if (Stack.size() < 2) {
 					cout << "multiplication needs at least two elements on the stack; stack size = " << Stack.size() << endl;
+					print_code(fst + j,  20, verbose_level);
 					exit(1);
 				}
 				a = Stack[Stack.size() - 1];
@@ -316,6 +340,7 @@ void function_polish::evaluate(
 				// add
 				if (Stack.size() < 2) {
 					cout << "addition needs at least two elements on the stack; stack size = " << Stack.size() << endl;
+					print_code(fst + j,  20, verbose_level);
 					exit(1);
 				}
 				a = Stack[Stack.size() - 1];
@@ -332,6 +357,7 @@ void function_polish::evaluate(
 				// cos
 				if (Stack.size() < 1) {
 					cout << "cos needs at least one element on the stack; stack size = " << Stack.size() << endl;
+					print_code(fst + j,  20, verbose_level);
 					exit(1);
 				}
 				a = Stack[Stack.size() - 1];
@@ -345,6 +371,7 @@ void function_polish::evaluate(
 				// sin
 				if (Stack.size() < 1) {
 					cout << "sin needs at least one element on the stack; stack size = " << Stack.size() << endl;
+					print_code(fst + j,  20, verbose_level);
 					exit(1);
 				}
 				a = Stack[Stack.size() - 1];
@@ -358,11 +385,13 @@ void function_polish::evaluate(
 				// sqrt
 				if (Stack.size() < 1) {
 					cout << "sin needs at least one element on the stack; stack size = " << Stack.size() << endl;
+					print_code(fst + j,  20, verbose_level);
 					exit(1);
 				}
 				a = Stack[Stack.size() - 1];
 				if (a < 0) {
 					cout << "sqrt: the argument is negative, a = " << a << endl;
+					print_code(fst + j,  20, verbose_level);
 					exit(1);
 				}
 				f = sqrt(a);
