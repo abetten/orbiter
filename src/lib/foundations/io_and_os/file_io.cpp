@@ -3071,7 +3071,7 @@ void file_io::create_file(create_file_description *Descr, int verbose_level)
 					else {
 						sprintf(str, Descr->lines[j].c_str(), S.get_string(c, 0));
 					}
-					fix_escape_characers(str);
+					fix_escape_characters(str);
 					fp << str << endl;
 				}
 			}
@@ -3133,7 +3133,7 @@ void file_io::create_file(create_file_description *Descr, int verbose_level)
 
 }
 
-void file_io::fix_escape_characers(char *str)
+void file_io::fix_escape_characters(char *str)
 {
 	int i, j, l;
 
@@ -3197,7 +3197,7 @@ void file_io::create_files(create_file_description *Descr,
 				sprintf(str, Descr->lines[j].c_str(), i, i, i, i, i, i, i, i);
 
 
-				fix_escape_characers(str);
+				fix_escape_characters(str);
 				cout << "str='" << str << "'" << endl;
 				fp << str << endl;
 			}
@@ -3207,7 +3207,7 @@ void file_io::create_files(create_file_description *Descr,
 						for (j = 0; j < Descr->repeat_N; j++) {
 							if ((j % Descr->split_m) == r) {
 								sprintf(str, Descr->repeat_mask.c_str(), j);
-								fix_escape_characers(str);
+								fix_escape_characters(str);
 								fp << str << endl;
 							}
 						}
@@ -3218,7 +3218,7 @@ void file_io::create_files(create_file_description *Descr,
 					int c;
 
 					sprintf(str, Descr->repeat_mask.c_str(), Descr->repeat_N);
-					fix_escape_characers(str);
+					fix_escape_characters(str);
 					fp << str << endl;
 					if (!Descr->f_command) {
 						cout << "please use option -command when using -repeat" << endl;
@@ -3227,7 +3227,7 @@ void file_io::create_files(create_file_description *Descr,
 					for (j = 0; j < Descr->repeat_N; j++) {
 						c = Descr->repeat_start + j * Descr->repeat_increment;
 						sprintf(str, Descr->command.c_str(), c, c, c, c);
-						fix_escape_characers(str);
+						fix_escape_characters(str);
 						fp << str << endl;
 					}
 				}
@@ -3288,7 +3288,7 @@ void file_io::create_files_list_of_cases(spreadsheet *S,
 
 				for (j = 0; j < Descr->nb_lines; j++) {
 					sprintf(str, Descr->lines[j].c_str(), i, i, i, i, i, i, i, i);
-					fix_escape_characers(str);
+					fix_escape_characters(str);
 					fp << str << endl;
 				}
 
@@ -3302,7 +3302,7 @@ void file_io::create_files_list_of_cases(spreadsheet *S,
 					//NT = Descr->N * Descr->nb_tasks;
 					for (t = 0; t < Descr->nb_tasks; t++) {
 						sprintf(str, Descr->command.c_str(), i, t, i, t);
-						fix_escape_characers(str);
+						fix_escape_characters(str);
 						fp << str; // << " \\" << endl;
 						for (j = 0; j < nb_cases; j++) {
 							if ((j % Descr->N) != i) {
@@ -3331,7 +3331,7 @@ void file_io::create_files_list_of_cases(spreadsheet *S,
 				} // if
 				else {
 					sprintf(str, Descr->command.c_str(), i);
-					fix_escape_characers(str);
+					fix_escape_characters(str);
 					fp << str << " \\" << endl;
 					//fp << command << " \\" << endl;
 					for (j = 0; j < nb_cases; j++) {
@@ -3359,7 +3359,7 @@ void file_io::create_files_list_of_cases(spreadsheet *S,
 
 				for (j = 0; j < Descr->nb_final_lines; j++) {
 					sprintf(str, Descr->final_lines[j].c_str(), i, i, i, i, i, i, i, i);
-					fix_escape_characers(str);
+					fix_escape_characters(str);
 					fp << str << endl;
 				} // next j
 

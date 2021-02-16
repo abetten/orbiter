@@ -245,13 +245,13 @@ void group_theoretic_activity::do_create_surface(
 		string fname_report;
 
 		if (SC->Descr->f_label_txt) {
-			fname_report.assign(SC->Descr->label_txt);
+			fname_report.assign(SC->label_txt);
 			fname_report.append(".tex");
 
 		}
 		else {
 			fname_report.assign("surface_");
-			fname_report.append(SC->Descr->label_txt);
+			fname_report.append(SC->label_txt);
 			fname_report.append("_report.tex");
 		}
 
@@ -262,12 +262,7 @@ void group_theoretic_activity::do_create_surface(
 			char title[1000];
 			char author[1000];
 
-			if (SC->Descr->f_label_tex) {
-				snprintf(title, 1000, "%s over GF(%d)", SC->Descr->label_tex.c_str(), F->q);
-			}
-			else {
-				snprintf(title, 1000, "Cubic Surface over GF(%d)", F->q);
-			}
+			snprintf(title, 1000, "%s over GF(%d)", SC->label_tex.c_str(), F->q);
 			strcpy(author, "");
 
 			latex_interface L;
