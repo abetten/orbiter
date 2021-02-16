@@ -76,10 +76,10 @@
 #include <fstream>
 #include <iomanip>
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdint.h>
-#include <string.h>
+//#include <stdlib.h>
+//#include <stdio.h>
+//#include <stdint.h>
+//#include <string.h>
 #include <math.h>
 #include <limits.h>
 #include <sstream>
@@ -87,18 +87,11 @@
 #include <map>
 #include <vector>
 #include <deque>
+#include <string>
 
 
-//using namespace std;
 
 
-#include <iostream>
-#include <map>
-#include <vector>
-#include <deque>
-
-#ifndef FOUNDATIONS_H_
-#define FOUNDATIONS_H_
 
 /*--------------------------------------------------------------------*/
 /// Define some ANSI colour codes
@@ -326,7 +319,6 @@ class desarguesian_spread;
 class classify_bitvectors;
 class object_in_projective_space;
 class point_line;
-typedef struct plane_data PLANE_DATA;
 class tdo_scheme;
 class tdo_data;
 struct solution_file_data;
@@ -404,6 +396,11 @@ class set_builder_description;
 class finite_field_description;
 class orbiter_symbol_table_entry;
 class orbiter_symbol_table;
+class syntax_tree_node_terminal;
+class lexer;
+class syntax_tree_node;
+class expression_parser;
+class syntax_tree;
 
 
 #ifdef MEMORY_DEBUG
@@ -488,6 +485,50 @@ enum diophant_equation_type {
 
 typedef enum monomial_ordering_type monomial_ordering_type;
 typedef enum diophant_equation_type diophant_equation_type;
+
+
+
+enum TokenType
+    {
+    NONE,
+    NAME,
+    NUMBER,
+    END,
+    PLUS='+',
+    MINUS='-',
+    MULTIPLY='*',
+    DIVIDE='/',
+    ASSIGN='=',
+    LHPAREN='(',
+    RHPAREN=')',
+    COMMA=',',
+    NOT='!',
+
+    // comparisons
+    LT='<',
+    GT='>',
+    LE,     // <=
+    GE,     // >=
+    EQ,     // ==
+    NE,     // !=
+    AND,    // &&
+    OR,      // ||
+
+    // special assignments
+
+    ASSIGN_ADD,  //  +=
+    ASSIGN_SUB,  //  +-
+    ASSIGN_MUL,  //  +*
+    ASSIGN_DIV   //  +/
+
+};
+
+enum syntax_tree_node_operation_type
+{
+	operation_type_nothing,
+	operation_type_mult,
+	operation_type_add
+};
 
 
 // we cannot move the following two declarations into their appropriate places,
@@ -586,6 +627,8 @@ public:
 
 std::ostream& operator<<(std::ostream& ost, longinteger_object& p);
 
+
+
 }}
 
 
@@ -594,6 +637,7 @@ std::ostream& operator<<(std::ostream& ost, longinteger_object& p);
 #include "./combinatorics/combinatorics.h"
 #include "./cryptography/cryptography.h"
 #include "./data_structures/data_structures.h"
+#include "./expression_parser/expression_parser.h"
 #include "./geometry/geometry.h"
 #include "./globals/globals.h"
 #include "./graph_theory/graph_theory.h"
@@ -606,8 +650,6 @@ std::ostream& operator<<(std::ostream& ost, longinteger_object& p);
 #include "./surfaces/surfaces.h"
 
 
-
-#endif
 
 
 

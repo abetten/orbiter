@@ -161,7 +161,9 @@ public:
 	// 6 = cubics
 	// 7 = quadrics
 	// 8 = quartics
-	// 9 = label
+	// 9 = quintics
+	// 10 = octics
+	// 11 = label
 
 
 	double d;
@@ -186,6 +188,8 @@ public:
 	void init_quadrics(int group_idx,
 			std::string &properties, int verbose_level);
 	void init_quartics(int group_idx,
+			std::string &properties, int verbose_level);
+	void init_quintics(int group_idx,
 			std::string &properties, int verbose_level);
 	void init_octics(int group_idx,
 			std::string &properties, int verbose_level);
@@ -822,6 +826,7 @@ public:
 #define SCENE_MAX_QUADRICS  10000
 #define SCENE_MAX_OCTICS      100
 #define SCENE_MAX_QUARTICS   1000
+#define SCENE_MAX_QUINTICS    500
 #define SCENE_MAX_CUBICS    10000
 #define SCENE_MAX_FACES    200000
 
@@ -857,6 +862,9 @@ private:
 	double *Quartic_coords;
 		// [nb_quartics * 35]
 
+	double *Quintic_coords;
+		// [nb_quintics * 56]
+
 	double *Octic_coords;
 		// [nb_quartics * 165]
 
@@ -884,6 +892,8 @@ public:
 	int nb_cubics;
 
 	int nb_quartics;
+
+	int nb_quintics;
 
 	int nb_octics;
 
@@ -938,6 +948,8 @@ public:
 		int verbose_level);
 	void transform_quartics(scene *S, double *A4, double *A4_inv,
 		int verbose_level);
+	void transform_quintics(scene *S, double *A4, double *A4_inv,
+		int verbose_level);
 	void copy_faces(scene *S, double *A4, double *A4_inv, 
 		int verbose_level);
 	int line_pt_and_dir(double *x6, double rad, int verbose_level);
@@ -969,6 +981,7 @@ public:
 	int plane_through_three_points(int pt1, int pt2, int pt3);
 	int quadric_through_three_lines(int line_idx1, 
 		int line_idx2, int line_idx3, int verbose_level);
+	int quintic(double *coeff_56);
 	int octic(double *coeff_165);
 	int quadric(double *coeff);
 	// povray ordering of monomials:
@@ -1047,6 +1060,8 @@ public:
 	void draw_cubic_with_selection(int *selection, int nb_select, 
 			std::string &options, std::ostream &ost);
 	void draw_quartic_with_selection(int *selection, int nb_select,
+			std::string &options, std::ostream &ost);
+	void draw_quintic_with_selection(int *selection, int nb_select,
 			std::string &options, std::ostream &ost);
 	void draw_octic_with_selection(int *selection, int nb_select,
 			std::string &options, std::ostream &ost);

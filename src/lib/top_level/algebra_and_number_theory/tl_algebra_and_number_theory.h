@@ -390,6 +390,14 @@ public:
 	int find_CRC_polynomials_information_bits;
 	int find_CRC_polynomials_check_bits;
 
+	int f_sift_polynomials;
+	long int sift_polynomials_r0;
+	long int sift_polynomials_r1;
+
+	int f_RREF_random_matrix;
+	int RREF_random_matrix_m;
+	int RREF_random_matrix_n;
+
 	int f_decomposition_by_element;
 	int decomposition_by_element_n;
 	int decomposition_by_element_power;
@@ -439,6 +447,14 @@ public:
 	std::string eigenstuff_coeffs;
 	std::string eigenstuff_fname;
 
+
+	int f_parse;
+	std::string parse_name_of_formula;
+	std::string parse_managed_variables;
+	std::string parse_text;
+
+	int f_evaluate;
+	std::string evaluate_text;
 
 	finite_field_activity_description();
 	~finite_field_activity_description();
@@ -907,6 +923,12 @@ public:
 	int f_unrank_line_through_two_points;
 	std::string unrank_line_through_two_points_p1;
 	std::string unrank_line_through_two_points_p2;
+
+	int f_lines_on_point;
+	long int lines_on_point_rank;
+
+	int f_perp;
+	std::string perp_text;
 
 	int f_create_BLT_set;
 	BLT_set_create_description * BLT_Set_create_description;

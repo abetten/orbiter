@@ -114,6 +114,7 @@ class interface_coding_theory {
 	int q;
 	int n;
 	int k;
+	int f_upper_bound_for_d;
 	int f_BCH;
 	int f_BCH_dual;
 	int BCH_t;
@@ -121,14 +122,6 @@ class interface_coding_theory {
 	int f_Hamming_graph;
 	int f_NTT;
 	std::string ntt_fname_code;
-	int f_draw_matrix;
-	std::string fname;
-	int box_width;
-	int bit_depth; // 8 or 24
-	int f_draw_matrix_partition;
-	int draw_matrix_partition_width;
-	std::string draw_matrix_partition_rows;
-	std::string draw_matrix_partition_cols;
 
 	int f_general_code_binary;
 	int general_code_binary_n;
@@ -308,6 +301,12 @@ class interface_cryptography {
 	std::string RSA_text;
 	int f_primitive_root;
 	int primitive_root_p;
+	int f_smallest_primitive_root;
+	int smallest_primitive_root_p;
+	int f_smallest_primitive_root_interval;
+	int smallest_primitive_root_interval_min;
+	int smallest_primitive_root_interval_max;
+	int f_number_of_primitive_roots_interval;
 	int f_inverse_mod;
 	int inverse_mod_a;
 	int inverse_mod_n;
@@ -607,6 +606,16 @@ class interface_toolkit {
 
 	int f_csv_file_latex;
 	std::string csv_file_latex_fname;
+
+	int f_draw_matrix;
+	std::string fname;
+	int box_width;
+	int bit_depth; // 8 or 24
+
+	int f_draw_matrix_partition;
+	int draw_matrix_partition_width;
+	std::string draw_matrix_partition_rows;
+	std::string draw_matrix_partition_cols;
 
 
 public:

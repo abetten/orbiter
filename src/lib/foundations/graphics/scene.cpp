@@ -120,6 +120,8 @@ scene::scene()
 	nb_cubics = 0;
 	Quartic_coords = NULL;
 	nb_quartics = 0;
+	Quintic_coords = NULL;
+	nb_quintics = 0;
 	Octic_coords = NULL;
 	nb_octics = 0;
 	Cubic_coords = NULL;
@@ -168,6 +170,9 @@ void scene::freeself()
 	}
 	if (Quartic_coords) {
 		delete [] Quartic_coords;
+	}
+	if (Quintic_coords) {
+		delete [] Quintic_coords;
 	}
 	if (Octic_coords) {
 		delete [] Octic_coords;
@@ -348,6 +353,8 @@ void scene::init(int verbose_level)
 	nb_cubics = 0;
 	Quartic_coords = new double [SCENE_MAX_QUARTICS * 35];
 	nb_quartics = 0;
+	Quintic_coords = new double [SCENE_MAX_QUINTICS * 56];
+	nb_quintics = 0;
 	Octic_coords = new double [SCENE_MAX_OCTICS * 165];
 	nb_octics = 0;
 	Face_points = NEW_pint(SCENE_MAX_FACES);
@@ -377,6 +384,8 @@ scene *scene::transformed_copy(double *A4, double *A4_inv,
 	transform_planes(S, A4, A4_inv, verbose_level);
 	transform_quadrics(S, A4, A4_inv, verbose_level);
 	transform_cubics(S, A4, A4_inv, verbose_level);
+	//transform_quartics(S, A4, A4_inv, verbose_level);
+	//transform_quintics(S, A4, A4_inv, verbose_level);
 	copy_faces(S, A4, A4_inv, verbose_level);
 
 	if (f_v) {
@@ -663,6 +672,38 @@ void scene::transform_quartics(scene *S, double *A4, double *A4_inv,
 
 	if (f_v) {
 		cout << "scene::transform_quartics done" << endl;
+	}
+}
+
+void scene::transform_quintics(scene *S, double *A4, double *A4_inv,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "scene::transform_quartics" << endl;
+	}
+
+	cout << "scene::transform_quintics not yet implemented" << endl;
+
+	double coeff_in[56];
+	double coeff_out[56];
+	int i;
+	numerics N;
+
+
+	for (i = 0; i < nb_quintics; i++) {
+		N.vec_copy(Quintic_coords + i * 56, coeff_in, 56);
+
+		N.substitute_quartic_linear_using_povray_ordering(coeff_in, coeff_out,
+			A4_inv, verbose_level);
+
+		S->quintic(coeff_out);
+	}
+
+	if (f_v) {
+		cout << "scene::transform_quintics done" << endl;
 	}
 }
 
@@ -1152,24 +1193,43 @@ int scene::quadric_through_three_lines(
 	return idx;
 }
 
+int scene::quintic(double *coeff_56)
+// povray (lexicographic) ordering of monomials:
+// http://www.povray.org/documentation/view/3.6.1/298/
+{
+	int i;
+
+	if (nb_quintics >= SCENE_MAX_QUINTICS) {
+		cout << "too many quintics" << endl;
+		exit(1);
+	}
+	for (i = 0; i < 56; i++) {
+		Quintic_coords[nb_quintics * 56 + i] = coeff_56[i];
+	}
+	nb_quintics++;
+	return nb_quintics - 1;
+
+}
+
+
 int scene::octic(double *coeff_165)
 {
 	int i;
 
-	for (i = 0; i < 165; i++) {
-		Octic_coords[nb_octics * 165 + i] = coeff_165[i];
-	}
-	nb_octics++;
 	if (nb_octics >= SCENE_MAX_OCTICS) {
 		cout << "too many octics" << endl;
 		exit(1);
 	}
+	for (i = 0; i < 165; i++) {
+		Octic_coords[nb_octics * 165 + i] = coeff_165[i];
+	}
+	nb_octics++;
 	return nb_octics - 1;
 
 }
 
 int scene::quadric(double *coeff)
-// povray ordering of monomials:
+// povray (lexicographic) ordering of monomials:
 // http://www.povray.org/documentation/view/3.6.1/298/
 // 1: x^2
 // 2: xy
@@ -1184,14 +1244,14 @@ int scene::quadric(double *coeff)
 {
 	int i;
 	
-	for (i = 0; i < 10; i++) {
-		Quadric_coords[nb_quadrics * 10 + i] = coeff[i];
-		}
-	nb_quadrics++;
 	if (nb_quadrics >= SCENE_MAX_QUADRICS) {
 		cout << "too many quadrics" << endl;
 		exit(1);
 	}
+	for (i = 0; i < 10; i++) {
+		Quadric_coords[nb_quadrics * 10 + i] = coeff[i];
+		}
+	nb_quadrics++;
 	return nb_quadrics - 1;
 }
 
@@ -1224,7 +1284,7 @@ int scene::cubic_in_orbiter_ordering(double *coeff)
 }
 
 int scene::cubic(double *coeff)
-// povray ordering of monomials:
+// povray (lexicographic) ordering of monomials:
 // http://www.povray.org/documentation/view/3.6.1/298/
 // 0: x^3
 // 1: x^2y
@@ -1328,19 +1388,19 @@ int scene::cubic_Goursat_ABC(double A, double B, double C)
 }
 
 int scene::quartic(double *coeff)
-// povray ordering of monomials:
+// povray (lexicographic) ordering of monomials:
 // http://www.povray.org/documentation/view/3.6.1/298/
 {
 	int i;
 
-	for (i = 0; i < 35; i++) {
-		Quartic_coords[nb_quartics * 35 + i] = coeff[i];
-		}
-	nb_quartics++;
 	if (nb_quartics >= SCENE_MAX_QUARTICS) {
 		cout << "too many quartics" << endl;
 		exit(1);
 	}
+	for (i = 0; i < 35; i++) {
+		Quartic_coords[nb_quartics * 35 + i] = coeff[i];
+		}
+	nb_quartics++;
 	return nb_quartics - 1;
 }
 
@@ -1880,7 +1940,7 @@ void scene::draw_points_with_selection(
 }
 
 void scene::draw_cubic_with_selection(int *selection, int nb_select, 
-		std::string &options, ostream &ost)
+		std::string &options, std::ostream &ost)
 {
 	int i, j, h, s;
 	numerics N;
@@ -1917,7 +1977,7 @@ void scene::draw_cubic_with_selection(int *selection, int nb_select,
 }
 
 void scene::draw_quartic_with_selection(int *selection, int nb_select,
-		std::string &options, ostream &ost)
+		std::string &options, std::ostream &ost)
 {
 	int i, j, h, s;
 	numerics N;
@@ -1953,8 +2013,45 @@ void scene::draw_quartic_with_selection(int *selection, int nb_select,
 	ost << "	}" << endl;
 }
 
+void scene::draw_quintic_with_selection(int *selection, int nb_select,
+		std::string &options, std::ostream &ost)
+{
+	int i, j, h, s;
+	numerics N;
+
+	ost << endl;
+	ost << "	union{ // quintics" << endl;
+	ost << endl;
+	for (i = 0; i < nb_select; i++) {
+		s = selection[i];
+		j = s;
+
+		cout << "scene::draw_quintic_with_selection j=" << j << ":" << endl;
+		for (h = 0; h < 56; h++) {
+			cout << h << " : " << Quintic_coords[j * 56 + h] << endl;
+		}
+		ost << "		poly{5, <";
+
+		for (h = 0; h < 56; h++) {
+			N.output_double(Quintic_coords[j * 56 + h], ost);
+			if (h < 56 - 1) {
+				ost << ", ";
+			}
+		}
+		ost << ">";
+	}
+	ost << endl;
+	ost << "		" << options << " " << endl;
+	//ost << "		pigment{" << color << "}" << endl;
+	//ost << "		pigment{Cyan*1.3}" << endl;
+	//ost << "		finish {ambient 0.4 diffuse 0.5 roughness 0.001 "
+	//"reflection 0.1 specular .8} " << endl;
+	ost << "		}" << endl;
+	ost << "	}" << endl;
+}
+
 void scene::draw_octic_with_selection(int *selection, int nb_select,
-		std::string &options, ostream &ost)
+		std::string &options, std::ostream &ost)
 {
 	int i, j, h, s;
 	numerics N;

@@ -14,6 +14,7 @@ MODULES= \
 		foundations/algebra_and_number_theory/finite_field_orthogonal.o \
 		foundations/algebra_and_number_theory/finite_field_projective.o \
 		foundations/algebra_and_number_theory/finite_field_representations.o \
+		foundations/algebra_and_number_theory/finite_field_RREF.o \
 		foundations/algebra_and_number_theory/finite_field_tables.o \
 		foundations/algebra_and_number_theory/finite_field.o \
 		foundations/algebra_and_number_theory/finite_ring.o \
@@ -69,6 +70,8 @@ MODULES= \
 		foundations/data_structures/spreadsheet.o \
 		foundations/data_structures/super_fast_hash.o \
 		foundations/data_structures/vector_hashing.o \
+		foundations/expression_parser/expression_parser.o \
+		foundations/expression_parser/lexer.o \
 		foundations/geometry/andre_construction.o \
 		foundations/geometry/andre_construction_line_element.o \
 		foundations/geometry/andre_construction_point_element.o \

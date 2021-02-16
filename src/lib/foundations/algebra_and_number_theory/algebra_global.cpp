@@ -2482,6 +2482,8 @@ void algebra_global::do_RREF(finite_field *F,
 		cout << "$$" << endl;
 	}
 
+
+
 	if (f_normalize_from_the_left) {
 		if (f_v) {
 			cout << "normalizing from the left" << endl;
@@ -2513,6 +2515,12 @@ void algebra_global::do_RREF(finite_field *F,
 			cout << "rk=" << rk << endl;
 		}
 	}
+
+
+	int_vec_copy(M, A, m * n);
+
+	RREF_demo(F, A, m, n, verbose_level);
+
 
 
 	FREE_int(M);
@@ -3546,7 +3554,318 @@ int algebra_global::remainder_is_nonzero_binary(int da, int *A,
 }
 
 
+void algebra_global::sift_polynomials(finite_field *F, long int rk0, long int rk1, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	unipoly_object p;
+	longinteger_domain ZZ;
+	long int rk;
+	int f_is_irred, f_is_primitive;
+	int f, i;
+	long int len, idx;
+	long int *Table;
+	longinteger_object Q, m1, Qm1;
 
+	if (f_v) {
+		cout << "algebra_global::sift_polynomials" << endl;
+	}
+	unipoly_domain D(F);
+
+	len = rk1 - rk0;
+	Table = NEW_lint(len * 3);
+	for (rk = rk0; rk < rk1; rk++) {
+
+		idx = rk - rk0;
+
+		D.create_object_by_rank(p, rk,
+				__FILE__, __LINE__, 0 /* verbose_level*/);
+		if (f_v) {
+			cout << "rk=" << rk << " poly=";
+			D.print_object(p, cout);
+			cout << endl;
+		}
+
+
+		int nb_primes;
+		longinteger_object *primes;
+		int *exponents;
+
+
+		f = D.degree(p);
+		Q.create(F->q, __FILE__, __LINE__);
+		m1.create(-1, __FILE__, __LINE__);
+		ZZ.power_int(Q, f);
+		ZZ.add(Q, m1, Qm1);
+		if (f_v) {
+			cout << "unipoly_domain::sift_polynomials Qm1 = " << Qm1 << endl;
+		}
+		ZZ.factor_into_longintegers(Qm1, nb_primes,
+				primes, exponents, verbose_level - 2);
+		if (f_v) {
+			cout << "unipoly_domain::get_a_primitive_polynomial after factoring "
+					<< Qm1 << " nb_primes=" << nb_primes << endl;
+			cout << "primes:" << endl;
+			for (i = 0; i < nb_primes; i++) {
+				cout << i << " : " << primes[i] << endl;
+			}
+		}
+
+		f_is_irred = D.is_irreducible(p, verbose_level - 2);
+		f_is_primitive = D.is_primitive(p,
+				Qm1,
+				nb_primes, primes,
+				verbose_level);
+
+		if (f_v) {
+			cout << "rk=" << rk << " poly=";
+			D.print_object(p, cout);
+			cout << " is_irred=" << f_is_irred << " is_primitive=" << f_is_primitive << endl;
+		}
+
+		Table[idx * 3 + 0] = rk;
+		Table[idx * 3 + 1] = f_is_irred;
+		Table[idx * 3 + 2] = f_is_primitive;
+
+
+		D.delete_object(p);
+
+		FREE_int(exponents);
+		FREE_OBJECTS(primes);
+	}
+	for (idx = 0; idx < len; idx++) {
+		rk = Table[idx * 3 + 0];
+		D.create_object_by_rank(p, rk,
+				__FILE__, __LINE__, 0 /* verbose_level*/);
+		f_is_irred = Table[idx * 3 + 1];
+		f_is_primitive = Table[idx * 3 + 2];
+		if (f_v) {
+			cout << "rk=" << rk;
+			cout << " is_irred=" << f_is_irred << " is_primitive=" << f_is_primitive;
+			cout << " poly=";
+			D.print_object(p, cout);
+			cout << endl;
+		}
+		D.delete_object(p);
+	}
+
+	if (f_v) {
+		cout << "algebra_global::sift_polynomials done" << endl;
+	}
+
+}
+
+void algebra_global::RREF_demo(finite_field *F, int *A, int m, int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::RREF_demo" << endl;
+	}
+
+
+	{
+		char str[1000];
+		string fname;
+		char title[1000];
+		char author[1000];
+
+		snprintf(str, 1000, "RREF_example_q%d_%d_%d.tex", F->q, m, n);
+		fname.assign(str);
+		snprintf(title, 1000, "RREF example $q=%d$", F->q);
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		{
+			ofstream ost(fname);
+			latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					FALSE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "algebra_global::RREF_demo before report" << endl;
+			}
+			RREF_demo2(ost, F, A, m, n, verbose_level);
+			if (f_v) {
+				cout << "algebra_global::RREF_demo after report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		file_io Fio;
+
+		cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+	if (f_v) {
+		cout << "algebra_global::RREF_demo done" << endl;
+	}
+}
+
+void algebra_global::RREF_demo2(std::ostream &ost, finite_field *F, int *A, int m, int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *base_cols;
+	int i, j, rk;
+	latex_interface Li;
+	int cnt = 0;
+
+	if (f_v) {
+		cout << "algebra_global::RREF_demo2" << endl;
+	}
+
+
+	ost << "{\\bf \\Large" << endl;
+
+	ost << endl;
+	ost << "\\clearpage" << endl;
+	ost << "\\vspace*{\\fill}" << endl;
+	ost << endl;
+
+	ost << "\\noindent A matrix over the field ${\\mathbb F}_{" << F->q << "}$\\\\" << endl;
+	ost << "$$" << endl;
+	ost << "\\left[" << endl;
+	Li.int_matrix_print_tex(ost, A, m, n);
+	ost << "\\right]" << endl;
+	ost << "$$" << endl;
+	cnt++;
+	if ((cnt % 3) == 0) {
+		ost << endl;
+		ost << "\\clearpage" << endl;
+		ost << endl;
+	}
+
+	base_cols = NEW_int(n);
+
+	i = 0;
+	j = 0;
+	while (TRUE) {
+		if (F->RREF_search_pivot(A, m, n,
+			i, j, base_cols, verbose_level)) {
+			ost << "\\noindent  i=" << i << " j=" << j << ", found pivot in column " << base_cols[i] << "\\\\" << endl;
+			ost << "$$" << endl;
+			ost << "\\left[" << endl;
+			Li.int_matrix_print_tex(ost, A, m, n);
+			ost << "\\right]" << endl;
+			ost << "$$" << endl;
+			cnt++;
+			if ((cnt % 3) == 0) {
+				ost << endl;
+				ost << "\\clearpage" << endl;
+				ost << "\\vspace*{\\fill}" << endl;
+				ost << endl;
+			}
+
+
+			F->RREF_make_pivot_one(A, m, n, i, j, base_cols, verbose_level);
+			ost << "\\noindent After making pivot 1:\\\\" << endl;
+			ost << "$$" << endl;
+			ost << "\\left[" << endl;
+			Li.int_matrix_print_tex(ost, A, m, n);
+			ost << "\\right]" << endl;
+			ost << "$$" << endl;
+			cnt++;
+			if ((cnt % 3) == 0) {
+				ost << endl;
+				ost << "\\clearpage" << endl;
+				ost << "\\vspace*{\\fill}" << endl;
+				ost << endl;
+			}
+
+
+			F->RREF_elimination_below(A, m, n, i, j, base_cols, verbose_level);
+			ost << "\\noindent After elimination below pivot:\\\\" << endl;
+			ost << "$$" << endl;
+			ost << "\\left[" << endl;
+			Li.int_matrix_print_tex(ost, A, m, n);
+			ost << "\\right]" << endl;
+			ost << "$$" << endl;
+			cnt++;
+			if ((cnt % 3) == 0) {
+				ost << endl;
+				ost << "\\clearpage" << endl;
+				ost << "\\vspace*{\\fill}" << endl;
+				ost << endl;
+			}
+
+		}
+		else {
+			rk = i;
+			ost << "Did not find pivot. The rank is " << rk << "\\\\" << endl;
+			break;
+		}
+	}
+	for (i = rk - 1; i >= 0; i--) {
+		F->RREF_elimination_above(A, m, n, i, base_cols, verbose_level);
+		ost << "\\noindent After elimination above pivot " << i << ":\\\\" << endl;
+		ost << "$$" << endl;
+		ost << "\\left[" << endl;
+		Li.int_matrix_print_tex(ost, A, m, n);
+		ost << "\\right]" << endl;
+		ost << "$$" << endl;
+		cnt++;
+		if ((cnt % 3) == 0) {
+			ost << endl;
+			ost << "\\clearpage" << endl;
+			ost << "\\vspace*{\\fill}" << endl;
+			ost << endl;
+		}
+	}
+
+	int_vec_print_fully(ost, A, m * n);
+	ost << "\\\\" << endl;
+
+
+	ost << "}" << endl;
+
+	FREE_int(base_cols);
+
+	if (f_v) {
+		cout << "algebra_global::RREF_demo2 done" << endl;
+	}
+
+}
+
+#if 0
+void algebra_global::code_weight_enumerator(finite_field *F, int *A, int m, int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *weight_enumerator;
+	coding_theory_domain Code;
+	int i;
+
+	if (f_v) {
+		cout << "algebra_global::code_weight_enumerator" << endl;
+	}
+
+	Code.code_weight_enumerator(F, n, m /* k */,
+			A, // [k * n]
+			weight_enumerator, // [n + 1]
+			verbose_level);
+	cout << "The weight enumerator is:" << endl;
+	for (i = 0; i <= n; i++) {
+		cout << i << " : " << weight_enumerator[i] << endl;
+	}
+
+	if (f_v) {
+		cout << "algebra_global::code_weight_enumerator done" << endl;
+	}
+}
+#endif
 
 }}
 

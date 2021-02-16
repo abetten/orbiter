@@ -821,7 +821,7 @@ void spreadsheet::tokenize(std::string &fname,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	char buf[BUFSIZE];
-	char *p_buf;
+	const char *p_buf;
 	char str[BUFSIZE];
 	int i; //, r;
 

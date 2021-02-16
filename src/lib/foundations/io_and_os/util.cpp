@@ -2156,7 +2156,7 @@ int s_scan_str(char **s, char *str)
 	return TRUE;
 }
 
-int s_scan_token_comma_separated(char **s, char *str)
+int s_scan_token_comma_separated(const char **s, char *str)
 {
 	char c;
 	int len;
@@ -2164,7 +2164,7 @@ int s_scan_token_comma_separated(char **s, char *str)
 	len = 0;
 	c = **s;
 	if (c == 0) {
-		return TRUE;
+		return false;
 	}
 #if 0
 	if (c == 10 || c == 13) {

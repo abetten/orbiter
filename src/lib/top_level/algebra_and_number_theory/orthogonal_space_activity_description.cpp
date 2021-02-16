@@ -31,6 +31,12 @@ orthogonal_space_activity_description::orthogonal_space_activity_description()
 	//std::string unrank_line_through_two_points_p1;
 	//std::string unrank_line_through_two_points_p2;
 
+	f_lines_on_point = FALSE;
+	lines_on_point_rank = 0;
+
+	f_perp = FALSE;
+	//std::string perp_text;
+
 	f_create_BLT_set = FALSE;
 	BLT_Set_create_description = NULL;
 
@@ -94,6 +100,17 @@ int orthogonal_space_activity_description::read_arguments(
 			unrank_line_through_two_points_p2.assign(argv[++i]);
 			cout << "-unrank_line_through_two_points " << unrank_line_through_two_points_p1
 					<< " " << unrank_line_through_two_points_p2 << endl;
+		}
+		else if (stringcmp(argv[i], "-lines_on_point") == 0) {
+			f_lines_on_point = TRUE;
+			lines_on_point_rank = strtoi(argv[++i]);
+			cout << "-lines_on_point " << lines_on_point_rank << endl;
+		}
+
+		else if (stringcmp(argv[i], "-perp") == 0) {
+			f_perp = TRUE;
+			perp_text.assign(argv[++i]);
+			cout << "-perp " << perp_text << endl;
 		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {

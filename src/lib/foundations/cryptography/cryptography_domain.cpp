@@ -1703,7 +1703,7 @@ void cryptography_domain::do_RSA_encrypt_text(long int RSA_d, long int RSA_m,
 	cout << endl;
 }
 
-void cryptography_domain::do_RSA(long int RSA_d, long int RSA_m,
+void cryptography_domain::do_RSA(long int RSA_d, long int RSA_m, int RSA_block_size,
 		std::string &RSA_text, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1743,30 +1743,34 @@ void cryptography_domain::do_RSA(long int RSA_d, long int RSA_m,
 	cout << endl;
 
 	long int a;
-	int b, j, h;
+	int b, j;
 	char str[1000];
 
 	for (i = 0; i < data_sz; i++) {
 		A.create(data[i], __FILE__, __LINE__);
-		D.power_int_mod(
-				A, RSA_d, M);
+		D.power_int_mod(A, RSA_d, M);
 		//cout << A;
 		a = A.as_lint();
-		j = 0;
-		while (a) {
+		for (j = 0; j < RSA_block_size; j++) {
 			b = a % 100;
 			if (b > 26 || b == 0) {
-				cout << "out of range" << endl;
-				exit(1);
+				str[RSA_block_size - 1 - j] = ' ';
 			}
-			str[j] = 'a' + b - 1;
-			j++;
-			str[j] = 0;
+			else {
+				str[RSA_block_size - 1 - j] = 'a' + b - 1;
+			}
 			a -= b;
 			a /= 100;
 		}
-		for (h = j - 1; h >= 0; h--) {
-			cout << str[h];
+		str[RSA_block_size] = 0;
+		for (j = 0; j < RSA_block_size; j++) {
+			if (str[j] != ' ') {
+				break;
+			}
+		}
+		cout << str + j;
+		if (i < data_sz - 1) {
+			cout << ",";
 		}
 	}
 	cout << endl;
@@ -2818,6 +2822,154 @@ void cryptography_domain::do_primitive_root(long int p, int verbose_level)
 	cout << "time: ";
 	Os.time_check_delta(cout, dt);
 	cout << endl;
+}
+
+
+void cryptography_domain::do_smallest_primitive_root(long int p, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	number_theory_domain NT;
+	long int a;
+	int t0, t1, dt;
+	os_interface Os;
+
+	t0 = Os.os_ticks();
+	if (f_v) {
+		cout << "cryptography_domain::do_smallest_primitive_root p=" << p << endl;
+	}
+
+
+	a = NT.primitive_root(p, verbose_level);
+	cout << "a primitive root modulo " << p << " is " << a << endl;
+
+	t1 = Os.os_ticks();
+	dt = t1 - t0;
+	cout << "time: ";
+	Os.time_check_delta(cout, dt);
+	cout << endl;
+	if (f_v) {
+		cout << "cryptography_domain::do_smallest_primitive_root done" << endl;
+	}
+}
+
+void cryptography_domain::do_smallest_primitive_root_interval(long int p_min, long int p_max, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	number_theory_domain NT;
+	long int a, p, i;
+	long int *T;
+	int t0, t1, dt;
+	os_interface Os;
+	file_io Fio;
+	char str[1000];
+
+	t0 = Os.os_ticks();
+	if (f_v) {
+		cout << "cryptography_domain::do_smallest_primitive_root_interval p_min=" << p_min << " p_max=" << p_max << endl;
+	}
+
+	std::vector<std::pair<long int, long int>> Table;
+
+	for (p = p_min; p < p_max; p++) {
+
+		if (!NT.is_prime(p)) {
+			continue;
+		}
+
+		std::pair<long int, long int> P;
+
+		a = NT.primitive_root(p, verbose_level);
+		cout << "a primitive root modulo " << p << " is " << a << endl;
+
+		P.first = p;
+		P.second = a;
+
+		Table.push_back(P);
+
+	}
+	T = NEW_lint(2 * Table.size());
+	for (i = 0; i < Table.size(); i++) {
+		T[2 * i + 0] = Table[i].first;
+		T[2 * i + 1] = Table[i].second;
+	}
+	sprintf(str, "primitive_element_table_%ld_%ld.csv", p_min, p_max);
+	string fname;
+
+	fname.assign(str);
+	Fio.lint_matrix_write_csv(fname, T, Table.size(), 2);
+
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+
+	t1 = Os.os_ticks();
+	dt = t1 - t0;
+	cout << "time: ";
+	Os.time_check_delta(cout, dt);
+	cout << endl;
+	if (f_v) {
+		cout << "cryptography_domain::do_smallest_primitive_root_interval done" << endl;
+	}
+}
+
+void cryptography_domain::do_number_of_primitive_roots_interval(long int p_min, long int p_max, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	number_theory_domain NT;
+	long int a, p, i;
+	long int *T;
+	int t0, t1, dt;
+	os_interface Os;
+	file_io Fio;
+	char str[1000];
+
+	t0 = Os.os_ticks();
+	if (f_v) {
+		cout << "cryptography_domain::do_number_of_primitive_roots_interval p_min=" << p_min << " p_max=" << p_max << endl;
+	}
+
+	std::vector<std::pair<long int, long int>> Table;
+
+	for (p = p_min; p < p_max; p++) {
+
+		if (!NT.is_prime(p)) {
+			continue;
+		}
+
+		std::pair<long int, long int> P;
+
+		a = NT.euler_function(p - 1);
+		cout << "the number of primitive elements modulo " << p << " is " << a << endl;
+
+		P.first = p;
+		P.second = a;
+
+		Table.push_back(P);
+
+	}
+	T = NEW_lint(2 * Table.size());
+	for (i = 0; i < Table.size(); i++) {
+		T[2 * i + 0] = Table[i].first;
+		T[2 * i + 1] = Table[i].second;
+	}
+	sprintf(str, "table_number_of_pe_%ld_%ld.csv", p_min, p_max);
+	string fname;
+
+	fname.assign(str);
+	Fio.lint_matrix_write_csv(fname, T, Table.size(), 2);
+
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+
+	t1 = Os.os_ticks();
+	dt = t1 - t0;
+	cout << "time: ";
+	Os.time_check_delta(cout, dt);
+	cout << endl;
+	if (f_v) {
+		cout << "cryptography_domain::do_number_of_primitive_roots_interval done" << endl;
+	}
 }
 
 

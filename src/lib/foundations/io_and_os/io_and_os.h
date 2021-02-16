@@ -857,7 +857,7 @@ int s_scan_double(char **s, double *d);
 int s_scan_token(char **s, char *str);
 int s_scan_token_arbitrary(char **s, char *str);
 int s_scan_str(char **s, char *str);
-int s_scan_token_comma_separated(char **s, char *str);
+int s_scan_token_comma_separated(const char **s, char *str);
 int hashing(int hash0, int a);
 int hashing_fixed_width(int hash0, int a, int bit_length);
 int int_vec_hash(int *v, int len, int bit_length);

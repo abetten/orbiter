@@ -3715,8 +3715,29 @@ void file_io::do_csv_file_latex(std::string &fname,
 
 	{
 		ofstream ost(fname_out);
+		latex_interface L;
 
-		S.print_table_latex_all_columns(ost, FALSE /* f_enclose_in_parentheses */);
+		//S.print_table_latex_all_columns(ost, FALSE /* f_enclose_in_parentheses */);
+
+		int *f_column_select;
+		int j;
+
+		f_column_select = NEW_int(S.nb_cols);
+		for (j = 0; j < S.nb_cols; j++) {
+			f_column_select[j] = TRUE;
+		}
+		f_column_select[0] = FALSE;
+
+
+		L.head_easy(ost);
+
+		S.print_table_latex(ost,
+				f_column_select, FALSE /* f_enclose_in_parentheses */);
+
+		FREE_int(f_column_select);
+
+		L.foot(ost);
+
 	}
 	cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
 
