@@ -2843,5 +2843,33 @@ int string_starts_with_a_number(std::string &str)
 	}
 }
 
+void string_fix_escape_characters(std::string &str)
+{
+	string str_t("\\t");
+	string str_D("\\D");
+	string str_B("\\B");
+	string str_n("\\n");
+
+
+	while (str.find(str_t) != std::string::npos) {
+		str.replace(str.find(str_t),str_t.length(),"\t");
+	}
+
+	while (str.find(str_D) != std::string::npos) {
+		str.replace(str.find(str_D),str_D.length(),"$");
+	}
+
+	while (str.find(str_B) != std::string::npos) {
+		str.replace(str.find(str_B),str_B.length(),"\\");
+	}
+
+	while (str.find(str_n) != std::string::npos) {
+		str.replace(str.find(str_n),str_n.length(),"\n");
+	}
+
+}
+
+
+
 }}
 

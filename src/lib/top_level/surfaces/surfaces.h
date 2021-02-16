@@ -728,6 +728,7 @@ public:
 			std::string &managed_variables,
 			std::string &equation_text,
 			std::string &equation_parameters,
+			std::string &equation_parameters_tex,
 			std::vector<std::string> &select_double_six_string,
 			int verbose_level);
 	void apply_transformations(
@@ -807,6 +808,7 @@ public:
 	std::string equation_managed_variables;
 	std::string equation_text;
 	std::string equation_parameters;
+	std::string equation_parameters_tex;
 
 	std::vector<std::string> transform_coeffs;
 	std::vector<int> f_inverse_transform;

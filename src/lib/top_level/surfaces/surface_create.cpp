@@ -284,6 +284,7 @@ void surface_create::create_surface_from_description(int verbose_level)
 				Descr->equation_managed_variables,
 				Descr->equation_text,
 				Descr->equation_parameters,
+				Descr->equation_parameters_tex,
 				Descr->select_double_six_string,
 				verbose_level);
 	}
@@ -1474,6 +1475,7 @@ void surface_create::create_surface_by_equation(
 		std::string &managed_variables,
 		std::string &equation_text,
 		std::string &equation_parameters,
+		std::string &equation_parameters_tex,
 		std::vector<std::string> &select_double_six_string,
 		int verbose_level)
 {
@@ -1705,17 +1707,32 @@ void surface_create::create_surface_by_equation(
 
 	prefix.assign("equation_");
 	prefix.append(name_of_formula);
+	prefix.append("_q");
 	prefix.append(str_q);
 
 	label_txt.assign("equation_");
 	label_txt.append(name_of_formula);
-	label_txt.append("str_q");
+	label_txt.append("_q");
+	label_txt.append(str_q);
 
-	label_tex.assign("Equation ");
-	label_tex.append(name_of_formula_tex);
+	label_tex.assign(name_of_formula_tex);
+	string_fix_escape_characters(label_tex);
+
+	string my_parameters_tex;
+
+	my_parameters_tex.assign(equation_parameters_tex);
+	string_fix_escape_characters(my_parameters_tex);
+	label_tex.append(" with ");
+	label_tex.append(my_parameters_tex);
+
+	//label_tex.append("\\_q");
+	//label_tex.append(str_q);
 
 
 
+	cout << "prefix = " << prefix << endl;
+	cout << "label_txt = " << label_txt << endl;
+	cout << "label_tex = " << label_tex << endl;
 
 	//AL->print(fp);
 

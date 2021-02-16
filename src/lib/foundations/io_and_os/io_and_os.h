@@ -237,7 +237,7 @@ public:
 	void write_decomposition_stack(char *fname, int m, int n,
 			int *v, int *b, int *aij, int verbose_level);
 	void create_file(create_file_description *Descr, int verbose_level);
-	void fix_escape_characers(char *str);
+	void fix_escape_characters(char *str);
 	void create_files(create_file_description *Descr,
 		int verbose_level);
 	void create_files_list_of_cases(spreadsheet *S,
@@ -898,6 +898,7 @@ int strtoi(std::string &str);
 long int strtolint(std::string &str);
 double strtof(std::string &str);
 int string_starts_with_a_number(std::string &str);
+void string_fix_escape_characters(std::string &str);
 
 
 
