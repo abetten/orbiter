@@ -182,7 +182,7 @@ public:
 	void print(std::ostream &ost);
 	void print_monomial(std::ostream &ost, int *monomial);
 	int identify_single_literal(std::string &single_literal);
-	int is_homoegeneous(int &degree);
+	int is_homogeneous(int &degree);
 	void split_by_monomials(homogeneous_polynomial_domain *Poly,
 			syntax_tree_node **&Subtrees, int verbose_level);
 

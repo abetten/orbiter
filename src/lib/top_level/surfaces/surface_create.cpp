@@ -276,6 +276,18 @@ void surface_create::create_surface_from_description(int verbose_level)
 				verbose_level);
 
 	}
+	else if (Descr->f_by_equation) {
+
+		create_surface_by_equation(
+				Descr->equation_name_of_formula,
+				Descr->equation_name_of_formula_tex,
+				Descr->equation_managed_variables,
+				Descr->equation_text,
+				Descr->equation_parameters,
+				Descr->select_double_six_string,
+				verbose_level);
+	}
+
 	else {
 		cout << "surface_create::init2 we do not "
 				"recognize the type of surface" << endl;
@@ -1454,6 +1466,265 @@ void surface_create::create_surface_by_arc_lifting_with_two_lines(
 		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines done" << endl;
 	}
 }
+
+
+void surface_create::create_surface_by_equation(
+		std::string &name_of_formula,
+		std::string &name_of_formula_tex,
+		std::string &managed_variables,
+		std::string &equation_text,
+		std::string &equation_parameters,
+		std::vector<std::string> &select_double_six_string,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation" << endl;
+	}
+
+	int coeffs20[20];
+
+
+
+
+	expression_parser Parser;
+	syntax_tree *tree;
+	int i;
+
+	tree = NEW_OBJECT(syntax_tree);
+
+	cout << "Formula " << name_of_formula << " is " << equation_text << endl;
+	cout << "Managed variables: " << managed_variables << endl;
+
+	const char *p = managed_variables.c_str();
+	char str[1000];
+
+	while (TRUE) {
+		if (!s_scan_token_comma_separated(&p, str)) {
+			break;
+		}
+		string var;
+
+		var.assign(str);
+		cout << "adding managed variable " << var << endl;
+
+		tree->managed_variables.push_back(var);
+		tree->f_has_managed_variables = TRUE;
+
+	}
+
+	int nb_vars;
+
+	nb_vars = tree->managed_variables.size();
+
+	cout << "Managed variables: " << endl;
+	for (i = 0; i < nb_vars; i++) {
+		cout << i << " : " << tree->managed_variables[i] << endl;
+	}
+
+
+	cout << "Starting to parse " << name_of_formula << endl;
+	Parser.parse(tree, equation_text, verbose_level);
+	cout << "Parsing " << name_of_formula << " finished" << endl;
+
+
+	cout << "Syntax tree:" << endl;
+	//tree->print(cout);
+
+	std::string fname;
+	fname.assign(name_of_formula);
+	fname.append(".gv");
+
+	{
+		std::ofstream ost(fname);
+		tree->Root->export_graphviz(name_of_formula, ost);
+	}
+
+	int ret, degree;
+	ret = tree->is_homogeneous(degree);
+	if (!ret) {
+		cout << "The given equation is not homogeneous" << endl;
+		exit(1);
+	}
+	cout << "homogeneous of degree " << degree << endl;
+
+	if (degree != 3) {
+		cout << "The given equation is homogeneous, but not of degree 3" << endl;
+		exit(1);
+	}
+
+	homogeneous_polynomial_domain *Poly;
+
+	Poly = NEW_OBJECT(homogeneous_polynomial_domain);
+
+	if (f_v) {
+		cout << "before Poly->init" << endl;
+	}
+	Poly->init(F,
+			nb_vars /* nb_vars */, degree,
+			FALSE /* f_init_incidence_structure */,
+			t_PART,
+			verbose_level);
+	if (f_v) {
+		cout << "after Poly->init" << endl;
+	}
+
+	syntax_tree_node **Subtrees;
+	int nb_monomials;
+
+
+	nb_monomials = Poly->get_nb_monomials();
+
+	if (nb_monomials != 20) {
+		cout << "nb_monomials != 20" << endl;
+		exit(1);
+	}
+
+	tree->split_by_monomials(Poly, Subtrees, verbose_level);
+
+	for (i = 0; i < nb_monomials; i++) {
+		cout << "Monomial " << i << " : ";
+		if (Subtrees[i]) {
+			Subtrees[i]->print_expression(cout);
+			cout << " * ";
+			Poly->print_monomial(cout, i);
+			cout << endl;
+		}
+		else {
+			cout << "no subtree" << endl;
+		}
+	}
+
+	cout << "before evaluate" << endl;
+
+	p = equation_parameters.c_str();
+	//char str[1000];
+
+	std::map<std::string, std::string> symbol_table;
+	//vector<string> symbols;
+	//vector<string> values;
+
+	while (TRUE) {
+		if (!s_scan_token_comma_separated(&p, str)) {
+			break;
+		}
+		string assignment;
+		int len;
+
+		assignment.assign(str);
+		len = strlen(str);
+
+		std::size_t found;
+
+		found = assignment.find('=');
+		if (found == std::string::npos) {
+			cout << "did not find '=' in variable assignment" << endl;
+			exit(1);
+		}
+		std::string symb = assignment.substr (0, found);
+		std::string val = assignment.substr (found + 1, len - found - 1);
+
+
+
+		cout << "adding symbol " << symb << " = " << val << endl;
+
+		symbol_table[symb] = val;
+		//symbols.push_back(symb);
+		//values.push_back(val);
+
+	}
+
+#if 0
+	cout << "symbol table:" << endl;
+	for (i = 0; i < symbol_table.size(); i++) {
+		cout << i << " : " << symbol_table[i] << " = " << values[i] << endl;
+	}
+#endif
+	int a;
+
+	for (i = 0; i < nb_monomials; i++) {
+		cout << "Monomial " << i << " : ";
+		if (Subtrees[i]) {
+			//Subtrees[i]->print_expression(cout);
+			a = Subtrees[i]->evaluate(symbol_table, F, verbose_level);
+			coeffs20[i] = a;
+			cout << a << " * ";
+			Poly->print_monomial(cout, i);
+			cout << endl;
+		}
+		else {
+			cout << "no subtree" << endl;
+			coeffs20[i] = 0;
+		}
+	}
+	cout << "evaluated polynomial:" << endl;
+	for (i = 0; i < nb_monomials; i++) {
+		cout << coeffs20[i] << " * ";
+		Poly->print_monomial(cout, i);
+		cout << endl;
+	}
+	cout << "coefficient vector: ";
+	int_vec_print(cout, coeffs20, nb_monomials);
+	cout << endl;
+
+
+
+	FREE_OBJECT(Poly);
+
+
+
+
+
+
+
+
+	SO = NEW_OBJECT(surface_object);
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation before create_surface_by_coefficient_vector" << endl;
+	}
+
+	create_surface_by_coefficient_vector(coeffs20,
+			select_double_six_string,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation after create_surface_by_coefficient_vector" << endl;
+	}
+
+
+	f_has_group = FALSE;
+
+	char str_q[1000];
+
+	sprintf(str_q, "%d", F->q);
+
+
+	prefix.assign("equation_");
+	prefix.append(name_of_formula);
+	prefix.append(str_q);
+
+	label_txt.assign("equation_");
+	label_txt.append(name_of_formula);
+	label_txt.append("str_q");
+
+	label_tex.assign("Equation ");
+	label_tex.append(name_of_formula_tex);
+
+
+
+
+	//AL->print(fp);
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation done" << endl;
+	}
+}
+
 
 void surface_create::apply_transformations(
 	std::vector<std::string> &transform_coeffs,

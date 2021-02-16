@@ -722,6 +722,14 @@ public:
 			std::string &arc_lifting_text,
 			std::string &arc_lifting_two_lines_text,
 			int verbose_level);
+	void create_surface_by_equation(
+			std::string &name_of_formula,
+			std::string &name_of_formula_tex,
+			std::string &managed_variables,
+			std::string &equation_text,
+			std::string &equation_parameters,
+			std::vector<std::string> &select_double_six_string,
+			int verbose_level);
 	void apply_transformations(
 		std::vector<std::string> &transform_coeffs,
 		std::vector<int> &f_inverse_transform,
@@ -769,23 +777,36 @@ public:
 	int f_family_HCV;
 	int family_HCV_a;
 	int family_HCV_b;
+
 	int f_family_G13;
 	int family_G13_a;
+
 	int f_family_F13;
 	int family_F13_a;
+
 	int f_family_bes;
 	int family_bes_a;
 	int family_bes_c;
+
 	int f_family_general_abcd;
 	int family_general_abcd_a;
 	int family_general_abcd_b;
 	int family_general_abcd_c;
 	int family_general_abcd_d;
+
 	int f_arc_lifting;
 	std::string arc_lifting_text;
 	std::string arc_lifting_two_lines_text;
+
 	int f_arc_lifting_with_two_lines;
 	std::vector<std::string> select_double_six_string;
+
+	int f_by_equation;
+	std::string equation_name_of_formula;
+	std::string equation_name_of_formula_tex;
+	std::string equation_managed_variables;
+	std::string equation_text;
+	std::string equation_parameters;
 
 	std::vector<std::string> transform_coeffs;
 	std::vector<int> f_inverse_transform;
