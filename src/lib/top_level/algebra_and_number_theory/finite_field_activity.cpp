@@ -627,6 +627,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 					Poly->print_monomial(cout, i);
 					cout << endl;
 				}
+				cout << "coefficient vector: ";
+				int_vec_print(cout, Values, nb_monomials);
+				cout << endl;
 
 			}
 
