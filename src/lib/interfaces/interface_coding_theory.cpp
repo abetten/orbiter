@@ -23,6 +23,9 @@ interface_coding_theory::interface_coding_theory()
 	q = 0;
 	n = 0;
 	k = 0;
+
+	f_upper_bound_for_d = FALSE;
+
 	f_BCH = FALSE;
 	f_BCH_dual = FALSE;
 	BCH_t = 0;
@@ -30,14 +33,6 @@ interface_coding_theory::interface_coding_theory()
 	f_Hamming_graph = FALSE;
 	f_NTT = FALSE;
 	//ntt_fname_code = NULL;
-	f_draw_matrix = FALSE;
-	bit_depth = 8;
-	//fname = NULL;
-	box_width = 0;
-	f_draw_matrix_partition = FALSE;
-	draw_matrix_partition_width = 0;
-	//std::string draw_matrix_partition_rows;
-	//std::string draw_matrix_partition_cols;
 
 	f_general_code_binary = FALSE;
 	general_code_binary_n = 0;
@@ -60,6 +55,9 @@ void interface_coding_theory::print_help(int argc,
 	if (stringcmp(argv[i], "-make_macwilliams_system") == 0) {
 		cout << "-make_macwilliams_system <int : q> <int : n> <int k>" << endl;
 	}
+	else if (stringcmp(argv[i], "-upper_bound_for_d") == 0) {
+		cout << "-upper_bound_for_d <int : n> <int k> <int : q> " << endl;
+	}
 	else if (stringcmp(argv[i], "-BCH") == 0) {
 		cout << "-BCH <int : n> <int : q> <int t>" << endl;
 	}
@@ -71,13 +69,6 @@ void interface_coding_theory::print_help(int argc,
 	}
 	else if (stringcmp(argv[i], "-NTT") == 0) {
 		cout << "-NTT <int : n> <int : q> <string : fname_code> " << endl;
-	}
-	else if (stringcmp(argv[i], "-draw_matrix") == 0) {
-		cout << "-draw_matrix <string : fname> <int : box_width> <int : bit_depth>" << endl;
-	}
-	else if (stringcmp(argv[i], "-draw_matrix_partition") == 0) {
-		cout << "-draw_matrix_partition <int : width> "
-				"<string : row partition> <string : col partition> " << endl;
 	}
 	else if (stringcmp(argv[i], "-general_code_binary") == 0) {
 		cout << "-general_code_binary <int : n> <string : set> " << endl;
@@ -95,13 +86,16 @@ int interface_coding_theory::recognize_keyword(int argc,
 {
 	int f_v = (verbose_level >= 1);
 
-	if (f_v) {
-		cout << "interface_coding_theory::recognize_keyword" << endl;
-	}
 	if (i >= argc) {
 		return false;
 	}
+	if (f_v) {
+		cout << "interface_coding_theory::recognize_keyword argv[i]=" << argv[i] << " i=" << i << " argc=" << argc << endl;
+	}
 	if (stringcmp(argv[i], "-make_macwilliams_system") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-upper_bound_for_d") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-BCH") == 0) {
@@ -114,12 +108,6 @@ int interface_coding_theory::recognize_keyword(int argc,
 		return true;
 	}
 	else if (stringcmp(argv[i], "-NTT") == 0) {
-		return true;
-	}
-	else if (stringcmp(argv[i], "-draw_matrix") == 0) {
-		return true;
-	}
-	else if (stringcmp(argv[i], "-draw_matrix_partition") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-general_code_binary") == 0) {
@@ -152,6 +140,13 @@ int interface_coding_theory::read_arguments(int argc,
 			k = strtoi(argv[++i]);
 			cout << "-make_macwilliams_system " << q << " " << n << " " << k << endl;
 		}
+		else if (stringcmp(argv[i], "-upper_bound_for_d") == 0) {
+			f_upper_bound_for_d = TRUE;
+			n = strtoi(argv[++i]);
+			k = strtoi(argv[++i]);
+			q = strtoi(argv[++i]);
+			cout << "-upper_bound_for_d " << n << " " << k << " " << q << endl;
+		}
 		else if (stringcmp(argv[i], "-BCH") == 0) {
 			f_BCH = TRUE;
 			n = strtoi(argv[++i]);
@@ -180,21 +175,6 @@ int interface_coding_theory::read_arguments(int argc,
 			q = strtoi(argv[++i]);
 			ntt_fname_code.assign(argv[++i]);
 			cout << "-NTT " << n << " " << q << " " << ntt_fname_code << endl;
-		}
-		else if (stringcmp(argv[i], "-draw_matrix") == 0) {
-			f_draw_matrix = TRUE;
-			fname.assign(argv[++i]);
-			box_width = strtoi(argv[++i]);
-			bit_depth = strtoi(argv[++i]);
-			cout << "-draw_matrix " << fname << " " << box_width << " " << bit_depth << endl;
-		}
-		else if (stringcmp(argv[i], "-draw_matrix_partition") == 0) {
-			f_draw_matrix_partition = TRUE;
-			draw_matrix_partition_width = strtoi(argv[++i]);
-			draw_matrix_partition_rows.assign(argv[++i]);
-			draw_matrix_partition_cols.assign(argv[++i]);
-			cout << "-draw_matrix_partition " << draw_matrix_partition_rows
-					<< " " << draw_matrix_partition_cols << endl;
 		}
 		else if (stringcmp(argv[i], "-general_code_binary") == 0) {
 			f_general_code_binary = TRUE;
@@ -266,6 +246,7 @@ int interface_coding_theory::read_arguments(int argc,
 			break;
 		}
 	}
+	cout << "interface_coding_theory::read_arguments done" << endl;
 	return i;
 }
 
@@ -277,6 +258,27 @@ void interface_coding_theory::worker(int verbose_level)
 		coding_theory_domain Coding;
 
 		Coding.do_make_macwilliams_system(q, n, k, verbose_level);
+	}
+	else if (f_upper_bound_for_d) {
+
+		coding_theory_domain Coding;
+		int d_singleton;
+		int d_hamming;
+		int d_plotkin;
+		int d_griesmer;
+
+		d_singleton = Coding.singleton_bound_for_d(n, k, q, verbose_level);
+		d_hamming = Coding.hamming_bound_for_d(n, k, q, verbose_level);
+		d_plotkin = Coding.plotkin_bound_for_d(n, k, q, verbose_level);
+		d_griesmer = Coding.griesmer_bound_for_d(n, k, q, verbose_level);
+
+		cout << "n = " << n << " k=" << k << " q=" << q << endl;
+
+		cout << "d_singleton = " << d_singleton << endl;
+		cout << "d_hamming = " << d_hamming << endl;
+		cout << "d_plotkin = " << d_plotkin << endl;
+		cout << "d_griesmer = " << d_griesmer << endl;
+
 	}
 	else if (f_BCH) {
 
@@ -301,40 +303,6 @@ void interface_coding_theory::worker(int verbose_level)
 		number_theoretic_transform NTT;
 
 		NTT.init(ntt_fname_code, n, q, verbose_level);
-	}
-	else if (f_draw_matrix) {
-		file_io Fio;
-		int *M;
-		int m, n;
-
-		Fio.int_matrix_read_csv(fname, M, m, n, verbose_level);
-
-		if (f_draw_matrix_partition) {
-			int *row_parts;
-			int *col_parts;
-			int nb_row_parts;
-			int nb_col_parts;
-
-			int_vec_scan(draw_matrix_partition_rows, row_parts, nb_row_parts);
-			int_vec_scan(draw_matrix_partition_cols, col_parts, nb_col_parts);
-			draw_bitmap(fname, M, m, n,
-					TRUE, draw_matrix_partition_width, // int f_partition, int part_width,
-					nb_row_parts, row_parts, nb_col_parts, col_parts, // int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,
-					TRUE /* f_box_width */, box_width,
-					FALSE /* f_invert_colors */, bit_depth,
-					verbose_level);
-			FREE_int(row_parts);
-			FREE_int(col_parts);
-		}
-		else {
-			draw_bitmap(fname, M, m, n,
-					FALSE, 0, // int f_partition, int part_width,
-					0, NULL, 0, NULL, // int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,
-					TRUE /* f_box_width */, box_width,
-					FALSE /* f_invert_colors */, bit_depth,
-					verbose_level);
-		}
-		FREE_int(M);
 	}
 	else if (f_general_code_binary) {
 			long int *set;

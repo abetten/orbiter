@@ -137,7 +137,7 @@ void latex_interface::head(ostream& ost,
 	ost << "%\\usepackage{pifont}" << endl;
 	if (f_enlarged_page) {
 		ost << "\\usepackage{fullpage}" << endl;
-		ost << "\\usepackage[top=1in,bottom=1in,right=1in,left=1in]{geometry}" << endl;
+		ost << "\\usepackage[top=1in,bottom=0.2in,right=1in,left=1in]{geometry}" << endl; // A Betten 2/7/2021
 #if 0
 		ost << "%\\voffset=-1.5cm" << endl;
 		ost << "\\hoffset=-2cm" << endl;

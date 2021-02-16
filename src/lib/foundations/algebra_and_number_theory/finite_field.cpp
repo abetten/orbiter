@@ -106,7 +106,7 @@ finite_field::~finite_field()
 	null();
 }
 
-void finite_field::print_call_stats(ostream &ost)
+void finite_field::print_call_stats(std::ostream &ost)
 {
 	cout << "finite_field::print_call_stats" << endl;
 	cout << "nb_calls_to_mult_matrix_matrix="
@@ -223,6 +223,10 @@ void finite_field::init_override_polynomial(int q,
 
 	finite_field::q = q;
 	NT.factor_prime_power(q, p, e);
+	if (f_v) {
+		cout << "finite_field::init_override_polynomial p=" << p << endl;
+		cout << "finite_field::init_override_polynomial e=" << e << endl;
+	}
 	//init_symbol_for_print("\\alpha");
 	set_default_symbol_for_print();
 
@@ -329,8 +333,8 @@ void finite_field::init_override_polynomial(int q,
 	absolute_trace_table = NEW_int(q);
 	
 	for (i = 0; i < q; i++) {
-		frobenius_table[i] = power(i, p);
-		if (FALSE) {
+		frobenius_table[i] = power_verbose(i, p, 0 /* verbose_level */);
+		if (TRUE) {
 			cout << "finite_field::init_override_polynomial frobenius_table[" << i << "]="
 					<< frobenius_table[i] << endl;
 		}
@@ -656,9 +660,16 @@ void finite_field::create_alpha_table_extension_field(int verbose_level)
 			if (k < 0 || k >= q) {
 				cout << "finite_field::create_alpha_table_extension_field error: k = " << k << endl;
 			}
+			if (k == 1 && i > 0 && i < q - 1) {
+				cout << "finite_field::create_alpha_table_extension_field the polynomial is not primitive" << endl;
+				cout << "k == 1 and i = " << i << endl;
+				exit(1);
+			}
 
 			alpha_power_table[i] = k;
-			log_alpha_table[k] = i;
+			if (i < q - 1) {
+				log_alpha_table[k] = i;
+			}
 
 			if (f_vv) {
 				cout << "alpha_power_table[" << i << "]=" << k << endl;
@@ -814,6 +825,9 @@ void finite_field::create_tables_extension_field(int verbose_level)
 			kk = (ii + jj) % (q - 1);
 			k = alpha_power_table[kk];
 			mult_table[i * q + j] = k;
+			if (FALSE) {
+				cout << "finite_field::create_tables_extension_field " << i << " * " << j << " = " << k << endl;
+			}
 			if (k == 1) {
 				inv_table[i] = j;
 			}
@@ -890,34 +904,63 @@ int finite_field::is_one(int i)
 
 int finite_field::mult(int i, int j)
 {
+	return mult_verbose(i, j, 0);
+}
+
+int finite_field::mult_verbose(int i, int j, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int c;
+
+	if (f_v) {
+		cout << "finite_field::mult_verbose" << endl;
+	}
 	nb_times_mult++;
-	//cout << "finite_field::mult i=" << i << " j=" << j << endl;
+	//cout << "finite_field::mult_verbose i=" << i << " j=" << j << endl;
 	if (i < 0 || i >= q) {
-		cout << "finite_field::mult i = " << i << endl;
+		cout << "finite_field::mult_verbose i = " << i << endl;
 		exit(1);
 	}
 	if (j < 0 || j >= q) {
-		cout << "finite_field::mult j = " << j << endl;
+		cout << "finite_field::mult_verbose j = " << j << endl;
 		exit(1);
 	}
 	if (f_has_table) {
-		//cout << "with table" << endl;
-		return mult_table[i * q + j];
+		if (f_v) {
+			cout << "finite_field::mult_verbose with table" << endl;
+		}
+		c = mult_table[i * q + j];
 	}
 	else {
-		int ii, jj, kk, k;
+		int ii, jj, kk;
 		
-		//cout << "without table" << endl;
+		if (f_v) {
+			cout << "finite_field::mult_verbose without table" << endl;
+		}
 		if (i == 0 || j == 0) {
 			return 0;
 		}
 		ii = log_alpha_table[i];
+		if (f_v) {
+			cout << "finite_field::mult_verbose ii = " << ii << endl;
+		}
 		jj = log_alpha_table[j];
+		if (f_v) {
+			cout << "finite_field::mult_verbose jj = " << jj << endl;
+		}
 		kk = (ii + jj) % (q - 1);
-		k = alpha_power_table[kk];
-		//cout << "mult: " << i << " * " << j << " = " << k << endl;
-		return k;
+		if (f_v) {
+			cout << "finite_field::mult_verbose kk = " << kk << endl;
+		}
+		c = alpha_power_table[kk];
+		if (f_v) {
+			cout << "finite_field::mult_verbose c = " << c << endl;
+		}
 	}
+	if (f_v) {
+		cout << "finite_field::mult_verbose " << i << " * " << j << " = " << c << endl;
+	}
+	return c;
 }
 
 int finite_field::a_over_b(int a, int b)
@@ -1192,20 +1235,36 @@ int finite_field::inverse(int i)
 int finite_field::power(int a, int n)
 // computes a^n
 {
+	return power_verbose(a, n, 0);
+}
+
+int finite_field::power_verbose(int a, int n, int verbose_level)
+// computes a^n
+{
+	int f_v = (verbose_level >= 1);
 	int b, c;
 	
+	if (f_v) {
+		cout << "finite_field::power_verbose a=" << a << " n=" << n << endl;
+	}
 	b = a;
 	c = 1;
 	while (n) {
+		if (f_v) {
+			cout << "finite_field::power_verbose n=" << n << " a=" << a << " b=" << b << " c=" << c << endl;
+		}
 		if (n % 2) {
 			//cout << "finite_field::power: mult(" << b << "," << c << ")=";
 			c = mult(b, c);
 			//cout << c << endl;
 		}
-		b = mult(b, b);
+		b = mult_verbose(b, b, verbose_level);
 		n >>= 1;
 		//cout << "finite_field::power: " << b << "^"
 		//<< n << " * " << c << endl;
+	}
+	if (f_v) {
+		cout << "finite_field::power_verbose a=" << a << " n=" << n << " c=" << c << " done" << endl;
 	}
 	return c;
 }
@@ -1257,6 +1316,13 @@ int finite_field::absolute_trace(int i)
 	}
 	if (ii != i) {
 		cout << "finite_field::absolute_trace ii != i" << endl;
+		cout << "i=" << i << endl;
+		cout << "ii=" << ii << endl;
+		ii = i;
+		for (j = 0; j < e; j++) {
+			ii = frobenius_table[ii];
+			cout << "j=" << j << " ii=" << ii << endl;
+		}
 		exit(1);
 	}
 	return t;

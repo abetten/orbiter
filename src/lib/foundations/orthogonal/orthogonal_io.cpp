@@ -87,7 +87,7 @@ void orthogonal::report_points(std::ostream &ost, int verbose_level)
 	long int rk;
 
 	ost << "The number of points is " << nb_points << "\\\\" << endl;
-	if (nb_points < 1000) {
+	if (nb_points < 3000) {
 		ost << "points:\\\\" << endl;
 		for (rk = 0; rk < nb_points; rk++) {
 			unrank_point(v1, 1, rk, 0 /*verbose_level*/);
@@ -97,7 +97,7 @@ void orthogonal::report_points(std::ostream &ost, int verbose_level)
 		}
 	}
 	else {
-		//ost << "Too many points to print.\\\\" << endl;
+		ost << "Too many points to print.\\\\" << endl;
 	}
 	//ost << endl;
 }

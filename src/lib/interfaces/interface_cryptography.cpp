@@ -54,6 +54,15 @@ interface_cryptography::interface_cryptography()
 	f_primitive_root = FALSE;
 	primitive_root_p = 0;
 
+	f_smallest_primitive_root = FALSE;
+	smallest_primitive_root_p = 0;
+
+	f_smallest_primitive_root_interval = FALSE;
+	smallest_primitive_root_interval_min = 0;
+	smallest_primitive_root_interval_max = 0;
+
+	f_number_of_primitive_roots_interval = FALSE;
+
 	f_inverse_mod = FALSE;
 	inverse_mod_a = 0;
 	inverse_mod_n = 0;
@@ -203,6 +212,15 @@ void interface_cryptography::print_help(int argc, std::string *argv, int i, int 
 	else if (stringcmp(argv[i], "-primitive_root") == 0) {
 		cout << "-primitive_root <int : p>" << endl;
 	}
+	else if (stringcmp(argv[i], "-smallest_primitive_root") == 0) {
+		cout << "-smallest_primitive_root <int : p>" << endl;
+	}
+	else if (stringcmp(argv[i], "-smallest_primitive_root_interval") == 0) {
+		cout << "-smallest_primitive_root_interval <int : p_min> <int : p_max>" << endl;
+	}
+	else if (stringcmp(argv[i], "-number_of_primitive_roots_interval") == 0) {
+		cout << "-number_of_primitive_roots_interval <int : p_min> <int : p_max>" << endl;
+	}
 	else if (stringcmp(argv[i], "-inverse_mod") == 0) {
 		cout << "-primitive_root <int : a> <int : n>" << endl;
 	}
@@ -309,6 +327,15 @@ int interface_cryptography::recognize_keyword(int argc, std::string *argv, int i
 		return true;
 	}
 	else if (stringcmp(argv[i], "-primitive_root") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-smallest_primitive_root") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-smallest_primitive_root_interval") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-number_of_primitive_roots_interval") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-inverse_mod") == 0) {
@@ -447,8 +474,9 @@ int interface_cryptography::read_arguments(int argc, std::string *argv, int i0, 
 			f_RSA = TRUE;
 			RSA_d = strtoi(argv[++i]);
 			RSA_m = strtoi(argv[++i]);
+			RSA_block_size = strtoi(argv[++i]);
 			RSA_text.assign(argv[++i]);
-			cout << "-RSA " << RSA_d << " " << RSA_m << " " << RSA_text << endl;
+			cout << "-RSA " << RSA_d << " " << RSA_m << " " << RSA_block_size << " " << RSA_text << endl;
 		}
 		else if (stringcmp(argv[i], "-RSA_encrypt_text") == 0) {
 			f_RSA_encrypt_text = TRUE;
@@ -457,7 +485,7 @@ int interface_cryptography::read_arguments(int argc, std::string *argv, int i0, 
 			RSA_block_size = strtoi(argv[++i]);
 			RSA_encrypt_text.assign(argv[++i]);
 			cout << "-RSA_encrypt_text " << RSA_d << " "
-					<< RSA_m << " " << RSA_encrypt_text << endl;
+					<< RSA_m << " " << RSA_block_size << " " << RSA_encrypt_text << endl;
 		}
 		else if (stringcmp(argv[i], "-RSA_setup") == 0) {
 			f_RSA_setup = TRUE;
@@ -472,6 +500,25 @@ int interface_cryptography::read_arguments(int argc, std::string *argv, int i0, 
 			f_primitive_root = TRUE;
 			primitive_root_p = strtoi(argv[++i]);
 			cout << "-primitive_root " << primitive_root_p << endl;
+		}
+		else if (stringcmp(argv[i], "-smallest_primitive_root") == 0) {
+			f_smallest_primitive_root = TRUE;
+			smallest_primitive_root_p = strtoi(argv[++i]);
+			cout << "-smallest_primitive_root " << smallest_primitive_root_p << endl;
+		}
+		else if (stringcmp(argv[i], "-smallest_primitive_root_interval") == 0) {
+			f_smallest_primitive_root_interval = TRUE;
+			smallest_primitive_root_interval_min = strtoi(argv[++i]);
+			smallest_primitive_root_interval_max = strtoi(argv[++i]);
+			cout << "-smallest_primitive_root_interval " << smallest_primitive_root_interval_min
+					<< " " << smallest_primitive_root_interval_max << endl;
+		}
+		else if (stringcmp(argv[i], "-number_of_primitive_roots_interval") == 0) {
+			f_number_of_primitive_roots_interval = TRUE;
+			smallest_primitive_root_interval_min = strtoi(argv[++i]);
+			smallest_primitive_root_interval_max = strtoi(argv[++i]);
+			cout << "-number_of_primitive_roots_interval " << smallest_primitive_root_interval_min
+					<< " " << smallest_primitive_root_interval_max << endl;
 		}
 		else if (stringcmp(argv[i], "-inverse_mod") == 0) {
 			f_inverse_mod = TRUE;
@@ -606,16 +653,6 @@ int interface_cryptography::read_arguments(int argc, std::string *argv, int i0, 
 			break;
 		}
 
-#if 0
-		else if (stringcmp(argv[i], "-ntt") == 0) {
-			f_ntt = TRUE;
-			ntt_t = atoi(argv[++i]);
-			ntt_q = atoi(argv[++i]);
-			cout << "-ntt " << ntt_t
-					<< " " << ntt_q
-					<< endl;
-		}
-#endif
 	}
 	return i;
 }
@@ -716,6 +753,26 @@ void interface_cryptography::worker(int verbose_level)
 
 		Crypto.do_primitive_root(primitive_root_p, verbose_level);
 	}
+	else if (f_smallest_primitive_root) {
+
+		cryptography_domain Crypto;
+
+		Crypto.do_smallest_primitive_root(smallest_primitive_root_p, verbose_level);
+	}
+	else if (f_smallest_primitive_root_interval) {
+
+		cryptography_domain Crypto;
+
+		Crypto.do_smallest_primitive_root_interval(smallest_primitive_root_interval_min,
+				smallest_primitive_root_interval_max, verbose_level);
+	}
+	else if (f_number_of_primitive_roots_interval) {
+
+		cryptography_domain Crypto;
+
+		Crypto.do_number_of_primitive_roots_interval(smallest_primitive_root_interval_min,
+				smallest_primitive_root_interval_max, verbose_level);
+	}
 	else if (f_inverse_mod) {
 
 		cryptography_domain Crypto;
@@ -738,7 +795,7 @@ void interface_cryptography::worker(int verbose_level)
 
 		cryptography_domain Crypto;
 
-		Crypto.do_RSA(RSA_d, RSA_m, RSA_text, verbose_level);
+		Crypto.do_RSA(RSA_d, RSA_m, RSA_block_size, RSA_text, verbose_level);
 	}
 	else if (f_RSA_encrypt_text) {
 
@@ -862,13 +919,6 @@ void interface_cryptography::worker(int verbose_level)
 		Crypto.make_affine_sequence(affine_sequence_a,
 				affine_sequence_c, affine_sequence_m, verbose_level);
 	}
-#if 0
-	else if (f_ntt) {
-		number_theoretic_transform NTT;
-		NTT.init(ntt_t, ntt_q, verbose_level);
-	}
-#endif
-
 }
 
 

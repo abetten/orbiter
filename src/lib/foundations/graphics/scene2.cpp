@@ -419,6 +419,22 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		quartic(coeff);
 		delete [] coeff;
 	}
+	else if (stringcmp(argv[i], "-quintic_lex_56") == 0) {
+		cout << "-quintic_lex_56" << endl;
+		string coeff_text;
+		double *coeff;
+		int coeff_sz;
+		numerics Numerics;
+
+		coeff_text.assign(argv[++i]);
+		Numerics.vec_scan(coeff_text, coeff, coeff_sz);
+		if (coeff_sz != 56) {
+			cout << "For -quintic_lex_56, number of coefficients must be 56; is " << coeff_sz << endl;
+			exit(1);
+		}
+		quintic(coeff);
+		delete [] coeff;
+	}
 	else if (stringcmp(argv[i], "-octic_lex_165") == 0) {
 		cout << "-octic_lex_165" << endl;
 		string coeff_text;
@@ -1052,6 +1068,21 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		drawable_set_of_objects D;
 
 		D.init_quartics(group_idx, properties, verbose_level);
+		Drawables.push_back(D);
+	}
+	else if (stringcmp(argv[i], "-quintics") == 0) {
+		cout << "-quintics" << endl;
+		int group_idx;
+		//double thickness;
+		string properties;
+
+		group_idx = strtoi(argv[++i]);
+		//thickness = atof(argv[++i]);
+		properties.assign(argv[++i]);
+
+		drawable_set_of_objects D;
+
+		D.init_quintics(group_idx, properties, verbose_level);
 		Drawables.push_back(D);
 	}
 	else if (stringcmp(argv[i], "-octics") == 0) {

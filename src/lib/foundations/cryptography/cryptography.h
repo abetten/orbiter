@@ -83,7 +83,7 @@ public:
 			int verbose_level);
 	void do_RSA_encrypt_text(long int RSA_d, long int RSA_m,
 			int RSA_block_size, std::string &RSA_encrypt_text, int verbose_level);
-	void do_RSA(long int RSA_d, long int RSA_m,
+	void do_RSA(long int RSA_d, long int RSA_m, int RSA_block_size,
 			std::string &RSA_text, int verbose_level);
 
 	void NTRU_encrypt(int N, int p, finite_field *Fq,
@@ -120,6 +120,9 @@ public:
 			std::string &sift_smooth_factor_base, int verbose_level);
 	void do_discrete_log(long int y, long int a, long int p, int verbose_level);
 	void do_primitive_root(long int p, int verbose_level);
+	void do_smallest_primitive_root(long int p, int verbose_level);
+	void do_smallest_primitive_root_interval(long int p_min, long int p_max, int verbose_level);
+	void do_number_of_primitive_roots_interval(long int p_min, long int p_max, int verbose_level);
 	void do_inverse_mod(long int a, long int n, int verbose_level);
 	void do_extended_gcd(int a, int b, int verbose_level);
 	void do_power_mod(long int a, long int k, long int n, int verbose_level);

@@ -202,6 +202,25 @@ void drawable_set_of_objects::init_quartics(int group_idx,
 	}
 }
 
+void drawable_set_of_objects::init_quintics(int group_idx,
+		std::string &properties, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "drawable_set_of_objects::init_quintics" << endl;
+	}
+	drawable_set_of_objects::group_idx = group_idx;
+	type = 9;
+	//d = rad;
+	drawable_set_of_objects::properties.assign(properties);
+
+
+	if (f_v) {
+		cout << "drawable_set_of_objects::init_quintics done" << endl;
+	}
+}
+
 void drawable_set_of_objects::init_octics(int group_idx,
 		std::string &properties, int verbose_level)
 {
@@ -211,7 +230,7 @@ void drawable_set_of_objects::init_octics(int group_idx,
 		cout << "drawable_set_of_objects::init_octics" << endl;
 	}
 	drawable_set_of_objects::group_idx = group_idx;
-	type = 9;
+	type = 10;
 	//d = rad;
 	drawable_set_of_objects::properties.assign(properties);
 
@@ -230,7 +249,7 @@ void drawable_set_of_objects::init_labels(int group_idx,
 		cout << "drawable_set_of_objects::init_labels" << endl;
 	}
 	drawable_set_of_objects::group_idx = group_idx;
-	type = 10;
+	type = 11;
 	d = thickness_half;
 	d2 = scale;
 	drawable_set_of_objects::properties.assign(properties);
@@ -345,14 +364,21 @@ void drawable_set_of_objects::draw(animate *Anim, ostream &ost,
 	}
 	else if (type == 9) {
 		if (f_v) {
-			cout << "type == 9 octics" << endl;
+			cout << "type == 9 quintics" << endl;
 		}
-		Anim->S->draw_octic_with_selection(Selection, sz,
+		Anim->S->draw_quintic_with_selection(Selection, sz,
 				properties, ost);
 	}
 	else if (type == 10) {
 		if (f_v) {
-			cout << "type == 10 labels" << endl;
+			cout << "type == 10 octics" << endl;
+		}
+		Anim->S->draw_octic_with_selection(Selection, sz,
+				properties, ost);
+	}
+	else if (type == 11) {
+		if (f_v) {
+			cout << "type == 11 labels" << endl;
 		}
 		string dummy;
 

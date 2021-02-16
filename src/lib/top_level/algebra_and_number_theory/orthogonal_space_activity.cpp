@@ -110,6 +110,66 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 
 	}
 
+	else if (Descr->f_lines_on_point) {
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity f_lines_on_point" << endl;
+		}
+
+		long int *line_pencil_line_ranks;
+
+		line_pencil_line_ranks = NEW_lint(OA->O->alpha);
+
+		cout << "point rank = " << Descr->lines_on_point_rank << endl;
+
+		OA->O->lines_on_point_by_line_rank(Descr->lines_on_point_rank,
+				line_pencil_line_ranks, verbose_level);
+
+		cout << "There are " << OA->O->alpha << " lines on point = "
+				<< Descr->lines_on_point_rank << ". They are: ";
+		lint_vec_print_fully(cout, line_pencil_line_ranks, OA->O->alpha);
+		cout << endl;
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity f_lines_on_point done" << endl;
+		}
+
+	}
+
+	else if (Descr->f_perp) {
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity f_perp" << endl;
+		}
+
+		long int *pts;
+		int nb_pts;
+
+		lint_vec_scan(Descr->perp_text.c_str(), pts, nb_pts);
+
+		cout << "Computing the common perp of the set ";
+		lint_vec_print(cout, pts, nb_pts);
+		cout << endl;
+
+		long int *Perp;
+		int sz;
+
+
+		OA->O->perp_of_k_points(pts, nb_pts, Perp, sz, verbose_level);
+
+		cout << "The common perp of the set has size " << sz << " and is ";
+		lint_vec_print_fully(cout, Perp, sz);
+		cout << endl;
+
+		FREE_lint(Perp);
+		FREE_lint(pts);
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity f_perp done" << endl;
+		}
+
+	}
+
 	else if (Descr->f_create_BLT_set) {
 
 		if (f_v) {

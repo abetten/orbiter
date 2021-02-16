@@ -124,7 +124,7 @@ void interface_combinatorics::print_help(int argc,
 		cout << "-diophant_activity <description> " << endl;
 	}
 	else if (stringcmp(argv[i], "-save") == 0) {
-		cout << "-save <fname> " << endl;
+		cout << "-save <string : fname> " << endl;
 	}
 	else if (stringcmp(argv[i], "-process_combinatorial_objects") == 0) {
 		cout << "-process_combinatorial_objects " << endl;

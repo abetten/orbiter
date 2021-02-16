@@ -15,6 +15,7 @@ MODULES = \
 	finite_field_orthogonal.o \
 	finite_field_projective.o \
 	finite_field_representations.o \
+	finite_field_RREF.o \
 	finite_field_tables.o \
 	finite_field.o \
 	finite_ring.o \

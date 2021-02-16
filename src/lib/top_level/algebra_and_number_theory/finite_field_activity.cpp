@@ -145,6 +145,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 				Descr->f_normalize_from_the_left,
 				Descr->f_normalize_from_the_right,
 				verbose_level);
+
 	}
 	else if (Descr->f_weight_enumerator) {
 
@@ -282,17 +283,6 @@ void finite_field_activity::perform_activity(int verbose_level)
 		Geo.do_cheat_sheet_Gr(F, Descr->cheat_sheet_Gr_n, Descr->cheat_sheet_Gr_k,
 				verbose_level);
 	}
-#if 0
-	else if (Descr->f_cheat_sheet_orthogonal) {
-
-		geometry_global Geo;
-
-		Geo.do_cheat_sheet_orthogonal(F,
-				Descr->cheat_sheet_orthogonal_epsilon,
-				Descr->cheat_sheet_orthogonal_n,
-				verbose_level);
-	}
-#endif
 	else if (Descr->f_cheat_sheet_hermitian) {
 
 		geometry_global Geo;
@@ -322,6 +312,42 @@ void finite_field_activity::perform_activity(int verbose_level)
 				Descr->find_CRC_polynomials_information_bits,
 				Descr->find_CRC_polynomials_check_bits,
 				verbose_level);
+	}
+
+	else if (Descr->f_sift_polynomials) {
+
+		algebra_global Algebra;
+
+		Algebra.sift_polynomials(F,
+				Descr->sift_polynomials_r0,
+				Descr->sift_polynomials_r1,
+				verbose_level);
+	}
+
+	else if (Descr->f_RREF_random_matrix) {
+
+		algebra_global Algebra;
+
+		int *A;
+		int m, n;
+		int i;
+
+		m = Descr->RREF_random_matrix_m;
+		n = Descr->RREF_random_matrix_n;
+
+		os_interface Os;
+
+		A = NEW_int(m * n);
+		for (i = 0; i < m * n; i++) {
+			A[i] = Os.random_integer(F->q);
+		}
+
+		Algebra.RREF_demo(F, A,
+				m,
+				n,
+				verbose_level);
+
+		FREE_int(A);
 	}
 
 	else if (Descr->f_decomposition_by_element) {
@@ -432,6 +458,185 @@ void finite_field_activity::perform_activity(int verbose_level)
 				Descr->eigenstuff_n,
 				Descr->eigenstuff_fname,
 				verbose_level);
+	}
+	else if (Descr->f_parse) {
+
+		expression_parser Parser;
+		syntax_tree *tree;
+		int i;
+
+		tree = NEW_OBJECT(syntax_tree);
+
+		cout << "Formula " << Descr->parse_name_of_formula << " is " << Descr->parse_text << endl;
+		cout << "Managed variables: " << Descr->parse_managed_variables << endl;
+
+		const char *p = Descr->parse_managed_variables.c_str();
+		char str[1000];
+
+		while (TRUE) {
+			if (!s_scan_token_comma_separated(&p, str)) {
+				break;
+			}
+			string var;
+
+			var.assign(str);
+			cout << "adding managed variable " << var << endl;
+
+			tree->managed_variables.push_back(var);
+			tree->f_has_managed_variables = TRUE;
+
+		}
+
+		int nb_vars;
+
+		nb_vars = tree->managed_variables.size();
+
+		cout << "Managed variables: " << endl;
+		for (i = 0; i < nb_vars; i++) {
+			cout << i << " : " << tree->managed_variables[i] << endl;
+		}
+
+
+		cout << "Starting to parse " << Descr->parse_name_of_formula << endl;
+		Parser.parse(tree, Descr->parse_text, verbose_level);
+		cout << "Parsing " << Descr->parse_name_of_formula << " finished" << endl;
+
+
+		cout << "Syntax tree:" << endl;
+		//tree->print(cout);
+
+		std::string fname;
+		fname.assign(Descr->parse_name_of_formula);
+		fname.append(".gv");
+
+		{
+			std::ofstream ost(fname);
+			tree->Root->export_graphviz(Descr->parse_name_of_formula, ost);
+		}
+
+		int ret, degree;
+		ret = tree->is_homoegeneous(degree);
+		if (ret) {
+			cout << "homogeneous of degree " << degree << endl;
+
+			homogeneous_polynomial_domain *Poly;
+
+			Poly = NEW_OBJECT(homogeneous_polynomial_domain);
+
+			if (f_v) {
+				cout << "before Poly->init" << endl;
+			}
+			Poly->init(F,
+					nb_vars /* nb_vars */, degree,
+					FALSE /* f_init_incidence_structure */,
+					t_PART,
+					verbose_level);
+			if (f_v) {
+				cout << "after Poly->init" << endl;
+			}
+
+			syntax_tree_node **Subtrees;
+			int nb_monomials;
+
+			nb_monomials = Poly->get_nb_monomials();
+
+			tree->split_by_monomials(Poly, Subtrees, verbose_level);
+
+			for (i = 0; i < nb_monomials; i++) {
+				cout << "Monomial " << i << " : ";
+				if (Subtrees[i]) {
+					Subtrees[i]->print_expression(cout);
+					cout << " * ";
+					Poly->print_monomial(cout, i);
+					cout << endl;
+				}
+				else {
+					cout << "no subtree" << endl;
+				}
+			}
+			if (Descr->f_evaluate) {
+
+				cout << "before evaluate" << endl;
+
+				const char *p = Descr->evaluate_text.c_str();
+				//char str[1000];
+
+				std::map<std::string, std::string> symbol_table;
+				//vector<string> symbols;
+				//vector<string> values;
+
+				while (TRUE) {
+					if (!s_scan_token_comma_separated(&p, str)) {
+						break;
+					}
+					string assignment;
+					int len;
+
+					assignment.assign(str);
+					len = strlen(str);
+
+					std::size_t found;
+
+					found = assignment.find('=');
+					if (found == std::string::npos) {
+						cout << "did not find '=' in variable assignment" << endl;
+						exit(1);
+					}
+					std::string symb = assignment.substr (0, found);
+					std::string val = assignment.substr (found + 1, len - found - 1);
+
+
+
+					cout << "adding symbol " << symb << " = " << val << endl;
+
+					symbol_table[symb] = val;
+					//symbols.push_back(symb);
+					//values.push_back(val);
+
+				}
+
+#if 0
+				cout << "symbol table:" << endl;
+				for (i = 0; i < symbol_table.size(); i++) {
+					cout << i << " : " << symbol_table[i] << " = " << values[i] << endl;
+				}
+#endif
+				int a;
+				int *Values;
+
+				Values = NEW_int(nb_monomials);
+
+				for (i = 0; i < nb_monomials; i++) {
+					cout << "Monomial " << i << " : ";
+					if (Subtrees[i]) {
+						//Subtrees[i]->print_expression(cout);
+						a = Subtrees[i]->evaluate(symbol_table, F, verbose_level);
+						Values[i] = a;
+						cout << a << " * ";
+						Poly->print_monomial(cout, i);
+						cout << endl;
+					}
+					else {
+						cout << "no subtree" << endl;
+						Values[i] = 0;
+					}
+				}
+				cout << "evaluated polynomial:" << endl;
+				for (i = 0; i < nb_monomials; i++) {
+					cout << a << " * ";
+					Poly->print_monomial(cout, i);
+					cout << endl;
+				}
+
+			}
+
+
+			FREE_OBJECT(Poly);
+		}
+		else {
+			cout << "not homogeneous" << endl;
+		}
+
 	}
 
 	if (f_v) {

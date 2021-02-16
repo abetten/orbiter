@@ -121,6 +121,15 @@ finite_field_activity_description::finite_field_activity_description()
 	find_CRC_polynomials_information_bits = 0;
 	find_CRC_polynomials_check_bits = 0;
 
+	f_sift_polynomials = FALSE;
+	sift_polynomials_r0 = 0;
+	sift_polynomials_r1 = 0;
+
+	f_RREF_random_matrix = FALSE;
+	RREF_random_matrix_m = 0;
+	RREF_random_matrix_n = 0;
+
+
 	f_decomposition_by_element = FALSE;
 	decomposition_by_element_n = 0;
 	decomposition_by_element_power = 1;
@@ -167,6 +176,14 @@ finite_field_activity_description::finite_field_activity_description()
 	eigenstuff_n = 0;
 	//eigenstuff_coeffs = NULL;
 	//eigenstuff_fname = NULL;
+
+	f_parse = FALSE;
+	//parse_name_of_formula
+	//parse_managed_variables
+	//std::string parse_text;
+
+	f_evaluate = FALSE;
+	//std::string evaluate_text;
 
 }
 
@@ -425,6 +442,27 @@ int finite_field_activity_description::read_arguments(
 					<< " " << find_CRC_polynomials_check_bits
 					<< endl;
 		}
+		else if (stringcmp(argv[i], "-sift_polynomials") == 0) {
+			f_sift_polynomials = TRUE;
+			sift_polynomials_r0 = strtolint(argv[++i]);
+			sift_polynomials_r1 = strtolint(argv[++i]);
+			cout << "-sift_polynomials "
+					<< " " << sift_polynomials_r0
+					<< " " << sift_polynomials_r1
+					<< endl;
+		}
+		else if (stringcmp(argv[i], "-RREF_random_matrix") == 0) {
+			f_RREF_random_matrix = TRUE;
+			RREF_random_matrix_m = strtolint(argv[++i]);
+			RREF_random_matrix_n = strtolint(argv[++i]);
+			cout << "-RREF_demo "
+					<< " " << RREF_random_matrix_m
+					<< " " << RREF_random_matrix_n
+					<< endl;
+		}
+
+
+
 		else if (stringcmp(argv[i], "-decomposition_by_element") == 0) {
 			f_decomposition_by_element = TRUE;
 			decomposition_by_element_n = strtoi(argv[++i]);
@@ -520,6 +558,18 @@ int finite_field_activity_description::read_arguments(
 			eigenstuff_fname.assign(argv[++i]);
 			cout << "-eigenstuff_from_file " << eigenstuff_n
 					<< " " << eigenstuff_fname << endl;
+		}
+		else if (stringcmp(argv[i], "-parse") == 0) {
+			f_parse = TRUE;
+			parse_name_of_formula.assign(argv[++i]);
+			parse_managed_variables.assign(argv[++i]);
+			parse_text.assign(argv[++i]);
+			cout << "-parse " << parse_name_of_formula << " " << parse_managed_variables << " " << parse_text << endl;
+		}
+		else if (stringcmp(argv[i], "-evaluate") == 0) {
+			f_evaluate = TRUE;
+			evaluate_text.assign(argv[++i]);
+			cout << "-evaluate " << evaluate_text << endl;
 		}
 
 

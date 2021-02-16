@@ -730,8 +730,6 @@ public:
 		long int *New_lines, long int *double_six, int verbose_level);
 	void create_lines_from_plane_equations(int *The_plane_equations,
 		long int *Lines, int verbose_level);
-	//int identify_two_lines(long int *lines, int verbose_level);
-	//int identify_three_lines(long int *lines, int verbose_level);
 	void create_remaining_fifteen_lines(
 		long int *double_six, long int *fifteen_lines,
 		int verbose_level);

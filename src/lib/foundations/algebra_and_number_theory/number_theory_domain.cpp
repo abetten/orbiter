@@ -1305,7 +1305,7 @@ void number_theory_domain::print_longfactorization(int nb_primes,
 		}
 }
 
-int number_theory_domain::euler_function(long int n)
+long int number_theory_domain::euler_function(long int n)
 //Computes Eulers $\varphi$-function for $n$.
 //Uses the prime factorization of $n$. before: eulerfunc
 {
@@ -1322,9 +1322,9 @@ int number_theory_domain::euler_function(long int n)
 		e1 = exponents[i];
 		if (e1 > 1) {
 			k *= i_power_j(p1, e1 - 1);
-			}
-		k *= (p1 - 1);
 		}
+		k *= (p1 - 1);
+	}
 	FREE_int(primes);
 	FREE_int(exponents);
 	return k;

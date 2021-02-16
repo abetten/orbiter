@@ -1556,8 +1556,8 @@ public:
 		// indicats whether or not plane and dual_plane 
 		// have been computed by init_plane_data()
 	
-	PLANE_DATA plane;
-	PLANE_DATA dual_plane;
+	struct plane_data plane;
+	struct plane_data dual_plane;
 
 	// data for the coordinatization:
 	int line_x_eq_y;

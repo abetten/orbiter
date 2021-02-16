@@ -409,35 +409,66 @@ void linear_group::linear_group_init(
 	if (description->f_on_k_subspaces) {
 		action_on_grassmannian *AG;
 		grassmann *Grass;
-		action *A3;
+		//action *A3;
 		
-		cout << "linear_group::linear_group_init creating induced action "
-				"on k-subspaces for k="
-				<< description->on_k_subspaces_k << endl;
+		if (f_v) {
+			cout << "linear_group::linear_group_init creating induced action "
+					"on k-subspaces for k="
+					<< description->on_k_subspaces_k << endl;
+		}
 		AG = NEW_OBJECT(action_on_grassmannian);
 		
 		Grass = NEW_OBJECT(grassmann);
 
-		A3 = NEW_OBJECT(action);
 
+		if (f_v) {
+			cout << "linear_group::linear_group_init before Grass->init" << endl;
+		}
 
 		Grass->init(n,
 				description->on_k_subspaces_k,
 				F, 0 /* verbose_level */);
 		
-		AG->init(*A2, Grass, verbose_level - 2);
-	
-		A3->induced_action_on_grassmannian(A2, AG, 
-			FALSE /* f_induce_action */, NULL /*sims *old_G */, 
-			MINIMUM(verbose_level - 2, 2));
-		A3->f_is_linear = TRUE;
+		if (f_v) {
+			cout << "linear_group::linear_group_init after Grass->init" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "linear_group::linear_group_init before AG->init" << endl;
+		}
+
+		AG->init(*A_linear, Grass, verbose_level - 2);
 	
 		if (f_v) {
-			cout << "linear_group::linear_group_init action A3 created: ";
-			A3->print_info();
+			cout << "linear_group::linear_group_init after AG->init" << endl;
+		}
+
+
+		A2 = NEW_OBJECT(action);
+
+		if (f_v) {
+			cout << "linear_group::linear_group_init before A2->induced_action_on_grassmannian" << endl;
+		}
+
+		A2->induced_action_on_grassmannian(A_linear, AG,
+			FALSE /* f_induce_action */, NULL /*sims *old_G */, 
+			verbose_level - 2);
+
+		if (f_v) {
+			cout << "linear_group::linear_group_init after A2->induced_action_on_grassmannian" << endl;
+		}
+
+
+		A2->f_is_linear = TRUE;
+		Strong_gens = initial_strong_gens;
+	
+		if (f_v) {
+			cout << "linear_group::linear_group_init action A2 created: ";
+			A2->print_info();
 			}
 
-		A2 = A3;
+		//A2 = A3;
 		f_OK = TRUE;
 
 		char str1[1000];
@@ -450,9 +481,10 @@ void linear_group::linear_group_init(
 		label_tex.append(str2);
 
 
-		cout << "linear_group::linear_group_init creating induced "
-				"action on k-subspaces done" << endl;
-		
+		if (f_v) {
+			cout << "linear_group::linear_group_init creating induced "
+					"action on k-subspaces done" << endl;
+		}
 	}
 	if (description->f_restricted_action) {
 		if (f_v) {
@@ -1389,9 +1421,18 @@ void linear_group::report(std::ostream &ost,
 
 			int *Table;
 			long int n;
+			file_io Fio;
+			string fname_group_table;
 			H->create_group_table(Table, n, verbose_level);
+
 			cout << "linear_group::report The group table is:" << endl;
 			int_matrix_print(Table, n, n, 2);
+
+			fname_group_table.assign(label);
+			fname_group_table.append("_group_table.csv");
+			Fio.int_matrix_write_csv(fname_group_table, Table, n, n);
+			cout << "Written file " << fname_group_table << " of size " << Fio.file_size(fname_group_table) << endl;
+
 			{
 				latex_interface L;
 

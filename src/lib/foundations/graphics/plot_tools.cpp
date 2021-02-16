@@ -509,10 +509,11 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 	int *Px, *Py;
 	double x_stretch = 1.;
 	double y_stretch = 1.;
-	int dx = O->xin * 0.5;
-	int dy = O->yin * 0.5; // stretch factor
+	int dx = O->xin * 0.25;
+	int dy = O->yin * 0.25; // stretch factor
 	int N = 1000;
 	int i;
+	double start_angle = 0;
 	numerics Num;
 
 	if (f_v) {
@@ -531,21 +532,26 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 
 	int M;
 
-	M = 4 * q + 1;
+	M = 4 * q + 1 + 4;
 
 	for (i = 0; i < q; i++) {
-		Num.on_circle_double(Dx, Dy, i, 90. - i * 360. / (double) q, 1.0);
+		Num.on_circle_double(Dx, Dy, i, start_angle + i * 360. / (double) q, 1.0);
 	}
 	for (i = 0; i < q; i++) {
-		Num.on_circle_double(Dx, Dy, q + 1 + i, 90. - i * 360. / (double) q, 1.2);
+		Num.on_circle_double(Dx, Dy, q + 1 + i, start_angle + i * 360. / (double) q, 1.2);
 	}
 	for (i = 0; i < q; i++) {
-		Num.on_circle_double(Dx, Dy, 2 * q + 1 + i, 90. - i * 360. / (double) q, .9);
+		Num.on_circle_double(Dx, Dy, 2 * q + 1 + i, start_angle + i * 360. / (double) q, .9);
 	}
 	for (i = 0; i < q; i++) {
-		Num.on_circle_double(Dx, Dy, 3 * q + 1 + i, 90. - i * 360. / (double) q, 1.1);
+		Num.on_circle_double(Dx, Dy, 3 * q + 1 + i, start_angle + i * 360. / (double) q, 1.1);
 	}
 	Num.on_circle_double(Dx, Dy, q, 0, 0.0);
+	Num.on_circle_double(Dx, Dy, 4 * q + 1 + 0, 0., 1.3);
+	Num.on_circle_double(Dx, Dy, 4 * q + 1 + 1, 90, 1.3);
+	Num.on_circle_double(Dx, Dy, 4 * q + 1 + 2, 180, 1.3);
+	Num.on_circle_double(Dx, Dy, 4 * q + 1 + 3, 270, 1.3);
+
 	for (i = 0; i < q; i++) {
 		cout << "i=" << i << " Dx=" << Dx[i] << " Dy=" << Dy[i] << endl;
 	}
@@ -570,7 +576,12 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 	char str[1000];
 
 	for (i = 0; i < q; i++) {
-		sprintf(str, "%d", i);
+		if (O->f_nodes_empty) {
+			str[0] = 0;
+		}
+		else {
+			sprintf(str, "%d", i);
+		}
 		G.text(Px[q + 1 + i], Py[q + 1 + i], str);
 	}
 
@@ -638,6 +649,10 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 		}
 		//FREE_OBJECT(F);
 	}
+
+
+	G.polygon2(Px, Py, 4 * q + 1 + 0, 4 * q + 1 + 2);
+	G.polygon2(Px, Py, 4 * q + 1 + 1, 4 * q + 1 + 3);
 
 	if (f_power_cycle) {
 		//finite_field *F;

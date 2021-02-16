@@ -229,6 +229,9 @@ public:
 			int verbose_level);
 	int remainder_is_nonzero(int da, int *A, int db, int *B, finite_field *F);
 	int remainder_is_nonzero_binary(int da, int *A, int db, int *B);
+	void sift_polynomials(finite_field *F, long int rk0, long int rk1, int verbose_level);
+	void RREF_demo(finite_field *F, int *A, int m, int n, int verbose_level);
+	void RREF_demo2(std::ostream &ost, finite_field *F, int *A, int m, int n, int verbose_level);
 
 };
 
@@ -336,6 +339,7 @@ public:
 	int is_zero(int i);
 	int is_one(int i);
 	int mult(int i, int j);
+	int mult_verbose(int i, int j, int verbose_level);
 	int a_over_b(int a, int b);
 	int mult3(int a1, int a2, int a3);
 	int product3(int a1, int a2, int a3);
@@ -361,6 +365,7 @@ public:
 	int negate(int i);
 	int inverse(int i);
 	int power(int a, int n);
+	int power_verbose(int a, int n, int verbose_level);
 		// computes a^n
 	void frobenius_power_vec(int *v, int len, int frob_power);
 	void frobenius_power_vec_to_vec(int *v_in, int *v_out, int len, int frob_power);
@@ -518,29 +523,6 @@ public:
 		int *base_cols, int verbose_level);
 		// returns the rank which is the 
 		// number of entries in base_cols
-	int Gauss_int(int *A, int f_special, 
-		int f_complete, int *base_cols, 
-		int f_P, int *P, int m, int n, 
-		int Pn, int verbose_level);
-		// returns the rank which is the 
-		// number of entries in base_cols
-		// A is m x n,
-		// P is m x Pn (provided f_P is TRUE)
-	int Gauss_int_with_pivot_strategy(int *A, 
-		int f_special, int f_complete, int *pivot_perm, 
-		int m, int n, 
-		int (*find_pivot_function)(int *A, int m, int n, int r, 
-		int *pivot_perm, void *data),
-		void *find_pivot_data,  
-		int verbose_level);
-		// returns the rank which is the number of entries in pivots
-		// A is a m x n matrix
-	int Gauss_int_with_given_pivots(int *A,
-		int f_special, int f_complete, int *pivots, int nb_pivots, 
-		int m, int n, 
-		int verbose_level);
-		// A is a m x n matrix
-		// returns FALSE if pivot cannot be found at one of the steps
 	void kernel_columns(int n, int nb_base_cols, 
 		int *base_cols, int *kernel_cols);
 	void matrix_get_kernel_as_int_matrix(int *M, int m, int n, 
@@ -1218,6 +1200,44 @@ public:
 	void export_gap(int d, long int *Pts, int nb_pts, std::string &fname);
 	void print_matrix_latex(std::ostream &ost, int *A, int m, int n);
 	void print_matrix_numerical_latex(std::ostream &ost, int *A, int m, int n);
+
+
+	// #########################################################################
+	// finite_field_RREF.cpp
+	// #########################################################################
+
+	int Gauss_int(int *A, int f_special,
+		int f_complete, int *base_cols,
+		int f_P, int *P, int m, int n,
+		int Pn, int verbose_level);
+		// returns the rank which is the
+		// number of entries in base_cols
+		// A is m x n,
+		// P is m x Pn (provided f_P is TRUE)
+	int Gauss_int_with_pivot_strategy(int *A,
+		int f_special, int f_complete, int *pivot_perm,
+		int m, int n,
+		int (*find_pivot_function)(int *A, int m, int n, int r,
+		int *pivot_perm, void *data),
+		void *find_pivot_data,
+		int verbose_level);
+		// returns the rank which is the number of entries in pivots
+		// A is a m x n matrix
+	int Gauss_int_with_given_pivots(int *A,
+		int f_special, int f_complete, int *pivots, int nb_pivots,
+		int m, int n,
+		int verbose_level);
+		// A is a m x n matrix
+		// returns FALSE if pivot cannot be found at one of the steps
+	int RREF_search_pivot(int *A, int m, int n,
+			int &i, int &j, int *base_cols, int verbose_level);
+	void RREF_make_pivot_one(int *A, int m, int n,
+			int &i, int &j, int *base_cols, int verbose_level);
+	void RREF_elimination_below(int *A, int m, int n,
+			int &i, int &j, int *base_cols, int verbose_level);
+	void RREF_elimination_above(int *A, int m, int n,
+			int i, int *base_cols, int verbose_level);
+
 };
 
 extern int nb_calls_to_finite_field_init;
@@ -2226,7 +2246,7 @@ public:
 	void print_factorization(int nb_primes, int *primes, int *exponents);
 	void print_longfactorization(int nb_primes,
 		longinteger_object *primes, int *exponents);
-	int euler_function(long int n);
+	long int euler_function(long int n);
 	void int_add_fractions(int at, int ab, int bt, int bb,
 		int &ct, int &cb, int verbose_level);
 	void int_mult_fractions(int at, int ab, int bt, int bb,
