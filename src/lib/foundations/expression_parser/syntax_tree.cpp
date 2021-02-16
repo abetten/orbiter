@@ -57,7 +57,7 @@ int syntax_tree::identify_single_literal(std::string &single_literal)
 	return -1;
 }
 
-int syntax_tree::is_homoegeneous(int &degree)
+int syntax_tree::is_homogeneous(int &degree)
 {
 	int ret;
 

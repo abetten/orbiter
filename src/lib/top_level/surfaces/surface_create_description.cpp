@@ -62,6 +62,14 @@ surface_create_description::surface_create_description()
 	//arc_lifting_two_lines_text = NULL;
 	f_arc_lifting_with_two_lines = FALSE;
 
+	f_by_equation = FALSE;
+	//std::string equation_name_of_formula;
+	//std::string equation_name_of_formula_tex;
+	//std::string equation_managed_variables;
+	//std::string equation_text;
+	//std::string equation_parameters;
+
+
 	//nb_select_double_six = 0;
 	//select_double_six_string[];
 
@@ -173,6 +181,21 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 			arc_lifting_two_lines_text.assign(argv[++i]);
 			cout << "-arc_lifting_with_two_lines " << arc_lifting_text
 					<< " " << arc_lifting_two_lines_text << endl;
+		}
+		else if (stringcmp(argv[i], "-by_equation") == 0) {
+			f_by_equation = TRUE;
+			equation_name_of_formula.assign(argv[++i]);
+			equation_name_of_formula_tex.assign(argv[++i]);
+			equation_managed_variables.assign(argv[++i]);
+			equation_text.assign(argv[++i]);
+			equation_parameters.assign(argv[++i]);
+			cout << "-by_equation "
+					<< equation_name_of_formula << " "
+					<< equation_name_of_formula_tex << " "
+					<< equation_managed_variables << " "
+					<< equation_text << " "
+					<< equation_parameters << " "
+					<< endl;
 		}
 		else if (stringcmp(argv[i], "-select_double_six") == 0) {
 			//f_select_double_six = TRUE;

@@ -515,7 +515,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 
 		int ret, degree;
-		ret = tree->is_homoegeneous(degree);
+		ret = tree->is_homogeneous(degree);
 		if (ret) {
 			cout << "homogeneous of degree " << degree << endl;
 
