@@ -623,7 +623,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 				}
 				cout << "evaluated polynomial:" << endl;
 				for (i = 0; i < nb_monomials; i++) {
-					cout << a << " * ";
+					cout << Values[i] << " * ";
 					Poly->print_monomial(cout, i);
 					cout << endl;
 				}

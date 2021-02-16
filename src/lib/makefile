@@ -72,6 +72,9 @@ MODULES= \
 		foundations/data_structures/vector_hashing.o \
 		foundations/expression_parser/expression_parser.o \
 		foundations/expression_parser/lexer.o \
+		foundations/expression_parser/syntax_tree_node_terminal.o \
+		foundations/expression_parser/syntax_tree_node.o \
+		foundations/expression_parser/syntax_tree.o \
 		foundations/geometry/andre_construction.o \
 		foundations/geometry/andre_construction_line_element.o \
 		foundations/geometry/andre_construction_point_element.o \
