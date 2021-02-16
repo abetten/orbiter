@@ -13,61 +13,52 @@
 namespace orbiter {
 namespace foundations {
 
-
-
 // #############################################################################
-// syntax_tree.cpp
+// expression_parser.cpp
 // #############################################################################
 
-//! the syntax tree of an expression
+
+
+//! class to parse expressions
 
 
 
-class syntax_tree {
-public:
-	int f_has_managed_variables;
-	std::vector<std::string> managed_variables;
 
-	syntax_tree_node *Root;
+class expression_parser {
 
-	syntax_tree();
-	void print(std::ostream &ost);
-	void print_monomial(std::ostream &ost, int *monomial);
-	int identify_single_literal(std::string &single_literal);
-	int is_homoegeneous(int &degree);
-	void split_by_monomials(homogeneous_polynomial_domain *Poly,
-			syntax_tree_node **&Subtrees, int verbose_level);
+
+
+  private:
+
+	lexer *Lexer;
+
+  public:
+
+	  // symbol table - can be accessed directly (eg. to copy a batch in)
+	  std::map<std::string, double> symbols_;
+
+	  syntax_tree *Tree;
+
+	  expression_parser();
+	  ~expression_parser();
+
+
+  // access symbols with operator []
+  double & operator[] (std::string & key) { return symbols_ [key]; }
+
+
+
+  syntax_tree_node *Primary (int verbose_level,
+		  int &f_single_literal, std::string &single_literal, int &f_has_seen_minus,
+		  const bool get);
+  syntax_tree_node *Term (int verbose_level, const bool get);
+  syntax_tree_node *AddSubtract (int verbose_level, const bool get);
+  syntax_tree_node *Comparison (int verbose_level, const bool get);
+  syntax_tree_node *Expression (int verbose_level, const bool get);
+  syntax_tree_node *CommaList (int verbose_level, const bool get);
+  void parse(syntax_tree *tree, std::string & program, int verbose_level);
 
 };
-
-
-
-
-// #############################################################################
-// syntax_tree_node_terminal.cpp
-// #############################################################################
-
-//! terminal note in the syntax tree of an expression
-
-
-
-class syntax_tree_node_terminal {
-public:
-	int f_int;
-	int f_double;
-	int f_text;
-	int value_int;
-	double value_double;
-	std::string value_text;
-
-	syntax_tree_node_terminal();
-	void print(std::ostream &ost);
-	void print_expression(std::ostream &ost);
-	int evaluate(std::map<std::string, std::string> &symbol_table,
-			finite_field *F, int verbose_level);
-
-};
-
 
 
 // #############################################################################
@@ -100,12 +91,38 @@ public:
 
 };
 
+// #############################################################################
+// syntax_tree_node_terminal.cpp
+// #############################################################################
+
+//! terminal note in the syntax tree of an expression
+
+
+
+class syntax_tree_node_terminal {
+public:
+	int f_int;
+	int f_double;
+	int f_text;
+	int value_int;
+	double value_double;
+	std::string value_text;
+
+	syntax_tree_node_terminal();
+	void print(std::ostream &ost);
+	void print_expression(std::ostream &ost);
+	int evaluate(std::map<std::string, std::string> &symbol_table,
+			finite_field *F, int verbose_level);
+
+};
+
+
 
 // #############################################################################
 // syntax_tree_node.cpp
 // #############################################################################
 
-#define MAX_NODES_SYNTAX_TREE 10
+#define MAX_NODES_SYNTAX_TREE 1000
 
 
 //! interior node in a syntax tree
@@ -147,50 +164,35 @@ public:
 
 
 // #############################################################################
-// expression_parser.cpp
+// syntax_tree.cpp
 // #############################################################################
 
-
-
-//! class to parse expressions
-
+//! the syntax tree of an expression
 
 
 
-class expression_parser {
+class syntax_tree {
+public:
+	int f_has_managed_variables;
+	std::vector<std::string> managed_variables;
 
+	syntax_tree_node *Root;
 
-
-  private:
-
-	lexer Lexer;
-
-  public:
-
-	  // symbol table - can be accessed directly (eg. to copy a batch in)
-	  std::map<std::string, double> symbols_;
-
-	  syntax_tree *Tree;
-
-	  expression_parser();
-
-
-  // access symbols with operator []
-  double & operator[] (std::string & key) { return symbols_ [key]; }
-
-
-
-  syntax_tree_node *Primary (int verbose_level,
-		  int &f_single_literal, std::string &single_literal, int &f_has_seen_minus,
-		  const bool get);
-  syntax_tree_node *Term (int verbose_level, const bool get);
-  syntax_tree_node *AddSubtract (int verbose_level, const bool get);
-  syntax_tree_node *Comparison (int verbose_level, const bool get);
-  syntax_tree_node *Expression (int verbose_level, const bool get);
-  syntax_tree_node *CommaList (int verbose_level, const bool get);
-  void parse(syntax_tree *tree, std::string & program, int verbose_level);
+	syntax_tree();
+	void print(std::ostream &ost);
+	void print_monomial(std::ostream &ost, int *monomial);
+	int identify_single_literal(std::string &single_literal);
+	int is_homoegeneous(int &degree);
+	void split_by_monomials(homogeneous_polynomial_domain *Poly,
+			syntax_tree_node **&Subtrees, int verbose_level);
 
 };
+
+
+
+
+
+
 
 }}
 

@@ -210,6 +210,7 @@ static int LoadThreeArgumentFunctions ()
 
 expression_parser::expression_parser()
 {
+	Lexer = NULL;
 	Tree = NULL;
     // insert pre-defined names:
     symbols_ ["pi"] = 3.1415926535897932385;
@@ -217,6 +218,13 @@ expression_parser::expression_parser()
     LoadOneArgumentFunctions ();
     LoadTwoArgumentFunctions ();
     LoadThreeArgumentFunctions ();
+}
+
+expression_parser::~expression_parser()
+{
+	if (Lexer) {
+		FREE_OBJECT(Lexer);
+	}
 }
 
 #if 0
@@ -310,29 +318,29 @@ syntax_tree_node *expression_parser::Primary (int verbose_level,
 	}
 
   if (get)
-    Lexer.GetToken(verbose_level);    // one-token lookahead
+    Lexer->GetToken(verbose_level);    // one-token lookahead
 
-  if (Lexer.type_ == NUMBER) {
-      double v = Lexer.value_;
+  if (Lexer->type_ == NUMBER) {
+      double v = Lexer->value_;
 		N->f_terminal = true;
-		N->T = Lexer.T;
-		Lexer.T = 0L;
-      Lexer.GetToken (verbose_level, true);  // get next one (one-token lookahead)
+		N->T = Lexer->T;
+		Lexer->T = 0L;
+      Lexer->GetToken (verbose_level, true);  // get next one (one-token lookahead)
 		if (f_v) {
 			std::cout << "expression_parser::Primary NUMBER " << v << " done" << std::endl;
 		}
  		N->print(std::cout);
       return N;
   }
-  else if (Lexer.type_ == NAME) {
-      std::string word = Lexer.word_;
+  else if (Lexer->type_ == NAME) {
+      std::string word = Lexer->word_;
 
 		N->f_terminal = true;
-		N->T = Lexer.T;
-		Lexer.T = 0L;
+		N->T = Lexer->T;
+		Lexer->T = 0L;
 
-		Lexer.GetToken (verbose_level, true);
-      if (Lexer.type_ == LHPAREN)
+		Lexer->GetToken (verbose_level, true);
+      if (Lexer->type_ == LHPAREN)
         {
     	  exit(1);
     	  //return Function(verbose_level, word);
@@ -371,7 +379,7 @@ syntax_tree_node *expression_parser::Primary (int verbose_level,
  		N->print(std::cout);
  		return N;               // and return new value
       }
-  else if (Lexer.type_ == MINUS) {
+  else if (Lexer->type_ == MINUS) {
     	// unary minus
 		if (f_v) {
 			std::cout << "expression_parser::Primary unary minus" << std::endl;
@@ -396,7 +404,7 @@ syntax_tree_node *expression_parser::Primary (int verbose_level,
       return N;
   }
 #endif
-  else if (Lexer.type_ == LHPAREN) {
+  else if (Lexer->type_ == LHPAREN) {
   		if (f_v) {
   			std::cout << "expression_parser::Primary left hand parenthesis, calling CommaList" << std::endl;
   		}
@@ -404,8 +412,8 @@ syntax_tree_node *expression_parser::Primary (int verbose_level,
 		if (f_v) {
 			std::cout << "expression_parser::Primary left hand parenthesis, after CommaList" << std::endl;
 		}
-		Lexer.CheckToken (RHPAREN);
-      Lexer.GetToken (verbose_level, true);                // eat the ')'
+		Lexer->CheckToken (RHPAREN);
+      Lexer->GetToken (verbose_level, true);                // eat the ')'
 		if (f_v) {
 			std::cout << "expression_parser::Primary left hand parenthesis done" << std::endl;
 		}
@@ -416,12 +424,143 @@ syntax_tree_node *expression_parser::Primary (int verbose_level,
   else {
 	  std::string remainder;
 
-	  remainder.assign(Lexer.pWord_);
-      throw std::runtime_error ("Unexpected token: " + Lexer.word_ + " at " + remainder);
+	  remainder.assign(Lexer->pWord_);
+      throw std::runtime_error ("Unexpected token: " + Lexer->word_ + " at " + remainder);
    } // end of if on type
 
   } // end of Parser::Primary
 
+#if 0
+syntax_tree_node *expression_parser::Term (int verbose_level, const bool get)
+// multiply and divide
+  {
+	int f_v = (verbose_level >= 1);
+	int f_single_literal;
+	std::string single_literal;
+	int *monomial;
+	int i;
+	syntax_tree_node *N;
+	int f_has_seen_minus;
+	int nb_minus_signs = 0;
+
+	if (f_v) {
+		std::cout << "expression_parser::Term" << std::endl;
+	}
+
+	if (Tree->managed_variables.size()) {
+		monomial = NEW_int(Tree->managed_variables.size());
+		int_vec_zero(monomial, Tree->managed_variables.size());
+	}
+
+	N = new syntax_tree_node;
+	N->Tree = Tree;
+	N->type = operation_type_mult;
+	if (f_v) {
+		std::cout << "expression_parser::Term opening node " << N->idx << std::endl;
+	}
+	if (f_v) {
+		std::cout << "expression_parser::Term before Primary" << std::endl;
+	}
+	syntax_tree_node *left = Primary (verbose_level, f_single_literal, single_literal, f_has_seen_minus, get);
+	if (f_has_seen_minus) {
+		nb_minus_signs++;
+	}
+	if (f_v) {
+		std::cout << "expression_parser::Term after Primary, f_single_literal = " << f_single_literal << std::endl;
+	}
+	int f_done;
+	f_done = false;
+	if (Tree->managed_variables.size() && f_single_literal) {
+		i = Tree->identify_single_literal(single_literal);
+		if (i >= 0) {
+			monomial[i]++;
+			delete left;
+			f_done = true;
+		}
+	}
+	if (!f_done) {
+		N->nb_nodes = 1;
+		N->Nodes[0] = left;
+		if (f_v) {
+			std::cout << "expression_parser::Term first descendant of " << N->idx << " is node " << N->Nodes[0]->idx << std::endl;
+		}
+	}
+  while (true)
+    {
+    switch (Lexer.type_)
+      {
+      case MULTIPLY:
+    		if (f_v) {
+    			std::cout << "expression_parser::Term MULTIPLY, calling Primary" << std::endl;
+    		}
+    	syntax_tree_node * N2;
+        N2 = Primary (verbose_level, f_single_literal, single_literal, f_has_seen_minus, true);
+		if (f_v) {
+			std::cout << "Parser::Term MULTIPLY, after Primary, f_single_literal=" << f_single_literal << std::endl;
+		}
+		if (f_has_seen_minus) {
+			nb_minus_signs++;
+		}
+		f_done = false;
+		if (f_single_literal) {
+			std::cout << "single_literal = " << single_literal << std::endl;
+			if (Tree->managed_variables.size() && f_single_literal) {
+				i = Tree->identify_single_literal(single_literal);
+				if (i >= 0) {
+					monomial[i]++;
+					delete N2;
+					f_done = true;
+				}
+			}
+		}
+		if (!f_done) {
+			std::cout << "not a single_literal, N->nb_nodes=" << N->nb_nodes << std::endl;
+			{
+				N->Nodes[N->nb_nodes] = N2;
+				N->nb_nodes++;
+				if (ODD(nb_minus_signs)) {
+					N->f_has_minus = TRUE;
+				}
+			}
+		}
+		break;
+#if 0
+      case DIVIDE:
+          {
+      		if (f_v) {
+      			std::cout << "expression_parser::Term DIVIDE, calling Primary" << std::endl;
+      		}
+          double d = Primary (verbose_level, f_single_literal, single_literal, true);
+    		if (f_v) {
+    			std::cout << "expression_parser::Term DIVIDE, after Primary" << std::endl;
+    		}
+          if (d == 0.0)
+            throw std::runtime_error ("Divide by zero");
+          left /= d;
+          break;
+          }
+#endif
+      default:
+    	 if (Tree->managed_variables.size()) {
+    		 N->f_has_monomial = TRUE;
+    		 N->monomial = monomial;
+    	 }
+ 		if (f_v) {
+  			std::cout << "expression_parser::Term before return, ";
+  	   		N->print_without_recursion(std::cout);
+  			if (N->f_has_monomial) {
+  				Tree->print_monomial(std::cout, N->monomial);
+  			}
+  			std::cout << std::endl;
+  		}
+ 		return N;
+      } // end of switch on type
+    }   // end of loop
+	if (f_v) {
+		std::cout << "expression_parser::Term done" << std::endl;
+	}
+  } // end of Parser::Term
+#else
 syntax_tree_node *expression_parser::Term (int verbose_level, const bool get)
 // multiply and divide
   {
@@ -476,7 +615,7 @@ syntax_tree_node *expression_parser::Term (int verbose_level, const bool get)
 	}
   while (true)
     {
-    switch (Lexer.type_)
+    switch (Lexer->type_)
       {
       case MULTIPLY:
     		if (f_v) {
@@ -530,14 +669,17 @@ syntax_tree_node *expression_parser::Term (int verbose_level, const bool get)
           }
 #endif
       default:
-   		N->print_without_recursion(std::cout);
     	N->monomial = monomial;
+    	N->f_has_monomial = TRUE;
  		if (f_v) {
-  			std::cout << "expression_parser::Term before return, ";
+  			std::cout << "expression_parser::Term before return ";
   			if (N->f_has_monomial) {
   				Tree->print_monomial(std::cout, N->monomial);
   			}
   			std::cout << std::endl;
+  			std::cout << "expression_parser::Term created the following node:" << endl;
+  	   		N->print_without_recursion(std::cout);
+  			std::cout << "expression_parser::Term done" << endl;
   		}
  		return N;
       } // end of switch on type
@@ -546,6 +688,8 @@ syntax_tree_node *expression_parser::Term (int verbose_level, const bool get)
 		std::cout << "expression_parser::Term done" << std::endl;
 	}
   } // end of Parser::Term
+
+#endif
 
 syntax_tree_node *expression_parser::AddSubtract (int verbose_level, const bool get)
 // add and subtract
@@ -573,7 +717,7 @@ syntax_tree_node *expression_parser::AddSubtract (int verbose_level, const bool 
 	}
   while (true)
     {
-    switch (Lexer.type_)
+    switch (Lexer->type_)
       {
       case PLUS:
     		if (f_v) {
@@ -752,10 +896,11 @@ void expression_parser::parse (syntax_tree *tree, std::string & program, int ver
 	if (f_v) {
 		std::cout << "expression_parser::parse" << std::endl;
 	}
+	Lexer = NEW_OBJECT(lexer);
 	Tree = tree;
-	Lexer.program_ = program;
-	Lexer.pWord_    = Lexer.program_.c_str ();
-  Lexer.type_     = NONE;
+	Lexer->program_ = program;
+	Lexer->pWord_    = Lexer->program_.c_str ();
+	Lexer->type_     = NONE;
 	if (f_v) {
 		std::cout << "expression_parser::parse before CommaList" << std::endl;
 	}
@@ -763,9 +908,9 @@ void expression_parser::parse (syntax_tree *tree, std::string & program, int ver
 	if (f_v) {
 		std::cout << "expression_parser::parse after CommaList" << std::endl;
 	}
-  if (Lexer.type_ != END)
-    throw std::runtime_error ("Unexpected text at end of expression: " + std::string (Lexer.pWordStart_));
-  }
+	if (Lexer->type_ != END)
+		throw std::runtime_error ("Unexpected text at end of expression: " + std::string (Lexer->pWordStart_));
+	}
 
 
 }}

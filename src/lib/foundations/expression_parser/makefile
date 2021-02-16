@@ -7,7 +7,10 @@ LFLAGS = -lm
 
 MODULES = \
 	expression_parser.o \
-	lexer.o
+	lexer.o \
+	syntax_tree_node_terminal.o \
+	syntax_tree_node.o \
+	syntax_tree.o 
 
 
 
