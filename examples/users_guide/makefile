@@ -11639,7 +11639,7 @@ F_4_4_3_3_q7:
 
 
 
-F_alpha_beta_gamma_delta_q7_sweep:
+F_alpha_beta_gamma_delta_points.txt:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 7 -wedge -end -end \
 		-with G -do \
 		-group_theoretic_activities \
@@ -11651,3 +11651,22 @@ F_alpha_beta_gamma_delta_q7_sweep:
 			"alpha=2,beta=3,gamma=4,delta=5" "\D\alpha=2,\beta=3,\gamma=4,\delta=5\D" \
 		-end \
 		-end 
+
+
+F_alpha_beta_gamma_delta_q7_classify: F_alpha_beta_gamma_delta_points.txt
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 7 -end -end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
+		-canonical_form_PG  \
+		-input -file_of_points F_alpha_beta_gamma_delta_points.txt \
+		-end \
+		-classification_prefix F_alpha_beta_gamma_delta_points \
+		-report \
+		-end \
+		-end
+	pdflatex F_alpha_beta_gamma_delta_points_classification.tex
+	open F_alpha_beta_gamma_delta_points_classification.pdf
+
+
