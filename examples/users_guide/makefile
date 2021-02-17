@@ -11393,9 +11393,10 @@ F_ALPHA_BETA_GAMMA_DELTA="beta*(gamma + 1)*x0*x0*x2 + (alpha*delta - beta*gamma 
 
 
 F_alpha_beta_gamma_delta:
-	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 2 -end -end \
-		-with F -do -finite_field_activity -parse "F_alpha_beta_gamma_delta" "x0,x1,x2,x3" $(F_ALPHA_BETA_GAMMA_DELTA) -evaluate "alpha=1,beta=1,gamma=1,delta=1" -end
-	dot -Tpng F_alpha_beta_gamma_delta.gv >F_alpha_beta_gamma_delta.png
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 7 -end -end \
+		-with F -do -finite_field_activity -parse "F_alpha_beta_gamma_delta" "x0,x1,x2,x3" $(F_ALPHA_BETA_GAMMA_DELTA) -evaluate "alpha=2,beta=3,gamma=4,delta=5" -end
+	#dot -Tpng F_alpha_beta_gamma_delta.gv >F_alpha_beta_gamma_delta.png
+
 
 
 draw_dot:
@@ -11431,3 +11432,222 @@ parse2:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 2 -end -end \
 		-with F -do -finite_field_activity -parse "test" "x0,x1,x2,x3" "(alpha*delta - beta*gamma + alpha - beta - delta - 1)*x0*x1*x2" -end
 
+
+
+F_abcd_eqn = "-(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(b - d)*X0*X0*X2 + (a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(a + b - c - d)*X0*X1*X2 + (a*a*c - a*a*d - a*c*c + b*c*c + a*d - b*c)*(b - d)*X0*X1*X3 - (a*d - b*c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X0*X2*X2 - (a*a*c*d - a*b*c*c - a*a*d + a*b*d + b*c*c - b*c*d)*(b - d)*X0*X2*X3 - (a - c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X1*X1*X2 - (a - c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X1*X1*X3 + (a*d - b*c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X1*X2*X2 + (2*a*a*b*c*d - a*a*b*d*d - 2*a*a*c*d*d - 2*a*b*b*c*c + a*b*b*c*d + 2*a*b*c*c*d + a*b*c*d*d - b*b*c*c*d - a*a*b*c + a*a*c*d + a*a*d*d + a*b*b*c + a*b*c*c - 4*a*b*c*d - a*c*c*d + a*c*d*d + b*b*c*c)*X1*X2*X3 + c*a*(a*d - b*c - a + b + c - d)*(b - d)*X1*X3*X3"
+
+
+F_abcd:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 7 -end -end \
+		-with F -do -finite_field_activity -parse "Fabcd" "X0,X1,X2,X3" $(F_abcd_eqn) -evaluate "a=4,b=2,c=2,d=4" -end
+	#dot -Tpng F_alpha_beta_gamma_delta.gv >F_alpha_beta_gamma_delta.png
+
+F_alpha_beta_gamma_delta_q7:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 7 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -q 7 -by_equation "F_alpha_beta_gamma_delta" \
+			"\DF_{\alpha,\beta,\gamma,\delta}\D" "x0,x1,x2,x3" \
+			$(F_ALPHA_BETA_GAMMA_DELTA) \
+			"alpha=2,beta=3,gamma=4,delta=5" "\D\alpha=2,\beta=3,\gamma=4,\delta=5\D" \
+		-end \
+		-end 
+	pdflatex surface_equation_F_alpha_beta_gamma_delta_q7_report.tex
+	open surface_equation_F_alpha_beta_gamma_delta_q7_report.pdf
+
+
+SURFACE_F7_15LINES_POINTS="0,1,2,3,5,6,7,8,9,10,12,18,20,26,28,34,36,42,44,45,50,53,58,59,60,61,62,63,64,67,77,80,90,93,103,107,115,118,122,125,127,142,147,155,157,162,165,170,172,204,208,219,229,240,244,246,251,253,259,277,278,281,286,298,300,302,303,310,312,316,340,343,351,354,358,365,369,372,373,379,384,386,388,393,399"
+
+
+
+surface_F7_15_lines_stab:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 7 -end -end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
+		-canonical_form_PG \
+		-input \
+			-set_of_points "$(SURFACE_F7_15LINES_POINTS)" \
+		-end \
+		-classification_prefix surface_15_lines_q7 \
+		-report \
+		-end \
+		-end
+	pdflatex surface_15_lines_q7_classification.tex
+	open surface_15_lines_q7_classification.pdf
+
+
+# group has order 6, 2 generators:
+#1,5,0,0,3,6,0,0,1,1,3,0,5,5,0,3, 1,0,2,5,0,1,6,1,0,0,3,5,0,0,4,4,
+
+
+
+F7_povray:
+	$(ORBITER_PATH)/orbiter.out -v 2 -povray \
+		-round 0 -nb_frames_default 30 -output_mask F7_15_lines_%d_%03d.pov \
+		-video_options -W 1024 -H 768  -global_picture_scale 1.5 -default_angle 80 -clipping_radius 4.4 \
+		-omit_bottom_plane \
+		-camera 0 "1,1,1"  "-4.5,3.5,6" "0,0,0"  \
+		-end \
+		-scene_objects \
+			-cubic_lex "0, 0, 6, 0, 0, -13.39014946, -3.341901346, -6.972931640, 5.827182718, 0, 0, 7.390149464, 7.390149464, 6.972931640, -1.512349728, -8.485281372, 0, 0, 0, 0" \
+			-group_of_things "0" \
+			-cubics 0 "texture{ pigment{ White*0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+			-line_through_point_with_direction "0, 0, 0, 1, 0, 0" \
+			-line_through_point_with_direction "0, 0, -1, 0, 1, 0" \
+			-line_through_point_with_direction "0, 0, 0, 0, 0, -1" \
+			-line_through_point_with_direction "1, 0, 0, 1, 1, 1" \
+			-line_through_point_with_direction "-1.414213562, 0, 0, 4.146264370, 1.732050808, 1.732050808" \
+			-line_through_point_with_direction "0, 1.732050808, -1, 2.414213562, -0.317837246, 2.414213562" \
+			-line_through_point_with_direction "-2.133352390, 0, -1, 1.674708020, 1, 0" \
+			-line_through_point_with_direction "-2.539058015, 0, 0, 2.211360755, 1, 0" \
+			-line_through_point_with_direction "0, 1.148188060, 0, 0, -0.9435440612, 1" \
+			-line_through_point_with_direction "-0.9711971171, 0, 0, 1.162155272, 0, 1" \
+			-line_through_point_with_direction "2.096037870, 2.096037870, 0, -1.065851905, -1.065851905, 1" \
+			-line_through_point_with_direction "3.921555783, 2.921555781, 0, -1.722456585, -1.722456585, 1" \
+			-group_of_things_as_interval 0 12 \
+			-lines 1 0.04 "texture{ pigment{ color Yellow } finish { diffuse 0.9 phong 1}}" \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv F7_15_lines_0_*.pov POV
+	mv makefile_animation POV
+
+
+
+
+#			-label 0 "c23" \
+#			-label 2 "c24" \
+#			-label 4 "c15" \
+#			-label 6 "c16" \
+#			-label 8 "c45" \
+#			-label 10 "c35" \
+#			-label 12 "c13" \
+#			-label 14 "c14" \
+#			-label 16 "c36" \
+#			-label 18 "c46" \
+#			-label 20 "c26" \
+#			-label 22 "c25" \
+#			-group_of_things_as_interval 0 12 \
+#			-texts 2 0.2 0.3 "texture{ pigment{Black} } no_shadow" \
+
+#			-lines 1 0.02 "texture{ pigment{ color Red } finish { diffuse 0.9 phong 1}}" \
+#			-lines 2 0.02 "texture{ pigment{ color Blue } finish { diffuse 0.9 phong 1}}" \
+#			-lines 3 0.02 "texture{ pigment{ color Yellow } finish { diffuse 0.9 phong 1}}" \
+
+# first vector is a point, second vector is direction:
+
+#c23:=  [[0, 0, 0], [1, 0, 0]]
+
+#c24:= [[0, 0, -1], [0, 1, 0]]
+
+#c15:=  [[0, 0, 0], [0, 0, -1]]
+
+#c16:= [[1, 0, 0], [1, 1, 1]]
+
+#c45:= [[-1.414213562, 0, 0], [4.146264370, 1.732050808, 1.732050808]]
+
+#c35:= [[0, 1.732050808, -1], [2.414213562, -0.317837246, 2.414213562]]
+
+#c13:= [[-2.133352390, 0, -1], [1.674708020, 1, 0]]
+
+#c14:= [[-2.539058015, 0, 0], [2.211360755, 1, 0]]
+
+#c36:= [[0, 1.148188060, 0], [0, -0.9435440612, 1]]
+
+#c46:= [[-0.9711971171, 0, 0], [1.162155272, 0, 1]]
+
+#c26:= [[2.096037870, 2.096037870, 0], [-1.065851905, -1.065851905, 1]]
+
+#c25:= [[3.921555783, 2.921555781, 0], [-1.722456585, -1.722456585, 1]]
+
+
+F7_video:
+	- rm -r FRAMES
+	- mkdir FRAMES
+	- rm fifteen_with_lines.mp4
+	$(ORBITER_PATH)/orbiter.out \
+		-prepare_frames \
+			-i 0 30 F7b/F7_15_lines_0_%03d.png \
+			-output_starts_at 0 \
+			-o FRAMES/frame%04d.png \
+		-end
+	ffmpeg -r 5 -f image2 -i FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  fifteen_with_lines.mp4
+
+
+McKean_povray:
+	$(ORBITER_PATH)/orbiter.out -v 2 -povray \
+		-round 0 -nb_frames_default 30 -output_mask McKean_%d_%03d.pov \
+		-video_options -W 1024 -H 768  -global_picture_scale 1.5 -default_angle 80 -clipping_radius 4.4 \
+		-omit_bottom_plane \
+		-camera 0 "1,1,1"  "-4.5,3.5,6" "0,0,0"  \
+		-end \
+		-scene_objects \
+			-cubic_lex "0, 0, 1, 0, 0, -1, -2, 1, 2, 0, 0, 1, 1,-1, -1, -1, 0, 0, 0, 0" \
+			-group_of_things "0" \
+			-cubics 0 "texture{ pigment{ White*0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv McKean_0_*.pov POV
+	mv makefile_animation POV
+
+McKean_video:
+	- rm -r FRAMES
+	- mkdir FRAMES
+	- rm McKean.mp4
+	$(ORBITER_PATH)/orbiter.out \
+		-prepare_frames \
+			-i 0 30 MCKEAN/McKean_0_%03d.png \
+			-output_starts_at 0 \
+			-o FRAMES/frame%04d.png \
+		-end
+	ffmpeg -r 5 -f image2 -i FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  McKean.mp4
+
+McKean_15lines_q7:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 7 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -by_coefficients "1,5,-1,16,-2,17,1,10,2,18,1,8,1,9,-1,11,-1,19,-1,14" -q 7 \
+		-end \
+		-end 
+	pdflatex surface_by_coefficients_q7_report.tex
+	open surface_by_coefficients_q7_report.pdf
+
+# 2 Eckardt points
+
+F_4_4_3_3_q7:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 7 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -q 7 -by_equation "F_alpha_beta_gamma_delta" \
+			"\DF_{\alpha,\beta,\gamma,\delta}\D" "x0,x1,x2,x3" \
+			$(F_ALPHA_BETA_GAMMA_DELTA) \
+			"alpha=4,beta=4,gamma=3,delta=3" "\D\alpha=4,\beta=4,\gamma=3,\delta=3\D" \
+		-end \
+		-end
+	pdflatex surface_equation_F_alpha_beta_gamma_delta_q7_report.tex
+	open surface_equation_F_alpha_beta_gamma_delta_q7_report.pdf
+
+# has 4 Eckardt points
+
+
+
+F_alpha_beta_gamma_delta_q7_sweep:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 7 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-sweep nothing \
+		-create_surface -q 7 -by_equation "F_alpha_beta_gamma_delta" \
+			"\DF_{\alpha,\beta,\gamma,\delta}\D" "x0,x1,x2,x3" \
+			$(F_ALPHA_BETA_GAMMA_DELTA) \
+			"alpha=2,beta=3,gamma=4,delta=5" "\D\alpha=2,\beta=3,\gamma=4,\delta=5\D" \
+		-end \
+		-end 
