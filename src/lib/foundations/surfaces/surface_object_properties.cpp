@@ -2580,6 +2580,8 @@ void surface_object_properties::print_all_points_on_surface(std::ostream &ost)
 			ost << "$\\\\" << endl;
 			}
 		ost << "\\end{multicols}" << endl;
+		lint_vec_print_fully(ost, SO->Pts, SO->nb_pts);
+		ost << "\\\\" << endl;
 	}
 	else {
 		ost << "Too many to print.\\\\" << endl;

@@ -323,7 +323,9 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 			cout << "please use option -control_six_arcs <description> -end" << endl;
 			exit(1);
 		}
-		do_create_surface(Descr->surface_description, Descr->Control_six_arcs, verbose_level);
+		do_create_surface(Descr->surface_description, Descr->Control_six_arcs,
+				Descr->f_sweep, Descr->sweep_fname,
+				verbose_level);
 	}
 	else if (Descr->f_six_arcs) {
 		if (!Descr->f_control_six_arcs) {

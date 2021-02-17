@@ -810,8 +810,11 @@ public:
 	std::string equation_parameters;
 	std::string equation_parameters_tex;
 
+
+
 	std::vector<std::string> transform_coeffs;
 	std::vector<int> f_inverse_transform;
+
 
 
 	surface_create_description();
@@ -1146,6 +1149,18 @@ public:
 	void report_basics(std::ostream &ost);
 	void report_double_triplets(std::ostream &ost);
 	void report_double_triplets_detailed(std::ostream &ost);
+	void create_surface_and_do_report(
+			surface_create_description *Surface_Descr,
+			poset_classification_control *Control_six_arcs,
+			int f_surface_clebsch,
+			int f_surface_codes,
+			int f_surface_quartic,
+			int verbose_level);
+	void create_surface_sweep(
+			surface_create_description *Surface_Descr,
+			poset_classification_control *Control_six_arcs,
+			int f_sweep, std::string &sweep_fname,
+			int verbose_level);
 
 };
 

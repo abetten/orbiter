@@ -71,6 +71,7 @@ surface_create_description::surface_create_description()
 	//std::string equation_parameters_tex;
 
 
+
 	//nb_select_double_six = 0;
 	//select_double_six_string[];
 
@@ -200,6 +201,9 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 					<< equation_parameters_tex << " "
 					<< endl;
 		}
+
+
+
 		else if (stringcmp(argv[i], "-select_double_six") == 0) {
 			//f_select_double_six = TRUE;
 			string s;
