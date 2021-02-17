@@ -1126,6 +1126,7 @@ void surface_with_action::create_surface_sweep(
 	}
 
 	vector<vector<long int>> Properties;
+	vector<vector<long int>> Points;
 
 
 	for (alpha = 0; alpha < q; alpha++) {
@@ -1224,6 +1225,7 @@ void surface_with_action::create_surface_sweep(
 						continue;
 					}
 					vector<long int> Props;
+					vector<long int> Pts;
 
 					Props.push_back(alpha);
 					Props.push_back(beta);
@@ -1238,8 +1240,14 @@ void surface_with_action::create_surface_sweep(
 					Props.push_back(SC->SO->SOP->nb_pts_not_on_lines);
 					Props.push_back(SC->SO->SOP->nb_Hesse_planes);
 					Props.push_back(SC->SO->SOP->nb_axes);
-
 					Properties.push_back(Props);
+
+					int i;
+					for (i = 0; i < SC->SO->nb_pts; i++) {
+						Pts.push_back(SC->SO->Pts[i]);
+					}
+					Points.push_back(Pts);
+
 					FREE_OBJECT(SC);
 
 				} // delta
@@ -1270,6 +1278,30 @@ void surface_with_action::create_surface_sweep(
 
 	Fio.lint_matrix_write_csv(fname, T, N, 13);
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+	fname.assign(Surface_Descr->equation_name_of_formula);
+	fname.append("_points.txt");
+
+
+	{
+		ofstream ost(fname);
+
+		for (i = 0; i < N; i++) {
+			long int sz = Points[i].size();
+			ost << sz;
+			for (j = 0; j < sz; j++) {
+				ost << " " << Points[i][j];
+			}
+			ost << endl;
+		}
+		ost << "-1" << endl;
+
+	}
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+
 
 	FREE_lint(T);
 
