@@ -907,6 +907,7 @@ int scene::line_after_recentering(double x1, double x2, double x3,
 	Line_coords[nb_lines * 6 + 3] = yy[0];
 	Line_coords[nb_lines * 6 + 4] = yy[1];
 	Line_coords[nb_lines * 6 + 5] = yy[2];
+	points(Line_coords + nb_lines * 6, 2 /* nb_points */);
 	nb_lines++;
 	if (nb_lines >= SCENE_MAX_LINES) {
 		cout << "too many lines" << endl;

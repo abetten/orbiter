@@ -720,7 +720,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 					"the number of coefficients must be 6; is " << coeff_sz << endl;
 			exit(1);
 		}
-		line(coeff[0], coeff[1], coeff[2], coeff[3], coeff[4], coeff[5]);
+		line_after_recentering(coeff[0], coeff[1], coeff[2], coeff[0] + coeff[3], coeff[1] + coeff[4], coeff[2] + coeff[5], 10);
 		delete [] coeff;
 	}
 	else if (stringcmp(argv[i], "-plane_by_dual_coordinates") == 0) {

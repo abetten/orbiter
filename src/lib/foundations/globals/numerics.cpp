@@ -1797,7 +1797,7 @@ void numerics::matrix_double_inverse(double *A, double *Av, int n,
 int numerics::line_centered(double *pt1_in, double *pt2_in,
 	double *pt1_out, double *pt2_out, double r, int verbose_level)
 {
-	int f_v = (verbose_level >= 1);
+	int f_v = TRUE; //(verbose_level >= 1);
 	double v[3];
 	double x1, x2, x3, y1, y2, y3;
 	double a, b, c, av, d, e;
@@ -1868,8 +1868,10 @@ int numerics::line_centered(double *pt1_in, double *pt2_in,
 		cout << endl;
 		exit(1);
 		//return FALSE;
+		//d = 0;
 		}
 	e = sqrt(d);
+
 	lambda1 = -b * 0.5 + e;
 	lambda2 = -b * 0.5 - e;
 	pt1_out[0] = x1 + lambda1 * v[0];

@@ -130,6 +130,10 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 			Control_six_arcs = NULL;
 	f_create_surface = FALSE;
 	surface_description = NULL;
+
+	f_sweep = FALSE;
+	//std::string sweep_fname;
+
 	f_six_arcs = FALSE;
 	f_filter_by_nb_Eckardt_points = FALSE;
 	nb_Eckardt_points = 0;
@@ -580,6 +584,13 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
+
+		else if (stringcmp(argv[i], "-sweep") == 0) {
+			f_sweep = TRUE;
+			sweep_fname.assign(argv[++i]);
+			cout << "-sweep " << sweep_fname << endl;
+		}
+
 		else if (stringcmp(argv[i], "-six_arcs") == 0) {
 			f_six_arcs = TRUE;
 			cout << "-six_arcs" << endl;

@@ -612,8 +612,13 @@ public:
 		poset_classification_control *Trihedra2_control;
 		int f_control_six_arcs;
 		poset_classification_control *Control_six_arcs;
-	int f_create_surface;
-	surface_create_description *surface_description;
+
+		int f_create_surface;
+		surface_create_description *surface_description;
+
+	int f_sweep;
+	std::string sweep_fname;
+
 	int f_six_arcs;
 	int f_filter_by_nb_Eckardt_points;
 	int nb_Eckardt_points;
@@ -805,6 +810,7 @@ public:
 	void do_create_surface(
 			surface_create_description *Descr,
 			poset_classification_control *Control_six_arcs,
+			int f_sweep, std::string &sweep_fname,
 			int verbose_level);
 	void do_surface_classify(int verbose_level);
 	void do_surface_report(int verbose_level);
