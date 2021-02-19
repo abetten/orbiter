@@ -553,6 +553,23 @@ int number_theory_domain::int_logq(int n, int q)
 	return i;
 }
 
+int number_theory_domain::lint_logq(long int n, int q)
+// returns the number of digits in base q representation
+{
+	int i;
+
+	if (n < 0) {
+		cout << "int_logq n < 0" << endl;
+		exit(1);
+		}
+	i = 0;
+	do {
+		i++;
+		n /= q;
+		} while (n);
+	return i;
+}
+
 int number_theory_domain::is_strict_prime_power(int q)
 // assuming that q is a prime power, this fuction tests 
 // whether or not q is a srict prime power

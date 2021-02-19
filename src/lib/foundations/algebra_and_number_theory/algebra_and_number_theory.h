@@ -230,6 +230,8 @@ public:
 	int remainder_is_nonzero(int da, int *A, int db, int *B, finite_field *F);
 	int remainder_is_nonzero_binary(int da, int *A, int db, int *B);
 	void sift_polynomials(finite_field *F, long int rk0, long int rk1, int verbose_level);
+	void mult_polynomials(finite_field *F, long int rk0, long int rk1, int verbose_level);
+	void polynomial_division_with_report(finite_field *F, long int rk0, long int rk1, int verbose_level);
 	void RREF_demo(finite_field *F, int *A, int m, int n, int verbose_level);
 	void RREF_demo2(std::ostream &ost, finite_field *F, int *A, int m, int n, int verbose_level);
 
@@ -2221,6 +2223,7 @@ public:
 	int lint_log10(long int n);
 	int int_logq(int n, int q);
 	// returns the number of digits in base q representation
+	int lint_logq(long int n, int q);
 	int is_strict_prime_power(int q);
 	// assuming that q is a prime power, this fuction tests
 	// whether or not q is a strict prime power
@@ -2454,7 +2457,7 @@ public:
 	void create_object_of_degree_no_test(unipoly_object &p, int d);
 	void create_object_of_degree_with_coefficients(unipoly_object &p, 
 		int d, int *coeff);
-	void create_object_by_rank(unipoly_object &p, int rk,
+	void create_object_by_rank(unipoly_object &p, long int rk,
 			const char *file, int line, int verbose_level);
 	void create_object_by_rank_longinteger(unipoly_object &p, 
 		longinteger_object &rank,
@@ -2480,7 +2483,6 @@ public:
 	void make_monic(unipoly_object &a);
 	void add(unipoly_object a, unipoly_object b, unipoly_object &c);
 	void mult(unipoly_object a, unipoly_object b, unipoly_object &c, int verbose_level);
-	void mult_easy(unipoly_object a, unipoly_object b, unipoly_object &c);
 	void mult_mod(unipoly_object a,
 		unipoly_object b, unipoly_object &c, unipoly_object m,
 		int verbose_level);
@@ -2576,6 +2578,15 @@ public:
 		int delete_column, unipoly_object *&N, int verbose_level);
 	void center_lift_coordinates(unipoly_object a, int q);
 	void reduce_modulo_p(unipoly_object a, int p);
+
+	//unipoly_domain2.cpp:
+	void mult_easy(unipoly_object a, unipoly_object b, unipoly_object &c);
+	void print_coeffs_top_down_assuming_one_character_per_digit(unipoly_object a, std::ostream &ost);
+	void print_coeffs_top_down_assuming_one_character_per_digit_with_degree_given(unipoly_object a, int m, std::ostream &ost);
+	void mult_easy_with_report(long int rk_a, long int rk_b, long int &rk_c, std::ostream &ost);
+	void division_with_remainder_with_report(long int rk_a, long int rk_b,
+			long int &rk_q, long int &rk_r, std::ostream &ost, int verbose_level);
+
 
 };
 

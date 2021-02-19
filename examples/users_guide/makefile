@@ -6950,6 +6950,54 @@ Code_RS_11_weight_enumerator:
 
 #1*y^(10) + 1200*x^3*y^7 + 16800*x^4*y^6 + 209160*x^5*y^5 + 1734600*x^6*y^4 + 9918000*x^7*y^3 + 37189800*x^8*y^2 + 82644700*x^9*y + 82644620*x^(10)
 
+
+coding_theory_upper_bounds_q2:
+	$(ORBITER_PATH)/orbiter.out -v 2 -table_of_bounds 20 2
+	
+coding_theory_upper_bounds_q8:
+	$(ORBITER_PATH)/orbiter.out -v 2 -table_of_bounds 20 8
+	
+mult_polynomials_2_5_7:
+	$(ORBITER_PATH)/orbiter.out -v 2 -finite_field_activity -q 2 -mult_polynomials 5 7 -end
+	pdflatex polynomial_mult_5_7.tex
+	open polynomial_mult_5_7.pdf
+
+
+polynomial_division_ranked_2_27_13:
+	$(ORBITER_PATH)/orbiter.out -v 2 -finite_field_activity -q 2 -polynomial_division_ranked 27 13 -end
+	pdflatex polynomial_division_27_13.tex
+	open polynomial_division_27_13.pdf
+
+
+mult_polynomials_2_4_6:
+	$(ORBITER_PATH)/orbiter.out -v 2 -finite_field_activity -q 2 -mult_polynomials 4 6 -end
+	pdflatex polynomial_mult_4_6.tex
+	open polynomial_mult_4_6.pdf
+
+polynomial_division_ranked_2_24_13:
+	$(ORBITER_PATH)/orbiter.out -v 2 -finite_field_activity -q 2 -polynomial_division_ranked 24 13 -end
+	pdflatex polynomial_division_24_13.tex
+	open polynomial_division_24_13.pdf
+
+
+
+mult_polynomials_1024_999_997:
+	$(ORBITER_PATH)/orbiter.out -v 2 -finite_field_activity -q 2 -mult_polynomials 999 997 -end
+	pdflatex polynomial_mult_999_997.tex
+	open polynomial_mult_999_997.pdf
+
+polynomial_division_ranked_2_349147_1033:
+	$(ORBITER_PATH)/orbiter.out -v 2 -finite_field_activity -q 2 -polynomial_division_ranked 349147 1033 -end
+	pdflatex polynomial_division_349147_1033.tex
+	open polynomial_division_349147_1033.pdf
+
+mult_polynomials_1024_999_997_check:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 1024 -end -end \
+		-with F -do -finite_field_activity -parse "test" "" "a*b" -evaluate "a=999,b=997" -end
+
+
+
+
 ########################################################################################################
 # Section 41: Diophantine Systems
 
@@ -11460,6 +11508,8 @@ F_alpha_beta_gamma_delta_q7:
 SURFACE_F7_15LINES_POINTS="0,1,2,3,5,6,7,8,9,10,12,18,20,26,28,34,36,42,44,45,50,53,58,59,60,61,62,63,64,67,77,80,90,93,103,107,115,118,122,125,127,142,147,155,157,162,165,170,172,204,208,219,229,240,244,246,251,253,259,277,278,281,286,298,300,302,303,310,312,316,340,343,351,354,358,365,369,372,373,379,384,386,388,393,399"
 
 
+SURFACE_F7_15LINES_MCKEAN_POINTS="0,1,2,3,4,5,6,7,8,9,10,16,17,28,35,36,59,60,61,62,63,64,65,76,80,91,95,106,107,111,119,121,122,130,138,139,141,146,150,154,155,158,170,175,184,186,199,203,204,206,226,231,234,239,240,252,253,254,278,279,282,287,299,301,302,319,320,330,338,343,345,350,351,357,364,370,371,376,378,382,385,388,392,394,399"
+
 
 surface_F7_15_lines_stab:
 	$(ORBITER_PATH)/orbiter.out -v 2 \
@@ -11660,7 +11710,9 @@ F_alpha_beta_gamma_delta_q7_classify: F_alpha_beta_gamma_delta_points.txt
 		-with P -do \
 		-projective_space_activity \
 		-canonical_form_PG  \
-		-input -file_of_points F_alpha_beta_gamma_delta_points.txt \
+		-input \
+		-set_of_points $(SURFACE_F7_15LINES_MCKEAN_POINTS) \
+		-file_of_points F_alpha_beta_gamma_delta_points.txt \
 		-end \
 		-classification_prefix F_alpha_beta_gamma_delta_points \
 		-report \
@@ -11669,4 +11721,10 @@ F_alpha_beta_gamma_delta_q7_classify: F_alpha_beta_gamma_delta_points.txt
 	pdflatex F_alpha_beta_gamma_delta_points_classification.tex
 	open F_alpha_beta_gamma_delta_points_classification.pdf
 
+
+
+
+F8_work:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 8 -end -end \
+		-with F -do -finite_field_activity -parse "test" "" "(t-a)*(t-a*a)" -evaluate "a=2" -end
 

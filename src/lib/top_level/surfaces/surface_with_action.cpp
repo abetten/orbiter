@@ -1136,15 +1136,9 @@ void surface_with_action::create_surface_sweep(
 		if (alpha == 1) {
 			continue;
 		}
-		if (alpha == q - 1) {
-			continue;
-		}
 
 		for (beta = 0; beta < q; beta++) {
 			if (beta == 0) {
-				continue;
-			}
-			if (beta == 1) {
 				continue;
 			}
 			if (beta == q - 1) {
@@ -1155,9 +1149,6 @@ void surface_with_action::create_surface_sweep(
 				if (gamma == 0) {
 					continue;
 				}
-				if (gamma == 1) {
-					continue;
-				}
 				if (gamma == q - 1) {
 					continue;
 				}
@@ -1166,7 +1157,7 @@ void surface_with_action::create_surface_sweep(
 					if (delta == 0) {
 						continue;
 					}
-					if (delta == 1) {
+					if (delta == beta) {
 						continue;
 					}
 					if (delta == q - 1) {
@@ -1272,8 +1263,11 @@ void surface_with_action::create_surface_sweep(
 	}
 	file_io Fio;
 	std::string fname;
+	char str[1000];
 
+	sprintf(str, "_q%d", q);
 	fname.assign(Surface_Descr->equation_name_of_formula);
+	fname.append(str);
 	fname.append("_sweep.csv");
 
 	Fio.lint_matrix_write_csv(fname, T, N, 13);
@@ -1281,6 +1275,7 @@ void surface_with_action::create_surface_sweep(
 
 
 	fname.assign(Surface_Descr->equation_name_of_formula);
+	fname.append(str);
 	fname.append("_points.txt");
 
 

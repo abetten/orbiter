@@ -137,12 +137,12 @@ void unipoly_domain::create_object_of_degree_with_coefficients(
 }
 
 void unipoly_domain::create_object_by_rank(
-	unipoly_object &p, int rk,
+	unipoly_object &p, long int rk,
 	const char *file, int line, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	number_theory_domain NT;
-	int len = NT.int_logq(rk, F->q);
+	int len = NT.lint_logq(rk, F->q);
 	
 	if (f_factorring) {
 		if (len > factor_degree) {
@@ -671,44 +671,6 @@ void unipoly_domain::mult(unipoly_object a,
 	if (f_v) {
 		cout << "unipoly_domain::mult done" << endl;
 	}
-}
-
-void unipoly_domain::mult_easy(unipoly_object a,
-		unipoly_object b, unipoly_object &c)
-{
-	int *ra = (int *) a;
-	int *rb = (int *) b;
-	int m = ra[0];
-	int n = rb[0];
-	int mn = m + n;
-	
-	int *rc = (int *) c;
-	FREE_int(rc);
-	rc = NEW_int(mn + 2);
-	
-	int *A = ra + 1;
-	int *B = rb + 1;
-	int *C = rc + 1;
-	int i, j, k, x, y;
-	
-	rc[0] = mn;
-	for (i = 0; i <= mn; i++) {
-		C[i] = 0;
-	}
-	for (i = m; i >= 0; i--) {
-		for (j = n; j >= 0; j--) {
-			k = i + j;
-			x = C[k];
-			y = F->mult(A[i], B[j]);
-			if (x == 0) {
-				C[k] = y;
-			}
-			else {
-				C[k] = F->add(x, y);
-			}
-		}
-	}
-	c = (void *) rc;
 }
 
 void unipoly_domain::mult_mod(unipoly_object a,

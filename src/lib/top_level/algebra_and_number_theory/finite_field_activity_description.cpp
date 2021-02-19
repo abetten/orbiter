@@ -125,9 +125,19 @@ finite_field_activity_description::finite_field_activity_description()
 	sift_polynomials_r0 = 0;
 	sift_polynomials_r1 = 0;
 
+	f_mult_polynomials = FALSE;
+	mult_polynomials_r0 = 0;
+	mult_polynomials_r1 = 0;
+
+	f_polynomial_division_ranked = FALSE;
+	polynomial_division_r0 = 0;
+	polynomial_division_r1 = 0;
+
+
 	f_RREF_random_matrix = FALSE;
 	RREF_random_matrix_m = 0;
 	RREF_random_matrix_n = 0;
+
 
 
 	f_decomposition_by_element = FALSE;
@@ -449,6 +459,24 @@ int finite_field_activity_description::read_arguments(
 			cout << "-sift_polynomials "
 					<< " " << sift_polynomials_r0
 					<< " " << sift_polynomials_r1
+					<< endl;
+		}
+		else if (stringcmp(argv[i], "-mult_polynomials") == 0) {
+			f_mult_polynomials = TRUE;
+			mult_polynomials_r0 = strtolint(argv[++i]);
+			mult_polynomials_r1 = strtolint(argv[++i]);
+			cout << "-mult_polynomials "
+					<< " " << mult_polynomials_r0
+					<< " " << mult_polynomials_r1
+					<< endl;
+		}
+		else if (stringcmp(argv[i], "-polynomial_division_ranked") == 0) {
+			f_polynomial_division_ranked = TRUE;
+			polynomial_division_r0 = strtolint(argv[++i]);
+			polynomial_division_r1 = strtolint(argv[++i]);
+			cout << "-polynomial_division_ranked "
+					<< " " << polynomial_division_r0
+					<< " " << polynomial_division_r1
 					<< endl;
 		}
 		else if (stringcmp(argv[i], "-RREF_random_matrix") == 0) {

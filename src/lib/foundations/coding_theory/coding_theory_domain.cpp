@@ -1485,6 +1485,74 @@ void coding_theory_domain::make_mac_williams_equations(longinteger_object *&M,
 	}
 }
 
+void coding_theory_domain::make_table_of_bounds(
+		int n_max, int q, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int n, k, d_S, d_H, d_P, d_G;
+
+	if (f_v) {
+		cout << "coding_theory_domain::make_table_of_bounds" << endl;
+	}
+	vector<vector<long int>> Table;
+	for (n = 2; n <= n_max; n++) {
+		for (k = 1; k <= n; k++) {
+			cout << "n=" << n << " k=" << k << " q=" << q << endl;
+			d_S = singleton_bound_for_d(n, k, q, 0 /*verbose_level*/);
+			cout << "d_S=" << d_S << endl;
+			d_H = hamming_bound_for_d(n, k, q, 0 /*verbose_level*/);
+			cout << "d_H=" << d_H << endl;
+			d_P = plotkin_bound_for_d(n, k, q, 0 /*verbose_level*/);
+			cout << "d_P=" << d_P << endl;
+			d_G = griesmer_bound_for_d(n, k, q, 0 /*verbose_level*/);
+			cout << "d_G=" << d_G << endl;
+			vector<long int> entry;
+
+			entry.push_back(n);
+			entry.push_back(k);
+			entry.push_back(q);
+			entry.push_back(d_S);
+			entry.push_back(d_H);
+			entry.push_back(d_P);
+			entry.push_back(d_G);
+			Table.push_back(entry);
+		}
+	}
+	long int *T;
+	int N;
+	int i, j;
+
+	N = Table.size();
+
+	T = NEW_lint(N * 7);
+	for (i = 0; i < N; i++) {
+		for (j = 0; j < 7; j++) {
+			T[i * 7 + j] = Table[i][j];
+		}
+	}
+	file_io Fio;
+	std::string fname;
+	char str[1000];
+
+	sprintf(str, "_n%d_q%d", n_max, q);
+
+	fname.assign("table_of_bounds");
+	fname.append(str);
+	fname.append(".csv");
+
+	Fio.lint_matrix_write_csv(fname, T, N, 7);
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+	FREE_lint(T);
+
+
+	if (f_v) {
+		cout << "coding_theory_domain::make_table_of_bounds done" << endl;
+	}
+}
+
+
+
 int coding_theory_domain::singleton_bound_for_d(
 		int n, int k, int q, int verbose_level)
 {

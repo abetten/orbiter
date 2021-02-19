@@ -24,6 +24,10 @@ interface_coding_theory::interface_coding_theory()
 	n = 0;
 	k = 0;
 
+	f_table_of_bounds = FALSE;
+	table_of_bounds_n_max = 0;
+	table_of_bounds_q = 0;
+
 	f_upper_bound_for_d = FALSE;
 
 	f_BCH = FALSE;
@@ -54,6 +58,9 @@ void interface_coding_theory::print_help(int argc,
 {
 	if (stringcmp(argv[i], "-make_macwilliams_system") == 0) {
 		cout << "-make_macwilliams_system <int : q> <int : n> <int k>" << endl;
+	}
+	else if (stringcmp(argv[i], "-table_of_bounds") == 0) {
+		cout << "-table_of_bounds <int : n_max> <int : q> " << endl;
 	}
 	else if (stringcmp(argv[i], "-upper_bound_for_d") == 0) {
 		cout << "-upper_bound_for_d <int : n> <int k> <int : q> " << endl;
@@ -93,6 +100,9 @@ int interface_coding_theory::recognize_keyword(int argc,
 		cout << "interface_coding_theory::recognize_keyword argv[i]=" << argv[i] << " i=" << i << " argc=" << argc << endl;
 	}
 	if (stringcmp(argv[i], "-make_macwilliams_system") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-table_of_bounds") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-upper_bound_for_d") == 0) {
@@ -139,6 +149,12 @@ int interface_coding_theory::read_arguments(int argc,
 			n = strtoi(argv[++i]);
 			k = strtoi(argv[++i]);
 			cout << "-make_macwilliams_system " << q << " " << n << " " << k << endl;
+		}
+		else if (stringcmp(argv[i], "-table_of_bounds") == 0) {
+			f_table_of_bounds = TRUE;
+			table_of_bounds_n_max = strtoi(argv[++i]);
+			table_of_bounds_q = strtoi(argv[++i]);
+			cout << "-table_of_bounds " << table_of_bounds_n_max << " " << table_of_bounds_q << endl;
 		}
 		else if (stringcmp(argv[i], "-upper_bound_for_d") == 0) {
 			f_upper_bound_for_d = TRUE;
@@ -258,6 +274,12 @@ void interface_coding_theory::worker(int verbose_level)
 		coding_theory_domain Coding;
 
 		Coding.do_make_macwilliams_system(q, n, k, verbose_level);
+	}
+	else if (f_table_of_bounds) {
+
+		coding_theory_domain Coding;
+
+		Coding.make_table_of_bounds(table_of_bounds_n_max, table_of_bounds_q, verbose_level);
 	}
 	else if (f_upper_bound_for_d) {
 

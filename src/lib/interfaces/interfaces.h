@@ -114,6 +114,11 @@ class interface_coding_theory {
 	int q;
 	int n;
 	int k;
+
+	int f_table_of_bounds;
+	int table_of_bounds_n_max;
+	int table_of_bounds_q;
+
 	int f_upper_bound_for_d;
 	int f_BCH;
 	int f_BCH_dual;
