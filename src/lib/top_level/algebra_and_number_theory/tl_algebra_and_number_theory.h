@@ -394,6 +394,14 @@ public:
 	long int sift_polynomials_r0;
 	long int sift_polynomials_r1;
 
+	int f_mult_polynomials;
+	long int mult_polynomials_r0;
+	long int mult_polynomials_r1;
+
+	int f_polynomial_division_ranked;
+	long int polynomial_division_r0;
+	long int polynomial_division_r1;
+
 	int f_RREF_random_matrix;
 	int RREF_random_matrix_m;
 	int RREF_random_matrix_n;

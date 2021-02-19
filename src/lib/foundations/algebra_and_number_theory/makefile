@@ -37,6 +37,7 @@ MODULES = \
 	subfield_structure.o \
 	table_of_irreducible_polynomials.o \
 	unipoly_domain.o \
+	unipoly_domain2.o \
 	vector_space.o
 
 

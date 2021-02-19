@@ -324,6 +324,26 @@ void finite_field_activity::perform_activity(int verbose_level)
 				verbose_level);
 	}
 
+	else if (Descr->f_mult_polynomials) {
+
+		algebra_global Algebra;
+
+		Algebra.mult_polynomials(F,
+				Descr->mult_polynomials_r0,
+				Descr->mult_polynomials_r1,
+				verbose_level);
+	}
+
+	else if (Descr->f_polynomial_division_ranked) {
+
+		algebra_global Algebra;
+
+		Algebra.polynomial_division_with_report(F,
+				Descr->polynomial_division_r0,
+				Descr->polynomial_division_r1,
+				verbose_level);
+	}
+
 	else if (Descr->f_RREF_random_matrix) {
 
 		algebra_global Algebra;
@@ -595,12 +615,12 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 				}
 
-#if 0
+	#if 0
 				cout << "symbol table:" << endl;
 				for (i = 0; i < symbol_table.size(); i++) {
 					cout << i << " : " << symbol_table[i] << " = " << values[i] << endl;
 				}
-#endif
+	#endif
 				int a;
 				int *Values;
 
@@ -638,7 +658,65 @@ void finite_field_activity::perform_activity(int verbose_level)
 		}
 		else {
 			cout << "not homogeneous" << endl;
+
+
+			if (Descr->f_evaluate) {
+
+				cout << "before evaluate" << endl;
+
+				const char *p = Descr->evaluate_text.c_str();
+				//char str[1000];
+
+				std::map<std::string, std::string> symbol_table;
+				//vector<string> symbols;
+				//vector<string> values;
+
+				while (TRUE) {
+					if (!s_scan_token_comma_separated(&p, str)) {
+						break;
+					}
+					string assignment;
+					int len;
+
+					assignment.assign(str);
+					len = strlen(str);
+
+					std::size_t found;
+
+					found = assignment.find('=');
+					if (found == std::string::npos) {
+						cout << "did not find '=' in variable assignment" << endl;
+						exit(1);
+					}
+					std::string symb = assignment.substr (0, found);
+					std::string val = assignment.substr (found + 1, len - found - 1);
+
+
+
+					cout << "adding symbol " << symb << " = " << val << endl;
+
+					symbol_table[symb] = val;
+					//symbols.push_back(symb);
+					//values.push_back(val);
+
+				}
+
+#if 0
+				cout << "symbol table:" << endl;
+				for (i = 0; i < symbol_table.size(); i++) {
+					cout << i << " : " << symbol_table[i] << " = " << values[i] << endl;
+				}
+#endif
+				int a;
+
+				a = tree->Root->evaluate(symbol_table, F, verbose_level);
+				cout << "the formula evaluates to " << a << endl;
+
+			}
+
+
 		}
+
 
 	}
 

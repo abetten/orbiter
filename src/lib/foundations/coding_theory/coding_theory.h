@@ -77,6 +77,8 @@ public:
 
 	void make_mac_williams_equations(longinteger_object *&M,
 			int n, int k, int q, int verbose_level);
+	void make_table_of_bounds(
+			int n_max, int q, int verbose_level);
 	int singleton_bound_for_d(int n, int k, int q, int verbose_level);
 	int hamming_bound_for_d(int n, int k, int q, int verbose_level);
 	int plotkin_bound_for_d(int n, int k, int q, int verbose_level);

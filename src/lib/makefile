@@ -36,6 +36,7 @@ MODULES= \
 		foundations/algebra_and_number_theory/subfield_structure.o \
 		foundations/algebra_and_number_theory/table_of_irreducible_polynomials.o \
 		foundations/algebra_and_number_theory/unipoly_domain.o \
+		foundations/algebra_and_number_theory/unipoly_domain2.o \
 		foundations/algebra_and_number_theory/vector_space.o \
 		foundations/coding_theory/coding_theory_domain.o \
 		foundations/coding_theory/mindist.o \

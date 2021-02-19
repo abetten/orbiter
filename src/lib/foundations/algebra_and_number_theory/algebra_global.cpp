@@ -3654,6 +3654,143 @@ void algebra_global::sift_polynomials(finite_field *F, long int rk0, long int rk
 
 }
 
+void algebra_global::mult_polynomials(finite_field *F, long int rk0, long int rk1, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::mult_polynomials" << endl;
+	}
+	unipoly_domain D(F);
+
+	{
+		char str[1000];
+		string fname;
+		char title[1000];
+		char author[1000];
+
+		snprintf(str, 1000, "polynomial_mult_%ld_%ld.tex", rk0, rk1);
+		fname.assign(str);
+		snprintf(title, 1000, "Polynomial Mult");
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		{
+			ofstream ost(fname);
+			latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "algebra_global::mult_polynomials before report" << endl;
+			}
+			//report(ost, verbose_level);
+
+			long int rk2;
+			D.mult_easy_with_report(rk0, rk1, rk2, ost);
+			ost << "$" << rk0 << " \\otimes " << rk1 << " = " << rk2 << "$\\\\" << endl;
+
+
+			if (f_v) {
+				cout << "algebra_global::mult_polynomials after report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		file_io Fio;
+
+		cout << "algebra_global::mult_polynomials written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "algebra_global::mult_polynomials done" << endl;
+	}
+
+}
+
+void algebra_global::polynomial_division_with_report(finite_field *F, long int rk0, long int rk1, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::polynomial_division_with_report" << endl;
+	}
+	unipoly_domain D(F);
+
+	{
+		char str[1000];
+		string fname;
+		char title[1000];
+		char author[1000];
+
+		snprintf(str, 1000, "polynomial_division_%ld_%ld.tex", rk0, rk1);
+		fname.assign(str);
+		snprintf(title, 1000, "Polynomial Division");
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		{
+			ofstream ost(fname);
+			latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "algebra_global::polynomial_division_with_report before report" << endl;
+			}
+			//report(ost, verbose_level);
+
+			long int rk2, rk3;
+			D.division_with_remainder_with_report(rk0, rk1, rk2, rk3, ost, verbose_level);
+			ost << "$" << rk0 << " / " << rk1 << " = " << rk2 << "$ Remainder $" << rk3 << "$\\\\" << endl;
+
+
+			if (f_v) {
+				cout << "algebra_global::polynomial_division_with_report after report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		file_io Fio;
+
+		cout << "algebra_global::polynomial_division_with_report written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "algebra_global::polynomial_division_with_report done" << endl;
+	}
+
+}
+
+
 void algebra_global::RREF_demo(finite_field *F, int *A, int m, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
