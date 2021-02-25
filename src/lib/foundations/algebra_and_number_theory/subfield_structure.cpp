@@ -209,6 +209,51 @@ void subfield_structure::print_embedding()
 	
 }
 
+void subfield_structure::report(std::ostream &ost)
+{
+	int i, j;
+	geometry_global Gg;
+
+
+	ost << "Field basis:\\\\" << endl;
+	ost << "$$" << endl;
+	int_vec_print(ost, Basis, s);
+	cout << endl;
+	ost << "$$" << endl;
+	ost << "Embedding:\\\\" << endl;
+	ost << "$$";
+	ost << "\\begin{array}{|r|r|r|}" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < Q; i++) {
+		Gg.AG_element_unrank(q, v, 1, s, i);
+		j = evaluate_over_Fq(v);
+		ost << setw(4) << i << " & ";
+		int_vec_print(ost, v, s);
+		ost << " & " << j << "\\\\" << endl;
+		}
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+	ost << "$$";
+
+
+	ost << "In reverse:\\\\" << endl;
+	ost << "$$";
+	ost << "\\begin{array}{|r|r|r|}" << endl;
+	ost << "\\hline" << endl;
+	ost << "i \\in {\\mathbb F}_Q & \\mbox{vector} & \\mbox{rank}\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < Q; i++) {
+		j = Gg.AG_element_rank(q, components + i * s, 1, s);
+		ost << setw(4) << i << " & ";
+		int_vec_print(ost, components + i * s, s);
+		ost << " & " << j << "\\\\" << endl;
+	}
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+	ost << "$$";
+
+}
+
 int subfield_structure::evaluate_over_FQ(int *v)
 {
 	int i, a, b;
@@ -524,6 +569,73 @@ void subfield_structure::create_adelaide_hyperoval(
 }
 
 
+void subfield_structure::field_reduction(int *input, int sz, int *output,
+		int verbose_level)
+// input[sz], output[(s * sz) * (s * n)],
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, a, b, c, t, J;
+	int n;
+	int *w;
+	geometry_global Gg;
+
+	if (f_v) {
+		cout << "subfield_structure::field_reduction" << endl;
+	}
+	n = sz * s;
+	w = NEW_int(sz);
+
+	if (f_v) {
+		cout << "input:" << endl;
+		int_vec_print(cout, input, sz);
+		cout << endl;
+	}
+
+	int_vec_zero(output, s * n);
+
+	for (i = 0; i < s; i++) {
+
+		if (f_v) {
+			cout << "i=" << i << " / " << s << endl;
+		}
+		// multiply by the i-th basis element,
+		// put into the vector w[m]
+		a = Basis[i];
+		for (j = 0; j < sz; j++) {
+			b = input[j];
+			if (FALSE) {
+				cout << "j=" << j << " / " << sz
+						<< " a=" << a << " b=" << b << endl;
+			}
+			c = FQ->mult(b, a);
+			w[j] = c;
+		}
+		if (f_v) {
+			cout << "i=" << i << " / " << s << " w=";
+			int_vec_print(cout, w, sz);
+			cout << endl;
+		}
+
+		for (j = 0; j < sz; j++) {
+			J = j * s;
+			b = w[j];
+			for (t = 0; t < s; t++) {
+				c = components[b * s + t];
+				output[i * n + J + t] = c;
+			}
+		}
+		if (f_v) {
+			cout << "output:" << endl;
+			int_matrix_print(output, s, n);
+		}
+	}
+	FREE_int(w);
+
+	if (f_v) {
+		cout << "subfield_structure::field_reduction done" << endl;
+	}
+
+}
 
 
 }}

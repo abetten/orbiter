@@ -1110,8 +1110,19 @@ void projective_space::print_all_points()
 long int projective_space::rank_point(int *v)
 {
 	long int b;
+	int verbose_level = 1;
+
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space::rank_point" << endl;
+	}
 	
 	F->PG_element_rank_modified_lint(v, 1, n + 1, b);
+
+	if (f_v) {
+		cout << "projective_space::rank_point done" << endl;
+	}
 	return b;
 }
 

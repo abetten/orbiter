@@ -118,6 +118,63 @@ void orbiter_symbol_table_entry::init_orthogonal_space(std::string &label,
 	}
 }
 
+void orbiter_symbol_table_entry::init_formula(std::string &label,
+		void *p, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_formula" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_formula;
+	ptr = p;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_formula done" << endl;
+	}
+}
+
+void orbiter_symbol_table_entry::init_collection(std::string &label,
+		std::string &list_of_objects, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_collection" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_collection;
+
+	const char *p = list_of_objects.c_str();
+	char str[1000];
+
+	std::vector<std::string> *the_list;
+	the_list = new std::vector<std::string>;
+
+	while (TRUE) {
+		if (!s_scan_token_comma_separated(&p, str)) {
+			break;
+		}
+		string var;
+
+		var.assign(str);
+		if (f_v) {
+			cout << "adding object " << var << " to the collection" << endl;
+		}
+
+		the_list->push_back(var);
+
+	}
+
+
+	ptr = the_list;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_collection done" << endl;
+	}
+}
+
 void orbiter_symbol_table_entry::print()
 {
 	if (type == t_intvec) {
@@ -139,6 +196,23 @@ void orbiter_symbol_table_entry::print()
 		}
 		else if (object_type == t_orthogonal_space) {
 			cout << "orthogonal space" << endl;
+		}
+		else if (object_type == t_formula) {
+			cout << "formula" << endl;
+			formula *F;
+
+			F = (formula *) ptr;
+			F->print();
+		}
+		else if (object_type == t_collection) {
+			cout << "collection" << endl;
+			std::vector<std::string> *the_list;
+			int i;
+
+			the_list = (std::vector<std::string> *) ptr;
+			for (i = 0; i < the_list->size(); i++) {
+				cout << i << " : " << (*the_list)[i] << endl;
+			}
 		}
 #if 0
 		else if (object_type == t_action) {

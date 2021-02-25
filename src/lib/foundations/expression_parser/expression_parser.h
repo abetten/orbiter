@@ -62,6 +62,50 @@ class expression_parser {
 
 
 // #############################################################################
+// formula.cpp
+// #############################################################################
+
+
+
+//! front-end to expression
+
+
+
+
+class formula {
+
+
+public:
+
+	std::string name_of_formula;
+	std::string name_of_formula_latex;
+	std::string managed_variables;
+	std::string formula_text;
+	syntax_tree *tree;
+
+	int nb_managed_vars;
+
+	int f_is_homogeneous;
+	int degree;
+
+
+	formula();
+	~formula();
+	void print();
+	void init(std::string &label, std::string &label_tex,
+			std::string &managed_variables, std::string &formula_text,
+			int verbose_level);
+	void get_subtrees(homogeneous_polynomial_domain *Poly,
+			syntax_tree_node **&Subtrees, int &nb_monomials,
+			int verbose_level);
+	void evaluate(homogeneous_polynomial_domain *Poly,
+			syntax_tree_node **Subtrees, std::string &evaluate_text, int *Values,
+			int verbose_level);
+
+};
+
+
+// #############################################################################
 // lexer.cpp
 // #############################################################################
 

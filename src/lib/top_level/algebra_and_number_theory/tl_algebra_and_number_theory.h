@@ -455,6 +455,14 @@ public:
 	std::string eigenstuff_coeffs;
 	std::string eigenstuff_fname;
 
+	int f_field_reduction;
+	std::string field_reduction_label;
+	int field_reduction_q;
+	int field_reduction_m;
+	int field_reduction_n;
+	std::string field_reduction_text;
+
+
 
 	int f_parse;
 	std::string parse_name_of_formula;
@@ -999,8 +1007,8 @@ public:
 	data_input_stream *Data;
 
 
-	int f_fname_base_out;
-	std::string fname_base_out;
+	//int f_fname_base_out;
+	//std::string fname_base_out;
 
 	int f_canonical_form_PG;
 	//int canonical_form_PG_n;
@@ -1014,6 +1022,16 @@ public:
 	int f_cubic_surface_properties_analyze;
 	std::string cubic_surface_properties_fname_csv;
 	int cubic_surface_properties_defining_q;
+
+	int f_canonical_form_of_code;
+	std::string canonical_form_of_code_label;
+	int canonical_form_of_code_m;
+	int canonical_form_of_code_n;
+	std::string canonical_form_of_code_text;
+
+	int f_analyze_del_Pezzo_surface;
+	std::string analyze_del_Pezzo_surface_label;
+	std::string analyze_del_Pezzo_surface_parameters;
 
 
 	projective_space_activity_description();
@@ -1044,6 +1062,21 @@ public:
 	projective_space_activity();
 	~projective_space_activity();
 	void perform_activity(int verbose_level);
+	void analyze_del_Pezzo_surface(
+			projective_space_with_action *PA,
+			std::string &label,
+			std::string &evaluate_text,
+			int verbose_level);
+	void analyze_del_Pezzo_surface_formula_given(
+			projective_space_with_action *PA,
+			formula *F,
+			std::string &evaluate_text,
+			int verbose_level);
+	void canonical_form_of_code(
+			projective_space_with_action *PA,
+			std::string &label, int m, int n,
+			std::string &data,
+			int verbose_level);
 	void do_cubic_surface_properties(
 			projective_space_with_action *PA,
 			std::string fname_csv, int defining_q,

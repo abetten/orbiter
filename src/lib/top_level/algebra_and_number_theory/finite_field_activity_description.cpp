@@ -187,6 +187,13 @@ finite_field_activity_description::finite_field_activity_description()
 	//eigenstuff_coeffs = NULL;
 	//eigenstuff_fname = NULL;
 
+	f_field_reduction = FALSE;
+	//field_reduction_label
+	field_reduction_q = 0;
+	field_reduction_m = 0;
+	field_reduction_n = 0;
+	// field_reduction_text;
+
 	f_parse = FALSE;
 	//parse_name_of_formula
 	//parse_managed_variables
@@ -586,6 +593,20 @@ int finite_field_activity_description::read_arguments(
 			eigenstuff_fname.assign(argv[++i]);
 			cout << "-eigenstuff_from_file " << eigenstuff_n
 					<< " " << eigenstuff_fname << endl;
+		}
+		else if (stringcmp(argv[i], "-field_reduction") == 0) {
+			f_field_reduction = TRUE;
+			field_reduction_label.assign(argv[++i]);
+			field_reduction_q = strtoi(argv[++i]);
+			field_reduction_m = strtoi(argv[++i]);
+			field_reduction_n = strtoi(argv[++i]);
+			field_reduction_text.assign(argv[++i]);
+			cout << "-field_reduction "
+					<< " " << field_reduction_label
+					<< " " << field_reduction_q
+					<< " " << field_reduction_m
+					<< " " << field_reduction_n
+					<< " " << field_reduction_text << endl;
 		}
 		else if (stringcmp(argv[i], "-parse") == 0) {
 			f_parse = TRUE;

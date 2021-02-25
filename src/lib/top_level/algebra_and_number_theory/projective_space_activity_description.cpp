@@ -23,8 +23,10 @@ projective_space_activity_description::projective_space_activity_description()
 	f_input = FALSE;
 	Data = NULL;
 
+#if 0
 	f_fname_base_out = FALSE;
 	//fname_base_out;
+#endif
 
 	f_canonical_form_PG = FALSE;
 	//canonical_form_PG_n = 0;
@@ -39,6 +41,15 @@ projective_space_activity_description::projective_space_activity_description()
 	//std::string cubic_surface_properties_fname_csv;
 	cubic_surface_properties_defining_q = 0;
 
+	f_canonical_form_of_code = FALSE;
+	//canonical_form_of_code_label;
+	canonical_form_of_code_m = 0;
+	canonical_form_of_code_n = 0;
+	//canonical_form_of_code_text;
+
+	f_analyze_del_Pezzo_surface = FALSE;
+	//analyze_del_Pezzo_surface_label;
+	//analyze_del_Pezzo_surface_parameters;
 
 }
 
@@ -70,11 +81,13 @@ int projective_space_activity_description::read_arguments(
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
+#if 0
 		else if (stringcmp(argv[i], "-fname_base_out") == 0) {
 			f_fname_base_out = TRUE;
 			fname_base_out.assign(argv[++i]);
 			cout << "-fname_base_out " << fname_base_out << endl;
 		}
+#endif
 		else if (stringcmp(argv[i], "-canonical_form_PG") == 0) {
 			f_canonical_form_PG = TRUE;
 			//canonical_form_PG_n = strtoi(argv[++i]);
@@ -108,6 +121,28 @@ int projective_space_activity_description::read_arguments(
 			cubic_surface_properties_defining_q = strtoi(argv[++i]);
 			cout << "-cubic_surface_properties " << cubic_surface_properties_fname_csv
 					<< " " << cubic_surface_properties_defining_q << endl;
+		}
+		else if (stringcmp(argv[i], "-canonical_form_of_code") == 0) {
+			f_canonical_form_of_code = TRUE;
+			canonical_form_of_code_label.assign(argv[++i]);
+			canonical_form_of_code_m = strtoi(argv[++i]);
+			canonical_form_of_code_n = strtoi(argv[++i]);
+			canonical_form_of_code_text.assign(argv[++i]);
+			cout << "-canonical_form_of_code "
+					<< canonical_form_of_code_label << " "
+					<< canonical_form_of_code_m << " "
+					<< canonical_form_of_code_n << " "
+					<< canonical_form_of_code_text << " "
+					<< endl;
+		}
+		else if (stringcmp(argv[i], "-analyze_del_Pezzo_surface") == 0) {
+			f_analyze_del_Pezzo_surface = TRUE;
+			analyze_del_Pezzo_surface_label.assign(argv[++i]);
+			analyze_del_Pezzo_surface_parameters.assign(argv[++i]);
+			cout << "-analyze_del_Pezzo_surface "
+					<< analyze_del_Pezzo_surface_label << " "
+					<< analyze_del_Pezzo_surface_parameters << " "
+					<< endl;
 		}
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;

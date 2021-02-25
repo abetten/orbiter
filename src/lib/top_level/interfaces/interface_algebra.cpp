@@ -14,7 +14,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace interfaces {
+namespace top_level {
 
 
 interface_algebra::interface_algebra()

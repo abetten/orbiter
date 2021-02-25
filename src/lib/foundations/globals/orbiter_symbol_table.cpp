@@ -38,6 +38,7 @@ int orbiter_symbol_table::find_symbol(std::string &str)
 			return i;
 		}
 	}
+	cout << "orbiter_symbol_table::find_symbol " << str << " not found" << endl;
 	return -1;
 }
 

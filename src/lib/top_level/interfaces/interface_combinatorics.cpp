@@ -16,7 +16,7 @@ using namespace std;
 
 
 namespace orbiter {
-namespace interfaces {
+namespace top_level {
 
 
 
@@ -39,6 +39,7 @@ interface_combinatorics::interface_combinatorics()
 
 	f_bent = FALSE;
 	bent_n = 0;
+
 	f_random_permutation = FALSE;
 	random_permutation_degree = 0;
 	//random_permutation_fname_csv = NULL;

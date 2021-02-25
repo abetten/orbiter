@@ -2762,6 +2762,56 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 
 		}
 		cout << endl;
+
+
+		cout << "The weight enumerator is:" << endl;
+		for (i = 0; i <= n; i++) {
+			cout << i << " : " << weight_enumerator[i] << endl;
+		}
+
+		f_first = TRUE;
+
+		for (i = 0; i <= n; i++) {
+			if (weight_enumerator[i] == 0) {
+				continue;
+			}
+			if (f_first) {
+				f_first = FALSE;
+			}
+			else {
+				cout << " + ";
+			}
+			cout << weight_enumerator[i];
+			if (i) {
+				//cout << "*";
+				cout << "x";
+				if (i > 1) {
+					cout << "^";
+					if (i < 10) {
+						cout << i;
+					}
+					else {
+						cout << "{" << i << "}";
+					}
+				}
+			}
+			if (n - i) {
+				//cout << "*";
+				cout << "y";
+				if (n - i > 1) {
+					cout << "^";
+					if (n - i < 10) {
+						cout << n - i;
+					}
+					else {
+						cout << "{" << n - i << "}";
+					}
+				}
+			}
+
+		}
+		cout << endl;
+
 	}
 
 
@@ -3749,6 +3799,110 @@ void coding_theory_domain::place_binary(long int h, int &i, int &j)
 
 
 
+void coding_theory_domain::field_reduction(finite_field *FQ, finite_field *Fq,
+		std::string &label,
+		int m, int n, std::string &genma_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *M;
+	int sz;
+	int i;
+	int *M2;
+
+	if (f_v) {
+		cout << "coding_theory_domain::field_reduction" << endl;
+	}
+
+	subfield_structure *Sub;
+
+	Sub = NEW_OBJECT(subfield_structure);
+
+	Sub->init(FQ, Fq, verbose_level);
+
+	if (f_v) {
+		Sub->print_embedding();
+	}
+
+	int_vec_scan(genma_text, M, sz);
+
+	if (sz != m * n) {
+		cout << "sz != m * n" << endl;
+		exit(1);
+	}
+
+	M2 = NEW_int(Sub->s * m * Sub->s * n);
+
+	for (i = 0; i < m; i++) {
+		Sub->field_reduction(M + i * n, n, M2 + (i * Sub->s) * Sub->s * n,
+				verbose_level);
+	}
+
+
+	{
+		char str[1000];
+		string fname;
+		char title[1000];
+		char author[1000];
+
+		snprintf(str, 1000, "field_reduction_Q%d_q%d_%d_%d.tex", FQ->q, Fq->q, m, n);
+		fname.assign(str);
+		snprintf(title, 1000, "Field Reduction");
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		{
+			ofstream ost(fname);
+			latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+
+			ost << "$$" << endl;
+			ost << "\\left[" << endl;
+			L.int_matrix_print_tex(ost, M2, m * Sub->s, Sub->s * n);
+			ost << "\\right]" << endl;
+			ost << "$$" << endl;
+
+			int_vec_print_fully(ost, M2, m * Sub->s * Sub->s * n);
+			ost << "\\\\" << endl;
+
+
+
+			L.foot(ost);
+
+		}
+		file_io Fio;
+
+		cout << "coding_theory_domain::field_reduction written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+
+		string fname_csv;
+
+		fname_csv.assign(label);
+		fname_csv.append(".csv");
+
+		Fio.int_matrix_write_csv(fname_csv, M2, m * Sub->s, Sub->s * n);
+	}
+
+	FREE_int(M2);
+	FREE_OBJECT(Sub);
+
+	if (f_v) {
+		cout << "coding_theory_domain::field_reduction done" << endl;
+	}
+}
 
 
 

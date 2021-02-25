@@ -15,7 +15,7 @@
 using namespace std;
 
 namespace orbiter {
-namespace interfaces {
+namespace top_level {
 
 
 
@@ -50,6 +50,12 @@ interface_toolkit::interface_toolkit()
 	draw_matrix_partition_width = 0;
 	//std::string draw_matrix_partition_rows;
 	//std::string draw_matrix_partition_cols;
+
+	f_store_as_csv_file = FALSE;
+	//std::string> store_as_csv_file_fname;
+	store_as_csv_file_m = 0;
+	store_as_csv_file_n = 0;
+	//std::string store_as_csv_file_data;
 }
 
 
@@ -78,6 +84,10 @@ void interface_toolkit::print_help(int argc,
 		cout << "-draw_matrix_partition <int : width> "
 				"<string : row partition> <string : col partition> " << endl;
 	}
+	else if (stringcmp(argv[i], "-store_as_csv_file") == 0) {
+		cout << "-store_as_csv_file <string : fname> <int : m> "
+				"<int : n> <string : data> " << endl;
+	}
 }
 
 int interface_toolkit::recognize_keyword(int argc,
@@ -105,6 +115,9 @@ int interface_toolkit::recognize_keyword(int argc,
 		return true;
 	}
 	else if (stringcmp(argv[i], "-draw_matrix_partition") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-store_as_csv_file") == 0) {
 		return true;
 	}
 	return false;
@@ -171,6 +184,15 @@ int interface_toolkit::read_arguments(int argc,
 			draw_matrix_partition_cols.assign(argv[++i]);
 			cout << "-draw_matrix_partition " << draw_matrix_partition_rows
 					<< " " << draw_matrix_partition_cols << endl;
+		}
+		else if (stringcmp(argv[i], "-store_as_csv_file") == 0) {
+			f_store_as_csv_file = TRUE;
+			store_as_csv_file_fname.assign(argv[++i]);
+			store_as_csv_file_m = strtoi(argv[++i]);
+			store_as_csv_file_n = strtoi(argv[++i]);
+			store_as_csv_file_data.assign(argv[++i]);
+			cout << "-store_as_csv_file " << store_as_csv_file_fname
+					<< " " << store_as_csv_file_m << " " << store_as_csv_file_n << " " << store_as_csv_file_data << endl;
 		}
 		else {
 			break;
@@ -257,6 +279,26 @@ void interface_toolkit::worker(int verbose_level)
 					verbose_level);
 		}
 		FREE_int(M);
+	}
+	else if (f_store_as_csv_file) {
+		long int *D;
+		int sz;
+
+		cout << "f_store_as_csv_file" << endl;
+		cout << "data=" << store_as_csv_file_data << endl;
+
+		lint_vec_scan(store_as_csv_file_data, D, sz);
+		if (sz != store_as_csv_file_m * store_as_csv_file_n) {
+			cout << "sz != store_as_csv_file_m * store_as_csv_file_n" << endl;
+			cout << "sz = " << sz << endl;
+			cout << "store_as_csv_file_m = " << store_as_csv_file_m << endl;
+			cout << "store_as_csv_file_n = " << store_as_csv_file_n << endl;
+			exit(1);
+		}
+		file_io Fio;
+
+		Fio.lint_matrix_write_csv(store_as_csv_file_fname, D, store_as_csv_file_m, store_as_csv_file_n);
+		cout << "Written file " << store_as_csv_file_fname << " of size " << Fio.file_size(store_as_csv_file_fname) << endl;
 	}
 
 	if (f_v) {

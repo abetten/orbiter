@@ -2271,7 +2271,7 @@ void cryptography_domain::do_find_pseudoprime(int nb_digits, int nb_fermat, int 
 
 	int cnt = -1;
 
-	f << "\\begin{multicols}{2}" << endl;
+	//f << "\\begin{multicols}{2}" << endl;
 	f << "\\begin{enumerate}[(1)]" << endl;
 	while (TRUE) {
 
@@ -2300,29 +2300,41 @@ void cryptography_domain::do_find_pseudoprime(int nb_digits, int nb_fermat, int 
 			//f << "Fermat: The number $" << P << "$ is probably prime. Fermat test is inconclusive.\\\\" << endl;
 		}
 
-		f << "\\item" << endl;
-		if (D.miller_rabin_test_iterated_with_latex_key(f,
-				P, nb_miller_rabin,
-				verbose_level)) {
-			f << "Miller Rabin: The number $" << P << "$ is not prime.\\\\" << endl;
-			f << "\\end{enumerate}" << endl;
-			continue;
+
+		if (nb_miller_rabin) {
+			f << "\\item" << endl;
+			if (D.miller_rabin_test_iterated_with_latex_key(f,
+					P, nb_miller_rabin,
+					verbose_level)) {
+				f << "Miller Rabin: The number $" << P << "$ is not prime.\\\\" << endl;
+				f << "\\end{enumerate}" << endl;
+				continue;
+			}
+			else {
+				//f << "Miller Rabin: The number $" << P << "$ is probably prime. Miller Rabin test is inconclusive.\\\\" << endl;
+			}
 		}
 		else {
-			//f << "Miller Rabin: The number $" << P << "$ is probably prime. Miller Rabin test is inconclusive.\\\\" << endl;
+			f << "\\end{enumerate}" << endl;
+			break;
 		}
 
-
-		f << "\\item" << endl;
-		if (D.solovay_strassen_test_iterated_with_latex_key(f,
-				P, nb_solovay_strassen,
-				verbose_level)) {
-			//f << "Solovay-Strassen: The number $" << P << "$ is not prime.\\\\" << endl;
-			f << "\\end{enumerate}" << endl;
-			continue;
+		if (nb_solovay_strassen) {
+			f << "\\item" << endl;
+			if (D.solovay_strassen_test_iterated_with_latex_key(f,
+					P, nb_solovay_strassen,
+					verbose_level)) {
+				//f << "Solovay-Strassen: The number $" << P << "$ is not prime.\\\\" << endl;
+				f << "\\end{enumerate}" << endl;
+				continue;
+			}
+			else {
+				//f << "Solovay-Strassen: The number $" << P << "$ is probably prime. Solovay-Strassen test is inconclusive.\\\\" << endl;
+				f << "\\end{enumerate}" << endl;
+				break;
+			}
 		}
 		else {
-			//f << "Solovay-Strassen: The number $" << P << "$ is probably prime. Solovay-Strassen test is inconclusive.\\\\" << endl;
 			f << "\\end{enumerate}" << endl;
 			break;
 		}
@@ -2330,7 +2342,7 @@ void cryptography_domain::do_find_pseudoprime(int nb_digits, int nb_fermat, int 
 
 	}
 	f << "\\end{enumerate}" << endl;
-	f << "\\end{multicols}" << endl;
+	//f << "\\end{multicols}" << endl;
 
 	f << "\\noindent" << endl;
 	f << "The number $" << P << "$ is probably prime. \\\\" << endl;

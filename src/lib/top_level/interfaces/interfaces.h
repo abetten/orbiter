@@ -5,31 +5,16 @@
  *      Author: betten
  */
 
-#ifndef SRC_LIB_INTERFACES_INTERFACES_H_
-#define SRC_LIB_INTERFACES_INTERFACES_H_
+#ifndef SRC_LIB_TOP_LEVEL_INTERFACES_INTERFACES_H_
+#define SRC_LIB_TOP_LEVEL_INTERFACES_INTERFACES_H_
 
 
-using namespace orbiter::foundations;
-using namespace orbiter::group_actions;
-using namespace orbiter::classification;
-using namespace orbiter::discreta;
-using namespace orbiter::top_level;
 
 
 namespace orbiter {
+namespace top_level {
 
-//! classes to interface user input through the command line
 
-namespace interfaces {
-
-class interface_algebra;
-class interface_coding_theory;
-class interface_combinatorics;
-class interface_cryptography;
-class interface_povray;
-class interface_projective;
-class interface_toolkit;
-class orbiter_top_level_session;
 
 
 // #############################################################################
@@ -557,15 +542,33 @@ public:
 	interface_symbol_table();
 	void print_help(int argc, std::string *argv, int i, int verbose_level);
 	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
-	int read_arguments(int argc, std::string *argv, int i0, int verbose_level);
+	int read_arguments(
+			orbiter_top_level_session *Orbiter_top_level_session,
+			int argc, std::string *argv, int i0, int verbose_level);
+	void read_definition(
+			orbiter_top_level_session *Orbiter_top_level_session,
+			int argc, std::string *argv, int &i, int verbose_level);
+	void read_with(
+			orbiter_top_level_session *Orbiter_top_level_session,
+			int argc, std::string *argv, int &i, int verbose_level);
 	void read_activity_arguments(int argc,
 			std::string *argv, int &i, int verbose_level);
 	void worker(orbiter_top_level_session *Orbiter_top_level_session, int verbose_level);
-	void definition(orbiter_top_level_session *Orbiter_top_level_session,
+	//void definition(orbiter_top_level_session *Orbiter_top_level_session,
+	//		int verbose_level);
+	void definition_of_finite_field(orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 	void definition_of_projective_space(orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 	void definition_of_orthogonal_space(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void definition_of_linear_group(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void definition_of_formula(orbiter_top_level_session *Orbiter_top_level_session,
+			formula *F,
+			int verbose_level);
+	void definition_of_collection(orbiter_top_level_session *Orbiter_top_level_session,
+			std::string &list_of_objects,
 			int verbose_level);
 	void do_finite_field_activity(orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
@@ -622,6 +625,11 @@ class interface_toolkit {
 	std::string draw_matrix_partition_rows;
 	std::string draw_matrix_partition_cols;
 
+	int f_store_as_csv_file;
+	std::string store_as_csv_file_fname;
+	int store_as_csv_file_m;
+	int store_as_csv_file_n;
+	std::string store_as_csv_file_data;
 
 public:
 
@@ -640,9 +648,8 @@ public:
 // #############################################################################
 
 
-extern orbiter_top_level_session *The_Orbiter_top_level_session; // global top level Orbiter session
 
-//! The top level orbiter session is reponsible for the command line interface and the program execution and for the orbiter_session
+//! The top level orbiter session is responsible for the command line interface and the program execution and for the orbiter_session
 
 
 class orbiter_top_level_session {
@@ -677,4 +684,4 @@ public:
 }}
 
 
-#endif /* SRC_LIB_INTERFACES_INTERFACES_H_ */
+#endif /* SRC_LIB_TOP_LEVEL_INTERFACES_INTERFACES_H_ */

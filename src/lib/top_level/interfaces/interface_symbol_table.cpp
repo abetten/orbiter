@@ -15,7 +15,7 @@
 using namespace std;
 
 namespace orbiter {
-namespace interfaces {
+namespace top_level {
 
 
 
@@ -80,8 +80,9 @@ int interface_symbol_table::recognize_keyword(int argc,
 	return false;
 }
 
-int interface_symbol_table::read_arguments(int argc,
-		std::string *argv, int i0, int verbose_level)
+int interface_symbol_table::read_arguments(
+		orbiter_top_level_session *Orbiter_top_level_session,
+		int argc, std::string *argv, int i0, int verbose_level)
 {
 	int i;
 
@@ -89,99 +90,14 @@ int interface_symbol_table::read_arguments(int argc,
 
 	for (i = i0; i < argc; i++) {
 		if (stringcmp(argv[i], "-define") == 0) {
-			f_define = TRUE;
-			define_label.assign(argv[++i]);
-			i++;
-			cout << "-define " << define_label << endl;
-			if (stringcmp(argv[i], "-finite_field") == 0) {
-				f_finite_field = TRUE;
-				Finite_field_description = NEW_OBJECT(finite_field_description);
-				cout << "reading -finite_field" << endl;
-				i += Finite_field_description->read_arguments(argc - (i + 1),
-					argv + i + 1, verbose_level);
-
-				cout << "-finite_field" << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-			}
-			else if (stringcmp(argv[i], "-projective_space") == 0) {
-				f_projective_space = TRUE;
-				Projective_space_with_action_description = NEW_OBJECT(projective_space_with_action_description);
-				cout << "reading -projective_space" << endl;
-				i += Projective_space_with_action_description->read_arguments(argc - (i + 1),
-					argv + i + 1, verbose_level);
-				cout << "-projective_space" << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-			}
-			else if (stringcmp(argv[i], "-orthogonal_space") == 0) {
-				f_orthogonal_space = TRUE;
-				Orthogonal_space_with_action_description = NEW_OBJECT(orthogonal_space_with_action_description);
-				cout << "reading -orthogonal_space" << endl;
-				i += Orthogonal_space_with_action_description->read_arguments(argc - (i + 1),
-					argv + i + 1, verbose_level);
-				cout << "-orthogonal_space" << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-			}
-			else if (stringcmp(argv[i], "-linear_group") == 0) {
-				f_linear_group = TRUE;
-				Linear_group_description = NEW_OBJECT(linear_group_description);
-				cout << "reading -linear_group" << endl;
-				i += Linear_group_description->read_arguments(argc - (i + 1),
-					argv + i + 1, verbose_level);
-
-				cout << "-linear_group" << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-			}
-			else {
-				cout << "unrecognized command after -define" << endl;
-				exit(1);
-			}
+			read_definition(Orbiter_top_level_session, argc, argv, i, verbose_level);
 		}
 		else if (stringcmp(argv[i], "-print_symbols") == 0) {
 			f_print_symbols = TRUE;
 			cout << "-print_symbols" << endl;
 		}
 		else if (stringcmp(argv[i], "-with") == 0) {
-			f_with = TRUE;
-			string s;
-
-			s.assign(argv[++i]);
-			with_labels.push_back(s);
-
-			while (TRUE) {
-				i++;
-				if (stringcmp(argv[i], "-and") == 0) {
-					string s;
-
-					s.assign(argv[++i]);
-					with_labels.push_back(s);
-				}
-				else if (stringcmp(argv[i], "-do") == 0) {
-					i++;
-					read_activity_arguments(argc, argv, i, verbose_level);
-					break;
-				}
-				else {
-					cout << "syntax error after -with, seeing " << argv[i] << endl;
-					exit(1);
-				}
-			}
-			cout << "-with ..." << endl;
+			read_with(Orbiter_top_level_session, argc, argv, i, verbose_level);
 		}
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
@@ -198,6 +114,192 @@ int interface_symbol_table::read_arguments(int argc,
 	return i;
 }
 
+void interface_symbol_table::read_definition(
+		orbiter_top_level_session *Orbiter_top_level_session,
+		int argc, std::string *argv, int &i, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_symbol_table::read_definition" << endl;
+	}
+
+	//f_define = TRUE;
+	define_label.assign(argv[++i]);
+	if (f_v) {
+		cout << "interface_symbol_table::read_definition define_label=" << define_label << endl;
+	}
+	i++;
+	cout << "-define " << define_label << endl;
+	if (stringcmp(argv[i], "-finite_field") == 0) {
+		f_finite_field = TRUE;
+		Finite_field_description = NEW_OBJECT(finite_field_description);
+		cout << "reading -finite_field" << endl;
+		i += Finite_field_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		cout << "-finite_field" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition before definition_of_finite_field" << endl;
+		}
+		definition_of_finite_field(Orbiter_top_level_session, verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition after definition_of_finite_field" << endl;
+		}
+	}
+	else if (stringcmp(argv[i], "-projective_space") == 0) {
+		f_projective_space = TRUE;
+		Projective_space_with_action_description = NEW_OBJECT(projective_space_with_action_description);
+		cout << "reading -projective_space" << endl;
+		i += Projective_space_with_action_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+		cout << "-projective_space" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition before definition_of_projective_space" << endl;
+		}
+		definition_of_projective_space(Orbiter_top_level_session, verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition after definition_of_projective_space" << endl;
+		}
+	}
+	else if (stringcmp(argv[i], "-orthogonal_space") == 0) {
+		f_orthogonal_space = TRUE;
+		Orthogonal_space_with_action_description = NEW_OBJECT(orthogonal_space_with_action_description);
+		cout << "reading -orthogonal_space" << endl;
+		i += Orthogonal_space_with_action_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+		cout << "-orthogonal_space" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition before definition_of_orthogonal_space" << endl;
+		}
+		definition_of_orthogonal_space(Orbiter_top_level_session, verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition after definition_of_orthogonal_space" << endl;
+		}
+	}
+	else if (stringcmp(argv[i], "-linear_group") == 0) {
+		f_linear_group = TRUE;
+		Linear_group_description = NEW_OBJECT(linear_group_description);
+		cout << "reading -linear_group" << endl;
+		i += Linear_group_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		cout << "-linear_group" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition before definition_of_linear_group" << endl;
+		}
+		definition_of_linear_group(Orbiter_top_level_session, verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition after definition_of_linear_group" << endl;
+		}
+	}
+	else if (stringcmp(argv[i], "-formula") == 0) {
+		cout << "-formula" << endl;
+		string label;
+		string label_tex;
+		string managed_variables;
+		string formula_text;
+
+		label.assign(argv[++i]);
+		label_tex.assign(argv[++i]);
+		managed_variables.assign(argv[++i]);
+		formula_text.assign(argv[++i]);
+
+		formula *F;
+
+		F = NEW_OBJECT(formula);
+		F->init(label, label_tex, managed_variables, formula_text, verbose_level);
+
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition before definition_of_formula" << endl;
+		}
+		definition_of_formula(Orbiter_top_level_session, F, verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition after definition_of_formula" << endl;
+		}
+	}
+	else if (stringcmp(argv[i], "-collection") == 0) {
+		cout << "-collection" << endl;
+		string list_of_objects;
+
+		list_of_objects.assign(argv[++i]);
+
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition before definition_of_collection" << endl;
+		}
+		definition_of_collection(Orbiter_top_level_session, list_of_objects, verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition after definition_of_collection" << endl;
+		}
+	}
+	else {
+		cout << "unrecognized command after -define" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "interface_symbol_table::read_definition done" << endl;
+	}
+}
+
+void interface_symbol_table::read_with(
+		orbiter_top_level_session *Orbiter_top_level_session,
+		int argc, std::string *argv, int &i, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_symbol_table::read_with" << endl;
+	}
+
+	f_with = TRUE;
+	string s;
+
+	s.assign(argv[++i]);
+	with_labels.push_back(s);
+
+	while (TRUE) {
+		i++;
+		if (stringcmp(argv[i], "-and") == 0) {
+			string s;
+
+			s.assign(argv[++i]);
+			with_labels.push_back(s);
+		}
+		else if (stringcmp(argv[i], "-do") == 0) {
+			i++;
+			read_activity_arguments(argc, argv, i, verbose_level);
+			break;
+		}
+		else {
+			cout << "syntax error after -with, seeing " << argv[i] << endl;
+			exit(1);
+		}
+	}
+	if (f_v) {
+		cout << "interface_symbol_table::read_with done" << endl;
+	}
+
+}
 void interface_symbol_table::read_activity_arguments(int argc,
 		std::string *argv, int &i, int verbose_level)
 {
@@ -288,10 +390,15 @@ void interface_symbol_table::worker(orbiter_top_level_session *Orbiter_top_level
 
 	if (f_define) {
 
+#if 0
 		if (f_v) {
-			cout << "interface_symbol_table::worker f_define" << endl;
+			cout << "interface_symbol_table::worker f_define define_label=" << define_label << endl;
 		}
 		definition(Orbiter_top_level_session, verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::worker f_define define_label=" << define_label << " done" << endl;
+		}
+#endif
 	}
 	else if (f_print_symbols) {
 
@@ -335,132 +442,33 @@ void interface_symbol_table::worker(orbiter_top_level_session *Orbiter_top_level
 	}
 }
 
-void interface_symbol_table::definition(orbiter_top_level_session *Orbiter_top_level_session,
+
+void interface_symbol_table::definition_of_finite_field(orbiter_top_level_session *Orbiter_top_level_session,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "interface_symbol_table::definition" << endl;
+		cout << "interface_symbol_table::definition_of_finite_field" << endl;
 	}
-	if (f_finite_field) {
+	Finite_field_description->print();
+	finite_field *F;
 
-		if (f_v) {
-			cout << "interface_symbol_table::definition f_finite_field" << endl;
-		}
-		Finite_field_description->print();
-		finite_field *F;
+	F = NEW_OBJECT(finite_field);
+	F->init(Finite_field_description, verbose_level);
 
-		F = NEW_OBJECT(finite_field);
-		F->init(Finite_field_description, verbose_level);
-
-		orbiter_symbol_table_entry Symb;
-		Symb.init_finite_field(define_label, F, verbose_level);
-		if (f_v) {
-			cout << "interface_symbol_table::definition before add_symbol_table_entry" << endl;
-		}
-		Orbiter_top_level_session->add_symbol_table_entry(
-				define_label, &Symb, verbose_level);
-
-	}
-	else if (f_projective_space) {
-
-		if (f_v) {
-			cout << "interface_symbol_table::definition f_projective_space" << endl;
-		}
-
-		definition_of_projective_space(Orbiter_top_level_session, verbose_level);
-
-
-	}
-	else if (f_orthogonal_space) {
-
-		if (f_v) {
-			cout << "interface_symbol_table::definition f_orthogonal_space" << endl;
-		}
-
-		definition_of_orthogonal_space(Orbiter_top_level_session, verbose_level);
-
-
-	}
-	else if (f_linear_group) {
-
-		if (f_v) {
-			cout << "interface_symbol_table::definition f_linear_group" << endl;
-		}
-
-
-#if 0
-		finite_field *F;
-		F = NEW_OBJECT(finite_field);
-
-		if (Linear_group_description->f_override_polynomial) {
-			cout << "interface_symbol_table::definition "
-					"creating finite field of order q=" << Linear_group_description->input_q
-					<< " using override polynomial " << Linear_group_description->override_polynomial << endl;
-			F->init_override_polynomial(Linear_group_description->input_q,
-					Linear_group_description->override_polynomial, verbose_level - 3);
-		}
-		else {
-			cout << "interface_symbol_table::definition creating finite field "
-					"of order q=" << Linear_group_description->input_q
-					<< " using the default polynomial (if necessary)" << endl;
-			F->finite_field_init(Linear_group_description->input_q, 0);
-		}
-#else
-		finite_field *F;
-
-		if (string_starts_with_a_number(Linear_group_description->input_q)) {
-			int q;
-
-			q = strtoi(Linear_group_description->input_q);
-			if (f_v) {
-				cout << "interface_symbol_table::definition "
-						"creating finite field of order " << q << endl;
-			}
-			F = NEW_OBJECT(finite_field);
-			F->finite_field_init(q, 0);
-		}
-		else {
-			if (f_v) {
-				cout << "interface_symbol_table::definition "
-						"using existing finite field " << Linear_group_description->input_q << endl;
-			}
-			int idx;
-			idx = Orbiter_top_level_session->find_symbol(Linear_group_description->input_q);
-			F = (finite_field *) Orbiter_top_level_session->get_object(idx);
-		}
-
-
-#endif
-
-		Linear_group_description->F = F;
-		//q = Descr->input_q;
-
-		linear_group *LG;
-
-		LG = NEW_OBJECT(linear_group);
-		if (f_v) {
-			cout << "interface_symbol_table::definition before LG->init, "
-					"creating the group" << endl;
-		}
-
-		LG->linear_group_init(Linear_group_description, verbose_level - 5);
-
-		orbiter_symbol_table_entry Symb;
-		Symb.init_linear_group(define_label, LG, verbose_level);
-		if (f_v) {
-			cout << "interface_symbol_table::definition before add_symbol_table_entry" << endl;
-		}
-		Orbiter_top_level_session->add_symbol_table_entry(
-				define_label, &Symb, verbose_level);
-
-	}
+	orbiter_symbol_table_entry Symb;
+	Symb.init_finite_field(define_label, F, verbose_level);
 	if (f_v) {
-		cout << "interface_symbol_table::definition done" << endl;
+		cout << "interface_symbol_table::definition_of_finite_field before add_symbol_table_entry" << endl;
+	}
+	Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, &Symb, verbose_level);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_finite_field done" << endl;
 	}
 }
-
 
 void interface_symbol_table::definition_of_projective_space(orbiter_top_level_session *Orbiter_top_level_session,
 		int verbose_level)
@@ -603,6 +611,112 @@ void interface_symbol_table::definition_of_orthogonal_space(orbiter_top_level_se
 		cout << "interface_symbol_table::definition_of_orthogonal_space done" << endl;
 	}
 }
+
+void interface_symbol_table::definition_of_linear_group(orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_linear_group" << endl;
+	}
+
+	finite_field *F;
+
+	if (string_starts_with_a_number(Linear_group_description->input_q)) {
+		int q;
+
+		q = strtoi(Linear_group_description->input_q);
+		if (f_v) {
+			cout << "interface_symbol_table::definition "
+					"creating finite field of order " << q << endl;
+		}
+		F = NEW_OBJECT(finite_field);
+		F->finite_field_init(q, 0);
+	}
+	else {
+		if (f_v) {
+			cout << "interface_symbol_table::definition "
+					"using existing finite field " << Linear_group_description->input_q << endl;
+		}
+		int idx;
+		idx = Orbiter_top_level_session->find_symbol(Linear_group_description->input_q);
+		F = (finite_field *) Orbiter_top_level_session->get_object(idx);
+	}
+
+
+
+	Linear_group_description->F = F;
+	//q = Descr->input_q;
+
+	linear_group *LG;
+
+	LG = NEW_OBJECT(linear_group);
+	if (f_v) {
+		cout << "interface_symbol_table::definition before LG->init, "
+				"creating the group" << endl;
+	}
+
+	LG->linear_group_init(Linear_group_description, verbose_level - 5);
+
+	orbiter_symbol_table_entry Symb;
+	Symb.init_linear_group(define_label, LG, verbose_level);
+	if (f_v) {
+		cout << "interface_symbol_table::definition before add_symbol_table_entry" << endl;
+	}
+	Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, &Symb, verbose_level);
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_linear_group done" << endl;
+	}
+}
+
+void interface_symbol_table::definition_of_formula(orbiter_top_level_session *Orbiter_top_level_session,
+		formula *F,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_formula" << endl;
+	}
+
+	orbiter_symbol_table_entry Symb;
+	Symb.init_formula(define_label, F, verbose_level);
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_formula before add_symbol_table_entry" << endl;
+	}
+	Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, &Symb, verbose_level);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_formula done" << endl;
+	}
+}
+
+void interface_symbol_table::definition_of_collection(orbiter_top_level_session *Orbiter_top_level_session,
+		std::string &list_of_objects,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_collection" << endl;
+	}
+
+	orbiter_symbol_table_entry Symb;
+	Symb.init_collection(define_label, list_of_objects, verbose_level);
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_formula before add_symbol_table_entry" << endl;
+	}
+	Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, &Symb, verbose_level);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_collection done" << endl;
+	}
+}
+
 
 void interface_symbol_table::do_finite_field_activity(
 		orbiter_top_level_session *Orbiter_top_level_session,
