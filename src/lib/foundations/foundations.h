@@ -403,6 +403,8 @@ class syntax_tree_node;
 class expression_parser;
 class syntax_tree;
 class formula;
+class del_pezzo_surface_of_degree_two_domain;
+class del_pezzo_surface_of_degree_two_object;
 
 
 #ifdef MEMORY_DEBUG

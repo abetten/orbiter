@@ -1371,6 +1371,38 @@ int finite_field::multiplicative_order(int a)
 	return order;
 }
 
+void finite_field::all_square_roots(int a, int &nb_roots, int *roots2)
+{
+	if (a == 0) {
+		nb_roots = 1;
+		roots2[0] = 0;
+	}
+	else {
+		if (p == 2) {
+			// we are in characteristic two
+
+			nb_roots = 1;
+			roots2[0] = frobenius_power(a, e - 1 /* frob_power */);
+		}
+		else {
+			// we are in characteristic odd
+			int r;
+
+			r = log_alpha(a);
+			if (ODD(r)) {
+				nb_roots = 0;
+			}
+			else {
+				nb_roots = 2;
+
+				r >>= 1;
+				roots2[0] = alpha_power(r);
+				roots2[1] = negate(roots2[0]);
+			}
+		}
+	}
+}
+
 int finite_field::square_root(int i, int &root)
 {
 	int r;

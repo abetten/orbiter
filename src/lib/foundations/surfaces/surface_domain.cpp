@@ -709,14 +709,14 @@ int surface_domain::index_of_monomial(int *v)
 	return Poly3_4->index_of_monomial(v);
 }
 
-void surface_domain::unrank_point(int *v, int rk)
+void surface_domain::unrank_point(int *v, long int rk)
 {
 	P->unrank_point(v, rk);
 }
 
-int surface_domain::rank_point(int *v)
+long int surface_domain::rank_point(int *v)
 {
-	int rk;
+	long int rk;
 
 	rk = P->rank_point(v);
 	return rk;

@@ -175,6 +175,8 @@ MODULES= \
 		foundations/statistics/tally.o \
 		foundations/surfaces/arc_lifting_with_two_lines.o \
 		foundations/surfaces/clebsch_map.o \
+		foundations/surfaces/del_pezzo_surface_of_degree_two_domain.o \
+		foundations/surfaces/del_pezzo_surface_of_degree_two_object.o \
 		foundations/surfaces/eckardt_point_info.o \
 		foundations/surfaces/eckardt_point.o \
 		foundations/surfaces/schlaefli.o \

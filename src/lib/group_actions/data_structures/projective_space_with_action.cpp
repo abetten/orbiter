@@ -2602,14 +2602,14 @@ void projective_space_with_action::analyze_del_Pezzo_surface(formula *Formula,
 		Formula->print();
 	}
 
-	homogeneous_polynomial_domain *Poly;
+	homogeneous_polynomial_domain *Poly4_3;
 
-	Poly = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly4_3 = NEW_OBJECT(homogeneous_polynomial_domain);
 
 	if (f_v) {
 		cout << "projective_space_with_action::analyze_del_Pezzo_surface before Poly->init" << endl;
 	}
-	Poly->init(F,
+	Poly4_3->init(F,
 			Formula->nb_managed_vars /* nb_vars */, Formula->degree,
 			FALSE /* f_init_incidence_structure */,
 			t_PART,
@@ -2625,7 +2625,7 @@ void projective_space_with_action::analyze_del_Pezzo_surface(formula *Formula,
 	if (f_v) {
 		cout << "projective_space_with_action::analyze_del_Pezzo_surface before Formula->get_subtrees" << endl;
 	}
-	Formula->get_subtrees(Poly, Subtrees, nb_monomials, verbose_level);
+	Formula->get_subtrees(Poly4_3, Subtrees, nb_monomials, verbose_level);
 	if (f_v) {
 		cout << "projective_space_with_action::analyze_del_Pezzo_surface after Formula->get_subtrees" << endl;
 	}
@@ -2637,7 +2637,7 @@ void projective_space_with_action::analyze_del_Pezzo_surface(formula *Formula,
 		if (Subtrees[i]) {
 			Subtrees[i]->print_expression(cout);
 			cout << " * ";
-			Poly->print_monomial(cout, i);
+			Poly4_3->print_monomial(cout, i);
 			cout << endl;
 		}
 		else {
@@ -2650,7 +2650,7 @@ void projective_space_with_action::analyze_del_Pezzo_surface(formula *Formula,
 
 	Coefficient_vector = NEW_int(nb_monomials);
 
-	Formula->evaluate(Poly,
+	Formula->evaluate(Poly4_3,
 			Subtrees, evaluate_text, Coefficient_vector,
 			verbose_level);
 
@@ -2660,9 +2660,29 @@ void projective_space_with_action::analyze_del_Pezzo_surface(formula *Formula,
 		cout << endl;
 	}
 
+	del_pezzo_surface_of_degree_two_domain *del_Pezzo;
+
+	del_Pezzo = NEW_OBJECT(del_pezzo_surface_of_degree_two_domain);
+
+	del_Pezzo->init(P, Poly4_3, verbose_level);
+
+	del_pezzo_surface_of_degree_two_object *del_Pezzo_surface;
+
+	del_Pezzo_surface = NEW_OBJECT(del_pezzo_surface_of_degree_two_object);
+
+	del_Pezzo_surface->init(del_Pezzo,
+			Formula, Subtrees, Coefficient_vector,
+			verbose_level);
+
+	del_Pezzo_surface->enumerate_points_and_lines(verbose_level);
+
+	del_Pezzo_surface->create_latex_report(Formula->name_of_formula, Formula->name_of_formula_latex, verbose_level);
+
+	FREE_OBJECT(del_Pezzo_surface);
+	FREE_OBJECT(del_Pezzo);
 
 	FREE_int(Coefficient_vector);
-	FREE_OBJECT(Poly);
+	FREE_OBJECT(Poly4_3);
 
 	if (f_v) {
 		cout << "projective_space_with_action::analyze_del_Pezzo_surface done" << endl;

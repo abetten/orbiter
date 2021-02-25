@@ -129,6 +129,85 @@ public:
 
 
 // #############################################################################
+// del_pezzo_surface_of_degree_two_domain.cpp
+// #############################################################################
+
+//! domain for del Pezzo surfaces of degree two
+
+
+class del_pezzo_surface_of_degree_two_domain {
+
+public:
+	finite_field *F;
+	projective_space *P;
+	projective_space *P2;
+	grassmann *Gr; // Gr_{4,2}
+	grassmann *Gr3; // Gr_{4,3}
+	long int nb_lines_PG_3;
+	homogeneous_polynomial_domain *Poly4_3;
+		// quartic polynomials in three variables
+
+	del_pezzo_surface_of_degree_two_domain();
+	~del_pezzo_surface_of_degree_two_domain();
+	void init(
+			projective_space *P,
+			homogeneous_polynomial_domain *Poly4_3,
+			int verbose_level);
+	void enumerate_points(int *coeff,
+			std::vector<long int> &Pts,
+			int verbose_level);
+	void print_equation_with_line_breaks_tex(std::ostream &ost, int *coeffs);
+	void unrank_point(int *v, long int rk);
+	long int rank_point(int *v);
+	void print_lines_tex(std::ostream &ost, long int *Lines, int nb_lines);
+
+};
+
+
+// #############################################################################
+// del_pezzo_surface_of_degree_two_object.cpp
+// #############################################################################
+
+//! a del Pezzo surface of degree two
+
+
+class del_pezzo_surface_of_degree_two_object {
+
+public:
+	del_pezzo_surface_of_degree_two_domain *Dom;
+
+	formula *RHS;
+	syntax_tree_node **Subtrees;
+	int *Coefficient_vector;
+
+	long int *Pts;
+	int nb_pts;
+
+
+	long int *Lines;
+	int nb_lines;
+
+
+
+	del_pezzo_surface_of_degree_two_object();
+	~del_pezzo_surface_of_degree_two_object();
+	void init(
+			del_pezzo_surface_of_degree_two_domain *Dom,
+			formula *RHS, syntax_tree_node **Subtrees, int *Coefficient_vector,
+			int verbose_level);
+	void enumerate_points_and_lines(int verbose_level);
+	void create_latex_report(std::string &label, std::string &label_tex, int verbose_level);
+	void report_properties(std::ostream &ost, int verbose_level);
+	void print_equation(std::ostream &ost);
+	void print_points(std::ostream &ost);
+	void print_all_points_on_surface(std::ostream &ost);
+	void print_lines(std::ostream &ost);
+
+};
+
+
+
+// #############################################################################
 // eckardt_point_info.cpp
 // #############################################################################
 
@@ -577,8 +656,8 @@ public:
 	void label_variables_24(homogeneous_polynomial_domain *HPD,
 		int verbose_level);
 	int index_of_monomial(int *v);
-	void unrank_point(int *v, int rk);
-	int rank_point(int *v);
+	void unrank_point(int *v, long int rk);
+	long int rank_point(int *v);
 	void unrank_plane(int *v, long int rk);
 	long int rank_plane(int *v);
 	void enumerate_points(int *coeff,
