@@ -981,7 +981,7 @@ public:
 		finite_field *Fq,
 		std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
-	// the big field FQ is given
+		// the big field FQ is given
 	void create_BLT_from_database(int f_embedded,
 		int BLT_k,
 		std::string &fname, int &nb_pts, long int *&Pts,
@@ -1006,7 +1006,7 @@ public:
 		int f_construction_A, int f_hyperoval, int f_construction_B,
 		std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
-	// this is FQ
+		// this is FQ
 	void create_unital_XXq_YZq_ZYq(
 			std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
@@ -1028,7 +1028,7 @@ public:
 		int f_embedded_in_PG_4_q,
 		std::string &fname, int &nb_lines, long int *&Lines,
 		int verbose_level);
-	// this is FQ
+		// this is FQ
 	void do_Klein_correspondence(int n,
 			long int *set_in, int set_size,
 			long int *&the_set_out, int &set_size_out,
@@ -1062,7 +1062,7 @@ public:
 			long int *the_set_in, int set_size_in,
 			long int *&the_set_out, int &set_size_out,
 			int verbose_level);
-	// this is FQ
+		// this is FQ
 	void do_print_lines_in_PG(int n, long int *set_in, int set_size);
 	void do_print_points_in_PG(int n, long int *set_in, int set_size);
 	void do_print_points_in_orthogonal_space(
@@ -1186,9 +1186,12 @@ public:
 	void cheat_sheet(std::ostream &f, int verbose_level);
 	void cheat_sheet_subfields(std::ostream &f, int verbose_level);
 	void report_subfields(std::ostream &f, int verbose_level);
+	void report_subfields_detailed(std::ostream &ost, int verbose_level);
 	void cheat_sheet_addition_table(std::ostream &f, int verbose_level);
 	void cheat_sheet_multiplication_table(std::ostream &f, int verbose_level);
 	void cheat_sheet_power_table(std::ostream &f, int verbose_level);
+	void cheat_sheet_table_of_elements(std::ostream &ost, int verbose_level);
+	void print_element_as_polynomial(std::ostream &ost, int *v, int verbose_level);
 	void cheat_sheet_main_table(std::ostream &f, int verbose_level);
 	void cheat_sheet_main_table_top(std::ostream &f, int nb_cols);
 	void cheat_sheet_main_table_bottom(std::ostream &f);
@@ -2379,6 +2382,7 @@ public:
 	void init_with_given_basis(finite_field *FQ, finite_field *Fq, 
 		int *given_basis, int verbose_level);
 	void print_embedding();
+	void report(std::ostream &ost);
 	int evaluate_over_FQ(int *v);
 	int evaluate_over_Fq(int *v);
 	void lift_matrix(int *MQ, int m, int *Mq, int verbose_level);
@@ -2389,6 +2393,9 @@ public:
 	void create_adelaide_hyperoval(
 			std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
+	void field_reduction(int *input, int sz, int *output,
+			int verbose_level);
+	// input[sz], output[s * (sz * n)],
 
 };
 

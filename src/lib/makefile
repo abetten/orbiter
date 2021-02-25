@@ -72,6 +72,7 @@ MODULES= \
 		foundations/data_structures/super_fast_hash.o \
 		foundations/data_structures/vector_hashing.o \
 		foundations/expression_parser/expression_parser.o \
+		foundations/expression_parser/formula.o \
 		foundations/expression_parser/lexer.o \
 		foundations/expression_parser/syntax_tree_node_terminal.o \
 		foundations/expression_parser/syntax_tree_node.o \
@@ -374,6 +375,15 @@ MODULES= \
 		top_level/geometry/search_blocking_set.o \
 		top_level/geometry/singer_cycle.o \
 		top_level/geometry/tensor_classify.o \
+		top_level/interfaces/interface_algebra.o \
+		top_level/interfaces/interface_coding_theory.o \
+		top_level/interfaces/interface_combinatorics.o \
+		top_level/interfaces/interface_cryptography.o \
+		top_level/interfaces/interface_povray.o \
+		top_level/interfaces/interface_projective.o \
+		top_level/interfaces/interface_symbol_table.o \
+		top_level/interfaces/interface_toolkit.o \
+		top_level/interfaces/orbiter_top_level_session.o \
 		top_level/isomorph/isomorph.o \
 		top_level/isomorph/isomorph_arguments.o \
 		top_level/isomorph/isomorph_database.o \
@@ -435,16 +445,7 @@ MODULES= \
 		top_level/surfaces/surfaces_arc_lifting_trace.o \
 		top_level/surfaces/surfaces_arc_lifting_upstep.o \
 		top_level/surfaces/surfaces_arc_lifting.o \
-		top_level/surfaces/trihedral_pair_with_action.o \
-		interfaces/interface_algebra.o \
-		interfaces/interface_coding_theory.o \
-		interfaces/interface_combinatorics.o \
-		interfaces/interface_cryptography.o \
-		interfaces/interface_povray.o \
-		interfaces/interface_projective.o \
-		interfaces/interface_symbol_table.o \
-		interfaces/interface_toolkit.o \
-		interfaces/orbiter_top_level_session.o
+		top_level/surfaces/trihedral_pair_with_action.o 
 
 
 all:
@@ -453,7 +454,6 @@ all:
 	cd classification; $(MAKE)
 	cd DISCRETA; $(MAKE)
 	cd top_level; $(MAKE)
-	cd interfaces; $(MAKE)
 	ar ruvs liborbiter.a $(MODULES)
 
 
@@ -463,7 +463,6 @@ clean:
 	cd classification; $(MAKE) clean
 	cd DISCRETA; $(MAKE) clean
 	cd top_level; $(MAKE) clean
-	cd interfaces; $(MAKE) clean
 	- rm *.o *.a 
 
 

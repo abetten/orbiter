@@ -479,6 +479,21 @@ void finite_field_activity::perform_activity(int verbose_level)
 				Descr->eigenstuff_fname,
 				verbose_level);
 	}
+	else if (Descr->f_field_reduction) {
+
+		coding_theory_domain Coding;
+		finite_field *Fq;
+
+		Fq = NEW_OBJECT(finite_field);
+		Fq->finite_field_init(Descr->field_reduction_q, verbose_level);
+		Coding.field_reduction(F, Fq,
+				Descr->field_reduction_label,
+				Descr->field_reduction_m, Descr->field_reduction_n, Descr->field_reduction_text,
+				verbose_level);
+
+		FREE_OBJECT(Fq);
+
+	}
 	else if (Descr->f_parse) {
 
 		expression_parser Parser;

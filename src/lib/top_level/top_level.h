@@ -26,6 +26,8 @@ namespace orbiter {
 namespace top_level {
 
 
+
+
 class representatives;
 	// added 7/3/12
 class isomorph;
@@ -165,6 +167,25 @@ class projective_space_activity_description;
 class projective_space_activity;
 class orthogonal_space_activity_description;
 class orthogonal_space_activity;
+class interface_algebra;
+class interface_coding_theory;
+class interface_combinatorics;
+class interface_cryptography;
+class interface_povray;
+class interface_projective;
+class interface_toolkit;
+class orbiter_top_level_session;
+
+
+// #############################################################################
+// global variable:
+// #############################################################################
+
+
+
+extern orbiter_top_level_session *The_Orbiter_top_level_session; // global top level Orbiter session
+
+
 
 // #############################################################################
 // representatives.cpp
@@ -242,6 +263,7 @@ public:
 #include "./algebra_and_number_theory/tl_algebra_and_number_theory.h"
 #include "./combinatorics/tl_combinatorics.h"
 #include "./geometry/tl_geometry.h"
+#include "./interfaces/interfaces.h"
 #include "./isomorph/isomorph.h"
 #include "./orbits/orbits.h"
 #include "./semifields/semifields.h"

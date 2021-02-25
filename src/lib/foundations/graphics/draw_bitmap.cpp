@@ -37,6 +37,14 @@ void draw_bitmap(std::string &fname, int *M, int m, int n,
 		cout << "draw_bitmap" << endl;
 	}
 
+	if (f_partition) {
+		cout << "row_part: ";
+		int_vec_print(cout, Row_part, nb_row_parts);
+		cout << endl;
+		cout << "col_part: ";
+		int_vec_print(cout, Col_part, nb_col_parts);
+		cout << endl;
+	}
 	int i;
 	int max_value;
 
@@ -62,6 +70,9 @@ void draw_bitmap(std::string &fname, int *M, int m, int n,
 	if (max_value > 10000) {
 		cout << "draw_bitmap max_value > 10000" << endl;
 		exit(1);
+	}
+	if (max_value == 0) {
+		max_value = 1;
 	}
 	for (i = max_value; i >= 0; i--) {
 		std::vector<int> color = get_color(bit_depth, max_value, i, f_invert_colors, 1);

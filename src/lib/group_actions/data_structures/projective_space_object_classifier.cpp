@@ -1500,8 +1500,12 @@ void projective_space_object_classifier::latex_report(
 			TRUE /* f_tex */);
 		fp << "$$" << endl;
 
+#if 1
+		// possible overflow in long integers in tally because tally uses int
 		compute_and_print_ago_distribution_with_classes(fp,
 				CB, verbose_level);
+#endif
+
 
 		for (i = 0; i < CB->nb_types; i++) {
 

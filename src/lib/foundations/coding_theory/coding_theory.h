@@ -162,6 +162,10 @@ public:
 	void convert_to_binary(int n, long int h, int *v);
 	int distance(int n, int a, int b);
 	void place_binary(long int h, int &i, int &j);
+	void field_reduction(finite_field *FQ, finite_field *Fq,
+			std::string &label,
+			int m, int n, std::string &genma_text,
+			int verbose_level);
 
 
 

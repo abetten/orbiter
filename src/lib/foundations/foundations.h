@@ -402,6 +402,7 @@ class lexer;
 class syntax_tree_node;
 class expression_parser;
 class syntax_tree;
+class formula;
 
 
 #ifdef MEMORY_DEBUG

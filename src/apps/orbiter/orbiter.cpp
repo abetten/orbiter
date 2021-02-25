@@ -9,7 +9,7 @@
 
 using namespace std;
 using namespace orbiter;
-using namespace orbiter::interfaces;
+using namespace orbiter::top_level;
 
 int build_number =
 #include "../../../build_number"
@@ -24,6 +24,10 @@ int main(int argc, const char **argv)
 
 	orbiter_top_level_session Top_level_session;
 	int i;
+
+
+
+	The_Orbiter_top_level_session = &Top_level_session;
 
 
 	// setup:

@@ -400,6 +400,8 @@ enum symbol_table_object_type {
 	t_linear_group,
 	t_projective_space,
 	t_orthogonal_space,
+	t_formula,
+	t_collection,
 	t_action,
 	t_poset,
 	t_poset_classification,
@@ -432,6 +434,10 @@ public:
 			void *p, int verbose_level);
 	void init_orthogonal_space(std::string &label,
 			void *p, int verbose_level);
+	void init_formula(std::string &label,
+			void *p, int verbose_level);
+	void init_collection(std::string &label,
+			std::string &list_of_objects, int verbose_level);
 	void print();
 };
 

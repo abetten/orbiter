@@ -882,6 +882,10 @@ public:
 	void compute_group_of_set(long int *set, int set_sz,
 			strong_generators *&Sg,
 			int verbose_level);
+	void analyze_del_Pezzo_surface(formula *Formula,
+			std::string &evaluate_text,
+			int verbose_level);
+
 };
 
 //globals:

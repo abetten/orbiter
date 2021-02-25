@@ -2586,7 +2586,88 @@ void projective_space_with_action::compute_group_of_set(long int *set, int set_s
 }
 
 
+void projective_space_with_action::analyze_del_Pezzo_surface(formula *Formula,
+		std::string &evaluate_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "projective_space_with_action::analyze_del_Pezzo_surface" << endl;
+	}
+
+	if (f_v) {
+		cout << "projective_space_activity::analyze_del_Pezzo_surface" << endl;
+		cout << "formula:" << endl;
+		Formula->print();
+	}
+
+	homogeneous_polynomial_domain *Poly;
+
+	Poly = NEW_OBJECT(homogeneous_polynomial_domain);
+
+	if (f_v) {
+		cout << "projective_space_with_action::analyze_del_Pezzo_surface before Poly->init" << endl;
+	}
+	Poly->init(F,
+			Formula->nb_managed_vars /* nb_vars */, Formula->degree,
+			FALSE /* f_init_incidence_structure */,
+			t_PART,
+			verbose_level);
+	if (f_v) {
+		cout << "projective_space_with_action::analyze_del_Pezzo_surfaceafter Poly->init" << endl;
+	}
+
+
+	syntax_tree_node **Subtrees;
+	int nb_monomials;
+
+	if (f_v) {
+		cout << "projective_space_with_action::analyze_del_Pezzo_surface before Formula->get_subtrees" << endl;
+	}
+	Formula->get_subtrees(Poly, Subtrees, nb_monomials, verbose_level);
+	if (f_v) {
+		cout << "projective_space_with_action::analyze_del_Pezzo_surface after Formula->get_subtrees" << endl;
+	}
+
+	int i;
+
+	for (i = 0; i < nb_monomials; i++) {
+		cout << "Monomial " << i << " : ";
+		if (Subtrees[i]) {
+			Subtrees[i]->print_expression(cout);
+			cout << " * ";
+			Poly->print_monomial(cout, i);
+			cout << endl;
+		}
+		else {
+			cout << "no subtree" << endl;
+		}
+	}
+
+
+	int *Coefficient_vector;
+
+	Coefficient_vector = NEW_int(nb_monomials);
+
+	Formula->evaluate(Poly,
+			Subtrees, evaluate_text, Coefficient_vector,
+			verbose_level);
+
+	if (f_v) {
+		cout << "projective_space_with_action::analyze_del_Pezzo_surface coefficient vector:" << endl;
+		int_vec_print(cout, Coefficient_vector, nb_monomials);
+		cout << endl;
+	}
+
+
+	FREE_int(Coefficient_vector);
+	FREE_OBJECT(Poly);
+
+	if (f_v) {
+		cout << "projective_space_with_action::analyze_del_Pezzo_surface done" << endl;
+	}
+}
 
 // #############################################################################
 // globals:

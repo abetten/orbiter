@@ -15,8 +15,10 @@
 using namespace std;
 
 namespace orbiter {
-namespace interfaces {
+namespace top_level {
 
+
+orbiter_top_level_session *The_Orbiter_top_level_session; // global top level Orbiter session
 
 
 
@@ -147,7 +149,7 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 				if (f_v) {
 					cout << "recognizing keyword from Interface_symbol_table" << endl;
 				}
-				i = Interface_symbol_table.read_arguments(argc, Argv, i, verbose_level);
+				i = Interface_symbol_table.read_arguments(this, argc, Argv, i, verbose_level);
 				Interface_symbol_table.worker(this, verbose_level);
 			}
 		}
