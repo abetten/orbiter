@@ -7285,7 +7285,7 @@ mult_polynomials_1024_999_997_check:
 		-with F -do \
 		-finite_field_activity -parse "test" "" "a*b" -evaluate "a=999,b=997" -end
 
-del_Pezzo:
+del_Pezzo_13:
 	$(ORBITER_PATH)/orbiter.out -v 3 \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space 3 F -end \
@@ -7299,6 +7299,26 @@ del_Pezzo:
 	-with P -do \
 	-projective_space_activity \
 	-analyze_del_Pezzo_surface del_Pezzo13 ""
+	pdflatex del_Pezzo_F13a_report.tex
+	pdflatex del_Pezzo_F13b_report.tex
+	open del_Pezzo_F13a_report.pdf
+	open del_Pezzo_F13b_report.pdf
+
+
+del_Pezzo_169:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-define F -finite_field -q 169 -end \
+		-define P -projective_space 3 F -end \
+		-define f3 -formula "del_Pezzo_F169a" "del\_Pezzo\_F169a" "x,y,z" "x*x*x*x+y*y*y*y+z*z*z*z+8*x*x*y*y+8*x*x*z*z+8*y*y*z*z"  -end \
+		-define f4 -formula "del_Pezzo_F169b" "del\_Pezzo\_F169b" "x,y,z" "x*x*x*x+y*y*y*y+z*z*z*z-x*x*y*y"  -end \
+		-define del_Pezzo13 -collection "f3,f4" \
+	-with P -do \
+	-projective_space_activity \
+	-analyze_del_Pezzo_surface del_Pezzo13 ""
+	pdflatex del_Pezzo_F169a_report.tex
+	pdflatex del_Pezzo_F169b_report.tex
+	open del_Pezzo_F169a_report.pdf
+	open del_Pezzo_F169b_report.pdf
 
 
 ########################################################################################################

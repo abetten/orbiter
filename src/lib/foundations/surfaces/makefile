@@ -8,6 +8,8 @@ LFLAGS = -lm
 MODULES = \
 	arc_lifting_with_two_lines.o \
 	clebsch_map.o \
+	del_pezzo_surface_of_degree_two_domain.o \
+	del_pezzo_surface_of_degree_two_object.o \
 	eckardt_point_info.o \
 	eckardt_point.o \
 	schlaefli.o \

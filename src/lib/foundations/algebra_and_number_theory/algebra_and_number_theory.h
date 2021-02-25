@@ -378,6 +378,7 @@ public:
 	int alpha_power(int i);
 	int log_alpha(int i);
 	int multiplicative_order(int a);
+	void all_square_roots(int a, int &nb_roots, int *roots2);
 	int square_root(int i, int &root);
 	int primitive_root();
 	int N2(int a);
