@@ -247,10 +247,10 @@ void action_on_factor_space::init_by_rank_table_mode(
 				cout << setw(5) << i << " : "
 						<< setw(7) << coset_reps_Gauss[i] << " : ";
 				unrank_in_large_space(Tmp1, coset_reps_Gauss[i]);
-				int_vec_print(cout, Tmp1, VS->dimension);
+				Orbiter->Int_vec.print(cout, Tmp1, VS->dimension);
 				cout << setw(7) << preimage_table[i] << " : ";
 				unrank_in_large_space(Tmp1, preimage_table[i]);
-				int_vec_print(cout, Tmp1, VS->dimension);
+				Orbiter->Int_vec.print(cout, Tmp1, VS->dimension);
 				cout << endl;
 			}
 		}
@@ -274,7 +274,7 @@ void action_on_factor_space::print_coset_table()
 			cout << setw(5) << i << " : " << setw(7)
 					<< coset_reps_Gauss[i] << " : ";
 			unrank_in_large_space(Tmp1, coset_reps_Gauss[i]);
-			int_vec_print(cout, Tmp1, VS->dimension);
+			Orbiter->Int_vec.print(cout, Tmp1, VS->dimension);
 			cout << endl;
 		}
 	}
@@ -297,12 +297,12 @@ void action_on_factor_space::print_projection_table(
 			cout << setw(5) << i << " : "
 					<< setw(7) << point_list[i] << " : ";
 			unrank_in_large_space(Tmp1, point_list[i]);
-			int_vec_print(cout, Tmp1, VS->dimension);
+			Orbiter->Int_vec.print(cout, Tmp1, VS->dimension);
 			cout << " : " << setw(7) << projection_table[i] << " : ";
 			if (projection_table[i] >= 0) {
 				unrank_in_large_space(Tmp1,
 						coset_reps_Gauss[projection_table[i]]);
-				int_vec_print(cout, Tmp1, VS->dimension);
+				Orbiter->Int_vec.print(cout, Tmp1, VS->dimension);
 				}
 			cout << endl;
 		}
@@ -419,7 +419,7 @@ void action_on_factor_space::init_from_coordinate_vectors(
 	action_on_factor_space::subspace_basis_size = subspace_basis_size;
 	action_on_factor_space::subspace_basis =
 			NEW_int(subspace_basis_size * VS->dimension);
-	int_vec_copy(subspace_basis,
+	Orbiter->Int_vec.copy(subspace_basis,
 			action_on_factor_space::subspace_basis,
 			subspace_basis_size * VS->dimension);
 	if (f_v) {
@@ -512,7 +512,7 @@ void action_on_factor_space::init2(action &A_base,
 	}
 	if (FALSE /*f_v8*/) {
 		cout << "embedding: ";
-		int_vec_print(cout, embedding, factor_space_len);
+		Orbiter->Int_vec.print(cout, embedding, factor_space_len);
 		cout << endl;
 	}
 	degree = compute_degree();
@@ -606,7 +606,7 @@ void action_on_factor_space::list_all_elements()
 		for (i = 0; i < degree; i++) {
 			unrank(v, i, 0);
 			cout << setw(5) << i <<  " : ";
-			int_vec_print(cout, v, VS->dimension);
+			Orbiter->Int_vec.print(cout, v, VS->dimension);
 			j = rank(v, 0);
 			cout << " : " << setw(5) << j;
 			cout << endl;
@@ -622,11 +622,11 @@ void action_on_factor_space::list_all_elements()
 			j = project(i, 0);
 			unrank_in_large_space(v, i);
 			cout << " : " << setw(5) << i <<  " : ";
-			int_vec_print(cout, v, VS->dimension);
+			Orbiter->Int_vec.print(cout, v, VS->dimension);
 			cout << setw(5) << j << " : ";
 			if (j >= 0) {
 				unrank(v, j, 0);
-				int_vec_print(cout, v, VS->dimension);
+				Orbiter->Int_vec.print(cout, v, VS->dimension);
 				}
 			cout << endl;
 		}
@@ -640,10 +640,10 @@ void action_on_factor_space::list_all_elements()
 			unrank(v, i, 0);
 			j = preimage(i, 0);
 			cout << setw(5) << i <<  " : ";
-			int_vec_print(cout, v, VS->dimension);
+			Orbiter->Int_vec.print(cout, v, VS->dimension);
 			cout << setw(5) << j << " : ";
 			unrank_in_large_space(v, j);
-			int_vec_print(cout, v, VS->dimension);
+			Orbiter->Int_vec.print(cout, v, VS->dimension);
 			cout << endl;
 		}
 	}
@@ -697,7 +697,7 @@ long int action_on_factor_space::lexleast_element_in_coset(long int rk,
 	unrank_in_large_space(Tmp1, rk);
 	if (f_vv) {
 		cout << rk << "=";
-		int_vec_print(cout, Tmp1, VS->dimension);
+		Orbiter->Int_vec.print(cout, Tmp1, VS->dimension);
 		cout << endl;
 		}
 
@@ -726,11 +726,11 @@ long int action_on_factor_space::lexleast_element_in_coset(long int rk,
 			}
 		if (f_vvv) {
 			cout << "i=" << i << " : w=";
-			int_vec_print(cout, w, subspace_basis_size);
+			Orbiter->Int_vec.print(cout, w, subspace_basis_size);
 			cout << " v1=";
-			int_vec_print(cout, v1, VS->dimension);
+			Orbiter->Int_vec.print(cout, v1, VS->dimension);
 			cout << " v2=";
-			int_vec_print(cout, v2, VS->dimension);
+			Orbiter->Int_vec.print(cout, v2, VS->dimension);
 			cout << " b=" << b << " rk1=" << rk1 << endl;
 			}
 		}
@@ -765,7 +765,7 @@ long int action_on_factor_space::project_onto_Gauss_reduced_vector(
 		cout << "action_on_factor_space::project_"
 				"onto_Gauss_reduced_vector"
 				<< endl;
-		int_vec_print(cout, Tmp1, VS->dimension);
+		Orbiter->Int_vec.print(cout, Tmp1, VS->dimension);
 		cout << endl;
 		}
 	
@@ -774,7 +774,7 @@ long int action_on_factor_space::project_onto_Gauss_reduced_vector(
 		cout << "action_on_factor_space::project_"
 				"onto_Gauss_reduced_vector "
 				"after reduce_mod_subspace" << endl;
-		int_vec_print(cout, Tmp1, VS->dimension);
+		Orbiter->Int_vec.print(cout, Tmp1, VS->dimension);
 		cout << endl;
 		}
 
@@ -944,17 +944,17 @@ long int action_on_factor_space::rank(int *v, int verbose_level)
 		
 		w = tmp_w;
 		//w = NEW_int(len);
-		int_vec_copy(v, w, VS->dimension);
+		Orbiter->Int_vec.copy(v, w, VS->dimension);
 		reduce_mod_subspace(v, verbose_level - 1);
 		p = rank_in_large_space(v);
 		if (!Sorting.lint_vec_search(coset_reps_Gauss, nb_cosets, p, idx, 0)) {
 			cout << "action_on_factor_space::rank fatal: "
 					"did not find Gauss coset representative"
 					<< endl;
-			int_vec_print(cout, v, VS->dimension);
+			Orbiter->Int_vec.print(cout, v, VS->dimension);
 			cout << endl;
 			cout << "after reduce_mod_subspace" << endl;
-			int_vec_print(cout, w, VS->dimension);
+			Orbiter->Int_vec.print(cout, w, VS->dimension);
 			cout << endl;
 			cout << "has rank " << p << endl;
 			exit(1);
@@ -1022,7 +1022,7 @@ long int action_on_factor_space::compute_image(action *A,
 	if (f_v) {
 		cout << "action_on_factor_space::compute_"
 				"image after unrank:";
-		int_vec_print(cout, Tmp1, VS->dimension);
+		Orbiter->Int_vec.print(cout, Tmp1, VS->dimension);
 		cout << endl;
 		}
 	
@@ -1042,7 +1042,7 @@ long int action_on_factor_space::compute_image(action *A,
 	if (f_v) {
 		cout << "action_on_factor_space::compute_"
 				"image after element_image_of_low_level:";
-		int_vec_print(cout, Tmp2, VS->dimension);
+		Orbiter->Int_vec.print(cout, Tmp2, VS->dimension);
 		cout << endl;
 		}
 	

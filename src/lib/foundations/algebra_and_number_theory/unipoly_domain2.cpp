@@ -246,7 +246,7 @@ void unipoly_domain::division_with_remainder_with_report(long int rk_a, long int
 		pivot = B[db];
 		pivot_inv = F->inverse(pivot);
 
-		int_vec_zero(Q, dq + 1);
+		Orbiter->Int_vec.zero(Q, dq + 1);
 
 		ost << "\\begin{verbatim}" << endl;
 		print_repeated_character(ost, ' ', db + 1 + 3);

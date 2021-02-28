@@ -66,9 +66,10 @@ unipoly_domain::unipoly_domain(finite_field *F, unipoly_object m, int verbose_le
 	//factor_poly = m;
 	if (f_v) {
 		cout << "unipoly_domain::unipoly_domain factor_coeffs = ";
-		int_vec_print(cout, factor_coeffs, factor_degree + 1);
+		Orbiter->Int_vec.print(cout, factor_coeffs, factor_degree + 1);
 		cout << endl;
 	}
+	f_print_sub = FALSE;
 	if (f_v) {
 		cout << "unipoly_domain::unipoly_domain creating factorring done" << endl;
 	}
@@ -152,7 +153,7 @@ void unipoly_domain::create_object_by_rank(
 		}
 		if (f_v) {
 			cout << "unipoly_domain::create_object_by_rank modulo - (";
-			int_vec_print(cout,
+			Orbiter->Int_vec.print(cout,
 					factor_coeffs,
 					factor_degree + 1);
 			cout << ")" << endl;
@@ -197,7 +198,7 @@ void unipoly_domain::create_object_by_rank_longinteger(
 		}
 		if (f_v) {
 			cout << "unipoly_domain::create_object_by_rank_longinteger modulo - (";
-			int_vec_print(cout,
+			Orbiter->Int_vec.print(cout,
 					factor_coeffs,
 					factor_degree + 1);
 			cout << ")" << endl;
@@ -430,7 +431,7 @@ void unipoly_domain::assign(unipoly_object a, unipoly_object &b, int verbose_lev
 		if (f_v) {
 			cout << "unipoly_domain::assign with factorring";
 			cout << " modulo - (";
-			int_vec_print(cout,
+			Orbiter->Int_vec.print(cout,
 					factor_coeffs,
 					factor_degree + 1);
 			cout << ")" << endl;
@@ -734,7 +735,7 @@ void unipoly_domain::mult_mod_negated(unipoly_object a,
 		cout << " x ";
 		print_object(rb, cout);
 		cout << " modulo - (";
-		int_vec_print(cout,
+		Orbiter->Int_vec.print(cout,
 				factor_polynomial_coefficients_negated,
 			factor_polynomial_degree + 1);
 		cout << ")";
@@ -859,7 +860,7 @@ void unipoly_domain::Frobenius_matrix(int *&Frob,
 	}
 
 	Frob = NEW_int(factor_polynomial_degree * factor_polynomial_degree);
-	int_vec_zero(Frob,
+	Orbiter->Int_vec.zero(Frob,
 			factor_polynomial_degree * factor_polynomial_degree);
 	Frob[0] = 1; // the first column of Frob is (1,0,...,0)
 	
@@ -1078,7 +1079,7 @@ void unipoly_domain::division_with_remainder(
 		pivot = B[db];
 		pivot_inv = F->inverse(pivot);
 	
-		int_vec_zero(Q, dq + 1);
+		Orbiter->Int_vec.zero(Q, dq + 1);
 
 		for (i = da, j = dq; i >= db; i--, j--) {
 			x = R[i];
@@ -1476,7 +1477,7 @@ void unipoly_domain::compute_normal_basis(int d,
 		print_object(mue, cout);
 		cout << ")" << endl;
 	}
-	int_vec_zero(v, deg);
+	Orbiter->Int_vec.zero(v, deg);
 	v[0] = 1;
 
 	while (degree(mue) < deg) {
@@ -1515,7 +1516,7 @@ void unipoly_domain::compute_normal_basis(int d,
 			print_object(mue, cout);
 			cout << endl;
 			cout << "v = ";
-			int_vec_print(cout, v, deg);
+			Orbiter->Int_vec.print(cout, v, deg);
 			cout << endl;
 		}
 		
@@ -1535,7 +1536,7 @@ void unipoly_domain::compute_normal_basis(int d,
 		if (degree(GCD) < degree(lambda)) {
 		
 			// b = (0, 0, \ldots, 0, 1, 0, ..., 0) = X^i 
-			int_vec_zero(b, deg);
+			Orbiter->Int_vec.zero(b, deg);
 			b[i] = 1;
 			
 			exact_division(lambda, GCD, Q, 0 /* verbose_level - 2 */);
@@ -1659,7 +1660,7 @@ void unipoly_domain::compute_normal_basis(int d,
 	if (f_vv) {
 		cout << "unipoly_domain::compute_normal_basis "
 				"generator = ";
-		int_vec_print(cout, v, deg);
+		Orbiter->Int_vec.print(cout, v, deg);
 		cout << endl;
 	}
 
@@ -1755,7 +1756,7 @@ void unipoly_domain::order_ideal_generator(
 	int *v;
 
 	v = NEW_int(d);
-	int_vec_zero(v, d);
+	Orbiter->Int_vec.zero(v, d);
 	v[idx] = 1;
 	
 	if (f_v) {
@@ -1772,7 +1773,7 @@ void unipoly_domain::order_ideal_generator(
 		if (v[i]) {
 			cout << "unipoly_domain::order_ideal_generator "
 				"d=" << d << " idx = " << idx << " test fails, v=" << endl;
-			int_vec_print(cout, v, d);
+			Orbiter->Int_vec.print(cout, v, d);
 			cout << endl;
 			exit(1);
 		}
@@ -1815,13 +1816,13 @@ void unipoly_domain::matrix_apply(unipoly_object &p,
 	}
 	if (f_v) {
 		cout << "unipoly_domain::matrix_apply v1 = ";
-		int_vec_print(cout, v1, n);
+		Orbiter->Int_vec.print(cout, v1, n);
 		cout << endl;
 	}
 	F->mult_vector_from_the_right(Mtx, v1, v2, n, n);
 	if (f_v) {
 		cout << "unipoly_domain::matrix_apply v2 = ";
-		int_vec_print(cout, v2, n);
+		Orbiter->Int_vec.print(cout, v2, n);
 		cout << endl;
 	}
 
@@ -1879,10 +1880,10 @@ void unipoly_domain::substitute_matrix_in_polynomial(
 					0 /* verbose_level */);
 		}
 		else {
-			int_vec_copy(M2, M1, k * k);
+			Orbiter->Int_vec.copy(M2, M1, k * k);
 		}
 	}
-	int_vec_copy(M1, Mtx_out, k * k);
+	Orbiter->Int_vec.copy(M1, Mtx_out, k * k);
 
 	FREE_int(M1);
 	FREE_int(M2);
@@ -1948,7 +1949,7 @@ void unipoly_domain::module_structure_apply(int *v,
 	v1 = NEW_int(n);
 	v2 = NEW_int(n);
 
-	int_vec_copy(v, v1, n);
+	Orbiter->Int_vec.copy(v, v1, n);
 
 	d = degree(p);
 	int *pp;
@@ -1974,7 +1975,7 @@ void unipoly_domain::module_structure_apply(int *v,
 				"i = " << i << endl;
 			cout << "unipoly_domain::module_structure_apply "
 				"v1 = ";
-			int_vec_print(cout, v1, n);
+			Orbiter->Int_vec.print(cout, v1, n);
 			cout << endl;
 		}
 		
@@ -1985,7 +1986,7 @@ void unipoly_domain::module_structure_apply(int *v,
 				"i = " << i << endl;
 			cout << "unipoly_domain::module_structure_apply "
 				"v2 = ";
-			int_vec_print(cout, v1, n);
+			Orbiter->Int_vec.print(cout, v1, n);
 			cout << endl;
 		}
 
@@ -2006,7 +2007,7 @@ void unipoly_domain::module_structure_apply(int *v,
 				"i = " << i << endl;
 			cout << "unipoly_domain::module_structure_apply "
 				"v1 = ";
-			int_vec_print(cout, v1, n);
+			Orbiter->Int_vec.print(cout, v1, n);
 			cout << endl;
 		}
 

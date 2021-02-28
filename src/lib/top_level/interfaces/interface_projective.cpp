@@ -461,7 +461,7 @@ void interface_projective::do_create_surface_reports(int q_max, int verbose_leve
 
 			make_fname_surface_report_tex(fname, q, ocn);
 
-			cmd.assign(foundations::The_Orbiter_session->orbiter_path);
+			cmd.assign(Orbiter->orbiter_path);
 			cmd.append("/orbiter.out -v 2  ");
 
 			if (h > 1) {

@@ -160,7 +160,7 @@ int delandtsheer_doyen_description::read_arguments(
 				//row_type_cur[j] = 0;
 				}
 			cout << "-R ";
-			int_vec_print(cout, row_type + 1, nb_row_types);
+			Orbiter->Int_vec.print(cout, row_type + 1, nb_row_types);
 			cout << endl;
 		}
 		else if (stringcmp(argv[i], "-C") == 0) {
@@ -173,7 +173,7 @@ int delandtsheer_doyen_description::read_arguments(
 				//col_type_cur[j] = 0;
 				}
 			cout << "-C ";
-			int_vec_print(cout, col_type + 1, nb_col_types);
+			Orbiter->Int_vec.print(cout, col_type + 1, nb_col_types);
 			cout << endl;
 		}
 		else if (stringcmp(argv[i], "-masktest") == 0) {

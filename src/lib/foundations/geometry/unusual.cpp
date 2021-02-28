@@ -338,11 +338,8 @@ void unusual_model::setup2(
 	form_coeff = NEW_int(4 * 4);
 	Gram = NEW_int(4 * 4);
 
-	int_vec_zero(Gram, 4 * 4);
-#if 0
-	for (i = 0; i < 4 * 4; i++)
-		Gram[i] = 0;
-#endif
+	Orbiter->Int_vec.zero(Gram, 4 * 4);
+
 	if (f_sum_of_squares) {
 		Gg.add_term(4, *FQ, nb_terms, form_i, form_j, form_coeff, Gram, 0, 0, 1);
 		Gg.add_term(4, *FQ, nb_terms, form_i, form_j, form_coeff, Gram, 1, 1, 1);
@@ -711,7 +708,7 @@ void unusual_model::create_Fisher_BLT_set(
 	}
 	if (f_v) {
 		cout << nb_norm_one << " norm one elements reduced:" << endl;
-		int_vec_print(cout, norm_one_table, nb_norm_one);
+		Orbiter->Int_vec.print(cout, norm_one_table, nb_norm_one);
 		cout << endl;
 	}
 	if (nb_norm_one != (q + 1) / 2) {
@@ -770,7 +767,7 @@ void unusual_model::create_Linear_BLT_set(
 	}
 	if (f_v) {
 		cout << nb << " norm -1 elements reduced:" << endl;
-		int_vec_print(cout, norm_table, nb);
+		Orbiter->Int_vec.print(cout, norm_table, nb);
 		cout << endl;
 	}
 	if (nb != q + 1) {
@@ -856,7 +853,7 @@ void unusual_model::create_Mondello_BLT_set(
 	}
 	if (f_v) {
 		cout << nb_norm_one << " norm one elements:" << endl;
-		int_vec_print(cout, norm_one_table, nb_norm_one);
+		Orbiter->Int_vec.print(cout, norm_one_table, nb_norm_one);
 		cout << endl;
 	}
 	if (nb_norm_one != q + 1) {
@@ -1001,9 +998,9 @@ void unusual_model::print_coordinates_detailed(long int pt, int cnt)
 			<< b << ", " << c << " : " << setw(3) << a1
 			<< ", " << setw(4) << a2 << ", " << setw(3)
 			<< b1 << ", " << setw(4) << b2 << ", 1) : ";
-	int_vec_print(cout, unusual, 3);
+	Orbiter->Int_vec.print(cout, unusual, 3);
 	cout << " : " << unusual_point_rank << " : ";
-	int_vec_print(cout, usual, 5);
+	Orbiter->Int_vec.print(cout, usual, 5);
 	cout << " : ";
 	x = N2(a);
 	y = N2(b);

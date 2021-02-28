@@ -432,7 +432,7 @@ long int finite_field::Qminus_rank(int *v,
 			cout << "c1=" << c1 << endl;
 			cout << "c2=" << c2 << endl;
 			cout << "c3=" << c3 << endl;
-			int_vec_print(cout, v, k + 1);
+			Orbiter->Int_vec.print(cout, v, k + 1);
 			cout << endl;
 			exit(1);
 		}
@@ -1097,7 +1097,7 @@ void finite_field::Sbar_rank(int *v, int stride, int n, long int &a, int verbose
 	if (f_v) {
 		cout << "finite_field::Sbar_rank: ";
 		if (stride == 1) {
-			int_vec_print(cout, v, 2 * n);
+			Orbiter->Int_vec.print(cout, v, 2 * n);
 			cout << endl;
 		}
 	}
@@ -1115,7 +1115,7 @@ void finite_field::Sbar_rank(int *v, int stride, int n, long int &a, int verbose
 			cout << "finite_field::Sbar_rank "
 					"error in Sbar_rank n = 1 bad vector" << endl;
 			if (stride == 1) {
-				int_vec_print(cout, v, 2);
+				Orbiter->Int_vec.print(cout, v, 2);
 				}
 			exit(1);
 			}
@@ -1274,7 +1274,7 @@ void finite_field::Gram_matrix(int epsilon, int k,
 		cout << "finite_field::Gram_matrix" << endl;
 	}
 	Gram = NEW_int(d * d);
-	int_vec_zero(Gram, d * d);
+	Orbiter->Int_vec.zero(Gram, d * d);
 	n = Gg.Witt_index(epsilon, k);
 	if (epsilon == 0) {
 		Gram[0 * d + 0] = add(form_c1, form_c1);
@@ -1421,13 +1421,13 @@ void finite_field::Siegel_map_between_singular_points(int *T,
 			form_c1, form_c2, form_c3, rk_to, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "    root=";
-		int_vec_print(cout, B, d);
+		Orbiter->Int_vec.print(cout, B, d);
 		cout << endl;
 		cout << " rk_from=";
-		int_vec_print(cout, B + d, d);
+		Orbiter->Int_vec.print(cout, B + d, d);
 		cout << endl;
 		cout << "   rk_to=";
-		int_vec_print(cout, w, d);
+		Orbiter->Int_vec.print(cout, w, d);
 		cout << endl;
 	}
 
@@ -1442,10 +1442,10 @@ void finite_field::Siegel_map_between_singular_points(int *T,
 	if (f_vv) {
 		cout << "after scaling:" << endl;
 		cout << " rk_from=";
-		int_vec_print(cout, B + d, d);
+		Orbiter->Int_vec.print(cout, B + d, d);
 		cout << endl;
 		cout << "   rk_to=";
-		int_vec_print(cout, w, d);
+		Orbiter->Int_vec.print(cout, w, d);
 		cout << endl;
 	}
 	for (i = 2; i < d; i++) {
@@ -1471,20 +1471,20 @@ void finite_field::Siegel_map_between_singular_points(int *T,
 	mult_matrix_matrix(w, Bv, z, 1, d, d, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the coefficient vector z = w * Bv is:" << endl;
-		int_vec_print(cout, z, d);
+		Orbiter->Int_vec.print(cout, z, d);
 		cout << endl;
 	}
 	z[0] = 0;
 	z[1] = 0;
 	if (f_vv) {
 		cout << "we zero out the first two coordinates:" << endl;
-		int_vec_print(cout, z, d);
+		Orbiter->Int_vec.print(cout, z, d);
 		cout << endl;
 	}
 	mult_matrix_matrix(z, B, x, 1, d, d, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the vector x = z * B is:" << endl;
-		int_vec_print(cout, x, d);
+		Orbiter->Int_vec.print(cout, x, d);
 		cout << endl;
 	}
 	minus_one = negate(1);
@@ -1493,7 +1493,7 @@ void finite_field::Siegel_map_between_singular_points(int *T,
 	}
 	if (f_vv) {
 		cout << "the vector -x is:" << endl;
-		int_vec_print(cout, x, d);
+		Orbiter->Int_vec.print(cout, x, d);
 		cout << endl;
 	}
 	Siegel_Transformation(epsilon, d - 1,
@@ -1533,9 +1533,9 @@ void finite_field::Siegel_Transformation(
 	if (f_v) {
 		cout << "finite_field::Siegel_Transformation "
 				"v=";
-		int_vec_print(cout, v, d);
+		Orbiter->Int_vec.print(cout, v, d);
 		cout << " u=";
-		int_vec_print(cout, u, d);
+		Orbiter->Int_vec.print(cout, u, d);
 		cout << endl;
 	}
 	Gram_matrix(epsilon, k,

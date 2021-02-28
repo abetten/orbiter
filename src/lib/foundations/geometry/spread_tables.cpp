@@ -283,7 +283,7 @@ void spread_tables::classify_self_dual_spreads(int *&type,
 		cout << "spread_tables::classify_self_dual_spreads" << endl;
 	}
 	type = NEW_int(nb_iso_types_of_spreads);
-	int_vec_zero(type, nb_iso_types_of_spreads);
+	Orbiter->Int_vec.zero(type, nb_iso_types_of_spreads);
 	for (i = 0; i < nb_self_dual_spreads; i++) {
 		a = spread_iso_type[i];
 		type[a]++;
@@ -567,7 +567,7 @@ void spread_tables::compute_adjacency_matrix(
 		int *color;
 
 		color = NEW_int(nb_spreads);
-		int_vec_zero(color, nb_spreads);
+		Orbiter->Int_vec.zero(color, nb_spreads);
 
 		CG->init(nb_spreads, 1, 1,
 				color, Bitvec,
@@ -836,7 +836,7 @@ void spread_tables::compute_iso_type_invariant(
 	}
 
 	Iso_type_invariant = NEW_int(nb_pp * nb_iso_types_of_spreads);
-	int_vec_zero(Iso_type_invariant, nb_pp * nb_iso_types_of_spreads);
+	Orbiter->Int_vec.zero(Iso_type_invariant, nb_pp * nb_iso_types_of_spreads);
 	for (i = 0; i < nb_pp; i++) {
 		for (j = 0; j < sz; j++) {
 			a = Partial_packings[i * sz + j];

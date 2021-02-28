@@ -174,12 +174,7 @@ void action_on_spread_set::matrix_to_subspace(
 {
 	int i, j;
 	
-	int_vec_zero(subspace, k * n);
-#if 0
-	for (i = 0; i < k * n; i++) {
-		subspace[i] = 0;
-		}
-#endif
+	Orbiter->Int_vec.zero(subspace, k * n);
 	for (i = 0; i < k; i++) {
 		subspace[i * n + i] = 1;
 		for (j = 0; j < k; j++) {
@@ -229,7 +224,7 @@ void action_on_spread_set::unrank_point(
 				"rk = " << rk << endl;
 		}
 	G_PGL_k_q->element_unrank_lint(rk, Elt1);
-	int_vec_copy(Elt1, mtx, k * k);
+	Orbiter->Int_vec.copy(Elt1, mtx, k * k);
 	if (f_v) {
 		cout << "action_on_spread_set::unrank_point done" << endl;
 		}

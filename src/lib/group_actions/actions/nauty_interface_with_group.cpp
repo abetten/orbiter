@@ -324,12 +324,12 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph_with_part
 					"partition_and_labeling: "
 					"The group order is = " << Ago << endl;
 			cout << "transversal length: ";
-			int_vec_print(cout, Transversal_length, Base_length);
+			Orbiter->Int_vec.print(cout, Transversal_length, Base_length);
 			cout << endl;
 			}
 		}
 
-	int_vec_copy_to_lint(Base, Base_lint, Base_length);
+	Orbiter->Int_vec.copy_to_lint(Base, Base_lint, Base_length);
 
 #if 0
 	for (i = 0; i < n; i++) {
@@ -342,7 +342,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph_with_part
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph_with_"
 				"partition_and_labeling: "
 				"labeling:" << endl;
-		int_vec_print(cout, labeling, n);
+		Orbiter->Int_vec.print(cout, labeling, n);
 		cout << endl;
 		//cout << "labeling_inv:" << endl;
 		//int_vec_print(cout, labeling_inv, n);
@@ -351,7 +351,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph_with_part
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph_with_"
 				"partition_and_labeling: "
 				"Base:" << endl;
-		int_vec_print(cout, Base, Base_length);
+		Orbiter->Int_vec.print(cout, Base, Base_length);
 		cout << endl;
 
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph_with_"
@@ -414,7 +414,7 @@ void nauty_interface_with_group::create_incidence_matrix_of_graph(int *Adj, int 
 			}
 		}
 	M = NEW_int(n * nb_cols);
-	int_vec_zero(M, n * nb_cols);
+	Orbiter->Int_vec.zero(M, n * nb_cols);
 	u = 0;
 	for (i = 0; i < n; i++) {
 		for (j = i + 1; j < n; j++) {
@@ -498,7 +498,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph(
 				"after nauty_interface_graph_int Ago=" << Ago << endl;
 		}
 
-	int_vec_copy_to_lint(Base, Base_lint, Base_length);
+	Orbiter->Int_vec.copy_to_lint(Base, Base_lint, Base_length);
 
 	action *A;
 	longinteger_object ago;
@@ -594,7 +594,7 @@ action *nauty_interface_with_group::create_automorphism_group_and_canonical_labe
 				"after nauty_interface_graph_int" << endl;
 		}
 
-	int_vec_copy_to_lint(Base, Base_lint, Base_length);
+	Orbiter->Int_vec.copy_to_lint(Base, Base_lint, Base_length);
 
 	action *A;
 	longinteger_object ago;
@@ -643,7 +643,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_block_system(
 		cout << "nauty_interface_with_group::create_automorphism_group_of_block_system" << endl;
 		}
 	M = NEW_int(nb_points * nb_blocks);
-	int_vec_zero(M, nb_points * nb_blocks);
+	Orbiter->Int_vec.zero(M, nb_points * nb_blocks);
 	for (j = 0; j < nb_blocks; j++) {
 		for (h = 0; h < block_size; h++) {
 			i = Blocks[j * block_size + h];
@@ -681,7 +681,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_collection_of_t
 	nb_rows = nb_points + 2;
 
 	M = NEW_int(nb_rows * nb_cols);
-	int_vec_zero(M, nb_rows * nb_cols);
+	Orbiter->Int_vec.zero(M, nb_rows * nb_cols);
 
 	// first system:
 	for (j = 0; j < nb_blocks1; j++) {
@@ -878,7 +878,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_incidence_struc
 			}
 		}
 
-	int_vec_copy_to_lint(Base, Base_lint, Base_length);
+	Orbiter->Int_vec.copy_to_lint(Base, Base_lint, Base_length);
 
 #if 0
 	for (i = 0; i < m + n; i++) {
@@ -891,7 +891,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_incidence_struc
 		cout << "nauty_interface_with_group::create_automorphism_group_of_"
 				"incidence_structure_with_partition: "
 				"labeling:" << endl;
-		int_vec_print(cout, labeling, m + n);
+		Orbiter->Int_vec.print(cout, labeling, m + n);
 		cout << endl;
 		//cout << "labeling_inv:" << endl;
 		//int_vec_print(cout, labeling_inv, m + n);
@@ -1064,7 +1064,7 @@ void nauty_interface_with_group::do_self_dual_self_polar(int input_no,
 			}
 		}
 
-	int_vec_copy_to_lint(Base, Base_lint, Base_length);
+	Orbiter->Int_vec.copy_to_lint(Base, Base_lint, Base_length);
 
 #if 0
 	for (i = 0; i < m + n; i++) {

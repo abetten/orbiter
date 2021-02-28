@@ -148,7 +148,7 @@ void grassmann_embedded::init(int big_n, int n,
 	}
 	if (f_v) {
 		cout << "base_cols:" << endl;
-		int_vec_print(cout, base_cols, rk);
+		Orbiter->Int_vec.print(cout, base_cols, rk);
 		cout << endl;
 	}
 	if (rk != n) {
@@ -171,7 +171,7 @@ void grassmann_embedded::init(int big_n, int n,
 	}
 	if (f_v) {
 		cout << "embedding: ";
-		int_vec_print(cout, embedding, big_n - n);
+		Orbiter->Int_vec.print(cout, embedding, big_n - n);
 		cout << endl;
 	}
 	C.q_binomial(deg, n, k, q, 0);
@@ -336,10 +336,10 @@ long int grassmann_embedded::rank_lint(
 			print_integer_matrix_width(cout,
 					M, n, big_n, big_n, F->log10_of_q);
 			cout << "Tmp1:" << endl;
-			int_vec_print(cout, Tmp1, n);
+			Orbiter->Int_vec.print(cout, Tmp1, n);
 			cout << endl;
 			cout << "Tmp2:" << endl;
-			int_vec_print(cout, Tmp2, big_n);
+			Orbiter->Int_vec.print(cout, Tmp2, big_n);
 			cout << endl;
 			exit(1);
 		}

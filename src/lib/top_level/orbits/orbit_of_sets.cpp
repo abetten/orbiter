@@ -197,7 +197,7 @@ void orbit_of_sets::compute(int verbose_level)
 						cout << "reallocate Extra" << endl;
 					}
 					Extra2 = NEW_int(al2 * 2);
-					int_vec_copy(Extra, Extra2, allocation_length * 2);
+					Orbiter->Int_vec.copy(Extra, Extra2, allocation_length * 2);
 					FREE_int(Extra);
 					Extra = Extra2;
 

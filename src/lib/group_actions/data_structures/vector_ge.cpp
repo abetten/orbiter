@@ -756,11 +756,11 @@ void vector_ge::extract_subset_of_elements_by_rank_text_vector(
 	int *v;
 	int len;
 
-	int_vec_scan(rank_vector_text, v, len);
+	Orbiter->Int_vec.scan(rank_vector_text, v, len);
 	if (f_v) {
 		cout << "vector_ge::extract_subset_of_elements_"
 				"by_rank_text_vector after scanning: ";
-		int_vec_print(cout, v, len);
+		Orbiter->Int_vec.print(cout, v, len);
 		cout << endl;
 	}
 	extract_subset_of_elements_by_rank(v, len, S, verbose_level);

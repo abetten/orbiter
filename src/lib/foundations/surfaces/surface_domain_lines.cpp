@@ -283,7 +283,7 @@ void surface_domain::compute_intersection_points_and_indices(int *Adj,
 	}
 	Intersection_pt = NEW_int(nb_lines * nb_lines);
 	Intersection_pt_idx = NEW_int(nb_lines * nb_lines);
-	int_vec_mone(Intersection_pt, nb_lines * nb_lines);
+	Orbiter->Int_vec.mone(Intersection_pt, nb_lines * nb_lines);
 	for (j1 = 0; j1 < nb_lines; j1++) {
 		a1 = Lines[j1];
 		for (j2 = j1 + 1; j2 < nb_lines; j2++) {
@@ -539,7 +539,7 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 			Perp[rk], Perp_sz[rk], verbose_level - 1);
 		if (f_v) {
 			cout << "surface_domain::create_double_six_from_five_lines_with_a_common_transversal the perp of the subset ";
-			int_vec_print(cout, subset, 4);
+			Orbiter->Int_vec.print(cout, subset, 4);
 			cout << " has size " << Perp_sz[rk] << " : ";
 			lint_vec_print(cout, Perp[rk], Perp_sz[rk]);
 			cout << endl;
@@ -941,7 +941,7 @@ void surface_domain::create_the_fifteen_other_lines(
 		if (f_v) {
 			cout << "plane " << h << " / " << 30
 				<< " has rank " << Planes[h] << " and basis ";
-			int_vec_print(cout, Basis0, 12);
+			Orbiter->Int_vec.print(cout, Basis0, 12);
 			cout << endl;
 		}
 	}
@@ -972,7 +972,7 @@ void surface_domain::create_the_fifteen_other_lines(
 			cout << "line " << h << " / " << 15
 				<< " has rank " << Lines[h]
 				<< " and basis ";
-			int_vec_print(cout, Basis0, 8);
+			Orbiter->Int_vec.print(cout, Basis0, 8);
 			cout << endl;
 		}
 	}
@@ -1014,7 +1014,7 @@ void surface_domain::compute_adjacency_matrix_of_line_intersection_graph(
 	}
 
 	Adj = NEW_int(n * n);
-	int_vec_zero(Adj, n * n);
+	Orbiter->Int_vec.zero(Adj, n * n);
 	for (i = 0; i < n; i++) {
 		for (j = i + 1; j < n; j++) {
 			if (O->evaluate_bilinear_form_by_rank(
@@ -1054,7 +1054,7 @@ void surface_domain::compute_adjacency_matrix_of_line_disjointness_graph(
 	}
 
 	Adj = NEW_int(n * n);
-	int_vec_zero(Adj, n * n);
+	Orbiter->Int_vec.zero(Adj, n * n);
 	for (i = 0; i < n; i++) {
 		for (j = i + 1; j < n; j++) {
 			if (O->evaluate_bilinear_form_by_rank(
@@ -1101,8 +1101,8 @@ void surface_domain::compute_points_on_lines(
 		//int_vec_print(cout, Basis, 8);
 		//cout << " : ";
 		for (j = 0; j < nb_points_on_surface; j++) {
-			int_vec_copy(Basis, Mtx, 8);
-			int_vec_copy(Surf_pt_coords + j * 4, Mtx + 8, 4);
+			Orbiter->Int_vec.copy(Basis, Mtx, 8);
+			Orbiter->Int_vec.copy(Surf_pt_coords + j * 4, Mtx + 8, 4);
 			r = F->Gauss_easy(Mtx, 3, 4);
 			if (r == 2) {
 				pts_on_lines->add_element(i, j);
@@ -1323,7 +1323,7 @@ void surface_domain::rearrange_lines_according_to_starter_configuration(
 
 	if (f_v) {
 		cout << "The 5+1 lines are ";
-		int_vec_print(cout, Line_idx, 6);
+		Orbiter->Int_vec.print(cout, Line_idx, 6);
 		cout << endl;
 	}
 
@@ -1343,11 +1343,11 @@ void surface_domain::rearrange_lines_according_to_starter_configuration(
 			cout << i << " / " << 5 << ":" << endl;
 		}
 
-		int_vec_copy(Line_idx, four_lines, i);
-		int_vec_copy(Line_idx + i + 1, four_lines + i, 5 - i - 1);
+		Orbiter->Int_vec.copy(Line_idx, four_lines, i);
+		Orbiter->Int_vec.copy(Line_idx + i + 1, four_lines + i, 5 - i - 1);
 		if (f_v) {
 			cout << "four_lines=";
-			int_vec_print(cout, four_lines, 4);
+			Orbiter->Int_vec.print(cout, four_lines, 4);
 			cout << endl;
 		}
 
@@ -1360,7 +1360,7 @@ void surface_domain::rearrange_lines_according_to_starter_configuration(
 	}
 
 	int five_lines_idx[5];
-	int_vec_copy(Line_idx + 6, five_lines_idx, 5);
+	Orbiter->Int_vec.copy(Line_idx + 6, five_lines_idx, 5);
 	Line_idx[5] = intersection_of_five_lines(Adj,
 		five_lines_idx, verbose_level);
 	if (f_v) {
@@ -1513,8 +1513,8 @@ void surface_domain::create_lines_from_plane_equations(
 	for (line_idx = 0; line_idx < 27; line_idx++) {
 		Schlaefli->find_tritangent_planes_intersecting_in_a_line(
 			line_idx, plane1, plane2, 0 /* verbose_level */);
-		int_vec_copy(The_plane_equations + plane1 * 4, Basis, 4);
-		int_vec_copy(The_plane_equations + plane2 * 4, Basis + 4, 4);
+		Orbiter->Int_vec.copy(The_plane_equations + plane1 * 4, Basis, 4);
+		Orbiter->Int_vec.copy(The_plane_equations + plane2 * 4, Basis + 4, 4);
 		F->perp_standard(4, 2, Basis, 0 /* verbose_level */);
 		Lines27[line_idx] = rank_line(Basis + 8);
 	}
@@ -1698,7 +1698,7 @@ int surface_domain::compute_transversals_of_any_four(
 			if (f_v) {
 				cout << "The 4-subset does not lead "
 						"to two transversal lines: ";
-				int_vec_print(cout, subset, 4);
+				Orbiter->Int_vec.print(cout, subset, 4);
 				cout << " = ";
 				lint_vec_print(cout, four_lines, 4);
 				cout << " perp_sz=" << perp_sz << endl;

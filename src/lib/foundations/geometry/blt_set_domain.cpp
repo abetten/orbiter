@@ -303,10 +303,10 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 	O->unrank_point(v2, 1, p2, 0);
 	if (f_vv) {
 		cout << "p1=" << p1 << " ";
-		int_vec_print(cout, v1, 5);
+		Orbiter->Int_vec.print(cout, v1, 5);
 		cout << endl;
 		cout << "p2=" << p2 << " ";
-		int_vec_print(cout, v2, 5);
+		Orbiter->Int_vec.print(cout, v2, 5);
 		cout << endl;
 	}
 	if (p1 != starter[0]) {
@@ -360,7 +360,7 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 
 	if (f_vv) {
 		cout << "starter_t:" << endl;
-		int_vec_print(cout, starter_t, starter_sz);
+		Orbiter->Int_vec.print(cout, starter_t, starter_sz);
 		cout << endl;
 	}
 
@@ -397,7 +397,7 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 		lint_vec_print(cout, free_pts, nb_colors);
 		cout << endl;
 		cout << "The " << nb_colors << " open colors are :" << endl;
-		int_vec_print(cout, open_colors, nb_colors);
+		Orbiter->Int_vec.print(cout, open_colors, nb_colors);
 		cout << endl;
 	}
 	for ( ; j < q; j++) {
@@ -405,7 +405,7 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 	}
 	if (f_vv) {
 		cout << "open_colors :" << endl;
-		int_vec_print(cout, open_colors, q);
+		Orbiter->Int_vec.print(cout, open_colors, q);
 		cout << endl;
 	}
 	for (i = 0; i < q; i++) {
@@ -414,7 +414,7 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 	}
 	if (f_vv) {
 		cout << "open_colors_inv :" << endl;
-		int_vec_print(cout, open_colors_inv, q);
+		Orbiter->Int_vec.print(cout, open_colors_inv, q);
 		cout << endl;
 	}
 
@@ -424,7 +424,7 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 		if (f_vv) {
 			cout << "candidate " << i << " / " << nb_candidates
 					<< " is " << candidates[i] << " = ";
-			int_vec_print(cout, v3, 5);
+			Orbiter->Int_vec.print(cout, v3, 5);
 			cout << endl;
 		}
 		a = O->evaluate_bilinear_form(v1, v3, 1);
@@ -442,7 +442,7 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 			cout << "i=" << i << endl;
 			cout << "candidates[i]=" << candidates[i] << endl;
 			cout << "as vector: ";
-			int_vec_print(cout, v3, 5);
+			Orbiter->Int_vec.print(cout, v3, 5);
 			cout << endl;
 			cout << "a=" << a << endl;
 			cout << "b=" << b << endl;
@@ -457,7 +457,7 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 
 	if (f_vv) {
 		cout << "point colors:" << endl;
-		int_vec_print(cout, point_color, nb_candidates);
+		Orbiter->Int_vec.print(cout, point_color, nb_candidates);
 		cout << endl;
 	}
 
@@ -503,7 +503,7 @@ void blt_set_domain::early_test_func(long int *S, int len,
 						0/*verbose_level - 4*/);
 				cout << "candidate " << i << "="
 						<< candidates[i] << ": ";
-				int_vec_print(cout, v, 5);
+				Orbiter->Int_vec.print(cout, v, 5);
 				cout << endl;
 			}
 		}
@@ -703,7 +703,7 @@ int blt_set_domain::collinearity_test(long int *S, int len, int verbose_level)
 		cout << "blt_set_domain::collinearity_test test for" << endl;
 		for (i = 0; i < len; i++) {
 			O->unrank_point(O->v1, 1, S[i], 0);
-			int_vec_print(cout, O->v1, n);
+			Orbiter->Int_vec.print(cout, O->v1, n);
 			cout << endl;
 		}
 	}
@@ -721,9 +721,9 @@ int blt_set_domain::collinearity_test(long int *S, int len, int verbose_level)
 				cout << "not OK; ";
 				cout << "{x,y}={" << x << ","
 						<< y << "} are collinear" << endl;
-				int_vec_print(cout, O->v1, n);
+				Orbiter->Int_vec.print(cout, O->v1, n);
 				cout << endl;
-				int_vec_print(cout, O->v2, n);
+				Orbiter->Int_vec.print(cout, O->v2, n);
 				cout << endl;
 				cout << "fxy=" << fxy << endl;
 			}
@@ -745,7 +745,7 @@ void blt_set_domain::print(ostream &ost, long int *S, int len)
 
 	for (i = 0; i < len; i++) {
 		O->unrank_point(O->v1, 1, S[i], 0);
-		int_vec_print(ost, O->v1, n);
+		Orbiter->Int_vec.print(ost, O->v1, n);
 		ost << endl;
 	}
 }

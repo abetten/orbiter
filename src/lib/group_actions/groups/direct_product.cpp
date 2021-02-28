@@ -195,7 +195,7 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 		cout << endl;
 		cout << "direct_product::init "
 				"tl_for_component1 = ";
-		int_vec_print(cout, tl_for_component1,
+		Orbiter->Int_vec.print(cout, tl_for_component1,
 				base_len_in_component1);
 		cout << endl;
 	}
@@ -213,7 +213,7 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 		lint_vec_print(cout, base_for_component2, base_len_in_component2);
 		cout << endl;
 		cout << "direct_product::init tl_for_component2 = ";
-		int_vec_print(cout, tl_for_component2, base_len_in_component2);
+		Orbiter->Int_vec.print(cout, tl_for_component2, base_len_in_component2);
 		cout << endl;
 	}
 
@@ -235,7 +235,7 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 		lint_vec_print(cout, the_base, base_length);
 		cout << endl;
 		cout << "direct_product::init the_transversal_length = ";
-		int_vec_print(cout, the_transversal_length, base_length);
+		Orbiter->Int_vec.print(cout, the_transversal_length, base_length);
 		cout << endl;
 	}
 
@@ -366,7 +366,7 @@ void direct_product::element_move(int *A, int *B, int verbose_level)
 	if (f_v) {
 		cout << "direct_product::element_move" << endl;
 	}
-	int_vec_copy(A, B, elt_size_int);
+	Orbiter->Int_vec.copy(A, B, elt_size_int);
 	if (f_v) {
 		cout << "direct_product::element_move done" << endl;
 	}
@@ -501,7 +501,7 @@ void direct_product::make_element(int *Elt, int *data, int verbose_level)
 		}
 	if (f_v) {
 		cout << "direct_product::make_element data:" << endl;
-		int_vec_print(cout, data, make_element_size);
+		Orbiter->Int_vec.print(cout, data, make_element_size);
 		cout << endl;
 	}
 	M1->make_element(Elt + offset_i(0),
@@ -627,26 +627,26 @@ void direct_product::make_strong_generators_data(int *&data,
 	h = 0;
 	// generators for the second component:
 	for (g = 0; g < GL2_nb_gens; g++) {
-		int_vec_zero(dat, size);
+		Orbiter->Int_vec.zero(dat, size);
 		F1->identity_matrix(
 					dat,
 					dimension_of_matrix_group1);
-		int_vec_copy(GL2_data + g * GL2_size,
+		Orbiter->Int_vec.copy(GL2_data + g * GL2_size,
 					dat + M1->make_element_size,
 					GL2_size);
-		int_vec_copy(dat, data + h * size, size);
+		Orbiter->Int_vec.copy(dat, data + h * size, size);
 		h++;
 	}
 	// generators for the first component:
 	for (g = 0; g < GL1_nb_gens; g++) {
-		int_vec_zero(dat, size);
-		int_vec_copy(GL1_data + g * GL1_size,
+		Orbiter->Int_vec.zero(dat, size);
+		Orbiter->Int_vec.copy(GL1_data + g * GL1_size,
 					dat + 0,
 					GL1_size);
 		F2->identity_matrix(
 					dat + M1->make_element_size,
 					dimension_of_matrix_group2);
-		int_vec_copy(dat, data + h * size, size);
+		Orbiter->Int_vec.copy(dat, data + h * size, size);
 		h++;
 	}
 	if (h != nb_gens) {

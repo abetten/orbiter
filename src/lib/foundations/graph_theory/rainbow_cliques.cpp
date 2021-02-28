@@ -274,7 +274,7 @@ int rainbow_cliques::find_candidates(
 	// color_frequency[i] is the frequency of points with color i 
 	// in the list pt_list[]:
 
-	int_vec_zero(color_frequency, graph->nb_colors);
+	Orbiter->Int_vec.zero(color_frequency, graph->nb_colors);
 	for (i = 0; i < nb_pts; i++) {
 		pt = pt_list[i];
 		if (pt >= graph->nb_points) {
@@ -294,7 +294,7 @@ int rainbow_cliques::find_candidates(
 	}
 	if (f_v) {
 		cout << "rainbow_cliques::find_candidates color_frequency: ";
-		int_vec_print(cout, color_frequency, graph->nb_colors);
+		Orbiter->Int_vec.print(cout, color_frequency, graph->nb_colors);
 		cout << endl;
 	}
 
@@ -308,7 +308,7 @@ int rainbow_cliques::find_candidates(
 						"satisfied color appears with positive "
 						"frequency" << endl;
 				cout << "current clique:";
-				int_vec_print(cout, current_clique, current_clique_size);
+				Orbiter->Int_vec.print(cout, current_clique, current_clique_size);
 				cout << endl;
 				exit(1);
 			}

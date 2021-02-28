@@ -424,7 +424,7 @@ void buekenhout_metz::create_unital(int verbose_level)
 
 	if (f_v) {
 		cout << "The vertex is:" << endl;
-		int_vec_print(cout, w1, 5);
+		Orbiter->Int_vec.print(cout, w1, 5);
 		cout << endl;
 		}
 	
@@ -435,7 +435,7 @@ void buekenhout_metz::create_unital(int verbose_level)
 		P3->unrank_point(w2, a);
 		if (f_vv) {
 			cout << i << "-th ovoidal point is " << a << " : ";
-			int_vec_print(cout, w2, 4);
+			Orbiter->Int_vec.print(cout, w2, 4);
 			cout << endl;
 			}
 
@@ -455,7 +455,7 @@ void buekenhout_metz::create_unital(int verbose_level)
 		w3[4] = w2[3];
 		if (f_vv) {
 			cout << "after embedding:" << endl;
-			int_vec_print(cout, w3, 5);
+			Orbiter->Int_vec.print(cout, w3, 5);
 			cout << endl;
 			}
 		
@@ -468,7 +468,7 @@ void buekenhout_metz::create_unital(int verbose_level)
 				}
 			if (f_vvv) {
 				cout << "w4:" << endl;
-				int_vec_print(cout, w4, 5);
+				Orbiter->Int_vec.print(cout, w4, 5);
 				cout << endl;
 				}
 			
@@ -478,7 +478,7 @@ void buekenhout_metz::create_unital(int verbose_level)
 			w5[5] = 0;
 			if (f_vvv) {
 				cout << "w5 (with added 0):" << endl;
-				int_vec_print(cout, w5, 6);
+				Orbiter->Int_vec.print(cout, w5, 6);
 				cout << endl;
 				}
 
@@ -492,7 +492,7 @@ void buekenhout_metz::create_unital(int verbose_level)
 
 			if (f_vvv) {
 				cout << " : ";
-				int_vec_print(cout, v, 3);
+				Orbiter->Int_vec.print(cout, v, 3);
 				//cout << endl;
 				}
 
@@ -558,7 +558,7 @@ void buekenhout_metz::create_unital_tex(int verbose_level)
 		P3->unrank_point(w2, a);
 		if (FALSE) {
 			cout << i << "-th ovoidal point is " << a << " : ";
-			int_vec_print(cout, w2, 4);
+			Orbiter->Int_vec.print(cout, w2, 4);
 			cout << endl;
 			}
 
@@ -574,7 +574,7 @@ void buekenhout_metz::create_unital_tex(int verbose_level)
 		w3[4] = w2[3];
 		if (FALSE) {
 			cout << "after embedding:" << endl;
-			int_vec_print(cout, w3, 5);
+			Orbiter->Int_vec.print(cout, w3, 5);
 			cout << endl;
 			}
 		cout << "(";
@@ -602,7 +602,7 @@ void buekenhout_metz::create_unital_tex(int verbose_level)
 				}
 			if (FALSE) {
 				cout << "w4:" << endl;
-				int_vec_print(cout, w4, 5);
+				Orbiter->Int_vec.print(cout, w4, 5);
 				cout << endl;
 				}
 			
@@ -612,7 +612,7 @@ void buekenhout_metz::create_unital_tex(int verbose_level)
 			w5[5] = 0;
 			if (FALSE) {
 				cout << "w5 (with added 0):" << endl;
-				int_vec_print(cout, w5, 6);
+				Orbiter->Int_vec.print(cout, w5, 6);
 				cout << endl;
 				}
 
@@ -626,7 +626,7 @@ void buekenhout_metz::create_unital_tex(int verbose_level)
 
 			if (FALSE) {
 				cout << " : ";
-				int_vec_print(cout, v, 3);
+				Orbiter->Int_vec.print(cout, v, 3);
 				//cout << endl;
 				}
 			FQ->int_vec_print_field_elements(cout, v, 3);
@@ -1360,7 +1360,7 @@ int buekenhout_metz_check_good_points(int len,
 
 	if (f_v) {
 		cout << "buekenhout_metz_check_good_points checking the set ";
-		int_vec_print(cout, S, len);
+		Orbiter->Int_vec.print(cout, S, len);
 		cout << endl;
 		}
 	for (i = 0; i < len; i++) {

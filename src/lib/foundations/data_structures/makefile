@@ -1,6 +1,6 @@
 DISCRETA_CPP = g++
 DISCRETA_CC = gcc
-CPPFLAGS = -Wall -O3 -march=native -funroll-loops -I..
+CPPFLAGS = -Wall -O3 -march=native -funroll-loops -I.. -std=c++14
 # -frename-registers
 LIB = 
 LFLAGS = -lm
@@ -14,6 +14,7 @@ MODULES = \
 	data_structures_global.o \
 	fancy_set.o \
 	int_matrix.o \
+	int_vec.o \
 	int_vector.o \
 	page_storage.o \
 	partitionstack.o \

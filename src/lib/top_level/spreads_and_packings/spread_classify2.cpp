@@ -2416,7 +2416,7 @@ void spread_classify::cooperstein_thas_quotients(isomorph &Iso,
 
 		Mtx->GFq->PG_element_unrank_modified(vec1, 1, n, the_point);
 		Mtx->GFq->PG_element_normalize_from_front(vec1, 1, n);
-		pivot = int_vec_find_first_nonzero_entry(vec1, n);
+		pivot = Orbiter->Int_vec.find_first_nonzero_entry(vec1, n);
 
 		for (i = 0; i < order + 1; i++) {
 			if (Sorting.lint_vec_search(Pts[i], nb_points, the_point, idx, 0)) {
@@ -2442,7 +2442,7 @@ void spread_classify::cooperstein_thas_quotients(isomorph &Iso,
 		for (i = 0; i < order; i++) {
 			a = data[List[i]];
 			Grass->unrank_lint_here(M, a, 0/*verbose_level - 4*/);
-			int_vec_copy(vec1, vec2, n);
+			Orbiter->Int_vec.copy(vec1, vec2, n);
 			for (j = 0; j < k; j++) {
 				Mtx->GFq->Gauss_step(vec2, M + j * n, n, pivot,
 						0 /* verbose_level*/);

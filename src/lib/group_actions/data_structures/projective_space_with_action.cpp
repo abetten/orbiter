@@ -402,7 +402,7 @@ strong_generators
 	}
 	FREE_int(can_labeling);
 
-	int_vec_copy_to_lint(Base, Base_lint, Base_length);
+	Orbiter->Int_vec.copy_to_lint(Base, Base_lint, Base_length);
 
 	t1 = Os.os_ticks();
 	dt = t1 - t0;
@@ -655,7 +655,7 @@ void projective_space_with_action::report_fixed_objects_in_PG_3_tex(
 		F->PG_element_unrank_modified(v, 1, 4, i);
 		if (j == i) {
 			ost << i << " : ";
-			int_vec_print(ost, v, 4);
+			Orbiter->Int_vec.print(ost, v, 4);
 			ost << "\\\\" << endl;
 			cnt++;
 		}
@@ -928,7 +928,7 @@ void projective_space_with_action::report_decomposition_by_single_automorphism(
 	set = NEW_int(A_on_lines->degree);
 	for (i = 1; i < S2.ht; i++) {
 		sz = S2.cellSize[i];
-		int_vec_copy(S2.pointList + S2.startCell[i], set, sz);
+		Orbiter->Int_vec.copy(S2.pointList + S2.startCell[i], set, sz);
 		for (j = 0; j < sz; j++) {
 			set[j] += A->degree;
 		}
@@ -2656,7 +2656,7 @@ void projective_space_with_action::analyze_del_Pezzo_surface(formula *Formula,
 
 	if (f_v) {
 		cout << "projective_space_with_action::analyze_del_Pezzo_surface coefficient vector:" << endl;
-		int_vec_print(cout, Coefficient_vector, nb_monomials);
+		Orbiter->Int_vec.print(cout, Coefficient_vector, nb_monomials);
 		cout << endl;
 	}
 
@@ -2675,6 +2675,8 @@ void projective_space_with_action::analyze_del_Pezzo_surface(formula *Formula,
 			verbose_level);
 
 	del_Pezzo_surface->enumerate_points_and_lines(verbose_level);
+
+	del_Pezzo_surface->pal->write_points_to_txt_file(Formula->name_of_formula, verbose_level);
 
 	del_Pezzo_surface->create_latex_report(Formula->name_of_formula, Formula->name_of_formula_latex, verbose_level);
 

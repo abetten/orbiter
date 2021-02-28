@@ -94,7 +94,7 @@ void seventytwo_cases::init(surface_domain *Surf, int f, int tritangent_plane_id
 	seventytwo_cases::Surf = Surf;
 	seventytwo_cases::f = f;
 	seventytwo_cases::tritangent_plane_idx = tritangent_plane_idx;
-	int_vec_copy(three_lines_idx, seventytwo_cases::three_lines_idx, 3);
+	Orbiter->Int_vec.copy(three_lines_idx, seventytwo_cases::three_lines_idx, 3);
 	lint_vec_copy(three_lines, seventytwo_cases::three_lines, 3);
 
 	tritangent_plane_rk = 0;

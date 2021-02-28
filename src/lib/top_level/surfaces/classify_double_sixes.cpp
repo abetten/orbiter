@@ -372,7 +372,7 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 		Surf->wedge_to_klein(w, v);
 		if (FALSE) {
 			cout << i << " : ";
-			int_vec_print(cout, v, 6);
+			Orbiter->Int_vec.print(cout, v, 6);
 			cout << endl;
 		}
 		b = Surf->O->rank_point(v, 1, 0 /* verbose_level*/);
@@ -689,7 +689,7 @@ void classify_double_sixes::test_orbits(int verbose_level)
 				<< nb << " / " << len
 				<< " orbits where the rank is 19" << endl;
 		cout << "Idx=";
-		int_vec_print(cout, Idx, nb);
+		Orbiter->Int_vec.print(cout, Idx, nb);
 		cout << endl;
 	}
 	if (f_v) {
@@ -975,7 +975,7 @@ void classify_double_sixes::downstep(int verbose_level)
 		cout << "classify_double_sixes::downstep "
 				"after test_orbits" << endl;
 		cout << "Idx=";
-		int_vec_print(cout, Idx, nb);
+		Orbiter->Int_vec.print(cout, Idx, nb);
 		cout << endl;
 	}
 
@@ -1142,7 +1142,7 @@ void classify_double_sixes::upstep(int verbose_level)
 
 
 	f_processed = NEW_int(Flag_orbits->nb_flag_orbits);
-	int_vec_zero(f_processed, Flag_orbits->nb_flag_orbits);
+	Orbiter->Int_vec.zero(f_processed, Flag_orbits->nb_flag_orbits);
 	nb_processed = 0;
 
 	Double_sixes = NEW_OBJECT(classification_step);
@@ -1274,7 +1274,7 @@ void classify_double_sixes::upstep(int verbose_level)
 					cout << "cannot find orbit " << orbit_index
 							<< " in Po" << endl;
 					cout << "Po=";
-					int_vec_print(cout, Po, Flag_orbits->nb_flag_orbits);
+					Orbiter->Int_vec.print(cout, Po, Flag_orbits->nb_flag_orbits);
 					cout << endl;
 					exit(1);
 				}
@@ -1356,7 +1356,7 @@ void classify_double_sixes::upstep(int verbose_level)
 			if (f_v) {
 				cout << "classify_double_sixes::upstep "
 						"Aut_gens tl = ";
-				int_vec_print(cout,
+				Orbiter->Int_vec.print(cout,
 						Aut_gens->tl, Aut_gens->A->base_len());
 				cout << endl;
 			}

@@ -921,7 +921,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 		cout << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		cout << "candidates: ";
-		int_vec_print(cout, candidates, nb_candidates);
+		Orbiter->Int_vec.print(cout, candidates, nb_candidates);
 		cout << endl;
 		}
 	if (len == 0) {
@@ -951,7 +951,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 		}
 	if (f_v) {
 		cout << "the basis is ";
-		int_vec_print(cout, S, len);
+		Orbiter->Int_vec.print(cout, S, len);
 		cout << endl;
 		cout << "corresponding to the vectors:" << endl;
 		print_integer_matrix_width(cout, M, len, n, n, F->log10_of_q);
@@ -990,7 +990,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 			O->unrank_point(v, 1, c, 0);
 			if (f_v) {
 				cout << "i=" << i;
-				int_vec_print(cout, v, n);
+				Orbiter->Int_vec.print(cout, v, n);
 				cout << endl;
 				}
 			for (j = 0; j < nb0; j++) {
@@ -1000,7 +1000,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 						}
 					if (f_v) {
 						cout << "j=" << j << " y=" << y << " : w=";
-						int_vec_print(cout, w, n);
+						Orbiter->Int_vec.print(cout, w, n);
 						cout << endl;
 						}
 					d = O->rank_point(w, 1, 0);
@@ -1013,14 +1013,14 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 			} // next i
 		if (f_v) {
 			cout << "expanded candidate set:" << endl;
-			int_vec_print(cout,
+			Orbiter->Int_vec.print(cout,
 					candidates_expanded, nb_candidates_expanded);
 			cout << endl;
 			}
 		Sorting.int_vec_heapsort(candidates_expanded, nb_candidates_expanded);
 		if (f_v) {
 			cout << "expanded candidate set after sort:" << endl;
-			int_vec_print(cout, candidates_expanded, nb_candidates_expanded);
+			Orbiter->Int_vec.print(cout, candidates_expanded, nb_candidates_expanded);
 			cout << endl;
 			}
 		}
@@ -1043,7 +1043,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 		O->unrank_point(v, 1, c, 0);
 		if (f_v) {
 			cout << "i=" << i;
-			int_vec_print(cout, v, n);
+			Orbiter->Int_vec.print(cout, v, n);
 			cout << endl;
 			}
 		f_OK = TRUE;
@@ -1054,7 +1054,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 					}
 				if (f_v) {
 					cout << "j=" << j << " y=" << y << " : w=";
-					int_vec_print(cout, w, n);
+					Orbiter->Int_vec.print(cout, w, n);
 					cout << endl;
 					}
 				d = O->rank_point(w, 1, 0);
@@ -1080,7 +1080,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 		}
 	if (f_v) {
 		cout << "tmp_candidates:" << endl;
-		int_vec_print(cout, tmp_candidates, nb_tmp_candidates);
+		Orbiter->Int_vec.print(cout, tmp_candidates, nb_tmp_candidates);
 		cout << endl;
 		}
 
@@ -1101,7 +1101,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 		}
 	if (f_vv) {
 		cout << "good candidates: ";
-		int_vec_print(cout, good_candidates, nb_good_candidates);
+		Orbiter->Int_vec.print(cout, good_candidates, nb_good_candidates);
 		cout << endl;
 		}
 	FREE_int(M);

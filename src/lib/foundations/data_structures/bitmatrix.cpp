@@ -109,7 +109,7 @@ void bitmatrix::rank_PG_elements_in_columns(
 	}
 	if (f_vv) {
 		cout << "perm=";
-		int_vec_print(cout, perms, m);
+		Orbiter->Int_vec.print(cout, perms, m);
 		cout << endl;
 	}
 	v = NEW_int(m);

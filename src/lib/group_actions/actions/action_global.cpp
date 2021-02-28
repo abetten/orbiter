@@ -161,10 +161,10 @@ void action_global::make_generators_stabilizer_of_two_components(
 	minus_one = Fq->negate(1);
 	alpha = Fq->primitive_root();
 
-	int_vec_zero(Zero, k * k);
-	int_vec_zero(Id, k * k);
-	int_vec_zero(Center, k * k);
-	int_vec_zero(minusId, k * k);
+	Orbiter->Int_vec.zero(Zero, k * k);
+	Orbiter->Int_vec.zero(Id, k * k);
+	Orbiter->Int_vec.zero(Center, k * k);
+	Orbiter->Int_vec.zero(minusId, k * k);
 	for (i = 0; i < k; i++) {
 		Id[i * k + i] = 1;
 	}
@@ -209,7 +209,7 @@ void action_global::make_generators_stabilizer_of_two_components(
 		if (Mtx->f_semilinear) {
 			Q[n * n] = P[k * k];
 		}
-		int_vec_copy(Q, Data + idx * sz, sz);
+		Orbiter->Int_vec.copy(Q, Data + idx * sz, sz);
 		idx++;
 	}
 
@@ -228,7 +228,7 @@ void action_global::make_generators_stabilizer_of_two_components(
 	if (Mtx->f_semilinear) {
 		Q[n * n] = 0;
 	}
-	int_vec_copy(Q, Data + idx * sz, sz);
+	Orbiter->Int_vec.copy(Q, Data + idx * sz, sz);
 	idx++;
 
 	// Q := matrix(I,0,0,Center):
@@ -236,7 +236,7 @@ void action_global::make_generators_stabilizer_of_two_components(
 	if (Mtx->f_semilinear) {
 		Q[n * n] = 0;
 	}
-	int_vec_copy(Q, Data + idx * sz, sz);
+	Orbiter->Int_vec.copy(Q, Data + idx * sz, sz);
 	idx++;
 
 
@@ -310,9 +310,9 @@ void action_global::make_generators_stabilizer_of_three_components(
 	minus_one = Fq->negate(1);
 
 
-	int_vec_zero(Zero, k * k);
-	int_vec_zero(Id, k * k);
-	int_vec_zero(minusId, k * k);
+	Orbiter->Int_vec.zero(Zero, k * k);
+	Orbiter->Int_vec.zero(Id, k * k);
+	Orbiter->Int_vec.zero(minusId, k * k);
 	for (i = 0; i < k; i++) {
 		Id[i * k + i] = 1;
 	}
@@ -348,7 +348,7 @@ void action_global::make_generators_stabilizer_of_three_components(
 		if (Mtx->f_semilinear) {
 			Q[n * n] = P[k * k];
 			}
-		int_vec_copy(Q, Data + idx * sz, sz);
+		Orbiter->Int_vec.copy(Q, Data + idx * sz, sz);
 		idx++;
 	}
 
@@ -357,7 +357,7 @@ void action_global::make_generators_stabilizer_of_three_components(
 	if (Mtx->f_semilinear) {
 		Q[n * n] = 0;
 	}
-	int_vec_copy(Q, Data + idx * sz, sz);
+	Orbiter->Int_vec.copy(Q, Data + idx * sz, sz);
 	idx++;
 
 	// Q := matrix(0,I,-I,-I):
@@ -365,7 +365,7 @@ void action_global::make_generators_stabilizer_of_three_components(
 	if (Mtx->f_semilinear) {
 		Q[n * n] = 0;
 	}
-	int_vec_copy(Q, Data + idx * sz, sz);
+	Orbiter->Int_vec.copy(Q, Data + idx * sz, sz);
 	idx++;
 
 

@@ -183,11 +183,11 @@ void group::init_strong_generators_by_hdl(int nb_gen,
 		}
 	if (f_v) {
 		cout << "gen_hdl=";
-		int_vec_print(cout, gen_hdl, nb_gen);
+		Orbiter->Int_vec.print(cout, gen_hdl, nb_gen);
 		cout << endl;
 		if (nb_gen) {
 			cout << "tl=";
-			int_vec_print(cout, tl, A->base_len());
+			Orbiter->Int_vec.print(cout, tl, A->base_len());
 			cout << endl;
 		}
 	}
@@ -464,7 +464,7 @@ void group::schreier_sims(int verbose_level)
 	if (f_v) {
 		cout << "group::schreier_sims after S->init_generators" << endl;
 		cout << "tl: ";
-		int_vec_print(cout, tl, A->base_len());
+		Orbiter->Int_vec.print(cout, tl, A->base_len());
 		cout << endl;
 	}
 	if (f_v) {
@@ -529,7 +529,7 @@ void group::point_stabilizer(group &stab, int pt, int verbose_level)
 		cout << "stabilizer of point " << pt << " has order ";
 		stab.print_group_order(cout);
 		cout << " ";
-		int_vec_print(cout, stab.tl, A->base_len());
+		Orbiter->Int_vec.print(cout, stab.tl, A->base_len());
 		cout << " with " << stab_gens.len << " strong generators" << endl;
 		if (f_vv) {
 			stab_gens.print(cout);
@@ -591,7 +591,7 @@ void group::point_stabilizer_with_action(action *A2,
 		cout << "stabilizer of point " << pt << " has order ";
 		stab.print_group_order(cout);
 		cout << " ";
-		int_vec_print(cout, stab.tl, A->base_len());
+		Orbiter->Int_vec.print(cout, stab.tl, A->base_len());
 		cout << " with " << stab_gens.len << " strong generators" << endl;
 		if (f_vv) {
 			stab_gens.print(cout);
@@ -863,7 +863,7 @@ void group::print_strong_generators(ostream &ost,
 		exit(1);
 	}
 	ost << "group::print_strong_generators a group with tl=";
-	int_vec_print(ost, tl, A->base_len());
+	Orbiter->Int_vec.print(ost, tl, A->base_len());
 	l = SG->len;
 	ost << " and with " << l << " strong generators" << endl;
 	for (i = 0; i < l; i++) {
@@ -903,7 +903,7 @@ void group::print_strong_generators_with_different_action_verbose(
 	}
 	ost << "group::print_strong_generators_with_different_"
 			"action_verbose a group with tl=";
-	int_vec_print(ost, tl, A->base_len());
+	Orbiter->Int_vec.print(ost, tl, A->base_len());
 	l = SG->len;
 	ost << " and with " << l << " strong generators" << endl;
 	for (i = 0; i < l; i++) {

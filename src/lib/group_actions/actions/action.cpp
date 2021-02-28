@@ -872,7 +872,7 @@ int action::element_order_and_cycle_type_verbose(
 		element_print_as_permutation(elt, cout);
 		}
 	n = degree;
-	int_vec_zero(cycle_type, degree);
+	Orbiter->Int_vec.zero(cycle_type, degree);
 	have_seen = NEW_int(n);
 	for (l = 0; l < n; l++) {
 		have_seen[l] = FALSE;
@@ -1040,7 +1040,7 @@ void action::compute_point_stabilizer_chain(vector_ge &gen,
 	
 	if (f_v) {
 		cout << "action::compute_point_stabilizer_chain for sequence ";
-		int_vec_print(cout, sequence, len);
+		Orbiter->Int_vec.print(cout, sequence, len);
 		cout << endl;
 		}
 	for (i = 0; i <= len; i++) {
@@ -1078,7 +1078,7 @@ void action::compute_point_stabilizer_chain(vector_ge &gen,
 		}
 	if (f_v) {
 		cout << "action::compute_point_stabilizer_chain for sequence ";
-		int_vec_print(cout, sequence, len);
+		Orbiter->Int_vec.print(cout, sequence, len);
 		cout << " finished" << endl;
 		cout << "i : order of i-th stabilizer" << endl;
 		for (i = 0; i <= len; i++) {
@@ -1149,7 +1149,7 @@ int action::least_image_of_point(vector_ge &strong_generators,
 	Schreier.init_generators(strong_generators, verbose_level - 2);
 	Schreier.compute_point_orbit(pt, 0);
 	len = Schreier.orbit_len[0];
-	image = int_vec_minimum(Schreier.orbit, len);
+	image = Orbiter->Int_vec.minimum(Schreier.orbit, len);
 	pos = Schreier.orbit_inv[image];
 	Schreier.coset_rep(pos, 0 /* verbose_level */);
 	element_move(Schreier.cosetrep, transporter, 0);
@@ -1682,7 +1682,7 @@ void action::make_element_from_base_image(int *Elt, sims *S,
 	if (f_v) {
 		cout << "action::make_element_from_base_image" << endl;
 		cout << "base images: ";
-		int_vec_print(cout, data, base_len());
+		Orbiter->Int_vec.print(cout, data, base_len());
 		cout << endl;
 		print_info();
 	}
@@ -1813,11 +1813,11 @@ void action::make_element_from_string(int *Elt,
 	int *data;
 	int data_len;
 
-	int_vec_scan(data_string, data, data_len);
+	Orbiter->Int_vec.scan(data_string, data, data_len);
 
 	if (f_v) {
 		cout << "action::make_element_from_string data = ";
-		int_vec_print(cout, data, data_len);
+		Orbiter->Int_vec.print(cout, data, data_len);
 		cout << endl;
 		}
 
@@ -1926,7 +1926,7 @@ void action::build_up_automorphism_group_from_aut_data(
 	for (h = 0; h < nb_auts; h++) {
 		if (f_v) {
 			cout << "aut_data[" << h << "]=";
-			int_vec_print(cout, aut_data + h * base_len(), base_len());
+			Orbiter->Int_vec.print(cout, aut_data + h * base_len(), base_len());
 			cout << endl;
 			}
 		for (i = 0; i < base_len(); i++) {
@@ -1937,7 +1937,7 @@ void action::build_up_automorphism_group_from_aut_data(
 			}
 		if (f_v) {
 			cout << "path=";
-			int_vec_print(cout, Sims->path, base_len());
+			Orbiter->Int_vec.print(cout, Sims->path, base_len());
 			cout << endl;
 			}
 		Sims->element_from_path_inv(Elt1);
@@ -2062,7 +2062,7 @@ void action::init_group_from_generators(
 		if (f_v) {
 			cout << "parsing generator " << i << ":" << endl;
 			}
-		int_vec_print(cout, group_generator_data + 
+		Orbiter->Int_vec.print(cout, group_generator_data +
 			i * make_element_size, make_element_size);
 		cout << endl;
 		make_element(Elt, 
@@ -2142,7 +2142,7 @@ void action::init_group_from_generators_by_base_images(
 		if (f_v) {
 			cout << "parsing generator " << i << ":" << endl;
 			}
-		int_vec_print(cout, group_generator_data + 
+		Orbiter->Int_vec.print(cout, group_generator_data +
 			i * base_len(), base_len());
 		cout << endl;
 		make_element_from_base_image(Elt, parent_group_S,
@@ -2226,7 +2226,7 @@ void action::element_print_base_images_verbose(
 	base_images = NEW_int(base_len());
 	element_base_images_verbose(Elt, base_images, verbose_level - 1);
 	ost << "base images: ";
-	int_vec_print(ost, base_images, base_len());
+	Orbiter->Int_vec.print(ost, base_images, base_len());
 	FREE_int(base_images);
 }
 
@@ -2332,10 +2332,10 @@ void action::minimize_base_images(int level,
 		if (f_vv) {
 			cout << "level " << i << " j0=" << j0 << endl;
 			cout << "before: ";
-			int_vec_print(cout, base_images1, base_len());
+			Orbiter->Int_vec.print(cout, base_images1, base_len());
 			cout << endl;
 			cout << "after : ";
-			int_vec_print(cout, base_images2, base_len());
+			Orbiter->Int_vec.print(cout, base_images2, base_len());
 			cout << endl;
 			}
 		}

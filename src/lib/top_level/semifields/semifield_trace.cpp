@@ -125,7 +125,7 @@ void semifield_trace::trace_very_general(
 	// (0 I)
 	// where A is input_basis
 	// the resulting matrix will be put in transporter
-	int_vec_zero(M1, n * n);
+	Orbiter->Int_vec.zero(M1, n * n);
 	for (i = 0; i < k; i++) {
 		for (j = 0; j < k; j++) {
 			M1[i * n + j] = input_basis[i * k + j];
@@ -335,7 +335,7 @@ void semifield_trace::trace_very_general(
 	base_cols[1] = k;
 	if (f_vv) {
 		cout << "semifield_trace::trace_very_general base_cols=";
-		int_vec_print(cout, base_cols, 2);
+		Orbiter->Int_vec.print(cout, base_cols, 2);
 		cout << endl;
 		}
 	for (i = 0; i < 2; i++) {

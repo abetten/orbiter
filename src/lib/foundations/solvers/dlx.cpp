@@ -990,7 +990,7 @@ void DlxSearchRHS(int k, int verbose_level)
 		// All header columns gone means we have a valid solution!
 		if (f_v) {
 			cout << "DlxSearchRHS k=" << k << " solution ";
-			int_vec_print(cout, Result, k);
+			Orbiter->Int_vec.print(cout, Result, k);
 			cout << " found" << endl;
 			}
 
@@ -1096,7 +1096,7 @@ void DlxSearchRHS(int k, int verbose_level)
 			cout << "DlxSearchRHS k=" << k << " column " << c
 					<< " choice " << Cur_choice[k] << " / "
 					<< Nb_choices[k] << " which is ";
-			int_vec_print(cout, Result, k + 1);
+			Orbiter->Int_vec.print(cout, Result, k + 1);
 			cout << endl;
 			}
 
@@ -1178,7 +1178,7 @@ void DlxSearchRHS(int k, int verbose_level)
 			cout << "DlxSearchRHS k=" << k << " column " << c
 					<< " choice " << Cur_choice[k] << " / "
 					<< Nb_choices[k] << " which is ";
-			int_vec_print(cout, Result, k + 1);
+			Orbiter->Int_vec.print(cout, Result, k + 1);
 			cout << " recursing" << endl;
 			}
 
@@ -1190,7 +1190,7 @@ void DlxSearchRHS(int k, int verbose_level)
 			cout << "DlxSearchRHS k=" << k << " column " << c
 					<< " choice " << Cur_choice[k] << " / "
 					<< Nb_choices[k] << " which is ";
-			int_vec_print(cout, Result, k + 1);
+			Orbiter->Int_vec.print(cout, Result, k + 1);
 			cout << " after recursion" << endl;
 			}
 

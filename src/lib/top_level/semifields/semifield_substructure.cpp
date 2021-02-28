@@ -211,8 +211,8 @@ void semifield_substructure::compute_orbits(
 		position = NEW_int(len);
 		orbit_idx = NEW_int(len);
 
-		int_vec_zero(f_reached, len);
-		int_vec_mone(position, len);
+		Orbiter->Int_vec.zero(f_reached, len);
+		Orbiter->Int_vec.mone(position, len);
 
 		int cnt, f;
 
@@ -518,7 +518,7 @@ void semifield_substructure::do_classify(int verbose_level)
 
 
 	f_processed = NEW_int(nb_flag_orbits);
-	int_vec_zero(f_processed, nb_flag_orbits);
+	Orbiter->Int_vec.zero(f_processed, nb_flag_orbits);
 	nb_processed = 0;
 
 
@@ -597,7 +597,7 @@ void semifield_substructure::do_classify(int verbose_level)
 			cout << "flag orbit " << f << " / "
 					<< nb_flag_orbits
 					<< " 1st col of third matrix is = ";
-			int_vec_print(cout, v3, SC->k);
+			Orbiter->Int_vec.print(cout, v3, SC->k);
 			cout << " which is not the (k-1)-th unit vector, "
 					"so we skip" << endl;
 			f_skip = TRUE;

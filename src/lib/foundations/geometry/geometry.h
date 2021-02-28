@@ -1635,6 +1635,44 @@ public:
 void get_MOLm(int *MOLS, int order, int m, int *&M);
 
 
+
+// #############################################################################
+// points_and_lines.cpp
+// #############################################################################
+
+//! points and lines in projective space, for instance on a curface
+
+
+
+class points_and_lines {
+
+public:
+
+	projective_space *P;
+
+	long int *Pts;
+	int nb_pts;
+
+
+	long int *Lines;
+	int nb_lines;
+
+
+	points_and_lines();
+	~points_and_lines();
+	void init(projective_space *P, std::vector<long int> &Points, int verbose_level);
+	void unrank_point(int *v, long int rk);
+	long int rank_point(int *v);
+	void print_all_points(std::ostream &ost);
+	void print_all_lines(std::ostream &ost);
+	void print_lines_tex(std::ostream &ost);
+	void write_points_to_txt_file(std::string &label, int verbose_level);
+
+
+};
+
+
+
 // #############################################################################
 // projective_space.cpp
 // #############################################################################

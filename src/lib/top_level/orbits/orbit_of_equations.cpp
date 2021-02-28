@@ -134,7 +134,7 @@ void orbit_of_equations::print_orbit()
 			"length " << used_length << endl;
 	for (i = 0; i < used_length; i++) {
 		cout << i << " : ";
-		int_vec_print(cout, Equations[i] + 1, nb_monomials);
+		Orbiter->Int_vec.print(cout, Equations[i] + 1, nb_monomials);
 		cout << " : ";
 		AonHPD->HPD->print_equation(cout, Equations[i] + 1);
 		if (f_has_print_function) {
@@ -173,7 +173,7 @@ void orbit_of_equations::compute_orbit(int *coeff, int verbose_level)
 	if (f_v) {
 		cout << "orbit_of_equations::compute_orbit init Equations[0]" << endl;
 	}
-	int_vec_copy(coeff, Equations[0] + 1, nb_monomials);
+	Orbiter->Int_vec.copy(coeff, Equations[0] + 1, nb_monomials);
 	Equations[0][0] = 0;
 	F->PG_element_normalize_from_front(
 		Equations[0] + 1, 1, nb_monomials);
@@ -188,7 +188,7 @@ void orbit_of_equations::compute_orbit(int *coeff, int verbose_level)
 		if (f_vv) {
 			cout << "orbit_of_equations::compute_orbit  Q_len = "
 					<< Q_len << " : used_length=" << used_length << " : ";
-			int_vec_print(cout, Q, Q_len);
+			Orbiter->Int_vec.print(cout, Q, Q_len);
 			cout << endl;
 		}
 		cur = Q[0];
@@ -197,7 +197,7 @@ void orbit_of_equations::compute_orbit(int *coeff, int verbose_level)
 		}
 		Q_len--;
 
-		int_vec_copy(Equations[cur], cur_object, sz);
+		Orbiter->Int_vec.copy(Equations[cur], cur_object, sz);
 
 
 		for (j = 0; j < SG->gens->len; j++) {
@@ -221,7 +221,7 @@ void orbit_of_equations::compute_orbit(int *coeff, int verbose_level)
 				if (f_vvv) {
 					cout << "orbit_of_equations::compute_orbit "
 							"Found a n e w object : ";
-					int_vec_print(cout, new_object, sz);
+					Orbiter->Int_vec.print(cout, new_object, sz);
 					if (f_has_print_function) {
 						(*print_function)(new_object, sz, print_function_data);
 					}
@@ -244,8 +244,8 @@ void orbit_of_equations::compute_orbit(int *coeff, int verbose_level)
 					for (i = 0; i < allocation_length; i++) {
 						Equations2[i] = Equations[i];
 					}
-					int_vec_copy(prev, prev2, allocation_length);
-					int_vec_copy(label, label2, allocation_length);
+					Orbiter->Int_vec.copy(prev, prev2, allocation_length);
+					Orbiter->Int_vec.copy(label, label2, allocation_length);
 					FREE_pint(Equations);
 					FREE_int(prev);
 					FREE_int(label);
@@ -253,7 +253,7 @@ void orbit_of_equations::compute_orbit(int *coeff, int verbose_level)
 					prev = prev2;
 					label = label2;
 					Q2 = NEW_int(al2);
-					int_vec_copy(Q, Q2, Q_len);
+					Orbiter->Int_vec.copy(Q, Q2, Q_len);
 					FREE_int(Q);
 					Q = Q2;
 					allocation_length = al2;
@@ -271,7 +271,7 @@ void orbit_of_equations::compute_orbit(int *coeff, int verbose_level)
 				prev[idx] = cur;
 				label[idx] = j;
 
-				int_vec_copy(new_object, Equations[idx], sz);
+				Orbiter->Int_vec.copy(new_object, Equations[idx], sz);
 
 				if (position_of_original_object >= idx) {
 					position_of_original_object++;
@@ -405,7 +405,7 @@ void orbit_of_equations::get_random_schreier_generator(
 	A->element_mult(E1, SG->gens->ith(r2), E2, 0);
 
 	// compute image of original subspace under E2:
-	int_vec_copy(Equations[pt1], cur_object, sz);
+	Orbiter->Int_vec.copy(Equations[pt1], cur_object, sz);
 
 	map_an_equation(cur_object, new_object, E2, 0 /* verbose_level*/);
 
@@ -695,7 +695,7 @@ void orbit_of_equations::save_csv(std::string &fname, int verbose_level)
 
 	Data = NEW_int(used_length * nb_monomials);
 	for (i = 0; i < used_length; i++) {
-		int_vec_copy(Equations[i] + 1, Data + i * nb_monomials, nb_monomials);
+		Orbiter->Int_vec.copy(Equations[i] + 1, Data + i * nb_monomials, nb_monomials);
 	}
 	Fio.int_matrix_write_csv(fname, Data, used_length, nb_monomials);
 }

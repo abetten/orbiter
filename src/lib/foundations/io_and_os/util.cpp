@@ -21,89 +21,12 @@ namespace foundations {
 
 
 
-void int_vec_add(int *v1, int *v2, int *w, int len)
-{
-	int i;
-
-	for (i = 0; i < len; i++) {
-		w[i] = v1[i] + v2[i];
-	}
-}
-
-void int_vec_add3(int *v1, int *v2, int *v3, int *w, int len)
-{
-	int i;
-
-	for (i = 0; i < len; i++) {
-		w[i] = v1[i] + v2[i] + v3[i];
-	}
-}
-
-void int_vec_apply(int *from, int *through, int *to, int len)
-{
-	int i;
-	
-	for (i = 0; i < len; i++) {
-		to[i] = through[from[i]];
-	}
-}
-
-void int_vec_apply_lint(int *from, long int *through, long int *to, int len)
-{
-	int i;
-
-	for (i = 0; i < len; i++) {
-		to[i] = through[from[i]];
-	}
-}
-
 void lint_vec_apply(long int *from, long int *through, long int *to, int len)
 {
 	int i;
 
 	for (i = 0; i < len; i++) {
 		to[i] = through[from[i]];
-	}
-}
-
-int int_vec_is_constant_on_subset(int *v, 
-	int *subset, int sz, int &value)
-{
-	int a, i;
-
-	if (sz == 0) {
-		cout << "int_vec_is_costant_on_subset sz == 0" << endl;
-		exit(1);
-	}
-	a = v[subset[0]];
-	if (sz == 1) {
-		value = a;
-		return TRUE;
-	}
-	for (i = 1; i < sz; i++) {
-		if (v[subset[i]] != a) {
-			return FALSE;
-		}
-	}
-	value = a;
-	return TRUE;
-}
-
-void int_vec_take_away(int *v, int &len,
-		int *take_away, int nb_take_away)
-	// v must be sorted
-{
-	int i, j, idx;
-	sorting Sorting;
-	
-	for (i = 0; i < nb_take_away; i++) {
-		if (!Sorting.int_vec_search(v, len, take_away[i], idx)) {
-			continue;
-		}
-		for (j = idx; j < len; j++) {
-			v[j] = v[j + 1];
-		}
-		len--;
 	}
 }
 
@@ -126,42 +49,6 @@ void lint_vec_take_away(long int *v, int &len,
 }
 
 
-int int_vec_count_number_of_nonzero_entries(int *v, int len)
-{
-	int i, n;
-	
-	n = 0;
-	for (i = 0; i < len; i++) {
-		if (v[i]) {
-			n++;
-		}
-	}
-	return n;
-}
-
-int int_vec_find_first_nonzero_entry(int *v, int len)
-{
-	int i;
-	
-	for (i = 0; i < len; i++) {
-		if (v[i]) {
-			return i;
-		}
-	}
-	cout << "int_vec_find_first_nonzero_entry the vector is all zero" << endl;
-	exit(1);
-}
-
-void int_vec_zero(int *v, long int len)
-{
-	int i;
-	int *p;
-
-	for (p = v, i = 0; i < len; p++, i++) {
-		*p = 0;
-	}
-}
-
 void lint_vec_zero(long int *v, long int len)
 {
 	int i;
@@ -169,29 +56,6 @@ void lint_vec_zero(long int *v, long int len)
 
 	for (p = v, i = 0; i < len; p++, i++) {
 		*p = 0;
-	}
-}
-
-int int_vec_is_zero(int *v, long int len)
-{
-	int i;
-
-	for (i = 0; i < len; i++) {
-		if (v[i]) {
-			return FALSE;
-		}
-	}
-	return TRUE;
-}
-
-
-void int_vec_mone(int *v, long int len)
-{
-	int i;
-	int *p;
-
-	for (p = v, i = 0; i < len; p++, i++) {
-		*p = -1;
 	}
 }
 
@@ -205,31 +69,10 @@ void lint_vec_mone(long int *v, long int len)
 	}
 }
 
-void int_vec_copy(int *from, int *to, long int len)
-{
-	int i;
-	int *p, *q;
-
-	for (p = from, q = to, i = 0; i < len; p++, q++, i++) {
-		*q = *p;
-	}
-}
-
 void lint_vec_copy(long int *from, long int *to, long int len)
 {
 	int i;
 	long int *p, *q;
-
-	for (p = from, q = to, i = 0; i < len; p++, q++, i++) {
-		*q = *p;
-	}
-}
-
-void int_vec_copy_to_lint(int *from, long int *to, long int len)
-{
-	int i;
-	int *p;
-	long int *q;
 
 	for (p = from, q = to, i = 0; i < len; p++, q++, i++) {
 		*q = *p;
@@ -244,82 +87,6 @@ void lint_vec_copy_to_int(long int *from, int *to, long int len)
 
 	for (p = from, q = to, i = 0; i < len; p++, q++, i++) {
 		*q = *p;
-	}
-}
-
-void int_vec_swap(int *v1, int *v2, long int len)
-{
-	int i, a;
-	int *p, *q;
-
-	for (p = v1, q = v2, i = 0; i < len; p++, q++, i++) {
-		a = *q;
-		*q = *p;
-		*p = a;
-	}
-}
-
-void int_vec_delete_element_assume_sorted(int *v, 
-	int &len, int a)
-{
-	int idx, i;
-	sorting Sorting;
-
-	if (!Sorting.int_vec_search(v, len, a, idx)) {
-		cout << "int_vec_delete_element_assume_sorted "
-				"cannot find the element" << endl;
-		exit(1);
-	}
-	for (i = idx + 1; i < len; i++) {
-		v[i - 1] = v[i];
-	}
-	len--;
-}
-
-
-
-void int_vec_complement(int *v, int n, int k)
-// computes the complement to v + k (v must be allocated to n lements)
-// the first k elements of v[] must be in increasing order.
-{
-	int *w;
-	int j1, j2, i;
-	
-	w = v + k;
-	j1 = 0;
-	j2 = 0;
-	for (i = 0; i < n; i++) {
-		if (j1 < k && v[j1] == i) {
-			j1++;
-			continue;
-		}
-		w[j2] = i;
-		j2++;
-	}
-	if (j2 != n - k) {
-		cout << "int_vec_complement j2 != n - k" << endl;
-		exit(1);
-	}
-}
-
-void int_vec_complement(int *v, int *w, int n, int k)
-// computes the complement of v[k] in the set {0,...,n-1} to w[n - k]
-{
-	int j1, j2, i;
-	
-	j1 = 0;
-	j2 = 0;
-	for (i = 0; i < n; i++) {
-		if (j1 < k && v[j1] == i) {
-			j1++;
-			continue;
-		}
-		w[j2] = i;
-		j2++;
-	}
-	if (j2 != n - k) {
-		cout << "int_vec_complement j2 != n - k" << endl;
-		exit(1);
 	}
 }
 
@@ -342,15 +109,6 @@ void lint_vec_complement(long int *v, long int *w, int n, int k)
 		cout << "lint_vec_complement j2 != n - k" << endl;
 		exit(1);
 	}
-}
-
-void int_vec_init5(int *v, int a0, int a1, int a2, int a3, int a4)
-{
-	v[0] = a0;
-	v[1] = a1;
-	v[2] = a2;
-	v[3] = a3;
-	v[4] = a4;
 }
 
 void dump_memory_chain(void *allocated_objects)
@@ -385,23 +143,6 @@ void print_vector(ostream &ost, int *v, int size)
 	ost << ")";
 }
 
-int int_vec_minimum(int *v, int len)
-{
-	int i, m;
-	
-	if (len == 0) {
-		cout << "int_vec_minimum len == 0" << endl;
-		exit(1);
-	}
-	m = v[0];
-	for (i = 1; i < len; i++) {
-		if (v[i] < m) {
-			m = v[i];
-		}
-	}
-	return m;
-}
-
 long int lint_vec_minimum(long int *v, int len)
 {
 	long int i, m;
@@ -413,23 +154,6 @@ long int lint_vec_minimum(long int *v, int len)
 	m = v[0];
 	for (i = 1; i < len; i++) {
 		if (v[i] < m) {
-			m = v[i];
-		}
-	}
-	return m;
-}
-
-int int_vec_maximum(int *v, int len)
-{
-	int m, i;
-	
-	if (len == 0) {
-		cout << "int_vec_maximum len == 0" << endl;
-		exit(1);
-	}
-	m = v[0];
-	for (i = 1; i < len; i++) {
-		if (v[i] > m) {
 			m = v[i];
 		}
 	}
@@ -451,27 +175,6 @@ long int lint_vec_maximum(long int *v, int len)
 		}
 	}
 	return m;
-}
-
-void int_vec_copy(int len, int *from, int *to)
-{
-	int i;
-	
-	for (i = 0; i < len; i++) {
-		to[i] = from[i];
-	}
-}
-
-int int_vec_first_difference(int *p, int *q, int len)
-{
-	int i;
-	
-	for (i = 0; i < len; i++) {
-		if (p[i] != q[i]) {
-			return i;
-		}
-	}
-	return i;
 }
 
 void itoa(char *p, int len_of_p, int i)
@@ -589,28 +292,6 @@ void int_matrix_delete_column_in_place(int *Mtx,
 	}
 }
 
-int int_vec_vec_max_log_of_entries(std::vector<std::vector<int>> &p)
-{
-	int i, j, a, w = 1, w1;
-	number_theory_domain NT;
-
-	for (i = 0; i < p.size(); i++) {
-		for (j = 0; j < p[i].size(); j++) {
-			a = p[i][j];
-			if (a > 0) {
-				w1 = NT.int_log10(a);
-			}
-			else if (a < 0) {
-				w1 = NT.int_log10(-a) + 1;
-			}
-			else {
-				w1 = 1;
-			}
-			w = MAXIMUM(w, w1);
-		}
-	}
-	return w;
-}
 
 int int_matrix_max_log_of_entries(int *p, int m, int n)
 {
@@ -675,13 +356,6 @@ void int_matrix_print(int *p, int m, int n)
 	int_matrix_print(p, m, n, w);
 }
 
-void int_vec_vec_print(std::vector<std::vector<int>> &p)
-{
-	int w;
-
-	w = int_vec_vec_max_log_of_entries(p);
-	int_vec_vec_print(p, w);
-}
 
 
 void lint_matrix_print(long int *p, int m, int n)
@@ -709,21 +383,6 @@ void int_matrix_print_ost(ostream &ost, int *p, int m, int n, int w)
 			}
 		}
 		ost << endl;
-	}
-}
-
-void int_vec_vec_print(std::vector<std::vector<int>> &p, int w)
-{
-	int i, j;
-
-	for (i = 0; i < p.size(); i++) {
-		for (j = 0; j < p[i].size(); j++) {
-			cout << setw((int) w) << p[i][j];
-			if (w) {
-				cout << " ";
-			}
-		}
-		cout << endl;
 	}
 }
 
@@ -766,45 +425,6 @@ void int_matrix_print_bitwise(int *p, int m, int n)
 			cout << p[i * n + j];
 		}
 		cout << endl;
-	}
-}
-
-void int_vec_distribution_compute_and_print(ostream &ost, 
-	int *v, int v_len)
-{
-	int *val, *mult, len;	
-	
-	int_vec_distribution(v, v_len, val, mult, len);
-	int_distribution_print(ost, val, mult, len);
-	ost << endl;
-	
-	FREE_int(val);
-	FREE_int(mult);
-}
-
-void int_vec_distribution(int *v, 
-	int len_v, int *&val, int *&mult, int &len)
-{
-	sorting Sorting;
-	int i, j, a, idx;
-	
-	val = NEW_int(len_v);
-	mult = NEW_int(len_v);
-	len = 0;
-	for (i = 0; i < len_v; i++) {
-		a = v[i];
-		if (Sorting.int_vec_search(val, len, a, idx)) {
-			mult[idx]++;
-		}
-		else {
-			for (j = len; j > idx; j--) {
-				val[j] = val[j - 1];
-				mult[j] = mult[j - 1];
-			}
-			val[idx] = a;
-			mult[idx] = 1;
-			len++;
-		}
 	}
 }
 
@@ -877,60 +497,6 @@ void lint_set_print(std::ostream &ost, long int *v, int len)
 	ost << " }";
 }
 
-void int_vec_print(std::ostream &ost, std::vector<int> &v)
-{
-	int i;
-	int len;
-
-	len = v.size();
-	if (len > 50) {
-		ost << "( ";
-		for (i = 0; i < 50; i++) {
-			ost << v[i];
-			if (i < len - 1) {
-				ost << ", ";
-			}
-		}
-		ost << "...";
-		for (i = len - 3; i < len; i++) {
-			ost << v[i];
-			if (i < len - 1) {
-				ost << ", ";
-			}
-		}
-		ost << " )";
-	}
-	else {
-		int_vec_print_fully(ost, v);
-	}
-}
-
-void int_vec_print(std::ostream &ost, int *v, int len)
-{
-	int i;
-	
-	if (len > 50) {
-		ost << "( ";
-		for (i = 0; i < 50; i++) {
-			ost << v[i];
-			if (i < len - 1) {
-				ost << ", ";
-			}
-		}
-		ost << "...";
-		for (i = len - 3; i < len; i++) {
-			ost << v[i];
-			if (i < len - 1) {
-				ost << ", ";
-			}
-		}
-		ost << " )";
-	}
-	else {
-		int_vec_print_fully(ost, v, len);
-	}
-}
-
 void lint_vec_print(std::ostream &ost, long int *v, int len)
 {
 	int i;
@@ -984,38 +550,6 @@ void lint_vec_print(std::ostream &ost, std::vector<long int> &v)
 	}
 }
 
-void int_vec_print_str(stringstream &ost, int *v, int len)
-{
-	int i;
-
-	ost << "(";
-	for (i = 0; i < len; i++) {
-		ost << v[i];
-		if (i < len - 1) {
-			ost << ", ";
-		}
-	}
-	ost << ")";
-}
-
-
-
-void int_vec_print_as_table(std::ostream &ost, int *v, int len, int width)
-{
-	int i;
-	
-	for (i = 0; i < len; i++) {
-		ost << v[i];
-		if (i < len - 1) {
-			ost << ", ";
-		}
-		if (((i + 1) % 10) == 0) {
-			ost << endl;
-		}
-	}
-	ost << endl;
-}
-
 void lint_vec_print_as_table(std::ostream &ost, long int *v, int len, int width)
 {
 	int i;
@@ -1030,37 +564,6 @@ void lint_vec_print_as_table(std::ostream &ost, long int *v, int len, int width)
 		}
 	}
 	ost << endl;
-}
-
-void int_vec_print_fully(std::ostream &ost, std::vector<int> &v)
-{
-	int i;
-	int len;
-
-
-	len = v.size();
-	ost << "( ";
-	for (i = 0; i < len; i++) {
-		ost << v[i];
-		if (i < len - 1) {
-			ost << ", ";
-		}
-	}
-	ost << " )";
-}
-
-void int_vec_print_fully(std::ostream &ost, int *v, int len)
-{
-	int i;
-	
-	ost << "( ";
-	for (i = 0; i < len; i++) {
-		ost << v[i];
-		if (i < len - 1) {
-			ost << ", ";
-		}
-	}
-	ost << " )";
 }
 
 void lint_vec_print_fully(std::ostream &ost, long int *v, int len)
@@ -1090,58 +593,6 @@ void lint_vec_print_fully(std::ostream &ost, std::vector<long int> &v)
 		}
 	}
 	ost << " )";
-}
-
-void int_vec_print_Cpp(ostream &ost, int *v, int len)
-{
-	int i;
-	
-	ost << "{ " << endl;
-	ost << "\t";
-	for (i = 0; i < len; i++) {
-		ost << v[i];
-		if (i < len - 1) {
-			ost << ", ";
-		}
-		if ((i + 1) % 10 == 0) {
-			ost << endl;
-			ost << "\t";
-		}
-	}
-	ost << " }";
-}
-
-void int_vec_print_GAP(ostream &ost, int *v, int len)
-{
-	int i;
-	
-	ost << "[ ";
-	for (i = 0; i < len; i++) {
-		ost << v[i];
-		if (i < len - 1) {
-			ost << ", ";
-		}
-	}
-	ost << " ]";
-}
-
-void int_vec_print_classified(int *v, int len)
-{
-	tally C;
-
-	C.init(v, len, FALSE /*f_second */, 0);
-	C.print(TRUE /* f_backwards*/);
-	cout << endl;
-}
-
-void int_vec_print_classified_str(stringstream &sstr,
-		int *v, int len, int f_backwards)
-{
-	tally C;
-
-	C.init(v, len, FALSE /*f_second */, 0);
-	//C.print(TRUE /* f_backwards*/);
-	C.print_naked_stringstream(sstr, f_backwards);
 }
 
 void integer_vec_print(ostream &ost, int *v, int len)
@@ -1323,41 +774,6 @@ void print_incidence_structure(ostream &ost,
 	FREE_int(M);
 }
 
-void int_vec_scan(std::string &s, int *&v, int &len)
-{
-	int verbose_level = 1;
-
-	int f_v = (verbose_level >= 1);
-	if (f_v) {
-		cout << "int_vec_scan: " << s << endl;
-	}
-	istringstream ins(s);
-	int_vec_scan_from_stream(ins, v, len);
-	if (f_v) {
-		cout << "int_vec_scan done, len = " << len << endl;
-		cout << "v = ";
-		int_vec_print(cout, v, len);
-		cout << endl;
-	}
-}
-
-
-
-void int_vec_scan(const char *s, int *&v, int &len)
-{
-	int verbose_level = 1;
-
-	int f_v = (verbose_level >= 1);
-	if (f_v) {
-		cout << "int_vec_scan: " << s << endl;
-	}
-	istringstream ins(s);
-	int_vec_scan_from_stream(ins, v, len);
-	if (f_v) {
-		cout << "int_vec_scan done, len = " << len << endl;
-	}
-}
-
 void lint_vec_scan(std::string &s, long int *&v, int &len)
 {
 	istringstream ins(s);
@@ -1369,162 +785,6 @@ void lint_vec_scan(const char *s, long int *&v, int &len)
 {
 	istringstream ins(s);
 	lint_vec_scan_from_stream(ins, v, len);
-}
-
-void int_vec_scan_from_stream(istream & is, int *&v, int &len)
-{
-	int verbose_level = 1;
-	int a;
-	char s[10000], c;
-	int l, h;
-	int f_v = (verbose_level >= 1);
-		
-	if (f_v) {
-		cout << "int_vec_scan_from_stream" << endl;
-	}
-	len = 20;
-	v = NEW_int(len);
-	h = 0;
-	l = 0;
-
-	while (TRUE) {
-		if (!is) {
-			len = h;
-			if (f_v) {
-				cout << "int_vec_scan_from_stream done" << endl;
-			}
-			return;
-		}
-		l = 0;
-		if (is.eof()) {
-			if (f_v) {
-				cout << "breaking off because of eof" << endl;
-			}
-			len = h;
-			if (f_v) {
-				cout << "int_vec_scan_from_stream done" << endl;
-			}
-			return;
-		}
-		is >> c;
-		if (f_v) {
-			cout << "c='" << c << "'" << endl;
-		}
-		//c = get_character(is, verbose_level - 2);
-		if (c == 0) {
-			len = h;
-			if (f_v) {
-				cout << "int_vec_scan_from_stream done" << endl;
-			}
-			return;
-		}
-		while (TRUE) {
-			// read digits:
-			//cout << "int_vec_scan_from_stream: \"" << c
-			//<< "\", ascii=" << (int)c << endl;
-			l = 0;
-			while (c != 0) {
-				if (c == ' ') {
-					is >> c;
-					if (f_v) {
-						cout << "int_vec_scan_from_stream skipping space" << endl;
-					}
-					continue;
-				}
-				if (c == '-') {
-					if (f_v) {
-						cout << "c='" << c << "'" << endl;
-					}
-					if (is.eof()) {
-						if (f_v) {
-							cout << "breaking off because of eof" << endl;
-						}
-						break;
-					}
-					s[l++] = c;
-					is >> c;
-					//c = get_character(is, verbose_level - 2);
-				}
-				else if (c >= '0' && c <= '9') {
-					//cout << "c='" << c << "'" << endl;
-					if (is.eof()) {
-						//cout << "breaking off because of eof" << endl;
-						break;
-					}
-					s[l++] = c;
-					is >> c;
-					//c = get_character(is, verbose_level - 2);
-				}
-				else {
-					if (f_v) {
-						cout << "breaking off because c='" << c << "'" << endl;
-					}
-					break;
-				}
-				if (c == 0) {
-					break;
-				}
-				if (f_v) {
-					cout << "int_vec_scan_from_stream inside loop: \""
-								<< c << "\", ascii=" << (int)c << endl;
-				}
-			}
-			s[l] = 0;
-			a = atoi(s);
-			if (f_v) {
-				cout << "h=" << h << ", len=" << len << ", digit as string: " << s
-						<< ", numeric: " << a << endl;
-			}
-			if (h == len) {
-				len += 20;
-				int *v2;
-
-				if (f_v) {
-					cout << "int_vec_scan_from_stream reallocating to length " << len << endl;
-				}
-
-				v2 = NEW_int(len);
-				int_vec_copy(v, v2, h);
-				FREE_int(v);
-				v = v2;
-			}
-			v[h++] = a;
-			l = 0;
-			if (!is) {
-				len = h;
-				if (f_v) {
-					cout << "int_vec_scan_from_stream done" << endl;
-				}
-				return;
-			}
-			if (c == 0) {
-				len = h;
-				if (f_v) {
-					cout << "int_vec_scan_from_stream done" << endl;
-				}
-				return;
-			}
-			if (is.eof()) {
-				if (f_v) {
-					cout << "breaking off because of eof" << endl;
-				}
-				len = h;
-				if (f_v) {
-					cout << "int_vec_scan_from_stream done" << endl;
-				}
-				return;
-			}
-			is >> c;
-			//c = get_character(is, verbose_level - 2);
-			if (c == 0) {
-				len = h;
-				if (f_v) {
-					cout << "int_vec_scan_from_stream done" << endl;
-				}
-				return;
-			}
-		}
-	}
 }
 
 void lint_vec_scan_from_stream(istream & is, long int *&v, int &len)
@@ -2463,22 +1723,6 @@ int test_if_sets_are_disjoint_assuming_sorted_lint(
 }
 
 
-void int_vec_print_to_str(char *str, int *data, int len)
-{
-	int i, a;
-
-	str[0] = 0;
-	strcat(str, "\" ");
-	for (i = 0; i < len; i++) {
-		a = data[i];
-		sprintf(str + strlen(str), "%d", a);
-		if (i < len - 1) {
-			strcat(str, ", ");
-		}
-	}
-	strcat(str, "\"");
-}
-
 void lint_vec_print_to_str(char *str, long int *data, int len)
 {
 	long int i, a;
@@ -2493,20 +1737,6 @@ void lint_vec_print_to_str(char *str, long int *data, int len)
 		}
 	}
 	strcat(str, "\"");
-}
-
-void int_vec_print_to_str_naked(char *str, int *data, int len)
-{
-	int i, a;
-
-	str[0] = 0;
-	for (i = 0; i < len; i++) {
-		a = data[i];
-		sprintf(str + strlen(str), "%d", a);
-		if (i < len - 1) {
-			strcat(str, ", ");
-		}
-	}
 }
 
 void lint_vec_print_to_str_naked(char *str, long int *data, int len)
@@ -2694,14 +1924,6 @@ int is_all_digits(char *p)
 	return TRUE;
 }
 
-void int_vec_print(int *v, int len)
-{
-	int i;
-
-	for (i = 0; i < len; i++) {
-		cout << i << " : " << v[i] << endl;
-	}
-}
 
 
 

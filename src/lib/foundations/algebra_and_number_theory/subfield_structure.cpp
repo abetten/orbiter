@@ -156,7 +156,7 @@ void subfield_structure::init_with_given_basis(
 		}
 	if (f_v) {
 		cout << "Field basis: ";
-		int_vec_print(cout, Basis, s);
+		Orbiter->Int_vec.print(cout, Basis, s);
 		cout << endl;
 		}
 	for (i = 0; i < Q; i++) {
@@ -195,7 +195,7 @@ void subfield_structure::print_embedding()
 		Gg.AG_element_unrank(q, v, 1, s, i);
 		j = evaluate_over_Fq(v);
 		cout << setw(4) << i << " : ";
-		int_vec_print(cout, v, s);
+		Orbiter->Int_vec.print(cout, v, s);
 		cout << " : " << j << endl;
 		}
 	cout << "subfield_structure::print_embedding in reverse:" << endl;
@@ -203,7 +203,7 @@ void subfield_structure::print_embedding()
 	for (i = 0; i < Q; i++) {
 		j = Gg.AG_element_rank(q, components + i * s, 1, s);
 		cout << setw(4) << i << " : ";
-		int_vec_print(cout, components + i * s, s);
+		Orbiter->Int_vec.print(cout, components + i * s, s);
 		cout << " : " << j << endl;
 		}
 	
@@ -217,7 +217,7 @@ void subfield_structure::report(std::ostream &ost)
 
 	ost << "Field basis:\\\\" << endl;
 	ost << "$$" << endl;
-	int_vec_print(ost, Basis, s);
+	Orbiter->Int_vec.print(ost, Basis, s);
 	cout << endl;
 	ost << "$$" << endl;
 	ost << "Embedding:\\\\" << endl;
@@ -228,7 +228,7 @@ void subfield_structure::report(std::ostream &ost)
 		Gg.AG_element_unrank(q, v, 1, s, i);
 		j = evaluate_over_Fq(v);
 		ost << setw(4) << i << " & ";
-		int_vec_print(ost, v, s);
+		Orbiter->Int_vec.print(ost, v, s);
 		ost << " & " << j << "\\\\" << endl;
 		}
 	ost << "\\hline" << endl;
@@ -245,7 +245,7 @@ void subfield_structure::report(std::ostream &ost)
 	for (i = 0; i < Q; i++) {
 		j = Gg.AG_element_rank(q, components + i * s, 1, s);
 		ost << setw(4) << i << " & ";
-		int_vec_print(ost, components + i * s, s);
+		Orbiter->Int_vec.print(ost, components + i * s, s);
 		ost << " & " << j << "\\\\" << endl;
 	}
 	ost << "\\hline" << endl;
@@ -449,7 +449,7 @@ void subfield_structure::Adelaide_hyperoval(
 
 	Pts = NEW_lint(N);
 	Mtx = NEW_int(N * 3);
-	int_vec_zero(Mtx, N * 3);
+	Orbiter->Int_vec.zero(Mtx, N * 3);
 	for (t = 0; t < q; t++) {
 
 		sqrt_t = Fq->frobenius_power(t, e - 1);
@@ -551,7 +551,7 @@ void subfield_structure::create_adelaide_hyperoval(
 			P->unrank_point(v, Pts[i]);
 			if (f_v) {
 				cout << setw(4) << i << " : ";
-				int_vec_print(cout, v, d);
+				Orbiter->Int_vec.print(cout, v, d);
 				cout << endl;
 				}
 			}
@@ -587,11 +587,11 @@ void subfield_structure::field_reduction(int *input, int sz, int *output,
 
 	if (f_v) {
 		cout << "input:" << endl;
-		int_vec_print(cout, input, sz);
+		Orbiter->Int_vec.print(cout, input, sz);
 		cout << endl;
 	}
 
-	int_vec_zero(output, s * n);
+	Orbiter->Int_vec.zero(output, s * n);
 
 	for (i = 0; i < s; i++) {
 
@@ -612,7 +612,7 @@ void subfield_structure::field_reduction(int *input, int sz, int *output,
 		}
 		if (f_v) {
 			cout << "i=" << i << " / " << s << " w=";
-			int_vec_print(cout, w, sz);
+			Orbiter->Int_vec.print(cout, w, sz);
 			cout << endl;
 		}
 

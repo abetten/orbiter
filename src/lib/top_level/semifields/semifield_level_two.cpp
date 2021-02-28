@@ -435,7 +435,7 @@ void semifield_level_two::init_desired_pivots(int verbose_level)
 	if (f_vv) {
 		cout << "semifield_level_two::init_desired_pivots "
 				"desired_pivots: ";
-		int_vec_print(cout, desired_pivots, k);
+		Orbiter->Int_vec.print(cout, desired_pivots, k);
 		cout << endl;
 	}
 	if (f_v) {
@@ -523,7 +523,7 @@ void semifield_level_two::list_all_elements_in_conjugacy_class(
 	}
 
 	cout << "The elements of class " << c << " are: ";
-	int_vec_print(cout, Ranks, cl);
+	Orbiter->Int_vec.print(cout, Ranks, cl);
 	cout << endl;
 
 	FREE_int(Ranks);
@@ -1243,7 +1243,7 @@ void semifield_level_two::trace(int f, int coset,
 	SC->matrix_unrank(b, Mtx2);
 	F->identity_matrix(Mtx3, k);
 
-	int_vec_zero(M1, n * n);
+	Orbiter->Int_vec.zero(M1, n * n);
 	for (i = 0; i < k; i++) {
 		for (j = 0; j < k; j++) {
 			M1[i * n + j] = Mtx1[i * k + j];
@@ -1462,7 +1462,7 @@ void semifield_level_two::multiply_to_the_right(
 	}
 	//M = Mnn;
 	M = NEW_int(n * n);
-	int_vec_zero(M, n * n);
+	Orbiter->Int_vec.zero(M, n * n);
 	for (i = 0; i < k; i++) {
 		for (j = 0; j < k; j++) {
 			a = Mtx[i * k + j];
@@ -1575,14 +1575,14 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 #endif
 
 
-			int_vec_copy(Affine_k + Cnt[i] * k, Mtx1 + i * k, k);
+			Orbiter->Int_vec.copy(Affine_k + Cnt[i] * k, Mtx1 + i * k, k);
 			//AG_element_unrank(q, Mtx1 + i * k, 1, k, Cnt[i]);
 			if (i < 2 && Mtx1[i * k + 0]) {
 				continue;
 					// we need zeroes in the first
 					// two entries in the first column
 			}
-			int_vec_copy(Mtx1, Mtx2, (i + 1) * k);
+			Orbiter->Int_vec.copy(Mtx1, Mtx2, (i + 1) * k);
 			if (F->rank_of_rectangular_matrix_memory_given(
 					Mtx2, i + 1, k, B, base_cols,
 					0 /* verbose_level */) < i + 1) {
@@ -1590,7 +1590,7 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 			}
 			// now rank is OK
 			for (h = 1; h < N1; h++) {
-				int_vec_copy(Affine_2 + h * 2, v, 2);
+				Orbiter->Int_vec.copy(Affine_2 + h * 2, v, 2);
 				//AG_element_unrank(q, v, 1, 2, h);
 
 				// form the linear combination of
@@ -1631,7 +1631,7 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 		if ((nb_tested & ((1 << 17) - 1)) == 0) {
 			cout << "semifield_level_two::compute_candidates_at_level_two_case "
 					"orbit " << orbit << " / " << nb_orbits << " Cnt=";
-			int_vec_print(cout, Cnt, k);
+			Orbiter->Int_vec.print(cout, Cnt, k);
 			cout << " number tested = " << nb_tested
 					<< " Number of candidates = " << nb_candidates << endl;
 		}
@@ -2254,7 +2254,7 @@ void semifield_level_two::report(
 			ost << "\\item" << endl;
 			ost << i << " / " << nb_flag_orbits << ":\\\\" << endl;
 			ost << "Classes: ";
-			int_vec_print(ost, flag_orbit_classes + i * 2, 2);
+			Orbiter->Int_vec.print(ost, flag_orbit_classes + i * 2, 2);
 			ost << "\\\\" << endl;
 			ost << "number\\_of\\_matrices = " << flag_orbit_number_of_matrices[i] << "\\\\" << endl;
 			ost << "orbit\\_length = " << flag_orbit_length[i] << "\\\\" << endl;

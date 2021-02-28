@@ -183,24 +183,18 @@ void design_create::create_design_PG_2_q(finite_field *F,
 
 	design_create::k = q + 1;
 	k = q + 1;
-#if 0
-	P = NEW_OBJECT(projective_space);
-	P->finite_field_init(2, F,
-			TRUE /* f_init_incidence_structure */,
-			verbose_level);
-#endif
 	degree = P->N_points;
 
 	block = NEW_int(k);
 	sz = P->N_lines;
 	set = NEW_lint(sz);
 	for (j = 0; j < sz; j++) {
-		int_vec_copy(P->Lines + j * k, block, k);
+		Orbiter->Int_vec.copy(P->Lines + j * k, block, k);
 		Sorting.int_vec_heapsort(block, k);
 		set[j] = Combi.rank_k_subset(block, P->N_points, k);
 		if (f_v) {
 			cout << "block " << j << " / " << sz << " : ";
-			int_vec_print(cout, block, k);
+			Orbiter->Int_vec.print(cout, block, k);
 			cout << " : " << set[j] << endl;
 		}
 	}
@@ -251,7 +245,7 @@ void design_create::unrank_block_in_PG_2_q(int *block,
 	Combi.unrank_k_subset(rk, block, P->N_points, k);
 	if (f_v) {
 		cout << "design_create::unrank_block_in_PG_2_q block = ";
-		int_vec_print(cout, block, k);
+		Orbiter->Int_vec.print(cout, block, k);
 		cout << endl;
 	}
 	if (f_v) {

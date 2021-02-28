@@ -127,7 +127,7 @@ void coding_theory_domain::twisted_tensor_product_codes(
 		cout << "beta = " << beta << endl;
 		cout << "beta_q = " << beta_q << endl;
 		cout << "Exponents: ";
-		int_vec_print(cout, exponents, m);
+		Orbiter->Int_vec.print(cout, exponents, m);
 		cout << endl;
 		}
 
@@ -625,7 +625,7 @@ void coding_theory_domain::make_tensor_code_9dimensional_as_point_set(
 	if (f_v) {
 		cout << "make_tensor_code_9dimensional_as_point_set done" << endl;
 		cout << "created the set: ";
-		int_vec_print(cout, the_set, length);
+		Orbiter->Int_vec.print(cout, the_set, length);
 		cout << endl;
 		}
 }
@@ -2118,7 +2118,7 @@ void coding_theory_domain::make_BCH_codes(int n, int q, int t, int b, int f_dual
 	snprintf(fname, 1000, "BCH_%d_%d.txt", n, t);
 
 	cout << "roots: ";
-	int_vec_print(cout, roots, nb_roots);
+	Orbiter->Int_vec.print(cout, roots, nb_roots);
 	cout << endl;
 
 	coding_theory_domain Codes;
@@ -2272,7 +2272,7 @@ int coding_theory_domain::code_minimum_distance(finite_field *F, int n, int k,
 		cout << "coding_theory_domain::code_minimum_distance" << endl;
 	}
 	weight_enumerator = NEW_int(n + 1);
-	int_vec_zero(weight_enumerator, n + 1);
+	Orbiter->Int_vec.zero(weight_enumerator, n + 1);
 	code_weight_enumerator_fast(F, n, k,
 		code, // [k * n]
 		weight_enumerator, // [n + 1]
@@ -2352,7 +2352,7 @@ void coding_theory_domain::code_projective_weight_enumerator(finite_field *F,
 	msg = NEW_int(k);
 	word = NEW_int(n);
 
-	int_vec_zero(weight_enumerator, n + 1);
+	Orbiter->Int_vec.zero(weight_enumerator, n + 1);
 
 	for (h = 0; h < N; h++) {
 		if (f_v && (h % ONE_MILLION) == 0) {
@@ -2424,7 +2424,7 @@ void coding_theory_domain::code_weight_enumerator(finite_field *F,
 	msg = NEW_int(k);
 	word = NEW_int(n);
 
-	int_vec_zero(weight_enumerator, n + 1);
+	Orbiter->Int_vec.zero(weight_enumerator, n + 1);
 
 	for (h = 0; h < N; h++) {
 		if ((h % ONE_MILLION) == 0) {
@@ -2498,7 +2498,7 @@ void coding_theory_domain::code_weight_enumerator_fast(finite_field *F,
 	word = NEW_int(n);
 
 
-	int_vec_zero(weight_enumerator, n + 1);
+	Orbiter->Int_vec.zero(weight_enumerator, n + 1);
 
 	for (h = 0; h < N; h++) {
 		if (((h % ONE_MILLION) == 0) && h) {
@@ -2529,9 +2529,9 @@ void coding_theory_domain::code_weight_enumerator_fast(finite_field *F,
 		weight_enumerator[wt]++;
 		if (f_vv) {
 			cout << h << " / " << N << " msg: ";
-			int_vec_print(cout, msg, k);
+			Orbiter->Int_vec.print(cout, msg, k);
 			cout << " codeword ";
-			int_vec_print(cout, word, n);
+			Orbiter->Int_vec.print(cout, word, n);
 			cout << " weight " << wt << endl;
 		}
 	}
@@ -2680,7 +2680,7 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 		cout << "do_weight_enumerator" << endl;
 	}
 
-	int_vec_scan(text, M, len);
+	Orbiter->Int_vec.scan(text, M, len);
 	if (len != m * n) {
 		cout << "number of coordinates received differs from m * n" << endl;
 		cout << "received " << len << endl;
@@ -2691,7 +2691,7 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 	A = NEW_int(n * n);
 	base_cols = NEW_int(n);
 	weight_enumerator = NEW_int(n + 1);
-	int_vec_copy(M, A, m * n);
+	Orbiter->Int_vec.copy(M, A, m * n);
 
 	rk = F->Gauss_int(A,
 		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
@@ -2705,7 +2705,7 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 		cout << "rk=" << rk << endl;
 
 		cout << "coefficients:" << endl;
-		int_vec_print(cout, A, rk * n);
+		Orbiter->Int_vec.print(cout, A, rk * n);
 		cout << endl;
 	}
 
@@ -2901,9 +2901,9 @@ void coding_theory_domain::do_linear_code_through_basis(
 		set[i] = Gg.AG_element_rank(2, code_word, 1, n);
 
 		cout << i << " : ";
-		int_vec_print(cout, word, k);
+		Orbiter->Int_vec.print(cout, word, k);
 		cout << " : ";
-		int_vec_print(cout, code_word, n);
+		Orbiter->Int_vec.print(cout, code_word, n);
 		cout << " : " << set[i] << endl;
 	}
 	investigate_code(set, sz, n, f_embellish, verbose_level);
@@ -2958,10 +2958,10 @@ void coding_theory_domain::do_polynomial(
 	mon = NEW_int(polynomial_nb_vars);
 	coeff = NEW_int(Poly->get_nb_monomials());
 
-	int_vec_zero(coeff, Poly->get_nb_monomials());
+	Orbiter->Int_vec.zero(coeff, Poly->get_nb_monomials());
 
 	for (i = 0; i < poly_monomials_sz; i++) {
-		int_vec_zero(mon, polynomial_nb_vars);
+		Orbiter->Int_vec.zero(mon, polynomial_nb_vars);
 		a = poly_monomials[i];
 		j = 0;
 		while (a) {
@@ -2996,7 +2996,7 @@ void coding_theory_domain::do_polynomial(
 	for (h = 0; h < Poly->get_P()->N_points; h++) {
 		Poly->unrank_point(v, h);
 		cout << h << " : ";
-		int_vec_print(cout, v, polynomial_nb_vars);
+		Orbiter->Int_vec.print(cout, v, polynomial_nb_vars);
 		cout << " : " << f[h] << endl;
 		if (f[h] == 1 && v[polynomial_nb_vars - 1] == 1) {
 			a = Gg.AG_element_rank(2, v, 1, polynomial_nb_vars - 1);
@@ -3055,7 +3055,7 @@ void coding_theory_domain::do_sylvester_hadamard(int n,
 
 	F = NEW_OBJECT(finite_field);
 	F->finite_field_init(3, 0);
-	int_vec_copy(H2, M1, 4);
+	Orbiter->Int_vec.copy(H2, M1, 4);
 	sz = 2;
 	for (i = 0; i < nb_factors; i++) {
 
@@ -3066,7 +3066,7 @@ void coding_theory_domain::do_sylvester_hadamard(int n,
 				M1, H2,
 				sz, 2, M2, sz1,
 				verbose_level);
-		int_vec_copy(M2, M1, sz1 * sz1);
+		Orbiter->Int_vec.copy(M2, M1, sz1 * sz1);
 
 		sz = sz1;
 	}
@@ -3144,8 +3144,8 @@ void coding_theory_domain::investigate_code(long int *Words,
 	M = NEW_int(nb_rows * nb_cols);
 
 
-	int_vec_zero(M1, nb_rows * nb_cols);
-	int_vec_zero(M2, nb_rows * nb_cols);
+	Orbiter->Int_vec.zero(M1, nb_rows * nb_cols);
+	Orbiter->Int_vec.zero(M2, nb_rows * nb_cols);
 
 
 	N = 1 << n;
@@ -3186,7 +3186,7 @@ void coding_theory_domain::investigate_code(long int *Words,
 
 
 		cout << "placing codewords" << endl;
-		int_vec_zero(M, nb_rows * nb_cols);
+		Orbiter->Int_vec.zero(M, nb_rows * nb_cols);
 		for (h = 0; h < nb_words; h++) {
 			convert_to_binary(n, Words[h], v);
 			cout << "codeword " << h + 1 << " = " << setw(5) << Words[h];
@@ -3267,7 +3267,7 @@ void coding_theory_domain::investigate_code(long int *Words,
 	f = NEW_int(N);
 	g = NEW_int(N);
 
-	int_vec_zero(f, N);
+	Orbiter->Int_vec.zero(f, N);
 	for (h = 0; h < nb_words; h++) {
 		f[Words[h]] = 1;
 	}
@@ -3347,7 +3347,7 @@ void coding_theory_domain::do_long_code(
 
 	k = long_code_generators_text.size();
 	genma = NEW_int(k * n);
-	int_vec_zero(genma, k * n);
+	Orbiter->Int_vec.zero(genma, k * n);
 	for (i = 0; i < k; i++) {
 		long int *set;
 		int sz;
@@ -3406,14 +3406,14 @@ void coding_theory_domain::do_long_code(
 	F->finite_field_init(2, 0);
 
 	Wt = NEW_int(sz);
-	int_vec_zero(Wt, sz);
+	Orbiter->Int_vec.zero(Wt, sz);
 
 	for (i = 0; i < sz; i++) {
 		Gg.AG_element_unrank(2, message, 1, k, i);
 		F->mult_matrix_matrix(message, genma,
 				code_word, 1, k, n, 0 /* verbose_level*/);
 
-		int_vec_zero(M, nb_rows * nb_cols);
+		Orbiter->Int_vec.zero(M, nb_rows * nb_cols);
 		wt = 0;
 		for (h = 0; h < n; h++) {
 			if (code_word[h]) {
@@ -3485,7 +3485,7 @@ void coding_theory_domain::do_long_code(
 
 
 		word = NEW_int(n);
-		int_vec_zero(word, n);
+		Orbiter->Int_vec.zero(word, n);
 		for (j = 0; j < nearest_codeword_sz; j++) {
 			word[nearest_codeword_set[j]] = 1;
 		}
@@ -3499,7 +3499,7 @@ void coding_theory_domain::do_long_code(
 		}
 
 		BF->apply_Walsh_transform(f, g);
-		int_vec_zero(M, nb_rows * nb_cols);
+		Orbiter->Int_vec.zero(M, nb_rows * nb_cols);
 		for (h = 0; h < n; h++) {
 			place_binary(h, r, c);
 			M[r * nb_cols + c] = g[h];
@@ -3515,7 +3515,7 @@ void coding_theory_domain::do_long_code(
 			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 		}
 
-		int_vec_zero(M, nb_rows * nb_cols);
+		Orbiter->Int_vec.zero(M, nb_rows * nb_cols);
 		for (h = 0; h < n; h++) {
 			if (word[h]) {
 				place_binary(h, r, c);
@@ -3671,7 +3671,7 @@ void coding_theory_domain::do_it(int n, int r, int a, int c, int seed, int verbo
 	v = NEW_int(n);
 	W = NEW_int(r);
 	M = NEW_int(nb_rows * nb_cols);
-	int_vec_zero(M, nb_rows * nb_cols);
+	Orbiter->Int_vec.zero(M, nb_rows * nb_cols);
 
 	s = seed;
 	for (h = 0; h < r; h++) {
@@ -3824,7 +3824,7 @@ void coding_theory_domain::field_reduction(finite_field *FQ, finite_field *Fq,
 		Sub->print_embedding();
 	}
 
-	int_vec_scan(genma_text, M, sz);
+	Orbiter->Int_vec.scan(genma_text, M, sz);
 
 	if (sz != m * n) {
 		cout << "sz != m * n" << endl;
@@ -3875,7 +3875,7 @@ void coding_theory_domain::field_reduction(finite_field *FQ, finite_field *Fq,
 			ost << "\\right]" << endl;
 			ost << "$$" << endl;
 
-			int_vec_print_fully(ost, M2, m * Sub->s * Sub->s * n);
+			Orbiter->Int_vec.print_fully(ost, M2, m * Sub->s * Sub->s * n);
 			ost << "\\\\" << endl;
 
 

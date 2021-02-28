@@ -205,7 +205,7 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 					"did not find pt" << endl;
 			cout << "pt = " << pt << endl;
 			cout << "vector of length " << n << endl;
-			int_vec_print(cout, S->sv + 1, n);
+			Orbiter->Int_vec.print(cout, S->sv + 1, n);
 			cout << endl;
 			exit(1);
 			}

@@ -301,7 +301,7 @@ void drawable_set_of_objects::draw(animate *Anim, ostream &ost,
 
 	if (f_v) {
 		cout << "Selection: " << endl;
-		int_vec_print(cout, Selection, sz);
+		Orbiter->Int_vec.print(cout, Selection, sz);
 		cout << endl;
 	}
 	if (type == 1) {

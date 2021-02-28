@@ -286,7 +286,7 @@ void tdo_scheme::init_partition_stack(int verbose_level)
 	}
 	if (f_vvv) {
 		cout << "init_partition_stack: m=" << m << " n=" << n << endl;
-		int_vec_print(cout, part, part_length + 1);
+		Orbiter->Int_vec.print(cout, part, part_length + 1);
 		cout << endl;
 	}
 	
@@ -1232,7 +1232,7 @@ int tdo_scheme::geometric_test_for_row_scheme(partitionstack &P,
 		if (f_vvvv) {
 			cout << "geometric_test_for_row_scheme: testing distribution " 
 				<< cnt << " / " << nb_distributions << " : ";
-			int_vec_print(cout,
+			Orbiter->Int_vec.print(cout,
 				distributions + cnt * nb_point_types,
 				nb_point_types);
 			cout << endl;
@@ -1242,7 +1242,7 @@ int tdo_scheme::geometric_test_for_row_scheme(partitionstack &P,
 					d = distributions[cnt *
 						nb_point_types + non_zero_blocks[i]];
 					cout << setw(3) << i << " : " << setw(3) << d << " x ";
-					int_vec_print(cout,
+					Orbiter->Int_vec.print(cout,
 						point_types + non_zero_blocks[i] * point_type_len,
 						point_type_len);
 					cout << endl;
@@ -1270,7 +1270,7 @@ int tdo_scheme::geometric_test_for_row_scheme(partitionstack &P,
 										  non_zero_blocks[i]];
 						cout << setw(3) << i << " : "
 							<< setw(3) << d << " x ";
-						int_vec_print(cout,
+						Orbiter->Int_vec.print(cout,
 							point_types + non_zero_blocks[i] * point_type_len,
 							point_type_len);
 						cout << endl;						
@@ -1302,7 +1302,7 @@ int tdo_scheme::geometric_test_for_row_scheme(partitionstack &P,
 			<< new_nb_distributions << ", i.e. Eliminated " 
 			<< nb_distributions - new_nb_distributions << " cases" << endl;
 		cout << "# of ruled out by test of order ";
-		int_vec_print(cout, ruled_out_by, nb_point_types + 1);
+		Orbiter->Int_vec.print(cout, ruled_out_by, nb_point_types + 1);
 		cout << endl;
 		//cout << "nb ruled out by first order test  = "
 		//<< nb_ruled_out_by_order1 << endl;
@@ -1531,7 +1531,7 @@ int tdo_scheme::geometric_test_for_row_scheme_level_s(
 				if (f_v) {
 					cout << "tdo_scheme::geometric_test_for_row_scheme_"
 						"level_s s=" << s << " failure in point type ";
-					int_vec_print(cout, set, s);
+					Orbiter->Int_vec.print(cout, set, s);
 					cout << endl;
 					cout << "max=" << max << endl;
 					cout << "J=" << J << endl;

@@ -257,7 +257,7 @@ void linear_set_classify::init(
 
 	if (f_v) {
 		cout << "Field-basis: ";
-		int_vec_print(cout, SubS->Basis, s);
+		Orbiter->Int_vec.print(cout, SubS->Basis, s);
 		cout << endl;
 	}
 
@@ -668,7 +668,7 @@ void linear_set_classify::calculate_intersections(int depth, int verbose_level)
 				<< depth << " with " << Nb_nodes[level] << " orbits:" << endl;
 		for (i = 0; i < Nb_nodes[level]; i++) {
 			cout << setw(3) << i << " : ";
-			int_vec_print(cout,
+			Orbiter->Int_vec.print(cout,
 					Intersection_dimensions[level] + i * D->N, D->N);
 			cout << " : ";
 			{
@@ -1120,7 +1120,7 @@ void linear_set_classify::do_classify_secondary(int verbose_level)
 			Intersection_dimensions, 0 /*verbose_level - 1*/);
 
 		cout << "Intersection_dimensions:";
-		int_vec_print(cout, Intersection_dimensions, D->N);
+		Orbiter->Int_vec.print(cout, Intersection_dimensions, D->N);
 		cout << endl;
 
 		strong_generators *Strong_gens2;
@@ -1590,7 +1590,7 @@ void linear_set_classify::do_compute_stabilizer(
 			Intersection_dimensions, 0 /*verbose_level - 1*/);
 
 		cout << "Intersection_dimensions:";
-		int_vec_print(cout, Intersection_dimensions, D->N);
+		Orbiter->Int_vec.print(cout, Intersection_dimensions, D->N);
 		cout << endl;
 
 		//int f_lex = TRUE;
@@ -1732,8 +1732,8 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 	BasisU = NEW_int(dimU * n1);
 	BasisW = NEW_int(dimW * n1);
 
-	int_vec_zero(BasisU, dimU * n1);
-	int_vec_zero(BasisW, dimW * n1);
+	Orbiter->Int_vec.zero(BasisU, dimU * n1);
+	Orbiter->Int_vec.zero(BasisW, dimW * n1);
 
 	Gen->get_set_by_level(secondary_level, secondary_orbit_at_level, set1);
 	for (i = 0; i < secondary_level; i++) {
@@ -1902,20 +1902,20 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 		cout << "BasisW:" << endl;
 		int_matrix_print(BasisW, dimW, n1);
 		cout << "base_cols:";
-		int_vec_print(cout, base_cols, dimW);
+		Orbiter->Int_vec.print(cout, base_cols, dimW);
 		cout << endl;
 	}
 
 	Fq->kernel_columns(n1, dimW, base_cols, kernel_cols);
 	if (f_vv) {
 		cout << "kernel_cols:";
-		int_vec_print(cout, kernel_cols, n2);
+		Orbiter->Int_vec.print(cout, kernel_cols, n2);
 		cout << endl;
 	}
 
 
 
-	int_vec_zero(Basis_infinity, s * n2);
+	Orbiter->Int_vec.zero(Basis_infinity, s * n2);
 	for (i = 0; i < s; i++) {
 		//a = kernel_cols[i] - s;
 		Basis_infinity[i * n2 + i] = 1;
@@ -1936,7 +1936,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 
 
 	Components[0] = NEW_int(s * n2);
-	int_vec_copy(Basis_infinity, Components[0], s * n2);
+	Orbiter->Int_vec.copy(Basis_infinity, Components[0], s * n2);
 
 	for (h = 0; h < linear_set_sz; h++) {
 		if (f_v3) {
@@ -1944,7 +1944,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 					<< linear_set_sz << ":" << endl;
 		}
 		a = linear_set[h];
-		int_vec_copy(
+		Orbiter->Int_vec.copy(
 				D1->Spread_elements + a * D1->spread_element_size,
 				Spread_element_basis, D1->spread_element_size);
 		if (f_v3) {
@@ -1994,7 +1994,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 		}
 
 		Components[h + 1] = NEW_int(s * n2);
-		int_vec_copy(Basis_elt, Components[h + 1], s * n2);
+		Orbiter->Int_vec.copy(Basis_elt, Components[h + 1], s * n2);
 	}
 
 	if (f_v3) {

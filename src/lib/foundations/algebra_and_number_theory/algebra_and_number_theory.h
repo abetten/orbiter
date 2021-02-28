@@ -325,8 +325,9 @@ public:
 	int has_quadratic_subfield();
 	int belongs_to_quadratic_subfield(int a);
 	void init_quadratic_subfield(int verbose_level);
-	int compute_subfield_polynomial(int order_subfield, 
-		int verbose_level);
+	long int compute_subfield_polynomial(int order_subfield,
+			int f_latex, std::ostream &ost,
+			int verbose_level);
 	void compute_subfields(int verbose_level);
 	void create_alpha_table(int verbose_level);
 	void create_alpha_table_extension_field(int verbose_level);

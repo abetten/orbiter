@@ -298,6 +298,75 @@ class fancy_set {
 };
 
 // #############################################################################
+// int_vec.cpp:
+// #############################################################################
+
+
+//! int arrays
+
+class int_vec {
+public:
+
+	int_vec();
+	~int_vec();
+	void add(int *v1, int *v2, int *w, int len);
+	void add3(int *v1, int *v2, int *v3, int *w, int len);
+	void apply(int *from, int *through, int *to, int len);
+	void apply_lint(int *from, long int *through, long int *to, int len);
+	int is_constant_on_subset(int *v,
+		int *subset, int sz, int &value);
+	void take_away(int *v, int &len,
+			int *take_away, int nb_take_away);
+		// v must be sorted
+	int count_number_of_nonzero_entries(int *v, int len);
+	int find_first_nonzero_entry(int *v, int len);
+	void zero(int *v, long int len);
+	int is_zero(int *v, long int len);
+	void mone(int *v, long int len);
+	void copy(int *from, int *to, long int len);
+	void copy_to_lint(int *from, long int *to, long int len);
+	void swap(int *v1, int *v2, long int len);
+	void delete_element_assume_sorted(int *v,
+		int &len, int a);
+	void complement(int *v, int n, int k);
+	// computes the complement to v + k (v must be allocated to n elements)
+	// the first k elements of v[] must be in increasing order.
+	void complement(int *v, int *w, int n, int k);
+	// computes the complement of v[k] in the set {0,...,n-1} to w[n - k]
+	void init5(int *v, int a0, int a1, int a2, int a3, int a4);
+	int minimum(int *v, int len);
+	int maximum(int *v, int len);
+	void copy(int len, int *from, int *to);
+	int first_difference(int *p, int *q, int len);
+	int vec_max_log_of_entries(std::vector<std::vector<int> > &p);
+	void vec_print(std::vector<std::vector<int> > &p);
+	void vec_print(std::vector<std::vector<int> > &p, int w);
+	void distribution_compute_and_print(std::ostream &ost,
+		int *v, int v_len);
+	void distribution(int *v,
+		int len_v, int *&val, int *&mult, int &len);
+	void print(std::ostream &ost, std::vector<int> &v);
+	void print(std::ostream &ost, int *v, int len);
+	void print_str(std::stringstream &ost, int *v, int len);
+	void print_as_table(std::ostream &ost, int *v, int len, int width);
+	void print_fully(std::ostream &ost, std::vector<int> &v);
+	void print_fully(std::ostream &ost, int *v, int len);
+	void print_Cpp(std::ostream &ost, int *v, int len);
+	void print_GAP(std::ostream &ost, int *v, int len);
+	void print_classified(int *v, int len);
+	void print_classified_str(std::stringstream &sstr,
+			int *v, int len, int f_backwards);
+	void scan(std::string &s, int *&v, int &len);
+	void scan(const char *s, int *&v, int &len);
+	void scan_from_stream(std::istream & is, int *&v, int &len);
+	void print_to_str(char *str, int *data, int len);
+	void print_to_str_naked(char *str, int *data, int len);
+	void print(int *v, int len);
+};
+
+
+
+// #############################################################################
 // int_vector.cpp
 // #############################################################################
 

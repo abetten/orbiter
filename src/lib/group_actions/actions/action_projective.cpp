@@ -234,7 +234,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 				"done with nauty_interface_matrix_int, Ago=" << Ago << endl;
 		}
 
-	int_vec_copy_to_lint(Base, Base_lint, Base_length);
+	Orbiter->Int_vec.copy_to_lint(Base, Base_lint, Base_length);
 
 	int *Incma_out;
 	int ii, jj;
@@ -586,7 +586,7 @@ int action::reverse_engineer_semilinear_map(
 				v1[h] = 0;
 				}
 			}
-		int_vec_copy(v1, v1_save, d);
+		Orbiter->Int_vec.copy(v1, v1_save, d);
 		i = P->rank_point(v1);
 			// Now, the value of i should be equal to e.
 		j = element_image_of(i, Elt, 0);
@@ -599,7 +599,7 @@ int action::reverse_engineer_semilinear_map(
 #endif
 
 
-		int_vec_copy(v2, Mtx + e * d, d);
+		Orbiter->Int_vec.copy(v2, Mtx + e * d, d);
 		}
 
 	if (f_vv) {
@@ -617,7 +617,7 @@ int action::reverse_engineer_semilinear_map(
 	for (h = 0; h < d; h++) {
 		v1[h] = 1;
 		}
-	int_vec_copy(v1, v1_save, d);
+	Orbiter->Int_vec.copy(v1, v1_save, d);
 	i = P->rank_point(v1);
 	j = element_image_of(i, Elt, 0);
 	P->unrank_point(v2, j);
@@ -687,7 +687,7 @@ int action::reverse_engineer_semilinear_map(
 				v1[h] = 0;
 				}
 			}
-		int_vec_copy(v1, v1_save, d);
+		Orbiter->Int_vec.copy(v1, v1_save, d);
 		i = P->rank_point(v1);
 		j = element_image_of(i, Elt, 0);
 		P->unrank_point(v2, j);
@@ -842,7 +842,7 @@ void action::report_fixed_objects_in_P3(ostream &ost,
 		F->PG_element_unrank_modified(v, 1, 4, i);
 		if (j == i) {
 			ost << i << " : ";
-			int_vec_print(ost, v, 4);
+			Orbiter->Int_vec.print(ost, v, 4);
 			ost << "\\\\" << endl;
 			cnt++;
 			}

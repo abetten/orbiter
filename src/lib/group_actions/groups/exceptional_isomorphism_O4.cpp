@@ -141,7 +141,7 @@ void exceptional_isomorphism_O4::apply_5_to_4(
 	if (f_v) {
 		cout << "exceptional_isomorphism_O4::apply_5_to_4" << endl;
 		}
-	int_vec_copy(mtx5x5, Data, 25);
+	Orbiter->Int_vec.copy(mtx5x5, Data, 25);
 	Fq->PG_element_normalize_from_front(Data, 1, 25);
 	if (f_v) {
 		cout << "as 5 x 5:" << endl;
@@ -197,8 +197,8 @@ void exceptional_isomorphism_O4::apply_4_to_5(
 		cout << "ord4=" << ord4 << endl;
 	}
 
-	int_vec_copy(E4, M4, 16);
-	int_vec_zero(gram, 16);
+	Orbiter->Int_vec.copy(E4, M4, 16);
+	Orbiter->Int_vec.zero(gram, 16);
 	gram[0 * 4 + 1] = 1;
 	gram[1 * 4 + 0] = 1;
 	gram[2 * 4 + 3] = 1;
@@ -282,7 +282,7 @@ void exceptional_isomorphism_O4::apply_4_to_5(
 		A4->element_print_quick(E4b, cout);
 	}
 
-	int_vec_zero(M5, 26); // 26 in case we are semilinear
+	Orbiter->Int_vec.zero(M5, 26); // 26 in case we are semilinear
 
 	M5[0] = 1;
 	//M5[0] = sqrt_value;
@@ -299,7 +299,7 @@ void exceptional_isomorphism_O4::apply_4_to_5(
 	}
 
 
-	int_vec_zero(Gram5, 25);
+	Orbiter->Int_vec.zero(Gram5, 25);
 	Gram5[0 * 5 + 0] = Fq->add(1, 1);
 	Gram5[1 * 5 + 2] = 1;
 	Gram5[2 * 5 + 1] = 1;
@@ -358,7 +358,7 @@ void exceptional_isomorphism_O4::apply_4_to_2(
 		cout << "E4:" << endl;
 		A4->element_print_quick(E4, cout);
 		}
-	int_vec_copy(E4, Data, 16);
+	Orbiter->Int_vec.copy(E4, Data, 16);
 	Fq->PG_element_normalize_from_front(Data, 1, 16);
 	if (f_v) {
 		cout << "as 4 x 4:" << endl;

@@ -1102,7 +1102,7 @@ void latex_interface::int_vec_print_as_matrix(ostream &ost,
 	int i;
 
 	w = NEW_int(len + width - 1);
-	int_vec_copy(v, w, len);
+	Orbiter->Int_vec.copy(v, w, len);
 	for (i = 0; i < width - 1; i++) {
 		w[len + i] = 0;
 		}

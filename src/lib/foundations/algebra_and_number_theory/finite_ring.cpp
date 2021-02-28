@@ -288,7 +288,7 @@ int finite_ring::Gauss_int(int *A, int f_special,
 				}
 			if (f_vv) {
 				cout << "made pivot to one:" << endl;
-				int_vec_print(cout, A + i * n, n);
+				Orbiter->Int_vec.print(cout, A + i * n, n);
 				cout << endl;
 				}
 			}
@@ -327,7 +327,7 @@ int finite_ring::Gauss_int(int *A, int f_special,
 				}
 			if (f_vv) {
 				cout << "after eliminating row " << k << ":" << endl;
-				int_vec_print(cout, A + k * n, n);
+				Orbiter->Int_vec.print(cout, A + k * n, n);
 				cout << endl;
 				}
 			if (f_P) {

@@ -121,9 +121,9 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 				cout << "automorphism " << D->nb_auts
 					<< " first_moved = " << D->first_moved
 					<< " choice: ";
-				int_vec_print(cout, D->current_choice, A->base_len());
+				Orbiter->Int_vec.print(cout, D->current_choice, A->base_len());
 				cout << " points: ";
-				int_vec_print(cout, D->aut_data +
+				Orbiter->Int_vec.print(cout, D->aut_data +
 						D->nb_auts * A->base_len(), A->base_len());
 				cout << endl;
 				}
@@ -209,7 +209,7 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 		}
 	if (f_vv) {
 		cout << "choice set of size " << D->nb_choices[depth] << " : ";
-		int_vec_print(cout, D->choices + depth * A->degree,
+		Orbiter->Int_vec.print(cout, D->choices + depth * A->degree,
 				D->nb_choices[depth]);
 		cout << endl;
 		}
@@ -294,7 +294,7 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 				}
 			lint_vec_copy(next_set, D->witness, D->size);
 			int k, choice;
-			int_vec_zero(A->Sims->path, A->base_len());
+			Orbiter->Int_vec.zero(A->Sims->path, A->base_len());
 			for (k = 0; k <= depth; k++) {
 				choice = D->choices[k * A->degree + D->current_choice[k]];
 				A->Sims->path[k] = A->Sims->get_orbit_inv(k, choice);
@@ -597,12 +597,7 @@ int action::is_minimal_witness(int size, long int *set,
 					S->print_raw();
 					}
 				int k;
-				int_vec_zero(A.Sims->path, A.base_len());
-#if 0
-				for (k = 0; k < A.base_len; k++) {
-					A.Sims->path[k] = 0;
-					}
-#endif
+				Orbiter->Int_vec.zero(A.Sims->path, A.base_len());
 				A.Sims->path[i] = A.orbit_inv_ij(i, p);
 				A.Sims->element_from_path(transporter_witness, 0);
 
@@ -647,7 +642,7 @@ int action::is_minimal_witness(int size, long int *set,
 		}
 	if (f_v) {
 		cout << "action::is_minimal_witness: D.is_minimal_base_point=";
-		int_vec_print(cout, D.is_minimal_base_point, A.base_len());
+		Orbiter->Int_vec.print(cout, D.is_minimal_base_point, A.base_len());
 		cout << endl;
 		}
 	

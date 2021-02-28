@@ -106,7 +106,7 @@ void gl_classes::init(int k, finite_field *F, int verbose_level)
 	if (f_v) {
 		cout << "gl_classes k = " << k
 				<< " q = " << q << " Nb_part = ";
-		int_vec_print(cout, Nb_part + 1, k);
+		Orbiter->Int_vec.print(cout, Nb_part + 1, k);
 		cout << endl;
 		}
 
@@ -127,7 +127,7 @@ int gl_classes::select_partition_first(int *Select,
 	if (f_v) {
 		cout << "gl_classes::select_partition_first" << endl;
 		}
-	int_vec_zero(Select_partition, Table_of_polynomials->nb_irred);
+	Orbiter->Int_vec.zero(Select_partition, Table_of_polynomials->nb_irred);
 	return TRUE;
 }
 
@@ -213,8 +213,8 @@ void gl_classes::make_matrix_from_class_rep(int *Mtx,
 	}
 	Select = NEW_int(Table_of_polynomials->nb_irred);
 	Select_Partition = NEW_int(Table_of_polynomials->nb_irred);
-	int_vec_zero(Select, Table_of_polynomials->nb_irred);
-	int_vec_zero(Select_Partition, Table_of_polynomials->nb_irred);
+	Orbiter->Int_vec.zero(Select, Table_of_polynomials->nb_irred);
+	Orbiter->Int_vec.zero(Select_Partition, Table_of_polynomials->nb_irred);
 
 	for (i = 0; i < R->type_coding.m; i++) {
 		a = R->type_coding.s_ij(i, 0);
@@ -254,18 +254,18 @@ void gl_classes::make_matrix_in_rational_normal_form(
 	if (f_v) {
 		cout << "gl_classes::make_matrix_in_rational_normal_form" << endl;
 		cout << "Select=";
-		int_vec_print(cout, Select, Table_of_polynomials->nb_irred);
+		Orbiter->Int_vec.print(cout, Select, Table_of_polynomials->nb_irred);
 		cout << endl;
 		cout << "Select_Partition=";
-		int_vec_print(cout, Select_Partition, Table_of_polynomials->nb_irred);
+		Orbiter->Int_vec.print(cout, Select_Partition, Table_of_polynomials->nb_irred);
 		cout << endl;
 		cout << "Degree=";
-		int_vec_print(cout, Table_of_polynomials->Degree,
+		Orbiter->Int_vec.print(cout, Table_of_polynomials->Degree,
 				Table_of_polynomials->nb_irred);
 		cout << endl;
 		}
 
-	int_vec_zero(Mtx, k * k);
+	Orbiter->Int_vec.zero(Mtx, k * k);
 	m_one = F->negate(1);
 
 	// take care of the irreducible polynomial blocks first:
@@ -531,7 +531,7 @@ void gl_classes::make_classes(gl_class_rep *&R, int &nb_classes,
 
 		if (f_vv) {
 			cout << "gl_classes::make_classes The class " << cnt << " is:" << endl;
-			int_vec_print(cout, Select_polynomial,
+			Orbiter->Int_vec.print(cout, Select_polynomial,
 					Table_of_polynomials->nb_irred);
 			cout << " : ";
 
@@ -619,7 +619,7 @@ loop1:
 
 		if (f_vv) {
 			cout << "gl_classes::make_classes The class " << cnt << " is:" << endl;
-			int_vec_print(cout, Select_polynomial,
+			Orbiter->Int_vec.print(cout, Select_polynomial,
 					Table_of_polynomials->nb_irred);
 			cout << " : ";
 			int f_first = TRUE;
@@ -770,7 +770,7 @@ void gl_classes::identify_matrix(int *Mtx,
 
 	if (f_v) {
 		cout << "gl_classes::identify_matrix factorization: ";
-		int_vec_print(cout, Mult, Table_of_polynomials->nb_irred);
+		Orbiter->Int_vec.print(cout, Mult, Table_of_polynomials->nb_irred);
 		cout << endl;
 		}
 
@@ -840,7 +840,7 @@ void gl_classes::identify2(int *Mtx, unipoly_object &poly,
 		cout << "gl_classes::identify2 k = " << k << " q = " << q << endl;
 		}
 
-	nb_irreds = int_vec_count_number_of_nonzero_entries(
+	nb_irreds = Orbiter->Int_vec.count_number_of_nonzero_entries(
 			Mult, Table_of_polynomials->nb_irred);
 
 	// nb_irreds is the number of distinct irreducible factors
@@ -870,7 +870,7 @@ void gl_classes::identify2(int *Mtx, unipoly_object &poly,
 	if (f_v) {
 		cout << "gl_classes::identify2 "
 				"k = " << k << " q = " << q << " Irreds: ";
-		int_vec_print(cout, Irreds, nb_irreds);
+		Orbiter->Int_vec.print(cout, Irreds, nb_irreds);
 		cout << endl;
 		}
 
@@ -897,7 +897,7 @@ void gl_classes::identify2(int *Mtx, unipoly_object &poly,
 				"after compute_generalized_kernels_for_each_block" << endl;
 		}
 
-	int_vec_zero(Select_partition, nb_irreds);
+	Orbiter->Int_vec.zero(Select_partition, nb_irreds);
 	for (i = 0; i < nb_irreds; i++) {
 		Select_partition[Irreds[i]] = Data[i].part_idx;
 		}
@@ -1042,8 +1042,8 @@ void gl_classes::compute_generalized_kernels(
 	Data->b0 = b0;
 	Data->b1 = b0 + d * m;
 
-	int_vec_copy(M2, M3, k * k);
-	int_vec_zero(Data->dual_part, k);
+	Orbiter->Int_vec.copy(M2, M3, k * k);
+	Orbiter->Int_vec.zero(Data->dual_part, k);
 
 	for (cnt = 1; cnt <= k; cnt++) {
 
@@ -1053,7 +1053,7 @@ void gl_classes::compute_generalized_kernels(
 			int_matrix_print(M3, k, k);
 			cout << endl;
 			}
-		int_vec_copy(M3, M4, k * k);
+		Orbiter->Int_vec.copy(M3, M4, k * k);
 
 		rank = F->Gauss_simple(M4, k, k, base_cols, 0 /*verbose_level*/);
 
@@ -1079,7 +1079,7 @@ void gl_classes::compute_generalized_kernels(
 			}
 
 		F->mult_matrix_matrix(M3, M2, M4, k, k, k, 0 /* verbose_level */);
-		int_vec_copy(M4, M3, k * k);
+		Orbiter->Int_vec.copy(M4, M3, k * k);
 
 		}
 
@@ -1138,7 +1138,7 @@ int gl_classes::identify_partition(int *part, int m, int verbose_level)
 		cout << "gl_classes::identify_partition "
 				"did not find partition" << endl;
 		cout << "looking for:" << endl;
-		int_vec_print(cout, part, m);
+		Orbiter->Int_vec.print(cout, part, m);
 		cout << endl;
 		cout << "in:" << endl;
 		int_matrix_print(Partitions[m], Nb_part[m], m);
@@ -1169,7 +1169,7 @@ void gl_classes::choose_basis_for_rational_normal_form(
 		cout << endl;
 		}
 	b = 0;
-	int_vec_zero(Basis, k * k);
+	Orbiter->Int_vec.zero(Basis, k * k);
 		
 	for (h = 0; h < nb_irreds; h++) {
 		if (f_vv) {
@@ -1273,7 +1273,7 @@ void gl_classes::choose_basis_for_rational_normal_form_block(
 				
 			if (f_v) {
 				cout << "chosing vector v=";
-				int_vec_print(cout, v, k);
+				Orbiter->Int_vec.print(cout, v, k);
 				cout << endl;
 				}
 			for (c = 0; c < f; c++) {
@@ -1297,10 +1297,10 @@ void gl_classes::choose_basis_for_rational_normal_form_block(
 					F->mult_vector_from_the_right(Mtx, v, w, k, k);
 					if (f_v) {
 						cout << "forced vector w=";
-						int_vec_print(cout, w, k);
+						Orbiter->Int_vec.print(cout, w, k);
 						cout << endl;
 						}
-					int_vec_copy(w, v, k);
+					Orbiter->Int_vec.copy(w, v, k);
 
 					if (g == Data->d - 1) {
 						for (ii = 0; ii < Data->d; ii++) {
@@ -1403,7 +1403,7 @@ void gl_classes::generators_for_centralizer(
 
 	if (f_v) {
 		cout << "gl_classes::generators_for_centralizer factorization: ";
-		int_vec_print(cout, Mult, Table_of_polynomials->nb_irred);
+		Orbiter->Int_vec.print(cout, Mult, Table_of_polynomials->nb_irred);
 		cout << endl;
 		}
 
@@ -1445,7 +1445,7 @@ void gl_classes::generators_for_centralizer(
 				0 /* verbose_level */);
 		F->mult_matrix_matrix(Basis, Basis_inv, M2, k, k, k,
 				0 /* verbose_level */);
-		int_vec_copy(M2, Gens[i], k * k);
+		Orbiter->Int_vec.copy(M2, Gens[i], k * k);
 		}
 
 	if (f_vv) {
@@ -1512,7 +1512,7 @@ void gl_classes::centralizer_generators(int *Mtx,
 				"k = " << k << " q = " << q << endl;
 		}
 
-	nb_irreds = int_vec_count_number_of_nonzero_entries(
+	nb_irreds = Orbiter->Int_vec.count_number_of_nonzero_entries(
 			Mult, Table_of_polynomials->nb_irred);
 
 	Irreds = NEW_int(nb_irreds);
@@ -1532,7 +1532,7 @@ void gl_classes::centralizer_generators(int *Mtx,
 	if (f_v) {
 		cout << "gl_classes::centralizer_generators "
 				"k = " << k << " q = " << q << " Irreds: ";
-		int_vec_print(cout, Irreds, nb_irreds);
+		Orbiter->Int_vec.print(cout, Irreds, nb_irreds);
 		cout << endl;
 		}
 
@@ -1555,7 +1555,7 @@ void gl_classes::centralizer_generators(int *Mtx,
 			verbose_level);
 
 
-	int_vec_zero(Select_partition, nb_irreds);
+	Orbiter->Int_vec.zero(Select_partition, nb_irreds);
 	for (i = 0; i < nb_irreds; i++) {
 		Select_partition[Irreds[i]] = Data[i].part_idx;
 		}
@@ -1647,7 +1647,7 @@ void gl_classes::centralizer_generators_block(int *Mtx,
 			coset = 0;
 			while (TRUE) {
 
-				int_vec_zero(Basis, k * k);
+				Orbiter->Int_vec.zero(Basis, k * k);
 
 
 
@@ -1716,7 +1716,7 @@ void gl_classes::centralizer_generators_block(int *Mtx,
 					nb_alloc = nb_alloc_new;
 					}
 				Gens[nb_gens] = NEW_int(k * k);
-				int_vec_copy(Basis, Gens[nb_gens], k * k);
+				Orbiter->Int_vec.copy(Basis, Gens[nb_gens], k * k);
 				nb_gens++;
 
 
@@ -1836,7 +1836,7 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 				}
 			if (f_vv) {
 				cout << "chosing vector v=";
-				int_vec_print(cout, v, k);
+				Orbiter->Int_vec.print(cout, v, k);
 				cout << endl;
 				}
 			for (c = 0; c < f; c++) {
@@ -1855,10 +1855,10 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 					F->mult_vector_from_the_right(Mtx, v, w, k, k);
 					if (f_vv) {
 						cout << "forced vector w=";
-						int_vec_print(cout, w, k);
+						Orbiter->Int_vec.print(cout, w, k);
 						cout << endl;
 						}
-					int_vec_copy(w, v, k);
+					Orbiter->Int_vec.copy(w, v, k);
 
 					if (g == Data->d - 1) {
 						for (ii = 0; ii < Data->d; ii++) {
@@ -2008,8 +2008,8 @@ void gl_classes::print_matrix_and_centralizer_order_latex(
 
 	Select_polynomial = NEW_int(Table_of_polynomials->nb_irred);
 	Select_Partition = NEW_int(Table_of_polynomials->nb_irred);
-	int_vec_zero(Select_polynomial, Table_of_polynomials->nb_irred);
-	int_vec_zero(Select_Partition, Table_of_polynomials->nb_irred);
+	Orbiter->Int_vec.zero(Select_polynomial, Table_of_polynomials->nb_irred);
+	Orbiter->Int_vec.zero(Select_Partition, Table_of_polynomials->nb_irred);
 
 	for (i = 0; i < R->type_coding.m; i++) {
 		a = R->type_coding.s_ij(i, 0);

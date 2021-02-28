@@ -473,7 +473,7 @@ void isomorph::init_starter_number(int verbose_level)
 		}
 	if (f_v) {
 		cout << "starter_number:" << endl;
-		int_vec_print(cout, starter_number, N);
+		Orbiter->Int_vec.print(cout, starter_number, N);
 		cout << endl;
 		}
 }
@@ -1443,7 +1443,7 @@ void isomorph::test_edges(int verbose_level)
 			}
 		}
 	cout << "subset: ";
-	int_vec_print(cout, subset, level);
+	Orbiter->Int_vec.print(cout, subset, level);
 	cout << endl;
 
 	FREE_int(transporter1);

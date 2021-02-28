@@ -42,7 +42,7 @@ void orthogonal::list_points_of_given_type(int t, int verbose_level)
 		rk = type_and_index_to_point_rk(t, i, verbose_level);
 		cout << i << " : " << rk << " : ";
 		unrank_point(v1, 1, rk, verbose_level - 1);
-		int_vec_print(cout, v1, n);
+		Orbiter->Int_vec.print(cout, v1, n);
 		point_rk_to_type_and_index(rk, u, j, verbose_level);
 		cout << " : " << u << " : " << j << endl;
 		if (u != t) {
@@ -66,7 +66,7 @@ void orthogonal::report_points_of_given_type(std::ostream &ost, int t, int verbo
 		rk = type_and_index_to_point_rk(t, i, verbose_level);
 		ost << i << " : " << rk << " : ";
 		unrank_point(v1, 1, rk, verbose_level - 1);
-		int_vec_print(ost, v1, n);
+		Orbiter->Int_vec.print(ost, v1, n);
 		ost << "\\\\" << endl;
 		point_rk_to_type_and_index(rk, u, j, verbose_level);
 		//ost << " : " << u << " : " << j << endl;
@@ -92,7 +92,7 @@ void orthogonal::report_points(std::ostream &ost, int verbose_level)
 		for (rk = 0; rk < nb_points; rk++) {
 			unrank_point(v1, 1, rk, 0 /*verbose_level*/);
 			ost << "$P_{" << rk << "} = ";
-			int_vec_print(ost, v1, n);
+			Orbiter->Int_vec.print(ost, v1, n);
 			ost << "$\\\\" << endl;
 		}
 	}
@@ -131,8 +131,8 @@ void orthogonal::report_lines(std::ostream &ost, int verbose_level)
 			unrank_point(v1, 1, p1, 0);
 			unrank_point(v2, 1, p2, 0);
 
-			int_vec_copy(v1, L, d);
-			int_vec_copy(v2, L + d, d);
+			Orbiter->Int_vec.copy(v1, L, d);
+			Orbiter->Int_vec.copy(v2, L + d, d);
 
 			ost << "\\left[" << endl;
 			Li.print_integer_matrix_tex(ost, L, 2, d);
@@ -210,7 +210,7 @@ void orthogonal::list_points_vs_points(int t1, int t2, int verbose_level)
 		rk1 = type_and_index_to_point_rk(t1, i, verbose_level);
 		cout << i << " : " << rk1 << " : ";
 		unrank_point(v1, 1, rk1, verbose_level - 1);
-		int_vec_print(cout, v1, n);
+		Orbiter->Int_vec.print(cout, v1, n);
 		cout << endl;
 		cout << "is incident with:" << endl;
 
@@ -229,7 +229,7 @@ void orthogonal::list_points_vs_points(int t1, int t2, int verbose_level)
 				//cout << "yes" << endl;
 				if (test_if_minimal_on_line(v2, v1, v3)) {
 					cout << cnt << " : " << j << " : " << rk2 << " : ";
-					int_vec_print(cout, v2, n);
+					Orbiter->Int_vec.print(cout, v2, n);
 					cout << endl;
 					cnt++;
 				}

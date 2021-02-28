@@ -206,10 +206,10 @@ void clique_finder::init(std::string &label, int n,
 	level_m = NEW_int(target_depth);
 	current_clique = NEW_int(target_depth);
 
-	int_vec_zero(level_counter, target_depth);
-	int_vec_zero(f_level_mod, target_depth);
-	int_vec_zero(level_r, target_depth);
-	int_vec_zero(level_m, target_depth);
+	Orbiter->Int_vec.zero(level_counter, target_depth);
+	Orbiter->Int_vec.zero(f_level_mod, target_depth);
+	Orbiter->Int_vec.zero(level_r, target_depth);
+	Orbiter->Int_vec.zero(level_m, target_depth);
 
 
 	for (i = 0; i < n; i++) {
@@ -262,7 +262,7 @@ void clique_finder::init_restrictions(int *restrictions,
 void clique_finder::init_point_labels(int *pt_labels)
 {
 	point_labels = NEW_int(n);
-	int_vec_copy(pt_labels, point_labels, n);
+	Orbiter->Int_vec.copy(pt_labels, point_labels, n);
 }
 
 void clique_finder::init_suspicous_points(int nb, int *point_list)
@@ -569,7 +569,7 @@ void clique_finder::backtrack_search(int depth, int verbose_level)
 			// If we don't have a find_candidates callback,
 			// we take all the points into consideration:
 
-			int_vec_copy(pt_list, candidates + depth * n, nb_points[depth]);
+			Orbiter->Int_vec.copy(pt_list, candidates + depth * n, nb_points[depth]);
 			nb_candidates[depth] = nb_points[depth];
 		}
 	}
@@ -1325,7 +1325,7 @@ entrance_point:
 			// If we don't have a find_candidates callback,
 			// we take all the points into consideration:
 
-			int_vec_copy(pt_list, candidates + depth * n,
+			Orbiter->Int_vec.copy(pt_list, candidates + depth * n,
 					nb_points[depth]);
 			nb_candidates[depth] = nb_points[depth];
 		}

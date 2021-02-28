@@ -873,7 +873,7 @@ int algebra_global::PHG_element_rank(finite_ring &R,
 	}
 	if (f_v) {
 		cout << "w=";
-		int_vec_print(cout, w, len - 1);
+		Orbiter->Int_vec.print(cout, w, len - 1);
 		cout << endl;
 	}
 	r1 = Gg.AG_element_rank(R.get_e(), w, 1, len - 1);
@@ -918,7 +918,7 @@ void algebra_global::PHG_element_unrank(finite_ring &R,
 
 	if (f_v) {
 		cout << "w=";
-		int_vec_print(cout, w, len - 1);
+		Orbiter->Int_vec.print(cout, w, len - 1);
 		cout << endl;
 	}
 
@@ -1471,7 +1471,7 @@ void algebra_global::make_all_irreducible_polynomials_of_degree_d(
 		if (f_vv) {
 			cout << "algebra_global::make_all_irreducible_polynomials_"
 					"of_degree_d regular word " << cnt << " : v = ";
-			int_vec_print(cout, v, d);
+			Orbiter->Int_vec.print(cout, v, d);
 			cout << endl;
 		}
 
@@ -1479,7 +1479,7 @@ void algebra_global::make_all_irreducible_polynomials_of_degree_d(
 		if (f_vv) {
 			cout << "algebra_global::make_all_irreducible_polynomials_"
 					"of_degree_d regular word " << cnt << " : w = ";
-			int_vec_print(cout, w, d);
+			Orbiter->Int_vec.print(cout, w, d);
 			cout << endl;
 		}
 
@@ -1494,7 +1494,7 @@ void algebra_global::make_all_irreducible_polynomials_of_degree_d(
 		if (f_vv) {
 			cout << "algebra_global::make_all_irreducible_polynomials_"
 					"of_degree_d regular word " << cnt << " : v = ";
-			int_vec_print(cout, v, d);
+			Orbiter->Int_vec.print(cout, v, d);
 			cout << " irreducible polynomial = ";
 			FX.print_object(minpol, cout);
 			cout << endl;
@@ -1640,7 +1640,7 @@ int algebra_global::count_all_irreducible_polynomials_of_degree_d(finite_field *
 		if (f_vv) {
 			cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
 					"regular word " << cnt << " : v = ";
-			int_vec_print(cout, v, d);
+			Orbiter->Int_vec.print(cout, v, d);
 			cout << endl;
 		}
 
@@ -1648,7 +1648,7 @@ int algebra_global::count_all_irreducible_polynomials_of_degree_d(finite_field *
 		if (f_vv) {
 			cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
 					"regular word " << cnt << " : w = ";
-			int_vec_print(cout, w, d);
+			Orbiter->Int_vec.print(cout, w, d);
 			cout << endl;
 		}
 
@@ -1663,7 +1663,7 @@ int algebra_global::count_all_irreducible_polynomials_of_degree_d(finite_field *
 		if (f_vv) {
 			cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
 					"regular word " << cnt << " : v = ";
-			int_vec_print(cout, v, d);
+			Orbiter->Int_vec.print(cout, v, d);
 			cout << " irreducible polynomial = ";
 			FX.print_object(minpol, cout);
 			cout << endl;
@@ -1730,8 +1730,8 @@ void algebra_global::polynomial_division(finite_field *F,
 	int *data_B;
 	int sz_A, sz_B;
 
-	int_vec_scan(A_coeffs, data_A, sz_A);
-	int_vec_scan(B_coeffs, data_B, sz_B);
+	Orbiter->Int_vec.scan(A_coeffs, data_A, sz_A);
+	Orbiter->Int_vec.scan(B_coeffs, data_B, sz_B);
 
 
 
@@ -1823,8 +1823,8 @@ void algebra_global::extended_gcd_for_polynomials(finite_field *F,
 	int *data_B;
 	int sz_A, sz_B;
 
-	int_vec_scan(A_coeffs, data_A, sz_A);
-	int_vec_scan(B_coeffs, data_B, sz_B);
+	Orbiter->Int_vec.scan(A_coeffs, data_A, sz_A);
+	Orbiter->Int_vec.scan(B_coeffs, data_B, sz_B);
 
 	number_theory_domain NT;
 
@@ -1977,9 +1977,9 @@ void algebra_global::polynomial_mult_mod(finite_field *F,
 	int *data_M;
 	int sz_A, sz_B, sz_M;
 
-	int_vec_scan(A_coeffs, data_A, sz_A);
-	int_vec_scan(B_coeffs, data_B, sz_B);
-	int_vec_scan(M_coeffs, data_M, sz_M);
+	Orbiter->Int_vec.scan(A_coeffs, data_A, sz_A);
+	Orbiter->Int_vec.scan(B_coeffs, data_B, sz_B);
+	Orbiter->Int_vec.scan(M_coeffs, data_M, sz_M);
 
 	number_theory_domain NT;
 
@@ -2080,7 +2080,7 @@ void algebra_global::Berlekamp_matrix(finite_field *F,
 	int *data_A;
 	int sz_A;
 
-	int_vec_scan(Berlekamp_matrix_coeffs, data_A, sz_A);
+	Orbiter->Int_vec.scan(Berlekamp_matrix_coeffs, data_A, sz_A);
 
 	number_theory_domain NT;
 
@@ -2248,7 +2248,7 @@ void algebra_global::do_nullspace(finite_field *F,
 	}
 
 
-	int_vec_scan(text, M, len);
+	Orbiter->Int_vec.scan(text, M, len);
 	if (len != m * n) {
 		cout << "number of coordinates received differs from m * n" << endl;
 		cout << "received " << len << endl;
@@ -2262,7 +2262,7 @@ void algebra_global::do_nullspace(finite_field *F,
 
 	A = NEW_int(n * n);
 	base_cols = NEW_int(n);
-	int_vec_copy(M, A, m * n);
+	Orbiter->Int_vec.copy(M, A, m * n);
 
 	if (f_v) {
 		cout << "algebra_global::do_nullspace before F->perp_standard" << endl;
@@ -2293,7 +2293,7 @@ void algebra_global::do_nullspace(finite_field *F,
 		cout << "rank of nullspace = " << rk1 << endl;
 
 		cout << "algebra_global::do_nullspace coefficients:" << endl;
-		int_vec_print(cout, A + rk * n, rk1 * n);
+		Orbiter->Int_vec.print(cout, A + rk * n, rk1 * n);
 		cout << endl;
 
 		cout << "$$" << endl;
@@ -2447,7 +2447,7 @@ void algebra_global::do_RREF(finite_field *F,
 	}
 
 
-	int_vec_scan(text, M, len);
+	Orbiter->Int_vec.scan(text, M, len);
 	if (len != m * n) {
 		cout << "algebra_global::do_RREF "
 				"number of coordinates received differs from m * n" << endl;
@@ -2458,7 +2458,7 @@ void algebra_global::do_RREF(finite_field *F,
 
 	A = NEW_int(n * n);
 	base_cols = NEW_int(n);
-	int_vec_copy(M, A, m * n);
+	Orbiter->Int_vec.copy(M, A, m * n);
 
 	rk = F->Gauss_int(A,
 		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
@@ -2472,7 +2472,7 @@ void algebra_global::do_RREF(finite_field *F,
 		cout << "rk=" << rk << endl;
 
 		cout << "coefficients:" << endl;
-		int_vec_print(cout, A, rk * n);
+		Orbiter->Int_vec.print(cout, A, rk * n);
 		cout << endl;
 
 		cout << "$$" << endl;
@@ -2517,7 +2517,7 @@ void algebra_global::do_RREF(finite_field *F,
 	}
 
 
-	int_vec_copy(M, A, m * n);
+	Orbiter->Int_vec.copy(M, A, m * n);
 
 	RREF_demo(F, A, m, n, verbose_level);
 
@@ -2582,11 +2582,11 @@ void algebra_global::do_trace(finite_field *F, int verbose_level)
 	}
 
 	cout << "Trace 0:" << endl;
-	int_vec_print_fully(cout, T0, nb_T0);
+	Orbiter->Int_vec.print_fully(cout, T0, nb_T0);
 	cout << endl;
 
 	cout << "Trace 1:" << endl;
-	int_vec_print_fully(cout, T1, nb_T1);
+	Orbiter->Int_vec.print_fully(cout, T1, nb_T1);
 	cout << endl;
 
 	char str[1000];
@@ -2642,11 +2642,11 @@ void algebra_global::do_norm(finite_field *F, int verbose_level)
 	}
 
 	cout << "Norm 0:" << endl;
-	int_vec_print_fully(cout, T0, nb_T0);
+	Orbiter->Int_vec.print_fully(cout, T0, nb_T0);
 	cout << endl;
 
 	cout << "Norm 1:" << endl;
-	int_vec_print_fully(cout, T1, nb_T1);
+	Orbiter->Int_vec.print_fully(cout, T1, nb_T1);
 	cout << endl;
 
 
@@ -2870,7 +2870,7 @@ void algebra_global::do_make_table_of_irreducible_polynomials(int deg,
 	cout << "The " << nb << " irreducible polynomials of "
 			"degree " << deg << " over F_" << F->q << " are:" << endl;
 
-	int_vec_vec_print(Table);
+	Orbiter->Int_vec.vec_print(Table);
 
 
 	//int_matrix_print(Table, nb, deg + 1);
@@ -2897,7 +2897,7 @@ void algebra_global::polynomial_find_roots(finite_field *F,
 	int *data_A;
 	int sz_A;
 
-	int_vec_scan(A_coeffs, data_A, sz_A);
+	Orbiter->Int_vec.scan(A_coeffs, data_A, sz_A);
 
 	number_theory_domain NT;
 
@@ -3963,7 +3963,7 @@ void algebra_global::RREF_demo2(std::ostream &ost, finite_field *F, int *A, int 
 		}
 	}
 
-	int_vec_print_fully(ost, A, m * n);
+	Orbiter->Int_vec.print_fully(ost, A, m * n);
 	ost << "\\\\" << endl;
 
 

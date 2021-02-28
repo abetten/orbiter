@@ -148,13 +148,13 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 	if (Descr->f_report) {
 
-		if (!The_Orbiter_session->f_draw_options) {
+		if (!Orbiter->f_draw_options) {
 			cout << "for a report of the group, please use -draw_options" << endl;
 			exit(1);
 		}
 
 		LG->create_latex_report(
-				The_Orbiter_session->draw_options,
+				Orbiter->draw_options,
 				Descr->f_sylow, Descr->f_group_table, Descr->f_classes,
 				verbose_level);
 
@@ -471,7 +471,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 
 		if (Descr->f_orbits_on_polynomials_draw_tree &&
-				!The_Orbiter_session->f_draw_options) {
+				!Orbiter->f_draw_options) {
 			cout << "please use -draw_options ... -end" << endl;
 			exit(1);
 		}
@@ -483,7 +483,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 				Descr->recognize_orbits_on_polynomials_text,
 				Descr->f_orbits_on_polynomials_draw_tree,
 				Descr->orbits_on_polynomials_draw_tree_idx,
-				The_Orbiter_session->draw_options,
+				Orbiter->draw_options,
 				verbose_level);
 	}
 
@@ -1078,7 +1078,7 @@ void group_theoretic_activity::print_elements_tex(int verbose_level)
 			int *order_table;
 			int i;
 
-			int_vec_scan(Descr->order_of_products_elements, elements, nb_elements);
+			Orbiter->Int_vec.scan(Descr->order_of_products_elements, elements, nb_elements);
 
 			int j;
 			int *Elt1, *Elt2, *Elt3;
@@ -1537,7 +1537,7 @@ void group_theoretic_activity::isomorphism_Klein_quadric(std::string &fname, int
 			F->mult_vector_from_the_left(Basis2 + j * 6, An2, v, 6, 6);
 					// v[m], A[m][n], vA[n]
 			F->wedge_to_klein(v /* W */, w /*K*/);
-			int_vec_copy(w, C + j * 6, 6);
+			Orbiter->Int_vec.copy(w, C + j * 6, 6);
 		}
 
 		int Gram[] = {
@@ -1601,7 +1601,7 @@ void group_theoretic_activity::isomorphism_Klein_quadric(std::string &fname, int
 		c = Sorting.integer_vec_compare(E, Target, 36);
 		if (c == 0) {
 			cout << "We found it! i=" << i << " element = ";
-			int_vec_print(cout, M + i * A1->make_element_size, A1->make_element_size);
+			Orbiter->Int_vec.print(cout, M + i * A1->make_element_size, A1->make_element_size);
 			cout << endl;
 
 			cout << "Element :" << endl;
@@ -2902,11 +2902,11 @@ void group_theoretic_activity::do_conjugacy_class_of_element(
 
 	int *data, sz;
 
-	int_vec_scan(elt_text, data, sz);
+	Orbiter->Int_vec.scan(elt_text, data, sz);
 
 	if (f_v) {
 		cout << "computing conjugacy class of ";
-		int_vec_print(cout, data, sz);
+		Orbiter->Int_vec.print(cout, data, sz);
 		cout << endl;
 	}
 
@@ -3126,7 +3126,7 @@ void group_theoretic_activity::do_orbits_on_group_elements_under_conjugation(
 
 			if (FALSE) {
 				cout << i << " : ";
-				int_vec_print(cout, M + i * n, n);
+				Orbiter->Int_vec.print(cout, M + i * n, n);
 				cout << endl;
 			}
 
@@ -3159,7 +3159,7 @@ void group_theoretic_activity::do_orbits_on_group_elements_under_conjugation(
 
 			if (FALSE) {
 				cout << i << " : ";
-				int_vec_print(cout, M + i * n, n);
+				Orbiter->Int_vec.print(cout, M + i * n, n);
 				cout << endl;
 			}
 

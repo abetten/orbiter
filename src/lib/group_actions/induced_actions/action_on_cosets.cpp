@@ -171,7 +171,7 @@ long int action_on_cosets::compute_image(int *Elt, long int i, int verbose_level
 	}
 	if (f_vv) {
 		cout << "action_on_cosets::compute_image after unrank:";
-		int_vec_print(cout, v1, n);
+		Orbiter->Int_vec.print(cout, v1, n);
 		cout << endl;
 		}
 	
@@ -181,7 +181,7 @@ long int action_on_cosets::compute_image(int *Elt, long int i, int verbose_level
 	if (f_vv) {
 		cout << "action_on_cosets::compute_image "
 				"after element_image_of_low_level:";
-		int_vec_print(cout, v2, n);
+		Orbiter->Int_vec.print(cout, v2, n);
 		cout << endl;
 		}
 
@@ -190,7 +190,7 @@ long int action_on_cosets::compute_image(int *Elt, long int i, int verbose_level
 	if (f_vv) {
 		cout << "action_on_cosets::compute_image "
 				"after reduce_mod_subspace:";
-		int_vec_print(cout, v2, n);
+		Orbiter->Int_vec.print(cout, v2, n);
 		cout << endl;
 		}
 	if (f_lint) {

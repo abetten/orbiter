@@ -119,7 +119,7 @@ void eckardt_point_info::init(surface_domain *Surf, projective_space *P,
 	}
 	if (f_v) {
 		cout << "bisecants: ";
-		int_vec_print(cout, bisecants, 15);
+		Orbiter->Int_vec.print(cout, bisecants, 15);
 		cout << endl;
 	}
 	Intersections = NEW_int(15 * 15);
@@ -146,7 +146,7 @@ void eckardt_point_info::init(surface_domain *Surf, projective_space *P,
 
 	if (f_vv) {
 		cout << "We found " << nb_B_pts << " B-pts: ";
-		int_vec_print(cout, B_pts, nb_B_pts);
+		Orbiter->Int_vec.print(cout, B_pts, nb_B_pts);
 		cout << endl;
 	}
 
@@ -171,7 +171,7 @@ void eckardt_point_info::init(surface_domain *Surf, projective_space *P,
 
 			if (f_vv) {
 				cout << "H1=";
-				int_vec_print(cout, H1, 6);
+				Orbiter->Int_vec.print(cout, H1, 6);
 				cout << endl;
 			}
 			for (u = 0; u < 6; u++) {
@@ -181,7 +181,7 @@ void eckardt_point_info::init(surface_domain *Surf, projective_space *P,
 				}
 			if (f_vv) {
 				cout << "H=";
-				int_vec_print(cout, H, 12);
+				Orbiter->Int_vec.print(cout, H, 12);
 				cout << endl;
 			}
 
@@ -198,7 +198,7 @@ void eckardt_point_info::init(surface_domain *Surf, projective_space *P,
 			if (f_vv) {
 				cout << "eckardt_point_info::init "
 					"We found " << nb_labels << " labels: ";
-				int_vec_print(cout, Labels, nb_labels);
+				Orbiter->Int_vec.print(cout, Labels, nb_labels);
 				cout << endl;
 			}
 
@@ -206,7 +206,7 @@ void eckardt_point_info::init(surface_domain *Surf, projective_space *P,
 				cout << "nb_labels != 3" << endl;
 				exit(1);
 				}
-			int_vec_copy(Labels, B_pts_label + 3 * s, 3);
+			Orbiter->Int_vec.copy(Labels, B_pts_label + 3 * s, 3);
 
 			FREE_int(Labels);
 			s++;
@@ -311,7 +311,7 @@ void eckardt_point_info::init(surface_domain *Surf, projective_space *P,
 	for (i = 0; i < nb_B_pts; i++) {
 		E[i].len = 3;
 		E[i].pt = B_pts[i];
-		int_vec_copy(B_pts_label + i * 3, E[i].index, 3);
+		Orbiter->Int_vec.copy(B_pts_label + i * 3, E[i].index, 3);
 		}
 	for (i = 0; i < nb_E2; i++) {
 		E[nb_B_pts + i].len = 2;

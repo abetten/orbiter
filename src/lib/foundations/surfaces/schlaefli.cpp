@@ -297,7 +297,7 @@ void schlaefli::init_line_data(int verbose_level)
 
 	Sets = NEW_lint(30 * 2);
 	M = NEW_int(6 * 6);
-	int_vec_zero(M, 6 * 6);
+	Orbiter->Int_vec.zero(M, 6 * 6);
 
 	h = 0;
 	for (i = 0; i < 6; i++) {
@@ -508,10 +508,10 @@ void schlaefli::make_trihedral_pair_disjointness_graph(int *&Adj, int verbose_le
 	Adj = NEW_int(nb_trihedral_pairs * nb_trihedral_pairs);
 	T = NEW_int(nb_trihedral_pairs * 9);
 	for (i = 0; i < nb_trihedral_pairs; i++) {
-		int_vec_copy(Trihedral_pairs + i * 9, T + i * 9, 9);
+		Orbiter->Int_vec.copy(Trihedral_pairs + i * 9, T + i * 9, 9);
 		Sorting.int_vec_heapsort(T + i * 9, 9);
 	}
-	int_vec_zero(Adj, nb_trihedral_pairs * nb_trihedral_pairs);
+	Orbiter->Int_vec.zero(Adj, nb_trihedral_pairs * nb_trihedral_pairs);
 	for (i = 0; i < nb_trihedral_pairs; i++) {
 		for (j = i + 1; j < nb_trihedral_pairs; j++) {
 			if (Sorting.int_vecs_are_disjoint(T + i * 9, 9, T + j * 9, 9)) {
@@ -1190,7 +1190,7 @@ void schlaefli::find_trihedral_pairs_from_collinear_triples_of_Eckardt_points(
 
 	cout << "Found " << nb_T << " special trihedral pairs:" << endl;
 	cout << "T_idx: ";
-	int_vec_print(cout, T_idx, nb_T);
+	Orbiter->Int_vec.print(cout, T_idx, nb_T);
 	cout << endl;
 	for (i = 0; i < nb_T; i++) {
 		cout << i << " / " << nb_T << " T_{"
@@ -1459,7 +1459,7 @@ void schlaefli::ijk2lmn(int i, int j, int k, int &l, int &m, int &n)
 	v[1] = j;
 	v[2] = k;
 	cout << "schlaefli::ijk2lmn v=";
-	int_vec_print(cout, v, 3);
+	Orbiter->Int_vec.print(cout, v, 3);
 	cout << endl;
 	Combi.set_complement_safe(v, 3, v + 3, size_complement, 6);
 	if (size_complement != 3) {
@@ -1863,7 +1863,7 @@ void schlaefli::init_adjacency_matrix_of_lines(int verbose_level)
 	}
 
 	adjacency_matrix_of_lines = NEW_int(27 * 27);
-	int_vec_zero(adjacency_matrix_of_lines, 27 * 27);
+	Orbiter->Int_vec.zero(adjacency_matrix_of_lines, 27 * 27);
 
 	// the ai lines:
 	for (i = 0; i < 6; i++) {
@@ -1975,7 +1975,7 @@ void schlaefli::init_incidence_matrix_of_lines_vs_tritangent_planes(int verbose_
 	}
 
 	incidence_lines_vs_tritangent_planes = NEW_int(27 * 45);
-	int_vec_zero(incidence_lines_vs_tritangent_planes, 27 * 45);
+	Orbiter->Int_vec.zero(incidence_lines_vs_tritangent_planes, 27 * 45);
 
 
 	Lines_in_tritangent_planes = NEW_lint(45 * 3);

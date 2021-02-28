@@ -29,7 +29,7 @@ void finite_field::reduce_mod_subspace_and_get_coefficient_vector(
 	}
 	if (f_vv) {
 		cout << "finite_field::reduce_mod_subspace_and_get_coefficient_vector: v=";
-		int_vec_print(cout, v, len);
+		Orbiter->Int_vec.print(cout, v, len);
 		cout << endl;
 	}
 	if (f_vv) {
@@ -61,10 +61,10 @@ void finite_field::reduce_mod_subspace_and_get_coefficient_vector(
 	if (f_vv) {
 		cout << "finite_field::reduce_mod_subspace_and_get_coefficient_vector "
 				"after: v=";
-		int_vec_print(cout, v, len);
+		Orbiter->Int_vec.print(cout, v, len);
 		cout << endl;
 		cout << "coefficients=";
-		int_vec_print(cout, coefficients, k);
+		Orbiter->Int_vec.print(cout, coefficients, k);
 		cout << endl;
 	}
 	if (f_v) {
@@ -85,7 +85,7 @@ void finite_field::reduce_mod_subspace(int k,
 	}
 	if (f_vv) {
 		cout << "finite_field::reduce_mod_subspace before: v=";
-		int_vec_print(cout, v, len);
+		Orbiter->Int_vec.print(cout, v, len);
 		cout << endl;
 	}
 	if (f_vv) {
@@ -107,7 +107,7 @@ void finite_field::reduce_mod_subspace(int k,
 	}
 	if (f_vv) {
 		cout << "finite_field::reduce_mod_subspace after: v=";
-		int_vec_print(cout, v, len);
+		Orbiter->Int_vec.print(cout, v, len);
 		cout << endl;
 	}
 	if (f_v) {
@@ -128,7 +128,7 @@ int finite_field::is_contained_in_subspace(int k,
 	}
 	if (f_vv) {
 		cout << "finite_field::is_contained_in_subspace testing v=";
-		int_vec_print(cout, v, len);
+		Orbiter->Int_vec.print(cout, v, len);
 		cout << endl;
 	}
 	reduce_mod_subspace(k, len, basis,
@@ -166,8 +166,8 @@ int finite_field::is_subspace(int d, int dim_U,
 	Basis = NEW_int((dim_V + 1) * d);
 	for (h = 0; h < dim_U; h++) {
 
-		int_vec_copy(Basis_V, Basis, dim_V * d);
-		int_vec_copy(Basis_U + h * d, Basis + dim_V * d, d);
+		Orbiter->Int_vec.copy(Basis_V, Basis, dim_V * d);
+		Orbiter->Int_vec.copy(Basis_U + h * d, Basis + dim_V * d, d);
 		rk = Gauss_easy(Basis, dim_V + 1, d);
 		if (rk > dim_V) {
 			ret = FALSE;
@@ -263,7 +263,7 @@ int finite_field::dependency(int d,
 		cout << "finite_field::dependency A=" << endl;
 		int_matrix_print(A, m, deg);
 		cout << "v = ";
-		orbiter::foundations::int_vec_print(cout, v, deg);
+		Orbiter->Int_vec.print(cout, v, deg);
 		cout << endl;
 	}
 	// fill the m-th row of matrix A with v^rho:
@@ -275,7 +275,7 @@ int finite_field::dependency(int d,
 				"after putting in row " << m << " A=" << endl;
 		int_matrix_print(A, m + 1, deg);
 		cout << "rho = ";
-		orbiter::foundations::int_vec_print(cout, rho, deg);
+		Orbiter->Int_vec.print(cout, rho, deg);
 		cout << endl;
 	}
 	for (k = 0; k < m; k++) {
@@ -317,7 +317,7 @@ int finite_field::dependency(int d,
 				"m=" << m << " after reapply, A=" << endl;
 		int_matrix_print(A, m + 1, deg);
 		cout << "rho = ";
-		orbiter::foundations::int_vec_print(cout, rho, deg);
+		Orbiter->Int_vec.print(cout, rho, deg);
 		cout << endl;
 	}
 
@@ -358,7 +358,7 @@ int finite_field::dependency(int d,
 				<< " after pivoting, A=" << endl;
 		int_matrix_print(A, m + 1, deg);
 		cout << "rho = ";
-		orbiter::foundations::int_vec_print(cout, rho, deg);
+		Orbiter->Int_vec.print(cout, rho, deg);
 		cout << endl;
 	}
 
@@ -394,7 +394,7 @@ void finite_field::order_ideal_generator(int d,
 	rho = NEW_int(deg);
 
 	// make v the idx-th unit vector:
-	int_vec_zero(v, deg);
+	Orbiter->Int_vec.zero(v, deg);
 	v[idx] = 1;
 
 	// make rho the identity permutation:
@@ -411,7 +411,7 @@ void finite_field::order_ideal_generator(int d,
 		// (the images are written in the columns):
 
 		mult_vector_from_the_right(Frobenius, v, v1, deg, deg);
-		int_vec_copy(v1, v, deg);
+		Orbiter->Int_vec.copy(v1, v, deg);
 
 		m++;
 		f_null = dependency(d, v, A, m, rho, verbose_level - 1);
@@ -454,7 +454,7 @@ void finite_field::order_ideal_generator(int d,
 				"after preparing mue:" << endl;
 		cout << "mue_deg = " << mue_deg << endl;
 		cout << "mue = ";
-		orbiter::foundations::int_vec_print(cout, mue, mue_deg + 1);
+		Orbiter->Int_vec.print(cout, mue, mue_deg + 1);
 		cout << endl;
 	}
 
@@ -478,7 +478,7 @@ void finite_field::span_cyclic_module(int *A,
 	}
 	w1 = NEW_int(n);
 	w2 = NEW_int(n);
-	int_vec_copy(v, w1, n);
+	Orbiter->Int_vec.copy(v, w1, n);
 	for (j = 0; j < n; j++) {
 
 		// put w1 in the j-th column of A:
@@ -486,7 +486,7 @@ void finite_field::span_cyclic_module(int *A,
 			A[i * n + j] = w1[i];
 		}
 		mult_vector_from_the_right(Mtx, w1, w2, n, n);
-		int_vec_copy(w2, w1, n);
+		Orbiter->Int_vec.copy(w2, w1, n);
 	}
 
 	FREE_int(w1);
@@ -526,7 +526,7 @@ void finite_field::random_invertible_matrix(int *M,
 				orbiter::foundations::int_matrix_print(M, i + 1, k);
 			}
 
-			int_vec_copy(M, N, (i + 1) * k);
+			Orbiter->Int_vec.copy(M, N, (i + 1) * k);
 			rk = Gauss_easy(N, i + 1, k);
 			if (f_vv) {
 				cout << "rk=" << rk << endl;
@@ -562,7 +562,7 @@ void finite_field::adjust_basis(int *V, int *U,
 	base_cols = NEW_int(n);
 	M = NEW_int(k * n);
 
-	int_vec_copy(U, M, d * n);
+	Orbiter->Int_vec.copy(U, M, d * n);
 
 	if (Gauss_simple(M, d, n, base_cols,
 			0 /* verbose_level */) != d) {
@@ -572,7 +572,7 @@ void finite_field::adjust_basis(int *V, int *U,
 	}
 	ii = 0;
 	for (i = 0; i < k; i++) {
-		int_vec_copy(V + i * n, M + (d + ii) * n, n);
+		Orbiter->Int_vec.copy(V + i * n, M + (d + ii) * n, n);
 		for (j = 0; j < d; j++) {
 			b = base_cols[j];
 			Gauss_step(M + b * n, M + (d + ii) * n,
@@ -588,7 +588,7 @@ void finite_field::adjust_basis(int *V, int *U,
 		cout << "finite_field::adjust_basis d + ii != k" << endl;
 		exit(1);
 	}
-	int_vec_copy(M, V, k * n);
+	Orbiter->Int_vec.copy(M, V, k * n);
 
 
 	FREE_int(M);
@@ -659,7 +659,7 @@ void finite_field::choose_vector_in_here_but_not_in_here_column_spaces(
 				"column_spaces d + ii != k" << endl;
 		exit(1);
 	}
-	int_vec_copy(Gen + d * n, v, n);
+	Orbiter->Int_vec.copy(Gen + d * n, v, n);
 
 
 	FREE_int(Gen);
@@ -768,7 +768,7 @@ int finite_field::choose_vector_in_here_but_not_in_here_or_here_column_spaces_co
 
 		if (f_vv) {
 			cout << "coset=" << coset << " w=";
-			int_vec_print(cout, w, k);
+			Orbiter->Int_vec.print(cout, w, k);
 			cout << endl;
 		}
 
@@ -782,10 +782,10 @@ int finite_field::choose_vector_in_here_but_not_in_here_or_here_column_spaces_co
 				Gen[rk * n + j] = add(Gen[rk * n + j], mult(a, V->s_ij(j, i)));
 			}
 		}
-		int_vec_copy(Gen + rk * n, z, n);
+		Orbiter->Int_vec.copy(Gen + rk * n, z, n);
 		if (f_vv) {
 			cout << "before reduce=";
-			int_vec_print(cout, Gen + rk * n, n);
+			Orbiter->Int_vec.print(cout, Gen + rk * n, n);
 			cout << endl;
 		}
 
@@ -797,7 +797,7 @@ int finite_field::choose_vector_in_here_but_not_in_here_or_here_column_spaces_co
 
 		if (f_vv) {
 			cout << "after reduce=";
-			int_vec_print(cout, Gen + rk * n, n);
+			Orbiter->Int_vec.print(cout, Gen + rk * n, n);
 			cout << endl;
 		}
 
@@ -810,7 +810,7 @@ int finite_field::choose_vector_in_here_but_not_in_here_or_here_column_spaces_co
 
 	} // while
 
-	int_vec_copy(z, v, n);
+	Orbiter->Int_vec.copy(z, v, n);
 
 
 	FREE_int(Gen);
@@ -1101,7 +1101,7 @@ void finite_field::map_frame_to_frame_with_permutation(int d,
 
 	if (f_v) {
 		cout << "permutation: ";
-		orbiter::foundations::int_vec_print(cout, perm, d + 1);
+		Orbiter->Int_vec.print(cout, perm, d + 1);
 		cout << endl;
 	}
 	if (f_v) {
@@ -1115,7 +1115,7 @@ void finite_field::map_frame_to_frame_with_permutation(int d,
 
 	for (i = 0; i < d + 1; i++) {
 		j = perm[i];
-		int_vec_copy(A + j * d, A1 + i * d, d);
+		Orbiter->Int_vec.copy(A + j * d, A1 + i * d, d);
 	}
 
 	if (f_v) {
@@ -1196,7 +1196,7 @@ void finite_field::map_points_to_points_projectively(int d, int k,
 	subset = NEW_int(d + k + 1);
 	v = NEW_int(d);
 
-	int_vec_copy(B, B1, (d + k + 1) * d);
+	Orbiter->Int_vec.copy(B, B1, (d + k + 1) * d);
 	for (i = 0; i < d + k + 1; i++) {
 		//PG_element_normalize(*this, B1 + i * d, 1, d);
 		PG_element_rank_modified(B1 + i * d, 1, d, a);
@@ -1205,7 +1205,7 @@ void finite_field::map_points_to_points_projectively(int d, int k,
 	Sorting.int_vec_heapsort(B_set, d + k + 1);
 	if (f_v) {
 		cout << "B_set = ";
-		orbiter::foundations::int_vec_print(cout, B_set, d + k + 1);
+		Orbiter->Int_vec.print(cout, B_set, d + k + 1);
 		cout << endl;
 	}
 
@@ -1218,16 +1218,16 @@ void finite_field::map_points_to_points_projectively(int d, int k,
 
 		if (f_v) {
 			cout << "subset " << h << " / " << nCk << " is ";
-			orbiter::foundations::int_vec_print(cout, subset, d + 1);
+			Orbiter->Int_vec.print(cout, subset, d + 1);
 			cout << ", the complement is ";
-			orbiter::foundations::int_vec_print(cout, subset + d + 1, k);
+			Orbiter->Int_vec.print(cout, subset + d + 1, k);
 			cout << endl;
 		}
 
 
 		for (i = 0; i < d + k + 1; i++) {
 			j = subset[i];
-			int_vec_copy(A + j * d, A1 + i * d, d);
+			Orbiter->Int_vec.copy(A + j * d, A1 + i * d, d);
 		}
 		if (f_v) {
 			cout << "A1=" << endl;
@@ -1239,13 +1239,13 @@ void finite_field::map_points_to_points_projectively(int d, int k,
 		while (TRUE) {
 			if (f_v) {
 				cout << "lehmercode: ";
-				orbiter::foundations::int_vec_print(cout, lehmercode, d + 1);
+				Orbiter->Int_vec.print(cout, lehmercode, d + 1);
 				cout << endl;
 			}
 			Combi.lehmercode_to_permutation(d + 1, lehmercode, perm);
 			if (f_v) {
 				cout << "permutation: ";
-				orbiter::foundations::int_vec_print(cout, perm, d + 1);
+				Orbiter->Int_vec.print(cout, perm, d + 1);
 				cout << endl;
 			}
 			map_frame_to_frame_with_permutation(d, A1, perm,
@@ -1258,13 +1258,13 @@ void finite_field::map_points_to_points_projectively(int d, int k,
 			}
 			if (f_v) {
 				cout << "image_set before sorting: ";
-				orbiter::foundations::int_vec_print(cout, image_set, d + k + 1);
+				Orbiter->Int_vec.print(cout, image_set, d + k + 1);
 				cout << endl;
 			}
 			Sorting.int_vec_heapsort(image_set, d + k + 1);
 			if (f_v) {
 				cout << "image_set after sorting: ";
-				orbiter::foundations::int_vec_print(cout, image_set, d + k + 1);
+				Orbiter->Int_vec.print(cout, image_set, d + k + 1);
 				cout << endl;
 			}
 
@@ -1313,10 +1313,10 @@ int finite_field::BallChowdhury_matrix_entry(int *Coord,
 	d = 1;
 	for (u = 0; u < sz_U; u++) {
 		a = U[u];
-		int_vec_copy(Coord + a * k, T + (k - 1) * k, k);
+		Orbiter->Int_vec.copy(Coord + a * k, T + (k - 1) * k, k);
 		for (i = 0; i < k - 1; i++) {
 			a = C[i];
-			int_vec_copy(Coord + a * k, T + i * k, k);
+			Orbiter->Int_vec.copy(Coord + a * k, T + i * k, k);
 		}
 		if (f_vv) {
 			cout << "u=" << u << " / " << sz_U << " the matrix is:" << endl;
@@ -1363,7 +1363,7 @@ void finite_field::cubic_surface_family_24_generators(
 		group_order *= q - 1;
 	}
 	gens = NEW_int(nb_gens * data_size);
-	int_vec_zero(gens, nb_gens * data_size);
+	Orbiter->Int_vec.zero(gens, nb_gens * data_size);
 		// this sets the field automorphism index
 		// to zero if we are semilinear
 
@@ -1441,14 +1441,14 @@ void finite_field::cubic_surface_family_G13_generators(
 	group_order = 192;
 
 	gens = NEW_int(nb_gens * data_size);
-	int_vec_zero(gens, nb_gens * data_size);
+	Orbiter->Int_vec.zero(gens, nb_gens * data_size);
 
 	int h, i, j, c, m, l;
 	int *v;
 	geometry_global Gg;
 	number_theory_domain NT;
 
-	m = int_vec_maximum(data, nb_gens * data_size);
+	m = Orbiter->Int_vec.maximum(data, nb_gens * data_size);
 	l = NT.int_log2(m) + 1;
 
 	v = NEW_int(l);
@@ -1456,7 +1456,7 @@ void finite_field::cubic_surface_family_G13_generators(
 
 	for (h = 0; h < nb_gens; h++) {
 		for (i = 0; i < 16; i++) {
-			int_vec_zero(v, l);
+			Orbiter->Int_vec.zero(v, l);
 			Gg.AG_element_unrank(p, v, 1, l, data[h * 16 + i]);
 			c = 0;
 			for (j = 0; j < l; j++) {
@@ -1563,14 +1563,14 @@ void finite_field::cubic_surface_family_F13_generators(
 	group_order = 192;
 
 	gens = NEW_int(nb_gens * data_size);
-	int_vec_zero(gens, nb_gens * data_size);
+	Orbiter->Int_vec.zero(gens, nb_gens * data_size);
 
 	int h, i, j, c, m, l;
 	int *v;
 	geometry_global Gg;
 	number_theory_domain NT;
 
-	m = int_vec_maximum(data, nb_gens * data_size);
+	m = Orbiter->Int_vec.maximum(data, nb_gens * data_size);
 	l = NT.int_log2(m) + 1;
 
 	v = NEW_int(l);
@@ -1578,7 +1578,7 @@ void finite_field::cubic_surface_family_F13_generators(
 
 	for (h = 0; h < nb_gens; h++) {
 		for (i = 0; i < 16; i++) {
-			int_vec_zero(v, l);
+			Orbiter->Int_vec.zero(v, l);
 			Gg.AG_element_unrank(p, v, 1, l, data[h * 16 + i]);
 			c = 0;
 			for (j = 0; j < l; j++) {

@@ -319,10 +319,10 @@ void arc_generator::init(
 	if (Descr->f_has_forbidden_point_set) {
 		int i, a;
 
-		int_vec_scan(Descr->forbidden_point_set_string, forbidden_points, nb_forbidden_points);
+		Orbiter->Int_vec.scan(Descr->forbidden_point_set_string, forbidden_points, nb_forbidden_points);
 
 		f_is_forbidden = NEW_int(P->N_points);
-		int_vec_zero(f_is_forbidden, P->N_points);
+		Orbiter->Int_vec.zero(f_is_forbidden, P->N_points);
 		for (i = 0; i < nb_forbidden_points; i++) {
 			a = forbidden_points[i];
 			f_is_forbidden[a] = TRUE;
@@ -769,7 +769,7 @@ void arc_generator::print(int len, long int *S)
 	}
 	for (i = 0; i < len; i++) {
 		cout << S[i] << " : ";
-		int_vec_print(cout, Coord + i * Descr->n, Descr->n);
+		Orbiter->Int_vec.print(cout, Coord + i * Descr->n, Descr->n);
 		cout << endl;
 	}
 
@@ -863,7 +863,7 @@ void arc_generator::compute_line_type(long int *set, int len, int verbose_level)
 				"P->Lines_on_point == 0" << endl;
 		exit(1);
 	}
-	int_vec_zero(line_type, P->N_lines);
+	Orbiter->Int_vec.zero(line_type, P->N_lines);
 	for (i = 0; i < len; i++) {
 		a = set[i];
 		for (j = 0; j < P->r; j++) {
@@ -1410,7 +1410,7 @@ void arc_generator::report_do_the_work(ostream &ost, isomorph &Iso, int verbose_
 
 					point_unrank(vec, data[v]);
 					ost << "$" << v << "$ & $" << data[v] << "$ & $";
-					int_vec_print(ost, vec, 3);
+					Orbiter->Int_vec.print(ost, vec, 3);
 					ost << "$\\\\" << endl;
 				}
 			}

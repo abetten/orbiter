@@ -314,10 +314,10 @@ void orbits_on_something::compute_compact_type(long int *orbit_type, long int go
 	f_col_used = NEW_int(goi);
 	row_idx = NEW_int(goi);
 	col_idx = NEW_int(goi);
-	int_vec_zero(f_row_used, goi);
-	int_vec_zero(f_col_used, goi);
-	int_vec_zero(row_idx, goi);
-	int_vec_zero(col_idx, goi);
+	Orbiter->Int_vec.zero(f_row_used, goi);
+	Orbiter->Int_vec.zero(f_col_used, goi);
+	Orbiter->Int_vec.zero(row_idx, goi);
+	Orbiter->Int_vec.zero(col_idx, goi);
 	for (i = 1; i <= goi; i++) {
 		for (j = 1; j <= goi; j++) {
 			if (orbit_type[i * goi + j - 1]) {
@@ -407,7 +407,7 @@ void orbits_on_something::classify_orbits_by_length(int verbose_level)
 		cout << "orbits_on_something::classify_orbits_by_length "
 				"after C->get_set_partition_and_types" << endl;
 		cout << "types: ";
-		int_vec_print(cout, Orbits_classified_length,
+		Orbiter->Int_vec.print(cout, Orbits_classified_length,
 				Orbits_classified_nb_types);
 		cout << endl;
 		cout << "Orbits_classified:" << endl;
@@ -1069,7 +1069,7 @@ void orbits_on_something::report(std::ostream &ost, int verbose_level)
 	ost << "Considering the orbit length, there are "
 			<< Orbits_classified_nb_types << " types of orbits:\\\\" << endl;
 	ost << "$$" << endl;
-	int_vec_print(ost, Orbits_classified_length,
+	Orbiter->Int_vec.print(ost, Orbits_classified_length,
 			Orbits_classified_nb_types);
 	ost << "$$" << endl;
 	ost << "i : orbit length : number of orbits\\\\" << endl;

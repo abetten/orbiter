@@ -381,11 +381,11 @@ void interface_algebra::worker(int verbose_level)
 		layered_graph_draw_options *O;
 
 
-		if (!The_Orbiter_session->f_draw_options) {
+		if (!Orbiter->f_draw_options) {
 			cout << "please use option -draw_options .. -end" << endl;
 			exit(1);
 		}
-		O = The_Orbiter_session->draw_options;
+		O = Orbiter->draw_options;
 		PT.draw_mod_n(draw_mod_n_fname,
 				O,
 				draw_mod_n,

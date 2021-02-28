@@ -350,7 +350,7 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 		cout << endl;
 		cout << "wreath_product::init_tensor_wreath_product "
 				"tl_for_component = ";
-		int_vec_print(cout, tl_for_component, base_len_in_component);
+		Orbiter->Int_vec.print(cout, tl_for_component, base_len_in_component);
 		cout << endl;
 	}
 
@@ -374,7 +374,7 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 		cout << endl;
 		cout << "wreath_product::init_tensor_wreath_product "
 				"the_transversal_length = ";
-		int_vec_print(cout, the_transversal_length, base_length);
+		Orbiter->Int_vec.print(cout, the_transversal_length, base_length);
 		cout << endl;
 	}
 
@@ -496,7 +496,7 @@ long int wreath_product::element_image_of(int *Elt, long int a, int verbose_leve
 			if (f_v) {
 				cout << "wreath_product::element_image_of "
 						"u = ";
-				int_vec_print(cout, u, dimension_of_tensor_action);
+				Orbiter->Int_vec.print(cout, u, dimension_of_tensor_action);
 				cout << endl;
 			}
 			create_matrix(Elt, A3, 0 /* verbose_level */);
@@ -513,14 +513,14 @@ long int wreath_product::element_image_of(int *Elt, long int a, int verbose_leve
 			if (f_v) {
 				cout << "wreath_product::element_image_of "
 						"v = ";
-				int_vec_print(cout, v, dimension_of_tensor_action);
+				Orbiter->Int_vec.print(cout, v, dimension_of_tensor_action);
 				cout << endl;
 			}
 			apply_permutation(Elt, v, w, verbose_level);
 			if (f_v) {
 				cout << "wreath_product::element_image_of "
 						"w = ";
-				int_vec_print(cout, w, dimension_of_tensor_action);
+				Orbiter->Int_vec.print(cout, w, dimension_of_tensor_action);
 				cout << endl;
 			}
 			F->PG_element_rank_modified_lint(w, 1,
@@ -557,7 +557,7 @@ void wreath_product::element_image_of_low_level(int *Elt,
 	if (f_v) {
 		cout << "wreath_product::element_image_of_low_level "
 				"input = ";
-		int_vec_print(cout, input, dimension_of_tensor_action);
+		Orbiter->Int_vec.print(cout, input, dimension_of_tensor_action);
 		cout << endl;
 	}
 	create_matrix(Elt, A3, 0 /* verbose_level */);
@@ -574,14 +574,14 @@ void wreath_product::element_image_of_low_level(int *Elt,
 	if (f_v) {
 		cout << "wreath_product::element_image_of_low_level "
 				"v = ";
-		int_vec_print(cout, v, dimension_of_tensor_action);
+		Orbiter->Int_vec.print(cout, v, dimension_of_tensor_action);
 		cout << endl;
 	}
 	apply_permutation(Elt, v, output, verbose_level - 1);
 	if (f_v) {
 		cout << "wreath_product::element_image_of_low_level "
 				"output = ";
-		int_vec_print(cout, output, dimension_of_tensor_action);
+		Orbiter->Int_vec.print(cout, output, dimension_of_tensor_action);
 		cout << endl;
 	}
 	if (f_v) {
@@ -652,7 +652,7 @@ void wreath_product::element_move(int *A, int *B, int verbose_level)
 	if (f_v) {
 		cout << "wreath_product::element_move" << endl;
 	}
-	int_vec_copy(A, B, elt_size_int);
+	Orbiter->Int_vec.copy(A, B, elt_size_int);
 
 #if 0
 	if (f_v) {
@@ -715,22 +715,22 @@ void wreath_product::apply_permutation(int *Elt,
 	}
 	if (f_v) {
 		cout << "wreath_product::apply_permutation perm=";
-		int_vec_print(cout, Elt, nb_factors);
+		Orbiter->Int_vec.print(cout, Elt, nb_factors);
 		cout << endl;
 	}
 	if (f_v) {
 		cout << "wreath_product::apply_permutation v_in=";
-		int_vec_print(cout, v_in, dimension_of_tensor_action);
+		Orbiter->Int_vec.print(cout, v_in, dimension_of_tensor_action);
 		cout << endl;
 	}
-	int_vec_zero(v_out, dimension_of_tensor_action);
+	Orbiter->Int_vec.zero(v_out, dimension_of_tensor_action);
 
 	//perm_inverse(Elt, tmp_perm1, nb_factors);
 
 	compute_induced_permutation(Elt, induced_perm);
 	if (f_v) {
 		cout << "wreath_product::apply_permutation induced_perm=";
-		int_vec_print(cout, induced_perm, dimension_of_tensor_action);
+		Orbiter->Int_vec.print(cout, induced_perm, dimension_of_tensor_action);
 		cout << endl;
 	}
 
@@ -751,7 +751,7 @@ void wreath_product::apply_permutation(int *Elt,
 	}
 	if (f_v) {
 		cout << "wreath_product::apply_permutation v_out=";
-		int_vec_print(cout, v_out, dimension_of_tensor_action);
+		Orbiter->Int_vec.print(cout, v_out, dimension_of_tensor_action);
 		cout << endl;
 	}
 	if (f_v) {
@@ -774,7 +774,7 @@ void wreath_product::create_matrix(int *Elt, int *A, int verbose_level)
 	}
 	for (f = 0; f < nb_factors; f++) {
 		if (f == 0) {
-			int_vec_copy(Elt + offset_i(f), A1,
+			Orbiter->Int_vec.copy(Elt + offset_i(f), A1,
 					dimension_of_matrix_group * dimension_of_matrix_group);
 			N = dimension_of_matrix_group;
 		}
@@ -783,7 +783,7 @@ void wreath_product::create_matrix(int *Elt, int *A, int verbose_level)
 					A1, Elt + offset_i(f),
 					mtx_size[f - 1], dimension_of_matrix_group,
 					A2, N, 0 /* verbose_level */);
-			int_vec_copy(A2, A1, N * N);
+			Orbiter->Int_vec.copy(A2, A1, N * N);
 		}
 		if (f_v) {
 			cout << "wreath_product::create_matrix "
@@ -791,7 +791,7 @@ void wreath_product::create_matrix(int *Elt, int *A, int verbose_level)
 			int_matrix_print(A1, N, N);
 		}
 	}
-	int_vec_copy(A1, A,
+	Orbiter->Int_vec.copy(A1, A,
 			dimension_of_tensor_action * dimension_of_tensor_action);
 	if (f_v) {
 		cout << "wreath_product::create_matrix done" << endl;
@@ -915,7 +915,7 @@ void wreath_product::make_element(int *Elt, int *data, int verbose_level)
 		}
 	if (f_v) {
 		cout << "wreath_product::make_element data:" << endl;
-		int_vec_print(cout, data, make_element_size);
+		Orbiter->Int_vec.print(cout, data, make_element_size);
 		cout << endl;
 	}
 	for (f = 0; f < nb_factors; f++) {
@@ -1084,7 +1084,7 @@ void wreath_product::make_strong_generators_data(int *&data,
 			Combi.perm_identity(dat, nb_factors);
 			for (k = 0; k < nb_factors; k++) {
 				if (k == f) {
-					int_vec_copy(GL_data + g * GL_size,
+					Orbiter->Int_vec.copy(GL_data + g * GL_size,
 							dat + nb_factors + k * M->elt_size_int_half,
 							GL_size);
 				}
@@ -1094,7 +1094,7 @@ void wreath_product::make_strong_generators_data(int *&data,
 							dimension_of_matrix_group);
 				}
 			}
-			int_vec_copy(dat, data + h * size, size);
+			Orbiter->Int_vec.copy(dat, data + h * size, size);
 			h++;
 		}
 	}
@@ -1106,7 +1106,7 @@ void wreath_product::make_strong_generators_data(int *&data,
 			F->identity_matrix(dat + nb_factors + f * M->elt_size_int_half,
 					dimension_of_matrix_group);
 		}
-		int_vec_copy(dat, data + h * size, size);
+		Orbiter->Int_vec.copy(dat, data + h * size, size);
 		h++;
 	}
 #endif
@@ -1192,7 +1192,7 @@ void wreath_product::report_rank_one_tensors(
 		F->transpose_matrix(projections, projections1, nb_factors, dimension_of_matrix_group);
 
 		ost << " & " << endl;
-		int_vec_print(ost, Proj, nb_factors);
+		Orbiter->Int_vec.print(ost, Proj, nb_factors);
 		ost << " & " << endl;
 
 		ost << "\\left[" << endl;
@@ -1211,7 +1211,7 @@ void wreath_product::report_rank_one_tensors(
 			cout << endl;
 		}
 
-		int_vec_zero(T, dimension_of_tensor_action);
+		Orbiter->Int_vec.zero(T, dimension_of_tensor_action);
 		for (j = 0; j < dimension_of_tensor_action; j++) {
 			Gg.AG_element_unrank(dimension_of_matrix_group, coords, 1, nb_factors, j);
 			a = 1;
@@ -1425,7 +1425,7 @@ void wreath_product::tensor_affine_unrank(int *tensor, uint32_t rk)
 	uint32_t b;
 	int i;
 
-	int_vec_zero(tensor, dimension_of_tensor_action);
+	Orbiter->Int_vec.zero(tensor, dimension_of_tensor_action);
 
 	b = rk;
 	for (i = 0; i < dimension_of_tensor_action; i++) {
@@ -2873,7 +2873,7 @@ void wreath_product::orbits_restricted(
 					tensor_PG_unrank(v, x);
 					s = tensor_affine_rank(v);
 					cout << "tensor=";
-					int_vec_print(cout, v, dimension_of_tensor_action);
+					Orbiter->Int_vec.print(cout, v, dimension_of_tensor_action);
 					cout << endl;
 					cout << "affine rank s=" << s << endl;
 
@@ -2881,7 +2881,7 @@ void wreath_product::orbits_restricted(
 					tensor_PG_unrank(v, y);
 					s = tensor_affine_rank(v);
 					cout << "tensor=";
-					int_vec_print(cout, v, dimension_of_tensor_action);
+					Orbiter->Int_vec.print(cout, v, dimension_of_tensor_action);
 					cout << endl;
 					cout << "affine rank s=" << s << endl;
 
@@ -3092,7 +3092,7 @@ void wreath_product::orbits_restricted_compute(
 		if (f_v) {
 			cout << "orbit representative is " << orb_rep << " = " << orbit_rep_in_PG << " = " << orbit_rep_in_PG_uint << endl;
 			cout << "tensor: ";
-			int_vec_print(cout, tensor, dimension_of_tensor_action);
+			Orbiter->Int_vec.print(cout, tensor, dimension_of_tensor_action);
 			cout << endl;
 		}
 		sims *Stab;

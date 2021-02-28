@@ -433,7 +433,7 @@ void set_of_sets::init_cycle_structure(int *perm,
 	orbit_length = NEW_lint(n);
 	orbit_length2 = NEW_lint(n);
 	have_seen = NEW_int(n);
-	int_vec_zero(have_seen, n);
+	Orbiter->Int_vec.zero(have_seen, n);
 
 	l = 0;
 	while (l < n) {
@@ -512,7 +512,7 @@ void set_of_sets::init_cycle_structure(int *perm,
 	init_basic(n /* underlying_set_size */,
 			nb_orbits, orbit_length, 0 /* verbose_level */);
 
-	int_vec_zero(have_seen, n);
+	Orbiter->Int_vec.zero(have_seen, n);
 
 	l = 0;
 	while (l < n) {
@@ -890,7 +890,7 @@ void set_of_sets::compute_incidence_matrix(
 	m = underlying_set_size;
 	n = nb_sets;
 	Inc = NEW_int(underlying_set_size * nb_sets);
-	int_vec_zero(Inc, m * n);
+	Orbiter->Int_vec.zero(Inc, m * n);
 	for (j = 0; j < nb_sets; j++) {
 		for (h = 0; h < Set_size[j]; h++) {
 			i = Sets[j][h];
@@ -1176,7 +1176,7 @@ void set_of_sets::pairwise_intersection_matrix(int *&M, int verbose_level)
 
 
 	M = NEW_int(nb_sets * nb_sets);
-	int_vec_zero(M, nb_sets * nb_sets);
+	Orbiter->Int_vec.zero(M, nb_sets * nb_sets);
 
 	v = NEW_lint(underlying_set_size);
 	for (i = 0; i < nb_sets; i++) {

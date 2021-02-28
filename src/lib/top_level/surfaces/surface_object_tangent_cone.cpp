@@ -231,7 +231,7 @@ void surface_object_tangent_cone::quartic(ostream &ost, int verbose_level)
 		SOA->Surf->unrank_point(v, Pts_on_surface[i]);
 		ost << i << " : $P_{" << i << "} = P_{"
 				<< Pts_on_surface[i] << "}=";
-		int_vec_print_fully(ost, v, 4);
+		Orbiter->Int_vec.print_fully(ost, v, 4);
 		ost << "$\\\\" << endl;
 	}
 	ost << "\\end{multicols}" << endl;
@@ -316,7 +316,7 @@ void surface_object_tangent_cone::quartic(ostream &ost, int verbose_level)
 		SOA->Surf->unrank_point(v, Pts_on_tangent_quadric[i]);
 		ost << i << " : $P_{" << i << "} = P_{"
 				<< Pts_on_tangent_quadric[i] << "}=";
-		int_vec_print_fully(ost, v, 4);
+		Orbiter->Int_vec.print_fully(ost, v, 4);
 		ost << "$\\\\" << endl;
 	}
 	ost << "\\end{multicols}" << endl;
@@ -332,7 +332,7 @@ void surface_object_tangent_cone::quartic(ostream &ost, int verbose_level)
 
 	type_collected = NEW_int(nb_pts_on_tangent_quadric + 1);
 
-	int_vec_zero(type_collected, nb_pts_on_tangent_quadric + 1);
+	Orbiter->Int_vec.zero(type_collected, nb_pts_on_tangent_quadric + 1);
 	for (i = 0; i < SOA->Surf->P->N_lines; i++) {
 		type_collected[line_type[i]]++;
 	}
@@ -376,7 +376,7 @@ void surface_object_tangent_cone::quartic(ostream &ost, int verbose_level)
 	for (i = 0; i < nb_pts_intersection; i++) {
 		SOA->Surf->unrank_point(v, Pts_intersection[i]);
 		ost << i << " : $P_{" << i << "} = P_{" << Pts_intersection[i] << "}=";
-		int_vec_print_fully(ost, v, 4);
+		Orbiter->Int_vec.print_fully(ost, v, 4);
 		ost << "$\\\\" << endl;
 	}
 	ost << "\\end{multicols}" << endl;
@@ -420,7 +420,7 @@ void surface_object_tangent_cone::quartic(ostream &ost, int verbose_level)
 		SOA->Surf->P2->unrank_point(v, Pts_on_curve[i]);
 		ost << i << " : $P_{" << i << "} = P_{"
 				<< Pts_on_curve[i] << "}=";
-		int_vec_print_fully(ost, v, 3);
+		Orbiter->Int_vec.print_fully(ost, v, 3);
 		ost << "$\\\\" << endl;
 	}
 	ost << "\\end{multicols}" << endl;
@@ -688,7 +688,7 @@ void surface_object_tangent_cone::cheat_sheet_quartic_curve(
 		SOA->Surf->unrank_point(v, Pts_on_surface[i]);
 		ost << i << " : $P_{" << i << "} = P_{"
 				<< Pts_on_surface[i] << "}=";
-		int_vec_print_fully(ost, v, 4);
+		Orbiter->Int_vec.print_fully(ost, v, 4);
 		ost << "$\\\\" << endl;
 	}
 	ost << "\\end{multicols}" << endl;
@@ -759,7 +759,7 @@ void surface_object_tangent_cone::cheat_sheet_quartic_curve(
 		SOA->Surf->unrank_point(v, Pts_on_tangent_quadric[i]);
 		ost << i << " : $P_{" << i << "} = P_{"
 				<< Pts_on_tangent_quadric[i] << "}=";
-		int_vec_print_fully(ost, v, 4);
+		Orbiter->Int_vec.print_fully(ost, v, 4);
 		ost << "$\\\\" << endl;
 	}
 	ost << "\\end{multicols}" << endl;
@@ -783,7 +783,7 @@ void surface_object_tangent_cone::cheat_sheet_quartic_curve(
 		SOA->Surf->unrank_point(v, Pts_intersection[i]);
 		ost << i << " : $P_{" << i << "} = P_{"
 				<< Pts_intersection[i] << "}=";
-		int_vec_print_fully(ost, v, 4);
+		Orbiter->Int_vec.print_fully(ost, v, 4);
 		ost << "$\\\\" << endl;
 	}
 	ost << "\\end{multicols}" << endl;
@@ -830,7 +830,7 @@ void surface_object_tangent_cone::cheat_sheet_quartic_curve(
 		SOA->Surf->P2->unrank_point(v, Pts_on_curve[i]);
 		ost << i << " : $P_{" << i << "} = P_{"
 				<< Pts_on_curve[i] << "}=";
-		int_vec_print_fully(ost, v, 3);
+		Orbiter->Int_vec.print_fully(ost, v, 3);
 		ost << "$\\\\" << endl;
 	}
 	ost << "\\end{multicols}" << endl;

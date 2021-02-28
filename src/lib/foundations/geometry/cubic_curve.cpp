@@ -197,7 +197,7 @@ void cubic_curve::compute_gradient(int *eqn_in, int verbose_level)
 		}
 		if (f_v) {
 			cout << "cubic_curve::compute_gradient eqn_in=";
-			int_vec_print(cout, eqn_in, Poly->get_nb_monomials());
+			Orbiter->Int_vec.print(cout, eqn_in, Poly->get_nb_monomials());
 			cout << " = ";
 			Poly->print_equation(cout, eqn_in);
 			cout << endl;
@@ -207,7 +207,7 @@ void cubic_curve::compute_gradient(int *eqn_in, int verbose_level)
 				verbose_level - 2);
 		if (f_v) {
 			cout << "cubic_curve::compute_gradient partial=";
-			int_vec_print(cout, gradient + i * Poly2->get_nb_monomials(),
+			Orbiter->Int_vec.print(cout, gradient + i * Poly2->get_nb_monomials(),
 					Poly2->get_nb_monomials());
 			cout << " = ";
 			Poly2->print_equation(cout, gradient + i * Poly2->get_nb_monomials());
@@ -254,7 +254,7 @@ void cubic_curve::compute_singular_points(
 		if (f_vv) {
 			cout << "cubic_curve::compute_singular_points "
 					"v=";
-			int_vec_print(cout, v, 3);
+			Orbiter->Int_vec.print(cout, v, 3);
 			cout << endl;
 		}
 		for (i = 0; i < nb_eqns; i++) {
@@ -265,7 +265,7 @@ void cubic_curve::compute_singular_points(
 			if (f_vv) {
 				cout << "cubic_curve::compute_singular_points "
 						"gradient " << i << " = ";
-				int_vec_print(cout,
+				Orbiter->Int_vec.print(cout,
 						gradient + i * Poly2->get_nb_monomials(),
 						Poly2->get_nb_monomials());
 				cout << endl;
@@ -319,7 +319,7 @@ void cubic_curve::compute_inflexion_points(
 		if (f_v) {
 			cout << "cubic_curve::compute_inflexion_points testing point "
 					<< h << " / " << nb_pts_on_curve << " = " << a << " = ";
-			int_vec_print(cout, v, 3);
+			Orbiter->Int_vec.print(cout, v, 3);
 			cout << endl;
 		}
 		for (i = 0; i < 3; i++) {
@@ -335,7 +335,7 @@ void cubic_curve::compute_inflexion_points(
 			// now we know that the tangent line at point a exists:
 
 			//int_vec_copy(v, Basis, 3);
-			int_vec_copy(T, Basis, 3);
+			Orbiter->Int_vec.copy(T, Basis, 3);
 			if (f_v) {
 				cout << "cubic_curve::compute_inflexion_points "
 						"before F->perp_standard:" << endl;
@@ -348,17 +348,17 @@ void cubic_curve::compute_inflexion_points(
 				int_matrix_print(Basis, 3, 3);
 			}
 			// test if the first basis vector is a multiple of v:
-			int_vec_copy(v, Basis2, 3);
-			int_vec_copy(Basis + 3, Basis2 + 3, 3);
+			Orbiter->Int_vec.copy(v, Basis2, 3);
+			Orbiter->Int_vec.copy(Basis + 3, Basis2 + 3, 3);
 			if (F->rank_of_rectangular_matrix(Basis2,
 					2, 3, 0 /*verbose_level*/) == 1) {
-				int_vec_copy(Basis + 6, w, 3);
+				Orbiter->Int_vec.copy(Basis + 6, w, 3);
 			}
 			else {
-				int_vec_copy(Basis + 3, w, 3);
+				Orbiter->Int_vec.copy(Basis + 3, w, 3);
 			}
-			int_vec_copy(v, Basis2, 3);
-			int_vec_copy(w, Basis2 + 3, 3);
+			Orbiter->Int_vec.copy(v, Basis2, 3);
+			Orbiter->Int_vec.copy(w, Basis2 + 3, 3);
 			if (F->rank_of_rectangular_matrix(Basis,
 					2, 3, 0 /*verbose_level*/) != 2) {
 				cout << "cubic_curve::compute_inflexion_points rank of "
@@ -373,7 +373,7 @@ void cubic_curve::compute_inflexion_points(
 			if (f_v) {
 				cout << "cubic_curve::compute_inflexion_points "
 						"after Poly->substitute_line:" << endl;
-				int_vec_print(cout, eqn_restricted_to_line, 4);
+				Orbiter->Int_vec.print(cout, eqn_restricted_to_line, 4);
 				cout << endl;
 			}
 			if (eqn_restricted_to_line[0] == 0 &&

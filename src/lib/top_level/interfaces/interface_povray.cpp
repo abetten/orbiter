@@ -216,10 +216,10 @@ void interface_povray::worker(int verbose_level)
 				int *rounds;
 				int nb_rounds;
 
-				int_vec_scan(rounds_as_string, rounds, nb_rounds);
+				Orbiter->Int_vec.scan(rounds_as_string, rounds, nb_rounds);
 
 				cout << "Doing the following " << nb_rounds << " rounds: ";
-				int_vec_print(cout, rounds, nb_rounds);
+				Orbiter->Int_vec.print(cout, rounds, nb_rounds);
 				cout << endl;
 
 				int r;

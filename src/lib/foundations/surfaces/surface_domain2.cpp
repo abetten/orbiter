@@ -30,7 +30,7 @@ void surface_domain::multiply_conic_times_linear(int *six_coeff,
 	}
 
 
-	int_vec_zero(ten_coeff, 10);
+	Orbiter->Int_vec.zero(ten_coeff, 10);
 	for (i = 0; i < 6; i++) {
 		a = six_coeff[i];
 		if (a == 0) {
@@ -74,7 +74,7 @@ void surface_domain::multiply_linear_times_linear_times_linear(
 		cout << "surface_domain::multiply_linear_times_linear_times_linear" << endl;
 	}
 
-	int_vec_zero(ten_coeff, 10);
+	Orbiter->Int_vec.zero(ten_coeff, 10);
 	for (i = 0; i < 3; i++) {
 		a = three_coeff1[i];
 		if (a == 0) {
@@ -125,7 +125,7 @@ void surface_domain::multiply_linear_times_linear_times_linear_in_space(
 		cout << "surface_domain::multiply_linear_times_linear_times_linear_in_space" << endl;
 	}
 
-	int_vec_zero(twenty_coeff, 20);
+	Orbiter->Int_vec.zero(twenty_coeff, 20);
 	for (i = 0; i < 4; i++) {
 		a = four_coeff1[i];
 		if (a == 0) {
@@ -176,7 +176,7 @@ void surface_domain::multiply_Poly2_3_times_Poly2_3(
 		cout << "surface_domain::multiply_Poly2_3_times_Poly2_3" << endl;
 	}
 
-	int_vec_zero(result, Poly4_x123->get_nb_monomials());
+	Orbiter->Int_vec.zero(result, Poly4_x123->get_nb_monomials());
 	for (i = 0; i < Poly2->get_nb_monomials(); i++) {
 		a = input1[i];
 		if (a == 0) {
@@ -214,7 +214,7 @@ void surface_domain::multiply_Poly1_3_times_Poly3_3(int *input1, int *input2,
 		cout << "surface_domain::multiply_Poly1_3_times_Poly3_3" << endl;
 	}
 
-	int_vec_zero(result, Poly4_x123->get_nb_monomials());
+	Orbiter->Int_vec.zero(result, Poly4_x123->get_nb_monomials());
 	for (i = 0; i < Poly1->get_nb_monomials(); i++) {
 		a = input1[i];
 		if (a == 0) {
@@ -273,9 +273,9 @@ void surface_domain::create_equations_for_pencil_of_surfaces_from_trihedral_pair
 	for (l = 0; l < q + 1; l++) {
 		F->PG_element_unrank_modified(v, 1, 2, l);
 
-		int_vec_copy(eqn_F, eqn_F2, 20);
+		Orbiter->Int_vec.copy(eqn_F, eqn_F2, 20);
 		F->scalar_multiply_vector_in_place(v[0], eqn_F2, 20);
-		int_vec_copy(eqn_G, eqn_G2, 20);
+		Orbiter->Int_vec.copy(eqn_G, eqn_G2, 20);
 		F->scalar_multiply_vector_in_place(v[1], eqn_G2, 20);
 		F->add_vector(eqn_F2, eqn_G2, The_surface_equations + l * 20, 20);
 		F->PG_element_normalize(The_surface_equations + l * 20, 1, 20);
@@ -484,7 +484,7 @@ void surface_domain::clebsch_cubics(int verbose_level)
 	Clebsch_P = NEW_pint(3 * 4);
 	Clebsch_P3 = NEW_pint(3 * 3);
 
-	int_vec_zero(Clebsch_Pij, 3 * 4 * nb_monomials2);
+	Orbiter->Int_vec.zero(Clebsch_Pij, 3 * 4 * nb_monomials2);
 
 
 	for (i = 0; i < 3; i++) {
@@ -522,17 +522,17 @@ void surface_domain::clebsch_cubics(int verbose_level)
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 4; j++) {
 			cout << "i=" << i << " j=" << j << endl;
-			int_vec_zero(Monomial, 27);
+			Orbiter->Int_vec.zero(Monomial, 27);
 			c0 = coeffs[(i * 4 + j) * 4 + 0];
 			c1 = coeffs[(i * 4 + j) * 4 + 1];
-			int_vec_zero(Monomial, 27);
+			Orbiter->Int_vec.zero(Monomial, 27);
 			Monomial[c0] = 1;
 			Monomial[c1] = 1;
 			idx = Poly2_27->index_of_monomial(Monomial);
 			Clebsch_P[i * 4 + j][idx] = 1;
 			c0 = coeffs[(i * 4 + j) * 4 + 2];
 			c1 = coeffs[(i * 4 + j) * 4 + 3];
-			int_vec_zero(Monomial, 27);
+			Orbiter->Int_vec.zero(Monomial, 27);
 			Monomial[c0] = 1;
 			Monomial[c1] = 1;
 			idx = Poly2_27->index_of_monomial(Monomial);
@@ -565,10 +565,10 @@ void surface_domain::clebsch_cubics(int verbose_level)
 	}
 
 	Cubics = NEW_int(4 * nb_monomials6);
-	int_vec_zero(Cubics, 4 * nb_monomials6);
+	Orbiter->Int_vec.zero(Cubics, 4 * nb_monomials6);
 
 	Adjugate = NEW_int(3 * 3 * nb_monomials4);
-	int_vec_zero(Adjugate, 3 * 3 * nb_monomials4);
+	Orbiter->Int_vec.zero(Adjugate, 3 * 3 * nb_monomials4);
 
 	for (i = 0; i < 4; i++) {
 		C[i] = Cubics + i * nb_monomials6;
@@ -663,7 +663,7 @@ void surface_domain::clebsch_cubics(int verbose_level)
 	int h;
 
 	Clebsch_coeffs = NEW_int(4 * Poly3->get_nb_monomials() * nb_monomials3);
-	int_vec_zero(Clebsch_coeffs,
+	Orbiter->Int_vec.zero(Clebsch_coeffs,
 			4 * Poly3->get_nb_monomials() * nb_monomials3);
 	CC = NEW_pint(4 * Poly3->get_nb_monomials());
 	for (i = 0; i < 4; i++) {
@@ -673,10 +673,10 @@ void surface_domain::clebsch_cubics(int verbose_level)
 		}
 	}
 	for (i = 0; i < Poly3->get_nb_monomials(); i++) {
-		int_vec_copy(Poly3->get_monomial_pointer(i), Y, 3);
+		Orbiter->Int_vec.copy(Poly3->get_monomial_pointer(i), Y, 3);
 		for (j = 0; j < nb_monomials6; j++) {
 			if (int_vec_compare(Y, Poly6_27->get_monomial_pointer(j), 3) == 0) {
-				int_vec_copy(Poly6_27->get_monomial_pointer(j) + 3, M24, 24);
+				Orbiter->Int_vec.copy(Poly6_27->get_monomial_pointer(j) + 3, M24, 24);
 				idx = Poly3_24->index_of_monomial(M24);
 				for (h = 0; h < 4; h++) {
 					CC[h * Poly3->get_nb_monomials() + i][idx] =
@@ -731,7 +731,7 @@ void surface_domain::multiply_222_27_and_add(int *M1, int *M2, int *M3,
 					continue;
 				}
 				d = F->mult3(a, b, c);
-				int_vec_add3(Poly2_27->get_monomial_pointer(i),
+				Orbiter->Int_vec.add3(Poly2_27->get_monomial_pointer(i),
 					Poly2_27->get_monomial_pointer(j),
 					Poly2_27->get_monomial_pointer(k),
 					M, 27);
@@ -769,7 +769,7 @@ void surface_domain::minor22(int **P3, int i1, int i2, int j1, int j2,
 				"f_has_large_polynomial_domains is FALSE" << endl;
 		exit(1);
 	}
-	int_vec_zero(Ad, nb_monomials4);
+	Orbiter->Int_vec.zero(Ad, nb_monomials4);
 	for (i = 0; i < nb_monomials2; i++) {
 		a = P3[i1 * 3 + j1][i];
 		if (a == 0) {
@@ -781,7 +781,7 @@ void surface_domain::minor22(int **P3, int i1, int i2, int j1, int j2,
 				continue;
 			}
 			d = F->mult(a, b);
-			int_vec_add(Poly2_27->get_monomial_pointer(i),
+			Orbiter->Int_vec.add(Poly2_27->get_monomial_pointer(i),
 				Poly2_27->get_monomial_pointer(j),
 				M, 27);
 			idx = Poly4_27->index_of_monomial(M);
@@ -805,7 +805,7 @@ void surface_domain::minor22(int **P3, int i1, int i2, int j1, int j2,
 				continue;
 			}
 			d = F->mult(a, b);
-			int_vec_add(Poly2_27->get_monomial_pointer(i),
+			Orbiter->Int_vec.add(Poly2_27->get_monomial_pointer(i),
 				Poly2_27->get_monomial_pointer(j),
 				M, 27);
 			idx = Poly4_27->index_of_monomial(M);
@@ -853,7 +853,7 @@ void surface_domain::multiply42_and_add(int *M1, int *M2,
 				continue;
 			}
 			d = F->mult(a, b);
-			int_vec_add(Poly4_27->get_monomial_pointer(i),
+			Orbiter->Int_vec.add(Poly4_27->get_monomial_pointer(i),
 				Poly2_27->get_monomial_pointer(j),
 				M, 27);
 			idx = Poly6_27->index_of_monomial(M);
@@ -882,7 +882,7 @@ void surface_domain::prepare_system_from_FG(int *F_planes, int *G_planes,
 		cout << "surface_domain::prepare_system_from_FG" << endl;
 	}
 	system = NEW_int(3 * 4 * 3);
-	int_vec_zero(system, 3 * 4 * 3);
+	Orbiter->Int_vec.zero(system, 3 * 4 * 3);
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 4; j++) {
 			int *p = system + (i * 4 + j) * 3;
@@ -921,8 +921,8 @@ void surface_domain::compute_nine_lines(int *F_planes, int *G_planes,
 	}
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 3; j++) {
-			int_vec_copy(F_planes + i * 4, Basis, 4);
-			int_vec_copy(G_planes + j * 4, Basis + 4, 4);
+			Orbiter->Int_vec.copy(F_planes + i * 4, Basis, 4);
+			Orbiter->Int_vec.copy(G_planes + j * 4, Basis + 4, 4);
 			F->RREF_and_kernel(4, 2, Basis, 0 /* verbose_level */);
 			nine_lines[i * 3 + j] = Gr->rank_lint_here(
 				Basis + 8, 0 /* verbose_level */);
@@ -960,8 +960,8 @@ void surface_domain::compute_nine_lines_by_dual_point_ranks(
 
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 3; j++) {
-			int_vec_copy(F_planes + i * 4, Basis, 4);
-			int_vec_copy(G_planes + j * 4, Basis + 4, 4);
+			Orbiter->Int_vec.copy(F_planes + i * 4, Basis, 4);
+			Orbiter->Int_vec.copy(G_planes + j * 4, Basis + 4, 4);
 			F->RREF_and_kernel(4, 2, Basis, 0 /* verbose_level */);
 			nine_lines[i * 3 + j] = Gr->rank_lint_here(
 				Basis + 8, 0 /* verbose_level */);
@@ -991,16 +991,16 @@ void surface_domain::split_nice_equation(int *nice_equation,
 	f1 = NEW_int(Poly1->get_nb_monomials());
 	f2 = NEW_int(Poly2->get_nb_monomials());
 	f3 = NEW_int(Poly3->get_nb_monomials());
-	int_vec_zero(f1, Poly1->get_nb_monomials());
-	int_vec_zero(f2, Poly2->get_nb_monomials());
-	int_vec_zero(f3, Poly3->get_nb_monomials());
+	Orbiter->Int_vec.zero(f1, Poly1->get_nb_monomials());
+	Orbiter->Int_vec.zero(f2, Poly2->get_nb_monomials());
+	Orbiter->Int_vec.zero(f3, Poly3->get_nb_monomials());
 
 	for (i = 0; i < 20; i++) {
 		a = nice_equation[i];
 		if (a == 0) {
 			continue;
 		}
-		int_vec_copy(Poly3_4->get_monomial_pointer(i), M, 4);
+		Orbiter->Int_vec.copy(Poly3_4->get_monomial_pointer(i), M, 4);
 		if (M[0] == 3) {
 			cout << "surface_domain::split_nice_equation the x_0^3 "
 				"term is supposed to be zero" << endl;
@@ -1040,14 +1040,14 @@ void surface_domain::assemble_tangent_quadric(
 
 	two = F->add(1, 1);
 	tangent_quadric = NEW_int(Poly2_4->get_nb_monomials());
-	int_vec_zero(tangent_quadric, Poly2_4->get_nb_monomials());
+	Orbiter->Int_vec.zero(tangent_quadric, Poly2_4->get_nb_monomials());
 
 	for (i = 0; i < Poly1->get_nb_monomials(); i++) {
 		a = f1[i];
 		if (a == 0) {
 			continue;
 		}
-		int_vec_copy(Poly1->get_monomial_pointer(i), M + 1, 3);
+		Orbiter->Int_vec.copy(Poly1->get_monomial_pointer(i), M + 1, 3);
 		M[0] = 1;
 		idx = Poly2_4->index_of_monomial(M);
 		tangent_quadric[idx] = F->mult(two, a);
@@ -1058,7 +1058,7 @@ void surface_domain::assemble_tangent_quadric(
 		if (a == 0) {
 			continue;
 		}
-		int_vec_copy(Poly2->get_monomial_pointer(i), M + 1, 3);
+		Orbiter->Int_vec.copy(Poly2->get_monomial_pointer(i), M + 1, 3);
 		M[0] = 0;
 		idx = Poly2_4->index_of_monomial(M);
 		tangent_quadric[idx] = a;
@@ -1185,14 +1185,14 @@ void surface_domain::do_arc_lifting_with_two_lines(
 		cout << "surface_domain::do_arc_lifting_with_two_lines after "
 				"AL->create_surface" << endl;
 		cout << "equation: ";
-		int_vec_print(cout, AL->coeff, 20);
+		Orbiter->Int_vec.print(cout, AL->coeff, 20);
 		cout << endl;
 		cout << "lines: ";
 		lint_vec_print(cout, AL->lines27, 27);
 		cout << endl;
 	}
 
-	int_vec_copy(AL->coeff, coeff20, 20);
+	Orbiter->Int_vec.copy(AL->coeff, coeff20, 20);
 	lint_vec_copy(AL->lines27, lines27, 27);
 
 
@@ -1228,7 +1228,7 @@ void surface_domain::compute_local_coordinates_of_arc(
 		if (f_v) {
 			cout << "surface_domain::compute_local_coordinates_of_arc "
 					"which is ";
-			int_vec_print(cout, v, 4);
+			Orbiter->Int_vec.print(cout, v, 4);
 			cout << endl;
 		}
 		F->reduce_mod_subspace_and_get_coefficient_vector(
@@ -1238,7 +1238,7 @@ void surface_domain::compute_local_coordinates_of_arc(
 		if (f_v) {
 			cout << "surface_domain::compute_local_coordinates_of_arc "
 					"local coefficients ";
-			int_vec_print(cout, coefficients, 3);
+			Orbiter->Int_vec.print(cout, coefficients, 3);
 			cout << endl;
 		}
 		F->PG_element_rank_modified_lint(coefficients, 1, 3, P6_local[i]);

@@ -395,7 +395,7 @@ void spread_lifting::find_coloring(diophant *Dio,
 		if (f_v) {
 			cout << "found color " << nb_colors
 					<< " : " << i << " = " << a << " = ";
-			int_vec_print(cout, v, S->n);
+			Orbiter->Int_vec.print(cout, v, S->n);
 			cout << endl;
 		}
 		colors[nb_colors++] = i;

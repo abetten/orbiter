@@ -558,7 +558,7 @@ void trihedral_pair_with_action::loop_over_trihedral_pairs(
 			if (f_v) {
 				cout << "trihedral_pair_with_action::loop_over_trihedral_pairs "
 						"The transformed equation is:" << endl;
-				int_vec_print(cout, coeff_out, 20);
+				Orbiter->Int_vec.print(cout, coeff_out, 20);
 				cout << endl;
 			}
 
@@ -650,7 +650,7 @@ void trihedral_pair_with_action::create_the_six_plane_equations(int t_idx, int v
 			AL->Web->row_col_Eckardt_points, 6);
 
 	for (i = 0; i < 6; i++) {
-		int_vec_copy(AL->Web->Tritangent_plane_equations + AL->Web->row_col_Eckardt_points[i] * 4,
+		Orbiter->Int_vec.copy(AL->Web->Tritangent_plane_equations + AL->Web->row_col_Eckardt_points[i] * 4,
 				The_six_plane_equations + i * 4, 4);
 	}
 
@@ -701,7 +701,7 @@ void trihedral_pair_with_action::create_surface_from_trihedral_pair_and_arc(
 		verbose_level);
 
 
-	int_vec_copy(The_surface_equations + lambda_rk * 20, AL->the_equation, 20);
+	Orbiter->Int_vec.copy(The_surface_equations + lambda_rk * 20, AL->the_equation, 20);
 
 	if (f_v) {
 		cout << "trihedral_pair_with_action::create_surface_from_trihedral_pair_and_arc done" << endl;
@@ -821,8 +821,8 @@ void trihedral_pair_with_action::create_clebsch_system(int verbose_level)
 		cout << "trihedral_pair_with_action::create_clebsch_system" << endl;
 	}
 
-	int_vec_copy(The_six_plane_equations, F_plane, 12);
-	int_vec_copy(The_six_plane_equations + 12, G_plane, 12);
+	Orbiter->Int_vec.copy(The_six_plane_equations, F_plane, 12);
+	Orbiter->Int_vec.copy(The_six_plane_equations + 12, G_plane, 12);
 	if (f_v) {
 		cout << "F_planes:" << endl;
 		int_matrix_print(F_plane, 3, 4);
@@ -952,10 +952,10 @@ void trihedral_pair_with_action::print_equations()
 	cout << "The surface equation corresponding to "
 			"lambda = " << lambda << " which is equation "
 			"number " << lambda_rk << ":" << endl;
-	int_vec_print(cout, The_surface_equations + lambda_rk * 20, 20);
+	Orbiter->Int_vec.print(cout, The_surface_equations + lambda_rk * 20, 20);
 	cout << endl;
 	cout << "the_equation:" << endl;
-	int_vec_print(cout, AL->the_equation, 20);
+	Orbiter->Int_vec.print(cout, AL->the_equation, 20);
 	cout << endl;
 }
 
@@ -1297,7 +1297,7 @@ void trihedral_pair_with_action::report(ostream &ost, int verbose_level)
 	int coeffs2[20];
 
 	coeffs = The_surface_equations + lambda_rk * 20;
-	int_vec_copy(coeffs, coeffs2, 20);
+	Orbiter->Int_vec.copy(coeffs, coeffs2, 20);
 	AL->F->PG_element_normalize_from_front(coeffs2, 1, 20);
 
 	ost << "\\bigskip" << endl;

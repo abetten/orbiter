@@ -77,7 +77,7 @@ void sims::create_group_tree(const char *fname,
 				if (h < l - 1 && j == 0) {
 					continue;
 					}
-				int_vec_zero(path, l);
+				Orbiter->Int_vec.zero(path, l);
 				path[h] = j;
 				fp << h + 1;
 				for (i = 0; i <= h; i++) {
@@ -145,7 +145,7 @@ void sims::print_transversals_short()
 
 void sims::print_transversal_lengths()
 {
-	int_vec_print(cout, orbit_len, A->base_len());
+	Orbiter->Int_vec.print(cout, orbit_len, A->base_len());
 	cout << endl;
 #if 0
 	int i, l;
@@ -691,7 +691,7 @@ void sims::write_as_magma_permutation_group(std::string &fname_base,
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Table = NEW_int(l * n);
-	int_vec_zero(Table, l * n);
+	Orbiter->Int_vec.zero(Table, l * n);
 	for (h = 0; h < l; h++) {
 		if (f_v) {
 			cout << "sims::write_as_magma_permutation_group "

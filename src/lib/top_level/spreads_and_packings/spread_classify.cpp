@@ -558,7 +558,7 @@ void spread_classify::print_points()
 	for (i = 0; i < nb_pts; i++) {
 		unrank_point(v, i);
 		cout << "point " << i << " : ";
-		int_vec_print(cout, v, n);
+		Orbiter->Int_vec.print(cout, v, n);
 		cout << endl;
 	}
 	FREE_int(v);
@@ -576,7 +576,7 @@ void spread_classify::print_points(long int *pts, int len)
 		a = pts[h];
 		unrank_point(v, a);
 		cout << "point " << h << " : " << a << " : ";
-		int_vec_print(cout, v, n);
+		Orbiter->Int_vec.print(cout, v, n);
 		cout << endl;
 	}
 	FREE_int(v);
@@ -633,7 +633,7 @@ void spread_classify::print_elements_and_points()
 		print_integer_matrix_width(cout, M,
 				k, n, n, Mtx->GFq->log10_of_q + 1);
 		cout << "points on subspace " << i << " : ";
-		int_vec_print(cout, Line, r);
+		Orbiter->Int_vec.print(cout, Line, r);
 		cout << endl;
 	}
 	FREE_int(M);
@@ -764,8 +764,8 @@ void spread_classify::early_test_func(long int *S, int len,
 			i0 = len - 1;
 		}
 		for (i = i0; i < len; i++) {
-			int_vec_copy(MM + i * kn, M, k * n);
-			int_vec_copy(Grass->M, M + kn, k * n);
+			Orbiter->Int_vec.copy(MM + i * kn, M, k * n);
+			Orbiter->Int_vec.copy(Grass->M, M + kn, k * n);
 
 			if (f_vv) {
 				cout << "testing (p_" << i << ",candidates[" << j << "])="
@@ -835,7 +835,7 @@ int spread_classify::check_function(int len, long int *S, int verbose_level)
 	for (i = 0; i < len; i++) {
 		unrank_subspace(M1, S[i]);
 		for (j = i + 1; j < len; j++) {
-			int_vec_copy(M1, M, kn);
+			Orbiter->Int_vec.copy(M1, M, kn);
 			unrank_subspace(M + kn, S[j]);
 
 			if (f_vv) {
@@ -918,7 +918,7 @@ int spread_classify::incremental_check_function(int len, long int *S, int verbos
 	unrank_subspace(M1, S[j]);
 	for (i = 0; i < len - 1; i++) {
 		unrank_subspace(M, S[i]);
-		int_vec_copy(M1, M + kn, kn);
+		Orbiter->Int_vec.copy(M1, M + kn, kn);
 		
 		if (f_vv) {
 			cout << "testing (p_" << i << ",p_" << j << ")"
@@ -1023,7 +1023,7 @@ void spread_classify::lifting_prepare_function_new(
 
 	if (f_v3) {
 		cout << "col_color=";
-		int_vec_print(cout, col_color, Dio->n);
+		Orbiter->Int_vec.print(cout, col_color, Dio->n);
 		cout << endl;
 	}
 

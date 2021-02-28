@@ -82,7 +82,7 @@ void surface_object::init_equation(surface_domain *Surf, int *eqn,
 
 	if (f_v) {
 		cout << "surface_object::init_equation" << endl;
-		int_vec_print(cout, eqn, 20);
+		Orbiter->Int_vec.print(cout, eqn, 20);
 		cout << endl;
 	}
 
@@ -91,7 +91,7 @@ void surface_object::init_equation(surface_domain *Surf, int *eqn,
 	q = F->q;
 
 	//int_vec_copy(Lines, surface_object::Lines, 27);
-	int_vec_copy(eqn, surface_object::eqn, 20);
+	Orbiter->Int_vec.copy(eqn, surface_object::eqn, 20);
 	
 
 	//long int *Points;
@@ -331,10 +331,10 @@ void surface_object::find_real_lines(std::vector<long int> &The_Lines, int verbo
 
 		if (f_v) {
 			cout << "surface_object::find_real_lines coeff_out=";
-			int_vec_print(cout, coeff_out, 4);
+			Orbiter->Int_vec.print(cout, coeff_out, 4);
 			cout << endl;
 		}
-		if (!int_vec_is_zero(coeff_out, 4)) {
+		if (!Orbiter->Int_vec.is_zero(coeff_out, 4)) {
 			if (f_v) {
 				cout << "surface_object::find_real_lines not a real line" << endl;
 			}
@@ -396,7 +396,7 @@ void surface_object::init_with_27_lines(surface_domain *Surf,
 	}
 
 
-	int_vec_copy(eqn, surface_object::eqn, 20);
+	Orbiter->Int_vec.copy(eqn, surface_object::eqn, 20);
 	
 
 	if (f_v) {

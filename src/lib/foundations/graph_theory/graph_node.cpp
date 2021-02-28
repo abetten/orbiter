@@ -355,7 +355,7 @@ void graph_node::register_child(layered_graph *G,
 		int *child_id_new;
 
 		child_id_new = NEW_int(nb_children_allocated);
-		int_vec_copy(child_id, child_id_new, nb_children);
+		Orbiter->Int_vec.copy(child_id, child_id_new, nb_children);
 		FREE_int(child_id);
 		child_id = child_id_new;
 		}

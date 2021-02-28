@@ -112,11 +112,11 @@ void del_pezzo_surface_of_degree_two_domain::enumerate_points(int *coeff,
 
 		if (f_v) {
 			cout << a << " : ";
-			int_vec_print(cout, v3, 3);
+			Orbiter->Int_vec.print(cout, v3, 3);
 			cout << " : " << a << " : ";
 		}
 
-		int_vec_copy(v3, v4, 3);
+		Orbiter->Int_vec.copy(v3, v4, 3);
 
 		if (a == 0) {
 			v4[3] = 0;
@@ -137,7 +137,7 @@ void del_pezzo_surface_of_degree_two_domain::enumerate_points(int *coeff,
 				 cout << nb_roots << " points" << endl;
 			}
 			for (i = 0; i < nb_roots; i++) {
-				int_vec_copy(v3, v4, 3);
+				Orbiter->Int_vec.copy(v3, v4, 3);
 				v4[3] = roots[i];
 				rk_pt = P->rank_point(v4);
 
@@ -179,61 +179,6 @@ long int del_pezzo_surface_of_degree_two_domain::rank_point(int *v)
 	return rk;
 }
 
-void del_pezzo_surface_of_degree_two_domain::print_lines_tex(std::ostream &ost, long int *Lines, int nb_lines)
-{
-	int i;
-	latex_interface L;
-	long int *Rk;
-
-	Rk = NEW_lint(nb_lines);
-
-	ost << "The lines and their Pluecker coordinates are:\\\\" << endl;
-
-	for (i = 0; i < nb_lines; i++) {
-		//fp << "Line " << i << " is " << v[i] << ":\\\\" << endl;
-		Gr->unrank_lint(Lines[i], 0 /*verbose_level*/);
-		ost << "$$" << endl;
-		ost << "\\ell_{" << i << "}";
-
-#if 0
-		if (nb_lines == 27) {
-			ost << " = " << Schlaefli->Line_label_tex[i];
-		}
-#endif
-		ost << " = " << endl;
-		//print_integer_matrix_width(cout,
-		// Gr->M, k, n, n, F->log10_of_q + 1);
-		Gr->latex_matrix(ost, Gr->M);
-		//print_integer_matrix_tex(ost, Gr->M, 2, 4);
-		//ost << "\\right]_{" << Lines[i] << "}" << endl;
-		ost << "_{" << Lines[i] << "}" << endl;
-		ost << "=" << endl;
-		ost << "\\left[" << endl;
-		L.print_integer_matrix_tex(ost, Gr->M, 2, 4);
-		ost << "\\right]_{" << Lines[i] << "}" << endl;
-
-		int v6[6];
-
-		P->Pluecker_coordinates(Lines[i], v6, 0 /* verbose_level */);
-
-		Rk[i] = F->Qplus_rank(v6, 1, 5, 0 /* verbose_level*/);
-
-		ost << "={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
-				<< v6[2] << "," << v6[3] << "," << v6[4]
-				<< "," << v6[5] << " ";
-		ost << ")_{" << Rk[i] << "}";
-		ost << "$$" << endl;
-	}
-	ost << "Rank of lines: ";
-	lint_vec_print(ost, Lines, nb_lines);
-	ost << "\\\\" << endl;
-	ost << "Rank of points on Klein quadric: ";
-	lint_vec_print(ost, Rk, nb_lines);
-	ost << "\\\\" << endl;
-
-	FREE_lint(Rk);
-
-}
 
 
 

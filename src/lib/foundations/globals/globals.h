@@ -324,9 +324,10 @@ public:
 // #############################################################################
 
 
-extern orbiter_session *The_Orbiter_session; // global Orbiter session
+//! global Orbiter session
+extern orbiter_session *Orbiter;
 
-//! The orbiter session is reponsible for the command line interface and the program execution
+//! The orbiter session is responsible for the command line interface and the program execution
 
 
 class orbiter_session {
@@ -368,6 +369,7 @@ public:
 
 	orbiter_symbol_table *Orbiter_symbol_table;
 
+	int_vec Int_vec;
 
 
 	orbiter_session();

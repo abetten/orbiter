@@ -17,11 +17,11 @@ namespace foundations {
 
 magma_interface::magma_interface()
 {
-	if (The_Orbiter_session == NULL) {
+	if (Orbiter == NULL) {
 		cout << "magma_interface::magma_interface The_Orbiter_session == NULL" << endl;
 		exit(1);
 	}
-	Orbiter_session = The_Orbiter_session;
+	Orbiter_session = Orbiter;
 }
 
 magma_interface::~magma_interface()

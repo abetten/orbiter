@@ -167,9 +167,9 @@ int layered_graph_draw_options::read_arguments(
 		else if (stringcmp(argv[i], "-select_layers") == 0) {
 			f_select_layers = TRUE;
 			select_layers.assign(argv[++i]);
-			int_vec_scan(select_layers, layer_select, nb_layer_select);
+			Orbiter->Int_vec.scan(select_layers, layer_select, nb_layer_select);
 			cout << "-select_layers ";
-			int_vec_print(cout, layer_select, nb_layer_select);
+			Orbiter->Int_vec.print(cout, layer_select, nb_layer_select);
 			cout << endl;
 		}
 		else if (stringcmp(argv[i], "-paths_in_between") == 0) {
@@ -230,7 +230,7 @@ void layered_graph_draw_options::print()
 	}
 	if (nb_layer_select) {
 		cout << "layer_select=";
-		int_vec_print(cout, layer_select, nb_layer_select);
+		Orbiter->Int_vec.print(cout, layer_select, nb_layer_select);
 		cout << endl;
 	}
 	if (f_paths_in_between) {

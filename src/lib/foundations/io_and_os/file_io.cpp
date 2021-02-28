@@ -527,7 +527,7 @@ void file_io::read_solution_file(std::string &fname,
 					if (y[i] != 1) {
 						cout << "file_io::read_solution_file "
 								"Not a solution!" << endl;
-						int_vec_print_fully(cout, y, nb_rows);
+						Orbiter->Int_vec.print_fully(cout, y, nb_rows);
 						cout << endl;
 						exit(1);
 					}
@@ -2534,7 +2534,7 @@ void file_io::read_k_th_set_from_file(std::string &fname, int k,
 	}
 	if (f_vv) {
 		cout << "the set is:" << endl;
-		int_vec_print(cout, the_set, set_size);
+		Orbiter->Int_vec.print(cout, the_set, set_size);
 		cout << endl;
 	}
 }
@@ -2876,7 +2876,7 @@ void file_io::read_numbers_from_file(std::string &fname,
 	}
 	if (f_vv) {
 		cout << "the set is:" << endl;
-		int_vec_print(cout, the_set, set_size);
+		Orbiter->Int_vec.print(cout, the_set, set_size);
 		cout << endl;
 	}
 }
@@ -2943,7 +2943,7 @@ void file_io::read_ascii_set_of_sets_constant_size(
 			if (f_v) {
 				cout << "file_io::read_ascii_set_of_sets_constant_size "
 						"set " << nb_sets << " / " << N << " is ";
-				int_vec_print(cout, Sets + nb_sets * set_size, set_size);
+				Orbiter->Int_vec.print(cout, Sets + nb_sets * set_size, set_size);
 				cout << endl;
 			}
 			nb_sets++;
@@ -3431,7 +3431,7 @@ void file_io::do_csv_file_select_rows(std::string &fname,
 	int *Rows;
 	int nb_rows;
 
-	int_vec_scan(rows_text, Rows, nb_rows);
+	Orbiter->Int_vec.scan(rows_text, Rows, nb_rows);
 
 	spreadsheet S;
 
@@ -3479,7 +3479,7 @@ void file_io::do_csv_file_select_cols(std::string &fname,
 	int *Cols;
 	int nb_cols;
 
-	int_vec_scan(cols_text, Cols, nb_cols);
+	Orbiter->Int_vec.scan(cols_text, Cols, nb_cols);
 
 	spreadsheet S;
 
@@ -3553,9 +3553,9 @@ void file_io::do_csv_file_select_rows_and_cols(std::string &fname,
 	int *Cols;
 	int nb_cols;
 
-	int_vec_scan(rows_text, Rows, nb_rows);
+	Orbiter->Int_vec.scan(rows_text, Rows, nb_rows);
 
-	int_vec_scan(cols_text, Cols, nb_cols);
+	Orbiter->Int_vec.scan(cols_text, Cols, nb_cols);
 
 	spreadsheet S;
 

@@ -219,7 +219,7 @@ void projective_space_activity::canonical_form_of_code(
 	if (f_v) {
 		cout << "projective_space_activity::canonical_form_of_code before int_vec_scan" << endl;
 	}
-	int_vec_scan(data, genma, sz);
+	Orbiter->Int_vec.scan(data, genma, sz);
 	if (f_v) {
 		cout << "projective_space_activity::canonical_form_of_code after int_vec_scan, sz=" << sz << endl;
 	}
@@ -230,7 +230,7 @@ void projective_space_activity::canonical_form_of_code(
 	}
 	if (f_v) {
 		cout << "genma: " << endl;
-		int_vec_print(cout, genma, sz);
+		Orbiter->Int_vec.print(cout, genma, sz);
 		cout << endl;
 	}
 	v = NEW_int(m);
@@ -241,7 +241,7 @@ void projective_space_activity::canonical_form_of_code(
 		}
 		if (f_v) {
 			cout << "projective_space_activity::canonical_form_of_code before PA->P->rank_point" << endl;
-			int_vec_print(cout, v, m);
+			Orbiter->Int_vec.print(cout, v, m);
 			cout << endl;
 		}
 		if (PA->P == NULL) {
@@ -463,7 +463,7 @@ void projective_space_activity::do_cubic_surface_properties(
 		cout << "Rep=" << Rep[orbit_idx] << endl;
 		F0->PG_element_unrank_modified_lint(coeff20, 1, 20, Rep[orbit_idx]);
 		cout << "coeff20=";
-		int_vec_print(cout, coeff20, 20);
+		Orbiter->Int_vec.print(cout, coeff20, 20);
 		cout << endl;
 
 		surface_create_description *Descr;
@@ -510,7 +510,7 @@ void projective_space_activity::do_cubic_surface_properties(
 			cout << "$$" << endl;
 
 			cout << "$$" << endl;
-			int_vec_print(cout, SC->SO->eqn, 20);
+			Orbiter->Int_vec.print(cout, SC->SO->eqn, 20);
 			cout << endl;
 			cout << "$$" << endl;
 		}

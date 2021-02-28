@@ -739,7 +739,7 @@ void object_in_projective_space::encode_point_set(
 	Incma = NEW_int(L);
 	partition = NEW_int(N);
 
-	int_vec_zero(Incma, L);
+	Orbiter->Int_vec.zero(Incma, L);
 
 	for (i = 0; i < P->N_points; i++) {
 		for (j = 0; j < P->N_lines; j++) {
@@ -859,7 +859,7 @@ void object_in_projective_space::encode_line_set(
 	Incma = NEW_int(L);
 
 
-	int_vec_zero(Incma, L);
+	Orbiter->Int_vec.zero(Incma, L);
 
 	for (i = 0; i < P->N_points; i++) {
 		for (j = 0; j < P->N_lines; j++) {
@@ -929,7 +929,7 @@ void object_in_projective_space::encode_packing(
 	partition = NEW_int(N);
 
 
-	int_vec_zero(Incma, L);
+	Orbiter->Int_vec.zero(Incma, L);
 
 	for (i = 0; i < P->N_points; i++) {
 		for (j = 0; j < P->N_lines; j++) {

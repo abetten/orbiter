@@ -1012,7 +1012,7 @@ void mem_object_registry::sort_by_location_and_get_frequency(
 	perm_inv = new int[nb_types];
 	frequency = new int[nb_types];
 
-	int_vec_copy(type_len, frequency, nb_types);
+	Orbiter->Int_vec.copy(type_len, frequency, nb_types);
 
 	Sorting.int_vec_sorting_permutation(frequency, nb_types,
 			perm, perm_inv, FALSE /* f_increasingly */);

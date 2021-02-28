@@ -165,7 +165,7 @@ void cayley_graph_search::init_group2(int verbose_level)
 	f_has_order2 = NEW_int(go);
 	f_subgroup = NEW_int(go);
 
-	int_vec_zero(f_subgroup, go);
+	Orbiter->Int_vec.zero(f_subgroup, go);
 
 	if (level == 4) {
 		if (group == 2 || group == 3 || group == 5) {

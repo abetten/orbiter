@@ -23,20 +23,14 @@ del_pezzo_surface_of_degree_two_object::del_pezzo_surface_of_degree_two_object()
 	Subtrees = NULL;
 	Coefficient_vector = NULL;
 
-	Pts = NULL;
-	nb_pts = 0;
+	pal = NULL;
 
-	Lines = NULL;
-	nb_lines = 0;
 }
 
 del_pezzo_surface_of_degree_two_object::~del_pezzo_surface_of_degree_two_object()
 {
-	if (Pts) {
-		FREE_lint(Pts);
-	}
-	if (Lines) {
-		FREE_lint(Lines);
+	if (pal) {
+		FREE_OBJECT(pal);
 	}
 }
 
@@ -68,7 +62,6 @@ void del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines(int verb
 	}
 
 	vector<long int> Points;
-	vector<long int> The_Lines;
 
 	if (f_v) {
 		cout << "del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines before "
@@ -85,58 +78,11 @@ void del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines(int verb
 		cout << "del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines The surface "
 				"has " << Points.size() << " points" << endl;
 	}
-	int i;
-
-	nb_pts = Points.size();
-	Pts = NEW_lint(nb_pts);
-	for (i = 0; i < nb_pts; i++) {
-		Pts[i] = Points[i];
-	}
 
 
-	if (f_v) {
-		cout << "del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines before "
-				"Surf->P->find_lines_which_are_contained" << endl;
-	}
-	Dom->P->find_lines_which_are_contained(Points, The_Lines, 0 /*verbose_level - 1*/);
-	if (f_v) {
-		cout << "del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines after "
-				"Surf->P->find_lines_which_are_contained" << endl;
-	}
+	pal = NEW_OBJECT(points_and_lines);
 
-	if (f_v) {
-		cout << "del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines The surface "
-				"has " << The_Lines.size() << " lines" << endl;
-	}
-
-
-#if 0
-	if (F->q == 2) {
-		if (f_v) {
-			cout << "del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines before find_real_lines" << endl;
-		}
-
-		find_real_lines(The_Lines, verbose_level);
-
-		if (f_v) {
-			cout << "del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines after find_real_lines" << endl;
-		}
-	}
-#endif
-
-	nb_lines = The_Lines.size();
-	Lines = NEW_lint(nb_lines);
-	for (i = 0; i < nb_lines; i++) {
-		Lines[i] = The_Lines[i];
-	}
-
-	if (f_v) {
-		cout << "del_pezzo_surface_of_degree_two_object::enumerate_points_and_lines nb_pts=" << nb_pts << " nb_lines=" << nb_lines << endl;
-		cout << "Lines:";
-		lint_vec_print(cout, Lines, nb_lines);
-		cout << endl;
-	}
-
+	pal->init(Dom->P, Points, verbose_level);
 
 
 
@@ -228,7 +174,7 @@ void del_pezzo_surface_of_degree_two_object::report_properties(std::ostream &ost
 	if (f_v) {
 		cout << "del_pezzo_surface_of_degree_two_object::report_properties before print_lines" << endl;
 	}
-	print_lines(ost);
+	pal->print_all_lines(ost);
 
 	if (f_v) {
 		cout << "del_pezzo_surface_of_degree_two_object::report_properties before print_points" << endl;
@@ -278,7 +224,7 @@ void del_pezzo_surface_of_degree_two_object::print_equation(std::ostream &ost)
 
 	Dom->print_equation_with_line_breaks_tex(ost, Coefficient_vector);
 
-	int_vec_print(ost, Coefficient_vector, 15);
+	Orbiter->Int_vec.print(ost, Coefficient_vector, 15);
 	ost << "\\\\" << endl;
 
 	long int rk;
@@ -297,7 +243,7 @@ void del_pezzo_surface_of_degree_two_object::print_points(std::ostream &ost)
 
 	cout << "surface_object_properties::print_points before print_points_on_surface" << endl;
 	//print_points_on_surface(ost);
-	print_all_points_on_surface(ost);
+	pal->print_all_points(ost);
 
 #if 0
 	ost << "\\subsubsection*{Eckardt Points}" << endl;
@@ -327,47 +273,6 @@ void del_pezzo_surface_of_degree_two_object::print_points(std::ostream &ost)
 #endif
 #endif
 
-}
-
-void del_pezzo_surface_of_degree_two_object::print_all_points_on_surface(std::ostream &ost)
-{
-	//latex_interface L;
-	//int i;
-	//int v[4];
-
-	//ost << "\\clearpage" << endl;
-	ost << "The surface has " << nb_pts << " points:\\\\" << endl;
-
-	if (nb_pts < 1000) {
-		//ost << "$$" << endl;
-		//L.lint_vec_print_as_matrix(ost, SO->Pts, SO->nb_pts, 10, TRUE /* f_tex */);
-		//ost << "$$" << endl;
-		//ost << "\\clearpage" << endl;
-		ost << "The points on the surface are:\\\\" << endl;
-		ost << "\\begin{multicols}{3}" << endl;
-		ost << "\\noindent" << endl;
-		int i;
-		int v[4];
-
-		for (i = 0; i < nb_pts; i++) {
-			Dom->unrank_point(v, Pts[i]);
-			ost << i << " : $P_{" << Pts[i] << "}=";
-			int_vec_print_fully(ost, v, 4);
-			ost << "$\\\\" << endl;
-			}
-		ost << "\\end{multicols}" << endl;
-		lint_vec_print_fully(ost, Pts, nb_pts);
-		ost << "\\\\" << endl;
-	}
-	else {
-		ost << "Too many to print.\\\\" << endl;
-	}
-}
-
-void del_pezzo_surface_of_degree_two_object::print_lines(std::ostream &ost)
-{
-	ost << "\\subsection*{The " << nb_lines << " Lines}" << endl;
-	Dom->print_lines_tex(ost, Lines, nb_lines);
 }
 
 

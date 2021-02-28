@@ -557,9 +557,9 @@ void poset_classification::report_poset_of_orbits(std::ostream &ost)
 	string cmd;
 
 
-	if (The_Orbiter_session->f_orbiter_path) {
+	if (Orbiter->f_orbiter_path) {
 
-		cmd.assign(The_Orbiter_session->orbiter_path);
+		cmd.assign(Orbiter->orbiter_path);
 
 	}
 	else {

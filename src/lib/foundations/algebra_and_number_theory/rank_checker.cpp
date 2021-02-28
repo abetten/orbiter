@@ -94,7 +94,7 @@ int rank_checker::check_rank(int len, long int *S, int verbose_level)
 		// get the subset of columns:
 		if (f_vv) {
 			cout << "subset: ";
-			int_vec_print(cout, set, d1);
+			Orbiter->Int_vec.print(cout, set, d1);
 			cout << endl;
 			}
 		
@@ -122,7 +122,7 @@ int rank_checker::check_rank(int len, long int *S, int verbose_level)
 			f_OK = FALSE;
 			if (f_v) {
 				cout << "not OK; subset: ";
-				int_vec_print(cout, set, d1);
+				Orbiter->Int_vec.print(cout, set, d1);
 				cout << " leads to a rk " << rk << " submatrix" << endl;
 				}
 			break;
@@ -162,7 +162,7 @@ int rank_checker::check_rank_matrix_input(
 		// get the subset of columns:
 		if (f_vv) {
 			cout << "subset: ";
-			int_vec_print(cout, set, d1);
+			Orbiter->Int_vec.print(cout, set, d1);
 			cout << endl;
 			}
 		
@@ -187,7 +187,7 @@ int rank_checker::check_rank_matrix_input(
 			f_OK = FALSE;
 			if (f_v) {
 				cout << "not OK; subset: ";
-				int_vec_print(cout, set, d1);
+				Orbiter->Int_vec.print(cout, set, d1);
 				cout << " leads to a rk " << rk
 						<< " submatrix, but we want rank "
 						<< d1 + 1 << endl;
@@ -244,7 +244,7 @@ int rank_checker::check_rank_last_two_are_fixed(
 		// get the subset of columns:
 		if (f_vv) {
 			cout << "subset: ";
-			int_vec_print(cout, set, d1);
+			Orbiter->Int_vec.print(cout, set, d1);
 			cout << endl;
 			}
 		
@@ -273,7 +273,7 @@ int rank_checker::check_rank_last_two_are_fixed(
 			f_OK = FALSE;
 			if (f_v) {
 				cout << "not OK; subset: ";
-				int_vec_print(cout, set, d1);
+				Orbiter->Int_vec.print(cout, set, d1);
 				cout << " leads to a rk " << rk << " submatrix" << endl;
 				}
 			break;

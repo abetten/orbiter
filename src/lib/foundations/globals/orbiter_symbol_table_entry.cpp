@@ -178,7 +178,7 @@ void orbiter_symbol_table_entry::init_collection(std::string &label,
 void orbiter_symbol_table_entry::print()
 {
 	if (type == t_intvec) {
-		int_vec_print(cout, vec, vec_len);
+		Orbiter->Int_vec.print(cout, vec, vec_len);
 		cout << endl;
 	}
 	else if (type == t_object) {

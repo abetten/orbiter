@@ -719,7 +719,7 @@ void partitionstack::refine_arbitrary_set(
 		cout << "partitionstack::refine_arbitrary_set" << endl;
 		if (f_vv) {
 			cout << "set: ";
-			int_vec_print(cout, set, size);
+			Orbiter->Int_vec.print(cout, set, size);
 			cout << endl;
 		}
 	}
@@ -805,7 +805,7 @@ void partitionstack::split_multiple_cells(int *set,
 	}
 	if (f_v) {
 		cout << "cell_nb : ";
-		int_vec_print(cout, cell_nb, set_size);
+		Orbiter->Int_vec.print(cout, cell_nb, set_size);
 		cout << endl;
 	}
 	nb_done = 0;
@@ -827,7 +827,7 @@ void partitionstack::split_multiple_cells(int *set,
 		}
 		if (f_vv) {
 			cout << "splitting set of size " << set2_sz << " which is ";
-			int_vec_print(cout, set2, set2_sz);
+			Orbiter->Int_vec.print(cout, set2, set2_sz);
 			cout << " from class " << c << endl;
 		}
 		split_cell_front_or_back(set2, set2_sz, f_front, verbose_level - 2);
@@ -1702,9 +1702,9 @@ void partitionstack::print_column_refinement_info(
 		first = startCell[cell];
 		j = pointList[first];
 		cout << "cell " << cell << " of size " << cellSize[cell] << " : ";
-		int_vec_print(cout, data + j * depth, depth);
+		Orbiter->Int_vec.print(cout, data + j * depth, depth);
 		cout << " : ";
-		int_vec_print(cout, pointList + first, cellSize[cell]);
+		Orbiter->Int_vec.print(cout, pointList + first, cellSize[cell]);
 		cout << endl;
 		}
 	if (ht0 == ht) {
@@ -1719,9 +1719,9 @@ void partitionstack::print_column_refinement_info(
 			j = pointList[first];
 			cout << "cell " << cell << " of size " << cellSize[cell] 
 				<< " ancestor cell is " << ancestor << " : ";
-			int_vec_print(cout, data + j * depth, depth);
+			Orbiter->Int_vec.print(cout, data + j * depth, depth);
 			cout << " : ";
-			int_vec_print(cout, pointList + first, cellSize[cell]);
+			Orbiter->Int_vec.print(cout, pointList + first, cellSize[cell]);
 			cout << endl;
 			}
 		}
@@ -1739,9 +1739,9 @@ void partitionstack::print_row_refinement_info(
 		first = startCell[cell];
 		j = pointList[first];
 		cout << "cell " << cell << " of size " << cellSize[cell] << " : ";
-		int_vec_print(cout, data + j * depth, depth);
+		Orbiter->Int_vec.print(cout, data + j * depth, depth);
 		cout << " : ";
-		int_vec_print(cout, pointList + first, cellSize[cell]);
+		Orbiter->Int_vec.print(cout, pointList + first, cellSize[cell]);
 		cout << endl;
 		}
 	if (ht0 == ht) {
@@ -1756,9 +1756,9 @@ void partitionstack::print_row_refinement_info(
 			j = pointList[first];
 			cout << "cell " << cell << " of size " << cellSize[cell] 
 				<< " ancestor cell is " << ancestor << " : ";
-			int_vec_print(cout, data + j * depth, depth);
+			Orbiter->Int_vec.print(cout, data + j * depth, depth);
 			cout << " : ";
-			int_vec_print(cout, pointList + first, cellSize[cell]);
+			Orbiter->Int_vec.print(cout, pointList + first, cellSize[cell]);
 			cout << endl;
 			}
 		}
@@ -1929,7 +1929,7 @@ void partitionstack::split_by_orbit_partition(int nb_orbits,
 			}
 		if (f_vv) {
 			cout << "orbit: ";
-			int_vec_print(cout, Set, l);
+			Orbiter->Int_vec.print(cout, Set, l);
 			cout << endl;
 			}
 		cell_idx = 0;

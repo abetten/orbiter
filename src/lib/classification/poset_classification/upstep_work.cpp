@@ -138,7 +138,7 @@ void upstep_work::init(poset_classification *gen,
 		}
 	if (f_v) {
 		cout << "upstep_work::init path: ";
-		int_vec_print(cout, path, size + 1);
+		Orbiter->Int_vec.print(cout, path, size + 1);
 		cout << endl;
 		}
 	if (f_v) {

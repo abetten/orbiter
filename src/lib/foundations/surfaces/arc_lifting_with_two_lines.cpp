@@ -255,7 +255,7 @@ void arc_lifting_with_two_lines::create_surface(
 	if (f_v) {
 		cout << "arc_lifting_with_two_lines::create_surface "
 				"coeff:" << endl;
-		int_vec_print(cout, coeff, 20);
+		Orbiter->Int_vec.print(cout, coeff, 20);
 		cout << endl;
 
 		Surf->Poly3_4->print_equation(cout, coeff);

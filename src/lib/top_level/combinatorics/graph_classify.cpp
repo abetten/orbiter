@@ -345,7 +345,7 @@ int graph_classify::check_conditions_tournament(
 		int u, v;
 
 		score = NEW_int(Descr->n);
-		int_vec_zero(score, Descr->n);
+		Orbiter->Int_vec.zero(score, Descr->n);
 		for (i = 0; i < len && f_OK; i++) {
 			a = S_sorted[i];
 			swap = a % 2;
@@ -419,7 +419,7 @@ int graph_classify::compute_degree_sequence(long int *S, int len)
 				"tournament is TRUE" << endl;
 		exit(1);
 		}
-	int_vec_zero(degree_sequence, Descr->n);
+	Orbiter->Int_vec.zero(degree_sequence, Descr->n);
 	for (h = 0; h < len; h++) {
 		a = S[h];
 		Combi.k2ij_lint(a, i, j, Descr->n);
@@ -536,7 +536,7 @@ void graph_classify::get_adjacency(long int *S, int len, int verbose_level)
 	long int h, i, j, a;
 	combinatorics_domain Combi;
 	
-	int_vec_zero(adjacency, Descr->n * Descr->n);
+	Orbiter->Int_vec.zero(adjacency, Descr->n * Descr->n);
 
 	if (Descr->f_tournament) {
 		int swap, a2;
@@ -696,7 +696,7 @@ void graph_classify::draw_graphs(int level,
 
 		Strong_gens->group_order(go);
 		
-		int_vec_zero(v, n2);
+		Orbiter->Int_vec.zero(v, n2);
 		for (i = 0; i < level; i++) {
 			v[set[i]] = 1;
 			}

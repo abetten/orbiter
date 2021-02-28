@@ -289,14 +289,14 @@ void poset_orbit_node::install_fusion_node(
 			cout << " is " << endl;
 			for (i = 0; i < lvl + 1; i++) {
 				gen->unrank_point(v, gen->get_set3()[i]);
-				int_vec_print(cout, v, gen->get_VS()->dimension);
+				Orbiter->Int_vec.print(cout, v, gen->get_VS()->dimension);
 				cout << endl;
 				}
 			lint_set_print(cout, gen->get_set0(), lvl + 1);
 			cout << " is " << endl;
 			for (i = 0; i < lvl + 1; i++) {
 				gen->unrank_point(v, gen->get_set0()[i]);
-				int_vec_print(cout, v, gen->get_VS()->dimension);
+				Orbiter->Int_vec.print(cout, v, gen->get_VS()->dimension);
 				cout << endl;
 				}
 

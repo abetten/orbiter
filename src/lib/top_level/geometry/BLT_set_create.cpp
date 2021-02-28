@@ -461,7 +461,7 @@ void BLT_set_create::print_set_of_points(std::ostream &ost, long int *Pts, int n
 				OA->O->unrank_point(v, 1, Pts[I * 40 + h], 0 /* verbose_level */);
 
 				ost << I * 40 + h << " & " << Pts[I * 40 + h] << " & ";
-				int_vec_print(ost, v, n + 1);
+				Orbiter->Int_vec.print(ost, v, n + 1);
 				ost << "\\\\" << endl;
 			}
 		}
@@ -499,7 +499,7 @@ void BLT_set_create::print_set_of_points_with_ABC(std::ostream &ost, long int *P
 				c = ABC[3 * (I * 40 + h) + 2];
 
 				ost << I * 40 + h << " & " << Pts[I * 40 + h] << " & ";
-				int_vec_print(ost, v, n + 1);
+				Orbiter->Int_vec.print(ost, v, n + 1);
 				ost << " & ";
 				ost << "(";
 				ost << a;

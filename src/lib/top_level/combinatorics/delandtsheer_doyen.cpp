@@ -190,13 +190,13 @@ void delandtsheer_doyen::init(delandtsheer_doyen_description *Descr,
 
 	if (Descr->f_R) {
 		row_type_cur = NEW_int(Descr->nb_row_types + 1);
-		int_vec_zero(row_type_cur, Descr->nb_row_types + 1);
+		Orbiter->Int_vec.zero(row_type_cur, Descr->nb_row_types + 1);
 		row_type_this_or_bigger = NEW_int(Descr->nb_row_types + 1);
 	}
 
 	if (Descr->f_C) {
 		col_type_cur = NEW_int(Descr->nb_col_types + 1);
-		int_vec_zero(col_type_cur, Descr->nb_col_types + 1);
+		Orbiter->Int_vec.zero(col_type_cur, Descr->nb_col_types + 1);
 		col_type_this_or_bigger = NEW_int(Descr->nb_col_types + 1);
 	}
 
@@ -233,8 +233,8 @@ void delandtsheer_doyen::init(delandtsheer_doyen_description *Descr,
 		cout << "DELANDTSHEER_DOYEN_Y=" << Descr->DELANDTSHEER_DOYEN_Y << endl;
 	}
 
-	int_vec_zero(row_sum, Xsize);
-	int_vec_zero(col_sum, Ysize);
+	Orbiter->Int_vec.zero(row_sum, Xsize);
+	Orbiter->Int_vec.zero(col_sum, Ysize);
 
 
 	M1 = NEW_OBJECT(matrix_group);
@@ -598,7 +598,7 @@ void delandtsheer_doyen::search_singletons(int verbose_level)
 
 				lint_vec_copy(line0, line, level);
 
-				int_vec_apply_lint(subset, live_points, line + level, target_depth);
+				Orbiter->Int_vec.apply_lint(subset, live_points, line + level, target_depth);
 
 				if (check_orbit_covering(line, Descr->K, 0 /* verbose_level */)) {
 					cout << "found a solution, subset " << l
@@ -821,7 +821,7 @@ void delandtsheer_doyen::compute_orbits_on_pairs(strong_generators *Strong_gens,
 	orbit_covered_max = NEW_int(nb_orbits);
 	orbits_covered = NEW_int(Descr->K * Descr->K);
 
-	int_vec_zero(orbit_covered, nb_orbits);
+	Orbiter->Int_vec.zero(orbit_covered, nb_orbits);
 
 	for (i = 0; i < nb_orbits; i++) {
 		orbit_length[i] = Pairs->orbit_length_as_int(
@@ -862,7 +862,7 @@ strong_generators *delandtsheer_doyen::scan_subgroup_generators(int verbose_leve
 	int nb_gens;
 	vector_ge *nice_gens;
 
-	int_vec_scan(Descr->subgroup_gens.c_str(), data, sz);
+	Orbiter->Int_vec.scan(Descr->subgroup_gens.c_str(), data, sz);
 	nb_gens = sz / A->make_element_size;
 	if (f_v) {
 		cout << "before Strong_gens->init_from_data_with_target_go_ascii" << endl;
@@ -1062,8 +1062,8 @@ void delandtsheer_doyen::create_graph(long int *line0, int len, int verbose_leve
 		cout << "delandtsheer_doyen::create_graph" << endl;
 	}
 
-	int_vec_zero(row_sum, Xsize);
-	int_vec_zero(col_sum, Ysize);
+	Orbiter->Int_vec.zero(row_sum, Xsize);
+	Orbiter->Int_vec.zero(col_sum, Ysize);
 
 	for (i = 0; i < len; i++) {
 		a = line0[i];
@@ -1179,7 +1179,7 @@ void delandtsheer_doyen::compute_pair_orbit_table(int verbose_level)
 		cout << "delandtsheer_doyen::compute_pair_orbit_table" << endl;
 	}
 	pair_orbit = NEW_int(V * V);
-	int_vec_zero(pair_orbit, V * V);
+	Orbiter->Int_vec.zero(pair_orbit, V * V);
 	for (i = 0; i < V; i++) {
 		for (j = i + 1; j < V; j++) {
 			k = find_pair_orbit_by_tracing(i, j, 0 /*verbose_level - 2*/);
@@ -1409,7 +1409,7 @@ int delandtsheer_doyen::check_orbit_covering(long int *line,
 	//int f_vv = (verbose_level >= 2);
 	int i, pi, j, pj, o, f_OK = TRUE;
 
-	int_vec_zero(orbit_covered, nb_orbits);
+	Orbiter->Int_vec.zero(orbit_covered, nb_orbits);
 
 	for (i = 0; i < len; i++) {
 		pi = line[i];
@@ -1457,7 +1457,7 @@ int delandtsheer_doyen::check_row_sums(long int *line,
 	int f_DD_problem = FALSE;
 
 	inner_pairs_in_rows = 0;
-	int_vec_zero(row_sum, Xsize);
+	Orbiter->Int_vec.zero(row_sum, Xsize);
 	if (Descr->f_R) {
 		for (i = 1; i <= Descr->nb_row_types; i++) {
 			row_type_cur[i] = 0;
@@ -1532,7 +1532,7 @@ int delandtsheer_doyen::check_col_sums(long int *line,
 	int f_DD_problem = FALSE;
 
 	inner_pairs_in_cols = 0;
-	int_vec_zero(col_sum, Ysize);
+	Orbiter->Int_vec.zero(col_sum, Ysize);
 	if (Descr->f_C) {
 		for (i = 1; i <= Descr->nb_col_types; i++) {
 			col_type_cur[i] = 0;
@@ -1697,8 +1697,8 @@ void delandtsheer_doyen::get_mask_core_and_singletons(
 	int m = Xsize;
 	int n = Ysize;
 
-	int_vec_zero(f_row_used, m);
-	int_vec_zero(f_col_used, n);
+	Orbiter->Int_vec.zero(f_row_used, m);
+	Orbiter->Int_vec.zero(f_col_used, n);
 	for (h = 0; h < len; h++) {
 		a = line[h];
 		i = a / Ysize;

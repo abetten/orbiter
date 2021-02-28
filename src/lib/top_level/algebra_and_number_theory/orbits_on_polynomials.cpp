@@ -536,7 +536,7 @@ void orbits_on_polynomials::report_detailed_list(std::ostream &ost,
 			ost << "number of points = " << nb_pts << "\\\\" << endl;
 
 			ost << "$";
-			int_vec_print(ost, coeff, HPD->get_nb_monomials());
+			Orbiter->Int_vec.print(ost, coeff, HPD->get_nb_monomials());
 			ost << " = ";
 			HPD->print_equation(ost, coeff);
 			ost << "$\\\\" << endl;
@@ -557,7 +557,7 @@ void orbits_on_polynomials::report_detailed_list(std::ostream &ost,
 			ost << "The line type is: ";
 
 			stringstream sstr;
-			int_vec_print_classified_str(sstr,
+			Orbiter->Int_vec.print_classified_str(sstr,
 					line_type, HPD->get_P()->N_lines, TRUE /* f_backwards*/);
 			string s = sstr.str();
 			ost << "$" << s << "$\\\\" << endl;

@@ -738,7 +738,7 @@ int graph_theory_domain::is_association_scheme(int *color_graph, int n,
 
 	if (f_vv) {
 		cout << "colors (the 0-th color is the diagonal color): ";
-		int_vec_print(cout, colors, nb_colors);
+		Orbiter->Int_vec.print(cout, colors, nb_colors);
 		cout << endl;
 	}
 
@@ -747,7 +747,7 @@ int graph_theory_domain::is_association_scheme(int *color_graph, int n,
 	int pijk, pijk1, u, v, w, u0 = 0, v0 = 0;
 
 	Pijk = NEW_int(C * C * C);
-	int_vec_zero(Pijk, C * C * C);
+	Orbiter->Int_vec.zero(Pijk, C * C * C);
 	for (k = 0; k < C; k++) {
 		for (i = 0; i < C; i++) {
 			for (j = 0; j < C; j++) {
@@ -867,14 +867,14 @@ void graph_theory_domain::compute_decomposition_of_graph_wrt_partition(
 		cout << "compute_decomposition_of_graph_wrt_partition" << endl;
 		cout << "The partition is:" << endl;
 		cout << "first = ";
-		int_vec_print(cout, first, nb_parts);
+		Orbiter->Int_vec.print(cout, first, nb_parts);
 		cout << endl;
 		cout << "len = ";
-		int_vec_print(cout, len, nb_parts);
+		Orbiter->Int_vec.print(cout, len, nb_parts);
 		cout << endl;
 	}
 	R = NEW_int(nb_parts * nb_parts);
-	int_vec_zero(R, nb_parts * nb_parts);
+	Orbiter->Int_vec.zero(R, nb_parts * nb_parts);
 	for (I = 0; I < nb_parts; I++) {
 		f1 = first[I];
 		l1 = len[I];

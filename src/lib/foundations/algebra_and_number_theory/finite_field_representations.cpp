@@ -21,12 +21,8 @@ void finite_field::representing_matrix8_R(int *A,
 {
 	//int i;
 	
-	int_vec_zero(A, 64);
-#if 0
-	for (i = 0; i < 8 * 8; i++) {
-		A[i] = 0;
-		}
-#endif
+	Orbiter->Int_vec.zero(A, 64);
+
 	A[0 * 8 + 0] = m_term(q, d, d, d);
 	A[0 * 8 + 1] = m_term(q, c, c, c);
 	A[0 * 8 + 2] = m_term(q, d, d, c);
@@ -113,12 +109,8 @@ void finite_field::representing_matrix9_R(int *A,
 	int q2 = q + 2;
 	
 	
-	int_vec_zero(A, 81);
-#if 0
-	for (i = 0; i < 9 * 9; i++) {
-		A[i] = 0;
-		}
-#endif
+	Orbiter->Int_vec.zero(A, 81);
+
 	A[0 * 9 + 0] = term1(d,tq2);
 	A[0 * 9 + 1] = term2(c,d,q1,q1);
 	A[0 * 9 + 2] = term1(c,tq2);
@@ -548,11 +540,7 @@ void finite_field::representing_matrix8_V(int *A, int beta)
 	delta1 = inverse(T3(add(beta_21, negate(beta_12))));
 	delta2 = inverse(T3(add(beta_123, negate(beta_132))));
 
-	int_vec_zero(A, 64);
-#if 0
-	for (i = 0; i < 8 * 8; i++)
-		A[i] = 0;
-#endif
+	Orbiter->Int_vec.zero(A, 64);
 	
 	A[0 * 8 + 0] = 1;
 	A[1 * 8 + 1] = 1;
@@ -615,12 +603,8 @@ void finite_field::representing_matrix9b(int *A, int beta)
 	//cout << "nTgamma=" << nTgamma << endl;
 	//cout << "Tbetagamma=" << Tbetagamma << endl;
 	
-	int_vec_zero(A, 81);
-#if 0
-	for (i = 0; i < 81; i++)
-		A[i] = 0;
-#endif
-	
+	Orbiter->Int_vec.zero(A, 81);
+
 	// changed to n e w base:
 	// attention, now transposed!
 	A[0 * 9 + 0] = 1;
@@ -780,11 +764,7 @@ void finite_field::representing_matrix8b(int *A, int beta)
 	cout << "delta=" << delta << endl;
 	cout << "omega=" << omega << endl;
 	
-	int_vec_zero(A, 64);
-#if 0
-	for (i = 0; i < 64; i++)
-		A[i] = 0;
-#endif
+	Orbiter->Int_vec.zero(A, 64);
 	
 	A[0 * 8 + 0] = 1;
 	A[7 * 8 + 7] = 1;

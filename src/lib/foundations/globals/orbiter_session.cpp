@@ -19,16 +19,16 @@ namespace orbiter {
 namespace foundations {
 
 
-orbiter_session *The_Orbiter_session = NULL;
+orbiter_session *Orbiter = NULL;
 
 
 orbiter_session::orbiter_session()
 {
-	if (The_Orbiter_session) {
+	if (Orbiter) {
 		cout << "orbiter_session::orbiter_session The_Orbiter_session is non NULL" << endl;
 		exit(1);
 	}
-	The_Orbiter_session = this;
+	Orbiter = this;
 
 	verbose_level = 0;
 
@@ -69,7 +69,7 @@ orbiter_session::orbiter_session()
 
 orbiter_session::~orbiter_session()
 {
-	The_Orbiter_session = NULL;
+	Orbiter = NULL;
 	if (Orbiter_symbol_table) {
 		FREE_OBJECT(Orbiter_symbol_table);
 	}

@@ -578,7 +578,7 @@ syntax_tree_node *expression_parser::Term (int verbose_level, const bool get)
 	}
 
 	monomial = NEW_int(Tree->managed_variables.size());
-	int_vec_zero(monomial, Tree->managed_variables.size());
+	Orbiter->Int_vec.zero(monomial, Tree->managed_variables.size());
 
 	N = new syntax_tree_node;
 	N->Tree = Tree;

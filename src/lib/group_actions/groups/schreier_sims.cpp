@@ -383,7 +383,7 @@ void schreier_sims::get_generator_external_old_G(
 	if (f_v) {
 		cout << "schreier_sims::get_generator_external_old_G "
 				"random element chosen, path = ";
-		int_vec_print(cout, old_G->path, old_G->A->base_len());
+		Orbiter->Int_vec.print(cout, old_G->path, old_G->A->base_len());
 		cout << endl;
 		}
 }

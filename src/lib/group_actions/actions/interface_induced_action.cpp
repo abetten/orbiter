@@ -564,7 +564,7 @@ static void induced_action_element_image_of_low_level(action &A,
 	if (f_v) {
 		cout << "induced_action_element_image_of_low_level "
 				"computing image of ";
-		int_vec_print(cout, input, A.low_level_point_size);
+		Orbiter->Int_vec.print(cout, input, A.low_level_point_size);
 		cout << " in action " << A.label << endl;
 		}
 	if (A.type_G == action_by_right_multiplication_t) {
@@ -898,9 +898,9 @@ static void induced_action_element_image_of_low_level(action &A,
 	if (f_v) {
 		cout << "induced_action_element_image_of_low_level  done" << endl;
 		cout << "image of ";
-		int_vec_print(cout, input, A.low_level_point_size);
+		Orbiter->Int_vec.print(cout, input, A.low_level_point_size);
 		cout << " in action " << A.label << " is ";
-		int_vec_print(cout, output, A.low_level_point_size);
+		Orbiter->Int_vec.print(cout, output, A.low_level_point_size);
 		cout << endl;
 		}
 }

@@ -912,7 +912,7 @@ void poset_classification::compute_flag_orbits(int size,
 				if (FALSE) {
 					int *live_points = root[prev].live_points();
 					cout << "The live points are : ";
-					int_vec_print(cout, live_points, nb);
+					Orbiter->Int_vec.print(cout, live_points, nb);
 				}
 				cout << endl;
 				}

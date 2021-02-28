@@ -1469,7 +1469,7 @@ void projective_space_object_classifier::latex_report(
 		col_part_len[0] = width;
 
 		Table = NEW_int(CB->nb_types * width);
-		int_vec_zero(Table, CB->nb_types * width);
+		Orbiter->Int_vec.zero(Table, CB->nb_types * width);
 
 		row_labels = NEW_int(CB->nb_types);
 		col_labels = NEW_int(width);

@@ -60,6 +60,7 @@ MODULES= \
 		foundations/data_structures/data_structures_global.o \
 		foundations/data_structures/fancy_set.o \
 		foundations/data_structures/int_matrix.o \
+		foundations/data_structures/int_vec.o \
 		foundations/data_structures/int_vector.o \
 		foundations/data_structures/page_storage.o \
 		foundations/data_structures/partitionstack.o \
@@ -99,6 +100,7 @@ MODULES= \
 		foundations/geometry/knowledge_base.o \
 		foundations/geometry/object_in_projective_space.o \
 		foundations/geometry/point_line.o \
+		foundations/geometry/points_and_lines.o \
 		foundations/geometry/projective_space.o \
 		foundations/geometry/projective_space2.o \
 		foundations/geometry/spread_tables.o \
