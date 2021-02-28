@@ -1247,7 +1247,7 @@ void action::init_direct_product_group(
 
 
 	lint_vec_copy(P->the_base, get_base(), base_len());
-	int_vec_copy(P->the_transversal_length,
+	Orbiter->Int_vec.copy(P->the_transversal_length,
 			get_transversal_length(), base_len());
 
 	int *gens_data;
@@ -1491,7 +1491,7 @@ void action::init_wreath_product_group(int nb_factors, int n,
 	}
 
 	lint_vec_copy(W->the_base, get_base(), base_len());
-	int_vec_copy(W->the_transversal_length,
+	Orbiter->Int_vec.copy(W->the_transversal_length,
 			get_transversal_length(), base_len());
 
 	int *gens_data;
@@ -1653,7 +1653,7 @@ void action::init_permutation_representation(action *A_original,
 			}
 
 		lint_vec_copy(W->the_base, get_base(), base_len());
-		int_vec_copy(W->the_transversal_length,
+		Orbiter->Int_vec.copy(W->the_transversal_length,
 				get_transversal_length(), base_len());
 
 		sprintf(str1, "_induced%d_prev", degree);
@@ -2121,7 +2121,7 @@ void action::init_group_from_strong_generators(
 	if (f_vv) {
 		cout << "action::init_group_from_strong_generators "
 				"calling allocate_base_data, initial base:";
-		int_vec_print(cout, given_base, given_base_length);
+		Orbiter->Int_vec.print(cout, given_base, given_base_length);
 		cout << " of length " << given_base_length << endl;
 	}
 	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);

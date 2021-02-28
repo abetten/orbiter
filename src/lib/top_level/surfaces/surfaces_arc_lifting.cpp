@@ -608,7 +608,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 			if (f_vv) {
 				cout << "surfaces_arc_lifting::downstep_one_arc The partition is: ";
 				for (h = 0; h < 2; h++) {
-					int_vec_print(cout, part + h * 2, 2);
+					Orbiter->Int_vec.print(cout, part + h * 2, 2);
 				}
 				cout << endl;
 			}
@@ -704,13 +704,13 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 				cout << "surfaces_arc_lifting::downstep_one_arc "
 						"after Surf->do_arc_lifting_with_two_lines" << endl;
 				cout << "coeff20: ";
-				int_vec_print(cout, coeff20, 20);
+				Orbiter->Int_vec.print(cout, coeff20, 20);
 				cout << endl;
 				cout << "lines27: ";
 				lint_vec_print(cout, lines27, 27);
 				cout << endl;
 			}
-			int_vec_copy_to_lint(coeff20, Flag + 13, 20);
+			Orbiter->Int_vec.copy_to_lint(coeff20, Flag + 13, 20);
 			lint_vec_copy(lines27, Flag + 33, 27);
 
 
@@ -1213,7 +1213,7 @@ void surfaces_arc_lifting::report_flag_orbits_in_detail(ostream &ost, int verbos
 				<< ", and corresponds to the partition $";
 		Combi.set_partition_4_into_2_unrank(orbit_rep, part);
 		for (h = 0; h < 2; h++) {
-			int_vec_print(ost, part + h * 2, 2);
+			Orbiter->Int_vec.print(ost, part + h * 2, 2);
 		}
 		ost << "$\\\\" << endl;
 

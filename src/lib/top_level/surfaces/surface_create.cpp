@@ -298,7 +298,7 @@ void surface_create::create_surface_from_description(int verbose_level)
 
 	if (f_v) {
 		cout << "surface_create::init2 coeffs = ";
-		int_vec_print(cout, SO->eqn, 20);
+		Orbiter->Int_vec.print(cout, SO->eqn, 20);
 		cout << endl;
 	}
 
@@ -707,13 +707,13 @@ void surface_create::create_surface_by_coefficients(std::string &coefficients_te
 	int nb_coeffs, nb_terms;
 	int i, a, b;
 
-	int_vec_scan(coefficients_text, surface_coeffs, nb_coeffs);
+	Orbiter->Int_vec.scan(coefficients_text, surface_coeffs, nb_coeffs);
 	if (ODD(nb_coeffs)) {
 		cout << "surface_create::create_surface_by_coefficients number of surface "
 				"coefficients must be even" << endl;
 		exit(1);
 	}
-	int_vec_zero(coeffs20, 20);
+	Orbiter->Int_vec.zero(coeffs20, 20);
 	nb_terms = nb_coeffs >> 1;
 	for (i = 0; i < nb_terms; i++) {
 		a = surface_coeffs[2 * i + 0];
@@ -954,7 +954,7 @@ void surface_create::create_surface_by_coefficient_vector(int *coeffs20,
 				cout << "surface_create::create_surface_by_coefficient_vector selecting "
 						"double six " << i << " / " << nb_select_double_six << endl;
 			}
-			int_vec_scan(select_double_six_string[i], select_double_six, sz);
+			Orbiter->Int_vec.scan(select_double_six_string[i], select_double_six, sz);
 			if (sz != 12) {
 				cout << "surface_create::create_surface_by_coefficient_vector "
 						"f_select_double_six double six must consist of 12 numbers" << endl;
@@ -963,7 +963,7 @@ void surface_create::create_surface_by_coefficient_vector(int *coeffs20,
 
 			if (f_v) {
 				cout << "surface_create::create_surface_by_coefficient_vector select_double_six = ";
-				int_vec_print(cout, select_double_six, 12);
+				Orbiter->Int_vec.print(cout, select_double_six, 12);
 				cout << endl;
 			}
 
@@ -1117,7 +1117,7 @@ void surface_create::create_surface_from_catalogue(int iso,
 			if (f_v) {
 				cout << "surface_create::create_surface_from_catalogue selecting double six " << i << " / " << nb_select_double_six << endl;
 			}
-			int_vec_scan(select_double_six_string[i], select_double_six, sz);
+			Orbiter->Int_vec.scan(select_double_six_string[i], select_double_six, sz);
 			if (sz != 12) {
 				cout << "surface_create::create_surface_from_catalogue f_select_double_six double six must consist of 12 numbers" << endl;
 				exit(1);
@@ -1125,7 +1125,7 @@ void surface_create::create_surface_from_catalogue(int iso,
 
 			if (f_v) {
 				cout << "surface_create::create_surface_from_catalogue select_double_six = ";
-				int_vec_print(cout, select_double_six, 12);
+				Orbiter->Int_vec.print(cout, select_double_six, 12);
 				cout << endl;
 			}
 
@@ -1271,7 +1271,7 @@ void surface_create::create_surface_by_arc_lifting(
 
 	AL->Web->print_Eckardt_point_data(cout, verbose_level);
 
-	int_vec_copy(AL->Trihedral_pair->The_surface_equations
+	Orbiter->Int_vec.copy(AL->Trihedral_pair->The_surface_equations
 			+ AL->Trihedral_pair->lambda_rk * 20, coeffs20, 20);
 
 	lint_vec_copy(AL->Web->Lines27, Lines27, 27);
@@ -1396,7 +1396,7 @@ void surface_create::create_surface_by_arc_lifting_with_two_lines(
 				"AL->create_surface" << endl;
 	}
 
-	int_vec_copy(AL->coeff, coeffs20, 20);
+	Orbiter->Int_vec.copy(AL->coeff, coeffs20, 20);
 	lint_vec_copy(AL->lines27, Lines27, 27);
 
 	SO = NEW_OBJECT(surface_object);
@@ -1667,7 +1667,7 @@ void surface_create::create_surface_by_equation(
 		cout << endl;
 	}
 	cout << "coefficient vector: ";
-	int_vec_print(cout, coeffs20, nb_monomials);
+	Orbiter->Int_vec.print(cout, coeffs20, nb_monomials);
 	cout << endl;
 
 
@@ -1789,7 +1789,7 @@ void surface_create::apply_transformations(
 						<< transform_coeffs.size() << ":" << endl;
 			}
 
-			int_vec_scan(transform_coeffs[h], transformation_coeffs, sz);
+			Orbiter->Int_vec.scan(transform_coeffs[h], transformation_coeffs, sz);
 
 			if (sz != desired_sz) {
 				cout << "surface_create::apply_transformations "
@@ -1846,7 +1846,7 @@ void surface_create::apply_transformations(
 				cout << "$$" << endl;
 			}
 
-			int_vec_copy(coeffs_out, SO->eqn, 20);
+			Orbiter->Int_vec.copy(coeffs_out, SO->eqn, 20);
 
 
 

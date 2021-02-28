@@ -119,7 +119,7 @@ void schreier::print_orbit_length_distribution(std::ostream &ost)
 {
 	int *val, *mult, len;
 
-	int_vec_distribution(orbit_len, nb_orbits, val, mult, len);
+	Orbiter->Int_vec.distribution(orbit_len, nb_orbits, val, mult, len);
 	int_distribution_print(ost, val, mult, len);
 	ost << endl;
 
@@ -492,7 +492,7 @@ void schreier::print_and_list_orbits_sorted_by_length(
 	Len = NEW_int(nb_orbits);
 	Perm = NEW_int(nb_orbits);
 	Perm_inv = NEW_int(nb_orbits);
-	int_vec_copy(orbit_len, Len, nb_orbits);
+	Orbiter->Int_vec.copy(orbit_len, Len, nb_orbits);
 	Sorting.int_vec_sorting_permutation(Len, nb_orbits,
 			Perm, Perm_inv, TRUE /*f_increasingly*/);
 
@@ -506,7 +506,7 @@ void schreier::print_and_list_orbits_sorted_by_length(
 		ost << endl;
 	}
 	ost << "Orbit lengths: ";
-	int_vec_print(ost, orbit_len, nb_orbits);
+	Orbiter->Int_vec.print(ost, orbit_len, nb_orbits);
 	if (f_tex) {
 		ost << "\\\\" << endl;
 	}
@@ -550,7 +550,7 @@ void schreier::print_and_list_orbits_and_stabilizer_sorted_by_length(
 	Len = NEW_int(nb_orbits);
 	Perm = NEW_int(nb_orbits);
 	Perm_inv = NEW_int(nb_orbits);
-	int_vec_copy(orbit_len, Len, nb_orbits);
+	Orbiter->Int_vec.copy(orbit_len, Len, nb_orbits);
 	Sorting.int_vec_sorting_permutation(Len, nb_orbits,
 			Perm, Perm_inv, TRUE /*f_increasingly*/);
 
@@ -563,7 +563,7 @@ void schreier::print_and_list_orbits_and_stabilizer_sorted_by_length(
 		ost << endl;
 	}
 	ost << "Orbit lengths: ";
-	int_vec_print(ost, orbit_len, nb_orbits);
+	Orbiter->Int_vec.print(ost, orbit_len, nb_orbits);
 	if (f_tex) {
 		ost << "\\\\" << endl;
 	}
@@ -610,7 +610,7 @@ void schreier::print_fancy(
 	Len = NEW_int(nb_orbits);
 	Perm = NEW_int(nb_orbits);
 	Perm_inv = NEW_int(nb_orbits);
-	int_vec_copy(orbit_len, Len, nb_orbits);
+	Orbiter->Int_vec.copy(orbit_len, Len, nb_orbits);
 	Sorting.int_vec_sorting_permutation(Len, nb_orbits,
 			Perm, Perm_inv, TRUE /*f_increasingly*/);
 
@@ -623,7 +623,7 @@ void schreier::print_fancy(
 		ost << endl;
 	}
 	ost << "Orbit lengths: ";
-	int_vec_print(ost, orbit_len, nb_orbits);
+	Orbiter->Int_vec.print(ost, orbit_len, nb_orbits);
 	if (f_tex) {
 		ost << "\\\\" << endl;
 	}
@@ -1029,7 +1029,7 @@ void schreier::print_orbit_using_labels(std::ostream &ost,
 	}
 	//int_vec_print(ost, v, len);
 	Sorting.int_vec_heapsort(v, len);
-	int_vec_print_fully(ost, v, len);
+	Orbiter->Int_vec.print_fully(ost, v, len);
 
 	FREE_int(v);
 }
@@ -1243,8 +1243,8 @@ void schreier::export_tree_as_layered_graph(int orbit_no,
 	//C.init(depth, len, FALSE, 0);
 	Nb = NEW_int(nb_layers);
 	Nb1 = NEW_int(nb_layers);
-	int_vec_zero(Nb, nb_layers);
-	int_vec_zero(Nb1, nb_layers);
+	Orbiter->Int_vec.zero(Nb, nb_layers);
+	Orbiter->Int_vec.zero(Nb1, nb_layers);
 	for (j = 0; j < len; j++) {
 		trace_back(NULL, orbit[fst + j], l);
 		l--;

@@ -998,7 +998,7 @@ void isomorph::load_strong_generators_database(int cur_level,
 		}
 	if (f_vv) {
 		cout << "isomorph::load_strong_generators_database set: ";
-		int_vec_print(cout, set, cur_level);
+		Orbiter->Int_vec.print(cout, set, cur_level);
 		cout << endl;
 		}
 	int nb_strong_generators;

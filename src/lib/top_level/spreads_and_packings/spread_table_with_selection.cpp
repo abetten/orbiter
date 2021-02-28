@@ -92,10 +92,10 @@ void spread_table_with_selection::init(spread_classify *T,
 	}
 
 	if (f_select_spread) {
-		int_vec_scan(select_spread_text.c_str(), select_spread, select_spread_nb);
+		Orbiter->Int_vec.scan(select_spread_text.c_str(), select_spread, select_spread_nb);
 		if (f_v) {
 			cout << "select_spread = ";
-			int_vec_print(cout, select_spread, select_spread_nb);
+			Orbiter->Int_vec.print(cout, select_spread, select_spread_nb);
 			cout << endl;
 		}
 	}
@@ -127,7 +127,7 @@ void spread_table_with_selection::init(spread_classify *T,
 	if (f_select_spread) {
 		cout << "spread_table_with_selection::init selected spreads are "
 				"from the following orbits: ";
-		int_vec_print(cout,
+		Orbiter->Int_vec.print(cout,
 				select_spread,
 				select_spread_nb);
 		cout << endl;

@@ -453,7 +453,7 @@ int finite_field::Gauss_int_with_given_pivots(int *A,
 				"Gauss algorithm for matrix:" << endl;
 		print_integer_matrix_width(cout, A, m, n, n, 5);
 		cout << "pivots: ";
-		orbiter::foundations::int_vec_print(cout, pivots, nb_pivots);
+		Orbiter->Int_vec.print(cout, pivots, nb_pivots);
 		cout << endl;
 		//print_tables();
 	}

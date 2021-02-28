@@ -87,7 +87,7 @@ void surface_domain::create_equation_general_abcd(int a, int b, int c, int d, in
 
 	int E = F->add(E_plus, F->negate(E_minus));
 
-	int_vec_zero(coeff, nb_monomials);
+	Orbiter->Int_vec.zero(coeff, nb_monomials);
 
 	coeff[5] = F->mult3(m1, A, bmd);
 	coeff[16] = F->mult(A, F->add4(a, b, F->negate(c), F->negate(d)));
@@ -140,7 +140,7 @@ void surface_domain::create_equation_bes(int a, int c, int *coeff, int verbose_l
 	delta = w2;
 	epsilon = F->mult(ap1c, F->mult(a, c));
 
-	int_vec_zero(coeff, nb_monomials);
+	Orbiter->Int_vec.zero(coeff, nb_monomials);
 
 	coeff[4] = coeff[7] = coeff[8] = coeff[11] = coeff[12] = alpha;
 	coeff[17] = beta;
@@ -167,7 +167,7 @@ void surface_domain::create_equation_F13(int a, int *coeff, int verbose_level)
 
 	b = F->power(F->add(a, 1), 5);
 	c = F->add(F->power(a, 3), 1);
-	int_vec_zero(coeff, nb_monomials);
+	Orbiter->Int_vec.zero(coeff, nb_monomials);
 
 	coeff[6] = b;
 	coeff[13] = b;
@@ -190,7 +190,7 @@ void surface_domain::create_equation_G13(int a, int *coeff, int verbose_level)
 
 	b = F->mult(a, F->add(a, 1));
 	c = F->add(F->mult(a, a), F->add(a, 1));
-	int_vec_zero(coeff, nb_monomials);
+	Orbiter->Int_vec.zero(coeff, nb_monomials);
 
 	coeff[5] = coeff[8] = coeff[9] = coeff[10] = coeff[11] = coeff[12] = 1;
 	coeff[14] = coeff[15] = b;
@@ -528,7 +528,7 @@ void surface_domain::create_equation_HCV(int a, int b,
 	alpha = F->negate(F->mult(b, b));
 	beta = F->mult(F->mult(F->power(b, 3),
 		F->add(1, F->mult(a, a))), F->inverse(a));
-	int_vec_zero(coeff, nb_monomials);
+	Orbiter->Int_vec.zero(coeff, nb_monomials);
 
 	coeff[3] = 1;
 	coeff[6] = alpha;
@@ -554,7 +554,7 @@ int surface_domain::test_HCV_form_alpha_beta(int *coeff,
 	if (f_v) {
 		cout << "surface_domain::test_HCV_form_alpha_beta" << endl;
 	}
-	if (!int_vec_is_constant_on_subset(coeff,
+	if (!Orbiter->Int_vec.is_constant_on_subset(coeff,
 		zeroes, sizeof(zeroes) / sizeof(int), a)) {
 		cout << "surface_domain::test_HCV_form_alpha_beta "
 				"not constant on zero set" << endl;
@@ -570,14 +570,14 @@ int surface_domain::test_HCV_form_alpha_beta(int *coeff,
 				"not normalized" << endl;
 		exit(1);
 	}
-	if (!int_vec_is_constant_on_subset(coeff,
+	if (!Orbiter->Int_vec.is_constant_on_subset(coeff,
 		alphas, sizeof(alphas) / sizeof(int), a)) {
 		cout << "surface_domain::test_HCV_form_alpha_beta "
 				"not constant on alpha set" << endl;
 		return FALSE;
 	}
 	alpha = a;
-	if (!int_vec_is_constant_on_subset(coeff,
+	if (!Orbiter->Int_vec.is_constant_on_subset(coeff,
 		betas, sizeof(betas) / sizeof(int), a)) {
 		cout << "surface_domain::test_HCV_form_alpha_beta "
 				"not constant on beta set" << endl;

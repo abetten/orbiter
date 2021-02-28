@@ -270,7 +270,7 @@ void knarr::points_and_lines(int verbose_level)
 			cout << endl;
 			}
 
-		int_vec_zero(Basis2, 3 * 6);
+		Orbiter->Int_vec.zero(Basis2, 3 * 6);
 		Basis2[0] = 1;
 		for (i = 0; i < 2; i++) {
 			for (j = 0; j < 4; j++) {
@@ -285,7 +285,7 @@ void knarr::points_and_lines(int verbose_level)
 			}
 
 
-		int_vec_copy(Basis2, G63->M, 3 * 6);
+		Orbiter->Int_vec.copy(Basis2, G63->M, 3 * 6);
 
 		i = G63->rank_lint(0);
 		if (f_v4) {
@@ -306,7 +306,7 @@ void knarr::points_and_lines(int verbose_level)
 
 		for (jj = 0; jj < Gre->degree; jj++) {
 			Gre->unrank_lint(subspace_basis, jj, 0);
-			int_vec_copy(subspace_basis, P5->Grass_lines->M, 2 * 6);
+			Orbiter->Int_vec.copy(subspace_basis, P5->Grass_lines->M, 2 * 6);
 			j = P5->Grass_lines->rank_lint(0);
 			if (f_v4) {
 				cout << "Subspace " << jj << " has a basis:" << endl;
@@ -314,7 +314,7 @@ void knarr::points_and_lines(int verbose_level)
 						2, 6, 6, F->log10_of_q);
 				cout << "and has rank " << j << endl;
 				}
-			int_vec_zero(subspace_basis + 2 * 6, 6);
+			Orbiter->Int_vec.zero(subspace_basis + 2 * 6, 6);
 			subspace_basis[2 * 6 + 0] = 1;
 			rk = F->Gauss_easy(subspace_basis, 3, 6);
 			if (rk <= 2) {
@@ -432,7 +432,7 @@ void knarr::points_and_lines(int verbose_level)
 		Basis_intersection[2 * 6 + 5] = 0;
 
 
-		int_vec_copy(Basis_intersection, G63->M, 3 * 6);
+		Orbiter->Int_vec.copy(Basis_intersection, G63->M, 3 * 6);
 		j = G63->rank_lint(0);
 		
 		if (type_b_lines->is_contained(j)) {
@@ -546,7 +546,7 @@ void knarr::incidence_matrix(int *&Inc,
 	cout << "Computing the incidence matrix..." << endl;
 	
 	Inc = NEW_int(nb_points * nb_lines);
-	int_vec_zero(Inc, nb_points * nb_lines);
+	Orbiter->Int_vec.zero(Inc, nb_points * nb_lines);
 	
 	for (I = 0; I < 3; I++) {
 		if (I == 0) {

@@ -186,7 +186,7 @@ void flag::unrank(long int rk, int *subspace, int verbose_level)
 	}
 
 	Gr->unrank_embedded_subspace_lint(a, 0 /*verbose_level*/);
-	int_vec_copy(Gr->M, M, K * n);
+	Orbiter->Int_vec.copy(Gr->M, M, K * n);
 	if (f_v) {
 		cout << "flag::unrank M=" << endl;
 		int_matrix_print(M, K, n);
@@ -194,7 +194,7 @@ void flag::unrank(long int rk, int *subspace, int verbose_level)
 	if (Flag) {
 		Flag->unrank_recursion(b, M, verbose_level);
 	}
-	int_vec_copy(M, subspace, K * n);
+	Orbiter->Int_vec.copy(M, subspace, K * n);
 }
 
 void flag::unrank_recursion(long int rk, int *subspace, int verbose_level)
@@ -232,7 +232,7 @@ void flag::unrank_recursion(long int rk, int *subspace, int verbose_level)
 
 	F->mult_matrix_matrix(Gr->M, subspace, M, s2, s2, n,
 			0 /* verbose_level */);
-	int_vec_copy(subspace + s2 * n, M + s2 * n, (K - s2) * n);
+	Orbiter->Int_vec.copy(subspace + s2 * n, M + s2 * n, (K - s2) * n);
 
 	if (f_v) {
 		cout << "flag::unrank_recursion idx=" << idx
@@ -245,7 +245,7 @@ void flag::unrank_recursion(long int rk, int *subspace, int verbose_level)
 	if (Flag) {
 		Flag->unrank_recursion(b, M, verbose_level);
 	}
-	int_vec_copy(M, subspace, K * n);
+	Orbiter->Int_vec.copy(M, subspace, K * n);
 }
 
 long int flag::rank(int *input_subspace, int verbose_level)
@@ -266,14 +266,14 @@ long int flag::rank(int *input_subspace, int verbose_level)
 		int_matrix_print(input_subspace, K, n);
 	}
 
-	int_vec_copy(input_subspace, M, K * n);
-	int_vec_copy(input_subspace, Gr->M, s2 * n);
+	Orbiter->Int_vec.copy(input_subspace, M, K * n);
+	Orbiter->Int_vec.copy(input_subspace, Gr->M, s2 * n);
 	a = Gr->rank_lint(0 /*verbose_level*/);
 	if (f_v) {
 		cout << "flag::rank idx=" << idx << " a=" << a << endl;
 	}
 	Gr->unrank_embedded_subspace_lint(a, 0 /*verbose_level*/);
-	int_vec_copy(Gr->M, M1, K * n);
+	Orbiter->Int_vec.copy(Gr->M, M1, K * n);
 	if (f_v) {
 		cout << "flag::rank after unrank:" << endl;
 		int_matrix_print(M1, K, n);
@@ -309,8 +309,8 @@ long int flag::rank_recursion(int *input_subspace,
 		cout << "flag::rank_recursion big_space:" << endl;
 		int_matrix_print(big_space, s2, n);
 	}
-	int_vec_copy(big_space, M, s2 * n);
-	int_vec_copy(big_space, M_Gauss, s2 * n);
+	Orbiter->Int_vec.copy(big_space, M, s2 * n);
+	Orbiter->Int_vec.copy(big_space, M_Gauss, s2 * n);
 	F->identity_matrix(transform, s2);
 	r = F->Gauss_int(M_Gauss,
 		FALSE /*f_special*/,
@@ -368,7 +368,7 @@ long int flag::rank_recursion(int *input_subspace,
 			exit(1);
 		}
 		// add one row to Gr->M:
-		int_vec_copy(M2 + i * s2, Gr->M + i * s2, s2);
+		Orbiter->Int_vec.copy(M2 + i * s2, Gr->M + i * s2, s2);
 	}
 
 
@@ -391,7 +391,7 @@ long int flag::rank_recursion(int *input_subspace,
 	}
 	F->mult_matrix_matrix(Gr->M, big_space, M, s2, s2, n,
 			0 /* verbose_level */);
-	int_vec_copy(big_space + s2 * n, M + s2 * n, (K - s2) * n);
+	Orbiter->Int_vec.copy(big_space + s2 * n, M + s2 * n, (K - s2) * n);
 	//now M is K x n
 	if (f_v) {
 		cout << "after unrank_embedded:" << endl;

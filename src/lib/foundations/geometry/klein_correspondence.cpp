@@ -135,7 +135,7 @@ void klein_correspondence::init(finite_field *F,
 
 
 	Form = NEW_int(d * d);
-	int_vec_zero(Form, d * d);
+	Orbiter->Int_vec.zero(Form, d * d);
 	// the matrix with blocks
 	// [0 1]
 	// [1 0]
@@ -428,7 +428,7 @@ long int klein_correspondence::line_to_point_on_quadric(long int line_rk, int ve
 	if (FALSE) {
 		cout << "klein_correspondence::line_to_point_on_quadric line_rk=" << line_rk
 				<< " / " << P3->N_lines << " v6 : ";
-		int_vec_print(cout, v6, 6);
+		Orbiter->Int_vec.print(cout, v6, 6);
 		cout << " : point_rk=" << point_rk << endl;
 	}
 
@@ -488,7 +488,7 @@ long int klein_correspondence::point_on_quadric_to_line(long int point_rk, int v
 	O->unrank_point(v6, 1, point_rk, 0);
 	if (f_v) {
 		cout << "klein_correspondence::point_on_quadric_to_line v6=";
-		int_vec_print(cout, v6, 6);
+		Orbiter->Int_vec.print(cout, v6, 6);
 		cout << endl;
 	}
 
@@ -566,7 +566,7 @@ void klein_correspondence::exterior_square_to_line(int *v, int *basis_line, int 
 	p34 = v[5];
 
 
-	int_vec_zero(basis_line, 8);
+	Orbiter->Int_vec.zero(basis_line, 8);
 
 	if (p12 == 0 && p13 == 0 && p14 == 0) {
 		// this means that x1 = 0
@@ -783,9 +783,9 @@ void klein_correspondence::identify_external_lines_and_spreads(
 					"does not have rank 4" << endl;
 			exit(1);
 		}
-		int_vec_copy(basis_elliptic_quadric, basis, 4 * d);
+		Orbiter->Int_vec.copy(basis_elliptic_quadric, basis, 4 * d);
 		F->perp(d, 4, basis, Form, 0 /* verbose_level */);
-		int_vec_copy(
+		Orbiter->Int_vec.copy(
 				basis + 4 * d,
 				basis_external_line,
 				2 * d);
@@ -946,7 +946,7 @@ void klein_correspondence::reverse_isomorphism(int *A6, int *A4, int verbose_lev
 
 	int M[16 * 8];
 
-	int_vec_zero(M, 16 * 8);
+	Orbiter->Int_vec.zero(M, 16 * 8);
 
 	M[0 * 8 + 0] = XYv[0 * 4 + 2];
 	M[0 * 8 + 1] = XYv[1 * 4 + 2];
@@ -982,7 +982,7 @@ void klein_correspondence::reverse_isomorphism(int *A6, int *A4, int verbose_lev
 	M[15 * 8 + 4] = XZv[2 * 4 + 1];
 	M[15 * 8 + 5] = XZv[3 * 4 + 1];
 
-	int_vec_zero(A4, 4 * 4);
+	Orbiter->Int_vec.zero(A4, 4 * 4);
 
 
 	if (f_v) {
@@ -1003,7 +1003,7 @@ void klein_correspondence::reverse_isomorphism(int *A6, int *A4, int verbose_lev
 	}
 	if (f_v) {
 		cout << "base columns: " << endl;
-		int_vec_print(cout, base_cols, rk);
+		Orbiter->Int_vec.print(cout, base_cols, rk);
 		cout << endl;
 	}
 
@@ -1047,7 +1047,7 @@ void klein_correspondence::reverse_isomorphism(int *A6, int *A4, int verbose_lev
 	h = abcdefgh[7];
 
 
-	int_vec_zero(D, 16);
+	Orbiter->Int_vec.zero(D, 16);
 	D[0 * 4 + 0] = a;
 	D[0 * 4 + 1] = b;
 	D[1 * 4 + 0] = c;

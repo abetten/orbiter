@@ -108,7 +108,7 @@ void action_on_homogeneous_polynomials::init_invariant_set_of_equations(
 	action_on_homogeneous_polynomials::Equations =
 			NEW_int(nb_equations * dimension);
 	action_on_homogeneous_polynomials::nb_equations = nb_equations;
-	int_vec_copy(Equations,
+	Orbiter->Int_vec.copy(Equations,
 			action_on_homogeneous_polynomials::Equations,
 			nb_equations * dimension);
 	for (i = 0; i < nb_equations; i++) {
@@ -150,7 +150,7 @@ long int action_on_homogeneous_polynomials::compute_image_int(
 				"verbose_level=" << verbose_level << endl;
 	}
 	if (f_invariant_set) {
-		int_vec_copy(Equations + a * dimension, v1, dimension);
+		Orbiter->Int_vec.copy(Equations + a * dimension, v1, dimension);
 	}
 	else {
 		unrank_point(v1, a);
@@ -158,14 +158,14 @@ long int action_on_homogeneous_polynomials::compute_image_int(
 	if (f_vv) {
 		cout << "action_on_homogeneous_polynomials::compute_image_int "
 				"a = " << a << " v1 = ";
-		int_vec_print(cout, v1, dimension);
+		Orbiter->Int_vec.print(cout, v1, dimension);
 		cout << endl;
 	}
 	
 	compute_image_int_low_level(Elt, v1, v2, verbose_level);
 	if (f_vv) {
 		cout << " v2 = v1 * A = ";
-		int_vec_print(cout, v2, dimension);
+		Orbiter->Int_vec.print(cout, v2, dimension);
 		cout << endl;
 	}
 
@@ -181,17 +181,17 @@ long int action_on_homogeneous_polynomials::compute_image_int(
 					"could not find equation" << endl;
 			cout << "action_on_homogeneous_polynomials::compute_image_int "
 					"a = " << a << " v1 = " << endl;
-			int_vec_print(cout, v1, dimension);
+			Orbiter->Int_vec.print(cout, v1, dimension);
 			cout << endl;
 			cout << " v2 = v1 * A = " << endl;
-			int_vec_print(cout, v2, dimension);
+			Orbiter->Int_vec.print(cout, v2, dimension);
 			cout << endl;
 			cout << "A=" << endl;
 			A->element_print_quick(Elt, cout);
 			cout << "equations:" << endl;
 			for (b = 0; b < nb_equations; b++) {
 				cout << setw(3) << b << " : ";
-				int_vec_print(cout, Equations + b * dimension, dimension);
+				Orbiter->Int_vec.print(cout, Equations + b * dimension, dimension);
 				cout << endl;
 			}
 			exit(1);
@@ -222,7 +222,7 @@ void action_on_homogeneous_polynomials::compute_image_int_low_level(
 	if (f_vv) {
 		cout << "action_on_homogeneous_polynomials::compute_image_int_low_level "
 				"input = ";
-		int_vec_print(cout, input, dimension);
+		Orbiter->Int_vec.print(cout, input, dimension);
 		cout << endl;
 	}
 
@@ -251,7 +251,7 @@ void action_on_homogeneous_polynomials::compute_image_int_low_level(
 	if (f_vv) {
 		cout << "action_on_homogeneous_polynomials::compute_image_int_low_level "
 				"output = ";
-		int_vec_print(cout, output, dimension);
+		Orbiter->Int_vec.print(cout, output, dimension);
 		cout << endl;
 	}
 	if (f_v) {
@@ -276,7 +276,7 @@ void action_on_homogeneous_polynomials::compute_representation(
 
 
 	for (i = 0; i < dimension; i++) {
-		int_vec_zero(v1, dimension);
+		Orbiter->Int_vec.zero(v1, dimension);
 		v1[i] = 1;
 		compute_image_int_low_level(
 			Elt, v1, M + i * dimension, 0 /* verbose_level */);

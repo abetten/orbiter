@@ -492,8 +492,8 @@ void hall_system_classify::early_test_func(long int *S, int len,
 	}
 
 
-	int_vec_zero(row_sum, nm1);
-	int_vec_zero(pair_covering, nb_pairs2);
+	Orbiter->Int_vec.zero(row_sum, nm1);
+	Orbiter->Int_vec.zero(pair_covering, nb_pairs2);
 
 
 	for (i = 0; i < len; i++) {
@@ -518,10 +518,10 @@ void hall_system_classify::early_test_func(long int *S, int len,
 		cout << "hall_system::early_test_func "
 				"pair_covering before testing:" << endl;
 		cout << "row_sum: " << endl;
-		int_vec_print(cout, row_sum, nm1);
+		Orbiter->Int_vec.print(cout, row_sum, nm1);
 		cout << endl;
 		cout << "pair_covering: " << endl;
-		int_vec_print(cout, pair_covering, nb_pairs2);
+		Orbiter->Int_vec.print(cout, pair_covering, nb_pairs2);
 		cout << endl;
 	}
 

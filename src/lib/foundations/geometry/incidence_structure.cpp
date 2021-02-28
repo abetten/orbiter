@@ -289,7 +289,7 @@ void incidence_structure::init_by_set_of_sets(
 	m = SoS->nb_sets;
 	n = SoS->underlying_set_size;
 	M = NEW_int(m * n);
-	int_vec_zero(M, m * n);
+	Orbiter->Int_vec.zero(M, m * n);
 	for (i = 0; i < m; i++) {
 		for (h = 0; h < SoS->Set_size[i]; h++) {
 			j = SoS->Sets[i][h];
@@ -1669,15 +1669,15 @@ void incidence_structure::get_row_decomposition_scheme(
 	neighbors = NEW_int(max_r);
 	data0 = NEW_int(nb_col_classes);
 	data1 = NEW_int(nb_col_classes);
-	int_vec_zero(row_scheme, nb_row_classes * nb_col_classes);
+	Orbiter->Int_vec.zero(row_scheme, nb_row_classes * nb_col_classes);
 	for (I = 0; I < nb_row_classes; I++) {
 		c1 = row_classes[I];
 		f1 = PStack.startCell[c1];
 		l1 = PStack.cellSize[c1];
-		int_vec_zero(data0, nb_col_classes);
+		Orbiter->Int_vec.zero(data0, nb_col_classes);
 		for (i = 0; i < l1; i++) {
 			x = PStack.pointList[f1 + i];
-			int_vec_zero(data1, nb_col_classes);
+			Orbiter->Int_vec.zero(data1, nb_col_classes);
 			nb = get_lines_on_point(neighbors, x);
 			for (u = 0; u < nb; u++) {
 				y = neighbors[u];
@@ -1687,7 +1687,7 @@ void incidence_structure::get_row_decomposition_scheme(
 				data1[J]++;
 			}
 			if (i == 0) {
-				int_vec_copy(data1, data0, nb_col_classes);
+				Orbiter->Int_vec.copy(data1, data0, nb_col_classes);
 			}
 			else {
 				for (J = 0; J < nb_col_classes; J++) {
@@ -1701,7 +1701,7 @@ void incidence_structure::get_row_decomposition_scheme(
 			}
 		} // next i
 
-		int_vec_copy(data0,
+		Orbiter->Int_vec.copy(data0,
 				row_scheme + I * nb_col_classes,
 				nb_col_classes);
 	}
@@ -3199,7 +3199,7 @@ void incidence_structure::init_partitionstack(partitionstack *S,
 		if (f_v3) {
 			cout << "which is the following set of size "
 					<< distinguished_point_set_size[j] << ":" << endl;
-			int_vec_print(cout, distinguished_point_sets[j],
+			Orbiter->Int_vec.print(cout, distinguished_point_sets[j],
 					distinguished_point_set_size[j]);
 			cout << endl;
 		}
@@ -3223,7 +3223,7 @@ void incidence_structure::init_partitionstack(partitionstack *S,
 		if (f_v3) {
 			cout << "which is the following set of size "
 					<< distinguished_line_set_size[j] << ":" << endl;
-			int_vec_print(cout, distinguished_line_sets[j],
+			Orbiter->Int_vec.print(cout, distinguished_line_sets[j],
 					distinguished_line_set_size[j]);
 			cout << endl;
 		}
@@ -3241,7 +3241,7 @@ void incidence_structure::init_partitionstack(partitionstack *S,
 		if (f_vv) {
 			cout << "incidence_structure::init_partitionstack "
 					"After adding Inc->nb_points():" << endl;
-			int_vec_print(cout, set, set_sz);
+			Orbiter->Int_vec.print(cout, set, set_sz);
 			cout << endl;
 		}
 
@@ -3598,7 +3598,7 @@ void incidence_structure::compute_extended_matrix(
 	for (j = 0; j < nb_distinguished_point_sets; j++) {
 		if (f_v) {
 			cout << "The " << j << "-th distinguished point set is:" << endl;
-			int_vec_print(cout, distinguished_point_sets[j],
+			Orbiter->Int_vec.print(cout, distinguished_point_sets[j],
 					distinguished_point_set_size[j]);
 			cout << endl;
 		}
@@ -3612,7 +3612,7 @@ void incidence_structure::compute_extended_matrix(
 	for (j = 0; j < nb_distinguished_line_sets; j++) {
 		if (f_v) {
 			cout << "The " << j << "-th distinguished line set is:" << endl;
-			int_vec_print(cout, distinguished_line_sets[j],
+			Orbiter->Int_vec.print(cout, distinguished_line_sets[j],
 					distinguished_line_set_size[j]);
 			cout << endl;
 		}
@@ -3676,7 +3676,7 @@ void incidence_structure::compute_extended_matrix(
 	if (f_v4) {
 		cout << "incidence_structure::compute_extended_matrix "
 				"The partition is:" << endl;
-		int_vec_print(cout, partition, total);
+		Orbiter->Int_vec.print(cout, partition, total);
 		cout << endl;
 	}
 
@@ -3804,7 +3804,7 @@ void incidence_structure::init_large_set(
 	N = nb_rows + nb_cols;
 
 	Incma = NEW_int(nb_rows * nb_cols);
-	int_vec_zero(Incma, nb_rows * nb_cols);
+	Orbiter->Int_vec.zero(Incma, nb_rows * nb_cols);
 	block = NEW_int(design_k);
 
 	for (u = 0; u < nb_classes; u++) {

@@ -159,7 +159,6 @@ public:
 	void print_equation_with_line_breaks_tex(std::ostream &ost, int *coeffs);
 	void unrank_point(int *v, long int rk);
 	long int rank_point(int *v);
-	void print_lines_tex(std::ostream &ost, long int *Lines, int nb_lines);
 
 };
 
@@ -180,13 +179,7 @@ public:
 	syntax_tree_node **Subtrees;
 	int *Coefficient_vector;
 
-	long int *Pts;
-	int nb_pts;
-
-
-	long int *Lines;
-	int nb_lines;
-
+	points_and_lines *pal;
 
 
 	del_pezzo_surface_of_degree_two_object();

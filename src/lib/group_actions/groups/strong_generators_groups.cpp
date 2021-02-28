@@ -486,7 +486,7 @@ void strong_generators::generators_for_the_monomial_group(
 	D.multiply_up(target_go, go_factored, 3 * n + 1, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "group order factored: ";
-		int_vec_print(cout, go_factored, 3 * n + 1);
+		Orbiter->Int_vec.print(cout, go_factored, 3 * n + 1);
 		cout << endl;
 		cout << "target_go=" << target_go << endl;
 	}
@@ -505,7 +505,7 @@ void strong_generators::generators_for_the_monomial_group(
 		}
 		F->identity_matrix(data, n);
 		if (Mtx->f_affine) {
-			int_vec_zero(data + n * n, n);
+			Orbiter->Int_vec.zero(data + n * n, n);
 		}
 
 		if (h < n - 1) {
@@ -539,7 +539,7 @@ void strong_generators::generators_for_the_monomial_group(
 					"generator " << h << " / "
 					<< nb_gens << ", before A->make_element" << endl;
 			cout << "data = ";
-			int_vec_print(cout, data, Mtx->elt_size_int_half);
+			Orbiter->Int_vec.print(cout, data, Mtx->elt_size_int_half);
 			cout << endl;
 			cout << "in action " << A->label << endl;
 		}
@@ -665,7 +665,7 @@ void strong_generators::generators_for_the_diagonal_group(action *A,
 	D.multiply_up(target_go, go_factored, n + 1, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "group order factored: ";
-		int_vec_print(cout, go_factored, n + 1);
+		Orbiter->Int_vec.print(cout, go_factored, n + 1);
 		cout << endl;
 		cout << "target_go=" << target_go << endl;
 	}
@@ -826,7 +826,7 @@ void strong_generators::generators_for_the_singer_cycle(
 			cout << endl;
 		}
 	
-		int_vec_zero(data, n * n);
+		Orbiter->Int_vec.zero(data, n * n);
 	
 		// create upper diagonal:
 		for (i = 0; i < n - 1; i++) {
@@ -995,7 +995,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 		}
 		FX.get_a_primitive_polynomial(m, n, verbose_level - 1);
 
-		int_vec_zero(data1, n * n);
+		Orbiter->Int_vec.zero(data1, n * n);
 
 		// create upper diagonal:
 		for (i = 0; i < n - 1; i++) {
@@ -1015,7 +1015,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 			data1[n * n] = 0;
 		}
 
-		int_vec_zero(data2, n * n);
+		Orbiter->Int_vec.zero(data2, n * n);
 
 		FX.Frobenius_matrix_by_rows(data2, m,
 				verbose_level);
@@ -1192,7 +1192,7 @@ void strong_generators::generators_for_symplectic_group(
 	}
 	if (f_v) {
 		cout << "strong_generators::generators_for_symplectic_group t_len=";
-		int_vec_print(cout, t_len, A->base_len());
+		Orbiter->Int_vec.print(cout, t_len, A->base_len());
 		cout << endl;
 	}
 
@@ -1278,7 +1278,7 @@ void strong_generators::init_centralizer_of_matrix_general_linear(
 	new_gens->allocate(SG1->gens->len + 1, verbose_level - 2);
 	data = NEW_int(n * n + n + 1);
 	for (i = 0; i < SG1->gens->len; i++) {
-		int_vec_copy(SG1->gens->ith(i), data, n * n);
+		Orbiter->Int_vec.copy(SG1->gens->ith(i), data, n * n);
 		if (M->f_semilinear) {
 			data[n * n] = SG1->gens->ith(i)[n * n];
 			}
@@ -1548,7 +1548,7 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 		}
 
 		M1 = M + cnt * sz;
-		int_vec_zero(M1, n1 * n1);
+		Orbiter->Int_vec.zero(M1, n1 * n1);
 		for (i = 0; i < n1; i++) {
 			M1[i * n1 + i] = 1;
 		}
@@ -1573,7 +1573,7 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 				"the second kind:" << endl;
 	}
 	M1 = M + cnt * sz;
-	int_vec_zero(M1, n1 * n1);
+	Orbiter->Int_vec.zero(M1, n1 * n1);
 	for (i = 0; i < n1; i++) {
 		if (i < n1 - 1) {
 			M1[i * n1 + i] = alpha;
@@ -1597,7 +1597,7 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 	for (h = 0; h < n; h++) {
 		for (u = 0; u < F->e; u++, cnt++) {
 			M1 = M + cnt * sz;
-			int_vec_zero(M1, n1 * n1);
+			Orbiter->Int_vec.zero(M1, n1 * n1);
 			for (i = 0; i < n1; i++) {
 				M1[i * n1 + i] = 1;
 			}
@@ -3121,7 +3121,7 @@ void strong_generators::stabilizer_of_pencil_of_conics(
 
 	gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
-		int_vec_zero(data, data_size);
+		Orbiter->Int_vec.zero(data, data_size);
 		if (i == 0) {
 			// diag(t, 1/t, 1)
 			data[0] = alpha;
@@ -3218,7 +3218,7 @@ void strong_generators::Janko1(
 
 	gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
-		int_vec_zero(data, data_size);
+		Orbiter->Int_vec.zero(data, data_size);
 		if (i == 0) {
 			for (j = 0; j < 7; j++) {
 				if (j < 7 - 1) {
@@ -3670,7 +3670,7 @@ void strong_generators::exterior_square(
 					<< " before P->exterior_square" << endl;
 			}
 
-		int_vec_zero(An2, n2 * n2 + 1);
+		Orbiter->Int_vec.zero(An2, n2 * n2 + 1);
 		F->exterior_square(SG_original->gens->ith(i), An2, n, verbose_level - 2);
 
 		An2[n2 * n2] = frobenius;
@@ -3779,7 +3779,7 @@ void strong_generators::diagonally_repeat(
 	gens->allocate(l, verbose_level - 2);
 	for (h = 0; h < l; h++) {
 		Elt = gens->ith(h);
-		int_vec_zero(M, n * n);
+		Orbiter->Int_vec.zero(M, n * n);
 		for (i = 0; i < k; i++) {
 			for (j = 0; j < k; j++) {
 				a = Elt[i * k + j];

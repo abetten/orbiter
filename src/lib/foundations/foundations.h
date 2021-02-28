@@ -405,6 +405,8 @@ class syntax_tree;
 class formula;
 class del_pezzo_surface_of_degree_two_domain;
 class del_pezzo_surface_of_degree_two_object;
+class points_and_lines;
+class int_vec;
 
 
 #ifdef MEMORY_DEBUG
@@ -567,6 +569,8 @@ public:
 	
 
 };
+
+
 
 // #############################################################################
 // longinteger_object.cpp:

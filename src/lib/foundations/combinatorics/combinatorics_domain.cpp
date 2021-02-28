@@ -73,10 +73,10 @@ void combinatorics_domain::partition_dual(
 	if (f_v) {
 		cout << "partition_dual" << endl;
 		cout << "input: ";
-		int_vec_print(cout, part, n);
+		Orbiter->Int_vec.print(cout, part, n);
 		cout << endl;
 	}
-	int_vec_zero(dual_part, n);
+	Orbiter->Int_vec.zero(dual_part, n);
 	j = 0;
 	s = 0;
 	for (i = n; i >= 1; i--) {
@@ -106,7 +106,7 @@ void combinatorics_domain::partition_dual(
 	if (f_v) {
 		cout << "partition_dual" << endl;
 		cout << "output: ";
-		int_vec_print(cout, dual_part, n);
+		Orbiter->Int_vec.print(cout, dual_part, n);
 		cout << endl;
 	}
 }
@@ -130,7 +130,7 @@ void combinatorics_domain::make_all_partitions_of_n(int n,
 	cnt = 0;
 	partition_first(v, n);
 	while (TRUE) {
-		int_vec_copy(v, Table + cnt * n, n);
+		Orbiter->Int_vec.copy(v, Table + cnt * n, n);
 		cnt++;
 		if (!partition_next(v, n)) {
 			break;
@@ -174,7 +174,7 @@ int combinatorics_domain::count_all_partitions_of_n(int n)
 
 int combinatorics_domain::partition_first(int *v, int n)
 {
-	int_vec_zero(v, n);
+	Orbiter->Int_vec.zero(v, n);
 	v[n - 1] = 1;
 	return TRUE;
 }
@@ -368,7 +368,7 @@ int combinatorics_domain::set_find(int *elts, int size, int a)
 	if (!Sorting.int_vec_search(elts, size, a, idx)) {
 		cout << "set_find fatal: did not find" << endl;
 		cout << "a=" << a << endl;
-		int_vec_print(cout, elts, size);
+		Orbiter->Int_vec.print(cout, elts, size);
 		cout << endl;
 		exit(1);
 	}
@@ -424,7 +424,7 @@ void combinatorics_domain::set_complement_safe(
 	sorting Sorting;
 
 	subset2 = NEW_int(subset_size);
-	int_vec_copy(subset, subset2, subset_size);
+	Orbiter->Int_vec.copy(subset, subset2, subset_size);
 	Sorting.int_vec_heapsort(subset2, subset_size);
 	
 	j = 0;
@@ -867,7 +867,7 @@ int combinatorics_domain::unordered_triple_pair_rank(
 
 	if (f_v) {
 		cout << "unordered_triple_pair_rank : b = " << b << " : ";
-		int_vec_print(cout, six, sz); 
+		Orbiter->Int_vec.print(cout, six, sz);
 		cout << endl;
 	}
 
@@ -884,7 +884,7 @@ int combinatorics_domain::unordered_triple_pair_rank(
 
 	if (f_v) {
 		cout << "unordered_triple_pair_rank : b = " << b << " : ";
-		int_vec_print(cout, six, sz); 
+		Orbiter->Int_vec.print(cout, six, sz);
 		cout << endl;
 	}
 
@@ -1617,7 +1617,7 @@ int combinatorics_domain::is_permutation(int *perm, long int n)
 	sorting Sorting;
 
 	perm2 = NEW_int(n);
-	int_vec_copy(perm, perm2, n);
+	Orbiter->Int_vec.copy(perm, perm2, n);
 	Sorting.int_vec_heapsort(perm2, n);
 	for (i = 0; i < n; i++) {
 		if (perm2[i] != i) {
@@ -2251,7 +2251,7 @@ void combinatorics_domain::compute_adjacency_matrix(
 	int *color;
 
 	color = NEW_int(nb_sets);
-	int_vec_zero(color, nb_sets);
+	Orbiter->Int_vec.zero(color, nb_sets);
 
 	CG->init(nb_sets, 1 /* nb_colors */, 1 /* nb_colors_per_vertex */,
 			color, B,
@@ -2317,9 +2317,9 @@ void combinatorics_domain::make_partitions(int n, int *Part, int cnt)
 
 	part = NEW_int(n + 1);
 
-	int_vec_zero(part, n + 1);
+	Orbiter->Int_vec.zero(part, n + 1);
 	part[n] = 1;
-	int_vec_copy(part + 1, Part + cnt1 * n, n);
+	Orbiter->Int_vec.copy(part + 1, Part + cnt1 * n, n);
 
 	cnt1 = 1;
 	while (TRUE) {
@@ -2327,7 +2327,7 @@ void combinatorics_domain::make_partitions(int n, int *Part, int cnt)
 		if (!next_partition(n, part)) {
 			break;
 		}
-		int_vec_copy(part + 1, Part + cnt1 * n, n);
+		Orbiter->Int_vec.copy(part + 1, Part + cnt1 * n, n);
 		cnt1++;
 	}
 	if (cnt1 != cnt) {
@@ -2346,7 +2346,7 @@ int combinatorics_domain::count_partitions(int n)
 
 	part = NEW_int(n + 1);
 
-	int_vec_zero(part, n + 1);
+	Orbiter->Int_vec.zero(part, n + 1);
 	part[n] = 1;
 
 
@@ -3201,7 +3201,7 @@ void combinatorics_domain::make_Johnson_graph(int *&Adj, int &N,
 
 
 	Adj = NEW_int(N * N);
-	int_vec_zero(Adj, N * N);
+	Orbiter->Int_vec.zero(Adj, N * N);
 
 	set1 = NEW_int(k);
 	set2 = NEW_int(k);
@@ -3255,7 +3255,7 @@ void combinatorics_domain::make_Paley_graph(int *&Adj, int &N,
 	F->finite_field_init(q, verbose_level);
 
 	f_is_square = NEW_int(q);
-	int_vec_zero(f_is_square, q);
+	Orbiter->Int_vec.zero(f_is_square, q);
 
 	for (i = 0; i < q; i++) {
 		j = F->mult(i, i);
@@ -3263,7 +3263,7 @@ void combinatorics_domain::make_Paley_graph(int *&Adj, int &N,
 	}
 
 	Adj = NEW_int(q * q);
-	int_vec_zero(Adj, q * q);
+	Orbiter->Int_vec.zero(Adj, q * q);
 
 	for (i = 0; i < q; i++) {
 		for (j = i + 1; j < q; j++) {
@@ -3381,7 +3381,7 @@ void combinatorics_domain::make_Winnie_Li_graph(int *&Adj, int &N,
 	}
 	if (f_v) {
 		cout << "found " << k << " norm-one elements:" << endl;
-		int_vec_print(cout, N1, k);
+		Orbiter->Int_vec.print(cout, N1, k);
 		cout << endl;
 	}
 
@@ -3439,7 +3439,7 @@ void combinatorics_domain::make_Grassmann_graph(int *&Adj, int &N,
 	M = NEW_int(2 * k * n);
 
 	Adj = NEW_int(N * N);
-	int_vec_zero(Adj, N * N);
+	Orbiter->Int_vec.zero(Adj, N * N);
 
 	for (i = 0; i < N; i++) {
 
@@ -3449,8 +3449,8 @@ void combinatorics_domain::make_Grassmann_graph(int *&Adj, int &N,
 
 			Gr->unrank_lint_here(M2, j, 0 /* verbose_level */);
 
-			int_vec_copy(M1, M, k * n);
-			int_vec_copy(M2, M + k * n, k * n);
+			Orbiter->Int_vec.copy(M1, M, k * n);
+			Orbiter->Int_vec.copy(M2, M + k * n, k * n);
 
 			rr = F->rank_of_rectangular_matrix(M, 2 * k, n, 0 /* verbose_level */);
 			if (rr == r) {

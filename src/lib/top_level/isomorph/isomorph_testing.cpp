@@ -141,7 +141,7 @@ void isomorph::probe(int flag_orbit, int subset_rk,
 	if (f_v) {
 		cout << "isomorph::probe the subset with rank "
 				<< subset_rk  << " is ";
-		int_vec_print(cout, subset, level);
+		Orbiter->Int_vec.print(cout, subset, level);
 		cout << endl;
 		cout << "size=" << size << endl;
 		cout << "level=" << level << endl;
@@ -314,7 +314,7 @@ void isomorph::write_classification_matrix(int verbose_level)
 	nb_cols = Reps->count;
 
 	Mtx = NEW_int(nb_rows * nb_cols);
-	int_vec_zero(Mtx, nb_rows * nb_cols);
+	Orbiter->Int_vec.zero(Mtx, nb_rows * nb_cols);
 	starter_idx = NEW_int(nb_orbits);
 
 	for (i = 0; i < nb_starter; i++) {
@@ -331,7 +331,7 @@ void isomorph::write_classification_matrix(int verbose_level)
 
 	if (f_v) {
 		cout << "starter_idx=";
-		int_vec_print(cout, starter_idx, nb_orbits);
+		Orbiter->Int_vec.print(cout, starter_idx, nb_orbits);
 		cout << endl;
 		}
 
@@ -550,7 +550,7 @@ void isomorph::compute_down_link(int *&down_link,
 
 	if (f_vv) {
 		cout << "down_link: ";
-		int_vec_print(cout, down_link, nb_orbits);
+		Orbiter->Int_vec.print(cout, down_link, nb_orbits);
 		cout << endl;
 		}
 	if (f_v) {
@@ -967,7 +967,7 @@ void isomorph::process_rearranged_set(
 			cout << "n e w transporter times old transporter inverse:" << endl;
 			A->element_print(tmp_Elt, cout);
 			cout << "subset: ";
-			int_vec_print(cout, subset, level);
+			Orbiter->Int_vec.print(cout, subset, level);
 			cout << endl;
 
 			long int my_data[1000];
@@ -1544,7 +1544,7 @@ void isomorph::induced_action_on_set(
 			}
 		if (FALSE /*f_v*/) {
 			cout << "isomorph::induced_action_on_set permutation: ";
-			int_vec_print(cout, data1, size);
+			Orbiter->Int_vec.print(cout, data1, size);
 			cout << endl;
 			}
 		AA_perm->make_element(Elt1, data1, 0 /* verbose_level */);

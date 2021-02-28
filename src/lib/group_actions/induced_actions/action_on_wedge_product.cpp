@@ -101,14 +101,14 @@ long int action_on_wedge_product::compute_image_int(
 	if (f_vv) {
 		cout << "action_on_wedge_product::compute_image_int "
 				"a = " << a << " wedge_v1 = ";
-		int_vec_print(cout, wedge_v1, wedge_dimension);
+		Orbiter->Int_vec.print(cout, wedge_v1, wedge_dimension);
 		cout << endl;
 		}
 	
 	compute_image_int_low_level(A, Elt, wedge_v1, wedge_v2, verbose_level);
 	if (f_vv) {
 		cout << " v2=v1 * A=";
-		int_vec_print(cout, wedge_v2, wedge_dimension);
+		Orbiter->Int_vec.print(cout, wedge_v2, wedge_dimension);
 		cout << endl;
 		}
 
@@ -183,7 +183,7 @@ void action_on_wedge_product::compute_image_int_low_level(
 		}
 	if (f_vv) {
 		cout << "wedge action: x=";
-		int_vec_print(cout, x, wedge_dimension);
+		Orbiter->Int_vec.print(cout, x, wedge_dimension);
 		cout << endl;
 		}
 	// (i,j) = row index
@@ -231,7 +231,7 @@ void action_on_wedge_product::compute_image_int_low_level(
 		} // next i
 	if (f_vv) {
 		cout << "xA=";
-		int_vec_print(cout, xA, wedge_dimension);
+		Orbiter->Int_vec.print(cout, xA, wedge_dimension);
 		cout << endl;
 		}
 	if (M->f_semilinear) {
@@ -241,7 +241,7 @@ void action_on_wedge_product::compute_image_int_low_level(
 			}
 		if (f_vv) {
 			cout << "after " << f << " field automorphisms: xA=";
-			int_vec_print(cout, xA, wedge_dimension);
+			Orbiter->Int_vec.print(cout, xA, wedge_dimension);
 			cout << endl;
 			}
 		}

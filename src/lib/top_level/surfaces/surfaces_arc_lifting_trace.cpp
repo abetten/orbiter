@@ -516,7 +516,7 @@ void surfaces_arc_lifting_trace::compute_beta1(seventytwo_cases *The_case, int v
 		cout << "surfaces_arc_lifting_trace::compute_beta1 after "
 			"Table_orbits_on_pairs[orbit_not_on_conic_idx].recognize" << endl;
 		cout << "the_partition4=";
-		int_vec_print(cout, The_case->the_partition4, 4);
+		Orbiter->Int_vec.print(cout, The_case->the_partition4, 4);
 		cout << endl;
 	}
 
@@ -809,9 +809,9 @@ void surfaces_arc_lifting_trace::embed(int *Elt_A3, int *Elt_A4, int verbose_lev
 	if (f_v) {
 		cout << "surfaces_arc_lifting_trace::embed" << endl;
 	}
-	int_vec_copy(Elt_A3, M3, 9);
+	Orbiter->Int_vec.copy(Elt_A3, M3, 9);
 	Up->Lift->F->PG_element_normalize(M3, 1, 9);
-	int_vec_zero(M4, 17);
+	Orbiter->Int_vec.zero(M4, 17);
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 3; j++) {
 			a = M3[i * 3 + j];
@@ -821,7 +821,7 @@ void surfaces_arc_lifting_trace::embed(int *Elt_A3, int *Elt_A4, int verbose_lev
 	M4[3 * 4 + 3] = 1;
 	if (FALSE) {
 		cout << "surfaces_arc_lifting_trace::embed M4=" << endl;
-		int_vec_print(cout, M4, 17);
+		Orbiter->Int_vec.print(cout, M4, 17);
 		cout << endl;
 	}
 	if (Up->Lift->f_semilinear) {

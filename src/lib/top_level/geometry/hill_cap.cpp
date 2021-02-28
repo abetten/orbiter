@@ -296,7 +296,7 @@ void Hill_cap56(
 									nb_sol++;
 									cout << "solution " << nb_sol << ", a set of size " << sz[8] << " : ";
 									cout << i1 << "," << i2 << "," << i3 << "," << i4 << "," << i5 << "," << i6 << "," << i7 << "," << i8 << endl;
-									int_vec_print(cout, set, sz[8]);
+									Orbiter->Int_vec.print(cout, set, sz[8]);
 									cout << endl;
 
 

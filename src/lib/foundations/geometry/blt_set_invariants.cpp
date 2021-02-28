@@ -355,7 +355,7 @@ void blt_set_invariants::latex(std::ostream &ost, int verbose_level)
 		//f << "\\left[" << endl;
 		//f << "\\begin{array}{c}" << endl;
 		ost << "P_{" << i /*data[i]*/ << "}=";
-		int_vec_print(ost, v5, 5);
+		Orbiter->Int_vec.print(ost, v5, 5);
 #if 0
 		for (u = 0; u < 5; u++) {
 			for (v = 0; v < n; v++) {

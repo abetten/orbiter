@@ -723,68 +723,31 @@ public:
 // #############################################################################
 
 
-void int_vec_add(int *v1, int *v2, int *w, int len);
-void int_vec_add3(int *v1, int *v2, int *v3, int *w, int len);
-void int_vec_apply(int *from, int *through, int *to, int len);
-void int_vec_apply_lint(int *from, long int *through, long int *to, int len);
 void lint_vec_apply(long int *from, long int *through, long int *to, int len);
-int int_vec_is_constant_on_subset(int *v, int *subset, int sz, int &value);
-void int_vec_take_away(int *v, int &len, int *take_away, int nb_take_away);
-	// v must be sorted
 void lint_vec_take_away(long int *v, int &len,
 		long int *take_away, int nb_take_away);
-int int_vec_count_number_of_nonzero_entries(int *v, int len);
-int int_vec_find_first_nonzero_entry(int *v, int len);
-void int_vec_zero(int *v, long int len);
 void lint_vec_zero(long int *v, long int len);
-int int_vec_is_zero(int *v, long int len);
-void int_vec_mone(int *v, long int len);
 void lint_vec_mone(long int *v, long int len);
-void int_vec_copy(int *from, int *to, long int len);
 void lint_vec_copy(long int *from, long int *to, long int len);
-void int_vec_copy_to_lint(int *from, long int *to, long int len);
 void lint_vec_copy_to_int(long int *from, int *to, long int len);
-void int_vec_swap(int *v1, int *v2, long int len);
-void int_vec_delete_element_assume_sorted(int *v, int &len, int a);
-void int_vec_complement(int *v, int n, int k);
-// computes the complement to v + k (v must be allocated to n lements)
-void int_vec_complement(int *v, int *w, int n, int k);
-// computes the complement of v[k] w[n - k] 
 void lint_vec_complement(long int *v, long int *w, int n, int k);
-void int_vec_init5(int *v, int a0, int a1, int a2, int a3, int a4);
 void dump_memory_chain(void *allocated_objects);
 void print_vector(std::ostream &ost, int *v, int size);
-int int_vec_minimum(int *v, int len);
 long int lint_vec_minimum(long int *v, int len);
-int int_vec_maximum(int *v, int len);
 long int lint_vec_maximum(long int *v, int len);
-int int_vec_first_difference(int *p, int *q, int len);
 void itoa(char *p, int len_of_p, int i);
 void char_swap(char *p, char *q, int len);
-void int_vec_distribution_compute_and_print(std::ostream &ost, int *v, int v_len);
-void int_vec_distribution(int *v, int len_v, int *&val, int *&mult, int &len);
 void int_distribution_print(std::ostream &ost, int *val, int *mult, int len);
 void int_swap(int& x, int& y);
 void int_set_print(int *v, int len);
 void lint_set_print(long int *v, int len);
 void int_set_print(std::ostream &ost, int *v, int len);
 void lint_set_print(std::ostream &ost, long int *v, int len);
-void int_vec_print(std::ostream &ost, std::vector<int> &v);
-void int_vec_print(std::ostream &ost, int *v, int len);
 void lint_vec_print(std::ostream &ost, long int *v, int len);
 void lint_vec_print(std::ostream &ost, std::vector<long int> &v);
-void int_vec_print_str(std::stringstream &ost, int *v, int len);
-void int_vec_print_as_table(std::ostream &ost, int *v, int len, int width);
 void lint_vec_print_as_table(std::ostream &ost, long int *v, int len, int width);
-void int_vec_print_fully(std::ostream &ost, std::vector<int> &v);
-void int_vec_print_fully(std::ostream &ost, int *v, int len);
 void lint_vec_print_fully(std::ostream &ost, long int *v, int len);
 void lint_vec_print_fully(std::ostream &ost, std::vector<long int> &v);
-void int_vec_print_Cpp(std::ostream &ost, int *v, int len);
-void int_vec_print_GAP(std::ostream &ost, int *v, int len);
-void int_vec_print_classified(int *v, int len);
-void int_vec_print_classified_str(std::stringstream &sstr,
-		int *v, int len, int f_backwards);
 void integer_vec_print(std::ostream &ost, int *v, int len);
 void print_integer_matrix(std::ostream &ost, int *p, int m, int n);
 void print_integer_matrix_width(std::ostream &ost, int *p,
@@ -798,16 +761,13 @@ void int_matrix_make_block_matrix_2x2(int *Mtx, int k,
 // (C D)
 void int_matrix_delete_column_in_place(int *Mtx, int k, int n, int pivot);
 // afterwards, the matrix is k x (n - 1)
-int int_vec_vec_max_log_of_entries(std::vector<std::vector<int> > &p);
 int int_matrix_max_log_of_entries(int *p, int m, int n);
 int lint_matrix_max_log_of_entries(long int *p, int m, int n);
 void int_matrix_print_ost(std::ostream &ost, int *p, int m, int n);
 void int_matrix_print(int *p, int m, int n);
-void int_vec_vec_print(std::vector<std::vector<int> > &p);
 void lint_matrix_print(long int *p, int m, int n);
 void int_matrix_print_tight(int *p, int m, int n);
 void int_matrix_print_ost(std::ostream &ost, int *p, int m, int n, int w);
-void int_vec_vec_print(std::vector<std::vector<int> > &p, int w);
 void int_matrix_print(int *p, int m, int n, int w);
 void lint_matrix_print(long int *p, int m, int n, int w);
 void int_matrix_print_bitwise(int *p, int m, int n);
@@ -831,11 +791,8 @@ void print_set(std::ostream &ost, int size, long int *set);
 void print_set_lint(std::ostream &ost, int size, long int *set);
 void print_incidence_structure(std::ostream &ost,
 		int m, int n, int len, int *S);
-void int_vec_scan(std::string &s, int *&v, int &len);
-void int_vec_scan(const char *s, int *&v, int &len);
 void lint_vec_scan(std::string &s, long int *&v, int &len);
 void lint_vec_scan(const char *s, long int *&v, int &len);
-void int_vec_scan_from_stream(std::istream & is, int *&v, int &len);
 void lint_vec_scan_from_stream(std::istream & is, long int *&v, int &len);
 void scan_permutation_from_string(const char *s, 
 	int *&perm, int &degree, int verbose_level);
@@ -869,9 +826,7 @@ int compare_sets(int *set1, int *set2, int sz1, int sz2);
 //int test_if_sets_are_disjoint(int *set1, int *set2, int sz1, int sz2);
 int test_if_sets_are_disjoint_assuming_sorted(int *set1, int *set2, int sz1, int sz2);
 int test_if_sets_are_disjoint_assuming_sorted_lint(long int *set1, long int *set2, int sz1, int sz2);
-void int_vec_print_to_str(char *str, int *data, int len);
 void lint_vec_print_to_str(char *str, long int *data, int len);
-void int_vec_print_to_str_naked(char *str, int *data, int len);
 void lint_vec_print_to_str_naked(char *str, long int *data, int len);
 int is_csv_file(const char *fname);
 int is_xml_file(const char *fname);
@@ -881,7 +836,7 @@ void chop_string(const char *str, int &argc, char **&argv);
 const char *strip_directory(const char *p);
 int is_all_whitespace(const char *str);
 int is_all_digits(char *p);
-void int_vec_print(int *v, int len);
+//void int_vec_print(int *v, int len);
 int str2int(std::string &str);
 void print_longinteger_after_multiplying(std::ostream &ost, int *factors, int len);
 int my_atoi(char *str);

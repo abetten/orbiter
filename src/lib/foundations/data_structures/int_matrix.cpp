@@ -56,7 +56,7 @@ void int_matrix::allocate_and_init(int m, int n, int *Mtx)
 	M = NEW_int(m * n);
 	int_matrix::m = m;
 	int_matrix::n = n;
-	int_vec_copy(Mtx, M, m * n);
+	Orbiter->Int_vec.copy(Mtx, M, m * n);
 }
 
 int &int_matrix::s_ij(int i, int j)

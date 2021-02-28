@@ -128,7 +128,7 @@ void null_polarity_generator::init(finite_field *F, int n, int verbose_level)
 	if (f_v) {
 		cout << "We found " << nb_gens << " strong generators" << endl;
 		cout << "transversal_length = ";
-		int_vec_print(cout, transversal_length, n);
+		Orbiter->Int_vec.print(cout, transversal_length, n);
 		cout << endl;
 		cout << "group order: ";
 		print_longinteger_after_multiplying(cout, transversal_length, n);
@@ -188,7 +188,7 @@ int null_polarity_generator::count_strong_generators(
 				<< " / " << nb_candidates[depth]
 				<< " which is " << a << endl;
 			}
-		int_vec_copy(Points + a * n, Mtx + depth * n, n);
+		Orbiter->Int_vec.copy(Points + a * n, Mtx + depth * n, n);
 		create_next_candidate_set(depth, 0 /* verbose_level */);
 
 		if (!count_strong_generators(nb, transversal_length,
@@ -210,7 +210,7 @@ int null_polarity_generator::get_strong_generators(
 	if (depth == n) {
 		//cout << "solution " << nb << endl;
 		//int_matrix_print(Mtx, n, n);
-		int_vec_copy(Mtx, Data + nb * n * n, n * n);
+		Orbiter->Int_vec.copy(Mtx, Data + nb * n * n, n * n);
 		nb++;
 		return FALSE;
 		}
@@ -226,7 +226,7 @@ int null_polarity_generator::get_strong_generators(
 				<< " / " << nb_candidates[depth] << " which is "
 				<< a << endl;
 			}
-		int_vec_copy(Points + a * n, Mtx + depth * n, n);
+		Orbiter->Int_vec.copy(Points + a * n, Mtx + depth * n, n);
 		create_next_candidate_set(depth, 0 /* verbose_level */);
 
 		if (!get_strong_generators(Data, nb, first_moved,
@@ -261,7 +261,7 @@ void null_polarity_generator::backtrack_search(
 					<< nb_candidates[depth]
 									 << " which is " << a << endl;
 			}
-		int_vec_copy(Points + a * n, Mtx + depth * n, n);
+		Orbiter->Int_vec.copy(Points + a * n, Mtx + depth * n, n);
 		create_next_candidate_set(depth, 0 /* verbose_level */);
 
 		backtrack_search(nb_sol, depth + 1, verbose_level);
@@ -280,7 +280,7 @@ void null_polarity_generator::create_first_candidate_set(
 		}
 	nb = 0;
 	for (i = 0; i < qn; i++) {
-		int_vec_copy(Points + i * n, v, n);
+		Orbiter->Int_vec.copy(Points + i * n, v, n);
 		if (dot_product(v, v) == 1) {
 			candidates[0][nb++] = i;
 			}
@@ -304,10 +304,10 @@ void null_polarity_generator::create_next_candidate_set(
 				"level=" << level << endl;
 		}
 	nb = 0;
-	int_vec_copy(Mtx + level * n, v, n);
+	Orbiter->Int_vec.copy(Mtx + level * n, v, n);
 	for (i = 0; i < nb_candidates[level]; i++) {
 		ai = candidates[level][i];
-		int_vec_copy(Points + ai * n, w, n);
+		Orbiter->Int_vec.copy(Points + ai * n, w, n);
 		if (dot_product(v, w) == 0) {
 			candidates[level + 1][nb++] = ai;
 			}
@@ -324,18 +324,7 @@ void null_polarity_generator::create_next_candidate_set(
 
 int null_polarity_generator::dot_product(int *u1, int *u2)
 {
-#if 0
-	int c;
-	int i;
-
-	c = 0;
-	for (i = 0; i < n; i++) {
-		c = F->add(c, F->mult(u1[i], u2[i]));
-		}
-	return c;
-#else
 	return F->dot_product(n, u1, u2);
-#endif
 }
 
 }

@@ -27,7 +27,6 @@ semifields : semifields2 ;
 solver : solver2 ; 
 spreads_and_packings : spreads_and_packings2 ; 
 surfaces : surfaces2 ; 
-interfaces : interfaces2 ; 
 
 algebra_and_number_theory2 :  ; cd algebra_and_number_theory; $(MAKE)
 combinatorics2 :  ; cd combinatorics; $(MAKE)

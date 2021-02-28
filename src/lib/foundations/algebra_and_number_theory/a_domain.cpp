@@ -1205,7 +1205,7 @@ void a_domain::matrix_get_kernel(int *M,
 	
 	kernel_cols = NEW_int(k);
 
-	int_vec_complement(base_cols, kernel_cols, n, nb_base_cols);
+	Orbiter->Int_vec.complement(base_cols, kernel_cols, n, nb_base_cols);
 	
 
 	for (i = 0; i < r; i++) {
@@ -1270,7 +1270,7 @@ void a_domain::matrix_get_kernel_as_row_vectors(
 	
 	kernel_cols = NEW_int(k);
 
-	int_vec_complement(base_cols, kernel_cols, n, nb_base_cols);
+	Orbiter->Int_vec.complement(base_cols, kernel_cols, n, nb_base_cols);
 	
 
 	for (i = 0; i < r; i++) {
@@ -1367,7 +1367,7 @@ void a_domain::complete_basis(int *M, int m, int n, int verbose_level)
 
 	kernel_cols = NEW_int(k);
 
-	int_vec_complement(base_cols, kernel_cols, n, rk);
+	Orbiter->Int_vec.complement(base_cols, kernel_cols, n, rk);
 	for (i = rk; i < n; i++) {
 		for (j = 0; j < n; j++) {
 			make_zero(offset(M, i * n + j), 0);

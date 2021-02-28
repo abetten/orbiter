@@ -1165,7 +1165,7 @@ void number_theoretic_transform::paste(int **Xr, int **X, int s, int verbose_lev
 		cout << "algebra_global::paste N[k]=" << N[k] << endl;
 	}
 	X[s] = NEW_int(N[k] * N[k]);
-	int_vec_zero(X[s], N[k] * N[k]);
+	Orbiter->Int_vec.zero(X[s], N[k] * N[k]);
 	i0 = 0;
 	for (h = 0; h < t; h++) {
 		if (f_v) {
@@ -1198,7 +1198,7 @@ void number_theoretic_transform::make_G_matrix(int s, int verbose_level)
 	}
 
 	Gr[s] = NEW_int(N[s + 1] * N[s + 1]);
-	int_vec_zero(Gr[s], N[s + 1] * N[s + 1]);
+	Orbiter->Int_vec.zero(Gr[s], N[s + 1] * N[s + 1]);
 	for (i = 0; i < N[s]; i++) {
 		Gr[s][i * N[s + 1] + i] = 1;
 		Gr[s][i * N[s + 1] + N[s] + i] = 1;
@@ -1222,7 +1222,7 @@ void number_theoretic_transform::make_D_matrix(int s, int verbose_level)
 	}
 
 	Dr[s] = NEW_int(N[s + 1] * N[s + 1]);
-	int_vec_zero(Dr[s], N[s + 1] * N[s + 1]);
+	Orbiter->Int_vec.zero(Dr[s], N[s + 1] * N[s + 1]);
 	omega = Omega[s + 1];
 	gamma = 1;
 	for (i = 0; i < N[s]; i++) {
@@ -1239,7 +1239,7 @@ void number_theoretic_transform::make_D_matrix(int s, int verbose_level)
 	}
 
 	Dvr[s] = NEW_int(N[s + 1] * N[s + 1]);
-	int_vec_zero(Dvr[s], N[s + 1] * N[s + 1]);
+	Orbiter->Int_vec.zero(Dvr[s], N[s + 1] * N[s + 1]);
 	omega = F->inverse(Omega[s + 1]);
 	gamma = 1;
 
@@ -1273,7 +1273,7 @@ void number_theoretic_transform::make_T_matrix(int s, int verbose_level)
 	int Id2[] = {1,0,0,1};
 
 	Tr[s] = NEW_int(N[s + 1] * N[s + 1]);
-	int_vec_zero(Tr[s], N[s + 1] * N[s + 1]);
+	Orbiter->Int_vec.zero(Tr[s], N[s + 1] * N[s + 1]);
 	F->Kronecker_product_square_but_arbitrary(A[s], Id2,
 			N[s], 2, Tr[s], sz, 0 /*verbose_level */);
 	if (sz != N[s + 1]) {
@@ -1282,7 +1282,7 @@ void number_theoretic_transform::make_T_matrix(int s, int verbose_level)
 	}
 
 	Tvr[s] = NEW_int(N[s + 1] * N[s + 1]);
-	int_vec_zero(Tvr[s], N[s + 1] * N[s + 1]);
+	Orbiter->Int_vec.zero(Tvr[s], N[s + 1] * N[s + 1]);
 	F->Kronecker_product_square_but_arbitrary(Av[s], Id2,
 			N[s], 2, Tvr[s], sz, 0 /*verbose_level */);
 	if (sz != N[s + 1]) {
@@ -1306,7 +1306,7 @@ void number_theoretic_transform::make_P_matrix(int s, int verbose_level)
 		cout << "number_theoretic_transform::make_P_matrix s=" << s << endl;
 	}
 	Pr[s] = NEW_int(N[s + 1] * N[s + 1]);
-	int_vec_zero(Pr[s], N[s + 1] * N[s + 1]);
+	Orbiter->Int_vec.zero(Pr[s], N[s + 1] * N[s + 1]);
 	for (i = 0; i < N[s]; i++) {
 		Pr[s][i * N[s + 1] + 2 * i] = 1;
 		Pr[s][(N[s] + i) * N[s + 1] + 2 * i + 1] = 1;
@@ -1327,15 +1327,15 @@ void number_theoretic_transform::multiply_matrix_stack(finite_field *F,
 		cout << "number_theoretic_transform::multiply_matrix_stack nb=" << nb << endl;
 	}
 	if (nb == 1) {
-		int_vec_copy(S[0], Result, sz * sz);
+		Orbiter->Int_vec.copy(S[0], Result, sz * sz);
 	}
 	else {
 		F->mult_matrix_matrix(S[0], S[1], Tmp1, sz, sz, sz, 0 /* verbose_level*/);
 		for (i = 2; i < nb; i++) {
 			F->mult_matrix_matrix(Tmp1, S[i], Tmp2, sz, sz, sz, 0 /* verbose_level*/);
-			int_vec_copy(Tmp2, Tmp1, sz * sz);
+			Orbiter->Int_vec.copy(Tmp2, Tmp1, sz * sz);
 		}
-		int_vec_copy(Tmp1, Result, sz * sz);
+		Orbiter->Int_vec.copy(Tmp1, Result, sz * sz);
 	}
 	if (f_v) {
 		cout << "number_theoretic_transform::multiply_matrix_stack done" << endl;

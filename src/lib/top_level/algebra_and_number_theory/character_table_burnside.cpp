@@ -110,7 +110,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 		class_size[i] = Sch->orbit_len[i];
 		}
 	cout << "class sizes : ";
-	int_vec_print(cout, class_size, nb_classes);
+	Orbiter->Int_vec.print(cout, class_size, nb_classes);
 	cout << endl;
 
 
@@ -171,7 +171,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 
 
 	cout << "We found " << nb_lambda << " integer roots, they are: " << endl;
-	int_vec_print(cout, Lambda, nb_lambda);
+	Orbiter->Int_vec.print(cout, Lambda, nb_lambda);
 	cout << endl;
 	cout << "We found " << nb_mu << " distinct integer roots, they are: " << endl;
 	for (i = 0; i < nb_mu; i++) {
@@ -200,7 +200,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 
 
 	cout << "character degrees : ";
-	int_vec_print(cout, character_degree, nb_classes);
+	Orbiter->Int_vec.print(cout, character_degree, nb_classes);
 	cout << endl;
 
 
@@ -245,14 +245,14 @@ void character_table_burnside::do_it(int n, int verbose_level)
 	for (i = 0; i < nb_classes; i++) {
 
 		cout << "character " << i << " / " << nb_classes << ":" << endl;
-		int_vec_print(cout, character_table + i * nb_classes, nb_classes);
+		Orbiter->Int_vec.print(cout, character_table + i * nb_classes, nb_classes);
 		cout << endl;
 
 
 		int *S, a, t;
 
 		S = NEW_int(t_max + 1);
-		int_vec_zero(S, t_max + 1);
+		Orbiter->Int_vec.zero(S, t_max + 1);
 
 		for (t = 0; t <= t_max; t++) {
 			S[t] = 0;
@@ -265,7 +265,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 				}
 			}
 		cout << "S=";
-		int_vec_print(cout, S + 1, t_max);
+		Orbiter->Int_vec.print(cout, S + 1, t_max);
 		cout << endl;
 
 
@@ -656,7 +656,7 @@ int character_table_burnside::compute_r0(int *N, int nb_classes, int verbose_lev
 
 			cout << "We found " << nb_lambda
 					<< " integer roots, they are: " << endl;
-			int_vec_print(cout, Lambda, nb_lambda);
+			Orbiter->Int_vec.print(cout, Lambda, nb_lambda);
 			cout << endl;
 			cout << "We found " << nb_mu
 					<< " distinct integer roots, they are: " << endl;
@@ -695,7 +695,7 @@ void character_table_burnside::compute_multiplication_constants_center_of_group_
 		}
 
 	N = NEW_int(nb_classes * nb_classes * nb_classes);
-	int_vec_zero(N, nb_classes * nb_classes * nb_classes);
+	Orbiter->Int_vec.zero(N, nb_classes * nb_classes * nb_classes);
 
 
 	for (r = 0; r < nb_classes; r++) {
@@ -758,7 +758,7 @@ void character_table_burnside::compute_Distribution_table(action *A, action_by_c
 
 	Choice = NEW_int(t_max);
 	Distribution = NEW_int((t_max + 1) * nb_classes);
-	int_vec_zero(Distribution, (t_max + 1) * nb_classes);
+	Orbiter->Int_vec.zero(Distribution, (t_max + 1) * nb_classes);
 	Nb = NEW_int(t_max + 1);
 
 	for (t = 1; t <= t_max; t++) {
@@ -767,7 +767,7 @@ void character_table_burnside::compute_Distribution_table(action *A, action_by_c
 
 	if (f_v) {
 		cout << "Nb : ";
-		int_vec_print(cout, Nb + 1, t_max);
+		Orbiter->Int_vec.print(cout, Nb + 1, t_max);
 		cout << endl;
 		}
 
@@ -778,7 +778,7 @@ void character_table_burnside::compute_Distribution_table(action *A, action_by_c
 
 			if (f_vvv) {
 				cout << "h=" << h << " Choice=";
-				int_vec_print(cout, Choice, t);
+				Orbiter->Int_vec.print(cout, Choice, t);
 				cout << endl;
 				}
 
@@ -915,7 +915,7 @@ void character_table_burnside::integral_eigenvalues(int *M, int n,
 		}
 	if (f_v) {
 		cout << "coeffs : ";
-		int_vec_print(cout, A, deg + 1);
+		Orbiter->Int_vec.print(cout, A, deg + 1);
 		cout << endl;
 		}
 
@@ -957,11 +957,11 @@ void character_table_burnside::integral_eigenvalues(int *M, int n,
 					exit(1);
 					}
 				}
-			int_vec_copy(B, A, deg);
+			Orbiter->Int_vec.copy(B, A, deg);
 			deg--;
 			if (f_v) {
 				cout << "after dividing off, the polynomial is: ";
-				int_vec_print(cout, A, deg + 1);
+				Orbiter->Int_vec.print(cout, A, deg + 1);
 				cout << endl;
 				}
 
@@ -972,13 +972,13 @@ void character_table_burnside::integral_eigenvalues(int *M, int n,
 
 	if (f_v) {
 		cout << "after dividing off integer roots, the polynomial is: ";
-		int_vec_print(cout, A, deg + 1);
+		Orbiter->Int_vec.print(cout, A, deg + 1);
 		cout << endl;
 		}
 
 	if (f_v) {
 		cout << "We found " << nb_lambda << " integer roots, they are: " << endl;
-		int_vec_print(cout, Lambda, nb_lambda);
+		Orbiter->Int_vec.print(cout, Lambda, nb_lambda);
 		cout << endl;
 		cout << "We found " << nb_mu << " distinct integer roots, they are: " << endl;
 		for (i = 0; i < nb_mu; i++) {

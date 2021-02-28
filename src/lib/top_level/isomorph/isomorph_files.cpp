@@ -138,7 +138,7 @@ void isomorph::count_solutions_from_clique_finder_case_by_case(
 	solution_first = NEW_int(nb_starter + 1);
 	solution_len = NEW_int(nb_starter);
 
-	int_vec_zero(solution_len, nb_starter);
+	Orbiter->Int_vec.zero(solution_len, nb_starter);
 	N = 0;
 	for (i = 0; i < nb_files; i++) {
 		int nb_solutions;
@@ -949,7 +949,7 @@ void isomorph::count_solutions(int nb_files, std::string *fname,
 		cout << "isomorph::count_solutions "
 				"after count_solutions2" << endl;
 		cout << "case_len: ";
-		int_vec_print(cout, solution_len, nb_starter);
+		Orbiter->Int_vec.print(cout, solution_len, nb_starter);
 		cout << endl;
 		}
 	cout << "total computing time for the search : ";
@@ -1691,7 +1691,7 @@ void isomorph::print_isomorphism_types(int f_select,
 		cout << "Computed all orbits on the set, found "
 				<< Orb.nb_orbits << " orbits" << endl;
 		cout << "orbit lengths: ";
-		int_vec_print(cout, Orb.orbit_len, Orb.nb_orbits);
+		Orbiter->Int_vec.print(cout, Orb.orbit_len, Orb.nb_orbits);
 		cout << endl;
 	
 		if (print_set_function) {
@@ -1825,7 +1825,7 @@ void isomorph::induced_action_on_set_and_kernel(
 	
 		file << "The kernel has $" << Orb.nb_orbits
 				<< "$ orbits on the quadric.\\\\" << endl;
-		int_vec_distribution(Orb.orbit_len, Orb.nb_orbits,
+		Orbiter->Int_vec.distribution(Orb.orbit_len, Orb.nb_orbits,
 				val, mult, len);
 		file << "The orbit length are $[";
 		for (i = len - 1; i >= 0; i--) {
@@ -1900,7 +1900,7 @@ void isomorph::read_event_file(const char *event_file_name,
 			nb_completed_cases, completed_cases, verbose_level);
 	cout << "file " << event_file_name << " holds "
 			<< nb_completed_cases << " completed cases: ";
-	int_vec_print(cout, completed_cases, nb_completed_cases);
+	Orbiter->Int_vec.print(cout, completed_cases, nb_completed_cases);
 	cout << endl;
 	for (i = 0; i < nb_completed_cases; i++) {
 		event_file_read_case(event_file_name,

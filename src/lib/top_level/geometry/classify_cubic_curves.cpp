@@ -264,7 +264,7 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 				<< nb << " / " << nb_orbits_on_sets
 				<< " orbits where the rank is 9" << endl;
 		cout << "Idx=";
-		int_vec_print(cout, Idx, nb);
+		Orbiter->Int_vec.print(cout, Idx, nb);
 		cout << endl;
 	}
 
@@ -299,7 +299,7 @@ void classify_cubic_curves::downstep(int verbose_level)
 		cout << "classify_cubic_curves::downstep "
 				"after test_orbits" << endl;
 		cout << "Idx=";
-		int_vec_print(cout, Idx, nb);
+		Orbiter->Int_vec.print(cout, Idx, nb);
 		cout << endl;
 	}
 
@@ -374,10 +374,10 @@ void classify_cubic_curves::downstep(int verbose_level)
 		if (f_vv) {
 			cout << "The starter configuration is good, "
 					"a cubic has been computed:" << endl;
-			int_vec_print(cout, eqn, 10);
+			Orbiter->Int_vec.print(cout, eqn, 10);
 		}
 
-		int_vec_copy_to_lint(eqn, dataset + 9, 10);
+		Orbiter->Int_vec.copy_to_lint(eqn, dataset + 9, 10);
 
 
 		Flag_orbits->Flag_orbit_node[nb_flag_orbits].init(
@@ -449,7 +449,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 	type = NEW_int(CCA->CC->P->N_lines);
 
 	f_processed = NEW_int(Flag_orbits->nb_flag_orbits);
-	int_vec_zero(f_processed, Flag_orbits->nb_flag_orbits);
+	Orbiter->Int_vec.zero(f_processed, Flag_orbits->nb_flag_orbits);
 	nb_processed = 0;
 
 	Curves = NEW_OBJECT(classification_step);
@@ -525,7 +525,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 
 		if (f_v) {
 			cout << "equation:";
-			int_vec_print(cout, eqn, 10);
+			Orbiter->Int_vec.print(cout, eqn, 10);
 			cout << endl;
 		}
 		S = Flag_orbits->Flag_orbit_node[f].gens->create_copy();
@@ -609,7 +609,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 				cout << "cannot find orbit " << orbit_index
 						<< " in Po" << endl;
 				cout << "Po=";
-				int_vec_print(cout, Po, Flag_orbits->nb_flag_orbits);
+				Orbiter->Int_vec.print(cout, Po, Flag_orbits->nb_flag_orbits);
 				cout << endl;
 				exit(1);
 			}
@@ -692,7 +692,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 			if (f_v) {
 				cout << "classify_cubic_curves::upstep "
 						"Aut_gens tl = ";
-				int_vec_print(cout,
+				Orbiter->Int_vec.print(cout,
 						Aut_gens->tl, Aut_gens->A->base_len());
 				cout << endl;
 			}
@@ -1014,7 +1014,7 @@ void classify_cubic_curves::family1_recognize(int *Iso_type,
 	for (e = 0; e < F->q; e++) {
 
 #if 1
-		int_vec_zero(eqn, 10);
+		Orbiter->Int_vec.zero(eqn, 10);
 		// 0 = x0x1(x0 + x1) + ex2^3
 		// 0 = x0^2x1 + x0x1^2 + ex2^3
 		// 0 = X^2Y + XY^2 + eZ^3
@@ -1064,7 +1064,7 @@ void classify_cubic_curves::family2_recognize(int *Iso_type,
 	for (e = 0; e < F->q; e++) {
 
 #if 1
-		int_vec_zero(eqn, 10);
+		Orbiter->Int_vec.zero(eqn, 10);
 		// 0 = x0x1(x0 + x1 + x2) + ex2^3
 		// 0 = x0^2x1 + x0x1^2 + x1x2x3 + ex2^3
 		// 0 = X^2Y + XY^2 + XYZ + eZ^3
@@ -1117,7 +1117,7 @@ void classify_cubic_curves::family3_recognize(int *Iso_type,
 	for (e = 0; e < F->q; e++) {
 
 #if 1
-		int_vec_zero(eqn, 10);
+		Orbiter->Int_vec.zero(eqn, 10);
 		// 0 = x0x1x2 + e(x0 + x1 + x2)
 		// 0 = e(x0^3 + x1^3 + x2^3)
 		// + 3e(x0^2x1 + x0^2x2 + x1^2x0 + x1^2x2 + x2^2x0 + x2^2x1)
@@ -1178,7 +1178,7 @@ void classify_cubic_curves::familyE_recognize(int *Iso_type,
 	for (d = 0; d < F->q; d++) {
 
 #if 1
-		int_vec_zero(eqn, 10);
+		Orbiter->Int_vec.zero(eqn, 10);
 		// 0 = x2^2x1 + x0^3 - dx1^3
 		// 0 = Z^2Y + X^3 - dY^3
 
@@ -1227,7 +1227,7 @@ void classify_cubic_curves::familyH_recognize(int *Iso_type,
 	for (e = 0; e < F->q; e++) {
 
 #if 1
-		int_vec_zero(eqn, 10);
+		Orbiter->Int_vec.zero(eqn, 10);
 		// 0 = x2^2x1 + x0^3 + ex0x1^2
 		// 0 = Z^2Y + X^3 + eXY^2
 
@@ -1278,7 +1278,7 @@ void classify_cubic_curves::familyG_recognize(int *Iso_type,
 		for (d = 0; d < F->q; d++) {
 
 #if 1
-			int_vec_zero(eqn, 10);
+			Orbiter->Int_vec.zero(eqn, 10);
 			// 0 = x2^2x1 + x0^3 + cx0x1^2 + dx1^3
 			// 0 = Z^2Y + X^3 + cXY^2 + dY^3
 

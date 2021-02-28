@@ -84,7 +84,7 @@ void isomorph_read_statistic_files(
 			<< " starter cases" << endl;
 	 
 	Stats = NEW_int(6 * Iso.nb_starter);
-	int_vec_zero(Stats, 6 * Iso.nb_starter);
+	Orbiter->Int_vec.zero(Stats, 6 * Iso.nb_starter);
 	for (i = 0; i < Iso.nb_starter; i++) {
 		Stats[i * 6 + 0] = -1;
 		}
@@ -152,7 +152,7 @@ void isomorph_read_statistic_files(
 	h = 0;
 	for (i = 0; i < Iso.nb_starter; i++) {
 		if (Stats[i * 6 + 1]) {
-			int_vec_copy(Stats + 6 * i, Stats_short + 6 * h, 6);
+			Orbiter->Int_vec.copy(Stats + 6 * i, Stats_short + 6 * h, 6);
 			Stats_short[h * 6 + 0] = i;
 			h++;
 			}

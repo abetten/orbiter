@@ -67,7 +67,7 @@ void set_of_sets_lint::init_simple(long int underlying_set_size,
 	for (i = 0; i < nb_sets; i++) {
 		Sets[i] = NULL;
 		}
-	int_vec_zero(Set_size, nb_sets);
+	Orbiter->Int_vec.zero(Set_size, nb_sets);
 }
 
 void set_of_sets_lint::init(long int underlying_set_size,

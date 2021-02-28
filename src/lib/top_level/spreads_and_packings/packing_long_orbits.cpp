@@ -138,7 +138,7 @@ void packing_long_orbits::list_of_cases_from_file(int verbose_level)
 	int total = 0;
 
 	Nb = NEW_int(m);
-	int_vec_zero(Nb, m);
+	Orbiter->Int_vec.zero(Nb, m);
 
 	std::vector<std::vector<std::vector<int> > > Packings_by_case;
 
@@ -516,7 +516,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 			exit(1);
 		}
 
-		cmd.assign(foundations::The_Orbiter_session->orbiter_path);
+		cmd.assign(Orbiter->orbiter_path);
 		cmd.append("/orbiter.out -v 2 -create_graph -load_from_file ");
 		cmd.append(fname_graph);
 		cmd.append(" -end -graph_theoretic_activity -find_cliques -target_size ");
@@ -637,7 +637,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 
 		int *iso_type;
 		iso_type = NEW_int(Orbits->nb_orbits * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads);
-		int_vec_zero(iso_type, Orbits->nb_orbits * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads);
+		Orbiter->Int_vec.zero(iso_type, Orbits->nb_orbits * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads);
 
 		int idx, j;
 

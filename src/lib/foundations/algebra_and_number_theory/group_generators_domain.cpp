@@ -1209,7 +1209,7 @@ void group_generators_domain::projective_matrix_group_base_and_orbits(int n, fin
 	if (f_v) {
 		cout << "group_generators_domain::projective_matrix_group_base_and_orbits "
 				"transversal_length: ";
-		int_vec_print(cout, transversal_length, base_len);
+		Orbiter->Int_vec.print(cout, transversal_length, base_len);
 		cout << endl;
 	}
 	if (f_semilinear) {
@@ -1312,7 +1312,7 @@ void group_generators_domain::projective_matrix_group_base_and_orbits(int n, fin
 		cout << endl;
 		cout << "projective_matrix_group_base_and_orbits "
 				"transversal_length: ";
-		int_vec_print(cout, transversal_length, base_len);
+		Orbiter->Int_vec.print(cout, transversal_length, base_len);
 		cout << endl;
 		}
 	if (f_v) {
@@ -1379,7 +1379,7 @@ void group_generators_domain::projective_matrix_group_base_and_transversal_lengt
 		cout << endl;
 		cout << "finite_field::projective_matrix_group_base_and_transversal_length "
 				"transversal_length: ";
-		int_vec_print(cout, transversal_length, base_len);
+		Orbiter->Int_vec.print(cout, transversal_length, base_len);
 		cout << endl;
 	}
 	if (f_v) {
@@ -1427,7 +1427,7 @@ void group_generators_domain::affine_matrix_group_base_and_transversal_length(in
 		cout << endl;
 		cout << "finite_field::affine_matrix_group_base_and_transversal_length "
 				"transversal_length: ";
-		int_vec_print(cout, transversal_length, base_len);
+		Orbiter->Int_vec.print(cout, transversal_length, base_len);
 		cout << endl;
 	}
 	if (f_v) {
@@ -1476,7 +1476,7 @@ void group_generators_domain::general_linear_matrix_group_base_and_transversal_l
 		cout << endl;
 		cout << "group_generators_domain::general_linear_matrix_group_base_and_"
 				"transversal_length transversal_length: ";
-		int_vec_print(cout, transversal_length, base_len);
+		Orbiter->Int_vec.print(cout, transversal_length, base_len);
 		cout << endl;
 	}
 	if (f_v) {
@@ -1522,7 +1522,7 @@ void group_generators_domain::strong_generators_for_projective_linear_group(
 	if (f_semilinear) {
 		F->identity_matrix(M, n);
 		M[n * n] = 1;
-		int_vec_copy(M, data + cur * size, size);
+		Orbiter->Int_vec.copy(M, data + cur * size, size);
 		cur++;
 	}
 
@@ -1539,7 +1539,7 @@ void group_generators_domain::strong_generators_for_projective_linear_group(
 			if (f_semilinear) {
 				M[n * n] = 0;
 			}
-			int_vec_copy(M, data + cur * size, size);
+			Orbiter->Int_vec.copy(M, data + cur * size, size);
 			cur++;
 		}
 	}
@@ -1556,7 +1556,7 @@ void group_generators_domain::strong_generators_for_projective_linear_group(
 			if (f_semilinear) {
 				M[n * n] = 0;
 			}
-			int_vec_copy(M, data + cur * size, size);
+			Orbiter->Int_vec.copy(M, data + cur * size, size);
 			cur++;
 		}
 	}
@@ -1574,7 +1574,7 @@ void group_generators_domain::strong_generators_for_projective_linear_group(
 		if (f_semilinear) {
 			M[n * n] = 0;
 		}
-		int_vec_copy(M, data + cur * size, size);
+		Orbiter->Int_vec.copy(M, data + cur * size, size);
 		cur++;
 	}
 
@@ -1628,7 +1628,7 @@ void group_generators_domain::strong_generators_for_affine_linear_group(
 
 	cur = 0;
 	if (f_semilinear) {
-		int_vec_zero(data + cur * size, size);
+		Orbiter->Int_vec.zero(data + cur * size, size);
 		F->identity_matrix(data + cur * size, n);
 		data[cur * size + n * n + n] = 1;
 		cur++;
@@ -1641,7 +1641,7 @@ void group_generators_domain::strong_generators_for_affine_linear_group(
 					"(e=" << F->e << "):" << endl;
 		}
 		for (u = 0; u < F->e; u++) {
-			int_vec_zero(data + cur * size, size);
+			Orbiter->Int_vec.zero(data + cur * size, size);
 			F->identity_matrix(data + cur * size, n);
 
 			data[cur * size + (n - 1) * n + h] = NT.i_power_j(F->p, u);
@@ -1659,7 +1659,7 @@ void group_generators_domain::strong_generators_for_affine_linear_group(
 			cout << "generators for primitive element "
 					"on the last diagonal:" << endl;
 		}
-		int_vec_zero(data + cur * size, size);
+		Orbiter->Int_vec.zero(data + cur * size, size);
 		F->identity_matrix(data + cur * size, n);
 
 		data[cur * size + h * n + h] = F->primitive_root();
@@ -1675,7 +1675,7 @@ void group_generators_domain::strong_generators_for_affine_linear_group(
 		if (f_vv) {
 			cout << "generators for swaps along the diagonal:" << endl;
 		}
-		int_vec_zero(data + cur * size, size);
+		Orbiter->Int_vec.zero(data + cur * size, size);
 		F->identity_matrix(data + cur * size, n);
 		data[cur * size + h * n + h] = 0;
 		data[cur * size + h * n + h + 1] = 1;
@@ -1690,7 +1690,7 @@ void group_generators_domain::strong_generators_for_affine_linear_group(
 	// the translations:
 	for (h = 0; h < n; h++) {
 		for (u = 0; u < F->e; u++) {
-			int_vec_zero(data + cur * size, size);
+			Orbiter->Int_vec.zero(data + cur * size, size);
 			F->identity_matrix(data + cur * size, n);
 
 			data[cur * size + n * n + h] = NT.i_power_j(F->p, u);
@@ -1746,7 +1746,7 @@ void group_generators_domain::strong_generators_for_general_linear_group(
 
 	cur = 0;
 	if (f_semilinear) {
-		int_vec_zero(data + cur * size, size);
+		Orbiter->Int_vec.zero(data + cur * size, size);
 		F->identity_matrix(data + cur * size, n);
 		data[cur * size + n * n] = 1;
 		cur++;
@@ -1759,7 +1759,7 @@ void group_generators_domain::strong_generators_for_general_linear_group(
 					"(e=" << F->e << "):" << endl;
 		}
 		for (u = 0; u < F->e; u++) {
-			int_vec_zero(data + cur * size, size);
+			Orbiter->Int_vec.zero(data + cur * size, size);
 			F->identity_matrix(data + cur * size, n);
 
 			data[cur * size + (n - 1) * n + h] = NT.i_power_j(F->p, u);
@@ -1777,7 +1777,7 @@ void group_generators_domain::strong_generators_for_general_linear_group(
 			cout << "generators for primitive element "
 					"on the last diagonal:" << endl;
 		}
-		int_vec_zero(data + cur * size, size);
+		Orbiter->Int_vec.zero(data + cur * size, size);
 		F->identity_matrix(data + cur * size, n);
 
 		data[cur * size + h * n + h] = F->primitive_root();
@@ -1793,7 +1793,7 @@ void group_generators_domain::strong_generators_for_general_linear_group(
 		if (f_vv) {
 			cout << "generators for swaps along the diagonal:" << endl;
 		}
-		int_vec_zero(data + cur * size, size);
+		Orbiter->Int_vec.zero(data + cur * size, size);
 		F->identity_matrix(data + cur * size, n);
 		data[cur * size + h * n + h] = 0;
 		data[cur * size + h * n + h + 1] = 1;
@@ -1892,7 +1892,7 @@ void group_generators_domain::generators_for_parabolic_subgroup(
 	if (f_semilinear) {
 		F->identity_matrix(M, n);
 		M[n * n] = 1;
-		int_vec_copy(M, data + cur * size, size);
+		Orbiter->Int_vec.copy(M, data + cur * size, size);
 		cur++;
 	}
 
@@ -1909,7 +1909,7 @@ void group_generators_domain::generators_for_parabolic_subgroup(
 			if (f_semilinear) {
 				M[n * n] = 0;
 			}
-			int_vec_copy(M, data + cur * size, size);
+			Orbiter->Int_vec.copy(M, data + cur * size, size);
 			cur++;
 		}
 	}
@@ -1926,7 +1926,7 @@ void group_generators_domain::generators_for_parabolic_subgroup(
 			if (f_semilinear) {
 				M[n * n] = 0;
 			}
-			int_vec_copy(M, data + cur * size, size);
+			Orbiter->Int_vec.copy(M, data + cur * size, size);
 			cur++;
 		}
 	}
@@ -1939,7 +1939,7 @@ void group_generators_domain::generators_for_parabolic_subgroup(
 			if (f_semilinear) {
 				M[n * n] = 0;
 			}
-			int_vec_copy(M, data + cur * size, size);
+			Orbiter->Int_vec.copy(M, data + cur * size, size);
 			cur++;
 		}
 	}
@@ -1957,7 +1957,7 @@ void group_generators_domain::generators_for_parabolic_subgroup(
 				if (f_semilinear) {
 					M[n * n] = 0;
 				}
-				int_vec_copy(M, data + cur * size, size);
+				Orbiter->Int_vec.copy(M, data + cur * size, size);
 				cur++;
 			}
 		}
@@ -1977,7 +1977,7 @@ void group_generators_domain::generators_for_parabolic_subgroup(
 		if (f_semilinear) {
 			M[n * n] = 0;
 		}
-		int_vec_copy(M, data + cur * size, size);
+		Orbiter->Int_vec.copy(M, data + cur * size, size);
 		cur++;
 	}
 	for (h = k - 2; h >= 0; h--) {
@@ -1989,7 +1989,7 @@ void group_generators_domain::generators_for_parabolic_subgroup(
 		if (f_semilinear) {
 			M[n * n] = 0;
 		}
-		int_vec_copy(M, data + cur * size, size);
+		Orbiter->Int_vec.copy(M, data + cur * size, size);
 		cur++;
 	}
 
@@ -2053,7 +2053,7 @@ void group_generators_domain::generators_for_stabilizer_of_three_collinear_point
 	if (f_semilinear) {
 		F->identity_matrix(M, n);
 		M[n * n] = 1;
-		int_vec_copy(M, data + cur * size, size);
+		Orbiter->Int_vec.copy(M, data + cur * size, size);
 		cur++;
 	}
 
@@ -2070,7 +2070,7 @@ void group_generators_domain::generators_for_stabilizer_of_three_collinear_point
 	if (f_semilinear) {
 		M[n * n] = 0;
 	}
-	int_vec_copy(M, data + cur * size, size);
+	Orbiter->Int_vec.copy(M, data + cur * size, size);
 	cur++;
 	F->identity_matrix(M, n);
 	M[0 * 4 + 0] = 0;
@@ -2080,7 +2080,7 @@ void group_generators_domain::generators_for_stabilizer_of_three_collinear_point
 	if (f_semilinear) {
 		M[n * n] = 0;
 	}
-	int_vec_copy(M, data + cur * size, size);
+	Orbiter->Int_vec.copy(M, data + cur * size, size);
 	cur++;
 	F->identity_matrix(M, n);
 	M[0 * 4 + 0] = F->primitive_root();
@@ -2090,7 +2090,7 @@ void group_generators_domain::generators_for_stabilizer_of_three_collinear_point
 	if (f_semilinear) {
 		M[n * n] = 0;
 	}
-	int_vec_copy(M, data + cur * size, size);
+	Orbiter->Int_vec.copy(M, data + cur * size, size);
 	cur++;
 
 	// scalars in bottom right:
@@ -2099,7 +2099,7 @@ void group_generators_domain::generators_for_stabilizer_of_three_collinear_point
 	if (f_semilinear) {
 		M[n * n] = 0;
 	}
-	int_vec_copy(M, data + cur * size, size);
+	Orbiter->Int_vec.copy(M, data + cur * size, size);
 	cur++;
 
 	// lower left block:
@@ -2111,7 +2111,7 @@ void group_generators_domain::generators_for_stabilizer_of_three_collinear_point
 				if (f_semilinear) {
 					M[n * n] = 0;
 				}
-				int_vec_copy(M, data + cur * size, size);
+				Orbiter->Int_vec.copy(M, data + cur * size, size);
 				cur++;
 			}
 		}
@@ -2126,7 +2126,7 @@ void group_generators_domain::generators_for_stabilizer_of_three_collinear_point
 	if (f_semilinear) {
 		M[n * n] = 0;
 	}
-	int_vec_copy(M, data + cur * size, size);
+	Orbiter->Int_vec.copy(M, data + cur * size, size);
 	cur++;
 
 	// PGL2 in lower right, bottom row
@@ -2136,7 +2136,7 @@ void group_generators_domain::generators_for_stabilizer_of_three_collinear_point
 		if (f_semilinear) {
 			M[n * n] = 0;
 		}
-		int_vec_copy(M, data + cur * size, size);
+		Orbiter->Int_vec.copy(M, data + cur * size, size);
 		cur++;
 	}
 
@@ -2200,7 +2200,7 @@ void group_generators_domain::generators_for_stabilizer_of_triangle_in_PGL4(
 	if (f_semilinear) {
 		F->identity_matrix(M, n);
 		M[n * n] = 1;
-		int_vec_copy(M, data + cur * size, size);
+		Orbiter->Int_vec.copy(M, data + cur * size, size);
 		cur++;
 	}
 
@@ -2217,7 +2217,7 @@ void group_generators_domain::generators_for_stabilizer_of_triangle_in_PGL4(
 	if (f_semilinear) {
 		M[n * n] = 0;
 	}
-	int_vec_copy(M, data + cur * size, size);
+	Orbiter->Int_vec.copy(M, data + cur * size, size);
 	cur++;
 	F->identity_matrix(M, n);
 	M[0 * 4 + 0] = 0;
@@ -2229,7 +2229,7 @@ void group_generators_domain::generators_for_stabilizer_of_triangle_in_PGL4(
 	if (f_semilinear) {
 		M[n * n] = 0;
 	}
-	int_vec_copy(M, data + cur * size, size);
+	Orbiter->Int_vec.copy(M, data + cur * size, size);
 	cur++;
 
 	// scalars in top left block:
@@ -2238,21 +2238,21 @@ void group_generators_domain::generators_for_stabilizer_of_triangle_in_PGL4(
 	if (f_semilinear) {
 		M[n * n] = 0;
 	}
-	int_vec_copy(M, data + cur * size, size);
+	Orbiter->Int_vec.copy(M, data + cur * size, size);
 	cur++;
 	F->identity_matrix(M, n);
 	M[1 * 4 + 1] = F->primitive_root();
 	if (f_semilinear) {
 		M[n * n] = 0;
 	}
-	int_vec_copy(M, data + cur * size, size);
+	Orbiter->Int_vec.copy(M, data + cur * size, size);
 	cur++;
 	F->identity_matrix(M, n);
 	M[2 * 4 + 2] = F->primitive_root();
 	if (f_semilinear) {
 		M[n * n] = 0;
 	}
-	int_vec_copy(M, data + cur * size, size);
+	Orbiter->Int_vec.copy(M, data + cur * size, size);
 	cur++;
 
 	// scalars bottom right
@@ -2261,7 +2261,7 @@ void group_generators_domain::generators_for_stabilizer_of_triangle_in_PGL4(
 	if (f_semilinear) {
 		M[n * n] = 0;
 	}
-	int_vec_copy(M, data + cur * size, size);
+	Orbiter->Int_vec.copy(M, data + cur * size, size);
 	cur++;
 
 	// lower left block
@@ -2272,7 +2272,7 @@ void group_generators_domain::generators_for_stabilizer_of_triangle_in_PGL4(
 			if (f_semilinear) {
 				M[n * n] = 0;
 			}
-			int_vec_copy(M, data + cur * size, size);
+			Orbiter->Int_vec.copy(M, data + cur * size, size);
 			cur++;
 		}
 	}

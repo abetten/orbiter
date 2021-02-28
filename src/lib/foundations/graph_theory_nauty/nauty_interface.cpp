@@ -24,7 +24,8 @@ using namespace std;
 // 100000 is too big for Linux under gcc, but OK for Macintosh with LLVM
 
 
-#define MAXN 22000
+#define MAXN 50000
+//#define MAXN 22000
 
 
 // must be defined before reading nauty.h

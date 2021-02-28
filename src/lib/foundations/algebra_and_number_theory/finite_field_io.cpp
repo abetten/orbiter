@@ -793,6 +793,7 @@ void finite_field::cheat_sheet_subfields(ostream &f, int verbose_level)
 		unipoly_domain FX(&GFp);
 		unipoly_object m;
 
+
 		FX.create_object_by_rank_string(m, polynomial, verbose_level - 2);
 		f << "$";
 		FX.print_object(m, f);
@@ -834,10 +835,12 @@ void finite_field::report_subfields(std::ostream &ost, int verbose_level)
 
 
 			ost << "\\hline" << endl;
-			int poly;
+			long int poly;
 
 			poly = compute_subfield_polynomial(
-					NT.i_power_j(p, h), verbose_level);
+					NT.i_power_j(p, h),
+					FALSE, cout,
+					verbose_level);
 			{
 				finite_field GFp;
 				GFp.finite_field_init(p, 0);
@@ -882,19 +885,19 @@ void finite_field::report_subfields_detailed(std::ostream &ost, int verbose_leve
 			continue;
 		}
 
-		int poly_numeric, q0;
+		long int poly_numeric, q0;
 		finite_field *Fq;
 
 		Fq = NEW_OBJECT(finite_field);
 
 		q0 = NT.i_power_j(p, h);
 
-		poly_numeric = compute_subfield_polynomial(q0, verbose_level);
+		poly_numeric = compute_subfield_polynomial(q0, TRUE, ost, verbose_level);
 
 
 		char str[1000];
 
-		sprintf(str, "%d", poly_numeric);
+		sprintf(str, "%ld", poly_numeric);
 		string poly_text;
 
 		poly_text.assign(str);
@@ -1331,7 +1334,7 @@ void finite_field::display_table_of_projective_points2(
 	for (i = 0; i < nb_pts; i++) {
 		PG_element_unrank_modified_lint(coords, 1, len, Pts[i]);
 		ost << i << " & " << Pts[i] << " & ";
-		int_vec_print(ost, coords, len);
+		Orbiter->Int_vec.print(ost, coords, len);
 		ost << "\\\\" << endl;
 		if (((i + 1) % 30) == 0) {
 			ost << "\\hline" << endl;
@@ -1364,7 +1367,7 @@ void finite_field::display_table_of_projective_points_easy(
 	ost << "\\hline" << endl;
 	for (i = 0; i < nb_pts; i++) {
 		PG_element_unrank_modified_lint(coords, 1, len, Pts[i]);
-		int_vec_print(ost, coords, len);
+		Orbiter->Int_vec.print(ost, coords, len);
 		ost << "\\\\" << endl;
 		if (((i + 1) % 30) == 0) {
 			ost << "\\hline" << endl;

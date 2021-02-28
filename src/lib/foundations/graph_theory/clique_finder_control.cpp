@@ -116,7 +116,7 @@ int clique_finder_control::parse_arguments(
 				}
 			}
 			cout << "-restrictions ";
-			int_vec_print(cout, restrictions, 3 * nb_restrictions);
+			Orbiter->Int_vec.print(cout, restrictions, 3 * nb_restrictions);
 			cout << endl;
 		}
 		else if (stringcmp(argv[i], "-end") == 0) {
@@ -352,7 +352,7 @@ void clique_finder_control::all_cliques_weighted(colored_graph *CG,
 	int i;
 
 
-	int_vec_scan(weights_string, weights, nb_weights);
+	Orbiter->Int_vec.scan(weights_string, weights, nb_weights);
 
 	if (CG->nb_colors + 1 != nb_weights) {
 		cout << "CG.nb_colors + 1 != nb_weights" << endl;
@@ -367,7 +367,7 @@ void clique_finder_control::all_cliques_weighted(colored_graph *CG,
 
 	cout << "target_value = " << target_value << endl;
 	cout << "the weights are ";
-	int_vec_print(cout, weights, nb_weights);
+	Orbiter->Int_vec.print(cout, weights, nb_weights);
 	cout << endl;
 
 	if (nb_weights != 2) {
@@ -401,7 +401,7 @@ void clique_finder_control::all_cliques_weighted(colored_graph *CG,
 	cout << "The solutions are:" << endl;
 	for (i = 0; i < nb_sol; i++) {
 		cout << i << " : ";
-		int_vec_print(cout, Sol_weights + i * nb_weights, nb_weights);
+		Orbiter->Int_vec.print(cout, Sol_weights + i * nb_weights, nb_weights);
 		cout << endl;
 	}
 

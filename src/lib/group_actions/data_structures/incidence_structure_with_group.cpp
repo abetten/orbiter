@@ -204,7 +204,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 	}
 	FREE_int(can_labeling);
 
-	int_vec_copy_to_lint(Base, Base_lint, Base_length);
+	Orbiter->Int_vec.copy_to_lint(Base, Base_lint, Base_length);
 
 	if (f_v) {
 		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form "

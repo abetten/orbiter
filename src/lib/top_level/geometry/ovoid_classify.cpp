@@ -298,7 +298,7 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 		cout << "color table:" << endl;
 		for (i = 0; i < N; i++) {
 			cout << i << " / " << N << " : ";
-			int_vec_print(cout, v, Descr->d);
+			Orbiter->Int_vec.print(cout, v, Descr->d);
 
 			O->unrank_point(v, 1, i, 0);
 			fxy = O->evaluate_bilinear_form(u, v, 1);
@@ -351,7 +351,7 @@ void ovoid_classify::early_test_func(long int *S, int len,
 						0/*verbose_level - 4*/);
 				cout << "candidate " << i << "="
 						<< candidates[i] << ": ";
-				int_vec_print(cout, u, Descr->d);
+				Orbiter->Int_vec.print(cout, u, Descr->d);
 				cout << endl;
 				}
 			}
@@ -405,7 +405,7 @@ void ovoid_classify::print(ostream &ost, long int *S, int len)
 	for (i = 0; i < len; i++) {
 		for (i = 0; i < len; i++) {
 			O->unrank_point(u, 1, S[i], 0);
-			int_vec_print(ost, u, Descr->d - 1);
+			Orbiter->Int_vec.print(ost, u, Descr->d - 1);
 			ost << endl;
 			}
 		}
@@ -824,10 +824,10 @@ void ovoid_classify::compute_coloring(
 	}
 	Sorting.int_vec_heapsort(colors, starter_size - 1);
 	cout << "colors:";
-	int_vec_print(cout, colors, starter_size - 1);
+	Orbiter->Int_vec.print(cout, colors, starter_size - 1);
 	cout << endl;
 	nb_colors_used = nb_colors - (starter_size - 1);
-	int_vec_complement(colors, nb_colors, starter_size - 1);
+	Orbiter->Int_vec.complement(colors, nb_colors, starter_size - 1);
 	for (i = 0; i < nb_colors; i++) {
 		c = colors[i];
 		color_pos[c] = i;

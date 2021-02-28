@@ -154,7 +154,7 @@ void singer_cycle::init(int n, finite_field *F, action *A, action *A2, int verbo
 	
 	if (f_v) {
 		cout << "singer_cycle::init coefficients: ";
-		int_vec_print(cout, poly_coeffs, n + 1);
+		Orbiter->Int_vec.print(cout, poly_coeffs, n + 1);
 		cout << endl;
 	}
 
@@ -248,7 +248,7 @@ void singer_cycle::init_lines(int verbose_level)
 		for (i = 0; i < P->N_points; i++) {
 			cout << i << " : " << singer_point_list[i] << " : ";
 			P->unrank_point(v, singer_point_list[i]);
-			int_vec_print(cout, v, n);
+			Orbiter->Int_vec.print(cout, v, n);
 			cout << endl;
 		}
 	}
@@ -269,7 +269,7 @@ void singer_cycle::init_lines(int verbose_level)
 				}
 			}
 			cout << "points on this line in powers of singer cycle: ";
-			int_vec_print(cout, line, h);
+			Orbiter->Int_vec.print(cout, line, h);
 			cout << endl;
 		}
 	}
@@ -303,13 +303,13 @@ void singer_cycle::init_lines(int verbose_level)
 	}
 	if (f_v) {
 		cout << "line_orbit_reps:";
-		int_vec_print(cout, line_orbit_reps, nb_line_orbits);
+		Orbiter->Int_vec.print(cout, line_orbit_reps, nb_line_orbits);
 		cout << endl;
 		cout << "line_orbit_len:";
-		int_vec_print(cout, line_orbit_len, nb_line_orbits);
+		Orbiter->Int_vec.print(cout, line_orbit_len, nb_line_orbits);
 		cout << endl;
 		cout << "line_orbit_first:";
-		int_vec_print(cout, line_orbit_first, nb_line_orbits);
+		Orbiter->Int_vec.print(cout, line_orbit_first, nb_line_orbits);
 		cout << endl;
 	}
 	h = 0;

@@ -69,12 +69,12 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 			cout << "orthogonal_space_activity::perform_activity before OA->report" << endl;
 		}
 
-		if (!The_Orbiter_session->f_draw_options) {
+		if (!Orbiter->f_draw_options) {
 			cout << "please use -draw_options ... -end" << endl;
 			exit(1);
 		}
 
-		OA->report(The_Orbiter_session->draw_options,
+		OA->report(Orbiter->draw_options,
 				verbose_level);
 
 

@@ -1823,7 +1823,7 @@ void animate::draw_frame_Hilbert(
 			faces[1 + i] = 10 + rk;
 		}
 		cout << "faces=";
-		int_vec_print(cout, faces, 4);
+		Orbiter->Int_vec.print(cout, faces, 4);
 		cout << endl;
 		S->draw_faces_with_selection(faces, 4,
 				0.01, Pov->color_pink, fp);

@@ -191,7 +191,7 @@ void translation_plane_via_andre_model::init(
 		if (f_v10) {
 			cout << "translation_plane_via_andre_model::init "
 					"Line_" << j << "=";
-			int_vec_print(cout, pts_on_line, Andre->order + 1);
+			Orbiter->Int_vec.print(cout, pts_on_line, Andre->order + 1);
 			cout << endl;
 		}
 		for (h = 0; h < Andre->order + 1; h++) {

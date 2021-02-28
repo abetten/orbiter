@@ -142,7 +142,7 @@ void vector_hashing::compute_tables(int verbose_level)
 				idx = perm_inv[type_first[i] + j];
 				cout << "j=" << j << " index " << idx << endl;
 				cout << idx << " : ";
-				int_vec_print(cout, vector_data + idx * data_size, data_size);
+				Orbiter->Int_vec.print(cout, vector_data + idx * data_size, data_size);
 				cout << " : " << H[idx] << endl;
 				}
 			}
@@ -157,12 +157,12 @@ void vector_hashing::print()
 	cout << "data:" << endl;
 	for (i = 0; i < N; i++) {
 		cout << i << " : ";
-		int_vec_print(cout, vector_data + i * data_size, data_size);
+		Orbiter->Int_vec.print(cout, vector_data + i * data_size, data_size);
 		cout << " : " << H[i] << endl;
 		}
 
 	cout << "H sorted:" << endl;
-	int_vec_print(cout, H_sorted, N);
+	Orbiter->Int_vec.print(cout, H_sorted, N);
 	cout << endl;
 
 	cout << "types:" << endl;
@@ -177,7 +177,7 @@ void vector_hashing::print()
 			idx = perm_inv[type_first[i] + j];
 			cout << "j=" << j << " index " << idx << endl;
 			cout << idx << " : ";
-			int_vec_print(cout, vector_data + idx * data_size, data_size);
+			Orbiter->Int_vec.print(cout, vector_data + idx * data_size, data_size);
 			cout << " : " << H[idx] << endl;
 			}
 		}
@@ -211,7 +211,7 @@ int vector_hashing::rank(int *data)
 	cout << "vector_hashing::rank did not find "
 			"data f=" << f << " l=" << l << endl;
 	cout << "data:" << endl;
-	int_vec_print(cout, data, data_size);
+	Orbiter->Int_vec.print(cout, data, data_size);
 	cout << endl;
 	cout << "hash h=" << h << endl;
 	cout << "idx=" << idx << endl;
@@ -219,7 +219,7 @@ int vector_hashing::rank(int *data)
 		I = f + i;
 		idx = perm_inv[I];
 		cout << I << " : " << idx << " : ";
-		int_vec_print(cout, vector_data + idx * data_size, data_size);
+		Orbiter->Int_vec.print(cout, vector_data + idx * data_size, data_size);
 		cout << endl;
 		}
 	cout << endl;

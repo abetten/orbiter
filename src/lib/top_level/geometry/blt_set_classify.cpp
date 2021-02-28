@@ -511,7 +511,7 @@ void blt_set_classify::create_graphs_list_of_cases(
 	int nb_of_cases;
 
 
-	int_vec_scan(list_of_cases_text, list_of_cases, nb_of_cases);
+	Orbiter->Int_vec.scan(list_of_cases_text, list_of_cases, nb_of_cases);
 	if (f_v) {
 		cout << "blt_set_classify::create_graphs_list_of_cases "
 				"nb_of_cases = " << nb_of_cases << endl;

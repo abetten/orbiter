@@ -773,7 +773,7 @@ void semifield_classify_with_substructure::latex_report(
 				cout << "after Sub->all_two_dimensional_subspaces" << endl;
 			}
 
-			int_vec_copy(Po2, PO2 + orbit_idx * Sub->N2, Sub->N2);
+			Orbiter->Int_vec.copy(Po2, PO2 + orbit_idx * Sub->N2, Sub->N2);
 			fp << "\\item" << endl;
 			fp << orbit_idx << " / " << Semifields->nb_orbits << endl;
 			fp << " has  type ";
@@ -1015,7 +1015,7 @@ void semifield_print_function_callback(ostream &ost, int orbit_idx,
 		a = R[j];
 		SC->matrix_unrank(a, SC->test_Basis);
 		ost << "$";
-		int_vec_print(ost, SC->test_Basis, SC->k2);
+		Orbiter->Int_vec.print(ost, SC->test_Basis, SC->k2);
 		ost << "$";
 		ost << "\\\\" << endl;
 	}

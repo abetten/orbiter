@@ -173,11 +173,11 @@ void group_theoretic_activity::do_surface_classify(int verbose_level)
 		layered_graph_draw_options *O;
 
 
-		if (!The_Orbiter_session->f_draw_options) {
+		if (!Orbiter->f_draw_options) {
 			cout << "please use option -draw_options .. -end" << endl;
 			exit(1);
 		}
-		O = The_Orbiter_session->draw_options;
+		O = Orbiter->draw_options;
 
 
 		SCW->create_report(TRUE /*f_with_stabilizers */,
@@ -795,8 +795,8 @@ void group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_p
 	}
 
 
-	if (The_Orbiter_session->f_draw_options) {
-		Surf_arc->report(The_Orbiter_session->draw_options, verbose_level);
+	if (Orbiter->f_draw_options) {
+		Surf_arc->report(Orbiter->draw_options, verbose_level);
 	}
 	else {
 		cout << "group_theoretic_activity::do_classify_surfaces_through_arcs_and_trihedral_pairs "

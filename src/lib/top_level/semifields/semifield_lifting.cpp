@@ -1763,7 +1763,7 @@ void semifield_lifting::trace_very_general(
 	base_cols[1] = k;
 	if (f_vvv) {
 		cout << "semifield_lifting::trace_very_general base_cols=";
-		int_vec_print(cout, base_cols, 2);
+		Orbiter->Int_vec.print(cout, base_cols, 2);
 		cout << endl;
 	}
 	for (i = 0; i < 2; i++) {
@@ -1842,7 +1842,7 @@ void semifield_lifting::trace_very_general(
 	if (f_vv) {
 		cout << "semifield_lifting::trace_very_general "
 				"base_cols=";
-		int_vec_print(cout, base_cols, 2);
+		Orbiter->Int_vec.print(cout, base_cols, 2);
 		cout << endl;
 	}
 	for (i = 0; i < 2; i++) {
@@ -1922,7 +1922,7 @@ void semifield_lifting::trace_to_level_two(
 	// (0 I)
 	// where A is input_basis
 	// the resulting matrix will be put in transporter
-	int_vec_zero(M1, n * n);
+	Orbiter->Int_vec.zero(M1, n * n);
 	for (i = 0; i < k; i++) {
 		for (j = 0; j < k; j++) {
 			M1[i * n + j] = input_basis[i * k + j];
@@ -2280,7 +2280,7 @@ void semifield_lifting::deep_search_at_level_three(
 				int_matrix_print(Basis + i * k2, k, k);
 			}
 			cout << "pivots: ";
-			int_vec_print(cout, SC->desired_pivots, 3);
+			Orbiter->Int_vec.print(cout, SC->desired_pivots, 3);
 			cout << endl;
 
 
@@ -2692,7 +2692,7 @@ int semifield_lifting::candidate_testing(
 					<< u << " / " << Nb_sets_new << " v=" << v
 					<< " w=" << w << " testing " << l
 					<< " points, pattern: ";
-			int_vec_print(cout, window_in, window_size);
+			Orbiter->Int_vec.print(cout, window_in, window_size);
 			cout << endl;
 		}
 

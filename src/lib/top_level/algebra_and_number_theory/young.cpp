@@ -285,7 +285,7 @@ void young::create_module(int *h_alpha,
 
 	if (f_v) {
 		cout << "base_cols=" << endl;
-		int_vec_print(cout, base_cols, rk);
+		Orbiter->Int_vec.print(cout, base_cols, rk);
 		cout << endl;
 		}
 
@@ -546,10 +546,10 @@ void young::young_symmetrizer(int *row_parts, int nb_row_parts,
 
 	if (f_v) {
 		cout << "row_part: ";
-		int_vec_print(cout, row_parts, l1);
+		Orbiter->Int_vec.print(cout, row_parts, l1);
 		cout << endl;
 		cout << "col_part: ";
-		int_vec_print(cout, col_parts, l2);
+		Orbiter->Int_vec.print(cout, col_parts, l2);
 		cout << endl;
 		}
 
@@ -637,8 +637,8 @@ void young::young_symmetrizer(int *row_parts, int nb_row_parts,
 		}
 
 
-	int_vec_zero(elt1, goi);
-	int_vec_zero(elt2, goi);
+	Orbiter->Int_vec.zero(elt1, goi);
+	Orbiter->Int_vec.zero(elt2, goi);
 
 
 	// Unrank the element in the row-stabilizer subgroup,
@@ -977,7 +977,7 @@ void young::group_ring_element_print(action *A, sims *S, int *elt)
 	long int goi;
 
 	goi = S->group_order_lint();
-	int_vec_print(cout, elt, goi);
+	Orbiter->Int_vec.print(cout, elt, goi);
 }
 
 void young::group_ring_element_copy(action *A, sims *S,
@@ -986,7 +986,7 @@ void young::group_ring_element_copy(action *A, sims *S,
 	long int goi;
 
 	goi = S->group_order_lint();
-	int_vec_copy(elt_from, elt_to, goi);
+	Orbiter->Int_vec.copy(elt_from, elt_to, goi);
 }
 
 void young::group_ring_element_zero(action *A, sims *S, int *elt)
@@ -994,7 +994,7 @@ void young::group_ring_element_zero(action *A, sims *S, int *elt)
 	long int goi;
 
 	goi = S->group_order_lint();
-	int_vec_zero(elt, goi);
+	Orbiter->Int_vec.zero(elt, goi);
 }
 
 void young::group_ring_element_mult(action *A,
@@ -1005,7 +1005,7 @@ void young::group_ring_element_mult(action *A,
 	int a, b, c;
 
 	goi = S->group_order_lint();
-	int_vec_zero(elt3, goi);
+	Orbiter->Int_vec.zero(elt3, goi);
 	for (i = 0; i < goi; i++) {
 		a = elt1[i];
 		for (j = 0; j < goi; j++) {

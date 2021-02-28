@@ -102,7 +102,7 @@ void permutation_representation::init(action *A_original,
 
 	Elts = NEW_int(nb_gens * elt_size_int);
 	for (i = 0; i < nb_gens; i++) {
-		int_vec_copy(gens->ith(i), Elts + i * elt_size_int, A_original->elt_size_in_int);
+		Orbiter->Int_vec.copy(gens->ith(i), Elts + i * elt_size_int, A_original->elt_size_in_int);
 		for (j = 0; j < degree; j++) {
 			Elts[i * elt_size_int + perm_offset + j] = Perms[j * nb_gens + i];
 		}
@@ -182,7 +182,7 @@ void permutation_representation::element_move(int *A, int *B, int verbose_level)
 	if (f_v) {
 		cout << "permutation_representation::element_move" << endl;
 	}
-	int_vec_copy(A, B, elt_size_int);
+	Orbiter->Int_vec.copy(A, B, elt_size_int);
 	if (f_v) {
 		cout << "permutation_representation::element_move done" << endl;
 	}

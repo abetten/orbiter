@@ -39,16 +39,16 @@ void draw_bitmap(std::string &fname, int *M, int m, int n,
 
 	if (f_partition) {
 		cout << "row_part: ";
-		int_vec_print(cout, Row_part, nb_row_parts);
+		Orbiter->Int_vec.print(cout, Row_part, nb_row_parts);
 		cout << endl;
 		cout << "col_part: ";
-		int_vec_print(cout, Col_part, nb_col_parts);
+		Orbiter->Int_vec.print(cout, Col_part, nb_col_parts);
 		cout << endl;
 	}
 	int i;
 	int max_value;
 
-	max_value = int_vec_maximum(M, m * n);
+	max_value = Orbiter->Int_vec.maximum(M, m * n);
 	cout << "max_value=" << max_value << endl;
 
 	//max_value += 5;

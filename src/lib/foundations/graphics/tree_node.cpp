@@ -212,7 +212,7 @@ void tree_node::add_node(int l, int depth, int *path, int i_data, char *c_data,
 	
 	if (f_v) {
 		cout << "tree_node::add_node: depth=" << depth << " : ";
-		int_vec_print(cout, path, l);
+		Orbiter->Int_vec.print(cout, path, l);
 		cout << endl;
 		}
 	if (l == 0) {

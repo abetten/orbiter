@@ -580,7 +580,7 @@ void wreath_product_print_set(ostream &ost, int len, long int *S, void *data)
 		T->F->PG_element_unrank_modified(T->v,
 				1, T->vector_space_dimension, S[i]);
 		cout << S[i] << " : ";
-		int_vec_print(cout, T->v, T->vector_space_dimension);
+		Orbiter->Int_vec.print(cout, T->v, T->vector_space_dimension);
 		cout << endl;
 	}
 }

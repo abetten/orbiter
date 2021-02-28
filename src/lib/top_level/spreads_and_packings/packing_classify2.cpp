@@ -869,7 +869,7 @@ void packing_classify::report_extra_stuff(
 		for (i = 0; i < nb_points; i++) {
 			P3->unrank_point(v, i);
 			ost << "$P_{" << i << "}=";
-			int_vec_print_fully(ost, v, 4);
+			Orbiter->Int_vec.print_fully(ost, v, 4);
 			ost << "$\\\\" << endl;
 		}
 		ost << endl;

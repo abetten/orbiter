@@ -105,7 +105,7 @@ void arc_lifting_simeon::init(int q, int d, int n, int k,
 	for (i = 0; i < A->degree; i++) {
 		F->PG_element_unrank_modified(v, 1, n + 1, i);
 		cout << "point " << i << " / " << A->degree << " is ";
-		int_vec_print(cout, v, d);
+		Orbiter->Int_vec.print(cout, v, d);
 		cout << endl;
 	}
 
@@ -291,7 +291,7 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 		exit(1);
 		}
 	cout << "We found " << nb_bisecants << " bisecants : ";
-	int_vec_print(cout, bisecants, nb_bisecants);
+	Orbiter->Int_vec.print(cout, bisecants, nb_bisecants);
 	cout << endl;
 
 	c2_points = NEW_int(nb_c2points);
@@ -323,7 +323,7 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 			}
 		}
 	cout << "We found " << h << " c2-points: ";
-	int_vec_print(cout, c2_points, h);
+	Orbiter->Int_vec.print(cout, c2_points, h);
 	cout << endl;
 
 	cout << "filtering the external lines:" << endl;
@@ -417,7 +417,7 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 		if ((i % 10000) == 0) {
 			cout << "testing orbit " << i << endl;
 			}
-		int_vec_zero(covering_number, h);
+		Orbiter->Int_vec.zero(covering_number, h);
 		for (j = 0; j < h; j++) {
 			for (u = 0; u < target_depth; u++) {
 				a = SaS->data[u];
@@ -439,7 +439,7 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 			SaS->print_set_tex(cout);
 			cout << endl;
 			cout << "covering_number: ";
-			int_vec_print(cout, covering_number, h);
+			Orbiter->Int_vec.print(cout, covering_number, h);
 			cout << endl;
 
 

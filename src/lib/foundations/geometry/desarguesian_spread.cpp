@@ -163,7 +163,7 @@ void desarguesian_spread::calculate_spread_elements(
 			}
 		FQ->PG_element_unrank_modified(v, 1, m, h);
 		if (f_vv) {
-			int_vec_print(cout, v, m);
+			Orbiter->Int_vec.print(cout, v, m);
 			cout << endl;
 			}
 		for (i = 0; i < s; i++) {
@@ -195,11 +195,11 @@ void desarguesian_spread::calculate_spread_elements(
 			}
 		if (f_vv) {
 			cout << "basis element " << h << " / " << N << ":" << endl;
-			int_vec_print(cout, v, m);
+			Orbiter->Int_vec.print(cout, v, m);
 			cout << endl;
 			int_matrix_print(z, s, n);
 			}
-		int_vec_copy(z,
+		Orbiter->Int_vec.copy(z,
 			Spread_elements + h * spread_element_size,
 			spread_element_size);
 
@@ -235,7 +235,7 @@ void desarguesian_spread::calculate_spread_elements(
 			cout << "basis element " << h << " / " << N << ":" << endl;
 			int_matrix_print(Spread_elt_basis, s, n);
 			cout << "Consists of the following points:" << endl;
-			int_vec_print(cout,
+			Orbiter->Int_vec.print(cout,
 				List_of_points + h * nb_points_per_spread_element,
 				nb_points_per_spread_element);
 			cout << endl;
@@ -305,7 +305,7 @@ void desarguesian_spread::compute_shadow(
 
 	if (f_vv) {
 		cout << "Intersection_dimensions:";
-		int_vec_print(cout, Intersection_dimensions, N);
+		Orbiter->Int_vec.print(cout, Intersection_dimensions, N);
 		cout << endl;
 		}
 	
@@ -384,7 +384,7 @@ void desarguesian_spread::print_spread_element_table_tex(std::ostream &ost)
 	for (a = 0; a < N; a++) {
 		FQ->PG_element_unrank_modified(v, 1, m, a);
 		ost << "$";
-		int_vec_print(ost, v, m);
+		Orbiter->Int_vec.print(ost, v, m);
 		ost << "$";
 		ost << " & ";
 		ost << "$";
@@ -420,7 +420,7 @@ void desarguesian_spread::print_spread_elements_tex(std::ostream &ost)
 		ost << "Spread element " << a << " is ";
 		FQ->PG_element_unrank_modified(v, 1, m, a);
 		ost << "$";
-		int_vec_print(ost, v, m);
+		Orbiter->Int_vec.print(ost, v, m);
 		ost << "=";
 		ost << "\\left[" << endl;
 		ost << "\\begin{array}{*{" << n << "}{c}}" << endl;
@@ -465,7 +465,7 @@ void desarguesian_spread::print_linear_set_element_tex(long int a, int sz)
 	v = NEW_int(m);
 	FQ->PG_element_unrank_modified(v, 1, m, a);
 	cout << "D_{";
-	int_vec_print(cout, v, m);
+	Orbiter->Int_vec.print(cout, v, m);
 	cout << "}";
 
 	FREE_int(v);

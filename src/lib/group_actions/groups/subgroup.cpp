@@ -97,16 +97,16 @@ void subgroup::init(int *Elements,
 	subgroup::gens = NEW_int(nb_gens);
 	subgroup::group_order = group_order;
 	subgroup::nb_gens = nb_gens;
-	int_vec_copy(Elements, subgroup::Elements, group_order);
-	int_vec_copy(gens, subgroup::gens, nb_gens);
+	Orbiter->Int_vec.copy(Elements, subgroup::Elements, group_order);
+	Orbiter->Int_vec.copy(gens, subgroup::gens, nb_gens);
 }
 
 void subgroup::print()
 {
 	cout << "group of order " << group_order << " : ";
-	int_vec_print(cout, Elements, group_order);
+	Orbiter->Int_vec.print(cout, Elements, group_order);
 	cout << " gens: ";
-	int_vec_print(cout, gens, nb_gens);
+	Orbiter->Int_vec.print(cout, gens, nb_gens);
 	cout << endl;
 }
 

@@ -758,7 +758,7 @@ void interface_combinatorics::worker(int verbose_level)
 				Pts, nb_pts, multiplicity, verbose_level);
 
 		cout << "multiplicity " << multiplicity << " number of pts = " << nb_pts << endl;
-		int_vec_print(cout, Pts, nb_pts);
+		Orbiter->Int_vec.print(cout, Pts, nb_pts);
 		cout << endl;
 
 
@@ -1234,7 +1234,7 @@ void interface_combinatorics::do_conjugacy_classes_Sym_n(int n, int verbose_leve
 	cout << "The conjugacy classes in Sym_" << n << " are:" << endl;
 	for (i = 0; i < cnt; i++) {
 		cout << i << " : ";
-		int_vec_print(cout, Parts + i * n, n);
+		Orbiter->Int_vec.print(cout, Parts + i * n, n);
 		cout << " : ";
 
 		C.size_of_conjugacy_class_in_sym_n(class_size, n, Parts + i * n);
@@ -1572,7 +1572,7 @@ void interface_combinatorics::do_create_design(design_create_description *Descr,
 
 
 		Incma = NEW_int(nb_pts * nb_blocks);
-		int_vec_zero(Incma, nb_pts * nb_blocks);
+		Orbiter->Int_vec.zero(Incma, nb_pts * nb_blocks);
 
 		for (j = 0; j < nb_blocks; j++) {
 			//cout << "j=" << j << " / " << set_size

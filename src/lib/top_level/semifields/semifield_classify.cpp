@@ -814,7 +814,7 @@ long int semifield_classify::rank_point(int *v, int verbose_level)
 	if (f_v) {
 		cout << "semifield_classify::rank_point" << endl;
 	}
-	int_vec_copy(v, A_on_S->mtx1, k2);
+	Orbiter->Int_vec.copy(v, A_on_S->mtx1, k2);
 	G->A->make_element(Elt1, A_on_S->mtx1, 0);
 	if (f_vv) {
 		cout << "semifield_classify::rank_point "
@@ -847,7 +847,7 @@ void semifield_classify::unrank_point(int *v, long int rk, int verbose_level)
 		exit(1);
 	}
 	G->element_unrank_lint(rk, Elt1);
-	int_vec_copy(Elt1, v, k2);
+	Orbiter->Int_vec.copy(Elt1, v, k2);
 	if (f_vv) {
 		cout << "semifield_classify::unrank_point "
 				"The element of "
@@ -1098,7 +1098,7 @@ int semifield_classify::test_partial_semifield(
 						"fail for vector h=" << h << " / " << N << " : ";
 				cout << "r=" << r << endl;
 				cout << "v=";
-				int_vec_print(cout, v, sz);
+				Orbiter->Int_vec.print(cout, v, sz);
 				cout << endl;
 				basis_print(Basis, sz);
 				cout << "linear combination:" << endl;
@@ -1285,7 +1285,7 @@ void semifield_classify::apply_element_and_copy_back(int *Elt,
 	apply_element(Elt,
 		basis_in, basis_out,
 		first, last_plus_one, verbose_level);
-	int_vec_copy(basis_out + first * k2,
+	Orbiter->Int_vec.copy(basis_out + first * k2,
 			basis_in + first * k2,
 			(last_plus_one - first) * k2);
 	if (f_v) {
@@ -1334,8 +1334,8 @@ void semifield_classify::candidates_classify_by_first_column(
 	Mtx = NEW_int(k * k);
 	Set_sz = NEW_int(Nb_sets);
 	Tmp_sz = NEW_int(Nb_sets);
-	int_vec_zero(Set_sz, Nb_sets);
-	int_vec_zero(Tmp_sz, Nb_sets);
+	Orbiter->Int_vec.zero(Set_sz, Nb_sets);
+	Orbiter->Int_vec.zero(Tmp_sz, Nb_sets);
 	for (h = 0; h < input_set_sz; h++) {
 		if ((h % (256 * 1024)) == 0) {
 			cout << "semifield_classify::candidates_classify_by_first_column " << h << " / "
@@ -1509,7 +1509,7 @@ void semifield_classify::init_desired_pivots(int verbose_level)
 	if (f_vv) {
 		cout << "semifield_classify::init_desired_pivots "
 				"desired_pivots: ";
-		int_vec_print(cout, desired_pivots, k);
+		Orbiter->Int_vec.print(cout, desired_pivots, k);
 		cout << endl;
 	}
 	if (f_v) {

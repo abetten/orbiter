@@ -791,7 +791,7 @@ int tdo_refinement::do_column_refinement(
 				cout << "s=" << s << endl;
 				cout << "l=" << l << endl;
 				cout << "a=" << a << endl;
-				int_vec_print(cout, distributions + t * nb_line_types, nb_line_types);
+				Orbiter->Int_vec.print(cout, distributions + t * nb_line_types, nb_line_types);
 				cout << endl;
 				exit(1);
 			}

@@ -84,7 +84,7 @@ void surfaces_arc_lifting_upstep::init(surfaces_arc_lifting *Lift, int verbose_l
 	surfaces_arc_lifting_upstep::Lift = Lift;
 
 	f_processed = NEW_int(Lift->Flag_orbits->nb_flag_orbits);
-	int_vec_zero(f_processed, Lift->Flag_orbits->nb_flag_orbits);
+	Orbiter->Int_vec.zero(f_processed, Lift->Flag_orbits->nb_flag_orbits);
 	nb_processed = 0;
 
 	pt_representation_sz = 6 + 1 + 2 + 1 + 1 + 2 + 20 + 27;
@@ -337,7 +337,7 @@ void surfaces_arc_lifting_upstep::compute_stabilizer(surfaces_arc_lifting_defini
 					"after process_tritangent_plane" << endl;
 		}
 
-		int_vec_copy(three_lines_idx, D->three_lines_idx + tritangent_plane_idx * 3, 3);
+		Orbiter->Int_vec.copy(three_lines_idx, D->three_lines_idx + tritangent_plane_idx * 3, 3);
 		lint_vec_copy(three_lines, D->three_lines + tritangent_plane_idx * 3, 3);
 
 		for (seventytwo_case_idx = 0; seventytwo_case_idx < 72; seventytwo_case_idx++) {
@@ -463,7 +463,7 @@ void surfaces_arc_lifting_upstep::process_tritangent_plane(
 				<< ", upstep "
 				"tritangent_plane_idx=" << tritangent_plane_idx << " / 45 "
 				"three_lines_idx=";
-		int_vec_print(cout, three_lines_idx, 3);
+		Orbiter->Int_vec.print(cout, three_lines_idx, 3);
 		cout << " three_lines=";
 		lint_vec_print(cout, three_lines, 3);
 		cout << endl;

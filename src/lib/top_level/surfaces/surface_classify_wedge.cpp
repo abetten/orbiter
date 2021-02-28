@@ -421,7 +421,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 
 
 	f_processed = NEW_int(Flag_orbits->nb_flag_orbits);
-	int_vec_zero(f_processed, Flag_orbits->nb_flag_orbits);
+	Orbiter->Int_vec.zero(f_processed, Flag_orbits->nb_flag_orbits);
 	nb_processed = 0;
 
 	Surfaces = NEW_OBJECT(classification_step);
@@ -672,7 +672,7 @@ void surface_classify_wedge::derived_arcs(int verbose_level)
 		if (f_v) {
 			cout << "There are " << nb_starter_conf
 					<< " starter configurations which are involved: " << endl;
-			int_vec_print(cout, Starter_configuration_idx, nb_starter_conf);
+			Orbiter->Int_vec.print(cout, Starter_configuration_idx, nb_starter_conf);
 			cout << endl;
 		}
 
@@ -793,7 +793,7 @@ void surface_classify_wedge::derived_arcs(int verbose_level)
 				for (i = 0; i < 7; i++) {
 					Surf->O->unrank_point(w, 1, K1[i], 0 /* verbose_level*/);
 					cout << i << " / " << 6 << " : ";
-					int_vec_print(cout, w, 6);
+					Orbiter->Int_vec.print(cout, w, 6);
 					cout << endl;
 				}
 			}
@@ -802,7 +802,7 @@ void surface_classify_wedge::derived_arcs(int verbose_level)
 			Arc[1] = 2;
 			for (i = 0; i < 4; i++) {
 				Surf->O->unrank_point(w, 1, K1[1 + i], 0 /* verbose_level*/);
-				int_vec_copy(w + 3, v, 3);
+				Orbiter->Int_vec.copy(w + 3, v, 3);
 				F->PG_element_rank_modified_lint(v, 1, 3, Arc[2 + i]);
 			}
 			if (f_v) {
@@ -812,7 +812,7 @@ void surface_classify_wedge::derived_arcs(int verbose_level)
 				for (i = 0; i < 6; i++) {
 					F->PG_element_unrank_modified_lint(v, 1, 3, Arc[i]);
 					cout << i << " & " << Arc[i] << " & ";
-					int_vec_print(cout, v, 3);
+					Orbiter->Int_vec.print(cout, v, 3);
 					cout << " \\\\" << endl;
 				}
 			}
@@ -1865,10 +1865,10 @@ int surface_classify_wedge::isomorphism_test_pairwise(
 			cout << "testing the isomorphism" << endl;
 			A->element_print(Elt_isomorphism_1to2, cout);
 			cout << "from: ";
-			int_vec_print(cout, coeff1, 20);
+			Orbiter->Int_vec.print(cout, coeff1, 20);
 			cout << endl;
 			cout << "to  : ";
-			int_vec_print(cout, coeff2, 20);
+			Orbiter->Int_vec.print(cout, coeff2, 20);
 			cout << endl;
 		}
 		A->element_invert(Elt_isomorphism_1to2, Elt1, 0);
@@ -1882,7 +1882,7 @@ int surface_classify_wedge::isomorphism_test_pairwise(
 				coeff1, coeff3, Surf,
 				verbose_level - 1);
 
-		int_vec_copy(coeff2, coeff4, 20);
+		Orbiter->Int_vec.copy(coeff2, coeff4, 20);
 		F->PG_element_normalize_from_front(
 				coeff3, 1,
 				Surf->nb_monomials);
@@ -1893,11 +1893,11 @@ int surface_classify_wedge::isomorphism_test_pairwise(
 		if (f_v) {
 			cout << "after substitution, normalized" << endl;
 			cout << "    : ";
-			int_vec_print(cout, coeff3, 20);
+			Orbiter->Int_vec.print(cout, coeff3, 20);
 			cout << endl;
 			cout << "coeff2, normalized" << endl;
 			cout << "    : ";
-			int_vec_print(cout, coeff4, 20);
+			Orbiter->Int_vec.print(cout, coeff4, 20);
 			cout << endl;
 		}
 		if (int_vec_compare(coeff3, coeff4, 20)) {
@@ -1936,7 +1936,7 @@ void surface_classify_wedge::identify_surface(
 
 	if (f_v) {
 		cout << "identifying the surface ";
-		int_vec_print(cout, coeff_of_given_surface,
+		Orbiter->Int_vec.print(cout, coeff_of_given_surface,
 			Surf->nb_monomials);
 		cout << " = ";
 		Surf->print_equation(cout, coeff_of_given_surface);
@@ -2250,7 +2250,7 @@ void surface_classify_wedge::identify_surface(
 			0 /* verbose_level*/);
 	F->PG_element_normalize_from_front(eqn0, 1, Surf->nb_monomials);
 
-	int_vec_print(cout, eqn0, Surf->nb_monomials);
+	Orbiter->Int_vec.print(cout, eqn0, Surf->nb_monomials);
 	//int_vec_print(cout,
 	//The_surface[isomorphic_to]->coeff, Surf->nb_monomials);
 	cout << " = ";
@@ -2279,14 +2279,14 @@ void surface_classify_wedge::identify_surface(
 			Surf->nb_monomials);
 
 	cout << "the surface to be identified was " << endl;
-	int_vec_print(cout, coeff_of_given_surface, Surf->nb_monomials);
+	Orbiter->Int_vec.print(cout, coeff_of_given_surface, Surf->nb_monomials);
 	cout << " = ";
 	Surf->print_equation(cout, coeff_of_given_surface);
 	cout << endl;
 
 
 	cout << "coeffs_transformed (and normalized) = " << endl;
-	int_vec_print(cout, coeffs_transformed, Surf->nb_monomials);
+	Orbiter->Int_vec.print(cout, coeffs_transformed, Surf->nb_monomials);
 	cout << " = ";
 	Surf->print_equation(cout, coeffs_transformed);
 	cout << endl;

@@ -186,7 +186,7 @@ void boolean_function_classify::search_for_bent_functions(int verbose_level)
 		Gg.AG_element_unrank_longinteger(2, BF->f, 1, BF->Q, a);
 		//Gg.AG_element_unrank(2, f, 1, Q, a);
 		cout << a << " / " << BF->NN << " : ";
-		int_vec_print(cout, BF->f, BF->Q);
+		Orbiter->Int_vec.print(cout, BF->f, BF->Q);
 		//cout << endl;
 
 		BF->raise(BF->f, BF->F);
@@ -194,7 +194,7 @@ void boolean_function_classify::search_for_bent_functions(int verbose_level)
 		BF->apply_Walsh_transform(BF->F, BF->T);
 
 		cout << " : ";
-		int_vec_print(cout, BF->T, BF->Q);
+		Orbiter->Int_vec.print(cout, BF->T, BF->Q);
 
 		if (BF->is_bent(BF->T)) {
 			cout << " is bent " << nb_sol;
@@ -232,7 +232,7 @@ void boolean_function_classify::search_for_bent_functions(int verbose_level)
 				cout << " : ";
 				//evaluate_projectively(poly, f_proj);
 				BF->evaluate(poly, BF->f_proj);
-				int_vec_print(cout, BF->f_proj, BF->Q);
+				Orbiter->Int_vec.print(cout, BF->f_proj, BF->Q);
 				cout << endl;
 
 				orbit_of_equations *Orb;
@@ -303,10 +303,10 @@ void boolean_function_classify::search_for_bent_functions(int verbose_level)
 					coeff = Orb->Equations[idx] + 1;
 					BF->evaluate(coeff, BF->f_proj);
 					cout << "orbit " << nb_orbits << ", function: ";
-					int_vec_print(cout, BF->f_proj, BF->Q);
+					Orbiter->Int_vec.print(cout, BF->f_proj, BF->Q);
 					cout << endl;
 					cout << "orbit " << nb_orbits << ", equation: ";
-					int_vec_print(cout, coeff, BF->Poly[BF->n].get_nb_monomials());
+					Orbiter->Int_vec.print(cout, coeff, BF->Poly[BF->n].get_nb_monomials());
 					cout << endl;
 
 					strong_generators *Stab_gens_clean;
@@ -359,12 +359,12 @@ void boolean_function_classify::search_for_bent_functions(int verbose_level)
 				poly[j] = Equation_table[i][j];
 			}
 
-			int_vec_copy(BF->f, BF->f2, BF->Q);
+			Orbiter->Int_vec.copy(BF->f, BF->f2, BF->Q);
 			Gg.AG_element_rank_longinteger(2, BF->f2, 1, BF->Q, a);
 
-			int_vec_print(cout, BF->f, BF->Q);
+			Orbiter->Int_vec.print(cout, BF->f, BF->Q);
 			cout << " : " << a << " : ";
-			int_vec_print(cout, poly, BF->Poly[BF->n].get_nb_monomials());
+			Orbiter->Int_vec.print(cout, poly, BF->Poly[BF->n].get_nb_monomials());
 			cout << " : ";
 			BF->Poly[BF->n].print_equation(cout, poly);
 			cout << endl;
@@ -410,11 +410,11 @@ void boolean_function_classify_print_function(int *poly, int sz, void *data)
 	longinteger_object a;
 
 	BFC->BF->evaluate(poly + 1, BFC->BF->f_proj);
-	int_vec_copy(BFC->BF->f_proj, BFC->BF->f_proj2, BFC->BF->Q);
+	Orbiter->Int_vec.copy(BFC->BF->f_proj, BFC->BF->f_proj2, BFC->BF->Q);
 	Gg.AG_element_rank_longinteger(2, BFC->BF->f_proj2, 1, BFC->BF->Q, a);
 
 	cout << " : ";
-	int_vec_print(cout, BFC->BF->f_proj, BFC->BF->Q);
+	Orbiter->Int_vec.print(cout, BFC->BF->f_proj, BFC->BF->Q);
 	cout << " : rk=" << a;
 
 }

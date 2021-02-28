@@ -587,7 +587,7 @@ void action::element_write_file_fp(int *Elt,
 	elt = element_rw_memory_object;
 	if (f_v) {
 		element_print(Elt, cout);
-		int_vec_print(cout, Elt, elt_size_in_int);
+		Orbiter->Int_vec.print(cout, Elt, elt_size_in_int);
 		cout << endl;
 		}
 	element_pack(Elt, elt, FALSE);
@@ -607,7 +607,7 @@ void action::element_read_file_fp(int *Elt,
 	element_unpack(elt, Elt, FALSE);
 	if (f_v) {
 		element_print(Elt, cout);
-		int_vec_print(cout, Elt, elt_size_in_int);
+		Orbiter->Int_vec.print(cout, Elt, elt_size_in_int);
 		cout << endl;
 		}
 }

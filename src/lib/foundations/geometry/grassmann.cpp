@@ -262,12 +262,12 @@ void grassmann::points_covered(long int *the_points, int verbose_level)
 void grassmann::unrank_lint_here(int *Mtx, long int rk, int verbose_level)
 {
 	unrank_lint(rk, verbose_level);
-	int_vec_copy(M, Mtx, k * n);
+	Orbiter->Int_vec.copy(M, Mtx, k * n);
 }
 
 long int grassmann::rank_lint_here(int *Mtx, int verbose_level)
 {
-	int_vec_copy(Mtx, M, k * n);
+	Orbiter->Int_vec.copy(Mtx, M, k * n);
 	return rank_lint(verbose_level);
 }
 
@@ -280,7 +280,7 @@ void grassmann::unrank_embedded_subspace_lint(long int rk, int verbose_level)
 		cout << "grassmann::unrank_embedded_subspace_lint " << rk << endl;
 	}
 	unrank_lint(rk, verbose_level);
-	int_vec_zero(M + k * n, (n - k) * n);
+	Orbiter->Int_vec.zero(M + k * n, (n - k) * n);
 	if (k == 0) {
 		F->identity_matrix(M, n);
 	}
@@ -317,7 +317,7 @@ void grassmann::unrank_embedded_subspace_lint_here(int *Basis, long int rk, int 
 		cout << "grassmann::unrank_embedded_subspace_int_here " << rk << endl;
 	}
 	unrank_lint_here(Basis, rk, verbose_level);
-	int_vec_zero(Basis + k * n, (n - k) * n);
+	Orbiter->Int_vec.zero(Basis + k * n, (n - k) * n);
 	if (k == 0) {
 		F->identity_matrix(Basis, n);
 	}
@@ -350,7 +350,7 @@ void grassmann::unrank_lint(long int rk, int verbose_level)
 		return;
 	}
 	// null the first row:
-	int_vec_zero(M, n);
+	Orbiter->Int_vec.zero(M, n);
 	
 	
 	// find out the value of h:
@@ -413,7 +413,7 @@ void grassmann::unrank_lint(long int rk, int verbose_level)
 	}
 	if (f_v) {
 		cout << "grassmann::unrank_lint coset " << b << " = ";
-		int_vec_print(cout, coset, nb_free_cols);
+		Orbiter->Int_vec.print(cout, coset, nb_free_cols);
 		cout << endl;
 	}
 	
@@ -428,10 +428,10 @@ void grassmann::unrank_lint(long int rk, int verbose_level)
 	if (f_v) {
 		cout << "grassmann::unrank_lint calling "
 				"int_vec_complement n=" << n << " k=" << k << " : ";
-		int_vec_print(cout, base_cols, k);
+		Orbiter->Int_vec.print(cout, base_cols, k);
 		cout << endl;
 	}
-	int_vec_complement(base_cols, n, k);
+	Orbiter->Int_vec.complement(base_cols, n, k);
 	
 	// fill in the coset:
 	if (k == 1) {
@@ -465,10 +465,10 @@ void grassmann::unrank_lint(long int rk, int verbose_level)
 		cout << "grassmann::unrank_lint " << rk << ", we found the matrix" << endl;
 		print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
 		cout << "grassmann::unrank_lint base_cols = ";
-		int_vec_print(cout, base_cols, k);
+		Orbiter->Int_vec.print(cout, base_cols, k);
 		cout << endl;
 		cout << "grassmann::unrank_lint complement = ";
-		int_vec_print(cout, base_cols + k, n - k);
+		Orbiter->Int_vec.print(cout, base_cols + k, n - k);
 		cout << endl;
 	}
 	if (f_v) {
@@ -511,7 +511,7 @@ long int grassmann::rank_lint(int verbose_level)
 	}
 	if (f_v) {
 		cout << "grassmann::rank_lint base_cols: ";
-		int_vec_print(cout, base_cols, k);
+		Orbiter->Int_vec.print(cout, base_cols, k);
 		cout << endl;
 	}
 	
@@ -519,13 +519,13 @@ long int grassmann::rank_lint(int verbose_level)
 	if (f_v) {
 		cout << "grassmann::rank_lint calling int_vec_complement n=" << n
 				<< " k=" << k << " : ";
-		int_vec_print(cout, base_cols, k);
+		Orbiter->Int_vec.print(cout, base_cols, k);
 		cout << endl;
 	}
-	int_vec_complement(base_cols, n, k);
+	Orbiter->Int_vec.complement(base_cols, n, k);
 	if (f_v) {
 		cout << "grassmann::rank_lint complement : ";
-		int_vec_print(cout, base_cols + k, n - k);
+		Orbiter->Int_vec.print(cout, base_cols + k, n - k);
 		cout << endl;
 	}
 
@@ -586,7 +586,7 @@ long int grassmann::rank_lint(int verbose_level)
 	}
 	if (f_v) {
 		cout << "grassmann::rank_lint coset " << b << " = ";
-		int_vec_print(cout, coset, nb_free_cols);
+		Orbiter->Int_vec.print(cout, coset, nb_free_cols);
 		cout << endl;
 	}
 
@@ -607,13 +607,13 @@ void grassmann::unrank_longinteger_here(int *Mtx,
 		longinteger_object &rk, int verbose_level)
 {
 	unrank_longinteger(rk, verbose_level);
-	int_vec_copy(M, Mtx, k * n);
+	Orbiter->Int_vec.copy(M, Mtx, k * n);
 }
 
 void grassmann::rank_longinteger_here(int *Mtx,
 		longinteger_object &rk, int verbose_level)
 {
-	int_vec_copy(Mtx, M, k * n);
+	Orbiter->Int_vec.copy(Mtx, M, k * n);
 	rank_longinteger(rk, verbose_level);
 }
 
@@ -690,7 +690,7 @@ void grassmann::unrank_longinteger(
 	}
 	if (f_v) {
 		cout << "grassmann::unrank_longinteger coset " << b << " = ";
-		int_vec_print(cout, coset, nb_free_cols);
+		Orbiter->Int_vec.print(cout, coset, nb_free_cols);
 		cout << endl;
 	}
 	
@@ -705,10 +705,10 @@ void grassmann::unrank_longinteger(
 	if (f_v) {
 		cout << "grassmann::unrank_longinteger calling "
 				"int_vec_complement n=" << n << " k=" << k << " : ";
-		int_vec_print(cout, base_cols, k);
+		Orbiter->Int_vec.print(cout, base_cols, k);
 		cout << endl;
 	}
-	int_vec_complement(base_cols, n, k);
+	Orbiter->Int_vec.complement(base_cols, n, k);
 	
 	// fill in the coset:
 	if (k == 1) {
@@ -743,10 +743,10 @@ void grassmann::unrank_longinteger(
 				<< ", we found the matrix" << endl;
 		print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
 		cout << "grassmann::unrank_longinteger base_cols = ";
-		int_vec_print(cout, base_cols, k);
+		Orbiter->Int_vec.print(cout, base_cols, k);
 		cout << endl;
 		cout << "grassmann::unrank_longinteger complement = ";
-		int_vec_print(cout, base_cols + k, n - k);
+		Orbiter->Int_vec.print(cout, base_cols + k, n - k);
 		cout << endl;
 	}
 	if (f_v) {
@@ -788,20 +788,20 @@ void grassmann::rank_longinteger(longinteger_object &r,
 	}
 	if (f_v) {
 		cout << "grassmann::rank_longinteger base_cols: ";
-		int_vec_print(cout, base_cols, k);
+		Orbiter->Int_vec.print(cout, base_cols, k);
 		cout << endl;
 	}
 	
 
 	if (f_v) {
 		cout << "grassmann::rank_longinteger calling int_vec_complement for ";
-		int_vec_print(cout, base_cols, k);
+		Orbiter->Int_vec.print(cout, base_cols, k);
 		cout << endl;
 	}
-	int_vec_complement(base_cols, n, k);
+	Orbiter->Int_vec.complement(base_cols, n, k);
 	if (f_v) {
 		cout << "yields: ";
-		int_vec_print(cout, base_cols + k, n - k);
+		Orbiter->Int_vec.print(cout, base_cols + k, n - k);
 		cout << endl;
 	}
 
@@ -876,7 +876,7 @@ void grassmann::rank_longinteger(longinteger_object &r,
 		Gg.AG_element_rank_longinteger(q, coset, 1, nb_free_cols, b);
 		if (f_v) {
 			cout << "AG_element_rank_longinteger for coset ";
-			int_vec_print(cout, coset, nb_free_cols);
+			Orbiter->Int_vec.print(cout, coset, nb_free_cols);
 			cout << " yields " << b << endl;
 		}
 	}
@@ -885,7 +885,7 @@ void grassmann::rank_longinteger(longinteger_object &r,
 	}
 	if (f_v) {
 		cout << "grassmann::rank_longinteger coset " << b << " = ";
-		int_vec_print(cout, coset, nb_free_cols);
+		Orbiter->Int_vec.print(cout, coset, nb_free_cols);
 		cout << endl;
 	}
 
@@ -949,7 +949,7 @@ void grassmann::unrank_lint_here_and_extend_basis(
 		cout << "grassmann::unrank_lint_here_and_extend_basis" << endl;
 	}
 	unrank_lint(rk, verbose_level);
-	int_vec_copy(M, Mtx, k * n);
+	Orbiter->Int_vec.copy(M, Mtx, k * n);
 	base_cols = NEW_int(n);
 	embedding = base_cols + k;
 	r = F->base_cols_and_embedding(k, n, Mtx,
@@ -958,7 +958,7 @@ void grassmann::unrank_lint_here_and_extend_basis(
 		cout << "r != k" << endl;
 		exit(1);
 	}
-	int_vec_zero(Mtx + k * n, (n - k) * n);
+	Orbiter->Int_vec.zero(Mtx + k * n, (n - k) * n);
 	for (i = 0; i < n - k; i++) {
 		Mtx[(k + i) * n + embedding[i]] = 1;
 	}
@@ -982,7 +982,7 @@ void grassmann::unrank_lint_here_and_compute_perp(
 		cout << "grassmann::unrank_int_here_and_compute_perp" << endl;
 		}
 	unrank_lint(rk, verbose_level);
-	int_vec_copy(M, Mtx, k * n);
+	Orbiter->Int_vec.copy(M, Mtx, k * n);
 	base_cols = NEW_int(n);
 	//embedding = base_cols + k;
 	r = F->RREF_and_kernel(n, k, Mtx, 0 /* verbose_level */);
@@ -1022,7 +1022,7 @@ void grassmann::line_regulus_in_PG_3_q(
 	regulus = NEW_int(regulus_size);
 	// the equation of the hyperboloid is x_0x_3-x_1x_2 = 0
 	for (u = 0; u < regulus_size; u++) {
-		int_vec_zero(M, 8);
+		Orbiter->Int_vec.zero(M, 8);
 		if (u == 0) {
 			// create the infinity component, which is 
 			// [0,0,1,0]
@@ -1051,7 +1051,7 @@ void grassmann::line_regulus_in_PG_3_q(
 	} // next u
 	if (f_vv) {
 		cout << "grassmann::line_regulus_in_PG_3_q regulus:" << endl;
-		int_vec_print(cout, regulus, regulus_size);
+		Orbiter->Int_vec.print(cout, regulus, regulus_size);
 		cout << endl;
 	}
 	if (f_v) {
@@ -1131,7 +1131,7 @@ void grassmann::compute_dual_spread(
 	Basis = M2;
 	if (f_v) {
 		cout << "grassmann::compute_dual_spread The spread is : ";
-		int_vec_print(cout, spread, spread_size);
+		Orbiter->Int_vec.print(cout, spread, spread_size);
 		cout << endl;
 	}
 	for (i = 0; i < spread_size; i++) {
@@ -1157,7 +1157,7 @@ void grassmann::compute_dual_spread(
 	}
 	if (f_v) {
 		cout << "grassmann::compute_dual_spread The dual spread is : ";
-		int_vec_print(cout, dual_spread, spread_size);
+		Orbiter->Int_vec.print(cout, dual_spread, spread_size);
 		cout << endl;
 	}
 	
@@ -1263,7 +1263,7 @@ void grassmann::create_Schlaefli_graph(int *&Adj, int &sz, int verbose_level)
 
 
 	Adj = NEW_int(sz * sz);
-	int_vec_zero(Adj, sz * sz);
+	Orbiter->Int_vec.zero(Adj, sz * sz);
 
 	for (i = 0; i < sz; i++) {
 		unrank_lint_here(M1, List[i], 0 /* verbose_level */);
@@ -1271,8 +1271,8 @@ void grassmann::create_Schlaefli_graph(int *&Adj, int &sz, int verbose_level)
 		for (j = i + 1; j < sz; j++) {
 			unrank_lint_here(M2, List[j], 0 /* verbose_level */);
 
-			int_vec_copy(M1, M, k * n);
-			int_vec_copy(M2, M + k * n, k * n);
+			Orbiter->Int_vec.copy(M1, M, k * n);
+			Orbiter->Int_vec.copy(M2, M + k * n, k * n);
 
 			rr = F->rank_of_rectangular_matrix(M, 2 * k, n, 0 /* verbose_level */);
 			if (rr == 2 * k) {

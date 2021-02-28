@@ -54,7 +54,7 @@ void finite_field::number_of_conditions_satisfied(
 	int *Cnt;
 
 	Cnt = NEW_int(nb_pts);
-	int_vec_zero(Cnt, nb_pts);
+	Orbiter->Int_vec.zero(Cnt, nb_pts);
 
 
 	homogeneous_polynomial_domain *HPD;
@@ -95,7 +95,7 @@ void finite_field::number_of_conditions_satisfied(
 		if (f_v) {
 			cout << "finite_field::number_of_conditions_satisfied "
 					"h=" << h << " / " << Variety_coeffs.size() << " coeff:";
-			int_vec_print(cout, coeff, HPD->get_nb_monomials());
+			Orbiter->Int_vec.print(cout, coeff, HPD->get_nb_monomials());
 			cout << endl;
 		}
 
@@ -224,7 +224,7 @@ void finite_field::create_intersection_of_zariski_open_sets(
 		if (f_v) {
 			cout << "finite_field::create_intersection_of_zariski_open_sets "
 					"h=" << h << " / " << Variety_coeffs.size() << " coeff:";
-			int_vec_print(cout, coeff, HPD->get_nb_monomials());
+			Orbiter->Int_vec.print(cout, coeff, HPD->get_nb_monomials());
 			cout << endl;
 		}
 
@@ -327,7 +327,7 @@ void finite_field::create_projective_variety(
 
 	if (f_v) {
 		cout << "finite_field::create_projective_variety coeff:";
-		int_vec_print(cout, coeff, HPD->get_nb_monomials());
+		Orbiter->Int_vec.print(cout, coeff, HPD->get_nb_monomials());
 		cout << endl;
 	}
 
@@ -390,7 +390,7 @@ void finite_field::create_projective_curve(
 	HPD->print_monomial_ordering(cout);
 
 	coeff = NEW_int(HPD->get_nb_monomials());
-	int_vec_zero(coeff, HPD->get_nb_monomials());
+	Orbiter->Int_vec.zero(coeff, HPD->get_nb_monomials());
 
 	fname.assign(variety_label);
 	fname.append(".txt");
@@ -399,7 +399,7 @@ void finite_field::create_projective_curve(
 	int *v;
 	int v2[2];
 
-	int_vec_scan(curve_coeffs.c_str(), coeffs, len);
+	Orbiter->Int_vec.scan(curve_coeffs.c_str(), coeffs, len);
 	if (len != curve_degree + 1) {
 		cout << "finite_field::create_projective_curve "
 				"len != curve_degree + 1" << endl;
@@ -424,7 +424,7 @@ void finite_field::create_projective_curve(
 		Pts[i] = c;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			int_vec_print(cout, v, curve_nb_vars);
+			Orbiter->Int_vec.print(cout, v, curve_nb_vars);
 			cout << " : " << setw(5) << c << endl;
 			}
 		}
@@ -451,8 +451,8 @@ int finite_field::test_if_vectors_are_projectively_equal(int *v1, int *v2, int l
 	w1 = NEW_int(len);
 	w2 = NEW_int(len);
 
-	int_vec_copy(v1, w1, len);
-	int_vec_copy(v2, w2, len);
+	Orbiter->Int_vec.copy(v1, w1, len);
+	Orbiter->Int_vec.copy(v2, w2, len);
 	PG_element_normalize(w1, 1, len);
 	PG_element_normalize(w2, 1, len);
 	for (i = 0; i < len; i++) {
@@ -533,7 +533,7 @@ long int finite_field::PG_element_embed(
 {
 	long int a;
 	PG_element_unrank_modified_lint(v, 1, old_length, rk);
-	int_vec_zero(v + old_length, new_length - old_length);
+	Orbiter->Int_vec.zero(v + old_length, new_length - old_length);
 	PG_element_rank_modified_lint(v, 1, new_length, a);
 	return a;
 }
@@ -1407,7 +1407,7 @@ void finite_field::create_BLT_point(
 	v3 = mult(minus_one, add(
 			mult(mult(b, b), quarter), negate(mult(a, c))));
 	v4 = 1;
-	int_vec_init5(v5, v0, v1, v2, v3, v4);
+	Orbiter->Int_vec.init5(v5, v0, v1, v2, v3, v4);
 	if (f_v) {
 		cout << "finite_field::create_BLT_point done" << endl;
 	}
@@ -1433,7 +1433,7 @@ void finite_field::Segre_hyperoval(
 
 	Pts = NEW_lint(N);
 	Mtx = NEW_int(N * 3);
-	int_vec_zero(Mtx, N * 3);
+	Orbiter->Int_vec.zero(Mtx, N * 3);
 	for (t = 0; t < q; t++) {
 		t6 = power(t, 6);
 		Mtx[t * 3 + 0] = 1;
@@ -1503,7 +1503,7 @@ void finite_field::GlynnI_hyperoval(
 
 	Pts = NEW_lint(N);
 	Mtx = NEW_int(N * 3);
-	int_vec_zero(Mtx, N * 3);
+	Orbiter->Int_vec.zero(Mtx, N * 3);
 	for (t = 0; t < q; t++) {
 		te = power(t, exponent);
 		Mtx[t * 3 + 0] = 1;
@@ -1573,7 +1573,7 @@ void finite_field::GlynnII_hyperoval(
 
 	Pts = NEW_lint(N);
 	Mtx = NEW_int(N * 3);
-	int_vec_zero(Mtx, N * 3);
+	Orbiter->Int_vec.zero(Mtx, N * 3);
 	for (t = 0; t < q; t++) {
 		te = power(t, exponent);
 		Mtx[t * 3 + 0] = 1;
@@ -1635,7 +1635,7 @@ void finite_field::Subiaco_oval(
 	}
 	Pts = NEW_lint(N);
 	Mtx = NEW_int(N * 3);
-	int_vec_zero(Mtx, N * 3);
+	Orbiter->Int_vec.zero(Mtx, N * 3);
 	for (t = 0; t < q; t++) {
 		t2 = mult(t, t);
 		t3 = mult(t2, t);
@@ -1732,7 +1732,7 @@ void finite_field::Subiaco_hyperoval(
 
 	Pts = NEW_lint(N);
 	Mtx = NEW_int(N * 3);
-	int_vec_zero(Mtx, N * 3);
+	Orbiter->Int_vec.zero(Mtx, N * 3);
 	for (t = 0; t < q; t++) {
 		t2 = mult(t, t);
 		t3 = mult(t2, t);
@@ -1969,7 +1969,7 @@ void finite_field::LunelliSce(int *pts18, int verbose_level)
 	if (f_v) {
 		cout << "the size of the LinelliSce hyperoval is " << sz << endl;
 		cout << "the LinelliSce hyperoval is:" << endl;
-		int_vec_print(cout, pts18, sz);
+		Orbiter->Int_vec.print(cout, pts18, sz);
 		cout << endl;
 	}
 
@@ -2055,14 +2055,14 @@ void finite_field::O4_isomorphism_4to2(
 			0, 0, verbose_level);
 	if (f_vv) {
 		cout << "grid point (0,0) = ";
-		int_vec_print(cout, P, 4);
+		Orbiter->Int_vec.print(cout, P, 4);
 		cout << endl;
 	}
 	O4_grid_coordinates_unrank(Q[0], Q[1], Q[2], Q[3],
 			1, 0, verbose_level);
 	if (f_vv) {
 		cout << "grid point (1,0) = ";
-		int_vec_print(cout, Q, 4);
+		Orbiter->Int_vec.print(cout, Q, 4);
 		cout << endl;
 	}
 	mult_vector_from_the_left(P, B, R, 4, 4);
@@ -2285,8 +2285,8 @@ void finite_field::O4_grid_coordinates_rank(
 	PG_element_normalize_from_front(v, 1, 2);
 	PG_element_normalize_from_front(w, 1, 2);
 	if (f_v) {
-		int_vec_print(cout, v, 2);
-		int_vec_print(cout, w, 2);
+		Orbiter->Int_vec.print(cout, v, 2);
+		Orbiter->Int_vec.print(cout, w, 2);
 		cout << endl;
 	}
 
@@ -2308,8 +2308,8 @@ void finite_field::O4_grid_coordinates_unrank(
 	PG_element_normalize_from_front(v, 1, 2);
 	PG_element_normalize_from_front(w, 1, 2);
 	if (f_v) {
-		int_vec_print(cout, v, 2);
-		int_vec_print(cout, w, 2);
+		Orbiter->Int_vec.print(cout, v, 2);
+		Orbiter->Int_vec.print(cout, w, 2);
 		cout << endl;
 	}
 
@@ -2460,9 +2460,9 @@ void finite_field::O4_find_tangent_plane(
 	}
 	if (f_v) {
 		cout << "nb_secants=" << nb_secants << endl;
-		int_vec_print(cout, secants1, nb_secants);
+		Orbiter->Int_vec.print(cout, secants1, nb_secants);
 		cout << endl;
-		int_vec_print(cout, secants2, nb_secants);
+		Orbiter->Int_vec.print(cout, secants2, nb_secants);
 		cout << endl;
 	}
 	h = 0;
@@ -2476,7 +2476,7 @@ void finite_field::O4_find_tangent_plane(
 	}
 	if (f_v) {
 		cout << "complement = tangents:" << endl;
-		int_vec_print(cout, complement, nb_complement);
+		Orbiter->Int_vec.print(cout, complement, nb_complement);
 		cout << endl;
 	}
 
@@ -2612,13 +2612,13 @@ void finite_field::all_PG_elements_in_subspace(
 		PG_element_unrank_modified(message, 1, k, i);
 		if (f_vv) {
 			cout << "message " << i << " / " << nb_points << " is ";
-			int_vec_print(cout, message, k);
+			Orbiter->Int_vec.print(cout, message, k);
 			cout << endl;
 		}
 		mult_vector_from_the_left(message, genma, word, k, n);
 		if (f_vv) {
 			cout << "yields word ";
-			int_vec_print(cout, word, n);
+			Orbiter->Int_vec.print(cout, word, n);
 			cout << endl;
 		}
 		PG_element_rank_modified_lint(word, 1, n, a);
@@ -2660,13 +2660,13 @@ void finite_field::all_PG_elements_in_subspace_array_is_given(
 		PG_element_unrank_modified(message, 1, k, i);
 		if (f_vv) {
 			cout << "message " << i << " / " << nb_points << " is ";
-			int_vec_print(cout, message, k);
+			Orbiter->Int_vec.print(cout, message, k);
 			cout << endl;
 		}
 		mult_vector_from_the_left(message, genma, word, k, n);
 		if (f_vv) {
 			cout << "yields word ";
-			int_vec_print(cout, word, n);
+			Orbiter->Int_vec.print(cout, word, n);
 			cout << endl;
 		}
 		PG_element_rank_modified(word, 1, n, j);
@@ -2774,7 +2774,7 @@ void finite_field::do_cone_over(int n,
 	cnt = 0;
 
 	// create the vertex:
-	int_vec_zero(v, d);
+	Orbiter->Int_vec.zero(v, d);
 	v[d - 1] = 1;
 	b = P2->rank_point(v);
 	set_out[cnt++] = b;
@@ -3101,7 +3101,7 @@ void finite_field::create_hyperoval(
 			P->unrank_point(v, Pts[i]);
 			if (f_v) {
 				cout << setw(4) << i << " : ";
-				int_vec_print(cout, v, d);
+				Orbiter->Int_vec.print(cout, v, d);
 				cout << endl;
 				}
 			}
@@ -3161,7 +3161,7 @@ void finite_field::create_subiaco_oval(
 			P->unrank_point(v, Pts[i]);
 			if (f_v) {
 				cout << setw(4) << i << " : ";
-				int_vec_print(cout, v, d);
+				Orbiter->Int_vec.print(cout, v, d);
 				cout << endl;
 				}
 			}
@@ -3216,7 +3216,7 @@ void finite_field::create_subiaco_hyperoval(
 			P->unrank_point(v, Pts[i]);
 			if (f_v) {
 				cout << setw(4) << i << " : ";
-				int_vec_print(cout, v, d);
+				Orbiter->Int_vec.print(cout, v, d);
 				cout << endl;
 				}
 			}
@@ -3271,7 +3271,7 @@ void finite_field::create_ovoid(
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			int_vec_print(cout, v, d);
+			Orbiter->Int_vec.print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
 			}
 		}
@@ -3416,7 +3416,7 @@ void finite_field::create_BLT_from_database(int f_embedded,
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : " << setw(4) << BLT[i] << " : ";
-			int_vec_print(cout, v, d);
+			Orbiter->Int_vec.print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
 			}
 		}
@@ -3482,7 +3482,7 @@ void finite_field::create_orthogonal(int epsilon, int n,
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			int_vec_print(cout, v, d);
+			Orbiter->Int_vec.print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
 			}
 		}
@@ -3537,7 +3537,7 @@ void finite_field::create_hermitian(int n,
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			int_vec_print(cout, v, d);
+			Orbiter->Int_vec.print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
 			}
 		}
@@ -3604,7 +3604,7 @@ void finite_field::create_cuspidal_cubic(
 		Pts[i] = a;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			int_vec_print(cout, v, d);
+			Orbiter->Int_vec.print(cout, v, d);
 			cout << " : " << setw(5) << a << endl;
 			}
 		}
@@ -3711,7 +3711,7 @@ void finite_field::create_twisted_cubic(
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			int_vec_print(cout, v, d);
+			Orbiter->Int_vec.print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
 			}
 		}
@@ -3774,7 +3774,7 @@ void finite_field::create_elliptic_curve(
 		Pts[i] = a;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			int_vec_print(cout, E->T + i * d, d);
+			Orbiter->Int_vec.print(cout, E->T + i * d, d);
 			cout << " : " << setw(5) << a << endl;
 			}
 		}
@@ -3869,7 +3869,7 @@ void finite_field::create_ttp_code(finite_field *Fq,
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			int_vec_print(cout, v, d);
+			Orbiter->Int_vec.print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
 			}
 		}
@@ -3937,7 +3937,7 @@ void finite_field::create_unital_XXq_YZq_ZYq(
 		P2->unrank_point(v, rk);
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			int_vec_print(cout, v, d);
+			Orbiter->Int_vec.print(cout, v, d);
 			cout << " : " << setw(5) << rk << endl;
 			}
 		}
@@ -4019,7 +4019,7 @@ void finite_field::create_hyperplane(int n,
 			Pts[nb_pts++] = i;
 			if (f_v) {
 				cout << setw(4) << nb_pts - 1 << " : ";
-				int_vec_print(cout, v2, d);
+				Orbiter->Int_vec.print(cout, v2, d);
 				cout << " : " << setw(5) << i << endl;
 				}
 			}
@@ -4259,7 +4259,7 @@ void finite_field::create_desarguesian_line_spread_in_PG_3_q(
 			// which is an element of the regular spread.
 		if (f_vv) {
 			cout << "v2=";
-			int_vec_print(cout, v2, 2);
+			Orbiter->Int_vec.print(cout, v2, 2);
 			cout << endl;
 			}
 
@@ -4281,9 +4281,9 @@ void finite_field::create_desarguesian_line_spread_in_PG_3_q(
 			}
 		if (f_vv) {
 			cout << "w1=";
-			int_vec_print(cout, w1, 4);
+			Orbiter->Int_vec.print(cout, w1, 4);
 			cout << "w2=";
-			int_vec_print(cout, w2, 4);
+			Orbiter->Int_vec.print(cout, w2, 4);
 			cout << endl;
 			}
 
@@ -4299,9 +4299,9 @@ void finite_field::create_desarguesian_line_spread_in_PG_3_q(
 		Lines[rk] = rk1;
 		if (f_vv) {
 			cout << setw(4) << rk << " : ";
-			int_vec_print(cout, w1, d);
+			Orbiter->Int_vec.print(cout, w1, d);
 			cout << ", ";
-			int_vec_print(cout, w2, d);
+			Orbiter->Int_vec.print(cout, w2, d);
 			cout << " : " << setw(5) << rk1 << endl;
 			}
 		}
@@ -4468,7 +4468,7 @@ void finite_field::do_m_subspace_type(int n, int m,
 				}
 			Sorting.int_vec_quicksort_increasingly(S, l);
 			if (f_v) {
-				int_vec_print(cout, S, l);
+				Orbiter->Int_vec.print(cout, S, l);
 				cout << endl;
 				}
 
@@ -4625,7 +4625,7 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 		}
 	Sorting.int_vec_quicksort_increasingly(S, nb_planes);
 	if (f_v) {
-		int_vec_print(cout, S, nb_planes);
+		Orbiter->Int_vec.print(cout, S, nb_planes);
 		cout << endl;
 		}
 
@@ -4834,7 +4834,7 @@ void finite_field::do_line_type(int n,
 				}
 			Sorting.int_vec_quicksort_increasingly(S, l);
 			if (f_v) {
-				int_vec_print(cout, S, l);
+				Orbiter->Int_vec.print(cout, S, l);
 				cout << endl;
 				}
 			for (j = 0; j < l; j++) {
@@ -5113,7 +5113,7 @@ void finite_field::do_test_diagonal_line(int n,
 			}
 
 		cout << "p_idx[4]: ";
-		int_vec_print(cout, p_idx, 4);
+		Orbiter->Int_vec.print(cout, p_idx, 4);
 		cout << endl;
 
 		line[0] = P->line_through_two_points(pt[0], pt[1]);
@@ -5124,7 +5124,7 @@ void finite_field::do_test_diagonal_line(int n,
 		line[5] = P->line_through_two_points(pt[2], pt[3]);
 
 		cout << "line[6]: ";
-		int_vec_print(cout, line, 6);
+		Orbiter->Int_vec.print(cout, line, 6);
 		cout << endl;
 
 
@@ -5133,7 +5133,7 @@ void finite_field::do_test_diagonal_line(int n,
 		diag_pts[2] = P->intersection_of_two_lines(line[2], line[3]);
 
 		cout << "diag_pts[3]: ";
-		int_vec_print(cout, diag_pts, 3);
+		Orbiter->Int_vec.print(cout, diag_pts, 3);
 		cout << endl;
 
 
@@ -5296,7 +5296,7 @@ void finite_field::do_andre(finite_field *Fq,
 		P2->unrank_point(v, the_set_in[i]);
 		PG_element_normalize(v, 1, 3);
 		if (f_vv) {
-			int_vec_print(cout, v, 3);
+			Orbiter->Int_vec.print(cout, v, 3);
 			cout << " becomes ";
 			}
 
@@ -5333,9 +5333,9 @@ void finite_field::do_andre(finite_field *Fq,
 				}
 			if (FALSE) {
 				cout << "w1=";
-				int_vec_print(cout, w1, 4);
+				Orbiter->Int_vec.print(cout, w1, 4);
 				cout << "w2=";
-				int_vec_print(cout, w2, 4);
+				Orbiter->Int_vec.print(cout, w2, 4);
 				cout << endl;
 				}
 
@@ -5349,7 +5349,7 @@ void finite_field::do_andre(finite_field *Fq,
 				Fq->PG_element_unrank_modified(v2, 1, 2, h);
 				if (FALSE) {
 					cout << "v2=";
-					int_vec_print(cout, v2, 2);
+					Orbiter->Int_vec.print(cout, v2, 2);
 					cout << " : ";
 					}
 				for (k = 0; k < 4; k++) {
@@ -5359,7 +5359,7 @@ void finite_field::do_andre(finite_field *Fq,
 				w3[4] = 0;
 				if (f_vv) {
 					cout << " ";
-					int_vec_print(cout, w3, 5);
+					Orbiter->Int_vec.print(cout, w3, 5);
 					}
 				a = P4->rank_point(w3);
 				if (f_vv) {
@@ -5385,7 +5385,7 @@ void finite_field::do_andre(finite_field *Fq,
 			w1[4] = 1;
 			if (f_vv) {
 				//cout << "w1=";
-				int_vec_print(cout, w1, 5);
+				Orbiter->Int_vec.print(cout, w1, 5);
 				}
 			a = P4->rank_point(w1);
 			if (f_vv) {
@@ -5400,7 +5400,7 @@ void finite_field::do_andre(finite_field *Fq,
 			a = the_set_out[i];
 			P4->unrank_point(w1, a);
 			cout << setw(3) << i << " : " << setw(5) << a << " : ";
-			int_vec_print(cout, w1, 5);
+			Orbiter->Int_vec.print(cout, w1, 5);
 			cout << endl;
 			}
 		}
@@ -5468,7 +5468,7 @@ void finite_field::do_print_points_in_PG(int n,
 		a = set_in[h];
 		P->unrank_point(v, a);
 		cout << setw(5) << h << " : " << setw(5) << a << " : ";
-		int_vec_print(cout, v, d);
+		Orbiter->Int_vec.print(cout, v, d);
 		cout << " : ";
 		int_vec_print_elements_exponential(cout,
 				v, d, symbol_for_print);
@@ -5506,7 +5506,7 @@ void finite_field::do_print_points_in_orthogonal_space(
 					v, d, symbol_for_print);
 			}
 		else {
-			int_vec_print(cout, v, d);
+			Orbiter->Int_vec.print(cout, v, d);
 			}
 		cout << "\\\\" << endl;
 		}
@@ -6324,7 +6324,7 @@ void finite_field::simeon(int n, int len, long int *S, int s, int verbose_level)
 	C = NEW_int(k - 1);
 	T = NEW_int(k * k);
 
-	int_vec_zero(M, nb_rows * nb_cols);
+	Orbiter->Int_vec.zero(M, nb_rows * nb_cols);
 
 
 	// unrank all points of the arc:
@@ -6361,7 +6361,7 @@ void finite_field::simeon(int n, int len, long int *S, int s, int verbose_level)
 		}
 		if (f_vv) {
 			cout << "Ac=";
-			int_vec_print(cout, Ac, ac);
+			Orbiter->Int_vec.print(cout, Ac, ac);
 			cout << endl;
 		}
 
@@ -6374,7 +6374,7 @@ void finite_field::simeon(int n, int len, long int *S, int s, int verbose_level)
 			}
 			if (f_vv) {
 				cout << "U1=";
-				int_vec_print(cout, U1, k - 1);
+				Orbiter->Int_vec.print(cout, U1, k - 1);
 				cout << endl;
 			}
 
@@ -6387,7 +6387,7 @@ void finite_field::simeon(int n, int len, long int *S, int s, int verbose_level)
 				Combi.unrank_k_subset(col, C, len, k - 1);
 				if (f_vv) {
 					cout << "C: ";
-					int_vec_print(cout, C, k - 1);
+					Orbiter->Int_vec.print(cout, C, k - 1);
 					cout << endl;
 				}
 
@@ -6533,7 +6533,7 @@ void finite_field::isomorphism_to_special_orthogonal(int *A4, int *A6, int verbo
 		mult_vector_from_the_left(Basis2 + j * 6, An2, v, 6, 6);
 				// v[m], A[m][n], vA[n]
 		wedge_to_klein(v, w);
-		int_vec_copy(w, C + j * 6, 6);
+		Orbiter->Int_vec.copy(w, C + j * 6, 6);
 	}
 
 

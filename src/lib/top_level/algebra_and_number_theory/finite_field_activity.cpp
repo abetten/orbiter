@@ -267,11 +267,11 @@ void finite_field_activity::perform_activity(int verbose_level)
 		layered_graph_draw_options *O;
 
 
-		if (!The_Orbiter_session->f_draw_options) {
+		if (!Orbiter->f_draw_options) {
 			cout << "please use option -draw_options .. -end" << endl;
 			exit(1);
 		}
-		O = The_Orbiter_session->draw_options;
+		O = Orbiter->draw_options;
 
 		Geo.do_cheat_sheet_PG(F, O, Descr->cheat_sheet_PG_n,
 				verbose_level);
@@ -663,7 +663,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 					cout << endl;
 				}
 				cout << "coefficient vector: ";
-				int_vec_print(cout, Values, nb_monomials);
+				Orbiter->Int_vec.print(cout, Values, nb_monomials);
 				cout << endl;
 
 			}

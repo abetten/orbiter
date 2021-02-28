@@ -339,7 +339,7 @@ colored_graph *colored_graph::subgraph_by_color_classes(
 	Pts = NEW_lint(l);
 	Color = NEW_int(l);
 
-	int_vec_zero(A, l * l);
+	Orbiter->Int_vec.zero(A, l * l);
 
 	for (i = 0; i < l; i++) {
 		ii = f + i;
@@ -441,7 +441,7 @@ colored_graph *colored_graph::subgraph_by_color_classes_with_condition(
 	}
 
 	A = NEW_int(nb_pts * nb_pts);
-	int_vec_zero(A, nb_pts * nb_pts);
+	Orbiter->Int_vec.zero(A, nb_pts * nb_pts);
 
 	for (i = 0; i < nb_pts; i++) {
 		ii = f + i;
@@ -679,10 +679,10 @@ void colored_graph::init(int nb_points, int nb_colors, int nb_colors_per_vertex,
 	point_color = NEW_int(nb_points * nb_colors_per_vertex);
 
 	if (colors) {
-		int_vec_copy(colors, point_color, nb_points * nb_colors_per_vertex);
+		Orbiter->Int_vec.copy(colors, point_color, nb_points * nb_colors_per_vertex);
 	}
 	else {
-		int_vec_zero(point_color, nb_points * nb_colors_per_vertex);
+		Orbiter->Int_vec.zero(point_color, nb_points * nb_colors_per_vertex);
 	}
 	
 	colored_graph::f_ownership_of_bitvec = f_ownership_of_bitvec;
@@ -706,7 +706,7 @@ void colored_graph::init_no_colors(int nb_points,
 		cout << "nb_points=" << nb_points << endl;
 	}
 	vertex_colors = NEW_int(nb_points);
-	int_vec_zero(vertex_colors, nb_points);
+	Orbiter->Int_vec.zero(vertex_colors, nb_points);
 
 	init(nb_points, 1 /* nb_colors */, 1 /* nb_colors_per_vertex */,
 		vertex_colors, Bitvec, f_ownership_of_bitvec, verbose_level);
@@ -820,7 +820,7 @@ void colored_graph::init_adjacency_no_colors(int nb_points,
 		cout << "nb_points=" << nb_points << endl;
 	}
 	vertex_colors = NEW_int(nb_points);
-	int_vec_zero(vertex_colors, nb_points);
+	Orbiter->Int_vec.zero(vertex_colors, nb_points);
 
 	init_adjacency(nb_points,
 			1 /* nb_colors */, 1 /* nb_colors_per_vertex */,
@@ -965,7 +965,7 @@ colored_graph::all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file(
 				"and_write_solutions_to_file " << fname << endl;
 		if (f_restrictions) {
 			cout << "with restrictions: ";
-			int_vec_print(cout, restrictions, 3);
+			Orbiter->Int_vec.print(cout, restrictions, 3);
 			cout << endl;
 		}
 	}
@@ -1388,7 +1388,7 @@ void colored_graph::draw_Levi(std::string &fname,
 			labels[i] = points[i];
 		}
 		cout << "colored_graph::draw_Levi label=";
-		int_vec_print(cout, labels, m + n);
+		Orbiter->Int_vec.print(cout, labels, m + n);
 		cout << endl;
 	}
 	
@@ -2183,7 +2183,7 @@ void colored_graph::export_to_csv(std::string &fname, int verbose_level)
 	}
 
 	M = NEW_int(nb_points * nb_points);
-	int_vec_zero(M, nb_points * nb_points);
+	Orbiter->Int_vec.zero(M, nb_points * nb_points);
 
 	for (i = 0; i < nb_points; i++) {
 		for (j = 0; j < nb_points; j++) {
@@ -2311,7 +2311,7 @@ void colored_graph::early_test_func_for_path_and_cycle_search(
 	}
 
 	v = NEW_int(nb_points);
-	int_vec_zero(v, nb_points);
+	Orbiter->Int_vec.zero(v, nb_points);
 
 	//pt = S[len - 1];
 
@@ -2350,7 +2350,7 @@ int colored_graph::is_cycle(int nb_e, long int *edges,
 		cout << "colored_graph::is_cycle" << endl;
 	}
 	v = NEW_int(nb_points);
-	int_vec_zero(v, nb_points);
+	Orbiter->Int_vec.zero(v, nb_points);
 	
 	for (i = 0; i < nb_e; i++) {
 		a = edges[i];

@@ -40,7 +40,7 @@ void poset_orbit_node::store_strong_generators(
 				gen->get_A()->element_store(Strong_gens->gens->ith(i), FALSE);
 			}
 		}
-		int_vec_copy(Strong_gens->tl, tl, gen->get_A()->base_len());
+		Orbiter->Int_vec.copy(Strong_gens->tl, tl, gen->get_A()->base_len());
 	}
 }
 
@@ -859,7 +859,7 @@ void poset_orbit_node::create_schreier_vector_wrapper_subspace_action(
 		if (f_vv) {
 			cout << "schreier vector before relabeling :" << endl;
 			if (Schreier_vector->get_number_of_points() < 100) {
-				int_vec_print(cout, Schreier_vector->points(),
+				Orbiter->Int_vec.print(cout, Schreier_vector->points(),
 						Schreier_vector->get_number_of_points());
 				cout << endl;
 			}
@@ -879,7 +879,7 @@ void poset_orbit_node::create_schreier_vector_wrapper_subspace_action(
 		if (f_vv) {
 			cout << "schreier vector after relabeling :" << endl;
 			if (Schreier_vector->get_number_of_points() < 100) {
-				int_vec_print(cout, Schreier_vector->points(),
+				Orbiter->Int_vec.print(cout, Schreier_vector->points(),
 						Schreier_vector->get_number_of_points());
 				cout << endl;
 			}

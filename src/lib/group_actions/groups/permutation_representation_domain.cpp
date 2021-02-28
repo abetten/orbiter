@@ -418,7 +418,7 @@ void permutation_representation_domain::print_with_print_point_function(int *Elt
 
 void permutation_representation_domain::code_for_make_element(int *Elt, int *data)
 {
-	int_vec_copy(Elt, data, degree);
+	Orbiter->Int_vec.copy(Elt, data, degree);
 }
 
 void permutation_representation_domain::print_for_make_element(int *Elt, ostream &ost)
@@ -504,7 +504,7 @@ void permutation_representation_domain::make_element(int *Elt, int *data, int ve
 	}
 	if (f_vv) {
 		cout << "data: ";
-		int_vec_print(cout, data, elt_size_int);
+		Orbiter->Int_vec.print(cout, data, elt_size_int);
 		cout << endl;
 	}
 	for (i = 0; i < elt_size_int; i++) {

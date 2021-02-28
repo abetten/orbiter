@@ -259,8 +259,8 @@ void interface_toolkit::worker(int verbose_level)
 			int nb_row_parts;
 			int nb_col_parts;
 
-			int_vec_scan(draw_matrix_partition_rows, row_parts, nb_row_parts);
-			int_vec_scan(draw_matrix_partition_cols, col_parts, nb_col_parts);
+			Orbiter->Int_vec.scan(draw_matrix_partition_rows, row_parts, nb_row_parts);
+			Orbiter->Int_vec.scan(draw_matrix_partition_cols, col_parts, nb_col_parts);
 			draw_bitmap(fname, M, m, n,
 					TRUE, draw_matrix_partition_width, // int f_partition, int part_width,
 					nb_row_parts, row_parts, nb_col_parts, col_parts, // int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,

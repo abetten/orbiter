@@ -102,14 +102,14 @@ void surface_domain::make_spreadsheet_of_lines_in_three_kinds(
 	for (i = 0; i < nb_lines; i++) {
 		a = Wedge_rk[i];
 		F->PG_element_unrank_modified_lint(w, 1, 6 /*wedge_dimension*/, a);
-		int_vec_print_to_str(str, w, 6);
+		Orbiter->Int_vec.print_to_str(str, w, 6);
 		Text_wedge[i] = NEW_char(strlen(str) + 1);
 		strcpy(Text_wedge[i], str);
 		}
 	for (i = 0; i < nb_lines; i++) {
 		a = Line_rk[i];
 		Gr->unrank_lint_here(Basis, a, 0 /* verbose_level */);
-		int_vec_print_to_str(str, Basis, 8);
+		Orbiter->Int_vec.print_to_str(str, Basis, 8);
 		Text_line[i] = NEW_char(strlen(str) + 1);
 		strcpy(Text_line[i], str);
 		}
@@ -118,7 +118,7 @@ void surface_domain::make_spreadsheet_of_lines_in_three_kinds(
 		O->unrank_point(w, 1, a, 0 /* verbose_level*/);
 			// error corrected: w was v which was v[4], so too short.
 			// Aug 25, 2018
-		int_vec_print_to_str(str, w, 6);
+		Orbiter->Int_vec.print_to_str(str, w, 6);
 			// w was v, error corrected
 		Text_klein[i] = NEW_char(strlen(str) + 1);
 		strcpy(Text_klein[i], str);
@@ -438,11 +438,11 @@ void surface_domain::print_trihedral_pair_in_dual_coordinates_in_GAP(
 		}
 	cout << "[";
 	for (i = 0; i < 3; i++) {
-		int_vec_print_GAP(cout, F_planes + i * 4, 4);
+		Orbiter->Int_vec.print_GAP(cout, F_planes + i * 4, 4);
 		cout << ", ";
 		}
 	for (i = 0; i < 3; i++) {
-		int_vec_print_GAP(cout, G_planes + i * 4, 4);
+		Orbiter->Int_vec.print_GAP(cout, G_planes + i * 4, 4);
 		if (i < 3 - 1) {
 			cout << ", ";
 			}
@@ -851,7 +851,7 @@ void surface_domain::compute_table_E(
 
 	nb_Q = nb_fields;
 	Q = NEW_int(nb_Q);
-	int_vec_copy(field_orders, Q, nb_Q);
+	Orbiter->Int_vec.copy(field_orders, Q, nb_Q);
 
 	nb_E_max = 0;
 	for (i = 0; i < nb_fields; i++) {
@@ -865,7 +865,7 @@ void surface_domain::compute_table_E(
 	cout << "nb_E_max=" << nb_E_max << endl;
 	int *E_freq;
 	E_freq = NEW_int(nb_E_max + 1);
-	int_vec_zero(E_freq, nb_E_max + 1);
+	Orbiter->Int_vec.zero(E_freq, nb_E_max + 1);
 	for (i = 0; i < nb_fields; i++) {
 		q = field_orders[i];
 		nb_reps = K.cubic_surface_nb_reps(q);
@@ -878,7 +878,7 @@ void surface_domain::compute_table_E(
 
 
 	cout << "E_freq=";
-	int_vec_print(cout, E_freq, nb_E_max + 1);
+	Orbiter->Int_vec.print(cout, E_freq, nb_E_max + 1);
 	cout << endl;
 
 
@@ -899,7 +899,7 @@ void surface_domain::compute_table_E(
 
 
 	Table = NEW_int(nb_Q * nb_E_types);
-	int_vec_zero(Table, nb_Q * nb_E_types);
+	Orbiter->Int_vec.zero(Table, nb_Q * nb_E_types);
 	for (i = 0; i < nb_fields; i++) {
 		q = Q[i];
 		nb_reps = K.cubic_surface_nb_reps(q);

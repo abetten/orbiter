@@ -157,7 +157,7 @@ void recoordinatize::do_recoordinatize(
 		cout << "M:" << endl;
 		print_integer_matrix_width(cout, M, 3 * k, n, n, F->log10_of_q + 1);
 	}
-	int_vec_copy(M, AA, n * n);
+	Orbiter->Int_vec.copy(M, AA, n * n);
 	F->matrix_inverse(AA, AAv, n, 0 /*verbose_level - 1*/);
 	if (f_vv) {
 		cout << "AAv:" << endl;
@@ -185,7 +185,7 @@ void recoordinatize::do_recoordinatize(
 		print_integer_matrix_width(cout, TTv, k, k, k, F->log10_of_q + 1);
 	}
 
-	int_vec_zero(B, n * n);
+	Orbiter->Int_vec.zero(B, n * n);
 	for (i = 0; i < k; i++) {
 		for (j = 0; j < k; j++) {
 			B[i * n + j] = TTv[i * k + j];
@@ -653,7 +653,7 @@ void recoordinatize::compute_live_points_low_level(
 			}
 	
 			// make the k x n matrix ( I_k | Elt1 )
-			int_vec_zero(Grass->M, k * n);
+			Orbiter->Int_vec.zero(Grass->M, k * n);
 			for (i = 0; i < k; i++) {
 				Grass->M[i * n + i] = 1;
 			}
@@ -731,7 +731,7 @@ void recoordinatize::make_first_three(
 	M = NEW_int(k * n);
 
 	// make the element (I_k | 0). Let j1 be its rank
-	int_vec_zero(M, k * n);
+	Orbiter->Int_vec.zero(M, k * n);
 	for (i = 0; i < k; i++) {
 		M[i * n + i] = 1;
 	}
@@ -745,7 +745,7 @@ void recoordinatize::make_first_three(
 	}
 
 	// make the element (0 | I_k). Let j2 be its rank
-	int_vec_zero(M, k * n);
+	Orbiter->Int_vec.zero(M, k * n);
 	for (i = 0; i < k; i++) {
 		M[i * n + k + i] = 1;
 	}
@@ -759,7 +759,7 @@ void recoordinatize::make_first_three(
 	}
 
 	// make the element (I_k | I_k). Let j3 be its rank
-	int_vec_zero(M, k * n);
+	Orbiter->Int_vec.zero(M, k * n);
 	for (i = 0; i < k; i++) {
 		M[i * n + i] = 1;
 		M[i * n + k + i] = 1;

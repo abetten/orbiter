@@ -130,7 +130,7 @@ void orbit_of_subspaces::init(
 	orbit_of_subspaces::F = F;
 	orbit_of_subspaces::gens = gens;
 	orbit_of_subspaces::subspace_by_rank = NEW_int(n);
-	int_vec_copy(subspace_by_rank, orbit_of_subspaces::subspace_by_rank, n);
+	Orbiter->Int_vec.copy(subspace_by_rank, orbit_of_subspaces::subspace_by_rank, n);
 	orbit_of_subspaces::k = k;
 	orbit_of_subspaces::n = n;
 	orbit_of_subspaces::f_has_desired_pivots = f_has_desired_pivots;
@@ -418,7 +418,7 @@ void orbit_of_subspaces::rref(int *subspace, int verbose_level)
 			cout << "orbit_of_subspaces::rref before:" << endl;
 			int_matrix_print(subspace, k, n);
 			cout << "desired_pivots:";
-			int_vec_print(cout, desired_pivots, k);
+			Orbiter->Int_vec.print(cout, desired_pivots, k);
 			cout << endl;
 			}
 		F->Gauss_int_with_given_pivots(
@@ -529,7 +529,7 @@ void orbit_of_subspaces::print_orbit()
 			lint_vec_print(cout, Subspaces_lint[i], k);
 		}
 		else {
-			int_vec_print(cout, Subspaces[i], k);
+			Orbiter->Int_vec.print(cout, Subspaces[i], k);
 		}
 #if 0
 		cout << " : ";
@@ -652,7 +652,7 @@ void orbit_of_subspaces::compute(int verbose_level)
 	}
 	else {
 		Subspaces[0] = NEW_int(sz);
-		int_vec_copy(subspace_by_rank, Subspaces[0], sz);
+		Orbiter->Int_vec.copy(subspace_by_rank, Subspaces[0], sz);
 	}
 	prev[0] = -1;
 	label[0] = -1;
@@ -673,7 +673,7 @@ void orbit_of_subspaces::compute(int verbose_level)
 			cout << "Q_len = " << Q_len
 					<< " : used_length="
 					<< used_length << " : ";
-			int_vec_print(cout, Q, Q_len);
+			Orbiter->Int_vec.print(cout, Q, Q_len);
 			cout << endl;
 			}
 		cur = Q[0];
@@ -730,21 +730,21 @@ void orbit_of_subspaces::compute(int verbose_level)
 					// reallocate prev:
 					int *prev2;
 					prev2 = NEW_int(al2);
-					int_vec_copy(prev, prev2, al2);
+					Orbiter->Int_vec.copy(prev, prev2, al2);
 					FREE_int(prev);
 					prev = prev2;
 
 					// reallocate label:
 					int *label2;
 					label2 = NEW_int(al2);
-					int_vec_copy(label, label2, al2);
+					Orbiter->Int_vec.copy(label, label2, al2);
 					FREE_int(label);
 					label = label2;
 
 					// reallocate Q2:
 					int *Q2;
 					Q2 = NEW_int(al2);
-					int_vec_copy(Q, Q2, Q_len);
+					Orbiter->Int_vec.copy(Q, Q2, Q_len);
 					FREE_int(Q);
 					Q = Q2;
 
@@ -758,7 +758,7 @@ void orbit_of_subspaces::compute(int verbose_level)
 				}
 				else {
 					Subspaces[used_length] = NEW_int(sz);
-					int_vec_copy(subspace_by_rank, Subspaces[used_length], sz);
+					Orbiter->Int_vec.copy(subspace_by_rank, Subspaces[used_length], sz);
 				}
 				prev[used_length] = cur;
 				label[used_length] = j;

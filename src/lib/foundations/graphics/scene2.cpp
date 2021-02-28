@@ -555,7 +555,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		//numerics Numerics;
 
 		Idx_text.assign(argv[++i]);
-		int_vec_scan(Idx_text, Idx, Idx_sz);
+		Orbiter->Int_vec.scan(Idx_text, Idx, Idx_sz);
 		if (Idx_sz != 2) {
 			cout << "For -point_as_intersection_of_two_lines, "
 					"the number of indices must be 2; is " << Idx_sz << endl;
@@ -572,7 +572,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		//numerics Numerics;
 
 		Idx_text.assign(argv[++i]);
-		int_vec_scan(Idx_text, Idx, Idx_sz);
+		Orbiter->Int_vec.scan(Idx_text, Idx, Idx_sz);
 		if (Idx_sz != 2) {
 			cout << "For -edge, the number of indices must be 2; is " << Idx_sz << endl;
 			exit(1);
@@ -598,7 +598,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		//numerics Numerics;
 
 		Idx_text.assign(argv[++i]);
-		int_vec_scan(Idx_text, Idx, Idx_sz);
+		Orbiter->Int_vec.scan(Idx_text, Idx, Idx_sz);
 		if (Idx_sz != 3) {
 			cout << "For -triangular_face_given_by_three_lines, "
 					"the number of indices must be 3; is " << Idx_sz << endl;
@@ -615,7 +615,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		//numerics Numerics;
 
 		Idx_text.assign(argv[++i]);
-		int_vec_scan(Idx_text, Idx, Idx_sz);
+		Orbiter->Int_vec.scan(Idx_text, Idx, Idx_sz);
 		face(Idx, Idx_sz);
 		FREE_int(Idx);
 	}
@@ -627,7 +627,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		//numerics Numerics;
 
 		Idx_text.assign(argv[++i]);
-		int_vec_scan(Idx_text, Idx, Idx_sz);
+		Orbiter->Int_vec.scan(Idx_text, Idx, Idx_sz);
 		if (Idx_sz != 3) {
 			cout << "For -quadric_through_three_skew_lines, "
 					"the number of indices must be 3; is " << Idx_sz << endl;
@@ -644,7 +644,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		//numerics Numerics;
 
 		Idx_text.assign(argv[++i]);
-		int_vec_scan(Idx_text, Idx, Idx_sz);
+		Orbiter->Int_vec.scan(Idx_text, Idx, Idx_sz);
 		if (Idx_sz != 3) {
 			cout << "For -plane_defined_by_three_points, "
 					"the number of indices must be 3; is " << Idx_sz << endl;
@@ -697,7 +697,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		//numerics Numerics;
 
 		Idx_text.assign(argv[++i]);
-		int_vec_scan(Idx_text, Idx, Idx_sz);
+		Orbiter->Int_vec.scan(Idx_text, Idx, Idx_sz);
 		if (Idx_sz != 2) {
 			cout << "For -line_through_two_existing_points, "
 					"the number of indices must be 2; is " << Idx_sz << endl;
@@ -804,9 +804,9 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 
 		Idx_text.assign(argv[++i]);
 		cout << "group: " << Idx_text << endl;
-		int_vec_scan(Idx_text, Idx, Idx_sz);
+		Orbiter->Int_vec.scan(Idx_text, Idx, Idx_sz);
 		cout << "group: ";
-		int_vec_print(cout, Idx, Idx_sz);
+		Orbiter->Int_vec.print(cout, Idx, Idx_sz);
 		cout << endl;
 		add_a_group_of_things(Idx, Idx_sz, verbose_level);
 		FREE_int(Idx);
@@ -821,7 +821,7 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 
 		offset = strtoi(argv[++i]);
 		Idx_text.assign(argv[++i]);
-		int_vec_scan(Idx_text, Idx, Idx_sz);
+		Orbiter->Int_vec.scan(Idx_text, Idx, Idx_sz);
 		for (h = 0; h < Idx_sz; h++) {
 			Idx[h] += offset;
 		}
@@ -859,7 +859,7 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		len = strtoi(argv[++i]);
 		exceptions_text.assign(argv[++i]);
 
-		int_vec_scan(exceptions_text, exceptions, exceptions_sz);
+		Orbiter->Int_vec.scan(exceptions_text, exceptions, exceptions_sz);
 
 		Idx = NEW_int(len);
 		for (h = 0; h < len; h++) {

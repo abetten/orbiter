@@ -265,7 +265,7 @@ int poset_classification::poset_structure_is_contained(
 						"rk2 != sz2" << endl;
 				exit(1);
 			}
-			int_vec_copy(B1,
+			Orbiter->Int_vec.copy(B1,
 					B2 + sz2 * dim,
 					sz1 * dim);
 			rk2 = Poset->VS->F->Gauss_easy(B2, sz1 + sz2, dim);
@@ -1931,7 +1931,7 @@ void poset_classification::find_interesting_k_subsets(
 	if (f_v) {
 		cout << "interesting set of size "
 				<< nb_interesting_sets << " : ";
-		int_vec_print(cout, interesting_sets, nb_interesting_sets);
+		Orbiter->Int_vec.print(cout, interesting_sets, nb_interesting_sets);
 		cout << endl;
 	}
 
@@ -1998,7 +1998,7 @@ void poset_classification::trace_all_k_subsets(
 	canonical_subset = NEW_lint(k);
 	isotype = NEW_int(nCk);
 	
-	int_vec_zero(isotype, nCk);
+	Orbiter->Int_vec.zero(isotype, nCk);
 
 	Combi.first_k_subset(index_set, n, k);
 	subset_rk = 0;
@@ -2010,7 +2010,7 @@ void poset_classification::trace_all_k_subsets(
 				<< " testing set " << subset_rk << " / " << nCk 
 				<< " = " << 100. * (double) subset_rk /
 				(double) nCk << " % : ";
-			int_vec_print(cout, index_set, k);
+			Orbiter->Int_vec.print(cout, index_set, k);
 			cout << endl;
 		}
 		for (i = 0; i < k; i++) {

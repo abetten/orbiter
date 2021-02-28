@@ -67,13 +67,13 @@ void create_graph::init(
 		int *Idx;
 		int sz;
 
-		int_vec_scan(description->edge_list_text, Idx, sz);
+		Orbiter->Int_vec.scan(description->edge_list_text, Idx, sz);
 
 		N = description->n;
 
 
 		Adj = NEW_int(N * N);
-		int_vec_zero(Adj, N * N);
+		Orbiter->Int_vec.zero(Adj, N * N);
 		for (h = 0; h < sz; h++) {
 			a = Idx[h];
 			Combi.k2ij(a, i, j, N);
@@ -92,13 +92,13 @@ void create_graph::init(
 		int *Idx;
 		int sz, sz2;
 
-		int_vec_scan(description->edges_as_pairs_text, Idx, sz);
+		Orbiter->Int_vec.scan(description->edges_as_pairs_text, Idx, sz);
 
 		N = description->n;
 
 
 		Adj = NEW_int(N * N);
-		int_vec_zero(Adj, N * N);
+		Orbiter->Int_vec.zero(Adj, N * N);
 		sz2 = sz >> 1;
 		for (h = 0; h < sz2; h++) {
 			i = Idx[2 * h + 0];
@@ -399,7 +399,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 	}
 	if (f_v) {
 		cout << "sqrt_mod_q:" << endl;
-		int_vec_print(cout, sqrt_mod_q, q);
+		Orbiter->Int_vec.print(cout, sqrt_mod_q, q);
 		cout << endl;
 	}
 
@@ -531,7 +531,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 
 		if (f_vv) {
 			cout << "M4=";
-			int_vec_print(cout, M4, 4);
+			Orbiter->Int_vec.print(cout, M4, 4);
 			cout << endl;
 		}
 

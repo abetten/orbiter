@@ -223,12 +223,7 @@ void action_on_grassmannian::compute_image_longinteger(
 				G->k, G->n, G->n, F->log10_of_q);
 		}
 	
-	int_vec_copy(M1, G->M, k * n);
-#if 0
-	for (h = 0; h < k * n; h++) {
-		G->M[h] = M1[h];
-		}
-#endif
+	Orbiter->Int_vec.copy(M1, G->M, k * n);
 	G->rank_longinteger(j, 0/*verbose_level - 1*/);
 	if (f_v) {
 		cout << "action_on_grassmannian::compute_image_longinteger "
@@ -283,12 +278,7 @@ long int action_on_grassmannian::compute_image_int_ordinary(
 		}
 #endif
 	
-	int_vec_copy(M1, G->M, k * n);
-#if 0
-	for (h = 0; h < k * n; h++) {
-		G->M[h] = M1[h];
-		}
-#endif
+	Orbiter->Int_vec.copy(M1, G->M, k * n);
 	j = G->rank_lint(verbose_level - 1);
 	if (f_v) {
 		cout << "action_on_grassmannian::compute_image_int_ordinary "

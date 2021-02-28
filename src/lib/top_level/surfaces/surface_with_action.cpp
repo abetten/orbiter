@@ -451,9 +451,9 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 			b = F->evaluate_quadratic_form_x0x3mx1x2(w);
 			if (f_vv) {
 				cout << "a=" << a << " v=";
-				int_vec_print(cout, v, 2);
+				Orbiter->Int_vec.print(cout, v, 2);
 				cout << " w=";
-				int_vec_print(cout, w, 4);
+				Orbiter->Int_vec.print(cout, w, 4);
 				cout << " b=" << b << endl;
 			}
 			if (b == 0) {
@@ -506,12 +506,12 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		}
 
 		// Let pi1 be the plane spanned by line1 and w:
-		int_vec_copy(line1, pi1, 8);
-		int_vec_copy(w, pi1 + 8, 4);
+		Orbiter->Int_vec.copy(line1, pi1, 8);
+		Orbiter->Int_vec.copy(w, pi1 + 8, 4);
 
 		// Let pi2 be the plane spanned by line2 and w:
-		int_vec_copy(line2, pi2, 8);
-		int_vec_copy(w, pi2 + 8, 4);
+		Orbiter->Int_vec.copy(line2, pi2, 8);
+		Orbiter->Int_vec.copy(w, pi2 + 8, 4);
 		
 		// Let line3 be the intersection of pi1 and pi2:
 		F->intersect_subspaces(4, 3, pi1, 3, pi2, 
@@ -561,7 +561,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 			// to see if w lies on it:
 			b = F->evaluate_quadratic_form_x0x3mx1x2(w);
 			if (b == 0) {
-				int_vec_copy(w, pt_coord + nb_pts * 4, 4);
+				Orbiter->Int_vec.copy(w, pt_coord + nb_pts * 4, 4);
 				nb_pts++;
 				if (nb_pts == 5) {
 					cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
@@ -591,8 +591,8 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 					cout << "h=" << h << " k=" << k
 							<< " define a singular line" << endl;
 				}
-				int_vec_copy(pt_coord + h * 4, L, 4);
-				int_vec_copy(pt_coord + (2 + k) * 4, L + 4, 4);
+				Orbiter->Int_vec.copy(pt_coord + h * 4, L, 4);
+				Orbiter->Int_vec.copy(pt_coord + (2 + k) * 4, L + 4, 4);
 				line3 = Surf->rank_line(L);
 
 				if (!Surf->P->test_if_lines_are_skew(ell0,
@@ -728,7 +728,7 @@ void surface_with_action::create_surface_and_do_report(
 	cout << "$$" << endl;
 
 	cout << "$$" << endl;
-	int_vec_print(cout, SC->SO->eqn, 20);
+	Orbiter->Int_vec.print(cout, SC->SO->eqn, 20);
 	cout << endl;
 	cout << "$$" << endl;
 
@@ -1073,9 +1073,9 @@ void surface_with_action::create_surface_and_do_report(
 					"before SoA->investigate_surface_and_write_report:" << endl;
 		}
 
-		if (The_Orbiter_session->f_draw_options) {
+		if (Orbiter->f_draw_options) {
 			SoA->investigate_surface_and_write_report(
-					The_Orbiter_session->draw_options,
+					Orbiter->draw_options,
 					A,
 					SC,
 					Six_arcs,

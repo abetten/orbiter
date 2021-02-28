@@ -118,7 +118,7 @@ long int action_on_andre::compute_image_of_point(int *Elt,
 					<< Pt.at_infinity_idx << endl;
 			}
 		for (i = 0; i < k; i++) {
-			int_vec_copy(Andre->spread_elements_genma +
+			Orbiter->Int_vec.copy(Andre->spread_elements_genma +
 					Pt.at_infinity_idx * k * n + i * n, coords1 + i * n1, n);
 			coords1[i * n1 + n] = 0;
 			}
@@ -135,7 +135,7 @@ long int action_on_andre::compute_image_of_point(int *Elt,
 			int_matrix_print(coords2, k, n1);
 			}
 		for (i = 0; i < k; i++) {
-			int_vec_copy(coords2 + i * n1, coords3 + i * n, n);
+			Orbiter->Int_vec.copy(coords2 + i * n1, coords3 + i * n, n);
 			}
 		if (f_v) {
 			cout << "Reduced:" << endl;
@@ -162,14 +162,14 @@ long int action_on_andre::compute_image_of_point(int *Elt,
 		image = parallel_class_idx;
 		}
 	else {
-		int_vec_copy(Pt.coordinates, coords1, n);
+		Orbiter->Int_vec.copy(Pt.coordinates, coords1, n);
 		coords1[n] = 1;
 
 		An1->element_image_of_low_level(coords1, coords2,
 				Elt, verbose_level - 1);
 
 		Andre->F->PG_element_normalize(coords2, 1, n1);
-		int_vec_copy(coords2, Pt.coordinates, n);
+		Orbiter->Int_vec.copy(coords2, Pt.coordinates, n);
 		image = Pt.rank(0 /* verbose_level*/);
 		}
 	

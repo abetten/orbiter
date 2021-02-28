@@ -700,7 +700,7 @@ void classify_trihedral_pairs::identify_three_planes(
 	Surf->P->unrank_point(M1, p1);
 	Surf->P->unrank_point(M1 + 4, p2);
 	Surf->P->unrank_point(M1 + 8, p3);
-	int_vec_copy(M1, M2, 12);
+	Orbiter->Int_vec.copy(M1, M2, 12);
 	rk = F->rank_of_rectangular_matrix_memory_given(M2, 3, 4,
 			M3, base_cols, 0 /* verbose_level */);
 	Combi.set_complement(base_cols, rk, base_cols + rk, size_complement, 4);
@@ -714,7 +714,7 @@ void classify_trihedral_pairs::identify_three_planes(
 		c3 = base_cols[rk];
 		c4 = base_cols[rk + 1];
 
-		int_vec_copy(M1, M2, 8);
+		Orbiter->Int_vec.copy(M1, M2, 8);
 		F->rank_of_rectangular_matrix_memory_given(M2, 2, 4, M3,
 				base_cols2, 0 /* verbose_level */);
 
@@ -734,17 +734,17 @@ void classify_trihedral_pairs::identify_three_planes(
 		mu = F->mult(F->add(F->mult(a, f),
 				F->negate(F->mult(d, c))), det_inv);
 
-		int_vec_copy(M1, M2, 8);
+		Orbiter->Int_vec.copy(M1, M2, 8);
 		F->scalar_multiply_vector_in_place(lambda, M2, 4);
 		F->scalar_multiply_vector_in_place(mu, M2 + 4, 4);
-		int_vec_zero(M2 + 8, 8);
+		Orbiter->Int_vec.zero(M2 + 8, 8);
 		M2[2 * 4 + c3] = 1;
 		M2[3 * 4 + c4] = 1;
 		type = 1;
 	}
 	else if (rk == 3) {
-		int_vec_copy(M1, M2, 12);
-		int_vec_zero(M2 + 12, 4);
+		Orbiter->Int_vec.copy(M1, M2, 12);
+		Orbiter->Int_vec.zero(M2 + 12, 4);
 		M2[3 * 4 + base_cols[3]] = 1;
 		type = 2;
 	}
@@ -960,7 +960,7 @@ void classify_trihedral_pairs::upstep(int verbose_level)
 	int *Elt3;
 
 	f_processed = NEW_int(nb_orbits_ordered_total);
-	int_vec_zero(f_processed, nb_orbits_ordered_total);
+	Orbiter->Int_vec.zero(f_processed, nb_orbits_ordered_total);
 	nb_processed = 0;
 
 	Elt1 = NEW_int(A->elt_size_in_int);

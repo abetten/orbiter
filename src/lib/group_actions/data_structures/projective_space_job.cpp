@@ -582,7 +582,7 @@ void projective_space_job::perform_job_for_one_set(
 
 			int *type;
 			type = NEW_int(len);
-			int_vec_zero(type, len);
+			Orbiter->Int_vec.zero(type, len);
 			for (int i = 0; i < len; i++) {
 				vector<int> point_indices;
 				vector<int> point_local_coordinates;
@@ -709,11 +709,11 @@ void projective_space_job::perform_job_for_one_set(
 		layered_graph_draw_options *O;
 
 
-		if (!The_Orbiter_session->f_draw_options) {
+		if (!Orbiter->f_draw_options) {
 			cout << "please use option -draw_options .. -end" << endl;
 			exit(1);
 		}
-		O = The_Orbiter_session->draw_options;
+		O = Orbiter->draw_options;
 
 		F->do_draw_points_in_plane(
 				O,

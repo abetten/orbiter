@@ -282,7 +282,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 					"unranking " << coset << ":" << endl;
 		}
 		G.unrank_lint(coset, 0 /*verbose_level - 5*/);
-		int_vec_copy(G.M, base_change_matrix, k * n);
+		Orbiter->Int_vec.copy(G.M, base_change_matrix, k * n);
 
 		if (f_vvv) {
 			cout << "upstep_work::upstep_subspace_action "
@@ -304,14 +304,14 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		}
 		if (f_v5) {
 			cout << "upstep_work::upstep_subspace_action base_cols:";
-			int_vec_print(cout, base_cols, rk);
+			Orbiter->Int_vec.print(cout, base_cols, rk);
 			cout << " embedding:";
-			int_vec_print(cout, embedding, n - rk);
+			Orbiter->Int_vec.print(cout, embedding, n - rk);
 			cout << endl;
 		}
 
 		// fill the matrix up and make it invertible:
-		int_vec_zero(base_change_matrix + (n - 1) * n, n);
+		Orbiter->Int_vec.zero(base_change_matrix + (n - 1) * n, n);
 		base_change_matrix[(n - 1) * n + embedding[0]] = 1;
 
 		if (f_v5) {

@@ -517,7 +517,7 @@ void action::read_file_and_print_representatives(
 		G->S->extract_strong_generators_in_order(*gens, tl,
 				0 /* verbose_level */);
 		cout << "Stabilizer has order " << go << " tl=";
-		int_vec_print(cout, tl, base_len());
+		Orbiter->Int_vec.print(cout, tl, base_len());
 		cout << endl;
 
 		if (f_print_stabilizer_generators) {
@@ -793,7 +793,7 @@ void action::latex_all_points(std::ostream &ost)
 	for (i = 0; i < degree; i++) {
 		unrank_point(i, v);
 		ost << i << " = ";
-		int_vec_print(ost, v, low_level_point_size);
+		Orbiter->Int_vec.print(ost, v, low_level_point_size);
 		ost << "\\\\" << endl;
 	}
 	if (low_level_point_size < 10) {
@@ -860,7 +860,7 @@ void action::latex_point_set(std::ostream &ost, long int *set, int sz, int verbo
 		unrank_point(set[i], v);
 		ost << i << " : ";
 		ost << set[i] << " = ";
-		int_vec_print(ost, v, low_level_point_size);
+		Orbiter->Int_vec.print(ost, v, low_level_point_size);
 		ost << "\\\\" << endl;
 	}
 	if (low_level_point_size < 10) {

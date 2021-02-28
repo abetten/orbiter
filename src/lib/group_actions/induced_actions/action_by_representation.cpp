@@ -92,14 +92,14 @@ long int action_by_representation::compute_image_int(
 	if (f_vv) {
 		cout << "action_by_representation::compute_image_int "
 				"a = " << a << " v1 = ";
-		int_vec_print(cout, v1, dimension);
+		Orbiter->Int_vec.print(cout, v1, dimension);
 		cout << endl;
 		}
 	
 	compute_image_int_low_level(A, Elt, v1, v2, verbose_level);
 	if (f_vv) {
 		cout << " v2=v1 * A=";
-		int_vec_print(cout, v2, dimension);
+		Orbiter->Int_vec.print(cout, v2, dimension);
 		cout << endl;
 		}
 
@@ -127,7 +127,7 @@ void action_by_representation::compute_image_int_low_level(
 	if (f_vv) {
 		cout << "action_by_representation::compute_image_int_low_level: "
 				"x=";
-		int_vec_print(cout, x, dimension);
+		Orbiter->Int_vec.print(cout, x, dimension);
 		cout << endl;
 		}
 	int a, b, c, d;
@@ -161,7 +161,7 @@ void action_by_representation::compute_image_int_low_level(
 	if (f_vv) {
 		cout << "action_by_representation::compute_image_int_low_level: "
 				"xA=";
-		int_vec_print(cout, xA, dimension);
+		Orbiter->Int_vec.print(cout, xA, dimension);
 		cout << endl;
 		}
 	if (M->f_semilinear) {
@@ -171,7 +171,7 @@ void action_by_representation::compute_image_int_low_level(
 			}
 		if (f_vv) {
 			cout << "after " << f << " field automorphisms: xA=";
-			int_vec_print(cout, xA, dimension);
+			Orbiter->Int_vec.print(cout, xA, dimension);
 			cout << endl;
 			}
 		}

@@ -48,14 +48,14 @@ void difference_set_in_heisenberg_group::init(int n, finite_field *F, int verbos
 
 	H->generating_set(gens, nb_gens, verbose_level);
 	cout << "Generating set of size " << nb_gens << ":" << endl;
-	int_vec_print(cout, gens, nb_gens);
+	Orbiter->Int_vec.print(cout, gens, nb_gens);
 	cout << endl;
 
 	for (i = 0; i < nb_gens; i++) {
 		cout << "generator " << i << " / " << nb_gens
 				<< " is " << gens[i] << ":" << endl;
 		H->unrank_element(H->Elt1, gens[i]);
-		int_vec_print(cout, H->Elt1, H->len);
+		Orbiter->Int_vec.print(cout, H->Elt1, H->len);
 		cout << endl;
 		}
 
@@ -70,7 +70,7 @@ void difference_set_in_heisenberg_group::init(int n, finite_field *F, int verbos
 	//given_base = gens;
 
 	given_base = NEW_lint(given_base_length);
-	int_vec_copy_to_lint(gens, given_base, given_base_length);
+	Orbiter->Int_vec.copy_to_lint(gens, given_base, given_base_length);
 
 #if 0
 	magma_normalizer_in_Sym_n(fname_base,
@@ -166,7 +166,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	base_image = NEW_int(given_base_length);
 	base_image_elts = NEW_int(given_base_length * H->len);
 
-	int_vec_zero(base_image_elts, given_base_length * H->len);
+	Orbiter->Int_vec.zero(base_image_elts, given_base_length * H->len);
 
 	base_image_elts[0] = 1;
 	base_image_elts[2] = 1;
@@ -342,11 +342,11 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	Sorting.int_vec_heapsort(Pairs_of_type2, nb_pairs_of_type2);
 	cout << "We found " << 	nb_pairs_of_type1
 			<< " pairs of short orbits, they are:" << endl;
-	int_vec_print(cout, Pairs_of_type1, nb_pairs_of_type1);
+	Orbiter->Int_vec.print(cout, Pairs_of_type1, nb_pairs_of_type1);
 	cout << endl;
 	cout << "We found " << 	nb_pairs_of_type2
 			<< " pairs of long orbits, they are:" << endl;
-	int_vec_print(cout, Pairs_of_type2, nb_pairs_of_type2);
+	Orbiter->Int_vec.print(cout, Pairs_of_type2, nb_pairs_of_type2);
 	cout << endl;
 
 
@@ -397,7 +397,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 	Long_pairs = NEW_lint(nb_long_orbits);
 
 	Short_orbit_inverse = NEW_int(Sch->nb_orbits);
-	int_vec_mone(Short_orbit_inverse, Sch->nb_orbits);
+	Orbiter->Int_vec.mone(Short_orbit_inverse, Sch->nb_orbits);
 
 	for (s = 0; s < nb_pairs_of_type1; s++) {
 		h = Pairs_of_type1[s];
@@ -559,7 +559,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 		Sorting.int_vec_heapsort(long_orbits, nb_long_orbits);
 		cout << "We found " << 	nb_long_orbits
 				<< " long orbits, they are:" << endl;
-		int_vec_print(cout, long_orbits, nb_long_orbits);
+		Orbiter->Int_vec.print(cout, long_orbits, nb_long_orbits);
 		cout << endl;
 
 
@@ -621,7 +621,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 					cout << "s=" << s << endl;
 					cout << "t=" << t << endl;
 					cout << "testing case " << u << " = ";
-					int_vec_print(cout, selection,
+					Orbiter->Int_vec.print(cout, selection,
 							nb_pairs_of_long_orbits);
 					cout << endl;
 					exit(1);
@@ -641,15 +641,15 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 				}
 			if (((u + 250) % 1) == 0) {
 				cout << "testing case " << u << " = ";
-				int_vec_print(cout, selection,
+				Orbiter->Int_vec.print(cout, selection,
 						nb_pairs_of_long_orbits);
 				cout << endl;
 				cout << "We found a set D of size "
 						<< D_sz << ":" << endl;
-				int_vec_print(cout, D, D_sz);
+				Orbiter->Int_vec.print(cout, D, D_sz);
 				cout << endl;
 				}
-			int_vec_zero(count, H->group_order);
+			Orbiter->Int_vec.zero(count, H->group_order);
 			for (i = 0; i < D_sz; i++) {
 				di = D[i];
 				for (j = 0; j < D_sz; j++) {
@@ -728,7 +728,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 	N->Sims->zuppo_list(Zuppos, nb_zuppos, verbose_level);
 
 	cout << "We found " << nb_zuppos << " zuppos." << endl;
-	int_vec_print(cout, Zuppos, nb_zuppos);
+	Orbiter->Int_vec.print(cout, Zuppos, nb_zuppos);
 	cout << endl;
 
 	int *subgroup_elements;
@@ -856,11 +856,11 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 
 			for (z = 0; z < nb_zuppos; z++) {
 				cout << "zuppo " << z << " / " << nb_zuppos << ":" << endl;
-				int_vec_copy(Subgroups_of_order[j]->Elements,
+				Orbiter->Int_vec.copy(Subgroups_of_order[j]->Elements,
 						subgroup_elements,
 						Subgroups_of_order[j]->group_order);
 				subgroup_sz = Subgroups_of_order[j]->group_order;
-				int_vec_copy(Subgroups_of_order[j]->gens,
+				Orbiter->Int_vec.copy(Subgroups_of_order[j]->gens,
 						gens,
 						Subgroups_of_order[j]->nb_gens);
 				nb_gens = Subgroups_of_order[j]->nb_gens;
@@ -872,7 +872,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 					0 /* verbose_level */);
 
 				cout << "found a group of order " << group_sz << " : ";
-				int_vec_print(cout, group, group_sz);
+				Orbiter->Int_vec.print(cout, group, group_sz);
 				cout << endl;
 
 				Overgroup_order[z] = group_sz;
@@ -973,7 +973,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(
 				//print_integer_matrix_with_standard_labels(cout,
 				// second_generator, Sch_overgroups->nb_orbits,
 				// 1, FALSE /* f_tex */);
-				int_vec_print_Cpp(cout,
+				Orbiter->Int_vec.print_Cpp(cout,
 					second_generator, Sch_overgroups->nb_orbits);
 				cout << endl;
 				} // next ii
@@ -1029,7 +1029,7 @@ void difference_set_in_heisenberg_group::early_test_func(long int *S, int len,
 		}
 
 	nb_good_candidates = 0;
-	int_vec_zero(f_orbit_select, nb_short_orbits);
+	Orbiter->Int_vec.zero(f_orbit_select, nb_short_orbits);
 
 
 	for (i = 0; i < len; i++) {

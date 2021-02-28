@@ -127,7 +127,7 @@ void W3q::init(finite_field *F, int verbose_level)
 
 		if (f_vvv) {
 			cout << "v5=";
-			int_vec_print(cout, v5, 5);
+			Orbiter->Int_vec.print(cout, v5, 5);
 			cout << endl;
 		}
 		
@@ -218,12 +218,12 @@ void W3q::print_by_lines()
 		cout << setw(4) << Q4_rk[h] << " : ";
 		cout << setw(4) << Line_idx[h] << " : ";
 		P3->unrank_line(Basis, Lines[h]);
-		int_vec_print(cout, Basis, 4);
+		Orbiter->Int_vec.print(cout, Basis, 4);
 		cout << " : ";
-		int_vec_print(cout, Basis + 4, 4);
+		Orbiter->Int_vec.print(cout, Basis + 4, 4);
 		Q4->unrank_point(v5, 1, Q4_rk[h], 0);
 		cout << " : ";
-		int_vec_print(cout, v5, 5);
+		Orbiter->Int_vec.print(cout, v5, 5);
 		cout << endl;
 	}
 }
@@ -240,12 +240,12 @@ void W3q::print_by_points()
 		cout << setw(4) << Line_idx[h] << " : ";
 		cout << setw(4) << Lines[Line_idx[h]] << " : ";
 		P3->unrank_line(Basis, Lines[Line_idx[h]]);
-		int_vec_print(cout, Basis, 4);
+		Orbiter->Int_vec.print(cout, Basis, 4);
 		cout << " : ";
-		int_vec_print(cout, Basis + 4, 4);
+		Orbiter->Int_vec.print(cout, Basis + 4, 4);
 		Q4->unrank_point(v5, 1, h, 0);
 		cout << " : ";
-		int_vec_print(cout, v5, 5);
+		Orbiter->Int_vec.print(cout, v5, 5);
 		cout << endl;
 	}
 }

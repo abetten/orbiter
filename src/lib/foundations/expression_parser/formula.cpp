@@ -519,7 +519,7 @@ void formula::evaluate(homogeneous_polynomial_domain *Poly,
 		cout << endl;
 	}
 	cout << "coefficient vector: ";
-	int_vec_print(cout, Values, Poly->get_nb_monomials());
+	Orbiter->Int_vec.print(cout, Values, Poly->get_nb_monomials());
 	cout << endl;
 
 

@@ -31,10 +31,10 @@ void projective_space::print_set_numerical(std::ostream &ost, long int *set, int
 		a = set[i];
 		unrank_point(v, a);
 		ost << setw(3) << i << " : " << setw(5) << a << " : ";
-		int_vec_print(ost, v, n + 1);
+		Orbiter->Int_vec.print(ost, v, n + 1);
 		ost << "=";
 		F->PG_element_normalize_from_front(v, 1, n + 1);
-		int_vec_print(ost, v, n + 1);
+		Orbiter->Int_vec.print(ost, v, n + 1);
 		ost << "\\\\" << endl;
 	}
 	FREE_int(v);
@@ -70,7 +70,7 @@ void projective_space::print_line_set_numerical(
 		a = set[i];
 		unrank_line(v, a);
 		cout << setw(3) << i << " : " << setw(5) << a << " : ";
-		int_vec_print(cout, v, 2 * (n + 1));
+		Orbiter->Int_vec.print(cout, v, 2 * (n + 1));
 		cout << endl;
 	}
 	FREE_int(v);
@@ -234,7 +234,7 @@ int projective_space::determine_hermitian_form_in_plane(
 	if (f_v) {
 		cout << "projective_space::determine_hermitian_form_"
 				"in_plane six_coeffs:" << endl;
-		int_vec_print(cout, six_coeffs, 6);
+		Orbiter->Int_vec.print(cout, six_coeffs, 6);
 		cout << endl;
 	}
 	FREE_int(coords);
@@ -260,7 +260,7 @@ void projective_space::circle_type_of_line_subset(
 	if (f_v) {
 		cout << "projective_space::circle_type_of_line_subset "
 				"pts=" << endl;
-		int_vec_print(cout, pts, nb_pts);
+		Orbiter->Int_vec.print(cout, pts, nb_pts);
 		cout << endl;
 		//cout << "computing Baer subline determined by
 		//the first three points:" << endl;
@@ -303,7 +303,7 @@ void projective_space::circle_type_of_line_subset(
 	if (f_vv) {
 		cout << "projective_space::circle_type_of_line_subset "
 				"circle_type before fixing =" << endl;
-		int_vec_print(cout, circle_type, nb_pts);
+		Orbiter->Int_vec.print(cout, circle_type, nb_pts);
 		cout << endl;
 	}
 	for (i = 4; i < nb_pts; i++) {
@@ -318,7 +318,7 @@ void projective_space::circle_type_of_line_subset(
 	if (f_vv) {
 		cout << "projective_space::circle_type_of_line_subset "
 				"circle_type after fixing =" << endl;
-		int_vec_print(cout, circle_type, nb_pts);
+		Orbiter->Int_vec.print(cout, circle_type, nb_pts);
 		cout << endl;
 	}
 }
@@ -359,7 +359,7 @@ void projective_space::create_unital_XXq_YZq_ZYq(
 		unrank_point(v, i);
 		if (f_vvv) {
 			cout << "i=" << i << " : ";
-			int_vec_print(cout, v, 3);
+			Orbiter->Int_vec.print(cout, v, 3);
 			//cout << endl;
 		}
 		X = v[0];
@@ -411,14 +411,7 @@ void projective_space::intersection_of_subspace_with_point_set(
 	G->unrank_lint(rk, 0 /* verbose_level */);
 
 	for (h = 0; h < set_size; h++) {
-		int_vec_copy(G->M, M, k * d);
-#if 0
-		for (i = 0; i < k; i++) {
-			for (j = 0; j < d; j++) {
-				M[i * d + j] = G->M[i * d + j];
-			}
-		}
-#endif
+		Orbiter->Int_vec.copy(G->M, M, k * d);
 		unrank_point(M + k * d, set[h]);
 		if (F->rank_of_rectangular_matrix(M,
 				k + 1, d, 0 /*verbose_level*/) == k) {
@@ -447,7 +440,7 @@ void projective_space::intersection_of_subspace_with_point_set_rank_is_longinteg
 	G->unrank_longinteger(rk, 0 /* verbose_level */);
 
 	for (h = 0; h < set_size; h++) {
-		int_vec_copy(G->M, M, k * d);
+		Orbiter->Int_vec.copy(G->M, M, k * d);
 		unrank_point(M + k * d, set[h]);
 		if (F->rank_of_rectangular_matrix(M,
 				k + 1, d, 0 /*verbose_level*/) == k) {
@@ -500,7 +493,7 @@ void projective_space::plane_intersection_invariant(
 	highest_intersection_number = C.data_sorted[f];
 	intersection_type = NEW_int(highest_intersection_number + 1);
 
-	int_vec_zero(intersection_type, highest_intersection_number + 1);
+	Orbiter->Int_vec.zero(intersection_type, highest_intersection_number + 1);
 
 	for (i = 0; i < C.nb_types; i++) {
 		f = C.type_first[i];
@@ -566,7 +559,7 @@ void projective_space::plane_intersection_invariant(
 	}
 
 	intersection_matrix = NEW_int(nb_planes * nb_planes);
-	int_vec_copy(ItI,
+	Orbiter->Int_vec.copy(ItI,
 			intersection_matrix, nb_planes * nb_planes);
 
 	FREE_int(Incma);
@@ -623,7 +616,7 @@ void projective_space::plane_intersection_type(
 	f = C.type_first[C.nb_types - 1];
 	highest_intersection_number = C.data_sorted[f];
 	intersection_type = NEW_int(highest_intersection_number + 1);
-	int_vec_zero(intersection_type, highest_intersection_number + 1);
+	Orbiter->Int_vec.zero(intersection_type, highest_intersection_number + 1);
 	for (i = 0; i < C.nb_types; i++) {
 		f = C.type_first[i];
 		l = C.type_len[i];
@@ -749,8 +742,8 @@ void projective_space::plane_intersection_type_slow(
 		pts_on_plane = NEW_lint(set_size);
 
 		for (u = 0; u < set_size; u++) {
-			int_vec_copy(Basis_save, Basis, 3 * d);
-			int_vec_copy(Coords + u * d, Basis + 3 * d, d);
+			Orbiter->Int_vec.copy(Basis_save, Basis, 3 * d);
+			Orbiter->Int_vec.copy(Coords + u * d, Basis + 3 * d, d);
 			r = F->rank_of_rectangular_matrix(Basis,
 					4, d, 0 /* verbose_level */);
 			if (r < 4) {
@@ -852,7 +845,7 @@ void projective_space::plane_intersection_type_fast(
 		Combi.unrank_k_subset(rk, subset, set_size, 3);
 		if (f_v) {
 			cout << rk << "-th subset ";
-			int_vec_print(cout, subset, 3);
+			Orbiter->Int_vec.print(cout, subset, 3);
 			cout << endl;
 		}
 		if (f_subset_done[rk]) {
@@ -864,12 +857,12 @@ void projective_space::plane_intersection_type_fast(
 		for (j = 0; j < 3; j++) {
 			a = subset[j];
 			//a = set[subset[j]];
-			int_vec_copy(Coords + a * d, Basis + j * d, d);
+			Orbiter->Int_vec.copy(Coords + a * d, Basis + j * d, d);
 			//unrank_point(Basis + j * d, a);
 		}
 		if (f_v3) {
 			cout << "subset: ";
-			int_vec_print(cout, subset, 3);
+			Orbiter->Int_vec.print(cout, subset, 3);
 			cout << " corresponds to Basis:" << endl;
 			int_matrix_print(Basis, 3, d);
 		}
@@ -880,7 +873,7 @@ void projective_space::plane_intersection_type_fast(
 				cout << "projective_space::plane_intersection_type_fast "
 						"not independent, skip" << endl;
 				cout << "subset: ";
-				int_vec_print(cout, subset, 3);
+				Orbiter->Int_vec.print(cout, subset, 3);
 				cout << endl;
 			}
 			rank_idx[rk] = -1;
@@ -889,7 +882,7 @@ void projective_space::plane_intersection_type_fast(
 		G->rank_longinteger_here(Basis, plane_rk, 0 /* verbose_level */);
 		if (f_v) {
 			cout << rk << "-th subset ";
-			int_vec_print(cout, subset, 3);
+			Orbiter->Int_vec.print(cout, subset, 3);
 			cout << " plane_rk=" << plane_rk << endl;
 		}
 
@@ -939,10 +932,10 @@ void projective_space::plane_intersection_type_fast(
 				}
 #endif
 
-				int_vec_copy(Basis_save, Basis, 3 * d);
+				Orbiter->Int_vec.copy(Basis_save, Basis, 3 * d);
 				//a = set[h];
 
-				int_vec_copy(Coords + h * d, Basis + 3 * d, d);
+				Orbiter->Int_vec.copy(Coords + h * d, Basis + 3 * d, d);
 
 				//unrank_point(Basis + 3 * d, set[h]);
 				if (FALSE && f_v3) {
@@ -1005,7 +998,7 @@ void projective_space::plane_intersection_type_fast(
 					rr = Combi.rank_k_subset(subset3, set_size, 3);
 					if (f_v) {
 						cout << i << "-th subset3 ";
-						int_vec_print(cout, subset3, 3);
+						Orbiter->Int_vec.print(cout, subset3, 3);
 						cout << " rr=" << rr << endl;
 					}
 					if (!f_subset_done[rr]) {
@@ -1115,8 +1108,8 @@ void projective_space::find_planes_which_intersect_in_at_least_s_points(
 		int nb_pts_on_plane = 0;
 
 		for (u = 0; u < set_size; u++) {
-			int_vec_copy(Basis_save, Basis, 3 * d);
-			int_vec_copy(Coords + u * d, Basis + 3 * d, d);
+			Orbiter->Int_vec.copy(Basis_save, Basis, 3 * d);
+			Orbiter->Int_vec.copy(Coords + u * d, Basis + 3 * d, d);
 			r = F->rank_of_rectangular_matrix(Basis,
 					4, d, 0 /* verbose_level */);
 			if (r < 4) {
@@ -1186,16 +1179,16 @@ void projective_space::plane_intersection(int plane_rank,
 	int local_rank;
 
 	for (u = 0; u < set_size; u++) {
-		int_vec_copy(Basis_save, Basis, 3 * d);
-		int_vec_copy(Coords + u * d, Basis + 3 * d, d);
+		Orbiter->Int_vec.copy(Basis_save, Basis, 3 * d);
+		Orbiter->Int_vec.copy(Coords + u * d, Basis + 3 * d, d);
 		r = F->rank_of_rectangular_matrix(Basis,
 				4, d, 0 /* verbose_level */);
 		if (r < 4) {
 			nb_pts_on_plane++;
 			point_indices.push_back(u);
 
-			int_vec_copy(Basis_save, Basis, 3 * d);
-			int_vec_copy(Coords + u * d, Basis + 3 * d, d);
+			Orbiter->Int_vec.copy(Basis_save, Basis, 3 * d);
+			Orbiter->Int_vec.copy(Coords + u * d, Basis + 3 * d, d);
 
 			F->Gauss_simple(Basis, 3, d,
 					base_cols, 0 /*verbose_level */);
@@ -1252,8 +1245,8 @@ void projective_space::line_intersection(int line_rank,
 	Grass_lines->unrank_lint_here(Basis_save, line_rank, 0 /* verbose_level */);
 
 	for (u = 0; u < set_size; u++) {
-		int_vec_copy(Basis_save, Basis, 2 * d);
-		int_vec_copy(Coords + u * d, Basis + 2 * d, d);
+		Orbiter->Int_vec.copy(Basis_save, Basis, 2 * d);
+		Orbiter->Int_vec.copy(Coords + u * d, Basis + 2 * d, d);
 		r = F->rank_of_rectangular_matrix(Basis,
 				3, d, 0 /* verbose_level */);
 		if (r < 3) {
@@ -1311,7 +1304,7 @@ void projective_space::klein_correspondence(
 				symbol_for_print, Grass_lines->M, 2, 4);
 			cout << endl;
 		}
-		int_vec_copy(Grass_lines->M, basis8, 8);
+		Orbiter->Int_vec.copy(Grass_lines->M, basis8, 8);
 		if (f_vv) {
 			int_matrix_print(basis8, 2, 4);
 		}
@@ -1325,7 +1318,7 @@ void projective_space::klein_correspondence(
 		v6[5] = F->Pluecker_23(x4, y4);
 		if (f_vv) {
 			cout << "v6 : ";
-			int_vec_print(cout, v6, 6);
+			Orbiter->Int_vec.print(cout, v6, 6);
 			cout << endl;
 		}
 		a = F->mult(v6[0], v6[1]);
@@ -1366,7 +1359,7 @@ void projective_space::Pluecker_coordinates(
 			symbol_for_print, Grass_lines->M, 2, 4);
 		cout << endl;
 	}
-	int_vec_copy(Grass_lines->M, basis8, 8);
+	Orbiter->Int_vec.copy(Grass_lines->M, basis8, 8);
 	if (f_vv) {
 		int_matrix_print(basis8, 2, 4);
 	}
@@ -1380,7 +1373,7 @@ void projective_space::Pluecker_coordinates(
 	v6[5] = F->Pluecker_23(x4, y4);
 	if (f_vv) {
 		cout << "v6 : ";
-		int_vec_print(cout, v6, 6);
+		Orbiter->Int_vec.print(cout, v6, 6);
 		cout << endl;
 	}
 	if (f_v) {
@@ -1424,7 +1417,7 @@ void projective_space::klein_correspondence_special_model(
 				symbol_for_print, Grass_lines->M, 2, 4);
 			cout << endl;
 		}
-		int_vec_copy(Grass_lines->M, basis8, 8);
+		Orbiter->Int_vec.copy(Grass_lines->M, basis8, 8);
 		if (f_vv) {
 			int_matrix_print(basis8, 2, 4);
 		}
@@ -1438,7 +1431,7 @@ void projective_space::klein_correspondence_special_model(
 		x6[5] = F->Pluecker_23(x4, y4);
 		if (f_vv) {
 			cout << "x6 : ";
-			int_vec_print(cout, x6, 6);
+			Orbiter->Int_vec.print(cout, x6, 6);
 			cout << endl;
 		}
 		a = F->mult(x6[0], x6[1]);
@@ -1459,7 +1452,7 @@ void projective_space::klein_correspondence_special_model(
 		y6[5] = x6[5];
 		if (f_vv) {
 			cout << "y6 : ";
-			int_vec_print(cout, y6, 6);
+			Orbiter->Int_vec.print(cout, y6, 6);
 			cout << endl;
 		}
 		table[h] = P5->rank_point(y6);
@@ -1497,7 +1490,7 @@ void projective_space::cheat_sheet_points(
 		for (i = 0; i < N_points; i++) {
 			F->PG_element_unrank_modified(v, 1, d, i);
 			f << "$P_{" << i << "}=";
-			int_vec_print(f, v, d);
+			Orbiter->Int_vec.print(f, v, d);
 			f << "$\\\\" << endl;
 		}
 		f << "\\end{multicols}" << endl;
@@ -1507,7 +1500,7 @@ void projective_space::cheat_sheet_points(
 		for (i = 0; i < N_points; i++) {
 			F->PG_element_unrank_modified(v, 1, d, i);
 			f << "$P_{" << i << "}=";
-			int_vec_print(f, v, d);
+			Orbiter->Int_vec.print(f, v, d);
 			f << "=";
 			F->int_vec_print_elements_exponential(f, v, d, symbol_for_print);
 			f << "$\\\\" << endl;
@@ -1530,7 +1523,7 @@ void projective_space::cheat_sheet_points(
 			if (j == d) {
 				cnt++;
 				f << "$P_{" << i << "}=";
-				int_vec_print(f, v, d);
+				Orbiter->Int_vec.print(f, v, d);
 				f << "$\\\\" << endl;
 			}
 		}
@@ -1546,7 +1539,7 @@ void projective_space::cheat_sheet_points(
 		F->PG_element_unrank_modified(v, 1, d, i);
 		F->PG_element_normalize_from_front(v, 1, d);
 		f << "$P_{" << i << "}=";
-		int_vec_print(f, v, d);
+		Orbiter->Int_vec.print(f, v, d);
 		f << "$\\\\" << endl;
 		}
 	f << "\\end{multicols}" << endl;
@@ -1597,7 +1590,7 @@ void projective_space::cheat_sheet_point_table(
 				f << " & ";
 				if (a < N_points) {
 					F->PG_element_unrank_modified(v, 1, d, a);
-					int_vec_print(f, v, d);
+					Orbiter->Int_vec.print(f, v, d);
 					}
 				}
 			f << "\\\\" << endl;
@@ -2038,7 +2031,7 @@ void projective_space::conic_type_randomized(int nb_times,
 		Combi.unrank_k_subset(rk, subset, set_size, 5);
 		if (cnt && ((cnt % 1000) == 0)) {
 			cout << cnt << " / " << nb_times << " : ";
-			int_vec_print(cout, subset, 5);
+			Orbiter->Int_vec.print(cout, subset, 5);
 			cout << endl;
 		}
 
@@ -2066,7 +2059,7 @@ void projective_space::conic_type_randomized(int nb_times,
 		}
 		if (FALSE /* f_v3 */) {
 			cout << "subset: ";
-			int_vec_print(cout, subset, 5);
+			Orbiter->Int_vec.print(cout, subset, 5);
 			cout << "input_pts: ";
 			lint_vec_print(cout, input_pts, 5);
 		}
@@ -2081,7 +2074,7 @@ void projective_space::conic_type_randomized(int nb_times,
 		Gg.AG_element_rank_longinteger(F->q, six_coeffs, 1, 6, conic_rk);
 		if (FALSE /* f_vv */) {
 			cout << rk << "-th subset ";
-			int_vec_print(cout, subset, 5);
+			Orbiter->Int_vec.print(cout, subset, 5);
 			cout << " conic_rk=" << conic_rk << endl;
 		}
 
@@ -2288,7 +2281,7 @@ void projective_space::conic_intersection_type(
 	f = C.type_first[C.nb_types - 1];
 	highest_intersection_number = C.data_sorted[f];
 	intersection_type = NEW_int(highest_intersection_number + 1);
-	int_vec_zero(intersection_type, highest_intersection_number + 1);
+	Orbiter->Int_vec.zero(intersection_type, highest_intersection_number + 1);
 	for (i = 0; i < C.nb_types; i++) {
 		f = C.type_first[i];
 		l = C.type_len[i];
@@ -2377,7 +2370,7 @@ void projective_space::conic_type(
 		Combi.unrank_k_subset(rk, subset, set_size, 5);
 		if (f_v) {
 			cout << "projective_space::conic_type rk=" << rk << " / " << N << " : ";
-			int_vec_print(cout, subset, 5);
+			Orbiter->Int_vec.print(cout, subset, 5);
 			cout << endl;
 		}
 
@@ -2406,7 +2399,7 @@ void projective_space::conic_type(
 		}
 		if (f_v) {
 			cout << "subset: ";
-			int_vec_print(cout, subset, 5);
+			Orbiter->Int_vec.print(cout, subset, 5);
 			cout << "input_pts: ";
 			lint_vec_print(cout, input_pts, 5);
 		}
@@ -2425,7 +2418,7 @@ void projective_space::conic_type(
 				six_coeffs, 1, 6, conic_rk);
 		if (FALSE /* f_vv */) {
 			cout << rk << "-th subset ";
-			int_vec_print(cout, subset, 5);
+			Orbiter->Int_vec.print(cout, subset, 5);
 			cout << " conic_rk=" << conic_rk << endl;
 		}
 
@@ -2676,7 +2669,7 @@ void projective_space::find_nucleus(
 		int v[3];
 		unrank_point(v, nucleus);
 		cout << "nucleus = ";
-		int_vec_print(cout, v, 3);
+		Orbiter->Int_vec.print(cout, v, 3);
 		cout << endl;
 	}
 
@@ -2765,7 +2758,7 @@ void projective_space::elliptic_curve_addition_table(
 				cout << "i=" << i << " pi=" << pi << " j=" << j
 						<< " pj=" << pj << " pk=" << pk << endl;
 				cout << "Pts: ";
-				int_vec_print(cout, Pts, nb_pts);
+				Orbiter->Int_vec.print(cout, Pts, nb_pts);
 				cout << endl;
 				exit(1);
 			}
@@ -3079,15 +3072,15 @@ void projective_space::line_plane_incidence_matrix_restricted(
 	the_lines = NEW_int(nb_lines * line_sz);
 
 
-	int_vec_zero(M, nb_lines * nb_planes);
+	Orbiter->Int_vec.zero(M, nb_lines * nb_planes);
 	for (i = 0; i < nb_lines; i++) {
 		unrank_line(the_lines + i * line_sz, Lines[i]);
 	}
 	for (j = 0; j < nb_planes; j++) {
 		unrank_plane(Basis, j);
 		for (i = 0; i < nb_lines; i++) {
-			int_vec_copy(Basis, Work, 3 * (n + 1));
-			int_vec_copy(the_lines + i * line_sz,
+			Orbiter->Int_vec.copy(Basis, Work, 3 * (n + 1));
+			Orbiter->Int_vec.copy(the_lines + i * line_sz,
 					Work + 3 * (n + 1), line_sz);
 			if (F->Gauss_easy(Work, 5, n + 1) == 3) {
 				M[i * nb_planes + j] = 1;
@@ -3307,8 +3300,8 @@ long int projective_space::line_of_intersection_of_two_planes_in_three_space_usi
 	unrank_point(Plane1, plane1);
 	unrank_point(Plane2, plane2);
 
-	int_vec_copy(Plane1, Basis, 4);
-	int_vec_copy(Plane2, Basis + 4, 4);
+	Orbiter->Int_vec.copy(Plane1, Basis, 4);
+	Orbiter->Int_vec.copy(Plane2, Basis + 4, 4);
 	F->RREF_and_kernel(4, 2, Basis, 0 /* verbose_level */);
 	rk = Grass_lines->rank_lint_here(Basis + 8, 0 /* verbose_level */);
 	return rk;
@@ -3339,8 +3332,8 @@ long int projective_space::transversal_to_two_skew_lines_through_a_point(
 	unrank_point(Basis2 + 8, pt);
 	F->RREF_and_kernel(4, 3, Basis1, 0 /* verbose_level */);
 	F->RREF_and_kernel(4, 3, Basis2, 0 /* verbose_level */);
-	int_vec_copy(Basis1 + 12, Basis3, 4);
-	int_vec_copy(Basis2 + 12, Basis3 + 4, 4);
+	Orbiter->Int_vec.copy(Basis1 + 12, Basis3, 4);
+	Orbiter->Int_vec.copy(Basis2 + 12, Basis3 + 4, 4);
 	F->RREF_and_kernel(4, 2, Basis3, 0 /* verbose_level */);
 	a = rank_line(Basis3 + 8);
 	if (f_v) {
@@ -3397,7 +3390,7 @@ long int projective_space::plane_rank_using_dual_coordinates_in_three_space(
 	if (f_v) {
 		cout << "projective_space::plane_rank_using_dual_coordinates_in_three_space" << endl;
 	}
-	int_vec_copy(eqn4, Basis, 4);
+	Orbiter->Int_vec.copy(eqn4, Basis, 4);
 	rk = F->RREF_and_kernel(4, 1, Basis, 0 /* verbose_level*/);
 	if (rk != 1) {
 		cout << "projective_space::plane_rank_using_dual_coordinates_in_three_space rk != 1" << endl;
@@ -3453,7 +3446,7 @@ void projective_space::plane_equation_from_three_lines_in_three_space(
 				"lines_in_three_space rk != 3" << endl;
 		exit(1);
 	}
-	int_vec_copy(Basis + 3 * 4, plane_eqn4, 4);
+	Orbiter->Int_vec.copy(Basis + 3 * 4, plane_eqn4, 4);
 
 	if (f_v) {
 		cout << "projective_space::plane_equation_from_three_"
@@ -3606,7 +3599,7 @@ void projective_space::arc_lifting_diophant(
 			line_type, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "line_type: ";
-		int_vec_print_fully(cout, line_type, N_lines);
+		Orbiter->Int_vec.print_fully(cout, line_type, N_lines);
 		cout << endl;
 	}
 
@@ -4187,8 +4180,8 @@ void projective_space::maximal_arc_by_diophant(
 
 	other_lines = NEW_int(N_lines);
 
-	int_vec_scan(secant_lines_text, secant_lines, nb_secant_lines);
-	int_vec_scan(external_lines_as_subset_of_secants_text, Idx, nb_external_lines);
+	Orbiter->Int_vec.scan(secant_lines_text, secant_lines, nb_secant_lines);
+	Orbiter->Int_vec.scan(external_lines_as_subset_of_secants_text, Idx, nb_external_lines);
 
 	Sorting.int_vec_heapsort(secant_lines, nb_secant_lines);
 
@@ -4235,7 +4228,7 @@ void projective_space::maximal_arc_by_diophant(
 	pencil_idx = NEW_int(N_lines);
 	pencil_sub_idx = NEW_int(N_lines);
 	nb_times_hit = NEW_int(k);
-	int_vec_zero(nb_times_hit, k);
+	Orbiter->Int_vec.zero(nb_times_hit, k);
 
 	pencil_idx[0] = -1;
 	for (i = 1; i < N_lines; i++) {
@@ -4477,7 +4470,7 @@ void projective_space::find_two_lines_for_arc_lifting(
 				"in the hyperplane W = 0" << endl;
 		exit(1);
 	}
-	int_vec_zero(Basis + 8, 8);
+	Orbiter->Int_vec.zero(Basis + 8, 8);
 
 	N = Gg.nb_PG_elements(3, q);
 	// N = the number of points in PG(3,q)
@@ -4489,13 +4482,13 @@ void projective_space::find_two_lines_for_arc_lifting(
 	// Make sure the rank of the subspace spanned by P1, P2 and P is three.
 
 	for (i = 0; i < N; i++) {
-		int_vec_copy(Basis, Basis_search, 4);
-		int_vec_copy(Basis + 4, Basis_search + 4, 4);
+		Orbiter->Int_vec.copy(Basis, Basis_search, 4);
+		Orbiter->Int_vec.copy(Basis + 4, Basis_search + 4, 4);
 		F->PG_element_unrank_modified(Basis_search + 8, 1, 4, i);
 		if (Basis_search[11] == 0) {
 			continue;
 		}
-		int_vec_copy(Basis_search, Basis_search_copy, 12);
+		Orbiter->Int_vec.copy(Basis_search, Basis_search_copy, 12);
 		rk = F->Gauss_easy_memory_given(Basis_search_copy, 3, 4, base_cols);
 		if (rk == 3) {
 			break;
@@ -4517,14 +4510,14 @@ void projective_space::find_two_lines_for_arc_lifting(
 	// Make sure the rank of the subspace spanned by P1, P2 and P and Q is four.
 
 	for (i = p0 + 1; i < N; i++) {
-		int_vec_copy(Basis, Basis_search, 4);
-		int_vec_copy(Basis + 4, Basis_search + 4, 4);
+		Orbiter->Int_vec.copy(Basis, Basis_search, 4);
+		Orbiter->Int_vec.copy(Basis + 4, Basis_search + 4, 4);
 		F->PG_element_unrank_modified(Basis_search + 8, 1, 4, p0);
 		F->PG_element_unrank_modified(Basis_search + 12, 1, 4, i);
 		if (Basis_search[15] == 0) {
 			continue;
 		}
-		int_vec_copy(Basis_search, Basis_search_copy, 16);
+		Orbiter->Int_vec.copy(Basis_search, Basis_search_copy, 16);
 		rk = F->Gauss_easy_memory_given(Basis_search_copy, 4, 4, base_cols);
 		if (rk == 4) {
 			break;
@@ -4548,10 +4541,10 @@ void projective_space::find_two_lines_for_arc_lifting(
 		cout << "Basis:" << endl;
 		int_matrix_print(Basis, 4, 4);
 	}
-	int_vec_copy(Basis, Basis2, 4);
-	int_vec_copy(Basis + 8, Basis2 + 4, 4);
-	int_vec_copy(Basis + 4, Basis2 + 8, 4);
-	int_vec_copy(Basis + 12, Basis2 + 12, 4);
+	Orbiter->Int_vec.copy(Basis, Basis2, 4);
+	Orbiter->Int_vec.copy(Basis + 8, Basis2 + 4, 4);
+	Orbiter->Int_vec.copy(Basis + 4, Basis2 + 8, 4);
+	Orbiter->Int_vec.copy(Basis + 12, Basis2 + 12, 4);
 	if (f_v) {
 		cout << "projective_space::find_two_lines_for_arc_lifting "
 				"Basis2:" << endl;
@@ -4720,8 +4713,8 @@ void projective_space::hyperplane_lifting_with_two_lines_fixed(
 				"f_swap=" << f_swap << endl;
 	}
 
-	int_vec_copy(Line1 + 4, x, 3);
-	int_vec_copy(Line2 + 4, y, 3);
+	Orbiter->Int_vec.copy(Line1 + 4, x, 3);
+	Orbiter->Int_vec.copy(Line2 + 4, y, 3);
 	if (f_v) {
 		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
 				"x:" << endl;
@@ -4766,16 +4759,16 @@ void projective_space::hyperplane_lifting_with_two_lines_fixed(
 	}
 
 	if (f_swap) {
-		int_vec_copy(Line2 + 4, Mt + 0, 4);
-		int_vec_copy(Line2 + 0, Mt + 4, 4);
-		int_vec_copy(Line1 + 4, Mt + 8, 4);
-		int_vec_copy(Line1 + 0, Mt + 12, 4);
+		Orbiter->Int_vec.copy(Line2 + 4, Mt + 0, 4);
+		Orbiter->Int_vec.copy(Line2 + 0, Mt + 4, 4);
+		Orbiter->Int_vec.copy(Line1 + 4, Mt + 8, 4);
+		Orbiter->Int_vec.copy(Line1 + 0, Mt + 12, 4);
 	}
 	else {
-		int_vec_copy(Line1 + 4, Mt + 0, 4);
-		int_vec_copy(Line1 + 0, Mt + 4, 4);
-		int_vec_copy(Line2 + 4, Mt + 8, 4);
-		int_vec_copy(Line2 + 0, Mt + 12, 4);
+		Orbiter->Int_vec.copy(Line1 + 4, Mt + 0, 4);
+		Orbiter->Int_vec.copy(Line1 + 0, Mt + 4, 4);
+		Orbiter->Int_vec.copy(Line2 + 4, Mt + 8, 4);
+		Orbiter->Int_vec.copy(Line2 + 0, Mt + 12, 4);
 	}
 
 	F->negate_vector_in_place(Mt + 8, 8);
@@ -4832,7 +4825,7 @@ void projective_space::hyperplane_lifting_with_two_lines_fixed(
 		A4[i * 4 + 3] = 0;
 	}
 	// fill in the last row:
-	int_vec_copy(abgd, A4 + 4 * 3, 4);
+	Orbiter->Int_vec.copy(abgd, A4 + 4 * 3, 4);
 	if (f_v) {
 		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
 				"A4:" << endl;
@@ -4928,10 +4921,10 @@ void projective_space::hyperplane_lifting_with_two_lines_moved(
 				"v = second point on Line2_from:" << endl;
 		int_matrix_print(Line2_from + 4, 1, 4);
 	}
-	int_vec_copy(Line1_from + 4, u, 4);
-	int_vec_copy(Line1_from, P1, 4);
-	int_vec_copy(Line2_from + 4, v, 4);
-	int_vec_copy(Line2_from, P2, 4);
+	Orbiter->Int_vec.copy(Line1_from + 4, u, 4);
+	Orbiter->Int_vec.copy(Line1_from, P1, 4);
+	Orbiter->Int_vec.copy(Line2_from + 4, v, 4);
+	Orbiter->Int_vec.copy(Line2_from, P2, 4);
 
 
 	unrank_line(Line1_to, line1_to);
@@ -4983,13 +4976,13 @@ void projective_space::hyperplane_lifting_with_two_lines_moved(
 	}
 
 
-	int_vec_copy(Line1_to + 4, x, 4);
+	Orbiter->Int_vec.copy(Line1_to + 4, x, 4);
 	//int_vec_copy(Line1_to, P1, 4);
 	if (int_vec_compare(P1, Line1_to, 4)) {
 		cout << "Line1_from and Line1_to must intersect in W=0" << endl;
 		exit(1);
 	}
-	int_vec_copy(Line2_to + 4, y, 4);
+	Orbiter->Int_vec.copy(Line2_to + 4, y, 4);
 	//int_vec_copy(Line2_to, P2, 4);
 	if (int_vec_compare(P2, Line2_to, 4)) {
 		cout << "Line2_from and Line2_to must intersect in W=0" << endl;
@@ -5005,10 +4998,10 @@ void projective_space::hyperplane_lifting_with_two_lines_moved(
 		int_matrix_print(umv, 1, 4);
 	}
 
-	int_vec_copy(x, M + 0, 4);
-	int_vec_copy(P1, M + 4, 4);
-	int_vec_copy(y, M + 8, 4);
-	int_vec_copy(P2, M + 12, 4);
+	Orbiter->Int_vec.copy(x, M + 0, 4);
+	Orbiter->Int_vec.copy(P1, M + 4, 4);
+	Orbiter->Int_vec.copy(y, M + 8, 4);
+	Orbiter->Int_vec.copy(P2, M + 12, 4);
 
 	F->negate_vector_in_place(M + 8, 8);
 	if (f_v) {
@@ -5060,7 +5053,7 @@ void projective_space::hyperplane_lifting_with_two_lines_moved(
 		}
 	}
 	// fill in the last row:
-	int_vec_copy(abgd, A4 + 3 * 4, 4);
+	Orbiter->Int_vec.copy(abgd, A4 + 3 * 4, 4);
 	if (f_v) {
 		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
 				"A4:" << endl;
@@ -5148,7 +5141,7 @@ void projective_space::andre_preimage(projective_space *P4,
 		unrank_point(v, set2[i]);
 		FQ->PG_element_normalize(v, 1, 3);
 		if (f_vv) {
-			int_vec_print(cout, v, 3);
+			Orbiter->Int_vec.print(cout, v, 3);
 			cout << " becomes ";
 		}
 
@@ -5186,9 +5179,9 @@ void projective_space::andre_preimage(projective_space *P4,
 			}
 			if (FALSE) {
 				cout << "w1=";
-				int_vec_print(cout, w1, 4);
+				Orbiter->Int_vec.print(cout, w1, 4);
 				cout << "w2=";
-				int_vec_print(cout, w2, 4);
+				Orbiter->Int_vec.print(cout, w2, 4);
 				cout << endl;
 			}
 
@@ -5202,7 +5195,7 @@ void projective_space::andre_preimage(projective_space *P4,
 				Fq->PG_element_unrank_modified(v2, 1, 2, h);
 				if (FALSE) {
 					cout << "v2=";
-					int_vec_print(cout, v2, 2);
+					Orbiter->Int_vec.print(cout, v2, 2);
 					cout << " : ";
 				}
 				for (k = 0; k < 4; k++) {
@@ -5212,7 +5205,7 @@ void projective_space::andre_preimage(projective_space *P4,
 				w3[4] = 0;
 				if (f_vv) {
 					cout << " ";
-					int_vec_print(cout, w3, 5);
+					Orbiter->Int_vec.print(cout, w3, 5);
 				}
 				a = P4->rank_point(w3);
 				if (f_vv) {
@@ -5238,7 +5231,7 @@ void projective_space::andre_preimage(projective_space *P4,
 			w1[4] = 1;
 			if (f_vv) {
 				//cout << "w1=";
-				int_vec_print(cout, w1, 5);
+				Orbiter->Int_vec.print(cout, w1, 5);
 			}
 			a = P4->rank_point(w1);
 			if (f_vv) {
@@ -5315,12 +5308,12 @@ void projective_space::planes_through_a_line(
 	for (h = 0; h < N; h++) {
 
 		F->PG_element_unrank_modified(w, 1, d - 2, h);
-		int_vec_zero(v, d);
+		Orbiter->Int_vec.zero(v, d);
 		for (j = 0; j < d - 2; j++) {
 			v[embedding[j]] = w[j];
 		}
-		int_vec_copy(M1, M2, 2 * d);
-		int_vec_copy(v, M2 + 2 * d, d);
+		Orbiter->Int_vec.copy(M1, M2, 2 * d);
+		Orbiter->Int_vec.copy(v, M2 + 2 * d, d);
 		if (f_v) {
 			cout << "projective_space::planes_through_a_line h = " << h << ", M2=" << endl;
 			int_matrix_print(M2, 3, d);

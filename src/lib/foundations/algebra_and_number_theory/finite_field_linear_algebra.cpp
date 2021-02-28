@@ -19,7 +19,7 @@ namespace foundations {
 void finite_field::copy_matrix(int *A, int *B, int ma, int na)
 {
 
-	int_vec_copy(A, B, ma * na);
+	Orbiter->Int_vec.copy(A, B, ma * na);
 }
 
 void finite_field::reverse_matrix(int *A, int *B, int m, int n)
@@ -195,7 +195,7 @@ void finite_field::semilinear_matrix_mult(int *A, int *B, int *AB, int n)
 	f1 = A[n * n];
 	f2 = B[n * n];
 	f1inv = NT.mod(-f1, e);
-	int_vec_copy(B, B2, n * n);
+	Orbiter->Int_vec.copy(B, B2, n * n);
 	vector_frobenius_power_in_place(B2, n * n, f1inv);
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < n; j++) {
@@ -240,7 +240,7 @@ void finite_field::semilinear_matrix_mult_memory_given(
 		cout << "finite_field::semilinear_matrix_mult_memory_given f1inv=" << f1inv << endl;
 	}
 
-	int_vec_copy(B, B2, n * n);
+	Orbiter->Int_vec.copy(B, B2, n * n);
 	vector_frobenius_power_in_place(B2, n * n, f1inv);
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < n; j++) {
@@ -336,7 +336,7 @@ void finite_field::semilinear_matrix_mult_affine(
 	f12 = NT.mod(f1 + f2, e);
 	f1inv = NT.mod(e - f1, e);
 	
-	int_vec_copy(A2, T, n * n);
+	Orbiter->Int_vec.copy(A2, T, n * n);
 	vector_frobenius_power_in_place(T, n * n, f1inv);
 	mult_matrix_matrix(A1, T, A3, n, n, n, 0 /* verbose_level */);
 	//vector_frobenius_power_in_place(A2, n * n, f1);
@@ -368,7 +368,7 @@ int finite_field::matrix_determinant(int *A, int n, int verbose_level)
 	}
 	Tmp = NEW_int(n * n);
 	Tmp1 = NEW_int(n * n);
-	int_vec_copy(A, Tmp, n * n);
+	Orbiter->Int_vec.copy(A, Tmp, n * n);
 
 	// search for nonzero element in the first column:
 	for (i = 0; i < n; i++) {
@@ -616,7 +616,7 @@ void finite_field::semilinear_matrix_invert_affine(int *A,
 	if (f_vv) {
 		print_integer_matrix_width(cout, A, n, n, n, log10_of_q + 1);
 		cout << "b: ";
-		int_vec_print(cout, A + n * n, n);
+		Orbiter->Int_vec.print(cout, A + n * n, n);
 		cout << " frobenius: " << A[n * n + n] << endl;
 	}
 	b1 = A + n * n;
@@ -637,7 +637,7 @@ void finite_field::semilinear_matrix_invert_affine(int *A,
 		cout << "the inverse is" << endl;
 		print_integer_matrix_width(cout, Ainv, n, n, n, log10_of_q + 1);
 		cout << "b: ";
-		int_vec_print(cout, Ainv + n * n, n);
+		Orbiter->Int_vec.print(cout, Ainv + n * n, n);
 		cout << " frobenius: " << Ainv[n * n + n] << endl;
 	}
 	if (f_v) {
@@ -662,7 +662,7 @@ void finite_field::matrix_invert_affine(int *A,
 	if (f_vv) {
 		print_integer_matrix_width(cout, A, n, n, n, log10_of_q + 1);
 		cout << "b: ";
-		int_vec_print(cout, A + n * n, n);
+		Orbiter->Int_vec.print(cout, A + n * n, n);
 		cout << endl;
 	}
 	b1 = A + n * n;
@@ -677,7 +677,7 @@ void finite_field::matrix_invert_affine(int *A,
 		cout << "the inverse is" << endl;
 		print_integer_matrix_width(cout, Ainv, n, n, n, log10_of_q + 1);
 		cout << "b: ";
-		int_vec_print(cout, Ainv + n * n, n);
+		Orbiter->Int_vec.print(cout, Ainv + n * n, n);
 		cout << endl;
 	}
 	if (f_v) {
@@ -968,7 +968,7 @@ void finite_field::invert_matrix_memory_given(int *A, int *A_inv, int n,
 			A_inv[i * n + j] = a;
 		}
 	}
-	int_vec_copy(A, A_tmp, n * n);
+	Orbiter->Int_vec.copy(A, A_tmp, n * n);
 
 	rk = Gauss_int(A_tmp,
 			FALSE /* f_special */,
@@ -1041,7 +1041,7 @@ int finite_field::rank_of_matrix_memory_given(int *A,
 	if (f_v) {
 		cout << "finite_field::rank_of_matrix_memory_given" << endl;
 	}
-	int_vec_copy(A, B, m * m);
+	Orbiter->Int_vec.copy(A, B, m * m);
 	rk = Gauss_int(B, FALSE, FALSE, base_cols, FALSE,
 			NULL, m, m, m, 0 /* verbose_level */);
 	if (FALSE) {
@@ -1095,7 +1095,7 @@ int finite_field::rank_of_rectangular_matrix_memory_given(
 	}
 	//B = NEW_int(m * n);
 	//base_cols = NEW_int(n);
-	int_vec_copy(A, B, m * n);
+	Orbiter->Int_vec.copy(A, B, m * n);
 	rk = Gauss_int(B, FALSE, FALSE, base_cols, FALSE,
 			NULL, m, n, n, 0 /* verbose_level */);
 
@@ -1125,7 +1125,7 @@ int finite_field::rank_and_basecols(int *A, int m,
 		cout << "finite_field::rank_and_basecols" << endl;
 	}
 	B = NEW_int(m * m);
-	int_vec_copy(A, B, m * m);
+	Orbiter->Int_vec.copy(A, B, m * m);
 	rk = Gauss_int(B, FALSE, FALSE, base_cols, FALSE,
 			NULL, m, m, m, 0 /* verbose_level */);
 	if (FALSE) {
@@ -1157,9 +1157,9 @@ void finite_field::Gauss_step(int *v1, int *v2,
 	}
 	if (f_vv) {
 		cout << "before:" << endl;
-		int_vec_print(cout, v1, len);
+		Orbiter->Int_vec.print(cout, v1, len);
 		cout << endl;
-		int_vec_print(cout, v2, len);
+		Orbiter->Int_vec.print(cout, v2, len);
 		cout << endl;
 		cout << "pivot column " << idx << endl;
 	}
@@ -1183,9 +1183,9 @@ void finite_field::Gauss_step(int *v1, int *v2,
 after:
 	if (f_vv) {
 		cout << "finite_field::Gauss_step after:" << endl;
-		int_vec_print(cout, v1, len);
+		Orbiter->Int_vec.print(cout, v1, len);
 		cout << endl;
-		int_vec_print(cout, v2, len);
+		Orbiter->Int_vec.print(cout, v2, len);
 		cout << endl;
 	}
 	if (f_v) {
@@ -1207,9 +1207,9 @@ void finite_field::Gauss_step_make_pivot_one(int *v1, int *v2,
 	}
 	if (f_vv) {
 		cout << "before:" << endl;
-		int_vec_print(cout, v1, len);
+		Orbiter->Int_vec.print(cout, v1, len);
 		cout << endl;
-		int_vec_print(cout, v2, len);
+		Orbiter->Int_vec.print(cout, v2, len);
 		cout << endl;
 		cout << "pivot column " << idx << endl;
 	}
@@ -1244,9 +1244,9 @@ after:
 	}
 	if (f_vv) {
 		cout << "finite_field::Gauss_step_make_pivot_one after:" << endl;
-		int_vec_print(cout, v1, len);
+		Orbiter->Int_vec.print(cout, v1, len);
 		cout << endl;
-		int_vec_print(cout, v2, len);
+		Orbiter->Int_vec.print(cout, v2, len);
 		cout << endl;
 	}
 	if (f_v) {
@@ -1275,12 +1275,12 @@ void finite_field::extend_basis(int m, int n, int *Basis,
 		cout << "matrix:" << endl;
 		print_integer_matrix_width(cout, Basis, m, n, n, log10_of_q);
 	}
-	int_vec_zero(Basis + m * n, (n - m) * n);
+	Orbiter->Int_vec.zero(Basis + m * n, (n - m) * n);
 	B = NEW_int(n * n);
 	base_cols = NEW_int(n);
 	embedding = NEW_int(n);
-	int_vec_zero(B, n * n);
-	int_vec_copy(Basis, B, m * n);
+	Orbiter->Int_vec.zero(B, n * n);
+	Orbiter->Int_vec.copy(Basis, B, m * n);
 	rk = base_cols_and_embedding(m, n, B,
 		base_cols, embedding, verbose_level);
 	if (rk != m) {
@@ -1320,7 +1320,7 @@ int finite_field::base_cols_and_embedding(int m, int n, int *A,
 		print_integer_matrix_width(cout, A, m, n, n, log10_of_q);
 	}
 	B = NEW_int(m * n);
-	int_vec_copy(A, B, m * n);
+	Orbiter->Int_vec.copy(A, B, m * n);
 	rk = Gauss_simple(B, m, n, base_cols, verbose_level - 3);
 	j = 0;
 	for (i = 0; i < n; i++) {
@@ -1339,10 +1339,10 @@ int finite_field::base_cols_and_embedding(int m, int n, int *A,
 		cout << "finite_field::base_cols_and_embedding" << endl;
 		cout << "rk=" << rk << endl;
 		cout << "base_cols:" << endl;
-		int_vec_print(cout, base_cols, rk);
+		Orbiter->Int_vec.print(cout, base_cols, rk);
 		cout << endl;
 		cout << "embedding:" << endl;
-		int_vec_print(cout, embedding, n - rk);
+		Orbiter->Int_vec.print(cout, embedding, n - rk);
 		cout << endl;
 	}
 	FREE_int(B);
@@ -1386,7 +1386,7 @@ int finite_field::Gauss_simple(int *A, int m, int n,
 void finite_field::kernel_columns(int n, int nb_base_cols,
 		int *base_cols, int *kernel_cols)
 {
-	int_vec_complement(base_cols, kernel_cols, n, nb_base_cols);
+	Orbiter->Int_vec.complement(base_cols, kernel_cols, n, nb_base_cols);
 #if 0
 	int i, j, k;
 	
@@ -1589,7 +1589,7 @@ int finite_field::RREF_and_kernel(int n, int k,
 	B = NEW_int(m * n);
 	K = NEW_int(n * n);
 	base_cols = NEW_int(n);
-	int_vec_copy(A, B, k * n);
+	Orbiter->Int_vec.copy(A, B, k * n);
 	//mult_matrix_matrix(A, Gram, B, k, n, n);
 	if (f_v) {
 		cout << "finite_field::RREF_and_kernel before Gauss_int" << endl;
@@ -1601,7 +1601,7 @@ int finite_field::RREF_and_kernel(int n, int k,
 		cout << "finite_field::RREF_and_kernel after Gauss_int, "
 				"rank = " << nb_base_cols << endl;
 	}
-	int_vec_copy(B, A, nb_base_cols * n);
+	Orbiter->Int_vec.copy(B, A, nb_base_cols * n);
 	if (f_v) {
 		cout << "finite_field::RREF_and_kernel "
 				"before matrix_get_kernel" << endl;
@@ -1670,7 +1670,7 @@ int finite_field::perp_standard_with_temporary_data(
 	//K = NEW_int(n * n);
 	//base_cols = NEW_int(n);
 
-	int_vec_copy(A, B, k * n);
+	Orbiter->Int_vec.copy(A, B, k * n);
 	if (f_v) {
 		cout << "finite_field::perp_standard_temporary_data" << endl;
 		cout << "B=" << endl;
@@ -1693,7 +1693,7 @@ int finite_field::perp_standard_with_temporary_data(
 		cout << "kernel_n = " << kernel_n << endl;
 	}
 
-	int_vec_copy(B, A, nb_base_cols * n);
+	Orbiter->Int_vec.copy(B, A, nb_base_cols * n);
 
 	for (j = 0; j < kernel_n; j++) {
 		for (i = 0; i < n; i++) {
@@ -1731,8 +1731,8 @@ int finite_field::intersect_subspaces(int n, int k1,
 	B1 = NEW_int(n * n);
 	K = NEW_int(n * n);
 	base_cols = NEW_int(n);
-	int_vec_copy(A, AA, k1 * n);
-	int_vec_copy(B, BB, k2 * n);
+	Orbiter->Int_vec.copy(A, AA, k1 * n);
+	Orbiter->Int_vec.copy(B, BB, k2 * n);
 	if (f_v) {
 		cout << "finite_field::intersect_subspaces AA=" << endl;
 		print_integer_matrix_width(cout, AA, k1, n, n, 2);
@@ -1768,8 +1768,8 @@ int finite_field::intersect_subspaces(int n, int k1,
 	}
 	CC = NEW_int((3 * n) * n);
 
-	int_vec_copy(AA + k1 * n, CC, (n - k1) * n);
-	int_vec_copy(BB + k2 * n, CC + (n - k1) * n, (n - k2) * n);
+	Orbiter->Int_vec.copy(AA + k1 * n, CC, (n - k1) * n);
+	Orbiter->Int_vec.copy(BB + k2 * n, CC + (n - k1) * n, (n - k2) * n);
 	k3 = (n - k1) + (n - k2);
 	if (f_v) {
 		cout << "finite_field::intersect_subspaces CC=" << endl;
@@ -1781,7 +1781,7 @@ int finite_field::intersect_subspaces(int n, int k1,
 	k3 = Gauss_easy(CC, k3, n);
 
 	r3 = perp_standard_with_temporary_data(n, k3, CC, B1, K, base_cols, 0);
-	int_vec_copy(CC + k3 * n, intersection, (n - r3) * n);
+	Orbiter->Int_vec.copy(CC + k3 * n, intersection, (n - r3) * n);
 
 	FREE_int(AA);
 	FREE_int(BB);
@@ -2000,12 +2000,12 @@ void finite_field::find_singular_vector_brute_force(int n,
 				form_i, form_j, form_coeff, v1);
 		if (f_v) {
 			cout << "v1=";
-			int_vec_print(cout, v1, n);
+			Orbiter->Int_vec.print(cout, v1, n);
 			cout << endl;
 			cout << "form value a=" << a << endl;
 		}
 		if (a == 0) {
-			int_vec_copy(v1, vec, n);
+			Orbiter->Int_vec.copy(v1, vec, n);
 			goto finish;
 		}
 	}
@@ -2047,12 +2047,12 @@ void finite_field::find_singular_vector(int n, int form_nb_terms,
 			form_i, form_j, form_coeff, v1);
 	if (f_vv) {
 		cout << "v1=";
-		int_vec_print(cout, v1, n);
+		Orbiter->Int_vec.print(cout, v1, n);
 		cout << endl;
 		cout << "form value a=" << a << endl;
 	}
 	if (a == 0) {
-		int_vec_copy(v1, vec, n);
+		Orbiter->Int_vec.copy(v1, vec, n);
 		goto finish;
 	}
 	perp(n, 1, v1, Gram, 0 /* verbose_level */);
@@ -2067,12 +2067,12 @@ void finite_field::find_singular_vector(int n, int form_nb_terms,
 			form_i, form_j, form_coeff, v2);
 	if (f_vv) {
 		cout << "vector v2=";
-		int_vec_print(cout, v2, n);
+		Orbiter->Int_vec.print(cout, v2, n);
 		cout << endl;
 		cout << "form value b=" << b << endl;
 	}
 	if (b == 0) {
-		int_vec_copy(v2, vec, n);
+		Orbiter->Int_vec.copy(v2, vec, n);
 		goto finish;
 	}
 	perp(n, 1, v2, Gram, 0 /* verbose_level */);
@@ -2097,12 +2097,12 @@ void finite_field::find_singular_vector(int n, int form_nb_terms,
 			form_i, form_j, form_coeff, v3);
 	if (f_vv) {
 		cout << "v3=";
-		int_vec_print(cout, v3, n);
+		Orbiter->Int_vec.print(cout, v3, n);
 		cout << endl;
 		cout << "form value c=" << c << endl;
 	}
 	if (c == 0) {
-		int_vec_copy(v3, vec, n);
+		Orbiter->Int_vec.copy(v3, vec, n);
 		goto finish;
 	}
 	if (f_vv) {
@@ -2123,7 +2123,7 @@ void finite_field::find_singular_vector(int n, int form_nb_terms,
 	}
 	if (f_vv) {
 		cout << "singular vector vec=";
-		int_vec_print(cout, vec, n);
+		Orbiter->Int_vec.print(cout, vec, n);
 		cout << endl;
 	}
 	d = evaluate_quadratic_form(n, form_nb_terms,
@@ -2131,7 +2131,7 @@ void finite_field::find_singular_vector(int n, int form_nb_terms,
 	if (d) {
 		cout << "is non-singular, error! d=" << d << endl;
 		cout << "singular vector vec=";
-		int_vec_print(cout, vec, n);
+		Orbiter->Int_vec.print(cout, vec, n);
 		cout << endl;
 		exit(1);
 	}
@@ -2165,7 +2165,7 @@ void finite_field::complete_hyperbolic_pair(
 	}
 	if (f_vv) {
 		cout << "vec1=";
-		int_vec_print(cout, vec1, n);
+		Orbiter->Int_vec.print(cout, vec1, n);
 		cout << endl;
 		cout << "Gram=" << endl;
 		print_integer_matrix_width(cout, Gram, 4, 4, 4, 2);
@@ -2174,10 +2174,10 @@ void finite_field::complete_hyperbolic_pair(
 			0 /* verbose_level */);
 	if (f_vv) {
 		cout << "v0=";
-		int_vec_print(cout, v0, n);
+		Orbiter->Int_vec.print(cout, v0, n);
 		cout << endl;
 	}
-	int_vec_zero(v1, n);
+	Orbiter->Int_vec.zero(v1, n);
 	for (i = n - 1; i >= 0; i--) {
 		if (v0[i]) {
 			v1[i] = 1;
@@ -2228,7 +2228,7 @@ void finite_field::complete_hyperbolic_pair(
 	}
 	if (f_vv) {
 		cout << "normalized ";
-		int_vec_print(cout, v1, n);
+		Orbiter->Int_vec.print(cout, v1, n);
 		cout << endl;
 	}
 	b = evaluate_quadratic_form(n, form_nb_terms,
@@ -2240,7 +2240,7 @@ void finite_field::complete_hyperbolic_pair(
 	if (f_vv) {
 		cout << "finite_field::complete_hyperbolic_pair" << endl;
 		cout << "vec2=";
-		int_vec_print(cout, vec2, n);
+		Orbiter->Int_vec.print(cout, vec2, n);
 		cout << endl;
 	}
 	c = dot_product(n, v0, vec2);
@@ -2248,10 +2248,10 @@ void finite_field::complete_hyperbolic_pair(
 		cout << "dot product is not 1, error" << endl;
 		cout << "c=" << c << endl;
 		cout << "vec1=";
-		int_vec_print(cout, vec1, n);
+		Orbiter->Int_vec.print(cout, vec1, n);
 		cout << endl;
 		cout << "vec2=";
-		int_vec_print(cout, vec2, n);
+		Orbiter->Int_vec.print(cout, vec2, n);
 		cout << endl;
 	}
 	FREE_int(v0);
@@ -2285,7 +2285,7 @@ void finite_field::find_hyperbolic_pair(int n, int form_nb_terms,
 	if (f_vv) {
 		cout << "finite_field::find_hyperbolic_pair, "
 				"found singular vector" << endl;
-		int_vec_print(cout, vec1, n);
+		Orbiter->Int_vec.print(cout, vec1, n);
 		cout << endl;
 		cout << "calling complete_hyperbolic_pair" << endl;
 	}
@@ -2313,7 +2313,7 @@ void finite_field::restrict_quadratic_form_list_coding(
 	}
 	C = NEW_int(n * n);
 	D = NEW_int(k * k);
-	int_vec_zero(C, n * n);
+	Orbiter->Int_vec.zero(C, n * n);
 	for (h = 0; h < form_nb_terms; h++) {
 		i = form_i[h];
 		j = form_j[h];
@@ -2369,7 +2369,7 @@ void finite_field::restrict_quadratic_form(int k, int n,
 		cout << "finite_field::restrict_quadratic_form" << endl;
 		print_integer_matrix_width(cout, C, n, n, n, 2);
 	}
-	int_vec_zero(D, k * k);
+	Orbiter->Int_vec.zero(D, k * k);
 	for (lambda = 0; lambda < k; lambda++) {
 		for (mu = 0; mu < k; mu++) {
 			d = 0;
@@ -2419,10 +2419,10 @@ int finite_field::compare_subspaces_ranked(
 	if (f_vv) {
 		cout << "finite_field::compare_subspaces_ranked" << endl;
 		cout << "set1: ";
-		int_vec_print(cout, set1, size);
+		Orbiter->Int_vec.print(cout, set1, size);
 		cout << endl;
 		cout << "set2: ";
-		int_vec_print(cout, set2, size);
+		Orbiter->Int_vec.print(cout, set2, size);
 		cout << endl;
 	}
 	M1 = NEW_int(size * vector_space_dimension);
@@ -2456,14 +2456,14 @@ int finite_field::compare_subspaces_ranked(
 				vector_space_dimension, vector_space_dimension, log10_of_q);
 		cout << "rank1=" << rk1 << endl;
 		cout << "base_cols1: ";
-		int_vec_print(cout, base_cols1, rk1);
+		Orbiter->Int_vec.print(cout, base_cols1, rk1);
 		cout << endl;
 		cout << "matrix2:" << endl;
 		print_integer_matrix_width(cout, M2, size,
 				vector_space_dimension, vector_space_dimension, log10_of_q);
 		cout << "rank2=" << rk2 << endl;
 		cout << "base_cols2: ";
-		int_vec_print(cout, base_cols2, rk2);
+		Orbiter->Int_vec.print(cout, base_cols2, rk2);
 		cout << endl;
 	}
 	if (rk1 != rk2) {
@@ -2537,10 +2537,10 @@ int finite_field::compare_subspaces_ranked_with_unrank_function(
 		cout << "finite_field::compare_subspaces_ranked_"
 				"with_unrank_function" << endl;
 		cout << "set1: ";
-		orbiter::foundations::int_vec_print(cout, set1, size);
+		Orbiter->Int_vec.print(cout, set1, size);
 		cout << endl;
 		cout << "set2: ";
-		orbiter::foundations::int_vec_print(cout, set2, size);
+		Orbiter->Int_vec.print(cout, set2, size);
 		cout << endl;
 	}
 	M1 = NEW_int(size * vector_space_dimension);
@@ -2583,7 +2583,7 @@ int finite_field::compare_subspaces_ranked_with_unrank_function(
 				log10_of_q);
 		cout << "rank1=" << rk1 << endl;
 		cout << "base_cols1: ";
-		orbiter::foundations::int_vec_print(cout, base_cols1, rk1);
+		Orbiter->Int_vec.print(cout, base_cols1, rk1);
 		cout << endl;
 		cout << "matrix2:" << endl;
 		print_integer_matrix_width(cout, M2, size,
@@ -2591,7 +2591,7 @@ int finite_field::compare_subspaces_ranked_with_unrank_function(
 				log10_of_q);
 		cout << "rank2=" << rk2 << endl;
 		cout << "base_cols2: ";
-		orbiter::foundations::int_vec_print(cout, base_cols2, rk2);
+		Orbiter->Int_vec.print(cout, base_cols2, rk2);
 		cout << endl;
 	}
 	if (rk1 != rk2) {
@@ -2659,7 +2659,7 @@ int finite_field::Gauss_canonical_form_ranked(
 	if (f_vv) {
 		cout << "finite_field::Gauss_canonical_form_ranked" << endl;
 		cout << "set1: ";
-		int_vec_print(cout, set1, size);
+		Orbiter->Int_vec.print(cout, set1, size);
 		cout << endl;
 	}
 	M = NEW_int(size * vector_space_dimension);
@@ -2687,7 +2687,7 @@ int finite_field::Gauss_canonical_form_ranked(
 				log10_of_q);
 		cout << "rank=" << rk << endl;
 		cout << "base_cols: ";
-		int_vec_print(cout, base_cols, rk);
+		Orbiter->Int_vec.print(cout, base_cols, rk);
 		cout << endl;
 	}
 
@@ -2741,7 +2741,7 @@ int finite_field::lexleast_canonical_form_ranked(
 	if (f_vv) {
 		cout << "finite_field::lexleast_canonical_form_ranked" << endl;
 		cout << "set1: ";
-		int_vec_print(cout, set1, size);
+		Orbiter->Int_vec.print(cout, set1, size);
 		cout << endl;
 	}
 	tmp = NEW_int(vector_space_dimension);
@@ -2770,7 +2770,7 @@ int finite_field::lexleast_canonical_form_ranked(
 				log10_of_q);
 		cout << "rank=" << rk << endl;
 		cout << "base_cols: ";
-		int_vec_print(cout, base_cols, rk);
+		Orbiter->Int_vec.print(cout, base_cols, rk);
 		cout << endl;
 	}
 	N = NT.i_power_j(q, rk);
@@ -2809,13 +2809,13 @@ int finite_field::lexleast_canonical_form_ranked(
 				vector_space_dimension, vector_space_dimension,
 				log10_of_q);
 		cout << "list_of_ranks:" << endl;
-		int_vec_print(cout, list_of_ranks, N);
+		Orbiter->Int_vec.print(cout, list_of_ranks, N);
 		cout << endl;	
 		cout << "list_of_ranks_PG:" << endl;
-		int_vec_print(cout, list_of_ranks_PG, N);
+		Orbiter->Int_vec.print(cout, list_of_ranks_PG, N);
 		cout << endl;	
 		cout << "list_of_ranks_PG_sorted:" << endl;
-		int_vec_print(cout, list_of_ranks_PG_sorted, size_list);
+		Orbiter->Int_vec.print(cout, list_of_ranks_PG_sorted, size_list);
 		cout << endl;	
 	}
 	f_allowed = NEW_int(size_list);
@@ -2828,10 +2828,10 @@ int finite_field::lexleast_canonical_form_ranked(
 		if (f_vv) {
 			cout << "step " << i << " ";
 			cout << " list_of_ranks_PG_sorted=";
-			int_vec_print(cout, list_of_ranks_PG_sorted, size_list);
+			Orbiter->Int_vec.print(cout, list_of_ranks_PG_sorted, size_list);
 			cout << " ";
 			cout << "f_allowed=";
-			int_vec_print(cout, f_allowed, size_list);
+			Orbiter->Int_vec.print(cout, f_allowed, size_list);
 			cout << endl;
 		}
 		for (a = 0; a < size_list; a++) {
@@ -2850,7 +2850,7 @@ int finite_field::lexleast_canonical_form_ranked(
 		if (f_vv) {
 			cout << "step " << i
 					<< " basis_vector=" << basis_vectors[i] << " : ";
-			int_vec_print(cout, M1 + i * vector_space_dimension,
+			Orbiter->Int_vec.print(cout, M1 + i * vector_space_dimension,
 					vector_space_dimension);
 			cout << " sz=" << sz << " Sz=" << Sz << endl;
 		}
@@ -2867,7 +2867,7 @@ int finite_field::lexleast_canonical_form_ranked(
 			Gg.AG_element_unrank(q, v, 1, i + 1, j);
 			if (f_vv) {
 				cout << "j=" << j << " v=";
-				int_vec_print(cout, v, i + 1);
+				Orbiter->Int_vec.print(cout, v, i + 1);
 				cout << endl;
 			}
 #if 0
@@ -2885,7 +2885,7 @@ int finite_field::lexleast_canonical_form_ranked(
 					0 /* verbose_level */);
 			if (f_vv) {
 				cout << " tmp=";
-				int_vec_print(cout, tmp, vector_space_dimension);
+				Orbiter->Int_vec.print(cout, tmp, vector_space_dimension);
 				cout << endl;
 			}
 			PG_element_rank_modified(tmp, 1,
@@ -2907,7 +2907,7 @@ int finite_field::lexleast_canonical_form_ranked(
 	}
 	if (f_vv) {
 		cout << "basis_vectors by rank: ";
-		int_vec_print(cout, basis_vectors, rk);
+		Orbiter->Int_vec.print(cout, basis_vectors, rk);
 		cout << endl;
 	}
 	if (f_vv) {
@@ -2924,7 +2924,7 @@ int finite_field::lexleast_canonical_form_ranked(
 	}
 	if (f_vv) {
 		cout << "basis_vectors by rank again (double check): ";
-		int_vec_print(cout, set2, rk);
+		Orbiter->Int_vec.print(cout, set2, rk);
 		cout << endl;
 	}
 

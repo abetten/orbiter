@@ -114,12 +114,12 @@ void surface_study::init(finite_field *F, int nb, int verbose_level)
 	cout << "q=" << q << " nb=" << nb; // << " six=";
 	//int_vec_print(cout, six, 6);
 	cout << " coeff=";
-	int_vec_print(cout, rep, 20);
+	Orbiter->Int_vec.print(cout, rep, 20);
 	cout << endl;
 
 	cout << "stab_gens for a group of order " << stab_order << ":" << endl;
 	for (i = 0; i < nb_gens; i++) {
-		int_vec_print(cout, data + i * data_size, data_size);
+		Orbiter->Int_vec.print(cout, data + i * data_size, data_size);
 		cout << endl;
 		}
 
@@ -303,7 +303,7 @@ void surface_study::init(finite_field *F, int nb, int verbose_level)
 			0 /* verbose_level */);
 	F->PG_element_normalize_from_front(coeff, 1, 20);
 	cout << "coefficient vector of the surface: ";
-	int_vec_print(cout, coeff, 20);
+	Orbiter->Int_vec.print(cout, coeff, 20);
 	cout << endl;
 	cout << "equation: ";
 	Surf->print_equation(cout, coeff);
@@ -440,7 +440,7 @@ void surface_study::study_line_orbits(int verbose_level)
 	cout << endl;
 
 	cout << "orbit_length: ";
-	int_vec_print(cout, orbit_length, nb_orbits);
+	Orbiter->Int_vec.print(cout, orbit_length, nb_orbits);
 	cout << endl;
 
 
@@ -1066,7 +1066,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 		cout << endl;
 #endif
 
-		int_vec_copy(coeff, Coeff + j * 20, 20);
+		Orbiter->Int_vec.copy(coeff, Coeff + j * 20, 20);
 
 		FREE_OBJECT(SaS2);
 		}
@@ -1080,7 +1080,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 		co = Coeff + i * 20;
 		if ((co[16] == co[17]) && (co[17] == co[18])) {
 			cout << i << " / " << l << " : ";
-			int_vec_print(cout, co, 20);
+			Orbiter->Int_vec.print(cout, co, 20);
 			cout << endl;
 			}
 		}
@@ -1129,7 +1129,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 				0 /* verbose_level */);
 		F->PG_element_normalize_from_front(coeff, 1, 20);
 		cout << "coefficient vector of the surface: ";
-		int_vec_print(cout, coeff, 20);
+		Orbiter->Int_vec.print(cout, coeff, 20);
 		cout << endl;
 		cout << "equation: ";
 		Surf->print_equation(cout, coeff);

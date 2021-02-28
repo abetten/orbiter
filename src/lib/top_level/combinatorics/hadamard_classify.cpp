@@ -141,7 +141,7 @@ void hadamard_classify::init(int n, int f_draw,
 		int *color;
 
 		color = NEW_int(N);
-		int_vec_zero(color, N);
+		Orbiter->Int_vec.zero(color, N);
 
 		CG->init(N, 1, 1, color, Bitvec, FALSE, verbose_level);
 
@@ -167,7 +167,7 @@ void hadamard_classify::init(int n, int f_draw,
 	int *color;
 
 	color = NEW_int(N);
-	int_vec_zero(color, N);
+	Orbiter->Int_vec.zero(color, N);
 
 	CG->init(N, 1, 1, color, Bitvec, FALSE, verbose_level);
 
@@ -186,7 +186,7 @@ void hadamard_classify::init(int n, int f_draw,
 	int *color_graph;
 
 	color_graph = NEW_int(N * N);
-	int_vec_zero(color_graph, N * N);
+	Orbiter->Int_vec.zero(color_graph, N * N);
 	k = 0;
 	cnt1 = 0;
 	for (i = 0; i < N; i++) {
