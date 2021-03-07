@@ -54,6 +54,23 @@ void syntax_tree_node_terminal::print_expression(std::ostream &ost)
 	}
 }
 
+void syntax_tree_node_terminal::print_graphviz(std::ostream &ost)
+{
+	if (f_int) {
+		ost << value_int;
+	}
+	else if (f_double) {
+		ost << value_double;
+	}
+	else if (f_text) {
+		ost << value_text;
+	}
+	else {
+		cout << "syntax_tree_node_terminal::print_graphviz unknown type" << endl;
+		exit(1);
+	}
+
+}
 int syntax_tree_node_terminal::evaluate(std::map<std::string, std::string> &symbol_table,
 		finite_field *F, int verbose_level)
 {

@@ -103,6 +103,8 @@ public:
 	void init(
 			function_polish_description *Descr,
 			int verbose_level);
+	void print_code_complete(
+			int verbose_level);
 	void print_code(
 			int i0,  int len,
 			int verbose_level);

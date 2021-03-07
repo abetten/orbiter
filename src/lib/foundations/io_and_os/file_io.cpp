@@ -3705,6 +3705,10 @@ void file_io::do_csv_file_latex(std::string &fname,
 	S.read_spreadsheet(fname, verbose_level);
 
 
+	if (f_v) {
+		cout << "file_io::do_csv_file_latex S.nb_rows = " << S.nb_rows << endl;
+		cout << "file_io::do_csv_file_latex S.nb_cols = " << S.nb_cols << endl;
+	}
 
 
 	string fname_out;

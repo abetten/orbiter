@@ -90,7 +90,7 @@ void parametric_curve::init(int nb_dimensions,
 	if (f_v) {
 		cout << "parametric_curve::init computing value at t=" << setw(8) << t << endl;
 	}
-	f_is_valid = (*compute_point_function)(t, coords, extra_data, 0 /*verbose_level*/);
+	f_is_valid = (*compute_point_function)(t, coords, extra_data, verbose_level);
 	if (f_v) {
 		cout << "parametric_curve::init computing value at t=" << setw(8) << t << " done" << endl;
 	}

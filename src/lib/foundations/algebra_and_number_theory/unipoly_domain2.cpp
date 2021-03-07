@@ -74,9 +74,15 @@ void unipoly_domain::print_coeffs_top_down_assuming_one_character_per_digit_with
 	//int m = ra[0]; // degree of a
 	int *A = ra + 1;
 	int i;
+	int d = ra[0];
 
 	for (i = m; i >= 0; i--) {
-		ost << A[i];
+		if (i > d) {
+			ost << "0";
+		}
+		else {
+			ost << A[i];
+		}
 	}
 }
 
@@ -163,9 +169,8 @@ void unipoly_domain::mult_easy_with_report(long int rk_a, long int rk_b, long in
 
 }
 
-
-
-void unipoly_domain::division_with_remainder_with_report(long int rk_a, long int rk_b,
+void unipoly_domain::division_with_remainder_from_file_with_report(
+		std::string &input_fname, long int rk_b,
 		long int &rk_q, long int &rk_r, std::ostream &ost, int verbose_level)
 	//unipoly_object a, unipoly_object b,
 	//unipoly_object &q, unipoly_object &r,
@@ -175,7 +180,198 @@ void unipoly_domain::division_with_remainder_with_report(long int rk_a, long int
 
 
 	if (f_v) {
-		cout << "unipoly_domain::division_with_remainder_with_report" << endl;
+		cout << "unipoly_domain::division_with_remainder_from_file_with_report" << endl;
+	}
+
+	unipoly_object a;
+	unipoly_object b;
+	unipoly_object q;
+	unipoly_object r;
+
+
+	create_object_from_csv_file(
+			a, input_fname,
+			__FILE__, __LINE__,
+			verbose_level);
+	create_object_by_rank(b, rk_b,
+				__FILE__, __LINE__, 0 /* verbose_level */);
+	create_object_by_rank(q, 0,
+				__FILE__, __LINE__, 0 /* verbose_level */);
+	create_object_by_rank(r, 0,
+				__FILE__, __LINE__, 0 /* verbose_level */);
+
+
+	int da, db;
+	int i;
+
+	da = degree(a);
+	db = degree(b);
+
+	ost << "\\begin{verbatim}" << endl;
+	print_repeated_character(ost, ' ', db + 1 + 3);
+	ost << input_fname << " / " << setw(db + 1) << rk_b << " = " << endl;
+
+
+	division_with_remainder_with_report(a, b, q, r, TRUE, ost, verbose_level);
+
+	int *rr = (int *) r;
+	int *R = rr + 1;
+	for (i = db - 1; i >= 0; i--) {
+		if (R[i]) {
+			break;
+		}
+	}
+	rk_q = rank(q);
+	rk_r = rank(r);
+	print_repeated_character(ost, ' ', db + 1 + 3);
+	print_repeated_character(ost, ' ', da - i - 2);
+	ost << "= " << setw(i + 1) << rk_r << endl;
+	ost << endl;
+	ost << "\\end{verbatim}" << endl;
+
+	if (f_v) {
+		cout << "unipoly_domain::division_with_remainder_from_file_with_report done" << endl;
+	}
+
+}
+
+
+void unipoly_domain::division_with_remainder_from_file_all_k_bit_error_patterns(
+		std::string &input_fname, long int rk_b, int k,
+		long int *&rk_q, long int *&rk_r, int &n, int &N, std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "unipoly_domain::division_with_remainder_from_file_all_k_bit_error_patterns" << endl;
+	}
+	combinatorics_domain Combi;
+
+
+	unipoly_object a;
+	unipoly_object b;
+	unipoly_object q;
+	unipoly_object r;
+
+
+	create_object_from_csv_file(
+			a, input_fname,
+			__FILE__, __LINE__,
+			verbose_level);
+	create_object_by_rank(b, rk_b,
+				__FILE__, __LINE__, 0 /* verbose_level */);
+	create_object_by_rank(q, 0,
+				__FILE__, __LINE__, 0 /* verbose_level */);
+	create_object_by_rank(r, 0,
+				__FILE__, __LINE__, 0 /* verbose_level */);
+
+
+	int da, db;
+	int *aa = (int *) a;
+	int i, h;
+
+	da = aa[0]; //degree(a);
+	db = degree(b);
+
+	n = da + 1;
+	N = Combi.int_n_choose_k(n, k);
+
+	rk_q = NEW_lint(N);
+	rk_r = NEW_lint(N);
+
+	int *set;
+	int j, u;
+
+	set = NEW_int(k);
+
+
+	ost << "\\begin{verbatim}" << endl;
+	ost << "      : ";
+	print_coeffs_top_down_assuming_one_character_per_digit_with_degree_given(a, n - 1, ost);
+	ost << endl;
+
+	for (h = 0; h < N; h++) {
+		Orbiter->Int_vec.zero(set, k);
+		Combi.unrank_k_subset(h, set, n, k);
+
+
+		create_object_from_csv_file(
+				a, input_fname,
+				__FILE__, __LINE__,
+				verbose_level);
+		create_object_by_rank(b, rk_b,
+					__FILE__, __LINE__, 0 /* verbose_level */);
+		create_object_by_rank(q, 0,
+					__FILE__, __LINE__, 0 /* verbose_level */);
+		create_object_by_rank(r, 0,
+					__FILE__, __LINE__, 0 /* verbose_level */);
+
+		int *aa = (int *) a;
+		int *A = aa + 1;
+
+		for (j = 0; j < k; j++) {
+			u = set[j];
+			if (A[u]) {
+				A[u] = 0;
+			}
+			else {
+				A[u] = 1;
+			}
+		}
+
+		ost << setw(5) << h;
+		ost << " : ";
+		print_coeffs_top_down_assuming_one_character_per_digit_with_degree_given(a, n - 1, ost);
+
+		cout << setw(5) << h;
+		cout << " : ";
+		print_coeffs_top_down_assuming_one_character_per_digit_with_degree_given(a, n - 1, cout);
+		cout << endl;
+
+
+		division_with_remainder_with_report(a, b, q, r, FALSE, ost, verbose_level);
+
+		ost << " : ";
+		print_coeffs_top_down_assuming_one_character_per_digit_with_degree_given(r, db - 1, ost);
+
+		int *rr = (int *) r;
+		int *R = rr + 1;
+		for (i = db - 1; i >= 0; i--) {
+			if (R[i]) {
+				break;
+			}
+		}
+		rk_q[h] = rank(q);
+		rk_r[h] = rank(r);
+		ost << " : ";
+		ost << setw(5) << rk_r[h];
+		ost << " : ";
+		print_object(r, ost);
+		ost << endl;
+
+	}
+	ost << "\\end{verbatim}" << endl;
+	FREE_int(set);
+
+	if (f_v) {
+		cout << "unipoly_domain::division_with_remainder_from_file_all_k_bit_error_patterns done" << endl;
+	}
+
+}
+
+
+void unipoly_domain::division_with_remainder_numerically_with_report(long int rk_a, long int rk_b,
+		long int &rk_q, long int &rk_r, std::ostream &ost, int verbose_level)
+	//unipoly_object a, unipoly_object b,
+	//unipoly_object &q, unipoly_object &r,
+	//int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "unipoly_domain::division_with_remainder_numerically_with_report" << endl;
 	}
 
 	unipoly_object a;
@@ -191,6 +387,52 @@ void unipoly_domain::division_with_remainder_with_report(long int rk_a, long int
 				__FILE__, __LINE__, 0 /* verbose_level */);
 	create_object_by_rank(r, 0,
 				__FILE__, __LINE__, 0 /* verbose_level */);
+
+	int da, db;
+	int i;
+
+	da = degree(a);
+	db = degree(b);
+
+	ost << "\\begin{verbatim}" << endl;
+	print_repeated_character(ost, ' ', db + 1 + 3);
+	ost << setw(da + 1) << rk_a << " / " << setw(db + 1) << rk_b << " = " << endl;
+
+
+
+	division_with_remainder_with_report(a, b, q, r, TRUE, ost, verbose_level);
+
+
+	int *rr = (int *) r;
+	int *R = rr + 1;
+	for (i = db - 1; i >= 0; i--) {
+		if (R[i]) {
+			break;
+		}
+	}
+	rk_q = rank(q);
+	rk_r = rank(r);
+	print_repeated_character(ost, ' ', db + 1 + 3);
+	print_repeated_character(ost, ' ', da - i - 2);
+	ost << "= " << setw(i + 1) << rk_r << endl;
+	ost << endl;
+	ost << "\\end{verbatim}" << endl;
+}
+
+
+void unipoly_domain::division_with_remainder_with_report(unipoly_object &a, unipoly_object &b,
+		unipoly_object &q, unipoly_object &r, int f_report, std::ostream &ost, int verbose_level)
+	//unipoly_object a, unipoly_object b,
+	//unipoly_object &q, unipoly_object &r,
+	//int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "unipoly_domain::division_with_remainder_with_report" << endl;
+	}
+
 
 
 	//int *ra = (int *) a;
@@ -216,6 +458,7 @@ void unipoly_domain::division_with_remainder_with_report(long int rk_a, long int
 		}
 	}
 	if (db > da) {
+		cout << "unipoly_domain::division_with_remainder_with_report db > da" << endl;
 		int *rq = (int *) q;
 		FREE_int(rq);
 		rq = NEW_int(2);
@@ -248,15 +491,14 @@ void unipoly_domain::division_with_remainder_with_report(long int rk_a, long int
 
 		Orbiter->Int_vec.zero(Q, dq + 1);
 
-		ost << "\\begin{verbatim}" << endl;
-		print_repeated_character(ost, ' ', db + 1 + 3);
-		ost << setw(da + 1) << rk_a << " / " << setw(db + 1) << rk_b << " = " << endl;
-		print_repeated_character(ost, ' ', db + 1 + 3);
-		print_coeffs_top_down_assuming_one_character_per_digit(a, ost);
-		ost << " / ";
-		print_coeffs_top_down_assuming_one_character_per_digit(b, ost);
-		ost << " = " << endl << endl;
+		if (f_report) {
+			print_repeated_character(ost, ' ', db + 1 + 3);
+			print_coeffs_top_down_assuming_one_character_per_digit(a, ost);
+			ost << " / ";
+			print_coeffs_top_down_assuming_one_character_per_digit(b, ost);
+			ost << " = " << endl << endl;
 
+		}
 		// quotient should be here, so we need to do the computation
 
 
@@ -289,17 +531,20 @@ void unipoly_domain::division_with_remainder_with_report(long int rk_a, long int
 		rr[0] = MAXIMUM(db - 1, 0);
 		q = rq;
 
-		print_repeated_character(ost, ' ', db + 1 + 3);
-		print_coeffs_top_down_assuming_one_character_per_digit(q, ost);
-
+		if (f_report) {
+			print_repeated_character(ost, ' ', db + 1 + 3);
+			print_coeffs_top_down_assuming_one_character_per_digit(q, ost);
+		}
 
 		assign(a, r, 0 /*verbose_level*/);
 
 
-		ost << endl;
-		print_repeated_character(ost, ' ', db + 1 + 3);
-		print_repeated_character(ost, '=', da + 1);
-		ost << endl;
+		if (f_report) {
+			ost << endl;
+			print_repeated_character(ost, ' ', db + 1 + 3);
+			print_repeated_character(ost, '=', da + 1);
+			ost << endl;
+		}
 
 
 		for (i = da, j = dq; i >= db; i--, j--) {
@@ -310,24 +555,26 @@ void unipoly_domain::division_with_remainder_with_report(long int rk_a, long int
 				continue;
 			}
 
-			if (i == da) {
-				print_coeffs_top_down_assuming_one_character_per_digit_with_degree_given(b, db, ost);
-				ost << " | ";
-			}
-			else {
+			if (f_report) {
+				if (i == da) {
+					print_coeffs_top_down_assuming_one_character_per_digit_with_degree_given(b, db, ost);
+					ost << " | ";
+				}
+				else {
+					print_repeated_character(ost, ' ', db + 1 + 3);
+				}
+				print_repeated_character(ost, ' ', da - i);
+				print_coeffs_top_down_assuming_one_character_per_digit_with_degree_given(r, i, ost);
+				ost << endl;
 				print_repeated_character(ost, ' ', db + 1 + 3);
+				print_repeated_character(ost, ' ', da - i);
+				print_coeffs_top_down_assuming_one_character_per_digit(b, ost);
+				ost << endl;
+				print_repeated_character(ost, ' ', db + 1 + 3);
+				print_repeated_character(ost, ' ', da - i);
+				print_repeated_character(ost, '=', db + 1);
+				ost << endl;
 			}
-			print_repeated_character(ost, ' ', da - i);
-			print_coeffs_top_down_assuming_one_character_per_digit_with_degree_given(r, i, ost);
-			ost << endl;
-			print_repeated_character(ost, ' ', db + 1 + 3);
-			print_repeated_character(ost, ' ', da - i);
-			print_coeffs_top_down_assuming_one_character_per_digit(b, ost);
-			ost << endl;
-			print_repeated_character(ost, ' ', db + 1 + 3);
-			print_repeated_character(ost, ' ', da - i);
-			print_repeated_character(ost, '=', db + 1);
-			ost << endl;
 
 			c = F->mult(x, pivot_inv);
 			Q[j] = c;
@@ -347,7 +594,6 @@ void unipoly_domain::division_with_remainder_with_report(long int rk_a, long int
 			// rq, cout); cout << endl;
 			//cout << "r="; print_object(r, cout); cout << endl;
 		}
-		rr[0] = MAXIMUM(db - 1, 0);
 		q = rq;
 		//cout << "q="; print_object(q, cout); cout << endl;
 		//cout << "r="; print_object(r, cout); cout << endl;
@@ -355,17 +601,16 @@ void unipoly_domain::division_with_remainder_with_report(long int rk_a, long int
 		while (i > 0 && R[i] == 0) {
 			i--;
 		}
-		print_repeated_character(ost, ' ', db + 1 + 3);
-		print_repeated_character(ost, ' ', da - i);
-		print_coeffs_top_down_assuming_one_character_per_digit_with_degree_given(r, i, ost);
-		ost << endl;
-		rk_q = rank(q);
-		rk_r = rank(r);
-		print_repeated_character(ost, ' ', db + 1 + 3);
-		print_repeated_character(ost, ' ', da - i - 2);
-		ost << "= " << setw(i + 1) << rk_r << endl;
-		ost << endl;
-		ost << "\\end{verbatim}" << endl;
+		rr[0] = i;
+		if (rr[0] < 0) {
+			rr[0] = 0;
+		}
+		if (f_report) {
+			print_repeated_character(ost, ' ', db + 1 + 3);
+			print_repeated_character(ost, ' ', da - i);
+			print_coeffs_top_down_assuming_one_character_per_digit_with_degree_given(r, i, ost);
+			ost << endl;
+		}
 	}
 done:
 	if (f_v) {

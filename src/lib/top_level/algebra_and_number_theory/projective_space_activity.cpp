@@ -70,6 +70,15 @@ void projective_space_activity::perform_activity(int verbose_level)
 				verbose_level);
 
 	}
+	else if (Descr->f_map) {
+
+		map(
+				PA,
+				Descr->map_label,
+				Descr->map_parameters,
+				verbose_level);
+
+	}
 	else if (Descr->f_analyze_del_Pezzo_surface) {
 
 		analyze_del_Pezzo_surface(
@@ -88,6 +97,79 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 
 }
+
+void projective_space_activity::map(
+		projective_space_with_action *PA,
+		std::string &label,
+		std::string &evaluate_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_activity::map" << endl;
+	}
+
+
+
+	int idx;
+	idx = The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->find_symbol(label);
+
+	if (idx < 0) {
+		cout << "could not find symbol " << label << endl;
+		exit(1);
+	}
+	The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->get_object(idx);
+
+	if (The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].type != t_object) {
+		cout << "symbol table entry must be of type t_object" << endl;
+		exit(1);
+	}
+	if (The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].object_type == t_collection) {
+		cout << "symbol table entry is a collection" << endl;
+
+		vector<string> *List;
+
+		List = (vector<string> *) The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].ptr;
+		int i;
+
+		for (i = 0; i < List->size(); i++) {
+			int idx1;
+
+			idx1 = The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->find_symbol((*List)[i]);
+			if (idx1 < 0) {
+				cout << "could not find symbol " << (*List)[i] << endl;
+				exit(1);
+			}
+			formula *Formula;
+			Formula = (formula *) The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx1].ptr;
+
+			PA->map(Formula,
+					evaluate_text,
+					verbose_level);
+		}
+	}
+	else if (The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].object_type == t_formula) {
+		cout << "symbol table entry is a formula" << endl;
+
+		formula *Formula;
+		Formula = (formula *) The_Orbiter_top_level_session->Orbiter_session->Orbiter_symbol_table->Table[idx].ptr;
+
+		PA->map(Formula,
+				evaluate_text,
+				verbose_level);
+	}
+	else {
+		cout << "symbol table entry must be either a formula or a collection" << endl;
+		exit(1);
+	}
+
+
+	if (f_v) {
+		cout << "projective_space_activity::map done" << endl;
+	}
+}
+
 
 void projective_space_activity::analyze_del_Pezzo_surface(
 		projective_space_with_action *PA,

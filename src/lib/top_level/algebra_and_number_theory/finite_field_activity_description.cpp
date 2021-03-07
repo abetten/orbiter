@@ -133,6 +133,15 @@ finite_field_activity_description::finite_field_activity_description()
 	polynomial_division_r0 = 0;
 	polynomial_division_r1 = 0;
 
+	f_polynomial_division_from_file = FALSE;
+	//std::string polynomial_division_from_file_fname;
+	polynomial_division_from_file_r1 = 0;
+
+	f_polynomial_division_from_file_all_k_bit_error_patterns = FALSE;
+	//std::string polynomial_division_from_file_all_k_bit_error_patterns_fname;
+	polynomial_division_from_file_all_k_bit_error_patterns_r1 = 0;
+	polynomial_division_from_file_all_k_bit_error_patterns_k = 0;
+
 
 	f_RREF_random_matrix = FALSE;
 	RREF_random_matrix_m = 0;
@@ -486,6 +495,29 @@ int finite_field_activity_description::read_arguments(
 					<< " " << polynomial_division_r1
 					<< endl;
 		}
+		else if (stringcmp(argv[i], "-polynomial_division_from_file") == 0) {
+			f_polynomial_division_from_file = TRUE;
+			polynomial_division_from_file_fname.assign(argv[++i]);
+			polynomial_division_from_file_r1 = strtolint(argv[++i]);
+			cout << "-polynomial_division_from_file "
+					<< " " << polynomial_division_from_file_fname
+					<< " " << polynomial_division_from_file_r1
+					<< endl;
+		}
+
+		else if (stringcmp(argv[i], "-polynomial_division_from_file_all_k_bit_error_patterns") == 0) {
+			f_polynomial_division_from_file_all_k_bit_error_patterns = TRUE;
+			polynomial_division_from_file_all_k_bit_error_patterns_fname.assign(argv[++i]);
+			polynomial_division_from_file_all_k_bit_error_patterns_r1 = strtolint(argv[++i]);
+			polynomial_division_from_file_all_k_bit_error_patterns_k = strtolint(argv[++i]);
+			cout << "-polynomial_division_from_file_all_k_bit_error_patterns "
+					<< " " << polynomial_division_from_file_all_k_bit_error_patterns_fname
+					<< " " << polynomial_division_from_file_all_k_bit_error_patterns_r1
+					<< " " << polynomial_division_from_file_all_k_bit_error_patterns_k
+					<< endl;
+		}
+
+
 		else if (stringcmp(argv[i], "-RREF_random_matrix") == 0) {
 			f_RREF_random_matrix = TRUE;
 			RREF_random_matrix_m = strtolint(argv[++i]);

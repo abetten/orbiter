@@ -127,6 +127,77 @@ public:
 	void do_extended_gcd(int a, int b, int verbose_level);
 	void do_power_mod(long int a, long int k, long int n, int verbose_level);
 
+
+	void calc_roots(longinteger_object &M,
+		longinteger_object &sqrtM,
+		std::vector<int> &primes, std::vector<int> &R1, std::vector<int> &R2,
+		int verbose_level);
+	void Quadratic_Sieve(
+		int factorbase,
+		int f_mod, int mod_n, int mod_r, int x0,
+		int n, longinteger_object &M, longinteger_object &sqrtM,
+		std::vector<int> &primes, std::vector<int> &primes_log2,
+		std::vector<int> &R1, std::vector<int> &R2,
+		std::vector<int> &X,
+		int verbose_level);
+	int quadratic_sieve(
+		longinteger_object& M, longinteger_object& sqrtM,
+		std::vector<int> &primes, std::vector<int> &primes_log2,
+		std::vector<int> &R1, std::vector<int> &R2,
+		int from, int to,
+		int ll, std::vector<int> &X, int verbose_level);
+	int factor_over_factor_base(longinteger_object &x,
+			std::vector<int> &primes,
+			std::vector<int> &factor_idx, std::vector<int> &factor_exp,
+			int verbose_level);
+	int factor_over_factor_base2(
+			longinteger_object &x,
+			std::vector<int> &primes, std::vector<int> &exponents,
+			int verbose_level);
+
+	void find_probable_prime_above(
+		longinteger_object &a,
+		int nb_solovay_strassen_tests, int f_miller_rabin_test,
+		int verbose_level);
+	int solovay_strassen_is_prime(
+		longinteger_object &n, int nb_tests, int verbose_level);
+	int solovay_strassen_is_prime_single_test(
+		longinteger_object &n, int verbose_level);
+	int fermat_test_iterated_with_latex_key(std::ostream &ost,
+			longinteger_object &P, int nb_times,
+			int verbose_level);
+	int fermat_test_with_latex_key(std::ostream &ost,
+		longinteger_object &n, longinteger_object &a,
+		int verbose_level);
+	int solovay_strassen_test(
+		longinteger_object &n, longinteger_object &a,
+		int verbose_level);
+	int solovay_strassen_test_with_latex_key(std::ostream &ost,
+		longinteger_object &n, longinteger_object &a,
+		int verbose_level);
+	int solovay_strassen_test_iterated_with_latex_key(std::ostream &ost,
+			longinteger_object &P, int nb_times,
+			int verbose_level);
+	// returns TRUE is the test is conclusive, i.e. if the number is not prime.
+	int miller_rabin_test(
+		longinteger_object &n, int verbose_level);
+	int miller_rabin_test_with_latex_key(std::ostream &ost,
+		longinteger_object &n, int iteration, int verbose_level);
+	int miller_rabin_test_iterated_with_latex_key(std::ostream &ost,
+			longinteger_object &P, int nb_times,
+			int verbose_level);
+	// returns TRUE is the test is conclusive, i.e. if the number is not prime.
+	void get_k_bit_random_pseudoprime(
+		longinteger_object &n, int k,
+		int nb_tests_solovay_strassen,
+		int f_miller_rabin_test, int verbose_level);
+	void RSA_setup(longinteger_object &n,
+		longinteger_object &p, longinteger_object &q,
+		longinteger_object &a, longinteger_object &b,
+		int nb_bits,
+		int nb_tests_solovay_strassen, int f_miller_rabin_test,
+		int verbose_level);
+
 };
 
 }}

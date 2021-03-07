@@ -233,6 +233,34 @@ void longinteger_domain::add_in_place(
 	C.assign_to(a);
 }
 
+void longinteger_domain::subtract_in_place(
+		longinteger_object &a, longinteger_object &b)
+// a := a - b
+{
+	longinteger_object c;
+
+	if (is_less_than(a, b)) {
+		subtract_signless(b, a, c);
+		mult_integer_in_place(c, -1);
+	}
+	else {
+		subtract_signless(a, b, c);
+	}
+	c.assign_to(a);
+}
+
+void longinteger_domain::add_int_in_place(
+		longinteger_object &a, long int b)
+// a := a + b
+{
+	longinteger_object C;
+	longinteger_object B;
+
+	B.create(b, __FILE__, __LINE__);
+	add(a, B, C);
+	C.assign_to(a);
+}
+
 
 void longinteger_domain::mult(
 		longinteger_object &a, longinteger_object &b,
@@ -1311,355 +1339,14 @@ int longinteger_domain::square_root_mod(int a, int p, int verbose_level)
 	}
 }
 
-void longinteger_domain::calc_roots(longinteger_object &M,
-	longinteger_object &sqrtM,
-	vector<int> &primes, vector<int> &R1, vector<int> &R2,
-	int verbose_level)
-// computes the root of the polynomial
-// $X^2 + a X + b$ over $GF(p)$
-// here, $a = 2 \cdot \lfloor \sqrt{M} \rfloor$
-// and $b= {\lfloor \sqrt{M} \rfloor }^2 - M$
-// which is equal to
-// (X + \lfloor \sqrt{M} \rfloor)^2 - M.
-// If $x$ is a root of this polynomial mod p then
-// (x + \lfloor \sqrt{M} \rfloor)^2 = M mod p
-// and M is a square mod p.
-// Due to reduce prime, only such p are considered.
-// The polynomial factors as
-// $(X - r_1)(X - r_1)= X^2 - (r_1 + r_2) X + r_1 r_2$
-// Due to reduce primes, the polynomial factors mod p.
+void longinteger_domain::create_q_to_the_n(
+		longinteger_object &a, int q, int n)
+// create (q^n - 1)
 {
-	int f_v = (verbose_level >= 1);
-	int i, l, p, Mmodp, sqrtMmodp, b;
-	int r1, r2, c, c2, s;
-	longinteger_object P, l1, l2, l3;
-
-	if (f_v) {
-		cout << "longinteger_domain::calc_roots, verbose_level=" << verbose_level << endl;
-		cout << "longinteger_domain::calc_roots, M=" << M << endl;
-		cout << "longinteger_domain::calc_roots, sqrtM=" << sqrtM << endl;
-	}
-	l = primes.size();
-	for (i = 0; i < l; i++) {
-		p = primes[i];
-		if (f_v) {
-			cout << "longinteger_domain::calc_roots i=" << i << " / " << l << " p=" << p << endl;
-		}
-		P.create(p, __FILE__, __LINE__);
-
-		if (f_v) {
-			cout << "longinteger_domain::calc_roots before remainder_mod_int" << endl;
-		}
-		Mmodp = remainder_mod_int(M, p);
-		if (f_v) {
-			cout << "longinteger_domain::calc_roots after remainder_mod_int "
-					"Mmodp=" << Mmodp << endl;
-		}
-		if (f_v) {
-			cout << "longinteger_domain::calc_roots before remainder_mod_int" << endl;
-		}
-		sqrtMmodp = remainder_mod_int(sqrtM, p);
-		if (f_v) {
-			cout << "longinteger_domain::calc_roots after remainder_mod_int, "
-					"sqrtMmodp=" << sqrtMmodp << endl;
-		}
-
-		// a = 2 * sqrtMmodp mod p
-		//a = (sqrtMmodp << 1) % p;
-
-		// b = (sqrtMmodp * sqrtMmodp) % p;
-		l1.create(sqrtMmodp, __FILE__, __LINE__);
-		mult_mod(l1, l1, l2, P, 0 /* verbose_level */);
-		b = l2.as_int();
-
-		b = b - Mmodp;
-		if (b < 0) {
-			b += p;
-		}
-		else {
-			b = b % p;
-		}
-
-		// use the quadratic formula to compute the roots:
-		// sqrtMmodp = a / 2.
-
-		l1.create(sqrtMmodp, __FILE__, __LINE__);
-		mult_mod(l1, l1, l2, P, 0 /* verbose_level */);
-		c2 = l2.as_int();
-		c2 -= b;
-		while (c2 < 0) {
-			c2 += p;
-		}
-		// c2 = discriminant
-
-
-		if (f_v) {
-			cout << "longinteger_domain::calc_roots computing square root "
-					"of discriminant c2=" << c2 << endl;
-		}
-		s = square_root_mod(c2, p, 0 /* verbose_level*/);
-		if (f_v) {
-			cout << "longinteger_domain::calc_roots c2=" << c2 << " s=" << s << endl;
-		}
-
-
-		c = - sqrtMmodp;
-		if (c < 0) {
-			c += p;
-		}
-
-		r1 = (c + s) % p;
-
-		r2 = c - s;
-		if (r2 < 0) {
-			r2 += p;
-		}
-		r2 = r2 % p;
-
-
-		if (f_v) {
-			cout << "longinteger_domain::calc_roots r1=" << r1 << " r2=" << r2 << endl;
-		}
-
-
-		R1.push_back(r1);
-		R2.push_back(r2);
-		// cout << "i=" << i << " p=" << p
-		//<< " r1=" << r1 << " r2=" << r2 << endl;
-
-	} // next i
-
-	if (f_v) {
-		cout << "longinteger_domain::calc_roots done" << endl;
-	}
+	a.create(q, __FILE__, __LINE__);
+	power_int(a, n);
 }
 
-void longinteger_domain::Quadratic_Sieve(
-	int factorbase,
-	int f_mod, int mod_n, int mod_r, int x0,
-	int n, longinteger_object &M, longinteger_object &sqrtM,
-	std::vector<int> &primes, std::vector<int> &primes_log2,
-	std::vector<int> &R1, std::vector<int> &R2,
-	std::vector<int> &X,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	//char buf[1024];
-	ostringstream ff;
-	string s;
-
-	if (f_v) {
-		cout << "longinteger_domain::Quadratic_Sieve" << endl;
-	}
-	ff << "X_M_" << n << "_FB_" << factorbase;
-	if (f_mod) {
-		ff << "_mod_" << mod_n << "_" << mod_r;
-	}
-	ff << ".txt";
-	ff << ends;
-	s = ff.str();
-
-	int l = primes.size();
-	int ll = l + 10;
-	int from = x0, to = x0, count = -1, step_size = 50000;
-
-	if (f_mod) {
-		ll = ll / mod_n + 1;
-	}
-	//X.m_l(0);
-
-
-
-
-	while (TRUE) {
-		from = to;
-		to = from + step_size;
-		count++;
-
-		if (f_mod) {
-			if (count % mod_n != mod_r) {
-				continue;
-			}
-		}
-		if (quadratic_sieve(M, sqrtM,
-			primes, primes_log2, R1, R2, from, to, ll, X, verbose_level)) {
-			break;
-		}
-	}
-
-	if (f_v) {
-		cout << "found " << ll << " x_i" << endl;
-	}
-
-	{
-		ofstream f(s.c_str());
-
-#if 1
-		int i;
-
-		for (i = 0; i < ll; i++) {
-			f << X[i] << " ";
-			if ((i + 1) % 10 == 0)
-				f << endl;
-			}
-#endif
-		f << endl << "-1" << endl;
-	}
-}
-
-int longinteger_domain::quadratic_sieve(
-	longinteger_object& M, longinteger_object& sqrtM,
-	std::vector<int> &primes, std::vector<int> &primes_log2,
-	std::vector<int> &R1, std::vector<int> &R2,
-	int from, int to,
-	int ll, std::vector<int> &X,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int x, j;
-	longinteger_object Z, zero, a, b, c, d;
-	int i, l;
-	vector<int> factor_idx, factor_exp;
-
-	if (f_v) {
-		cout << "longinteger_domain::quadratic_sieve" << endl;
-	}
-	zero.create(0, __FILE__, __LINE__);
-	l = primes.size();
-	j = X.size();
-	if (f_v) {
-		cout << "quadratic sieve from=" << from
-				<< " to=" << to << " j=" << j << endl;
-		cout << "searching for " << ll << " numbers" << endl;
-	}
-	for (x = from; x < to; x++) {
-		if (x == 0)
-			continue;
-		a.create(x, __FILE__, __LINE__);
-		add(a, sqrtM, c);
-		mult(c, a, d);
-		d.assign_to(a);
-		M.assign_to(b);
-		b.negate();
-		add(a, b, c);
-		c.assign_to(a);
-		if (compare_unsigned(a, zero) <= 0) {
-			continue;
-		}
-		a.normalize();
-
-#if 1
-		int xmodp, log2a, sumlog2;
-		log2a = 3 * (a.len() - 1);
-		sumlog2 = 0;
-		for (i = 0; i < l; i++) {
-			xmodp = x % primes[i];
-			if (xmodp == R1[i]) {
-				sumlog2 += primes_log2[i] + 0;
-			}
-			if (xmodp == R2[i]) {
-				sumlog2 += primes_log2[i] + 0;
-			}
-		}
-		// cout << "sieve x=" << x << " log2=" << log2a
-		//<< " sumlog2=" << sumlog2 << endl;
-		if (sumlog2 < log2a)
-			continue;
-#endif
-		if (!factor_over_factor_base(a,
-				primes, factor_idx, factor_exp,
-				verbose_level - 1)) {
-			continue;
-		}
-		//f << x << endl;
-		if (f_v) {
-			cout << "found solution " << j << " which is " << x
-					<< ", need " << ll - j << " more" << endl;
-		}
-		X.push_back(x);
-		j++;
-		if (j >= ll) {
-			if (f_v) {
-				cout << "sieve: found enough numbers "
-						"(enough = " << ll << ")" << endl;
-			}
-			if (f_v) {
-				cout << "longinteger_domain::quadratic_sieve done" << endl;
-			}
-			return TRUE;
-		}
-	} // next x
-	if (f_v) {
-		cout << "longinteger_domain::quadratic_sieve done" << endl;
-	}
-	return FALSE;
-}
-
-int longinteger_domain::factor_over_factor_base(longinteger_object &x,
-		std::vector<int> &primes,
-		std::vector<int> &factor_idx, std::vector<int> &factor_exp,
-		int verbose_level)
-{
-	longinteger_object y, z1, residue;
-	int i, l, n, p;
-
-	x.assign_to(y);
-	z1.create(1, __FILE__, __LINE__);
-	l = primes.size();
-	//factor_idx.m_l(0);
-	//factor_exp.m_l(0);
-	for (i = 0; i < l; i++) {
-		if (compare(y, z1) <= 0) {
-			break;
-		}
-		p = primes[i];
-		n = multiplicity_of_p(y, residue, p);
-		residue.assign_to(y);
-		if (n) {
-			factor_idx.push_back(i);
-			factor_exp.push_back(n);
-		}
-	}
-	if (compare_unsigned(y, z1) == 0) {
-		return TRUE;
-	}
-	else {
-		return FALSE;
-	}
-}
-
-int longinteger_domain::factor_over_factor_base2(
-		longinteger_object &x,
-		vector<int> &primes, vector<int> &exponents,
-		int verbose_level)
-{
-	longinteger_object y, z1, residue;
-	int i, l, n, nn, p;
-
-	x.assign_to(y);
-	z1.create(1, __FILE__, __LINE__);
-	l = primes.size();
-	for (i = 0; i < l; i++) {
-		if (compare(x, z1) <= 0) {
-			break;
-		}
-		p = primes[i];
-		n = multiplicity_of_p(x, residue, p);
-		residue.assign_to(x);
-		//n = x.ny_p(p);
-		// cout << "p=" << p << " ny_p=" << n << endl;
-		if (n) {
-			nn = exponents[i] + n;
-			exponents[i] = nn;
-		}
-	}
-	if (compare_unsigned(x, z1) == 0) {
-		return TRUE;
-	}
-	else {
-		return FALSE;
-	}
-}
 
 void longinteger_domain::create_qnm1(
 		longinteger_object &a, int q, int n)
@@ -1702,7 +1389,100 @@ void longinteger_domain::create_Fermat(longinteger_object &F, int n)
 
 
 
+void longinteger_domain::Dedekind_number(longinteger_object &Dnq, int n, int q, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	number_theory_domain NT;
+	geometry_global Gg;
+	longinteger_object A, S, B;
 
+	if (f_v) {
+		cout << "longinteger_domain::Dedekind_number n=" << n << " q=" << q << endl;
+	}
+	int *primes;
+	int *exponents;
+	int len, cnt;
+	long int i, N, h, d, d_prime;
+	int *v;
+
+	len = NT.factor_int(n, primes, exponents);
+
+	v = NEW_int(len);
+
+	S.create(0, __FILE__, __LINE__);
+
+	N = NT.i_power_j(2, len);
+	if (f_v) {
+		cout << "\\frac{1}{" << n << "} \\Big( ";
+	}
+
+	int f_first = TRUE;
+	for (i = 0; i < N; i++) {
+		if (FALSE) {
+			cout << "i=" << i << endl;
+		}
+		Gg.AG_element_unrank(2, v, 1, len, i);
+		d = 1;
+		cnt = 0;
+		for (h = 0; h < len; h++) {
+			if (v[h]) {
+				d *= primes[h];
+				cnt++;
+			}
+		}
+		d_prime = n / d;
+		//a = NT.i_power_j(q, d_prime);
+		create_q_to_the_n(A, q, d_prime);
+
+		if (FALSE) {
+			cout << "d=" << d << " d_prime=" << d_prime << " A=" << A << " S=" << S << endl;
+		}
+
+		if (ODD(cnt)) {
+			if (f_v) {
+				cout << " - ";
+			}
+			subtract_in_place(S, A);
+		}
+		else {
+			if (f_v) {
+				if (!f_first) {
+					cout << " + ";
+				}
+			}
+			add_in_place(S, A);
+		}
+		if (f_first) {
+			f_first = FALSE;
+		}
+		if (f_v) {
+			cout << "q^{" << d_prime << "}";
+		}
+	}
+	if (f_v) {
+		cout << "\\Big) ";
+	}
+	if (f_v) {
+		cout << endl;
+	}
+	B.create(n, __FILE__, __LINE__);
+
+	if (f_v) {
+		cout << "S=" << S << endl;
+	}
+	integral_division_exact(S, B, Dnq);
+
+
+
+	FREE_int(v);
+	FREE_int(primes);
+	FREE_int(exponents);
+
+
+	if (f_v) {
+		cout << "longinteger_domain::Dedekind_number done" << endl;
+	}
+}
 
 
 
@@ -2021,7 +1801,7 @@ int longinteger_domain::jacobi(longinteger_object &a,
 	int n, rr, r1, t1, t2;
 	
 	if (f_v) {
-		cout << "longinteger_domain::jacobi (" << a << " over " << m << ")" << endl;
+		cout << "longinteger_domain::jacobi(" << a << " over " << m << ")" << endl;
 	}
 	a.assign_to(a1);
 	m.assign_to(m1);
@@ -2140,782 +1920,6 @@ void longinteger_domain::random_number_with_n_decimals(
 
 	if (f_v) {
 		cout << "longinteger_domain::random_number_with_n_decimals done" << endl;
-	}
-}
-
-void longinteger_domain::find_probable_prime_above(
-	longinteger_object &a, 
-	int nb_solovay_strassen_tests, int f_miller_rabin_test, 
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	longinteger_object b, one;
-	int i = 0;
-	
-	if (f_v) {
-		cout << "longinteger_domain::find_probable_prime_above" << endl;
-	}
-	one.create(1, __FILE__, __LINE__);
-	while (TRUE) {
-		if (f_vv) {
-			cout << "considering " << a << endl;
-		}
-		if (!miller_rabin_test(a, verbose_level - 2)) {
-			if (f_vv) {
-				cout << "is not prime because of Miller Rabin" << endl;
-			}
-			goto loop;
-		}
-		if (solovay_strassen_is_prime(a,
-				nb_solovay_strassen_tests, verbose_level - 2)) {
-			if (f_vv) {
-				cout << "may be prime" << endl;
-			}
-			break;
-		}
-		else {
-			if (f_vv) {
-				cout << "is not prime because of "
-					"Solovay Strassen" << endl;
-			}
-		}
-loop:
-		add(a, one, b);
-		b.assign_to(a);
-		i++;
-	}
-	if (f_v) {
-		cout << "find_probable_prime_above: probable prime: "
-			<< a << " (found after " << i << " tests)" << endl;
-	}
-}
-
-int longinteger_domain::solovay_strassen_is_prime(
-	longinteger_object &n, int nb_tests, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i;
-	
-	if (f_v) {
-		cout << "longinteger_domain::solovay_strassen_is_prime for " 
-			<< n << " with " << nb_tests << " tests:" << endl;
-		}
-	for (i = 0; i < nb_tests; i++) {
-		if (!solovay_strassen_is_prime_single_test(
-				n, verbose_level - 2)) {
-			if (f_v) {
-				cout << "is not prime after "
-						<< i + 1 << " tests" << endl;
-				}
-			return FALSE;
-		}
-	}
-	return TRUE;
-}
-
-int longinteger_domain::solovay_strassen_is_prime_single_test(
-	longinteger_object &n, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	longinteger_object a, one, b, m_one, n_minus_one;
-	int r;
-
-	if (f_v) {
-		cout << "longinteger_domain::solovay_strassen_"
-				"is_prime_single_test" << endl;
-	}
-	one.create(1, __FILE__, __LINE__);
-	m_one.create(-1, __FILE__, __LINE__);
-	add(n, m_one, n_minus_one);
-	random_number_less_than_n(n_minus_one, a);
-	add(a, one, b);
-	b.assign_to(a);
-	if (f_vv) {
-		cout << "longinteger_domain::solovay_strassen_is_prime "
-				"choosing integer " << a
-				<< " less than " << n << endl;
-	}
-
-	r = solovay_strassen_test(n, a, verbose_level);
-	return r;
-
-}
-
-int longinteger_domain::fermat_test_iterated_with_latex_key(ostream &ost,
-		longinteger_object &P, int nb_times,
-		int verbose_level)
-// returns TRUE is the test is conclusive, i.e. if the number is not prime.
-{
-	int f_v = (verbose_level >= 1);
-	longinteger_object A, B, one, minus_two, n_minus_two;
-	int i, ret;
-
-	if (f_v) {
-		cout << "longinteger_domain::fermat_test_iterated_with_latex_key" << endl;
-	}
-	one.create(1, __FILE__, __LINE__);
-	minus_two.create(-2, __FILE__, __LINE__);
-
-	add(P, minus_two, n_minus_two);
-
-	ost << "We will do " << nb_times << " Fermat tests for $" << P << "$:\\\\" << endl;
-
-	for (i = 0; i < nb_times; i++) {
-
-
-		ost << "Fermat test no " << i << ":\\\\" << endl;
-
-		// choose a random integer a with 1 <= a < n - 1
-		random_number_less_than_n(n_minus_two, A);
-		add(A, one, B);
-		B.assign_to(A);
-
-
-		ost << "Choosing base $" << A << ".$\\\\" << endl;
-
-		if (fermat_test_with_latex_key(ost,
-			P, A,
-			verbose_level)) {
-			// test applies, the number is not prime
-			break;
-		}
-
-	}
-	if (i == nb_times) {
-		//ost << "Fermat: The number $" << P << "$ is probably prime. Fermat test is inconclusive.\\\\" << endl;
-		ret = FALSE;
-	}
-	else {
-		//ost << "Fermat: The number $" << P << "$ is not prime.\\\\" << endl;
-		ret = TRUE;
-	}
-	if (f_v) {
-		cout << "longinteger_domain::fermat_test_iterated_with_latex_key done" << endl;
-	}
-	return ret;
-}
-
-int longinteger_domain::fermat_test_with_latex_key(ostream &ost,
-	longinteger_object &n, longinteger_object &a,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	longinteger_object b, one, m_one, n2, n_minus_one;
-
-	if (f_v) {
-		cout << "longinteger_domain::fermat_test_with_latex_key" << endl;
-	}
-	one.create(1, __FILE__, __LINE__);
-	m_one.create(-1, __FILE__, __LINE__);
-	add(n, m_one, n_minus_one);
-	if (f_vv) {
-		cout << "longinteger_domain::fermat_test_with_latex_key "
-			"a = " << a << endl;
-	}
-	ost << "Fermat test for $n=" << n << ",$ picking basis $a=" << a << "$\\\\" << endl;
-	power_longint_mod(a, n_minus_one, n, 0 /*verbose_level - 2*/);
-	if (f_vv) {
-		cout << "longinteger_domain::fermat_test_with_latex_key "
-				"a^((n-1)) = " << a << endl;
-	}
-	ost << "$a^{" << n_minus_one << "} \\equiv " << a << "$\\\\" << endl;
-	if (a.is_one()) {
-		if (f_v) {
-			cout << "longinteger_domain::fermat_test_with_latex_key "
-				"inconclusive" << endl;
-		}
-		cout << "The test is inconclusive.\\\\" << endl;
-		return FALSE;
-	}
-	else {
-		if (f_v) {
-			cout << "longinteger_domain::fermat_test_with_latex_key "
-				"not prime (sure)" << endl;
-		}
-		cout << "The number $" << n << "$ is not prime.\\\\" << endl;
-		return TRUE;
-	}
-}
-
-int longinteger_domain::solovay_strassen_test(
-	longinteger_object &n, longinteger_object &a,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	longinteger_object b, one, m_one, n2, n_minus_one;
-	int x, r;
-	
-	if (f_v) {
-		cout << "longinteger_domain::solovay_strassen_test" << endl;
-	}
-	one.create(1, __FILE__, __LINE__);
-	m_one.create(-1, __FILE__, __LINE__);
-	add(n, m_one, n_minus_one);
-	if (f_vv) {
-		cout << "longinteger_domain::solovay_strassen_test "
-			"a = " << a << endl;
-	}
-	x = jacobi(a, n, verbose_level - 2);
-	if (x == 0) {
-		if (f_v) {
-			cout << "not prime (sure)" << endl;
-		}
-		return FALSE;
-	}
-	add(n, m_one, b);
-	integral_division_by_int(b, 2, n2, r);
-	if (f_vv) {
-		cout << "longinteger_domain::solovay_strassen_test "
-			"raising to the power " << n2 << endl;
-	}
-	power_longint_mod(a, n2, n, 0 /*verbose_level - 2*/);
-	if (f_vv) {
-		cout << "longinteger_domain::solovay_strassen_test "
-				"a^((n-1)/2) = " << a << endl;
-	}
-	if (x == 1) {
-		if (a.is_one()) {
-			if (f_v) {
-				cout << "longinteger_domain::solovay_strassen_test "
-					"inconclusive" << endl;
-			}
-			return TRUE;
-		}
-		else {
-			if (f_v) {
-				cout << "longinteger_domain::solovay_strassen_test "
-					"not prime (sure)" << endl;
-			}
-			return FALSE;
-		}
-	}
-	if (x == -1) {
-		if (compare_unsigned(a, n_minus_one) == 0) {
-			if (f_v) {
-				cout << "longinteger_domain::solovay_strassen_test "
-					"inconclusive" << endl;
-			}
-			return TRUE;
-		}
-		else {
-			if (f_v) {
-				cout << "longinteger_domain::solovay_strassen_test "
-					"not prime (sure)" << endl;
-			}
-			return FALSE;
-		}
-	}
-	// we should never be here:
-	cout << "longinteger_domain::solovay_strassen_test "
-			"error" << endl;
-	exit(1);
-}
-
-int longinteger_domain::solovay_strassen_test_with_latex_key(ostream &ost,
-	longinteger_object &n, longinteger_object &a,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	longinteger_object b, one, m_one, n2, n_minus_one;
-	int x, r;
-
-	if (f_v) {
-		cout << "longinteger_domain::solovay_strassen_test_with_latex_key" << endl;
-	}
-	one.create(1, __FILE__, __LINE__);
-	m_one.create(-1, __FILE__, __LINE__);
-	add(n, m_one, n_minus_one);
-	if (f_vv) {
-		cout << "longinteger_domain::solovay_strassen_test_with_latex_key "
-			"a = " << a << endl;
-	}
-	ost << "Solovay-Strassen pseudoprime test for $n=" << n
-			<< ",$ picking basis $a=" << a << "$\\\\" << endl;
-	x = jacobi(a, n, verbose_level - 2);
-	ost << "$\\Big( \\frac{" << a
-		<< " }{ " << n << "}\\Big) = " << x << "$\\\\" << endl;
-	if (x == 0) {
-		if (f_v) {
-			cout << "not prime (sure)" << endl;
-		}
-		return FALSE;
-	}
-	add(n, m_one, b);
-	integral_division_by_int(b, 2, n2, r);
-	if (f_vv) {
-		cout << "longinteger_domain::solovay_strassen_test_with_latex_key "
-			"raising to the power " << n2 << endl;
-	}
-	power_longint_mod(a, n2, n, 0 /*verbose_level - 2*/);
-	if (f_vv) {
-		cout << "longinteger_domain::solovay_strassen_test_with_latex_key "
-				"a^((n-1)/2) = " << a << endl;
-	}
-	ost << "$a^{\\frac{" << n << "-1}{2}} \\equiv " << a << "$\\\\" << endl;
-	if (x == 1) {
-		if (a.is_one()) {
-			if (f_v) {
-				cout << "longinteger_domain::solovay_strassen_test_with_latex_key "
-					"inconclusive" << endl;
-			}
-			cout << "The test is inconclusive.\\\\" << endl;
-			return TRUE;
-		}
-		else {
-			if (f_v) {
-				cout << "longinteger_domain::solovay_strassen_test_with_latex_key "
-					"not prime (sure)" << endl;
-			}
-			cout << "The number $m$ is not prime.\\\\" << endl;
-			return FALSE;
-		}
-	}
-	if (x == -1) {
-		if (compare_unsigned(a, n_minus_one) == 0) {
-			if (f_v) {
-				cout << "longinteger_domain::solovay_strassen_test_with_latex_key "
-					"inconclusive" << endl;
-			}
-			cout << "The test is inconclusive.\\\\" << endl;
-			return TRUE;
-		}
-		else {
-			if (f_v) {
-				cout << "longinteger_domain::solovay_strassen_test_with_latex_key "
-					"not prime (sure)" << endl;
-			}
-			cout << "The number $m$ is not prime.\\\\" << endl;
-			return FALSE;
-		}
-	}
-	// we should never be here:
-	cout << "longinteger_domain::solovay_strassen_test_with_latex_key "
-			"error" << endl;
-	exit(1);
-}
-
-int longinteger_domain::solovay_strassen_test_iterated_with_latex_key(ostream &ost,
-		longinteger_object &P, int nb_times,
-		int verbose_level)
-// returns TRUE is the test is conclusive, i.e. if the number is not prime.
-{
-	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
-	longinteger_object A, B, one, m_one, m_two, P_minus_one, P_minus_two;
-	int i, ret;
-
-	if (f_v) {
-		cout << "longinteger_domain::solovay_strassen_test_iterated_with_latex_key" << endl;
-	}
-
-	ost << "We will do " << nb_times << " Solovay-Strassen "
-			"tests for $" << P << "$:\\\\" << endl;
-
-	one.create(1, __FILE__, __LINE__);
-	m_one.create(-1, __FILE__, __LINE__);
-	m_two.create(-2, __FILE__, __LINE__);
-	add(P, m_one, P_minus_one);
-	add(P, m_two, P_minus_two);
-
-	for (i = 0; i < nb_times; i++) {
-
-
-		ost << "Solovay-Strassen test no " << i << ":\\\\" << endl;
-
-		// choose a random integer a with 1 <= a < n - 1
-		random_number_less_than_n(P_minus_two, A);
-		add(A, one, B);
-		B.assign_to(A);
-
-
-		ost << "Choosing base $" << A << ".$\\\\" << endl;
-
-		if (!solovay_strassen_test_with_latex_key(ost,
-			P, A,
-			verbose_level)) {
-			// test applies, the number is not prime
-			break;
-		}
-
-	}
-	if (i == nb_times) {
-		//ost << "Solovay-Strassen: The number $" << P << "$ is probably prime. Solovay-Strassen test is inconclusive.\\\\" << endl;
-		ret = FALSE;
-	}
-	else {
-		//ost << "Solovay-Strassen: The number $" << P << "$ is not prime.\\\\" << endl;
-		ret = TRUE;
-	}
-	if (f_v) {
-		cout << "longinteger_domain::solovay_strassen_test_iterated_with_latex_key done" << endl;
-	}
-	return ret;
-}
-
-int longinteger_domain::miller_rabin_test(
-	longinteger_object &n, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	longinteger_object a, b, c, one, m_one, n_minus_one, m, mm;
-	int k, i;
-	
-	if (f_v) {
-		cout << "longinteger_domain::miller_rabin_test "
-				"for " << n << endl;
-	}
-	one.create(1, __FILE__, __LINE__);
-	m_one.create(-1, __FILE__, __LINE__);
-	add(n, m_one, n_minus_one);
-	
-#if 1
-	// choose a random integer a with 1 <= a <= n - 1
-	random_number_less_than_n(n_minus_one, a);
-	add(a, one, b);
-	b.assign_to(a);
-#else
-	a.create(2, __FILE__, __LINE__);
-#endif
-	if (f_vv) {
-		cout << "longinteger_domain::miller_rabin_test "
-			"choosing integer " << a << " less than " << n << endl;
-	}
-	
-	k = multiplicity_of_p(n_minus_one, m, 2);
-	m.assign_to(mm);
-	if (f_vv) {
-		cout << n_minus_one << " = 2^" << k << " x " << m << endl;
-	}
-	
-	// compute b := a^m mod n
-	a.assign_to(b);
-	power_longint_mod(b, m, n, FALSE /* f_v */);
-	if (f_vv) {
-		cout << a << "^" << mm << " = " << b << endl;
-	}
-	if (b.is_one()) {
-		if (f_v) {
-			cout << "a^m = 1 mod n, so the test is inconclusive" << endl;
-		}
-		return TRUE;
-	}
-	if (compare_unsigned(b, n_minus_one) == 0) {
-		if (f_v) {
-			cout << "is minus one, so the test is inconclusive" << endl;
-		}
-		return TRUE;
-	}
-	for (i = 0; i < k; i++) {
-		mult_mod(b, b, c, n, 0); 
-		if (f_vv) {
-			cout << "b_" << i << "=" << b
-					<< " b_" << i + 1 << "=" << c << endl;
-		}
-		c.assign_to(b);
-		if (compare_unsigned(b, n_minus_one) == 0) {
-			if (f_v) {
-				cout << "is minus one, so the test is inconclusive" << endl;
-			}
-			return TRUE;
-		}
-		if (compare_unsigned(b, one) == 0) {
-			if (f_v) {
-				cout << "is one, we reject as composite" << endl;
-			}
-			return FALSE;
-		}
-		//mult(b, b, c);
-	}
-	if (f_v) {
-		cout << "inconclusive, we accept as probably prime" << endl;
-	}
-	return TRUE;
-}
-
-int longinteger_domain::miller_rabin_test_with_latex_key(ostream &ost,
-	longinteger_object &n, int iteration, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	longinteger_object a, b, c, one, m_one, n_minus_one, m, mm;
-	int k, i;
-
-	if (f_v) {
-		cout << "longinteger_domain::miller_rabin_test_with_latex_key "
-				"for " << n << " iteration=" << iteration << endl;
-	}
-	ost << "Miller-Rabin pseudoprime test for $n=" << n << "$\\\\" << endl;
-	one.create(1, __FILE__, __LINE__);
-	m_one.create(-1, __FILE__, __LINE__);
-	add(n, m_one, n_minus_one);
-
-
-
-		if (iteration < 5) {
-			int small_prime;
-			number_theory_domain NT;
-
-			small_prime = NT.get_prime_from_table(iteration);
-			a.create(small_prime, __FILE__, __LINE__);
-		}
-		else {
-			// choose a random integer a with 1 <= a <= n - 1
-			random_number_less_than_n(n_minus_one, a);
-			add(a, one, b);
-			b.assign_to(a);
-		}
-
-
-		if (f_vv) {
-			cout << "longinteger_domain::miller_rabin_test_with_latex_key "
-				"choosing test base a= " << a << endl;
-		}
-
-		ost << "Picking test base $a=" << a << "$\\\\" << endl;
-
-
-		// do a Fermat test:
-		a.assign_to(b);
-		power_longint_mod(b, n_minus_one, n, FALSE /* f_v */);
-		if (f_vv) {
-			cout << a << "^{n-1} = " << b << endl;
-		}
-
-		ost << "$a^{n-1} = a^{" << n_minus_one << "}=" << b << "$\\\\" << endl;
-
-		if (!b.is_one()) {
-			if (f_v) {
-				cout << "a^{n-1} != 1 mod n, so the number is not prime by Fermat" << endl;
-			}
-			ost << "The number is not prime, a=" << a << " is a Fermat witness\\\\" << endl;
-			return TRUE;
-		}
-		else {
-			ost << "The number survives the Fermat witness\\\\" << endl;
-
-		}
-
-
-		k = multiplicity_of_p(n_minus_one, m, 2);
-		m.assign_to(mm);
-		if (f_vv) {
-			cout << n_minus_one << " = 2^" << k << " x " << m << endl;
-		}
-		ost << "$n-1=2^s \\cdot m = 2^{" << k << "} \\cdot " << m << "$\\\\" << endl;
-
-
-
-		// compute b := a^m mod n
-		a.assign_to(b);
-		power_longint_mod(b, m, n, FALSE /* f_v */);
-		if (f_vv) {
-			cout << a << "^" << mm << " = " << b << endl;
-		}
-
-		ost << "$b_0 = a^m = a^{" << mm << "}=" << b << "$\\\\" << endl;
-
-		if (b.is_one()) {
-			if (f_v) {
-				cout << "a^m = 1 mod n, so the test is inconclusive" << endl;
-			}
-			ost << "The test is inconclusive\\\\" << endl;
-			return FALSE;
-		}
-		if (compare_unsigned(b, n_minus_one) == 0) {
-			if (f_v) {
-				cout << "is minus one, so the test is inconclusive" << endl;
-			}
-			ost << "The test is inconclusive\\\\" << endl;
-			return FALSE;
-		}
-		ost << "$b_{0} = " << b << "$\\\\" << endl;
-		for (i = 0; i < k; i++) {
-			mult_mod(b, b, c, n, 0);
-			if (f_vv) {
-				cout << "b_" << i << "=" << b
-						<< " b_" << i + 1 << "=" << c << endl;
-			}
-			ost << "$b_{" << i + 1 << "} = " << c << "$\\\\" << endl;
-			c.assign_to(b);
-			if (compare_unsigned(b, n_minus_one) == 0) {
-				if (f_v) {
-					cout << "is minus one, so the test is inconclusive" << endl;
-				}
-				ost << "The test is inconclusive.\\\\" << endl;
-				return FALSE;
-			}
-			if (compare_unsigned(b, one) == 0) {
-				if (f_v) {
-					cout << "is one, we reject as composite" << endl;
-				}
-				ost << "The number is not prime.\\\\" << endl;
-				return TRUE;
-			}
-			//mult(b, b, c);
-		}
-		if (f_v) {
-			cout << "inconclusive, we accept as probably prime" << endl;
-		}
-		ost << "The test is inconclusive.\\\\" << endl;
-
-	if (f_v) {
-		cout << "longinteger_domain::miller_rabin_test_with_latex_key "
-				"done" << endl;
-	}
-	return FALSE;
-}
-
-int longinteger_domain::miller_rabin_test_iterated_with_latex_key(ostream &ost,
-		longinteger_object &P, int nb_times,
-		int verbose_level)
-// returns TRUE if the test is conclusive, i.e. if the number is not prime.
-{
-	int f_v = (verbose_level >= 1);
-	int i, ret;
-
-	if (f_v) {
-		cout << "longinteger_domain::miller_rabin_test_iterated_with_latex_key" << endl;
-	}
-
-	ost << "Miller Rabin test for $" << P << "$:\\\\" << endl;
-
-	ost << "\\begin{enumerate}[(1)]" << endl;
-	for (i = 0; i < nb_times; i++) {
-
-
-		ost << "\\item" << endl;
-		ost << "Miller Rabin test no " << i << ":\\\\" << endl;
-
-		if (miller_rabin_test_with_latex_key(ost,
-			P, i,
-			verbose_level)) {
-			// test applies, the number is not prime
-			break;
-		}
-
-	}
-	ost << "\\end{enumerate}" << endl;
-	if (i == nb_times) {
-		//ost << "Miller Rabin: The number $" << P << "$ is probably prime. Miller Rabin test is inconclusive.\\\\" << endl;
-		ret = FALSE;
-	}
-	else {
-		//ost << "Miller Rabin: The number $" << P << "$ is not prime.\\\\" << endl;
-		ret = TRUE;
-	}
-	if (f_v) {
-		cout << "longinteger_domain::miller_rabin_test_iterated_with_latex_key done" << endl;
-	}
-	return ret;
-}
-
-void longinteger_domain::get_k_bit_random_pseudoprime(
-	longinteger_object &n, int k, 
-	int nb_tests_solovay_strassen, 
-	int f_miller_rabin_test, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	longinteger_domain D;
-	int kk = (k * 3) / 10;
-	longinteger_object a, b;
-	
-	if (f_v) {
-		cout << "longinteger_domain::get_k_bit_random_pseudoprime "
-			"trying to get a " << k << " bit, " << kk
-			<< " decimals random pseudoprime" << endl;
-	}
-	a.create(10, __FILE__, __LINE__);
-	D.power_int(a, kk);
-	random_number_less_than_n(a, b);
-	if (f_v) {
-		cout << "choosing integer " << b << " less than " << a << endl;
-	}
-	add(a, b, n);
-	if (f_v) {
-		cout << "the sum is " << n << endl;
-	}
-	
-	D.find_probable_prime_above(n,
-			nb_tests_solovay_strassen, f_miller_rabin_test,
-			verbose_level - 1);
-	
-}
-
-void longinteger_domain::RSA_setup(
-	longinteger_object &n,
-	longinteger_object &p, longinteger_object &q, 
-	longinteger_object &a, longinteger_object &b, 
-	int nb_bits, 
-	int nb_tests_solovay_strassen, int f_miller_rabin_test, 
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	longinteger_domain D;
-	longinteger_object m1, pm1, qm1, phi_n, v, g;
-	int half_bits = nb_bits >> 1;
-	
-	if (f_v) {
-		cout << "longinteger_domain::RSA_setup nb_bits=" << nb_bits 
-			<< " nb_tests_solovay_strassen=" << nb_tests_solovay_strassen 
-			<< " f_miller_rabin_test=" << f_miller_rabin_test << endl;
-	}
-	m1.create(-1, __FILE__, __LINE__);
-	D.get_k_bit_random_pseudoprime(p, half_bits, 
-		nb_tests_solovay_strassen,
-		f_miller_rabin_test, verbose_level - 2);
-	if (f_vv) {
-		cout << "choosing p = " << p << endl;
-	}
-	D.get_k_bit_random_pseudoprime(q, half_bits, 
-		nb_tests_solovay_strassen,
-		f_miller_rabin_test, verbose_level - 2);
-	if (f_v) {
-		cout << "choosing p = " << p << endl;
-		cout << "choosing q = " << q << endl;
-	}
-	D.mult(p, q, n);
-	if (f_v) {
-		cout << "n = pq = " << n << endl;
-	}
-	D.add(p, m1, pm1);
-	D.add(q, m1, qm1);
-	D.mult(pm1, qm1, phi_n);
-	if (f_v) {
-		cout << "phi(n) = (p - 1)(q - 1) = "
-				<< phi_n << endl;
-	}
-	
-	while (TRUE) {
-		random_number_less_than_n(n, a);
-		if (f_v) {
-			cout << "choosing integer " << a
-					<< " less than " << n << endl;
-		}
-		D.extended_gcd(a, phi_n, g, b, v, verbose_level - 2);
-		if (g.is_one()) {
-			break;
-		}
-		if (f_v) {
-			cout << "non trivial gcd: " << g
-					<< " , repeating" << endl;
-		}
-	}
-	if (b.sign()) {
-		if (f_v) {
-			cout << "making b positive" << endl;
-		}
-		D.add(b, phi_n, v);
-		v.assign_to(b);
-	}
-	if (f_v) {
-		cout << "the public key is (a,n) = " << a << "," << n << endl;
-		cout << "the private key is (b,n) = " << b << "," << n << endl;
 	}
 }
 

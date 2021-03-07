@@ -177,6 +177,7 @@ void syntax_tree_node::print(std::ostream &ost)
 }
 
 
+
 int syntax_tree_node::evaluate(std::map<std::string, std::string> &symbol_table,
 		finite_field *F, int verbose_level)
 {
@@ -239,7 +240,8 @@ void syntax_tree_node::print_expression(std::ostream &ost)
 		if (f_has_minus) {
 			ost << "-";
 		}
-		T->print_expression(ost);
+		//T->print_expression(ost);
+		T->print_graphviz(ost);
 	}
 
 	else {
@@ -332,20 +334,44 @@ void syntax_tree_node::export_graphviz(std::string &name, std::ostream &ost)
 
 void syntax_tree_node::export_graphviz_recursion(std::ostream &ost)
 {
+	//ost << "Node " << idx << " nb_nodes=" << nb_nodes << endl;
 
 	if (f_terminal) {
-		//ost << "is terminal" << std::endl;
-		//T->print(ost);
+		//ost << "Node " << idx << " is terminal node" << endl;
+		ost << idx << " [label=\"";
+		T->print_graphviz(ost);
+		ost << "\" ] ;" << std::endl;
 	}
-
 	else {
 		int i;
+		ost << idx << " [label=\"";
+
+
+		if (nb_nodes == 1) {
+			ost << "(...)";
+		}
+		else {
+			if (type == operation_type_mult) {
+				ost << "*";
+			}
+			else if (type == operation_type_add) {
+				ost << "+";
+			}
+			else {
+				cout << "syntax_tree_node::export_graphviz_recursion unknown operation" << endl;
+				exit(1);
+			}
+		}
+		ost << "\" ] ;" << std::endl;
+
 
 		for (i = 0; i < nb_nodes; i++) {
 			ost << idx << " -- " << Nodes[i]->idx << std::endl;
 		}
 		for (i = 0; i < nb_nodes; i++) {
+			//ost << "recursing into node " << Nodes[i]->idx << endl;
 			Nodes[i]->export_graphviz_recursion(ost);
+			//ost << "recursing into node " << Nodes[i]->idx << " finished" << endl;
 		}
 	}
 

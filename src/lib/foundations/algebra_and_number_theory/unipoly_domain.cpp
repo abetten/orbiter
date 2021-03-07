@@ -174,6 +174,42 @@ void unipoly_domain::create_object_by_rank(
 	p = (void *) rep;
 }
 
+void unipoly_domain::create_object_from_csv_file(
+	unipoly_object &p, std::string &fname,
+	const char *file, int line,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	number_theory_domain NT;
+	file_io Fio;
+	int m, n, len;
+	long int *M;
+
+	if (f_v) {
+		cout << "unipoly_domain::create_object_from_csv_file" << endl;
+	}
+	if (f_factorring) {
+		cout << "unipoly_domain::create_object_from_csv_file "
+					"f_factorring" << endl;
+		exit(1);
+	}
+	Fio.lint_matrix_read_csv(fname, M, m, n, 0 /* verbose_level */);
+	len = m * n;
+
+
+	int *rep = NEW_int_with_tracking(len + 1, file, line);
+	rep[0] = len - 1;
+	int *coeff = rep + 1;
+	int i = 0;
+
+	for (i = 0; i < len; i++) {
+		coeff[len - 1 - i] = M[i];
+	}
+	//rep[0] = i - 1;
+	p = (void *) rep;
+	FREE_lint(M);
+}
+
 void unipoly_domain::create_object_by_rank_longinteger(
 	unipoly_object &p,
 	longinteger_object &rank,
@@ -311,7 +347,8 @@ int unipoly_domain::rank(unipoly_object p)
 	int *rep = (int *) p;
 	int d = rep[0]; // degree
 	int *coeff = rep + 1;
-	int rk = 0, i;
+	int rk = 0;
+	int i;
 	
 	for (i = d; i >= 0; i--) {
 		rk *= F->q;

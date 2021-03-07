@@ -46,6 +46,13 @@ interface_toolkit::interface_toolkit()
 	bit_depth = 8;
 	//fname = NULL;
 	box_width = 0;
+
+
+	f_reformat = FALSE;
+	//std::string reformat_fname_in;
+	//std::string reformat_fname_out;
+	reformat_nb_cols = 0;
+
 	f_draw_matrix_partition = FALSE;
 	draw_matrix_partition_width = 0;
 	//std::string draw_matrix_partition_rows;
@@ -80,6 +87,9 @@ void interface_toolkit::print_help(int argc,
 	else if (stringcmp(argv[i], "-draw_matrix") == 0) {
 		cout << "-draw_matrix <string : fname> <int : box_width> <int : bit_depth>" << endl;
 	}
+	else if (stringcmp(argv[i], "-reformat") == 0) {
+		cout << "-reformat <string : fname_in> <string : fname_out> <int : new_width>" << endl;
+	}
 	else if (stringcmp(argv[i], "-draw_matrix_partition") == 0) {
 		cout << "-draw_matrix_partition <int : width> "
 				"<string : row partition> <string : col partition> " << endl;
@@ -112,6 +122,9 @@ int interface_toolkit::recognize_keyword(int argc,
 		return true;
 	}
 	else if (stringcmp(argv[i], "-draw_matrix") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-reformat") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-draw_matrix_partition") == 0) {
@@ -176,6 +189,13 @@ int interface_toolkit::read_arguments(int argc,
 			box_width = strtoi(argv[++i]);
 			bit_depth = strtoi(argv[++i]);
 			cout << "-draw_matrix " << fname << " " << box_width << " " << bit_depth << endl;
+		}
+		else if (stringcmp(argv[i], "-reformat") == 0) {
+			f_reformat = TRUE;
+			reformat_fname_in.assign(argv[++i]);
+			reformat_fname_out.assign(argv[++i]);
+			reformat_nb_cols = strtoi(argv[++i]);
+			cout << "-reformat " << reformat_fname_in << " " << reformat_fname_out << " " << reformat_nb_cols << endl;
 		}
 		else if (stringcmp(argv[i], "-draw_matrix_partition") == 0) {
 			f_draw_matrix_partition = TRUE;
@@ -279,6 +299,23 @@ void interface_toolkit::worker(int verbose_level)
 					verbose_level);
 		}
 		FREE_int(M);
+	}
+	else if (f_reformat) {
+		file_io Fio;
+		int *M;
+		int *M2;
+		int m, n;
+		int len;
+		int m2;
+
+		Fio.int_matrix_read_csv(reformat_fname_in, M, m, n, verbose_level);
+		len = m * n;
+		m2 = (len + reformat_nb_cols - 1) / reformat_nb_cols;
+		M2 = NEW_int(m2 * reformat_nb_cols);
+		Orbiter->Int_vec.zero(M2, m2 * reformat_nb_cols);
+		Orbiter->Int_vec.copy(M, M2, len);
+		Fio.int_matrix_write_csv(reformat_fname_out, M2, m2, reformat_nb_cols);
+		cout << "Written file " << reformat_fname_out << " of size " << Fio.file_size(reformat_fname_out) << endl;
 	}
 	else if (f_store_as_csv_file) {
 		long int *D;

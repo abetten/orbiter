@@ -53,6 +53,19 @@ interface_algebra::interface_algebra()
 	p_max = 0;
 	deg_min = 0;
 	deg_max = 0;
+
+	f_Dedekind_numbers = FALSE;
+	Dedekind_n_min = 0;
+	Dedekind_n_max = 0;
+	Dedekind_q_min = 0;
+	Dedekind_q_max = 0;
+
+
+	f_order_of_q_mod_n = FALSE;
+	order_of_q_mod_n_q = 0;
+	order_of_q_mod_n_n_min = 0;
+	order_of_q_mod_n_n_max = 0;
+
 	f_young_symmetrizer = FALSE;
 	young_symmetrizer_n = 0;
 	f_young_symmetrizer_sym_4 = FALSE;
@@ -95,6 +108,12 @@ void interface_algebra::print_help(int argc,
 	}
 	else if (stringcmp(argv[i], "-search_for_primitive_polynomial_in_range") == 0) {
 		cout << "-search_for_primitive_polynomial_in_range  " << endl;
+	}
+	else if (stringcmp(argv[i], "-Dedekind_numbers") == 0) {
+		cout << "-Dedekind_numbers <int : n_min> <int : n_max> <int : q_min> <int : q_max>  " << endl;
+	}
+	else if (stringcmp(argv[i], "-order_of_q_mod_n") == 0) {
+		cout << "-order_of_q_mod_n <int : q> <int : n_min> <int : n_max>  " << endl;
 	}
 	else if (stringcmp(argv[i], "-young_symmetrizer") == 0) {
 		cout << "-young_symmetrizer  " << endl;
@@ -149,6 +168,12 @@ int interface_algebra::recognize_keyword(int argc,
 		return true;
 	}
 	else if (stringcmp(argv[i], "-search_for_primitive_polynomial_in_range") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-Dedekind_numbers") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-order_of_q_mod_n") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-young_symmetrizer") == 0) {
@@ -276,6 +301,26 @@ int interface_algebra::read_arguments(int argc,
 					<< " " << p_max << " " << deg_min << " " << deg_max << " " << endl;
 		}
 
+		else if (stringcmp(argv[i], "-Dedekind_numbers") == 0) {
+			f_Dedekind_numbers = TRUE;
+			Dedekind_n_min = strtoi(argv[++i]);
+			Dedekind_n_max = strtoi(argv[++i]);
+			Dedekind_q_min = strtoi(argv[++i]);
+			Dedekind_q_max = strtoi(argv[++i]);
+			cout << "-Dedekind_numbers " << Dedekind_n_min
+					<< " " << Dedekind_n_max << " " << Dedekind_q_min << " " << Dedekind_q_max << " " << endl;
+		}
+		else if (stringcmp(argv[i], "-order_of_q_mod_n") == 0) {
+			f_order_of_q_mod_n = TRUE;
+			order_of_q_mod_n_q = strtoi(argv[++i]);
+			order_of_q_mod_n_n_min = strtoi(argv[++i]);
+			order_of_q_mod_n_n_max = strtoi(argv[++i]);
+			cout << "-order_of_q_mod_n " << order_of_q_mod_n_q
+					<< " " << order_of_q_mod_n_n_min << " " << order_of_q_mod_n_n_max << " " << endl;
+		}
+
+
+
 		else if (stringcmp(argv[i], "-young_symmetrizer") == 0) {
 			f_young_symmetrizer = TRUE;
 			draw_mod_n_fname.assign(argv[++i]);
@@ -364,6 +409,24 @@ void interface_algebra::worker(int verbose_level)
 		Algebra.do_search_for_primitive_polynomial_in_range(
 				p_min, p_max, deg_min, deg_max,
 				verbose_level);
+	}
+	else if (f_Dedekind_numbers) {
+
+		algebra_global Algebra;
+
+		Algebra.Dedekind_numbers(
+				Dedekind_n_min, Dedekind_n_max, Dedekind_q_min, Dedekind_q_max,
+				verbose_level);
+
+	}
+	else if (f_order_of_q_mod_n) {
+
+		algebra_global Algebra;
+
+		Algebra.order_of_q_mod_n(
+				order_of_q_mod_n_q, order_of_q_mod_n_n_min, order_of_q_mod_n_n_max,
+				verbose_level);
+
 	}
 	else if (f_young_symmetrizer) {
 		algebra_global_with_action Algebra;

@@ -47,6 +47,10 @@ projective_space_activity_description::projective_space_activity_description()
 	canonical_form_of_code_n = 0;
 	//canonical_form_of_code_text;
 
+	f_map = FALSE;
+	//std::string map_label;
+	//std::string map_parameters;
+
 	f_analyze_del_Pezzo_surface = FALSE;
 	//analyze_del_Pezzo_surface_label;
 	//analyze_del_Pezzo_surface_parameters;
@@ -133,6 +137,15 @@ int projective_space_activity_description::read_arguments(
 					<< canonical_form_of_code_m << " "
 					<< canonical_form_of_code_n << " "
 					<< canonical_form_of_code_text << " "
+					<< endl;
+		}
+		else if (stringcmp(argv[i], "-map") == 0) {
+			f_map = TRUE;
+			map_label.assign(argv[++i]);
+			map_parameters.assign(argv[++i]);
+			cout << "-map "
+					<< map_label << " "
+					<< map_parameters << " "
 					<< endl;
 		}
 		else if (stringcmp(argv[i], "-analyze_del_Pezzo_surface") == 0) {

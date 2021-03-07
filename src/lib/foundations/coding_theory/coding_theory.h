@@ -63,7 +63,8 @@ public:
 			int verbose_level);
 	void make_cyclic_code(int n, int q, int t,
 			int *roots, int nb_roots, int f_poly, std::string &poly,
-			int f_dual, char *fname, int verbose_level);
+			int f_dual, std::string &fname_txt, std::string &fname_csv,
+			int verbose_level);
 	void generator_matrix_cyclic_code(int n,
 			int degree, int *generator_polynomial, int *&M);
 	void print_polynomial(unipoly_domain &Fq,
@@ -166,6 +167,8 @@ public:
 			std::string &label,
 			int m, int n, std::string &genma_text,
 			int verbose_level);
+	void encode_text_5bits(std::string &text, std::string &fname, int verbose_level);
+	void field_induction(std::string &fname_in, std::string &fname_out, int nb_bits, int verbose_level);
 
 
 

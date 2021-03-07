@@ -1250,14 +1250,14 @@ void algebra_global::test_longinteger7()
 void algebra_global::test_longinteger8()
 {
 	int verbose_level = 2;
-	longinteger_domain D;
+	cryptography_domain Crypto;
 	longinteger_object a, b, one;
 	int nb_solovay_strassen_tests = 100;
 	int f_miller_rabin_test = TRUE;
 
 	one.create(1, __FILE__, __LINE__);
 	a.create(197659, __FILE__, __LINE__);
-	D.find_probable_prime_above(a, nb_solovay_strassen_tests,
+	Crypto.find_probable_prime_above(a, nb_solovay_strassen_tests,
 		f_miller_rabin_test, verbose_level);
 }
 
@@ -2789,7 +2789,9 @@ void algebra_global::do_cheat_sheet_GF(finite_field *F, int verbose_level)
 
 		F->cheat_sheet_multiplication_table(f, verbose_level);
 
-		F->cheat_sheet_power_table(f, verbose_level);
+		F->cheat_sheet_power_table(f, TRUE, verbose_level);
+
+		F->cheat_sheet_power_table(f, FALSE, verbose_level);
 
 
 
@@ -2859,7 +2861,6 @@ void algebra_global::do_make_table_of_irreducible_polynomials(int deg,
 	}
 
 	int nb;
-	//int *Table;
 	std::vector<std::vector<int>> Table;
 
 	make_all_irreducible_polynomials_of_degree_d(F, deg,
@@ -2872,6 +2873,79 @@ void algebra_global::do_make_table_of_irreducible_polynomials(int deg,
 
 	Orbiter->Int_vec.vec_print(Table);
 
+
+	int *T;
+	int i, j;
+
+	T = NEW_int(Table.size() * (deg + 1));
+	for (i = 0; i < Table.size(); i++) {
+		for (j = 0; j < deg + 1; j++) {
+			T[i * (deg + 1) + j] = Table[i][j];
+		}
+	}
+
+
+
+	{
+		char str[1000];
+		string fname;
+		char title[1000];
+		char author[1000];
+
+		snprintf(str, 1000, "Irred_q%d_d%d.tex", F->q, deg);
+		fname.assign(str);
+		snprintf(title, 1000, "Irreducible Polynomials of Degree %d over F%d", deg, F->q);
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		{
+			ofstream ost(fname);
+			latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "algebra_global::do_make_table_of_irreducible_polynomials before report" << endl;
+			}
+			//report(ost, verbose_level);
+
+			ost << "There are " << Table.size() << " irreducible polynomials of "
+					"degree " << deg << " over the field F" << F->q << ":\\\\" << endl;
+			for (i = 0; i < Table.size(); i++) {
+				ost << i << " : $";
+				for (j = deg; j>= 0; j--) {
+					ost << T[i * (deg + 1) + j];
+				}
+				ost << "$\\\\" << endl;
+			}
+
+
+			if (f_v) {
+				cout << "algebra_global::do_make_table_of_irreducible_polynomials after report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		file_io Fio;
+
+		cout << "algebra_global::do_make_table_of_irreducible_polynomials written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+	FREE_int(T);
 
 	//int_matrix_print(Table, nb, deg + 1);
 
@@ -3722,6 +3796,170 @@ void algebra_global::mult_polynomials(finite_field *F, long int rk0, long int rk
 
 }
 
+void algebra_global::polynomial_division_from_file_with_report(finite_field *F,
+		std::string &input_file, long int rk1, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::polynomial_division_from_file_with_report" << endl;
+	}
+	unipoly_domain D(F);
+	{
+		char str[1000];
+		string fname;
+		char title[1000];
+		char author[1000];
+
+		snprintf(str, 1000, "polynomial_division_file_%ld.tex", rk1);
+		fname.assign(str);
+		snprintf(title, 1000, "Polynomial Division");
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		{
+			ofstream ost(fname);
+			latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "algebra_global::polynomial_division_from_file_with_report before division_with_remainder_numerically_with_report" << endl;
+			}
+			//report(ost, verbose_level);
+
+			long int rk_q, rk_r;
+
+			D.division_with_remainder_from_file_with_report(input_file, rk1,
+					rk_q, rk_r, ost, verbose_level);
+
+			ost << "$ / " << rk1 << " = " << rk_q << "$ Remainder $" << rk_r << "$\\\\" << endl;
+
+
+			if (f_v) {
+				cout << "algebra_global::polynomial_division_from_file_with_report after division_with_remainder_numerically_with_report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		file_io Fio;
+
+		cout << "algebra_global::polynomial_division_from_file_with_report written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+	if (f_v) {
+		cout << "algebra_global::polynomial_division_from_file_with_report done" << endl;
+	}
+
+}
+
+void algebra_global::polynomial_division_from_file_all_k_error_patterns_with_report(finite_field *F,
+		std::string &input_file, long int rk1, int k, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::polynomial_division_from_file_all_k_error_patterns_with_report" << endl;
+	}
+	unipoly_domain D(F);
+	{
+		char str[1000];
+		string fname;
+		char title[1000];
+		char author[1000];
+
+		snprintf(str, 1000, "polynomial_division_file_all_%d_error_patterns_%ld.tex", k, rk1);
+		fname.assign(str);
+		snprintf(title, 1000, "Polynomial Division");
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		{
+			ofstream ost(fname);
+			latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "algebra_global::polynomial_division_from_file_all_k_error_patterns_with_report before division_with_remainder_numerically_with_report" << endl;
+			}
+			//report(ost, verbose_level);
+
+			long int *rk_q, *rk_r;
+			int N, n, h;
+			combinatorics_domain Combi;
+
+			int *set;
+
+			set = NEW_int(k);
+
+
+
+			D.division_with_remainder_from_file_all_k_bit_error_patterns(input_file,
+					rk1, k,
+					rk_q, rk_r, n, N, ost, verbose_level);
+
+			ost << "$" << input_file << " / " << rk1 << "$\\\\" << endl;
+
+			for (h = 0; h < N; h++) {
+				Combi.unrank_k_subset(h, set, n, k);
+				ost << h << " : ";
+				Orbiter->Int_vec.print(ost, set, k);
+				ost << " : ";
+				ost << rk_r[h] << "\\\\" << endl;
+			}
+
+			FREE_lint(rk_q);
+			FREE_lint(rk_r);
+
+			if (f_v) {
+				cout << "algebra_global::polynomial_division_from_file_all_k_error_patterns_with_report after division_with_remainder_numerically_with_report" << endl;
+			}
+
+			FREE_int(set);
+
+			L.foot(ost);
+
+		}
+		file_io Fio;
+
+		cout << "algebra_global::polynomial_division_from_file_all_k_error_patterns_with_report written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+	if (f_v) {
+		cout << "algebra_global::polynomial_division_from_file_with_report done" << endl;
+	}
+
+}
+
 void algebra_global::polynomial_division_with_report(finite_field *F, long int rk0, long int rk1, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3761,17 +3999,17 @@ void algebra_global::polynomial_division_with_report(finite_field *F, long int r
 
 
 			if (f_v) {
-				cout << "algebra_global::polynomial_division_with_report before report" << endl;
+				cout << "algebra_global::polynomial_division_with_report before division_with_remainder_numerically_with_report" << endl;
 			}
 			//report(ost, verbose_level);
 
 			long int rk2, rk3;
-			D.division_with_remainder_with_report(rk0, rk1, rk2, rk3, ost, verbose_level);
+			D.division_with_remainder_numerically_with_report(rk0, rk1, rk2, rk3, ost, verbose_level);
 			ost << "$" << rk0 << " / " << rk1 << " = " << rk2 << "$ Remainder $" << rk3 << "$\\\\" << endl;
 
 
 			if (f_v) {
-				cout << "algebra_global::polynomial_division_with_report after report" << endl;
+				cout << "algebra_global::polynomial_division_with_report after division_with_remainder_numerically_with_report" << endl;
 			}
 
 
@@ -4003,6 +4241,140 @@ void algebra_global::code_weight_enumerator(finite_field *F, int *A, int m, int 
 	}
 }
 #endif
+
+void algebra_global::Dedekind_numbers(int n_min, int n_max, int q_min, int q_max, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::Dedekind_numbers" << endl;
+	}
+	{
+		char str[1000];
+		string fname;
+
+		snprintf(str, 1000, "Dedekind_%d_%d_%d_%d.csv", n_min, n_max, q_min, q_max);
+		fname.assign(str);
+
+
+		{
+			ofstream ost(fname);
+
+			if (f_v) {
+				cout << "algebra_global::Dedekind_numbers writing csv file" << endl;
+			}
+			//report(ost, verbose_level);
+
+			int n, q;
+			longinteger_domain D;
+			longinteger_object Dnq;
+
+			ost << "ROW";
+			for (q = q_min; q <= q_max; q++) {
+				ost << "," << q;
+			}
+			ost << endl;
+			for (n = n_min; n <= n_max; n++) {
+				ost << n;
+				for (q = q_min; q <= q_max; q++) {
+					longinteger_object Dnk;
+
+					cout << "computing n=" << n << " q=" << q << endl;
+					D.Dedekind_number(Dnq, n, q, verbose_level);
+					ost << "," << Dnq;
+				}
+				ost << endl;
+			}
+			ost << "END" << endl;
+
+			if (f_v) {
+				cout << "algebra_global::Dedekind_numbers writing csv file" << endl;
+			}
+
+
+		}
+		file_io Fio;
+
+		cout << "algebra_global::Dedekind_numbers written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "algebra_global::Dedekind_numbers done" << endl;
+	}
+}
+
+void algebra_global::order_of_q_mod_n(int q, int n_min, int n_max, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::order_of_q_mod_n" << endl;
+	}
+	{
+		char str[1000];
+		string fname;
+
+		snprintf(str, 1000, "order_of_q_mod_n_q%d_%d_%d.csv", q, n_min, n_max);
+		fname.assign(str);
+
+
+		{
+			ofstream ost(fname);
+			number_theory_domain NT;
+
+			if (f_v) {
+				cout << "algebra_global::order_of_q_mod_n writing csv file" << endl;
+			}
+			//report(ost, verbose_level);
+
+			int n, row;
+			long int o;
+
+			row = 0;
+
+			ost << "ROW,N,ORDER" << endl;
+			for (n = n_min; n <= n_max; n++) {
+
+				int g;
+
+				g = NT.gcd_lint(q, n);
+				if (g > 1) {
+					continue;
+				}
+
+				ost << row << "," << n;
+				cout << "computing n=" << n << " q=" << q << endl;
+				o = NT.order_mod_p(q, n);
+				ost << "," << o;
+				ost << endl;
+				row++;
+			}
+			ost << "END" << endl;
+
+			if (f_v) {
+				cout << "algebra_global::order_of_q_mod_n writing csv file" << endl;
+			}
+
+
+		}
+		file_io Fio;
+
+		cout << "algebra_global::order_of_q_mod_n written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "algebra_global::order_of_q_mod_n done" << endl;
+	}
+}
+
 
 }}
 

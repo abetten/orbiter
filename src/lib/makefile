@@ -7,16 +7,6 @@ LFLAGS = -lm
 MODULES= \
 		foundations/algebra_and_number_theory/a_domain.o \
 		foundations/algebra_and_number_theory/algebra_global.o \
-		foundations/algebra_and_number_theory/finite_field_description.o \
-		foundations/algebra_and_number_theory/finite_field_io.o \
-		foundations/algebra_and_number_theory/finite_field_linear_algebra.o \
-		foundations/algebra_and_number_theory/finite_field_linear_algebra2.o \
-		foundations/algebra_and_number_theory/finite_field_orthogonal.o \
-		foundations/algebra_and_number_theory/finite_field_projective.o \
-		foundations/algebra_and_number_theory/finite_field_representations.o \
-		foundations/algebra_and_number_theory/finite_field_RREF.o \
-		foundations/algebra_and_number_theory/finite_field_tables.o \
-		foundations/algebra_and_number_theory/finite_field.o \
 		foundations/algebra_and_number_theory/finite_ring.o \
 		foundations/algebra_and_number_theory/generators_symplectic_group.o \
 		foundations/algebra_and_number_theory/gl_class_rep.o \
@@ -78,6 +68,16 @@ MODULES= \
 		foundations/expression_parser/syntax_tree_node_terminal.o \
 		foundations/expression_parser/syntax_tree_node.o \
 		foundations/expression_parser/syntax_tree.o \
+		foundations/finite_fields/finite_field_description.o \
+		foundations/finite_fields/finite_field_io.o \
+		foundations/finite_fields/finite_field_linear_algebra.o \
+		foundations/finite_fields/finite_field_linear_algebra2.o \
+		foundations/finite_fields/finite_field_orthogonal.o \
+		foundations/finite_fields/finite_field_projective.o \
+		foundations/finite_fields/finite_field_representations.o \
+		foundations/finite_fields/finite_field_RREF.o \
+		foundations/finite_fields/finite_field_tables.o \
+		foundations/finite_fields/finite_field.o \
 		foundations/geometry/andre_construction.o \
 		foundations/geometry/andre_construction_line_element.o \
 		foundations/geometry/andre_construction_point_element.o \

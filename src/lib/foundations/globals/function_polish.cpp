@@ -187,11 +187,33 @@ void function_polish::init(
 
 	if (f_v) {
 		cout << "function_polish::init Parsed " << Entry.size() << " functions" << endl;
+
+		print_code_complete(verbose_level);
+
 	}
 
 
 	if (f_v) {
 		cout << "function_polish::init done" << endl;
+	}
+}
+
+void function_polish::print_code_complete(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "function_polish::print_code_complete" << endl;
+	}
+
+	int h, i0, len;
+
+	for (h = 0; h < Entry.size(); h++) {
+		i0 = Entry[h];
+		len = Len[h];
+		cout << "subroutine " << h << " starts at " << i0 << " and has length " << len << ":" << endl;
+		print_code(i0, len, verbose_level);
 	}
 }
 
@@ -314,10 +336,10 @@ void function_polish::evaluate(
 				// store to a variable, pop the stack
 				f = Stack[Stack.size() - 1];
 				variable_values[Code[i].arg] = f;
-				if (f_v || TRUE) {
-					cout << "storing value " << f << " to variable " << Variables[Code[i].arg] << endl;
-				}
 				Stack.pop_back();
+				if (f_v || TRUE) {
+					cout << "storing value " << f << " to variable " << Variables[Code[i].arg] << " : stacksize = " << Stack.size() << endl;
+				}
 			}
 			else if (t == 5) {
 				// mult
@@ -402,7 +424,7 @@ void function_polish::evaluate(
 			}
 			else if (t == 9) {
 				if (f_v) {
-					cout << "return" << endl;
+					cout << "return, stacksize = " << Stack.size() << endl;
 				}
 				if (Stack.size() != 1) {
 					cout << "Stack size is not 1 at the end of the execution of function " << h << endl;
