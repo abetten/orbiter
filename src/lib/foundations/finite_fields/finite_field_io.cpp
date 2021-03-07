@@ -42,9 +42,9 @@ void finite_field::print_minimum_polynomial(int p, const char *polynomial)
 	FX.create_object_by_rank_string(m, polynomial, 0);
 	FX.create_object_by_rank_string(n, polynomial, 0);
 	{
-	unipoly_domain Fq(&GFp, m, 0 /* verbose_level */);
+		unipoly_domain Fq(&GFp, m, 0 /* verbose_level */);
 
-	Fq.print_object(n, cout);
+		Fq.print_object(n, cout);
 	}
 	//cout << "finite_field::print_minimum_polynomial "
 	//"before delete_object" << endl;
@@ -765,7 +765,9 @@ void finite_field::cheat_sheet(ostream &f, int verbose_level)
 
 	cheat_sheet_multiplication_table(f, verbose_level);
 
-	cheat_sheet_power_table(f, verbose_level);
+	cheat_sheet_power_table(f, TRUE /* f_with_polynomials */, verbose_level);
+
+	cheat_sheet_power_table(f, FALSE /* f_with_polynomials */, verbose_level);
 
 	if (f_v) {
 		cout << "finite_field::cheat_sheet done" << endl;
@@ -1000,7 +1002,7 @@ void finite_field::cheat_sheet_multiplication_table(ostream &f, int verbose_leve
 	}
 }
 
-void finite_field::cheat_sheet_power_table(std::ostream &ost, int verbose_level)
+void finite_field::cheat_sheet_power_table(std::ostream &ost, int f_with_polynomials, int verbose_level)
 {
 	int *Powers;
 	int i, j, t;
@@ -1014,29 +1016,20 @@ void finite_field::cheat_sheet_power_table(std::ostream &ost, int verbose_level)
 	Powers = NEW_int(len);
 	power_table(t, Powers, len);
 
-#if 0
-	ost << "\\begin{multicols}{2}" << endl;
-	ost << "\\noindent" << endl;
-	for (i = 0; i < len; i++) {
-		if (e == 1) {
-			ost << "$" << t << "^{" << i << "} \\equiv " << Powers[i] << "$\\\\" << endl;
-		}
-		else {
-			ost << "$" << t << "^{" << i << "} = " << Powers[i] << "$\\\\" << endl;
-		}
-	}
-	ost << "\\end{multicols}" << endl;
-#endif
-
 	ost << "Cyclic structure:\\\\" << endl;
-	ost << "$$";
-	ost << "\\begin{array}{|r|r|r|r|r|}" << endl;
-	ost << "\\hline" << endl;
-	ost << "i & \\alpha^i & \\alpha^i & \\mbox{vector}& \\mbox{reduced rep.}\\\\" << endl;
-	ost << "\\hline" << endl;
+
+
+	ost << "$$" << endl;
+	cheat_sheet_power_table_top(ost, f_with_polynomials, verbose_level);
+
 	for (i = 0; i < len; i++) {
 
-
+		if (i && (i % 32) == 0) {
+			cheat_sheet_power_table_bottom(ost, f_with_polynomials, verbose_level);
+			ost << "$$" << endl;
+			ost << "$$" << endl;
+			cheat_sheet_power_table_top(ost, f_with_polynomials, verbose_level);
+		}
 
 		Gg.AG_element_unrank(p, v, 1, e, Powers[i]);
 
@@ -1044,21 +1037,46 @@ void finite_field::cheat_sheet_power_table(std::ostream &ost, int verbose_level)
 		for (j = e - 1; j >= 0; j--) {
 			ost << v[j];
 		}
-		ost << " & ";
 
-		print_element_as_polynomial(ost, v, verbose_level);
+		if (f_with_polynomials) {
+			ost << " & ";
+
+			print_element_as_polynomial(ost, v, verbose_level);
+		}
 
 
 		ost << "\\\\" << endl;
 	}
-	ost << "\\hline" << endl;
-	ost << "\\end{array}" << endl;
-	ost << "$$";
-
+	cheat_sheet_power_table_bottom(ost, f_with_polynomials, verbose_level);
+	ost << "$$" << endl;
 
 	FREE_int(v);
 	FREE_int(Powers);
 
+}
+
+void finite_field::cheat_sheet_power_table_top(std::ostream &ost, int f_with_polynomials, int verbose_level)
+{
+	ost << "\\begin{array}{|r|r|r|r|";
+	if (f_with_polynomials) {
+		ost << "r|";
+	}
+	ost << "}" << endl;
+	ost << "\\hline" << endl;
+
+
+	ost << "i & \\alpha^i & \\alpha^i & \\mbox{vector}";
+	if (f_with_polynomials) {
+		ost << "& \\mbox{reduced rep.}";
+	}
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+}
+
+void finite_field::cheat_sheet_power_table_bottom(std::ostream &ost, int f_with_polynomials, int verbose_level)
+{
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
 }
 
 void finite_field::cheat_sheet_table_of_elements(std::ostream &ost, int verbose_level)

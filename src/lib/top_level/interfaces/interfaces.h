@@ -43,6 +43,7 @@ class interface_algebra {
 	int f_count_subprimitive;
 	int count_subprimitive_Q_max;
 	int count_subprimitive_H_max;
+
 	int f_equivalence_class_of_fractions;
 	int equivalence_class_of_fractions_N;
 
@@ -54,6 +55,17 @@ class interface_algebra {
 	int f_search_for_primitive_polynomial_in_range;
 	int p_min, p_max, deg_min, deg_max;
 
+
+	int f_Dedekind_numbers;
+	int Dedekind_n_min;
+	int Dedekind_n_max;
+	int Dedekind_q_min;
+	int Dedekind_q_max;
+
+	int f_order_of_q_mod_n;
+	int order_of_q_mod_n_q;
+	int order_of_q_mod_n_n_min;
+	int order_of_q_mod_n_n_max;
 
 	int f_young_symmetrizer;
 	int young_symmetrizer_n;
@@ -124,6 +136,17 @@ class interface_coding_theory {
 	int f_long_code;
 	int long_code_n;
 	std::vector<std::string> long_code_generators;
+
+	int f_encode_text_5bits;
+	std::string encode_text_5bits_input;
+	std::string encode_text_5bits_fname;
+
+	int f_field_induction;
+	std::string field_induction_fname_in;
+	std::string field_induction_fname_out;
+	int field_induction_nb_bits;
+
+
 
 public:
 	interface_coding_theory();
@@ -619,6 +642,11 @@ class interface_toolkit {
 	std::string fname;
 	int box_width;
 	int bit_depth; // 8 or 24
+
+	int f_reformat;
+	std::string reformat_fname_in;
+	std::string reformat_fname_out;
+	int reformat_nb_cols;
 
 	int f_draw_matrix_partition;
 	int draw_matrix_partition_width;

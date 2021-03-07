@@ -402,6 +402,15 @@ public:
 	long int polynomial_division_r0;
 	long int polynomial_division_r1;
 
+	int f_polynomial_division_from_file;
+	std::string polynomial_division_from_file_fname;
+	long int polynomial_division_from_file_r1;
+
+	int f_polynomial_division_from_file_all_k_bit_error_patterns;
+	std::string polynomial_division_from_file_all_k_bit_error_patterns_fname;
+	int polynomial_division_from_file_all_k_bit_error_patterns_r1;
+	int polynomial_division_from_file_all_k_bit_error_patterns_k;
+
 	int f_RREF_random_matrix;
 	int RREF_random_matrix_m;
 	int RREF_random_matrix_n;
@@ -1029,6 +1038,10 @@ public:
 	int canonical_form_of_code_n;
 	std::string canonical_form_of_code_text;
 
+	int f_map;
+	std::string map_label;
+	std::string map_parameters;
+
 	int f_analyze_del_Pezzo_surface;
 	std::string analyze_del_Pezzo_surface_label;
 	std::string analyze_del_Pezzo_surface_parameters;
@@ -1062,6 +1075,11 @@ public:
 	projective_space_activity();
 	~projective_space_activity();
 	void perform_activity(int verbose_level);
+	void map(
+			projective_space_with_action *PA,
+			std::string &label,
+			std::string &evaluate_text,
+			int verbose_level);
 	void analyze_del_Pezzo_surface(
 			projective_space_with_action *PA,
 			std::string &label,

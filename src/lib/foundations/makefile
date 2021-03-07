@@ -12,6 +12,7 @@ all: algebra_and_number_theory \
 	cryptography \
 	data_structures \
 	expression_parser \
+	finite_fields \
 	geometry \
 	globals \
 	graph_theory \
@@ -33,6 +34,7 @@ combinatorics : combinatorics2
 cryptography : cryptography2
 data_structures : data_structures2  
 expression_parser : expression_parser2  
+finite_fields : finite_fields2  
 geometry : geometry2 
 globals : globals2 
 graph_theory : graph_theory2 
@@ -51,6 +53,7 @@ combinatorics2 : ; cd combinatorics; $(MAKE)
 cryptography2 : ; cd cryptography; $(MAKE)
 data_structures2 : ; cd data_structures; $(MAKE)
 expression_parser2 : ; cd expression_parser; $(MAKE)
+finite_fields2 : ; cd finite_fields; $(MAKE)
 geometry2 : ; cd geometry; $(MAKE)
 globals2 : ; cd globals; $(MAKE)
 graph_theory2 : ; cd graph_theory; $(MAKE)
@@ -70,6 +73,7 @@ clean:
 	cd cryptography; $(MAKE) clean
 	cd data_structures; $(MAKE) clean
 	cd expression_parser; $(MAKE) clean
+	cd finite_fields; $(MAKE) clean
 	cd geometry; $(MAKE) clean
 	cd globals; $(MAKE) clean
 	cd graph_theory; $(MAKE) clean

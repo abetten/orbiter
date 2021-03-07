@@ -2586,6 +2586,127 @@ void projective_space_with_action::compute_group_of_set(long int *set, int set_s
 }
 
 
+void projective_space_with_action::map(formula *Formula,
+		std::string &evaluate_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_with_action::map" << endl;
+	}
+
+	if (f_v) {
+		cout << "projective_space_activity::map" << endl;
+		cout << "formula:" << endl;
+		Formula->print();
+	}
+
+	if (!Formula->f_is_homogeneous) {
+		cout << "Formula is not homogeneous" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "Formula is homogeneous of degree " << Formula->degree << endl;
+		exit(1);
+	}
+	if (Formula->nb_managed_vars != P->n + 1) {
+		cout << "Formula->nb_managed_vars != P->n + 1" << endl;
+		exit(1);
+	}
+
+	homogeneous_polynomial_domain *Poly;
+
+	Poly = NEW_OBJECT(homogeneous_polynomial_domain);
+
+	if (f_v) {
+		cout << "projective_space_with_action::map before Poly->init" << endl;
+	}
+	Poly->init(F,
+			Formula->nb_managed_vars /* nb_vars */, Formula->degree,
+			FALSE /* f_init_incidence_structure */,
+			t_PART,
+			verbose_level);
+	if (f_v) {
+		cout << "projective_space_with_action::map after Poly->init" << endl;
+	}
+
+
+	syntax_tree_node **Subtrees;
+	int nb_monomials;
+
+	if (f_v) {
+		cout << "projective_space_with_action::map before Formula->get_subtrees" << endl;
+	}
+	Formula->get_subtrees(Poly, Subtrees, nb_monomials, verbose_level);
+	if (f_v) {
+		cout << "projective_space_with_action::map after Formula->get_subtrees" << endl;
+	}
+
+	int i;
+
+	for (i = 0; i < nb_monomials; i++) {
+		cout << "Monomial " << i << " : ";
+		if (Subtrees[i]) {
+			Subtrees[i]->print_expression(cout);
+			cout << " * ";
+			Poly->print_monomial(cout, i);
+			cout << endl;
+		}
+		else {
+			cout << "no subtree" << endl;
+		}
+	}
+
+
+	int *Coefficient_vector;
+
+	Coefficient_vector = NEW_int(nb_monomials);
+
+	Formula->evaluate(Poly,
+			Subtrees, evaluate_text, Coefficient_vector,
+			verbose_level);
+
+	if (f_v) {
+		cout << "projective_space_with_action::map coefficient vector:" << endl;
+		Orbiter->Int_vec.print(cout, Coefficient_vector, nb_monomials);
+		cout << endl;
+	}
+
+#if 0
+	del_pezzo_surface_of_degree_two_domain *del_Pezzo;
+
+	del_Pezzo = NEW_OBJECT(del_pezzo_surface_of_degree_two_domain);
+
+	del_Pezzo->init(P, Poly4_3, verbose_level);
+
+	del_pezzo_surface_of_degree_two_object *del_Pezzo_surface;
+
+	del_Pezzo_surface = NEW_OBJECT(del_pezzo_surface_of_degree_two_object);
+
+	del_Pezzo_surface->init(del_Pezzo,
+			Formula, Subtrees, Coefficient_vector,
+			verbose_level);
+
+	del_Pezzo_surface->enumerate_points_and_lines(verbose_level);
+
+	del_Pezzo_surface->pal->write_points_to_txt_file(Formula->name_of_formula, verbose_level);
+
+	del_Pezzo_surface->create_latex_report(Formula->name_of_formula, Formula->name_of_formula_latex, verbose_level);
+
+	FREE_OBJECT(del_Pezzo_surface);
+	FREE_OBJECT(del_Pezzo);
+#endif
+
+	FREE_int(Coefficient_vector);
+	FREE_OBJECT(Poly);
+
+	if (f_v) {
+		cout << "projective_space_with_action::map done" << endl;
+	}
+}
+
+
 void projective_space_with_action::analyze_del_Pezzo_surface(formula *Formula,
 		std::string &evaluate_text,
 		int verbose_level)
@@ -2602,6 +2723,19 @@ void projective_space_with_action::analyze_del_Pezzo_surface(formula *Formula,
 		Formula->print();
 	}
 
+	if (!Formula->f_is_homogeneous) {
+		cout << "Formula is not homogeneous" << endl;
+		exit(1);
+	}
+	if (Formula->degree != 4) {
+		cout << "Formula is not of degree 4. Degree is " << Formula->degree << endl;
+		exit(1);
+	}
+	if (Formula->nb_managed_vars != 3) {
+		cout << "Formula should have 3 managed variables. Has " << Formula->nb_managed_vars << endl;
+		exit(1);
+	}
+
 	homogeneous_polynomial_domain *Poly4_3;
 
 	Poly4_3 = NEW_OBJECT(homogeneous_polynomial_domain);
@@ -2615,7 +2749,7 @@ void projective_space_with_action::analyze_del_Pezzo_surface(formula *Formula,
 			t_PART,
 			verbose_level);
 	if (f_v) {
-		cout << "projective_space_with_action::analyze_del_Pezzo_surfaceafter Poly->init" << endl;
+		cout << "projective_space_with_action::analyze_del_Pezzo_surface after Poly->init" << endl;
 	}
 
 

@@ -863,7 +863,8 @@ void coding_theory_domain::make_tensor_code_9_dimensional(int q,
 
 void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 		int *roots, int nb_roots, int f_poly, std::string &poly,
-		int f_dual, char *fname, int verbose_level)
+		int f_dual, std::string &fname_txt, std::string &fname_csv,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -1223,7 +1224,7 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 
 
 	{
-	ofstream fp(fname);
+	ofstream fp(fname_txt);
 	int k = n - degree;
 
 
@@ -1236,8 +1237,19 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 		}
 	fp << endl;
 	}
-	cout << "Written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
+	cout << "Written file " << fname_txt << " of size "
+			<< Fio.file_size(fname_txt) << endl;
+
+
+	{
+	int k = n - degree;
+
+
+	Fio.int_matrix_write_csv(fname_csv, Genma, k, n);
+	cout << "Written file " << fname_csv << " of size "
+			<< Fio.file_size(fname_csv) << endl;
+	}
+
 
 	latex_interface L;
 
@@ -2104,6 +2116,8 @@ void coding_theory_domain::make_BCH_codes(int n, int q, int t, int b, int f_dual
 	}
 
 	char fname[1000];
+	std::string fname_txt;
+	std::string fname_csv;
 	number_theory_domain NT;
 	int *roots;
 	int nb_roots;
@@ -2115,7 +2129,12 @@ void coding_theory_domain::make_BCH_codes(int n, int q, int t, int b, int f_dual
 		j = NT.mod(b + i, n);
 		roots[i] = j;
 		}
-	snprintf(fname, 1000, "BCH_%d_%d.txt", n, t);
+	snprintf(fname, 1000, "BCH_%d_%d", n, t);
+
+	fname_txt.assign(fname);
+	fname_txt.append(".txt");
+	fname_csv.assign(fname);
+	fname_csv.append(".csv");
 
 	cout << "roots: ";
 	Orbiter->Int_vec.print(cout, roots, nb_roots);
@@ -2129,7 +2148,7 @@ void coding_theory_domain::make_BCH_codes(int n, int q, int t, int b, int f_dual
 
 	Codes.make_cyclic_code(n, q, t, roots, nb_roots,
 			FALSE /*f_poly*/, dummy /*poly*/, f_dual,
-			fname, verbose_level);
+			fname_txt, fname_csv, verbose_level);
 
 	FREE_int(roots);
 
@@ -3904,6 +3923,80 @@ void coding_theory_domain::field_reduction(finite_field *FQ, finite_field *Fq,
 	}
 }
 
+void coding_theory_domain::encode_text_5bits(std::string &text, std::string &fname, int verbose_level)
+{
+	int l, i, j, h, a;
+	char c;
+	long int *encoding;
+
+
+	l = text.size();
+	encoding = NEW_lint(5 * l);
+	j = 0;
+	for (i = 0; i < l; i++) {
+		c = text[i];
+		if (c >= 'A' && c <= 'Z') {
+			a = 3 + c - 'A';
+		}
+		else if (c >= 'a' && c <= 'z') {
+			a = 3 + c - 'a';
+		}
+		else if (c == ' ') {
+			a = 0;
+		}
+		else if (c == ',') {
+			a = 1;
+		}
+		else if (c == '.') {
+			a = 2;
+		}
+		else {
+			cout << "unknown character " << c << endl;
+			exit(1);
+		}
+		for (h = 0; h < 5; h++) {
+			encoding[j++] = a % 2;
+			a >>= 1;
+		}
+	}
+	file_io Fio;
+
+	//Fio.int_vec_write_csv(encoding, 5 * l, fname, "encoding");
+	Fio.lint_matrix_write_csv(fname, encoding, 1, 5 * l);
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+}
+
+
+void coding_theory_domain::field_induction(std::string &fname_in, std::string &fname_out, int nb_bits, int verbose_level)
+{
+	int i, h, len, len2;
+	long int *M;
+	long int a;
+	long int *M2;
+	int *v;
+	int m, n;
+	geometry_global GG;
+
+
+	file_io Fio;
+
+	cout << "Reading file " << fname_in << " of size " << Fio.file_size(fname_in) << endl;
+	Fio.lint_matrix_read_csv(fname_in, M, m, n, verbose_level);
+	len = m * n;
+	len2 = (len + nb_bits - 1) / nb_bits;
+	v = NEW_int(nb_bits);
+	M2 = NEW_lint(len2);
+	for (i = 0; i < len2; i++) {
+		for (h = 0; h < nb_bits; h++) {
+			v[h] = M[i * nb_bits + h];
+		}
+		a = GG.AG_element_rank(2, v, 1, nb_bits);
+		M2[i] = a;
+	}
+	Fio.lint_matrix_write_csv(fname_out, M2, 1, len2);
+	cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+
+}
 
 
 }}

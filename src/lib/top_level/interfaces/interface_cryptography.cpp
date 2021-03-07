@@ -805,10 +805,10 @@ void interface_cryptography::worker(int verbose_level)
 				RSA_encrypt_text, verbose_level);
 	}
 	else if (f_RSA_setup) {
-		longinteger_domain D;
+		cryptography_domain Crypto;
 		longinteger_object n, p, q, a, b;
 
-		D.RSA_setup(n, p, q, a, b,
+		Crypto.RSA_setup(n, p, q, a, b,
 			RSA_setup_nb_bits,
 			RSA_setup_nb_tests_solovay_strassen,
 			RSA_setup_f_miller_rabin_test,

@@ -1347,6 +1347,34 @@ long int number_theory_domain::euler_function(long int n)
 	return k;
 }
 
+long int number_theory_domain::moebius_function(long int n)
+//Computes the Moebius $\mu$-function for $n$.
+//Uses the prime factorization of $n$.
+{
+	int *primes;
+	int *exponents;
+	int len;
+	long int i;
+
+	len = factor_int(n, primes, exponents);
+
+	for (i = 0; i < len; i++) {
+		if (exponents[i] > 1) {
+			return 0;
+		}
+	}
+	FREE_int(primes);
+	FREE_int(exponents);
+	if (EVEN(len)) {
+		return 1;
+	}
+	else {
+		return -1;
+	}
+}
+
+
+
 void number_theory_domain::int_add_fractions(int at, int ab,
 		int bt, int bb, int &ct, int &cb,
 		int verbose_level)

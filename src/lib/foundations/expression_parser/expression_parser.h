@@ -155,6 +155,7 @@ public:
 	syntax_tree_node_terminal();
 	void print(std::ostream &ost);
 	void print_expression(std::ostream &ost);
+	void print_graphviz(std::ostream &ost);
 	int evaluate(std::map<std::string, std::string> &symbol_table,
 			finite_field *F, int verbose_level);
 

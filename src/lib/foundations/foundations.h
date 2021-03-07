@@ -646,6 +646,7 @@ std::ostream& operator<<(std::ostream& ost, longinteger_object& p);
 #include "./cryptography/cryptography.h"
 #include "./data_structures/data_structures.h"
 #include "./expression_parser/expression_parser.h"
+#include "./finite_fields/finite_fields.h"
 #include "./geometry/geometry.h"
 #include "./globals/globals.h"
 #include "./graph_theory/graph_theory.h"

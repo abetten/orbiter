@@ -14,13 +14,23 @@ update_all:
 	cd $(MY_PATH); make clean; git pull; make 
 
 
+#############################################################################################################
+# Makefile Variables
+
+
+SURFACE_F7_15LINES_POINTS="0,1,2,3,5,6,7,8,9,10,12,18,20,26,28,34,36,42,44,45,50,53,58,59,60,61,62,63,64,67,77,80,90,93,103,107,115,118,122,125,127,142,147,155,157,162,165,170,172,204,208,219,229,240,244,246,251,253,259,277,278,281,286,298,300,302,303,310,312,316,340,343,351,354,358,365,369,372,373,379,384,386,388,393,399"
+
+
+SURFACE_F7_15LINES_MCKEAN_POINTS="0,1,2,3,4,5,6,7,8,9,10,16,17,28,35,36,59,60,61,62,63,64,65,76,80,91,95,106,107,111,119,121,122,130,138,139,141,146,150,154,155,158,170,175,184,186,199,203,204,206,226,231,234,239,240,252,253,254,278,279,282,287,299,301,302,319,320,330,338,343,345,350,351,357,364,370,371,376,378,382,385,388,392,394,399"
+
+
 
 
 #############################################################################################################
 # Section 4: Orbiter Session
 	
 	
-ORBITER_SESSION:
+SECTION_ORBITER_SESSION:
 	
 test_session:
 	$(ORBITER_PATH)/orbiter.out
@@ -29,6 +39,8 @@ test_session:
 
 #############################################################################################################
 # Section 5: Set Builder
+
+SECTION_SET_BUILDER:
 
 set_builder_examples:
 	$(ORBITER_PATH)/orbiter.out -v 2 -long_code 64 7 \
@@ -47,11 +59,12 @@ set_builder_examples:
 #############################################################################################################
 # Section 6: Input Streams
 
+SECTION_INPUT_STREAMS:
 
 #############################################################################################################
 # Section 7: Basic Number Theory
 
-BASIC_NUMBER_THEORY:
+SECTION_BASIC_NUMBER_THEORY:
 
 PR7:
 		$(ORBITER_PATH)/orbiter.out -v 1 -smallest_primitive_root 7
@@ -207,6 +220,13 @@ draw_mod_7:
 			pdflatex mod_7_draw.tex
 			open mod_7_draw.pdf
 
+draw_mod_15:
+		$(ORBITER_PATH)/orbiter.out -v 2 -draw_options -embedded -end \
+			-draw_mod_n 15 mod_15 
+			pdflatex mod_15_draw.tex
+			open mod_15_draw.pdf
+
+
 draw_mod_16:
 		$(ORBITER_PATH)/orbiter.out -v 2 -draw_options -embedded -nodes_empty -end \
 			-draw_mod_n 16 mod_16 
@@ -242,7 +262,7 @@ draw_mod_251:
 #############################################################################################################
 # Section 8: Prime Fields
 
-PRIME_FIELDS:
+SECTION_PRIME_FIELDS:
 	
 
 F_2:
@@ -328,7 +348,7 @@ F_127:
 #############################################################################################################
 # Section 9: Polynomials over Finite Fields
 
-POLYNOMIALS:
+SECTION_POLYNOMIALS:
 
 
 
@@ -418,41 +438,56 @@ roots_over_F8:
 
 irred_3_2:
 	$(ORBITER_PATH)/orbiter.out -v 3 -finite_field_activity -q 2 -make_table_of_irreducible_polynomials 3 -end
-
+	pdflatex Irred_q2_d3.tex
+	open Irred_q2_d3.pdf
 
 
 irred_4_2:
 	$(ORBITER_PATH)/orbiter.out -v 3 -finite_field_activity -q 2 -make_table_of_irreducible_polynomials 4 -end
+	pdflatex Irred_q2_d4.tex
+	open Irred_q2_d4.pdf
 
 # 3 polys
 
 irred_5_2:
 	$(ORBITER_PATH)/orbiter.out -v 3 -finite_field_activity -q 2 -make_table_of_irreducible_polynomials 5 -end
+	pdflatex Irred_q2_d5.tex
+	open Irred_q2_d5.pdf
 
 # 6 polys
 
 irred_6_2:
 	$(ORBITER_PATH)/orbiter.out -v 3 -finite_field_activity -q 2 -make_table_of_irreducible_polynomials 6 -end
+	pdflatex Irred_q2_d6.tex
+	open Irred_q2_d6.pdf
 
 # 9 polys
 
 irred_7_2:
 	$(ORBITER_PATH)/orbiter.out -v 3 -finite_field_activity -q 2 -make_table_of_irreducible_polynomials 7 -end
+	pdflatex Irred_q2_d7.tex
+	open Irred_q2_d7.pdf
 
 # 18 polys
 
 irred_8_2:
 	$(ORBITER_PATH)/orbiter.out -v 3 -finite_field_activity -q 2 -make_table_of_irreducible_polynomials 8 -end
+	pdflatex Irred_q2_d8.tex
+	open Irred_q2_d8.pdf
 
 # 30 polys
 
 irred_9_2:
 	$(ORBITER_PATH)/orbiter.out -v 3 -finite_field_activity -q 2 -make_table_of_irreducible_polynomials 9 -end
+	pdflatex Irred_q2_d9.tex
+	open Irred_q2_d9.pdf
 
 # 56 polys
 
 irred_10_2:
 	$(ORBITER_PATH)/orbiter.out -v 3 -finite_field_activity -q 2 -make_table_of_irreducible_polynomials 10 -end
+	pdflatex Irred_q2_d10.tex
+	open Irred_q2_d10.pdf
 
 # 99 polys
 
@@ -467,6 +502,25 @@ irred_3_4:
 		-make_table_of_irreducible_polynomials 3 -end
 
 # 20 polys
+
+
+Dedekind_10_10:
+	$(ORBITER_PATH)/orbiter.out -v 3 -Dedekind_numbers 2 10 2 10
+
+
+Dedekind_30_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -Dedekind_numbers 2 30 2 2
+
+
+Dedekind_100_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -Dedekind_numbers 2 100 2 2
+
+
+order_of_2_mod_n:
+	$(ORBITER_PATH)/orbiter.out -v 3 -order_of_q_mod_n 2 3 300
+	$(ORBITER_PATH)/orbiter.out -v 1 -csv_file_latex order_of_q_mod_n_q2_3_300.csv
+	pdflatex order_of_q_mod_n_q2_3_300.tex
+	open order_of_q_mod_n_q2_3_300.pdf
 
 
 search_primitive_poly_2:
@@ -650,7 +704,7 @@ CRC_poly_3_128_10:
 #############################################################################################################
 # Section 10: Extension Fields
 
-EXTENSION_FIELDS:
+SECTION_EXTENSION_FIELDS:
 	
 
 
@@ -913,9 +967,17 @@ F_125:
 F_256:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 256 -end -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q256_addition_table.csv 40 24  -draw_matrix_partition 3 256 256
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q256_multiplication_table.csv 40 24 -draw_matrix_partition 3 255 255
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q256_addition_table_reordered.csv 40 24 -draw_matrix_partition 3 256 256
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q256_multiplication_table_reordered.csv 40 24 -draw_matrix_partition 3 255 255
 	pdflatex GF_256.tex
 	open GF_256.pdf
 
+
+F_256_Rijndahl:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 256 -override_polynomial 283 -end -end \
+		-with F -do -finite_field_activity -cheat_sheet_GF -end
 
 F_289:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 289 -end -end \
@@ -932,13 +994,123 @@ normal_basis_2_3:
 
 
 
+mult_polynomials_2_5_7:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -mult_polynomials 5 7 -end
+	pdflatex polynomial_mult_5_7.tex
+	open polynomial_mult_5_7.pdf
+
+polynomial_division_ranked_2_27_13:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -polynomial_division_ranked 27 13 -end
+	pdflatex polynomial_division_27_13.tex
+	open polynomial_division_27_13.pdf
+
+
+
+
+mult_polynomials_2_8_15:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -mult_polynomials 8 15 -end
+	pdflatex polynomial_mult_8_15.tex
+	open polynomial_mult_8_15.pdf
+
+polynomial_division_ranked_2_120_25:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -polynomial_division_ranked 120 25 -end
+	pdflatex polynomial_division_120_25.tex
+	open polynomial_division_120_25.pdf
+
+# the answer is 5
+
+
+mult_polynomials_2_4_6:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -mult_polynomials 4 6 -end
+	pdflatex polynomial_mult_4_6.tex
+	open polynomial_mult_4_6.pdf
+
+polynomial_division_ranked_2_24_13:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -polynomial_division_ranked 24 13 -end
+	pdflatex polynomial_division_24_13.tex
+	open polynomial_division_24_13.pdf
+
+
+
+mult_polynomials_1024_999_997:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -mult_polynomials 999 997 -end
+	pdflatex polynomial_mult_999_997.tex
+	open polynomial_mult_999_997.pdf
+
+polynomial_division_ranked_2_349147_1033:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -polynomial_division_ranked 349147 1033 -end
+	pdflatex polynomial_division_349147_1033.tex
+	open polynomial_division_349147_1033.pdf
+
+mult_polynomials_17_12:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -mult_polynomials 17 12 -end
+	pdflatex polynomial_mult_17_12.tex
+	open polynomial_mult_17_12.pdf
+	
+# gives 204
+
+polynomial_division_ranked_2_204_37:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -polynomial_division_ranked 204 37 -end
+	pdflatex polynomial_division_204_37.tex
+	open polynomial_division_204_37.pdf
+	
+# answer is 18
+	
+	
+
+mult_polynomials_1024_999_997_check:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-define F -finite_field -q 1024 -end \
+		-with F -do \
+		-finite_field_activity -parse "test" "" "a*b" -evaluate "a=999,b=997" -end
+
+
+
+F_16_7_power_5:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end -end \
+		-with F -do -finite_field_activity -parse "test" "" "(a*a)*(a*a)*a" -evaluate "a=7" -end
+	dot -Tpng test.gv >test.png
+
+
+# the answer is 11.
+
 
 
 #############################################################################################################
 # Section 11: Linear Algebra over Finite Fields
 
 
-LINEAR_ALGEBRA:
+SECTION_LINEAR_ALGEBRA:
 
 
 RREF:
@@ -991,7 +1163,7 @@ classes_GL_4_2:
 #############################################################################################################
 # Section 12: Representation Theory
 
-REPRESENTATION_THEORY:
+SECTION_REPRESENTATION_THEORY:
 
 
 Char_Sym_4:
@@ -1062,7 +1234,7 @@ representation_tetrahedral_group_on_polynomials_of_degree_3:
 #############################################################################################################
 # Section 13: Finite Projective Spaces
 
-FINITE_PROJECTIVE_SPACES:
+SECTION_FINITE_PROJECTIVE_SPACES:
 
 PG_1_16:
 	$(ORBITER_PATH)/orbiter.out \
@@ -1153,7 +1325,7 @@ surface_16_2_move_two_lines:
 # Section 14: Projective Planes
 
 
-PROJECTIVE_PLANES:
+SECTION_PROJECTIVE_PLANES:
 
 
 PG_2_2:
@@ -1256,7 +1428,7 @@ PG_2_16:
 # Section 15: The Grassmannian
 
 
-GRASSMANNIAN:
+SECTION_GRASSMANNIAN:
 
 GR_3_2_2:
 	$(ORBITER_PATH)/orbiter.out -define F -finite_field -q 2 -end -end \
@@ -1269,7 +1441,7 @@ GR_3_2_2:
 # Section 16: Algebraic Sets
 
 
-ALGEBRAIC_SETS:
+SECTION_ALGEBRAIC_SETS:
 
 EC.txt:
 	$(ORBITER_PATH)/orbiter.out -v 2 -create_combinatorial_object -q 11 -n 2 \
@@ -1315,11 +1487,55 @@ octic_prepare:
 
 
 
+del_Pezzo_F13a_points.txt:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space 3 F -end \
+		-define f1 -formula "del_Pezzo_F9" "del\_Pezzo\_F9" "x,y,z" "x*x*x*x+y*y*y*y+z*z*z*z"  -end \
+		-define f2 -formula "del_Pezzo_F11" "del\_Pezzo\_F11" "x,y,z" "x*x*x*x+y*y*y*y+z*z*z*z+x*x*y*y+x*x*z*z+y*y*z*z"  -end \
+		-define f3 -formula "del_Pezzo_F13a" "del\_Pezzo\_F13a" "x,y,z" "x*x*x*x+y*y*y*y+z*z*z*z+8*x*x*y*y+8*x*x*z*z+8*y*y*z*z"  -end \
+		-define f4 -formula "del_Pezzo_F13b" "del\_Pezzo\_F13b" "x,y,z" "x*x*x*x+y*y*y*y+z*z*z*z-x*x*y*y"  -end \
+		-define del_Pezzo9 -collection "f1" \
+		-define del_Pezzo11 -collection "f2" \
+		-define del_Pezzo13 -collection "f3,f4" \
+	-with P -do \
+	-projective_space_activity \
+	-analyze_del_Pezzo_surface del_Pezzo13 ""
+	pdflatex del_Pezzo_F13a_report.tex
+	pdflatex del_Pezzo_F13b_report.tex
+	open del_Pezzo_F13a_report.pdf
+	open del_Pezzo_F13b_report.pdf
+	#dot -Tpng del_Pezzo_F13a.gv >del_Pezzo_F13a.png
+	#open del_Pezzo_F13a.png
+
+# writes del_Pezzo_F13a_points.txt
+
+
+
+
+del_Pezzo_169:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-define F -finite_field -q 169 -end \
+		-define P -projective_space 3 F -end \
+		-define f3 -formula "del_Pezzo_F169a" "del\_Pezzo\_F169a" "x,y,z" "x*x*x*x+y*y*y*y+z*z*z*z+8*x*x*y*y+8*x*x*z*z+8*y*y*z*z"  -end \
+		-define f4 -formula "del_Pezzo_F169b" "del\_Pezzo\_F169b" "x,y,z" "x*x*x*x+y*y*y*y+z*z*z*z-x*x*y*y"  -end \
+		-define del_Pezzo13 -collection "f3,f4" \
+	-with P -do \
+	-projective_space_activity \
+	-analyze_del_Pezzo_surface del_Pezzo13 ""
+	pdflatex del_Pezzo_F169a_report.tex
+	pdflatex del_Pezzo_F169b_report.tex
+	open del_Pezzo_F169a_report.pdf
+	open del_Pezzo_F169b_report.pdf
+
+
+
+
 #############################################################################################################
 # Section 17: The Klein Quadric and Pluecker coordinates
 
 
-KLEIN_QUADRIC_AND_PLUECKER_COORDINATES:
+SECTION_KLEIN_QUADRIC_AND_PLUECKER_COORDINATES:
 
 
 
@@ -1334,7 +1550,7 @@ GR_4_2_2:
 # Section 18: Orthogonal spaces
 
 
-ORTHOGONAL_SPACES:
+SECTION_ORTHOGONAL_SPACES:
 
 
 
@@ -1396,7 +1612,7 @@ Op_6_8_2:
 # Section 19: Hermitian varieties
 
 
-HERMITIAN_VARIETIES:
+SECTION_HERMITIAN_VARIETIES:
 
 
 
@@ -1421,7 +1637,7 @@ H_3_4:
 # Section 20: Permutation groups
 
 
-PERMUTATION_GROUPS:
+SECTION_PERMUTATION_GROUPS:
 
 PGL_4_2a:
 	$(ORBITER_PATH)/orbiter.out -v 2 \
@@ -1441,7 +1657,7 @@ PGL_4_2a:
 # Section 21: Linear Groups
 
 
-LINEAR_GROUPS:
+SECTION_LINEAR_GROUPS:
 
 
 PGL_3_2:
@@ -1596,13 +1812,29 @@ PGOm_6_2:
 	pdflatex PGOm_6_2_report.tex
 	open PGOm_6_2_report.pdf
 
+Weyl_E8:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-draw_options -end \
+		-define G -linear_group -GL 8 3 \
+		-subgroup_by_generators "Weyl_E8" "696729600" 2 \
+		"-1,-1,-1,-1,0,0,0,0, 0,0,0,1,0,0,0,0, 1,0,0,0,0,0,0,0, 0,0,1,0,0,0,0,0, 0,1,0,1,1,0,0,0, 0,0,0,0,0,1,0,0, 0,0,0,0,0,0,1,0, 0,0,0,0,0,0,0,1" \
+		"-1,0,-1,-1,-1,-1,-1,-1, 0,1,0,1,1,1,1,1, 1,0,0,0,0,0,0,0, 0,0,1,0,0,0,0,0, 0,0,0,1,0,0,0,0, 0,0,0,0,1,0,0,0, 0,0,0,0,0,1,0,0, 0,0,0,0,0,0,1,0" \
+		-end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-report \
+		-end
+	pdflatex GL_8_3_Subgroup_Weyl_E8_696729600_report.tex
+	open GL_8_3_Subgroup_Weyl_E8_696729600_report.pdf
+
+# group generators from http://www.math.rwth-aachen.de/~Gabriele.Nebe/LATTICES/E8.b.html
 
 
 
 #############################################################################################################
 # Section 22: Subgroups
 
-SUBGROUPS:
+SECTION_SUBGROUPS:
 
 J1:
 	$(ORBITER_PATH)/orbiter.out -v 3 \
@@ -1727,7 +1959,7 @@ Hesse_group:
 # Section 23:  Linear Groups, Advanced Topics
 
 
-LINEAR_GROUPS_ADVANCED_TOPICS:
+SECTION_LINEAR_GROUPS_ADVANCED_TOPICS:
 
 
 U_3_2:
@@ -1915,7 +2147,7 @@ Ree_27:
 # Section 24:  Induced Actions
 
 
-INDUCED_ACTIONS:
+SECTION_INDUCED_ACTIONS:
 
 
 
@@ -1993,7 +2225,7 @@ PGGL_2_8_on_conic:
 # Section 25:  Group Theoretic Activities
 
 
-GROUP_THEORETIC_ACTIVITIES:
+SECTION_GROUP_THEORETIC_ACTIVITIES:
 
 PGL_3_4_singer:
 	$(ORBITER_PATH)/orbiter.out -v 5 -define G -linear_group -PGL 3 4 -end -end \
@@ -2150,7 +2382,7 @@ normal_forms_PGL_4_5:
 # Section 26:  Group Theoretic Activities Based on Magma
 
 
-GROUP_THEORETIC_ACTIVITIES_BASED_ON_MAGMA:
+SECTION_GROUP_THEORETIC_ACTIVITIES_BASED_ON_MAGMA:
 
 
 
@@ -2616,7 +2848,7 @@ Normalizer_of_Z22_in_PGL_2_9:
 # Section 27:  Orbit Algorithms
 
 
-ORBIT_ALGORITHMS:
+SECTION_ORBIT_ALGORITHMS:
 
 
 T3r1_orbits:
@@ -2823,7 +3055,7 @@ PGGL_7_8_orbits:
 # Section 28: Poset Classification
 
 
-POSET_CLASSIFICATION:
+SECTION_POSET_CLASSIFICATION:
 	
 poset_of_4subsets:
 	$(ORBITER_PATH)/orbiter.out -v 3 \
@@ -2908,7 +3140,7 @@ V_4_2_trivial:
 # Section 29: Orbits on Subsets
 
 
-ORBITS_ON_SUBSETS:
+SECTION_ORBITS_ON_SUBSETS:
 
 PG_2_2_subsets:
 	$(ORBITER_PATH)/orbiter.out -v 3 \
@@ -3083,7 +3315,7 @@ PG_3_7_lines:
 # Section 30: Orbits on Subspaces
 
 
-ORBITS_ON_SUBSPACES:
+SECTION_ORBITS_ON_SUBSPACES:
 	
 
 subspaces_Op_4_2:
@@ -3258,7 +3490,7 @@ Op_8_2_orbits:
 #############################################################################################################
 # Section 31: Creating Objects in Projective Geometry
 
-CREATING_OBJECTS_IN_PG:
+SECTION_CREATING_OBJECTS_IN_PG:
 
 
 elliptic_curve_b1_c3_q11.txt:
@@ -3367,7 +3599,7 @@ Hirschfeld_surface_q16.txt:
 #############################################################################################################
 # Section 32: Activities for  Objects in Projective Geometry
 
-ACTIVITIES_FOR_OBJECTS_IN_PG:
+SECTION_ACTIVITIES_FOR_OBJECTS_IN_PG:
 
 arcs_q8_d2_lvl_4:
 	$(ORBITER_PATH)/orbiter.out -v 4 \
@@ -3400,7 +3632,7 @@ arcs_4_2_lift: arcs_q8_d2_lvl_4
 # Section 33: Canonical Forms of Objects in Finite Projective Spaces
 
 
-CANONICAL_FORMS:
+SECTION_CANONICAL_FORMS:
 
 
 EC_canon: elliptic_curve_b1_c3_q11.txt
@@ -3665,11 +3897,39 @@ cuspidal_cubic_q16_subsets_canonical: cuspidal_cubic_16_subsets_6.txt
 
 
 
+del_Pezzo_13_group: del_Pezzo_F13a_points.txt
+	$(ORBITER_PATH)/orbiter.out -v 4 \
+		-define F -finite_field -q 13 -end -end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
+		-canonical_form_PG \
+		-input \
+		-file_of_points del_Pezzo_F13a_points.txt \
+		-file_of_points del_Pezzo_F13b_points.txt \
+		-end \
+		-classification_prefix del_Pezzo_F13 \
+		-report \
+		-end
+	pdflatex del_Pezzo_F13_classification.tex
+	open del_Pezzo_F13_classification.pdf
+
+# 12 minutes on Macintosh
+# both have the same group of order 8, 
+# generated by -1s on the diagonals for the first three variables.
+
+#nauty_interface::nauty_interface_matrix_int n >= MAXN
+#nauty_interface::nauty_interface_matrix_int n = 33492
+#nauty_interface::nauty_interface_matrix_int MAXN = 22000
+
+
+
+
 #############################################################################################################
 # Section 34: Arcs
 
 
-ARCS:
+SECTION_ARCS:
 
 
 fano_plane_arcs:
@@ -4250,7 +4510,7 @@ awss:
 #############################################################################################################
 # Section 35: Cubic Curves
 
-CUBIC_CURVES:
+SECTION_CUBIC_CURVES:
 
 
 cubic_curves_PG_2_4:
@@ -4450,7 +4710,7 @@ cuspidal_cubic_q11_subsets_canonical: cuspidal_cubic_11_subsets_6.txt
 # Section 36: Cubic Surfaces Creation
 
 
-CUBIC_SURFACES_CREATION:
+SECTION_CUBIC_SURFACES_CREATION:
 
 
 
@@ -5596,11 +5856,268 @@ surface_reports:
 
 
 
+
+
+F_ALPHA_BETA_GAMMA_DELTA="beta*(gamma + 1)*x0*x0*x2 + (alpha*delta - beta*gamma + alpha - beta - delta - 1)*x0*x1*x2 -1*(alpha*beta -alpha*delta + delta)*(gamma + 1)*x0*x1*x3 + (0-alpha*delta + alpha*gamma -beta*gamma -beta + delta -gamma)*x0*x2*x2 -(alpha*delta +beta -delta)*(gamma +1)*x0*x2*x3 -(delta + 1)*(alpha - 1)*x1*x1*x2 - (delta + 1)*(alpha - 1)*x1*x1*x3 + (alpha*delta - alpha*gamma + beta*gamma + beta - delta + gamma)*x1*x2*x2 + (alpha*beta*gamma + alpha*beta + alpha*delta - alpha*gamma + beta*gamma + beta - delta + gamma)*x1*x2*x3 + alpha*beta*(gamma + 1)*x1*x3*x3"
+
+
+F_alpha_beta_gamma_delta:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 7 -end -end \
+		-with F -do -finite_field_activity -parse "F_alpha_beta_gamma_delta" "x0,x1,x2,x3" $(F_ALPHA_BETA_GAMMA_DELTA) -evaluate "alpha=2,beta=3,gamma=4,delta=5" -end
+	dot -Tpng F_alpha_beta_gamma_delta.gv >F_alpha_beta_gamma_delta.png
+
+
+
+draw_dot:
+	dot -Tpng test.gv >test.png
+
+
+draw_neato:
+	neato -Tpng Formula.gv >Formula_neato.png
+
+
+draw_fdp:
+	fdp -Tpng Formula.gv >Formula_fdp.png
+
+draw_twopi:
+	twopi -Tpng Formula.gv >Formula_twopi.png
+
+draw_circo:
+	circo -Tpng Formula.gv >Formula_circo.png
+
+draw_circo_cvg:
+	circo -Tsvg Formula.gv >Formula_circo.svg
+
+# post processing in EazyDraw
+
+
+parse:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 7 -end -end \
+		-with F -do -finite_field_activity -parse "test" "x0,x1" "(a+b)*(a+b)*x0+(a*a-b*b)*x1" -evaluate "a=1,b=1" -end
+	dot -Tpng test.gv >test.png
+	open test.png
+
+parse2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -parse "test" "x0,x1,x2,x3" "(alpha*delta - beta*gamma + alpha - beta - delta - 1)*x0*x1*x2" -end
+
+
+
+F_abcd_eqn = "-(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(b - d)*X0*X0*X2 + (a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(a + b - c - d)*X0*X1*X2 + (a*a*c - a*a*d - a*c*c + b*c*c + a*d - b*c)*(b - d)*X0*X1*X3 - (a*d - b*c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X0*X2*X2 - (a*a*c*d - a*b*c*c - a*a*d + a*b*d + b*c*c - b*c*d)*(b - d)*X0*X2*X3 - (a - c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X1*X1*X2 - (a - c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X1*X1*X3 + (a*d - b*c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X1*X2*X2 + (2*a*a*b*c*d - a*a*b*d*d - 2*a*a*c*d*d - 2*a*b*b*c*c + a*b*b*c*d + 2*a*b*c*c*d + a*b*c*d*d - b*b*c*c*d - a*a*b*c + a*a*c*d + a*a*d*d + a*b*b*c + a*b*c*c - 4*a*b*c*d - a*c*c*d + a*c*d*d + b*b*c*c)*X1*X2*X3 + c*a*(a*d - b*c - a + b + c - d)*(b - d)*X1*X3*X3"
+
+
+F_abcd:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 7 -end -end \
+		-with F -do -finite_field_activity -parse "Fabcd" "X0,X1,X2,X3" $(F_abcd_eqn) -evaluate "a=4,b=2,c=2,d=4" -end
+	#dot -Tpng F_alpha_beta_gamma_delta.gv >F_alpha_beta_gamma_delta.png
+
+F_alpha_beta_gamma_delta_q7:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 7 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -q 7 -by_equation "F_alpha_beta_gamma_delta" \
+			"\DF_{\alpha,\beta,\gamma,\delta}\D" "x0,x1,x2,x3" \
+			$(F_ALPHA_BETA_GAMMA_DELTA) \
+			"alpha=2,beta=3,gamma=4,delta=5" "\D\alpha=2,\beta=3,\gamma=4,\delta=5\D" \
+		-end \
+		-end 
+	pdflatex surface_equation_F_alpha_beta_gamma_delta_q7_report.tex
+	open surface_equation_F_alpha_beta_gamma_delta_q7_report.pdf
+
+
+
+
+surface_F7_15_lines_stab:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 7 -end -end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
+		-canonical_form_PG \
+		-input \
+			-set_of_points "$(SURFACE_F7_15LINES_POINTS)" \
+		-end \
+		-classification_prefix surface_15_lines_q7 \
+		-report \
+		-end \
+		-end
+	pdflatex surface_15_lines_q7_classification.tex
+	open surface_15_lines_q7_classification.pdf
+
+
+# group has order 6, 2 generators:
+#1,5,0,0,3,6,0,0,1,1,3,0,5,5,0,3, 1,0,2,5,0,1,6,1,0,0,3,5,0,0,4,4,
+
+
+
+McKean_15lines_q7:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 7 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -by_coefficients "1,5,-1,16,-2,17,1,10,2,18,1,8,1,9,-1,11,-1,19,-1,14" -q 7 \
+		-end \
+		-end 
+	pdflatex surface_by_coefficients_q7_report.tex
+	open surface_by_coefficients_q7_report.pdf
+
+# 2 Eckardt points
+
+F_4_4_3_3_q7:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 7 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -q 7 -by_equation "F_alpha_beta_gamma_delta" \
+			"\DF_{\alpha,\beta,\gamma,\delta}\D" "x0,x1,x2,x3" \
+			$(F_ALPHA_BETA_GAMMA_DELTA) \
+			"alpha=4,beta=4,gamma=3,delta=3" "\D\alpha=4,\beta=4,\gamma=3,\delta=3\D" \
+		-end \
+		-end
+	pdflatex surface_equation_F_alpha_beta_gamma_delta_q7_report.tex
+	open surface_equation_F_alpha_beta_gamma_delta_q7_report.pdf
+
+# has 4 Eckardt points
+
+
+
+F_alpha_beta_gamma_delta_points.txt:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 7 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-sweep nothing \
+		-create_surface -q 7 -by_equation "F_alpha_beta_gamma_delta" \
+			"\DF_{\alpha,\beta,\gamma,\delta}\D" "x0,x1,x2,x3" \
+			$(F_ALPHA_BETA_GAMMA_DELTA) \
+			"alpha=2,beta=3,gamma=4,delta=5" "\D\alpha=2,\beta=3,\gamma=4,\delta=5\D" \
+		-end \
+		-end 
+
+
+
+
+
+
+
+
+
+
+# odd characteristic
+# q=19
+
+# E = 2
+
+Family_general_q19_2_3_3_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 19 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 2 3 3 2 -q 19 -end 
+		pdflatex surface_family_general_abcd_q19_a2_b3_c3_d2_report.tex
+		open surface_family_general_abcd_q19_a2_b3_c3_d2_report.pdf
+
+
+
+# E = 4:
+
+Family_general_q19_4_2_2_4:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 19 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 4 2 2 4 -q 19 -end 
+		pdflatex surface_family_general_abcd_q19_a4_b2_c2_d4_report.tex
+		open surface_family_general_abcd_q19_a4_b2_c2_d4_report.pdf
+
+
+# E = 6
+
+
+Family_general_q19_11_2_15_11:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 19 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 11 2 15 11 -q 19 -end 
+		pdflatex surface_family_general_abcd_q19_a11_b2_c15_d11_report.tex
+		open surface_family_general_abcd_q19_a11_b2_c15_d11_report.pdf
+
+
+# E = 9:
+
+Family_general_q19_6_2_3_6:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 19 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 6 2 3 6 -q 19 -end 
+		pdflatex surface_family_general_abcd_q19_a6_b2_c3_d6_report.tex
+		open surface_family_general_abcd_q19_a6_b2_c3_d6_report.pdf
+
+
+
+# E = 10:
+
+Family_general_q19_6_5_5_6:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 19 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 6 5 5 6 -q 19 -end 
+		pdflatex surface_family_general_abcd_q19_a6_b5_c5_d6_report.tex
+		open surface_family_general_abcd_q19_a6_b5_c5_d6_report.pdf
+
+# E = 18:
+
+Family_general_q19_5_2_12_5:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 19 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 5 2 12 5 -q 19 -end 
+		pdflatex surface_family_general_abcd_q19_a5_b2_c12_d5_report.tex
+		open surface_family_general_abcd_q19_a5_b2_c12_d5_report.pdf
+
+
+# q=29
+
+Family_general_q29_3_7_4_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 29 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-control_six_arcs -end \
+		-create_surface -family_general_abcd 3 7 4 2 -q 29 -end 
+		pdflatex surface_family_general_abcd_q29_a3_b7_c4_d2_report.tex
+		open surface_family_general_abcd_q29_a3_b7_c4_d2_report.pdf
+
+
+
+arc_lifting_two_lines_29_E1:
+	$(ORBITER_PATH)/orbiter.out -v 4 -define G -linear_group -PGL 4 29 -end -end \
+		-draw_options -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-control_six_arcs -problem_label sixarcs_q29 -end \
+		-classify_surfaces_through_arcs_and_two_lines \
+		-test_nb_Eckardt_points 1 \
+		-report \
+		-end
+	pdflatex surfaces_arc_lifting_29.tex
+	open surfaces_arc_lifting_29.pdf
+
+
+
+
+
+
+
 #############################################################################################################
 # Section 37: Cubic Surfaces Classification
 
 
-CUBIC_SURFACES_CLASSIFICATION:
+SECTION_CUBIC_SURFACES_CLASSIFICATION:
 
 
 surface_4:
@@ -6202,12 +6719,31 @@ example_general_q32_2_3_5_18:
 	open surface_family_general_abcd_q32_a2_b3_c5_d18_report.pdf
 
 
+F_alpha_beta_gamma_delta_q7_classify: F_alpha_beta_gamma_delta_points.txt
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 7 -end -end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
+		-canonical_form_PG  \
+		-input \
+		-set_of_points $(SURFACE_F7_15LINES_MCKEAN_POINTS) \
+		-file_of_points F_alpha_beta_gamma_delta_points.txt \
+		-end \
+		-classification_prefix F_alpha_beta_gamma_delta_points \
+		-report \
+		-end \
+		-end
+	pdflatex F_alpha_beta_gamma_delta_points_classification.tex
+	open F_alpha_beta_gamma_delta_points_classification.pdf
+
+
 
 #############################################################################################################
 # Section 38:  Number Theory
 
 
-NUMBER_THEORY:
+SECTION_NUMBER_THEORY:
 	
 
 inverse_mod_a:
@@ -6236,7 +6772,7 @@ equivalence_class_of_fractions_draw:
 # Section 39: Cryptography 
 
 
-CRYPTOGRAPHY:
+SECTION_CRYPTOGRAPHY:
 
 
 EC_add:
@@ -6621,10 +7157,62 @@ pseudoprime36:
 # factoring takes 46 seconds
 
 
+
+ntt:
+	$(ORBITER_PATH)/orbiter.out -v 2 -NTT 4 17 ntt4.cpp
+
+
+FGDTP:
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_F_k4.csv 20 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_Fv_k4.csv 20 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_AAv_k4.csv 20 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_G_k4.csv 20 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_D_k4.csv 20 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_T_k4.csv 20 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_Tv_k4.csv 20 8
+	
+no:
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_P_k4.csv 20 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_F_k3.csv 20 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_Gr_k3.csv 20 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_Dr_k3.csv 20 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_Tr_k3.csv 20 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_Pr_k3.csv 20 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_G_k3.csv 20 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_D_k3.csv 20 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_T_k3.csv 20 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_P_k3.csv 20 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_G_k2.csv 20 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_D_k2.csv 20 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_T_k2.csv 20 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_P_k2.csv 20 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_the_P_k4.csv 20 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_L_k4.csv 20 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix Fourier_q17_N16.csv 40 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix Fourier_q17_N8.csv 40 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix Fourier_q17_N4.csv 40 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix Fourier_q17_N2.csv 40 8
+	
+SRC=../../DEV.20/GITHUB/orbiter/src
+DISCRETA_CPP = g++
+DISCRETA_CC = gcc
+CPPFLAGS = -Wall -I$(SRC)/lib -std=c++14
+LIB = $(SRC)/lib/liborbiter.a -lpthread
+LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
+
+
+
+
+ntt4.out:  ntt4.o ;
+	$(DISCRETA_CPP)  ntt4.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+
+
+
 #############################################################################################################
 # Section 40: Coding Theory
 
-CODING_THEORY:
+SECTION_CODING_THEORY:
 
 
 
@@ -6632,7 +7220,7 @@ CODING_THEORY:
 
 Hamming_4_2:
 	$(ORBITER_PATH)/orbiter.out -Hamming_graph 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_n4_q2.csv 20 8
+	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_n4_q2.csv 20 8 -draw_matrix_partition 2 16 16 
 	open Hamming_n4_q2_draw.bmp
 
 
@@ -6891,7 +7479,90 @@ BCH21:
 	$(ORBITER_PATH)/orbiter.out -BCH_dual 21 2 7 
 
 
+BCH93:
+	$(ORBITER_PATH)/orbiter.out -BCH 93 2 3
 
+BCH255:
+	$(ORBITER_PATH)/orbiter.out -BCH 255 2 4
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix BCH_255_4.csv 40 24 -draw_matrix_partition 10 "239" "255" 
+
+#BCH_255_4.csv
+
+
+BCH273:
+	$(ORBITER_PATH)/orbiter.out -BCH 273 2 4
+
+
+encode_text_5bits:
+	$(ORBITER_PATH)/orbiter.out -encode_text_5bits  "Hithere" "text.csv"
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -polynomial_division_from_file text.csv 13 -end
+	pdflatex polynomial_division_file_13.tex
+	open polynomial_division_file_13.pdf
+
+#\usepackage[a1paper]{geometry}
+
+encode_text_5bits_check:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -polynomial_division_from_file text_with_1error.csv 13 -end
+	pdflatex polynomial_division_file_13.tex
+	open polynomial_division_file_13.pdf
+
+encode_constitution_field_induction:
+	$(ORBITER_PATH)/orbiter.out -encode_text_5bits  "We the People of the United States, in Order to form a more perfect Union, establish Justice, insure domestic Tranquility, provide for the common defense, promote the general Welfare, and secure the Blessings of Liberty to ourselves and our Posterity, do ordain and establish this Constitution for the United States of America." "constitution.csv"
+	$(ORBITER_PATH)/orbiter.out -reformat "constitution.csv" "constitution_80.csv" 80
+	$(ORBITER_PATH)/orbiter.out -field_induction  "constitution.csv"  "constitution_32.csv" 5
+	$(ORBITER_PATH)/orbiter.out -reformat "constitution_32.csv" "constitution_32_16.csv" 16
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix constitution_80.csv 20 8 -draw_matrix_partition 5 "21" "80" 
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix constitution_32_16.csv 20 8 -draw_matrix_partition 5 "21" "16" 
+
+
+
+encode_text_5bits_1error:
+	$(ORBITER_PATH)/orbiter.out -encode_text_5bits  "Hithere" "text.csv"
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -polynomial_division_from_file_all_k_bit_error_patterns text.csv 13 1 -end
+	pdflatex polynomial_division_file_all_1_error_patterns_13.tex
+	open polynomial_division_file_all_1_error_patterns_13.pdf
+
+encode_text_zero_5bits_1error:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -polynomial_division_from_file_all_k_bit_error_patterns text_zero.csv 13 1 -end
+	pdflatex polynomial_division_file_all_1_error_patterns_13.tex
+	open polynomial_division_file_all_1_error_patterns_13.pdf
+
+encode_text_zero_5bits_2error:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -polynomial_division_from_file_all_k_bit_error_patterns text_zero.csv 13 2 -end
+	pdflatex polynomial_division_file_all_2_error_patterns_13.tex
+	open polynomial_division_file_all_2_error_patterns_13.pdf
+
+encode_text_5bits_2error:
+	$(ORBITER_PATH)/orbiter.out -encode_text_5bits  "Hithere" "text.csv"
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -polynomial_division_from_file_all_k_bit_error_patterns text.csv 13 2 -end
+	pdflatex polynomial_division_file_all_2_error_patterns_13.tex
+	open polynomial_division_file_all_2_error_patterns_13.pdf
+
+encode_text_5bits_error_0_7:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -polynomial_division_from_file text_error_0_7.csv 13 -end
+	pdflatex polynomial_division_file_13.tex
+	open polynomial_division_file_13.pdf
 
 # code classification:
 
@@ -7227,134 +7898,19 @@ coding_theory_upper_bounds_q2:
 coding_theory_upper_bounds_q8:
 	$(ORBITER_PATH)/orbiter.out -v 2 -table_of_bounds 20 8
 	
-mult_polynomials_2_5_7:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity -mult_polynomials 5 7 -end
-	pdflatex polynomial_mult_5_7.tex
-	open polynomial_mult_5_7.pdf
 
 
-polynomial_division_ranked_2_27_13:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity -polynomial_division_ranked 27 13 -end
-	pdflatex polynomial_division_27_13.tex
-	open polynomial_division_27_13.pdf
+Reed_solomon_F8_work:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 8 -end -end \
+		-with F -do -finite_field_activity -parse "test" "" "(t-a)*(t-a*a)" -evaluate "a=2" -end
 
 
-mult_polynomials_2_4_6:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity -mult_polynomials 4 6 -end
-	pdflatex polynomial_mult_4_6.tex
-	open polynomial_mult_4_6.pdf
-
-polynomial_division_ranked_2_24_13:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity -polynomial_division_ranked 24 13 -end
-	pdflatex polynomial_division_24_13.tex
-	open polynomial_division_24_13.pdf
-
-
-
-mult_polynomials_1024_999_997:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity -mult_polynomials 999 997 -end
-	pdflatex polynomial_mult_999_997.tex
-	open polynomial_mult_999_997.pdf
-
-polynomial_division_ranked_2_349147_1033:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity -polynomial_division_ranked 349147 1033 -end
-	pdflatex polynomial_division_349147_1033.tex
-	open polynomial_division_349147_1033.pdf
-
-mult_polynomials_1024_999_997_check:
-	$(ORBITER_PATH)/orbiter.out -v 3 \
-		-define F -finite_field -q 1024 -end \
-		-with F -do \
-		-finite_field_activity -parse "test" "" "a*b" -evaluate "a=999,b=997" -end
-
-del_Pezzo_F13a_points.txt:
-	$(ORBITER_PATH)/orbiter.out -v 3 \
-		-define F -finite_field -q 13 -end \
-		-define P -projective_space 3 F -end \
-		-define f1 -formula "del_Pezzo_F9" "del\_Pezzo\_F9" "x,y,z" "x*x*x*x+y*y*y*y+z*z*z*z"  -end \
-		-define f2 -formula "del_Pezzo_F11" "del\_Pezzo\_F11" "x,y,z" "x*x*x*x+y*y*y*y+z*z*z*z+x*x*y*y+x*x*z*z+y*y*z*z"  -end \
-		-define f3 -formula "del_Pezzo_F13a" "del\_Pezzo\_F13a" "x,y,z" "x*x*x*x+y*y*y*y+z*z*z*z+8*x*x*y*y+8*x*x*z*z+8*y*y*z*z"  -end \
-		-define f4 -formula "del_Pezzo_F13b" "del\_Pezzo\_F13b" "x,y,z" "x*x*x*x+y*y*y*y+z*z*z*z-x*x*y*y"  -end \
-		-define del_Pezzo9 -collection "f1" \
-		-define del_Pezzo11 -collection "f2" \
-		-define del_Pezzo13 -collection "f3,f4" \
-	-with P -do \
-	-projective_space_activity \
-	-analyze_del_Pezzo_surface del_Pezzo13 ""
-	pdflatex del_Pezzo_F13a_report.tex
-	pdflatex del_Pezzo_F13b_report.tex
-	open del_Pezzo_F13a_report.pdf
-	open del_Pezzo_F13b_report.pdf
-
-# writes del_Pezzo_F13a_points.txt
-
-
-del_Pezzo_13_group: del_Pezzo_F13a_points.txt
-	$(ORBITER_PATH)/orbiter.out -v 4 \
-		-define F -finite_field -q 13 -end -end \
-		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-		-input \
-		-file_of_points del_Pezzo_F13a_points.txt \
-		-file_of_points del_Pezzo_F13b_points.txt \
-		-end \
-		-classification_prefix del_Pezzo_F13 \
-		-report \
-		-end
-	pdflatex del_Pezzo_F13_classification.tex
-	open del_Pezzo_F13_classification.pdf
-
-# 12 minutes on Macintosh
-# both have the same group of order 8, 
-# generated by -1s on the diagonals for the first three variables.
-
-#nauty_interface::nauty_interface_matrix_int n >= MAXN
-#nauty_interface::nauty_interface_matrix_int n = 33492
-#nauty_interface::nauty_interface_matrix_int MAXN = 22000
-
-
-
-
-del_Pezzo_169:
-	$(ORBITER_PATH)/orbiter.out -v 3 \
-		-define F -finite_field -q 169 -end \
-		-define P -projective_space 3 F -end \
-		-define f3 -formula "del_Pezzo_F169a" "del\_Pezzo\_F169a" "x,y,z" "x*x*x*x+y*y*y*y+z*z*z*z+8*x*x*y*y+8*x*x*z*z+8*y*y*z*z"  -end \
-		-define f4 -formula "del_Pezzo_F169b" "del\_Pezzo\_F169b" "x,y,z" "x*x*x*x+y*y*y*y+z*z*z*z-x*x*y*y"  -end \
-		-define del_Pezzo13 -collection "f3,f4" \
-	-with P -do \
-	-projective_space_activity \
-	-analyze_del_Pezzo_surface del_Pezzo13 ""
-	pdflatex del_Pezzo_F169a_report.tex
-	pdflatex del_Pezzo_F169b_report.tex
-	open del_Pezzo_F169a_report.pdf
-	open del_Pezzo_F169b_report.pdf
 
 
 ########################################################################################################
 # Section 41: Diophantine Systems
 
-DIOPHANT:
+SECTION_DIOPHANT:
 	
 
 
@@ -7396,7 +7952,7 @@ octic_monomials_solve:
 ########################################################################################################
 # Section 42: Combinatorial Linear Spaces
 
-COMBINATORIAL_LINEAR_SPACES:
+SECTION_COMBINATORIAL_LINEAR_SPACES:
 	
 
 linsp7:
@@ -7449,7 +8005,7 @@ linsp30_pt_distribution:
 #############################################################################################################
 # Section 43: Design Theory
 
-DESIGN_THEORY:
+SECTION_DESIGN_THEORY:
 
 
 design_PG_2_3:
@@ -7631,7 +8187,7 @@ design_27_conic_type:
 #############################################################################################################
 # Section 44: Tactical Decompositions
 
-TACTICAL_DECOMPOSITIONS:
+SECTION_TACTICAL_DECOMPOSITIONS:
 
 max_arc_16_4_start:
 	$(ORBITER_PATH)/orbiter.out -v 4 -maximal_arc_parameters 16 4
@@ -7891,7 +8447,7 @@ max_arc_lift:
 #############################################################################################################
 # Section 45: Spreads
 
-SPREADS:
+SECTION_SPREADS:
 	
 desarguesian_spread_in_PG_3_2:
 	$(ORBITER_PATH)/orbiter.out -v 3 \
@@ -8128,7 +8684,7 @@ TP_16_2:
 # Section 46: Packings
 
 
-PACKINGS:
+SECTION_PACKINGS:
 
 
 #######################################
@@ -9506,7 +10062,7 @@ packing_2Cx2_0_long_orbits_5_fixpoints:
 #############################################################################################################
 # Section 47: BLT-sets
 
-BLT_SETS:
+SECTION_BLT_SETS:
 
 BLT_5_1:
 	$(ORBITER_PATH)/orbiter.out -v 2 \
@@ -9626,7 +10182,7 @@ BLT_5_classify:
 # Section 48: Graph Theory
 
 
-GRAPH_THEORY:
+SECTION_GRAPH_THEORY:
 	
 
 petersen:
@@ -9695,7 +10251,7 @@ small_graph_cliques_Sajeeb:
 #############################################################################################################
 # Section 49: Graphical Output
 
-GRAPHICAL_OUTPUT:
+SECTION_GRAPHICAL_OUTPUT:
 	
 
 addition_table_F7:
@@ -9771,7 +10327,7 @@ schreier_tree_graphical_output:
 # Section 50: The Povray Interface
 
 
-POVRAY:
+SECTION_POVRAY:
 
 
 cube:
@@ -10026,7 +10582,7 @@ EC_draw: elliptic_curve_b1_c3_q11.txt
 #############################################################################################################
 # Section 51: Creating a Movie Using Ffmpeg
 
-ANIMATIONS:
+SECTION_ANIMATIONS:
 
 
 monkey_video:
@@ -10054,6 +10610,496 @@ HCV_deform_video:
 	ffmpeg -r 5 -f image2 -i FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  HCV_deform.mp4
 
 
+Eckardt_surface:
+	$(ORBITER_PATH)/orbiter.out -v 2 -povray \
+		-round 0 -nb_frames_default 30 -output_mask Eckardt_%d_%03d.pov \
+		-video_options -W 1024 -H 768  -global_picture_scale 0.9 -default_angle 75 -clipping_radius 2.4 \
+		-camera 0 "1,1,1" "-3,1,3" "0.12,0.12,0.12"  \
+		-end \
+		-scene_objects \
+			-cubic_Goursat "6,3,-15" \
+			-group_of_things "0" \
+			-cubics 0 "texture{ pigment{ White*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv Eckardt_0_*.pov POV
+	mv makefile_animation POV
+
+Kummer_surface:
+	$(ORBITER_PATH)/orbiter.out -v 2 -povray \
+		-round 0 -nb_frames_default 30 -output_mask Kummer_%d_%03d.pov \
+		-video_options -W 1024 -H 768  -global_picture_scale 0.9 -default_angle 75 -clipping_radius 2.4 \
+		-camera 0 "1,1,1" "-3,1,3" "0.12,0.12,0.12"  \
+		-end \
+		-scene_objects \
+			-quartic_lex_35 "-2, 0, 0, 0, 2, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -2, 0, 0, 2, 0, 2, 0, 0, 0, 0, -2, 0, 2, 0, -2" \
+			-group_of_things "0" \
+			-quartics 0 "texture{ pigment{ White*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv Kummer_0_*.pov POV
+	mv makefile_animation POV
+
+
+# Maple:
+#Kummer := expand((x0^2 + x1^2 + x2^2 + x3^2)^2 - 3*(x0^4 + x1^4 + x2^4 + x3^4))
+
+
+Kummer_video:
+	- rm -r FRAMES
+	- mkdir FRAMES
+	- rm Kummer.mp4
+	$(ORBITER_PATH)/orbiter.out \
+		-prepare_frames \
+			-i 0 30 KUMMER/Kummer_0_%03d.png \
+			-output_starts_at 0 \
+			-o FRAMES/frame%04d.png \
+		-end
+	ffmpeg -r 5 -f image2 -i FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  Kummer.mp4
+
+
+Beauville_surface:
+	$(ORBITER_PATH)/orbiter.out -v 2 -povray \
+		-round 0 -nb_frames_default 30 -output_mask Beauville_%d_%03d.pov \
+		-video_options -W 1024 -H 768  -global_picture_scale 0.3 -default_angle 75 -clipping_radius 2.4 \
+		-camera 0 "1,1,1" "-3,1,3" "0.12,0.12,0.12"  \
+		-end \
+		-scene_objects \
+			-quintic_lex_56 "-44, 228, 400, 315, -396, -852, -512, -553, -1050, -354, 284, 504, -62, -707, -1390, -1010, 281, -167, -1644, -1024, -72, -196, 192, 373, 322, 78, 150, 966, 1540, 348, -475, -492, 1063, 1550, 390, 0, 96, 3, -337, -426, -66, 425, 673, -156, -216, -223, -60, 1543, 1998, 618, 263, -250, -919, 557, 1800, 741" \
+			-group_of_things "0" \
+			-quintics 0 "texture{ pigment{ White*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv Beauville_0_*.pov POV
+	mv makefile_animation POV
+
+
+#-44, 228, 400, 315, -396, -852, -512, -553, -1050, -354, 284, 504, -62, -707, -1390, -1010, 281, -167, -1644, -1024, -72, -196, 192, 373, 322, 78, 150, 966, 1540, 348, -475, -492, 1063, 1550, 390, 0, 96, 3, -337, -426, -66, 425, 673, -156, -216, -223, -60, 1543, 1998, 618, 263, -250, -919, 557, 1800, 741
+
+
+
+
+
+# Clebsch map up for surface created using arc lifting
+# We take a circle of radius r centered at the origin in the affine real plane 
+# and map it up on the surface.
+# The Clebsch surface has 
+# a = d = 2.618033988 = (3+sqrt(5))/2
+# b = c = 1.618033988 = (1+sqrt(5))/2
+# 
+CLEBSCH_A=2.618033988
+CLEBSCH_D=2.618033988
+CLEBSCH_B=1.618033988
+CLEBSCH_C=1.618033988
+TWO_PI=6.283185308
+
+
+# to go from the arclifting surface to the defining equation:
+#Matrix(4, 4, [[-0.44721360215312733, 1.1708204000530853, 1.1708204000530853, -0.4472135957999158], [-1.1708204000530853, 0.4472136021531272, 1.4472136021531272, 0.4472135957999158], [4.2360680044124255, -4.2360680044124255, -4.2360680044124255, 0.], [1.6180340022062127, -2.6180340022062127, -1.6180340022062127, 0.]])
+#-0.44721360215312733, 1.1708204000530853, 1.1708204000530853, -0.4472135957999158
+#-1.1708204000530853, 0.4472136021531272, 1.4472136021531272, 0.4472135957999158
+#4.2360680044124255, -4.2360680044124255, -4.2360680044124255, 0.
+#1.6180340022062127, -2.6180340022062127, -1.6180340022062127, 0.
+
+
+T00=-0.44721360215312733
+T01=1.1708204000530853
+T02=1.1708204000530853
+T03=-0.4472135957999158
+T10=-1.1708204000530853
+T11=0.4472136021531272
+T12=1.4472136021531272
+T13=0.4472135957999158
+T20=4.2360680044124255
+T21=-4.2360680044124255
+T22=-4.2360680044124255
+T23=0.
+T30=1.6180340022062127
+T31=-2.6180340022062127
+T32=-1.6180340022062127
+T33=0.
+
+
+CLEBSCH_CUBICS=\
+				push b push b mult push d push c push m mult add mult \
+				push b push c push d push d push m mult mult add mult \
+				push a push d push d push m add mult mult add add \
+				push a push c push m mult add mult \
+				store c001 \
+				push b push d mult \
+				push b push 1 push m push c mult add mult \
+				push d push a push 1 push m mult add mult add \
+				push m push a mult add push c add \
+				push c push m push a mult add \
+				mult mult \
+				store c002 \
+				push b \
+				push d push c push a push m mult add mult \
+				push c push a push m push 1 mult add mult add mult \
+				push a push d mult push c push 1 push m mult add mult \
+				push m mult add \
+				push a push c push m mult add mult \
+				store c011 \
+				push b push b push c mult mult \
+				push 1 push d push m mult add mult \
+				push a push b mult push c push d push d push m mult mult add mult \
+				push m mult add \
+				push a push d mult push c push d push m mult add mult add \
+				push a push c push m mult add mult \
+				store c012 \
+				push m \
+				push b push d push m mult add push c mult \
+				push d push b push 1 push m mult add mult push m mult add push a mult \
+				push b push c mult push d push 1 push m mult add mult add mult \
+				push b push d push m mult add mult \
+				store d001 \
+				push m \
+				push d push c push m mult add push a push a mult mult \
+				push c push c mult push d push m mult add push a mult add \
+				push m push b push c mult mult push c push 1 push m mult add mult add mult \
+				push b push d push m mult add mult \
+				store d011 \
+				push m \
+				push c push d mult push d push m mult add push a push a mult mult \
+				push c push c mult push d push m mult add push a push b push m mult mult mult add \
+				push b push d push c push m mult add mult push c push m mult mult add \
+				push b push d push m mult add mult mult \
+				store d012 \
+				push d push 1 push m mult add push a mult push m push b mult push 1 add push c mult add \
+				push b add push m push d mult add \
+				push a push c mult mult \
+				push b push d push m mult add mult \
+				store d112 \
+				push m \
+				push b push d push m mult add push c mult push d push b push 1 push m mult add mult \
+				push m mult add push a mult push b push c mult push d push 1 push m mult add mult add \
+				push b push d push m mult add mult mult \
+				store m002 \
+				push m \
+				push d push c push m mult add push a push a mult mult \
+				push c push c mult push d push m mult add push a mult add \
+				push b push c push m mult mult push c push 1 push m mult add mult add \
+				push b push d push m mult add mult mult \
+				store m012 \
+				push m\
+				push c push d mult push d push m mult add push a push a mult mult \
+				push m push c push c mult push d push m mult add push a push b mult mult mult add \
+				push m push b push d push c push m mult add push c mult mult mult add \
+				push b push d push m mult add mult mult \
+				store m022 \
+				push d push 1 push m mult add push a mult \
+				push m push b mult push 1 add push c mult add \
+				push b add push m push d mult add \
+				push a push c mult mult \
+				push b push d push m mult add mult \
+				store m122 \
+				push m push a mult push c add push d mult push c push a push 1 push m mult add mult add \
+				push b mult \
+				push m push a push d mult mult push c push 1 push m mult add mult add \
+				push b push d push m mult add mult \
+				store n002 \
+				push m \
+				push c push d push m mult add push b mult push m push d push c push 1 push m mult add mult mult add \
+				push a mult \
+				push b push c mult push d push 1 push m mult add mult add mult \
+				push a push b push c push m mult push d push m mult add add add mult \
+				store n012 \
+				push c push d push m mult add push b mult \
+				push m push d push c push 1 push m mult add mult mult  add \
+				push a mult \
+				push b push c mult push d push 1 push m mult add mult add \
+				push a push d mult push m push b push c mult mult add mult \
+				store n022 \
+				push m \
+				push c push d push m mult add push b mult \
+				push m push d push c push 1 push m mult add mult mult add \
+				push a mult \
+				push b push c mult push d push 1 push m mult add mult add \
+				push m push a mult push c add mult mult \
+				store n112 \
+				push m \
+				push c push d push m mult add push b mult \
+				push m push d push c push 1 push m mult add mult mult add \
+				push a mult \
+				push b push c mult push d push 1 push m mult add mult add \
+				push a push d mult push m push b push c mult mult add mult mult \
+				store n122 
+
+Clebsch_up_create_points:
+	$(ORBITER_PATH)/orbiter.out -v 2 -smooth_curve "Clebsch_map_of_circle_to_defininig_eqn_r2" 0.07 1000 5 0 $(TWO_PI) \
+		-const a $(CLEBSCH_A) b $(CLEBSCH_B) c $(CLEBSCH_C) d $(CLEBSCH_D) \
+			t00 $(T00) t01 $(T01) t02 $(T02) t03 $(T03) \
+			t10 $(T10) t11 $(T11) t12 $(T12) t13 $(T13) \
+			t20 $(T20) t21 $(T21) t22 $(T22) t23 $(T23) \
+			t30 $(T30) t31 $(T31) t32 $(T32) t33 $(T33) \
+			r 2 one 1 m -1 \
+		-const_end \
+		-var t \
+			c001 c002 c011 c012 \
+			d001 d011 d012 d112 \
+			m002 m012 m022 m122 \
+			n002 n012 n112 n022 n122 \
+			y0 y1 y2 \
+			y001 y002 y011 y012 y022 y112 y122 \
+			x0 x1 x2 x3 \
+			-var_end \
+		-code \
+			push t cos push r mult store y0 \
+			push t sin push r mult store y1 \
+			push one store y2 \
+			push y0 push y0 push y1 mult mult store y001 \
+			push y0 push y0 push y2 mult mult store y002 \
+			push y0 push y1 push y1 mult mult store y011 \
+			push y0 push y1 push y2 mult mult store y012 \
+			push y0 push y2 push y2 mult mult store y022 \
+			push y1 push y1 push y2 mult mult store y112 \
+			push y1 push y2 push y2 mult mult store y122 \
+			$(CLEBSCH_CUBICS) \
+				push c001 push y001 mult \
+				push c002 push y002 mult add \
+				push c011 push y011 mult add \
+				push c012 push y012 mult add \
+				store x0 \
+				push d001 push y001 mult \
+				push d011 push y011 mult add \
+				push d012 push y012 mult add \
+				push d112 push y112 mult add \
+				store x1 \
+				push m002 push y002 mult \
+				push m012 push y012 mult add \
+				push m022 push y022 mult add \
+				push m122 push y122 mult add \
+				store x2 \
+				push n002 push y002 mult \
+				push n012 push y012 mult add \
+				push n022 push y022 mult add \
+				push n112 push y112 mult add \
+				push n122 push y122 mult add \
+				store x3 \
+				push x0 push t00 mult \
+				push x1 push t10 mult add \
+				push x2 push t20 mult add \
+				push x3 push t30 mult add \
+				return \
+				push x0 push t01 mult \
+				push x1 push t11 mult add \
+				push x2 push t21 mult add \
+				push x3 push t31 mult add \
+				return \
+				push x0 push t02 mult \
+				push x1 push t12 mult add \
+				push x2 push t22 mult add \
+				push x3 push t32 mult add \
+				return \
+				push x0 push t03 mult \
+				push x1 push t13 mult add \
+				push x2 push t23 mult add \
+				push x3 push t33 mult add \
+				return \
+		-code_end
+
+
+Clebsch_surface:
+	$(ORBITER_PATH)/orbiter.out -v 2 -povray \
+		-round 0 -nb_frames_default 30 -output_mask Clebsch_%d_%03d.pov \
+		-video_options -W 1024 -H 768  -global_picture_scale 0.9 -default_angle 75 -clipping_radius 2.4 \
+		-camera 0 "1,1,1" "-3,1,3" "0.12,0.12,0.12"  \
+		-end \
+		-scene_objects \
+			-cubic_orbiter "0,0,0,0,0,-4.236067972,0,0,4.236067972,4.236067972,17.94427188,- 17.94427188,0,0,- 9.472135941,0,0,5.236067971,8.472135938,- 27.41640782" \
+			-group_of_things "0" \
+			-cubics 0 "texture{ pigment{ White*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+			-point_list_from_csv_file function_Clebsch_map_of_circle_N1000_points.csv \
+			-group_of_things_as_interval 0 954 \
+			-spheres 1 0.07 "texture{ pigment{ color Red } finish { diffuse 0.9 phong 1}}" \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv Clebsch_0_*.pov POV
+	mv makefile_animation POV
+
+
+Clebsch_surface_defining_equation:
+	$(ORBITER_PATH)/orbiter.out -v 2 -povray \
+		-round 0 -nb_frames_default 30 -output_mask Clebsch_%d_%03d.pov \
+		-video_options -W 1024 -H 768  -global_picture_scale 0.6 -default_angle 75 -clipping_radius 1.6 \
+		-camera 0 "1,1,1" "-2,0,2" "0,0,0"  \
+		-end \
+		-scene_objects \
+			-cubic_orbiter "0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2" \
+			-group_of_things "0" \
+			-cubics 0 "texture{ pigment{ White*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv Clebsch_0_*.pov POV
+	mv makefile_animation POV
+
+
+
+Clebsch_surface_defining_equation_and_curves:
+	$(ORBITER_PATH)/orbiter.out -v 2 -povray \
+		-round 0 -nb_frames_default 30 -output_mask Clebsch_2curves_%d_%03d.pov \
+		-video_options -W 1024 -H 768  -global_picture_scale 0.6 -default_angle 75 -clipping_radius 1.6 \
+		-camera 0 "1,1,1" "-2,0,2" "0,0,0"  \
+		-end \
+		-scene_objects \
+			-cubic_orbiter "0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2" \
+			-group_of_things "0" \
+			-cubics 0 "texture{ pigment{ White*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+			-point_list_from_csv_file function_Clebsch_map_of_circle_to_defininig_eqn_N1000_points.csv \
+			-group_of_things_as_interval 0 656 \
+			-spheres 1 0.07 "texture{ pigment{ color Red } finish { diffuse 0.9 phong 1}}" \
+			-point_list_from_csv_file function_Clebsch_map_of_circle_to_defininig_eqn_r2_N1000_points.csv \
+			-group_of_things_as_interval 656 1042 \
+			-spheres 2 0.07 "texture{ pigment{ color Blue } finish { diffuse 0.9 phong 1}}" \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv Clebsch_2curves_0_*.pov POV
+	mv makefile_animation POV
+
+#			-point_list_from_csv_file function_Clebsch_map_of_circle_N1000_points.csv \
+#			-group_of_things_as_interval 0 954 \
+#			-spheres 1 0.07 "texture{ pigment{ color Red } finish { diffuse 0.9 phong 1}}" \
+
+
+
+
+F7_povray:
+	$(ORBITER_PATH)/orbiter.out -v 2 -povray \
+		-round 0 -nb_frames_default 30 -output_mask F7_15_lines_%d_%03d.pov \
+		-video_options -W 1024 -H 768  -global_picture_scale 1.5 -default_angle 80 -clipping_radius 4.4 \
+		-omit_bottom_plane \
+		-camera 0 "1,1,1"  "-4.5,3.5,6" "0,0,0"  \
+		-end \
+		-scene_objects \
+			-cubic_lex "0, 0, 6, 0, 0, -13.39014946, -3.341901346, -6.972931640, 5.827182718, 0, 0, 7.390149464, 7.390149464, 6.972931640, -1.512349728, -8.485281372, 0, 0, 0, 0" \
+			-group_of_things "0" \
+			-cubics 0 "texture{ pigment{ White*0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+			-line_through_point_with_direction "0, 0, 0, 1, 0, 0" \
+			-line_through_point_with_direction "0, 0, -1, 0, 1, 0" \
+			-line_through_point_with_direction "0, 0, 0, 0, 0, -1" \
+			-line_through_point_with_direction "1, 0, 0, 1, 1, 1" \
+			-line_through_point_with_direction "-1.414213562, 0, 0, 4.146264370, 1.732050808, 1.732050808" \
+			-line_through_point_with_direction "0, 1.732050808, -1, 2.414213562, -0.317837246, 2.414213562" \
+			-line_through_point_with_direction "-2.133352390, 0, -1, 1.674708020, 1, 0" \
+			-line_through_point_with_direction "-2.539058015, 0, 0, 2.211360755, 1, 0" \
+			-line_through_point_with_direction "0, 1.148188060, 0, 0, -0.9435440612, 1" \
+			-line_through_point_with_direction "-0.9711971171, 0, 0, 1.162155272, 0, 1" \
+			-line_through_point_with_direction "2.096037870, 2.096037870, 0, -1.065851905, -1.065851905, 1" \
+			-line_through_point_with_direction "3.921555783, 2.921555781, 0, -1.722456585, -1.722456585, 1" \
+			-group_of_things_as_interval 0 12 \
+			-lines 1 0.04 "texture{ pigment{ color Yellow } finish { diffuse 0.9 phong 1}}" \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv F7_15_lines_0_*.pov POV
+	mv makefile_animation POV
+
+
+
+
+#			-label 0 "c23" \
+#			-label 2 "c24" \
+#			-label 4 "c15" \
+#			-label 6 "c16" \
+#			-label 8 "c45" \
+#			-label 10 "c35" \
+#			-label 12 "c13" \
+#			-label 14 "c14" \
+#			-label 16 "c36" \
+#			-label 18 "c46" \
+#			-label 20 "c26" \
+#			-label 22 "c25" \
+#			-group_of_things_as_interval 0 12 \
+#			-texts 2 0.2 0.3 "texture{ pigment{Black} } no_shadow" \
+
+#			-lines 1 0.02 "texture{ pigment{ color Red } finish { diffuse 0.9 phong 1}}" \
+#			-lines 2 0.02 "texture{ pigment{ color Blue } finish { diffuse 0.9 phong 1}}" \
+#			-lines 3 0.02 "texture{ pigment{ color Yellow } finish { diffuse 0.9 phong 1}}" \
+
+# first vector is a point, second vector is direction:
+
+#c23:=  [[0, 0, 0], [1, 0, 0]]
+
+#c24:= [[0, 0, -1], [0, 1, 0]]
+
+#c15:=  [[0, 0, 0], [0, 0, -1]]
+
+#c16:= [[1, 0, 0], [1, 1, 1]]
+
+#c45:= [[-1.414213562, 0, 0], [4.146264370, 1.732050808, 1.732050808]]
+
+#c35:= [[0, 1.732050808, -1], [2.414213562, -0.317837246, 2.414213562]]
+
+#c13:= [[-2.133352390, 0, -1], [1.674708020, 1, 0]]
+
+#c14:= [[-2.539058015, 0, 0], [2.211360755, 1, 0]]
+
+#c36:= [[0, 1.148188060, 0], [0, -0.9435440612, 1]]
+
+#c46:= [[-0.9711971171, 0, 0], [1.162155272, 0, 1]]
+
+#c26:= [[2.096037870, 2.096037870, 0], [-1.065851905, -1.065851905, 1]]
+
+#c25:= [[3.921555783, 2.921555781, 0], [-1.722456585, -1.722456585, 1]]
+
+
+F7_video:
+	- rm -r FRAMES
+	- mkdir FRAMES
+	- rm fifteen_with_lines.mp4
+	$(ORBITER_PATH)/orbiter.out \
+		-prepare_frames \
+			-i 0 30 F7b/F7_15_lines_0_%03d.png \
+			-output_starts_at 0 \
+			-o FRAMES/frame%04d.png \
+		-end
+	ffmpeg -r 5 -f image2 -i FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  fifteen_with_lines.mp4
+
+
+McKean_povray:
+	$(ORBITER_PATH)/orbiter.out -v 2 -povray \
+		-round 0 -nb_frames_default 30 -output_mask McKean_%d_%03d.pov \
+		-video_options -W 1024 -H 768  -global_picture_scale 1.5 -default_angle 80 -clipping_radius 4.4 \
+		-omit_bottom_plane \
+		-camera 0 "1,1,1"  "-4.5,3.5,6" "0,0,0"  \
+		-end \
+		-scene_objects \
+			-cubic_lex "0, 0, 1, 0, 0, -1, -2, 1, 2, 0, 0, 1, 1,-1, -1, -1, 0, 0, 0, 0" \
+			-group_of_things "0" \
+			-cubics 0 "texture{ pigment{ White*0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+		-scene_objects_end \
+		-povray_end
+	- rm -rf POV
+	mkdir POV
+	mv McKean_0_*.pov POV
+	mv makefile_animation POV
+
+McKean_video:
+	- rm -r FRAMES
+	- mkdir FRAMES
+	- rm McKean.mp4
+	$(ORBITER_PATH)/orbiter.out \
+		-prepare_frames \
+			-i 0 30 MCKEAN/McKean_0_%03d.png \
+			-output_starts_at 0 \
+			-o FRAMES/frame%04d.png \
+		-end
+	ffmpeg -r 5 -f image2 -i FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  McKean.mp4
+
+
 
 
 #############################################################################################################
@@ -10061,7 +11107,7 @@ HCV_deform_video:
 
 
 
-CONTINUOUS_FUNCTION_PLOTTER:
+SECTION_CONTINUOUS_FUNCTION_PLOTTER:
 
 
 lissajous:
@@ -10156,7 +11202,7 @@ lissajous_3d_plot:
 #############################################################################################################
 # Section 53: Miscellaneous
 
-MISCELLANEOUS:
+SECTION_MISCELLANEOUS:
 
 
 #	$(ORBITER_PATH)/orbiter.out -v 4 -csv_file_select_rows poly_orbits_d3_n3_q2.csv \
@@ -10201,54 +11247,6 @@ convert_stack_tdo_32_der:
 #1 1 2
 #</HTDO>
 
-
-ntt:
-	$(ORBITER_PATH)/orbiter.out -v 2 -NTT 4 17 ntt4.cpp
-
-
-FGDTP:
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_F_k4.csv 20 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_Fv_k4.csv 20 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_AAv_k4.csv 20 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_G_k4.csv 20 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_D_k4.csv 20 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_T_k4.csv 20 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_Tv_k4.csv 20 8
-	
-no:
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_P_k4.csv 20 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_F_k3.csv 20 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_Gr_k3.csv 20 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_Dr_k3.csv 20 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_Tr_k3.csv 20 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_Pr_k3.csv 20 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_G_k3.csv 20 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_D_k3.csv 20 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_T_k3.csv 20 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_P_k3.csv 20 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_G_k2.csv 20 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_D_k2.csv 20 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_T_k2.csv 20 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_P_k2.csv 20 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_the_P_k4.csv 20 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_L_k4.csv 20 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix Fourier_q17_N16.csv 40 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix Fourier_q17_N8.csv 40 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix Fourier_q17_N4.csv 40 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix Fourier_q17_N2.csv 40 8
-	
-SRC=../../DEV.20/GITHUB/orbiter/src
-DISCRETA_CPP = g++
-DISCRETA_CC = gcc
-CPPFLAGS = -Wall -I$(SRC)/lib -std=c++14
-LIB = $(SRC)/lib/liborbiter.a -lpthread
-LFLAGS = -lm -Wl,-rpath -Wl,/usr/local/gcc-8.2.0/lib64
-
-
-
-
-ntt4.out:  ntt4.o ;
-	$(DISCRETA_CPP)  ntt4.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 
@@ -10523,113 +11521,6 @@ Dickson_q8_surface_canonical:
 
 
 ####
-
-
-
-
-# odd characteristic
-# q=19
-
-# E = 2
-
-Family_general_q19_2_3_3_2:
-	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 19 -wedge -end -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-control_six_arcs -end \
-		-create_surface -family_general_abcd 2 3 3 2 -q 19 -end 
-		pdflatex surface_family_general_abcd_q19_a2_b3_c3_d2_report.tex
-		open surface_family_general_abcd_q19_a2_b3_c3_d2_report.pdf
-
-
-
-# E = 4:
-
-Family_general_q19_4_2_2_4:
-	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 19 -wedge -end -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-control_six_arcs -end \
-		-create_surface -family_general_abcd 4 2 2 4 -q 19 -end 
-		pdflatex surface_family_general_abcd_q19_a4_b2_c2_d4_report.tex
-		open surface_family_general_abcd_q19_a4_b2_c2_d4_report.pdf
-
-
-# E = 6
-
-
-Family_general_q19_11_2_15_11:
-	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 19 -wedge -end -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-control_six_arcs -end \
-		-create_surface -family_general_abcd 11 2 15 11 -q 19 -end 
-		pdflatex surface_family_general_abcd_q19_a11_b2_c15_d11_report.tex
-		open surface_family_general_abcd_q19_a11_b2_c15_d11_report.pdf
-
-
-# E = 9:
-
-Family_general_q19_6_2_3_6:
-	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 19 -wedge -end -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-control_six_arcs -end \
-		-create_surface -family_general_abcd 6 2 3 6 -q 19 -end 
-		pdflatex surface_family_general_abcd_q19_a6_b2_c3_d6_report.tex
-		open surface_family_general_abcd_q19_a6_b2_c3_d6_report.pdf
-
-
-
-# E = 10:
-
-Family_general_q19_6_5_5_6:
-	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 19 -wedge -end -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-control_six_arcs -end \
-		-create_surface -family_general_abcd 6 5 5 6 -q 19 -end 
-		pdflatex surface_family_general_abcd_q19_a6_b5_c5_d6_report.tex
-		open surface_family_general_abcd_q19_a6_b5_c5_d6_report.pdf
-
-# E = 18:
-
-Family_general_q19_5_2_12_5:
-	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 19 -wedge -end -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-control_six_arcs -end \
-		-create_surface -family_general_abcd 5 2 12 5 -q 19 -end 
-		pdflatex surface_family_general_abcd_q19_a5_b2_c12_d5_report.tex
-		open surface_family_general_abcd_q19_a5_b2_c12_d5_report.pdf
-
-
-# q=29
-
-Family_general_q29_3_7_4_2:
-	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 29 -wedge -end -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-control_six_arcs -end \
-		-create_surface -family_general_abcd 3 7 4 2 -q 29 -end 
-		pdflatex surface_family_general_abcd_q29_a3_b7_c4_d2_report.tex
-		open surface_family_general_abcd_q29_a3_b7_c4_d2_report.pdf
-
-
-
-arc_lifting_two_lines_29_E1:
-	$(ORBITER_PATH)/orbiter.out -v 4 -define G -linear_group -PGL 4 29 -end -end \
-		-draw_options -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-control_six_arcs -problem_label sixarcs_q29 -end \
-		-classify_surfaces_through_arcs_and_two_lines \
-		-test_nb_Eckardt_points 1 \
-		-report \
-		-end
-	pdflatex surfaces_arc_lifting_29.tex
-	open surfaces_arc_lifting_29.pdf
-
 
 
 E0="-1,55,1,45,-1,46,1,57,1,61,-1,62"
@@ -11315,293 +12206,6 @@ rank_PG_2_19:
 
 ######
 
-# Clebsch map up for surface created using arc lifting
-# We take a circle of radius r centered at the origin in the affine real plane 
-# and map it up on the surface.
-# The Clebsch surface has 
-# a = d = 2.618033988 = (3+sqrt(5))/2
-# b = c = 1.618033988 = (1+sqrt(5))/2
-# 
-CLEBSCH_A=2.618033988
-CLEBSCH_D=2.618033988
-CLEBSCH_B=1.618033988
-CLEBSCH_C=1.618033988
-TWO_PI=6.283185308
-
-
-# to go from the arclifting surface to the defining equation:
-#Matrix(4, 4, [[-0.44721360215312733, 1.1708204000530853, 1.1708204000530853, -0.4472135957999158], [-1.1708204000530853, 0.4472136021531272, 1.4472136021531272, 0.4472135957999158], [4.2360680044124255, -4.2360680044124255, -4.2360680044124255, 0.], [1.6180340022062127, -2.6180340022062127, -1.6180340022062127, 0.]])
-#-0.44721360215312733, 1.1708204000530853, 1.1708204000530853, -0.4472135957999158
-#-1.1708204000530853, 0.4472136021531272, 1.4472136021531272, 0.4472135957999158
-#4.2360680044124255, -4.2360680044124255, -4.2360680044124255, 0.
-#1.6180340022062127, -2.6180340022062127, -1.6180340022062127, 0.
-
-
-T00=-0.44721360215312733
-T01=1.1708204000530853
-T02=1.1708204000530853
-T03=-0.4472135957999158
-T10=-1.1708204000530853
-T11=0.4472136021531272
-T12=1.4472136021531272
-T13=0.4472135957999158
-T20=4.2360680044124255
-T21=-4.2360680044124255
-T22=-4.2360680044124255
-T23=0.
-T30=1.6180340022062127
-T31=-2.6180340022062127
-T32=-1.6180340022062127
-T33=0.
-
-
-CLEBSCH_CUBICS=\
-				push b push b mult push d push c push m mult add mult \
-				push b push c push d push d push m mult mult add mult \
-				push a push d push d push m add mult mult add add \
-				push a push c push m mult add mult \
-				store c001 \
-				push b push d mult \
-				push b push 1 push m push c mult add mult \
-				push d push a push 1 push m mult add mult add \
-				push m push a mult add push c add \
-				push c push m push a mult add \
-				mult mult \
-				store c002 \
-				push b \
-				push d push c push a push m mult add mult \
-				push c push a push m push 1 mult add mult add mult \
-				push a push d mult push c push 1 push m mult add mult \
-				push m mult add \
-				push a push c push m mult add mult \
-				store c011 \
-				push b push b push c mult mult \
-				push 1 push d push m mult add mult \
-				push a push b mult push c push d push d push m mult mult add mult \
-				push m mult add \
-				push a push d mult push c push d push m mult add mult add \
-				push a push c push m mult add mult \
-				store c012 \
-				push m \
-				push b push d push m mult add push c mult \
-				push d push b push 1 push m mult add mult push m mult add push a mult \
-				push b push c mult push d push 1 push m mult add mult add mult \
-				push b push d push m mult add mult \
-				store d001 \
-				push m \
-				push d push c push m mult add push a push a mult mult \
-				push c push c mult push d push m mult add push a mult add \
-				push m push b push c mult mult push c push 1 push m mult add mult add mult \
-				push b push d push m mult add mult \
-				store d011 \
-				push m \
-				push c push d mult push d push m mult add push a push a mult mult \
-				push c push c mult push d push m mult add push a push b push m mult mult mult add \
-				push b push d push c push m mult add mult push c push m mult mult add \
-				push b push d push m mult add mult mult \
-				store d012 \
-				push d push 1 push m mult add push a mult push m push b mult push 1 add push c mult add \
-				push b add push m push d mult add \
-				push a push c mult mult \
-				push b push d push m mult add mult \
-				store d112 \
-				push m \
-				push b push d push m mult add push c mult push d push b push 1 push m mult add mult \
-				push m mult add push a mult push b push c mult push d push 1 push m mult add mult add \
-				push b push d push m mult add mult mult \
-				store m002 \
-				push m \
-				push d push c push m mult add push a push a mult mult \
-				push c push c mult push d push m mult add push a mult add \
-				push b push c push m mult mult push c push 1 push m mult add mult add \
-				push b push d push m mult add mult mult \
-				store m012 \
-				push m\
-				push c push d mult push d push m mult add push a push a mult mult \
-				push m push c push c mult push d push m mult add push a push b mult mult mult add \
-				push m push b push d push c push m mult add push c mult mult mult add \
-				push b push d push m mult add mult mult \
-				store m022 \
-				push d push 1 push m mult add push a mult \
-				push m push b mult push 1 add push c mult add \
-				push b add push m push d mult add \
-				push a push c mult mult \
-				push b push d push m mult add mult \
-				store m122 \
-				push m push a mult push c add push d mult push c push a push 1 push m mult add mult add \
-				push b mult \
-				push m push a push d mult mult push c push 1 push m mult add mult add \
-				push b push d push m mult add mult \
-				store n002 \
-				push m \
-				push c push d push m mult add push b mult push m push d push c push 1 push m mult add mult mult add \
-				push a mult \
-				push b push c mult push d push 1 push m mult add mult add mult \
-				push a push b push c push m mult push d push m mult add add add mult \
-				store n012 \
-				push c push d push m mult add push b mult \
-				push m push d push c push 1 push m mult add mult mult  add \
-				push a mult \
-				push b push c mult push d push 1 push m mult add mult add \
-				push a push d mult push m push b push c mult mult add mult \
-				store n022 \
-				push m \
-				push c push d push m mult add push b mult \
-				push m push d push c push 1 push m mult add mult mult add \
-				push a mult \
-				push b push c mult push d push 1 push m mult add mult add \
-				push m push a mult push c add mult mult \
-				store n112 \
-				push m \
-				push c push d push m mult add push b mult \
-				push m push d push c push 1 push m mult add mult mult add \
-				push a mult \
-				push b push c mult push d push 1 push m mult add mult add \
-				push a push d mult push m push b push c mult mult add mult mult \
-				store n122 
-
-Clebsch_up_create_points:
-	$(ORBITER_PATH)/orbiter.out -v 2 -smooth_curve "Clebsch_map_of_circle_to_defininig_eqn_r2" 0.07 1000 5 0 $(TWO_PI) \
-		-const a $(CLEBSCH_A) b $(CLEBSCH_B) c $(CLEBSCH_C) d $(CLEBSCH_D) \
-			t00 $(T00) t01 $(T01) t02 $(T02) t03 $(T03) \
-			t10 $(T10) t11 $(T11) t12 $(T12) t13 $(T13) \
-			t20 $(T20) t21 $(T21) t22 $(T22) t23 $(T23) \
-			t30 $(T30) t31 $(T31) t32 $(T32) t33 $(T33) \
-			r 2 one 1 m -1 \
-		-const_end \
-		-var t \
-			c001 c002 c011 c012 \
-			d001 d011 d012 d112 \
-			m002 m012 m022 m122 \
-			n002 n012 n112 n022 n122 \
-			y0 y1 y2 \
-			y001 y002 y011 y012 y022 y112 y122 \
-			x0 x1 x2 x3 \
-			-var_end \
-		-code \
-			push t cos push r mult store y0 \
-			push t sin push r mult store y1 \
-			push one store y2 \
-			push y0 push y0 push y1 mult mult store y001 \
-			push y0 push y0 push y2 mult mult store y002 \
-			push y0 push y1 push y1 mult mult store y011 \
-			push y0 push y1 push y2 mult mult store y012 \
-			push y0 push y2 push y2 mult mult store y022 \
-			push y1 push y1 push y2 mult mult store y112 \
-			push y1 push y2 push y2 mult mult store y122 \
-			$(CLEBSCH_CUBICS) \
-				push c001 push y001 mult \
-				push c002 push y002 mult add \
-				push c011 push y011 mult add \
-				push c012 push y012 mult add \
-				store x0 \
-				push d001 push y001 mult \
-				push d011 push y011 mult add \
-				push d012 push y012 mult add \
-				push d112 push y112 mult add \
-				store x1 \
-				push m002 push y002 mult \
-				push m012 push y012 mult add \
-				push m022 push y022 mult add \
-				push m122 push y122 mult add \
-				store x2 \
-				push n002 push y002 mult \
-				push n012 push y012 mult add \
-				push n022 push y022 mult add \
-				push n112 push y112 mult add \
-				push n122 push y122 mult add \
-				store x3 \
-				push x0 push t00 mult \
-				push x1 push t10 mult add \
-				push x2 push t20 mult add \
-				push x3 push t30 mult add \
-				return \
-				push x0 push t01 mult \
-				push x1 push t11 mult add \
-				push x2 push t21 mult add \
-				push x3 push t31 mult add \
-				return \
-				push x0 push t02 mult \
-				push x1 push t12 mult add \
-				push x2 push t22 mult add \
-				push x3 push t32 mult add \
-				return \
-				push x0 push t03 mult \
-				push x1 push t13 mult add \
-				push x2 push t23 mult add \
-				push x3 push t33 mult add \
-				return \
-		-code_end
-
-
-Clebsch_surface:
-	$(ORBITER_PATH)/orbiter.out -v 2 -povray \
-		-round 0 -nb_frames_default 30 -output_mask Clebsch_%d_%03d.pov \
-		-video_options -W 1024 -H 768  -global_picture_scale 0.9 -default_angle 75 -clipping_radius 2.4 \
-		-camera 0 "1,1,1" "-3,1,3" "0.12,0.12,0.12"  \
-		-end \
-		-scene_objects \
-			-cubic_orbiter "0,0,0,0,0,-4.236067972,0,0,4.236067972,4.236067972,17.94427188,- 17.94427188,0,0,- 9.472135941,0,0,5.236067971,8.472135938,- 27.41640782" \
-			-group_of_things "0" \
-			-cubics 0 "texture{ pigment{ White*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
-			-point_list_from_csv_file function_Clebsch_map_of_circle_N1000_points.csv \
-			-group_of_things_as_interval 0 954 \
-			-spheres 1 0.07 "texture{ pigment{ color Red } finish { diffuse 0.9 phong 1}}" \
-		-scene_objects_end \
-		-povray_end
-	- rm -rf POV
-	mkdir POV
-	mv Clebsch_0_*.pov POV
-	mv makefile_animation POV
-
-
-Clebsch_surface_defining_equation:
-	$(ORBITER_PATH)/orbiter.out -v 2 -povray \
-		-round 0 -nb_frames_default 30 -output_mask Clebsch_%d_%03d.pov \
-		-video_options -W 1024 -H 768  -global_picture_scale 0.6 -default_angle 75 -clipping_radius 1.6 \
-		-camera 0 "1,1,1" "-2,0,2" "0,0,0"  \
-		-end \
-		-scene_objects \
-			-cubic_orbiter "0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2" \
-			-group_of_things "0" \
-			-cubics 0 "texture{ pigment{ White*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
-		-scene_objects_end \
-		-povray_end
-	- rm -rf POV
-	mkdir POV
-	mv Clebsch_0_*.pov POV
-	mv makefile_animation POV
-
-
-
-Clebsch_surface_defining_equation_and_curves:
-	$(ORBITER_PATH)/orbiter.out -v 2 -povray \
-		-round 0 -nb_frames_default 30 -output_mask Clebsch_2curves_%d_%03d.pov \
-		-video_options -W 1024 -H 768  -global_picture_scale 0.6 -default_angle 75 -clipping_radius 1.6 \
-		-camera 0 "1,1,1" "-2,0,2" "0,0,0"  \
-		-end \
-		-scene_objects \
-			-cubic_orbiter "0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2" \
-			-group_of_things "0" \
-			-cubics 0 "texture{ pigment{ White*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
-			-point_list_from_csv_file function_Clebsch_map_of_circle_to_defininig_eqn_N1000_points.csv \
-			-group_of_things_as_interval 0 656 \
-			-spheres 1 0.07 "texture{ pigment{ color Red } finish { diffuse 0.9 phong 1}}" \
-			-point_list_from_csv_file function_Clebsch_map_of_circle_to_defininig_eqn_r2_N1000_points.csv \
-			-group_of_things_as_interval 656 1042 \
-			-spheres 2 0.07 "texture{ pigment{ color Blue } finish { diffuse 0.9 phong 1}}" \
-		-scene_objects_end \
-		-povray_end
-	- rm -rf POV
-	mkdir POV
-	mv Clebsch_2curves_0_*.pov POV
-	mv makefile_animation POV
-
-#			-point_list_from_csv_file function_Clebsch_map_of_circle_N1000_points.csv \
-#			-group_of_things_as_interval 0 954 \
-#			-spheres 1 0.07 "texture{ pigment{ color Red } finish { diffuse 0.9 phong 1}}" \
-
-
 create_HCV_abcd_a2:
 	$(ORBITER_PATH)/orbiter.out -v 3 \
 		-linear_group -PGL 4 11 -wedge -end \
@@ -11678,79 +12282,6 @@ problem_find_conic:
 
 
 
-Eckardt_surface:
-	$(ORBITER_PATH)/orbiter.out -v 2 -povray \
-		-round 0 -nb_frames_default 30 -output_mask Eckardt_%d_%03d.pov \
-		-video_options -W 1024 -H 768  -global_picture_scale 0.9 -default_angle 75 -clipping_radius 2.4 \
-		-camera 0 "1,1,1" "-3,1,3" "0.12,0.12,0.12"  \
-		-end \
-		-scene_objects \
-			-cubic_Goursat "6,3,-15" \
-			-group_of_things "0" \
-			-cubics 0 "texture{ pigment{ White*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
-		-scene_objects_end \
-		-povray_end
-	- rm -rf POV
-	mkdir POV
-	mv Eckardt_0_*.pov POV
-	mv makefile_animation POV
-
-Kummer_surface:
-	$(ORBITER_PATH)/orbiter.out -v 2 -povray \
-		-round 0 -nb_frames_default 30 -output_mask Kummer_%d_%03d.pov \
-		-video_options -W 1024 -H 768  -global_picture_scale 0.9 -default_angle 75 -clipping_radius 2.4 \
-		-camera 0 "1,1,1" "-3,1,3" "0.12,0.12,0.12"  \
-		-end \
-		-scene_objects \
-			-quartic_lex_35 "-2, 0, 0, 0, 2, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -2, 0, 0, 2, 0, 2, 0, 0, 0, 0, -2, 0, 2, 0, -2" \
-			-group_of_things "0" \
-			-quartics 0 "texture{ pigment{ White*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
-		-scene_objects_end \
-		-povray_end
-	- rm -rf POV
-	mkdir POV
-	mv Kummer_0_*.pov POV
-	mv makefile_animation POV
-
-
-# Maple:
-#Kummer := expand((x0^2 + x1^2 + x2^2 + x3^2)^2 - 3*(x0^4 + x1^4 + x2^4 + x3^4))
-
-
-Kummer_video:
-	- rm -r FRAMES
-	- mkdir FRAMES
-	- rm Kummer.mp4
-	$(ORBITER_PATH)/orbiter.out \
-		-prepare_frames \
-			-i 0 30 KUMMER/Kummer_0_%03d.png \
-			-output_starts_at 0 \
-			-o FRAMES/frame%04d.png \
-		-end
-	ffmpeg -r 5 -f image2 -i FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  Kummer.mp4
-
-
-Beauville_surface:
-	$(ORBITER_PATH)/orbiter.out -v 2 -povray \
-		-round 0 -nb_frames_default 30 -output_mask Beauville_%d_%03d.pov \
-		-video_options -W 1024 -H 768  -global_picture_scale 0.3 -default_angle 75 -clipping_radius 2.4 \
-		-camera 0 "1,1,1" "-3,1,3" "0.12,0.12,0.12"  \
-		-end \
-		-scene_objects \
-			-quintic_lex_56 "-44, 228, 400, 315, -396, -852, -512, -553, -1050, -354, 284, 504, -62, -707, -1390, -1010, 281, -167, -1644, -1024, -72, -196, 192, 373, 322, 78, 150, 966, 1540, 348, -475, -492, 1063, 1550, 390, 0, 96, 3, -337, -426, -66, 425, 673, -156, -216, -223, -60, 1543, 1998, 618, 263, -250, -919, 557, 1800, 741" \
-			-group_of_things "0" \
-			-quintics 0 "texture{ pigment{ White*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
-		-scene_objects_end \
-		-povray_end
-	- rm -rf POV
-	mkdir POV
-	mv Beauville_0_*.pov POV
-	mv makefile_animation POV
-
-
-#-44, 228, 400, 315, -396, -852, -512, -553, -1050, -354, 284, 504, -62, -707, -1390, -1010, 281, -167, -1644, -1024, -72, -196, 192, 373, 322, 78, 150, 966, 1540, 348, -475, -492, 1063, 1550, 390, 0, 96, 3, -337, -426, -66, 425, 673, -156, -216, -223, -60, 1543, 1998, 618, 263, -250, -919, 557, 1800, 741
-
-
 PG_3_7_three_lines_configuration: 
 	$(ORBITER_PATH)/orbiter.out -v 2 \
 		-define F -finite_field -q 7 -end -end \
@@ -11822,313 +12353,3 @@ Op_6_7_lines_on_point:
 		-end
 
 
-F_ALPHA_BETA_GAMMA_DELTA="beta*(gamma + 1)*x0*x0*x2 + (alpha*delta - beta*gamma + alpha - beta - delta - 1)*x0*x1*x2 -1*(alpha*beta -alpha*delta + delta)*(gamma + 1)*x0*x1*x3 + (0-alpha*delta + alpha*gamma -beta*gamma -beta + delta -gamma)*x0*x2*x2 -(alpha*delta +beta -delta)*(gamma +1)*x0*x2*x3 -(delta + 1)*(alpha - 1)*x1*x1*x2 - (delta + 1)*(alpha - 1)*x1*x1*x3 + (alpha*delta - alpha*gamma + beta*gamma + beta - delta + gamma)*x1*x2*x2 + (alpha*beta*gamma + alpha*beta + alpha*delta - alpha*gamma + beta*gamma + beta - delta + gamma)*x1*x2*x3 + alpha*beta*(gamma + 1)*x1*x3*x3"
-
-
-F_alpha_beta_gamma_delta:
-	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 7 -end -end \
-		-with F -do -finite_field_activity -parse "F_alpha_beta_gamma_delta" "x0,x1,x2,x3" $(F_ALPHA_BETA_GAMMA_DELTA) -evaluate "alpha=2,beta=3,gamma=4,delta=5" -end
-	#dot -Tpng F_alpha_beta_gamma_delta.gv >F_alpha_beta_gamma_delta.png
-
-
-
-draw_dot:
-	dot -Tpng test.gv >test.png
-
-
-draw_neato:
-	neato -Tpng Formula.gv >Formula_neato.png
-
-
-draw_fdp:
-	fdp -Tpng Formula.gv >Formula_fdp.png
-
-draw_twopi:
-	twopi -Tpng Formula.gv >Formula_twopi.png
-
-draw_circo:
-	circo -Tpng Formula.gv >Formula_circo.png
-
-draw_circo_cvg:
-	circo -Tsvg Formula.gv >Formula_circo.svg
-
-# post processing in EazyDraw
-
-
-parse:
-	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 7 -end -end \
-		-with F -do -finite_field_activity -parse "test" "x0,x1" "(a+b)*(a+b)*x0+(a*a-b*b)*x1" -evaluate "a=1,b=1" -end
-	dot -Tpng test.gv >test.png
-	open test.png
-
-parse2:
-	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 2 -end -end \
-		-with F -do -finite_field_activity -parse "test" "x0,x1,x2,x3" "(alpha*delta - beta*gamma + alpha - beta - delta - 1)*x0*x1*x2" -end
-
-
-
-F_abcd_eqn = "-(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(b - d)*X0*X0*X2 + (a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(a + b - c - d)*X0*X1*X2 + (a*a*c - a*a*d - a*c*c + b*c*c + a*d - b*c)*(b - d)*X0*X1*X3 - (a*d - b*c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X0*X2*X2 - (a*a*c*d - a*b*c*c - a*a*d + a*b*d + b*c*c - b*c*d)*(b - d)*X0*X2*X3 - (a - c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X1*X1*X2 - (a - c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X1*X1*X3 + (a*d - b*c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X1*X2*X2 + (2*a*a*b*c*d - a*a*b*d*d - 2*a*a*c*d*d - 2*a*b*b*c*c + a*b*b*c*d + 2*a*b*c*c*d + a*b*c*d*d - b*b*c*c*d - a*a*b*c + a*a*c*d + a*a*d*d + a*b*b*c + a*b*c*c - 4*a*b*c*d - a*c*c*d + a*c*d*d + b*b*c*c)*X1*X2*X3 + c*a*(a*d - b*c - a + b + c - d)*(b - d)*X1*X3*X3"
-
-
-F_abcd:
-	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 7 -end -end \
-		-with F -do -finite_field_activity -parse "Fabcd" "X0,X1,X2,X3" $(F_abcd_eqn) -evaluate "a=4,b=2,c=2,d=4" -end
-	#dot -Tpng F_alpha_beta_gamma_delta.gv >F_alpha_beta_gamma_delta.png
-
-F_alpha_beta_gamma_delta_q7:
-	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 7 -wedge -end -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-control_six_arcs -end \
-		-create_surface -q 7 -by_equation "F_alpha_beta_gamma_delta" \
-			"\DF_{\alpha,\beta,\gamma,\delta}\D" "x0,x1,x2,x3" \
-			$(F_ALPHA_BETA_GAMMA_DELTA) \
-			"alpha=2,beta=3,gamma=4,delta=5" "\D\alpha=2,\beta=3,\gamma=4,\delta=5\D" \
-		-end \
-		-end 
-	pdflatex surface_equation_F_alpha_beta_gamma_delta_q7_report.tex
-	open surface_equation_F_alpha_beta_gamma_delta_q7_report.pdf
-
-
-SURFACE_F7_15LINES_POINTS="0,1,2,3,5,6,7,8,9,10,12,18,20,26,28,34,36,42,44,45,50,53,58,59,60,61,62,63,64,67,77,80,90,93,103,107,115,118,122,125,127,142,147,155,157,162,165,170,172,204,208,219,229,240,244,246,251,253,259,277,278,281,286,298,300,302,303,310,312,316,340,343,351,354,358,365,369,372,373,379,384,386,388,393,399"
-
-
-SURFACE_F7_15LINES_MCKEAN_POINTS="0,1,2,3,4,5,6,7,8,9,10,16,17,28,35,36,59,60,61,62,63,64,65,76,80,91,95,106,107,111,119,121,122,130,138,139,141,146,150,154,155,158,170,175,184,186,199,203,204,206,226,231,234,239,240,252,253,254,278,279,282,287,299,301,302,319,320,330,338,343,345,350,351,357,364,370,371,376,378,382,385,388,392,394,399"
-
-
-surface_F7_15_lines_stab:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define F -finite_field -q 7 -end -end \
-		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-		-input \
-			-set_of_points "$(SURFACE_F7_15LINES_POINTS)" \
-		-end \
-		-classification_prefix surface_15_lines_q7 \
-		-report \
-		-end \
-		-end
-	pdflatex surface_15_lines_q7_classification.tex
-	open surface_15_lines_q7_classification.pdf
-
-
-# group has order 6, 2 generators:
-#1,5,0,0,3,6,0,0,1,1,3,0,5,5,0,3, 1,0,2,5,0,1,6,1,0,0,3,5,0,0,4,4,
-
-
-
-F7_povray:
-	$(ORBITER_PATH)/orbiter.out -v 2 -povray \
-		-round 0 -nb_frames_default 30 -output_mask F7_15_lines_%d_%03d.pov \
-		-video_options -W 1024 -H 768  -global_picture_scale 1.5 -default_angle 80 -clipping_radius 4.4 \
-		-omit_bottom_plane \
-		-camera 0 "1,1,1"  "-4.5,3.5,6" "0,0,0"  \
-		-end \
-		-scene_objects \
-			-cubic_lex "0, 0, 6, 0, 0, -13.39014946, -3.341901346, -6.972931640, 5.827182718, 0, 0, 7.390149464, 7.390149464, 6.972931640, -1.512349728, -8.485281372, 0, 0, 0, 0" \
-			-group_of_things "0" \
-			-cubics 0 "texture{ pigment{ White*0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
-			-line_through_point_with_direction "0, 0, 0, 1, 0, 0" \
-			-line_through_point_with_direction "0, 0, -1, 0, 1, 0" \
-			-line_through_point_with_direction "0, 0, 0, 0, 0, -1" \
-			-line_through_point_with_direction "1, 0, 0, 1, 1, 1" \
-			-line_through_point_with_direction "-1.414213562, 0, 0, 4.146264370, 1.732050808, 1.732050808" \
-			-line_through_point_with_direction "0, 1.732050808, -1, 2.414213562, -0.317837246, 2.414213562" \
-			-line_through_point_with_direction "-2.133352390, 0, -1, 1.674708020, 1, 0" \
-			-line_through_point_with_direction "-2.539058015, 0, 0, 2.211360755, 1, 0" \
-			-line_through_point_with_direction "0, 1.148188060, 0, 0, -0.9435440612, 1" \
-			-line_through_point_with_direction "-0.9711971171, 0, 0, 1.162155272, 0, 1" \
-			-line_through_point_with_direction "2.096037870, 2.096037870, 0, -1.065851905, -1.065851905, 1" \
-			-line_through_point_with_direction "3.921555783, 2.921555781, 0, -1.722456585, -1.722456585, 1" \
-			-group_of_things_as_interval 0 12 \
-			-lines 1 0.04 "texture{ pigment{ color Yellow } finish { diffuse 0.9 phong 1}}" \
-		-scene_objects_end \
-		-povray_end
-	- rm -rf POV
-	mkdir POV
-	mv F7_15_lines_0_*.pov POV
-	mv makefile_animation POV
-
-
-
-
-#			-label 0 "c23" \
-#			-label 2 "c24" \
-#			-label 4 "c15" \
-#			-label 6 "c16" \
-#			-label 8 "c45" \
-#			-label 10 "c35" \
-#			-label 12 "c13" \
-#			-label 14 "c14" \
-#			-label 16 "c36" \
-#			-label 18 "c46" \
-#			-label 20 "c26" \
-#			-label 22 "c25" \
-#			-group_of_things_as_interval 0 12 \
-#			-texts 2 0.2 0.3 "texture{ pigment{Black} } no_shadow" \
-
-#			-lines 1 0.02 "texture{ pigment{ color Red } finish { diffuse 0.9 phong 1}}" \
-#			-lines 2 0.02 "texture{ pigment{ color Blue } finish { diffuse 0.9 phong 1}}" \
-#			-lines 3 0.02 "texture{ pigment{ color Yellow } finish { diffuse 0.9 phong 1}}" \
-
-# first vector is a point, second vector is direction:
-
-#c23:=  [[0, 0, 0], [1, 0, 0]]
-
-#c24:= [[0, 0, -1], [0, 1, 0]]
-
-#c15:=  [[0, 0, 0], [0, 0, -1]]
-
-#c16:= [[1, 0, 0], [1, 1, 1]]
-
-#c45:= [[-1.414213562, 0, 0], [4.146264370, 1.732050808, 1.732050808]]
-
-#c35:= [[0, 1.732050808, -1], [2.414213562, -0.317837246, 2.414213562]]
-
-#c13:= [[-2.133352390, 0, -1], [1.674708020, 1, 0]]
-
-#c14:= [[-2.539058015, 0, 0], [2.211360755, 1, 0]]
-
-#c36:= [[0, 1.148188060, 0], [0, -0.9435440612, 1]]
-
-#c46:= [[-0.9711971171, 0, 0], [1.162155272, 0, 1]]
-
-#c26:= [[2.096037870, 2.096037870, 0], [-1.065851905, -1.065851905, 1]]
-
-#c25:= [[3.921555783, 2.921555781, 0], [-1.722456585, -1.722456585, 1]]
-
-
-F7_video:
-	- rm -r FRAMES
-	- mkdir FRAMES
-	- rm fifteen_with_lines.mp4
-	$(ORBITER_PATH)/orbiter.out \
-		-prepare_frames \
-			-i 0 30 F7b/F7_15_lines_0_%03d.png \
-			-output_starts_at 0 \
-			-o FRAMES/frame%04d.png \
-		-end
-	ffmpeg -r 5 -f image2 -i FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  fifteen_with_lines.mp4
-
-
-McKean_povray:
-	$(ORBITER_PATH)/orbiter.out -v 2 -povray \
-		-round 0 -nb_frames_default 30 -output_mask McKean_%d_%03d.pov \
-		-video_options -W 1024 -H 768  -global_picture_scale 1.5 -default_angle 80 -clipping_radius 4.4 \
-		-omit_bottom_plane \
-		-camera 0 "1,1,1"  "-4.5,3.5,6" "0,0,0"  \
-		-end \
-		-scene_objects \
-			-cubic_lex "0, 0, 1, 0, 0, -1, -2, 1, 2, 0, 0, 1, 1,-1, -1, -1, 0, 0, 0, 0" \
-			-group_of_things "0" \
-			-cubics 0 "texture{ pigment{ White*0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
-		-scene_objects_end \
-		-povray_end
-	- rm -rf POV
-	mkdir POV
-	mv McKean_0_*.pov POV
-	mv makefile_animation POV
-
-McKean_video:
-	- rm -r FRAMES
-	- mkdir FRAMES
-	- rm McKean.mp4
-	$(ORBITER_PATH)/orbiter.out \
-		-prepare_frames \
-			-i 0 30 MCKEAN/McKean_0_%03d.png \
-			-output_starts_at 0 \
-			-o FRAMES/frame%04d.png \
-		-end
-	ffmpeg -r 5 -f image2 -i FRAMES/frame%04d.png -f mp4 -q:v 0 -vcodec mpeg4  McKean.mp4
-
-McKean_15lines_q7:
-	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 7 -wedge -end -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-control_six_arcs -end \
-		-create_surface -by_coefficients "1,5,-1,16,-2,17,1,10,2,18,1,8,1,9,-1,11,-1,19,-1,14" -q 7 \
-		-end \
-		-end 
-	pdflatex surface_by_coefficients_q7_report.tex
-	open surface_by_coefficients_q7_report.pdf
-
-# 2 Eckardt points
-
-F_4_4_3_3_q7:
-	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 7 -wedge -end -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-control_six_arcs -end \
-		-create_surface -q 7 -by_equation "F_alpha_beta_gamma_delta" \
-			"\DF_{\alpha,\beta,\gamma,\delta}\D" "x0,x1,x2,x3" \
-			$(F_ALPHA_BETA_GAMMA_DELTA) \
-			"alpha=4,beta=4,gamma=3,delta=3" "\D\alpha=4,\beta=4,\gamma=3,\delta=3\D" \
-		-end \
-		-end
-	pdflatex surface_equation_F_alpha_beta_gamma_delta_q7_report.tex
-	open surface_equation_F_alpha_beta_gamma_delta_q7_report.pdf
-
-# has 4 Eckardt points
-
-
-
-F_alpha_beta_gamma_delta_points.txt:
-	$(ORBITER_PATH)/orbiter.out -v 3 -define G -linear_group -PGL 4 7 -wedge -end -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-control_six_arcs -end \
-		-sweep nothing \
-		-create_surface -q 7 -by_equation "F_alpha_beta_gamma_delta" \
-			"\DF_{\alpha,\beta,\gamma,\delta}\D" "x0,x1,x2,x3" \
-			$(F_ALPHA_BETA_GAMMA_DELTA) \
-			"alpha=2,beta=3,gamma=4,delta=5" "\D\alpha=2,\beta=3,\gamma=4,\delta=5\D" \
-		-end \
-		-end 
-
-
-F_alpha_beta_gamma_delta_q7_classify: F_alpha_beta_gamma_delta_points.txt
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define F -finite_field -q 7 -end -end \
-		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG  \
-		-input \
-		-set_of_points $(SURFACE_F7_15LINES_MCKEAN_POINTS) \
-		-file_of_points F_alpha_beta_gamma_delta_points.txt \
-		-end \
-		-classification_prefix F_alpha_beta_gamma_delta_points \
-		-report \
-		-end \
-		-end
-	pdflatex F_alpha_beta_gamma_delta_points_classification.tex
-	open F_alpha_beta_gamma_delta_points_classification.pdf
-
-
-
-
-F8_work:
-	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 8 -end -end \
-		-with F -do -finite_field_activity -parse "test" "" "(t-a)*(t-a*a)" -evaluate "a=2" -end
-
-
-
-
-Weyl_E8:
-	$(ORBITER_PATH)/orbiter.out -v 3 \
-		-draw_options -end \
-		-define G -linear_group -GL 8 3 \
-		-subgroup_by_generators "Weyl_E8" "696729600" 2 \
-		"-1,-1,-1,-1,0,0,0,0, 0,0,0,1,0,0,0,0, 1,0,0,0,0,0,0,0, 0,0,1,0,0,0,0,0, 0,1,0,1,1,0,0,0, 0,0,0,0,0,1,0,0, 0,0,0,0,0,0,1,0, 0,0,0,0,0,0,0,1" \
-		"-1,0,-1,-1,-1,-1,-1,-1, 0,1,0,1,1,1,1,1, 1,0,0,0,0,0,0,0, 0,0,1,0,0,0,0,0, 0,0,0,1,0,0,0,0, 0,0,0,0,1,0,0,0, 0,0,0,0,0,1,0,0, 0,0,0,0,0,0,1,0" \
-		-end -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-report \
-		-end
-	pdflatex GL_8_3_Subgroup_Weyl_E8_696729600_report.tex
-	open GL_8_3_Subgroup_Weyl_E8_696729600_report.pdf
-
-# group generators from http://www.math.rwth-aachen.de/~Gabriele.Nebe/LATTICES/E8.b.html

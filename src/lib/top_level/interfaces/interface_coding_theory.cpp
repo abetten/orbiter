@@ -50,6 +50,15 @@ interface_coding_theory::interface_coding_theory()
 	long_code_n = 0;
 	//long_code_generators;
 
+	f_encode_text_5bits = FALSE;
+	//encode_text_5bits_input;
+	//encode_text_5bits_fname;
+
+	f_field_induction = FALSE;
+	//std::string field_induction_fname_in;
+	//std::string field_induction_fname_out;
+	field_induction_nb_bits = 0;
+
 }
 
 
@@ -84,7 +93,13 @@ void interface_coding_theory::print_help(int argc,
 		cout << "-linear_code_through_basis <int : n> <string : set> " << endl;
 	}
 	else if (stringcmp(argv[i], "-long_code") == 0) {
-		cout << "-long_code <int : n> <int : nb_generators=k> <string : generator1> .. <string : generatork>" << endl;
+		cout << "-long_code <int : n> <int : nb_generators=k> <string : generator_1> .. <string : generator_k>" << endl;
+	}
+	else if (stringcmp(argv[i], "-encode_text_5bits") == 0) {
+		cout << "-encode_text_5bits <string : text> <string : fname>" << endl;
+	}
+	else if (stringcmp(argv[i], "-field_induction") == 0) {
+		cout << "-field_induction <string : fname_in> <string : fname_out> <int : nb_bits>" << endl;
 	}
 }
 
@@ -129,6 +144,14 @@ int interface_coding_theory::recognize_keyword(int argc,
 	else if (stringcmp(argv[i], "-long_code") == 0) {
 		return true;
 	}
+	else if (stringcmp(argv[i], "-encode_text_5bits") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-field_induction") == 0) {
+		return true;
+	}
+
+
 	if (f_v) {
 		cout << "interface_coding_theory::recognize_keyword unrecognized" << endl;
 	}
@@ -258,6 +281,25 @@ int interface_coding_theory::read_arguments(int argc,
 				cout << " " << long_code_generators[h] << endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-encode_text_5bits") == 0) {
+			f_encode_text_5bits = TRUE;
+			encode_text_5bits_input.assign(argv[++i]);
+			encode_text_5bits_fname.assign(argv[++i]);
+			cout << "-encode_text_5bits " << encode_text_5bits_input << " "
+					<< encode_text_5bits_fname << endl;
+		}
+		else if (stringcmp(argv[i], "-field_induction") == 0) {
+			f_field_induction = TRUE;
+			field_induction_fname_in.assign(argv[++i]);
+			field_induction_fname_out.assign(argv[++i]);
+			field_induction_nb_bits = strtoi(argv[++i]);
+			cout << "-field_induction " << field_induction_fname_in
+					<< " " << field_induction_fname_out
+					<< " " << field_induction_nb_bits
+					<< endl;
+		}
+
+
 		else {
 			break;
 		}
@@ -370,6 +412,18 @@ void interface_coding_theory::worker(int verbose_level)
 					FALSE /* f_nearest_codeword */,
 					dummy /* const char *nearest_codeword_text */,
 					verbose_level);
+
+	}
+	else if (f_encode_text_5bits) {
+		coding_theory_domain Codes;
+
+		Codes.encode_text_5bits(encode_text_5bits_input, encode_text_5bits_fname, verbose_level);
+
+	}
+	else if (f_field_induction) {
+		coding_theory_domain Codes;
+
+		Codes.field_induction(field_induction_fname_in, field_induction_fname_out, field_induction_nb_bits, verbose_level);
 
 	}
 }

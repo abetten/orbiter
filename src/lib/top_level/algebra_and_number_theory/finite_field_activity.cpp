@@ -344,6 +344,27 @@ void finite_field_activity::perform_activity(int verbose_level)
 				verbose_level);
 	}
 
+	else if (Descr->f_polynomial_division_from_file) {
+
+		algebra_global Algebra;
+
+		Algebra.polynomial_division_from_file_with_report(F,
+				Descr->polynomial_division_from_file_fname,
+				Descr->polynomial_division_from_file_r1,
+				verbose_level);
+	}
+
+	else if (Descr->f_polynomial_division_from_file_all_k_bit_error_patterns) {
+
+		algebra_global Algebra;
+
+		Algebra.polynomial_division_from_file_all_k_error_patterns_with_report(F,
+				Descr->polynomial_division_from_file_all_k_bit_error_patterns_fname,
+				Descr->polynomial_division_from_file_all_k_bit_error_patterns_r1,
+				Descr->polynomial_division_from_file_all_k_bit_error_patterns_k,
+				verbose_level);
+	}
+
 	else if (Descr->f_RREF_random_matrix) {
 
 		algebra_global Algebra;
