@@ -1891,12 +1891,13 @@ void geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text(
 	}
 }
 
-void geometry_global::Walsh_matrix(finite_field *F, int n, int *W, int verbose_level)
+void geometry_global::Walsh_matrix(finite_field *F, int n, int *&W, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int Q;
 	int *v;
 	int *w;
+	int *W01;
 	int i, j, a;
 
 	if (f_v) {
@@ -1905,6 +1906,8 @@ void geometry_global::Walsh_matrix(finite_field *F, int n, int *W, int verbose_l
 	v = NEW_int(n);
 	w = NEW_int(n);
 	Q = 1 << n;
+	W = NEW_int(Q * Q);
+	W01 = NEW_int(Q * Q);
 	for (i = 0; i < Q; i++) {
 		AG_element_unrank(2, v, 1, n, i);
 		for (j = 0; j < Q; j++) {
@@ -1912,14 +1915,35 @@ void geometry_global::Walsh_matrix(finite_field *F, int n, int *W, int verbose_l
 			a = F->dot_product(n, v, w);
 			if (a) {
 				W[i * Q + j] = -1;
+				W01[i * Q + j] = 1;
 			}
 			else {
 				W[i * Q + j] = 1;
+				W01[i * Q + j] = 0;
 			}
 		}
 	}
+	char str[1000];
+	string fname_csv;
+	file_io Fio;
+
+	snprintf(str, 1000, "Walsh_%d.csv", n);
+	fname_csv.assign(str);
+	Fio.int_matrix_write_csv(fname_csv, W, Q, Q);
+	cout << "written file " << fname_csv << " of size "
+			<< Fio.file_size(fname_csv) << endl;
+
+
+	snprintf(str, 1000, "Walsh_01_%d.csv", n);
+	fname_csv.assign(str);
+	Fio.int_matrix_write_csv(fname_csv, W01, Q, Q);
+	cout << "written file " << fname_csv << " of size "
+			<< Fio.file_size(fname_csv) << endl;
+
+
 	FREE_int(v);
 	FREE_int(w);
+	FREE_int(W01);
 	if (f_v) {
 		cout << "geometry_global::Walsh_matrix done" << endl;
 	}

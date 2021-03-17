@@ -2532,11 +2532,265 @@ void algebra_global::do_RREF(finite_field *F,
 	}
 }
 
+void algebra_global::apply_Walsh_Hadamard_transform(finite_field *F,
+		std::string &fname_csv_in, int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::apply_Walsh_Hadamard_transform" << endl;
+	}
+
+
+	boolean_function_domain *BF;
+
+	BF = NEW_OBJECT(boolean_function_domain);
+
+	BF->init(n, verbose_level);
+
+
+	file_io Fio;
+	int *M;
+	int m, nb_cols;
+	int len;
+	string fname_csv_out;
+
+	fname_csv_out.assign(fname_csv_in);
+	chop_off_extension(fname_csv_out);
+	fname_csv_out.append("_transformed.csv");
+
+	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
+	len = m * nb_cols;
+	if (len != BF->Q) {
+		cout << "algebra_global::apply_Walsh_Hadamard_transform len != BF->Q" << endl;
+		exit(1);
+	}
+	BF->raise(M, BF->F);
+
+	BF->apply_Walsh_transform(BF->F, BF->T);
+
+	cout << " : ";
+	Orbiter->Int_vec.print(cout, BF->T, BF->Q);
+	cout << endl;
+
+	if (EVEN(n)) {
+		if (BF->is_bent(BF->T)) {
+			cout << "is bent" << endl;
+		}
+		else {
+			cout << "is not bent" << endl;
+		}
+	}
+	else {
+		if (BF->is_near_bent(BF->T)) {
+			cout << "is near bent" << endl;
+		}
+		else {
+			cout << "is not near bent" << endl;
+		}
+
+	}
+	Fio.int_matrix_write_csv(fname_csv_out, BF->T, m, nb_cols);
+	cout << "written file " << fname_csv_out << " of size "
+			<< Fio.file_size(fname_csv_out) << endl;
+
+	FREE_int(M);
+	FREE_OBJECT(BF);
+
+	if (f_v) {
+		cout << "algebra_global::apply_Walsh_Hadamard_transform done" << endl;
+	}
+}
+
+void algebra_global::algebraic_normal_form(finite_field *F,
+		std::string &fname_csv_in, int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::algebraic_normal_form" << endl;
+	}
+
+
+	boolean_function_domain *BF;
+
+	BF = NEW_OBJECT(boolean_function_domain);
+
+	if (f_v) {
+		cout << "algebra_global::algebraic_normal_form before BF->init" << endl;
+	}
+	BF->init(n, verbose_level);
+	if (f_v) {
+		cout << "algebra_global::algebraic_normal_form after BF->init" << endl;
+	}
+
+
+	file_io Fio;
+	int *M;
+	int m, nb_cols;
+	int len;
+	string fname_csv_out;
+
+	fname_csv_out.assign(fname_csv_in);
+	chop_off_extension(fname_csv_out);
+	fname_csv_out.append("_alg_normal_form.csv");
+
+	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
+	len = m * nb_cols;
+	if (len != BF->Q) {
+		cout << "algebra_global::algebraic_normal_form len != BF->Q" << endl;
+		exit(1);
+	}
+
+	int *coeff;
+	int nb_coeff;
+
+	nb_coeff = BF->Poly[n].get_nb_monomials();
+
+	coeff = NEW_int(nb_coeff);
+
+	if (f_v) {
+		cout << "algebra_global::algebraic_normal_form before BF->compute_polynomial_representation" << endl;
+	}
+	BF->compute_polynomial_representation(M, coeff, verbose_level);
+	if (f_v) {
+		cout << "algebra_global::algebraic_normal_form after BF->compute_polynomial_representation" << endl;
+	}
+
+	cout << "algebraic normal form:" << endl;
+	BF->Poly[n].print_equation(cout, coeff);
+	cout << endl;
+
+	cout << "algebraic normal form in tex:" << endl;
+	BF->Poly[n].print_equation_tex(cout, coeff);
+	cout << endl;
+
+	cout << "algebraic normal form in numerical form:" << endl;
+	BF->Poly[n].print_equation_numerical(cout, coeff);
+	cout << endl;
+
+
+
+	Fio.int_matrix_write_csv(fname_csv_out, coeff, 1, nb_coeff);
+	cout << "written file " << fname_csv_out << " of size "
+			<< Fio.file_size(fname_csv_out) << endl;
+
+	FREE_int(M);
+	FREE_OBJECT(BF);
+
+	if (f_v) {
+		cout << "algebra_global::algebraic_normal_form done" << endl;
+	}
+}
+
+void algebra_global::apply_trace_function(finite_field *F,
+		std::string &fname_csv_in, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::apply_trace_function" << endl;
+	}
+
+
+	file_io Fio;
+	int *M;
+	int m, nb_cols;
+	int len, i;
+	string fname_csv_out;
+
+	fname_csv_out.assign(fname_csv_in);
+	chop_off_extension(fname_csv_out);
+	fname_csv_out.append("_trace.csv");
+
+	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
+	len = m * nb_cols;
+	for (i = 0; i < len; i++) {
+		M[i] = F->absolute_trace(M[i]);
+	}
+	Fio.int_matrix_write_csv(fname_csv_out, M, m, nb_cols);
+
+	FREE_int(M);
+
+	if (f_v) {
+		cout << "algebra_global::apply_trace_function done" << endl;
+	}
+}
+
+void algebra_global::apply_power_function(finite_field *F,
+		std::string &fname_csv_in, long int d, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::apply_power_function" << endl;
+	}
+
+
+	file_io Fio;
+	int *M;
+	int m, nb_cols;
+	int len, i;
+	string fname_csv_out;
+
+	fname_csv_out.assign(fname_csv_in);
+	chop_off_extension(fname_csv_out);
+
+	char str[1000];
+
+	sprintf(str, "_power_%ld.csv", d);
+	fname_csv_out.append(str);
+
+	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
+	len = m * nb_cols;
+	for (i = 0; i < len; i++) {
+		M[i] = F->power(M[i], d);
+	}
+	Fio.int_matrix_write_csv(fname_csv_out, M, m, nb_cols);
+	cout << "written file " << fname_csv_out << " of size "
+			<< Fio.file_size(fname_csv_out) << endl;
+
+	FREE_int(M);
+
+	if (f_v) {
+		cout << "algebra_global::apply_power_function done" << endl;
+	}
+}
+
+void algebra_global::identity_function(finite_field *F,
+		std::string &fname_csv_out, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::identity_function" << endl;
+	}
+
+
+	file_io Fio;
+	int *M;
+	int i;
+
+	M = NEW_int(F->q);
+	for (i = 0; i < F->q; i++) {
+		M[i] = i;
+	}
+	Fio.int_matrix_write_csv(fname_csv_out, M, 1, F->q);
+	cout << "written file " << fname_csv_out << " of size "
+			<< Fio.file_size(fname_csv_out) << endl;
+
+	FREE_int(M);
+
+	if (f_v) {
+		cout << "algebra_global::identity_function done" << endl;
+	}
+}
 
 void algebra_global::do_trace(finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int s, t;
+	int *T = NULL;
 	int *T0 = NULL;
 	int *T1 = NULL;
 	int nb_T0 = 0;
@@ -2549,6 +2803,7 @@ void algebra_global::do_trace(finite_field *F, int verbose_level)
 
 	int q = F->q;
 
+	T = NEW_int(q);
 	T0 = NEW_int(q);
 	T1 = NEW_int(q);
 
@@ -2573,6 +2828,7 @@ void algebra_global::do_trace(finite_field *F, int verbose_level)
 #endif
 
 		t = F->absolute_trace(s);
+		T[s] = t;
 		if (t == 1) {
 			T1[nb_T1++] = s;
 		}
@@ -2580,6 +2836,8 @@ void algebra_global::do_trace(finite_field *F, int verbose_level)
 			T0[nb_T0++] = s;
 		}
 	}
+
+
 
 	cout << "Trace 0:" << endl;
 	Orbiter->Int_vec.print_fully(cout, T0, nb_T0);
@@ -2592,6 +2850,13 @@ void algebra_global::do_trace(finite_field *F, int verbose_level)
 	char str[1000];
 	string fname_csv;
 	file_io Fio;
+
+	snprintf(str, 1000, "F_q%d_trace.csv", q);
+	fname_csv.assign(str);
+	Fio.int_matrix_write_csv(fname_csv, T, 1, q);
+	cout << "written file " << fname_csv << " of size "
+			<< Fio.file_size(fname_csv) << endl;
+
 
 	snprintf(str, 1000, "F_q%d_trace_0.csv", q);
 	fname_csv.assign(str);
@@ -2607,6 +2872,9 @@ void algebra_global::do_trace(finite_field *F, int verbose_level)
 	cout << "written file " << fname_csv << " of size "
 			<< Fio.file_size(fname_csv) << endl;
 
+	FREE_int(T);
+	FREE_int(T0);
+	FREE_int(T1);
 
 	if (f_v) {
 		cout << "algebra_global::do_trace done" << endl;
@@ -2738,10 +3006,6 @@ void algebra_global::do_cheat_sheet_GF(finite_field *F, int verbose_level)
 		cout << "algebra_global::do_cheat_sheet_GF q=" << F->q << endl;
 	}
 
-	//int i;
-	//int f_poly = FALSE;
-	//const char *poly = NULL;
-
 	char fname[1000];
 	char title[1000];
 	char author[1000];
@@ -2766,12 +3030,8 @@ void algebra_global::do_cheat_sheet_GF(finite_field *F, int verbose_level)
 		ofstream f(fname);
 
 
-		//algebra_global AG;
-
-		//AG.cheat_sheet_GF(q, f_override_poly, my_override_poly, verbose_level);
 		latex_interface L;
 
-		//F.init(q), verbose_level - 2);
 
 		L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
 			title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
@@ -2902,6 +3162,8 @@ void algebra_global::do_make_table_of_irreducible_polynomials(int deg,
 		{
 			ofstream ost(fname);
 			latex_interface L;
+			geometry_global GG;
+			long int rk;
 
 			L.head(ost,
 					FALSE /* f_book*/,
@@ -2922,13 +3184,19 @@ void algebra_global::do_make_table_of_irreducible_polynomials(int deg,
 
 			ost << "There are " << Table.size() << " irreducible polynomials of "
 					"degree " << deg << " over the field F" << F->q << ":\\\\" << endl;
+			//ost << "\\begin{multicols}{2}" << endl;
+			//ost << "\\noindent" << endl;
 			for (i = 0; i < Table.size(); i++) {
 				ost << i << " : $";
 				for (j = deg; j>= 0; j--) {
 					ost << T[i * (deg + 1) + j];
 				}
+				ost << " : ";
+				rk = GG.AG_element_rank(F->q, T + i * (deg + 1), 1, deg + 1);
+				ost << rk;
 				ost << "$\\\\" << endl;
 			}
+			//ost << "\\end{multicols}" << endl;
 
 
 			if (f_v) {

@@ -1018,6 +1018,8 @@ void surface_object_with_action::print_automorphism_group(
 	//Orbits_on_points_not_on_lines->print_and_list_orbits_sorted_by_length_tex(ost);
 	Orbits_on_points_not_on_lines->print_and_list_orbits_with_original_labels_tex(ost);
 
+	print_full_del_Pezzo(ost, verbose_level);
+
 
 	ost << "\\subsection*{Orbits on lines}" << endl;
 	Orbits_on_lines->print_and_list_orbits_tex(ost);
@@ -1468,6 +1470,7 @@ void surface_object_with_action::investigate_surface_and_write_report2(
 
 	if (f_v) {
 		cout << "surface_object_with_action::investigate_surface_and_write_report2" << endl;
+		cout << "f_surface_quartic = " << f_surface_quartic << endl;
 	}
 
 	ost << "\\section{The Finite Field $\\mathbb F_{" << SC->F->q << "}$}" << endl;
@@ -1475,6 +1478,9 @@ void surface_object_with_action::investigate_surface_and_write_report2(
 
 	ost << "\\bigskip" << endl;
 
+	if (f_v) {
+		cout << "surface_object_with_action::investigate_surface_and_write_report2 before cheat_sheet" << endl;
+	}
 	cheat_sheet(ost,
 		label,
 		label_tex,
@@ -1482,10 +1488,17 @@ void surface_object_with_action::investigate_surface_and_write_report2(
 		fname_mask /* const char *fname_mask*/,
 		Opt,
 		verbose_level);
+	if (f_v) {
+		cout << "surface_object_with_action::investigate_surface_and_write_report2 after cheat_sheet" << endl;
+	}
 
 	ost << "\\setlength{\\parindent}{0pt}" << endl;
 
 	if (f_surface_clebsch) {
+
+		if (f_v) {
+			cout << "surface_object_with_action::investigate_surface_and_write_report2 f_surface_clebsch" << endl;
+		}
 
 		//surface_object *SO;
 		//SO = SoA->SO;
@@ -1591,22 +1604,51 @@ void surface_object_with_action::investigate_surface_and_write_report2(
 
 
 		}
+		else {
+			if (f_v) {
+				cout << "surface_object_with_action::investigate_surface_and_write_report2 !f_surface_clebsch" << endl;
+			}
+
+		}
 
 
 
 
 		if (f_surface_quartic) {
 
-			surface_object_tangent_cone *SOT;
+			if (f_v) {
+				cout << "surface_object_with_action::investigate_surface_and_write_report2 f_surface_quartic" << endl;
+			}
 
-			SOT = NEW_OBJECT(surface_object_tangent_cone);
+			int pt_orbit;
 
-			SOT->init(this, verbose_level);
-			SOT->quartic(ost, verbose_level);
+			for (pt_orbit = 0; pt_orbit < Orbits_on_points_not_on_lines->nb_orbits; pt_orbit++) {
 
-			FREE_OBJECT(SOT);
+				ost << "\\section{Quartic curve associated with orbit " << pt_orbit << "}" << endl;
+
+
+				surface_object_tangent_cone *SOT;
+
+				SOT = NEW_OBJECT(surface_object_tangent_cone);
+
+				SOT->init(this, verbose_level);
+
+
+				SOT->quartic(ost, pt_orbit, verbose_level);
+
+				FREE_OBJECT(SOT);
+			}
+
+
 
 			//SoA->quartic(ost, verbose_level);
+		}
+		else {
+			if (f_v) {
+				cout << "surface_object_with_action::investigate_surface_and_write_report2 !f_surface_quartic" << endl;
+			}
+
+
 		}
 
 
@@ -1617,6 +1659,74 @@ void surface_object_with_action::investigate_surface_and_write_report2(
 	}
 }
 
+void surface_object_with_action::print_full_del_Pezzo(std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, f, P_idx, P_idx_local;
+	long int P;
+
+	if (f_v) {
+		cout << "surface_object_with_action::print_full_del_Pezzo" << endl;
+	}
+
+
+	//schreier *Orbits_on_points_not_on_lines;
+
+	ost << "Full del Pezzo surfaces:\\\\" << endl;
+	ost << "testing all " << Orbits_on_points_not_on_lines->nb_orbits << " orbits:\\\\" << endl;
+
+	ost << "$$" << endl;
+	ost << "\\begin{array}{|c|c|c|c|c|}" << endl;
+	for (i = 0; i < Orbits_on_points_not_on_lines->nb_orbits; i++) {
+		f = Orbits_on_points_not_on_lines->orbit_first[i];
+		P_idx_local = Orbits_on_points_not_on_lines->orbit[f];
+		P = SO->SOP->Pts_not_on_lines[P_idx_local];
+		if (!SO->find_point(P, P_idx)) {
+			cout << "surface_object_with_action::print_full_del_Pezzo could not find point" << endl;
+			exit(1);
+		}
+		ost << i << " & " << P_idx << " & "  << P << " & ";
+
+		int *f_deleted;
+		int j, f_first;
+
+		SO->SOP->compute_reduced_set_of_points_not_on_lines_wrt_P(P_idx, f_deleted, verbose_level);
+		// P_idx = index into SO->Pts[]
+
+		ost << "\\{";
+		f_first = TRUE;
+		for (j = 0; j < SO->SOP->nb_pts_not_on_lines; j++) {
+			if (!f_deleted[j]) {
+				if (f_first) {
+					f_first = FALSE;
+				}
+				else {
+					ost << ",";
+				}
+				ost << j;
+			}
+		}
+		ost << "\\}";
+		ost << " & ";
+		if (SO->SOP->test_full_del_pezzo(P_idx, f_deleted, verbose_level)) {
+			ost << " \\mbox{is full}\\\\" << endl;
+		}
+		else {
+			ost << " \\mbox{is not full}\\\\" << endl;
+		}
+
+
+		//, SO->SOP->nb_pts_not_on_lines,
+
+		FREE_int(f_deleted);
+	}
+	ost << "\\end{array}" << endl;
+	ost << "$$" << endl;
+
+	if (f_v) {
+		cout << "surface_object_with_action::print_full_del_Pezzo done" << endl;
+	}
+}
 
 
 

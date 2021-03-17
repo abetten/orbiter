@@ -42,9 +42,28 @@ interface_coding_theory::interface_coding_theory()
 	general_code_binary_n = 0;
 	//std::string general_code_binary_text;
 
+	f_code_diagram = FALSE;
+	//std::string code_diagram_label;
+	//std::string code_diagram_codewords_text;
+	code_diagram_n = 0;
+
+	f_code_diagram_from_file = FALSE;
+	//std::string code_diagram_from_file_codewords_fname;
+
+	f_enhance = FALSE;
+	enhance_radius = 0;
+
+	f_metric_balls = FALSE;
+	radius_of_metric_ball = 0;
+
 	f_linear_code_through_basis = FALSE;
 	linear_code_through_basis_n = 0;
 	//std::string linear_code_through_basis_text;
+
+	f_linear_code_through_columns_of_parity_check_projectively = FALSE;
+	f_linear_code_through_columns_of_parity_check = FALSE;
+	linear_code_through_columns_of_parity_check_k = 0;
+	//std::string linear_code_through_columns_of_parity_check_text;
 
 	f_long_code = FALSE;
 	long_code_n = 0;
@@ -89,8 +108,26 @@ void interface_coding_theory::print_help(int argc,
 	else if (stringcmp(argv[i], "-general_code_binary") == 0) {
 		cout << "-general_code_binary <int : n> <string : set> " << endl;
 	}
+	else if (stringcmp(argv[i], "-code_diagram") == 0) {
+		cout << "-code_diagram <string : label> <string : codewords> <int : n> " << endl;
+	}
+	else if (stringcmp(argv[i], "-code_diagram_from_file") == 0) {
+		cout << "-code_diagram_from_file <string : label> <string : fname_codewords> <int : n> " << endl;
+	}
+	else if (stringcmp(argv[i], "-enhance") == 0) {
+		cout << "-enhance <int : radius>" << endl;
+	}
+	else if (stringcmp(argv[i], "-metric_balls") == 0) {
+		cout << "-metric_balls <int : radius_of_metric_ball> " << endl;
+	}
 	else if (stringcmp(argv[i], "-linear_code_through_basis") == 0) {
 		cout << "-linear_code_through_basis <int : n> <string : set> " << endl;
+	}
+	else if (stringcmp(argv[i], "-linear_code_through_columns_of_parity_check_projectively") == 0) {
+		cout << "-linear_code_through_columns_of_parity_check <int : k> <string : set> " << endl;
+	}
+	else if (stringcmp(argv[i], "-linear_code_through_columns_of_parity_check") == 0) {
+		cout << "-linear_code_through_columns_of_parity_check <int : k> <string : set> " << endl;
 	}
 	else if (stringcmp(argv[i], "-long_code") == 0) {
 		cout << "-long_code <int : n> <int : nb_generators=k> <string : generator_1> .. <string : generator_k>" << endl;
@@ -138,7 +175,25 @@ int interface_coding_theory::recognize_keyword(int argc,
 	else if (stringcmp(argv[i], "-general_code_binary") == 0) {
 		return true;
 	}
+	else if (stringcmp(argv[i], "-code_diagram") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-code_diagram_from_file") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-enhance") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-metric_balls") == 0) {
+		return true;
+	}
 	else if (stringcmp(argv[i], "-linear_code_through_basis") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-linear_code_through_columns_of_parity_check_projectively") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-linear_code_through_columns_of_parity_check") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-long_code") == 0) {
@@ -150,10 +205,8 @@ int interface_coding_theory::recognize_keyword(int argc,
 	else if (stringcmp(argv[i], "-field_induction") == 0) {
 		return true;
 	}
-
-
 	if (f_v) {
-		cout << "interface_coding_theory::recognize_keyword unrecognized" << endl;
+		cout << "interface_coding_theory::recognize_keyword not recognizing" << endl;
 	}
 	return false;
 }
@@ -222,6 +275,39 @@ int interface_coding_theory::read_arguments(int argc,
 			cout << "-general_code_binary " << general_code_binary_n << " "
 					<< general_code_binary_text << endl;
 		}
+		else if (stringcmp(argv[i], "-code_diagram") == 0) {
+			f_code_diagram = TRUE;
+			code_diagram_label.assign(argv[++i]);
+			code_diagram_codewords_text.assign(argv[++i]);
+			code_diagram_n = strtoi(argv[++i]);
+			cout << "-code_diagram " << code_diagram_label
+					<< " " << code_diagram_codewords_text
+					<< " " << code_diagram_n << endl;
+		}
+		else if (stringcmp(argv[i], "-code_diagram_from_file") == 0) {
+			f_code_diagram_from_file = TRUE;
+			code_diagram_label.assign(argv[++i]);
+			code_diagram_from_file_codewords_fname.assign(argv[++i]);
+			code_diagram_n = strtoi(argv[++i]);
+			cout << "-code_diagram_from_file " << code_diagram_label
+					<< " " << code_diagram_from_file_codewords_fname
+					<< " " << code_diagram_n << endl;
+		}
+
+		else if (stringcmp(argv[i], "-enhance") == 0) {
+			f_enhance = TRUE;
+			enhance_radius = strtoi(argv[++i]);
+			cout << "-enhance " << enhance_radius << endl;
+		}
+
+		else if (stringcmp(argv[i], "-metric_balls") == 0) {
+			f_metric_balls = TRUE;
+			radius_of_metric_ball = strtoi(argv[++i]);
+			cout << "-metric_balls " << radius_of_metric_ball << endl;
+		}
+
+
+
 		else if (stringcmp(argv[i], "-linear_code_through_basis") == 0) {
 			f_linear_code_through_basis = TRUE;
 			linear_code_through_basis_n = strtoi(argv[++i]);
@@ -229,6 +315,23 @@ int interface_coding_theory::read_arguments(int argc,
 			cout << "-linear_code_through_basis " << linear_code_through_basis_n
 					<< " " << linear_code_through_basis_text << endl;
 		}
+
+		else if (stringcmp(argv[i], "-linear_code_through_columns_of_parity_check_projectively") == 0) {
+			f_linear_code_through_columns_of_parity_check_projectively = TRUE;
+			linear_code_through_columns_of_parity_check_k = strtoi(argv[++i]);
+			linear_code_through_columns_of_parity_check_text.assign(argv[++i]);
+			cout << "-linear_code_through_columns_of_parity_check_projectively " << linear_code_through_columns_of_parity_check_k
+					<< " " << linear_code_through_columns_of_parity_check_text << endl;
+		}
+
+		else if (stringcmp(argv[i], "-linear_code_through_columns_of_parity_check") == 0) {
+			f_linear_code_through_columns_of_parity_check = TRUE;
+			linear_code_through_columns_of_parity_check_k = strtoi(argv[++i]);
+			linear_code_through_columns_of_parity_check_text.assign(argv[++i]);
+			cout << "-linear_code_through_columns_of_parity_check " << linear_code_through_columns_of_parity_check_k
+					<< " " << linear_code_through_columns_of_parity_check_text << endl;
+		}
+
 		else if (stringcmp(argv[i], "-long_code") == 0) {
 			f_long_code = TRUE;
 			long_code_n = strtoi(argv[++i]);
@@ -311,6 +414,12 @@ int interface_coding_theory::read_arguments(int argc,
 
 void interface_coding_theory::worker(int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_coding_theory::worker" << endl;
+	}
+
 	if (f_make_macwilliams_system) {
 
 		coding_theory_domain Coding;
@@ -383,6 +492,65 @@ void interface_coding_theory::worker(int verbose_level)
 			FREE_lint(set);
 
 	}
+
+	else if (f_code_diagram) {
+			long int *codewords;
+			int nb_words;
+
+			coding_theory_domain Codes;
+
+
+			lint_vec_scan(code_diagram_codewords_text, codewords, nb_words);
+
+
+
+			Codes.code_diagram(
+					code_diagram_label,
+					codewords,
+					nb_words, code_diagram_n, f_metric_balls, radius_of_metric_ball,
+					f_enhance, 0 /*nb_enhance */,
+					verbose_level);
+	}
+
+	else if (f_code_diagram_from_file) {
+			long int *codewords;
+			int m, nb_words;
+			file_io Fio;
+
+			coding_theory_domain Codes;
+
+
+			Fio.lint_matrix_read_csv(code_diagram_from_file_codewords_fname, codewords, m, nb_words, verbose_level);
+
+
+
+			Codes.code_diagram(
+					code_diagram_label,
+					codewords,
+					nb_words, code_diagram_n, f_metric_balls, radius_of_metric_ball,
+					f_enhance, enhance_radius,
+					verbose_level);
+	}
+
+	else if (f_code_diagram_from_file) {
+			long int *codewords;
+			int nb_words;
+
+			coding_theory_domain Codes;
+
+
+			lint_vec_scan(code_diagram_codewords_text, codewords, nb_words);
+
+
+
+			Codes.code_diagram(
+					code_diagram_label,
+					codewords,
+					nb_words, code_diagram_n, f_metric_balls, radius_of_metric_ball,
+					f_enhance, enhance_radius,
+					verbose_level);
+	}
+
 	else if (f_linear_code_through_basis) {
 			long int *set;
 			int sz;
@@ -402,6 +570,44 @@ void interface_coding_theory::worker(int verbose_level)
 			FREE_lint(set);
 
 	}
+
+	else if (f_linear_code_through_columns_of_parity_check_projectively) {
+			long int *set;
+			int n;
+
+			coding_theory_domain Codes;
+
+
+			lint_vec_scan(linear_code_through_columns_of_parity_check_text, set, n);
+
+			Codes.do_linear_code_through_columns_of_parity_check_projectively(
+					n,
+					set, linear_code_through_columns_of_parity_check_k /*k*/,
+					verbose_level);
+
+			FREE_lint(set);
+
+	}
+
+
+	else if (f_linear_code_through_columns_of_parity_check) {
+			long int *set;
+			int n;
+
+			coding_theory_domain Codes;
+
+
+			lint_vec_scan(linear_code_through_columns_of_parity_check_text, set, n);
+
+			Codes.do_linear_code_through_columns_of_parity_check(
+					n,
+					set, linear_code_through_columns_of_parity_check_k /*k*/,
+					verbose_level);
+
+			FREE_lint(set);
+
+	}
+
 	else if (f_long_code) {
 			coding_theory_domain Codes;
 			string dummy;
@@ -425,6 +631,9 @@ void interface_coding_theory::worker(int verbose_level)
 
 		Codes.field_induction(field_induction_fname_in, field_induction_fname_out, field_induction_nb_bits, verbose_level);
 
+	}
+	if (f_v) {
+		cout << "interface_coding_theory::worker done" << endl;
 	}
 }
 

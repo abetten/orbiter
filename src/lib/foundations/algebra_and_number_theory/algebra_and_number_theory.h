@@ -198,6 +198,16 @@ public:
 	void do_RREF(finite_field *F, int m, int n, std::string &text,
 			int f_normalize_from_the_left, int f_normalize_from_the_right,
 			int verbose_level);
+	void apply_Walsh_Hadamard_transform(finite_field *F,
+			std::string &fname_csv_in, int n, int verbose_level);
+	void algebraic_normal_form(finite_field *F,
+			std::string &fname_csv_in, int n, int verbose_level);
+	void apply_trace_function(finite_field *F,
+			std::string &fname_csv_in, int verbose_level);
+	void apply_power_function(finite_field *F,
+			std::string &fname_csv_in, long int d, int verbose_level);
+	void identity_function(finite_field *F,
+			std::string &fname_csv_out, int verbose_level);
 	void do_trace(finite_field *F, int verbose_level);
 	void do_norm(finite_field *F, int verbose_level);
 	void do_equivalence_class_of_fractions(int N, int verbose_level);
@@ -1193,6 +1203,8 @@ public:
 	void sieve_primes(std::vector<int> &v,
 			int from, int to, int limit, int verbose_level);
 	int nb_primes(int n);
+	void cyclotomic_set(std::vector<int> &cyclotomic_set, int a, int q, int n, int verbose_level);
+
 };
 
 // #############################################################################

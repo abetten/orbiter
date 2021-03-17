@@ -89,7 +89,16 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 	}
 
+	else if (Descr->f_cheat_sheet_for_decomposition_by_element_PG) {
 
+		do_cheat_sheet_for_decomposition_by_element_PG(
+				PA,
+				Descr->decomposition_by_element_power,
+				Descr->decomposition_by_element_data,
+				Descr->decomposition_by_element_fname,
+				verbose_level);
+
+	}
 
 
 	if (f_v) {
@@ -383,52 +392,6 @@ void projective_space_activity::canonical_form_of_code(
 	if (f_v) {
 		cout << "projective_space_activity::canonical_form_of_code after PA->canonical_form" << endl;
 	}
-
-#if 0
-	int f_input;
-	data_input_stream *Data;
-
-
-	int f_save_classification;
-	std::string save_prefix;
-
-	int f_report;
-	std::string report_prefix;
-
-	int fixed_structure_order_list_sz;
-	int fixed_structure_order_list[1000];
-
-	int f_max_TDO_depth;
-	int max_TDO_depth;
-
-	int f_classification_prefix;
-	std::string classification_prefix;
-
-#if 0
-	int f_save_incma_in_and_out;
-	std::string save_incma_in_and_out_prefix;
-#endif
-
-	int f_save_canonical_labeling;
-
-	int f_save_ago;
-
-	int f_load_canonical_labeling;
-
-	int f_load_ago;
-
-	int f_save_cumulative_canonical_labeling;
-	std::string cumulative_canonical_labeling_fname;
-
-	int f_save_cumulative_ago;
-	std::string cumulative_ago_fname;
-
-	int f_save_cumulative_data;
-	std::string cumulative_data_fname;
-
-	int f_save_fibration;
-	std::string fibration_fname;
-#endif
 
 
 	FREE_int(v);
@@ -1101,6 +1064,90 @@ void projective_space_activity::report_surfaces_by_lines(std::ostream &ost,
 
 }
 
+void projective_space_activity::do_cheat_sheet_for_decomposition_by_element_PG(
+		projective_space_with_action *PA,
+		int decomposition_by_element_power,
+		std::string &decomposition_by_element_data, std::string &fname_base,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "projective_space_activity::do_cheat_sheet_for_decomposition_by_element_PG verbose_level="
+				<< verbose_level << endl;
+	}
+
+
+	finite_field *F;
+
+	F = PA->P->F;
+
+
+	{
+		char title[1000];
+		char author[1000];
+
+		snprintf(title, 1000, "Cheat Sheet PG($%d,%d$)", PA->n, F->q);
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		{
+			ofstream ost(fname_base);
+			latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "projective_space_activity::do_cheat_sheet_for_decomposition_by_element_PG f_decomposition_by_element" << endl;
+			}
+
+			int *Elt;
+
+			Elt = NEW_int(PA->A->elt_size_in_int);
+
+
+			PA->A->make_element_from_string(Elt,
+					decomposition_by_element_data, verbose_level);
+
+
+			PA->A->element_power_int_in_place(Elt,
+					decomposition_by_element_power, verbose_level);
+
+			PA->report_decomposition_by_single_automorphism(
+					Elt, ost, fname_base,
+					verbose_level);
+
+			FREE_int(Elt);
+
+
+			L.foot(ost);
+
+		}
+		file_io Fio;
+
+		if (f_v) {
+			cout << "written file " << fname_base << " of size "
+					<< Fio.file_size(fname_base) << endl;
+		}
+	}
+
+	if (f_v) {
+		cout << "projective_space_activity::do_cheat_sheet_for_decomposition_by_element_PG done" << endl;
+	}
+
+}
 
 
 }}

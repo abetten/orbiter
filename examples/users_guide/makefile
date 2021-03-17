@@ -23,7 +23,289 @@ SURFACE_F7_15LINES_POINTS="0,1,2,3,5,6,7,8,9,10,12,18,20,26,28,34,36,42,44,45,50
 
 SURFACE_F7_15LINES_MCKEAN_POINTS="0,1,2,3,4,5,6,7,8,9,10,16,17,28,35,36,59,60,61,62,63,64,65,76,80,91,95,106,107,111,119,121,122,130,138,139,141,146,150,154,155,158,170,175,184,186,199,203,204,206,226,231,234,239,240,252,253,254,278,279,282,287,299,301,302,319,320,330,338,343,345,350,351,357,364,370,371,376,378,382,385,388,392,394,399"
 
+CODE_RS_6_4_7="6,2,1,0,0,0, 0,6,2,1,0,0, 0,0,6,2,1,0, 0,0,0,6,2,1"
 
+
+# Dickson:
+
+D1="1,4,1,7,1,12,1,15"
+D2= "1,1,1,2,1,3,1,4,1,7,1,11,1,14,1,15,1,19"
+D3="1,4,1,7,1,12,1,14,1,15,1,19"
+D4="1,3,1,4,1,11,1,9,1,10,1,14,1,17,1,18,1,19"
+D5="1,3,1,4,1,8,1,10,1,17,1,18,1,19"
+D6="1,2,1,3,1,4,1,7,1,15"
+D7="1,2,1,3,1,5,1,9,1,10,1,14,1,15"
+D8="1,3,1,4,1,5,1,7,1,10,1,11,1,19"
+D9="1,3,1,4,1,7,1,11,1,12,1,15,1,19"
+D10="1,4,1,7,1,8,1,9,1,10,1,13,1,15,1,16,1,17"
+D11:="1,4,1,7,1,8,1,10,1,13,1,14,1,15,1,16,1,17"
+D12="1,4,1,6,1,7,1,8,1,9,1,10,1,15,1,16,1,17"
+D13="1,6,1,8,1,9,1,10,1,15,1,16,1,17"
+D14="1,6,1,7,1,10,1,11,1,14,1,15"
+D15="1,4,1,5,1,6,1,8,1,12,1,14,1,16"
+D16=" 1,4,1,7,1,3,1,15,1,12"  
+D17="1,4,1,7,1,8,1,9,1,11,1,13,1,15,1,16,1,17,1,18,1,19"
+D18="1,4,1,7,1,8,1,11,1,13,1,14,1,15,1,16,1,17,1,18,1,19"
+D19= "1,4,1,7,1,6,1,8,1,11,1,14,1,12,1,16,1,17,1,18,1,19 "   
+D20="1,4,1,5,1,6,1,7,1,8,1,10,1,13,1,14,1,15"
+D21="1,5,1,6,1,8,1,10,1,13,1,14,1,15"
+D22="1,4,1,5,1,7,1,9,1,10,1,11,1,13,1,14,1,15,1,18,1,19"
+D23="1,4,1,7,1,9,1,11,1,13,1,14,1,15,1,18,1,19"
+D24="1,5,1,8,1,9,1,10,1,13,1,14,1,15,1,18,1,19"
+D25= "1,5,1,10,1,13,1,11,1,9,1,14,1,15,1,18,1,19 "   
+D26="1,5,1,6,1,8,1,10,1,15,1,18,1,19"
+D27="1,4,1,5,1,7,1,10,1,11,1,12,1,13,1,14,1,17,1,18"
+D28="1,4,1,5,1,6,1,7,1,10,1,11,1,14,1,15,1,17,1,18"
+D29="1,4,1,7,1,13,1,11,1,9,1,15,1,17,1,18"
+D30= "1,0,1,1,1,2,1,3,1,7,1,10,1,11,1,16"   
+D31="1,0,1,1,1,2,1,5,1,7,1,11,1,13,1,14,1,15,1,17,1,18,1,19"
+D32="1,0,1,1,1,2,1,3,1,7,1,8,1,10,1,11,1,12,1,15,1,16,1,19"
+D33="1,0,1,1,1,2,1,3,1,6,1,7,1,10,1,12,1,13,1,15,1,16,1,19"
+D34= "1,0,1,1,1,2,1,3,1,7,1,10,1,16,1,19"  
+D35="1,0,1,1,1,2,1,3,1,6,1,7,1,8,1,11,1,13,1,15"
+D36="1,0,1,1,1,2,1,3,1,7,1,15"
+D37="1,0,1,1,1,2,1,3,1,7,1,12,1,15,1,19"
+D38="1,0,1,1,1,2,1,3,1,6,1,7,1,12,1,13,1,15,1,19"
+D39= "1,0,1,1,1,2,1,3,1,7,1,5,1,10,1,6,1,13,1,8,1,11,1,9,1,14,1,12,1,15,1,19"  
+D40= "1,0,1,1,1,2,1,3,1,7,1,5,1,10,1,6,1,13,1,19 "   
+D41="1,2,1,4,1,7,1,5,1,10,1,11,1,14,1,19"
+D42="1,2,1,4,1,7,1,11,1,12,1,14,1,15,1,19"
+D43= "1,0,1,1,1,2,1,7,1,13,1,8,1,11,1,14,1,15,1,17 "   
+D44="1,0,1,1,1,2,1,6,1,8,1,11,1,12,1,14"
+D45="1,6,1,8,1,9,1,11,1,12,1,13,1,14,1,15,1,16,1,17,1,18,1,19"
+D46="1,5,1,10,1,6,1,13,1,8,1,11,1,9,1,14,1,12,1,15,1,16,1,17,1,18,1,19" 
+D47="1,5,1,10,1,6,1,13,1,8,1,11,1,9,1,14,1,16,1,17,1,18,1,19 "
+
+
+
+F_ALPHA_BETA_GAMMA_DELTA="beta*(gamma + 1)*x0*x0*x2 + (alpha*delta - beta*gamma + alpha - beta - delta - 1)*x0*x1*x2 -1*(alpha*beta -alpha*delta + delta)*(gamma + 1)*x0*x1*x3 + (0-alpha*delta + alpha*gamma -beta*gamma -beta + delta -gamma)*x0*x2*x2 -(alpha*delta +beta -delta)*(gamma +1)*x0*x2*x3 -(delta + 1)*(alpha - 1)*x1*x1*x2 - (delta + 1)*(alpha - 1)*x1*x1*x3 + (alpha*delta - alpha*gamma + beta*gamma + beta - delta + gamma)*x1*x2*x2 + (alpha*beta*gamma + alpha*beta + alpha*delta - alpha*gamma + beta*gamma + beta - delta + gamma)*x1*x2*x3 + alpha*beta*(gamma + 1)*x1*x3*x3"
+
+GOLAY_23_COLUMN_RANKS_PROJECTIVELY="0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 132, 913, 1460, 1750, 1898, 2518, 2787, 2874, 3320, 3357, 3662" 
+
+CODE_RM_3_1_GENMA="1,1,1,1,1,1,1,1, 0,1,0,1,0,1,0,1, 0,0,1,1,0,0,1,1, 0,0,0,0,1,1,1,1"
+CODE_RM_4_1_GENMA="1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1"
+CODE_RS_8="5,6,1,0,0,0,0, 0,5,6,1,0,0,0, 0,0,5,6,1,0,0, 0,0,0,5,6,1,0, 0,0,0,0,5,6,1"	
+CODE_RS_11_RREF="1, 0, 0, 0, 0, 0, 0, 0, 7, 2, 0, 1, 0, 0, 0, 0, 0, 0, 8, 3, 0, 0, 1, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 1, 0, 0, 0, 0, 8, 8, 0, 0, 0, 0, 1, 0, 0, 0, 10, 3, 0, 0, 0, 0, 0, 1, 0, 0, 1, 4, 0, 0, 0, 0, 0, 0, 1, 0, 5, 4, 0, 0, 0, 0, 0, 0, 0, 1, 5, 8"
+RS_8_reduced="0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1"
+
+CODE_21_15_4="1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 1,1,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0, 1,0,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0, 0,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0, 1,1,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0, 1,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0, 0,1,1,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0, 1,0,0,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0, 0,1,0,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0, 0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0, 1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0, 1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0, 1,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0, 0,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0, 1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1"
+
+
+# created in the combinatorics section:
+ELEMENTARY_SYMMETRIC_8_1="x0 + x1 + x2 + x3 + x4 + x5 + x6 + x7"
+ELEMENTARY_SYMMETRIC_8_2="x0*x1 + x0*x2 + x0*x3 + x0*x4 + x0*x5 + x0*x6 + x0*x7 + x1*x2 + x1*x3 + x1*x4 + x1*x5 + x1*x6 + x1*x7 + x2*x3 + x2*x4 + x2*x5 + x2*x6 + x2*x7 + x3*x4 + x3*x5 + x3*x6 + x3*x7 + x4*x5 + x4*x6 + x4*x7 + x5*x6 + x5*x7 + x6*x7"
+ELEMENTARY_SYMMETRIC_8_3="x0*x1*x2 + x0*x1*x3 + x0*x1*x4 + x0*x1*x5 + x0*x1*x6 + x0*x1*x7 + x0*x2*x3 + x0*x2*x4 + x0*x2*x5 + x0*x2*x6 + x0*x2*x7 + x0*x3*x4 + x0*x3*x5 + x0*x3*x6 + x0*x3*x7 + x0*x4*x5 + x0*x4*x6 + x0*x4*x7 + x0*x5*x6 + x0*x5*x7 + x0*x6*x7 + x1*x2*x3 + x1*x2*x4 + x1*x2*x5 + x1*x2*x6 + x1*x2*x7 + x1*x3*x4 + x1*x3*x5 + x1*x3*x6 + x1*x3*x7 + x1*x4*x5 + x1*x4*x6 + x1*x4*x7 + x1*x5*x6 + x1*x5*x7 + x1*x6*x7 + x2*x3*x4 + x2*x3*x5 + x2*x3*x6 + x2*x3*x7 + x2*x4*x5 + x2*x4*x6 + x2*x4*x7 + x2*x5*x6 + x2*x5*x7 + x2*x6*x7 + x3*x4*x5 + x3*x4*x6 + x3*x4*x7 + x3*x5*x6 + x3*x5*x7 + x3*x6*x7 + x4*x5*x6 + x4*x5*x7 + x4*x6*x7 + x5*x6*x7"
+ELEMENTARY_SYMMETRIC_8_4="x0*x1*x2*x3 + x0*x1*x2*x4 + x0*x1*x2*x5 + x0*x1*x2*x6 + x0*x1*x2*x7 + x0*x1*x3*x4 + x0*x1*x3*x5 + x0*x1*x3*x6 + x0*x1*x3*x7 + x0*x1*x4*x5 + x0*x1*x4*x6 + x0*x1*x4*x7 + x0*x1*x5*x6 + x0*x1*x5*x7 + x0*x1*x6*x7 + x0*x2*x3*x4 + x0*x2*x3*x5 + x0*x2*x3*x6 + x0*x2*x3*x7 + x0*x2*x4*x5 + x0*x2*x4*x6 + x0*x2*x4*x7 + x0*x2*x5*x6 + x0*x2*x5*x7 + x0*x2*x6*x7 + x0*x3*x4*x5 + x0*x3*x4*x6 + x0*x3*x4*x7 + x0*x3*x5*x6 + x0*x3*x5*x7 + x0*x3*x6*x7 + x0*x4*x5*x6 + x0*x4*x5*x7 + x0*x4*x6*x7 + x0*x5*x6*x7 + x1*x2*x3*x4 + x1*x2*x3*x5 + x1*x2*x3*x6 + x1*x2*x3*x7 + x1*x2*x4*x5 + x1*x2*x4*x6 + x1*x2*x4*x7 + x1*x2*x5*x6 + x1*x2*x5*x7 + x1*x2*x6*x7 + x1*x3*x4*x5 + x1*x3*x4*x6 + x1*x3*x4*x7 + x1*x3*x5*x6 + x1*x3*x5*x7 + x1*x3*x6*x7 + x1*x4*x5*x6 + x1*x4*x5*x7 + x1*x4*x6*x7 + x1*x5*x6*x7 + x2*x3*x4*x5 + x2*x3*x4*x6 + x2*x3*x4*x7 + x2*x3*x5*x6 + x2*x3*x5*x7 + x2*x3*x6*x7 + x2*x4*x5*x6 + x2*x4*x5*x7 + x2*x4*x6*x7 + x2*x5*x6*x7 + x3*x4*x5*x6 + x3*x4*x5*x7 + x3*x4*x6*x7 + x3*x5*x6*x7 + x4*x5*x6*x7"
+ELEMENTARY_SYMMETRIC_8_5="x0*x1*x2*x3*x4 + x0*x1*x2*x3*x5 + x0*x1*x2*x3*x6 + x0*x1*x2*x3*x7 + x0*x1*x2*x4*x5 + x0*x1*x2*x4*x6 + x0*x1*x2*x4*x7 + x0*x1*x2*x5*x6 + x0*x1*x2*x5*x7 + x0*x1*x2*x6*x7 + x0*x1*x3*x4*x5 + x0*x1*x3*x4*x6 + x0*x1*x3*x4*x7 + x0*x1*x3*x5*x6 + x0*x1*x3*x5*x7 + x0*x1*x3*x6*x7 + x0*x1*x4*x5*x6 + x0*x1*x4*x5*x7 + x0*x1*x4*x6*x7 + x0*x1*x5*x6*x7 + x0*x2*x3*x4*x5 + x0*x2*x3*x4*x6 + x0*x2*x3*x4*x7 + x0*x2*x3*x5*x6 + x0*x2*x3*x5*x7 + x0*x2*x3*x6*x7 + x0*x2*x4*x5*x6 + x0*x2*x4*x5*x7 + x0*x2*x4*x6*x7 + x0*x2*x5*x6*x7 + x0*x3*x4*x5*x6 + x0*x3*x4*x5*x7 + x0*x3*x4*x6*x7 + x0*x3*x5*x6*x7 + x0*x4*x5*x6*x7 + x1*x2*x3*x4*x5 + x1*x2*x3*x4*x6 + x1*x2*x3*x4*x7 + x1*x2*x3*x5*x6 + x1*x2*x3*x5*x7 + x1*x2*x3*x6*x7 + x1*x2*x4*x5*x6 + x1*x2*x4*x5*x7 + x1*x2*x4*x6*x7 + x1*x2*x5*x6*x7 + x1*x3*x4*x5*x6 + x1*x3*x4*x5*x7 + x1*x3*x4*x6*x7 + x1*x3*x5*x6*x7 + x1*x4*x5*x6*x7 + x2*x3*x4*x5*x6 + x2*x3*x4*x5*x7 + x2*x3*x4*x6*x7 + x2*x3*x5*x6*x7 + x2*x4*x5*x6*x7 + x3*x4*x5*x6*x7"
+ELEMENTARY_SYMMETRIC_8_6="x0*x1*x2*x3*x4*x5 + x0*x1*x2*x3*x4*x6 + x0*x1*x2*x3*x4*x7 + x0*x1*x2*x3*x5*x6 + x0*x1*x2*x3*x5*x7 + x0*x1*x2*x3*x6*x7 + x0*x1*x2*x4*x5*x6 + x0*x1*x2*x4*x5*x7 + x0*x1*x2*x4*x6*x7 + x0*x1*x2*x5*x6*x7 + x0*x1*x3*x4*x5*x6 + x0*x1*x3*x4*x5*x7 + x0*x1*x3*x4*x6*x7 + x0*x1*x3*x5*x6*x7 + x0*x1*x4*x5*x6*x7 + x0*x2*x3*x4*x5*x6 + x0*x2*x3*x4*x5*x7 + x0*x2*x3*x4*x6*x7 + x0*x2*x3*x5*x6*x7 + x0*x2*x4*x5*x6*x7 + x0*x3*x4*x5*x6*x7 + x1*x2*x3*x4*x5*x6 + x1*x2*x3*x4*x5*x7 + x1*x2*x3*x4*x6*x7 + x1*x2*x3*x5*x6*x7 + x1*x2*x4*x5*x6*x7 + x1*x3*x4*x5*x6*x7 + x2*x3*x4*x5*x6*x7"
+ELEMENTARY_SYMMETRIC_8_7="x0*x1*x2*x3*x4*x5*x6 + x0*x1*x2*x3*x4*x5*x7 + x0*x1*x2*x3*x4*x6*x7 + x0*x1*x2*x3*x5*x6*x7 + x0*x1*x2*x4*x5*x6*x7 + x0*x1*x3*x4*x5*x6*x7 + x0*x2*x3*x4*x5*x6*x7 + x1*x2*x3*x4*x5*x6*x7"
+ELEMENTARY_SYMMETRIC_8_8="x0*x1*x2*x3*x4*x5*x6*x7"
+
+
+E0="-1,55,1,45,-1,46,1,57,1,61,-1,62"
+E1="1,39,-1,40,-1,49,1,51,1,61,-1,62"
+E2="-1,67,1,69,1,59,-1,64,-1,22,1,24"
+E3="-1,38,1,47,1,40,-1,67,-1,51,1,69"
+E4="1,61,-1,62,-1,67,1,69"
+E5="1,38,-1,47,-1,39,2,66,-1,67,1,49,-2,68,1,69,1,61,-1,62"
+E6="1,62,-1,63,-1,64,1,24"
+E7="1,35,-1,36,-1,38,2,65,-1,29,1,40,-2,66,1,45,1,51,-1,69"
+E8="1,61,-1,63,-1,59,1,22"
+E9="1,27,1,47,-2,65,-1,48,1,50,-1,40,1,67,2,68,-1,55,-1,51"
+E10="1,66,-1,68,-1,59,1,64,1,21,-1,23"
+E11="-1,53,1,44,1,66,-1,68,1,55,-1,45"
+E12="1,61,-1,62,1,66,-1,68"
+E13="1,53,-1,44,1,66,-2,67,-1,68,1,46,2,69,-1,57,1,61,-1,62"
+E14="1,60,-1,61,1,64,-1,23"
+E15="1,27,1,41,-1,42,-2,65,1,44,-1,40,2,67,1,68,-1,55,-1,45"
+E16="1,60,-1,62,1,59,-1,21"
+E17="2,65,-1,53,-1,54,-1,29,1,56,-1,66,1,55,1,45,1,51,-2,69"
+E18="-1,67,1,69,1,66,-1,68"
+E19="-1,66,1,67,1,68,-1,69,-2,61,2,62,1,21,-1,22,-1,23,1,24"
+E20="-1,68,1,61,1,69,-1,62"
+E21="1,36,-1,41,-1,37,1,43,2,66,-2,67,-1,68,1,69,1,61,-1,62"
+E22="-1,66,1,62,1,67,-1,61"
+E23="1,54,-1,50,1,66,-1,67,-2,68,2,69,1,52,-1,58,1,61,-1,62"
+E24="1,68,-1,69,-1,60,1,63,1,23,-1,24"
+E25="1,36,-1,41,-1,40,1,68,1,45,-1,69"
+E26="1,66,-1,67,-1,60,1,63,1,21,-1,22"
+E27="-1,54,1,50,1,66,-1,67,1,55,-1,51"
+E28="1,37,-1,40,-1,43,1,45,1,61,-1,62"
+E29="1,55,-1,51,1,52,-1,58,-1,61,1,62"
+E30="1,21,-1,23,-1,22,1,24"
+E31="1,61,-1,21,-1,62,1,22"
+E32="1,61,-1,24,-1,62,1,23"
+E33="1,61,-1,24,-1,62,1,22"
+E34="1,61,-1,21,-1,24,1,23"
+E35="1,62,-1,22,-1,23,1,21"
+E36="1,61,-1,21,-1,62,1,23"
+E37="1,61,-1,23"
+E38="1,21,-1,62"
+E39="1,62,-1,22,-1,23,1,24"
+E40="1,62,-1,24"
+E41="1,22,-1,23"
+E42="1,61,-1,21,-1,24,1,22"
+E43="1,61,-1,22"
+E44="1,21,-1,24"
+H0="1,21"
+H1="1,21,-1,4"
+H2="1,22"
+H3="1,22,-1,4"
+H4="1,23"
+H5="1,23,-1,4"
+H6="1,24"
+H7="1,24,-1,4"
+H8="1,21,-1,22"
+H9="1,21,-1,23"
+H10="1,22,-1,24"
+H11="1,23,-1,24"
+H12="1,61,-1,62"
+H13="1,61,-1,21,-1,24,-1,62,1,22,1,23"
+H14="-1,67,-1,68,1,61,1,66,1,69,-1,62"
+
+
+
+Orb0="0"
+Orb1="4"
+Orb2="16"
+Orb3="20"
+Orb4="21"
+Orb5="24"
+Orb6="31"
+Orb7="34"
+Orb8="35"
+Orb9="38"
+Orb10="43"
+Orb11="46"
+Orb12="68"
+Orb13="69"
+Orb14="76"
+Orb15="77"
+Orb16="139"
+Orb17="140"
+Orb18="156"
+Orb19="192"
+Orb20="264"
+Orb21="265"
+Orb22="331"
+Orb23="337"
+Orb24="346"
+Orb25="355"
+Orb26="362"
+Orb27="487"
+Orb28="10566"
+Orb29="65540"
+Orb30="65542"
+Orb31="65546"
+Orb32="65547"
+Orb33="65548"
+Orb34="65550"
+Orb35="65554"
+Orb36="65561"
+Orb37="65562"
+Orb38="65569"
+Orb39="65570"
+Orb40="65603"
+Orb41="65605"
+Orb42="65609"
+Orb43="65611"
+Orb44="65612"
+Orb45="65613"
+Orb46="65614"
+Orb47="65617"
+Orb48="65618"
+Orb49="65633"
+Orb50="65634"
+Orb51="65665"
+Orb52="65666"
+Orb53="65687"
+Orb54="65695"
+Orb55="65735"
+Orb56="65743"
+Orb57="65744"
+Orb58="65759"
+Orb59="65760"
+Orb60="65831"
+Orb61="65839"
+Orb62="65843"
+Orb63="65850"
+Orb64="65851"
+Orb65="65858"
+Orb66="65859"
+Orb67="65863"
+Orb68="65865"
+Orb69="65867"
+Orb70="65868"
+Orb71="65869"
+Orb72="65871"
+Orb73="65872"
+Orb74="65873"
+Orb75="65874"
+Orb76="65887"
+Orb77="65899"
+Orb78="65900"
+Orb79="65903"
+Orb80="65904"
+Orb81="65915"
+Orb82="65919"
+Orb83="65921"
+Orb84="65922"
+Orb85="66755"
+Orb86="66763"
+Orb87="66764"
+Orb88="67107"
+Orb89="67115"
+Orb90="67117"
+Orb91="67150"
+Orb92="67243"
+Orb93="73731"
+Orb94="73733"
+Orb95="73737"
+Orb96="73753"
+Orb97="73795"
+Orb98="73796"
+Orb99="73797"
+Orb100="73798"
+Orb101="73801"
+Orb102="73802"
+Orb103="73987"
+Orb104="73993"
+Orb105="74007"
+Orb106="74051"
+Orb107="74052"
+Orb108="74053"
+Orb109="74055"
+Orb110="74057"
+Orb111="74099"
+Orb112="74105"
+Orb113="74106"
+Orb114="74243"
+Orb115="74247"
+Orb116="74248"
+Orb117="74263"
+Orb118="74264"
+Orb119="74275"
+Orb120="74276"
+Orb121="74279"
+Orb122="74280"
+Orb123="74295"
+Orb124="74296"
+Orb125="74499"
+Orb126="74500"
+Orb127="74531"
+Orb128="74532"
+Orb129="76051"
+Orb130="76099"
+Orb131="76100"
+Orb132="76291"
+Orb133="76292"
+Orb134="76307"
+Orb135="76308"
+Orb136="76323"
+Orb137="76355"
+Orb138="76356"
+Orb139="76387"
+Orb140="76389"
 
 
 #############################################################################################################
@@ -202,6 +484,13 @@ draw_mod_3:
 			pdflatex mod_3_draw.tex
 			open mod_3_draw.pdf
 
+draw_mod_3_c:
+		$(ORBITER_PATH)/orbiter.out -v 2 -draw_options -embedded -nodes_empty -end \
+			-draw_mod_n 3 mod_3_c \
+			-cyclotomic_sets 2 "1"
+			pdflatex mod_3_c_draw.tex
+			open mod_3_c_draw.pdf
+
 draw_mod_4:
 		$(ORBITER_PATH)/orbiter.out -v 2 -draw_options -embedded -nodes_empty -end \
 			-draw_mod_n 4 mod_4
@@ -219,6 +508,8 @@ draw_mod_7:
 			-draw_mod_n 7 mod_7 
 			pdflatex mod_7_draw.tex
 			open mod_7_draw.pdf
+
+
 
 draw_mod_15:
 		$(ORBITER_PATH)/orbiter.out -v 2 -draw_options -embedded -end \
@@ -240,6 +531,12 @@ draw_mod_18:
 			open mod_18_draw.pdf
 
 
+draw_mod_31:
+		$(ORBITER_PATH)/orbiter.out -v 2 -draw_options -embedded -end \
+			-draw_mod_n 31 mod_31 
+			pdflatex mod_31_draw.tex
+			open mod_31_draw.pdf
+
 
 PR127:
 		$(ORBITER_PATH)/orbiter.out -v 5 -primitive_root 127
@@ -258,6 +555,30 @@ draw_mod_251:
 			open mod_251_draw.pdf
 
 #-draw_mod_n_inverse
+
+
+draw_mod_255_cyclotomic_1:
+		$(ORBITER_PATH)/orbiter.out -v 2 -draw_options -nodes_empty -rad 10 -line_width 0.4 -embedded -end \
+			-draw_mod_n 255 mod_255_cyclotomic_1 \
+			-cyclotomic_sets 2 "1"
+			pdflatex mod_255_cyclotomic_1_draw.tex
+			open mod_255_cyclotomic_1_draw.pdf
+
+draw_mod_255_cyclotomic_3:
+		$(ORBITER_PATH)/orbiter.out -v 2 -draw_options -nodes_empty -rad 10 -line_width 0.4 -embedded -end \
+			-draw_mod_n 255 mod_255_cyclotomic_3 \
+			-cyclotomic_sets 2 "3"
+			pdflatex mod_255_cyclotomic_3_draw.tex
+			open mod_255_cyclotomic_3_draw.pdf
+
+draw_mod_255_cyclotomic_1_and_3:
+		$(ORBITER_PATH)/orbiter.out -v 2 -draw_options -nodes_empty -rad 10 -line_width 0.4 -embedded -end \
+			-draw_mod_n 255 mod_255_cyclotomic_1_and_3 \
+			-cyclotomic_sets 2 "1,3"
+			pdflatex mod_255_cyclotomic_1_and_3_draw.tex
+			open mod_255_cyclotomic_1_and_3_draw.pdf
+
+
 
 #############################################################################################################
 # Section 8: Prime Fields
@@ -345,11 +666,37 @@ F_127:
 	#open GF_7.pdf
 
 
+Wash_matrix_4:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -Walsh_matrix 4 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix Walsh_01_4.csv 10 24 -draw_matrix_partition 3 16 16 
+	#pdflatex GF_2.tex
+	#open GF_2.pdf
+
+
 #############################################################################################################
 # Section 9: Polynomials over Finite Fields
 
 SECTION_POLYNOMIALS:
 
+
+
+
+# check which polynomials are irreducible and which are primitive:
+
+sift_polynomials_3:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -sift_polynomials 8 16 -end
+
+
+
+sift_polynomials_4:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -sift_polynomials 16 32 -end
 
 
 
@@ -701,6 +1048,122 @@ CRC_poly_3_128_10:
 
 
 
+
+
+mult_polynomials_2_5_7:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -mult_polynomials 5 7 -end
+	pdflatex polynomial_mult_5_7.tex
+	open polynomial_mult_5_7.pdf
+
+polynomial_division_ranked_2_27_13:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -polynomial_division_ranked 27 13 -end
+	pdflatex polynomial_division_27_13.tex
+	open polynomial_division_27_13.pdf
+
+
+
+
+mult_polynomials_2_8_15:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -mult_polynomials 8 15 -end
+	pdflatex polynomial_mult_8_15.tex
+	open polynomial_mult_8_15.pdf
+
+polynomial_division_ranked_2_120_25:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -polynomial_division_ranked 120 25 -end
+	pdflatex polynomial_division_120_25.tex
+	open polynomial_division_120_25.pdf
+
+# the answer is 5
+
+
+mult_polynomials_2_7_7:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -mult_polynomials 7 7 -end
+	pdflatex polynomial_mult_7_7.tex
+	open polynomial_mult_7_7.pdf
+
+
+
+mult_polynomials_2_4_6:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -mult_polynomials 4 6 -end
+	pdflatex polynomial_mult_4_6.tex
+	open polynomial_mult_4_6.pdf
+
+polynomial_division_ranked_2_24_13:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -polynomial_division_ranked 24 13 -end
+	pdflatex polynomial_division_24_13.tex
+	open polynomial_division_24_13.pdf
+
+
+
+mult_polynomials_1024_999_997:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -mult_polynomials 999 997 -end
+	pdflatex polynomial_mult_999_997.tex
+	open polynomial_mult_999_997.pdf
+
+polynomial_division_ranked_2_349147_1033:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -polynomial_division_ranked 349147 1033 -end
+	pdflatex polynomial_division_349147_1033.tex
+	open polynomial_division_349147_1033.pdf
+
+mult_polynomials_17_12:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -mult_polynomials 17 12 -end
+	pdflatex polynomial_mult_17_12.tex
+	open polynomial_mult_17_12.pdf
+	
+# gives 204
+
+polynomial_division_ranked_2_204_37:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity -polynomial_division_ranked 204 37 -end
+	pdflatex polynomial_division_204_37.tex
+	open polynomial_division_204_37.pdf
+	
+# answer is 18
+	
+	
+
+mult_polynomials_1024_999_997_check:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-define F -finite_field -q 1024 -end \
+		-with F -do \
+		-finite_field_activity -parse "test" "" "a*b" -evaluate "a=999,b=997" -end
+
+
+
+
+
 #############################################################################################################
 # Section 10: Extension Fields
 
@@ -717,6 +1180,17 @@ F_4:
 	pdflatex GF_4.tex
 	open GF_4.pdf
 
+trace_4:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 4 -end -end \
+		-with F -do -finite_field_activity -trace -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F_q4_trace.csv F_q4_trace_2x2.csv 2
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F_q4_trace_2x2.csv 40 24 -draw_matrix_partition 4 2 2
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 4 -end -end \
+		-with F -do -finite_field_activity -algebraic_normal_form F_q4_trace.csv 2 -end
+	
+trace_4_WH_transform:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 4 -end -end \
+		-with F -do -finite_field_activity -Walsh_Hadamard_transform F_q4_trace.csv 2 -end
 
 
 F_8:
@@ -724,6 +1198,35 @@ F_8:
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
 	pdflatex GF_8.tex
 	open GF_8.pdf
+
+
+F_8_near_bent_5:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 8 -end -end \
+		-with F -do -finite_field_activity -identity_function  F8.csv -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 8 -end -end \
+		-with F -do -finite_field_activity -apply_power_function  F8.csv 5 -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 8 -end -end \
+		-with F -do -finite_field_activity -apply_trace_function  F8_power_5.csv -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -Walsh_Hadamard_transform F8_power_5_trace.csv 4 -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F8_power_5_trace.csv F8_power_5_trace_8x1.csv 1
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F8_power_5_trace_8x1.csv 40 24 -draw_matrix_partition 4 8 1
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix Walsh_01_3.csv 40 24 -draw_matrix_partition 4 8 8
+	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F8_power_5_trace_transformed.csv F8_power_5_trace_transformed_8x1.csv 1
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F8_power_5_trace_transformed_8x1.csv 40 24 -draw_matrix_partition 4 8 1
+
+bent_4:
+	$(ORBITER_PATH)/orbiter.out -v 3 -bent 4
+
+bent_4a:
+	$(ORBITER_PATH)/orbiter.out -v 3 -reformat bent_function_n4.csv bent_function_n4_16x1.csv 1
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -Walsh_Hadamard_transform bent_function_n4.csv 4 -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -reformat bent_function_n4_transformed.csv bent_function_n4_transformed_16x1.csv 1
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix bent_function_n4_transformed_16x1.csv 40 24 -draw_matrix_partition 4 16 1
+
+#0 : 0 / 448 : ( 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0 ) : 27328 : ( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...0, 0, 0 ) : homogeneous_polynomial_domain::print_equation
+#X0*X3*X4^2 + X1*X2*X4^2
 
 
 F8_over_F2_field_reduction:
@@ -781,6 +1284,13 @@ F_9:
 	pdflatex GF_9.tex
 	open GF_9.pdf
 
+trace_9:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 9 -end -end \
+		-with F -do -finite_field_activity -trace -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F_q9_trace.csv F_q9_trace_3x3.csv 3
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F_q9_trace_3x3.csv 40 24 -draw_matrix_partition 4 3 3
+	
+
 
 
 
@@ -795,6 +1305,29 @@ F_16:
 	pdflatex GF_16.tex
 	open GF_16.pdf
 
+
+
+trace_16:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end -end \
+		-with F -do -finite_field_activity -trace -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F_q16_trace.csv F_q16_trace_4x4.csv 4
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F_q16_trace_4x4.csv 40 24 -draw_matrix_partition 4 4 4
+	
+
+F_16_bent:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end -end \
+		-with F -do -finite_field_activity -identity_function  F16.csv -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end -end \
+		-with F -do -finite_field_activity -apply_power_function  F16.csv 9 -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end -end \
+		-with F -do -finite_field_activity -apply_trace_function  F16_power_9.csv -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -Walsh_Hadamard_transform F16_power_9_trace.csv 4 -end
+	#$(ORBITER_PATH)/orbiter.out -v 3 -reformat F16_power_9_trace.csv F16_power_9_trace_16x1.csv 1
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F16_power_9_trace_16x1.csv 40 24 -draw_matrix_partition 4 16 1
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix Walsh_01_4.csv 40 24 -draw_matrix_partition 4 16 16
+	#$(ORBITER_PATH)/orbiter.out -v 3 -reformat F16_power_9_trace_transformed.csv F16_power_9_trace_transformed_16x1.csv 1
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F16_power_9_trace_transformed_16x1.csv 40 24 -draw_matrix_partition 4 16 1
 
 
 F_16_over_F_4_field_reduction:
@@ -896,6 +1429,12 @@ F_25:
 	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q25_addition_table_reordered.csv 40 24 -draw_matrix_partition 3 25 25
 	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q25_multiplication_table_reordered.csv 40 24 -draw_matrix_partition 3 24 24
 
+trace_25:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 25 -end -end \
+		-with F -do -finite_field_activity -trace -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F_q25_trace.csv F_q25_trace_5x5.csv 5
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F_q25_trace_5x5.csv 40 24 -draw_matrix_partition 4 5 5
+
 
 
 F_32:
@@ -916,6 +1455,12 @@ F_49:
 	#pdflatex GF_49.tex
 	#open GF_49.pdf
 
+trace_49:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 49 -end -end \
+		-with F -do -finite_field_activity -trace -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F_q49_trace.csv F_q49_trace_7x7.csv 7
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F_q49_trace_7x7.csv 40 24 -draw_matrix_partition 4 7 7
+
 
 
 F_64:
@@ -927,6 +1472,23 @@ F_64:
 	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q64_multiplication_table_reordered.csv 40 24 -draw_matrix_partition 3 63 63
 	pdflatex GF_64.tex
 	open GF_64.pdf
+
+
+trace_64:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 64 -end -end \
+		-with F -do -finite_field_activity -trace -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F_q64_trace.csv F_q64_trace_8x8.csv 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F_q64_trace_8x8.csv 40 24 -draw_matrix_partition 4 8 8
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -algebraic_normal_form F_q64_trace.csv 6 -end
+
+
+trace_64_poly_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 64 -override_polynomial 115 -end -end \
+		-with F -do -finite_field_activity -trace -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F_q64_trace.csv F_q64_trace_8x8.csv 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F_q64_trace_8x8.csv 40 24 -draw_matrix_partition 4 8 8
+
 
 F_64_over_F_8_field_reduction:
 	$(ORBITER_PATH)/orbiter.out -v 2 \
@@ -956,6 +1518,14 @@ F64_over_F2_field_reduction:
 	open field_reduction_Q64_q2_8_8.pdf
 
 
+
+trace_81:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 81 -end -end \
+		-with F -do -finite_field_activity -trace -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F_q81_trace.csv F_q81_trace_9x9.csv 9
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F_q81_trace_9x9.csv 40 24 -draw_matrix_partition 4 9 9
+
+
 F_125:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 125 -end -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
@@ -973,6 +1543,14 @@ F_256:
 	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q256_multiplication_table_reordered.csv 40 24 -draw_matrix_partition 3 255 255
 	pdflatex GF_256.tex
 	open GF_256.pdf
+
+
+trace_256:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 256 -end -end \
+		-with F -do -finite_field_activity -trace -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F_q256_trace.csv F_q256_trace_16x16.csv 16
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F_q256_trace_16x16.csv 40 24 -draw_matrix_partition 4 16 16
+
 
 
 F_256_Rijndahl:
@@ -993,106 +1571,6 @@ normal_basis_2_3:
 		-normal_basis 3 -end
 
 
-
-mult_polynomials_2_5_7:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity -mult_polynomials 5 7 -end
-	pdflatex polynomial_mult_5_7.tex
-	open polynomial_mult_5_7.pdf
-
-polynomial_division_ranked_2_27_13:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity -polynomial_division_ranked 27 13 -end
-	pdflatex polynomial_division_27_13.tex
-	open polynomial_division_27_13.pdf
-
-
-
-
-mult_polynomials_2_8_15:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity -mult_polynomials 8 15 -end
-	pdflatex polynomial_mult_8_15.tex
-	open polynomial_mult_8_15.pdf
-
-polynomial_division_ranked_2_120_25:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity -polynomial_division_ranked 120 25 -end
-	pdflatex polynomial_division_120_25.tex
-	open polynomial_division_120_25.pdf
-
-# the answer is 5
-
-
-mult_polynomials_2_4_6:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity -mult_polynomials 4 6 -end
-	pdflatex polynomial_mult_4_6.tex
-	open polynomial_mult_4_6.pdf
-
-polynomial_division_ranked_2_24_13:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity -polynomial_division_ranked 24 13 -end
-	pdflatex polynomial_division_24_13.tex
-	open polynomial_division_24_13.pdf
-
-
-
-mult_polynomials_1024_999_997:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity -mult_polynomials 999 997 -end
-	pdflatex polynomial_mult_999_997.tex
-	open polynomial_mult_999_997.pdf
-
-polynomial_division_ranked_2_349147_1033:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity -polynomial_division_ranked 349147 1033 -end
-	pdflatex polynomial_division_349147_1033.tex
-	open polynomial_division_349147_1033.pdf
-
-mult_polynomials_17_12:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity -mult_polynomials 17 12 -end
-	pdflatex polynomial_mult_17_12.tex
-	open polynomial_mult_17_12.pdf
-	
-# gives 204
-
-polynomial_division_ranked_2_204_37:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity -polynomial_division_ranked 204 37 -end
-	pdflatex polynomial_division_204_37.tex
-	open polynomial_division_204_37.pdf
-	
-# answer is 18
-	
-	
-
-mult_polynomials_1024_999_997_check:
-	$(ORBITER_PATH)/orbiter.out -v 3 \
-		-define F -finite_field -q 1024 -end \
-		-with F -do \
-		-finite_field_activity -parse "test" "" "a*b" -evaluate "a=999,b=997" -end
 
 
 
@@ -1160,6 +1638,59 @@ classes_GL_4_2:
 # 252 classes
 
 
+
+RREF_demo_4_4_q5:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 5 -end \
+		-with F -do \
+		-finite_field_activity -RREF_demo 4 4 -end
+	pdflatex RREF_example_q5_4_4.tex
+	#open RREF_example_q5_4_4.pdf
+	gs -sDEVICE=png16 -dFIXEDMEDIA -dDEVICEWIDTHPOINTS=500 -dDEVICEHEIGHTPOINTS=450 \
+		-r240 -oRREF_example_q5_4_4_page%02d.png \
+		RREF_example_q5_4_4.pdf
+
+#-dDEVICEWIDTHPOINTS=100 -dDEVICEHEIGHTPOINTS=100 
+#-sPAPERSIZE=hagaki
+
+RREF_demo_4_6_q7:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 7 -end \
+		-with F -do \
+		-finite_field_activity -RREF_random_matrix 4 6 -end
+	pdflatex RREF_example_q7_4_6.tex
+	gs -sDEVICE=png16 -dFIXEDMEDIA -dDEVICEWIDTHPOINTS=500 -dDEVICEHEIGHTPOINTS=450 \
+		-r240 -oRREF_example_q7_4_6_page%02d.png \
+		RREF_example_q7_4_6.pdf
+	open RREF_example_q7_4_6.pdf
+
+
+RREF_demo_4_8_q8:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 8 -end \
+		-with F -do \
+		-finite_field_activity -RREF_random_matrix 4 8 -end
+	pdflatex RREF_example_q8_4_8.tex
+	#open RREF_example_q8_4_8.pdf
+	gs -sDEVICE=png16 -dFIXEDMEDIA -dDEVICEWIDTHPOINTS=500 -dDEVICEHEIGHTPOINTS=450 \
+		-r240 -oRREF_example_q8_4_8_page%02d.png \
+		RREF_example_q8_4_8.pdf
+
+
+
+RREF_RS_6_4_7:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 7 -end \
+		-with F -do \
+		-finite_field_activity -RREF 4 6 $(CODE_RS_6_4_7) -end
+	pdflatex RREF_example_q7_4_6.tex
+	gs -sDEVICE=png16 -dFIXEDMEDIA -dDEVICEWIDTHPOINTS=500 -dDEVICEHEIGHTPOINTS=450 \
+		-r240 -oRREF_example_q7_4_6_page%02d.png \
+		RREF_example_q7_4_6.pdf
+
+
+
+
 #############################################################################################################
 # Section 12: Representation Theory
 
@@ -1168,10 +1699,10 @@ SECTION_REPRESENTATION_THEORY:
 
 Char_Sym_4:
 	$(ORBITER_PATH)/orbiter.out -v 2 -character_table_symmetric_group 4
-	
+
 Char_Sym_5:
 	$(ORBITER_PATH)/orbiter.out -v 2 -character_table_symmetric_group 5
-	
+
 Char_Sym_6:
 	$(ORBITER_PATH)/orbiter.out -v 2 -character_table_symmetric_group 6
 	
@@ -1319,6 +1850,20 @@ surface_16_2_move_two_lines:
 		"1,0,0,0, 0,0,0,1"  "1,1,0,2, 0,0,1,0" \
 		"1,0,0,0, 0,0,0,1" "0,1,0,1, 0,0,1,0" \
 		-end
+
+
+
+PG_2_4_decomposition_singer_power:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-draw_options -end \
+		-define F -finite_field -q 4 -end -end \
+		-define P -projective_space 2 F -end  \
+		-with P -do \
+		-projective_space_activity \
+			-cheat_sheet_for_decomposition_by_element_PG 7 "0,1,0, 0,0,1, 2,1,1, 0" "PG_2_4_singer.tex" \
+		-end
+	pdflatex PG_2_4_singer.tex
+	open PG_2_4_singer.pdf
 
 
 #############################################################################################################
@@ -2354,11 +2899,11 @@ PGL_4_5_3B_unrank:
 		-element_unrank "701459351"
 		
 
-eigen_3A:
-	$(ORBITER_PATH)/orbiter.out -v 6  -finite_field_activity -q 5 -eigenstuff 4 "0,1,0,2,0,1,2,1,4,2,3,1,2,0,4,3" -end
+#eigen_3A:
+#	$(ORBITER_PATH)/orbiter.out -v 6  -finite_field_activity -q 5 -eigenstuff 4 "0,1,0,2,0,1,2,1,4,2,3,1,2,0,4,3" -end
 	
-eigen_3B:
-	$(ORBITER_PATH)/orbiter.out -v 6  -finite_field_activity -q 5 -eigenstuff 4 "0,0,0,1,2,3,0,1,0,3,4,4,0,1,2,1" -end
+#eigen_3B:
+#	$(ORBITER_PATH)/orbiter.out -v 6  -finite_field_activity -q 5 -eigenstuff 4 "0,0,0,1,2,3,0,1,0,3,4,4,0,1,2,1" -end
 	
 
 # element of order 31 in PGL(4,5):
@@ -4714,6 +5259,199 @@ SECTION_CUBIC_SURFACES_CREATION:
 
 
 
+# full del Pezzo surfaces:
+
+
+surface_13_0:
+	- $(ORBITER_PATH)/orbiter.out -v 3 \
+		-draw_options -end \
+		-define G -linear_group -PGL 4 13 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-control_six_arcs  -end \
+		-create_surface -q 13 -catalogue 0 -end \
+		-surface_clebsch -surface_quartic \
+		-end
+	#pdflatex surface_catalogue_q13_iso0_report.tex
+	#open surface_catalogue_q13_iso0_report.pdf
+	pdflatex surface_catalogue_q13_iso0_with_group.tex
+	open surface_catalogue_q13_iso0_with_group.pdf
+
+
+
+quartic_curve_13_0_canonical: 
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-define F -finite_field -q 13 -end -end \
+		-define P -projective_space 2 F -end \
+		-with P -do \
+		-projective_space_activity \
+		-canonical_form_PG \
+		-input -set_of_points "34,74,87,89,95,99,146,175" -end \
+		-classification_prefix quartic_q13_0 \
+		-report \
+		-end \
+		-end
+	pdflatex quartic_q13_0_classification.tex
+	open quartic_q13_0_classification.pdf
+
+
+
+surface_13_1:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-draw_options -end \
+		-define G -linear_group -PGL 4 13 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-control_six_arcs  -end \
+		-create_surface -q 13 -catalogue 1 -end \
+		-surface_clebsch -surface_quartic \
+		-end
+	#pdflatex surface_catalogue_q13_iso1_report.tex
+	#open surface_catalogue_q13_iso1_report.pdf
+	pdflatex surface_catalogue_q13_iso1_with_group.tex
+	open surface_catalogue_q13_iso1_with_group.pdf
+
+
+surface_13_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-draw_options -end \
+		-define G -linear_group -PGL 4 13 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-control_six_arcs  -end \
+		-create_surface -q 13 -catalogue 2 -end \
+		-surface_clebsch -surface_quartic \
+		-end
+	pdflatex surface_catalogue_q13_iso2_report.tex
+	open surface_catalogue_q13_iso2_report.pdf
+	pdflatex surface_catalogue_q13_iso2_with_group.tex
+	open surface_catalogue_q13_iso2_with_group.pdf
+
+
+quartic_curve_13_2_canonical: 
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-define F -finite_field -q 13 -end -end \
+		-define P -projective_space 2 F -end \
+		-with P -do \
+		-projective_space_activity \
+		-canonical_form_PG \
+		-input -set_of_points "29,86,97,154" -end \
+		-classification_prefix quartic_q13_2 \
+		-report \
+		-end \
+		-end
+	pdflatex quartic_q13_2_classification.tex
+	open quartic_q13_2_classification.pdf
+
+Knecht_13_1:
+	$(ORBITER_PATH)/orbiter.out -v 2 -create_combinatorial_object -q 13 -n 2 \
+		-projective_variety "Knecht_1" 4 "1,0,1,1,1,2,12,9"	-monomial_type_PART -end -save "./"
+
+
+quartic_curve_Knecht_1_canonical: 
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-define F -finite_field -q 13 -end -end \
+		-define P -projective_space 2 F -end \
+		-with P -do \
+		-projective_space_activity \
+		-canonical_form_PG \
+		-input -file_of_points Knecht_1.txt -end \
+		-classification_prefix quartic_Knecht_1 \
+		-report \
+		-end \
+		-end
+	pdflatex quartic_Knecht_1_classification.tex
+	open quartic_Knecht_1_classification.pdf
+
+
+Knecht_13_2:
+	$(ORBITER_PATH)/orbiter.out -v 2 -create_combinatorial_object -q 13 -n 2 \
+		-projective_variety "Knecht_2" 4 "1,0,1,1,1,2,8,9,8,10,8,11"	-monomial_type_PART -end -save "./"
+
+
+quartic_curve_Knecht_2_canonical: 
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-define F -finite_field -q 13 -end -end \
+		-define P -projective_space 2 F -end \
+		-with P -do \
+		-projective_space_activity \
+		-canonical_form_PG \
+		-input \
+		-file_of_points Knecht_2.txt -end \
+		-classification_prefix quartic_Knecht_2 \
+		-report \
+		-end \
+		-end
+	pdflatex quartic_Knecht_2_classification.tex
+	open quartic_Knecht_2_classification.pdf
+
+
+
+quartic_curve_13_canonical: 
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-define F -finite_field -q 13 -end -end \
+		-define P -projective_space 2 F -end \
+		-with P -do \
+		-projective_space_activity \
+		-canonical_form_PG \
+		-input \
+		-file_of_points Knecht_1.txt \
+		-file_of_points Knecht_2.txt \
+		-set_of_points "34,74,87,89,95,99,146,175" \
+		-set_of_points "29,86,97,154"  \
+		-set_of_points "17,18,47,72,113,134,162,163"  \
+		-end \
+		-classification_prefix quartic_Knecht_2 \
+		-report \
+		-end \
+		-end
+	pdflatex quartic_Knecht_2_classification.tex
+	open quartic_Knecht_2_classification.pdf
+
+
+
+surface_25_0:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-draw_options -end \
+		-define G -linear_group -PGGL 4 25 -wedge -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-control_six_arcs  -end \
+		-create_surface -q 25 -catalogue 0 -end \
+		-surface_clebsch -surface_quartic \
+		-end
+	#pdflatex surface_catalogue_q25_iso0_report.tex
+	#open surface_catalogue_q25_iso0_report.pdf
+	pdflatex surface_catalogue_q25_iso0_with_group.tex
+	open surface_catalogue_q25_iso0_with_group.pdf
+
+quartic_curve_25_0_0_canonical: 
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-define F -finite_field -q 25 -end -end \
+		-define P -projective_space 2 F -end \
+		-with P -do \
+		-projective_space_activity \
+		-canonical_form_PG \
+		-input \
+		-set_of_points "10,11,59,63,124,135,136,170,206,257,275,284,285,367,378,393,433,619,641,644"  \
+		-set_of_points "9, 24, 62, 67, 77, 84, 87, 89, 125, 130, 158, 172, 197, 219, 266, 271, 325, 356, 391, 392, 400, 429, 454, 458, 470, 503, 531, 553, 605, 625, 627, 646"  \
+		-set_of_points "9, 24, 55, 75, 79, 88, 93, 94, 112, 142, 186, 213, 230, 249, 316, 329, 337, 371, 381, 383, 392, 405, 417, 439, 464, 466, 470, 524, 530, 567, 583, 594"  \
+		-set_of_points "10, 23, 34, 51, 65, 83, 117, 126, 144, 146, 147, 159, 172, 181, 185, 197, 198, 207, 240, 281, 283, 293, 300, 301, 305, 346, 357, 384, 409, 419, 444, 459, 463, 465, 468, 514, 533, 543, 547, 549, 586, 615, 618, 628"  \
+		-set_of_points "2, 12, 48, 65, 87, 120, 189, 246, 305, 323, 354, 375, 434, 435, 455, 482, 496, 557, 586, 595"  \
+		-end \
+		-classification_prefix quartic_25_0_0 \
+		-report \
+		-end \
+		-end
+	pdflatex quartic_25_0_0_classification.tex
+	open quartic_25_0_0_classification.pdf
+
+
+
+
+
+
+
 surface_table:
 	$(ORBITER_PATH)/orbiter.out -v 3 -make_table_of_surfaces
 	pdflatex surfaces_report.tex
@@ -4723,55 +5461,6 @@ surface_table:
 
 
 
-# Dickson:
-
-D1="1,4,1,7,1,12,1,15"
-D2= "1,1,1,2,1,3,1,4,1,7,1,11,1,14,1,15,1,19"
-D3="1,4,1,7,1,12,1,14,1,15,1,19"
-D4="1,3,1,4,1,11,1,9,1,10,1,14,1,17,1,18,1,19"
-D5="1,3,1,4,1,8,1,10,1,17,1,18,1,19"
-D6="1,2,1,3,1,4,1,7,1,15"
-D7="1,2,1,3,1,5,1,9,1,10,1,14,1,15"
-D8="1,3,1,4,1,5,1,7,1,10,1,11,1,19"
-D9="1,3,1,4,1,7,1,11,1,12,1,15,1,19"
-D10="1,4,1,7,1,8,1,9,1,10,1,13,1,15,1,16,1,17"
-D11:="1,4,1,7,1,8,1,10,1,13,1,14,1,15,1,16,1,17"
-D12="1,4,1,6,1,7,1,8,1,9,1,10,1,15,1,16,1,17"
-D13="1,6,1,8,1,9,1,10,1,15,1,16,1,17"
-D14="1,6,1,7,1,10,1,11,1,14,1,15"
-D15="1,4,1,5,1,6,1,8,1,12,1,14,1,16"
-D16=" 1,4,1,7,1,3,1,15,1,12"  
-D17="1,4,1,7,1,8,1,9,1,11,1,13,1,15,1,16,1,17,1,18,1,19"
-D18="1,4,1,7,1,8,1,11,1,13,1,14,1,15,1,16,1,17,1,18,1,19"
-D19= "1,4,1,7,1,6,1,8,1,11,1,14,1,12,1,16,1,17,1,18,1,19 "   
-D20="1,4,1,5,1,6,1,7,1,8,1,10,1,13,1,14,1,15"
-D21="1,5,1,6,1,8,1,10,1,13,1,14,1,15"
-D22="1,4,1,5,1,7,1,9,1,10,1,11,1,13,1,14,1,15,1,18,1,19"
-D23="1,4,1,7,1,9,1,11,1,13,1,14,1,15,1,18,1,19"
-D24="1,5,1,8,1,9,1,10,1,13,1,14,1,15,1,18,1,19"
-D25= "1,5,1,10,1,13,1,11,1,9,1,14,1,15,1,18,1,19 "   
-D26="1,5,1,6,1,8,1,10,1,15,1,18,1,19"
-D27="1,4,1,5,1,7,1,10,1,11,1,12,1,13,1,14,1,17,1,18"
-D28="1,4,1,5,1,6,1,7,1,10,1,11,1,14,1,15,1,17,1,18"
-D29="1,4,1,7,1,13,1,11,1,9,1,15,1,17,1,18"
-D30= "1,0,1,1,1,2,1,3,1,7,1,10,1,11,1,16"   
-D31="1,0,1,1,1,2,1,5,1,7,1,11,1,13,1,14,1,15,1,17,1,18,1,19"
-D32="1,0,1,1,1,2,1,3,1,7,1,8,1,10,1,11,1,12,1,15,1,16,1,19"
-D33="1,0,1,1,1,2,1,3,1,6,1,7,1,10,1,12,1,13,1,15,1,16,1,19"
-D34= "1,0,1,1,1,2,1,3,1,7,1,10,1,16,1,19"  
-D35="1,0,1,1,1,2,1,3,1,6,1,7,1,8,1,11,1,13,1,15"
-D36="1,0,1,1,1,2,1,3,1,7,1,15"
-D37="1,0,1,1,1,2,1,3,1,7,1,12,1,15,1,19"
-D38="1,0,1,1,1,2,1,3,1,6,1,7,1,12,1,13,1,15,1,19"
-D39= "1,0,1,1,1,2,1,3,1,7,1,5,1,10,1,6,1,13,1,8,1,11,1,9,1,14,1,12,1,15,1,19"  
-D40= "1,0,1,1,1,2,1,3,1,7,1,5,1,10,1,6,1,13,1,19 "   
-D41="1,2,1,4,1,7,1,5,1,10,1,11,1,14,1,19"
-D42="1,2,1,4,1,7,1,11,1,12,1,14,1,15,1,19"
-D43= "1,0,1,1,1,2,1,7,1,13,1,8,1,11,1,14,1,15,1,17 "   
-D44="1,0,1,1,1,2,1,6,1,8,1,11,1,12,1,14"
-D45="1,6,1,8,1,9,1,11,1,12,1,13,1,14,1,15,1,16,1,17,1,18,1,19"
-D46="1,5,1,10,1,6,1,13,1,8,1,11,1,9,1,14,1,12,1,15,1,16,1,17,1,18,1,19" 
-D47="1,5,1,10,1,6,1,13,1,8,1,11,1,9,1,14,1,16,1,17,1,18,1,19 "
 
 
 D6_q2:
@@ -5858,7 +6547,6 @@ surface_reports:
 
 
 
-F_ALPHA_BETA_GAMMA_DELTA="beta*(gamma + 1)*x0*x0*x2 + (alpha*delta - beta*gamma + alpha - beta - delta - 1)*x0*x1*x2 -1*(alpha*beta -alpha*delta + delta)*(gamma + 1)*x0*x1*x3 + (0-alpha*delta + alpha*gamma -beta*gamma -beta + delta -gamma)*x0*x2*x2 -(alpha*delta +beta -delta)*(gamma +1)*x0*x2*x3 -(delta + 1)*(alpha - 1)*x1*x1*x2 - (delta + 1)*(alpha - 1)*x1*x1*x3 + (alpha*delta - alpha*gamma + beta*gamma + beta - delta + gamma)*x1*x2*x2 + (alpha*beta*gamma + alpha*beta + alpha*delta - alpha*gamma + beta*gamma + beta - delta + gamma)*x1*x2*x3 + alpha*beta*(gamma + 1)*x1*x3*x3"
 
 
 F_alpha_beta_gamma_delta:
@@ -6758,8 +7446,6 @@ jacobi_5_19:
 sqrt_mod_7817:
 		$(ORBITER_PATH)/orbiter.out -v 2 -square_root_mod 2221 7817
 
-trace_16:
-		$(ORBITER_PATH)/orbiter.out -v 2 -trace 16
 
 equivalence_class_of_fractions:
 		$(ORBITER_PATH)/orbiter.out -v 2 -equivalence_class_of_fractions 10
@@ -6768,8 +7454,24 @@ equivalence_class_of_fractions_draw:
 	$(ORBITER_PATH)/orbiter.out -draw_matrix table_fractions_N10.csv 20 8
 
 
+
+
+
 #############################################################################################################
-# Section 39: Cryptography 
+# Section 39:  Combinatorics
+
+
+SECTION_COMBINATORICS:
+	
+
+
+elementary_symmetric_functions_8:
+	$(ORBITER_PATH)/orbiter.out -make_elementary_symmetric_functions 8 8
+
+
+
+#############################################################################################################
+# Section 40: Cryptography 
 
 
 SECTION_CRYPTOGRAPHY:
@@ -6780,6 +7482,12 @@ EC_add:
 
 EC_cyclic_subgroup:
 	$(ORBITER_PATH)/orbiter.out -v 2 -finite_field_activity -q 11 -EC_cyclic_subgroup 1 3 "1,4" -end
+
+
+EC_points_13:
+	$(ORBITER_PATH)/orbiter.out -v 2 -finite_field_activity -q 13 -EC_points 2 5 -end
+
+
 
 EC_points:
 	$(ORBITER_PATH)/orbiter.out -v 2 -finite_field_activity -q 199 -EC_points 5 7 -end
@@ -7210,7 +7918,7 @@ ntt4.out:  ntt4.o ;
 
 
 #############################################################################################################
-# Section 40: Coding Theory
+# Section 41: Coding Theory
 
 SECTION_CODING_THEORY:
 
@@ -7241,9 +7949,54 @@ code_6:
 
 
 
+Hamming_code_words:
+	- $(ORBITER_PATH)/orbiter.out -v 2 -linear_code_through_basis 7 "67,37,22,15" 
+	pdflatex code_n7_k4_q2.tex
+	open code_n7_k4_q2.pdf
 
+
+Hamming_code_diagram:
+	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4" \
+		"0, 67, 37, 102, 22, 85, 51, 112, 15, 76, 42, 105, 25, 90, 60, 127" 7 -metric_balls 1
+	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_diagram_01_7_16.csv 25 8 -draw_matrix_partition 4 16 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_diagram_7_16.csv 25 8 -draw_matrix_partition 4 16 8 
+	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4_word_0" "0" 7 -metric_balls 1
+	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4_word_1" "67" 7 -metric_balls 1
+	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4_word_2" "37" 7 -metric_balls 1
+	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4_word_3" "102" 7 -metric_balls 1
+	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4_word_4" "22" 7 -metric_balls 1
+	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4_word_5" "85" 7 -metric_balls 1
+	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4_word_6" "51" 7 -metric_balls 1
+	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4_word_7" "112" 7 -metric_balls 1
+	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4_word_8" "15" 7 -metric_balls 1
+	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4_word_9" "76" 7 -metric_balls 1
+	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4_word_10" "42" 7 -metric_balls 1
+	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4_word_11" "105" 7 -metric_balls 1
+	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4_word_12" "25" 7 -metric_balls 1
+	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4_word_13" "90" 7 -metric_balls 1
+	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4_word_14" "60" 7 -metric_balls 1
+	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4_word_15" "127" 7 -metric_balls 1
+	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_0_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_1_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_2_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_3_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_4_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_5_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_6_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_7_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_8_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_9_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_10_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_11_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_12_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_13_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_14_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_15_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
+	
+	
+	
 code_Hamming_systematic:
-	$(ORBITER_PATH)/orbiter.out -v 2 -linear_code_through_basis 7  "67,37,22,15"
+	$(ORBITER_PATH)/orbiter.out -v 2 -linear_code_through_basis 7  "67,37,22,15" 
 	$(ORBITER_PATH)/orbiter.out -draw_matrix code_matrix_16_8.csv 25 8 -draw_matrix_partition 2 16 8
 	open code_matrix_16_8_draw.bmp
 	pdflatex code_7_16.tex
@@ -7267,7 +8020,30 @@ code_Hamming_systematic:
 #0110011
 #0001111
 
+#[23,12,8]
+#0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 132, 913, 1460, 1750, 1898, 2518, 2787, 2874, 3320, 3357, 3662
 
+#[24,12,8]
+#0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 132, 913, 1460, 1750, 1898, 2518, 2787, 2874, 3320, 3357, 3662, 4004
+
+
+Golay23_code_words:
+	$(ORBITER_PATH)/orbiter.out -v 2 -linear_code_through_columns_of_parity_check_projectively 12 \
+		$(GOLAY_23_COLUMN_RANKS_PROJECTIVELY)
+	pdflatex code_n23_k12_q2.tex
+	open code_n23_k12_q2.pdf
+
+
+
+Golay23_code_diagram:
+	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram_from_file "Golay_23" \
+		codewords_n23_k12_q2.csv 23 -enhance 4
+		
+		#-metric_balls 3
+
+
+Golay23_code_diagram_draw:
+	$(ORBITER_PATH)/orbiter.out -draw_matrix Golay_23_diagram_01_23_4096.csv 4 8 -draw_matrix_partition 20 4096 2048
 
 
 Hamming_generator:
@@ -7412,20 +8188,134 @@ Hamming_cyclic_clean_long:
 	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_15.csv 25 8 -draw_matrix_partition 3 4 2
 
 
-RM_6:
-	$(ORBITER_PATH)/orbiter.out -v 2 -long_code 64 7 \
-		"0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63" \
-		"1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63" \
-		"2,3,6,7,18,19,22,23,10,11,14,15,26,27,30,31,34,35,38,39,42,43,46,47,50,51,54,55,58,59,62,63" \
-		"4,6,12,14,36,38,52,54,5,7,13,15,37,39,53,55,20,22,28,30,44,46,60,62,21,23,29,31,45,47,61,63" \
-		"8,9,12,13,24,25,28,29,10,11,14,15,26,27,30,31,40,41,44,45,56,57,60,61,42,43,46,47,58,59,62,63" \
-		"16,18,24,26,48,50,56,58,17,19,25,27,49,51,57,59,20,22,28,30,52,54,60,62,21,23,29,31,53,55,61,63" \
-		"32,34,48,50,33,35,49,51,36,38,52,54,37,39,53,55,40,42,56,58,41,43,57,59,44,46,60,62,45,47,61,63" 
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7.csv 25 8 -draw_matrix_partition 3 7 64
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_0.csv 25 8 -draw_matrix_partition 3 8 8
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_1.csv 25 8 -draw_matrix_partition 3 8 8
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_2.csv 25 8 -draw_matrix_partition 3 8 8
 	
+
+
+#11111111 = 255
+#01010101 = 170
+#00110011 = 204
+#00001111 = 240
+
+
+RM_3_1_code_words:
+	- $(ORBITER_PATH)/orbiter.out -v 2 -linear_code_through_basis 8 "255,170,204,240" 
+	pdflatex code_n8_k4_q2.tex
+	open code_n8_k4_q2.pdf
+
+#Codewords: (0,255,170,85,204,51,102,153,240,15,90,165,60,195,150,105)
+	
+
+RM_3_group:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end  \
+		-define P -projective_space 3 F -end  \
+		-with P -do \
+		-projective_space_activity -canonical_form_of_code "RM_3_1" 4 8 $(CODE_RM_3_1_GENMA)  -end
+	pdflatex classify_code_RM_3_1_classification.tex
+	open classify_code_RM_3_1_classification.pdf
+
+# group order 1344
+
+RM_3_1_diagram:
+	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "RM_3_1" \
+		"0,255,170,85,204,51,102,153,240,15,90,165,60,195,150,105" 8 -metric_balls 1
+	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_3_1_diagram_01_8_16.csv 25 8 -draw_matrix_partition 4 16 16
+	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_3_1_diagram_8_16.csv 25 8 -draw_matrix_partition 4 16 16 
+	#- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4_word_0" "0" 7 -metric_balls 1
+
+
+RM_3_1_split:
+	$(ORBITER_PATH)/orbiter.out -split_by_values RM_3_1_holes_8_16.csv 
+
+RM_3_1_holes_draw:
+	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_3_1_holes_8_16_value0.csv 25 4 -draw_matrix_partition 5 16 16
+	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_3_1_holes_8_16_value1.csv 25 4 -draw_matrix_partition 5 16 16
+	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_3_1_holes_8_16_value2.csv 25 4 -draw_matrix_partition 5 16 16
+
+RM_3_1_hole0:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -algebraic_normal_form RM_3_1_holes_8_16_value0.csv 8 -end
+
+# E_0 + E_1 + E_2 + E_3 + E_4
+
+
+RM_3_1_hole1:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -algebraic_normal_form RM_3_1_holes_8_16_value1.csv 8 -end
+
+#E_1 = X_0X_8^7 + X_1X_8^7 + X_2X_8^7 + X_3X_8^7 + X_4X_8^7 + X_5X_8^7 + X_6X_8^7 + X_7X_8^7
+
+RM_3_1_hole2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -algebraic_normal_form RM_3_1_holes_8_16_value2.csv 8 -end
+
+#X0*X1*X8^6 + X0*X2*X8^6 + X0*X3*X8^6 + X0*X4*X8^6 + X0*X5*X8^6 + X0*X6*X8^6 + X0*X7*X8^6 + X1*X2*X8^6 + X1*X3*X8^6 + X1*X4*X8^6 + X1*X5*X8^6 + X1*X6*X8^6 + X1*X7*X8^6 + X2*X3*X8^6 + X2*X4*X8^6 + X2*X5*X8^6 + X2*X6*X8^6 + X2*X7*X8^6 + X3*X4*X8^6 + X3*X5*X8^6 + X3*X6*X8^6 + X3*X7*X8^6 + X4*X5*X8^6 + X4*X6*X8^6 + X4*X7*X8^6 + X5*X6*X8^6 + X5*X7*X8^6 + X6*X7*X8^6 + X0*X1*X2*X8^5 + X0*X1*X3*X8^5 + X0*X1*X4*X8^5 + X0*X1*X5*X8^5 + X0*X1*X6*X8^5 + X0*X1*X7*X8^5 + X0*X2*X3*X8^5 + X0*X2*X4*X8^5 + X0*X2*X5*X8^5 + X0*X2*X6*X8^5 + X0*X2*X7*X8^5 + X0*X3*X4*X8^5 + X0*X3*X5*X8^5 + X0*X3*X6*X8^5 + X0*X3*X7*X8^5 + X0*X4*X5*X8^5 + X0*X4*X6*X8^5 + X0*X4*X7*X8^5 + X0*X5*X6*X8^5 + X0*X5*X7*X8^5 + X0*X6*X7*X8^5 + X1*X2*X3*X8^5 + X1*X2*X4*X8^5 + X1*X2*X5*X8^5 + X1*X2*X6*X8^5 + X1*X2*X7*X8^5 + X1*X3*X4*X8^5 + X1*X3*X5*X8^5 + X1*X3*X6*X8^5 + X1*X3*X7*X8^5 + X1*X4*X5*X8^5 + X1*X4*X6*X8^5 + X1*X4*X7*X8^5 + X1*X5*X6*X8^5 + X1*X5*X7*X8^5 + X1*X6*X7*X8^5 + X2*X3*X4*X8^5 + X2*X3*X5*X8^5 + X2*X3*X6*X8^5 + X2*X3*X7*X8^5 + X2*X4*X5*X8^5 + X2*X4*X6*X8^5 + X2*X4*X7*X8^5 + X2*X5*X6*X8^5 + X2*X5*X7*X8^5 + X2*X6*X7*X8^5 + X3*X4*X5*X8^5 + X3*X4*X6*X8^5 + X3*X4*X7*X8^5 + X3*X5*X6*X8^5 + X3*X5*X7*X8^5 + X3*X6*X7*X8^5 + X4*X5*X6*X8^5 + X4*X5*X7*X8^5 + X4*X6*X7*X8^5 + X5*X6*X7*X8^5 + X0*X1*X2*X4*X8^4 + X0*X1*X2*X5*X8^4 + X0*X1*X2*X6*X8^4 + X0*X1*X2*X7*X8^4 + X0*X1*X3*X4*X8^4 + X0*X1*X3*X5*X8^4 + X0*X1*X3*X6*X8^4 + X0*X1*X3*X7*X8^4 + X0*X1*X4*X6*X8^4 + X0*X1*X4*X7*X8^4 + X0*X1*X5*X6*X8^4 + X0*X1*X5*X7*X8^4 + X0*X2*X3*X4*X8^4 + X0*X2*X3*X5*X8^4 + X0*X2*X3*X6*X8^4 + X0*X2*X3*X7*X8^4 + X0*X2*X4*X5*X8^4 + X0*X2*X4*X7*X8^4 + X0*X2*X5*X6*X8^4 + X0*X2*X6*X7*X8^4 + X0*X3*X4*X5*X8^4 + X0*X3*X4*X6*X8^4 + X0*X3*X5*X7*X8^4 + X0*X3*X6*X7*X8^4 + X0*X4*X5*X6*X8^4 + X0*X4*X5*X7*X8^4 + X0*X4*X6*X7*X8^4 + X0*X5*X6*X7*X8^4 + X1*X2*X3*X4*X8^4 + X1*X2*X3*X5*X8^4 + X1*X2*X3*X6*X8^4 + X1*X2*X3*X7*X8^4 + X1*X2*X4*X5*X8^4 + X1*X2*X4*X6*X8^4 + X1*X2*X5*X7*X8^4 + X1*X2*X6*X7*X8^4 + X1*X3*X4*X5*X8^4 + X1*X3*X4*X7*X8^4 + X1*X3*X5*X6*X8^4 + X1*X3*X6*X7*X8^4 + X1*X4*X5*X6*X8^4 + X1*X4*X5*X7*X8^4 + X1*X4*X6*X7*X8^4 + X1*X5*X6*X7*X8^4 + X2*X3*X4*X6*X8^4 + X2*X3*X4*X7*X8^4 + X2*X3*X5*X6*X8^4 + X2*X3*X5*X7*X8^4 + X2*X4*X5*X6*X8^4 + X2*X4*X5*X7*X8^4 + X2*X4*X6*X7*X8^4 + X2*X5*X6*X7*X8^4 + X3*X4*X5*X6*X8^4 + X3*X4*X5*X7*X8^4 + X3*X4*X6*X7*X8^4 + X3*X5*X6*X7*X8^4
+
+# E_2 + E_3 + E_4
+
+RM_4_1:
+	- $(ORBITER_PATH)/orbiter.out -v 2 -linear_code_through_columns_of_parity_check 5 "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31" 
+	pdflatex code_n16_k5_q2.tex
+	open code_n16_k5_q2.pdf
+
+
+# codewords_n16_k5_q2.csv
+
+RM_4_group:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end  \
+		-define P -projective_space 4 F -end  \
+		-with P -do \
+		-projective_space_activity -canonical_form_of_code "RM_4_1" 5 16 $(CODE_RM_4_1_GENMA)  -end
+	pdflatex classify_code_RM_4_1_classification.tex
+	open classify_code_RM_4_1_classification.pdf
+
+
+# group order 322560 = 24*30*28*16
+
+
+RM_4_1_diagram:
+	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram_from_file "RM_4_1" \
+		codewords_n16_k5_q2.csv 16 
+		#-enhance 4 
+		#-metric_balls 3
+
+RM_4_1_diagram_draw:
+	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_4_1_diagram_01_16_32.csv 25 4 -draw_matrix_partition 10 256 256
+
+
+RM_4_1_split:
+	$(ORBITER_PATH)/orbiter.out -split_by_values RM_4_1_holes_16_32.csv 
+
+RM_4_1_diagram_draw_holes:
+	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_4_1_holes_16_32.csv 25 4 -draw_matrix_partition 10 256 256
+	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_4_1_holes_16_32_value0.csv 25 4 -draw_matrix_partition 10 256 256
+	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_4_1_holes_16_32_value1.csv 25 4 -draw_matrix_partition 10 256 256
+	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_4_1_holes_16_32_value2.csv 25 4 -draw_matrix_partition 10 256 256
+	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_4_1_holes_16_32_value3.csv 25 4 -draw_matrix_partition 10 256 256
+	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_4_1_holes_16_32_value4.csv 25 4 -draw_matrix_partition 10 256 256
+	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_4_1_holes_16_32_value5.csv 25 4 -draw_matrix_partition 10 256 256
+	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_4_1_holes_16_32_value6.csv 25 4 -draw_matrix_partition 10 256 256
+
+
+
+RM_4_1_diagram_metric_balls:
+	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram_from_file "RM_4_1" \
+		codewords_n16_k5_q2.csv 16 -metric_balls 3
+	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_4_1_diagram_16_32.csv 25 4 -draw_matrix_partition 10 256 256
+
+
+
+RM_4_1_hole0:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 2 -end -end \
+		-with F -do -finite_field_activity -algebraic_normal_form RM_4_1_holes_16_32_value0.csv 16 -end
+
+
+
+smiley:
+	$(ORBITER_PATH)/orbiter.out -draw_matrix smiley.csv 25 8 
+
+
 
 
 Reed_Muller_6:
@@ -7447,6 +8337,433 @@ Reed_Muller_6:
 
 
 #-nearest_codeword "8,16,32,24,40,48,56,1,2,4,3,5,6,7,9,18,36,27,45,54,63,33,42,20,11,53,62,31"
+
+
+
+RM_6:
+	$(ORBITER_PATH)/orbiter.out -v 2 -long_code 64 7 \
+		"0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63" \
+		"1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63" \
+		"2,3,6,7,18,19,22,23,10,11,14,15,26,27,30,31,34,35,38,39,42,43,46,47,50,51,54,55,58,59,62,63" \
+		"4,6,12,14,36,38,52,54,5,7,13,15,37,39,53,55,20,22,28,30,44,46,60,62,21,23,29,31,45,47,61,63" \
+		"8,9,12,13,24,25,28,29,10,11,14,15,26,27,30,31,40,41,44,45,56,57,60,61,42,43,46,47,58,59,62,63" \
+		"16,18,24,26,48,50,56,58,17,19,25,27,49,51,57,59,20,22,28,30,52,54,60,62,21,23,29,31,53,55,61,63" \
+		"32,34,48,50,33,35,49,51,36,38,52,54,37,39,53,55,40,42,56,58,41,43,57,59,44,46,60,62,45,47,61,63" 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7.csv 25 8 -draw_matrix_partition 3 7 64
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_0.csv 25 8 -draw_matrix_partition 3 8 8
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_1.csv 25 8 -draw_matrix_partition 3 8 8
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_2.csv 25 8 -draw_matrix_partition 3 8 8
+
+
+
+
+RM6words:
+	- mkdir RM6
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_0.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_1.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_2.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_3.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_4.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_5.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_6.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_7.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_8.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_9.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_10.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_11.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_12.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_13.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_14.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_15.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_16.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_17.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_18.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_19.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_20.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_21.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_22.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_23.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_24.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_25.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_26.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_27.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_28.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_29.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_30.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_31.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_32.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_33.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_34.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_35.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_36.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_37.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_38.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_39.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_40.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_41.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_42.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_43.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_44.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_45.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_46.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_47.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_48.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_49.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_50.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_51.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_52.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_53.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_54.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_55.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_56.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_57.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_58.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_59.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_60.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_61.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_62.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_63.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_64.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_65.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_66.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_67.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_68.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_69.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_70.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_71.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_72.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_73.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_74.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_75.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_76.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_77.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_78.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_79.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_80.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_81.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_82.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_83.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_84.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_85.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_86.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_87.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_88.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_89.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_90.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_91.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_92.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_93.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_94.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_95.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_96.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_97.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_98.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_99.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_100.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_101.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_102.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_103.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_104.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_105.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_106.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_107.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_108.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_109.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_110.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_111.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_112.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_113.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_114.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_115.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_116.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_117.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_118.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_119.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_120.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_121.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_122.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_123.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_124.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_125.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_126.csv 25 8 -draw_matrix_partition 4 8 8 
+	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_127.csv 25 8 -draw_matrix_partition 4 8 8 
+	mv long_code_genma_n64_k7_codeword_0_draw.bmp RM6/RM_6_1_codeword_0.bmp
+	mv long_code_genma_n64_k7_codeword_1_draw.bmp RM6/RM_6_1_codeword_1.bmp
+	mv long_code_genma_n64_k7_codeword_2_draw.bmp RM6/RM_6_1_codeword_2.bmp
+	mv long_code_genma_n64_k7_codeword_3_draw.bmp RM6/RM_6_1_codeword_3.bmp
+	mv long_code_genma_n64_k7_codeword_4_draw.bmp RM6/RM_6_1_codeword_4.bmp
+	mv long_code_genma_n64_k7_codeword_5_draw.bmp RM6/RM_6_1_codeword_5.bmp
+	mv long_code_genma_n64_k7_codeword_6_draw.bmp RM6/RM_6_1_codeword_6.bmp
+	mv long_code_genma_n64_k7_codeword_7_draw.bmp RM6/RM_6_1_codeword_7.bmp
+	mv long_code_genma_n64_k7_codeword_8_draw.bmp RM6/RM_6_1_codeword_8.bmp
+	mv long_code_genma_n64_k7_codeword_9_draw.bmp RM6/RM_6_1_codeword_9.bmp
+	mv long_code_genma_n64_k7_codeword_10_draw.bmp RM6/RM_6_1_codeword_10.bmp
+	mv long_code_genma_n64_k7_codeword_11_draw.bmp RM6/RM_6_1_codeword_11.bmp
+	mv long_code_genma_n64_k7_codeword_12_draw.bmp RM6/RM_6_1_codeword_12.bmp
+	mv long_code_genma_n64_k7_codeword_13_draw.bmp RM6/RM_6_1_codeword_13.bmp
+	mv long_code_genma_n64_k7_codeword_14_draw.bmp RM6/RM_6_1_codeword_14.bmp
+	mv long_code_genma_n64_k7_codeword_15_draw.bmp RM6/RM_6_1_codeword_15.bmp
+	mv long_code_genma_n64_k7_codeword_16_draw.bmp RM6/RM_6_1_codeword_16.bmp
+	mv long_code_genma_n64_k7_codeword_17_draw.bmp RM6/RM_6_1_codeword_17.bmp
+	mv long_code_genma_n64_k7_codeword_18_draw.bmp RM6/RM_6_1_codeword_18.bmp
+	mv long_code_genma_n64_k7_codeword_19_draw.bmp RM6/RM_6_1_codeword_19.bmp
+	mv long_code_genma_n64_k7_codeword_20_draw.bmp RM6/RM_6_1_codeword_20.bmp
+	mv long_code_genma_n64_k7_codeword_21_draw.bmp RM6/RM_6_1_codeword_21.bmp
+	mv long_code_genma_n64_k7_codeword_22_draw.bmp RM6/RM_6_1_codeword_22.bmp
+	mv long_code_genma_n64_k7_codeword_23_draw.bmp RM6/RM_6_1_codeword_23.bmp
+	mv long_code_genma_n64_k7_codeword_24_draw.bmp RM6/RM_6_1_codeword_24.bmp
+	mv long_code_genma_n64_k7_codeword_25_draw.bmp RM6/RM_6_1_codeword_25.bmp
+	mv long_code_genma_n64_k7_codeword_26_draw.bmp RM6/RM_6_1_codeword_26.bmp
+	mv long_code_genma_n64_k7_codeword_27_draw.bmp RM6/RM_6_1_codeword_27.bmp
+	mv long_code_genma_n64_k7_codeword_28_draw.bmp RM6/RM_6_1_codeword_28.bmp
+	mv long_code_genma_n64_k7_codeword_29_draw.bmp RM6/RM_6_1_codeword_29.bmp
+	mv long_code_genma_n64_k7_codeword_30_draw.bmp RM6/RM_6_1_codeword_30.bmp
+	mv long_code_genma_n64_k7_codeword_31_draw.bmp RM6/RM_6_1_codeword_31.bmp
+	mv long_code_genma_n64_k7_codeword_32_draw.bmp RM6/RM_6_1_codeword_32.bmp
+	mv long_code_genma_n64_k7_codeword_33_draw.bmp RM6/RM_6_1_codeword_33.bmp
+	mv long_code_genma_n64_k7_codeword_34_draw.bmp RM6/RM_6_1_codeword_34.bmp
+	mv long_code_genma_n64_k7_codeword_35_draw.bmp RM6/RM_6_1_codeword_35.bmp
+	mv long_code_genma_n64_k7_codeword_36_draw.bmp RM6/RM_6_1_codeword_36.bmp
+	mv long_code_genma_n64_k7_codeword_37_draw.bmp RM6/RM_6_1_codeword_37.bmp
+	mv long_code_genma_n64_k7_codeword_38_draw.bmp RM6/RM_6_1_codeword_38.bmp
+	mv long_code_genma_n64_k7_codeword_39_draw.bmp RM6/RM_6_1_codeword_39.bmp
+	mv long_code_genma_n64_k7_codeword_40_draw.bmp RM6/RM_6_1_codeword_40.bmp
+	mv long_code_genma_n64_k7_codeword_41_draw.bmp RM6/RM_6_1_codeword_41.bmp
+	mv long_code_genma_n64_k7_codeword_42_draw.bmp RM6/RM_6_1_codeword_42.bmp
+	mv long_code_genma_n64_k7_codeword_43_draw.bmp RM6/RM_6_1_codeword_43.bmp
+	mv long_code_genma_n64_k7_codeword_44_draw.bmp RM6/RM_6_1_codeword_44.bmp
+	mv long_code_genma_n64_k7_codeword_45_draw.bmp RM6/RM_6_1_codeword_45.bmp
+	mv long_code_genma_n64_k7_codeword_46_draw.bmp RM6/RM_6_1_codeword_46.bmp
+	mv long_code_genma_n64_k7_codeword_47_draw.bmp RM6/RM_6_1_codeword_47.bmp
+	mv long_code_genma_n64_k7_codeword_48_draw.bmp RM6/RM_6_1_codeword_48.bmp
+	mv long_code_genma_n64_k7_codeword_49_draw.bmp RM6/RM_6_1_codeword_49.bmp
+	mv long_code_genma_n64_k7_codeword_50_draw.bmp RM6/RM_6_1_codeword_50.bmp
+	mv long_code_genma_n64_k7_codeword_51_draw.bmp RM6/RM_6_1_codeword_51.bmp
+	mv long_code_genma_n64_k7_codeword_52_draw.bmp RM6/RM_6_1_codeword_52.bmp
+	mv long_code_genma_n64_k7_codeword_53_draw.bmp RM6/RM_6_1_codeword_53.bmp
+	mv long_code_genma_n64_k7_codeword_54_draw.bmp RM6/RM_6_1_codeword_54.bmp
+	mv long_code_genma_n64_k7_codeword_55_draw.bmp RM6/RM_6_1_codeword_55.bmp
+	mv long_code_genma_n64_k7_codeword_56_draw.bmp RM6/RM_6_1_codeword_56.bmp
+	mv long_code_genma_n64_k7_codeword_57_draw.bmp RM6/RM_6_1_codeword_57.bmp
+	mv long_code_genma_n64_k7_codeword_58_draw.bmp RM6/RM_6_1_codeword_58.bmp
+	mv long_code_genma_n64_k7_codeword_59_draw.bmp RM6/RM_6_1_codeword_59.bmp
+	mv long_code_genma_n64_k7_codeword_60_draw.bmp RM6/RM_6_1_codeword_60.bmp
+	mv long_code_genma_n64_k7_codeword_61_draw.bmp RM6/RM_6_1_codeword_61.bmp
+	mv long_code_genma_n64_k7_codeword_62_draw.bmp RM6/RM_6_1_codeword_62.bmp
+	mv long_code_genma_n64_k7_codeword_63_draw.bmp RM6/RM_6_1_codeword_63.bmp
+	mv long_code_genma_n64_k7_codeword_64_draw.bmp RM6/RM_6_1_codeword_64.bmp
+	mv long_code_genma_n64_k7_codeword_65_draw.bmp RM6/RM_6_1_codeword_65.bmp
+	mv long_code_genma_n64_k7_codeword_66_draw.bmp RM6/RM_6_1_codeword_66.bmp
+	mv long_code_genma_n64_k7_codeword_67_draw.bmp RM6/RM_6_1_codeword_67.bmp
+	mv long_code_genma_n64_k7_codeword_68_draw.bmp RM6/RM_6_1_codeword_68.bmp
+	mv long_code_genma_n64_k7_codeword_69_draw.bmp RM6/RM_6_1_codeword_69.bmp
+	mv long_code_genma_n64_k7_codeword_70_draw.bmp RM6/RM_6_1_codeword_70.bmp
+	mv long_code_genma_n64_k7_codeword_71_draw.bmp RM6/RM_6_1_codeword_71.bmp
+	mv long_code_genma_n64_k7_codeword_72_draw.bmp RM6/RM_6_1_codeword_72.bmp
+	mv long_code_genma_n64_k7_codeword_73_draw.bmp RM6/RM_6_1_codeword_73.bmp
+	mv long_code_genma_n64_k7_codeword_74_draw.bmp RM6/RM_6_1_codeword_74.bmp
+	mv long_code_genma_n64_k7_codeword_75_draw.bmp RM6/RM_6_1_codeword_75.bmp
+	mv long_code_genma_n64_k7_codeword_76_draw.bmp RM6/RM_6_1_codeword_76.bmp
+	mv long_code_genma_n64_k7_codeword_77_draw.bmp RM6/RM_6_1_codeword_77.bmp
+	mv long_code_genma_n64_k7_codeword_78_draw.bmp RM6/RM_6_1_codeword_78.bmp
+	mv long_code_genma_n64_k7_codeword_79_draw.bmp RM6/RM_6_1_codeword_79.bmp
+	mv long_code_genma_n64_k7_codeword_80_draw.bmp RM6/RM_6_1_codeword_80.bmp
+	mv long_code_genma_n64_k7_codeword_81_draw.bmp RM6/RM_6_1_codeword_81.bmp
+	mv long_code_genma_n64_k7_codeword_82_draw.bmp RM6/RM_6_1_codeword_82.bmp
+	mv long_code_genma_n64_k7_codeword_83_draw.bmp RM6/RM_6_1_codeword_83.bmp
+	mv long_code_genma_n64_k7_codeword_84_draw.bmp RM6/RM_6_1_codeword_84.bmp
+	mv long_code_genma_n64_k7_codeword_85_draw.bmp RM6/RM_6_1_codeword_85.bmp
+	mv long_code_genma_n64_k7_codeword_86_draw.bmp RM6/RM_6_1_codeword_86.bmp
+	mv long_code_genma_n64_k7_codeword_87_draw.bmp RM6/RM_6_1_codeword_87.bmp
+	mv long_code_genma_n64_k7_codeword_88_draw.bmp RM6/RM_6_1_codeword_88.bmp
+	mv long_code_genma_n64_k7_codeword_89_draw.bmp RM6/RM_6_1_codeword_89.bmp
+	mv long_code_genma_n64_k7_codeword_90_draw.bmp RM6/RM_6_1_codeword_90.bmp
+	mv long_code_genma_n64_k7_codeword_91_draw.bmp RM6/RM_6_1_codeword_91.bmp
+	mv long_code_genma_n64_k7_codeword_92_draw.bmp RM6/RM_6_1_codeword_92.bmp
+	mv long_code_genma_n64_k7_codeword_93_draw.bmp RM6/RM_6_1_codeword_93.bmp
+	mv long_code_genma_n64_k7_codeword_94_draw.bmp RM6/RM_6_1_codeword_94.bmp
+	mv long_code_genma_n64_k7_codeword_95_draw.bmp RM6/RM_6_1_codeword_95.bmp
+	mv long_code_genma_n64_k7_codeword_96_draw.bmp RM6/RM_6_1_codeword_96.bmp
+	mv long_code_genma_n64_k7_codeword_97_draw.bmp RM6/RM_6_1_codeword_97.bmp
+	mv long_code_genma_n64_k7_codeword_98_draw.bmp RM6/RM_6_1_codeword_98.bmp
+	mv long_code_genma_n64_k7_codeword_99_draw.bmp RM6/RM_6_1_codeword_99.bmp
+	mv long_code_genma_n64_k7_codeword_100_draw.bmp RM6/RM_6_1_codeword_100.bmp
+	mv long_code_genma_n64_k7_codeword_101_draw.bmp RM6/RM_6_1_codeword_101.bmp
+	mv long_code_genma_n64_k7_codeword_102_draw.bmp RM6/RM_6_1_codeword_102.bmp
+	mv long_code_genma_n64_k7_codeword_103_draw.bmp RM6/RM_6_1_codeword_103.bmp
+	mv long_code_genma_n64_k7_codeword_104_draw.bmp RM6/RM_6_1_codeword_104.bmp
+	mv long_code_genma_n64_k7_codeword_105_draw.bmp RM6/RM_6_1_codeword_105.bmp
+	mv long_code_genma_n64_k7_codeword_106_draw.bmp RM6/RM_6_1_codeword_106.bmp
+	mv long_code_genma_n64_k7_codeword_107_draw.bmp RM6/RM_6_1_codeword_107.bmp
+	mv long_code_genma_n64_k7_codeword_108_draw.bmp RM6/RM_6_1_codeword_108.bmp
+	mv long_code_genma_n64_k7_codeword_109_draw.bmp RM6/RM_6_1_codeword_109.bmp
+	mv long_code_genma_n64_k7_codeword_110_draw.bmp RM6/RM_6_1_codeword_110.bmp
+	mv long_code_genma_n64_k7_codeword_111_draw.bmp RM6/RM_6_1_codeword_111.bmp
+	mv long_code_genma_n64_k7_codeword_112_draw.bmp RM6/RM_6_1_codeword_112.bmp
+	mv long_code_genma_n64_k7_codeword_113_draw.bmp RM6/RM_6_1_codeword_113.bmp
+	mv long_code_genma_n64_k7_codeword_114_draw.bmp RM6/RM_6_1_codeword_114.bmp
+	mv long_code_genma_n64_k7_codeword_115_draw.bmp RM6/RM_6_1_codeword_115.bmp
+	mv long_code_genma_n64_k7_codeword_116_draw.bmp RM6/RM_6_1_codeword_116.bmp
+	mv long_code_genma_n64_k7_codeword_117_draw.bmp RM6/RM_6_1_codeword_117.bmp
+	mv long_code_genma_n64_k7_codeword_118_draw.bmp RM6/RM_6_1_codeword_118.bmp
+	mv long_code_genma_n64_k7_codeword_119_draw.bmp RM6/RM_6_1_codeword_119.bmp
+	mv long_code_genma_n64_k7_codeword_120_draw.bmp RM6/RM_6_1_codeword_120.bmp
+	mv long_code_genma_n64_k7_codeword_121_draw.bmp RM6/RM_6_1_codeword_121.bmp
+	mv long_code_genma_n64_k7_codeword_122_draw.bmp RM6/RM_6_1_codeword_122.bmp
+	mv long_code_genma_n64_k7_codeword_123_draw.bmp RM6/RM_6_1_codeword_123.bmp
+	mv long_code_genma_n64_k7_codeword_124_draw.bmp RM6/RM_6_1_codeword_124.bmp
+	mv long_code_genma_n64_k7_codeword_125_draw.bmp RM6/RM_6_1_codeword_125.bmp
+	mv long_code_genma_n64_k7_codeword_126_draw.bmp RM6/RM_6_1_codeword_126.bmp
+	mv long_code_genma_n64_k7_codeword_127_draw.bmp RM6/RM_6_1_codeword_127.bmp
+
+
+RM6_convert:
+	- mkdir RM6_PNG
+	convert RM6/RM_6_1_codeword_0.bmp -frame 8 RM6_PNG/000.png
+	convert RM6/RM_6_1_codeword_1.bmp -frame 8 RM6_PNG/001.png
+	convert RM6/RM_6_1_codeword_2.bmp -frame 8 RM6_PNG/002.png
+	convert RM6/RM_6_1_codeword_3.bmp -frame 8 RM6_PNG/003.png
+	convert RM6/RM_6_1_codeword_4.bmp -frame 8 RM6_PNG/004.png
+	convert RM6/RM_6_1_codeword_5.bmp -frame 8 RM6_PNG/005.png
+	convert RM6/RM_6_1_codeword_6.bmp -frame 8 RM6_PNG/006.png
+	convert RM6/RM_6_1_codeword_7.bmp -frame 8 RM6_PNG/007.png
+	convert RM6/RM_6_1_codeword_8.bmp -frame 8 RM6_PNG/008.png
+	convert RM6/RM_6_1_codeword_9.bmp -frame 8 RM6_PNG/009.png
+	convert RM6/RM_6_1_codeword_10.bmp -frame 8 RM6_PNG/010.png
+	convert RM6/RM_6_1_codeword_11.bmp -frame 8 RM6_PNG/011.png
+	convert RM6/RM_6_1_codeword_12.bmp -frame 8 RM6_PNG/012.png
+	convert RM6/RM_6_1_codeword_13.bmp -frame 8 RM6_PNG/013.png
+	convert RM6/RM_6_1_codeword_14.bmp -frame 8 RM6_PNG/014.png
+	convert RM6/RM_6_1_codeword_15.bmp -frame 8 RM6_PNG/015.png
+	convert RM6/RM_6_1_codeword_16.bmp -frame 8 RM6_PNG/016.png
+	convert RM6/RM_6_1_codeword_17.bmp -frame 8 RM6_PNG/017.png
+	convert RM6/RM_6_1_codeword_18.bmp -frame 8 RM6_PNG/018.png
+	convert RM6/RM_6_1_codeword_19.bmp -frame 8 RM6_PNG/019.png
+	convert RM6/RM_6_1_codeword_20.bmp -frame 8 RM6_PNG/020.png
+	convert RM6/RM_6_1_codeword_21.bmp -frame 8 RM6_PNG/021.png
+	convert RM6/RM_6_1_codeword_22.bmp -frame 8 RM6_PNG/022.png
+	convert RM6/RM_6_1_codeword_23.bmp -frame 8 RM6_PNG/023.png
+	convert RM6/RM_6_1_codeword_24.bmp -frame 8 RM6_PNG/024.png
+	convert RM6/RM_6_1_codeword_25.bmp -frame 8 RM6_PNG/025.png
+	convert RM6/RM_6_1_codeword_26.bmp -frame 8 RM6_PNG/026.png
+	convert RM6/RM_6_1_codeword_27.bmp -frame 8 RM6_PNG/027.png
+	convert RM6/RM_6_1_codeword_28.bmp -frame 8 RM6_PNG/028.png
+	convert RM6/RM_6_1_codeword_29.bmp -frame 8 RM6_PNG/029.png
+	convert RM6/RM_6_1_codeword_30.bmp -frame 8 RM6_PNG/030.png
+	convert RM6/RM_6_1_codeword_31.bmp -frame 8 RM6_PNG/031.png
+	convert RM6/RM_6_1_codeword_32.bmp -frame 8 RM6_PNG/032.png
+	convert RM6/RM_6_1_codeword_33.bmp -frame 8 RM6_PNG/033.png
+	convert RM6/RM_6_1_codeword_34.bmp -frame 8 RM6_PNG/034.png
+	convert RM6/RM_6_1_codeword_35.bmp -frame 8 RM6_PNG/035.png
+	convert RM6/RM_6_1_codeword_36.bmp -frame 8 RM6_PNG/036.png
+	convert RM6/RM_6_1_codeword_37.bmp -frame 8 RM6_PNG/037.png
+	convert RM6/RM_6_1_codeword_38.bmp -frame 8 RM6_PNG/038.png
+	convert RM6/RM_6_1_codeword_39.bmp -frame 8 RM6_PNG/039.png
+	convert RM6/RM_6_1_codeword_40.bmp -frame 8 RM6_PNG/040.png
+	convert RM6/RM_6_1_codeword_41.bmp -frame 8 RM6_PNG/041.png
+	convert RM6/RM_6_1_codeword_42.bmp -frame 8 RM6_PNG/042.png
+	convert RM6/RM_6_1_codeword_43.bmp -frame 8 RM6_PNG/043.png
+	convert RM6/RM_6_1_codeword_44.bmp -frame 8 RM6_PNG/044.png
+	convert RM6/RM_6_1_codeword_45.bmp -frame 8 RM6_PNG/045.png
+	convert RM6/RM_6_1_codeword_46.bmp -frame 8 RM6_PNG/046.png
+	convert RM6/RM_6_1_codeword_47.bmp -frame 8 RM6_PNG/047.png
+	convert RM6/RM_6_1_codeword_48.bmp -frame 8 RM6_PNG/048.png
+	convert RM6/RM_6_1_codeword_49.bmp -frame 8 RM6_PNG/049.png
+	convert RM6/RM_6_1_codeword_50.bmp -frame 8 RM6_PNG/050.png
+	convert RM6/RM_6_1_codeword_51.bmp -frame 8 RM6_PNG/051.png
+	convert RM6/RM_6_1_codeword_52.bmp -frame 8 RM6_PNG/052.png
+	convert RM6/RM_6_1_codeword_53.bmp -frame 8 RM6_PNG/053.png
+	convert RM6/RM_6_1_codeword_54.bmp -frame 8 RM6_PNG/054.png
+	convert RM6/RM_6_1_codeword_55.bmp -frame 8 RM6_PNG/055.png
+	convert RM6/RM_6_1_codeword_56.bmp -frame 8 RM6_PNG/056.png
+	convert RM6/RM_6_1_codeword_57.bmp -frame 8 RM6_PNG/057.png
+	convert RM6/RM_6_1_codeword_58.bmp -frame 8 RM6_PNG/058.png
+	convert RM6/RM_6_1_codeword_59.bmp -frame 8 RM6_PNG/059.png
+	convert RM6/RM_6_1_codeword_60.bmp -frame 8 RM6_PNG/060.png
+	convert RM6/RM_6_1_codeword_61.bmp -frame 8 RM6_PNG/061.png
+	convert RM6/RM_6_1_codeword_62.bmp -frame 8 RM6_PNG/062.png
+	convert RM6/RM_6_1_codeword_63.bmp -frame 8 RM6_PNG/063.png
+	convert RM6/RM_6_1_codeword_64.bmp -frame 8 RM6_PNG/064.png
+	convert RM6/RM_6_1_codeword_65.bmp -frame 8 RM6_PNG/065.png
+	convert RM6/RM_6_1_codeword_66.bmp -frame 8 RM6_PNG/066.png
+	convert RM6/RM_6_1_codeword_67.bmp -frame 8 RM6_PNG/067.png
+	convert RM6/RM_6_1_codeword_68.bmp -frame 8 RM6_PNG/068.png
+	convert RM6/RM_6_1_codeword_69.bmp -frame 8 RM6_PNG/069.png
+	convert RM6/RM_6_1_codeword_70.bmp -frame 8 RM6_PNG/070.png
+	convert RM6/RM_6_1_codeword_71.bmp -frame 8 RM6_PNG/071.png
+	convert RM6/RM_6_1_codeword_72.bmp -frame 8 RM6_PNG/072.png
+	convert RM6/RM_6_1_codeword_73.bmp -frame 8 RM6_PNG/073.png
+	convert RM6/RM_6_1_codeword_74.bmp -frame 8 RM6_PNG/074.png
+	convert RM6/RM_6_1_codeword_75.bmp -frame 8 RM6_PNG/075.png
+	convert RM6/RM_6_1_codeword_76.bmp -frame 8 RM6_PNG/076.png
+	convert RM6/RM_6_1_codeword_77.bmp -frame 8 RM6_PNG/077.png
+	convert RM6/RM_6_1_codeword_78.bmp -frame 8 RM6_PNG/078.png
+	convert RM6/RM_6_1_codeword_79.bmp -frame 8 RM6_PNG/079.png
+	convert RM6/RM_6_1_codeword_80.bmp -frame 8 RM6_PNG/080.png
+	convert RM6/RM_6_1_codeword_81.bmp -frame 8 RM6_PNG/081.png
+	convert RM6/RM_6_1_codeword_82.bmp -frame 8 RM6_PNG/082.png
+	convert RM6/RM_6_1_codeword_83.bmp -frame 8 RM6_PNG/083.png
+	convert RM6/RM_6_1_codeword_84.bmp -frame 8 RM6_PNG/084.png
+	convert RM6/RM_6_1_codeword_85.bmp -frame 8 RM6_PNG/085.png
+	convert RM6/RM_6_1_codeword_86.bmp -frame 8 RM6_PNG/086.png
+	convert RM6/RM_6_1_codeword_87.bmp -frame 8 RM6_PNG/087.png
+	convert RM6/RM_6_1_codeword_88.bmp -frame 8 RM6_PNG/088.png
+	convert RM6/RM_6_1_codeword_89.bmp -frame 8 RM6_PNG/089.png
+	convert RM6/RM_6_1_codeword_90.bmp -frame 8 RM6_PNG/090.png
+	convert RM6/RM_6_1_codeword_91.bmp -frame 8 RM6_PNG/091.png
+	convert RM6/RM_6_1_codeword_92.bmp -frame 8 RM6_PNG/092.png
+	convert RM6/RM_6_1_codeword_93.bmp -frame 8 RM6_PNG/093.png
+	convert RM6/RM_6_1_codeword_94.bmp -frame 8 RM6_PNG/094.png
+	convert RM6/RM_6_1_codeword_95.bmp -frame 8 RM6_PNG/095.png
+	convert RM6/RM_6_1_codeword_96.bmp -frame 8 RM6_PNG/096.png
+	convert RM6/RM_6_1_codeword_97.bmp -frame 8 RM6_PNG/097.png
+	convert RM6/RM_6_1_codeword_98.bmp -frame 8 RM6_PNG/098.png
+	convert RM6/RM_6_1_codeword_99.bmp -frame 8 RM6_PNG/099.png
+	convert RM6/RM_6_1_codeword_100.bmp -frame 8 RM6_PNG/100.png
+	convert RM6/RM_6_1_codeword_101.bmp -frame 8 RM6_PNG/101.png
+	convert RM6/RM_6_1_codeword_102.bmp -frame 8 RM6_PNG/102.png
+	convert RM6/RM_6_1_codeword_103.bmp -frame 8 RM6_PNG/103.png
+	convert RM6/RM_6_1_codeword_104.bmp -frame 8 RM6_PNG/104.png
+	convert RM6/RM_6_1_codeword_105.bmp -frame 8 RM6_PNG/105.png
+	convert RM6/RM_6_1_codeword_106.bmp -frame 8 RM6_PNG/106.png
+	convert RM6/RM_6_1_codeword_107.bmp -frame 8 RM6_PNG/107.png
+	convert RM6/RM_6_1_codeword_108.bmp -frame 8 RM6_PNG/108.png
+	convert RM6/RM_6_1_codeword_109.bmp -frame 8 RM6_PNG/109.png
+	convert RM6/RM_6_1_codeword_110.bmp -frame 8 RM6_PNG/110.png
+	convert RM6/RM_6_1_codeword_111.bmp -frame 8 RM6_PNG/111.png
+	convert RM6/RM_6_1_codeword_112.bmp -frame 8 RM6_PNG/112.png
+	convert RM6/RM_6_1_codeword_113.bmp -frame 8 RM6_PNG/113.png
+	convert RM6/RM_6_1_codeword_114.bmp -frame 8 RM6_PNG/114.png
+	convert RM6/RM_6_1_codeword_115.bmp -frame 8 RM6_PNG/115.png
+	convert RM6/RM_6_1_codeword_116.bmp -frame 8 RM6_PNG/116.png
+	convert RM6/RM_6_1_codeword_117.bmp -frame 8 RM6_PNG/117.png
+	convert RM6/RM_6_1_codeword_118.bmp -frame 8 RM6_PNG/118.png
+	convert RM6/RM_6_1_codeword_119.bmp -frame 8 RM6_PNG/119.png
+	convert RM6/RM_6_1_codeword_120.bmp -frame 8 RM6_PNG/120.png
+	convert RM6/RM_6_1_codeword_121.bmp -frame 8 RM6_PNG/121.png
+	convert RM6/RM_6_1_codeword_122.bmp -frame 8 RM6_PNG/122.png
+	convert RM6/RM_6_1_codeword_123.bmp -frame 8 RM6_PNG/123.png
+	convert RM6/RM_6_1_codeword_124.bmp -frame 8 RM6_PNG/124.png
+	convert RM6/RM_6_1_codeword_125.bmp -frame 8 RM6_PNG/125.png
+	convert RM6/RM_6_1_codeword_126.bmp -frame 8 RM6_PNG/126.png
+	convert RM6/RM_6_1_codeword_127.bmp -frame 8 RM6_PNG/127.png
+
+RM_6_poster:
+	convert RM6_PNG/000.png RM6_PNG/001.png RM6_PNG/002.png RM6_PNG/003.png RM6_PNG/004.png RM6_PNG/005.png RM6_PNG/006.png RM6_PNG/007.png RM6_PNG/008.png RM6_PNG/009.png RM6_PNG/010.png +append a0
+	convert RM6_PNG/011.png RM6_PNG/012.png RM6_PNG/013.png RM6_PNG/014.png RM6_PNG/015.png RM6_PNG/016.png RM6_PNG/017.png RM6_PNG/018.png RM6_PNG/019.png RM6_PNG/020.png RM6_PNG/021.png +append a1
+	convert RM6_PNG/022.png RM6_PNG/023.png RM6_PNG/024.png RM6_PNG/025.png RM6_PNG/026.png RM6_PNG/027.png RM6_PNG/028.png RM6_PNG/029.png RM6_PNG/030.png RM6_PNG/031.png RM6_PNG/032.png +append a2
+	convert RM6_PNG/033.png RM6_PNG/034.png RM6_PNG/035.png RM6_PNG/036.png RM6_PNG/037.png RM6_PNG/038.png RM6_PNG/039.png RM6_PNG/040.png RM6_PNG/041.png RM6_PNG/042.png RM6_PNG/043.png +append a3
+	convert RM6_PNG/044.png RM6_PNG/045.png RM6_PNG/046.png RM6_PNG/047.png RM6_PNG/048.png RM6_PNG/049.png RM6_PNG/050.png RM6_PNG/051.png RM6_PNG/052.png RM6_PNG/053.png RM6_PNG/054.png +append a4
+	convert RM6_PNG/055.png RM6_PNG/056.png RM6_PNG/057.png RM6_PNG/058.png RM6_PNG/059.png RM6_PNG/060.png RM6_PNG/061.png RM6_PNG/062.png RM6_PNG/063.png RM6_PNG/064.png RM6_PNG/065.png +append a5
+	convert RM6_PNG/066.png RM6_PNG/067.png RM6_PNG/068.png RM6_PNG/069.png RM6_PNG/070.png RM6_PNG/071.png RM6_PNG/072.png RM6_PNG/073.png RM6_PNG/074.png RM6_PNG/075.png RM6_PNG/076.png +append a6
+	convert RM6_PNG/077.png RM6_PNG/078.png RM6_PNG/079.png RM6_PNG/080.png RM6_PNG/081.png RM6_PNG/082.png RM6_PNG/083.png RM6_PNG/084.png RM6_PNG/085.png RM6_PNG/086.png RM6_PNG/087.png +append a7
+	convert RM6_PNG/088.png RM6_PNG/089.png RM6_PNG/090.png RM6_PNG/091.png RM6_PNG/092.png RM6_PNG/093.png RM6_PNG/094.png RM6_PNG/095.png RM6_PNG/096.png RM6_PNG/097.png RM6_PNG/098.png +append a8
+	convert RM6_PNG/099.png RM6_PNG/100.png RM6_PNG/101.png RM6_PNG/102.png RM6_PNG/103.png RM6_PNG/104.png RM6_PNG/105.png RM6_PNG/106.png RM6_PNG/107.png RM6_PNG/108.png RM6_PNG/109.png +append a9
+	convert RM6_PNG/110.png RM6_PNG/111.png RM6_PNG/112.png RM6_PNG/113.png RM6_PNG/114.png RM6_PNG/115.png RM6_PNG/116.png RM6_PNG/117.png RM6_PNG/118.png RM6_PNG/119.png RM6_PNG/120.png +append a10
+	convert RM6_PNG/121.png RM6_PNG/122.png RM6_PNG/123.png RM6_PNG/124.png RM6_PNG/125.png RM6_PNG/126.png RM6_PNG/127.png RM6_PNG/000.png RM6_PNG/000.png RM6_PNG/000.png RM6_PNG/000.png +append a11
+	convert a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 -append poster_RM_1_6.png
+
+
 
 
 
@@ -7672,8 +8989,15 @@ codes_24_12_8:
 	pdflatex codes_24_12_8_poset.tex
 	open codes_24_12_8_poset.pdf
 
+#codes_24_12_8_poset_lvl_24.layered_graph
 
-
+codes_24_12_8_draw:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-draw_layered_graph codes_24_12_8_poset_lvl_24.layered_graph \
+		-rad 100 -spanning_tree -embedded -line_width 0.5  -x_stretch 1.4 -scale 0.25 -nodes_empty \
+		-end
+	pdflatex codes_24_12_8_poset_lvl_24_draw.tex
+	open codes_24_12_8_poset_lvl_24_draw.pdf
 
 glynn_arc:
 	$(ORBITER_PATH)/orbiter.out -v 5 \
@@ -7724,70 +9048,7 @@ glynn_arc:
 		
 
 
-sift_polynomials_3:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity -sift_polynomials 8 16 -end
 
-
-
-sift_polynomials_4:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity -sift_polynomials 16 32 -end
-
-
-RREF_demo_4_4_q5:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define F -finite_field -q 5 -end \
-		-with F -do \
-		-finite_field_activity -RREF_demo 4 4 -end
-	pdflatex RREF_example_q5_4_4.tex
-	#open RREF_example_q5_4_4.pdf
-	gs -sDEVICE=png16 -dFIXEDMEDIA -dDEVICEWIDTHPOINTS=500 -dDEVICEHEIGHTPOINTS=450 \
-		-r240 -oRREF_example_q5_4_4_page%02d.png \
-		RREF_example_q5_4_4.pdf
-
-#-dDEVICEWIDTHPOINTS=100 -dDEVICEHEIGHTPOINTS=100 
-#-sPAPERSIZE=hagaki
-
-RREF_demo_4_6_q7:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define F -finite_field -q 7 -end \
-		-with F -do \
-		-finite_field_activity -RREF_random_matrix 4 6 -end
-	pdflatex RREF_example_q7_4_6.tex
-	gs -sDEVICE=png16 -dFIXEDMEDIA -dDEVICEWIDTHPOINTS=500 -dDEVICEHEIGHTPOINTS=450 \
-		-r240 -oRREF_example_q7_4_6_page%02d.png \
-		RREF_example_q7_4_6.pdf
-	open RREF_example_q7_4_6.pdf
-
-
-RREF_demo_4_8_q8:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define F -finite_field -q 8 -end \
-		-with F -do \
-		-finite_field_activity -RREF_random_matrix 4 8 -end
-	pdflatex RREF_example_q8_4_8.tex
-	#open RREF_example_q8_4_8.pdf
-	gs -sDEVICE=png16 -dFIXEDMEDIA -dDEVICEWIDTHPOINTS=500 -dDEVICEHEIGHTPOINTS=450 \
-		-r240 -oRREF_example_q8_4_8_page%02d.png \
-		RREF_example_q8_4_8.pdf
-
-
-CODE_RS_6_4_7="6,2,1,0,0,0, 0,6,2,1,0,0, 0,0,6,2,1,0, 0,0,0,6,2,1"
-
-RREF_RS_6_4_7:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define F -finite_field -q 7 -end \
-		-with F -do \
-		-finite_field_activity -RREF 4 6 $(CODE_RS_6_4_7) -end
-	pdflatex RREF_example_q7_4_6.tex
-	gs -sDEVICE=png16 -dFIXEDMEDIA -dDEVICEWIDTHPOINTS=500 -dDEVICEHEIGHTPOINTS=450 \
-		-r240 -oRREF_example_q7_4_6_page%02d.png \
-		RREF_example_q7_4_6.pdf
 
 
 RS_6_4_7_group:
@@ -7825,7 +9086,6 @@ Code_RS_11:
 	#	RREF_example_q11_8_10.pdf
 	open RREF_example_q11_8_10.pdf
 
-CODE_RS_11_RREF="1, 0, 0, 0, 0, 0, 0, 0, 7, 2, 0, 1, 0, 0, 0, 0, 0, 0, 8, 3, 0, 0, 1, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 1, 0, 0, 0, 0, 8, 8, 0, 0, 0, 0, 1, 0, 0, 0, 10, 3, 0, 0, 0, 0, 0, 1, 0, 0, 1, 4, 0, 0, 0, 0, 0, 0, 1, 0, 5, 4, 0, 0, 0, 0, 0, 0, 0, 1, 5, 8"
 
 Code_RS_11_weight_enumerator:
 	$(ORBITER_PATH)/orbiter.out -v 2 \
@@ -7836,7 +9096,6 @@ Code_RS_11_weight_enumerator:
 
 #1*y^(10) + 1200*x^3*y^7 + 16800*x^4*y^6 + 209160*x^5*y^5 + 1734600*x^6*y^4 + 9918000*x^7*y^3 + 37189800*x^8*y^2 + 82644700*x^9*y + 82644620*x^(10)
 
-CODE_RS_8="5,6,1,0,0,0,0, 0,5,6,1,0,0,0, 0,0,5,6,1,0,0, 0,0,0,5,6,1,0, 0,0,0,0,5,6,1"	
 
 RREF_RS_8_weight_enumerator:
 	$(ORBITER_PATH)/orbiter.out -v 2 \
@@ -7867,9 +9126,6 @@ RS_8_field_reduction:
 	pdflatex field_reduction_Q8_q2_5_7.tex
 	open field_reduction_Q8_q2_5_7.pdf
 
-RS_8_reduced="0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1"
-
-CODE_21_15_4="1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 1,1,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0, 1,0,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0, 0,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0, 1,1,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0, 1,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0, 0,1,1,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0, 1,0,0,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0, 0,1,0,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0, 0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0, 1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0, 1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0, 1,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0, 0,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0, 1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1"
 
 RREF_RS_8_reduced_weight_enumerator:
 	$(ORBITER_PATH)/orbiter.out -v 2 \
@@ -7906,9 +9162,40 @@ Reed_solomon_F8_work:
 
 
 
+BCH_255_5_evaluate_elementary_symmetric_functions_1:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 256 -end -end \
+		-define e1 -formula "e1" "e1" "" $(ELEMENTARY_SYMMETRIC_8_1)  -end  \
+		-define e2 -formula "e2" "e2" "" $(ELEMENTARY_SYMMETRIC_8_2)  -end  \
+		-define e3 -formula "e3" "e3" "" $(ELEMENTARY_SYMMETRIC_8_3)  -end  \
+		-define e4 -formula "e4" "e4" "" $(ELEMENTARY_SYMMETRIC_8_4)  -end  \
+		-define e5 -formula "e5" "e5" "" $(ELEMENTARY_SYMMETRIC_8_5)  -end  \
+		-define e6 -formula "e6" "e6" "" $(ELEMENTARY_SYMMETRIC_8_6)  -end  \
+		-define e7 -formula "e7" "e7" "" $(ELEMENTARY_SYMMETRIC_8_7)  -end  \
+		-define e8 -formula "e8" "e8" "" $(ELEMENTARY_SYMMETRIC_8_8)  -end  \
+		-define E8 -collection "e1,e2,e3,e4,e5,e6,e7,e8" \
+		-with F -do -finite_field_activity -evaluate E8 "x0=2,x1=4,x2=16,x3=29,x4=76,x5=157,x6=95,x7=133" -end
+
+BCH_255_5_evaluate_elementary_symmetric_functions_2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 256 -end -end \
+		-define e1 -formula "e1" "e1" "" $(ELEMENTARY_SYMMETRIC_8_1)  -end  \
+		-define e2 -formula "e2" "e2" "" $(ELEMENTARY_SYMMETRIC_8_2)  -end  \
+		-define e3 -formula "e3" "e3" "" $(ELEMENTARY_SYMMETRIC_8_3)  -end  \
+		-define e4 -formula "e4" "e4" "" $(ELEMENTARY_SYMMETRIC_8_4)  -end  \
+		-define e5 -formula "e5" "e5" "" $(ELEMENTARY_SYMMETRIC_8_5)  -end  \
+		-define e6 -formula "e6" "e6" "" $(ELEMENTARY_SYMMETRIC_8_6)  -end  \
+		-define e7 -formula "e7" "e7" "" $(ELEMENTARY_SYMMETRIC_8_7)  -end  \
+		-define e8 -formula "e8" "e8" "" $(ELEMENTARY_SYMMETRIC_8_8)  -end  \
+		-define E8 -collection "e1,e2,e3,e4,e5,e6,e7,e8" \
+		-with F -do -finite_field_activity -evaluate E8 "x0=8,x1=64,x2=205,x3=143,x4=70,x5=217,x6=130,x7=23" -end
+
+
+
+
+
+
 
 ########################################################################################################
-# Section 41: Diophantine Systems
+# Section 42: Diophantine Systems
 
 SECTION_DIOPHANT:
 	
@@ -7950,7 +9237,7 @@ octic_monomials_solve:
 
 
 ########################################################################################################
-# Section 42: Combinatorial Linear Spaces
+# Section 43: Combinatorial Linear Spaces
 
 SECTION_COMBINATORIAL_LINEAR_SPACES:
 	
@@ -8003,7 +9290,7 @@ linsp30_pt_distribution:
 
 
 #############################################################################################################
-# Section 43: Design Theory
+# Section 44: Design Theory
 
 SECTION_DESIGN_THEORY:
 
@@ -8185,7 +9472,7 @@ design_27_conic_type:
 
 
 #############################################################################################################
-# Section 44: Tactical Decompositions
+# Section 45: Tactical Decompositions
 
 SECTION_TACTICAL_DECOMPOSITIONS:
 
@@ -8445,7 +9732,7 @@ max_arc_lift:
 
 
 #############################################################################################################
-# Section 45: Spreads
+# Section 46: Spreads
 
 SECTION_SPREADS:
 	
@@ -8681,7 +9968,7 @@ TP_16_2:
 
 
 #############################################################################################################
-# Section 46: Packings
+# Section 47: Packings
 
 
 SECTION_PACKINGS:
@@ -10060,7 +11347,7 @@ packing_2Cx2_0_long_orbits_5_fixpoints:
 
 
 #############################################################################################################
-# Section 47: BLT-sets
+# Section 48: BLT-sets
 
 SECTION_BLT_SETS:
 
@@ -10179,7 +11466,7 @@ BLT_5_classify:
 
 
 #############################################################################################################
-# Section 48: Graph Theory
+# Section 49: Graph Theory
 
 
 SECTION_GRAPH_THEORY:
@@ -10249,7 +11536,7 @@ small_graph_cliques_Sajeeb:
 
 
 #############################################################################################################
-# Section 49: Graphical Output
+# Section 50: Graphical Output
 
 SECTION_GRAPHICAL_OUTPUT:
 	
@@ -10324,7 +11611,7 @@ schreier_tree_graphical_output:
 
 
 #############################################################################################################
-# Section 50: The Povray Interface
+# Section 51: The Povray Interface
 
 
 SECTION_POVRAY:
@@ -10580,7 +11867,7 @@ EC_draw: elliptic_curve_b1_c3_q11.txt
 
 
 #############################################################################################################
-# Section 51: Creating a Movie Using Ffmpeg
+# Section 52: Creating a Movie Using Ffmpeg
 
 SECTION_ANIMATIONS:
 
@@ -11103,7 +12390,7 @@ McKean_video:
 
 
 #############################################################################################################
-# Section 52: Continuous Function Plotter
+# Section 53: Continuous Function Plotter
 
 
 
@@ -11200,7 +12487,7 @@ lissajous_3d_plot:
 
 
 #############################################################################################################
-# Section 53: Miscellaneous
+# Section 54: Miscellaneous
 
 SECTION_MISCELLANEOUS:
 
@@ -11417,6 +12704,7 @@ poly_orbits_d3_n3_q2_F2.csv: poly_orbits_d3_n3_q2.csv
 		-table_of_cubic_surfaces_compute_properties poly_orbits_d3_n3_q2.csv 2 0 \
 		-end 
 
+
 Dickson_q2_analyze: poly_orbits_d3_n3_q2_F2.csv
 	$(ORBITER_PATH)/orbiter.out -v 4 \
 		-define F -finite_field -q 2 -end -end \
@@ -11522,67 +12810,6 @@ Dickson_q8_surface_canonical:
 
 ####
 
-
-E0="-1,55,1,45,-1,46,1,57,1,61,-1,62"
-E1="1,39,-1,40,-1,49,1,51,1,61,-1,62"
-E2="-1,67,1,69,1,59,-1,64,-1,22,1,24"
-E3="-1,38,1,47,1,40,-1,67,-1,51,1,69"
-E4="1,61,-1,62,-1,67,1,69"
-E5="1,38,-1,47,-1,39,2,66,-1,67,1,49,-2,68,1,69,1,61,-1,62"
-E6="1,62,-1,63,-1,64,1,24"
-E7="1,35,-1,36,-1,38,2,65,-1,29,1,40,-2,66,1,45,1,51,-1,69"
-E8="1,61,-1,63,-1,59,1,22"
-E9="1,27,1,47,-2,65,-1,48,1,50,-1,40,1,67,2,68,-1,55,-1,51"
-E10="1,66,-1,68,-1,59,1,64,1,21,-1,23"
-E11="-1,53,1,44,1,66,-1,68,1,55,-1,45"
-E12="1,61,-1,62,1,66,-1,68"
-E13="1,53,-1,44,1,66,-2,67,-1,68,1,46,2,69,-1,57,1,61,-1,62"
-E14="1,60,-1,61,1,64,-1,23"
-E15="1,27,1,41,-1,42,-2,65,1,44,-1,40,2,67,1,68,-1,55,-1,45"
-E16="1,60,-1,62,1,59,-1,21"
-E17="2,65,-1,53,-1,54,-1,29,1,56,-1,66,1,55,1,45,1,51,-2,69"
-E18="-1,67,1,69,1,66,-1,68"
-E19="-1,66,1,67,1,68,-1,69,-2,61,2,62,1,21,-1,22,-1,23,1,24"
-E20="-1,68,1,61,1,69,-1,62"
-E21="1,36,-1,41,-1,37,1,43,2,66,-2,67,-1,68,1,69,1,61,-1,62"
-E22="-1,66,1,62,1,67,-1,61"
-E23="1,54,-1,50,1,66,-1,67,-2,68,2,69,1,52,-1,58,1,61,-1,62"
-E24="1,68,-1,69,-1,60,1,63,1,23,-1,24"
-E25="1,36,-1,41,-1,40,1,68,1,45,-1,69"
-E26="1,66,-1,67,-1,60,1,63,1,21,-1,22"
-E27="-1,54,1,50,1,66,-1,67,1,55,-1,51"
-E28="1,37,-1,40,-1,43,1,45,1,61,-1,62"
-E29="1,55,-1,51,1,52,-1,58,-1,61,1,62"
-E30="1,21,-1,23,-1,22,1,24"
-E31="1,61,-1,21,-1,62,1,22"
-E32="1,61,-1,24,-1,62,1,23"
-E33="1,61,-1,24,-1,62,1,22"
-E34="1,61,-1,21,-1,24,1,23"
-E35="1,62,-1,22,-1,23,1,21"
-E36="1,61,-1,21,-1,62,1,23"
-E37="1,61,-1,23"
-E38="1,21,-1,62"
-E39="1,62,-1,22,-1,23,1,24"
-E40="1,62,-1,24"
-E41="1,22,-1,23"
-E42="1,61,-1,21,-1,24,1,22"
-E43="1,61,-1,22"
-E44="1,21,-1,24"
-H0="1,21"
-H1="1,21,-1,4"
-H2="1,22"
-H3="1,22,-1,4"
-H4="1,23"
-H5="1,23,-1,4"
-H6="1,24"
-H7="1,24,-1,4"
-H8="1,21,-1,22"
-H9="1,21,-1,23"
-H10="1,22,-1,24"
-H11="1,23,-1,24"
-H12="1,61,-1,62"
-H13="1,61,-1,21,-1,24,-1,62,1,22,1,23"
-H14="-1,67,-1,68,1,61,1,66,1,69,-1,62"
 
 
 E_complement_19:
@@ -11896,147 +13123,6 @@ D42_q64:
 
 
 
-Orb0="0"
-Orb1="4"
-Orb2="16"
-Orb3="20"
-Orb4="21"
-Orb5="24"
-Orb6="31"
-Orb7="34"
-Orb8="35"
-Orb9="38"
-Orb10="43"
-Orb11="46"
-Orb12="68"
-Orb13="69"
-Orb14="76"
-Orb15="77"
-Orb16="139"
-Orb17="140"
-Orb18="156"
-Orb19="192"
-Orb20="264"
-Orb21="265"
-Orb22="331"
-Orb23="337"
-Orb24="346"
-Orb25="355"
-Orb26="362"
-Orb27="487"
-Orb28="10566"
-Orb29="65540"
-Orb30="65542"
-Orb31="65546"
-Orb32="65547"
-Orb33="65548"
-Orb34="65550"
-Orb35="65554"
-Orb36="65561"
-Orb37="65562"
-Orb38="65569"
-Orb39="65570"
-Orb40="65603"
-Orb41="65605"
-Orb42="65609"
-Orb43="65611"
-Orb44="65612"
-Orb45="65613"
-Orb46="65614"
-Orb47="65617"
-Orb48="65618"
-Orb49="65633"
-Orb50="65634"
-Orb51="65665"
-Orb52="65666"
-Orb53="65687"
-Orb54="65695"
-Orb55="65735"
-Orb56="65743"
-Orb57="65744"
-Orb58="65759"
-Orb59="65760"
-Orb60="65831"
-Orb61="65839"
-Orb62="65843"
-Orb63="65850"
-Orb64="65851"
-Orb65="65858"
-Orb66="65859"
-Orb67="65863"
-Orb68="65865"
-Orb69="65867"
-Orb70="65868"
-Orb71="65869"
-Orb72="65871"
-Orb73="65872"
-Orb74="65873"
-Orb75="65874"
-Orb76="65887"
-Orb77="65899"
-Orb78="65900"
-Orb79="65903"
-Orb80="65904"
-Orb81="65915"
-Orb82="65919"
-Orb83="65921"
-Orb84="65922"
-Orb85="66755"
-Orb86="66763"
-Orb87="66764"
-Orb88="67107"
-Orb89="67115"
-Orb90="67117"
-Orb91="67150"
-Orb92="67243"
-Orb93="73731"
-Orb94="73733"
-Orb95="73737"
-Orb96="73753"
-Orb97="73795"
-Orb98="73796"
-Orb99="73797"
-Orb100="73798"
-Orb101="73801"
-Orb102="73802"
-Orb103="73987"
-Orb104="73993"
-Orb105="74007"
-Orb106="74051"
-Orb107="74052"
-Orb108="74053"
-Orb109="74055"
-Orb110="74057"
-Orb111="74099"
-Orb112="74105"
-Orb113="74106"
-Orb114="74243"
-Orb115="74247"
-Orb116="74248"
-Orb117="74263"
-Orb118="74264"
-Orb119="74275"
-Orb120="74276"
-Orb121="74279"
-Orb122="74280"
-Orb123="74295"
-Orb124="74296"
-Orb125="74499"
-Orb126="74500"
-Orb127="74531"
-Orb128="74532"
-Orb129="76051"
-Orb130="76099"
-Orb131="76100"
-Orb132="76291"
-Orb133="76292"
-Orb134="76307"
-Orb135="76308"
-Orb136="76323"
-Orb137="76355"
-Orb138="76356"
-Orb139="76387"
-Orb140="76389"
 
 Surface_Orb0_q4:
 	$(ORBITER_PATH)/orbiter.out -v 3 \
@@ -12071,7 +13157,7 @@ create_dickson_makefiles_q4:
 		-line_numeric "\t\t-linear_group -PGL 4 4 -wedge -end \\" \
 		-line_numeric "\t\t-group_theoretic_activities \\" \
 		-line_numeric "\t\t-control_six_arcs -end \\" \
-		-line_numeric "\t\t-create_surface -label_txt \"Orb%d_q4\" -label_tex \"Rank-\D(Orb%d)\" -label_for_summary \"Orb%d\" -by_rank \D(Orb%d) 2 -q 4 \\" \
+		-line_numeric "\t\t-, -label_txt \"Orb%d_q4\" -label_tex \"Rank-\D(Orb%d)\" -label_for_summary \"Orb%d\" -by_rank \D(Orb%d) 2 -q 4 \\" \
 		-line_numeric "\t\t-end \\" \
 		-line_numeric "\t\t-end" \
 		-line_numeric "" \

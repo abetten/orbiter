@@ -96,6 +96,7 @@ void group_theoretic_activity::do_create_surface(
 	else {
 		if (f_v) {
 			cout << "group_theoretic_activity::do_create_surface before Surf_A->create_surface_and_do_report" << endl;
+			cout << "Descr->f_surface_quartic = " << Descr->f_surface_quartic << endl;
 		}
 		Surf_A->create_surface_and_do_report(
 					Surface_Descr,

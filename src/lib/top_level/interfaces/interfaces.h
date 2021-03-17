@@ -79,6 +79,9 @@ class interface_algebra {
 	int f_draw_mod_n_power_cycle;
 	int f_draw_mod_n_power_cycle_base;
 
+	int f_cyclotomic_sets;
+	int cyclotomic_sets_q;
+	std::string cyclotomic_sets_reps;
 
 public:
 	interface_algebra();
@@ -121,7 +124,9 @@ class interface_coding_theory {
 	int f_BCH_dual;
 	int BCH_t;
 	//int BCH_b;
+
 	int f_Hamming_graph;
+
 	int f_NTT;
 	std::string ntt_fname_code;
 
@@ -129,9 +134,29 @@ class interface_coding_theory {
 	int general_code_binary_n;
 	std::string general_code_binary_text;
 
+	int f_code_diagram;
+	std::string code_diagram_label;
+	std::string code_diagram_codewords_text;
+	int code_diagram_n;
+
+	int f_code_diagram_from_file;
+	std::string code_diagram_from_file_codewords_fname;
+
+	int f_enhance;
+	int enhance_radius;
+
+	int f_metric_balls;
+	int radius_of_metric_ball;
+
+
 	int f_linear_code_through_basis;
 	int linear_code_through_basis_n;
 	std::string linear_code_through_basis_text;
+
+	int f_linear_code_through_columns_of_parity_check_projectively;
+	int f_linear_code_through_columns_of_parity_check;
+	int linear_code_through_columns_of_parity_check_k;
+	std::string linear_code_through_columns_of_parity_check_text;
 
 	int f_long_code;
 	int long_code_n;
@@ -252,6 +277,9 @@ class interface_combinatorics {
 	std::string read_solutions_and_tally_fname;
 	int read_solutions_and_tally_sz;
 
+	int f_make_elementary_symmetric_functions;
+	int make_elementary_symmetric_functions_n;
+	int make_elementary_symmetric_functions_k_max;
 
 public:
 	interface_combinatorics();
@@ -279,6 +307,8 @@ public:
 	void convert_stack_to_tdo(std::string &stack_fname, int verbose_level);
 	void do_parameters_maximal_arc(int q, int r, int verbose_level);
 	void do_parameters_arc(int q, int s, int r, int verbose_level);
+	void do_make_elementary_symmetric_functions(int n, int k_max, int verbose_level);
+
 };
 
 
@@ -647,6 +677,9 @@ class interface_toolkit {
 	std::string reformat_fname_in;
 	std::string reformat_fname_out;
 	int reformat_nb_cols;
+
+	int f_split_by_values;
+	std::string split_by_values_fname_in;
 
 	int f_draw_matrix_partition;
 	int draw_matrix_partition_width;

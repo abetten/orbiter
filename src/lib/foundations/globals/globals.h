@@ -383,6 +383,14 @@ public:
 	int read_arguments(int argc,
 			std::string *argv, int i0);
 	void fork(int argc, std::string *argv, int verbose_level);
+
+	void *get_object(int idx);
+	int find_symbol(std::string &label);
+	void find_symbols(std::vector<std::string> &Labels, int *&Idx);
+	void print_symbol_table();
+	void add_symbol_table_entry(std::string &label,
+			orbiter_symbol_table_entry *Symb, int verbose_level);
+
 };
 
 

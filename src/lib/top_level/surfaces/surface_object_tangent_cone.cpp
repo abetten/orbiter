@@ -122,7 +122,7 @@ void surface_object_tangent_cone::init(surface_object_with_action *SOA, int verb
 	}
 }
 
-void surface_object_tangent_cone::quartic(ostream &ost, int verbose_level)
+void surface_object_tangent_cone::quartic(ostream &ost, int pt_orbit, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int *Elt;
@@ -144,7 +144,7 @@ void surface_object_tangent_cone::quartic(ostream &ost, int verbose_level)
 	cout << "surface_object_tangent_cone::quartic "
 			"The surface has points not on lines, "
 			"we are computing the quartic" << endl;
-	compute_quartic(0 /* pt_orbit */,
+	compute_quartic(pt_orbit,
 			//pt_A, pt_B, transporter,
 			SOA->SO->eqn, //equation_nice,
 			verbose_level);
@@ -311,6 +311,7 @@ void surface_object_tangent_cone::quartic(ostream &ost, int verbose_level)
 
 	Sorting.lint_vec_heapsort(Pts_on_tangent_quadric, nb_pts_on_tangent_quadric);
 	ost << "The points on the tangent quadric are:\\\\" << endl;
+#if 0
 	ost << "\\begin{multicols}{2}" << endl;
 	for (i = 0; i < nb_pts_on_tangent_quadric; i++) {
 		SOA->Surf->unrank_point(v, Pts_on_tangent_quadric[i]);
@@ -320,6 +321,7 @@ void surface_object_tangent_cone::quartic(ostream &ost, int verbose_level)
 		ost << "$\\\\" << endl;
 	}
 	ost << "\\end{multicols}" << endl;
+#endif
 
 
 
@@ -425,6 +427,15 @@ void surface_object_tangent_cone::quartic(ostream &ost, int verbose_level)
 	}
 	ost << "\\end{multicols}" << endl;
 
+	for (i = 0; i < sz_curve; i++) {
+		ost << Pts_on_curve[i];
+		if (i < sz_curve - 1) {
+			ost << ", ";
+		}
+	}
+	ost << "\\\\" << endl;
+
+
 #else
 
 	sz_curve = nb_pts_intersection - 1;
@@ -469,6 +480,7 @@ void surface_object_tangent_cone::quartic(ostream &ost, int verbose_level)
 
 	moved_surface = NEW_OBJECT(set_and_stabilizer);
 
+#if 0
 	cout << "creating moved_surface" << endl;
 	moved_surface->init_everything(SOA->Surf_A->A,
 			SOA->Surf_A->A, SOA->SO->Pts, SOA->SO->nb_pts,
@@ -487,6 +499,7 @@ void surface_object_tangent_cone::quartic(ostream &ost, int verbose_level)
 	ost << "The stabilizer of $P0$ and the moved surface "
 			"is the following group:\\\\" << endl;
 	stab_gens_P0->print_generators_tex(ost);
+#endif
 
 }
 
@@ -498,6 +511,7 @@ void surface_object_tangent_cone::compute_quartic(int pt_orbit,
 {
 	int f_v = (verbose_level >= 1);
 	//int *Elt;
+	int f;
 
 	if (f_v) {
 		cout << "surface_object_tangent_cone::compute_quartic" << endl;
@@ -522,7 +536,8 @@ void surface_object_tangent_cone::compute_quartic(int pt_orbit,
 	v[2] = 0;
 	v[3] = 0;
 	pt_B = SOA->Surf->rank_point(v);
-	i = SOA->Orbits_on_points_not_on_lines->orbit[0];
+	f = SOA->Orbits_on_points_not_on_lines->orbit_first[pt_orbit];
+	i = SOA->Orbits_on_points_not_on_lines->orbit[f];
 	pt_A = SOA->SO->SOP->Pts_not_on_lines[i];
 
 	cout << "surface_object_tangent_cone::compute_quartic "
@@ -880,26 +895,38 @@ void surface_object_tangent_cone::cheat_sheet_quartic_curve(
 
 	moved_surface = NEW_OBJECT(set_and_stabilizer);
 
-	cout << "creating moved_surface" << endl;
+	if (f_v) {
+		cout << "surface_object_tangent_cone::cheat_sheet_quartic_curve creating moved_surface" << endl;
+	}
 	moved_surface->init_everything(SOA->Surf_A->A,
 			SOA->Surf_A->A, SOA->SO->Pts, SOA->SO->nb_pts,
 			gens_copy, 0 /*verbose_level */);
 
 	//stab_gens_moved_surface = SaS->Strong_gens->create_copy();
 
-	cout << "before apply_to_self" << endl;
+	if (f_v) {
+		cout << "surface_object_tangent_cone::cheat_sheet_quartic_curve before apply_to_self" << endl;
+	}
 	moved_surface->apply_to_self(transporter,
 			0 /* verbose_level */);
 
-	cout << "before moved_surface->Strong_gens->point_stabilizer"
+#if 0
+	if (f_v) {
+		cout << "surface_object_tangent_cone::cheat_sheet_quartic_curve before moved_surface->Strong_gens->point_stabilizer"
 			<< endl;
+	}
 	stab_gens_P0 = moved_surface->Strong_gens->point_stabilizer(
 			0 /*int pt */, verbose_level);
+	if (f_v) {
+		cout << "surface_object_tangent_cone::cheat_sheet_quartic_curve after moved_surface->Strong_gens->point_stabilizer"
+			<< endl;
+	}
+
 
 	ost << "The stabilizer of $P0$ and the moved surface is "
 			"the following group:\\\\" << endl;
 	stab_gens_P0->print_generators_tex(ost);
-
+#endif
 
 
 	if (f_v) {

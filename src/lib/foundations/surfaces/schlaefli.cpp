@@ -2333,7 +2333,7 @@ void schlaefli::latex_table_of_double_sixes(std::ostream &ost)
 	int i, j, h;
 	long int D[12];
 
-	cout << "schlaefli::latex_table_of_double_sixes" << endl;
+	//cout << "schlaefli::latex_table_of_double_sixes" << endl;
 
 
 
@@ -2374,7 +2374,7 @@ void schlaefli::latex_table_of_double_sixes(std::ostream &ost)
 		}
 	//ost << "\\end{multicols}" << endl;
 
-	cout << "schlaefli::latex_table_of_double_sixes done" << endl;
+	//cout << "schlaefli::latex_table_of_double_sixes done" << endl;
 
 }
 
@@ -2383,7 +2383,7 @@ void schlaefli::latex_table_of_half_double_sixes(std::ostream &ost)
 {
 	int i;
 
-	cout << "schlaefli::latex_table_of_half_double_sixes" << endl;
+	//cout << "schlaefli::latex_table_of_half_double_sixes" << endl;
 
 
 
@@ -2402,7 +2402,7 @@ void schlaefli::latex_table_of_half_double_sixes(std::ostream &ost)
 
 
 
-	cout << "schlaefli::latex_table_of_double_sixes done" << endl;
+	//cout << "schlaefli::latex_table_of_double_sixes done" << endl;
 }
 
 void schlaefli::latex_half_double_six(std::ostream &ost, int idx)
@@ -2410,7 +2410,7 @@ void schlaefli::latex_half_double_six(std::ostream &ost, int idx)
 	int j;
 	long int H[6];
 
-	cout << "schlaefli::latex_table_of_half_double_sixes" << endl;
+	//cout << "schlaefli::latex_table_of_half_double_sixes" << endl;
 
 
 
@@ -2441,7 +2441,7 @@ void schlaefli::latex_half_double_six(std::ostream &ost, int idx)
 
 
 
-	cout << "schlaefli::latex_table_of_double_sixes done" << endl;
+	//cout << "schlaefli::latex_table_of_double_sixes done" << endl;
 }
 
 
@@ -2451,7 +2451,7 @@ void schlaefli::latex_table_of_Eckardt_points(std::ostream &ost)
 	int i, j;
 	int three_lines[3];
 
-	cout << "schlaefli::latex_table_of_Eckardt_points" << endl;
+	//cout << "schlaefli::latex_table_of_Eckardt_points" << endl;
 	ost << "\\begin{multicols}{2}" << endl;
 	for (i = 0; i < nb_Eckardt_points; i++) {
 
@@ -2469,7 +2469,7 @@ void schlaefli::latex_table_of_Eckardt_points(std::ostream &ost)
 		ost << "$\\\\" << endl;
 		}
 	ost << "\\end{multicols}" << endl;
-	cout << "schlaefli::latex_table_of_Eckardt_points done" << endl;
+	//cout << "schlaefli::latex_table_of_Eckardt_points done" << endl;
 }
 
 void schlaefli::latex_table_of_tritangent_planes(std::ostream &ost)
@@ -2477,7 +2477,7 @@ void schlaefli::latex_table_of_tritangent_planes(std::ostream &ost)
 	int i, j;
 	int three_lines[3];
 
-	cout << "schlaefli::latex_table_of_tritangent_planes" << endl;
+	//cout << "schlaefli::latex_table_of_tritangent_planes" << endl;
 	ost << "\\begin{multicols}{2}" << endl;
 	for (i = 0; i < nb_Eckardt_points; i++) {
 
@@ -2492,7 +2492,7 @@ void schlaefli::latex_table_of_tritangent_planes(std::ostream &ost)
 		ost << "$\\\\" << endl;
 		}
 	ost << "\\end{multicols}" << endl;
-	cout << "schlaefli::latex_table_of_tritangent_planes done" << endl;
+	//cout << "schlaefli::latex_table_of_tritangent_planes done" << endl;
 }
 
 void schlaefli::print_line(ostream &ost, int rk)
@@ -2561,7 +2561,7 @@ void schlaefli::latex_table_of_clebsch_maps(ostream &ost)
 	//int intersecting_lines[10];
 
 	cnt = 0;
-	cout << "schlaefli::latex_table_of_clebsch_maps" << endl;
+	//cout << "schlaefli::latex_table_of_clebsch_maps" << endl;
 	//ost << "\\begin{multicols}{2}" << endl;
 	for (e = 0; e < nb_Eckardt_points; e++) {
 
@@ -2759,7 +2759,7 @@ void schlaefli::latex_table_of_clebsch_maps(ostream &ost)
 		ost << endl;
 	} // e
 	//ost << "\\end{multicols}" << endl;
-	cout << "schlaefli::latex_table_of_clebsch_maps done" << endl;
+	//cout << "schlaefli::latex_table_of_clebsch_maps done" << endl;
 }
 
 void schlaefli::print_half_double_sixes_in_GAP()

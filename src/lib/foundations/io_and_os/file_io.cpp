@@ -3751,6 +3751,56 @@ void file_io::do_csv_file_latex(std::string &fname,
 	}
 }
 
+void file_io::read_solutions_and_tally(std::string &fname, int sz, int verbose_level)
+{
+	int nb_solutions;
+	int solution_size = sz;
+	int *Sol;
+	int i, j;
+
+	std::vector<std::vector<int> > Solutions;
+
+
+	read_solutions_from_file_size_is_known(fname,
+			Solutions, solution_size,
+			verbose_level);
+
+	nb_solutions = Solutions.size();
+
+	Sol = NEW_int(nb_solutions * solution_size);
+	for (i = 0; i < nb_solutions; i++) {
+		for (j = 0; j < solution_size; j++) {
+			Sol[i * solution_size + j] = Solutions[i][j];
+		}
+	}
+
+
+	cout << "nb_solutions = " << nb_solutions << endl;
+
+	tally T;
+
+	T.init(Sol, nb_solutions * solution_size, TRUE, 0);
+	cout << "tally:" << endl;
+	T.print(TRUE);
+	cout << endl;
+
+
+	int *Pts;
+	int nb_pts;
+	int multiplicity = 4;
+
+	T.get_data_by_multiplicity(
+			Pts, nb_pts, multiplicity, verbose_level);
+
+	cout << "multiplicity " << multiplicity << " number of pts = " << nb_pts << endl;
+	Orbiter->Int_vec.print(cout, Pts, nb_pts);
+	cout << endl;
+
+
+	FREE_int(Sol);
+
+}
+
 }}
 
 

@@ -79,6 +79,10 @@ interface_algebra::interface_algebra()
 	f_draw_mod_n_power_cycle = FALSE;
 	f_draw_mod_n_power_cycle_base = 0;
 
+	f_cyclotomic_sets = FALSE;
+	cyclotomic_sets_q = 0;
+	//std::string cyclotomic_sets_reps;
+
 }
 
 
@@ -132,6 +136,9 @@ void interface_algebra::print_help(int argc,
 	}
 	else if (stringcmp(argv[i], "-draw_mod_n_power_cycle") == 0) {
 		cout << "-draw_mod_n_power_cycle <int : base> " << endl;
+	}
+	else if (stringcmp(argv[i], "-cyclotomic_sets") == 0) {
+		cout << "-cyclotomic_sets <int : q> <int : reps> " << endl;
 	}
 }
 
@@ -194,11 +201,15 @@ int interface_algebra::recognize_keyword(int argc,
 	else if (stringcmp(argv[i], "-draw_mod_n_power_cycle") == 0) {
 		return true;
 	}
+	else if (stringcmp(argv[i], "-cyclotomic_sets") == 0) {
+		return true;
+	}
 	if (f_v) {
 		cout << "interface_algebra::recognize_keyword not recognizing" << endl;
 	}
 	return false;
 }
+
 
 int interface_algebra::read_arguments(int argc,
 		std::string *argv, int i0, int verbose_level)
@@ -350,6 +361,12 @@ int interface_algebra::read_arguments(int argc,
 			f_draw_mod_n_power_cycle_base = strtoi(argv[++i]);
 			cout << "-draw_mod_n_power_cycle " << endl;
 		}
+		else if (stringcmp(argv[i], "-cyclotomic_sets") == 0) {
+			f_cyclotomic_sets = TRUE;
+			cyclotomic_sets_q = strtoi(argv[++i]);
+			cyclotomic_sets_reps.assign(argv[++i]);
+			cout << "-cyclotomic_sets " << cyclotomic_sets_q << " " << cyclotomic_sets_reps << endl;
+		}
 		else {
 			break;
 		}
@@ -455,6 +472,7 @@ void interface_algebra::worker(int verbose_level)
 				f_draw_mod_n_inverse,
 				f_draw_mod_n_additive_inverse,
 				f_draw_mod_n_power_cycle, f_draw_mod_n_power_cycle_base,
+				f_cyclotomic_sets, cyclotomic_sets_q, cyclotomic_sets_reps,
 				verbose_level);
 	}
 

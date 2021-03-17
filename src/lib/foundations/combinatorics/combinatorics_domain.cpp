@@ -3592,6 +3592,50 @@ void combinatorics_domain::make_orthogonal_collinearity_graph(int *&Adj, int &N,
 	}
 }
 
+void combinatorics_domain::make_elementary_symmetric_functions(int n, int k_max, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorics_domain::make_elementary_symmetric_function" << endl;
+	}
+	int *set;
+	combinatorics_domain Combi;
+	int k, j;
+	int f_first;
+
+
+	set = NEW_int(k_max);
+	for (k = 1; k <= k_max; k++) {
+		cout << "k=" << k << " : " << endl;
+		Combi.first_k_subset(set, n, k);
+		f_first = TRUE;
+		while (TRUE) {
+			if (f_first) {
+				f_first = FALSE;
+			}
+			else {
+				cout << " + ";
+			}
+			for (j = 0; j < k; j++) {
+				cout << "x" << set[j];
+				if (j < k - 1) {
+					cout << "*";
+				}
+			}
+			if (!Combi.next_k_subset(set, n, k)) {
+				break;
+			}
+		}
+		cout << endl;
+	}
+
+	FREE_int(set);
+	if (f_v) {
+		cout << "combinatorics_domain::make_elementary_symmetric_functions done" << endl;
+	}
+
+}
 
 
 //##############################################################################
@@ -3652,6 +3696,7 @@ void combinatorics_domain_free_tab_q_binomials()
 		tab_q_binomials = NULL;
 	}
 }
+
 
 
 }}
