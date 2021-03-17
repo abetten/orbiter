@@ -783,7 +783,7 @@ class projective_space_with_action {
 
 public:
 
-	int n;
+	int n; // projective dimension
 	int d; // n + 1
 	int q;
 	finite_field *F; // do not free

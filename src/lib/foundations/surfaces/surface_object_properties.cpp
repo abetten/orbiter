@@ -28,6 +28,8 @@ surface_object_properties::surface_object_properties()
 	SO = NULL;
 
 	pts_on_lines = NULL;
+	f_is_on_line = NULL;
+
 	lines_on_point = NULL;
 	Type_pts_on_lines = NULL;
 	Type_lines_on_point = NULL;
@@ -101,6 +103,17 @@ surface_object_properties::surface_object_properties()
 
 surface_object_properties::~surface_object_properties()
 {
+	if (pts_on_lines) {
+		FREE_OBJECT(pts_on_lines);
+	}
+	if (f_is_on_line) {
+		FREE_int(f_is_on_line);
+	}
+	if (lines_on_point) {
+		FREE_OBJECT(lines_on_point);
+	}
+
+
 	if (Eckardt_points) {
 		FREE_lint(Eckardt_points);
 	}
@@ -149,12 +162,7 @@ surface_object_properties::~surface_object_properties()
 	if (Pts_not_on_lines) {
 		FREE_lint(Pts_not_on_lines);
 	}
-	if (pts_on_lines) {
-		FREE_OBJECT(pts_on_lines);
-	}
-	if (lines_on_point) {
-		FREE_OBJECT(lines_on_point);
-	}
+
 	if (plane_type_by_points) {
 		FREE_int(plane_type_by_points);
 	}
@@ -342,6 +350,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 	SO->Surf->compute_points_on_lines(SO->Pts, SO->nb_pts,
 		SO->Lines, SO->nb_lines,
 		pts_on_lines,
+		f_is_on_line,
 		0 /* verbose_level */);
 	if (f_v) {
 		cout << "surface_object_properties::compute_properties after "
@@ -3302,6 +3311,112 @@ void surface_object_properties::latex_trihedral_pair(std::ostream &ost, int *T, 
 	ost << "\\end{array}" << endl;
 }
 
+void surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P(int P_idx, int *&f_deleted, int verbose_level)
+// P_idx = index into SO->Pts[]
+{
+	int f_v = (verbose_level >= 1);
+	int i, idx;
+	long int P, R, Q;
+	int Basis_of_PR[8];
+
+	if (f_v) {
+		cout << "surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P" << endl;
+	}
+	f_deleted = NEW_int(nb_pts_not_on_lines);
+	Orbiter->Int_vec.zero(f_deleted, nb_pts_not_on_lines);
+
+	P = SO->Pts[P_idx];
+	for (i = 0; i < nb_pts_not_on_lines; i++) {
+		R = Pts_not_on_lines[i];
+		if (R == P) {
+			continue;
+		}
+		SO->Surf->unrank_point(Basis_of_PR, P);
+		SO->Surf->unrank_point(Basis_of_PR + 4, R);
+
+		int v[2];
+		int w[4];
+		int j;
+
+		for (j = 0; j < SO->F->q + 1; j++) {
+			SO->F->PG_element_unrank_modified(v, 1, 2, j);
+			if (f_v) {
+				cout << "surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P v=" << endl;
+				Orbiter->Int_vec.print(cout, v, 2);
+				cout << endl;
+			}
+
+			SO->F->mult_matrix_matrix(v, Basis_of_PR, w, 1, 2, 4,
+					0 /* verbose_level */);
+			if (f_v) {
+				cout << "surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P w=" << endl;
+				Orbiter->Int_vec.print(cout, w, 4);
+				cout << endl;
+			}
+
+			Q = SO->Surf->rank_point(w);
+
+			if (SO->find_point(Q, idx)) {
+				f_deleted[i] = TRUE;
+			}
+
+		}
+
+
+	}
+
+	if (f_v) {
+		cout << "surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P done" << endl;
+	}
+}
+
+
+int surface_object_properties::test_full_del_pezzo(int P_idx, int *f_deleted, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+	long int P, R, rk_tangent_plane;
+	int Basis[4 * 4];
+
+	if (f_v) {
+		cout << "surface_object_properties::test_full_del_pezzo" << endl;
+	}
+
+	P = SO->Pts[P_idx];
+	rk_tangent_plane = tangent_plane_rank_global[P_idx];
+
+	SO->Surf->P->dual_rank_of_plane_in_three_space(
+			rk_tangent_plane, 0 /* verbose_level*/);
+
+
+	for (i = 0; i < nb_pts_not_on_lines; i++) {
+		R = Pts_not_on_lines[i];
+		if (R == P) {
+			continue;
+		}
+		if (f_deleted[i]) {
+			continue;
+		}
+		int rk;
+
+		if (f_v) {
+			cout << "projective_space::dual_rank_of_plane_in_three_space" << endl;
+		}
+		SO->Surf->P->unrank_plane(Basis, rk_tangent_plane);
+		SO->Surf->unrank_point(Basis + 12, R);
+		rk = SO->F->Gauss_easy(Basis, 4, 4);
+		if (rk != 3) {
+			return FALSE;
+		}
+	}
+
+	if (f_v) {
+		cout << "surface_object_properties::test_full_del_pezzo done" << endl;
+	}
+	return TRUE;
+}
+
+//long int *tangent_plane_rank_global; // [SO->nb_pts]
 
 
 

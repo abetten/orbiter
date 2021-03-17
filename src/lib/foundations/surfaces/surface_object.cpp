@@ -1954,6 +1954,18 @@ void surface_object::compute_clebsch_maps(int verbose_level)
 
 
 
+int surface_object::find_point(long int P, int &idx)
+{
+	sorting Sorting;
+
+	if (Sorting.lint_vec_search(Pts, nb_pts, P,
+			idx, 0 /* verbose_level */)) {
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
+}
 
 
 

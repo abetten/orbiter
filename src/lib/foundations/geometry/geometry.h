@@ -729,7 +729,7 @@ public:
 			std::string line1_from_text, std::string line2_from_text,
 			std::string line1_to_text, std::string line2_to_text,
 			int verbose_level);
-	void Walsh_matrix(finite_field *F, int n, int *W, int verbose_level);
+	void Walsh_matrix(finite_field *F, int n, int *&W, int verbose_level);
 	void do_cheat_sheet_PG(finite_field *F,
 			layered_graph_draw_options *O,
 			int n,

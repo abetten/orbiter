@@ -735,6 +735,11 @@ void surface_with_action::create_surface_and_do_report(
 
 	if (SC->f_has_group) {
 
+		if (f_v) {
+			cout << "surface_with_action::create_surface_and_do_report f_has_group is true" << endl;
+		}
+
+
 		// test the generators:
 
 		int i;

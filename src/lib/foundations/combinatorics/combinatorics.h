@@ -30,13 +30,14 @@ public:
 	int n;
 	int n2; // n / 2
 	int Q; // 2^n
-	int Q2; // 2^{n/2}
+	int bent; // 2^{n/2}
+	int near_bent; // 2^{(n+1)/2}
 	//int NN;
 	longinteger_object NN; // 2^Q
 	int N; // size of PG(n,2)
 
 	finite_field *Fq; // the field F2
-	finite_field *FQ; // the field of order 2^n
+	//finite_field *FQ; // the field of order 2^n
 
 	homogeneous_polynomial_domain *Poly;
 		// Poly[i] = polynomial of degree i in n + 1 variables.
@@ -74,6 +75,7 @@ public:
 	void raise(int *in, int *out);
 	void apply_Walsh_transform(int *in, int *out);
 	int is_bent(int *T);
+	int is_near_bent(int *T);
 };
 
 
@@ -441,6 +443,7 @@ public:
 			int n, int k, int q, int r, int verbose_level);
 	void make_orthogonal_collinearity_graph(int *&Adj, int &N,
 			int epsilon, int d, int q, int verbose_level);
+	void make_elementary_symmetric_functions(int n, int k_max, int verbose_level);
 
 };
 

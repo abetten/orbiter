@@ -881,7 +881,7 @@ public:
 	surface_object_tangent_cone();
 	~surface_object_tangent_cone();
 	void init(surface_object_with_action *SOA, int verbose_level);
-	void quartic(std::ostream &ost, int verbose_level);
+	void quartic(std::ostream &ost, int pt_orbit, int verbose_level);
 	void compute_quartic(int pt_orbit,
 		//int &pt_A, int &pt_B, int *transporter,
 		int *equation, //int *equation_nice,
@@ -1016,6 +1016,7 @@ public:
 			std::string &label,
 			std::string &label_tex,
 			int verbose_level);
+	void print_full_del_Pezzo(std::ostream &ost, int verbose_level);
 };
 
 // #############################################################################

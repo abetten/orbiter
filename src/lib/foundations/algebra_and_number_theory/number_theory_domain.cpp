@@ -1740,7 +1740,34 @@ int number_theory_domain::nb_primes(int n)
 	return i;
 }
 
+void number_theory_domain::cyclotomic_set(std::vector<int> &cyclotomic_set, int a, int q, int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int b, c;
 
+	if (f_v) {
+		cout << "number_theory_domain::cyclotomic_set" << endl;
+	}
+	b = a;
+	cyclotomic_set.push_back(b);
+	if (f_v) {
+		cout << "push " << b << endl;
+	}
+	while (TRUE) {
+		c = (b * q) % n;
+		if (c == a) {
+			break;
+		}
+		b = c;
+		cyclotomic_set.push_back(b);
+		if (f_v) {
+			cout << "push " << b << endl;
+		}
+	}
+	if (f_v) {
+		cout << "number_theory_domain::cyclotomic_set done" << endl;
+	}
+}
 
 
 }

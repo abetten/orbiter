@@ -407,6 +407,8 @@ class del_pezzo_surface_of_degree_two_domain;
 class del_pezzo_surface_of_degree_two_object;
 class points_and_lines;
 class int_vec;
+class finite_field_activity_description;
+class finite_field_activity;
 
 
 #ifdef MEMORY_DEBUG

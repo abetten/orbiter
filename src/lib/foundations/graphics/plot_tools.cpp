@@ -420,6 +420,7 @@ void plot_tools::draw_mod_n(std::string &fname,
 		int f_inverse,
 		int f_additive_inverse,
 		int f_power_cycle, int power_cycle_base,
+		int f_cyclotomic_sets, int cyclotomic_sets_q, std::string &cyclotomic_sets_reps,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -466,6 +467,7 @@ void plot_tools::draw_mod_n(std::string &fname,
 				f_inverse,
 				f_additive_inverse,
 				f_power_cycle, power_cycle_base,
+				f_cyclotomic_sets, cyclotomic_sets_q, cyclotomic_sets_reps,
 				verbose_level);
 		if (f_v) {
 			cout << "plot_tools::draw_mod_n "
@@ -502,6 +504,7 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 		int f_inverse,
 		int f_additive_inverse,
 		int f_power_cycle, int power_cycle_base,
+		int f_cyclotomic_sets, int cyclotomic_sets_q, std::string &cyclotomic_sets_reps,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -686,6 +689,45 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 			a = b;
 		}
 		//FREE_OBJECT(F);
+	}
+
+	if (f_cyclotomic_sets) {
+
+
+		number_theory_domain NT;
+		int *reps;
+		int nb_reps;
+
+		Orbiter->Int_vec.scan(cyclotomic_sets_reps, reps, nb_reps);
+
+		cout << "cyclotomic sets of ";
+		Orbiter->Int_vec.print(cout, reps, nb_reps);
+		cout << " modulo " << cyclotomic_sets_q << endl;
+
+		G.sl_thickness(110);
+		for (i = 0; i < nb_reps; i++) {
+			std::vector<int> cyclotomic_set;
+			int a, b, h;
+
+			NT.cyclotomic_set(cyclotomic_set, reps[i], cyclotomic_sets_q, number, verbose_level);
+
+			G.sl_color(3 + i);
+			for (h = 0; h < cyclotomic_set.size(); h++) {
+				a = cyclotomic_set[h];
+				if (h < cyclotomic_set.size() - 1) {
+					b = cyclotomic_set[h + 1];
+				}
+				else {
+					b = cyclotomic_set[0];
+				}
+				G.polygon2(Px, Py, a, b);
+
+			}
+			G.sl_color(0);
+		}
+		G.sl_thickness(100);
+		//cyclotomic_sets_q, std::string &cyclotomic_sets_reps
+
 	}
 
 	#if 0

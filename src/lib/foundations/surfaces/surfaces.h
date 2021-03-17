@@ -780,6 +780,7 @@ public:
 			int nb_points_on_surface,
 			long int *Lines, int nb_lines,
 			set_of_sets *&pts_on_lines,
+			int *&f_is_on_line,
 			int verbose_level);
 	int compute_rank_of_any_four(
 			long int *&Rk, int &nb_subsets, long int *lines,
@@ -887,6 +888,9 @@ public:
 
 	set_of_sets *pts_on_lines;
 		// points are stored as indices into Pts[]
+	int *f_is_on_line; // [SO->nb_pts]
+
+
 	set_of_sets *lines_on_point;
 	tally *Type_pts_on_lines;
 	tally *Type_lines_on_point;
@@ -1033,6 +1037,8 @@ public:
 	void print_Steiner_and_Eckardt(std::ostream &ost);
 	void latex_table_of_trihedral_pairs(std::ostream &ost);
 	void latex_trihedral_pair(std::ostream &ost, int *T, long int *TE);
+	void compute_reduced_set_of_points_not_on_lines_wrt_P(int P_idx, int *&f_deleted, int verbose_level);
+	int test_full_del_pezzo(int P_idx, int *f_deleted, int verbose_level);
 
 };
 
@@ -1052,7 +1058,7 @@ public:
 	finite_field *F;
 	surface_domain *Surf;
 
-	long int *Pts;
+	long int *Pts; // in increasing order
 	int nb_pts;
 
 
@@ -1082,6 +1088,7 @@ public:
 		int verbose_level);
 	void print_nine_lines_latex(std::ostream &ost, long int *nine_lines,
 		int *nine_lines_idx);
+	int find_point(long int P, int &idx);
 
 
 };

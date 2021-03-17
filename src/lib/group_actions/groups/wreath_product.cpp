@@ -1597,7 +1597,7 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 				b = rank_one_tensors[i];
 				c = a ^ b;
 				if (f_vv) {
-					cout << "wreath_product::compute_tensor_ranks expanding genereator " << i << " = " << b << " maps " << a << " to " << c << endl;
+					cout << "wreath_product::compute_tensor_ranks expanding generator " << i << " = " << b << " maps " << a << " to " << c << endl;
 				}
 				if (TR[c] == -1) {
 					if (f_vv) {
@@ -1610,7 +1610,8 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 					if (sz % one_percent == 0) {
 						cout << "wreath_product::compute_tensor_ranks "
 								<< sz / one_percent << " % of tree completed, size of "
-								"queue is " << D.size() << " = " << (D.size() / (double)(degree_of_tensor_action + 1)) * 100. << " %" << endl;
+								"queue is " << D.size() << " = "
+								<< (D.size() / (double)(degree_of_tensor_action + 1)) * 100. << " %" << endl;
 					}
 				}
 				else {

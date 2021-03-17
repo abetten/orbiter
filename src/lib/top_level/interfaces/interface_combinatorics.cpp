@@ -109,6 +109,11 @@ interface_combinatorics::interface_combinatorics()
 	f_read_solutions_and_tally = FALSE;
 	//read_solutions_and_tally_fname
 	read_solutions_and_tally_sz = 0;
+
+
+	f_make_elementary_symmetric_functions = FALSE;
+	make_elementary_symmetric_functions_n = 0;
+	make_elementary_symmetric_functions_k_max = 0;
 }
 
 
@@ -195,6 +200,9 @@ void interface_combinatorics::print_help(int argc,
 	}
 	else if (stringcmp(argv[i], "-read_solutions_and_tally") == 0) {
 		cout << "-read_solutions_and_tally <string : fname> <int :read_solutions_and_tally_sz>" << endl;
+	}
+	else if (stringcmp(argv[i], "-make_elementary_symmetric_functions") == 0) {
+		cout << "-make_elementary_symmetric_functions <int : n> <int :k_max>" << endl;
 	}
 }
 
@@ -283,6 +291,9 @@ int interface_combinatorics::recognize_keyword(int argc,
 		return true;
 	}
 	else if (stringcmp(argv[i], "-read_solutions_and_tally") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-make_elementary_symmetric_functions") == 0) {
 		return true;
 	}
 	return false;
@@ -573,6 +584,14 @@ int interface_combinatorics::read_arguments(int argc,
 			cout << "-read_solutions_and_tally " << read_solutions_and_tally_fname
 					<< " " << read_solutions_and_tally_sz << endl;
 		}
+
+		else if (stringcmp(argv[i], "-make_elementary_symmetric_functions") == 0) {
+			f_make_elementary_symmetric_functions = TRUE;
+			make_elementary_symmetric_functions_n = strtoi(argv[++i]);
+			make_elementary_symmetric_functions_k_max = strtoi(argv[++i]);
+			cout << "-make_elementary_symmetric_functions " << make_elementary_symmetric_functions_n
+					<< " " << make_elementary_symmetric_functions_k_max << endl;
+		}
 		else {
 			break;
 		}
@@ -718,52 +737,13 @@ void interface_combinatorics::worker(int verbose_level)
 	else if (f_read_solutions_and_tally) {
 
 		file_io Fio;
-		int nb_solutions;
-		int solution_size = read_solutions_and_tally_sz;
-		int *Sol;
-		int i, j;
 
-		std::vector<std::vector<int> > Solutions;
+		Fio.read_solutions_and_tally(read_solutions_and_tally_fname, read_solutions_and_tally_sz, verbose_level);
 
-
-		Fio.read_solutions_from_file_size_is_known(read_solutions_and_tally_fname,
-				Solutions, solution_size,
-				verbose_level);
-
-		nb_solutions = Solutions.size();
-
-		Sol = NEW_int(nb_solutions * solution_size);
-		for (i = 0; i < nb_solutions; i++) {
-			for (j = 0; j < solution_size; j++) {
-				Sol[i * solution_size + j] = Solutions[i][j];
-			}
-		}
-
-
-		cout << "nb_solutions = " << nb_solutions << endl;
-
-		tally T;
-
-		T.init(Sol, nb_solutions * solution_size, TRUE, 0);
-		cout << "tally:" << endl;
-		T.print(TRUE);
-		cout << endl;
-
-
-		int *Pts;
-		int nb_pts;
-		int multiplicity = 4;
-
-		T.get_data_by_multiplicity(
-				Pts, nb_pts, multiplicity, verbose_level);
-
-		cout << "multiplicity " << multiplicity << " number of pts = " << nb_pts << endl;
-		Orbiter->Int_vec.print(cout, Pts, nb_pts);
-		cout << endl;
-
-
-		FREE_int(Sol);
-
+	}
+	else if (f_make_elementary_symmetric_functions) {
+		do_make_elementary_symmetric_functions(make_elementary_symmetric_functions_n,
+				make_elementary_symmetric_functions_k_max, verbose_level);
 	}
 }
 
@@ -1160,15 +1140,33 @@ void interface_combinatorics::do_bent(int n, int verbose_level)
 
 		BF = NEW_OBJECT(boolean_function_domain);
 
+		if (f_v) {
+			cout << "interface_combinatorics::do_bent before BF->init" << endl;
+		}
 		BF->init(n, verbose_level);
+		if (f_v) {
+			cout << "interface_combinatorics::do_bent after BF->init" << endl;
+		}
 
 		boolean_function_classify *BFC;
 
 		BFC = NEW_OBJECT(boolean_function_classify);
 
+		if (f_v) {
+			cout << "interface_combinatorics::do_bent before BFC->init_group" << endl;
+		}
 		BFC->init_group(BF, verbose_level);
+		if (f_v) {
+			cout << "interface_combinatorics::do_bent after BFC->init_group" << endl;
+		}
 
+		if (f_v) {
+			cout << "interface_combinatorics::do_bent before BFC->search_for_bent_functions" << endl;
+		}
 		BFC->search_for_bent_functions(verbose_level);
+		if (f_v) {
+			cout << "interface_combinatorics::do_bent after BFC->search_for_bent_functions" << endl;
+		}
 
 		FREE_OBJECT(BFC);
 		FREE_OBJECT(BF);
@@ -1784,6 +1782,12 @@ void interface_combinatorics::do_parameters_arc(int q, int s, int r, int verbose
 }
 
 
+void interface_combinatorics::do_make_elementary_symmetric_functions(int n, int k_max, int verbose_level)
+{
+	combinatorics_domain Combi;
+
+	Combi.make_elementary_symmetric_functions(n, k_max, verbose_level);
+}
 
 
 

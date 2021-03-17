@@ -51,7 +51,7 @@ int finite_field_description::read_arguments(
 		else if (stringcmp(argv[i], "-override_polynomial") == 0) {
 			f_override_polynomial = TRUE;
 			override_polynomial.assign(argv[++i]);
-			cout << "-override_polynomial" << override_polynomial << endl;
+			cout << "-override_polynomial " << override_polynomial << endl;
 		}
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;

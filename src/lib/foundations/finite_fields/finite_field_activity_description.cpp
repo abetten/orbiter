@@ -7,12 +7,14 @@
 
 
 
-#include "orbiter.h"
+#include "foundations.h"
 
 using namespace std;
 
+
+
 namespace orbiter {
-namespace top_level {
+namespace foundations {
 
 
 finite_field_activity_description::finite_field_activity_description()
@@ -24,8 +26,6 @@ finite_field_activity_description::finite_field_activity_description()
 	//std::string override_polynomial;
 
 	f_cheat_sheet_GF = FALSE;
-	f_all_rational_normal_forms = FALSE;
-	d = 0;
 
 	f_polynomial_division = FALSE;
 	//polynomial_division_A;
@@ -63,8 +63,32 @@ finite_field_activity_description::finite_field_activity_description()
 	//RREF_text = NULL;
 
 	f_weight_enumerator = FALSE;
+
+	f_Walsh_Hadamard_transform = FALSE;
+	//std::string Walsh_Hadamard_transform_fname_csv_in;
+	Walsh_Hadamard_transform_n = 0;
+
+	f_algebraic_normal_form = FALSE;
+	//std::string algebraic_normal_form_fname_csv_in;
+	algebraic_normal_form_n = 0;
+
+
+
+	f_apply_trace_function = FALSE;
+	//std::string apply_trace_function_fname_csv_in;
+
+	f_apply_power_function = FALSE;
+	//std::string apply_power_function_fname_csv_in;
+	apply_power_function_d = 0;
+
+	f_identity_function = FALSE;
+	//std::string identity_function_fname_csv_out;
+
 	f_trace = FALSE;
 	f_norm = FALSE;
+
+	f_Walsh_matrix = FALSE;
+	Walsh_matrix_n = 0;
 
 	f_make_table_of_irreducible_polynomials = FALSE;
 	make_table_of_irreducible_polynomials_degree = 0;
@@ -149,13 +173,6 @@ finite_field_activity_description::finite_field_activity_description()
 
 
 
-	f_decomposition_by_element = FALSE;
-	decomposition_by_element_n = 0;
-	decomposition_by_element_power = 1;
-	//std::string decomposition_by_element_data
-	//decomposition_by_element_fname_base
-
-
 	f_transversal = FALSE;
 	//transversal_line_1_basis = NULL;
 	//transversal_line_2_basis = NULL;
@@ -176,26 +193,6 @@ finite_field_activity_description::finite_field_activity_description()
 	//std:string line1_to_text;
 	//std:string line2_to_text;
 
-	f_study_surface = FALSE;
-	study_surface_nb = 0;
-
-	f_inverse_isomorphism_klein_quadric = FALSE;
-	// std::string inverse_isomorphism_klein_quadric_matrix_A6;
-
-	f_rank_point_in_PG = FALSE;
-	rank_point_in_PG_n = 0;
-	//rank_point_in_PG_text;
-
-	f_rank_point_in_PG_given_as_pairs = FALSE;
-	rank_point_in_PG_given_as_pairs_n = 0;
-	//std::string f_rank_point_in_PG_given_as_pairs_text;
-
-	f_eigenstuff = FALSE;
-	f_eigenstuff_from_file = FALSE;
-	eigenstuff_n = 0;
-	//eigenstuff_coeffs = NULL;
-	//eigenstuff_fname = NULL;
-
 	f_field_reduction = FALSE;
 	//field_reduction_label
 	field_reduction_q = 0;
@@ -209,7 +206,42 @@ finite_field_activity_description::finite_field_activity_description()
 	//std::string parse_text;
 
 	f_evaluate = FALSE;
-	//std::string evaluate_text;
+	//std::string evaluate_formula_label;
+	//std::string evaluate_parameters;
+
+
+	f_inverse_isomorphism_klein_quadric = FALSE;
+	// std::string inverse_isomorphism_klein_quadric_matrix_A6;
+
+	f_rank_point_in_PG = FALSE;
+	rank_point_in_PG_n = 0;
+	//rank_point_in_PG_text;
+
+	f_rank_point_in_PG_given_as_pairs = FALSE;
+	rank_point_in_PG_given_as_pairs_n = 0;
+	//std::string f_rank_point_in_PG_given_as_pairs_text;
+
+#if 0
+	f_all_rational_normal_forms = FALSE;
+	d = 0;
+	//
+	f_study_surface = FALSE;
+	study_surface_nb = 0;
+
+	f_eigenstuff = FALSE;
+	f_eigenstuff_from_file = FALSE;
+	eigenstuff_n = 0;
+	//eigenstuff_coeffs = NULL;
+	//eigenstuff_fname = NULL;
+
+	f_decomposition_by_element = FALSE;
+	decomposition_by_element_n = 0;
+	decomposition_by_element_power = 1;
+	//std::string decomposition_by_element_data
+	//decomposition_by_element_fname_base
+
+
+#endif
 
 }
 
@@ -240,11 +272,6 @@ int finite_field_activity_description::read_arguments(
 		else if (stringcmp(argv[i], "-cheat_sheet_GF") == 0) {
 			f_cheat_sheet_GF = TRUE;
 			cout << "-cheat_sheet_GF " << endl;
-		}
-		else if (stringcmp(argv[i], "-all_rational_normal_forms") == 0) {
-			f_all_rational_normal_forms = TRUE;
-			d = strtoi(argv[++i]);
-			cout << "-f_all_rational_normal_forms " << d << endl;
 		}
 		else if (stringcmp(argv[i], "-polynomial_division") == 0) {
 			f_polynomial_division = TRUE;
@@ -317,6 +344,51 @@ int finite_field_activity_description::read_arguments(
 			cout << "-weight_enumerator " << RREF_m << " " << RREF_n
 					<< " " << RREF_text << endl;
 		}
+
+		else if (stringcmp(argv[i], "-Walsh_Hadamard_transform") == 0) {
+			f_Walsh_Hadamard_transform = TRUE;
+			Walsh_Hadamard_transform_fname_csv_in.assign(argv[++i]);
+			Walsh_Hadamard_transform_n = strtoi(argv[++i]);
+			cout << "-Walsh_Hadamard_transform "
+					<< Walsh_Hadamard_transform_fname_csv_in
+					<< " " << Walsh_Hadamard_transform_n << endl;
+		}
+
+		else if (stringcmp(argv[i], "-algebraic_normal_form") == 0) {
+			f_algebraic_normal_form = TRUE;
+			algebraic_normal_form_fname_csv_in.assign(argv[++i]);
+			algebraic_normal_form_n = strtoi(argv[++i]);
+			cout << "-algebraic_normal_form "
+					<< algebraic_normal_form_fname_csv_in
+					<< " " << algebraic_normal_form_n << endl;
+		}
+
+		else if (stringcmp(argv[i], "-apply_trace_function") == 0) {
+			f_apply_trace_function = TRUE;
+			apply_trace_function_fname_csv_in.assign(argv[++i]);
+			cout << "-apply_trace_function "
+					<< apply_trace_function_fname_csv_in
+					<< endl;
+		}
+
+		else if (stringcmp(argv[i], "-apply_power_function") == 0) {
+			f_apply_power_function = TRUE;
+			apply_power_function_fname_csv_in.assign(argv[++i]);
+			apply_power_function_d = strtoi(argv[++i]);
+			cout << "-apply_power_function "
+					<< apply_power_function_fname_csv_in
+					<< " " << apply_power_function_d
+					<< endl;
+		}
+
+		else if (stringcmp(argv[i], "-identity_function") == 0) {
+			f_identity_function = TRUE;
+			identity_function_fname_csv_out.assign(argv[++i]);
+			cout << "-identity_function "
+					<< identity_function_fname_csv_out
+					<< endl;
+		}
+
 		else if (stringcmp(argv[i], "-trace") == 0) {
 			f_trace = TRUE;
 			cout << "-trace " << endl;
@@ -325,6 +397,13 @@ int finite_field_activity_description::read_arguments(
 			f_norm = TRUE;
 			cout << "-norm " << endl;
 		}
+
+		else if (stringcmp(argv[i], "-Walsh_matrix") == 0) {
+			f_Walsh_matrix = TRUE;
+			Walsh_matrix_n = strtoi(argv[++i]);
+			cout << "-Walsh_matrix " << Walsh_matrix_n << endl;
+		}
+
 		else if (stringcmp(argv[i], "-make_table_of_irreducible_polynomials") == 0) {
 			f_make_table_of_irreducible_polynomials = TRUE;
 			make_table_of_irreducible_polynomials_degree = strtoi(argv[++i]);
@@ -530,17 +609,6 @@ int finite_field_activity_description::read_arguments(
 
 
 
-		else if (stringcmp(argv[i], "-decomposition_by_element") == 0) {
-			f_decomposition_by_element = TRUE;
-			decomposition_by_element_n = strtoi(argv[++i]);
-			decomposition_by_element_power = strtoi(argv[++i]);
-			decomposition_by_element_data.assign(argv[++i]);
-			decomposition_by_element_fname_base.assign(argv[++i]);
-			cout << "-decomposition_by_element " <<  decomposition_by_element_power
-					<< " " << decomposition_by_element_data
-					<< " " << decomposition_by_element_fname_base << endl;
-		}
-
 
 
 
@@ -589,11 +657,6 @@ int finite_field_activity_description::read_arguments(
 					<< " " << line2_to_text
 					<< endl;
 		}
-		else if (stringcmp(argv[i], "-study_surface") == 0) {
-			f_study_surface = TRUE;
-			study_surface_nb = strtoi(argv[++i]);
-			cout << "-study_surface" << study_surface_nb << endl;
-		}
 		else if (stringcmp(argv[i], "-inverse_isomorphism_klein_quadric") == 0) {
 			f_inverse_isomorphism_klein_quadric = TRUE;
 			inverse_isomorphism_klein_quadric_matrix_A6.assign(argv[++i]);
@@ -611,20 +674,6 @@ int finite_field_activity_description::read_arguments(
 			rank_point_in_PG_given_as_pairs_n = strtoi(argv[++i]);
 			rank_point_in_PG_given_as_pairs_text.assign(argv[++i]);
 			cout << "-rank_point_in_PG " << rank_point_in_PG_given_as_pairs_n << " " << rank_point_in_PG_given_as_pairs_text << endl;
-		}
-		else if (stringcmp(argv[i], "-eigenstuff") == 0) {
-			f_eigenstuff = TRUE;
-			eigenstuff_n = strtoi(argv[++i]);
-			eigenstuff_coeffs.assign(argv[++i]);
-			cout << "-eigenstuff " << eigenstuff_n
-					<< " " << eigenstuff_coeffs << endl;
-		}
-		else if (stringcmp(argv[i], "-eigenstuff_matrix_from_file") == 0) {
-			f_eigenstuff_from_file = TRUE;
-			eigenstuff_n = strtoi(argv[++i]);
-			eigenstuff_fname.assign(argv[++i]);
-			cout << "-eigenstuff_from_file " << eigenstuff_n
-					<< " " << eigenstuff_fname << endl;
 		}
 		else if (stringcmp(argv[i], "-field_reduction") == 0) {
 			f_field_reduction = TRUE;
@@ -649,10 +698,50 @@ int finite_field_activity_description::read_arguments(
 		}
 		else if (stringcmp(argv[i], "-evaluate") == 0) {
 			f_evaluate = TRUE;
-			evaluate_text.assign(argv[++i]);
-			cout << "-evaluate " << evaluate_text << endl;
+			evaluate_formula_label.assign(argv[++i]);
+			evaluate_parameters.assign(argv[++i]);
+			cout << "-evaluate " << evaluate_formula_label
+					<< " " << evaluate_parameters
+					<< endl;
 		}
 
+#if 0
+		else if (stringcmp(argv[i], "-study_surface") == 0) {
+			f_study_surface = TRUE;
+			study_surface_nb = strtoi(argv[++i]);
+			cout << "-study_surface" << study_surface_nb << endl;
+		}
+		else if (stringcmp(argv[i], "-eigenstuff") == 0) {
+			f_eigenstuff = TRUE;
+			eigenstuff_n = strtoi(argv[++i]);
+			eigenstuff_coeffs.assign(argv[++i]);
+			cout << "-eigenstuff " << eigenstuff_n
+					<< " " << eigenstuff_coeffs << endl;
+		}
+		else if (stringcmp(argv[i], "-eigenstuff_matrix_from_file") == 0) {
+			f_eigenstuff_from_file = TRUE;
+			eigenstuff_n = strtoi(argv[++i]);
+			eigenstuff_fname.assign(argv[++i]);
+			cout << "-eigenstuff_from_file " << eigenstuff_n
+					<< " " << eigenstuff_fname << endl;
+		}
+		else if (stringcmp(argv[i], "-all_rational_normal_forms") == 0) {
+			f_all_rational_normal_forms = TRUE;
+			d = strtoi(argv[++i]);
+			cout << "-f_all_rational_normal_forms " << d << endl;
+		}
+		else if (stringcmp(argv[i], "-decomposition_by_element") == 0) {
+			f_decomposition_by_element = TRUE;
+			decomposition_by_element_n = strtoi(argv[++i]);
+			decomposition_by_element_power = strtoi(argv[++i]);
+			decomposition_by_element_data.assign(argv[++i]);
+			decomposition_by_element_fname_base.assign(argv[++i]);
+			cout << "-decomposition_by_element " <<  decomposition_by_element_power
+					<< " " << decomposition_by_element_data
+					<< " " << decomposition_by_element_fname_base << endl;
+		}
+
+#endif
 
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;

@@ -57,7 +57,7 @@ void finite_field::null()
 
 finite_field::~finite_field()
 {
-	print_call_stats(cout);
+	//print_call_stats(cout);
 	//cout << "destroying tables" << endl;
 	//cout << "destroying add_table" << endl;
 	if (add_table) {
@@ -134,6 +134,9 @@ void finite_field::init(finite_field_description *Descr, int verbose_level)
 		exit(1);
 	}
 	if (Descr->f_override_polynomial) {
+		if (f_v) {
+			cout << "finite_field::init override_polynomial=" << Descr->override_polynomial << endl;
+		}
 		init_override_polynomial(Descr->q,
 				Descr->override_polynomial, verbose_level);
 	}
@@ -164,12 +167,24 @@ void finite_field::finite_field_init(int q, int verbose_level)
 		algebra_global Algebra;
 
 		poly.assign(Algebra.get_primitive_polynomial(p, e, verbose_level));
+		if (f_v) {
+			cout << "finite_field::init q=" << q << " before init_override_polynomial poly = " << poly << endl;
+		}
 		init_override_polynomial(q, poly, verbose_level);
+		if (f_v) {
+			cout << "finite_field::init q=" << q << " after init_override_polynomial" << endl;
+		}
 	}
 	else {
 		f_is_prime_field = TRUE;
 		poly.assign("");
+		if (f_v) {
+			cout << "finite_field::init q=" << q << " before init_override_polynomial poly = " << poly << endl;
+		}
 		init_override_polynomial(q, poly, verbose_level);
+		if (f_v) {
+			cout << "finite_field::init q=" << q << " after init_override_polynomial" << endl;
+		}
 	}
 	if (f_v) {
 		cout << "finite_field::init done" << endl;
@@ -212,7 +227,7 @@ void finite_field::init_override_polynomial(int q,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int i, l;
+	int l;
 	number_theory_domain NT;
 	string my_poly;
 
@@ -275,73 +290,56 @@ void finite_field::init_override_polynomial(int q,
 	v2 = NEW_int(e);
 	v3 = NEW_int(e);
 	
-	create_alpha_table(verbose_level - 1);
-	if (f_vv) {
-		cout << "finite_field::init_override_polynomial "
-				"alpha table created" << endl;
+	if (f_v) {
+		cout << "finite_field::init_override_polynomial before create_alpha_table" << endl;
+	}
+	create_alpha_table(verbose_level);
+	if (f_v) {
+		cout << "finite_field::init_override_polynomial after create_alpha_table" << endl;
 	}
 
 
-	if (q <= CREATE_TABLE_UPPER_BOUND) {
-		if (f_vv) {
-			cout << "finite_field::init_override_polynomial "
-					"creating tables q=" << q << endl;
-		}
-		add_table = NEW_int(q * q);
-		mult_table = NEW_int(q * q);
-		negate_table = NEW_int(q);
-		inv_table = NEW_int(q);
-		reordered_list_of_elements = NEW_int(q);
-		reordered_list_of_elements_inv = NEW_int(q);
-		if (e == 1) {
-			create_tables_prime_field(verbose_level - 1);
-		}
-		else {
-			create_tables_extension_field(verbose_level - 1);
-		}
-		if (FALSE) {
-			print_add_mult_tables();
-		}
 
-		f_has_table = TRUE;
+
+	if (f_v) {
+		cout << "finite_field::init_override_polynomial before init_binary_operations" << endl;
 	}
-	else {
-		if (f_v) {
-			cout << "finite_field::init_override_polynomial "
-					"field size is big, we don't create tables" << endl;
-		}
-		f_has_table = FALSE;
+	init_binary_operations(0 /*verbose_level */);
+	if (f_v) {
+		cout << "finite_field::init_override_polynomial after init_binary_operations" << endl;
 	}
+
 	
-	if (f_vv) {
+
+
+	if (f_v) {
 		cout << "finite_field::init_override_polynomial "
 				"before init_quadratic_subfield" << endl;
 	}
-	init_quadratic_subfield(verbose_level);
-	if (f_vv) {
+	init_quadratic_subfield(verbose_level - 2);
+	if (f_v) {
 		cout << "finite_field::init_override_polynomial "
 				"after init_quadratic_subfield" << endl;
 	}
 
-	
-	if (f_vv) {
+	if (f_v) {
 		cout << "finite_field::init_override_polynomial "
-				"computing frobenius_table and "
-				"absolute_trace_table q=" << q << endl;
+				"before init_frobenius_table" << endl;
 	}
-	frobenius_table = NEW_int(q);
-	absolute_trace_table = NEW_int(q);
-	
-	for (i = 0; i < q; i++) {
-		frobenius_table[i] = power_verbose(i, p, 0 /* verbose_level */);
-		if (TRUE) {
-			cout << "finite_field::init_override_polynomial frobenius_table[" << i << "]="
-					<< frobenius_table[i] << endl;
-		}
+	init_frobenius_table(verbose_level);
+	if (f_v) {
+		cout << "finite_field::init_override_polynomial "
+				"after init_frobenius_table" << endl;
 	}
 	
-	for (i = 0; i < q; i++) {
-		absolute_trace_table[i] = absolute_trace(i);
+	if (f_v) {
+		cout << "finite_field::init_override_polynomial "
+				"before init_absolute_trace_table" << endl;
+	}
+	init_absolute_trace_table(verbose_level);
+	if (f_v) {
+		cout << "finite_field::init_override_polynomial "
+				"after init_absolute_trace_table" << endl;
 	}
 
 	
@@ -364,6 +362,107 @@ void finite_field::init_override_polynomial(int q,
 				"finished" << endl;
 	}
 }
+
+void finite_field::init_binary_operations(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::init_binary_operations" << endl;
+	}
+
+	if (q <= CREATE_TABLE_UPPER_BOUND) {
+		if (f_v) {
+			cout << "finite_field::init_binary_operations "
+					"creating tables q=" << q << endl;
+		}
+		add_table = NEW_int(q * q);
+		mult_table = NEW_int(q * q);
+		negate_table = NEW_int(q);
+		inv_table = NEW_int(q);
+		reordered_list_of_elements = NEW_int(q);
+		reordered_list_of_elements_inv = NEW_int(q);
+		if (e == 1) {
+			if (f_v) {
+				cout << "finite_field::init_binary_operations before create_tables_prime_field" << endl;
+			}
+			create_tables_prime_field(verbose_level - 2);
+			if (f_v) {
+				cout << "finite_field::init_binary_operations after create_tables_prime_field" << endl;
+			}
+		}
+		else {
+			if (f_v) {
+				cout << "finite_field::init_binary_operations before create_tables_extension_field" << endl;
+			}
+			create_tables_extension_field(verbose_level - 2);
+			if (f_v) {
+				cout << "finite_field::init_binary_operations after create_tables_extension_field" << endl;
+			}
+		}
+		if (FALSE) {
+			print_add_mult_tables();
+		}
+
+		f_has_table = TRUE;
+	}
+	else {
+		if (f_v) {
+			cout << "finite_field::init_binary_operations "
+					"field size is big, we don't create tables" << endl;
+		}
+		f_has_table = FALSE;
+	}
+
+	if (f_v) {
+		cout << "finite_field::init_binary_operations done" << endl;
+	}
+}
+
+void finite_field::init_frobenius_table(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "finite_field::init_frobenius_table" << endl;
+	}
+
+	frobenius_table = NEW_int(q);
+
+	for (i = 0; i < q; i++) {
+		frobenius_table[i] = power_verbose(i, p, 0 /* verbose_level */);
+		if (f_v) {
+			cout << "finite_field::init_frobenius_table frobenius_table[" << i << "]="
+					<< frobenius_table[i] << endl;
+		}
+	}
+
+	if (f_v) {
+		cout << "finite_field::init_frobenius_table done" << endl;
+	}
+}
+
+void finite_field::init_absolute_trace_table(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "finite_field::init_absolute_trace_table" << endl;
+	}
+
+
+	absolute_trace_table = NEW_int(q);
+	for (i = 0; i < q; i++) {
+		absolute_trace_table[i] = absolute_trace(i);
+	}
+
+	if (f_v) {
+		cout << "finite_field::init_absolute_trace_table done" << endl;
+	}
+}
+
 
 int finite_field::has_quadratic_subfield()
 {
@@ -642,34 +741,70 @@ void finite_field::create_alpha_table(int verbose_level)
 	alpha_power_table = NEW_int(q);
 
 	if (f_v) {
-		cout << "creating alpha table, q=" << q
+		cout << "finite_field::create_alpha_table q=" << q
 				<< " p=" << p << " e=" << e << endl;
 	}
 	if (f_is_prime_field) {
-		create_alpha_table_prime_field(verbose_level - 5);
+		if (f_v) {
+			cout << "finite_field::create_alpha_table before create_alpha_table_prime_field" << endl;
+		}
+		create_alpha_table_prime_field(verbose_level);
+		if (f_v) {
+			cout << "finite_field::create_alpha_table after create_alpha_table_prime_field" << endl;
+		}
 	}
 	else {
-		create_alpha_table_extension_field(verbose_level - 5);
+		if (f_v) {
+			cout << "finite_field::create_alpha_table before create_alpha_table_extension_field" << endl;
+		}
+		create_alpha_table_extension_field(verbose_level);
+		if (f_v) {
+			cout << "finite_field::create_alpha_table after create_alpha_table_extension_field" << endl;
+		}
 	}
 	if (f_v) {
-		cout << "alpha table created" << endl;
+		cout << "finite_field::create_alpha_table done" << endl;
 	}
 }
 
-void finite_field::create_alpha_table_extension_field(int verbose_level)
+int finite_field::find_primitive_element(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, ord;
+
+	if (f_v) {
+		cout << "finite_field::find_primitive_element" << endl;
+	}
+	for (i = 2; i < q; i++) {
+		ord = compute_order_of_element(i, 0 /*verbose_level - 3*/);
+		if (f_v) {
+			cout << "finite_field::find_primitive_element the order of " << i << " is " << ord << endl;
+		}
+		if (ord == q - 1) {
+			break;
+		}
+	}
+	if (i == q) {
+		cout << "finite_field::find_primitive_element could not find a primitive element" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "finite_field::find_primitive_element done" << endl;
+	}
+	return i;
+}
+
+
+int finite_field::compute_order_of_element(int elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, k;
-	
+
 	if (f_v) {
-		cout << "finite_field::create_alpha_table_extension_field "
-				"q=" << q << " p=" << p << " e=" << e << endl;
+		cout << "finite_field::compute_order_of_element "
+				"q=" << q << " p=" << p << " e=" << e << " elt=" << elt << endl;
 	}
-
-	alpha = p;
-	log_alpha_table[0] = -1;
-
 
 
 	finite_field GFp;
@@ -688,9 +823,91 @@ void finite_field::create_alpha_table_extension_field(int verbose_level)
 		unipoly_domain Fq(&GFp, m, verbose_level - 1);
 		unipoly_object a, c, Alpha;
 
-		Fq.create_object_by_rank(Alpha, alpha, __FILE__, __LINE__, verbose_level);
-		Fq.create_object_by_rank(a, 1, __FILE__, __LINE__, verbose_level);
+		Fq.create_object_by_rank(Alpha, elt, __FILE__, __LINE__, verbose_level);
+		Fq.create_object_by_rank(a, elt, __FILE__, __LINE__, verbose_level);
 		Fq.create_object_by_rank(c, 1, __FILE__, __LINE__, verbose_level);
+
+		for (i = 1; i < q; i++) {
+
+			if (f_vv) {
+				cout << "i=" << i << endl;
+			}
+			k = Fq.rank(a);
+			if (f_vv) {
+				cout << "a=";
+				Fq.print_object(a, cout);
+				cout << " has rank " << k << endl;
+			}
+			if (k < 0 || k >= q) {
+				cout << "finite_field::compute_order_of_element error: k = " << k << endl;
+			}
+			if (k == 1) {
+				break;
+			}
+
+			Fq.mult(a, Alpha, c, verbose_level - 1);
+			Fq.assign(c, a, verbose_level - 2);
+		}
+		Fq.delete_object(Alpha);
+		Fq.delete_object(a);
+		Fq.delete_object(c);
+	}
+	FX.delete_object(m);
+
+	if (f_v) {
+		cout << "finite_field::compute_order_of_element done "
+				"q=" << q << " p=" << p << " e=" << e << " order of " << elt << " is " << i << endl;
+	}
+	return i;
+}
+
+
+void finite_field::create_alpha_table_extension_field(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, k;
+	
+	if (f_v) {
+		cout << "finite_field::create_alpha_table_extension_field "
+				"q=" << q << " p=" << p << " e=" << e << endl;
+	}
+
+
+	if (f_v) {
+		cout << "finite_field::create_alpha_table_extension_field before find_primitive_element" << endl;
+	}
+	alpha = find_primitive_element(verbose_level);
+	if (f_v) {
+		cout << "finite_field::create_alpha_table_extension_field after find_primitive_element" << endl;
+	}
+	if (f_v) {
+		cout << "finite_field::create_alpha_table_extension_field alpha = " << alpha << endl;
+	}
+	//alpha = p;
+	log_alpha_table[0] = -1;
+
+
+
+	finite_field GFp;
+	GFp.finite_field_init(p, 0);
+
+	unipoly_domain FX(&GFp);
+	unipoly_object m;
+
+	FX.create_object_by_rank_string(m, polynomial, 0 /*verbose_level - 2*/);
+	if (f_vv) {
+		cout << "m=";
+		FX.print_object(m, cout);
+		cout << endl;
+	}
+	{
+		unipoly_domain Fq(&GFp, m, verbose_level - 1);
+		unipoly_object a, c, Alpha;
+
+		Fq.create_object_by_rank(Alpha, alpha, __FILE__, __LINE__, 0 /*verbose_level - 2*/);
+		Fq.create_object_by_rank(a, 1, __FILE__, __LINE__, 0 /*verbose_level - 2*/);
+		Fq.create_object_by_rank(c, 1, __FILE__, __LINE__, 0 /*verbose_level - 2*/);
 
 		for (i = 0; i < q; i++) {
 

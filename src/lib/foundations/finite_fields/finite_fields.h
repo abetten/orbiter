@@ -12,6 +12,292 @@ namespace orbiter {
 namespace foundations {
 
 
+
+// #############################################################################
+// finite_field_activity_description.cpp
+// #############################################################################
+
+
+//! description of a finite field activity
+
+class finite_field_activity_description {
+public:
+
+	int f_q;
+	int q;
+
+	int f_override_polynomial;
+	std::string override_polynomial;
+
+	int f_cheat_sheet_GF;
+
+	int f_polynomial_division;
+	std::string polynomial_division_A;
+	std::string polynomial_division_B;
+
+	int f_extended_gcd_for_polynomials;
+
+	int f_polynomial_mult_mod;
+	std::string polynomial_mult_mod_A;
+	std::string polynomial_mult_mod_B;
+	std::string polynomial_mult_mod_M;
+
+	int f_Berlekamp_matrix;
+	std::string Berlekamp_matrix_coeffs;
+
+	int f_normal_basis;
+	int normal_basis_d;
+
+	int f_polynomial_find_roots;
+	std::string polynomial_find_roots_A;
+
+
+	int f_normalize_from_the_right;
+	int f_normalize_from_the_left;
+
+	int f_nullspace;
+	int nullspace_m;
+	int nullspace_n;
+	std::string nullspace_text;
+
+	int f_RREF;
+	int RREF_m;
+	int RREF_n;
+	std::string RREF_text;
+
+	int f_weight_enumerator;
+
+	int f_Walsh_Hadamard_transform;
+	std::string Walsh_Hadamard_transform_fname_csv_in;
+	int Walsh_Hadamard_transform_n;
+
+	int f_algebraic_normal_form;
+	std::string algebraic_normal_form_fname_csv_in;
+	int algebraic_normal_form_n;
+
+
+	int f_apply_trace_function;
+	std::string apply_trace_function_fname_csv_in;
+
+	int f_apply_power_function;
+	std::string apply_power_function_fname_csv_in;
+	long int apply_power_function_d;
+
+	int f_identity_function;
+	std::string identity_function_fname_csv_out;
+
+	int f_trace;
+
+	int f_norm;
+
+	int f_Walsh_matrix;
+	int Walsh_matrix_n;
+
+	int f_make_table_of_irreducible_polynomials;
+	int make_table_of_irreducible_polynomials_degree;
+
+	int f_EC_Koblitz_encoding;
+	std::string EC_message;
+	int EC_s;
+	int f_EC_points;
+	int f_EC_add;
+	std::string EC_pt1_text;
+	std::string EC_pt2_text;
+
+	int f_EC_cyclic_subgroup;
+	int EC_b;
+	int EC_c;
+	std::string EC_pt_text;
+
+	int f_EC_multiple_of;
+	int EC_multiple_of_n;
+	int f_EC_discrete_log;
+	std::string EC_discrete_log_pt_text;
+
+	int f_EC_baby_step_giant_step;
+	std::string EC_bsgs_G;
+	int EC_bsgs_N;
+	std::string EC_bsgs_cipher_text;
+
+	int f_EC_baby_step_giant_step_decode;
+	std::string EC_bsgs_A;
+	std::string EC_bsgs_keys;
+
+
+
+
+	int f_NTRU_encrypt;
+	int NTRU_encrypt_N;
+	int NTRU_encrypt_p;
+	std::string NTRU_encrypt_H;
+	std::string NTRU_encrypt_R;
+	std::string NTRU_encrypt_Msg;
+
+	int f_polynomial_center_lift;
+	std::string polynomial_center_lift_A;
+
+	int f_polynomial_reduce_mod_p;
+	std::string polynomial_reduce_mod_p_A;
+
+	int f_cheat_sheet_PG;
+	int cheat_sheet_PG_n;
+
+	int f_cheat_sheet_Gr;
+	int cheat_sheet_Gr_n;
+	int cheat_sheet_Gr_k;
+
+	int f_cheat_sheet_hermitian;
+	int cheat_sheet_hermitian_projective_dimension;
+
+	int f_cheat_sheet_desarguesian_spread;
+	int cheat_sheet_desarguesian_spread_m;
+
+	int f_find_CRC_polynomials;
+	int find_CRC_polynomials_nb_errors;
+	int find_CRC_polynomials_information_bits;
+	int find_CRC_polynomials_check_bits;
+
+	int f_sift_polynomials;
+	long int sift_polynomials_r0;
+	long int sift_polynomials_r1;
+
+	int f_mult_polynomials;
+	long int mult_polynomials_r0;
+	long int mult_polynomials_r1;
+
+	int f_polynomial_division_ranked;
+	long int polynomial_division_r0;
+	long int polynomial_division_r1;
+
+	int f_polynomial_division_from_file;
+	std::string polynomial_division_from_file_fname;
+	long int polynomial_division_from_file_r1;
+
+	int f_polynomial_division_from_file_all_k_bit_error_patterns;
+	std::string polynomial_division_from_file_all_k_bit_error_patterns_fname;
+	int polynomial_division_from_file_all_k_bit_error_patterns_r1;
+	int polynomial_division_from_file_all_k_bit_error_patterns_k;
+
+	int f_RREF_random_matrix;
+	int RREF_random_matrix_m;
+	int RREF_random_matrix_n;
+
+
+
+	int f_transversal;
+	std::string transversal_line_1_basis;
+	std::string transversal_line_2_basis;
+	std::string transversal_point;
+
+	int f_intersection_of_two_lines;
+	std::string line_1_basis;
+	std::string line_2_basis;
+
+	int f_move_two_lines_in_hyperplane_stabilizer;
+	long int line1_from;
+	long int line2_from;
+	long int line1_to;
+	long int line2_to;
+
+	int f_move_two_lines_in_hyperplane_stabilizer_text;
+	std::string line1_from_text;
+	std::string line2_from_text;
+	std::string line1_to_text;
+	std::string line2_to_text;
+
+	int f_inverse_isomorphism_klein_quadric;
+	std::string inverse_isomorphism_klein_quadric_matrix_A6;
+
+	int f_rank_point_in_PG;
+	int rank_point_in_PG_n;
+	std::string rank_point_in_PG_text;
+
+	int f_rank_point_in_PG_given_as_pairs;
+	int rank_point_in_PG_given_as_pairs_n;
+	std::string rank_point_in_PG_given_as_pairs_text;
+
+
+	int f_field_reduction;
+	std::string field_reduction_label;
+	int field_reduction_q;
+	int field_reduction_m;
+	int field_reduction_n;
+	std::string field_reduction_text;
+
+
+
+	int f_parse;
+	std::string parse_name_of_formula;
+	std::string parse_managed_variables;
+	std::string parse_text;
+
+	int f_evaluate;
+	std::string evaluate_formula_label;
+	std::string evaluate_parameters;
+
+#if 0
+	int f_all_rational_normal_forms;
+	int d;
+	int f_study_surface;
+	int study_surface_nb;
+
+	int f_eigenstuff;
+	int f_eigenstuff_from_file;
+	int eigenstuff_n;
+	std::string eigenstuff_coeffs;
+	std::string eigenstuff_fname;
+
+	int f_decomposition_by_element;
+	int decomposition_by_element_n;
+	int decomposition_by_element_power;
+	std::string decomposition_by_element_data;
+	std::string decomposition_by_element_fname_base;
+#endif
+
+	finite_field_activity_description();
+	~finite_field_activity_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+
+};
+
+
+
+// #############################################################################
+// finite_field_activity.cpp
+// #############################################################################
+
+
+//! perform a finite field activity
+
+class finite_field_activity {
+public:
+	finite_field_activity_description *Descr;
+	finite_field *F;
+	finite_field *F_secondary;
+
+	finite_field_activity();
+	~finite_field_activity();
+	void init(finite_field_activity_description *Descr,
+			int verbose_level);
+	void perform_activity(int verbose_level);
+	void evaluate(
+			finite_field *Fq,
+			std::string &formula_label,
+			std::string &parameters,
+			int verbose_level);
+	int evaluate_formula(
+			formula *F,
+			finite_field *Fq,
+			std::string &evaluate_text,
+			int verbose_level);
+
+
+};
+
+
+
 // #############################################################################
 // finite_field_description.cpp
 // #############################################################################
@@ -97,6 +383,9 @@ public:
 	void init_symbol_for_print(const char *symbol);
 	void init_override_polynomial(int q, std::string &poly,
 		int verbose_level);
+	void init_binary_operations(int verbose_level);
+	void init_frobenius_table(int verbose_level);
+	void init_absolute_trace_table(int verbose_level);
 	int has_quadratic_subfield();
 	int belongs_to_quadratic_subfield(int a);
 	void init_quadratic_subfield(int verbose_level);
@@ -105,6 +394,8 @@ public:
 			int verbose_level);
 	void compute_subfields(int verbose_level);
 	void create_alpha_table(int verbose_level);
+	int find_primitive_element(int verbose_level);
+	int compute_order_of_element(int elt, int verbose_level);
 	void create_alpha_table_extension_field(int verbose_level);
 	void create_alpha_table_prime_field(int verbose_level);
 	void create_tables_prime_field(int verbose_level);

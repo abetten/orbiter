@@ -9,12 +9,15 @@
 
 
 
-#include "orbiter.h"
+#include "foundations.h"
 
 using namespace std;
 
+
+
 namespace orbiter {
-namespace top_level {
+namespace foundations {
+
 
 
 finite_field_activity::finite_field_activity()
@@ -68,15 +71,6 @@ void finite_field_activity::perform_activity(int verbose_level)
 		algebra_global Algebra;
 
 		Algebra.do_cheat_sheet_GF(F, verbose_level);
-	}
-	else if (Descr->f_all_rational_normal_forms) {
-
-		algebra_global_with_action Algebra;
-
-		Algebra.classes_GL(F, Descr->d,
-				FALSE /* f_no_eigenvalue_one */, verbose_level);
-
-
 	}
 	else if (Descr->f_polynomial_division) {
 		algebra_global Algebra;
@@ -157,6 +151,52 @@ void finite_field_activity::perform_activity(int verbose_level)
 				Descr->f_normalize_from_the_right,
 				verbose_level);
 	}
+
+	else if (Descr->f_Walsh_Hadamard_transform) {
+
+		algebra_global Algebra;
+
+		Algebra.apply_Walsh_Hadamard_transform(F,
+				Descr->Walsh_Hadamard_transform_fname_csv_in,
+				Descr->Walsh_Hadamard_transform_n, verbose_level);
+	}
+
+
+	else if (Descr->f_algebraic_normal_form) {
+
+		algebra_global Algebra;
+
+		Algebra.algebraic_normal_form(F,
+				Descr->algebraic_normal_form_fname_csv_in,
+				Descr->algebraic_normal_form_n, verbose_level);
+	}
+
+
+	else if (Descr->f_apply_trace_function) {
+
+		algebra_global Algebra;
+
+		Algebra.apply_trace_function(F,
+				Descr->apply_trace_function_fname_csv_in, verbose_level);
+	}
+
+	else if (Descr->f_apply_power_function) {
+
+		algebra_global Algebra;
+
+		Algebra.apply_power_function(F,
+				Descr->apply_power_function_fname_csv_in, Descr->apply_power_function_d, verbose_level);
+	}
+
+	else if (Descr->f_identity_function) {
+
+		algebra_global Algebra;
+
+		Algebra.identity_function(F,
+				Descr->identity_function_fname_csv_out, verbose_level);
+	}
+
+
 	else if (Descr->f_trace) {
 
 		algebra_global Algebra;
@@ -169,6 +209,16 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 		Algebra.do_norm(F, verbose_level);
 	}
+	else if (Descr->f_Walsh_matrix) {
+
+		geometry_global GG;
+		int *W = NULL;
+
+		GG.Walsh_matrix(F, Descr->Walsh_matrix_n, W, verbose_level);
+		FREE_int(W);
+	}
+
+
 
 	else if (Descr->f_make_table_of_irreducible_polynomials) {
 
@@ -391,17 +441,6 @@ void finite_field_activity::perform_activity(int verbose_level)
 		FREE_int(A);
 	}
 
-	else if (Descr->f_decomposition_by_element) {
-
-		algebra_global_with_action Algebra;
-
-		Algebra.do_cheat_sheet_for_decomposition_by_element_PG(F,
-				Descr->decomposition_by_element_n,
-				Descr->decomposition_by_element_power,
-				Descr->decomposition_by_element_data,
-				Descr->decomposition_by_element_fname_base,
-				verbose_level);
-	}
 	else if (Descr->f_transversal) {
 
 		geometry_global GG;
@@ -446,14 +485,6 @@ void finite_field_activity::perform_activity(int verbose_level)
 				Descr->line1_to_text, Descr->line2_to_text,
 				verbose_level);
 	}
-	else if (Descr->f_study_surface) {
-
-		algebra_global_with_action Algebra;
-
-		Algebra.do_study_surface(F,
-				Descr->study_surface_nb,
-				verbose_level);
-	}
 	else if (Descr->f_inverse_isomorphism_klein_quadric) {
 
 		geometry_global GG;
@@ -478,26 +509,6 @@ void finite_field_activity::perform_activity(int verbose_level)
 		GG.do_rank_point_in_PG_given_as_pairs(F,
 				Descr->rank_point_in_PG_given_as_pairs_n,
 				Descr->rank_point_in_PG_given_as_pairs_text,
-				verbose_level);
-	}
-	else if (Descr->f_eigenstuff) {
-
-		algebra_global_with_action Algebra;
-
-		Algebra.do_eigenstuff_with_coefficients(
-				F,
-				Descr->eigenstuff_n,
-				Descr->eigenstuff_coeffs,
-				verbose_level);
-	}
-	else if (Descr->f_eigenstuff_from_file) {
-
-		algebra_global_with_action Algebra;
-
-		Algebra.do_eigenstuff_from_file(
-				F,
-				Descr->eigenstuff_n,
-				Descr->eigenstuff_fname,
 				verbose_level);
 	}
 	else if (Descr->f_field_reduction) {
@@ -614,7 +625,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 				cout << "before evaluate" << endl;
 
-				const char *p = Descr->evaluate_text.c_str();
+				const char *p = Descr->evaluate_parameters.c_str();
 				//char str[1000];
 
 				std::map<std::string, std::string> symbol_table;
@@ -700,7 +711,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 				cout << "before evaluate" << endl;
 
-				const char *p = Descr->evaluate_text.c_str();
+				const char *p = Descr->evaluate_parameters.c_str();
 				//char str[1000];
 
 				std::map<std::string, std::string> symbol_table;
@@ -755,6 +766,68 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 
 	}
+	else if (Descr->f_evaluate) {
+
+		cout << "before evaluate" << endl;
+
+		evaluate(F,
+				Descr->evaluate_formula_label,
+				Descr->evaluate_parameters, verbose_level);
+
+	}
+
+#if 0
+	else if (Descr->f_all_rational_normal_forms) {
+
+		algebra_global_with_action Algebra;
+
+		Algebra.classes_GL(F, Descr->d,
+				FALSE /* f_no_eigenvalue_one */, verbose_level);
+
+
+	}
+	else if (Descr->f_study_surface) {
+
+		algebra_global_with_action Algebra;
+
+		Algebra.do_study_surface(F,
+				Descr->study_surface_nb,
+				verbose_level);
+	}
+	else if (Descr->f_eigenstuff) {
+
+		algebra_global_with_action Algebra;
+
+		Algebra.do_eigenstuff_with_coefficients(
+				F,
+				Descr->eigenstuff_n,
+				Descr->eigenstuff_coeffs,
+				verbose_level);
+	}
+	else if (Descr->f_eigenstuff_from_file) {
+
+		algebra_global_with_action Algebra;
+
+		Algebra.do_eigenstuff_from_file(
+				F,
+				Descr->eigenstuff_n,
+				Descr->eigenstuff_fname,
+				verbose_level);
+	}
+	else if (Descr->f_decomposition_by_element) {
+
+		algebra_global_with_action Algebra;
+
+		Algebra.do_cheat_sheet_for_decomposition_by_element_PG(F,
+				Descr->decomposition_by_element_n,
+				Descr->decomposition_by_element_power,
+				Descr->decomposition_by_element_data,
+				Descr->decomposition_by_element_fname_base,
+				verbose_level);
+	}
+#endif
+
+
 
 	if (f_v) {
 		cout << "finite_field_activity::perform_activity done" << endl;
@@ -763,6 +836,300 @@ void finite_field_activity::perform_activity(int verbose_level)
 }
 
 
+
+
+void finite_field_activity::evaluate(
+		finite_field *Fq,
+		std::string &formula_label,
+		std::string &parameters,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field_activity::evaluate" << endl;
+	}
+
+
+
+	int idx;
+	idx = Orbiter->find_symbol(formula_label);
+
+	if (idx < 0) {
+		cout << "could not find symbol " << formula_label << endl;
+		exit(1);
+	}
+
+	if (Orbiter->Orbiter_symbol_table->Table[idx].type != t_object) {
+		cout << "symbol table entry must be of type t_object" << endl;
+		exit(1);
+	}
+
+
+
+
+	if (Orbiter->Orbiter_symbol_table->Table[idx].object_type == t_collection) {
+		cout << "symbol table entry is a collection" << endl;
+
+		vector<string> *List;
+
+		List = (vector<string> *) Orbiter->Orbiter_symbol_table->Table[idx].ptr;
+		int i;
+		int *Values;
+
+		Values = NEW_int(List->size());
+
+		for (i = 0; i < List->size(); i++) {
+			int idx1;
+
+			idx1 = Orbiter->Orbiter_symbol_table->find_symbol((*List)[i]);
+			if (idx1 < 0) {
+				cout << "could not find symbol " << (*List)[i] << endl;
+				exit(1);
+			}
+			formula *F;
+			F = (formula *) Orbiter->Orbiter_symbol_table->Table[idx1].ptr;
+
+			Values[i] = evaluate_formula(
+					F,
+					Fq,
+					parameters,
+					verbose_level);
+		}
+		cout << "The values of the formulae are:" << endl;
+		for (i = 0; i < List->size(); i++) {
+			cout << i << " : " << Values[i] << endl;
+		}
+
+	}
+	else if (Orbiter->Orbiter_symbol_table->Table[idx].object_type == t_formula) {
+		cout << "symbol table entry is a formula" << endl;
+
+		formula *F;
+		F = (formula *) Orbiter->Orbiter_symbol_table->Table[idx].ptr;
+
+		int a;
+
+		a = evaluate_formula(
+				F,
+				Fq,
+				parameters,
+				verbose_level);
+		cout << "The formula evaluates to " << a << endl;
+	}
+	else {
+		cout << "symbol table entry must be either a formula or a collection" << endl;
+		exit(1);
+	}
+
+
+	if (f_v) {
+		cout << "finite_field_activity::evaluate done" << endl;
+	}
+}
+
+int finite_field_activity::evaluate_formula(
+		formula *F,
+		finite_field *Fq,
+		std::string &evaluate_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_activity::evaluate_formula" << endl;
+	}
+
+	if (f_v) {
+		cout << "projective_space_activity::evaluate_formula before F->get_subtrees" << endl;
+	}
+
+	int ret, degree;
+	ret = F->tree->is_homogeneous(degree);
+	if (ret) {
+		cout << "homogeneous of degree " << degree << endl;
+
+		homogeneous_polynomial_domain *Poly;
+
+		Poly = NEW_OBJECT(homogeneous_polynomial_domain);
+
+		if (f_v) {
+			cout << "before Poly->init" << endl;
+		}
+		Poly->init(Fq,
+				F->nb_managed_vars /* nb_vars */, degree,
+				FALSE /* f_init_incidence_structure */,
+				t_PART,
+				verbose_level);
+		if (f_v) {
+			cout << "after Poly->init" << endl;
+		}
+
+		syntax_tree_node **Subtrees;
+		int nb_monomials;
+		int i;
+
+		nb_monomials = Poly->get_nb_monomials();
+
+		F->tree->split_by_monomials(Poly, Subtrees, verbose_level);
+
+		for (i = 0; i < nb_monomials; i++) {
+			cout << "Monomial " << i << " : ";
+			if (Subtrees[i]) {
+				Subtrees[i]->print_expression(cout);
+				cout << " * ";
+				Poly->print_monomial(cout, i);
+				cout << endl;
+			}
+			else {
+				cout << "no subtree" << endl;
+			}
+		}
+
+		cout << "before evaluate" << endl;
+
+		const char *p = Descr->evaluate_parameters.c_str();
+		char str[1000];
+
+		std::map<std::string, std::string> symbol_table;
+		//vector<string> symbols;
+		//vector<string> values;
+
+		while (TRUE) {
+			if (!s_scan_token_comma_separated(&p, str)) {
+				break;
+			}
+			string assignment;
+			int len;
+
+			assignment.assign(str);
+			len = strlen(str);
+
+			std::size_t found;
+
+			found = assignment.find('=');
+			if (found == std::string::npos) {
+				cout << "did not find '=' in variable assignment" << endl;
+				exit(1);
+			}
+			std::string symb = assignment.substr (0, found);
+			std::string val = assignment.substr (found + 1, len - found - 1);
+
+
+
+			cout << "adding symbol " << symb << " = " << val << endl;
+
+			symbol_table[symb] = val;
+			//symbols.push_back(symb);
+			//values.push_back(val);
+
+		}
+
+#if 0
+		cout << "symbol table:" << endl;
+		for (i = 0; i < symbol_table.size(); i++) {
+			cout << i << " : " << symbol_table[i] << " = " << values[i] << endl;
+		}
+#endif
+		int a;
+		int *Values;
+
+		Values = NEW_int(nb_monomials);
+
+		for (i = 0; i < nb_monomials; i++) {
+			cout << "Monomial " << i << " : ";
+			if (Subtrees[i]) {
+				//Subtrees[i]->print_expression(cout);
+				a = Subtrees[i]->evaluate(symbol_table, Fq, verbose_level);
+				Values[i] = a;
+				cout << a << " * ";
+				Poly->print_monomial(cout, i);
+				cout << endl;
+			}
+			else {
+				cout << "no subtree" << endl;
+				Values[i] = 0;
+			}
+		}
+		cout << "evaluated polynomial:" << endl;
+		for (i = 0; i < nb_monomials; i++) {
+			cout << Values[i] << " * ";
+			Poly->print_monomial(cout, i);
+			cout << endl;
+		}
+		cout << "coefficient vector: ";
+		Orbiter->Int_vec.print(cout, Values, nb_monomials);
+		cout << endl;
+
+
+
+		FREE_OBJECT(Poly);
+	}
+	else {
+		cout << "not homogeneous" << endl;
+
+
+		cout << "before evaluate" << endl;
+
+		const char *p = Descr->evaluate_parameters.c_str();
+		char str[1000];
+
+		std::map<std::string, std::string> symbol_table;
+		//vector<string> symbols;
+		//vector<string> values;
+
+		while (TRUE) {
+			if (!s_scan_token_comma_separated(&p, str)) {
+				break;
+			}
+			string assignment;
+			int len;
+
+			assignment.assign(str);
+			len = strlen(str);
+
+			std::size_t found;
+
+			found = assignment.find('=');
+			if (found == std::string::npos) {
+				cout << "did not find '=' in variable assignment" << endl;
+				exit(1);
+			}
+			std::string symb = assignment.substr (0, found);
+			std::string val = assignment.substr (found + 1, len - found - 1);
+
+
+
+			cout << "adding symbol " << symb << " = " << val << endl;
+
+			symbol_table[symb] = val;
+			//symbols.push_back(symb);
+			//values.push_back(val);
+
+		}
+
+#if 0
+		cout << "symbol table:" << endl;
+		for (i = 0; i < symbol_table.size(); i++) {
+			cout << i << " : " << symbol_table[i] << " = " << values[i] << endl;
+		}
+#endif
+		int a;
+
+		a = F->tree->Root->evaluate(symbol_table, Fq, verbose_level);
+		cout << "the formula evaluates to " << a << endl;
+
+
+		return a;
+
+	}
+
+
+	if (f_v) {
+		cout << "projective_space_activity::evaluate_formula done" << endl;
+	}
+	return 0;
+}
 
 
 

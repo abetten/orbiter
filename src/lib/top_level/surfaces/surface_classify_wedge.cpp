@@ -2631,10 +2631,17 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 						"nb_pts != Surf->nb_pts_on_surface_with_27_lines" << endl;
 				exit(1);
 			}
+
+			int *f_is_on_line;
+
 			Surf->compute_points_on_lines(Pts, nb_pts,
 				Lines, 27 /*nb_lines*/,
 				pts_on_lines,
+				f_is_on_line,
 				verbose_level);
+
+			FREE_int(f_is_on_line);
+
 			nb_E = pts_on_lines->number_of_eckardt_points(verbose_level);
 
 			f << nb_E;

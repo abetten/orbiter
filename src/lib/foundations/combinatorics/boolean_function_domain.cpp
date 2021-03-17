@@ -18,9 +18,9 @@ namespace foundations {
 
 boolean_function_domain::boolean_function_domain()
 {
-	n = n2 = Q = Q2 = N = 0;
+	n = n2 = Q = bent = near_bent = N = 0;
 	Fq = NULL;
-	FQ = NULL;
+	//FQ = NULL;
 	Poly = NULL;
 	A_poly = NULL;
 	B_poly = NULL;
@@ -37,9 +37,11 @@ boolean_function_domain::~boolean_function_domain()
 	if (Fq) {
 		FREE_OBJECT(Fq);
 	}
+#if 0
 	if (FQ) {
 		FREE_OBJECT(FQ);
 	}
+#endif
 	if (Poly) {
 		FREE_OBJECTS(Poly);
 	}
@@ -111,25 +113,27 @@ void boolean_function_domain::init(int n, int verbose_level)
 	boolean_function_domain::n = n;
 	n2 = n >> 1;
 	Q = 1 << n;
-	Q2 = 1 << n2;
+	bent = 1 << (n2);
+	near_bent = 1 << ((n + 1) >> 1);
 	//NN = 1 << Q;
 	NN.create(2, __FILE__, __LINE__);
 	D.power_int(NN, Q - 1);
 	N = Gg.nb_PG_elements(n, 2);
 	if (f_v) {
-		cout << "do_it n=" << n << endl;
-		cout << "do_it n2=" << n2 << endl;
-		cout << "do_it Q=" << Q << endl;
-		cout << "do_it Q2=" << Q2 << endl;
-		cout << "do_it NN=" << NN << endl;
-		cout << "do_it N=" << N << endl;
+		cout << "boolean_function_domain::init n=" << n << endl;
+		cout << "boolean_function_domain::init n2=" << n2 << endl;
+		cout << "boolean_function_domain::init Q=" << Q << endl;
+		cout << "boolean_function_domain::init bent=" << bent << endl;
+		cout << "boolean_function_domain::init near_bent=" << near_bent << endl;
+		cout << "boolean_function_domain::init NN=" << NN << endl;
+		cout << "boolean_function_domain::init N=" << N << endl;
 	}
 
 	Fq = NEW_OBJECT(finite_field);
 	Fq->finite_field_init(2, 0);
 
-	FQ = NEW_OBJECT(finite_field);
-	FQ->finite_field_init(Q, 0);
+	//FQ = NEW_OBJECT(finite_field);
+	//FQ->finite_field_init(Q, 0);
 
 	affine_points = NEW_lint(Q);
 
@@ -140,7 +144,7 @@ void boolean_function_domain::init(int n, int verbose_level)
 	f2 = NEW_int(Q);
 	F = NEW_int(Q);
 	T = NEW_int(Q);
-	W = NEW_int(Q * Q);
+	//W = NEW_int(Q * Q);
 	f_proj = NEW_int(N);
 	f_proj2 = NEW_int(N);
 
@@ -153,7 +157,7 @@ void boolean_function_domain::init(int n, int verbose_level)
 		Fq->PG_element_rank_modified_lint(v1, 1, n + 1, a);
 		affine_points[i] = a;
 	}
-	if (f_v) {
+	if (FALSE) {
 		cout << "affine_points" << endl;
 		for (i = 0; i < Q; i++) {
 			Gg.AG_element_unrank(2, v1, 1, n, i);
@@ -165,10 +169,27 @@ void boolean_function_domain::init(int n, int verbose_level)
 
 	// setup the Walsh matrix:
 
-	Gg.Walsh_matrix(Fq, n, W, verbose_level);
+	if (f_v) {
+		cout << "boolean_function_domain::init before Gg.Walsh_matrix" << endl;
+	}
+	if (n <= 10) {
+		Gg.Walsh_matrix(Fq, n, W, verbose_level);
+	}
+	else {
+		cout << "Walsh matrix is too big" << endl;
+	}
+	if (f_v) {
+		cout << "boolean_function_domain::init after Gg.Walsh_matrix" << endl;
+	}
 
 
+	if (f_v) {
+		cout << "boolean_function_domain::init before setup_polynomial_rings" << endl;
+	}
 	setup_polynomial_rings(verbose_level);
+	if (f_v) {
+		cout << "boolean_function_domain::init after setup_polynomial_rings" << endl;
+	}
 
 
 
@@ -196,6 +217,9 @@ void boolean_function_domain::setup_polynomial_rings(int verbose_level)
 	A_poly = NEW_pint(n + 1);
 	B_poly = NEW_pint(n + 1);
 	for (degree = 1; degree <= n; degree++) {
+		if (f_v) {
+			cout << "boolean_function_domain::setup_polynomial_rings setting up polynomial ring of degree " << degree << endl;
+		}
 		Poly[degree].init(Fq, nb_vars, degree,
 				FALSE /* f_init_incidence_structure */,
 				t_PART,
@@ -204,10 +228,16 @@ void boolean_function_domain::setup_polynomial_rings(int verbose_level)
 		B_poly[degree] = NEW_int(Poly[degree].get_nb_monomials());
 	}
 
+	if (f_v) {
+		cout << "boolean_function_domain::setup_polynomial_rings before Poly[n].affine_evaluation_kernel" << endl;
+	}
 	Poly[n].affine_evaluation_kernel(
 			Kernel, dim_kernel, verbose_level);
-
 	if (f_v) {
+		cout << "boolean_function_domain::setup_polynomial_rings after Poly[n].affine_evaluation_kernel" << endl;
+	}
+
+	if (FALSE) {
 		cout << "Kernel of evaluation map:" << endl;
 		int_matrix_print(Kernel, dim_kernel, 2);
 	}
@@ -243,10 +273,17 @@ void boolean_function_domain::compute_polynomial_representation(
 	vec = NEW_int(n);
 	mon = NEW_int(degree);
 	Orbiter->Int_vec.zero(coeff, Poly[n].get_nb_monomials());
+	if (f_v) {
+		cout << "boolean_function_domain::compute_polynomial_representation looping over all values, N=" << N << endl;
+	}
 	for (s = 0; s < N; s++) {
 
 		// we are making the complement of the function,
 		// so we are skipping all entries which are zero!
+
+		if (f_v) {
+			cout << "boolean_function_domain::compute_polynomial_representation s=" << s << " / " << N << endl;
+		}
 
 		if (func[s]) {
 			continue;
@@ -264,7 +301,7 @@ void boolean_function_domain::compute_polynomial_representation(
 
 		// create the polynomial
 		// \prod_{i=0}^{n-1} (x_i+(vec[i]+1)*x_n)
-		// which is one exacly if x_i = vec[i] for i=0..n-1 and x_n = 1.
+		// which is one exactly if x_i = vec[i] for i=0..n-1 and x_n = 1.
 		// and zero otherwise.
 		// So this polynomial agrees with the boolean function
 		// on the affine space x_n = 1.
@@ -327,6 +364,9 @@ void boolean_function_domain::compute_polynomial_representation(
 			coeff[h] = Fq->add(coeff[h], B_poly[n][h]);
 		}
 	} // next s
+	if (f_v) {
+		cout << "boolean_function_domain::compute_polynomial_representation looping over all values done" << endl;
+	}
 
 	if (f_v) {
 		cout << "preliminary result : ";
@@ -341,14 +381,16 @@ void boolean_function_domain::compute_polynomial_representation(
 
 		for (h = 0; h < Q; h++) {
 			cout << h << " : " << func[h] << " : " << f[h];
+#if 0
 			if (func[h] == f[h]) {
 				cout << "error";
 				f_error = TRUE;
 			}
+#endif
 			cout << endl;
 		}
 		if (f_error) {
-			cout << "an error has occured" << endl;
+			cout << "an error has occurred" << endl;
 			exit(1);
 		}
 		FREE_int(f);
@@ -380,7 +422,7 @@ void boolean_function_domain::compute_polynomial_representation(
 			cout << endl;
 		}
 		if (f_error) {
-			cout << "an error has occured" << endl;
+			cout << "an error has occurred" << endl;
 			exit(1);
 		}
 		FREE_int(f);
@@ -450,7 +492,8 @@ int boolean_function_domain::is_bent(int *T)
 	int i;
 
 	for (i = 0; i < Q; i++) {
-		if (ABS(T[i]) != Q2) {
+		if (ABS(T[i]) != bent) {
+			//cout << "ABS(T[i]) != bent, T[i] = " << T[i] << " bent=" << bent << endl;
 			break;
 		}
 	}
@@ -461,6 +504,28 @@ int boolean_function_domain::is_bent(int *T)
 		return FALSE;
 	}
 }
+
+int boolean_function_domain::is_near_bent(int *T)
+{
+	int i;
+
+	for (i = 0; i < Q; i++) {
+		if (T[i] == 0) {
+			continue;
+		}
+		if (ABS(T[i]) != near_bent) {
+			//cout << "ABS(T[i]) != near_bent, T[i] = " << T[i] << " near_bent=" << near_bent << endl;
+			break;
+		}
+	}
+	if (i == Q) {
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
+}
+
 
 
 }}

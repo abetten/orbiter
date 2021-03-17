@@ -137,6 +137,14 @@ public:
 			long int *basis_set, int k,
 			int f_embellish,
 			int verbose_level);
+	void do_linear_code_through_columns_of_parity_check_projectively(
+			int n,
+			long int *columns_set, int k,
+			int verbose_level);
+	void do_linear_code_through_columns_of_parity_check(
+			int n,
+			long int *columns_set, int k,
+			int verbose_level);
 	void do_polynomial(
 			int n,
 			int polynomial_degree,
@@ -153,8 +161,14 @@ public:
 			int f_nearest_codeword,
 			std::string &nearest_codeword_text,
 			int verbose_level);
+	void code_diagram(
+			std::string &label,
+			long int *Words,
+			int nb_words, int n, int f_metric_balls, int radius_of_metric_ball,
+			int f_enhance, int radius,
+			int verbose_level);
 	void investigate_code(long int *Words, int nb_words, int n, int f_embellish, int verbose_level);
-	void embellish(int *M, int nb_rows, int nb_cols, int i0, int j0, int a);
+	void embellish(int *M, int nb_rows, int nb_cols, int i0, int j0, int a, int rad);
 	void place_entry(int *M, int nb_rows, int nb_cols, int i, int j, int a);
 	void do_it(int n, int r, int a, int c, int seed, int verbose_level);
 	void dimensions(int n, int &nb_rows, int &nb_cols);
@@ -163,6 +177,7 @@ public:
 	void convert_to_binary(int n, long int h, int *v);
 	int distance(int n, int a, int b);
 	void place_binary(long int h, int &i, int &j);
+	void place_binary(int *v, int n, int &i, int &j);
 	void field_reduction(finite_field *FQ, finite_field *Fq,
 			std::string &label,
 			int m, int n, std::string &genma_text,

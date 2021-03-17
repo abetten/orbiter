@@ -23,11 +23,6 @@ projective_space_activity_description::projective_space_activity_description()
 	f_input = FALSE;
 	Data = NULL;
 
-#if 0
-	f_fname_base_out = FALSE;
-	//fname_base_out;
-#endif
-
 	f_canonical_form_PG = FALSE;
 	//canonical_form_PG_n = 0;
 	Canonical_form_PG_Descr = NULL;
@@ -54,6 +49,11 @@ projective_space_activity_description::projective_space_activity_description()
 	f_analyze_del_Pezzo_surface = FALSE;
 	//analyze_del_Pezzo_surface_label;
 	//analyze_del_Pezzo_surface_parameters;
+
+	f_cheat_sheet_for_decomposition_by_element_PG = FALSE;
+	decomposition_by_element_power = 0;
+	//std::string decomposition_by_element_data;
+	//std::string decomposition_by_element_fname;
 
 }
 
@@ -85,13 +85,6 @@ int projective_space_activity_description::read_arguments(
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
-#if 0
-		else if (stringcmp(argv[i], "-fname_base_out") == 0) {
-			f_fname_base_out = TRUE;
-			fname_base_out.assign(argv[++i]);
-			cout << "-fname_base_out " << fname_base_out << endl;
-		}
-#endif
 		else if (stringcmp(argv[i], "-canonical_form_PG") == 0) {
 			f_canonical_form_PG = TRUE;
 			//canonical_form_PG_n = strtoi(argv[++i]);
@@ -157,6 +150,18 @@ int projective_space_activity_description::read_arguments(
 					<< analyze_del_Pezzo_surface_parameters << " "
 					<< endl;
 		}
+		else if (stringcmp(argv[i], "-cheat_sheet_for_decomposition_by_element_PG") == 0) {
+			f_cheat_sheet_for_decomposition_by_element_PG = TRUE;
+			decomposition_by_element_power = strtoi(argv[++i]);
+			decomposition_by_element_data.assign(argv[++i]);
+			decomposition_by_element_fname.assign(argv[++i]);
+			cout << "-cheat_sheet_for_decomposition_by_element_PG "
+					<< decomposition_by_element_power
+					<< " " << decomposition_by_element_data
+					<< " " << decomposition_by_element_fname
+					<< endl;
+		}
+
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;

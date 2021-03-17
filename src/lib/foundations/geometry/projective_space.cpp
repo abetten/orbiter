@@ -1110,7 +1110,7 @@ void projective_space::print_all_points()
 long int projective_space::rank_point(int *v)
 {
 	long int b;
-	int verbose_level = 1;
+	int verbose_level = 0;
 
 	int f_v = (verbose_level >= 1);
 

@@ -1074,6 +1074,7 @@ void surface_domain::compute_points_on_lines(
 		long int *Pts_on_surface, int nb_points_on_surface,
 		long int *Lines, int nb_lines,
 		set_of_sets *&pts_on_lines,
+		int *&f_is_on_line,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1085,6 +1086,9 @@ void surface_domain::compute_points_on_lines(
 	if (f_v) {
 		cout << "surface_domain::compute_points_on_lines" << endl;
 	}
+	f_is_on_line = NEW_int(nb_points_on_surface);
+	Orbiter->Int_vec.zero(f_is_on_line, nb_points_on_surface);
+
 	pts_on_lines = NEW_OBJECT(set_of_sets);
 	pts_on_lines->init_basic_constant_size(nb_points_on_surface,
 		nb_lines, q + 1, 0 /* verbose_level */);
@@ -1106,6 +1110,7 @@ void surface_domain::compute_points_on_lines(
 			r = F->Gauss_easy(Mtx, 3, 4);
 			if (r == 2) {
 				pts_on_lines->add_element(i, j);
+				f_is_on_line[j] = TRUE;
 				//cout << j << " ";
 			}
 		}

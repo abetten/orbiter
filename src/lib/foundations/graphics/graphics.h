@@ -736,6 +736,7 @@ public:
 			int f_inverse,
 			int f_additive_inverse,
 			int f_power_cycle, int power_cycle_base,
+			int f_cyclotomic_sets, int cyclotomic_sets_q, std::string &cyclotomic_sets_reps,
 			int verbose_level);
 	void draw_mod_n_work(mp_graphics &G,
 			layered_graph_draw_options *O,
@@ -743,6 +744,7 @@ public:
 			int f_inverse,
 			int f_additive_inverse,
 			int f_power_cycle, int power_cycle_base,
+			int f_cyclotomic_sets, int cyclotomic_sets_q, std::string &cyclotomic_sets_reps,
 			int verbose_level);
 
 };

@@ -267,16 +267,19 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 
 void *orbiter_top_level_session::get_object(int idx)
 {
-	return Orbiter_session->Orbiter_symbol_table->get_object(idx);
+	return Orbiter_session->get_object(idx);
 }
 
 int orbiter_top_level_session::find_symbol(std::string &label)
 {
-	return Orbiter_session->Orbiter_symbol_table->find_symbol(label);
+	return Orbiter_session->find_symbol(label);
 }
 
 void orbiter_top_level_session::find_symbols(std::vector<std::string> &Labels, int *&Idx)
 {
+
+	Orbiter_session->find_symbols(Labels, Idx);
+#if 0
 	int i, idx;
 
 	Idx = NEW_int(Labels.size());
@@ -289,17 +292,18 @@ void orbiter_top_level_session::find_symbols(std::vector<std::string> &Labels, i
 		}
 		Idx[i] = idx;
 	}
+#endif
 }
 
 void orbiter_top_level_session::print_symbol_table()
 {
-	Orbiter_session->Orbiter_symbol_table->print_symbol_table();
+	Orbiter_session->print_symbol_table();
 }
 
 void orbiter_top_level_session::add_symbol_table_entry(std::string &label,
 		orbiter_symbol_table_entry *Symb, int verbose_level)
 {
-	Orbiter_session->Orbiter_symbol_table->add_symbol_table_entry(label, Symb, verbose_level);
+	Orbiter_session->add_symbol_table_entry(label, Symb, verbose_level);
 }
 
 
