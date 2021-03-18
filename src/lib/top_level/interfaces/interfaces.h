@@ -87,7 +87,8 @@ public:
 	interface_algebra();
 	void print_help(int argc, std::string *argv, int i, int verbose_level);
 	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
-	int read_arguments(int argc, std::string *argv, int i0, int verbose_level);
+	void read_arguments(int argc,
+			std::string *argv, int &i, int verbose_level);
 	void worker(int verbose_level);
 	void do_linear_group(
 			linear_group_description *Descr, int verbose_level);
@@ -177,7 +178,8 @@ public:
 	interface_coding_theory();
 	void print_help(int argc, std::string *argv, int i, int verbose_level);
 	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
-	int read_arguments(int argc, std::string *argv, int i0, int verbose_level);
+	void read_arguments(int argc,
+			std::string *argv, int &i, int verbose_level);
 	void worker(int verbose_level);
 };
 
@@ -285,7 +287,8 @@ public:
 	interface_combinatorics();
 	void print_help(int argc, std::string *argv, int i, int verbose_level);
 	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
-	int read_arguments(int argc, std::string *argv, int i0, int verbose_level);
+	void read_arguments(int argc,
+			std::string *argv, int &i, int verbose_level);
 	void worker(int verbose_level);
 	void do_graph_theoretic_activity(
 			graph_theoretic_activity_description *Descr, int verbose_level);
@@ -419,7 +422,7 @@ public:
 	interface_cryptography();
 	void print_help(int argc, std::string *argv, int i, int verbose_level);
 	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
-	int read_arguments(int argc, std::string *argv, int i0, int verbose_level);
+	void read_arguments(int argc, std::string *argv, int &i, int verbose_level);
 	void worker(int verbose_level);
 
 
@@ -456,7 +459,7 @@ public:
 	interface_povray();
 	void print_help(int argc, std::string *argv, int i, int verbose_level);
 	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
-	int read_arguments(int argc, std::string *argv, int i0, int verbose_level);
+	void read_arguments(int argc, std::string *argv, int &i, int verbose_level);
 	void worker(int verbose_level);
 };
 
@@ -508,11 +511,6 @@ class interface_projective {
 
 	int f_create_dickson_atlas;
 
-#if 0
-	int f_create_BLT_set;
-	BLT_set_create_description *BLT_set_descr;
-#endif
-
 	std::vector<std::string> transform_coeffs;
 	std::vector<int> f_inverse_transform;
 
@@ -523,7 +521,8 @@ public:
 	interface_projective();
 	void print_help(int argc, std::string *argv, int i, int verbose_level);
 	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
-	int read_arguments(int argc, std::string *argv, int i0, int verbose_level);
+	void read_arguments(int argc,
+			std::string *argv, int &i, int verbose_level);
 	void worker(int verbose_level);
 	void do_cheat_sheet_PG(orbiter_session *Session,
 			int n, int q,
@@ -588,6 +587,8 @@ class interface_symbol_table {
 	int f_group_theoretic_activity;
 	group_theoretic_activity_description *Group_theoretic_activity_description;
 
+	int f_cubic_surface_activity;
+	cubic_surface_activity_description *Cubic_surface_activity_description;
 
 public:
 
@@ -595,9 +596,9 @@ public:
 	interface_symbol_table();
 	void print_help(int argc, std::string *argv, int i, int verbose_level);
 	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
-	int read_arguments(
+	void read_arguments(
 			orbiter_top_level_session *Orbiter_top_level_session,
-			int argc, std::string *argv, int i0, int verbose_level);
+			int argc, std::string *argv, int &i, int verbose_level);
 	void read_definition(
 			orbiter_top_level_session *Orbiter_top_level_session,
 			int argc, std::string *argv, int &i, int verbose_level);
@@ -607,8 +608,6 @@ public:
 	void read_activity_arguments(int argc,
 			std::string *argv, int &i, int verbose_level);
 	void worker(orbiter_top_level_session *Orbiter_top_level_session, int verbose_level);
-	//void definition(orbiter_top_level_session *Orbiter_top_level_session,
-	//		int verbose_level);
 	void definition_of_finite_field(orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 	void definition_of_projective_space(orbiter_top_level_session *Orbiter_top_level_session,
@@ -632,6 +631,9 @@ public:
 			orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 	void do_group_theoretic_activity(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void do_cubic_surface_activity(
+			orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 
 };
@@ -698,7 +700,8 @@ public:
 	interface_toolkit();
 	void print_help(int argc, std::string *argv, int i, int verbose_level);
 	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
-	int read_arguments(int argc, std::string *argv, int i0, int verbose_level);
+	void read_arguments(int argc,
+			std::string *argv, int &i, int verbose_level);
 	void worker(int verbose_level);
 
 };

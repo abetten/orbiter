@@ -36,7 +36,6 @@ class search_blocking_set;
 	// added Nov 2, 2010
 class choose_points_or_lines;
 	// added Nov 29, 2010
-struct factor_group;
 class orbit_of_sets;
 	// added March 27, 2013
 class singer_cycle;
@@ -173,6 +172,8 @@ class interface_povray;
 class interface_projective;
 class interface_toolkit;
 class orbiter_top_level_session;
+class cubic_surface_activity_description;
+class cubic_surface_activity;
 
 
 // #############################################################################

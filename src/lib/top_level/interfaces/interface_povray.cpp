@@ -65,13 +65,21 @@ int interface_povray::recognize_keyword(int argc, std::string *argv, int i, int 
 	return false;
 }
 
-int interface_povray::read_arguments(int argc, std::string *argv, int i0, int verbose_level)
+void interface_povray::read_arguments(int argc, std::string *argv, int &i, int verbose_level)
 {
-	int i;
+	int f_v = (verbose_level >= 1);
 
-	cout << "interface_povray::read_arguments" << endl;
+	if (f_v) {
+		cout << "interface_povray::read_arguments" << endl;
+	}
 
-	for (i = i0; i < argc; i++) {
+
+
+	//for (; i < argc; i++) {
+
+		if (f_v) {
+			cout << "interface_povray::read_arguments the next argument is " << argv[i] << endl;
+		}
 		if (stringcmp(argv[i], "-povray") == 0) {
 			f_povray = TRUE;
 			cout << "-povray " << endl;
@@ -165,12 +173,16 @@ int interface_povray::read_arguments(int argc, std::string *argv, int i0, int ve
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
+#if 0
 		else {
 			break;
 		}
+#endif
+	//}
+	if (f_v) {
+		cout << "interface_povray::read_arguments done" << endl;
 	}
-	cout << "interface_povray::read_arguments done" << endl;
-	return i;
+	//return i;
 }
 
 void interface_povray::worker(int verbose_level)

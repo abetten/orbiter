@@ -1535,127 +1535,161 @@ void surface_object_with_action::investigate_surface_and_write_report2(
 		Six_arcs->report_latex(ost);
 
 
-		if (f_surface_codes) {
-
-			homogeneous_polynomial_domain *HPD;
-
-			HPD = NEW_OBJECT(homogeneous_polynomial_domain);
-
-			HPD->init(SC->F, 3, 2 /* degree */,
-					TRUE /* f_init_incidence_structure */,
-					t_PART,
-					verbose_level);
-
-			action *A_on_poly;
-
-			A_on_poly = NEW_OBJECT(action);
-			A_on_poly->induced_action_on_homogeneous_polynomials(A,
-				HPD,
-				FALSE /* f_induce_action */, NULL,
-				verbose_level);
-
-			cout << "created action A_on_poly" << endl;
-			A_on_poly->print_info();
-
-			schreier *Sch;
-			longinteger_object full_go;
-
-			//Sch = new schreier;
-			//A2->all_point_orbits(*Sch, verbose_level);
-
-			cout << "computing orbits:" << endl;
-
-			Sch = A->Strong_gens->orbits_on_points_schreier(A_on_poly, verbose_level);
-
-			//SC->Sg->
-			//Sch = SC->Sg->orbits_on_points_schreier(A_on_poly, verbose_level);
-
-			orbit_transversal *T;
-
-			A->group_order(full_go);
-			T = NEW_OBJECT(orbit_transversal);
-
-			cout << "before T->init_from_schreier" << endl;
-
-			T->init_from_schreier(
-					Sch,
-					A,
-					full_go,
-					verbose_level);
-
-			cout << "after T->init_from_schreier" << endl;
-
-			Sch->print_orbit_reps(cout);
-
-			cout << "orbit reps:" << endl;
-
-			ost << "\\section{Orbits on conics}" << endl;
-			ost << endl;
-
-			T->print_table_latex(
-					ost,
-					TRUE /* f_has_callback */,
-					HPD_callback_print_function2,
-					HPD /* callback_data */,
-					TRUE /* f_has_callback */,
-					HPD_callback_print_function,
-					HPD /* callback_data */,
-					verbose_level);
 
 
-		}
-		else {
-			if (f_v) {
-				cout << "surface_object_with_action::investigate_surface_and_write_report2 !f_surface_clebsch" << endl;
-			}
-
+	}
+	else {
+		if (f_v) {
+			cout << "surface_object_with_action::investigate_surface_and_write_report2 !f_surface_clebsch" << endl;
 		}
 
+	}
 
 
 
-		if (f_surface_quartic) {
+	if (f_surface_quartic) {
 
-			if (f_v) {
-				cout << "surface_object_with_action::investigate_surface_and_write_report2 f_surface_quartic" << endl;
-			}
-
-			int pt_orbit;
-
-			for (pt_orbit = 0; pt_orbit < Orbits_on_points_not_on_lines->nb_orbits; pt_orbit++) {
-
-				ost << "\\section{Quartic curve associated with orbit " << pt_orbit << "}" << endl;
-
-
-				surface_object_tangent_cone *SOT;
-
-				SOT = NEW_OBJECT(surface_object_tangent_cone);
-
-				SOT->init(this, verbose_level);
-
-
-				SOT->quartic(ost, pt_orbit, verbose_level);
-
-				FREE_OBJECT(SOT);
-			}
-
-
-
-			//SoA->quartic(ost, verbose_level);
+		if (f_v) {
+			cout << "surface_object_with_action::investigate_surface_and_write_report2 f_surface_quartic" << endl;
 		}
-		else {
-			if (f_v) {
-				cout << "surface_object_with_action::investigate_surface_and_write_report2 !f_surface_quartic" << endl;
-			}
+
+		{
+			ofstream ost_quartics("quartics.txt");
 
 
+
+			all_quartic_curves(ost, ost_quartics, verbose_level);
+		}
+
+	}
+	else {
+		if (f_v) {
+			cout << "surface_object_with_action::investigate_surface_and_write_report2 !f_surface_quartic" << endl;
 		}
 
 
 	}
 
+
+
+
+	if (f_surface_codes) {
+
+		if (f_v) {
+			cout << "surface_object_with_action::investigate_surface_and_write_report2 f_surface_codes" << endl;
+		}
+
+		homogeneous_polynomial_domain *HPD;
+
+		HPD = NEW_OBJECT(homogeneous_polynomial_domain);
+
+		HPD->init(SC->F, 3, 2 /* degree */,
+				TRUE /* f_init_incidence_structure */,
+				t_PART,
+				verbose_level);
+
+		action *A_on_poly;
+
+		A_on_poly = NEW_OBJECT(action);
+		A_on_poly->induced_action_on_homogeneous_polynomials(A,
+			HPD,
+			FALSE /* f_induce_action */, NULL,
+			verbose_level);
+
+		cout << "created action A_on_poly" << endl;
+		A_on_poly->print_info();
+
+		schreier *Sch;
+		longinteger_object full_go;
+
+		//Sch = new schreier;
+		//A2->all_point_orbits(*Sch, verbose_level);
+
+		cout << "computing orbits:" << endl;
+
+		Sch = A->Strong_gens->orbits_on_points_schreier(A_on_poly, verbose_level);
+
+		//SC->Sg->
+		//Sch = SC->Sg->orbits_on_points_schreier(A_on_poly, verbose_level);
+
+		orbit_transversal *T;
+
+		A->group_order(full_go);
+		T = NEW_OBJECT(orbit_transversal);
+
+		cout << "before T->init_from_schreier" << endl;
+
+		T->init_from_schreier(
+				Sch,
+				A,
+				full_go,
+				verbose_level);
+
+		cout << "after T->init_from_schreier" << endl;
+
+		Sch->print_orbit_reps(cout);
+
+		cout << "orbit reps:" << endl;
+
+		ost << "\\section{Orbits on conics}" << endl;
+		ost << endl;
+
+		T->print_table_latex(
+				ost,
+				TRUE /* f_has_callback */,
+				HPD_callback_print_function2,
+				HPD /* callback_data */,
+				TRUE /* f_has_callback */,
+				HPD_callback_print_function,
+				HPD /* callback_data */,
+				verbose_level);
+
+
+	}
+	else {
+		if (f_v) {
+			cout << "surface_object_with_action::investigate_surface_and_write_report2 !f_surface_codes" << endl;
+		}
+
+
+	}
+
+
+
 	if (f_v) {
 		cout << "surface_object_with_action::investigate_surface_and_write_report2 done" << endl;
+	}
+}
+
+void surface_object_with_action::all_quartic_curves(std::ostream &ost, std::ostream &ost_quartics, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object_with_action::all_quartic_curves" << endl;
+	}
+	int pt_orbit;
+
+	for (pt_orbit = 0; pt_orbit < Orbits_on_points_not_on_lines->nb_orbits; pt_orbit++) {
+
+		ost << "\\section{Quartic curve associated with orbit " << pt_orbit << "}" << endl;
+
+
+		surface_object_tangent_cone *SOT;
+
+		SOT = NEW_OBJECT(surface_object_tangent_cone);
+
+		SOT->init(this, verbose_level);
+
+
+		SOT->quartic(pt_orbit, verbose_level);
+
+		SOT->cheat_sheet_quartic_curve(ost, ost_quartics, verbose_level);
+
+		FREE_OBJECT(SOT);
+	}
+	if (f_v) {
+		cout << "surface_object_with_action::all_quartic_curves done" << endl;
 	}
 }
 

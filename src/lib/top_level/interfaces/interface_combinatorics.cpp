@@ -299,14 +299,25 @@ int interface_combinatorics::recognize_keyword(int argc,
 	return false;
 }
 
-int interface_combinatorics::read_arguments(int argc,
-		std::string *argv, int i0, int verbose_level)
+void interface_combinatorics::read_arguments(int argc,
+		std::string *argv, int &i, int verbose_level)
 {
-	int i;
+	//int i;
+	int f_v = (verbose_level >= 1);
 
-	cout << "interface_combinatorics::read_arguments" << endl;
+	if (f_v) {
+		cout << "interface_combinatorics::read_arguments" << endl;
+	}
 
-	for (i = i0; i < argc; i++) {
+
+
+	//for (; i < argc; i++) {
+
+		if (f_v) {
+			cout << "interface_combinatorics::read_arguments the next argument is " << argv[i] << endl;
+		}
+
+
 		if (stringcmp(argv[i], "-create_combinatorial_object") == 0) {
 			f_create_combinatorial_object = TRUE;
 			cout << "-create_combinatorial_object " << endl;
@@ -592,12 +603,16 @@ int interface_combinatorics::read_arguments(int argc,
 			cout << "-make_elementary_symmetric_functions " << make_elementary_symmetric_functions_n
 					<< " " << make_elementary_symmetric_functions_k_max << endl;
 		}
+#if 0
 		else {
 			break;
 		}
+#endif
+	//}
+	if (f_v) {
+		cout << "interface_combinatorics::read_arguments done" << endl;
 	}
-	cout << "interface_combinatorics::read_arguments done" << endl;
-	return i;
+	//return i;
 }
 
 

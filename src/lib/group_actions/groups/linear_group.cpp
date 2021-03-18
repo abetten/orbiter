@@ -87,13 +87,6 @@ void linear_group::linear_group_init(
 		A_linear,
 		F, n, 
 		description,
-		//description->f_projective,
-		//description->f_general,
-		//description->f_affine,
-		//description->f_semilinear,
-		//description->f_special,
-		//description->f_GL_d_q_wr_Sym_n,
-		//description->GL_wreath_Sym_d, description->GL_wreath_Sym_n,
 		nice_gens,
 		verbose_level);
 
@@ -695,13 +688,6 @@ void linear_group::init_wedge_action_detached(int verbose_level)
 			A2,
 			F, n2,
 			description,
-			//description->f_projective,
-			//description->f_general,
-			//description->f_affine,
-			//description->f_semilinear,
-			//description->f_special,
-			//description->f_GL_d_q_wr_Sym_n,
-			//description->GL_wreath_Sym_d, description->GL_wreath_Sym_n,
 			secondary_nice_gens,
 			verbose_level);
 

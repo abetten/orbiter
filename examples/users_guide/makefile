@@ -1478,7 +1478,7 @@ trace_64:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 64 -end -end \
 		-with F -do -finite_field_activity -trace -end
 	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F_q64_trace.csv F_q64_trace_8x8.csv 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F_q64_trace_8x8.csv 40 24 -draw_matrix_partition 4 8 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F_q64_trace_8x8.csv 40 24 -draw_matrix_partition 4 "1,1,1,1,1,1,1,1" "1,1,1,1,1,1,1,1"
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 2 -end -end \
 		-with F -do -finite_field_activity -algebraic_normal_form F_q64_trace.csv 6 -end
 
@@ -1549,7 +1549,7 @@ trace_256:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 256 -end -end \
 		-with F -do -finite_field_activity -trace -end
 	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F_q256_trace.csv F_q256_trace_16x16.csv 16
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F_q256_trace_16x16.csv 40 24 -draw_matrix_partition 4 16 16
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F_q256_trace_16x16.csv 40 24 -draw_matrix_partition 4 "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1" "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"
 
 
 
@@ -5262,7 +5262,58 @@ SECTION_CUBIC_SURFACES_CREATION:
 # full del Pezzo surfaces:
 
 
-surface_13_0:
+quartic_curves_q13:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-list_arguments \
+		-draw_options -end \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space 3 F \
+		-with P -do \
+		-projective_space_activity \
+			-define_surface S13_0 -q 13 -catalogue 0 -end \
+		-end \
+		-print_symbols \
+		-with P -do \
+		-projective_space_activity \
+			-define_surface S13_1 -q 13 -catalogue 1 -end \
+		-end \
+		-print_symbols \
+		-with S13_0 -do \
+		-cubic_surface_activity \
+			-report \
+			-all_quartic_curves \
+		-end \
+		-with S13_1 -do \
+		-cubic_surface_activity \
+			-report \
+			-all_quartic_curves \
+		-end \
+		-print_symbols 		
+		pdflatex surface_catalogue_q13_iso0_quartics.tex
+		open surface_catalogue_q13_iso0_quartics.pdf
+		pdflatex surface_catalogue_q13_iso1_quartics.tex
+		open surface_catalogue_q13_iso1_quartics.pdf
+		#pdflatex surface_catalogue_q13_iso0_report.tex
+		#open surface_catalogue_q13_iso0_report.pdf
+
+
+
+#		-with P -do \
+#		-projective_space_activity \
+#			-define_surface S13_1 -q 13 -catalogue 1 -end \
+#		-end -end \
+#		-with S13_0 -do \
+#		-cubic_surface_activity \
+#		-end 
+
+
+#		-end \
+#		-with S13_0 -do \
+#		-cubic_surface_activity \
+#		-end 
+
+
+surface_13_0_quartic:
 	- $(ORBITER_PATH)/orbiter.out -v 3 \
 		-draw_options -end \
 		-define G -linear_group -PGL 4 13 -wedge -end -end \
@@ -5270,7 +5321,7 @@ surface_13_0:
 		-group_theoretic_activities \
 		-control_six_arcs  -end \
 		-create_surface -q 13 -catalogue 0 -end \
-		-surface_clebsch -surface_quartic \
+		-surface_quartic \
 		-end
 	#pdflatex surface_catalogue_q13_iso0_report.tex
 	#open surface_catalogue_q13_iso0_report.pdf
@@ -5294,6 +5345,7 @@ quartic_curve_13_0_canonical:
 	pdflatex quartic_q13_0_classification.tex
 	open quartic_q13_0_classification.pdf
 
+# group order 24
 
 
 surface_13_1:
@@ -5304,7 +5356,7 @@ surface_13_1:
 		-group_theoretic_activities \
 		-control_six_arcs  -end \
 		-create_surface -q 13 -catalogue 1 -end \
-		-surface_clebsch -surface_quartic \
+		-surface_quartic \
 		-end
 	#pdflatex surface_catalogue_q13_iso1_report.tex
 	#open surface_catalogue_q13_iso1_report.pdf
@@ -5320,7 +5372,7 @@ surface_13_2:
 		-group_theoretic_activities \
 		-control_six_arcs  -end \
 		-create_surface -q 13 -catalogue 2 -end \
-		-surface_clebsch -surface_quartic \
+		-surface_quartic \
 		-end
 	pdflatex surface_catalogue_q13_iso2_report.tex
 	open surface_catalogue_q13_iso2_report.pdf
@@ -5342,6 +5394,38 @@ quartic_curve_13_2_canonical:
 		-end
 	pdflatex quartic_q13_2_classification.tex
 	open quartic_q13_2_classification.pdf
+
+
+# group order 24336
+
+# 5 generators:
+#1,0,0,0,1,0,1,2,12, 1,0,0,1,7,0,11,0,7, 1,0,0,8,12,1,4,11,1, 1,0,0,11,4,1,2,10,0, 0,1,0,11,3,0,4,9,1
+
+
+
+quartic_curve_13_2_group:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-draw_options -end \
+		-define G -linear_group -PGL 3 13 \
+			-subgroup_by_generators "quartic_13_2"  24336 5 \
+			"1,0,0,0,1,0,1,2,12," \
+			"1,0,0,1,7,0,11,0,7," \
+			"1,0,0,8,12,1,4,11,1," \
+			"1,0,0,11,4,1,2,10,0," \
+			"0,1,0,11,3,0,4,9,1" \
+			-restricted_action "29,86,97,154" \
+		-end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-report \
+		-end
+	pdflatex PGL_3_13_Subgroup_quartic_13_2_24336_report.tex
+	open PGL_3_13_Subgroup_quartic_13_2_24336_report.pdf
+	#pdflatex PGGL_3_4_report.tex
+	#open PGGL_3_4_report.pdf
+
+
+
 
 Knecht_13_1:
 	$(ORBITER_PATH)/orbiter.out -v 2 -create_combinatorial_object -q 13 -n 2 \
@@ -5418,7 +5502,7 @@ surface_25_0:
 		-group_theoretic_activities \
 		-control_six_arcs  -end \
 		-create_surface -q 25 -catalogue 0 -end \
-		-surface_clebsch -surface_quartic \
+		-surface_quartic \
 		-end
 	#pdflatex surface_catalogue_q25_iso0_report.tex
 	#open surface_catalogue_q25_iso0_report.pdf
@@ -10858,7 +10942,7 @@ PGL_4_5_SUBGROUP_3B_NORMALIZER=-PGL 4 5 \
 
 
 
-PGL_4_5_3B_prepare_clean:
+old_PGL_4_5_3B_prepare_clean:
 	$(ORBITER_PATH)/orbiter.out -v 5 \
 		-orbiter_path $(ORBITER_PATH)/ \
 		-define G -linear_group -PGL 4 5 -end -end \
@@ -10936,7 +11020,7 @@ PGL_4_5_3B_prepare_clean:
 
 
 
-PGL_4_5_3B_graphs_clean:
+old_PGL_4_5_3B_graphs_clean:
 	$(ORBITER_PATH)/orbiter.out -v 5 \
 		-orbiter_path $(ORBITER_PATH)/ \
 		-define G -linear_group -PGL 4 5 -end -end \
@@ -10965,7 +11049,7 @@ PGL_4_5_3B_graphs_clean:
 # creates PGL_4_5_Subgroup_3B_3_reg_spreads_fpc0.graph
 
 
-PGL_4_5_3B_clique0:
+old_PGL_4_5_3B_clique0:
 	$(ORBITER_PATH)/orbiter.out -v 2 \
 		-create_graph \
 			-load_from_file PGL_4_5_Subgroup_3B_3_reg_spreads_fpc0.graph \
@@ -10981,7 +11065,7 @@ PGL_4_5_3B_clique0:
 # Michael Epstein: about 8hrs on ripoff with magma
 
 
-PGL_4_5_3B_clique0_sajeeb:
+old_PGL_4_5_3B_clique0_sajeeb:
 	$(ORBITER_PATH)/orbiter.out -v 2 \
 		-create_graph \
 			-load_from_file PGL_4_5_Subgroup_3B_3_reg_spreads_fpc0.graph \
@@ -10996,7 +11080,7 @@ PGL_4_5_3B_clique0_sajeeb:
 
 
 
-PGL_4_5_3B_read_clean:
+old_PGL_4_5_3B_read_clean:
 	$(ORBITER_PATH)/orbiter.out -v 5 \
 		-orbiter_path $(ORBITER_PATH)/ \
 		-define G -linear_group -PGL 4 5 -end -end \
@@ -11053,7 +11137,7 @@ PGL_4_5_3B_read_clean:
 
 
 
-PGL_4_5_packing_3B_iso_old:
+old_PGL_4_5_packing_3B_iso_old:
 	$(ORBITER_PATH)/orbiter.out -v 2 \
 		-define F -finite_field -q 5 -end -end \
 		-define P -projective_space 3 F -end \
@@ -11118,7 +11202,7 @@ PGL_4_5_packing_3B_iso_old:
 
 
 
-PGL_4_5_norm_31_again:
+old_PGL_4_5_norm_31_again:
 	$(ORBITER_PATH)/orbiter.out -v 6 -define G \
 		-linear_group -PGL 4 5 -end -end \
 		-with G -do \
@@ -13437,5 +13521,319 @@ Op_6_7_lines_on_point:
 		-with O -do -orthogonal_space_activity \
 			-lines_on_point "" \
 		-end
+
+
+
+#Exterior square roots:
+
+#elt of order 3:
+#the exterior square root of f is X=
+#[1 0 0 0]
+#[0 1 0 0]
+#[0 0 2 2]
+#[0 0 4 2]
+
+#elt of order 31:
+#the exterior square root of g is Z=
+#[1 0 0 0]
+#[0 3 4 3]
+#[0 3 3 4]
+#[0 3 2 3]
+
+
+PGL_4_5_order_3:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-draw_options -end \
+		-define G -linear_group -PGL 4 5 \
+			-subgroup_by_generators "PGL_4_5_order_3"  3 1 \
+			"1,0,0,0, 0,1,0,0, 0,0,2,2, 0,0,4,2" \
+		-end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-report \
+		-end
+	pdflatex PGL_4_5_Subgroup_PGL_4_5_order_3_3_report.tex
+	open PGL_4_5_Subgroup_PGL_4_5_order_3_3_report.pdf
+
+PGL_4_5_order_31:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-draw_options -end \
+		-define G -linear_group -PGL 4 5 \
+			-subgroup_by_generators "PGL_4_5_order_31"  31 1 \
+			"1,0,0,0, 0,3,4,3, 0,3,3,4, 0,3,2,3" \
+		-end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-report \
+		-end
+	pdflatex PGL_4_5_Subgroup_PGL_4_5_order_31_31_report.tex
+	open PGL_4_5_Subgroup_PGL_4_5_order_31_31_report.pdf
+
+
+PGL_4_5_order_93:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-draw_options -end \
+		-define G -linear_group -PGL 4 5 \
+			-subgroup_by_generators "Michael"  93 2 \
+			"1,0,0,0, 0,1,0,0, 0,0,2,2, 0,0,4,2" \
+			"1,0,0,0, 0,3,4,3, 0,3,3,4, 0,3,2,3" \
+		-end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-report \
+		-end
+	pdflatex PGL_4_5_Subgroup_Michael_93_report.tex
+	open PGL_4_5_Subgroup_Michael_93_report.pdf
+
+
+PGL_4_5_order_3_props:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-draw_options -end \
+		-define F -finite_field -q 5 -end -end \
+		-define P -projective_space 3 F -end  \
+		-with P -do \
+		-projective_space_activity \
+			-cheat_sheet_for_decomposition_by_element_PG 1 "1,0,0,0, 0,1,0,0, 0,0,2,2, 0,0,4,2" "PG_3_5_elt_3.tex" \
+		-end
+		pdflatex PG_3_5_elt_3.tex
+		open PG_3_5_elt_3.pdf
+
+
+
+PGL_4_5_order_3_norm:
+	$(ORBITER_PATH)/orbiter.out -v 6 -define G \
+		-linear_group -PGL 4 5 -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-normalizer_of_cyclic_subgroup "3B" "1,0,0,0, 0,1,0,0, 0,0,2,2, 0,0,4,2"
+	pdflatex normalizer_of_3B_in_PGL_4_5.tex
+	open normalizer_of_3B_in_PGL_4_5.pdf
+
+
+#5760
+#"1,0,0,0,0,4,0,0,0,0,1,0,0,0,0,1, " \
+#"1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,4, " \
+#"1,0,0,0,0,4,0,0,0,0,4,0,0,0,0,4, " \
+#"1,0,0,0,0,1,0,0,0,0,3,0,0,0,0,3, " \
+#"1,0,0,0,0,3,0,0,0,0,1,0,0,0,0,1, " \
+#"1,0,0,0,0,1,0,0,0,0,2,4,0,0,2,3, " \
+#"1,0,0,0,4,4,0,0,0,0,1,0,0,0,0,1, " \
+#"0,1,0,0,1,0,0,0,0,0,4,0,0,0,0,4," \
+
+
+
+PGL_4_5_order_31_norm:
+	$(ORBITER_PATH)/orbiter.out -v 6 -define G \
+		-linear_group -PGL 4 5 -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-normalizer_of_cyclic_subgroup "31" "1,0,0,0, 0,3,4,3, 0,3,3,4, 0,3,2,3"
+	pdflatex normalizer_of_31_in_PGL_4_5.tex
+	open normalizer_of_31_in_PGL_4_5.pdf
+
+#372:
+#"1,0,0,0,0,4,0,0,0,0,4,0,0,0,0,4, " \
+#"1,0,0,0,0,3,0,0,0,0,3,0,0,0,0,3, " \
+#"1,0,0,0,0,4,0,0,0,0,2,1,0,3,2,4, " \
+#"1,0,0,0,0,0,1,0,0,0,0,1,0,1,1,3," \
+
+
+PGL_4_5_SUBGROUP_3B=-PGL 4 5 \
+	-subgroup_by_generators "3B" 3 1 \
+	"1,0,0,0, 0,1,0,0, 0,0,2,2, 0,0,4,2"
+PGL_4_5_SUBGROUP_3B_NORMALIZER=-PGL 4 5 \
+	-subgroup_by_generators "normalizer_3B" "5760" 8 \
+	"1,0,0,0,0,4,0,0,0,0,1,0,0,0,0,1, " \
+	"1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,4, " \
+	"1,0,0,0,0,4,0,0,0,0,4,0,0,0,0,4, " \
+	"1,0,0,0,0,1,0,0,0,0,3,0,0,0,0,3, " \
+	"1,0,0,0,0,3,0,0,0,0,1,0,0,0,0,1, " \
+	"1,0,0,0,0,1,0,0,0,0,2,4,0,0,2,3, " \
+	"1,0,0,0,4,4,0,0,0,0,1,0,0,0,0,1, " \
+	"0,1,0,0,1,0,0,0,0,0,4,0,0,0,0,4," \
+
+
+PGL_4_5_table_of_regular_spreads:
+	- mkdir SPREAD_TABLES_5
+	$(ORBITER_PATH)/orbiter.out -v 6 \
+		-define G -linear_group -PGL 4 5 -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+			-spread_table_init 2 "12" "SPREAD_TABLES_5/" \
+		-end
+
+# 12/9/2020: 34 sec on Mac
+# 12 is the index of the regular spread in the classification of spreads
+# 155000 spreads
+
+
+PGL_4_5_3B_prepare_clean:
+	$(ORBITER_PATH)/orbiter.out -v 5 \
+		-orbiter_path $(ORBITER_PATH)/ \
+		-define G -linear_group -PGL 4 5 -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+			-spread_table_init 2 "12" "SPREAD_TABLES_5/" \
+			-packing_with_assumed_symmetry \
+				-problem_label _reg_spreads \
+				-H $(PGL_4_5_SUBGROUP_3B) -end \
+				-N $(PGL_4_5_SUBGROUP_3B_NORMALIZER) -end \
+				-cliques_on_fixpoint_graph 1 \
+				-cliques_on_fixpoint_graph_control -W \
+					-problem_label PGL_4_5_Subgroup_3B_3_reg_spreads_fixp_graph_cliques \
+				-end \
+				-fixp_clique_types_save_individually \
+			-end \
+		-end 
+	pdflatex PGL_4_5_Subgroup_3B_3_reg_spreads_line_orbits_orbits_report.tex
+	#open PGL_4_5_Subgroup_3B_3_reg_spreads_line_orbits_orbits_report.pdf
+	pdflatex H_spread_orbits_orbit_types_report.tex
+	#open H_spread_orbits_orbit_types_report.pdf
+	pdflatex H_spread_orbits_reduced_orbit_types_report.tex
+	open H_spread_orbits_reduced_orbit_types_report.pdf
+
+
+
+PGL_4_5_3B_graphs_clean:
+	$(ORBITER_PATH)/orbiter.out -v 5 \
+		-orbiter_path $(ORBITER_PATH)/ \
+		-define G -linear_group -PGL 4 5 -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+			-spread_table_init 2 "12" "SPREAD_TABLES_5/" \
+			-packing_with_assumed_symmetry \
+				-problem_label _reg_spreads \
+				-H $(PGL_4_5_SUBGROUP_3B) -end \
+				-N $(PGL_4_5_SUBGROUP_3B_NORMALIZER) -end \
+				-cliques_on_fixpoint_graph 1 \
+				-cliques_on_fixpoint_graph_control -W \
+					-problem_label PGL_4_5_Subgroup_3B_3_reg_spreads_fixp_graph_cliques \
+				-end \
+				-process_long_orbits \
+					-create_graphs \
+					-list_of_cases_from_file PGL_4_5_Subgroup_3B_3_reg_spreads_graph_cliques_by_type_100000000000000000000.csv \
+					-clique_size 10 \
+					-orbit_length 3 \
+				-end \
+			-end \
+		-end
+
+# 0:55 on Mac
+# creates PGL_4_5_Subgroup_3B_3_reg_spreads_fpc0.graph
+
+PGL_4_5_3B_clique0:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-create_graph \
+			-load_from_file PGL_4_5_Subgroup_3B_3_reg_spreads_fpc0.graph \
+		-end \
+		-graph_theoretic_activity \
+			-find_cliques  -target_size 10 \
+		-end
+
+
+
+#nb_sol = 768
+#User time: 7:52
+# Michael Epstein: about 8hrs on ripoff with magma
+
+
+PGL_4_5_3B_clique0_sajeeb:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-create_graph \
+			-load_from_file PGL_4_5_Subgroup_3B_3_reg_spreads_fpc0.graph \
+		-end \
+		-graph_theoretic_activity \
+			-find_cliques -Sajeeb -target_size 10 \
+		-end
+	- mkdir SOLUTIONS
+	cp PGL_4_5_Subgroup_3B_3_reg_spreads_fpc0_sol.txt SOLUTIONS
+
+# 768 solutions
+# PGL_4_5_Subgroup_3B_3_reg_spreads_fpc0_sol.txt
+# PGL_4_5_Subgroup_3B_3_reg_spreads_fpc0_sol.txt
+
+PGL_4_5_3B_read_clean:
+	$(ORBITER_PATH)/orbiter.out -v 5 \
+		-orbiter_path $(ORBITER_PATH)/ \
+		-define G -linear_group -PGL 4 5 -end -end \
+		-with G -do \
+		-group_theoretic_activities \
+			-spread_table_init 2 "12" "SPREAD_TABLES_5/" \
+			-packing_with_assumed_symmetry \
+				-problem_label _reg_spreads \
+				-H $(PGL_4_5_SUBGROUP_3B) -end \
+				-N $(PGL_4_5_SUBGROUP_3B_NORMALIZER) -end \
+				-cliques_on_fixpoint_graph 1 \
+				-cliques_on_fixpoint_graph_control -W \
+					-problem_label PGL_4_5_Subgroup_3B_3_reg_spreads_fixp_graph_cliques \
+				-end \
+				-process_long_orbits \
+					-read_solutions \
+					-solution_path SOLUTIONS/ \
+					-list_of_cases_from_file \
+						PGL_4_5_Subgroup_3B_3_reg_spreads_graph_cliques_by_type_100000000000000000000.csv \
+					-clique_size 10 \
+					-orbit_length 3 \
+				-end \
+			-end \
+		-end
+
+
+#solution file SOLUTIONS/PGL_4_5_Subgroup_3B_3_reg_spreads_fpc0_sol.txt is missing
+
+
+# 7 sec
+#ACTION PGL_4_5_Gr_4_2_S26_S31 degree=768 of type action_on_sets_t->action_on_sets_t->action_on_grassmannian_t->matrix_group_t
+#low_level_point_size=0, f_has_sims=0, f_has_strong_generators=0
+#the action is not linear
+
+#action::create_induced_action_on_sets after A->induced_action_on_sets
+#action::create_induced_action_on_sets done
+#packing_long_orbits::create_graph_on_remaining_long_orbits before Ar_On_Packings->all_point_orbits_from_generators
+#action::all_point_orbits_from_generators
+#schreier::compute_all_point_orbits verbose_level=1
+#schreier::compute_all_point_orbits found 8 orbits
+#The distribution of orbit lengths is: ( 96^8 )
+#packing_long_orbits::create_graph_on_remaining_long_orbits after Ar_On_Packings->all_point_orbits_from_generators
+#tally_vector_data::init
+#tally_vector_data::init starting to collect data
+#tally_vector_data::init finished collecting data
+#tally_vector_data::init computing Reps_in_lex_order
+#tally_vector_data::init done
+#packing_long_orbits::create_graph_on_remaining_long_orbits We found the following type vectors:
+#8 x ( 31, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+#0 & 16120 & 768 & 288 & (96^8 ) & 8 \\TEX
+#packing_long_orbits::create_graph_on_remaining_long_orbits done
+
+
+# PGL_4_5_Subgroup_3B_3_reg_spreads_graph_cliques_by_type_100000000000000000000_count.csv
+# PGL_4_5_Subgroup_3B_3_reg_spreads_graph_cliques_by_type_100000000000000000000_packings.csv
+
+
+
+PGL_4_5_packing_3B_iso:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define F -finite_field -q 5 -end -end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
+		-canonical_form_PG \
+		-input -file_of_packings_through_spread_table \
+			PGL_4_5_Subgroup_3B_3_reg_spreads_graph_cliques_by_type_100000000000000000000_packings.csv \
+			SPREAD_TABLES_5/spread_25_spreads.csv \
+		-end \
+		-classification_prefix packings_3B \
+		-report \
+		-end
+	pdflatex packings_3B_classification.tex
+	open packings_3B_classification.pdf
+
+#User time: 14:43
+
+
+
+
+#####
+
 
 

@@ -137,14 +137,22 @@ int interface_projective::recognize_keyword(int argc,
 	return false;
 }
 
-int interface_projective::read_arguments(int argc,
-		std::string *argv, int i0, int verbose_level)
+void interface_projective::read_arguments(int argc,
+		std::string *argv, int &i, int verbose_level)
 {
-	int i;
+	int f_v = (verbose_level >= 1);
 
-	cout << "interface_projective::read_arguments" << endl;
+	if (f_v) {
+		cout << "interface_projective::read_arguments" << endl;
+	}
 
-	for (i = i0; i < argc; i++) {
+
+
+	//for (; i < argc; i++) {
+
+		if (f_v) {
+			cout << "interface_projective::read_arguments the next argument is " << argv[i] << endl;
+		}
 		if (stringcmp(argv[i], "-create_points_on_quartic") == 0) {
 			f_create_points_on_quartic = TRUE;
 			desired_distance = strtof(argv[++i]);
@@ -238,12 +246,15 @@ int interface_projective::read_arguments(int argc,
 			cout << "-create_dickson_atlas " << endl;
 			//i++;
 		}
+#if 0
 		else {
 			break;
 		}
+#endif
+	//}
+	if (f_v) {
+		cout << "interface_projective::read_arguments done" << endl;
 	}
-	cout << "interface_projective::read_arguments done" << endl;
-	return i;
 }
 
 

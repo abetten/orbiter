@@ -36,12 +36,9 @@ void group_theoretic_activity::do_create_surface(
 	}
 
 	int q;
-	//int i;
 	finite_field *F;
 	surface_domain *Surf;
 	surface_with_action *Surf_A;
-	//number_theory_domain NT;
-	//sorting Sorting;
 
 	if (f_v) {
 		cout << "group_theoretic_activity::do_create_surface before Surface_Descr->get_q" << endl;
@@ -71,11 +68,11 @@ void group_theoretic_activity::do_create_surface(
 	Surf_A = NEW_OBJECT(surface_with_action);
 
 	if (f_v) {
-		cout << "group_theoretic_activity::do_create_surface before Surf_A->init_with_linear_group" << endl;
+		cout << "group_theoretic_activity::do_create_surface before Surf_A->init" << endl;
 	}
-	Surf_A->init_with_linear_group(Surf, LG, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
+	Surf_A->init(Surf, LG->A_linear, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "group_theoretic_activity::do_create_surface after Surf_A->init_with_linear_group" << endl;
+		cout << "group_theoretic_activity::do_create_surface after Surf_A->init" << endl;
 	}
 
 
@@ -100,7 +97,7 @@ void group_theoretic_activity::do_create_surface(
 		}
 		Surf_A->create_surface_and_do_report(
 					Surface_Descr,
-					Control_six_arcs,
+					TRUE, Control_six_arcs,
 					Descr->f_surface_clebsch,
 					Descr->f_surface_codes,
 					Descr->f_surface_quartic,
@@ -136,7 +133,9 @@ void group_theoretic_activity::do_surface_classify(int verbose_level)
 		Control = Descr->Control;
 	}
 	else {
-		Control = NEW_OBJECT(poset_classification_control);
+		cout << "please use option -poset_classification_control" << endl;
+		exit(1);
+		//Control = NEW_OBJECT(poset_classification_control);
 	}
 
 

@@ -395,17 +395,22 @@ int interface_cryptography::recognize_keyword(int argc, std::string *argv, int i
 	return false;
 }
 
-int interface_cryptography::read_arguments(int argc, std::string *argv, int i0, int verbose_level)
+void interface_cryptography::read_arguments(int argc, std::string *argv, int &i, int verbose_level)
 {
-	int i;
+	//int i;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "interface_cryptography::read_arguments" << endl;
 	}
-	//return 0;
 
-	for (i = i0; i < argc; i++) {
+
+	//for (; i < argc; i++) {
+
+		if (f_v) {
+			cout << "interface_cryptography::read_arguments the next argument is " << argv[i] << endl;
+		}
+
 		if (stringcmp(argv[i], "-cs") == 0) {
 			f_cipher = TRUE;
 			t = substitution;
@@ -649,12 +654,17 @@ int interface_cryptography::read_arguments(int argc, std::string *argv, int i0, 
 			cout << "-affine_sequence " << affine_sequence_a
 					<< " " << affine_sequence_c << " " << affine_sequence_m << endl;
 		}
+#if 0
 		else {
 			break;
 		}
+#endif
 
+	//}
+	if (f_v) {
+		cout << "interface_cryptography::read_arguments done" << endl;
 	}
-	return i;
+	//return i;
 }
 
 void interface_cryptography::worker(int verbose_level)

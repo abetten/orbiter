@@ -332,7 +332,6 @@ MODULES= \
 		DISCRETA/vector.o \
 		top_level/algebra_and_number_theory/algebra_global_with_action.o \
 		top_level/algebra_and_number_theory/character_table_burnside.o \
-		top_level/algebra_and_number_theory/factor_group.o \
 		top_level/algebra_and_number_theory/group_theoretic_activity_description.o \
 		top_level/algebra_and_number_theory/group_theoretic_activity.o \
 		top_level/algebra_and_number_theory/group_theoretic_activity_for_surfaces.o \
@@ -434,6 +433,8 @@ MODULES= \
 		top_level/surfaces/arc_partition.o \
 		top_level/surfaces/classify_double_sixes.o \
 		top_level/surfaces/classify_trihedral_pairs.o \
+		top_level/surfaces/cubic_surface_activity_description.o \
+		top_level/surfaces/cubic_surface_activity.o \
 		top_level/surfaces/six_arcs_not_on_a_conic.o \
 		top_level/surfaces/surface_classify_using_arc.o \
 		top_level/surfaces/surface_classify_wedge.o \

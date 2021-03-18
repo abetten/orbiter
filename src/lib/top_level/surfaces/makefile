@@ -11,6 +11,8 @@ MODULES = \
 	arc_partition.o \
 	classify_double_sixes.o \
 	classify_trihedral_pairs.o \
+	cubic_surface_activity_description.o \
+	cubic_surface_activity.o \
 	six_arcs_not_on_a_conic.o \
 	surface_classify_using_arc.o \
 	surface_classify_wedge.o \

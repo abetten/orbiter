@@ -392,6 +392,58 @@ void classify_trihedral_pairs_early_test_function_type2(long int *S, int len,
 
 
 // #############################################################################
+// cubic_surface_activity_description.cpp
+// #############################################################################
+
+//! description of an activity associated with a cubic surface
+
+
+class cubic_surface_activity_description {
+public:
+
+	int f_report;
+
+	int f_export_points;
+
+	int f_clebsch;
+
+	int f_codes;
+
+	int f_all_quartic_curves;
+
+	cubic_surface_activity_description();
+	~cubic_surface_activity_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+
+};
+
+// #############################################################################
+// cubic_surface_activity.cpp
+// #############################################################################
+
+//! an activity associated with a cubic surface
+
+
+class cubic_surface_activity {
+public:
+
+	cubic_surface_activity_description *Descr;
+	surface_create *SC;
+
+
+	cubic_surface_activity();
+	~cubic_surface_activity();
+	void init(cubic_surface_activity_description *Cubic_surface_activity_description,
+			surface_create *SC, int verbose_level);
+	void perform_activity(int verbose_level);
+};
+
+
+
+
+// #############################################################################
 // six_arcs_not_on_a_conic.cpp
 // #############################################################################
 
@@ -881,13 +933,12 @@ public:
 	surface_object_tangent_cone();
 	~surface_object_tangent_cone();
 	void init(surface_object_with_action *SOA, int verbose_level);
-	void quartic(std::ostream &ost, int pt_orbit, int verbose_level);
+	void quartic(int pt_orbit, int verbose_level);
 	void compute_quartic(int pt_orbit,
-		//int &pt_A, int &pt_B, int *transporter,
-		int *equation, //int *equation_nice,
+		int *equation,
 		int verbose_level);
 	void cheat_sheet_quartic_curve(std::ostream &ost,
-		const char *label_txt, const char *label_tex,
+			std::ostream &ost_curves,
 		int verbose_level);
 
 };
@@ -1016,6 +1067,7 @@ public:
 			std::string &label,
 			std::string &label_tex,
 			int verbose_level);
+	void all_quartic_curves(std::ostream &ost, std::ostream &ost_quartics, int verbose_level);
 	void print_full_del_Pezzo(std::ostream &ost, int verbose_level);
 };
 
@@ -1150,12 +1202,26 @@ public:
 	void report_basics(std::ostream &ost);
 	void report_double_triplets(std::ostream &ost);
 	void report_double_triplets_detailed(std::ostream &ost);
+	void create_surface(
+			surface_create_description *Surface_Descr,
+			surface_create *&SC,
+			int verbose_level);
 	void create_surface_and_do_report(
 			surface_create_description *Surface_Descr,
-			poset_classification_control *Control_six_arcs,
+			int f_has_control_six_arcs, poset_classification_control *Control_six_arcs,
 			int f_surface_clebsch,
 			int f_surface_codes,
 			int f_surface_quartic,
+			int verbose_level);
+	void create_surface_object_with_action(
+			surface_create *SC,
+			surface_object_with_action *&SoA,
+			int verbose_level);
+	void export_points(
+			surface_create *SC,
+			int verbose_level);
+	void do_report(
+			surface_create *SC,
 			int verbose_level);
 	void create_surface_sweep(
 			surface_create_description *Surface_Descr,
