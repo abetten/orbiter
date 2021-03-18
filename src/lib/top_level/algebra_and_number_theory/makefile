@@ -8,7 +8,6 @@ LFLAGS = -lm
 MODULES = \
 	algebra_global_with_action.o \
 	character_table_burnside.o \
-	factor_group.o \
 	group_theoretic_activity_description.o \
 	group_theoretic_activity.o \
 	group_theoretic_activity_for_surfaces.o \

@@ -55,6 +55,10 @@ projective_space_activity_description::projective_space_activity_description()
 	//std::string decomposition_by_element_data;
 	//std::string decomposition_by_element_fname;
 
+
+	f_define_surface = FALSE;
+	//std::string define_surface_label
+	Surface_Descr = NULL;
 }
 
 projective_space_activity_description::~projective_space_activity_description()
@@ -160,6 +164,22 @@ int projective_space_activity_description::read_arguments(
 					<< " " << decomposition_by_element_data
 					<< " " << decomposition_by_element_fname
 					<< endl;
+		}
+		else if (stringcmp(argv[i], "-define_surface") == 0) {
+			f_define_surface = TRUE;
+			cout << "-define_surface, reading extra arguments" << endl;
+
+			define_surface_label.assign(argv[++i]);
+			Surface_Descr = NEW_OBJECT(surface_create_description);
+
+			i += Surface_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
+			cout << "done reading -define_surface " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-define_surface " << define_surface_label << endl;
 		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {

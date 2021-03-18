@@ -211,14 +211,23 @@ int interface_algebra::recognize_keyword(int argc,
 }
 
 
-int interface_algebra::read_arguments(int argc,
-		std::string *argv, int i0, int verbose_level)
+void interface_algebra::read_arguments(int argc,
+		std::string *argv, int &i, int verbose_level)
 {
-	int i;
+	//int i;
+	int f_v = (verbose_level >= 1);
 
-	cout << "interface_algebra::read_arguments" << endl;
+	if (f_v) {
+		cout << "interface_algebra::read_arguments" << endl;
+	}
 
-	for (i = i0; i < argc; i++) {
+	//for (; i < argc; i++) {
+
+		if (f_v) {
+			cout << "interface_algebra::read_arguments the next argument is " << argv[i] << endl;
+		}
+
+
 		if (stringcmp(argv[i], "-linear_group") == 0) {
 			f_linear_group = TRUE;
 			Linear_group_description = NEW_OBJECT(linear_group_description);
@@ -367,11 +376,13 @@ int interface_algebra::read_arguments(int argc,
 			cyclotomic_sets_reps.assign(argv[++i]);
 			cout << "-cyclotomic_sets " << cyclotomic_sets_q << " " << cyclotomic_sets_reps << endl;
 		}
+#if 0
 		else {
 			break;
 		}
-	}
-	return i;
+#endif
+	//}
+	//return i;
 }
 
 

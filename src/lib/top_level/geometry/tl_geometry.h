@@ -317,7 +317,6 @@ void blt_set_classify_early_test_func_callback(long int *S, int len,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
 void blt_set_classify_callback_report(isomorph *Iso, void *data, int verbose_level);
-//void blt_set_callback_subset_orbits(isomorph *Iso, void *data, int verbose_level);
 
 
 // #############################################################################
@@ -332,8 +331,6 @@ class BLT_set_create_description {
 
 public:
 
-	//int f_q;
-	//int q;
 	int f_catalogue;
 	int iso;
 	int f_family;
@@ -616,7 +613,6 @@ public:
 
 	int q;
 	finite_field *F; // do not free
-	//int f_semilinear;
 
 	cubic_curve *CC; // do not free
 
@@ -1117,7 +1113,7 @@ public:
 // singer_cycle.cpp
 // #############################################################################
 
-//! the Singer cycle in PG(n-1,q)
+//! the Singer cycle in a finite projective geometry
 
 
 class singer_cycle {
@@ -1196,7 +1192,6 @@ public:
 	~tensor_classify();
 	void init(
 			finite_field *F, linear_group *LG,
-			//int nb_factors, int n, int q, int depth,
 			int verbose_level);
 	void classify_poset(int depth,
 			poset_classification_control *Control,

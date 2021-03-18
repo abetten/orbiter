@@ -168,12 +168,6 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		print_elements_tex(verbose_level);
 	}
 
-#if 0
-	if (Descr->f_search_subgroup) {
-		search_subgroup(verbose_level);
-	}
-#endif
-
 	if (Descr->f_find_singer_cycle) {
 		find_singer_cycle(verbose_level);
 	}
@@ -1946,7 +1940,9 @@ void group_theoretic_activity::orbits_on_subsets(int verbose_level)
 		Control = Descr->Control;
 	}
 	else {
-		Control = NEW_OBJECT(poset_classification_control);
+		cout << "please use option -poset_classification_control" << endl;
+		exit(1);
+		//Control = NEW_OBJECT(poset_classification_control);
 	}
 
 
@@ -2343,7 +2339,6 @@ void group_theoretic_activity::do_spread_classify(int k, int verbose_level)
 	SC->init(
 			LG,
 			k,
-			//Control,
 			TRUE /* f_recoordinatize */,
 			verbose_level - 1);
 	if (f_v) {
@@ -2390,24 +2385,10 @@ void group_theoretic_activity::do_spread_table_init(int dimension_of_spread_elem
 		cout << "group_theoretic_activity::do_spread_table_init" << endl;
 	}
 
-#if 0
-	poset_classification_control *Control;
-
-	if (!Descr->f_poset_classification_control) {
-		cout << "please use -poset_classification_control <descr> -end" << endl;
-		exit(1);
-	}
-	else {
-		Control = Descr->Control;
-	}
-#endif
-
-
 
 	P = NEW_OBJECT(packing_classify);
 
 	P->spread_table_init(
-			//Control,
 			LG,
 			dimension_of_spread_elements,
 			TRUE /* f_select_spread */, spread_selection_text,
@@ -2628,10 +2609,6 @@ void group_theoretic_activity::do_classify_cubic_curves(
 		cout << "group_theoretic_activity::do_classify_cubic_curves" << endl;
 	}
 
-	//const char *starter_directory_name = "";
-	//char base_fname[1000];
-
-	//snprintf(base_fname, 1000, "cubic_curves_%d", q);
 
 
 	finite_field *F;
@@ -2644,18 +2621,6 @@ void group_theoretic_activity::do_classify_cubic_curves(
 		exit(1);
 	}
 
-#if 0
-	int f_semilinear = FALSE;
-	number_theory_domain NT;
-
-	if (!NT.is_prime(q)) {
-		f_semilinear = TRUE;
-	}
-	finite_field *F;
-
-	F = NEW_OBJECT(finite_field);
-	F->init(q, 0);
-#endif
 
 
 	if (f_v) {
@@ -2687,9 +2652,6 @@ void group_theoretic_activity::do_classify_cubic_curves(
 		cout << "group_theoretic_activity::do_classify_cubic_curves after CCA->init" << endl;
 	}
 
-	//group_theoretic_activity *GTA;
-
-	//GTA = NEW_OBJECT(group_theoretic_activity);
 
 	classify_cubic_curves *CCC;
 
@@ -3222,7 +3184,6 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(int spread_no,
 	translation_plane_via_andre_model *Andre;
 	matrix_group *M; // do not free
 
-	//int f_basis = FALSE;
 	int f_semilinear = FALSE;
 	int n, k, q;
 
@@ -3235,9 +3196,6 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(int spread_no,
 	if (f_v) {
 		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction" << endl;
 	}
-
-	//n = Andre->n;
-	//n1 = n + 1;
 
 	An = A1;
 	An1 = A2;
@@ -3268,25 +3226,14 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(int spread_no,
 
 
 
-#if 0
-	int *data; // do not free
-	int nb_gens, data_size;
-	TP_stab_gens(order_of_plane, spread_no, data, nb_gens, data_size, stab_order);
-	gens = new vector_ge;
-	gens->finite_field_init(An);
-	gens->allocate(nb_gens);
-	cout << "Creating stabilizer generators:" << endl;
-	for (i = 0; i < nb_gens; i++) {
-		An->make_element(gens->ith(i), data + i * data_size, 0 /*verbose_level*/);
-		}
-#else
 	An->stabilizer_of_spread_representative(q, k, spread_no,
 			gens, stab_order, verbose_level);
 
 	stab_go.create_from_base_10_string(stab_order, 0 /* verbose_level */);
-#endif
 
-	cout << "Spread stabilizer has order " << stab_go << endl;
+	if (f_v) {
+		cout << "Spread stabilizer has order " << stab_go << endl;
+	}
 
 	Andre = NEW_OBJECT(translation_plane_via_andre_model);
 

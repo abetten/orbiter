@@ -133,9 +133,12 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 		if (f_v) {
 			cout << "orbiter_top_level_session::parse_and_execute "
 					"cnt = " << cnt << ", i = " << i << endl;
+			if (i < argc) {
+				cout << "orbiter_top_level_session::parse_and_execute next argument is " << Argv[i] << endl;
+			}
 		}
 		if (cnt > 10 && i_prev == i) {
-			cout << "we seem to be stuck in a look" << endl;
+			cout << "orbiter_top_level_session::parse_and_execute we seem to be stuck in a look" << endl;
 			exit(1);
 		}
 		i_prev = i;
@@ -147,15 +150,22 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 			interface_symbol_table Interface_symbol_table;
 			if (Interface_symbol_table.recognize_keyword(argc, Argv, i, verbose_level)) {
 				if (f_v) {
-					cout << "recognizing keyword from Interface_symbol_table" << endl;
+					cout << "orbiter_top_level_session::parse_and_execute recognizing keyword from Interface_symbol_table" << endl;
 				}
-				i = Interface_symbol_table.read_arguments(this, argc, Argv, i, verbose_level);
+				Interface_symbol_table.read_arguments(this, argc, Argv, i, verbose_level);
+				if (f_v) {
+					cout << "orbiter_top_level_session::parse_and_execute after Interface_symbol_table.read_arguments, i=" << i << endl;
+				}
+				if (i < argc) {
+					cout << "orbiter_top_level_session::parse_and_execute next argument is " << Argv[i] << endl;
+				}
 				Interface_symbol_table.worker(this, verbose_level);
+				continue;
 			}
 		}
 
 		if (i < argc) {
-			cout << "next argument is " << Argv[i] << endl;
+			cout << "orbiter_top_level_session::parse_and_execute next argument is " << Argv[i] << endl;
 		}
 
 		if (f_v) {
@@ -166,10 +176,11 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 			interface_algebra Interface_algebra;
 			if (Interface_algebra.recognize_keyword(argc, Argv, i, verbose_level)) {
 				if (f_v) {
-					cout << "recognizing keyword from Interface_algebra" << endl;
+					cout << "orbiter_top_level_session::parse_and_execute recognizing keyword from Interface_algebra" << endl;
 				}
-				i = Interface_algebra.read_arguments(argc, Argv, i, verbose_level);
+				Interface_algebra.read_arguments(argc, Argv, i, verbose_level);
 				Interface_algebra.worker(verbose_level);
+				continue;
 			}
 		}
 
@@ -181,10 +192,11 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 			interface_cryptography Interface_cryptography;
 			if (Interface_cryptography.recognize_keyword(argc, Argv, i, verbose_level)) {
 				if (f_v) {
-					cout << "recognizing keyword from Interface_cryptography" << endl;
+					cout << "orbiter_top_level_session::parse_and_execute recognizing keyword from Interface_cryptography" << endl;
 				}
-				i = Interface_cryptography.read_arguments(argc, Argv, i, verbose_level);
+				Interface_cryptography.read_arguments(argc, Argv, i, verbose_level);
 				Interface_cryptography.worker(verbose_level);
+				continue;
 			}
 		}
 
@@ -196,10 +208,11 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 			interface_combinatorics Interface_combinatorics;
 			if (Interface_combinatorics.recognize_keyword(argc, Argv, i, verbose_level)) {
 				if (f_v) {
-					cout << "recognizing keyword from Interface_combinatorics" << endl;
+					cout << "orbiter_top_level_session::parse_and_execute recognizing keyword from Interface_combinatorics" << endl;
 				}
-				i = Interface_combinatorics.read_arguments(argc, Argv, i, verbose_level);
+				Interface_combinatorics.read_arguments(argc, Argv, i, verbose_level);
 				Interface_combinatorics.worker(verbose_level);
+				continue;
 			}
 		}
 
@@ -211,10 +224,11 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 			interface_coding_theory Interface_coding_theory;
 			if (Interface_coding_theory.recognize_keyword(argc, Argv, i, verbose_level)) {
 				if (f_v) {
-					cout << "recognizing keyword from Interface_coding_theory" << endl;
+					cout << "orbiter_top_level_session::parse_and_execute recognizing keyword from Interface_coding_theory" << endl;
 				}
-				i = Interface_coding_theory.read_arguments(argc, Argv, i, verbose_level);
+				Interface_coding_theory.read_arguments(argc, Argv, i, verbose_level);
 				Interface_coding_theory.worker(verbose_level);
+				continue;
 			}
 		}
 
@@ -226,10 +240,11 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 			interface_povray Interface_povray;
 			if (Interface_povray.recognize_keyword(argc, Argv, i, verbose_level)) {
 				if (f_v) {
-					cout << "recognizing keyword from Interface_povray" << endl;
+					cout << "orbiter_top_level_session::parse_and_execute recognizing keyword from Interface_povray" << endl;
 				}
-				i = Interface_povray.read_arguments(argc, Argv, i, verbose_level);
+				Interface_povray.read_arguments(argc, Argv, i, verbose_level);
 				Interface_povray.worker(verbose_level);
+				continue;
 			}
 		}
 
@@ -240,8 +255,9 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 
 			interface_projective Interface_projective;
 			if (Interface_projective.recognize_keyword(argc, Argv, i, verbose_level)) {
-				i = Interface_projective.read_arguments(argc, Argv, i, verbose_level);
+				Interface_projective.read_arguments(argc, Argv, i, verbose_level);
 				Interface_projective.worker(verbose_level);
+				continue;
 			}
 		}
 
@@ -252,8 +268,9 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 
 			interface_toolkit Interface_toolkit;
 			if (Interface_toolkit.recognize_keyword(argc, Argv, i, verbose_level)) {
-				i = Interface_toolkit.read_arguments(argc, Argv, i, verbose_level);
+				Interface_toolkit.read_arguments(argc, Argv, i, verbose_level);
 				Interface_toolkit.worker(verbose_level);
+				continue;
 			}
 		}
 		cnt++;
@@ -279,20 +296,6 @@ void orbiter_top_level_session::find_symbols(std::vector<std::string> &Labels, i
 {
 
 	Orbiter_session->find_symbols(Labels, Idx);
-#if 0
-	int i, idx;
-
-	Idx = NEW_int(Labels.size());
-
-	for (i = 0; i < Labels.size(); i++) {
-		idx = find_symbol(Labels[i]);
-		if (idx == -1) {
-			cout << "cannot find symbol " << Labels[i] << endl;
-			exit(1);
-		}
-		Idx[i] = idx;
-	}
-#endif
 }
 
 void orbiter_top_level_session::print_symbol_table()

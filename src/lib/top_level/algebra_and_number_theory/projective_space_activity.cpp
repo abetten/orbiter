@@ -100,6 +100,34 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 	}
 
+	else if (Descr->f_define_surface) {
+
+		cout << "f_define_surface label = " << Descr->define_surface_label << endl;
+
+		surface_with_action *Surf_A;
+		surface_create *SC;
+
+		do_create_surface(
+			PA,
+			Descr->Surface_Descr,
+			Surf_A,
+			SC,
+			verbose_level);
+
+		orbiter_symbol_table_entry *Symb;
+
+		Symb = NEW_OBJECT(orbiter_symbol_table_entry);
+
+		Symb->init_cubic_surface(Descr->define_surface_label, SC, verbose_level);
+		if (f_v) {
+			cout << "before Orbiter->add_symbol_table_entry " << Descr->define_surface_label << endl;
+		}
+		Orbiter->add_symbol_table_entry(Descr->define_surface_label, Symb, verbose_level);
+
+
+		//FREE_OBJECT(SC);
+		//FREE_OBJECT(Surf_A);
+	}
 
 	if (f_v) {
 		cout << "projective_space_activity::perform_activity done" << endl;
@@ -1148,6 +1176,81 @@ void projective_space_activity::do_cheat_sheet_for_decomposition_by_element_PG(
 	}
 
 }
+
+
+void projective_space_activity::do_create_surface(
+		projective_space_with_action *PA,
+		surface_create_description *Surface_Descr,
+		surface_with_action *&Surf_A,
+		surface_create *&SC,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_activity::do_create_surface" << endl;
+		cout << "projective_space_activity::do_create_surface verbose_level=" << verbose_level << endl;
+	}
+
+	int q;
+	surface_domain *Surf;
+
+	if (f_v) {
+		cout << "projective_space_activity::do_create_surface before Surface_Descr->get_q" << endl;
+	}
+	q = Surface_Descr->get_q();
+	if (f_v) {
+		cout << "projective_space_activity::do_create_surface q = " << q << endl;
+	}
+
+	if (PA->q != q) {
+		cout << "projective_space_activity::do_create_surface PA->q != q" << endl;
+		exit(1);
+	}
+	if (PA->n != 3) {
+		cout << "projective_space_activity::do_create_surface we need a three-dimensional projective space" << endl;
+		exit(1);
+	}
+
+
+	if (f_v) {
+		cout << "projective_space_activity::do_create_surface before Surf->init" << endl;
+	}
+	Surf = NEW_OBJECT(surface_domain);
+	Surf->init(PA->F, 0 /*verbose_level - 1*/);
+	if (f_v) {
+		cout << "projective_space_activity::do_create_surface after Surf->init" << endl;
+	}
+
+	Surf_A = NEW_OBJECT(surface_with_action);
+
+	if (f_v) {
+		cout << "projective_space_activity::do_create_surface before Surf_A->init" << endl;
+	}
+	Surf_A->init(Surf, PA->A, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "projective_space_activity::do_create_surface after Surf_A->init" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "projective_space_activity::do_create_surface before Surf_A->create_surface_and_do_report" << endl;
+	}
+
+	Surf_A->create_surface(
+			Surface_Descr,
+			SC,
+			verbose_level);
+
+	if (f_v) {
+		cout << "projective_space_activity::do_create_surface after Surf_A->create_surface_and_do_report" << endl;
+	}
+
+	if (f_v) {
+		cout << "projective_space_activity::do_create_surface done" << endl;
+	}
+}
+
 
 
 }}

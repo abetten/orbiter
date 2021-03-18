@@ -137,12 +137,14 @@ void spread_create::init(spread_create_description *Descr, int verbose_level)
 			verbose_level);
 		f_has_group = TRUE;
 
-		sprintf(prefix, "catalogue_q%d_k%d_%d",
-				q, k, Descr->iso);
-		sprintf(label_txt, "catalogue_q%d_k%d_%d",
-				q, k, Descr->iso);
-		sprintf(label_tex, "catalogue\\_q%d\\_k%d\\_%d",
-				q, k, Descr->iso);
+		char str[1000];
+
+		sprintf(str, "catalogue_q%d_k%d_%d", q, k, Descr->iso);
+		prefix.assign(str);
+		sprintf(str, "catalogue_q%d_k%d_%d", q, k, Descr->iso);
+		label_txt.assign(str);
+		sprintf(str, "catalogue\\_q%d\\_k%d\\_%d", q, k, Descr->iso);
+		label_tex.assign(str);
 		if (f_v) {
 			cout << "spread_create::init "
 					"after Sg->stabilizer_of_spread_from_catalogue" << endl;

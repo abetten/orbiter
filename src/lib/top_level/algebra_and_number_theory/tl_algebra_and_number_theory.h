@@ -65,8 +65,10 @@ public:
 	void centralizer(int q, int d,
 			int elt_idx, int verbose_level);
 	void centralizer(int q, int d, int verbose_level);
+#if 0
 	void analyze_group(action *A, sims *S, vector_ge *SG,
 		vector_ge *gens2, int verbose_level);
+#endif
 	void compute_regular_representation(action *A, sims *S,
 		vector_ge *SG, int *&perm, int verbose_level);
 	void presentation(action *A, sims *S, int goi, vector_ge *gens,
@@ -162,7 +164,6 @@ public:
 			int f_load_save,
 			std::string &prefix,
 			orbits_on_something *&Orb,
-			//int f_stabilizer, int f_export_trees, int f_shallow_tree, int f_report,
 			int verbose_level);
 	void find_singer_cycle(linear_group *LG,
 			action *A1, action *A2,
@@ -185,7 +186,7 @@ public:
 // character_table_burnside.cpp
 // #############################################################################
 
-//! character table using Burnside algorithm
+//! character table of a finite group using the algorithm of Burnside
 
 
 class character_table_burnside {
@@ -235,30 +236,6 @@ public:
 
 
 
-// #############################################################################
-// factor_group.cpp
-// #############################################################################
-
-
-//! auxiliary class for create_factor_group, which is used in analyze_group.cpp
-
-struct factor_group {
-	long int goi;
-	action *A;
-	sims *S;
-	int size_subgroup;
-	int *subgroup;
-	long int *all_cosets;
-	int nb_cosets;
-	action *ByRightMultiplication;
-	action *FactorGroup;
-	action *FactorGroupConjugated;
-	long int goi_factor_group;
-};
-
-void create_factor_group(action *A, sims *S, long int goi,
-	int size_subgroup, int *subgroup, factor_group *F, int verbose_level);
-
 
 
 // #############################################################################
@@ -266,7 +243,7 @@ void create_factor_group(action *A, sims *S, long int goi,
 // #############################################################################
 
 
-//! description of a group theoretic activity
+//! description of an activity associated with a linear group
 
 class group_theoretic_activity_description {
 public:
@@ -274,12 +251,9 @@ public:
 	int f_poset_classification_control;
 	poset_classification_control *Control;
 
-	//int f_draw_options;
-	//layered_graph_draw_options *draw_options;
 
 	int f_orbits_on_points;
 	int f_export_trees;
-	//int f_shallow_tree;
 	int f_stabilizer;
 	int f_orbits_on_subsets;
 	int orbits_on_subsets_size;
@@ -290,11 +264,14 @@ public:
 	int f_centralizer_of_element;
 	std::string element_description_text;
 	std::string element_label;
+
 	int f_conjugacy_class_of_element;
 	// uses element_description_text and element_label
+
 	int f_orbits_on_group_elements_under_conjugation;
 	std::string orbits_on_group_elements_under_conjugation_fname;
 	std::string orbits_on_group_elements_under_conjugation_transporter_fname;
+
 	int f_normalizer_of_cyclic_subgroup;
 	int f_find_subgroup;
 	int find_subgroup_order;
@@ -303,26 +280,35 @@ public:
 	int f_test_if_geometric;
 	int test_if_geometric_depth;
 	int f_draw_tree;
+
 	int f_orbit_of;
 	int orbit_of_idx;
+
 	int f_orbits_on_set_system_from_file;
 	std::string orbits_on_set_system_from_file_fname;
 	int orbits_on_set_system_first_column;
 	int orbits_on_set_system_number_of_columns;
+
 	int f_orbit_of_set_from_file;
 	std::string orbit_of_set_from_file_fname;
-	//int f_search_subgroup;
+
 	int f_find_singer_cycle;
+
 	int f_search_element_of_order;
 	int search_element_order;
+
 	int f_element_rank;
 	std::string element_rank_data;
+
 	int f_element_unrank;
 	std::string element_unrank_data;
+
 	int f_conjugacy_class_of;
 	std::string conjugacy_class_of_data;
+
 	int f_isomorphism_Klein_quadric;
 	std::string isomorphism_Klein_quadric_fname;
+
 	int f_print_elements;
 	int f_print_elements_tex;
 
@@ -470,7 +456,7 @@ public:
 // #############################################################################
 
 
-//! perform a group theoretic activity
+//! perform an activity associated with a linear group
 
 class group_theoretic_activity {
 public:
@@ -516,7 +502,6 @@ public:
 			int verbose_level);
 	void print_elements(int verbose_level);
 	void print_elements_tex(int verbose_level);
-	//void search_subgroup(int verbose_level);
 	void find_singer_cycle(int verbose_level);
 	void search_element_of_order(int order, int verbose_level);
 	void element_rank(std::string &elt_data, int verbose_level);
@@ -638,9 +623,7 @@ public:
 
 	finite_field *F;
 	action *A;
-	//matrix_group *M;
 	int n;
-	//int degree;
 	longinteger_object go;
 
 	homogeneous_polynomial_domain *HPD;
@@ -683,7 +666,7 @@ public:
 // orthogonal_space_activity_description.cpp
 // #############################################################################
 
-//! description of an activity that requires an orthogonal space
+//! description of an activity associated with an orthogonal space
 
 
 class orthogonal_space_activity_description {
@@ -726,7 +709,7 @@ public:
 // orthogonal_space_activity.cpp
 // #############################################################################
 
-//! an activity that requires an orthogonal space
+//! an activity associated with an orthogonal space
 
 
 class orthogonal_space_activity {
@@ -753,7 +736,7 @@ public:
 // projective_space_activity_description.cpp
 // #############################################################################
 
-//! description of an activity that requires a projective space
+//! description of an activity associated with a projective space
 
 
 class projective_space_activity_description {
@@ -794,6 +777,9 @@ public:
 	std::string decomposition_by_element_data;
 	std::string decomposition_by_element_fname;
 
+	int f_define_surface;
+	std::string define_surface_label;
+	surface_create_description *Surface_Descr;
 
 	projective_space_activity_description();
 	~projective_space_activity_description();
@@ -809,7 +795,7 @@ public:
 // projective_space_activity.cpp
 // #############################################################################
 
-//! an activity that requires a projective space
+//! an activity associated with a projective space
 
 
 class projective_space_activity {
@@ -862,6 +848,12 @@ public:
 			projective_space_with_action *PA,
 			int decomposition_by_element_power,
 			std::string &decomposition_by_element_data, std::string &fname_base,
+			int verbose_level);
+	void do_create_surface(
+			projective_space_with_action *PA,
+			surface_create_description *Surface_Descr,
+			surface_with_action *&Surf_A,
+			surface_create *&SC,
 			int verbose_level);
 
 

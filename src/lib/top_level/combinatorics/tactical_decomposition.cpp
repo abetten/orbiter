@@ -78,8 +78,7 @@ void tactical_decomposition::init(int nb_rows, int nb_cols,
 
 	if (f_combined_action) {
 		if (f_v) {
-			cout << "tactical_decomposition::init "
-					"setting up schreier" << endl;
+			cout << "tactical_decomposition::init setting up schreier" << endl;
 			}
 		Sch = NEW_OBJECT(schreier);
 		Sch->init(A, verbose_level - 2);

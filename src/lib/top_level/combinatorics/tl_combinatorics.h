@@ -192,10 +192,6 @@ public:
 
 
 	create_graph_description();
-#if 0
-	void read_arguments_from_string(
-			const char *str, int verbose_level);
-#endif
 	int read_arguments(
 		int argc, std::string *argv,
 		int verbose_level);
@@ -401,10 +397,6 @@ public:
 	int *col_type_this_or_bigger; 	// [nb_col_types + 1]
 
 
-	// a file where we print the solution, it has the extension bblt
-	// for "base block line transitive" design
-	//FILE *fp_sol;
-	//char fname_solution_file[1000];
 
 	// for testing the mask:
 	int *f_row_used; // [Xsize];
@@ -472,8 +464,6 @@ public:
 
 	int f_q;
 	int q;
-	//int f_k;
-	//int k;
 	int f_catalogue;
 	int iso;
 	int f_family;
@@ -768,9 +758,6 @@ public:
 	void score_sequence(int n, long int *set, int sz, long int *score, int verbose_level);
 	void draw_graphs(int level,
 			layered_graph_draw_options *draw_options,
-			//double scale,
-			//int xmax_in, int ymax_in, int xmax, int ymax,
-			//int f_embedded, int f_sideways,
 			int verbose_level);
 
 };
@@ -833,8 +820,6 @@ public:
 	int n;
 	int N, N2;
 	bitvector *Bitvec;
-	//int bitvector_length;
-	//uchar *bitvector_adjacency;
 	colored_graph *CG;
 
 	action *A;

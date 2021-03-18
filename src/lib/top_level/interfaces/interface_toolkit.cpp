@@ -145,14 +145,21 @@ int interface_toolkit::recognize_keyword(int argc,
 	return false;
 }
 
-int interface_toolkit::read_arguments(int argc,
-		std::string *argv, int i0, int verbose_level)
+void interface_toolkit::read_arguments(int argc,
+		std::string *argv, int &i, int verbose_level)
 {
-	int i;
+	int f_v = (verbose_level >= 1);
 
-	cout << "interface_toolkit::read_arguments" << endl;
+	if (f_v) {
+		cout << "interface_toolkit::read_arguments" << endl;
+	}
 
-	for (i = i0; i < argc; i++) {
+
+	//for (; i < argc; i++) {
+
+		if (f_v) {
+			cout << "interface_toolkit::read_arguments the next argument is " << argv[i] << endl;
+		}
 		if (stringcmp(argv[i], "-csv_file_select_rows") == 0) {
 			f_csv_file_select_rows = TRUE;
 			csv_file_select_rows_fname.assign(argv[++i]);
@@ -228,12 +235,15 @@ int interface_toolkit::read_arguments(int argc,
 			cout << "-store_as_csv_file " << store_as_csv_file_fname
 					<< " " << store_as_csv_file_m << " " << store_as_csv_file_n << " " << store_as_csv_file_data << endl;
 		}
+#if 0
 		else {
 			break;
 		}
+#endif
+	//}
+	if (f_v) {
+		cout << "interface_toolkit::read_arguments done" << endl;
 	}
-	cout << "interface_toolkit::read_arguments done" << endl;
-	return i;
 }
 
 void interface_toolkit::worker(int verbose_level)
