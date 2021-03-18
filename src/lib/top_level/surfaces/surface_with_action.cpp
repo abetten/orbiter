@@ -1241,31 +1241,40 @@ void surface_with_action::create_surface_sweep(
 		}
 
 		for (beta = 0; beta < q; beta++) {
-			if (beta == 0) {
-				continue;
+		if (beta == 0) {
+			continue;
 			}
-			if (beta == q - 1) {
-				continue;
+		if (beta == F->negate(1)) {
+			continue;
 			}
 
-			for (gamma = 0; gamma < q; gamma++) {
-				if (gamma == 0) {
+			for (delta = 0; delta < q; delta++) {
+				if (delta == 0) {
 					continue;
 				}
-				if (gamma == q - 1) {
+				if (delta == beta) {
+					continue;
+				}
+				if (delta == F->negate(1)) {
+					continue;
+				}
+				if (delta == F-> mult(F->mult(alpha, beta),F->inverse(F->add(alpha,F->negate(1))))) {
 					continue;
 				}
 
-				for (delta = 0; delta < q; delta++) {
-					if (delta == 0) {
+				for (gamma = 0; gamma < q; gamma++) {
+					if (gamma == 0) {
 						continue;
 					}
-					if (delta == beta) {
+					if (gamma == F->negate(1)) {
 						continue;
 					}
-					if (delta == q - 1) {
+					if (gamma == F->mult((F->add3(1,F->mult(F->negate(1),alpha),F->negate(F->mult(alpha,beta)))),
+							F->inverse(F->add3(F->mult(alpha,beta),F->negate(F->mult(alpha,delta)),delta)))) {
 						continue;
 					}
+
+
 
 
 					char str[1000];
