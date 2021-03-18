@@ -5313,7 +5313,29 @@ quartic_curves_q13:
 #		-end 
 
 
-surface_13_0_quartic:
+quartic_curves_13_classify: 
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space 2 F \
+		-with P -do \
+		-projective_space_activity \
+		-canonical_form_PG \
+		-input \
+			-file_of_points surface_catalogue_q13_iso0_quartics.txt \
+			-file_of_points surface_catalogue_q13_iso1_quartics.txt \
+		-end \
+		-classification_prefix quartic_q13 \
+		-report \
+		-end \
+		-end
+	pdflatex quartic_q13_classification.tex
+	open quartic_q13_classification.pdf
+
+
+
+
+
+quartic_curve_13_0_canonical:
 	- $(ORBITER_PATH)/orbiter.out -v 3 \
 		-draw_options -end \
 		-define G -linear_group -PGL 4 13 -wedge -end -end \
