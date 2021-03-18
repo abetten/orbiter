@@ -1321,12 +1321,16 @@ void surface_with_action::create_surface_sweep(
 #endif
 
 
+#if 0
 					if (SC->SO->nb_lines != 15) {
 						continue;
 					}
 					if (SC->SO->SOP->nb_singular_pts) {
 						continue;
 					}
+#endif
+
+
 					vector<long int> Props;
 					vector<long int> Pts;
 
