@@ -145,113 +145,102 @@ void interface_projective::read_arguments(int argc,
 	if (f_v) {
 		cout << "interface_projective::read_arguments" << endl;
 	}
+	if (f_v) {
+		cout << "interface_projective::read_arguments the next argument is " << argv[i] << endl;
+	}
+	if (stringcmp(argv[i], "-create_points_on_quartic") == 0) {
+		f_create_points_on_quartic = TRUE;
+		desired_distance = strtof(argv[++i]);
+		cout << "-create_points_on_quartic " << desired_distance << endl;
+		//i++;
+	}
+	else if (stringcmp(argv[i], "-create_points_on_parabola") == 0) {
+		f_create_points_on_parabola = TRUE;
+		desired_distance = strtof(argv[++i]);
+		parabola_N = strtoi(argv[++i]);
+		parabola_a = strtof(argv[++i]);
+		parabola_b = strtof(argv[++i]);
+		parabola_c = strtof(argv[++i]);
+		cout << "-create_points_on_parabola " << desired_distance << " "
+				<< parabola_N << " " << parabola_a << " "
+				<< parabola_b << " " << parabola_c << endl;
+		//i++;
+	}
+	else if (stringcmp(argv[i], "-smooth_curve") == 0) {
+		f_smooth_curve = TRUE;
+		smooth_curve_label.assign(argv[++i]);
+		desired_distance = strtof(argv[++i]);
+		smooth_curve_N = strtoi(argv[++i]);
+		smooth_curve_boundary = strtof(argv[++i]);
+		smooth_curve_t_min = strtof(argv[++i]);
+		smooth_curve_t_max = strtof(argv[++i]);
 
+		FP_descr = NEW_OBJECT(function_polish_description);
 
+		i += FP_descr->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
 
-	//for (; i < argc; i++) {
-
-		if (f_v) {
-			cout << "interface_projective::read_arguments the next argument is " << argv[i] << endl;
-		}
-		if (stringcmp(argv[i], "-create_points_on_quartic") == 0) {
-			f_create_points_on_quartic = TRUE;
-			desired_distance = strtof(argv[++i]);
-			cout << "-create_points_on_quartic " << desired_distance << endl;
-			//i++;
-		}
-		else if (stringcmp(argv[i], "-create_points_on_parabola") == 0) {
-			f_create_points_on_parabola = TRUE;
-			desired_distance = strtof(argv[++i]);
-			parabola_N = strtoi(argv[++i]);
-			parabola_a = strtof(argv[++i]);
-			parabola_b = strtof(argv[++i]);
-			parabola_c = strtof(argv[++i]);
-			cout << "-create_points_on_parabola " << desired_distance << " "
-					<< parabola_N << " " << parabola_a << " "
-					<< parabola_b << " " << parabola_c << endl;
-			//i++;
-		}
-		else if (stringcmp(argv[i], "-smooth_curve") == 0) {
-			f_smooth_curve = TRUE;
-			smooth_curve_label.assign(argv[++i]);
-			desired_distance = strtof(argv[++i]);
-			smooth_curve_N = strtoi(argv[++i]);
-			smooth_curve_boundary = strtof(argv[++i]);
-			smooth_curve_t_min = strtof(argv[++i]);
-			smooth_curve_t_max = strtof(argv[++i]);
-
-			FP_descr = NEW_OBJECT(function_polish_description);
-
-			i += FP_descr->read_arguments(argc - (i + 1),
+		cout << "-smooth_curve "
+				<< smooth_curve_label << " "
+				<< desired_distance << " "
+				<< smooth_curve_N << " "
+				<< smooth_curve_boundary << " "
+				<< smooth_curve_t_min << " "
+				<< smooth_curve_t_max << " "
+				<< endl;
+		//i++;
+	}
+	else if (stringcmp(argv[i], "-create_spread") == 0) {
+		f_create_spread = TRUE;
+		cout << "-create_spread" << endl;
+		Spread_create_description = NEW_OBJECT(spread_create_description);
+		i += Spread_create_description->read_arguments(
+				argc - (i - 1),
 				argv + i + 1, verbose_level);
+		cout << "interface_combinatorics::read_arguments finished "
+				"reading -create_spread" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+	}
+	else if (stringcmp(argv[i], "-transform") == 0) {
 
-			cout << "-smooth_curve "
-					<< smooth_curve_label << " "
-					<< desired_distance << " "
-					<< smooth_curve_N << " "
-					<< smooth_curve_boundary << " "
-					<< smooth_curve_t_min << " "
-					<< smooth_curve_t_max << " "
-					<< endl;
-			//i++;
-		}
-		else if (stringcmp(argv[i], "-create_spread") == 0) {
-			f_create_spread = TRUE;
-			cout << "-create_spread" << endl;
-			Spread_create_description = NEW_OBJECT(spread_create_description);
-			i += Spread_create_description->read_arguments(
-					argc - (i - 1),
-					argv + i + 1, verbose_level);
-			cout << "interface_combinatorics::read_arguments finished "
-					"reading -create_spread" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-transform") == 0) {
+		string s;
 
-			string s;
+		s.assign(argv[++i]);
+		transform_coeffs.push_back(s);
+		f_inverse_transform.push_back(FALSE);
+		cout << "-transform " << transform_coeffs[transform_coeffs.size() - 1] << endl;
+	}
+	else if (stringcmp(argv[i], "-transform_inverse") == 0) {
+		string s;
 
-			s.assign(argv[++i]);
-			transform_coeffs.push_back(s);
-			f_inverse_transform.push_back(FALSE);
-			cout << "-transform " << transform_coeffs[transform_coeffs.size() - 1] << endl;
-		}
-		else if (stringcmp(argv[i], "-transform_inverse") == 0) {
-			string s;
-
-			s.assign(argv[++i]);
-			transform_coeffs.push_back(s);
-			f_inverse_transform.push_back(TRUE);
-			cout << "-transform_inverse " << transform_coeffs[transform_coeffs.size() - 1] << endl;
-		}
-		else if (stringcmp(argv[i], "-make_table_of_surfaces") == 0) {
-			f_make_table_of_surfaces = TRUE;
-			cout << "-make_table_of_surfaces" << endl;
-		}
-		else if (stringcmp(argv[i], "-create_surface_atlas") == 0) {
-			f_create_surface_atlas = TRUE;
-			create_surface_atlas_q_max = strtoi(argv[++i]);
-			cout << "-create_surface_atlas " << create_surface_atlas_q_max << endl;
-		}
-		else if (stringcmp(argv[i], "-create_surface_reports") == 0) {
-			f_create_surface_reports = TRUE;
-			create_surface_atlas_q_max = strtoi(argv[++i]);
-			cout << "-create_surface_reports " << create_surface_atlas_q_max << endl;
-		}
-		else if (stringcmp(argv[i], "-create_dickson_atlas") == 0) {
-			f_create_dickson_atlas = TRUE;
-			cout << "-create_dickson_atlas " << endl;
-			//i++;
-		}
-#if 0
-		else {
-			break;
-		}
-#endif
-	//}
+		s.assign(argv[++i]);
+		transform_coeffs.push_back(s);
+		f_inverse_transform.push_back(TRUE);
+		cout << "-transform_inverse " << transform_coeffs[transform_coeffs.size() - 1] << endl;
+	}
+	else if (stringcmp(argv[i], "-make_table_of_surfaces") == 0) {
+		f_make_table_of_surfaces = TRUE;
+		cout << "-make_table_of_surfaces" << endl;
+	}
+	else if (stringcmp(argv[i], "-create_surface_atlas") == 0) {
+		f_create_surface_atlas = TRUE;
+		create_surface_atlas_q_max = strtoi(argv[++i]);
+		cout << "-create_surface_atlas " << create_surface_atlas_q_max << endl;
+	}
+	else if (stringcmp(argv[i], "-create_surface_reports") == 0) {
+		f_create_surface_reports = TRUE;
+		create_surface_atlas_q_max = strtoi(argv[++i]);
+		cout << "-create_surface_reports " << create_surface_atlas_q_max << endl;
+	}
+	else if (stringcmp(argv[i], "-create_dickson_atlas") == 0) {
+		f_create_dickson_atlas = TRUE;
+		cout << "-create_dickson_atlas " << endl;
+		//i++;
+	}
 	if (f_v) {
 		cout << "interface_projective::read_arguments done" << endl;
 	}
