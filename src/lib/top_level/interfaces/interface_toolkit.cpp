@@ -154,93 +154,84 @@ void interface_toolkit::read_arguments(int argc,
 		cout << "interface_toolkit::read_arguments" << endl;
 	}
 
+	if (f_v) {
+		cout << "interface_toolkit::read_arguments the next argument is " << argv[i] << endl;
+	}
+	if (stringcmp(argv[i], "-csv_file_select_rows") == 0) {
+		f_csv_file_select_rows = TRUE;
+		csv_file_select_rows_fname.assign(argv[++i]);
+		csv_file_select_rows_text.assign(argv[++i]);
+		cout << "-csv_file_select_rows " << csv_file_select_rows_fname << " " << csv_file_select_rows_text << endl;
+	}
+	else if (stringcmp(argv[i], "-csv_file_select_cols") == 0) {
+		f_csv_file_select_cols = TRUE;
+		csv_file_select_cols_fname.assign(argv[++i]);
+		csv_file_select_cols_text.assign(argv[++i]);
+		cout << "-csv_file_select_cols " << csv_file_select_cols_fname << " " << csv_file_select_cols_text << endl;
+	}
+	else if (stringcmp(argv[i], "-csv_file_select_rows_and_cols") == 0) {
+		f_csv_file_select_rows_and_cols = TRUE;
+		csv_file_select_rows_and_cols_fname.assign(argv[++i]);
+		csv_file_select_rows_and_cols_R_text.assign(argv[++i]);
+		csv_file_select_rows_and_cols_C_text.assign(argv[++i]);
+		cout << "-csv_file_select_rows_and_cols "
+				<< csv_file_select_rows_and_cols_fname
+				<< " " << csv_file_select_rows_and_cols_R_text
+				<< " " << csv_file_select_rows_and_cols_C_text
+				<< endl;
+	}
+	else if (stringcmp(argv[i], "-csv_file_join") == 0) {
+		string s;
 
-	//for (; i < argc; i++) {
-
-		if (f_v) {
-			cout << "interface_toolkit::read_arguments the next argument is " << argv[i] << endl;
-		}
-		if (stringcmp(argv[i], "-csv_file_select_rows") == 0) {
-			f_csv_file_select_rows = TRUE;
-			csv_file_select_rows_fname.assign(argv[++i]);
-			csv_file_select_rows_text.assign(argv[++i]);
-			cout << "-csv_file_select_rows " << csv_file_select_rows_fname << " " << csv_file_select_rows_text << endl;
-		}
-		else if (stringcmp(argv[i], "-csv_file_select_cols") == 0) {
-			f_csv_file_select_cols = TRUE;
-			csv_file_select_cols_fname.assign(argv[++i]);
-			csv_file_select_cols_text.assign(argv[++i]);
-			cout << "-csv_file_select_cols " << csv_file_select_cols_fname << " " << csv_file_select_cols_text << endl;
-		}
-		else if (stringcmp(argv[i], "-csv_file_select_rows_and_cols") == 0) {
-			f_csv_file_select_rows_and_cols = TRUE;
-			csv_file_select_rows_and_cols_fname.assign(argv[++i]);
-			csv_file_select_rows_and_cols_R_text.assign(argv[++i]);
-			csv_file_select_rows_and_cols_C_text.assign(argv[++i]);
-			cout << "-csv_file_select_rows_and_cols "
-					<< csv_file_select_rows_and_cols_fname
-					<< " " << csv_file_select_rows_and_cols_R_text
-					<< " " << csv_file_select_rows_and_cols_C_text
-					<< endl;
-		}
-		else if (stringcmp(argv[i], "-csv_file_join") == 0) {
-			string s;
-
-			f_csv_file_join = TRUE;
-			s.assign(argv[++i]);
-			csv_file_join_fname.push_back(s);
-			s.assign(argv[++i]);
-			csv_file_join_identifier.push_back(s);
-			cout << "-join " << csv_file_join_fname[csv_file_join_fname.size() - 1] << " "
-					<< csv_file_join_identifier[csv_file_join_identifier.size() - 1] << endl;
-		}
-		else if (stringcmp(argv[i], "-csv_file_latex") == 0) {
-			f_csv_file_latex = TRUE;
-			csv_file_latex_fname.assign(argv[++i]);
-			cout << "-csv_file_latex " << csv_file_latex_fname << endl;
-		}
-		else if (stringcmp(argv[i], "-draw_matrix") == 0) {
-			f_draw_matrix = TRUE;
-			fname.assign(argv[++i]);
-			box_width = strtoi(argv[++i]);
-			bit_depth = strtoi(argv[++i]);
-			cout << "-draw_matrix " << fname << " " << box_width << " " << bit_depth << endl;
-		}
-		else if (stringcmp(argv[i], "-reformat") == 0) {
-			f_reformat = TRUE;
-			reformat_fname_in.assign(argv[++i]);
-			reformat_fname_out.assign(argv[++i]);
-			reformat_nb_cols = strtoi(argv[++i]);
-			cout << "-reformat " << reformat_fname_in << " " << reformat_fname_out << " " << reformat_nb_cols << endl;
-		}
-		else if (stringcmp(argv[i], "-split_by_values") == 0) {
-			f_split_by_values = TRUE;
-			split_by_values_fname_in.assign(argv[++i]);
-			cout << "-split_by_values " << split_by_values_fname_in << endl;
-		}
-		else if (stringcmp(argv[i], "-draw_matrix_partition") == 0) {
-			f_draw_matrix_partition = TRUE;
-			draw_matrix_partition_width = strtoi(argv[++i]);
-			draw_matrix_partition_rows.assign(argv[++i]);
-			draw_matrix_partition_cols.assign(argv[++i]);
-			cout << "-draw_matrix_partition " << draw_matrix_partition_rows
-					<< " " << draw_matrix_partition_cols << endl;
-		}
-		else if (stringcmp(argv[i], "-store_as_csv_file") == 0) {
-			f_store_as_csv_file = TRUE;
-			store_as_csv_file_fname.assign(argv[++i]);
-			store_as_csv_file_m = strtoi(argv[++i]);
-			store_as_csv_file_n = strtoi(argv[++i]);
-			store_as_csv_file_data.assign(argv[++i]);
-			cout << "-store_as_csv_file " << store_as_csv_file_fname
-					<< " " << store_as_csv_file_m << " " << store_as_csv_file_n << " " << store_as_csv_file_data << endl;
-		}
-#if 0
-		else {
-			break;
-		}
-#endif
-	//}
+		f_csv_file_join = TRUE;
+		s.assign(argv[++i]);
+		csv_file_join_fname.push_back(s);
+		s.assign(argv[++i]);
+		csv_file_join_identifier.push_back(s);
+		cout << "-join " << csv_file_join_fname[csv_file_join_fname.size() - 1] << " "
+				<< csv_file_join_identifier[csv_file_join_identifier.size() - 1] << endl;
+	}
+	else if (stringcmp(argv[i], "-csv_file_latex") == 0) {
+		f_csv_file_latex = TRUE;
+		csv_file_latex_fname.assign(argv[++i]);
+		cout << "-csv_file_latex " << csv_file_latex_fname << endl;
+	}
+	else if (stringcmp(argv[i], "-draw_matrix") == 0) {
+		f_draw_matrix = TRUE;
+		fname.assign(argv[++i]);
+		box_width = strtoi(argv[++i]);
+		bit_depth = strtoi(argv[++i]);
+		cout << "-draw_matrix " << fname << " " << box_width << " " << bit_depth << endl;
+	}
+	else if (stringcmp(argv[i], "-reformat") == 0) {
+		f_reformat = TRUE;
+		reformat_fname_in.assign(argv[++i]);
+		reformat_fname_out.assign(argv[++i]);
+		reformat_nb_cols = strtoi(argv[++i]);
+		cout << "-reformat " << reformat_fname_in << " " << reformat_fname_out << " " << reformat_nb_cols << endl;
+	}
+	else if (stringcmp(argv[i], "-split_by_values") == 0) {
+		f_split_by_values = TRUE;
+		split_by_values_fname_in.assign(argv[++i]);
+		cout << "-split_by_values " << split_by_values_fname_in << endl;
+	}
+	else if (stringcmp(argv[i], "-draw_matrix_partition") == 0) {
+		f_draw_matrix_partition = TRUE;
+		draw_matrix_partition_width = strtoi(argv[++i]);
+		draw_matrix_partition_rows.assign(argv[++i]);
+		draw_matrix_partition_cols.assign(argv[++i]);
+		cout << "-draw_matrix_partition " << draw_matrix_partition_rows
+				<< " " << draw_matrix_partition_cols << endl;
+	}
+	else if (stringcmp(argv[i], "-store_as_csv_file") == 0) {
+		f_store_as_csv_file = TRUE;
+		store_as_csv_file_fname.assign(argv[++i]);
+		store_as_csv_file_m = strtoi(argv[++i]);
+		store_as_csv_file_n = strtoi(argv[++i]);
+		store_as_csv_file_data.assign(argv[++i]);
+		cout << "-store_as_csv_file " << store_as_csv_file_fname
+				<< " " << store_as_csv_file_m << " " << store_as_csv_file_n << " " << store_as_csv_file_data << endl;
+	}
 	if (f_v) {
 		cout << "interface_toolkit::read_arguments done" << endl;
 	}

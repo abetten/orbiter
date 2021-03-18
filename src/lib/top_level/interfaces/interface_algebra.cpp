@@ -214,175 +214,166 @@ int interface_algebra::recognize_keyword(int argc,
 void interface_algebra::read_arguments(int argc,
 		std::string *argv, int &i, int verbose_level)
 {
-	//int i;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "interface_algebra::read_arguments" << endl;
 	}
 
-	//for (; i < argc; i++) {
 
-		if (f_v) {
-			cout << "interface_algebra::read_arguments the next argument is " << argv[i] << endl;
-		}
-
-
-		if (stringcmp(argv[i], "-linear_group") == 0) {
-			f_linear_group = TRUE;
-			Linear_group_description = NEW_OBJECT(linear_group_description);
-			cout << "reading -linear_group" << endl;
-			i += Linear_group_description->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			cout << "-linear_group" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-group_theoretic_activities") == 0) {
-			f_group_theoretic_activity = TRUE;
-			Group_theoretic_activity_description =
-					NEW_OBJECT(group_theoretic_activity_description);
-			cout << "reading -group_theoretic_activities" << endl;
-			i += Group_theoretic_activity_description->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			cout << "-group_theoretic_activities" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-finite_field_activity") == 0) {
-			f_finite_field_activity = TRUE;
-			Finite_field_activity_description =
-					NEW_OBJECT(finite_field_activity_description);
-			cout << "reading -finite_field_activity" << endl;
-			i += Finite_field_activity_description->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			cout << "-finite_field_activity" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-poset_classification_control") == 0) {
-			f_poset_classification_control = TRUE;
-			Control = NEW_OBJECT(poset_classification_control);
-			cout << "reading -poset_classification_control" << endl;
-			i += Control->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			cout << "done reading -poset_classification_control " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-count_subprimitive") == 0) {
-			f_count_subprimitive = TRUE;
-			count_subprimitive_Q_max = strtoi(argv[++i]);
-			count_subprimitive_H_max = strtoi(argv[++i]);
-			cout << "-count_subprimitive "
-					<< count_subprimitive_Q_max
-					<< " " << count_subprimitive_H_max
-					<< endl;
-		}
-		else if (stringcmp(argv[i], "-equivalence_class_of_fractions") == 0) {
-			f_equivalence_class_of_fractions = TRUE;
-			equivalence_class_of_fractions_N = strtoi(argv[++i]);
-			cout << "-equivalence_class_of_fractions " << equivalence_class_of_fractions_N
-					<< endl;
-		}
-		else if (stringcmp(argv[i], "-character_table_symmetric_group") == 0) {
-			f_character_table_symmetric_group = TRUE;
-			deg = strtoi(argv[++i]);
-			cout << "-character_table_symmetric_group " << deg << endl;
-		}
-		else if (stringcmp(argv[i], "-make_A5_in_PSL_2_q") == 0) {
-			f_make_A5_in_PSL_2_q = TRUE;
-			q = strtoi(argv[++i]);
-			cout << "-make_A5_in_PSL_2_q " << q << endl;
-		}
-		else if (stringcmp(argv[i], "-search_for_primitive_polynomial_in_range") == 0) {
-			f_search_for_primitive_polynomial_in_range = TRUE;
-			p_min = strtoi(argv[++i]);
-			p_max = strtoi(argv[++i]);
-			deg_min = strtoi(argv[++i]);
-			deg_max = strtoi(argv[++i]);
-			cout << "-search_for_primitive_polynomial_in_range " << p_min
-					<< " " << p_max << " " << deg_min << " " << deg_max << " " << endl;
-		}
-
-		else if (stringcmp(argv[i], "-Dedekind_numbers") == 0) {
-			f_Dedekind_numbers = TRUE;
-			Dedekind_n_min = strtoi(argv[++i]);
-			Dedekind_n_max = strtoi(argv[++i]);
-			Dedekind_q_min = strtoi(argv[++i]);
-			Dedekind_q_max = strtoi(argv[++i]);
-			cout << "-Dedekind_numbers " << Dedekind_n_min
-					<< " " << Dedekind_n_max << " " << Dedekind_q_min << " " << Dedekind_q_max << " " << endl;
-		}
-		else if (stringcmp(argv[i], "-order_of_q_mod_n") == 0) {
-			f_order_of_q_mod_n = TRUE;
-			order_of_q_mod_n_q = strtoi(argv[++i]);
-			order_of_q_mod_n_n_min = strtoi(argv[++i]);
-			order_of_q_mod_n_n_max = strtoi(argv[++i]);
-			cout << "-order_of_q_mod_n " << order_of_q_mod_n_q
-					<< " " << order_of_q_mod_n_n_min << " " << order_of_q_mod_n_n_max << " " << endl;
-		}
+	if (f_v) {
+		cout << "interface_algebra::read_arguments the next argument is " << argv[i] << endl;
+	}
 
 
+	if (stringcmp(argv[i], "-linear_group") == 0) {
+		f_linear_group = TRUE;
+		Linear_group_description = NEW_OBJECT(linear_group_description);
+		cout << "reading -linear_group" << endl;
+		i += Linear_group_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
 
-		else if (stringcmp(argv[i], "-young_symmetrizer") == 0) {
-			f_young_symmetrizer = TRUE;
-			draw_mod_n_fname.assign(argv[++i]);
-			young_symmetrizer_n = strtoi(argv[++i]);
-			cout << "-young_symmetrizer " << young_symmetrizer_n << endl;
+		cout << "-linear_group" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
 		}
-		else if (stringcmp(argv[i], "-young_symmetrizer_sym_4") == 0) {
-			f_young_symmetrizer_sym_4 = TRUE;
-			cout << "-young_symmetrizer_sym_4 " << endl;
+	}
+	else if (stringcmp(argv[i], "-group_theoretic_activities") == 0) {
+		f_group_theoretic_activity = TRUE;
+		Group_theoretic_activity_description =
+				NEW_OBJECT(group_theoretic_activity_description);
+		cout << "reading -group_theoretic_activities" << endl;
+		i += Group_theoretic_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		cout << "-group_theoretic_activities" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
 		}
-		else if (stringcmp(argv[i], "-draw_mod_n") == 0) {
-			f_draw_mod_n = TRUE;
-			draw_mod_n = strtoi(argv[++i]);
-			draw_mod_n_fname.assign(argv[++i]);
-			cout << "-draw_mod_n " << draw_mod_n << " " << draw_mod_n_fname << endl;
+	}
+	else if (stringcmp(argv[i], "-finite_field_activity") == 0) {
+		f_finite_field_activity = TRUE;
+		Finite_field_activity_description =
+				NEW_OBJECT(finite_field_activity_description);
+		cout << "reading -finite_field_activity" << endl;
+		i += Finite_field_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		cout << "-finite_field_activity" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
 		}
-		else if (stringcmp(argv[i], "-draw_mod_n_inverse") == 0) {
-			f_draw_mod_n_inverse = TRUE;
-			cout << "-draw_mod_n_inverse " << endl;
+	}
+	else if (stringcmp(argv[i], "-poset_classification_control") == 0) {
+		f_poset_classification_control = TRUE;
+		Control = NEW_OBJECT(poset_classification_control);
+		cout << "reading -poset_classification_control" << endl;
+		i += Control->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		cout << "done reading -poset_classification_control " << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
 		}
-		else if (stringcmp(argv[i], "-draw_mod_n_additive_inverse") == 0) {
-			f_draw_mod_n_additive_inverse = TRUE;
-			cout << "-draw_mod_n_additive_inverse " << endl;
-		}
-		else if (stringcmp(argv[i], "-draw_mod_n_power_cycle") == 0) {
-			f_draw_mod_n_power_cycle = TRUE;
-			f_draw_mod_n_power_cycle_base = strtoi(argv[++i]);
-			cout << "-draw_mod_n_power_cycle " << endl;
-		}
-		else if (stringcmp(argv[i], "-cyclotomic_sets") == 0) {
-			f_cyclotomic_sets = TRUE;
-			cyclotomic_sets_q = strtoi(argv[++i]);
-			cyclotomic_sets_reps.assign(argv[++i]);
-			cout << "-cyclotomic_sets " << cyclotomic_sets_q << " " << cyclotomic_sets_reps << endl;
-		}
-#if 0
-		else {
-			break;
-		}
-#endif
-	//}
-	//return i;
+	}
+	else if (stringcmp(argv[i], "-count_subprimitive") == 0) {
+		f_count_subprimitive = TRUE;
+		count_subprimitive_Q_max = strtoi(argv[++i]);
+		count_subprimitive_H_max = strtoi(argv[++i]);
+		cout << "-count_subprimitive "
+				<< count_subprimitive_Q_max
+				<< " " << count_subprimitive_H_max
+				<< endl;
+	}
+	else if (stringcmp(argv[i], "-equivalence_class_of_fractions") == 0) {
+		f_equivalence_class_of_fractions = TRUE;
+		equivalence_class_of_fractions_N = strtoi(argv[++i]);
+		cout << "-equivalence_class_of_fractions " << equivalence_class_of_fractions_N
+				<< endl;
+	}
+	else if (stringcmp(argv[i], "-character_table_symmetric_group") == 0) {
+		f_character_table_symmetric_group = TRUE;
+		deg = strtoi(argv[++i]);
+		cout << "-character_table_symmetric_group " << deg << endl;
+	}
+	else if (stringcmp(argv[i], "-make_A5_in_PSL_2_q") == 0) {
+		f_make_A5_in_PSL_2_q = TRUE;
+		q = strtoi(argv[++i]);
+		cout << "-make_A5_in_PSL_2_q " << q << endl;
+	}
+	else if (stringcmp(argv[i], "-search_for_primitive_polynomial_in_range") == 0) {
+		f_search_for_primitive_polynomial_in_range = TRUE;
+		p_min = strtoi(argv[++i]);
+		p_max = strtoi(argv[++i]);
+		deg_min = strtoi(argv[++i]);
+		deg_max = strtoi(argv[++i]);
+		cout << "-search_for_primitive_polynomial_in_range " << p_min
+				<< " " << p_max << " " << deg_min << " " << deg_max << " " << endl;
+	}
+
+	else if (stringcmp(argv[i], "-Dedekind_numbers") == 0) {
+		f_Dedekind_numbers = TRUE;
+		Dedekind_n_min = strtoi(argv[++i]);
+		Dedekind_n_max = strtoi(argv[++i]);
+		Dedekind_q_min = strtoi(argv[++i]);
+		Dedekind_q_max = strtoi(argv[++i]);
+		cout << "-Dedekind_numbers " << Dedekind_n_min
+				<< " " << Dedekind_n_max << " " << Dedekind_q_min << " " << Dedekind_q_max << " " << endl;
+	}
+	else if (stringcmp(argv[i], "-order_of_q_mod_n") == 0) {
+		f_order_of_q_mod_n = TRUE;
+		order_of_q_mod_n_q = strtoi(argv[++i]);
+		order_of_q_mod_n_n_min = strtoi(argv[++i]);
+		order_of_q_mod_n_n_max = strtoi(argv[++i]);
+		cout << "-order_of_q_mod_n " << order_of_q_mod_n_q
+				<< " " << order_of_q_mod_n_n_min << " " << order_of_q_mod_n_n_max << " " << endl;
+	}
+
+
+
+	else if (stringcmp(argv[i], "-young_symmetrizer") == 0) {
+		f_young_symmetrizer = TRUE;
+		draw_mod_n_fname.assign(argv[++i]);
+		young_symmetrizer_n = strtoi(argv[++i]);
+		cout << "-young_symmetrizer " << young_symmetrizer_n << endl;
+	}
+	else if (stringcmp(argv[i], "-young_symmetrizer_sym_4") == 0) {
+		f_young_symmetrizer_sym_4 = TRUE;
+		cout << "-young_symmetrizer_sym_4 " << endl;
+	}
+	else if (stringcmp(argv[i], "-draw_mod_n") == 0) {
+		f_draw_mod_n = TRUE;
+		draw_mod_n = strtoi(argv[++i]);
+		draw_mod_n_fname.assign(argv[++i]);
+		cout << "-draw_mod_n " << draw_mod_n << " " << draw_mod_n_fname << endl;
+	}
+	else if (stringcmp(argv[i], "-draw_mod_n_inverse") == 0) {
+		f_draw_mod_n_inverse = TRUE;
+		cout << "-draw_mod_n_inverse " << endl;
+	}
+	else if (stringcmp(argv[i], "-draw_mod_n_additive_inverse") == 0) {
+		f_draw_mod_n_additive_inverse = TRUE;
+		cout << "-draw_mod_n_additive_inverse " << endl;
+	}
+	else if (stringcmp(argv[i], "-draw_mod_n_power_cycle") == 0) {
+		f_draw_mod_n_power_cycle = TRUE;
+		f_draw_mod_n_power_cycle_base = strtoi(argv[++i]);
+		cout << "-draw_mod_n_power_cycle " << endl;
+	}
+	else if (stringcmp(argv[i], "-cyclotomic_sets") == 0) {
+		f_cyclotomic_sets = TRUE;
+		cyclotomic_sets_q = strtoi(argv[++i]);
+		cyclotomic_sets_reps.assign(argv[++i]);
+		cout << "-cyclotomic_sets " << cyclotomic_sets_q << " " << cyclotomic_sets_reps << endl;
+	}
 }
 
 

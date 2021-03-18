@@ -302,7 +302,6 @@ int interface_combinatorics::recognize_keyword(int argc,
 void interface_combinatorics::read_arguments(int argc,
 		std::string *argv, int &i, int verbose_level)
 {
-	//int i;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
@@ -310,309 +309,299 @@ void interface_combinatorics::read_arguments(int argc,
 	}
 
 
+	if (f_v) {
+		cout << "interface_combinatorics::read_arguments the next argument is " << argv[i] << endl;
+	}
 
-	//for (; i < argc; i++) {
 
-		if (f_v) {
-			cout << "interface_combinatorics::read_arguments the next argument is " << argv[i] << endl;
+	if (stringcmp(argv[i], "-create_combinatorial_object") == 0) {
+		f_create_combinatorial_object = TRUE;
+		cout << "-create_combinatorial_object " << endl;
+		Combinatorial_object_description = NEW_OBJECT(combinatorial_object_description);
+		i += Combinatorial_object_description->read_arguments(argc - i - 1,
+				argv + i + 1, verbose_level);
+		cout << "interface_combinatorics::read_arguments finished "
+				"reading -create_combinatorial_object" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
 		}
+	}
+	else if (stringcmp(argv[i], "-diophant") == 0) {
+		f_diophant = TRUE;
+		cout << "-diophant " << endl;
+		Diophant_description = NEW_OBJECT(diophant_description);
+		i += Diophant_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
 
-
-		if (stringcmp(argv[i], "-create_combinatorial_object") == 0) {
-			f_create_combinatorial_object = TRUE;
-			cout << "-create_combinatorial_object " << endl;
-			Combinatorial_object_description = NEW_OBJECT(combinatorial_object_description);
-			i += Combinatorial_object_description->read_arguments(argc - i - 1,
-					argv + i + 1, verbose_level);
-			cout << "interface_combinatorics::read_arguments finished "
-					"reading -create_combinatorial_object" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
+		cout << "interface_combinatorics::read_arguments finished "
+				"reading -diophant" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
 		}
-		else if (stringcmp(argv[i], "-diophant") == 0) {
-			f_diophant = TRUE;
-			cout << "-diophant " << endl;
-			Diophant_description = NEW_OBJECT(diophant_description);
-			i += Diophant_description->read_arguments(argc - (i + 1),
+	}
+	else if (stringcmp(argv[i], "-diophant_activity") == 0) {
+		f_diophant_activity = TRUE;
+		cout << "-diophant_activity " << endl;
+		Diophant_activity_description = NEW_OBJECT(diophant_activity_description);
+		i += Diophant_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		cout << "interface_combinatorics::read_arguments finished "
+				"reading -diophant_activity" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+	}
+	else if (stringcmp(argv[i], "-save") == 0) {
+		f_save = TRUE;
+		fname_prefix.assign(argv[++i]);
+		cout << "-save " << fname_prefix << endl;
+	}
+	else if (stringcmp(argv[i], "-process_combinatorial_objects") == 0) {
+		f_process_combinatorial_objects = TRUE;
+
+		cout << "-process_combinatorial_objects " << endl;
+
+		Job_description = NEW_OBJECT(projective_space_job_description);
+		i += Job_description->read_arguments(argc - i - 1,
+			argv + i + 1, verbose_level);
+		cout << "interface_combinatorics::read_arguments finished "
+				"reading -process_combinatorial_objects" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+	}
+	else if (stringcmp(argv[i], "-bent") == 0) {
+		f_bent = TRUE;
+		bent_n = strtoi(argv[++i]);
+		cout << "-bent " << bent_n << endl;
+	}
+	else if (stringcmp(argv[i], "-random_permutation") == 0) {
+		f_random_permutation = TRUE;
+		random_permutation_degree = strtoi(argv[++i]);
+		random_permutation_fname_csv.assign(argv[++i]);
+		cout << "-random_permutation " << random_permutation_degree << endl;
+	}
+	else if (stringcmp(argv[i], "-create_graph") == 0) {
+		f_create_graph = TRUE;
+
+		cout << "-create_graph " << endl;
+
+		Create_graph_description = NEW_OBJECT(create_graph_description);
+		i += Create_graph_description->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
-			cout << "interface_combinatorics::read_arguments finished "
-					"reading -diophant" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
+		cout << "interface_combinatorics::read_arguments finished "
+				"reading -create_graph" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
 		}
-		else if (stringcmp(argv[i], "-diophant_activity") == 0) {
-			f_diophant_activity = TRUE;
-			cout << "-diophant_activity " << endl;
-			Diophant_activity_description = NEW_OBJECT(diophant_activity_description);
-			i += Diophant_activity_description->read_arguments(argc - (i + 1),
+	}
+	else if (stringcmp(argv[i], "-read_poset_file") == 0) {
+		f_read_poset_file = TRUE;
+		f_grouping = FALSE;
+		read_poset_file_fname.assign(argv[++i]);
+		cout << "-read_poset_file " << read_poset_file_fname << endl;
+	}
+	else if (stringcmp(argv[i], "-read_poset_file_with_grouping") == 0) {
+		f_read_poset_file = TRUE;
+		f_grouping = TRUE;
+		read_poset_file_fname.assign(argv[++i]);
+		x_stretch = strtof(argv[++i]);
+		cout << "-read_poset_file_with_grouping "
+				<< read_poset_file_fname << " " << x_stretch << endl;
+	}
+	else if (stringcmp(argv[i], "-graph_theoretic_activity") == 0) {
+		f_graph_theoretic_activity_description = TRUE;
+
+		cout << "-graph_theoretic_activity " << endl;
+
+		Graph_theoretic_activity_description = NEW_OBJECT(graph_theoretic_activity_description);
+		i += Graph_theoretic_activity_description->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
-			cout << "interface_combinatorics::read_arguments finished "
-					"reading -diophant_activity" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
+		cout << "interface_combinatorics::read_arguments finished "
+				"reading -graph_theoretic_activity" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
 		}
-		else if (stringcmp(argv[i], "-save") == 0) {
-			f_save = TRUE;
-			fname_prefix.assign(argv[++i]);
-			cout << "-save " << fname_prefix << endl;
+	}
+	else if (stringcmp(argv[i], "-list_parameters_of_SRG") == 0) {
+		f_list_parameters_of_SRG = TRUE;
+		v_max = strtoi(argv[++i]);
+		cout << "-list_parameters_of_SRG " << v_max << endl;
+	}
+	else if (stringcmp(argv[i], "-conjugacy_classes_Sym_n") == 0) {
+		f_conjugacy_classes_Sym_n = TRUE;
+		n = strtoi(argv[++i]);
+		cout << "-conjugacy_classes_Sym_n " << n << endl;
+	}
+	else if (stringcmp(argv[i], "-tree_of_all_k_subsets") == 0) {
+		f_tree_of_all_k_subsets = TRUE;
+		tree_n = strtoi(argv[++i]);
+		tree_k = strtoi(argv[++i]);
+		cout << "-tree_of_all_k_subsets " << tree_n << " " << tree_k << endl;
+	}
+	else if (stringcmp(argv[i], "-Delandtsheer_Doyen") == 0) {
+		f_Delandtsheer_Doyen = TRUE;
+		Delandtsheer_Doyen_description = NEW_OBJECT(delandtsheer_doyen_description);
+		i += Delandtsheer_Doyen_description->read_arguments(argc - (i - 1),
+				argv + i, verbose_level);
+
+		cout << "-Delandtsheer_Doyen" << endl;
+	}
+	else if (stringcmp(argv[i], "-graph_classify") == 0) {
+		f_graph_classify = TRUE;
+
+		cout << "-graph_classify " << endl;
+
+		Graph_classify_description = NEW_OBJECT(graph_classify_description);
+		i += Graph_classify_description->read_arguments(argc - i - 1,
+			argv + i + 1, verbose_level);
+		cout << "interface_combinatorics::read_arguments finished reading -graph_classify" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
 		}
-		else if (stringcmp(argv[i], "-process_combinatorial_objects") == 0) {
-			f_process_combinatorial_objects = TRUE;
-
-			cout << "-process_combinatorial_objects " << endl;
-
-			Job_description = NEW_OBJECT(projective_space_job_description);
-			i += Job_description->read_arguments(argc - i - 1,
+		cout << "-graph_classify " << endl;
+	}
+	else if (stringcmp(argv[i], "-tdo_refinement") == 0) {
+		f_tdo_refinement = TRUE;
+		cout << "-tdo_refinement " << endl;
+		Tdo_refinement_descr = NEW_OBJECT(tdo_refinement_description);
+		i += Tdo_refinement_descr->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
-			cout << "interface_combinatorics::read_arguments finished "
-					"reading -process_combinatorial_objects" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
+		cout << "interface_combinatorics::read_arguments finished "
+				"reading -tdo_refinement" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
 		}
-		else if (stringcmp(argv[i], "-bent") == 0) {
-			f_bent = TRUE;
-			bent_n = strtoi(argv[++i]);
-			cout << "-bent " << bent_n << endl;
-		}
-		else if (stringcmp(argv[i], "-random_permutation") == 0) {
-			f_random_permutation = TRUE;
-			random_permutation_degree = strtoi(argv[++i]);
-			random_permutation_fname_csv.assign(argv[++i]);
-			cout << "-random_permutation " << random_permutation_degree << endl;
-		}
-		else if (stringcmp(argv[i], "-create_graph") == 0) {
-			f_create_graph = TRUE;
-
-			cout << "-create_graph " << endl;
-
-			Create_graph_description = NEW_OBJECT(create_graph_description);
-			i += Create_graph_description->read_arguments(argc - (i + 1),
-					argv + i + 1, verbose_level);
-
-			cout << "interface_combinatorics::read_arguments finished "
-					"reading -create_graph" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-read_poset_file") == 0) {
-			f_read_poset_file = TRUE;
-			f_grouping = FALSE;
-			read_poset_file_fname.assign(argv[++i]);
-			cout << "-read_poset_file " << read_poset_file_fname << endl;
-		}
-		else if (stringcmp(argv[i], "-read_poset_file_with_grouping") == 0) {
-			f_read_poset_file = TRUE;
-			f_grouping = TRUE;
-			read_poset_file_fname.assign(argv[++i]);
-			x_stretch = strtof(argv[++i]);
-			cout << "-read_poset_file_with_grouping "
-					<< read_poset_file_fname << " " << x_stretch << endl;
-		}
-		else if (stringcmp(argv[i], "-graph_theoretic_activity") == 0) {
-			f_graph_theoretic_activity_description = TRUE;
-
-			cout << "-graph_theoretic_activity " << endl;
-
-			Graph_theoretic_activity_description = NEW_OBJECT(graph_theoretic_activity_description);
-			i += Graph_theoretic_activity_description->read_arguments(argc - (i + 1),
-					argv + i + 1, verbose_level);
-
-			cout << "interface_combinatorics::read_arguments finished "
-					"reading -graph_theoretic_activity" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-list_parameters_of_SRG") == 0) {
-			f_list_parameters_of_SRG = TRUE;
-			v_max = strtoi(argv[++i]);
-			cout << "-list_parameters_of_SRG " << v_max << endl;
-		}
-		else if (stringcmp(argv[i], "-conjugacy_classes_Sym_n") == 0) {
-			f_conjugacy_classes_Sym_n = TRUE;
-			n = strtoi(argv[++i]);
-			cout << "-conjugacy_classes_Sym_n " << n << endl;
-		}
-		else if (stringcmp(argv[i], "-tree_of_all_k_subsets") == 0) {
-			f_tree_of_all_k_subsets = TRUE;
-			tree_n = strtoi(argv[++i]);
-			tree_k = strtoi(argv[++i]);
-			cout << "-tree_of_all_k_subsets " << tree_n << " " << tree_k << endl;
-		}
-		else if (stringcmp(argv[i], "-Delandtsheer_Doyen") == 0) {
-			f_Delandtsheer_Doyen = TRUE;
-			Delandtsheer_Doyen_description = NEW_OBJECT(delandtsheer_doyen_description);
-			i += Delandtsheer_Doyen_description->read_arguments(argc - (i - 1),
-					argv + i, verbose_level);
-
-			cout << "-Delandtsheer_Doyen" << endl;
-		}
-		else if (stringcmp(argv[i], "-graph_classify") == 0) {
-			f_graph_classify = TRUE;
-
-			cout << "-graph_classify " << endl;
-
-			Graph_classify_description = NEW_OBJECT(graph_classify_description);
-			i += Graph_classify_description->read_arguments(argc - i - 1,
+	}
+	else if (stringcmp(argv[i], "-tdo_print") == 0) {
+		f_tdo_print = TRUE;
+		tdo_print_fname.assign(argv[++i]);
+		cout << "-tdo_print " << tdo_print_fname << endl;
+	}
+	else if (stringcmp(argv[i], "-create_design") == 0) {
+		f_create_design = TRUE;
+		Design_create_description = NEW_OBJECT(design_create_description);
+		i += Design_create_description->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
-			cout << "interface_combinatorics::read_arguments finished reading -graph_classify" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-			cout << "-graph_classify " << endl;
-		}
-		else if (stringcmp(argv[i], "-tdo_refinement") == 0) {
-			f_tdo_refinement = TRUE;
-			cout << "-tdo_refinement " << endl;
-			Tdo_refinement_descr = NEW_OBJECT(tdo_refinement_description);
-			i += Tdo_refinement_descr->read_arguments(argc - (i + 1),
-					argv + i + 1, verbose_level);
-			cout << "interface_combinatorics::read_arguments finished "
-					"reading -tdo_refinement" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-tdo_print") == 0) {
-			f_tdo_print = TRUE;
-			tdo_print_fname.assign(argv[++i]);
-			cout << "-tdo_print " << tdo_print_fname << endl;
-		}
-		else if (stringcmp(argv[i], "-create_design") == 0) {
-			f_create_design = TRUE;
-			Design_create_description = NEW_OBJECT(design_create_description);
-			i += Design_create_description->read_arguments(argc - (i + 1),
-					argv + i + 1, verbose_level);
 
-			cout << "-create_design" << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
+		cout << "-create_design" << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
 		}
-		else if (stringcmp(argv[i], "-convert_stack_to_tdo") == 0) {
-			f_convert_stack_to_tdo = TRUE;
-			stack_fname.assign(argv[++i]);
-			cout << "-convert_stack_to_tdo " << stack_fname << endl;
-		}
-		else if (stringcmp(argv[i], "-maximal_arc_parameters") == 0) {
-			f_maximal_arc_parameters = TRUE;
-			maximal_arc_parameters_q = strtoi(argv[++i]);
-			maximal_arc_parameters_r = strtoi(argv[++i]);
-			cout << "-maximal_arc_parameters " << maximal_arc_parameters_q
-					<< " " << maximal_arc_parameters_r << endl;
-		}
-		else if (stringcmp(argv[i], "-arc_parameters") == 0) {
-			f_arc_parameters = TRUE;
-			arc_parameters_q = strtoi(argv[++i]);
-			arc_parameters_s = strtoi(argv[++i]);
-			arc_parameters_r = strtoi(argv[++i]);
-			cout << "-arc_parameters " << arc_parameters_q
-					<< " " << arc_parameters_s
-					<< " " << arc_parameters_r
-					<< endl;
-		}
-		else if (stringcmp(argv[i], "-pentomino_puzzle") == 0) {
-			f_pentomino_puzzle = TRUE;
-			cout << "-pentomino_puzzle " <<endl;
-		}
-		else if (stringcmp(argv[i], "-regular_linear_space_classify") == 0) {
-			f_regular_linear_space_classify = TRUE;
+	}
+	else if (stringcmp(argv[i], "-convert_stack_to_tdo") == 0) {
+		f_convert_stack_to_tdo = TRUE;
+		stack_fname.assign(argv[++i]);
+		cout << "-convert_stack_to_tdo " << stack_fname << endl;
+	}
+	else if (stringcmp(argv[i], "-maximal_arc_parameters") == 0) {
+		f_maximal_arc_parameters = TRUE;
+		maximal_arc_parameters_q = strtoi(argv[++i]);
+		maximal_arc_parameters_r = strtoi(argv[++i]);
+		cout << "-maximal_arc_parameters " << maximal_arc_parameters_q
+				<< " " << maximal_arc_parameters_r << endl;
+	}
+	else if (stringcmp(argv[i], "-arc_parameters") == 0) {
+		f_arc_parameters = TRUE;
+		arc_parameters_q = strtoi(argv[++i]);
+		arc_parameters_s = strtoi(argv[++i]);
+		arc_parameters_r = strtoi(argv[++i]);
+		cout << "-arc_parameters " << arc_parameters_q
+				<< " " << arc_parameters_s
+				<< " " << arc_parameters_r
+				<< endl;
+	}
+	else if (stringcmp(argv[i], "-pentomino_puzzle") == 0) {
+		f_pentomino_puzzle = TRUE;
+		cout << "-pentomino_puzzle " <<endl;
+	}
+	else if (stringcmp(argv[i], "-regular_linear_space_classify") == 0) {
+		f_regular_linear_space_classify = TRUE;
 
-			cout << "-regular_linear_space_classify " << endl;
+		cout << "-regular_linear_space_classify " << endl;
 
-			Rls_descr = NEW_OBJECT(regular_linear_space_description);
-			i += Rls_descr->read_arguments(argc - i - 1,
+		Rls_descr = NEW_OBJECT(regular_linear_space_description);
+		i += Rls_descr->read_arguments(argc - i - 1,
+			argv + i + 1, verbose_level);
+		cout << "interface_combinatorics::read_arguments finished "
+				"reading -regular_linear_space_classify" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+
+		cout << "-regular_linear_space_classify " <<endl;
+	}
+	else if (stringcmp(argv[i], "-create_files") == 0) {
+		f_create_files = TRUE;
+
+		cout << "-create_files " << endl;
+
+		Create_file_description = NEW_OBJECT(create_file_description);
+		i += Create_file_description->read_arguments(argc - i - 1,
+			argv + i + 1, verbose_level);
+		cout << "interface_combinatorics::read_arguments finished "
+				"reading -create_files" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+
+		cout << "-create_files " <<endl;
+	}
+	else if (stringcmp(argv[i], "-draw_layered_graph") == 0) {
+		f_draw_layered_graph = TRUE;
+		draw_layered_graph_fname.assign(argv[++i]);
+		cout << "-draw_layered_graph " << endl;
+		Layered_graph_draw_options = NEW_OBJECT(layered_graph_draw_options);
+		i += Layered_graph_draw_options->read_arguments(argc - i - 1,
 				argv + i + 1, verbose_level);
-			cout << "interface_combinatorics::read_arguments finished "
-					"reading -regular_linear_space_classify" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
+		cout << "interface_combinatorics::read_arguments finished reading -draw_layered_graph" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+	}
+	else if (stringcmp(argv[i], "-read_solutions_and_tally") == 0) {
+		f_read_solutions_and_tally = TRUE;
+		read_solutions_and_tally_fname.assign(argv[++i]);
+		read_solutions_and_tally_sz = strtoi(argv[++i]);
+		cout << "-read_solutions_and_tally " << read_solutions_and_tally_fname
+				<< " " << read_solutions_and_tally_sz << endl;
+	}
 
-			cout << "-regular_linear_space_classify " <<endl;
-		}
-		else if (stringcmp(argv[i], "-create_files") == 0) {
-			f_create_files = TRUE;
-
-			cout << "-create_files " << endl;
-
-			Create_file_description = NEW_OBJECT(create_file_description);
-			i += Create_file_description->read_arguments(argc - i - 1,
-				argv + i + 1, verbose_level);
-			cout << "interface_combinatorics::read_arguments finished "
-					"reading -create_files" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-
-			cout << "-create_files " <<endl;
-		}
-		else if (stringcmp(argv[i], "-draw_layered_graph") == 0) {
-			f_draw_layered_graph = TRUE;
-			draw_layered_graph_fname.assign(argv[++i]);
-			cout << "-draw_layered_graph " << endl;
-			Layered_graph_draw_options = NEW_OBJECT(layered_graph_draw_options);
-			i += Layered_graph_draw_options->read_arguments(argc - i - 1,
-					argv + i + 1, verbose_level);
-			cout << "interface_combinatorics::read_arguments finished reading -draw_layered_graph" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-read_solutions_and_tally") == 0) {
-			f_read_solutions_and_tally = TRUE;
-			read_solutions_and_tally_fname.assign(argv[++i]);
-			read_solutions_and_tally_sz = strtoi(argv[++i]);
-			cout << "-read_solutions_and_tally " << read_solutions_and_tally_fname
-					<< " " << read_solutions_and_tally_sz << endl;
-		}
-
-		else if (stringcmp(argv[i], "-make_elementary_symmetric_functions") == 0) {
-			f_make_elementary_symmetric_functions = TRUE;
-			make_elementary_symmetric_functions_n = strtoi(argv[++i]);
-			make_elementary_symmetric_functions_k_max = strtoi(argv[++i]);
-			cout << "-make_elementary_symmetric_functions " << make_elementary_symmetric_functions_n
-					<< " " << make_elementary_symmetric_functions_k_max << endl;
-		}
-#if 0
-		else {
-			break;
-		}
-#endif
-	//}
+	else if (stringcmp(argv[i], "-make_elementary_symmetric_functions") == 0) {
+		f_make_elementary_symmetric_functions = TRUE;
+		make_elementary_symmetric_functions_n = strtoi(argv[++i]);
+		make_elementary_symmetric_functions_k_max = strtoi(argv[++i]);
+		cout << "-make_elementary_symmetric_functions " << make_elementary_symmetric_functions_n
+				<< " " << make_elementary_symmetric_functions_k_max << endl;
+	}
 	if (f_v) {
 		cout << "interface_combinatorics::read_arguments done" << endl;
 	}
-	//return i;
 }
 
 

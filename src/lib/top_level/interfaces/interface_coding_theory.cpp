@@ -222,206 +222,196 @@ void interface_coding_theory::read_arguments(int argc,
 
 
 
-	//for (; i < argc; i++) {
-
-		if (f_v) {
-			cout << "interface_coding_theory::read_arguments the next argument is " << argv[i] << endl;
-		}
+	if (f_v) {
+		cout << "interface_coding_theory::read_arguments the next argument is " << argv[i] << endl;
+	}
 
 
-		if (stringcmp(argv[i], "-make_macwilliams_system") == 0) {
-			f_make_macwilliams_system = TRUE;
-			q = strtoi(argv[++i]);
-			n = strtoi(argv[++i]);
-			k = strtoi(argv[++i]);
-			cout << "-make_macwilliams_system " << q << " " << n << " " << k << endl;
-		}
-		else if (stringcmp(argv[i], "-table_of_bounds") == 0) {
-			f_table_of_bounds = TRUE;
-			table_of_bounds_n_max = strtoi(argv[++i]);
-			table_of_bounds_q = strtoi(argv[++i]);
-			cout << "-table_of_bounds " << table_of_bounds_n_max << " " << table_of_bounds_q << endl;
-		}
-		else if (stringcmp(argv[i], "-upper_bound_for_d") == 0) {
-			f_upper_bound_for_d = TRUE;
-			n = strtoi(argv[++i]);
-			k = strtoi(argv[++i]);
-			q = strtoi(argv[++i]);
-			cout << "-upper_bound_for_d " << n << " " << k << " " << q << endl;
-		}
-		else if (stringcmp(argv[i], "-BCH") == 0) {
-			f_BCH = TRUE;
-			n = strtoi(argv[++i]);
-			q = strtoi(argv[++i]);
-			BCH_t = strtoi(argv[++i]);
-			//BCH_b = atoi(argv[++i]);
-			cout << "-BCH " << n << " " << q << " " << BCH_t << endl;
-		}
-		else if (stringcmp(argv[i], "-BCH_dual") == 0) {
-			f_BCH_dual = TRUE;
-			n = strtoi(argv[++i]);
-			q = strtoi(argv[++i]);
-			BCH_t = strtoi(argv[++i]);
-			//BCH_b = atoi(argv[++i]);
-			cout << "-BCH " << n << " " << q << " " << BCH_t << endl;
-		}
-		else if (stringcmp(argv[i], "-Hamming_graph") == 0) {
-			f_Hamming_graph = TRUE;
-			n = strtoi(argv[++i]);
-			q = strtoi(argv[++i]);
-			cout << "-Hamming_graph " << n << " " << q << endl;
-		}
-		else if (stringcmp(argv[i], "-NTT") == 0) {
-			f_NTT = TRUE;
-			n = strtoi(argv[++i]);
-			q = strtoi(argv[++i]);
-			ntt_fname_code.assign(argv[++i]);
-			cout << "-NTT " << n << " " << q << " " << ntt_fname_code << endl;
-		}
-		else if (stringcmp(argv[i], "-general_code_binary") == 0) {
-			f_general_code_binary = TRUE;
-			general_code_binary_n = strtoi(argv[++i]);
-			general_code_binary_text.assign(argv[++i]);
-			cout << "-general_code_binary " << general_code_binary_n << " "
-					<< general_code_binary_text << endl;
-		}
-		else if (stringcmp(argv[i], "-code_diagram") == 0) {
-			f_code_diagram = TRUE;
-			code_diagram_label.assign(argv[++i]);
-			code_diagram_codewords_text.assign(argv[++i]);
-			code_diagram_n = strtoi(argv[++i]);
-			cout << "-code_diagram " << code_diagram_label
-					<< " " << code_diagram_codewords_text
-					<< " " << code_diagram_n << endl;
-		}
-		else if (stringcmp(argv[i], "-code_diagram_from_file") == 0) {
-			f_code_diagram_from_file = TRUE;
-			code_diagram_label.assign(argv[++i]);
-			code_diagram_from_file_codewords_fname.assign(argv[++i]);
-			code_diagram_n = strtoi(argv[++i]);
-			cout << "-code_diagram_from_file " << code_diagram_label
-					<< " " << code_diagram_from_file_codewords_fname
-					<< " " << code_diagram_n << endl;
-		}
+	if (stringcmp(argv[i], "-make_macwilliams_system") == 0) {
+		f_make_macwilliams_system = TRUE;
+		q = strtoi(argv[++i]);
+		n = strtoi(argv[++i]);
+		k = strtoi(argv[++i]);
+		cout << "-make_macwilliams_system " << q << " " << n << " " << k << endl;
+	}
+	else if (stringcmp(argv[i], "-table_of_bounds") == 0) {
+		f_table_of_bounds = TRUE;
+		table_of_bounds_n_max = strtoi(argv[++i]);
+		table_of_bounds_q = strtoi(argv[++i]);
+		cout << "-table_of_bounds " << table_of_bounds_n_max << " " << table_of_bounds_q << endl;
+	}
+	else if (stringcmp(argv[i], "-upper_bound_for_d") == 0) {
+		f_upper_bound_for_d = TRUE;
+		n = strtoi(argv[++i]);
+		k = strtoi(argv[++i]);
+		q = strtoi(argv[++i]);
+		cout << "-upper_bound_for_d " << n << " " << k << " " << q << endl;
+	}
+	else if (stringcmp(argv[i], "-BCH") == 0) {
+		f_BCH = TRUE;
+		n = strtoi(argv[++i]);
+		q = strtoi(argv[++i]);
+		BCH_t = strtoi(argv[++i]);
+		//BCH_b = atoi(argv[++i]);
+		cout << "-BCH " << n << " " << q << " " << BCH_t << endl;
+	}
+	else if (stringcmp(argv[i], "-BCH_dual") == 0) {
+		f_BCH_dual = TRUE;
+		n = strtoi(argv[++i]);
+		q = strtoi(argv[++i]);
+		BCH_t = strtoi(argv[++i]);
+		//BCH_b = atoi(argv[++i]);
+		cout << "-BCH " << n << " " << q << " " << BCH_t << endl;
+	}
+	else if (stringcmp(argv[i], "-Hamming_graph") == 0) {
+		f_Hamming_graph = TRUE;
+		n = strtoi(argv[++i]);
+		q = strtoi(argv[++i]);
+		cout << "-Hamming_graph " << n << " " << q << endl;
+	}
+	else if (stringcmp(argv[i], "-NTT") == 0) {
+		f_NTT = TRUE;
+		n = strtoi(argv[++i]);
+		q = strtoi(argv[++i]);
+		ntt_fname_code.assign(argv[++i]);
+		cout << "-NTT " << n << " " << q << " " << ntt_fname_code << endl;
+	}
+	else if (stringcmp(argv[i], "-general_code_binary") == 0) {
+		f_general_code_binary = TRUE;
+		general_code_binary_n = strtoi(argv[++i]);
+		general_code_binary_text.assign(argv[++i]);
+		cout << "-general_code_binary " << general_code_binary_n << " "
+				<< general_code_binary_text << endl;
+	}
+	else if (stringcmp(argv[i], "-code_diagram") == 0) {
+		f_code_diagram = TRUE;
+		code_diagram_label.assign(argv[++i]);
+		code_diagram_codewords_text.assign(argv[++i]);
+		code_diagram_n = strtoi(argv[++i]);
+		cout << "-code_diagram " << code_diagram_label
+				<< " " << code_diagram_codewords_text
+				<< " " << code_diagram_n << endl;
+	}
+	else if (stringcmp(argv[i], "-code_diagram_from_file") == 0) {
+		f_code_diagram_from_file = TRUE;
+		code_diagram_label.assign(argv[++i]);
+		code_diagram_from_file_codewords_fname.assign(argv[++i]);
+		code_diagram_n = strtoi(argv[++i]);
+		cout << "-code_diagram_from_file " << code_diagram_label
+				<< " " << code_diagram_from_file_codewords_fname
+				<< " " << code_diagram_n << endl;
+	}
 
-		else if (stringcmp(argv[i], "-enhance") == 0) {
-			f_enhance = TRUE;
-			enhance_radius = strtoi(argv[++i]);
-			cout << "-enhance " << enhance_radius << endl;
-		}
+	else if (stringcmp(argv[i], "-enhance") == 0) {
+		f_enhance = TRUE;
+		enhance_radius = strtoi(argv[++i]);
+		cout << "-enhance " << enhance_radius << endl;
+	}
 
-		else if (stringcmp(argv[i], "-metric_balls") == 0) {
-			f_metric_balls = TRUE;
-			radius_of_metric_ball = strtoi(argv[++i]);
-			cout << "-metric_balls " << radius_of_metric_ball << endl;
-		}
+	else if (stringcmp(argv[i], "-metric_balls") == 0) {
+		f_metric_balls = TRUE;
+		radius_of_metric_ball = strtoi(argv[++i]);
+		cout << "-metric_balls " << radius_of_metric_ball << endl;
+	}
 
 
 
-		else if (stringcmp(argv[i], "-linear_code_through_basis") == 0) {
-			f_linear_code_through_basis = TRUE;
-			linear_code_through_basis_n = strtoi(argv[++i]);
-			linear_code_through_basis_text.assign(argv[++i]);
-			cout << "-linear_code_through_basis " << linear_code_through_basis_n
-					<< " " << linear_code_through_basis_text << endl;
-		}
+	else if (stringcmp(argv[i], "-linear_code_through_basis") == 0) {
+		f_linear_code_through_basis = TRUE;
+		linear_code_through_basis_n = strtoi(argv[++i]);
+		linear_code_through_basis_text.assign(argv[++i]);
+		cout << "-linear_code_through_basis " << linear_code_through_basis_n
+				<< " " << linear_code_through_basis_text << endl;
+	}
 
-		else if (stringcmp(argv[i], "-linear_code_through_columns_of_parity_check_projectively") == 0) {
-			f_linear_code_through_columns_of_parity_check_projectively = TRUE;
-			linear_code_through_columns_of_parity_check_k = strtoi(argv[++i]);
-			linear_code_through_columns_of_parity_check_text.assign(argv[++i]);
-			cout << "-linear_code_through_columns_of_parity_check_projectively " << linear_code_through_columns_of_parity_check_k
-					<< " " << linear_code_through_columns_of_parity_check_text << endl;
-		}
+	else if (stringcmp(argv[i], "-linear_code_through_columns_of_parity_check_projectively") == 0) {
+		f_linear_code_through_columns_of_parity_check_projectively = TRUE;
+		linear_code_through_columns_of_parity_check_k = strtoi(argv[++i]);
+		linear_code_through_columns_of_parity_check_text.assign(argv[++i]);
+		cout << "-linear_code_through_columns_of_parity_check_projectively " << linear_code_through_columns_of_parity_check_k
+				<< " " << linear_code_through_columns_of_parity_check_text << endl;
+	}
 
-		else if (stringcmp(argv[i], "-linear_code_through_columns_of_parity_check") == 0) {
-			f_linear_code_through_columns_of_parity_check = TRUE;
-			linear_code_through_columns_of_parity_check_k = strtoi(argv[++i]);
-			linear_code_through_columns_of_parity_check_text.assign(argv[++i]);
-			cout << "-linear_code_through_columns_of_parity_check " << linear_code_through_columns_of_parity_check_k
-					<< " " << linear_code_through_columns_of_parity_check_text << endl;
-		}
+	else if (stringcmp(argv[i], "-linear_code_through_columns_of_parity_check") == 0) {
+		f_linear_code_through_columns_of_parity_check = TRUE;
+		linear_code_through_columns_of_parity_check_k = strtoi(argv[++i]);
+		linear_code_through_columns_of_parity_check_text.assign(argv[++i]);
+		cout << "-linear_code_through_columns_of_parity_check " << linear_code_through_columns_of_parity_check_k
+				<< " " << linear_code_through_columns_of_parity_check_text << endl;
+	}
 
-		else if (stringcmp(argv[i], "-long_code") == 0) {
-			f_long_code = TRUE;
-			long_code_n = strtoi(argv[++i]);
+	else if (stringcmp(argv[i], "-long_code") == 0) {
+		f_long_code = TRUE;
+		long_code_n = strtoi(argv[++i]);
 
-			int n, h;
-			n = strtoi(argv[++i]);
-			for (h = 0; h < n; h++) {
-				string s;
+		int n, h;
+		n = strtoi(argv[++i]);
+		for (h = 0; h < n; h++) {
+			string s;
 
-				s.assign(argv[++i]);
-				if (stringcmp(s, "-set_builder") == 0) {
-					set_builder_description Descr;
+			s.assign(argv[++i]);
+			if (stringcmp(s, "-set_builder") == 0) {
+				set_builder_description Descr;
 
-					cout << "reading -set_builder" << endl;
-					i += Descr.read_arguments(argc - (i + 1),
-						argv + i + 1, verbose_level);
+				cout << "reading -set_builder" << endl;
+				i += Descr.read_arguments(argc - (i + 1),
+					argv + i + 1, verbose_level);
 
-					cout << "-set_builder" << endl;
-					cout << "i = " << i << endl;
-					cout << "argc = " << argc << endl;
-					if (i < argc) {
-						cout << "next argument is " << argv[i] << endl;
-					}
-					set_builder S;
-
-					S.init(&Descr, verbose_level);
-
-					cout << "set_builder found the following set of size " << S.sz << endl;
-					lint_vec_print(cout, S.set, S.sz);
-					cout << endl;
-
-					s.assign("");
-					int j;
-					char str[1000];
-
-					for (j = 0; j < S.sz; j++) {
-						if (j) {
-							s.append(",");
-						}
-						sprintf(str, "%ld", S.set[j]);
-						s.append(str);
-					}
-					cout << "as string: " << s << endl;
-
+				cout << "-set_builder" << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
 				}
-				long_code_generators.push_back(s);
-			}
-			cout << "-long_code " << long_code_n << endl;
-			for (int h = 0; h < n; h++) {
-				cout << " " << long_code_generators[h] << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-encode_text_5bits") == 0) {
-			f_encode_text_5bits = TRUE;
-			encode_text_5bits_input.assign(argv[++i]);
-			encode_text_5bits_fname.assign(argv[++i]);
-			cout << "-encode_text_5bits " << encode_text_5bits_input << " "
-					<< encode_text_5bits_fname << endl;
-		}
-		else if (stringcmp(argv[i], "-field_induction") == 0) {
-			f_field_induction = TRUE;
-			field_induction_fname_in.assign(argv[++i]);
-			field_induction_fname_out.assign(argv[++i]);
-			field_induction_nb_bits = strtoi(argv[++i]);
-			cout << "-field_induction " << field_induction_fname_in
-					<< " " << field_induction_fname_out
-					<< " " << field_induction_nb_bits
-					<< endl;
-		}
+				set_builder S;
 
-#if 0
-		else {
-			break;
+				S.init(&Descr, verbose_level);
+
+				cout << "set_builder found the following set of size " << S.sz << endl;
+				lint_vec_print(cout, S.set, S.sz);
+				cout << endl;
+
+				s.assign("");
+				int j;
+				char str[1000];
+
+				for (j = 0; j < S.sz; j++) {
+					if (j) {
+						s.append(",");
+					}
+					sprintf(str, "%ld", S.set[j]);
+					s.append(str);
+				}
+				cout << "as string: " << s << endl;
+
+			}
+			long_code_generators.push_back(s);
 		}
-#endif
-	//}
+		cout << "-long_code " << long_code_n << endl;
+		for (int h = 0; h < n; h++) {
+			cout << " " << long_code_generators[h] << endl;
+		}
+	}
+	else if (stringcmp(argv[i], "-encode_text_5bits") == 0) {
+		f_encode_text_5bits = TRUE;
+		encode_text_5bits_input.assign(argv[++i]);
+		encode_text_5bits_fname.assign(argv[++i]);
+		cout << "-encode_text_5bits " << encode_text_5bits_input << " "
+				<< encode_text_5bits_fname << endl;
+	}
+	else if (stringcmp(argv[i], "-field_induction") == 0) {
+		f_field_induction = TRUE;
+		field_induction_fname_in.assign(argv[++i]);
+		field_induction_fname_out.assign(argv[++i]);
+		field_induction_nb_bits = strtoi(argv[++i]);
+		cout << "-field_induction " << field_induction_fname_in
+				<< " " << field_induction_fname_out
+				<< " " << field_induction_nb_bits
+				<< endl;
+	}
 	if (f_v) {
 		cout << "interface_coding_theory::read_arguments done" << endl;
 	}
-	//return i;
 }
 
 

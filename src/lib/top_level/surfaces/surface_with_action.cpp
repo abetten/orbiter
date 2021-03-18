@@ -1241,11 +1241,11 @@ void surface_with_action::create_surface_sweep(
 		}
 
 		for (beta = 0; beta < q; beta++) {
-		if (beta == 0) {
-			continue;
+			if (beta == 0) {
+				continue;
 			}
-		if (beta == F->negate(1)) {
-			continue;
+			if (beta == F->negate(1)) {
+				continue;
 			}
 
 			for (delta = 0; delta < q; delta++) {

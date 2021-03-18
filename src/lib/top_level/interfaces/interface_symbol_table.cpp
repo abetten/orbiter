@@ -93,14 +93,12 @@ void interface_symbol_table::read_arguments(
 		orbiter_top_level_session *Orbiter_top_level_session,
 		int argc, std::string *argv, int &i, int verbose_level)
 {
-	//int i;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "interface_symbol_table::read_arguments" << endl;
 	}
 
-	//for (; i < argc; i++) {
 
 	if (f_v) {
 		cout << "interface_symbol_table::read_arguments the next argument is " << argv[i] << endl;
@@ -118,19 +116,6 @@ void interface_symbol_table::read_arguments(
 		read_with(Orbiter_top_level_session, argc, argv, i, verbose_level);
 	}
 
-#if 0
-		else if (stringcmp(argv[i], "-end") == 0) {
-			cout << "-end" << endl;
-			//i++;
-			break;
-		}
-		else {
-			cout << "interface_symbol_table::read_arguments: unrecognized option "
-					<< argv[i] << ", skipping" << endl;
-			break;
-		}
-#endif
-	//}
 	if (f_v) {
 		cout << "interface_symbol_table::read_arguments done" << endl;
 	}

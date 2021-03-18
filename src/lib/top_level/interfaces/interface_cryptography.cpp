@@ -397,7 +397,6 @@ int interface_cryptography::recognize_keyword(int argc, std::string *argv, int i
 
 void interface_cryptography::read_arguments(int argc, std::string *argv, int &i, int verbose_level)
 {
-	//int i;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
@@ -405,266 +404,256 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 	}
 
 
-	//for (; i < argc; i++) {
+	if (f_v) {
+		cout << "interface_cryptography::read_arguments the next argument is " << argv[i] << endl;
+	}
 
-		if (f_v) {
-			cout << "interface_cryptography::read_arguments the next argument is " << argv[i] << endl;
-		}
-
-		if (stringcmp(argv[i], "-cs") == 0) {
-			f_cipher = TRUE;
-			t = substitution;
-			strcpy(ptext, argv[++i].c_str());
-			//cout << "-c " << ptext << endl;
-		}
-		else if (stringcmp(argv[i], "-cv") == 0) {
-			f_cipher = TRUE;
-			t = vigenere;
-			strcpy(ptext, argv[++i].c_str());
-			strcpy(key, argv[++i].c_str());
-			//cout << "-c " << ptext << endl;
-		}
-		else if (stringcmp(argv[i], "-ca") == 0) {
-			f_cipher = TRUE;
-			t = affine;
-			strcpy(ptext, argv[++i].c_str());
-			affine_a = strtoi(argv[++i]);
-			affine_b = strtoi(argv[++i]);
-			//cout << "-c " << ptext << endl;
-		}
-		else if (stringcmp(argv[i], "-as") == 0) {
-			f_analyze = TRUE;
-			t = substitution;
-			strcpy(ctext, argv[++i].c_str());
-			//cout << "-a " << ctext << endl;
-		}
-		else if (stringcmp(argv[i], "-av") == 0) {
-			f_analyze = TRUE;
-			t = vigenere;
-			strcpy(ctext, argv[++i].c_str());
-			//cout << "-a " << ctext << endl;
-		}
-		else if (stringcmp(argv[i], "-avk") == 0) {
-			f_avk = TRUE;
-			strcpy(ctext, argv[++i].c_str());
-			key_length = strtoi(argv[++i]);
-			//cout << "-a " << ctext << endl;
-		}
-		else if (stringcmp(argv[i], "-kasiski") == 0) {
-			f_kasiski = TRUE;
-			strcpy(ctext, argv[++i].c_str());
-			threshold = strtoi(argv[++i]);
-			//cout << "-a " << ctext << endl;
-		}
-		else if (stringcmp(argv[i], "-ds") == 0) {
-			f_decipher = TRUE;
-			t = substitution;
-			strcpy(ctext, argv[++i].c_str());
-			strcpy(guess, argv[++i].c_str());
-			//cout << "-d " << ctext << " " << guess << endl;
-		}
-		else if (stringcmp(argv[i], "-dv") == 0) {
-			f_decipher = TRUE;
-			t = vigenere;
-			strcpy(ctext, argv[++i].c_str());
-			strcpy(key, argv[++i].c_str());
-		}
-		else if (stringcmp(argv[i], "-da") == 0) {
-			f_decipher = TRUE;
-			t = affine;
-			strcpy(ctext, argv[++i].c_str());
-			strcpy(guess, argv[++i].c_str());
-		}
-		else if (stringcmp(argv[i], "-RSA") == 0) {
-			f_RSA = TRUE;
-			RSA_d = strtoi(argv[++i]);
-			RSA_m = strtoi(argv[++i]);
-			RSA_block_size = strtoi(argv[++i]);
-			RSA_text.assign(argv[++i]);
-			cout << "-RSA " << RSA_d << " " << RSA_m << " " << RSA_block_size << " " << RSA_text << endl;
-		}
-		else if (stringcmp(argv[i], "-RSA_encrypt_text") == 0) {
-			f_RSA_encrypt_text = TRUE;
-			RSA_d = strtoi(argv[++i]);
-			RSA_m = strtoi(argv[++i]);
-			RSA_block_size = strtoi(argv[++i]);
-			RSA_encrypt_text.assign(argv[++i]);
-			cout << "-RSA_encrypt_text " << RSA_d << " "
-					<< RSA_m << " " << RSA_block_size << " " << RSA_encrypt_text << endl;
-		}
-		else if (stringcmp(argv[i], "-RSA_setup") == 0) {
-			f_RSA_setup = TRUE;
-			RSA_setup_nb_bits = strtoi(argv[++i]);
-			RSA_setup_nb_tests_solovay_strassen = strtoi(argv[++i]);
-			RSA_setup_f_miller_rabin_test = strtoi(argv[++i]);
-			cout << "-RSA_setup " << RSA_setup_nb_bits << " "
-					<< RSA_setup_nb_tests_solovay_strassen << " "
-					<< RSA_setup_f_miller_rabin_test << endl;
-		}
-		else if (stringcmp(argv[i], "-primitive_root") == 0) {
-			f_primitive_root = TRUE;
-			primitive_root_p = strtoi(argv[++i]);
-			cout << "-primitive_root " << primitive_root_p << endl;
-		}
-		else if (stringcmp(argv[i], "-smallest_primitive_root") == 0) {
-			f_smallest_primitive_root = TRUE;
-			smallest_primitive_root_p = strtoi(argv[++i]);
-			cout << "-smallest_primitive_root " << smallest_primitive_root_p << endl;
-		}
-		else if (stringcmp(argv[i], "-smallest_primitive_root_interval") == 0) {
-			f_smallest_primitive_root_interval = TRUE;
-			smallest_primitive_root_interval_min = strtoi(argv[++i]);
-			smallest_primitive_root_interval_max = strtoi(argv[++i]);
-			cout << "-smallest_primitive_root_interval " << smallest_primitive_root_interval_min
-					<< " " << smallest_primitive_root_interval_max << endl;
-		}
-		else if (stringcmp(argv[i], "-number_of_primitive_roots_interval") == 0) {
-			f_number_of_primitive_roots_interval = TRUE;
-			smallest_primitive_root_interval_min = strtoi(argv[++i]);
-			smallest_primitive_root_interval_max = strtoi(argv[++i]);
-			cout << "-number_of_primitive_roots_interval " << smallest_primitive_root_interval_min
-					<< " " << smallest_primitive_root_interval_max << endl;
-		}
-		else if (stringcmp(argv[i], "-inverse_mod") == 0) {
-			f_inverse_mod = TRUE;
-			inverse_mod_a = strtoi(argv[++i]);
-			inverse_mod_n = strtoi(argv[++i]);
-			cout << "-inverse_mod " << inverse_mod_a << " " << inverse_mod_n << endl;
-		}
-		else if (stringcmp(argv[i], "-extended_gcd") == 0) {
-			f_extended_gcd = TRUE;
-			extended_gcd_a = strtoi(argv[++i]);
-			extended_gcd_b = strtoi(argv[++i]);
-			cout << "-extended_gcd " << extended_gcd_a << " " << extended_gcd_b << endl;
-		}
-		else if (stringcmp(argv[i], "-power_mod") == 0) {
-			f_power_mod = TRUE;
-			power_mod_a = strtoi(argv[++i]);
-			power_mod_k = strtoi(argv[++i]);
-			power_mod_n = strtoi(argv[++i]);
-			cout << "-power_mod " << power_mod_a << " " << power_mod_k << " " << power_mod_n << endl;
-		}
-		else if (stringcmp(argv[i], "-discrete_log") == 0) {
-			f_discrete_log = TRUE;
-			discrete_log_y = strtoi(argv[++i]);
-			discrete_log_a = strtoi(argv[++i]);
-			discrete_log_m = strtoi(argv[++i]);
-			cout << "-discrete_log " << discrete_log_y << " "
-					<< discrete_log_a << " " << discrete_log_m << endl;
-		}
-		else if (stringcmp(argv[i], "-sift_smooth") == 0) {
-			f_sift_smooth = TRUE;
-			sift_smooth_from = strtoi(argv[++i]);
-			sift_smooth_len = strtoi(argv[++i]);
-			sift_smooth_factor_base = argv[++i];
-			cout << "-sift_smooth " << sift_smooth_from << " "
-					<< sift_smooth_len << " " << sift_smooth_factor_base << endl;
-		}
-		else if (stringcmp(argv[i], "-square_root") == 0) {
-			f_square_root = TRUE;
-			square_root_number.assign(argv[++i]);
-			cout << "-square_root " << square_root_number << endl;
-		}
-		else if (stringcmp(argv[i], "-square_root_mod") == 0) {
-			f_square_root_mod = TRUE;
-			square_root_mod_a.assign(argv[++i]);
-			square_root_mod_m.assign(argv[++i]);
-			cout << "-square_root_mod " << square_root_mod_a << " "
-					<< square_root_mod_m << endl;
-		}
-		else if (stringcmp(argv[i], "-quadratic_sieve") == 0) {
-			f_quadratic_sieve = TRUE;
-			quadratic_sieve_n = strtoi(argv[++i]);
-			quadratic_sieve_factorbase = strtoi(argv[++i]);
-			quadratic_sieve_x0 = strtoi(argv[++i]);
-			cout << "-quadratic_sieve " << quadratic_sieve_n << " "
-					<< quadratic_sieve_factorbase << " " << quadratic_sieve_x0 << endl;
-		}
-		else if (stringcmp(argv[i], "-jacobi") == 0) {
-			f_jacobi = TRUE;
-			jacobi_top = strtoi(argv[++i]);
-			jacobi_bottom = strtoi(argv[++i]);
-			cout << "-jacobi " << jacobi_top << " "
-					<< jacobi_bottom << endl;
-		}
-		else if (stringcmp(argv[i], "-solovay_strassen") == 0) {
-			f_solovay_strassen = TRUE;
-			solovay_strassen_p = strtoi(argv[++i]);
-			solovay_strassen_a = strtoi(argv[++i]);
-			cout << "-solovay_strassen " << solovay_strassen_p << " "
-					<< solovay_strassen_a << endl;
-		}
-		else if (stringcmp(argv[i], "-miller_rabin") == 0) {
-			f_miller_rabin = TRUE;
-			miller_rabin_p = strtoi(argv[++i]);
-			miller_rabin_nb_times = strtoi(argv[++i]);
-			cout << "-miller_rabin " << miller_rabin_p << " " << miller_rabin_nb_times << endl;
-		}
-		else if (stringcmp(argv[i], "-fermat_test") == 0) {
-			f_fermat_test = TRUE;
-			fermat_test_p = strtoi(argv[++i]);
-			fermat_test_nb_times = strtoi(argv[++i]);
-			cout << "-fermat_test " << fermat_test_p << " " << fermat_test_nb_times << endl;
-		}
-		else if (stringcmp(argv[i], "-find_pseudoprime") == 0) {
-			f_find_pseudoprime = TRUE;
-			find_pseudoprime_nb_digits = strtoi(argv[++i]);
-			find_pseudoprime_nb_fermat = strtoi(argv[++i]);
-			find_pseudoprime_nb_miller_rabin = strtoi(argv[++i]);
-			find_pseudoprime_nb_solovay_strassen = strtoi(argv[++i]);
-			cout << "-find_pseudoprime " << find_pseudoprime_nb_digits
-					<< " " << find_pseudoprime_nb_fermat
-					<< " " << find_pseudoprime_nb_miller_rabin
-					<< " " << find_pseudoprime_nb_solovay_strassen << endl;
-		}
-		else if (stringcmp(argv[i], "-find_strong_pseudoprime") == 0) {
-			f_find_strong_pseudoprime = TRUE;
-			find_pseudoprime_nb_digits = strtoi(argv[++i]);
-			find_pseudoprime_nb_fermat = strtoi(argv[++i]);
-			find_pseudoprime_nb_miller_rabin = strtoi(argv[++i]);
-			cout << "-find_strong_pseudoprime " << find_pseudoprime_nb_digits
-					<< " " << find_pseudoprime_nb_fermat
-					<< " " << find_pseudoprime_nb_miller_rabin
-					<< endl;
-		}
-		else if (stringcmp(argv[i], "-miller_rabin_text") == 0) {
-			f_miller_rabin_text = TRUE;
-			miller_rabin_text_nb_times = strtoi(argv[++i]);
-			miller_rabin_number_text.assign(argv[++i]);
-			cout << "-miller_rabin " << miller_rabin_text_nb_times
-					<< " " << miller_rabin_number_text
-					<< endl;
-		}
-		else if (stringcmp(argv[i], "-random") == 0) {
-			f_random = TRUE;
-			random_nb = strtoi(argv[++i]);
-			random_fname_csv.assign(argv[++i]);
-			cout << "-random " << random_nb << " " << random_fname_csv << endl;
-		}
-		else if (stringcmp(argv[i], "-random_last") == 0) {
-			f_random_last = TRUE;
-			random_last_nb = strtoi(argv[++i]);
-			cout << "-random_last " << random_last_nb << endl;
-		}
-		else if (stringcmp(argv[i], "-affine_sequence") == 0) {
-			f_affine_sequence = TRUE;
-			affine_sequence_a = strtoi(argv[++i]);
-			affine_sequence_c = strtoi(argv[++i]);
-			affine_sequence_m = strtoi(argv[++i]);
-			cout << "-affine_sequence " << affine_sequence_a
-					<< " " << affine_sequence_c << " " << affine_sequence_m << endl;
-		}
-#if 0
-		else {
-			break;
-		}
-#endif
-
-	//}
+	if (stringcmp(argv[i], "-cs") == 0) {
+		f_cipher = TRUE;
+		t = substitution;
+		strcpy(ptext, argv[++i].c_str());
+		//cout << "-c " << ptext << endl;
+	}
+	else if (stringcmp(argv[i], "-cv") == 0) {
+		f_cipher = TRUE;
+		t = vigenere;
+		strcpy(ptext, argv[++i].c_str());
+		strcpy(key, argv[++i].c_str());
+		//cout << "-c " << ptext << endl;
+	}
+	else if (stringcmp(argv[i], "-ca") == 0) {
+		f_cipher = TRUE;
+		t = affine;
+		strcpy(ptext, argv[++i].c_str());
+		affine_a = strtoi(argv[++i]);
+		affine_b = strtoi(argv[++i]);
+		//cout << "-c " << ptext << endl;
+	}
+	else if (stringcmp(argv[i], "-as") == 0) {
+		f_analyze = TRUE;
+		t = substitution;
+		strcpy(ctext, argv[++i].c_str());
+		//cout << "-a " << ctext << endl;
+	}
+	else if (stringcmp(argv[i], "-av") == 0) {
+		f_analyze = TRUE;
+		t = vigenere;
+		strcpy(ctext, argv[++i].c_str());
+		//cout << "-a " << ctext << endl;
+	}
+	else if (stringcmp(argv[i], "-avk") == 0) {
+		f_avk = TRUE;
+		strcpy(ctext, argv[++i].c_str());
+		key_length = strtoi(argv[++i]);
+		//cout << "-a " << ctext << endl;
+	}
+	else if (stringcmp(argv[i], "-kasiski") == 0) {
+		f_kasiski = TRUE;
+		strcpy(ctext, argv[++i].c_str());
+		threshold = strtoi(argv[++i]);
+		//cout << "-a " << ctext << endl;
+	}
+	else if (stringcmp(argv[i], "-ds") == 0) {
+		f_decipher = TRUE;
+		t = substitution;
+		strcpy(ctext, argv[++i].c_str());
+		strcpy(guess, argv[++i].c_str());
+		//cout << "-d " << ctext << " " << guess << endl;
+	}
+	else if (stringcmp(argv[i], "-dv") == 0) {
+		f_decipher = TRUE;
+		t = vigenere;
+		strcpy(ctext, argv[++i].c_str());
+		strcpy(key, argv[++i].c_str());
+	}
+	else if (stringcmp(argv[i], "-da") == 0) {
+		f_decipher = TRUE;
+		t = affine;
+		strcpy(ctext, argv[++i].c_str());
+		strcpy(guess, argv[++i].c_str());
+	}
+	else if (stringcmp(argv[i], "-RSA") == 0) {
+		f_RSA = TRUE;
+		RSA_d = strtoi(argv[++i]);
+		RSA_m = strtoi(argv[++i]);
+		RSA_block_size = strtoi(argv[++i]);
+		RSA_text.assign(argv[++i]);
+		cout << "-RSA " << RSA_d << " " << RSA_m << " " << RSA_block_size << " " << RSA_text << endl;
+	}
+	else if (stringcmp(argv[i], "-RSA_encrypt_text") == 0) {
+		f_RSA_encrypt_text = TRUE;
+		RSA_d = strtoi(argv[++i]);
+		RSA_m = strtoi(argv[++i]);
+		RSA_block_size = strtoi(argv[++i]);
+		RSA_encrypt_text.assign(argv[++i]);
+		cout << "-RSA_encrypt_text " << RSA_d << " "
+				<< RSA_m << " " << RSA_block_size << " " << RSA_encrypt_text << endl;
+	}
+	else if (stringcmp(argv[i], "-RSA_setup") == 0) {
+		f_RSA_setup = TRUE;
+		RSA_setup_nb_bits = strtoi(argv[++i]);
+		RSA_setup_nb_tests_solovay_strassen = strtoi(argv[++i]);
+		RSA_setup_f_miller_rabin_test = strtoi(argv[++i]);
+		cout << "-RSA_setup " << RSA_setup_nb_bits << " "
+				<< RSA_setup_nb_tests_solovay_strassen << " "
+				<< RSA_setup_f_miller_rabin_test << endl;
+	}
+	else if (stringcmp(argv[i], "-primitive_root") == 0) {
+		f_primitive_root = TRUE;
+		primitive_root_p = strtoi(argv[++i]);
+		cout << "-primitive_root " << primitive_root_p << endl;
+	}
+	else if (stringcmp(argv[i], "-smallest_primitive_root") == 0) {
+		f_smallest_primitive_root = TRUE;
+		smallest_primitive_root_p = strtoi(argv[++i]);
+		cout << "-smallest_primitive_root " << smallest_primitive_root_p << endl;
+	}
+	else if (stringcmp(argv[i], "-smallest_primitive_root_interval") == 0) {
+		f_smallest_primitive_root_interval = TRUE;
+		smallest_primitive_root_interval_min = strtoi(argv[++i]);
+		smallest_primitive_root_interval_max = strtoi(argv[++i]);
+		cout << "-smallest_primitive_root_interval " << smallest_primitive_root_interval_min
+				<< " " << smallest_primitive_root_interval_max << endl;
+	}
+	else if (stringcmp(argv[i], "-number_of_primitive_roots_interval") == 0) {
+		f_number_of_primitive_roots_interval = TRUE;
+		smallest_primitive_root_interval_min = strtoi(argv[++i]);
+		smallest_primitive_root_interval_max = strtoi(argv[++i]);
+		cout << "-number_of_primitive_roots_interval " << smallest_primitive_root_interval_min
+				<< " " << smallest_primitive_root_interval_max << endl;
+	}
+	else if (stringcmp(argv[i], "-inverse_mod") == 0) {
+		f_inverse_mod = TRUE;
+		inverse_mod_a = strtoi(argv[++i]);
+		inverse_mod_n = strtoi(argv[++i]);
+		cout << "-inverse_mod " << inverse_mod_a << " " << inverse_mod_n << endl;
+	}
+	else if (stringcmp(argv[i], "-extended_gcd") == 0) {
+		f_extended_gcd = TRUE;
+		extended_gcd_a = strtoi(argv[++i]);
+		extended_gcd_b = strtoi(argv[++i]);
+		cout << "-extended_gcd " << extended_gcd_a << " " << extended_gcd_b << endl;
+	}
+	else if (stringcmp(argv[i], "-power_mod") == 0) {
+		f_power_mod = TRUE;
+		power_mod_a = strtoi(argv[++i]);
+		power_mod_k = strtoi(argv[++i]);
+		power_mod_n = strtoi(argv[++i]);
+		cout << "-power_mod " << power_mod_a << " " << power_mod_k << " " << power_mod_n << endl;
+	}
+	else if (stringcmp(argv[i], "-discrete_log") == 0) {
+		f_discrete_log = TRUE;
+		discrete_log_y = strtoi(argv[++i]);
+		discrete_log_a = strtoi(argv[++i]);
+		discrete_log_m = strtoi(argv[++i]);
+		cout << "-discrete_log " << discrete_log_y << " "
+				<< discrete_log_a << " " << discrete_log_m << endl;
+	}
+	else if (stringcmp(argv[i], "-sift_smooth") == 0) {
+		f_sift_smooth = TRUE;
+		sift_smooth_from = strtoi(argv[++i]);
+		sift_smooth_len = strtoi(argv[++i]);
+		sift_smooth_factor_base = argv[++i];
+		cout << "-sift_smooth " << sift_smooth_from << " "
+				<< sift_smooth_len << " " << sift_smooth_factor_base << endl;
+	}
+	else if (stringcmp(argv[i], "-square_root") == 0) {
+		f_square_root = TRUE;
+		square_root_number.assign(argv[++i]);
+		cout << "-square_root " << square_root_number << endl;
+	}
+	else if (stringcmp(argv[i], "-square_root_mod") == 0) {
+		f_square_root_mod = TRUE;
+		square_root_mod_a.assign(argv[++i]);
+		square_root_mod_m.assign(argv[++i]);
+		cout << "-square_root_mod " << square_root_mod_a << " "
+				<< square_root_mod_m << endl;
+	}
+	else if (stringcmp(argv[i], "-quadratic_sieve") == 0) {
+		f_quadratic_sieve = TRUE;
+		quadratic_sieve_n = strtoi(argv[++i]);
+		quadratic_sieve_factorbase = strtoi(argv[++i]);
+		quadratic_sieve_x0 = strtoi(argv[++i]);
+		cout << "-quadratic_sieve " << quadratic_sieve_n << " "
+				<< quadratic_sieve_factorbase << " " << quadratic_sieve_x0 << endl;
+	}
+	else if (stringcmp(argv[i], "-jacobi") == 0) {
+		f_jacobi = TRUE;
+		jacobi_top = strtoi(argv[++i]);
+		jacobi_bottom = strtoi(argv[++i]);
+		cout << "-jacobi " << jacobi_top << " "
+				<< jacobi_bottom << endl;
+	}
+	else if (stringcmp(argv[i], "-solovay_strassen") == 0) {
+		f_solovay_strassen = TRUE;
+		solovay_strassen_p = strtoi(argv[++i]);
+		solovay_strassen_a = strtoi(argv[++i]);
+		cout << "-solovay_strassen " << solovay_strassen_p << " "
+				<< solovay_strassen_a << endl;
+	}
+	else if (stringcmp(argv[i], "-miller_rabin") == 0) {
+		f_miller_rabin = TRUE;
+		miller_rabin_p = strtoi(argv[++i]);
+		miller_rabin_nb_times = strtoi(argv[++i]);
+		cout << "-miller_rabin " << miller_rabin_p << " " << miller_rabin_nb_times << endl;
+	}
+	else if (stringcmp(argv[i], "-fermat_test") == 0) {
+		f_fermat_test = TRUE;
+		fermat_test_p = strtoi(argv[++i]);
+		fermat_test_nb_times = strtoi(argv[++i]);
+		cout << "-fermat_test " << fermat_test_p << " " << fermat_test_nb_times << endl;
+	}
+	else if (stringcmp(argv[i], "-find_pseudoprime") == 0) {
+		f_find_pseudoprime = TRUE;
+		find_pseudoprime_nb_digits = strtoi(argv[++i]);
+		find_pseudoprime_nb_fermat = strtoi(argv[++i]);
+		find_pseudoprime_nb_miller_rabin = strtoi(argv[++i]);
+		find_pseudoprime_nb_solovay_strassen = strtoi(argv[++i]);
+		cout << "-find_pseudoprime " << find_pseudoprime_nb_digits
+				<< " " << find_pseudoprime_nb_fermat
+				<< " " << find_pseudoprime_nb_miller_rabin
+				<< " " << find_pseudoprime_nb_solovay_strassen << endl;
+	}
+	else if (stringcmp(argv[i], "-find_strong_pseudoprime") == 0) {
+		f_find_strong_pseudoprime = TRUE;
+		find_pseudoprime_nb_digits = strtoi(argv[++i]);
+		find_pseudoprime_nb_fermat = strtoi(argv[++i]);
+		find_pseudoprime_nb_miller_rabin = strtoi(argv[++i]);
+		cout << "-find_strong_pseudoprime " << find_pseudoprime_nb_digits
+				<< " " << find_pseudoprime_nb_fermat
+				<< " " << find_pseudoprime_nb_miller_rabin
+				<< endl;
+	}
+	else if (stringcmp(argv[i], "-miller_rabin_text") == 0) {
+		f_miller_rabin_text = TRUE;
+		miller_rabin_text_nb_times = strtoi(argv[++i]);
+		miller_rabin_number_text.assign(argv[++i]);
+		cout << "-miller_rabin " << miller_rabin_text_nb_times
+				<< " " << miller_rabin_number_text
+				<< endl;
+	}
+	else if (stringcmp(argv[i], "-random") == 0) {
+		f_random = TRUE;
+		random_nb = strtoi(argv[++i]);
+		random_fname_csv.assign(argv[++i]);
+		cout << "-random " << random_nb << " " << random_fname_csv << endl;
+	}
+	else if (stringcmp(argv[i], "-random_last") == 0) {
+		f_random_last = TRUE;
+		random_last_nb = strtoi(argv[++i]);
+		cout << "-random_last " << random_last_nb << endl;
+	}
+	else if (stringcmp(argv[i], "-affine_sequence") == 0) {
+		f_affine_sequence = TRUE;
+		affine_sequence_a = strtoi(argv[++i]);
+		affine_sequence_c = strtoi(argv[++i]);
+		affine_sequence_m = strtoi(argv[++i]);
+		cout << "-affine_sequence " << affine_sequence_a
+				<< " " << affine_sequence_c << " " << affine_sequence_m << endl;
+	}
 	if (f_v) {
 		cout << "interface_cryptography::read_arguments done" << endl;
 	}
-	//return i;
 }
 
 void interface_cryptography::worker(int verbose_level)

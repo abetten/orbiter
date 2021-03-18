@@ -122,7 +122,7 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 	//verbose_level = 1;
 	int f_v = (verbose_level >= 1);
 	long int cnt = 0;
-	int i_prev = i;
+	int i_prev = -1;
 
 	if (f_v) {
 		cout << "orbiter_top_level_session::parse_and_execute" << endl;
@@ -137,7 +137,7 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 				cout << "orbiter_top_level_session::parse_and_execute next argument is " << Argv[i] << endl;
 			}
 		}
-		if (cnt > 10 && i_prev == i) {
+		if (i_prev == i) {
 			cout << "orbiter_top_level_session::parse_and_execute we seem to be stuck in a look" << endl;
 			exit(1);
 		}
@@ -179,6 +179,7 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 					cout << "orbiter_top_level_session::parse_and_execute recognizing keyword from Interface_algebra" << endl;
 				}
 				Interface_algebra.read_arguments(argc, Argv, i, verbose_level);
+				i++;
 				Interface_algebra.worker(verbose_level);
 				continue;
 			}
@@ -195,6 +196,7 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 					cout << "orbiter_top_level_session::parse_and_execute recognizing keyword from Interface_cryptography" << endl;
 				}
 				Interface_cryptography.read_arguments(argc, Argv, i, verbose_level);
+				i++;
 				Interface_cryptography.worker(verbose_level);
 				continue;
 			}
@@ -211,6 +213,7 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 					cout << "orbiter_top_level_session::parse_and_execute recognizing keyword from Interface_combinatorics" << endl;
 				}
 				Interface_combinatorics.read_arguments(argc, Argv, i, verbose_level);
+				i++;
 				Interface_combinatorics.worker(verbose_level);
 				continue;
 			}
@@ -227,6 +230,7 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 					cout << "orbiter_top_level_session::parse_and_execute recognizing keyword from Interface_coding_theory" << endl;
 				}
 				Interface_coding_theory.read_arguments(argc, Argv, i, verbose_level);
+				i++;
 				Interface_coding_theory.worker(verbose_level);
 				continue;
 			}
@@ -243,6 +247,7 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 					cout << "orbiter_top_level_session::parse_and_execute recognizing keyword from Interface_povray" << endl;
 				}
 				Interface_povray.read_arguments(argc, Argv, i, verbose_level);
+				i++;
 				Interface_povray.worker(verbose_level);
 				continue;
 			}
@@ -256,6 +261,7 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 			interface_projective Interface_projective;
 			if (Interface_projective.recognize_keyword(argc, Argv, i, verbose_level)) {
 				Interface_projective.read_arguments(argc, Argv, i, verbose_level);
+				i++;
 				Interface_projective.worker(verbose_level);
 				continue;
 			}
@@ -269,10 +275,14 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 			interface_toolkit Interface_toolkit;
 			if (Interface_toolkit.recognize_keyword(argc, Argv, i, verbose_level)) {
 				Interface_toolkit.read_arguments(argc, Argv, i, verbose_level);
+				i++;
 				Interface_toolkit.worker(verbose_level);
 				continue;
 			}
 		}
+
+		cout << "Command is unrecognized " << Argv[i] << endl;
+		exit(1);
 		cnt++;
 	}
 

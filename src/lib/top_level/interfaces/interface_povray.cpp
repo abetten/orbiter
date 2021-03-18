@@ -73,116 +73,105 @@ void interface_povray::read_arguments(int argc, std::string *argv, int &i, int v
 		cout << "interface_povray::read_arguments" << endl;
 	}
 
+	if (f_v) {
+		cout << "interface_povray::read_arguments the next argument is " << argv[i] << endl;
+	}
+	if (stringcmp(argv[i], "-povray") == 0) {
+		f_povray = TRUE;
+		cout << "-povray " << endl;
+		i++;
 
+		S = NEW_OBJECT(scene);
 
-	//for (; i < argc; i++) {
+		S->init(verbose_level);
 
-		if (f_v) {
-			cout << "interface_povray::read_arguments the next argument is " << argv[i] << endl;
-		}
-		if (stringcmp(argv[i], "-povray") == 0) {
-			f_povray = TRUE;
-			cout << "-povray " << endl;
-			i++;
+		for (; i < argc; i++) {
+			if (stringcmp(argv[i], "-video_options") == 0) {
+				Opt = NEW_OBJECT(video_draw_options);
+				i += Opt->read_arguments(argc - (i - 1),
+					argv + i + 1, verbose_level);
 
-			S = NEW_OBJECT(scene);
-
-			S->init(verbose_level);
-
-			for (; i < argc; i++) {
-				if (stringcmp(argv[i], "-video_options") == 0) {
-					Opt = NEW_OBJECT(video_draw_options);
-					i += Opt->read_arguments(argc - (i - 1),
-						argv + i + 1, verbose_level);
-
-					cout << "-video_options" << endl;
-					cout << "done with -video_options " << endl;
-					cout << "i = " << i << endl;
-					cout << "argc = " << argc << endl;
-					if (i < argc) {
-						cout << "next argument is " << argv[i] << endl;
-					}
-				}
-				else if (stringcmp(argv[i], "-round") == 0) {
-					f_round = TRUE;
-					round = strtoi(argv[++i]);
-					cout << "-round " << round << endl;
-				}
-
-				else if (stringcmp(argv[i], "-rounds") == 0) {
-					f_rounds = TRUE;
-					rounds_as_string.assign(argv[++i]);
-					cout << "-rounds " << rounds_as_string << endl;
-				}
-				else if (stringcmp(argv[i], "-nb_frames_default") == 0) {
-					f_nb_frames_default = TRUE;
-					nb_frames_default = strtoi(argv[++i]);
-					cout << "-nb_frames_default " << nb_frames_default << endl;
-				}
-				else if (stringcmp(argv[i], "-output_mask") == 0) {
-					f_output_mask = TRUE;
-					output_mask.assign(argv[++i]);
-					cout << "-output_mask " << output_mask << endl;
-				}
-				else if (stringcmp(argv[i], "-scene_objects") == 0) {
-					cout << "-scene_objects " << endl;
-					i++;
-					i = S->read_scene_objects(argc, argv, i, verbose_level);
-					cout << "done with -scene_objects " << endl;
-					cout << "i = " << i << endl;
-					cout << "argc = " << argc << endl;
-					if (i < argc) {
-						cout << "next argument is " << argv[i] << endl;
-					}
-				}
-				else if (stringcmp(argv[i], "-povray_end") == 0) {
-					cout << "-povray_end " << endl;
-					break;
-				}
-				else {
-					cout << "unrecognized option " << argv[i] << endl;
+				cout << "-video_options" << endl;
+				cout << "done with -video_options " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
 				}
 			}
-			if (Opt == NULL) {
-				cout << "Please use option -video_options .." << endl;
-				exit(1);
-				}
-			if (!f_output_mask) {
-				cout << "Please use option -output_mask <output_mask>" << endl;
-				exit(1);
-				}
-			if (!f_nb_frames_default) {
-				cout << "Please use option -nb_frames_default <nb_frames>" << endl;
-				exit(1);
-				}
-			if (!f_round && !f_rounds ) {
-				cout << "Please use option -round <round> or "
-						"-rounds <first_round> <nb_rounds>" << endl;
-				exit(1);
-				}
-		}
-		else if (stringcmp(argv[i], "-prepare_frames") == 0) {
-			f_prepare_frames = TRUE;
-			Prepare_frames = NEW_OBJECT(prepare_frames);
-			i += Prepare_frames->parse_arguments(argc - (i + 1), argv + i + 1);
+			else if (stringcmp(argv[i], "-round") == 0) {
+				f_round = TRUE;
+				round = strtoi(argv[++i]);
+				cout << "-round " << round << endl;
+			}
 
-			cout << "done reading -prepare_frames " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
+			else if (stringcmp(argv[i], "-rounds") == 0) {
+				f_rounds = TRUE;
+				rounds_as_string.assign(argv[++i]);
+				cout << "-rounds " << rounds_as_string << endl;
+			}
+			else if (stringcmp(argv[i], "-nb_frames_default") == 0) {
+				f_nb_frames_default = TRUE;
+				nb_frames_default = strtoi(argv[++i]);
+				cout << "-nb_frames_default " << nb_frames_default << endl;
+			}
+			else if (stringcmp(argv[i], "-output_mask") == 0) {
+				f_output_mask = TRUE;
+				output_mask.assign(argv[++i]);
+				cout << "-output_mask " << output_mask << endl;
+			}
+			else if (stringcmp(argv[i], "-scene_objects") == 0) {
+				cout << "-scene_objects " << endl;
+				i++;
+				i = S->read_scene_objects(argc, argv, i, verbose_level);
+				cout << "done with -scene_objects " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+			}
+			else if (stringcmp(argv[i], "-povray_end") == 0) {
+				cout << "-povray_end " << endl;
+				break;
+			}
+			else {
+				cout << "unrecognized option " << argv[i] << endl;
 			}
 		}
-#if 0
-		else {
-			break;
+		if (Opt == NULL) {
+			cout << "Please use option -video_options .." << endl;
+			exit(1);
+			}
+		if (!f_output_mask) {
+			cout << "Please use option -output_mask <output_mask>" << endl;
+			exit(1);
+			}
+		if (!f_nb_frames_default) {
+			cout << "Please use option -nb_frames_default <nb_frames>" << endl;
+			exit(1);
+			}
+		if (!f_round && !f_rounds ) {
+			cout << "Please use option -round <round> or "
+					"-rounds <first_round> <nb_rounds>" << endl;
+			exit(1);
+			}
+	}
+	else if (stringcmp(argv[i], "-prepare_frames") == 0) {
+		f_prepare_frames = TRUE;
+		Prepare_frames = NEW_OBJECT(prepare_frames);
+		i += Prepare_frames->parse_arguments(argc - (i + 1), argv + i + 1);
+
+		cout << "done reading -prepare_frames " << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
 		}
-#endif
-	//}
+	}
 	if (f_v) {
 		cout << "interface_povray::read_arguments done" << endl;
 	}
-	//return i;
 }
 
 void interface_povray::worker(int verbose_level)
