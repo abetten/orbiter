@@ -111,6 +111,55 @@ public:
 
 void brick_test(int q, int verbose_level);
 
+
+
+// #############################################################################
+// combinatorial_object_activity_description.cpp
+// #############################################################################
+
+
+//! description of an activity for a combinatorial object
+
+class combinatorial_object_activity_description {
+public:
+
+	int f_save;
+
+	combinatorial_object_activity_description();
+	~combinatorial_object_activity_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+
+};
+
+
+
+// #############################################################################
+// combinatorial_object_activity.cpp
+// #############################################################################
+
+
+//! perform an activity for a combinatorial object
+
+class combinatorial_object_activity {
+public:
+	combinatorial_object_activity_description *Descr;
+	combinatorial_object_create *COC;
+
+	combinatorial_object_activity();
+	~combinatorial_object_activity();
+	void init(combinatorial_object_activity_description *Descr,
+			combinatorial_object_create *COC,
+			int verbose_level);
+	void perform_activity(int verbose_level);
+
+};
+
+
+
+
+
 // #############################################################################
 // combinatorial_object_create.cpp
 // #############################################################################

@@ -80,6 +80,8 @@ D47="1,5,1,10,1,6,1,13,1,8,1,11,1,9,1,14,1,16,1,17,1,18,1,19 "
 
 F_ALPHA_BETA_GAMMA_DELTA="beta*(gamma + 1)*x0*x0*x2 + (alpha*delta - beta*gamma + alpha - beta - delta - 1)*x0*x1*x2 -1*(alpha*beta -alpha*delta + delta)*(gamma + 1)*x0*x1*x3 + (0-alpha*delta + alpha*gamma -beta*gamma -beta + delta -gamma)*x0*x2*x2 -(alpha*delta +beta -delta)*(gamma +1)*x0*x2*x3 -(delta + 1)*(alpha - 1)*x1*x1*x2 - (delta + 1)*(alpha - 1)*x1*x1*x3 + (alpha*delta - alpha*gamma + beta*gamma + beta - delta + gamma)*x1*x2*x2 + (alpha*beta*gamma + alpha*beta + alpha*delta - alpha*gamma + beta*gamma + beta - delta + gamma)*x1*x2*x3 + alpha*beta*(gamma + 1)*x1*x3*x3"
 
+F_abcd_eqn = "-(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(b - d)*X0*X0*X2 + (a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(a + b - c - d)*X0*X1*X2 + (a*a*c - a*a*d - a*c*c + b*c*c + a*d - b*c)*(b - d)*X0*X1*X3 - (a*d - b*c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X0*X2*X2 - (a*a*c*d - a*b*c*c - a*a*d + a*b*d + b*c*c - b*c*d)*(b - d)*X0*X2*X3 - (a - c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X1*X1*X2 - (a - c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X1*X1*X3 + (a*d - b*c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X1*X2*X2 + (2*a*a*b*c*d - a*a*b*d*d - 2*a*a*c*d*d - 2*a*b*b*c*c + a*b*b*c*d + 2*a*b*c*c*d + a*b*c*d*d - b*b*c*c*d - a*a*b*c + a*a*c*d + a*a*d*d + a*b*b*c + a*b*c*c - 4*a*b*c*d - a*c*c*d + a*c*d*d + b*b*c*c)*X1*X2*X3 + c*a*(a*d - b*c - a + b + c - d)*(b - d)*X1*X3*X3"
+
 GOLAY_23_COLUMN_RANKS_PROJECTIVELY="0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 132, 913, 1460, 1750, 1898, 2518, 2787, 2874, 3320, 3357, 3662" 
 
 CODE_RM_3_1_GENMA="1,1,1,1,1,1,1,1, 0,1,0,1,0,1,0,1, 0,0,1,1,0,0,1,1, 0,0,0,0,1,1,1,1"
@@ -579,6 +581,9 @@ draw_mod_255_cyclotomic_1_and_3:
 			open mod_255_cyclotomic_1_and_3_draw.pdf
 
 
+sqrt_mod_20_31:
+		$(ORBITER_PATH)/orbiter.out -v 2 -square_root_mod 20 31
+
 
 #############################################################################################################
 # Section 8: Prime Fields
@@ -596,12 +601,12 @@ F_2:
 F_3:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 3 -end  \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q3_addition_table.csv 40 24 -draw_matrix_partition 4 3 3
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q3_multiplication_table.csv 40 24 -draw_matrix_partition 4 2 2
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q3_addition_table_reordered.csv 40 24 -draw_matrix_partition 3 3 3
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q3_multiplication_table_reordered.csv 40 24 -draw_matrix_partition 3 2 2
-	pdflatex GF_3.tex
-	open GF_3.pdf
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix  -input_csv_file GF_q3_addition_table.csv -box_width 40 -bit_depth 24 -partition 4 3 3 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix  -input_csv_file GF_q3_multiplication_table.csv -box_width 40 -bit_depth 24 -partition 4 2 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix  -input_csv_file GF_q3_addition_table_reordered.csv -box_width 40 -bit_depth 24 -partition 4 3 3 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix  -input_csv_file GF_q3_multiplication_table_reordered.csv -box_width 40 -bit_depth 24 -partition 4 2 2 -end
+	#pdflatex GF_3.tex
+	#open GF_3.pdf
 
 F_5:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 5 -end \
@@ -612,10 +617,10 @@ F_5:
 F_7:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 7 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_addition_table.csv 40 24 -draw_matrix_partition 3 7 7 
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_multiplication_table.csv 40 24 -draw_matrix_partition 3 6 6
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_addition_table_reordered.csv 40 24 -draw_matrix_partition 3 7 7 
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_multiplication_table_reordered.csv 40 24 -draw_matrix_partition 3 6 6
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_addition_table.csv 40 24 -draw_matrix_partition 3 7 7 
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_multiplication_table.csv 40 24 -draw_matrix_partition 3 6 6
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_addition_table_reordered.csv 40 24 -draw_matrix_partition 3 7 7 
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_multiplication_table_reordered.csv 40 24 -draw_matrix_partition 3 6 6
 	pdflatex GF_7.tex
 	open GF_7.pdf
 
@@ -631,8 +636,8 @@ F_13:
 F_17:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 17 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q17_addition_table.csv 40 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q17_multiplication_table.csv 40 8
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q17_addition_table.csv 40 8
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q17_multiplication_table.csv 40 8
 	pdflatex GF_17.tex
 	open GF_17.pdf
 
@@ -650,18 +655,18 @@ F_19:
 F_31:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 31 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q31_addition_table.csv 10 24 -draw_matrix_partition 3 31 31 
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q31_multiplication_table.csv 10 24 -draw_matrix_partition 3 30 30
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q31_addition_table_reordered.csv 10 24 -draw_matrix_partition 3 31 31
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q31_multiplication_table_reordered.csv 10 24 -draw_matrix_partition 3 30 30
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q31_addition_table.csv 10 24 -draw_matrix_partition 3 31 31 
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q31_multiplication_table.csv 10 24 -draw_matrix_partition 3 30 30
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q31_addition_table_reordered.csv 10 24 -draw_matrix_partition 3 31 31
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q31_multiplication_table_reordered.csv 10 24 -draw_matrix_partition 3 30 30
 
 F_127:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 127 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q127_addition_table.csv 10 24 -draw_matrix_partition 3 127 127 
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q127_multiplication_table.csv 10 24 -draw_matrix_partition 3 126 126
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q127_addition_table_reordered.csv 10 24 -draw_matrix_partition 3 127 127 
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q127_multiplication_table_reordered.csv 10 24 -draw_matrix_partition 3 126 126
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q127_addition_table.csv 10 24 -draw_matrix_partition 3 127 127 
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q127_multiplication_table.csv 10 24 -draw_matrix_partition 3 126 126
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q127_addition_table_reordered.csv 10 24 -draw_matrix_partition 3 127 127 
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q127_multiplication_table_reordered.csv 10 24 -draw_matrix_partition 3 126 126
 	#pdflatex GF_7.tex
 	#open GF_7.pdf
 
@@ -669,7 +674,7 @@ F_127:
 Wash_matrix_4:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 2 -end \
 		-with F -do -finite_field_activity -Walsh_matrix 4 -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix Walsh_01_4.csv 10 24 -draw_matrix_partition 3 16 16 
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Walsh_01_4.csv -box_width 10 -depth 24 -partition 3 16 16 -end
 	#pdflatex GF_2.tex
 	#open GF_2.pdf
 
@@ -1175,8 +1180,8 @@ SECTION_EXTENSION_FIELDS:
 F_4:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 4 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q4_addition_table.csv 40 24 -draw_matrix_partition 3 4 4 
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q4_multiplication_table.csv 40 24 -draw_matrix_partition 3 3 3
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q4_addition_table.csv -box_width 40 -depth 24 -partition 3 4 4 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q4_multiplication_table.csv -box_width 40 -depth 24 -partition 3 3 3 -end
 	pdflatex GF_4.tex
 	open GF_4.pdf
 
@@ -1184,7 +1189,7 @@ trace_4:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 4 -end \
 		-with F -do -finite_field_activity -trace -end
 	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F_q4_trace.csv F_q4_trace_2x2.csv 2
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F_q4_trace_2x2.csv 40 24 -draw_matrix_partition 4 2 2
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F_q4_trace_2x2.csv -box_width 40 -depth 24 -partition 4 2 2 -end
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 4 -end \
 		-with F -do -finite_field_activity -algebraic_normal_form F_q4_trace.csv 2 -end
 	
@@ -1210,10 +1215,10 @@ F_8_near_bent_5:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 2 -end \
 		-with F -do -finite_field_activity -Walsh_Hadamard_transform F8_power_5_trace.csv 4 -end
 	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F8_power_5_trace.csv F8_power_5_trace_8x1.csv 1
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F8_power_5_trace_8x1.csv 40 24 -draw_matrix_partition 4 8 1
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix Walsh_01_3.csv 40 24 -draw_matrix_partition 4 8 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F8_power_5_trace_8x1.csv -box_width 40 -depth 24  -partition 4 8 1 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Walsh_01_3.csv -box_width 40 -depth 24  -partition 4 8 8 -end
 	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F8_power_5_trace_transformed.csv F8_power_5_trace_transformed_8x1.csv 1
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F8_power_5_trace_transformed_8x1.csv 40 24 -draw_matrix_partition 4 8 1
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F8_power_5_trace_transformed_8x1.csv -box_width 40 -depth 24  -partition 4 8 1 -end
 
 bent_4:
 	$(ORBITER_PATH)/orbiter.out -v 3 -bent 4
@@ -1223,7 +1228,7 @@ bent_4a:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 2 -end \
 		-with F -do -finite_field_activity -Walsh_Hadamard_transform bent_function_n4.csv 4 -end
 	$(ORBITER_PATH)/orbiter.out -v 3 -reformat bent_function_n4_transformed.csv bent_function_n4_transformed_16x1.csv 1
-	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix bent_function_n4_transformed_16x1.csv 40 24 -draw_matrix_partition 4 16 1
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file bent_function_n4_transformed_16x1.csv -box_width 40 -depth 24  -partition 4 16 1 -end
 
 #0 : 0 / 448 : ( 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0 ) : 27328 : ( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ...0, 0, 0 ) : homogeneous_polynomial_domain::print_equation
 #X0*X3*X4^2 + X1*X2*X4^2
@@ -1262,14 +1267,14 @@ F8_over_F2_field_reduction:
 		-define F -finite_field -q 8 -end \
 		-with F -do \
 		-finite_field_activity -field_reduction "F8_red_7" 2 1 1 "7" -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F8_red_0.csv 40 24 -draw_matrix_partition 4 "3" "3"
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F8_red_1.csv 40 24 -draw_matrix_partition 4 "3" "3"
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F8_red_2.csv 40 24 -draw_matrix_partition 4 "3" "3"
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F8_red_3.csv 40 24 -draw_matrix_partition 4 "3" "3"
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F8_red_4.csv 40 24 -draw_matrix_partition 4 "3" "3"
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F8_red_5.csv 40 24 -draw_matrix_partition 4 "3" "3"
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F8_red_6.csv 40 24 -draw_matrix_partition 4 "3" "3"
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F8_red_7.csv 40 24 -draw_matrix_partition 4 "3" "3"
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F8_red_0.csv -box_width 40 -depth 24  -partition 4 3 3 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F8_red_1.csv -box_width 40 -depth 24  -partition 4 3 3 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F8_red_2.csv -box_width 40 -depth 24  -partition 4 3 3 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F8_red_3.csv -box_width 40 -depth 24  -partition 4 3 3 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F8_red_4.csv -box_width 40 -depth 24  -partition 4 3 3 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F8_red_5.csv -box_width 40 -depth 24  -partition 4 3 3 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F8_red_6.csv -box_width 40 -depth 24  -partition 4 3 3 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F8_red_7.csv -box_width 40 -depth 24  -partition 4 3 3 -end
 	#pdflatex field_reduction_Q8_q2_5_7.tex
 
 
@@ -1277,10 +1282,10 @@ F8_over_F2_field_reduction:
 F_9:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 9 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q9_addition_table.csv 40 24 -draw_matrix_partition 4 "3,6" "3,6"
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q9_multiplication_table.csv 40 24 -draw_matrix_partition 4 "2,6" "2,6"
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q9_addition_table_reordered.csv 40 24 -draw_matrix_partition 3 9 9
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q9_multiplication_table_reordered.csv 40 24 -draw_matrix_partition 3 8 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q9_addition_table.csv -box_width 40 -depth 24  -partition 3 "3,6" "3,6" -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q9_multiplication_table.csv -box_width 40 -depth 24  -partition 3 "2,6" "2,6" -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q9_addition_table_reordered.csv -box_width 40 -depth 24  -partition 3 9 9 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q9_multiplication_table_reordered.csv -box_width 40 -depth 24  -partition 3 8 8 -end
 	pdflatex GF_9.tex
 	open GF_9.pdf
 
@@ -1288,7 +1293,7 @@ trace_9:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 9 -end \
 		-with F -do -finite_field_activity -trace -end
 	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F_q9_trace.csv F_q9_trace_3x3.csv 3
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F_q9_trace_3x3.csv 40 24 -draw_matrix_partition 4 3 3
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F_q9_trace_3x3.csv -box_width 40 -depth 24  -partition 4 3 3 -end
 	
 
 
@@ -1298,10 +1303,10 @@ trace_9:
 F_16:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q16_addition_table.csv 40 24 -draw_matrix_partition 3 16 16 
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q16_multiplication_table.csv 40 24 -draw_matrix_partition 3 15 15
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q16_addition_table_reordered.csv 40 24 -draw_matrix_partition 3 16 16 
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q16_multiplication_table_reordered.csv 40 24 -draw_matrix_partition 3 15 15
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q16_addition_table.csv -box_width 40 -depth 24  -partition 3 16 16 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q16_multiplication_table.csv -box_width 40 -depth 24  -partition 3 15 15 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q16_addition_table_reordered.csv -box_width 40 -depth 24  -partition 3 16 16 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q16_multiplication_table_reordered.csv -box_width 40 -depth 24  -partition 3 15 15 -end
 	pdflatex GF_16.tex
 	open GF_16.pdf
 
@@ -1311,10 +1316,10 @@ trace_16:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end \
 		-with F -do -finite_field_activity -trace -end
 	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F_q16_trace.csv F_q16_trace_4x4.csv 4
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F_q16_trace_4x4.csv 40 24 -draw_matrix_partition 4 4 4
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F_q16_trace_4x4.csv -box_width 40 -depth 24  -partition 4 4 4 -end
 	
 
-F_16_bent:
+F_16_bent_wrong:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end \
 		-with F -do -finite_field_activity -identity_function  F16.csv -end
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end \
@@ -1323,11 +1328,11 @@ F_16_bent:
 		-with F -do -finite_field_activity -apply_trace_function  F16_power_9.csv -end
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 2 -end \
 		-with F -do -finite_field_activity -Walsh_Hadamard_transform F16_power_9_trace.csv 4 -end
-	#$(ORBITER_PATH)/orbiter.out -v 3 -reformat F16_power_9_trace.csv F16_power_9_trace_16x1.csv 1
-	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F16_power_9_trace_16x1.csv 40 24 -draw_matrix_partition 4 16 1
-	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix Walsh_01_4.csv 40 24 -draw_matrix_partition 4 16 16
-	#$(ORBITER_PATH)/orbiter.out -v 3 -reformat F16_power_9_trace_transformed.csv F16_power_9_trace_transformed_16x1.csv 1
-	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F16_power_9_trace_transformed_16x1.csv 40 24 -draw_matrix_partition 4 16 1
+	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F16_power_9_trace.csv F16_power_9_trace_16x1.csv 1
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F16_power_9_trace_16x1.csv -box_width 40 -depth 24  -partition 4 16 1 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Walsh_01_4.csv -box_width 40 -depth 24  -partition 4 16 16 -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F16_power_9_trace_transformed.csv F16_power_9_trace_transformed_16x1.csv 1
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F16_power_9_trace_transformed_16x1.csv -box_width 40 -depth 24  -partition 4 16 1 -end
 
 
 F_16_over_F_4_field_reduction:
@@ -1395,22 +1400,22 @@ F_16_over_F_4_field_reduction:
 		-define F -finite_field -q 16 -end \
 		-with F -do \
 		-finite_field_activity -field_reduction "F16_over_F4_15" 4 1 1 "15" -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F16_over_F4_0.csv 40 24 -draw_matrix_partition 4 "2" "2"
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F16_over_F4_1.csv 40 24 -draw_matrix_partition 4 "2" "2"
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F16_over_F4_2.csv 40 24 -draw_matrix_partition 4 "2" "2"
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F16_over_F4_3.csv 40 24 -draw_matrix_partition 4 "2" "2"
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F16_over_F4_4.csv 40 24 -draw_matrix_partition 4 "2" "2"
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F16_over_F4_5.csv 40 24 -draw_matrix_partition 4 "2" "2"
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F16_over_F4_6.csv 40 24 -draw_matrix_partition 4 "2" "2"
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F16_over_F4_7.csv 40 24 -draw_matrix_partition 4 "2" "2"
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F16_over_F4_8.csv 40 24 -draw_matrix_partition 4 "2" "2"
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F16_over_F4_9.csv 40 24 -draw_matrix_partition 4 "2" "2"
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F16_over_F4_10.csv 40 24 -draw_matrix_partition 4 "2" "2"
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F16_over_F4_11.csv 40 24 -draw_matrix_partition 4 "2" "2"
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F16_over_F4_12.csv 40 24 -draw_matrix_partition 4 "2" "2"
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F16_over_F4_13.csv 40 24 -draw_matrix_partition 4 "2" "2"
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F16_over_F4_14.csv 40 24 -draw_matrix_partition 4 "2" "2"
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F16_over_F4_15.csv 40 24 -draw_matrix_partition 4 "2" "2"
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F16_over_F4_0.csv -box_width 40 -depth 24  -partition 4 2 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F16_over_F4_1.csv -box_width 40 -depth 24  -partition 4 2 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F16_over_F4_2.csv -box_width 40 -depth 24  -partition 4 2 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F16_over_F4_3.csv -box_width 40 -depth 24  -partition 4 2 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F16_over_F4_4.csv -box_width 40 -depth 24  -partition 4 2 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F16_over_F4_5.csv -box_width 40 -depth 24  -partition 4 2 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F16_over_F4_6.csv -box_width 40 -depth 24  -partition 4 2 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F16_over_F4_7.csv -box_width 40 -depth 24  -partition 4 2 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F16_over_F4_8.csv -box_width 40 -depth 24  -partition 4 2 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F16_over_F4_9.csv -box_width 40 -depth 24  -partition 4 2 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F16_over_F4_10.csv -box_width 40 -depth 24  -partition 4 2 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F16_over_F4_11.csv -box_width 40 -depth 24  -partition 4 2 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F16_over_F4_12.csv -box_width 40 -depth 24  -partition 4 2 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F16_over_F4_13.csv -box_width 40 -depth 24  -partition 4 2 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F16_over_F4_14.csv -box_width 40 -depth 24  -partition 4 2 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F16_over_F4_15.csv -box_width 40 -depth 24  -partition 4 2 2 -end
 
 
 
@@ -1424,16 +1429,16 @@ F_16_poly31:
 F_25:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 25 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q25_addition_table.csv 40 24 -draw_matrix_partition 3 25 25
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q25_multiplication_table.csv 40 24 -draw_matrix_partition 3 24 24
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q25_addition_table_reordered.csv 40 24 -draw_matrix_partition 3 25 25
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q25_multiplication_table_reordered.csv 40 24 -draw_matrix_partition 3 24 24
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q25_addition_table.csv -box_width 40 -depth 24  -partition 3 25 25 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q25_multiplication_table.csv -box_width 40 -depth 24  -partition 3 24 24 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q25_addition_table_reordered.csv -box_width 40 -depth 24  -partition 3 25 25 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q25_multiplication_table_reordered.csv -box_width 40 -depth 24  -partition 3 24 24 -end
 
 trace_25:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 25 -end \
 		-with F -do -finite_field_activity -trace -end
 	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F_q25_trace.csv F_q25_trace_5x5.csv 5
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F_q25_trace_5x5.csv 40 24 -draw_matrix_partition 4 5 5
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q25_addition_table.csv -box_width 40 -depth 24  -partition 3 25 25 -end
 
 
 
@@ -1448,10 +1453,10 @@ F_32:
 F_49:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 49 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q49_addition_table.csv 40 24  -draw_matrix_partition 3 49 49
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q49_multiplication_table.csv 40 24 -draw_matrix_partition 3 48 48
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q49_addition_table_reordered.csv 40 24 -draw_matrix_partition 3 49 49
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q49_multiplication_table_reordered.csv 40 24 -draw_matrix_partition 3 48 48
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q49_addition_table.csv -box_width 40 -depth 24  -partition 3 49 49 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q49_multiplication_table.csv -box_width 40 -depth 24  -partition 3 48 48 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q49_addition_table_reordered.csv -box_width 40 -depth 24  -partition 3 49 49 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q49_multiplication_table_reordered.csv -box_width 40 -depth 24  -partition 3 48 48 -end
 	#pdflatex GF_49.tex
 	#open GF_49.pdf
 
@@ -1459,17 +1464,17 @@ trace_49:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 49 -end \
 		-with F -do -finite_field_activity -trace -end
 	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F_q49_trace.csv F_q49_trace_7x7.csv 7
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F_q49_trace_7x7.csv 40 24 -draw_matrix_partition 4 7 7
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F_q49_trace_7x7.csv -box_width 40 -depth 24  -partition 4 7 7  -end
 
 
 
 F_64:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 64 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q64_addition_table.csv 40 24  -draw_matrix_partition 3 64 64
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q64_multiplication_table.csv 40 24 -draw_matrix_partition 3 63 63
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q64_addition_table_reordered.csv 40 24 -draw_matrix_partition 3 64 64
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q64_multiplication_table_reordered.csv 40 24 -draw_matrix_partition 3 63 63
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q64_addition_table.csv -box_width 40 -depth 24  -partition 3 64 64 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q64_multiplication_table.csv -box_width 40 -depth 24  -partition 3 63 63 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q64_addition_table_reordered.csv -box_width 40 -depth 24  -partition 3 64 64 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q64_multiplication_table_reordered.csv -box_width 40 -depth 24  -partition 3 63 63 -end
 	pdflatex GF_64.tex
 	open GF_64.pdf
 
@@ -1478,7 +1483,7 @@ trace_64:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 64 -end \
 		-with F -do -finite_field_activity -trace -end
 	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F_q64_trace.csv F_q64_trace_8x8.csv 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F_q64_trace_8x8.csv 40 24 -draw_matrix_partition 4 "1,1,1,1,1,1,1,1" "1,1,1,1,1,1,1,1"
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F_q64_trace_8x8.csv -box_width 40 -depth 24  -partition 3 4 "1,1,1,1,1,1,1,1" "1,1,1,1,1,1,1,1" -end
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 2 -end \
 		-with F -do -finite_field_activity -algebraic_normal_form F_q64_trace.csv 6 -end
 
@@ -1487,7 +1492,7 @@ trace_64_poly_2:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 64 -override_polynomial 115 -end \
 		-with F -do -finite_field_activity -trace -end
 	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F_q64_trace.csv F_q64_trace_8x8.csv 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F_q64_trace_8x8.csv 40 24 -draw_matrix_partition 4 8 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F_q64_trace_8x8.csv -box_width 40 -depth 24  -partition 3 8 8 -end
 
 
 F_64_over_F_8_field_reduction:
@@ -1495,7 +1500,7 @@ F_64_over_F_8_field_reduction:
 		-define F -finite_field -q 64 -end \
 		-with F -do \
 		-finite_field_activity -field_reduction "F64_over_F8" 8 8 8 "0,1,2,3,4,5,6,7, 8,9,10,11,12,13,14,15, 16,17,18,19,20,21,22,23, 24,25,26,27,28,29,30,31, 32,33,34,35,36,37,38,39, 40,41,42,43,44,45,46,47, 48,49,50,51,52,53,54,55, 56,57,58,59,60,61,62,63" -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F64_over_F8.csv 40 24 -draw_matrix_partition 4 "2,2,2,2,2,2,2,2" "2,2,2,2,2,2,2,2"
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F64_over_F8.csv -box_width 40 -depth 24  -partition 4 "2,2,2,2,2,2,2,2" "2,2,2,2,2,2,2,2" -end
 	pdflatex field_reduction_Q64_q8_8_8.tex
 	open field_reduction_Q64_q8_8_8.pdf
 
@@ -1504,7 +1509,7 @@ F_64_over_F_4_field_reduction:
 		-define F -finite_field -q 64 -end \
 		-with F -do \
 		-finite_field_activity -field_reduction "F64_over_F4" 4 8 8 "0,1,2,3,4,5,6,7, 8,9,10,11,12,13,14,15, 16,17,18,19,20,21,22,23, 24,25,26,27,28,29,30,31, 32,33,34,35,36,37,38,39, 40,41,42,43,44,45,46,47, 48,49,50,51,52,53,54,55, 56,57,58,59,60,61,62,63" -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F64_over_F4.csv 40 24 -draw_matrix_partition 4 "3,3,3,3,3,3,3,3" "3,3,3,3,3,3,3,3"
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F64_over_F4.csv -box_width 40 -depth 24  -partition 4 "3,3,3,3,3,3,3,3" "3,3,3,3,3,3,3,3" -end
 	pdflatex field_reduction_Q64_q4_8_8.tex
 	open field_reduction_Q64_q4_8_8.pdf
 
@@ -1513,7 +1518,7 @@ F64_over_F2_field_reduction:
 		-define F -finite_field -q 64 -end \
 		-with F -do \
 		-finite_field_activity -field_reduction "F64_over_F2" 2 8 8 "0,1,2,3,4,5,6,7, 8,9,10,11,12,13,14,15, 16,17,18,19,20,21,22,23, 24,25,26,27,28,29,30,31, 32,33,34,35,36,37,38,39, 40,41,42,43,44,45,46,47, 48,49,50,51,52,53,54,55, 56,57,58,59,60,61,62,63" -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F64_over_F2.csv 40 24 -draw_matrix_partition 4 "6,6,6,6,6,6,6,6" "6,6,6,6,6,6,6,6"
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F64_over_F2.csv -box_width 40 -depth 24  -partition 4 "6,6,6,6,6,6,6,6" "6,6,6,6,6,6,6,6" -end
 	pdflatex field_reduction_Q64_q2_8_8.tex
 	open field_reduction_Q64_q2_8_8.pdf
 
@@ -1523,7 +1528,7 @@ trace_81:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 81 -end \
 		-with F -do -finite_field_activity -trace -end
 	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F_q81_trace.csv F_q81_trace_9x9.csv 9
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F_q81_trace_9x9.csv 40 24 -draw_matrix_partition 4 9 9
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F_q81_trace_9x9.csv -box_width 40 -depth 24  -partition 4 9 9 -end
 
 
 F_125:
@@ -1537,10 +1542,10 @@ F_125:
 F_256:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 256 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q256_addition_table.csv 40 24  -draw_matrix_partition 3 256 256
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q256_multiplication_table.csv 40 24 -draw_matrix_partition 3 255 255
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q256_addition_table_reordered.csv 40 24 -draw_matrix_partition 3 256 256
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q256_multiplication_table_reordered.csv 40 24 -draw_matrix_partition 3 255 255
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q256_addition_table.csv -box_width 40 -depth 24  -partition 3 256 256 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q256_multiplication_table.csv -box_width 40 -depth 24  -partition 3 255 255 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q256_addition_table_reordered.csv -box_width 40 -depth 24  -partition 3 256 256 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GF_q256_multiplication_table_reordered.csv -box_width 40 -depth 24  -partition 3 255 255 -end
 	pdflatex GF_256.tex
 	open GF_256.pdf
 
@@ -1549,7 +1554,7 @@ trace_256:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 256 -end \
 		-with F -do -finite_field_activity -trace -end
 	$(ORBITER_PATH)/orbiter.out -v 3 -reformat F_q256_trace.csv F_q256_trace_16x16.csv 16
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix F_q256_trace_16x16.csv 40 24 -draw_matrix_partition 4 "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1" "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F_q256_trace_16x16.csv -box_width 40 -depth 24  -partition 4 "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1" "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1" -end
 
 
 
@@ -1723,24 +1728,15 @@ representation_on_polynomials_of_degree_3_old:
 		-group_theoretic_activities \
 		-representation_on_polynomials 3 \
 		-end 
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix PGL_4_3_rep_3_0.csv 20 3 -draw_matrix_partition 3 20 20
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix PGL_4_3_rep_3_1.csv 20 3 -draw_matrix_partition 3 20 20
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix PGL_4_3_rep_3_2.csv 20 3 -draw_matrix_partition 3 20 20
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix PGL_4_3_rep_3_3.csv 20 3 -draw_matrix_partition 3 20 20
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix PGL_4_3_rep_3_4.csv 20 3 -draw_matrix_partition 3 20 20
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix PGL_4_3_rep_3_5.csv 20 3 -draw_matrix_partition 3 20 20
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix PGL_4_3_rep_3_6.csv 20 3 -draw_matrix_partition 3 20 20
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix PGL_4_3_rep_3_7.csv 20 3 -draw_matrix_partition 3 20 20
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix PGL_4_3_rep_3_8.csv 20 3 -draw_matrix_partition 3 20 20
-	open PGL_4_3_rep_3_0_draw.bmp
-	open PGL_4_3_rep_3_1_draw.bmp
-	open PGL_4_3_rep_3_2_draw.bmp
-	open PGL_4_3_rep_3_3_draw.bmp
-	open PGL_4_3_rep_3_4_draw.bmp
-	open PGL_4_3_rep_3_5_draw.bmp
-	open PGL_4_3_rep_3_6_draw.bmp
-	open PGL_4_3_rep_3_7_draw.bmp
-	open PGL_4_3_rep_3_8_draw.bmp
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file PGL_4_3_rep_3_0.csv -box_width 40 -depth 24  -partition 3 20 20 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file PGL_4_3_rep_3_1.csv -box_width 40 -depth 24  -partition 3 20 20 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file PGL_4_3_rep_3_2.csv -box_width 40 -depth 24  -partition 3 20 20 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file PGL_4_3_rep_3_3.csv -box_width 40 -depth 24  -partition 3 20 20 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file PGL_4_3_rep_3_4.csv -box_width 40 -depth 24  -partition 3 20 20 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file PGL_4_3_rep_3_5.csv -box_width 40 -depth 24  -partition 3 20 20 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file PGL_4_3_rep_3_6.csv -box_width 40 -depth 24  -partition 3 20 20 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file PGL_4_3_rep_3_7.csv -box_width 40 -depth 24  -partition 3 20 20 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file PGL_4_3_rep_3_8.csv -box_width 40 -depth 24  -partition 3 20 20 -end
 
 # write PGL_4_3_rep_3_0.csv, ... PGL_4_3_rep_3_8.csv
 
@@ -1754,8 +1750,8 @@ representation_tetrahedral_group_on_polynomials_of_degree_3:
 		-group_theoretic_activities \
 		-representation_on_polynomials 3 \
 		-end 
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GL_3_3_Subgroup_tetra_12_rep_3_0.csv 20 3 -draw_matrix_partition 3 10 10
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GL_3_3_Subgroup_tetra_12_rep_3_1.csv 20 3 -draw_matrix_partition 3 10 10
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GL_3_3_Subgroup_tetra_12_rep_3_0.csv -box_width 20 -depth 8  -partition 3 10 10 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file GL_3_3_Subgroup_tetra_12_rep_3_1.csv -box_width 20 -depth 8  -partition 3 10 10 -end
 	open GL_3_3_Subgroup_tetra_12_rep_3_0_draw.bmp
 	open GL_3_3_Subgroup_tetra_12_rep_3_1_draw.bmp
 
@@ -1920,25 +1916,21 @@ PG_2_4_sub7:
 
 
 PG_2_4_incma_singer:
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix PG_2_4_singer_incma_transitive.csv 20 3 \
-		-draw_matrix_partition 3 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file PG_2_4_singer_incma_transitive.csv -box_width 40 -depth 24  -partition 3 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 -end
 	open PG_2_4_singer_incma_transitive_draw.bmp
 
 
 PG_2_4_incma_singer_sub_3:
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix PG_2_4_singer_incma_subgroup_index_3.csv 20 3 \
-		-draw_matrix_partition 3 7,7,7 7,7,7
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file PG_2_4_singer_incma_subgroup_index_3.csv -box_width 20 -depth 24  -partition 3 7,7,7 7,7,7 -end
 	open PG_2_4_singer_incma_subgroup_index_3_draw.bmp
 
 PG_2_4_incma_singer_sub_7:
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix PG_2_4_singer_incma_subgroup_index_7.csv 20 3 \
-		-draw_matrix_partition 3 3,3,3,3,3,3,3 3,3,3,3,3,3,3
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file PG_2_4_singer_incma_subgroup_index_7.csv -box_width 20 -depth 24  -partition 3 3,3,3,3,3,3,3 3,3,3,3,3,3,3 -end
 	open PG_2_4_singer_incma_subgroup_index_7_draw.bmp
 
 
 PG_2_4_incma:
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix PG_n2_q4_incidence_matrix.csv 20 8 \
-		-draw_matrix_partition 3 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file PG_n2_q4_incidence_matrix.csv -box_width 20 -depth 8  -partition 3 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 -end
 	open PG_n2_q4_incidence_matrix_draw.bmp
 
 
@@ -5101,7 +5093,7 @@ cubic_curves_PG_2_8:
 				-Kramer_Mesner_matrix 6 9 \
 			-end \
 		-end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix cc_8_KM_6_9.csv 50 3
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file cc_8_KM_6_9.csv -box_width 50 -depth 8   -end
 	pdflatex Cubic_curves_q8.tex
 	open Cubic_curves_q8.pdf
 	#pdflatex cc_8_tree_lvl_9.tex
@@ -6803,7 +6795,6 @@ parse2:
 
 
 
-F_abcd_eqn = "-(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(b - d)*X0*X0*X2 + (a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(a + b - c - d)*X0*X1*X2 + (a*a*c - a*a*d - a*c*c + b*c*c + a*d - b*c)*(b - d)*X0*X1*X3 - (a*d - b*c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X0*X2*X2 - (a*a*c*d - a*b*c*c - a*a*d + a*b*d + b*c*c - b*c*d)*(b - d)*X0*X2*X3 - (a - c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X1*X1*X2 - (a - c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X1*X1*X3 + (a*d - b*c)*(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*X1*X2*X2 + (2*a*a*b*c*d - a*a*b*d*d - 2*a*a*c*d*d - 2*a*b*b*c*c + a*b*b*c*d + 2*a*b*c*c*d + a*b*c*d*d - b*b*c*c*d - a*a*b*c + a*a*c*d + a*a*d*d + a*b*b*c + a*b*c*c - 4*a*b*c*d - a*c*c*d + a*c*d*d + b*b*c*c)*X1*X2*X3 + c*a*(a*d - b*c - a + b + c - d)*(b - d)*X1*X3*X3"
 
 
 F_abcd:
@@ -7059,7 +7050,7 @@ arc_lifting_4:
 		-end
 	pdflatex arc_lifting_q4.tex
 	open arc_lifting_q4.pdf
-	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix surfaces_q4_decomposition_matrix.csv 20 8
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file surfaces_q4_decomposition_matrix.csv -box_width 40 -depth 24 -end
 
 # writes surfaces_q4_decomposition_matrix.csv
 
@@ -7129,7 +7120,7 @@ arc_lifting_8:
 		-end
 	#pdflatex arc_lifting_q8.tex
 	#open arc_lifting_q8.pdf
-	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix surfaces_q4_decomposition_matrix.csv 20 8
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file surfaces_q4_decomposition_matrix.csv -box_width 20 -depth 24   -end
 
 # time: 0:01
 
@@ -7209,7 +7200,7 @@ arc_lifting_13:
 		-end
 	pdflatex arc_lifting_q13.tex
 	open arc_lifting_q13.pdf
-	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix surfaces_q13_decomposition_matrix.csv 20 8
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file surfaces_q13_decomposition_matrix.csv -box_width 20 -depth 24  -end
 
 
 
@@ -7236,7 +7227,7 @@ arc_lifting_16:
 		-end
 	pdflatex arc_lifting_q16.tex
 	open arc_lifting_q16.pdf
-	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix surfaces_q4_decomposition_matrix.csv 20 8
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file surfaces_q4_decomposition_matrix.csv -box_width 20 -depth 24   -end
 
 # 5 surfaces in 0 min 17 sec on Mac 7/20/2020
 
@@ -7283,7 +7274,7 @@ arc_lifting_32:
 		-end
 	pdflatex arc_lifting_q32.tex
 	open arc_lifting_q32.pdf
-	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix surfaces_q4_decomposition_matrix.csv 20 8
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file surfaces_q4_decomposition_matrix.csv -box_width 20 -depth 24   -end
 
 # 9 min 25 sec on slipslide (Oct 9, 2020)
 # 13 min 32 sec on Mac 
@@ -7662,8 +7653,8 @@ sqrt_mod_7817:
 equivalence_class_of_fractions:
 		$(ORBITER_PATH)/orbiter.out -v 2 -equivalence_class_of_fractions 10
 
-equivalence_class_of_fractions_draw:
-	$(ORBITER_PATH)/orbiter.out -draw_matrix table_fractions_N10.csv 20 8
+#equivalence_class_of_fractions_draw:
+#	$(ORBITER_PATH)/orbiter.out -draw_matrix table_fractions_N10.csv 20 8
 
 
 
@@ -8082,6 +8073,9 @@ ntt:
 	$(ORBITER_PATH)/orbiter.out -v 2 -NTT 4 17 ntt4.cpp
 
 
+
+#	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file PG_2_4_singer_incma_subgroup_index_3.csv -box_width 20 -depth 24  -partition 3 7,7,7 7,7,7 -end
+
 FGDTP:
 	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_F_k4.csv 20 8
 	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix ntt_Fv_k4.csv 20 8
@@ -8140,15 +8134,14 @@ SECTION_CODING_THEORY:
 
 Hamming_4_2:
 	$(ORBITER_PATH)/orbiter.out -Hamming_graph 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_n4_q2.csv 20 8 -draw_matrix_partition 2 16 16 
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Hamming_n4_q2.csv -box_width 20 -depth 24  -partition 4 16 16 -end
 	open Hamming_n4_q2_draw.bmp
 
 
 
 code_6:
 	$(ORBITER_PATH)/orbiter.out -v 2 -general_code_binary 6 "0,60,50,41,14,21,27,39"
-	$(ORBITER_PATH)/orbiter.out -draw_matrix code_matrix_8_8.csv 20 25 \
-		-draw_matrix_partition 2 "1,1,1,1,1,1,1,1" "1,1,1,1,1,1,1,1" 
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file code_matrix_8_8.csv -box_width 20 -depth 24  -partition 2 "1,1,1,1,1,1,1,1" "1,1,1,1,1,1,1,1" -end
 	pdflatex code_6_8.tex
 	open code_6_8.pdf
 	open code_matrix_8_8_draw.bmp
@@ -8170,8 +8163,8 @@ Hamming_code_words:
 Hamming_code_diagram:
 	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4" \
 		"0, 67, 37, 102, 22, 85, 51, 112, 15, 76, 42, 105, 25, 90, 60, 127" 7 -metric_balls 1
-	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_diagram_01_7_16.csv 25 8 -draw_matrix_partition 4 16 8 
-	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_diagram_7_16.csv 25 8 -draw_matrix_partition 4 16 8 
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Hamming_7_4_diagram_01_7_16.csv -box_width 25 -depth 24  -partition 4 16 8 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Hamming_7_4_diagram_7_16.csv -box_width 25 -depth 14  -partition 4 16 8 -end
 	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4_word_0" "0" 7 -metric_balls 1
 	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4_word_1" "67" 7 -metric_balls 1
 	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4_word_2" "37" 7 -metric_balls 1
@@ -8188,28 +8181,28 @@ Hamming_code_diagram:
 	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4_word_13" "90" 7 -metric_balls 1
 	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4_word_14" "60" 7 -metric_balls 1
 	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4_word_15" "127" 7 -metric_balls 1
-	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_0_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
-	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_1_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
-	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_2_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
-	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_3_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
-	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_4_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
-	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_5_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
-	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_6_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
-	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_7_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
-	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_8_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
-	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_9_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
-	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_10_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
-	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_11_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
-	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_12_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
-	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_13_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
-	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_14_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
-	$(ORBITER_PATH)/orbiter.out -draw_matrix Hamming_7_4_word_15_diagram_7_1.csv 25 8 -draw_matrix_partition 4 16 8 
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Hamming_7_4_word_0_diagram_7_1.csv -box_width 25 -depth 8  -partition 4 16 8 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Hamming_7_4_word_1_diagram_7_1.csv -box_width 25 -depth 8  -partition 4 16 8 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Hamming_7_4_word_2_diagram_7_1.csv -box_width 25 -depth 8  -partition 4 16 8 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Hamming_7_4_word_3_diagram_7_1.csv -box_width 25 -depth 8  -partition 4 16 8 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Hamming_7_4_word_4_diagram_7_1.csv -box_width 25 -depth 8  -partition 4 16 8 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Hamming_7_4_word_5_diagram_7_1.csv -box_width 25 -depth 8  -partition 4 16 8 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Hamming_7_4_word_6_diagram_7_1.csv -box_width 25 -depth 8  -partition 4 16 8 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Hamming_7_4_word_7_diagram_7_1.csv -box_width 25 -depth 8  -partition 4 16 8 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Hamming_7_4_word_8_diagram_7_1.csv -box_width 25 -depth 8  -partition 4 16 8 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Hamming_7_4_word_9_diagram_7_1.csv -box_width 25 -depth 8  -partition 4 16 8 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Hamming_7_4_word_10_diagram_7_1.csv -box_width 25 -depth 8  -partition 4 16 8 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Hamming_7_4_word_11_diagram_7_1.csv -box_width 25 -depth 8  -partition 4 16 8 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Hamming_7_4_word_12_diagram_7_1.csv -box_width 25 -depth 8  -partition 4 16 8 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Hamming_7_4_word_13_diagram_7_1.csv -box_width 25 -depth 8  -partition 4 16 8 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Hamming_7_4_word_14_diagram_7_1.csv -box_width 25 -depth 8  -partition 4 16 8 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Hamming_7_4_word_15_diagram_7_1.csv -box_width 25 -depth 8  -partition 4 16 8 -end
 	
 	
 	
 code_Hamming_systematic:
 	$(ORBITER_PATH)/orbiter.out -v 2 -linear_code_through_basis 7  "67,37,22,15" 
-	$(ORBITER_PATH)/orbiter.out -draw_matrix code_matrix_16_8.csv 25 8 -draw_matrix_partition 2 16 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file code_matrix_16_8.csv -box_width 25 -depth 8  -partition 2 16 8 -end
 	open code_matrix_16_8_draw.bmp
 	pdflatex code_7_16.tex
 	open code_7_16.pdf
@@ -8255,7 +8248,7 @@ Golay23_code_diagram:
 
 
 Golay23_code_diagram_draw:
-	$(ORBITER_PATH)/orbiter.out -draw_matrix Golay_23_diagram_01_23_4096.csv 4 8 -draw_matrix_partition 20 4096 2048
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Golay_23_diagram_01_23_4096.csv -box_width 4 -depth 8  -partition 20 4096 2048 -end
 
 
 Hamming_generator:
@@ -8273,22 +8266,22 @@ Hamming_long:
 		"1,4,6" \
 		"2,4,5" \
 		"3,4,5,6" 
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_0.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_1.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_2.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_3.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_4.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_5.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_6.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_7.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_8.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_9.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_10.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_11.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_12.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_13.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_14.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_15.csv 25 8 -draw_matrix_partition 3 4 2
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_0.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_1.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_2.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_3.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_4.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_5.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_6.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_7.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_8.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_9.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_10.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_11.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_12.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_13.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_14.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_15.csv -box_width 25 -depth 8  -partition 3 4 2 -end
 
 
 #long_code_genma_n7_k4_codeword_0.csv
@@ -8333,27 +8326,27 @@ Hamming_cyclic_long:
 		"1,4,5,6" \
 		"2,4,5" \
 		"3,5,6" 
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_0.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_1.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_2.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_3.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_4.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_5.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_6.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_7.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_8.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_9.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_10.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_11.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_12.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_13.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_14.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_15.csv 25 8 -draw_matrix_partition 3 4 2
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_0.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_1.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_2.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_3.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_4.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_5.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_6.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_7.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_8.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_9.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_10.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_11.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_12.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_13.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_14.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_15.csv -box_width 25 -depth 8  -partition 3 4 2 -end
 
 
 Hamming_cyclic:
 	$(ORBITER_PATH)/orbiter.out -v 2 -linear_code_through_basis 7  "69,39,22,11"
-	$(ORBITER_PATH)/orbiter.out -draw_matrix code_matrix_16_8.csv 25 8 -draw_matrix_partition 2 16 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file code_matrix_16_8.csv -box_width 25 -depth 8  -partition 2 16 8 -end
 	open code_matrix_16_8_draw.bmp
 	pdflatex code_7_16.tex
 	open code_7_16.pdf
@@ -8370,7 +8363,7 @@ Hamming_cyclic_clean_ns:
 
 Hamming_cyclic_clean:
 	$(ORBITER_PATH)/orbiter.out -v 2 -linear_code_through_basis 7  "88,44,22,11"
-	$(ORBITER_PATH)/orbiter.out -draw_matrix code_matrix_16_8.csv 25 8 -draw_matrix_partition 2 16 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file code_matrix_16_8.csv -box_width 25 -depth 8  -partition 2 16 8 -end
 	open code_matrix_16_8_draw.bmp
 	pdflatex code_7_16.tex
 	open code_7_16.pdf
@@ -8382,22 +8375,22 @@ Hamming_cyclic_clean_long:
 		"1,3,4" \
 		"2,4,5" \
 		"3,5,6" 
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_0.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_1.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_2.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_3.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_4.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_5.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_6.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_7.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_8.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_9.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_10.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_11.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_12.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_13.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_14.csv 25 8 -draw_matrix_partition 3 4 2
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n7_k4_codeword_15.csv 25 8 -draw_matrix_partition 3 4 2
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_0.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_1.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_2.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_3.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_4.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_5.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_6.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_7.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_8.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_9.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_10.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_11.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_12.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_13.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_14.csv -box_width 25 -depth 8  -partition 3 4 2 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n7_k4_codeword_15.csv -box_width 25 -depth 8  -partition 3 4 2 -end
 
 
 	
@@ -8431,8 +8424,8 @@ RM_3_group:
 RM_3_1_diagram:
 	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "RM_3_1" \
 		"0,255,170,85,204,51,102,153,240,15,90,165,60,195,150,105" 8 -metric_balls 1
-	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_3_1_diagram_01_8_16.csv 25 8 -draw_matrix_partition 4 16 16
-	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_3_1_diagram_8_16.csv 25 8 -draw_matrix_partition 4 16 16 
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file RM_3_1_diagram_01_8_16.csv -box_width 25 -depth 8  -partition 4 16 16 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file RM_3_1_diagram_8_16.csv -box_width 25 -depth 8  -partition 4 16 16 -end
 	#- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4_word_0" "0" 7 -metric_balls 1
 
 
@@ -8440,9 +8433,9 @@ RM_3_1_split:
 	$(ORBITER_PATH)/orbiter.out -split_by_values RM_3_1_holes_8_16.csv 
 
 RM_3_1_holes_draw:
-	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_3_1_holes_8_16_value0.csv 25 4 -draw_matrix_partition 5 16 16
-	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_3_1_holes_8_16_value1.csv 25 4 -draw_matrix_partition 5 16 16
-	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_3_1_holes_8_16_value2.csv 25 4 -draw_matrix_partition 5 16 16
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file RM_3_1_holes_8_16_value0.csv -box_width 25 -depth 8  -partition 5 16 16 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file RM_3_1_holes_8_16_value1.csv -box_width 25 -depth 8  -partition 5 16 16 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file RM_3_1_holes_8_16_value2.csv -box_width 25 -depth 8  -partition 5 16 16 -end
 
 RM_3_1_hole0:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 2 -end \
@@ -8493,28 +8486,28 @@ RM_4_1_diagram:
 		#-metric_balls 3
 
 RM_4_1_diagram_draw:
-	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_4_1_diagram_01_16_32.csv 25 4 -draw_matrix_partition 10 256 256
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file RM_4_1_diagram_01_16_32.csv -box_width 25 -depth 8  -partition 10 256 256 -end
 
 
 RM_4_1_split:
 	$(ORBITER_PATH)/orbiter.out -split_by_values RM_4_1_holes_16_32.csv 
 
 RM_4_1_diagram_draw_holes:
-	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_4_1_holes_16_32.csv 25 4 -draw_matrix_partition 10 256 256
-	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_4_1_holes_16_32_value0.csv 25 4 -draw_matrix_partition 10 256 256
-	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_4_1_holes_16_32_value1.csv 25 4 -draw_matrix_partition 10 256 256
-	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_4_1_holes_16_32_value2.csv 25 4 -draw_matrix_partition 10 256 256
-	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_4_1_holes_16_32_value3.csv 25 4 -draw_matrix_partition 10 256 256
-	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_4_1_holes_16_32_value4.csv 25 4 -draw_matrix_partition 10 256 256
-	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_4_1_holes_16_32_value5.csv 25 4 -draw_matrix_partition 10 256 256
-	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_4_1_holes_16_32_value6.csv 25 4 -draw_matrix_partition 10 256 256
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file RM_4_1_holes_16_32.csv -box_width 25 -depth 8  -partition 10 256 256 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file RM_4_1_holes_16_32_value0.csv -box_width 25 -depth 8  -partition 10 256 256 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file RM_4_1_holes_16_32_value1.csv -box_width 25 -depth 8  -partition 10 256 256 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file RM_4_1_holes_16_32_value2.csv -box_width 25 -depth 8  -partition 10 256 256 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file RM_4_1_holes_16_32_value3.csv -box_width 25 -depth 8  -partition 10 256 256 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file RM_4_1_holes_16_32_value4.csv -box_width 25 -depth 8  -partition 10 256 256 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file RM_4_1_holes_16_32_value5.csv -box_width 25 -depth 8  -partition 10 256 256 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file RM_4_1_holes_16_32_value6.csv -box_width 25 -depth 8  -partition 10 256 256 -end
 
 
 
 RM_4_1_diagram_metric_balls:
 	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram_from_file "RM_4_1" \
 		codewords_n16_k5_q2.csv 16 -metric_balls 3
-	$(ORBITER_PATH)/orbiter.out -draw_matrix RM_4_1_diagram_16_32.csv 25 4 -draw_matrix_partition 10 256 256
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file RM_4_1_diagram_16_32.csv -box_width 25 -depth 8  -partition 10 256 256 -end
 
 
 
@@ -8524,8 +8517,6 @@ RM_4_1_hole0:
 
 
 
-smiley:
-	$(ORBITER_PATH)/orbiter.out -draw_matrix smiley.csv 25 8 
 
 
 
@@ -8542,7 +8533,7 @@ Reed_Muller_6:
 			-clone_with_affine_function 1 24 -end -clone_with_affine_function 1 32 -end\
 		-set_builder -loop 0 16 1 -affine_function 1 16 -clone_with_affine_function 1 48 -end \
 		-set_builder -loop 0 32 1 -affine_function 1 32 -end 
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7.csv 25 8 -draw_matrix_partition 3 7 64
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n64_k7.csv -box_width 25 -depth 8  -partition 3 7 64 -end
 	open long_code_genma_n64_k7_draw.bmp
 
 
@@ -8561,16 +8552,17 @@ RM_6:
 		"8,9,12,13,24,25,28,29,10,11,14,15,26,27,30,31,40,41,44,45,56,57,60,61,42,43,46,47,58,59,62,63" \
 		"16,18,24,26,48,50,56,58,17,19,25,27,49,51,57,59,20,22,28,30,52,54,60,62,21,23,29,31,53,55,61,63" \
 		"32,34,48,50,33,35,49,51,36,38,52,54,37,39,53,55,40,42,56,58,41,43,57,59,44,46,60,62,45,47,61,63" 
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7.csv 25 8 -draw_matrix_partition 3 7 64
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_0.csv 25 8 -draw_matrix_partition 3 8 8
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_1.csv 25 8 -draw_matrix_partition 3 8 8
-	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_2.csv 25 8 -draw_matrix_partition 3 8 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n64_k7.csv -box_width 25 -depth 8  -partition 3 7 64 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n64_k7_codeword_0.csv -box_width 25 -depth 8  -partition 3 8 8 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n64_k7_codeword_1.csv -box_width 25 -depth 8  -partition 3 8 8 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n64_k7_codeword_2.csv -box_width 25 -depth 8  -partition 3 8 8 -end
 
 
 
 
 RM6words:
 	- mkdir RM6
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file long_code_genma_n64_k7_codeword_0.csv -box_width 25 -depth 8  -partition 4 8 8 -end
 	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_0.csv 25 8 -draw_matrix_partition 4 8 8 
 	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_1.csv 25 8 -draw_matrix_partition 4 8 8 
 	$(ORBITER_PATH)/orbiter.out -draw_matrix long_code_genma_n64_k7_codeword_2.csv 25 8 -draw_matrix_partition 4 8 8 
@@ -9013,7 +9005,7 @@ BCH93:
 
 BCH255:
 	$(ORBITER_PATH)/orbiter.out -BCH 255 2 4
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix BCH_255_4.csv 40 24 -draw_matrix_partition 10 "239" "255" 
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file BCH_255_4.csv -box_width 40 -depth 24  -partition 10 "239" "255"  -end
 
 #BCH_255_4.csv
 
@@ -9046,8 +9038,8 @@ encode_constitution_field_induction:
 	$(ORBITER_PATH)/orbiter.out -reformat "constitution.csv" "constitution_80.csv" 80
 	$(ORBITER_PATH)/orbiter.out -field_induction  "constitution.csv"  "constitution_32.csv" 5
 	$(ORBITER_PATH)/orbiter.out -reformat "constitution_32.csv" "constitution_32_16.csv" 16
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix constitution_80.csv 20 8 -draw_matrix_partition 5 "21" "80" 
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix constitution_32_16.csv 20 8 -draw_matrix_partition 5 "21" "16" 
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file constitution_80.csv -box_width 20 -depth 24  -partition 5 "21" "80"  -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file constitution_32_16.csv -box_width 20 -depth 24  -partition 5 "21" "16"  -end
 
 
 
@@ -9334,7 +9326,7 @@ RS_8_field_reduction:
 		-define F -finite_field -q 8 -end \
 		-with F -do \
 		-finite_field_activity -field_reduction "RS_8_red_2" 2 5 7 $(CODE_RS_8) -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix RS_8_red_2.csv 40 24 -draw_matrix_partition 4 "3,3,3,3,3" "3,3,3,3,3,3,3"
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file RS_8_red_2.csv -box_width 40 -depth 24  -partition  4 "3,3,3,3,3" "3,3,3,3,3,3,3"  -end
 	pdflatex field_reduction_Q8_q2_5_7.tex
 	open field_reduction_Q8_q2_5_7.pdf
 
@@ -9350,7 +9342,7 @@ RREF_RS_8_reduced_weight_enumerator:
 CODE_21_15_4_store:
 	$(ORBITER_PATH)/orbiter.out -v 2 \
 		-store_as_csv_file "code_21_15_4.csv" 15 21 $(CODE_21_15_4) 
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix code_21_15_4.csv 40 24 -draw_matrix_partition 4 "15" "21"
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file code_21_15_4.csv -box_width 40 -depth 24  -partition  4 "15" "21"  -end
 
 CODE_21_15_4_weight_enumerator:
 	$(ORBITER_PATH)/orbiter.out -v 2 \
@@ -9530,8 +9522,7 @@ KM_PGGL_2_32:
 			-end \
 			-orbits_on_subsets 8 \
 			-end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix KM_PGGL_2_32_KM_7_8.csv 20 8 \
-		-draw_matrix_partition 3 32 97
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file KM_PGGL_2_32_KM_7_8.csv -box_width 20 -depth 24  -partition  3 32 97  -end
 	pdflatex KM_PGGL_2_32_poset_lvl_8.tex
 	open KM_PGGL_2_32_poset_lvl_8.pdf
 	open KM_PGGL_2_32_KM_7_8_draw.bmp
@@ -9559,8 +9550,7 @@ KM_PSL_3_5:
 				-draw_options -embedded -sideways -rad 50 -scale 0.5 -line_width 0.3 \
 			-end \
 			-orbits_on_subsets 10
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix KM_PSL_3_5_KM_8_10.csv 10 8 \
-		-draw_matrix_partition 3 42 174
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file KM_PSL_3_5_KM_8_10.csv -box_width 10 -depth 8  -partition  3 42 174  -end
 	$(ORBITER_PATH)/orbiter.out -v 4 -diophant \
 		-label "KM_PSL_3_5_KM_8_10_system" -coefficient_matrix_csv KM_PSL_3_5_KM_8_10.csv  \
 		-RHS_constant "93,93,1" \
@@ -10124,7 +10114,7 @@ TP_9_0:
 		-define PGL5 -linear_group -PGL 5 F -end \
 		-with PGL4 -and PGL5 -do \
 		-group_theoretic_activities -Andre_Bruck_Bose_construction 0 "TP9-0" -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix TP9-0_incma.csv 6 8 -draw_matrix_partition 6 91 91
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file TP9-0_incma.csv -box_width 6 -depth 8  -partition   6 91 91  -end
 	#open TP9-0_incma_draw.bmp
 
 TP_9_1:
@@ -10134,7 +10124,7 @@ TP_9_1:
 		-define PGL5 -linear_group -PGL 5 F -end \
 		-with PGL4 -and PGL5 -do \
 		-group_theoretic_activities -Andre_Bruck_Bose_construction 0 "TP9-1" -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix TP9-1_incma.csv 6 8 -draw_matrix_partition 6 91 91
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file TP9-1_incma.csv -box_width 6 -depth 8  -partition   6 91 91  -end
 	open TP9-1_incma_draw.bmp
 	pdflatex TP9-1_report.tex
 	open TP9-1_report.pdf
@@ -10147,7 +10137,7 @@ TP_16_4:
 		-define PGGL5 -linear_group -PGGL 5 F -end \
 		-with PGGL4 -and PGGL5 -do \
 		-group_theoretic_activities -Andre_Bruck_Bose_construction 0 "TP16-4-HALL" -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix TP16-4-HALL_incma.csv 6 8 -draw_matrix_partition 6 273 273
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file TP16-4-HALL_incma.csv -box_width 6 -depth 8  -partition   6 273 273 -end
 	open TP16-4-HALL_incma_draw.bmp
 	pdflatex TP16-4-HALL_report.tex
 	open TP16-4-HALL_report.pdf
@@ -10354,7 +10344,7 @@ packings_2A_fpc0_classification.pdf: PGGL_4_4_Subgroup_2A_2_graph_cliques_by_typ
 packing_2A_graph_draw:
 	$(ORBITER_PATH)/orbiter.out -v 2 -create_graph -load_from_file PGGL_4_4_Subgroup_2A_2_graph.bin -end \
 		-graph_theoretic_activity -export_csv -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix PGGL_4_4_Subgroup_2A_2_graph.csv 2 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file PGGL_4_4_Subgroup_2A_2_graph.csv -box_width 6 -depth 8  -end
 
 #1680 vertices
 
@@ -10362,7 +10352,7 @@ packing_2A_graph_draw:
 packing_2Ac0_draw:
 	$(ORBITER_PATH)/orbiter.out -v 2 -create_graph -load_from_file PGGL_4_4_Subgroup_2A_2_fpc0.graph -end \
 		-graph_theoretic_activity -export_csv -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix PGGL_4_4_Subgroup_2A_2_fpc0.csv 2 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file PGGL_4_4_Subgroup_2A_2_fpc0.csv -box_width 2 -depth 8  -end
 
 
 packing_2Ac0_search:
@@ -10382,7 +10372,7 @@ packing_2Ac0_search_Sajeeb:
 packing_2A_draw:
 	$(ORBITER_PATH)/orbiter.out -v 2 -create_graph -load_from_file PGGL_4_4_Subgroup_2A_2_fixp_graph.bin -end \
 		-graph_theoretic_activity -export_csv PGGL_4_4_Subgroup_2A_2_fixp_graph.csv -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix PGGL_4_4_Subgroup_2A_2_fixp_graph.bin.csv 2 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file PGGL_4_4_Subgroup_2A_2_fixp_graph.csv -box_width 2 -depth 8  -end
 
 # 440 orbits on cliques of size 7 on the fixpoint graph
 
@@ -11694,7 +11684,7 @@ petersen:
 petersen_csv:
 	$(ORBITER_PATH)/orbiter.out -v 2 -create_graph -Johnson 5 2 0 -end \
 		-graph_theoretic_activity -export_csv  -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix Johnson_5_2_0.csv 20 8 -draw_matrix_partition 3 10 10 
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Johnson_5_2_0.csv -box_width 20 -depth 8 -partition 3 10 10  -end
 	open Johnson_5_2_0_draw.bmp
 
 
@@ -11702,14 +11692,14 @@ petersen_csv:
 Paley13:
 	$(ORBITER_PATH)/orbiter.out -v 2 -create_graph -Paley 13 -end \
 		-graph_theoretic_activity -export_csv  -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix Paley_13.csv 20 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Paley_13.csv -box_width 20 -depth 8  -end
 	open Paley_13_draw.bmp
 
 
 trihedal_pair_graph:
 	$(ORBITER_PATH)/orbiter.out -v 2 -create_graph -trihedral_pair_disjointness_graph  -end \
 		-graph_theoretic_activity -export_csv  -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix trihedral_pair_disjointness.csv 20 8
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file trihedral_pair_disjointness.csv -box_width 20 -depth 8  -end
 	open trihedral_pair_disjointness_draw.bmp
 
 
@@ -11752,48 +11742,6 @@ small_graph_cliques_Sajeeb:
 
 SECTION_GRAPHICAL_OUTPUT:
 	
-
-addition_table_F7:
-	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 7 -end \
-		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_addition_table.csv 40 24 \
-		-draw_matrix_partition 3 7 7
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_multiplication_table.csv 40 24 \
-		-draw_matrix_partition 3 7 7
-	open GF_q7_addition_table_draw.bmp
-	open GF_q7_multiplication_table_draw.bmp
-
-group_tables_F8:
-	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 8 -end \
-		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q8_addition_table.csv 40 24 \
-		-draw_matrix_partition 3 8 8
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q8_multiplication_table.csv 40 24 \
-		-draw_matrix_partition 3 7 7
-	open GF_q8_addition_table_draw.bmp
-	open GF_q8_multiplication_table_draw.bmp
-
-
-group_tables_F16:
-	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end \
-		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q16_addition_table.csv 40 24 \
-		-draw_matrix_partition 3 16 16
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q16_multiplication_table.csv 40 24 \
-		-draw_matrix_partition 3 15 15
-	open GF_q16_addition_table_draw.bmp
-	open GF_q16_multiplication_table_draw.bmp
-
-
-group_tables_F1024:
-	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 1024 -end \
-		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q1024_addition_table.csv 4 24 \
-		-draw_matrix_partition 3 1024 1024
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q1024_multiplication_table.csv 4 24 \
-		-draw_matrix_partition 3 1023 1023
-	open GF_q1024_addition_table_draw.bmp
-	open GF_q1024_multiplication_table_draw.bmp
 
 
 PGL_4_2_Wedge_4_0_detached_graphical_output:
@@ -13963,5 +13911,26 @@ PGL_4_5_packing_3B_iso:
 
 #####
 
+# does not work:
+
+
+MATH360_hw2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end \
+		-with F -do -finite_field_activity -parse "test" "" "a+b" -evaluate "a=8,b=14" -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end \
+		-with F -do -finite_field_activity -parse "test" "" "a*b" -evaluate "a=9,b=13" -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end \
+		-with F -do -finite_field_activity -parse "test" "" "a*a*a*a*a" -evaluate "a=9" -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end \
+		-with F -do -finite_field_activity -parse "test" "" "(a+b)*(a+b)" -evaluate "a=5,b=7" -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end \
+		-with F -do -finite_field_activity -parse "test" "" "a*a+b*b" -evaluate "a=5,b=7" -end
+
+
+Nathan_19_1:
+	$(ORBITER_PATH)/orbiter.out -v 2 -define N19_1 -combinatorial_object -q 19 -n 2 \
+		-projective_variety "Nathan19_1" 4 "16,0,9,3,10,4,11,9,14,12,9,5,4,14,3,7,16,1,4,6,17,11,17,8,6,2" \
+		-monomial_type_PART -end \
+		-with N19_1 -do -combinatorial_object_activity -save -end
 
 

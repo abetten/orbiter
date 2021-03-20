@@ -137,6 +137,46 @@ public:
 
 
 // #############################################################################
+// draw_bitmap_control.cpp
+// #############################################################################
+
+
+//! options for drawing bitmap files
+
+
+class draw_bitmap_control {
+
+public:
+
+	int f_input_csv_file;
+	std::string input_csv_file_name;
+	int f_input_matrix;
+	int *M;
+	int m;
+	int n;
+	int f_partition;
+	int part_width;
+	int nb_row_parts;
+	std::string part_row;
+	std::string part_col;
+	int *Row_parts;
+	int nb_col_parts;
+	int *Col_parts;
+	int f_box_width;
+	int box_width;
+	int f_invert_colors;
+	int bit_depth;
+
+
+	draw_bitmap_control();
+	~draw_bitmap_control();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+};
+
+
+// #############################################################################
 // drawable_set_of_objects.cpp
 // #############################################################################
 
@@ -232,6 +272,8 @@ public:
 			double desired_distance, int N,
 			double t_min, double t_max, double boundary,
 			function_polish_description *FP_descr, int verbose_level);
+	void draw_bitmap(draw_bitmap_control *C, int verbose_level);
+
 };
 
 
@@ -1395,15 +1437,6 @@ public:
 };
 
 
-// draw_bitmap.cpp:
-
-void draw_bitmap(std::string &fname, int *M, int m, int n,
-		int f_partition, int part_width,
-		int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,
-		int f_box_width, int box_width,
-		int f_invert_colors, int bit_depth,
-		int verbose_level);
-// bit_depth should be either 8 or 24.
 
 
 

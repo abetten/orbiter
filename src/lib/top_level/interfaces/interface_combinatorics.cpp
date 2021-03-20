@@ -31,7 +31,7 @@ interface_combinatorics::interface_combinatorics()
 	f_diophant_activity = FALSE;
 	Diophant_activity_description = NULL;
 
-	f_save = FALSE;
+	//f_save = FALSE;
 	//fname_prefix;
 
 	f_process_combinatorial_objects = FALSE;
@@ -358,11 +358,13 @@ void interface_combinatorics::read_arguments(int argc,
 			cout << "next argument is " << argv[i] << endl;
 		}
 	}
+#if 0
 	else if (stringcmp(argv[i], "-save") == 0) {
 		f_save = TRUE;
 		fname_prefix.assign(argv[++i]);
 		cout << "-save " << fname_prefix << endl;
 	}
+#endif
 	else if (stringcmp(argv[i], "-process_combinatorial_objects") == 0) {
 		f_process_combinatorial_objects = TRUE;
 
@@ -1031,7 +1033,7 @@ void interface_combinatorics::do_create_combinatorial_object(int verbose_level)
 
 
 
-
+#if 0
 	if (f_save) {
 		file_io Fio;
 		string fname;
@@ -1048,6 +1050,7 @@ void interface_combinatorics::do_create_combinatorial_object(int verbose_level)
 					<< Fio.file_size(fname) << endl;
 		}
 	}
+#endif
 
 	FREE_OBJECT(COC);
 

@@ -202,8 +202,8 @@ class interface_combinatorics {
 	int f_diophant_activity;
 	diophant_activity_description *Diophant_activity_description;
 
-	int f_save;
-	std::string fname_prefix;
+	//int f_save;
+	//std::string fname_prefix;
 
 	int f_process_combinatorial_objects;
 	projective_space_job_description *Job_description;
@@ -570,6 +570,9 @@ class interface_symbol_table {
 	int f_linear_group;
 	linear_group_description *Linear_group_description;
 
+	int f_combinatorial_object;
+	combinatorial_object_description *Combinatorial_object_description;
+
 
 	int f_print_symbols;
 	int f_with;
@@ -589,6 +592,9 @@ class interface_symbol_table {
 
 	int f_cubic_surface_activity;
 	cubic_surface_activity_description *Cubic_surface_activity_description;
+
+	int f_combinatorial_object_activity;
+	combinatorial_object_activity_description *Combinatorial_object_activity_description;
 
 public:
 
@@ -622,6 +628,8 @@ public:
 	void definition_of_collection(orbiter_top_level_session *Orbiter_top_level_session,
 			std::string &list_of_objects,
 			int verbose_level);
+	void definition_of_combinatorial_object(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
 	void do_finite_field_activity(orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 	void do_projective_space_activity(
@@ -633,6 +641,9 @@ public:
 	void do_group_theoretic_activity(orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 	void do_cubic_surface_activity(
+			orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void do_combinatorial_object_activity(
 			orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 
@@ -671,9 +682,9 @@ class interface_toolkit {
 	std::string csv_file_latex_fname;
 
 	int f_draw_matrix;
-	std::string fname;
-	int box_width;
-	int bit_depth; // 8 or 24
+	draw_bitmap_control *Draw_bitmap_control;
+	//int box_width;
+	//int bit_depth; // 8 or 24
 
 	int f_reformat;
 	std::string reformat_fname_in;
@@ -683,10 +694,10 @@ class interface_toolkit {
 	int f_split_by_values;
 	std::string split_by_values_fname_in;
 
-	int f_draw_matrix_partition;
-	int draw_matrix_partition_width;
-	std::string draw_matrix_partition_rows;
-	std::string draw_matrix_partition_cols;
+	//int f_draw_matrix_partition;
+	//int draw_matrix_partition_width;
+	//std::string draw_matrix_partition_rows;
+	//std::string draw_matrix_partition_cols;
 
 	int f_store_as_csv_file;
 	std::string store_as_csv_file_fname;
