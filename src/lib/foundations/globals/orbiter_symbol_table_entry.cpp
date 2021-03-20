@@ -192,6 +192,23 @@ void orbiter_symbol_table_entry::init_collection(std::string &label,
 	}
 }
 
+void orbiter_symbol_table_entry::init_combinatorial_object(std::string &label,
+		combinatorial_object_create *COC, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_combinatorial_object" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_collection;
+	ptr = COC;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_combinatorial_object done" << endl;
+	}
+}
+
 void orbiter_symbol_table_entry::print()
 {
 	if (type == t_intvec) {
@@ -233,6 +250,9 @@ void orbiter_symbol_table_entry::print()
 			for (i = 0; i < the_list->size(); i++) {
 				cout << i << " : " << (*the_list)[i] << endl;
 			}
+		}
+		else if (object_type == t_combinatorial_object) {
+			cout << "combinatorial object" << endl;
 		}
 #if 0
 		else if (object_type == t_action) {

@@ -32,6 +32,8 @@ MODULES= \
 		foundations/coding_theory/mindist.o \
 		foundations/combinatorics/boolean_function_domain.o \
 		foundations/combinatorics/brick_domain.o \
+		foundations/combinatorics/combinatorial_object_activity_description.o \
+		foundations/combinatorics/combinatorial_object_activity.o \
 		foundations/combinatorics/combinatorial_object_create.o \
 		foundations/combinatorics/combinatorial_object_description.o \
 		foundations/combinatorics/combinatorics_domain.o \
@@ -135,7 +137,7 @@ MODULES= \
 		foundations/graph_theory_nauty/nauty_interface.o \
 		foundations/graph_theory_nauty/schreier.o \
 		foundations/graphics/animate.o \
-		foundations/graphics/draw_bitmap.o \
+		foundations/graphics/draw_bitmap_control.o \
 		foundations/graphics/drawable_set_of_objects.o \
 		foundations/graphics/EasyBMP.o \
 		foundations/graphics/graphical_output.o \

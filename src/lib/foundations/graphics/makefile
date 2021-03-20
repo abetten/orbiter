@@ -7,7 +7,7 @@ LFLAGS = -lm
 
 MODULES = \
 	animate.o \
-	draw_bitmap.o \
+	draw_bitmap_control.o \
 	drawable_set_of_objects.o \
 	EasyBMP.o \
 	graphical_output.o \

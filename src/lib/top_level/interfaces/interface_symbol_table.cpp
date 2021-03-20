@@ -36,6 +36,9 @@ interface_symbol_table::interface_symbol_table()
 	f_linear_group = FALSE;
 	Linear_group_description = NULL;
 
+	f_combinatorial_object = FALSE;
+	Combinatorial_object_description = NULL;
+
 	f_print_symbols = FALSE;
 	f_with = FALSE;
 	//std::vector<std::string> with_labels;
@@ -54,6 +57,10 @@ interface_symbol_table::interface_symbol_table()
 
 	f_cubic_surface_activity = FALSE;
 	Cubic_surface_activity_description = NULL;
+
+	f_combinatorial_object_activity = FALSE;
+	Combinatorial_object_activity_description = NULL;
+
 }
 
 
@@ -270,6 +277,30 @@ void interface_symbol_table::read_definition(
 			cout << "interface_symbol_table::read_definition after definition_of_collection" << endl;
 		}
 	}
+	else if (stringcmp(argv[i], "-combinatorial_object") == 0) {
+
+		f_combinatorial_object = TRUE;
+		Combinatorial_object_description = NEW_OBJECT(combinatorial_object_description);
+		cout << "reading -combinatorial_object" << endl;
+		i += Combinatorial_object_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		cout << "-combinatorial_object" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition before definition_of_combinatorial_object" << endl;
+		}
+		definition_of_combinatorial_object(Orbiter_top_level_session, verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition after definition_of_combinatorial_object" << endl;
+		}
+	}
 	else {
 		cout << "unrecognized command after -define" << endl;
 		exit(1);
@@ -414,7 +445,23 @@ void interface_symbol_table::read_activity_arguments(int argc,
 		if (i < argc) {
 			cout << "next argument is " << argv[i] << endl;
 		}
-		//i++;
+	}
+	else if (stringcmp(argv[i], "-combinatorial_object_activity") == 0) {
+		f_combinatorial_object_activity = TRUE;
+		Combinatorial_object_activity_description =
+				NEW_OBJECT(combinatorial_object_activity_description);
+		cout << "reading -combinatorial_object_activity" << endl;
+		i += Combinatorial_object_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		cout << "-combinatorial_object_activity" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
 	}
 	else {
 		cout << "expecting activity after -do but seeing " << argv[i] << endl;
@@ -486,6 +533,14 @@ void interface_symbol_table::worker(orbiter_top_level_session *Orbiter_top_level
 			cout << "interface_symbol_table::worker f_cubic_surface_activity" << endl;
 		}
 		do_cubic_surface_activity(Orbiter_top_level_session, verbose_level);
+
+	}
+	else if (f_combinatorial_object_activity) {
+
+		if (f_v) {
+			cout << "interface_symbol_table::worker f_combinatorial_object_activity" << endl;
+		}
+		do_combinatorial_object_activity(Orbiter_top_level_session, verbose_level);
 
 	}
 
@@ -766,6 +821,60 @@ void interface_symbol_table::definition_of_collection(orbiter_top_level_session 
 
 	if (f_v) {
 		cout << "interface_symbol_table::definition_of_collection done" << endl;
+	}
+}
+
+void interface_symbol_table::definition_of_combinatorial_object(orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_combinatorial_object" << endl;
+	}
+
+	combinatorial_object_create *COC;
+
+	COC = NEW_OBJECT(combinatorial_object_create);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_combinatorial_object before COC->init" << endl;
+	}
+	COC->init(Combinatorial_object_description, verbose_level);
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_combinatorial_object after COC->init" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_combinatorial_object we created a set of " << COC->nb_pts
+				<< " points, called " << COC->fname << endl;
+
+#if 0
+		cout << "list of points:" << endl;
+
+		cout << COC->nb_pts << endl;
+		for (i = 0; i < COC->nb_pts; i++) {
+			cout << COC->Pts[i] << " ";
+			}
+		cout << endl;
+#endif
+	}
+
+
+	orbiter_symbol_table_entry Symb;
+	Symb.init_combinatorial_object(define_label, COC, verbose_level);
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_combinatorial_object before add_symbol_table_entry" << endl;
+	}
+	Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, &Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_combinatorial_object done" << endl;
 	}
 }
 
@@ -1065,6 +1174,65 @@ void interface_symbol_table::do_cubic_surface_activity(
 
 	if (f_v) {
 		cout << "interface_symbol_table::do_cubic_surface_activity done" << endl;
+	}
+
+}
+
+
+void interface_symbol_table::do_combinatorial_object_activity(
+		orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		int i;
+		cout << "interface_symbol_table::do_combinatorial_object_activity "
+				"activity for " << with_labels.size() << " objects:";
+		for (i = 0; i < with_labels.size(); i++) {
+			cout << with_labels[i];
+			if (i < with_labels.size() - 1) {
+				cout << ", ";
+			}
+		}
+		cout << endl;
+	}
+
+
+
+	int *Idx;
+
+	Orbiter_top_level_session->find_symbols(with_labels, Idx);
+
+	if (with_labels.size() < 1) {
+		cout << "-group_theoretic_activity requires at least one input" << endl;
+		exit(1);
+	}
+
+	combinatorial_object_create *COC;
+
+	COC = (combinatorial_object_create *) Orbiter_top_level_session->get_object(Idx[0]);
+	{
+		combinatorial_object_activity Activity;
+
+		Activity.init(Combinatorial_object_activity_description, COC, verbose_level);
+
+		if (f_v) {
+			cout << "interface_symbol_table::do_combinatorial_object_activity "
+					"before Activity.perform_activity" << endl;
+		}
+		Activity.perform_activity(verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::do_combinatorial_object_activity "
+					"after Activity.perform_activity" << endl;
+		}
+
+	}
+
+	FREE_int(Idx);
+
+	if (f_v) {
+		cout << "interface_symbol_table::do_combinatorial_object_activity done" << endl;
 	}
 
 }

@@ -3911,12 +3911,29 @@ void diophant::draw_as_bitmap(std::string &fname,
 		}
 	}
 
+
+	graphical_output GO;
+	draw_bitmap_control Draw_bitmap_control;
+
+	Draw_bitmap_control.M = M;
+	Draw_bitmap_control.m = m1;
+	Draw_bitmap_control.n = n1;
+	Draw_bitmap_control.f_box_width = f_box_width;
+	Draw_bitmap_control.box_width = box_width;
+	Draw_bitmap_control.bit_depth = bit_depth;
+	Draw_bitmap_control.f_invert_colors = FALSE;
+
+
+	GO.draw_bitmap(&Draw_bitmap_control, verbose_level);
+
+#if 0
 	draw_bitmap(fname, M, m1, n1,
 			FALSE /* f_partition */, 0 /* part_width*/,
 			0, NULL, 0, NULL, //int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,
 			f_box_width, box_width,
 			FALSE /* f_invert_colors */, bit_depth,
 			verbose_level);
+#endif
 
 	FREE_int(M);
 

@@ -43,9 +43,7 @@ interface_toolkit::interface_toolkit()
 	//std::vector<std::string> csv_file_latex_fname;
 
 	f_draw_matrix = FALSE;
-	bit_depth = 8;
-	//fname = NULL;
-	box_width = 0;
+	Draw_bitmap_control = NULL;
 
 
 	f_reformat = FALSE;
@@ -55,11 +53,6 @@ interface_toolkit::interface_toolkit()
 
 	f_split_by_values = FALSE;
 	//std::string split_by_values_fname_in;
-
-	f_draw_matrix_partition = FALSE;
-	draw_matrix_partition_width = 0;
-	//std::string draw_matrix_partition_rows;
-	//std::string draw_matrix_partition_cols;
 
 	f_store_as_csv_file = FALSE;
 	//std::string> store_as_csv_file_fname;
@@ -88,17 +81,13 @@ void interface_toolkit::print_help(int argc,
 		cout << "-cvs_file_latex <string : file_name>" << endl;
 	}
 	else if (stringcmp(argv[i], "-draw_matrix") == 0) {
-		cout << "-draw_matrix <string : fname> <int : box_width> <int : bit_depth>" << endl;
+		cout << "-draw_matrix options -end" << endl;
 	}
 	else if (stringcmp(argv[i], "-reformat") == 0) {
 		cout << "-reformat <string : fname_in> <string : fname_out> <int : new_width>" << endl;
 	}
 	else if (stringcmp(argv[i], "-split_by_values") == 0) {
 		cout << "-split_by_values <string : fname_in>" << endl;
-	}
-	else if (stringcmp(argv[i], "-draw_matrix_partition") == 0) {
-		cout << "-draw_matrix_partition <int : width> "
-				"<string : row partition> <string : col partition> " << endl;
 	}
 	else if (stringcmp(argv[i], "-store_as_csv_file") == 0) {
 		cout << "-store_as_csv_file <string : fname> <int : m> "
@@ -134,9 +123,6 @@ int interface_toolkit::recognize_keyword(int argc,
 		return true;
 	}
 	else if (stringcmp(argv[i], "-split_by_values") == 0) {
-		return true;
-	}
-	else if (stringcmp(argv[i], "-draw_matrix_partition") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-store_as_csv_file") == 0) {
@@ -198,10 +184,16 @@ void interface_toolkit::read_arguments(int argc,
 	}
 	else if (stringcmp(argv[i], "-draw_matrix") == 0) {
 		f_draw_matrix = TRUE;
-		fname.assign(argv[++i]);
-		box_width = strtoi(argv[++i]);
-		bit_depth = strtoi(argv[++i]);
-		cout << "-draw_matrix " << fname << " " << box_width << " " << bit_depth << endl;
+		Draw_bitmap_control = NEW_OBJECT(draw_bitmap_control);
+		cout << "reading -draw_matrix" << endl;
+		i += Draw_bitmap_control->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+		cout << "-draw_matrix " << endl;
 	}
 	else if (stringcmp(argv[i], "-reformat") == 0) {
 		f_reformat = TRUE;
@@ -214,14 +206,6 @@ void interface_toolkit::read_arguments(int argc,
 		f_split_by_values = TRUE;
 		split_by_values_fname_in.assign(argv[++i]);
 		cout << "-split_by_values " << split_by_values_fname_in << endl;
-	}
-	else if (stringcmp(argv[i], "-draw_matrix_partition") == 0) {
-		f_draw_matrix_partition = TRUE;
-		draw_matrix_partition_width = strtoi(argv[++i]);
-		draw_matrix_partition_rows.assign(argv[++i]);
-		draw_matrix_partition_cols.assign(argv[++i]);
-		cout << "-draw_matrix_partition " << draw_matrix_partition_rows
-				<< " " << draw_matrix_partition_cols << endl;
 	}
 	else if (stringcmp(argv[i], "-store_as_csv_file") == 0) {
 		f_store_as_csv_file = TRUE;
@@ -282,38 +266,11 @@ void interface_toolkit::worker(int verbose_level)
 		Fio.do_csv_file_latex(csv_file_latex_fname, verbose_level);
 	}
 	else if (f_draw_matrix) {
-		file_io Fio;
-		int *M;
-		int m, n;
+		graphical_output GO;
 
-		Fio.int_matrix_read_csv(fname, M, m, n, verbose_level);
+		GO.draw_bitmap(Draw_bitmap_control, verbose_level);
 
-		if (f_draw_matrix_partition) {
-			int *row_parts;
-			int *col_parts;
-			int nb_row_parts;
-			int nb_col_parts;
-
-			Orbiter->Int_vec.scan(draw_matrix_partition_rows, row_parts, nb_row_parts);
-			Orbiter->Int_vec.scan(draw_matrix_partition_cols, col_parts, nb_col_parts);
-			draw_bitmap(fname, M, m, n,
-					TRUE, draw_matrix_partition_width, // int f_partition, int part_width,
-					nb_row_parts, row_parts, nb_col_parts, col_parts, // int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,
-					TRUE /* f_box_width */, box_width,
-					FALSE /* f_invert_colors */, bit_depth,
-					verbose_level);
-			FREE_int(row_parts);
-			FREE_int(col_parts);
-		}
-		else {
-			draw_bitmap(fname, M, m, n,
-					FALSE, 0, // int f_partition, int part_width,
-					0, NULL, 0, NULL, // int nb_row_parts, int *Row_part, int nb_col_parts, int *Col_part,
-					TRUE /* f_box_width */, box_width,
-					FALSE /* f_invert_colors */, bit_depth,
-					verbose_level);
-		}
-		FREE_int(M);
+		FREE_int(Draw_bitmap_control->M);
 	}
 	else if (f_reformat) {
 		file_io Fio;

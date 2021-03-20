@@ -255,9 +255,12 @@ int finite_field_activity_description::read_arguments(
 	int argc, std::string *argv,
 	int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i;
 
-	cout << "finite_field_activity_description::read_arguments" << endl;
+	if (f_v) {
+		cout << "finite_field_activity_description::read_arguments" << endl;
+	}
 	for (i = 0; i < argc; i++) {
 		if (stringcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
@@ -752,7 +755,9 @@ int finite_field_activity_description::read_arguments(
 					"unrecognized option " << argv[i] << endl;
 		}
 	} // next i
-	cout << "finite_field_activity_description::read_arguments done" << endl;
+	if (f_v) {
+		cout << "finite_field_activity_description::read_arguments done" << endl;
+	}
 	return i + 1;
 }
 

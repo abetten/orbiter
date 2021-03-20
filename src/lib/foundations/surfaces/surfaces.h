@@ -696,14 +696,6 @@ public:
 	void Trihedral_pairs_to_planes(long int *Lines, long int *Planes_by_rank,
 		int verbose_level);
 		// Planes_by_rank[nb_trihedral_pairs * 6]
-#if 0
-	void compute_tritangent_planes_slow(long int *Lines,
-		long int *&Tritangent_planes, int &nb_tritangent_planes,
-		long int *&Unitangent_planes, int &nb_unitangent_planes,
-		long int *&Lines_in_tritangent_plane,
-		long int *&Line_in_unitangent_plane,
-		int verbose_level);
-#endif
 	void clebsch_cubics(int verbose_level);
 	void multiply_222_27_and_add(int *M1, int *M2, int *M3,
 		int scalar, int *MM, int verbose_level);

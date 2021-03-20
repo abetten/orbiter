@@ -409,6 +409,9 @@ class points_and_lines;
 class int_vec;
 class finite_field_activity_description;
 class finite_field_activity;
+class draw_bitmap_control;
+class combinatorial_object_activity_description;
+class combinatorial_object_activity;
 
 
 #ifdef MEMORY_DEBUG
