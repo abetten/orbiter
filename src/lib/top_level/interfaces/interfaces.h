@@ -34,8 +34,10 @@ class interface_algebra {
 	int f_group_theoretic_activity;
 	group_theoretic_activity_description *Group_theoretic_activity_description;
 
+#if 0
 	int f_finite_field_activity;
 	finite_field_activity_description *Finite_field_activity_description;
+#endif
 
 	int f_poset_classification_control;
 	poset_classification_control *Control;

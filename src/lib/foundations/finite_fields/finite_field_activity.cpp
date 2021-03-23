@@ -32,6 +32,7 @@ finite_field_activity::~finite_field_activity()
 }
 
 void finite_field_activity::init(finite_field_activity_description *Descr,
+		finite_field *F,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -41,17 +42,7 @@ void finite_field_activity::init(finite_field_activity_description *Descr,
 	}
 
 	finite_field_activity::Descr = Descr;
-	F = NEW_OBJECT(finite_field);
-
-	if (Descr->f_override_polynomial) {
-		F->init_override_polynomial(Descr->q,
-				Descr->override_polynomial, verbose_level);
-	}
-	else {
-		F->finite_field_init(Descr->q, 0 /* verbose_level */);
-	}
-
-
+	finite_field_activity::F = F;
 	if (f_v) {
 		cout << "finite_field_activity::init done" << endl;
 	}
@@ -240,7 +231,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 		cryptography_domain Crypto;
 
-		Crypto.do_EC_points(F, Descr->EC_b, Descr->EC_c, verbose_level);
+		Crypto.do_EC_points(F, Descr->EC_label, Descr->EC_b, Descr->EC_c, verbose_level);
 	}
 	else if (Descr->f_EC_add) {
 

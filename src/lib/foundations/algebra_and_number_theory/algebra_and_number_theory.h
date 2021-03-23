@@ -1176,6 +1176,9 @@ public:
 	int Jacobi(long int a, long int m, int verbose_level);
 	int Jacobi_with_key_in_latex(std::ostream &ost,
 			long int a, long int m, int verbose_level);
+	int Legendre_with_key_in_latex(std::ostream &ost,
+			long int a, long int m, int verbose_level);
+	//Computes the Legendre symbol $\left( \frac{a}{m} \right)$.
 	int ny2(long int x, long int &x1);
 	int ny_p(long int n, long int p);
 	//long int sqrt_mod_simple(long int a, long int p);
@@ -1527,7 +1530,8 @@ public:
 	void mult_easy(unipoly_object a, unipoly_object b, unipoly_object &c);
 	void print_coeffs_top_down_assuming_one_character_per_digit(unipoly_object a, std::ostream &ost);
 	void print_coeffs_top_down_assuming_one_character_per_digit_with_degree_given(unipoly_object a, int m, std::ostream &ost);
-	void mult_easy_with_report(long int rk_a, long int rk_b, long int &rk_c, std::ostream &ost);
+	void mult_easy_with_report(long int rk_a, long int rk_b, long int &rk_c,
+			std::ostream &ost, int verbose_level);
 	void division_with_remainder_from_file_with_report(std::string &input_fname, long int rk_b,
 			long int &rk_q, long int &rk_r, std::ostream &ost, int verbose_level);
 	void division_with_remainder_from_file_all_k_bit_error_patterns(

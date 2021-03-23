@@ -86,17 +86,30 @@ void unipoly_domain::print_coeffs_top_down_assuming_one_character_per_digit_with
 	}
 }
 
-void unipoly_domain::mult_easy_with_report(long int rk_a, long int rk_b, long int &rk_c, std::ostream &ost)
+void unipoly_domain::mult_easy_with_report(long int rk_a, long int rk_b, long int &rk_c,
+		std::ostream &ost, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "unipoly_domain::mult_easy_with_report" << endl;
+	}
 	unipoly_object a;
 	unipoly_object b;
 	unipoly_object c;
 
+	if (f_v) {
+		cout << "unipoly_domain::mult_easy_with_report rk_a=" << rk_a << endl;
+		cout << "unipoly_domain::mult_easy_with_report rk_b=" << rk_b << endl;
+	}
 	create_object_by_rank(a, rk_a,
-				__FILE__, __LINE__, 0 /* verbose_level */);
+				__FILE__, __LINE__, verbose_level);
 	create_object_by_rank(b, rk_b,
 				__FILE__, __LINE__, 0 /* verbose_level */);
 
+	if (f_v) {
+		cout << "unipoly_domain::mult_easy_with_report after create_object_by_rank" << endl;
+	}
 
 	int *ra = (int *) a;
 	int *rb = (int *) b;
@@ -106,6 +119,9 @@ void unipoly_domain::mult_easy_with_report(long int rk_a, long int rk_b, long in
 
 	int *rc; // = (int *) c;
 	//FREE_int(rc);
+	if (f_v) {
+		cout << "unipoly_domain::mult_easy_with_report before NEW_int, mn=" << mn << endl;
+	}
 	rc = NEW_int(mn + 2);
 		// +1 since the number of coeffs is one more than the degree,
 		// +1 since we allocate one unit for the degree itself
@@ -115,6 +131,9 @@ void unipoly_domain::mult_easy_with_report(long int rk_a, long int rk_b, long in
 	int *C = rc + 1;
 	int i, j, k, x, y;
 
+	if (f_v) {
+		cout << "unipoly_domain::mult_easy_with_report before rc[0] = mn;" << endl;
+	}
 	rc[0] = mn;
 	for (i = 0; i <= mn; i++) {
 		C[i] = 0;
@@ -122,6 +141,9 @@ void unipoly_domain::mult_easy_with_report(long int rk_a, long int rk_b, long in
 
 	ost << "\\begin{verbatim}" << endl;
 	ost << setw(m + 1) << rk_a << " x " << setw(n + 1) << rk_b << " = " << endl;
+	if (f_v) {
+		cout << "unipoly_domain::mult_easy_with_report before print_coeffs_top_down_assuming_one_character_per_digit" << endl;
+	}
 	print_coeffs_top_down_assuming_one_character_per_digit(a, ost);
 	ost << " x ";
 	print_coeffs_top_down_assuming_one_character_per_digit(b, ost);
@@ -129,6 +151,9 @@ void unipoly_domain::mult_easy_with_report(long int rk_a, long int rk_b, long in
 	print_repeated_character(ost, '=', m + 1 + 3 + n + 1);
 	ost << endl;
 	for (j = n; j >= 0; j--) {
+		if (f_v) {
+			cout << "unipoly_domain::mult_easy_with_report j=" << j << endl;
+		}
 		if (B[j] == 0) {
 			continue;
 		}
@@ -140,8 +165,17 @@ void unipoly_domain::mult_easy_with_report(long int rk_a, long int rk_b, long in
 	print_repeated_character(ost, '=', m + 1 + n);
 	ost << endl;
 
+	if (f_v) {
+		cout << "unipoly_domain::mult_easy_with_report multiplying" << endl;
+	}
 	for (i = m; i >= 0; i--) {
+		if (f_v) {
+			cout << "unipoly_domain::mult_easy_with_report i=" << i << endl;
+		}
 		for (j = n; j >= 0; j--) {
+			if (f_v) {
+				cout << "unipoly_domain::mult_easy_with_report j=" << j << endl;
+			}
 			k = i + j;
 			x = C[k];
 			y = F->mult(A[i], B[j]);
@@ -158,6 +192,9 @@ void unipoly_domain::mult_easy_with_report(long int rk_a, long int rk_b, long in
 	print_coeffs_top_down_assuming_one_character_per_digit(c, ost);
 	ost << endl;
 	rk_c = rank(c);
+	if (f_v) {
+		cout << "unipoly_domain::mult_easy_with_report rk_c=" << rk_c << endl;
+	}
 	print_repeated_character(ost, ' ', 3);
 	ost << "=" << setw(mn + 1) << rk_c << endl;
 	ost << endl;
@@ -166,6 +203,9 @@ void unipoly_domain::mult_easy_with_report(long int rk_a, long int rk_b, long in
 	delete_object(a);
 	delete_object(b);
 	delete_object(c);
+	if (f_v) {
+		cout << "unipoly_domain::mult_easy_with_report done" << endl;
+	}
 
 }
 

@@ -62,7 +62,8 @@ public:
 			int EC_b, int EC_c, int EC_s,
 			std::string &pt_text, std::string &EC_message,
 			int verbose_level);
-	void do_EC_points(finite_field *F, int EC_b, int EC_c, int verbose_level);
+	void do_EC_points(finite_field *F, std::string &label,
+			int EC_b, int EC_c, int verbose_level);
 	int EC_evaluate_RHS(finite_field *F, int EC_b, int EC_c, int x);
 	// evaluates x^3 + bx + c
 	void do_EC_add(finite_field *F, int EC_b, int EC_c,

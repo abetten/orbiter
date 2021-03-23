@@ -597,6 +597,26 @@ public:
 			int f_has_labels, int *labels,
 			int verbose_level);
 	void list_parameters_of_SRG(int v_max, int verbose_level);
+	void make_Johnson_graph(int *&Adj, int &N,
+			int n, int k, int s, int verbose_level);
+	void make_Paley_graph(int *&Adj, int &N,
+			int q, int verbose_level);
+	void make_Schlaefli_graph(int *&Adj, int &N,
+			int q, int verbose_level);
+	void make_Winnie_Li_graph(int *&Adj, int &N,
+			int q, int index, int verbose_level);
+	void make_Grassmann_graph(int *&Adj, int &N,
+			int n, int k, int q, int r, int verbose_level);
+	void make_orthogonal_collinearity_graph(int *&Adj, int &N,
+			int epsilon, int d, int q, int verbose_level);
+	void compute_adjacency_matrix(
+			int *Table, int nb_sets, int set_size,
+			std::string &prefix_for_graph,
+			bitvector *&B,
+			int verbose_level);
+	void make_graph_of_disjoint_sets_from_rows_of_matrix(
+		int *M, int m, int n,
+		int *&Adj, int verbose_level);
 
 };
 

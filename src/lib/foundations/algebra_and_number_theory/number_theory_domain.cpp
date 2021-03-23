@@ -993,7 +993,7 @@ int number_theory_domain::Jacobi(long int a, long int m, int verbose_level)
 	exit(1);
 }
 
-int number_theory_domain::Jacobi_with_key_in_latex(ostream &ost,
+int number_theory_domain::Jacobi_with_key_in_latex(std::ostream &ost,
 		long int a, long int m, int verbose_level)
 //Computes the Jacobi symbol $\left( \frac{a}{m} \right)$.
 {
@@ -1004,7 +1004,7 @@ int number_theory_domain::Jacobi_with_key_in_latex(ostream &ost,
 	long int t, t1, t2;
 	
 	if (f_v) {
-		cout << "number_theory_domain::Jacobi(" << a << ", " << m << ")" << endl;
+		cout << "number_theory_domain::Jacobi_with_key_in_latex(" << a << ", " << m << ")" << endl;
 	}
 
 
@@ -1020,12 +1020,12 @@ int number_theory_domain::Jacobi_with_key_in_latex(ostream &ost,
 		return 0;
 	}
 	while (TRUE) {
-		/* Invariante: 
-		 * r1 enthaelt bereits ausgerechnete Faktoren.
-		 * ABS(r1) == 1.
-		 * Jacobi(a, m) = r1 * Jacobi(a1, m1) und ggT(a1, m1) == 1. */
+		// Invariant:
+		// r1 contains partial results.
+		// ABS(r1) == 1.
+		// Jacobi(a, m) = r1 * Jacobi(a1, m1) and gcd(a1, m1) == 1.
 		if (a1 == 0) {
-			cout << "number_theory_domain::Jacobi a1 == 0" << endl;
+			cout << "number_theory_domain::Jacobi_with_key_in_latex a1 == 0" << endl;
 			exit(1);
 		}
 		if (a1 % m1 < a1) {
@@ -1047,7 +1047,7 @@ int number_theory_domain::Jacobi_with_key_in_latex(ostream &ost,
 		}
 		ord2 = ny2(a1, a1);
 		
-		/* a1 jetzt immer noch != 0 */
+		// a1 != 0
 		if (f_negative) {
 
 			ost << "$=";
@@ -1069,12 +1069,15 @@ int number_theory_domain::Jacobi_with_key_in_latex(ostream &ost,
 
 
 
-			t = (m1 - 1) >> 1; /* t := (m1 - 1) / 2 */
+			t = (m1 - 1) >> 1;
+				// t := (m1 - 1) / 2
+
 			/* Ranmultiplizieren von (-1) hoch t an r1: */
+
 			if (t % 2) {
-				r1 = -r1; /* Beachte ABS(r1) == 1 */
+				r1 = -r1; /* note ABS(r1) == 1 */
 			}
-			/* und a1 wieder positiv machen: */
+
 			a1 = -a1;
 
 			ost << "$=";
@@ -1186,11 +1189,243 @@ int number_theory_domain::Jacobi_with_key_in_latex(ostream &ost,
 				<< " - 1}{2}}$\\\\" << endl;
 
 
-		/* Reziprozitaet: */
-		t1 = (m1 - 1) >> 1; /* t1 = (m1 - 1) / 2 */
-		t2 = (a1 - 1) >> 1; /* t1 = (a1 - 1) / 2 */
-		if ((t1 % 2) && (t2 % 2)) /* t1 und t2 ungerade */ {
-			r1 = -r1; /* Beachte ABS(r1) == 1 */
+		// reciprocity:
+		t1 = (m1 - 1) >> 1;
+			// t1 = (m1 - 1) / 2
+		t2 = (a1 - 1) >> 1;
+			// t1 = (a1 - 1) / 2
+		if ((t1 % 2) && (t2 % 2)) {
+			// t1 and t2 are both odd
+			r1 = -r1;
+			// note ABS(r1) == 1
+		}
+
+		ost << "$=";
+		if (r1 == -1) {
+			ost << "(-1) \\cdot ";
+		}
+		ost << "\\Big( \\frac{" << a1 << " }{ " << m1
+				<< "}\\Big)$\\\\" << endl;
+
+		if (f_v) {
+			cout << "number_theory_domain::Jacobi_with_key_in_latex = " << r1 << " * Jacobi(" << a1
+					<< ", " << m1 << ")" << endl;
+		}
+	}
+	if (a1 == 1) {
+		ost << "$=" << r1 << "$\\\\" << endl;
+		return r1;
+	}
+	if (a1 <= 0) {
+		cout << "number_theory_domain::Jacobi_with_key_in_latex a1 == -1 || a1 == 0" << endl;
+		exit(1);
+	}
+	cout << "number_theory_domain::Jacobi_with_key_in_latex wrong termination" << endl;
+	exit(1);
+}
+
+int number_theory_domain::Legendre_with_key_in_latex(ostream &ost,
+		long int a, long int m, int verbose_level)
+//Computes the Legendre symbol $\left( \frac{a}{m} \right)$.
+{
+	int f_v = (verbose_level >= 1);
+	long int a1, m1, ord2, r1;
+	long int g;
+	int f_negative = FALSE;
+	long int t, t1, t2;
+
+	if (f_v) {
+		cout << "number_theory_domain::Legendre_with_key_in_latex(" << a << ", " << m << ")" << endl;
+	}
+
+
+	ost << "$\\Big( \\frac{" << a << " }{ "
+			<< m << "}\\Big)$\\\\" << endl;
+
+
+	a1 = a;
+	m1 = m;
+	r1 = 1;
+	g = gcd_lint(a1, m1);
+	if (ABS(g) != 1) {
+		return 0;
+	}
+	while (TRUE) {
+		// invariant:
+		// r1 contains partial result.
+		// ABS(r1) == 1.
+		// Legendre(a, m) = r1 * Legendre(a1, m1) and gcd(a1, m1) == 1. */
+		if (a1 == 0) {
+			cout << "number_theory_domain::Legendre_with_key_in_latex a1 == 0" << endl;
+			exit(1);
+		}
+		if (a1 % m1 < a1) {
+
+			ost << "$=";
+			if (r1 == -1) {
+				ost << "(-1) \\cdot ";
+			}
+			ost << " \\Big( \\frac{" << a1 % m1 << " }{ "
+					<< m1 << "}\\Big)$\\\\" << endl;
+
+		}
+
+		a1 = a1 % m1;
+
+		if (f_v) {
+			cout << "Jacobi = " << r1 << " * Jacobi("
+					<< a1 << ", " << m1 << ")" << endl;
+		}
+		ord2 = ny2(a1, a1);
+
+		// a1 is != 0
+		if (f_negative) {
+
+			ost << "$=";
+			if (r1 == -1) {
+				ost << "(-1) \\cdot ";
+			}
+			ost << "\\Big( \\frac{-1 }{ " << m1
+					<< "}\\Big) \\cdot \\Big( \\frac{"
+					<< a1 * i_power_j(2, ord2) << " }{ "
+					<< m1 << "}\\Big)$\\\\" << endl;
+			ost << "$=";
+			if (r1 == -1) {
+				ost << "(-1) \\cdot ";
+			}
+			ost << "(-1)^{\\frac{" << m1
+					<< "-1}{2}} \\cdot \\Big( \\frac{"
+					<< a1 * i_power_j(2, ord2) << " }{ "
+					<< m1 << "}\\Big)$\\\\" << endl;
+
+
+
+			t = (m1 - 1) >> 1; /* t := (m1 - 1) / 2 */
+
+			if (t % 2) {
+				r1 = -r1;
+			}
+
+			a1 = -a1;
+
+			ost << "$=";
+			if (r1 == -1) {
+				ost << "(-1) \\cdot ";
+			}
+			ost << " \\Big( \\frac{"
+					<< a1 * i_power_j(2, ord2)
+			<< " }{ " << m1 << "}\\Big)$\\\\" << endl;
+
+
+			}
+		if (ord2 % 2) {
+			/* tue nur dann etwas, wenn ord2 ungerade */
+			// t = (m1 * m1 - 1) >> 3; /* t = (m1 * m1 - 1) / 8 */
+			/* Ranmultiplizieren von (-1) hoch t an r1: */
+
+			if (ord2 > 1) {
+				ost << "$=";
+				if (r1 == -1) {
+					ost << "(-1) \\cdot ";
+				}
+				ost << "\\Big( \\frac{2}{ " << m1
+						<< "}\\Big)^{" << ord2
+						<< "} \\cdot \\Big( \\frac{" << a1
+						<< " }{ " << m1 << "}\\Big)$\\\\" << endl;
+				ost << "$=";
+				if (r1 == -1) {
+					ost << "(-1) \\cdot ";
+				}
+				ost << "\\Big( (-1)^{\\frac{" << m1
+						<< "^2-1}{8}} \\Big)^{" << ord2
+						<< "} \\cdot \\Big( \\frac{" << a1 << " }{ "
+						<< m1 << "}\\Big)$\\\\" << endl;
+			}
+			else {
+				ost << "$=";
+				if (r1 == -1) {
+					ost << "(-1) \\cdot ";
+				}
+				ost << "\\Big( \\frac{2}{ " << m1
+						<< "}\\Big) \\cdot \\Big( \\frac{" << a1
+						<< " }{ " << m1 << "}\\Big)$\\\\" << endl;
+				ost << "$=";
+				if (r1 == -1) {
+					ost << "(-1) \\cdot ";
+				}
+				ost << "(-1)^{\\frac{" << m1
+						<< "^2-1}{8}} \\cdot \\Big( \\frac{" << a1
+						<< " }{ " << m1 << "}\\Big)$\\\\" << endl;
+			}
+
+			if (m1 % 8 == 3 || m1 % 8 == 5) {
+				r1 = -r1; /* Beachte ABS(r1) == 1L */
+			}
+
+			ost << "$=";
+			if (r1 == -1) {
+				ost << "(-1) \\cdot ";
+			}
+			ost << "\\Big( \\frac{" << a1 << " }{ " << m1
+					<< "}\\Big)$\\\\" << endl;
+
+
+		}
+		else {
+			if (ord2) {
+				ost << "$=";
+				if (r1 == -1) {
+					ost << "(-1) \\cdot ";
+				}
+				ost << "\\Big( \\frac{2}{ " << m1 << "}\\Big)^{"
+						<< ord2 << "} \\cdot \\Big( \\frac{" << a1
+						<< " }{ " << m1 << "}\\Big)$\\\\" << endl;
+
+				ost << "$=";
+				if (r1 == -1) {
+					ost << "(-1) \\cdot ";
+				}
+				ost << "\\Big( (-1)^{\\frac{" << m1
+						<< "^2-1}{8}} \\Big)^{" << ord2
+						<< "} \\cdot \\Big( \\frac{" << a1 << " }{ "
+						<< m1 << "}\\Big)$\\\\" << endl;
+				ost << "$=";
+				if (r1 == -1) {
+					ost << "(-1) \\cdot ";
+				}
+				ost << "\\Big( \\frac{" << a1 << " }{ " << m1
+						<< "}\\Big)$\\\\" << endl;
+			}
+		}
+		if (ABS(a1) <= 1) {
+			break;
+		}
+
+
+		t = m1;
+		m1 = a1;
+		a1 = t;
+
+
+		ost << "$=";
+		if (r1 == -1) {
+			ost << "(-1) \\cdot ";
+		}
+		ost << "\\Big( \\frac{" << a1 << " }{ " << m1
+				<< "}\\Big) \\cdot (-1)^{\\frac{" << m1
+				<< "-1}{2} \\cdot \\frac{" << a1
+				<< " - 1}{2}}$\\\\" << endl;
+
+
+		// reciprocity:
+
+		t1 = (m1 - 1) >> 1;
+			// t1 = (m1 - 1) / 2
+		t2 = (a1 - 1) >> 1;
+			// t1 = (a1 - 1) / 2
+
+		if ((t1 % 2) && (t2 % 2)) /* t1 and t2 are both odd */ {
+			r1 = -r1; /* note: ABS(r1) == 1 */
 		}
 
 		ost << "$=";
@@ -1210,13 +1445,12 @@ int number_theory_domain::Jacobi_with_key_in_latex(ostream &ost,
 		return r1;
 	}
 	if (a1 <= 0) {
-		cout << "number_theory_domain::Jacobi a1 == -1 || a1 == 0" << endl;
+		cout << "number_theory_domain::Legendre_with_key_in_latex a1 == -1 || a1 == 0" << endl;
 		exit(1);
 	}
-	cout << "number_theory_domain::Jacobi wrong termination" << endl;
+	cout << "number_theory_domain::Legendre_with_key_in_latex wrong termination" << endl;
 	exit(1);
 }
-
 
 int number_theory_domain::ny2(long int x, long int &x1)
 //returns $n = \ny_2(x).$ 

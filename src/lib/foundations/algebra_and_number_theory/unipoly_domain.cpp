@@ -143,8 +143,14 @@ void unipoly_domain::create_object_by_rank(
 {
 	int f_v = (verbose_level >= 1);
 	number_theory_domain NT;
-	int len = NT.lint_logq(rk, F->q);
 	
+	if (f_v) {
+		cout << "unipoly_domain::create_object_by_rank rk=" << rk << endl;
+		cout << "unipoly_domain::create_object_by_rank f_factorring=" << f_factorring << endl;
+	}
+
+	int len = NT.lint_logq(rk, F->q);
+
 	if (f_factorring) {
 		if (len > factor_degree) {
 			cout << "unipoly_domain::create_object_by_rank "
@@ -172,6 +178,9 @@ void unipoly_domain::create_object_by_rank(
 	} while (rk);
 	rep[0] = i - 1;
 	p = (void *) rep;
+	if (f_v) {
+		cout << "unipoly_domain::create_object_by_rank done" << endl;
+	}
 }
 
 void unipoly_domain::create_object_from_csv_file(

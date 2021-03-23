@@ -327,7 +327,6 @@ class combinatorics_domain {
 public:
 	combinatorics_domain();
 	~combinatorics_domain();
-	int Hamming_distance_binary(int a, int b, int n);
 	int int_factorial(int a);
 	int Kung_mue_i(int *part, int i, int m);
 	void partition_dual(int *part, int *dual_part, int n, int verbose_level);
@@ -435,9 +434,7 @@ public:
 	int disjoint_binary_representation(int u, int v);
 	int hall_test(int *A, int n, int kmax, int *memo, int verbose_level);
 	int philip_hall_test(int *A, int n, int k, int *memo, int verbose_level);
-	// memo points to free memory of n int's
 	int philip_hall_test_dual(int *A, int n, int k, int *memo, int verbose_level);
-	// memo points to free memory of n int's
 	void print_01_matrix_with_stars(std::ostream &ost, int *A, int m, int n);
 	void print_int_matrix(std::ostream &ost, int *A, int m, int n);
 	int create_roots_H4(finite_field *F, int *roots);
@@ -451,16 +448,6 @@ public:
 	long int binomial2(int a);
 	long int binomial3(int a);
 	int minus_one_if_positive(int i);
-	//int int_ij2k(int i, int j, int n);
-	//void int_k2ij(int k, int & i, int & j, int n);
-	void compute_adjacency_matrix(
-			int *Table, int nb_sets, int set_size,
-			std::string &prefix_for_graph,
-			bitvector *&B,
-			int verbose_level);
-	void make_graph_of_disjoint_sets_from_rows_of_matrix(
-		int *M, int m, int n,
-		int *&Adj, int verbose_level);
 	void make_partitions(int n, int *Part, int cnt);
 	int count_partitions(int n);
 	int next_partition(int n, int *part);
@@ -480,18 +467,6 @@ public:
 	void krawtchouk(longinteger_object &a, int n, int q, int k, int x);
 	void do_tdo_refinement(tdo_refinement_description *Descr, int verbose_level);
 	void do_tdo_print(std::string &fname, int verbose_level);
-	void make_Johnson_graph(int *&Adj, int &N,
-			int n, int k, int s, int verbose_level);
-	void make_Paley_graph(int *&Adj, int &N,
-			int q, int verbose_level);
-	void make_Schlaefli_graph(int *&Adj, int &N,
-			int q, int verbose_level);
-	void make_Winnie_Li_graph(int *&Adj, int &N,
-			int q, int index, int verbose_level);
-	void make_Grassmann_graph(int *&Adj, int &N,
-			int n, int k, int q, int r, int verbose_level);
-	void make_orthogonal_collinearity_graph(int *&Adj, int &N,
-			int epsilon, int d, int q, int verbose_level);
 	void make_elementary_symmetric_functions(int n, int k_max, int verbose_level);
 
 };

@@ -4040,7 +4040,7 @@ void algebra_global::mult_polynomials(finite_field *F, long int rk0, long int rk
 			//report(ost, verbose_level);
 
 			long int rk2;
-			D.mult_easy_with_report(rk0, rk1, rk2, ost);
+			D.mult_easy_with_report(rk0, rk1, rk2, ost, verbose_level);
 			ost << "$" << rk0 << " \\otimes " << rk1 << " = " << rk2 << "$\\\\" << endl;
 
 

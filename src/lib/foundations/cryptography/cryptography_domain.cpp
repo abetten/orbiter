@@ -1040,7 +1040,7 @@ void cryptography_domain::do_EC_Koblitz_encoding(finite_field *F,
 	}
 }
 
-void cryptography_domain::do_EC_points(finite_field *F,
+void cryptography_domain::do_EC_points(finite_field *F, std::string &label,
 		int EC_b, int EC_c, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1168,6 +1168,7 @@ void cryptography_domain::do_EC_points(finite_field *F,
 	int i;
 	cout << "We found " << Pts.size() << " points:" << endl;
 
+
 	for (i = 0; i < (int) Pts.size(); i++) {
 		if (i == (int) Pts.size()) {
 
@@ -1193,6 +1194,31 @@ void cryptography_domain::do_EC_points(finite_field *F,
 		}
 	}
 
+	int *M;
+
+	M = NEW_int(F->q * F->q);
+	Orbiter->Int_vec.zero(M, F->q * F->q);
+
+
+	for (i = 0; i < (int) Pts.size(); i++) {
+		vector<int> pt;
+		int x, y, z;
+
+		pt = Pts[i];
+		x = pt[0];
+		y = pt[1];
+		z = pt[2];
+		if (z == 1) {
+			M[(F->q - 1 - y) * F->q + x] = 1;
+		}
+	}
+	string fname;
+	file_io Fio;
+
+	fname.assign(label);
+	fname.append("_points_xy.csv");
+	Fio.int_matrix_write_csv(fname, M, F->q, F->q);
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 	if (f_v) {
 		cout << "do_EC_points done" << endl;
@@ -1233,7 +1259,7 @@ void cryptography_domain::do_EC_add(finite_field *F,
 
 	Orbiter->Int_vec.scan(pt1_text, v, len);
 	if (len != 2) {
-		cout << "point should have just two ccordinates" << endl;
+		cout << "point should have just two coordinates" << endl;
 		exit(1);
 	}
 	x1 = v[0];
@@ -1243,7 +1269,7 @@ void cryptography_domain::do_EC_add(finite_field *F,
 
 	Orbiter->Int_vec.scan(pt2_text, v, len);
 	if (len != 2) {
-		cout << "point should have just two ccordinates" << endl;
+		cout << "point should have just two coordinates" << endl;
 		exit(1);
 	}
 	x2 = v[0];
@@ -1289,7 +1315,7 @@ void cryptography_domain::do_EC_cyclic_subgroup(finite_field *F,
 
 	Orbiter->Int_vec.scan(pt_text, v, len);
 	if (len != 2) {
-		cout << "point should have just two ccordinates" << endl;
+		cout << "point should have just two coordinates" << endl;
 		exit(1);
 	}
 	x1 = v[0];
@@ -1344,7 +1370,7 @@ void cryptography_domain::do_EC_multiple_of(finite_field *F,
 
 	Orbiter->Int_vec.scan(pt_text, v, len);
 	if (len != 2) {
-		cout << "point should have just two ccordinates" << endl;
+		cout << "point should have just two coordinates" << endl;
 		exit(1);
 	}
 	x1 = v[0];
@@ -1393,7 +1419,7 @@ void cryptography_domain::do_EC_discrete_log(finite_field *F,
 
 	Orbiter->Int_vec.scan(base_pt_text, v, len);
 	if (len != 2) {
-		cout << "point should have just two ccordinates" << endl;
+		cout << "point should have just two coordinates" << endl;
 		exit(1);
 	}
 	x1 = v[0];

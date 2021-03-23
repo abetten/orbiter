@@ -250,6 +250,9 @@ void interface_symbol_table::read_definition(
 		managed_variables.assign(argv[++i]);
 		formula_text.assign(argv[++i]);
 
+		i++;
+
+
 		formula *F;
 
 		F = NEW_OBJECT(formula);
@@ -268,6 +271,7 @@ void interface_symbol_table::read_definition(
 		string list_of_objects;
 
 		list_of_objects.assign(argv[++i]);
+		i++;
 
 		if (f_v) {
 			cout << "interface_symbol_table::read_definition before definition_of_collection" << endl;
@@ -912,11 +916,13 @@ void interface_symbol_table::do_finite_field_activity(
 	F = (finite_field *) Orbiter_top_level_session->get_object(Idx[0]);
 
 	finite_field_activity FA;
-	//FA.init(Finite_field_activity_description, verbose_level);
+	FA.init(Finite_field_activity_description, F, verbose_level);
+#if 0
 	Finite_field_activity_description->f_q = TRUE;
 	Finite_field_activity_description->q = F->q;
 	FA.Descr = Finite_field_activity_description;
 	FA.F = F;
+#endif
 
 	if (with_labels.size() == 2) {
 		cout << "-finite_field_activity has two inputs" << endl;
