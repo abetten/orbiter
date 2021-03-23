@@ -23,11 +23,13 @@ namespace foundations {
 class finite_field_activity_description {
 public:
 
+#if 0
 	int f_q;
 	int q;
 
 	int f_override_polynomial;
 	std::string override_polynomial;
+#endif
 
 	int f_cheat_sheet_GF;
 
@@ -99,7 +101,10 @@ public:
 	int f_EC_Koblitz_encoding;
 	std::string EC_message;
 	int EC_s;
+
 	int f_EC_points;
+	std::string EC_label;
+
 	int f_EC_add;
 	std::string EC_pt1_text;
 	std::string EC_pt2_text;
@@ -280,6 +285,7 @@ public:
 	finite_field_activity();
 	~finite_field_activity();
 	void init(finite_field_activity_description *Descr,
+			finite_field *F,
 			int verbose_level);
 	void perform_activity(int verbose_level);
 	void evaluate(

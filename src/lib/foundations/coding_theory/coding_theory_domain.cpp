@@ -4610,6 +4610,24 @@ void coding_theory_domain::field_induction(std::string &fname_in, std::string &f
 
 }
 
+int coding_theory_domain::Hamming_distance_binary(int a, int b, int n)
+{
+	int i, d, u, v;
+
+	d = 0;
+	for (i = 0; i < n; i++) {
+		u = a % 2;
+		v = b % 2;
+		if (u != v) {
+			d++;
+		}
+		a >>= 1;
+		b >>= 1;
+	}
+	return d;
+}
+
+
 
 }}
 

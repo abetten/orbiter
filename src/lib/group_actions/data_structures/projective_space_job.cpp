@@ -941,6 +941,7 @@ void projective_space_job::perform_job_for_one_set(
 			}
 			fp << -1 << " " << nb_sol << endl;
 		}
+
 		file_io Fio;
 
 		cout << "Written file " << fname_solutions << " of size "
@@ -1144,7 +1145,6 @@ void projective_space_job::do_canonical_form(
 	SG = A_linear->set_stabilizer_in_projective_space(
 		P,
 		set, set_size, canonical_pt, NULL /* canonical_set_or_NULL */,
-		//FALSE, NULL,
 		verbose_level);
 	//P->draw_point_set_in_plane(fname_base, set, set_size,
 	// TRUE /*f_with_points*/, 0 /* verbose_level */);

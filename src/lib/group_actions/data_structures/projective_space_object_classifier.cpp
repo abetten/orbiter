@@ -117,9 +117,14 @@ void projective_space_object_classifier::do_the_work(
 
 
 	if (Descr->f_save_classification) {
-		cout << "projective_space_object_classifier::do_the_work "
-				"Saving the classification with save_prefix " << Descr->save_prefix << endl;
+
+		if (f_v) {
+			cout << "projective_space_object_classifier::do_the_work "
+					"Saving the classification with save_prefix " << Descr->save_prefix << endl;
+		}
+
 		save(Descr->save_prefix, verbose_level);
+
 		CB->save(Descr->save_prefix,
 			OiPA_encode, OiPA_group_order,
 			NULL /* void *global_data */,
@@ -1307,7 +1312,6 @@ int projective_space_object_classifier::process_object_with_known_canonical_labe
 	OiP->canonical_form_given_canonical_labeling(
 				canonical_labeling,
 				Bitvec_canonical_form,
-				//canonical_form, canonical_form_len,
 				verbose_level);
 
 

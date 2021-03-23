@@ -339,7 +339,6 @@ void graph_theory_domain::save_colored_graph(std::string &fname,
 		long int *points, int *point_color,
 		long int *data, int data_sz,
 		bitvector *Bitvec,
-		//uchar *bitvector_adjacency, long int bitvector_length,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1056,6 +1055,567 @@ void graph_theory_domain::list_parameters_of_SRG(int v_max, int verbose_level)
 		cout << "graph_theory_domain::list_parameters_of_SRG done" << endl;
 	}
 }
+
+void graph_theory_domain::make_Johnson_graph(int *&Adj, int &N,
+		int n, int k, int s, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_Johnson_graph" << endl;
+	}
+	combinatorics_domain Combi;
+	sorting Sorting;
+	int *set1;
+	int *set2;
+	int *set3;
+	int i, j, sz;
+
+	N = Combi.int_n_choose_k(n, k);
+
+
+	Adj = NEW_int(N * N);
+	Orbiter->Int_vec.zero(Adj, N * N);
+
+	set1 = NEW_int(k);
+	set2 = NEW_int(k);
+	set3 = NEW_int(k);
+
+	for (i = 0; i < N; i++) {
+		Combi.unrank_k_subset(i, set1, n, k);
+		for (j = i + 1; j < N; j++) {
+			Combi.unrank_k_subset(j, set2, n, k);
+
+			Sorting.int_vec_intersect_sorted_vectors(set1, k, set2, k, set3, sz);
+			if (sz == s) {
+				Adj[i * N + j] = 1;
+				Adj[j * N + i] = 1;
+			}
+		}
+	}
+
+	FREE_int(set1);
+	FREE_int(set2);
+	FREE_int(set3);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_Johnson_graph done" << endl;
+	}
+
+}
+
+void graph_theory_domain::make_Paley_graph(int *&Adj, int &N,
+		int q, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_Paley_graph" << endl;
+	}
+
+	if (EVEN(q)) {
+		cout << "graph_theory_domain::make_Paley_graph q must be odd" << endl;
+		exit(1);
+	}
+	if (!DOUBLYEVEN(q - 1)) {
+		cout << "graph_theory_domain::make_Paley_graph q must be congruent to 1 modulo 4" << endl;
+	}
+
+	finite_field *F;
+	int *f_is_square;
+	int i, j, a;
+
+	F = NEW_OBJECT(finite_field);
+	F->finite_field_init(q, verbose_level);
+
+	f_is_square = NEW_int(q);
+	Orbiter->Int_vec.zero(f_is_square, q);
+
+	for (i = 0; i < q; i++) {
+		j = F->mult(i, i);
+		f_is_square[j] = TRUE;
+	}
+
+	Adj = NEW_int(q * q);
+	Orbiter->Int_vec.zero(Adj, q * q);
+
+	for (i = 0; i < q; i++) {
+		for (j = i + 1; j < q; j++) {
+			a = F->add(i, F->negate(j));
+			if (f_is_square[a]) {
+				Adj[i * q + j] = 1;
+				Adj[j * q + i] = 1;
+			}
+		}
+	}
+	N = q;
+
+	FREE_OBJECT(F);
+	FREE_int(f_is_square);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_Paley_graph done" << endl;
+	}
+}
+
+void graph_theory_domain::make_Schlaefli_graph(int *&Adj, int &N,
+		int q, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_Schlaefli_graph" << endl;
+	}
+
+	finite_field *F;
+	grassmann *Gr;
+	int n = 4;
+	int k = 2;
+
+
+	F = NEW_OBJECT(finite_field);
+	F->finite_field_init(q, verbose_level);
+
+	Gr = NEW_OBJECT(grassmann);
+	Gr->init(n, k, F, verbose_level);
+
+	Gr->create_Schlaefli_graph(Adj, N, verbose_level);
+
+	FREE_OBJECT(Gr);
+	FREE_OBJECT(F);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_Schlaefli_graph done" << endl;
+	}
+}
+
+void graph_theory_domain::make_Winnie_Li_graph(int *&Adj, int &N,
+		int q, int index, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_Winnie_Li_graph" << endl;
+	}
+
+	finite_field *F;
+	int i, j, h, u, p, k, co_index, q1, relative_norm;
+	int *N1;
+	number_theory_domain NT;
+
+
+	F = NEW_OBJECT(finite_field);
+	F->finite_field_init(q, verbose_level - 1);
+	p = F->p;
+
+#if 0
+	if (!f_index) {
+		index = F->e;
+		}
+#endif
+
+	co_index = F->e / index;
+
+	if (co_index * index != F->e) {
+		cout << "the index has to divide the field degree" << endl;
+		exit(1);
+	}
+	q1 = NT.i_power_j(p, co_index);
+
+	k = (q - 1) / (q1 - 1);
+
+	if (f_v) {
+		cout << "q=" << q << endl;
+		cout << "index=" << index << endl;
+		cout << "co_index=" << co_index << endl;
+		cout << "q1=" << q1 << endl;
+		cout << "k=" << k << endl;
+	}
+
+	relative_norm = 0;
+	j = 1;
+	for (i = 0; i < index; i++) {
+		relative_norm += j;
+		j *= q1;
+	}
+	if (f_v) {
+		cout << "relative_norm=" << relative_norm << endl;
+	}
+
+	N1 = NEW_int(k);
+	j = 0;
+	for (i = 0; i < q; i++) {
+		if (F->power(i, relative_norm) == 1) {
+			N1[j++] = i;
+		}
+	}
+	if (j != k) {
+		cout << "j != k" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "found " << k << " norm-one elements:" << endl;
+		Orbiter->Int_vec.print(cout, N1, k);
+		cout << endl;
+	}
+
+	Adj = NEW_int(q * q);
+	for (i = 0; i < q; i++) {
+		for (h = 0; h < k; h++) {
+			j = N1[h];
+			u = F->add(i, j);
+			Adj[i * q + u] = 1;
+			Adj[u * q + i] = 1;
+		}
+	}
+
+	N = q;
+
+
+	FREE_int(N1);
+	FREE_OBJECT(F);
+
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_Winnie_Li_graph done" << endl;
+	}
+}
+
+void graph_theory_domain::make_Grassmann_graph(int *&Adj, int &N,
+		int n, int k, int q, int r, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_Grassmann_graph" << endl;
+	}
+
+
+	finite_field *F;
+	grassmann *Gr;
+	int i, j, rr;
+	int *M1; // [k * n]
+	int *M2; // [k * n]
+	int *M; // [2 * k * n]
+	combinatorics_domain Combi;
+
+	F = NEW_OBJECT(finite_field);
+	F->finite_field_init(q, verbose_level);
+
+
+	Gr = NEW_OBJECT(grassmann);
+	Gr->init(n, k, F, verbose_level);
+
+	N = Combi.generalized_binomial(n, k, q);
+
+	M1 = NEW_int(k * n);
+	M2 = NEW_int(k * n);
+	M = NEW_int(2 * k * n);
+
+	Adj = NEW_int(N * N);
+	Orbiter->Int_vec.zero(Adj, N * N);
+
+	for (i = 0; i < N; i++) {
+
+		Gr->unrank_lint_here(M1, i, 0 /* verbose_level */);
+
+		for (j = i + 1; j < N; j++) {
+
+			Gr->unrank_lint_here(M2, j, 0 /* verbose_level */);
+
+			Orbiter->Int_vec.copy(M1, M, k * n);
+			Orbiter->Int_vec.copy(M2, M + k * n, k * n);
+
+			rr = F->rank_of_rectangular_matrix(M, 2 * k, n, 0 /* verbose_level */);
+			if (rr == r) {
+				Adj[i * N + j] = 1;
+				Adj[j * N + i] = 1;
+			}
+		}
+	}
+
+
+
+	FREE_int(M1);
+	FREE_int(M2);
+	FREE_int(M);
+	FREE_OBJECT(Gr);
+	FREE_OBJECT(F);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_Grassmann_graph done" << endl;
+	}
+}
+
+
+void graph_theory_domain::make_orthogonal_collinearity_graph(int *&Adj, int &N,
+		int epsilon, int d, int q, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_orthogonal_collinearity_graph" << endl;
+	}
+
+	finite_field *F;
+	int i, j;
+	int n, a, nb_e, nb_inc;
+	int c1 = 0, c2 = 0, c3 = 0;
+	int *v, *v2;
+	int *Gram; // Gram matrix
+	geometry_global Gg;
+
+
+	n = d - 1; // projective dimension
+
+	v = NEW_int(d);
+	v2 = NEW_int(d);
+	Gram = NEW_int(d * d);
+
+	if (f_v) {
+		cout << "epsilon=" << epsilon << " n=" << n << " q=" << q << endl;
+	}
+
+	N = Gg.nb_pts_Qepsilon(epsilon, n, q);
+
+	if (f_v) {
+		cout << "number of points = " << N << endl;
+	}
+
+	F = NEW_OBJECT(finite_field);
+
+	F->finite_field_init(q, verbose_level - 1);
+	F->print();
+
+	if (epsilon == 0) {
+		c1 = 1;
+	}
+	else if (epsilon == -1) {
+		F->choose_anisotropic_form(c1, c2, c3, verbose_level - 2);
+		//cout << "incma.cpp: epsilon == -1, need irreducible polynomial" << endl;
+		//exit(1);
+	}
+	F->Gram_matrix(epsilon, n, c1, c2, c3, Gram, verbose_level - 1);
+	if (f_v) {
+		cout << "Gram matrix" << endl;
+		print_integer_matrix_width(cout, Gram, d, d, d, 2);
+	}
+
+#if 0
+	if (f_list_points) {
+		for (i = 0; i < N; i++) {
+			F->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i, 0 /* verbose_level */);
+			cout << i << " : ";
+			int_vec_print(cout, v, n + 1);
+			j = F->Q_epsilon_rank(v, 1, epsilon, n, c1, c2, c3, 0 /* verbose_level */);
+			cout << " : " << j << endl;
+
+			}
+		}
+#endif
+
+
+	if (f_v) {
+		cout << "allocating adjacency matrix" << endl;
+	}
+	Adj = NEW_int(N * N);
+	if (f_v) {
+		cout << "allocating adjacency matrix was successful" << endl;
+	}
+	nb_e = 0;
+	nb_inc = 0;
+	for (i = 0; i < N; i++) {
+		//cout << i << " : ";
+		F->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i, 0 /* verbose_level */);
+		for (j = i + 1; j < N; j++) {
+			F->Q_epsilon_unrank(v2, 1, epsilon, n, c1, c2, c3, j, 0 /* verbose_level */);
+			a = F->evaluate_bilinear_form(v, v2, n + 1, Gram);
+			if (a == 0) {
+				//cout << j << " ";
+				//k = ij2k(i, j, N);
+				//cout << k << ", ";
+				nb_e++;
+				//if ((nb_e % 50) == 0)
+					//cout << endl;
+				Adj[i * N + j] = 1;
+				Adj[j * N + i] = 1;
+			}
+			else {
+				Adj[i * N + j] = 0;
+				Adj[j * N + i] = 0;
+				; //cout << " 0";
+				nb_inc++;
+			}
+		}
+		//cout << endl;
+		Adj[i * N + i] = 0;
+	}
+	//cout << endl;
+	if (f_v) {
+		cout << "The adjacency matrix of the collinearity graph has been computed" << endl;
+	}
+
+
+	FREE_int(v);
+	FREE_int(v2);
+	FREE_int(Gram);
+	FREE_OBJECT(F);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_orthogonal_collinearity_graph done" << endl;
+	}
+}
+
+void graph_theory_domain::compute_adjacency_matrix(
+		int *Table, int nb_sets, int set_size,
+		std::string &prefix_for_graph,
+		bitvector *&B,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int i, j, k, cnt, N2, N2_100;
+
+	if (f_v) {
+		cout << "graph_theory_domain::compute_adjacency_matrix" << endl;
+	}
+
+	N2 = (nb_sets * nb_sets) >> 1;
+	if (f_v) {
+		cout << "graph_theory_domain::compute_adjacency_matrix N2=" << N2 << endl;
+	}
+	N2_100 = (N2 / 100) + 1;
+
+	B = NEW_OBJECT(bitvector);
+
+	B->allocate(N2);
+
+	if (f_v) {
+		cout << "graph_theory_domain::compute_adjacency_matrix after allocating adjacency bitvector" << endl;
+		cout << "computing adjacency matrix:" << endl;
+	}
+	k = 0;
+	cnt = 0;
+	for (i = 0; i < nb_sets; i++) {
+		for (j = i + 1; j < nb_sets; j++) {
+
+			int *p, *q;
+			int u, v;
+
+			p = Table + i * set_size;
+			q = Table + j * set_size;
+			u = v = 0;
+			while (u + v < 2 * set_size) {
+				if (p[u] == q[v]) {
+					break;
+				}
+				if (u == set_size) {
+					v++;
+				}
+				else if (v == set_size) {
+					u++;
+				}
+				else if (p[u] < q[v]) {
+					u++;
+				}
+				else {
+					v++;
+				}
+			}
+			if (u + v < 2 * set_size) {
+				B->m_i(k, 0);
+
+			}
+			else {
+				B->m_i(k, 1);
+				cnt++;
+			}
+
+			k++;
+			if ((k % N2_100) == 0) {
+				cout << "i=" << i << " j=" << j << " " << k / N2_100 << "% done, k=" << k << endl;
+			}
+#if 0
+			if ((k & ((1 << 21) - 1)) == 0) {
+				cout << "i=" << i << " j=" << j << " k=" << k
+						<< " / " << N2 << endl;
+				}
+#endif
+		}
+	}
+
+
+	if (f_v) {
+		cout << "graph_theory_domain::compute_adjacency_matrix making a graph" << endl;
+	}
+
+	{
+	colored_graph *CG;
+	std::string fname;
+	file_io Fio;
+
+	CG = NEW_OBJECT(colored_graph);
+	int *color;
+
+	color = NEW_int(nb_sets);
+	Orbiter->Int_vec.zero(color, nb_sets);
+
+	CG->init(nb_sets, 1 /* nb_colors */, 1 /* nb_colors_per_vertex */,
+			color, B,
+			FALSE, verbose_level);
+
+	fname.assign(prefix_for_graph);
+	fname.append("_disjointness.colored_graph");
+	//snprintf(fname, 1000, "%s_disjointness.colored_graph", prefix_for_graph);
+
+	CG->save(fname, verbose_level);
+
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+	FREE_int(color);
+	FREE_OBJECT(CG);
+	}
+
+
+	if (f_v) {
+		cout << "graph_theory_domain::compute_adjacency_matrix done" << endl;
+		}
+}
+
+void graph_theory_domain::make_graph_of_disjoint_sets_from_rows_of_matrix(
+	int *M, int m, int n,
+	int *&Adj, int verbose_level)
+// assumes that the rows are sorted
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, a;
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_graph_of_disjoint_sets_from_rows_of_matrix" << endl;
+	}
+	Adj = NEW_int(m * m);
+	for (i = 0; i < m * m; i++) {
+		Adj[i] = 0;
+	}
+
+	for (i = 0; i < m; i++) {
+		for (j = i + 1; j < m; j++) {
+			if (test_if_sets_are_disjoint_assuming_sorted(
+				M + i * n, M + j * n, n, n)) {
+				a = 1;
+			}
+			else {
+				a = 0;
+			}
+			Adj[i * m + j] = a;
+			Adj[j * m + i] = a;
+		}
+	}
+	if (f_v) {
+		cout << "graph_theory_domain::make_graph_of_disjoint_sets_from_rows_of_matrix done" << endl;
+	}
+}
+
+
 
 
 

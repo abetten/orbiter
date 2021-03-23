@@ -246,13 +246,13 @@ void create_graph::create_Johnson(int &N, int *&Adj,
 		cout << "create_graph::create_Johnson" << endl;
 	}
 
-	combinatorics_domain Combi;
+	graph_theory_domain GT;
 
 
 	if (f_v) {
 		cout << "create_graph::create_Johnson before Combi.make_Johnson_graph" << endl;
 	}
-	Combi.make_Johnson_graph(Adj, N, n, k, s, verbose_level);
+	GT.make_Johnson_graph(Adj, N, n, k, s, verbose_level);
 	if (f_v) {
 		cout << "create_graph::create_Johnson after Combi.make_Johnson_graph" << endl;
 	}
@@ -279,13 +279,13 @@ void create_graph::create_Paley(int &N, int *&Adj,
 	}
 
 
-	combinatorics_domain Combi;
+	graph_theory_domain GT;
 
 
 	if (f_v) {
 		cout << "create_graph::create_Paley before Combi.make_Paley_graph" << endl;
 	}
-	Combi.make_Paley_graph(Adj, N, q, verbose_level);
+	GT.make_Paley_graph(Adj, N, q, verbose_level);
 	if (f_v) {
 		cout << "create_graph::create_Paley after Combi.make_Paley_graph" << endl;
 	}
@@ -633,13 +633,13 @@ void create_graph::create_Schlaefli(int &N, int *&Adj,
 		cout << "create_graph::create_Schlaefli" << endl;
 	}
 
-	combinatorics_domain Combi;
+	graph_theory_domain GT;
 
 
 	if (f_v) {
 		cout << "create_graph::create_Schlaefli before Combi.make_Schlaefli_graph" << endl;
 	}
-	Combi.make_Schlaefli_graph(Adj, N, q, verbose_level);
+	GT.make_Schlaefli_graph(Adj, N, q, verbose_level);
 	if (f_v) {
 		cout << "create_graph::create_Schlaefli after Combi.make_Schlaefli_graph" << endl;
 	}
@@ -839,13 +839,13 @@ void create_graph::create_Winnie_Li(int &N, int *&Adj,
 		cout << "create_graph::create_Winnie_Li" << endl;
 	}
 
-	combinatorics_domain Combi;
+	graph_theory_domain GT;
 
 
 	if (f_v) {
 		cout << "create_graph::create_Winnie_Li before Combi.make_Winnie_Li_graph" << endl;
 	}
-	Combi.make_Winnie_Li_graph(Adj, N, q, index, verbose_level);
+	GT.make_Winnie_Li_graph(Adj, N, q, index, verbose_level);
 	if (f_v) {
 		cout << "create_graph::create_Winnie_Li after Combi.make_Winnie_Li_graph" << endl;
 	}
@@ -874,13 +874,13 @@ void create_graph::create_Grassmann(int &N, int *&Adj,
 	}
 
 
-	combinatorics_domain Combi;
+	graph_theory_domain GT;
 
 
 	if (f_v) {
 		cout << "create_graph::create_Grassmann before Combi.make_Grassmann_graph" << endl;
 	}
-	Combi.make_Grassmann_graph(Adj, N, n, k, q, r, verbose_level);
+	GT.make_Grassmann_graph(Adj, N, n, k, q, r, verbose_level);
 	if (f_v) {
 		cout << "create_graph::create_Grassmann after Combi.make_Grassmann_graph" << endl;
 	}
@@ -907,14 +907,14 @@ void create_graph::create_coll_orthogonal(int &N, int *&Adj,
 		cout << "create_graph::create_coll_orthogonal" << endl;
 	}
 
-	combinatorics_domain Combi;
+	graph_theory_domain GT;
 
 
 	if (f_v) {
 		cout << "create_graph::create_coll_orthogonal before "
 				"Combi.make_orthogonal_collinearity_graph" << endl;
 	}
-	Combi.make_orthogonal_collinearity_graph(Adj, N,
+	GT.make_orthogonal_collinearity_graph(Adj, N,
 			epsilon, d, q, verbose_level);
 	if (f_v) {
 		cout << "create_graph::create_coll_orthogonal after "

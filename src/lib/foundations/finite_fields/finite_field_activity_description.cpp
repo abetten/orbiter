@@ -19,11 +19,12 @@ namespace foundations {
 
 finite_field_activity_description::finite_field_activity_description()
 {
-
+#if 0
 	f_q = FALSE;
 	q = 0;
 	f_override_polynomial = FALSE;
 	//std::string override_polynomial;
+#endif
 
 	f_cheat_sheet_GF = FALSE;
 
@@ -262,6 +263,8 @@ int finite_field_activity_description::read_arguments(
 		cout << "finite_field_activity_description::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
+
+#if 0
 		if (stringcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
 			q = strtoi(argv[++i]);
@@ -272,7 +275,9 @@ int finite_field_activity_description::read_arguments(
 			override_polynomial.assign(argv[++i]);
 			cout << "-override_polynomial" << override_polynomial << endl;
 		}
-		else if (stringcmp(argv[i], "-cheat_sheet_GF") == 0) {
+#endif
+
+		if (stringcmp(argv[i], "-cheat_sheet_GF") == 0) {
 			f_cheat_sheet_GF = TRUE;
 			cout << "-cheat_sheet_GF " << endl;
 		}
@@ -426,9 +431,10 @@ int finite_field_activity_description::read_arguments(
 		}
 		else if (stringcmp(argv[i], "-EC_points") == 0) {
 			f_EC_points = TRUE;
+			EC_label.assign(argv[++i]);
 			EC_b = strtoi(argv[++i]);
 			EC_c = strtoi(argv[++i]);
-			cout << "-EC_points " << " " << EC_b << " " << EC_c << endl;
+			cout << "-EC_points " << " " << EC_label << " " << EC_b << " " << EC_c << endl;
 		}
 		else if (stringcmp(argv[i], "-EC_add") == 0) {
 			f_EC_add = TRUE;

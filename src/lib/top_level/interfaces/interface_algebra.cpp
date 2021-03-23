@@ -22,8 +22,8 @@ interface_algebra::interface_algebra()
 	f_linear_group = FALSE;
 	Linear_group_description = NULL;
 
-	f_finite_field_activity = FALSE;
-	Finite_field_activity_description = FALSE;
+	//f_finite_field_activity = FALSE;
+	//Finite_field_activity_description = FALSE;
 
 	F = NULL;
 	LG = NULL;
@@ -95,9 +95,11 @@ void interface_algebra::print_help(int argc,
 	else if (stringcmp(argv[i], "-group_theoretic_activity") == 0) {
 		cout << "-group_theoretic_activity <description>" << endl;
 	}
+#if 0
 	else if (stringcmp(argv[i], "-finite_field_activity") == 0) {
 		cout << "-finite_field_activity <description>" << endl;
 	}
+#endif
 	else if (stringcmp(argv[i], "-count_subprimitive") == 0) {
 		cout << "-count_subprimitive <int : Q_max> <int : H_max>" << endl;
 	}
@@ -159,9 +161,11 @@ int interface_algebra::recognize_keyword(int argc,
 	else if (stringcmp(argv[i], "-group_theoretic_activity") == 0) {
 		return true;
 	}
+#if 0
 	else if (stringcmp(argv[i], "-finite_field_activity") == 0) {
 		return true;
 	}
+#endif
 	else if (stringcmp(argv[i], "-count_subprimitive") == 0) {
 		return true;
 	}
@@ -255,6 +259,7 @@ void interface_algebra::read_arguments(int argc,
 			cout << "next argument is " << argv[i] << endl;
 		}
 	}
+#if 0
 	else if (stringcmp(argv[i], "-finite_field_activity") == 0) {
 		f_finite_field_activity = TRUE;
 		Finite_field_activity_description =
@@ -270,6 +275,7 @@ void interface_algebra::read_arguments(int argc,
 			cout << "next argument is " << argv[i] << endl;
 		}
 	}
+#endif
 	else if (stringcmp(argv[i], "-poset_classification_control") == 0) {
 		f_poset_classification_control = TRUE;
 		Control = NEW_OBJECT(poset_classification_control);
@@ -388,6 +394,7 @@ void interface_algebra::worker(int verbose_level)
 		do_linear_group(Linear_group_description, verbose_level);
 	}
 
+#if 0
 	else if (f_finite_field_activity) {
 
 		cout << "interface_algebra::worker f_finite_field_activity" << endl;
@@ -402,6 +409,7 @@ void interface_algebra::worker(int verbose_level)
 		FREE_OBJECT(Finite_field_activity);
 
 	}
+#endif
 	else if (f_character_table_symmetric_group) {
 		do_character_table_symmetric_group(deg, verbose_level);
 	}

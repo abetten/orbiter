@@ -670,7 +670,7 @@ public:
 
 
 
-//! classification of objects in projective space PG(n,q) using graph a theoretic approach
+//! classification of objects in projective space PG(n,q) using a graph-theoretic approach
 
 
 
@@ -1093,7 +1093,7 @@ public:
 // #############################################################################
 
 
-//! a union find data structure (used in the poset classification)
+//! a union find data structure (used in the poset classification algorithm)
 
 
 
@@ -1123,7 +1123,7 @@ public:
 // union_find_on_k_subsets.cpp
 // #############################################################################
 
-//! a union find data structure (used in the poset classification)
+//! a union find data structure (used in the poset classification algorithm)
 
 
 
