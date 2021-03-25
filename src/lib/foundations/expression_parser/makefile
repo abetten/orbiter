@@ -6,6 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	expression_parser_domain.o \
 	expression_parser.o \
 	formula.o \
 	lexer.o \

@@ -155,6 +155,9 @@ public:
 	int f_edges_as_pairs;
 	std::string edges_as_pairs_text;
 
+	int f_Hamming;
+	int Hamming_n;
+	int Hamming_q;
 
 	int f_Johnson;
 	int Johnson_n;
@@ -190,6 +193,12 @@ public:
 
 	int f_trihedral_pair_disjointness_graph;
 
+	int f_subset;
+	std::string subset_label;
+	std::string subset_label_tex;
+	std::string subset_text;
+
+
 
 	create_graph_description();
 	int read_arguments(
@@ -219,6 +228,7 @@ public:
 	int N;
 	int *Adj;
 
+
 	std::string label;
 	std::string label_tex;
 
@@ -227,6 +237,7 @@ public:
 	void init(
 			create_graph_description *description,
 			int verbose_level);
+	void create_Hamming(int &N, int *&Adj, int n, int q, int verbose_level);
 	void create_Johnson(int &N, int *&Adj, int n, int k, int s, int verbose_level);
 	void create_Paley(int &N, int *&Adj, int q, int verbose_level);
 	void create_Sarnak(int &N, int *&Adj, int p, int q, int verbose_level);
@@ -786,11 +797,13 @@ public:
 	int f_export_magma;
 	int f_export_maple;
 	int f_export_csv;
+	int f_export_graphviz;
 	int f_print;
 	int f_sort_by_colors;
 	//int f_split;
 	//std::string split_file;
 	int f_save;
+	int f_automorphism_group;
 
 
 	graph_theoretic_activity_description();
@@ -803,6 +816,33 @@ public:
 
 
 };
+
+
+// #############################################################################
+// graph_theoretic_activity.cpp
+// #############################################################################
+
+//! an activity for graphs
+
+
+class graph_theoretic_activity {
+
+public:
+
+	graph_theoretic_activity_description *Descr;
+	create_graph *Gr;
+
+
+	graph_theoretic_activity();
+	~graph_theoretic_activity();
+	void init(graph_theoretic_activity_description *Descr,
+			create_graph *Gr,
+			int verbose_level);
+	void perform_activity(int verbose_level);
+
+
+};
+
 
 
 // #############################################################################

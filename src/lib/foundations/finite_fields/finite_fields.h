@@ -231,10 +231,11 @@ public:
 
 
 
-	int f_parse;
+	int f_parse_and_evaluate;
 	std::string parse_name_of_formula;
 	std::string parse_managed_variables;
 	std::string parse_text;
+	std::string parse_parameters;
 
 	int f_evaluate;
 	std::string evaluate_formula_label;
@@ -288,17 +289,6 @@ public:
 			finite_field *F,
 			int verbose_level);
 	void perform_activity(int verbose_level);
-	void evaluate(
-			finite_field *Fq,
-			std::string &formula_label,
-			std::string &parameters,
-			int verbose_level);
-	int evaluate_formula(
-			formula *F,
-			finite_field *Fq,
-			std::string &evaluate_text,
-			int verbose_level);
-
 
 };
 

@@ -39,6 +39,10 @@ interface_symbol_table::interface_symbol_table()
 	f_combinatorial_object = FALSE;
 	Combinatorial_object_description = NULL;
 
+	f_graph = FALSE;
+	Create_graph_description = NULL;
+
+
 	f_print_symbols = FALSE;
 	f_with = FALSE;
 	//std::vector<std::string> with_labels;
@@ -60,6 +64,9 @@ interface_symbol_table::interface_symbol_table()
 
 	f_combinatorial_object_activity = FALSE;
 	Combinatorial_object_activity_description = NULL;
+
+	f_graph_theoretic_activity = FALSE;
+	Graph_theoretic_activity_description = NULL;
 
 }
 
@@ -305,6 +312,33 @@ void interface_symbol_table::read_definition(
 			cout << "interface_symbol_table::read_definition after definition_of_combinatorial_object" << endl;
 		}
 	}
+
+	else if (stringcmp(argv[i], "-graph") == 0) {
+
+		f_graph = TRUE;
+		Create_graph_description = NEW_OBJECT(create_graph_description);
+		cout << "reading -graph" << endl;
+
+		i += Create_graph_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		cout << "-graph" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition before definition_of_graph" << endl;
+		}
+		definition_of_graph(Orbiter_top_level_session, verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition after definition_of_graph" << endl;
+		}
+	}
+
 	else {
 		cout << "unrecognized command after -define" << endl;
 		exit(1);
@@ -314,244 +348,6 @@ void interface_symbol_table::read_definition(
 	}
 }
 
-void interface_symbol_table::read_with(
-		orbiter_top_level_session *Orbiter_top_level_session,
-		int argc, std::string *argv, int &i, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_symbol_table::read_with" << endl;
-	}
-
-	f_with = TRUE;
-	string s;
-
-	s.assign(argv[++i]);
-	with_labels.push_back(s);
-
-	while (TRUE) {
-		i++;
-		if (stringcmp(argv[i], "-and") == 0) {
-			string s;
-
-			s.assign(argv[++i]);
-			with_labels.push_back(s);
-		}
-		else if (stringcmp(argv[i], "-do") == 0) {
-			i++;
-			read_activity_arguments(argc, argv, i, verbose_level);
-			break;
-		}
-		else {
-			cout << "syntax error after -with, seeing " << argv[i] << endl;
-			exit(1);
-		}
-	}
-	if (f_v) {
-		cout << "interface_symbol_table::read_with done" << endl;
-	}
-
-}
-void interface_symbol_table::read_activity_arguments(int argc,
-		std::string *argv, int &i, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_symbol_table::read_activity_arguments" << endl;
-	}
-	if (stringcmp(argv[i], "-finite_field_activity") == 0) {
-		f_finite_field_activity = TRUE;
-		Finite_field_activity_description =
-				NEW_OBJECT(finite_field_activity_description);
-		cout << "reading -finite_field_activity" << endl;
-		i += Finite_field_activity_description->read_arguments(argc - (i + 1),
-			argv + i + 1, verbose_level);
-
-		i++;
-
-		cout << "-finite_field_activity" << endl;
-		cout << "i = " << i << endl;
-		cout << "argc = " << argc << endl;
-		if (i < argc) {
-			cout << "next argument is " << argv[i] << endl;
-		}
-		//i++;
-	}
-	else if (stringcmp(argv[i], "-projective_space_activity") == 0) {
-		f_projective_space_activity = TRUE;
-		Projective_space_activity_description =
-				NEW_OBJECT(projective_space_activity_description);
-		cout << "reading -projective_space_activity" << endl;
-		i += Projective_space_activity_description->read_arguments(argc - (i + 1),
-			argv + i + 1, verbose_level);
-
-		i++;
-
-		cout << "-projective_space_activity" << endl;
-		cout << "i = " << i << endl;
-		cout << "argc = " << argc << endl;
-		if (i < argc) {
-			cout << "next argument is " << argv[i] << endl;
-		}
-		//i++;
-	}
-	else if (stringcmp(argv[i], "-orthogonal_space_activity") == 0) {
-		f_orthogonal_space_activity = TRUE;
-		Orthogonal_space_activity_description =
-				NEW_OBJECT(orthogonal_space_activity_description);
-		cout << "reading -orthogonal_space_activity" << endl;
-		i += Orthogonal_space_activity_description->read_arguments(argc - (i + 1),
-			argv + i + 1, verbose_level);
-
-		i++;
-
-		cout << "-orthogonal_space_activity" << endl;
-		cout << "i = " << i << endl;
-		cout << "argc = " << argc << endl;
-		if (i < argc) {
-			cout << "next argument is " << argv[i] << endl;
-		}
-		//i++;
-	}
-	else if (stringcmp(argv[i], "-group_theoretic_activities") == 0) {
-		f_group_theoretic_activity = TRUE;
-		Group_theoretic_activity_description =
-				NEW_OBJECT(group_theoretic_activity_description);
-		cout << "reading -group_theoretic_activities" << endl;
-		i += Group_theoretic_activity_description->read_arguments(argc - (i + 1),
-			argv + i + 1, verbose_level);
-
-		i++;
-
-		cout << "-group_theoretic_activities" << endl;
-		cout << "i = " << i << endl;
-		cout << "argc = " << argc << endl;
-		if (i < argc) {
-			cout << "next argument is " << argv[i] << endl;
-		}
-		//i++;
-	}
-	else if (stringcmp(argv[i], "-cubic_surface_activity") == 0) {
-		f_cubic_surface_activity = TRUE;
-		Cubic_surface_activity_description =
-				NEW_OBJECT(cubic_surface_activity_description);
-		cout << "reading -cubic_surface_activity" << endl;
-		i += Cubic_surface_activity_description->read_arguments(argc - (i + 1),
-			argv + i + 1, verbose_level);
-
-		i++;
-
-		cout << "-cubic_surface_activity" << endl;
-		cout << "i = " << i << endl;
-		cout << "argc = " << argc << endl;
-		if (i < argc) {
-			cout << "next argument is " << argv[i] << endl;
-		}
-	}
-	else if (stringcmp(argv[i], "-combinatorial_object_activity") == 0) {
-		f_combinatorial_object_activity = TRUE;
-		Combinatorial_object_activity_description =
-				NEW_OBJECT(combinatorial_object_activity_description);
-		cout << "reading -combinatorial_object_activity" << endl;
-		i += Combinatorial_object_activity_description->read_arguments(argc - (i + 1),
-			argv + i + 1, verbose_level);
-
-		i++;
-
-		cout << "-combinatorial_object_activity" << endl;
-		cout << "i = " << i << endl;
-		cout << "argc = " << argc << endl;
-		if (i < argc) {
-			cout << "next argument is " << argv[i] << endl;
-		}
-	}
-	else {
-		cout << "expecting activity after -do but seeing " << argv[i] << endl;
-		exit(1);
-	}
-
-}
-
-void interface_symbol_table::worker(orbiter_top_level_session *Orbiter_top_level_session,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_symbol_table::worker" << endl;
-	}
-
-	if (f_define) {
-
-#if 0
-		if (f_v) {
-			cout << "interface_symbol_table::worker f_define define_label=" << define_label << endl;
-		}
-		definition(Orbiter_top_level_session, verbose_level);
-		if (f_v) {
-			cout << "interface_symbol_table::worker f_define define_label=" << define_label << " done" << endl;
-		}
-#endif
-	}
-	else if (f_print_symbols) {
-
-		Orbiter_top_level_session->print_symbol_table();
-	}
-	else if (f_finite_field_activity) {
-
-		if (f_v) {
-			cout << "interface_symbol_table::worker f_finite_field_activity" << endl;
-		}
-		do_finite_field_activity(Orbiter_top_level_session, verbose_level);
-
-	}
-	else if (f_projective_space_activity) {
-
-		if (f_v) {
-			cout << "interface_symbol_table::worker f_projective_space_activity" << endl;
-		}
-		do_projective_space_activity(Orbiter_top_level_session, verbose_level);
-
-	}
-	else if (f_orthogonal_space_activity) {
-
-		if (f_v) {
-			cout << "interface_symbol_table::worker f_orthogonal_space_activity" << endl;
-		}
-		do_orthogonal_space_activity(Orbiter_top_level_session, verbose_level);
-
-	}
-	else if (f_group_theoretic_activity) {
-
-		if (f_v) {
-			cout << "interface_symbol_table::worker f_group_theoretic_activity" << endl;
-		}
-		do_group_theoretic_activity(Orbiter_top_level_session, verbose_level);
-
-	}
-	else if (f_cubic_surface_activity) {
-
-		if (f_v) {
-			cout << "interface_symbol_table::worker f_cubic_surface_activity" << endl;
-		}
-		do_cubic_surface_activity(Orbiter_top_level_session, verbose_level);
-
-	}
-	else if (f_combinatorial_object_activity) {
-
-		if (f_v) {
-			cout << "interface_symbol_table::worker f_combinatorial_object_activity" << endl;
-		}
-		do_combinatorial_object_activity(Orbiter_top_level_session, verbose_level);
-
-	}
-
-	if (f_v) {
-		cout << "interface_symbol_table::worker done" << endl;
-	}
-}
 
 
 void interface_symbol_table::definition_of_finite_field(orbiter_top_level_session *Orbiter_top_level_session,
@@ -882,6 +678,331 @@ void interface_symbol_table::definition_of_combinatorial_object(orbiter_top_leve
 	}
 }
 
+
+void interface_symbol_table::definition_of_graph(orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_graph" << endl;
+	}
+
+	create_graph *Gr;
+
+	Gr = NEW_OBJECT(create_graph);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_graph before Gr->init" << endl;
+	}
+	Gr->init(Create_graph_description, verbose_level);
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_graph after Gr->init" << endl;
+	}
+	if (f_v) {
+		cout << "Gr->N=" << Gr->N << endl;
+		cout << "Gr->label=" << Gr->label << endl;
+		cout << "Adj:" << endl;
+		int_matrix_print(Gr->Adj, Gr->N, Gr->N);
+	}
+
+
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_graph we created a set on " << Gr->N
+				<< " points, called " << Gr->label << endl;
+
+#if 0
+		cout << "list of points:" << endl;
+
+		cout << COC->nb_pts << endl;
+		for (i = 0; i < COC->nb_pts; i++) {
+			cout << COC->Pts[i] << " ";
+			}
+		cout << endl;
+#endif
+	}
+
+
+	orbiter_symbol_table_entry Symb;
+	Symb.init_graph(define_label, Gr, verbose_level);
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_graph before add_symbol_table_entry" << endl;
+	}
+	Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, &Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_graph done" << endl;
+	}
+}
+
+
+void interface_symbol_table::read_with(
+		orbiter_top_level_session *Orbiter_top_level_session,
+		int argc, std::string *argv, int &i, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_symbol_table::read_with" << endl;
+	}
+
+	f_with = TRUE;
+	string s;
+
+	s.assign(argv[++i]);
+	with_labels.push_back(s);
+
+	while (TRUE) {
+		i++;
+		if (stringcmp(argv[i], "-and") == 0) {
+			string s;
+
+			s.assign(argv[++i]);
+			with_labels.push_back(s);
+		}
+		else if (stringcmp(argv[i], "-do") == 0) {
+			i++;
+			read_activity_arguments(argc, argv, i, verbose_level);
+			break;
+		}
+		else {
+			cout << "syntax error after -with, seeing " << argv[i] << endl;
+			exit(1);
+		}
+	}
+	if (f_v) {
+		cout << "interface_symbol_table::read_with done" << endl;
+	}
+
+}
+void interface_symbol_table::read_activity_arguments(int argc,
+		std::string *argv, int &i, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_symbol_table::read_activity_arguments" << endl;
+	}
+	if (stringcmp(argv[i], "-finite_field_activity") == 0) {
+		f_finite_field_activity = TRUE;
+		Finite_field_activity_description =
+				NEW_OBJECT(finite_field_activity_description);
+		cout << "reading -finite_field_activity" << endl;
+		i += Finite_field_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		cout << "-finite_field_activity" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+		//i++;
+	}
+	else if (stringcmp(argv[i], "-projective_space_activity") == 0) {
+		f_projective_space_activity = TRUE;
+		Projective_space_activity_description =
+				NEW_OBJECT(projective_space_activity_description);
+		cout << "reading -projective_space_activity" << endl;
+		i += Projective_space_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		cout << "-projective_space_activity" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+		//i++;
+	}
+	else if (stringcmp(argv[i], "-orthogonal_space_activity") == 0) {
+		f_orthogonal_space_activity = TRUE;
+		Orthogonal_space_activity_description =
+				NEW_OBJECT(orthogonal_space_activity_description);
+		cout << "reading -orthogonal_space_activity" << endl;
+		i += Orthogonal_space_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		cout << "-orthogonal_space_activity" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+		//i++;
+	}
+	else if (stringcmp(argv[i], "-group_theoretic_activities") == 0) {
+		f_group_theoretic_activity = TRUE;
+		Group_theoretic_activity_description =
+				NEW_OBJECT(group_theoretic_activity_description);
+		cout << "reading -group_theoretic_activities" << endl;
+		i += Group_theoretic_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		cout << "-group_theoretic_activities" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+		//i++;
+	}
+	else if (stringcmp(argv[i], "-cubic_surface_activity") == 0) {
+		f_cubic_surface_activity = TRUE;
+		Cubic_surface_activity_description =
+				NEW_OBJECT(cubic_surface_activity_description);
+		cout << "reading -cubic_surface_activity" << endl;
+		i += Cubic_surface_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		cout << "-cubic_surface_activity" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+	}
+	else if (stringcmp(argv[i], "-combinatorial_object_activity") == 0) {
+		f_combinatorial_object_activity = TRUE;
+		Combinatorial_object_activity_description =
+				NEW_OBJECT(combinatorial_object_activity_description);
+		cout << "reading -combinatorial_object_activity" << endl;
+		i += Combinatorial_object_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		cout << "-combinatorial_object_activity" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+	}
+	else if (stringcmp(argv[i], "-graph_theoretic_activity") == 0) {
+		f_graph_theoretic_activity = TRUE;
+		Graph_theoretic_activity_description =
+				NEW_OBJECT(graph_theoretic_activity_description);
+		cout << "reading -combinatorial_object_activity" << endl;
+		i += Graph_theoretic_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		cout << "-graph_theoretic_activity" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+	}
+	else {
+		cout << "expecting activity after -do but seeing " << argv[i] << endl;
+		exit(1);
+	}
+
+}
+
+void interface_symbol_table::worker(orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_symbol_table::worker" << endl;
+	}
+
+	if (f_define) {
+
+#if 0
+		if (f_v) {
+			cout << "interface_symbol_table::worker f_define define_label=" << define_label << endl;
+		}
+		definition(Orbiter_top_level_session, verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::worker f_define define_label=" << define_label << " done" << endl;
+		}
+#endif
+	}
+	else if (f_print_symbols) {
+
+		Orbiter_top_level_session->print_symbol_table();
+	}
+	else if (f_finite_field_activity) {
+
+		if (f_v) {
+			cout << "interface_symbol_table::worker f_finite_field_activity" << endl;
+		}
+		do_finite_field_activity(Orbiter_top_level_session, verbose_level);
+
+	}
+	else if (f_projective_space_activity) {
+
+		if (f_v) {
+			cout << "interface_symbol_table::worker f_projective_space_activity" << endl;
+		}
+		do_projective_space_activity(Orbiter_top_level_session, verbose_level);
+
+	}
+	else if (f_orthogonal_space_activity) {
+
+		if (f_v) {
+			cout << "interface_symbol_table::worker f_orthogonal_space_activity" << endl;
+		}
+		do_orthogonal_space_activity(Orbiter_top_level_session, verbose_level);
+
+	}
+	else if (f_group_theoretic_activity) {
+
+		if (f_v) {
+			cout << "interface_symbol_table::worker f_group_theoretic_activity" << endl;
+		}
+		do_group_theoretic_activity(Orbiter_top_level_session, verbose_level);
+
+	}
+	else if (f_cubic_surface_activity) {
+
+		if (f_v) {
+			cout << "interface_symbol_table::worker f_cubic_surface_activity" << endl;
+		}
+		do_cubic_surface_activity(Orbiter_top_level_session, verbose_level);
+
+	}
+	else if (f_combinatorial_object_activity) {
+
+		if (f_v) {
+			cout << "interface_symbol_table::worker f_combinatorial_object_activity" << endl;
+		}
+		do_combinatorial_object_activity(Orbiter_top_level_session, verbose_level);
+
+	}
+	else if (f_graph_theoretic_activity) {
+
+		if (f_v) {
+			cout << "interface_symbol_table::worker f_graph_theoretic_activity" << endl;
+		}
+		do_graph_theoretic_activity(Orbiter_top_level_session, verbose_level);
+
+	}
+
+	if (f_v) {
+		cout << "interface_symbol_table::worker done" << endl;
+	}
+}
 
 void interface_symbol_table::do_finite_field_activity(
 		orbiter_top_level_session *Orbiter_top_level_session,
@@ -1239,6 +1360,64 @@ void interface_symbol_table::do_combinatorial_object_activity(
 
 	if (f_v) {
 		cout << "interface_symbol_table::do_combinatorial_object_activity done" << endl;
+	}
+
+}
+
+void interface_symbol_table::do_graph_theoretic_activity(
+		orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		int i;
+		cout << "interface_symbol_table::do_graph_theoretic_activity "
+				"activity for " << with_labels.size() << " objects:";
+		for (i = 0; i < with_labels.size(); i++) {
+			cout << with_labels[i];
+			if (i < with_labels.size() - 1) {
+				cout << ", ";
+			}
+		}
+		cout << endl;
+	}
+
+
+
+	int *Idx;
+
+	Orbiter_top_level_session->find_symbols(with_labels, Idx);
+
+	if (with_labels.size() < 1) {
+		cout << "-graph_theoretic_activity requires at least one input" << endl;
+		exit(1);
+	}
+
+	create_graph *Gr;
+
+	Gr = (create_graph *) Orbiter_top_level_session->get_object(Idx[0]);
+	{
+		graph_theoretic_activity Activity;
+
+		Activity.init(Graph_theoretic_activity_description, Gr, verbose_level);
+
+		if (f_v) {
+			cout << "interface_symbol_table::do_graph_theoretic_activity "
+					"before Activity.perform_activity" << endl;
+		}
+		Activity.perform_activity(verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::do_graph_theoretic_activity "
+					"after Activity.perform_activity" << endl;
+		}
+
+	}
+
+	FREE_int(Idx);
+
+	if (f_v) {
+		cout << "interface_symbol_table::do_graph_theoretic_activity done" << endl;
 	}
 
 }

@@ -92,6 +92,9 @@ F_abcd_eqn = "-(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(b - d)*X0*X0*X2 + (a
 
 GOLAY_23_COLUMN_RANKS_PROJECTIVELY="0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 132, 913, 1460, 1750, 1898, 2518, 2787, 2874, 3320, 3357, 3662" 
 
+HAMMING_CODE_CODEWORDS="0, 67, 37, 102, 22, 85, 51, 112, 15, 76, 42, 105, 25, 90, 60, 127"
+
+
 CODE_RM_3_1_GENMA="1,1,1,1,1,1,1,1, 0,1,0,1,0,1,0,1, 0,0,1,1,0,0,1,1, 0,0,0,0,1,1,1,1"
 CODE_RM_4_1_GENMA="1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1"
 CODE_RS_8="5,6,1,0,0,0,0, 0,5,6,1,0,0,0, 0,0,5,6,1,0,0, 0,0,0,5,6,1,0, 0,0,0,0,5,6,1"	
@@ -1409,6 +1412,16 @@ mult_polynomials_1024_999_997:
 	pdflatex polynomial_mult_999_997.tex
 	open polynomial_mult_999_997.pdf
 
+
+mult_polynomials_1024_999_997_check:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-define F -finite_field -q 1024 -end \
+		-with F -do \
+		-finite_field_activity -parse_and_evaluate "test" "" "a*b" "a=999,b=997" -end
+
+# evaluates to 61
+
+
 polynomial_division_ranked_2_349147_1033:
 	$(ORBITER_PATH)/orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
@@ -1831,10 +1844,6 @@ trace_256:
 	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file F_q256_trace_16x16.csv -box_width 40 -depth 24  -partition 4 "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1" "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1" -end
 
 
-
-F_256_Rijndahl:
-	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 256 -override_polynomial 283 -end \
-		-with F -do -finite_field_activity -cheat_sheet_GF -end
 
 F_289:
 	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 289 -end \
@@ -8411,6 +8420,25 @@ pseudoprime36:
 # factoring takes 46 seconds
 
 
+MATH360_hw2:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end \
+		-with F -do -finite_field_activity -parse_and_evaluate "test" "" "a+b" "a=8,b=14" -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end \
+		-with F -do -finite_field_activity -parse_and_evaluate "test" "" "a*b" "a=9,b=13" -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end \
+		-with F -do -finite_field_activity -parse_and_evaluate "test" "" "a*a*a*a*a" "a=9" -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end \
+		-with F -do -finite_field_activity -parse_and_evaluate "test" "" "(a+b)*(a+b)"  "a=5,b=7" -end
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end \
+		-with F -do -finite_field_activity -parse_and_evaluate "test" "" "a*a+b*b"  "a=5,b=7" -end
+
+
+F_256_Rijndahl:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 256 -override_polynomial 283 -end \
+		-with F -do -finite_field_activity -cheat_sheet_GF -end
+
+
+
 
 ntt:
 	$(ORBITER_PATH)/orbiter.out -v 2 -NTT 4 17 ntt4.cpp
@@ -8499,7 +8527,7 @@ Hamming_code_words:
 
 Hamming_code_diagram:
 	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4" \
-		"0, 67, 37, 102, 22, 85, 51, 112, 15, 76, 42, 105, 25, 90, 60, 127" 7 -metric_balls 1
+		$(HAMMING_CODE_CODEWORDS) 7 -metric_balls 1
 	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Hamming_7_4_diagram_01_7_16.csv -box_width 25 -depth 24  -partition 4 16 8 -end
 	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Hamming_7_4_diagram_7_16.csv -box_width 25 -depth 14  -partition 4 16 8 -end
 	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "Hamming_7_4_word_0" "0" 7 -metric_balls 1
@@ -9612,7 +9640,22 @@ glynn_arc:
 		
 
 
-
+five_points_in_general:
+	$(ORBITER_PATH)/orbiter.out -v 5 \
+		-orbiter_path $(ORBITER_PATH) \
+		-define G \
+		-linear_group -PGL 4 2 -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-poset_classification_control -problem_label five_points_in_general \
+			-draw_options -embedded -rad 250 -line_width 1.0 -spanning_tree -end \
+			-draw_poset \
+			-report \
+		-end \
+		-linear_codes 4 5 \
+		-end
+	pdflatex five_points_in_general_poset.tex
+	open five_points_in_general_poset.pdf
 
 
 RS_6_4_7_group:
@@ -9756,6 +9799,15 @@ BCH_255_5_evaluate_elementary_symmetric_functions_2:
 
 
 
+
+
+F_16_7_power_5:
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end \
+		-with F -do -finite_field_activity -parse_and_evaluate "test" "" "(a*a)*(a*a)*a"  "a=7" -end
+	dot -Tpng test.gv >test.png
+
+
+# the answer is 11.
 
 
 
@@ -11923,19 +11975,7 @@ BLT_5_classify:
 SECTION_GRAPH_THEORY:
 	
 
-petersen:
-	$(ORBITER_PATH)/orbiter.out -v 2 -create_graph -Johnson 5 2 0 -end \
-		-graph_theoretic_activity -save  -end
-
-# creates Johnson_5_2_0.colored_graph
-
-
-petersen_csv:
-	$(ORBITER_PATH)/orbiter.out -v 2 -create_graph -Johnson 5 2 0 -end \
-		-graph_theoretic_activity -export_csv  -end
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file Johnson_5_2_0.csv -box_width 20 -depth 8 -partition 3 10 10  -end
-	open Johnson_5_2_0_draw.bmp
-
+# problem:
 
 
 Paley13:
@@ -11945,6 +11985,8 @@ Paley13:
 	open Paley_13_draw.bmp
 
 
+# problem:
+	
 trihedal_pair_graph:
 	$(ORBITER_PATH)/orbiter.out -v 2 -create_graph -trihedral_pair_disjointness_graph  -end \
 		-graph_theoretic_activity -export_csv  -end
@@ -11956,35 +11998,107 @@ trihedal_pair_graph:
 graph_classify_4:
 	$(ORBITER_PATH)/orbiter.out -v 2 -graph_classify -n 4
 
+
+# problem:
+
 tournament_classify_4:
 	$(ORBITER_PATH)/orbiter.out -v 2 -graph_classify \
 	-n 4 -v 2 -tournament \
 	-poset_classification_control -problem_label tournament_4  -depth 6 -end \
 	-draw_graphs_at_level 6
 
-# problem!
+
+
 
 small_graph:
-	$(ORBITER_PATH)/orbiter.out -v 2 -create_graph -edges_as_pairs 5 "0,1,0,2,0,3,0,4,1,3,1,4,2,4" -end \
-		-graph_theoretic_activity -export_csv -save -end
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define G -graph -edges_as_pairs 5 "0,1,0,2,0,3,0,4,1,3,1,4,2,4" -end \
+		-with G -do \
+		-graph_theoretic_activity -export_csv -end \
+		-with G -do \
+		-graph_theoretic_activity -export_graphviz -end \
+		-with G -do \
+		-graph_theoretic_activity -save -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix  -input_csv_file graph_v5_e7.csv \
+		-box_width 40 -bit_depth 24 -partition 4 "1,1,1,1,1" "1,1,1,1,1" -end
+	dot -Tpng graph_v5_e7.gv >graph_v5_e7.png
 
 # creates graph_v5_e7.csv
 # creates graph_v5_e7.colored_graph
 
 small_graph_cliques:
-	$(ORBITER_PATH)/orbiter.out -v 2 -create_graph -load_from_file graph_v5_e7.colored_graph -end \
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define G -graph -load_from_file graph_v5_e7.colored_graph -end \
+		-with G -do \
 		-graph_theoretic_activity -find_cliques  -target_size 3 -end
 
 # nb_sol = 3
 
 small_graph_cliques_Sajeeb:
-	$(ORBITER_PATH)/orbiter.out -v 2 -create_graph -load_from_file graph_v5_e7.colored_graph -end \
-		-graph_theoretic_activity -find_cliques -Sajeeb -target_size 3 -end
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define G -graph -load_from_file graph_v5_e7.colored_graph -end \
+		-with G -do \
+		-graph_theoretic_activity -find_cliques -Sajeeb  -target_size 3 -end
 
 # nb_sol = 3
 
+petersen:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define G -graph -Johnson 5 2 0 -end \
+		-with G -do \
+		-graph_theoretic_activity -export_csv -end \
+		-with G -do \
+		-graph_theoretic_activity -export_graphviz -end \
+		-with G -do \
+		-graph_theoretic_activity -save -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix  -input_csv_file Johnson_5_2_0.csv \
+		-box_width 40 -bit_depth 24 -partition 4 "1,1,1,1,1,1,1,1,1,1" "1,1,1,1,1,1,1,1,1,1" -end
+	dot -Tpng Johnson_5_2_0.gv >Johnson_5_2_0.png
+
+Hamming_graph_3:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define G -graph -Hamming 3 2 -end \
+		-with G -do \
+		-graph_theoretic_activity -export_csv -end \
+		-with G -do \
+		-graph_theoretic_activity -export_graphviz -end \
+		-with G -do \
+		-graph_theoretic_activity -save -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix  -input_csv_file Hamming_3_2.csv \
+		-box_width 40 -bit_depth 24 -partition 4 "1,1,1,1,1,1,1,1" "1,1,1,1,1,1,1,1" -end
+	dot -Tpng Hamming_3_2.gv >Hamming_3_2.png
 
 
+Hamming_graph_7:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define G -graph -Hamming 7 2 -end \
+		-with G -do \
+		-graph_theoretic_activity -export_csv -end \
+		-with G -do \
+		-graph_theoretic_activity -export_graphviz -end \
+		-with G -do \
+		-graph_theoretic_activity -save -end
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix  -input_csv_file Hamming_7_2.csv \
+		-box_width 8 -bit_depth 24 -partition 4 128 128 -end
+	dot -Tpng Hamming_7_2.gv >Hamming_7_2.png
+
+
+
+Hamming_graph_7_with_Hamming_code:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define G -graph -Hamming 7 2 -subset "_Hamming_code" "\\_with\\_Hamming\\_code" $(HAMMING_CODE_CODEWORDS) -end \
+		-with G -do \
+		-graph_theoretic_activity -export_csv -end \
+		-with G -do \
+		-graph_theoretic_activity -export_graphviz -end \
+		-with G -do \
+		-graph_theoretic_activity -save -end \
+		-with G -do \
+		-graph_theoretic_activity -automorphism_group -end
+	pdflatex Hamming_7_2_Hamming_code_report.tex
+	open Hamming_7_2_Hamming_code_report.pdf
+
+# group of order 2688 = 16 * 168
 
 #############################################################################################################
 # Section 50: Graphical Output
@@ -12911,8 +13025,9 @@ misc_select:
 	$(ORBITER_PATH)/orbiter.out -v 4 -csv_file_select_rows_and_cols \
 		GF_q7_multiplication_table_reordered.csv \
 		"0,2,4" "0,2,4" 
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_multiplication_table_reordered.csv 40 24 -draw_matrix_partition 3 6 6
-	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_multiplication_table_reordered_select.csv 40 24 -draw_matrix_partition 3 3 3
+	# old style:
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_multiplication_table_reordered.csv 40 24 -draw_matrix_partition 3 6 6
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix GF_q7_multiplication_table_reordered_select.csv 40 24 -draw_matrix_partition 3 3 3
 
 
 misc_join:
@@ -14125,36 +14240,8 @@ PGL_4_5_packing_3B_iso:
 
 #####
 
-# does not work:
 
 
-MATH360_hw2:
-	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end \
-		-with F -do -finite_field_activity -parse "test" "" "a+b" -evaluate "a=8,b=14" -end
-	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end \
-		-with F -do -finite_field_activity -parse "test" "" "a*b" -evaluate "a=9,b=13" -end
-	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end \
-		-with F -do -finite_field_activity -parse "test" "" "a*a*a*a*a" -evaluate "a=9" -end
-	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end \
-		-with F -do -finite_field_activity -parse "test" "" "(a+b)*(a+b)" -evaluate "a=5,b=7" -end
-	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end \
-		-with F -do -finite_field_activity -parse "test" "" "a*a+b*b" -evaluate "a=5,b=7" -end
-
-
-mult_polynomials_1024_999_997_check:
-	$(ORBITER_PATH)/orbiter.out -v 3 \
-		-define F -finite_field -q 1024 -end \
-		-with F -do \
-		-finite_field_activity -parse "test" "" "a*b" -evaluate "a=999,b=997" -end
-
-
-F_16_7_power_5:
-	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -end \
-		-with F -do -finite_field_activity -parse "test" "" "(a*a)*(a*a)*a" -evaluate "a=7" -end
-	dot -Tpng test.gv >test.png
-
-
-# the answer is 11.
 
 
 

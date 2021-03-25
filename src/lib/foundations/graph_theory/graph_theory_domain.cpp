@@ -1056,6 +1056,56 @@ void graph_theory_domain::list_parameters_of_SRG(int v_max, int verbose_level)
 	}
 }
 
+void graph_theory_domain::make_Hamming_graph(int *&Adj, int &N,
+		int n, int q, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_Hamming_graph" << endl;
+	}
+	geometry_global GG;
+	number_theory_domain NT;
+	coding_theory_domain Coding;
+	int *v1;
+	int *v2;
+	int *v3;
+	int i, j, d;
+
+	N = NT.i_power_j(q, n);
+
+
+	Adj = NEW_int(N * N);
+	Orbiter->Int_vec.zero(Adj, N * N);
+
+	v1 = NEW_int(n);
+	v2 = NEW_int(n);
+	v3 = NEW_int(n);
+
+	for (i = 0; i < N; i++) {
+		GG.AG_element_unrank(q, v1, 1, n, i);
+		for (j = i + 1; j < N; j++) {
+			GG.AG_element_unrank(q, v2, 1, n, j);
+
+			d = Coding.Hamming_distance(v1, v2, n);
+			if (d == 1) {
+				Adj[i * N + j] = 1;
+				Adj[j * N + i] = 1;
+			}
+		}
+	}
+
+	FREE_int(v1);
+	FREE_int(v2);
+	FREE_int(v3);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_Hamming_graph done" << endl;
+	}
+
+}
+
+
 void graph_theory_domain::make_Johnson_graph(int *&Adj, int &N,
 		int n, int k, int s, int verbose_level)
 {

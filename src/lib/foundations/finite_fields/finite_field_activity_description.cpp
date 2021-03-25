@@ -201,10 +201,11 @@ finite_field_activity_description::finite_field_activity_description()
 	field_reduction_n = 0;
 	// field_reduction_text;
 
-	f_parse = FALSE;
+	f_parse_and_evaluate = FALSE;
 	//parse_name_of_formula
 	//parse_managed_variables
 	//std::string parse_text;
+	//std::string parse_parameters
 
 	f_evaluate = FALSE;
 	//std::string evaluate_formula_label;
@@ -698,12 +699,17 @@ int finite_field_activity_description::read_arguments(
 					<< " " << field_reduction_n
 					<< " " << field_reduction_text << endl;
 		}
-		else if (stringcmp(argv[i], "-parse") == 0) {
-			f_parse = TRUE;
+		else if (stringcmp(argv[i], "-parse_and_evaluate") == 0) {
+			f_parse_and_evaluate = TRUE;
 			parse_name_of_formula.assign(argv[++i]);
 			parse_managed_variables.assign(argv[++i]);
 			parse_text.assign(argv[++i]);
-			cout << "-parse " << parse_name_of_formula << " " << parse_managed_variables << " " << parse_text << endl;
+			parse_parameters.assign(argv[++i]);
+			cout << "-parse_and_evaluate " << parse_name_of_formula
+					<< " " << parse_managed_variables
+					<< " " << parse_text
+					<< " " << parse_parameters
+					<< endl;
 		}
 		else if (stringcmp(argv[i], "-evaluate") == 0) {
 			f_evaluate = TRUE;

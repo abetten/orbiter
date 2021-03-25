@@ -14,6 +14,43 @@ namespace orbiter {
 namespace foundations {
 
 // #############################################################################
+// expression_parser_domain.cpp
+// #############################################################################
+
+
+
+//! a domain for things related to expression parsing
+
+class expression_parser_domain {
+public:
+	expression_parser_domain();
+	~expression_parser_domain();
+	void parse_and_evaluate(
+			finite_field *F,
+			std::string &name_of_formula,
+			std::string &formula_text,
+			std::string &managed_variables,
+			int f_evaluate,
+			std::string &parameters,
+			int verbose_level);
+	void evaluate(
+			finite_field *Fq,
+			std::string &formula_label,
+			std::string &parameters,
+			int verbose_level);
+	int evaluate_formula(
+			formula *F,
+			finite_field *Fq,
+			std::string &parameters,
+			int verbose_level);
+
+};
+
+
+
+
+
+// #############################################################################
 // expression_parser.cpp
 // #############################################################################
 

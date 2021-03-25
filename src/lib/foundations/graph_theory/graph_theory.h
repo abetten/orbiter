@@ -296,6 +296,8 @@ public:
 		int *colors, int *Adj, int verbose_level);
 	void init_adjacency_no_colors(int nb_points, int *Adj, 
 		int verbose_level);
+	void init_adjacency_two_colors(int nb_points,
+		int *Adj, int *subset, int sz, int verbose_level);
 	void init_user_data(long int *data, int data_size, int verbose_level);
 	void save(std::string &fname, int verbose_level);
 	void load(std::string &fname, int verbose_level);
@@ -388,6 +390,7 @@ public:
 		int verbose_level);
 	void export_to_file_matlab(std::string &fname, int verbose_level);
 	void export_to_csv(std::string &fname, int verbose_level);
+	void export_to_graphviz(std::string &fname, int verbose_level);
 	void early_test_func_for_clique_search(long int *S, int len,
 		long int *candidates, int nb_candidates,
 		long int *good_candidates, int &nb_good_candidates,
@@ -597,6 +600,8 @@ public:
 			int f_has_labels, int *labels,
 			int verbose_level);
 	void list_parameters_of_SRG(int v_max, int verbose_level);
+	void make_Hamming_graph(int *&Adj, int &N,
+			int n, int q, int verbose_level);
 	void make_Johnson_graph(int *&Adj, int &N,
 			int n, int k, int s, int verbose_level);
 	void make_Paley_graph(int *&Adj, int &N,

@@ -202,10 +202,27 @@ void orbiter_symbol_table_entry::init_combinatorial_object(std::string &label,
 	}
 	orbiter_symbol_table_entry::label.assign(label);
 	type = t_object;
-	object_type = t_collection;
+	object_type = t_combinatorial_object;
 	ptr = COC;
 	if (f_v) {
 		cout << "orbiter_symbol_table_entry::init_combinatorial_object done" << endl;
+	}
+}
+
+void orbiter_symbol_table_entry::init_graph(std::string &label,
+		void *Gr, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_graph" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_graph;
+	ptr = Gr;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_graph done" << endl;
 	}
 }
 
@@ -253,6 +270,9 @@ void orbiter_symbol_table_entry::print()
 		}
 		else if (object_type == t_combinatorial_object) {
 			cout << "combinatorial object" << endl;
+		}
+		else if (object_type == t_graph) {
+			cout << "graph" << endl;
 		}
 #if 0
 		else if (object_type == t_action) {

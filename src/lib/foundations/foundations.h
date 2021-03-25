@@ -412,7 +412,7 @@ class finite_field_activity;
 class draw_bitmap_control;
 class combinatorial_object_activity_description;
 class combinatorial_object_activity;
-
+class expression_parser_domain;
 
 #ifdef MEMORY_DEBUG
 #define NEW_int(n) global_mem_object_registry.allocate_int(n, __FILE__, __LINE__)

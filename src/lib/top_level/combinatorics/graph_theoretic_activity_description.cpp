@@ -24,11 +24,13 @@ graph_theoretic_activity_description::graph_theoretic_activity_description()
 	f_export_magma = FALSE;
 	f_export_maple = FALSE;
 	f_export_csv = FALSE;
+	f_export_graphviz = FALSE;
 	f_print = FALSE;
 	f_sort_by_colors = FALSE;
 	//f_split = FALSE;
 	//split_file = NULL;
 	f_save = FALSE;
+	f_automorphism_group = FALSE;
 }
 
 graph_theoretic_activity_description::~graph_theoretic_activity_description()
@@ -70,6 +72,10 @@ int graph_theoretic_activity_description::read_arguments(
 			f_export_csv = TRUE;
 			cout << "-export_csv" << endl;
 		}
+		else if (stringcmp(argv[i], "-export_graphviz") == 0) {
+			f_export_graphviz = TRUE;
+			cout << "-export_graphviz" << endl;
+		}
 		else if (stringcmp(argv[i], "-print") == 0) {
 			f_print = TRUE;
 			cout << "-print" << endl;
@@ -88,6 +94,10 @@ int graph_theoretic_activity_description::read_arguments(
 		else if (stringcmp(argv[i], "-save") == 0) {
 			f_save = TRUE;
 			cout << "-save " << endl;
+		}
+		else if (stringcmp(argv[i], "-automorphism_group") == 0) {
+			f_automorphism_group = TRUE;
+			cout << "-automorphism_group " << endl;
 		}
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;

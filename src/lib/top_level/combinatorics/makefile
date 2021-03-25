@@ -18,6 +18,7 @@ MODULES = \
 	graph_classify_description.o \
 	graph_classify.o \
 	graph_theoretic_activity_description.o \
+	graph_theoretic_activity.o \
 	hadamard_classify.o \
 	hall_system_classify.o \
 	large_set_classify.o \
