@@ -64,6 +64,7 @@ MODULES= \
 		foundations/data_structures/spreadsheet.o \
 		foundations/data_structures/super_fast_hash.o \
 		foundations/data_structures/vector_hashing.o \
+		foundations/expression_parser/expression_parser_domain.o \
 		foundations/expression_parser/expression_parser.o \
 		foundations/expression_parser/formula.o \
 		foundations/expression_parser/lexer.o \
@@ -355,6 +356,7 @@ MODULES= \
 		top_level/combinatorics/graph_classify_description.o \
 		top_level/combinatorics/graph_classify.o \
 		top_level/combinatorics/graph_theoretic_activity_description.o \
+		top_level/combinatorics/graph_theoretic_activity.o \
 		top_level/combinatorics/hadamard_classify.o \
 		top_level/combinatorics/hall_system_classify.o \
 		top_level/combinatorics/large_set_classify.o \

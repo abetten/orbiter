@@ -44,11 +44,13 @@ interface_combinatorics::interface_combinatorics()
 	random_permutation_degree = 0;
 	//random_permutation_fname_csv = NULL;
 
+#if 0
 	f_create_graph = FALSE;
 	CG = NULL;
 	//char fname_graph[1000];
 
 	Create_graph_description = NULL;
+#endif
 
 	f_read_poset_file = FALSE;
 	//read_poset_file_fname;
@@ -56,8 +58,10 @@ interface_combinatorics::interface_combinatorics()
 	f_grouping = FALSE;
 	x_stretch = 0.7;
 
+#if 0
 	f_graph_theoretic_activity_description = FALSE;
 	Graph_theoretic_activity_description = NULL;
+#endif
 
 	f_list_parameters_of_SRG = FALSE;
 	v_max = 0;
@@ -141,18 +145,22 @@ void interface_combinatorics::print_help(int argc,
 	else if (stringcmp(argv[i], "-random_permutation") == 0) {
 		cout << "-random_permutation <ind : degree> <string : <fname_csv>" << endl;
 	}
+#if 0
 	else if (stringcmp(argv[i], "-create_graph") == 0) {
 		cout << "-create_graph <description>" << endl;
 	}
+#endif
 	else if (stringcmp(argv[i], "-read_poset_file") == 0) {
 		cout << "-read_poset_file <string : file_name>" << endl;
 	}
 	else if (stringcmp(argv[i], "-read_poset_file_with_grouping") == 0) {
 		cout << "-read_poset_file_with_grouping <string : file_name> <double : x_stretch>" << endl;
 	}
+#if 0
 	else if (stringcmp(argv[i], "-graph_theoretic_activity") == 0) {
 		cout << "-graph_theoretic_activity <description>" << endl;
 	}
+#endif
 	else if (stringcmp(argv[i], "-list_parameters_of_SRG") == 0) {
 		cout << "-list_parameters_of_SRG <int : v_max>" << endl;
 	}
@@ -233,18 +241,22 @@ int interface_combinatorics::recognize_keyword(int argc,
 	else if (stringcmp(argv[i], "-random_permutation") == 0) {
 		return true;
 	}
+#if 0
 	else if (stringcmp(argv[i], "-create_graph") == 0) {
 		return true;
 	}
+#endif
 	else if (stringcmp(argv[i], "-read_poset_file") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-read_poset_file_with_grouping") == 0) {
 		return true;
 	}
+#if 0
 	else if (stringcmp(argv[i], "-graph_theoretic_activity") == 0) {
 		return true;
 	}
+#endif
 	else if (stringcmp(argv[i], "-list_parameters_of_SRG") == 0) {
 		return true;
 	}
@@ -392,6 +404,7 @@ void interface_combinatorics::read_arguments(int argc,
 		random_permutation_fname_csv.assign(argv[++i]);
 		cout << "-random_permutation " << random_permutation_degree << endl;
 	}
+#if 0
 	else if (stringcmp(argv[i], "-create_graph") == 0) {
 		f_create_graph = TRUE;
 
@@ -409,6 +422,7 @@ void interface_combinatorics::read_arguments(int argc,
 			cout << "next argument is " << argv[i] << endl;
 		}
 	}
+#endif
 	else if (stringcmp(argv[i], "-read_poset_file") == 0) {
 		f_read_poset_file = TRUE;
 		f_grouping = FALSE;
@@ -423,6 +437,7 @@ void interface_combinatorics::read_arguments(int argc,
 		cout << "-read_poset_file_with_grouping "
 				<< read_poset_file_fname << " " << x_stretch << endl;
 	}
+#if 0
 	else if (stringcmp(argv[i], "-graph_theoretic_activity") == 0) {
 		f_graph_theoretic_activity_description = TRUE;
 
@@ -440,6 +455,7 @@ void interface_combinatorics::read_arguments(int argc,
 			cout << "next argument is " << argv[i] << endl;
 		}
 	}
+#endif
 	else if (stringcmp(argv[i], "-list_parameters_of_SRG") == 0) {
 		f_list_parameters_of_SRG = TRUE;
 		v_max = strtoi(argv[++i]);
@@ -633,18 +649,20 @@ void interface_combinatorics::worker(int verbose_level)
 		do_random_permutation(random_permutation_degree,
 				random_permutation_fname_csv, verbose_level);
 	}
+#if 0
 	else if (f_create_graph || f_graph_theoretic_activity_description) {
 		if (f_create_graph) {
 			do_create_graph(Create_graph_description, verbose_level);
 		}
 		if (f_graph_theoretic_activity_description) {
 			if (!f_create_graph) {
-				cout << "-graph_activity needs -create_graph" << endl;
+				cout << "-graph_theoretic_activity_description needs -create_graph" << endl;
 				exit(1);
 			}
 			do_graph_theoretic_activity(Graph_theoretic_activity_description, verbose_level);
 		}
 	}
+#endif
 	else if (f_read_poset_file) {
 
 		do_read_poset_file(read_poset_file_fname, f_grouping, x_stretch, verbose_level);
@@ -753,6 +771,7 @@ void interface_combinatorics::worker(int verbose_level)
 	}
 }
 
+#if 0
 void interface_combinatorics::do_graph_theoretic_activity(
 		graph_theoretic_activity_description *Descr, int verbose_level)
 {
@@ -953,6 +972,7 @@ void interface_combinatorics::do_create_graph(
 		cout << "interface_combinatorics::do_create_graph done" << endl;
 	}
 }
+#endif
 
 void interface_combinatorics::do_read_poset_file(std::string &fname,
 		int f_grouping, double x_stretch, int verbose_level)

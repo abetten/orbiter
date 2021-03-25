@@ -217,10 +217,12 @@ class interface_combinatorics {
 	int random_permutation_degree;
 	std::string random_permutation_fname_csv;
 
+#if 0
 	int f_create_graph;
 	colored_graph *CG;
 	std::string fname_graph;
 	create_graph_description *Create_graph_description;
+#endif
 
 	int f_read_poset_file;
 	std::string read_poset_file_fname;
@@ -228,8 +230,10 @@ class interface_combinatorics {
 	int f_grouping;
 	double x_stretch;
 
+#if 0
 	int f_graph_theoretic_activity_description;
 	graph_theoretic_activity_description *Graph_theoretic_activity_description;
+#endif
 
 	int f_list_parameters_of_SRG;
 	int v_max;
@@ -292,10 +296,12 @@ public:
 	void read_arguments(int argc,
 			std::string *argv, int &i, int verbose_level);
 	void worker(int verbose_level);
+#if 0
 	void do_graph_theoretic_activity(
 			graph_theoretic_activity_description *Descr, int verbose_level);
 	void do_create_graph(
 			create_graph_description *Create_graph_description, int verbose_level);
+#endif
 	void do_read_poset_file(std::string &fname,
 			int f_grouping, double x_stretch, int verbose_level);
 	void do_create_combinatorial_object(int verbose_level);
@@ -575,6 +581,8 @@ class interface_symbol_table {
 	int f_combinatorial_object;
 	combinatorial_object_description *Combinatorial_object_description;
 
+	int f_graph;
+	create_graph_description *Create_graph_description;
 
 	int f_print_symbols;
 	int f_with;
@@ -598,6 +606,9 @@ class interface_symbol_table {
 	int f_combinatorial_object_activity;
 	combinatorial_object_activity_description *Combinatorial_object_activity_description;
 
+	int f_graph_theoretic_activity;
+	graph_theoretic_activity_description * Graph_theoretic_activity_description;
+
 public:
 
 
@@ -610,12 +621,6 @@ public:
 	void read_definition(
 			orbiter_top_level_session *Orbiter_top_level_session,
 			int argc, std::string *argv, int &i, int verbose_level);
-	void read_with(
-			orbiter_top_level_session *Orbiter_top_level_session,
-			int argc, std::string *argv, int &i, int verbose_level);
-	void read_activity_arguments(int argc,
-			std::string *argv, int &i, int verbose_level);
-	void worker(orbiter_top_level_session *Orbiter_top_level_session, int verbose_level);
 	void definition_of_finite_field(orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 	void definition_of_projective_space(orbiter_top_level_session *Orbiter_top_level_session,
@@ -632,6 +637,17 @@ public:
 			int verbose_level);
 	void definition_of_combinatorial_object(orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
+	void definition_of_graph(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+
+
+	void read_with(
+			orbiter_top_level_session *Orbiter_top_level_session,
+			int argc, std::string *argv, int &i, int verbose_level);
+	void read_activity_arguments(int argc,
+			std::string *argv, int &i, int verbose_level);
+	void worker(orbiter_top_level_session *Orbiter_top_level_session, int verbose_level);
+
 	void do_finite_field_activity(orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 	void do_projective_space_activity(
@@ -646,6 +662,9 @@ public:
 			orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 	void do_combinatorial_object_activity(
+			orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void do_graph_theoretic_activity(
 			orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 

@@ -113,6 +113,20 @@ void create_graph::init(
 		sprintf(str, "Graph\\_%d\\_%d", description->n, sz2);
 		label_tex.assign(str);
 		}
+	else if (description->f_Hamming) {
+
+		if (f_v) {
+			cout << "create_graph::init before create_Hamming" << endl;
+		}
+		create_Hamming(N, Adj, description->Hamming_n,
+				description->Hamming_q,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "create_graph::init after create_Hamming" << endl;
+		}
+	}
 	else if (description->f_Johnson) {
 
 		if (f_v) {
@@ -231,8 +245,80 @@ void create_graph::init(
 		FREE_OBJECT(F);
 	}
 
+	if (description->f_subset) {
+		if (f_v) {
+			cout << "create_graph::init the graph has a subset" << endl;
+		}
+		CG = NEW_OBJECT(colored_graph);
+		CG->init_adjacency_no_colors(N, Adj, verbose_level);
+
+		int *subset;
+		int sz;
+
+		Orbiter->Int_vec.scan(description->subset_text, subset, sz);
+
+		CG->init_adjacency_two_colors(N,
+				Adj, subset, sz, verbose_level);
+
+		f_has_CG = TRUE;
+
+		label.append(description->subset_label);
+		label_tex.append(description->subset_label_tex);
+
+		FREE_int(subset);
+		if (f_v) {
+			cout << "create_graph::init created colored graph with two colors" << endl;
+		}
+
+	}
+	else {
+
+		CG = NEW_OBJECT(colored_graph);
+		CG->init_adjacency_no_colors(N, Adj, verbose_level);
+
+		f_has_CG = TRUE;
+
+		if (f_v) {
+			cout << "create_graph::init created colored graph with one color" << endl;
+		}
+
+	}
+
 	if (f_v) {
 		cout << "create_graph::init done" << endl;
+	}
+}
+
+
+void create_graph::create_Hamming(int &N, int *&Adj,
+		int n, int q, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_graph::create_Hamming" << endl;
+	}
+
+	graph_theory_domain GT;
+
+
+	if (f_v) {
+		cout << "create_graph::create_Hamming before Combi.make_Johnson_graph" << endl;
+	}
+	GT.make_Hamming_graph(Adj, N, n, q, verbose_level);
+	if (f_v) {
+		cout << "create_graph::create_Johnson after Combi.make_Johnson_graph" << endl;
+	}
+
+	char str[1000];
+	sprintf(str, "Hamming_%d_%d", n, q);
+	label.assign(str);
+	sprintf(str, "Hamming\\_%d\\_%d", n, q);
+	label_tex.assign(str);
+
+
+	if (f_v) {
+		cout << "create_graph::create_Hamming done" << endl;
 	}
 }
 

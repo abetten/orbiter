@@ -416,6 +416,7 @@ enum symbol_table_object_type {
 	t_cubic_surface,
 	t_collection,
 	t_combinatorial_object,
+	t_graph,
 	t_action,
 	t_poset,
 	t_poset_classification,
@@ -456,6 +457,8 @@ public:
 			std::string &list_of_objects, int verbose_level);
 	void init_combinatorial_object(std::string &label,
 			combinatorial_object_create *COC, int verbose_level);
+	void init_graph(std::string &label,
+			void *Gr, int verbose_level);
 	void print();
 };
 

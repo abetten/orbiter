@@ -174,6 +174,7 @@ class interface_toolkit;
 class orbiter_top_level_session;
 class cubic_surface_activity_description;
 class cubic_surface_activity;
+class graph_theoretic_activity;
 
 
 // #############################################################################

@@ -184,6 +184,7 @@ public:
 			int verbose_level);
 	void encode_text_5bits(std::string &text, std::string &fname, int verbose_level);
 	void field_induction(std::string &fname_in, std::string &fname_out, int nb_bits, int verbose_level);
+	int Hamming_distance(int *v1, int *v2, int n);
 	int Hamming_distance_binary(int a, int b, int n);
 
 

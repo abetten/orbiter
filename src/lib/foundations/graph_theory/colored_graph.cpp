@@ -832,6 +832,36 @@ void colored_graph::init_adjacency_no_colors(int nb_points,
 	}
 }
 
+void colored_graph::init_adjacency_two_colors(int nb_points,
+	int *Adj, int *subset, int sz, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *vertex_colors;
+	int i, a;
+
+	if (f_v) {
+		cout << "colored_graph::init_adjacency_two_colors" << endl;
+		cout << "nb_points=" << nb_points << endl;
+		cout << "sz=" << sz << endl;
+	}
+
+	vertex_colors = NEW_int(nb_points);
+	Orbiter->Int_vec.zero(vertex_colors, nb_points);
+	for (i = 0; i < sz; i++) {
+		a = subset[i];
+		vertex_colors[a] = 1;
+	}
+
+	init_adjacency(nb_points,
+			2 /* nb_colors */, 1 /* nb_colors_per_vertex */,
+			vertex_colors, Adj, verbose_level);
+
+	FREE_int(vertex_colors);
+	if (f_v) {
+		cout << "colored_graph::init_adjacency_two_colors done" << endl;
+	}
+}
+
 void colored_graph::init_user_data(long int *data,
 	int data_size, int verbose_level)
 {
@@ -2200,10 +2230,66 @@ void colored_graph::export_to_csv(std::string &fname, int verbose_level)
 			<< Fio.file_size(fname) << endl;
 
 	if (f_v) {
-		cout << "colored_graph::export_to_csv" << endl;
+		cout << "colored_graph::export_to_csv done" << endl;
 		}
 }
 
+
+void colored_graph::export_to_graphviz(std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+	int *M;
+	file_io Fio;
+
+	if (f_v) {
+		cout << "colored_graph::export_to_graphviz" << endl;
+	}
+
+	M = NEW_int(nb_points * nb_points);
+	Orbiter->Int_vec.zero(M, nb_points * nb_points);
+
+	for (i = 0; i < nb_points; i++) {
+		for (j = 0; j < nb_points; j++) {
+			if (is_adjacent(i, j)) {
+				M[i * nb_points + j] = 1;
+			}
+		}
+	}
+
+	{
+		ofstream ost(fname);
+
+		string label;
+
+		label.assign(fname);
+		chop_off_extension(label);
+
+		ost << "graph " << label << " {" << std::endl;
+
+		//export_graphviz_recursion(ost);
+		for (i = 0; i < nb_points; i++) {
+			ost << i << " [label=\"" << i << "\" ]" << endl;
+			for (j = i + 1; j < nb_points; j++) {
+				if (is_adjacent(i, j)) {
+
+					ost << i << " -- " << j << endl;
+				}
+			}
+		}
+
+		ost << "}" << std::endl;
+
+	}
+	//Fio.int_matrix_write_csv(fname, M, nb_points, nb_points);
+
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
+	if (f_v) {
+		cout << "colored_graph::export_to_graphviz done" << endl;
+		}
+}
 
 void colored_graph::early_test_func_for_clique_search(
 	long int *S, int len,

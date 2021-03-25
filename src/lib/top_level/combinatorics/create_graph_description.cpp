@@ -28,6 +28,10 @@ create_graph_description::create_graph_description()
 	f_edges_as_pairs = FALSE;
 	//edges_as_pairs_text;
 
+	f_Hamming = FALSE;
+	Hamming_n = 0;
+	Hamming_q = 0;
+
 	f_Johnson = FALSE;
 	Johnson_n = 0;
 	Johnson_k = 0;
@@ -61,6 +65,11 @@ create_graph_description::create_graph_description()
 	coll_orthogonal_q = 0;
 
 	f_trihedral_pair_disjointness_graph = FALSE;
+
+	f_subset = FALSE;
+	//std::string subset_label;
+	//std::string subset_label_tex;
+	//std::string subset_text;
 }
 
 
@@ -89,6 +98,12 @@ int create_graph_description::read_arguments(
 			n = strtoi(argv[++i]);
 			edges_as_pairs_text.assign(argv[++i]);
 			cout << "-edges_as_pairs " << n << " " << edges_as_pairs_text << endl;
+		}
+		else if (stringcmp(argv[i], "-Hamming") == 0) {
+			f_Hamming = TRUE;
+			Hamming_n = strtoi(argv[++i]);
+			Hamming_q = strtoi(argv[++i]);
+			cout << "-Hamming " << Hamming_n << " " << Hamming_q << endl;
 		}
 		else if (stringcmp(argv[i], "-Johnson") == 0) {
 			f_Johnson = TRUE;
@@ -144,6 +159,13 @@ int create_graph_description::read_arguments(
 		else if (stringcmp(argv[i], "-trihedral_pair_disjointness_graph") == 0) {
 			f_trihedral_pair_disjointness_graph = TRUE;
 			cout << "-trihedral_pair_disjointness_graph " << endl;
+		}
+		else if (stringcmp(argv[i], "-subset") == 0) {
+			f_subset = TRUE;
+			subset_label.assign(argv[++i]);
+			subset_label_tex.assign(argv[++i]);
+			subset_text.assign(argv[++i]);
+			cout << "-subset " << subset_label << " " << subset_label_tex << " " << subset_text << endl;
 		}
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
