@@ -59,6 +59,21 @@ interface_toolkit::interface_toolkit()
 	store_as_csv_file_m = 0;
 	store_as_csv_file_n = 0;
 	//std::string store_as_csv_file_data;
+
+	f_mv = FALSE;
+	//std::string mv_a;
+	//std::string mv_b;
+
+	f_loop = FALSE;
+	loop_start_idx = 0;
+	loop_end_idx = 0;
+	//std::string loop_variable;
+	loop_from = 0;
+	loop_to = 0;
+	loop_step = 0;
+	loop_argv = NULL;
+
+
 }
 
 
@@ -93,6 +108,12 @@ void interface_toolkit::print_help(int argc,
 		cout << "-store_as_csv_file <string : fname> <int : m> "
 				"<int : n> <string : data> " << endl;
 	}
+	else if (stringcmp(argv[i], "-mv") == 0) {
+		cout << "-mv <string : from> <string : to> " << endl;
+	}
+	else if (stringcmp(argv[i], "-loop") == 0) {
+		cout << "-loop <string : variable> <string : logfile_mask> <int : from> <int : to> <int : step> <arguments> -loop_end" << endl;
+	}
 }
 
 int interface_toolkit::recognize_keyword(int argc,
@@ -126,6 +147,12 @@ int interface_toolkit::recognize_keyword(int argc,
 		return true;
 	}
 	else if (stringcmp(argv[i], "-store_as_csv_file") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-mv") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-loop") == 0) {
 		return true;
 	}
 	return false;
@@ -215,6 +242,45 @@ void interface_toolkit::read_arguments(int argc,
 		store_as_csv_file_data.assign(argv[++i]);
 		cout << "-store_as_csv_file " << store_as_csv_file_fname
 				<< " " << store_as_csv_file_m << " " << store_as_csv_file_n << " " << store_as_csv_file_data << endl;
+	}
+	else if (stringcmp(argv[i], "-mv") == 0) {
+		f_mv = TRUE;
+		mv_a.assign(argv[++i]);
+		mv_b.assign(argv[++i]);
+		cout << "-mv " << mv_a
+				<< " " << mv_b << endl;
+	}
+	else if (stringcmp(argv[i], "-loop") == 0) {
+		f_loop = TRUE;
+		loop_start_idx = i + 5;
+		loop_variable.assign(argv[++i]);
+		loop_from = strtoi(argv[++i]);
+		loop_to = strtoi(argv[++i]);
+		loop_step = strtoi(argv[++i]);
+		loop_argv = argv;
+
+		for (++i; i < argc; i++) {
+			if (stringcmp(argv[i], "-end_loop") == 0) {
+				loop_end_idx = i;
+				break;
+			}
+		}
+		if (i == argc) {
+			cout << "-loop cannot find -end_loop" << endl;
+			exit(1);
+		}
+		cout << "-loop " << loop_variable
+				<< " " << loop_from
+				<< " " << loop_to
+				<< " " << loop_step
+				<< " " << loop_start_idx
+				<< " " << loop_end_idx;
+
+		for (int j = loop_start_idx; j < loop_end_idx; j++) {
+			cout << " " << argv[j];
+		}
+		cout << endl;
+
 	}
 	if (f_v) {
 		cout << "interface_toolkit::read_arguments done" << endl;
@@ -344,6 +410,60 @@ void interface_toolkit::worker(int verbose_level)
 
 		Fio.lint_matrix_write_csv(store_as_csv_file_fname, D, store_as_csv_file_m, store_as_csv_file_n);
 		cout << "Written file " << store_as_csv_file_fname << " of size " << Fio.file_size(store_as_csv_file_fname) << endl;
+	}
+	else if (f_mv) {
+		string cmd;
+
+		cmd.assign("mv ");
+		cmd.append(mv_a);
+		cmd.append(" ");
+		cmd.append(mv_b);
+		cout << "executing " << cmd << endl;
+		system(cmd.c_str());
+	}
+	else if (f_loop) {
+		std::string *argv2;
+		int argc2;
+		int j;
+
+		argc2 = loop_end_idx - loop_start_idx;
+		int h, s;
+
+		for (h = loop_from; h < loop_to; h += loop_step) {
+			cout << "loop h=" << h << ":" << endl;
+			argv2 = new string[argc2];
+			for (j = loop_start_idx, s = 0; j < loop_end_idx; j++, s++) {
+
+				char str[1000];
+				string arg;
+				string value_h;
+				string variable;
+
+				arg.assign(loop_argv[j]);
+				sprintf(str, "%d", h);
+				value_h.assign(str);
+				variable.assign("%");
+				variable.append(loop_variable);
+
+				while (arg.find(variable) != std::string::npos) {
+					arg.replace(arg.find(variable), variable.length(), value_h);
+				}
+				argv2[s].assign(arg);
+			}
+			cout << "loop iteration " << h << ", executing sequence of length " << argc2 << " : ";
+			for (s = 0; s < argc2; s++) {
+				cout << " " << argv2[s];
+			}
+			cout << endl;
+
+
+			The_Orbiter_top_level_session->parse_and_execute(argc2 - 1, argv2, 0, verbose_level);
+
+			cout << "loop iteration " << h << "done" << endl;
+
+			delete [] argv2;
+		}
+
 	}
 
 	if (f_v) {

@@ -125,7 +125,7 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 	int i_prev = -1;
 
 	if (f_v) {
-		cout << "orbiter_top_level_session::parse_and_execute" << endl;
+		cout << "orbiter_top_level_session::parse_and_execute, argc=" << argc << endl;
 	}
 
 
@@ -134,7 +134,7 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 			cout << "orbiter_top_level_session::parse_and_execute "
 					"cnt = " << cnt << ", i = " << i << endl;
 			if (i < argc) {
-				cout << "orbiter_top_level_session::parse_and_execute next argument is " << Argv[i] << endl;
+				cout << "orbiter_top_level_session::parse_and_execute i=" << i << ", next argument is " << Argv[i] << endl;
 			}
 		}
 		if (i_prev == i) {
@@ -165,11 +165,11 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 		}
 
 		if (i < argc) {
-			cout << "orbiter_top_level_session::parse_and_execute next argument is " << Argv[i] << endl;
+			cout << "orbiter_top_level_session::parse_and_execute i=" << i << ", next argument is " << Argv[i] << endl;
 		}
 
 		if (f_v) {
-			cout << "orbiter_top_level_session::parse_and_execute before Interface_algebra, i = " << i << endl;
+			cout << "orbiter_top_level_session::parse_and_execute before Interface_algebra, i = " << i << " " << Argv[i] << endl;
 		}
 		{
 
@@ -186,7 +186,7 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 		}
 
 		if (f_v) {
-			cout << "orbiter_top_level_session::parse_and_execute before Interface_cryptography, i = " << i << endl;
+			cout << "orbiter_top_level_session::parse_and_execute before Interface_cryptography, i = " << i << " " << Argv[i] << endl;
 		}
 		{
 
@@ -203,7 +203,7 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 		}
 
 		if (f_v) {
-			cout << "orbiter_top_level_session::parse_and_execute before Interface_combinatorics, i = " << i << endl;
+			cout << "orbiter_top_level_session::parse_and_execute before Interface_combinatorics, i = " << i << " " << Argv[i] << endl;
 		}
 		{
 
@@ -220,7 +220,7 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 		}
 
 		if (f_v) {
-			cout << "orbiter_top_level_session::parse_and_execute before Interface_coding_theory, i = " << i << endl;
+			cout << "orbiter_top_level_session::parse_and_execute before Interface_coding_theory, i = " << i << " " << Argv[i] << endl;
 		}
 		{
 
@@ -237,7 +237,7 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 		}
 
 		if (f_v) {
-			cout << "orbiter_top_level_session::parse_and_execute before Interface_povray, i = " << i << endl;
+			cout << "orbiter_top_level_session::parse_and_execute before Interface_povray, i = " << i << " " << Argv[i] << endl;
 		}
 		{
 
@@ -254,7 +254,7 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 		}
 
 		if (f_v) {
-			cout << "orbiter_top_level_session::parse_and_execute before Interface_projective, i = " << i << endl;
+			cout << "orbiter_top_level_session::parse_and_execute before Interface_projective, i = " << i << " " << Argv[i] << endl;
 		}
 		{
 
