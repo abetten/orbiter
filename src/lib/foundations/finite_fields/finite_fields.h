@@ -23,14 +23,6 @@ namespace foundations {
 class finite_field_activity_description {
 public:
 
-#if 0
-	int f_q;
-	int q;
-
-	int f_override_polynomial;
-	std::string override_polynomial;
-#endif
-
 	int f_cheat_sheet_GF;
 
 	int f_polynomial_division;

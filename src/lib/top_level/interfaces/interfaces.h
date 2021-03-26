@@ -726,6 +726,21 @@ class interface_toolkit {
 	int store_as_csv_file_n;
 	std::string store_as_csv_file_data;
 
+	int f_mv;
+	std::string mv_a;
+	std::string mv_b;
+
+
+	int f_loop;
+	int loop_start_idx;
+	int loop_end_idx;
+	std::string loop_variable;
+	int loop_from;
+	int loop_to;
+	int loop_step;
+	std::string *loop_argv;
+
+
 public:
 
 
