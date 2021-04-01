@@ -19,9 +19,9 @@ namespace top_level {
 
 interface_algebra::interface_algebra()
 {
+#if 0
 	f_linear_group = FALSE;
 	Linear_group_description = NULL;
-
 	//f_finite_field_activity = FALSE;
 	//Finite_field_activity_description = FALSE;
 
@@ -30,6 +30,7 @@ interface_algebra::interface_algebra()
 
 	f_group_theoretic_activity = FALSE;
 	Group_theoretic_activity_description = NULL;
+#endif
 
 	f_poset_classification_control = FALSE;
 	Control = NULL;
@@ -89,18 +90,15 @@ interface_algebra::interface_algebra()
 void interface_algebra::print_help(int argc,
 		std::string *argv, int i, int verbose_level)
 {
+#if 0
 	if (stringcmp(argv[i], "-linear_group") == 0) {
 		cout << "-linear_group <description>" << endl;
 	}
-	else if (stringcmp(argv[i], "-group_theoretic_activity") == 0) {
+	if (stringcmp(argv[i], "-group_theoretic_activity") == 0) {
 		cout << "-group_theoretic_activity <description>" << endl;
 	}
-#if 0
-	else if (stringcmp(argv[i], "-finite_field_activity") == 0) {
-		cout << "-finite_field_activity <description>" << endl;
-	}
 #endif
-	else if (stringcmp(argv[i], "-count_subprimitive") == 0) {
+	if (stringcmp(argv[i], "-count_subprimitive") == 0) {
 		cout << "-count_subprimitive <int : Q_max> <int : H_max>" << endl;
 	}
 	else if (stringcmp(argv[i], "-equivalence_class_of_fractions") == 0) {
@@ -155,18 +153,15 @@ int interface_algebra::recognize_keyword(int argc,
 	if (i >= argc) {
 		return false;
 	}
+#if 0
 	if (stringcmp(argv[i], "-linear_group") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-group_theoretic_activity") == 0) {
-		return true;
-	}
-#if 0
-	else if (stringcmp(argv[i], "-finite_field_activity") == 0) {
+	if (stringcmp(argv[i], "-group_theoretic_activity") == 0) {
 		return true;
 	}
 #endif
-	else if (stringcmp(argv[i], "-count_subprimitive") == 0) {
+	if (stringcmp(argv[i], "-count_subprimitive") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-equivalence_class_of_fractions") == 0) {
@@ -229,7 +224,7 @@ void interface_algebra::read_arguments(int argc,
 		cout << "interface_algebra::read_arguments the next argument is " << argv[i] << endl;
 	}
 
-
+#if 0
 	if (stringcmp(argv[i], "-linear_group") == 0) {
 		f_linear_group = TRUE;
 		Linear_group_description = NEW_OBJECT(linear_group_description);
@@ -244,7 +239,7 @@ void interface_algebra::read_arguments(int argc,
 			cout << "next argument is " << argv[i] << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-group_theoretic_activities") == 0) {
+	if (stringcmp(argv[i], "-group_theoretic_activities") == 0) {
 		f_group_theoretic_activity = TRUE;
 		Group_theoretic_activity_description =
 				NEW_OBJECT(group_theoretic_activity_description);
@@ -259,24 +254,8 @@ void interface_algebra::read_arguments(int argc,
 			cout << "next argument is " << argv[i] << endl;
 		}
 	}
-#if 0
-	else if (stringcmp(argv[i], "-finite_field_activity") == 0) {
-		f_finite_field_activity = TRUE;
-		Finite_field_activity_description =
-				NEW_OBJECT(finite_field_activity_description);
-		cout << "reading -finite_field_activity" << endl;
-		i += Finite_field_activity_description->read_arguments(argc - (i + 1),
-			argv + i + 1, verbose_level);
-
-		cout << "-finite_field_activity" << endl;
-		cout << "i = " << i << endl;
-		cout << "argc = " << argc << endl;
-		if (i < argc) {
-			cout << "next argument is " << argv[i] << endl;
-		}
-	}
 #endif
-	else if (stringcmp(argv[i], "-poset_classification_control") == 0) {
+	if (stringcmp(argv[i], "-poset_classification_control") == 0) {
 		f_poset_classification_control = TRUE;
 		Control = NEW_OBJECT(poset_classification_control);
 		cout << "reading -poset_classification_control" << endl;
@@ -322,7 +301,9 @@ void interface_algebra::read_arguments(int argc,
 		deg_min = strtoi(argv[++i]);
 		deg_max = strtoi(argv[++i]);
 		cout << "-search_for_primitive_polynomial_in_range " << p_min
-				<< " " << p_max << " " << deg_min << " " << deg_max << " " << endl;
+				<< " " << p_max
+				<< " " << deg_min
+				<< " " << deg_max << " " << endl;
 	}
 
 	else if (stringcmp(argv[i], "-Dedekind_numbers") == 0) {
@@ -332,7 +313,10 @@ void interface_algebra::read_arguments(int argc,
 		Dedekind_q_min = strtoi(argv[++i]);
 		Dedekind_q_max = strtoi(argv[++i]);
 		cout << "-Dedekind_numbers " << Dedekind_n_min
-				<< " " << Dedekind_n_max << " " << Dedekind_q_min << " " << Dedekind_q_max << " " << endl;
+				<< " " << Dedekind_n_max
+				<< " " << Dedekind_q_min
+				<< " " << Dedekind_q_max
+				<< " " << endl;
 	}
 	else if (stringcmp(argv[i], "-order_of_q_mod_n") == 0) {
 		f_order_of_q_mod_n = TRUE;
@@ -340,7 +324,8 @@ void interface_algebra::read_arguments(int argc,
 		order_of_q_mod_n_n_min = strtoi(argv[++i]);
 		order_of_q_mod_n_n_max = strtoi(argv[++i]);
 		cout << "-order_of_q_mod_n " << order_of_q_mod_n_q
-				<< " " << order_of_q_mod_n_n_min << " " << order_of_q_mod_n_n_max << " " << endl;
+				<< " " << order_of_q_mod_n_n_min
+				<< " " << order_of_q_mod_n_n_max << " " << endl;
 	}
 
 
@@ -390,27 +375,12 @@ void interface_algebra::worker(int verbose_level)
 	if (f_v) {
 		cout << "interface_algebra::worker" << endl;
 	}
+#if 0
 	if (f_linear_group) {
 		do_linear_group(Linear_group_description, verbose_level);
 	}
-
-#if 0
-	else if (f_finite_field_activity) {
-
-		cout << "interface_algebra::worker f_finite_field_activity" << endl;
-
-		finite_field_activity *Finite_field_activity;
-		Finite_field_activity = NEW_OBJECT(finite_field_activity);
-
-		Finite_field_activity->init(Finite_field_activity_description, verbose_level);
-
-		Finite_field_activity->perform_activity(verbose_level);
-
-		FREE_OBJECT(Finite_field_activity);
-
-	}
 #endif
-	else if (f_character_table_symmetric_group) {
+	if (f_character_table_symmetric_group) {
 		do_character_table_symmetric_group(deg, verbose_level);
 	}
 	else if (f_make_A5_in_PSL_2_q) {
@@ -492,7 +462,7 @@ void interface_algebra::worker(int verbose_level)
 
 }
 
-
+#if 0
 void interface_algebra::do_linear_group(
 		linear_group_description *Descr, int verbose_level)
 {
@@ -634,6 +604,7 @@ void interface_algebra::perform_group_theoretic_activity(
 		cout << "interface_algebra::perform_group_theoretic_activity done" << endl;
 	}
 }
+#endif
 
 
 

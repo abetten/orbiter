@@ -8,15 +8,14 @@
 
 
 
-#include "foundations/foundations.h"
-#include "group_actions.h"
-
+#include "orbiter.h"
 
 using namespace std;
 
-
 namespace orbiter {
-namespace group_actions {
+namespace top_level {
+
+
 
 
 projective_space_object_classifier::projective_space_object_classifier()

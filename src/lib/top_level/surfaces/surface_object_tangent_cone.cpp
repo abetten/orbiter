@@ -38,8 +38,8 @@ surface_object_tangent_cone::surface_object_tangent_cone()
 	Pts_on_tangent_quadric = NULL;
 	nb_pts_on_tangent_quadric = 0;
 
-	line_type = NULL;
-	type_collected = NULL;
+	//line_type = NULL;
+	//type_collected = NULL;
 
 	Class_pts = NULL;
 	nb_class_pts = 0;
@@ -53,6 +53,8 @@ surface_object_tangent_cone::surface_object_tangent_cone()
 	gens_copy = NULL;
 	moved_surface = NULL;
 	stab_gens_P0 = NULL;
+
+	Stab_gens_quartic = NULL;
 }
 
 
@@ -104,6 +106,9 @@ surface_object_tangent_cone::~surface_object_tangent_cone()
 	}
 	if (stab_gens_P0) {
 		FREE_OBJECT(stab_gens_P0);
+	}
+	if (Stab_gens_quartic) {
+		FREE_OBJECT(Stab_gens_quartic);
 	}
 }
 
@@ -276,7 +281,7 @@ void surface_object_tangent_cone::quartic(int pt_orbit, int verbose_level)
 
 
 
-
+#if 0
 	line_type = NEW_int(SOA->Surf->P->N_lines);
 
 	SOA->Surf->P->line_intersection_type(Pts_on_tangent_quadric,
@@ -290,7 +295,7 @@ void surface_object_tangent_cone::quartic(int pt_orbit, int verbose_level)
 	for (i = 0; i < SOA->Surf->P->N_lines; i++) {
 		type_collected[line_type[i]]++;
 	}
-
+#endif
 
 
 #if 0
@@ -745,6 +750,9 @@ void surface_object_tangent_cone::cheat_sheet_quartic_curve(
 	stab_gens_P0->print_generators_tex(ost);
 #endif
 
+
+	ost << "The stabilizer of the quartic curve is the following group:\\\\" << endl;
+	Stab_gens_quartic->print_generators_tex(ost);
 
 	if (f_v) {
 		cout << "surface_object_tangent_cone::cheat_sheet_quartic_curve" << endl;

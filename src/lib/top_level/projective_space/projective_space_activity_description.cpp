@@ -59,6 +59,47 @@ projective_space_activity_description::projective_space_activity_description()
 	f_define_surface = FALSE;
 	//std::string define_surface_label
 	Surface_Descr = NULL;
+
+
+	f_classify_surfaces_with_double_sixes = FALSE;
+	//std::string classify_surfaces_with_double_sixes_label;
+	classify_surfaces_with_double_sixes_control = NULL;
+
+
+
+	f_classify_surfaces_through_arcs_and_two_lines = FALSE;
+	f_test_nb_Eckardt_points = FALSE;
+	nb_E = 0;
+	f_classify_surfaces_through_arcs_and_trihedral_pairs = FALSE;
+	f_trihedra1_control = FALSE;
+	Trihedra1_control = NULL;
+	f_trihedra2_control = FALSE;
+	Trihedra2_control = NULL;
+	f_control_six_arcs = FALSE;
+			Control_six_arcs = NULL;
+	f_create_surface = FALSE;
+	surface_description = NULL;
+
+	f_sweep = FALSE;
+	//std::string sweep_fname;
+
+	f_sweep_4 = FALSE;
+	//std::string sweep_4_fname;
+	sweep_4_surface_description = NULL;
+
+	f_six_arcs = FALSE;
+	f_filter_by_nb_Eckardt_points = FALSE;
+	nb_Eckardt_points = 0;
+
+
+	f_surface_quartic = FALSE;
+	f_surface_clebsch = FALSE;
+	f_surface_codes = FALSE;
+
+	f_make_gilbert_varshamov_code = FALSE;
+	make_gilbert_varshamov_code_n = 0;
+	make_gilbert_varshamov_code_d = 0;
+
 }
 
 projective_space_activity_description::~projective_space_activity_description()
@@ -91,7 +132,6 @@ int projective_space_activity_description::read_arguments(
 		}
 		else if (stringcmp(argv[i], "-canonical_form_PG") == 0) {
 			f_canonical_form_PG = TRUE;
-			//canonical_form_PG_n = strtoi(argv[++i]);
 			cout << "-canonical_form_PG, reading extra arguments" << endl;
 
 			Canonical_form_PG_Descr = NEW_OBJECT(projective_space_object_classifier_description);
@@ -182,6 +222,144 @@ int projective_space_activity_description::read_arguments(
 			cout << "-define_surface " << define_surface_label << endl;
 		}
 
+		// cubic surfaces:
+		else if (stringcmp(argv[i], "-classify_surfaces_with_double_sixes") == 0) {
+			f_classify_surfaces_with_double_sixes = TRUE;
+			classify_surfaces_with_double_sixes_label.assign(argv[++i]);
+			classify_surfaces_with_double_sixes_control = NEW_OBJECT(poset_classification_control);
+			cout << "-classify_surfaces_with_double_sixes " << endl;
+			i += classify_surfaces_with_double_sixes_control->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading -poset_classification_control " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-classify_surfaces_with_double_sixes " << classify_surfaces_with_double_sixes_label << endl;
+			classify_surfaces_with_double_sixes_control->print();
+		}
+
+		else if (stringcmp(argv[i], "-classify_surfaces_through_arcs_and_two_lines") == 0) {
+			f_classify_surfaces_through_arcs_and_two_lines = TRUE;
+			cout << "-classify_surfaces_through_arcs_and_two_lines " << endl;
+		}
+
+		else if (stringcmp(argv[i], "-test_nb_Eckardt_points") == 0) {
+			f_test_nb_Eckardt_points = TRUE;
+			nb_E = strtoi(argv[++i]);
+			cout << "-test_nb_Eckardt_points " << nb_E << endl;
+		}
+		else if (stringcmp(argv[i], "-classify_surfaces_through_arcs_and_trihedral_pairs") == 0) {
+			f_classify_surfaces_through_arcs_and_trihedral_pairs = TRUE;
+			cout << "-classify_surfaces_through_arcs_and_trihedral_pairs " << endl;
+		}
+		else if (stringcmp(argv[i], "-create_surface") == 0) {
+			f_create_surface = TRUE;
+			surface_description = NEW_OBJECT(surface_create_description);
+			cout << "-create_surface" << endl;
+			i += surface_description->read_arguments(
+					argc - (i + 1), argv + i + 1,
+					verbose_level);
+			cout << "done with -create_surface" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+
+		else if (stringcmp(argv[i], "-sweep") == 0) {
+			f_sweep = TRUE;
+			sweep_fname.assign(argv[++i]);
+			cout << "-sweep " << sweep_fname << endl;
+		}
+
+		else if (stringcmp(argv[i], "-sweep_4") == 0) {
+			f_sweep_4 = TRUE;
+			sweep_4_fname.assign(argv[++i]);
+			sweep_4_surface_description = NEW_OBJECT(surface_create_description);
+			cout << "-sweep_4" << endl;
+			i += sweep_4_surface_description->read_arguments(
+					argc - (i + 1), argv + i + 1,
+					verbose_level);
+			cout << "done with -sweep_4" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-sweep_4 " << sweep_4_fname << endl;
+		}
+
+		else if (stringcmp(argv[i], "-six_arcs") == 0) {
+			f_six_arcs = TRUE;
+			cout << "-six_arcs" << endl;
+		}
+		else if (stringcmp(argv[i], "-filter_by_nb_Eckardt_points") == 0) {
+			f_filter_by_nb_Eckardt_points = TRUE;
+			nb_Eckardt_points = strtoi(argv[++i]);
+			cout << "-filter_by_nb_Eckardt_points " << nb_Eckardt_points << endl;
+		}
+		else if (stringcmp(argv[i], "-surface_quartic") == 0) {
+			f_surface_quartic = TRUE;
+			cout << "-surface_quartic" << endl;
+		}
+		else if (stringcmp(argv[i], "-surface_clebsch") == 0) {
+			f_surface_clebsch = TRUE;
+			cout << "=surface_clebsch" << endl;
+		}
+		else if (stringcmp(argv[i], "-surface_codes") == 0) {
+			f_surface_codes = TRUE;
+			cout << "-surface_codes" << endl;
+		}
+		else if (stringcmp(argv[i], "-trihedra1_control") == 0) {
+			f_trihedra1_control = TRUE;
+			Trihedra1_control = NEW_OBJECT(poset_classification_control);
+			i += Trihedra1_control->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading -trihedra1_control " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-trihedra2_control") == 0) {
+			f_trihedra2_control = TRUE;
+			Trihedra2_control = NEW_OBJECT(poset_classification_control);
+			i += Trihedra2_control->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading -trihedra2_control " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-control_six_arcs") == 0) {
+			f_control_six_arcs = TRUE;
+			Control_six_arcs = NEW_OBJECT(poset_classification_control);
+			i += Control_six_arcs->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading -control_six_arcs " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-make_gilbert_varshamov_code") == 0) {
+			f_make_gilbert_varshamov_code = TRUE;
+			make_gilbert_varshamov_code_n = strtoi(argv[++i]);
+			make_gilbert_varshamov_code_d = strtoi(argv[++i]);
+			cout << "-make_gilbert_varshamov_code" << make_gilbert_varshamov_code_n
+					<< " " << make_gilbert_varshamov_code_d << endl;
+		}
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;

@@ -144,6 +144,78 @@ public:
 
 };
 
+// #############################################################################
+// classification_of_cubic_surfaces_with_double_sixes_activity_description.cpp
+// #############################################################################
+
+//! description of an activity for a classification of cubic surfaces with 27 lines with double sixes
+
+
+class classification_of_cubic_surfaces_with_double_sixes_activity_description {
+public:
+
+	int f_report;
+
+	int f_identify_HCV;
+
+	int f_identify_F13;
+
+	int f_identify_Bes;
+
+	int f_identify_general_abcd;
+
+	int f_isomorphism_testing;
+		surface_create_description *isomorphism_testing_surface1;
+		surface_create_description *isomorphism_testing_surface2;
+
+	int f_recognize;
+		surface_create_description *recognize_surface;
+
+
+	classification_of_cubic_surfaces_with_double_sixes_activity_description();
+	~classification_of_cubic_surfaces_with_double_sixes_activity_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+
+
+};
+
+// #############################################################################
+// classification_of_cubic_surfaces_with_double_sixes_activity.cpp
+// #############################################################################
+
+//! an activity for a classification of cubic surfaces with 27 lines with double sixes
+
+
+class classification_of_cubic_surfaces_with_double_sixes_activity {
+public:
+
+	classification_of_cubic_surfaces_with_double_sixes_activity_description *Descr;
+	surface_classify_wedge *SCW;
+
+	classification_of_cubic_surfaces_with_double_sixes_activity();
+	~classification_of_cubic_surfaces_with_double_sixes_activity();
+	void init(
+			classification_of_cubic_surfaces_with_double_sixes_activity_description *Descr,
+			surface_classify_wedge *SCW,
+			int verbose_level);
+	void perform_activity(int verbose_level);
+	void report(int verbose_level);
+	void do_surface_identify_HCV(int verbose_level);
+	void do_surface_identify_F13(int verbose_level);
+	void do_surface_identify_Bes(int verbose_level);
+	void do_surface_identify_general_abcd(int verbose_level);
+	void do_surface_isomorphism_testing(
+			surface_create_description *surface_descr_isomorph1,
+			surface_create_description *surface_descr_isomorph2,
+			int verbose_level);
+	void do_recognize(
+			surface_create_description *surface_descr,
+			int verbose_level);
+
+
+};
 
 
 // #############################################################################
@@ -161,7 +233,7 @@ public:
 	finite_field *F;
 	action *A;
 
-	linear_group *LG;
+	//linear_group *LG;
 
 	surface_with_action *Surf_A;
 	surface_domain *Surf;
@@ -261,7 +333,7 @@ public:
 	~classify_double_sixes();
 	void null();
 	void freeself();
-	void init(surface_with_action *Surf_A, linear_group *LG,
+	void init(surface_with_action *Surf_A,
 			poset_classification_control *Control,
 			int verbose_level);
 	void compute_neighbors(int verbose_level);
@@ -403,6 +475,8 @@ public:
 
 	int f_report;
 
+	int f_report_with_group;
+
 	int f_export_points;
 
 	int f_clebsch;
@@ -543,9 +617,9 @@ class surface_classify_wedge {
 public:
 	finite_field *F;
 	int q;
-	linear_group *LG;
+	//linear_group *LG;
 
-	int f_semilinear;
+	//int f_semilinear;
 
 	std::string fname_base;
 
@@ -573,8 +647,8 @@ public:
 	~surface_classify_wedge();
 	void null();
 	void freeself();
-	void init(finite_field *F, linear_group *LG,
-		int f_semilinear, surface_with_action *Surf_A,
+	void init(
+		surface_with_action *Surf_A,
 		poset_classification_control *Control,
 		int verbose_level);
 	void do_classify_double_sixes(int verbose_level);
@@ -607,7 +681,7 @@ public:
 	void identify_surface(int *coeff_of_given_surface,
 		int &isomorphic_to, int *Elt_isomorphism,
 		int verbose_level);
-	void latex_surfaces(std::ostream &ost, int f_with_stabilizers);
+	void latex_surfaces(std::ostream &ost, int f_with_stabilizers, int verbose_level);
 	void report_surface(std::ostream &ost, int orbit_index, int verbose_level);
 	void generate_source_code(int verbose_level);
 		// no longer produces nb_E[] and single_six[]
@@ -750,6 +824,8 @@ public:
 		surface_with_action *Surf_A,
 		int verbose_level);
 	void create_surface_from_description(int verbose_level);
+	void override_group(std::string &group_order_text,
+			int nb_gens, std::string &gens_text, int verbose_level);
 	void create_surface_HCV(int a, int b, int verbose_level);
 	void create_surface_G13(int a, int verbose_level);
 	void create_surface_F13(int a, int verbose_level);
@@ -862,7 +938,10 @@ public:
 	std::string equation_parameters;
 	std::string equation_parameters_tex;
 
-
+	int f_override_group;
+	std::string override_group_order;
+	int override_group_nb_gens;
+	std::string override_group_gens;
 
 	std::vector<std::string> transform_coeffs;
 	std::vector<int> f_inverse_transform;
@@ -876,6 +955,90 @@ public:
 	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 	int get_q();
+};
+
+
+// #############################################################################
+// surface_domain_high_level.cpp
+// #############################################################################
+
+
+//! high level functions for cubic surfaces
+
+
+class surface_domain_high_level {
+
+public:
+
+
+	surface_domain_high_level();
+	~surface_domain_high_level();
+
+	void do_sweep_4(
+			projective_space_with_action *PA,
+			surface_create_description *Surface_Descr,
+			std::string &sweep_fname,
+			int verbose_level);
+	void do_create_surface(
+			projective_space_with_action *PA,
+			surface_create_description *Surface_Descr,
+			poset_classification_control *Control_six_arcs,
+			int verbose_level);
+	void classify_surfaces_with_double_sixes(
+			projective_space_with_action *PA,
+			poset_classification_control *Control,
+			surface_classify_wedge *&SCW,
+			int verbose_level);
+	void prepare_surface_classify_wedge(
+			finite_field *F,
+			projective_space_with_action *PA,
+			poset_classification_control *Control,
+			surface_domain *&Surf, surface_with_action *&Surf_A,
+			surface_classify_wedge *&SCW,
+			int verbose_level);
+	void do_study_surface(finite_field *F, int nb, int verbose_level);
+	void do_classify_surfaces_through_arcs_and_two_lines(
+			projective_space_with_action *PA,
+			poset_classification_control *Control_six_arcs,
+			int f_test_nb_Eckardt_points, int nb_E,
+			int verbose_level);
+	void do_classify_surfaces_through_arcs_and_trihedral_pairs(
+			projective_space_with_action *PA,
+			poset_classification_control *Control1,
+			poset_classification_control *Control2,
+			poset_classification_control *Control_six_arcs,
+			int f_test_nb_Eckardt_points, int nb_E,
+			int verbose_level);
+	void do_six_arcs(
+			projective_space_with_action *PA,
+			poset_classification_control *Control_six_arcs,
+			int f_filter_by_nb_Eckardt_points, int nb_Eckardt_points,
+			int verbose_level);
+	void do_cubic_surface_properties(
+			projective_space_with_action *PA,
+			std::string fname_csv, int defining_q,
+			int column_offset,
+			int verbose_level);
+	void do_cubic_surface_properties_analyze(
+			projective_space_with_action *PA,
+			std::string fname_csv, int defining_q,
+			int verbose_level);
+	void report_singular_surfaces(std::ostream &ost,
+			struct cubic_surface_data_set *Data, int nb_orbits, int verbose_level);
+	void report_non_singular_surfaces(std::ostream &ost,
+			struct cubic_surface_data_set *Data, int nb_orbits, int verbose_level);
+	void report_surfaces_by_lines(std::ostream &ost,
+			struct cubic_surface_data_set *Data, tally &T, int verbose_level);
+	void do_create_surface_reports(int q_max, int verbose_level);
+	void do_create_surface_atlas(int q_max, int verbose_level);
+	void do_create_surface_atlas_q_e(int q_max,
+			struct table_surfaces_field_order *T, int nb_e, int *Idx, int nb,
+			std::string &fname_report_tex,
+			int verbose_level);
+	void do_create_dickson_atlas(int verbose_level);
+	void make_fname_surface_report_tex(std::string &fname, int q, int ocn);
+	void make_fname_surface_report_pdf(std::string &fname, int q, int ocn);
+
 };
 
 // #############################################################################
@@ -913,8 +1076,8 @@ public:
 	long int *Pts_on_tangent_quadric;
 	int nb_pts_on_tangent_quadric;
 
-	int *line_type;
-	int *type_collected;
+	//int *line_type;
+	//int *type_collected;
 
 	int *Class_pts;
 	int nb_class_pts;
@@ -928,6 +1091,9 @@ public:
 	set_and_stabilizer *moved_surface;
 	//strong_generators *stab_gens_moved_surface;
 	strong_generators *stab_gens_P0;
+
+	strong_generators *Stab_gens_quartic;
+
 
 
 	surface_object_tangent_cone();
@@ -1050,9 +1216,6 @@ public:
 			action *A,
 			surface_create *SC,
 			six_arcs_not_on_a_conic *Six_arcs,
-			int f_surface_clebsch,
-			int f_surface_codes,
-			int f_surface_quartic,
 			int verbose_level);
 	void investigate_surface_and_write_report2(
 			std::ostream &ost,
@@ -1060,9 +1223,6 @@ public:
 			action *A,
 			surface_create *SC,
 			six_arcs_not_on_a_conic *Six_arcs,
-			int f_surface_clebsch,
-			int f_surface_codes,
-			int f_surface_quartic,
 			std::string &fname_mask,
 			std::string &label,
 			std::string &label_tex,
@@ -1158,16 +1318,20 @@ class surface_with_action {
 
 public:
 
-	int q;
-	finite_field *F; // do not free
+
+	projective_space_with_action *PA;
+
 	int f_semilinear;
 
 	surface_domain *Surf; // do not free
 
 	action *A; // linear group PGGL(4,q)
+
+	action *A_wedge; // linear group PGGL(4,q)
+
+
 	action *A2; // linear group PGGL(4,q) acting on lines
 	action *A_on_planes; // linear group PGGL(4,q) acting on planes
-	//sims *S; // linear group PGGL(4,q)
 
 	int *Elt1;
 
@@ -1185,12 +1349,8 @@ public:
 	~surface_with_action();
 	void null();
 	void freeself();
-	void init_with_linear_group(surface_domain *Surf,
-			linear_group *LG,
-			int f_recoordinatize,
-			int verbose_level);
 	void init(surface_domain *Surf,
-			action *A_linear,
+			projective_space_with_action *PA,
 			int f_recoordinatize,
 			int verbose_level);
 	int create_double_six_safely(
@@ -1209,9 +1369,13 @@ public:
 	void create_surface_and_do_report(
 			surface_create_description *Surface_Descr,
 			int f_has_control_six_arcs, poset_classification_control *Control_six_arcs,
-			int f_surface_clebsch,
-			int f_surface_codes,
-			int f_surface_quartic,
+			int verbose_level);
+	void test_group(
+			surface_create *SC,
+			int verbose_level);
+	void report_with_group(
+			surface_create *SC,
+			int f_has_control_six_arcs, poset_classification_control *Control_six_arcs,
 			int verbose_level);
 	void create_surface_object_with_action(
 			surface_create *SC,
@@ -1223,10 +1387,9 @@ public:
 	void do_report(
 			surface_create *SC,
 			int verbose_level);
-	void create_surface_sweep(
+	void sweep_4(
 			surface_create_description *Surface_Descr,
-			poset_classification_control *Control_six_arcs,
-			int f_sweep, std::string &sweep_fname,
+			std::string &sweep_fname,
 			int verbose_level);
 
 };
@@ -1523,7 +1686,6 @@ public:
 	void null();
 	void freeself();
 	void init(
-		finite_field *F, linear_group *LG4,
 		surface_with_action *Surf_A,
 		poset_classification_control *Control_six_arcs,
 		int f_test_nb_Eckardt_points, int nb_E,

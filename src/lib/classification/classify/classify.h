@@ -56,7 +56,7 @@ public:
 	void print_group_orders();
 	void print_summary(std::ostream &ost);
 	void print_latex(std::ostream &ost,
-		const char *title, int f_print_stabilizer_gens,
+			std::string &title, int f_print_stabilizer_gens,
 		int f_has_print_function,
 		void (*print_function)(std::ostream &ost, int i,
 				classification_step *Step, void *print_function_data),

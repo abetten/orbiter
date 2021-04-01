@@ -9,15 +9,13 @@
 //
 //
 
-#include "foundations/foundations.h"
-#include "group_actions.h"
-
+#include "orbiter.h"
 
 using namespace std;
 
-
 namespace orbiter {
-namespace group_actions {
+namespace top_level {
+
 
 
 projective_space_with_action::projective_space_with_action()
@@ -35,6 +33,7 @@ void projective_space_with_action::null()
 	q = 0;
 	F = NULL;
 	P = NULL;
+	PA2 = NULL;
 	A = NULL;
 	A_on_lines = NULL;
 	Elt1 = NULL;
@@ -44,6 +43,9 @@ void projective_space_with_action::freeself()
 {
 	if (P) {
 		FREE_OBJECT(P);
+	}
+	if (PA2) {
+		FREE_OBJECT(PA2);
 	}
 	if (A) {
 		FREE_OBJECT(A);
@@ -80,6 +82,23 @@ void projective_space_with_action::init(
 		verbose_level);
 	
 	init_group(f_semilinear, verbose_level);
+
+	if (n >= 3) {
+		if (f_v) {
+			cout << "projective_space_with_action::init n >= 3, so we initialize a plane" << endl;
+		}
+		PA2 = NEW_OBJECT(projective_space_with_action);
+		if (f_v) {
+			cout << "projective_space_with_action::init before PA2->init" << endl;
+		}
+		PA2->init(F, 2, f_semilinear,
+			f_init_incidence_structure,
+			verbose_level - 2);
+		if (f_v) {
+			cout << "projective_space_with_action::init after PA2->init" << endl;
+		}
+	}
+
 	
 	Elt1 = NEW_int(A->elt_size_in_int);
 
@@ -148,6 +167,7 @@ void projective_space_with_action::init_group(
 		cout << "projective_space_with_action::init_group done" << endl;
 	}
 }
+
 
 void projective_space_with_action::canonical_form(
 		projective_space_object_classifier_description *Canonical_form_PG_Descr,
@@ -290,10 +310,7 @@ void projective_space_with_action::canonical_labeling(
 strong_generators
 *projective_space_with_action::set_stabilizer_of_object(
 	object_in_projective_space *OiP, 
-	//int f_save_incma_in_and_out,
-	//std::string &save_incma_in_and_out_prefix,
 	int f_compute_canonical_form, bitvector *&Canonical_form,
-	//uchar *&canonical_form, int &canonical_form_len,
 	long int *canonical_labeling, int &canonical_labeling_len,
 	int verbose_level)
 // canonical_labeling[nb_rows + nb_cols] contains the canonical labeling
@@ -2824,6 +2841,92 @@ void projective_space_with_action::analyze_del_Pezzo_surface(formula *Formula,
 		cout << "projective_space_with_action::analyze_del_Pezzo_surface done" << endl;
 	}
 }
+
+
+void projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_PG(
+		int decomposition_by_element_power,
+		std::string &decomposition_by_element_data, std::string &fname_base,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_PG verbose_level="
+				<< verbose_level << endl;
+	}
+
+
+	finite_field *F;
+
+	F = P->F;
+
+
+	{
+		char title[1000];
+		char author[1000];
+
+		snprintf(title, 1000, "Cheat Sheet PG($%d,%d$)", n, F->q);
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		{
+			ofstream ost(fname_base);
+			latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_PG f_decomposition_by_element" << endl;
+			}
+
+			int *Elt;
+
+			Elt = NEW_int(A->elt_size_in_int);
+
+
+			A->make_element_from_string(Elt,
+					decomposition_by_element_data, verbose_level);
+
+
+			A->element_power_int_in_place(Elt,
+					decomposition_by_element_power, verbose_level);
+
+			report_decomposition_by_single_automorphism(
+					Elt, ost, fname_base,
+					verbose_level);
+
+			FREE_int(Elt);
+
+
+			L.foot(ost);
+
+		}
+		file_io Fio;
+
+		if (f_v) {
+			cout << "written file " << fname_base << " of size "
+					<< Fio.file_size(fname_base) << endl;
+		}
+	}
+
+	if (f_v) {
+		cout << "projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_PG done" << endl;
+	}
+
+}
+
 
 // #############################################################################
 // globals:

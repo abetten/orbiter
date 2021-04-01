@@ -107,41 +107,10 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	ECA = NULL;
 	f_isomorph_arguments = FALSE;
 	IA = NULL;
-	f_surface_classify = FALSE;
-	f_surface_report = FALSE;
-	f_surface_identify_HCV = FALSE;
-	f_surface_identify_F13 = FALSE;
-	f_surface_identify_Bes = FALSE;
-	f_surface_identify_general_abcd = FALSE;
-	f_surface_isomorphism_testing = FALSE;
-		surface_descr_isomorph1 = NULL;
-		surface_descr_isomorph2 = NULL;
-	f_surface_recognize = FALSE;
-		surface_descr = NULL;
-	f_classify_surfaces_through_arcs_and_two_lines = FALSE;
-	f_test_nb_Eckardt_points = FALSE;
-	nb_E = 0;
-	f_classify_surfaces_through_arcs_and_trihedral_pairs = FALSE;
-	f_trihedra1_control = FALSE;
-	Trihedra1_control = NULL;
-	f_trihedra2_control = FALSE;
-	Trihedra2_control = NULL;
-	f_control_six_arcs = FALSE;
-			Control_six_arcs = NULL;
-	f_create_surface = FALSE;
-	surface_description = NULL;
-
-	f_sweep = FALSE;
-	//std::string sweep_fname;
-
-	f_six_arcs = FALSE;
-	f_filter_by_nb_Eckardt_points = FALSE;
-	nb_Eckardt_points = 0;
 
 
-	f_surface_quartic = FALSE;
-	f_surface_clebsch = FALSE;
-	f_surface_codes = FALSE;
+
+
 
 	f_mindist = FALSE;
 	mindist = 0;
@@ -249,12 +218,6 @@ int group_theoretic_activity_description::read_arguments(
 			f_export_trees = TRUE;
 			cout << "-export_trees" << endl;
 		}
-#if 0
-		else if (stringcmp(argv[i], "-shallow_tree") == 0) {
-			f_shallow_tree = TRUE;
-			cout << "-shallow_tree" << endl;
-		}
-#endif
 
 		else if (stringcmp(argv[i], "-stabilizer") == 0) {
 			f_stabilizer = TRUE;
@@ -494,163 +457,6 @@ int group_theoretic_activity_description::read_arguments(
 		}
 
 
-		// cubic surfaces:
-		else if (stringcmp(argv[i], "-surface_classify") == 0) {
-			f_surface_classify = TRUE;
-			cout << "-surface_classify " << endl;
-		}
-		else if (stringcmp(argv[i], "-surface_report") == 0) {
-			f_surface_report = TRUE;
-			cout << "-surface_report " << endl;
-		}
-		else if (stringcmp(argv[i], "-surface_identify_HCV") == 0) {
-			f_surface_identify_HCV = TRUE;
-			cout << "-surface_identify_HCV " << endl;
-		}
-		else if (stringcmp(argv[i], "-surface_identify_F13") == 0) {
-			f_surface_identify_F13 = TRUE;
-			cout << "-surface_identify_F13 " << endl;
-		}
-		else if (stringcmp(argv[i], "-surface_identify_Bes") == 0) {
-			f_surface_identify_Bes = TRUE;
-			cout << "-surface_identify_Bes " << endl;
-		}
-		else if (stringcmp(argv[i], "-surface_identify_general_abcd") == 0) {
-			f_surface_identify_general_abcd = TRUE;
-			cout << "-surface_identify_general_abcd " << endl;
-		}
-		else if (stringcmp(argv[i], "-surface_isomorphism_testing") == 0) {
-			f_surface_isomorphism_testing = TRUE;
-			cout << "-surface_isomorphism_testing reading description of first surface" << endl;
-			surface_descr_isomorph1 = NEW_OBJECT(surface_create_description);
-			i += surface_descr_isomorph1->
-					read_arguments(argc - (i - 1), argv + i,
-					verbose_level);
-			cout << "-surface_isomorphism_testing after reading description of first surface" << endl;
-			cout << "the current argument is " << argv[i] << endl;
-			cout << "-surface_isomorphism_testing reading description of second surface" << endl;
-			surface_descr_isomorph2 = NEW_OBJECT(surface_create_description);
-			i += surface_descr_isomorph2->
-					read_arguments(argc - (i - 1), argv + i,
-					verbose_level);
-			cout << "done with -surface_isomorphism_testing" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-			cout << "-surface_isomorphism_testing " << endl;
-		}
-		else if (stringcmp(argv[i], "-surface_recognize") == 0) {
-			f_surface_recognize = TRUE;
-			cout << "-surface_recognize reading description of surface" << endl;
-			surface_descr = NEW_OBJECT(surface_create_description);
-			i += surface_descr->
-					read_arguments(argc - (i - 1), argv + i,
-					verbose_level);
-			cout << "done with -surface_recognize" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-			cout << "-surface_recognize " << endl;
-		}
-		else if (stringcmp(argv[i], "-classify_surfaces_through_arcs_and_two_lines") == 0) {
-			f_classify_surfaces_through_arcs_and_two_lines = TRUE;
-			cout << "-classify_surfaces_through_arcs_and_two_lines " << endl;
-		}
-
-		else if (stringcmp(argv[i], "-test_nb_Eckardt_points") == 0) {
-			f_test_nb_Eckardt_points = TRUE;
-			nb_E = strtoi(argv[++i]);
-			cout << "-test_nb_Eckardt_points " << nb_E << endl;
-		}
-		else if (stringcmp(argv[i], "-classify_surfaces_through_arcs_and_trihedral_pairs") == 0) {
-			f_classify_surfaces_through_arcs_and_trihedral_pairs = TRUE;
-			cout << "-classify_surfaces_through_arcs_and_trihedral_pairs " << endl;
-		}
-		else if (stringcmp(argv[i], "-create_surface") == 0) {
-			f_create_surface = TRUE;
-			surface_description = NEW_OBJECT(surface_create_description);
-			cout << "-create_surface" << endl;
-			i += surface_description->read_arguments(
-					argc - (i + 1), argv + i + 1,
-					verbose_level);
-			cout << "done with -create_surface" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
-
-		else if (stringcmp(argv[i], "-sweep") == 0) {
-			f_sweep = TRUE;
-			sweep_fname.assign(argv[++i]);
-			cout << "-sweep " << sweep_fname << endl;
-		}
-
-		else if (stringcmp(argv[i], "-six_arcs") == 0) {
-			f_six_arcs = TRUE;
-			cout << "-six_arcs" << endl;
-		}
-		else if (stringcmp(argv[i], "-filter_by_nb_Eckardt_points") == 0) {
-			f_filter_by_nb_Eckardt_points = TRUE;
-			nb_Eckardt_points = strtoi(argv[++i]);
-			cout << "-filter_by_nb_Eckardt_points " << nb_Eckardt_points << endl;
-		}
-		else if (stringcmp(argv[i], "-surface_quartic") == 0) {
-			f_surface_quartic = TRUE;
-			cout << "-surface_quartic" << endl;
-		}
-		else if (stringcmp(argv[i], "-surface_clebsch") == 0) {
-			f_surface_clebsch = TRUE;
-			cout << "=surface_clebsch" << endl;
-		}
-		else if (stringcmp(argv[i], "-surface_codes") == 0) {
-			f_surface_codes = TRUE;
-			cout << "-surface_codes" << endl;
-		}
-		else if (stringcmp(argv[i], "-trihedra1_control") == 0) {
-			f_trihedra1_control = TRUE;
-			Trihedra1_control = NEW_OBJECT(poset_classification_control);
-			i += Trihedra1_control->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			cout << "done reading -trihedra1_control " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-trihedra2_control") == 0) {
-			f_trihedra2_control = TRUE;
-			Trihedra2_control = NEW_OBJECT(poset_classification_control);
-			i += Trihedra2_control->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			cout << "done reading -trihedra2_control " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-control_six_arcs") == 0) {
-			f_control_six_arcs = TRUE;
-			Control_six_arcs = NEW_OBJECT(poset_classification_control);
-			i += Control_six_arcs->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			cout << "done reading -control_six_arcs " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
 
 
 

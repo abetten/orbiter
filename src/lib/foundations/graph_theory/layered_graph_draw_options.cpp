@@ -116,9 +116,9 @@ int layered_graph_draw_options::read_arguments(
 			f_corners = TRUE;
 			cout << "-corners " << endl;
 		}
-		else if (stringcmp(argv[i], "-rad") == 0) {
+		else if (stringcmp(argv[i], "-radius") == 0) {
 			rad = strtoi(argv[++i]);
-			cout << "-rad " << rad << endl;
+			cout << "-radius " << rad << endl;
 		}
 		else if (stringcmp(argv[i], "-embedded") == 0) {
 			f_embedded = TRUE;
@@ -206,7 +206,7 @@ void layered_graph_draw_options::print()
 	cout << "f_spanning_tree=" << f_spanning_tree << endl;
 	cout << "f_circle=" << f_circle << endl;
 	cout << "f_corners=" << f_corners << endl;
-	cout << "rad=" << rad << endl;
+	cout << "radius=" << rad << endl;
 	cout << "f_embedded=" << f_embedded << endl;
 	cout << "f_sideways=" << f_sideways << endl;
 	cout << "f_show_level_info=" << f_show_level_info << endl;

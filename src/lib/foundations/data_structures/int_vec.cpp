@@ -615,7 +615,7 @@ void int_vec::scan(const char *s, int *&v, int &len)
 
 void int_vec::scan_from_stream(istream & is, int *&v, int &len)
 {
-	int verbose_level = 1;
+	int verbose_level = 0;
 	int a;
 	char s[10000], c;
 	int l, h;

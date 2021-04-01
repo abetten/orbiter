@@ -755,6 +755,103 @@ void action::induced_action_on_orthogonal(action *A_old,
 		}
 }
 
+
+action *action::induced_action_on_wedge_product(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	action *A;
+	matrix_group *M;
+
+	if (f_v) {
+		cout << "action::induced_action_on_wedge_product" << endl;
+	}
+	A = NEW_OBJECT(action);
+
+
+	char str1[1000];
+	char str2[1000];
+	snprintf(str1, 1000, "_Wedge");
+	snprintf(str2, 1000, " {\\rm OnWedge}");
+
+	A->label.assign(label);
+	A->label_tex.assign(label_tex);
+	A->label.append(str1);
+	A->label_tex.append(str2);
+
+
+	if (f_v) {
+		cout << "the old_action " << label
+				<< " has base_length = " << base_len()
+			<< " and degree " << degree << endl;
+	}
+	A->f_has_subaction = TRUE;
+	A->subaction = this;
+	if (type_G != matrix_group_t) {
+		cout << "action::induced_action_on_wedge_product "
+				"old action not of matrix group type" << endl;
+		exit(1);
+	}
+	M = G.matrix_grp;
+
+	action_on_wedge_product *AW;
+
+	AW = NEW_OBJECT(action_on_wedge_product);
+
+
+
+
+	if (f_v) {
+		cout << "action::induced_action_on_wedge_product before AW->init" << endl;
+	}
+	AW->init(*this, verbose_level);
+	if (f_v) {
+		cout << "action::induced_action_on_wedge_product after AW->init" << endl;
+	}
+
+	A->type_G = action_on_wedge_product_t;
+	A->G.AW = AW;
+	A->f_allocated = TRUE;
+	A->make_element_size = make_element_size;
+	A->low_level_point_size = AW->low_level_point_size;
+
+	A->f_has_strong_generators = FALSE;
+
+	A->degree = AW->degree;
+	//A->base_len = 0;
+	if (f_v) {
+		cout << "action::induced_action_on_wedge_product "
+				"before init_function_pointers_induced_action" << endl;
+		}
+	A->ptr = NEW_OBJECT(action_pointer_table);
+	A->ptr->init_function_pointers_induced_action();
+
+
+
+	A->elt_size_in_int = elt_size_in_int;
+	A->coded_elt_size_in_char = coded_elt_size_in_char;
+
+	A->f_is_linear = TRUE;
+	A->dimension = AW->wedge_dimension;
+
+	if (f_v) {
+		cout << "action::induced_action_on_wedge_product "
+				"before allocate_element_data" << endl;
+		}
+	allocate_element_data();
+
+
+	if (f_v) {
+		cout << "action::induced_action_on_wedge_product "
+				"finished, created action " << A->label << endl;
+		cout << "degree=" << A->degree << endl;
+		cout << "make_element_size=" << A->make_element_size << endl;
+		cout << "low_level_point_size=" << A->low_level_point_size << endl;
+		print_info();
+		}
+	return A;
+}
+
+#if 0
 void action::induced_action_on_wedge_product(action *A_old, 
 	action_on_wedge_product *AW, 
 	int f_induce_action, sims *old_G, 
@@ -830,6 +927,7 @@ void action::induced_action_on_wedge_product(action *A_old,
 		print_info();
 		}
 }
+#endif
 
 void action::induced_action_by_subfield_structure(action *A_old, 
 	action_by_subfield_structure *SubfieldStructure, 

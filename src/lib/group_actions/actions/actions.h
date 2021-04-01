@@ -641,10 +641,13 @@ public:
 		action_on_orthogonal *AO, 
 		int f_induce_action, sims *old_G, 
 		int verbose_level);
+	action *induced_action_on_wedge_product(int verbose_level);
+#if 0
 	void induced_action_on_wedge_product(action *A_old, 
 		action_on_wedge_product *AW, 
 		int f_induce_action, sims *old_G, 
 		int verbose_level);
+#endif
 	void induced_action_by_subfield_structure(action *A_old, 
 		action_by_subfield_structure *SubfieldStructure, 
 		int f_induce_action, sims *old_G, 

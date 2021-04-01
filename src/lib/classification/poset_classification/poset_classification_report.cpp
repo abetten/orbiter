@@ -209,6 +209,9 @@ void poset_classification::report(std::ostream &ost, int verbose_level)
 		cout << "poset_classification::report" << endl;
 	}
 
+	if (f_v) {
+		cout << "poset_classification::report Orbits" << endl;
+	}
 	ost << "Poset classification up to depth " << depth << "\\\\" << endl;
 
 	ost << endl;
@@ -217,13 +220,22 @@ void poset_classification::report(std::ostream &ost, int verbose_level)
 
 
 	if (f_v) {
+		cout << "poset_classification::report Number of Orbits By Level" << endl;
+	}
+	if (f_v) {
 		cout << "poset_classification::report before section Number of Orbits By Level" << endl;
 	}
 
 
 	ost << "\\subsection*{Number of Orbits By Level}" << endl;
 
+	if (f_v) {
+		cout << "poset_classification::report before report_number_of_orbits_at_level" << endl;
+	}
 	report_number_of_orbits_at_level(ost);
+	if (f_v) {
+		cout << "poset_classification::report after report_number_of_orbits_at_level" << endl;
+	}
 
 
 
@@ -237,7 +249,13 @@ void poset_classification::report(std::ostream &ost, int verbose_level)
 	ost << "\\subsection*{Summary of Orbit Representatives}" << endl;
 	ost << endl;
 
+	if (f_v) {
+		cout << "poset_classification::report before report_orbits_summary" << endl;
+	}
 	report_orbits_summary(ost, verbose_level);
+	if (f_v) {
+		cout << "poset_classification::report after report_orbits_summary" << endl;
+	}
 
 
 	ost << endl;
@@ -275,6 +293,9 @@ void poset_classification::report(std::ostream &ost, int verbose_level)
 	for (level = 0; level <= depth; level++) {
 
 
+		if (f_v) {
+			cout << "poset_classification::report Orbits at Level " << level << ":" << endl;
+		}
 		ost << endl;
 		ost << "\\subsection*{Orbits at Level " << level << "}" << endl;
 		ost << endl;
@@ -431,7 +452,7 @@ void poset_classification::report_orbits_summary(std::ostream &ost, int verbose_
 			}
 			Schreier_vector = O->get_Schreier_vector();
 
-			if (level < depth) {
+			if (level < depth && Schreier_vector) {
 				if (Schreier_vector == NULL) {
 					cout << "poset_classification::report_orbits_summary Schreier_vector == NULL" << endl;
 					exit(1);
@@ -580,7 +601,7 @@ void poset_classification::report_poset_of_orbits(std::ostream &ost)
 		exit(1);
 	}
 
-	sprintf(str, " -xin %d -yin %d -xout %d -yout %d -rad %d",
+	sprintf(str, " -xin %d -yin %d -xout %d -yout %d -radius %d",
 			Control->draw_options->xin,
 			Control->draw_options->yin,
 			Control->draw_options->xout,

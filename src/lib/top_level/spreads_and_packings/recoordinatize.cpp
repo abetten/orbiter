@@ -251,8 +251,6 @@ void recoordinatize::compute_starter(long int *&S, int &size,
 	strong_generators *&Strong_gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 3);
-	//int f_vvv = (verbose_level >= 3);
 	
 	
 	if (f_v) {
@@ -384,8 +382,7 @@ void recoordinatize::stabilizer_of_first_three(
 
 	if (f_v) {
 		cout << "recoordinatize::stabilizer_of_first_three "
-				"before make_generators_stabilizer_of_"
-				"three_components" << endl;
+				"before make_generators_stabilizer_of_three_components" << endl;
 	}
 
 	action_global AG;
@@ -394,6 +391,12 @@ void recoordinatize::stabilizer_of_first_three(
 		A /* A_PGL_n_q */,
 		A0 /* A_PGL_k_q */,
 		k, gens2, verbose_level - 1);
+
+	if (f_v) {
+		cout << "recoordinatize::stabilizer_of_first_three "
+				"after make_generators_stabilizer_of_three_components" << endl;
+	}
+
 
 	if (f_v) {
 		cout << "recoordinatize::stabilizer_of_first_three "
@@ -681,8 +684,8 @@ void recoordinatize::compute_live_points_low_level(
 					check_function_incremental_data,
 					0/*verbose_level - 4*/)) {
 				if (f_vv && (cnt % cnt_mod) == 0 && cnt) {
-					cout << "recoordinatize::compute_live_points_"
-							"low_level element " << cnt << " = " << h << ", "
+					cout << "recoordinatize::compute_live_points_low_level "
+							"element " << cnt << " = " << h << ", "
 							<< z << " subspace rank " << a
 							<< " is accepted as live point no "
 							<< nb_live_points << endl;
@@ -691,8 +694,8 @@ void recoordinatize::compute_live_points_low_level(
 			}
 			else {
 				if (f_vv && (cnt % cnt_mod) == 0) {
-					cout << "recoordinatize::compute_live_points_"
-							"low_level element " << cnt << " = " << h << ", "
+					cout << "recoordinatize::compute_live_points_low_level "
+							"element " << cnt << " = " << h << ", "
 							<< z << " subspace rank " << a
 							<< " is not accepted" << endl;
 				}
@@ -784,5 +787,3 @@ void recoordinatize::make_first_three(
 }
 
 }}
-
-

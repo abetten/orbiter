@@ -85,12 +85,6 @@ public:
 	void matrix_convert_to_numerical(discreta_matrix &A, int *AA, int q);
 
 
-	void classify_surfaces(
-			finite_field *F, linear_group *LG,
-			poset_classification_control *Control,
-			surface_domain *&Surf, surface_with_action *&Surf_A,
-			surface_classify_wedge *&SCW,
-			int verbose_level);
 	void young_symmetrizer(int n, int verbose_level);
 	void young_symmetrizer_sym_4(int verbose_level);
 	void report_tactical_decomposition_by_automorphism_group(
@@ -136,24 +130,6 @@ public:
 	void do_eigenstuff_from_file(
 			finite_field *F, int n, std::string &fname, int verbose_level);
 
-	void do_study_surface(finite_field *F, int nb, int verbose_level);
-	void do_cubic_surface_properties(
-			linear_group *LG,
-			std::string fname_csv, int defining_q,
-			int column_offset,
-			int verbose_level);
-	void do_cubic_surface_properties_analyze(
-			linear_group *LG,
-			std::string fname_csv, int defining_q,
-			int verbose_level);
-	void report_singular_surfaces(std::ostream &ost,
-			struct cubic_surface_data_set *Data, int nb_orbits,
-			int verbose_level);
-	void report_non_singular_surfaces(std::ostream &ost,
-			struct cubic_surface_data_set *Data, int nb_orbits,
-			int verbose_level);
-	void report_surfaces_by_lines(std::ostream &ost,
-			struct cubic_surface_data_set *Data, tally &T, int verbose_level);
 	void orbits_on_points(
 			linear_group *LG,
 			action *A2,
@@ -344,42 +320,6 @@ public:
 	isomorph_arguments *IA;
 
 
-	// for cubic surfaces:
-	int f_surface_classify;
-	int f_surface_report;
-	int f_surface_identify_HCV;
-	int f_surface_identify_F13;
-	int f_surface_identify_Bes;
-	int f_surface_identify_general_abcd;
-	int f_surface_isomorphism_testing;
-		surface_create_description *surface_descr_isomorph1;
-		surface_create_description *surface_descr_isomorph2;
-	int f_surface_recognize;
-		surface_create_description *surface_descr;
-	int f_classify_surfaces_through_arcs_and_two_lines;
-	int f_test_nb_Eckardt_points;
-	int nb_E;
-	int f_classify_surfaces_through_arcs_and_trihedral_pairs;
-		int f_trihedra1_control;
-		poset_classification_control *Trihedra1_control;
-		int f_trihedra2_control;
-		poset_classification_control *Trihedra2_control;
-		int f_control_six_arcs;
-		poset_classification_control *Control_six_arcs;
-
-		int f_create_surface;
-		surface_create_description *surface_description;
-
-	int f_sweep;
-	std::string sweep_fname;
-
-	int f_six_arcs;
-	int f_filter_by_nb_Eckardt_points;
-	int nb_Eckardt_points;
-	int f_surface_quartic;
-	int f_surface_clebsch;
-	int f_surface_codes;
-
 
 
 		// subspace orbits:
@@ -558,41 +498,6 @@ public:
 			int verbose_level);
 
 
-	// group_theoretic_activity_for_surfaces.cpp:
-
-	void do_create_surface(
-			surface_create_description *Descr,
-			poset_classification_control *Control_six_arcs,
-			int f_sweep, std::string &sweep_fname,
-			int verbose_level);
-	void do_surface_classify(int verbose_level);
-	void do_surface_report(int verbose_level);
-	void do_surface_identify_HCV(int verbose_level);
-	void do_surface_identify_F13(int verbose_level);
-	void do_surface_identify_Bes(int verbose_level);
-	void do_surface_identify_general_abcd(int verbose_level);
-	void do_surface_isomorphism_testing(
-			surface_create_description *surface_descr_isomorph1,
-			surface_create_description *surface_descr_isomorph2,
-			int verbose_level);
-	void do_surface_recognize(
-			surface_create_description *surface_descr,
-			int verbose_level);
-	void do_classify_surfaces_through_arcs_and_two_lines(
-			poset_classification_control *Control_six_arcs,
-			int f_test_nb_Eckardt_points, int nb_E,
-			int verbose_level);
-	void do_classify_surfaces_through_arcs_and_trihedral_pairs(
-			poset_classification_control *Control1,
-			poset_classification_control *Control2,
-			poset_classification_control *Control_six_arcs,
-			int f_test_nb_Eckardt_points, int nb_E,
-			int verbose_level);
-	void do_six_arcs(
-			poset_classification_control *Control_six_arcs,
-			int f_filter_by_nb_Eckardt_points, int nb_Eckardt_points,
-			int verbose_level);
-
 
 };
 
@@ -727,133 +632,6 @@ public:
 
 };
 
-
-// #############################################################################
-// projective_space_activity_description.cpp
-// #############################################################################
-
-//! description of an activity associated with a projective space
-
-
-class projective_space_activity_description {
-public:
-
-	int f_input;
-	data_input_stream *Data;
-
-
-	int f_canonical_form_PG;
-	projective_space_object_classifier_description *Canonical_form_PG_Descr;
-
-	int f_table_of_cubic_surfaces_compute_properties;
-	std::string table_of_cubic_surfaces_compute_fname_csv;
-	int table_of_cubic_surfaces_compute_defining_q;
-	int table_of_cubic_surfaces_compute_column_offset;
-
-	int f_cubic_surface_properties_analyze;
-	std::string cubic_surface_properties_fname_csv;
-	int cubic_surface_properties_defining_q;
-
-	int f_canonical_form_of_code;
-	std::string canonical_form_of_code_label;
-	int canonical_form_of_code_m;
-	int canonical_form_of_code_n;
-	std::string canonical_form_of_code_text;
-
-	int f_map;
-	std::string map_label;
-	std::string map_parameters;
-
-	int f_analyze_del_Pezzo_surface;
-	std::string analyze_del_Pezzo_surface_label;
-	std::string analyze_del_Pezzo_surface_parameters;
-
-	int f_cheat_sheet_for_decomposition_by_element_PG;
-	int decomposition_by_element_power;
-	std::string decomposition_by_element_data;
-	std::string decomposition_by_element_fname;
-
-	int f_define_surface;
-	std::string define_surface_label;
-	surface_create_description *Surface_Descr;
-
-	projective_space_activity_description();
-	~projective_space_activity_description();
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-
-
-};
-
-
-// #############################################################################
-// projective_space_activity.cpp
-// #############################################################################
-
-//! an activity associated with a projective space
-
-
-class projective_space_activity {
-public:
-
-	projective_space_activity_description *Descr;
-
-	projective_space_with_action *PA;
-
-
-	projective_space_activity();
-	~projective_space_activity();
-	void perform_activity(int verbose_level);
-	void map(
-			projective_space_with_action *PA,
-			std::string &label,
-			std::string &evaluate_text,
-			int verbose_level);
-	void analyze_del_Pezzo_surface(
-			projective_space_with_action *PA,
-			std::string &label,
-			std::string &evaluate_text,
-			int verbose_level);
-	void analyze_del_Pezzo_surface_formula_given(
-			projective_space_with_action *PA,
-			formula *F,
-			std::string &evaluate_text,
-			int verbose_level);
-	void canonical_form_of_code(
-			projective_space_with_action *PA,
-			std::string &label, int m, int n,
-			std::string &data,
-			int verbose_level);
-	void do_cubic_surface_properties(
-			projective_space_with_action *PA,
-			std::string fname_csv, int defining_q,
-			int column_offset,
-			int verbose_level);
-	void do_cubic_surface_properties_analyze(
-			projective_space_with_action *PA,
-			std::string fname_csv, int defining_q,
-			int verbose_level);
-	void report_singular_surfaces(std::ostream &ost,
-			struct cubic_surface_data_set *Data, int nb_orbits, int verbose_level);
-	void report_non_singular_surfaces(std::ostream &ost,
-			struct cubic_surface_data_set *Data, int nb_orbits, int verbose_level);
-	void report_surfaces_by_lines(std::ostream &ost,
-			struct cubic_surface_data_set *Data, tally &T, int verbose_level);
-	void do_cheat_sheet_for_decomposition_by_element_PG(
-			projective_space_with_action *PA,
-			int decomposition_by_element_power,
-			std::string &decomposition_by_element_data, std::string &fname_base,
-			int verbose_level);
-	void do_create_surface(
-			projective_space_with_action *PA,
-			surface_create_description *Surface_Descr,
-			surface_with_action *&Surf_A,
-			surface_create *&SC,
-			int verbose_level);
-
-
-};
 
 
 

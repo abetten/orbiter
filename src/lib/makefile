@@ -218,18 +218,11 @@ MODULES= \
 		group_actions/actions/stabilizer_chain_base_data.o \
 		group_actions/data_structures/group.o \
 		group_actions/data_structures/incidence_structure_with_group.o \
-		group_actions/data_structures/object_in_projective_space_with_action.o \
 		group_actions/data_structures/orbit_rep.o \
 		group_actions/data_structures/orbit_transversal.o \
 		group_actions/data_structures/orbit_type_repository.o \
 		group_actions/data_structures/orthogonal_space_with_action_description.o \
 		group_actions/data_structures/orthogonal_space_with_action.o \
-		group_actions/data_structures/projective_space_job_description.o \
-		group_actions/data_structures/projective_space_job.o \
-		group_actions/data_structures/projective_space_object_classifier_description.o \
-		group_actions/data_structures/projective_space_object_classifier.o \
-		group_actions/data_structures/projective_space_with_action_description.o \
-		group_actions/data_structures/projective_space_with_action.o \
 		group_actions/data_structures/schreier_vector_handler.o \
 		group_actions/data_structures/schreier_vector.o \
 		group_actions/data_structures/set_and_stabilizer.o \
@@ -337,26 +330,16 @@ MODULES= \
 		top_level/algebra_and_number_theory/character_table_burnside.o \
 		top_level/algebra_and_number_theory/group_theoretic_activity_description.o \
 		top_level/algebra_and_number_theory/group_theoretic_activity.o \
-		top_level/algebra_and_number_theory/group_theoretic_activity_for_surfaces.o \
 		top_level/algebra_and_number_theory/orbits_on_polynomials.o \
 		top_level/algebra_and_number_theory/orthogonal_space_activity_description.o \
 		top_level/algebra_and_number_theory/orthogonal_space_activity.o \
-		top_level/algebra_and_number_theory/projective_space_activity_description.o \
-		top_level/algebra_and_number_theory/projective_space_activity.o \
 		top_level/algebra_and_number_theory/young.o \
 		top_level/combinatorics/boolean_function_classify.o \
-		top_level/combinatorics/cayley_graph_search.o \
-		top_level/combinatorics/create_graph_description.o \
-		top_level/combinatorics/create_graph.o \
 		top_level/combinatorics/delandtsheer_doyen_description.o \
 		top_level/combinatorics/delandtsheer_doyen.o \
 		top_level/combinatorics/design_create_description.o \
 		top_level/combinatorics/design_create.o \
 		top_level/combinatorics/difference_set_in_heisenberg_group.o \
-		top_level/combinatorics/graph_classify_description.o \
-		top_level/combinatorics/graph_classify.o \
-		top_level/combinatorics/graph_theoretic_activity_description.o \
-		top_level/combinatorics/graph_theoretic_activity.o \
 		top_level/combinatorics/hadamard_classify.o \
 		top_level/combinatorics/hall_system_classify.o \
 		top_level/combinatorics/large_set_classify.o \
@@ -382,6 +365,13 @@ MODULES= \
 		top_level/geometry/search_blocking_set.o \
 		top_level/geometry/singer_cycle.o \
 		top_level/geometry/tensor_classify.o \
+		top_level/graph_theory/cayley_graph_search.o \
+		top_level/graph_theory/create_graph_description.o \
+		top_level/graph_theory/create_graph.o \
+		top_level/graph_theory/graph_classify_description.o \
+		top_level/graph_theory/graph_classify.o \
+		top_level/graph_theory/graph_theoretic_activity_description.o \
+		top_level/graph_theory/graph_theoretic_activity.o \
 		top_level/interfaces/interface_algebra.o \
 		top_level/interfaces/interface_coding_theory.o \
 		top_level/interfaces/interface_combinatorics.o \
@@ -402,6 +392,15 @@ MODULES= \
 		top_level/orbits/orbit_of_equations.o \
 		top_level/orbits/orbit_of_sets.o \
 		top_level/orbits/orbit_of_subspaces.o \
+		top_level/projective_space/object_in_projective_space_with_action.o \
+		top_level/projective_space/projective_space_activity_description.o \
+		top_level/projective_space/projective_space_activity.o \
+		top_level/projective_space/projective_space_job_description.o \
+		top_level/projective_space/projective_space_job.o \
+		top_level/projective_space/projective_space_object_classifier_description.o \
+		top_level/projective_space/projective_space_object_classifier.o \
+		top_level/projective_space/projective_space_with_action_description.o \
+		top_level/projective_space/projective_space_with_action.o \
 		top_level/semifields/semifield_classify_description.o \
 		top_level/semifields/semifield_classify_with_substructure.o \
 		top_level/semifields/semifield_classify.o \
@@ -435,6 +434,8 @@ MODULES= \
 		top_level/surfaces/arc_lifting.o \
 		top_level/surfaces/arc_orbits_on_pairs.o \
 		top_level/surfaces/arc_partition.o \
+		top_level/surfaces/classification_of_cubic_surfaces_with_double_sixes_activity_description.o \
+		top_level/surfaces/classification_of_cubic_surfaces_with_double_sixes_activity.o \
 		top_level/surfaces/classify_double_sixes.o \
 		top_level/surfaces/classify_trihedral_pairs.o \
 		top_level/surfaces/cubic_surface_activity_description.o \
@@ -446,6 +447,7 @@ MODULES= \
 		top_level/surfaces/surface_create_by_arc_lifting.o \
 		top_level/surfaces/surface_create_description.o \
 		top_level/surfaces/surface_create.o \
+		top_level/surfaces/surface_domain_high_level.o \
 		top_level/surfaces/surface_object_tangent_cone.o \
 		top_level/surfaces/surface_object_with_action.o \
 		top_level/surfaces/surface_study.o \

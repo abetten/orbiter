@@ -20,6 +20,8 @@ cubic_surface_activity_description::cubic_surface_activity_description()
 {
 	f_report = FALSE;
 
+	f_report_with_group = FALSE;
+
 	f_export_points = FALSE;
 
 	f_clebsch = FALSE;
@@ -48,6 +50,10 @@ int cubic_surface_activity_description::read_arguments(
 		if (stringcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			cout << "-report " << endl;
+		}
+		else if (stringcmp(argv[i], "-report_with_group") == 0) {
+			f_report_with_group = TRUE;
+			cout << "-report_with_group " << endl;
 		}
 		else if (stringcmp(argv[i], "-export_points") == 0) {
 			f_export_points = TRUE;

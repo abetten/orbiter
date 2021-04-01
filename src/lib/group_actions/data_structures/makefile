@@ -8,18 +8,11 @@ LFLAGS = -lm
 MODULES = \
 	group.o \
 	incidence_structure_with_group.o \
-	object_in_projective_space_with_action.o \
 	orbit_rep.o \
 	orbit_transversal.o \
 	orbit_type_repository.o \
 	orthogonal_space_with_action_description.o \
 	orthogonal_space_with_action.o \
-	projective_space_job_description.o \
-	projective_space_job.o \
-	projective_space_object_classifier_description.o \
-	projective_space_object_classifier.o \
-	projective_space_with_action_description.o \
-	projective_space_with_action.o \
 	schreier_vector_handler.o \
 	schreier_vector.o \
 	set_and_stabilizer.o \

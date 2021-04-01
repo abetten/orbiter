@@ -26,6 +26,7 @@ namespace top_level {
 
 class interface_algebra {
 
+#if 0
 	int f_linear_group;
 	linear_group_description *Linear_group_description;
 	finite_field *F;
@@ -33,6 +34,7 @@ class interface_algebra {
 
 	int f_group_theoretic_activity;
 	group_theoretic_activity_description *Group_theoretic_activity_description;
+#endif
 
 #if 0
 	int f_finite_field_activity;
@@ -122,7 +124,8 @@ class interface_coding_theory {
 	int table_of_bounds_n_max;
 	int table_of_bounds_q;
 
-	int f_upper_bound_for_d;
+	int f_make_bounds_for_d_given_n_and_k_and_q;
+
 	int f_BCH;
 	int f_BCH_dual;
 	int BCH_t;
@@ -391,6 +394,11 @@ class interface_cryptography {
 	int f_square_root_mod;
 	std::string square_root_mod_a;
 	std::string square_root_mod_m;
+
+	int f_all_square_roots_mod_n;
+	std::string all_square_roots_mod_n_a;
+	std::string all_square_roots_mod_n_n;
+
 	int f_quadratic_sieve;
 	int quadratic_sieve_n;
 	int quadratic_sieve_factorbase;
@@ -542,15 +550,6 @@ public:
 	void do_create_BLT_set(BLT_set_create_description *Descr, int verbose_level);
 	void do_create_spread(spread_create_description *Descr, int verbose_level);
 	void do_create_surface(surface_create_description *Descr, int verbose_level);
-	void do_create_surface_reports(int q_max, int verbose_level);
-	void do_create_surface_atlas(int q_max, int verbose_level);
-	void do_create_surface_atlas_q_e(int q_max,
-			struct table_surfaces_field_order *T, int nb_e, int *Idx, int nb,
-			std::string &fname_report_tex,
-			int verbose_level);
-	void do_create_dickson_atlas(int verbose_level);
-	void make_fname_surface_report_tex(std::string &fname, int q, int ocn);
-	void make_fname_surface_report_pdf(std::string &fname, int q, int ocn);
 
 };
 
@@ -608,6 +607,9 @@ class interface_symbol_table {
 
 	int f_graph_theoretic_activity;
 	graph_theoretic_activity_description * Graph_theoretic_activity_description;
+
+	int f_classification_of_cubic_surfaces_with_double_sixes_activity;
+	classification_of_cubic_surfaces_with_double_sixes_activity_description *Classification_of_cubic_surfaces_with_double_sixes_activity_description;
 
 public:
 
@@ -667,6 +669,10 @@ public:
 	void do_graph_theoretic_activity(
 			orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
+	void do_classification_of_cubic_surfaces_with_double_sixes_activity(
+			orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+
 
 };
 

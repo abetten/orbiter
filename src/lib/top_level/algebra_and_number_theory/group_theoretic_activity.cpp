@@ -250,86 +250,6 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 
 
-	// surfaces:
-
-
-	else if (Descr->f_surface_classify) {
-		do_surface_classify(verbose_level);
-	}
-	else if (Descr->f_surface_report) {
-		do_surface_report(verbose_level);
-	}
-	else if (Descr->f_surface_identify_HCV) {
-		do_surface_identify_HCV(verbose_level);
-	}
-	else if (Descr->f_surface_identify_F13) {
-		do_surface_identify_F13(verbose_level);
-	}
-	else if (Descr->f_surface_identify_Bes) {
-		do_surface_identify_Bes(verbose_level);
-	}
-	else if (Descr->f_surface_identify_general_abcd) {
-		do_surface_identify_general_abcd(verbose_level);
-	}
-	else if (Descr->f_surface_isomorphism_testing) {
-		do_surface_isomorphism_testing(
-				Descr->surface_descr_isomorph1,
-				Descr->surface_descr_isomorph2,
-				verbose_level);
-	}
-	else if (Descr->f_surface_recognize) {
-		do_surface_recognize(Descr->surface_descr, verbose_level);
-	}
-
-	else if (Descr->f_classify_surfaces_through_arcs_and_two_lines) {
-
-		if (!Descr->f_control_six_arcs) {
-			cout << "please use option -control_six_arcs <description> -end" << endl;
-			exit(1);
-		}
-		do_classify_surfaces_through_arcs_and_two_lines(
-				Descr->Control_six_arcs,
-				Descr->f_test_nb_Eckardt_points, Descr->nb_E,
-				verbose_level);
-	}
-
-	else if (Descr->f_classify_surfaces_through_arcs_and_trihedral_pairs) {
-		if (!Descr->f_trihedra1_control) {
-			cout << "please use option -trihedra1_control <description> -end" << endl;
-			exit(1);
-		}
-		if (!Descr->f_trihedra2_control) {
-			cout << "please use option -trihedra2_control <description> -end" << endl;
-			exit(1);
-		}
-		if (!Descr->f_control_six_arcs) {
-			cout << "please use option -control_six_arcs <description> -end" << endl;
-			exit(1);
-		}
-		do_classify_surfaces_through_arcs_and_trihedral_pairs(
-				Descr->Trihedra1_control, Descr->Trihedra2_control,
-				Descr->Control_six_arcs,
-				Descr->f_test_nb_Eckardt_points, Descr->nb_E,
-				verbose_level);
-	}
-	else if (Descr->f_create_surface) {
-		if (!Descr->f_control_six_arcs) {
-			cout << "please use option -control_six_arcs <description> -end" << endl;
-			exit(1);
-		}
-		do_create_surface(Descr->surface_description, Descr->Control_six_arcs,
-				Descr->f_sweep, Descr->sweep_fname,
-				verbose_level);
-	}
-	else if (Descr->f_six_arcs) {
-		if (!Descr->f_control_six_arcs) {
-			cout << "please use option -control_six_arcs <description> -end" << endl;
-			exit(1);
-		}
-		do_six_arcs(Descr->Control_six_arcs,
-				Descr->f_filter_by_nb_Eckardt_points, Descr->nb_Eckardt_points,
-				verbose_level);
-	}
 
 	// spreads:
 
@@ -1944,6 +1864,10 @@ void group_theoretic_activity::orbits_on_subsets(int verbose_level)
 		exit(1);
 		//Control = NEW_OBJECT(poset_classification_control);
 	}
+	if (f_v) {
+		cout << "group_theoretic_activity::orbits_on_subsets control=" << endl;
+		Control->print();
+	}
 
 
 	Poset->init_subset_lattice(A1, A2,
@@ -2471,66 +2395,6 @@ void group_theoretic_activity::do_tensor_permutations(int verbose_level)
 		cout << "group_theoretic_activity::do_tensor_permutations done" << endl;
 	}
 }
-
-#if 0
-
-tensor_classify *T;
-
-T = NEW_OBJECT(tensor_classify);
-
-T->init(nb_factors, d, q, depth,
-		0/*verbose_level*/);
-
-if (f_tensor_ranks) {
-	cout << "before T->W->compute_tensor_ranks" << endl;
-	T->W->compute_tensor_ranks(verbose_level);
-	cout << "after T->W->compute_tensor_ranks" << endl;
-}
-
-{
-	int *result = NULL;
-
-	cout << "time check: ";
-	Os.time_check(cout, t0);
-	cout << endl;
-
-	cout << "tensor_classify::init " << __FILE__ << ":" << __LINE__ << endl;
-
-	int nb_gens, degree;
-
-	if (f_permutations) {
-		cout << "before T->W->compute_permutations_and_write_to_file" << endl;
-		T->W->compute_permutations_and_write_to_file(T->SG, T->A, result,
-				nb_gens, degree, nb_factors,
-				verbose_level);
-		cout << "after T->W->compute_permutations_and_write_to_file" << endl;
-	}
-	//wreath_product_orbits_CUDA(W, SG, A,
-	// result, nb_gens, degree, nb_factors, verbose_level);
-
-	if (f_orbits) {
-		cout << "before T->W->orbits_using_files_and_union_find" << endl;
-		T->W->orbits_using_files_and_union_find(T->SG, T->A, result, nb_gens, degree, nb_factors,
-				verbose_level);
-		cout << "after T->W->orbits_using_files_and_union_find" << endl;
-	}
-	if (f_orbits_restricted) {
-		cout << "before T->W->orbits_restricted" << endl;
-		T->W->orbits_restricted(T->SG, T->A, result,
-				nb_gens, degree, nb_factors, orbits_restricted_fname,
-				verbose_level);
-		cout << "after T->W->orbits_restricted" << endl;
-	}
-	if (f_orbits_restricted_compute) {
-		cout << "before T->W->orbits_restricted_compute" << endl;
-		T->W->orbits_restricted_compute(T->SG, T->A, result,
-				nb_gens, degree, nb_factors, orbits_restricted_fname,
-				verbose_level);
-		cout << "after T->W->orbits_restricted_compute" << endl;
-	}
-}
-
-#endif
 
 
 void group_theoretic_activity::do_linear_codes(int minimum_distance,

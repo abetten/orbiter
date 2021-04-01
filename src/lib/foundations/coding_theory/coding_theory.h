@@ -80,6 +80,11 @@ public:
 			int n, int k, int q, int verbose_level);
 	void make_table_of_bounds(
 			int n_max, int q, int verbose_level);
+	void make_gilbert_varshamov_code(
+			int n, int k, int d, int q, projective_space *P, int verbose_level);
+	void make_gilbert_varshamov_code_recursion(
+			projective_space *P, int n, int d, long int *set, int *f_forbidden, int level, int verbose_level);
+	int gilbert_varshamov_lower_bound_for_d(int n, int k, int q, int verbose_level);
 	int singleton_bound_for_d(int n, int k, int q, int verbose_level);
 	int hamming_bound_for_d(int n, int k, int q, int verbose_level);
 	int plotkin_bound_for_d(int n, int k, int q, int verbose_level);
@@ -136,6 +141,10 @@ public:
 			int n,
 			long int *basis_set, int k,
 			int f_embellish,
+			int verbose_level);
+	void matrix_from_projective_set(finite_field *F,
+			int n, int k, long int *columns_set_of_size_n,
+			int *genma,
 			int verbose_level);
 	void do_linear_code_through_columns_of_parity_check_projectively(
 			int n,

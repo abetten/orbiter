@@ -24,6 +24,7 @@ interface_symbol_table::interface_symbol_table()
 {
 	f_define = FALSE;
 	//define_label
+
 	f_finite_field = FALSE;
 	Finite_field_description = NULL;
 
@@ -67,6 +68,9 @@ interface_symbol_table::interface_symbol_table()
 
 	f_graph_theoretic_activity = FALSE;
 	Graph_theoretic_activity_description = NULL;
+
+	f_classification_of_cubic_surfaces_with_double_sixes_activity = FALSE;
+	Classification_of_cubic_surfaces_with_double_sixes_activity_description = NULL;
 
 }
 
@@ -897,7 +901,7 @@ void interface_symbol_table::read_activity_arguments(int argc,
 		f_graph_theoretic_activity = TRUE;
 		Graph_theoretic_activity_description =
 				NEW_OBJECT(graph_theoretic_activity_description);
-		cout << "reading -combinatorial_object_activity" << endl;
+		cout << "reading -graph_theoretic_activity" << endl;
 		i += Graph_theoretic_activity_description->read_arguments(argc - (i + 1),
 			argv + i + 1, verbose_level);
 
@@ -910,6 +914,25 @@ void interface_symbol_table::read_activity_arguments(int argc,
 			cout << "next argument is " << argv[i] << endl;
 		}
 	}
+	else if (stringcmp(argv[i], "-classification_of_cubic_surfaces_with_double_sixes_activity") == 0) {
+		f_classification_of_cubic_surfaces_with_double_sixes_activity = TRUE;
+		Classification_of_cubic_surfaces_with_double_sixes_activity_description =
+				NEW_OBJECT(classification_of_cubic_surfaces_with_double_sixes_activity_description);
+		cout << "reading -classification_of_cubic_surfaces_with_double_sixes_activity" << endl;
+		i += Classification_of_cubic_surfaces_with_double_sixes_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		cout << "-classification_of_cubic_surfaces_with_double_sixes_activity" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+	}
+
+
 	else {
 		cout << "expecting activity after -do but seeing " << argv[i] << endl;
 		exit(1);
@@ -997,6 +1020,14 @@ void interface_symbol_table::worker(orbiter_top_level_session *Orbiter_top_level
 		}
 		do_graph_theoretic_activity(Orbiter_top_level_session, verbose_level);
 
+	}
+	else if (f_classification_of_cubic_surfaces_with_double_sixes_activity) {
+
+		if (f_v) {
+			cout << "interface_symbol_table::worker f_classification_of_cubic_surfaces_with_double_sixes_activity" << endl;
+		}
+
+		do_classification_of_cubic_surfaces_with_double_sixes_activity(Orbiter_top_level_session, verbose_level);
 	}
 
 	if (f_v) {
@@ -1421,6 +1452,66 @@ void interface_symbol_table::do_graph_theoretic_activity(
 	}
 
 }
+
+void interface_symbol_table::do_classification_of_cubic_surfaces_with_double_sixes_activity(
+		orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		int i;
+		cout << "interface_symbol_table::do_classification_of_cubic_surfaces_with_double_sixes_activity "
+				"activity for " << with_labels.size() << " objects:";
+		for (i = 0; i < with_labels.size(); i++) {
+			cout << with_labels[i];
+			if (i < with_labels.size() - 1) {
+				cout << ", ";
+			}
+		}
+		cout << endl;
+	}
+
+
+
+	int *Idx;
+
+	Orbiter_top_level_session->find_symbols(with_labels, Idx);
+
+	if (with_labels.size() < 1) {
+		cout << "-classification_of_cubic_surfaces_with_double_sixes_activity requires at least one input" << endl;
+		exit(1);
+	}
+
+	surface_classify_wedge *SCW;
+
+	SCW = (surface_classify_wedge *) Orbiter_top_level_session->get_object(Idx[0]);
+	{
+		classification_of_cubic_surfaces_with_double_sixes_activity Activity;
+
+		Activity.init(Classification_of_cubic_surfaces_with_double_sixes_activity_description, SCW, verbose_level);
+
+		if (f_v) {
+			cout << "interface_symbol_table::do_classification_of_cubic_surfaces_with_double_sixes_activity "
+					"before Activity.perform_activity" << endl;
+		}
+		Activity.perform_activity(verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::do_classification_of_cubic_surfaces_with_double_sixes_activity "
+					"after Activity.perform_activity" << endl;
+		}
+
+	}
+
+	FREE_int(Idx);
+
+	if (f_v) {
+		cout << "interface_symbol_table::do_classification_of_cubic_surfaces_with_double_sixes_activity done" << endl;
+	}
+
+}
+
+
 
 
 }}

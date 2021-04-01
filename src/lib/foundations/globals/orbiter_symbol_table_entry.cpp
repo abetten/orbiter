@@ -152,6 +152,25 @@ void orbiter_symbol_table_entry::init_cubic_surface(std::string &label,
 	}
 }
 
+void orbiter_symbol_table_entry::init_classification_of_cubic_surfaces_with_double_sixes(
+		std::string &label,
+		void *p, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_classification_of_cubic_surfaces_with_double_sixes" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_classification_of_cubic_surfaces_with_double_sixes;
+	ptr = p;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_classification_of_cubic_surfaces_with_double_sixes done" << endl;
+	}
+
+}
+
 void orbiter_symbol_table_entry::init_collection(std::string &label,
 		std::string &list_of_objects, int verbose_level)
 {
@@ -257,6 +276,9 @@ void orbiter_symbol_table_entry::print()
 		}
 		else if (object_type == t_cubic_surface) {
 			cout << "cubic surface" << endl;
+		}
+		else if (object_type == t_classification_of_cubic_surfaces_with_double_sixes) {
+			cout << "classification_of_cubic_surfaces_with_double_sixes" << endl;
 		}
 		else if (object_type == t_collection) {
 			cout << "collection" << endl;

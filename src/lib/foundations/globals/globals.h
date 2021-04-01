@@ -414,6 +414,7 @@ enum symbol_table_object_type {
 	t_orthogonal_space,
 	t_formula,
 	t_cubic_surface,
+	t_classification_of_cubic_surfaces_with_double_sixes,
 	t_collection,
 	t_combinatorial_object,
 	t_graph,
@@ -452,6 +453,9 @@ public:
 	void init_formula(std::string &label,
 			void *p, int verbose_level);
 	void init_cubic_surface(std::string &label,
+			void *p, int verbose_level);
+	void init_classification_of_cubic_surfaces_with_double_sixes(
+			std::string &label,
 			void *p, int verbose_level);
 	void init_collection(std::string &label,
 			std::string &list_of_objects, int verbose_level);

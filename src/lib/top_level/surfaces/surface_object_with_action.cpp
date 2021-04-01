@@ -1385,9 +1385,6 @@ void surface_object_with_action::investigate_surface_and_write_report(
 		action *A,
 		surface_create *SC,
 		six_arcs_not_on_a_conic *Six_arcs,
-		int f_surface_clebsch,
-		int f_surface_codes,
-		int f_surface_quartic,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1430,9 +1427,6 @@ void surface_object_with_action::investigate_surface_and_write_report(
 					A,
 					SC,
 					Six_arcs,
-					f_surface_clebsch,
-					f_surface_codes,
-					f_surface_quartic,
 					fname_mask,
 					label,
 					label_tex,
@@ -1458,9 +1452,6 @@ void surface_object_with_action::investigate_surface_and_write_report2(
 		action *A,
 		surface_create *SC,
 		six_arcs_not_on_a_conic *Six_arcs,
-		int f_surface_clebsch,
-		int f_surface_codes,
-		int f_surface_quartic,
 		std::string &fname_mask,
 		std::string &label,
 		std::string &label_tex,
@@ -1470,7 +1461,6 @@ void surface_object_with_action::investigate_surface_and_write_report2(
 
 	if (f_v) {
 		cout << "surface_object_with_action::investigate_surface_and_write_report2" << endl;
-		cout << "f_surface_quartic = " << f_surface_quartic << endl;
 	}
 
 	ost << "\\section{The Finite Field $\\mathbb F_{" << SC->F->q << "}$}" << endl;
@@ -1494,6 +1484,7 @@ void surface_object_with_action::investigate_surface_and_write_report2(
 
 	ost << "\\setlength{\\parindent}{0pt}" << endl;
 
+#if 0
 	if (f_surface_clebsch) {
 
 		if (f_v) {
@@ -1653,6 +1644,7 @@ void surface_object_with_action::investigate_surface_and_write_report2(
 
 
 	}
+#endif
 
 
 
@@ -1683,6 +1675,125 @@ void surface_object_with_action::all_quartic_curves(std::ostream &ost, std::ostr
 
 
 		SOT->quartic(pt_orbit, verbose_level);
+
+		// now, the quartic curve is in SOT->curve
+		// as a Surf->Poly4_x123
+
+#if 1
+		{
+
+			strong_generators *SG_pt_stab = NULL;
+			longinteger_object pt_stab_order;
+			object_in_projective_space *OiP = NULL;
+			int f_compute_canonical_form = TRUE;
+			bitvector *Canonical_form;
+			long int *canonical_labeling = NULL;
+			int canonical_labeling_len;
+
+			// compute stabilizer of the set of points:
+
+			OiP = NEW_OBJECT(object_in_projective_space);
+
+			if (f_v) {
+				cout << "surface_object_with_action::all_quartic_curves before OiP->init_point_set" << endl;
+			}
+			OiP->init_point_set(Surf_A->PA->PA2->P,
+					SOT->Pts_on_curve, SOT->sz_curve, verbose_level - 1);
+			if (f_v) {
+				cout << "surface_object_with_action::all_quartic_curves after OiP->init_point_set" << endl;
+			}
+
+			int nb_rows, nb_cols;
+
+			OiP->encoding_size(
+						nb_rows, nb_cols,
+						verbose_level);
+			if (f_v) {
+				cout << "surface_object_with_action::all_quartic_curves nb_rows = " << nb_rows << endl;
+				cout << "surface_object_with_action::all_quartic_curves nb_cols = " << nb_cols << endl;
+			}
+
+			canonical_labeling = NEW_lint(nb_rows + nb_cols);
+
+			if (f_v) {
+				cout << "surface_object_with_action::all_quartic_curves before Surf_A->PA->PA2->set_stabilizer_of_object" << endl;
+			}
+			SG_pt_stab = Surf_A->PA->PA2->set_stabilizer_of_object(
+				OiP,
+				f_compute_canonical_form, Canonical_form,
+				canonical_labeling, canonical_labeling_len,
+				verbose_level);
+			if (f_v) {
+				cout << "surface_object_with_action::all_quartic_curves after Surf_A->PA->PA2->set_stabilizer_of_object" << endl;
+			}
+
+
+			SG_pt_stab->group_order(pt_stab_order);
+			if (f_v) {
+				cout << "surface_object_with_action::all_quartic_curves "
+						"pt_stab_order = " << pt_stab_order << endl;
+			}
+
+
+			action_on_homogeneous_polynomials *AonHPD;
+
+			AonHPD = NEW_OBJECT(action_on_homogeneous_polynomials);
+			if (f_v) {
+				cout << "surface_object_with_action::all_quartic_curves "
+						"before AonHPD->init" << endl;
+			}
+			AonHPD->init(Surf_A->PA->PA2->A, Surf->Poly4_x123, verbose_level);
+			if (f_v) {
+				cout << "surface_object_with_action::all_quartic_curves "
+						"after AonHPD->init" << endl;
+			}
+
+
+
+
+			// compute the orbit of the equation under the stabilizer of the set of points:
+
+
+			orbit_of_equations *Orb;
+
+			Orb = NEW_OBJECT(orbit_of_equations);
+
+
+#if 1
+			if (f_v) {
+				cout << "surface_object_with_action::all_quartic_curves "
+						"before Orb->init" << endl;
+			}
+			Orb->init(Surf_A->PA->PA2->A, Surf_A->PA->F,
+				AonHPD,
+				SG_pt_stab /* A->Strong_gens*/, SOT->curve,
+				verbose_level);
+			if (f_v) {
+				cout << "surface_object_with_action::all_quartic_curves "
+						"after Orb->init" << endl;
+				cout << "surface_object_with_action::all_quartic_curves found an orbit of length " << Orb->used_length << endl;
+			}
+
+
+
+
+			if (f_v) {
+				cout << "surface_object_with_action::all_quartic_curves "
+						"before Orb->stabilizer_orbit_rep" << endl;
+			}
+			SOT->Stab_gens_quartic = Orb->stabilizer_orbit_rep(
+					pt_stab_order, verbose_level);
+			if (f_v) {
+				cout << "surface_object_with_action::all_quartic_curves "
+						"after Orb->stabilizer_orbit_rep" << endl;
+			}
+			SOT->Stab_gens_quartic->print_generators_tex(cout);
+#endif
+
+
+		}
+#endif
+
 
 		SOT->cheat_sheet_quartic_curve(ost, ost_quartics, verbose_level);
 

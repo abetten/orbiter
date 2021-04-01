@@ -1063,6 +1063,7 @@ void surface_domain::assemble_tangent_quadric(
 		idx = Poly2_4->index_of_monomial(M);
 		tangent_quadric[idx] = a;
 	}
+
 	if (f_v) {
 		cout << "surface_domain::assemble_tangent_quadric done" << endl;
 	}

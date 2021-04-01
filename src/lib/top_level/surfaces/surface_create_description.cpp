@@ -75,6 +75,12 @@ surface_create_description::surface_create_description()
 	//nb_select_double_six = 0;
 	//select_double_six_string[];
 
+	f_override_group = FALSE;
+	//std::string override_group_order;
+	override_group_nb_gens = 0;
+	//std::string override_group_gens;
+
+
 	//std::vector<std::string> transform_coeffs;
 	//std::vector<int> f_inverse_transform;
 
@@ -213,6 +219,22 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 			cout << "-select_double_six "
 					<< select_double_six_string[select_double_six_string.size() - 1] << endl;
 		}
+
+
+		else if (stringcmp(argv[i], "-override_group") == 0) {
+			f_override_group = TRUE;
+
+			override_group_order.assign(argv[++i]);
+			override_group_nb_gens = strtoi(argv[++i]);
+			override_group_gens.assign(argv[++i]);
+
+			cout << "-override_group "
+					<< override_group_order
+					<< " " << override_group_nb_gens
+					<< " " << override_group_gens
+					<< endl;
+		}
+
 		else if (stringcmp(argv[i], "-transform") == 0) {
 
 			string s;
