@@ -28,7 +28,7 @@ interface_coding_theory::interface_coding_theory()
 	table_of_bounds_n_max = 0;
 	table_of_bounds_q = 0;
 
-	f_upper_bound_for_d = FALSE;
+	f_make_bounds_for_d_given_n_and_k_and_q = FALSE;
 
 	f_BCH = FALSE;
 	f_BCH_dual = FALSE;
@@ -90,8 +90,8 @@ void interface_coding_theory::print_help(int argc,
 	else if (stringcmp(argv[i], "-table_of_bounds") == 0) {
 		cout << "-table_of_bounds <int : n_max> <int : q> " << endl;
 	}
-	else if (stringcmp(argv[i], "-upper_bound_for_d") == 0) {
-		cout << "-upper_bound_for_d <int : n> <int k> <int : q> " << endl;
+	else if (stringcmp(argv[i], "-make_bounds_for_d_given_n_and_k_and_q") == 0) {
+		cout << "-make_bounds_for_d_given_n_and_k_and_q <int : n> <int k> <int : q> " << endl;
 	}
 	else if (stringcmp(argv[i], "-BCH") == 0) {
 		cout << "-BCH <int : n> <int : q> <int t>" << endl;
@@ -157,7 +157,7 @@ int interface_coding_theory::recognize_keyword(int argc,
 	else if (stringcmp(argv[i], "-table_of_bounds") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-upper_bound_for_d") == 0) {
+	else if (stringcmp(argv[i], "-make_bounds_for_d_given_n_and_k_and_q") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-BCH") == 0) {
@@ -240,12 +240,12 @@ void interface_coding_theory::read_arguments(int argc,
 		table_of_bounds_q = strtoi(argv[++i]);
 		cout << "-table_of_bounds " << table_of_bounds_n_max << " " << table_of_bounds_q << endl;
 	}
-	else if (stringcmp(argv[i], "-upper_bound_for_d") == 0) {
-		f_upper_bound_for_d = TRUE;
+	else if (stringcmp(argv[i], "-make_bounds_for_d_given_n_and_k_and_q") == 0) {
+		f_make_bounds_for_d_given_n_and_k_and_q = TRUE;
 		n = strtoi(argv[++i]);
 		k = strtoi(argv[++i]);
 		q = strtoi(argv[++i]);
-		cout << "-upper_bound_for_d " << n << " " << k << " " << q << endl;
+		cout << "-make_bounds_for_d_given_n_and_k_and_q " << n << " " << k << " " << q << endl;
 	}
 	else if (stringcmp(argv[i], "-BCH") == 0) {
 		f_BCH = TRUE;
@@ -435,14 +435,16 @@ void interface_coding_theory::worker(int verbose_level)
 
 		Coding.make_table_of_bounds(table_of_bounds_n_max, table_of_bounds_q, verbose_level);
 	}
-	else if (f_upper_bound_for_d) {
+	else if (f_make_bounds_for_d_given_n_and_k_and_q) {
 
 		coding_theory_domain Coding;
+		int d_GV;
 		int d_singleton;
 		int d_hamming;
 		int d_plotkin;
 		int d_griesmer;
 
+		d_GV = Coding.gilbert_varshamov_lower_bound_for_d(n, k, q, verbose_level);
 		d_singleton = Coding.singleton_bound_for_d(n, k, q, verbose_level);
 		d_hamming = Coding.hamming_bound_for_d(n, k, q, verbose_level);
 		d_plotkin = Coding.plotkin_bound_for_d(n, k, q, verbose_level);
@@ -450,6 +452,7 @@ void interface_coding_theory::worker(int verbose_level)
 
 		cout << "n = " << n << " k=" << k << " q=" << q << endl;
 
+		cout << "d_GV = " << d_GV << endl;
 		cout << "d_singleton = " << d_singleton << endl;
 		cout << "d_hamming = " << d_hamming << endl;
 		cout << "d_plotkin = " << d_plotkin << endl;

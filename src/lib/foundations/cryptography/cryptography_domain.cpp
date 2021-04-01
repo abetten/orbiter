@@ -2665,6 +2665,30 @@ void cryptography_domain::calc_log2(vector<int> &primes, vector<int> &primes_log
 		}
 }
 
+void cryptography_domain::all_square_roots_mod_n_by_exhaustive_search_lint(std::string &square_root_a,
+		std::string &square_root_mod_n,
+		std::vector<long int> &S, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int i, a, n;
+
+	if (f_v) {
+		cout << "cryptography_domain::all_square_roots_mod_n_by_exhaustive_search_lint" << endl;
+	}
+
+	a = strtoi(square_root_a);
+	n = strtoi(square_root_mod_n);
+	for (i = 0; i < a; i++) {
+		if (((i * i) % n) == a) {
+			S.push_back(i);
+		}
+	}
+
+	if (f_v) {
+		cout << "cryptography_domain::all_square_roots_mod_n_by_exhaustive_search_lint done" << endl;
+	}
+}
+
 void cryptography_domain::square_root(std::string &square_root_number, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

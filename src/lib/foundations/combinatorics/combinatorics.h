@@ -451,6 +451,7 @@ public:
 	void make_partitions(int n, int *Part, int cnt);
 	int count_partitions(int n);
 	int next_partition(int n, int *part);
+	long int binomial_lint(int n, int k);
 	void binomial(longinteger_object &a, int n, int k, int verbose_level);
 	void binomial_with_table(longinteger_object &a, int n, int k);
 	void size_of_conjugacy_class_in_sym_n(longinteger_object &a, int n, int *part);

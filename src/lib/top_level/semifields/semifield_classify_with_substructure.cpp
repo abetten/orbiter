@@ -644,10 +644,14 @@ void semifield_classify_with_substructure::latex_report(
 	if (f_v) {
 		cout << "semifield_classify_with_substructure::latex_report" << endl;
 	}
-	char title[1000];
+	char str[1000];
 	char author[1000];
 	char fname[1000];
-	sprintf(title, "Isotopy classes of semifields of order %d", Descr->order);
+	sprintf(str, "Isotopy classes of semifields of order %d", Descr->order);
+
+	string title;
+	title.assign(str);
+
 	sprintf(author, "Orbiter");
 	sprintf(fname, "Semifields_%d.tex", Descr->order);
 
@@ -664,7 +668,7 @@ void semifield_classify_with_substructure::latex_report(
 		L.head(fp,
 			FALSE /* f_book */,
 			TRUE /* f_title */,
-			title,
+			title.c_str(),
 			author,
 			FALSE /*f_toc */,
 			FALSE /* f_landscape */,

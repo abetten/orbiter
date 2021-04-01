@@ -20,15 +20,17 @@ namespace top_level {
 
 surface_with_action::surface_with_action()
 {
-	q = 0;
-	F = NULL;
+	PA = NULL;
+
 	f_semilinear = FALSE;
 	Surf = NULL;
 	A = NULL;
+	A_wedge = NULL;
 	A2 = NULL;
 	A_on_planes = NULL;
-	//S = NULL;
+
 	Elt1 = NULL;
+
 	AonHPD_3_4 = NULL;
 
 	Classify_trihedral_pairs = NULL;
@@ -50,20 +52,10 @@ void surface_with_action::null()
 
 void surface_with_action::freeself()
 {
-	if (A) {
-		FREE_OBJECT(A);
-	}
-	if (A2) {
-		FREE_OBJECT(A2);
-	}
+
 	if (A_on_planes) {
 		FREE_OBJECT(A_on_planes);
 	}
-#if 0
-	if (S) {
-		FREE_OBJECT(S);
-	}
-#endif
 	if (Elt1) {
 		FREE_int(Elt1);
 	}
@@ -82,27 +74,8 @@ void surface_with_action::freeself()
 	null();
 }
 
-void surface_with_action::init_with_linear_group(surface_domain *Surf,
-		linear_group *LG,
-		int f_recoordinatize,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "surface_with_action::init_with_linear_group" << endl;
-	}
-	init(Surf,
-			LG->A_linear,
-			f_recoordinatize,
-			verbose_level);
-	if (f_v) {
-		cout << "surface_with_action::init_with_linear_group done" << endl;
-	}
-}
-
 void surface_with_action::init(surface_domain *Surf,
-		action *A_linear,
+		projective_space_with_action *PA,
 		int f_recoordinatize,
 		int verbose_level)
 {
@@ -112,18 +85,45 @@ void surface_with_action::init(surface_domain *Surf,
 		cout << "surface_with_action::init" << endl;
 	}
 	surface_with_action::Surf = Surf;
-	F = Surf->F;
-	q = F->q;
-	
+	surface_with_action::PA = PA;
 
 
-	//init_group(f_semilinear, verbose_level);
-	A = A_linear;
+
+	A = PA->A;
+
+	if (f_v) {
+		cout << "surface_with_action::init action A:" << endl;
+		A->print_info();
+	}
+
+
+	if (f_v) {
+		cout << "surface_with_action::init "
+				"before A->induced_action_on_wedge_product" << endl;
+	}
+	A_wedge = A->induced_action_on_wedge_product(verbose_level);
+	if (f_v) {
+		cout << "surface_with_action::init "
+				"after A->induced_action_on_wedge_product" << endl;
+	}
+	if (f_v) {
+		cout << "surface_with_action::init action A_wedge:" << endl;
+		A_wedge->print_info();
+	}
+
+	A2 = PA->A_on_lines;
+	if (f_v) {
+		cout << "surface_with_action::init action A2:" << endl;
+		A2->print_info();
+	}
 	f_semilinear = A->is_semilinear_matrix_group();
 	if (f_v) {
 		cout << "surface_with_action::init f_semilinear=" << f_semilinear << endl;
 	}
 
+
+
+#if 0
 	if (f_v) {
 		cout << "surface_with_action::init "
 				"creating action on lines" << endl;
@@ -133,6 +133,7 @@ void surface_with_action::init(surface_domain *Surf,
 		cout << "surface_with_action::init "
 				"creating action on lines done" << endl;
 	}
+#endif
 
 	if (f_v) {
 		cout << "surface_with_action::init "
@@ -168,7 +169,7 @@ void surface_with_action::init(surface_domain *Surf,
 		char str[1000];
 		string fname_live_points;
 
-		sprintf(str, "live_points_q%d", q);
+		sprintf(str, "live_points_q%d", PA->F->q);
 		fname_live_points.assign(str);
 
 		Recoordinatize = NEW_OBJECT(recoordinatize);
@@ -178,7 +179,7 @@ void surface_with_action::init(surface_domain *Surf,
 					"before Recoordinatize->init" << endl;
 		}
 		Recoordinatize->init(4 /*n*/, 2 /*k*/,
-			F, Surf->Gr, A, A2,
+			PA->F, Surf->Gr, A, A2,
 			TRUE /* f_projective */, f_semilinear,
 			NULL /*int (*check_function_incremental)(int len,
 				int *S, void *data, int verbose_level)*/,
@@ -320,10 +321,13 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	int pt_coord[4 * 4];
 	int nb_pts;
 	combinatorics_domain Combi;
+	finite_field *F;
 	
 	if (f_v) {
 		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal, verbose_level = " << verbose_level << endl;
 	}
+
+	F = PA->F;
 
 	if (Recoordinatize == NULL) {
 		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
@@ -438,7 +442,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		// Determine the point w which is the second point where 
 		// the line which is the image of a_{i4} intersects the hyperboloid:
 		// To do so, we loop over all points on the line distinct from Q4:
-		for (a = 0; a < q; a++) {
+		for (a = 0; a < F->q; a++) {
 			v[0] = a;
 			v[1] = 1;
 			F->mult_matrix_matrix(v, L, w, 1, 2, 4,
@@ -460,7 +464,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 				break;
 			}
 		}
-		if (a == q) {
+		if (a == F->q) {
 			if (f_v) {
 				cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal "
 						"we could not find a second intersection point"
@@ -551,7 +555,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	nb_pts = 0;
 	for (h = 0; h < 2; h++) {
 		Surf->Gr->unrank_lint_here(L, image[h], 0 /* verbose_level */);
-		for (a = 0; a < q + 1; a++) {
+		for (a = 0; a < F->q + 1; a++) {
 			F->PG_element_unrank_modified(v, 1, 2, a);
 			F->mult_matrix_matrix(v, L, w, 1, 2, 4,
 					0 /* verbose_level */);
@@ -703,9 +707,6 @@ void surface_with_action::create_surface(
 void surface_with_action::create_surface_and_do_report(
 		surface_create_description *Surface_Descr,
 		int f_has_control_six_arcs, poset_classification_control *Control_six_arcs,
-		int f_surface_clebsch,
-		int f_surface_codes,
-		int f_surface_quartic,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -714,6 +715,9 @@ void surface_with_action::create_surface_and_do_report(
 		cout << "surface_with_action::create_surface_and_do_report" << endl;
 	}
 
+	finite_field *F;
+
+	F = PA->F;
 
 
 	surface_create *SC;
@@ -758,43 +762,12 @@ void surface_with_action::create_surface_and_do_report(
 
 
 	if (SC->f_has_group) {
-
 		if (f_v) {
-			cout << "surface_with_action::create_surface_and_do_report f_has_group is true" << endl;
+			cout << "surface_with_action::create_surface_and_do_report before test_group" << endl;
 		}
-
-
-		// test the generators:
-
-		int coeffs_out[20];
-		int i;
-
-		for (i = 0; i < SC->Sg->gens->len; i++) {
-			cout << "surface_with_action::create_surface_and_do_report "
-					"Testing generator " << i << " / "
-					<< SC->Sg->gens->len << endl;
-			A->element_invert(SC->Sg->gens->ith(i),
-					Elt2, 0 /*verbose_level*/);
-
-
-
-			matrix_group *M;
-
-			M = A->G.matrix_grp;
-			M->substitute_surface_equation(Elt2,
-					SC->SO->eqn, coeffs_out, SC->Surf,
-					verbose_level - 1);
-
-
-			if (int_vec_compare(SC->SO->eqn, coeffs_out, 20)) {
-				cout << "surface_with_action::create_surface_and_do_report error, "
-						"the transformation does not preserve "
-						"the equation of the surface" << endl;
-				exit(1);
-			}
-			cout << "surface_with_action::create_surface_and_do_report "
-					"Generator " << i << " / " << SC->Sg->gens->len
-					<< " is good" << endl;
+		test_group(SC, verbose_level);
+		if (f_v) {
+			cout << "surface_with_action::create_surface_and_do_report after test_group" << endl;
 		}
 	}
 	else {
@@ -876,130 +849,15 @@ void surface_with_action::create_surface_and_do_report(
 
 	if (SC->f_has_group) {
 
-		if (f_v) {
-			cout << "surface_with_action::create_surface_and_do_report creating "
-					"surface_object_with_action object" << endl;
-		}
-
-		surface_object_with_action *SoA;
-
-
-		create_surface_object_with_action(
-				SC,
-				SoA,
-				verbose_level);
-
-
-		if (f_v) {
-			cout << "surface_with_action::create_surface_and_do_report "
-					"The surface has been created." << endl;
-		}
-
-
-
-		if (f_v) {
-			cout << "surface_with_action::create_surface_and_do_report "
-					"Classifying non-conical six-arcs." << endl;
-		}
-
-		six_arcs_not_on_a_conic *Six_arcs;
-		arc_generator_description *Six_arc_descr;
-
-		int *transporter;
-
-		Six_arcs = NEW_OBJECT(six_arcs_not_on_a_conic);
-
-		Six_arc_descr = NEW_OBJECT(arc_generator_description);
-		Six_arc_descr->F = F;
-		Six_arc_descr->f_q = TRUE;
-		Six_arc_descr->q = F->q;
-		Six_arc_descr->f_n = TRUE;
-		Six_arc_descr->n = 3;
-		Six_arc_descr->f_target_size = TRUE;
-		Six_arc_descr->target_size = 6;
-
-		if (f_has_control_six_arcs) {
-			Six_arc_descr->Control = Control_six_arcs;
-		}
-		else {
-			Six_arc_descr->Control = NEW_OBJECT(poset_classification_control);
-		}
-
-
-
-		// classify six arcs not on a conic:
-
-		if (f_v) {
-			cout << "surface_with_action::create_surface_and_do_report "
-					"Setting up the group of the plane:" << endl;
-		}
-
-		action *A;
-
-		A = NEW_OBJECT(action);
-
-
-		int f_semilinear = TRUE;
-		number_theory_domain NT;
-
-		if (NT.is_prime(F->q)) {
-			f_semilinear = FALSE;
-		}
-
-		{
-			vector_ge *nice_gens;
-			A->init_projective_group(3, F,
-					f_semilinear, TRUE /*f_basis*/, TRUE /* f_init_sims */,
-					nice_gens,
-					0 /*verbose_level*/);
-			FREE_OBJECT(nice_gens);
-		}
-
-
-		if (f_v) {
-			cout << "surface_with_action::create_surface_and_do_report "
-					"before Six_arcs->init:" << endl;
-		}
-
-
-		Six_arcs->init(
-				Six_arc_descr,
-				A,
-				SC->Surf->P2,
-				FALSE, 0, NULL,
-				verbose_level);
-
-		transporter = NEW_int(Six_arcs->Gen->A->elt_size_in_int);
-
-
-		if (f_v) {
-			cout << "surface_with_action::create_surface_and_do_report "
-					"before SoA->investigate_surface_and_write_report:" << endl;
-		}
-
-		if (Orbiter->f_draw_options) {
-			SoA->investigate_surface_and_write_report(
-					Orbiter->draw_options,
-					A,
+		report_with_group(
 					SC,
-					Six_arcs,
-					f_surface_clebsch,
-					f_surface_codes,
-					f_surface_quartic,
+					f_has_control_six_arcs, Control_six_arcs,
+					//f_surface_clebsch,
+					//f_surface_codes,
+					//f_surface_quartic,
 					verbose_level);
-		}
-		else {
-			cout << "use -draw_options to specify the drawing option for the report" << endl;
-			exit(1);
-		}
 
-		FREE_OBJECT(SoA);
-		FREE_OBJECT(Six_arcs);
-		FREE_OBJECT(Six_arc_descr);
-		FREE_int(transporter);
-
-
-		}
+	}
 	else {
 		cout << "We don't have the group of the surface" << endl;
 	}
@@ -1017,6 +875,212 @@ void surface_with_action::create_surface_and_do_report(
 }
 
 
+void surface_with_action::test_group(
+		surface_create *SC,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_with_action::test_group" << endl;
+	}
+
+
+	int *Elt2;
+
+
+	Elt2 = NEW_int(A->elt_size_in_int);
+
+	// test the generators:
+
+	int coeffs_out[20];
+	int i;
+
+	for (i = 0; i < SC->Sg->gens->len; i++) {
+		cout << "surface_with_action::test_group "
+				"Testing generator " << i << " / "
+				<< SC->Sg->gens->len << endl;
+		A->element_invert(SC->Sg->gens->ith(i),
+				Elt2, 0 /*verbose_level*/);
+
+
+
+		matrix_group *M;
+
+		M = A->G.matrix_grp;
+		M->substitute_surface_equation(Elt2,
+				SC->SO->eqn, coeffs_out, SC->Surf,
+				verbose_level - 1);
+
+
+		if (!PA->F->test_if_vectors_are_projectively_equal(SC->SO->eqn, coeffs_out, 20)) {
+			cout << "surface_with_action::test_group error, "
+					"the transformation does not preserve "
+					"the equation of the surface" << endl;
+			cout << "SC->SO->eqn:" << endl;
+			Orbiter->Int_vec.print(cout, SC->SO->eqn, 20);
+			cout << endl;
+			cout << "coeffs_out" << endl;
+			Orbiter->Int_vec.print(cout, coeffs_out, 20);
+			cout << endl;
+
+			exit(1);
+		}
+		cout << "surface_with_action::test_group "
+				"Generator " << i << " / " << SC->Sg->gens->len
+				<< " is good" << endl;
+	}
+
+	FREE_int(Elt2);
+
+	if (f_v) {
+		cout << "surface_with_action::test_group the group is good. Done" << endl;
+	}
+}
+
+void surface_with_action::report_with_group(
+		surface_create *SC,
+		int f_has_control_six_arcs, poset_classification_control *Control_six_arcs,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_with_action::report_with_group" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_with_action::report_with_group creating "
+				"surface_object_with_action object" << endl;
+	}
+
+	finite_field *F;
+
+	F = PA->F;
+
+	surface_object_with_action *SoA;
+
+
+	create_surface_object_with_action(
+			SC,
+			SoA,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "surface_with_action::report_with_group "
+				"The surface has been created." << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "surface_with_action::report_with_group "
+				"Classifying non-conical six-arcs." << endl;
+	}
+
+	six_arcs_not_on_a_conic *Six_arcs;
+	arc_generator_description *Six_arc_descr;
+
+	int *transporter;
+
+	Six_arcs = NEW_OBJECT(six_arcs_not_on_a_conic);
+
+	Six_arc_descr = NEW_OBJECT(arc_generator_description);
+	Six_arc_descr->F = F;
+	Six_arc_descr->f_q = TRUE;
+	Six_arc_descr->q = F->q;
+	Six_arc_descr->f_n = TRUE;
+	Six_arc_descr->n = 3;
+	Six_arc_descr->f_target_size = TRUE;
+	Six_arc_descr->target_size = 6;
+
+	if (f_has_control_six_arcs) {
+		Six_arc_descr->Control = Control_six_arcs;
+	}
+	else {
+		Six_arc_descr->Control = NEW_OBJECT(poset_classification_control);
+	}
+
+
+
+	// classify six arcs not on a conic:
+
+	if (f_v) {
+		cout << "surface_with_action::report_with_group "
+				"Setting up the group of the plane:" << endl;
+	}
+
+	action *A;
+
+
+#if 0
+	A = NEW_OBJECT(action);
+
+
+	int f_semilinear = TRUE;
+	number_theory_domain NT;
+
+	if (NT.is_prime(F->q)) {
+		f_semilinear = FALSE;
+	}
+
+	{
+		vector_ge *nice_gens;
+		A->init_projective_group(3, F,
+				f_semilinear, TRUE /*f_basis*/, TRUE /* f_init_sims */,
+				nice_gens,
+				0 /*verbose_level*/);
+		FREE_OBJECT(nice_gens);
+	}
+#else
+	A = PA->PA2->A;
+#endif
+
+	if (f_v) {
+		cout << "surface_with_action::report_with_group "
+				"before Six_arcs->init:" << endl;
+	}
+
+
+	Six_arcs->init(
+			Six_arc_descr,
+			A,
+			SC->Surf->P2,
+			FALSE, 0, NULL,
+			verbose_level);
+
+	transporter = NEW_int(Six_arcs->Gen->A->elt_size_in_int);
+
+
+	if (f_v) {
+		cout << "surface_with_action::report_with_group "
+				"before SoA->investigate_surface_and_write_report:" << endl;
+	}
+
+	if (Orbiter->f_draw_options) {
+		SoA->investigate_surface_and_write_report(
+				Orbiter->draw_options,
+				A,
+				SC,
+				Six_arcs,
+				verbose_level);
+	}
+	else {
+		cout << "use -draw_options to specify the drawing option for the report" << endl;
+		exit(1);
+	}
+
+	FREE_OBJECT(SoA);
+	FREE_OBJECT(Six_arcs);
+	FREE_OBJECT(Six_arc_descr);
+	FREE_int(transporter);
+
+	if (f_v) {
+		cout << "surface_with_action::report_with_group done" << endl;
+	}
+
+}
 void surface_with_action::create_surface_object_with_action(
 		surface_create *SC,
 		surface_object_with_action *&SoA,
@@ -1028,6 +1092,11 @@ void surface_with_action::create_surface_object_with_action(
 		cout << "surface_with_action::create_surface_object_with_action" << endl;
 	}
 
+
+	if (!SC->f_has_group) {
+		cout << "surface_with_action::create_surface_object_with_action The automorphism group of the surface is missing" << endl;
+		exit(1);
+	}
 
 	SoA = NEW_OBJECT(surface_object_with_action);
 
@@ -1093,6 +1162,11 @@ void surface_with_action::do_report(
 	if (f_v) {
 		cout << "surface_with_action::do_report" << endl;
 	}
+
+	finite_field *F;
+
+	F = PA->F;
+
 	{
 		string fname_report;
 
@@ -1215,24 +1289,27 @@ void surface_with_action::do_report(
 
 }
 
-void surface_with_action::create_surface_sweep(
+void surface_with_action::sweep_4(
 		surface_create_description *Surface_Descr,
-		poset_classification_control *Control_six_arcs,
-		int f_sweep, std::string &sweep_fname,
+		std::string &sweep_fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int alpha, beta, gamma, delta;
 
 	if (f_v) {
-		cout << "surface_with_action::create_surface_sweep" << endl;
+		cout << "surface_with_action::sweep_4" << endl;
 	}
+
+	finite_field *F;
+
+	F = PA->F;
 
 	vector<vector<long int>> Properties;
 	vector<vector<long int>> Points;
 
 
-	for (alpha = 0; alpha < q; alpha++) {
+	for (alpha = 0; alpha < F->q; alpha++) {
 		if (alpha == 0) {
 			continue;
 		}
@@ -1240,7 +1317,7 @@ void surface_with_action::create_surface_sweep(
 			continue;
 		}
 
-		for (beta = 0; beta < q; beta++) {
+		for (beta = 0; beta < F->q; beta++) {
 			if (beta == 0) {
 				continue;
 			}
@@ -1248,7 +1325,7 @@ void surface_with_action::create_surface_sweep(
 				continue;
 			}
 
-			for (delta = 0; delta < q; delta++) {
+			for (delta = 0; delta < F->q; delta++) {
 				if (delta == 0) {
 					continue;
 				}
@@ -1262,7 +1339,7 @@ void surface_with_action::create_surface_sweep(
 					continue;
 				}
 
-				for (gamma = 0; gamma < q; gamma++) {
+				for (gamma = 0; gamma < F->q; gamma++) {
 					if (gamma == 0) {
 						continue;
 					}
@@ -1321,7 +1398,7 @@ void surface_with_action::create_surface_sweep(
 #endif
 
 
-#if 0
+#if 1
 					if (SC->SO->nb_lines != 15) {
 						continue;
 					}
@@ -1381,7 +1458,7 @@ void surface_with_action::create_surface_sweep(
 	std::string fname;
 	char str[1000];
 
-	sprintf(str, "_q%d", q);
+	sprintf(str, "_q%d", F->q);
 	fname.assign(Surface_Descr->equation_name_of_formula);
 	fname.append(str);
 	fname.append("_sweep.csv");
@@ -1417,7 +1494,7 @@ void surface_with_action::create_surface_sweep(
 	FREE_lint(T);
 
 	if (f_v) {
-		cout << "surface_with_action::create_surface_sweep done" << endl;
+		cout << "surface_with_action::sweep_4 done" << endl;
 	}
 }
 

@@ -61,6 +61,25 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 		}
 
 	}
+	if (Descr->f_report_with_group) {
+
+		if (f_v) {
+			cout << "cubic_surface_activity::perform_activity before SC->Surf_A->report_with_group" << endl;
+		}
+
+		int f_has_control_six_arcs = FALSE;
+		poset_classification_control *Control_six_arcs = NULL;
+
+		SC->Surf_A->report_with_group(
+				SC,
+				f_has_control_six_arcs, Control_six_arcs,
+				verbose_level);
+
+		if (f_v) {
+			cout << "cubic_surface_activity::perform_activity after SC->Surf_A->report_with_group" << endl;
+		}
+
+	}
 	if (Descr->f_export_points) {
 
 		if (f_v) {
@@ -86,6 +105,10 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 
 		surface_object_with_action *SoA;
 
+		if (!SC->f_has_group) {
+			cout << "-all_quartic_curves: The automorphism group of the surface is missing" << endl;
+			exit(1);
+		}
 
 		if (f_v) {
 			cout << "cubic_surface_activity::perform_activity before SC->Surf_A->create_surface_object_with_action" << endl;

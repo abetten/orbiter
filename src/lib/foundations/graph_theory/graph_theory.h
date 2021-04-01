@@ -600,6 +600,8 @@ public:
 			int f_has_labels, int *labels,
 			int verbose_level);
 	void list_parameters_of_SRG(int v_max, int verbose_level);
+	void make_cycle_graph(int *&Adj, int &N,
+			int n, int verbose_level);
 	void make_Hamming_graph(int *&Adj, int &N,
 			int n, int q, int verbose_level);
 	void make_Johnson_graph(int *&Adj, int &N,

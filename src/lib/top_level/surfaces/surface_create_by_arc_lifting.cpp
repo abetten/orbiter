@@ -116,7 +116,7 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 	file_io Fio;
 
 	magma_fname.assign("surface_q");
-	sprintf(str, "%d", SCA->Surf_A->F->q);
+	sprintf(str, "%d", SCA->Surf_A->PA->F->q);
 	magma_fname.append(str);
 	magma_fname.append("_iso");
 	sprintf(str, "%d", SCA->nb_surfaces);
@@ -408,7 +408,7 @@ void surface_create_by_arc_lifting::report(std::ostream &ost,
 	char str[1000];
 
 	fname_mask.assign("orbit_half_double_sixes_q");
-	sprintf(str, "%d", SCA->Surf_A->F->q);
+	sprintf(str, "%d", SCA->Surf_A->PA->F->q);
 	fname_mask.append(str);
 	fname_mask.append("_iso_");
 	sprintf(str, "%d", SCA->nb_surfaces);

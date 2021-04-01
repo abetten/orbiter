@@ -1056,6 +1056,37 @@ void graph_theory_domain::list_parameters_of_SRG(int v_max, int verbose_level)
 	}
 }
 
+void graph_theory_domain::make_cycle_graph(int *&Adj, int &N,
+		int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_cycle_graph" << endl;
+	}
+	int i, j;
+
+	N = n;
+
+
+	Adj = NEW_int(N * N);
+	Orbiter->Int_vec.zero(Adj, N * N);
+
+	for (i = 0; i < N; i++) {
+		j = (i + 1) % N;
+		Adj[i * N + j] = 1;
+		Adj[j * N + i] = 1;
+	}
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_cycle_graph done" << endl;
+	}
+
+}
+
+
+
+
 void graph_theory_domain::make_Hamming_graph(int *&Adj, int &N,
 		int n, int q, int verbose_level)
 {

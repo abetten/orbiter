@@ -109,6 +109,10 @@ public:
 			int x0, int verbose_level);
 	void calc_log2(std::vector<int> &primes,
 			std::vector<int> &primes_log2, int verbose_level);
+	void all_square_roots_mod_n_by_exhaustive_search_lint(
+			std::string &square_root_a,
+			std::string &square_root_mod_n,
+			std::vector<long int> &S, int verbose_level);
 	void square_root(std::string &square_root_number, int verbose_level);
 	void square_root_mod(std::string &square_root_number,
 			std::string &mod_number, int verbose_level);

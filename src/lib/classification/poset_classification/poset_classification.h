@@ -1,5 +1,5 @@
 /*
- * snakes_and_ladders.h
+ * poset_classification.h
  *
  *  Created on: Aug 9, 2018
  *      Author: Anton Betten
@@ -21,6 +21,7 @@ namespace classification {
 // #############################################################################
 // classification_base_case.cpp
 // #############################################################################
+
 
 
 //! represents a known classification with constructive recognition, to be used as base case for poset_classification
@@ -300,7 +301,7 @@ public:
 // #############################################################################
 
 
-//! to control the bahavior of the poset classification algorithm
+//! to control the behavior of the poset classification algorithm
 
 
 class poset_classification_control {

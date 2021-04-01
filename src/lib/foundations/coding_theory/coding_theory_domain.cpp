@@ -1501,12 +1501,13 @@ void coding_theory_domain::make_table_of_bounds(
 		int n_max, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int n, k, d_S, d_H, d_P, d_G;
+	int n, k, d_S, d_H, d_P, d_G, d_GV;
 
 	if (f_v) {
 		cout << "coding_theory_domain::make_table_of_bounds" << endl;
 	}
 	vector<vector<long int>> Table;
+
 	for (n = 2; n <= n_max; n++) {
 		for (k = 1; k <= n; k++) {
 			cout << "n=" << n << " k=" << k << " q=" << q << endl;
@@ -1518,11 +1519,14 @@ void coding_theory_domain::make_table_of_bounds(
 			cout << "d_P=" << d_P << endl;
 			d_G = griesmer_bound_for_d(n, k, q, 0 /*verbose_level*/);
 			cout << "d_G=" << d_G << endl;
+			d_GV = gilbert_varshamov_lower_bound_for_d(n, k, q, 0 /*verbose_level*/);
+			cout << "d_GV=" << d_GV << endl;
 			vector<long int> entry;
 
 			entry.push_back(n);
 			entry.push_back(k);
 			entry.push_back(q);
+			entry.push_back(d_GV);
 			entry.push_back(d_S);
 			entry.push_back(d_H);
 			entry.push_back(d_P);
@@ -1533,13 +1537,14 @@ void coding_theory_domain::make_table_of_bounds(
 	long int *T;
 	int N;
 	int i, j;
+	int nb_cols = 8;
 
 	N = Table.size();
 
-	T = NEW_lint(N * 7);
+	T = NEW_lint(N * nb_cols);
 	for (i = 0; i < N; i++) {
-		for (j = 0; j < 7; j++) {
-			T[i * 7 + j] = Table[i][j];
+		for (j = 0; j < nb_cols; j++) {
+			T[i * nb_cols + j] = Table[i][j];
 		}
 	}
 	file_io Fio;
@@ -1552,10 +1557,24 @@ void coding_theory_domain::make_table_of_bounds(
 	fname.append(str);
 	fname.append(".csv");
 
-	Fio.lint_matrix_write_csv(fname, T, N, 7);
+	string *headers;
+
+	headers = new string[8];
+
+	headers[0].assign("n");
+	headers[1].assign("k");
+	headers[2].assign("q");
+	headers[3].assign("GV");
+	headers[4].assign("S");
+	headers[5].assign("H");
+	headers[6].assign("P");
+	headers[7].assign("G");
+
+	Fio.lint_matrix_write_csv_override_headers(fname, headers, T, N, nb_cols);
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 	FREE_lint(T);
+	delete [] headers;
 
 
 	if (f_v) {
@@ -1563,6 +1582,247 @@ void coding_theory_domain::make_table_of_bounds(
 	}
 }
 
+void coding_theory_domain::make_gilbert_varshamov_code(
+		int n, int k, int d, int q, projective_space *P, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "coding_theory_domain::make_gilbert_varshamov_code" << endl;
+		cout << "coding_theory_domain::make_gilbert_varshamov_code P->N_points = " << P->N_points << endl;
+	}
+	long int *set;
+	int *f_forbidden;
+
+	set = NEW_lint(n);
+	f_forbidden = NEW_int(P->N_points);
+	Orbiter->Int_vec.zero(f_forbidden, P->N_points);
+
+	make_gilbert_varshamov_code_recursion(P, n, d, set, f_forbidden, 0 /*level*/, verbose_level);
+
+
+
+	cout << "found the following parity check matrix as projective set: ";
+	lint_vec_print(cout, set, n);
+	cout << endl;
+
+	int *genma;
+	int nmk;
+
+
+	nmk = P->n + 1;
+	genma = NEW_int(n * n);
+
+	matrix_from_projective_set(P->F,
+			n, nmk, set,
+			genma,
+			verbose_level);
+
+	cout << "parity check matrix:" << endl;
+	int_matrix_print_ost(cout, genma, P->n + 1, n);
+
+	cout << "parity check matrix:" << endl;
+	Orbiter->Int_vec.print_fully(cout, genma, nmk * n);
+	cout << endl;
+
+	P->F->RREF_and_kernel(n, nmk, genma, 0 /* verbose_level */);
+
+	cout << "generator matrix:" << endl;
+	int_matrix_print_ost(cout, genma + nmk * n, k, n);
+
+
+	cout << "generator matrix:" << endl;
+	Orbiter->Int_vec.print_fully(cout, genma + nmk * n, k * n);
+	cout << endl;
+
+
+
+	FREE_int(genma);
+
+
+	FREE_lint(set);
+	FREE_int(f_forbidden);
+	if (f_v) {
+		cout << "coding_theory_domain::make_gilbert_varshamov_code done" << endl;
+	}
+}
+
+void coding_theory_domain::make_gilbert_varshamov_code_recursion(
+		projective_space *P, int n, int d, long int *set, int *f_forbidden, int level, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "coding_theory_domain::make_gilbert_varshamov_code level = " << level << endl;
+		cout << "coding_theory_domain::make_gilbert_varshamov_code set = ";
+		lint_vec_print(cout, set, level);
+		cout << endl;
+	}
+
+	if (level == n) {
+		cout << "done" << endl;
+		return;
+	}
+	int a, b, i;
+
+	for (a = 0; a < P->N_points; a++) {
+
+		if (!f_forbidden[a]) {
+			break;
+		}
+	}
+
+	if (a == P->N_points) {
+		cout << "coding_theory_domain::make_gilbert_varshamov_code_recursion failure to construct the code" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "picking a=" << a << endl;
+	}
+
+
+	vector<int> add_set;
+	int nmk;
+	combinatorics_domain Combi;
+	int cnt;
+
+	nmk = P->n + 1;
+	set[level] = a;
+	if (f_v) {
+		cout << "coding_theory_domain::make_gilbert_varshamov_code nmk = " << nmk << endl;
+	}
+
+	f_forbidden[a] = TRUE;
+	add_set.push_back(a);
+	cnt = 1;
+
+
+	if (level) {
+
+		int *subset;
+		subset = NEW_int(level - 1);
+		int s, N, h, u, c, e, t, f;
+		int *v1;
+		//int *v2;
+		int *v3;
+
+		v1 = NEW_int(nmk);
+		//v2 = NEW_int(nmk);
+		v3 = NEW_int(nmk);
+
+		s = MINIMUM(level, d - 2);
+
+
+		for (i = 1; i <= s; i++) {
+			N = Combi.binomial_lint(level, i);
+			if (f_v) {
+				cout << "coding_theory_domain::make_gilbert_varshamov_code N_" << i << " = " << N << endl;
+				cout << "set = ";
+				lint_vec_print(cout, set, level + 1);
+				cout << endl;
+				cout << "looping over all subsets of size " << i << ":" << endl;
+			}
+			for (h = 0; h < N; h++) {
+				Combi.unrank_k_subset(h, subset, level, i);
+				Orbiter->Int_vec.zero(v3, nmk);
+				for (u = 0; u < i; u++) {
+					c = subset[u];
+					e = set[c];
+					P->unrank_point(v1, e);
+					for (t = 0; t < nmk; t++) {
+						v3[t] = P->F->add(v3[t], v1[t]);
+					}
+				}
+				P->unrank_point(v1, set[level]);
+				for (t = 0; t < nmk; t++) {
+					v3[t] = P->F->add(v3[t], v1[t]);
+				}
+				f = P->rank_point(v3);
+				if (f_v) {
+					cout << "h=" << h << " / " << N << " : ";
+					Orbiter->Int_vec.print(cout, subset, i);
+					cout << " : ";
+					Orbiter->Int_vec.print(cout, v3, nmk);
+					cout << " : " << f;
+				}
+				if (!f_forbidden[f]) {
+					f_forbidden[f] = TRUE;
+					add_set.push_back(f);
+					cnt++;
+					if (f_v) {
+						cout << " : is new forbidden point " << cnt;
+					}
+				}
+				if (f_v) {
+					cout << endl;
+				}
+			}
+			//cout << endl;
+		}
+		FREE_int(subset);
+		FREE_int(v1);
+		//FREE_int(v2);
+		FREE_int(v3);
+	}
+	if (f_v) {
+		cout << "coding_theory_domain::make_gilbert_varshamov_code level = " << level << " : cnt = " << cnt << " calling the recursion:" << endl;
+	}
+	make_gilbert_varshamov_code_recursion(P, n, d, set, f_forbidden, level + 1, verbose_level);
+	if (f_v) {
+		cout << "coding_theory_domain::make_gilbert_varshamov_code level = " << level << " : cnt = " << cnt << " done with the recursion:" << endl;
+	}
+
+	for (i = 0; i < add_set.size(); i++) {
+		b = add_set[i];
+		f_forbidden[b] = FALSE;
+	}
+
+
+	if (f_v) {
+		cout << "coding_theory_domain::make_gilbert_varshamov_code done" << endl;
+	}
+}
+
+
+
+
+int coding_theory_domain::gilbert_varshamov_lower_bound_for_d(int n, int k, int q, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	longinteger_domain D;
+	combinatorics_domain Combi;
+	int i, d;
+	longinteger_object qnmk, qm1, qm1_power, S, s, a, b;
+
+	if (f_v) {
+		cout << "coding_theory_domain::gilbert_varshamov_lower_bound_for_d" << endl;
+	}
+	qnmk.create(q, __FILE__, __LINE__);
+	qm1.create(q - 1, __FILE__, __LINE__);
+	D.power_int(qnmk, n - k);
+	qm1_power.create(1, __FILE__, __LINE__);
+	S.create(0, __FILE__, __LINE__);
+	//cout << "gilbert_varshamov_lower_bound_for_d: q=" << q << " n=" << n << " k=" << k << " " << q << "^" << n - k << " = " << qnmk << endl;
+	for (i = 0; ; i++) {
+		Combi.binomial(b, n - 1, i, FALSE);
+		D.mult(b, qm1_power, s);
+		D.add(S, s, a);
+		a.assign_to(S);
+		if (D.compare(S, qnmk) >= 0) {
+			d = i + 1;
+			//cout << "S=" << S << " d=" << d << endl;
+			break;
+		}
+		//cout << "i=" << i << " S=" << S << " is OK" << endl;
+		D.mult(qm1_power, qm1, s);
+		s.assign_to(qm1_power);
+	}
+	if (f_v) {
+		cout << "coding_theory_domain::gilbert_varshamov_lower_bound_for_d done" << endl;
+	}
+	return d;
+}
 
 
 int coding_theory_domain::singleton_bound_for_d(
@@ -2696,12 +2956,12 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 	int len, rk, i;
 
 	if (f_v) {
-		cout << "do_weight_enumerator" << endl;
+		cout << "coding_theory_domain::do_weight_enumerator" << endl;
 	}
 
 	Orbiter->Int_vec.scan(text, M, len);
 	if (len != m * n) {
-		cout << "number of coordinates received differs from m * n" << endl;
+		cout << "coding_theory_domain::do_weight_enumerator number of coordinates received differs from m * n" << endl;
 		cout << "received " << len << endl;
 		exit(1);
 	}
@@ -2712,6 +2972,11 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 	weight_enumerator = NEW_int(n + 1);
 	Orbiter->Int_vec.copy(M, A, m * n);
 
+	if (f_v) {
+		cout << "coding_theory_domain::do_weight_enumerator input matrix:" << endl;
+		int_matrix_print(A, m, n);
+	}
+
 	rk = F->Gauss_int(A,
 		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
 		FALSE /* f_P */, NULL /*P*/, m, n, n,
@@ -2719,11 +2984,11 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 
 
 	if (f_v) {
-		cout << "after RREF:" << endl;
+		cout << "coding_theory_domain::do_weight_enumerator after RREF:" << endl;
 		int_matrix_print(A, rk, n);
 		cout << "rk=" << rk << endl;
 
-		cout << "coefficients:" << endl;
+		cout << "coding_theory_domain::do_weight_enumerator coefficients:" << endl;
 		Orbiter->Int_vec.print(cout, A, rk * n);
 		cout << endl;
 	}
@@ -2734,7 +2999,7 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 		verbose_level);
 
 	if (f_v) {
-		cout << "The weight enumerator is:" << endl;
+		cout << "coding_theory_domain::do_weight_enumerator The weight enumerator is:" << endl;
 		for (i = 0; i <= n; i++) {
 			cout << i << " : " << weight_enumerator[i] << endl;
 		}
@@ -2783,7 +3048,7 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 		cout << endl;
 
 
-		cout << "The weight enumerator is:" << endl;
+		cout << "coding_theory_domain::do_weight_enumerator The weight enumerator is:" << endl;
 		for (i = 0; i <= n; i++) {
 			cout << i << " : " << weight_enumerator[i] << endl;
 		}
@@ -2836,7 +3101,7 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 
 	if (f_normalize_from_the_left) {
 		if (f_v) {
-			cout << "normalizing from the left" << endl;
+			cout << "coding_theory_domain::do_weight_enumerator normalizing from the left" << endl;
 		}
 		for (i = 0; i < rk; i++) {
 			F->PG_element_normalize_from_front(
@@ -2844,7 +3109,7 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 		}
 
 		if (f_v) {
-			cout << "after normalize from the left:" << endl;
+			cout << "coding_theory_domain::do_weight_enumerator after normalize from the left:" << endl;
 			int_matrix_print(A, rk, n);
 			cout << "rk=" << rk << endl;
 		}
@@ -2852,7 +3117,7 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 
 	if (f_normalize_from_the_right) {
 		if (f_v) {
-			cout << "normalizing from the right" << endl;
+			cout << "coding_theory_domain::do_weight_enumerator normalizing from the right" << endl;
 		}
 		for (i = 0; i < rk; i++) {
 			F->PG_element_normalize(
@@ -2860,9 +3125,9 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 		}
 
 		if (f_v) {
-			cout << "after normalize from the right:" << endl;
+			cout << "coding_theory_domain::do_weight_enumerator after normalize from the right:" << endl;
 			int_matrix_print(A, rk, n);
-			cout << "rk=" << rk << endl;
+			cout << "coding_theory_domain::do_weight_enumerator rk=" << rk << endl;
 		}
 	}
 
@@ -2873,7 +3138,7 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 	FREE_int(weight_enumerator);
 
 	if (f_v) {
-		cout << "do_weight_enumerator done" << endl;
+		cout << "coding_theory_domain::do_weight_enumerator done" << endl;
 	}
 }
 
@@ -2986,6 +3251,34 @@ void coding_theory_domain::do_linear_code_through_basis(
 	FREE_int(word);
 	FREE_int(code_word);
 
+}
+
+void coding_theory_domain::matrix_from_projective_set(finite_field *F,
+		int n, int k, long int *columns_set_of_size_n,
+		int *genma,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "coding_theory_domain::matrix_from_projective_set" << endl;
+	}
+	int i, j;
+	int *v;
+
+	v = NEW_int(k);
+	for (j = 0; j < n; j++) {
+
+		F->PG_element_unrank_modified(v, 1, k, columns_set_of_size_n[j]);
+		for (i = 0; i < k; i++) {
+			genma[i * n + j] = v[i];
+		}
+	}
+	FREE_int(v);
+
+	if (f_v) {
+		cout << "coding_theory_domain::matrix_from_projective_set done" << endl;
+	}
 }
 
 void coding_theory_domain::do_linear_code_through_columns_of_parity_check_projectively(

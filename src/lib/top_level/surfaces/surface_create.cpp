@@ -91,7 +91,7 @@ void surface_create::init_with_data(
 		f_semilinear = TRUE;
 	}
 
-	surface_create::F = Surf_A->F;
+	surface_create::F = Surf_A->PA->F;
 	q = F->q;
 	surface_create::Surf = Surf_A->Surf;
 	if (Descr->q != F->q) {
@@ -296,15 +296,25 @@ void surface_create::create_surface_from_description(int verbose_level)
 	}
 
 
+	if (Descr->f_override_group) {
+
+		override_group(Descr->override_group_order,
+				Descr->override_group_nb_gens,
+				Descr->override_group_gens,
+				verbose_level);
+	}
+
 	if (f_v) {
 		cout << "surface_create::init2 coeffs = ";
 		Orbiter->Int_vec.print(cout, SO->eqn, 20);
 		cout << endl;
 	}
 
-	cout << "surface_create::init2 Lines = ";
-	lint_vec_print(cout, SO->Lines, SO->nb_lines);
-	cout << endl;
+	if (f_v) {
+		cout << "surface_create::init2 Lines = ";
+		lint_vec_print(cout, SO->Lines, SO->nb_lines);
+		cout << endl;
+	}
 
 	if (f_has_group) {
 		cout << "surface_create::init2 the stabilizer is:" << endl;
@@ -315,10 +325,59 @@ void surface_create::create_surface_from_description(int verbose_level)
 				"The surface has no group computed" << endl;
 	}
 
-
+	if (f_has_group) {
+		if (f_v) {
+			cout << "surface_with_action::create_surface_and_do_report before Surf_A->test_group" << endl;
+		}
+		Surf_A->test_group(this, verbose_level);
+		if (f_v) {
+			cout << "surface_with_action::create_surface_and_do_report after Surf_A->test_group" << endl;
+		}
+	}
 
 	if (f_v) {
 		cout << "surface_create::init2 done" << endl;
+	}
+}
+
+void surface_create::override_group(std::string &group_order_text,
+		int nb_gens, std::string &gens_text, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *data;
+	int sz;
+
+	if (f_v) {
+		cout << "surface_create::override_group "
+				"group_order=" << group_order_text
+				<< " nb_gens=" << nb_gens << endl;
+	}
+	Sg = NEW_OBJECT(strong_generators);
+
+	if (f_v) {
+		cout << "surface_create::override_group before Sg->stabilizer_of_cubic_surface_from_catalogue" << endl;
+	}
+
+	Orbiter->Int_vec.scan(gens_text, data, sz);
+	if (sz != Surf_A->A->make_element_size * nb_gens) {
+		cout << "surface_create::override_group sz != Surf_A->A->make_element_size * nb_gens" << endl;
+		exit(1);
+	}
+
+	vector_ge *nice_gens;
+
+	Sg->init_from_data_with_target_go_ascii(Surf_A->A, data,
+			nb_gens, Surf_A->A->make_element_size, group_order_text.c_str(),
+			nice_gens,
+			verbose_level);
+
+	FREE_OBJECT(nice_gens);
+
+
+	f_has_group = TRUE;
+
+	if (f_v) {
+		cout << "surface_create::override_group done" << endl;
 	}
 }
 
@@ -491,7 +550,7 @@ void surface_create::create_surface_F13(int a, int verbose_level)
 		cout << "surface_create::create_surface_F13 before Surf->create_surface_F13" << endl;
 	}
 
-	SO = Surf->create_surface_F13(1, verbose_level);
+	SO = Surf->create_surface_F13(a, verbose_level);
 
 	if (f_v) {
 		cout << "surface_create::create_surface_F13 after Surf->create_surface_F13" << endl;
@@ -678,7 +737,7 @@ void surface_create::create_surface_general_abcd(int a, int b, int c, int d, int
 	label_txt.append(str_q);
 	label_txt.append(str);
 
-	label_tex.assign("family\\_general\\_abcd_\\_q");
+	label_tex.assign("family\\_general\\_abcd\\_q");
 	label_tex.append(str_q);
 	label_tex.append(str2);
 

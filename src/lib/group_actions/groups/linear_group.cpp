@@ -600,10 +600,11 @@ void linear_group::init_wedge_action(int verbose_level)
 		exit(1);
 	}
 	A2 = NEW_OBJECT(action);
-	action_on_wedge_product *AW;
+	//action_on_wedge_product *AW;
 
 	
 
+#if 0
 
 	if (f_v) {
 		cout << "linear_group::init_wedge_action "
@@ -612,12 +613,8 @@ void linear_group::init_wedge_action(int verbose_level)
 	AW = NEW_OBJECT(action_on_wedge_product);
 
 	AW->init(*A_linear, verbose_level);
+#endif
 	
-	vector_space_dimension = AW->wedge_dimension;
-	q = input_q;
-	Strong_gens = initial_strong_gens; //A_linear->Strong_gens;
-	f_has_strong_generators = FALSE;
-
 
 	if (f_v) {
 		cout << "linear_group::init_wedge_action "
@@ -625,10 +622,13 @@ void linear_group::init_wedge_action(int verbose_level)
 				<< vector_space_dimension << endl;
 	}
 		
-	A2->induced_action_on_wedge_product(A_linear, 
-		AW, 
-		FALSE /* f_induce_action */, NULL, 
-		verbose_level);
+	A2 = A_linear->induced_action_on_wedge_product(verbose_level);
+
+	vector_space_dimension = A2->G.AW->wedge_dimension;
+	q = input_q;
+	Strong_gens = initial_strong_gens; //A_linear->Strong_gens;
+	f_has_strong_generators = FALSE;
+
 	if (f_v) {
 		cout << "linear_group::init_wedge_action "
 				"created wedge action:" << endl;

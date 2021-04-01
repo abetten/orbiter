@@ -12,6 +12,7 @@ using namespace std;
 namespace orbiter {
 namespace classification {
 
+
 void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 	poset_classification *gen,
 	int lvl, long int pt_to_trace,

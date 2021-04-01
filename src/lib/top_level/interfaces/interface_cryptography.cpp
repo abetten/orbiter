@@ -107,6 +107,10 @@ interface_cryptography::interface_cryptography()
 	//square_root_mod_m = NULL;
 	//cout << "interface_cryptography::interface_cryptography 1a" << endl;
 
+	f_all_square_roots_mod_n = FALSE;
+	//std::string f_all_square_roots_mod_n_a;
+	//std::string f_all_square_roots_mod_n_n;
+
 	f_quadratic_sieve = FALSE;
 	quadratic_sieve_n = 0;
 	quadratic_sieve_factorbase = 0;
@@ -242,6 +246,9 @@ void interface_cryptography::print_help(int argc, std::string *argv, int i, int 
 	else if (stringcmp(argv[i], "-square_root_mod") == 0) {
 		cout << "-square_root_mod <int : a> <int : m>" << endl;
 	}
+	else if (stringcmp(argv[i], "-all_square_roots_mod_n") == 0) {
+		cout << "-all_square_roots_mod_n <int : a> <int : n>" << endl;
+	}
 	else if (stringcmp(argv[i], "-quadratic_sieve") == 0) {
 		cout << "-quadratic_sieve <int : n> <string : factor_base> <int : x0>" << endl;
 	}
@@ -357,6 +364,9 @@ int interface_cryptography::recognize_keyword(int argc, std::string *argv, int i
 		return true;
 	}
 	else if (stringcmp(argv[i], "-square_root_mod") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-all_square_roots_mod_n") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-quadratic_sieve") == 0) {
@@ -568,6 +578,13 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 		square_root_mod_m.assign(argv[++i]);
 		cout << "-square_root_mod " << square_root_mod_a << " "
 				<< square_root_mod_m << endl;
+	}
+	else if (stringcmp(argv[i], "-all_square_roots_mod_n") == 0) {
+		f_all_square_roots_mod_n = TRUE;
+		all_square_roots_mod_n_a.assign(argv[++i]);
+		all_square_roots_mod_n_n.assign(argv[++i]);
+		cout << "-all_square_roots_mod_n " << all_square_roots_mod_n_a << " "
+				<< all_square_roots_mod_n_n << endl;
 	}
 	else if (stringcmp(argv[i], "-quadratic_sieve") == 0) {
 		f_quadratic_sieve = TRUE;
@@ -833,6 +850,24 @@ void interface_cryptography::worker(int verbose_level)
 
 		Crypto.square_root_mod(square_root_mod_a, square_root_mod_m, verbose_level);
 	}
+
+	else if (f_all_square_roots_mod_n) {
+
+		cryptography_domain Crypto;
+		vector<long int> S;
+		int i;
+
+		Crypto.all_square_roots_mod_n_by_exhaustive_search_lint(
+				all_square_roots_mod_n_a, all_square_roots_mod_n_n, S, verbose_level);
+
+		cout << "We found " << S.size() << " square roots of " << all_square_roots_mod_n_a << " mod " << all_square_roots_mod_n_n << endl;
+		cout << "They are:" << endl;
+		for (i = 0; i < S.size(); i++) {
+			cout << i << " : " << S[i] << endl;
+		}
+	}
+
+
 	else if (f_quadratic_sieve) {
 
 		cryptography_domain Crypto;

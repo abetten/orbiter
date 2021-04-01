@@ -2661,7 +2661,6 @@ void strong_generators::stabilizer_of_cubic_surface_from_catalogue(
 	int data_size;
 	const char *ascii_target_go;
 	longinteger_object target_go;
-	int i;
 	knowledge_base K;
 	
 	if (f_v) {
@@ -2671,17 +2670,33 @@ void strong_generators::stabilizer_of_cubic_surface_from_catalogue(
 	K.cubic_surface_stab_gens(F->q, iso,
 			data, nb_gens, data_size, ascii_target_go);
 
+	target_go.create_from_base_10_string(ascii_target_go);
+
+
 	vector_ge *gens;
 
 	gens = NEW_OBJECT(vector_ge);
+
+#if 0
+	int i;
 	gens->init(A, verbose_level - 2);
-	target_go.create_from_base_10_string(ascii_target_go);
 
 
 	gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
 		A->make_element(gens->ith(i), data + i * data_size, 0);
 	}
+#else
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_cubic_surface_from_catalogue before "
+				"gens->init_from_data" << endl;
+	}
+	gens->init_from_data(A, data, nb_gens, data_size, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_cubic_surface_from_catalogue after "
+				"gens->init_from_data" << endl;
+	}
+#endif
 
 
 

@@ -1070,8 +1070,6 @@ public:
 	int *tmp_isomorphism_type_of_spread; // for packing_swap_func
 
 	bitvector *Bitvec;
-	//uchar *bitvector_adjacency;
-	//long int bitvector_length;
 
 	action *A_on_spreads;
 

@@ -2221,6 +2221,14 @@ static longinteger_object *tab_binomials = NULL;
 static int tab_binomials_size = 0;
 
 
+long int combinatorics_domain::binomial_lint(int n, int k)
+{
+	longinteger_object a;
+
+	binomial(a, n, k, 0 /* verbose_level */);
+	return a.as_lint();
+}
+
 
 void combinatorics_domain::binomial(longinteger_object &a, int n, int k, int verbose_level)
 {

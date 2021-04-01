@@ -82,7 +82,7 @@ void classify_trihedral_pairs::init(surface_with_action *Surf_A,
 		cout << "classify_trihedral_pairs::init" << endl;
 	}
 	classify_trihedral_pairs::Surf_A = Surf_A;
-	F = Surf_A->F;
+	F = Surf_A->PA->F;
 	q = F->q;
 	A = Surf_A->A;
 	Surf = Surf_A->Surf;
@@ -1131,8 +1131,11 @@ void classify_trihedral_pairs::print_trihedral_pairs_summary(ostream &ost)
 void classify_trihedral_pairs::print_trihedral_pairs(ostream &ost, 
 	int f_with_stabilizers)
 {
+	string title;
+
+	title.assign("Classification of Double Triplets");
 	Trihedral_pairs->print_latex(ost, 
-		"Classification of Double Triplets", f_with_stabilizers,
+		title, f_with_stabilizers,
 		FALSE, NULL, NULL);
 }
 

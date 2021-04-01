@@ -82,17 +82,25 @@ void orbit_of_equations::init(action *A, finite_field *F,
 	orbit_of_equations::AonHPD = AonHPD;
 	
 	nb_monomials = AonHPD->HPD->get_nb_monomials();
+	if (f_v) {
+		cout << "orbit_of_equations::init nb_monomials = " << nb_monomials << endl;
+	}
 	sz = 1 + nb_monomials;
 	sz_for_compare = 1 + nb_monomials;
 	
 	data_tmp = NEW_int(sz);
 	
 	if (f_v) {
-		cout << "orbit_of_equations::init before compute" << endl;
+		cout << "orbit_of_equations::init computing orbit of ";
+		Orbiter->Int_vec.print(cout, coeff_in, nb_monomials);
+		cout << endl;
 	}
-	compute_orbit(coeff_in, verbose_level);
 	if (f_v) {
-		cout << "orbit_of_equations::init after compute" << endl;
+		cout << "orbit_of_equations::init before compute_orbit" << endl;
+	}
+	compute_orbit(coeff_in, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "orbit_of_equations::init after compute_orbit" << endl;
 	}
 
 	if (f_v) {
@@ -113,14 +121,40 @@ void orbit_of_equations::map_an_equation(int *object_in, int *object_out,
 	if (f_v) {
 		cout << "orbit_of_equations::map_an_equation" << endl;
 	}
+	if (f_v) {
+		cout << "orbit_of_equations::map_an_equation object_in=";
+		Orbiter->Int_vec.print(cout, object_in + 1, nb_monomials);
+		cout << endl;
+	}
+	if (f_v) {
+		cout << "orbit_of_equations::map_an_equation Elt=" << endl;
+		A->element_print(Elt, cout);
+	}
 	AonHPD->compute_image_int_low_level(
 		Elt, object_in + 1, object_out + 1, verbose_level - 2);
 	object_out[0] = 0;
+	if (f_v) {
+		cout << "orbit_of_equations::map_an_equation object_out=";
+		Orbiter->Int_vec.print(cout, object_out + 1, nb_monomials);
+		cout << endl;
+	}
 	if (f_has_reduction) {
+		if (f_v) {
+			cout << "orbit_of_equations::map_an_equation before reduction_function" << endl;
+		}
 		(*reduction_function)(object_out + 1, reduction_function_data);
+		if (f_v) {
+			cout << "orbit_of_equations::map_an_equation after reduction_function" << endl;
+		}
+	}
+	if (f_v) {
+		cout << "orbit_of_equations::map_an_equation before F->PG_element_normalize_from_front" << endl;
 	}
 	F->PG_element_normalize_from_front(
 		object_out + 1, 1, nb_monomials);
+	if (f_v) {
+		cout << "orbit_of_equations::map_an_equation after F->PG_element_normalize_from_front" << endl;
+	}
 	if (f_v) {
 		cout << "orbit_of_equations::map_an_equation done" << endl;
 	}
@@ -175,8 +209,7 @@ void orbit_of_equations::compute_orbit(int *coeff, int verbose_level)
 	}
 	Orbiter->Int_vec.copy(coeff, Equations[0] + 1, nb_monomials);
 	Equations[0][0] = 0;
-	F->PG_element_normalize_from_front(
-		Equations[0] + 1, 1, nb_monomials);
+	F->PG_element_normalize_from_front(Equations[0] + 1, 1, nb_monomials);
 
 	position_of_original_object = 0;
 
@@ -207,9 +240,13 @@ void orbit_of_equations::compute_orbit(int *coeff, int verbose_level)
 			}
 
 			map_an_equation(cur_object, new_object,
-					SG->gens->ith(j),  verbose_level - 4);
+					SG->gens->ith(j),  verbose_level);
 
 			
+			if (f_vvv) {
+				cout << "orbit_of_equations::compute_orbit  "
+						"before search_data" << endl;
+			}
 			if (search_data(new_object, idx)) {
 				if (f_vvv) {
 					cout << "orbit_of_equations::compute_orbit "
@@ -583,8 +620,7 @@ strong_generators *orbit_of_equations::stabilizer_orbit_rep(
 	sims *Stab;
 
 	if (f_v) {
-		cout << "orbit_of_equations::generators_for_"
-				"stabilizer_of_orbit_rep" << endl;
+		cout << "orbit_of_equations::generators_for_stabilizer_of_orbit_rep" << endl;
 	}
 
 	compute_stabilizer(A /* default_action */, full_group_order, 
@@ -594,8 +630,8 @@ strong_generators *orbit_of_equations::stabilizer_orbit_rep(
 
 	Stab->group_order(stab_order);
 	if (f_v) {
-		cout << "orbit_of_equations::generators_for_stabilizer_"
-				"of_orbit_rep found a stabilizer group of order "
+		cout << "orbit_of_equations::generators_for_stabilizer_of_orbit_rep "
+				"found a stabilizer group of order "
 				<< stab_order << endl;
 	}
 	
@@ -605,8 +641,7 @@ strong_generators *orbit_of_equations::stabilizer_orbit_rep(
 
 	FREE_OBJECT(Stab);
 	if (f_v) {
-		cout << "orbit_of_equations::generators_for_stabilizer_of_"
-				"orbit_rep done" << endl;
+		cout << "orbit_of_equations::generators_for_stabilizer_of_orbit_rep done" << endl;
 	}
 	return gens;
 }
@@ -646,15 +681,13 @@ strong_generators *orbit_of_equations::stabilizer_any_point(
 
 	if (f_v) {
 		cout << "orbit_of_equations::stabilizer_any_point "
-				"before gens->init_generators_"
-				"for_the_conjugate_group_aGav" << endl;
+				"before gens->init_generators_for_the_conjugate_group_aGav" << endl;
 	}
 	gens->init_generators_for_the_conjugate_group_aGav(gens0,
 		transporter, verbose_level);
 	if (f_v) {
 		cout << "orbit_of_equations::stabilizer_any_point "
-				"after gens->init_generators_"
-				"for_the_conjugate_group_aGav" << endl;
+				"after gens->init_generators_for_the_conjugate_group_aGav" << endl;
 	}
 
 	FREE_int(transporter);

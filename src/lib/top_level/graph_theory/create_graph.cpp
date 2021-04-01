@@ -113,6 +113,19 @@ void create_graph::init(
 		sprintf(str, "Graph\\_%d\\_%d", description->n, sz2);
 		label_tex.assign(str);
 		}
+	else if (description->f_cycle) {
+
+		if (f_v) {
+			cout << "create_graph::init before create_cycle" << endl;
+		}
+		create_cycle(N, Adj, description->cycle_n,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "create_graph::init after create_Hamming" << endl;
+		}
+	}
 	else if (description->f_Hamming) {
 
 		if (f_v) {
@@ -290,6 +303,39 @@ void create_graph::init(
 }
 
 
+void create_graph::create_cycle(int &N, int *&Adj,
+		int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_graph::create_cycle" << endl;
+	}
+
+	graph_theory_domain GT;
+
+
+	if (f_v) {
+		cout << "create_graph::create_cycle before Combi.make_cycle_graph" << endl;
+	}
+	GT.make_cycle_graph(Adj, N, n, verbose_level);
+	if (f_v) {
+		cout << "create_graph::create_cycle after Combi.make_cycle_graph" << endl;
+	}
+
+	char str[1000];
+	sprintf(str, "Cycle_%d", n);
+	label.assign(str);
+	sprintf(str, "Cycle\\_%d", n);
+	label_tex.assign(str);
+
+
+	if (f_v) {
+		cout << "create_graph::create_cycle done" << endl;
+	}
+}
+
+
 void create_graph::create_Hamming(int &N, int *&Adj,
 		int n, int q, int verbose_level)
 {
@@ -303,11 +349,11 @@ void create_graph::create_Hamming(int &N, int *&Adj,
 
 
 	if (f_v) {
-		cout << "create_graph::create_Hamming before Combi.make_Johnson_graph" << endl;
+		cout << "create_graph::create_Hamming before Combi.make_Hamming_graph" << endl;
 	}
 	GT.make_Hamming_graph(Adj, N, n, q, verbose_level);
 	if (f_v) {
-		cout << "create_graph::create_Johnson after Combi.make_Johnson_graph" << endl;
+		cout << "create_graph::create_Hamming after Combi.make_Hamming_graph" << endl;
 	}
 
 	char str[1000];
@@ -406,7 +452,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 
 	l = NT.Legendre(p, q, 0);
 	if (f_v) {
-		cout << "Legendre(" << p << ", " << q << ")=" << l << endl;
+		cout << "create_graph::create_Sarnak Legendre(" << p << ", " << q << ")=" << l << endl;
 	}
 
 
@@ -425,7 +471,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 		f_special = TRUE;
 
 		if (f_v) {
-			cout << "Creating projective special linear group:" << endl;
+			cout << "create_graph::create_Sarnak Creating projective special linear group:" << endl;
 		}
 		A->init_projective_special_group(2, F,
 			f_semilinear,
@@ -436,7 +482,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 		vector_ge *nice_gens;
 
 		if (f_v) {
-			cout << "Creating projective linear group:" << endl;
+			cout << "create_graph::create_Sarnak Creating projective linear group:" << endl;
 		}
 		A->init_projective_group(2, F,
 			f_semilinear,
@@ -459,7 +505,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 	goi = Sims->group_order_lint();
 
 	if (f_v) {
-		cout << "found a group of order " << goi << endl;
+		cout << "create_graph::create_Sarnak found a group of order " << goi << endl;
 	}
 
 
@@ -484,7 +530,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 		sqrt_mod_q[j] = i;
 	}
 	if (f_v) {
-		cout << "sqrt_mod_q:" << endl;
+		cout << "create_graph::create_Sarnak sqrt_mod_q:" << endl;
 		Orbiter->Int_vec.print(cout, sqrt_mod_q, q);
 		cout << endl;
 	}
@@ -497,8 +543,8 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 		}
 	}
 	if (f_v) {
-		cout << "p=" << p << endl;
-		cout << "sqrt_p = " << sqrt_p << endl;
+		cout << "create_graph::create_Sarnak p=" << p << endl;
+		cout << "create_graph::create_Sarnak sqrt_p = " << sqrt_p << endl;
 	}
 
 
@@ -508,11 +554,11 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 		}
 	}
 	if (I == q) {
-		cout << "did not find I" << endl;
+		cout << "create_graph::create_Sarnak did not find I" << endl;
 		exit(1);
 	}
 	if (f_v) {
-		cout << "I=" << I << endl;
+		cout << "create_graph::create_Sarnak I=" << I << endl;
 	}
 
 	for (a0 = 1; a0 <= sqrt_p; a0++) {
@@ -533,12 +579,12 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 					}
 					if (a0 * a0 + a1 * a1 + a2 * a2 + a3 * a3 == p) {
 						if (f_v) {
-							cout << "solution " << nb_A4 << " : " << a0
+							cout << "create_graph::create_Sarnak solution " << nb_A4 << " : " << a0
 									<< ", " << a1 << ", " << a2 << ", "
 									<< a3 << ", " << endl;
 						}
 						if (nb_A4 == p + 1) {
-							cout << "too many solutions" << endl;
+							cout << "create_graph::create_Sarnak too many solutions" << endl;
 							exit(1);
 						}
 						A4[nb_A4 * 4 + 0] = a0;
@@ -553,10 +599,10 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 	}
 
 	if (f_v) {
-		cout << "nb_A4=" << nb_A4 << endl;
+		cout << "create_graph::create_Sarnak nb_A4=" << nb_A4 << endl;
 	}
 	if (nb_A4 != p + 1) {
-		cout << "nb_A4 != p + 1" << endl;
+		cout << "create_graph::create_Sarnak nb_A4 != p + 1" << endl;
 		exit(1);
 	}
 
@@ -578,12 +624,12 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 	gens->allocate(nb_A4, verbose_level - 2);
 
 	if (f_v) {
-		cout << "making connection set:" << endl;
+		cout << "create_graph::create_Sarnak making connection set:" << endl;
 	}
 	for (i = 0; i < nb_A4; i++) {
 
 		if (f_vv) {
-			cout << "making generator " << i << ":" << endl;
+			cout << "create_graph::create_Sarnak making generator " << i << ":" << endl;
 		}
 		a0 = A4[i * 4 + 0];
 		a1 = A4[i * 4 + 1];
@@ -606,7 +652,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 		a2 = a2 % q;
 		a3 = a3 % q;
 		if (f_vv) {
-			cout << "making generator " << i << ": a0=" << a0
+			cout << "create_graph::create_Sarnak making generator " << i << ": a0=" << a0
 					<< " a1=" << a1 << " a2=" << a2
 					<< " a3=" << a3 << endl;
 		}
@@ -632,19 +678,19 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 #if 0
 			s = sqrt_mod_q[det];
 			if (s == -1) {
-				cout << "determinant is not a square" << endl;
+				cout << "create_graph::create_Sarnak determinant is not a square" << endl;
 				exit(1);
 			}
 			sv = F->inverse(s);
 			if (f_vv) {
-				cout << "det=" << det << " sqrt=" << s
+				cout << "create_graph::create_Sarnak det=" << det << " sqrt=" << s
 						<< " mutiplying by " << sv << endl;
 			}
 			for (j = 0; j < 4; j++) {
 				M4[j] = F->mult(sv, M4[j]);
 			}
 			if (f_vv) {
-				cout << "M4=";
+				cout << "create_graph::create_Sarnak M4=";
 				int_vec_print(cout, M4, 4);
 				cout << endl;
 			}
@@ -654,7 +700,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 		A->make_element(Elt1, M4, verbose_level - 1);
 
 		if (f_v) {
-			cout << "s_" << i << "=" << endl;
+			cout << "create_graph::create_Sarnak s_" << i << "=" << endl;
 			A->element_print_quick(Elt1, cout);
 		}
 

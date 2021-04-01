@@ -78,12 +78,21 @@ void surface_domain::build_cubic_surface_from_lines(
 		cout << "surface_domain::build_cubic_surface_from_lines before create_system" << endl;
 	}
 	create_system(len, S, System, nb_rows, verbose_level);
+	if (f_v) {
+		cout << "surface_domain::build_cubic_surface_from_lines after create_system" << endl;
+	}
 
 
 	int base_cols[20];
 
+	if (f_v) {
+		cout << "surface_domain::build_cubic_surface_from_lines before F->Gauss_simple" << endl;
+	}
 	r = F->Gauss_simple(System, nb_rows, nb_monomials,
 		base_cols, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_domain::build_cubic_surface_from_lines after F->Gauss_simple" << endl;
+	}
 
 	if (FALSE) {
 		cout << "surface_domain::create_system "
@@ -105,8 +114,14 @@ void surface_domain::build_cubic_surface_from_lines(
 
 	int kernel_m, kernel_n;
 
+	if (f_v) {
+		cout << "surface_domain::build_cubic_surface_from_lines before F->matrix_get_kernel" << endl;
+	}
 	F->matrix_get_kernel(System, r, nb_monomials, base_cols, r,
 		kernel_m, kernel_n, coeff, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_domain::build_cubic_surface_from_lines after F->matrix_get_kernel" << endl;
+	}
 
 	FREE_int(System);
 
@@ -157,6 +172,9 @@ void surface_domain::create_system(int len, long int *S,
 	if (f_v) {
 		cout << "surface_domain::create_system" << endl;
 	}
+	if (f_v) {
+		cout << "surface_domain::create_system len = " << len << endl;
+	}
 
 	vector<long int> Pts;
 	long int *pts_on_line;
@@ -175,9 +193,15 @@ void surface_domain::create_system(int len, long int *S,
 			}
 		}
 		else {
+			if (f_v) {
+				cout << "surface_domain::create_system before P->create_points_on_line" << endl;
+			}
 			P->create_points_on_line(a,
 					pts_on_line, //pt_list + nb_pts,
 					0 /* verbose_level */);
+			if (f_v) {
+				cout << "surface_domain::create_system after P->create_points_on_line" << endl;
+			}
 			//nb_pts += P->k;
 			for (j = 0; j < P->k; j++) {
 				Pts.push_back(pts_on_line[j]);
@@ -199,10 +223,18 @@ void surface_domain::create_system(int len, long int *S,
 		}
 #endif
 
+	if (f_v) {
+		cout << "surface_domain::create_system list of "
+				"covered points by lines has been created" << endl;
+	}
 
 
 	nb_rows = Pts.size();
 
+	if (f_v) {
+		cout << "surface_domain::create_system nb_rows = " << nb_rows << endl;
+		cout << "surface_domain::create_system n = " << n << endl;
+	}
 	Pt_coords = NEW_int(nb_rows * n);
 
 	for (i = 0; i < nb_rows; i++) {
@@ -215,6 +247,9 @@ void surface_domain::create_system(int len, long int *S,
 		int_matrix_print(Pt_coords, nb_rows, n);
 	}
 
+	if (f_v) {
+		cout << "surface_domain::create_system nb_rows = " << nb_rows << endl;
+	}
 
 	System = NEW_int(nb_rows * nb_monomials);
 
@@ -226,6 +261,10 @@ void surface_domain::create_system(int len, long int *S,
 	FREE_int(Pt_coords);
 
 
+	if (f_v) {
+		cout << "surface_domain::create_system "
+				"The system has been created" << endl;
+	}
 	if (f_v && FALSE) {
 		cout << "surface_domain::create_system "
 				"The system:" << endl;

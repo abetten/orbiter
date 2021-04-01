@@ -114,7 +114,6 @@ void surfaces_arc_lifting::freeself()
 }
 
 void surfaces_arc_lifting::init(
-	finite_field *F, linear_group *LG4,
 	surface_with_action *Surf_A,
 	poset_classification_control *Control_six_arcs,
 	int f_test_nb_Eckardt_points, int nb_E,
@@ -126,10 +125,10 @@ void surfaces_arc_lifting::init(
 	if (f_v) {
 		cout << "surfaces_arc_lifting::init" << endl;
 	}
-	surfaces_arc_lifting::F = F;
-	surfaces_arc_lifting::LG4 = LG4;
+	//surfaces_arc_lifting::LG4 = LG4;
 	surfaces_arc_lifting::Surf_A = Surf_A;
 	surfaces_arc_lifting::Surf = Surf_A->Surf;
+	surfaces_arc_lifting::F = Surf_A->PA->F;
 	q = F->q;
 
 	fname_base.assign("surfaces_arc_lifting_");
@@ -137,7 +136,7 @@ void surfaces_arc_lifting::init(
 	sprintf(str, "%d", q);
 	fname_base.append(str);
 
-	A4 = LG4->A_linear;
+	A4 = Surf_A->PA->A;
 	if (f_v) {
 		cout << "surfaces_arc_lifting::init A4 = " << A4->label << endl;
 		cout << "surfaces_arc_lifting::init A4 = " << A4->label_tex << endl;
@@ -148,6 +147,9 @@ void surfaces_arc_lifting::init(
 
 	f_semilinear = A4->is_semilinear_matrix_group();
 
+
+
+#if 0
 	A3 = NEW_OBJECT(action);
 
 
@@ -167,6 +169,9 @@ void surfaces_arc_lifting::init(
 		cout << "surfaces_arc_lifting::init "
 				"after A->init_projective_group" << endl;
 	}
+#else
+	A3 = Surf_A->PA->PA2->A;
+#endif
 
 
 
@@ -869,9 +874,13 @@ void surfaces_arc_lifting::report2(ostream &ost,
 
 	//ost << "\\section{Cubic Surfaces over the field $\\mathbb F}_{" << q << "}$}" << endl << endl;
 
-	char title[1000];
-	sprintf(title, "\\section{The Classification of Cubic Surfaces with 27 Lines "
+	char str[1000];
+	sprintf(str, "\\section{The Classification of Cubic Surfaces with 27 Lines "
 			"over the field ${\\mathbb F}_{%d}$}", q);
+
+	string title;
+
+	title.assign(str);
 
 	//classification_step *Surfaces;
 

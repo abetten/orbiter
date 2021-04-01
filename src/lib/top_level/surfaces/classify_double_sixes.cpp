@@ -33,7 +33,7 @@ void classify_double_sixes::null()
 	Surf_A = NULL;
 	Surf = NULL;
 
-	LG = NULL;
+	//LG = NULL;
 
 	A2 = NULL;
 	AW = NULL;
@@ -115,7 +115,7 @@ void classify_double_sixes::freeself()
 }
 
 void classify_double_sixes::init(
-	surface_with_action *Surf_A, linear_group *LG,
+	surface_with_action *Surf_A,
 	poset_classification_control *Control,
 	int verbose_level)
 {
@@ -125,10 +125,9 @@ void classify_double_sixes::init(
 		cout << "classify_double_sixes::init" << endl;
 		}
 	classify_double_sixes::Surf_A = Surf_A;
-	classify_double_sixes::LG = LG;
-	F = Surf_A->F;
+	//classify_double_sixes::LG = LG;
+	F = Surf_A->PA->F;
 	q = F->q;
-	A = Surf_A->A;
 	Surf = Surf_A->Surf;
 	
 	
@@ -140,8 +139,11 @@ void classify_double_sixes::init(
 	
 
 
-	A = LG->A_linear;
-	A2 = LG->A2;
+	//A = LG->A_linear;
+	//A2 = LG->A2;
+	//A = Surf_A->PA->A;
+	A = Surf_A->A;
+	A2 = Surf_A->A_wedge;
 
 	if (A2->type_G != action_on_wedge_product_t) {
 		cout << "classify_double_sixes::init group must "
@@ -184,10 +186,22 @@ void classify_double_sixes::init(
 		cout << "classify_double_sixes::init "
 				"before compute_neighbors" << endl;
 	}
-	compute_neighbors(verbose_level - 1);
+	compute_neighbors(verbose_level);
+	if (f_v) {
+		cout << "classify_double_sixes::init "
+				"after compute_neighbors" << endl;
+	}
 	{
 		spreadsheet *Sp;
+		if (f_v) {
+			cout << "classify_double_sixes::init "
+					"before make_spreadsheet_of_neighbors" << endl;
+		}
 		make_spreadsheet_of_neighbors(Sp, 0 /* verbose_level */);
+		if (f_v) {
+			cout << "classify_double_sixes::init "
+					"after make_spreadsheet_of_neighbors" << endl;
+		}
 		FREE_OBJECT(Sp);
 	}
 	if (f_v) {
@@ -542,6 +556,9 @@ void classify_double_sixes::report(std::ostream &ost,
 	}
 	ost << "\\section*{The classification of five-plus-ones}" << endl;
 	Five_plus_one->report(ost, verbose_level);
+	if (f_v) {
+		cout << "classify_double_sixes::report after Five_plus_one->report" << endl;
+	}
 
 
 	if (f_v) {

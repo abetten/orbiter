@@ -88,7 +88,7 @@ void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pa
 		cout << "surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pairs" << endl;
 	}
 
-	F = Surf_A->F;
+	F = Surf_A->PA->F;
 	Surf = Surf_A->Surf;
 
 	A = NEW_OBJECT(action);
@@ -252,7 +252,7 @@ void surface_classify_using_arc::report(
 
 
 
-	F = Surf_A->F;
+	F = Surf_A->PA->F;
 	//Surf = Surf_A->Surf;
 
 	string fname_arc_lifting;
@@ -318,7 +318,7 @@ void surface_classify_using_arc::report2(ostream &ost,
 	//surface_domain *Surf;
 	finite_field *F;
 
-	F = Surf_A->F;
+	F = Surf_A->PA->F;
 	//Surf = Surf_A->Surf;
 
 	if (f_v) {
@@ -527,7 +527,7 @@ void surface_classify_using_arc::report_decomposition_matrix(ostream &ost, int v
 	char str[1000];
 	string fname_decomposition;
 
-	sprintf(str, "surfaces_q%d_decomposition_matrix.csv", Surf_A->F->q);
+	sprintf(str, "surfaces_q%d_decomposition_matrix.csv", Surf_A->PA->F->q);
 	fname_decomposition.assign(str);
 
 	Fio.int_matrix_write_csv(fname_decomposition, Decomp,

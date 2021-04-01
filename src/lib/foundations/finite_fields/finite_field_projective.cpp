@@ -451,10 +451,29 @@ int finite_field::test_if_vectors_are_projectively_equal(int *v1, int *v2, int l
 	w1 = NEW_int(len);
 	w2 = NEW_int(len);
 
+#if 0
+	cout << "finite_field::test_if_vectors_are_projectively_equal:" << endl;
+	Orbiter->Int_vec.print(cout, v1, 20);
+	cout << endl;
+	cout << "finite_field::test_if_vectors_are_projectively_equal:" << endl;
+	Orbiter->Int_vec.print(cout, v2, 20);
+	cout << endl;
+#endif
+
 	Orbiter->Int_vec.copy(v1, w1, len);
 	Orbiter->Int_vec.copy(v2, w2, len);
 	PG_element_normalize(w1, 1, len);
 	PG_element_normalize(w2, 1, len);
+
+#if 0
+	cout << "finite_field::test_if_vectors_are_projectively_equal:" << endl;
+	Orbiter->Int_vec.print(cout, w1, 20);
+	cout << endl;
+	cout << "finite_field::test_if_vectors_are_projectively_equal:" << endl;
+	Orbiter->Int_vec.print(cout, w2, 20);
+	cout << endl;
+#endif
+
 	for (i = 0; i < len; i++) {
 		if (w1[i] != w2[i]) {
 			ret = FALSE;

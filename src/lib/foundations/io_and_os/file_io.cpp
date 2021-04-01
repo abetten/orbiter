@@ -1332,6 +1332,29 @@ void file_io::lint_matrix_write_csv(std::string &fname, long int *M, int m, int 
 	}
 }
 
+void file_io::lint_matrix_write_csv_override_headers(std::string &fname, std::string *headers, long int *M, int m, int n)
+{
+	int i, j;
+
+	{
+		ofstream f(fname);
+
+		f << "Row";
+		for (j = 0; j < n; j++) {
+			f << "," << headers[j];
+		}
+		f << endl;
+		for (i = 0; i < m; i++) {
+			f << i;
+			for (j = 0; j < n; j++) {
+				f << "," << M[i * n + j];
+			}
+			f << endl;
+		}
+		f << "END" << endl;
+	}
+}
+
 void file_io::double_matrix_write_csv(
 		std::string &fname, double *M, int m, int n)
 {

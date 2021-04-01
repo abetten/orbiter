@@ -2611,86 +2611,6 @@ void algebra_global_with_action::matrix_convert_to_numerical(discreta_matrix &A,
 
 
 
-void algebra_global_with_action::classify_surfaces(
-		finite_field *F, linear_group *LG,
-		poset_classification_control *Control,
-		surface_domain *&Surf, surface_with_action *&Surf_A,
-		surface_classify_wedge *&SCW,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
-
-	if (f_v) {
-		cout << "algebra_global_with_action::classify_surfaces" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "algebra_global_with_action::classify_surfaces before Surf->init" << endl;
-	}
-	Surf = NEW_OBJECT(surface_domain);
-	Surf->init(F, 0 /*verbose_level - 3*/);
-	if (f_v) {
-		cout << "algebra_global_with_action::classify_surfaces after Surf->init" << endl;
-	}
-
-
-	Surf_A = NEW_OBJECT(surface_with_action);
-
-
-	int f_semilinear;
-
-	f_semilinear = LG->A2->is_semilinear_matrix_group();
-
-	if (f_v) {
-		cout << "algebra_global_with_action::classify_surfaces before Surf_A->init_with_linear_group" << endl;
-	}
-	Surf_A->init_with_linear_group(Surf, LG, TRUE /* f_recoordinatize */, verbose_level - 3);
-	if (f_v) {
-		cout << "algebra_global_with_action::classify_surfaces after Surf_A->init_with_linear_group" << endl;
-	}
-
-
-
-	SCW = NEW_OBJECT(surface_classify_wedge);
-
-	if (f_v) {
-		cout << "algebra_global_with_action::classify_surfaces before SCW->init" << endl;
-	}
-
-	SCW->init(F, LG,
-			f_semilinear, Surf_A,
-			Control,
-			verbose_level - 1);
-
-	if (f_v) {
-		cout << "algebra_global_with_action::classify_surfaces after SCW->init" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "algebra_global_with_action::classify_surfaces before SCW->do_classify_double_sixes" << endl;
-	}
-	SCW->do_classify_double_sixes(verbose_level);
-	if (f_v) {
-		cout << "algebra_global_with_action::classify_surfaces after SCW->do_classify_double_sixes" << endl;
-	}
-
-	if (f_v) {
-		cout << "algebra_global_with_action::classify_surfaces before SCW->do_classify_surfaces" << endl;
-	}
-	SCW->do_classify_surfaces(verbose_level);
-	if (f_v) {
-		cout << "algebra_global_with_action::classify_surfaces after SCW->do_classify_surfaces" << endl;
-	}
-
-	if (f_v) {
-		cout << "algebra_global_with_action::classify_surfaces done" << endl;
-	}
-
-}
-
 
 void algebra_global_with_action::young_symmetrizer(int n, int verbose_level)
 {
@@ -2810,7 +2730,8 @@ void algebra_global_with_action::young_symmetrizer(int n, int verbose_level)
 
 		for (i = 0; i < rk; i++) {
 			for (j = 0; j < Y->goi; j++) {
-				Y->D->copy(Y->D->offset(Module_Base, i * Y->goi + j), Y->D->offset(Base, s * Y->goi + j), 0);
+				Y->D->copy(Y->D->offset(Module_Base, i * Y->goi + j),
+						Y->D->offset(Base, s * Y->goi + j), 0);
 			}
 			s++;
 		}
@@ -3869,55 +3790,6 @@ void algebra_global_with_action::do_eigenstuff_from_file(
 }
 
 
-
-void algebra_global_with_action::do_study_surface(finite_field *F, int nb, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "algebra_global_with_action::do_study_surface" << endl;
-	}
-
-	surface_study *study;
-
-	study = NEW_OBJECT(surface_study);
-
-	cout << "before study->init" << endl;
-	study->init(F, nb, verbose_level);
-	cout << "after study->init" << endl;
-
-	cout << "before study->study_intersection_points" << endl;
-	study->study_intersection_points(verbose_level);
-	cout << "after study->study_intersection_points" << endl;
-
-	cout << "before study->study_line_orbits" << endl;
-	study->study_line_orbits(verbose_level);
-	cout << "after study->study_line_orbits" << endl;
-
-	cout << "before study->study_group" << endl;
-	study->study_group(verbose_level);
-	cout << "after study->study_group" << endl;
-
-	cout << "before study->study_orbits_on_lines" << endl;
-	study->study_orbits_on_lines(verbose_level);
-	cout << "after study->study_orbits_on_lines" << endl;
-
-	cout << "before study->study_find_eckardt_points" << endl;
-	study->study_find_eckardt_points(verbose_level);
-	cout << "after study->study_find_eckardt_points" << endl;
-
-#if 0
-	if (study->nb_Eckardt_pts == 6) {
-		cout << "before study->study_surface_with_6_eckardt_points" << endl;
-		study->study_surface_with_6_eckardt_points(verbose_level);
-		cout << "after study->study_surface_with_6_eckardt_points" << endl;
-		}
-#endif
-
-	if (f_v) {
-		cout << "algebra_global_with_action::do_study_surface done" << endl;
-	}
-}
 
 
 

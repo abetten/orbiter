@@ -9,15 +9,14 @@
 //
 //
 
-#include "foundations/foundations.h"
-#include "group_actions.h"
+#include "orbiter.h"
 
 using namespace std;
 
-
-
 namespace orbiter {
-namespace group_actions {
+namespace top_level {
+
+
 
 object_in_projective_space_with_action::object_in_projective_space_with_action()
 {

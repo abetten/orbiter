@@ -9,6 +9,8 @@ MODULES = \
 	arc_lifting.o \
 	arc_orbits_on_pairs.o \
 	arc_partition.o \
+	classification_of_cubic_surfaces_with_double_sixes_activity_description.o \
+	classification_of_cubic_surfaces_with_double_sixes_activity.o \
 	classify_double_sixes.o \
 	classify_trihedral_pairs.o \
 	cubic_surface_activity_description.o \
@@ -20,6 +22,7 @@ MODULES = \
 	surface_create_by_arc_lifting.o \
 	surface_create_description.o \
 	surface_create.o \
+	surface_domain_high_level.o \
 	surface_object_tangent_cone.o \
 	surface_object_with_action.o \
 	surface_study.o \

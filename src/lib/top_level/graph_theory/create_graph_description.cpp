@@ -28,6 +28,9 @@ create_graph_description::create_graph_description()
 	f_edges_as_pairs = FALSE;
 	//edges_as_pairs_text;
 
+	f_cycle = FALSE;
+	cycle_n = 0;
+
 	f_Hamming = FALSE;
 	Hamming_n = 0;
 	Hamming_q = 0;
@@ -98,6 +101,11 @@ int create_graph_description::read_arguments(
 			n = strtoi(argv[++i]);
 			edges_as_pairs_text.assign(argv[++i]);
 			cout << "-edges_as_pairs " << n << " " << edges_as_pairs_text << endl;
+		}
+		else if (stringcmp(argv[i], "-cycle") == 0) {
+			f_cycle = TRUE;
+			cycle_n = strtoi(argv[++i]);
+			cout << "-cycle " << cycle_n << endl;
 		}
 		else if (stringcmp(argv[i], "-Hamming") == 0) {
 			f_Hamming = TRUE;

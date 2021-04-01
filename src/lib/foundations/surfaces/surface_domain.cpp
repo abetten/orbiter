@@ -576,7 +576,7 @@ void surface_domain::label_variables_x123(
 	}
 
 
-	HPD->remake_symbols(0 /* symbol_offset */,
+	HPD->remake_symbols(1 /* symbol_offset */,
 			"x_%d", "x_{%d}", verbose_level);
 
 	if (f_v) {

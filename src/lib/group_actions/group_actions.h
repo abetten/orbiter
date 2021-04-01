@@ -71,24 +71,23 @@ class direct_product;
 class schreier_vector_handler;
 class schreier_vector;
 class action_on_set_partitions;
-class object_in_projective_space_with_action;
 class action_pointer_table;
 class nauty_interface_with_group;
 class exceptional_isomorphism_O4;
 class orbit_rep;
-class projective_space_with_action;
-class projective_space_job_description;
-class projective_space_job;
 class stabilizer_chain_base_data;
 class orbits_on_something;
 class orbit_type_repository;
 class permutation_representation;
 class incidence_structure_with_group;
 class action_global;
-class projective_space_object_classifier;
-class projective_space_with_action_description;
 class orthogonal_space_with_action_description;
 class orthogonal_space_with_action;
+
+
+
+
+
 
 //! enumeration to distinguish between the various types of group actions
 
