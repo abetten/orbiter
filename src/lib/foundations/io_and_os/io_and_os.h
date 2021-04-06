@@ -849,7 +849,7 @@ uint32_t root_of_tree_uint32_t (uint32_t* S, uint32_t i);
 int util_compare_func(void *a, void *b, void *data);
 void text_to_three_double(const char *text, double *d);
 void text_to_three_double(std::string &text, double *d);
-void convert_arguments(int argc, const char **argv, std::string *&Argv);
+void convert_arguments(int &argc, const char **argv, std::string *&Argv);
 int stringcmp(std::string &str, const char *p);
 int strtoi(std::string &str);
 long int strtolint(std::string &str);

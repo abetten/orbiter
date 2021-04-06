@@ -146,6 +146,16 @@ public:
 	int make_gilbert_varshamov_code_d;
 
 
+	int f_spread_classify;
+	int spread_classify_k;
+	poset_classification_control *spread_classify_Control;
+
+	int f_classify_semifields;
+	semifield_classify_description *Semifield_classify_description;
+	poset_classification_control *Semifield_classify_Control;
+
+
+
 	projective_space_activity_description();
 	~projective_space_activity_description();
 	int read_arguments(
@@ -174,6 +184,14 @@ public:
 	projective_space_activity();
 	~projective_space_activity();
 	void perform_activity(int verbose_level);
+	void do_spread_table_init(
+			projective_space_with_action *PA,
+			int dimension_of_spread_elements,
+			std::string &spread_selection_text,
+			std::string &spread_tables_prefix,
+			int starter_size,
+			packing_classify *&P,
+			int verbose_level);
 	void map(
 			projective_space_with_action *PA,
 			std::string &label,
@@ -199,6 +217,16 @@ public:
 			surface_create_description *Surface_Descr,
 			surface_with_action *&Surf_A,
 			surface_create *&SC,
+			int verbose_level);
+	void do_spread_classify(
+			projective_space_with_action *PA,
+			int k,
+			poset_classification_control *Control,
+			int verbose_level);
+	void do_classify_semifields(
+			projective_space_with_action *PA,
+			semifield_classify_description *Semifield_classify_description,
+			poset_classification_control *Control,
 			int verbose_level);
 
 

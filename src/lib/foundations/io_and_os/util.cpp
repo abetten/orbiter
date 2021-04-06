@@ -2081,14 +2081,73 @@ void text_to_three_double(std::string &text, double *d)
 }
 
 
-void convert_arguments(int argc, const char **argv, std::string *&Argv)
+void convert_arguments(int &argc, const char **argv, std::string *&Argv)
 {
 	int i;
+	vector<string> Arg_vec;
 
+	for (i = 0; i < argc; i++) {
+		if (strcmp(argv[i], "-repeat") == 0) {
+			string variable_name;
+			int loop_from;
+			int loop_upper_bound;
+			int loop_increment;
+			int index_of_repeat_start;
+			int index_of_repeat_end;
+
+			variable_name.assign(argv[++i]);
+			loop_from = atoi(argv[++i]);
+			loop_upper_bound = atoi(argv[++i]);
+			loop_increment = atoi(argv[++i]);
+			i++;
+			index_of_repeat_start = i;
+			while (i < argc) {
+				if (strcmp(argv[i], "-repeat_end") == 0) {
+					index_of_repeat_end = i;
+					break;
+				}
+				i++;
+			}
+			int loop_var;
+			int h;
+			string variable;
+
+			variable.assign("%");
+			variable.append(variable_name);
+
+			for (loop_var = loop_from; loop_var < loop_upper_bound; loop_var += loop_increment) {
+				for (h = index_of_repeat_start; h < index_of_repeat_end; h++) {
+					string arg;
+					string value_L;
+					char str[1000];
+
+					sprintf(str, "%d", loop_var);
+					value_L.assign(str);
+
+					arg.assign(argv[h]);
+
+					while (arg.find(variable) != std::string::npos) {
+						arg.replace(arg.find(variable), variable.length(), value_L);
+					}
+
+
+					Arg_vec.push_back(arg);
+				}
+			}
+		}
+		else {
+			string str;
+
+			str.assign(argv[i]);
+			Arg_vec.push_back(str);
+		}
+	}
+	argc = Arg_vec.size();
 	Argv = new string[argc];
 	for (i = 0; i < argc; i++) {
-		Argv[i].assign(argv[i]);
+		Argv[i].assign(Arg_vec[i]);
 	}
+
 }
 
 int stringcmp(std::string &str, const char *p)

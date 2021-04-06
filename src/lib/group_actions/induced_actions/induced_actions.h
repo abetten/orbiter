@@ -766,6 +766,7 @@ public:
 	void free();
 	void init(int nb_sets, int set_size, 
 		long int *input_sets, int verbose_level);
+	int find_set(long int *set, int verbose_level);
 	long int compute_image(action *A, int *Elt,
 		long int i, int verbose_level);
 	void print_sets_sorted();

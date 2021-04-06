@@ -460,12 +460,12 @@ void linear_set_classify::init(
 
 		//int max_depth = order + 1;
 		poset_classification_control *Control;
-		linear_group *LG;
+		projective_space_with_action *PA;
 
 		Control = NEW_OBJECT(poset_classification_control);
-		LG = NEW_OBJECT(linear_group); // hack !!! ToDo
+		PA = NEW_OBJECT(projective_space_with_action); // hack !!! ToDo
 
-		T->init(LG, k, //Control,
+		T->init(PA, k,
 				TRUE /* f_recoordinatize */,
 				verbose_level - 2);
 

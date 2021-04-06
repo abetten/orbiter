@@ -2125,7 +2125,7 @@ public:
 
 	spread_tables();
 	~spread_tables();
-	void init(finite_field *F,
+	void init(projective_space *P,
 			int f_load,
 			int nb_iso_types_of_spreads,
 			std::string &path_to_spread_tables,
@@ -2142,6 +2142,9 @@ public:
 			int nb_select, int *select,
 			spread_tables *old_spread_table,
 			int verbose_level);
+	long int *get_spread(int spread_idx);
+	void find_spreads_containing_two_lines(std::vector<int> &v, int line1, int line2, int verbose_level);
+
 	void classify_self_dual_spreads(int *&type,
 			set_of_sets *&SoS,
 			int verbose_level);

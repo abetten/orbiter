@@ -580,7 +580,7 @@ void int_vec::print_classified_str(stringstream &sstr,
 
 void int_vec::scan(std::string &s, int *&v, int &len)
 {
-	int verbose_level = 1;
+	int verbose_level = 0;
 
 	int f_v = (verbose_level >= 1);
 	if (f_v) {

@@ -29,17 +29,6 @@ spread_tables::spread_tables()
 	spread_size = 0;
 	nb_iso_types_of_spreads = 0;
 
-#if 0
-	prefix[0] = 0;
-
-	fname_dual_line_idx[0] = 0;
-	fname_self_dual_lines[0] = 0;
-	fname_spreads[0] = 0;
-	fname_isomorphism_type_of_spreads[0] = 0;
-	fname_dual_spread[0] = 0;
-	fname_self_dual_spreads[0] = 0;
-#endif
-
 	dual_line_idx = NULL;
 	self_dual_lines = NULL;
 	nb_self_dual_lines = 0;
@@ -56,12 +45,14 @@ spread_tables::spread_tables()
 
 spread_tables::~spread_tables()
 {
+#if 0
 	if (P) {
 		FREE_OBJECT(P);
 	}
 	if (Gr) {
 		FREE_OBJECT(Gr);
 	}
+#endif
 	if (dual_line_idx) {
 		FREE_int(dual_line_idx);
 	}
@@ -80,7 +71,7 @@ spread_tables::~spread_tables()
 	//freeself();
 }
 
-void spread_tables::init(finite_field *F,
+void spread_tables::init(projective_space *P,
 		int f_load,
 		int nb_iso_types_of_spreads,
 		std::string &path_to_spread_tables,
@@ -93,9 +84,16 @@ void spread_tables::init(finite_field *F,
 		cout << "spread_tables::init" << endl;
 	}
 
-	spread_tables::F = F;
+	if (P->n != 3) {
+		cout << "spread_tables::init P->n != 3" << endl;
+		exit(1);
+	}
+	spread_tables::P = P;
+	spread_tables::F = P->F;
+	Gr = P->Grass_lines;
 	q = F->q;
-	d = 4; // = 4
+	d = 4;
+#if 0
 	P = NEW_OBJECT(projective_space);
 	if (f_v) {
 		cout << "spread_tables::init before P->init" << endl;
@@ -110,6 +108,7 @@ void spread_tables::init(finite_field *F,
 
 	Gr = NEW_OBJECT(grassmann);
 	Gr->init(d, 2, F, 0 /* verbose_level */);
+#endif
 	nb_lines = Gr->nCkq.as_int();
 	spread_size = q * q + 1;
 	spread_tables::nb_iso_types_of_spreads = nb_iso_types_of_spreads;
@@ -129,29 +128,27 @@ void spread_tables::init(finite_field *F,
 
 	prefix.append(str);
 
-	//snprintf(spread_tables::prefix, 1000, "%sspread_%d", path_to_spread_tables, NT.i_power_j(q, 2));
 	if (f_v) {
 		cout << "spread_tables::init prefix=" << spread_tables::prefix << endl;
 	}
 
 	fname_dual_line_idx.assign(prefix);
 	fname_dual_line_idx.append("_dual_line_idx.csv");
-	//snprintf(fname_dual_line_idx, 2000, "%s_dual_line_idx.csv", spread_tables::prefix);
+
 	fname_self_dual_lines.assign(prefix);
 	fname_self_dual_lines.append("_self_dual_line_idx.csv");
-	//snprintf(fname_self_dual_lines, 2000, "%s_self_dual_lines.csv", spread_tables::prefix);
+
 	fname_spreads.assign(prefix);
 	fname_spreads.append("_spreads.csv");
-	//snprintf(fname_spreads, 2000, "%s_spreads.csv", spread_tables::prefix);
+
 	fname_isomorphism_type_of_spreads.assign(prefix);
 	fname_isomorphism_type_of_spreads.append("_spreads_iso.csv");
-	//snprintf(fname_isomorphism_type_of_spreads, 2000, "%s_spreads_iso.csv", spread_tables::prefix);
+
 	fname_dual_spread.assign(prefix);
 	fname_dual_spread.append("_dual_spread_idx.csv");
-	//snprintf(fname_dual_spread, 2000, "%s_dual_spread_idx.csv", spread_tables::prefix);
+
 	fname_self_dual_spreads.assign(prefix);
 	fname_self_dual_spreads.append("_self_dual_spreads.csv");
-	//snprintf(fname_self_dual_spreads, 2000, "%s_self_dual_spreads.csv", spread_tables::prefix);
 
 
 	if (f_v) {
@@ -231,9 +228,12 @@ void spread_tables::init_reduced(
 		cout << "spread_tables::init_reduced" << endl;
 	}
 
-	F = old_spread_table->F;
+	P = old_spread_table->P;
+	F = P->F;
+	Gr = P->Grass_lines;
 	q = F->q;
 	d = 4; // = 4
+#if 0
 	P = NEW_OBJECT(projective_space);
 	P->init(3, F,
 		TRUE /* f_init_incidence_structure */,
@@ -242,6 +242,7 @@ void spread_tables::init_reduced(
 
 	Gr = NEW_OBJECT(grassmann);
 	Gr->init(d, 2, F, 0 /* verbose_level */);
+#endif
 	nb_lines = Gr->nCkq.as_int();
 	spread_size = old_spread_table->spread_size;
 	nb_iso_types_of_spreads = old_spread_table->nb_iso_types_of_spreads;
@@ -262,13 +263,54 @@ void spread_tables::init_reduced(
 				spread_table + i * spread_size, spread_size);
 		spread_iso_type[i] = old_spread_table->spread_iso_type[a];
 	}
-#if 0
-	spread_tables::dual_spread_idx = dual_spread_idx;
-	spread_tables::self_dual_spreads = self_dual_spreads;
-	spread_tables::nb_self_dual_spreads = nb_self_dual_spreads;
-#endif
 	if (f_v) {
 		cout << "spread_tables::init_reduced done" << endl;
+	}
+}
+
+long int *spread_tables::get_spread(int spread_idx)
+{
+	return spread_table + spread_idx * spread_size;
+}
+
+void spread_tables::find_spreads_containing_two_lines(std::vector<int> &v,
+		int line1, int line2, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "spread_tables::find_spreads_containing_two_lines" << endl;
+		cout << "spread_tables::find_spreads_containing_two_lines line1 = " << line1 << endl;
+		cout << "spread_tables::find_spreads_containing_two_lines line2 = " << line2 << endl;
+	}
+	int spread_idx;
+	long int *S;
+	int i;
+	int f_found_line1;
+	int f_found_line2;
+
+	for (spread_idx = 0; spread_idx < nb_spreads; spread_idx++) {
+		S = get_spread(spread_idx);
+		f_found_line1 = FALSE;
+		for (i = 0; i < spread_size; i++) {
+			if (S[i] == line1) {
+				f_found_line1 = TRUE;
+				break;
+			}
+		}
+		f_found_line2 = FALSE;
+		for (i = 0; i < spread_size; i++) {
+			if (S[i] == line2) {
+				f_found_line2 = TRUE;
+				break;
+			}
+		}
+		if (f_found_line1 && f_found_line2) {
+			v.push_back(spread_idx);
+		}
+	}
+	if (f_v) {
+		cout << "spread_tables::find_spreads_containing_two_lines done" << endl;
 	}
 }
 

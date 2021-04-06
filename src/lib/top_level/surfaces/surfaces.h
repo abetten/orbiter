@@ -1016,12 +1016,12 @@ public:
 			int verbose_level);
 	void do_cubic_surface_properties(
 			projective_space_with_action *PA,
-			std::string fname_csv, int defining_q,
+			std::string &fname_csv, int defining_q,
 			int column_offset,
 			int verbose_level);
 	void do_cubic_surface_properties_analyze(
 			projective_space_with_action *PA,
-			std::string fname_csv, int defining_q,
+			std::string &fname_csv, int defining_q,
 			int verbose_level);
 	void report_singular_surfaces(std::ostream &ost,
 			struct cubic_surface_data_set *Data, int nb_orbits, int verbose_level);

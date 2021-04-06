@@ -92,9 +92,9 @@ void orbits_on_something::init(
 	}
 	orbits_on_something::A = A;
 	orbits_on_something::SG = SG;
-	//orbits_on_something::Sch = NEW_OBJECT(schreier);
 	orbits_on_something::f_load_save = f_load_save;
 	orbits_on_something::prefix.assign(prefix);
+
 	fname.assign(prefix);
 	fname.append("_orbits.bin");
 
@@ -527,6 +527,33 @@ void orbits_on_something::test_orbits_of_a_certain_length(
 	}
 }
 
+void orbits_on_something::report_orbits_of_type(std::ostream &ost, int type_idx)
+{
+
+	int nb_points;
+	int i, a, len, orbit_length;
+	long int *orbit;
+
+	orbit_length = Orbits_classified_length[type_idx];
+	nb_points = Orbits_classified->Set_size[type_idx];
+
+	ost << "The  orbits of type " << type_idx << " have size " << orbit_length << "\\\\" << endl;
+	ost << "The number of orbits of type " << type_idx << " is " << nb_points << "\\\\" << endl;
+
+	orbit = NEW_lint(orbit_length);
+
+	for (i = 0; i < nb_points; i++) {
+		a = Orbits_classified->Sets[type_idx][i];
+		Sch->get_orbit(a, orbit, len, 0 /* verbose_level*/);
+		ost << i << " : " << a << " : ";
+		lint_vec_print(ost, orbit, len);
+		ost << "\\\\" << endl;
+	}
+
+	FREE_lint(orbit);
+
+}
+
 void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	colored_graph *&CG,
 	std::string &fname,
@@ -546,9 +573,6 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	}
 	int nb_points;
 	bitvector *Bitvec;
-	//uchar *bitvector_adjacency;
-	//long int bitvector_length_in_bits;
-	//long int bitvector_length;
 	long int L, L100;
 	long int i, j, k;
 	int a, b, c;
@@ -559,7 +583,6 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	int t0, t1, dt;
 	int *point_color;
 	os_interface Os;
-	//data_structures_global D;
 
 	type_idx = get_orbit_type_index(orbit_length);
 	nb_points = Orbits_classified->Set_size[type_idx];
@@ -605,14 +628,6 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	Bitvec = NEW_OBJECT(bitvector);
 	Bitvec->allocate(L);
 
-#if 0
-	//bitvector_length_in_bits = L;
-	bitvector_length = (L + 7) >> 3;
-	bitvector_adjacency = NEW_uchar(bitvector_length);
-	for (i = 0; i < bitvector_length; i++) {
-		bitvector_adjacency[i] = 0;
-	}
-#endif
 
 	k = 0;
 	for (i = 0; i < nb_points; i++) {
@@ -629,7 +644,6 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 				cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length l2 != orbit_length" << endl;
 				exit(1);
 			}
-			//k = Combi.ij2k_lint(i, j, nb_points);
 
 #if 1
 			//cout << "i=" << i << " j=" << j << " k=" << k << endl;
@@ -651,8 +665,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 			}
 			else {
 				//cout << "is NOT adjacent" << endl;
-				Bitvec->m_i(k, 0);
-				// not needed becaude we initialize with zero.
+				//Bitvec->m_i(k, 0);
+				// not needed because we have initialized with zero.
 			}
 		k++;
 		}
@@ -1056,6 +1070,8 @@ void orbits_on_something::report(std::ostream &ost, int verbose_level)
 
 
 
+	cout << "orbits_on_something::report step 1" << endl;
+
 	SG->group_order(go);
 
 	int i, orbit_length, nb_orbits, j, idx, l1;
@@ -1080,6 +1096,8 @@ void orbits_on_something::report(std::ostream &ost, int verbose_level)
 	ost << "Orbits classified:\\\\" << endl;
 	Orbits_classified->print_table_tex(ost);
 
+	cout << "orbits_on_something::report step 2" << endl;
+
 	long int *Orb;
 
 	for (i = 0; i < Orbits_classified->nb_sets; i++) {
@@ -1103,6 +1121,9 @@ void orbits_on_something::report(std::ostream &ost, int verbose_level)
 	}
 
 	ost << "\\bigskip" << endl;
+
+
+	cout << "orbits_on_something::report step 3" << endl;
 
 	for (i = 0; i < Orbits_classified->nb_sets; i++) {
 		orbit_length = Orbits_classified_length[i];

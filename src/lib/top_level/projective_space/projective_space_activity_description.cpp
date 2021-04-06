@@ -100,6 +100,21 @@ projective_space_activity_description::projective_space_activity_description()
 	make_gilbert_varshamov_code_n = 0;
 	make_gilbert_varshamov_code_d = 0;
 
+#if 0
+	f_spread_table_init = FALSE;
+	dimension_of_spread_elements = 0;
+	//spread_selection_text = NULL;
+	//spread_tables_prefix = NULL;
+#endif
+
+	f_spread_classify = FALSE;
+	spread_classify_k = 0;
+	spread_classify_Control = NULL;
+
+	f_classify_semifields = FALSE;
+	Semifield_classify_description = NULL;
+	Semifield_classify_Control = NULL;
+
 }
 
 projective_space_activity_description::~projective_space_activity_description()
@@ -308,7 +323,7 @@ int projective_space_activity_description::read_arguments(
 		}
 		else if (stringcmp(argv[i], "-surface_clebsch") == 0) {
 			f_surface_clebsch = TRUE;
-			cout << "=surface_clebsch" << endl;
+			cout << "-surface_clebsch" << endl;
 		}
 		else if (stringcmp(argv[i], "-surface_codes") == 0) {
 			f_surface_codes = TRUE;
@@ -360,6 +375,47 @@ int projective_space_activity_description::read_arguments(
 			cout << "-make_gilbert_varshamov_code" << make_gilbert_varshamov_code_n
 					<< " " << make_gilbert_varshamov_code_d << endl;
 		}
+
+		else if (stringcmp(argv[i], "-spread_classify") == 0) {
+			f_spread_classify = TRUE;
+			spread_classify_k = strtoi(argv[++i]);
+			spread_classify_Control = NEW_OBJECT(poset_classification_control);
+			cout << "-spread_classify " << endl;
+			i += spread_classify_Control->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading -spread_classify " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-spread_classify " << spread_classify_k << endl;
+			spread_classify_Control->print();
+		}
+		// semifields
+		else if (stringcmp(argv[i], "-classify_semifields") == 0) {
+			f_classify_semifields = TRUE;
+			Semifield_classify_description = NEW_OBJECT(semifield_classify_description);
+			cout << "-classify_semifields" << endl;
+			i += Semifield_classify_description->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading -classify_semifields " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			Semifield_classify_Control = NEW_OBJECT(poset_classification_control);
+			cout << "reading control " << endl;
+			i += Semifield_classify_Control->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading control " << endl;
+			cout << "-classify_semifields " << endl;
+		}
+
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;

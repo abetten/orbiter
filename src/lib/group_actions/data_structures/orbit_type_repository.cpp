@@ -327,15 +327,16 @@ void orbit_type_repository::report(ostream &ost, int verbose_level)
 	int type_idx;
 	layered_graph_draw_options LG_Draw_options;
 
-
+#if 0
 	Oos->A->report(ost, FALSE /* f_sims*/, NULL /* sims *S*/,
 			TRUE /* f_strong_gens */, Oos->SG,
 			&LG_Draw_options,
 			0 /* verbose_level*/);
+#endif
 
 	ost << "\\begin{enumerate}[(1)]" << endl;
 	for (type_idx = 0; type_idx < nb_types; type_idx++) {
-		report_one_type(ost, type_idx, verbose_level);
+		report_one_type(ost, type_idx, verbose_level - 5);
 	}
 	ost << "\\end{enumerate}" << endl;
 
@@ -384,6 +385,8 @@ void orbit_type_repository::report_one_type(ostream &ost, int type_idx, int verb
 				// orbit_type[c * go + l - 1] = number of times that an orbit of length l
 				// intersects the set in c elements.
 
+				ost << "\\clearpage" << endl;
+
 				ost << "Set " << i << ":\\\\" << endl;
 				for (l = 1; l <= goi; l++) {
 					vector<int> Idx;
@@ -429,7 +432,7 @@ void orbit_type_repository::report_one_type(ostream &ost, int type_idx, int verb
 						int u;
 
 						SoS = By_orbit_number.get_set_partition_and_types(
-								types, nb_types, verbose_level);
+								types, nb_types, verbose_level - 5);
 
 						SoS->sort();
 

@@ -330,19 +330,6 @@ public:
 		int f_self_orthogonal;
 		int f_doubly_even;
 
-		int f_spread_classify;
-		int spread_classify_k;
-
-
-		int f_spread_table_init;
-		int dimension_of_spread_elements;
-		std::string spread_selection_text;
-		std::string spread_tables_prefix;
-
-		int f_packing_with_assumed_symmetry;
-		packing_was_description *packing_was_descr;
-
-
 		int f_tensor_classify;
 		int tensor_classify_depth;
 		int f_tensor_permutations;
@@ -351,9 +338,6 @@ public:
 		ovoid_classify_description *Ovoid_classify_description;
 
 		int f_classify_cubic_curves;
-
-		int f_classify_semifields;
-		semifield_classify_description *Semifield_classify_description;
 
 		int f_orbits_on_polynomials;
 		int orbits_on_polynomials_degree;
@@ -458,7 +442,6 @@ public:
 	void do_classify_arcs(
 			arc_generator_description *Arc_generator_description,
 			int verbose_level);
-	void do_spread_classify(int k, int verbose_level);
 	void do_spread_table_init(int dimension_of_spread_elements,
 			std::string &spread_selection_text,
 			std::string &spread_tables_prefix,
@@ -475,10 +458,6 @@ public:
 			int verbose_level);
 	void do_classify_cubic_curves(
 			arc_generator_description *Arc_generator_description,
-			int verbose_level);
-	void do_classify_semifields(
-			semifield_classify_description *Semifield_classify_description,
-			poset_classification_control *Control,
 			int verbose_level);
 	int subspace_orbits_test_set(
 			int len, long int *S, int verbose_level);

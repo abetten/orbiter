@@ -18,11 +18,9 @@ namespace top_level {
 
 spread_classify::spread_classify()
 {
-	//F = NULL;
-	LG = NULL;
+	PA = NULL;
+
 	Mtx = NULL;
-	//f_semilinear = FALSE;
-	//Control = NULL;
 
 	order = 0;
 	spread_size = 0;
@@ -37,8 +35,6 @@ spread_classify::spread_classify()
 	block_size = 0;
 
 
-	//char starter_directory_name[1000];
-	//char prefix[1000];
 	starter_size = 0;
 
 	
@@ -148,8 +144,8 @@ void spread_classify::freeself()
 }
 
 void spread_classify::init(
-		linear_group *LG,
-		int k, //poset_classification_control *Control,
+		projective_space_with_action *PA,
+		int k,
 		int f_recoordinatize,
 		int verbose_level)
 {
@@ -167,8 +163,8 @@ void spread_classify::init(
 	spread_classify::k = k;
 	//spread_classify::Control = Control;
 
-	spread_classify::LG = LG;
-	A = LG->A_linear;
+	spread_classify::PA = PA;
+	spread_classify::A = PA->A; //LG->A_linear;
 	n = A->matrix_group_dimension();
 	Mtx = A->get_matrix_group();
 	q = Mtx->GFq->q;
@@ -288,11 +284,9 @@ void spread_classify::init(
 	}
 #endif
 
-	//int len;
-	
 
 
-	if (f_vv) {
+	if (FALSE) {
 		int f_print_as_permutation = TRUE;
 		int f_offset = FALSE;
 		int offset = 1;

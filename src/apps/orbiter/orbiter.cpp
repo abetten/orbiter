@@ -56,6 +56,7 @@ int main(int argc, const char **argv)
 	std::string *Argv;
 
 	convert_arguments(argc, argv, Argv);
+		// argc has changed!
 
 
 	i = Top_level_session.startup_and_read_arguments(argc, Argv, 1);

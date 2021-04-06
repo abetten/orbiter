@@ -20,6 +20,7 @@ namespace top_level {
 
 packing_classify::packing_classify()
 {
+	PA = NULL;
 	T = NULL;
 	F = NULL;
 	spread_size = 0;
@@ -97,8 +98,7 @@ void packing_classify::freeself()
 }
 
 void packing_classify::spread_table_init(
-		//poset_classification_control *Control,
-		linear_group *LG,
+		projective_space_with_action *PA,
 		int dimension_of_spread_elements,
 		int f_select_spread, std::string &select_spread_text,
 		std::string &path_to_spread_tables,
@@ -110,19 +110,20 @@ void packing_classify::spread_table_init(
 		cout << "packing_classify::spread_table_init "
 				"dimension_of_spread_elements=" << dimension_of_spread_elements << endl;
 	}
-	action *A;
 	int n, q;
 	matrix_group *Mtx;
 	spread_classify *T;
 
 
-	A = LG->A2;
-	n = A->matrix_group_dimension();
-	Mtx = A->get_matrix_group();
-	q = Mtx->GFq->q;
+	packing_classify::PA = PA;
+	n = PA->A->matrix_group_dimension();
+	Mtx = PA->A->get_matrix_group();
+	F = Mtx->GFq;
+	q = F->q;
 	if (f_v) {
 		cout << "packing_classify::spread_table_init n=" << n
-				<< " k=" << dimension_of_spread_elements << " q=" << q << endl;
+				<< " k=" << dimension_of_spread_elements
+				<< " q=" << q << endl;
 	}
 
 
@@ -134,8 +135,10 @@ void packing_classify::spread_table_init(
 	}
 
 
-	T->init(LG, dimension_of_spread_elements, //Control,
-			TRUE /* f_recoordinatize */, verbose_level - 1);
+	T->init(PA,
+			dimension_of_spread_elements,
+			TRUE /* f_recoordinatize */,
+			verbose_level - 1);
 
 	if (f_v) {
 		cout << "packing_classify::spread_table_init after T->init" << endl;
@@ -178,8 +181,10 @@ void packing_classify::spread_table_init(
 	if (f_v) {
 		cout << "packing_classify::spread_table_init before init" << endl;
 	}
-	init(Spread_table_with_selection,
-		TRUE, // ECA->f_lex,
+	init(
+		PA,
+		Spread_table_with_selection,
+		TRUE,
 		verbose_level);
 	if (f_v) {
 		cout << "packing_classify::spread_table_init after init" << endl;
@@ -213,6 +218,7 @@ void packing_classify::spread_table_init(
 
 
 void packing_classify::init(
+		projective_space_with_action *PA,
 		spread_table_with_selection *Spread_table_with_selection,
 		int f_lexorder_test,
 		int verbose_level)
@@ -224,6 +230,7 @@ void packing_classify::init(
 	}
 
 
+	packing_classify::PA = PA;
 	packing_classify::Spread_table_with_selection = Spread_table_with_selection;
 
 
@@ -246,7 +253,13 @@ void packing_classify::init(
 		//cout << "packing_classify::init base_fname=" << base_fname << endl;
 	}
 
-	init_P3_and_P5(verbose_level - 1);
+	if (f_v) {
+		cout << "packing_classify::init before init_P3_and_P5_and_Gr" << endl;
+	}
+	init_P3_and_P5_and_Gr(verbose_level - 1);
+	if (f_v) {
+		cout << "packing_classify::init after init_P3_and_P5_and_Gr" << endl;
+	}
 
 
 	if (f_v) {
@@ -291,33 +304,34 @@ void packing_classify::init2(poset_classification_control *Control,
 }
 
 
-void packing_classify::init_P3_and_P5(int verbose_level)
+
+void packing_classify::init_P3_and_P5_and_Gr(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "packing_classify::init_P3_and_P5" << endl;
+		cout << "packing_classify::init_P3_and_P5_and_Gr" << endl;
 	}
 	P3 = NEW_OBJECT(projective_space);
 	
-	P3->init(3, T->Mtx->GFq,
+	P3->init(3, F,
 		TRUE /* f_init_incidence_structure */, 
 		0 /* verbose_level - 2 */);
 
 	if (f_v) {
-		cout << "packing_classify::init_P3_and_P5 P3->N_points=" << P3->N_points << endl;
-		cout << "packing_classify::init_P3_and_P5 P3->N_lines=" << P3->N_lines << endl;
+		cout << "packing_classify::init_P3_and_P5_and_Gr P3->N_points=" << P3->N_points << endl;
+		cout << "packing_classify::init_P3_and_P5_and_Gr P3->N_lines=" << P3->N_lines << endl;
 	}
 
 	P5 = NEW_OBJECT(projective_space);
 
-	P5->init(5, T->Mtx->GFq,
+	P5->init(5, F,
 		TRUE /* f_init_incidence_structure */,
 		0 /* verbose_level - 2 */);
 
 	if (f_v) {
-		cout << "packing_classify::init_P3_and_P5 P5->N_points=" << P5->N_points << endl;
-		cout << "packing_classify::init_P3_and_P5 P5->N_lines=" << P5->N_lines << endl;
+		cout << "packing_classify::init_P3_and_P5_and_Gr P5->N_points=" << P5->N_points << endl;
+		cout << "packing_classify::init_P3_and_P5_and_Gr P5->N_lines=" << P5->N_lines << endl;
 	}
 
 	the_packing = NEW_lint(size_of_packing);
@@ -331,7 +345,7 @@ void packing_classify::init_P3_and_P5(int verbose_level)
 	Gr->init(6, 3, F, 0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "packing_classify::init_P3_and_P5 done" << endl;
+		cout << "packing_classify::init_P3_and_P5_and_Gr done" << endl;
 	}
 }
 
@@ -741,6 +755,18 @@ int packing_classify::test_if_pair_of_orbits_are_adjacent(
 			verbose_level);
 }
 
+
+int packing_classify::find_spread(long int *set, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int idx;
+
+	if (f_v) {
+		cout << "packing_classify::find_spread" << endl;
+	}
+	idx = Spread_table_with_selection->find_spread(set, verbose_level);
+	return idx;
+}
 
 
 // #############################################################################

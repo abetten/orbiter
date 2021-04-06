@@ -1171,48 +1171,15 @@ void grassmann::compute_dual_spread(
 void grassmann::latex_matrix(ostream &ost, int *p)
 {
 
-#if 0
-	int i, j;
-
-	ost << "\\left[" << endl;
-	ost << "\\begin{array}{*{" << n << "}c}" << endl;
-	for (i = 0; i < k; i++) {
-		for (j = 0; j < n; j++) {
-			F->print_element(ost, p[i * n + j]);
-			if (j < n - 1) {
-				ost << "  & ";
-			}
-		}
-		ost << "\\\\" << endl;
-	}
-	ost << "\\end{array}" << endl;
-	ost << "\\right]" << endl;
-#else
 	F->print_matrix_latex(ost, p, k, n);
-#endif
+
 }
 
 void grassmann::latex_matrix_numerical(ostream &ost, int *p)
 {
-#if 0
-	int i, j;
 
-	ost << "\\left[" << endl;
-	ost << "\\begin{array}{*{" << n << "}c}" << endl;
-	for (i = 0; i < k; i++) {
-		for (j = 0; j < n; j++) {
-			ost << p[i * n + j];
-			if (j < n - 1) {
-				ost << "  & ";
-			}
-		}
-		ost << "\\\\" << endl;
-	}
-	ost << "\\end{array}" << endl;
-	ost << "\\right]" << endl;
-#else
 	F->print_matrix_numerical_latex(ost, p, k, n);
-#endif
+
 }
 
 void grassmann::create_Schlaefli_graph(int *&Adj, int &sz, int verbose_level)

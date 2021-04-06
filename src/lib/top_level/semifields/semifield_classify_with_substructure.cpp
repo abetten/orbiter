@@ -20,15 +20,11 @@ namespace top_level {
 semifield_classify_with_substructure::semifield_classify_with_substructure()
 {
 	Descr = NULL;
-	LG = NULL;
+	PA = NULL;
 	Mtx = NULL;
 	//F = NULL;
 	Control = NULL;
 	t0 = 0;
-	//argc = 0;
-	//argv = NULL;
-	//f_poly = FALSE;
-	//poly = NULL;
 
 	identify_semifields_from_file_Po = NULL;
 	identify_semifields_from_file_m = 0;
@@ -69,7 +65,7 @@ semifield_classify_with_substructure::~semifield_classify_with_substructure()
 
 void semifield_classify_with_substructure::init(
 		semifield_classify_description *Descr,
-		linear_group *LG,
+		projective_space_with_action *PA,
 		poset_classification_control *Control,
 		int verbose_level)
 {
@@ -83,8 +79,8 @@ void semifield_classify_with_substructure::init(
 
 	semifield_classify_with_substructure::Descr = Descr;
 
-	semifield_classify_with_substructure::LG = LG;
-	Mtx = LG->A_linear->get_matrix_group();
+	semifield_classify_with_substructure::PA = PA;
+	Mtx = PA->A->get_matrix_group();
 	semifield_classify_with_substructure::Control = Control;
 
 	NT.factor_prime_power(Descr->order, p, e);
@@ -140,7 +136,7 @@ void semifield_classify_with_substructure::init(
 	if (f_v) {
 		cout << "semifield_classify_with_substructure::init before Sub->SC->init" << endl;
 	}
-	Sub->SC->init(LG, k, Control,
+	Sub->SC->init(PA, k, Control,
 			Descr->level_two_prefix,
 			Descr->level_three_prefix,
 			verbose_level - 1);

@@ -19,11 +19,6 @@ namespace top_level {
 packing_was_description::packing_was_description()
 {
 	//f_spreads_invariant_under_H = FALSE;
-	f_cliques_on_fixpoint_graph = FALSE;
-	clique_size_on_fixpoint_graph = 0;
-
-	f_cliques_on_fixpoint_graph_control = FALSE;
-	cliques_on_fixpoint_graph_control = NULL;
 
 	f_process_long_orbits = FALSE;
 	Long_Orbits_Descr = NULL;
@@ -35,11 +30,12 @@ packing_was_description::packing_was_description()
 	f_fixp_clique_types_save_individually = FALSE;
 	//f_label = FALSE;
 	//label = NULL;
-	f_spread_tables_prefix = FALSE;
-	//spread_tables_prefix = "";
+
 	f_output_path = FALSE;
 	//output_path = "";
 
+	f_spread_tables_prefix = FALSE;
+	//spread_tables_prefix = "";
 
 	f_exact_cover = FALSE;
 	ECA = NULL;
@@ -112,26 +108,6 @@ int packing_was_description::read_arguments(int argc, std::string *argv,
 		}
 #endif
 
-		else if (stringcmp(argv[i], "-cliques_on_fixpoint_graph") == 0) {
-			f_cliques_on_fixpoint_graph = TRUE;
-			clique_size_on_fixpoint_graph = strtoi(argv[++i]);
-			cout << "-cliques_on_fixpoint_graph " << clique_size_on_fixpoint_graph << endl;
-		}
-
-		else if (stringcmp(argv[i], "-cliques_on_fixpoint_graph_control") == 0) {
-			f_cliques_on_fixpoint_graph_control = TRUE;
-			cliques_on_fixpoint_graph_control = NEW_OBJECT(poset_classification_control);
-			i += cliques_on_fixpoint_graph_control->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			cout << "done reading -cliques_on_fixpoint_graph_control " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-			cout << "-cliques_on_fixpoint_graph_control " << endl;
-		}
 
 #if 0
 		else if (stringcmp(argv[i], "-type_of_fixed_spreads") == 0) {
@@ -234,11 +210,6 @@ int packing_was_description::read_arguments(int argc, std::string *argv,
 			cout << "ignoring argument " << argv[i] << endl;
 		}
 	} // next i
-
-	if (f_cliques_on_fixpoint_graph && !f_cliques_on_fixpoint_graph_control) {
-		cout << "please use -cliques_on_fixpoint_graph_control <descr> -end" << endl;
-		exit(1);
-	}
 
 	cout << "packing_was_description::read_arguments done" << endl;
 	return i + 1;
