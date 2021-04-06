@@ -251,103 +251,6 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 
 
-	// spreads:
-
-	else if (Descr->f_spread_classify) {
-		do_spread_classify(Descr->spread_classify_k, verbose_level);
-	}
-
-
-	// packings:
-
-	else if (Descr->f_packing_with_assumed_symmetry) {
-		if (!Descr->f_spread_table_init) {
-			cout << "packing with symmetry needs packing" << endl;
-			exit(1);
-		}
-		packing_classify *P;
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"before do_spread_table_init" << endl;
-		}
-
-		do_spread_table_init(Descr->dimension_of_spread_elements,
-				Descr->spread_selection_text,
-				Descr->spread_tables_prefix,
-				0, // starter_size
-				P,
-				verbose_level);
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity "
-					"after do_spread_table_init" << endl;
-		}
-
-		packing_was *PW;
-
-		PW = NEW_OBJECT(packing_was);
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity before PW->init" << endl;
-		}
-
-		PW->init(Descr->packing_was_descr, P, verbose_level);
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity after PW->init" << endl;
-		}
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity before PW->report" << endl;
-		}
-
-		PW->report(0 /* verbose_level */);
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity after PW->report" << endl;
-		}
-
-		packing_was_fixpoints *PWF;
-
-		PWF = NEW_OBJECT(packing_was_fixpoints);
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity before PWF->init" << endl;
-		}
-
-		PWF->init(PW, verbose_level);
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity after PWF->init" << endl;
-		}
-
-
-		FREE_OBJECT(PWF);
-		FREE_OBJECT(PW);
-		FREE_OBJECT(P);
-
-	}
-	else if (Descr->f_spread_table_init) {
-		packing_classify *P;
-
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity before do_spread_table_init" << endl;
-		}
-
-		do_spread_table_init(Descr->dimension_of_spread_elements,
-				Descr->spread_selection_text,
-				Descr->spread_tables_prefix,
-				0, // starter_size
-				P,
-				verbose_level);
-		if (f_v) {
-			cout << "group_theoretic_activity::perform_activity after do_spread_table_init" << endl;
-		}
-
-		FREE_OBJECT(P);
-	}
-
 
 
 	// tensors:
@@ -369,14 +272,6 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		do_classify_cubic_curves(
 				Descr->Arc_generator_description,
 				verbose_level);
-	}
-
-	else if (Descr->f_classify_semifields) {
-		do_classify_semifields(
-				Descr->Semifield_classify_description,
-				Descr->Control,
-				verbose_level);
-
 	}
 
 	else if (Descr->f_orbits_on_polynomials) {
@@ -2233,98 +2128,6 @@ void group_theoretic_activity::do_classify_arcs(
 
 
 
-void group_theoretic_activity::do_spread_classify(int k, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_spread_classify" << endl;
-	}
-
-	poset_classification_control *Control;
-
-	if (!Descr->f_poset_classification_control) {
-		cout << "please use -poset_classification_control <descr> -end" << endl;
-		exit(1);
-	}
-	else {
-		Control = Descr->Control;
-	}
-
-
-	spread_classify *SC;
-
-	SC = NEW_OBJECT(spread_classify);
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_spread_classify before SC->init" << endl;
-	}
-
-	SC->init(
-			LG,
-			k,
-			TRUE /* f_recoordinatize */,
-			verbose_level - 1);
-	if (f_v) {
-		cout << "group_theoretic_activity::do_spread_classify after SC->init" << endl;
-	}
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_spread_classify before SC->init2" << endl;
-	}
-	SC->init2(Control, verbose_level);
-	if (f_v) {
-		cout << "group_theoretic_activity::do_spread_classify after SC->init2" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_spread_classify before SC->compute" << endl;
-	}
-
-	SC->compute(verbose_level);
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_spread_classify after SC->compute" << endl;
-	}
-
-
-	FREE_OBJECT(SC);
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_spread_classify done" << endl;
-	}
-}
-
-void group_theoretic_activity::do_spread_table_init(int dimension_of_spread_elements,
-		std::string &spread_selection_text,
-		std::string &spread_tables_prefix,
-		int starter_size,
-		packing_classify *&P,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_spread_table_init" << endl;
-	}
-
-
-	P = NEW_OBJECT(packing_classify);
-
-	P->spread_table_init(
-			LG,
-			dimension_of_spread_elements,
-			TRUE /* f_select_spread */, spread_selection_text,
-			spread_tables_prefix,
-			verbose_level);
-
-
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_spread_table_init done" << endl;
-	}
-}
 
 void group_theoretic_activity::do_tensor_classify(int depth, int verbose_level)
 {
@@ -2616,39 +2419,6 @@ void group_theoretic_activity::do_classify_cubic_curves(
 	}
 }
 
-
-void group_theoretic_activity::do_classify_semifields(
-		semifield_classify_description *Semifield_classify_description,
-		poset_classification_control *Control,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_semifields" << endl;
-	}
-
-
-	semifield_classify_with_substructure *S;
-
-	S = NEW_OBJECT(semifield_classify_with_substructure);
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_semifields before S->init" << endl;
-	}
-	S->init(
-			Semifield_classify_description,
-			LG,
-			Control,
-			verbose_level);
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_semifields after S->init" << endl;
-	}
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_semifields done" << endl;
-	}
-}
 
 
 

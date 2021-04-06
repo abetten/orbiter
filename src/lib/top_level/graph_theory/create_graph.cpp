@@ -51,10 +51,24 @@ void create_graph::init(
 	f_has_CG = FALSE;
 
 	if (description->f_load_from_file) {
+		if (f_v) {
+			cout << "create_graph::init f_load_from_file" << endl;
+		}
 
 		f_has_CG = TRUE;
 		CG = NEW_OBJECT(colored_graph);
+		if (f_v) {
+			cout << "create_graph::init before CG->load, fname=" << description->fname << endl;
+		}
 		CG->load(description->fname, verbose_level);
+		if (f_v) {
+			cout << "create_graph::init after CG->load, fname=" << description->fname << endl;
+		}
+		f_has_CG = TRUE;
+		N = CG->nb_points;
+		if (f_v) {
+			cout << "create_graph::init number of vertices = " << N << endl;
+		}
 		label.assign(description->fname);
 		label_tex.assign("File\\_");
 		label_tex.append(description->fname);
@@ -286,13 +300,15 @@ void create_graph::init(
 	}
 	else {
 
-		CG = NEW_OBJECT(colored_graph);
-		CG->init_adjacency_no_colors(N, Adj, verbose_level);
+		if (!f_has_CG) {
+			CG = NEW_OBJECT(colored_graph);
+			CG->init_adjacency_no_colors(N, Adj, verbose_level);
 
-		f_has_CG = TRUE;
+			f_has_CG = TRUE;
 
-		if (f_v) {
-			cout << "create_graph::init created colored graph with one color" << endl;
+			if (f_v) {
+				cout << "create_graph::init created colored graph with one color" << endl;
+			}
 		}
 
 	}

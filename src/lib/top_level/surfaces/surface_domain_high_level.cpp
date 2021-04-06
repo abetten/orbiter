@@ -831,7 +831,7 @@ void surface_domain_high_level::do_six_arcs(
 
 void surface_domain_high_level::do_cubic_surface_properties(
 		projective_space_with_action *PA,
-		std::string fname_csv, int defining_q,
+		std::string &fname_csv, int defining_q,
 		int column_offset,
 		int verbose_level)
 {
@@ -1116,7 +1116,7 @@ struct cubic_surface_data_set {
 
 void surface_domain_high_level::do_cubic_surface_properties_analyze(
 		projective_space_with_action *PA,
-		std::string fname_csv, int defining_q,
+		std::string &fname_csv, int defining_q,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -418,6 +418,10 @@ enum symbol_table_object_type {
 	t_collection,
 	t_combinatorial_object,
 	t_graph,
+	t_spread_table,
+	t_packing_was,
+	t_packing_was_choose_fixed_points,
+	t_packing_long_orbits,
 	t_action,
 	t_poset,
 	t_poset_classification,
@@ -463,6 +467,14 @@ public:
 			combinatorial_object_create *COC, int verbose_level);
 	void init_graph(std::string &label,
 			void *Gr, int verbose_level);
+	void init_spread_table(std::string &label,
+			void *P, int verbose_level);
+	void init_packing_was(std::string &label,
+			void *P, int verbose_level);
+	void init_packing_was_choose_fixed_points(std::string &label,
+			void *P, int verbose_level);
+	void init_packing_long_orbits(std::string &label,
+			void *PL, int verbose_level);
 	void print();
 };
 

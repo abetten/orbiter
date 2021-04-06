@@ -822,11 +822,11 @@ void action::report_fixed_objects_in_P3(ostream &ost,
 	ost << "$$" << endl;
 	element_print_latex(Elt, ost);
 	ost << "$$" << endl;
-	ost << "has the following fixed objects:\\" << endl;
+	ost << "has the following fixed objects:\\\\" << endl;
 
 
 	ost << "\\bigskip" << endl;
-	ost << "Fixed Points:\\" << endl;
+	//ost << "Fixed Points:\\" << endl;
 
 	cnt = 0;
 	for (i = 0; i < P3->N_points; i++) {
@@ -849,7 +849,7 @@ void action::report_fixed_objects_in_P3(ostream &ost,
 		}
 
 	ost << "\\bigskip" << endl;
-	ost << "Fixed Lines\\\\" << endl;
+	//ost << "Fixed Lines\\\\" << endl;
 
 	{
 	action *A2;
@@ -880,7 +880,7 @@ void action::report_fixed_objects_in_P3(ostream &ost,
 	}
 
 	ost << "\\bigskip" << endl;
-	ost << "Fixed Planes\\\\" << endl;
+	//ost << "Fixed Planes\\\\" << endl;
 
 	{
 	action *A3;

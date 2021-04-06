@@ -19,18 +19,6 @@ namespace top_level {
 
 interface_algebra::interface_algebra()
 {
-#if 0
-	f_linear_group = FALSE;
-	Linear_group_description = NULL;
-	//f_finite_field_activity = FALSE;
-	//Finite_field_activity_description = FALSE;
-
-	F = NULL;
-	LG = NULL;
-
-	f_group_theoretic_activity = FALSE;
-	Group_theoretic_activity_description = NULL;
-#endif
 
 	f_poset_classification_control = FALSE;
 	Control = NULL;
@@ -90,14 +78,6 @@ interface_algebra::interface_algebra()
 void interface_algebra::print_help(int argc,
 		std::string *argv, int i, int verbose_level)
 {
-#if 0
-	if (stringcmp(argv[i], "-linear_group") == 0) {
-		cout << "-linear_group <description>" << endl;
-	}
-	if (stringcmp(argv[i], "-group_theoretic_activity") == 0) {
-		cout << "-group_theoretic_activity <description>" << endl;
-	}
-#endif
 	if (stringcmp(argv[i], "-count_subprimitive") == 0) {
 		cout << "-count_subprimitive <int : Q_max> <int : H_max>" << endl;
 	}
@@ -153,14 +133,6 @@ int interface_algebra::recognize_keyword(int argc,
 	if (i >= argc) {
 		return false;
 	}
-#if 0
-	if (stringcmp(argv[i], "-linear_group") == 0) {
-		return true;
-	}
-	if (stringcmp(argv[i], "-group_theoretic_activity") == 0) {
-		return true;
-	}
-#endif
 	if (stringcmp(argv[i], "-count_subprimitive") == 0) {
 		return true;
 	}
@@ -224,37 +196,6 @@ void interface_algebra::read_arguments(int argc,
 		cout << "interface_algebra::read_arguments the next argument is " << argv[i] << endl;
 	}
 
-#if 0
-	if (stringcmp(argv[i], "-linear_group") == 0) {
-		f_linear_group = TRUE;
-		Linear_group_description = NEW_OBJECT(linear_group_description);
-		cout << "reading -linear_group" << endl;
-		i += Linear_group_description->read_arguments(argc - (i + 1),
-			argv + i + 1, verbose_level);
-
-		cout << "-linear_group" << endl;
-		cout << "i = " << i << endl;
-		cout << "argc = " << argc << endl;
-		if (i < argc) {
-			cout << "next argument is " << argv[i] << endl;
-		}
-	}
-	if (stringcmp(argv[i], "-group_theoretic_activities") == 0) {
-		f_group_theoretic_activity = TRUE;
-		Group_theoretic_activity_description =
-				NEW_OBJECT(group_theoretic_activity_description);
-		cout << "reading -group_theoretic_activities" << endl;
-		i += Group_theoretic_activity_description->read_arguments(argc - (i + 1),
-			argv + i + 1, verbose_level);
-
-		cout << "-group_theoretic_activities" << endl;
-		cout << "i = " << i << endl;
-		cout << "argc = " << argc << endl;
-		if (i < argc) {
-			cout << "next argument is " << argv[i] << endl;
-		}
-	}
-#endif
 	if (stringcmp(argv[i], "-poset_classification_control") == 0) {
 		f_poset_classification_control = TRUE;
 		Control = NEW_OBJECT(poset_classification_control);
@@ -375,11 +316,6 @@ void interface_algebra::worker(int verbose_level)
 	if (f_v) {
 		cout << "interface_algebra::worker" << endl;
 	}
-#if 0
-	if (f_linear_group) {
-		do_linear_group(Linear_group_description, verbose_level);
-	}
-#endif
 	if (f_character_table_symmetric_group) {
 		do_character_table_symmetric_group(deg, verbose_level);
 	}
@@ -461,150 +397,6 @@ void interface_algebra::worker(int verbose_level)
 	}
 
 }
-
-#if 0
-void interface_algebra::do_linear_group(
-		linear_group_description *Descr, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_algebra::do_linear_group" << endl;
-	}
-
-
-	F = NEW_OBJECT(finite_field);
-
-	if (Descr->f_override_polynomial) {
-		cout << "creating finite field of order q=" << Descr->input_q
-				<< " using override polynomial " << Descr->override_polynomial << endl;
-		F->init_override_polynomial(strtoi(Descr->input_q),
-				Descr->override_polynomial, verbose_level - 3);
-	}
-	else {
-		cout << "interface_algebra::do_linear_group creating finite field "
-				"of order q=" << Descr->input_q
-				<< " using the default polynomial (if necessary)" << endl;
-		F->finite_field_init(strtoi(Descr->input_q), 0);
-	}
-
-	Descr->F = F;
-	//q = Descr->input_q;
-
-
-
-	LG = NEW_OBJECT(linear_group);
-	if (f_v) {
-		cout << "interface_algebra::do_linear_group before LG->init, "
-				"before LG->linear_group_init" << endl;
-	}
-
-	LG->linear_group_init(Descr, verbose_level - 5);
-
-	if (f_v) {
-		cout << "interface_algebra::do_linear_group after LG->linear_group_init" << endl;
-	}
-
-	action *A;
-
-	A = LG->A2;
-
-	cout << "interface_algebra::do_linear_group created group " << A->label << endl;
-
-
-
-	if (LG->f_has_nice_gens) {
-		cout << "interface_algebra::do_linear_group we have nice generators, they are:" << endl;
-		LG->nice_gens->print(cout);
-		cout << "$$" << endl;
-
-		int i;
-
-		for (i = 0; i < LG->nice_gens->len; i++) {
-			//cout << "Generator " << i << " / " << gens->len
-			// << " is:" << endl;
-			A->element_print_latex(LG->nice_gens->ith(i), cout);
-			if (i < LG->nice_gens->len - 1) {
-				cout << ", " << endl;
-			}
-			if (((i + 1) % 3) == 0 && i < LG->nice_gens->len - 1) {
-				cout << "$$" << endl;
-				cout << "$$" << endl;
-			}
-		}
-		cout << "$$" << endl;
-		LG->nice_gens->print_as_permutation(cout);
-	}
-
-
-
-	int n;
-
-	n = A->matrix_group_dimension();
-
-	cout << "interface_algebra::do_linear_group The group acts on the points of PG(" << n - 1
-			<< "," << Descr->input_q << ")" << endl;
-
-#if 0
-	if (A->degree < 1000) {
-		int i;
-
-		for (i = 0; i < A->degree; i++) {
-			cout << i << " & ";
-			A->print_point(i, cout);
-			cout << "\\\\" << endl;
-		}
-	}
-	else {
-		cout << "Too many points to print" << endl;
-	}
-#endif
-
-
-
-	if (f_group_theoretic_activity) {
-		perform_group_theoretic_activity(F, LG,
-				Group_theoretic_activity_description, verbose_level);
-	}
-
-	if (f_v) {
-		cout << "interface_algebra::do_linear_group done" << endl;
-	}
-}
-
-void interface_algebra::perform_group_theoretic_activity(
-		finite_field *F, linear_group *LG,
-		group_theoretic_activity_description *Descr,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_algebra::perform_group_theoretic_activity" << endl;
-	}
-
-
-	action *A;
-
-	A = LG->A2;
-
-	cout << "created group " << A->label << endl;
-
-	{
-		group_theoretic_activity Activity;
-
-		Activity.init(Descr, F, LG, verbose_level);
-
-		Activity.perform_activity(verbose_level);
-
-	}
-
-
-	if (f_v) {
-		cout << "interface_algebra::perform_group_theoretic_activity done" << endl;
-	}
-}
-#endif
 
 
 

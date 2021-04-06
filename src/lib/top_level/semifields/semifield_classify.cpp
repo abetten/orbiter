@@ -17,11 +17,12 @@ namespace top_level {
 
 semifield_classify::semifield_classify()
 {
+	PA = NULL;
 	n = 0;
 	k = 0;
 	k2 = 0;
 
-	LG = NULL;
+	//LG = NULL;
 	Mtx = NULL;
 	//F = NULL;
 	//f_semilinear = FALSE;
@@ -166,7 +167,7 @@ void semifield_classify::freeself()
 }
 
 void semifield_classify::init(
-		linear_group *LG,
+		projective_space_with_action *PA,
 		int k,
 		poset_classification_control *Control,
 		std::string &level_two_prefix,
@@ -181,19 +182,18 @@ void semifield_classify::init(
 		cout << "semifield_classify::init" << endl;
 	}
 
-	//semifield_classify::n = n;
+	semifield_classify::PA = PA;
 	semifield_classify::k = k;
 
 	semifield_classify::Control = Control;
 
-	semifield_classify::LG = LG;
-	A = LG->A2;
+	A = PA->A;
 	Mtx = A->get_matrix_group();
 
 	n = A->matrix_group_dimension();
 	//semifield_classify::F = Mtx->GFq;
 	//f_semilinear = A->is_semilinear_matrix_group();
-	q = Mtx->GFq->q;
+	q = PA->F->q;
 	order = NT.i_power_j(q, k);
 
 	k2 = k * k;
@@ -257,7 +257,7 @@ void semifield_classify::init(
 
 	//int max_depth = k + 1;
 
-	T->init(LG, k, //Control,
+	T->init(PA, k, //Control,
 			FALSE /* f_recoordinatize */,
 			0 /*verbose_level - 2*/);
 

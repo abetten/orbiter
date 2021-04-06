@@ -415,9 +415,12 @@ void desarguesian_spread::print_spread_elements_tex(std::ostream &ost)
 	int *v;
 
 	v = NEW_int(m);
+	ost << "\\clearpage" << endl;
+	ost << "The spread elements are:\\\\ " << endl;
+	ost << "\\begin{multicols}{2}" << endl;
 	ost << "\\noindent" << endl;
 	for (a = 0; a < N; a++) {
-		ost << "Spread element " << a << " is ";
+		ost << a << " / " << N << ":";
 		FQ->PG_element_unrank_modified(v, 1, m, a);
 		ost << "$";
 		Orbiter->Int_vec.print(ost, v, m);
@@ -439,6 +442,7 @@ void desarguesian_spread::print_spread_elements_tex(std::ostream &ost)
 		ost << "$";
 		ost << "\\\\" << endl;
 		}
+	ost << "\\end{multicols}" << endl;
 	ost << "Spread elements by rank: ";
 	lint_vec_print(ost, Rk, N);
 	ost << "\\\\" << endl;

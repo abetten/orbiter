@@ -117,16 +117,11 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_self_orthogonal = FALSE;
 	f_doubly_even = FALSE;
 
-	f_spread_classify = FALSE;
-	spread_classify_k = 0;
 
-	f_spread_table_init = FALSE;
-	dimension_of_spread_elements = 0;
-	//spread_selection_text = NULL;
-	//spread_tables_prefix = NULL;
+#if 0
 	f_packing_with_assumed_symmetry = FALSE;
 	packing_was_descr = NULL;
-
+#endif
 
 	f_tensor_classify = FALSE;
 	tensor_classify_depth = 0;
@@ -137,8 +132,6 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	f_classify_cubic_curves = FALSE;
 
-	f_classify_semifields = FALSE;
-	Semifield_classify_description = NULL;
 
 	f_orbits_on_polynomials = FALSE;
 	orbits_on_polynomials_degree = 0;
@@ -477,41 +470,6 @@ int group_theoretic_activity_description::read_arguments(
 		}
 
 
-		// spreads:
-
-		else if (stringcmp(argv[i], "-spread_classify") == 0) {
-			f_spread_classify = TRUE;
-			spread_classify_k = strtoi(argv[++i]);
-			cout << "-spread_classify " << spread_classify_k << endl;
-		}
-
-		// packings:
-		else if (stringcmp(argv[i], "-spread_table_init") == 0) {
-			f_spread_table_init = TRUE;
-			dimension_of_spread_elements = strtoi(argv[++i]);
-			spread_selection_text.assign(argv[++i]);
-			spread_tables_prefix.assign(argv[++i]);
-			cout << "-spread_table_init "
-					<< dimension_of_spread_elements
-					<< " " << spread_selection_text
-					<< " " << spread_tables_prefix
-					<< endl;
-		}
-		else if (stringcmp(argv[i], "-packing_with_assumed_symmetry") == 0) {
-			f_packing_with_assumed_symmetry = TRUE;
-			packing_was_descr = NEW_OBJECT(packing_was_description);
-			cout << "-packing_with_assumed_symmetry " << endl;
-			i += packing_was_descr->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			cout << "done reading -packing_with_assumed_symmetry " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
-
 
 		// tensors:
 
@@ -560,22 +518,6 @@ int group_theoretic_activity_description::read_arguments(
 			cout << "-classify_cubic_curves " << endl;
 		}
 
-		// semifields
-		else if (stringcmp(argv[i], "-classify_semifields") == 0) {
-			f_classify_semifields = TRUE;
-			Semifield_classify_description = NEW_OBJECT(semifield_classify_description);
-			cout << "-classify_semifields" << endl;
-			i += Semifield_classify_description->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			cout << "done reading -classify_semifields " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-			cout << "-classify_semifields " << endl;
-		}
 
 
 		// other:

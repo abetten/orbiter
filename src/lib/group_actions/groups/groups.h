@@ -529,6 +529,7 @@ public:
 		int (*test_function)(long int *orbit, int orbit_length, void *data),
 		void *test_function_data,
 		int verbose_level);
+	void report_orbits_of_type(std::ostream &ost, int type_idx);
 	void create_graph_on_orbits_of_a_certain_length(
 		colored_graph *&CG,
 		std::string &fname,

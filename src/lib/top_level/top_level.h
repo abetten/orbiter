@@ -42,10 +42,6 @@ class singer_cycle;
 	// added March 27, 2013
 class exact_cover;
 	// added April 30, 2013
-class recoordinatize;
-	// added November 2, 2013
-class spread_classify;
-	// added November 2, 2013
 class polar;
 class orbit_of_subspaces;
 	// added April 10, 2014
@@ -58,20 +54,12 @@ class translation_plane_via_andre_model;
 class isomorph_arguments;
 	// added January 27, 2016
 struct isomorph_worker_data;
-class surface_classify_wedge;
-	// added September 2, 2016
 class arc_generator;
 	// moved here February 23, 2017
 class BLT_set_create_description;
 	// added March 17, 2018
 class BLT_set_create;
 	// added March 17, 2018
-class spread_create_description;
-	// added March 22, 2018
-class spread_create;
-	// added March 22, 2018
-class spread_lifting;
-	// added April 1, 2018
 //class k_arc_generator;
 class arc_lifting_simeon;
 	// added Jan 6, 2019
@@ -79,9 +67,6 @@ class blt_set_classify;
 	// started 8/13/2006, added Jan 6, 2019
 class surfaces_arc_lifting;
 	// started 1/9/2019
-class packing_classify;
-class packing_invariants;
-class invariants_packing;
 class classify_cubic_curves;
 class cubic_curve_with_action;
 class blt_set_with_action;
@@ -94,8 +79,6 @@ class semifield_trace;
 class trace_record;
 class semifield_substructure;
 class semifield_classify_with_substructure;
-class packing_was;
-class packing_long_orbits;
 class tactical_decomposition;
 class tensor_classify;
 class design_create;
@@ -114,14 +97,9 @@ class character_table_burnside;
 class algebra_global_with_action;
 class group_theoretic_activity_description;
 class group_theoretic_activity;
-class packing_was_description;
 class regular_linear_space_description;
 class arc_generator_description;
-class spread_table_with_selection;
-class packing_was_fixpoints;
 class ovoid_classify_description;
-class packing_long_orbits_description;
-class regular_packing;
 class semifield_classify_description;
 class orbits_on_polynomials;
 class orthogonal_space_activity_description;
@@ -157,6 +135,34 @@ class projective_space_object_classifier;
 class projective_space_with_action_description;
 class projective_space_with_action;
 
+
+// spreads and packings:
+class spread_table_activity_description;
+class spread_table_activity;
+class spread_table_with_selection;
+class packing_was_fixpoints;
+class packing_long_orbits_description;
+class regular_packing;
+class packing_was_description;
+class packing_classify;
+class packing_invariants;
+class invariants_packing;
+class spread_create_description;
+	// added March 22, 2018
+class spread_create;
+	// added March 22, 2018
+class spread_lifting;
+	// added April 1, 2018
+class packing_was;
+class packing_long_orbits;
+class recoordinatize;
+	// added November 2, 2013
+class spread_classify;
+	// added November 2, 2013
+class packing_was_activity_description;
+class packing_was_activity;
+class packing_was_fixpoints_activity_description;
+class packing_was_fixpoints_activity;
 
 // surfaces.h:
 class arc_orbits_on_pairs;
@@ -194,6 +200,8 @@ class surfaces_arc_lifting_definition_node;
 class cubic_surface_activity_description;
 class cubic_surface_activity;
 class surface_domain_high_level;
+class surface_classify_wedge;
+	// added September 2, 2016
 
 
 // #############################################################################

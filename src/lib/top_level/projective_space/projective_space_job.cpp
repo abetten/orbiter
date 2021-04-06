@@ -799,7 +799,8 @@ void projective_space_job::perform_job_for_one_set(
 
 		PA->P->arc_with_given_set_of_s_lines_diophant(
 				the_set_in /*one_lines*/, set_size_in /* nb_one_lines */,
-				Descr->arc_size /*target_sz*/, Descr->arc_d /* target_d */, Descr->arc_d_low, Descr->arc_s /* target_s */,
+				Descr->arc_size /*target_sz*/, Descr->arc_d /* target_d */,
+				Descr->arc_d_low, Descr->arc_s /* target_s */,
 				TRUE /* f_dualize */,
 				D,
 				verbose_level);
@@ -814,7 +815,6 @@ void projective_space_job::perform_job_for_one_set(
 
 			sprintf(str, "system_%d.diophant", back_end_counter);
 			fname_system.assign(str);
-			//sprintf(fname_system, "system_%d.diophant", back_end_counter);
 			cout << "perform_job_for_one_set saving the system "
 					"to file " << fname_system << endl;
 			D->save_in_general_format(fname_system, 0 /* verbose_level */);
@@ -991,7 +991,6 @@ void projective_space_job::perform_job_for_one_set(
 			sprintf(str, "system_%d.diophant", back_end_counter);
 			fname_system.assign(str);
 
-			//sprintf(fname_system, "system_%d.diophant", back_end_counter);
 			cout << "perform_job_for_one_set saving the system "
 					"to file " << fname_system << endl;
 			D->save_in_general_format(fname_system, 0 /* verbose_level */);
@@ -1145,8 +1144,6 @@ void projective_space_job::do_canonical_form(
 		P,
 		set, set_size, canonical_pt, NULL /* canonical_set_or_NULL */,
 		verbose_level);
-	//P->draw_point_set_in_plane(fname_base, set, set_size,
-	// TRUE /*f_with_points*/, 0 /* verbose_level */);
 	FREE_OBJECT(nice_gens);
 	FREE_OBJECT(SG);
 	FREE_OBJECT(A_linear);

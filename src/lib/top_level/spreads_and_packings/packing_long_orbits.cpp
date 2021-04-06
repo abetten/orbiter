@@ -56,6 +56,7 @@ packing_long_orbits::~packing_long_orbits()
 }
 
 void packing_long_orbits::init(packing_was_fixpoints *PWF,
+		packing_long_orbits_description *Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -64,10 +65,11 @@ void packing_long_orbits::init(packing_was_fixpoints *PWF,
 		cout << "packing_long_orbits::init" << endl;
 	}
 	packing_long_orbits::PWF = PWF;
-	Descr = PWF->PW->Descr->Long_Orbits_Descr;
+	packing_long_orbits::Descr = Descr;
+	//Descr = PWF->PW->Descr->Long_Orbits_Descr;
 
 	if (!Descr->f_orbit_length) {
-		cout << "please specify orbit length" << endl;
+		cout << "packing_long_orbits::init please specify orbit length" << endl;
 		exit(1);
 	}
 
@@ -77,7 +79,7 @@ void packing_long_orbits::init(packing_was_fixpoints *PWF,
 	}
 
 
-	packing_long_orbits::fixpoint_clique_size = PWF->PW->Descr->clique_size_on_fixpoint_graph;
+	packing_long_orbits::fixpoint_clique_size = PWF->cliques_on_fixpoint_graph_size;
 	if (f_v) {
 		cout << "packing_long_orbits::init fixpoint_clique_size = " << fixpoint_clique_size << endl;
 	}
@@ -91,9 +93,17 @@ void packing_long_orbits::init(packing_was_fixpoints *PWF,
 
 
 	if (Descr->f_list_of_cases_from_file) {
+		if (f_v) {
+			cout << "packing_long_orbits::init f_list_of_cases_from_file" << endl;
+		}
+
 		list_of_cases_from_file(verbose_level);
 	}
 	else {
+		if (f_v) {
+			cout << "packing_long_orbits::init do_single_case" << endl;
+		}
+
 		do_single_case(verbose_level);
 	}
 
@@ -152,17 +162,20 @@ void packing_long_orbits::list_of_cases_from_file(int verbose_level)
 			std::vector<std::vector<int> > Packings;
 
 			if (f_v) {
-				cout << "packing_long_orbits::list_of_cases_from_file before process_single_case" << endl;
+				cout << "packing_long_orbits::list_of_cases_from_file before process_single_case, idx = " << idx << endl;
 			}
 			process_single_case(
 					Packings,
 					verbose_level);
 			if (f_v) {
-				cout << "packing_long_orbits::list_of_cases_from_file after process_single_case" << endl;
+				cout << "packing_long_orbits::list_of_cases_from_file after process_single_case, idx = " << idx << endl;
 			}
 
 			Nb[idx] = Packings.size();
 			Packings_by_case.push_back(Packings);
+			if (f_v) {
+				cout << "packing_long_orbits::list_of_cases_from_file after process_single_case, idx = " << idx << " we found " << Nb[idx] << " solutions" << endl;
+			}
 		}
 	}
 
@@ -312,11 +325,13 @@ void packing_long_orbits::process_single_case(
 	}
 
 
+#if 0
 	if (PWF->PW->Descr->f_report) {
 		cout << "doing a report" << endl;
 
-		PWF->report(this, verbose_level);
+		//PWF->report(this, verbose_level);
 	}
+#endif
 
 	if (f_v) {
 		cout << "packing_long_orbits::process_single_case " << fixpoints_clique_case_number << " done" << endl;
@@ -337,16 +352,6 @@ void packing_long_orbits::init_fixpoint_clique_from_orbit_numbers(int verbose_le
 	for (i = 0; i < fixpoint_clique_size; i++) {
 		a = fixpoint_clique_orbit_numbers[i];
 		c = PWF->fixpoint_to_reduced_spread(a, verbose_level);
-#if 0
-		b = P->reduced_spread_orbits_under_H->Orbits_classified->Sets[fixpoints_idx][a];
-		P->reduced_spread_orbits_under_H->Sch->get_orbit(b /* orbit_idx */, set, len,
-				0 /*verbose_level */);
-		if (len != 1) {
-			cout << "packing_long_orbits::init len != 1, len = " << len << endl;
-			exit(1);
-		}
-		c = set[0];
-#endif
 		fixpoint_clique[i] = c;
 	}
 

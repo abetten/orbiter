@@ -43,6 +43,28 @@ interface_symbol_table::interface_symbol_table()
 	f_graph = FALSE;
 	Create_graph_description = NULL;
 
+	f_spread_table = FALSE;
+	//std::string spread_table_label_PA;
+	dimension_of_spread_elements = 0;
+	//std::string spread_selection_text;
+	//std::string spread_tables_prefix;
+
+
+	f_packing_was = FALSE;
+	//std::string packing_was_label_spread_table;
+	packing_was_descr = NULL;
+
+	f_packing_was_choose_fixed_points = FALSE;
+	//std::string packing_with_assumed_symmetry_label;
+	packing_with_assumed_symmetry_choose_fixed_points_clique_size = 0;
+	packing_with_assumed_symmetry_choose_fixed_points_control = NULL;
+
+
+	f_packing_long_orbits = FALSE;
+	//std::string packing_long_orbits_choose_fixed_points_label
+	Packing_long_orbits_description = NULL;
+
+
 
 	f_print_symbols = FALSE;
 	f_with = FALSE;
@@ -71,6 +93,15 @@ interface_symbol_table::interface_symbol_table()
 
 	f_classification_of_cubic_surfaces_with_double_sixes_activity = FALSE;
 	Classification_of_cubic_surfaces_with_double_sixes_activity_description = NULL;
+
+	f_spread_table_activity = FALSE;
+	Spread_table_activity_description = NULL;
+
+	f_packing_with_symmetry_assumption_activity = FALSE;
+	Packing_was_activity_description = NULL;
+
+	f_packing_fixed_points_activity = FALSE;
+	Packing_was_fixpoints_activity_description = NULL;
 
 }
 
@@ -342,6 +373,125 @@ void interface_symbol_table::read_definition(
 			cout << "interface_symbol_table::read_definition after definition_of_graph" << endl;
 		}
 	}
+	else if (stringcmp(argv[i], "-spread_table") == 0) {
+		f_spread_table = TRUE;
+
+		spread_table_label_PA.assign(argv[++i]);
+		dimension_of_spread_elements = strtoi(argv[++i]);
+		spread_selection_text.assign(argv[++i]);
+		spread_tables_prefix.assign(argv[++i]);
+		cout << "dimension_of_spread_elements = " << dimension_of_spread_elements
+				<< " " << spread_selection_text
+				<< " " << spread_tables_prefix << endl;
+
+		i++;
+
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+		cout << "-spread_table " << spread_table_label_PA
+				<< " " << dimension_of_spread_elements
+				<< " " << spread_selection_text
+				<< " " << spread_tables_prefix
+				<< endl;
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition before definition_of_projective_space" << endl;
+		}
+		definition_of_spread_table(Orbiter_top_level_session, verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition after definition_of_projective_space" << endl;
+		}
+	}
+	else if (stringcmp(argv[i], "-packing_with_symmetry_assumption") == 0) {
+		f_packing_was = TRUE;
+
+		packing_was_label_spread_table.assign(argv[++i]);
+
+		packing_was_descr = NEW_OBJECT(packing_was_description);
+		cout << "reading -packing_with_symmetry_assumption" << endl;
+		i += packing_was_descr->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		cout << "-packing_with_symmetry_assumption" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+		cout << "-packing_with_symmetry_assumption " << packing_was_label_spread_table
+				<< endl;
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition before definition_of_packing_was" << endl;
+		}
+		definition_of_packing_was(Orbiter_top_level_session, verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition after definition_of_packing_was" << endl;
+		}
+	}
+	else if (stringcmp(argv[i], "-packing_with_symmetry_assumption_choose_fixed_points") == 0) {
+		f_packing_was_choose_fixed_points = TRUE;
+
+		packing_with_assumed_symmetry_label.assign(argv[++i]);
+		packing_with_assumed_symmetry_choose_fixed_points_clique_size = strtoi(argv[++i]);
+
+		packing_with_assumed_symmetry_choose_fixed_points_control = NEW_OBJECT(poset_classification_control);
+		cout << "reading -packing_with_symmetry_assumption_choose_fixed_points" << endl;
+		i += packing_with_assumed_symmetry_choose_fixed_points_control->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		cout << "-packing_with_symmetry_assumption_choose_fixed_points" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+		cout << "-packing_with_symmetry_assumption_choose_fixed_points "
+				<< packing_with_assumed_symmetry_label
+				<< " " << packing_with_assumed_symmetry_choose_fixed_points_clique_size
+				<< endl;
+		packing_with_assumed_symmetry_choose_fixed_points_control->print();
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition before definition_of_packing_was_choose_fixed_points" << endl;
+		}
+		definition_of_packing_was_choose_fixed_points(Orbiter_top_level_session, verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition after definition_of_packing_was_choose_fixed_points" << endl;
+		}
+	}
+	else if (stringcmp(argv[i], "-packing_long_orbits") == 0) {
+		f_packing_long_orbits = TRUE;
+
+		packing_long_orbits_choose_fixed_points_label.assign(argv[++i]);
+
+		Packing_long_orbits_description = NEW_OBJECT(packing_long_orbits_description);
+		cout << "reading -packing_long_orbits" << endl;
+		i += Packing_long_orbits_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		cout << "-packing_long_orbits" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+		cout << "-packing_long_orbits "
+				<< packing_long_orbits_choose_fixed_points_label
+				<< endl;
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition before definition_of_packing_long_orbits" << endl;
+		}
+		definition_of_packing_long_orbits(Orbiter_top_level_session, verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition after definition_of_packing_long_orbits" << endl;
+		}
+	}
+
 
 	else {
 		cout << "unrecognized command after -define" << endl;
@@ -706,8 +856,8 @@ void interface_symbol_table::definition_of_graph(orbiter_top_level_session *Orbi
 	if (f_v) {
 		cout << "Gr->N=" << Gr->N << endl;
 		cout << "Gr->label=" << Gr->label << endl;
-		cout << "Adj:" << endl;
-		int_matrix_print(Gr->Adj, Gr->N, Gr->N);
+		//cout << "Adj:" << endl;
+		//int_matrix_print(Gr->Adj, Gr->N, Gr->N);
 	}
 
 
@@ -742,6 +892,243 @@ void interface_symbol_table::definition_of_graph(orbiter_top_level_session *Orbi
 		cout << "interface_symbol_table::definition_of_graph done" << endl;
 	}
 }
+
+
+void interface_symbol_table::definition_of_spread_table(orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_spread_table" << endl;
+	}
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_spread_table "
+				"using existing PA " << spread_table_label_PA << endl;
+	}
+	int idx;
+	projective_space_with_action *PA;
+
+	idx = Orbiter_top_level_session->find_symbol(spread_table_label_PA);
+	PA = (projective_space_with_action *) Orbiter_top_level_session->get_object(idx);
+
+
+
+
+	packing_classify *P;
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_spread_table before P->spread_table_init" << endl;
+	}
+
+	P = NEW_OBJECT(packing_classify);
+
+	P->spread_table_init(
+			PA,
+			dimension_of_spread_elements,
+			TRUE /* f_select_spread */, spread_selection_text,
+			spread_tables_prefix,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_spread_table after do_spread_table_init" << endl;
+	}
+
+
+
+
+	orbiter_symbol_table_entry Symb;
+	Symb.init_spread_table(define_label, P, verbose_level);
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_spread_table before add_symbol_table_entry" << endl;
+	}
+	Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, &Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_spread_table done" << endl;
+	}
+}
+
+
+void interface_symbol_table::definition_of_packing_was(orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_packing_was" << endl;
+	}
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_packing_was "
+				"using existing spread table " << packing_was_label_spread_table << endl;
+	}
+	int idx;
+	packing_classify *P;
+
+	idx = Orbiter_top_level_session->find_symbol(packing_was_label_spread_table);
+	P = (packing_classify *) Orbiter_top_level_session->get_object(idx);
+
+
+
+
+
+
+	packing_was *PW;
+
+	PW = NEW_OBJECT(packing_was);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_packing_was before PW->init" << endl;
+	}
+
+	PW->init(packing_was_descr, P, verbose_level);
+
+	if (f_v) {
+		cout << "spread_table_activity::perform_activity after PW->init" << endl;
+	}
+
+
+
+
+	orbiter_symbol_table_entry Symb;
+	Symb.init_packing_was(define_label, PW, verbose_level);
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_packing_was before add_symbol_table_entry" << endl;
+	}
+	Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, &Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_packing_was done" << endl;
+	}
+}
+
+
+
+void interface_symbol_table::definition_of_packing_was_choose_fixed_points(orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_packing_was_choose_fixed_points" << endl;
+	}
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_packing_was_choose_fixed_points "
+				"using existing object " << packing_with_assumed_symmetry_label << endl;
+	}
+	int idx;
+	packing_was *PW;
+
+	idx = Orbiter_top_level_session->find_symbol(packing_with_assumed_symmetry_label);
+	PW = (packing_was *) Orbiter_top_level_session->get_object(idx);
+
+
+	packing_was_fixpoints *PWF;
+
+	PWF = NEW_OBJECT(packing_was_fixpoints);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_packing_was_choose_fixed_points before PWF->init" << endl;
+	}
+
+	PWF->init(PW, verbose_level);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_packing_was_choose_fixed_points after PWF->init" << endl;
+	}
+
+
+	PWF->compute_cliques_on_fixpoint_graph(
+			packing_with_assumed_symmetry_choose_fixed_points_clique_size,
+			packing_with_assumed_symmetry_choose_fixed_points_control,
+			verbose_level);
+
+
+
+
+	orbiter_symbol_table_entry Symb;
+	Symb.init_packing_was_choose_fixed_points(define_label, PWF, verbose_level);
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_packing_was_choose_fixed_points before add_symbol_table_entry" << endl;
+	}
+	Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, &Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_packing_was_choose_fixed_points done" << endl;
+	}
+}
+
+
+
+
+
+void interface_symbol_table::definition_of_packing_long_orbits(orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_packing_long_orbits" << endl;
+	}
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_packing_long_orbits "
+				"using existing object " << packing_long_orbits_choose_fixed_points_label << endl;
+	}
+	int idx;
+
+	packing_was_fixpoints *PWF;
+
+	idx = Orbiter_top_level_session->find_symbol(packing_long_orbits_choose_fixed_points_label);
+	PWF = (packing_was_fixpoints *) Orbiter_top_level_session->get_object(idx);
+
+
+	packing_long_orbits *PL;
+
+	PL = NEW_OBJECT(packing_long_orbits);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_packing_long_orbits before PL->init" << endl;
+	}
+
+	PL->init(PWF, Packing_long_orbits_description, verbose_level);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_packing_long_orbits after PL->init" << endl;
+	}
+
+
+
+
+	orbiter_symbol_table_entry Symb;
+
+	Symb.init_packing_long_orbits(define_label, PL, verbose_level);
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_packing_long_orbits before add_symbol_table_entry" << endl;
+	}
+	Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, &Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_packing_long_orbits done" << endl;
+	}
+}
+
 
 
 void interface_symbol_table::read_with(
@@ -931,6 +1318,57 @@ void interface_symbol_table::read_activity_arguments(int argc,
 			cout << "next argument is " << argv[i] << endl;
 		}
 	}
+	else if (stringcmp(argv[i], "-spread_table_activity") == 0) {
+		f_spread_table_activity = TRUE;
+		Spread_table_activity_description =
+				NEW_OBJECT(spread_table_activity_description);
+		cout << "reading -classification_of_cubic_surfaces_with_double_sixes_activity" << endl;
+		i += Spread_table_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		cout << "-spread_table_activity" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+	}
+	else if (stringcmp(argv[i], "-packing_with_symmetry_assumption_activity") == 0) {
+		f_packing_with_symmetry_assumption_activity = TRUE;
+		Packing_was_activity_description =
+				NEW_OBJECT(packing_was_activity_description);
+		cout << "reading -packing_with_symmetry_assumption_activity" << endl;
+		i += Packing_was_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		cout << "-packing_with_symmetry_assumption_activity" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+	}
+	else if (stringcmp(argv[i], "-packing_fixed_points_activity") == 0) {
+		f_packing_fixed_points_activity = TRUE;
+		Packing_was_fixpoints_activity_description =
+				NEW_OBJECT(packing_was_fixpoints_activity_description);
+		cout << "reading -packing_fixed_points_activity" << endl;
+		i += Packing_was_fixpoints_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		cout << "-packing_fixed_points_activity" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+	}
 
 
 	else {
@@ -1028,6 +1466,30 @@ void interface_symbol_table::worker(orbiter_top_level_session *Orbiter_top_level
 		}
 
 		do_classification_of_cubic_surfaces_with_double_sixes_activity(Orbiter_top_level_session, verbose_level);
+	}
+	else if (f_spread_table_activity) {
+
+		if (f_v) {
+			cout << "interface_symbol_table::worker f_spread_table_activity" << endl;
+		}
+
+		do_spread_table_activity(Orbiter_top_level_session, verbose_level);
+	}
+	else if (f_packing_with_symmetry_assumption_activity) {
+
+		if (f_v) {
+			cout << "interface_symbol_table::worker f_packing_with_symmetry_activity" << endl;
+		}
+
+		do_packing_was_activity(Orbiter_top_level_session, verbose_level);
+	}
+	else if (f_packing_fixed_points_activity) {
+
+		if (f_v) {
+			cout << "interface_symbol_table::worker f_packing_with_symmetry_activity" << endl;
+		}
+
+		do_packing_fixed_points_activity(Orbiter_top_level_session, verbose_level);
 	}
 
 	if (f_v) {
@@ -1511,7 +1973,181 @@ void interface_symbol_table::do_classification_of_cubic_surfaces_with_double_six
 
 }
 
+void interface_symbol_table::do_spread_table_activity(
+		orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		int i;
+		cout << "interface_symbol_table::do_spread_table_activity "
+				"activity for " << with_labels.size() << " objects:";
+		for (i = 0; i < with_labels.size(); i++) {
+			cout << with_labels[i];
+			if (i < with_labels.size() - 1) {
+				cout << ", ";
+			}
+		}
+		cout << endl;
+	}
+
+
+
+	int *Idx;
+
+	Orbiter_top_level_session->find_symbols(with_labels, Idx);
+
+	if (with_labels.size() < 1) {
+		cout << "-do_spread_table_activity requires at least one input" << endl;
+		exit(1);
+	}
+
+	packing_classify *P;
+
+	P = (packing_classify *) Orbiter_top_level_session->get_object(Idx[0]);
+	{
+		spread_table_activity Activity;
+
+		Activity.init(Spread_table_activity_description, P, verbose_level);
+
+		if (f_v) {
+			cout << "interface_symbol_table::do_spread_table_activity "
+					"before Activity.perform_activity" << endl;
+		}
+		Activity.perform_activity(verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::do_spread_table_activity "
+					"after Activity.perform_activity" << endl;
+		}
+
+	}
+
+	FREE_int(Idx);
+
+	if (f_v) {
+		cout << "interface_symbol_table::do_spread_table_activity done" << endl;
+	}
+
+}
+
+void interface_symbol_table::do_packing_was_activity(
+		orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		int i;
+		cout << "interface_symbol_table::do_packing_was_activity "
+				"activity for " << with_labels.size() << " objects:";
+		for (i = 0; i < with_labels.size(); i++) {
+			cout << with_labels[i];
+			if (i < with_labels.size() - 1) {
+				cout << ", ";
+			}
+		}
+		cout << endl;
+	}
+
+
+
+	int *Idx;
+
+	Orbiter_top_level_session->find_symbols(with_labels, Idx);
+
+	if (with_labels.size() < 1) {
+		cout << "-do_spread_table_activity requires at least one input" << endl;
+		exit(1);
+	}
+
+	packing_was *PW;
+
+	PW = (packing_was *) Orbiter_top_level_session->get_object(Idx[0]);
+	{
+		packing_was_activity Activity;
+
+		Activity.init(Packing_was_activity_description, PW, verbose_level);
+
+		if (f_v) {
+			cout << "interface_symbol_table::do_packing_was_activity "
+					"before Activity.perform_activity" << endl;
+		}
+		Activity.perform_activity(verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::do_packing_was_activity "
+					"after Activity.perform_activity" << endl;
+		}
+
+	}
+
+	FREE_int(Idx);
+
+	if (f_v) {
+		cout << "interface_symbol_table::do_packing_was_activity done" << endl;
+	}
+
+}
+
+
+
+void interface_symbol_table::do_packing_fixed_points_activity(
+		orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		int i;
+		cout << "interface_symbol_table::do_packing_fixed_points_activity "
+				"activity for " << with_labels.size() << " objects:";
+		for (i = 0; i < with_labels.size(); i++) {
+			cout << with_labels[i];
+			if (i < with_labels.size() - 1) {
+				cout << ", ";
+			}
+		}
+		cout << endl;
+	}
+
+
+
+	int *Idx;
+
+	Orbiter_top_level_session->find_symbols(with_labels, Idx);
+
+	if (with_labels.size() < 1) {
+		cout << "-do_spread_table_activity requires at least one input" << endl;
+		exit(1);
+	}
+
+	packing_was_fixpoints *PWF;
+
+	PWF = (packing_was_fixpoints *) Orbiter_top_level_session->get_object(Idx[0]);
+	{
+		packing_was_fixpoints_activity Activity;
+
+		Activity.init(Packing_was_fixpoints_activity_description, PWF, verbose_level);
+
+		if (f_v) {
+			cout << "interface_symbol_table::do_packing_fixed_points_activity "
+					"before Activity.perform_activity" << endl;
+		}
+		Activity.perform_activity(verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::do_packing_fixed_points_activity "
+					"after Activity.perform_activity" << endl;
+		}
+
+	}
+
+	FREE_int(Idx);
+
+	if (f_v) {
+		cout << "interface_symbol_table::do_packing_fixed_points_activity done" << endl;
+	}
+
+}
 
 
 }}

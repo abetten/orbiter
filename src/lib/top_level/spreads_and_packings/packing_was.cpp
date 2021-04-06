@@ -118,7 +118,7 @@ void packing_was::init(packing_was_description *Descr,
 	if (f_v) {
 		cout << "packing_was::init before init_H" << endl;
 	}
-	init_H(verbose_level - 1);
+	init_H(verbose_level - 3);
 	if (f_v) {
 		cout << "packing_was::init after init_H" << endl;
 	}
@@ -132,7 +132,7 @@ void packing_was::init(packing_was_description *Descr,
 	if (f_v) {
 		cout << "packing_was::init before init_N" << endl;
 	}
-	init_N(verbose_level - 1);
+	init_N(verbose_level - 3);
 	if (f_v) {
 		cout << "packing_was::init after init_N" << endl;
 	}
@@ -142,11 +142,11 @@ void packing_was::init(packing_was_description *Descr,
 
 
 	if (f_v) {
-		cout << "packing_was::init before init_spreads" << endl;
+		cout << "packing_was::init before compute_H_orbits_and_reduce" << endl;
 	}
-	init_spreads(verbose_level);
+	compute_H_orbits_and_reduce(verbose_level);
 	if (f_v) {
-		cout << "packing_was::init after init_spreads" << endl;
+		cout << "packing_was::init after compute_H_orbits_and_reduce" << endl;
 	}
 
 
@@ -158,129 +158,129 @@ void packing_was::init(packing_was_description *Descr,
 	}
 }
 
-void packing_was::init_spreads(int verbose_level)
+void packing_was::compute_H_orbits_and_reduce(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "packing_was::init_spreads" << endl;
+		cout << "packing_was::compute_H_orbits_and_reduce" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "packing_was::init_spreads before P->read_spread_table" << endl;
+		cout << "packing_was::compute_H_orbits_and_reduce before P->read_spread_table" << endl;
 	}
 	compute_H_orbits_on_lines(verbose_level);
 	if (f_v) {
-		cout << "packing_was::init_spreads after P->read_spread_table" << endl;
+		cout << "packing_was::compute_H_orbits_and_reduce after P->read_spread_table" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "packing_was::init_spreads before compute_spread_types_wrt_H" << endl;
+		cout << "packing_was::compute_H_orbits_and_reduce before compute_spread_types_wrt_H" << endl;
 	}
 	compute_spread_types_wrt_H(verbose_level);
 	if (f_v) {
-		cout << "packing_was::init_spreads after compute_spread_types_wrt_H" << endl;
+		cout << "packing_was::compute_H_orbits_and_reduce after compute_spread_types_wrt_H" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "packing_was::init_spreads before "
+		cout << "packing_was::compute_H_orbits_and_reduce before "
 				"P->Spread_table_with_selection->create_action_on_spreads" << endl;
 	}
 	P->Spread_table_with_selection->create_action_on_spreads(verbose_level);
 	if (f_v) {
-		cout << "packing_was::init_spreads after "
+		cout << "packing_was::compute_H_orbits_and_reduce after "
 				"P->Spread_table_with_selection->create_action_on_spreads" << endl;
 	}
 
 	if (f_v) {
-		cout << "packing_was::init_spreads "
+		cout << "packing_was::compute_H_orbits_and_reduce "
 				"before compute_H_orbits_on_spreads" << endl;
 	}
 	compute_H_orbits_on_spreads(verbose_level);
 	if (f_v) {
-		cout << "packing_was::init_spreads "
+		cout << "packing_was::compute_H_orbits_and_reduce "
 				"after compute_H_orbits_on_spreads" << endl;
 	}
 
 	if (f_v) {
-		cout << "packing_was::init_spreads "
+		cout << "packing_was::compute_H_orbits_and_reduce "
 				"before test_orbits_on_spreads" << endl;
 	}
 	test_orbits_on_spreads(verbose_level);
 	if (f_v) {
-		cout << "packing_was::init_spreads "
+		cout << "packing_was::compute_H_orbits_and_reduce "
 				"after test_orbits_on_spreads" << endl;
 	}
 
 	if (f_v) {
-		cout << "packing_was::init_spreads "
+		cout << "packing_was::compute_H_orbits_and_reduce "
 				"before reduce_spreads" << endl;
 	}
 	reduce_spreads(verbose_level);
 	if (f_v) {
-		cout << "packing_was::init_spreads "
+		cout << "packing_was::compute_H_orbits_and_reduce "
 				"after reduce_spreads" << endl;
 	}
 
 	if (f_v) {
-		cout << "packing_was::init_spreads "
+		cout << "packing_was::compute_H_orbits_and_reduce "
 				"before compute_reduced_spread_types_wrt_H" << endl;
 	}
 	compute_reduced_spread_types_wrt_H(verbose_level);
 	if (f_v) {
-		cout << "packing_was::init_spreads "
+		cout << "packing_was::compute_H_orbits_and_reduce "
 				"after compute_reduced_spread_types_wrt_H" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "packing_was::init_spreads "
+		cout << "packing_was::compute_H_orbits_and_reduce "
 				"before compute_H_orbits_on_reduced_spreads" << endl;
 	}
 	compute_H_orbits_on_reduced_spreads(verbose_level);
 	if (f_v) {
-		cout << "packing_was::init_spreads "
+		cout << "packing_was::compute_H_orbits_and_reduce "
 				"after compute_H_orbits_on_reduced_spreads" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "packing_was::init_spreads "
+		cout << "packing_was::compute_H_orbits_and_reduce "
 				"before compute_orbit_invariant_on_classified_orbits" << endl;
 	}
 	compute_orbit_invariant_on_classified_orbits(verbose_level);
 	if (f_v) {
-		cout << "packing_was::init_spreads "
+		cout << "packing_was::compute_H_orbits_and_reduce "
 				"after compute_orbit_invariant_on_classified_orbits" << endl;
 	}
 
 	if (f_v) {
-		cout << "packing_was::init_spreads "
+		cout << "packing_was::compute_H_orbits_and_reduce "
 				"before classify_orbit_invariant" << endl;
 	}
 	classify_orbit_invariant(verbose_level);
 	if (f_v) {
-		cout << "packing_was::init_spreads "
+		cout << "packing_was::compute_H_orbits_and_reduce "
 				"after classify_orbit_invariant" << endl;
 	}
 
 	if (Descr->f_regular_packing) {
 		if (f_v) {
-			cout << "packing_was::init_spreads "
+			cout << "packing_was::compute_H_orbits_and_reduce "
 					"before init_regular_packing" << endl;
 		}
 		init_regular_packing(verbose_level);
 		if (f_v) {
-			cout << "packing_was::init_spreads "
+			cout << "packing_was::compute_H_orbits_and_reduce "
 					"after init_regular_packing" << endl;
 		}
 	}
 
 	if (f_v) {
-		cout << "packing_was::init_spreads done" << endl;
+		cout << "packing_was::compute_H_orbits_and_reduce done" << endl;
 	}
 }
 
@@ -327,7 +327,7 @@ void packing_was::init_N(int verbose_level)
 			exit(1);
 		}
 		Descr->N_Descr->F = P->F;
-		N_LG->linear_group_init(Descr->N_Descr, verbose_level - 1);
+		N_LG->linear_group_init(Descr->N_Descr, verbose_level - 2);
 
 		if (f_v) {
 			cout << "packing_was::init_N after N_LG->linear_group_init" << endl;
@@ -382,7 +382,7 @@ void packing_was::init_H(int verbose_level)
 				"creating the group" << endl;
 	}
 
-	H_LG->linear_group_init(Descr->H_Descr, verbose_level - 1);
+	H_LG->linear_group_init(Descr->H_Descr, verbose_level - 2);
 
 	if (f_v) {
 		cout << "packing_was::init_H after H_LG->linear_group_init" << endl;
@@ -454,6 +454,11 @@ void packing_was::compute_H_orbits_on_lines(int verbose_level)
 
 
 	Line_orbits_under_H = NEW_OBJECT(orbits_on_something);
+
+	if (f_v) {
+		cout << "packing_was::compute_H_orbits_on_lines "
+				"prefix_line_orbits=" << prefix_line_orbits << endl;
+	}
 
 	Line_orbits_under_H->init(P->T->A2, H_gens, TRUE /*f_load_save*/,
 			prefix_line_orbits,
@@ -1055,6 +1060,7 @@ void packing_was::report_orbit_invariant(ostream &ost)
 		ost << "Orbits of length " <<
 				reduced_spread_orbits_under_H->Orbits_classified_length[i]
 				<< " have the following spread type:\\\\" << endl;
+
 		//Classify_spread_invariant_by_orbit_length[i].print(FALSE);
 		for (h = 0; h < Classify_spread_invariant_by_orbit_length[i].nb_types; h++) {
 			f = Classify_spread_invariant_by_orbit_length[i].type_first[h];
@@ -1150,36 +1156,43 @@ void packing_was::report2(std::ostream &ost, int verbose_level)
 			0 /* verbose_level */);
 	ost << endl;
 
+	ost << "\\clearpage" << endl;
 	ost << "\\section{Line Orbits of $H$}" << endl;
 	ost << endl;
 	//Line_orbits_under_H->report_orbit_lengths(ost);
 	report_line_orbits_under_H(ost, verbose_level);
 	ost << endl;
 
+	ost << "\\clearpage" << endl;
 	ost << "\\section{Spread Orbits of $H$}" << endl;
 	ost << endl;
 	Spread_orbits_under_H->report_orbit_lengths(ost);
 	ost << endl;
 
+	ost << "\\clearpage" << endl;
 	ost << "\\section{Spread Types}" << endl;
 	Spread_type->report(ost, verbose_level);
 	ost << endl;
 
+	ost << "\\clearpage" << endl;
 	ost << "\\section{Reduced Spread Types}" << endl;
 	Spread_type_reduced->report(ost, verbose_level);
 	ost << endl;
 
+	ost << "\\clearpage" << endl;
 	ost << "\\section{Reduced Spread Orbits}" << endl;
 	reduced_spread_orbits_under_H->report_classified_orbit_lengths(ost);
 	ost << endl;
 
 	//report_reduced_spread_orbits(ost, verbose_level);
 
+	ost << "\\clearpage" << endl;
 	ost << "\\section{Reduced Spread Orbits: Spread invariant}" << endl;
 	report_orbit_invariant(ost);
 	ost << endl;
 
 	if (Descr->f_N) {
+		ost << "\\clearpage" << endl;
 		ost << "\\section{The Group $N$}" << endl;
 		ost << "The Group $N$ has order " << N_goi << "\\\\" << endl;
 		N_gens->print_generators_tex(ost);
@@ -1307,48 +1320,133 @@ void packing_was::report_line_orbits_under_H(std::ostream &ost, int verbose_leve
 
 }
 
-
-void packing_was::report_reduced_spread_orbits(std::ostream &ost, int verbose_level)
+void packing_was::get_spreads_in_reduced_orbits_by_type(int type_idx,
+		int &nb_orbits, int &orbit_length,
+		long int *&orbit_idx,
+		long int *&spreads_in_reduced_orbits_by_type,
+		int f_original_spread_numbers,
+		int verbose_level)
 {
-	ost << "\\bigskip" << endl;
-	ost << "\\noindent" << endl;
+	int f_v = (verbose_level >= 1);
+	int j, h;
+	long int a, b, c;
+	long int nb_spreads;
+
+	if (f_v) {
+		cout << "packing_was::get_spreads_in_reduced_orbits_by_type" << endl;
+	}
+	nb_spreads = 0;
+
+	nb_orbits = reduced_spread_orbits_under_H->Orbits_classified->Set_size[type_idx];
+
+	orbit_idx = NEW_lint(nb_orbits);
+
+	orbit_length = -1;
+	for (j = 0; j < nb_orbits; j++) {
+		a = reduced_spread_orbits_under_H->Orbits_classified->Sets[type_idx][j];
+
+		orbit_idx[j] = a;
+		std::vector<int> Orb;
+
+		reduced_spread_orbits_under_H->Sch->get_orbit_in_order(Orb,
+				a /* orbit_idx */, 0 /* verbose_level */);
+
+		if (orbit_length == -1) {
+			orbit_length = Orb.size();
+		}
+		else if (orbit_length != Orb.size()) {
+			cout << "we have orbits of different lengths" << endl;
+			exit(1);
+		}
+	}
+
+	nb_spreads = nb_orbits * orbit_length;
+
+	cout << "Type " << type_idx << " has " << nb_spreads << " spreads:\\\\" << endl;
+
+	spreads_in_reduced_orbits_by_type = NEW_lint(nb_spreads);
+	lint_vec_zero(spreads_in_reduced_orbits_by_type, nb_spreads);
+
+
+
+	for (j = 0; j < nb_orbits; j++) {
+		a = reduced_spread_orbits_under_H->Orbits_classified->Sets[type_idx][j];
+
+		std::vector<int> Orb;
+
+
+		reduced_spread_orbits_under_H->Sch->get_orbit_in_order(Orb,
+				a /* orbit_idx */, 0 /* verbose_level */);
+
+		for (h = 0; h < Orb.size(); h++) {
+
+			b = Orb[h];
+
+			if (f_original_spread_numbers) {
+				c = good_spreads[b];
+			}
+			else {
+				c = b;
+			}
+			spreads_in_reduced_orbits_by_type[j * orbit_length + h] = c;
+		}
+	}
+
+
+	//FREE_lint(spreads_in_reduced_orbits_by_type);
+
+}
+
+
+
+void packing_was::report_reduced_spread_orbits(std::ostream &ost, int f_original_spread_numbers, int verbose_level)
+{
+	//ost << "\\bigskip" << endl;
+	//ost << "\\noindent" << endl;
 
 	//reduced_spread_orbits_under_H->report_classified_orbits_by_lengths(ost);
+	latex_interface L;
+	int type_idx;
+
+
+	for (type_idx = 0; type_idx < reduced_spread_orbits_under_H->Orbits_classified->nb_sets; type_idx++) {
+
+		int nb_orbits;
+		int orbit_length;
+		long int *orbit_idx;
+		long int *spreads_in_reduced_orbits_by_type;
+
+		get_spreads_in_reduced_orbits_by_type(type_idx,
+					nb_orbits, orbit_length,
+					orbit_idx,
+					spreads_in_reduced_orbits_by_type,
+					f_original_spread_numbers,
+					verbose_level);
+
+		ost << "Type " << type_idx << " has " << nb_orbits
+				<< " orbits of length " << orbit_length << ":\\\\" << endl;
+
+		int j;
+
+		for (j = 0; j < nb_orbits; j++) {
+			ost << j << " : " << orbit_idx[j] << " : ";
+			lint_vec_print(ost, spreads_in_reduced_orbits_by_type + j * orbit_length, orbit_length);
+			ost << "\\\\" << endl;
+			if (j && (j % 100) == 0) {
+				ost << endl;
+				ost << "\\clearpage" << endl;
+				ost << endl;
+			}
+		}
+
+	}
+
+#if 0
 	int i, j, h;
 	long int a, b;
 	long int *spreads_in_reduced_orbits;
 	int nb_spreads, spread_cnt;
 	int orbit_length;
-	latex_interface L;
-
-
-	nb_spreads = 0;
-	orbit_length = -1;
-	for (i = 0; i < reduced_spread_orbits_under_H->Orbits_classified->nb_sets; i++) {
-
-
-		nb_spreads += reduced_spread_orbits_under_H->Orbits_classified->Set_size[i];
-
-		for (j = 0; j < reduced_spread_orbits_under_H->Orbits_classified->Set_size[i]; j++) {
-			a = reduced_spread_orbits_under_H->Orbits_classified->Sets[i][j];
-
-			std::vector<int> Orb;
-
-
-			reduced_spread_orbits_under_H->Sch->get_orbit_in_order(Orb,
-					a /* orbit_idx */, 0 /* verbose_level */);
-
-			if (orbit_length == -1) {
-				orbit_length = Orb.size();
-			}
-			else if (orbit_length != Orb.size()) {
-				cout << "we have orbits of different lengths" << endl;
-				exit(1);
-			}
-
-		}
-	}
-
 	spreads_in_reduced_orbits = NEW_lint(nb_spreads * orbit_length);
 	lint_vec_zero(spreads_in_reduced_orbits, nb_spreads * orbit_length);
 
@@ -1498,6 +1596,27 @@ void packing_was::report_reduced_spread_orbits(std::ostream &ost, int verbose_le
 			}
 		}
 	}
+#endif
+
+}
+
+void packing_was::report_good_spreads(std::ostream &ost)
+{
+	long int i, a;
+
+	ost << "The number of good spreads is " << nb_good_spreads << "\\\\" << endl;
+	ost << "The good spreads are:\\\\" << endl;
+	for (i = 0; i < nb_good_spreads; i++) {
+		a = good_spreads[i];
+		ost << a;
+		if (i < nb_good_spreads - 1) {
+			ost << ", ";
+		}
+		if ((i % 100) == 0) {
+			ost << "\\\\" << endl;
+		}
+	}
+	ost << "\\ \\\\" << endl;
 
 }
 

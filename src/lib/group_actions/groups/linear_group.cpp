@@ -307,7 +307,7 @@ void linear_group::linear_group_init(
 			description->subgroup_order_text,
 			description->nb_subgroup_generators,
 			description->subgroup_generators_as_string,
-			verbose_level);
+			verbose_level - 2);
 		if (f_v) {
 			cout << "linear_group::linear_group_init "
 					"after init_subgroup_by_generators" << endl;
@@ -1195,7 +1195,7 @@ void linear_group::init_subgroup_by_generators(
 			nb_subgroup_generators, subgroup_generators_as_string,
 			subgroup_order_text,
 			nice_gens,
-			verbose_level);
+			verbose_level - 3);
 
 	f_has_nice_gens = TRUE;
 

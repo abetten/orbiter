@@ -127,6 +127,33 @@ void action_on_sets::init(int nb_sets,
 		}
 }
 
+int action_on_sets::find_set(long int *set, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	sorting Sorting;
+	int idx, j;
+
+	if (f_v) {
+		cout << "action_on_sets::find_set, nb_sets=" << nb_sets << endl;
+	}
+	if (!Sorting.vec_search(
+			(void **)sets,
+			action_on_sets_compare_inverted,
+			this,
+			nb_sets,
+			set,
+			idx,
+			verbose_level)) {
+		cout << "action_on_sets::find_set could not find the given set" << endl;
+		exit(1);
+	}
+	j = perm_inv[idx];
+	if (f_v) {
+		cout << "action_on_sets::find_set done" << endl;
+	}
+	return j;
+}
+
 long int action_on_sets::compute_image(action *A,
 		int *Elt, long int i, int verbose_level)
 {

@@ -105,8 +105,8 @@ void spread_table_with_selection::init(spread_classify *T,
 
 
 	spread_table_with_selection::T = T;
-	F = T->Mtx->GFq;
-	q = T->q;
+	F = T->PA->F;
+	q = F->q;
 
 	spread_size = T->spread_size;
 	size_of_packing = q * q + q + 1;
@@ -137,14 +137,11 @@ void spread_table_with_selection::init(spread_classify *T,
 	Spread_tables = NEW_OBJECT(spread_tables);
 
 
-	//algebra_global_with_action Algebra;
 
 	if (f_v) {
 		cout << "spread_table_with_selection::init before predict_spread_table_length" << endl;
 	}
-	predict_spread_table_length(
-		T->A, T->LG->Strong_gens,
-		verbose_level - 1);
+	predict_spread_table_length(T->A, T->A->Strong_gens, verbose_level - 1);
 	if (f_v) {
 		cout << "spread_table_with_selection::init after predict_spread_table_length" << endl;
 		cout << "spread_table_with_selection::init total_nb_of_spreads = " << total_nb_of_spreads << endl;
@@ -156,7 +153,7 @@ void spread_table_with_selection::init(spread_classify *T,
 		cout << "spread_table_with_selection::init before Spread_tables->init" << endl;
 	}
 
-	Spread_tables->init(F,
+	Spread_tables->init(T->PA->P,
 				FALSE /* f_load */,
 				nb_iso_types_of_spreads,
 				path_to_spread_tables,
@@ -172,7 +169,6 @@ void spread_table_with_selection::init(spread_classify *T,
 				<< " labeled spreads" << endl;
 	}
 
-	//FREE_int(select_spread);
 	sorted_packing = NEW_int(size_of_packing);
 	dual_packing = NEW_int(size_of_packing);
 
@@ -225,6 +221,13 @@ void spread_table_with_selection::compute_spread_table(int verbose_level)
 	}
 
 
+	if (f_v) {
+		cout << "spread_table_with_selection::compute_spread_table before create_action_on_spreads" << endl;
+	}
+	create_action_on_spreads(verbose_level);
+	if (f_v) {
+		cout << "spread_table_with_selection::compute_spread_table after create_action_on_spreads" << endl;
+	}
 
 	if (f_v) {
 		cout << "spread_table_with_selection::compute_spread_table done" << endl;
@@ -256,7 +259,7 @@ void spread_table_with_selection::compute_spread_table_from_scratch(int verbose_
 
 
 	make_spread_table(
-			T->A, T->A2, T->LG->Strong_gens,
+			T->A, T->A2, T->A->Strong_gens,
 			Sets, isomorphism_type_of_spread,
 			verbose_level);
 
@@ -291,7 +294,7 @@ void spread_table_with_selection::compute_spread_table_from_scratch(int verbose_
 	}
 
 
-	Spread_tables->init(F, FALSE, nb_iso_types_of_spreads,
+	Spread_tables->init(T->PA->P, FALSE, nb_iso_types_of_spreads,
 			path_to_spread_tables,
 			verbose_level);
 
@@ -367,6 +370,34 @@ void spread_table_with_selection::create_action_on_spreads(int verbose_level)
 		cout << "spread_table_with_selection::create_action_on_spreads "
 				"creating action A_on_spreads done" << endl;
 	}
+}
+
+int spread_table_with_selection::find_spread(long int *set, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int idx;
+
+	if (f_v) {
+		cout << "spread_table_with_selection::find_spread" << endl;
+	}
+	if (A_on_spreads == NULL) {
+		cout << "spread_table_with_selection::find_spread A_on_spreads == NULL" << endl;
+		exit(1);
+	}
+	idx = A_on_spreads->G.on_sets->find_set(set, verbose_level);
+	return idx;
+}
+
+long int *spread_table_with_selection::get_spread(int spread_idx)
+{
+	return Spread_tables->get_spread(spread_idx);
+}
+
+void spread_table_with_selection::find_spreads_containing_two_lines(std::vector<int> &v,
+		int line1, int line2, int verbose_level)
+{
+	Spread_tables->find_spreads_containing_two_lines(v,
+			line1, line2, verbose_level);
 }
 
 int spread_table_with_selection::test_if_packing_is_self_dual(int *packing, int verbose_level)

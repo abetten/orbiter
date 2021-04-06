@@ -65,6 +65,9 @@ int packing_types_compare_function(void *a, void *b, void *data);
 
 class packing_classify {
 public:
+
+	projective_space_with_action *PA;
+
 	spread_classify *T;
 	finite_field *F;
 	int spread_size;
@@ -104,17 +107,18 @@ public:
 	void null();
 	void freeself();
 	void spread_table_init(
-			linear_group *LG,
+			projective_space_with_action *PA,
 			int dimension_of_spread_elements,
 			int f_select_spread, std::string &select_spread_text,
 			std::string &path_to_spread_tables,
 			int verbose_level);
 	void init(
+			projective_space_with_action *PA,
 			spread_table_with_selection *Spread_table_with_selection,
 			int f_lexorder_test,
 			int verbose_level);
 	void init2(poset_classification_control *Control, int verbose_level);
-	void init_P3_and_P5(int verbose_level);
+	void init_P3_and_P5_and_Gr(int verbose_level);
 	void compute_adjacency_matrix(int verbose_level);
 	void prepare_generator(
 			poset_classification_control *Control,
@@ -138,6 +142,7 @@ public:
 		long int *orbit1, long int *orbit2, int verbose_level);
 	// tests if every spread from orbit a
 	// is line-disjoint from every spread from orbit b
+	int find_spread(long int *set, int verbose_level);
 
 	// packing2.cpp
 	void compute_klein_invariants(
@@ -316,6 +321,7 @@ public:
 	packing_long_orbits();
 	~packing_long_orbits();
 	void init(packing_was_fixpoints *PWF,
+			packing_long_orbits_description *Descr,
 			int verbose_level);
 	void list_of_cases_from_file(int verbose_level);
 	void save_packings_by_case(std::vector<std::vector<std::vector<int> > > &Packings_by_case, int verbose_level);
@@ -349,6 +355,50 @@ int packing_long_orbit_test_function(long int *orbit1, int len1,
 
 
 // #############################################################################
+// packing_was_activity_description.cpp
+// #############################################################################
+
+//! description of an activity involving a packing_was
+
+class packing_was_activity_description {
+public:
+
+	int f_report;
+
+
+
+
+	packing_was_activity_description();
+	~packing_was_activity_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+};
+
+
+// #############################################################################
+// packing_was_activity.cpp
+// #############################################################################
+
+//! an activity involving a packing_was
+
+class packing_was_activity {
+public:
+
+	packing_was_activity_description *Descr;
+	packing_was *PW;
+
+	packing_was_activity();
+	~packing_was_activity();
+	void init(packing_was_activity_description *Descr,
+			packing_was *PW,
+			int verbose_level);
+	void perform_activity(int verbose_level);
+};
+
+
+
+// #############################################################################
 // packing_was_description.cpp
 // #############################################################################
 
@@ -357,12 +407,6 @@ int packing_long_orbit_test_function(long int *orbit1, int len1,
 class packing_was_description {
 public:
 	//int f_spreads_invariant_under_H;
-
-	int f_cliques_on_fixpoint_graph;
-	int clique_size_on_fixpoint_graph;
-
-	int f_cliques_on_fixpoint_graph_control;
-	poset_classification_control *cliques_on_fixpoint_graph_control;
 
 	int f_process_long_orbits;
 	packing_long_orbits_description *Long_Orbits_Descr;
@@ -375,6 +419,7 @@ public:
 
 	int f_spread_tables_prefix;
 	std::string spread_tables_prefix;
+
 	int f_output_path;
 	std::string output_path;
 
@@ -404,10 +449,51 @@ public:
 };
 
 // #############################################################################
+// packing_was_fixpoints_activity_description.cpp
+// #############################################################################
+
+//! description of an activity after the fixed points have been selected in the construction of packings in PG(3,q) with assumed symmetry
+
+class packing_was_fixpoints_activity_description {
+public:
+	int f_report;
+
+	packing_was_fixpoints_activity_description();
+	~packing_was_fixpoints_activity_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+
+};
+
+// #############################################################################
+// packing_was_fixpoints_activity.cpp
+// #############################################################################
+
+//! an activity after the fixed points have been selected in the construction of packings in PG(3,q) with assumed symmetry
+
+class packing_was_fixpoints_activity {
+public:
+
+	packing_was_fixpoints_activity_description *Descr;
+	packing_was_fixpoints *PWF;
+
+	packing_was_fixpoints_activity();
+	~packing_was_fixpoints_activity();
+	void init(packing_was_fixpoints_activity_description *Descr,
+			packing_was_fixpoints *PWF,
+			int verbose_level);
+	void perform_activity(int verbose_level);
+
+};
+
+
+
+// #############################################################################
 // packing_was_fixpoints.cpp
 // #############################################################################
 
-//! construction of packings in PG(3,q) with assumed symmetry, picking fixpoints
+//! picking fixed points in the construction of packings in PG(3,q) with assumed symmetry
 
 class packing_was_fixpoints {
 public:
@@ -425,7 +511,9 @@ public:
 	colored_graph *fixpoint_graph;
 	poset *Poset_fixpoint_cliques;
 	poset_classification *fixpoint_clique_gen;
-	long int *Cliques; // [nb_cliques * clique_size]
+
+	int cliques_on_fixpoint_graph_size;
+	long int *Cliques; // [nb_cliques * cliques_on_fixpoint_graph_size]
 	int nb_cliques;
 	std::string fname_fixp_graph_cliques_orbiter;
 	orbit_transversal *Fixp_cliques;
@@ -438,12 +526,17 @@ public:
 	void init(packing_was *PW, int verbose_level);
 	void create_graph_on_fixpoints(int verbose_level);
 	void action_on_fixpoints(int verbose_level);
-	void compute_cliques_on_fixpoint_graph(int verbose_level);
+	void compute_cliques_on_fixpoint_graph(
+			int clique_size,
+			poset_classification_control *Control,
+			int verbose_level);
 	// initializes the orbit transversal Fixp_cliques
 	// initializes Cliques[nb_cliques * clique_size]
 	// (either by computing it or reading it from file)
 	void compute_cliques_on_fixpoint_graph_from_scratch(
-			int clique_size, int verbose_level);
+			int clique_size,
+			poset_classification_control *Control,
+			int verbose_level);
 	// compute cliques on fixpoint graph using A_on_fixpoints
 	// orbit representatives will be stored in Cliques[nb_cliques * clique_size]
 	void process_long_orbits(int verbose_level);
@@ -455,8 +548,8 @@ public:
 			std::string &solution_path,
 			std::vector<std::vector<int> > &Packings,
 			int verbose_level);
-	void report(packing_long_orbits *L, int verbose_level);
-	void report2(std::ostream &ost, packing_long_orbits *L, int verbose_level);
+	void report(/*packing_long_orbits *L,*/ int verbose_level);
+	void report2(std::ostream &ost, /*packing_long_orbits *L,*/ int verbose_level);
 	long int fixpoint_to_reduced_spread(int a, int verbose_level);
 
 };
@@ -548,7 +641,7 @@ public:
 	void freeself();
 	void init(packing_was_description *Descr,
 			packing_classify *P, int verbose_level);
-	void init_spreads(int verbose_level);
+	void compute_H_orbits_and_reduce(int verbose_level);
 	void init_regular_packing(int verbose_level);
 	void init_N(int verbose_level);
 	void init_H(int verbose_level);
@@ -584,7 +677,15 @@ public:
 	void report2(std::ostream &ost, int verbose_level);
 	void report(int verbose_level);
 	void report_line_orbits_under_H(std::ostream &ost, int verbose_level);
-	void report_reduced_spread_orbits(std::ostream &ost, int verbose_level);
+	void get_spreads_in_reduced_orbits_by_type(int type_idx,
+			int &nb_orbits, int &orbit_length,
+			long int *&orbit_idx,
+			long int *&spreads_in_reduced_orbits_by_type,
+			int f_original_spread_numbers,
+			int verbose_level);
+	void report_reduced_spread_orbits(std::ostream &ost, int f_original_spread_numbers, int verbose_level);
+	void report_good_spreads(std::ostream &ost);
+
 };
 
 // gloabls:
@@ -716,10 +817,10 @@ public:
 class spread_classify {
 public:
 
-	linear_group *LG;
+	projective_space_with_action *PA;
+
 	matrix_group *Mtx;
 
-	//poset_classification_control *Control;
 
 	int order;
 	int spread_size; // = order + 1
@@ -736,7 +837,6 @@ public:
 	int starter_size;
 
 
-	// allocated in init();
 	action *A;
 		// P Gamma L(n,q)
 	action *A2;
@@ -761,7 +861,6 @@ public:
 	int *tmp_M3;
 	int *tmp_M4;
 
-	//poset_classification_control *Control;
 	poset *Poset;
 	poset_classification *gen;
 
@@ -787,8 +886,8 @@ public:
 	void null();
 	void freeself();
 	void init(
-			linear_group *LG,
-			int k, //poset_classification_control *Control,
+			projective_space_with_action *PA,
+			int k,
 			int f_recoordinatize,
 			int verbose_level);
 	void init2(poset_classification_control *Control, int verbose_level);
@@ -1030,6 +1129,74 @@ public:
 
 
 // #############################################################################
+// spread_table_activity_description.cpp
+// #############################################################################
+
+//! description of an activity for a spread table
+
+
+class spread_table_activity_description {
+public:
+
+
+	int f_find_spread;
+	std::string find_spread_text;
+
+	int f_print_spreads;
+	std::string print_spreads_idx_text;
+
+	int f_export_spreads_to_csv;
+	std::string export_spreads_to_csv_fname;
+	std::string export_spreads_to_csv_idx_text;
+
+
+	int f_find_spreads_containing_two_lines;
+	int find_spreads_containing_two_lines_line1;
+	int find_spreads_containing_two_lines_line2;
+
+	int f_find_spreads_containing_one_line;
+	int find_spreads_containing_one_line_line_idx;
+
+
+
+	spread_table_activity_description();
+	~spread_table_activity_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+
+};
+
+
+// #############################################################################
+// spread_table_activity.cpp
+// #############################################################################
+
+//! an activity for a spread table
+
+
+class spread_table_activity {
+public:
+
+	spread_table_activity_description *Descr;
+	packing_classify *P;
+
+
+
+	spread_table_activity();
+	~spread_table_activity();
+	void init(spread_table_activity_description *Descr,
+			packing_classify *P,
+			int verbose_level);
+	void perform_activity(int verbose_level);
+	void export_spreads_to_csv(std::string &fname, int *spread_idx, int nb, int verbose_level);
+	void report_spreads(int *spread_idx, int nb, int verbose_level);
+	void report_spread2(std::ostream &ost, int spread_idx, int verbose_level);
+
+};
+
+
+// #############################################################################
 // spread_table_with_selection.cpp
 // #############################################################################
 
@@ -1083,6 +1250,10 @@ public:
 	void compute_spread_table(int verbose_level);
 	void compute_spread_table_from_scratch(int verbose_level);
 	void create_action_on_spreads(int verbose_level);
+	int find_spread(long int *set, int verbose_level);
+	long int *get_spread(int spread_idx);
+	void find_spreads_containing_two_lines(std::vector<int> &v,
+			int line1, int line2, int verbose_level);
 	int test_if_packing_is_self_dual(int *packing, int verbose_level);
 	void predict_spread_table_length(
 		action *A, strong_generators *Strong_gens,

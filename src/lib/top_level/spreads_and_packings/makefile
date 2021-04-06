@@ -12,7 +12,11 @@ MODULES = \
 	packing_invariants.o \
 	packing_long_orbits_description.o \
 	packing_long_orbits.o \
+	packing_was_activity_description.o \
+	packing_was_activity.o \
 	packing_was_description.o \
+	packing_was_fixpoints_activity_description.o \
+	packing_was_fixpoints_activity.o \
 	packing_was_fixpoints.o \
 	packing_was.o \
 	recoordinatize.o \
@@ -22,6 +26,8 @@ MODULES = \
 	spread_create_description.o \
 	spread_create.o \
 	spread_lifting.o \
+	spread_table_activity_description.o \
+	spread_table_activity.o \
 	spread_table_with_selection.o \
 	translation_plane_via_andre_model.o
 

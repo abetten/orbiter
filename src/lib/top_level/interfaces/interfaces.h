@@ -26,21 +26,6 @@ namespace top_level {
 
 class interface_algebra {
 
-#if 0
-	int f_linear_group;
-	linear_group_description *Linear_group_description;
-	finite_field *F;
-	linear_group *LG;
-
-	int f_group_theoretic_activity;
-	group_theoretic_activity_description *Group_theoretic_activity_description;
-#endif
-
-#if 0
-	int f_finite_field_activity;
-	finite_field_activity_description *Finite_field_activity_description;
-#endif
-
 	int f_poset_classification_control;
 	poset_classification_control *Control;
 
@@ -207,9 +192,6 @@ class interface_combinatorics {
 	int f_diophant_activity;
 	diophant_activity_description *Diophant_activity_description;
 
-	//int f_save;
-	//std::string fname_prefix;
-
 	int f_process_combinatorial_objects;
 	projective_space_job_description *Job_description;
 
@@ -220,23 +202,11 @@ class interface_combinatorics {
 	int random_permutation_degree;
 	std::string random_permutation_fname_csv;
 
-#if 0
-	int f_create_graph;
-	colored_graph *CG;
-	std::string fname_graph;
-	create_graph_description *Create_graph_description;
-#endif
-
 	int f_read_poset_file;
 	std::string read_poset_file_fname;
 
 	int f_grouping;
 	double x_stretch;
-
-#if 0
-	int f_graph_theoretic_activity_description;
-	graph_theoretic_activity_description *Graph_theoretic_activity_description;
-#endif
 
 	int f_list_parameters_of_SRG;
 	int v_max;
@@ -299,12 +269,6 @@ public:
 	void read_arguments(int argc,
 			std::string *argv, int &i, int verbose_level);
 	void worker(int verbose_level);
-#if 0
-	void do_graph_theoretic_activity(
-			graph_theoretic_activity_description *Descr, int verbose_level);
-	void do_create_graph(
-			create_graph_description *Create_graph_description, int verbose_level);
-#endif
 	void do_read_poset_file(std::string &fname,
 			int f_grouping, double x_stretch, int verbose_level);
 	void do_create_combinatorial_object(int verbose_level);
@@ -583,6 +547,27 @@ class interface_symbol_table {
 	int f_graph;
 	create_graph_description *Create_graph_description;
 
+	int f_spread_table;
+	std::string spread_table_label_PA;
+	int dimension_of_spread_elements;
+	std::string spread_selection_text;
+	std::string spread_tables_prefix;
+
+	int f_packing_was;
+	std::string packing_was_label_spread_table;
+	packing_was_description * packing_was_descr;
+
+	int f_packing_was_choose_fixed_points;
+	std::string packing_with_assumed_symmetry_label;
+	int packing_with_assumed_symmetry_choose_fixed_points_clique_size;
+	poset_classification_control *packing_with_assumed_symmetry_choose_fixed_points_control;
+
+
+	int f_packing_long_orbits;
+	std::string packing_long_orbits_choose_fixed_points_label;
+	packing_long_orbits_description * Packing_long_orbits_description;
+
+
 	int f_print_symbols;
 	int f_with;
 	std::vector<std::string> with_labels;
@@ -610,6 +595,16 @@ class interface_symbol_table {
 
 	int f_classification_of_cubic_surfaces_with_double_sixes_activity;
 	classification_of_cubic_surfaces_with_double_sixes_activity_description *Classification_of_cubic_surfaces_with_double_sixes_activity_description;
+
+	int f_spread_table_activity;
+	spread_table_activity_description * Spread_table_activity_description;
+
+	int f_packing_with_symmetry_assumption_activity;
+	packing_was_activity_description *Packing_was_activity_description;
+
+	int f_packing_fixed_points_activity;
+	packing_was_fixpoints_activity_description *Packing_was_fixpoints_activity_description;
+
 
 public:
 
@@ -641,6 +636,14 @@ public:
 			int verbose_level);
 	void definition_of_graph(orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
+	void definition_of_spread_table(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void definition_of_packing_was(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void definition_of_packing_was_choose_fixed_points(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void definition_of_packing_long_orbits(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
 
 
 	void read_with(
@@ -670,6 +673,15 @@ public:
 			orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 	void do_classification_of_cubic_surfaces_with_double_sixes_activity(
+			orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void do_spread_table_activity(
+			orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void do_packing_was_activity(
+			orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void do_packing_fixed_points_activity(
 			orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 
@@ -710,8 +722,6 @@ class interface_toolkit {
 
 	int f_draw_matrix;
 	draw_bitmap_control *Draw_bitmap_control;
-	//int box_width;
-	//int bit_depth; // 8 or 24
 
 	int f_reformat;
 	std::string reformat_fname_in;
@@ -720,11 +730,6 @@ class interface_toolkit {
 
 	int f_split_by_values;
 	std::string split_by_values_fname_in;
-
-	//int f_draw_matrix_partition;
-	//int draw_matrix_partition_width;
-	//std::string draw_matrix_partition_rows;
-	//std::string draw_matrix_partition_cols;
 
 	int f_store_as_csv_file;
 	std::string store_as_csv_file_fname;

@@ -245,6 +245,76 @@ void orbiter_symbol_table_entry::init_graph(std::string &label,
 	}
 }
 
+void orbiter_symbol_table_entry::init_spread_table(std::string &label,
+		void *P, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_spread_table" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_spread_table;
+	ptr = P;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_spread_table done" << endl;
+	}
+}
+
+void orbiter_symbol_table_entry::init_packing_was(std::string &label,
+		void *P, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_packing_was" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_packing_was;
+	ptr = P;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_packing_was done" << endl;
+	}
+}
+
+
+void orbiter_symbol_table_entry::init_packing_was_choose_fixed_points(std::string &label,
+		void *P, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_packing_was_choose_fixed_points" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_packing_was_choose_fixed_points;
+	ptr = P;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_packing_was_choose_fixed_points done" << endl;
+	}
+}
+
+
+void orbiter_symbol_table_entry::init_packing_long_orbits(std::string &label,
+		void *PL, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_packing_long_orbits" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_packing_long_orbits;
+	ptr = PL;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_packing_long_orbits done" << endl;
+	}
+}
+
 void orbiter_symbol_table_entry::print()
 {
 	if (type == t_intvec) {
@@ -296,6 +366,20 @@ void orbiter_symbol_table_entry::print()
 		else if (object_type == t_graph) {
 			cout << "graph" << endl;
 		}
+		else if (object_type == t_spread_table) {
+			cout << "spread table" << endl;
+		}
+		else if (object_type == t_packing_was) {
+			cout << "packing with symmetry assumption" << endl;
+		}
+		else if (object_type == t_packing_was_choose_fixed_points) {
+			cout << "packing with symmetry assumption, choice of fixed points" << endl;
+		}
+		else if (object_type == t_packing_long_orbits) {
+			cout << "packing with symmetry assumption, choosing long orbits" << endl;
+		}
+
+
 #if 0
 		else if (object_type == t_action) {
 			action *A;

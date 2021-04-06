@@ -70,7 +70,8 @@ public:
 
 	semifield_classify_description *Descr;
 
-	linear_group *LG;
+	projective_space_with_action *PA;
+	//linear_group *LG;
 	matrix_group *Mtx;
 	poset_classification_control *Control;
 
@@ -112,7 +113,7 @@ public:
 	~semifield_classify_with_substructure();
 	void init(
 			semifield_classify_description *Descr,
-			linear_group *LG,
+			projective_space_with_action *PA,
 			poset_classification_control *Control,
 			int verbose_level);
 	void read_data(int verbose_level);
@@ -144,10 +145,12 @@ void semifield_print_function_callback(std::ostream &ost, int orbit_idx,
 class semifield_classify {
 public:
 
+	projective_space_with_action *PA;
+
 	int n;
 	int k;
 	int k2; // = k * k
-	linear_group *LG;
+	//linear_group *LG;
 	matrix_group *Mtx;
 
 	int q;
@@ -205,7 +208,7 @@ public:
 	void null();
 	void freeself();
 	void init(
-			linear_group *LG,
+			projective_space_with_action *PA,
 			int k,
 			poset_classification_control *Control,
 			std::string &level_two_prefix,

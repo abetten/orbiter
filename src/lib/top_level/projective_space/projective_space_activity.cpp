@@ -245,11 +245,28 @@ void projective_space_activity::perform_activity(int verbose_level)
 				PA->P, verbose_level);
 	}
 
+	else if (Descr->f_spread_classify) {
+		do_spread_classify(PA,
+				Descr->spread_classify_k,
+				Descr->spread_classify_Control,
+				verbose_level);
+	}
+	else if (Descr->f_classify_semifields) {
+		do_classify_semifields(
+				PA,
+				Descr->Semifield_classify_description,
+				Descr->Semifield_classify_Control,
+				verbose_level);
+
+	}
+
+
 	if (f_v) {
 		cout << "projective_space_activity::perform_activity done" << endl;
 	}
 
 }
+
 
 void projective_space_activity::map(
 		projective_space_with_action *PA,
@@ -622,7 +639,97 @@ void projective_space_activity::do_create_surface(
 }
 
 
+void projective_space_activity::do_spread_classify(
+		projective_space_with_action *PA,
+		int k,
+		poset_classification_control *Control,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "projective_space_activity::do_spread_classify" << endl;
+	}
+
+
+	spread_classify *SC;
+
+	SC = NEW_OBJECT(spread_classify);
+
+	if (f_v) {
+		cout << "projective_space_activity::do_spread_classify before SC->init" << endl;
+	}
+
+	SC->init(
+			PA,
+			k,
+			TRUE /* f_recoordinatize */,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "projective_space_activity::do_spread_classify after SC->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "projective_space_activity::do_spread_classify before SC->init2" << endl;
+	}
+	SC->init2(Control, verbose_level);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_spread_classify after SC->init2" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "projective_space_activity::do_spread_classify before SC->compute" << endl;
+	}
+
+	SC->compute(verbose_level);
+
+	if (f_v) {
+		cout << "projective_space_activity::do_spread_classify after SC->compute" << endl;
+	}
+
+
+	FREE_OBJECT(SC);
+
+	if (f_v) {
+		cout << "projective_space_activity::do_spread_classify done" << endl;
+	}
+}
+
+
+void projective_space_activity::do_classify_semifields(
+		projective_space_with_action *PA,
+		semifield_classify_description *Semifield_classify_description,
+		poset_classification_control *Control,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_activity::do_classify_semifields" << endl;
+	}
+
+
+	semifield_classify_with_substructure *S;
+
+	S = NEW_OBJECT(semifield_classify_with_substructure);
+
+	if (f_v) {
+		cout << "projective_space_activity::do_classify_semifields before S->init" << endl;
+	}
+	S->init(
+			Semifield_classify_description,
+			PA,
+			Control,
+			verbose_level);
+	if (f_v) {
+		cout << "projective_space_activity::do_classify_semifields after S->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "projective_space_activity::do_classify_semifields done" << endl;
+	}
+}
 
 
 

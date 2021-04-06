@@ -419,7 +419,11 @@ MODULES= \
 		top_level/spreads_and_packings/packing_invariants.o \
 		top_level/spreads_and_packings/packing_long_orbits_description.o \
 		top_level/spreads_and_packings/packing_long_orbits.o \
+		top_level/spreads_and_packings/packing_was_activity_description.o \
+		top_level/spreads_and_packings/packing_was_activity.o \
 		top_level/spreads_and_packings/packing_was_description.o \
+		top_level/spreads_and_packings/packing_was_fixpoints_activity_description.o \
+		top_level/spreads_and_packings/packing_was_fixpoints_activity.o \
 		top_level/spreads_and_packings/packing_was_fixpoints.o \
 		top_level/spreads_and_packings/packing_was.o \
 		top_level/spreads_and_packings/recoordinatize.o \
@@ -429,6 +433,8 @@ MODULES= \
 		top_level/spreads_and_packings/spread_create_description.o \
 		top_level/spreads_and_packings/spread_create.o \
 		top_level/spreads_and_packings/spread_lifting.o \
+		top_level/spreads_and_packings/spread_table_activity_description.o \
+		top_level/spreads_and_packings/spread_table_activity.o \
 		top_level/spreads_and_packings/spread_table_with_selection.o \
 		top_level/spreads_and_packings/translation_plane_via_andre_model.o \
 		top_level/surfaces/arc_lifting.o \
