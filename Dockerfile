@@ -1,5 +1,5 @@
 FROM gcc:10.2
-MAINTAINER Anton Betten "abetten@colostate.edu"
+MAINTAINER Anton Betten "Anton.Betten@colostate.edu"
 
 RUN apt-get update
 
