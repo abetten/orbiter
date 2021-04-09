@@ -26,8 +26,8 @@ namespace top_level {
 
 class interface_algebra {
 
-	int f_poset_classification_control;
-	poset_classification_control *Control;
+	//int f_poset_classification_control;
+	//poset_classification_control *Control;
 
 	int f_count_subprimitive;
 	int count_subprimitive_Q_max;
@@ -43,13 +43,6 @@ class interface_algebra {
 
 	int f_search_for_primitive_polynomial_in_range;
 	int p_min, p_max, deg_min, deg_max;
-
-
-	int f_Dedekind_numbers;
-	int Dedekind_n_min;
-	int Dedekind_n_max;
-	int Dedekind_q_min;
-	int Dedekind_q_max;
 
 	int f_order_of_q_mod_n;
 	int order_of_q_mod_n_q;
@@ -261,6 +254,13 @@ class interface_combinatorics {
 	int f_make_elementary_symmetric_functions;
 	int make_elementary_symmetric_functions_n;
 	int make_elementary_symmetric_functions_k_max;
+
+	int f_Dedekind_numbers;
+	int Dedekind_n_min;
+	int Dedekind_n_max;
+	int Dedekind_q_min;
+	int Dedekind_q_max;
+
 
 public:
 	interface_combinatorics();

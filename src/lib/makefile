@@ -73,6 +73,7 @@ MODULES= \
 		foundations/expression_parser/syntax_tree.o \
 		foundations/finite_fields/finite_field_activity_description.o \
 		foundations/finite_fields/finite_field_activity.o \
+		foundations/finite_fields/finite_field_applications.o \
 		foundations/finite_fields/finite_field_description.o \
 		foundations/finite_fields/finite_field_io.o \
 		foundations/finite_fields/finite_field_linear_algebra.o \

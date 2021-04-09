@@ -1047,11 +1047,15 @@ void interface_symbol_table::definition_of_packing_was_choose_fixed_points(orbit
 		cout << "interface_symbol_table::definition_of_packing_was_choose_fixed_points after PWF->init" << endl;
 	}
 
-
-	PWF->compute_cliques_on_fixpoint_graph(
-			packing_with_assumed_symmetry_choose_fixed_points_clique_size,
-			packing_with_assumed_symmetry_choose_fixed_points_control,
-			verbose_level);
+	if (packing_with_assumed_symmetry_choose_fixed_points_clique_size > 0) {
+		PWF->compute_cliques_on_fixpoint_graph(
+				packing_with_assumed_symmetry_choose_fixed_points_clique_size,
+				packing_with_assumed_symmetry_choose_fixed_points_control,
+				verbose_level);
+	}
+	else {
+		cout << "interface_symbol_table::definition_of_packing_was_choose_fixed_points clique size on fixed spreads is zero, so nothing to do" << endl;
+	}
 
 
 

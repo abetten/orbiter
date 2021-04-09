@@ -3064,6 +3064,74 @@ void combinatorics_domain::make_elementary_symmetric_functions(int n, int k_max,
 
 }
 
+void combinatorics_domain::Dedekind_numbers(int n_min, int n_max, int q_min, int q_max, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorics_domain::Dedekind_numbers" << endl;
+	}
+	{
+		char str[1000];
+		string fname;
+
+		snprintf(str, 1000, "Dedekind_%d_%d_%d_%d.csv", n_min, n_max, q_min, q_max);
+		fname.assign(str);
+
+
+		{
+			ofstream ost(fname);
+
+			if (f_v) {
+				cout << "combinatorics_domain::Dedekind_numbers writing csv file" << endl;
+			}
+			//report(ost, verbose_level);
+
+			int n, q;
+			longinteger_domain D;
+			longinteger_object Dnq;
+
+			ost << "ROW";
+			for (q = q_min; q <= q_max; q++) {
+				ost << "," << q;
+			}
+			ost << endl;
+			for (n = n_min; n <= n_max; n++) {
+				ost << n;
+				for (q = q_min; q <= q_max; q++) {
+					longinteger_object Dnk;
+
+					cout << "computing n=" << n << " q=" << q << endl;
+					D.Dedekind_number(Dnq, n, q, verbose_level);
+					ost << "," << Dnq;
+				}
+				ost << endl;
+			}
+			ost << "END" << endl;
+
+			if (f_v) {
+				cout << "combinatorics_domain::Dedekind_numbers writing csv file" << endl;
+			}
+
+
+		}
+		file_io Fio;
+
+		cout << "combinatorics_domain::Dedekind_numbers written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "combinatorics_domain::Dedekind_numbers done" << endl;
+	}
+}
+
+
+
+
 
 //##############################################################################
 // global functions, for instance for nauty_interface.cpp:

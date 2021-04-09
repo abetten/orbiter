@@ -31,9 +31,6 @@ interface_combinatorics::interface_combinatorics()
 	f_diophant_activity = FALSE;
 	Diophant_activity_description = NULL;
 
-	//f_save = FALSE;
-	//fname_prefix;
-
 	f_process_combinatorial_objects = FALSE;
 	Job_description = NULL;
 
@@ -44,24 +41,11 @@ interface_combinatorics::interface_combinatorics()
 	random_permutation_degree = 0;
 	//random_permutation_fname_csv = NULL;
 
-#if 0
-	f_create_graph = FALSE;
-	CG = NULL;
-	//char fname_graph[1000];
-
-	Create_graph_description = NULL;
-#endif
-
 	f_read_poset_file = FALSE;
 	//read_poset_file_fname;
 
 	f_grouping = FALSE;
 	x_stretch = 0.7;
-
-#if 0
-	f_graph_theoretic_activity_description = FALSE;
-	Graph_theoretic_activity_description = NULL;
-#endif
 
 	f_list_parameters_of_SRG = FALSE;
 	v_max = 0;
@@ -118,6 +102,13 @@ interface_combinatorics::interface_combinatorics()
 	f_make_elementary_symmetric_functions = FALSE;
 	make_elementary_symmetric_functions_n = 0;
 	make_elementary_symmetric_functions_k_max = 0;
+
+	f_Dedekind_numbers = FALSE;
+	Dedekind_n_min = 0;
+	Dedekind_n_max = 0;
+	Dedekind_q_min = 0;
+	Dedekind_q_max = 0;
+
 }
 
 
@@ -145,22 +136,12 @@ void interface_combinatorics::print_help(int argc,
 	else if (stringcmp(argv[i], "-random_permutation") == 0) {
 		cout << "-random_permutation <ind : degree> <string : <fname_csv>" << endl;
 	}
-#if 0
-	else if (stringcmp(argv[i], "-create_graph") == 0) {
-		cout << "-create_graph <description>" << endl;
-	}
-#endif
 	else if (stringcmp(argv[i], "-read_poset_file") == 0) {
 		cout << "-read_poset_file <string : file_name>" << endl;
 	}
 	else if (stringcmp(argv[i], "-read_poset_file_with_grouping") == 0) {
 		cout << "-read_poset_file_with_grouping <string : file_name> <double : x_stretch>" << endl;
 	}
-#if 0
-	else if (stringcmp(argv[i], "-graph_theoretic_activity") == 0) {
-		cout << "-graph_theoretic_activity <description>" << endl;
-	}
-#endif
 	else if (stringcmp(argv[i], "-list_parameters_of_SRG") == 0) {
 		cout << "-list_parameters_of_SRG <int : v_max>" << endl;
 	}
@@ -212,6 +193,9 @@ void interface_combinatorics::print_help(int argc,
 	else if (stringcmp(argv[i], "-make_elementary_symmetric_functions") == 0) {
 		cout << "-make_elementary_symmetric_functions <int : n> <int :k_max>" << endl;
 	}
+	else if (stringcmp(argv[i], "-Dedekind_numbers") == 0) {
+		cout << "-Dedekind_numbers <int : n_min> <int : n_max> <int : q_min> <int : q_max>  " << endl;
+	}
 }
 
 int interface_combinatorics::recognize_keyword(int argc,
@@ -241,22 +225,12 @@ int interface_combinatorics::recognize_keyword(int argc,
 	else if (stringcmp(argv[i], "-random_permutation") == 0) {
 		return true;
 	}
-#if 0
-	else if (stringcmp(argv[i], "-create_graph") == 0) {
-		return true;
-	}
-#endif
 	else if (stringcmp(argv[i], "-read_poset_file") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-read_poset_file_with_grouping") == 0) {
 		return true;
 	}
-#if 0
-	else if (stringcmp(argv[i], "-graph_theoretic_activity") == 0) {
-		return true;
-	}
-#endif
 	else if (stringcmp(argv[i], "-list_parameters_of_SRG") == 0) {
 		return true;
 	}
@@ -306,6 +280,9 @@ int interface_combinatorics::recognize_keyword(int argc,
 		return true;
 	}
 	else if (stringcmp(argv[i], "-make_elementary_symmetric_functions") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-Dedekind_numbers") == 0) {
 		return true;
 	}
 	return false;
@@ -370,13 +347,6 @@ void interface_combinatorics::read_arguments(int argc,
 			cout << "next argument is " << argv[i] << endl;
 		}
 	}
-#if 0
-	else if (stringcmp(argv[i], "-save") == 0) {
-		f_save = TRUE;
-		fname_prefix.assign(argv[++i]);
-		cout << "-save " << fname_prefix << endl;
-	}
-#endif
 	else if (stringcmp(argv[i], "-process_combinatorial_objects") == 0) {
 		f_process_combinatorial_objects = TRUE;
 
@@ -404,25 +374,6 @@ void interface_combinatorics::read_arguments(int argc,
 		random_permutation_fname_csv.assign(argv[++i]);
 		cout << "-random_permutation " << random_permutation_degree << endl;
 	}
-#if 0
-	else if (stringcmp(argv[i], "-create_graph") == 0) {
-		f_create_graph = TRUE;
-
-		cout << "-create_graph " << endl;
-
-		Create_graph_description = NEW_OBJECT(create_graph_description);
-		i += Create_graph_description->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-		cout << "interface_combinatorics::read_arguments finished "
-				"reading -create_graph" << endl;
-		cout << "i = " << i << endl;
-		cout << "argc = " << argc << endl;
-		if (i < argc) {
-			cout << "next argument is " << argv[i] << endl;
-		}
-	}
-#endif
 	else if (stringcmp(argv[i], "-read_poset_file") == 0) {
 		f_read_poset_file = TRUE;
 		f_grouping = FALSE;
@@ -437,25 +388,6 @@ void interface_combinatorics::read_arguments(int argc,
 		cout << "-read_poset_file_with_grouping "
 				<< read_poset_file_fname << " " << x_stretch << endl;
 	}
-#if 0
-	else if (stringcmp(argv[i], "-graph_theoretic_activity") == 0) {
-		f_graph_theoretic_activity_description = TRUE;
-
-		cout << "-graph_theoretic_activity " << endl;
-
-		Graph_theoretic_activity_description = NEW_OBJECT(graph_theoretic_activity_description);
-		i += Graph_theoretic_activity_description->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-		cout << "interface_combinatorics::read_arguments finished "
-				"reading -graph_theoretic_activity" << endl;
-		cout << "i = " << i << endl;
-		cout << "argc = " << argc << endl;
-		if (i < argc) {
-			cout << "next argument is " << argv[i] << endl;
-		}
-	}
-#endif
 	else if (stringcmp(argv[i], "-list_parameters_of_SRG") == 0) {
 		f_list_parameters_of_SRG = TRUE;
 		v_max = strtoi(argv[++i]);
@@ -617,6 +549,19 @@ void interface_combinatorics::read_arguments(int argc,
 		cout << "-make_elementary_symmetric_functions " << make_elementary_symmetric_functions_n
 				<< " " << make_elementary_symmetric_functions_k_max << endl;
 	}
+	else if (stringcmp(argv[i], "-Dedekind_numbers") == 0) {
+		f_Dedekind_numbers = TRUE;
+		Dedekind_n_min = strtoi(argv[++i]);
+		Dedekind_n_max = strtoi(argv[++i]);
+		Dedekind_q_min = strtoi(argv[++i]);
+		Dedekind_q_max = strtoi(argv[++i]);
+		cout << "-Dedekind_numbers " << Dedekind_n_min
+				<< " " << Dedekind_n_max
+				<< " " << Dedekind_q_min
+				<< " " << Dedekind_q_max
+				<< " " << endl;
+	}
+
 	if (f_v) {
 		cout << "interface_combinatorics::read_arguments done" << endl;
 	}
@@ -649,20 +594,6 @@ void interface_combinatorics::worker(int verbose_level)
 		do_random_permutation(random_permutation_degree,
 				random_permutation_fname_csv, verbose_level);
 	}
-#if 0
-	else if (f_create_graph || f_graph_theoretic_activity_description) {
-		if (f_create_graph) {
-			do_create_graph(Create_graph_description, verbose_level);
-		}
-		if (f_graph_theoretic_activity_description) {
-			if (!f_create_graph) {
-				cout << "-graph_theoretic_activity_description needs -create_graph" << endl;
-				exit(1);
-			}
-			do_graph_theoretic_activity(Graph_theoretic_activity_description, verbose_level);
-		}
-	}
-#endif
 	else if (f_read_poset_file) {
 
 		do_read_poset_file(read_poset_file_fname, f_grouping, x_stretch, verbose_level);
@@ -769,210 +700,18 @@ void interface_combinatorics::worker(int verbose_level)
 		do_make_elementary_symmetric_functions(make_elementary_symmetric_functions_n,
 				make_elementary_symmetric_functions_k_max, verbose_level);
 	}
-}
+	else if (f_Dedekind_numbers) {
 
-#if 0
-void interface_combinatorics::do_graph_theoretic_activity(
-		graph_theoretic_activity_description *Descr, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
+		combinatorics_domain Combi;
 
-	if (f_v) {
-		cout << "interface_combinatorics::do_graph_theoretic_activity" << endl;
-	}
-
-	if (Descr->f_find_cliques) {
-		cout << "before Clique_finder_control->all_cliques" << endl;
-		Descr->Clique_finder_control->all_cliques(
-				CG, fname_graph,
+		Combi.Dedekind_numbers(
+				Dedekind_n_min, Dedekind_n_max, Dedekind_q_min, Dedekind_q_max,
 				verbose_level);
-		cout << "after Clique_finder_control->all_cliques" << endl;
 
-		cout << "nb_sol = " << Descr->Clique_finder_control->nb_sol << endl;
-	}
-	if (Descr->f_export_magma) {
-
-		cout << "export_magma" << endl;
-
-		string fname_magma;
-		string fname_text;
-
-		fname_magma.assign(fname_graph);
-		//strcpy(fname_magma, fname_graph);
-
-		fname_text.assign(fname_graph);
-		//strcpy(fname_text, fname_graph);
-
-
-		replace_extension_with(fname_magma, ".magma");
-		replace_extension_with(fname_text, ".txt");
-
-		cout << "exporting to magma as " << fname_magma << endl;
-
-
-		CG->export_to_magma(fname_magma, verbose_level);
-
-		CG->export_to_text(fname_text, verbose_level);
-
-		cout << "export_magma done" << endl;
-	}
-
-	if (Descr->f_export_csv) {
-
-		cout << "export_csv" << endl;
-
-		string fname_csv;
-
-		fname_csv.assign(fname_graph);
-
-
-		replace_extension_with(fname_csv, ".csv");
-
-		cout << "exporting to csv as " << fname_csv << endl;
-
-
-		CG->export_to_csv(fname_csv, verbose_level);
-
-
-		cout << "export_csv done" << endl;
 	}
 
 
-	if (Descr->f_export_maple) {
-
-		cout << "export_maple" << endl;
-
-		string fname_maple;
-
-		fname_maple.assign(fname_graph);
-
-
-		replace_extension_with(fname_maple, ".maple");
-
-		cout << "exporting to maple as " << fname_maple << endl;
-
-
-		CG->export_to_maple(fname_maple, verbose_level);
-
-		cout << "export_maple done" << endl;
-	}
-	if (Descr->f_print) {
-		CG->print();
-	}
-	if (Descr->f_sort_by_colors) {
-		colored_graph *CG2;
-		string fname2;
-
-		fname2.assign(fname_graph);
-		//strcpy(fname2, fname_graph);
-		replace_extension_with(fname2, "_sorted.bin");
-		CG2 = CG->sort_by_color_classes(verbose_level);
-		CG2->save(fname2, verbose_level);
-		FREE_OBJECT(CG2);
-	}
-
-#if 0
-	if (Descr->f_split) {
-		cout << "splitting by file " << Descr->split_file << endl;
-		file_io Fio;
-		long int *Split;
-		string fname_out;
-		char extension[1000];
-		int m, n;
-		int a, c;
-
-		Fio.lint_matrix_read_csv(Descr->split_file, Split, m, n, verbose_level - 2);
-		cout << "We found " << m << " cases for splitting" << endl;
-		for (c = 0; c < m; c++) {
-
-			cout << "splitting case " << c << " / " << m << ":" << endl;
-			a = Split[2 * c + 0];
-
-			colored_graph *Subgraph;
-			fancy_set *color_subset;
-			fancy_set *vertex_subset;
-
-			Subgraph = CG->compute_neighborhood_subgraph(a,
-					vertex_subset, color_subset, verbose_level);
-
-
-			fname_out.assign(fname_graph);
-			snprintf(extension, 1000, "_case_%03d.bin", c);
-			replace_extension_with(fname_out, extension);
-
-
-			Subgraph->save(fname_out, verbose_level - 2);
-		}
-	}
-#endif
-
-	if (Descr->f_save) {
-		cout << "before save fname_graph=" << fname_graph << endl;
-		CG->save(fname_graph, verbose_level);
-		cout << "after save" << endl;
-	}
-
-
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_graph_theoretic_activity done" << endl;
-	}
 }
-
-void interface_combinatorics::do_create_graph(
-		create_graph_description *Descr, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_create_graph" << endl;
-	}
-
-	create_graph *Gr;
-
-	Gr = NEW_OBJECT(create_graph);
-
-	if (f_v) {
-		cout << "before Gr->init" << endl;
-	}
-	Gr->init(Descr, verbose_level);
-	if (f_v) {
-		cout << "after Gr->init" << endl;
-	}
-	if (f_v) {
-		cout << "Gr->N=" << Gr->N << endl;
-		cout << "Gr->label=" << Gr->label << endl;
-		cout << "Adj:" << endl;
-		int_matrix_print(Gr->Adj, Gr->N, Gr->N);
-	}
-
-
-
-	if (Gr->f_has_CG) {
-		CG = Gr->CG;
-		Gr->f_has_CG = FALSE;
-		Gr->CG = NULL;
-	}
-	else {
-		CG = NEW_OBJECT(colored_graph);
-		CG->init_adjacency_no_colors(Gr->N, Gr->Adj, verbose_level);
-	}
-
-	fname_graph.assign(Gr->label);
-	replace_extension_with(fname_graph, ".colored_graph");
-	//snprintf(fname_graph, 2000, "%s.colored_graph", Gr->label);
-
-	//CG->save(fname_graph, verbose_level);
-
-	//FREE_OBJECT(CG);
-
-
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_create_graph done" << endl;
-	}
-}
-#endif
 
 void interface_combinatorics::do_read_poset_file(std::string &fname,
 		int f_grouping, double x_stretch, int verbose_level)

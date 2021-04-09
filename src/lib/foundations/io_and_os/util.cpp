@@ -198,7 +198,7 @@ void char_swap(char *p, char *q, int len)
 	}
 }
 
-void print_integer_matrix(ostream &ost, 
+void print_integer_matrix(std::ostream &ost,
 	int *p, int m, int n)
 {
 	int i, j;
@@ -211,7 +211,7 @@ void print_integer_matrix(ostream &ost,
 	}
 }
 
-void print_integer_matrix_width(ostream &ost, 
+void print_integer_matrix_width(std::ostream &ost,
 	int *p, int m, int n, int dim_n, int w)
 {
 	int i, j;
@@ -227,7 +227,7 @@ void print_integer_matrix_width(ostream &ost,
 	}
 }
 
-void lint_matrix_print_width(ostream &ost,
+void lint_matrix_print_width(std::ostream &ost,
 	long int *p, int m, int n, int dim_n, int w)
 {
 	int i, j;
@@ -242,6 +242,23 @@ void lint_matrix_print_width(ostream &ost,
 		ost << endl;
 	}
 }
+
+void print_integer_matrix_in_C_source(std::ostream &ost,
+	int *p, int m, int n)
+{
+	int i, j;
+
+	ost << "{" << endl;
+	for (i = 0; i < m; i++) {
+		ost << "\t";
+		for (j = 0; j < n; j++) {
+			ost << p[i * n + j] << ", ";
+		}
+		ost << endl;
+	}
+	ost << "};" << endl;
+}
+
 
 void int_matrix_make_block_matrix_2x2(int *Mtx, 
 	int k, int *A, int *B, int *C, int *D)

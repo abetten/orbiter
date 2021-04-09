@@ -112,7 +112,7 @@ void incidence_structure::init_hjelmslev(hjelmslev *H, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
-	algebra_global Algebra;
+	//algebra_global Algebra;
 
 	if (f_v) {
 		cout << "incidence_structure::init_hjelmslev" << endl;
@@ -123,7 +123,7 @@ void incidence_structure::init_hjelmslev(hjelmslev *H, int verbose_level)
 	f_colsums_constant = TRUE;
 	//max_r = min_r = r = O->alpha;
 	//max_k = min_k = k = O->q + 1;
-	nb_rows = Algebra.nb_PHG_elements(H->k, *H->R);
+	nb_rows = H->R->nb_PHG_elements(H->k);
 	nb_cols = H->number_of_submodules();
 	if (f_v) {
 		cout << "nb_rows=" << nb_rows << endl;
@@ -145,7 +145,7 @@ void incidence_structure::init_hjelmslev(hjelmslev *H, int verbose_level)
 	for (i = 0; i < nb_rows; i++) {
 		for (j = 0; j < nb_cols; j++) {
 			cout << "i=" << i << " j=" << j << endl;
-			Algebra.PHG_element_unrank(*H->R, Mtx, 1, n, i);
+			H->R->PHG_element_unrank(Mtx, 1, n, i);
 			H->unrank_lint(Mtx + n, j, 0);
 			print_integer_matrix_width(cout, Mtx, k + 1, n, n, 1);
 			mtx_rk = H->R->Gauss_int(

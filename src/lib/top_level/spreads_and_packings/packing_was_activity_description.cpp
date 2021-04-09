@@ -22,6 +22,8 @@ packing_was_activity_description::packing_was_activity_description()
 {
 	f_report = FALSE;
 
+	f_export_reduced_spread_orbits = FALSE;
+	//std::string export_reduced_spread_orbits_fname_base;
 }
 
 packing_was_activity_description::~packing_was_activity_description()
@@ -44,6 +46,11 @@ int packing_was_activity_description::read_arguments(
 		if (stringcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			cout << "-report" << endl;
+		}
+		else if (stringcmp(argv[i], "-export_reduced_spread_orbits") == 0) {
+			f_export_reduced_spread_orbits = TRUE;
+			export_reduced_spread_orbits_fname_base.assign(argv[++i]);
+			cout << "-export_reduced_spread_orbits " << export_reduced_spread_orbits_fname_base << endl;
 		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {

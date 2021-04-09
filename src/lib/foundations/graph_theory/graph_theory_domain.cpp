@@ -401,9 +401,15 @@ void graph_theory_domain::load_colored_graph(std::string &fname,
 	int f_v = (verbose_level >= 1);
 	long int L;
 	int i, j, a, b;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "graph_theory_domain::load_colored_graph" << endl;
+	}
+
+	if (Fio.file_size(fname) <= 0) {
+		cout << "graph_theory_domain::load_colored_graph the file " << fname << " does not exist or is empty" << endl;
+		exit(1);
 	}
 
 	{
@@ -486,7 +492,7 @@ void graph_theory_domain::load_colored_graph(std::string &fname,
 		else {
 
 			if (f_v) {
-				cout << "graph_theory_domain::load_colored_graph detected old file format" << endl;
+				cout << "graph_theory_domain::load_colored_graph detected old file format in file " << fname << endl;
 			}
 			// old file format is still supported:
 

@@ -28,7 +28,7 @@ latex_interface::~latex_interface()
 
 }
 
-void latex_interface::head_easy(ostream& ost)
+void latex_interface::head_easy(std::ostream& ost)
 {
 	head(ost,
 		FALSE /* f_book */,
@@ -44,7 +44,7 @@ void latex_interface::head_easy(ostream& ost)
 }
 
 void latex_interface::head_easy_with_extras_in_the_praeamble(
-		ostream& ost, const char *extras)
+		std::ostream& ost, const char *extras)
 {
 	head(ost,
 		FALSE /* f_book */,
@@ -59,7 +59,7 @@ void latex_interface::head_easy_with_extras_in_the_praeamble(
 
 }
 
-void latex_interface::head_easy_sideways(ostream& ost)
+void latex_interface::head_easy_sideways(std::ostream& ost)
 {
 	head(ost, FALSE /* f_book */,
 		FALSE /* f_title */,
@@ -73,7 +73,7 @@ void latex_interface::head_easy_sideways(ostream& ost)
 
 }
 
-void latex_interface::head(ostream& ost,
+void latex_interface::head(std::ostream& ost,
 	int f_book, int f_title,
 	const char *title, const char *author,
 	int f_toc, int f_landscape, int f_12pt,
@@ -512,7 +512,7 @@ void latex_interface::head(ostream& ost,
 }
 
 
-void latex_interface::foot(ostream& ost)
+void latex_interface::foot(std::ostream& ost)
 {
 	ost << endl;
 	ost << endl;
@@ -547,7 +547,7 @@ void latex_interface::foot(ostream& ost)
 // two functions from DISCRETA1:
 // adapted to use ostream instead of FILE pointer
 
-void latex_interface::incma_latex_picture(ostream &fp,
+void latex_interface::incma_latex_picture(std::ostream &fp,
 	int width, int width_10,
 	int f_outline_thin, const char *unit_length,
 	const char *thick_lines,
@@ -702,7 +702,7 @@ static const char *incma_latex_unit_length[100];
 
 
 
-void latex_interface::incma_latex(ostream &fp,
+void latex_interface::incma_latex(std::ostream &fp,
 	int v, int b,
 	int V, int B, int *Vi, int *Bj,
 	int *R, int *X, int dim_X)
@@ -744,7 +744,7 @@ void latex_interface::incma_latex_override_unit_length_drop()
 	incma_latex_unit_length_nb--;
 }
 
-void latex_interface::print_01_matrix_tex(ostream &ost,
+void latex_interface::print_01_matrix_tex(std::ostream &ost,
 	int *p, int m, int n)
 {
 	int i, j;
@@ -758,7 +758,7 @@ void latex_interface::print_01_matrix_tex(ostream &ost,
 		}
 }
 
-void latex_interface::print_integer_matrix_tex(ostream &ost,
+void latex_interface::print_integer_matrix_tex(std::ostream &ost,
 	int *p, int m, int n)
 {
 	int i, j;
@@ -776,7 +776,7 @@ void latex_interface::print_integer_matrix_tex(ostream &ost,
 	ost << "\\end{array}" << endl;
 }
 
-void latex_interface::print_lint_matrix_tex(ostream &ost,
+void latex_interface::print_lint_matrix_tex(std::ostream &ost,
 	long int *p, int m, int n)
 {
 	int i, j;
@@ -794,7 +794,25 @@ void latex_interface::print_lint_matrix_tex(ostream &ost,
 	ost << "\\end{array}" << endl;
 }
 
-void latex_interface::print_integer_matrix_with_labels(ostream &ost,
+void latex_interface::print_longinteger_matrix_tex(std::ostream &ost,
+	longinteger_object *p, int m, int n)
+{
+	int i, j;
+
+	ost << "\\begin{array}{*{" << n << "}r}" << endl;
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			ost << p[i * n + j];
+			if (j < n - 1) {
+				ost << "  & ";
+				}
+			}
+		ost << "\\\\" << endl;
+		}
+	ost << "\\end{array}" << endl;
+}
+
+void latex_interface::print_integer_matrix_with_labels(std::ostream &ost,
 	int *p, int m, int n, int *row_labels, int *col_labels,
 	int f_tex)
 {
@@ -841,7 +859,7 @@ void latex_interface::print_integer_matrix_with_labels(ostream &ost,
 		}
 }
 
-void latex_interface::print_lint_matrix_with_labels(ostream &ost,
+void latex_interface::print_lint_matrix_with_labels(std::ostream &ost,
 	long int *p, int m, int n, long int *row_labels, long int *col_labels,
 	int f_tex)
 {
@@ -888,7 +906,7 @@ void latex_interface::print_lint_matrix_with_labels(ostream &ost,
 		}
 }
 
-void latex_interface::print_integer_matrix_with_standard_labels(ostream &ost,
+void latex_interface::print_integer_matrix_with_standard_labels(std::ostream &ost,
 	int *p, int m, int n, int f_tex)
 {
 	print_integer_matrix_with_standard_labels_and_offset(ost,
@@ -896,7 +914,7 @@ void latex_interface::print_integer_matrix_with_standard_labels(ostream &ost,
 
 }
 
-void latex_interface::print_lint_matrix_with_standard_labels(ostream &ost,
+void latex_interface::print_lint_matrix_with_standard_labels(std::ostream &ost,
 	long int *p, int m, int n, int f_tex)
 {
 	print_lint_matrix_with_standard_labels_and_offset(ost,
@@ -904,7 +922,7 @@ void latex_interface::print_lint_matrix_with_standard_labels(ostream &ost,
 
 }
 
-void latex_interface::print_integer_matrix_with_standard_labels_and_offset(ostream &ost,
+void latex_interface::print_integer_matrix_with_standard_labels_and_offset(std::ostream &ost,
 	int *p, int m, int n, int m_offset, int n_offset, int f_tex)
 {
 	if (f_tex) {
@@ -917,7 +935,7 @@ void latex_interface::print_integer_matrix_with_standard_labels_and_offset(ostre
 		}
 }
 
-void latex_interface::print_lint_matrix_with_standard_labels_and_offset(ostream &ost,
+void latex_interface::print_lint_matrix_with_standard_labels_and_offset(std::ostream &ost,
 	long int *p, int m, int n, int m_offset, int n_offset, int f_tex)
 {
 	if (f_tex) {
@@ -931,7 +949,7 @@ void latex_interface::print_lint_matrix_with_standard_labels_and_offset(ostream 
 }
 
 void latex_interface::print_integer_matrix_with_standard_labels_and_offset_text(
-	ostream &ost, int *p, int m, int n, int m_offset, int n_offset)
+		std::ostream &ost, int *p, int m, int n, int m_offset, int n_offset)
 {
 	int i, j, w;
 
@@ -954,7 +972,7 @@ void latex_interface::print_integer_matrix_with_standard_labels_and_offset_text(
 }
 
 void latex_interface::print_lint_matrix_with_standard_labels_and_offset_text(
-	ostream &ost, long int *p, int m, int n, int m_offset, int n_offset)
+		std::ostream &ost, long int *p, int m, int n, int m_offset, int n_offset)
 {
 	int i, j, w;
 
@@ -977,7 +995,7 @@ void latex_interface::print_lint_matrix_with_standard_labels_and_offset_text(
 }
 
 void latex_interface::print_integer_matrix_with_standard_labels_and_offset_tex(
-	ostream &ost, int *p, int m, int n,
+		std::ostream &ost, int *p, int m, int n,
 	int m_offset, int n_offset)
 {
 	int i, j;
@@ -1001,7 +1019,7 @@ void latex_interface::print_integer_matrix_with_standard_labels_and_offset_tex(
 }
 
 void latex_interface::print_lint_matrix_with_standard_labels_and_offset_tex(
-	ostream &ost, long int *p, int m, int n,
+		std::ostream &ost, long int *p, int m, int n,
 	int m_offset, int n_offset)
 {
 	int i, j;
@@ -1024,7 +1042,7 @@ void latex_interface::print_lint_matrix_with_standard_labels_and_offset_tex(
 	ost << "\\end{array}" << endl;
 }
 
-void latex_interface::print_integer_matrix_tex_block_by_block(ostream &ost,
+void latex_interface::print_integer_matrix_tex_block_by_block(std::ostream &ost,
 	int *p, int m, int n, int block_width)
 {
 	int i, j, I, J, nb_row_blocks, nb_col_blocks, v, w;
@@ -1082,7 +1100,7 @@ void latex_interface::print_integer_matrix_tex_block_by_block(ostream &ost,
 	FREE_int(M);
 }
 
-void latex_interface::print_big_integer_matrix_tex(ostream &ost,
+void latex_interface::print_big_integer_matrix_tex(std::ostream &ost,
 	int *p, int m, int n)
 {
 	int i, j;
@@ -1095,7 +1113,7 @@ void latex_interface::print_big_integer_matrix_tex(ostream &ost,
 		}
 }
 
-void latex_interface::int_vec_print_as_matrix(ostream &ost,
+void latex_interface::int_vec_print_as_matrix(std::ostream &ost,
 	int *v, int len, int width, int f_tex)
 {
 	int *w;
@@ -1113,7 +1131,7 @@ void latex_interface::int_vec_print_as_matrix(ostream &ost,
 	FREE_int(w);
 }
 
-void latex_interface::lint_vec_print_as_matrix(ostream &ost,
+void latex_interface::lint_vec_print_as_matrix(std::ostream &ost,
 	long int *v, int len, int width, int f_tex)
 {
 	long int *w;
@@ -1326,7 +1344,7 @@ void latex_interface::lint_matrix_print_with_labels_and_partition(std::ostream &
 		}
 }
 
-void latex_interface::int_matrix_print_tex(ostream &ost, int *p, int m, int n)
+void latex_interface::int_matrix_print_tex(std::ostream &ost, int *p, int m, int n)
 {
 	int i, j;
 
@@ -1343,7 +1361,7 @@ void latex_interface::int_matrix_print_tex(ostream &ost, int *p, int m, int n)
 	ost << "\\end{array}" << endl;
 }
 
-void latex_interface::lint_matrix_print_tex(ostream &ost, long int *p, int m, int n)
+void latex_interface::lint_matrix_print_tex(std::ostream &ost, long int *p, int m, int n)
 {
 	int i, j;
 
@@ -1380,7 +1398,7 @@ void latex_interface::print_cycle_tex_with_special_point_labels(
 	ost << ")";
 }
 
-void latex_interface::int_set_print_tex(ostream &ost, int *v, int len)
+void latex_interface::int_set_print_tex(std::ostream &ost, int *v, int len)
 {
 	int i;
 
@@ -1435,7 +1453,7 @@ void latex_interface::print_type_vector_tex(std::ostream &ost, int *v, int len)
 	}
 }
 
-void latex_interface::int_set_print_masked_tex(ostream &ost,
+void latex_interface::int_set_print_masked_tex(std::ostream &ost,
 	int *v, int len,
 	const char *mask_begin,
 	const char *mask_end)
@@ -1452,7 +1470,7 @@ void latex_interface::int_set_print_masked_tex(ostream &ost,
 }
 
 
-void latex_interface::lint_set_print_masked_tex(ostream &ost,
+void latex_interface::lint_set_print_masked_tex(std::ostream &ost,
 	long int *v, int len,
 	const char *mask_begin,
 	const char *mask_end)
@@ -1469,7 +1487,7 @@ void latex_interface::lint_set_print_masked_tex(ostream &ost,
 }
 
 
-void latex_interface::int_set_print_tex_for_inline_text(ostream &ost,
+void latex_interface::int_set_print_tex_for_inline_text(std::ostream &ost,
 	int *v, int len)
 {
 	int i;
@@ -1483,7 +1501,7 @@ void latex_interface::int_set_print_tex_for_inline_text(ostream &ost,
 	ost << " \\}";
 }
 
-void latex_interface::lint_set_print_tex_for_inline_text(ostream &ost,
+void latex_interface::lint_set_print_tex_for_inline_text(std::ostream &ost,
 	long int *v, int len)
 {
 	int i;

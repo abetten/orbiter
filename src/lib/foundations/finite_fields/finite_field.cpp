@@ -139,9 +139,12 @@ void finite_field::init(finite_field_description *Descr, int verbose_level)
 		}
 		init_override_polynomial(Descr->q,
 				Descr->override_polynomial, verbose_level);
+
+
 	}
 	else {
 		finite_field_init(Descr->q, verbose_level);
+
 	}
 	if (f_v) {
 		cout << "finite_field::init done" << endl;
@@ -186,6 +189,14 @@ void finite_field::finite_field_init(int q, int verbose_level)
 			cout << "finite_field::init q=" << q << " after init_override_polynomial" << endl;
 		}
 	}
+
+	char str[1000];
+
+	sprintf(str, "GF_%d", q);
+	label.assign(str);
+	sprintf(str, "{\\mathbb F}_{%d}", q);
+	label_tex.assign(str);
+
 	if (f_v) {
 		cout << "finite_field::init done" << endl;
 	}
@@ -279,10 +290,25 @@ void finite_field::init_override_polynomial(int q,
 			cout << endl;
 		}
 	}
+
 	
 	l = my_poly.length();
 	polynomial = NEW_char(l + 1);
 	strcpy(polynomial, my_poly.c_str());
+
+
+	char str[1000];
+
+	sprintf(str, "GF_%d", q);
+	label.assign(str);
+	label.append("_poly");
+	label.append(override_poly);
+
+	sprintf(str, "{\\mathbb F}_{%d,", q);
+	label_tex.assign(str);
+	label_tex.append(override_poly);
+	label_tex.append("}");
+
 	
 	finite_field::q = q;
 	log10_of_q = NT.int_log10(q);

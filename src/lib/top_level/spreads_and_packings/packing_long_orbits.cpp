@@ -160,11 +160,13 @@ void packing_long_orbits::list_of_cases_from_file(int verbose_level)
 					<< idx << " / " << m << " is case " << fixpoints_clique_case_number << ":" << endl;
 
 			std::vector<std::vector<int> > Packings;
+			std::vector<std::vector<int> > Packings_classified;
 
 			if (f_v) {
 				cout << "packing_long_orbits::list_of_cases_from_file before process_single_case, idx = " << idx << endl;
 			}
 			process_single_case(
+					Packings_classified,
 					Packings,
 					verbose_level);
 			if (f_v) {
@@ -285,6 +287,7 @@ void packing_long_orbits::do_single_case(int verbose_level)
 }
 
 void packing_long_orbits::process_single_case(
+		std::vector<std::vector<int> > &Packings_classified,
 		std::vector<std::vector<int> > &Packings,
 		int verbose_level)
 {
@@ -317,6 +320,7 @@ void packing_long_orbits::process_single_case(
 
 
 	create_graph_on_remaining_long_orbits(
+			Packings_classified,
 			Packings,
 			verbose_level - 2);
 	if (f_v) {
@@ -439,6 +443,7 @@ void packing_long_orbits::filter_orbits(int verbose_level)
 }
 
 void packing_long_orbits::create_graph_on_remaining_long_orbits(
+		std::vector<std::vector<int> > &Packings_classified,
 		std::vector<std::vector<int> > &Packings,
 		int verbose_level)
 {
@@ -667,9 +672,38 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 				}
 			}
 
-			Packings.push_back(Packing);
+			Packings_classified.push_back(Packing);
 		}
 
+		for (i = 0; i < Orbits->nb_orbits; i++) {
+			int h;
+			int len;
+
+			len = Orbits->orbit_len[i];
+			for (h= 0; h < len; h++) {
+				idx = Orbits->orbit[Orbits->orbit_first[i] + h];
+
+				vector<int> Packing;
+				for (j = 0; j < PWF->PW->P->size_of_packing; j++) {
+					a = Packings_table[idx * PWF->PW->P->size_of_packing + j];
+					Packing.push_back(a);
+				}
+
+				for (j = 0; j < PWF->PW->P->size_of_packing; j++) {
+					a = Packing[j];
+					b = PWF->PW->Spread_tables_reduced->spread_iso_type[a];
+					iso_type[i * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads + b]++;
+				}
+				for (j = 0; j < PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads; j++) {
+					if (iso_type[i * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads + j] == PWF->PW->P->size_of_packing) {
+						nb_uniform++;
+						break;
+					}
+				}
+
+				Packings.push_back(Packing);
+			}
+		}
 
 
 

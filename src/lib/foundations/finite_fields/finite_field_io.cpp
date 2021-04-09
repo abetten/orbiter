@@ -75,8 +75,10 @@ void finite_field::print_detailed(int f_add_mult_table)
 	}
 	if (f_add_mult_table) {
 		print_add_mult_tables();
+		print_add_mult_tables_in_C(label);
 	}
 }
+
 
 void finite_field::print_add_mult_tables()
 {
@@ -89,6 +91,39 @@ void finite_field::print_add_mult_tables()
 	print_integer_matrix_width(cout, mult_table, q, q, q, log10_of_q + 1);
 	cout << endl;
 }
+
+void finite_field::print_add_mult_tables_in_C(std::string &fname_base)
+{
+
+	string fname;
+
+	fname.assign(fname_base);
+	fname.append(".cpp");
+
+	{
+		ofstream ost(fname);
+
+		ost << "//addition, multiplication, inversion and negation table:" << endl;
+		ost << "int add_table[] = ";
+		print_integer_matrix_in_C_source(ost, add_table, q, q);
+		ost << endl;
+
+
+		ost << "int mult_table[] = ";
+		print_integer_matrix_in_C_source(ost, mult_table, q, q);
+		ost << endl;
+
+		ost << "int inv_table[] = ";
+		print_integer_matrix_in_C_source(ost, inv_table, 1, q);
+		ost << endl;
+
+		ost << "int neg_table[] = ";
+		print_integer_matrix_in_C_source(ost, negate_table, 1, q);
+		ost << endl;
+	}
+
+}
+
 
 void finite_field::print_tables()
 {
@@ -753,6 +788,13 @@ void finite_field::cheat_sheet(ostream &f, int verbose_level)
 
 	if (f_v) {
 		cout << "finite_field::cheat_sheet" << endl;
+	}
+
+	int f_add_mult_table = TRUE;
+
+	if (f_add_mult_table) {
+		print_add_mult_tables();
+		print_add_mult_tables_in_C(label);
 	}
 
 	cheat_sheet_subfields(f, verbose_level);

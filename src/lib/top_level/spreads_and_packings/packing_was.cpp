@@ -1184,7 +1184,16 @@ void packing_was::report2(std::ostream &ost, int verbose_level)
 	reduced_spread_orbits_under_H->report_classified_orbit_lengths(ost);
 	ost << endl;
 
-	//report_reduced_spread_orbits(ost, verbose_level);
+
+	int f_original_spread_numbers = TRUE;
+
+	report_reduced_spread_orbits(ost, f_original_spread_numbers, verbose_level);
+
+#if 0
+	f_original_spread_numbers = FALSE;
+
+	report_reduced_spread_orbits(ost, f_original_spread_numbers, verbose_level);
+#endif
 
 	ost << "\\clearpage" << endl;
 	ost << "\\section{Reduced Spread Orbits: Spread invariant}" << endl;
@@ -1398,6 +1407,55 @@ void packing_was::get_spreads_in_reduced_orbits_by_type(int type_idx,
 }
 
 
+void packing_was::export_reduced_spread_orbits_csv(std::string &fname_base, int f_original_spread_numbers, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//ost << "\\bigskip" << endl;
+	//ost << "\\noindent" << endl;
+
+	if (f_v) {
+		cout << "packing_was::export_reduced_spread_orbits_csv" << endl;
+	}
+	//reduced_spread_orbits_under_H->report_classified_orbits_by_lengths(ost);
+	latex_interface L;
+	int type_idx;
+	string fname;
+
+
+	for (type_idx = 0; type_idx < reduced_spread_orbits_under_H->Orbits_classified->nb_sets; type_idx++) {
+
+		char str[1000];
+		file_io Fio;
+
+
+		int nb_orbits;
+		int orbit_length;
+		long int *orbit_idx;
+		long int *spreads_in_reduced_orbits_by_type;
+
+		get_spreads_in_reduced_orbits_by_type(type_idx,
+					nb_orbits, orbit_length,
+					orbit_idx,
+					spreads_in_reduced_orbits_by_type,
+					f_original_spread_numbers,
+					verbose_level);
+
+
+		sprintf(str, "_of_length_%d", orbit_length);
+
+		fname.assign(fname_base);
+		fname.append("_reduced_spead_orbits");
+		fname.append(str);
+		fname.append(".csv");
+
+
+		Fio.lint_matrix_write_csv(fname, spreads_in_reduced_orbits_by_type, nb_orbits, orbit_length);
+
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+	}
+
+}
 
 void packing_was::report_reduced_spread_orbits(std::ostream &ost, int f_original_spread_numbers, int verbose_level)
 {

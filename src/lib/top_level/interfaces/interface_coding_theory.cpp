@@ -229,10 +229,10 @@ void interface_coding_theory::read_arguments(int argc,
 
 	if (stringcmp(argv[i], "-make_macwilliams_system") == 0) {
 		f_make_macwilliams_system = TRUE;
-		q = strtoi(argv[++i]);
 		n = strtoi(argv[++i]);
 		k = strtoi(argv[++i]);
-		cout << "-make_macwilliams_system " << q << " " << n << " " << k << endl;
+		q = strtoi(argv[++i]);
+		cout << "-make_macwilliams_system " << n << " " << k << " " << q << endl;
 	}
 	else if (stringcmp(argv[i], "-table_of_bounds") == 0) {
 		f_table_of_bounds = TRUE;
