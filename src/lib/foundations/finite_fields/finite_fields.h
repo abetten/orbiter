@@ -345,6 +345,8 @@ private:
 	int nb_times_add;
 
 public:
+	std::string label;
+	std::string label_tex;
 	std::string override_poly;
 	char *polynomial;
 		// the actual polynomial we consider
@@ -457,6 +459,62 @@ public:
 		int *&pair_embedding, int verbose_level);
 	int nb_times_mult_called();
 	int nb_times_add_called();
+
+	// #########################################################################
+	// finite_field_applications.cpp
+	// #########################################################################
+
+
+	void make_all_irreducible_polynomials_of_degree_d(
+			int d, std::vector<std::vector<int> > &Table,
+			int verbose_level);
+	int count_all_irreducible_polynomials_of_degree_d(int d, int verbose_level);
+	void polynomial_division(
+			std::string &A_coeffs, std::string &B_coeffs, int verbose_level);
+	void extended_gcd_for_polynomials(
+			std::string &A_coeffs, std::string &B_coeffs, int verbose_level);
+	void polynomial_mult_mod(
+			std::string &A_coeffs, std::string &B_coeffs, std::string &M_coeffs,
+			int verbose_level);
+	void Berlekamp_matrix(
+			std::string &Berlekamp_matrix_coeffs,
+			int verbose_level);
+	void compute_normal_basis(int d, int verbose_level);
+	void do_nullspace(int m, int n, std::string &text,
+			int f_normalize_from_the_left, int f_normalize_from_the_right,
+			int verbose_level);
+	void do_RREF(int m, int n, std::string &text,
+			int f_normalize_from_the_left, int f_normalize_from_the_right,
+			int verbose_level);
+	void apply_Walsh_Hadamard_transform(
+			std::string &fname_csv_in, int n, int verbose_level);
+	void algebraic_normal_form(
+			std::string &fname_csv_in, int n, int verbose_level);
+	void apply_trace_function(
+			std::string &fname_csv_in, int verbose_level);
+	void apply_power_function(
+			std::string &fname_csv_in, long int d, int verbose_level);
+	void identity_function(
+			std::string &fname_csv_out, int verbose_level);
+	void do_trace(int verbose_level);
+	void do_norm(int verbose_level);
+	void do_cheat_sheet_GF(int verbose_level);
+	void do_make_table_of_irreducible_polynomials(int deg, int verbose_level);
+	void polynomial_find_roots(
+			std::string &A_coeffs,
+			int verbose_level);
+	void sift_polynomials(long int rk0, long int rk1, int verbose_level);
+	void mult_polynomials(long int rk0, long int rk1, int verbose_level);
+	void polynomial_division_from_file_with_report(
+			std::string &input_file, long int rk1, int verbose_level);
+	void polynomial_division_from_file_all_k_error_patterns_with_report(
+			std::string &input_file, long int rk1, int k, int verbose_level);
+	void polynomial_division_with_report(long int rk0, long int rk1, int verbose_level);
+	void RREF_demo(int *A, int m, int n, int verbose_level);
+	void RREF_demo2(std::ostream &ost, int *A, int m, int n, int verbose_level);
+	void gl_random_matrix(int k, int verbose_level);
+
+
 
 	// #########################################################################
 	// finite_field_linear_algebra.cpp
@@ -1190,6 +1248,7 @@ public:
 	void print();
 	void print_detailed(int f_add_mult_table);
 	void print_add_mult_tables();
+	void print_add_mult_tables_in_C(std::string &fname_base);
 	void print_tables();
 	void print_tables_extension_field(const char *poly);
 	void display_T2(std::ostream &ost);

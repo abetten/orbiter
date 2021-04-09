@@ -59,73 +59,55 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	if (Descr->f_cheat_sheet_GF) {
 
-		algebra_global Algebra;
-
-		Algebra.do_cheat_sheet_GF(F, verbose_level);
+		F->do_cheat_sheet_GF(verbose_level);
 	}
 	else if (Descr->f_polynomial_division) {
-		algebra_global Algebra;
 
-		Algebra.polynomial_division(F,
+		F->polynomial_division(
 				Descr->polynomial_division_A, Descr->polynomial_division_B,
 				verbose_level);
 	}
 	else if (Descr->f_extended_gcd_for_polynomials) {
-		algebra_global Algebra;
 
-		Algebra.extended_gcd_for_polynomials(F,
+		F->extended_gcd_for_polynomials(
 				Descr->polynomial_division_A, Descr->polynomial_division_B,
 				verbose_level);
 	}
 
 	else if (Descr->f_polynomial_mult_mod) {
-		algebra_global Algebra;
 
-		Algebra.polynomial_mult_mod(F,
+		F->polynomial_mult_mod(
 				Descr->polynomial_mult_mod_A, Descr->polynomial_mult_mod_B,
 				Descr->polynomial_mult_mod_M, verbose_level);
 	}
 	else if (Descr->f_Berlekamp_matrix) {
-		algebra_global Algebra;
 
-		Algebra.Berlekamp_matrix(F,
+		F->Berlekamp_matrix(
 				Descr->Berlekamp_matrix_coeffs, verbose_level);
 
 	}
 	else if (Descr->f_normal_basis) {
 
-		algebra_global Algebra;
-
-
-		Algebra.compute_normal_basis(F, Descr->normal_basis_d, verbose_level);
+		F->compute_normal_basis(Descr->normal_basis_d, verbose_level);
 
 	}
 	else if (Descr->f_polynomial_find_roots) {
 
-		algebra_global Algebra;
-
-
-
-		Algebra.polynomial_find_roots(F,
+		F->polynomial_find_roots(
 				Descr->polynomial_find_roots_A,
 				verbose_level);
 	}
 
 	else if (Descr->f_nullspace) {
 
-		algebra_global Algebra;
-
-		Algebra.do_nullspace(F, Descr->nullspace_m, Descr->nullspace_n,
+		F->do_nullspace(Descr->nullspace_m, Descr->nullspace_n,
 				Descr->nullspace_text,
 				Descr->f_normalize_from_the_left,
 				Descr->f_normalize_from_the_right, verbose_level);
 	}
 	else if (Descr->f_RREF) {
 
-		algebra_global Algebra;
-
-
-		Algebra.do_RREF(F, Descr->RREF_m, Descr->RREF_n, Descr->RREF_text,
+		F->do_RREF(Descr->RREF_m, Descr->RREF_n, Descr->RREF_text,
 				Descr->f_normalize_from_the_left,
 				Descr->f_normalize_from_the_right,
 				verbose_level);
@@ -144,9 +126,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_Walsh_Hadamard_transform) {
 
-		algebra_global Algebra;
-
-		Algebra.apply_Walsh_Hadamard_transform(F,
+		F->apply_Walsh_Hadamard_transform(
 				Descr->Walsh_Hadamard_transform_fname_csv_in,
 				Descr->Walsh_Hadamard_transform_n, verbose_level);
 	}
@@ -154,9 +134,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_algebraic_normal_form) {
 
-		algebra_global Algebra;
-
-		Algebra.algebraic_normal_form(F,
+		F->algebraic_normal_form(
 				Descr->algebraic_normal_form_fname_csv_in,
 				Descr->algebraic_normal_form_n, verbose_level);
 	}
@@ -164,17 +142,13 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_apply_trace_function) {
 
-		algebra_global Algebra;
-
-		Algebra.apply_trace_function(F,
+		F->apply_trace_function(
 				Descr->apply_trace_function_fname_csv_in, verbose_level);
 	}
 
 	else if (Descr->f_apply_power_function) {
 
-		algebra_global Algebra;
-
-		Algebra.apply_power_function(F,
+		F->apply_power_function(
 				Descr->apply_power_function_fname_csv_in,
 				Descr->apply_power_function_d,
 				verbose_level);
@@ -182,24 +156,18 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_identity_function) {
 
-		algebra_global Algebra;
-
-		Algebra.identity_function(F,
+		F->identity_function(
 				Descr->identity_function_fname_csv_out, verbose_level);
 	}
 
 
 	else if (Descr->f_trace) {
 
-		algebra_global Algebra;
-
-		Algebra.do_trace(F, verbose_level);
+		F->do_trace(verbose_level);
 	}
 	else if (Descr->f_norm) {
 
-		algebra_global Algebra;
-
-		Algebra.do_norm(F, verbose_level);
+		F->do_norm(verbose_level);
 	}
 	else if (Descr->f_Walsh_matrix) {
 
@@ -214,11 +182,10 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_make_table_of_irreducible_polynomials) {
 
-		algebra_global Algebra;
 
-		Algebra.do_make_table_of_irreducible_polynomials(
+		F->do_make_table_of_irreducible_polynomials(
 				Descr->make_table_of_irreducible_polynomials_degree,
-				F, verbose_level);
+				verbose_level);
 
 	}
 	else if (Descr->f_EC_Koblitz_encoding) {
@@ -358,9 +325,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_sift_polynomials) {
 
-		algebra_global Algebra;
-
-		Algebra.sift_polynomials(F,
+		F->sift_polynomials(
 				Descr->sift_polynomials_r0,
 				Descr->sift_polynomials_r1,
 				verbose_level);
@@ -368,9 +333,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_mult_polynomials) {
 
-		algebra_global Algebra;
-
-		Algebra.mult_polynomials(F,
+		F->mult_polynomials(
 				Descr->mult_polynomials_r0,
 				Descr->mult_polynomials_r1,
 				verbose_level);
@@ -378,9 +341,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_polynomial_division_ranked) {
 
-		algebra_global Algebra;
-
-		Algebra.polynomial_division_with_report(F,
+		F->polynomial_division_with_report(
 				Descr->polynomial_division_r0,
 				Descr->polynomial_division_r1,
 				verbose_level);
@@ -388,9 +349,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_polynomial_division_from_file) {
 
-		algebra_global Algebra;
-
-		Algebra.polynomial_division_from_file_with_report(F,
+		F->polynomial_division_from_file_with_report(
 				Descr->polynomial_division_from_file_fname,
 				Descr->polynomial_division_from_file_r1,
 				verbose_level);
@@ -398,9 +357,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_polynomial_division_from_file_all_k_bit_error_patterns) {
 
-		algebra_global Algebra;
-
-		Algebra.polynomial_division_from_file_all_k_error_patterns_with_report(F,
+		F->polynomial_division_from_file_all_k_error_patterns_with_report(
 				Descr->polynomial_division_from_file_all_k_bit_error_patterns_fname,
 				Descr->polynomial_division_from_file_all_k_bit_error_patterns_r1,
 				Descr->polynomial_division_from_file_all_k_bit_error_patterns_k,
@@ -408,8 +365,6 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 
 	else if (Descr->f_RREF_random_matrix) {
-
-		algebra_global Algebra;
 
 		int *A;
 		int m, n;
@@ -425,7 +380,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 			A[i] = Os.random_integer(F->q);
 		}
 
-		Algebra.RREF_demo(F, A,
+		F->RREF_demo(A,
 				m,
 				n,
 				verbose_level);

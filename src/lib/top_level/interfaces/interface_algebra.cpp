@@ -19,10 +19,10 @@ namespace top_level {
 
 interface_algebra::interface_algebra()
 {
-
+#if 0
 	f_poset_classification_control = FALSE;
 	Control = NULL;
-
+#endif
 	f_count_subprimitive = FALSE;
 	count_subprimitive_Q_max = 0;
 	count_subprimitive_H_max = 0;
@@ -42,13 +42,6 @@ interface_algebra::interface_algebra()
 	p_max = 0;
 	deg_min = 0;
 	deg_max = 0;
-
-	f_Dedekind_numbers = FALSE;
-	Dedekind_n_min = 0;
-	Dedekind_n_max = 0;
-	Dedekind_q_min = 0;
-	Dedekind_q_max = 0;
-
 
 	f_order_of_q_mod_n = FALSE;
 	order_of_q_mod_n_q = 0;
@@ -92,9 +85,6 @@ void interface_algebra::print_help(int argc,
 	}
 	else if (stringcmp(argv[i], "-search_for_primitive_polynomial_in_range") == 0) {
 		cout << "-search_for_primitive_polynomial_in_range  " << endl;
-	}
-	else if (stringcmp(argv[i], "-Dedekind_numbers") == 0) {
-		cout << "-Dedekind_numbers <int : n_min> <int : n_max> <int : q_min> <int : q_max>  " << endl;
 	}
 	else if (stringcmp(argv[i], "-order_of_q_mod_n") == 0) {
 		cout << "-order_of_q_mod_n <int : q> <int : n_min> <int : n_max>  " << endl;
@@ -148,9 +138,6 @@ int interface_algebra::recognize_keyword(int argc,
 	else if (stringcmp(argv[i], "-search_for_primitive_polynomial_in_range") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-Dedekind_numbers") == 0) {
-		return true;
-	}
 	else if (stringcmp(argv[i], "-order_of_q_mod_n") == 0) {
 		return true;
 	}
@@ -196,6 +183,7 @@ void interface_algebra::read_arguments(int argc,
 		cout << "interface_algebra::read_arguments the next argument is " << argv[i] << endl;
 	}
 
+#if 0
 	if (stringcmp(argv[i], "-poset_classification_control") == 0) {
 		f_poset_classification_control = TRUE;
 		Control = NEW_OBJECT(poset_classification_control);
@@ -210,7 +198,9 @@ void interface_algebra::read_arguments(int argc,
 			cout << "next argument is " << argv[i] << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-count_subprimitive") == 0) {
+#endif
+
+	if (stringcmp(argv[i], "-count_subprimitive") == 0) {
 		f_count_subprimitive = TRUE;
 		count_subprimitive_Q_max = strtoi(argv[++i]);
 		count_subprimitive_H_max = strtoi(argv[++i]);
@@ -247,18 +237,6 @@ void interface_algebra::read_arguments(int argc,
 				<< " " << deg_max << " " << endl;
 	}
 
-	else if (stringcmp(argv[i], "-Dedekind_numbers") == 0) {
-		f_Dedekind_numbers = TRUE;
-		Dedekind_n_min = strtoi(argv[++i]);
-		Dedekind_n_max = strtoi(argv[++i]);
-		Dedekind_q_min = strtoi(argv[++i]);
-		Dedekind_q_max = strtoi(argv[++i]);
-		cout << "-Dedekind_numbers " << Dedekind_n_min
-				<< " " << Dedekind_n_max
-				<< " " << Dedekind_q_min
-				<< " " << Dedekind_q_max
-				<< " " << endl;
-	}
 	else if (stringcmp(argv[i], "-order_of_q_mod_n") == 0) {
 		f_order_of_q_mod_n = TRUE;
 		order_of_q_mod_n_q = strtoi(argv[++i]);
@@ -342,15 +320,6 @@ void interface_algebra::worker(int verbose_level)
 		Algebra.do_search_for_primitive_polynomial_in_range(
 				p_min, p_max, deg_min, deg_max,
 				verbose_level);
-	}
-	else if (f_Dedekind_numbers) {
-
-		algebra_global Algebra;
-
-		Algebra.Dedekind_numbers(
-				Dedekind_n_min, Dedekind_n_max, Dedekind_q_min, Dedekind_q_max,
-				verbose_level);
-
 	}
 	else if (f_order_of_q_mod_n) {
 

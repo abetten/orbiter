@@ -128,6 +128,10 @@ public:
 
 class algebra_global {
 public:
+	void do_search_for_primitive_polynomial_in_range(
+			int p_min, int p_max,
+			int deg_min, int deg_max,
+			int verbose_level);
 	char *search_for_primitive_polynomial_of_given_degree(int p,
 		int degree, int verbose_level);
 	void search_for_primitive_polynomials(int p_min, int p_max,
@@ -142,17 +146,8 @@ public:
 	int subprimitive(int q, int h);
 	int period_of_sequence(int *v, int l);
 	void subexponent(int q, int Q, int h, int f, int j, int k, int &s, int &c);
-	void gl_random_matrix(int k, int q, int verbose_level);
 	const char *plus_minus_string(int epsilon);
 	const char *plus_minus_letter(int epsilon);
-	int PHG_element_normalize(finite_ring &R, int *v, int stride, int len);
-	// last unit element made one
-	int PHG_element_normalize_from_front(finite_ring &R, int *v,
-		int stride, int len);
-	// first non unit element made one
-	int PHG_element_rank(finite_ring &R, int *v, int stride, int len);
-	void PHG_element_unrank(finite_ring &R, int *v, int stride, int len, int rk);
-	int nb_PHG_elements(int n, finite_ring &R);
 	void display_all_PHG_elements(int n, int q);
 	void test_unipoly();
 	void test_unipoly2();
@@ -175,49 +170,9 @@ public:
 			longinteger_object &ago);
 	void longinteger_collect_print(std::ostream &ost,
 			int &nb_agos, longinteger_object *&agos, int *&multiplicities);
-
-	void make_all_irreducible_polynomials_of_degree_d(
-			finite_field *F, int d, std::vector<std::vector<int> > &Table,
-			int verbose_level);
-	int count_all_irreducible_polynomials_of_degree_d(finite_field *F,
-		int d, int verbose_level);
-	void polynomial_division(finite_field *F,
-			std::string &A_coeffs, std::string &B_coeffs, int verbose_level);
-	void extended_gcd_for_polynomials(finite_field *F,
-			std::string &A_coeffs, std::string &B_coeffs, int verbose_level);
-	void polynomial_mult_mod(finite_field *F,
-			std::string &A_coeffs, std::string &B_coeffs, std::string &M_coeffs,
-			int verbose_level);
-	void Berlekamp_matrix(finite_field *F,
-			std::string &Berlekamp_matrix_coeffs,
-			int verbose_level);
-	void compute_normal_basis(finite_field *F, int d, int verbose_level);
-	void do_nullspace(finite_field *F, int m, int n, std::string &text,
-			int f_normalize_from_the_left, int f_normalize_from_the_right,
-			int verbose_level);
-	void do_RREF(finite_field *F, int m, int n, std::string &text,
-			int f_normalize_from_the_left, int f_normalize_from_the_right,
-			int verbose_level);
-	void apply_Walsh_Hadamard_transform(finite_field *F,
-			std::string &fname_csv_in, int n, int verbose_level);
-	void algebraic_normal_form(finite_field *F,
-			std::string &fname_csv_in, int n, int verbose_level);
-	void apply_trace_function(finite_field *F,
-			std::string &fname_csv_in, int verbose_level);
-	void apply_power_function(finite_field *F,
-			std::string &fname_csv_in, long int d, int verbose_level);
-	void identity_function(finite_field *F,
-			std::string &fname_csv_out, int verbose_level);
-	void do_trace(finite_field *F, int verbose_level);
-	void do_norm(finite_field *F, int verbose_level);
 	void do_equivalence_class_of_fractions(int N, int verbose_level);
-	void do_cheat_sheet_GF(finite_field *F, int verbose_level);
-	void do_search_for_primitive_polynomial_in_range(int p_min, int p_max,
-			int deg_min, int deg_max, int verbose_level);
-	void do_make_table_of_irreducible_polynomials(int deg, finite_field *F, int verbose_level);
-	void polynomial_find_roots(finite_field *F,
-			std::string &A_coeffs,
-			int verbose_level);
+
+
 	void find_CRC_polynomials(finite_field *F,
 			int t, int da, int dc,
 			int verbose_level);
@@ -239,16 +194,9 @@ public:
 			int verbose_level);
 	int remainder_is_nonzero(int da, int *A, int db, int *B, finite_field *F);
 	int remainder_is_nonzero_binary(int da, int *A, int db, int *B);
-	void sift_polynomials(finite_field *F, long int rk0, long int rk1, int verbose_level);
-	void mult_polynomials(finite_field *F, long int rk0, long int rk1, int verbose_level);
-	void polynomial_division_from_file_with_report(finite_field *F,
-			std::string &input_file, long int rk1, int verbose_level);
-	void polynomial_division_from_file_all_k_error_patterns_with_report(finite_field *F,
-			std::string &input_file, long int rk1, int k, int verbose_level);
-	void polynomial_division_with_report(finite_field *F, long int rk0, long int rk1, int verbose_level);
-	void RREF_demo(finite_field *F, int *A, int m, int n, int verbose_level);
-	void RREF_demo2(std::ostream &ost, finite_field *F, int *A, int m, int n, int verbose_level);
-	void Dedekind_numbers(int n_min, int n_max, int q_min, int q_max, int verbose_level);
+
+
+
 	void order_of_q_mod_n(int q, int n_min, int n_max, int verbose_level);
 
 };
@@ -309,6 +257,14 @@ public:
 		// of entries in base_cols
 		// A is a m x n matrix,
 		// P is a m x Pn matrix (if f_P is TRUE)
+	int PHG_element_normalize(int *v, int stride, int len);
+	// last unit element made one
+	int PHG_element_normalize_from_front(int *v,
+		int stride, int len);
+	// first non unit element made one
+	int PHG_element_rank(int *v, int stride, int len);
+	void PHG_element_unrank(int *v, int stride, int len, int rk);
+	int nb_PHG_elements(int n);
 };
 
 
@@ -1245,7 +1201,7 @@ public:
 // #############################################################################
 
 
-//! checking whether any d - 1 columns are linearly independent
+//! to check whether any d - 1 elements of a given set are linearly independent
 
 
 class rank_checker {

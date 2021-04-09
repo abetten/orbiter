@@ -8,6 +8,7 @@ LFLAGS = -lm
 MODULES = \
 	finite_field_activity_description.o \
 	finite_field_activity.o \
+	finite_field_applications.o \
 	finite_field_description.o \
 	finite_field_io.o \
 	finite_field_linear_algebra.o \

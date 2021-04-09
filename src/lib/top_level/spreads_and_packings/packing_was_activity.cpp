@@ -67,6 +67,23 @@ void packing_was_activity::perform_activity(int verbose_level)
 
 
 	}
+	else if (Descr->f_export_reduced_spread_orbits) {
+
+
+		if (f_v) {
+			cout << "packing_was_activity::perform_activity before PW->export_reduced_spread_orbits_csv" << endl;
+		}
+
+		int f_original_spread_numbers = TRUE;
+
+		PW->export_reduced_spread_orbits_csv(Descr->export_reduced_spread_orbits_fname_base,
+				f_original_spread_numbers, verbose_level);
+
+		if (f_v) {
+			cout << "packing_was_activity::perform_activity after PW->export_reduced_spread_orbits_csv" << endl;
+		}
+
+	}
 
 
 

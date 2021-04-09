@@ -469,6 +469,7 @@ public:
 	void do_tdo_refinement(tdo_refinement_description *Descr, int verbose_level);
 	void do_tdo_print(std::string &fname, int verbose_level);
 	void make_elementary_symmetric_functions(int n, int k_max, int verbose_level);
+	void Dedekind_numbers(int n_min, int n_max, int q_min, int q_max, int verbose_level);
 
 };
 

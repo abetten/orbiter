@@ -420,6 +420,194 @@ int finite_ring::Gauss_int(int *A, int f_special,
 
 
 
+int finite_ring::PHG_element_normalize(
+		int *v, int stride, int len)
+// last unit element made one
+{
+	int i, j, a;
+
+	if (!f_chain_ring) {
+		cout << "finite_ring::PHG_element_normalize not a chain ring" << endl;
+		exit(1);
+	}
+	for (i = len - 1; i >= 0; i--) {
+		a = v[i * stride];
+		if (is_unit(a)) {
+			if (a == 1)
+				return i;
+			a = inverse(a);
+			for (j = len - 1; j >= 0; j--) {
+				v[j * stride] = mult(v[j * stride], a);
+				}
+			return i;
+			}
+		}
+	cout << "finite_ring::PHG_element_normalize "
+			"vector is not free" << endl;
+	exit(1);
+}
+
+
+int finite_ring::PHG_element_normalize_from_front(
+		int *v, int stride, int len)
+// first non unit element made one
+{
+	int i, j, a;
+
+	if (!f_chain_ring) {
+		cout << "finite_ring::PHG_element_normalize_from_front not a chain ring" << endl;
+		exit(1);
+	}
+	for (i = 0; i < len; i++) {
+		a = v[i * stride];
+		if (is_unit(a)) {
+			if (a == 1) {
+				return i;
+			}
+			a = inverse(a);
+			for (j = 0; j < len; j++) {
+				v[j * stride] = mult(v[j * stride], a);
+			}
+			return i;
+		}
+	}
+	cout << "finite_ring::PHG_element_normalize_from_front "
+			"vector is not free" << endl;
+	exit(1);
+}
+
+int finite_ring::PHG_element_rank(
+		int *v, int stride, int len)
+{
+	long int i, j, idx, a, b, r1, r2, rk, N;
+	int f_v = FALSE;
+	int *w;
+	int *embedding;
+	geometry_global Gg;
+
+	if (!f_chain_ring) {
+		cout << "finite_ring::PHG_element_rank not a chain ring" << endl;
+		exit(1);
+	}
+	if (len <= 0) {
+		cout << "finite_ring::PHG_element_rank len <= 0" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "the vector before normalization is ";
+		for (i = 0; i < len; i++) {
+			cout << v[i * stride] << " ";
+		}
+		cout << endl;
+	}
+	idx = PHG_element_normalize(v, stride, len);
+	if (f_v) {
+		cout << "the vector after normalization is ";
+		for (i = 0; i < len; i++) {
+			cout << v[i * stride] << " ";
+		}
+		cout << endl;
+	}
+	w = NEW_int(len - 1);
+	embedding = NEW_int(len - 1);
+	for (i = 0, j = 0; i < len - 1; i++, j++) {
+		if (i == idx) {
+			j++;
+		}
+		embedding[i] = j;
+	}
+	for (i = 0; i < len - 1; i++) {
+		w[i] = v[embedding[i] * stride];
+	}
+	for (i = 0; i < len - 1; i++) {
+		a = w[i];
+		b = a % get_p();
+		v[embedding[i] * stride] = b;
+		w[i] = (a - b) / get_p();
+	}
+	if (f_v) {
+		cout << "w=";
+		Orbiter->Int_vec.print(cout, w, len - 1);
+		cout << endl;
+	}
+	r1 = Gg.AG_element_rank(get_e(), w, 1, len - 1);
+	get_Fp()->PG_element_rank_modified_lint(v, stride, len, r2);
+
+	N = Gg.nb_PG_elements(len - 1, get_p());
+	rk = r1 * N + r2;
+
+	FREE_int(w);
+	FREE_int(embedding);
+
+	return rk;
+}
+
+void finite_ring::PHG_element_unrank(
+		int *v, int stride, int len, int rk)
+{
+	int i, j, idx, r1, r2, N;
+	int f_v = FALSE;
+	int *w;
+	int *embedding;
+	geometry_global Gg;
+
+	if (!f_chain_ring) {
+		cout << "finite_ring::PHG_element_unrank not a chain ring" << endl;
+		exit(1);
+	}
+	if (len <= 0) {
+		cout << "finite_ring::PHG_element_unrank len <= 0" << endl;
+		exit(1);
+	}
+
+	w = NEW_int(len - 1);
+	embedding = NEW_int(len - 1);
+
+	N = Gg.nb_PG_elements(len - 1, get_p());
+	r2 = rk % N;
+	r1 = (rk - r2) / N;
+
+	Gg.AG_element_unrank(get_e(), w, 1, len - 1, r1);
+	get_Fp()->PG_element_unrank_modified(v, stride, len, r2);
+
+	if (f_v) {
+		cout << "w=";
+		Orbiter->Int_vec.print(cout, w, len - 1);
+		cout << endl;
+	}
+
+	idx = PHG_element_normalize(v, stride, len);
+	for (i = 0, j = 0; i < len - 1; i++, j++) {
+		if (i == idx) {
+			j++;
+		}
+		embedding[i] = j;
+	}
+
+	for (i = 0; i < len - 1; i++) {
+		v[embedding[i] * stride] += w[i] * get_p();
+	}
+
+
+
+	FREE_int(w);
+	FREE_int(embedding);
+
+}
+
+int finite_ring::nb_PHG_elements(int n)
+{
+	int N1, N2;
+	geometry_global Gg;
+
+	if (!f_chain_ring) {
+		cout << "finite_ring::nb_PHG_elements not a chain ring" << endl;
+		exit(1);
+	}
+	N1 = Gg.nb_PG_elements(n, get_p());
+	N2 = Gg.nb_AG_elements(n, get_e());
+	return N1 * N2;
+}
 
 }
 }

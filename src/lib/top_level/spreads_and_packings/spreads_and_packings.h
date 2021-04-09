@@ -327,11 +327,13 @@ public:
 	void save_packings_by_case(std::vector<std::vector<std::vector<int> > > &Packings_by_case, int verbose_level);
 	void do_single_case(int verbose_level);
 	void process_single_case(
+			std::vector<std::vector<int> > &Packings_classified,
 			std::vector<std::vector<int> > &Packings,
 			int verbose_level);
 	void init_fixpoint_clique_from_orbit_numbers(int verbose_level);
 	void filter_orbits(int verbose_level);
 	void create_graph_on_remaining_long_orbits(
+			std::vector<std::vector<int> > &Packings_classified,
 			std::vector<std::vector<int> > &Packings,
 			int verbose_level);
 	void create_fname_graph_on_remaining_long_orbits();
@@ -365,7 +367,8 @@ public:
 
 	int f_report;
 
-
+	int f_export_reduced_spread_orbits;
+	std::string export_reduced_spread_orbits_fname_base;
 
 
 	packing_was_activity_description();
@@ -683,6 +686,7 @@ public:
 			long int *&spreads_in_reduced_orbits_by_type,
 			int f_original_spread_numbers,
 			int verbose_level);
+	void export_reduced_spread_orbits_csv(std::string &fname_base, int f_original_spread_numbers, int verbose_level);
 	void report_reduced_spread_orbits(std::ostream &ost, int f_original_spread_numbers, int verbose_level);
 	void report_good_spreads(std::ostream &ost);
 

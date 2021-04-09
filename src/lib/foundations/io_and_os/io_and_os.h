@@ -338,6 +338,8 @@ public:
 	void print_integer_matrix_tex(std::ostream &ost, int *p, int m, int n);
 	void print_lint_matrix_tex(std::ostream &ost,
 		long int *p, int m, int n);
+	void print_longinteger_matrix_tex(std::ostream &ost,
+		longinteger_object *p, int m, int n);
 	void print_integer_matrix_with_labels(std::ostream &ost, int *p,
 		int m, int n, int *row_labels, int *col_labels, int f_tex);
 	void print_lint_matrix_with_labels(std::ostream &ost,
@@ -756,6 +758,8 @@ void print_integer_matrix_width(std::ostream &ost, int *p,
 	int m, int n, int dim_n, int w);
 void lint_matrix_print_width(std::ostream &ost,
 	long int *p, int m, int n, int dim_n, int w);
+void print_integer_matrix_in_C_source(std::ostream &ost,
+	int *p, int m, int n);
 void int_matrix_make_block_matrix_2x2(int *Mtx, int k, 
 	int *A, int *B, int *C, int *D);
 // makes the 2k x 2k block matrix 
