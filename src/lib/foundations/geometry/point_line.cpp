@@ -35,7 +35,7 @@ int point_line::is_desarguesian_plane(int verbose_level)
 	plane_get_points_on_line(line, pts_on_line);
 	if (f_vv) {
 		cout << "line " << line << " ";
-		int_set_print(cout, pts_on_line, plane_order + 1);
+		Orbiter->Int_vec.set_print(cout, pts_on_line, plane_order + 1);
 		}
 	u = pts_on_line[0];
 	v = pts_on_line[1];

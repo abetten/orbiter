@@ -63,12 +63,12 @@ void object_in_projective_space::print(ostream &ost)
 	cout << "set_as_string: " << set_as_string << endl;
 	if (type == t_PTS) {
 		ost << "set of points of size " << sz << ": ";
-		lint_vec_print(ost, set, sz);
+		Orbiter->Lint_vec.print(ost, set, sz);
 		ost << endl;
 	}
 	else if (type == t_LNS) {
 		ost << "set of lines of size " << sz << ": ";
-		lint_vec_print(ost, set, sz);
+		Orbiter->Lint_vec.print(ost, set, sz);
 		ost << endl;
 	}
 	else if (type == t_PAC) {
@@ -82,14 +82,14 @@ void object_in_projective_space::print_tex(ostream &ost)
 {
 	if (type == t_PTS) {
 		ost << "set of points of size " << sz << ": $\\{";
-		lint_vec_print(ost, set, sz);
+		Orbiter->Lint_vec.print(ost, set, sz);
 		ost << "\\}$\\\\" << endl;
 		//P->print_set_numerical(ost, set, sz);
 		P->print_set_of_points(ost, set, sz);
 	}
 	else if (type == t_LNS) {
 		ost << "set of lines of size " << sz << ": $\\{";
-		lint_vec_print(ost, set, sz);
+		Orbiter->Lint_vec.print(ost, set, sz);
 		ost << "\\}$" << endl;
 	}
 	else if (type == t_PAC) {
@@ -143,7 +143,7 @@ void object_in_projective_space::init_object_from_string(
 	long int *the_set_in;
 	int set_size_in;
 
-	lint_vec_scan(set_as_string.c_str(), the_set_in, set_size_in);
+	Orbiter->Lint_vec.scan(set_as_string.c_str(), the_set_in, set_size_in);
 
 
 	if (f_v) {
@@ -191,7 +191,7 @@ void object_in_projective_space::init_object_from_int_vec(
 	if (f_v) {
 		cout << "The input set has size " << the_set_sz << ":" << endl;
 		cout << "The input set is:" << endl;
-		lint_vec_print(cout, the_set_in, the_set_sz);
+		Orbiter->Lint_vec.print(cout, the_set_in, the_set_sz);
 		cout << endl;
 		cout << "The type is: ";
 		if (type == t_PTS) {
@@ -242,7 +242,7 @@ void object_in_projective_space::init_point_set(
 	object_in_projective_space::P = P;
 	type = t_PTS;
 	object_in_projective_space::set = NEW_lint(sz);
-	lint_vec_copy(set, object_in_projective_space::set, sz);
+	Orbiter->Lint_vec.copy(set, object_in_projective_space::set, sz);
 	object_in_projective_space::sz = sz;
 	if (f_v) {
 		cout << "object_in_projective_space::init_point_set done" << endl;
@@ -261,7 +261,7 @@ void object_in_projective_space::init_line_set(
 	object_in_projective_space::P = P;
 	type = t_LNS;
 	object_in_projective_space::set = NEW_lint(sz);
-	lint_vec_copy(set, object_in_projective_space::set, sz);
+	Orbiter->Lint_vec.copy(set, object_in_projective_space::set, sz);
 	object_in_projective_space::sz = sz;
 	if (f_v) {
 		cout << "object_in_projective_space::init_line_set done" << endl;
@@ -296,7 +296,7 @@ void object_in_projective_space::init_packing_from_set(
 		0 /* verbose_level */);
 
 	for (i = 0; i < size_of_packing; i++) {
-		lint_vec_copy(packing + i * size_of_spread,
+		Orbiter->Lint_vec.copy(packing + i * size_of_spread,
 				SoS->Sets[i], size_of_spread);
 	}
 #if 0
@@ -364,7 +364,7 @@ void object_in_projective_space::init_packing_from_spread_table(
 
 	for (i = 0; i < size_of_packing; i++) {
 		a = data[i];
-		lint_vec_copy(Spread_table + a * size_of_spread,
+		Orbiter->Lint_vec.copy(Spread_table + a * size_of_spread,
 				SoS->Sets[i], size_of_spread);
 	}
 	if (verbose_level >= 5) {
@@ -640,7 +640,7 @@ void object_in_projective_space::encode_point_set(
 
 	if (f_v) {
 		cout << "object_in_projective_space::encode_point_set set=";
-		lint_vec_print(cout, set, sz);
+		Orbiter->Lint_vec.print(cout, set, sz);
 		cout << endl;
 	}
 	C->init_lint(set, sz, TRUE, 0);
@@ -1055,7 +1055,7 @@ void object_in_projective_space::encode_object_points(
 	}
 	encoding_sz = sz;
 	encoding = NEW_lint(sz);
-	lint_vec_copy(set, encoding, sz);
+	Orbiter->Lint_vec.copy(set, encoding, sz);
 }
 
 void object_in_projective_space::encode_object_lines(
@@ -1068,7 +1068,7 @@ void object_in_projective_space::encode_object_lines(
 	}
 	encoding_sz = sz;
 	encoding = NEW_lint(sz);
-	lint_vec_copy(set, encoding, sz);
+	Orbiter->Lint_vec.copy(set, encoding, sz);
 }
 
 void object_in_projective_space::encode_object_packing(
@@ -1085,7 +1085,7 @@ void object_in_projective_space::encode_object_packing(
 	encoding = NEW_lint(encoding_sz);
 	h = 0;
 	for (i = 0; i < SoS->nb_sets; i++) {
-		lint_vec_copy(SoS->Sets[i], encoding + h, SoS->Set_size[i]);
+		Orbiter->Lint_vec.copy(SoS->Sets[i], encoding + h, SoS->Set_size[i]);
 		h += SoS->Set_size[i];
 	}
 	if (h != encoding_sz) {

@@ -86,7 +86,7 @@ void eckardt_point_info::init(surface_domain *Surf, projective_space *P,
 		}
 	eckardt_point_info::Surf = Surf;
 	eckardt_point_info::P = P;
-	lint_vec_copy(arc6, eckardt_point_info::arc6, 6);
+	Orbiter->Lint_vec.copy(arc6, eckardt_point_info::arc6, 6);
 
 	if (P->n != 2) {
 		cout << "eckardt_point_info::init "
@@ -96,7 +96,7 @@ void eckardt_point_info::init(surface_domain *Surf, projective_space *P,
 
 	if (f_v) {
 		cout << "arc: ";
-		lint_vec_print(cout, arc6, 6);
+		Orbiter->Lint_vec.print(cout, arc6, 6);
 		cout << endl;
 	}
 
@@ -250,8 +250,8 @@ void eckardt_point_info::init(surface_domain *Surf, projective_space *P,
 		six_coeffs = conic_coefficients + j * 6;
 
 		deleted_point = arc6[j];
-		lint_vec_copy(arc6, arc5, j);
-		lint_vec_copy(arc6 + j + 1, arc5 + j, 5 - j);
+		Orbiter->Lint_vec.copy(arc6, arc5, j);
+		Orbiter->Lint_vec.copy(arc6 + j + 1, arc5 + j, 5 - j);
 
 #if 0
 		cout << "deleting point " << j << " / 6:";

@@ -119,7 +119,7 @@ void algebra_global_with_action::create_subgroups(
 
 	the_set_sorted = NEW_lint(set_size);
 	position = NEW_lint(set_size);
-	lint_vec_copy(the_set, the_set_sorted, set_size);
+	Orbiter->Lint_vec.copy(the_set, the_set_sorted, set_size);
 	//Sorting.lint_vec_heapsort(the_set_sorted, set_size);
 	for (i = 0; i < set_size; i++) {
 		position[i] = i;
@@ -799,7 +799,7 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(action 
 
 		cout << "Representative of class " << i << " / "
 				<< nb_classes << " has rank " << a << "\\\\" << endl;
-		int_matrix_print(Elt, d, d);
+		Orbiter->Int_vec.matrix_print(Elt, d, d);
 
 		if (f_v) {
 			cout << "before C.print_matrix_and_centralizer_order_latex" << endl;
@@ -895,7 +895,7 @@ void algebra_global_with_action::conjugacy_classes_based_on_normal_forms(action 
 
 				ost << "Representative of class " << i << " / "
 						<< nb_classes << " has rank " << a << "\\\\" << endl;
-				int_matrix_print(Elt, d, d);
+				Orbiter->Int_vec.matrix_print(Elt, d, d);
 
 				if (f_v) {
 					cout << "before C.print_matrix_and_centralizer_order_latex" << endl;
@@ -981,7 +981,7 @@ void algebra_global_with_action::classes_GL(finite_field *F, int d,
 
 		cout << "Representative of class " << i << " / "
 				<< nb_classes << " has rank " << a << endl;
-		int_matrix_print(Elt, d, d);
+		Orbiter->Int_vec.matrix_print(Elt, d, d);
 
 		C.print_matrix_and_centralizer_order_latex(
 				cout, R + i);
@@ -1076,7 +1076,7 @@ void algebra_global_with_action::do_normal_form(int q, int d,
 	A->make_element(Elt, data, verbose_level);
 
 	cout << "Looking at element:" << endl;
-	int_matrix_print(Elt, d, d);
+	Orbiter->Int_vec.matrix_print(Elt, d, d);
 
 
 	gl_class_rep *R1;
@@ -1150,7 +1150,7 @@ void algebra_global_with_action::do_identify_one(int q, int d,
 	cout << "Looking at element " << elt_idx << ":" << endl;
 
 	A->Sims->element_unrank_lint(elt_idx, Elt);
-	int_matrix_print(Elt, d, d);
+	Orbiter->Int_vec.matrix_print(Elt, d, d);
 
 
 	gl_class_rep *R1;
@@ -1224,7 +1224,7 @@ void algebra_global_with_action::do_identify_all(int q, int d,
 		cout << "Looking at element " << i << ":" << endl;
 
 		A->Sims->element_unrank_lint(i, Elt);
-		int_matrix_print(Elt, d, d);
+		Orbiter->Int_vec.matrix_print(Elt, d, d);
 
 
 		gl_class_rep *R1;
@@ -1372,7 +1372,7 @@ void algebra_global_with_action::group_table(int q, int d, int f_poly, std::stri
 		cout << "Looking at element " << i << ":" << endl;
 
 		A->Sims->element_unrank_lint(i, Elt);
-		int_matrix_print(Elt, d, d);
+		Orbiter->Int_vec.matrix_print(Elt, d, d);
 
 		{
 		unipoly_domain U(C.F);
@@ -1414,7 +1414,7 @@ void algebra_global_with_action::group_table(int q, int d, int f_poly, std::stri
 		cout << "Looking at element " << a << ":" << endl;
 
 		A->Sims->element_unrank_lint(a, Elt);
-		int_matrix_print(Elt, d, d);
+		Orbiter->Int_vec.matrix_print(Elt, d, d);
 
 
 		gl_class_rep *R1;
@@ -1464,7 +1464,7 @@ void algebra_global_with_action::group_table(int q, int d, int f_poly, std::stri
 			}
 		}
 	cout << "extended group table:" << endl;
-	int_matrix_print(Table, L_sz, L_sz);
+	Orbiter->Int_vec.matrix_print(Table, L_sz, L_sz);
 
 
 	const char *fname = "group_table.tex";
@@ -1554,7 +1554,7 @@ void algebra_global_with_action::centralizer_brute_force(int q, int d,
 
 	cout << "Computing centralizer of element "
 			<< elt_idx << ":" << endl;
-	int_matrix_print(Elt, d, d);
+	Orbiter->Int_vec.matrix_print(Elt, d, d);
 
 	A->element_invert(Elt, Eltv, 0);
 
@@ -1595,7 +1595,7 @@ void algebra_global_with_action::centralizer_brute_force(int q, int d,
 				<< " which is " << a << endl;
 
 		A->Sims->element_unrank_lint(a, Elt1);
-		int_matrix_print(Elt1, d, d);
+		Orbiter->Int_vec.matrix_print(Elt1, d, d);
 
 		A->element_move(Elt1, gens->ith(i), 0);
 		}
@@ -1615,7 +1615,7 @@ void algebra_global_with_action::centralizer_brute_force(int q, int d,
 		cout << "Element " << i << " / " << SG->len
 				<< " which is " << a << endl;
 
-		int_matrix_print(Elt1, d, d);
+		Orbiter->Int_vec.matrix_print(Elt1, d, d);
 
 		}
 
@@ -1673,7 +1673,7 @@ void algebra_global_with_action::centralizer(int q, int d,
 	cout << "Looking at element " << elt_idx << ":" << endl;
 
 	A_PGL->Sims->element_unrank_lint(elt_idx, Elt);
-	int_matrix_print(Elt, d, d);
+	Orbiter->Int_vec.matrix_print(Elt, d, d);
 
 	strong_generators *Cent;
 	strong_generators *Cent_GL;
@@ -1737,7 +1737,7 @@ void algebra_global_with_action::centralizer(int q, int d, int verbose_level)
 		cout << "Looking at element " << i << ":" << endl;
 
 		A->Sims->element_unrank_lint(i, Elt);
-		int_matrix_print(Elt, d, d);
+		Orbiter->Int_vec.matrix_print(Elt, d, d);
 
 		sims *Cent;
 		longinteger_object cent_go;
@@ -2061,7 +2061,7 @@ void algebra_global_with_action::do_eigenstuff(finite_field *F, int size, int *D
 			}
 		}
 		cout << "A:" << endl;
-		print_integer_matrix_width(cout, A,
+		Orbiter->Int_vec.print_integer_matrix_width(cout, A,
 				size, size, size, F->log10_of_q);
 		for (i = 0; i < size; i++) {
 			for (j = 0; j < size; j++) {
@@ -2073,12 +2073,12 @@ void algebra_global_with_action::do_eigenstuff(finite_field *F, int size, int *D
 			}
 		}
 		cout << "B = A - eigenvalue * I:" << endl;
-		print_integer_matrix_width(cout, B,
+		Orbiter->Int_vec.print_integer_matrix_width(cout, B,
 				size, size, size, F->log10_of_q);
 
 		cout << "B transposed:" << endl;
 		F->transpose_matrix(B, Bt, size, size);
-		print_integer_matrix_width(cout, Bt,
+		Orbiter->Int_vec.print_integer_matrix_width(cout, Bt,
 				size, size, size, F->log10_of_q);
 
 		int f_special = FALSE;
@@ -2100,7 +2100,7 @@ void algebra_global_with_action::do_eigenstuff(finite_field *F, int size, int *D
 		F->matrix_get_kernel(Bt, size, size, base_cols, nb_base_cols,
 			kernel_m, kernel_n, kernel, 0 /* verbose_level */);
 		cout << "kernel = left eigenvectors:" << endl;
-		print_integer_matrix_width(cout, kernel,
+		Orbiter->Int_vec.print_integer_matrix_width(cout, kernel,
 				size, kernel_n, kernel_n, F->log10_of_q);
 
 		int *vec1, *vec2;
@@ -2179,11 +2179,11 @@ void algebra_global_with_action::A5_in_PSL_(int q, int verbose_level)
 			matrix_convert_to_numerical(B, BB, q);
 			matrix_convert_to_numerical(D, DD, q);
 			cout << "A=" << endl;
-			print_integer_matrix_width(cout, AA, 2, 2, 2, 7);
+			Orbiter->Int_vec.print_integer_matrix_width(cout, AA, 2, 2, 2, 7);
 			cout << "B=" << endl;
-			print_integer_matrix_width(cout, BB, 2, 2, 2, 7);
+			Orbiter->Int_vec.print_integer_matrix_width(cout, BB, 2, 2, 2, 7);
 			cout << "AB=" << endl;
-			print_integer_matrix_width(cout, DD, 2, 2, 2, 7);
+			Orbiter->Int_vec.print_integer_matrix_width(cout, DD, 2, 2, 2, 7);
 		}
 
 		int oA, oB, oD;
@@ -3706,7 +3706,7 @@ void algebra_global_with_action::representation_on_polynomials(
 
 	for (i = 0; i < nb_gens; i++) {
 		cout << "matrix " << i << " / " << nb_gens << ":" << endl;
-		int_matrix_print(M + i * A_on_HPD->dimension * A_on_HPD->dimension,
+		Orbiter->Int_vec.matrix_print(M + i * A_on_HPD->dimension * A_on_HPD->dimension,
 				A_on_HPD->dimension, A_on_HPD->dimension);
 	}
 

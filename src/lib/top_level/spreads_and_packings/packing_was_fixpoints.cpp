@@ -408,7 +408,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch(
 			cout << "too big to print" << endl;
 		}
 		else {
-			lint_matrix_print(Cliques, nb_cliques, clique_size);
+			Orbiter->Lint_vec.matrix_print(Cliques, nb_cliques, clique_size);
 		}
 	}
 
@@ -578,7 +578,7 @@ void packing_was_fixpoints::report2(ostream &ost, /*packing_long_orbits *L,*/ in
 
 
 			ost << "Orbit numbers: ";
-			lint_vec_print(ost, Orbit_numbers, cliques_on_fixpoint_graph_size);
+			Orbiter->Lint_vec.print(ost, Orbit_numbers, cliques_on_fixpoint_graph_size);
 			ost << "\\\\" << endl;
 
 			ost << "Stabilizer:\\\\" << endl;

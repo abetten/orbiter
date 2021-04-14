@@ -150,7 +150,7 @@ void null_polarity_generator::init(finite_field *F, int n, int verbose_level)
 		cout << "The strong generators are:" << endl;
 		for (i = 0; i < nb_gens; i++) {
 			cout << "generator " << i << " / " << nb_gens << ":" << endl;
-			int_matrix_print(Data + i * n * n, n, n);
+			Orbiter->Int_vec.matrix_print(Data + i * n * n, n, n);
 			}
 		}
 
@@ -246,7 +246,7 @@ void null_polarity_generator::backtrack_search(
 	if (depth == n) {
 		if (f_v) {
 			cout << "solution " << nb_sol << endl;
-			int_matrix_print(Mtx, n, n);
+			Orbiter->Int_vec.matrix_print(Mtx, n, n);
 			}
 		nb_sol++;
 		return;

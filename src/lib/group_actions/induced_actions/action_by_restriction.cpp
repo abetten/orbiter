@@ -85,7 +85,7 @@ void action_by_restriction::init(int nb_points, long int *points,
 		}
 	if (f_vv) {
 		cout << "action_by_restriction::init points=";
-		lint_vec_print(cout, points, nb_points);
+		Orbiter->Lint_vec.print(cout, points, nb_points);
 		cout << endl;
 	}
 	action_by_restriction::nb_points = nb_points;
@@ -100,7 +100,7 @@ void action_by_restriction::init(int nb_points, long int *points,
 	Sorting.lint_vec_heapsort_with_log(points_sorted, perm_inv, nb_points);
 	if (f_vv) {
 		cout << "action_by_restriction::init points after sorting=";
-		lint_vec_print(cout, points_sorted, nb_points);
+		Orbiter->Lint_vec.print(cout, points_sorted, nb_points);
 		cout << endl;
 	}
 	if (f_v) {
@@ -173,7 +173,7 @@ long int action_by_restriction::compute_image(
 		cout << "image of " << points[i] << " is " << b << endl;
 		cout << "nb_points=" << nb_points << endl;
 		cout << "points=";
-		lint_vec_print(cout, points, nb_points);
+		Orbiter->Lint_vec.print(cout, points, nb_points);
 		cout << endl;
 		cout << "points_sorted=" << endl;
 		for (h = 0; h < nb_points; h++) {

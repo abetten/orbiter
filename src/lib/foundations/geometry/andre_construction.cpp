@@ -156,7 +156,7 @@ void andre_construction::init(finite_field *F,
 			}
 		cout << "andre_construction::init spread element " << i
 				<< " is " << spread_elements_numeric[i] << ":" << endl;
-		int_matrix_print(spread_elements_genma + i * k * n, k, n);
+		Orbiter->Int_vec.matrix_print(spread_elements_genma + i * k * n, k, n);
 		cout << "pivot: ";
 		Orbiter->Int_vec.print(cout, pivot + i * k, k);
 		cout << endl;

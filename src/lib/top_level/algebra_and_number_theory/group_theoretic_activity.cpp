@@ -518,7 +518,7 @@ void group_theoretic_activity::create_group_table(int verbose_level)
 	fname.append("_group_table.csv");
 
 	cout << "The group table is:" << endl;
-	int_matrix_print(Table, n, n, 2);
+	Orbiter->Int_vec.matrix_print(Table, n, n, 2);
 
 	Fio.int_matrix_write_csv(fname, Table, n, n);
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -1338,7 +1338,7 @@ void group_theoretic_activity::isomorphism_Klein_quadric(std::string &fname, int
 
 		if (f_vv) {
 			cout << "Exterior square:" << endl;
-			int_matrix_print(An2, 6, 6);
+			Orbiter->Int_vec.matrix_print(An2, 6, 6);
 			cout << endl;
 		}
 
@@ -1364,14 +1364,14 @@ void group_theoretic_activity::isomorphism_Klein_quadric(std::string &fname, int
 
 		if (f_vv) {
 			cout << "Transformed Gram matrix:" << endl;
-			int_matrix_print(new_Gram, 6, 6);
+			Orbiter->Int_vec.matrix_print(new_Gram, 6, 6);
 			cout << endl;
 		}
 
 
 		if (f_vv) {
 			cout << "orthogonal matrix :" << endl;
-			int_matrix_print(C, 6, 6);
+			Orbiter->Int_vec.matrix_print(C, 6, 6);
 			cout << endl;
 		}
 
@@ -1382,7 +1382,7 @@ void group_theoretic_activity::isomorphism_Klein_quadric(std::string &fname, int
 
 		if (f_vv) {
 			cout << "orthogonal matrix in the special form:" << endl;
-			int_matrix_print(E, 6, 6);
+			Orbiter->Int_vec.matrix_print(E, 6, 6);
 			cout << endl;
 		}
 
@@ -1401,7 +1401,7 @@ void group_theoretic_activity::isomorphism_Klein_quadric(std::string &fname, int
 
 		if (f_vv) {
 			cout << "Transformed special Gram matrix:" << endl;
-			int_matrix_print(new_special_Gram, 6, 6);
+			Orbiter->Int_vec.matrix_print(new_special_Gram, 6, 6);
 			cout << endl;
 		}
 
@@ -1418,15 +1418,15 @@ void group_theoretic_activity::isomorphism_Klein_quadric(std::string &fname, int
 			cout << endl;
 
 			cout << "exterior square :" << endl;
-			int_matrix_print(An2, 6, 6);
+			Orbiter->Int_vec.matrix_print(An2, 6, 6);
 			cout << endl;
 
 			cout << "orthogonal matrix :" << endl;
-			int_matrix_print(C, 6, 6);
+			Orbiter->Int_vec.matrix_print(C, 6, 6);
 			cout << endl;
 
 			cout << "orthogonal matrix in the special form:" << endl;
-			int_matrix_print(E, 6, 6);
+			Orbiter->Int_vec.matrix_print(E, 6, 6);
 			cout << endl;
 
 			//exit(1);
@@ -1518,7 +1518,7 @@ void group_theoretic_activity::orbits_on_set_system_from_file(int verbose_level)
 			first = Sch->orbit_first[i];
 			a = Sch->orbit[first + 0];
 			cout << a << " : ";
-			lint_vec_print(cout, Table + a * set_size, set_size);
+			Orbiter->Lint_vec.print(cout, Table + a * set_size, set_size);
 			cout << endl;
 			//Sch->print_and_list_orbit_tex(i, ost);
 		}
@@ -1976,7 +1976,7 @@ void group_theoretic_activity::orbits_on_poset_post_processing(
 			cout << "depth " << d << " orbit " << orbit_idx
 					<< " / " << nb_orbits << " has length "
 					<< orbit_length << ":" << endl;
-			lint_matrix_print(Orbit, orbit_length, d);
+			Orbiter->Lint_vec.matrix_print(Orbit, orbit_length, d);
 
 			action *Aut;
 			longinteger_object ago;
@@ -2012,7 +2012,7 @@ void group_theoretic_activity::orbits_on_poset_post_processing(
 			cout << "depth " << d << " orbit " << 0
 					<< " / " << nb_orbits << " has length "
 					<< orbit_length1 << ":" << endl;
-			lint_matrix_print(Orbit1, orbit_length1, d);
+			Orbiter->Lint_vec.matrix_print(Orbit1, orbit_length1, d);
 
 			PC->get_whole_orbit(
 					depth, 1 /* orbit_idx*/,
@@ -2020,7 +2020,7 @@ void group_theoretic_activity::orbits_on_poset_post_processing(
 			cout << "depth " << d << " orbit " << 1
 					<< " / " << nb_orbits << " has length "
 					<< orbit_length2 << ":" << endl;
-			lint_matrix_print(Orbit2, orbit_length2, d);
+			Orbiter->Lint_vec.matrix_print(Orbit2, orbit_length2, d);
 
 			action *Aut;
 			longinteger_object ago;
@@ -2436,7 +2436,7 @@ int group_theoretic_activity::subspace_orbits_test_set(
 	if (f_v) {
 		cout << "group_theoretic_activity::subspace_orbits_test_set" << endl;
 		cout << "Testing set ";
-		lint_vec_print(cout, S, len);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 		cout << "LG->n=" << LG->n << endl;
 	}
@@ -2448,7 +2448,7 @@ int group_theoretic_activity::subspace_orbits_test_set(
 
 	if (f_vv) {
 		cout << "coordinate matrix:" << endl;
-		print_integer_matrix_width(cout,
+		Orbiter->Int_vec.print_integer_matrix_width(cout,
 				orbits_on_subspaces_M, len, n, n, F->log10_of_q);
 	}
 
@@ -2547,7 +2547,7 @@ void group_theoretic_activity::do_conjugacy_class_of_element(
 		cout << "computing conjugacy class of " << endl;
 		A1->element_print_latex(Elt, cout);
 		cout << "which is the set ";
-		lint_vec_print(cout, the_set, set_size);
+		Orbiter->Lint_vec.print(cout, the_set, set_size);
 		cout << endl;
 	}
 
@@ -2775,7 +2775,7 @@ void group_theoretic_activity::do_orbits_on_group_elements_under_conjugation(
 
 	if (f_v) {
 		cout << "computing conjugacy classes on the set " << endl;
-		lint_vec_print(cout, the_ranks, m);
+		Orbiter->Lint_vec.print(cout, the_ranks, m);
 		cout << endl;
 	}
 

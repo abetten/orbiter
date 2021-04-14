@@ -209,7 +209,7 @@ void classify_double_sixes::init(
 				"after compute_neighbors "
 				"nb_neighbors = " << nb_neighbors << endl;
 		cout << "Neighbors=";
-		lint_vec_print(cout, Neighbors, nb_neighbors);
+		Orbiter->Lint_vec.print(cout, Neighbors, nb_neighbors);
 		cout << endl;
 	}
 
@@ -476,7 +476,7 @@ void classify_double_sixes::classify_partial_ovoids(int verbose_level)
 		cout << "classify_double_sixes::classify_partial_ovoids "
 				"nb_neighbors = " << nb_neighbors << endl;
 		cout << "Neighbors=";
-		lint_vec_print(cout, Neighbors, nb_neighbors);
+		Orbiter->Lint_vec.print(cout, Neighbors, nb_neighbors);
 		cout << endl;
 	}
 	if (f_v) {
@@ -585,7 +585,7 @@ void classify_double_sixes::partial_ovoid_test_early(long int *S, int len,
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
-		lint_vec_print(cout, candidates, nb_candidates);
+		Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
 		cout << endl;
 	}
 
@@ -599,7 +599,7 @@ void classify_double_sixes::partial_ovoid_test_early(long int *S, int len,
 	}
 
 	if (len == 0) {
-		lint_vec_copy(candidates, good_candidates, nb_candidates);
+		Orbiter->Lint_vec.copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
 	}
 	else {
@@ -670,16 +670,16 @@ void classify_double_sixes::test_orbits(int verbose_level)
 		Five_plus_one->get_set_by_level(5, i, S);
 		if (f_vv) {
 			cout << "set: ";
-			lint_vec_print(cout, S, 5);
+			Orbiter->Lint_vec.print(cout, S, 5);
 			cout << endl;
 		}
 
 
-		lint_vec_apply(S, Neighbor_to_line, S2, 5);
+		Orbiter->Lint_vec.apply(S, Neighbor_to_line, S2, 5);
 		S2[5] = pt0_line;
 		if (f_vv) {
 			cout << "5+1 lines = ";
-			lint_vec_print(cout, S2, 6);
+			Orbiter->Lint_vec.print(cout, S2, 6);
 			cout << endl;
 		}
 
@@ -754,7 +754,7 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 
 	for (i = 0; i < nb; i++) {
 		Five_plus_one->get_set_by_level(k, Idx[i], rep);
-		lint_vec_apply(rep, Neighbor_to_line, lines, k);
+		Orbiter->Lint_vec.apply(rep, Neighbor_to_line, lines, k);
 		Five_plus_one->get_stabilizer_order(k, Idx[i], go);
 		Five_plus_one->orbit_length(Idx[i], k, len);
 		Stab_order[i] = go.as_int();
@@ -762,9 +762,9 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 	}
 	for (i = 0; i < nb; i++) {
 		Five_plus_one->get_set_by_level(k, Idx[i], rep);
-		lint_vec_apply(rep, Neighbor_to_line, lines, k);
+		Orbiter->Lint_vec.apply(rep, Neighbor_to_line, lines, k);
 
-		lint_vec_print_to_str(str, lines, k);
+		Orbiter->Lint_vec.print_to_str(str, lines, k);
 
 		Text[i] = NEW_char(strlen(str) + 1);
 		strcpy(Text[i], str);
@@ -854,7 +854,7 @@ void classify_double_sixes::identify_five_plus_one(
 				"transversal_line=" << transversal_line << endl;
 		cout << "classify_double_sixes::identify_five_plus_one "
 				"five_lines=";
-		lint_vec_print(cout, five_lines, 5);
+		Orbiter->Lint_vec.print(cout, five_lines, 5);
 		cout << endl;
 		cout << "verbose_level = " << verbose_level << endl;
 	}
@@ -863,7 +863,7 @@ void classify_double_sixes::identify_five_plus_one(
 	Surf->line_to_wedge_vec(five_lines, W1, 5);
 	if (f_v) {
 		cout << "classify_double_sixes::identify_five_plus_one W1=";
-		lint_vec_print(cout, W1, 5);
+		Orbiter->Lint_vec.print(cout, W1, 5);
 		cout << endl;
 	}
 
@@ -887,7 +887,7 @@ void classify_double_sixes::identify_five_plus_one(
 			Elt0, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "classify_double_sixes::identify_five_plus_one W2=";
-		lint_vec_print(cout, W2, 5);
+		Orbiter->Lint_vec.print(cout, W2, 5);
 		cout << endl;
 	}
 
@@ -897,7 +897,7 @@ void classify_double_sixes::identify_five_plus_one(
 	if (f_v) {
 		cout << "classify_double_sixes::identify_five_plus_one "
 				"tracing the set N1=";
-		lint_vec_print(cout, N1, 5);
+		Orbiter->Lint_vec.print(cout, N1, 5);
 		cout << endl;
 	}
 	orbit_index = Five_plus_one->trace_set(
@@ -1056,9 +1056,9 @@ void classify_double_sixes::downstep(int verbose_level)
 
 		R->Strong_gens->group_order(go);
 
-		lint_vec_copy(R->data, dataset, 5);
+		Orbiter->Lint_vec.copy(R->data, dataset, 5);
 
-		lint_vec_apply(dataset,
+		Orbiter->Lint_vec.apply(dataset,
 				Neighbor_to_line, dataset + 5, 5);
 		
 		dataset[10] = pt0_line;
@@ -1066,7 +1066,7 @@ void classify_double_sixes::downstep(int verbose_level)
 		long int double_six[12];
 		if (f_vv) {
 			cout << "5+1 lines = ";
-			lint_vec_print(cout, dataset + 5, 6);
+			Orbiter->Lint_vec.print(cout, dataset + 5, 6);
 			cout << endl;
 		}
 
@@ -1085,10 +1085,10 @@ void classify_double_sixes::downstep(int verbose_level)
 			if (f_vv) {
 				cout << "The starter configuration is good, "
 						"a double six has been computed:" << endl;
-				lint_matrix_print(double_six, 2, 6);
+				Orbiter->Lint_vec.matrix_print(double_six, 2, 6);
 			}
 
-			lint_vec_copy(double_six, dataset + 11, 12);
+			Orbiter->Lint_vec.copy(double_six, dataset + 11, 12);
 
 
 			Flag_orbits->Flag_orbit_node[nb_flag_orbits].init(
@@ -1213,7 +1213,7 @@ void classify_double_sixes::upstep(int verbose_level)
 		if (f_v) {
 			cout << "po=" << po << " so=" << so << endl;
 		}
-		lint_vec_copy(Flag_orbits->Pt + f * 23, dataset, 23);
+		Orbiter->Lint_vec.copy(Flag_orbits->Pt + f * 23, dataset, 23);
 
 
 
@@ -1230,11 +1230,11 @@ void classify_double_sixes::upstep(int verbose_level)
 		longinteger_object go;
 		long int double_six[12];
 
-		lint_vec_copy(dataset + 11, double_six, 12);
+		Orbiter->Lint_vec.copy(dataset + 11, double_six, 12);
 
 		if (f_v) {
 			cout << "double six:";
-			lint_vec_print(cout, double_six, 12);
+			Orbiter->Lint_vec.print(cout, double_six, 12);
 			cout << endl;
 		}
 		S = Flag_orbits->Flag_orbit_node[f].gens->create_copy();
@@ -1274,7 +1274,7 @@ void classify_double_sixes::upstep(int verbose_level)
 				if (f_v) {
 					cout << "transversal_line = "
 							<< transversal_line << " five_lines=";
-					lint_vec_print(cout, five_lines, 5);
+					Orbiter->Lint_vec.print(cout, five_lines, 5);
 					cout << endl;
 				}
 				identify_five_plus_one(five_lines, transversal_line, 
@@ -1532,7 +1532,7 @@ void classify_double_sixes::identify_double_six(long int *double_six,
 				"with transversal b_6" << endl;
 	}
 	transversal_line = double_six[11];
-	lint_vec_copy(double_six, five_lines, 5);
+	Orbiter->Lint_vec.copy(double_six, five_lines, 5);
 	
 	identify_five_plus_one(five_lines, transversal_line, 
 		five_lines_out_as_neighbors, po, 
@@ -1766,7 +1766,7 @@ void callback_partial_ovoid_test_early(long int *S, int len,
 
 	if (f_v) {
 		cout << "callback_partial_ovoid_test_early for set ";
-		lint_vec_print(cout, S, len);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 	}
 	Classify_double_sixes->partial_ovoid_test_early(S, len,

@@ -511,9 +511,9 @@ void isomorph::list_solutions_by_starter()
 				Sorting.lint_vec_heapsort(data2, size);
 				cout << i << " : " << j << " : "
 						<< idx << " : " << id << endl;
-				lint_vec_print(cout, data, size);
+				Orbiter->Lint_vec.print(cout, data, size);
 				cout << endl;
-				lint_vec_print(cout, data2, size);
+				Orbiter->Lint_vec.print(cout, data2, size);
 				cout << endl;
 				}
 			pos += len;
@@ -548,9 +548,9 @@ void isomorph::list_solutions_by_orbit()
 				}
 			Sorting.lint_vec_heapsort(data2, size);
 			cout << j << " : " << idx << " : " << id << endl;
-			lint_vec_print(cout, data, size);
+			Orbiter->Lint_vec.print(cout, data, size);
 			cout << endl;
-			lint_vec_print(cout, data2, size);
+			Orbiter->Lint_vec.print(cout, data2, size);
 			cout << endl;
 			}
 		}
@@ -884,13 +884,13 @@ void isomorph::orbits_of_stabilizer_case(int the_case,
 		load_solution(f + j, sets + j * size);
 		if (FALSE && f_vv) {
 			cout << "solution " << j << "        : ";
-			lint_vec_print(cout, sets + j * size, size);
+			Orbiter->Lint_vec.print(cout, sets + j * size, size);
 			cout << endl;
 			}
 		Sorting.lint_vec_heapsort(sets + j * size, size);
 		if (FALSE && f_vv) {
 			cout << "solution " << j << " sorted : ";
-			lint_vec_print(cout, sets + j * size, size);
+			Orbiter->Lint_vec.print(cout, sets + j * size, size);
 			cout << endl;
 			}
 		}
@@ -1251,12 +1251,12 @@ void isomorph::compute_stabilizer(sims *&Stab,
 		cout << "isomorph::compute_stabilizer "
 				"The " << l << " solutions are:" << endl;
 		if (l < 20) {
-			lint_matrix_print(sets, l, size);
+			Orbiter->Lint_vec.matrix_print(sets, l, size);
 			}
 		else {
 			cout << "isomorph::compute_stabilizer "
 					"Too big to print, we print only 20" << endl;
-			lint_matrix_print(sets, 20, size);
+			Orbiter->Lint_vec.matrix_print(sets, 20, size);
 			}
 		}
 

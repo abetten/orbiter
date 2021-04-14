@@ -779,7 +779,7 @@ void strong_generators::generators_for_the_singer_cycle(
 	D.multiply_up_lint(target_go, go_factored, 1, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "group order factored: ";
-		lint_vec_print(cout, go_factored, 1);
+		Orbiter->Lint_vec.print(cout, go_factored, 1);
 		cout << endl;
 		cout << "target_go=" << target_go << endl;
 	}
@@ -867,7 +867,7 @@ void strong_generators::generators_for_the_singer_cycle(
 	}
 	if (f_v) {
 		cout << "group order factored: ";
-		lint_vec_print(cout, go_factored, 1);
+		Orbiter->Lint_vec.print(cout, go_factored, 1);
 		cout << endl;
 		cout << "target_go=" << target_go << endl;
 	}
@@ -958,7 +958,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 	D.multiply_up_lint(target_go, go_factored, 2, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "group order factored: ";
-		lint_vec_print(cout, go_factored, 2);
+		Orbiter->Lint_vec.print(cout, go_factored, 2);
 		cout << endl;
 		cout << "target_go=" << target_go << endl;
 		}
@@ -1054,7 +1054,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 	}
 	if (f_v) {
 		cout << "group order factored: ";
-		lint_vec_print(cout, go_factored, 1);
+		Orbiter->Lint_vec.print(cout, go_factored, 1);
 		cout << endl;
 		cout << "target_go=" << target_go << endl;
 	}
@@ -1427,7 +1427,7 @@ void strong_generators::field_reduction(
 		S->lift_matrix(EltQ, m, Mtx, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "lifted matrix:" << endl;
-			int_matrix_print(Mtx, n, n);
+			Orbiter->Int_vec.matrix_print(Mtx, n, n);
 		}
 		Aq->make_element(Eltq, Mtx, verbose_level - 1);
 		if (f_v) {
@@ -1618,7 +1618,7 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 		if (f_v) {
 			cout << "strong_generators::generators_for_translation_plane_in_andre_model generator " << h << " / "
 					<< nb_gens << endl;
-			int_matrix_print(M1, n1, n1);
+			Orbiter->Int_vec.matrix_print(M1, n1, n1);
 			//cout << endl;
 		}
 		A_PGL_n1_q->make_element(my_gens->ith(h), M1, 0 /* verbose_level */);
@@ -1884,7 +1884,7 @@ void strong_generators::regulus_stabilizer(action *A_PGL_n_q,
 		if (f_vv) {
 			cout << "strong_generators::regulus_stabilizer "
 					"h = " << h << " before make_element:" << endl;
-			int_matrix_print(Q, n, n);
+			Orbiter->Int_vec.matrix_print(Q, n, n);
 			if (Mtx->f_semilinear) {
 				cout << "strong_generators::regulus_stabilizer "
 						"semilinear part = " << Q[n * n] << endl;

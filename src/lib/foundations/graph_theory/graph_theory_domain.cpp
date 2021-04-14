@@ -855,7 +855,7 @@ void graph_theory_domain::print_Pijk(int *Pijk, int nb_colors) {
 			}
 		}
 		cout << "P^{(" << k << ")}=(p_{i,j," << k << "})_{i,j}:" << endl;
-		print_integer_matrix_width(cout, Mtx, C, C, C, 3);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, Mtx, C, C, C, 3);
 		FREE_int(Mtx);
 	}
 }
@@ -1485,7 +1485,7 @@ void graph_theory_domain::make_orthogonal_collinearity_graph(int *&Adj, int &N,
 	F->Gram_matrix(epsilon, n, c1, c2, c3, Gram, verbose_level - 1);
 	if (f_v) {
 		cout << "Gram matrix" << endl;
-		print_integer_matrix_width(cout, Gram, d, d, d, 2);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, Gram, d, d, d, 2);
 	}
 
 #if 0

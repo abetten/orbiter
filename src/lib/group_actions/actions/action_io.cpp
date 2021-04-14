@@ -113,7 +113,7 @@ void action::report(ostream &ost, int f_sims, sims *S,
 	if (Stabilizer_chain) {
 		if (base_len()) {
 			ost << "Base: $";
-			lint_vec_print(ost, get_base(), base_len());
+			Orbiter->Lint_vec.print(ost, get_base(), base_len());
 			ost << "$\\\\" << endl;
 		}
 		if (f_strong_gens) {
@@ -263,7 +263,7 @@ void action::read_orbit_rep_and_candidates_from_files_and_process(
 					<< nb_candidates1 - nb_candidates2 << endl;
 			}
 
-		lint_vec_copy(candidates2, candidates1, nb_candidates2);
+		Orbiter->Lint_vec.copy(candidates2, candidates1, nb_candidates2);
 		nb_candidates1 = nb_candidates2;
 
 		FREE_lint(candidates2);
@@ -324,7 +324,7 @@ void action::read_orbit_rep_and_candidates_from_files(
 		cout << "action::read_orbit_rep_and_candidates_from_files "
 				"Read starter " << orbit_at_level << " / "
 				<< nb_cases << " : ";
-		lint_vec_print(cout, starter, starter_sz);
+		Orbiter->Lint_vec.print(cout, starter, starter_sz);
 		cout << endl;
 		//cout << "read_orbit_rep_and_candidates_from_files "
 		//"Group order=" << stab_go << endl;
@@ -496,7 +496,7 @@ void action::read_file_and_print_representatives(
 		0/*verbose_level*/);
 	for (i = 0; i < nb_cases; i++) {
 		cout << "Orbit " << i << " representative ";
-		lint_vec_print(cout, Sets[i], Set_sizes[i]);
+		Orbiter->Lint_vec.print(cout, Sets[i], Set_sizes[i]);
 		cout << endl;
 
 		group *G;
@@ -688,7 +688,7 @@ void action::print_info()
 	if (Stabilizer_chain) {
 		if (base_len()) {
 			cout << "base: ";
-			lint_vec_print(cout, get_base(), base_len());
+			Orbiter->Lint_vec.print(cout, get_base(), base_len());
 			cout << endl;
 		}
 	}
@@ -735,7 +735,7 @@ void action::print_base()
 {
 	if (Stabilizer_chain) {
 		cout << "action " << label << " has base ";
-		lint_vec_print(cout, get_base(), base_len());
+		Orbiter->Lint_vec.print(cout, get_base(), base_len());
 		cout << endl;
 	}
 	else {

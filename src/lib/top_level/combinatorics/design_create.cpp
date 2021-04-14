@@ -137,7 +137,7 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 
 	if (f_v) {
 		cout << "design_create::init set = ";
-		lint_vec_print(cout, set, sz);
+		Orbiter->Lint_vec.print(cout, set, sz);
 		cout << endl;
 	}
 
@@ -201,7 +201,7 @@ void design_create::create_design_PG_2_q(finite_field *F,
 	Sorting.lint_vec_heapsort(set, sz);
 	if (f_v) {
 		cout << "design : ";
-		lint_vec_print(cout, set, sz);
+		Orbiter->Lint_vec.print(cout, set, sz);
 		cout << endl;
 	}
 

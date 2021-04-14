@@ -233,7 +233,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 			Intersection_sets[j][i] = idx;
 		}
 
-		lint_vec_print(cout, Intersection_sets[j], sz);
+		Orbiter->Lint_vec.print(cout, Intersection_sets[j], sz);
 		cout << endl;
 	}
 
@@ -252,7 +252,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 		}
 	}
 	cout << "Adj" << endl;
-	int_matrix_print(Adj, nb_secants, nb_secants);
+	Orbiter->Int_vec.matrix_print(Adj, nb_secants, nb_secants);
 
 
 	cout << "Computing the unitary group:" << endl;
@@ -440,7 +440,7 @@ void hermitian_spreads_classify::early_test_func(long int *S, int len,
 		print_set(cout, len, S);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
-		lint_vec_print(cout, candidates, nb_candidates);
+		Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
 		cout << endl;
 	}
 

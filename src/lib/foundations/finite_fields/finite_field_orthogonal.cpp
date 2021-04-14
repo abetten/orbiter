@@ -1456,17 +1456,17 @@ void finite_field::Siegel_map_between_singular_points(int *T,
 
 	if (f_vv) {
 		cout << "before perp, the matrix B is:" << endl;
-		print_integer_matrix(cout, B, d, d);
+		Orbiter->Int_vec.print_integer_matrix(cout, B, d, d);
 	}
 	perp(d, 2, B, Gram_matrix, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "after perp, the matrix B is:" << endl;
-		print_integer_matrix(cout, B, d, d);
+		Orbiter->Int_vec.print_integer_matrix(cout, B, d, d);
 	}
 	invert_matrix(B, Bv, d, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the matrix Bv = B^{-1} is:" << endl;
-		print_integer_matrix(cout, B, d, d);
+		Orbiter->Int_vec.print_integer_matrix(cout, B, d, d);
 	}
 	mult_matrix_matrix(w, Bv, z, 1, d, d, 0 /* verbose_level */);
 	if (f_vv) {
@@ -1502,7 +1502,7 @@ void finite_field::Siegel_map_between_singular_points(int *T,
 	if (f_v) {
 		cout << "finite_field::Siegel_map_between_singular_points "
 				"the Siegel transformation is:" << endl;
-		print_integer_matrix(cout, T, d, d);
+		Orbiter->Int_vec.print_integer_matrix(cout, T, d, d);
 	}
 	FREE_int(B);
 	FREE_int(Bv);
@@ -1611,7 +1611,7 @@ void finite_field::Siegel_Transformation(
 	if (f_v) {
 		cout << "finite_field::Siegel_Transformation "
 				"Siegel matrix:" << endl;
-		print_integer_matrix_width(cout, M, d, d, d, 2);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, M, d, d, d, 2);
 		//GFq.transform_form_matrix(M, Gram, new_Gram, N1, N2, d);
 		//cout << "transformed Gram matrix:" << endl;
 		//print_integer_matrix_width(cout, new_Gram, d, d, d, 2);

@@ -545,7 +545,7 @@ void combinatorics_domain::print_k_subsets_by_rank(ostream &ost, int v, int k)
 	for (i = 0; i < nb; i++) {
 		unrank_k_subset(i, set, v, k);
 		cout << i << " : ";
-		int_set_print(ost, set, k);
+		Orbiter->Int_vec.set_print(ost, set, k);
 		cout << endl;
 	}
 	FREE_int(set);
@@ -1735,7 +1735,7 @@ int combinatorics_domain::philip_hall_test(
 		if (c < k) {
 			if (f_v) {
 				cout << "Hall test fails for " << k << "-set ";
-				int_set_print(memo, k);
+				Orbiter->Int_vec.set_print(cout, memo, k);
 				cout << " c=" << c << " n=" << n << endl;
 			}
 			if (f_vv) {
@@ -1789,7 +1789,7 @@ int combinatorics_domain::philip_hall_test_dual(
 		if (c < k) {
 			if (f_v) {
 				cout << "Hall test fails for " << k << "-set ";
-				int_set_print(memo, k);
+				Orbiter->Int_vec.set_print(cout, memo, k);
 				cout << " c=" << c << " n=" << n << endl;
 			}
 			if (f_vv) {
@@ -3130,6 +3130,239 @@ void combinatorics_domain::Dedekind_numbers(int n_min, int n_max, int q_min, int
 }
 
 
+
+void combinatorics_domain::convert_stack_to_tdo(std::string &stack_fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i;
+	string fname;
+	string fname_out;
+	string label;
+
+	if (f_v) {
+		cout << "combinatorics_domain::convert_stack_to_tdo" << endl;
+	}
+	fname.assign(stack_fname);
+	chop_off_extension(fname);
+	fname_out.assign(fname);
+	fname_out.append(".tdo");
+
+	if (f_v) {
+		cout << "reading stack file " << stack_fname << endl;
+	}
+	{
+		geo_parameter GP;
+		tdo_scheme G;
+		ifstream f(stack_fname);
+		ofstream g(fname_out);
+		for (i = 0; ; i++) {
+			if (f.eof()) {
+				if (f_v) {
+					cout << "end of file reached" << endl;
+				}
+				break;
+				}
+			if (!GP.input(f)) {
+				if (f_v) {
+					cout << "GP.input returns false" << endl;
+				}
+				break;
+				}
+			if (f_v) {
+				cout << "read decomposition " << i
+							<< " v=" << GP.v << " b=" << GP.b << endl;
+			}
+			GP.convert_single_to_stack(verbose_level - 1);
+			if (f_v) {
+				cout << "after convert_single_to_stack" << endl;
+			}
+			if (strlen(GP.label.c_str())) {
+				GP.write(g, GP.label);
+			}
+			else {
+				char str[1000];
+				string s;
+
+				sprintf(str, "%d", i);
+				s.assign(str);
+				GP.write(g, s);
+			}
+
+			if (f_v) {
+				cout << "after write" << endl;
+			}
+			GP.init_tdo_scheme(G, verbose_level - 1);
+			if (f_v) {
+				cout << "after init_tdo_scheme" << endl;
+			}
+			if (f_vv) {
+				GP.print_schemes(G);
+			}
+		}
+		g << "-1 " << i << endl;
+	}
+	if (f_v) {
+		file_io Fio;
+		cout << "written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+		cout << "combinatorics_domain::convert_stack_to_tdo done" << endl;
+	}
+}
+
+void combinatorics_domain::do_parameters_maximal_arc(int q, int r, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int m = 2, n = 2;
+	int v[2], b[2], aij[4];
+	int Q;
+	char fname[1000];
+	file_io Fio;
+
+	if (f_v) {
+		cout << "combinatorics_domain::do_parameters_maximal_arc q=" << q << " r=" << r << endl;
+	}
+
+	Q = q * q;
+	v[0] = q * (r - 1) + r;
+	v[1] = Q + q * (2 - r) - r + 1;
+	b[0] = Q - Q / r + q * 2 - q / r + 1;
+	b[1] = Q / r + q / r - q;
+	aij[0] = q + 1;
+	aij[1] = 0;
+	aij[2] = q - q / r + 1;
+	aij[3] = q / r;
+	snprintf(fname, 1000, "max_arc_q%d_r%d.stack", q, r);
+
+	Fio.write_decomposition_stack(fname, m, n, v, b, aij, verbose_level - 1);
+}
+
+void combinatorics_domain::do_parameters_arc(int q, int s, int r, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int m = 2, n = 1;
+	int v[2], b[1], aij[2];
+	char fname[1000];
+	file_io Fio;
+
+	if (f_v) {
+		cout << "combinatorics_domain::do_parameters_maximal_arc q=" << q << " s=" << s << " r=" << r << endl;
+	}
+
+	v[0] = s;
+	v[1] = q * q + q + 1 - s;
+	b[0] = q * q + q + 1;
+	aij[0] = q + 1;
+	aij[1] = q + 1;
+	snprintf(fname, 1000, "arc_q%d_s%d_r%d.stack", q, s, r);
+
+	Fio.write_decomposition_stack(fname, m, n, v, b, aij, verbose_level - 1);
+}
+
+void combinatorics_domain::do_read_poset_file(std::string &fname,
+		int f_grouping, double x_stretch, int verbose_level)
+// creates a layered graph file from a text file
+// which was created by DISCRETA/sgls2.cpp
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_combinatorics::do_read_poset_file" << endl;
+	}
+
+	layered_graph *LG;
+
+	LG = NEW_OBJECT(layered_graph);
+	LG->init_poset_from_file(fname, f_grouping, x_stretch, verbose_level - 1);
+
+
+	string fname_out;
+	file_io Fio;
+
+	fname_out.assign(fname);
+
+	replace_extension_with(fname_out, ".layered_graph");
+
+
+	LG->write_file(fname_out, 0 /*verbose_level*/);
+
+	cout << "Written file " << fname_out << " of size "
+			<< Fio.file_size(fname_out) << endl;
+
+	FREE_OBJECT(LG);
+
+	if (f_v) {
+		cout << "combinatorics_domain::do_read_poset_file done" << endl;
+	}
+}
+
+
+void combinatorics_domain::do_make_tree_of_all_k_subsets(int n, int k, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorics_domain::do_make_tree_of_all_k_subsets" << endl;
+	}
+
+	combinatorics_domain Combi;
+	int *set;
+	int N;
+	int h, i;
+	char fname[1000];
+
+
+	snprintf(fname, 1000, "all_k_subsets_%d_%d.tree", n, k);
+	set = NEW_int(k);
+	N = Combi.int_n_choose_k(n, k);
+
+
+	{
+		ofstream fp(fname);
+
+		for (h = 0; h < N; h++) {
+			Combi.unrank_k_subset(h, set, n, k);
+			fp << k;
+			for (i = 0; i < k; i++) {
+				fp << " " << set[i];
+				}
+			fp << endl;
+			}
+		fp << "-1" << endl;
+	}
+	FREE_int(set);
+
+	if (f_v) {
+		cout << "combinatorics_domain::do_make_tree_of_all_k_subsets done" << endl;
+	}
+}
+
+void combinatorics_domain::create_random_permutation(int deg,
+		std::string &fname_csv, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorics_domain::create_random_permutation" << endl;
+	}
+
+	{
+		file_io Fio;
+
+
+		int *P;
+
+		P = NEW_int(deg);
+		random_permutation(P, deg);
+
+		Fio.int_vec_write_csv(P, deg, fname_csv, "perm");
+
+		FREE_int(P);
+	}
+
+	if (f_v) {
+		cout << "combinatorics_domain::create_random_permutation done" << endl;
+	}
+}
 
 
 

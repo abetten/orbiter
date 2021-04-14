@@ -403,7 +403,7 @@ void call_back_colored_graph_clique_found(
 		int i, j, pt, c;
 		
 		cout << "call_back_colored_graph_clique_found clique";
-		int_set_print(cout, CF->current_clique, CF->target_depth);
+		Orbiter->Int_vec.set_print(cout, CF->current_clique, CF->target_depth);
 		cout << endl;
 		for (i = 0; i < CF->target_depth; i++) {
 			pt = CF->current_clique[i];

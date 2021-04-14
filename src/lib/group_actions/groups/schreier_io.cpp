@@ -120,7 +120,7 @@ void schreier::print_orbit_length_distribution(std::ostream &ost)
 	int *val, *mult, len;
 
 	Orbiter->Int_vec.distribution(orbit_len, nb_orbits, val, mult, len);
-	int_distribution_print(ost, val, mult, len);
+	Orbiter->Int_vec.distribution_print(ost, val, mult, len);
 	ost << endl;
 
 	FREE_int(val);
@@ -902,7 +902,7 @@ void schreier::print_orbit(std::ostream &ost, int orbit_no)
 	}
 	//int_vec_print(ost, v, len);
 	//int_vec_heapsort(v, len);
-	lint_vec_print_fully(ost, v, len);
+	Orbiter->Lint_vec.print_fully(ost, v, len);
 
 	FREE_lint(v);
 }
@@ -925,7 +925,7 @@ void schreier::print_orbit_with_original_labels(std::ostream &ost, int orbit_no)
 
 	//int_vec_print(ost, v, len);
 	//int_vec_heapsort(v, len);
-	lint_vec_print_fully(ost, w, len);
+	Orbiter->Lint_vec.print_fully(ost, w, len);
 
 	FREE_lint(v);
 	FREE_lint(w);
@@ -1093,7 +1093,7 @@ void schreier::print_orbit_through_labels(std::ostream &ost,
 		v[i] = point_labels[orbit[first + i]];
 	}
 	Sorting.lint_vec_heapsort(v, len);
-	lint_vec_print_fully(ost, v, len);
+	Orbiter->Lint_vec.print_fully(ost, v, len);
 	FREE_lint(v);
 }
 

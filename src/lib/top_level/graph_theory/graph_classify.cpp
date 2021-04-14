@@ -243,10 +243,28 @@ void graph_classify::init(graph_classify_description *Descr, int verbose_level)
 		target_depth,
 		verbose_level - 1);
 
+	long int t0;
+	os_interface Os;
+	int depth;
+
+	t0 = Os.os_ticks();
+
+	if (f_v) {
+		cout << "graph_classify::init before gen->main" << endl;
+	}
+	depth = gen->main(t0,
+			target_depth /*schreier_depth*/,
+		TRUE /*f_use_invariant_subset_if_available*/,
+		FALSE /*f_debug*/,
+		verbose_level);
+	if (f_v) {
+		cout << "graph_classify::init after gen->main" << endl;
+		cout << "gen->main returns depth=" << depth << endl;
+	}
 
 	if (f_v) {
 		cout << "graph_classify::init done" << endl;
-		}
+	}
 
 
 }
@@ -314,11 +332,11 @@ int graph_classify::check_conditions_tournament(
 	if (f_v) {
 		cout << "graph_classify::check_conditions_tournament "
 				"checking set ";
-		lint_vec_print(cout, S, len);
+		Orbiter->Lint_vec.print(cout, S, len);
 		}
 
 	S_sorted = NEW_lint(len);
-	lint_vec_copy(S, S_sorted, len);
+	Orbiter->Lint_vec.copy(S, S_sorted, len);
 	Sorting.lint_vec_heapsort(S_sorted, len);
 
 	for (i = 0; i < len; i++) {
@@ -393,7 +411,7 @@ int graph_classify::check_regularity(
 	
 	if (f_v) {
 		cout << "check_regularity for ";
-		lint_vec_print(cout, S, len);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 		}
 	f_OK = compute_degree_sequence(S, len);
@@ -444,7 +462,7 @@ int graph_classify::girth_check(long int *line, int len,
 	
 	if (f_v) {
 		cout << "girth check for ";
-		lint_vec_print(cout, line, len);
+		Orbiter->Lint_vec.print(cout, line, len);
 		cout << endl;
 		}
 	for (i = 0; i < Descr->n; i++) {
@@ -622,12 +640,12 @@ void graph_classify::print_score_sequences(
 
 
 		cout << h << " : ";
-		lint_vec_print(cout, set, level);
+		Orbiter->Lint_vec.print(cout, set, level);
 		cout << " : " << go << " : ";
 		
 		score_sequence(Descr->n, set, level, score, verbose_level - 1);
 
-		lint_vec_print(cout, score, Descr->n);
+		Orbiter->Lint_vec.print(cout, score, Descr->n);
 		cout << endl;
 
 		delete Strong_gens;
@@ -644,7 +662,7 @@ void graph_classify::score_sequence(int n,
 	int i, a, swap, a2, u, v;
 	combinatorics_domain Combi;
 
-	lint_vec_zero(score, n);
+	Orbiter->Lint_vec.zero(score, n);
 	for (i = 0; i < sz; i++) {
 		a = set[i];
 
@@ -669,8 +687,6 @@ void graph_classify::score_sequence(int n,
 
 void graph_classify::draw_graphs(int level,
 	layered_graph_draw_options *draw_options,
-	//double scale, int xmax_in, int ymax_in,
-	//int xmax, int ymax, int f_embedded, int f_sideways,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -679,13 +695,17 @@ void graph_classify::draw_graphs(int level,
 	int *v;
 
 	if (f_v) {
-		cout << "graph_classify::draw_graphs "
-				"level = " << level << endl;
-		}
+		cout << "graph_classify::draw_graphs level = " << level << endl;
+	}
 
 	set = NEW_lint(level);
 	v = NEW_int(n2);
 	nb_orbits = gen->nb_orbits_at_level(level);
+
+	if (f_v) {
+		cout << "graph_classify::draw_graphs nb_orbits = " << nb_orbits << endl;
+	}
+
 	for (h = 0; h < nb_orbits; h++) {
 		strong_generators *Strong_gens;
 		longinteger_object go;
@@ -702,7 +722,7 @@ void graph_classify::draw_graphs(int level,
 			}
 
 		cout << h << " : ";
-		lint_vec_print(cout, set, level);
+		Orbiter->Lint_vec.print(cout, set, level);
 		cout << " : ";
 		for (i = 0; i < n2; i++) {
 			cout << v[i];
@@ -719,7 +739,7 @@ void graph_classify::draw_graphs(int level,
 
 		fname_full.append(str);
 
-
+#if 1
 		int x_min = 0, x_max = draw_options->xin;
 		int y_min = 0, y_max = draw_options->yin;
 		int x, y, dx, dy;
@@ -728,42 +748,48 @@ void graph_classify::draw_graphs(int level,
 		y = (y_max - y_min) >> 1;
 		dx = x;
 		dy = y;
+#endif
+
 		{
-		mp_graphics G(fname_full,
-				x_min, y_min, x_max, y_max, draw_options->f_embedded, draw_options->f_sideways, verbose_level - 1);
-		G.out_xmin() = 0;
-		G.out_ymin() = 0;
-		G.out_xmax() = draw_options->xout;
-		G.out_ymax() = draw_options->yout;
-		//cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
-	
-		G.set_scale(draw_options->scale);
-		G.header();
-		G.begin_figure(1000 /*factor_1000*/);
+			mp_graphics G(fname_full, draw_options, verbose_level - 1);
 
-		G.sl_thickness(50); // 100 is normal
-		//G.frame(0.05);
+			G.header();
+			G.begin_figure(1000 /*factor_1000*/);
+
+			//G.sl_thickness(50); // 100 is normal
+			//G.frame(0.05);
 
 
-		if (Descr->f_tournament) {
-			G.draw_tournament(x, y, dx, dy, Descr->n, set, level, 0);
-			}
-		else {
-			G.draw_graph(x, y, dx, dy, Descr->n, set, level);
-			}
-		
-		G.end_figure();
-		G.footer();
+			if (Descr->f_tournament) {
+				cout << "graph_classify::draw_graphs before G.draw_tournament" << endl;
+				G.draw_tournament(x, y, dx, dy, Descr->n, set, level, draw_options->rad,
+						verbose_level - 1);
+				cout << "graph_classify::draw_graphs after G.draw_tournament" << endl;
+				}
+			else {
+				cout << "graph_classify::draw_graphs before G.draw_graph" << endl;
+				G.draw_graph(x, y, dx, dy, Descr->n, set, level, draw_options->rad,
+						verbose_level - 1);
+				cout << "graph_classify::draw_graphs after G.draw_graph" << endl;
+				}
+
+			G.end_figure();
+			G.footer();
 		}
 		file_io Fio;
 
 		cout << "written file " << fname_full
 				<< " of size " << Fio.file_size(fname_full) << endl;
 
-		delete Strong_gens;
+		cout << "before FREE_OBJECT(Strong_gens)" << endl;
+		//FREE_OBJECT(Strong_gens);
+		cout << "after FREE_OBJECT(Strong_gens)" << endl;
 		}
 
 	FREE_lint(set);
+	if (f_v) {
+		cout << "graph_classify::draw_graphs level = " << level << " done" << endl;
+	}
 }
 
 
@@ -780,7 +806,7 @@ void graph_classify_test_function(long int *S, int len,
 	graph_classify *Gen = (graph_classify *) data;
 	int i, f_OK;
 
-	lint_vec_copy(S, Gen->S1, len);
+	Orbiter->Lint_vec.copy(S, Gen->S1, len);
 	nb_good_candidates = 0;
 	for (i = 0; i < nb_candidates; i++) {
 		Gen->S1[len] = candidates[i];

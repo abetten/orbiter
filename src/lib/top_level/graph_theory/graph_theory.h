@@ -220,6 +220,61 @@ public:
 
 };
 
+// #############################################################################
+// graph_classification_activity_description.cpp
+// #############################################################################
+
+//! an activity for a classification of graphs and tournaments
+
+
+class graph_classification_activity_description {
+
+public:
+	int f_draw_level_graph;
+	int draw_level_graph_level;
+
+	int f_draw_graphs;
+
+	int f_draw_graphs_at_level;
+	int draw_graphs_at_level_level;
+
+	int f_draw_options;
+	layered_graph_draw_options *draw_options;
+
+
+	graph_classification_activity_description();
+	~graph_classification_activity_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+
+};
+
+
+// #############################################################################
+// graph_classification_activity.cpp
+// #############################################################################
+
+//! an activity for a classification of graphs and tournaments
+
+
+class graph_classification_activity {
+
+public:
+
+	graph_classification_activity_description *Descr;
+	graph_classify *GC;
+
+	graph_classification_activity();
+	~graph_classification_activity();
+	void init(graph_classification_activity_description *Descr,
+			graph_classify *GC,
+			int verbose_level);
+	void perform_activity(int verbose_level);
+
+
+};
+
 
 // #############################################################################
 // graph_classify_description.cpp
@@ -244,20 +299,12 @@ public:
 	int f_girth;
 	int girth;
 
-	int f_draw_graphs;
-	int f_draw_graphs_at_level;
-	int level;
-	int f_x_stretch;
-	double x_stretch;
-
 	int f_depth;
 	int depth;
 
 	int f_tournament;
 	int f_no_superking;
 
-	int f_draw_level_graph;
-	int level_graph_level;
 	int f_test_multi_edge;
 
 
@@ -265,8 +312,6 @@ public:
 	long int identify_data[1000];
 	int identify_data_sz;
 
-	int f_draw_options;
-	layered_graph_draw_options *draw_options;
 
 	graph_classify_description();
 	~graph_classify_description();

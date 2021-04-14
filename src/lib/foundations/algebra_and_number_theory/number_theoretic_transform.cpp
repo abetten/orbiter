@@ -105,7 +105,7 @@ void number_theoretic_transform::init(std::string &fname_code,
 	}
 
 	cout << "N[]:" << endl;
-	int_matrix_print(N, k + 1, 1);
+	Orbiter->Int_vec.matrix_print(N, k + 1, 1);
 
 	idx = (q - 1) / N[k];
 	omega = F->power(alpha, idx);
@@ -149,7 +149,7 @@ void number_theoretic_transform::init(std::string &fname_code,
 			cout << "alphaQ=" << alphaQ << endl;
 			cout << "psi=" << psi << endl;
 			cout << "Psi_powers:" << endl;
-			int_matrix_print(Psi_powers, N[k], 1);
+			Orbiter->Int_vec.matrix_print(Psi_powers, N[k], 1);
 		}
 
 
@@ -157,7 +157,7 @@ void number_theoretic_transform::init(std::string &fname_code,
 
 
 	cout << "Omega:" << endl;
-	int_matrix_print(Omega, k + 1, 1);
+	Orbiter->Int_vec.matrix_print(Omega, k + 1, 1);
 
 
 	cout << "h : N[h] : Omega[h] : multiplicative_order : Omega[h]^2" << endl;
@@ -179,7 +179,7 @@ void number_theoretic_transform::init(std::string &fname_code,
 			}
 		}
 		cout << "A_" << N[h] << " using logarithms (+1):" << endl;
-		int_matrix_print(A_log[h], N[h], N[h]);
+		Orbiter->Int_vec.matrix_print(A_log[h], N[h], N[h]);
 	}
 
 
@@ -195,7 +195,7 @@ void number_theoretic_transform::init(std::string &fname_code,
 		X[i] = Os.random_integer(q);
 	}
 	cout << "X:" << endl;
-	int_matrix_print(X, 1, N[k]);
+	Orbiter->Int_vec.matrix_print(X, 1, N[k]);
 	cout << endl;
 
 
@@ -214,7 +214,7 @@ void number_theoretic_transform::init(std::string &fname_code,
 
 
 	cout << "Y:" << endl;
-	int_matrix_print(Y, 1, N[k]);
+	Orbiter->Int_vec.matrix_print(Y, 1, N[k]);
 	cout << endl;
 
 	//omega_power = omega; //F->power(omega, 2);
@@ -253,7 +253,7 @@ void number_theoretic_transform::init(std::string &fname_code,
 
 
 	cout << "Z:" << endl;
-	int_matrix_print(Z, 1, N[k]);
+	Orbiter->Int_vec.matrix_print(Z, 1, N[k]);
 	cout << endl;
 
 	for (i = 0; i < N[k]; i++) {
@@ -303,19 +303,19 @@ void number_theoretic_transform::init(std::string &fname_code,
 
 
 	cout << "G[k-1]:" << endl;
-	int_matrix_print(Gr[k - 1], N[k], N[k]);
+	Orbiter->Int_vec.matrix_print(Gr[k - 1], N[k], N[k]);
 	cout << endl;
 	cout << "D[k-1]:" << endl;
-	int_matrix_print(Dr[k - 1], N[k], N[k]);
+	Orbiter->Int_vec.matrix_print(Dr[k - 1], N[k], N[k]);
 	cout << endl;
 	cout << "T[k-1]:" << endl;
-	int_matrix_print(Tr[k - 1], N[k], N[k]);
+	Orbiter->Int_vec.matrix_print(Tr[k - 1], N[k], N[k]);
 	cout << endl;
 	cout << "Tv[k-1]:" << endl;
-	int_matrix_print(Tvr[k - 1], N[k], N[k]);
+	Orbiter->Int_vec.matrix_print(Tvr[k - 1], N[k], N[k]);
 	cout << endl;
 	cout << "P[k-1]:" << endl;
-	int_matrix_print(Pr[k - 1], N[k], N[k]);
+	Orbiter->Int_vec.matrix_print(Pr[k - 1], N[k], N[k]);
 	cout << endl;
 
 	file_io Fio;
@@ -406,7 +406,7 @@ void number_theoretic_transform::init(std::string &fname_code,
 	multiply_matrix_stack(F, Stack, 3, N[k], the_P, verbose_level);
 
 	cout << "the_P:" << endl;
-	int_matrix_print(the_P, N[k], N[k]);
+	Orbiter->Int_vec.matrix_print(the_P, N[k], N[k]);
 	cout << endl;
 
 	sprintf(str, "ntt_the_P_k%d.csv", k);
@@ -425,7 +425,7 @@ void number_theoretic_transform::init(std::string &fname_code,
 		}
 	}
 	cout << "bit_reversal:" << endl;
-	int_matrix_print(bit_reversal, N[k], 1);
+	Orbiter->Int_vec.matrix_print(bit_reversal, N[k], 1);
 	cout << endl;
 
 
@@ -440,7 +440,7 @@ void number_theoretic_transform::init(std::string &fname_code,
 	multiply_matrix_stack(F, Stack, 6, N[k], the_L, verbose_level);
 
 	cout << "the_L:" << endl;
-	int_matrix_print(the_L, N[k], N[k]);
+	Orbiter->Int_vec.matrix_print(the_L, N[k], N[k]);
 	cout << endl;
 
 	string fname_L;
@@ -462,7 +462,7 @@ void number_theoretic_transform::init(std::string &fname_code,
 	multiply_matrix_stack(F, Stack, 4, N[3], the_L, verbose_level);
 
 	cout << "G[2]*D[2]*T[2]*P[2]=" << endl;
-	int_matrix_print(the_L, N[3], N[3]);
+	Orbiter->Int_vec.matrix_print(the_L, N[3], N[3]);
 	cout << endl;
 
 
@@ -482,7 +482,7 @@ void number_theoretic_transform::init(std::string &fname_code,
 	multiply_matrix_stack(F, Stack, 2, N[k], the_L, verbose_level);
 
 	cout << "A*Av=" << endl;
-	int_matrix_print(the_L, N[k], N[k]);
+	Orbiter->Int_vec.matrix_print(the_L, N[k], N[k]);
 	cout << endl;
 
 	string fname_AAv;
@@ -530,7 +530,7 @@ void number_theoretic_transform::init(std::string &fname_code,
 	}
 
 	cout << "poly_A:" << endl;
-	int_matrix_print(poly_A, 1, N[k]);
+	Orbiter->Int_vec.matrix_print(poly_A, 1, N[k]);
 	cout << endl;
 
 
@@ -539,14 +539,14 @@ void number_theoretic_transform::init(std::string &fname_code,
 	}
 
 	cout << "poly_B:" << endl;
-	int_matrix_print(poly_B, 1, N[k]);
+	Orbiter->Int_vec.matrix_print(poly_B, 1, N[k]);
 	cout << endl;
 
 	Hom->multiply_mod(poly_A, poly_B, poly_C, 0/*verbose_level*/);
 
 
 	cout << "poly_C:" << endl;
-	int_matrix_print(poly_C, 1, N[k]);
+	Orbiter->Int_vec.matrix_print(poly_C, 1, N[k]);
 	cout << endl;
 
 
@@ -559,7 +559,7 @@ void number_theoretic_transform::init(std::string &fname_code,
 	ntt4_backward(poly_Cp, poly_C, F);
 
 	cout << "poly_C:" << endl;
-	int_matrix_print(poly_C, 1, N[k]);
+	Orbiter->Int_vec.matrix_print(poly_C, 1, N[k]);
 	cout << endl;
 
 
@@ -568,7 +568,7 @@ void number_theoretic_transform::init(std::string &fname_code,
 	Hom->multiply_mod_negatively_wrapped(poly_A, poly_B, poly_C, 0/*verbose_level*/);
 
 	cout << "poly_C:" << endl;
-	int_matrix_print(poly_C, 1, N[k]);
+	Orbiter->Int_vec.matrix_print(poly_C, 1, N[k]);
 	cout << endl;
 
 	for (i = 0; i < N[k]; i++) {
@@ -588,7 +588,7 @@ void number_theoretic_transform::init(std::string &fname_code,
 		poly_C[i] = FQ->mult(poly_C[i], FQ->inverse(Psi_powers[i]));
 	}
 	cout << "poly_C:" << endl;
-	int_matrix_print(poly_C, 1, N[k]);
+	Orbiter->Int_vec.matrix_print(poly_C, 1, N[k]);
 	cout << endl;
 
 
@@ -986,22 +986,22 @@ void number_theoretic_transform::make_level(int s, int verbose_level)
 
 
 	cout << "Gr[" << s << "]:" << endl;
-	int_matrix_print(Gr[s], N[s + 1], N[s + 1]);
+	Orbiter->Int_vec.matrix_print(Gr[s], N[s + 1], N[s + 1]);
 	cout << endl;
 	cout << "Dr[" << s << "]:" << endl;
-	int_matrix_print(Dr[s], N[s + 1], N[s + 1]);
+	Orbiter->Int_vec.matrix_print(Dr[s], N[s + 1], N[s + 1]);
 	cout << endl;
 	cout << "Dvr[" << s << "]:" << endl;
-	int_matrix_print(Dvr[s], N[s + 1], N[s + 1]);
+	Orbiter->Int_vec.matrix_print(Dvr[s], N[s + 1], N[s + 1]);
 	cout << endl;
 	cout << "Tr[" << s << "]:" << endl;
-	int_matrix_print(Tr[s], N[s + 1], N[s + 1]);
+	Orbiter->Int_vec.matrix_print(Tr[s], N[s + 1], N[s + 1]);
 	cout << endl;
 	cout << "Tvr[" << s << "]:" << endl;
-	int_matrix_print(Tvr[s], N[s + 1], N[s + 1]);
+	Orbiter->Int_vec.matrix_print(Tvr[s], N[s + 1], N[s + 1]);
 	cout << endl;
 	cout << "Pr[" << s << "]:" << endl;
-	int_matrix_print(Pr[s], N[s + 1], N[s + 1]);
+	Orbiter->Int_vec.matrix_print(Pr[s], N[s + 1], N[s + 1]);
 	cout << endl;
 
 #if 0
@@ -1088,22 +1088,22 @@ void number_theoretic_transform::make_level(int s, int verbose_level)
 	paste(Pr, P, s, verbose_level);
 
 	cout << "G[" << s << "]:" << endl;
-	int_matrix_print(G[s], N[k], N[k]);
+	Orbiter->Int_vec.matrix_print(G[s], N[k], N[k]);
 	cout << endl;
 	cout << "D[" << s << "]:" << endl;
-	int_matrix_print(D[s], N[k], N[k]);
+	Orbiter->Int_vec.matrix_print(D[s], N[k], N[k]);
 	cout << endl;
 	cout << "Dv[" << s << "]:" << endl;
-	int_matrix_print(Dv[s], N[k], N[k]);
+	Orbiter->Int_vec.matrix_print(Dv[s], N[k], N[k]);
 	cout << endl;
 	cout << "T[" << s << "]:" << endl;
-	int_matrix_print(T[s], N[k], N[k]);
+	Orbiter->Int_vec.matrix_print(T[s], N[k], N[k]);
 	cout << endl;
 	cout << "Tv[" << s << "]:" << endl;
-	int_matrix_print(Tv[s], N[k], N[k]);
+	Orbiter->Int_vec.matrix_print(Tv[s], N[k], N[k]);
 	cout << endl;
 	cout << "P[" << s << "]:" << endl;
-	int_matrix_print(P[s], N[k], N[k]);
+	Orbiter->Int_vec.matrix_print(P[s], N[k], N[k]);
 	cout << endl;
 
 	//snprintf(fname_F, 1000, "ntt_F_k%d.csv", k - 1);
@@ -1181,7 +1181,7 @@ void number_theoretic_transform::paste(int **Xr, int **X, int s, int verbose_lev
 	}
 	if (f_v) {
 		cout << "number_theoretic_transform::paste created matrix" << endl;
-		int_matrix_print(G[s], N[k], N[k]);
+		Orbiter->Int_vec.matrix_print(G[s], N[k], N[k]);
 	}
 	if (f_v) {
 		cout << "number_theoretic_transform::paste done" << endl;

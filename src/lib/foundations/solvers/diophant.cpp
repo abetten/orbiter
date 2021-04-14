@@ -226,7 +226,7 @@ void diophant::init_var_labels(long int *labels, int verbose_level)
 	}
 	var_labels = NEW_int(n);
 	f_has_var_labels = TRUE;
-	lint_vec_copy_to_int(labels, var_labels, n);
+	Orbiter->Lint_vec.copy_to_int(labels, var_labels, n);
 	if (f_v) {
 		cout << "diophant::init_var_labels done" << endl;
 	}
@@ -1235,7 +1235,7 @@ int diophant::solve_all_DLX_with_RHS(int f_write_tree,
 	if (f_vv) {
 		cout << "diophant::solve_all_DLX_with_RHS "
 				"the system:" << endl;
-		int_matrix_print(Inc, m, n);
+		Orbiter->Int_vec.matrix_print(Inc, m, n);
 	}
 	f_has_type = TRUE;
 	my_RHS = NEW_int(m);
@@ -1246,7 +1246,7 @@ int diophant::solve_all_DLX_with_RHS(int f_write_tree,
 	}
 	if (f_vv) {
 		cout << "diophant::solve_all_DLX_with_RHS  RHS:" << endl;
-		int_matrix_print(my_RHS, m, 1);
+		Orbiter->Int_vec.matrix_print(my_RHS, m, 1);
 		//cout << diophant::solve_all_DLX_with_RHS  type:" << endl;
 		//int_matrix_print(my_type, m, 1);
 	}
@@ -1311,7 +1311,7 @@ int diophant::solve_all_DLX_with_RHS_and_callback(
 	if (f_vv) {
 		cout << "diophant::solve_all_DLX_with_RHS "
 				"the system:" << endl;
-		int_matrix_print(Inc, m, n);
+		Orbiter->Int_vec.matrix_print(Inc, m, n);
 	}
 	f_has_type = TRUE;
 	my_RHS = NEW_int(m);
@@ -1324,7 +1324,7 @@ int diophant::solve_all_DLX_with_RHS_and_callback(
 	}
 	if (f_vv) {
 		cout << "diophant::solve_all_DLX_with_RHS  RHS:" << endl;
-		int_matrix_print(my_RHS, m, 1);
+		Orbiter->Int_vec.matrix_print(my_RHS, m, 1);
 		//cout << diophant::solve_all_DLX_with_RHS  type:" << endl;
 		//int_matrix_print(my_type, m, 1);
 	}
@@ -4085,7 +4085,7 @@ void diophant::draw_partitioned(std::string &fname_base,
 	}
 	if (FALSE) {
 		cout << "diophant::draw_partitioned A2=" << endl;
-		int_matrix_print(A2, m, n);
+		Orbiter->Int_vec.matrix_print(A2, m, n);
 	}
 
 	int f_row_grid = FALSE;
@@ -4623,7 +4623,7 @@ void solve_diophant(int *Inc,
 		Dio->get_solutions(Solutions, nb_sol, 1 /* verbose_level */);
 		if (FALSE /*f_v4*/) {
 			cout << "Solutions:" << endl;
-			lint_matrix_print(Solutions, nb_sol, nb_needed);
+			Orbiter->Lint_vec.matrix_print(Solutions, nb_sol, nb_needed);
 		}
 	}
 	else {

@@ -128,7 +128,7 @@ void orthogonal::create_FTWKB_BLT_set(long int *set, int *ABC, int verbose_level
 	}
 	if (f_v) {
 		cout << "orthogonal::create_FTWKB_BLT_set the BLT set FTWKB is ";
-		lint_vec_print(cout, set, q + 1);
+		Orbiter->Lint_vec.print(cout, set, q + 1);
 		cout << endl;
 	}
 }
@@ -188,7 +188,7 @@ void orthogonal::create_K1_BLT_set(long int *set, int *ABC, int verbose_level)
 		}
 	if (f_v) {
 		cout << "orthogonal::create_K1_BLT_set the BLT set K1 is ";
-		lint_vec_print(cout, set, q + 1);
+		Orbiter->Lint_vec.print(cout, set, q + 1);
 		cout << endl;
 		}
 }
@@ -252,7 +252,7 @@ void orthogonal::create_K2_BLT_set(long int *set, int *ABC, int verbose_level)
 	if (f_v) {
 		cout << "orthogonal::create_K2_BLT_set "
 				"the BLT set K2 is ";
-		lint_vec_print(cout, set, q + 1);
+		Orbiter->Lint_vec.print(cout, set, q + 1);
 		cout << endl;
 		}
 }
@@ -331,7 +331,7 @@ void orthogonal::create_LP_37_72_BLT_set(
 	if (f_v) {
 		cout << "orthogonal::create_LP_37_72_BLT_set "
 				"the BLT set LP_37_72 is ";
-		lint_vec_print(cout, set, q + 1);
+		Orbiter->Lint_vec.print(cout, set, q + 1);
 		cout << endl;
 		}
 }
@@ -409,7 +409,7 @@ void orthogonal::create_LP_37_4a_BLT_set(long int *set, int verbose_level)
 	if (f_v) {
 		cout << "orthogonal::create_LP_37_4a_BLT_set "
 				"the BLT set LP_37_4a is ";
-		lint_vec_print(cout, set, q + 1);
+		Orbiter->Lint_vec.print(cout, set, q + 1);
 		cout << endl;
 		}
 }
@@ -487,7 +487,7 @@ void orthogonal::create_LP_37_4b_BLT_set(long int *set, int verbose_level)
 	if (f_v) {
 		cout << "orthogonal::create_LP_37_4b_BLT_set "
 				"the BLT set LP_37_4b is ";
-		lint_vec_print(cout, set, q + 1);
+		Orbiter->Lint_vec.print(cout, set, q + 1);
 		cout << endl;
 		}
 }
@@ -576,7 +576,7 @@ void orthogonal::create_Law_71_BLT_set(
 	if (f_v) {
 		cout << "orthogonal::create_Law_71_BLT_set "
 				"the BLT set LP_71 is ";
-		lint_vec_print(cout, set, q + 1);
+		Orbiter->Lint_vec.print(cout, set, q + 1);
 		cout << endl;
 		}
 }
@@ -607,7 +607,7 @@ int orthogonal::BLT_test(int size, long int *set, int verbose_level)
 		return TRUE;
 	if (f_v) {
 		cout << "BLT_test for" << endl;
-		lint_vec_print(cout, set, size);
+		Orbiter->Lint_vec.print(cout, set, size);
 		if (f_vv) {
 			for (i = 0; i < size; i++) {
 				unrank_point(v1, 1, set[i], verbose_level - 1);
@@ -926,7 +926,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 				base_col, FALSE, NULL, level, n, n, 0);
 		if (f_vvv) {
 			cout << "after Gauss, rank = " << rk << endl;
-			print_integer_matrix_width(cout, Mtx, level, n, n, 3);
+			Orbiter->Int_vec.print_integer_matrix_width(cout, Mtx, level, n, n, 3);
 			}
 		H = 0;
 		for (i = 0; i < level * n; i++) {
@@ -1060,7 +1060,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 					f_complete, base_col, FALSE, NULL, level, n, n, 0);
 			if (f_vvv)  {
 				cout << "after Gauss, rank = " << rk << endl;
-				print_integer_matrix_width(cout, Mtx, level, n, n, 3);
+				Orbiter->Int_vec.print_integer_matrix_width(cout, Mtx, level, n, n, 3);
 				}
 
 			H = 0;
@@ -1084,7 +1084,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 		cout << "Incidence structure between points "
 				"and high frequency planes:" << endl;
 		if (nb_planes < 30) {
-			print_integer_matrix_width(cout, Blocks,
+			Orbiter->Int_vec.print_integer_matrix_width(cout, Blocks,
 					nb_planes, Block_size, Block_size, 3);
 			}
 		}
@@ -1109,7 +1109,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 		}
 	if (f_vv) {
 		cout << "Incidence matrix:" << endl;
-		print_integer_matrix_width(cout, Incma,
+		Orbiter->Int_vec.print_integer_matrix_width(cout, Incma,
 				size, nb_planes, nb_planes, 1);
 		}
 	for (i = 0; i < size; i++) {
@@ -1128,7 +1128,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 		}
 	if (f_vv) {
 		cout << "I * I^\\top = " << endl;
-		print_integer_matrix_width(cout, IIt, size, size, size, 2);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, IIt, size, size, size, 2);
 		}
 	for (i = 0; i < nb_planes; i++) {
 		for (j = 0; j < nb_planes; j++) {
@@ -1141,7 +1141,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 		}
 	if (f_v) {
 		cout << "I^\\top * I = " << endl;
-		print_integer_matrix_width(cout, ItI,
+		Orbiter->Int_vec.print_integer_matrix_width(cout, ItI,
 				nb_planes, nb_planes, nb_planes, 3);
 		}
 

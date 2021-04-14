@@ -153,7 +153,7 @@ void action_by_representation::compute_image_int_low_level(
 
 	if (f_v) {
 		cout << "A=" << endl;
-		print_integer_matrix_width(cout,
+		Orbiter->Int_vec.print_integer_matrix_width(cout,
 				AA, 3, 3, 3, F->log10_of_q);
 		}
 	F->mult_matrix_matrix(x, AA, xA, 1, 3, 3,

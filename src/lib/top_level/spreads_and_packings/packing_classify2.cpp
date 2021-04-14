@@ -56,7 +56,7 @@ void packing_classify::compute_klein_invariants(
 		if (f_vv) {
 			cout << "read representative of orbit " << orbit
 					<< " (id=" << id << ")" << endl;
-			lint_vec_print(cout, the_packing, Iso->size);
+			Orbiter->Lint_vec.print(cout, the_packing, Iso->size);
 			cout << endl;
 		}
 		Spread_table_with_selection->Spread_tables->compute_list_of_lines_from_packing(list_of_lines,
@@ -64,7 +64,7 @@ void packing_classify::compute_klein_invariants(
 		if (f_v3) {
 			cout << "read representative of orbit " << orbit
 					<< " (id=" << id << ") list of lines:" << endl;
-			lint_matrix_print(list_of_lines,
+			Orbiter->Lint_vec.matrix_print(list_of_lines,
 					size_of_packing, spread_size);
 			cout << endl;
 		}
@@ -152,7 +152,7 @@ void packing_classify::compute_and_save_klein_invariants(std::string &prefix,
 		for (i = 0; i < nb_planes; i++) {
 			cout << setw(3) << i << " : " << R[i]
 				<< " : " << setw(5) << nb_pts_on_plane[i] << " : ";
-			lint_vec_print(cout, Pts_on_plane[i], nb_pts_on_plane[i]);
+			Orbiter->Lint_vec.print(cout, Pts_on_plane[i], nb_pts_on_plane[i]);
 			cout << endl;
 		}
 #endif
@@ -910,7 +910,7 @@ void packing_classify::report_extra_stuff(
 
 		for (u = 0; u < Spread_table_with_selection->Spread_tables->nb_spreads; u++) {
 			ost << "Spread " << u << " is $";
-			lint_vec_print_fully(ost,
+			Orbiter->Lint_vec.print_fully(ost,
 					Spread_table_with_selection->Spread_tables->spread_table + u * spread_size, spread_size);
 			ost << "$ isomorphism type "
 					<< Spread_table_with_selection->Spread_tables->spread_iso_type[u] << "\\\\" << endl;

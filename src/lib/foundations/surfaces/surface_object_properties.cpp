@@ -412,7 +412,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 	}
 	if (f_vvv) {
 		cout << "surface_object::compute_properties Eckardt_points=";
-		lint_vec_print(cout, Eckardt_points, nb_Eckardt_points);
+		Orbiter->Lint_vec.print(cout, Eckardt_points, nb_Eckardt_points);
 		cout << endl;
 	}
 
@@ -485,7 +485,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 	}
 	if (f_vvv) {
 		cout << "Double_points=";
-		lint_vec_print(cout, Double_points, nb_Double_points);
+		Orbiter->Lint_vec.print(cout, Double_points, nb_Double_points);
 		cout << endl;
 	}
 
@@ -519,7 +519,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 	}
 	if (f_vvv) {
 		cout << "Single_points=";
-		lint_vec_print(cout, Single_points, nb_Single_points);
+		Orbiter->Lint_vec.print(cout, Single_points, nb_Single_points);
 		cout << endl;
 	}
 
@@ -533,7 +533,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 
 
 	Pts_not_on_lines = NEW_lint(SO->nb_pts);
-	lint_vec_copy(SO->Pts, Pts_not_on_lines, SO->nb_pts);
+	Orbiter->Lint_vec.copy(SO->Pts, Pts_not_on_lines, SO->nb_pts);
 	nb_pts_not_on_lines = SO->nb_pts;
 
 	int i, j, a, b, idx, h;
@@ -636,7 +636,7 @@ void surface_object_properties::compute_axes(int verbose_level)
 			}
 			if (h == 3) {
 				Axes_index[nb_axes] = 2 * t + i;
-				lint_vec_copy(SO->Surf->Schlaefli->Trihedral_to_Eckardt + t * 6 + i * 3,
+				Orbiter->Lint_vec.copy(SO->Surf->Schlaefli->Trihedral_to_Eckardt + t * 6 + i * 3,
 						Axes_Eckardt_points + nb_axes * 3, 3);
 				nb_axes++;
 			}
@@ -2262,7 +2262,7 @@ void surface_object_properties::print_Hesse_planes(std::ostream &ost)
 	ost << "\\subsection*{Hesse planes}" << endl;
 	ost << "Number of Hesse planes: " << nb_Hesse_planes << "\\\\" << endl;
 	ost << "Set of Hesse planes: ";
-	lint_vec_print(ost, Hesse_planes, nb_Hesse_planes);
+	Orbiter->Lint_vec.print(ost, Hesse_planes, nb_Hesse_planes);
 	ost << "\\\\" << endl;
 
 	SO->Surf->Gr3->print_set_tex(ost, Hesse_planes, nb_Hesse_planes);
@@ -2589,7 +2589,7 @@ void surface_object_properties::print_all_points_on_surface(std::ostream &ost)
 			ost << "$\\\\" << endl;
 			}
 		ost << "\\end{multicols}" << endl;
-		lint_vec_print_fully(ost, SO->Pts, SO->nb_pts);
+		Orbiter->Lint_vec.print_fully(ost, SO->Pts, SO->nb_pts);
 		ost << "\\\\" << endl;
 	}
 	else {

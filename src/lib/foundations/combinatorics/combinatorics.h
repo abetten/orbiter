@@ -470,6 +470,16 @@ public:
 	void do_tdo_print(std::string &fname, int verbose_level);
 	void make_elementary_symmetric_functions(int n, int k_max, int verbose_level);
 	void Dedekind_numbers(int n_min, int n_max, int q_min, int q_max, int verbose_level);
+	void convert_stack_to_tdo(std::string &stack_fname, int verbose_level);
+	void do_parameters_maximal_arc(int q, int r, int verbose_level);
+	void do_parameters_arc(int q, int s, int r, int verbose_level);
+	void do_read_poset_file(std::string &fname,
+			int f_grouping, double x_stretch, int verbose_level);
+	// creates a layered graph file from a text file
+	// which was created by DISCRETA/sgls2.cpp
+	void do_make_tree_of_all_k_subsets(int n, int k, int verbose_level);
+	void create_random_permutation(int deg,
+			std::string &fname_csv, int verbose_level);
 
 };
 

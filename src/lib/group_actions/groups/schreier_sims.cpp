@@ -748,7 +748,7 @@ void schreier_sims::create_group(int verbose_level)
 		print_group_orders();
 
 		cout << "the n e w action has base ";
-		lint_vec_print(cout, GA->get_base(), GA->base_len());
+		Orbiter->Lint_vec.print(cout, GA->get_base(), GA->base_len());
 		cout << " of length " << GA->base_len()  << endl;
 	}
 }

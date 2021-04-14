@@ -159,7 +159,7 @@ void hall_system_classify::init(
 		}
 		unrank_triple(triples + i * 3, i);
 		if (f_v) {
-			lint_vec_print(cout, triples + i * 3, 3);
+			Orbiter->Lint_vec.print(cout, triples + i * 3, 3);
 			cout << endl;
 		}
 		Sorting.lint_vec_heapsort(triples + i * 3, 3);
@@ -167,7 +167,7 @@ void hall_system_classify::init(
 	if (f_v) {
 		cout << "sorted:" << endl;
 		for (i = 0; i < N; i++) {
-			lint_vec_print(cout, triples + i * 3, 3);
+			Orbiter->Lint_vec.print(cout, triples + i * 3, 3);
 			cout << endl;
 		}
 	}
@@ -487,7 +487,7 @@ void hall_system_classify::early_test_func(long int *S, int len,
 		print_set(cout, len, S);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
-		lint_vec_print(cout, candidates, nb_candidates);
+		Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
 		cout << endl;
 	}
 
@@ -542,7 +542,7 @@ void hall_system_classify::early_test_func(long int *S, int len,
 			for (h = 0; h < l; h++ ) {
 				t = Orbits_on_triples->orbit[f + h];
 				unrank_triple(T, t);
-				lint_vec_print(cout, T, 3);
+				Orbiter->Lint_vec.print(cout, T, 3);
 				cout << ", ";
 			}
 			cout << endl;

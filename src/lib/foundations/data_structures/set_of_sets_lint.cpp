@@ -84,7 +84,7 @@ void set_of_sets_lint::init(long int underlying_set_size,
 	init_basic(underlying_set_size, nb_sets, Sz, verbose_level);
 
 	for (i = 0; i < nb_sets; i++) {
-		lint_vec_copy(Pts[i], Sets[i], Sz[i]);
+		Orbiter->Lint_vec.copy(Pts[i], Sets[i], Sz[i]);
 		}
 }
 

@@ -1308,7 +1308,7 @@ void group_generators_domain::projective_matrix_group_base_and_orbits(int n, fin
 	}
 	if (f_vv) {
 		cout << "group_generators_domain::projective_matrix_group_base_and_orbits base: ";
-		lint_vec_print(cout, base, base_len);
+		Orbiter->Lint_vec.print(cout, base, base_len);
 		cout << endl;
 		cout << "projective_matrix_group_base_and_orbits "
 				"transversal_length: ";
@@ -1375,7 +1375,7 @@ void group_generators_domain::projective_matrix_group_base_and_transversal_lengt
 	}
 	if (f_v) {
 		cout << "group_generators_domain::projective_matrix_group_base_and_transversal_length base: ";
-		lint_vec_print(cout, base, base_len);
+		Orbiter->Lint_vec.print(cout, base, base_len);
 		cout << endl;
 		cout << "finite_field::projective_matrix_group_base_and_transversal_length "
 				"transversal_length: ";
@@ -1423,7 +1423,7 @@ void group_generators_domain::affine_matrix_group_base_and_transversal_length(in
 	}
 	if (f_vv) {
 		cout << "group_generators_domain::affine_matrix_group_base_and_transversal_length base: ";
-		lint_vec_print(cout, base, base_len);
+		Orbiter->Lint_vec.print(cout, base, base_len);
 		cout << endl;
 		cout << "finite_field::affine_matrix_group_base_and_transversal_length "
 				"transversal_length: ";
@@ -1472,7 +1472,7 @@ void group_generators_domain::general_linear_matrix_group_base_and_transversal_l
 	if (f_vv) {
 		cout << "group_generators_domain::general_linear_matrix_group_base_and_"
 				"transversal_length base: ";
-		lint_vec_print(cout, base, base_len);
+		Orbiter->Lint_vec.print(cout, base, base_len);
 		cout << endl;
 		cout << "group_generators_domain::general_linear_matrix_group_base_and_"
 				"transversal_length transversal_length: ";
@@ -2374,7 +2374,7 @@ void group_generators_domain::builtin_transversal_rep_GLnq(int *A,
 
 	if (f_vv) {
 		cout << "group_generators_domain::transversal_rep_GLnq[" << i << "][" << j << "] = \n";
-		print_integer_matrix(cout, A, n, n);
+		Orbiter->Int_vec.print_integer_matrix(cout, A, n, n);
 	}
 }
 

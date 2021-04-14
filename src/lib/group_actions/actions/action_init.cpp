@@ -793,7 +793,7 @@ void action::init_permutation_group_from_generators(int degree,
 		cout << "action::init_permutation_group_from_generators "
 				"calling allocate_base_data" << endl;
 		cout << "given_base:";
-		lint_vec_print(cout, given_base, given_base_length);
+		Orbiter->Lint_vec.print(cout, given_base, given_base_length);
 		cout << " of length " << given_base_length << endl;
 		}
 	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
@@ -1246,7 +1246,7 @@ void action::init_direct_product_group(
 	}
 
 
-	lint_vec_copy(P->the_base, get_base(), base_len());
+	Orbiter->Lint_vec.copy(P->the_base, get_base(), base_len());
 	Orbiter->Int_vec.copy(P->the_transversal_length,
 			get_transversal_length(), base_len());
 
@@ -1490,7 +1490,7 @@ void action::init_wreath_product_group(int nb_factors, int n,
 				"base_len=" << base_len() << endl;
 	}
 
-	lint_vec_copy(W->the_base, get_base(), base_len());
+	Orbiter->Lint_vec.copy(W->the_base, get_base(), base_len());
 	Orbiter->Int_vec.copy(W->the_transversal_length,
 			get_transversal_length(), base_len());
 
@@ -1652,7 +1652,7 @@ void action::init_permutation_representation(action *A_original,
 					"base_len=" << base_len() << endl;
 			}
 
-		lint_vec_copy(W->the_base, get_base(), base_len());
+		Orbiter->Lint_vec.copy(W->the_base, get_base(), base_len());
 		Orbiter->Int_vec.copy(W->the_transversal_length,
 				get_transversal_length(), base_len());
 
@@ -2046,7 +2046,7 @@ void action::init_BLT(finite_field *F, int f_basis,
 	if (f_v) {
 		cout << "action::init_BLT computing lex least base done" << endl;
 		cout << "base: ";
-		lint_vec_print(cout, get_base(), base_len());
+		Orbiter->Lint_vec.print(cout, get_base(), base_len());
 		cout << endl;
 	}
 
@@ -2392,7 +2392,7 @@ sims *action::create_sims_for_centralizer_of_matrix(
 		cout << "action::create_sims_for_centralizer_of_matrix "
 				"d = " << d << " q = " << q << endl;
 		cout << "Mtx=" << endl;
-		int_matrix_print(Mtx, d, d);
+		Orbiter->Int_vec.matrix_print(Mtx, d, d);
 	}
 
 	//gl_classes C;
@@ -2452,7 +2452,7 @@ sims *action::create_sims_for_centralizer_of_matrix(
 	if (f_v) {
 		cout << "action::create_sims_for_centralizer_of_matrix "
 				"Basis=" << endl;
-		int_matrix_print(Basis, d, d);
+		Orbiter->Int_vec.matrix_print(Basis, d, d);
 		cout << "create_sims_for_centralizer_of_matrix "
 				"We found " << nb_gens << " centralizing matrices" << endl;
 	}
@@ -2462,7 +2462,7 @@ sims *action::create_sims_for_centralizer_of_matrix(
 				"Gens=" << endl;
 		for (i = 0; i < nb_gens; i++) {
 			cout << "Gen " << i << " / " << nb_gens << " is:" << endl;
-			int_matrix_print(Gens[i], d, d);
+			Orbiter->Int_vec.matrix_print(Gens[i], d, d);
 		}
 	}
 
@@ -2471,9 +2471,9 @@ sims *action::create_sims_for_centralizer_of_matrix(
 				0/*verbose_level*/)) {
 			cout << "The matrices do not commute" << endl;
 			cout << "Mtx=" << endl;
-			int_matrix_print(Mtx, d, d);
+			Orbiter->Int_vec.matrix_print(Mtx, d, d);
 			cout << "Gens[i]=" << endl;
-			int_matrix_print(Gens[i], d, d);
+			Orbiter->Int_vec.matrix_print(Gens[i], d, d);
 			exit(1);
 		}
 	}
@@ -2483,7 +2483,7 @@ sims *action::create_sims_for_centralizer_of_matrix(
 	if (f_v) {
 		cout << "The type of the matrix under "
 				"consideration is:" << endl;
-		int_matrix_print(R1->type_coding.M,
+		Orbiter->Int_vec.matrix_print(R1->type_coding.M,
 				R1->type_coding.m, R1->type_coding.n);
 	}
 

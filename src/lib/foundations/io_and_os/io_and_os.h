@@ -727,80 +727,47 @@ public:
 // #############################################################################
 
 
-void lint_vec_apply(long int *from, long int *through, long int *to, int len);
-void lint_vec_take_away(long int *v, int &len,
-		long int *take_away, int nb_take_away);
-void lint_vec_zero(long int *v, long int len);
-void lint_vec_mone(long int *v, long int len);
-void lint_vec_copy(long int *from, long int *to, long int len);
-void lint_vec_copy_to_int(long int *from, int *to, long int len);
-void lint_vec_complement(long int *v, long int *w, int n, int k);
+
+
+
+int is_csv_file(const char *fname);
+int is_xml_file(const char *fname);
+void test_typedefs();
+void chop_string(const char *str, int &argc, char **&argv);
+const char *strip_directory(const char *p);
+int is_all_whitespace(const char *str);
+int is_all_digits(char *p);
+int str2int(std::string &str);
+void print_longinteger_after_multiplying(std::ostream &ost, int *factors, int len);
+int my_atoi(char *str);
+long int my_atol(char *str);
+int compare_strings(void *a, void *b, void *data);
+int strcmp_with_or_without(char *p, char *q);
+uint32_t root_of_tree_uint32_t (uint32_t* S, uint32_t i);
+int util_compare_func(void *a, void *b, void *data);
+void text_to_three_double(const char *text, double *d);
+void text_to_three_double(std::string &text, double *d);
+void convert_arguments(int &argc, const char **argv, std::string *&Argv);
+int stringcmp(std::string &str, const char *p);
+int strtoi(std::string &str);
+long int strtolint(std::string &str);
+double strtof(std::string &str);
+int string_starts_with_a_number(std::string &str);
+void string_fix_escape_characters(std::string &str);
 void dump_memory_chain(void *allocated_objects);
 void print_vector(std::ostream &ost, int *v, int size);
-long int lint_vec_minimum(long int *v, int len);
-long int lint_vec_maximum(long int *v, int len);
 void itoa(char *p, int len_of_p, int i);
 void char_swap(char *p, char *q, int len);
-void int_distribution_print(std::ostream &ost, int *val, int *mult, int len);
 void int_swap(int& x, int& y);
-void int_set_print(int *v, int len);
-void lint_set_print(long int *v, int len);
-void int_set_print(std::ostream &ost, int *v, int len);
-void lint_set_print(std::ostream &ost, long int *v, int len);
-void lint_vec_print(std::ostream &ost, long int *v, int len);
-void lint_vec_print(std::ostream &ost, std::vector<long int> &v);
-void lint_vec_print_as_table(std::ostream &ost, long int *v, int len, int width);
-void lint_vec_print_fully(std::ostream &ost, long int *v, int len);
-void lint_vec_print_fully(std::ostream &ost, std::vector<long int> &v);
-void integer_vec_print(std::ostream &ost, int *v, int len);
-void print_integer_matrix(std::ostream &ost, int *p, int m, int n);
-void print_integer_matrix_width(std::ostream &ost, int *p,
-	int m, int n, int dim_n, int w);
-void lint_matrix_print_width(std::ostream &ost,
-	long int *p, int m, int n, int dim_n, int w);
-void print_integer_matrix_in_C_source(std::ostream &ost,
-	int *p, int m, int n);
-void int_matrix_make_block_matrix_2x2(int *Mtx, int k, 
-	int *A, int *B, int *C, int *D);
-// makes the 2k x 2k block matrix 
-// (A B)
-// (C D)
-void int_matrix_delete_column_in_place(int *Mtx, int k, int n, int pivot);
-// afterwards, the matrix is k x (n - 1)
-int int_matrix_max_log_of_entries(int *p, int m, int n);
-int lint_matrix_max_log_of_entries(long int *p, int m, int n);
-void int_matrix_print_ost(std::ostream &ost, int *p, int m, int n);
-void int_matrix_print(int *p, int m, int n);
-void lint_matrix_print(long int *p, int m, int n);
-void int_matrix_print_tight(int *p, int m, int n);
-void int_matrix_print_ost(std::ostream &ost, int *p, int m, int n, int w);
-void int_matrix_print(int *p, int m, int n, int w);
-void lint_matrix_print(long int *p, int m, int n, int w);
-void int_matrix_print_bitwise(int *p, int m, int n);
 void uchar_print_bitwise(std::ostream &ost, uchar u);
 void uchar_move(uchar *p, uchar *q, int len);
-void int_submatrix_all_rows(int *A, int m, int n, 
-	int nb_cols, int *cols, int *B);
-void int_submatrix_all_cols(int *A, int m, int n, 
-	int nb_rows, int *rows, int *B);
-void int_submatrix(int *A, int m, int n, int nb_rows, 
-	int *rows, int nb_cols, int *cols, int *B);
-void int_matrix_transpose(int n, int *A);
-void int_matrix_transpose(int *M, int m, int n, int *Mt);
-// Mt must point to the right amount of memory (n * m int's)
-void int_matrix_shorten_rows(int *&p, int m, int n);
-void pint_matrix_shorten_rows(pint *&p, int m, int n);
-
 
 
 void print_set(std::ostream &ost, int size, long int *set);
 void print_set_lint(std::ostream &ost, int size, long int *set);
 void print_incidence_structure(std::ostream &ost,
 		int m, int n, int len, int *S);
-void lint_vec_scan(std::string &s, long int *&v, int &len);
-void lint_vec_scan(const char *s, long int *&v, int &len);
-void lint_vec_scan_from_stream(std::istream & is, long int *&v, int &len);
-void scan_permutation_from_string(const char *s, 
+void scan_permutation_from_string(const char *s,
 	int *&perm, int &degree, int verbose_level);
 void scan_permutation_from_stream(std::istream & is,
 	int *&perm, int &degree, int verbose_level);
@@ -829,37 +796,9 @@ void print_repeated_character(std::ostream &ost, char c, int n);
 void print_pointer_hex(std::ostream &ost, void *p);
 void print_hex_digit(std::ostream &ost, int digit);
 int compare_sets(int *set1, int *set2, int sz1, int sz2);
-//int test_if_sets_are_disjoint(int *set1, int *set2, int sz1, int sz2);
 int test_if_sets_are_disjoint_assuming_sorted(int *set1, int *set2, int sz1, int sz2);
 int test_if_sets_are_disjoint_assuming_sorted_lint(long int *set1, long int *set2, int sz1, int sz2);
-void lint_vec_print_to_str(char *str, long int *data, int len);
-void lint_vec_print_to_str_naked(char *str, long int *data, int len);
-int is_csv_file(const char *fname);
-int is_xml_file(const char *fname);
 
-void test_typedefs();
-void chop_string(const char *str, int &argc, char **&argv);
-const char *strip_directory(const char *p);
-int is_all_whitespace(const char *str);
-int is_all_digits(char *p);
-//void int_vec_print(int *v, int len);
-int str2int(std::string &str);
-void print_longinteger_after_multiplying(std::ostream &ost, int *factors, int len);
-int my_atoi(char *str);
-long int my_atol(char *str);
-int compare_strings(void *a, void *b, void *data);
-int strcmp_with_or_without(char *p, char *q);
-uint32_t root_of_tree_uint32_t (uint32_t* S, uint32_t i);
-int util_compare_func(void *a, void *b, void *data);
-void text_to_three_double(const char *text, double *d);
-void text_to_three_double(std::string &text, double *d);
-void convert_arguments(int &argc, const char **argv, std::string *&Argv);
-int stringcmp(std::string &str, const char *p);
-int strtoi(std::string &str);
-long int strtolint(std::string &str);
-double strtof(std::string &str);
-int string_starts_with_a_number(std::string &str);
-void string_fix_escape_characters(std::string &str);
 
 
 

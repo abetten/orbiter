@@ -1064,7 +1064,7 @@ void sims::build_up_group_from_generators(sims *K,
 
 	if (f_v) {
 		cout << "sims::build_up_group_from_generators base: ";
-		lint_vec_print(cout, GA->get_base(), GA->base_len());
+		Orbiter->Lint_vec.print(cout, GA->get_base(), GA->base_len());
 		cout << endl;
 
 #if 0

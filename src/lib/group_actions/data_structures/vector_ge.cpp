@@ -899,10 +899,10 @@ void vector_ge::reverse_isomorphism_exterior_square(int verbose_level)
 		cout << "generator " << i << " / " << len << ":" << endl;
 
 		cout << "before:" << endl;
-		int_matrix_print(ith(i), 6, 6);
+		Orbiter->Int_vec.matrix_print(ith(i), 6, 6);
 
 		cout << "after:" << endl;
-		int_matrix_print(A4, 4, 4);
+		Orbiter->Int_vec.matrix_print(A4, 4, 4);
 	}
 
 	FREE_OBJECT(K);

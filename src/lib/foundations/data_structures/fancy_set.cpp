@@ -68,7 +68,7 @@ void fancy_set::init_with_set(int n, int k, int *subset, int verbose_level)
 	if (f_v) {
 		cout << "fancy_set::init_with_set n=" << n << " k=" << k << endl;
 		cout << "set=";
-		int_set_print(cout, subset, k);
+		Orbiter->Int_vec.set_print(cout, subset, k);
 		cout << endl;
 		}
 	init(n, verbose_level - 1);

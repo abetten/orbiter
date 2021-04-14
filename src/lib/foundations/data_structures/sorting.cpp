@@ -618,7 +618,7 @@ void sorting::rearrange_subset_lint(int n, int k,
 		}
 	if (f_v) {
 		cout << "rearrange_subset ";
-		lint_vec_print(cout, rearranged_set, n);
+		Orbiter->Lint_vec.print(cout, rearranged_set, n);
 		cout << endl;
 		}
 }
@@ -641,7 +641,7 @@ void sorting::rearrange_subset_lint_all(int n, int k,
 		}
 	if (f_v) {
 		cout << "rearrange_subset ";
-		lint_vec_print(cout, rearranged_set, n);
+		Orbiter->Lint_vec.print(cout, rearranged_set, n);
 		cout << endl;
 		}
 }
@@ -2588,8 +2588,8 @@ int sorting::compare_sets_lint(long int *set1, long int *set2, int sz1, int sz2)
 
 	S1 = NEW_lint(sz1);
 	S2 = NEW_lint(sz2);
-	lint_vec_copy(set1, S1, sz1);
-	lint_vec_copy(set2, S2, sz2);
+	Orbiter->Lint_vec.copy(set1, S1, sz1);
+	Orbiter->Lint_vec.copy(set2, S2, sz2);
 	lint_vec_heapsort(S1, sz1);
 	lint_vec_heapsort(S2, sz2);
 	for (u = 0; u < sz1 + sz2; u++) {

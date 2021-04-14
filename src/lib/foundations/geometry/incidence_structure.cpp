@@ -84,7 +84,7 @@ void incidence_structure::check_point_pairs(int verbose_level)
 		}
 	}
 	cout << "nb of lines through two points:" << endl;
-	print_integer_matrix_width(cout, Mtx, nb_rows, nb_rows, nb_rows, 1);
+	Orbiter->Int_vec.print_integer_matrix_width(cout, Mtx, nb_rows, nb_rows, nb_rows, 1);
 	
 	FREE_int(Lines);
 }
@@ -147,12 +147,12 @@ void incidence_structure::init_hjelmslev(hjelmslev *H, int verbose_level)
 			cout << "i=" << i << " j=" << j << endl;
 			H->R->PHG_element_unrank(Mtx, 1, n, i);
 			H->unrank_lint(Mtx + n, j, 0);
-			print_integer_matrix_width(cout, Mtx, k + 1, n, n, 1);
+			Orbiter->Int_vec.print_integer_matrix_width(cout, Mtx, k + 1, n, n, 1);
 			mtx_rk = H->R->Gauss_int(
 				Mtx, TRUE, FALSE, base_cols, FALSE, NULL,
 				k + 1, n, n, 2);
 			cout << "after Gauss:" << endl;
-			print_integer_matrix_width(cout, Mtx, k + 1, n, n, 1);
+			Orbiter->Int_vec.print_integer_matrix_width(cout, Mtx, k + 1, n, n, 1);
 			cout << "the rank is " << mtx_rk << endl;
 
 			for (h = 0; h < n; h++) {
@@ -187,7 +187,7 @@ void incidence_structure::init_hjelmslev(hjelmslev *H, int verbose_level)
 	}
 	if (f_v) {
 		cout << "incidence matrix" << endl;
-		print_integer_matrix_width(cout,
+		Orbiter->Int_vec.print_integer_matrix_width(cout,
 				Inc_Mtx, nb_rows, nb_cols, nb_cols, 1);
 	}
 
@@ -968,7 +968,7 @@ int incidence_structure::refine_column_partition_safe(
 	if (f_vv) {
 		cout << "incidence_structure::refine_column_"
 				"partition_safe data:" << endl;
-		print_integer_matrix_width(cout,
+		Orbiter->Int_vec.print_integer_matrix_width(cout,
 			data + nb_points() * nb_row_classes,
 			nb_lines(), nb_row_classes, nb_row_classes, 3);
 	}
@@ -1060,7 +1060,7 @@ int incidence_structure::refine_row_partition_safe(
 	}
 	if (f_vv) {
 		cout << "incidence_structure::refine_row_partition_safe data:" << endl;
-		print_integer_matrix_width(cout, data, nb_points(),
+		Orbiter->Int_vec.print_integer_matrix_width(cout, data, nb_points(),
 				nb_col_classes, nb_col_classes, 3);
 	}
 
@@ -2473,7 +2473,7 @@ void incidence_structure::point_collinearity_graph(
 	if (f_v) {
 		cout << "incidence_structure::point_collinearity_graph "
 				"the graph is:" << endl;
-		print_integer_matrix_width(cout, Adj,
+		Orbiter->Int_vec.print_integer_matrix_width(cout, Adj,
 				nb_points(), nb_points(), nb_points(), 1);
 	}
 }
@@ -2509,7 +2509,7 @@ void incidence_structure::line_intersection_graph(
 	if (f_v) {
 		cout << "incidence_structure::line_intersection_graph "
 				"the graph is:" << endl;
-		print_integer_matrix_width(cout, Adj,
+		Orbiter->Int_vec.print_integer_matrix_width(cout, Adj,
 				nb_lines(), nb_lines(), nb_lines(), 1);
 	}
 }
@@ -3530,7 +3530,7 @@ void incidence_structure::compute_extended_collinearity_graph(
 	if (f_vv) {
 		cout << "incidence_structure::compute_extended_collinearity_graph "
 				"Adj=" << endl;
-		print_integer_matrix_width(cout, Adj, v, v, v, 1);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, Adj, v, v, v, 1);
 	}
 	
 
@@ -3626,7 +3626,7 @@ void incidence_structure::compute_extended_matrix(
 	if (f_v4) {
 		cout << "incidence_structure::compute_extended_matrix "
 				"The extended incidence matrix is:" << endl;
-		print_integer_matrix_width(cout, M, nb_rows, nb_cols, nb_cols, 1);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, M, nb_rows, nb_cols, nb_cols, 1);
 	}
 
 
@@ -3727,7 +3727,7 @@ incidence_structure *incidence_structure::apply_canonical_labeling(
 
 	if (f_vv) {
 		cout << "incidence_structure::apply_canonical_labeling labeling:" << endl;
-		lint_vec_print(cout, canonical_labeling, nb_rows + nb_cols);
+		Orbiter->Lint_vec.print(cout, canonical_labeling, nb_rows + nb_cols);
 		cout << endl;
 	}
 

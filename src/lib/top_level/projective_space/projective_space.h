@@ -154,7 +154,7 @@ public:
 	semifield_classify_description *Semifield_classify_description;
 	poset_classification_control *Semifield_classify_Control;
 
-
+	int f_cheat_sheet;
 
 	projective_space_activity_description();
 	~projective_space_activity_description();
@@ -227,6 +227,10 @@ public:
 			projective_space_with_action *PA,
 			semifield_classify_description *Semifield_classify_description,
 			poset_classification_control *Control,
+			int verbose_level);
+	void do_cheat_sheet_PG(
+			projective_space_with_action *PA,
+			layered_graph_draw_options *O,
 			int verbose_level);
 
 
@@ -720,6 +724,10 @@ public:
 			int decomposition_by_element_power,
 			std::string &decomposition_by_element_data, std::string &fname_base,
 			int verbose_level);
+	void report(
+		std::ostream &ost,
+		layered_graph_draw_options *O,
+		int verbose_level);
 
 };
 

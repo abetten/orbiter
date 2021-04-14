@@ -54,6 +54,7 @@ MODULES= \
 		foundations/data_structures/int_matrix.o \
 		foundations/data_structures/int_vec.o \
 		foundations/data_structures/int_vector.o \
+		foundations/data_structures/lint_vec.o \
 		foundations/data_structures/page_storage.o \
 		foundations/data_structures/partitionstack.o \
 		foundations/data_structures/set_builder_description.o \
@@ -369,6 +370,8 @@ MODULES= \
 		top_level/graph_theory/cayley_graph_search.o \
 		top_level/graph_theory/create_graph_description.o \
 		top_level/graph_theory/create_graph.o \
+		top_level/graph_theory/graph_classification_activity_description.o \
+		top_level/graph_theory/graph_classification_activity.o \
 		top_level/graph_theory/graph_classify_description.o \
 		top_level/graph_theory/graph_classify.o \
 		top_level/graph_theory/graph_theoretic_activity_description.o \
@@ -379,6 +382,8 @@ MODULES= \
 		top_level/interfaces/interface_cryptography.o \
 		top_level/interfaces/interface_povray.o \
 		top_level/interfaces/interface_projective.o \
+		top_level/interfaces/interface_symbol_table_activity.o \
+		top_level/interfaces/interface_symbol_table_definition.o \
 		top_level/interfaces/interface_symbol_table.o \
 		top_level/interfaces/interface_toolkit.o \
 		top_level/interfaces/orbiter_top_level_session.o \

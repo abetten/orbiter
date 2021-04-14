@@ -131,11 +131,11 @@ void orbit_type_repository::init(
 				"before Heapsort_general" << endl;
 		cout << "Type_repository:" << endl;
 		if (nb_sets < 10) {
-			lint_matrix_print(Type_repository, nb_sets, orbit_type_size);
+			Orbiter->Lint_vec.matrix_print(Type_repository, nb_sets, orbit_type_size);
 		}
 		else {
 			cout << "too many to print" << endl;
-			lint_matrix_print(Type_repository, 100, orbit_type_size);
+			Orbiter->Lint_vec.matrix_print(Type_repository, 100, orbit_type_size);
 		}
 	}
 
@@ -149,11 +149,11 @@ void orbit_type_repository::init(
 				"after Heapsort_general" << endl;
 		cout << "Sorted Type_repository:" << endl;
 		if (nb_sets < 10) {
-			lint_matrix_print(Type_repository, nb_sets, orbit_type_size);
+			Orbiter->Lint_vec.matrix_print(Type_repository, nb_sets, orbit_type_size);
 		}
 		else {
 			cout << "too many to print" << endl;
-			lint_matrix_print(Type_repository, 100, orbit_type_size);
+			Orbiter->Lint_vec.matrix_print(Type_repository, 100, orbit_type_size);
 		}
 	}
 	nb_types = 0;
@@ -181,7 +181,7 @@ void orbit_type_repository::init(
 	for (i = 0; i < nb_types; i++) {
 		f = type_first[i];
 		//l = type_len[i];
-		lint_vec_copy(Type_repository + f * orbit_type_size,
+		Orbiter->Lint_vec.copy(Type_repository + f * orbit_type_size,
 				Type_representatives + i * orbit_type_size, orbit_type_size);
 	}
 
@@ -191,7 +191,7 @@ void orbit_type_repository::init(
 				"The types are:" << endl;
 		for (i = 0; i < nb_types; i++) {
 			cout << i << " : ";
-			lint_vec_print(cout, Type_representatives + i * orbit_type_size, orbit_type_size);
+			Orbiter->Lint_vec.print(cout, Type_representatives + i * orbit_type_size, orbit_type_size);
 			cout << endl;
 		}
 	}
@@ -206,7 +206,7 @@ void orbit_type_repository::init(
 		if (FALSE) {
 			if (i < 10) {
 				cout << "type[" << i << "]=";
-				lint_vec_print(cout, Type_repository + i * orbit_type_size, orbit_type_size);
+				Orbiter->Lint_vec.print(cout, Type_repository + i * orbit_type_size, orbit_type_size);
 				cout << endl;
 			}
 		}
@@ -240,7 +240,7 @@ void orbit_type_repository::init(
 			cout << "i=" << i << endl;
 			//lint_matrix_print(Type_repository, nb_sets, orbit_type_size);
 			cout << "searching for ";
-			lint_vec_print(cout, Type_repository + i * orbit_type_size, orbit_type_size);
+			Orbiter->Lint_vec.print(cout, Type_repository + i * orbit_type_size, orbit_type_size);
 			cout << endl;
 			exit(1);
 		}

@@ -125,12 +125,15 @@ public:
 			std::string &sift_smooth_factor_base, int verbose_level);
 	void do_discrete_log(long int y, long int a, long int p, int verbose_level);
 	void do_primitive_root(long int p, int verbose_level);
+	void do_primitive_root_longinteger(longinteger_object &p, int verbose_level);
 	void do_smallest_primitive_root(long int p, int verbose_level);
 	void do_smallest_primitive_root_interval(long int p_min, long int p_max, int verbose_level);
 	void do_number_of_primitive_roots_interval(long int p_min, long int p_max, int verbose_level);
 	void do_inverse_mod(long int a, long int n, int verbose_level);
 	void do_extended_gcd(int a, int b, int verbose_level);
-	void do_power_mod(long int a, long int k, long int n, int verbose_level);
+	void do_power_mod(longinteger_object &a,
+			longinteger_object &k, longinteger_object &n,
+			int verbose_level);
 
 
 	void calc_roots(longinteger_object &M,

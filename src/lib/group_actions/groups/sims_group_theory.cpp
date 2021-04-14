@@ -1239,7 +1239,7 @@ void sims::all_cosets(int *subset, int size,
 		}
 	if (f_v) {
 		cout << "sims::all_cosets finished" << endl;
-		lint_matrix_print_width(cout,
+		Orbiter->Lint_vec.matrix_print_width(cout,
 				all_cosets, nb_cosets, size, size, 2);
 		cout << endl;
 		}

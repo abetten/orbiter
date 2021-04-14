@@ -115,6 +115,8 @@ projective_space_activity_description::projective_space_activity_description()
 	Semifield_classify_description = NULL;
 	Semifield_classify_Control = NULL;
 
+	f_cheat_sheet = FALSE;
+
 }
 
 projective_space_activity_description::~projective_space_activity_description()
@@ -414,6 +416,10 @@ int projective_space_activity_description::read_arguments(
 
 			cout << "done reading control " << endl;
 			cout << "-classify_semifields " << endl;
+		}
+		else if (stringcmp(argv[i], "-cheat_sheet") == 0) {
+			f_cheat_sheet = TRUE;
+			cout << "-cheat_sheet " << endl;
 		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {

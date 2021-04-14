@@ -290,7 +290,7 @@ void spread_table_with_selection::compute_spread_table_from_scratch(int verbose_
 
 	Spread_table = NEW_lint(nb_spreads * spread_size);
 	for (i = 0; i < nb_spreads; i++) {
-		lint_vec_copy(Sets[i], Spread_table + i * spread_size, spread_size);
+		Orbiter->Lint_vec.copy(Sets[i], Spread_table + i * spread_size, spread_size);
 	}
 
 
@@ -559,7 +559,7 @@ void spread_table_with_selection::predict_spread_table_length(
 			int sz;
 
 			rep = K.Spread_representative(q, T->k /* dimension_of_spread_elements*/, no, sz);
-			lint_vec_copy(rep,
+			Orbiter->Lint_vec.copy(rep,
 					spread_reps + nb_spread_reps * spread_size,
 					spread_size);
 
@@ -655,7 +655,7 @@ void spread_table_with_selection::make_spread_table(
 
 			Sets[nb_spreads1] = NEW_lint(spread_size);
 
-			lint_vec_copy(SetOrb[i].Sets[j], Sets[nb_spreads1], spread_size);
+			Orbiter->Lint_vec.copy(SetOrb[i].Sets[j], Sets[nb_spreads1], spread_size);
 
 			isomorphism_type_of_spread[nb_spreads1] = i;
 
@@ -701,7 +701,7 @@ void spread_table_with_selection::make_spread_table(
 				"The labeled spreads are:" << endl;
 		for (i = 0; i < total_nb_of_spreads; i++) {
 			cout << i << " : ";
-			lint_vec_print(cout, Sets[i], spread_size /* + 1*/);
+			Orbiter->Lint_vec.print(cout, Sets[i], spread_size /* + 1*/);
 			cout << endl;
 			}
 		}

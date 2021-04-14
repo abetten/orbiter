@@ -335,14 +335,14 @@ void classify_bitvectors::save(
 		if (i == 0) {
 			sz = encoding_sz;
 			Reps = NEW_lint(nb_types * sz);
-			lint_vec_copy(encoding, Reps, sz);
+			Orbiter->Lint_vec.copy(encoding, Reps, sz);
 			}
 		else {
 			if (encoding_sz != sz) {
 				cout << "encoding_sz != sz" << endl;
 				exit(1);
 				}
-			lint_vec_copy(encoding, Reps + i * sz, sz);
+			Orbiter->Lint_vec.copy(encoding, Reps + i * sz, sz);
 			}
 		FREE_lint(encoding);
 		}

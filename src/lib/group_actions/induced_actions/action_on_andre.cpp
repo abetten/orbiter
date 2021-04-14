@@ -124,7 +124,7 @@ long int action_on_andre::compute_image_of_point(int *Elt,
 			}
 		if (f_v) {
 			cout << "Spread element embedded:" << endl;
-			int_matrix_print(coords1, k, n1);
+			Orbiter->Int_vec.matrix_print(coords1, k, n1);
 			}
 		for (i = 0; i < k; i++) {
 			An1->element_image_of_low_level(coords1 + i * n1,
@@ -132,14 +132,14 @@ long int action_on_andre::compute_image_of_point(int *Elt,
 			}
 		if (f_v) {
 			cout << "Image of spread element:" << endl;
-			int_matrix_print(coords2, k, n1);
+			Orbiter->Int_vec.matrix_print(coords2, k, n1);
 			}
 		for (i = 0; i < k; i++) {
 			Orbiter->Int_vec.copy(coords2 + i * n1, coords3 + i * n, n);
 			}
 		if (f_v) {
 			cout << "Reduced:" << endl;
-			int_matrix_print(coords3, k, n);
+			Orbiter->Int_vec.matrix_print(coords3, k, n);
 			}
 		rk = Andre->Grass->rank_lint_here(coords3, 0 /* verbose_level*/);
 		if (f_v) {

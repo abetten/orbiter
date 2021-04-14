@@ -1832,8 +1832,8 @@ void number_theory_domain::do_babystep_giantstep(
 		Table1[i] = NT.mult_mod(Table1[i - 1], g, p);
 		Table2[i] = NT.mult_mod(Table2[i - 1], gmn, p);
 		}
-	lint_vec_copy(Table1, data, n);
-	lint_vec_copy(Table2, data + n, n);
+	Orbiter->Lint_vec.copy(Table1, data, n);
+	Orbiter->Lint_vec.copy(Table2, data + n, n);
 	Sorting.lint_vec_heapsort(data, 2 * n);
 	if (f_v) {
 		cout << "duplicates:" << endl;

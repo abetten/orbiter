@@ -16,6 +16,7 @@ MODULES = \
 	int_matrix.o \
 	int_vec.o \
 	int_vector.o \
+	lint_vec.o \
 	page_storage.o \
 	partitionstack.o \
 	set_builder_description.o \

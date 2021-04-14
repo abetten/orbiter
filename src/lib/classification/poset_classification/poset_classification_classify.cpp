@@ -73,7 +73,7 @@ void poset_classification::compute_orbits_on_subsets(
 	int i, fst, len;
 
 	if (f_v) {
-		cout << "compute_orbits_on_subsets done" << endl;
+		cout << "poset_classification::compute_orbits_on_subsets done" << endl;
 		cout << "depth : number of orbits" << endl;
 	}
 	for (i = 0; i < target_depth + 1; i++) {
@@ -83,6 +83,22 @@ void poset_classification::compute_orbits_on_subsets(
 			cout << i << " : " << len << endl;
 		}
 	}
+
+	long int N, F, level;
+
+	N = 0;
+	F = 0;
+	for (level = 0; level <= target_depth; level++) {
+		N += nb_orbits_at_level(level);
+		}
+	for (level = 0; level < target_depth; level++) {
+		F += nb_flag_orbits_up_at_level(level);
+		}
+	if (f_v) {
+		cout << "poset_classification::compute_orbits_on_subsets N=" << N << endl;
+		cout << "poset_classification::compute_orbits_on_subsets F=" << F << endl;
+	}
+
 	if (f_v) {
 		cout << "poset_classification::compute_orbits_on_subsets "
 				"done" << endl;
@@ -678,6 +694,9 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 		}
 
 	}
+	if (Control->f_test_multi_edge_in_decomposition_matrix) {
+		test_for_multi_edge_in_classification_graph(depth, verbose_level);
+		}
 
 	if (f_v) {
 		cout << "poset_classification::post_processing done" << endl;
@@ -700,9 +719,9 @@ void poset_classification::recognize(std::string &set_to_recognize,
 	int *Elt_transporter_inv;
 
 	cout << "recognize " << h << " / " << nb_to_recognize << endl;
-	lint_vec_scan(set_to_recognize, recognize_set, recognize_set_sz);
+	Orbiter->Lint_vec.scan(set_to_recognize, recognize_set, recognize_set_sz);
 	cout << "input set = " << h << " / " << nb_to_recognize << " : ";
-	lint_vec_print(cout, recognize_set, recognize_set_sz);
+	Orbiter->Lint_vec.print(cout, recognize_set, recognize_set_sz);
 	cout << endl;
 
 	canonical_set = NEW_lint(recognize_set_sz);
@@ -727,7 +746,7 @@ void poset_classification::recognize(std::string &set_to_recognize,
 
 	cout << "recognize " << h << " / " << nb_to_recognize << endl;
 	cout << "canonical set = ";
-	lint_vec_print(cout, canonical_set, recognize_set_sz);
+	Orbiter->Lint_vec.print(cout, canonical_set, recognize_set_sz);
 	cout << endl;
 	cout << "is orbit " << orb << endl;
 	cout << "recognize " << h << " / " << nb_to_recognize << endl;

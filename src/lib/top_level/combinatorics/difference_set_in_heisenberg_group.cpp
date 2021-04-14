@@ -401,7 +401,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 
 	for (s = 0; s < nb_pairs_of_type1; s++) {
 		h = Pairs_of_type1[s];
-		lint_vec_copy(Pairs + 2 * h, Short_pairs + 2 * s, 2);
+		Orbiter->Lint_vec.copy(Pairs + 2 * h, Short_pairs + 2 * s, 2);
 		for (t = 0; t < 2; t++) {
 			a = Short_pairs[2 * s + t];
 			Short_orbit_inverse[a] = 2 * s + t;
@@ -411,7 +411,7 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 
 	for (s = 0; s < nb_pairs_of_type2; s++) {
 		h = Pairs_of_type2[s];
-		lint_vec_copy(Pairs + 2 * h, Long_pairs + 2 * s, 2);
+		Orbiter->Lint_vec.copy(Pairs + 2 * h, Long_pairs + 2 * s, 2);
 		}
 
 	cout << "Short_pairs:" << endl;
@@ -1024,7 +1024,7 @@ void difference_set_in_heisenberg_group::early_test_func(long int *S, int len,
 	if (f_v) {
 		cout << "difference_set_in_heisenberg_group::early_test_func" << endl;
 		cout << "S=";
-		lint_vec_print(cout, S, len);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 		}
 
@@ -1097,7 +1097,7 @@ void difference_set_in_heisenberg_group::early_test_func(long int *S, int len,
 		}
 	if (f_v) {
 		cout << "They are:" << endl;
-		lint_vec_print(cout, good_candidates, nb_good_candidates);
+		Orbiter->Lint_vec.print(cout, good_candidates, nb_good_candidates);
 		cout << endl;
 		}
 	if (f_v) {

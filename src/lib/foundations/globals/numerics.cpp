@@ -1410,7 +1410,7 @@ void numerics::substitute_cubic_linear_using_povray_ordering(
 
 	if (FALSE) {
 		cout << "Variables:" << endl;
-		int_matrix_print(Variables, 20, 3);
+		Orbiter->Int_vec.matrix_print(Variables, 20, 3);
 		}
 	Monomials = NEW_int(nb_monomials * n);
 	Orbiter->Int_vec.zero(Monomials, nb_monomials * n);
@@ -1422,7 +1422,7 @@ void numerics::substitute_cubic_linear_using_povray_ordering(
 		}
 	if (FALSE) {
 		cout << "Monomials:" << endl;
-		int_matrix_print(Monomials, nb_monomials, n);
+		Orbiter->Int_vec.matrix_print(Monomials, nb_monomials, n);
 		}
 
 	for (i = 0; i < nb_affine; i++) {
@@ -1440,7 +1440,7 @@ void numerics::substitute_cubic_linear_using_povray_ordering(
 		if (idx == nb_monomials) {
 			cout << "could not determine Affine_to_monomial" << endl;
 			cout << "Monomials:" << endl;
-			int_matrix_print(Monomials, nb_monomials, n);
+			Orbiter->Int_vec.matrix_print(Monomials, nb_monomials, n);
 			cout << "v=";
 			Orbiter->Int_vec.print(cout, v, n);
 			exit(1);
@@ -1615,7 +1615,7 @@ void numerics::substitute_quartic_linear_using_povray_ordering(
 
 	if (FALSE) {
 		cout << "Variables:" << endl;
-		int_matrix_print(Variables, 35, 4);
+		Orbiter->Int_vec.matrix_print(Variables, 35, 4);
 		}
 	Monomials = NEW_int(nb_monomials * n);
 	Orbiter->Int_vec.zero(Monomials, nb_monomials * n);
@@ -1627,7 +1627,7 @@ void numerics::substitute_quartic_linear_using_povray_ordering(
 		}
 	if (FALSE) {
 		cout << "Monomials:" << endl;
-		int_matrix_print(Monomials, nb_monomials, n);
+		Orbiter->Int_vec.matrix_print(Monomials, nb_monomials, n);
 		}
 
 	for (i = 0; i < nb_affine; i++) {
@@ -1645,7 +1645,7 @@ void numerics::substitute_quartic_linear_using_povray_ordering(
 		if (idx == nb_monomials) {
 			cout << "could not determine Affine_to_monomial" << endl;
 			cout << "Monomials:" << endl;
-			int_matrix_print(Monomials, nb_monomials, n);
+			Orbiter->Int_vec.matrix_print(Monomials, nb_monomials, n);
 			cout << "v=";
 			Orbiter->Int_vec.print(cout, v, n);
 			exit(1);

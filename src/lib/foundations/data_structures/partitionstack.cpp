@@ -425,7 +425,7 @@ void partitionstack::print_class(ostream& ost, int idx)
 		S[j] = pointList[first + j];
 	}
 	Sorting.int_vec_heapsort(S, len);
-	int_set_print(ost, S, len);
+	Orbiter->Int_vec.set_print(ost, S, len);
 	ost << "_{" << len << "}" << endl;
 	FREE_int(S);
 }
@@ -685,7 +685,7 @@ void partitionstack::print_subset()
 			cout << ", ";
 		}
 #else
-	int_set_print(subset, subset_size);
+	Orbiter->Int_vec.set_print(cout, subset, subset_size);
 #endif
 }
 
@@ -699,7 +699,7 @@ void partitionstack::refine_arbitrary_set_lint(
 		cout << "partitionstack::refine_arbitrary_set_lint" << endl;
 	}
 	set2 = NEW_int(size);
-	lint_vec_copy_to_int(set, set2, size);
+	Orbiter->Lint_vec.copy_to_int(set, set2, size);
 	refine_arbitrary_set(size, set2, verbose_level);
 	if (f_v) {
 		cout << "partitionstack::refine_arbitrary_set_lint done" << endl;

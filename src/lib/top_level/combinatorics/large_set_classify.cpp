@@ -174,7 +174,7 @@ void large_set_classify::init_designs(orbit_of_sets *SetOrb,
 	for (i = 0; i < nb_designs; i++) {
 
 		Sets[i] = NEW_lint(design_size);
-		lint_vec_copy(SetOrb->Sets[i], Sets[i], design_size);
+		Orbiter->Lint_vec.copy(SetOrb->Sets[i], Sets[i], design_size);
 	}
 
 	if (f_v) {
@@ -193,14 +193,14 @@ void large_set_classify::init_designs(orbit_of_sets *SetOrb,
 
 	Design_table = NEW_lint(nb_designs * design_size);
 	for (i = 0; i < nb_designs; i++) {
-		lint_vec_copy(Sets[i], Design_table + i * design_size, design_size);
+		Orbiter->Lint_vec.copy(Sets[i], Design_table + i * design_size, design_size);
 	}
 
 	cout << "Designs:" << endl;
 	if (nb_designs < 100) {
 		for (i = 0; i < nb_designs; i++) {
 			cout << i << " : ";
-			lint_vec_print(cout, Design_table + i * design_size, design_size);
+			Orbiter->Lint_vec.print(cout, Design_table + i * design_size, design_size);
 			cout << endl;
 		}
 	}
@@ -442,7 +442,7 @@ void large_set_classify::make_reduced_design_table(
 			}
 		}
 		if (j == set_sz) {
-			lint_vec_copy(Design_table + i * design_size,
+			Orbiter->Lint_vec.copy(Design_table + i * design_size,
 					Design_table_out + nb_out * design_size, design_size);
 			Design_table_out_idx[nb_out] = i;
 			nb_out++;
@@ -736,7 +736,7 @@ void large_set_classify::process_starter_case(
 				nb_solutions, Solutions, solution_size,
 				verbose_level);
 		cout << "Read the following solutions from file:" << endl;
-		int_matrix_print(Solutions, nb_solutions, solution_size);
+		Orbiter->Int_vec.matrix_print(Solutions, nb_solutions, solution_size);
 		cout << "Number of solutions = " << nb_solutions << endl;
 		cout << "solution_size = " << solution_size << endl;
 
@@ -751,7 +751,7 @@ void large_set_classify::process_starter_case(
 		nb_large_sets = nb_solutions;
 		Large_sets = NEW_lint(nb_solutions * sz);
 		for (i = 0; i < nb_solutions; i++) {
-			lint_vec_copy(starter_set, Large_sets + i * sz, starter_set_sz);
+			Orbiter->Lint_vec.copy(starter_set, Large_sets + i * sz, starter_set_sz);
 			for (j = 0; j < solution_size; j++) {
 #if 0
 				a = Solutions[i * solution_size + j];
@@ -1017,7 +1017,7 @@ void large_set_early_test_function(long int *S, int len,
 		cout << endl;
 	}
 	if (len == 0) {
-		lint_vec_copy(candidates, good_candidates, nb_candidates);
+		Orbiter->Lint_vec.copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
 	}
 	else {

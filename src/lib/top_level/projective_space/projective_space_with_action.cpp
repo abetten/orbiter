@@ -238,7 +238,7 @@ void projective_space_with_action::canonical_labeling(
 	if (verbose_level > 5) {
 		cout << "projective_space_with_action::canonical_labeling "
 				"Incma:" << endl;
-		int_matrix_print_tight(Incma, nb_rows, nb_cols);
+		Orbiter->Int_vec.matrix_print_tight(Incma, nb_rows, nb_cols);
 	}
 
 	//canonical_labeling = NEW_int(nb_rows + nb_cols);
@@ -466,7 +466,7 @@ strong_generators
 		cout << "projective_space_with_action::set_stabilizer_of_object "
 				"Incma Out:" << endl;
 		if (nb_rows < 20) {
-			print_integer_matrix_width(cout,
+			Orbiter->Int_vec.print_integer_matrix_width(cout,
 					Incma_out, nb_rows, nb_cols, nb_cols, 1);
 		}
 		else {
@@ -2925,6 +2925,25 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_P
 		cout << "projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_PG done" << endl;
 	}
 
+}
+
+
+void projective_space_with_action::report(
+	ostream &ost,
+	layered_graph_draw_options *O,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_with_action::report" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "projective_space_with_action::report done" << endl;
+	}
 }
 
 

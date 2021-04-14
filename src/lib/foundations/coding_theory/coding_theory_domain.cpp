@@ -133,7 +133,7 @@ void coding_theory_domain::twisted_tensor_product_codes(
 
 	if (f_vv) {
 		cout << "twisted_tensor_product_codes: M:" << endl;
-		print_integer_matrix_width(cout, M, m, n, n, 2);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, M, m, n, n, 2);
 
 		F->latex_matrix(cout, f_elements_exponential, symbol_for_print, M, m, n);
 		}
@@ -167,7 +167,7 @@ void coding_theory_domain::twisted_tensor_product_codes(
 	if (f_v) {
 		cout << "twisted_tensor_product_codes: after create_matrix_H_subfield" << endl;
 		cout << "H_subfield:" << endl;
-		print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
 		f->latex_matrix(cout, f_elements_exponential, symbol_for_print_subfield, H_subfield, m, n);
 		}
 
@@ -313,7 +313,7 @@ void coding_theory_domain::create_matrix_M(
 
 	if (f_v) {
 		cout << "M:" << endl;
-		print_integer_matrix_width(cout, M, m, n, n, 2);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, M, m, n, n, 2);
 
 		F->latex_matrix(cout, f_elements_exponential,
 				symbol_for_print, M, m, n);
@@ -330,7 +330,7 @@ void coding_theory_domain::create_matrix_M(
 		F->mult_matrix_matrix(M, all_one, col_sum, m, n, 1,
 				0 /* verbose_level */);
 		cout << "overall col_sum:" << endl;
-		print_integer_matrix_width(cout, col_sum, m, 1, 1, 2);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, col_sum, m, 1, 1, 2);
 		FREE_int(all_one);
 		FREE_int(col_sum);
 		}
@@ -433,7 +433,7 @@ void coding_theory_domain::create_matrix_H_subfield(
 
 	if (f_v) {
 		cout << "matrix C:" << endl;
-		print_integer_matrix_width(cout, C, m, m, m, 2);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, C, m, m, m, 2);
 		F->latex_matrix(cout, f_elements_exponential,
 				symbol_for_print, C, m, m);
 		}
@@ -443,7 +443,7 @@ void coding_theory_domain::create_matrix_H_subfield(
 
 	if (f_vv) {
 		cout << "C_inv:" << endl;
-		print_integer_matrix_width(cout, C_inv, m, m, m, 2);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, C_inv, m, m, m, 2);
 		}
 
 	F->mult_matrix_matrix(C, C_inv, AA, m, m, m,
@@ -451,7 +451,7 @@ void coding_theory_domain::create_matrix_H_subfield(
 
 	if (f_vv) {
 		cout << "C * C_inv:" << endl;
-		print_integer_matrix_width(cout, AA, m, m, m, 2);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, AA, m, m, m, 2);
 		}
 
 
@@ -460,7 +460,7 @@ void coding_theory_domain::create_matrix_H_subfield(
 
 	if (f_v) {
 		cout << "H = C * M:" << endl;
-		print_integer_matrix_width(cout, H, m, n, n, 2);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, H, m, n, n, 2);
 		F->latex_matrix(cout, f_elements_exponential,
 				symbol_for_print, H, m, n);
 		}
@@ -477,7 +477,7 @@ void coding_theory_domain::create_matrix_H_subfield(
 
 	if (f_v) {
 		cout << "H_subfield:" << endl;
-		print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
 		f->latex_matrix(cout, f_elements_exponential,
 				symbol_for_print_subfield, H_subfield, m, n);
 		}
@@ -506,7 +506,7 @@ void coding_theory_domain::tt_field_reduction(
 		}
 	if (f_vv) {
 		cout << "before:" << endl;
-		print_integer_matrix_width(cout, M, m, n, n, 2);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, M, m, n, n, 2);
 		//print_integer_matrix(cout, M, m, n);
 		cout << endl;
 		F.print_integer_matrix_zech(cout, M, m, n);
@@ -542,7 +542,7 @@ void coding_theory_domain::tt_field_reduction(
 		}
 	if (f_vv) {
 		cout << "after:" << endl;
-		print_integer_matrix_width(cout, MM, m, n, n, 2);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, MM, m, n, n, 2);
 		//print_integer_matrix(cout, MM, m, n);
 		cout << endl;
 		f.print_integer_matrix_zech(cout, MM, m, n);
@@ -774,7 +774,7 @@ void coding_theory_domain::make_tensor_code_9_dimensional(int q,
 	}
 
 	cout << "M:" << endl;
-	print_integer_matrix_width(cout, M, m, n, n, 2);
+	Orbiter->Int_vec.print_integer_matrix_width(cout, M, m, n, n, 2);
 
 	{
 		int *all_one, *col_sum;
@@ -786,7 +786,7 @@ void coding_theory_domain::make_tensor_code_9_dimensional(int q,
 		F.mult_matrix_matrix(M, all_one, col_sum, m, n, 1,
 				0 /* verbose_level */);
 		cout << "col_sum:" << endl;
-		print_integer_matrix_width(cout, col_sum, m, 1, 1, 2);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, col_sum, m, 1, 1, 2);
 		FREE_int(all_one);
 		FREE_int(col_sum);
 	}
@@ -801,12 +801,12 @@ void coding_theory_domain::make_tensor_code_9_dimensional(int q,
 
 
 	cout << "C:" << endl;
-	print_integer_matrix_width(cout, C, m, m, m, 2);
+	Orbiter->Int_vec.print_integer_matrix_width(cout, C, m, m, m, 2);
 
 	F.invert_matrix(C, C_inv, m, 0 /* verbose_level */);
 
 	cout << "C_inv:" << endl;
-	print_integer_matrix_width(cout, C_inv, m, m, m, 2);
+	Orbiter->Int_vec.print_integer_matrix_width(cout, C_inv, m, m, m, 2);
 
 	{
 	int *AA;
@@ -814,14 +814,14 @@ void coding_theory_domain::make_tensor_code_9_dimensional(int q,
 	F.mult_matrix_matrix(C, C_inv, AA, m, m, m,
 			0 /* verbose_level */);
 	cout << "C * C_inv:" << endl;
-	print_integer_matrix_width(cout, AA, m, m, m, 2);
+	Orbiter->Int_vec.print_integer_matrix_width(cout, AA, m, m, m, 2);
 	FREE_int(AA);
 	}
 
 	F.mult_matrix_matrix(C, M, H, m, m, n,
 			0 /* verbose_level */);
 	cout << "H = C * M:" << endl;
-	print_integer_matrix_width(cout, H, m, n, n, 2);
+	Orbiter->Int_vec.print_integer_matrix_width(cout, H, m, n, n, 2);
 
 
 #if 0
@@ -833,7 +833,7 @@ void coding_theory_domain::make_tensor_code_9_dimensional(int q,
 
 	if (f_vv) {
 		cout << "before field reduction:" << endl;
-		print_integer_matrix_width(cout, H, m, n, n, 2);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, H, m, n, n, 2);
 		cout << endl;
 		f.print_integer_matrix_zech(cout, H, m, n);
 		cout << endl;
@@ -842,13 +842,13 @@ void coding_theory_domain::make_tensor_code_9_dimensional(int q,
 	//field_reduction(F, f, m, n, H, H_subfield, TRUE, TRUE);
 	if (f_vv) {
 		cout << "after field reduction:" << endl;
-		print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
 		cout << endl;
 		f.print_integer_matrix_zech(cout, H_subfield, m, n);
 		cout << endl;
 		}
 	cout << "H_subfield:" << endl;
-	print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
+	Orbiter->Int_vec.print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
 
 	code = H_subfield;
 	length = n;
@@ -1220,7 +1220,7 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 	}
 	generator_matrix_cyclic_code(n, degree, generator_subfield, Genma);
 	cout << "coding_theory_domain::make_cyclic_code generator matrix: " << endl;
-	print_integer_matrix_width(cout, Genma, n - degree, n, n, 3);
+	Orbiter->Int_vec.print_integer_matrix_width(cout, Genma, n - degree, n, n, 3);
 
 
 	{
@@ -1659,7 +1659,7 @@ void coding_theory_domain::make_gilbert_varshamov_code(
 
 
 	cout << "coding_theory_domain::make_gilbert_varshamov_code found the following parity check matrix as projective set: ";
-	lint_vec_print(cout, set, n);
+	Orbiter->Lint_vec.print(cout, set, n);
 	cout << endl;
 
 	int *genma;
@@ -1675,7 +1675,7 @@ void coding_theory_domain::make_gilbert_varshamov_code(
 			verbose_level);
 
 	cout << "coding_theory_domain::make_gilbert_varshamov_code parity check matrix:" << endl;
-	int_matrix_print_ost(cout, genma, P->n + 1, n);
+	Orbiter->Int_vec.matrix_print_ost(cout, genma, P->n + 1, n);
 
 	cout << "coding_theory_domain::make_gilbert_varshamov_code parity check matrix:" << endl;
 	Orbiter->Int_vec.print_fully(cout, genma, nmk * n);
@@ -1684,7 +1684,7 @@ void coding_theory_domain::make_gilbert_varshamov_code(
 	P->F->RREF_and_kernel(n, nmk, genma, 0 /* verbose_level */);
 
 	cout << "coding_theory_domain::make_gilbert_varshamov_code generator matrix:" << endl;
-	int_matrix_print_ost(cout, genma + nmk * n, k, n);
+	Orbiter->Int_vec.matrix_print_ost(cout, genma + nmk * n, k, n);
 
 
 	cout << "coding_theory_domain::make_gilbert_varshamov_code generator matrix:" << endl;
@@ -1712,7 +1712,7 @@ void coding_theory_domain::make_gilbert_varshamov_code_recursion(
 	if (f_v) {
 		cout << "coding_theory_domain::make_gilbert_varshamov_code level = " << level << endl;
 		cout << "coding_theory_domain::make_gilbert_varshamov_code set = ";
-		lint_vec_print(cout, set, level);
+		Orbiter->Lint_vec.print(cout, set, level);
 		cout << endl;
 	}
 
@@ -1776,7 +1776,7 @@ void coding_theory_domain::make_gilbert_varshamov_code_recursion(
 			if (f_v) {
 				cout << "coding_theory_domain::make_gilbert_varshamov_code N_" << i << " = " << N << endl;
 				cout << "set = ";
-				lint_vec_print(cout, set, level + 1);
+				Orbiter->Lint_vec.print(cout, set, level + 1);
 				cout << endl;
 				cout << "looping over all subsets of size " << i << ":" << endl;
 			}
@@ -2370,7 +2370,7 @@ void coding_theory_domain::compute_generator_matrix(
 	}
 	if (f_v) {
 		cout << "coding_theory_domain::compute_generator_matrix generator matrix:" << endl;
-		print_integer_matrix(cout, genma, k, n);
+		Orbiter->Int_vec.print_integer_matrix(cout, genma, k, n);
 	}
 }
 
@@ -3011,6 +3011,7 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 	int *base_cols;
 	int *weight_enumerator;
 	int len, rk, i;
+	latex_interface Li;
 
 	if (f_v) {
 		cout << "coding_theory_domain::do_weight_enumerator" << endl;
@@ -3031,7 +3032,14 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 
 	if (f_v) {
 		cout << "coding_theory_domain::do_weight_enumerator input matrix:" << endl;
-		int_matrix_print(A, m, n);
+		Orbiter->Int_vec.matrix_print(A, m, n);
+
+		cout << "$$" << endl;
+		cout << "\\left[" << endl;
+		Li.print_integer_matrix_tex(cout, A, m, n);
+		cout << "\\right]" << endl;
+		cout << "$$" << endl;
+
 	}
 
 	rk = F->Gauss_int(A,
@@ -3042,8 +3050,16 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 
 	if (f_v) {
 		cout << "coding_theory_domain::do_weight_enumerator after RREF:" << endl;
-		int_matrix_print(A, rk, n);
+		Orbiter->Int_vec.matrix_print(A, rk, n);
 		cout << "rk=" << rk << endl;
+
+
+		cout << "$$" << endl;
+		cout << "\\left[" << endl;
+		Li.print_integer_matrix_tex(cout, A, rk, n);
+		cout << "\\right]" << endl;
+		cout << "$$" << endl;
+
 
 		cout << "coding_theory_domain::do_weight_enumerator coefficients:" << endl;
 		Orbiter->Int_vec.print(cout, A, rk * n);
@@ -3167,7 +3183,7 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 
 		if (f_v) {
 			cout << "coding_theory_domain::do_weight_enumerator after normalize from the left:" << endl;
-			int_matrix_print(A, rk, n);
+			Orbiter->Int_vec.matrix_print(A, rk, n);
 			cout << "rk=" << rk << endl;
 		}
 	}
@@ -3183,7 +3199,7 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 
 		if (f_v) {
 			cout << "coding_theory_domain::do_weight_enumerator after normalize from the right:" << endl;
-			int_matrix_print(A, rk, n);
+			Orbiter->Int_vec.matrix_print(A, rk, n);
 			cout << "coding_theory_domain::do_weight_enumerator rk=" << rk << endl;
 		}
 	}
@@ -3225,7 +3241,7 @@ void coding_theory_domain::do_linear_code_through_basis(
 		Gg.AG_element_unrank(2, genma + i * n, 1, n, basis_set[i]);
 	}
 	cout << "genma:" << endl;
-	int_matrix_print(genma, k, n);
+	Orbiter->Int_vec.matrix_print(genma, k, n);
 
 	sz = 1 << k;
 	set = NEW_lint(sz);
@@ -3250,7 +3266,7 @@ void coding_theory_domain::do_linear_code_through_basis(
 
 
 	cout << "Codewords : ";
-	lint_vec_print(cout, set, sz);
+	Orbiter->Lint_vec.print(cout, set, sz);
 	cout << endl;
 
 
@@ -3288,7 +3304,7 @@ void coding_theory_domain::do_linear_code_through_basis(
 			ost << "$$" << endl;
 			ost << "Codewords: ";
 			ost << "$";
-			lint_vec_print(ost, set, sz);
+			Orbiter->Lint_vec.print(ost, set, sz);
 			ost << "$\\\\";
 			ost << endl;
 
@@ -3371,7 +3387,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check_projec
 		}
 	}
 	cout << "genma:" << endl;
-	int_matrix_print(genma, k, n);
+	Orbiter->Int_vec.matrix_print(genma, k, n);
 
 
 	number_theory_domain NT;
@@ -3395,7 +3411,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check_projec
 
 
 	cout << "Codewords : ";
-	lint_vec_print_fully(cout, set, N);
+	Orbiter->Lint_vec.print_fully(cout, set, N);
 	cout << endl;
 
 	char str[1000];
@@ -3505,7 +3521,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check(
 		}
 	}
 	cout << "genma:" << endl;
-	int_matrix_print(genma, k, n);
+	Orbiter->Int_vec.matrix_print(genma, k, n);
 
 
 	number_theory_domain NT;
@@ -3529,7 +3545,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check(
 
 
 	cout << "Codewords : ";
-	lint_vec_print_fully(cout, set, N);
+	Orbiter->Lint_vec.print_fully(cout, set, N);
 	cout << endl;
 
 	char str[1000];
@@ -3632,9 +3648,9 @@ void coding_theory_domain::do_polynomial(
 	int i, j, b, idx;
 	monomial_ordering_type Monomial_ordering_type = t_PART;
 
-	lint_vec_scan(polynomial_text, poly_monomials, poly_monomials_sz);
+	Orbiter->Lint_vec.scan(polynomial_text, poly_monomials, poly_monomials_sz);
 	cout << "polynomial after scan: ";
-	lint_vec_print(cout, poly_monomials, poly_monomials_sz);
+	Orbiter->Lint_vec.print(cout, poly_monomials, poly_monomials_sz);
 	cout << endl;
 
 	Poly = NEW_OBJECT(homogeneous_polynomial_domain);
@@ -3699,7 +3715,7 @@ void coding_theory_domain::do_polynomial(
 	Sorting.lint_vec_heapsort(set, set_sz);
 
 	cout << "We found a set of size " << set_sz << " : " << endl;
-	lint_vec_print_fully(cout, set, set_sz);
+	Orbiter->Lint_vec.print_fully(cout, set, set_sz);
 	cout << endl;
 
 	investigate_code(set, set_sz, n, f_embellish, verbose_level);
@@ -3751,7 +3767,7 @@ void coding_theory_domain::do_sylvester_hadamard(int n,
 	for (i = 0; i < nb_factors; i++) {
 
 		cout << "M1=" << endl;
-		int_matrix_print(M1, sz, sz);
+		Orbiter->Int_vec.matrix_print(M1, sz, sz);
 
 		F->Kronecker_product_square_but_arbitrary(
 				M1, H2,
@@ -3762,7 +3778,7 @@ void coding_theory_domain::do_sylvester_hadamard(int n,
 		sz = sz1;
 	}
 	cout << "Sylvester type Hadamard matrix:" << endl;
-	int_matrix_print(M1, sz, sz);
+	Orbiter->Int_vec.matrix_print(M1, sz, sz);
 	for (i = 0; i < sz; i++) {
 		for (j = 0; j < sz; j++) {
 			a = M1[i * sz + j];
@@ -3779,7 +3795,7 @@ void coding_theory_domain::do_sylvester_hadamard(int n,
 		}
 	}
 	cout << "Sylvester type Hadamard code:" << endl;
-	int_matrix_print(M1, 2 * sz, sz);
+	Orbiter->Int_vec.matrix_print(M1, 2 * sz, sz);
 
 
 	long int *set;
@@ -3821,7 +3837,7 @@ void coding_theory_domain::code_diagram(
 		cout << "coding_theory_domain::code_diagram" << endl;
 		cout << "n=" << n << endl;
 		cout << "set:" << endl;
-		lint_vec_print(cout, Words, nb_words);
+		Orbiter->Lint_vec.print(cout, Words, nb_words);
 		cout << endl;
 	}
 
@@ -4082,7 +4098,7 @@ void coding_theory_domain::investigate_code(long int *Words,
 		cout << "coding_theory_domain::investigate_code" << endl;
 		cout << "n=" << n << endl;
 		cout << "set:" << endl;
-		lint_vec_print(cout, Words, nb_words);
+		Orbiter->Lint_vec.print(cout, Words, nb_words);
 		cout << endl;
 	}
 
@@ -4169,7 +4185,7 @@ void coding_theory_domain::investigate_code(long int *Words,
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 	cout << "M2:" << endl;
-	int_matrix_print(M2, nb_rows, nb_cols);
+	Orbiter->Int_vec.matrix_print(M2, nb_rows, nb_cols);
 
 	{
 		char str[1000];
@@ -4309,7 +4325,7 @@ void coding_theory_domain::do_long_code(
 		int sz;
 
 
-		lint_vec_scan(long_code_generators_text[i], set, sz);
+		Orbiter->Lint_vec.scan(long_code_generators_text[i], set, sz);
 
 		for (j = 0; j < sz; j++) {
 			genma[i * n + set[j]] = 1;
@@ -4318,7 +4334,7 @@ void coding_theory_domain::do_long_code(
 	}
 
 	cout << "genma:" << endl;
-	int_matrix_print(genma, k, n);
+	Orbiter->Int_vec.matrix_print(genma, k, n);
 
 	{
 		char str[1000];
@@ -4436,7 +4452,7 @@ void coding_theory_domain::do_long_code(
 		int *word;
 
 
-		lint_vec_scan(nearest_codeword_text,
+		Orbiter->Lint_vec.scan(nearest_codeword_text,
 				nearest_codeword_set, nearest_codeword_sz);
 
 
@@ -4642,7 +4658,7 @@ void coding_theory_domain::do_it(int n, int r, int a, int c, int seed, int verbo
 		s = (a * s + c) % N;
 		}
 
-	int_matrix_print(M, nb_rows, nb_cols);
+	Orbiter->Int_vec.matrix_print(M, nb_rows, nb_cols);
 
 	L.print_integer_matrix_tex(cout, M, nb_rows, nb_cols);
 

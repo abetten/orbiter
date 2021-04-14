@@ -629,9 +629,9 @@ int action::test_if_set_stabilizes(int *Elt,
 	cmp = lint_vec_compare(set1, set2, size);
 	if (f_v) {
 		cout << "the elements takes " << endl;
-		lint_vec_print(cout, set1, size);
+		Orbiter->Lint_vec.print(cout, set1, size);
 		cout << endl << "to" << endl;
-		lint_vec_print(cout, set2, size);
+		Orbiter->Lint_vec.print(cout, set2, size);
 		cout << endl;
 		cout << "cmp = " << cmp << endl;
 		}
@@ -668,7 +668,7 @@ void action::map_a_set(long int *set,
 		element_print_quick(Elt, cout);
 		cout << endl;
 		cout << "set: " << endl;
-		lint_vec_print(cout, set, n);
+		Orbiter->Lint_vec.print(cout, set, n);
 		cout << endl;
 		}
 	for (i = 0; i < n; i++) {
@@ -1349,10 +1349,10 @@ int action::check_if_in_set_stabilizer(int *Elt,
 			if (f_v) {
 				cout << "action::check_if_in_set_stabilizer fails" << endl;
 				cout << "set: ";
-				lint_vec_print(cout, set, size);
+				Orbiter->Lint_vec.print(cout, set, size);
 				cout << endl;
 				cout << "ordered_set: ";
-				lint_vec_print(cout, ordered_set, size);
+				Orbiter->Lint_vec.print(cout, ordered_set, size);
 				cout << endl;
 				cout << "image of " << i << "-th element "
 						<< a << " is " << b
@@ -1379,9 +1379,9 @@ int action::check_if_transporter_for_set(int *Elt,
 	if (f_vv) {
 		cout << "action::check_if_transporter_for_set "
 				"size=" << size << endl;
-		lint_vec_print(cout, set1, size);
+		Orbiter->Lint_vec.print(cout, set1, size);
 		cout << endl;
-		lint_vec_print(cout, set2, size);
+		Orbiter->Lint_vec.print(cout, set2, size);
 		cout << endl;
 		element_print(Elt, cout);
 		cout << endl;
@@ -1393,7 +1393,7 @@ int action::check_if_transporter_for_set(int *Elt,
 	Sorting.lint_vec_heapsort(ordered_set2, size);
 	if (f_vv) {
 		cout << "sorted target set:" << endl;
-		lint_vec_print(cout, ordered_set2, size);
+		Orbiter->Lint_vec.print(cout, ordered_set2, size);
 		cout << endl;
 		}
 	for (i = 0; i < size; i++) {
@@ -1409,13 +1409,13 @@ int action::check_if_transporter_for_set(int *Elt,
 			if (f_v) {
 				cout << "action::check_if_transporter_for_set fails" << endl;
 				cout << "set1   : ";
-				lint_vec_print(cout, set1, size);
+				Orbiter->Lint_vec.print(cout, set1, size);
 				cout << endl;
 				cout << "set2   : ";
-				lint_vec_print(cout, set2, size);
+				Orbiter->Lint_vec.print(cout, set2, size);
 				cout << endl;
 				cout << "ordered: ";
-				lint_vec_print(cout, ordered_set2, size);
+				Orbiter->Lint_vec.print(cout, ordered_set2, size);
 				cout << endl;
 				cout << "image of " << i << "-th element "
 						<< a << " is " << b
@@ -1445,7 +1445,7 @@ void action::compute_set_orbit(vector_ge &gens,
 	
 	if (f_v) {
 		cout << "action::compute_set_orbit: ";
-		lint_vec_print(cout, set, size);
+		Orbiter->Lint_vec.print(cout, set, size);
 		cout << endl;
 		}
 	nb_gens = gens.len;
@@ -1478,7 +1478,7 @@ void action::compute_set_orbit(vector_ge &gens,
 				gens.ith(i), 0);
 			if (FALSE) {
 				cout << "image under generator " << i << ":";
-				lint_vec_print(cout, image_set, size);
+				Orbiter->Lint_vec.print(cout, image_set, size);
 				cout << endl;
 				}
 			for (j = 0; j < nb_sets; j++) {
@@ -1491,7 +1491,7 @@ void action::compute_set_orbit(vector_ge &gens,
 			// n e w set found:
 			if (f_v) {
 				cout << "n e w set " << nb_sets << ":";
-				lint_vec_print(cout, image_set, size);
+				Orbiter->Lint_vec.print(cout, image_set, size);
 				cout << endl;
 				}
 			Sets[nb_sets] = image_set;
@@ -1525,7 +1525,7 @@ void action::compute_set_orbit(vector_ge &gens,
 				"found an orbit of size " << nb_sets << endl;
 		for (i = 0; i < nb_sets; i++) {
 			cout << i << " : ";
-			lint_vec_print(cout, Sets[i], size);
+			Orbiter->Lint_vec.print(cout, Sets[i], size);
 			cout << endl;
 			element_print(Transporter[i], cout);
 			}
@@ -1588,7 +1588,7 @@ void action::find_strong_generators_at_level(
 	if (f_v) {
 		cout << "action::find_strong_generators_at_level "
 				"level=" << level << " base: ";
-		lint_vec_print(cout, the_base, base_len);
+		Orbiter->Lint_vec.print(cout, the_base, base_len);
 		cout << endl;
 		}
 	nb_gens = gens.len;

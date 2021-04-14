@@ -376,7 +376,7 @@ void int_vec::distribution_compute_and_print(ostream &ost,
 	int *val, *mult, len;
 
 	distribution(v, v_len, val, mult, len);
-	int_distribution_print(ost, val, mult, len);
+	distribution_print(ost, val, mult, len);
 	ost << endl;
 
 	FREE_int(val);
@@ -807,6 +807,241 @@ void int_vec::print(int *v, int len)
 		cout << i << " : " << v[i] << endl;
 	}
 }
+
+
+void int_vec::print_integer_matrix(std::ostream &ost,
+	int *p, int m, int n)
+{
+	int i, j;
+
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			ost << p[i * n + j] << " ";
+		}
+		ost << endl;
+	}
+}
+
+void int_vec::print_integer_matrix_width(std::ostream &ost,
+	int *p, int m, int n, int dim_n, int w)
+{
+	int i, j;
+
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			ost << setw((int) w) << p[i * dim_n + j];
+			if (w) {
+				ost << " ";
+			}
+		}
+		ost << endl;
+	}
+}
+
+void int_vec::print_integer_matrix_in_C_source(std::ostream &ost,
+	int *p, int m, int n)
+{
+	int i, j;
+
+	ost << "{" << endl;
+	for (i = 0; i < m; i++) {
+		ost << "\t";
+		for (j = 0; j < n; j++) {
+			ost << p[i * n + j] << ", ";
+		}
+		ost << endl;
+	}
+	ost << "};" << endl;
+}
+
+
+void int_vec::matrix_make_block_matrix_2x2(int *Mtx,
+	int k, int *A, int *B, int *C, int *D)
+// makes the 2k x 2k block matrix
+// (A B)
+// (C D)
+{
+	int i, j, n;
+
+	n = 2 * k;
+	for (i = 0; i < k; i++) {
+		for (j = 0; j < k; j++) {
+			Mtx[i * n + j] = A[i * k + j];
+		}
+	}
+	for (i = 0; i < k; i++) {
+		for (j = 0; j < k; j++) {
+			Mtx[i * n + k + j] = B[i * k + j];
+		}
+	}
+	for (i = 0; i < k; i++) {
+		for (j = 0; j < k; j++) {
+			Mtx[(k + i) * n + j] = C[i * k + j];
+		}
+	}
+	for (i = 0; i < k; i++) {
+		for (j = 0; j < k; j++) {
+			Mtx[(k + i) * n + k + j] = D[i * k + j];
+		}
+	}
+}
+
+void int_vec::matrix_delete_column_in_place(int *Mtx,
+	int k, int n, int pivot)
+// afterwards, the matrix is k x (n - 1)
+{
+	int i, j, jj;
+
+	for (i = 0; i < k; i++) {
+		jj = 0;
+		for (j = 0; j < n; j++) {
+			if (j == pivot) {
+				continue;
+			}
+			Mtx[i * (n - 1) + jj] = Mtx[i * n + j];
+			jj++;
+		}
+	}
+}
+
+
+int int_vec::matrix_max_log_of_entries(int *p, int m, int n)
+{
+	int i, j, a, w = 1, w1;
+	number_theory_domain NT;
+
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			a = p[i * n + j];
+			if (a > 0) {
+				w1 = NT.int_log10(a);
+			}
+			else if (a < 0) {
+				w1 = NT.int_log10(-a) + 1;
+			}
+			else {
+				w1 = 1;
+			}
+			w = MAXIMUM(w, w1);
+		}
+	}
+	return w;
+}
+
+void int_vec::matrix_print_ost(ostream &ost, int *p, int m, int n)
+{
+	int w;
+
+	w = matrix_max_log_of_entries(p, m, n);
+	matrix_print_ost(ost, p, m, n, w);
+}
+
+void int_vec::matrix_print(int *p, int m, int n)
+{
+	int w;
+
+	w = matrix_max_log_of_entries(p, m, n);
+	matrix_print(p, m, n, w);
+}
+
+void int_vec::matrix_print_tight(int *p, int m, int n)
+{
+	matrix_print(p, m, n, 0);
+}
+
+void int_vec::matrix_print_ost(std::ostream &ost, int *p, int m, int n, int w)
+{
+	int i, j;
+
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			ost << setw((int) w) << p[i * n + j];
+			if (w) {
+				ost << " ";
+			}
+		}
+		ost << endl;
+	}
+}
+
+void int_vec::matrix_print(int *p, int m, int n, int w)
+{
+	int i, j;
+
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			cout << setw((int) w) << p[i * n + j];
+			if (w) {
+				cout << " ";
+			}
+		}
+		cout << endl;
+	}
+}
+
+void int_vec::matrix_print_bitwise(int *p, int m, int n)
+{
+	int i, j;
+
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			cout << p[i * n + j];
+		}
+		cout << endl;
+	}
+}
+
+void int_vec::distribution_print(std::ostream &ost,
+	int *val, int *mult, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		ost << val[i];
+		if (mult[i] > 1) {
+			ost << "^";
+			if (mult[i] >= 10) {
+				ost << "{" << mult[i] << "}";
+			}
+			else {
+				ost << mult[i];
+			}
+		}
+		if (i < len - 1) {
+			ost << ", ";
+		}
+	}
+}
+
+void int_vec::set_print(std::ostream &ost, int *v, int len)
+{
+	int i;
+
+	ost << "{ ";
+	for (i = 0; i < len; i++) {
+		ost << v[i];
+		if (i < len - 1) {
+			ost << ", ";
+		}
+	}
+	ost << " }";
+}
+
+
+void int_vec::integer_vec_print(std::ostream &ost, int *v, int len)
+{
+	int i;
+
+	ost << "( ";
+	for (i = 0; i < len; i++) {
+		ost << v[i];
+		if (i < len - 1) {
+			ost << ", ";
+		}
+	}
+	ost << " )";
+}
+
 
 
 

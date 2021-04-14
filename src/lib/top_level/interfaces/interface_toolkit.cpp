@@ -398,7 +398,7 @@ void interface_toolkit::worker(int verbose_level)
 		cout << "f_store_as_csv_file" << endl;
 		cout << "data=" << store_as_csv_file_data << endl;
 
-		lint_vec_scan(store_as_csv_file_data, D, sz);
+		Orbiter->Lint_vec.scan(store_as_csv_file_data, D, sz);
 		if (sz != store_as_csv_file_m * store_as_csv_file_n) {
 			cout << "sz != store_as_csv_file_m * store_as_csv_file_n" << endl;
 			cout << "sz = " << sz << endl;

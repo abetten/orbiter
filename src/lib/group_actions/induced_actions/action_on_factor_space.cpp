@@ -470,7 +470,7 @@ void action_on_factor_space::init2(action &A_base,
 	if (f_vv) {
 		cout << "action_on_factor_space::init2 "
 				"subspace basis before reduction:" << endl;
-		print_integer_matrix_width(cout, subspace_basis,
+		Orbiter->Int_vec.print_integer_matrix_width(cout, subspace_basis,
 				subspace_basis_size,
 				VS->dimension, VS->dimension, VS->F->log10_of_q);
 	}
@@ -480,7 +480,7 @@ void action_on_factor_space::init2(action &A_base,
 	if (f_vv) {
 		cout << "action_on_factor_space::init2 "
 				"subspace basis after reduction:" << endl;
-		print_integer_matrix_width(cout, subspace_basis,
+		Orbiter->Int_vec.print_integer_matrix_width(cout, subspace_basis,
 				subspace_basis_size,
 				VS->dimension, VS->dimension, VS->F->log10_of_q);
 	}
@@ -568,10 +568,10 @@ void action_on_factor_space::compute_projection_table(
 	}
 	if (FALSE /*f_vv*/) {
 		cout << "projection_table: ";
-		lint_vec_print(cout, projection_table, large_degree);
+		Orbiter->Lint_vec.print(cout, projection_table, large_degree);
 		cout << endl;
 		cout << "preimage_table: ";
-		lint_vec_print(cout, preimage_table, degree);
+		Orbiter->Lint_vec.print(cout, preimage_table, degree);
 		cout << endl;
 	}
 	if (FALSE /*f_v10*/) {

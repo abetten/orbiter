@@ -870,7 +870,7 @@ void semifield_lifting::compute_flag_orbits(
 						<< f_long_orbit << endl;
 				SC->matrix_unrank(pt, Mtx1);
 				cout << "element " << pt << " is" << endl;
-				int_matrix_print(Mtx1, k, k);
+				Orbiter->Int_vec.matrix_print(Mtx1, k, k);
 			}
 
 			if (!f_long_orbit) {
@@ -1060,7 +1060,7 @@ void semifield_lifting::upstep(
 		}
 		if (f_vv) {
 			cout << "Mtx=" << endl;
-			int_matrix_print(Mtx, level, k2);
+			Orbiter->Int_vec.matrix_print(Mtx, level, k2);
 		}
 
 
@@ -1209,7 +1209,7 @@ void semifield_lifting::upstep_loop_over_down_set(
 	if (f_v) {
 		cout << "semifield_lifting::upstep_loop_over_down_set" << endl;
 		cout << "semifield_lifting::upstep_loop_over_down_set Mtx:" << endl;
-		int_matrix_print(Mtx, level, k2);
+		Orbiter->Int_vec.matrix_print(Mtx, level, k2);
 	}
 
 
@@ -1231,12 +1231,12 @@ void semifield_lifting::upstep_loop_over_down_set(
 		if (f_vvv) {
 			cout << "semifield_lifting::upstep_loop_over_down_set "
 					"base_change_matrix=" << endl;
-			int_matrix_print(base_change_matrix, level, level);
+			Orbiter->Int_vec.matrix_print(base_change_matrix, level, level);
 		}
 		if (f_vvv) {
 			cout << "semifield_lifting::upstep_loop_over_down_set "
 					"Mtx:" << endl;
-			int_matrix_print(Mtx, level, k2);
+			Orbiter->Int_vec.matrix_print(Mtx, level, k2);
 		}
 		if (f_vvv) {
 			cout << "semifield_lifting::upstep_loop_over_down_set "
@@ -1247,14 +1247,14 @@ void semifield_lifting::upstep_loop_over_down_set(
 				0 /* verbose_level */);
 		if (f_vvv) {
 			cout << "Mtx:" << endl;
-			int_matrix_print(Mtx, level, k2);
+			Orbiter->Int_vec.matrix_print(Mtx, level, k2);
 			cout << "changed_space:" << endl;
-			int_matrix_print(changed_space, level, k2);
+			Orbiter->Int_vec.matrix_print(changed_space, level, k2);
 		}
 		for (i = 0; i < level; i++) {
 			if (f_vvv) {
 				cout << "i=" << i << " / " << level << endl;
-				int_matrix_print(changed_space + i * k2, k, k);
+				Orbiter->Int_vec.matrix_print(changed_space + i * k2, k, k);
 			}
 			set[i] = SC->matrix_rank(changed_space + i * k2);
 		}
@@ -1262,7 +1262,7 @@ void semifield_lifting::upstep_loop_over_down_set(
 			cout << "Level " << level << ": flag orbit "
 					<< f << " / " << nb_flag_orbits
 					<< " coset " << h << " / " << N << " set: ";
-			lint_vec_print(cout, set, level);
+			Orbiter->Lint_vec.print(cout, set, level);
 			cout << " before trace_very_general" << endl;
 		}
 
@@ -1531,7 +1531,7 @@ int semifield_lifting::trace_to_level_three(
 	if (f_vv) {
 		cout << "semifield_lifting::trace_to_level_three "
 				"reduced basis=" << endl;
-		int_matrix_print(input_basis, basis_sz, k2);
+		Orbiter->Int_vec.matrix_print(input_basis, basis_sz, k2);
 		cout << "Which is:" << endl;
 		SC->basis_print(input_basis, basis_sz);
 	}
@@ -1605,7 +1605,7 @@ int semifield_lifting::trace_step_up(
 		if (f_vv) {
 			cout << "semifield_lifting::trace_step_up "
 					"after fusion:" << endl;
-			int_matrix_print(changed_basis, basis_sz, k2);
+			Orbiter->Int_vec.matrix_print(changed_basis, basis_sz, k2);
 			cout << "Which is:" << endl;
 			SC->basis_print(changed_basis, basis_sz);
 		}
@@ -1649,7 +1649,7 @@ int semifield_lifting::trace_step_up(
 	if (f_vv) {
 		cout << "semifield_lifting::trace_step_up "
 				"before Gauss_int_with_given_pivots" << endl;
-		int_matrix_print(changed_basis, basis_sz, k2);
+		Orbiter->Int_vec.matrix_print(changed_basis, basis_sz, k2);
 	}
 	if (!SC->Mtx->GFq->Gauss_int_with_given_pivots(
 		changed_basis,
@@ -1664,7 +1664,7 @@ int semifield_lifting::trace_step_up(
 			cout << "semifield_lifting::trace_step_up "
 					"Gauss_int_with_given_pivots returns FALSE, "
 					"pivot cannot be found" << endl;
-			int_matrix_print(changed_basis, basis_sz, k2);
+			Orbiter->Int_vec.matrix_print(changed_basis, basis_sz, k2);
 		}
 		ret = FALSE;
 	}
@@ -1672,7 +1672,7 @@ int semifield_lifting::trace_step_up(
 		if (f_vv) {
 			cout << "semifield_lifting::trace_step_up "
 					"after Gauss_int_with_given_pivots:" << endl;
-			int_matrix_print(changed_basis, basis_sz, k2);
+			Orbiter->Int_vec.matrix_print(changed_basis, basis_sz, k2);
 		}
 		for (i = 0; i < 3; i++) {
 			for (j = 3; j < basis_sz; j++) {
@@ -1684,7 +1684,7 @@ int semifield_lifting::trace_step_up(
 		if (f_vv) {
 			cout << "semifield_lifting::trace_step_up "
 					"after reducing:" << endl;
-			int_matrix_print(changed_basis, basis_sz, k2);
+			Orbiter->Int_vec.matrix_print(changed_basis, basis_sz, k2);
 			SC->basis_print(changed_basis, basis_sz);
 		}
 	}
@@ -1776,7 +1776,7 @@ void semifield_lifting::trace_very_general(
 	if (f_vv) {
 		cout << "semifield_lifting::trace_very_general "
 				"reduced basis=" << endl;
-		int_matrix_print(input_basis, basis_sz, k2);
+		Orbiter->Int_vec.matrix_print(input_basis, basis_sz, k2);
 		cout << "Which is:" << endl;
 		SC->basis_print(input_basis, basis_sz);
 	}
@@ -1856,7 +1856,7 @@ void semifield_lifting::trace_very_general(
 	if (f_vv) {
 		cout << "semifield_lifting::trace_very_general "
 				"reduced basis(2)=" << endl;
-		int_matrix_print(input_basis, basis_sz, k2);
+		Orbiter->Int_vec.matrix_print(input_basis, basis_sz, k2);
 		cout << "Which is:" << endl;
 		SC->basis_print(input_basis, basis_sz);
 	}
@@ -1935,9 +1935,9 @@ void semifield_lifting::trace_to_level_two(
 
 	if (f_vvv) {
 		cout << "transformation matrix transporter=" << endl;
-		int_matrix_print(transporter, n, n);
+		Orbiter->Int_vec.matrix_print(transporter, n, n);
 		cout << "transformation matrix M1=" << endl;
-		int_matrix_print(M1, n, n);
+		Orbiter->Int_vec.matrix_print(M1, n, n);
 	}
 
 	// apply transporter to elements 0,...,basis_sz - 1 of input_basis
@@ -2277,7 +2277,7 @@ void semifield_lifting::deep_search_at_level_three(
 
 			for (i = 0; i < 3; i++) {
 				cout << "matrix " << i << ":" << endl;
-				int_matrix_print(Basis + i * k2, k, k);
+				Orbiter->Int_vec.matrix_print(Basis + i * k2, k, k);
 			}
 			cout << "pivots: ";
 			Orbiter->Int_vec.print(cout, SC->desired_pivots, 3);
@@ -2494,7 +2494,7 @@ void semifield_lifting::deep_search_at_level_three_orbit(
 			cout << "Level 3, orbit " << orbit << " / "
 					<< nb_orbits << " level 4 case "
 					<< c4 << " / " << C4->Set_size[1] << " is matrix" << endl;
-			int_matrix_print(Basis + 3 * k2, k, k);
+			Orbiter->Int_vec.matrix_print(Basis + 3 * k2, k, k);
 		}
 
 		pivots[3] = (k - 2) * k;
@@ -2541,7 +2541,7 @@ void semifield_lifting::deep_search_at_level_three_orbit(
 						<< c4 << " / " << C4->Set_size[1] << " level 5 case "
 						<< c5 << " / " << C5->Set_size[1]
 						<< " is matrix" << endl;
-				int_matrix_print(Basis + 4 * k2, k, k);
+				Orbiter->Int_vec.matrix_print(Basis + 4 * k2, k, k);
 			}
 
 			pivots[4] = (k - 3) * k;

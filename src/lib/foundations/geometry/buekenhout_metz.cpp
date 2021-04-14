@@ -306,7 +306,7 @@ void buekenhout_metz::init_ovoid(int verbose_level)
 		}
 	if (f_v) {
 		cout << "found an ovoid of size " << sz_ovoid << ":" << endl;
-		lint_vec_print(cout, ovoid, sz_ovoid);
+		Orbiter->Lint_vec.print(cout, ovoid, sz_ovoid);
 		cout << endl;
 		}
 	if (f_vv) {
@@ -394,7 +394,7 @@ void buekenhout_metz::init_ovoid_Uab_even(
 			}
 		}
 	cout << "found an ovoid of size " << sz_ovoid << ":" << endl;
-	lint_vec_print(cout, ovoid, sz_ovoid);
+	Orbiter->Lint_vec.print(cout, ovoid, sz_ovoid);
 	cout << endl;
 	P3->print_set(ovoid, sz_ovoid);
 
@@ -514,7 +514,7 @@ void buekenhout_metz::create_unital(int verbose_level)
 
 	if (f_v) {
 		cout << "the Buekenhout Metz unital of size " << sz << " : ";
-		lint_vec_print(cout, U, sz);
+		Orbiter->Lint_vec.print(cout, U, sz);
 		cout << endl;
 
 		for (i = 0; i < sz; i++) {
@@ -817,7 +817,7 @@ void buekenhout_metz::compute_the_design(int verbose_level)
 	if (f_vv) {
 		cout << "There are " << nb_secant_lines
 				<< " secant lines, they are:" << endl;
-		lint_vec_print(cout, secant_lines, nb_secant_lines);
+		Orbiter->Lint_vec.print(cout, secant_lines, nb_secant_lines);
 		cout << endl;
 		}
 
@@ -827,7 +827,7 @@ void buekenhout_metz::compute_the_design(int verbose_level)
 	if (f_vv) {
 		cout << "There are " << nb_tangent_lines
 				<< " tangent lines, they are:" << endl;
-		lint_vec_print(cout, tangent_lines, nb_tangent_lines);
+		Orbiter->Lint_vec.print(cout, tangent_lines, nb_tangent_lines);
 		cout << endl;
 		}
 
@@ -916,7 +916,7 @@ void buekenhout_metz::compute_the_design(int verbose_level)
 
 	if (f_vv) {
 		cout << "The blocks of the design are:" << endl;
-		print_integer_matrix_width(cout, Design_blocks,
+		Orbiter->Int_vec.print_integer_matrix_width(cout, Design_blocks,
 				nb_secant_lines, q + 1, q + 1, 3);
 		}
 
@@ -934,7 +934,7 @@ void buekenhout_metz::compute_the_design(int verbose_level)
 		for (i = 0; i < nb_secant_lines; i++) {
 			cout << setw(3) << i << " : ";
 			cout << setw(3) << secant_lines[i] << " : ";
-			lint_vec_print(cout, Intersection_sets + i * (q + 1), q + 1);
+			Orbiter->Lint_vec.print(cout, Intersection_sets + i * (q + 1), q + 1);
 			cout << " : ";
 			cout << setw(3) << f_is_Baer[i] << endl;
 			}

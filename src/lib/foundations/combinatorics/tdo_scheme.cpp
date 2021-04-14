@@ -767,7 +767,7 @@ void tdo_scheme::get_column_split_partition(int verbose_level,
 		}
 		if (FALSE) {
 			cout << "non descendants of " << i << "/" << ci << " : ";
-			int_set_print(cout, P.subset, P.subset_size);
+			Orbiter->Int_vec.set_print(cout, P.subset, P.subset_size);
 			cout << endl;
 		}
 		if (P.subset_size > 0) {
@@ -839,7 +839,7 @@ void tdo_scheme::get_row_split_partition(int verbose_level,
 		}
 		if (FALSE) {
 			cout << "non descendants of " << i << "/" << ci << " : ";
-			int_set_print(cout, P.subset, P.subset_size);
+			Orbiter->Int_vec.set_print(cout, P.subset, P.subset_size);
 			cout << endl;
 		}
 		if (P.subset_size > 0) {
@@ -2034,7 +2034,7 @@ int tdo_scheme::refine_rows_hard(partitionstack &P, int verbose_level,
 		if (f_vv) {
 			cout << "tdo_scheme::refine_rows_hard r = " << r << ", found " << nb_sol
 					<< " refined point types:" << endl;
-			print_integer_matrix_width(cout,
+			Orbiter->Int_vec.print_integer_matrix_width(cout,
 				point_types + T.types_first[r] * point_type_len,
 				nb_sol, point_type_len, point_type_len, 3);
 		}
@@ -2061,7 +2061,7 @@ int tdo_scheme::refine_rows_hard(partitionstack &P, int verbose_level,
 		if (f_vv) {
 			cout << "tdo_scheme::refine_rows_hard r = " << r << ", found " << nb_sol
 					<< " refined point types:" << endl;
-			print_integer_matrix_width(cout,
+			Orbiter->Int_vec.print_integer_matrix_width(cout,
 				point_types + T.types_first[r] * point_type_len,
 				nb_sol, point_type_len, point_type_len, 3);
 		}
@@ -2118,7 +2118,7 @@ int tdo_scheme::refine_rows_hard(partitionstack &P, int verbose_level,
 	if (f_vv) {
 		cout << "tdo_scheme::refine_rows_hard altogether, we found " << nb_point_types
 				<< " refined point types:" << endl;
-		print_integer_matrix_width(cout, point_types,
+		Orbiter->Int_vec.print_integer_matrix_width(cout, point_types,
 			nb_point_types, point_type_len, point_type_len, 3);
 	}
 	
@@ -3106,7 +3106,7 @@ int tdo_scheme::refine_cols_hard(partitionstack &P,
 						<< " refined line types" << endl;
 			}
 			if (f_vv) {
-				print_integer_matrix_width(cout,
+				Orbiter->Int_vec.print_integer_matrix_width(cout,
 					line_types + T.types_first[r] * L2, nb_sol, L2, L2, 2);
 			}
 			nb_sol1 = 0;
@@ -3160,7 +3160,7 @@ int tdo_scheme::refine_cols_hard(partitionstack &P,
 			}
 
 			if (f_vv) {
-				print_integer_matrix_width(cout,
+				Orbiter->Int_vec.print_integer_matrix_width(cout,
 					line_types + T.types_first[r] * L2, nb_sol, L2, L2, 2);
 			}
 			if (nb_sol == 0) {
@@ -3198,7 +3198,7 @@ int tdo_scheme::refine_cols_hard(partitionstack &P,
 			}
 		}
 		if (f_vv) {
-			print_integer_matrix_width(cout, line_types,
+			Orbiter->Int_vec.print_integer_matrix_width(cout, line_types,
 					nb_line_types, line_type_len, line_type_len, 3);
 		}
 
@@ -3313,7 +3313,7 @@ int tdo_scheme::refine_cols_hard(partitionstack &P,
 		if (f_v) {
 			cout << "tdo_scheme::refine_cols_hard "
 					"The distributions are:" << endl;
-			int_matrix_print(distributions, nb_distributions, nb_line_types);
+			Orbiter->Int_vec.matrix_print(distributions, nb_distributions, nb_line_types);
 		}
 
 #if 0

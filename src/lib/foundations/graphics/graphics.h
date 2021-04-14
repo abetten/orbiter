@@ -363,6 +363,8 @@ public:
 
 	mp_graphics();
 	mp_graphics(std::string &file_name,
+			layered_graph_draw_options *Opt, int verbose_level);
+	mp_graphics(std::string &file_name,
 		int xmin, int ymin, int xmax, int ymax, 
 		int f_embedded, int f_sideways, int verbose_level);
 	~mp_graphics();
@@ -598,7 +600,8 @@ public:
 
 
 	void draw_graph(int x, int y,
-			int dx, int dy, int nb_V, long int *Edges, int nb_E);
+			int dx, int dy, int nb_V, long int *Edges, int nb_E, int radius,
+			int verbose_level);
 	void draw_graph_with_distinguished_edge(
 		int x, int y,
 		int dx, int dy, int nb_V, long int *Edges, int nb_E,
@@ -611,6 +614,7 @@ public:
 			int f_point_labels, int point_label_offset, int f_directed);
 	void draw_tournament(int x, int y,
 			int dx, int dy, int nb_V, long int *Edges, int nb_E,
+			int radius,
 			int verbose_level);
 	void draw_bitmatrix2(int f_dots,
 		int f_partition, int nb_row_parts, int *row_part_first,

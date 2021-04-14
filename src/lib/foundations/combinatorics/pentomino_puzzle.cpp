@@ -70,7 +70,7 @@ void pentomino_puzzle::main(int verbose_level)
 		nb_sol, sol_length, 0 /* verbose_level */);
 
 	for (l = 0; l < nb_sol; l++) {
-		lint_vec_copy(Sol + l * sol_length, L->Sets[l], sol_length);
+		Orbiter->Lint_vec.copy(Sol + l * sol_length, L->Sets[l], sol_length);
 		}
 
 	L->sort_all(0);
@@ -123,7 +123,7 @@ void pentomino_puzzle::main(int verbose_level)
 
 		cout << "Solution " << l << " : ";
 #if 1
-		lint_vec_print(cout, L->Sets[l], sol_length);
+		Orbiter->Lint_vec.print(cout, L->Sets[l], sol_length);
 		cout << "\\\\" << endl;
 #endif
 
@@ -172,7 +172,7 @@ void pentomino_puzzle::main(int verbose_level)
 		i = orbit[f];
 #if 1
 		cout << "Representative of orbit " << o << " is solution " << i << " : ";
-		lint_vec_print(cout, L->Sets[i], sol_length);
+		Orbiter->Lint_vec.print(cout, L->Sets[i], sol_length);
 		cout << "\\\\" << endl;
 #endif
 
@@ -233,7 +233,7 @@ void pentomino_puzzle::main(int verbose_level)
 
 #if 1
 		cout << p << " / " << nb_orbits_without_I << " Representative of orbit " << o << " is solution " << i << " : ";
-		lint_vec_print(cout, L->Sets[i], sol_length);
+		Orbiter->Lint_vec.print(cout, L->Sets[i], sol_length);
 		cout << "\\\\" << endl;
 #endif
 
@@ -467,7 +467,7 @@ void pentomino_puzzle::decode_assembly(long int *set)
 	int i, h = 0, r = 0, t = 0, tt, x, y, rr;
 
 	cout << "Set ";
-	lint_vec_print(cout, set, 5);
+	Orbiter->Lint_vec.print(cout, set, 5);
 	cout << endl;
 
 	for (i = 0; i < 5; i++) {
@@ -578,7 +578,7 @@ void pentomino_puzzle::compute_image_function(set_of_sets *S,
 	if (f_v) {
 		cout << "compute_image_function "
 				"computing image of solution " << elt_idx << " = ";
-		lint_vec_print(cout, set1, sz);
+		Orbiter->Lint_vec.print(cout, set1, sz);
 		cout << " under generator " << gen_idx << endl;
 		}
 
@@ -611,14 +611,14 @@ void pentomino_puzzle::compute_image_function(set_of_sets *S,
 			this /* void *data_for_compare */,
 		S->nb_sets, set2, idx, 0 /*verbose_level*/)) {
 		cout << "compute_image_function cannot find image" << endl;
-		lint_vec_print(cout, set2, sz);
+		Orbiter->Lint_vec.print(cout, set2, sz);
 		cout << endl;
 		exit(1);
 		}
 	idx_of_image = idx;
 	if (f_v) {
 		cout << "compute_image_function image is ";
-		lint_vec_print(cout, set2, sz);
+		Orbiter->Lint_vec.print(cout, set2, sz);
 		cout << " which is solution " << idx_of_image << endl;
 		}
 	FREE_lint(set2);

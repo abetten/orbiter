@@ -641,14 +641,14 @@ long int finite_field::compute_subfield_polynomial(int order_subfield,
 
 	if (f_v) {
 		cout << "finite_field::compute_subfield_polynomial M=" << endl;
-		print_integer_matrix_width(cout, M, 
+		Orbiter->Int_vec.print_integer_matrix_width(cout, M,
 			e, e1 + 1, e1 + 1, GFp.log10_of_q);
 	}
 	rk = GFp.Gauss_simple(M, e, e1 + 1, 
 		base_cols, 0/*verbose_level*/);
 	if (f_vv) {
 		cout << "finite_field::compute_subfield_polynomial after Gauss=" << endl;
-		print_integer_matrix_width(cout, M, 
+		Orbiter->Int_vec.print_integer_matrix_width(cout, M,
 			e, e1 + 1, e1 + 1, GFp.log10_of_q);
 		cout << "rk=" << rk << endl;
 	}

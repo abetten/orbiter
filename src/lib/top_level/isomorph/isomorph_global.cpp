@@ -817,7 +817,7 @@ void isomorph_testing(
 		if (FALSE) {
 			cout << "read representative of orbit " << orbit
 					<< " (id=" << id << ")" << endl;
-			lint_vec_print(cout, data1, Iso.size);
+			Orbiter->Lint_vec.print(cout, data1, Iso.size);
 			cout << endl;
 			}
 
@@ -972,7 +972,7 @@ void isomorph_identify(
 		if (f_v) {
 			cout << "isomorph_identify read file " << fname[i] << endl;
 			cout << "the_set = ";
-			lint_vec_print(cout, the_set, set_size);
+			Orbiter->Lint_vec.print(cout, the_set, set_size);
 			cout << endl;
 			}
 
@@ -1084,13 +1084,13 @@ void isomorph_identify_table(
 
 	for (i = 0; i < nb_rows; i++) {
 	
-		lint_vec_copy(Table + i * set_size, the_set, set_size);
+		Orbiter->Lint_vec.copy(Table + i * set_size, the_set, set_size);
 		
 		if (f_v) {
 			cout << "isomorph_identify_table "
 					"Identifying set no " << i << endl;
 			cout << "the_set = ";
-			lint_vec_print(cout, the_set, set_size);
+			Orbiter->Lint_vec.print(cout, the_set, set_size);
 			cout << endl;
 			}
 
@@ -1392,7 +1392,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 		
 	if (f_vv) {
 		cout << "data after induced_action_on_set:" << endl;
-		lint_vec_print(cout, data, Iso->size);
+		Orbiter->Lint_vec.print(cout, data, Iso->size);
 		cout << endl;
 		}
 		
@@ -1442,7 +1442,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 
 		if (f_vvv) {
 			cout << "Orbit reps: nb_orbits=" << nb_orbits << endl;
-			lint_matrix_print(orbit_reps, nb_orbits, Iso->level);
+			Orbiter->Lint_vec.matrix_print(orbit_reps, nb_orbits, Iso->level);
 			}
 
 		if (f_vv) {
@@ -1469,7 +1469,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 				cout << "iso type " << orbit << " / " << Iso->Reps->count
 						<< " down_orbit " << u << " / "
 						<< nb_orbits << ":" << endl;
-				lint_vec_print(cout, orbit_reps + u * Iso->level, Iso->level);
+				Orbiter->Lint_vec.print(cout, orbit_reps + u * Iso->level, Iso->level);
 				cout << endl;
 				}
 

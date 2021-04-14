@@ -930,7 +930,7 @@ void surface_domain::compute_nine_lines(int *F_planes, int *G_planes,
 	}
 	if (f_v) {
 		cout << "The nine lines are: ";
-		lint_vec_print(cout, nine_lines, 9);
+		Orbiter->Lint_vec.print(cout, nine_lines, 9);
 		cout << endl;
 	}
 	if (f_v) {
@@ -969,7 +969,7 @@ void surface_domain::compute_nine_lines_by_dual_point_ranks(
 	}
 	if (f_v) {
 		cout << "The nine lines are: ";
-		lint_vec_print(cout, nine_lines, 9);
+		Orbiter->Lint_vec.print(cout, nine_lines, 9);
 		cout << endl;
 	}
 	if (f_v) {
@@ -1146,7 +1146,7 @@ void surface_domain::do_arc_lifting_with_two_lines(
 	if (f_v) {
 		cout << "surface_domain::do_arc_lifting_with_two_lines" << endl;
 		cout << "Arc6: ";
-		lint_vec_print(cout, Arc6, 6);
+		Orbiter->Lint_vec.print(cout, Arc6, 6);
 		cout << endl;
 		cout << "p1_idx=" << p1_idx << " p2_idx=" << p2_idx
 				<< " partition_rk=" << partition_rk
@@ -1168,7 +1168,7 @@ void surface_domain::do_arc_lifting_with_two_lines(
 		cout << "surface_domain::do_arc_lifting_with_two_lines after "
 				"P->rearrange_arc_for_lifting" << endl;
 		cout << "arc: ";
-		lint_vec_print(cout, arc, 6);
+		Orbiter->Lint_vec.print(cout, arc, 6);
 		cout << endl;
 	}
 
@@ -1189,12 +1189,12 @@ void surface_domain::do_arc_lifting_with_two_lines(
 		Orbiter->Int_vec.print(cout, AL->coeff, 20);
 		cout << endl;
 		cout << "lines: ";
-		lint_vec_print(cout, AL->lines27, 27);
+		Orbiter->Lint_vec.print(cout, AL->lines27, 27);
 		cout << endl;
 	}
 
 	Orbiter->Int_vec.copy(AL->coeff, coeff20, 20);
-	lint_vec_copy(AL->lines27, lines27, 27);
+	Orbiter->Lint_vec.copy(AL->lines27, lines27, 27);
 
 
 	FREE_OBJECT(AL);
@@ -1247,7 +1247,7 @@ void surface_domain::compute_local_coordinates_of_arc(
 	if (f_v) {
 		cout << "surface_domain::compute_local_coordinates_of_arc" << endl;
 		cout << "P6_local=" << endl;
-		lint_vec_print(cout, P6_local, 6);
+		Orbiter->Lint_vec.print(cout, P6_local, 6);
 		cout << endl;
 	}
 

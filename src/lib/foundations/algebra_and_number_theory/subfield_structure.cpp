@@ -626,7 +626,7 @@ void subfield_structure::field_reduction(int *input, int sz, int *output,
 		}
 		if (f_v) {
 			cout << "output:" << endl;
-			int_matrix_print(output, s, n);
+			Orbiter->Int_vec.matrix_print(output, s, n);
 		}
 	}
 	FREE_int(w);

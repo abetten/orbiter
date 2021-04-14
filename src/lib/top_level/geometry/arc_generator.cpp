@@ -683,7 +683,7 @@ void arc_generator::early_test_func(long int *S, int len,
 		print_set(cout, len, S);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
-		lint_vec_print(cout, candidates, nb_candidates);
+		Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
 		cout << endl;
 	}
 
@@ -750,7 +750,7 @@ void arc_generator::print(int len, long int *S)
 	compute_line_type(S, len, 0 /* verbose_level */);
 
 	cout << "set ";
-	lint_vec_print(cout, S, len);
+	Orbiter->Lint_vec.print(cout, S, len);
 	cout << " has line type ";
 
 	tally C;
@@ -1004,7 +1004,7 @@ void arc_generator::lifting_prepare_function_new(
 	col_labels = NEW_lint(nb_candidates);
 
 
-	lint_vec_copy(candidates, col_labels, nb_candidates);
+	Orbiter->Lint_vec.copy(candidates, col_labels, nb_candidates);
 
 	if (E->f_lex) {
 		if (f_vv) {

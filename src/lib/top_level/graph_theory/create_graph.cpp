@@ -622,7 +622,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 		exit(1);
 	}
 
-	int_matrix_print(A4, nb_A4, 4);
+	Orbiter->Int_vec.matrix_print(A4, nb_A4, 4);
 
 	vector_ge *gens;
 	int *Elt1;

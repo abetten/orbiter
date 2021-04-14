@@ -59,7 +59,7 @@ void spread_table_activity::perform_activity(int verbose_level)
 
 
 
-		lint_vec_scan(Descr->find_spread_text, spread_elts, sz);
+		Orbiter->Lint_vec.scan(Descr->find_spread_text, spread_elts, sz);
 
 		if (sz != P->spread_size) {
 			cout << "the set does not have the right size" << endl;
@@ -283,7 +283,7 @@ void spread_table_activity::report_spread2(std::ostream &ost, int spread_idx, in
 	spread_elts = P->Spread_table_with_selection->get_spread(spread_idx);
 
 	ost << "The spread " << spread_idx << " is:\\\\" << endl;
-	lint_vec_print(ost, spread_elts, P->spread_size);
+	Orbiter->Lint_vec.print(ost, spread_elts, P->spread_size);
 	ost << "\\\\" << endl;
 
 	P->P3->Grass_lines->print_set_tex(ost, spread_elts, P->spread_size);

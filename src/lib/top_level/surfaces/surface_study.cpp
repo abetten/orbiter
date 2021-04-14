@@ -107,7 +107,7 @@ void surface_study::init(finite_field *F, int nb, int verbose_level)
 	Lines = K.cubic_surface_Lines(q, nb);
 
 	cout << "The lines are: ";
-	lint_vec_print(cout, Lines, 27);
+	Orbiter->Lint_vec.print(cout, Lines, 27);
 	cout << endl;
 
 
@@ -343,14 +343,14 @@ void surface_study::study_intersection_points(int verbose_level)
 	Surf->compute_adjacency_matrix_of_line_intersection_graph(
 			Adj, SaS->data, SaS->sz, verbose_level);
 	cout << "The adjacency matrix is:" << endl;
-	int_matrix_print(Adj, SaS->sz, SaS->sz);
+	Orbiter->Int_vec.matrix_print(Adj, SaS->sz, SaS->sz);
 
 	Surf->compute_intersection_points(Adj,
 		SaS->data, SaS->sz, Intersection_pt,
 		verbose_level);
 
 	cout << "The intersection points are:" << endl;
-	lint_matrix_print(Intersection_pt, SaS->sz, SaS->sz);
+	Orbiter->Lint_vec.matrix_print(Intersection_pt, SaS->sz, SaS->sz);
 
 
 	string fname_intersection_pts;
@@ -436,7 +436,7 @@ void surface_study::study_line_orbits(int verbose_level)
 
 
 	cout << "after rearranging, the set is:" << endl;
-	lint_vec_print(cout, SaS->data, SaS->sz);
+	Orbiter->Lint_vec.print(cout, SaS->data, SaS->sz);
 	cout << endl;
 
 	cout << "orbit_length: ";
@@ -475,7 +475,7 @@ void surface_study::study_group(int verbose_level)
 	SaS->Stab->group_order(go);
 
 	cout << "Group_elts:" << endl;
-	int_matrix_print(Group_elts, group_order, elt_sz);
+	Orbiter->Int_vec.matrix_print(Group_elts, group_order, elt_sz);
 	for (i = 0; i < group_order; i++) {
 		F->PG_element_normalize(Group_elts + i * elt_sz, 1, elt_sz);
 		}
@@ -489,7 +489,7 @@ void surface_study::study_group(int verbose_level)
 	for (i = 0; i < group_order; i++) {
 		F->PG_element_normalize(Group_elts + i * elt_sz, 1, elt_sz);
 		cout << "element " << i << " / " << group_order << ":" << endl;
-		int_matrix_print(Group_elts + i * elt_sz, 4, 4);
+		Orbiter->Int_vec.matrix_print(Group_elts + i * elt_sz, 4, 4);
 		}
 	//int_matrix_print(Group_elts, group_order, elt_sz);
 
@@ -631,7 +631,7 @@ void surface_study::study_orbits_on_lines(int verbose_level)
 			cout << i << " : " << a << " : " << b << endl;
 
 			Surf->Gr->unrank_lint_here(Basis, b, 0);
-			int_matrix_print(Basis, 2, 4);
+			Orbiter->Int_vec.matrix_print(Basis, 2, 4);
 			}
 
 		for (ii = 0; ii < Orb->nb_orbits; ii++) {
@@ -644,7 +644,7 @@ void surface_study::study_orbits_on_lines(int verbose_level)
 				cout << i << " : " << a << " : " << b << endl;
 
 				Surf->Gr->unrank_lint_here(Basis, b, 0);
-				int_matrix_print(Basis, 2, 4);
+				Orbiter->Int_vec.matrix_print(Basis, 2, 4);
 				}
 			}
 		}
@@ -671,7 +671,7 @@ void surface_study::study_find_eckardt_points(int verbose_level)
 	Surf->compute_adjacency_matrix_of_line_intersection_graph(
 			Adj, SaS->data, SaS->sz, verbose_level);
 	cout << "The adjacency matrix is:" << endl;
-	int_matrix_print(Adj, SaS->sz, SaS->sz);
+	Orbiter->Int_vec.matrix_print(Adj, SaS->sz, SaS->sz);
 
 
 
@@ -680,14 +680,14 @@ void surface_study::study_find_eckardt_points(int verbose_level)
 
 
 	cout << "The tactical decomposition scheme is:" << endl;
-	int_matrix_print(R, nb_orbits, nb_orbits);
+	Orbiter->Int_vec.matrix_print(R, nb_orbits, nb_orbits);
 
 	Surf->compute_intersection_points(Adj,
 		SaS->data, SaS->sz, Intersection_pt,
 		verbose_level);
 
 	cout << "The intersection points are:" << endl;
-	lint_matrix_print(Intersection_pt, SaS->sz, SaS->sz);
+	Orbiter->Lint_vec.matrix_print(Intersection_pt, SaS->sz, SaS->sz);
 
 	{
 		string fname_intersection_pts;
@@ -748,7 +748,7 @@ void surface_study::study_find_eckardt_points(int verbose_level)
 	Sorting.lint_vec_heapsort(Double_pts, nb_double_pts);
 
 	cout << "We found " << nb_double_pts << " double points" << endl;
-	lint_vec_print(cout, Double_pts, nb_double_pts);
+	Orbiter->Lint_vec.print(cout, Double_pts, nb_double_pts);
 	cout << endl;
 
 
@@ -764,7 +764,7 @@ void surface_study::study_find_eckardt_points(int verbose_level)
 	Sorting.lint_vec_heapsort(Eckardt_pts, nb_Eckardt_pts);
 
 	cout << "We found " << nb_Eckardt_pts << " Eckardt points" << endl;
-	lint_vec_print(cout, Eckardt_pts, nb_Eckardt_pts);
+	Orbiter->Lint_vec.print(cout, Eckardt_pts, nb_Eckardt_pts);
 	cout << endl;
 
 	if (f_v) {
@@ -797,7 +797,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 	desired_lines[2] = Surf->Gr->rank_lint_here(Basis3, 0 /*verbose_level*/);
 
 	cout << "desired_lines : ";
-	lint_vec_print(cout, desired_lines, 3);
+	Orbiter->Lint_vec.print(cout, desired_lines, 3);
 	cout << endl;
 
 
@@ -828,12 +828,12 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 
 
 
-	lint_vec_take_away(Double_pts, nb_double_pts, triangle, nb_pts_triangle);
-	lint_vec_take_away(Double_pts, nb_double_pts, three_points, 3);
+	Orbiter->Lint_vec.take_away(Double_pts, nb_double_pts, triangle, nb_pts_triangle);
+	Orbiter->Lint_vec.take_away(Double_pts, nb_double_pts, three_points, 3);
 
 	cout << "After taking away the triangle points, "
 			"we still have " << nb_double_pts << " double points" << endl;
-	lint_vec_print_as_table(cout, Double_pts, nb_double_pts, 10);
+	Orbiter->Lint_vec.print_as_table(cout, Double_pts, nb_double_pts, 10);
 	cout << endl;
 
 
@@ -993,7 +993,7 @@ void surface_study::study_surface_with_6_eckardt_points(int verbose_level)
 		b = Double_pts[a];
 		short_orbit[i] = b;
 		}
-	lint_vec_print(cout, short_orbit, short_orbit_len);
+	Orbiter->Lint_vec.print(cout, short_orbit, short_orbit_len);
 	cout << endl;
 
 
@@ -1553,7 +1553,7 @@ void move_point_set(action *A2,
 
 	if (f_v) {
 		cout << "idx = " << idx << " data_out = ";
-		lint_vec_print(cout, data_out, nb_pts);
+		Orbiter->Lint_vec.print(cout, data_out, nb_pts);
 		cout << endl;
 		}
 
@@ -1563,7 +1563,7 @@ void move_point_set(action *A2,
 
 	if (f_v) {
 		cout << "data2 = ";
-		lint_vec_print(cout, data2, nb_pts);
+		Orbiter->Lint_vec.print(cout, data2, nb_pts);
 		cout << endl;
 		}
 

@@ -76,7 +76,7 @@ void set_of_sets::init_simple(int underlying_set_size,
 	for (i = 0; i < nb_sets; i++) {
 		Sets[i] = NULL;
 		}
-	lint_vec_zero(Set_size, nb_sets);
+	Orbiter->Lint_vec.zero(Set_size, nb_sets);
 }
 
 void set_of_sets::init_from_adjacency_matrix(
@@ -100,7 +100,7 @@ void set_of_sets::init_from_adjacency_matrix(
 	for (i = 0; i < n; i++) {
 		Sets[i] = NEW_lint(Set_size[i]);
 		}
-	lint_vec_zero(Set_size, n);
+	Orbiter->Lint_vec.zero(Set_size, n);
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < n; j++) {
 			if (Adj[i * n + j]) {
@@ -125,7 +125,7 @@ void set_of_sets::init(int underlying_set_size,
 	init_basic(underlying_set_size, nb_sets, Sz, verbose_level);
 
 	for (i = 0; i < nb_sets; i++) {
-		lint_vec_copy(Pts[i], Sets[i], Sz[i]);
+		Orbiter->Lint_vec.copy(Pts[i], Sets[i], Sz[i]);
 		}
 }
 
@@ -150,7 +150,7 @@ void set_of_sets::init_with_Sz_in_int(int underlying_set_size,
 	init_basic(underlying_set_size, nb_sets, Sz1, verbose_level);
 
 	for (i = 0; i < nb_sets; i++) {
-		lint_vec_copy(Pts[i], Sets[i], Sz[i]);
+		Orbiter->Lint_vec.copy(Pts[i], Sets[i], Sz[i]);
 		}
 	FREE_lint(Sz1);
 }
@@ -286,7 +286,7 @@ void set_of_sets::init_from_csv_file(int underlying_set_size,
 		0 /* verbose_level */);
 
 	for (i = 0; i < m; i++) {
-		lint_vec_copy(Data + i * n, Sets[i], n);
+		Orbiter->Lint_vec.copy(Data + i * n, Sets[i], n);
 		}
 
 	
@@ -318,7 +318,7 @@ void set_of_sets::init_from_orbiter_file(int underlying_set_size,
 	for (i = 0; i < nb_sets; i++) {
 		Sets[i] = NULL;
 		}
-	lint_vec_zero(Set_size, nb_sets);
+	Orbiter->Lint_vec.zero(Set_size, nb_sets);
 
 	char *buf, *p_buf;
 
@@ -505,7 +505,7 @@ void set_of_sets::init_cycle_structure(int *perm,
 	if (f_v) {
 		cout << "set_of_sets::init_cycle_structure we found "
 				"the following cycle structure:";
-		lint_vec_print(cout, orbit_length, nb_orbits);
+		Orbiter->Lint_vec.print(cout, orbit_length, nb_orbits);
 		cout << endl;
 		}
 
@@ -631,7 +631,7 @@ void set_of_sets::print()
 	
 	cout << "(";
 	for (i = 0; i < nb_sets; i++) {
-		lint_vec_print(cout, Sets[i], Set_size[i]);
+		Orbiter->Lint_vec.print(cout, Sets[i], Set_size[i]);
 		if (i < nb_sets - 1) {
 			cout << ", ";
 		}
@@ -646,7 +646,7 @@ void set_of_sets::print_table()
 	cout << "set of sets with " << nb_sets << " sets :" << endl;
 	for (i = 0; i < nb_sets; i++) {
 		cout << "set " << i << " has size " << Set_size[i] << " : ";
-		lint_vec_print(cout, Sets[i], Set_size[i]);
+		Orbiter->Lint_vec.print(cout, Sets[i], Set_size[i]);
 		cout << endl;
 		}
 	cout << "end set of sets" << endl;
@@ -678,7 +678,7 @@ void set_of_sets::dualize(set_of_sets *&S, int verbose_level)
 	S = NEW_OBJECT(set_of_sets);
 	S->init_basic_constant_size(nb_sets,
 			underlying_set_size, nb_sets, verbose_level - 1);
-	lint_vec_zero(S->Set_size, underlying_set_size);
+	Orbiter->Lint_vec.zero(S->Set_size, underlying_set_size);
 	for (i = 0; i < nb_sets; i++) {
 		for (j = 0; j < Set_size[i]; j++) {
 			a = Sets[i][j];
@@ -826,7 +826,7 @@ void set_of_sets::intersection_matrix(
 		}
 	if (FALSE /*f_vv*/) {
 		cout << "Incidence matrix:" << endl;
-		print_integer_matrix_width(cout, Incma,
+		Orbiter->Int_vec.print_integer_matrix_width(cout, Incma,
 				underlying_set_size, nb_big_sets, nb_big_sets, 1);
 		}
 	for (i = 0; i < underlying_set_size; i++) {
@@ -841,7 +841,7 @@ void set_of_sets::intersection_matrix(
 		}
 	if (FALSE /*f_vv*/) {
 		cout << "I * I^\\top = " << endl;
-		print_integer_matrix_width(cout, IIt,
+		Orbiter->Int_vec.print_integer_matrix_width(cout, IIt,
 				underlying_set_size, underlying_set_size,
 				underlying_set_size, 2);
 		}
@@ -857,7 +857,7 @@ void set_of_sets::intersection_matrix(
 		}
 	if (FALSE /*f_v*/) {
 		cout << "I^\\top * I = " << endl;
-		print_integer_matrix_width(cout, ItI,
+		Orbiter->Int_vec.print_integer_matrix_width(cout, ItI,
 				nb_big_sets, nb_big_sets, nb_big_sets, 3);
 		}
 	
@@ -1059,7 +1059,7 @@ void set_of_sets::compute_tdo_decomposition(
 		}
 
 	if (f_v) {
-		int_matrix_print(Inc, underlying_set_size, nb_sets);
+		Orbiter->Int_vec.matrix_print(Inc, underlying_set_size, nb_sets);
 		}
 
 
@@ -1150,7 +1150,7 @@ void set_of_sets::all_pairwise_intersections(
 			Sorting.lint_vec_intersect_sorted_vectors(
 					Sets[i], Set_size[i], Sets[j], Set_size[j], v, l);
 			Intersections->Sets[k] = NEW_lint(l);
-			lint_vec_copy(v, Intersections->Sets[k], l);
+			Orbiter->Lint_vec.copy(v, Intersections->Sets[k], l);
 			Intersections->Set_size[k] = l;
 			}
 		}
@@ -1229,7 +1229,7 @@ void set_of_sets::all_triple_intersections(
 				Sorting.lint_vec_intersect_sorted_vectors(v, l1,
 						Sets[k], Set_size[k], w, l2);
 				Intersections->Sets[h] = NEW_lint(l2);
-				lint_vec_copy(w, Intersections->Sets[h], l2);
+				Orbiter->Lint_vec.copy(w, Intersections->Sets[h], l2);
 				Intersections->Set_size[h] = l2;
 				}
 			}

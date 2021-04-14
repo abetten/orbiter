@@ -467,7 +467,7 @@ void poset_orbit_node::setup_factor_space_action(
 
 	if (f_v) {
 		cout << "the set: ";
-		lint_vec_print(cout, the_set, lvl);
+		Orbiter->Lint_vec.print(cout, the_set, lvl);
 		cout << endl;
 		}
 	gen->unrank_basis(coordinates, the_set, lvl);

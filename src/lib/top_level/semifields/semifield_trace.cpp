@@ -138,9 +138,9 @@ void semifield_trace::trace_very_general(
 
 	if (f_vv) {
 		cout << "transformation matrix transporter=" << endl;
-		int_matrix_print(transporter, n, n);
+		Orbiter->Int_vec.matrix_print(transporter, n, n);
 		cout << "transformation matrix M1=" << endl;
-		int_matrix_print(M1, n, n);
+		Orbiter->Int_vec.matrix_print(M1, n, n);
 		}
 
 	// apply transporter to elements 0,...,basis_sz - 1 of input_basis
@@ -348,7 +348,7 @@ void semifield_trace::trace_very_general(
 	if (f_vv) {
 		cout << "semifield_trace::trace_very_general "
 				"reduced basis=" << endl;
-		int_matrix_print(input_basis, basis_sz, k2);
+		Orbiter->Int_vec.matrix_print(input_basis, basis_sz, k2);
 		cout << "Which is:" << endl;
 		SC->basis_print(input_basis, basis_sz);
 		}

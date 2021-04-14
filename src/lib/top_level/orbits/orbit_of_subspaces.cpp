@@ -195,7 +195,7 @@ void orbit_of_subspaces::init_lint(
 	orbit_of_subspaces::F = F;
 	orbit_of_subspaces::gens = gens;
 	orbit_of_subspaces::subspace_by_rank_lint = NEW_lint(n);
-	lint_vec_copy(subspace_by_rank, orbit_of_subspaces::subspace_by_rank_lint, n);
+	Orbiter->Lint_vec.copy(subspace_by_rank, orbit_of_subspaces::subspace_by_rank_lint, n);
 	orbit_of_subspaces::k = k;
 	orbit_of_subspaces::n = n;
 	orbit_of_subspaces::f_has_desired_pivots = f_has_desired_pivots;
@@ -416,7 +416,7 @@ void orbit_of_subspaces::rref(int *subspace, int verbose_level)
 	if (f_has_desired_pivots) {
 		if (f_vv) {
 			cout << "orbit_of_subspaces::rref before:" << endl;
-			int_matrix_print(subspace, k, n);
+			Orbiter->Int_vec.matrix_print(subspace, k, n);
 			cout << "desired_pivots:";
 			Orbiter->Int_vec.print(cout, desired_pivots, k);
 			cout << endl;
@@ -431,7 +431,7 @@ void orbit_of_subspaces::rref(int *subspace, int verbose_level)
 			0 /*verbose_level - 2*/);
 		if (f_vv) {
 			cout << "orbit_of_subspaces::rref after:" << endl;
-			int_matrix_print(subspace, k, n);
+			Orbiter->Int_vec.matrix_print(subspace, k, n);
 			}
 		}
 	else {
@@ -526,7 +526,7 @@ void orbit_of_subspaces::print_orbit()
 	for (i = 0; i < used_length; i++) {
 		cout << i << " : ";
 		if (f_lint) {
-			lint_vec_print(cout, Subspaces_lint[i], k);
+			Orbiter->Lint_vec.print(cout, Subspaces_lint[i], k);
 		}
 		else {
 			Orbiter->Int_vec.print(cout, Subspaces[i], k);
@@ -626,7 +626,7 @@ void orbit_of_subspaces::compute(int verbose_level)
 	}
 	if (f_v) {
 		cout << "which equals" << endl;
-		int_matrix_print(Mtx1, k, n);
+		Orbiter->Int_vec.matrix_print(Mtx1, k, n);
 		}
 
 	rref(Mtx1, verbose_level - 1);
@@ -642,13 +642,13 @@ void orbit_of_subspaces::compute(int verbose_level)
 	}
 	if (f_v) {
 		cout << "after RREF:" << endl;
-		int_matrix_print(Mtx1, k, n);
+		Orbiter->Int_vec.matrix_print(Mtx1, k, n);
 		}
 
 
 	if (f_lint) {
 		Subspaces_lint[0] = NEW_lint(sz);
-		lint_vec_copy(subspace_by_rank_lint, Subspaces_lint[0], sz);
+		Orbiter->Lint_vec.copy(subspace_by_rank_lint, Subspaces_lint[0], sz);
 	}
 	else {
 		Subspaces[0] = NEW_int(sz);
@@ -754,7 +754,7 @@ void orbit_of_subspaces::compute(int verbose_level)
 
 				if (f_lint) {
 					Subspaces_lint[used_length] = NEW_lint(sz);
-					lint_vec_copy(subspace_by_rank_lint, Subspaces_lint[used_length], sz);
+					Orbiter->Lint_vec.copy(subspace_by_rank_lint, Subspaces_lint[used_length], sz);
 				}
 				else {
 					Subspaces[used_length] = NEW_int(sz);

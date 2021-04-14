@@ -381,7 +381,7 @@ void surface_classify_wedge::downstep(int verbose_level)
 
 		R->Strong_gens->group_order(go);
 
-		lint_vec_copy(R->data, Lines, 12);
+		Orbiter->Lint_vec.copy(R->data, Lines, 12);
 
 		if (f_vv) {
 			cout << "surface_classify_wedge::downstep "
@@ -495,7 +495,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 		if (f_v) {
 			cout << "po=" << po << " so=" << so << endl;
 		}
-		lint_vec_copy(Flag_orbits->Pt + f * 27, Lines, 27);
+		Orbiter->Lint_vec.copy(Flag_orbits->Pt + f * 27, Lines, 27);
 
 
 
@@ -514,7 +514,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 
 		if (f_v) {
 			cout << "Lines:";
-			lint_vec_print(cout, Lines, 27);
+			Orbiter->Lint_vec.print(cout, Lines, 27);
 			cout << endl;
 		}
 		S = Flag_orbits->Flag_orbit_node[f].gens->create_copy();
@@ -543,7 +543,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 						<< Flag_orbits->nb_flag_orbits
 						<< ", upstep i=" << i
 						<< " / 36 double_six=";
-				lint_vec_print(cout, double_six, 12);
+				Orbiter->Lint_vec.print(cout, double_six, 12);
 				cout << endl;
 			}
 			
@@ -719,12 +719,12 @@ void surface_classify_wedge::derived_arcs(int verbose_level)
 
 			if (f_v) {
 				cout << "starter configuration as neighbors: ";
-				lint_vec_print(cout, S, 5);
+				Orbiter->Lint_vec.print(cout, S, 5);
 				cout << endl;
 			}
 
 
-			lint_vec_apply(S, Classify_double_sixes->Neighbor_to_line, S2, 5);
+			Orbiter->Lint_vec.apply(S, Classify_double_sixes->Neighbor_to_line, S2, 5);
 			S2[5] = Classify_double_sixes->pt0_line;
 
 			four_lines[0] = S2[0];
@@ -767,7 +767,7 @@ void surface_classify_wedge::derived_arcs(int verbose_level)
 			if (f_v) {
 				cout << "The lines which meet { a_2, a_3, a_4 } "
 						"and are skew to { a_1, b_5, b_6 } are: ";
-				lint_vec_print(cout, lines, nb_lines);
+				Orbiter->Lint_vec.print(cout, lines, nb_lines);
 				cout << endl;
 				cout << "generator matrices:" << endl;
 				Surf->Gr->print_set(lines, nb_lines);
@@ -790,7 +790,7 @@ void surface_classify_wedge::derived_arcs(int verbose_level)
 			if (f_v) {
 				cout << "The lines which meet { a_1, a_3, a_4 } "
 						"and are skew to { a_2, b_5, b_6 } are: ";
-				lint_vec_print(cout, lines, nb_lines);
+				Orbiter->Lint_vec.print(cout, lines, nb_lines);
 				cout << endl;
 				cout << "generator matrices:" << endl;
 				Surf->Gr->print_set(lines, nb_lines);
@@ -801,7 +801,7 @@ void surface_classify_wedge::derived_arcs(int verbose_level)
 
 			if (f_v) {
 				cout << "starter configuration as line ranks: ";
-				lint_vec_print(cout, S2, 6);
+				Orbiter->Lint_vec.print(cout, S2, 6);
 				cout << endl;
 				cout << "b5=" << b5 << endl;
 				cout << "generator matrices:" << endl;
@@ -817,7 +817,7 @@ void surface_classify_wedge::derived_arcs(int verbose_level)
 			//int_vec_apply(S2, Surf->Klein->Line_to_point_on_quadric, K1, 7);
 			if (f_v) {
 				cout << "starter configuration on the klein quadric: ";
-				lint_vec_print(cout, K1, 7);
+				Orbiter->Lint_vec.print(cout, K1, 7);
 				cout << endl;
 				for (i = 0; i < 7; i++) {
 					Surf->O->unrank_point(w, 1, K1[i], 0 /* verbose_level*/);
@@ -836,7 +836,7 @@ void surface_classify_wedge::derived_arcs(int verbose_level)
 			}
 			if (f_v) {
 				cout << "The associated arc is ";
-				lint_vec_print(cout, Arc, 6);
+				Orbiter->Lint_vec.print(cout, Arc, 6);
 				cout << endl;
 				for (i = 0; i < 6; i++) {
 					F->PG_element_unrank_modified_lint(v, 1, 3, Arc[i]);
@@ -1809,10 +1809,10 @@ void surface_classify_wedge::identify_surface(
 		cout << "the input surface has " << My_Lines.size() << " lines" << endl;
 		cout << "something is wrong with the input surface, skipping" << endl;
 		cout << "Points:";
-		lint_vec_print(cout, My_Points);
+		Orbiter->Lint_vec.print(cout, My_Points);
 		cout << endl;
 		cout << "Lines:";
-		lint_vec_print(cout, My_Lines);
+		Orbiter->Lint_vec.print(cout, My_Lines);
 		cout << endl;
 
 		return;
@@ -1875,7 +1875,7 @@ void surface_classify_wedge::identify_surface(
 	if (f_v) {
 		cout << "surface_classify_wedge::identify_surface "
 				"The starter configuration is S3=";
-		lint_vec_print(cout, S3, 6);
+		Orbiter->Lint_vec.print(cout, S3, 6);
 		cout << endl;
 	}
 
@@ -2041,7 +2041,7 @@ void surface_classify_wedge::identify_surface(
 		A->element_print_quick(Elt_isomorphism_inv, cout);
 
 		cout << "The image of the set of points is: ";
-		lint_vec_print(cout, image, nb_points);
+		Orbiter->Lint_vec.print(cout, image, nb_points);
 		cout << endl;
 	}
 
@@ -2072,7 +2072,7 @@ void surface_classify_wedge::identify_surface(
 
 	cout << "the surface in the list is = " << endl;
 	idx = Surfaces->Orbit[isomorphic_to].orbit_index;
-	lint_vec_copy(Surfaces->Rep +
+	Orbiter->Lint_vec.copy(Surfaces->Rep +
 			idx * Surfaces->representation_sz,
 			Lines0, 27);
 	
@@ -2241,7 +2241,7 @@ void surface_classify_wedge::report_surface(
 				"after Surfaces->get_set_and_stabilizer" << endl;
 	}
 
-	lint_vec_copy(SaS->data, Lines, 27);
+	Orbiter->Lint_vec.copy(SaS->data, Lines, 27);
 	
 	if (f_v) {
 		cout << "surface_classify_wedge::report_surface "
@@ -2424,7 +2424,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 
 			SaS = Surfaces->get_set_and_stabilizer(
 					orbit_index, 0 /* verbose_level */);
-			lint_vec_copy(SaS->data, Lines, 27);
+			Orbiter->Lint_vec.copy(SaS->data, Lines, 27);
 
 			Surf->build_cubic_surface_from_lines(27,
 					Lines, equation, 0 /* verbose_level */);
@@ -2491,7 +2491,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 
 			SaS = Surfaces->get_set_and_stabilizer(
 					orbit_index, 0 /* verbose_level */);
-			lint_vec_copy(SaS->data, Lines, 27);
+			Orbiter->Lint_vec.copy(SaS->data, Lines, 27);
 			Surf->build_cubic_surface_from_lines(27,
 					Lines, equation, 0 /* verbose_level */);
 			F->PG_element_normalize_from_front(equation, 1, 20);
@@ -2583,7 +2583,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 
 			SaS = Surfaces->get_set_and_stabilizer(
 					orbit_index, 0 /* verbose_level */);
-			lint_vec_copy(SaS->data, Lines, 27);
+			Orbiter->Lint_vec.copy(SaS->data, Lines, 27);
 
 			f << "\t";
 			for (j = 0; j < 27; j++) {

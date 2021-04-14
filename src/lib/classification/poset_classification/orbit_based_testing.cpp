@@ -162,7 +162,7 @@ void orbit_based_testing::early_test_func_by_using_group(
 
 	if (f_vv) {
 		cout << "S=";
-		lint_vec_print(cout, S, len);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << " testing " << nb_candidates << " candidates" << endl;
 		//int_vec_print(cout, candidates, nb_candidates);
 		//cout << endl;
@@ -173,7 +173,7 @@ void orbit_based_testing::early_test_func_by_using_group(
 				"len >= max_depth" << endl;
 		exit(1);
 	}
-	lint_vec_copy(S, local_S, len);
+	Orbiter->Lint_vec.copy(S, local_S, len);
 
 
 	int i, j, node, f, l, nb_good_orbits;

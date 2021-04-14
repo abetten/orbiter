@@ -259,7 +259,7 @@ void spread_tables::init_reduced(
 	spread_iso_type = NEW_int(nb_spreads);
 	for (i = 0; i < nb_spreads; i++) {
 		a = select[i];
-		lint_vec_copy(old_spread_table->spread_table + a * spread_size,
+		Orbiter->Lint_vec.copy(old_spread_table->spread_table + a * spread_size,
 				spread_table + i * spread_size, spread_size);
 		spread_iso_type[i] = old_spread_table->spread_iso_type[a];
 	}
@@ -680,16 +680,16 @@ void spread_tables::compute_dual_spreads(long int **Sets,
 		if (FALSE) {
 			cout << "spread_tables::compute_dual_spreads spread "
 					<< i << " / " << nb_spreads << endl;
-			lint_vec_print(cout,
+			Orbiter->Lint_vec.print(cout,
 					spread_table + i * spread_size, spread_size);
 			cout << endl;
-			lint_vec_print(cout, dual_spread, spread_size);
+			Orbiter->Lint_vec.print(cout, dual_spread, spread_size);
 			cout << endl;
 		}
 		Sorting.lint_vec_heapsort(dual_spread, spread_size);
 		//dual_spread[0] = int_vec_hash(dual_spread + 1, spread_size);
 		if (FALSE) {
-			lint_vec_print(cout, dual_spread, spread_size);
+			Orbiter->Lint_vec.print(cout, dual_spread, spread_size);
 			cout << endl;
 		}
 
@@ -714,7 +714,7 @@ void spread_tables::compute_dual_spreads(long int **Sets,
 		else {
 			cout << "The dual spread is not in the list, error!" << endl;
 			cout << "dual_spread: ";
-			lint_vec_print(cout, dual_spread, spread_size);
+			Orbiter->Lint_vec.print(cout, dual_spread, spread_size);
 			cout << endl;
 			exit(1);
 		}
@@ -725,7 +725,7 @@ void spread_tables::compute_dual_spreads(long int **Sets,
 		cout << "spread_tables::compute_dual_spreads we found "
 				<< nb_self_dual_spreads << " self dual spreads" << endl;
 		cout << "They are: ";
-		lint_vec_print(cout, self_dual_spread_idx, nb_self_dual_spreads);
+		Orbiter->Lint_vec.print(cout, self_dual_spread_idx, nb_self_dual_spreads);
 		cout << endl;
 	}
 
@@ -857,7 +857,7 @@ void spread_tables::compute_list_of_lines_from_packing(
 	}
 	for (i = 0; i < sz_of_packing; i++) {
 		a = packing[i];
-		lint_vec_copy(spread_table + a * spread_size,
+		Orbiter->Lint_vec.copy(spread_table + a * spread_size,
 				list_of_lines + i * spread_size, spread_size);
 	}
 	if (f_v) {

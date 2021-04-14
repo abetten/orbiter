@@ -274,7 +274,7 @@ void permutation_representation_domain::init_with_base(int degree,
 
 	if (f_v) {
 		cout << "base: ";
-		lint_vec_print(cout, A.get_base(), A.base_len());
+		Orbiter->Lint_vec.print(cout, A.get_base(), A.base_len());
 		cout << endl;
 		//cout << "transversal_length: ";
 		//print_set(cout, A.base_len, A.transversal_length);

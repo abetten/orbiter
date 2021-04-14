@@ -368,7 +368,7 @@ void interface_coding_theory::read_arguments(int argc,
 				S.init(&Descr, verbose_level);
 
 				cout << "set_builder found the following set of size " << S.sz << endl;
-				lint_vec_print(cout, S.set, S.sz);
+				Orbiter->Lint_vec.print(cout, S.set, S.sz);
 				cout << endl;
 
 				s.assign("");
@@ -491,7 +491,7 @@ void interface_coding_theory::worker(int verbose_level)
 			coding_theory_domain Codes;
 
 
-			lint_vec_scan(general_code_binary_text, set, sz);
+			Orbiter->Lint_vec.scan(general_code_binary_text, set, sz);
 
 			Codes.investigate_code(set, sz, general_code_binary_n, f_embellish, verbose_level);
 
@@ -506,7 +506,7 @@ void interface_coding_theory::worker(int verbose_level)
 			coding_theory_domain Codes;
 
 
-			lint_vec_scan(code_diagram_codewords_text, codewords, nb_words);
+			Orbiter->Lint_vec.scan(code_diagram_codewords_text, codewords, nb_words);
 
 
 
@@ -545,7 +545,7 @@ void interface_coding_theory::worker(int verbose_level)
 			coding_theory_domain Codes;
 
 
-			lint_vec_scan(code_diagram_codewords_text, codewords, nb_words);
+			Orbiter->Lint_vec.scan(code_diagram_codewords_text, codewords, nb_words);
 
 
 
@@ -565,7 +565,7 @@ void interface_coding_theory::worker(int verbose_level)
 			coding_theory_domain Codes;
 
 
-			lint_vec_scan(linear_code_through_basis_text, set, sz);
+			Orbiter->Lint_vec.scan(linear_code_through_basis_text, set, sz);
 
 			Codes.do_linear_code_through_basis(
 					linear_code_through_basis_n,
@@ -584,7 +584,7 @@ void interface_coding_theory::worker(int verbose_level)
 			coding_theory_domain Codes;
 
 
-			lint_vec_scan(linear_code_through_columns_of_parity_check_text, set, n);
+			Orbiter->Lint_vec.scan(linear_code_through_columns_of_parity_check_text, set, n);
 
 			Codes.do_linear_code_through_columns_of_parity_check_projectively(
 					n,
@@ -603,7 +603,7 @@ void interface_coding_theory::worker(int verbose_level)
 			coding_theory_domain Codes;
 
 
-			lint_vec_scan(linear_code_through_columns_of_parity_check_text, set, n);
+			Orbiter->Lint_vec.scan(linear_code_through_columns_of_parity_check_text, set, n);
 
 			Codes.do_linear_code_through_columns_of_parity_check(
 					n,

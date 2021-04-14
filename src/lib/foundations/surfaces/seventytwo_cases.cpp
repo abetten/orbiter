@@ -95,7 +95,7 @@ void seventytwo_cases::init(surface_domain *Surf, int f, int tritangent_plane_id
 	seventytwo_cases::f = f;
 	seventytwo_cases::tritangent_plane_idx = tritangent_plane_idx;
 	Orbiter->Int_vec.copy(three_lines_idx, seventytwo_cases::three_lines_idx, 3);
-	lint_vec_copy(three_lines, seventytwo_cases::three_lines, 3);
+	Orbiter->Lint_vec.copy(three_lines, seventytwo_cases::three_lines, 3);
 
 	tritangent_plane_rk = 0;
 
@@ -163,7 +163,7 @@ void seventytwo_cases::compute_arc(surface_object *SO, int verbose_level)
 	}
 	if (f_v) {
 		cout << "seventytwo_cases::compute_arc the four transversals are: ";
-		lint_vec_print(cout, transversals4, 4);
+		Orbiter->Lint_vec.print(cout, transversals4, 4);
 		cout << endl;
 	}
 
@@ -216,7 +216,7 @@ void seventytwo_cases::compute_arc(surface_object *SO, int verbose_level)
 	}
 	if (f_v) {
 		cout << "seventytwo_cases::compute_arc P6=";
-		lint_vec_print(cout, P6, 6);
+		Orbiter->Lint_vec.print(cout, P6, 6);
 		cout << endl;
 	}
 

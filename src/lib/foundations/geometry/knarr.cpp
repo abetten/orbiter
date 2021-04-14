@@ -190,7 +190,7 @@ void knarr::init(finite_field *F, int BLT_no, int verbose_level)
 			cout << setw(4) << i << " : " << setw(4) << a << " : "
 					<< setw(5) << W->Lines[a] << ":" << endl;
 			W->P3->unrank_line(Basis, W->Lines[a]);
-			print_integer_matrix_width(cout, Basis, 2, 4, 4, F->log10_of_q);
+			Orbiter->Int_vec.print_integer_matrix_width(cout, Basis, 2, 4, 4, F->log10_of_q);
 			cout << endl;
 			}
 		}
@@ -265,7 +265,7 @@ void knarr::points_and_lines(int verbose_level)
 		if (f_vvv) {
 			cout << "BLT line " << h << " which is "
 					<< W->Lines[a] << endl;
-			print_integer_matrix_width(cout, Basis, 2, 4, 4,
+			Orbiter->Int_vec.print_integer_matrix_width(cout, Basis, 2, 4, 4,
 					F->log10_of_q);
 			cout << endl;
 			}
@@ -279,7 +279,7 @@ void knarr::points_and_lines(int verbose_level)
 			}
 		if (f_v4) {
 			cout << "embedded:" << endl;
-			print_integer_matrix_width(cout, Basis2, 3, 6, 6,
+			Orbiter->Int_vec.print_integer_matrix_width(cout, Basis2, 3, 6, 6,
 					F->log10_of_q);
 			cout << endl;
 			}
@@ -310,7 +310,7 @@ void knarr::points_and_lines(int verbose_level)
 			j = P5->Grass_lines->rank_lint(0);
 			if (f_v4) {
 				cout << "Subspace " << jj << " has a basis:" << endl;
-				print_integer_matrix_width(cout, subspace_basis,
+				Orbiter->Int_vec.print_integer_matrix_width(cout, subspace_basis,
 						2, 6, 6, F->log10_of_q);
 				cout << "and has rank " << j << endl;
 				}
@@ -366,7 +366,7 @@ void knarr::points_and_lines(int verbose_level)
 		if (f_v4) {
 			cout << "Subspace i=" << i << " / "
 					<< six_choose_three_q_int << endl;
-			print_integer_matrix_width(cout, Basis, 3, 6, 6, F->log10_of_q);
+			Orbiter->Int_vec.print_integer_matrix_width(cout, Basis, 3, 6, 6, F->log10_of_q);
 			cout << endl;
 			}
 		if (!F->is_totally_isotropic_wrt_symplectic_form(3, 6, Basis)) {
@@ -441,14 +441,14 @@ void knarr::points_and_lines(int verbose_level)
 			if (f_v4) {
 				cout << "Subspace i=" << i << " is totally "
 						"isotropic and does not contain P." << endl;
-				print_integer_matrix_width(cout,
+				Orbiter->Int_vec.print_integer_matrix_width(cout,
 						Basis, 3, 6, 6, F->log10_of_q);
 				cout << endl;
 
 
 				cout << "dim_intersection=" << dim_intersection << endl;
 				cout << "Intersection:" << endl;
-				print_integer_matrix_width(cout,
+				Orbiter->Int_vec.print_integer_matrix_width(cout,
 						Basis_intersection, dim_intersection,
 						6, 6, F->log10_of_q);
 				cout << endl;
@@ -456,7 +456,7 @@ void knarr::points_and_lines(int verbose_level)
 				cout << "Added P" << endl;
 
 				cout << "looking at" << endl;
-				print_integer_matrix_width(cout,
+				Orbiter->Int_vec.print_integer_matrix_width(cout,
 						Basis_intersection, 3, 6, 6,
 						F->log10_of_q);
 				cout << endl;
@@ -511,7 +511,7 @@ void knarr::points_and_lines(int verbose_level)
 				cout << "cnt = " << cnt << " Subspace i=" << i
 						<< " is totally isotropic and does "
 								"not contain P." << endl;
-				print_integer_matrix_width(cout, Basis,
+				Orbiter->Int_vec.print_integer_matrix_width(cout, Basis,
 						3, 6, 6, F->log10_of_q);
 				cout << endl;
 				cnt++;
@@ -585,7 +585,7 @@ void knarr::incidence_matrix(int *&Inc,
 				cout << "I=" << I << " i=" << i;
 				cout << " a=" << a << " row=" << row << endl;
 				cout << "Basis_U:" << endl;
-				print_integer_matrix_width(cout,
+				Orbiter->Int_vec.print_integer_matrix_width(cout,
 						Basis_U, dim_U, 6, 6, F->log10_of_q);
 				cout << endl;
 				}
@@ -617,7 +617,7 @@ void knarr::incidence_matrix(int *&Inc,
 						cout << "J=" << J << " j=" << j; 
 						cout << " b=" << b << " col=" << col << endl;
 						cout << "Basis_V:" << endl;
-						print_integer_matrix_width(cout,
+						Orbiter->Int_vec.print_integer_matrix_width(cout,
 								Basis_V, dim_V, 6, 6, F->log10_of_q);
 						cout << endl;
 						}

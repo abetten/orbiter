@@ -97,7 +97,7 @@ void flag_orbit_node::init(
 	flag_orbit_node::downstep_secondary_orbit = downstep_secondary_orbit;
 	flag_orbit_node::downstep_orbit_len = downstep_orbit_len;
 	flag_orbit_node::f_long_orbit = FALSE;
-	lint_vec_copy(pt_representation,
+	Orbiter->Lint_vec.copy(pt_representation,
 			Flag_orbits->Pt +
 			flag_orbit_index * Flag_orbits->pt_representation_sz,
 			Flag_orbits->pt_representation_sz);
@@ -218,7 +218,7 @@ void flag_orbit_node::print_latex(flag_orbits *Flag_orbits,
 	}
 	ost << " is ";
 
-	lint_vec_print(ost, Flag_orbits->Pt +
+	Orbiter->Lint_vec.print(ost, Flag_orbits->Pt +
 			flag_orbit_index * Flag_orbits->pt_representation_sz,
 			Flag_orbits->pt_representation_sz);
 

@@ -148,7 +148,7 @@ void Hill_cap56(
 	for (i = 0; i < nb_lines; i++) {
 		Grass.unrank_longinteger(Rank_lines[i], 0/*verbose_level - 3*/);
 		cout << setw(5) << i << " : " << Rank_lines[i] << ":" << endl;
-		print_integer_matrix_width(cout, Grass.M, w, n, n, 2);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, Grass.M, w, n, n, 2);
 		}
 
 #endif
@@ -212,7 +212,7 @@ void Hill_cap56(
 		O->unrank_point(pt_coords + i * n, 1, i, 0);
 		}
 	cout << "point coordinates:" << endl;
-	print_integer_matrix_width(cout, pt_coords, nb_pts, n, n, 2);
+	Orbiter->Int_vec.print_integer_matrix_width(cout, pt_coords, nb_pts, n, n, 2);
 	
 	cout << "evaluating quadratic form:" << endl;
 	for (i = 0; i < nb_pts; i++) {

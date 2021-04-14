@@ -138,7 +138,7 @@ void surface_object::init_equation(surface_domain *Surf, int *eqn,
 			cout << "surface_object::init_equation after "
 					"find_double_six_and_rearrange_lines" << endl;
 			cout << "surface_object::init_equation Lines:";
-			lint_vec_print(cout, Lines, 27);
+			Orbiter->Lint_vec.print(cout, Lines, 27);
 			cout << endl;
 		}
 	}
@@ -292,7 +292,7 @@ void surface_object::enumerate_points_and_lines(int verbose_level)
 	if (f_v) {
 		cout << "surface_object::enumerate_points_and_lines nb_pts=" << nb_pts << " nb_lines=" << nb_lines << endl;
 		cout << "Lines:";
-		lint_vec_print(cout, Lines, nb_lines);
+		Orbiter->Lint_vec.print(cout, Lines, nb_lines);
 		cout << endl;
 	}
 
@@ -320,7 +320,7 @@ void surface_object::find_real_lines(std::vector<long int> &The_Lines, int verbo
 		Surf->P->Grass_lines->unrank_lint_here(M, rk, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "surface_object::find_real_lines testing line" << endl;
-			int_matrix_print(M, 2, 4);
+			Orbiter->Int_vec.matrix_print(M, 2, 4);
 		}
 
 		Surf->Poly3_4->substitute_line(
@@ -368,11 +368,11 @@ void surface_object::init_with_27_lines(surface_domain *Surf,
 
 	nb_lines = 27;
 	surface_object::Lines = NEW_lint(27);
-	lint_vec_copy(Lines27, surface_object::Lines, 27);
+	Orbiter->Lint_vec.copy(Lines27, surface_object::Lines, 27);
 
 	if (f_v) {
 		cout << "surface_object::init_with_27_lines Lines:";
-		lint_vec_print(cout, surface_object::Lines, 27);
+		Orbiter->Lint_vec.print(cout, surface_object::Lines, 27);
 		cout << endl;
 	}
 
@@ -391,7 +391,7 @@ void surface_object::init_with_27_lines(surface_domain *Surf,
 
 	if (f_v) {
 		cout << "surface_object::init_with_27_lines Lines:";
-		lint_vec_print(cout, surface_object::Lines, 27);
+		Orbiter->Lint_vec.print(cout, surface_object::Lines, 27);
 		cout << endl;
 	}
 
@@ -482,7 +482,7 @@ void surface_object::find_double_six_and_rearrange_lines(
 	if (f_v) {
 		cout << "surface_object::find_double_six_and_rearrange_lines" << endl;
 	}
-	lint_vec_copy(Lines, Lines0, 27);
+	Orbiter->Lint_vec.copy(Lines, Lines0, 27);
 
 	Surf->compute_adjacency_matrix_of_line_intersection_graph(
 			Adj, Lines0, 27, 0 /* verbose_level */);
@@ -528,7 +528,7 @@ void surface_object::find_double_six_and_rearrange_lines(
 	}
 
 
-	lint_vec_copy(double_six, Lines1, 12);
+	Orbiter->Lint_vec.copy(double_six, Lines1, 12);
 	
 	if (f_v) {
 		cout << "surface_object::find_double_six_and_rearrange_lines "
@@ -541,7 +541,7 @@ void surface_object::find_double_six_and_rearrange_lines(
 				"after Surf->create_remaining_fifteen_lines" << endl;
 	}
 
-	lint_vec_copy(Lines1, Lines, 27);
+	Orbiter->Lint_vec.copy(Lines1, Lines, 27);
 	Sorting.lint_vec_heapsort(Lines0, 27);
 	Sorting.lint_vec_heapsort(Lines1, 27);
 

@@ -946,7 +946,7 @@ void geo_parameter::convert_single_to_stack_fuse_simple_pt(
 		} // next j
 	if (f_v) {
 		cout << "the previous col scheme is" << endl;
-		print_integer_matrix_width(cout,
+		Orbiter->Int_vec.print_integer_matrix_width(cout,
 			prev_scheme, nb_classes, nb_B, nb_B, 4);
 		}
 	//part.clear();
@@ -1159,7 +1159,7 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 		} // next j
 	if (f_v) {
 		cout << "the previous row scheme is" << endl;
-		print_integer_matrix_width(cout,
+		Orbiter->Int_vec.print_integer_matrix_width(cout,
 				prev_scheme, nb_V, nb_classes, nb_classes, 4);
 		}
 	nb_parts = 0;
@@ -1447,7 +1447,7 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 		if (f_v) {
 			cout << "depth " << d << ", the previous "
 					"col scheme is" << endl;
-			print_integer_matrix_width(cout,
+			Orbiter->Int_vec.print_integer_matrix_width(cout,
 					prev_scheme[d], nb_classes[d],
 					fuse_block_len[d], fuse_block_len[d], 4);
 			}

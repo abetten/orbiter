@@ -91,6 +91,7 @@ poset_classification_control::poset_classification_control()
 	//schreier_tree_prefix[0] = 0;
 
 
+	f_test_multi_edge_in_decomposition_matrix = FALSE;
 
 }
 
@@ -343,6 +344,10 @@ int poset_classification_control::read_arguments(
 			schreier_tree_prefix.assign(argv[++i]);
 			cout << "-draw_schreier_trees " << schreier_tree_prefix << endl;
 		}
+		else if (stringcmp(argv[i], "-test_multi_edge_in_decomposition_matrix") == 0) {
+			f_test_multi_edge_in_decomposition_matrix = TRUE;
+			cout << "-test_multi_edge_in_decomposition_matrix " << endl;
+		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
@@ -352,6 +357,7 @@ int poset_classification_control::read_arguments(
 			cout << "poset_classification_control::read_arguments "
 					"unrecognized option " << argv[i] << endl;
 		}
+
 	} // next i
 	cout << "poset_classification_control::read_arguments done" << endl;
 	return i + 1;
@@ -472,6 +478,9 @@ void poset_classification_control::print()
 	}
 	if (f_node_label_is_group_order) {
 		cout << "-node_label_is_group_order" << endl;
+	}
+	if (f_test_multi_edge_in_decomposition_matrix) {
+		cout << "-test_multi_edge_in_decomposition_matrix" << endl;
 	}
 }
 

@@ -34,7 +34,7 @@ int finite_field::Gauss_int(int *A,
 	}
 	if (f_vv) {
 		cout << "Gauss algorithm for matrix:" << endl;
-		print_integer_matrix_width(cout, A, m, n, n, 5);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, 5);
 		//print_tables();
 	}
 	i = 0;
@@ -106,7 +106,7 @@ int finite_field::Gauss_int(int *A,
 					<< " made to one: " << A[i * n + j] << endl;
 			}
 			if (f_vvv) {
-				print_integer_matrix_width(cout, A, m, n, n, 5);
+				Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, 5);
 			}
 		}
 
@@ -163,17 +163,17 @@ int finite_field::Gauss_int(int *A,
 			}
 			if (f_vvv) {
 				cout << "A=" << endl;
-				print_integer_matrix_width(cout, A, m, n, n, 5);
+				Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, 5);
 			}
 		}
 		i++;
 		if (f_vv) {
 			cout << "A=" << endl;
-			print_integer_matrix_width(cout, A, m, n, n, 5);
+			Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, 5);
 			//print_integer_matrix(cout, A, m, n);
 			if (f_P) {
 				cout << "P=" << endl;
-				print_integer_matrix(cout, P, m, Pn);
+				Orbiter->Int_vec.print_integer_matrix(cout, P, m, Pn);
 			}
 		}
 	} // next j
@@ -230,7 +230,7 @@ int finite_field::Gauss_int(int *A,
 	}
 	if (f_vv) {
 		cout << endl;
-		print_integer_matrix_width(cout, A, m, n, n, 5);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, 5);
 		//print_integer_matrix(cout, A, rank, n);
 		cout << "the rank is " << rank << endl;
 	}
@@ -262,7 +262,7 @@ int finite_field::Gauss_int_with_pivot_strategy(int *A,
 	if (f_vv) {
 		cout << "finite_field::Gauss_int_with_pivot_strategy "
 				"Gauss algorithm for matrix:" << endl;
-		print_integer_matrix_width(cout, A, m, n, n, 5);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, 5);
 		//print_tables();
 	}
 	for (i = 0; i < m; i++) {
@@ -332,7 +332,7 @@ int finite_field::Gauss_int_with_pivot_strategy(int *A,
 					<< " made to one: " << A[i * n + j] << endl;
 			}
 			if (f_vvv) {
-				print_integer_matrix_width(cout, A, m, n, n, 5);
+				Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, 5);
 			}
 		}
 
@@ -379,13 +379,13 @@ int finite_field::Gauss_int_with_pivot_strategy(int *A,
 			}
 			if (f_vvv) {
 				cout << "A=" << endl;
-				print_integer_matrix_width(cout, A, m, n, n, 5);
+				Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, 5);
 			}
 		}
 		i++;
 		if (f_vv) {
 			cout << "A=" << endl;
-			print_integer_matrix_width(cout, A, m, n, n, 5);
+			Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, 5);
 			//print_integer_matrix(cout, A, m, n);
 		}
 	} // next j
@@ -423,7 +423,7 @@ int finite_field::Gauss_int_with_pivot_strategy(int *A,
 	}
 	if (f_vv) {
 		cout << endl;
-		print_integer_matrix_width(cout, A, m, n, n, 5);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, 5);
 		//print_integer_matrix(cout, A, rank, n);
 		cout << "the rank is " << rank << endl;
 	}
@@ -451,7 +451,7 @@ int finite_field::Gauss_int_with_given_pivots(int *A,
 	if (f_vv) {
 		cout << "finite_field::Gauss_int_with_given_pivots "
 				"Gauss algorithm for matrix:" << endl;
-		print_integer_matrix_width(cout, A, m, n, n, 5);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, 5);
 		cout << "pivots: ";
 		Orbiter->Int_vec.print(cout, pivots, nb_pivots);
 		cout << endl;
@@ -516,7 +516,7 @@ int finite_field::Gauss_int_with_given_pivots(int *A,
 					<< " made to one: " << A[i * n + j] << endl;
 			}
 			if (f_vvv) {
-				print_integer_matrix_width(cout, A, m, n, n, 5);
+				Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, 5);
 			}
 		}
 
@@ -563,12 +563,12 @@ int finite_field::Gauss_int_with_given_pivots(int *A,
 			}
 			if (f_vvv) {
 				cout << "A=" << endl;
-				print_integer_matrix_width(cout, A, m, n, n, 5);
+				Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, 5);
 			}
 		}
 		if (f_vv) {
 			cout << "A=" << endl;
-			print_integer_matrix_width(cout, A, m, n, n, 5);
+			Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, 5);
 			//print_integer_matrix(cout, A, m, n);
 		}
 	} // next j
@@ -605,7 +605,7 @@ int finite_field::Gauss_int_with_given_pivots(int *A,
 	}
 	if (f_vv) {
 		cout << endl;
-		print_integer_matrix_width(cout, A, m, n, n, 5);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, 5);
 		//print_integer_matrix(cout, A, rank, n);
 	}
 	if (f_v) {
@@ -629,7 +629,7 @@ int finite_field::RREF_search_pivot(int *A, int m, int n,
 	}
 	if (f_vv) {
 		cout << "finite_field::RREF_search_pivot matrix:" << endl;
-		print_integer_matrix_width(cout, A, m, n, n, 5);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, 5);
 		//print_tables();
 	}
 	for (; j < n; j++) {
