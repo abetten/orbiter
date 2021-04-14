@@ -15,6 +15,7 @@ MODULES = \
 	classify_trihedral_pairs.o \
 	cubic_surface_activity_description.o \
 	cubic_surface_activity.o \
+	quartic_curve.o \
 	six_arcs_not_on_a_conic.o \
 	surface_classify_using_arc.o \
 	surface_classify_wedge.o \
@@ -23,7 +24,6 @@ MODULES = \
 	surface_create_description.o \
 	surface_create.o \
 	surface_domain_high_level.o \
-	surface_object_tangent_cone.o \
 	surface_object_with_action.o \
 	surface_study.o \
 	surface_with_action.o \

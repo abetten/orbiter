@@ -452,6 +452,7 @@ MODULES= \
 		top_level/surfaces/classify_trihedral_pairs.o \
 		top_level/surfaces/cubic_surface_activity_description.o \
 		top_level/surfaces/cubic_surface_activity.o \
+		top_level/surfaces/quartic_curve.o \
 		top_level/surfaces/six_arcs_not_on_a_conic.o \
 		top_level/surfaces/surface_classify_using_arc.o \
 		top_level/surfaces/surface_classify_wedge.o \
@@ -460,7 +461,6 @@ MODULES= \
 		top_level/surfaces/surface_create_description.o \
 		top_level/surfaces/surface_create.o \
 		top_level/surfaces/surface_domain_high_level.o \
-		top_level/surfaces/surface_object_tangent_cone.o \
 		top_level/surfaces/surface_object_with_action.o \
 		top_level/surfaces/surface_study.o \
 		top_level/surfaces/surface_with_action.o \

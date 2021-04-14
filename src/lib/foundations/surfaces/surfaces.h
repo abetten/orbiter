@@ -723,6 +723,9 @@ public:
 		int verbose_level);
 	void compute_local_coordinates_of_arc(
 			long int *P6, long int *P6_local, int verbose_level);
+	void compute_gradient(int *equation20, int *&gradient, int verbose_level);
+	long int compute_tangent_plane(int *pt_coords, int *equation20, int verbose_level);
+
 
 
 
