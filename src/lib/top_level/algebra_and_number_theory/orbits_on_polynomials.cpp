@@ -184,7 +184,7 @@ void orbits_on_polynomials::init(
 
 
 		cout << "orbits_on_polynomials::init recognition:" << endl;
-		lint_vec_scan(recognize_text, Rank, len);
+		Orbiter->Lint_vec.scan(recognize_text, Rank, len);
 
 		Idx = NEW_int(len);
 
@@ -237,7 +237,7 @@ void orbits_on_polynomials::compute_points(int verbose_level)
 		T->Reps[i].Strong_gens->group_order(go);
 
 		cout << i << " : ";
-		lint_vec_print(cout, T->Reps[i].data, T->Reps[i].sz);
+		Orbiter->Lint_vec.print(cout, T->Reps[i].data, T->Reps[i].sz);
 		cout << " : ";
 		cout << go;
 
@@ -388,7 +388,7 @@ void orbits_on_polynomials::report(int verbose_level)
 				T->Reps[i].Strong_gens->group_order(go);
 
 				ost << i << " : ";
-				lint_vec_print(ost, T->Reps[i].data, T->Reps[i].sz);
+				Orbiter->Lint_vec.print(ost, T->Reps[i].data, T->Reps[i].sz);
 				ost << " : ";
 				ost << go;
 
@@ -544,7 +544,7 @@ void orbits_on_polynomials::report_detailed_list(std::ostream &ost,
 
 			cout << "We found " << nb_pts << " points in the variety" << endl;
 			cout << "They are : ";
-			lint_vec_print(cout, Pts, nb_pts);
+			Orbiter->Lint_vec.print(cout, Pts, nb_pts);
 			cout << endl;
 			HPD->get_P()->print_set_numerical(cout, Pts, nb_pts);
 

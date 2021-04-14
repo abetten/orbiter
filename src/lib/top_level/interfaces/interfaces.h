@@ -26,9 +26,6 @@ namespace top_level {
 
 class interface_algebra {
 
-	//int f_poset_classification_control;
-	//poset_classification_control *Control;
-
 	int f_count_subprimitive;
 	int count_subprimitive_Q_max;
 	int count_subprimitive_H_max;
@@ -213,8 +210,10 @@ class interface_combinatorics {
 	int f_Delandtsheer_Doyen;
 	delandtsheer_doyen_description *Delandtsheer_Doyen_description;
 
+#if 0
 	int f_graph_classify;
 	graph_classify_description *Graph_classify_description;
+#endif
 
 	int f_tdo_refinement;
 	tdo_refinement_description *Tdo_refinement_descr;
@@ -269,23 +268,14 @@ public:
 	void read_arguments(int argc,
 			std::string *argv, int &i, int verbose_level);
 	void worker(int verbose_level);
-	void do_read_poset_file(std::string &fname,
-			int f_grouping, double x_stretch, int verbose_level);
 	void do_create_combinatorial_object(int verbose_level);
 	void do_diophant(diophant_description *Descr, int verbose_level);
 	void do_diophant_activity(diophant_activity_description *Descr, int verbose_level);
 	void do_process_combinatorial_object(int verbose_level);
 	void do_bent(int n, int verbose_level);
-	void do_random_permutation(int deg, std::string &fname_csv, int verbose_level);
 	void do_conjugacy_classes_Sym_n(int n, int verbose_level);
-	void do_make_tree_of_all_k_subsets(int n, int k, int verbose_level);
 	void do_Delandtsheer_Doyen(delandtsheer_doyen_description *Descr, int verbose_level);
-	void do_graph_classify(graph_classify_description *Descr, int verbose_level);
 	void do_create_design(design_create_description *Descr, int verbose_level);
-	void convert_stack_to_tdo(std::string &stack_fname, int verbose_level);
-	void do_parameters_maximal_arc(int q, int r, int verbose_level);
-	void do_parameters_arc(int q, int s, int r, int verbose_level);
-	void do_make_elementary_symmetric_functions(int n, int k_max, int verbose_level);
 
 };
 
@@ -321,7 +311,7 @@ class interface_cryptography {
 	long int RSA_m;
 	std::string RSA_text;
 	int f_primitive_root;
-	int primitive_root_p;
+	std::string primitive_root_p;
 	int f_smallest_primitive_root;
 	int smallest_primitive_root_p;
 	int f_smallest_primitive_root_interval;
@@ -335,9 +325,9 @@ class interface_cryptography {
 	int extended_gcd_a;
 	int extended_gcd_b;
 	int f_power_mod;
-	int power_mod_a;
-	int power_mod_k;
-	int power_mod_n;
+	std::string power_mod_a;
+	std::string power_mod_k;
+	std::string power_mod_n;
 	int f_discrete_log;
 	long int discrete_log_y;
 	long int discrete_log_a;
@@ -567,6 +557,10 @@ class interface_symbol_table {
 	std::string packing_long_orbits_choose_fixed_points_label;
 	packing_long_orbits_description * Packing_long_orbits_description;
 
+	int f_graph_classification;
+	graph_classify_description * Graph_classify_description;
+
+
 
 	int f_print_symbols;
 	int f_with;
@@ -605,6 +599,9 @@ class interface_symbol_table {
 	int f_packing_fixed_points_activity;
 	packing_was_fixpoints_activity_description *Packing_was_fixpoints_activity_description;
 
+	int f_graph_classification_activity;
+	graph_classification_activity_description *Graph_classification_activity_description;
+
 
 public:
 
@@ -618,40 +615,15 @@ public:
 	void read_definition(
 			orbiter_top_level_session *Orbiter_top_level_session,
 			int argc, std::string *argv, int &i, int verbose_level);
-	void definition_of_finite_field(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void definition_of_projective_space(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void definition_of_orthogonal_space(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void definition_of_linear_group(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void definition_of_formula(orbiter_top_level_session *Orbiter_top_level_session,
-			formula *F,
-			int verbose_level);
-	void definition_of_collection(orbiter_top_level_session *Orbiter_top_level_session,
-			std::string &list_of_objects,
-			int verbose_level);
-	void definition_of_combinatorial_object(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void definition_of_graph(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void definition_of_spread_table(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void definition_of_packing_was(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void definition_of_packing_was_choose_fixed_points(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void definition_of_packing_long_orbits(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-
-
 	void read_with(
 			orbiter_top_level_session *Orbiter_top_level_session,
 			int argc, std::string *argv, int &i, int verbose_level);
 	void read_activity_arguments(int argc,
 			std::string *argv, int &i, int verbose_level);
 	void worker(orbiter_top_level_session *Orbiter_top_level_session, int verbose_level);
+
+
+	// interface_symbol_table_activity.cpp:
 
 	void do_finite_field_activity(orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
@@ -683,6 +655,40 @@ public:
 			int verbose_level);
 	void do_packing_fixed_points_activity(
 			orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void do_graph_classification_activity(
+			orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+
+
+	// interface_symbol_table_definition.cpp:
+	void definition_of_finite_field(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void definition_of_projective_space(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void definition_of_orthogonal_space(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void definition_of_linear_group(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void definition_of_formula(orbiter_top_level_session *Orbiter_top_level_session,
+			formula *F,
+			int verbose_level);
+	void definition_of_collection(orbiter_top_level_session *Orbiter_top_level_session,
+			std::string &list_of_objects,
+			int verbose_level);
+	void definition_of_combinatorial_object(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void definition_of_graph(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void definition_of_spread_table(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void definition_of_packing_was(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void definition_of_packing_was_choose_fixed_points(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void definition_of_packing_long_orbits(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void definition_of_graph_classification(orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 
 

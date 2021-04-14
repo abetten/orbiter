@@ -1564,7 +1564,7 @@ void clique_finder::log_position_and_choice(int depth,
 	cout << " nb_sol=" << nb_sol << " ";
 	if (FALSE) {
 		cout << " clique ";
-		int_set_print(cout, current_clique, depth);
+		Orbiter->Int_vec.set_print(cout, current_clique, depth);
 	}
 }
 
@@ -1575,7 +1575,7 @@ void clique_finder::log_position(int depth,
 	log_choice(depth);
 	if (FALSE) {
 		cout << " clique ";
-		int_set_print(cout, current_clique, depth);
+		Orbiter->Int_vec.set_print(cout, current_clique, depth);
 	}
 }
 

@@ -1335,7 +1335,7 @@ void schlaefli::create_half_double_sixes(int verbose_level)
 	Half_double_six_to_double_six = NEW_int(72);
 	Half_double_six_to_double_six_row = NEW_int(72);
 
-	lint_vec_copy(Double_six, Half_double_sixes, 36 * 12);
+	Orbiter->Lint_vec.copy(Double_six, Half_double_sixes, 36 * 12);
 	for (i = 0; i < 36; i++) {
 		for (j = 0; j < 2; j++) {
 			Sorting.lint_vec_heapsort(
@@ -1979,7 +1979,7 @@ void schlaefli::init_incidence_matrix_of_lines_vs_tritangent_planes(int verbose_
 
 
 	Lines_in_tritangent_planes = NEW_lint(45 * 3);
-	lint_vec_zero(Lines_in_tritangent_planes, 45 * 3);
+	Orbiter->Lint_vec.zero(Lines_in_tritangent_planes, 45 * 3);
 
 	for (j = 0; j < nb_Eckardt_points; j++) {
 		eckardt_point *E;
@@ -2340,7 +2340,7 @@ void schlaefli::latex_table_of_double_sixes(std::ostream &ost)
 	//ost << "\\begin{multicols}{2}" << endl;
 	for (h = 0; h < 36; h++) {
 
-		lint_vec_copy(Double_six + h * 12, D, 12);
+		Orbiter->Lint_vec.copy(Double_six + h * 12, D, 12);
 
 		ost << "$D_{" << h << "} = " << Double_six_label_tex[h] << endl;
 
@@ -2415,7 +2415,7 @@ void schlaefli::latex_half_double_six(std::ostream &ost, int idx)
 
 
 
-	lint_vec_copy(Half_double_sixes + idx * 6, H, 6);
+	Orbiter->Lint_vec.copy(Half_double_sixes + idx * 6, H, 6);
 
 	ost << "H_{" << idx << "} = " << Half_double_six_label_tex[idx] << endl;
 

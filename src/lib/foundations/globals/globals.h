@@ -372,6 +372,7 @@ public:
 	orbiter_symbol_table *Orbiter_symbol_table;
 
 	int_vec Int_vec;
+	lint_vec Lint_vec;
 
 
 	orbiter_session();
@@ -422,6 +423,7 @@ enum symbol_table_object_type {
 	t_packing_was,
 	t_packing_was_choose_fixed_points,
 	t_packing_long_orbits,
+	t_graph_classify,
 	t_action,
 	t_poset,
 	t_poset_classification,
@@ -475,6 +477,8 @@ public:
 			void *P, int verbose_level);
 	void init_packing_long_orbits(std::string &label,
 			void *PL, int verbose_level);
+	void init_graph_classify(std::string &label,
+			void *GC, int verbose_level);
 	void print();
 };
 

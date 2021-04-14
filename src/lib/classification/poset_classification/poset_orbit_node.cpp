@@ -873,7 +873,7 @@ void poset_orbit_node::print_set(poset_classification *gen)
 	size = depth;
 	set = NEW_lint(size);
 	store_set_to(gen, depth - 1, set /*gen->S0*/);
-	lint_vec_print(cout, set /*gen->S0*/, size);
+	Orbiter->Lint_vec.print(cout, set /*gen->S0*/, size);
 	if (nb_strong_generators == 0) {
 		cout << "_1";
 	}

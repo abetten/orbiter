@@ -361,6 +361,28 @@ public:
 	void print_to_str(char *str, int *data, int len);
 	void print_to_str_naked(char *str, int *data, int len);
 	void print(int *v, int len);
+	void print_integer_matrix(std::ostream &ost,
+		int *p, int m, int n);
+	void print_integer_matrix_width(std::ostream &ost,
+		int *p, int m, int n, int dim_n, int w);
+	void print_integer_matrix_in_C_source(std::ostream &ost,
+		int *p, int m, int n);
+	void matrix_make_block_matrix_2x2(int *Mtx,
+		int k, int *A, int *B, int *C, int *D);
+	void matrix_delete_column_in_place(int *Mtx,
+		int k, int n, int pivot);
+	int matrix_max_log_of_entries(int *p, int m, int n);
+	void matrix_print_ost(std::ostream &ost, int *p, int m, int n);
+	void matrix_print(int *p, int m, int n);
+	void matrix_print_tight(int *p, int m, int n);
+	void matrix_print_ost(std::ostream &ost, int *p, int m, int n, int w);
+	void matrix_print(int *p, int m, int n, int w);
+	void matrix_print_bitwise(int *p, int m, int n);
+	void distribution_print(std::ostream &ost,
+		int *val, int *mult, int len);
+	void set_print(std::ostream &ost, int *v, int len);
+	void integer_vec_print(std::ostream &ost, int *v, int len);
+
 };
 
 
@@ -369,7 +391,7 @@ public:
 // int_vector.cpp
 // #############################################################################
 
-//! vector of ints
+//! vector of int
 
 class int_vector {
 public:
@@ -409,6 +431,50 @@ public:
 
 
 };
+
+
+// #############################################################################
+// lint_vec.cpp:
+// #############################################################################
+
+
+//! long int arrays
+
+class lint_vec {
+public:
+
+	lint_vec();
+	~lint_vec();
+	void apply(long int *from, long int *through, long int *to, int len);
+	void take_away(long int *v, int &len,
+			long int *take_away, int nb_take_away);
+	void zero(long int *v, long int len);
+	void mone(long int *v, long int len);
+	void copy(long int *from, long int *to, long int len);
+	void copy_to_int(long int *from, int *to, long int len);
+	void complement(long int *v, long int *w, int n, int k);
+	long int minimum(long int *v, int len);
+	long int maximum(long int *v, int len);
+	void matrix_print_width(std::ostream &ost,
+		long int *p, int m, int n, int dim_n, int w);
+	void set_print(long int *v, int len);
+	void set_print(std::ostream &ost, long int *v, int len);
+	void print(std::ostream &ost, long int *v, int len);
+	void print(std::ostream &ost, std::vector<long int> &v);
+	void print_as_table(std::ostream &ost, long int *v, int len, int width);
+	void print_fully(std::ostream &ost, long int *v, int len);
+	void print_fully(std::ostream &ost, std::vector<long int> &v);
+	int matrix_max_log_of_entries(long int *p, int m, int n);
+	void matrix_print(long int *p, int m, int n);
+	void matrix_print(long int *p, int m, int n, int w);
+	void scan(std::string &s, long int *&v, int &len);
+	void scan(const char *s, long int *&v, int &len);
+	void scan_from_stream(std::istream & is, long int *&v, int &len);
+	void print_to_str(char *str, long int *data, int len);
+	void print_to_str_naked(char *str, long int *data, int len);
+
+};
+
 
 // #############################################################################
 // page_storage.cpp

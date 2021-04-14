@@ -306,13 +306,13 @@ void tensor_classify::early_test_func(long int *S, int len,
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
-		lint_vec_print(cout, candidates, nb_candidates);
+		Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
 		cout << endl;
 	}
 
 
 	if (len == 0) {
-		lint_vec_copy(candidates, good_candidates, nb_candidates);
+		Orbiter->Lint_vec.copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
 	}
 	else {
@@ -574,7 +574,7 @@ void wreath_product_print_set(ostream &ost, int len, long int *S, void *data)
 
 	T = (tensor_classify *) data;
 	cout << "set: ";
-	lint_vec_print(cout, S, len);
+	Orbiter->Lint_vec.print(cout, S, len);
 	cout << endl;
 	for (i = 0; i < len; i++) {
 		T->F->PG_element_unrank_modified(T->v,

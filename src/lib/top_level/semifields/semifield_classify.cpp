@@ -766,7 +766,7 @@ void semifield_classify::compute_orbits(int depth, int verbose_level)
 				unrank_point(v, set[j], 0/* verbose_level*/);
 				set[j] = matrix_rank(v);
 			}
-			lint_vec_copy(set, Table + i * k, k);
+			Orbiter->Lint_vec.copy(set, Table + i * k, k);
 		}
 		Fio.lint_matrix_write_csv(fname, Table, nb_orbits, k);
 
@@ -795,7 +795,7 @@ void semifield_classify::list_points()
 		for (rk = 0; rk < goi; rk++) {
 			unrank_point(v, rk, 0 /* verbose_level */);
 			cout << rk << " / " << goi << ":" << endl;
-			int_matrix_print(v, k, k);
+			Orbiter->Int_vec.matrix_print(v, k, k);
 			cout << endl;
 		}
 	}
@@ -819,7 +819,7 @@ long int semifield_classify::rank_point(int *v, int verbose_level)
 	if (f_vv) {
 		cout << "semifield_classify::rank_point "
 				"The rank of" << endl;
-		int_matrix_print(A_on_S->mtx1, k, k);
+		Orbiter->Int_vec.matrix_print(A_on_S->mtx1, k, k);
 	}
 	rk = G->element_rank_lint(Elt1);
 	if (f_vv) {
@@ -852,7 +852,7 @@ void semifield_classify::unrank_point(int *v, long int rk, int verbose_level)
 		cout << "semifield_classify::unrank_point "
 				"The element of "
 				"rank " << rk << " is " << endl;
-		int_matrix_print(v, k, k);
+		Orbiter->Int_vec.matrix_print(v, k, k);
 	}
 	if (f_v) {
 		cout << "semifield_classify::unrank_point done" << endl;
@@ -898,7 +898,7 @@ void semifield_classify::early_test_func(long int *S, int len,
 		cout << "semifield_classify::early_test_func current set:" << endl;
 		for (i = 0; i < len; i++) {
 			cout << "matrix " << i << " / " << len << ":" << endl;
-			int_matrix_print(M + i * k2, k, k);
+			Orbiter->Int_vec.matrix_print(M + i * k2, k, k);
 		}
 	}
 	if (f_vv) {
@@ -947,7 +947,7 @@ void semifield_classify::early_test_func(long int *S, int len,
 			unrank_point(M, good_candidates[i], 0 /*verbose_level - 2*/);
 			cout << i << " / " << nb_good_candidates << " is "
 					<< good_candidates[i] << ":" << endl;
-			int_matrix_print(M, k, k);
+			Orbiter->Int_vec.matrix_print(M, k, k);
 		}
 	}
 	//FREE_int(M);
@@ -1038,7 +1038,7 @@ int semifield_classify::test_partial_semifield_numerical_data(
 		for (i = 0; i < data_sz; i++) {
 			cout << "Basis element " << i << " is "
 					<< data[i] << ":" << endl;
-			int_matrix_print(Basis + i * k2, k, k);
+			Orbiter->Int_vec.matrix_print(Basis + i * k2, k, k);
 			cout << endl;
 		}
 	}
@@ -1111,7 +1111,7 @@ int semifield_classify::test_partial_semifield(
 					}
 					w[i] = c;
 				}
-				int_matrix_print(w, k, k);
+				Orbiter->Int_vec.matrix_print(w, k, k);
 			}
 			break;
 		}
@@ -1200,10 +1200,10 @@ void semifield_classify::basis_print(int *Mtx, int sz)
 	A = NEW_lint(sz);
 	for (i = 0; i < sz; i++) {
 		cout << "Elt " << i << ":" << endl;
-		int_matrix_print(Mtx + i * k2, k, k);
+		Orbiter->Int_vec.matrix_print(Mtx + i * k2, k, k);
 		A[i] = matrix_rank(Mtx + i * k2);
 	}
-	lint_vec_print(cout, A, sz);
+	Orbiter->Lint_vec.print(cout, A, sz);
 	cout << endl;
 	FREE_lint(A);
 }
@@ -1217,13 +1217,13 @@ void semifield_classify::basis_print_numeric(long int *Rk, int sz)
 		cout << "Elt " << i << ":" << endl;
 		matrix_print_numeric(Rk[i]);
 	}
-	lint_vec_print(cout, Rk, sz);
+	Orbiter->Lint_vec.print(cout, Rk, sz);
 	cout << endl;
 }
 
 void semifield_classify::matrix_print(int *Mtx)
 {
-	int_matrix_print(Mtx, k, k);
+	Orbiter->Int_vec.matrix_print(Mtx, k, k);
 }
 
 void semifield_classify::matrix_print_numeric(long int rk)
@@ -1232,7 +1232,7 @@ void semifield_classify::matrix_print_numeric(long int rk)
 
 	Mtx = NEW_int(k2);
 	matrix_unrank(rk, Mtx);
-	int_matrix_print(Mtx, k, k);
+	Orbiter->Int_vec.matrix_print(Mtx, k, k);
 	FREE_int(Mtx);
 }
 
@@ -1247,7 +1247,7 @@ void semifield_classify::print_set_of_matrices_numeric(
 		cout << "Matrix " << i << " / " << nb << " has rank "
 				<< Rk[i] << ":" << endl;
 		matrix_unrank(Rk[i], Mtx);
-		int_matrix_print(Mtx, k, k);
+		Orbiter->Int_vec.matrix_print(Mtx, k, k);
 	}
 	FREE_int(Mtx);
 }

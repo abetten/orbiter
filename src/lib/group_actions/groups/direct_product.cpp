@@ -190,7 +190,7 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 	if (f_v) {
 		cout << "direct_product::init "
 				"base_for_component1 = ";
-		lint_vec_print(cout, base_for_component1,
+		Orbiter->Lint_vec.print(cout, base_for_component1,
 				base_len_in_component1);
 		cout << endl;
 		cout << "direct_product::init "
@@ -210,7 +210,7 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 
 	if (f_v) {
 		cout << "direct_product::init base_for_component2 = ";
-		lint_vec_print(cout, base_for_component2, base_len_in_component2);
+		Orbiter->Lint_vec.print(cout, base_for_component2, base_len_in_component2);
 		cout << endl;
 		cout << "direct_product::init tl_for_component2 = ";
 		Orbiter->Int_vec.print(cout, tl_for_component2, base_len_in_component2);
@@ -232,7 +232,7 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 	}
 	if (f_v) {
 		cout << "direct_product::init the_base = ";
-		lint_vec_print(cout, the_base, base_length);
+		Orbiter->Lint_vec.print(cout, the_base, base_length);
 		cout << endl;
 		cout << "direct_product::init the_transversal_length = ";
 		Orbiter->Int_vec.print(cout, the_transversal_length, base_length);

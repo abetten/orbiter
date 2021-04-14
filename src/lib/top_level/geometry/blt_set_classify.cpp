@@ -394,7 +394,7 @@ void blt_set_classify::create_graphs(
 
 
 	Time = NEW_lint(nb_orbits * 2);
-	lint_vec_zero(Time, nb_orbits * 2);
+	Orbiter->Lint_vec.zero(Time, nb_orbits * 2);
 	time_idx = 0;
 
 	nb_of_cases = 0;
@@ -692,7 +692,7 @@ int blt_set_classify::create_graph(
 		cout << "blt_set_classify::create_graph Case "
 				<< orbit_at_level << " / " << R->nb_cases
 				<< " Read starter : ";
-		lint_vec_print(cout, R->rep, starter_size);
+		Orbiter->Lint_vec.print(cout, R->rep, starter_size);
 		cout << endl;
 	}
 
@@ -834,7 +834,7 @@ void blt_set_classify::lifting_prepare_function_new(
 	col_labels = NEW_lint(nb_candidates);
 
 
-	lint_vec_copy(candidates, col_labels, nb_candidates);
+	Orbiter->Lint_vec.copy(candidates, col_labels, nb_candidates);
 
 
 	int nb_rows = nb_free_points;
@@ -843,7 +843,7 @@ void blt_set_classify::lifting_prepare_function_new(
 
 	if (f_vv) {
 		cout << "blt_set_classify::lifting_prepare_function_new candidates: ";
-		lint_vec_print(cout, candidates, nb_candidates);
+		Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
 		cout << " (nb_candidates=" << nb_candidates << ")" << endl;
 	}
 

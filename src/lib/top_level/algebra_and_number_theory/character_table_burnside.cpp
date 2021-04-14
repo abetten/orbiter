@@ -127,7 +127,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 
 	for (r = 0; r < nb_classes; r++) {
 		cout << "N_" << r << ":" << endl;
-		int_matrix_print(N + r * nb_classes * nb_classes, nb_classes, nb_classes);
+		Orbiter->Int_vec.matrix_print(N + r * nb_classes * nb_classes, nb_classes, nb_classes);
 		cout << endl;
 		}
 
@@ -212,7 +212,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 		character_table, verbose_level);
 
 	cout << "character table:" << endl;
-	int_matrix_print(character_table, nb_classes, nb_classes);
+	Orbiter->Int_vec.matrix_print(character_table, nb_classes, nb_classes);
 
 	int f_special = TRUE;
 	int **Gens;
@@ -239,7 +239,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 
 
 	cout << "Distribution table:" << endl;
-	int_matrix_print(Distribution + nb_classes, t_max, nb_classes);
+	Orbiter->Int_vec.matrix_print(Distribution + nb_classes, t_max, nb_classes);
 
 
 	for (i = 0; i < nb_classes; i++) {
@@ -303,7 +303,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 
 
 	cout << "character table:" << endl;
-	int_matrix_print(character_table, nb_classes, nb_classes);
+	Orbiter->Int_vec.matrix_print(character_table, nb_classes, nb_classes);
 
 
 	latex_interface L;
@@ -804,7 +804,7 @@ void character_table_burnside::compute_Distribution_table(action *A, action_by_c
 
 		if (f_v) {
 			cout << "after t=" << t << " Distribution:" << endl;
-			int_matrix_print(Distribution, t + 1, nb_classes);
+			Orbiter->Int_vec.matrix_print(Distribution, t + 1, nb_classes);
 			}
 		}
 

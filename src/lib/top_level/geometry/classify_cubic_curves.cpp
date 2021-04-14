@@ -176,7 +176,7 @@ void classify_cubic_curves::test_orbits(int verbose_level)
 		Arc_gen->gen->get_set_by_level(9, i, S);
 		if (f_vv) {
 			cout << "set: ";
-			lint_vec_print(cout, S, 5);
+			Orbiter->Lint_vec.print(cout, S, 5);
 			cout << endl;
 		}
 
@@ -349,12 +349,12 @@ void classify_cubic_curves::downstep(int verbose_level)
 
 		R->Strong_gens->group_order(go);
 
-		lint_vec_copy(R->data, dataset, 9);
+		Orbiter->Lint_vec.copy(R->data, dataset, 9);
 
 		int eqn[10];
 		if (f_vv) {
 			cout << "9 points = ";
-			lint_vec_print(cout, dataset, 9);
+			Orbiter->Lint_vec.print(cout, dataset, 9);
 			cout << endl;
 		}
 
@@ -508,7 +508,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 		if (f_v) {
 			cout << "po=" << po << " so=" << so << endl;
 			}
-		lint_vec_copy(Flag_orbits->Pt + f * 19, dataset, 19);
+		Orbiter->Lint_vec.copy(Flag_orbits->Pt + f * 19, dataset, 19);
 
 
 
@@ -521,7 +521,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 		longinteger_object go;
 		int eqn[10];
 
-		lint_vec_copy_to_int(dataset + 9, eqn, 10);
+		Orbiter->Lint_vec.copy_to_int(dataset + 9, eqn, 10);
 
 		if (f_v) {
 			cout << "equation:";
@@ -1392,7 +1392,7 @@ void classify_cubic_curves::report(ostream &ost, int verbose_level)
 
 		data = Curves->Rep + i * Curves->representation_sz;
 		eqn1 = data + 9;
-		lint_vec_copy_to_int(eqn1, eqn, 10);
+		Orbiter->Lint_vec.copy_to_int(eqn1, eqn, 10);
 
 		ost << "\\subsection*{Curve " << i << " / "
 				<< Curves->nb_orbits << "}" << endl;
@@ -1488,7 +1488,7 @@ void classify_cubic_curves::report(ostream &ost, int verbose_level)
 		Nb_inflexions[i] = nb_inflection_pts;
 
 		ost << "The curve has " << nb_inflection_pts << " inflexion points: $";
-		lint_vec_print(ost, inflexion_Pts, nb_inflection_pts);
+		Orbiter->Lint_vec.print(ost, inflexion_Pts, nb_inflection_pts);
 		ost << "$\\\\" << endl;
 
 
@@ -1577,7 +1577,7 @@ void classify_cubic_curves::report(ostream &ost, int verbose_level)
 
 			ost << "The transformed curve has " << nb_inflection_pts
 					<< " inflexion points: $";
-			lint_vec_print(ost, inflexion_Pts, nb_inflection_pts);
+			Orbiter->Lint_vec.print(ost, inflexion_Pts, nb_inflection_pts);
 			ost << "$\\\\" << endl;
 
 

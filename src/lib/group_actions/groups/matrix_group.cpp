@@ -2026,7 +2026,7 @@ void matrix_group::orthogonal_group_random_generator(
 		cout << "matrix_group::orthogonal_group_random_generator "
 				"after O->random_generator_for_orthogonal_group" << endl;
 		cout << "Mtx=" << endl;
-		int_matrix_print(Mtx, n, n);
+		Orbiter->Int_vec.matrix_print(Mtx, n, n);
 	}
 	A->make_element(Elt, Mtx, verbose_level - 1);
 
@@ -2081,7 +2081,7 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 	}
 	if (f_v) {
 		cout << "The negative Identity matrix is:" << endl;
-		int_matrix_print(Id, n, n);
+		Orbiter->Int_vec.matrix_print(Id, n, n);
 	}
 	cnt = 0;
 	rk = 0;
@@ -2103,7 +2103,7 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 		}
 		if (FALSE) {
 			cout << "testing matrix " << rk << " / " << goi << endl;
-			int_matrix_print(Elt1, n, n);
+			Orbiter->Int_vec.matrix_print(Elt1, n, n);
 			S->path_unrank_lint(rk);
 			cout << "path ";
 			Orbiter->Int_vec.print(cout, S->path, S->A->base_len());
@@ -2114,7 +2114,7 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 			GFq->add_vector(Id, Mtx1, Mtx2, (i + 1) * n);
 			if (FALSE) {
 				cout << "testing level " << i << " / " << n << ":" << endl;
-				int_matrix_print(Mtx2, (i + 1), n);
+				Orbiter->Int_vec.matrix_print(Mtx2, (i + 1), n);
 			}
 			if (GFq->rank_of_rectangular_matrix_memory_given(Mtx2,
 					(i + 1), n, Mtx3, Mtx4, 0 /* verbose_level */) < i + 1) {
@@ -2170,7 +2170,7 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 					cout << " select_value = " << select_value;
 				}
 				cout << endl;
-				int_matrix_print(Elt1, n, n);
+				Orbiter->Int_vec.matrix_print(Elt1, n, n);
 			}
 			sol.push_back(rk);
 			rk++;

@@ -121,7 +121,7 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 			0 /* verbose_level */);
 
 	if (f_v) {
-		int_matrix_print(Plane, 3, 4);
+		Orbiter->Int_vec.matrix_print(Plane, 3, 4);
 		cout << "surface_with_action::arc_lifting_and_classify "
 				"base_cols: ";
 		Orbiter->Int_vec.print(cout, base_cols, 3);
@@ -136,7 +136,7 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 		cout << "The half double six is no " << hds
 				<< "$ = " << Surf->Schlaefli->Half_double_six_label_tex[hds]
 				<< "$ : $";
-		lint_vec_print(cout, Surf->Schlaefli->Half_double_sixes + hds * 6, 6);
+		Orbiter->Lint_vec.print(cout, Surf->Schlaefli->Half_double_sixes + hds * 6, 6);
 		cout << " = \\{" << endl;
 		for (h = 0; h < 6; h++) {
 			cout << Surf->Schlaefli->Line_label_tex[
@@ -274,14 +274,14 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 			0 /* verbose_level */);
 	if (f_v) {
 		cout << "Plane rank " << plane_rk_global << " :" << endl;
-		int_matrix_print(Plane, 3, 4);
+		Orbiter->Int_vec.matrix_print(Plane, 3, 4);
 	}
 
 	F->RREF_and_kernel(4, 3, Plane, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "Plane (3 basis vectors and dual coordinates):" << endl;
-		int_matrix_print(Plane, 4, 4);
+		Orbiter->Int_vec.matrix_print(Plane, 4, 4);
 		cout << "base_cols: ";
 		Orbiter->Int_vec.print(cout, base_cols, r);
 		cout << endl;
@@ -296,7 +296,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 	if (f_v) {
 		cout << "Line a = " << Surf->Schlaefli->Line_label_tex[line_idx[0]]
 			<< " = " << SO->Lines[line_idx[0]] << ":" << endl;
-		int_matrix_print(Line_a, 2, 4);
+		Orbiter->Int_vec.matrix_print(Line_a, 2, 4);
 	}
 	for (i = 0; i < 2; i++) {
 		if (F->dot_product(4, Line_a + i * 4, Plane + 3 * 4)) {
@@ -315,7 +315,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 	if (f_v) {
 		cout << "Line b = " << Surf->Schlaefli->Line_label_tex[line_idx[1]]
 			<< " = " << SO->Lines[line_idx[1]] << ":" << endl;
-		int_matrix_print(Line_b, 2, 4);
+		Orbiter->Int_vec.matrix_print(Line_b, 2, 4);
 	}
 	for (i = 0; i < 2; i++) {
 		if (F->dot_product(4, Line_b + i * 4, Plane + 3 * 4)) {
@@ -393,7 +393,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 		Orbiter->Int_vec.copy(Plane + 3 * 4, Dual_planes + 8, 4);
 		if (f_vv) {
 			cout << "clebsch_map::compute_Clebsch_map_down_worker Dual coordinates for all three planes: " << endl;
-			int_matrix_print(Dual_planes, 3, 4);
+			Orbiter->Int_vec.matrix_print(Dual_planes, 3, 4);
 			cout << endl;
 		}
 
@@ -401,7 +401,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 				Dual_planes, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << "Dual coordinates and perp: " << endl;
-			int_matrix_print(Dual_planes, 4, 4);
+			Orbiter->Int_vec.matrix_print(Dual_planes, 4, 4);
 			cout << endl;
 			cout << "matrix of dual coordinates has rank " << r << endl;
 		}
@@ -691,7 +691,7 @@ void clebsch_map::report(std::ostream &ost, int verbose_level)
 
 	ost << "The half double six is no " << hds << "$ = "
 			<< Surf->Schlaefli->Half_double_six_label_tex[hds] << "$ : $";
-	lint_vec_print(ost, Surf->Schlaefli->Half_double_sixes + hds * 6, 6);
+	Orbiter->Lint_vec.print(ost, Surf->Schlaefli->Half_double_sixes + hds * 6, 6);
 	ost << " = \\{" << endl;
 	for (h = 0; h < 6; h++) {
 		ost << Surf->Schlaefli->Line_label_tex[Surf->Schlaefli->Half_double_sixes[hds * 6 + h]];
@@ -730,7 +730,7 @@ void clebsch_map::report(std::ostream &ost, int verbose_level)
 		<< "$ yields arc = $";
 	L.lint_set_print_tex(ost, Arc, 6);
 	ost << "$ : blown up lines = ";
-	lint_vec_print(ost, Blown_up_lines, 6);
+	Orbiter->Lint_vec.print(ost, Blown_up_lines, 6);
 	ost << "\\\\" << endl;
 
 	SO->SOP->clebsch_map_latex(ost, Clebsch_map, Clebsch_coeff);

@@ -456,7 +456,7 @@ void action::read_conjugacy_classes_and_normalizers_from_MAGMA(
 		}
 		if (f_v) {
 			cout << "perms:" << endl;
-			int_matrix_print(perms, nb_classes, degree);
+			Orbiter->Int_vec.matrix_print(perms, nb_classes, degree);
 		}
 		for (i = 0; i < nb_classes * degree; i++) {
 			perms[i]--;

@@ -60,8 +60,6 @@ interface_combinatorics::interface_combinatorics()
 	f_Delandtsheer_Doyen = FALSE;
 	Delandtsheer_Doyen_description = NULL;
 
-	f_graph_classify = FALSE;
-	Graph_classify_description = NULL;
 
 	f_tdo_refinement = FALSE;
 	Tdo_refinement_descr = NULL;
@@ -124,9 +122,6 @@ void interface_combinatorics::print_help(int argc,
 	else if (stringcmp(argv[i], "-diophant_activity") == 0) {
 		cout << "-diophant_activity <description> " << endl;
 	}
-	else if (stringcmp(argv[i], "-save") == 0) {
-		cout << "-save <string : fname> " << endl;
-	}
 	else if (stringcmp(argv[i], "-process_combinatorial_objects") == 0) {
 		cout << "-process_combinatorial_objects " << endl;
 	}
@@ -153,9 +148,6 @@ void interface_combinatorics::print_help(int argc,
 	}
 	else if (stringcmp(argv[i], "-Delandtsheer_Doyen") == 0) {
 			cout << "-Delandtsheer_Doyen <description>" << endl;
-	}
-	else if (stringcmp(argv[i], "-graph_classify") == 0) {
-		cout << "-graph_classify <description -end>" << endl;
 	}
 	else if (stringcmp(argv[i], "-tdo_refinement") == 0) {
 		cout << "-tdo_refinement <options>" << endl;
@@ -213,9 +205,6 @@ int interface_combinatorics::recognize_keyword(int argc,
 	else if (stringcmp(argv[i], "-diophant_activity") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-save") == 0) {
-		return true;
-	}
 	else if (stringcmp(argv[i], "-process_combinatorial_objects") == 0) {
 		return true;
 	}
@@ -241,9 +230,6 @@ int interface_combinatorics::recognize_keyword(int argc,
 		return true;
 	}
 	else if (stringcmp(argv[i], "-Delandtsheer_Doyen") == 0) {
-		return true;
-	}
-	else if (stringcmp(argv[i], "-graph_classify") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-tdo_refinement") == 0) {
@@ -412,22 +398,6 @@ void interface_combinatorics::read_arguments(int argc,
 
 		cout << "-Delandtsheer_Doyen" << endl;
 	}
-	else if (stringcmp(argv[i], "-graph_classify") == 0) {
-		f_graph_classify = TRUE;
-
-		cout << "-graph_classify " << endl;
-
-		Graph_classify_description = NEW_OBJECT(graph_classify_description);
-		i += Graph_classify_description->read_arguments(argc - i - 1,
-			argv + i + 1, verbose_level);
-		cout << "interface_combinatorics::read_arguments finished reading -graph_classify" << endl;
-		cout << "i = " << i << endl;
-		cout << "argc = " << argc << endl;
-		if (i < argc) {
-			cout << "next argument is " << argv[i] << endl;
-		}
-		cout << "-graph_classify " << endl;
-	}
 	else if (stringcmp(argv[i], "-tdo_refinement") == 0) {
 		f_tdo_refinement = TRUE;
 		cout << "-tdo_refinement " << endl;
@@ -591,12 +561,17 @@ void interface_combinatorics::worker(int verbose_level)
 		do_bent(bent_n, verbose_level);
 	}
 	else if (f_random_permutation) {
-		do_random_permutation(random_permutation_degree,
+
+		combinatorics_domain Combi;
+
+		Combi.create_random_permutation(random_permutation_degree,
 				random_permutation_fname_csv, verbose_level);
 	}
 	else if (f_read_poset_file) {
 
-		do_read_poset_file(read_poset_file_fname, f_grouping, x_stretch, verbose_level);
+		combinatorics_domain Combi;
+
+		Combi.do_read_poset_file(read_poset_file_fname, f_grouping, x_stretch, verbose_level);
 	}
 	else if (f_list_parameters_of_SRG) {
 
@@ -610,15 +585,13 @@ void interface_combinatorics::worker(int verbose_level)
 	}
 	else if (f_tree_of_all_k_subsets) {
 
-		do_make_tree_of_all_k_subsets(tree_n, tree_k, verbose_level);
+		combinatorics_domain Combi;
+
+		Combi.do_make_tree_of_all_k_subsets(tree_n, tree_k, verbose_level);
 	}
 	else if (f_Delandtsheer_Doyen) {
 
 		do_Delandtsheer_Doyen(Delandtsheer_Doyen_description, verbose_level);
-	}
-	else if (f_graph_classify) {
-
-		do_graph_classify(Graph_classify_description, verbose_level);
 	}
 	else if (f_tdo_refinement) {
 
@@ -638,15 +611,21 @@ void interface_combinatorics::worker(int verbose_level)
 	}
 	else if (f_convert_stack_to_tdo) {
 
-		convert_stack_to_tdo(stack_fname, verbose_level);
+		combinatorics_domain Combi;
+
+		Combi.convert_stack_to_tdo(stack_fname, verbose_level);
 	}
 	else if (f_maximal_arc_parameters) {
 
-		do_parameters_maximal_arc(maximal_arc_parameters_q, maximal_arc_parameters_r, verbose_level);
+		combinatorics_domain Combi;
+
+		Combi.do_parameters_maximal_arc(maximal_arc_parameters_q, maximal_arc_parameters_r, verbose_level);
 	}
 	else if (f_arc_parameters) {
 
-		do_parameters_arc(arc_parameters_q, arc_parameters_s, arc_parameters_r, verbose_level);
+		combinatorics_domain Combi;
+
+		Combi.do_parameters_arc(arc_parameters_q, arc_parameters_s, arc_parameters_r, verbose_level);
 	}
 	else if (f_pentomino_puzzle) {
 		cout << "pentomino_puzzle " <<endl;
@@ -693,12 +672,17 @@ void interface_combinatorics::worker(int verbose_level)
 
 		file_io Fio;
 
-		Fio.read_solutions_and_tally(read_solutions_and_tally_fname, read_solutions_and_tally_sz, verbose_level);
+		Fio.read_solutions_and_tally(read_solutions_and_tally_fname,
+				read_solutions_and_tally_sz, verbose_level);
 
 	}
 	else if (f_make_elementary_symmetric_functions) {
-		do_make_elementary_symmetric_functions(make_elementary_symmetric_functions_n,
+
+		combinatorics_domain Combi;
+
+		Combi.make_elementary_symmetric_functions(make_elementary_symmetric_functions_n,
 				make_elementary_symmetric_functions_k_max, verbose_level);
+
 	}
 	else if (f_Dedekind_numbers) {
 
@@ -713,43 +697,6 @@ void interface_combinatorics::worker(int verbose_level)
 
 }
 
-void interface_combinatorics::do_read_poset_file(std::string &fname,
-		int f_grouping, double x_stretch, int verbose_level)
-// creates a layered graph file from a text file
-// which was created by DISCRETA/sgls2.cpp
-// for an example, see the bottom of this file.
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_read_poset_file" << endl;
-	}
-
-	layered_graph *LG;
-
-	LG = NEW_OBJECT(layered_graph);
-	LG->init_poset_from_file(fname, f_grouping, x_stretch, verbose_level - 1);
-
-
-	string fname_out;
-	file_io Fio;
-
-	fname_out.assign(fname);
-
-	replace_extension_with(fname_out, ".layered_graph");
-
-
-	LG->write_file(fname_out, 0 /*verbose_level*/);
-
-	cout << "Written file " << fname_out << " of size "
-			<< Fio.file_size(fname_out) << endl;
-
-	FREE_OBJECT(LG);
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_read_poset_file done" << endl;
-	}
-}
 
 void interface_combinatorics::do_create_combinatorial_object(int verbose_level)
 {
@@ -943,32 +890,6 @@ void interface_combinatorics::do_bent(int n, int verbose_level)
 	}
 }
 
-void interface_combinatorics::do_random_permutation(int deg,
-		std::string &fname_csv, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_random_permutation" << endl;
-	}
-
-	{
-		combinatorics_domain Combi;
-		file_io Fio;
-
-
-		int *P;
-
-		P = NEW_int(deg);
-		Combi.random_permutation(P, deg);
-
-		Fio.int_vec_write_csv(P, deg, fname_csv, "perm");
-	}
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_random_permutation done" << endl;
-	}
-}
 
 void interface_combinatorics::do_conjugacy_classes_Sym_n(int n, int verbose_level)
 {
@@ -1021,45 +942,6 @@ void interface_combinatorics::do_conjugacy_classes_Sym_n(int n, int verbose_leve
 	}
 }
 
-void interface_combinatorics::do_make_tree_of_all_k_subsets(int n, int k, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_make_tree_of_all_k_subsets" << endl;
-	}
-
-	combinatorics_domain Combi;
-	int *set;
-	int N;
-	int h, i;
-	char fname[1000];
-
-
-	snprintf(fname, 1000, "all_k_subsets_%d_%d.tree", n, k);
-	set = NEW_int(k);
-	N = Combi.int_n_choose_k(n, k);
-
-
-	{
-		ofstream fp(fname);
-
-		for (h = 0; h < N; h++) {
-			Combi.unrank_k_subset(h, set, n, k);
-			fp << k;
-			for (i = 0; i < k; i++) {
-				fp << " " << set[i];
-				}
-			fp << endl;
-			}
-		fp << "-1" << endl;
-	}
-	FREE_int(set);
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_make_tree_of_all_k_subsets done" << endl;
-	}
-}
 
 void interface_combinatorics::do_Delandtsheer_Doyen(delandtsheer_doyen_description *Descr, int verbose_level)
 {
@@ -1083,199 +965,6 @@ void interface_combinatorics::do_Delandtsheer_Doyen(delandtsheer_doyen_descripti
 	}
 }
 
-
-void interface_combinatorics::do_graph_classify(graph_classify_description *Descr, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_graph_classify" << endl;
-	}
-	{
-	graph_classify Gen;
-	int schreier_depth = 10000;
-	int f_use_invariant_subset_if_available = TRUE;
-	int f_debug = FALSE;
-	int depth;
-	//int f_embedded = TRUE;
-	//int f_sideways = FALSE;
-
-	os_interface Os;
-	int t0 = Os.os_ticks();
-
-
-	Gen.init(Descr, verbose_level);
-
-
-	depth = Gen.gen->main(t0,
-		schreier_depth,
-		f_use_invariant_subset_if_available,
-		f_debug,
-		verbose_level);
-	cout << "Gen.gen->main returns depth=" << depth << endl;
-
-	if (Gen.Descr->f_tournament) {
-		Gen.print_score_sequences(depth, verbose_level);
-		}
-
-	//Gen.gen->draw_poset(Gen.gen->fname_base, depth,
-	//Gen.n /* data1 */, f_embedded, Gen.gen->verbose_level);
-
-
-#if 0
-	if (Gen.Descr->Control->f_draw_poset) {
-		Gen.gen->draw_poset(Gen.gen->get_problem_label_with_path(), depth,
-			Gen.Descr->n /* data1 */, f_embedded, f_sideways, 100 /* rad */,
-			verbose_level);
-		}
-
-
-	if (Gen.Descr->Control->f_draw_full_poset) {
-		//double x_stretch = 0.4;
-		cout << "Gen.f_draw_full_poset" << endl;
-		Gen.gen->draw_poset_full(Gen.gen->get_problem_label_with_path(), depth,
-			Gen.Descr->n /* data1 */, f_embedded, f_sideways, 100 /* rad */,
-			Gen.Descr->x_stretch, verbose_level);
-
-		const char *fname_prefix = "flag_orbits";
-
-		Gen.gen->make_flag_orbits_on_relations(
-				depth, fname_prefix, verbose_level);
-		}
-
-	//Gen.gen->print_data_structure_tex(depth, Gen.gen->verbose_level);
-
-	if (Gen.Descr->Control->f_plesken) {
-		latex_interface L;
-		int *P;
-		int N;
-		Gen.gen->Plesken_matrix_up(depth, P, N, verbose_level);
-		cout << "Plesken matrix up:" << endl;
-		L.int_matrix_print_tex(cout, P, N, N);
-
-		FREE_int(P);
-		Gen.gen->Plesken_matrix_down(depth, P, N, verbose_level);
-		cout << "Plesken matrix down:" << endl;
-		L.int_matrix_print_tex(cout, P, N, N);
-
-		FREE_int(P);
-		}
-
-	if (Gen.Descr->Control->f_list) {
-		int f_show_orbit_decomposition = FALSE;
-		int f_show_stab = FALSE;
-		int f_save_stab = FALSE;
-		int f_show_whole_orbit = FALSE;
-
-		Gen.gen->list_all_orbits_at_level(Gen.Descr->Control->depth,
-			FALSE, NULL, NULL,
-			f_show_orbit_decomposition,
-			f_show_stab, f_save_stab, f_show_whole_orbit);
-		}
-
-	if (Gen.Descr->Control->f_list_all) {
-		int f_show_orbit_decomposition = FALSE;
-		int f_show_stab = FALSE;
-		int f_save_stab = FALSE;
-		int f_show_whole_orbit = FALSE;
-		int j;
-
-		for (j = 0; j <= Gen.Descr->Control->depth; j++) {
-			Gen.gen->list_all_orbits_at_level(j,
-				FALSE, NULL, NULL,
-				f_show_orbit_decomposition,
-				f_show_stab, f_save_stab, f_show_whole_orbit);
-			}
-		}
-#endif
-
-	if (Gen.Descr->f_draw_graphs) {
-#if 0
-		int xmax_in = 1000000;
-		int ymax_in = 1000000;
-		int xmax = 1000000;
-		int ymax = 1000000;
-#endif
-		int level;
-
-		for (level = 0; level <= Gen.Descr->Control->depth; level++) {
-			Gen.draw_graphs(level, //Gen.Descr->Control->scale,
-					Descr->draw_options,
-					//xmax_in, ymax_in, xmax, ymax,
-					//Gen.Descr->Control->f_embedded, Gen.Descr->Control->f_sideways,
-					verbose_level);
-			}
-		}
-
-	if (Gen.Descr->f_draw_graphs_at_level) {
-#if 0
-		int xmax_in = 1000000;
-		int ymax_in = 1000000;
-		int xmax = 1000000;
-		int ymax = 1000000;
-#endif
-
-		cout << "before Gen.draw_graphs" << endl;
-		Gen.draw_graphs(Gen.Descr->level,
-				Descr->draw_options,
-				//Gen.Descr->Control->scale,
-				//xmax_in, ymax_in, xmax, ymax,
-				//Gen.Descr->Control->f_embedded, Gen.Descr->Control->f_sideways,
-				verbose_level);
-		cout << "after Gen.draw_graphs" << endl;
-		}
-
-	if (Gen.Descr->f_draw_level_graph) {
-
-		if (!Descr->f_draw_options) {
-			cout << "please use option -draw_options" << endl;
-			exit(1);
-		}
-
-		Gen.gen->draw_level_graph(Gen.gen->get_problem_label_with_path(),
-				Gen.Descr->Control->depth, Gen.Descr->n /* data1 */,
-				Gen.Descr->level_graph_level,
-				Descr->draw_options,
-				//f_embedded, f_sideways,
-				verbose_level - 3);
-		}
-
-	if (Gen.Descr->f_test_multi_edge) {
-		Gen.gen->test_for_multi_edge_in_classification_graph(
-				depth, verbose_level);
-		}
-	if (Gen.Descr->f_identify) {
-		int *transporter;
-		int orbit_at_level;
-
-		transporter = NEW_int(Gen.gen->get_A()->elt_size_in_int);
-
-		Gen.gen->identify(Gen.Descr->identify_data, Gen.Descr->identify_data_sz,
-				transporter, orbit_at_level, verbose_level);
-
-		FREE_int(transporter);
-		}
-
-	int N, F, level;
-
-	N = 0;
-	F = 0;
-	for (level = 0; level <= Gen.Descr->Control->depth; level++) {
-		N += Gen.gen->nb_orbits_at_level(level);
-		}
-	for (level = 0; level < Gen.Descr->Control->depth; level++) {
-		F += Gen.gen->nb_flag_orbits_up_at_level(level);
-		}
-	cout << "N=" << N << endl;
-	cout << "F=" << F << endl;
-	} // clean up graph_generator
-	if (f_v) {
-		cout << "interface_combinatorics::do_graph_classify done" << endl;
-	}
-
-}
-
-
 void interface_combinatorics::do_create_design(design_create_description *Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1286,7 +975,6 @@ void interface_combinatorics::do_create_design(design_create_description *Descr,
 
 	design_create *DC;
 	latex_interface L;
-	//int j;
 
 	DC = NEW_OBJECT(design_create);
 
@@ -1297,16 +985,6 @@ void interface_combinatorics::do_create_design(design_create_description *Descr,
 	if (f_v) {
 		cout << "after DC->init" << endl;
 	}
-
-
-
-	//action *A;
-	//int *Elt1;
-	//int *Elt2;
-
-	//A = DC->A;
-
-	//Elt2 = NEW_int(A->elt_size_in_int);
 
 
 
@@ -1331,7 +1009,7 @@ void interface_combinatorics::do_create_design(design_create_description *Descr,
 		int nb_pts = DC->P->N_points;
 		int nb_blocks = DC->sz;
 		int *Incma;
-		int h, i, j; //, a;
+		int h, i, j;
 		int pts_per_element = DC->k;
 
 
@@ -1420,140 +1098,7 @@ void interface_combinatorics::do_create_design(design_create_description *Descr,
 }
 
 
-void interface_combinatorics::convert_stack_to_tdo(std::string &stack_fname, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int i;
-	string fname;
-	string fname_out;
-	string label;
 
-	if (f_v) {
-		cout << "interface_combinatorics::convert_stack_to_tdo" << endl;
-	}
-	fname.assign(stack_fname);
-	chop_off_extension(fname);
-	fname_out.assign(fname);
-	fname_out.append(".tdo");
-
-	if (f_v) {
-		cout << "reading stack file " << stack_fname << endl;
-	}
-	{
-		geo_parameter GP;
-		tdo_scheme G;
-		ifstream f(stack_fname);
-		ofstream g(fname_out);
-		for (i = 0; ; i++) {
-			if (f.eof()) {
-				if (f_v) {
-					cout << "end of file reached" << endl;
-				}
-				break;
-				}
-			if (!GP.input(f)) {
-				if (f_v) {
-					cout << "GP.input returns false" << endl;
-				}
-				break;
-				}
-			if (f_v) {
-				cout << "read decomposition " << i
-							<< " v=" << GP.v << " b=" << GP.b << endl;
-			}
-			GP.convert_single_to_stack(verbose_level - 1);
-			if (f_v) {
-				cout << "after convert_single_to_stack" << endl;
-			}
-			if (strlen(GP.label.c_str())) {
-				GP.write(g, GP.label);
-			}
-			else {
-				char str[1000];
-				string s;
-
-				sprintf(str, "%d", i);
-				s.assign(str);
-				GP.write(g, s);
-			}
-
-			if (f_v) {
-				cout << "after write" << endl;
-			}
-			GP.init_tdo_scheme(G, verbose_level - 1);
-			if (f_v) {
-				cout << "after init_tdo_scheme" << endl;
-			}
-			if (f_vv) {
-				GP.print_schemes(G);
-			}
-		}
-		g << "-1 " << i << endl;
-	}
-	if (f_v) {
-		file_io Fio;
-		cout << "written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
-		cout << "interface_combinatorics::convert_stack_to_tdo done" << endl;
-	}
-}
-
-void interface_combinatorics::do_parameters_maximal_arc(int q, int r, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int m = 2, n = 2;
-	int v[2], b[2], aij[4];
-	int Q;
-	char fname[1000];
-	file_io Fio;
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_parameters_maximal_arc q=" << q << " r=" << r << endl;
-	}
-
-	Q = q * q;
-	v[0] = q * (r - 1) + r;
-	v[1] = Q + q * (2 - r) - r + 1;
-	b[0] = Q - Q / r + q * 2 - q / r + 1;
-	b[1] = Q / r + q / r - q;
-	aij[0] = q + 1;
-	aij[1] = 0;
-	aij[2] = q - q / r + 1;
-	aij[3] = q / r;
-	snprintf(fname, 1000, "max_arc_q%d_r%d.stack", q, r);
-
-	Fio.write_decomposition_stack(fname, m, n, v, b, aij, verbose_level - 1);
-}
-
-void interface_combinatorics::do_parameters_arc(int q, int s, int r, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int m = 2, n = 1;
-	int v[2], b[1], aij[2];
-	char fname[1000];
-	file_io Fio;
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_parameters_maximal_arc q=" << q << " s=" << s << " r=" << r << endl;
-	}
-
-	v[0] = s;
-	v[1] = q * q + q + 1 - s;
-	b[0] = q * q + q + 1;
-	aij[0] = q + 1;
-	aij[1] = q + 1;
-	snprintf(fname, 1000, "arc_q%d_s%d_r%d.stack", q, s, r);
-
-	Fio.write_decomposition_stack(fname, m, n, v, b, aij, verbose_level - 1);
-}
-
-
-void interface_combinatorics::do_make_elementary_symmetric_functions(int n, int k_max, int verbose_level)
-{
-	combinatorics_domain Combi;
-
-	Combi.make_elementary_symmetric_functions(n, k_max, verbose_level);
-}
 
 
 

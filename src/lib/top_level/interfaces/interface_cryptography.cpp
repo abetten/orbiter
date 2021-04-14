@@ -52,7 +52,7 @@ interface_cryptography::interface_cryptography()
 	//cout << "interface_cryptography::interface_cryptography 00f" << endl;
 
 	f_primitive_root = FALSE;
-	primitive_root_p = 0;
+	//std::string primitive_root_p;
 
 	f_smallest_primitive_root = FALSE;
 	smallest_primitive_root_p = 0;
@@ -73,9 +73,9 @@ interface_cryptography::interface_cryptography()
 	extended_gcd_b = 0;
 
 	f_power_mod = FALSE;
-	power_mod_a = 0;
-	power_mod_k = 0;
-	power_mod_n = 0;
+	//std::string power_mod_a;
+	//std::string power_mod_k;
+	//std::string power_mod_n;
 	//cout << "interface_cryptography::interface_cryptography 00h" << endl;
 
 	f_discrete_log = FALSE;
@@ -510,7 +510,7 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 	}
 	else if (stringcmp(argv[i], "-primitive_root") == 0) {
 		f_primitive_root = TRUE;
-		primitive_root_p = strtoi(argv[++i]);
+		primitive_root_p.assign(argv[++i]);
 		cout << "-primitive_root " << primitive_root_p << endl;
 	}
 	else if (stringcmp(argv[i], "-smallest_primitive_root") == 0) {
@@ -546,9 +546,9 @@ void interface_cryptography::read_arguments(int argc, std::string *argv, int &i,
 	}
 	else if (stringcmp(argv[i], "-power_mod") == 0) {
 		f_power_mod = TRUE;
-		power_mod_a = strtoi(argv[++i]);
-		power_mod_k = strtoi(argv[++i]);
-		power_mod_n = strtoi(argv[++i]);
+		power_mod_a.assign(argv[++i]);
+		power_mod_k.assign(argv[++i]);
+		power_mod_n.assign(argv[++i]);
 		cout << "-power_mod " << power_mod_a << " " << power_mod_k << " " << power_mod_n << endl;
 	}
 	else if (stringcmp(argv[i], "-discrete_log") == 0) {
@@ -767,7 +767,11 @@ void interface_cryptography::worker(int verbose_level)
 
 		cryptography_domain Crypto;
 
-		Crypto.do_primitive_root(primitive_root_p, verbose_level);
+		//longinteger_domain D;
+		longinteger_object p;
+
+		p.create_from_base_10_string(primitive_root_p);
+		Crypto.do_primitive_root_longinteger(p, verbose_level);
 	}
 	else if (f_smallest_primitive_root) {
 
@@ -805,7 +809,15 @@ void interface_cryptography::worker(int verbose_level)
 
 		cryptography_domain Crypto;
 
-		Crypto.do_power_mod(power_mod_a, power_mod_k, power_mod_n, verbose_level);
+		longinteger_object a;
+		longinteger_object k;
+		longinteger_object n;
+
+		a.create_from_base_10_string(power_mod_a);
+		k.create_from_base_10_string(power_mod_k);
+		n.create_from_base_10_string(power_mod_n);
+
+		Crypto.do_power_mod(a, k, n, verbose_level);
 	}
 	else if (f_RSA) {
 

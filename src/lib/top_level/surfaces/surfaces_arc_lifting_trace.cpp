@@ -265,7 +265,7 @@ void surfaces_arc_lifting_trace::move_arc(int verbose_level)
 		//cout << " transversals4=";
 		//lint_vec_print(cout, transversals4, 4);
 		cout << " P6=";
-		lint_vec_print(cout, The_case.P6, 6);
+		Orbiter->Lint_vec.print(cout, The_case.P6, 6);
 		cout << endl;
 	}
 
@@ -359,7 +359,7 @@ void surfaces_arc_lifting_trace::move_plane_and_arc(long int *P6a, int verbose_l
 		//cout << " transversals4=";
 		//lint_vec_print(cout, transversals4, 4);
 		cout << " P6=";
-		lint_vec_print(cout, The_case.P6, 6);
+		Orbiter->Lint_vec.print(cout, The_case.P6, 6);
 		cout << endl;
 	}
 
@@ -378,14 +378,14 @@ void surfaces_arc_lifting_trace::move_plane_and_arc(long int *P6a, int verbose_l
 	if (f_v) {
 		cout << "surfaces_arc_lifting_trace::move_plane_and_arc" << endl;
 		cout << "Basis=" << endl;
-		int_matrix_print(The_case.Basis_pi, 4, 4);
+		Orbiter->Int_vec.matrix_print(The_case.Basis_pi, 4, 4);
 	}
 
 	Up->Lift->Surf_A->Surf->F->invert_matrix(The_case.Basis_pi, The_case.Basis_pi_inv, 4, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "surfaces_arc_lifting_trace::move_plane_and_arc" << endl;
 		cout << "Basis_inv=" << endl;
-		int_matrix_print(The_case.Basis_pi_inv, 4, 4);
+		Orbiter->Int_vec.matrix_print(The_case.Basis_pi_inv, 4, 4);
 	}
 
 	The_case.Basis_pi_inv[16] = 0; // in case the group is semilinear
@@ -397,7 +397,7 @@ void surfaces_arc_lifting_trace::move_plane_and_arc(long int *P6a, int verbose_l
 	if (f_v) {
 		cout << "surfaces_arc_lifting_trace::move_plane_and_arc" << endl;
 		cout << "P6a=" << endl;
-		lint_vec_print(cout, P6a, 6);
+		Orbiter->Lint_vec.print(cout, P6a, 6);
 		cout << endl;
 	}
 
@@ -425,7 +425,7 @@ void surfaces_arc_lifting_trace::make_arc_canonical(
 	if (f_v) {
 		cout << "surfaces_arc_lifting_trace::make_arc_canonical" << endl;
 		cout << "P6_local=" << endl;
-		lint_vec_print(cout, P6_local, 6);
+		Orbiter->Lint_vec.print(cout, P6_local, 6);
 		cout << " orbit_not_on_conic_idx=" << orbit_not_on_conic_idx << endl;
 	}
 	for (i = 0; i < 6; i++) {
@@ -434,7 +434,7 @@ void surfaces_arc_lifting_trace::make_arc_canonical(
 	if (f_v) {
 		cout << "surfaces_arc_lifting_trace::make_arc_canonical" << endl;
 		cout << "P6_local_canonical=" << endl;
-		lint_vec_print(cout, P6_local_canonical, 6);
+		Orbiter->Lint_vec.print(cout, P6_local_canonical, 6);
 		cout << " orbit_not_on_conic_idx=" << orbit_not_on_conic_idx << endl;
 		cout << "The flag orbit f satisfies "
 				<< Up->Lift->flag_orbit_fst[orbit_not_on_conic_idx]
@@ -461,7 +461,7 @@ void surfaces_arc_lifting_trace::compute_beta1(seventytwo_cases *The_case, int v
 	long int P6_orbit_rep[6];
 	int idx;
 
-	lint_vec_copy(The_case->P6_local_canonical, P6_orbit_rep, 6);
+	Orbiter->Lint_vec.copy(The_case->P6_local_canonical, P6_orbit_rep, 6);
 	Sorting.lint_vec_heapsort(P6_orbit_rep, 6);
 	for (i = 0; i < 6; i++) {
 		Sorting.lint_vec_search_linear(P6_orbit_rep, 6, The_case->P6_local_canonical[i], idx);
@@ -472,10 +472,10 @@ void surfaces_arc_lifting_trace::compute_beta1(seventytwo_cases *The_case, int v
 	if (f_v) {
 		cout << "surfaces_arc_lifting_trace::compute_beta1" << endl;
 		cout << "P6_orbit_rep=" << endl;
-		lint_vec_print(cout, P6_orbit_rep, 6);
+		Orbiter->Lint_vec.print(cout, P6_orbit_rep, 6);
 		cout << endl;
 		cout << "P6_perm=" << endl;
-		lint_vec_print(cout, The_case->P6_perm, 6);
+		Orbiter->Lint_vec.print(cout, The_case->P6_perm, 6);
 		cout << endl;
 	}
 
@@ -674,7 +674,7 @@ void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(int verb
 
 #if 0
 	line1_to = Table_orbits_on_pairs[orbit_not_on_conic_idx].
-			Table_orbits_on_partition[pair_orbit_idx].
+			Table_orbits_on_partition[pair_orbit_idx].;
 #endif
 
 	//int pt_representation_sz;
@@ -692,7 +692,7 @@ void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(int verb
 
 	//Flag2_representation = NEW_lint(pt_representation_sz);
 
-	lint_vec_copy(
+	Orbiter->Lint_vec.copy(
 			Up->Lift->Flag_orbits->Pt + f2 * Up->pt_representation_sz,
 			Up->Flag2_representation, Up->pt_representation_sz);
 
@@ -707,10 +707,10 @@ void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(int verb
 		int B[8];
 		Up->Lift->Surf_A->Surf->P->unrank_line(A, line1_to);
 		cout << "line1_to=" << line1_to << "=" << endl;
-		int_matrix_print(A, 2, 4);
+		Orbiter->Int_vec.matrix_print(A, 2, 4);
 		Up->Lift->Surf_A->Surf->P->unrank_line(B, line2_to);
 		cout << "line2_to=" << line2_to << "=" << endl;
-		int_matrix_print(B, 2, 4);
+		Orbiter->Int_vec.matrix_print(B, 2, 4);
 	}
 
 	if (f_vv) {
@@ -720,10 +720,10 @@ void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(int verb
 		int B[8];
 		Up->Lift->Surf_A->Surf->P->unrank_line(A, The_case.L1);
 		cout << "L1=" << The_case.L1 << "=" << endl;
-		int_matrix_print(A, 2, 4);
+		Orbiter->Int_vec.matrix_print(A, 2, 4);
 		Up->Lift->Surf_A->Surf->P->unrank_line(B, The_case.L2);
 		cout << "L2=" << The_case.L2 << "=" << endl;
-		int_matrix_print(B, 2, 4);
+		Orbiter->Int_vec.matrix_print(B, 2, 4);
 	}
 
 	// test if L1 and line1_to are skew then switch L1 and L2:
@@ -784,7 +784,7 @@ void surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines(int verb
 	if (f_vv) {
 		cout << "surfaces_arc_lifting_trace::lift_group_elements_and_move_two_lines" << endl;
 		cout << "Elt_beta3=" << endl;
-		int_matrix_print(Elt_Beta3, 4, 4);
+		Orbiter->Int_vec.matrix_print(Elt_Beta3, 4, 4);
 		cout << "Elt_beta3=" << endl;
 		Up->Lift->A4->element_print_quick(Elt_Beta3, cout);
 		cout << endl;

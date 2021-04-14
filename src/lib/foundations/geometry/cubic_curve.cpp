@@ -144,7 +144,7 @@ int cubic_curve::compute_system_in_RREF(
 	if (FALSE) {
 		cout << "cubic_curve::compute_system_in_RREF list of "
 				"covered points by lines:" << endl;
-		lint_matrix_print(pt_list, nb_pts, P->k);
+		Orbiter->Lint_vec.matrix_print(pt_list, nb_pts, P->k);
 	}
 	for (i = 0; i < nb_pts; i++) {
 		P->unrank_point(Pts + i * 3, pt_list[i]);
@@ -152,7 +152,7 @@ int cubic_curve::compute_system_in_RREF(
 	if (f_v && FALSE) {
 		cout << "cubic_curve::compute_system_in_RREF list of "
 				"covered points in coordinates:" << endl;
-		int_matrix_print(Pts, nb_pts, 3);
+		Orbiter->Int_vec.matrix_print(Pts, nb_pts, 3);
 	}
 
 	for (i = 0; i < nb_pts; i++) {
@@ -164,14 +164,14 @@ int cubic_curve::compute_system_in_RREF(
 	if (f_v && FALSE) {
 		cout << "cubic_curve::compute_system_in_RREF "
 				"The system:" << endl;
-		int_matrix_print(System, nb_pts, nb_monomials);
+		Orbiter->Int_vec.matrix_print(System, nb_pts, nb_monomials);
 	}
 	r = F->Gauss_simple(System, nb_pts, nb_monomials,
 		base_cols, 0 /* verbose_level */);
 	if (FALSE) {
 		cout << "cubic_curve::compute_system_in_RREF "
 				"The system in RREF:" << endl;
-		int_matrix_print(System, nb_pts, nb_monomials);
+		Orbiter->Int_vec.matrix_print(System, nb_pts, nb_monomials);
 	}
 	if (f_v) {
 		cout << "cubic_curve::compute_system_in_RREF "
@@ -339,13 +339,13 @@ void cubic_curve::compute_inflexion_points(
 			if (f_v) {
 				cout << "cubic_curve::compute_inflexion_points "
 						"before F->perp_standard:" << endl;
-				int_matrix_print(Basis, 1, 3);
+				Orbiter->Int_vec.matrix_print(Basis, 1, 3);
 			}
 			F->perp_standard(3, 1, Basis, 0 /*verbose_level*/);
 			if (f_v) {
 				cout << "cubic_curve::compute_inflexion_points "
 						"after F->perp_standard:" << endl;
-				int_matrix_print(Basis, 3, 3);
+				Orbiter->Int_vec.matrix_print(Basis, 3, 3);
 			}
 			// test if the first basis vector is a multiple of v:
 			Orbiter->Int_vec.copy(v, Basis2, 3);

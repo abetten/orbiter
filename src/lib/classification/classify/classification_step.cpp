@@ -91,7 +91,7 @@ set_and_stabilizer *classification_step::get_set_and_stabilizer(
 	SaS = NEW_OBJECT(set_and_stabilizer);
 
 	data = NEW_lint(representation_sz);
-	lint_vec_copy(
+	Orbiter->Lint_vec.copy(
 			Rep_ith(orbit_index),
 			data, representation_sz);
 	
@@ -138,7 +138,7 @@ void classification_step::write_file(ofstream &fp, int verbose_level)
 
 	if (f_vv) {
 		cout << "classification_step::write_file Rep matrix:" << endl;
-		lint_matrix_print(Rep, nb_orbits, representation_sz);
+		Orbiter->Lint_vec.matrix_print(Rep, nb_orbits, representation_sz);
 	}
 
 	for (i = 0; i < nb_orbits * representation_sz; i++) {
@@ -186,7 +186,7 @@ void classification_step::read_file(ifstream &fp,
 	
 	if (f_vv) {
 		cout << "classification_step::read_file Rep matrix:" << endl;
-		lint_matrix_print(Rep, nb_orbits, representation_sz);
+		Orbiter->Lint_vec.matrix_print(Rep, nb_orbits, representation_sz);
 	}
 
 	max_orbits = nb_orbits;

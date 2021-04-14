@@ -263,7 +263,7 @@ void finite_field::create_intersection_of_zariski_open_sets(
 					Pts2[sz2++] = a;
 				}
 			}
-			lint_vec_copy(Pts2, Pts1, sz2);
+			Orbiter->Lint_vec.copy(Pts2, Pts1, sz2);
 			sz1 = sz2;
 		}
 		if (f_v) {
@@ -275,7 +275,7 @@ void finite_field::create_intersection_of_zariski_open_sets(
 
 	nb_pts = sz1;
 	Pts = NEW_lint(sz1);
-	lint_vec_copy(Pts1, Pts, sz1);
+	Orbiter->Lint_vec.copy(Pts1, Pts, sz1);
 
 	display_table_of_projective_points(
 			cout, Pts, nb_pts, variety_nb_vars);
@@ -2196,9 +2196,9 @@ void finite_field::O4_isomorphism_4to2(
 	As[3] = e;
 	if (f_v) {
 		cout << "At:" << endl;
-		print_integer_matrix_width(cout, At, 2, 2, 2, log10_of_q);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, At, 2, 2, 2, log10_of_q);
 		cout << "As:" << endl;
-		print_integer_matrix_width(cout, As, 2, 2, 2, log10_of_q);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, As, 2, 2, 2, log10_of_q);
 	}
 
 }
@@ -2528,7 +2528,7 @@ void finite_field::O4_find_tangent_plane(
 	if (f_v) {
 		cout << "the rank of the tangent space is " << rk << endl;
 		cout << "basis:" << endl;
-		print_integer_matrix_width(cout, T, rk, 4, 4, log10_of_q);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, T, rk, 4, 4, log10_of_q);
 	}
 
 	if (rk != 3) {
@@ -2907,7 +2907,7 @@ void finite_field::do_blocking_set_family_3(int n,
 			exit(1);
 			}
 		P->unrank_line(basis, diag_line);
-		int_matrix_print(basis, 2, 3);
+		Orbiter->Int_vec.matrix_print(basis, 2, 3);
 		nb = 0;
 		for (i = 0; i < set_size; i++) {
 			pt = set_in[i];
@@ -2995,7 +2995,7 @@ void finite_field::do_blocking_set_family_3(int n,
 
 	cout << "we created a blocking set of lines of "
 			"size " << S->k << ":" << endl;
-	lint_vec_print(cout, S->set, S->k);
+	Orbiter->Lint_vec.print(cout, S->set, S->k);
 	cout << endl;
 
 
@@ -3853,7 +3853,7 @@ void finite_field::create_ttp_code(finite_field *Fq,
 		cout << "H_subfield:" << endl;
 		cout << "m=" << m << endl;
 		cout << "n=" << n << endl;
-		print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
 		//f.latex_matrix(cout, f_elements_exponential,
 		//symbol_for_print_subfield, H_subfield, m, n);
 		}
@@ -4108,7 +4108,7 @@ void finite_field::create_segre_variety(int a, int b,
 			Pts[nb_pts++] = rk;
 			if (f_v) {
 				cout << setw(4) << nb_pts - 1 << " : " << endl;
-				int_matrix_print(v3, a + 1, b + 1);
+				Orbiter->Int_vec.matrix_print(v3, a + 1, b + 1);
 				cout << " : " << setw(5) << rk << endl;
 				}
 			}
@@ -4312,7 +4312,7 @@ void finite_field::create_desarguesian_line_spread_in_PG_3_q(
 			}
 		if (f_vv) {
 			cout << "before P3->Grass_lines->rank_int:" << endl;
-			int_matrix_print(P3->Grass_lines->M, 2, 4);
+			Orbiter->Int_vec.matrix_print(P3->Grass_lines->M, 2, 4);
 			}
 		rk1 = P3->Grass_lines->rank_lint(0 /* verbose_level*/);
 		Lines[rk] = rk1;
@@ -4502,7 +4502,7 @@ void finite_field::do_m_subspace_type(int n, int m,
 
 				cout << "subspace " << j << " / " << l << " which is "
 						<< b << " has a basis:" << endl;
-				print_integer_matrix_width(cout,
+				Orbiter->Int_vec.print_integer_matrix_width(cout,
 						G->M, m + 1, d, d, P->F->log10_of_q);
 
 
@@ -4601,7 +4601,7 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 		for (i = 0; i < len; i++) {
 			cout << setw(3) << i << " : " << R[i]
 				<< " : " << setw(5) << nb_pts_on_plane[i] << " : ";
-			lint_vec_print(cout, Pts_on_plane[i], nb_pts_on_plane[i]);
+			Orbiter->Lint_vec.print(cout, Pts_on_plane[i], nb_pts_on_plane[i]);
 			cout << endl;
 			}
 #endif
@@ -4662,7 +4662,7 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 
 		cout << "subspace " << i << " / " << nb_planes << " which is "
 			<< R[b] << " has a basis:" << endl;
-		print_integer_matrix_width(cout,
+		Orbiter->Int_vec.print_integer_matrix_width(cout,
 				G->M, m + 1, d, d, P->F->log10_of_q);
 
 
@@ -4694,7 +4694,7 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 		} // next i
 
 	cout << "Blocks:" << endl;
-	int_matrix_print(Blocks, nb_planes, intersection_size);
+	Orbiter->Int_vec.matrix_print(Blocks, nb_planes, intersection_size);
 
 	int *Incma;
 	int *ItI;
@@ -4719,7 +4719,7 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 		}
 
 	cout << "Incma:" << endl;
-	int_matrix_print(Incma, set_size, nb_planes);
+	Orbiter->Int_vec.matrix_print(Incma, set_size, nb_planes);
 
 	for (i = 0; i < nb_planes; i++) {
 		for (j = 0; j < nb_planes; j++) {
@@ -4733,7 +4733,7 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 		}
 
 	cout << "I^t*I:" << endl;
-	int_matrix_print(ItI, nb_planes, nb_planes);
+	Orbiter->Int_vec.matrix_print(ItI, nb_planes, nb_planes);
 
 	for (i = 0; i < set_size; i++) {
 		for (j = 0; j < set_size; j++) {
@@ -4747,7 +4747,7 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 		}
 
 	cout << "I*I^t:" << endl;
-	int_matrix_print(IIt, set_size, set_size);
+	Orbiter->Int_vec.matrix_print(IIt, set_size, set_size);
 
 
 	FREE_int(Incma);
@@ -4861,7 +4861,7 @@ void finite_field::do_line_type(int n,
 				P->unrank_line(basis, b);
 				if (f_show) {
 					cout << "line " << b << " has a basis:" << endl;
-					print_integer_matrix_width(cout,
+					Orbiter->Int_vec.print_integer_matrix_width(cout,
 							basis, 2, P->n + 1, P->n + 1,
 							P->F->log10_of_q);
 					}
@@ -4873,7 +4873,7 @@ void finite_field::do_line_type(int n,
 
 				if (f_show) {
 					cout << "intersects in " << sz << " points : ";
-					lint_vec_print(cout, I, sz);
+					Orbiter->Lint_vec.print(cout, I, sz);
 					cout << endl;
 					cout << "they are:" << endl;
 					P->print_set(I, sz);
@@ -5112,7 +5112,7 @@ void finite_field::do_test_diagonal_line(int n,
 
 
 		cout << "orbit " << h << " : ";
-		lint_vec_print(cout, sets[h], set_sizes[h]);
+		Orbiter->Lint_vec.print(cout, sets[h], set_sizes[h]);
 		cout << endl;
 
 		if (set_sizes[h] != 4) {
@@ -5161,7 +5161,7 @@ void finite_field::do_test_diagonal_line(int n,
 		cout << "The diagonal line is " << diag_line << endl;
 
 		P->unrank_line(basis, diag_line);
-		int_matrix_print(basis, 2, 3);
+		Orbiter->Int_vec.matrix_print(basis, 2, 3);
 
 		if (diag_line != P->line_through_two_points(
 				diag_pts[0], diag_pts[2])) {
@@ -5746,7 +5746,7 @@ void finite_field::do_ideal(int n,
 	cout << "The system has rank " << r << endl;
 	cout << "The ideal has dimension " << ns << endl;
 	cout << "and is generated by:" << endl;
-	int_matrix_print(Kernel, ns, HPD->get_nb_monomials());
+	Orbiter->Int_vec.matrix_print(Kernel, ns, HPD->get_nb_monomials());
 	cout << "corresponding to the following basis "
 			"of polynomials:" << endl;
 	for (h = 0; h < ns; h++) {
@@ -5773,7 +5773,7 @@ void finite_field::do_ideal(int n,
 
 		cout << "We found " << nb_pts << " points on the generator of the ideal" << endl;
 		cout << "They are : ";
-		lint_vec_print(cout, Pts, nb_pts);
+		Orbiter->Lint_vec.print(cout, Pts, nb_pts);
 		cout << endl;
 		HPD->get_P()->print_set_numerical(cout, Pts, nb_pts);
 
@@ -6543,7 +6543,7 @@ void finite_field::isomorphism_to_special_orthogonal(int *A4, int *A6, int verbo
 	if (f_vv) {
 		cout << "finite_field::isomorphism_to_special_orthogonal "
 				"exterior_square :" << endl;
-		int_matrix_print(An2, 6, 6);
+		Orbiter->Int_vec.matrix_print(An2, 6, 6);
 		cout << endl;
 	}
 
@@ -6559,7 +6559,7 @@ void finite_field::isomorphism_to_special_orthogonal(int *A4, int *A6, int verbo
 	if (f_vv) {
 		cout << "finite_field::isomorphism_to_special_orthogonal "
 				"orthogonal matrix :" << endl;
-		int_matrix_print(C, 6, 6);
+		Orbiter->Int_vec.matrix_print(C, 6, 6);
 		cout << endl;
 	}
 
@@ -6571,7 +6571,7 @@ void finite_field::isomorphism_to_special_orthogonal(int *A4, int *A6, int verbo
 	if (f_vv) {
 		cout << "finite_field::isomorphism_to_special_orthogonal "
 				"orthogonal matrix in the special form:" << endl;
-		int_matrix_print(A6, 6, 6);
+		Orbiter->Int_vec.matrix_print(A6, 6, 6);
 		cout << endl;
 	}
 

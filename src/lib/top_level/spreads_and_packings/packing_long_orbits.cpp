@@ -394,7 +394,7 @@ void packing_long_orbits::filter_orbits(int verbose_level)
 			Input->nb_sets,
 			Input->Set_size, 0 /* verbose_level */);
 
-	lint_vec_zero(Filtered_orbits->Set_size, Input->nb_sets);
+	Orbiter->Lint_vec.zero(Filtered_orbits->Set_size, Input->nb_sets);
 
 	for (t = 0; t < Input->nb_sets; t++) {
 		if (t == fixpoints_idx) {
@@ -605,7 +605,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 				exit(1);
 			}
 
-			lint_vec_copy(packing, Packings_table + sol_idx * PWF->PW->P->size_of_packing, PWF->PW->P->size_of_packing);
+			Orbiter->Lint_vec.copy(packing, Packings_table + sol_idx * PWF->PW->P->size_of_packing, PWF->PW->P->size_of_packing);
 
 
 #if 0

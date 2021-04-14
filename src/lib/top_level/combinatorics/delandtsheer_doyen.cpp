@@ -489,7 +489,7 @@ void delandtsheer_doyen::search_singletons(int verbose_level)
 		}
 		if (f_vv) {
 			cout << orbit_idx << " / " << ODF->nb_cases << " : ";
-			lint_vec_print(cout, ODF->sets[orbit_idx],
+			Orbiter->Lint_vec.print(cout, ODF->sets[orbit_idx],
 					ODF->set_sizes[orbit_idx]);
 			cout << " : " << ODF->Ago_ascii[orbit_idx] << " : "
 					<< ODF->Aut_ascii[orbit_idx] << endl;
@@ -568,8 +568,8 @@ void delandtsheer_doyen::search_singletons(int verbose_level)
 					<< " live points" << endl;
 		}
 		if (nb_live_points == target_depth) {
-			lint_vec_copy(line0, line, level);
-			lint_vec_copy(live_points, line + level, target_depth);
+			Orbiter->Lint_vec.copy(line0, line, level);
+			Orbiter->Lint_vec.copy(live_points, line + level, target_depth);
 			if (check_orbit_covering(line, Descr->K, 0 /* verbose_level */)) {
 				cout << "found a solution in orbit " << orbit_idx << endl;
 				nb_sol++;
@@ -596,7 +596,7 @@ void delandtsheer_doyen::search_singletons(int verbose_level)
 
 				Combi.unrank_k_subset(l, subset, nb_live_points, target_depth);
 
-				lint_vec_copy(line0, line, level);
+				Orbiter->Lint_vec.copy(line0, line, level);
 
 				Orbiter->Int_vec.apply_lint(subset, live_points, line + level, target_depth);
 
@@ -1294,13 +1294,13 @@ void delandtsheer_doyen::early_test_func(long int *S, int len,
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
-		lint_vec_print(cout, candidates, nb_candidates);
+		Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
 		cout << endl;
 	}
 
 
 	if (len == 0) {
-		lint_vec_copy(candidates, good_candidates, nb_candidates);
+		Orbiter->Lint_vec.copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
 	}
 	else {

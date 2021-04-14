@@ -258,10 +258,10 @@ void surface_domain::print_lines_tex(ostream &ost, long int *Lines, int nb_lines
 		ost << "$$" << endl;
 	}
 	ost << "Rank of lines: ";
-	lint_vec_print(ost, Lines, nb_lines);
+	Orbiter->Lint_vec.print(ost, Lines, nb_lines);
 	ost << "\\\\" << endl;
 	ost << "Rank of points on Klein quadric: ";
-	lint_vec_print(ost, Rk, nb_lines);
+	Orbiter->Lint_vec.print(ost, Rk, nb_lines);
 	ost << "\\\\" << endl;
 
 	FREE_lint(Rk);
@@ -910,7 +910,7 @@ void surface_domain::compute_table_E(
 			}
 		}
 	cout << "Table:" << endl;
-	int_matrix_print(Table, nb_Q, nb_E_types);
+	Orbiter->Int_vec.matrix_print(Table, nb_Q, nb_E_types);
 
 	FREE_int(Table_idx);
 }

@@ -1650,7 +1650,7 @@ void poset_classification::read_level_file(int level,
 		O = &root[I];
 		
 		cout << setw(10) << i << " : ";
-		lint_vec_print(cout, sets[i], level);
+		Orbiter->Lint_vec.print(cout, sets[i], level);
 		cout << endl;
 		
 		J = find_poset_orbit_node_for_set(level - 1,
@@ -2053,7 +2053,7 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 			strcpy(Text_node[first + i], str);
 
 			get_set_by_level(level, i, rep);
-			lint_vec_print_to_str(str, rep, level);
+			Orbiter->Lint_vec.print_to_str(str, rep, level);
 			Text_orbit_reps[first + i] = NEW_char(strlen(str) + 1);
 			strcpy(Text_orbit_reps[first + i], str);
 			

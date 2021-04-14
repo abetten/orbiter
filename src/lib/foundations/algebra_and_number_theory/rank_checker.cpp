@@ -74,7 +74,7 @@ int rank_checker::check_rank(int len, long int *S, int verbose_level)
 	if (f_vv) {
 		cout << "\n";
 		//print_integer_matrix(cout, gen.S, 1, len);
-		print_integer_matrix(cout, M1, m, len);
+		Orbiter->Int_vec.print_integer_matrix(cout, M1, m, len);
 		}
 	if (len <= 1)
 		return TRUE;
@@ -108,7 +108,7 @@ int rank_checker::check_rank(int len, long int *S, int verbose_level)
 			M2[i * (d1 + 1) + d1] = M1[i * len + len - 1];
 			}
 		if (FALSE) {
-			print_integer_matrix(cout, M2, m, d1 + 1);
+			Orbiter->Int_vec.print_integer_matrix(cout, M2, m, d1 + 1);
 			}
 		
 		rk = GFq->Gauss_int(M2,
@@ -224,7 +224,7 @@ int rank_checker::check_rank_last_two_are_fixed(
 	if (f_vv) {
 		cout << "\n";
 		//print_integer_matrix(cout, gen.S, 1, len);
-		print_integer_matrix(cout, M1, m, len);
+		Orbiter->Int_vec.print_integer_matrix(cout, M1, m, len);
 		}
 	if (len <= 1)
 		return TRUE;
@@ -259,7 +259,7 @@ int rank_checker::check_rank_last_two_are_fixed(
 			M2[i * (d1 + 2) + d1 + 1] = M1[i * len + len - 1];
 			}
 		if (FALSE) {
-			print_integer_matrix(cout, M2, m, d1 + 2);
+			Orbiter->Int_vec.print_integer_matrix(cout, M2, m, d1 + 2);
 			}
 		
 		rk = GFq->Gauss_int(M2,
@@ -314,7 +314,7 @@ int rank_checker::compute_rank_row_vectors(
 	if (f_v) {
 		cout << "\n";
 		//print_integer_matrix(cout, gen.S, 1, len);
-		print_integer_matrix(cout, M1, len, n);
+		Orbiter->Int_vec.print_integer_matrix(cout, M1, len, n);
 		}
 
 		

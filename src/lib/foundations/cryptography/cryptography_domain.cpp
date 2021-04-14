@@ -1740,10 +1740,10 @@ void cryptography_domain::do_RSA(long int RSA_d, long int RSA_m, int RSA_block_s
 	if (f_v) {
 		cout << "do_RSA RSA_d=" << RSA_d << " RSA_m=" << RSA_m << endl;
 	}
-	lint_vec_scan(RSA_text, data, data_sz);
+	Orbiter->Lint_vec.scan(RSA_text, data, data_sz);
 	if (f_v) {
 		cout << "text: ";
-		lint_vec_print(cout, data, data_sz);
+		Orbiter->Lint_vec.print(cout, data, data_sz);
 		cout << endl;
 	}
 
@@ -2264,7 +2264,9 @@ void cryptography_domain::do_fermat_test(int p, int nb_times, int verbose_level)
 
 }
 
-void cryptography_domain::do_find_pseudoprime(int nb_digits, int nb_fermat, int nb_miller_rabin, int nb_solovay_strassen, int verbose_level)
+void cryptography_domain::do_find_pseudoprime(int nb_digits,
+		int nb_fermat, int nb_miller_rabin, int nb_solovay_strassen,
+		int verbose_level)
 {
 	char fname[1000];
 	char title[1000];
@@ -2277,13 +2279,13 @@ void cryptography_domain::do_find_pseudoprime(int nb_digits, int nb_fermat, int 
 
 
 	{
-	ofstream f(fname);
+	ofstream ost(fname);
 
 
 	latex_interface L;
 
 
-	L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
+	L.head(ost, FALSE /* f_book*/, TRUE /* f_title */,
 		title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
 			TRUE /* f_12pt */,
 			TRUE /* f_enlarged_page */,
@@ -2298,28 +2300,28 @@ void cryptography_domain::do_find_pseudoprime(int nb_digits, int nb_fermat, int 
 	int cnt = -1;
 
 	//f << "\\begin{multicols}{2}" << endl;
-	f << "\\begin{enumerate}[(1)]" << endl;
+	ost << "\\begin{enumerate}[(1)]" << endl;
 	while (TRUE) {
 
 		cnt++;
 
 		D.random_number_with_n_decimals(P, nb_digits, verbose_level);
 
-		f << "\\item" << endl;
-		f << "Trial " << cnt << ", testing random number " << P << endl;
+		ost << "\\item" << endl;
+		ost << "Trial " << cnt << ", testing random number " << P << endl;
 
 		if (P.ith(0) != 1 && P.ith(0) != 3 && P.ith(0) != 7 && P.ith(0) != 9) {
-			f << "the number is not prime by looking at the lowest digit" << endl;
+			ost << "the number is not prime by looking at the lowest digit." << endl;
 			continue;
 		}
 
-		f << "\\begin{enumerate}[(a)]" << endl;
-		f << "\\item" << endl;
-		if (fermat_test_iterated_with_latex_key(f,
+		ost << "\\begin{enumerate}[(a)]" << endl;
+		ost << "\\item" << endl;
+		if (fermat_test_iterated_with_latex_key(ost,
 				P, nb_fermat,
 				verbose_level)) {
 			//f << "Fermat: The number $" << P << "$ is not prime.\\\\" << endl;
-			f << "\\end{enumerate}" << endl;
+			ost << "\\end{enumerate}" << endl;
 			continue;
 		}
 		else {
@@ -2328,55 +2330,55 @@ void cryptography_domain::do_find_pseudoprime(int nb_digits, int nb_fermat, int 
 
 
 		if (nb_miller_rabin) {
-			f << "\\item" << endl;
-			if (miller_rabin_test_iterated_with_latex_key(f,
+			ost << "\\item" << endl;
+			if (miller_rabin_test_iterated_with_latex_key(ost,
 					P, nb_miller_rabin,
 					verbose_level)) {
-				f << "Miller Rabin: The number $" << P << "$ is not prime.\\\\" << endl;
-				f << "\\end{enumerate}" << endl;
+				ost << "Miller Rabin: The number $" << P << "$ is not prime.\\\\" << endl;
+				ost << "\\end{enumerate}" << endl;
 				continue;
 			}
 			else {
-				//f << "Miller Rabin: The number $" << P << "$ is probably prime. Miller Rabin test is inconclusive.\\\\" << endl;
+				//ost << "Miller Rabin: The number $" << P << "$ is probably prime. Miller Rabin test is inconclusive.\\\\" << endl;
 			}
 		}
 		else {
-			f << "\\end{enumerate}" << endl;
+			ost << "\\end{enumerate}" << endl;
 			break;
 		}
 
 		if (nb_solovay_strassen) {
-			f << "\\item" << endl;
-			if (solovay_strassen_test_iterated_with_latex_key(f,
+			ost << "\\item" << endl;
+			if (solovay_strassen_test_iterated_with_latex_key(ost,
 					P, nb_solovay_strassen,
 					verbose_level)) {
-				//f << "Solovay-Strassen: The number $" << P << "$ is not prime.\\\\" << endl;
-				f << "\\end{enumerate}" << endl;
+				//ost << "Solovay-Strassen: The number $" << P << "$ is not prime.\\\\" << endl;
+				ost << "\\end{enumerate}" << endl;
 				continue;
 			}
 			else {
-				//f << "Solovay-Strassen: The number $" << P << "$ is probably prime. Solovay-Strassen test is inconclusive.\\\\" << endl;
-				f << "\\end{enumerate}" << endl;
+				//ost << "Solovay-Strassen: The number $" << P << "$ is probably prime. Solovay-Strassen test is inconclusive.\\\\" << endl;
+				ost << "\\end{enumerate}" << endl;
 				break;
 			}
 		}
 		else {
-			f << "\\end{enumerate}" << endl;
+			ost << "\\end{enumerate}" << endl;
 			break;
 		}
-		f << "\\end{enumerate}" << endl;
+		ost << "\\end{enumerate}" << endl;
 
 	}
-	f << "\\end{enumerate}" << endl;
-	//f << "\\end{multicols}" << endl;
+	ost << "\\end{enumerate}" << endl;
+	//ost << "\\end{multicols}" << endl;
 
-	f << "\\noindent" << endl;
-	f << "The number $" << P << "$ is probably prime. \\\\" << endl;
-	f << "Number of Fermat tests = " << nb_fermat << " \\\\" << endl;
-	f << "Number of Miller Rabin tests = " << nb_miller_rabin << " \\\\" << endl;
-	f << "Number of Solovay-Strassen tests = " << nb_solovay_strassen << " \\\\" << endl;
+	ost << "\\noindent" << endl;
+	ost << "The number $" << P << "$ is probably prime. \\\\" << endl;
+	ost << "Number of Fermat tests = " << nb_fermat << " \\\\" << endl;
+	ost << "Number of Miller Rabin tests = " << nb_miller_rabin << " \\\\" << endl;
+	ost << "Number of Solovay-Strassen tests = " << nb_solovay_strassen << " \\\\" << endl;
 
-	L.foot(f);
+	L.foot(ost);
 	}
 
 	file_io Fio;
@@ -2887,6 +2889,27 @@ void cryptography_domain::do_primitive_root(long int p, int verbose_level)
 }
 
 
+void cryptography_domain::do_primitive_root_longinteger(longinteger_object &p, int verbose_level)
+{
+	number_theory_domain NT;
+	long int a;
+	int t0, t1, dt;
+	os_interface Os;
+
+	t0 = Os.os_ticks();
+
+	a = NT.primitive_root_randomized(p.as_lint(), verbose_level);
+	cout << "a primitive root modulo " << p << " is " << a << endl;
+
+	t1 = Os.os_ticks();
+	dt = t1 - t0;
+	cout << "time: ";
+	Os.time_check_delta(cout, dt);
+	cout << endl;
+}
+
+
+
 void cryptography_domain::do_smallest_primitive_root(long int p, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3074,16 +3097,21 @@ void cryptography_domain::do_extended_gcd(int a, int b, int verbose_level)
 }
 
 
-void cryptography_domain::do_power_mod(long int a, long int k, long int n, int verbose_level)
+void cryptography_domain::do_power_mod(longinteger_object &a,
+		longinteger_object &k, longinteger_object &n,
+		int verbose_level)
 {
-	number_theory_domain NT;
-	long int b;
+	longinteger_domain D;
+	//number_theory_domain NT;
+	longinteger_object b;
 	int t0, t1, dt;
 	os_interface Os;
 
 	t0 = Os.os_ticks();
 
-	b = NT.power_mod(a, k, n);
+	a.assign_to(b);
+	D.power_longint_mod(b, k, n, 0 /* verbose_level */);
+	//b = NT.power_mod(a, k, n);
 	cout << "the power of " << a << " to the " << k << " mod " << n << " is " << b << endl;
 
 	t1 = Os.os_ticks();
@@ -3569,10 +3597,12 @@ int cryptography_domain::fermat_test_iterated_with_latex_key(ostream &ost,
 
 	ost << "We will do " << nb_times << " Fermat tests for $" << P << "$:\\\\" << endl;
 
+	ost << "\\begin{enumerate}[(1)]" << endl;
 	for (i = 0; i < nb_times; i++) {
 
 
-		ost << "Fermat test no " << i << ":\\\\" << endl;
+		ost << "\\item" << endl;
+		ost << "Fermat test no " << i + 1 << ":\\\\" << endl;
 
 		// choose a random integer a with 1 <= a < n - 1
 		D.random_number_less_than_n(n_minus_two, A);
@@ -3590,6 +3620,7 @@ int cryptography_domain::fermat_test_iterated_with_latex_key(ostream &ost,
 		}
 
 	}
+	ost << "\\end{enumerate}" << endl;
 	if (i == nb_times) {
 		//ost << "Fermat: The number $" << P << "$ is probably prime. Fermat test is inconclusive.\\\\" << endl;
 		ret = FALSE;
@@ -3635,7 +3666,7 @@ int cryptography_domain::fermat_test_with_latex_key(ostream &ost,
 			cout << "cryptography_domain::fermat_test_with_latex_key "
 				"inconclusive" << endl;
 		}
-		cout << "The test is inconclusive.\\\\" << endl;
+		ost << "The Fermat test is inconclusive.\\\\" << endl;
 		return FALSE;
 	}
 	else {
@@ -3643,7 +3674,7 @@ int cryptography_domain::fermat_test_with_latex_key(ostream &ost,
 			cout << "cryptography_domain::fermat_test_with_latex_key "
 				"not prime (sure)" << endl;
 		}
-		cout << "The number $" << n << "$ is not prime.\\\\" << endl;
+		ost << "The number $" << n << "$ is not prime because of the Fermat test.\\\\" << endl;
 		return TRUE;
 	}
 }
@@ -3766,14 +3797,21 @@ int cryptography_domain::solovay_strassen_test_with_latex_key(ostream &ost,
 		cout << "cryptography_domain::solovay_strassen_test_with_latex_key "
 				"a^((n-1)/2) = " << a << endl;
 	}
-	ost << "$a^{\\frac{" << n << "-1}{2}} \\equiv " << a << "$\\\\" << endl;
+
+
+	ost << "$a^{\\frac{" << n << "-1}{2}} \\equiv " << a;
+	if (D.compare_unsigned(a, n_minus_one) == 0) {
+		ost << " \\equiv -1";
+	}
+	ost << "$\\\\" << endl;
+
 	if (x == 1) {
 		if (a.is_one()) {
 			if (f_v) {
 				cout << "cryptography_domain::solovay_strassen_test_with_latex_key "
 					"inconclusive" << endl;
 			}
-			cout << "The test is inconclusive.\\\\" << endl;
+			ost << "The Solovay-Strassen test is inconclusive.\\\\" << endl;
 			return TRUE;
 		}
 		else {
@@ -3781,7 +3819,7 @@ int cryptography_domain::solovay_strassen_test_with_latex_key(ostream &ost,
 				cout << "cryptography_domain::solovay_strassen_test_with_latex_key "
 					"not prime (sure)" << endl;
 			}
-			cout << "The number $m$ is not prime.\\\\" << endl;
+			ost << "The number $n$ is not prime by the Solovay-Strassen test.\\\\" << endl;
 			return FALSE;
 		}
 	}
@@ -3791,7 +3829,7 @@ int cryptography_domain::solovay_strassen_test_with_latex_key(ostream &ost,
 				cout << "cryptography_domain::solovay_strassen_test_with_latex_key "
 					"inconclusive" << endl;
 			}
-			cout << "The test is inconclusive.\\\\" << endl;
+			ost << "The Solovay-Strassen test is inconclusive.\\\\" << endl;
 			return TRUE;
 		}
 		else {
@@ -3799,7 +3837,7 @@ int cryptography_domain::solovay_strassen_test_with_latex_key(ostream &ost,
 				cout << "cryptography_domain::solovay_strassen_test_with_latex_key "
 					"not prime (sure)" << endl;
 			}
-			cout << "The number $m$ is not prime.\\\\" << endl;
+			ost << "The number $n$ is not prime by the Solovay-Strassen test.\\\\" << endl;
 			return FALSE;
 		}
 	}
@@ -3833,10 +3871,14 @@ int cryptography_domain::solovay_strassen_test_iterated_with_latex_key(ostream &
 	D.add(P, m_one, P_minus_one);
 	D.add(P, m_two, P_minus_two);
 
+	ost << "\\begin{enumerate}[(1)]" << endl;
+
+
 	for (i = 0; i < nb_times; i++) {
 
 
-		ost << "Solovay-Strassen test no " << i << ":\\\\" << endl;
+		ost << "\\item" << endl;
+		ost << "Solovay-Strassen test no " << i + 1 << ":\\\\" << endl;
 
 		// choose a random integer a with 1 <= a < n - 1
 		D.random_number_less_than_n(P_minus_two, A);
@@ -3854,6 +3896,8 @@ int cryptography_domain::solovay_strassen_test_iterated_with_latex_key(ostream &
 		}
 
 	}
+	ost << "\\end{enumerate}" << endl;
+
 	if (i == nb_times) {
 		//ost << "Solovay-Strassen: The number $" << P << "$ is probably prime. Solovay-Strassen test is inconclusive.\\\\" << endl;
 		ret = FALSE;
@@ -3867,6 +3911,9 @@ int cryptography_domain::solovay_strassen_test_iterated_with_latex_key(ostream &
 	}
 	return ret;
 }
+
+
+
 
 int cryptography_domain::miller_rabin_test(
 	longinteger_object &n, int verbose_level)
@@ -4009,7 +4056,7 @@ int cryptography_domain::miller_rabin_test_with_latex_key(ostream &ost,
 			return TRUE;
 		}
 		else {
-			ost << "The number survives the Fermat witness\\\\" << endl;
+			ost << "The number survives the Fermat test\\\\" << endl;
 
 		}
 
@@ -4036,14 +4083,14 @@ int cryptography_domain::miller_rabin_test_with_latex_key(ostream &ost,
 			if (f_v) {
 				cout << "a^m = 1 mod n, so the test is inconclusive" << endl;
 			}
-			ost << "The test is inconclusive\\\\" << endl;
+			ost << "The Miller-Rabin test is inconclusive\\\\" << endl;
 			return FALSE;
 		}
 		if (D.compare_unsigned(b, n_minus_one) == 0) {
 			if (f_v) {
 				cout << "is minus one, so the test is inconclusive" << endl;
 			}
-			ost << "The test is inconclusive\\\\" << endl;
+			ost << "The Miller-Rabin test is inconclusive\\\\" << endl;
 			return FALSE;
 		}
 		ost << "$b_{0} = " << b << "$\\\\" << endl;
@@ -4059,14 +4106,14 @@ int cryptography_domain::miller_rabin_test_with_latex_key(ostream &ost,
 				if (f_v) {
 					cout << "is minus one, so the test is inconclusive" << endl;
 				}
-				ost << "The test is inconclusive.\\\\" << endl;
+				ost << "The Miller-Rabin test is inconclusive.\\\\" << endl;
 				return FALSE;
 			}
 			if (D.compare_unsigned(b, one) == 0) {
 				if (f_v) {
 					cout << "is one, we reject as composite" << endl;
 				}
-				ost << "The number is not prime.\\\\" << endl;
+				ost << "The number is not prime because of the Miller-Rabin test.\\\\" << endl;
 				return TRUE;
 			}
 			//mult(b, b, c);
@@ -4074,7 +4121,7 @@ int cryptography_domain::miller_rabin_test_with_latex_key(ostream &ost,
 		if (f_v) {
 			cout << "inconclusive, we accept as probably prime" << endl;
 		}
-		ost << "The test is inconclusive.\\\\" << endl;
+		ost << "The Miller-Rabin test is inconclusive.\\\\" << endl;
 
 	if (f_v) {
 		cout << "cryptography_domain::miller_rabin_test_with_latex_key "
@@ -4095,14 +4142,14 @@ int cryptography_domain::miller_rabin_test_iterated_with_latex_key(ostream &ost,
 		cout << "cryptography_domain::miller_rabin_test_iterated_with_latex_key" << endl;
 	}
 
-	ost << "Miller Rabin test for $" << P << "$:\\\\" << endl;
+	ost << "Miller-Rabin test for $" << P << "$:\\\\" << endl;
 
 	ost << "\\begin{enumerate}[(1)]" << endl;
 	for (i = 0; i < nb_times; i++) {
 
 
 		ost << "\\item" << endl;
-		ost << "Miller Rabin test no " << i << ":\\\\" << endl;
+		ost << "Miller-Rabin test no " << i + 1 << ":\\\\" << endl;
 
 		if (miller_rabin_test_with_latex_key(ost,
 			P, i,

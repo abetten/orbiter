@@ -315,6 +315,24 @@ void orbiter_symbol_table_entry::init_packing_long_orbits(std::string &label,
 	}
 }
 
+void orbiter_symbol_table_entry::init_graph_classify(std::string &label,
+		void *GC, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_graph_classify" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_graph_classify;
+	ptr = GC;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_graph_classify done" << endl;
+	}
+}
+
+
 void orbiter_symbol_table_entry::print()
 {
 	if (type == t_intvec) {
@@ -377,6 +395,9 @@ void orbiter_symbol_table_entry::print()
 		}
 		else if (object_type == t_packing_long_orbits) {
 			cout << "packing with symmetry assumption, choosing long orbits" << endl;
+		}
+		else if (object_type == t_graph_classify) {
+			cout << "graph_classification" << endl;
 		}
 
 

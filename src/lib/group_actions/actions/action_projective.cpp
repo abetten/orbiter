@@ -604,7 +604,7 @@ int action::reverse_engineer_semilinear_map(
 
 	if (f_vv) {
 		cout << "Mtx (before scaling):" << endl;
-		print_integer_matrix_width(cout, Mtx, d, d, d, F->log10_of_q);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, Mtx, d, d, d, F->log10_of_q);
 		cout << endl;
 		}
 
@@ -647,7 +647,7 @@ int action::reverse_engineer_semilinear_map(
 		}
 	if (f_vv) {
 		cout << "after Gauss_simple:" << endl;
-		print_integer_matrix_width(cout, system,
+		Orbiter->Int_vec.print_integer_matrix_width(cout, system,
 				d, d + 1, d + 1, F->log10_of_q);
 		cout << endl;
 		}
@@ -660,7 +660,7 @@ int action::reverse_engineer_semilinear_map(
 
 	if (f_vv) {
 		cout << "Mtx (after scaling):" << endl;
-		print_integer_matrix_width(cout, Mtx, d, d, d, F->log10_of_q);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, Mtx, d, d, d, F->log10_of_q);
 		cout << endl;
 		}
 
@@ -718,7 +718,7 @@ int action::reverse_engineer_semilinear_map(
 			}
 		if (f_vv) {
 			cout << "after Gauss_simple:" << endl;
-			print_integer_matrix_width(cout,
+			Orbiter->Int_vec.print_integer_matrix_width(cout,
 					system, 2, 3, 3, F->log10_of_q);
 			cout << endl;
 			}
@@ -732,7 +732,7 @@ int action::reverse_engineer_semilinear_map(
 			}
 		if (f_vv) {
 			cout << "after scaling the last column:" << endl;
-			print_integer_matrix_width(cout,
+			Orbiter->Int_vec.print_integer_matrix_width(cout,
 					system, 2, 3, 3, F->log10_of_q);
 			cout << endl;
 			}
@@ -777,7 +777,7 @@ int action::reverse_engineer_semilinear_map(
 		cout << "action::reverse_engineer_semilinear_map "
 				"done, we found the following map" << endl;
 		cout << "Mtx:" << endl;
-		print_integer_matrix_width(cout,
+		Orbiter->Int_vec.print_integer_matrix_width(cout,
 				Mtx, d, d, d, F->log10_of_q);
 		cout << endl;
 		cout << "frobenius = " << frobenius << endl;

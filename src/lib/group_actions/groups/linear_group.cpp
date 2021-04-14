@@ -488,7 +488,7 @@ void linear_group::linear_group_init(
 		int nb_points;
 		action *A3;
 
-		lint_vec_scan(description->restricted_action_text, points, nb_points);
+		Orbiter->Lint_vec.scan(description->restricted_action_text, points, nb_points);
 		A3 = A2->restricted_action(points, nb_points,
 				verbose_level);
 		A3->f_is_linear = TRUE;
@@ -1412,7 +1412,7 @@ void linear_group::report(std::ostream &ost,
 			H->create_group_table(Table, n, verbose_level);
 
 			cout << "linear_group::report The group table is:" << endl;
-			int_matrix_print(Table, n, n, 2);
+			Orbiter->Int_vec.matrix_print(Table, n, n, 2);
 
 			fname_group_table.assign(label);
 			fname_group_table.append("_group_table.csv");

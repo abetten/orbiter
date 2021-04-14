@@ -413,7 +413,7 @@ surface_object *surface_domain::create_surface_HCV(int a, int b,
 	}
 
 
-	lint_vec_copy(Oab, Lines27, 12);
+	Orbiter->Lint_vec.copy(Oab, Lines27, 12);
 	FREE_lint(Oab);
 
 
@@ -422,7 +422,7 @@ surface_object *surface_domain::create_surface_HCV(int a, int b,
 	if (f_v) {
 		cout << "surface_domain::create_surface_HCV We have a set of "
 				"lines of size " << nb << ":";
-		lint_vec_print(cout, Lines27, nb);
+		Orbiter->Lint_vec.print(cout, Lines27, nb);
 		cout << endl;
 	}
 
@@ -431,7 +431,7 @@ surface_object *surface_domain::create_surface_HCV(int a, int b,
 
 	if (f_v) {
 		cout << "surface_domain::create_surface_HCV The remaining 15 lines are:";
-		lint_vec_print(cout, Lines27 + 12, 15);
+		Orbiter->Lint_vec.print(cout, Lines27 + 12, 15);
 		cout << endl;
 		Gr->print_set(Lines27 + 12, 15);
 	}

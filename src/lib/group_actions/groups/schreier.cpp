@@ -2772,7 +2772,7 @@ void schreier::get_orbit_decomposition_scheme_of_graph(
 	}
 	if (f_v) {
 		cout << "Decomp_scheme = " << endl;
-		int_matrix_print(Decomp_scheme, nb_orbits, nb_orbits);
+		Orbiter->Int_vec.matrix_print(Decomp_scheme, nb_orbits, nb_orbits);
 	}
 	if (f_v) {
 		cout << "schreier::get_orbit_decomposition_"

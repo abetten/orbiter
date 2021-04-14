@@ -113,7 +113,7 @@ set_and_stabilizer *set_and_stabilizer::create_copy(int verbose_level)
 	SaS->A = A;
 	SaS->A2 = A2;
 	SaS->data = NEW_lint(sz);
-	lint_vec_copy(data, SaS->data, sz);
+	Orbiter->Lint_vec.copy(data, SaS->data, sz);
 	SaS->sz = sz;
 	target_go.assign_to(SaS->target_go);
 
@@ -150,7 +150,7 @@ void set_and_stabilizer::init_data(long int *data, int sz, int verbose_level)
 		}
 	set_and_stabilizer::sz = sz;
 	set_and_stabilizer::data = NEW_lint(sz);
-	lint_vec_copy(data, set_and_stabilizer::data, sz);
+	Orbiter->Lint_vec.copy(data, set_and_stabilizer::data, sz);
 	if (f_v) {
 		cout << "set_and_stabilizer::init_data done" << endl;
 		}
@@ -340,7 +340,7 @@ void set_and_stabilizer::apply_to_self(int *Elt, int verbose_level)
 		TRUE /* f_target_go */, target_go, 
 		gens, sg, 
 		0 /*verbose_level*/);
-	lint_vec_copy(data2, data, sz);
+	Orbiter->Lint_vec.copy(data2, data, sz);
 	FREE_OBJECT(gens);
 	FREE_OBJECT(Strong_gens);
 	Strong_gens = sg;
@@ -492,7 +492,7 @@ void set_and_stabilizer::rearrange_by_orbits(
 			d++;
 			}
 		}
-	lint_vec_copy(data2, data, sz);
+	Orbiter->Lint_vec.copy(data2, data, sz);
 
 	FREE_OBJECT(Orb);
 	FREE_OBJECT(A_on_set);

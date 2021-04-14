@@ -85,7 +85,7 @@ void packing_invariants::init(packing_classify *P,
 			verbose_level - 2);
 	if (f_vv) {
 		cout << "list_of_lines:" << endl;
-		lint_matrix_print(list_of_lines,
+		Orbiter->Lint_vec.matrix_print(list_of_lines,
 				P->size_of_packing, P->spread_size);
 	}
 	f_has_klein = FALSE;

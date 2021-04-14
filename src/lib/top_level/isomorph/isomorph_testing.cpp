@@ -116,7 +116,7 @@ void isomorph::probe(int flag_orbit, int subset_rk,
 	load_solution(id, data);
 	if (f_v) {
 		cout << "isomorph::probe flag orbit " << flag_orbit << " : ";
-		lint_vec_print(cout, data, size);
+		Orbiter->Lint_vec.print(cout, data, size);
 		cout << endl;
 		}
 	
@@ -156,7 +156,7 @@ void isomorph::probe(int flag_orbit, int subset_rk,
 
 	if (f_v) {
 		cout << "The rearranged set is ";
-		lint_vec_print(cout, rearranged_set, size);
+		Orbiter->Lint_vec.print(cout, rearranged_set, size);
 		cout << endl;
 		}
 
@@ -344,7 +344,7 @@ void isomorph::write_classification_matrix(int verbose_level)
 	if (f_v) {
 		cout << "isomorph::write_classification_matrix" << endl;
 		cout << "The classification matrix is:" << endl;
-		int_matrix_print(Mtx, nb_rows, nb_cols);
+		Orbiter->Int_vec.matrix_print(Mtx, nb_rows, nb_cols);
 		}
 
 	FREE_int(Mtx);
@@ -599,7 +599,7 @@ void isomorph::do_iso_test(int t0, sims *&Stab,
 	load_solution(id, data);
 	if (f_vv) {
 		cout << "isomorph::do_iso_test orbit_no = " << orbit_no << " : ";
-		lint_vec_print(cout, data, size);
+		Orbiter->Lint_vec.print(cout, data, size);
 		cout << endl;
 		}
 	
@@ -769,7 +769,7 @@ int isomorph::next_subset(int t0,
 	if (f_vvv) {
 		cout << "iso_node " << iso_nodes << " found minimal subset no " 
 			<< cnt_minimal << ", rank = " << subset_rank << " : ";
-		int_set_print(cout, subset, level);
+		Orbiter->Int_vec.set_print(cout, subset, level);
 		cout << endl;
 		}
 	cnt_minimal++;
@@ -1186,7 +1186,7 @@ void isomorph::print_statistics_iso_test(int t0, sims *Stab)
 	f1 = ((double)nb / (double)N) * 100;
 	cout << "ancestors left = " << nb << " / " << N
 			<< " (" << f1 << "%): ";
-	int_set_print(cout, subset, level);
+	Orbiter->Int_vec.set_print(cout, subset, level);
 	cout << " current stabilizer order " << go 
 		<< " induced action order " << AA_go 
 		<< " nb_reps=" << Reps->nb_reps 

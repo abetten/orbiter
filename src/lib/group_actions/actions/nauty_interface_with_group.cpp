@@ -357,7 +357,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph_with_part
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph_with_"
 				"partition_and_labeling: "
 				"generators:" << endl;
-		print_integer_matrix_width(cout, Aut, Aut_counter, n, n, 2);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, Aut, Aut_counter, n, n, 2);
 		}
 
 
@@ -900,13 +900,13 @@ action *nauty_interface_with_group::create_automorphism_group_of_incidence_struc
 		cout << "nauty_interface_with_group::create_automorphism_group_of_"
 				"incidence_structure_with_partition: "
 				"Base:" << endl;
-		lint_vec_print(cout, Base_lint, Base_length);
+		Orbiter->Lint_vec.print(cout, Base_lint, Base_length);
 		cout << endl;
 
 		cout << "nauty_interface_with_group::create_automorphism_group_of_"
 				"incidence_structure_with_partition: "
 				"generators:" << endl;
-		print_integer_matrix_width(cout,
+		Orbiter->Int_vec.print_integer_matrix_width(cout,
 				Aut, Aut_counter, m + n, m + n, 2);
 		}
 

@@ -338,7 +338,7 @@ void geometry_global::determine_conic(int q, std::string &override_poly,
 	if (f_v) {
 		cout << "determine_conic q=" << q << endl;
 		cout << "input_pts: ";
-		lint_vec_print(cout, input_pts, nb_pts);
+		Orbiter->Lint_vec.print(cout, input_pts, nb_pts);
 		cout << endl;
 		}
 	F.init_override_polynomial(q, override_poly, verbose_level);
@@ -371,7 +371,7 @@ void geometry_global::determine_conic(int q, std::string &override_poly,
 			points, nb_points, verbose_level - 2);
 	if (f_v) {
 		cout << "the " << nb_points << " conic points are: ";
-		lint_vec_print(cout, points, nb_points);
+		Orbiter->Lint_vec.print(cout, points, nb_points);
 		cout << endl;
 		for (i = 0; i < nb_points; i++) {
 			P->unrank_point(v, points[i]);
@@ -426,7 +426,7 @@ int geometry_global::test_if_arc(finite_field *Fq, int *pt_coords,
 			}
 		if (f_vv) {
 			cout << "matrix:" << endl;
-			print_integer_matrix_width(cout, Mtx, 3, k, k, 1);
+			Orbiter->Int_vec.print_integer_matrix_width(cout, Mtx, 3, k, k, 1);
 			}
 		rk = Fq->Gauss_easy(Mtx, 3, k);
 		if (rk < 3) {
@@ -873,7 +873,7 @@ void geometry_global::test_orthogonal(int n, int q)
 	for (i = 0; i < nb; i++) {
 		GFq.Sbar_unrank(v, stride, n, i, 0 /* verbose_level */);
 		cout << i << " : ";
-		int_set_print(v, 2 * n);
+		Orbiter->Int_vec.set_print(cout, v, 2 * n);
 		cout << " : ";
 		a = GFq.evaluate_hyperbolic_quadratic_form(v, stride, n);
 		cout << a;
@@ -1445,7 +1445,7 @@ void geometry_global::do_inverse_isomorphism_klein_quadric(finite_field *F,
 
 
 	cout << "A6:" << endl;
-	int_matrix_print(A6, 6, 6);
+	Orbiter->Int_vec.matrix_print(A6, 6, 6);
 
 	klein_correspondence *Klein;
 	orthogonal *O;
@@ -1461,7 +1461,7 @@ void geometry_global::do_inverse_isomorphism_klein_quadric(finite_field *F,
 	Klein->reverse_isomorphism(A6, A4, verbose_level);
 
 	cout << "A4:" << endl;
-	int_matrix_print(A4, 4, 4);
+	Orbiter->Int_vec.matrix_print(A4, 4, 4);
 
 	FREE_OBJECT(Klein);
 	FREE_OBJECT(O);
@@ -1648,7 +1648,7 @@ void geometry_global::do_intersection_of_two_lines(finite_field *F,
 		}
 
 		cout << "geometry_global::do_intersection_of_two_lines after normalize from the left:" << endl;
-		int_matrix_print(C + 12, 1, 4);
+		Orbiter->Int_vec.matrix_print(C + 12, 1, 4);
 		cout << "rk=" << rk << endl;
 
 	}
@@ -1661,7 +1661,7 @@ void geometry_global::do_intersection_of_two_lines(finite_field *F,
 		}
 
 		cout << "geometry_global::do_intersection_of_two_lines after normalize from the right:" << endl;
-		int_matrix_print(C + 12, 1, 4);
+		Orbiter->Int_vec.matrix_print(C + 12, 1, 4);
 		cout << "rk=" << rk << endl;
 
 	}
@@ -1756,7 +1756,7 @@ void geometry_global::do_transversal(finite_field *F,
 		}
 
 		cout << "geometry_global::do_transversal after normalize from the left:" << endl;
-		int_matrix_print(B + 8, 2, 4);
+		Orbiter->Int_vec.matrix_print(B + 8, 2, 4);
 		cout << "rk=" << rk << endl;
 
 	}
@@ -1769,7 +1769,7 @@ void geometry_global::do_transversal(finite_field *F,
 		}
 
 		cout << "geometry_global::do_transversal after normalize from the right:" << endl;
-		int_matrix_print(B + 8, 2, 4);
+		Orbiter->Int_vec.matrix_print(B + 8, 2, 4);
 		cout << "rk=" << rk << endl;
 
 	}
@@ -1812,7 +1812,7 @@ void geometry_global::do_move_two_lines_in_hyperplane_stabilizer(
 			verbose_level);
 
 	cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer A4=" << endl;
-	int_matrix_print(A4, 4, 4);
+	Orbiter->Int_vec.matrix_print(A4, 4, 4);
 
 	if (f_v) {
 		cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer done" << endl;
@@ -1884,7 +1884,7 @@ void geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text(
 			verbose_level);
 
 	cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text A4=" << endl;
-	int_matrix_print(A4, 4, 4);
+	Orbiter->Int_vec.matrix_print(A4, 4, 4);
 
 	if (f_v) {
 		cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text done" << endl;

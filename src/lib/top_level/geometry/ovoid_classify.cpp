@@ -313,7 +313,7 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 					2 /*m*/, 4 /* n*/,
 					0 /*verbose_level*/);
 				cout << " : " << endl;
-				int_matrix_print(B, 2, 4);
+				Orbiter->Int_vec.matrix_print(B, 2, 4);
 			}
 			cout << " : " << color_table[i] << endl;
 		}
@@ -343,7 +343,7 @@ void ovoid_classify::early_test_func(long int *S, int len,
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
-		lint_vec_print(cout, candidates, nb_candidates);
+		Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
 		cout << endl;
 		if (f_vv) {
 			for (i = 0; i < nb_candidates; i++) {
@@ -365,7 +365,7 @@ void ovoid_classify::early_test_func(long int *S, int len,
 		}
 
 	if (len == 0) {
-		lint_vec_copy(candidates, good_candidates, nb_candidates);
+		Orbiter->Lint_vec.copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
 		}
 	else {
@@ -440,7 +440,7 @@ void ovoid_classify::make_graphs(orbiter_data_file *ODF,
 			}
 		}
 		cout << orbit_idx << " / " << ODF->nb_cases << " : ";
-		lint_vec_print(cout, ODF->sets[orbit_idx],
+		Orbiter->Lint_vec.print(cout, ODF->sets[orbit_idx],
 				ODF->set_sizes[orbit_idx]);
 		cout << " : " << ODF->Ago_ascii[orbit_idx]
 				<< " : " << ODF->Aut_ascii[orbit_idx] << endl;
@@ -473,7 +473,7 @@ void ovoid_classify::make_graphs(orbiter_data_file *ODF,
 
 
 		cout << "With " << nb_candidates << " live points: ";
-		lint_vec_print(cout, candidates, nb_candidates);
+		Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
 		cout << endl;
 
 
@@ -766,7 +766,7 @@ void ovoid_classify::create_graph(orbiter_data_file *ODF,
 		verbose_level - 2);
 		// the adjacency becomes part of the colored_graph object
 
-	lint_vec_copy(candidates, CG->points, nb_candidates);
+	Orbiter->Lint_vec.copy(candidates, CG->points, nb_candidates);
 	CG->init_user_data(ODF->sets[orbit_idx],
 			starter_size, verbose_level - 2);
 
@@ -812,7 +812,7 @@ void ovoid_classify::compute_coloring(
 	colors = NEW_int(nb_colors);
 	color_pos = NEW_int(nb_colors);
 	cout << "starter:";
-	lint_vec_print(cout, starter, starter_size);
+	Orbiter->Lint_vec.print(cout, starter, starter_size);
 	cout << endl;
 	for (i = 1; i < starter_size; i++) {
 		c = color_table[starter[i]];

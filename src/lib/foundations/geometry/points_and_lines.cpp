@@ -91,7 +91,7 @@ void points_and_lines::init(projective_space *P,
 	if (f_v) {
 		cout << "points_and_lines::init nb_pts=" << nb_pts << " nb_lines=" << nb_lines << endl;
 		cout << "Lines:";
-		lint_vec_print(cout, Lines, nb_lines);
+		Orbiter->Lint_vec.print(cout, Lines, nb_lines);
 		cout << endl;
 	}
 
@@ -144,7 +144,7 @@ void points_and_lines::print_all_points(std::ostream &ost)
 			ost << "$\\\\" << endl;
 			}
 		ost << "\\end{multicols}" << endl;
-		lint_vec_print_fully(ost, Pts, nb_pts);
+		Orbiter->Lint_vec.print_fully(ost, Pts, nb_pts);
 		ost << "\\\\" << endl;
 	}
 	else {
@@ -204,10 +204,10 @@ void points_and_lines::print_lines_tex(std::ostream &ost)
 		ost << "$$" << endl;
 	}
 	ost << "Rank of lines: ";
-	lint_vec_print(ost, Lines, nb_lines);
+	Orbiter->Lint_vec.print(ost, Lines, nb_lines);
 	ost << "\\\\" << endl;
 	ost << "Rank of points on Klein quadric: ";
-	lint_vec_print(ost, Rk, nb_lines);
+	Orbiter->Lint_vec.print(ost, Rk, nb_lines);
 	ost << "\\\\" << endl;
 
 	FREE_lint(Rk);

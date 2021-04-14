@@ -1076,7 +1076,7 @@ void hermitian::report_points(std::ostream &ost, int verbose_level)
 	}
 	ost << "\\end{multicols}" << endl;
 	ost << "All points: ";
-	lint_vec_print(ost, rk_in_PG, nb_pts);
+	Orbiter->Lint_vec.print(ost, rk_in_PG, nb_pts);
 	ost << "\\\\" << endl;
 
 	FREE_int(v);

@@ -259,6 +259,22 @@ void projective_space_activity::perform_activity(int verbose_level)
 				verbose_level);
 
 	}
+	else if (Descr->f_cheat_sheet) {
+
+		layered_graph_draw_options *O;
+
+		if (Orbiter->f_draw_options) {
+			O = Orbiter->draw_options;
+		}
+		else {
+			cout << "please use -draw_options .. -end" << endl;
+			exit(1);
+		}
+		do_cheat_sheet_PG(
+				PA,
+				O,
+				verbose_level);
+	}
 
 
 	if (f_v) {
@@ -504,7 +520,7 @@ void projective_space_activity::canonical_form_of_code(
 	}
 	if (f_v) {
 		cout << "projective_space_activity::canonical_form_of_code set=";
-		lint_vec_print(cout, set, n);
+		Orbiter->Lint_vec.print(cout, set, n);
 		cout << endl;
 	}
 
@@ -731,6 +747,93 @@ void projective_space_activity::do_classify_semifields(
 	}
 }
 
+
+void projective_space_activity::do_cheat_sheet_PG(
+		projective_space_with_action *PA,
+		layered_graph_draw_options *O,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "projective_space_activity::do_cheat_sheet_PG verbose_level="
+				<< verbose_level << endl;
+	}
+
+
+
+	{
+		char fname[1000];
+		char title[1000];
+		char author[1000];
+
+		snprintf(fname, 1000, "PG_%d_%d.tex", PA->n, PA->F->q);
+		snprintf(title, 1000, "Cheat Sheet ${\\rm PG}(%d,%d)$", PA->n, PA->F->q);
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		{
+			ofstream ost(fname);
+			latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "projective_space_with_action::do_cheat_sheet_PG before PA->A->report" << endl;
+			}
+
+			PA->A->report(ost, PA->A->f_has_sims, PA->A->Sims,
+					PA->A->f_has_strong_generators, PA->A->Strong_gens,
+					O,
+					verbose_level);
+
+			if (f_v) {
+				cout << "projective_space_with_action::do_cheat_sheet_PG after PA->A->report" << endl;
+			}
+
+			if (f_v) {
+				cout << "projective_space_with_action::do_cheat_sheet_PG before PA->P->report" << endl;
+			}
+
+
+
+			PA->P->report(ost, O, verbose_level);
+
+			if (f_v) {
+				cout << "projective_space_with_action::do_cheat_sheet_PG after PA->P->report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		file_io Fio;
+
+		if (f_v) {
+			cout << "written file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
+		}
+
+	}
+
+
+	if (f_v) {
+		cout << "projective_space_activity::do_cheat_sheet_PG done" << endl;
+	}
+
+}
 
 
 

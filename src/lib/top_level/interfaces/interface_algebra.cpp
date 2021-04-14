@@ -19,10 +19,6 @@ namespace top_level {
 
 interface_algebra::interface_algebra()
 {
-#if 0
-	f_poset_classification_control = FALSE;
-	Control = NULL;
-#endif
 	f_count_subprimitive = FALSE;
 	count_subprimitive_Q_max = 0;
 	count_subprimitive_H_max = 0;
@@ -183,23 +179,6 @@ void interface_algebra::read_arguments(int argc,
 		cout << "interface_algebra::read_arguments the next argument is " << argv[i] << endl;
 	}
 
-#if 0
-	if (stringcmp(argv[i], "-poset_classification_control") == 0) {
-		f_poset_classification_control = TRUE;
-		Control = NEW_OBJECT(poset_classification_control);
-		cout << "reading -poset_classification_control" << endl;
-		i += Control->read_arguments(argc - (i + 1),
-			argv + i + 1, verbose_level);
-
-		cout << "done reading -poset_classification_control " << endl;
-		cout << "i = " << i << endl;
-		cout << "argc = " << argc << endl;
-		if (i < argc) {
-			cout << "next argument is " << argv[i] << endl;
-		}
-	}
-#endif
-
 	if (stringcmp(argv[i], "-count_subprimitive") == 0) {
 		f_count_subprimitive = TRUE;
 		count_subprimitive_Q_max = strtoi(argv[++i]);
@@ -294,12 +273,15 @@ void interface_algebra::worker(int verbose_level)
 	if (f_v) {
 		cout << "interface_algebra::worker" << endl;
 	}
+
 	if (f_character_table_symmetric_group) {
 		do_character_table_symmetric_group(deg, verbose_level);
 	}
+
 	else if (f_make_A5_in_PSL_2_q) {
 		do_make_A5_in_PSL_2_q(q, verbose_level);
 	}
+
 	else if (f_count_subprimitive) {
 
 		algebra_global Algebra;
@@ -307,12 +289,14 @@ void interface_algebra::worker(int verbose_level)
 		Algebra.count_subprimitive(count_subprimitive_Q_max,
 				count_subprimitive_H_max);
 	}
+
 	else if (f_equivalence_class_of_fractions) {
 
 		algebra_global Algebra;
 
 		Algebra.do_equivalence_class_of_fractions(equivalence_class_of_fractions_N, verbose_level);
 	}
+
 	else if (f_search_for_primitive_polynomial_in_range) {
 
 		algebra_global Algebra;
@@ -321,6 +305,7 @@ void interface_algebra::worker(int verbose_level)
 				p_min, p_max, deg_min, deg_max,
 				verbose_level);
 	}
+
 	else if (f_order_of_q_mod_n) {
 
 		algebra_global Algebra;
@@ -330,16 +315,19 @@ void interface_algebra::worker(int verbose_level)
 				verbose_level);
 
 	}
+
 	else if (f_young_symmetrizer) {
 		algebra_global_with_action Algebra;
 
 		Algebra.young_symmetrizer(young_symmetrizer_n, verbose_level);
 	}
+
 	else if (f_young_symmetrizer_sym_4) {
 		algebra_global_with_action Algebra;
 
 		Algebra.young_symmetrizer_sym_4(verbose_level);
 	}
+
 	else if (f_draw_mod_n) {
 		plot_tools PT;
 

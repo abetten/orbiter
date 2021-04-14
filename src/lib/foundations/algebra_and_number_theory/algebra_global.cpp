@@ -661,7 +661,7 @@ int algebra_global::subprimitive(int q, int h)
 #endif
 	cout << f << "^" << SM[f] << endl;
 	cout << "multiplicities CM:" << endl;
-	print_integer_matrix_width(cout, CM, 1, q - 1, q - 1, 2);
+	Orbiter->Int_vec.print_integer_matrix_width(cout, CM, 1, q - 1, q - 1, 2);
 	l = period_of_sequence(CM, q - 1);
 	cout << "period " << l << endl;
 	for (i = 0; i < q - 1; i++) {

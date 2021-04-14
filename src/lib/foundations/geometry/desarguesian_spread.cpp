@@ -197,7 +197,7 @@ void desarguesian_spread::calculate_spread_elements(
 			cout << "basis element " << h << " / " << N << ":" << endl;
 			Orbiter->Int_vec.print(cout, v, m);
 			cout << endl;
-			int_matrix_print(z, s, n);
+			Orbiter->Int_vec.matrix_print(z, s, n);
 			}
 		Orbiter->Int_vec.copy(z,
 			Spread_elements + h * spread_element_size,
@@ -233,7 +233,7 @@ void desarguesian_spread::calculate_spread_elements(
 			}
 		if (f_vv) {
 			cout << "basis element " << h << " / " << N << ":" << endl;
-			int_matrix_print(Spread_elt_basis, s, n);
+			Orbiter->Int_vec.matrix_print(Spread_elt_basis, s, n);
 			cout << "Consists of the following points:" << endl;
 			Orbiter->Int_vec.print(cout,
 				List_of_points + h * nb_points_per_spread_element,
@@ -364,7 +364,7 @@ void desarguesian_spread::compute_linear_set(int *Basis, int basis_sz,
 	if (f_v) {
 		cout << "desarguesian_spread::compute_linear_set "
 				"The linear set is: ";
-		lint_vec_print(cout, the_linear_set, the_linear_set_sz);
+		Orbiter->Lint_vec.print(cout, the_linear_set, the_linear_set_sz);
 		cout << endl;
 		}
 
@@ -444,7 +444,7 @@ void desarguesian_spread::print_spread_elements_tex(std::ostream &ost)
 		}
 	ost << "\\end{multicols}" << endl;
 	ost << "Spread elements by rank: ";
-	lint_vec_print(ost, Rk, N);
+	Orbiter->Lint_vec.print(ost, Rk, N);
 	ost << "\\\\" << endl;
 	FREE_int(v);
 }

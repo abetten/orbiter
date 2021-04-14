@@ -320,7 +320,7 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 
 	if (f_vv) {
 		cout << "pts_on_special_line:" << endl;
-		lint_vec_print(cout, pts_on_special_line, q + 1);
+		Orbiter->Lint_vec.print(cout, pts_on_special_line, q + 1);
 		cout << endl;
 	}
 
@@ -334,7 +334,7 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 	if (f_vv) {
 		cout << "pts_on_special_line without the first "
 				"starter point:" << endl;
-		lint_vec_print(cout, pts_on_special_line, q);
+		Orbiter->Lint_vec.print(cout, pts_on_special_line, q);
 		cout << endl;
 	}
 
@@ -394,7 +394,7 @@ void blt_set_domain::compute_colors(int orbit_at_level,
 	}
 	if (f_vv) {
 		cout << "The " << nb_colors << " free points are :" << endl;
-		lint_vec_print(cout, free_pts, nb_colors);
+		Orbiter->Lint_vec.print(cout, free_pts, nb_colors);
 		cout << endl;
 		cout << "The " << nb_colors << " open colors are :" << endl;
 		Orbiter->Int_vec.print(cout, open_colors, nb_colors);
@@ -495,7 +495,7 @@ void blt_set_domain::early_test_func(long int *S, int len,
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
-		lint_vec_print(cout, candidates, nb_candidates);
+		Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
 		cout << endl;
 		if (f_vv) {
 			for (i = 0; i < nb_candidates; i++) {
@@ -521,7 +521,7 @@ void blt_set_domain::early_test_func(long int *S, int len,
 
 
 	if (len == 0) {
-		lint_vec_copy(candidates, good_candidates, nb_candidates);
+		Orbiter->Lint_vec.copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
 	}
 	else {
@@ -775,7 +775,7 @@ void blt_set_domain::find_free_points(long int *S, int S_sz,
 	if (f_vv) {
 		cout << "blt_set_domain::find_free_points "
 				"Lines on partial BLT set:" << endl;
-		lint_matrix_print(lines_on_pt, S_sz, q + 1);
+		Orbiter->Lint_vec.matrix_print(lines_on_pt, S_sz, q + 1);
 	}
 
 	Perp = NEW_lint(S_sz * (q + 1) * (q + 1));
@@ -789,7 +789,7 @@ void blt_set_domain::find_free_points(long int *S, int S_sz,
 	}
 	if (f_vv) {
 		cout << "blt_set_domain::find_free_points Perp:" << endl;
-		lint_matrix_print(Perp, S_sz * (q + 1), q + 1);
+		Orbiter->Lint_vec.matrix_print(Perp, S_sz * (q + 1), q + 1);
 	}
 
 
@@ -868,7 +868,7 @@ int blt_set_domain::create_graph(
 	if (f_vv) {
 		cout << "Case " << case_number /*orbit_at_level*/
 				<< " Lines on partial BLT set:" << endl;
-		lint_matrix_print(lines_on_pt, 1 /*starter_size*/, q + 1);
+		Orbiter->Lint_vec.matrix_print(lines_on_pt, 1 /*starter_size*/, q + 1);
 	}
 
 

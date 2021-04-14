@@ -24,6 +24,23 @@ mp_graphics::mp_graphics()
 }
 
 mp_graphics::mp_graphics(std::string &file_name,
+		layered_graph_draw_options *Opt, int verbose_level)
+{
+
+	default_values();
+	init(file_name, 0 /*xmin*/, 0 /*ymin*/, Opt->xin /*xmax*/, Opt->yin /*ymax*/,
+			Opt->f_embedded, Opt->f_sideways, verbose_level);
+	dev[0] = 0;
+	dev[1] = 0;
+	dev[2] = Opt->xout;
+	dev[3] = Opt->yout;
+	set_parameters(Opt->scale, Opt->line_width);
+}
+
+
+
+
+mp_graphics::mp_graphics(std::string &file_name,
 		int xmin, int ymin, int xmax, int ymax,
 		int f_embedded, int f_sideways, int verbose_level)
 {
@@ -87,10 +104,6 @@ void mp_graphics::init(std::string &file_name,
 	replace_extension_with(fname_log, ".commands");
 	replace_extension_with(fname_tikz, ".tex");
 	
-	//get_fname_base(file_name, fname_base);
-	//sprintf(fname_log, "%s.commands", fname_base);
-	//sprintf(fname_tikz, "%s.tex", fname_base);
-
 	fp_mp.open(fname_mp);
 	fp_log.open(fname_log);
 	fp_tikz.open(fname_tikz);
@@ -2852,8 +2865,14 @@ void mp_graphics::text_4pts(int *Px, int *Py,
 
 
 void mp_graphics::draw_graph(int x, int y,
-		int dx, int dy, int nb_V, long int *Edges, int nb_E)
+		int dx, int dy, int nb_V, long int *Edges, int nb_E, int radius,
+		int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "mp_graphics::draw_graph nb_V=" << nb_V << " nb_E=" << nb_E << endl;
+	}
 	double *X, *Y;
 	double h = dy * .7;
 	double w = dx * .7;
@@ -2861,12 +2880,20 @@ void mp_graphics::draw_graph(int x, int y,
 	double phi = M_PI * 2. / nb_V;
 	int Px[2];
 	int Py[2];
-	int rad = (int)(dx * .05);
+	int rad = radius;
+	//int rad = (int)(dx * .05);
 	combinatorics_domain Combi;
 
 	//cout << "draw_graph nb_V=" << nb_V << endl;
 
-	sl_thickness(30);
+	if (f_v) {
+		cout << "mp_graphics::draw_graph edges=";
+		//Orbiter->Int_vec.print(cout, Edges, nb_E);
+		Orbiter->Lint_vec.print(cout, Edges, nb_E);
+		cout << endl;
+	}
+
+	sl_thickness(100); // was 30
 
 	X = new double [nb_V];
 	Y = new double [nb_V];
@@ -2890,6 +2917,9 @@ void mp_graphics::draw_graph(int x, int y,
 		}
 	delete X;
 	delete Y;
+	if (f_v) {
+		cout << "mp_graphics::draw_graph done" << endl;
+	}
 }
 
 void mp_graphics::draw_graph_with_distinguished_edge(
@@ -3054,6 +3084,7 @@ void mp_graphics::draw_graph_on_2D_grid(
 
 void mp_graphics::draw_tournament(int x, int y,
 		int dx, int dy, int nb_V, long int *Edges, int nb_E,
+		int radius,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3064,7 +3095,8 @@ void mp_graphics::draw_tournament(int x, int y,
 	double phi = M_PI * 2. / nb_V;
 	int Px[3];
 	int Py[3];
-	int rad = (int)(dx * .05);
+	int rad = radius;
+	//int rad = (int)(dx * .05);
 	combinatorics_domain Combi;
 
 	if (f_v) {

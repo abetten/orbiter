@@ -86,7 +86,7 @@ void action_on_sets::init(int nb_sets,
 		Sorting.lint_vec_quicksort_increasingly(sets[i], set_size);
 		if (f_vv) {
 			cout << "set " << setw(3) << i << " is ";
-			lint_vec_print(cout, sets[i], set_size);
+			Orbiter->Lint_vec.print(cout, sets[i], set_size);
 			cout << endl;
 			}
 		}
@@ -184,7 +184,7 @@ long int action_on_sets::compute_image(action *A,
 		}
 	if (f_vv) {
 		cout << "sets[perm[i]]:" << endl;
-		lint_vec_print(cout, sets[perm[i]], set_size);
+		Orbiter->Lint_vec.print(cout, sets[perm[i]], set_size);
 		cout << endl;
 		for (j = 0; j < set_size; j++) {
 			cout << j << " : " << sets[perm[i]][j] << " : " << endl;
@@ -200,7 +200,7 @@ long int action_on_sets::compute_image(action *A,
 			0);
 	if (f_vv) {
 		cout << "after map_a_set_and_reorder:" << endl;
-		lint_vec_print(cout, image_set, set_size);
+		Orbiter->Lint_vec.print(cout, image_set, set_size);
 		cout << endl;
 		for (j = 0; j < set_size; j++) {
 			cout << j << " : " << image_set[j] << " : " << endl;
@@ -231,14 +231,14 @@ long int action_on_sets::compute_image(action *A,
 		cout << "i=" << i << endl;
 		cout << "perm[i]=" << perm[i] << endl;
 		cout << "sets[perm[i]]:" << endl;
-		lint_vec_print_fully(cout, sets[perm[i]], set_size);
+		Orbiter->Lint_vec.print_fully(cout, sets[perm[i]], set_size);
 		cout << endl;
 		cout << "image_set:" << endl;
-		lint_vec_print_fully(cout, image_set, set_size);
+		Orbiter->Lint_vec.print_fully(cout, image_set, set_size);
 		cout << endl;
 		for (u = 0; u < nb_sets; u++) {
 			cout << u << " : ";
-			lint_vec_print(cout, sets[u], set_size);
+			Orbiter->Lint_vec.print(cout, sets[u], set_size);
 			cout << endl;
 			}
 		for (u = 0; u < set_size; u++) {
@@ -278,7 +278,7 @@ void action_on_sets::print_sets_sorted()
 	cout << "the sets in the sorted ordering:" << endl;
 	for (i = 0; i < nb_sets; i++) {
 		cout << "set " << i << " : is " << perm_inv[i] << " : ";
-		lint_vec_print(cout, sets[i], set_size);
+		Orbiter->Lint_vec.print(cout, sets[i], set_size);
 		cout << endl;
 		}
 }
@@ -290,7 +290,7 @@ void action_on_sets::print_sets_in_original_ordering()
 	cout << "the sets in the original ordering:" << endl;
 	for (i = 0; i < nb_sets; i++) {
 		cout << "set " << i << " : is " << perm[i] << " : ";
-		lint_vec_print(cout, sets[perm[i]], set_size);
+		Orbiter->Lint_vec.print(cout, sets[perm[i]], set_size);
 		cout << endl;
 		}
 }

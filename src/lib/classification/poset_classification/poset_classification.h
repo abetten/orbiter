@@ -382,11 +382,13 @@ public:
 	std::vector<std::string> recognize;
 
 
+
 	int f_export_schreier_trees;
 	int f_draw_schreier_trees;
 	std::string schreier_tree_prefix;
 			// comes after problem_label_with_path
 
+	int f_test_multi_edge_in_decomposition_matrix;
 
 
 	poset_classification_control();

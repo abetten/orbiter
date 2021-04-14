@@ -332,7 +332,7 @@ void homogeneous_polynomial_domain::make_monomials(
 		cout << "There are " << nb_sol << " monomials." << endl;
 
 		if (nb_sol < 100) {
-			int_matrix_print(Monomials, nb_sol, nb_variables);
+			Orbiter->Int_vec.matrix_print(Monomials, nb_sol, nb_variables);
 		}
 		else {
 			cout << "too many to print" << endl;
@@ -361,7 +361,7 @@ void homogeneous_polynomial_domain::make_monomials(
 	if (f_v) {
 		cout << "After rearranging by type:" << endl;
 		if (nb_monomials < 100) {
-			int_matrix_print(Monomials, nb_monomials, nb_variables);
+			Orbiter->Int_vec.matrix_print(Monomials, nb_monomials, nb_variables);
 		}
 		else {
 			cout << "too many to print" << endl;
@@ -516,7 +516,7 @@ void homogeneous_polynomial_domain::make_monomials(
 		if (FALSE) {
 			cout << "homogeneous_polynomial_domain::make_monomials  "
 					"Affine" << endl;
-			int_matrix_print(Affine, nb_affine, degree);
+			Orbiter->Int_vec.matrix_print(Affine, nb_affine, degree);
 		}
 		Affine_to_monomial = NEW_int(nb_affine);
 		for (i = 0; i < nb_affine; i++) {
@@ -1696,7 +1696,7 @@ void homogeneous_polynomial_domain::vanishing_ideal(long int *Pts,
 	if (f_vv) {
 		cout << "homogeneous_polynomial_domain::vanishing_ideal "
 				"The system:" << endl;
-		int_matrix_print(System, nb_pts, nb_monomials);
+		Orbiter->Int_vec.matrix_print(System, nb_pts, nb_monomials);
 	}
 
 	if (f_v) {
@@ -1712,10 +1712,10 @@ void homogeneous_polynomial_domain::vanishing_ideal(long int *Pts,
 	if (f_vv) {
 		cout << "homogeneous_polynomial_domain::vanishing_ideal "
 				"The system in RREF:" << endl;
-		int_matrix_print(System, r, nb_monomials);
+		Orbiter->Int_vec.matrix_print(System, r, nb_monomials);
 		cout << "homogeneous_polynomial_domain::vanishing_ideal "
 				"The kernel:" << endl;
-		int_matrix_print(System + r * nb_monomials,
+		Orbiter->Int_vec.matrix_print(System + r * nb_monomials,
 				nb_monomials - r, nb_monomials);
 	}
 	Orbiter->Int_vec.copy(System + r * nb_monomials, Kernel,

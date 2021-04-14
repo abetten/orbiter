@@ -76,7 +76,7 @@ int &int_matrix::s_n()
 
 void int_matrix::print()
 {
-	int_matrix_print(M, m, n);
+	Orbiter->Int_vec.matrix_print(M, m, n);
 }
 
 }

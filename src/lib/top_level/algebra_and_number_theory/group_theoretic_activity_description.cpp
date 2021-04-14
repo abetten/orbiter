@@ -18,13 +18,44 @@ namespace top_level {
 
 group_theoretic_activity_description::group_theoretic_activity_description()
 {
+	f_multiply = FALSE;
+	//multiply_a = NULL;
+	//multiply_b = NULL;
+	f_inverse = FALSE;
+	//inverse_a = NULL;
+
+	f_raise_to_the_power = FALSE;
+	//std::string raise_to_the_power_a_text;
+	//std::string raise_to_the_power_exponent_text;
+
+	f_export_gap = FALSE;
+
+	f_export_magma = FALSE;
+
+
+	f_search_element_of_order = FALSE;
+	search_element_order = 0;
+
+	f_element_rank = FALSE;
+	// std::string element_rank_data;
+
+	f_element_unrank = FALSE;
+	//std::string element_unrank_data;
+
+	f_find_singer_cycle = FALSE;
+
+
+
+	//
+
 	f_poset_classification_control = FALSE;
 	Control = NULL;
-	//f_draw_options = FALSE;
-	//draw_options = NULL;
+
 	f_orbits_on_points = FALSE;
+
 	f_export_trees = FALSE;
 	//f_shallow_tree = FALSE;
+
 	f_stabilizer = FALSE;
 
 	f_orbits_on_subsets = FALSE;
@@ -62,13 +93,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_orbit_of_set_from_file = FALSE;
 	//orbit_of_set_from_file_fname = NULL;
 	//f_search_subgroup = FALSE;
-	f_find_singer_cycle = FALSE;
-	f_search_element_of_order = FALSE;
-	search_element_order = 0;
-	f_element_rank = FALSE;
-	// std::string element_rank_data;
-	f_element_unrank = FALSE;
-	//std::string element_unrank_data;
+
 
 	f_conjugacy_class_of = FALSE;
 	//std::string conjugacy_class_of_data;
@@ -81,19 +106,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	linear_codes_target_size = 0;
 	f_print_elements = FALSE;
 	f_print_elements_tex = FALSE;
-	f_multiply = FALSE;
-	//multiply_a = NULL;
-	//multiply_b = NULL;
-	f_inverse = FALSE;
-	//inverse_a = NULL;
 
-	f_raise_to_the_power = FALSE;
-	//std::string raise_to_the_power_a_text;
-	//std::string raise_to_the_power_exponent_text;
-
-
-	f_export_gap = FALSE;
-	f_export_magma = FALSE;
 	f_order_of_products = FALSE;
 	//order_of_products_elements = NULL;
 	f_reverse_isomorphism_exterior_square = FALSE;
@@ -117,11 +130,6 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_self_orthogonal = FALSE;
 	f_doubly_even = FALSE;
 
-
-#if 0
-	f_packing_with_assumed_symmetry = FALSE;
-	packing_was_descr = NULL;
-#endif
 
 	f_tensor_classify = FALSE;
 	tensor_classify_depth = 0;
@@ -176,7 +184,58 @@ int group_theoretic_activity_description::read_arguments(
 
 	cout << "group_theoretic_activity_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
-		if (stringcmp(argv[i], "-poset_classification_control") == 0) {
+		if (stringcmp(argv[i], "-multiply") == 0) {
+			f_multiply = TRUE;
+			multiply_a.assign(argv[++i]);
+			multiply_b.assign(argv[++i]);
+			cout << "-multiply " << multiply_a << " " << multiply_b << endl;
+		}
+		else if (stringcmp(argv[i], "-inverse") == 0) {
+			f_inverse = TRUE;
+			inverse_a.assign(argv[++i]);
+			cout << "-inverse " << inverse_a << endl;
+		}
+		else if (stringcmp(argv[i], "-raise_to_the_power") == 0) {
+			f_raise_to_the_power = TRUE;
+			raise_to_the_power_a_text.assign(argv[++i]);
+			raise_to_the_power_exponent_text.assign(argv[++i]);
+			cout << "-raise_to_the_power " << raise_to_the_power_a_text
+					<< " " << raise_to_the_power_exponent_text << endl;
+		}
+
+		else if (stringcmp(argv[i], "-export_gap") == 0) {
+			f_export_gap = TRUE;
+			cout << "-export_gap " << endl;
+		}
+		else if (stringcmp(argv[i], "-export_magma") == 0) {
+			f_export_magma = TRUE;
+			cout << "-export_magma " << endl;
+		}
+
+		else if (stringcmp(argv[i], "-search_element_of_order") == 0) {
+			f_search_element_of_order = TRUE;
+			search_element_order = strtoi(argv[++i]);
+			cout << "-search_element_of_order " << search_element_order << endl;
+		}
+		else if (stringcmp(argv[i], "-element_rank") == 0) {
+			f_element_rank = TRUE;
+			element_rank_data.assign(argv[++i]);
+			cout << "-element_rank " << element_rank_data << endl;
+		}
+		else if (stringcmp(argv[i], "-element_unrank") == 0) {
+			f_element_unrank = TRUE;
+			element_unrank_data.assign(argv[++i]);
+			cout << "-element_unrank " << element_unrank_data << endl;
+		}
+		else if (stringcmp(argv[i], "-find_singer_cycle") == 0) {
+			f_find_singer_cycle = TRUE;
+			cout << "-find_singer_cycle " << endl;
+		}
+
+
+
+
+		else if (stringcmp(argv[i], "-poset_classification_control") == 0) {
 			f_poset_classification_control = TRUE;
 			Control = NEW_OBJECT(poset_classification_control);
 			cout << "-poset_classification_control " << endl;
@@ -313,25 +372,6 @@ int group_theoretic_activity_description::read_arguments(
 			cout << "-search_subgroup " << endl;
 		}
 #endif
-		else if (stringcmp(argv[i], "-find_singer_cycle") == 0) {
-			f_find_singer_cycle = TRUE;
-			cout << "-find_singer_cycle " << endl;
-		}
-		else if (stringcmp(argv[i], "-search_element_of_order") == 0) {
-			f_search_element_of_order = TRUE;
-			search_element_order = strtoi(argv[++i]);
-			cout << "-search_element_of_order " << search_element_order << endl;
-		}
-		else if (stringcmp(argv[i], "-element_rank") == 0) {
-			f_element_rank = TRUE;
-			element_rank_data.assign(argv[++i]);
-			cout << "-element_rank " << element_rank_data << endl;
-		}
-		else if (stringcmp(argv[i], "-element_unrank") == 0) {
-			f_element_unrank = TRUE;
-			element_unrank_data.assign(argv[++i]);
-			cout << "-element_unrank " << element_unrank_data << endl;
-		}
 
 		else if (stringcmp(argv[i], "-conjugacy_class_of") == 0) {
 			f_conjugacy_class_of = TRUE;
@@ -357,32 +397,6 @@ int group_theoretic_activity_description::read_arguments(
 			f_order_of_products = TRUE;
 			order_of_products_elements.assign(argv[++i]);
 			cout << "-order_of_products " << order_of_products_elements << endl;
-		}
-		else if (stringcmp(argv[i], "-multiply") == 0) {
-			f_multiply = TRUE;
-			multiply_a.assign(argv[++i]);
-			multiply_b.assign(argv[++i]);
-			cout << "-multiply " << multiply_a << " " << multiply_b << endl;
-		}
-		else if (stringcmp(argv[i], "-inverse") == 0) {
-			f_inverse = TRUE;
-			inverse_a.assign(argv[++i]);
-			cout << "-inverse " << inverse_a << endl;
-		}
-		else if (stringcmp(argv[i], "-raise_to_the_power") == 0) {
-			f_raise_to_the_power = TRUE;
-			raise_to_the_power_a_text.assign(argv[++i]);
-			raise_to_the_power_exponent_text.assign(argv[++i]);
-			cout << "-raise_to_the_power " << raise_to_the_power_a_text
-					<< " " << raise_to_the_power_exponent_text << endl;
-		}
-		else if (stringcmp(argv[i], "-export_gap") == 0) {
-			f_export_gap = TRUE;
-			cout << "-export_gap " << endl;
-		}
-		else if (stringcmp(argv[i], "-export_magma") == 0) {
-			f_export_magma = TRUE;
-			cout << "-export_magma " << endl;
 		}
 		else if (stringcmp(argv[i], "-reverse_isomorphism_exterior_square") == 0) {
 			f_reverse_isomorphism_exterior_square = TRUE;

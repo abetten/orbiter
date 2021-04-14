@@ -1729,7 +1729,7 @@ int Gauss_int(int *A, int f_special, int f_complete, int *base_cols,
 	
 	if (f_v) {
 		cout << "Gauss_int Gauss algorithm for matrix:" << endl;
-		print_integer_matrix(cout, A, m, n);
+		Orbiter->Int_vec.print_integer_matrix(cout, A, m, n);
 		}
 	i = 0;
 	for (j = 0; j < n; j++) {
@@ -1825,10 +1825,10 @@ int Gauss_int(int *A, int f_special, int f_complete, int *base_cols,
 		i++;
 		if (f_v) {
 			cout << "Gauss_int A=" << endl;
-			print_integer_matrix(cout, A, m, n);
+			Orbiter->Int_vec.print_integer_matrix(cout, A, m, n);
 			if (f_P) {
 				cout << "Gauss_int P=" << endl;
-				print_integer_matrix(cout, P, m, Pn);
+				Orbiter->Int_vec.print_integer_matrix(cout, P, m, Pn);
 				}
 			}
 		} // next j 
@@ -2043,7 +2043,7 @@ void fine_tune(finite_field *F, int *mtxD, int verbose_level)
 
 	if (f_v) {
 		cout << "fine_tune: tuning matrix:" << endl;
-		print_integer_matrix_width(cout,
+		Orbiter->Int_vec.print_integer_matrix_width(cout,
 				mtxD, 4, 4, 4, F->log10_of_q);
 		}
 
@@ -2069,7 +2069,7 @@ void fine_tune(finite_field *F, int *mtxD, int verbose_level)
 
 	if (f_vv) {
 		cout << "D^transpose * Gram * D = " << endl;
-		print_integer_matrix_width(cout,
+		Orbiter->Int_vec.print_integer_matrix_width(cout,
 				mtxF, 4, 4, 4, F->log10_of_q);
 		}
 
@@ -2119,7 +2119,7 @@ void fine_tune(finite_field *F, int *mtxD, int verbose_level)
 
 	if (f_vv) {
 		cout << "mtxG = s * mtxD:" << endl;
-		print_integer_matrix_width(cout,
+		Orbiter->Int_vec.print_integer_matrix_width(cout,
 				mtxG, 4, 4, 4, F->log10_of_q);
 		}
 
@@ -2133,7 +2133,7 @@ void fine_tune(finite_field *F, int *mtxD, int verbose_level)
 
 	if (f_vv) {
 		cout << "G^transpose * Gram * G = " << endl;
-		print_integer_matrix_width(cout, mtxF, 4, 4, 4, F->log10_of_q);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, mtxF, 4, 4, 4, F->log10_of_q);
 		}
 
 	
@@ -2142,7 +2142,7 @@ void fine_tune(finite_field *F, int *mtxD, int verbose_level)
 		}
 	if (f_v) {
 		cout << "fine_tune: the resulting matrix is" << endl;
-		print_integer_matrix_width(cout, mtxD, 4, 4, 4, F->log10_of_q);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, mtxD, 4, 4, 4, F->log10_of_q);
 		}
 
 

@@ -96,7 +96,7 @@ void blt_set_invariants::init(blt_set_domain *D, long int *the_set,
 	set_size = D->q + 1;
 	the_set_in_orthogonal = NEW_lint(set_size);
 	the_set_in_PG = NEW_lint(set_size);
-	lint_vec_copy(the_set, the_set_in_orthogonal, set_size);
+	Orbiter->Lint_vec.copy(the_set, the_set_in_orthogonal, set_size);
 
 	for (i = 0; i < set_size; i++) {
 		D->O->unrank_point(v5, 1, the_set[i], 0 /* verbose_level */);

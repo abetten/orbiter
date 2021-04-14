@@ -758,7 +758,7 @@ void schreier_vector::orbit_of_point(
 	if (f_vv) {
 		cout << "schreier_vector::orbit_of_point "
 				"the points in the orbit are: ";
-		lint_vec_print(cout, orbit_elts, orbit_len);
+		Orbiter->Lint_vec.print(cout, orbit_elts, orbit_len);
 		cout << endl;
 		}
 	if (orbit_elts[0] != pt) {

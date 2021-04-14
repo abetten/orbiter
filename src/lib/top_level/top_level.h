@@ -122,6 +122,8 @@ class graph_classify;
 class graph_theoretic_activity_description;
 class graph_theoretic_activity;
 class graph_generator;
+class graph_classification_activity_description;
+class graph_classification_activity;
 
 
 // projective_space.h:

@@ -35,7 +35,7 @@ void finite_field::reduce_mod_subspace_and_get_coefficient_vector(
 	if (f_vv) {
 		cout << "finite_field::reduce_mod_subspace_and_get_"
 				"coefficient_vector subspace basis:" << endl;
-		print_integer_matrix_width(cout, basis, k, len, len, log10_of_q);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, basis, k, len, len, log10_of_q);
 	}
 	for (i = 0; i < k; i++) {
 		idx = base_cols[i];
@@ -44,7 +44,7 @@ void finite_field::reduce_mod_subspace_and_get_coefficient_vector(
 					"coefficient_vector pivot entry is not one" << endl;
 			cout << "i=" << i << endl;
 			cout << "idx=" << idx << endl;
-			print_integer_matrix_width(cout, basis,
+			Orbiter->Int_vec.print_integer_matrix_width(cout, basis,
 					k, len, len, log10_of_q);
 			exit(1);
 		}
@@ -90,7 +90,7 @@ void finite_field::reduce_mod_subspace(int k,
 	}
 	if (f_vv) {
 		cout << "finite_field::reduce_mod_subspace subspace basis:" << endl;
-		print_integer_matrix_width(cout, basis, k,
+		Orbiter->Int_vec.print_integer_matrix_width(cout, basis, k,
 				len, len, log10_of_q);
 	}
 	for (i = 0; i < k; i++) {
@@ -261,7 +261,7 @@ int finite_field::dependency(int d,
 	deg = d;
 	if (f_vv) {
 		cout << "finite_field::dependency A=" << endl;
-		int_matrix_print(A, m, deg);
+		Orbiter->Int_vec.matrix_print(A, m, deg);
 		cout << "v = ";
 		Orbiter->Int_vec.print(cout, v, deg);
 		cout << endl;
@@ -273,7 +273,7 @@ int finite_field::dependency(int d,
 	if (f_vv) {
 		cout << "finite_field::dependency "
 				"after putting in row " << m << " A=" << endl;
-		int_matrix_print(A, m + 1, deg);
+		Orbiter->Int_vec.matrix_print(A, m + 1, deg);
 		cout << "rho = ";
 		Orbiter->Int_vec.print(cout, rho, deg);
 		cout << endl;
@@ -283,7 +283,7 @@ int finite_field::dependency(int d,
 		if (f_vv) {
 			cout << "finite_field::dependency "
 					"k=" << k << " A=" << endl;
-			int_matrix_print(A, m + 1, deg);
+			Orbiter->Int_vec.matrix_print(A, m + 1, deg);
 		}
 
 		for (j = k + 1; j < deg; j++) {
@@ -308,14 +308,14 @@ int finite_field::dependency(int d,
 		if (f_vv) {
 			cout << "finite_field::dependency "
 					"k=" << k << " done, A=" << endl;
-			int_matrix_print(A, m + 1, deg);
+			Orbiter->Int_vec.matrix_print(A, m + 1, deg);
 		}
 
 	} // next k
 	if (f_vv) {
 		cout << "finite_field::dependency "
 				"m=" << m << " after reapply, A=" << endl;
-		int_matrix_print(A, m + 1, deg);
+		Orbiter->Int_vec.matrix_print(A, m + 1, deg);
 		cout << "rho = ";
 		Orbiter->Int_vec.print(cout, rho, deg);
 		cout << endl;
@@ -356,7 +356,7 @@ int finite_field::dependency(int d,
 	if (f_vv) {
 		cout << "finite_field::dependency m=" << m
 				<< " after pivoting, A=" << endl;
-		int_matrix_print(A, m + 1, deg);
+		Orbiter->Int_vec.matrix_print(A, m + 1, deg);
 		cout << "rho = ";
 		Orbiter->Int_vec.print(cout, rho, deg);
 		cout << endl;
@@ -523,7 +523,7 @@ void finite_field::random_invertible_matrix(int *M,
 			}
 			Gg.AG_element_unrank(q, M + i * k, 1, k, r);
 			if (f_vv) {
-				orbiter::foundations::int_matrix_print(M, i + 1, k);
+				Orbiter->Int_vec.matrix_print(M, i + 1, k);
 			}
 
 			Orbiter->Int_vec.copy(M, N, (i + 1) * k);
@@ -542,7 +542,7 @@ void finite_field::random_invertible_matrix(int *M,
 	if (f_v) {
 		cout << "finite_field::random_invertible_matrix "
 				"Random invertible matrix:" << endl;
-		int_matrix_print(M, k, k);
+		Orbiter->Int_vec.matrix_print(M, k, k);
 	}
 	FREE_int(N);
 }
@@ -912,7 +912,7 @@ void finite_field::Borel_decomposition(int n, int *M,
 	if (f_v) {
 		cout << "finite_field::Borel_decomposition input matrix:" << endl;
 		cout << "M:" << endl;
-		int_matrix_print(M, n, n);
+		Orbiter->Int_vec.matrix_print(M, n, n);
 	}
 
 	identity_matrix(B1, n);
@@ -972,7 +972,7 @@ void finite_field::Borel_decomposition(int n, int *M,
 					cout << "finite_field::Borel_decomposition after going "
 							"down in column " << j << endl;
 					cout << "M:" << endl;
-					int_matrix_print(M, n, n);
+					Orbiter->Int_vec.matrix_print(M, n, n);
 				}
 
 				// now we go to the left from the pivot:
@@ -1002,7 +1002,7 @@ void finite_field::Borel_decomposition(int n, int *M,
 					cout << "finite_field::Borel_decomposition after going "
 							"across to the left:" << endl;
 					cout << "M:" << endl;
-					int_matrix_print(M, n, n);
+					Orbiter->Int_vec.matrix_print(M, n, n);
 				}
 				break;
 			}
@@ -1033,7 +1033,7 @@ void finite_field::map_to_standard_frame(int d, int *A,
 
 	if (f_v) {
 		cout << "A=" << endl;
-		int_matrix_print(A, d + 1, d);
+		Orbiter->Int_vec.matrix_print(A, d + 1, d);
 	}
 
 	n = d + 1;
@@ -1046,12 +1046,12 @@ void finite_field::map_to_standard_frame(int d, int *A,
 	}
 	if (f_v) {
 		cout << "B before=" << endl;
-		int_matrix_print(B, d, n);
+		Orbiter->Int_vec.matrix_print(B, d, n);
 	}
 	RREF_and_kernel(n, d, B, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "B after=" << endl;
-		int_matrix_print(B, n, n);
+		Orbiter->Int_vec.matrix_print(B, n, n);
 	}
 	xd = B[d * n + d - 1];
 	x = negate(inverse(xd));
@@ -1060,7 +1060,7 @@ void finite_field::map_to_standard_frame(int d, int *A,
 	}
 	if (f_v) {
 		cout << "last row of B after scaling : " << endl;
-		int_matrix_print(B + d * n, 1, n);
+		Orbiter->Int_vec.matrix_print(B + d * n, 1, n);
 	}
 	for (i = 0; i < d; i++) {
 		for (j = 0; j < d; j++) {
@@ -1069,7 +1069,7 @@ void finite_field::map_to_standard_frame(int d, int *A,
 	}
 	if (f_v) {
 		cout << "A2=" << endl;
-		int_matrix_print(A2, d, d);
+		Orbiter->Int_vec.matrix_print(A2, d, d);
 	}
 	matrix_inverse(A2, Transform, d, 0 /* verbose_level */);
 
@@ -1106,11 +1106,11 @@ void finite_field::map_frame_to_frame_with_permutation(int d,
 	}
 	if (f_v) {
 		cout << "A=" << endl;
-		int_matrix_print(A, d + 1, d);
+		Orbiter->Int_vec.matrix_print(A, d + 1, d);
 	}
 	if (f_v) {
 		cout << "B=" << endl;
-		int_matrix_print(B, d + 1, d);
+		Orbiter->Int_vec.matrix_print(B, d + 1, d);
 	}
 
 	for (i = 0; i < d + 1; i++) {
@@ -1120,7 +1120,7 @@ void finite_field::map_frame_to_frame_with_permutation(int d,
 
 	if (f_v) {
 		cout << "A1=" << endl;
-		int_matrix_print(A1, d + 1, d);
+		Orbiter->Int_vec.matrix_print(A1, d + 1, d);
 	}
 
 
@@ -1130,7 +1130,7 @@ void finite_field::map_frame_to_frame_with_permutation(int d,
 	map_to_standard_frame(d, A1, T1, verbose_level);
 	if (f_v) {
 		cout << "T1=" << endl;
-		int_matrix_print(T1, d, d);
+		Orbiter->Int_vec.matrix_print(T1, d, d);
 	}
 	if (f_v) {
 		cout << "mapping B to standard frame:" << endl;
@@ -1138,17 +1138,17 @@ void finite_field::map_frame_to_frame_with_permutation(int d,
 	map_to_standard_frame(d, B, T2, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "T2=" << endl;
-		int_matrix_print(T2, d, d);
+		Orbiter->Int_vec.matrix_print(T2, d, d);
 	}
 	matrix_inverse(T2, T3, d, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "T3=" << endl;
-		int_matrix_print(T3, d, d);
+		Orbiter->Int_vec.matrix_print(T3, d, d);
 	}
 	mult_matrix_matrix(T1, T3, Transform, d, d, d, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "Transform=" << endl;
-		int_matrix_print(Transform, d, d);
+		Orbiter->Int_vec.matrix_print(Transform, d, d);
 	}
 
 	FREE_int(T1);
@@ -1231,7 +1231,7 @@ void finite_field::map_points_to_points_projectively(int d, int k,
 		}
 		if (f_v) {
 			cout << "A1=" << endl;
-			int_matrix_print(A1, d + k + 1, d);
+			Orbiter->Int_vec.matrix_print(A1, d + k + 1, d);
 		}
 
 		cnt = 0;
@@ -1320,7 +1320,7 @@ int finite_field::BallChowdhury_matrix_entry(int *Coord,
 		}
 		if (f_vv) {
 			cout << "u=" << u << " / " << sz_U << " the matrix is:" << endl;
-			int_matrix_print(T, k, k);
+			Orbiter->Int_vec.matrix_print(T, k, k);
 		}
 		d1 = matrix_determinant(T, k, 0 /* verbose_level */);
 		if (f_vv) {
@@ -1475,7 +1475,7 @@ void finite_field::cubic_surface_family_G13_generators(
 		cout << "finite_field::cubic_surface_family_G13_generators" << endl;
 		for (h = 0; h < nb_gens; h++) {
 			cout << "generator " << h << ":" << endl;
-			int_matrix_print(gens + h * data_size, 4, 4);
+			Orbiter->Int_vec.matrix_print(gens + h * data_size, 4, 4);
 		}
 	}
 	if (f_v) {
@@ -1597,7 +1597,7 @@ void finite_field::cubic_surface_family_F13_generators(
 		cout << "finite_field::cubic_surface_family_F13_generators" << endl;
 		for (h = 0; h < nb_gens; h++) {
 			cout << "generator " << h << ":" << endl;
-			int_matrix_print(gens + h * data_size, 4, 4);
+			Orbiter->Int_vec.matrix_print(gens + h * data_size, 4, 4);
 		}
 	}
 	if (f_v) {
@@ -1664,12 +1664,12 @@ void finite_field::make_Fourier_matrices(
 	if (f_v) {
 		for (h = k; h >= 0; h--) {
 			cout << "A_" << N[h] << ":" << endl;
-			int_matrix_print(A[h], N[h], N[h]);
+			Orbiter->Int_vec.matrix_print(A[h], N[h], N[h]);
 		}
 
 		for (h = k; h >= 0; h--) {
 			cout << "Av_" << N[h] << ":" << endl;
-			int_matrix_print(Av[h], N[h], N[h]);
+			Orbiter->Int_vec.matrix_print(Av[h], N[h], N[h]);
 		}
 	}
 	if (f_v) {

@@ -153,7 +153,7 @@ void semifield_classify_with_substructure::init(
 		int i;
 
 		cout << "semifield_classify_with_substructure::init f_test_semifield" << endl;
-		lint_vec_scan(Descr->test_semifield_data, data, data_len);
+		Orbiter->Lint_vec.scan(Descr->test_semifield_data, data, data_len);
 		cout << "input semifield:" << endl;
 		for (i = 0; i < data_len; i++) {
 			cout << i << " : " << data[i] << endl;
@@ -495,7 +495,7 @@ void semifield_classify_with_substructure::identify_semifield(int verbose_level)
 		long int *data = NULL;
 		int data_len = 0;
 		cout << "f_identify_semifield" << endl;
-		lint_vec_scan(Descr->identify_semifield_data, data, data_len);
+		Orbiter->Lint_vec.scan(Descr->identify_semifield_data, data, data_len);
 		cout << "input semifield:" << endl;
 		for (i = 0; i < data_len; i++) {
 			cout << i << " : " << data[i] << endl;
@@ -516,7 +516,7 @@ void semifield_classify_with_substructure::identify_semifield(int verbose_level)
 					data, data_out,
 					verbose_level);
 
-			lint_vec_print(cout, data_out, k);
+			Orbiter->Lint_vec.print(cout, data_out, k);
 			cout << endl;
 			for (i = 0; i < k; i++) {
 				Sub->SC->matrix_unrank(data_out[i], Sub->Basis1 + i * k2);
@@ -762,7 +762,7 @@ void semifield_classify_with_substructure::latex_report(
 			if (f_v) {
 				cout << "orbit " << orbit_idx << " / " << Semifields->nb_orbits << ":" << endl;
 			}
-			lint_vec_copy(Semifields->Rep_ith(orbit_idx), Sub->data1, Sub->SC->k);
+			Orbiter->Lint_vec.copy(Semifields->Rep_ith(orbit_idx), Sub->data1, Sub->SC->k);
 
 			if (f_v) {
 				cout << "before Sub->all_two_dimensional_subspaces" << endl;

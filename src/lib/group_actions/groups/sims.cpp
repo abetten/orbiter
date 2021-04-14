@@ -1302,7 +1302,7 @@ void sims::element_rank(longinteger_object &a, int *elt)
 			cout << "jj=bi^elt=" << jj << endl;
 			cout << "j=orbit_inv[i][jj]=" << j << endl;
 			cout << "base=";
-			lint_vec_print(cout, A->get_base(), A->base_len());
+			Orbiter->Lint_vec.print(cout, A->get_base(), A->base_len());
 			cout << endl;
 			cout << "orbit_len=";
 			Orbiter->Int_vec.print(cout, orbit_len, A->base_len());

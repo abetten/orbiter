@@ -549,7 +549,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 					"orbit on pairs "
 					<< orbit_on_pairs_idx << " / "
 					<< nb_orbits_on_pairs << " pair \\{";
-			lint_vec_print(cout, pair_orbit->data, 2);
+			Orbiter->Lint_vec.print(cout, pair_orbit->data, 2);
 			cout << "\\}_{" << pair_orbit->group_order_as_lint() << "}" << endl;
 		}
 
@@ -595,12 +595,12 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 
 			// prepare the flag
 			// copy the arc:
-			lint_vec_copy(The_arc->data, Flag + 0, 6);
+			Orbiter->Lint_vec.copy(The_arc->data, Flag + 0, 6);
 			// copy orb and the pair:
 			Flag[6] = orbit_on_pairs_idx;
 			p0 = pair_orbit->data[0];
 			p1 = pair_orbit->data[1];
-			lint_vec_copy(pair_orbit->data, Flag + 7, 2);
+			Orbiter->Lint_vec.copy(pair_orbit->data, Flag + 7, 2);
 			Flag[9] = orbit_on_partition_idx;
 			Flag[10] = partition_rk;
 
@@ -658,7 +658,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 			if (f_v) {
 				cout << "surfaces_arc_lifting::downstep_one_arc "
 						"the arc is: ";
-				lint_vec_print(cout, The_arc->data, 6);
+				Orbiter->Lint_vec.print(cout, The_arc->data, 6);
 				cout << endl;
 			}
 			Surf->F->PG_elements_embed(The_arc->data, Arc6, 6, 3, 4, v4);
@@ -666,7 +666,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 			if (f_v) {
 				cout << "surfaces_arc_lifting::downstep_one_arc "
 						"after embedding, the arc is: ";
-				lint_vec_print(cout, Arc6, 6);
+				Orbiter->Lint_vec.print(cout, Arc6, 6);
 				cout << endl;
 			}
 
@@ -678,7 +678,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 			if (f_v) {
 				cout << "surfaces_arc_lifting::downstep_one_arc "
 						"the rearranged arcs is: ";
-				lint_vec_print(cout, Arc6_rearranged, 6);
+				Orbiter->Lint_vec.print(cout, Arc6_rearranged, 6);
 				cout << endl;
 			}
 
@@ -712,11 +712,11 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 				Orbiter->Int_vec.print(cout, coeff20, 20);
 				cout << endl;
 				cout << "lines27: ";
-				lint_vec_print(cout, lines27, 27);
+				Orbiter->Lint_vec.print(cout, lines27, 27);
 				cout << endl;
 			}
 			Orbiter->Int_vec.copy_to_lint(coeff20, Flag + 13, 20);
-			lint_vec_copy(lines27, Flag + 33, 27);
+			Orbiter->Lint_vec.copy(lines27, Flag + 33, 27);
 
 
 			long int arc_stab_order;
@@ -1159,7 +1159,7 @@ void surfaces_arc_lifting::report_flag_orbits_in_detail(ostream &ost, int verbos
 
 		ost << "\\end{align*}" << endl;
 		ost << "$$" << endl;
-		lint_vec_print(ost, Flag + 13, 20);
+		Orbiter->Lint_vec.print(ost, Flag + 13, 20);
 		ost << "$$" << endl;
 
 

@@ -602,7 +602,7 @@ void projective_space_job::perform_job_for_one_set(
 				cout << "plane " << i << " is " << plane_ranks[i]
 					<< " has " << nb_pts << " points, in local "
 							"coordinates they are ";
-				lint_vec_print(cout, pts, nb_pts);
+				Orbiter->Lint_vec.print(cout, pts, nb_pts);
 				cout << endl;
 
 				long int **Pts_on_conic;
@@ -871,10 +871,10 @@ void projective_space_job::perform_job_for_one_set(
 		//int arc_d;
 
 
-		lint_vec_scan(Descr->t_lines_string, t_lines, nb_t_lines);
+		Orbiter->Lint_vec.scan(Descr->t_lines_string, t_lines, nb_t_lines);
 
 		cout << "The t-lines, t=" << Descr->arc_t << " are ";
-		lint_vec_print(cout, t_lines, nb_t_lines);
+		Orbiter->Lint_vec.print(cout, t_lines, nb_t_lines);
 		cout << endl;
 
 
@@ -959,16 +959,16 @@ void projective_space_job::perform_job_for_one_set(
 		int f_save_system = TRUE;
 
 
-		lint_vec_scan(Descr->t_lines_string, t_lines, nb_t_lines);
-		lint_vec_scan(Descr->u_lines_string, u_lines, nb_u_lines);
+		Orbiter->Lint_vec.scan(Descr->t_lines_string, t_lines, nb_t_lines);
+		Orbiter->Lint_vec.scan(Descr->u_lines_string, u_lines, nb_u_lines);
 		//lint_vec_print(cout, t_lines, nb_t_lines);
 		//cout << endl;
 
 		cout << "The t-lines, t=" << Descr->arc_t << " are ";
-		lint_vec_print(cout, t_lines, nb_t_lines);
+		Orbiter->Lint_vec.print(cout, t_lines, nb_t_lines);
 		cout << endl;
 		cout << "The u-lines, u=" << Descr->arc_u << " are ";
-		lint_vec_print(cout, u_lines, nb_u_lines);
+		Orbiter->Lint_vec.print(cout, u_lines, nb_u_lines);
 		cout << endl;
 
 

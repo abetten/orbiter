@@ -728,7 +728,7 @@ int cayley_graph_search::incremental_check_func(
 
 	if (f_v) {
 		cout << "checking set ";
-		lint_vec_print(cout, S, len);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << " (incrementally)";
 		}
 	if (len) {

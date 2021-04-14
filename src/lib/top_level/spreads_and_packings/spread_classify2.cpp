@@ -550,7 +550,7 @@ void spread_classify::plane_intersection_type_of_klein_image(
 		data, size, the_set_out, 0/*verbose_level*/);
 	if (f_v) {
 		cout << "after Klein correspondence:" << endl;
-		lint_vec_print(cout, the_set_out, size);
+		Orbiter->Lint_vec.print(cout, the_set_out, size);
 		cout << endl;
 	}
 	if (f_v3) {
@@ -1223,13 +1223,13 @@ void spread_classify::czerwinski_oakden(int level, int verbose_level)
 							<< " c=" << c << " d=" << d << endl;
 					}
 				}
-			int_matrix_print(Grass->M, 2, 4);
+			Orbiter->Int_vec.matrix_print(Grass->M, 2, 4);
 			data[u] = Grass->rank_lint(0);
 
 			} // next u
 
 		cout << "spread " << h << ":";
-		lint_vec_print(cout, data, sz);
+		Orbiter->Lint_vec.print(cout, data, sz);
 		cout << endl;
 
 		fp << "0 "; // a dummy
@@ -1374,7 +1374,7 @@ void spread_classify::make_spread(long int *data,
 		}
 		if (f_vv) {
 			cout << "spread element " << h << ":" << endl;
-			int_matrix_print(Grass->M, 2, 4);
+			Orbiter->Int_vec.matrix_print(Grass->M, 2, 4);
 		}
 		data[h] = Grass->rank_lint(0);
 	} // next h
@@ -1553,7 +1553,7 @@ void spread_classify::make_spread_from_q_clan(long int *data,
 		}
 		if (f_vv) {
 			cout << "spread element " << h << ":" << endl;
-			int_matrix_print(Grass->M, 2, 4);
+			Orbiter->Int_vec.matrix_print(Grass->M, 2, 4);
 		}
 		data[h] = Grass->rank_lint(0);
 	}
@@ -1616,9 +1616,9 @@ void spread_classify::HMO(std::string &fname, int verbose_level)
 	}
 	cout << "spread::HMO after embedding" << endl;
 	cout << "Ge:" << endl;
-	int_matrix_print(Ge, q, q);
+	Orbiter->Int_vec.matrix_print(Ge, q, q);
 	cout << "He:" << endl;
-	int_matrix_print(He, q, q);
+	Orbiter->Int_vec.matrix_print(He, q, q);
 
 	GG = NEW_int(q2 * q2);
 	HH = NEW_int(q2 * q2);
@@ -1639,9 +1639,9 @@ void spread_classify::HMO(std::string &fname, int verbose_level)
 		}
 	}
 	cout << "GG:" << endl;
-	int_matrix_print(GG, q2, q2);
+	Orbiter->Int_vec.matrix_print(GG, q2, q2);
 	cout << "HH:" << endl;
-	int_matrix_print(HH, q2, q2);
+	Orbiter->Int_vec.matrix_print(HH, q2, q2);
 
 	grassmann *Gq2;
 	long int *Data2;
@@ -1679,7 +1679,7 @@ void spread_classify::HMO(std::string &fname, int verbose_level)
 			M[1 * 4 + 3] = HH[x * q2 + y];
 		}
 		cout << "element " << h << ":" << endl;
-		int_matrix_print(M, 2, 4);
+		Orbiter->Int_vec.matrix_print(M, 2, 4);
 		for (i = 0; i < 8; i++) {
 			Gq2->M[i] = M[i];
 		}
@@ -1761,9 +1761,9 @@ void spread_classify::get_spread_matrices(int *G, int *H,
 	if (f_v) {
 		cout << "spread::get_FG_matrices" << endl;
 		cout << "G:" << endl;
-		int_matrix_print(G, q, q);
+		Orbiter->Int_vec.matrix_print(G, q, q);
 		cout << "H:" << endl;
-		int_matrix_print(H, q, q);
+		Orbiter->Int_vec.matrix_print(H, q, q);
 	}
 }
 
@@ -1775,7 +1775,7 @@ void spread_classify::print_spread(ostream &ost, long int *data, int sz)
 	for (h = 0; h < sz; h++) {
 		Grass->unrank_lint(data[h], 0);
 		ost << "Spread element " << h << ":" << endl;
-		int_matrix_print_ost(ost, Grass->M, k, n);
+		Orbiter->Int_vec.matrix_print_ost(ost, Grass->M, k, n);
 	}
 }
 
@@ -2455,13 +2455,13 @@ void spread_classify::cooperstein_thas_quotients(isomorph &Iso,
 			// delete column 'pivot' in the k x n matrix M.
 			// Afterwards, the matrix is k x (n - 1)
 
-			int_matrix_delete_column_in_place(M, k, n, pivot);
+			Orbiter->Int_vec.matrix_delete_column_in_place(M, k, n, pivot);
 #endif
 
 			if (f_vv) {
 				cout << "spread_classify::cooperstein_thas_quotients the reduction "
 						"of the " << i << "-th matrix is:" << endl;
-				int_matrix_print(M, k, n - 1);
+				Orbiter->Int_vec.matrix_print(M, k, n - 1);
 			}
 
 			b = Gr->rank_lint_here(M, 0/*verbose_level - 4*/);
@@ -2472,7 +2472,7 @@ void spread_classify::cooperstein_thas_quotients(isomorph &Iso,
 			cout << "spread_classify::cooperstein_thas_quotients The quotient "
 					"system with respect to orbit " << u << " / "
 					<< Orb.nb_orbits << " is:" << endl;
-			lint_vec_print(cout, data2, order);
+			Orbiter->Lint_vec.print(cout, data2, order);
 			cout << endl;
 		}
 

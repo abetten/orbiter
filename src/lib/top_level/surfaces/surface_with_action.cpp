@@ -226,7 +226,7 @@ int surface_with_action::create_double_six_safely(
 	if (f_v) {
 		cout << "surface_with_action::create_double_six_safely" << endl;
 		cout << "five_lines=";
-		lint_vec_print(cout, five_lines, 5);
+		Orbiter->Lint_vec.print(cout, five_lines, 5);
 		cout << " transversal_line=" << transversal_line << endl;
 	}
 
@@ -272,14 +272,14 @@ int surface_with_action::create_double_six_safely(
 		cout << "surface_with_action::create_double_six_safely "
 				"the double sixes differ" << endl;
 		cout << "double six 1: ";
-		lint_vec_print(cout, double_six1, 12);
+		Orbiter->Lint_vec.print(cout, double_six1, 12);
 		cout << endl;
 		cout << "double six 2: ";
-		lint_vec_print(cout, double_six2, 12);
+		Orbiter->Lint_vec.print(cout, double_six2, 12);
 		cout << endl;
 		exit(1);
 	}
-	lint_vec_copy(double_six1, double_six, 12);
+	Orbiter->Lint_vec.copy(double_six1, double_six, 12);
 	if (f_v) {
 		cout << "surface_with_action::create_double_six_safely done" << endl;
 	}
@@ -339,13 +339,13 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	if (f_v) {
 		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal" << endl;
 		cout << "The five lines are ";
-		lint_vec_print(cout, five_lines, 5);
+		Orbiter->Lint_vec.print(cout, five_lines, 5);
 		cout << endl;
 	}
 
 	ell0 = Surf->rank_line(L0);
 
-	lint_vec_copy(five_lines, double_six, 5); // fill in a_1,\ldots,a_5
+	Orbiter->Lint_vec.copy(five_lines, double_six, 5); // fill in a_1,\ldots,a_5
 	double_six[11] = transversal_line; // fill in b_6
 	
 	for (i = 0; i < 5; i++) {
@@ -358,7 +358,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	}
 	if (f_vv) {
 		cout << "The five intersection points are:";
-		lint_vec_print(cout, P, 5);
+		Orbiter->Lint_vec.print(cout, P, 5);
 		cout << endl;
 	}
 
@@ -383,7 +383,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		P4 = P[subset[3]];
 		if (f_vv) {
 			cout << "subset " << rk << " / " << nb_subsets << " : ";
-			lint_vec_print(cout, four_lines, 5);
+			Orbiter->Lint_vec.print(cout, four_lines, 5);
 			cout << " P4=" << P4 << endl;
 		}
 
@@ -424,9 +424,9 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		if (f_vv) {
 			cout << "before F->adjust_basis" << endl;
 			cout << "L=" << endl;
-			int_matrix_print(L, 2, 4);
+			Orbiter->Int_vec.matrix_print(L, 2, 4);
 			cout << "Q4=" << endl;
-			int_matrix_print(Q4, 1, 4);
+			Orbiter->Int_vec.matrix_print(Q4, 1, 4);
 		}
 
 		// Adjust the basis L of the line ai4image so that Q4 is first:
@@ -434,9 +434,9 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		if (f_vv) {
 			cout << "after F->adjust_basis" << endl;
 			cout << "L=" << endl;
-			int_matrix_print(L, 2, 4);
+			Orbiter->Int_vec.matrix_print(L, 2, 4);
 			cout << "Q4=" << endl;
-			int_matrix_print(Q4, 1, 4);
+			Orbiter->Int_vec.matrix_print(Q4, 1, 4);
 		}
 
 		// Determine the point w which is the second point where 
@@ -583,7 +583,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 
 	if (f_vv) {
 		cout << "four points have been computed:" << endl;
-		int_matrix_print(pt_coord, 4, 4);
+		Orbiter->Int_vec.matrix_print(pt_coord, 4, 4);
 	}
 	line3 = -1;
 	for (h = 0; h < 2; h++) {

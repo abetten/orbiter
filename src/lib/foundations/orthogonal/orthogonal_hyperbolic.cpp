@@ -628,7 +628,7 @@ void orthogonal::unrank_line_L2(
 			}
 		if (f_vvv) {
 			cout << "orthogonal::unrank_line_L2 the Siegel map is" << endl;
-			print_integer_matrix(cout, T1, n - 2, n - 2);
+			Orbiter->Int_vec.print_integer_matrix(cout, T1, n - 2, n - 2);
 			}
 		F->mult_matrix_matrix(v1, T1, v2, 1, n - 2, n - 2,
 				0 /* verbose_level */);

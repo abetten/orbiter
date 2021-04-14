@@ -83,12 +83,12 @@ void finite_field::print_detailed(int f_add_mult_table)
 void finite_field::print_add_mult_tables()
 {
 	cout << "addition table:" << endl;
-	print_integer_matrix_width(cout, add_table, q, q, q, log10_of_q + 1);
+	Orbiter->Int_vec.print_integer_matrix_width(cout, add_table, q, q, q, log10_of_q + 1);
 	cout << endl;
 
 
 	cout << "multiplication table:" << endl;
-	print_integer_matrix_width(cout, mult_table, q, q, q, log10_of_q + 1);
+	Orbiter->Int_vec.print_integer_matrix_width(cout, mult_table, q, q, q, log10_of_q + 1);
 	cout << endl;
 }
 
@@ -105,20 +105,20 @@ void finite_field::print_add_mult_tables_in_C(std::string &fname_base)
 
 		ost << "//addition, multiplication, inversion and negation table:" << endl;
 		ost << "int add_table[] = ";
-		print_integer_matrix_in_C_source(ost, add_table, q, q);
+		Orbiter->Int_vec.print_integer_matrix_in_C_source(ost, add_table, q, q);
 		ost << endl;
 
 
 		ost << "int mult_table[] = ";
-		print_integer_matrix_in_C_source(ost, mult_table, q, q);
+		Orbiter->Int_vec.print_integer_matrix_in_C_source(ost, mult_table, q, q);
 		ost << endl;
 
 		ost << "int inv_table[] = ";
-		print_integer_matrix_in_C_source(ost, inv_table, 1, q);
+		Orbiter->Int_vec.print_integer_matrix_in_C_source(ost, inv_table, 1, q);
 		ost << endl;
 
 		ost << "int neg_table[] = ";
-		print_integer_matrix_in_C_source(ost, negate_table, 1, q);
+		Orbiter->Int_vec.print_integer_matrix_in_C_source(ost, negate_table, 1, q);
 		ost << endl;
 	}
 

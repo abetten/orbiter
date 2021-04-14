@@ -111,7 +111,7 @@ void spread_lifting::init(
 
 
 	col_labels = NEW_lint(nb_candidates);
-	lint_vec_copy(candidates, col_labels, nb_candidates);
+	Orbiter->Lint_vec.copy(candidates, col_labels, nb_candidates);
 	nb_cols = nb_candidates;
 
 
@@ -171,17 +171,17 @@ void spread_lifting::compute_points_covered_by_starter(
 			exit(1);
 		}
 
-		lint_vec_copy(point_list,
+		Orbiter->Lint_vec.copy(point_list,
 				points_covered_by_starter + i * S->block_size,
 				S->block_size);
 
 		if (f_v3) {
 			cout << "starter element " << i << " / "
 					<< starter_size << " is " << a << ":" << endl;
-			int_matrix_print(S->Grass->M, S->k, S->n);
+			Orbiter->Int_vec.matrix_print(S->Grass->M, S->k, S->n);
 			//cout << endl;
 			cout << "points_covered_by_starter: " << endl;
-			lint_vec_print(cout,
+			Orbiter->Lint_vec.print(cout,
 					points_covered_by_starter +
 						i * S->block_size, S->block_size);
 			cout << endl;
@@ -197,7 +197,7 @@ void spread_lifting::compute_points_covered_by_starter(
 		cout << "spread_lifting::compute_points_"
 				"covered_by_starter nb_points_covered_by_starter="
 				<< nb_points_covered_by_starter << endl;
-		lint_vec_print(cout, points_covered_by_starter,
+		Orbiter->Lint_vec.print(cout, points_covered_by_starter,
 				nb_points_covered_by_starter);
 		cout << endl;
 	}
@@ -253,7 +253,7 @@ void spread_lifting::prepare_free_points(
 	if (f_v3) {
 		cout << "spread_lifting::prepare_free_points "
 				"The " << nb_free_points << " free points:" << endl;
-		lint_vec_print(cout,
+		Orbiter->Lint_vec.print(cout,
 				free_point_list, nb_free_points);
 		cout << endl;
 		S->print_points(free_point_list, nb_free_points);
@@ -307,7 +307,7 @@ diophant *spread_lifting::create_system(int verbose_level)
 
 		if (f_v5) {
 			cout << "Which is " << endl;
-			int_matrix_print(S->Grass->M, S->k, S->n);
+			Orbiter->Int_vec.matrix_print(S->Grass->M, S->k, S->n);
 		}
 		S->Mtx->GFq->all_PG_elements_in_subspace(
 				S->Grass->M, S->k, S->n, point_list, nb_points,
@@ -319,7 +319,7 @@ diophant *spread_lifting::create_system(int verbose_level)
 		}
 		if (FALSE /*f_vv*/) {
 			cout << "List of points: ";
-			lint_vec_print(cout, point_list, nb_points);
+			Orbiter->Lint_vec.print(cout, point_list, nb_points);
 			cout << endl;
 		}
 

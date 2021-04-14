@@ -237,7 +237,7 @@ int search_blocking_set::test_level(int depth, int verbose_level)
 		
 		if (f_v) {
 			cout << "testing set " << h << " / " << nb_orbits << " : ";
-			lint_vec_print(cout, blocking_set, depth);
+			Orbiter->Lint_vec.print(cout, blocking_set, depth);
 			cout << endl;
 			}
 		
@@ -276,7 +276,7 @@ int search_blocking_set::test_blocking_set(int len, long int *S, int verbose_lev
 	if (f_v) {
 		cout << "search_blocking_set::test_blocking_set "
 				"checking set of points ";
-		lint_vec_print(cout, S, len);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 		}
 
@@ -352,7 +352,7 @@ int search_blocking_set::test_blocking_set_upper_bound_only(
 	if (f_v) {
 		cout << "search_blocking_set::test_blocking_set_upper_bound_only "
 				"set of points ";
-		lint_vec_print(cout, S, len);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 		}
 
@@ -461,7 +461,7 @@ void search_blocking_set::search_for_blocking_set(int input_no,
 		if (f_v) {
 			cout << "input_no " << input_no << " level " << level
 					<< " testing set " << h << " / " << nb_orbits << " : ";
-			lint_vec_print(cout, blocking_set, level);
+			Orbiter->Lint_vec.print(cout, blocking_set, level);
 			cout << endl;
 			}
 		
@@ -530,7 +530,7 @@ int search_blocking_set::recursive_search_for_blocking_set(
 		cout << "search_blocking_set::recursive_search_for_blocking_set "
 				"input_no = " << input_no << " level = " << level
 				<<  " sz_active_set = " << active_set->k << endl;
-		lint_vec_print(cout, blocking_set, starter_level + level);
+		Orbiter->Lint_vec.print(cout, blocking_set, starter_level + level);
 		cout << endl;
 		}
 	if (f_blocking_set_size_desired) {
@@ -571,7 +571,7 @@ int search_blocking_set::recursive_search_for_blocking_set(
 	if (t) {
 		cout << "found blocking set of size "
 				<< starter_level + level << " : ";
-		lint_vec_print(cout, blocking_set, starter_level + level);
+		Orbiter->Lint_vec.print(cout, blocking_set, starter_level + level);
 		cout << " line type = ";
 		C.print(FALSE /*f_backwards*/);
 		cout << " : solution no " << nb_solutions + 1;

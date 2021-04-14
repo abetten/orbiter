@@ -118,7 +118,7 @@ void graph_node::add_vec_data(long int *v, int len)
 {
 	vec_data = NEW_lint(len);
 	vec_data_len = len;
-	lint_vec_copy(v, vec_data, len);
+	Orbiter->Lint_vec.copy(v, vec_data, len);
 	f_has_vec_data = TRUE;
 }
 

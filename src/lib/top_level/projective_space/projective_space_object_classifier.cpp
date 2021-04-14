@@ -644,7 +644,7 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 			if (f_vvv) {
 				cout << "projective_space_object_classifier::process_multiple_objects_from_file "
 						"The input set is:" << endl;
-				lint_vec_print(cout, the_set_in, set_size_in);
+				Orbiter->Lint_vec.print(cout, the_set_in, set_size_in);
 				cout << endl;
 				}
 
@@ -715,7 +715,7 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 				// we don't have strong generators !
 				//SG = NULL;
 
-				lint_vec_copy(Known_canonical_labeling + h * canonical_labeling_len,
+				Orbiter->Lint_vec.copy(Known_canonical_labeling + h * canonical_labeling_len,
 						canonical_labeling, canonical_labeling_len);
 
 				if (Descr->f_load_ago) {

@@ -175,7 +175,7 @@ void singer_cycle::init(int n, finite_field *F, action *A, action *A2, int verbo
 	}
 	if (f_v) {
 		cout << "singer_cycle::init Singer_matrix: " << endl;
-		int_matrix_print(Singer_matrix, n, n);
+		Orbiter->Int_vec.matrix_print(Singer_matrix, n, n);
 	}
 	//Elt = NEW_int(A->elt_size_in_int);
 	//A->make_element(Elt, Singer_matrix, verbose_level);
@@ -259,7 +259,7 @@ void singer_cycle::init_lines(int verbose_level)
 			a = P->Lines_on_point[0 * P->r + i];
 			cout << "Line " <<  i << " has rank " << a << ":" << endl;
 			P->Grass_lines->unrank_lint(a, 0);
-			int_matrix_print(P->Grass_lines->M, 2, n);
+			Orbiter->Int_vec.matrix_print(P->Grass_lines->M, 2, n);
 			h = 0;
 			for (j = 0; j < P->k; j++) {
 				b = P->Lines[a * P->k + j];

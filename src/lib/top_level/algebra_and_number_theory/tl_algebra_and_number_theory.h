@@ -220,6 +220,36 @@ public:
 class group_theoretic_activity_description {
 public:
 
+	int f_multiply;
+	std::string multiply_a;
+	std::string multiply_b;
+
+	int f_inverse;
+	std::string inverse_a;
+
+	int f_raise_to_the_power;
+	std::string raise_to_the_power_a_text;
+	std::string raise_to_the_power_exponent_text;
+
+
+	int f_export_gap;
+
+	int f_export_magma;
+
+	int f_search_element_of_order;
+	int search_element_order;
+
+	int f_element_rank;
+	std::string element_rank_data;
+
+	int f_element_unrank;
+	std::string element_unrank_data;
+
+	int f_find_singer_cycle;
+
+
+
+
 	int f_poset_classification_control;
 	poset_classification_control *Control;
 
@@ -264,17 +294,6 @@ public:
 	int f_orbit_of_set_from_file;
 	std::string orbit_of_set_from_file_fname;
 
-	int f_find_singer_cycle;
-
-	int f_search_element_of_order;
-	int search_element_order;
-
-	int f_element_rank;
-	std::string element_rank_data;
-
-	int f_element_unrank;
-	std::string element_unrank_data;
-
 	int f_conjugacy_class_of;
 	std::string conjugacy_class_of_data;
 
@@ -283,20 +302,6 @@ public:
 
 	int f_print_elements;
 	int f_print_elements_tex;
-
-	int f_multiply;
-	std::string multiply_a;
-	std::string multiply_b;
-
-	int f_inverse;
-	std::string inverse_a;
-
-	int f_raise_to_the_power;
-	std::string raise_to_the_power_a_text;
-	std::string raise_to_the_power_exponent_text;
-
-	int f_export_gap;
-	int f_export_magma;
 
 	int f_order_of_products;
 	std::string order_of_products_elements;

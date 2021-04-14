@@ -125,7 +125,7 @@ void set_builder::init(set_builder_description *Descr,
 		long int *Index_set;
 		int Index_set_sz;
 
-		lint_vec_scan(Descr->index_set_text, Index_set, Index_set_sz);
+		Orbiter->Lint_vec.scan(Descr->index_set_text, Index_set, Index_set_sz);
 
 		int i, cnt;
 		long int x, y;
@@ -159,7 +159,7 @@ void set_builder::init(set_builder_description *Descr,
 	}
 	if (f_v) {
 		cout << "set_builder::init created set of size " << sz << endl;
-		lint_vec_print(cout, set, sz);
+		Orbiter->Lint_vec.print(cout, set, sz);
 		cout << endl;
 	}
 

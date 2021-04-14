@@ -117,7 +117,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 
 	if (verbose_level > 5) {
 		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form Incma:" << endl;
-		int_matrix_print_tight(Inc->M, Inc->nb_rows, Inc->nb_cols);
+		Orbiter->Int_vec.matrix_print_tight(Inc->M, Inc->nb_rows, Inc->nb_cols);
 	}
 
 	//canonical_labeling = NEW_int(nb_rows + nb_cols);
@@ -217,7 +217,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 	if (f_vvv) {
 		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form Incma Out:" << endl;
 		if (Inc->nb_rows < 10) {
-			print_integer_matrix_width(cout,
+			Orbiter->Int_vec.print_integer_matrix_width(cout,
 					Inc_out->M, Inc->nb_rows, Inc->nb_cols, Inc->nb_cols, 1);
 		}
 		else {

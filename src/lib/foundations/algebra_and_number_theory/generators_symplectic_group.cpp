@@ -164,7 +164,7 @@ void generators_symplectic_group::init(finite_field *F,
 		cout << "The strong generators are:" << endl;
 		for (i = 0; i < nb_gens; i++) {
 			cout << "generator " << i << " / " << nb_gens << ":" << endl;
-			int_matrix_print(Data + i * n * n, n, n);
+			Orbiter->Int_vec.matrix_print(Data + i * n * n, n, n);
 			}
 		}
 

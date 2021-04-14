@@ -741,7 +741,7 @@ void elliptic_curve::print_addition_table()
 {
 	latex_interface L;
 
-	int_matrix_print(A, nb, nb);
+	Orbiter->Int_vec.matrix_print(A, nb, nb);
 	L.int_matrix_print_tex(cout, A, nb, nb);
 }
 

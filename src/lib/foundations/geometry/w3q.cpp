@@ -118,7 +118,7 @@ void W3q::init(finite_field *F, int verbose_level)
 		P3->unrank_line(Basis, Lines[h]);
 		if (f_vv) {
 			cout << "Line " << h << " is " << Lines[h] << ":" << endl;
-			print_integer_matrix_width(cout,
+			Orbiter->Int_vec.print_integer_matrix_width(cout,
 					Basis, 2, 4, 4, F->log10_of_q);
 			cout << endl;
 		}
@@ -178,7 +178,7 @@ void W3q::print_lines()
 		cout << setw(4) << h << " : ";
 		cout << setw(4) << Lines[h] << " : " << endl;
 		P3->unrank_line(Basis, Lines[h]);
-		int_matrix_print(Basis, 2, 4);
+		Orbiter->Int_vec.matrix_print(Basis, 2, 4);
 		cout << endl;
 	}
 }

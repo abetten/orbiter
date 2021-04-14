@@ -1374,7 +1374,7 @@ void packing_was::get_spreads_in_reduced_orbits_by_type(int type_idx,
 	cout << "Type " << type_idx << " has " << nb_spreads << " spreads:\\\\" << endl;
 
 	spreads_in_reduced_orbits_by_type = NEW_lint(nb_spreads);
-	lint_vec_zero(spreads_in_reduced_orbits_by_type, nb_spreads);
+	Orbiter->Lint_vec.zero(spreads_in_reduced_orbits_by_type, nb_spreads);
 
 
 
@@ -1488,7 +1488,7 @@ void packing_was::report_reduced_spread_orbits(std::ostream &ost, int f_original
 
 		for (j = 0; j < nb_orbits; j++) {
 			ost << j << " : " << orbit_idx[j] << " : ";
-			lint_vec_print(ost, spreads_in_reduced_orbits_by_type + j * orbit_length, orbit_length);
+			Orbiter->Lint_vec.print(ost, spreads_in_reduced_orbits_by_type + j * orbit_length, orbit_length);
 			ost << "\\\\" << endl;
 			if (j && (j % 100) == 0) {
 				ost << endl;

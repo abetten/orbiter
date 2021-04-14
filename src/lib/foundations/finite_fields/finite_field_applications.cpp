@@ -102,7 +102,7 @@ void finite_field::make_all_irreducible_polynomials_of_degree_d(
 	if (f_v) {
 		cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
 				"Frobenius_matrix = " << endl;
-		int_matrix_print(Frobenius, d, d);
+		Orbiter->Int_vec.matrix_print(Frobenius, d, d);
 		cout << endl;
 	}
 
@@ -115,7 +115,7 @@ void finite_field::make_all_irreducible_polynomials_of_degree_d(
 	if (f_v) {
 		cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
 				"Normal_basis = " << endl;
-		int_matrix_print(Normal_basis, d, d);
+		Orbiter->Int_vec.matrix_print(Normal_basis, d, d);
 		cout << endl;
 	}
 
@@ -265,7 +265,7 @@ int finite_field::count_all_irreducible_polynomials_of_degree_d(int d, int verbo
 	if (f_v) {
 		cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
 				"Frobenius_matrix = " << endl;
-		int_matrix_print(Frobenius, d, d);
+		Orbiter->Int_vec.matrix_print(Frobenius, d, d);
 		cout << endl;
 	}
 
@@ -285,7 +285,7 @@ int finite_field::count_all_irreducible_polynomials_of_degree_d(int d, int verbo
 	if (f_v) {
 		cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
 				"Normal_basis = " << endl;
-		int_matrix_print(Normal_basis, d, d);
+		Orbiter->Int_vec.matrix_print(Normal_basis, d, d);
 		cout << endl;
 	}
 
@@ -782,7 +782,7 @@ void finite_field::Berlekamp_matrix(
 
 	if (f_v) {
 		cout << "B=" << endl;
-		int_matrix_print(B, da, da);
+		Orbiter->Int_vec.matrix_print(B, da, da);
 		cout << endl;
 	}
 
@@ -858,7 +858,7 @@ void finite_field::compute_normal_basis(int d, int verbose_level)
 	if (f_v) {
 		cout << "finite_field::compute_normal_basis "
 				"Frobenius_matrix = " << endl;
-		int_matrix_print(Frobenius, d, d);
+		Orbiter->Int_vec.matrix_print(Frobenius, d, d);
 		cout << endl;
 	}
 
@@ -872,7 +872,7 @@ void finite_field::compute_normal_basis(int d, int verbose_level)
 	if (f_v) {
 		cout << "finite_field::compute_normal_basis "
 				"Normal_basis = " << endl;
-		int_matrix_print(Normal_basis, d, d);
+		Orbiter->Int_vec.matrix_print(Normal_basis, d, d);
 		cout << endl;
 	}
 
@@ -929,7 +929,7 @@ void finite_field::do_nullspace(
 
 	if (f_v) {
 		cout << "finite_field::do_nullspace after perp_standard:" << endl;
-		int_matrix_print(A, n, n);
+		Orbiter->Int_vec.matrix_print(A, n, n);
 		cout << "rk=" << rk << endl;
 	}
 
@@ -941,7 +941,7 @@ void finite_field::do_nullspace(
 
 	if (f_v) {
 		cout << "finite_field::do_nullspace after RREF" << endl;
-		int_matrix_print(A + rk * n, rk1, n);
+		Orbiter->Int_vec.matrix_print(A + rk * n, rk1, n);
 		cout << "rank of nullspace = " << rk1 << endl;
 
 		cout << "finite_field::do_nullspace coefficients:" << endl;
@@ -965,7 +965,7 @@ void finite_field::do_nullspace(
 
 		if (f_v) {
 			cout << "finite_field::do_nullspace after normalize from the left:" << endl;
-			int_matrix_print(A, n, n);
+			Orbiter->Int_vec.matrix_print(A, n, n);
 			cout << "rk=" << rk << endl;
 
 			cout << "$$" << endl;
@@ -986,7 +986,7 @@ void finite_field::do_nullspace(
 
 		if (f_v) {
 			cout << "finite_field::do_nullspace after normalize from the right:" << endl;
-			int_matrix_print(A, n, n);
+			Orbiter->Int_vec.matrix_print(A, n, n);
 			cout << "rk=" << rk << endl;
 
 			cout << "$$" << endl;
@@ -1118,7 +1118,7 @@ void finite_field::do_RREF(
 
 	if (f_v) {
 		cout << "after RREF:" << endl;
-		int_matrix_print(A, rk, n);
+		Orbiter->Int_vec.matrix_print(A, rk, n);
 		cout << "rk=" << rk << endl;
 
 		cout << "coefficients:" << endl;
@@ -1144,7 +1144,7 @@ void finite_field::do_RREF(
 
 		if (f_v) {
 			cout << "after normalize from the left:" << endl;
-			int_matrix_print(A, rk, n);
+			Orbiter->Int_vec.matrix_print(A, rk, n);
 			cout << "rk=" << rk << endl;
 		}
 	}
@@ -1159,7 +1159,7 @@ void finite_field::do_RREF(
 
 		if (f_v) {
 			cout << "after normalize from the right:" << endl;
-			int_matrix_print(A, rk, n);
+			Orbiter->Int_vec.matrix_print(A, rk, n);
 			cout << "rk=" << rk << endl;
 		}
 	}
@@ -2447,7 +2447,7 @@ void finite_field::gl_random_matrix(int k, int verbose_level)
 	random_invertible_matrix(M, k, verbose_level - 2);
 
 	cout << "Random invertible matrix:" << endl;
-	int_matrix_print(M, k, k);
+	Orbiter->Int_vec.matrix_print(M, k, k);
 
 
 	{
@@ -2465,7 +2465,7 @@ void finite_field::gl_random_matrix(int k, int verbose_level)
 
 		U.substitute_matrix_in_polynomial(char_poly, M, M2, k, verbose_level);
 		cout << "After substitution, the matrix is " << endl;
-		int_matrix_print(M2, k, k);
+		Orbiter->Int_vec.matrix_print(M2, k, k);
 
 		U.delete_object(char_poly);
 

@@ -425,7 +425,7 @@ void orthogonal::init(int epsilon, int n,
 	if (f_v) {
 		print_schemes();
 		cout << "orthogonal::init Gram matrix:" << endl;
-		print_integer_matrix_width(cout,
+		Orbiter->Int_vec.print_integer_matrix_width(cout,
 				Gram_matrix, n, n, n, F->log10_of_q + 1);
 	}
 	if (FALSE) {
@@ -1575,7 +1575,7 @@ void orthogonal::lines_on_point(long int pt,
 	if (f_vv) {
 		cout << "orthogonal::lines_on_point line pencil (point ranks) "
 				"on point " << pt << " : ";
-		lint_vec_print(cout, line_pencil_point_ranks, alpha);
+		Orbiter->Lint_vec.print(cout, line_pencil_point_ranks, alpha);
 		cout << endl;
 		}
 	if (f_v) {
@@ -1664,7 +1664,7 @@ void orthogonal::lines_on_point_by_line_rank(long int pt,
 		}
 		if (f_v) {
 			cout << "orthogonal::lines_on_point_by_line_rank applying:" << endl;
-			int_matrix_print(T3, n, n);
+			Orbiter->Int_vec.matrix_print(T3, n, n);
 		}
 		F->mult_matrix_matrix(lines_on_point_coords1,
 				T3, lines_on_point_coords2, alpha, n, n,
@@ -1700,7 +1700,7 @@ void orthogonal::lines_on_point_by_line_rank(long int pt,
 	Sorting.lint_vec_quicksort_increasingly(line_pencil_line_ranks, alpha);
 	if (f_vv) {
 		cout << "line pencil on point " << pt << " by line rank : ";
-		lint_vec_print(cout, line_pencil_line_ranks, alpha);
+		Orbiter->Lint_vec.print(cout, line_pencil_line_ranks, alpha);
 		cout << endl;
 		}
 	if (f_v) {
@@ -1990,7 +1990,7 @@ void orthogonal::perp(long int pt,
 		for (i = 0; i < alpha; i++) {
 			cout << i << " : " << line_pencil[i] << endl;
 		}
-		lint_matrix_print(line_pencil, (alpha + 9)/ 10, 10);
+		Orbiter->Lint_vec.matrix_print(line_pencil, (alpha + 9)/ 10, 10);
 		//int_vec_print(cout, line_pencil, alpha);
 		//cout << endl;
 	}
@@ -2012,13 +2012,13 @@ void orthogonal::perp(long int pt,
 						<< " : " << Perp1[i * (q + 1) + j] << endl;
 			}
 		}
-		lint_matrix_print(Perp1, alpha, q + 1);
+		Orbiter->Lint_vec.matrix_print(Perp1, alpha, q + 1);
 	}
 
 	Sorting.lint_vec_heapsort(Perp1, alpha * (q + 1));
 	if (FALSE) {
 		cout << "orthogonal::perp after sorting:" << endl;
-		lint_vec_print(cout, Perp1, alpha * (q + 1));
+		Orbiter->Lint_vec.print(cout, Perp1, alpha * (q + 1));
 		cout << endl;
 	}
 
@@ -2033,11 +2033,11 @@ void orthogonal::perp(long int pt,
 	if (FALSE) {
 		cout << "orthogonal::perp after removing "
 				"pt and sorting:" << endl;
-		lint_vec_print(cout, Perp1, sz);
+		Orbiter->Lint_vec.print(cout, Perp1, sz);
 		cout << endl;
 		cout << "sz=" << sz << endl;
 	}
-	lint_vec_copy(Perp1, Perp_without_pt, sz);
+	Orbiter->Lint_vec.copy(Perp1, Perp_without_pt, sz);
 
 	if (f_v) {
 		cout << "orthogonal::perp done" << endl;
@@ -2064,7 +2064,7 @@ void orthogonal::perp_of_two_points(long int pt1, long int pt2,
 	perp(pt1, Perp1, sz1, 0 /*verbose_level*/);
 	perp(pt2, Perp2, sz2, 0 /*verbose_level*/);
 	Sorting.vec_intersect(Perp1, sz1, Perp2, sz2, Perp3, sz);
-	lint_vec_copy(Perp3, Perp, sz);
+	Orbiter->Lint_vec.copy(Perp3, Perp, sz);
 	FREE_lint(Perp1);
 	FREE_lint(Perp2);
 	FREE_lint(Perp3);
@@ -2086,7 +2086,7 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 	}
 	if (f_vv) {
 		cout << "pts=";
-		lint_vec_print(cout, pts, nb_pts);
+		Orbiter->Lint_vec.print(cout, pts, nb_pts);
 		cout << endl;
 		for (i = 0; i < nb_pts; i++) {
 			unrank_point(v1, 1, pts[i], 0 /* verbose_level*/);
@@ -2132,7 +2132,7 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 			cout << "orthogonal::perp_of_k_points perp of pt "
 					<< i << " / " << nb_pts << " has size "
 					<< perp_sz << " and is equal to ";
-			lint_vec_print_fully(cout, Perp_without_pt[i], perp_sz);
+			Orbiter->Lint_vec.print_fully(cout, Perp_without_pt[i], perp_sz);
 			cout << endl;
 			}
 		if (perp_sz != sz0) {
@@ -2156,7 +2156,7 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 	if (f_v) {
 		cout << "orthogonal::perp_of_k_points intersection of "
 				"P[0] and P[1] has size " << sz1 << " : ";
-		lint_vec_print_fully(cout, Intersection1, sz1);
+		Orbiter->Lint_vec.print_fully(cout, Intersection1, sz1);
 		cout << endl;
 		}
 	for (i = 2; i < nb_pts; i++) {
@@ -2169,7 +2169,7 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 		if (f_v) {
 			cout << "orthogonal::perp_of_k_points intersection "
 					"with P[" << i << "] has size " << sz2 << " : ";
-			lint_vec_print_fully(cout, Intersection2, sz2);
+			Orbiter->Lint_vec.print_fully(cout, Intersection2, sz2);
 			cout << endl;
 			}
 
@@ -2186,7 +2186,7 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 
 
 	Perp = NEW_lint(sz1);
-	lint_vec_copy(Intersection1, Perp, sz1);
+	Orbiter->Lint_vec.copy(Intersection1, Perp, sz1);
 	sz = sz1;
 
 

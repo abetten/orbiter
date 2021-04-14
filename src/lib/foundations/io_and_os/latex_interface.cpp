@@ -953,7 +953,7 @@ void latex_interface::print_integer_matrix_with_standard_labels_and_offset_text(
 {
 	int i, j, w;
 
-	w = int_matrix_max_log_of_entries(p, m, n);
+	w = Orbiter->Int_vec.matrix_max_log_of_entries(p, m, n);
 
 	for (j = 0; j < w; j++) {
 		ost << " ";
@@ -976,7 +976,7 @@ void latex_interface::print_lint_matrix_with_standard_labels_and_offset_text(
 {
 	int i, j, w;
 
-	w = lint_matrix_max_log_of_entries(p, m, n);
+	w = Orbiter->Lint_vec.matrix_max_log_of_entries(p, m, n);
 
 	for (j = 0; j < w; j++) {
 		ost << " ";
@@ -1072,7 +1072,7 @@ void latex_interface::print_integer_matrix_tex_block_by_block(std::ostream &ost,
 			cout << "print_integer_matrix_tex_block_by_block I="
 				<< I << " J=" << J << " v=" << v
 				<< " w=" << w << " M=" << endl;
-			int_matrix_print(M, v, w);
+			Orbiter->Int_vec.matrix_print(M, v, w);
 			print_integer_matrix_with_standard_labels_and_offset(
 				ost, M, v, w,
 				I * block_width,
@@ -1138,7 +1138,7 @@ void latex_interface::lint_vec_print_as_matrix(std::ostream &ost,
 	int i;
 
 	w = NEW_lint(len + width - 1);
-	lint_vec_copy(v, w, len);
+	Orbiter->Lint_vec.copy(v, w, len);
 	for (i = 0; i < width - 1; i++) {
 		w[len + i] = 0;
 		}

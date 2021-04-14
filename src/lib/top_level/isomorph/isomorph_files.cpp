@@ -677,7 +677,7 @@ void isomorph::build_up_database(int nb_files,
 					}
 				else {
 					cout << nb_total << " : " << data[0] << " : ";
-					lint_vec_print(cout, data + 1, size);
+					Orbiter->Lint_vec.print(cout, data + 1, size);
 					cout << endl;
 					}
 				}
@@ -1654,7 +1654,7 @@ void isomorph::print_isomorphism_types(int f_select,
 		load_solution(id, data);
 		cout << "isomorphism type " << i << " : " << j << " : "
 				<< id << " : ";
-		lint_vec_print(cout, data, size);
+		Orbiter->Lint_vec.print(cout, data, size);
 		cout << endl;
 #if 0
 		for (j = 0; j < size; j++) {
@@ -1730,7 +1730,7 @@ void isomorph::induced_action_on_set_and_kernel(
 		cout << "isomorph::induced_action_on_set_and_kernel "
 				"calling induced_action_by_restriction" << endl;
 		cout << "set: ";
-		lint_vec_print(cout, set, size);
+		Orbiter->Lint_vec.print(cout, set, size);
 		cout << endl;
 		}
 

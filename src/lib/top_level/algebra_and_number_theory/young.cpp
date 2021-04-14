@@ -252,7 +252,7 @@ void young::create_module(int *h_alpha,
 
 	if (FALSE) {
 		cout << "M1=" << endl;
-		int_matrix_print(M1, goi, sz);
+		Orbiter->Int_vec.matrix_print(M1, goi, sz);
 		}
 
 	for (i = 0; i < goi * sz; i++) {

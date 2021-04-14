@@ -274,7 +274,7 @@ void BLT_set_create::init(
 		}
 
 		set = NEW_lint(OA->Descr->F->q + 1);
-		lint_vec_copy(K.BLT_representative(OA->Descr->F->q, Descr->iso), set, OA->Descr->F->q + 1);
+		Orbiter->Lint_vec.copy(K.BLT_representative(OA->Descr->F->q, Descr->iso), set, OA->Descr->F->q + 1);
 
 		Sg = NEW_OBJECT(strong_generators);
 
@@ -323,7 +323,7 @@ void BLT_set_create::init(
 
 	if (f_v) {
 		cout << "BLT_set_create::init set = ";
-		lint_vec_print(cout, set, OA->Descr->F->q + 1);
+		Orbiter->Lint_vec.print(cout, set, OA->Descr->F->q + 1);
 		cout << endl;
 	}
 

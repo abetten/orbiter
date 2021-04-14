@@ -56,7 +56,7 @@ void int_vector::allocate_and_init(int len, long int *V)
 	M = NEW_lint(len);
 	m = len;
 	alloc_length = len;
-	lint_vec_copy(V, M, len);
+	Orbiter->Lint_vec.copy(V, M, len);
 }
 
 void int_vector::allocate_and_init_int(int len, int *V)
@@ -119,12 +119,12 @@ int &int_vector::length()
 
 void int_vector::print(ostream &ost)
 {
-	lint_vec_print(ost, M, m);
+	Orbiter->Lint_vec.print(ost, M, m);
 }
 
 void int_vector::zero()
 {
-	lint_vec_zero(M, m);
+	Orbiter->Lint_vec.zero(M, m);
 }
 
 int int_vector::search(int a, int &idx)
@@ -153,7 +153,7 @@ void int_vector::make_space()
 		new_alloc_length = 1;
 		}
 	M1 = NEW_lint(new_alloc_length);
-	lint_vec_copy(M, M1, m);
+	Orbiter->Lint_vec.copy(M, M1, m);
 	if (M) {
 		FREE_lint(M);
 		}
@@ -230,12 +230,12 @@ uint32_t int_vector::hash()
 
 int int_vector::minimum()
 {
-	return lint_vec_minimum(M, m);
+	return Orbiter->Lint_vec.minimum(M, m);
 }
 
 int int_vector::maximum()
 {
-	return lint_vec_maximum(M, m);
+	return Orbiter->Lint_vec.maximum(M, m);
 }
 
 

@@ -94,7 +94,7 @@ void semifield_downstep_node::init(
 
 	if (f_v) {
 		cout << "subspace_basis:" << endl;
-		int_matrix_print(subspace_basis, level, k2);
+		Orbiter->Int_vec.matrix_print(subspace_basis, level, k2);
 		//cout << "base_cols:" << endl;
 		//int_vec_print(cout, subspace_base_cols, level);
 		//cout << endl;

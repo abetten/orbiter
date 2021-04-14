@@ -214,7 +214,7 @@ void hadamard_classify::init(int n, int f_draw,
 
 	cout << "color graph:" << endl;
 	if (N < 30) {
-		int_matrix_print(color_graph, N, N);
+		Orbiter->Int_vec.matrix_print(color_graph, N, N);
 		}
 	else {
 		cout << "Too big to print" << endl;
@@ -353,7 +353,7 @@ void hadamard_classify::init(int n, int f_draw,
 	for (h = 0; h < nb_orbits; h++) {
 		gen->get_set_by_level(n, h, set);
 		cout << "Orbit " << h << " is the set ";
-		lint_vec_print(cout, set, n);
+		Orbiter->Lint_vec.print(cout, set, n);
 		cout << endl;
 
 
@@ -378,7 +378,7 @@ void hadamard_classify::init(int n, int f_draw,
 				}
 			}
 		cout << "The Hadamard matrix " << h << " is:" << endl;
-		int_matrix_print(H, n, n);
+		Orbiter->Int_vec.matrix_print(H, n, n);
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < n; j++) {
 				a = H[i * n + j];
@@ -396,7 +396,7 @@ void hadamard_classify::init(int n, int f_draw,
 				}
 			}
 		cout << "The matrix H * H^t is:" << endl;
-		int_matrix_print(M, n, n);
+		Orbiter->Int_vec.matrix_print(M, n, n);
 		}
 }
 
@@ -433,15 +433,15 @@ void hadamard_classify::early_test_func(long int *S, int len,
 
 	if (f_v) {
 		cout << "hadamard_classify::early_test_func checking set ";
-		lint_vec_print(cout, S, len);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
-		lint_vec_print(cout, candidates, nb_candidates);
+		Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
 		cout << endl;
 		}
 	if (len == 0) {
 		nb_good_candidates = nb_candidates;
-		lint_vec_copy(candidates, good_candidates, nb_candidates);
+		Orbiter->Lint_vec.copy(candidates, good_candidates, nb_candidates);
 		return;
 		}
 

@@ -92,7 +92,7 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 		cout << endl;
 		}
 	if (f_vvv) {
-		lint_vec_print(cout, current_set, D->size);
+		Orbiter->Lint_vec.print(cout, current_set, D->size);
 		cout << endl;
 		}
 	if (depth == A->base_len()) {
@@ -168,7 +168,7 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 				<< " base_point=" << base_point << endl;
 		}
 	if (f_vvv) {
-		lint_vec_print(cout, current_set, D->size);
+		Orbiter->Lint_vec.print(cout, current_set, D->size);
 		cout << endl;
 		}
 	D->nb_choices[depth] = 0;
@@ -244,7 +244,7 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 				<< " coset=" << coset << endl;
 			}
 		if (f_vvv) {
-			lint_vec_print(cout, current_set, D->size);
+			Orbiter->Lint_vec.print(cout, current_set, D->size);
 			cout << endl;
 			}
 		A->Sims->coset_rep_inv(D->coset_rep, depth, coset, 0 /*verbose_level*/);
@@ -259,13 +259,13 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 		A->map_a_set(current_set, next_set, D->size, D->coset_rep, 0);
 		if (FALSE /*f_vv*/) {
 			cout << "image set: ";
-			lint_vec_print(cout, next_set, D->size);
+			Orbiter->Lint_vec.print(cout, next_set, D->size);
 			cout << endl;
 			}
 		Sorting.lint_vec_quicksort_increasingly(next_set, D->size);
 		if (f_vv) {
 			cout << "sorted image : ";
-			lint_vec_print(cout, next_set, D->size);
+			Orbiter->Lint_vec.print(cout, next_set, D->size);
 			cout << endl;
 			}
 		cmp = lint_vec_compare(next_set, D->the_set, D->size);
@@ -289,10 +289,10 @@ int action_is_minimal_recursion(action_is_minimal_data *D,
 			if (f_v) {
 				cout << "the current set is less than the original set, "
 						"so the original set was not minimal" << endl;
-				lint_vec_print(cout, next_set, D->size);
+				Orbiter->Lint_vec.print(cout, next_set, D->size);
 				cout << endl;
 				}
-			lint_vec_copy(next_set, D->witness, D->size);
+			Orbiter->Lint_vec.copy(next_set, D->witness, D->size);
 			int k, choice;
 			Orbiter->Int_vec.zero(A->Sims->path, A->base_len());
 			for (k = 0; k <= depth; k++) {
@@ -376,7 +376,7 @@ void action::make_canonical(int size, long int *set,
 		}
 	if (f_vv) {
 		cout << "the input set is ";
-		lint_vec_print(cout, set, size);
+		Orbiter->Lint_vec.print(cout, set, size);
 		cout << endl;
 		}
 
@@ -392,7 +392,7 @@ void action::make_canonical(int size, long int *set,
 	set1 = NEW_lint(size);
 	set2 = NEW_lint(size);
 	
-	lint_vec_copy(set, set1, size);
+	Orbiter->Lint_vec.copy(set, set1, size);
 	element_one(Elt1, FALSE);
 	
 	while (TRUE) {
@@ -421,18 +421,18 @@ void action::make_canonical(int size, long int *set,
 		if (f_v) {
 			cout << "action::make_canonical finished iteration " << cnt;
 			if (f_vv) {
-				lint_vec_print(cout, set2, size);
+				Orbiter->Lint_vec.print(cout, set2, size);
 				}
 			cout << " with " 
 				<< backtrack_nodes << " backtrack nodes, total:"
 				<< total_backtrack_nodes << endl;
 			}
-		lint_vec_copy(set2, set1, size);
+		Orbiter->Lint_vec.copy(set2, set1, size);
 		element_mult(Elt1, Elt2, Elt3, 0);
 		element_move(Elt3, Elt1, 0);
 		
 		}
-	lint_vec_copy(set1, canonical_set, size);
+	Orbiter->Lint_vec.copy(set1, canonical_set, size);
 	element_move(Elt1, transporter, FALSE);
 	
 	if (!check_if_transporter_for_set(transporter,
@@ -449,7 +449,7 @@ void action::make_canonical(int size, long int *set,
 		}
 	if (f_vv) {
 		cout << "the canonical set is ";
-		lint_vec_print(cout, canonical_set, size);
+		Orbiter->Lint_vec.print(cout, canonical_set, size);
 		cout << endl;
 		}
 
@@ -483,7 +483,7 @@ int action::is_minimal_witness(int size, long int *set,
 		}
 	if (f_vvv) {
 		cout << "the input set is ";
-		lint_vec_print(cout, set, size);
+		Orbiter->Lint_vec.print(cout, set, size);
 		cout << endl;
 		}
 	
@@ -551,7 +551,7 @@ int action::is_minimal_witness(int size, long int *set,
 		}
 
 	D.the_set = NEW_lint((A.base_len() + 1) * size);
-	lint_vec_copy(set, D.the_set, size);
+	Orbiter->Lint_vec.copy(set, D.the_set, size);
 	Sorting.lint_vec_quicksort_increasingly(D.the_set, size);
 	
 	D.backtrack_node = 0;

@@ -140,7 +140,7 @@ void orthogonal::Siegel_Transformation2(int *T,
 	FREE_int(Root);
 	if (f_vv) {
 		cout << "the Siegel transformation is:" << endl;
-		print_integer_matrix(cout, T, n, n);
+		Orbiter->Int_vec.print_integer_matrix(cout, T, n, n);
 	}
 	if (f_v) {
 		cout << "orthogonal::Siegel_Transformation2 done" << endl;
@@ -210,35 +210,35 @@ void orthogonal::Siegel_Transformation3(int *T,
 
 	if (f_vv) {
 		cout << "before perp, the matrix B is:" << endl;
-		print_integer_matrix(cout, B, n, n);
+		Orbiter->Int_vec.print_integer_matrix(cout, B, n, n);
 	}
 	F->perp(n, 2, B, Gram, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the matrix B is:" << endl;
-		print_integer_matrix(cout, B, n, n);
+		Orbiter->Int_vec.print_integer_matrix(cout, B, n, n);
 	}
 	F->invert_matrix(B, Bv, n, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the matrix Bv is:" << endl;
-		print_integer_matrix(cout, B, n, n);
+		Orbiter->Int_vec.print_integer_matrix(cout, B, n, n);
 	}
 	F->mult_matrix_matrix(w, Bv, z, 1, n, n,
 			0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the coefficient vector z is:" << endl;
-		print_integer_matrix(cout, z, 1, n);
+		Orbiter->Int_vec.print_integer_matrix(cout, z, 1, n);
 	}
 	z[0] = 0;
 	z[1] = 0;
 	if (f_vv) {
 		cout << "the coefficient vector z is:" << endl;
-		print_integer_matrix(cout, z, 1, n);
+		Orbiter->Int_vec.print_integer_matrix(cout, z, 1, n);
 	}
 	F->mult_matrix_matrix(z, B, x, 1, n, n,
 			0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the vector x is:" << endl;
-		print_integer_matrix(cout, x, 1, n);
+		Orbiter->Int_vec.print_integer_matrix(cout, x, 1, n);
 	}
 	minus_one = F->negate(1);
 	for (i = 0; i < n; i++) {
@@ -246,12 +246,12 @@ void orthogonal::Siegel_Transformation3(int *T,
 	}
 	if (f_vv) {
 		cout << "the vector -x is:" << endl;
-		print_integer_matrix(cout, x, 1, n);
+		Orbiter->Int_vec.print_integer_matrix(cout, x, 1, n);
 	}
 	make_Siegel_Transformation(T, x, B, n, Gram, FALSE);
 	if (f_vv) {
 		cout << "the Siegel transformation is:" << endl;
-		print_integer_matrix(cout, T, n, n);
+		Orbiter->Int_vec.print_integer_matrix(cout, T, n, n);
 	}
 	if (f_v) {
 		cout << "orthogonal::Siegel_Transformation3 done" << endl;
@@ -444,7 +444,7 @@ void orthogonal::create_random_Siegel_transformation(
 		cout << ",";
 		Orbiter->Int_vec.print(cout, v, d);
 		cout << "}=" << endl;
-		int_matrix_print(Mtx, d, d);
+		Orbiter->Int_vec.matrix_print(Mtx, d, d);
 	}
 	FREE_int(u);
 	FREE_int(v);
@@ -708,10 +708,10 @@ void orthogonal::create_random_orthogonal_reflection(
 			cout << "create_random_orthogonal_reflection "
 					"The Gram matrix is not preserved" << endl;
 			cout << "Gram matrix:" << endl;
-			print_integer_matrix_width(cout, Gram_matrix,
+			Orbiter->Int_vec.print_integer_matrix_width(cout, Gram_matrix,
 					d, d, d, F->log10_of_q);
 			cout << "transformed Gram matrix:" << endl;
-			print_integer_matrix_width(cout, new_Gram,
+			Orbiter->Int_vec.print_integer_matrix_width(cout, new_Gram,
 					d, d, d, F->log10_of_q);
 			exit(1);
 			}
@@ -753,7 +753,7 @@ void orthogonal::make_orthogonal_reflection(
 
 	if (f_vv) {
 		cout << "orthogonal::make_orthogonal_reflection created:" << endl;
-		print_integer_matrix(cout, M, n, n);
+		Orbiter->Int_vec.print_integer_matrix(cout, M, n, n);
 	}
 	if (f_v) {
 		cout << "orthogonal::make_orthogonal_reflection done" << endl;
@@ -819,10 +819,10 @@ void orthogonal::make_Siegel_Transformation(int *M, int *v, int *u,
 	}
 	if (f_vv) {
 		cout << "Siegel matrix:" << endl;
-		print_integer_matrix_width(cout, M, n, n, n, 2);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, M, n, n, n, 2);
 		F->transform_form_matrix(M, Gram, Gram2, n, 0 /* verbose_level */);
 		cout << "transformed Gram matrix:" << endl;
-		print_integer_matrix_width(cout, Gram2, n, n, n, 2);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, Gram2, n, n, n, 2);
 		cout << endl;
 	}
 	if (f_v) {

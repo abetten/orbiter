@@ -108,7 +108,7 @@ void hjelmslev::unrank_lint(int *M, long int rk, int verbose_level)
 	G->unrank_lint(a, 0);
 	Gg.AG_element_unrank(R->get_e(), v, 1, k * (n - k), b);
 	if (f_vv) {
-		print_integer_matrix_width(cout, G->M, k, n, n, 5);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, G->M, k, n, n, 5);
 		Orbiter->Int_vec.print(cout, v, k * (n - k));
 		cout << endl;
 	}
@@ -139,7 +139,7 @@ long int hjelmslev::rank_lint(int *M, int verbose_level)
 	
 	if (f_v) {
 		cout << "hjelmslev::rank_lint " << endl;
-		print_integer_matrix_width(cout, M, k, n, n, 5);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, M, k, n, n, 5);
 		cout << "verbose_level=" << verbose_level << endl;
 		}
 	for (i = 0; i < k * n; i++) {
@@ -151,7 +151,7 @@ long int hjelmslev::rank_lint(int *M, int verbose_level)
 	if (f_v) {
 		cout << "hjelmslev::rank_lint after Gauss, "
 				"rk_mtx=" << rk_mtx << endl;
-		print_integer_matrix_width(cout, Mtx, k, n, n, 5);
+		Orbiter->Int_vec.print_integer_matrix_width(cout, Mtx, k, n, n, 5);
 		cout << "base_cols=";
 		Orbiter->Int_vec.print(cout, base_cols, rk_mtx);
 		cout << endl;

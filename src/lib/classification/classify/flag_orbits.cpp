@@ -195,7 +195,7 @@ void flag_orbits::write_file(ofstream &fp, int verbose_level)
 
 	if (f_vv) {
 		cout << "flag_orbits::write_file Pt matrix:" << endl;
-		lint_matrix_print(Pt, nb_flag_orbits, pt_representation_sz);
+		Orbiter->Lint_vec.matrix_print(Pt, nb_flag_orbits, pt_representation_sz);
 		}
 	for (i = 0; i < nb_flag_orbits * pt_representation_sz; i++) {
 		fp.write((char *) &Pt[i], sizeof(long int));
@@ -236,7 +236,7 @@ void flag_orbits::read_file(ifstream &fp,
 		}
 	if (f_vv) {
 		cout << "flag_orbits::read_file Pt matrix:" << endl;
-		lint_matrix_print(Pt, nb_flag_orbits, pt_representation_sz);
+		Orbiter->Lint_vec.matrix_print(Pt, nb_flag_orbits, pt_representation_sz);
 		}
 
 	if (f_v) {

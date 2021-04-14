@@ -239,7 +239,7 @@ void boolean_function_domain::setup_polynomial_rings(int verbose_level)
 
 	if (FALSE) {
 		cout << "Kernel of evaluation map:" << endl;
-		int_matrix_print(Kernel, dim_kernel, 2);
+		Orbiter->Int_vec.matrix_print(Kernel, dim_kernel, 2);
 	}
 
 	if (f_v) {

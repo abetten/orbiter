@@ -986,7 +986,7 @@ void unipoly_domain::Frobenius_matrix(int *&Frob,
 	}
 	if (f_vv) {
 		cout << "unipoly_domain::Frobenius_matrix=" << endl;
-		int_matrix_print(Frob,
+		Orbiter->Int_vec.matrix_print(Frob,
 			factor_polynomial_degree, factor_polynomial_degree);
 		cout << endl;
 	}
@@ -1020,7 +1020,7 @@ void unipoly_domain::Berlekamp_matrix(int *&B,
 	if (f_v) {
 		cout << "unipoly_domain::Berlekamp_matrix after Frobenius_matrix" << endl;
 		cout << "Frobenius matros:" << endl;
-		print_integer_matrix(cout, B,
+		Orbiter->Int_vec.print_integer_matrix(cout, B,
 				factor_polynomial_degree, factor_polynomial_degree);
 	}
 	m1 = F->negate(1);
@@ -1034,7 +1034,7 @@ void unipoly_domain::Berlekamp_matrix(int *&B,
 		cout << "unipoly_domain::Berlekamp_matrix "
 				"of degree " << factor_polynomial_degree
 				<< " = " << endl;
-		print_integer_matrix(cout, B,
+		Orbiter->Int_vec.print_integer_matrix(cout, B,
 				factor_polynomial_degree, factor_polynomial_degree);
 		cout << endl;
 	}
@@ -1724,7 +1724,7 @@ void unipoly_domain::compute_normal_basis(int d,
 	if (f_vv) {
 		cout << "unipoly_domain::compute_normal_basis "
 			"Normal_basis = " << endl;
-		int_matrix_print(Normal_basis, deg, deg);
+		Orbiter->Int_vec.matrix_print(Normal_basis, deg, deg);
 	}
 
 	FREE_int(v);
@@ -2164,7 +2164,7 @@ int unipoly_domain::is_irreducible(unipoly_object a,
 	}
 	if (f_vv) {
 		cout << "unipoly_domain::is_irreducible Berlekamp_matrix=" << endl;
-		int_matrix_print(B, factor_polynomial_degree, factor_polynomial_degree);
+		Orbiter->Int_vec.matrix_print(B, factor_polynomial_degree, factor_polynomial_degree);
 	}
 	
 	base_cols = NEW_int(factor_polynomial_degree);
@@ -3305,7 +3305,7 @@ void unipoly_domain::characteristic_polynomial(
 	}
 	if (f_vv) {
 		cout << "unipoly_domain::characteristic_polynomial M=" << endl;
-		int_matrix_print(Mtx, k, k);
+		Orbiter->Int_vec.matrix_print(Mtx, k, k);
 	}
 	m_one = F->negate(1);
 	M = NEW_OBJECTS(unipoly_object, k * k);

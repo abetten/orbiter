@@ -520,12 +520,12 @@ void packing_classify::lifting_prepare_function_new(
 	col_labels = NEW_lint(nb_cols);
 
 
-	lint_vec_copy(live_blocks2, col_labels, nb_cols);
+	Orbiter->Lint_vec.copy(live_blocks2, col_labels, nb_cols);
 
 
 	if (f_vv) {
 		cout << "packing_classify::lifting_prepare_function_new candidates: ";
-		lint_vec_print(cout, col_labels, nb_cols);
+		Orbiter->Lint_vec.print(cout, col_labels, nb_cols);
 		cout << " (nb_candidates=" << nb_cols << ")" << endl;
 	}
 

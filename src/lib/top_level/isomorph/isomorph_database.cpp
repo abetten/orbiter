@@ -660,7 +660,7 @@ void isomorph::create_level_database(int level, int verbose_level)
 				cout << "isomorph::create_level_database level "
 						<< level << " i=" << i << " / " << nb_nodes
 						<< " set=";
-				lint_vec_print(cout, set1, level);
+				Orbiter->Lint_vec.print(cout, set1, level);
 				cout << endl;
 				}
 
@@ -742,9 +742,9 @@ void isomorph::create_level_database(int level, int verbose_level)
 
 					if (f_vv /*f_vv && (i % print_mod) == 0*/) {
 						cout << "mapping ";
-						lint_vec_print(cout, set1, level + 1);
+						Orbiter->Lint_vec.print(cout, set1, level + 1);
 						cout << " to ";
-						lint_vec_print(cout, set2, level + 1);
+						Orbiter->Lint_vec.print(cout, set2, level + 1);
 						cout << endl;
 					}
 		

@@ -338,7 +338,7 @@ void poset::early_test_func(
 		}
 	}
 	else {
-		lint_vec_copy(candidates, good_candidates, nb_candidates);
+		Orbiter->Lint_vec.copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
 	}
 	if (f_v) {

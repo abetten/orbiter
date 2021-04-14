@@ -322,7 +322,7 @@ void file_io::read_candidates_for_one_orbit_from_file(std::string &prefix,
 					<< nb_candidates1 - nb_candidates2 << endl;
 		}
 
-		lint_vec_copy(candidates2, candidates1, nb_candidates2);
+		Orbiter->Lint_vec.copy(candidates2, candidates1, nb_candidates2);
 		nb_candidates1 = nb_candidates2;
 
 		FREE_lint(candidates2);
@@ -2224,7 +2224,7 @@ void file_io::read_set_from_file(std::string &fname,
 		}
 		if (f_vv) {
 			cout << "file_io::read_set_from_file the set is:" << endl;
-			lint_vec_print(cout, the_set, set_size);
+			Orbiter->Lint_vec.print(cout, the_set, set_size);
 			cout << endl;
 		}
 	}
@@ -2307,7 +2307,7 @@ void file_io::read_set_from_file_lint(std::string &fname,
 	}
 	if (f_vv) {
 		cout << "the set is:" << endl;
-		lint_vec_print(cout, the_set, set_size);
+		Orbiter->Lint_vec.print(cout, the_set, set_size);
 		cout << endl;
 	}
 }
@@ -2380,7 +2380,7 @@ void file_io::read_set_from_file_int4(std::string &fname,
 	}
 	if (f_vv) {
 		cout << "the set is:" << endl;
-		lint_vec_print(cout, the_set, set_size);
+		Orbiter->Lint_vec.print(cout, the_set, set_size);
 		cout << endl;
 	}
 }
@@ -2423,7 +2423,7 @@ void file_io::read_set_from_file_int8(std::string &fname,
 	}
 	if (f_vv) {
 		cout << "the set is:" << endl;
-		lint_vec_print(cout, the_set, set_size);
+		Orbiter->Lint_vec.print(cout, the_set, set_size);
 		cout << endl;
 	}
 }
@@ -2686,7 +2686,7 @@ void file_io::read_incidence_matrix_from_inc_file(int *&M, int &m, int &n,
 				if (f_vv) {
 					cout << "read_incidence_matrix_from_inc_file: "
 							"found the following incidence matrix:" << endl;
-					print_integer_matrix_width(cout,
+					Orbiter->Int_vec.print_integer_matrix_width(cout,
 						M, m, n, n, 1);
 				}
 				break;

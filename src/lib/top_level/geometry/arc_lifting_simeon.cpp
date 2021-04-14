@@ -181,7 +181,7 @@ void arc_lifting_simeon::early_test_func(long int *S, int len,
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
-		lint_vec_print(cout, candidates, nb_candidates);
+		Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
 		cout << endl;
 		}
 
@@ -190,7 +190,7 @@ void arc_lifting_simeon::early_test_func(long int *S, int len,
 	type_collected = NEW_int(len + 2);
 
 	if (len == 0) {
-		lint_vec_copy(candidates, good_candidates, nb_candidates);
+		Orbiter->Lint_vec.copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
 		}
 	else {
@@ -270,7 +270,7 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 		}
 	cout << "We found " << nb_external_lines
 			<< " external lines, they are: ";
-	lint_vec_print(cout, external_lines, nb_external_lines);
+	Orbiter->Lint_vec.print(cout, external_lines, nb_external_lines);
 	cout << endl;
 
 	cout << "compute bisecants and c2 points:" << endl;
@@ -448,7 +448,7 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 			// of external lines to get the arc:
 
 			sz = nb_external_lines;
-			lint_vec_copy(external_lines, S, nb_external_lines);
+			Orbiter->Lint_vec.copy(external_lines, S, nb_external_lines);
 			Sorting.lint_vec_heapsort(S, nb_external_lines);
 
 

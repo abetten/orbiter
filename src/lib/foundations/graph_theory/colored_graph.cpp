@@ -283,7 +283,7 @@ colored_graph *colored_graph::sort_by_color_classes(int verbose_level)
 		Color, A, 0 /* verbose_level */);
 	CG->init_user_data(user_data, user_data_size,
 			0 /* verbose_level */);
-	lint_vec_copy(Pts, CG->points, nb_points);
+	Orbiter->Lint_vec.copy(Pts, CG->points, nb_points);
 	FREE_int(A);	
 	FREE_int(Color);	
 	FREE_lint(Pts);
@@ -368,7 +368,7 @@ colored_graph *colored_graph::subgraph_by_color_classes(
 		Color, A, 0 /* verbose_level */);
 	CG->init_user_data(user_data, user_data_size,
 			0 /* verbose_level */);
-	lint_vec_copy(Pts, CG->points, l);
+	Orbiter->Lint_vec.copy(Pts, CG->points, l);
 	FREE_int(A);
 	FREE_int(Color);
 	FREE_lint(Pts);
@@ -467,7 +467,7 @@ colored_graph *colored_graph::subgraph_by_color_classes_with_condition(
 		Color, A, 0 /* verbose_level */);
 	CG->init_user_data(user_data, user_data_size,
 			0 /* verbose_level */);
-	lint_vec_copy(Pts, CG->points, nb_pts);
+	Orbiter->Lint_vec.copy(Pts, CG->points, nb_pts);
 	FREE_int(A);
 	FREE_int(Color);
 	FREE_lint(Pts);
@@ -643,7 +643,7 @@ void colored_graph::init_with_point_labels(int nb_points, int nb_colors, int nb_
 		colors,
 		Bitvec, f_ownership_of_bitvec,
 		verbose_level);
-	lint_vec_copy(point_labels, points, nb_points);
+	Orbiter->Lint_vec.copy(point_labels, points, nb_points);
 	if (f_v) {
 		cout << "colored_graph::init_with_point_labels done" << endl;
 	}
@@ -873,7 +873,7 @@ void colored_graph::init_user_data(long int *data,
 	}
 	user_data_size = data_size;
 	user_data = NEW_lint(data_size);
-	lint_vec_copy(data, user_data, data_size);
+	Orbiter->Lint_vec.copy(data, user_data, data_size);
 	if (f_v) {
 		cout << "colored_graph::init_user_data done" << endl;
 	}
@@ -2307,12 +2307,12 @@ void colored_graph::early_test_func_for_clique_search(
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
-		lint_vec_print(cout, candidates, nb_candidates);
+		Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
 		cout << endl;
 	}
 	if (len == 0) {
 		nb_good_candidates = nb_candidates;
-		lint_vec_copy(candidates, good_candidates, nb_candidates);
+		Orbiter->Lint_vec.copy(candidates, good_candidates, nb_candidates);
 		return;
 	}
 
@@ -2346,12 +2346,12 @@ void colored_graph::early_test_func_for_coclique_search(
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
-		lint_vec_print(cout, candidates, nb_candidates);
+		Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
 		cout << endl;
 		}
 	if (len == 0) {
 		nb_good_candidates = nb_candidates;
-		lint_vec_copy(candidates, good_candidates, nb_candidates);
+		Orbiter->Lint_vec.copy(candidates, good_candidates, nb_candidates);
 		return;
 		}
 
@@ -2387,12 +2387,12 @@ void colored_graph::early_test_func_for_path_and_cycle_search(
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
-		lint_vec_print(cout, candidates, nb_candidates);
+		Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
 		cout << endl;
 	}
 	if (len == 0) {
 		nb_good_candidates = nb_candidates;
-		lint_vec_copy(candidates, good_candidates, nb_candidates);
+		Orbiter->Lint_vec.copy(candidates, good_candidates, nb_candidates);
 		return;
 	}
 
