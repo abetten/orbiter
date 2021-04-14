@@ -653,7 +653,6 @@ void surface_object_properties::compute_axes(int verbose_level)
 void surface_object_properties::compute_gradient(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i;
 
 	if (f_v) {
 		cout << "surface_object_properties::compute_gradient" << endl;
@@ -664,34 +663,7 @@ void surface_object_properties::compute_gradient(int verbose_level)
 		cout << "surface_object_properties::compute_gradient SO->Surf->Poly2_4->get_nb_monomials() = " << SO->Surf->Poly2_4->get_nb_monomials() << endl;
 	}
 
-	gradient = NEW_int(4 * SO->Surf->Poly2_4->get_nb_monomials());
-
-	for (i = 0; i < 4; i++) {
-		if (f_v) {
-			cout << "surface_object_properties::compute_gradient i=" << i << endl;
-		}
-		if (f_v) {
-			cout << "surface_object_properties::compute_gradient eqn_in=";
-			Orbiter->Int_vec.print(cout, SO->eqn, 20);
-			cout << " = " << endl;
-			SO->Surf->Poly3_4->print_equation(cout, SO->eqn);
-			cout << endl;
-		}
-		SO->Surf->Partials[i].apply(SO->eqn,
-				gradient + i * SO->Surf->Poly2_4->get_nb_monomials(),
-				verbose_level - 2);
-		if (f_v) {
-			cout << "surface_object_properties::compute_gradient "
-					"partial=";
-			Orbiter->Int_vec.print(cout, gradient + i * SO->Surf->Poly2_4->get_nb_monomials(),
-					SO->Surf->Poly2_4->get_nb_monomials());
-			cout << " = ";
-			SO->Surf->Poly2_4->print_equation(cout,
-					gradient + i * SO->Surf->Poly2_4->get_nb_monomials());
-			cout << endl;
-		}
-	}
-
+	SO->Surf->compute_gradient(SO->eqn, gradient, verbose_level);
 
 	if (f_v) {
 		cout << "surface_object_properties::compute_gradient done" << endl;

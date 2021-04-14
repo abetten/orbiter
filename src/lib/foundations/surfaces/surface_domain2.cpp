@@ -1256,6 +1256,114 @@ void surface_domain::compute_local_coordinates_of_arc(
 	}
 }
 
+void surface_domain::compute_gradient(int *equation20, int *&gradient, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "surface_domain::compute_gradient" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "surface_domain::compute_gradient Poly2_4->get_nb_monomials() = " << Poly2_4->get_nb_monomials() << endl;
+	}
+
+	gradient = NEW_int(4 * Poly2_4->get_nb_monomials());
+
+	for (i = 0; i < 4; i++) {
+		if (f_v) {
+			cout << "surface_domain::compute_gradient i=" << i << endl;
+		}
+		if (f_v) {
+			cout << "surface_domain::compute_gradient eqn_in=";
+			Orbiter->Int_vec.print(cout, equation20, 20);
+			cout << " = " << endl;
+			Poly3_4->print_equation(cout, equation20);
+			cout << endl;
+		}
+		Partials[i].apply(equation20,
+				gradient + i * Poly2_4->get_nb_monomials(),
+				verbose_level - 2);
+		if (f_v) {
+			cout << "surface_domain::compute_gradient "
+					"partial=";
+			Orbiter->Int_vec.print(cout, gradient + i * Poly2_4->get_nb_monomials(),
+					Poly2_4->get_nb_monomials());
+			cout << " = ";
+			Poly2_4->print_equation(cout,
+					gradient + i * Poly2_4->get_nb_monomials());
+			cout << endl;
+		}
+	}
+
+
+	if (f_v) {
+		cout << "surface_domain::compute_gradient done" << endl;
+	}
+}
+
+long int surface_domain::compute_tangent_plane(int *pt_coords, int *equation20, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int nb_eqns = 4;
+	int i;
+	int w[4];
+	int *gradient;
+
+	if (f_v) {
+		cout << "surface_domain::compute_tangent_plane" << endl;
+	}
+	if (f_v) {
+		cout << "surface_domain::compute_tangent_plane before compute_gradient" << endl;
+	}
+	compute_gradient(equation20, gradient, verbose_level - 2);
+	if (f_v) {
+		cout << "surface_domain::compute_tangent_plane after compute_gradient" << endl;
+	}
+
+	for (i = 0; i < nb_eqns; i++) {
+		if (f_vv) {
+			cout << "surface_domain::compute_tangent_plane "
+					"gradient i=" << i << " / " << nb_eqns << endl;
+		}
+		if (FALSE) {
+			cout << "surface_domain::compute_tangent_plane "
+					"gradient " << i << " = ";
+			Orbiter->Int_vec.print(cout,
+					gradient + i * Poly2_4->get_nb_monomials(),
+					Poly2_4->get_nb_monomials());
+			cout << endl;
+		}
+		w[i] = Poly2_4->evaluate_at_a_point(
+				gradient + i * Poly2_4->get_nb_monomials(), pt_coords);
+		if (f_vv) {
+			cout << "surface_domain::compute_tangent_plane "
+					"value = " << w[i] << endl;
+		}
+	}
+	for (i = 0; i < nb_eqns; i++) {
+		if (w[i]) {
+			break;
+		}
+	}
+
+	if (i == nb_eqns) {
+		cout << "surface_domain::compute_tangent_plane the point is singular" << endl;
+		exit(1);
+	}
+	long int plane_rk;
+
+	plane_rk = P->plane_rank_using_dual_coordinates_in_three_space(
+			w /* eqn4 */,
+			0 /* verbose_level*/);
+
+	FREE_int(gradient);
+
+	return plane_rk;
+}
 
 
 

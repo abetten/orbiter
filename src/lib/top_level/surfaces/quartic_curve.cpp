@@ -1,5 +1,5 @@
 /*
- * surface_object_tangent_cone.cpp
+ * quartic_curve.cpp
  *
  *  Created on: Jul 15, 2020
  *      Author: betten
@@ -16,7 +16,7 @@ namespace orbiter {
 namespace top_level {
 
 
-surface_object_tangent_cone::surface_object_tangent_cone()
+quartic_curve::quartic_curve()
 {
 	SOA = NULL;
 
@@ -24,6 +24,12 @@ surface_object_tangent_cone::surface_object_tangent_cone()
 	transporter = NULL;
 	// int v[4];
 	pt_A = pt_B = 0;
+
+	Lines_nice = NULL;
+	nb_lines = 0;
+
+	Bitangents = NULL;
+	nb_bitangents = 0;
 
 	f1 = f2 = f3 = NULL;
 
@@ -60,10 +66,16 @@ surface_object_tangent_cone::surface_object_tangent_cone()
 
 
 
-surface_object_tangent_cone::~surface_object_tangent_cone()
+quartic_curve::~quartic_curve()
 {
 	if (transporter) {
 		FREE_int(transporter);
+	}
+	if (Lines_nice) {
+		FREE_lint(Lines_nice);
+	}
+	if (Bitangents) {
+		FREE_lint(Bitangents);
 	}
 	if (f1) {
 		FREE_int(f1);
@@ -112,29 +124,29 @@ surface_object_tangent_cone::~surface_object_tangent_cone()
 	}
 }
 
-void surface_object_tangent_cone::init(surface_object_with_action *SOA, int verbose_level)
+void quartic_curve::init(surface_object_with_action *SOA, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "surface_object_tangent_cone::init" << endl;
+		cout << "quartic_curve::init" << endl;
 	}
 
-	surface_object_tangent_cone::SOA = SOA;
+	quartic_curve::SOA = SOA;
 
 	if (f_v) {
-		cout << "surface_object_tangent_cone::init done" << endl;
+		cout << "quartic_curve::init done" << endl;
 	}
 }
 
-void surface_object_tangent_cone::quartic(int pt_orbit, int verbose_level)
+void quartic_curve::quartic(int pt_orbit, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	sorting Sorting;
 	int i, a;
 
 	if (f_v) {
-		cout << "surface_object_tangent_cone::quartic" << endl;
+		cout << "quartic_curve::quartic" << endl;
 	}
 
 
@@ -146,16 +158,19 @@ void surface_object_tangent_cone::quartic(int pt_orbit, int verbose_level)
 	transporter = NEW_int(SOA->Surf_A->A->elt_size_in_int);
 
 	if (f_v) {
-		cout << "surface_object_tangent_cone::quartic before compute_quartic" << endl;
+		cout << "quartic_curve::quartic before compute_quartic" << endl;
 	}
+
+
+
 	compute_quartic(pt_orbit,
-			SOA->SO->eqn,
+			SOA->SO->eqn, SOA->SO->Lines, SOA->SO->nb_lines,
 			verbose_level);
 	if (f_v) {
-		cout << "surface_object_tangent_cone::quartic after compute_quartic" << endl;
+		cout << "quartic_curve::quartic after compute_quartic" << endl;
 	}
 	if (f_v) {
-		cout << "surface_object_tangent_cone::quartic "
+		cout << "quartic_curve::quartic "
 				"equation_nice=" << endl;
 		SOA->Surf->Poly3_4->print_equation(cout, equation_nice);
 		cout << endl;
@@ -164,13 +179,13 @@ void surface_object_tangent_cone::quartic(int pt_orbit, int verbose_level)
 
 
 	if (f_v) {
-		cout << "surface_object_tangent_cone::quartic "
+		cout << "quartic_curve::quartic "
 				"before Surf->split_nice_equation" << endl;
 	}
 	SOA->Surf->split_nice_equation(equation_nice, f1, f2, f3,
 			0 /* verbose_level */);
 	if (f_v) {
-		cout << "surface_object_tangent_cone::quartic "
+		cout << "quartic_curve::quartic "
 			"after Surf->split_nice_equation" << endl;
 	}
 
@@ -195,13 +210,13 @@ void surface_object_tangent_cone::quartic(int pt_orbit, int verbose_level)
 
 
 	if (f_v) {
-		cout << "surface_object_tangent_cone::quartic "
+		cout << "quartic_curve::quartic "
 			"before Surf_A->A->map_a_set_and_reorder" << endl;
 	}
 	SOA->Surf_A->A->map_a_set_and_reorder(SOA->SO->Pts, Pts_on_surface,
 			nb_pts_on_surface, transporter, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "surface_object_tangent_cone::quartic "
+		cout << "quartic_curve::quartic "
 			"after Surf_A->A->map_a_set_and_reorder" << endl;
 	}
 	for (i = 0; i < nb_pts_on_surface; i++) {
@@ -244,7 +259,7 @@ void surface_object_tangent_cone::quartic(int pt_orbit, int verbose_level)
 
 
 	if (f_v) {
-		cout << "surface_object_tangent_cone::quartic before "
+		cout << "quartic_curve::quartic before "
 				"Surf->assemble_tangent_quadric" << endl;
 	}
 	SOA->Surf->assemble_tangent_quadric(f1, f2, f3,
@@ -254,7 +269,7 @@ void surface_object_tangent_cone::quartic(int pt_orbit, int verbose_level)
 	Pts_on_tangent_quadric = NEW_lint(SOA->Surf->P->N_points);
 
 	if (f_v) {
-		cout << "surface_object_tangent_cone::quartic "
+		cout << "quartic_curve::quartic "
 			"before Surf->Poly2_4->enumerate_points" << endl;
 	}
 
@@ -335,7 +350,7 @@ void surface_object_tangent_cone::quartic(int pt_orbit, int verbose_level)
 
 
 	if (f_v) {
-		cout << "surface_object_tangent_cone::quartic before "
+		cout << "quartic_curve::quartic before "
 			"Surf->Poly4_x123->enumerate_points" << endl;
 	}
 
@@ -426,43 +441,41 @@ void surface_object_tangent_cone::quartic(int pt_orbit, int verbose_level)
 }
 
 
-void surface_object_tangent_cone::compute_quartic(int pt_orbit,
-	int *equation,
+void quartic_curve::compute_quartic(int pt_orbit,
+	int *equation, long int *Lines, int nb_lines,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int *Elt;
-	int f;
+	int fst;
 
 	if (f_v) {
-		cout << "surface_object_tangent_cone::compute_quartic" << endl;
+		cout << "quartic_curve::compute_quartic" << endl;
 		cout << "pt_orbit=" << pt_orbit << endl;
 	}
 
 	if (SOA->Orbits_on_points_not_on_lines == NULL) {
-		cout << "surface_object_tangent_cone::compute_quartic "
+		cout << "quartic_curve::compute_quartic "
 				"Orbits_on_points_not_on_lines has not been computed" << endl;
 		exit(1);
 	}
 	if (pt_orbit >= SOA->Orbits_on_points_not_on_lines->nb_orbits) {
-		cout << "surface_object_tangent_cone::compute_quartic "
+		cout << "quartic_curve::compute_quartic "
 				"pt_orbit >= Orbits_on_points_not_on_lines->nb_orbits" << endl;
 		exit(1);
 	}
 	int i;
 
-	//Elt = NEW_int(Surf_A->A->elt_size_in_int);
 	v[0] = 1;
 	v[1] = 0;
 	v[2] = 0;
 	v[3] = 0;
-	pt_B = SOA->Surf->rank_point(v);
-	f = SOA->Orbits_on_points_not_on_lines->orbit_first[pt_orbit];
-	i = SOA->Orbits_on_points_not_on_lines->orbit[f];
+	pt_B = SOA->Surf->rank_point(v); // = 0
+	fst = SOA->Orbits_on_points_not_on_lines->orbit_first[pt_orbit];
+	i = SOA->Orbits_on_points_not_on_lines->orbit[fst];
 	pt_A = SOA->SO->SOP->Pts_not_on_lines[i];
 
 	if (f_v) {
-		cout << "surface_object_tangent_cone::compute_quartic "
+		cout << "quartic_curve::compute_quartic "
 			"pt_A = " << pt_A << " pt_B=" << pt_B << endl;
 	}
 
@@ -471,7 +484,7 @@ void surface_object_tangent_cone::compute_quartic(int pt_orbit,
 			pt_A, pt_B, transporter, verbose_level);
 
 	if (f_v) {
-		cout << "surface_object_tangent_cone::compute_quartic transporter element=" << endl;
+		cout << "quartic_curve::compute_quartic transporter element=" << endl;
 	}
 	SOA->Surf_A->A->element_print_quick(transporter, cout);
 
@@ -479,22 +492,100 @@ void surface_object_tangent_cone::compute_quartic(int pt_orbit,
 			transporter, equation /*int *input*/,
 			equation_nice /* int *output */, verbose_level);
 	if (f_v) {
-		cout << "surface_object_tangent_cone::compute_quartic "
+		cout << "quartic_curve::compute_quartic "
 			"equation_nice=" << endl;
 		SOA->Surf->Poly3_4->print_equation(cout, equation_nice);
 		cout << endl;
 	}
 
-
-	//FREE_int(Elt);
 	if (f_v) {
-		cout << "surface_object_tangent_cone::compute_quartic done" << endl;
+		cout << "quartic_curve::compute_quartic mapping the lines" << endl;
+	}
+	quartic_curve::nb_lines = nb_lines;
+	Lines_nice = NEW_lint(nb_lines);
+	nb_bitangents = nb_lines + 1;
+	Bitangents = NEW_lint(nb_lines + 1);
+	for (i = 0; i < nb_lines; i++) {
+
+		int Basis8[8];
+		int Basis6[6];
+		int j;
+
+		Lines_nice[i] = SOA->Surf_A->A2->element_image_of(Lines[i], transporter, 0);
+
+		SOA->Surf_A->PA->P->Grass_lines->unrank_lint_here(Basis8, Lines_nice[i], 0);
+		if (f_v) {
+			cout << "quartic_curve::compute_quartic Basis8=" << endl;
+			Orbiter->Int_vec.matrix_print(Basis8, 2, 4);
+		}
+
+		for (j = 0; j < 2; j++) {
+			Orbiter->Int_vec.copy(Basis8 + j * 4 + 1, Basis6 + j * 3, 3);
+		}
+		if (f_v) {
+			cout << "quartic_curve::compute_quartic Basis6=" << endl;
+			Orbiter->Int_vec.matrix_print(Basis6, 2, 3);
+		}
+		Bitangents[i] = SOA->Surf_A->PA->PA2->P->Grass_lines->rank_lint_here(Basis6, 0);
+		if (f_v) {
+			cout << "quartic_curve::compute_quartic Bitangents[" << i << "] = " << Bitangents[i] << endl;
+		}
+	}
+	if (f_v) {
+		cout << "quartic_curve::compute_quartic after mapping the lines" << endl;
+	}
+
+	long int plane_rk;
+
+	if (f_v) {
+		cout << "quartic_curve::compute_quartic before SOA->SO->Surf->compute_tangent_plane" << endl;
+	}
+
+	plane_rk = SOA->SO->Surf->compute_tangent_plane(v, equation_nice, verbose_level);
+
+
+	if (f_v) {
+		cout << "quartic_curve::compute_quartic after SOA->SO->Surf->compute_tangent_plane" << endl;
+	}
+	if (f_v) {
+		cout << "quartic_curve::compute_quartic plane_rk = " << plane_rk << endl;
+	}
+	int Basis12[12];
+
+	SOA->Surf->unrank_plane(Basis12, plane_rk);
+	if (f_v) {
+		cout << "quartic_curve::compute_quartic Basis12=" << endl;
+		Orbiter->Int_vec.matrix_print(Basis12, 3, 4);
+	}
+	int Basis6[6];
+	int j;
+
+	for (j = 0; j < 2; j++) {
+		Orbiter->Int_vec.copy(Basis12 + (j + 1) * 4 + 1, Basis6 + j * 3, 3);
+	}
+	Bitangents[nb_lines] = SOA->Surf_A->PA->PA2->P->Grass_lines->rank_lint_here(Basis6, 0);
+	if (f_v) {
+		cout << "quartic_curve::compute_quartic Bitangents[nb_lines] = " << Bitangents[nb_lines] << endl;
+	}
+
+
+	if (f_v) {
+		cout << "quartic_curve::compute_quartic Lines_nice = ";
+		Orbiter->Lint_vec.print(cout, Lines_nice, nb_lines);
+		cout << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "quartic_curve::compute_quartic done" << endl;
 	}
 }
 
 
 
-void surface_object_tangent_cone::cheat_sheet_quartic_curve(
+void quartic_curve::cheat_sheet_quartic_curve(
 		std::ostream &ost,
 		std::ostream &ost_curves,
 	int verbose_level)
@@ -502,14 +593,14 @@ void surface_object_tangent_cone::cheat_sheet_quartic_curve(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "surface_object_tangent_cone::cheat_sheet_quartic_curve" << endl;
+		cout << "quartic_curve::cheat_sheet_quartic_curve" << endl;
 	}
 
 	int i;
 
 
 
-	cout << "surface_object_tangent_cone::cheat_sheet_quartic_curve "
+	cout << "quartic_curve::cheat_sheet_quartic_curve "
 			"equation_nice=" << endl;
 	SOA->Surf->Poly3_4->print_equation(cout, equation_nice);
 	cout << endl;
@@ -639,7 +730,7 @@ void surface_object_tangent_cone::cheat_sheet_quartic_curve(
 
 
 	cout << "We found " << sz_curve << " points on "
-			"the quartic quadric." << endl;
+			"the quartic curve." << endl;
 
 	ost << "The " << sz_curve << " points on the "
 			"quartic curve are:\\\\" << endl;
@@ -719,7 +810,7 @@ void surface_object_tangent_cone::cheat_sheet_quartic_curve(
 	moved_surface = NEW_OBJECT(set_and_stabilizer);
 
 	if (f_v) {
-		cout << "surface_object_tangent_cone::cheat_sheet_quartic_curve creating moved_surface" << endl;
+		cout << "quartic_curve::cheat_sheet_quartic_curve creating moved_surface" << endl;
 	}
 	moved_surface->init_everything(SOA->Surf_A->A,
 			SOA->Surf_A->A, SOA->SO->Pts, SOA->SO->nb_pts,
@@ -728,19 +819,19 @@ void surface_object_tangent_cone::cheat_sheet_quartic_curve(
 	//stab_gens_moved_surface = SaS->Strong_gens->create_copy();
 
 	if (f_v) {
-		cout << "surface_object_tangent_cone::cheat_sheet_quartic_curve before apply_to_self" << endl;
+		cout << "quartic_curve::cheat_sheet_quartic_curve before apply_to_self" << endl;
 	}
 	moved_surface->apply_to_self(transporter,
 			0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "surface_object_tangent_cone::cheat_sheet_quartic_curve before moved_surface->Strong_gens->point_stabilizer"
+		cout << "quartic_curve::cheat_sheet_quartic_curve before moved_surface->Strong_gens->point_stabilizer"
 			<< endl;
 	}
 	stab_gens_P0 = moved_surface->Strong_gens->point_stabilizer(
 			0 /*int pt */, verbose_level);
 	if (f_v) {
-		cout << "surface_object_tangent_cone::cheat_sheet_quartic_curve after moved_surface->Strong_gens->point_stabilizer"
+		cout << "quartic_curve::cheat_sheet_quartic_curve after moved_surface->Strong_gens->point_stabilizer"
 			<< endl;
 	}
 
@@ -754,8 +845,12 @@ void surface_object_tangent_cone::cheat_sheet_quartic_curve(
 	ost << "The stabilizer of the quartic curve is the following group:\\\\" << endl;
 	Stab_gens_quartic->print_generators_tex(ost);
 
+
+	ost << "The curve has " << nb_bitangents << " bitangents, they are: ";
+	Orbiter->Lint_vec.print(ost, Bitangents, nb_bitangents);
+	ost << "\\\\" << endl;
 	if (f_v) {
-		cout << "surface_object_tangent_cone::cheat_sheet_quartic_curve" << endl;
+		cout << "quartic_curve::cheat_sheet_quartic_curve" << endl;
 	}
 }
 

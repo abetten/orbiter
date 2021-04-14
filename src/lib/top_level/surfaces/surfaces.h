@@ -60,7 +60,7 @@ public:
 // arc_orbits_on_pairs.cpp
 // #############################################################################
 
-//! orbits on pairs of points of a nonconical six-arc in PG(2,q)
+//! orbits on pairs of points of a non-conical six-arc in PG(2,q)
 
 
 class arc_orbits_on_pairs {
@@ -107,7 +107,7 @@ public:
 // arc_partition.cpp
 // #############################################################################
 
-//! orbits on the partitions of the remaining four point of a nonconical arc
+//! orbits on the partitions of the remaining four point of a non-conical arc
 
 
 class arc_partition {
@@ -514,6 +514,81 @@ public:
 	void perform_activity(int verbose_level);
 };
 
+
+// #############################################################################
+// quartic_curve.cpp
+// #############################################################################
+
+
+//! quartic curve associated to a cubic surface after projecting from a point
+
+
+class quartic_curve {
+
+public:
+
+	surface_object_with_action *SOA;
+
+	int equation_nice[20];
+	int *transporter;
+	int v[4];
+	int pt_A, pt_B;
+
+	long int *Lines_nice;
+	int nb_lines;
+
+	long int *Bitangents;
+	int nb_bitangents; // = nb_lines + 1
+
+
+	int *f1;
+	int *f2;
+	int *f3;
+
+	long int *Pts_on_surface;
+	int nb_pts_on_surface;
+
+	int *curve;
+	int *poly1;
+	int *poly2;
+	int two, four, mfour;
+
+	int *tangent_quadric;
+	long int *Pts_on_tangent_quadric;
+	int nb_pts_on_tangent_quadric;
+
+	//int *line_type;
+	//int *type_collected;
+
+	int *Class_pts;
+	int nb_class_pts;
+	long int *Pts_intersection;
+	int nb_pts_intersection;
+
+	long int *Pts_on_curve;
+	int sz_curve;
+
+	strong_generators *gens_copy;
+	set_and_stabilizer *moved_surface;
+	//strong_generators *stab_gens_moved_surface;
+	strong_generators *stab_gens_P0;
+
+	strong_generators *Stab_gens_quartic;
+
+
+
+	quartic_curve();
+	~quartic_curve();
+	void init(surface_object_with_action *SOA, int verbose_level);
+	void quartic(int pt_orbit, int verbose_level);
+	void compute_quartic(int pt_orbit,
+		int *equation, long int *Lines, int nb_lines,
+		int verbose_level);
+	void cheat_sheet_quartic_curve(std::ostream &ost,
+			std::ostream &ost_curves,
+		int verbose_level);
+
+};
 
 
 
@@ -1038,74 +1113,6 @@ public:
 	void do_create_dickson_atlas(int verbose_level);
 	void make_fname_surface_report_tex(std::string &fname, int q, int ocn);
 	void make_fname_surface_report_pdf(std::string &fname, int q, int ocn);
-
-};
-
-// #############################################################################
-// surface_object_tangent_cone.cpp
-// #############################################################################
-
-
-//! tangent cone of a cubic surface at a point
-
-
-class surface_object_tangent_cone {
-
-public:
-
-	surface_object_with_action *SOA;
-
-	int equation_nice[20];
-	int *transporter;
-	int v[4];
-	int pt_A, pt_B;
-
-	int *f1;
-	int *f2;
-	int *f3;
-
-	long int *Pts_on_surface;
-	int nb_pts_on_surface;
-
-	int *curve;
-	int *poly1;
-	int *poly2;
-	int two, four, mfour;
-
-	int *tangent_quadric;
-	long int *Pts_on_tangent_quadric;
-	int nb_pts_on_tangent_quadric;
-
-	//int *line_type;
-	//int *type_collected;
-
-	int *Class_pts;
-	int nb_class_pts;
-	long int *Pts_intersection;
-	int nb_pts_intersection;
-
-	long int *Pts_on_curve;
-	int sz_curve;
-
-	strong_generators *gens_copy;
-	set_and_stabilizer *moved_surface;
-	//strong_generators *stab_gens_moved_surface;
-	strong_generators *stab_gens_P0;
-
-	strong_generators *Stab_gens_quartic;
-
-
-
-	surface_object_tangent_cone();
-	~surface_object_tangent_cone();
-	void init(surface_object_with_action *SOA, int verbose_level);
-	void quartic(int pt_orbit, int verbose_level);
-	void compute_quartic(int pt_orbit,
-		int *equation,
-		int verbose_level);
-	void cheat_sheet_quartic_curve(std::ostream &ost,
-			std::ostream &ost_curves,
-		int verbose_level);
 
 };
 

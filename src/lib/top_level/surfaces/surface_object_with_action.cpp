@@ -1667,14 +1667,14 @@ void surface_object_with_action::all_quartic_curves(std::ostream &ost, std::ostr
 		ost << "\\section{Quartic curve associated with orbit " << pt_orbit << "}" << endl;
 
 
-		surface_object_tangent_cone *SOT;
+		quartic_curve *QC;
 
-		SOT = NEW_OBJECT(surface_object_tangent_cone);
+		QC = NEW_OBJECT(quartic_curve);
 
-		SOT->init(this, verbose_level);
+		QC->init(this, verbose_level);
 
 
-		SOT->quartic(pt_orbit, verbose_level);
+		QC->quartic(pt_orbit, verbose_level);
 
 		// now, the quartic curve is in SOT->curve
 		// as a Surf->Poly4_x123
@@ -1698,7 +1698,7 @@ void surface_object_with_action::all_quartic_curves(std::ostream &ost, std::ostr
 				cout << "surface_object_with_action::all_quartic_curves before OiP->init_point_set" << endl;
 			}
 			OiP->init_point_set(Surf_A->PA->PA2->P,
-					SOT->Pts_on_curve, SOT->sz_curve, verbose_level - 1);
+					QC->Pts_on_curve, QC->sz_curve, verbose_level - 1);
 			if (f_v) {
 				cout << "surface_object_with_action::all_quartic_curves after OiP->init_point_set" << endl;
 			}
@@ -1766,7 +1766,7 @@ void surface_object_with_action::all_quartic_curves(std::ostream &ost, std::ostr
 			}
 			Orb->init(Surf_A->PA->PA2->A, Surf_A->PA->F,
 				AonHPD,
-				SG_pt_stab /* A->Strong_gens*/, SOT->curve,
+				SG_pt_stab /* A->Strong_gens*/, QC->curve,
 				verbose_level);
 			if (f_v) {
 				cout << "surface_object_with_action::all_quartic_curves "
@@ -1781,13 +1781,13 @@ void surface_object_with_action::all_quartic_curves(std::ostream &ost, std::ostr
 				cout << "surface_object_with_action::all_quartic_curves "
 						"before Orb->stabilizer_orbit_rep" << endl;
 			}
-			SOT->Stab_gens_quartic = Orb->stabilizer_orbit_rep(
+			QC->Stab_gens_quartic = Orb->stabilizer_orbit_rep(
 					pt_stab_order, verbose_level);
 			if (f_v) {
 				cout << "surface_object_with_action::all_quartic_curves "
 						"after Orb->stabilizer_orbit_rep" << endl;
 			}
-			SOT->Stab_gens_quartic->print_generators_tex(cout);
+			QC->Stab_gens_quartic->print_generators_tex(cout);
 #endif
 
 
@@ -1795,9 +1795,9 @@ void surface_object_with_action::all_quartic_curves(std::ostream &ost, std::ostr
 #endif
 
 
-		SOT->cheat_sheet_quartic_curve(ost, ost_quartics, verbose_level);
+		QC->cheat_sheet_quartic_curve(ost, ost_quartics, verbose_level);
 
-		FREE_OBJECT(SOT);
+		FREE_OBJECT(QC);
 	}
 	if (f_v) {
 		cout << "surface_object_with_action::all_quartic_curves done" << endl;

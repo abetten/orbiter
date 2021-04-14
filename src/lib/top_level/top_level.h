@@ -190,7 +190,7 @@ class arc_lifting;
 class six_arcs_not_on_a_conic;
 	// added March 6, 2018
 class surface_study;
-class surface_object_tangent_cone;
+class quartic_curve;
 class surface_classify_using_arc;
 class surface_create_by_arc_lifting;
 class surface_clebsch_map;
