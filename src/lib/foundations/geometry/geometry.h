@@ -743,6 +743,11 @@ public:
 	void do_create_desarguesian_spread(finite_field *FQ, finite_field *Fq,
 			int m,
 			int verbose_level);
+	void create_decomposition_of_projective_plane(std::string &fname_base,
+			projective_space *P,
+			long int *points, int nb_points,
+			long int *lines, int nb_lines,
+			int verbose_level);
 
 };
 
@@ -953,6 +958,7 @@ public:
 #define INCIDENCE_STRUCTURE_REALIZATION_BY_MATRIX 1
 #define INCIDENCE_STRUCTURE_REALIZATION_BY_ORTHOGONAL 2
 #define INCIDENCE_STRUCTURE_REALIZATION_BY_HJELMSLEV 3
+#define INCIDENCE_STRUCTURE_REALIZATION_BY_PROJECTIVE_SPACE 4
 
 //! interface for various incidence geometries
 
@@ -987,6 +993,7 @@ class incidence_structure {
 	int *M;
 	orthogonal *O;
 	hjelmslev *H;
+	projective_space *P;
 	
 	
 	incidence_structure();
@@ -996,6 +1003,7 @@ class incidence_structure {
 	void check_point_pairs(int verbose_level);
 	int lines_through_two_points(int *lines, int p1, int p2, 
 		int verbose_level);
+	void init_projective_space(projective_space *P, int verbose_level);
 	void init_hjelmslev(hjelmslev *H, int verbose_level);
 	void init_orthogonal(orthogonal *O, int verbose_level);
 	void init_by_incidences(int m, int n, int nb_inc, int *X, 
@@ -1010,8 +1018,8 @@ class incidence_structure {
 	int nb_points();
 	int nb_lines();
 	int get_ij(int i, int j);
-	int get_lines_on_point(int *data, int i);
-	int get_points_on_line(int *data, int j);
+	int get_lines_on_point(int *data, int i, int verbose_level);
+	int get_points_on_line(int *data, int j, int verbose_level);
 	int get_nb_inc();
 	void save_inc_file(char *fname);
 	void save_row_by_row_file(char *fname);
@@ -1190,11 +1198,6 @@ class incidence_structure {
 	incidence_structure *apply_canonical_labeling(
 			long int *canonical_labeling, int verbose_level);
 	void save_as_csv(std::string &fname_csv, int verbose_level);
-#if 0
-	void save_as_Levi_graph(std::string &fname_bin,
-			int f_point_labels, long int *point_labels,
-			int verbose_level);
-#endif
 	void init_large_set(
 			long int *blocks,
 			int N_points, int design_b, int design_k, int partition_class_size,
@@ -1339,7 +1342,7 @@ public:
 // knowledge_base.cpp:
 // #############################################################################
 
-//! provides access to precomputed combinatorial data
+//! provides access to pre-computed combinatorial data from the Orbiter knowledge base
 
 
 class knowledge_base {
@@ -1473,7 +1476,6 @@ public:
 	void canonical_form_given_canonical_labeling(
 			long int *canonical_labeling,
 			bitvector *&B,
-			//uchar *&canonical_form, int &canonical_form_len,
 			int verbose_level);
 	void encode_incma(int *&Incma, int &nb_rows, int &nb_cols, 
 		int *&partition, int verbose_level);
@@ -1515,7 +1517,7 @@ struct plane_data {
 };
 
 
-//! a data structure for general projective planes, including nodesarguesian ones
+//! a data structure for general projective planes, including non-desarguesian ones
 
 
 class point_line {
@@ -1640,7 +1642,7 @@ void get_MOLm(int *MOLS, int order, int m, int *&M);
 // points_and_lines.cpp
 // #############################################################################
 
-//! points and lines in projective space, for instance on a curface
+//! points and lines in projective space, for instance on a surface
 
 
 
@@ -1677,7 +1679,7 @@ public:
 // projective_space.cpp
 // #############################################################################
 
-//! a projective space PG(n,q) of dimension n over Fq
+//! projective space PG(n,q) of dimension n over Fq
 
 
 class projective_space {
@@ -1731,6 +1733,8 @@ public:
 	void create_points_on_line(long int line_rk, long int *line,
 		int verbose_level);
 		// needs line[k]
+	void create_lines_on_point(
+		long int point_rk, long int *line_pencil, int verbose_level);
 	int create_point_on_line(
 		long int line_rk, int pt_rk, int verbose_level);
 	// pt_rk is between 0 and q-1.

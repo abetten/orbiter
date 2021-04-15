@@ -695,6 +695,40 @@ void projective_space::create_points_on_line(
 	}
 }
 
+void projective_space::create_lines_on_point(
+	long int point_rk, long int *line_pencil, int verbose_level)
+{
+	int a, b, i, d;
+	int *v;
+	int *w;
+	int *Basis;
+
+	d = n + 1;
+	v = NEW_int(d);
+	w = NEW_int(n);
+	Basis = NEW_int(2 * d);
+
+	F->PG_element_unrank_modified(v, 1, d, point_rk);
+	for (i = 0; i < n + 1; i++) {
+		if (v[i]) {
+			break;
+		}
+	}
+	if (i == n + 1) {
+		cout << "projective_space::create_lines_on_point zero vector" << endl;
+		exit(1);
+	}
+	for (a = 0; a < r; a++) {
+		F->PG_element_unrank_modified(w, 1, n, a);
+		Orbiter->Int_vec.copy(v, Basis, d);
+		Orbiter->Int_vec.copy(w, Basis + d, i);
+		Basis[d + i] = 0;
+		Orbiter->Int_vec.copy(w + i, Basis + d + i + 1, n - i);
+		b = Grass_lines->rank_lint_here(Basis, 0 /*verbose_level*/);
+		line_pencil[a] = b;
+	}
+}
+
 int projective_space::create_point_on_line(
 		long int line_rk, int pt_rk, int verbose_level)
 // pt_rk is between 0 and q-1.

@@ -5547,6 +5547,21 @@ HCV_tangents_ideal:
 
 
 
+surface_13_0:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-draw_options -end \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space 3 F  \
+		-with P -do \
+		-projective_space_activity \
+			-define_surface S13_0 -q 4 -catalogue 0 -end \
+		-end \
+		-with S13_0 -do \
+		-cubic_surface_activity \
+			-report \
+			-report_with_group \
+			-all_quartic_curves \
+		-end
 
 
 # clean equation for Tekirdag-2:

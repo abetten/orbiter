@@ -779,7 +779,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_incidence_struc
 	data = NEW_int(n);
 	h = 0;
 	for (i = 0; i < m; i++) {
-		nb = Inc->get_lines_on_point(data, i);
+		nb = Inc->get_lines_on_point(data, i, 0 /* verbose_level */);
 		for (j = 0; j < nb; j++) {
 			a = data[j];
 			X[h++] = i * m + a;

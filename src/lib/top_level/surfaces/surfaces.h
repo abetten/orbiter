@@ -529,6 +529,7 @@ public:
 
 	surface_object_with_action *SOA;
 
+	int pt_orbit;
 	int equation_nice[20];
 	int *transporter;
 	int v[4];

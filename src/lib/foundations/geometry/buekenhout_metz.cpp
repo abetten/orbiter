@@ -140,6 +140,9 @@ void buekenhout_metz::init(
 	int f_v = (verbose_level >= 1);
 	int i;
 
+	if (f_v) {
+		cout << "buekenhout_metz::init q=" << q << " Q=" << Q << endl;
+	}
 	buekenhout_metz::Fq = Fq;
 	buekenhout_metz::FQ = FQ;
 	buekenhout_metz::q = Fq->q;
@@ -155,13 +158,12 @@ void buekenhout_metz::init(
 	Q = q * q;
 
 	if (f_v) {
-		cout << "buekenhout_metz::init q=" << q << " Q=" << Q << endl;
-		cout << "f_Uab=" << f_Uab << endl;
+		cout << "buekenhout_metz::init f_Uab=" << f_Uab << endl;
 		if (f_Uab) {
-			cout << "a=" << parameter_a << endl;
-			cout << "b=" << parameter_b << endl;
+			cout << "buekenhout_metz::init a=" << parameter_a << endl;
+			cout << "buekenhout_metz::init b=" << parameter_b << endl;
 			}
-		cout << "f_classical=" << f_classical << endl;
+		cout << "buekenhout_metz::init f_classical=" << f_classical << endl;
 		}
 
 	P2 = NEW_OBJECT(projective_space);
@@ -214,7 +216,7 @@ void buekenhout_metz::init(
 			components, embedding, pair_embedding);
 
 
-		cout << "e1=" << e1 << " one_1=" << one_1
+		cout << "buekenhout_metz::init e1=" << e1 << " one_1=" << one_1
 				<< " one_2=" << one_2 << endl;
 		}
 	
@@ -228,7 +230,7 @@ void buekenhout_metz::init(
 		}
 	minus_t0 = Fq->negate(t0);
 	if (f_v) {
-		cout << "t0=" << t0 << " t1=" << t1
+		cout << "buekenhout_metz::init t0=" << t0 << " t1=" << t1
 				<< " minus_t0=" << minus_t0 << endl;
 		}
 	
@@ -239,6 +241,9 @@ void buekenhout_metz::init(
 	w3 = NEW_int(6);
 	w4 = NEW_int(6);
 	w5 = NEW_int(6);
+	if (f_v) {
+		cout << "buekenhout_metz::init done" << endl;
+	}
 }
 
 void buekenhout_metz::init_ovoid(int verbose_level)
