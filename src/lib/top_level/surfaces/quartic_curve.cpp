@@ -19,6 +19,7 @@ namespace top_level {
 quartic_curve::quartic_curve()
 {
 	SOA = NULL;
+	pt_orbit = 0;
 
 	// int equation_nice[20];
 	transporter = NULL;
@@ -372,6 +373,31 @@ void quartic_curve::quartic(int pt_orbit, int verbose_level)
 	}
 
 
+	geometry_global GG;
+	string fname_base;
+	char str[1000];
+
+	sprintf(str, "_orb%d", pt_orbit);
+	fname_base.assign("quartic");
+	fname_base.append(str);
+
+	if (f_v) {
+		cout << "quartic_curve::quartic "
+			"before GG.create_decomposition_of_projective_plane" << endl;
+	}
+
+	GG.create_decomposition_of_projective_plane(fname_base,
+			SOA->Surf_A->PA->PA2->P,
+			Pts_on_curve, sz_curve,
+			Bitangents, nb_bitangents,
+			verbose_level);
+
+	if (f_v) {
+		cout << "quartic_curve::quartic "
+			"after GG.create_decomposition_of_projective_plane" << endl;
+	}
+
+
 
 #else
 
@@ -465,6 +491,7 @@ void quartic_curve::compute_quartic(int pt_orbit,
 	}
 	int i;
 
+	quartic_curve::pt_orbit = pt_orbit;
 	v[0] = 1;
 	v[1] = 0;
 	v[2] = 0;
@@ -574,7 +601,6 @@ void quartic_curve::compute_quartic(int pt_orbit,
 		Orbiter->Lint_vec.print(cout, Lines_nice, nb_lines);
 		cout << endl;
 	}
-
 
 
 
@@ -849,6 +875,36 @@ void quartic_curve::cheat_sheet_quartic_curve(
 	ost << "The curve has " << nb_bitangents << " bitangents, they are: ";
 	Orbiter->Lint_vec.print(ost, Bitangents, nb_bitangents);
 	ost << "\\\\" << endl;
+
+
+
+	string fname_base;
+	char str[1000];
+
+	sprintf(str, "_orb%d", pt_orbit);
+	fname_base.assign("quartic");
+	fname_base.append(str);
+	string fname_row_scheme;
+	string fname_col_scheme;
+
+
+
+	fname_row_scheme.assign(fname_base);
+	fname_row_scheme.append("_row_scheme.tex");
+	fname_col_scheme.assign(fname_base);
+	fname_col_scheme.append("_col_scheme.tex");
+
+
+	ost << endl << endl;
+	ost << "$$" << endl;
+	ost << "\\input " << fname_row_scheme << endl;
+	ost << "$$" << endl;
+	ost << "$$" << endl;
+	ost << "\\input " << fname_col_scheme << endl;
+	ost << "$$" << endl;
+	ost << endl << endl;
+
+
 	if (f_v) {
 		cout << "quartic_curve::cheat_sheet_quartic_curve" << endl;
 	}

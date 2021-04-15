@@ -108,6 +108,42 @@ int incidence_structure::lines_through_two_points(int *lines,
 	return nb;
 }
 
+void incidence_structure::init_projective_space(projective_space *P, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "incidence_structure::init_projective_space" << endl;
+	}
+	realization_type = INCIDENCE_STRUCTURE_REALIZATION_BY_PROJECTIVE_SPACE;
+	incidence_structure::P = P;
+	nb_rows = P->N_points;
+	nb_cols = P->N_lines;
+
+	f_rowsums_constant = TRUE;
+	f_colsums_constant = TRUE;
+	r = P->r;
+	k = P->k;
+	nb_lines_on_point = NEW_int(nb_rows);
+	nb_points_on_line = NEW_int(nb_cols);
+	for (i = 0; i < nb_rows; i++) {
+		nb_lines_on_point[i] = r;
+	}
+	for (i = 0; i < nb_cols; i++) {
+		nb_points_on_line[i] = k;
+	}
+	//int *nb_lines_on_point;
+	//int *nb_points_on_line;
+	max_r = min_r = r;
+	max_k = min_k = k;
+
+	if (f_v) {
+		cout << "incidence_structure::init_projective_space nb_rows=" << nb_rows << endl;
+		cout << "incidence_structure::init_projective_space nb_cols=" << nb_cols << endl;
+	}
+}
+
 void incidence_structure::init_hjelmslev(hjelmslev *H, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -126,8 +162,8 @@ void incidence_structure::init_hjelmslev(hjelmslev *H, int verbose_level)
 	nb_rows = H->R->nb_PHG_elements(H->k);
 	nb_cols = H->number_of_submodules();
 	if (f_v) {
-		cout << "nb_rows=" << nb_rows << endl;
-		cout << "nb_cols=" << nb_cols << endl;
+		cout << "incidence_structure::init_hjelmslev nb_rows=" << nb_rows << endl;
+		cout << "incidence_structure::init_hjelmslev nb_cols=" << nb_cols << endl;
 	}
 	int *Mtx;
 	int *Inc_Mtx;
@@ -521,8 +557,14 @@ int incidence_structure::get_ij(int i, int j)
 	exit(1);
 }
 
-int incidence_structure::get_lines_on_point(int *data, int i)
+int incidence_structure::get_lines_on_point(int *data, int i, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+	int r;
+
+	if (f_v) {
+		cout << "incidence_structure::get_lines_on_point" << endl;
+	}
 	if (i < 0 || i >= nb_rows) {
 		cout << "incidence_structure::get_lines_on_point "
 				"i=" << i << " is illegal" << endl;
@@ -534,27 +576,55 @@ int incidence_structure::get_lines_on_point(int *data, int i)
 		for (h = 0; h < nb_lines_on_point[i]; h++) {
 			data[h] = lines_on_point[i * max_r + h];
 		}
-		return nb_lines_on_point[i];
+		r = nb_lines_on_point[i];
 	}
 	else if (realization_type ==
 			INCIDENCE_STRUCTURE_REALIZATION_BY_ORTHOGONAL) {
 		O->lines_on_point_by_line_rank_must_fit_into_int(i, data, 0/*verbose_level - 2*/);
-		return O->alpha;
+		r = O->alpha;
 	}
-	cout << "incidence_structure::get_lines_on_point "
+	else if (realization_type ==
+			INCIDENCE_STRUCTURE_REALIZATION_BY_PROJECTIVE_SPACE) {
+		long int *Data;
+		int h;
+
+		Data = NEW_lint(P->r);
+		P->create_lines_on_point(i, Data, verbose_level);
+		for (h = 0; h < P->r; h++) {
+			data[h] = Data[h];
+		}
+		FREE_lint(Data);
+		r = P->r;
+	}
+	else {
+		cout << "incidence_structure::get_lines_on_point "
 			"fatal: unknown realization_type";
-	exit(1);
+		exit(1);
+	}
+	if (f_v) {
+		cout << "incidence_structure::get_lines_on_point pt = " << i << " : ";
+		Orbiter->Int_vec.print(cout, data, r);
+		cout << endl;
+		cout << "incidence_structure::get_lines_on_point done" << endl;
+	}
+	return r;
 }
 
-int incidence_structure::get_points_on_line(int *data, int j)
+int incidence_structure::get_points_on_line(int *data, int j, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+	int k;
+
+	if (f_v) {
+		cout << "incidence_structure::get_points_on_line" << endl;
+	}
 	if (realization_type == INCIDENCE_STRUCTURE_REALIZATION_BY_MATRIX || 
 		realization_type == INCIDENCE_STRUCTURE_REALIZATION_BY_HJELMSLEV) {
 		int h;
 		for (h = 0; h < nb_points_on_line[j]; h++) {
 			data[h] = points_on_line[j * max_k + h];
 		}
-		return nb_points_on_line[j];
+		k = nb_points_on_line[j];
 	}
 	else if (realization_type ==
 			INCIDENCE_STRUCTURE_REALIZATION_BY_ORTHOGONAL) {
@@ -567,11 +637,33 @@ int incidence_structure::get_points_on_line(int *data, int j)
 			data[h] = Data[h];
 		}
 		FREE_lint(Data);
-		return O->q + 1;
+		k = O->q + 1;
 	}
-	cout << "incidence_structure::get_points_on_line "
-			"fatal: unknown realization_type";
-	exit(1);
+	else if (realization_type ==
+			INCIDENCE_STRUCTURE_REALIZATION_BY_PROJECTIVE_SPACE) {
+		long int *Data;
+		int h;
+
+		Data = NEW_lint(P->k);
+		P->create_points_on_line(j, Data, 0 /*verbose_level*/);
+		for (h = 0; h < P->k; h++) {
+			data[h] = Data[h];
+		}
+		FREE_lint(Data);
+		k = P->k;
+	}
+	else {
+		cout << "incidence_structure::get_points_on_line "
+				"fatal: unknown realization_type";
+		exit(1);
+	}
+	if (f_v) {
+		cout << "incidence_structure::get_points_on_line line = " << j << " : ";
+		Orbiter->Int_vec.print(cout, data, k);
+		cout << endl;
+		cout << "incidence_structure::get_points_on_line done" << endl;
+	}
+	return k;
 }
 
 int incidence_structure::get_nb_inc()
@@ -736,13 +828,30 @@ void incidence_structure::compute_TDO_safe(partitionstack &PStack,
 	
 	f_refine_prev = TRUE;
 	for (i = 0; i < depth; i++) {
+		if (f_v) {
+			cout << "incidence_structure::compute_TDO_safe i = " << i << endl;
+		}
+
+
 		if (EVEN(i)) {
+			if (f_v) {
+				cout << "incidence_structure::compute_TDO_safe before refine_column_partition_safe" << endl;
+			}
 			f_refine = refine_column_partition_safe(
-					PStack, verbose_level - 3);
+					PStack, verbose_level);
+			if (f_v) {
+				cout << "incidence_structure::compute_TDO_safe after refine_column_partition_safe" << endl;
+			}
 		}
 		else {
+			if (f_v) {
+				cout << "incidence_structure::compute_TDO_safe before refine_row_partition_safe" << endl;
+			}
 			f_refine = refine_row_partition_safe(
-					PStack, verbose_level - 3);
+					PStack, verbose_level);
+			if (f_v) {
+				cout << "incidence_structure::compute_TDO_safe after refine_row_partition_safe" << endl;
+			}
 		}
 
 		if (f_v) {
@@ -763,6 +872,9 @@ void incidence_structure::compute_TDO_safe(partitionstack &PStack,
 		}
 		
 		if (!f_refine_prev && !f_refine) {
+			if (f_v) {
+				cout << "incidence_structure::compute_TDO_safe no refinement, we are done" << endl;
+			}
 			goto done;
 		}
 		f_refine_prev = f_refine;
@@ -931,8 +1043,7 @@ int incidence_structure::refine_column_partition_safe(
 	int *neighbors;
 
 	if (f_v) {
-		cout << "incidence_structure::refine_"
-				"column_partition_safe" << endl;
+		cout << "incidence_structure::refine_column_partition_safe" << endl;
 	}
 	row_classes = NEW_int(PStack.ht);
 	col_classes = NEW_int(PStack.ht);
@@ -952,7 +1063,7 @@ int incidence_structure::refine_column_partition_safe(
 	neighbors = NEW_int(max_k);
 
 	for (j = 0; j < nb_lines(); j++) {
-		get_points_on_line(neighbors, j);
+		get_points_on_line(neighbors, j, verbose_level - 2);
 		for (h = 0; h < nb_points_on_line[j]; h++) {
 			i = neighbors[h];
 			c = PStack.cellNumber[PStack.invPointList[i]];
@@ -976,11 +1087,13 @@ int incidence_structure::refine_column_partition_safe(
 	ht = PStack.ht;
 	
 	for (c = 0; c < ht; c++) {
-		if (PStack.is_row_class(c))
+		if (PStack.is_row_class(c)) {
 			continue;
+		}
 			
-		if (PStack.cellSize[c] == 1)
+		if (PStack.cellSize[c] == 1) {
 			continue;
+		}
 		first = PStack.startCell[c];
 		next = first + PStack.cellSize[c];
 
@@ -997,8 +1110,7 @@ int incidence_structure::refine_column_partition_safe(
 	FREE_int(row_class_idx);
 	FREE_int(col_class_idx);
 	if (f_v) {
-		cout << "incidence_structure::refine_column_"
-				"partition_safe done" << endl;
+		cout << "incidence_structure::refine_column_partition_safe done" << endl;
 	}
 	if (PStack.ht == ht) {
 		return FALSE;
@@ -1045,7 +1157,7 @@ int incidence_structure::refine_row_partition_safe(
 	neighbors = NEW_int(max_r);
 
 	for (i = 0; i < nb_points(); i++) {
-		get_lines_on_point(neighbors, i);
+		get_lines_on_point(neighbors, i, verbose_level - 2);
 		for (h = 0; h < nb_lines_on_point[i]; h++) {
 			j = neighbors[h] + nb_points();
 			c = PStack.cellNumber[PStack.invPointList[j]];
@@ -1067,11 +1179,13 @@ int incidence_structure::refine_row_partition_safe(
 	ht = PStack.ht;
 	
 	for (c = 0; c < ht; c++) {
-		if (PStack.is_col_class(c))
+		if (PStack.is_col_class(c)) {
 			continue;
+		}
 			
-		if (PStack.cellSize[c] == 1)
+		if (PStack.cellSize[c] == 1) {
 			continue;
+		}
 		first = PStack.startCell[c];
 		next = first + PStack.cellSize[c];
 
@@ -1101,7 +1215,6 @@ int incidence_structure::refine_row_partition_safe(
 int incidence_structure::refine_column_partition(
 		partitionstack &PStack, int ht0, int verbose_level)
 {
-	//verbose_level += 3;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
@@ -1138,8 +1251,8 @@ int incidence_structure::refine_column_partition(
 		f = PStack.startCell[row_cell];
 		l = PStack.cellSize[row_cell];
 		if (f_vvv) {
-			cout << "incidence_structure::refine_column_"
-					"partition idx=" << idx
+			cout << "incidence_structure::refine_column_partition "
+					"idx=" << idx
 				<< " row_cell=" << row_cell 
 				<< " f=" << f << " l=" << l << endl;
 		}
@@ -1159,7 +1272,7 @@ int incidence_structure::refine_column_partition(
 			if (f_vv) {
 				cout << "before get_lines_on_point" << endl;
 			}
-			nb = get_lines_on_point(neighbors, x);
+			nb = get_lines_on_point(neighbors, x, verbose_level - 2);
 			if (f_vv) {
 				cout << "after get_lines_on_point nb=" << nb << endl;
 			}
@@ -1190,11 +1303,13 @@ int incidence_structure::refine_column_partition(
 		
 	ht0 = PStack.ht;
 	for (cell = 0; cell < ht0; cell++) {
-		if (PStack.is_row_class(cell))
+		if (PStack.is_row_class(cell)) {
 			continue;
+		}
 			
-		if (PStack.cellSize[cell] == 1)
+		if (PStack.cellSize[cell] == 1) {
 			continue;
+		}
 		first = PStack.startCell[cell];
 		next = first + PStack.cellSize[cell];
 
@@ -1279,7 +1394,7 @@ int incidence_structure::refine_row_partition(
 			
 			//O.points_on_line_by_line_rank(y - O.nb_points,
 			//neighbors, 0/* verbose_level - 2*/);
-			nb = get_points_on_line(neighbors, y - nb_points());
+			nb = get_points_on_line(neighbors, y - nb_points(), verbose_level - 2);
 	
 			//if (f_v) {int_vec_print(cout, neighbors,
 			//O.alpha);cout << endl;}
@@ -1304,11 +1419,13 @@ int incidence_structure::refine_row_partition(
 		
 	ht0 = PStack.ht;
 	for (cell = 0; cell < ht0; cell++) {
-		if (PStack.is_col_class(cell))
+		if (PStack.is_col_class(cell)) {
 			continue;
+		}
 			
-		if (PStack.cellSize[cell] == 1)
+		if (PStack.cellSize[cell] == 1) {
 			continue;
+		}
 		first = PStack.startCell[cell];
 		next = first + PStack.cellSize[cell];
 
@@ -1335,8 +1452,7 @@ int incidence_structure::refine_row_partition(
 	return h;
 }
 
-void
-incidence_structure::print_row_tactical_decomposition_scheme_incidences_tex(
+void incidence_structure::print_row_tactical_decomposition_scheme_incidences_tex(
 	partitionstack &PStack, 
 	ostream &ost, int f_enter_math_mode, 
 	int *row_classes, int *row_class_inv, int nb_row_classes,
@@ -1440,8 +1556,7 @@ incidence_structure::print_row_tactical_decomposition_scheme_incidences_tex(
 	FREE_int(row_scheme);
 }
 
-void
-incidence_structure::print_col_tactical_decomposition_scheme_incidences_tex(
+void incidence_structure::print_col_tactical_decomposition_scheme_incidences_tex(
 	partitionstack &PStack, 
 	ostream &ost, int f_enter_math_mode, 
 	int *row_classes, int *row_class_inv, int nb_row_classes,
@@ -1575,7 +1690,7 @@ void incidence_structure::get_incidences_by_row_scheme(
 	}
 	for (i = 0; i < l1; i++) {
 		x = PStack.pointList[f1 + i];
-		nb = get_lines_on_point(neighbors, x);
+		nb = get_lines_on_point(neighbors, x, verbose_level - 2);
 		//O.lines_on_point_by_line_rank(x, neighbors, verbose_level - 2);
 		for (u = 0; u < nb; u++) {
 			y = neighbors[u];
@@ -1611,8 +1726,7 @@ void incidence_structure::get_incidences_by_col_scheme(
 	int *neighbors;
 	
 	if (f_v) {
-		cout << "incidence_structure::get_incidences_"
-				"by_col_scheme" << endl;
+		cout << "incidence_structure::get_incidences_by_col_scheme" << endl;
 	}
 	c1 = row_classes[row_class_idx];
 	//f1 = PStack.startCell[c1];
@@ -1628,7 +1742,7 @@ void incidence_structure::get_incidences_by_col_scheme(
 	}
 	for (j = 0; j < l2; j++) {
 		y = PStack.pointList[f2 + j] - nb_points();
-		nb = get_points_on_line(neighbors, y);
+		nb = get_points_on_line(neighbors, y, verbose_level - 2);
 		for (u = 0; u < nb; u++) {
 			x = neighbors[u];
 			i = x;
@@ -1678,7 +1792,7 @@ void incidence_structure::get_row_decomposition_scheme(
 		for (i = 0; i < l1; i++) {
 			x = PStack.pointList[f1 + i];
 			Orbiter->Int_vec.zero(data1, nb_col_classes);
-			nb = get_lines_on_point(neighbors, x);
+			nb = get_lines_on_point(neighbors, x, verbose_level - 2);
 			for (u = 0; u < nb; u++) {
 				y = neighbors[u];
 				j = nb_points() + y;
@@ -1741,7 +1855,7 @@ void incidence_structure::get_row_decomposition_scheme_if_possible(
 			x = PStack.pointList[f1 + i];
 			for (J = 0; J < nb_col_classes; J++) 
 				data1[J] = 0;
-			nb = get_lines_on_point(neighbors, x);
+			nb = get_lines_on_point(neighbors, x, verbose_level - 2);
 			//O.lines_on_point_by_line_rank(x, neighbors,
 			//verbose_level - 2);
 			for (u = 0; u < nb; u++) {
@@ -1800,16 +1914,18 @@ void incidence_structure::get_col_decomposition_scheme(
 		c1 = col_classes[J];
 		f1 = PStack.startCell[c1];
 		l1 = PStack.cellSize[c1];
-		for (i = 0; i < nb_row_classes; i++) 
+		for (i = 0; i < nb_row_classes; i++) {
 			data0[i] = 0;
+		}
 		for (j = 0; j < l1; j++) {
 			y = PStack.pointList[f1 + j] - nb_points();
-			for (I = 0; I < nb_row_classes; I++) 
+			for (I = 0; I < nb_row_classes; I++) {
 				data1[I] = 0;
+			}
 			
 			//O.points_on_line_by_line_rank(y, neighbors,
 			//verbose_level - 2);
-			nb = get_points_on_line(neighbors, y);
+			nb = get_points_on_line(neighbors, y, verbose_level - 2);
 	
 			for (u = 0; u < nb; u++) {
 				x = neighbors[u];
@@ -1973,14 +2089,17 @@ void incidence_structure::get_and_print_decomposition_schemes(
 	int *row_classes, *row_class_inv, nb_row_classes;
 	int *col_classes, *col_class_inv, nb_col_classes;
 	int *row_scheme, *col_scheme;
-	int f_v = FALSE;
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
 	
-	cout << "incidence_structure::get_and_print_"
-			"decomposition_schemes computing both schemes" << endl;
+	if (f_v) {
+		cout << "incidence_structure::get_and_print_decomposition_schemes "
+				"computing both schemes" << endl;
+	}
 	PStack.allocate_and_get_decomposition(
 		row_classes, row_class_inv, nb_row_classes,
 		col_classes, col_class_inv, nb_col_classes, 
-		f_v);
+		verbose_level);
 	
 	row_scheme = NEW_int(nb_row_classes * nb_col_classes);
 	col_scheme = NEW_int(nb_row_classes * nb_col_classes);
@@ -1988,12 +2107,12 @@ void incidence_structure::get_and_print_decomposition_schemes(
 	get_row_decomposition_scheme(PStack, 
 		row_classes, row_class_inv, nb_row_classes,
 		col_classes, col_class_inv, nb_col_classes, 
-		row_scheme, f_v);
+		row_scheme, verbose_level);
 
 	row_scheme_to_col_scheme(PStack, 
 		row_classes, row_class_inv, nb_row_classes,
 		col_classes, col_class_inv, nb_col_classes, 
-		row_scheme, col_scheme, f_v);
+		row_scheme, col_scheme, verbose_level);
 	
 	//cout << *this << endl;
 	
@@ -2023,14 +2142,17 @@ void incidence_structure::get_and_print_decomposition_schemes_tex(
 	int *row_classes, *row_class_inv, nb_row_classes;
 	int *col_classes, *col_class_inv, nb_col_classes;
 	int *row_scheme, *col_scheme;
-	int f_v = FALSE;
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
 	
-	cout << "incidence_structure::get_and_print_decomposition_"
-			"schemes_tex computing both schemes" << endl;
+	if (f_v) {
+		cout << "incidence_structure::get_and_print_decomposition_schemes_tex "
+				"computing both schemes" << endl;
+	}
 	PStack.allocate_and_get_decomposition(
 		row_classes, row_class_inv, nb_row_classes,
 		col_classes, col_class_inv, nb_col_classes, 
-		f_v);
+		verbose_level);
 	
 	row_scheme = NEW_int(nb_row_classes * nb_col_classes);
 	col_scheme = NEW_int(nb_row_classes * nb_col_classes);
@@ -2038,12 +2160,12 @@ void incidence_structure::get_and_print_decomposition_schemes_tex(
 	get_row_decomposition_scheme(PStack, 
 		row_classes, row_class_inv, nb_row_classes,
 		col_classes, col_class_inv, nb_col_classes, 
-		row_scheme, f_v);
+		row_scheme, verbose_level);
 
 	row_scheme_to_col_scheme(PStack, 
 		row_classes, row_class_inv, nb_row_classes,
 		col_classes, col_class_inv, nb_col_classes, 
-		row_scheme, col_scheme, f_v);
+		row_scheme, col_scheme, verbose_level);
 	
 	//cout << *this << endl;
 	
@@ -2078,14 +2200,17 @@ void incidence_structure::get_and_print_tactical_decomposition_scheme_tex(
 	int *row_classes, *row_class_inv, nb_row_classes;
 	int *col_classes, *col_class_inv, nb_col_classes;
 	int *row_scheme, *col_scheme;
-	int f_v = FALSE;
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
 	
-	cout << "incidence_structure::get_and_print_tactical_"
-			"decomposition_scheme_tex computing both schemes" << endl;
+	if (f_v) {
+	cout << "incidence_structure::get_and_print_tactical_decomposition_scheme_tex "
+			"computing both schemes" << endl;
+	}
 	PStack.allocate_and_get_decomposition(
 		row_classes, row_class_inv, nb_row_classes,
 		col_classes, col_class_inv, nb_col_classes, 
-		f_v);
+		verbose_level);
 	
 	row_scheme = NEW_int(nb_row_classes * nb_col_classes);
 	col_scheme = NEW_int(nb_row_classes * nb_col_classes);
@@ -2093,12 +2218,12 @@ void incidence_structure::get_and_print_tactical_decomposition_scheme_tex(
 	get_row_decomposition_scheme(PStack, 
 		row_classes, row_class_inv, nb_row_classes,
 		col_classes, col_class_inv, nb_col_classes, 
-		row_scheme, f_v);
+		row_scheme, verbose_level);
 
 	row_scheme_to_col_scheme(PStack, 
 		row_classes, row_class_inv, nb_row_classes,
 		col_classes, col_class_inv, nb_col_classes, 
-		row_scheme, col_scheme, f_v);
+		row_scheme, col_scheme, verbose_level);
 	
 	PStack.print_tactical_decomposition_scheme_tex_internal(
 		ost, f_enter_math,
@@ -2265,7 +2390,6 @@ void incidence_structure::print_non_tactical_decomposition_scheme_tex(
 		verbose_level);
 	
 	row_scheme = NEW_int(nb_row_classes * nb_col_classes);
-	//col_scheme = NEW_int(nb_row_classes * nb_col_classes);
 
 	get_row_decomposition_scheme_if_possible(PStack, 
 		row_classes, row_class_inv, nb_row_classes,
@@ -2347,8 +2471,9 @@ void incidence_structure::print_column_labels(
 	}
 	for (J = 0; J <= nb_col_classes; J++) {
 		ost << "|";
-		if (J == nb_col_classes)
+		if (J == nb_col_classes) {
 			break;
+		}
 		cell = col_classes[J];
 		f2 = P.startCell[cell];
 		l = P.cellSize[cell];
@@ -2376,8 +2501,9 @@ void incidence_structure::print_hline(
 	}
 	for (J = 0; J <= nb_col_classes; J++) {
 		ost << "+";
-		if (J == nb_col_classes)
+		if (J == nb_col_classes) {
 			break;
+		}
 		cell = col_classes[J];
 		l = P.cellSize[cell];
 		for (j = 0; j < l; j++) {

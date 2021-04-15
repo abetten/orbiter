@@ -2146,7 +2146,100 @@ void geometry_global::do_create_desarguesian_spread(finite_field *FQ, finite_fie
 	}
 }
 
+void geometry_global::create_decomposition_of_projective_plane(std::string &fname_base,
+		projective_space *P,
+		long int *points, int nb_points,
+		long int *lines, int nb_lines,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "geometry_global::create_decomposition_of_projective_plane" << endl;
+	}
+	{
+		incidence_structure *I;
+		partitionstack *Stack;
+		int depth = INT_MAX;
+
+		I = NEW_OBJECT(incidence_structure);
+		I->init_projective_space(P, verbose_level);
+
+		Stack = NEW_OBJECT(partitionstack);
+		Stack->allocate(I->nb_rows + I->nb_cols, 0 /* verbose_level */);
+		Stack->subset_continguous(I->nb_rows, I->nb_cols);
+		Stack->split_cell(0 /* verbose_level */);
+		Stack->sort_cells();
+
+		int *the_points;
+		int *the_lines;
+		int i;
+		the_points = NEW_int(nb_points);
+		the_lines = NEW_int(nb_lines);
+
+		for (i = 0; i < nb_points; i++) {
+			the_points[i] = points[i];
+		}
+		for (i = 0; i < nb_lines; i++) {
+			the_lines[i] = lines[i];
+		}
+
+		Stack->split_cell_front_or_back(
+				the_points, nb_points, TRUE /* f_front*/, verbose_level);
+
+		Stack->split_line_cell_front_or_back(
+				the_lines, nb_lines, TRUE /* f_front*/, verbose_level);
+
+
+		FREE_int(the_points);
+		FREE_int(the_lines);
+
+		if (f_v) {
+			cout << "geometry_global::create_decomposition_of_projective_plane before I->compute_TDO_safe" << endl;
+		}
+		I->compute_TDO_safe(*Stack, depth, verbose_level);
+		if (f_v) {
+			cout << "geometry_global::create_decomposition_of_projective_plane after I->compute_TDO_safe" << endl;
+		}
+
+
+		I->get_and_print_row_tactical_decomposition_scheme_tex(
+			cout, FALSE /* f_enter_math */,
+			TRUE /* f_print_subscripts */, *Stack);
+		I->get_and_print_column_tactical_decomposition_scheme_tex(
+			cout, FALSE /* f_enter_math */,
+			TRUE /* f_print_subscripts */, *Stack);
+
+
+
+		string fname_row_scheme;
+		string fname_col_scheme;
+
+
+		fname_row_scheme.assign(fname_base);
+		fname_row_scheme.append("_row_scheme.tex");
+		fname_col_scheme.assign(fname_base);
+		fname_col_scheme.append("_col_scheme.tex");
+		{
+			ofstream fp_row_scheme(fname_row_scheme);
+			ofstream fp_col_scheme(fname_col_scheme);
+			I->get_and_print_row_tactical_decomposition_scheme_tex(
+				fp_row_scheme, FALSE /* f_enter_math */,
+				TRUE /* f_print_subscripts */, *Stack);
+			I->get_and_print_column_tactical_decomposition_scheme_tex(
+				fp_col_scheme, FALSE /* f_enter_math */,
+				TRUE /* f_print_subscripts */, *Stack);
+		}
+
+
+		FREE_OBJECT(Stack);
+		FREE_OBJECT(I);
+	}
+	if (f_v) {
+		cout << "geometry_global::create_decomposition_of_projective_plane done" << endl;
+	}
+
+}
 
 }}
 

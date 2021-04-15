@@ -430,7 +430,7 @@ void spread_classify::klein(ostream &ost,
 		}
 		FREE_OBJECT(Stack);
 		FREE_OBJECT(I);
-		}
+	}
 
 	// compute TDO:
 	{
