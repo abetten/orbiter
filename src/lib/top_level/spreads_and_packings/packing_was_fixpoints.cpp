@@ -194,6 +194,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 	int f_v = (verbose_level >= 1);
 	string my_prefix;
 	file_io Fio;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "packing_was_fixpoints::compute_cliques_on_fixpoint_graph "
@@ -208,7 +209,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 	fixpoint_graph->load(fname_fixp_graph, verbose_level);
 
 	my_prefix.assign(fname_fixp_graph);
-	chop_off_extension(my_prefix);
+	ST.chop_off_extension(my_prefix);
 	my_prefix.append("_cliques");
 
 	if (FALSE /*Fio.file_size(fname_fixp_graph_cliques) > 0*/) {
@@ -266,7 +267,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 	T = Fixp_cliques->get_ago_distribution(Ago, verbose_level);
 
 	my_prefix.assign(fname_fixp_graph);
-	chop_off_extension(my_prefix);
+	ST.chop_off_extension(my_prefix);
 	my_prefix.append("_cliques_by_ago_");
 
 
@@ -310,7 +311,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 
 
 	my_prefix.assign(fname_fixp_graph);
-	chop_off_extension(my_prefix);
+	ST.chop_off_extension(my_prefix);
 	my_prefix.append("_cliques_by_type_");
 
 

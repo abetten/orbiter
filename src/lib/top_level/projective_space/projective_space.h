@@ -15,6 +15,48 @@ namespace top_level {
 
 
 // #############################################################################
+// canonical_form.cpp
+// #############################################################################
+
+
+
+//! to represent an object in canonical form
+
+
+class canonical_form {
+
+public:
+
+	int idx;
+	int *eqn;
+	int sz;
+
+	long int *Pts_on_curve;
+	int sz_curve;
+
+	long int *bitangents;
+	int nb_bitangents;
+
+	int nb_rows, nb_cols;
+	bitvector *Canonical_form;
+	long int *canonical_labeling;
+	int canonical_labeling_len;
+
+
+	strong_generators *SG_pt_stab;
+
+	orbit_of_equations *Orb;
+
+	strong_generators *Stab_gens_quartic;
+
+
+	canonical_form();
+	~canonical_form();
+
+};
+
+
+// #############################################################################
 // object_in_projective_space_with_action.cpp
 // #############################################################################
 
@@ -156,6 +198,10 @@ public:
 
 	int f_cheat_sheet;
 
+	int f_classify_quartic_curves;
+	std::string classify_quartic_curves_fname_mask;
+	int classify_quartic_curves_nb;
+
 	projective_space_activity_description();
 	~projective_space_activity_description();
 	int read_arguments(
@@ -231,6 +277,19 @@ public:
 	void do_cheat_sheet_PG(
 			projective_space_with_action *PA,
 			layered_graph_draw_options *O,
+			int verbose_level);
+	void classify_quartic_curves(
+			projective_space_with_action *PA,
+			std::string &fname_mask, int nb,
+			int verbose_level);
+	void process_quartic_curve(
+			projective_space_with_action *PA,
+			homogeneous_polynomial_domain *Poly4_x123,
+			action_on_homogeneous_polynomials *AonHPD,
+			int idx, int *eqn, int sz,
+			long int *Pts_on_curve, int sz_curve,
+			long int *bitangents, int nb_bitangents,
+			canonical_form *&C,
 			int verbose_level);
 
 

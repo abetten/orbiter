@@ -46,20 +46,13 @@ interface_algebra::interface_algebra()
 
 	f_young_symmetrizer = FALSE;
 	young_symmetrizer_n = 0;
+
 	f_young_symmetrizer_sym_4 = FALSE;
 
 
 	f_draw_mod_n = FALSE;
-	draw_mod_n = 0;
-	// draw_mod_n_fname
-	f_draw_mod_n_inverse = FALSE;
-	f_draw_mod_n_additive_inverse = FALSE;
-	f_draw_mod_n_power_cycle = FALSE;
-	f_draw_mod_n_power_cycle_base = 0;
+	Draw_mod_n_description = NULL;
 
-	f_cyclotomic_sets = FALSE;
-	cyclotomic_sets_q = 0;
-	//std::string cyclotomic_sets_reps;
 
 }
 
@@ -92,19 +85,7 @@ void interface_algebra::print_help(int argc,
 		cout << "-young_symmetrizer_sym_4  " << endl;
 	}
 	else if (stringcmp(argv[i], "-draw_mod_n") == 0) {
-		cout << "-draw_mod_n <int : n>  <string : fname > " << endl;
-	}
-	else if (stringcmp(argv[i], "-draw_mod_n_inverse") == 0) {
-		cout << "-draw_mod_n_inverse " << endl;
-	}
-	else if (stringcmp(argv[i], "-draw_mod_n_additive_inverse") == 0) {
-		cout << "-draw_mod_n_additive_inverse " << endl;
-	}
-	else if (stringcmp(argv[i], "-draw_mod_n_power_cycle") == 0) {
-		cout << "-draw_mod_n_power_cycle <int : base> " << endl;
-	}
-	else if (stringcmp(argv[i], "-cyclotomic_sets") == 0) {
-		cout << "-cyclotomic_sets <int : q> <int : reps> " << endl;
+		cout << "-draw_mod_n descr -end" << endl;
 	}
 }
 
@@ -144,18 +125,6 @@ int interface_algebra::recognize_keyword(int argc,
 		return true;
 	}
 	else if (stringcmp(argv[i], "-draw_mod_n") == 0) {
-		return true;
-	}
-	else if (stringcmp(argv[i], "-draw_mod_n_inverse") == 0) {
-		return true;
-	}
-	else if (stringcmp(argv[i], "-draw_mod_n_additive_inverse") == 0) {
-		return true;
-	}
-	else if (stringcmp(argv[i], "-draw_mod_n_power_cycle") == 0) {
-		return true;
-	}
-	else if (stringcmp(argv[i], "-cyclotomic_sets") == 0) {
 		return true;
 	}
 	if (f_v) {
@@ -230,9 +199,8 @@ void interface_algebra::read_arguments(int argc,
 
 	else if (stringcmp(argv[i], "-young_symmetrizer") == 0) {
 		f_young_symmetrizer = TRUE;
-		draw_mod_n_fname.assign(argv[++i]);
 		young_symmetrizer_n = strtoi(argv[++i]);
-		cout << "-young_symmetrizer " << young_symmetrizer_n << endl;
+		cout << "-young_symmetrizer " << " " << young_symmetrizer_n << endl;
 	}
 	else if (stringcmp(argv[i], "-young_symmetrizer_sym_4") == 0) {
 		f_young_symmetrizer_sym_4 = TRUE;
@@ -240,28 +208,19 @@ void interface_algebra::read_arguments(int argc,
 	}
 	else if (stringcmp(argv[i], "-draw_mod_n") == 0) {
 		f_draw_mod_n = TRUE;
-		draw_mod_n = strtoi(argv[++i]);
-		draw_mod_n_fname.assign(argv[++i]);
-		cout << "-draw_mod_n " << draw_mod_n << " " << draw_mod_n_fname << endl;
-	}
-	else if (stringcmp(argv[i], "-draw_mod_n_inverse") == 0) {
-		f_draw_mod_n_inverse = TRUE;
-		cout << "-draw_mod_n_inverse " << endl;
-	}
-	else if (stringcmp(argv[i], "-draw_mod_n_additive_inverse") == 0) {
-		f_draw_mod_n_additive_inverse = TRUE;
-		cout << "-draw_mod_n_additive_inverse " << endl;
-	}
-	else if (stringcmp(argv[i], "-draw_mod_n_power_cycle") == 0) {
-		f_draw_mod_n_power_cycle = TRUE;
-		f_draw_mod_n_power_cycle_base = strtoi(argv[++i]);
-		cout << "-draw_mod_n_power_cycle " << endl;
-	}
-	else if (stringcmp(argv[i], "-cyclotomic_sets") == 0) {
-		f_cyclotomic_sets = TRUE;
-		cyclotomic_sets_q = strtoi(argv[++i]);
-		cyclotomic_sets_reps.assign(argv[++i]);
-		cout << "-cyclotomic_sets " << cyclotomic_sets_q << " " << cyclotomic_sets_reps << endl;
+		cout << "-draw_mod_n " << endl;
+		Draw_mod_n_description = NEW_OBJECT(draw_mod_n_description);
+		i += Draw_mod_n_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		cout << "interface_algebra::read_arguments finished "
+				"reading -draw_mod_n" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+		cout << "-draw_mod_n " << endl;
 	}
 }
 
@@ -330,7 +289,6 @@ void interface_algebra::worker(int verbose_level)
 
 	else if (f_draw_mod_n) {
 		plot_tools PT;
-
 		layered_graph_draw_options *O;
 
 
@@ -339,13 +297,8 @@ void interface_algebra::worker(int verbose_level)
 			exit(1);
 		}
 		O = Orbiter->draw_options;
-		PT.draw_mod_n(draw_mod_n_fname,
+		PT.draw_mod_n(Draw_mod_n_description,
 				O,
-				draw_mod_n,
-				f_draw_mod_n_inverse,
-				f_draw_mod_n_additive_inverse,
-				f_draw_mod_n_power_cycle, f_draw_mod_n_power_cycle_base,
-				f_cyclotomic_sets, cyclotomic_sets_q, cyclotomic_sets_reps,
 				verbose_level);
 	}
 

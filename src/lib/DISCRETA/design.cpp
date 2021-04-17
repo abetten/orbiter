@@ -556,6 +556,7 @@ void design_parameter_database_read_design_txt(char *fname_design_txt,
 	char comment[BUFSIZE];
 	int t, v, k, lambda;
 	int btree_idx_id = 0;
+	string_tools ST;
 
 	ifstream f(fname_design_txt);
 	if (!f) {
@@ -578,12 +579,12 @@ void design_parameter_database_read_design_txt(char *fname_design_txt,
 		p_buf = buf;
 		if (buf[0] == '#')
 			continue;
-		s_scan_int(&p_buf, &t);
+		ST.s_scan_int(&p_buf, &t);
 		if (t == -1)
 			break;
-		s_scan_int(&p_buf, &v);
-		s_scan_int(&p_buf, &k);
-		s_scan_int(&p_buf, &lambda);
+		ST.s_scan_int(&p_buf, &v);
+		ST.s_scan_int(&p_buf, &k);
+		ST.s_scan_int(&p_buf, &lambda);
 		strcpy(comment, p_buf);
 		// cout << "t=" << t << " v=" << v << " k=" << k
 		//<< " lambda=" << lambda << " comment=" << comment << endl;

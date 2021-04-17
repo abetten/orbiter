@@ -142,6 +142,7 @@ void clique_finder_control::all_cliques(colored_graph *CG,
 
 	//colored_graph CG;
 	string fname_sol;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "clique_finder_control::all_cliques" << endl;
@@ -154,7 +155,7 @@ void clique_finder_control::all_cliques(colored_graph *CG,
 	else {
 		fname_sol.assign(fname_graph);
 		//strcpy(fname_sol, fname_graph);
-		replace_extension_with(fname_sol, "_sol.txt");
+		ST.replace_extension_with(fname_sol, "_sol.txt");
 		//snprintf(fname_sol, 1000, "%s_sol.txt", fname_graph);
 	}
 

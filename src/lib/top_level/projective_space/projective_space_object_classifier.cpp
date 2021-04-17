@@ -186,6 +186,7 @@ void projective_space_object_classifier::classify_objects_using_nauty(
 	int t0, t1, dt;
 	file_io Fio;
 	os_interface Os;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "projective_space_object_classifier::classify_objects_using_nauty" << endl;
@@ -358,7 +359,7 @@ void projective_space_object_classifier::classify_objects_using_nauty(
 		string ago_fname1;
 
 		ago_fname1.assign(ago_fname);
-		replace_extension_with(ago_fname1, "_class_of_");
+		ST.replace_extension_with(ago_fname1, "_class_of_");
 		T.save_classes_individually(ago_fname1);
 
 		FREE_lint(M);
@@ -440,9 +441,9 @@ void projective_space_object_classifier::classify_objects_using_nauty(
 
 
 		data_fname1.assign(Descr->fibration_fname);
-		replace_extension_with(data_fname1, "1.csv");
+		ST.replace_extension_with(data_fname1, "1.csv");
 		data_fname2.assign(Descr->fibration_fname);
-		replace_extension_with(data_fname2, "2.csv");
+		ST.replace_extension_with(data_fname2, "2.csv");
 
 		if (f_v) {
 			cout << "projective_space_object_classifier::classify_objects_using_nauty before File_idx->save_csv" << endl;
@@ -521,6 +522,7 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
+	string_tools ST;
 
 	if (f_v) {
 		cout << "projective_space_object_classifier::process_multiple_objects_from_file" << endl;
@@ -588,7 +590,7 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 			string load_canonical_labeling_fname;
 
 			load_canonical_labeling_fname.assign(input_data);
-			replace_extension_with(load_canonical_labeling_fname, "_can_lab.csv");
+			ST.replace_extension_with(load_canonical_labeling_fname, "_can_lab.csv");
 
 
 			Fio.lint_matrix_read_csv(load_canonical_labeling_fname,
@@ -609,7 +611,7 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 			string load_ago_fname;
 
 			load_ago_fname.assign(input_data);
-			replace_extension_with(load_ago_fname, "_ago.csv");
+			ST.replace_extension_with(load_ago_fname, "_ago.csv");
 			Fio.lint_matrix_read_csv(load_ago_fname,
 					Known_ago, m, n, verbose_level);
 
@@ -826,7 +828,7 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 			file_io Fio;
 
 			canonical_labeling_fname.assign(input_data);
-			replace_extension_with(canonical_labeling_fname, "_can_lab.csv");
+			ST.replace_extension_with(canonical_labeling_fname, "_can_lab.csv");
 
 			M = NEW_lint(The_canonical_labeling.size() * canonical_labeling_len);
 			for (u = 0; u < The_canonical_labeling.size(); u++) {
@@ -851,7 +853,7 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 			file_io Fio;
 
 			ago_fname.assign(input_data);
-			replace_extension_with(ago_fname, "_ago.csv");
+			ST.replace_extension_with(ago_fname, "_ago.csv");
 
 			M = NEW_lint(The_canonical_labeling.size());
 			for (u = 0; u < The_canonical_labeling.size(); u++) {

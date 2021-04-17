@@ -37,14 +37,12 @@ void plot_tools::draw_density(char *prefix, int *the_set, int set_size,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	//int f_v5 = (verbose_level >= 5);
 	int *set;
 	int x_min = 0, x_max = 1000;
 	int y_min = 0, y_max = 1000;
 	int factor_1000 = 1000;
-	//char ext[1000];
 	string fname_full;
-	int i, prev; //, prev_start;
+	int i, prev;
 	int *outline_value;
 	int *outline_number;
 	int outline_sz = 0;
@@ -152,17 +150,14 @@ void plot_tools::draw_density_multiple_curves(std::string &prefix,
 	int f_v_logarithmic, double log_base, int no, int f_embedded, 
 	int verbose_level)
 {
-	//verbose_level += 6;
 	int f_v = (verbose_level >= 1);
 	int f_v5 = (verbose_level >= 5);
 	int **Data2;
-	//int *set;
 	int x_min = 0, x_max = 1000;
 	int y_min = 0, y_max = 1000;
 	int factor_1000 = 1000;
-	//char ext[1000];
 	string fname_full;
-	int i, prev; //, prev_start;
+	int i, prev;
 	int **outline_value;
 	int **outline_number;
 	int *outline_sz;
@@ -352,12 +347,8 @@ void plot_tools::projective_plane_draw_grid(std::string &fname,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int x_min = 0, x_max = 1000000;
-	//int y_min = 0, y_max = 1000000;
 	int factor_1000 = 1000;
 	string fname_full;
-	//int f_embedded = TRUE;
-	//int f_sideways = FALSE;
 	
 	if (f_v) {
 		cout << "plot_tools::projective_plane_draw_grid" << endl;
@@ -414,13 +405,8 @@ void plot_tools::projective_plane_draw_grid(std::string &fname,
 
 
 
-void plot_tools::draw_mod_n(std::string &fname,
+void plot_tools::draw_mod_n(draw_mod_n_description *Descr,
 		layered_graph_draw_options *O,
-		int number_n,
-		int f_inverse,
-		int f_additive_inverse,
-		int f_power_cycle, int power_cycle_base,
-		int f_cyclotomic_sets, int cyclotomic_sets_q, std::string &cyclotomic_sets_reps,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -433,8 +419,12 @@ void plot_tools::draw_mod_n(std::string &fname,
 
 
 
+	if (!Descr->f_file) {
+		cout << "please use -file <fname>" << endl;
+		exit(1);
+	}
 
-	fname_full.assign(fname);
+	fname_full.assign(Descr->fname);
 	fname_full.append("_draw.mp");
 
 
@@ -463,11 +453,7 @@ void plot_tools::draw_mod_n(std::string &fname,
 		}
 		draw_mod_n_work(G,
 				O,
-				number_n,
-				f_inverse,
-				f_additive_inverse,
-				f_power_cycle, power_cycle_base,
-				f_cyclotomic_sets, cyclotomic_sets_q, cyclotomic_sets_reps,
+				Descr,
 				verbose_level);
 		if (f_v) {
 			cout << "plot_tools::draw_mod_n "
@@ -500,11 +486,7 @@ void plot_tools::draw_mod_n(std::string &fname,
 
 void plot_tools::draw_mod_n_work(mp_graphics &G,
 		layered_graph_draw_options *O,
-		int number,
-		int f_inverse,
-		int f_additive_inverse,
-		int f_power_cycle, int power_cycle_base,
-		int f_cyclotomic_sets, int cyclotomic_sets_q, std::string &cyclotomic_sets_reps,
+		draw_mod_n_description *Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -519,11 +501,12 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 	double start_angle = 0;
 	numerics Num;
 
+	int n = Descr->n;
+
 	if (f_v) {
-		cout << "plot_tools::draw_mod_n_work number=" << number << endl;
+		cout << "plot_tools::draw_mod_n_work number=" << n << endl;
 	}
 
-	int q = number;
 
 	G.sl_thickness(100);
 	//G.sf_color(1);
@@ -535,27 +518,27 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 
 	int M;
 
-	M = 4 * q + 1 + 4;
+	M = 4 * n + 1 + 4;
 
-	for (i = 0; i < q; i++) {
-		Num.on_circle_double(Dx, Dy, i, start_angle + i * 360. / (double) q, 1.0);
+	for (i = 0; i < n; i++) {
+		Num.on_circle_double(Dx, Dy, i, start_angle + i * 360. / (double) n, 1.0);
 	}
-	for (i = 0; i < q; i++) {
-		Num.on_circle_double(Dx, Dy, q + 1 + i, start_angle + i * 360. / (double) q, 1.2);
+	for (i = 0; i < n; i++) {
+		Num.on_circle_double(Dx, Dy, n + 1 + i, start_angle + i * 360. / (double) n, 1.2);
 	}
-	for (i = 0; i < q; i++) {
-		Num.on_circle_double(Dx, Dy, 2 * q + 1 + i, start_angle + i * 360. / (double) q, .9);
+	for (i = 0; i < n; i++) {
+		Num.on_circle_double(Dx, Dy, 2 * n + 1 + i, start_angle + i * 360. / (double) n, .9);
 	}
-	for (i = 0; i < q; i++) {
-		Num.on_circle_double(Dx, Dy, 3 * q + 1 + i, start_angle + i * 360. / (double) q, 1.1);
+	for (i = 0; i < n; i++) {
+		Num.on_circle_double(Dx, Dy, 3 * n + 1 + i, start_angle + i * 360. / (double) n, 1.1);
 	}
-	Num.on_circle_double(Dx, Dy, q, 0, 0.0);
-	Num.on_circle_double(Dx, Dy, 4 * q + 1 + 0, 0., 1.3);
-	Num.on_circle_double(Dx, Dy, 4 * q + 1 + 1, 90, 1.3);
-	Num.on_circle_double(Dx, Dy, 4 * q + 1 + 2, 180, 1.3);
-	Num.on_circle_double(Dx, Dy, 4 * q + 1 + 3, 270, 1.3);
+	Num.on_circle_double(Dx, Dy, n, 0, 0.0);
+	Num.on_circle_double(Dx, Dy, 4 * n + 1 + 0, 0., 1.3);
+	Num.on_circle_double(Dx, Dy, 4 * n + 1 + 1, 90, 1.3);
+	Num.on_circle_double(Dx, Dy, 4 * n + 1 + 2, 180, 1.3);
+	Num.on_circle_double(Dx, Dy, 4 * n + 1 + 3, 270, 1.3);
 
-	for (i = 0; i < q; i++) {
+	for (i = 0; i < n; i++) {
 		cout << "i=" << i << " Dx=" << Dx[i] << " Dy=" << Dy[i] << endl;
 	}
 
@@ -565,11 +548,11 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 	}
 
 	// big circle:
-	G.circle(Px[q], Py[q], (int) dx * x_stretch);
+	G.circle(Px[n], Py[n], (int) dx * x_stretch);
 
 	G.sf_interior(100);
 	G.sf_color(1);
-	for (i = 0; i < q; i++) {
+	for (i = 0; i < n; i++) {
 		cout << "drawing circle " << i << " at " << Px[i] << ", " << Py[i]
 			<< " with rad=" << O->rad << endl;
 		G.circle(Px[i], Py[i], O->rad);
@@ -578,18 +561,18 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 
 	char str[1000];
 
-	for (i = 0; i < q; i++) {
+	for (i = 0; i < n; i++) {
 		if (O->f_nodes_empty) {
 			str[0] = 0;
 		}
 		else {
 			sprintf(str, "%d", i);
 		}
-		G.text(Px[q + 1 + i], Py[q + 1 + i], str);
+		G.text(Px[n + 1 + i], Py[n + 1 + i], str);
 	}
 
 
-	if (f_inverse) {
+	if (Descr->f_inverse) {
 		//finite_field *F;
 		long int a, b, g, u, v;
 		number_theory_domain NT;
@@ -598,36 +581,36 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 		//F->init(q);
 
 
-		for (a = 1; a < q; a++) {
+		for (a = 1; a < n; a++) {
 
-			g = NT.gcd_lint(a, q);
+			g = NT.gcd_lint(a, n);
 
 			if (g == 1) {
 
-				NT.extended_gcd_lint(a, q, g, u, v);
+				NT.extended_gcd_lint(a, n, g, u, v);
 				b = u;
 				while (b < 0) {
-					b += q;
+					b += n;
 				}
-				b = b % q;
+				b = b % n;
 
-				cout << "inverse of " << a << " mod " << q << " is " << b << endl;
+				cout << "inverse of " << a << " mod " << n << " is " << b << endl;
 				//b = F->inverse(a);
 				if (a == b) {
-					G.polygon2(Px, Py, 2 * q + 1 + a, 3 * q + 1 + a);
+					G.polygon2(Px, Py, 2 * n + 1 + a, 3 * n + 1 + a);
 				}
 				else {
 					G.polygon2(Px, Py, a, b);
 				}
 			}
 			else {
-				cout << "the element " << a << " does not have an inverse mod " << q << endl;
+				cout << "the element " << a << " does not have an inverse mod " << n << endl;
 			}
 		}
 		//FREE_OBJECT(F);
 	}
 
-	if (f_additive_inverse) {
+	if (Descr->f_additive_inverse) {
 		//finite_field *F;
 		long int a, b; //, g, u, v;
 		number_theory_domain NT;
@@ -636,15 +619,15 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 		//F->init(q);
 
 
-		for (a = 0; a < q; a++) {
+		for (a = 0; a < n; a++) {
 
-			b = (q - a) % q;
+			b = (n - a) % n;
 
 			//b = F->inverse(a);
-			cout << "negative of " << a << " mod " << q << " is " << b << endl;
+			cout << "negative of " << a << " mod " << n << " is " << b << endl;
 
 			if (a == b) {
-				G.polygon2(Px, Py, 2 * q + 1 + a, 3 * q + 1 + a);
+				G.polygon2(Px, Py, 2 * n + 1 + a, 3 * n + 1 + a);
 			}
 			else {
 				G.polygon2(Px, Py, a, b);
@@ -654,20 +637,25 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 	}
 
 
-	G.polygon2(Px, Py, 4 * q + 1 + 0, 4 * q + 1 + 2);
-	G.polygon2(Px, Py, 4 * q + 1 + 1, 4 * q + 1 + 3);
+	G.polygon2(Px, Py, 4 * n + 1 + 0, 4 * n + 1 + 2);
+	G.polygon2(Px, Py, 4 * n + 1 + 1, 4 * n + 1 + 3);
 
-	if (f_power_cycle) {
+	if (Descr->f_power_cycle) {
 		//finite_field *F;
 		long int a1, a, b; //, g, u, v;
 		number_theory_domain NT;
 
-		if (power_cycle_base == -1) {
-			a1 = NT.primitive_root(q, verbose_level);
+		cout << "f_power_cycle base = " << Descr->power_cycle_base << endl;
+
+		if (Descr->power_cycle_base == -1) {
+			a1 = NT.primitive_root(n, verbose_level);
 		}
 		else {
-			a1 = power_cycle_base;
+			a1 = Descr->power_cycle_base;
 		}
+
+		cout << "a1= " << a1 << endl;
+		cout << "n= " << n << endl;
 
 		//F = NEW_OBJECT(finite_field);
 		//F->init(q);
@@ -676,7 +664,7 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 		a = a1;
 		for (i = 0; ; i++) {
 
-			b = a * a1 % q;
+			b = (a * a1) % n;
 
 			//b = F->inverse(a);
 			cout << "a= " << a << " b= " << b << endl;
@@ -691,25 +679,25 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 		//FREE_OBJECT(F);
 	}
 
-	if (f_cyclotomic_sets) {
+	if (Descr->f_cyclotomic_sets) {
 
 
 		number_theory_domain NT;
 		int *reps;
 		int nb_reps;
 
-		Orbiter->Int_vec.scan(cyclotomic_sets_reps, reps, nb_reps);
+		Orbiter->Int_vec.scan(Descr->cyclotomic_sets_reps, reps, nb_reps);
 
 		cout << "cyclotomic sets of ";
 		Orbiter->Int_vec.print(cout, reps, nb_reps);
-		cout << " modulo " << cyclotomic_sets_q << endl;
+		cout << " modulo " << Descr->cyclotomic_sets_q << endl;
 
 		G.sl_thickness(110);
 		for (i = 0; i < nb_reps; i++) {
 			std::vector<int> cyclotomic_set;
 			int a, b, h;
 
-			NT.cyclotomic_set(cyclotomic_set, reps[i], cyclotomic_sets_q, number, verbose_level);
+			NT.cyclotomic_set(cyclotomic_set, reps[i], Descr->cyclotomic_sets_q, n, verbose_level);
 
 			G.sl_color(3 + i);
 			for (h = 0; h < cyclotomic_set.size(); h++) {

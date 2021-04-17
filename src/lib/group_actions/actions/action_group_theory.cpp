@@ -1201,9 +1201,11 @@ void action::read_conjugacy_classes_and_normalizers(
 	cout << "The group has order " << go << endl;
 
 	string fname_latex;
+	string_tools ST;
+
 	fname_latex.assign(fname);
 
-	replace_extension_with(fname_latex, ".tex");
+	ST.replace_extension_with(fname_latex, ".tex");
 
 	{
 		ofstream fp(fname_latex);
@@ -1487,9 +1489,11 @@ void action::read_and_report_conjugacy_classes_and_normalizers(ostream &ost,
 	cout << "The group has order " << go << endl;
 
 	string fname_latex;
+	string_tools ST;
+
 	fname_latex.assign(fname);
 
-	replace_extension_with(fname_latex, ".tex");
+	ST.replace_extension_with(fname_latex, ".tex");
 
 
 	ost << "\\section{Conjugacy classes in $" << label_tex << "$}" << endl;

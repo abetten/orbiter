@@ -462,6 +462,31 @@ void os_interface::get_date(std::string &str)
 #endif
 }
 
+void os_interface::test_typedefs()
+{
+	cout << "test_typedefs()" << endl;
+	cout << "sizeof(int)=" << sizeof(int) << endl;
+	cout << "sizeof(long int)=" << sizeof(long int) << endl;
+	if (sizeof(int_2) != 2) {
+		cout << "warning: sizeof(int_2)=" << sizeof(int_2) << endl;
+	}
+	if (sizeof(int_4) != 4) {
+		cout << "warning: sizeof(int4)=" << sizeof(int_4) << endl;
+	}
+	if (sizeof(int_8) != 8) {
+		cout << "warning: sizeof(int8)=" << sizeof(int_8) << endl;
+	}
+	if (sizeof(uint_2) != 2) {
+		cout << "warning: sizeof(uint_2)=" << sizeof(uint_2) << endl;
+	}
+	if (sizeof(uint_4) != 4) {
+		cout << "warning: sizeof(uint_2)=" << sizeof(uint_4) << endl;
+	}
+	if (sizeof(uint_8) != 8) {
+		cout << "warning: sizeof(uint_2)=" << sizeof(uint_8) << endl;
+	}
+	cout << "test_typedefs done" << endl;
+}
 
 
 }}

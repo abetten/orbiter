@@ -89,6 +89,7 @@ void mp_graphics::init(std::string &file_name,
 	int f_embedded, int f_sideways, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	string_tools ST;
 
 	if (f_v) {
 		cout << "mp_graphics::init file_name=" << file_name << endl;
@@ -100,9 +101,9 @@ void mp_graphics::init(std::string &file_name,
 	fname_log.assign(file_name);
 	fname_tikz.assign(file_name);
 
-	replace_extension_with(fname_mp, ".mp");
-	replace_extension_with(fname_log, ".commands");
-	replace_extension_with(fname_tikz, ".tex");
+	ST.replace_extension_with(fname_mp, ".mp");
+	ST.replace_extension_with(fname_log, ".commands");
+	ST.replace_extension_with(fname_tikz, ".tex");
 	
 	fp_mp.open(fname_mp);
 	fp_log.open(fname_log);

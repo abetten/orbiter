@@ -421,9 +421,10 @@ void isomorph::read_solutions_from_clique_finder(
 		int nb_solutions_total;
 		string fname_summary;
 		//char extension[1000];
-		
+		string_tools ST;
+
 		fname_summary.assign(fname[i]);
-		chop_off_extension_if_present(fname_summary, ".txt");
+		ST.chop_off_extension_if_present(fname_summary, ".txt");
 		fname_summary.append("_summary.csv");
 
 		Fio.count_number_of_solutions_in_file_by_case(fname[i],
@@ -583,6 +584,7 @@ void isomorph::build_up_database(int nb_files,
 	sorting Sorting;
 	file_io Fio;
 	data_structures_global Data;
+	string_tools ST;
 	
 	if (f_v) {
 		cout << "isomorph::build_up_database "
@@ -646,7 +648,7 @@ void isomorph::build_up_database(int nb_files,
 			p_buf = buf;
 
 			
-			s_scan_int(&p_buf, &a);
+			ST.s_scan_int(&p_buf, &a);
 			
 			data[0] = a; // starter number
 			
@@ -659,7 +661,7 @@ void isomorph::build_up_database(int nb_files,
 				}
 
 			for (j = 0; j < size; j++) {
-				s_scan_int(&p_buf, &a);
+				ST.s_scan_int(&p_buf, &a);
 				data[j + 1] = a;
 				}
 
@@ -1170,6 +1172,7 @@ void isomorph::count_solutions2(int nb_files, std::string *fname,
 	char str[1000];
 	int nb_fail = 0;
 	file_io Fio;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "count_solutions2: reading " << nb_files << " files" << endl;
@@ -1222,7 +1225,7 @@ void isomorph::count_solutions2(int nb_files, std::string *fname,
 			p_buf = buf;
 
 			
-			s_scan_int(&p_buf, &a);
+			ST.s_scan_int(&p_buf, &a);
 			
 			data[0] = a; // case number
 
@@ -1238,7 +1241,7 @@ void isomorph::count_solutions2(int nb_files, std::string *fname,
 
 
 			for (j = 0; j < size; j++) {
-				s_scan_int(&p_buf, &a);
+				ST.s_scan_int(&p_buf, &a);
 				data[j + 1] = a;
 				}
 
@@ -1278,7 +1281,7 @@ void isomorph::count_solutions2(int nb_files, std::string *fname,
 			<< " lines and " << nb << " solutions and " << nb_fail
 			<< " false positives" << endl;
 
-		s_scan_token_arbitrary(&p_buf, str);
+		ST.s_scan_token_arbitrary(&p_buf, str);
 		cout << "file " << fname[i] << " time " << str << endl;
 	
 		} // next i
@@ -1919,6 +1922,7 @@ void isomorph::skip_through_event_file(
 	char token[1000];
 	int l, j, case_no;
 	char *p_buf;
+	string_tools ST;
 
 	cout << "isomorph::skip_through_event_file" << endl;
 
@@ -1943,10 +1947,10 @@ void isomorph::skip_through_event_file(
 			
 		p_buf = buf;
 		if (strncmp(buf, "BEGIN", 5) == 0) {
-			s_scan_token(&p_buf, token);
-			s_scan_token(&p_buf, token);
-			s_scan_token(&p_buf, token);
-			s_scan_int(&p_buf, &case_no);
+			ST.s_scan_token(&p_buf, token);
+			ST.s_scan_token(&p_buf, token);
+			ST.s_scan_token(&p_buf, token);
+			ST.s_scan_int(&p_buf, &case_no);
 			cout << "located isomorphism type "
 					<< case_no << " in event file" << endl;
 			cout << "buf=" << buf << endl;
@@ -1974,6 +1978,7 @@ void isomorph::skip_through_event_file1(ifstream &f,
 	char *p_buf;
 	char token[1000];
 	char buf[MY_BUFSIZE];
+	string_tools ST;
 
 
 	while (TRUE) {
@@ -2000,11 +2005,11 @@ void isomorph::skip_through_event_file1(ifstream &f,
 			*fp_event_out << buf << endl;
 			return;
 			}
-		s_scan_token(&p_buf, token);
+		ST.s_scan_token(&p_buf, token);
 		if (strcmp(token, "F") == 0) {
-			s_scan_int(&p_buf, &from_orbit);
-			s_scan_int(&p_buf, &rank_subset);
-			s_scan_int(&p_buf, &to_orbit);
+			ST.s_scan_int(&p_buf, &from_orbit);
+			ST.s_scan_int(&p_buf, &rank_subset);
+			ST.s_scan_int(&p_buf, &to_orbit);
 
 			if (from_orbit != orbit_no) {
 				cout << "skip_through_event_file1 "
@@ -2020,9 +2025,9 @@ void isomorph::skip_through_event_file1(ifstream &f,
 			*fp_event_out << buf << endl;
 			}
 		else if (strcmp(token, "A") == 0) {
-			s_scan_int(&p_buf, &from_orbit);
-			s_scan_int(&p_buf, &rank_subset);
-			s_scan_token(&p_buf, token); // group order
+			ST.s_scan_int(&p_buf, &from_orbit);
+			ST.s_scan_int(&p_buf, &rank_subset);
+			ST.s_scan_token(&p_buf, token); // group order
 
 			if (from_orbit != orbit_no) {
 				cout << "skip_through_event_file1 "
@@ -2037,10 +2042,10 @@ void isomorph::skip_through_event_file1(ifstream &f,
 			*fp_event_out << buf << endl;
 			}
 		else if (strcmp(token, "AF") == 0) {
-			s_scan_int(&p_buf, &from_orbit);
-			s_scan_int(&p_buf, &rank_subset);
-			s_scan_int(&p_buf, &to_orbit);
-			s_scan_token(&p_buf, token); // group order
+			ST.s_scan_int(&p_buf, &from_orbit);
+			ST.s_scan_int(&p_buf, &rank_subset);
+			ST.s_scan_int(&p_buf, &to_orbit);
+			ST.s_scan_token(&p_buf, token); // group order
 
 			if (from_orbit != orbit_no) {
 				cout << "skip_through_event_file1 "
@@ -2075,6 +2080,7 @@ void isomorph::event_file_completed_cases(
 	char token[1000];
 	ifstream f(event_file_name);
 	char buf[MY_BUFSIZE];
+	string_tools ST;
 	
 	nb_completed_cases = 0;
 	while (TRUE) {
@@ -2094,10 +2100,10 @@ void isomorph::event_file_completed_cases(
 			
 		p_buf = buf;
 		if (strncmp(buf, "END", 3) == 0) {
-			s_scan_token(&p_buf, token);
-			s_scan_token(&p_buf, token);
-			s_scan_token(&p_buf, token);
-			s_scan_int(&p_buf, &a);
+			ST.s_scan_token(&p_buf, token);
+			ST.s_scan_token(&p_buf, token);
+			ST.s_scan_token(&p_buf, token);
+			ST.s_scan_int(&p_buf, &a);
 			cout << "isomorphism type " << a
 					<< " has been completed" << endl;
 			completed_cases[nb_completed_cases++] = a;
@@ -2115,6 +2121,7 @@ void isomorph::event_file_read_case(
 	char token[1000];
 	char buf[MY_BUFSIZE];
 	ifstream f(event_file_name);
+	string_tools ST;
 	
 	while (TRUE) {
 
@@ -2133,10 +2140,10 @@ void isomorph::event_file_read_case(
 			
 		p_buf = buf;
 		if (strncmp(buf, "BEGIN", 5) == 0) {
-			s_scan_token(&p_buf, token);
-			s_scan_token(&p_buf, token);
-			s_scan_token(&p_buf, token);
-			s_scan_int(&p_buf, &a);
+			ST.s_scan_token(&p_buf, token);
+			ST.s_scan_token(&p_buf, token);
+			ST.s_scan_token(&p_buf, token);
+			ST.s_scan_int(&p_buf, &a);
 			if (a == case_no) {
 				cout << "located isomorphism type " << a
 						<< " in event file" << endl;
@@ -2158,6 +2165,7 @@ void isomorph::event_file_read_case1(ifstream &f,
 	char *p_buf;
 	char token[1000];
 	char buf[MY_BUFSIZE];
+	string_tools ST;
 
 
 	while (TRUE) {
@@ -2183,29 +2191,29 @@ void isomorph::event_file_read_case1(ifstream &f,
 			Reps->print_fusion_statistics();
 			return;
 			}
-		s_scan_token(&p_buf, token);
+		ST.s_scan_token(&p_buf, token);
 		if (strcmp(token, "F") == 0) {
-			s_scan_int(&p_buf, &from_orbit);
-			s_scan_int(&p_buf, &rank_subset);
-			s_scan_int(&p_buf, &to_orbit);
+			ST.s_scan_int(&p_buf, &from_orbit);
+			ST.s_scan_int(&p_buf, &rank_subset);
+			ST.s_scan_int(&p_buf, &to_orbit);
 
 			Reps->rep[case_no] = from_orbit;
 			Reps->fusion[from_orbit] = from_orbit;
 			Reps->fusion[to_orbit] = from_orbit;
 			}
 		else if (strcmp(token, "A") == 0) {
-			s_scan_int(&p_buf, &from_orbit);
-			s_scan_int(&p_buf, &rank_subset);
-			s_scan_token(&p_buf, token); // group order
+			ST.s_scan_int(&p_buf, &from_orbit);
+			ST.s_scan_int(&p_buf, &rank_subset);
+			ST.s_scan_token(&p_buf, token); // group order
 
 			Reps->rep[case_no] = from_orbit;
 			Reps->fusion[from_orbit] = from_orbit;
 			}
 		else if (strcmp(token, "AF") == 0) {
-			s_scan_int(&p_buf, &from_orbit);
-			s_scan_int(&p_buf, &rank_subset);
-			s_scan_int(&p_buf, &to_orbit);
-			s_scan_token(&p_buf, token); // group order
+			ST.s_scan_int(&p_buf, &from_orbit);
+			ST.s_scan_int(&p_buf, &rank_subset);
+			ST.s_scan_int(&p_buf, &to_orbit);
+			ST.s_scan_token(&p_buf, token); // group order
 
 			Reps->rep[case_no] = from_orbit;
 			Reps->fusion[from_orbit] = from_orbit;
@@ -2226,6 +2234,7 @@ int isomorph::next_subset_play_back(int &subset_rank,
 	char buf[MY_BUFSIZE];
 	int rank;
 	combinatorics_domain Combi;
+	string_tools ST;
 		
 	f_eof = FALSE;
 	if (play_back_file->eof()) {
@@ -2265,9 +2274,9 @@ int isomorph::next_subset_play_back(int &subset_rank,
 		cout << "parsing: " << buf << endl;
 		}
 	p_buf = buf;
-	s_scan_token(&p_buf, token);
-	s_scan_int(&p_buf, &rank);
-	s_scan_int(&p_buf, &rank);
+	ST.s_scan_token(&p_buf, token);
+	ST.s_scan_int(&p_buf, &rank);
+	ST.s_scan_int(&p_buf, &rank);
 	if (f_v) {
 		cout << "rank = " << rank << endl;
 		cout << "subset_rank = " << subset_rank << endl;

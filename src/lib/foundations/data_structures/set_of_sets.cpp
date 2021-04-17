@@ -236,11 +236,12 @@ void set_of_sets::init_from_file(int underlying_set_size,
 		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	string_tools ST;
 	
 	if (f_v) {
 		cout << "set_of_sets::init_from_file fname=" << fname << endl;
 		}
-	if (is_csv_file(fname.c_str())) {
+	if (ST.is_csv_file(fname.c_str())) {
 		if (f_v) {
 			cout << "set_of_sets::init_from_file "
 					"the file is a csv file" << endl;
@@ -327,6 +328,7 @@ void set_of_sets::init_from_orbiter_file(int underlying_set_size,
 	{
 	ifstream fp(fname);
 	int len, nb_sol, a, j;
+	string_tools ST;
 
 	
 	nb_sol = 0;
@@ -349,7 +351,7 @@ void set_of_sets::init_from_orbiter_file(int underlying_set_size,
 			continue;
 			
 		p_buf = buf;
-		s_scan_int(&p_buf, &len);
+		ST.s_scan_int(&p_buf, &len);
 		if (len == -1) {
 			if (f_v) {
 				cout << "set_of_sets::init_from_orbiter_file "
@@ -367,7 +369,7 @@ void set_of_sets::init_from_orbiter_file(int underlying_set_size,
 		Sets[nb_sol] = NEW_lint(len);
 		Set_size[nb_sol] = len;
 		for (j = 0; j < len; j++) {
-			s_scan_int(&p_buf, &a);
+			ST.s_scan_int(&p_buf, &a);
 			Sets[nb_sol][j] = a;
 			}
 		nb_sol++;

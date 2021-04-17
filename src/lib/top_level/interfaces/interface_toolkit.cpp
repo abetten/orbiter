@@ -376,9 +376,10 @@ void interface_toolkit::worker(int verbose_level)
 			a = T.data_sorted[T.type_first[t]];
 			string fname;
 			char str[1000];
+			string_tools ST;
 
 			fname.assign(split_by_values_fname_in);
-			chop_off_extension(fname);
+			ST.chop_off_extension(fname);
 			sprintf(str, "_value%d.csv", a);
 			fname.append(str);
 			for (h = 0; h < len; h++) {

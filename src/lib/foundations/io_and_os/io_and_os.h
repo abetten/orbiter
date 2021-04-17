@@ -24,9 +24,10 @@ namespace foundations {
 // create_file_description.cpp
 // #############################################################################
 
-//! to create files
 
 #define MAX_LINES 100
+
+//! rules to create text files
 
 
 class create_file_description {
@@ -671,6 +672,7 @@ public:
 	void code_uchar(char *&p, uchar a);
 	void decode_uchar(char *&p, uchar &a);
 	void get_date(std::string &str);
+	void test_typedefs();
 
 };
 
@@ -730,10 +732,6 @@ public:
 
 
 
-int is_csv_file(const char *fname);
-int is_xml_file(const char *fname);
-void test_typedefs();
-void chop_string(const char *str, int &argc, char **&argv);
 const char *strip_directory(const char *p);
 int is_all_whitespace(const char *str);
 int is_all_digits(char *p);
@@ -747,13 +745,11 @@ uint32_t root_of_tree_uint32_t (uint32_t* S, uint32_t i);
 int util_compare_func(void *a, void *b, void *data);
 void text_to_three_double(const char *text, double *d);
 void text_to_three_double(std::string &text, double *d);
-void convert_arguments(int &argc, const char **argv, std::string *&Argv);
 int stringcmp(std::string &str, const char *p);
 int strtoi(std::string &str);
 long int strtolint(std::string &str);
 double strtof(std::string &str);
 int string_starts_with_a_number(std::string &str);
-void string_fix_escape_characters(std::string &str);
 void dump_memory_chain(void *allocated_objects);
 void print_vector(std::ostream &ost, int *v, int size);
 void itoa(char *p, int len_of_p, int i);
@@ -767,30 +763,8 @@ void print_set(std::ostream &ost, int size, long int *set);
 void print_set_lint(std::ostream &ost, int size, long int *set);
 void print_incidence_structure(std::ostream &ost,
 		int m, int n, int len, int *S);
-void scan_permutation_from_string(const char *s,
-	int *&perm, int &degree, int verbose_level);
-void scan_permutation_from_stream(std::istream & is,
-	int *&perm, int &degree, int verbose_level);
-char get_character(std::istream & is, int verbose_level);
-void replace_extension_with(char *p, const char *new_ext);
-void replace_extension_with(std::string &p, const char *new_ext);
-void chop_off_extension(char *p);
-void chop_off_extension(std::string &p);
-void chop_off_extension_if_present(std::string &p, const char *ext);
-void chop_off_extension_if_present(char *p, const char *ext);
-void get_fname_base(const char *p, char *fname_base);
-void get_extension_if_present(const char *p, char *ext);
-void get_extension_if_present_and_chop_off(char *p, char *ext);
-int s_scan_int(char **s, int *i);
-int s_scan_lint(char **s, long int *i);
-int s_scan_double(char **s, double *d);
-int s_scan_token(char **s, char *str);
-int s_scan_token_arbitrary(char **s, char *str);
-int s_scan_str(char **s, char *str);
-int s_scan_token_comma_separated(const char **s, char *str);
-int hashing(int hash0, int a);
-int hashing_fixed_width(int hash0, int a, int bit_length);
-int int_vec_hash(int *v, int len, int bit_length);
+
+
 void print_line_of_number_signs();
 void print_repeated_character(std::ostream &ost, char c, int n);
 void print_pointer_hex(std::ostream &ost, void *p);
@@ -798,6 +772,8 @@ void print_hex_digit(std::ostream &ost, int digit);
 int compare_sets(int *set1, int *set2, int sz1, int sz2);
 int test_if_sets_are_disjoint_assuming_sorted(int *set1, int *set2, int sz1, int sz2);
 int test_if_sets_are_disjoint_assuming_sorted_lint(long int *set1, long int *set2, int sz1, int sz2);
+int hashing(int hash0, int a);
+int hashing_fixed_width(int hash0, int a, int bit_length);
 
 
 

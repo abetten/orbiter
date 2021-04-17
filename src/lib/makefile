@@ -63,6 +63,7 @@ MODULES= \
 		foundations/data_structures/set_of_sets.o \
 		foundations/data_structures/sorting.o \
 		foundations/data_structures/spreadsheet.o \
+		foundations/data_structures/string_tools.o \
 		foundations/data_structures/super_fast_hash.o \
 		foundations/data_structures/vector_hashing.o \
 		foundations/expression_parser/expression_parser_domain.o \
@@ -141,6 +142,7 @@ MODULES= \
 		foundations/graph_theory_nauty/schreier.o \
 		foundations/graphics/animate.o \
 		foundations/graphics/draw_bitmap_control.o \
+		foundations/graphics/draw_mod_n_description.o \
 		foundations/graphics/drawable_set_of_objects.o \
 		foundations/graphics/EasyBMP.o \
 		foundations/graphics/graphical_output.o \
@@ -398,6 +400,7 @@ MODULES= \
 		top_level/orbits/orbit_of_equations.o \
 		top_level/orbits/orbit_of_sets.o \
 		top_level/orbits/orbit_of_subspaces.o \
+		top_level/projective_space/canonical_form.o \
 		top_level/projective_space/object_in_projective_space_with_action.o \
 		top_level/projective_space/projective_space_activity_description.o \
 		top_level/projective_space/projective_space_activity.o \

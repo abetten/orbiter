@@ -514,6 +514,7 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 			"(1,2)(3,4)(5,6)(7,8)(9,10)(11,12)",
 			"(5,6)(7,8)(9,10)(11,12)"
 			};
+		string_tools ST;
 
 		gens->allocate(5, verbose_level - 2);
 
@@ -521,7 +522,7 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 			int *perm;
 			int degree;
 
-			scan_permutation_from_string(
+			ST.scan_permutation_from_string(
 					data_str[i], perm, degree,
 					0 /* verbose_level */);
 			cout << "degree=" << degree << endl;
@@ -554,7 +555,7 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 			int *perm;
 			int degree;
 
-			scan_permutation_from_string(
+			ST.scan_permutation_from_string(
 					data_subgroup_str[i], perm, degree,
 					0 /* verbose_level */);
 			for (j = 0; j < degree; j++) {

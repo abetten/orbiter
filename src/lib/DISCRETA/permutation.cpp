@@ -331,15 +331,16 @@ void permutation::scan(istream & is, int verbose_level)
 	int i, a_last, a, dig, ci;
 	char s[10000], c;
 	int si, largest_point = 0;
+	string_tools ST;
 	
 	//l = s_l();
 	perm.m_l(l);
 	cycle.m_l_n(l);
 	perm.one();
 	while (TRUE) {
-		c = get_character(is, verbose_level);
+		c = ST.get_character(is, verbose_level);
 		while (c == ' ' || c == '\t') {
-			c = get_character(is, f_v);
+			c = ST.get_character(is, f_v);
 			}
 		ci = 0;
 		if (c != '(') {
@@ -348,21 +349,21 @@ void permutation::scan(istream & is, int verbose_level)
 		if (f_v) {
 			cout << "opening parenthesis" << endl;
 			}
-		c = get_character(is, verbose_level);
+		c = ST.get_character(is, verbose_level);
 		while (TRUE) {
 			while (c == ' ' || c == '\t')
-				c = get_character(is, verbose_level);
+				c = ST.get_character(is, verbose_level);
 			
 			si = 0;
 			// read digits:
 			while (c >= '0' && c <= '9') {
 				s[si++] = c;
-				c = get_character(is, f_v);
+				c = ST.get_character(is, f_v);
 				}
 			while (c == ' ' || c == '\t')
-				c = get_character(is, f_v);
+				c = ST.get_character(is, f_v);
 			if (c == ',')
-				c = get_character(is, f_v);
+				c = ST.get_character(is, f_v);
 			s[si] = 0;
 			dig = atoi(s);
 			if (dig > largest_point)
@@ -423,7 +424,7 @@ void permutation::scan(istream & is, int verbose_level)
 		if (!is)
 			break;
 		while (c == ' ' || c == '\t')
-			c = get_character(is, f_v);
+			c = ST.get_character(is, f_v);
 		ci = 0;
 		} // end of loop over all cycles
 	{

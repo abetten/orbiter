@@ -905,6 +905,7 @@ void colored_graph::load(std::string &fname, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	graph_theory_domain Graph;
 	file_io Fio;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "colored_graph::load" << endl;
@@ -926,7 +927,7 @@ void colored_graph::load(std::string &fname, int verbose_level)
 	f_ownership_of_bitvec = TRUE;
 
 	fname_base.assign(fname);
-	replace_extension_with(fname_base, "");
+	ST.replace_extension_with(fname_base, "");
 
 
 	if (f_v) {
@@ -2241,6 +2242,7 @@ void colored_graph::export_to_graphviz(std::string &fname, int verbose_level)
 	int i, j;
 	int *M;
 	file_io Fio;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "colored_graph::export_to_graphviz" << endl;
@@ -2263,7 +2265,7 @@ void colored_graph::export_to_graphviz(std::string &fname, int verbose_level)
 		string label;
 
 		label.assign(fname);
-		chop_off_extension(label);
+		ST.chop_off_extension(label);
 
 		ost << "graph " << label << " {" << std::endl;
 

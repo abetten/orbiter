@@ -6,6 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	canonical_form.o \
 	object_in_projective_space_with_action.o \
 	projective_space_activity_description.o \
 	projective_space_activity.o \

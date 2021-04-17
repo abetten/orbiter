@@ -436,7 +436,7 @@ void interface_symbol_table::read_definition(
 			cout << "interface_symbol_table::read_definition after definition_of_packing_was" << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-packing_with_symmetry_assumption_choose_fixed_points") == 0) {
+	else if (stringcmp(argv[i], "-packing_choose_fixed_points") == 0) {
 		f_packing_was_choose_fixed_points = TRUE;
 
 		packing_with_assumed_symmetry_label.assign(argv[++i]);

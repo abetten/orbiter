@@ -123,6 +123,7 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 
 		string fname_tex;
 		string fname_curves;
+		string fname_quartics;
 		string fname_mask;
 		string label;
 		string label_tex;
@@ -140,6 +141,10 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 		fname_curves.append(".txt");
 
 
+		fname_quartics.assign(label);
+		fname_quartics.append(".csv");
+
+
 		label_tex.assign("surface_");
 		label_tex.append(SC->label_tex);
 
@@ -150,6 +155,7 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 		{
 			ofstream ost(fname_tex);
 			ofstream ost_curves(fname_curves);
+			ofstream ost_quartics(fname_quartics);
 
 			latex_interface L;
 
@@ -158,7 +164,7 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 			if (f_v) {
 				cout << "cubic_surface_activity::perform_activity before SoA->all_quartic_curves" << endl;
 			}
-			SoA->all_quartic_curves(ost, ost_curves, verbose_level);
+			SoA->all_quartic_curves(ost, ost_curves, ost_quartics, verbose_level);
 			if (f_v) {
 				cout << "cubic_surface_activity::perform_activity after SoA->all_quartic_curves" << endl;
 			}

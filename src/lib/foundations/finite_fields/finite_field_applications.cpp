@@ -1202,9 +1202,10 @@ void finite_field::apply_Walsh_Hadamard_transform(
 	int m, nb_cols;
 	int len;
 	string fname_csv_out;
+	string_tools ST;
 
 	fname_csv_out.assign(fname_csv_in);
-	chop_off_extension(fname_csv_out);
+	ST.chop_off_extension(fname_csv_out);
 	fname_csv_out.append("_transformed.csv");
 
 	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
@@ -1278,9 +1279,10 @@ void finite_field::algebraic_normal_form(
 	int m, nb_cols;
 	int len;
 	string fname_csv_out;
+	string_tools ST;
 
 	fname_csv_out.assign(fname_csv_in);
-	chop_off_extension(fname_csv_out);
+	ST.chop_off_extension(fname_csv_out);
 	fname_csv_out.append("_alg_normal_form.csv");
 
 	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
@@ -1346,9 +1348,10 @@ void finite_field::apply_trace_function(
 	int m, nb_cols;
 	int len, i;
 	string fname_csv_out;
+	string_tools ST;
 
 	fname_csv_out.assign(fname_csv_in);
-	chop_off_extension(fname_csv_out);
+	ST.chop_off_extension(fname_csv_out);
 	fname_csv_out.append("_trace.csv");
 
 	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
@@ -1380,9 +1383,10 @@ void finite_field::apply_power_function(
 	int m, nb_cols;
 	int len, i;
 	string fname_csv_out;
+	string_tools ST;
 
 	fname_csv_out.assign(fname_csv_in);
-	chop_off_extension(fname_csv_out);
+	ST.chop_off_extension(fname_csv_out);
 
 	char str[1000];
 

@@ -275,6 +275,12 @@ void projective_space_activity::perform_activity(int verbose_level)
 				O,
 				verbose_level);
 	}
+	else if (Descr->f_classify_quartic_curves) {
+
+		classify_quartic_curves(PA,
+				Descr->classify_quartic_curves_fname_mask, Descr->classify_quartic_curves_nb,
+				verbose_level);
+	}
 
 
 	if (f_v) {
@@ -836,9 +842,271 @@ void projective_space_activity::do_cheat_sheet_PG(
 }
 
 
+void projective_space_activity::classify_quartic_curves(
+		projective_space_with_action *PA,
+		std::string &fname_mask, int nb,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "projective_space_activity::classify_quartic_curves" << endl;
+	}
+	homogeneous_polynomial_domain *Poly4_x123;
+
+	int cnt;
+
+	Poly4_x123 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly4_x123->init(PA->F, 3, 4, FALSE, t_PART, verbose_level);
+
+	action_on_homogeneous_polynomials *AonHPD;
+
+	AonHPD = NEW_OBJECT(action_on_homogeneous_polynomials);
+	if (f_v) {
+		cout << "projective_space_activity::process_quartic_curve "
+				"before AonHPD->init" << endl;
+	}
+	AonHPD->init(PA->A, Poly4_x123, verbose_level);
+	if (f_v) {
+		cout << "projective_space_activity::process_quartic_curve "
+				"after AonHPD->init" << endl;
+	}
+
+	for (cnt = 0; cnt < nb; cnt++) {
+		char str[1000];
+		string fname;
+		int row;
+
+		sprintf(str, fname_mask.c_str(), cnt);
+		fname.assign(str);
+
+		spreadsheet S;
+
+		S.read_spreadsheet(fname, verbose_level);
+
+		if (f_v) {
+			cout << "projective_space_activity::classify_quartic_curves S.nb_rows = " << S.nb_rows << endl;
+			cout << "projective_space_activity::classify_quartic_curves S.nb_cols = " << S.nb_cols << endl;
+		}
+
+		int j, t;
+		string eqn_txt;
+		string pts_txt;
+		string bitangents_txt;
+		int *eqn;
+		int sz;
+		long int *pts;
+		int nb_pts;
+		long int *bitangents;
+		int nb_bitangents;
+
+		for (row = 0; row < S.nb_rows - 1; row++) {
+			j = 1;
+			t = S.Table[(row + 1) * S.nb_cols + j];
+			if (S.tokens[t] == NULL) {
+				cout << "projective_space_activity::classify_quartic_curves token[t] == NULL" << endl;
+			}
+			eqn_txt.assign(S.tokens[t]);
+			j = 2;
+			t = S.Table[(row + 1) * S.nb_cols + j];
+			if (S.tokens[t] == NULL) {
+				cout << "projective_space_activity::classify_quartic_curves token[t] == NULL" << endl;
+			}
+			pts_txt.assign(S.tokens[t]);
+			j = 3;
+			t = S.Table[(row + 1) * S.nb_cols + j];
+			if (S.tokens[t] == NULL) {
+				cout << "projective_space_activity::classify_quartic_curves token[t] == NULL" << endl;
+			}
+			bitangents_txt.assign(S.tokens[t]);
+
+			string_tools ST;
+
+			ST.remove_specific_character(eqn_txt, '\"');
+			ST.remove_specific_character(pts_txt, '\"');
+			ST.remove_specific_character(bitangents_txt, '\"');
+
+			if (f_v) {
+				cout << "row = " << row << " eqn=" << eqn_txt << " pts_txt=" << pts_txt << " =" << bitangents_txt << endl;
+			}
+
+			Orbiter->Int_vec.scan(eqn_txt, eqn, sz);
+			Orbiter->Lint_vec.scan(pts_txt, pts, nb_pts);
+			Orbiter->Lint_vec.scan(bitangents_txt, bitangents, nb_bitangents);
+
+			if (f_v) {
+				cout << "row = " << row << " eqn=";
+				Orbiter->Int_vec.print(cout, eqn, sz);
+				cout << " pts=";
+				Orbiter->Lint_vec.print(cout, pts, nb_pts);
+				cout << " bitangents=";
+				Orbiter->Lint_vec.print(cout, bitangents, nb_bitangents);
+				cout << endl;
+			}
+
+
+			canonical_form *C;
+
+			process_quartic_curve(
+					PA,
+					Poly4_x123,
+					AonHPD,
+					row, eqn, sz,
+					pts, nb_pts,
+					bitangents, nb_bitangents,
+					C,
+					verbose_level);
+
+		}
+
+
+	}
+
+	FREE_OBJECT(Poly4_x123);
+	FREE_OBJECT(AonHPD);
+
+	if (f_v) {
+		cout << "projective_space_activity::classify_quartic_curves done" << endl;
+	}
+}
+
+
+void projective_space_activity::process_quartic_curve(
+		projective_space_with_action *PA,
+		homogeneous_polynomial_domain *Poly4_x123,
+		action_on_homogeneous_polynomials *AonHPD,
+		int idx, int *eqn, int sz,
+		long int *Pts_on_curve, int sz_curve,
+		long int *bitangents, int nb_bitangents,
+		canonical_form *&C,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "projective_space_activity::process_quartic_curve" << endl;
+	}
+
+	C = NEW_OBJECT(canonical_form);
+
+	C->idx = idx;
+	C->eqn = eqn;
+	C->sz = sz;
+	C->Pts_on_curve = Pts_on_curve;
+	C->sz_curve = sz_curve;
+	C->bitangents = bitangents;
+	C->nb_bitangents = nb_bitangents;
+
+
+	//strong_generators *SG_pt_stab = NULL;
+	longinteger_object pt_stab_order;
+	object_in_projective_space *OiP = NULL;
+
+	int f_compute_canonical_form = TRUE;
+	//bitvector *Canonical_form;
+	//long int *canonical_labeling = NULL;
+	//int canonical_labeling_len;
+
+
+	OiP = NEW_OBJECT(object_in_projective_space);
+
+	if (f_v) {
+		cout << "projective_space_activity::process_quartic_curve before OiP->init_point_set" << endl;
+	}
+	OiP->init_point_set(PA->P,
+			Pts_on_curve, sz_curve,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "projective_space_activity::process_quartic_curve after OiP->init_point_set" << endl;
+	}
+
+	int nb_rows, nb_cols;
+
+	OiP->encoding_size(
+				nb_rows, nb_cols,
+				verbose_level);
+	if (f_v) {
+		cout << "projective_space_activity::process_quartic_curve nb_rows = " << nb_rows << endl;
+		cout << "projective_space_activity::process_quartic_curve nb_cols = " << nb_cols << endl;
+	}
+
+	C->canonical_labeling = NEW_lint(nb_rows + nb_cols);
+
+	if (f_v) {
+		cout << "projective_space_activity::process_quartic_curve before Surf_A->PA->PA2->set_stabilizer_of_object" << endl;
+	}
+	C->SG_pt_stab = PA->set_stabilizer_of_object(
+		OiP,
+		f_compute_canonical_form, C->Canonical_form,
+		C->canonical_labeling, C->canonical_labeling_len,
+		verbose_level);
+	if (f_v) {
+		cout << "projective_space_activity::process_quartic_curve after Surf_A->PA->PA2->set_stabilizer_of_object" << endl;
+	}
+
+
+	C->SG_pt_stab->group_order(pt_stab_order);
+	if (f_v) {
+		cout << "projective_space_activity::process_quartic_curve "
+				"pt_stab_order = " << pt_stab_order << endl;
+	}
+
+	FREE_OBJECT(OiP);
+	//FREE_lint(canonical_labeling);
 
 
 
+
+
+	// compute the orbit of the equation under the stabilizer of the set of points:
+
+
+	//orbit_of_equations *Orb;
+
+	C->Orb = NEW_OBJECT(orbit_of_equations);
+
+
+#if 1
+	if (f_v) {
+		cout << "projective_space_activity::process_quartic_curve "
+				"before Orb->init" << endl;
+	}
+	C->Orb->init(PA->A, PA->F,
+		AonHPD,
+		C->SG_pt_stab /* A->Strong_gens*/, eqn,
+		verbose_level);
+	if (f_v) {
+		cout << "projective_space_activity::process_quartic_curve "
+				"after Orb->init" << endl;
+		cout << "projective_space_activity::process_quartic_curve found an orbit of length " << C->Orb->used_length << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "projective_space_activity::process_quartic_curve "
+				"before Orb->stabilizer_orbit_rep" << endl;
+	}
+	C->Stab_gens_quartic = C->Orb->stabilizer_orbit_rep(
+			pt_stab_order, verbose_level);
+	if (f_v) {
+		cout << "projective_space_activity::process_quartic_curve "
+				"after Orb->stabilizer_orbit_rep" << endl;
+	}
+	C->Stab_gens_quartic->print_generators_tex(cout);
+#endif
+
+	//FREE_OBJECT(SG_pt_stab);
+	//FREE_OBJECT(Orb);
+
+
+	if (f_v) {
+		cout << "projective_space_activity::process_quartic_curve done" << endl;
+	}
+}
 
 
 

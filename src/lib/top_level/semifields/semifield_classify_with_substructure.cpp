@@ -616,9 +616,10 @@ void semifield_classify_with_substructure::identify_semifields_from_file(
 
 		}
 		string fname;
+		string_tools ST;
 
 		fname.assign(Descr->identify_semifields_from_file_fname);
-		chop_off_extension(fname);
+		ST.chop_off_extension(fname);
 		fname.append("_identification.csv");
 		Fio.int_matrix_write_csv(fname, identify_semifields_from_file_Po,
 				identify_semifields_from_file_m, 6);

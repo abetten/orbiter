@@ -610,6 +610,139 @@ void quartic_curve::compute_quartic(int pt_orbit,
 }
 
 
+void quartic_curve::compute_stabilizer(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "quartic_curve::compute_stabilizer" << endl;
+	}
+	surface_with_action *Surf_A;
+
+	Surf_A = SOA->Surf_A;
+	// compute stabilizer of the set of points:
+
+
+	strong_generators *SG_pt_stab = NULL;
+	longinteger_object pt_stab_order;
+	object_in_projective_space *OiP = NULL;
+
+	int f_compute_canonical_form = FALSE;
+	bitvector *Canonical_form;
+	long int *canonical_labeling = NULL;
+	int canonical_labeling_len;
+
+
+	OiP = NEW_OBJECT(object_in_projective_space);
+
+	if (f_v) {
+		cout << "quartic_curve::compute_stabilizer before OiP->init_point_set" << endl;
+	}
+	OiP->init_point_set(Surf_A->PA->PA2->P,
+			Pts_on_curve, sz_curve,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "quartic_curve::compute_stabilizer after OiP->init_point_set" << endl;
+	}
+
+	int nb_rows, nb_cols;
+
+	OiP->encoding_size(
+				nb_rows, nb_cols,
+				verbose_level);
+	if (f_v) {
+		cout << "quartic_curve::compute_stabilizer nb_rows = " << nb_rows << endl;
+		cout << "quartic_curve::compute_stabilizer nb_cols = " << nb_cols << endl;
+	}
+
+	canonical_labeling = NEW_lint(nb_rows + nb_cols);
+
+	if (f_v) {
+		cout << "quartic_curve::compute_stabilizer before Surf_A->PA->PA2->set_stabilizer_of_object" << endl;
+	}
+	SG_pt_stab = Surf_A->PA->PA2->set_stabilizer_of_object(
+		OiP,
+		f_compute_canonical_form, Canonical_form,
+		canonical_labeling, canonical_labeling_len,
+		verbose_level);
+	if (f_v) {
+		cout << "quartic_curve::compute_stabilizer after Surf_A->PA->PA2->set_stabilizer_of_object" << endl;
+	}
+
+
+	SG_pt_stab->group_order(pt_stab_order);
+	if (f_v) {
+		cout << "quartic_curve::compute_stabilizer "
+				"pt_stab_order = " << pt_stab_order << endl;
+	}
+
+	FREE_OBJECT(OiP);
+	FREE_lint(canonical_labeling);
+
+	action_on_homogeneous_polynomials *AonHPD;
+
+	AonHPD = NEW_OBJECT(action_on_homogeneous_polynomials);
+	if (f_v) {
+		cout << "quartic_curve::compute_stabilizer "
+				"before AonHPD->init" << endl;
+	}
+	AonHPD->init(Surf_A->PA->PA2->A, Surf_A->Surf->Poly4_x123, verbose_level);
+	if (f_v) {
+		cout << "quartic_curve::compute_stabilizer "
+				"after AonHPD->init" << endl;
+	}
+
+
+
+
+	// compute the orbit of the equation under the stabilizer of the set of points:
+
+
+	orbit_of_equations *Orb;
+
+	Orb = NEW_OBJECT(orbit_of_equations);
+
+
+#if 1
+	if (f_v) {
+		cout << "quartic_curve::compute_stabilizer "
+				"before Orb->init" << endl;
+	}
+	Orb->init(Surf_A->PA->PA2->A, Surf_A->PA->F,
+		AonHPD,
+		SG_pt_stab /* A->Strong_gens*/, curve,
+		verbose_level);
+	if (f_v) {
+		cout << "quartic_curve::compute_stabilizer "
+				"after Orb->init" << endl;
+		cout << "quartic_curve::compute_stabilizer found an orbit of length " << Orb->used_length << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "quartic_curve::compute_stabilizer "
+				"before Orb->stabilizer_orbit_rep" << endl;
+	}
+	Stab_gens_quartic = Orb->stabilizer_orbit_rep(
+			pt_stab_order, verbose_level);
+	if (f_v) {
+		cout << "quartic_curve::compute_stabilizer "
+				"after Orb->stabilizer_orbit_rep" << endl;
+	}
+	Stab_gens_quartic->print_generators_tex(cout);
+#endif
+
+	FREE_OBJECT(SG_pt_stab);
+	FREE_OBJECT(Orb);
+	FREE_OBJECT(AonHPD);
+
+
+	if (f_v) {
+		cout << "quartic_curve::compute_stabilizer" << endl;
+	}
+}
 
 void quartic_curve::cheat_sheet_quartic_curve(
 		std::ostream &ost,

@@ -382,6 +382,7 @@ public:
 		int *val, int *mult, int len);
 	void set_print(std::ostream &ost, int *v, int len);
 	void integer_vec_print(std::ostream &ost, int *v, int len);
+	int hash(int *v, int len, int bit_length);
 
 };
 
@@ -1203,6 +1204,52 @@ public:
 
 
 };
+
+
+// #############################################################################
+// string_tools.cpp
+// #############################################################################
+
+//! functions related to strings and character arrays
+
+
+class string_tools {
+
+public:
+
+	string_tools();
+	~string_tools();
+	int is_csv_file(const char *fname);
+	int is_xml_file(const char *fname);
+	int s_scan_int(char **s, int *i);
+	int s_scan_lint(char **s, long int *i);
+	int s_scan_double(char **s, double *d);
+	int s_scan_token(char **s, char *str);
+	int s_scan_token_arbitrary(char **s, char *str);
+	int s_scan_str(char **s, char *str);
+	int s_scan_token_comma_separated(const char **s, char *str);
+	void scan_permutation_from_string(const char *s,
+		int *&perm, int &degree, int verbose_level);
+	void scan_permutation_from_stream(std::istream & is,
+		int *&perm, int &degree, int verbose_level);
+	void chop_string(const char *str, int &argc, char **&argv);
+	void convert_arguments(int &argc, const char **argv, std::string *&Argv);
+	char get_character(std::istream & is, int verbose_level);
+	void replace_extension_with(char *p, const char *new_ext);
+	void replace_extension_with(std::string &p, const char *new_ext);
+	void chop_off_extension(char *p);
+	void chop_off_extension(std::string &p);
+	void chop_off_extension_if_present(std::string &p, const char *ext);
+	void chop_off_extension_if_present(char *p, const char *ext);
+	void get_fname_base(const char *p, char *fname_base);
+	void get_extension_if_present(const char *p, char *ext);
+	void get_extension_if_present_and_chop_off(char *p, char *ext);
+	void string_fix_escape_characters(std::string &str);
+	void remove_specific_character(std::string &str, char c);
+
+
+};
+
 
 
 // #############################################################################

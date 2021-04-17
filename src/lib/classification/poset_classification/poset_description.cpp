@@ -46,11 +46,12 @@ void poset_description::read_arguments_from_string(
 	int argc;
 	char **argv;
 	int i;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "poset_description::read_arguments_from_string" << endl;
 	}
-	chop_string(str, argc, argv);
+	ST.chop_string(str, argc, argv);
 
 	if (f_vv) {
 		cout << "argv:" << endl;

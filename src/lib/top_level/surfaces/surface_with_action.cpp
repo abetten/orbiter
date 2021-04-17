@@ -852,9 +852,6 @@ void surface_with_action::create_surface_and_do_report(
 		report_with_group(
 					SC,
 					f_has_control_six_arcs, Control_six_arcs,
-					//f_surface_clebsch,
-					//f_surface_codes,
-					//f_surface_quartic,
 					verbose_level);
 
 	}

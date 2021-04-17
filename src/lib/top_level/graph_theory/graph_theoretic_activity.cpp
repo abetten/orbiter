@@ -55,6 +55,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 	if (f_v) {
 		cout << "graph_theoretic_activity::perform_activity" << endl;
 	}
+	string_tools ST;
 
 	if (Descr->f_find_cliques) {
 		if (f_v) {
@@ -112,8 +113,8 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 		fname_text.assign(Gr->label);
 
 
-		replace_extension_with(fname_magma, ".magma");
-		replace_extension_with(fname_text, ".txt");
+		ST.replace_extension_with(fname_magma, ".magma");
+		ST.replace_extension_with(fname_text, ".txt");
 
 		if (f_v) {
 			cout << "exporting to magma as " << fname_magma << endl;
@@ -154,7 +155,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 		fname_maple.assign(Gr->label);
 
 
-		replace_extension_with(fname_maple, ".maple");
+		ST.replace_extension_with(fname_maple, ".maple");
 
 		if (f_v) {
 			cout << "exporting to maple as " << fname_maple << endl;
@@ -193,7 +194,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 		fname_csv.assign(Gr->label);
 
 
-		replace_extension_with(fname_csv, ".csv");
+		ST.replace_extension_with(fname_csv, ".csv");
 
 		cout << "exporting to csv as " << fname_csv << endl;
 
@@ -227,7 +228,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 		fname_csv.assign(Gr->label);
 
 
-		replace_extension_with(fname_csv, ".gv");
+		ST.replace_extension_with(fname_csv, ".gv");
 
 		cout << "exporting to gv as " << fname_csv << endl;
 
@@ -278,7 +279,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 
 		fname2.assign(Gr->label);
 		//strcpy(fname2, fname_graph);
-		replace_extension_with(fname2, "_sorted.bin");
+		ST.replace_extension_with(fname2, "_sorted.bin");
 		CG2 = CG->sort_by_color_classes(verbose_level);
 		CG2->save(fname2, verbose_level);
 		FREE_OBJECT(CG2);
