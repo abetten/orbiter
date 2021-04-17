@@ -779,10 +779,12 @@ void large_set_classify::process_starter_case(
 		{
 		file_io Fio;
 		string fname_out;
-		fname_out.assign(solution_file_name);
-		replace_extension_with(fname_out, "_packings.csv");
+		string_tools ST;
 
-		replace_extension_with(fname_out, "_packings.csv");
+		fname_out.assign(solution_file_name);
+		ST.replace_extension_with(fname_out, "_packings.csv");
+
+		ST.replace_extension_with(fname_out, "_packings.csv");
 
 		Fio.lint_matrix_write_csv(fname_out, Large_sets, nb_solutions, sz);
 		}
@@ -802,9 +804,10 @@ void large_set_classify::process_starter_case(
 		{
 		file_io Fio;
 		string fname_out;
+		string_tools ST;
 
 		fname_out.assign(solution_file_name);
-		replace_extension_with(fname_out, "_packings_explicit.csv");
+		ST.replace_extension_with(fname_out, "_packings_explicit.csv");
 
 		Fio.lint_matrix_write_csv(fname_out, Packings_explicit, nb_solutions, Sz);
 		}

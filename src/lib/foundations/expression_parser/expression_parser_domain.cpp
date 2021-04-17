@@ -43,6 +43,7 @@ void expression_parser_domain::parse_and_evaluate(
 
 	expression_parser Parser;
 	syntax_tree *tree;
+	string_tools ST;
 	int i;
 
 	tree = NEW_OBJECT(syntax_tree);
@@ -56,7 +57,7 @@ void expression_parser_domain::parse_and_evaluate(
 	char str[1000];
 
 	while (TRUE) {
-		if (!s_scan_token_comma_separated(&p, str)) {
+		if (!ST.s_scan_token_comma_separated(&p, str)) {
 			break;
 		}
 		string var;
@@ -166,7 +167,7 @@ void expression_parser_domain::parse_and_evaluate(
 			//vector<string> values;
 
 			while (TRUE) {
-				if (!s_scan_token_comma_separated(&p, str)) {
+				if (!ST.s_scan_token_comma_separated(&p, str)) {
 					break;
 				}
 				string assignment;
@@ -262,7 +263,7 @@ void expression_parser_domain::parse_and_evaluate(
 			//vector<string> values;
 
 			while (TRUE) {
-				if (!s_scan_token_comma_separated(&p, str)) {
+				if (!ST.s_scan_token_comma_separated(&p, str)) {
 					break;
 				}
 				string assignment;
@@ -413,6 +414,7 @@ int expression_parser_domain::evaluate_formula(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	string_tools ST;
 
 	if (f_v) {
 		cout << "expression_parser_domain::evaluate_formula" << endl;
@@ -474,7 +476,7 @@ int expression_parser_domain::evaluate_formula(
 		//vector<string> values;
 
 		while (TRUE) {
-			if (!s_scan_token_comma_separated(&p, str)) {
+			if (!ST.s_scan_token_comma_separated(&p, str)) {
 				break;
 			}
 			string assignment;
@@ -557,7 +559,7 @@ int expression_parser_domain::evaluate_formula(
 		//vector<string> values;
 
 		while (TRUE) {
-			if (!s_scan_token_comma_separated(&p, str)) {
+			if (!ST.s_scan_token_comma_separated(&p, str)) {
 				break;
 			}
 			string assignment;

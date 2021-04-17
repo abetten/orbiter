@@ -1044,6 +1044,19 @@ void int_vec::integer_vec_print(std::ostream &ost, int *v, int len)
 
 
 
+int int_vec::hash(int *v, int len, int bit_length)
+{
+	int h = 0;
+	int i;
+
+	for (i = 0; i < len; i++) {
+		//h = hashing(h, v[i]);
+		h = hashing_fixed_width(h, v[i], bit_length);
+	}
+	return h;
+}
+
+
 
 }}
 

@@ -1452,10 +1452,11 @@ void finite_field::export_magma(int d, long int *Pts, int nb_pts, std::string &f
 	string fname2;
 	int *v;
 	int h, i, a, b;
+	string_tools ST;
 
 	v = NEW_int(d);
 	fname2.assign(fname);
-	replace_extension_with(fname2, ".magma");
+	ST.replace_extension_with(fname2, ".magma");
 
 	{
 		ofstream fp(fname2);
@@ -1505,10 +1506,11 @@ void finite_field::export_gap(int d, long int *Pts, int nb_pts, std::string &fna
 	string fname2;
 	int *v;
 	int h, i, a, b;
+	string_tools ST;
 
 	v = NEW_int(d);
 	fname2.assign(fname);
-	replace_extension_with(fname2, ".gap");
+	ST.replace_extension_with(fname2, ".gap");
 
 	{
 		ofstream fp(fname2);

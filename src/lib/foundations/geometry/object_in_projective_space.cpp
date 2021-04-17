@@ -670,8 +670,23 @@ void object_in_projective_space::encode_point_set(
 
 	Orbiter->Int_vec.zero(Incma, L);
 
+	long int LL, LL100;
+
+	LL = P->N_points * P->N_lines;
+	LL100 = LL / 100;
+
+	cout << "object_in_projective_space::encode_point_set N_points * N_lines = " << LL << endl;
+
+
+	long int cnt;
+
+	cnt = 0;
+
 	for (i = 0; i < P->N_points; i++) {
-		for (j = 0; j < P->N_lines; j++) {
+		for (j = 0; j < P->N_lines; j++, cnt++) {
+			if ((cnt % LL100) == 0) {
+				cout << cnt / LL100 << "%" << endl;
+			}
 			Incma[i * nb_cols + j] = P->is_incident(i, j);
 		}
 	}

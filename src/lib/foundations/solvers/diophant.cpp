@@ -2800,6 +2800,7 @@ void diophant::save_in_general_format(std::string &fname, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int i, j, a, d, h, val;
 	file_io Fio;
+	string_tools ST;
 	
 	if (f_v) {
 		cout << "diophant::save_in_general_format" << endl;
@@ -2829,9 +2830,9 @@ void diophant::save_in_general_format(std::string &fname, int verbose_level)
 	//strcpy(fname_RHS, fname);
 	//strcpy(fname_x_bounds, fname);
 
-	replace_extension_with(fname_coeff, "_coeff_matrix.csv");
-	replace_extension_with(fname_RHS, "_RHS.csv");
-	replace_extension_with(fname_x_bounds, "_x_bounds.csv");
+	ST.replace_extension_with(fname_coeff, "_coeff_matrix.csv");
+	ST.replace_extension_with(fname_RHS, "_RHS.csv");
+	ST.replace_extension_with(fname_x_bounds, "_x_bounds.csv");
 
 	Fio.int_matrix_write_csv(fname_coeff, A, m, n);
 	if (f_v) {

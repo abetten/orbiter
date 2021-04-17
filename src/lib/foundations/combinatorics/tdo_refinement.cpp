@@ -88,12 +88,13 @@ void tdo_refinement::main_loop(int verbose_level)
 	}
 	ifstream f(Descr->fname_in);
 	char str[1000];
+	string_tools ST;
 
 	fname.assign(Descr->fname_in);
 	//strcpy(str, Descr->fname_in);
 	//get_extension_if_present(str, ext);
 	//chop_off_extension_if_present(str, ext);
-	chop_off_extension(fname);
+	ST.chop_off_extension(fname);
 
 
 	fname_out.assign(fname);

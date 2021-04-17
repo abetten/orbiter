@@ -361,6 +361,7 @@ int file_io::find_orbit_index_in_data_file(std::string &prefix,
 		exit(1);
 	}
 	ifstream f(fname);
+	string_tools ST;
 	int a, i, cnt;
 	long int *S;
 	char buf[MY_OWN_BUFSIZE];
@@ -392,7 +393,7 @@ int file_io::find_orbit_index_in_data_file(std::string &prefix,
 			continue;
 
 		p_buf = buf;
-		s_scan_int(&p_buf, &a);
+		ST.s_scan_int(&p_buf, &a);
 		if (a == -1) {
 			break;
 		}
@@ -405,7 +406,7 @@ int file_io::find_orbit_index_in_data_file(std::string &prefix,
 			exit(1);
 		}
 		for (i = 0; i < len; i++) {
-			s_scan_lint(&p_buf, &S[i]);
+			ST.s_scan_lint(&p_buf, &S[i]);
 		}
 		for (i = 0; i < level_of_candidates_file; i++) {
 			if (S[i] != starter[i]) {
@@ -468,6 +469,7 @@ void file_io::read_solution_file(std::string &fname,
 	int f_v = (verbose_level >= 1);
 	int nb, nb_max, i, j, a, nb_sol1;
 	int *x, *y;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "file_io::read_solution_file" << endl;
@@ -502,7 +504,7 @@ void file_io::read_solution_file(std::string &fname,
 				for (j = 0; j < nb_cols; j++) {
 					x[j] = 0;
 				}
-				s_scan_int(&p_buf, &nb);
+				ST.s_scan_int(&p_buf, &nb);
 				if (nb_sol == 0) {
 					nb_max = nb;
 				}
@@ -554,11 +556,11 @@ void file_io::read_solution_file(std::string &fname,
 				for (j = 0; j < nb_cols; j++) {
 					x[j] = 0;
 				}
-				s_scan_int(&p_buf, &nb);
+				ST.s_scan_int(&p_buf, &nb);
 				//cout << "buf='" << buf << "' nb=" << nb << endl;
 
 				for (i = 0; i < sol_length; i++) {
-					s_scan_int(&p_buf, &a);
+					ST.s_scan_int(&p_buf, &a);
 					Solutions[nb_sol1 * sol_length + i] = a;
 				}
 				nb_sol1++;
@@ -584,6 +586,7 @@ void file_io::count_number_of_solutions_in_file_and_get_solution_size(
 {
 	int f_v = (verbose_level >= 1);
 	char *buf;
+	string_tools ST;
 	int s;
 
 	if (f_v) {
@@ -630,7 +633,7 @@ void file_io::count_number_of_solutions_in_file_and_get_solution_size(
 			}
 
 			p_buf = buf;
-			s_scan_int(&p_buf, &s);
+			ST.s_scan_int(&p_buf, &s);
 			if (solution_size == -1) {
 				solution_size = s;
 			}
@@ -850,6 +853,7 @@ void file_io::read_solutions_from_file_and_get_solution_size(std::string &fname,
 
 	Solutions = NEW_int(nb_solutions * solution_size);
 
+	string_tools ST;
 	char *buf;
 	char *p_buf;
 	int i, a, nb_sol;
@@ -866,7 +870,7 @@ void file_io::read_solutions_from_file_and_get_solution_size(std::string &fname,
 			}
 			p_buf = buf;
 			//cout << "buf='" << buf << "' nb=" << nb << endl;
-			s_scan_int(&p_buf, &a);
+			ST.s_scan_int(&p_buf, &a);
 
 			if (a == -1) {
 				break;
@@ -877,7 +881,7 @@ void file_io::read_solutions_from_file_and_get_solution_size(std::string &fname,
 				exit(1);
 			}
 			for (i = 0; i < solution_size; i++) {
-				s_scan_int(&p_buf, &a);
+				ST.s_scan_int(&p_buf, &a);
 				Solutions[nb_sol * solution_size + i] = a;
 			}
 			nb_sol++;
@@ -904,6 +908,7 @@ void file_io::read_solutions_from_file(std::string &fname,
 	char *buf;
 	char *p_buf;
 	int i, a, nb_sol;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "read_solutions_from_file" << endl;
@@ -940,7 +945,7 @@ void file_io::read_solutions_from_file(std::string &fname,
 			f.getline(buf, MY_OWN_BUFSIZE, '\n');
 			p_buf = buf;
 			//cout << "buf='" << buf << "' nb=" << nb << endl;
-			s_scan_int(&p_buf, &a);
+			ST.s_scan_int(&p_buf, &a);
 
 			if (a == -1) {
 				break;
@@ -951,7 +956,7 @@ void file_io::read_solutions_from_file(std::string &fname,
 				exit(1);
 			}
 			for (i = 0; i < solution_size; i++) {
-				s_scan_int(&p_buf, &a);
+				ST.s_scan_int(&p_buf, &a);
 				Solutions[nb_sol * solution_size + i] = a;
 			}
 			nb_sol++;
@@ -977,6 +982,7 @@ void file_io::read_solutions_from_file_size_is_known(std::string &fname,
 	char *buf;
 	char *p_buf;
 	vector<int> one_solution;
+	string_tools ST;
 	int i, a;
 
 	if (f_v) {
@@ -1003,7 +1009,7 @@ void file_io::read_solutions_from_file_size_is_known(std::string &fname,
 			f.getline(buf, MY_OWN_BUFSIZE, '\n');
 			p_buf = buf;
 			//cout << "buf='" << buf << "' nb=" << nb << endl;
-			s_scan_int(&p_buf, &a);
+			ST.s_scan_int(&p_buf, &a);
 
 			if (a == -1) {
 				break;
@@ -1011,7 +1017,7 @@ void file_io::read_solutions_from_file_size_is_known(std::string &fname,
 
 			one_solution[0] = a;
 			for (i = 1; i < solution_size; i++) {
-				s_scan_int(&p_buf, &a);
+				ST.s_scan_int(&p_buf, &a);
 				one_solution[i] = a;
 			}
 			Solutions.push_back(one_solution);
@@ -1036,6 +1042,7 @@ void file_io::read_solutions_from_file_by_case(std::string &fname,
 	int nb_case1;
 	int the_case;
 	int the_case_count = 0;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "read_solutions_from_file_by_case" << endl;
@@ -1105,14 +1112,14 @@ void file_io::read_solutions_from_file_by_case(std::string &fname,
 					//"reading solution " << the_case_count
 					//<< " for case " << the_case << endl;
 					p_buf = buf;
-					s_scan_int(&p_buf, &sz);
+					ST.s_scan_int(&p_buf, &sz);
 					if (sz != solution_size) {
 						cout << "read_solutions_from_file_by_case "
 								"sz != solution_size" << endl;
 						exit(1);
 					}
 					for (i = 0; i < sz; i++) {
-						s_scan_int(&p_buf, &a);
+						ST.s_scan_int(&p_buf, &a);
 						Solutions[nb_case1][the_case_count * solution_size + i] = a;
 					}
 					the_case_count++;
@@ -1639,6 +1646,7 @@ void file_io::parse_sets(int nb_cases, char **data, int f_casenumbers,
 	int h, casenumber;
 	char *ago_ascii, *aut_ascii;
 	char *p_buf;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "parse_sets f_casenumbers=" << f_casenumbers
@@ -1661,7 +1669,7 @@ void file_io::parse_sets(int nb_cases, char **data, int f_casenumbers,
 
 		p_buf = data[h];
 		if (f_casenumbers) {
-			s_scan_int(&p_buf, &casenumber);
+			ST.s_scan_int(&p_buf, &casenumber);
 		}
 		else {
 			casenumber = h;
@@ -1700,21 +1708,22 @@ void file_io::parse_line(char *line, int &len,
 {
 	int i;
 	char *p_buf;
+	string_tools ST;
 
 	//cout << "parse_line: " << line << endl;
 	p_buf = line;
-	s_scan_int(&p_buf, &len);
+	ST.s_scan_int(&p_buf, &len);
 	//cout << "parsing data of length " << len << endl;
 	set = NEW_lint(len);
 	for (i = 0; i < len; i++) {
-		s_scan_lint(&p_buf, &set[i]);
+		ST.s_scan_lint(&p_buf, &set[i]);
 	}
-	s_scan_token(&p_buf, ago_ascii);
+	ST.s_scan_token(&p_buf, ago_ascii);
 	if (strcmp(ago_ascii, "1") == 0) {
 		aut_ascii[0] = 0;
 	}
 	else {
-		s_scan_token(&p_buf, aut_ascii);
+		ST.s_scan_token(&p_buf, aut_ascii);
 	}
 }
 
@@ -1726,6 +1735,7 @@ int file_io::count_number_of_orbits_in_file(
 	char *buf, *p_buf;
 	int nb_sol, len;
 	int ret;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "count_number_of_orbits_in_file " << fname << endl;
@@ -1769,7 +1779,7 @@ int file_io::count_number_of_orbits_in_file(
 			}
 
 			p_buf = buf;
-			s_scan_int(&p_buf, &len);
+			ST.s_scan_int(&p_buf, &len);
 			if (len == -1) {
 				if (f_v) {
 					cout << "count_number_of_orbits_in_file "
@@ -1844,6 +1854,7 @@ int file_io::try_to_read_file(std::string &fname,
 	//int n1;
 	char *buf, *p_buf;
 	int nb_sol, len, a;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "try_to_read_file trying to read file " << fname
@@ -1891,7 +1902,7 @@ int file_io::try_to_read_file(std::string &fname,
 			}
 
 			p_buf = buf;
-			s_scan_int(&p_buf, &len);
+			ST.s_scan_int(&p_buf, &len);
 			if (len == -1) {
 				if (f_v) {
 					cout << "found a complete file with "
@@ -1939,7 +1950,7 @@ int file_io::try_to_read_file(std::string &fname,
 			}
 
 			p_buf = buf;
-			s_scan_int(&p_buf, &a);
+			ST.s_scan_int(&p_buf, &a);
 			if (a == -1) {
 				if (f_v) {
 					cout << "read " << nb_sol
@@ -2611,6 +2622,7 @@ void file_io::read_incidence_matrix_from_inc_file(int *&M, int &m, int &n,
 	char buf[READ_INCIDENCE_BUFSIZE];
 	char *p_buf;
 	int *X = NULL;
+	string_tools ST;
 
 
 	if (f_v) {
@@ -2651,7 +2663,7 @@ void file_io::read_incidence_matrix_from_inc_file(int *&M, int &m, int &n,
 
 			p_buf = buf;
 
-			s_scan_int(&p_buf, &a);
+			ST.s_scan_int(&p_buf, &a);
 			if (f_vv) {
 				//cout << cnt << " : " << a << " ";
 			}
@@ -2665,7 +2677,7 @@ void file_io::read_incidence_matrix_from_inc_file(int *&M, int &m, int &n,
 
 			//cout << "reading " << nb_inc << " incidences" << endl;
 			for (h = 1; h < nb_inc; h++) {
-				s_scan_int(&p_buf, &a);
+				ST.s_scan_int(&p_buf, &a);
 				if (a < 0 || a >= m * n) {
 					cout << "attention, read " << a
 						<< " h=" << h << endl;
@@ -2708,6 +2720,7 @@ int file_io::inc_file_get_number_of_geometries(
 	char *p_buf;
 	int *X = NULL;
 	int m, n;
+	string_tools ST;
 
 
 	if (f_v) {
@@ -2748,7 +2761,7 @@ int file_io::inc_file_get_number_of_geometries(
 
 			p_buf = buf;
 
-			s_scan_int(&p_buf, &a);
+			ST.s_scan_int(&p_buf, &a);
 			if (f_vv) {
 				//cout << cnt << " : " << a << " ";
 			}
@@ -2762,7 +2775,7 @@ int file_io::inc_file_get_number_of_geometries(
 
 			//cout << "reading " << nb_inc << " incidences" << endl;
 			for (h = 1; h < nb_inc; h++) {
-				s_scan_int(&p_buf, &a);
+				ST.s_scan_int(&p_buf, &a);
 				if (a < 0 || a >= m * n) {
 					cout << "attention, read " << a
 						<< " h=" << h << endl;
@@ -3453,6 +3466,7 @@ void file_io::do_csv_file_select_rows(std::string &fname,
 	}
 	int *Rows;
 	int nb_rows;
+	string_tools ST;
 
 	Orbiter->Int_vec.scan(rows_text, Rows, nb_rows);
 
@@ -3468,7 +3482,7 @@ void file_io::do_csv_file_select_rows(std::string &fname,
 	string fname_out;
 
 	fname_out.assign(fname);
-	chop_off_extension(fname_out);
+	ST.chop_off_extension(fname_out);
 	fname_out.append("_select.csv");
 
 	{
@@ -3501,6 +3515,7 @@ void file_io::do_csv_file_select_cols(std::string &fname,
 	}
 	int *Cols;
 	int nb_cols;
+	string_tools ST;
 
 	Orbiter->Int_vec.scan(cols_text, Cols, nb_cols);
 
@@ -3521,7 +3536,7 @@ void file_io::do_csv_file_select_cols(std::string &fname,
 	string fname_out;
 
 	fname_out.assign(fname);
-	chop_off_extension(fname_out);
+	ST.chop_off_extension(fname_out);
 	fname_out.append("_select.csv");
 
 	{
@@ -3538,7 +3553,7 @@ void file_io::do_csv_file_select_cols(std::string &fname,
 	cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
 
 	fname_out.assign(fname);
-	chop_off_extension(fname_out);
+	ST.chop_off_extension(fname_out);
 	fname_out.append("_special.csv");
 
 	{
@@ -3575,6 +3590,7 @@ void file_io::do_csv_file_select_rows_and_cols(std::string &fname,
 	int nb_rows;
 	int *Cols;
 	int nb_cols;
+	string_tools ST;
 
 	Orbiter->Int_vec.scan(rows_text, Rows, nb_rows);
 
@@ -3592,7 +3608,7 @@ void file_io::do_csv_file_select_rows_and_cols(std::string &fname,
 	string fname_out;
 
 	fname_out.assign(fname);
-	chop_off_extension(fname_out);
+	ST.chop_off_extension(fname_out);
 	fname_out.append("_select.csv");
 
 	{
@@ -3698,9 +3714,10 @@ void file_io::do_csv_file_join(
 
 
 	string save_fname;
+	string_tools ST;
 
 	save_fname.assign(csv_file_join_fname[0]);
-	chop_off_extension(save_fname);
+	ST.chop_off_extension(save_fname);
 	save_fname.append("_joined.csv");
 
 	{
@@ -3735,9 +3752,10 @@ void file_io::do_csv_file_latex(std::string &fname,
 
 
 	string fname_out;
+	string_tools ST;
 
 	fname_out.assign(fname);
-	chop_off_extension(fname_out);
+	ST.chop_off_extension(fname_out);
 	fname_out.append(".tex");
 
 	{

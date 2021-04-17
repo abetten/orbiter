@@ -1488,16 +1488,17 @@ void discreta_base::load_ascii(istream & f)
 	int a;
 	unsigned int a1, a2;
 	char cc;
+	string_tools ST;
 		
 	f.getline(buf, sizeof(buf));
 	p = buf;
-	s_scan_token(&p, str);
+	ST.s_scan_token(&p, str);
 	if (strcmp(str, "ASCII") != 0) {
 		cout << "discreta_base::load_ascii "
 				"error reading header: ASCII keyword not found" << endl;
 		exit(1);
 		}
-	s_scan_int(&p, &size);
+	ST.s_scan_int(&p, &size);
 	if (f_v) {
 		cout << "discreta_base::load_ascii "
 				"reading ASCII file of size " << size << endl;
@@ -1542,7 +1543,7 @@ void discreta_base::load_ascii(istream & f)
 	// f.getline(buf, sizeof(buf));
 	// cout << "discreta_base::load_ascii(): buf = " << buf << endl;
 	p = buf;
-	s_scan_token(&p, str);
+	ST.s_scan_token(&p, str);
 	if (strcmp(str, "ASCIIEND") != 0) {
 		cout << "discreta_base::load_ascii "
 				"error reading footer: ASCIIEND keyword not found" << endl;

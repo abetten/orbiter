@@ -3139,12 +3139,13 @@ void combinatorics_domain::convert_stack_to_tdo(std::string &stack_fname, int ve
 	string fname;
 	string fname_out;
 	string label;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "combinatorics_domain::convert_stack_to_tdo" << endl;
 	}
 	fname.assign(stack_fname);
-	chop_off_extension(fname);
+	ST.chop_off_extension(fname);
 	fname_out.assign(fname);
 	fname_out.append(".tdo");
 
@@ -3264,6 +3265,7 @@ void combinatorics_domain::do_read_poset_file(std::string &fname,
 // which was created by DISCRETA/sgls2.cpp
 {
 	int f_v = (verbose_level >= 1);
+	string_tools ST;
 
 	if (f_v) {
 		cout << "interface_combinatorics::do_read_poset_file" << endl;
@@ -3280,7 +3282,7 @@ void combinatorics_domain::do_read_poset_file(std::string &fname,
 
 	fname_out.assign(fname);
 
-	replace_extension_with(fname_out, ".layered_graph");
+	ST.replace_extension_with(fname_out, ".layered_graph");
 
 
 	LG->write_file(fname_out, 0 /*verbose_level*/);

@@ -54,8 +54,9 @@ int main(int argc, const char **argv)
 
 
 	std::string *Argv;
+	string_tools ST;
 
-	convert_arguments(argc, argv, Argv);
+	ST.convert_arguments(argc, argv, Argv);
 		// argc has changed!
 
 

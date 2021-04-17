@@ -96,9 +96,10 @@ void graphical_output::draw_layered_graph_from_file(std::string &fname,
 
 
 	string fname_out;
+	string_tools ST;
 
 	fname_out.assign(fname);
-	chop_off_extension(fname_out);
+	ST.chop_off_extension(fname_out);
 	fname_out.append("_draw");
 
 	//fname_out.append(".mp");
@@ -726,6 +727,7 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 	}
 	int i;
 	int max_value;
+	string_tools ST;
 
 	max_value = Orbiter->Int_vec.maximum(C->M, C->m * C->n);
 	cout << "max_value=" << max_value << endl;
@@ -743,7 +745,7 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 		fname_out.assign("bitmatrix.csv");
 
 	}
-	replace_extension_with(fname_out, "_draw.bmp");
+	ST.replace_extension_with(fname_out, "_draw.bmp");
 
 	//int bit_depth = 8;
 

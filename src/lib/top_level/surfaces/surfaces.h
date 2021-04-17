@@ -585,6 +585,7 @@ public:
 	void compute_quartic(int pt_orbit,
 		int *equation, long int *Lines, int nb_lines,
 		int verbose_level);
+	void compute_stabilizer(int verbose_level);
 	void cheat_sheet_quartic_curve(std::ostream &ost,
 			std::ostream &ost_curves,
 		int verbose_level);
@@ -789,7 +790,7 @@ public:
 // surface_clebsch_map.cpp
 // #############################################################################
 
-//! a clebsch map associated to a surface and a choice of half double six
+//! a Clebsch map associated to a surface and a choice of half double six
 
 
 class surface_clebsch_map {
@@ -1235,7 +1236,10 @@ public:
 			std::string &label,
 			std::string &label_tex,
 			int verbose_level);
-	void all_quartic_curves(std::ostream &ost, std::ostream &ost_quartics, int verbose_level);
+	void all_quartic_curves(std::ostream &ost,
+			std::ostream &ost_quartics,
+			std::ostream &ost_quartics_csv,
+			int verbose_level);
 	void print_full_del_Pezzo(std::ostream &ost, int verbose_level);
 };
 

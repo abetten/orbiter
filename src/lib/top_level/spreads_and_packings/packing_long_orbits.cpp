@@ -188,9 +188,10 @@ void packing_long_orbits::list_of_cases_from_file(int verbose_level)
 	cout << "total number of packings = " << total << endl;
 
 	std::string fname_out;
+	string_tools ST;
 
 	fname_out.assign(Descr->list_of_cases_from_file_fname);
-	replace_extension_with(fname_out, "_count.csv");
+	ST.replace_extension_with(fname_out, "_count.csv");
 
 
 	Fio.int_vec_write_csv(Nb, m, fname_out, "nb packings before iso");
@@ -224,6 +225,7 @@ void packing_long_orbits::save_packings_by_case(
 	int idx;
 	int total = 0;
 	file_io Fio;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "packing_long_orbits::save_packings_by_case" << endl;
@@ -231,7 +233,7 @@ void packing_long_orbits::save_packings_by_case(
 	std::string fname_packings;
 
 	fname_packings.assign(Descr->list_of_cases_from_file_fname);
-	replace_extension_with(fname_packings, "_packings.csv");
+	ST.replace_extension_with(fname_packings, "_packings.csv");
 
 	for (idx = 0; idx < Packings_by_case.size(); idx++) {
 		total += Packings_by_case[idx].size();

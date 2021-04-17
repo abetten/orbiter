@@ -1294,9 +1294,7 @@ void coding_theory_domain::generator_matrix_cyclic_code(int n,
 	int i, j;
 
 	M = NEW_int(k * n);
-	for (i = 0; i < k * n; i++) {
-		M[i] = 0;
-	}
+	Orbiter->Int_vec.zero(M, k * n);
 	for (i = 0; i < k; i++) {
 		for (j = 0; j <= degree; j++) {
 			M[i * n + j + i] = generator_polynomial[j];
@@ -2445,7 +2443,7 @@ void coding_theory_domain::make_BCH_codes(int n, int q, int t, int b, int f_dual
 	for (i = 0; i < t - 1; i++) {
 		j = NT.mod(b + i, n);
 		roots[i] = j;
-		}
+	}
 	snprintf(fname, 1000, "BCH_%d_%d", n, t);
 
 	fname_txt.assign(fname);

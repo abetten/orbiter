@@ -77,8 +77,9 @@ void int_vector::init_permutation_from_string(const char *s)
 	int verbose_level = 0;
 	int *perm;
 	int degree;
+	string_tools ST;
 	
-	scan_permutation_from_string(s, perm, degree, verbose_level);
+	ST.scan_permutation_from_string(s, perm, degree, verbose_level);
 	allocate_and_init_int(degree, perm);
 	FREE_int(perm);
 }

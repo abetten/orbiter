@@ -1545,6 +1545,7 @@ void surface_create::create_surface_by_equation(
 	}
 
 	int coeffs20[20];
+	string_tools ST;
 
 
 
@@ -1562,7 +1563,7 @@ void surface_create::create_surface_by_equation(
 	char str[1000];
 
 	while (TRUE) {
-		if (!s_scan_token_comma_separated(&p, str)) {
+		if (!ST.s_scan_token_comma_separated(&p, str)) {
 			break;
 		}
 		string var;
@@ -1667,7 +1668,7 @@ void surface_create::create_surface_by_equation(
 	//vector<string> values;
 
 	while (TRUE) {
-		if (!s_scan_token_comma_separated(&p, str)) {
+		if (!ST.s_scan_token_comma_separated(&p, str)) {
 			break;
 		}
 		string assignment;
@@ -1775,12 +1776,12 @@ void surface_create::create_surface_by_equation(
 	label_txt.append(str_q);
 
 	label_tex.assign(name_of_formula_tex);
-	string_fix_escape_characters(label_tex);
+	ST.string_fix_escape_characters(label_tex);
 
 	string my_parameters_tex;
 
 	my_parameters_tex.assign(equation_parameters_tex);
-	string_fix_escape_characters(my_parameters_tex);
+	ST.string_fix_escape_characters(my_parameters_tex);
 	label_tex.append(" with ");
 	label_tex.append(my_parameters_tex);
 

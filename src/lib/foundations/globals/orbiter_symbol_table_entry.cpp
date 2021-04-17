@@ -183,6 +183,7 @@ void orbiter_symbol_table_entry::init_collection(std::string &label,
 	type = t_object;
 	object_type = t_collection;
 
+	string_tools ST;
 	const char *p = list_of_objects.c_str();
 	char str[1000];
 
@@ -190,7 +191,7 @@ void orbiter_symbol_table_entry::init_collection(std::string &label,
 	the_list = new std::vector<std::string>;
 
 	while (TRUE) {
-		if (!s_scan_token_comma_separated(&p, str)) {
+		if (!ST.s_scan_token_comma_separated(&p, str)) {
 			break;
 		}
 		string var;

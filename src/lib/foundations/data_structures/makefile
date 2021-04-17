@@ -25,6 +25,7 @@ MODULES = \
 	set_of_sets.o \
 	sorting.o \
 	spreadsheet.o \
+	string_tools.o \
 	super_fast_hash.o \
 	vector_hashing.o 
 

@@ -176,6 +176,42 @@ public:
 };
 
 
+
+// #############################################################################
+// draw_mod_n_description.cpp
+// #############################################################################
+
+
+//! options for drawing modulo n
+
+
+class draw_mod_n_description {
+public:
+
+	int f_n;
+	int n;
+	int f_file;
+	std::string fname;
+	int f_inverse;
+	int f_additive_inverse;
+	int f_power_cycle;
+	int power_cycle_base;
+
+	int f_cyclotomic_sets;
+	int cyclotomic_sets_q;
+	std::string cyclotomic_sets_reps;
+
+
+	draw_mod_n_description();
+	~draw_mod_n_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+
+};
+
+
+
 // #############################################################################
 // drawable_set_of_objects.cpp
 // #############################################################################
@@ -776,21 +812,12 @@ public:
 			int q, int *Table, int nb,
 			int f_point_labels, char **Point_labels,
 			int verbose_level);
-	void draw_mod_n(std::string &fname,
+	void draw_mod_n(draw_mod_n_description *Descr,
 			layered_graph_draw_options *O,
-			int number_n,
-			int f_inverse,
-			int f_additive_inverse,
-			int f_power_cycle, int power_cycle_base,
-			int f_cyclotomic_sets, int cyclotomic_sets_q, std::string &cyclotomic_sets_reps,
 			int verbose_level);
 	void draw_mod_n_work(mp_graphics &G,
 			layered_graph_draw_options *O,
-			int number,
-			int f_inverse,
-			int f_additive_inverse,
-			int f_power_cycle, int power_cycle_base,
-			int f_cyclotomic_sets, int cyclotomic_sets_q, std::string &cyclotomic_sets_reps,
+			draw_mod_n_description *Descr,
 			int verbose_level);
 
 };

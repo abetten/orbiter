@@ -117,6 +117,10 @@ projective_space_activity_description::projective_space_activity_description()
 
 	f_cheat_sheet = FALSE;
 
+	f_classify_quartic_curves = FALSE;
+	//std::string classify_quartic_curves_fname_mask;
+	classify_quartic_curves_nb = 0;
+
 }
 
 projective_space_activity_description::~projective_space_activity_description()
@@ -420,6 +424,13 @@ int projective_space_activity_description::read_arguments(
 		else if (stringcmp(argv[i], "-cheat_sheet") == 0) {
 			f_cheat_sheet = TRUE;
 			cout << "-cheat_sheet " << endl;
+		}
+		else if (stringcmp(argv[i], "-classify_quartic_curves") == 0) {
+			f_classify_quartic_curves = TRUE;
+			classify_quartic_curves_fname_mask.assign(argv[++i]);
+			classify_quartic_curves_nb = strtoi(argv[++i]);
+			cout << "-classify_quartic_curves "
+					<< classify_quartic_curves_fname_mask << " " << classify_quartic_curves_nb << endl;
 		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {

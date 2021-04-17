@@ -39,6 +39,7 @@ void tree::init(std::string &fname,
 	int l, a, i, i_data, nb_nodes;
 	char *c_data;
 	int path[TREEPATHLEN];
+	string_tools ST;
 	
 	if (f_v) {
 		cout << "reading tree from file " << fname << endl;
@@ -62,7 +63,7 @@ void tree::init(std::string &fname,
 		p_buf = buf;
 		if (buf[0] == '#')
 			continue;
-		s_scan_int(&p_buf, &a);
+		ST.s_scan_int(&p_buf, &a);
 		if (a == -1)
 			break;
 		nb_nodes++;
@@ -95,7 +96,7 @@ void tree::init(std::string &fname,
 		p_buf = buf;
 		if (buf[0] == '#')
 			continue;
-		s_scan_int(&p_buf, &l);
+		ST.s_scan_int(&p_buf, &l);
 		if (l == -1)
 			break;
 		if (l >= TREEPATHLEN) {
@@ -108,9 +109,9 @@ void tree::init(std::string &fname,
 			cout << "reading entry at depth " << l << endl;
 			}
 		for (i = 0; i < l; i++) {
-			s_scan_int(&p_buf, &path[i]);
+			ST.s_scan_int(&p_buf, &path[i]);
 			}
-		s_scan_int(&p_buf, &i_data);
+		ST.s_scan_int(&p_buf, &i_data);
 		while (*p_buf == ' ')
 			p_buf++;
 		c_data = p_buf;

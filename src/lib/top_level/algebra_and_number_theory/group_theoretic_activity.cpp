@@ -1524,9 +1524,10 @@ void group_theoretic_activity::orbits_on_set_system_from_file(int verbose_level)
 		}
 	}
 	string fname;
+	string_tools ST;
 
 	fname.assign(Descr->orbits_on_set_system_from_file_fname);
-	chop_off_extension(fname);
+	ST.chop_off_extension(fname);
 	fname.append("_orbit_reps.txt");
 
 	{
@@ -1573,9 +1574,10 @@ void group_theoretic_activity::orbits_on_set_from_file(int verbose_level)
 
 
 	string label_set;
+	string_tools ST;
 
 	label_set.assign(Descr->orbit_of_set_from_file_fname);
-	chop_off_extension(label_set);
+	ST.chop_off_extension(label_set);
 
 	algebra_global_with_action Algebra;
 	long int *Table;

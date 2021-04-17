@@ -88,7 +88,7 @@ void vector_hashing::compute_tables(int verbose_level)
 		cout << "vector_hashing::compute_tables" << endl;
 		}
 	for (i = 0; i < N; i++) {
-		H[i] = int_vec_hash(
+		H[i] = Orbiter->Int_vec.hash(
 				vector_data + i * data_size,
 				data_size, bit_length);
 		}
@@ -192,7 +192,7 @@ int vector_hashing::rank(int *data)
 	int h, idx, f, l, i, I;
 	sorting Sorting;
 	
-	h = int_vec_hash(data, data_size, bit_length);
+	h = Orbiter->Int_vec.hash(data, data_size, bit_length);
 	if (!Sorting.int_vec_search(type_value, nb_types, h, idx)) {
 		cout << "vector_hashing::rank did not "
 				"find hash value h=" << h << endl;

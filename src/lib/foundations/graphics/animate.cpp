@@ -298,6 +298,7 @@ void animate::animate_one_round(
 		char fname_pov[1000];
 		char fname_png[1000];
 		char povray_opts[1000];
+		string_tools ST;
 
 
 		povray_opts[0] = 0;
@@ -311,7 +312,7 @@ void animate::animate_one_round(
 		// for instance -W1920 -H1200  for larger pictures
 		sprintf(fname_pov, output_mask.c_str(), round, h);
 		sprintf(fname_png, output_mask.c_str(), round, h);
-		replace_extension_with(fname_png, ".png");
+		ST.replace_extension_with(fname_png, ".png");
 
 		cout << "round " << round << ", frame " << h << " / "
 				<< nb_frames_this_round << " in " << fname_pov << endl;
@@ -627,6 +628,7 @@ void animate::animate_one_round(
 					if (!Opt->latex_f_label_has_been_prepared[i]) {
 
 						char str[1000];
+						string_tools ST;
 
 
 						cout << "creating latex label " << i << endl;
@@ -634,7 +636,7 @@ void animate::animate_one_round(
 
 						Opt->latex_fname_base[i].assign(str);
 
-						chop_off_extension(Opt->latex_fname_base[i]);
+						ST.chop_off_extension(Opt->latex_fname_base[i]);
 						sprintf(str, "_%04d", i);
 						Opt->latex_fname_base[i].append(str);
 

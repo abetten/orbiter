@@ -1031,9 +1031,10 @@ void surface_domain_high_level::do_cubic_surface_properties(
 
 
 	string fname_data;
+	string_tools ST;
 
 	fname_data.assign(fname_csv);
-	chop_off_extension(fname_data);
+	ST.chop_off_extension(fname_data);
 
 	char str[1000];
 	sprintf(str, "_F%d.csv", F->q);
@@ -1213,8 +1214,10 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 
 	{
 		string fname_report;
+		string_tools ST;
+
 		fname_report.assign(fname_csv);
-		chop_off_extension(fname_report);
+		ST.chop_off_extension(fname_report);
 		fname_report.append("_report.tex");
 		latex_interface L;
 		file_io Fio;
@@ -1846,8 +1849,10 @@ void surface_domain_high_level::do_create_surface_atlas(int q_max, int verbose_l
 								fname_report_tex,
 								verbose_level);
 
+						string_tools ST;
+
 						fname_report_html.assign(fname_report_tex);
-						chop_off_extension(fname_report_html);
+						ST.chop_off_extension(fname_report_html);
 						fname_report_html.append(".html");
 
 

@@ -414,7 +414,8 @@ class combinatorial_object_activity_description;
 class combinatorial_object_activity;
 class expression_parser_domain;
 class lint_vec;
-
+class string_tools;
+class draw_mod_n_description;
 
 
 #ifdef MEMORY_DEBUG

@@ -4782,6 +4782,7 @@ void scene::read_obj_file(std::string &fname, int verbose_level)
 
 	{
 		ifstream fp(fname);
+		string_tools ST;
 
 
 		while (TRUE) {
@@ -4801,9 +4802,9 @@ void scene::read_obj_file(std::string &fname, int verbose_level)
 			}
 			else if (strncmp(buf, "v ", 2) == 0) {
 				p_buf = buf + 2;
-				s_scan_double(&p_buf, &x);
-				s_scan_double(&p_buf, &y);
-				s_scan_double(&p_buf, &z);
+				ST.s_scan_double(&p_buf, &x);
+				ST.s_scan_double(&p_buf, &y);
+				ST.s_scan_double(&p_buf, &z);
 				if (nb_pts == 0) {
 					x0 = x;
 					x1 = x;
@@ -4849,7 +4850,7 @@ void scene::read_obj_file(std::string &fname, int verbose_level)
 				p_buf = buf + 2;
 				vector<int> v;
 				while (strlen(p_buf)) {
-					s_scan_token_arbitrary(&p_buf, str);
+					ST.s_scan_token_arbitrary(&p_buf, str);
 					//cout << "read token: " << str << endl;
 					if (strlen(str) == 0) {
 						continue;

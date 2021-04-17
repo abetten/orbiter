@@ -2897,9 +2897,10 @@ void wreath_product::orbits_restricted(
 	} // next h
 
 	string fname;
+	string_tools ST;
 
 	fname.assign(orbits_restricted_fname);
-	chop_off_extension(fname);
+	ST.chop_off_extension(fname);
 
 	fname.append("_restricted_action.txt");
 	Fio.lint_matrix_write_csv(fname, Perms, set_m, SG->gens->len);
@@ -2970,11 +2971,13 @@ void wreath_product::orbits_restricted_compute(
 
 
 	string fname;
+	string_tools ST;
+
 	int *Perms;
 	int perms_m, perms_n;
 
 	fname.assign(orbits_restricted_fname);
-	chop_off_extension(fname);
+	ST.chop_off_extension(fname);
 
 	fname.append("_restricted_action.txt");
 	Fio.int_matrix_read_csv(fname, Perms, perms_m, perms_n, verbose_level - 2);

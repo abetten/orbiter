@@ -152,7 +152,6 @@ void interface_projective::read_arguments(int argc,
 		f_create_points_on_quartic = TRUE;
 		desired_distance = strtof(argv[++i]);
 		cout << "-create_points_on_quartic " << desired_distance << endl;
-		//i++;
 	}
 	else if (stringcmp(argv[i], "-create_points_on_parabola") == 0) {
 		f_create_points_on_parabola = TRUE;
@@ -164,7 +163,6 @@ void interface_projective::read_arguments(int argc,
 		cout << "-create_points_on_parabola " << desired_distance << " "
 				<< parabola_N << " " << parabola_a << " "
 				<< parabola_b << " " << parabola_c << endl;
-		//i++;
 	}
 	else if (stringcmp(argv[i], "-smooth_curve") == 0) {
 		f_smooth_curve = TRUE;
@@ -188,7 +186,6 @@ void interface_projective::read_arguments(int argc,
 				<< smooth_curve_t_min << " "
 				<< smooth_curve_t_max << " "
 				<< endl;
-		//i++;
 	}
 	else if (stringcmp(argv[i], "-create_spread") == 0) {
 		f_create_spread = TRUE;
@@ -239,7 +236,6 @@ void interface_projective::read_arguments(int argc,
 	else if (stringcmp(argv[i], "-create_dickson_atlas") == 0) {
 		f_create_dickson_atlas = TRUE;
 		cout << "-create_dickson_atlas " << endl;
-		//i++;
 	}
 	if (f_v) {
 		cout << "interface_projective::read_arguments done" << endl;

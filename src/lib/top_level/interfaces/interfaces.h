@@ -18,7 +18,7 @@ namespace top_level {
 
 
 // #############################################################################
-// interface_coding_theory.cpp
+// interface_algebra.cpp
 // #############################################################################
 
 //! interface to the algebra module
@@ -51,16 +51,8 @@ class interface_algebra {
 	int f_young_symmetrizer_sym_4;
 
 	int f_draw_mod_n;
-	int draw_mod_n;
-	std::string draw_mod_n_fname;
-	int f_draw_mod_n_inverse;
-	int f_draw_mod_n_additive_inverse;
-	int f_draw_mod_n_power_cycle;
-	int f_draw_mod_n_power_cycle_base;
+	draw_mod_n_description *Draw_mod_n_description;
 
-	int f_cyclotomic_sets;
-	int cyclotomic_sets_q;
-	std::string cyclotomic_sets_reps;
 
 public:
 	interface_algebra();
@@ -210,11 +202,6 @@ class interface_combinatorics {
 	int f_Delandtsheer_Doyen;
 	delandtsheer_doyen_description *Delandtsheer_Doyen_description;
 
-#if 0
-	int f_graph_classify;
-	graph_classify_description *Graph_classify_description;
-#endif
-
 	int f_tdo_refinement;
 	tdo_refinement_description *Tdo_refinement_descr;
 
@@ -310,8 +297,10 @@ class interface_cryptography {
 	long int RSA_d;
 	long int RSA_m;
 	std::string RSA_text;
+
 	int f_primitive_root;
 	std::string primitive_root_p;
+
 	int f_smallest_primitive_root;
 	int smallest_primitive_root_p;
 	int f_smallest_primitive_root_interval;
@@ -324,10 +313,12 @@ class interface_cryptography {
 	int f_extended_gcd;
 	int extended_gcd_a;
 	int extended_gcd_b;
+
 	int f_power_mod;
 	std::string power_mod_a;
 	std::string power_mod_k;
 	std::string power_mod_n;
+
 	int f_discrete_log;
 	long int discrete_log_y;
 	long int discrete_log_a;
@@ -476,6 +467,7 @@ class interface_projective {
 	int f_make_table_of_surfaces;
 
 	int f_create_surface_reports;
+
 	int f_create_surface_atlas;
 	int create_surface_atlas_q_max;
 

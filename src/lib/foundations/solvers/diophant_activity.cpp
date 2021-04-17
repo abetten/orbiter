@@ -38,6 +38,7 @@ void diophant_activity::init(diophant_activity_description *Descr,
 	}
 
 	diophant_activity::Descr = Descr;
+	string_tools ST;
 
 	if (!Descr->f_input_file) {
 		cout << "diophant_activity::init please use option -q <q>" << endl;
@@ -64,7 +65,7 @@ void diophant_activity::init(diophant_activity_description *Descr,
 			string output_file;
 
 			output_file.assign(Descr->input_file);
-			replace_extension_with(output_file, ".sol");
+			ST.replace_extension_with(output_file, ".sol");
 
 
 			Dio->write_solutions(output_file, verbose_level);
@@ -84,7 +85,7 @@ void diophant_activity::init(diophant_activity_description *Descr,
 			string output_file;
 
 			output_file.assign(Descr->input_file);
-			replace_extension_with(output_file, ".sol");
+			ST.replace_extension_with(output_file, ".sol");
 
 
 			Dio->write_solutions(output_file, verbose_level);
@@ -95,7 +96,7 @@ void diophant_activity::init(diophant_activity_description *Descr,
 
 		fname_base.assign(Descr->input_file);
 		//sprintf(fname_base, "%s", Descr->input_file);
-		replace_extension_with(fname_base, "_drawing");
+		ST.replace_extension_with(fname_base, "_drawing");
 		Dio->draw_as_bitmap(fname_base, TRUE, Descr->box_width, Descr->bit_depth,
 			verbose_level);
 
@@ -141,7 +142,7 @@ void diophant_activity::init(diophant_activity_description *Descr,
 
 		fname_base.assign(Descr->input_file);
 		//sprintf(fname_base, "%s", Descr->input_file);
-		replace_extension_with(fname_base, "_drawing");
+		ST.replace_extension_with(fname_base, "_drawing");
 		//Dio->draw_it(fname_base, xmax_in, ymax_in, xmax_out, ymax_out);
 		Dio->draw_partitioned(fname_base,
 			xmax_in, ymax_in, xmax_out, ymax_out,
@@ -158,7 +159,7 @@ void diophant_activity::init(diophant_activity_description *Descr,
 
 		fname2.assign(Descr->input_file);
 		//sprintf(fname2, "%s", Descr->input_file);
-		replace_extension_with(fname2, "_red.diophant");
+		ST.replace_extension_with(fname2, "_red.diophant");
 
 		D2->save_in_general_format(fname2, verbose_level);
 		cout << "Written file " << fname2 << " of size " << Fio.file_size(fname2) << endl;
