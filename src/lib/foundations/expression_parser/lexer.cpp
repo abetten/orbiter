@@ -319,7 +319,7 @@ void lexer::create_text_token(std::string &txt)
     T = new syntax_tree_node_terminal;
     T->f_text = true;
     T->value_text.assign(txt);
-    std::cout << "lexer::create_text_token text=" << txt << std::endl;
+    //std::cout << "lexer::create_text_token text=" << txt << std::endl;
 
 }
 
@@ -331,7 +331,7 @@ void lexer::create_double_token(double dbl)
     T = new syntax_tree_node_terminal;
     T->f_double = true;
     T->value_double = dbl;
-    std::cout << "lexer::create_double_token value=" << dbl << std::endl;
+    //std::cout << "lexer::create_double_token value=" << dbl << std::endl;
 
 }
 

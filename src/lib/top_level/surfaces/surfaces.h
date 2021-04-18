@@ -171,6 +171,8 @@ public:
 	int f_recognize;
 		surface_create_description *recognize_surface;
 
+	int f_create_source_code;
+
 
 	classification_of_cubic_surfaces_with_double_sixes_activity_description();
 	~classification_of_cubic_surfaces_with_double_sixes_activity_description();
@@ -213,6 +215,7 @@ public:
 	void do_recognize(
 			surface_create_description *surface_descr,
 			int verbose_level);
+	void do_write_source_code(int verbose_level);
 
 
 };

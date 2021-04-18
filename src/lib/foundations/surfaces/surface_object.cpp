@@ -105,7 +105,7 @@ void surface_object::init_equation(surface_domain *Surf, int *eqn,
 	if (f_v) {
 		cout << "surface_object::init_equation before enumerate_points_and_lines" << endl;
 	}
-	enumerate_points_and_lines(verbose_level - 1);
+	enumerate_points_and_lines(0/*verbose_level - 1*/);
 	if (f_v) {
 		cout << "surface_object::init_equation after enumerate_points_and_lines" << endl;
 	}
@@ -132,7 +132,7 @@ void surface_object::init_equation(surface_domain *Surf, int *eqn,
 			cout << "surface_object::init_equation before "
 					"find_double_six_and_rearrange_lines" << endl;
 		}
-		find_double_six_and_rearrange_lines(Lines, verbose_level - 2);
+		find_double_six_and_rearrange_lines(Lines, 0/*verbose_level - 2*/);
 
 		if (f_v) {
 			cout << "surface_object::init_equation after "
@@ -152,7 +152,7 @@ void surface_object::init_equation(surface_domain *Surf, int *eqn,
 		cout << "surface_object::init_equation before "
 				"compute_properties" << endl;
 	}
-	compute_properties(verbose_level - 2);
+	compute_properties(0/*verbose_level - 2*/);
 	if (f_v) {
 		cout << "surface_object::init_equation after "
 				"compute_properties" << endl;

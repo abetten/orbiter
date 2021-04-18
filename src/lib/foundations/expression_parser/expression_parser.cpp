@@ -329,7 +329,9 @@ syntax_tree_node *expression_parser::Primary (int verbose_level,
 		if (f_v) {
 			std::cout << "expression_parser::Primary NUMBER " << v << " done" << std::endl;
 		}
- 		N->print(std::cout);
+		if (f_v) {
+			N->print(std::cout);
+		}
       return N;
   }
   else if (Lexer->type_ == NAME) {
@@ -376,7 +378,9 @@ syntax_tree_node *expression_parser::Primary (int verbose_level,
 		if (f_v) {
 			std::cout << "expression_parser::Primary symbol " << word << std::endl;
 		}
- 		N->print(std::cout);
+		if (f_v) {
+			N->print(std::cout);
+		}
  		return N;               // and return new value
       }
   else if (Lexer->type_ == MINUS) {
@@ -418,7 +422,9 @@ syntax_tree_node *expression_parser::Primary (int verbose_level,
 			std::cout << "expression_parser::Primary left hand parenthesis done" << std::endl;
 		}
 		delete N;
- 		N1->print(std::cout);
+		if (f_v) {
+			N1->print(std::cout);
+		}
       return N1;
    }
   else {
@@ -631,7 +637,9 @@ syntax_tree_node *expression_parser::Term (int verbose_level, const bool get)
 		}
 		f_done = false;
 		if (f_single_literal) {
-			std::cout << "single_literal = " << single_literal << std::endl;
+			if (f_v) {
+				std::cout << "single_literal = " << single_literal << std::endl;
+			}
 			if (f_single_literal) {
 				i = Tree->identify_single_literal(single_literal);
 				if (i >= 0) {
@@ -642,7 +650,9 @@ syntax_tree_node *expression_parser::Term (int verbose_level, const bool get)
 			}
 		}
 		if (!f_done) {
-			std::cout << "not a single_literal, N->nb_nodes=" << N->nb_nodes << std::endl;
+			if (f_v) {
+				std::cout << "not a single_literal, N->nb_nodes=" << N->nb_nodes << std::endl;
+			}
 			{
 				N->Nodes[N->nb_nodes] = N2;
 				N->nb_nodes++;
@@ -754,7 +764,9 @@ syntax_tree_node *expression_parser::AddSubtract (int verbose_level, const bool 
     		if (f_v) {
     			std::cout << "expression_parser::AddSubtract before return" << std::endl;
     		}
-    		N->print_without_recursion(std::cout);
+    		if (f_v) {
+    			N->print_without_recursion(std::cout);
+    		}
     		return N;
       } // end of switch on type
     }   // end of loop
@@ -845,7 +857,13 @@ syntax_tree_node *expression_parser::Expression (int verbose_level, const bool g
       } // end of switch on type
     }   // end of loop
 #endif
-	left->print_without_recursion(std::cout);
+
+  	  if (f_v) {
+  		  std::cout << "expression_parser::Expression:" << std::endl;
+  		  left->print_without_recursion(std::cout);
+  	  }
+
+
 	return left;
   } // end of Parser::Expression
 
@@ -863,7 +881,11 @@ syntax_tree_node *expression_parser::CommaList (int verbose_level, const bool ge
 	if (f_v) {
 		std::cout << "expression_parser::CommaList after Expression" << std::endl;
 	}
-	left->print_without_recursion(std::cout);
+
+	if (f_v) {
+		std::cout << "expression_parser::CommaList:" << std::endl;
+		left->print_without_recursion(std::cout);
+	}
 	return left;
 #if 0
   while (true)

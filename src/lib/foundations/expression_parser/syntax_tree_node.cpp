@@ -79,21 +79,25 @@ void syntax_tree_node::split_by_monomials(homogeneous_polynomial_domain *Poly,
 
 	if (f_v) {
 		cout << "syntax_tree_node::split_by_monomials" << endl;
+		cout << "syntax_tree_node::split_by_monomials Node " << idx << endl;
 	}
-	cout << "syntax_tree_node::split_by_monomials Node " << idx << endl;
 	if (f_terminal) {
 		return;
 	}
 	else {
 		if (type == operation_type_mult) {
-			cout << "checking multiplication node" << endl;
+			if (f_v) {
+				cout << "syntax_tree_node::split_by_monomials checking multiplication node" << endl;
+			}
 			idx = Poly->index_of_monomial(monomial);
 			Subtrees[idx] = this;
 		}
 		else {
 			int i;
 
-			cout << "splitting subtree" << endl;
+			if (f_v) {
+				cout << "syntax_tree_node::split_by_monomials splitting subtree" << endl;
+			}
 			for (i = 0; i < nb_nodes; i++) {
 				Nodes[i]->split_by_monomials(Poly, Subtrees, verbose_level);
 			}
@@ -101,29 +105,40 @@ void syntax_tree_node::split_by_monomials(homogeneous_polynomial_domain *Poly,
 	}
 }
 
-int syntax_tree_node::is_homogeneous(int &degree)
+int syntax_tree_node::is_homogeneous(int &degree, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int deg, i;
 
-	cout << "syntax_tree_node::is_homogeneous Node " << idx << endl;
+	if (f_v) {
+		cout << "syntax_tree_node::is_homogeneous Node " << idx << endl;
+	}
 	if (f_terminal) {
 		return TRUE;
 	}
 	else {
 		if (type == operation_type_mult) {
-			cout << "checking multiplication node" << endl;
+			if (f_v) {
+				cout << "checking multiplication node" << endl;
+			}
 			deg = 0;
 			for (i = 0; i < Tree->managed_variables.size(); i++) {
 				deg += monomial[i];
 			}
-			cout << "syntax_tree_node::is_homogeneous node " << idx << " has degree " << deg << endl;
+			if (f_v) {
+				cout << "syntax_tree_node::is_homogeneous node " << idx << " has degree " << deg << endl;
+			}
 			if (degree == -1) {
 				degree = deg;
-				cout << "syntax_tree_node::is_homogeneous node " << idx << " setting degree to " << degree << endl;
+				if (f_v) {
+					cout << "syntax_tree_node::is_homogeneous node " << idx << " setting degree to " << degree << endl;
+				}
 			}
 			else {
 				if (deg != degree) {
-					cout << "syntax_tree_node::is_homogeneous node " << idx << " has degree " << deg << " which is different from " << degree << ", so not homogeneous" << endl;
+					if (f_v) {
+						cout << "syntax_tree_node::is_homogeneous node " << idx << " has degree " << deg << " which is different from " << degree << ", so not homogeneous" << endl;
+					}
 					return FALSE;
 				}
 			}
@@ -132,10 +147,12 @@ int syntax_tree_node::is_homogeneous(int &degree)
 		else {
 			int i, ret;
 
-			cout << "checking subtree" << endl;
+			if (f_v) {
+				cout << "checking subtree" << endl;
+			}
 			ret = TRUE;
 			for (i = 0; i < nb_nodes; i++) {
-				ret = Nodes[i]->is_homogeneous(degree);
+				ret = Nodes[i]->is_homogeneous(degree, verbose_level);
 				if (ret == FALSE) {
 					return FALSE;
 				}

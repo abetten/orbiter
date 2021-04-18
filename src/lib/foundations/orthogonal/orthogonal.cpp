@@ -2125,14 +2125,14 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 		Perp_without_pt[i] = NEW_lint(sz0);
 
 
-		perp(pts[i], Perp_without_pt[i], perp_sz, verbose_level - 1);
+		perp(pts[i], Perp_without_pt[i], perp_sz, 0/*verbose_level - 1*/);
 
 
 		if (f_vv) {
 			cout << "orthogonal::perp_of_k_points perp of pt "
 					<< i << " / " << nb_pts << " has size "
 					<< perp_sz << " and is equal to ";
-			Orbiter->Lint_vec.print_fully(cout, Perp_without_pt[i], perp_sz);
+			Orbiter->Lint_vec.print(cout, Perp_without_pt[i], perp_sz);
 			cout << endl;
 			}
 		if (perp_sz != sz0) {

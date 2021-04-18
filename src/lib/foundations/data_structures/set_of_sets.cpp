@@ -1496,14 +1496,14 @@ void set_of_sets::get_eckardt_points(
 	PStack->allocate_and_get_decomposition(
 		row_classes, row_class_inv, nb_row_classes,
 		col_classes, col_class_inv, nb_col_classes, 
-		verbose_level);
+		0/*verbose_level*/);
 	
 	col_scheme = NEW_int(nb_row_classes * nb_col_classes);
 
 	IS->get_col_decomposition_scheme(*PStack, 
 		row_classes, row_class_inv, nb_row_classes,
 		col_classes, col_class_inv, nb_col_classes, 
-		col_scheme, verbose_level);
+		col_scheme, 0/*verbose_level*/);
 
 	//cout << *this << endl;
 	

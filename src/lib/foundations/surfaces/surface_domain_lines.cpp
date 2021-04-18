@@ -565,6 +565,9 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 	nb_subsets = Combi.int_n_choose_k(5, 4);
 	Perp = NEW_plint(nb_subsets);
 	Perp_sz = NEW_int(nb_subsets);
+	if (f_v) {
+		cout << "surface_domain::create_double_six_from_five_lines_with_a_common_transversal computing perp of 4-subsets" << endl;
+	}
 	for (rk = 0; rk < nb_subsets; rk++) {
 		Combi.unrank_k_subset(rk, subset, 5, 4);
 		for (i = 0; i < 4; i++) {
@@ -575,8 +578,8 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 			cout << "surface_domain::create_double_six_from_five_lines_with_a_common_transversal subset " << rk << " / " << nb_subsets << " : " << endl;
 		}
 		O->perp_of_k_points(pts, 4,
-			Perp[rk], Perp_sz[rk], verbose_level - 1);
-		if (f_v) {
+			Perp[rk], Perp_sz[rk], 0/*verbose_level - 1*/);
+		if (FALSE) {
 			cout << "surface_domain::create_double_six_from_five_lines_with_a_common_transversal the perp of the subset ";
 			Orbiter->Int_vec.print(cout, subset, 4);
 			cout << " has size " << Perp_sz[rk] << " : ";
@@ -626,7 +629,7 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 			}
 		}
 	}
-	if (f_v) {
+	if (FALSE) {
 		cout << "surface_domain::create_double_six_from_five_lines_with_a_common_transversal" << endl;
 		cout << "opposites ";
 		Orbiter->Lint_vec.print(cout, opposites, 5);
@@ -647,11 +650,11 @@ int surface_domain::create_double_six_from_five_lines_with_a_common_transversal(
 		cout << "surface_domain::create_double_six_from_five_lines_with_a_common_transversal before O->perp_of_k_points" << endl;
 	}
 	O->perp_of_k_points(opposites, 4, Perp_opp, Perp_opp_sz,
-			verbose_level - 1);
+			0/*verbose_level - 1*/);
 	if (f_v) {
 		cout << "surface_domain::create_double_six_from_five_lines_with_a_common_transversal after O->perp_of_k_points" << endl;
 	}
-	if (f_v) {
+	if (FALSE) {
 		cout << "the perp of the opposite subset ";
 		Orbiter->Lint_vec.print(cout, opposites, 4);
 		cout << " has size " << Perp_opp_sz << ":";

@@ -195,14 +195,14 @@ void surface_domain_high_level::classify_surfaces_with_double_sixes(
 			Control,
 			Surf, Surf_A,
 			SCW,
-			verbose_level - 1);
+			verbose_level);
 
 	if (f_v) {
 		cout << "surface_domain_high_level::classify_surfaces_with_double_sixes "
 				"after classify_surfaces" << endl;
 	}
 
-
+#if 0
 	if (f_v) {
 		cout << "surface_domain_high_level::classify_surfaces_with_double_sixes "
 				"before SCW->generate_source_code" << endl;
@@ -212,7 +212,7 @@ void surface_domain_high_level::classify_surfaces_with_double_sixes(
 		cout << "surface_domain_high_level::classify_surfaces_with_double_sixes "
 				"after SCW->generate_source_code" << endl;
 	}
-
+#endif
 
 	if (FALSE) {
 

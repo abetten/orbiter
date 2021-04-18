@@ -233,7 +233,7 @@ public:
 	void null();
 	void split_by_monomials(homogeneous_polynomial_domain *Poly,
 			syntax_tree_node **Subtrees, int verbose_level);
-	int is_homogeneous(int &degree);
+	int is_homogeneous(int &degree, int verbose_level);
 	void print(std::ostream &ost);
 	int evaluate(std::map<std::string, std::string> &symbol_table,
 			finite_field *F, int verbose_level);
@@ -264,7 +264,7 @@ public:
 	void print(std::ostream &ost);
 	void print_monomial(std::ostream &ost, int *monomial);
 	int identify_single_literal(std::string &single_literal);
-	int is_homogeneous(int &degree);
+	int is_homogeneous(int &degree, int verbose_level);
 	void split_by_monomials(homogeneous_polynomial_domain *Poly,
 			syntax_tree_node **&Subtrees, int verbose_level);
 

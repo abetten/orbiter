@@ -487,7 +487,7 @@ void classify_double_sixes::classify_partial_ovoids(int verbose_level)
 		schreier_depth, 
 		f_use_invariant_subset_if_available, 
 		f_debug, 
-		verbose_level - 1);
+		verbose_level);
 	if (f_v) {
 		cout << "classify_double_sixes::classify_partial_ovoids "
 				"classifying starter done" << endl;
@@ -904,7 +904,7 @@ void classify_double_sixes::identify_five_plus_one(
 			N1, 5, 5,
 			five_lines_out_as_neighbors,
 			Elt1,
-			verbose_level - 2);
+			0/*verbose_level - 2*/);
 	if (f_v) {
 		cout << "classify_double_sixes::identify_five_plus_one "
 				"orbit_index = " << orbit_index << endl;

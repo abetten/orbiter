@@ -47,29 +47,37 @@ int syntax_tree::identify_single_literal(std::string &single_literal)
 {
 	int i;
 
-	cout << "syntax_tree::identify_single_literal trying to identify " << single_literal << endl;
+	//cout << "syntax_tree::identify_single_literal trying to identify " << single_literal << endl;
 	for (i = 0; i < managed_variables.size(); i++) {
 		if (strcmp(single_literal.c_str(), managed_variables[i].c_str()) == 0) {
-			cout << "syntax_tree::identify_single_literal literal identified as managed variable " << i << endl;
+			//cout << "syntax_tree::identify_single_literal literal identified as managed variable " << i << endl;
 			return i;
 		}
 	}
 	return -1;
 }
 
-int syntax_tree::is_homogeneous(int &degree)
+int syntax_tree::is_homogeneous(int &degree, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "syntax_tree::is_homogeneous" << endl;
+	}
 	int ret;
 
 	if (!f_has_managed_variables) {
-		return FALSE;
+		ret = FALSE;
 	}
 	else {
 		degree = -1;
 
-		ret = Root->is_homogeneous(degree);
-		return ret;
+		ret = Root->is_homogeneous(degree, verbose_level);
 	}
+	if (f_v) {
+		cout << "syntax_tree::is_homogeneous done" << endl;
+	}
+	return ret;
 }
 
 

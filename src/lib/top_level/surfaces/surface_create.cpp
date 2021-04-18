@@ -1556,8 +1556,10 @@ void surface_create::create_surface_by_equation(
 
 	tree = NEW_OBJECT(syntax_tree);
 
-	cout << "Formula " << name_of_formula << " is " << equation_text << endl;
-	cout << "Managed variables: " << managed_variables << endl;
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation Formula " << name_of_formula << " is " << equation_text << endl;
+		cout << "surface_create::create_surface_by_equation Managed variables: " << managed_variables << endl;
+	}
 
 	const char *p = managed_variables.c_str();
 	char str[1000];
@@ -1569,7 +1571,9 @@ void surface_create::create_surface_by_equation(
 		string var;
 
 		var.assign(str);
-		cout << "adding managed variable " << var << endl;
+		if (f_v) {
+			cout << "surface_create::create_surface_by_equation adding managed variable " << var << endl;
+		}
 
 		tree->managed_variables.push_back(var);
 		tree->f_has_managed_variables = TRUE;
@@ -1580,19 +1584,27 @@ void surface_create::create_surface_by_equation(
 
 	nb_vars = tree->managed_variables.size();
 
-	cout << "Managed variables: " << endl;
-	for (i = 0; i < nb_vars; i++) {
-		cout << i << " : " << tree->managed_variables[i] << endl;
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation Managed variables: " << endl;
+		for (i = 0; i < nb_vars; i++) {
+			cout << i << " : " << tree->managed_variables[i] << endl;
+		}
 	}
 
 
-	cout << "Starting to parse " << name_of_formula << endl;
-	Parser.parse(tree, equation_text, verbose_level);
-	cout << "Parsing " << name_of_formula << " finished" << endl;
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation Starting to parse " << name_of_formula << endl;
+	}
+	Parser.parse(tree, equation_text, 0/*verbose_level*/);
+	if (f_v) {
+		cout << "Parsing " << name_of_formula << " finished" << endl;
+	}
 
 
-	cout << "Syntax tree:" << endl;
-	//tree->print(cout);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation Syntax tree:" << endl;
+		//tree->print(cout);
+	}
 
 	std::string fname;
 	fname.assign(name_of_formula);
@@ -1604,15 +1616,23 @@ void surface_create::create_surface_by_equation(
 	}
 
 	int ret, degree;
-	ret = tree->is_homogeneous(degree);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation before is_homogeneous" << endl;
+	}
+	ret = tree->is_homogeneous(degree, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation after is_homogeneous" << endl;
+	}
 	if (!ret) {
-		cout << "The given equation is not homogeneous" << endl;
+		cout << "surface_create::create_surface_by_equation The given equation is not homogeneous" << endl;
 		exit(1);
 	}
-	cout << "homogeneous of degree " << degree << endl;
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation homogeneous of degree " << degree << endl;
+	}
 
 	if (degree != 3) {
-		cout << "The given equation is homogeneous, but not of degree 3" << endl;
+		cout << "surface_create::create_surface_by_equation The given equation is homogeneous, but not of degree 3" << endl;
 		exit(1);
 	}
 
@@ -1621,15 +1641,15 @@ void surface_create::create_surface_by_equation(
 	Poly = NEW_OBJECT(homogeneous_polynomial_domain);
 
 	if (f_v) {
-		cout << "before Poly->init" << endl;
+		cout << "surface_create::create_surface_by_equation before Poly->init" << endl;
 	}
 	Poly->init(F,
 			nb_vars /* nb_vars */, degree,
 			FALSE /* f_init_incidence_structure */,
 			t_PART,
-			verbose_level);
+			0/*verbose_level*/);
 	if (f_v) {
-		cout << "after Poly->init" << endl;
+		cout << "surface_create::create_surface_by_equation after Poly->init" << endl;
 	}
 
 	syntax_tree_node **Subtrees;
@@ -1639,26 +1659,36 @@ void surface_create::create_surface_by_equation(
 	nb_monomials = Poly->get_nb_monomials();
 
 	if (nb_monomials != 20) {
-		cout << "nb_monomials != 20" << endl;
+		cout << "surface_create::create_surface_by_equation nb_monomials != 20" << endl;
 		exit(1);
 	}
 
-	tree->split_by_monomials(Poly, Subtrees, verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation before tree->split_by_monomials" << endl;
+	}
+	tree->split_by_monomials(Poly, Subtrees, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation after tree->split_by_monomials" << endl;
+	}
 
-	for (i = 0; i < nb_monomials; i++) {
-		cout << "Monomial " << i << " : ";
-		if (Subtrees[i]) {
-			Subtrees[i]->print_expression(cout);
-			cout << " * ";
-			Poly->print_monomial(cout, i);
-			cout << endl;
-		}
-		else {
-			cout << "no subtree" << endl;
+	if (f_v) {
+		for (i = 0; i < nb_monomials; i++) {
+			cout << "surface_create::create_surface_by_equation Monomial " << i << " : ";
+			if (Subtrees[i]) {
+				Subtrees[i]->print_expression(cout);
+				cout << " * ";
+				Poly->print_monomial(cout, i);
+				cout << endl;
+			}
+			else {
+				cout << "surface_create::create_surface_by_equation no subtree" << endl;
+			}
 		}
 	}
 
-	cout << "before evaluate" << endl;
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation before evaluate" << endl;
+	}
 
 	p = equation_parameters.c_str();
 	//char str[1000];
@@ -1689,7 +1719,9 @@ void surface_create::create_surface_by_equation(
 
 
 
-		cout << "adding symbol " << symb << " = " << val << endl;
+		if (f_v) {
+			cout << "surface_create::create_surface_by_equation adding symbol " << symb << " = " << val << endl;
+		}
 
 		symbol_table[symb] = val;
 		//symbols.push_back(symb);
@@ -1698,7 +1730,7 @@ void surface_create::create_surface_by_equation(
 	}
 
 #if 0
-	cout << "symbol table:" << endl;
+	cout << "surface_create::create_surface_by_equation symbol table:" << endl;
 	for (i = 0; i < symbol_table.size(); i++) {
 		cout << i << " : " << symbol_table[i] << " = " << values[i] << endl;
 	}
@@ -1706,29 +1738,38 @@ void surface_create::create_surface_by_equation(
 	int a;
 
 	for (i = 0; i < nb_monomials; i++) {
-		cout << "Monomial " << i << " : ";
+		if (f_v) {
+			cout << "surface_create::create_surface_by_equation Monomial " << i << " : ";
+		}
 		if (Subtrees[i]) {
 			//Subtrees[i]->print_expression(cout);
-			a = Subtrees[i]->evaluate(symbol_table, F, verbose_level);
+			a = Subtrees[i]->evaluate(symbol_table, F, 0/*verbose_level*/);
 			coeffs20[i] = a;
-			cout << a << " * ";
-			Poly->print_monomial(cout, i);
-			cout << endl;
+			if (f_v) {
+				cout << "surface_create::create_surface_by_equation Monomial " << i << " : ";
+				cout << a << " * ";
+				Poly->print_monomial(cout, i);
+				cout << endl;
+			}
 		}
 		else {
-			cout << "no subtree" << endl;
+			if (f_v) {
+				cout << "surface_create::create_surface_by_equation no subtree" << endl;
+			}
 			coeffs20[i] = 0;
 		}
 	}
-	cout << "evaluated polynomial:" << endl;
-	for (i = 0; i < nb_monomials; i++) {
-		cout << coeffs20[i] << " * ";
-		Poly->print_monomial(cout, i);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_equation evaluated polynomial:" << endl;
+		for (i = 0; i < nb_monomials; i++) {
+			cout << coeffs20[i] << " * ";
+			Poly->print_monomial(cout, i);
+			cout << endl;
+		}
+		cout << "surface_create::create_surface_by_equation coefficient vector: ";
+		Orbiter->Int_vec.print(cout, coeffs20, nb_monomials);
 		cout << endl;
 	}
-	cout << "coefficient vector: ";
-	Orbiter->Int_vec.print(cout, coeffs20, nb_monomials);
-	cout << endl;
 
 
 
