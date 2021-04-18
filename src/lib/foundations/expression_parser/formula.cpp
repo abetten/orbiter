@@ -71,8 +71,8 @@ void formula::init(std::string &label, std::string &label_tex,
 	tree = NEW_OBJECT(syntax_tree);
 
 	if (f_v) {
-		cout << "Formula " << name_of_formula << " is " << formula_text << endl;
-		cout << "Managed variables: " << managed_variables << endl;
+		cout << "formula::initFormula " << name_of_formula << " is " << formula_text << endl;
+		cout << "formula::initManaged variables: " << managed_variables << endl;
 	}
 
 	const char *p = managed_variables.c_str();
@@ -86,7 +86,7 @@ void formula::init(std::string &label, std::string &label_tex,
 
 		var.assign(str);
 		if (f_v) {
-			cout << "adding managed variable " << var << endl;
+			cout << "formula::initadding managed variable " << var << endl;
 		}
 
 		tree->managed_variables.push_back(var);
@@ -98,7 +98,7 @@ void formula::init(std::string &label, std::string &label_tex,
 	nb_managed_vars = tree->managed_variables.size();
 
 	if (f_v) {
-		cout << "Managed variables: " << endl;
+		cout << "formula::initManaged variables: " << endl;
 		for (i = 0; i < nb_managed_vars; i++) {
 			cout << i << " : " << tree->managed_variables[i] << endl;
 		}
@@ -106,16 +106,16 @@ void formula::init(std::string &label, std::string &label_tex,
 
 
 	if (f_v) {
-		cout << "Starting to parse " << name_of_formula << endl;
+		cout << "formula::initStarting to parse " << name_of_formula << endl;
 	}
 	Parser.parse(tree, formula_text, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "Parsing " << name_of_formula << " finished" << endl;
+		cout << "formula::initParsing " << name_of_formula << " finished" << endl;
 	}
 
 
 	if (FALSE) {
-		cout << "Syntax tree:" << endl;
+		cout << "formula::initSyntax tree:" << endl;
 		tree->print(cout);
 	}
 
@@ -128,7 +128,13 @@ void formula::init(std::string &label, std::string &label_tex,
 		tree->Root->export_graphviz(name_of_formula, ost);
 	}
 
-	f_is_homogeneous = tree->is_homogeneous(degree);
+	if (f_is_homogeneous) {
+		cout << "formula::init before tree->is_homogeneous" << endl;
+	}
+	f_is_homogeneous = tree->is_homogeneous(degree, verbose_level - 3);
+	if (f_is_homogeneous) {
+		cout << "formula::init after tree->is_homogeneous" << endl;
+	}
 
 	if (f_is_homogeneous) {
 		cout << "formula::init the formula is homogeneous of degree " << degree << endl;

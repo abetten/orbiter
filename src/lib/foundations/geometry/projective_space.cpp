@@ -3270,6 +3270,7 @@ void projective_space::find_lines_which_are_contained(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
+	int f_vvv = FALSE;
 	long int rk;
 	long int h, i, j, d, a, b;
 	int idx;
@@ -3297,7 +3298,7 @@ void projective_space::find_lines_which_are_contained(
 	sz2 = 0;
 	for (i = 0; i < Points.size(); i++) {
 		unrank_point(M, Points[i]);
-		if (f_vv) {
+		if (f_vvv) {
 			cout << Points[i] << " : ";
 			Orbiter->Int_vec.print(cout, M, d);
 			cout << endl;
@@ -3338,7 +3339,7 @@ void projective_space::find_lines_which_are_contained(
 
 	find_secant_lines(set1, sz1,
 			secants, nb_secants, n2,
-			verbose_level);
+			0/*verbose_level - 3*/);
 
 	if (f_v) {
 		cout << "projective_space::find_lines_which_are_contained "
@@ -3353,12 +3354,16 @@ void projective_space::find_lines_which_are_contained(
 
 	// first we test the secants and
 	// find those which are lines on the surface:
+	if (f_vv) {
+		cout << "projective_space::find_lines_which_are_contained "
+				"testing secants, nb_secants=" << nb_secants << endl;
+	}
 
 	//nb_lines = 0;
 	for (i = 0; i < nb_secants; i++) {
 		rk = secants[i];
 		Grass_lines->unrank_lint_here(M, rk, 0 /* verbose_level */);
-		if (f_vv) {
+		if (f_vvv) {
 			cout << "testing secant " << i << " / " << nb_secants
 					<< " which is line " << rk << ":" << endl;
 			Orbiter->Int_vec.matrix_print(M, 2, d);
@@ -3421,9 +3426,14 @@ void projective_space::find_lines_which_are_contained(
 		unrank_point(Pts2 + i * d, set2[i]);
 	}
 
+	if (f_vv) {
+		cout << "projective_space::find_lines_which_are_contained "
+				"checking lines through points of the hyperplane, sz1=" << sz1 << endl;
+	}
+
 	f_taken = NEW_int(sz2);
 	for (i = 0; i < sz1; i++) {
-		if (f_vv) {
+		if (f_vvv) {
 			cout << "projective_space::find_lines_which_are_contained "
 					"checking lines through hyperplane point " << i
 					<< " / " << sz1 << ":" << endl;
@@ -3436,7 +3446,7 @@ void projective_space::find_lines_which_are_contained(
 			if (f_taken[j]) {
 				continue;
 			}
-			if (f_vv) {
+			if (f_vvv) {
 				cout << "projective_space::find_lines_which_are_contained "
 						"i=" << i << " j=" << j << " / " << sz2 << ":" << endl;
 			}
@@ -3449,12 +3459,12 @@ void projective_space::find_lines_which_are_contained(
 
 			f_taken[j] = TRUE;
 
-			if (f_vv) {
+			if (f_vvv) {
 				Orbiter->Int_vec.matrix_print(M, 2, d);
 			}
 
 			rk = Grass_lines->rank_lint_here(M, 0 /* verbose_level */);
-			if (f_vv) {
+			if (f_vvv) {
 				cout << "projective_space::find_lines_which_are_contained "
 						"line rk=" << rk << ":" << endl;
 			}
@@ -3477,7 +3487,7 @@ void projective_space::find_lines_which_are_contained(
 					break;
 				}
 				else {
-					if (f_vv) {
+					if (f_vvv) {
 						cout << "eliminating point " << idx << endl;
 					}
 					// we don't need to consider this point for P2:
@@ -3495,12 +3505,12 @@ void projective_space::find_lines_which_are_contained(
 				}
 #endif
 				//lines[nb_lines++] = rk;
-				if (f_v) {
+				if (f_vvv) {
 					cout << "adding line " << rk << " nb_lines="
 							<< Lines.size() << endl;
 				}
 				Lines.push_back(rk);
-				if (f_v) {
+				if (f_vvv) {
 					cout << "adding line " << rk << " nb_lines="
 							<< Lines.size() << " done" << endl;
 				}

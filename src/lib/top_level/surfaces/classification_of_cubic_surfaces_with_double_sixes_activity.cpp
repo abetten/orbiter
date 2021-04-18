@@ -78,6 +78,9 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::perform_activi
 	else if (Descr->f_recognize) {
 		do_recognize(Descr->recognize_surface, verbose_level);
 	}
+	else if (Descr->f_create_source_code) {
+		do_write_source_code(verbose_level);
+	}
 
 }
 
@@ -264,6 +267,31 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::do_recognize(
 		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_recognize done" << endl;
 	}
 }
+
+void classification_of_cubic_surfaces_with_double_sixes_activity::do_write_source_code(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_write_source_code" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_write_source_code "
+				"before SCW->recognition" << endl;
+	}
+	SCW->generate_source_code(verbose_level);
+	if (f_v) {
+		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_write_source_code "
+				"after SCW->recognition" << endl;
+	}
+	if (f_v) {
+		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_write_source_code done" << endl;
+	}
+}
+
 
 
 

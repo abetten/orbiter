@@ -209,7 +209,7 @@ void surface_classify_wedge::do_classify_double_sixes(int verbose_level)
 			cout << "surface_classify_wedge::do_classify_double_sixes before "
 					"Classify_double_sixes->classify" << endl;
 		}
-		Classify_double_sixes->classify(verbose_level - 1);
+		Classify_double_sixes->classify(verbose_level);
 		if (f_v) {
 			cout << "surface_classify_wedge::do_classify_double_sixes after "
 					"Classify_double_sixes->classify" << endl;
@@ -272,7 +272,7 @@ void surface_classify_wedge::do_classify_surfaces(int verbose_level)
 			cout << "surface_classify_wedge::do_classify_surfaces before "
 					"SCW->classify_surfaces_from_double_sixes" << endl;
 		}
-		classify_surfaces_from_double_sixes(verbose_level - 1);
+		classify_surfaces_from_double_sixes(verbose_level);
 		if (f_v) {
 			cout << "surface_classify_wedge::do_classify_surfaces after "
 					"SCW->classify_surfaces_from_double_sixes" << endl;
@@ -356,7 +356,7 @@ void surface_classify_wedge::downstep(int verbose_level)
 			NULL /* void (*func_to_free_received_trace)(void *trace_result, void *data, int verbose_level) */,
 			NULL /* void (*func_latex_report_trace)(std::ostream &ost, void *trace_result, void *data, int verbose_level)*/,
 			NULL /* void *free_received_trace_data */,
-			verbose_level);
+			verbose_level - 3);
 
 	if (f_v) {
 		cout << "surface_classify_wedge::downstep "
@@ -391,7 +391,7 @@ void surface_classify_wedge::downstep(int verbose_level)
 		Surf->create_the_fifteen_other_lines(
 				Lines /* double_six */,
 				Lines + 12 /* fifteen_other_lines */,
-				verbose_level - 4);
+				0 /*verbose_level - 4*/);
 		if (f_vv) {
 			cout << "surface_classify_wedge::downstep "
 					"after create_the_fifteen_other_lines" << endl;
@@ -412,7 +412,7 @@ void surface_classify_wedge::downstep(int verbose_level)
 			FALSE /* f_long_orbit */,
 			Lines /* int *pt_representation */,
 			R->Strong_gens,
-			verbose_level - 2);
+			0/*verbose_level - 2*/);
 
 		if (f_vv) {
 			cout << "surface_classify_wedge::downstep "
@@ -460,7 +460,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 
 	Surfaces->init(A, A2,
 			Flag_orbits->nb_flag_orbits, 27, go,
-			verbose_level);
+			verbose_level - 3);
 
 
 	for (f = 0; f < Flag_orbits->nb_flag_orbits; f++) {
@@ -504,8 +504,8 @@ void surface_classify_wedge::upstep(int verbose_level)
 		int nb_coset_reps;
 		
 		coset_reps = NEW_OBJECT(vector_ge);
-		coset_reps->init(Surf_A->A, verbose_level - 2);
-		coset_reps->allocate(36, verbose_level - 2);
+		coset_reps->init(Surf_A->A, 0/*verbose_level - 2*/);
+		coset_reps->allocate(36, 0/*verbose_level - 2*/);
 
 
 		strong_generators *S;
@@ -548,7 +548,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 			}
 			
 			Classify_double_sixes->identify_double_six(double_six, 
-				Elt1 /* transporter */, f2, verbose_level - 10);
+				Elt1 /* transporter */, f2, 0/*verbose_level - 10*/);
 
 			if (f_v) {
 				cout << "f=" << f << " / "
@@ -562,8 +562,8 @@ void surface_classify_wedge::upstep(int verbose_level)
 			if (f2 == f) {
 				if (f_v) {
 					cout << "We found an automorphism of the surface:" << endl;
-					A->element_print_quick(Elt1, cout);
-					cout << endl;
+					//A->element_print_quick(Elt1, cout);
+					//cout << endl;
 				}
 				A->element_move(Elt1, coset_reps->ith(nb_coset_reps), 0);
 				nb_coset_reps++;
@@ -599,7 +599,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 		} // next i
 
 
-		coset_reps->reallocate(nb_coset_reps, verbose_level - 2);
+		coset_reps->reallocate(nb_coset_reps, 0/*verbose_level - 2*/);
 
 		strong_generators *Aut_gens;
 
@@ -613,7 +613,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 			}
 			Aut_gens = NEW_OBJECT(strong_generators);
 			Aut_gens->init_group_extension(S, coset_reps,
-					nb_coset_reps, verbose_level - 2);
+					nb_coset_reps, 0/*verbose_level - 2*/);
 
 			Aut_gens->group_order(ago);
 
@@ -631,7 +631,7 @@ void surface_classify_wedge::upstep(int verbose_level)
 		Surfaces->Orbit[Flag_orbits->nb_primary_orbits_upper].init(
 			Surfaces,
 			Flag_orbits->nb_primary_orbits_upper, 
-			Aut_gens, Lines, NULL /* extra_data */, verbose_level);
+			Aut_gens, Lines, NULL /* extra_data */, verbose_level - 4);
 
 		FREE_OBJECT(coset_reps);
 		FREE_OBJECT(S);
@@ -1782,7 +1782,7 @@ void surface_classify_wedge::identify_surface(
 	vector<long int> My_Points;
 	int h;
 
-	Surf->enumerate_points(coeff_of_given_surface, My_Points, verbose_level - 2);
+	Surf->enumerate_points(coeff_of_given_surface, My_Points, 0/*verbose_level - 2*/);
 
 	nb_points = My_Points.size();
 
@@ -1798,7 +1798,7 @@ void surface_classify_wedge::identify_surface(
 	Surf->P->find_lines_which_are_contained(
 			My_Points,
 			My_Lines,
-			verbose_level - 2);
+			0/*verbose_level - 2*/);
 
 	// the lines are not arranged according to a double six
 
@@ -1852,7 +1852,7 @@ void surface_classify_wedge::identify_surface(
 
 	Surf->list_starter_configurations(Lines, 27,
 		line_intersections, Starter_Table, nb_starter,
-		verbose_level);
+		0/*verbose_level*/);
 
 	long int S3[6];
 	long int K1[6];
@@ -1910,7 +1910,7 @@ void surface_classify_wedge::identify_surface(
 		W4 /* int *five_lines_out_as_neighbors */,
 		idx2 /* &orbit_index */,
 		Elt2 /* transporter */,
-		verbose_level - 2);
+		0/*verbose_level - 2*/);
 	
 	if (f_v) {
 		cout << "surface_classify_wedge::identify_surface "
@@ -2523,7 +2523,7 @@ void surface_classify_wedge::generate_source_code(int verbose_level)
 				Lines, 27 /*nb_lines*/,
 				pts_on_lines,
 				f_is_on_line,
-				verbose_level);
+				0/*verbose_level*/);
 
 			FREE_int(f_is_on_line);
 
@@ -3180,7 +3180,7 @@ void surface_classify_wedge::recognition(
 	identify_surface(
 		SC->SO->eqn,
 		isomorphic_to, Elt_isomorphism,
-		verbose_level - 1);
+		verbose_level);
 	if (f_v) {
 		cout << "surface belongs to iso type "
 				<< isomorphic_to << endl;
@@ -3209,6 +3209,8 @@ void surface_classify_wedge::recognition(
 		cout << "surface_classify_wedge::recognition done" << endl;
 	}
 }
+
+
 
 }}
 
