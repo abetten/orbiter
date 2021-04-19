@@ -1344,6 +1344,7 @@ void surface_with_action::sweep_4(
 				if (delta == F->negate(1)) {
 					continue;
 				}
+#endif
 
 
 				cout << "alpha=" << alpha << " beta=" << beta << " delta=" << delta << endl;
