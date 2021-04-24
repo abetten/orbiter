@@ -127,6 +127,8 @@ class graph_classification_activity;
 
 
 // projective_space.h:
+class canonical_form_classifier_description;
+class canonical_form_classifier;
 class canonical_form;
 class object_in_projective_space_with_action;
 class projective_space_activity_description;

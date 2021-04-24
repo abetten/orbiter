@@ -400,6 +400,8 @@ MODULES= \
 		top_level/orbits/orbit_of_equations.o \
 		top_level/orbits/orbit_of_sets.o \
 		top_level/orbits/orbit_of_subspaces.o \
+		top_level/projective_space/canonical_form_classifier_description.o \
+		top_level/projective_space/canonical_form_classifier.o \
 		top_level/projective_space/canonical_form.o \
 		top_level/projective_space/object_in_projective_space_with_action.o \
 		top_level/projective_space/projective_space_activity_description.o \
