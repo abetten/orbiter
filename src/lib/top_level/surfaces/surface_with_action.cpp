@@ -1307,45 +1307,40 @@ void surface_with_action::sweep_4(
 
 
 	for (alpha = 0; alpha < F->q; alpha++) {
-#if 0
+
 		if (alpha == 0) {
 			continue;
 		}
-#endif
+
 		if (alpha == 1) {
 			continue;
 		}
 
 
 		for (beta = 0; beta < F->q; beta++) {
-#if 0
+
 			if (beta == 0) {
 				continue;
 			}
+
 			if (beta == F->negate(1)) {
 				continue;
 			}
-#endif
 
-			for (delta = 0; delta < F->q; delta++) {
+		for (delta = 0; delta < F->q; delta++) {
 
-#if 0
+
 				if (delta == 0) {
 					continue;
 				}
+
 				if (delta == F->negate(1)) {
 					continue;
 				}
-#endif
+
 				if (delta == beta) {
 					continue;
 				}
-#if 0
-				if (delta == F->negate(1)) {
-					continue;
-				}
-#endif
-
 
 				cout << "alpha=" << alpha << " beta=" << beta << " delta=" << delta << endl;
 
@@ -1355,11 +1350,11 @@ void surface_with_action::sweep_4(
 				}
 #endif
 				for (gamma = 0; gamma < F->q; gamma++) {
-#if 0
+
 					if (gamma == 0) {
 						continue;
 					}
-#endif
+
 					if (gamma == F->negate(1)) {
 						continue;
 					}
@@ -1368,7 +1363,7 @@ void surface_with_action::sweep_4(
 							<< " delta=" << delta << " gamma=" << gamma << endl;
 
 
-#if 0
+# if 0
 					if (gamma == F->mult((F->add3(1,F->mult(F->negate(1),alpha),F->negate(F->mult(alpha,beta)))),
 							F->inverse(F->add3(F->mult(alpha,beta),F->negate(F->mult(alpha,delta)),delta)))) {
 						continue;
