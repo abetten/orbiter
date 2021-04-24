@@ -873,6 +873,53 @@ void projective_space_activity::classify_quartic_curves(
 				"after AonHPD->init" << endl;
 	}
 
+
+
+	int nb_objects_to_test;
+
+	nb_objects_to_test = 0;
+
+	for (cnt = 0; cnt < nb; cnt++) {
+		char str[1000];
+		string fname;
+
+		sprintf(str, fname_mask.c_str(), cnt);
+		fname.assign(str);
+
+		spreadsheet S;
+
+		S.read_spreadsheet(fname, verbose_level);
+
+		nb_objects_to_test += S.nb_rows - 1;
+		if (f_v) {
+			cout << "projective_space_activity::process_quartic_curve "
+					"file " << cnt << " / " << nb << " has  " << S.nb_rows - 1 << " objects" << endl;
+		}
+	}
+
+	if (f_v) {
+		cout << "projective_space_activity::process_quartic_curve "
+				"nb_objects_to_test=" << nb_objects_to_test << endl;
+	}
+
+
+	number_theory_domain NT;
+
+	classify_bitvectors *CB;
+
+	CB = NEW_OBJECT(classify_bitvectors);
+
+	int canonical_labeling_len;
+	long int *alpha;
+	int *gamma;
+
+	int *Elt;
+	int *eqn2;
+
+	Elt = NEW_int(PA->A->elt_size_in_int);
+	eqn2 = NEW_int(Poly4_x123->get_nb_monomials());
+
+
 	for (cnt = 0; cnt < nb; cnt++) {
 		char str[1000];
 		string fname;
@@ -901,7 +948,14 @@ void projective_space_activity::classify_quartic_curves(
 		long int *bitangents;
 		int nb_bitangents;
 
+
+
 		for (row = 0; row < S.nb_rows - 1; row++) {
+
+			if (f_v) {
+				cout << "cnt = " << cnt << " / " << nb << " row = " << row << " / " << S.nb_rows - 1 << endl;
+			}
+
 			j = 1;
 			t = S.Table[(row + 1) * S.nb_cols + j];
 			if (S.tokens[t] == NULL) {
@@ -947,24 +1001,270 @@ void projective_space_activity::classify_quartic_curves(
 
 
 			canonical_form *C;
+			longinteger_object go;
 
-			process_quartic_curve(
+
+			C = NEW_OBJECT(canonical_form);
+
+			C->quartic_curve(
 					PA,
 					Poly4_x123,
 					AonHPD,
 					row, eqn, sz,
 					pts, nb_pts,
 					bitangents, nb_bitangents,
-					C,
 					verbose_level);
 
-		}
+			C->Stab_gens_quartic->group_order(go);
+
+			canonical_labeling_len = C->canonical_labeling_len;
+			alpha = NEW_lint(canonical_labeling_len);
+			gamma = NEW_int(canonical_labeling_len);
 
 
-	}
+			if (CB->n == 0) {
+				CB->init(nb_objects_to_test,
+						C->Canonical_form->get_allocated_length(),
+						verbose_level);
+			}
+			int f_found;
+			int idx;
+
+			CB->search_and_add_if_new(C->Canonical_form->get_data(), C /* void *extra_data */, f_found, idx, verbose_level);
+
+
+			if (!f_found) {
+				if (f_v) {
+					cout << "After search_and_add_if_new, cnt = " << cnt << " row = " << row << " The canonical form is new" << endl;
+				}
+			}
+			else {
+				if (f_v) {
+					cout << "After search_and_add_if_new, cnt = " << cnt << " row = " << row << " We found the canonical form at idx = " << idx << endl;
+				}
+
+
+
+
+				long int *alpha_inv;
+				long int *beta_inv;
+				int i;
+
+				//long int *canonical_labeling;
+
+
+
+
+				int idx1;
+				int found_at = -1;
+
+				if (f_v) {
+					cout << "starting loop over idx1" << endl;
+				}
+
+				for (idx1 = idx; idx1 >= 0; idx1--) {
+
+
+
+					// test if entry at idx1 is equal to C.
+					// if not, break
+
+					if (f_v) {
+						cout << "projective_space_activity::classify_quartic_curves before CB->compare_at idx1 = " << idx1 << endl;
+					}
+					if (CB->compare_at(C->Canonical_form->get_data(), idx1) != 0) {
+						if (f_v) {
+							cout << "projective_space_activity::classify_quartic_curves at idx1 = " << idx1 << " is not equal, break" << endl;
+						}
+						break;
+					}
+					if (f_v) {
+						cout << "projective_space_activity::classify_quartic_curves canonical form at " << idx1 << " is equal" << endl;
+					}
+
+
+					canonical_form *C1;
+					C1 = (canonical_form *) CB->Type_extra_data[idx1];
+
+					alpha_inv = C1->canonical_labeling;
+
+					beta_inv = C->canonical_labeling;
+
+					// compute gamma = beta * alpha^-1
+
+
+					if (f_v) {
+						cout << "projective_space_activity::classify_quartic_curves computing alpha" << endl;
+					}
+					for (i = 0; i < canonical_labeling_len; i++) {
+						j = alpha_inv[i];
+						alpha[j] = i;
+					}
+
+					if (f_v) {
+						cout << "projective_space_activity::classify_quartic_curves computing gamma" << endl;
+					}
+					for (i = 0; i < canonical_labeling_len; i++) {
+						gamma[i] = beta_inv[alpha[i]];
+					}
+
+
+					// turn gamma into a matrix
+
+
+					int Mtx[10];
+					int Mtx_inv[10];
+					int frobenius;
+
+					if (f_v) {
+						cout << "projective_space_activity::classify_quartic_curves before PA->P->reverse_engineer_semilinear_map" << endl;
+					}
+					PA->P->reverse_engineer_semilinear_map(
+						gamma, Mtx, frobenius,
+						0 /*verbose_level*/);
+					if (f_v) {
+						cout << "projective_space_activity::classify_quartic_curves after PA->P->reverse_engineer_semilinear_map" << endl;
+					}
+
+					Mtx[9] = frobenius;
+
+					PA->A->make_element(Elt, Mtx, 0 /* verbose_level*/);
+
+					if (f_v) {
+						cout << "The isomorphism from C to C1 is given by:" << endl;
+						PA->A->element_print(Elt, cout);
+					}
+
+
+
+					int frobenius_inv;
+
+					frobenius_inv = NT.int_negate(Mtx[3 * 3], PA->F->e);
+
+
+					PA->F->matrix_inverse(Mtx, Mtx_inv, 3, 0 /* verbose_level*/);
+
+					if (f_v) {
+						cout << "projective_space_activity::classify_quartic_curves before substitute_semilinear" << endl;
+					}
+					Poly4_x123->substitute_semilinear(C->eqn /* coeff_in */, eqn2 /* coeff_out */,
+						PA->A->is_semilinear_matrix_group(), frobenius, Mtx, 0/*verbose_level*/);
+					if (f_v) {
+						cout << "projective_space_activity::classify_quartic_curves after substitute_semilinear" << endl;
+					}
+
+					PA->F->PG_element_normalize_from_front(eqn2, 1, Poly4_x123->get_nb_monomials());
+
+
+					if (f_v) {
+						cout << "The mapped equation is:";
+						Poly4_x123->print_equation_simple(cout, eqn2);
+						cout << endl;
+					}
+
+
+
+
+					int idx2;
+
+					if (!C1->Orb->search_equation(eqn2 /*new_object */, idx2, TRUE)) {
+						// need to map points and bitangents under gamma:
+						if (f_v) {
+							cout << "we found the canonical form but we did not find the equation at idx1=" << idx1 << endl;
+						}
+
+
+					}
+					else {
+						if (f_v) {
+							cout << "After search_and_add_if_new, cnt = " << cnt << " row = " << row << " We found the canonical form and the equation at idx2 " << idx2 << ", idx1=" << idx1 << endl;
+						}
+						found_at = idx1;
+						break;
+					}
+
+
+				}
+
+
+				if (found_at == -1) {
+
+					if (f_v) {
+						cout << "we found the canonical form but we did not find the equation" << endl;
+					}
+
+					long int *pts2;
+					//int nb_pts;
+					long int *bitangents2;
+					//int nb_bitangents;
+					int i;
+
+					pts2 = NEW_lint(nb_pts);
+					bitangents2 = NEW_lint(nb_bitangents);
+
+					for (i = 0; i < nb_pts; i++) {
+						pts2[i] = PA->A->element_image_of(pts[i], Elt, 0 /* verbose_level */);
+					}
+					for (i = 0; i < nb_bitangents; i++) {
+						bitangents2[i] = PA->A_on_lines->element_image_of(bitangents[i], Elt, 0 /* verbose_level */);
+					}
+
+					canonical_form *C2;
+					longinteger_object go;
+
+
+					C2 = NEW_OBJECT(canonical_form);
+
+					if (f_v) {
+						cout << "we recompute the quartic curve from the canonical equation." << endl;
+					}
+					if (f_v) {
+						cout << "projective_space_activity::classify_quartic_curves before C2->quartic_curve" << endl;
+					}
+					C2->quartic_curve(
+							PA,
+							Poly4_x123,
+							AonHPD,
+							row, eqn2, sz,
+							pts2, nb_pts,
+							bitangents2, nb_bitangents,
+							verbose_level);
+					if (f_v) {
+						cout << "projective_space_activity::classify_quartic_curves after C2->quartic_curve" << endl;
+					}
+
+					if (f_v) {
+						cout << "After search_and_add_if_new, adding at " << idx << endl;
+					}
+					CB->add_at_idx(C2->Canonical_form->get_data(), C2 /* void *extra_data */, idx, 0 /* verbose_level*/);
+
+
+				} // if (found_at == -1)
+				else {
+					if (f_v) {
+						cout << "we found the equation at found_at = " << found_at << endl;
+					}
+
+				}
+
+			} // if f_found
+
+			FREE_lint(alpha);
+			FREE_int(gamma);
+
+		} // next row
+
+
+	} // next cnt
+
+	cout << "The number of types of canonical forms is " << CB->nb_types << endl;
 
 	FREE_OBJECT(Poly4_x123);
 	FREE_OBJECT(AonHPD);
+
+	FREE_int(eqn2);
+	FREE_int(Elt);
+
 
 	if (f_v) {
 		cout << "projective_space_activity::classify_quartic_curves done" << endl;
@@ -972,141 +1272,6 @@ void projective_space_activity::classify_quartic_curves(
 }
 
 
-void projective_space_activity::process_quartic_curve(
-		projective_space_with_action *PA,
-		homogeneous_polynomial_domain *Poly4_x123,
-		action_on_homogeneous_polynomials *AonHPD,
-		int idx, int *eqn, int sz,
-		long int *Pts_on_curve, int sz_curve,
-		long int *bitangents, int nb_bitangents,
-		canonical_form *&C,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-
-	if (f_v) {
-		cout << "projective_space_activity::process_quartic_curve" << endl;
-	}
-
-	C = NEW_OBJECT(canonical_form);
-
-	C->idx = idx;
-	C->eqn = eqn;
-	C->sz = sz;
-	C->Pts_on_curve = Pts_on_curve;
-	C->sz_curve = sz_curve;
-	C->bitangents = bitangents;
-	C->nb_bitangents = nb_bitangents;
-
-
-	//strong_generators *SG_pt_stab = NULL;
-	longinteger_object pt_stab_order;
-	object_in_projective_space *OiP = NULL;
-
-	int f_compute_canonical_form = TRUE;
-	//bitvector *Canonical_form;
-	//long int *canonical_labeling = NULL;
-	//int canonical_labeling_len;
-
-
-	OiP = NEW_OBJECT(object_in_projective_space);
-
-	if (f_v) {
-		cout << "projective_space_activity::process_quartic_curve before OiP->init_point_set" << endl;
-	}
-	OiP->init_point_set(PA->P,
-			Pts_on_curve, sz_curve,
-			verbose_level - 1);
-	if (f_v) {
-		cout << "projective_space_activity::process_quartic_curve after OiP->init_point_set" << endl;
-	}
-
-	int nb_rows, nb_cols;
-
-	OiP->encoding_size(
-				nb_rows, nb_cols,
-				verbose_level);
-	if (f_v) {
-		cout << "projective_space_activity::process_quartic_curve nb_rows = " << nb_rows << endl;
-		cout << "projective_space_activity::process_quartic_curve nb_cols = " << nb_cols << endl;
-	}
-
-	C->canonical_labeling = NEW_lint(nb_rows + nb_cols);
-
-	if (f_v) {
-		cout << "projective_space_activity::process_quartic_curve before Surf_A->PA->PA2->set_stabilizer_of_object" << endl;
-	}
-	C->SG_pt_stab = PA->set_stabilizer_of_object(
-		OiP,
-		f_compute_canonical_form, C->Canonical_form,
-		C->canonical_labeling, C->canonical_labeling_len,
-		verbose_level);
-	if (f_v) {
-		cout << "projective_space_activity::process_quartic_curve after Surf_A->PA->PA2->set_stabilizer_of_object" << endl;
-	}
-
-
-	C->SG_pt_stab->group_order(pt_stab_order);
-	if (f_v) {
-		cout << "projective_space_activity::process_quartic_curve "
-				"pt_stab_order = " << pt_stab_order << endl;
-	}
-
-	FREE_OBJECT(OiP);
-	//FREE_lint(canonical_labeling);
-
-
-
-
-
-	// compute the orbit of the equation under the stabilizer of the set of points:
-
-
-	//orbit_of_equations *Orb;
-
-	C->Orb = NEW_OBJECT(orbit_of_equations);
-
-
-#if 1
-	if (f_v) {
-		cout << "projective_space_activity::process_quartic_curve "
-				"before Orb->init" << endl;
-	}
-	C->Orb->init(PA->A, PA->F,
-		AonHPD,
-		C->SG_pt_stab /* A->Strong_gens*/, eqn,
-		verbose_level);
-	if (f_v) {
-		cout << "projective_space_activity::process_quartic_curve "
-				"after Orb->init" << endl;
-		cout << "projective_space_activity::process_quartic_curve found an orbit of length " << C->Orb->used_length << endl;
-	}
-
-
-
-
-	if (f_v) {
-		cout << "projective_space_activity::process_quartic_curve "
-				"before Orb->stabilizer_orbit_rep" << endl;
-	}
-	C->Stab_gens_quartic = C->Orb->stabilizer_orbit_rep(
-			pt_stab_order, verbose_level);
-	if (f_v) {
-		cout << "projective_space_activity::process_quartic_curve "
-				"after Orb->stabilizer_orbit_rep" << endl;
-	}
-	C->Stab_gens_quartic->print_generators_tex(cout);
-#endif
-
-	//FREE_OBJECT(SG_pt_stab);
-	//FREE_OBJECT(Orb);
-
-
-	if (f_v) {
-		cout << "projective_space_activity::process_quartic_curve done" << endl;
-	}
-}
 
 
 

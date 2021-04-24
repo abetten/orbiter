@@ -231,6 +231,14 @@ void sims::print_generators_tex(ostream &ost)
 {
 	int i, j, nbg, nbg1, gen_idx, cnt, f_first;
 
+	ost << "basic orbits: ";
+	for (i = 0; i < A->base_len(); i++) {
+		ost << orbit_len[i];
+		if (i < A->base_len() - 1) {
+			ost << ", ";
+		}
+	}
+	ost << "\\\\" << endl;
 	ost << "\\begin{align*}" << endl;
 	cnt = 0;
 	f_first = TRUE;
@@ -245,18 +253,17 @@ void sims::print_generators_tex(ostream &ost)
 			if ((cnt % 3) == 0) {
 				if (!f_first) {
 					ost << "\\\\" << endl;
-					}
-				ost << "&" << endl;
 				}
+				ost << "&" << endl;
+			}
 			A->element_print_latex(gens.ith(gen_idx), ost);
 			cnt++;
 			f_first = FALSE;
 			if (j < nbg - 1) {
 				ost << ", \\; " << endl;
-				}
 			}
-		ost << ";_{" << orbit_len[i] << "}" << endl;
 		}
+	}
 	ost << "\\end{align*}" << endl;
 }
 

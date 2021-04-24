@@ -170,7 +170,7 @@ void orbit_of_equations::print_orbit()
 		cout << i << " : ";
 		Orbiter->Int_vec.print(cout, Equations[i] + 1, nb_monomials);
 		cout << " : ";
-		AonHPD->HPD->print_equation(cout, Equations[i] + 1);
+		//AonHPD->HPD->print_equation(cout, Equations[i] + 1);
 		if (f_has_print_function) {
 			(*print_function)(Equations[i], sz, print_function_data);
 		}
@@ -247,7 +247,7 @@ void orbit_of_equations::compute_orbit(int *coeff, int verbose_level)
 				cout << "orbit_of_equations::compute_orbit  "
 						"before search_data" << endl;
 			}
-			if (search_data(new_object, idx)) {
+			if (search_data(new_object, idx, FALSE)) {
 				if (f_vvv) {
 					cout << "orbit_of_equations::compute_orbit "
 							"image object is already in the list, "
@@ -446,7 +446,7 @@ void orbit_of_equations::get_random_schreier_generator(
 
 	map_an_equation(cur_object, new_object, E2, 0 /* verbose_level*/);
 
-	if (search_data(new_object, pt2)) {
+	if (search_data(new_object, pt2, FALSE)) {
 		if (f_vv) {
 			cout << "n e w object is at position " << pt2 << endl;
 		}
@@ -464,7 +464,7 @@ void orbit_of_equations::get_random_schreier_generator(
 
 	// test:
 	map_an_equation(cur_object, new_object, E5, 0 /* verbose_level*/);
-	if (search_data(new_object, pt3)) {
+	if (search_data(new_object, pt3, FALSE)) {
 		if (f_vv) {
 			cout << "testing: n e w object is at position " << pt3 << endl;
 		}
@@ -701,23 +701,86 @@ strong_generators *orbit_of_equations::stabilizer_any_point(
 }
 
 
-
-
-int orbit_of_equations::search_data(int *data, int &idx)
+int orbit_of_equations::search_equation(int *eqn, int &idx, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	sorting Sorting;
 	int p[1];
 	p[0] = sz_for_compare;
+	int ret;
+	int *data;
 
+	if (f_v) {
+		cout << "orbit_of_equations::search_data" << endl;
+	}
+	if (f_v) {
+		cout << "The equation is:";
+		AonHPD->HPD->print_equation_simple(cout, eqn);
+		cout << endl;
+	}
+	data = NEW_int(sz_for_compare);
+	data[0] = 0;
+	Orbiter->Int_vec.copy(eqn, data + 1, AonHPD->HPD->get_nb_monomials());
 	if (Sorting.vec_search((void **)Equations,
 			orbit_of_equations_compare_func,
 			p,
-		used_length, data, idx, 0 /* verbose_level */)) {
-		return TRUE;
+			used_length, data, idx,
+			0 /* verbose_level */)) {
+		if (f_v) {
+			cout << "orbit_of_equations::search_data we found the equation at " << idx << endl;
+		}
+		ret = TRUE;
 	}
 	else {
-		return FALSE;
+		if (f_v) {
+			cout << "orbit_of_equations::search_data we did not find the equation" << endl;
+		}
+		ret = FALSE;
 	}
+	if (f_v) {
+		cout << "orbit_of_equations::search_data done" << endl;
+	}
+	FREE_int(data);
+	return ret;
+}
+
+
+int orbit_of_equations::search_data(int *data, int &idx, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	sorting Sorting;
+	int p[1];
+	p[0] = sz_for_compare;
+	int ret;
+
+	if (f_v) {
+		cout << "orbit_of_equations::search_data" << endl;
+	}
+	if (f_v) {
+		cout << "The data set is:";
+		Orbiter->Int_vec.print(cout, data, sz_for_compare);
+		cout << endl;
+	}
+	if (Sorting.vec_search((void **)Equations,
+			orbit_of_equations_compare_func,
+			p,
+			used_length, data, idx,
+			0 /* verbose_level */)) {
+		if (f_v) {
+			cout << "orbit_of_equations::search_data we found the equation at " << idx << endl;
+		}
+		ret = TRUE;
+	}
+	else {
+		if (f_v) {
+			cout << "orbit_of_equations::search_data we did not find the equation" << endl;
+		}
+		ret = FALSE;
+	}
+	if (f_v) {
+		cout << "orbit_of_equations::search_data done" << endl;
+	}
+	return ret;
 }
 
 void orbit_of_equations::save_csv(std::string &fname, int verbose_level)

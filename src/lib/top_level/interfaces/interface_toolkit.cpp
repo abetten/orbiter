@@ -73,6 +73,9 @@ interface_toolkit::interface_toolkit()
 	loop_step = 0;
 	loop_argv = NULL;
 
+	f_plot_function = FALSE;
+	//std::string plot_function_fname;
+
 
 }
 
@@ -114,6 +117,9 @@ void interface_toolkit::print_help(int argc,
 	else if (stringcmp(argv[i], "-loop") == 0) {
 		cout << "-loop <string : variable> <string : logfile_mask> <int : from> <int : to> <int : step> <arguments> -loop_end" << endl;
 	}
+	else if (stringcmp(argv[i], "-plot_function") == 0) {
+		cout << "-plot_function <string : fname_csv>" << endl;
+	}
 }
 
 int interface_toolkit::recognize_keyword(int argc,
@@ -153,6 +159,9 @@ int interface_toolkit::recognize_keyword(int argc,
 		return true;
 	}
 	else if (stringcmp(argv[i], "-loop") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-plot_function") == 0) {
 		return true;
 	}
 	return false;
@@ -281,6 +290,11 @@ void interface_toolkit::read_arguments(int argc,
 		}
 		cout << endl;
 
+	}
+	else if (stringcmp(argv[i], "-plot_function") == 0) {
+		f_plot_function = TRUE;
+		plot_function_fname.assign(argv[++i]);
+		cout << "-plot_function " << plot_function_fname << endl;
 	}
 	if (f_v) {
 		cout << "interface_toolkit::read_arguments done" << endl;
@@ -464,6 +478,36 @@ void interface_toolkit::worker(int verbose_level)
 
 			delete [] argv2;
 		}
+
+	}
+	else if (f_plot_function) {
+		file_io Fio;
+		string_tools ST;
+		int *T;
+		int *M;
+		int m1, n1, n, x, y;
+
+		Fio.int_matrix_read_csv(plot_function_fname, T, m1, n1, verbose_level);
+
+
+		n = m1 * n1;
+
+		M = NEW_int(n * n);
+		Orbiter->Int_vec.zero(M, n * n);
+
+
+		for (x = 0; x < n; x++) {
+
+			y = T[x];
+			M[(n - 1 - y) * n + x] = 1;
+		}
+		string fname;
+
+		fname.assign(plot_function_fname);
+		ST.chop_off_extension(fname);
+		fname.append("_graph.csv");
+		Fio.int_matrix_write_csv(fname, M, n, n);
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 	}
 

@@ -1433,11 +1433,17 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 
 	if (f_vv) {
 		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
-				"we are now creating the group" << endl;
+				"before A_linear->create_sims_from_generators_with_target_group_order" << endl;
 		}
 
 	S = A_linear->create_sims_from_generators_with_target_group_order(
 		gens1, ago, 0 /*verbose_level*/);
+
+	if (f_vv) {
+		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
+				"after A_linear->create_sims_from_generators_with_target_group_order" << endl;
+		}
+
 
 	S->group_order(go);
 
@@ -1491,7 +1497,7 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 
 
 	if (f_v) {
-		cout << "nauty_interface_with_group::set_stabilizer_of_object "
+		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
 				"before initializing strong generators" << endl;
 		}
 
@@ -1500,7 +1506,7 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 	FREE_OBJECT(S);
 
 	if (f_v) {
-		cout << "nauty_interface_with_group::set_stabilizer_of_object "
+		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
 				"after initializing strong generators" << endl;
 		}
 

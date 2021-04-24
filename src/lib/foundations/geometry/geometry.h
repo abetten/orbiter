@@ -2086,6 +2086,10 @@ public:
 	void planes_through_a_line(
 		long int line_rk, std::vector<long int> &plane_ranks,
 		int verbose_level);
+	int reverse_engineer_semilinear_map(
+		int *Elt, int *Mtx, int &frobenius,
+		int verbose_level);
+
 };
 
 // #############################################################################
