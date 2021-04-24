@@ -905,22 +905,6 @@ void sorting::quicksort_array_with_perm(int len, void **v, int *perm,
 	quicksort(v, perm, compare_func, data, 0, len - 1);
 }
 
-#if 0
-void sorting::int_vec_sort(int len, int *p)
-{
-	int i, j, a;
-	for (i = 0; i < len; i++) {
-		for (j = i + 1; j < len; j++) {
-			if (p[i] > p[j]) {
-				a = p[i];
-				p[i] = p[j];
-				p[j] = a;
-				}
-			}
-		}
-}
-#endif
-
 int sorting::vec_search(void **v,
 	int (*compare_func)(void *a, void *b, void *data),
 	void *data_for_compare,

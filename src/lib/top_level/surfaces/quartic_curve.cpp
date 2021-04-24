@@ -140,7 +140,7 @@ void quartic_curve::init(surface_object_with_action *SOA, int verbose_level)
 	}
 }
 
-void quartic_curve::quartic(int pt_orbit, int verbose_level)
+void quartic_curve::quartic(std::string &surface_prefix, int pt_orbit, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	sorting Sorting;
@@ -378,8 +378,9 @@ void quartic_curve::quartic(int pt_orbit, int verbose_level)
 	char str[1000];
 
 	sprintf(str, "_orb%d", pt_orbit);
-	fname_base.assign("quartic");
+	fname_base.assign(surface_prefix);
 	fname_base.append(str);
+	fname_base.append("_quartic");
 
 	if (f_v) {
 		cout << "quartic_curve::quartic "
@@ -745,6 +746,7 @@ void quartic_curve::compute_stabilizer(int verbose_level)
 }
 
 void quartic_curve::cheat_sheet_quartic_curve(
+		std::string &surface_prefix,
 		std::ostream &ost,
 		std::ostream &ost_curves,
 	int verbose_level)
@@ -1014,11 +1016,14 @@ void quartic_curve::cheat_sheet_quartic_curve(
 	string fname_base;
 	char str[1000];
 
-	sprintf(str, "_orb%d", pt_orbit);
-	fname_base.assign("quartic");
-	fname_base.append(str);
 	string fname_row_scheme;
 	string fname_col_scheme;
+
+
+	sprintf(str, "_orb%d", pt_orbit);
+	fname_base.assign(surface_prefix);
+	fname_base.append(str);
+	fname_base.append("_quartic");
 
 
 

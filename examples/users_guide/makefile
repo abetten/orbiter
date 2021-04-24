@@ -717,6 +717,13 @@ sqrt_5_mod_19:
 		$(ORBITER_PATH)/orbiter.out -v 2 -square_root_mod 5 19 
 
 
+draw_mod_8:
+		$(ORBITER_PATH)/orbiter.out -v 2 -draw_options -embedded -end \
+			-draw_mod_n -n 8 -file mod_8  -end
+			pdflatex mod_8_draw.tex
+			open mod_8_draw.pdf
+
+
 draw_mod_13:
 		$(ORBITER_PATH)/orbiter.out -v 2 -draw_options -embedded -end \
 			-draw_mod_n -n 13 -file mod_13 -power_cycle 2 -end
@@ -6089,6 +6096,110 @@ F_alpha_beta_gamma_delta_sweep_4_classify_q7:
 	open surface_15_lines_q7_classification.pdf
 
 
+F_alpha_beta_gamma_delta_q7_recognize:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-draw_options -end \
+		-define F -finite_field -q 49 -end \
+		-define P -projective_space 3 F \
+		-with P -do \
+		-projective_space_activity \
+			-classify_surfaces_with_double_sixes Surf -W -end \
+		-end \
+		-with Surf -do \
+		-classification_of_cubic_surfaces_with_double_sixes_activity \
+			-recognize \
+				-q 49 \
+				-by_equation "F_alpha_beta_gamma_delta" \
+					"\DF_{\alpha,\beta,\gamma,\delta}\D" "x0,x1,x2,x3" \
+					$(F_ALPHA_BETA_GAMMA_DELTA) \
+					"alpha=2,beta=1,gamma=1,delta=2" \
+					"\D\alpha=2,\beta=1,\gamma=1,\delta=2\D" \
+				-end \
+			-end \
+		-end \
+		-with Surf -do \
+		-classification_of_cubic_surfaces_with_double_sixes_activity \
+			-recognize \
+				-q 49 \
+				-by_equation "F_alpha_beta_gamma_delta" \
+					"\DF_{\alpha,\beta,\gamma,\delta}\D" "x0,x1,x2,x3" \
+					$(F_ALPHA_BETA_GAMMA_DELTA) \
+					"alpha=2,beta=1,gamma=2,delta=2" \
+					"\D\alpha=2,\beta=1,\gamma=2,\delta=2\D" \
+				-end \
+			-end \
+		-end \
+		-with Surf -do \
+		-classification_of_cubic_surfaces_with_double_sixes_activity \
+			-recognize \
+				-q 49 \
+				-by_equation "F_alpha_beta_gamma_delta" \
+					"\DF_{\alpha,\beta,\gamma,\delta}\D" "x0,x1,x2,x3" \
+					$(F_ALPHA_BETA_GAMMA_DELTA) \
+					"alpha=2,beta=1,gamma=5,delta=2" \
+					"\D\alpha=2,\beta=1,\gamma=5,\delta=2\D" \
+				-end \
+			-end \
+		-end \
+		-with Surf -do \
+		-classification_of_cubic_surfaces_with_double_sixes_activity \
+			-recognize \
+				-q 49 \
+				-by_equation "F_alpha_beta_gamma_delta" \
+					"\DF_{\alpha,\beta,\gamma,\delta}\D" "x0,x1,x2,x3" \
+					$(F_ALPHA_BETA_GAMMA_DELTA) \
+					"alpha=2,beta=1,gamma=1,delta=3" \
+					"\D\alpha=2,\beta=1,\gamma=1,\delta=3\D" \
+				-end \
+			-end \
+		-end \
+		-with Surf -do \
+		-classification_of_cubic_surfaces_with_double_sixes_activity \
+			-recognize \
+				-q 49 \
+				-by_equation "F_alpha_beta_gamma_delta" \
+					"\DF_{\alpha,\beta,\gamma,\delta}\D" "x0,x1,x2,x3" \
+					$(F_ALPHA_BETA_GAMMA_DELTA) \
+					"alpha=2,beta=1,gamma=2,delta=3" \
+					"\D\alpha=2,\beta=1,\gamma=2,\delta=3\D" \
+				-end \
+			-end \
+		-end \
+		-with Surf -do \
+		-classification_of_cubic_surfaces_with_double_sixes_activity \
+			-recognize \
+				-q 49 \
+				-by_equation "F_alpha_beta_gamma_delta" \
+					"\DF_{\alpha,\beta,\gamma,\delta}\D" "x0,x1,x2,x3" \
+					$(F_ALPHA_BETA_GAMMA_DELTA) \
+					"alpha=2,beta=1,gamma=4,delta=3" \
+					"\D\alpha=2,\beta=1,\gamma=4,\delta=3\D" \
+				-end \
+			-end \
+		-end \
+
+
+
+iso0_rec_q49:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-draw_options  -end \
+		-define F -finite_field -q 49 -end \
+		-define P -projective_space 3 F \
+		-with P -do \
+		-projective_space_activity \
+			-classify_surfaces_with_double_sixes Surf27 -W -end \
+		-end \
+		-with Surf27 -do \
+		-classification_of_cubic_surfaces_with_double_sixes_activity \
+			-recognize \
+				-q 49 \
+				-by_coefficients "2,5,1,16,4,10,1,18,4,8,4,9,3,11,4,14" \
+				-end \
+			-end \
+		-end \
+		-print_symbols
+
+
 
 
 McKean_15lines_q7:
@@ -6206,6 +6317,10 @@ quartic_curves_q13:
 		open surface_catalogue_q13_iso0_quartics.pdf
 		pdflatex surface_catalogue_q13_iso1_quartics.tex
 		open surface_catalogue_q13_iso1_quartics.pdf
+		pdflatex surface_catalogue_q13_iso2_quartics.tex
+		open surface_catalogue_q13_iso2_quartics.pdf
+		pdflatex surface_catalogue_q13_iso3_quartics.tex
+		open surface_catalogue_q13_iso3_quartics.pdf
 		#pdflatex surface_catalogue_q13_iso0_report.tex
 		#open surface_catalogue_q13_iso0_report.pdf
 
@@ -6217,7 +6332,7 @@ quartic_curves_q13_classify:
 		-define P -projective_space 2 F \
 		-with P -do \
 		-projective_space_activity \
-			-classify_quartic_curves surface_catalogue_q13_iso%d_quartics.csv 4 \
+			-classify_quartic_curves surface_catalogue_q13_iso%d_quartics.csv 3 \
 		-end \
 		-print_symbols \
 
@@ -6329,7 +6444,7 @@ quartic_curve_13_0_canonical:
 
 # group order 24
 
-surface_13_0:
+surface_13_0_quartics:
 	$(ORBITER_PATH)/orbiter.out -v 3 \
 		-draw_options -end \
 		-define F -finite_field -q 13 -end \
@@ -6347,7 +6462,7 @@ surface_13_0:
 	open surface_catalogue_q13_iso0_quartics.pdf
 
 
-surface_13_1:
+surface_13_1_quartics:
 	$(ORBITER_PATH)/orbiter.out -v 3 \
 		-draw_options -end \
 		-define F -finite_field -q 13 -end \
@@ -8250,6 +8365,22 @@ all_square_roots_mod_n_1549411:
 	
 
 
+power_mod_211:
+	$(ORBITER_PATH)/orbiter.out -v 3 -power_mod_n 2 211
+	$(ORBITER_PATH)/orbiter.out -v 3 -plot_function power_mod_n_a2_n211.csv
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file power_mod_n_a2_n211_graph.csv -box_width 10 -depth 8  -partition 3 211 211 -end
+
+power_mod_2_31:
+	$(ORBITER_PATH)/orbiter.out -v 3 -power_mod_n 2 31
+	$(ORBITER_PATH)/orbiter.out -v 3 -plot_function power_mod_n_a2_n31.csv
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file power_mod_n_a2_n31_graph.csv -box_width 10 -depth 8  -partition 3 31 31 -end
+
+power_mod_3_31:
+	$(ORBITER_PATH)/orbiter.out -v 3 -power_mod_n 3 31
+	$(ORBITER_PATH)/orbiter.out -v 3 -plot_function power_mod_n_a3_n31.csv
+	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file power_mod_n_a3_n31_graph.csv -box_width 10 -depth 8  -partition 3 31 31 -end
+
+
 #############################################################################################################
 # Section 45: Coding Theory
 
@@ -8267,7 +8398,7 @@ Hamming_4_2:
 
 
 code_5_2_3_diagram:
-	- $(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "code_5_2_3" \
+	$(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "code_5_2_3" \
 		$(CODE_5_2_3_CODEWORDS) 5 -metric_balls 1
 	$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix -input_csv_file code_5_2_3_diagram_01_5_4.csv \
 		-box_width 25 -depth 24  -partition 4 8 4 -end
@@ -8335,6 +8466,9 @@ code_6:
 # 110010
 # 101001
 
+H_6_diagram:
+	$(ORBITER_PATH)/orbiter.out -v 2 -code_diagram "H6" \
+		"" 6 
 
 
 
@@ -11259,7 +11393,7 @@ PG_3_5_3B_long:
 
 #-rw-r--r--    1 betten  staff   16433357 Apr  6 10:04 PG_3_5_regular_spreads_3B_PGL_4_5_Subgroup_3B_3_reg_spreads_fpc0.graph
 #-rw-r--r--    1 betten  staff         36 Apr  6 10:04 PG_3_5_regular_spreads_3B_PGL_4_5_Subgroup_3B_3_reg_spreads_fixp_graph_cliques_count.csv
-#-rw-r--r--    1 betten  staff        122 Apr  6 10:04 PG_3_5_regular_spreads_3B_PGL_4_5_Subgroup_3B_3_reg_spreads_fixp_graph_cliques_packings.csv
+#-rw-r--r--    1 betten  staff        122 Apr  6 10:04 G PG_3_5_regular_spreads_3B_PGL_4_5_Subgroup_3B_3_reg_spreads_fixp_graph_cliques_packings.csv 
 
 
 
@@ -11778,7 +11912,7 @@ tournament_classify_4:
 
 
 graph_classify_8_r3:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
+	$(ORBITER_PATH)/orbiter.out -v 3 \
 		-define GC -graph_classification \
 			-n 8 -regular 3 \
 			-poset_classification_control \
@@ -11792,18 +11926,20 @@ graph_classify_8_r3:
 			-draw_graphs_at_level 12 \
 		-end \
 		-print_symbols
-	pdflatex graphs_v8_r3_rep_12_0.tex
-	open graphs_v8_r3_rep_12_0.pdf
-	pdflatex graphs_v8_r3_rep_12_1.tex
-	open graphs_v8_r3_rep_12_1.pdf
-	pdflatex graphs_v8_r3_rep_12_2.tex
-	open graphs_v8_r3_rep_12_2.pdf
-	pdflatex graphs_v8_r3_rep_12_3.tex
-	open graphs_v8_r3_rep_12_3.pdf
-	pdflatex graphs_v8_r3_rep_12_4.tex
-	open graphs_v8_r3_rep_12_4.pdf
-	pdflatex graphs_v8_r3_rep_12_5.tex
-	open graphs_v8_r3_rep_12_5.pdf
+	pdflatex graphs_v8_r3_poset_lvl_12.tex
+	open graphs_v8_r3_poset_lvl_12.pdf
+	#pdflatex graphs_v8_r3_rep_12_0.tex
+	#open graphs_v8_r3_rep_12_0.pdf
+	#pdflatex graphs_v8_r3_rep_12_1.tex
+	#open graphs_v8_r3_rep_12_1.pdf
+	#pdflatex graphs_v8_r3_rep_12_2.tex
+	#open graphs_v8_r3_rep_12_2.pdf
+	#pdflatex graphs_v8_r3_rep_12_3.tex
+	#open graphs_v8_r3_rep_12_3.pdf
+	#pdflatex graphs_v8_r3_rep_12_4.tex
+	#open graphs_v8_r3_rep_12_4.pdf
+	#pdflatex graphs_v8_r3_rep_12_5.tex
+	#open graphs_v8_r3_rep_12_5.pdf
 
 
 

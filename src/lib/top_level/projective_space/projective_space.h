@@ -52,6 +52,14 @@ public:
 
 	canonical_form();
 	~canonical_form();
+	void quartic_curve(
+			projective_space_with_action *PA,
+			homogeneous_polynomial_domain *Poly4_x123,
+			action_on_homogeneous_polynomials *AonHPD,
+			int idx, int *eqn, int sz,
+			long int *Pts_on_curve, int sz_curve,
+			long int *bitangents, int nb_bitangents,
+			int verbose_level);
 
 };
 
@@ -281,15 +289,6 @@ public:
 	void classify_quartic_curves(
 			projective_space_with_action *PA,
 			std::string &fname_mask, int nb,
-			int verbose_level);
-	void process_quartic_curve(
-			projective_space_with_action *PA,
-			homogeneous_polynomial_domain *Poly4_x123,
-			action_on_homogeneous_polynomials *AonHPD,
-			int idx, int *eqn, int sz,
-			long int *Pts_on_curve, int sz_curve,
-			long int *bitangents, int nb_bitangents,
-			canonical_form *&C,
 			int verbose_level);
 
 

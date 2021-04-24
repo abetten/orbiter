@@ -584,12 +584,14 @@ public:
 	quartic_curve();
 	~quartic_curve();
 	void init(surface_object_with_action *SOA, int verbose_level);
-	void quartic(int pt_orbit, int verbose_level);
+	void quartic(std::string &surface_prefix, int pt_orbit, int verbose_level);
 	void compute_quartic(int pt_orbit,
 		int *equation, long int *Lines, int nb_lines,
 		int verbose_level);
 	void compute_stabilizer(int verbose_level);
-	void cheat_sheet_quartic_curve(std::ostream &ost,
+	void cheat_sheet_quartic_curve(
+			std::string &surface_prefix,
+			std::ostream &ost,
 			std::ostream &ost_curves,
 		int verbose_level);
 
@@ -1239,7 +1241,9 @@ public:
 			std::string &label,
 			std::string &label_tex,
 			int verbose_level);
-	void all_quartic_curves(std::ostream &ost,
+	void all_quartic_curves(
+			std::string &surface_prefix,
+			std::ostream &ost,
 			std::ostream &ost_quartics,
 			std::ostream &ost_quartics_csv,
 			int verbose_level);

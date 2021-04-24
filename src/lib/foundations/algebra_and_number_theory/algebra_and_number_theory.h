@@ -198,6 +198,7 @@ public:
 
 
 	void order_of_q_mod_n(int q, int n_min, int n_max, int verbose_level);
+	void power_mod_n(int a, int n, int verbose_level);
 
 };
 
@@ -718,6 +719,7 @@ public:
 	void print_monomial_str(std::stringstream &ost, int i);
 	void print_monomial_latex_str(std::stringstream &ost, int i);
 	void print_equation(std::ostream &ost, int *coeffs);
+	void print_equation_simple(std::ostream &ost, int *coeffs);
 	void print_equation_tex(std::ostream &ost, int *coeffs);
 	void print_equation_numerical(std::ostream &ost, int *coeffs);
 	void print_equation_lint(std::ostream &ost, long int *coeffs);

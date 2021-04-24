@@ -809,7 +809,7 @@ void homogeneous_polynomial_domain::print_monomial_latex(std::string &s, int i)
 }
 
 
-void homogeneous_polynomial_domain::print_monomial_str(stringstream &ost, int i)
+void homogeneous_polynomial_domain::print_monomial_str(std::stringstream &ost, int i)
 {
 	int j, a, f_first = TRUE;
 
@@ -832,7 +832,7 @@ void homogeneous_polynomial_domain::print_monomial_str(stringstream &ost, int i)
 }
 
 
-void homogeneous_polynomial_domain::print_monomial_latex_str(stringstream &ost, int i)
+void homogeneous_polynomial_domain::print_monomial_latex_str(std::stringstream &ost, int i)
 {
 	int j, a;
 
@@ -848,7 +848,7 @@ void homogeneous_polynomial_domain::print_monomial_latex_str(stringstream &ost, 
 	}
 }
 
-void homogeneous_polynomial_domain::print_equation(ostream &ost, int *coeffs)
+void homogeneous_polynomial_domain::print_equation(std::ostream &ost, int *coeffs)
 {
 	int i, c;
 	int f_first = TRUE;
@@ -873,7 +873,14 @@ void homogeneous_polynomial_domain::print_equation(ostream &ost, int *coeffs)
 	}
 }
 
-void homogeneous_polynomial_domain::print_equation_tex(ostream &ost, int *coeffs)
+void homogeneous_polynomial_domain::print_equation_simple(std::ostream &ost, int *coeffs)
+{
+
+	Orbiter->Int_vec.print_fully(cout, coeffs, nb_monomials);
+}
+
+
+void homogeneous_polynomial_domain::print_equation_tex(std::ostream &ost, int *coeffs)
 {
 	int i, c;
 	int f_first = TRUE;

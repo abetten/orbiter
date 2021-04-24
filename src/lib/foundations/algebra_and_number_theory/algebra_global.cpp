@@ -1925,5 +1925,68 @@ void algebra_global::order_of_q_mod_n(int q, int n_min, int n_max, int verbose_l
 }
 
 
+void algebra_global::power_mod_n(int a, int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::power_mod_n" << endl;
+	}
+	{
+		char str[1000];
+		string fname;
+
+		snprintf(str, 1000, "power_mod_n_a%d_n%d.csv", a, n);
+		fname.assign(str);
+
+
+		{
+			ofstream ost(fname);
+			number_theory_domain NT;
+
+			if (f_v) {
+				cout << "algebra_global::power_mod_n computing powers" << endl;
+			}
+			//report(ost, verbose_level);
+
+			int row, k;
+			long int b;
+
+			row = 0;
+
+			ost << "ROW,A_POWER_K" << endl;
+			for (k = 0; k < n; k++) {
+
+				b = NT.power_mod(a, k, n);
+
+				ost << row;
+				ost << "," << b;
+				ost << endl;
+				row++;
+			}
+			ost << "END" << endl;
+
+			if (f_v) {
+				cout << "algebra_global::power_mod_n writing csv file" << endl;
+			}
+
+
+		}
+		file_io Fio;
+
+		cout << "algebra_global::power_mod_n written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "algebra_global::power_mod_n done" << endl;
+	}
+}
+
+
+
 }}
 

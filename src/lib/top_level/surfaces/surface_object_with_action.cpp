@@ -1653,7 +1653,9 @@ void surface_object_with_action::investigate_surface_and_write_report2(
 	}
 }
 
-void surface_object_with_action::all_quartic_curves(std::ostream &ost,
+void surface_object_with_action::all_quartic_curves(
+		std::string &surface_prefix,
+		std::ostream &ost,
 		std::ostream &ost_quartics,
 		std::ostream &ost_quartics_csv,
 		int verbose_level)
@@ -1661,7 +1663,7 @@ void surface_object_with_action::all_quartic_curves(std::ostream &ost,
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "surface_object_with_action::all_quartic_curves" << endl;
+		cout << "surface_object_with_action::all_quartic_curves surface_prefix=" << surface_prefix << endl;
 	}
 	int pt_orbit;
 
@@ -1682,7 +1684,7 @@ void surface_object_with_action::all_quartic_curves(std::ostream &ost,
 		if (f_v) {
 			cout << "surface_object_with_action::all_quartic_curves before QC->quartic" << endl;
 		}
-		QC->quartic(pt_orbit, verbose_level);
+		QC->quartic(surface_prefix, pt_orbit, verbose_level);
 		if (f_v) {
 			cout << "surface_object_with_action::all_quartic_curves after QC->quartic" << endl;
 		}
@@ -1702,7 +1704,7 @@ void surface_object_with_action::all_quartic_curves(std::ostream &ost,
 		if (f_v) {
 			cout << "surface_object_with_action::all_quartic_curves before QC->cheat_sheet_quartic_curve" << endl;
 		}
-		QC->cheat_sheet_quartic_curve(ost, ost_quartics, verbose_level);
+		QC->cheat_sheet_quartic_curve(surface_prefix, ost, ost_quartics, verbose_level);
 		if (f_v) {
 			cout << "surface_object_with_action::all_quartic_curves after QC->cheat_sheet_quartic_curve" << endl;
 		}

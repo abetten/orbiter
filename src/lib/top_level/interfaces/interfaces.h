@@ -53,6 +53,10 @@ class interface_algebra {
 	int f_draw_mod_n;
 	draw_mod_n_description *Draw_mod_n_description;
 
+	int f_power_mod_n;
+	int power_mod_n_a;
+	int power_mod_n_n;
+
 
 public:
 	interface_algebra();
@@ -748,6 +752,9 @@ class interface_toolkit {
 	int loop_to;
 	int loop_step;
 	std::string *loop_argv;
+
+	int f_plot_function;
+	std::string plot_function_fname;
 
 
 public:

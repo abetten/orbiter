@@ -121,6 +121,7 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 			cout << "cubic_surface_activity::perform_activity after SC->Surf_A->create_surface_object_with_action" << endl;
 		}
 
+		string surface_prefix;
 		string fname_tex;
 		string fname_curves;
 		string fname_quartics;
@@ -128,6 +129,9 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 		string label;
 		string label_tex;
 
+
+		surface_prefix.assign("surface_");
+		surface_prefix.append(SC->label_txt);
 
 		label.assign("surface_");
 		label.append(SC->label_txt);
@@ -164,7 +168,7 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 			if (f_v) {
 				cout << "cubic_surface_activity::perform_activity before SoA->all_quartic_curves" << endl;
 			}
-			SoA->all_quartic_curves(ost, ost_curves, ost_quartics, verbose_level);
+			SoA->all_quartic_curves(surface_prefix, ost, ost_curves, ost_quartics, verbose_level);
 			if (f_v) {
 				cout << "cubic_surface_activity::perform_activity after SoA->all_quartic_curves" << endl;
 			}

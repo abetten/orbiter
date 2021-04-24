@@ -542,6 +542,23 @@ int action::reverse_engineer_semilinear_map(
 	int verbose_level)
 // uses the function A->element_image_of
 {
+
+#if 1
+	int f_v = (verbose_level >= 1);
+	int ret;
+
+	if (f_v) {
+		cout << "action::reverse_engineer_semilinear_map, before P->reverse_engineer_semilinear_map" << endl;
+	}
+	ret = P->reverse_engineer_semilinear_map(Elt, Mtx, frobenius, verbose_level);
+	if (f_v) {
+		cout << "action::reverse_engineer_semilinear_map, after P->reverse_engineer_semilinear_map" << endl;
+	}
+	if (f_v) {
+		cout << "action::reverse_engineer_semilinear_map done" << endl;
+	}
+	return ret;
+#else
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	finite_field *F;
@@ -796,6 +813,7 @@ int action::reverse_engineer_semilinear_map(
 
 
 	return TRUE;
+#endif
 }
 
 

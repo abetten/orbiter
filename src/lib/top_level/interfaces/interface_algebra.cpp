@@ -53,6 +53,9 @@ interface_algebra::interface_algebra()
 	f_draw_mod_n = FALSE;
 	Draw_mod_n_description = NULL;
 
+	f_power_mod_n = FALSE;
+	power_mod_n_a = 0;
+	power_mod_n_n = 0;
 
 }
 
@@ -86,6 +89,9 @@ void interface_algebra::print_help(int argc,
 	}
 	else if (stringcmp(argv[i], "-draw_mod_n") == 0) {
 		cout << "-draw_mod_n descr -end" << endl;
+	}
+	else if (stringcmp(argv[i], "-power_mod_n") == 0) {
+		cout << "-power_mod_n <int : a> <int : n>" << endl;
 	}
 }
 
@@ -125,6 +131,9 @@ int interface_algebra::recognize_keyword(int argc,
 		return true;
 	}
 	else if (stringcmp(argv[i], "-draw_mod_n") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-power_mod_n") == 0) {
 		return true;
 	}
 	if (f_v) {
@@ -222,6 +231,14 @@ void interface_algebra::read_arguments(int argc,
 		}
 		cout << "-draw_mod_n " << endl;
 	}
+	else if (stringcmp(argv[i], "-power_mod_n") == 0) {
+		f_power_mod_n = TRUE;
+		power_mod_n_a = strtoi(argv[++i]);
+		power_mod_n_n = strtoi(argv[++i]);
+		cout << "-power_mod_n " << " " << power_mod_n_a << " " << power_mod_n_n << endl;
+	}
+
+
 }
 
 
@@ -300,6 +317,16 @@ void interface_algebra::worker(int verbose_level)
 		PT.draw_mod_n(Draw_mod_n_description,
 				O,
 				verbose_level);
+	}
+
+	else if (f_power_mod_n) {
+
+		algebra_global Algebra;
+
+		Algebra.power_mod_n(
+				power_mod_n_a, power_mod_n_n,
+				verbose_level);
+
 	}
 
 	if (f_v) {

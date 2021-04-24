@@ -79,7 +79,8 @@ public:
 	strong_generators *stabilizer_any_point(
 		longinteger_object &full_group_order, int idx,
 		int verbose_level);
-	int search_data(int *data, int &idx);
+	int search_equation(int *eqn, int &idx, int verbose_level);
+	int search_data(int *data, int &idx, int verbose_level);
 	void save_csv(std::string &fname, int verbose_level);
 };
 
