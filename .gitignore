@@ -4,7 +4,9 @@ ORBITER/nbproject/
 *.o
 *~
 *.dSYM
+*.exe
 orbiter.tar.gz
+.settings/language.settings.xml
 
 idea/
 CMakeLists.txt
