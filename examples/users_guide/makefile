@@ -6291,6 +6291,7 @@ surface_4_0_quartic_curves:
 
 # full del Pezzo surfaces:
 
+NB_CUBIC_SURFACES_Q13=4
 
 quartic_curves_q13:
 	$(ORBITER_PATH)/orbiter.out -v 3 \
@@ -6298,14 +6299,14 @@ quartic_curves_q13:
 		-draw_options -end \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space 3 F \
-		-loop L 0 4 1 \
+		-loop L 0 $(NB_CUBIC_SURFACES_Q13) 1 \
 			-with P -do \
 			-projective_space_activity \
 				-define_surface S13_%L -q 13 -catalogue %L -end \
 			-end \
 		-end_loop \
 		-print_symbols \
-		-loop L 0 4 1 \
+		-loop L 0 $(NB_CUBIC_SURFACES_Q13) 1 \
 			-with S13_%L -do \
 			-cubic_surface_activity \
 				-report \
@@ -6319,10 +6320,9 @@ quartic_curves_q13:
 		open surface_catalogue_q13_iso1_quartics.pdf
 		pdflatex surface_catalogue_q13_iso2_quartics.tex
 		open surface_catalogue_q13_iso2_quartics.pdf
-		pdflatex surface_catalogue_q13_iso3_quartics.tex
-		open surface_catalogue_q13_iso3_quartics.pdf
-		#pdflatex surface_catalogue_q13_iso0_report.tex
-		#open surface_catalogue_q13_iso0_report.pdf
+		#pdflatex surface_catalogue_q13_iso3_quartics.tex
+		#open surface_catalogue_q13_iso3_quartics.pdf
+
 
 quartic_curves_q13_classify:
 	$(ORBITER_PATH)/orbiter.out -v 3 \
@@ -6336,30 +6336,17 @@ quartic_curves_q13_classify:
 		-end \
 		-print_symbols \
 
+#q13
+#The number of types of quartic curves is 2
+#idx : ago
+#0 : 24
+#1 : 48
 
 
 # problem, wrong group:
 
-quartic_curves_13_classify_problem: 
-	$(ORBITER_PATH)/orbiter.out -v 3 \
-		-define F -finite_field -q 13 -end \
-		-define P -projective_space 2 F \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-		-input \
-			-set_of_points "68,71,75,78" \
-		-end \
-		-classification_prefix quartic_q13 \
-		-report \
-		-end \
-		-end
-	pdflatex quartic_q13_classification.tex
-	open quartic_q13_classification.pdf
 
-
-
-quartic_curves_13_classify: 
+quartic_curves_13_classify_old: 
 	$(ORBITER_PATH)/orbiter.out -v 3 \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space 2 F \
@@ -6378,6 +6365,7 @@ quartic_curves_13_classify:
 	open quartic_q13_classification.pdf
 
 
+NB_CUBIC_SURFACES_Q17=7
 
 quartic_curves_q17:
 	$(ORBITER_PATH)/orbiter.out -v 3 \
@@ -6385,14 +6373,14 @@ quartic_curves_q17:
 		-draw_options -end \
 		-define F -finite_field -q 17 -end \
 		-define P -projective_space 3 F \
-		-loop L 0 7 1 \
+		-loop L 0 $(NB_CUBIC_SURFACES_Q17) 1 \
 			-with P -do \
 			-projective_space_activity \
 				-define_surface S17_%L -q 17 -catalogue %L -end \
 			-end \
 		-end_loop \
 		-print_symbols \
-		-loop L 0 7 1 \
+		-loop L 0 $(NB_CUBIC_SURFACES_Q17) 1 \
 			-with S17_%L -do \
 			-cubic_surface_activity \
 				-report \
@@ -6400,8 +6388,101 @@ quartic_curves_q17:
 			-end \
 		-end_loop \
 		-print_symbols
+		pdflatex surface_catalogue_q17_iso0_quartics.tex
+		open surface_catalogue_q17_iso0_quartics.pdf
 
-quartic_curves_17_classify: 
+
+
+quartic_curves_q17_classify:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-list_arguments \
+		-draw_options -end \
+		-define F -finite_field -q 17 -end \
+		-define P -projective_space 2 F \
+		-with P -do \
+		-projective_space_activity \
+			-classify_quartic_curves surface_catalogue_q17_iso%d_quartics.csv $(NB_CUBIC_SURFACES_Q17) \
+		-end \
+		-print_symbols \
+
+#q17
+#The number of types of quartic curves is 7
+#idx : ago
+#0 : 24
+#1 : 24
+#2 : 4
+#3 : 96
+#4 : 6
+#5 : 8
+#6 : 2
+
+
+
+NB_CUBIC_SURFACES_Q19=10
+
+quartic_curves_q19:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-list_arguments \
+		-draw_options -end \
+		-define F -finite_field -q 19 -end \
+		-define P -projective_space 3 F \
+		-loop L 0 $(NB_CUBIC_SURFACES_Q19) 1 \
+			-with P -do \
+			-projective_space_activity \
+				-define_surface S19_%L -q 19 -catalogue %L -end \
+			-end \
+		-end_loop \
+		-print_symbols \
+		-loop L 0 $(NB_CUBIC_SURFACES_Q19) 1 \
+			-with S19_%L -do \
+			-cubic_surface_activity \
+				-report \
+				-all_quartic_curves \
+			-end \
+		-end_loop \
+		-print_symbols
+		pdflatex surface_catalogue_q19_iso0_quartics.tex
+		open surface_catalogue_q19_iso0_quartics.pdf
+
+
+quartic_curves_q19_classify:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-list_arguments \
+		-draw_options -end \
+		-define F -finite_field -q 19 -end \
+		-define P -projective_space 2 F \
+		-with P -do \
+		-projective_space_activity \
+			-classify_quartic_curves surface_catalogue_q19_iso%d_quartics.csv $(NB_CUBIC_SURFACES_Q19) \
+		-end \
+		-print_symbols \
+
+#q19
+#The number of types of quartic curves is 16
+#idx : ago
+#0 : 6
+#1 : 24
+#2 : 8
+#3 : 8
+#4 : 2
+#5 : 2
+#6 : 4
+#7 : 8
+#8 : 2
+#9 : 9
+#10 : 1
+#11 : 1
+#12 : 1
+#13 : 24
+#14 : 2
+#15 : 6
+
+# should be 14:
+# ago dist: 4^1, 9^1, 2^4, 6^2, 8^3, 24^3
+
+
+
+quartic_curves_17_classify_old: 
 	$(ORBITER_PATH)/orbiter.out -v 3 \
 		-define F -finite_field -q 17 -end \
 		-define P -projective_space 2 F \

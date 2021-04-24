@@ -14,6 +14,67 @@ namespace orbiter {
 namespace top_level {
 
 
+
+// #############################################################################
+// canonical_form_classifier_description.cpp
+// #############################################################################
+
+
+
+//! to classify objects using canonical forms
+
+
+class canonical_form_classifier_description {
+
+public:
+
+	std::string fname_mask;
+	int nb_files;
+
+	int f_degree;
+	int degree;
+
+	projective_space_with_action *PA;
+
+	canonical_form_classifier_description();
+	~canonical_form_classifier_description();
+};
+
+
+// #############################################################################
+// canonical_form_classifier.cpp
+// #############################################################################
+
+
+
+//! to classify objects using canonical forms
+
+
+class canonical_form_classifier {
+
+public:
+
+	canonical_form_classifier_description *Descr;
+
+
+	homogeneous_polynomial_domain *Poly_ring;
+
+	action_on_homogeneous_polynomials *AonHPD;
+
+	int nb_objects_to_test;
+
+	classify_bitvectors *CB;
+
+
+	canonical_form_classifier();
+	~canonical_form_classifier();
+	void count_nb_objects_to_test(int verbose_level);
+	void classify(canonical_form_classifier_description *Descr,
+			int verbose_level);
+
+};
+
+
 // #############################################################################
 // canonical_form.cpp
 // #############################################################################
