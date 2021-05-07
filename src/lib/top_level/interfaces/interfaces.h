@@ -756,6 +756,10 @@ class interface_toolkit {
 	int f_plot_function;
 	std::string plot_function_fname;
 
+	int f_draw_projective_curve;
+	draw_projective_curve_description *Draw_projective_curve_description;
+
+
 
 public:
 

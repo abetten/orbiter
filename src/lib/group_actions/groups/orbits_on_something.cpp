@@ -628,6 +628,16 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	Bitvec = NEW_OBJECT(bitvector);
 	Bitvec->allocate(L);
 
+	cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length point sets:" << endl;
+	for (i = 0; i < nb_points; i++) {
+		a = Orbits_classified->Sets[type_idx][i];
+		Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
+		Orbiter->Lint_vec.print(cout, orbit1, l1);
+		if (i < nb_points - 1) {
+			cout << ",";
+		}
+	}
+	cout << endl;
 
 	k = 0;
 	for (i = 0; i < nb_points; i++) {

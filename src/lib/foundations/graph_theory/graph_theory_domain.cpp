@@ -33,7 +33,6 @@ void graph_theory_domain::colored_graph_draw(std::string &fname, int xmax_in,
 	CG.load(fname, verbose_level - 1);
 	fname_draw.assign(CG.fname_base);
 	fname_draw.append("_graph");
-	//snprintf(fname_draw, 2000, "%s_graph", CG.fname_base);
 	if (f_v) {
 		cout << "colored_graph_draw before CG.draw_partitioned" << endl;
 	}
@@ -67,16 +66,12 @@ void graph_theory_domain::colored_graph_all_cliques(std::string &fname,
 		fname_sol.assign(output_fname);
 		fname_success.assign(output_fname);
 		fname_success.append(".success");
-		//snprintf(fname_sol, 2000, "%s", output_fname);
-		//snprintf(fname_success, 2000, "%s.success", output_fname);
 	}
 	else {
 		fname_sol.assign(CG.fname_base);
 		fname_sol.append("_sol.txt");
 		fname_success.assign(CG.fname_base);
 		fname_success.append("_sol.success");
-		//snprintf(fname_sol, 2000, "%s_sol.txt", CG.fname_base);
-		//snprintf(fname_success, 2000, "%s_sol.success", CG.fname_base);
 	}
 
 	//CG.print();
@@ -151,11 +146,9 @@ void graph_theory_domain::colored_graph_all_cliques_list_of_cases(
 			if (f_prefix) {
 				fname.assign(prefix);
 				fname.append(fname_tmp);
-				//snprintf(fname, 2000, "%s%s", prefix, fname_tmp);
 			}
 			else {
 				fname.assign(fname_tmp);
-				//strcpy(fname, fname_tmp);
 			}
 			CG->load(fname, verbose_level - 2);
 
@@ -317,7 +310,6 @@ void graph_theory_domain::save_as_colored_graph_easy(std::string &fname_base,
 	}
 	fname.assign(fname_base);
 	fname.append(".colored_graph");
-	//snprintf(fname, 2000, "%s.colored_graph", fname_base);
 
 	colored_graph *CG;
 
@@ -708,7 +700,6 @@ int graph_theory_domain::is_association_scheme(int *color_graph, int n,
 		{
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	//int f_vvv = (verbose_level >= 3);
 	int N;
 	int *M1;
 	int k, i, j;
@@ -830,7 +821,7 @@ int graph_theory_domain::is_association_scheme(int *color_graph, int n,
 			k = Pijk[2 * C * C + 2 * C + 0]; // p220;
 			lambda = Pijk[2 * C * C + 2 * C + 2]; // p222;
 			mu = Pijk[2 * C * C + 2 * C + 1]; // p221;
-			cout << "it is an srg(" << n << "," << k << "," << lambda << ","
+			cout << "it is an SRG(" << n << "," << k << "," << lambda << ","
 					<< mu << ")" << endl;
 		}
 
@@ -932,15 +923,11 @@ void graph_theory_domain::draw_bitmatrix(
 	std::string fname;
 	int f_embedded = TRUE;
 	int f_sideways = FALSE;
-	//double scale = .3;
-	//double line_width = 1.0;
 	file_io Fio;
 
 	fname_base2.assign(fname_base);
 	fname.assign(fname_base2);
 	fname.append(".mp");
-	//snprintf(fname_base2, 2000, "%s", fname_base);
-	//snprintf(fname, 3000, "%s.mp", fname_base2);
 	{
 		G.setup(fname_base2, 0, 0, xmax_in /* ONE_MILLION */,
 				ymax_in /* ONE_MILLION */, xmax_out, ymax_out, f_embedded,
@@ -1304,7 +1291,8 @@ void graph_theory_domain::make_Winnie_Li_graph(int *&Adj, int &N,
 	co_index = F->e / index;
 
 	if (co_index * index != F->e) {
-		cout << "the index has to divide the field degree" << endl;
+		cout << "graph_theory_domain::make_Winnie_Li_graph "
+				"the index has to divide the field degree" << endl;
 		exit(1);
 	}
 	q1 = NT.i_power_j(p, co_index);
@@ -1326,7 +1314,8 @@ void graph_theory_domain::make_Winnie_Li_graph(int *&Adj, int &N,
 		j *= q1;
 	}
 	if (f_v) {
-		cout << "relative_norm=" << relative_norm << endl;
+		cout << "graph_theory_domain::make_Winnie_Li_graph "
+				"relative_norm=" << relative_norm << endl;
 	}
 
 	N1 = NEW_int(k);
@@ -1337,11 +1326,13 @@ void graph_theory_domain::make_Winnie_Li_graph(int *&Adj, int &N,
 		}
 	}
 	if (j != k) {
-		cout << "j != k" << endl;
+		cout << "graph_theory_domain::make_Winnie_Li_graph "
+				"j != k" << endl;
 		exit(1);
 	}
 	if (f_v) {
-		cout << "found " << k << " norm-one elements:" << endl;
+		cout << "graph_theory_domain::make_Winnie_Li_graph "
+				"found " << k << " norm-one elements:" << endl;
 		Orbiter->Int_vec.print(cout, N1, k);
 		cout << endl;
 	}
@@ -1460,13 +1451,15 @@ void graph_theory_domain::make_orthogonal_collinearity_graph(int *&Adj, int &N,
 	Gram = NEW_int(d * d);
 
 	if (f_v) {
-		cout << "epsilon=" << epsilon << " n=" << n << " q=" << q << endl;
+		cout << "graph_theory_domain::make_orthogonal_collinearity_graph "
+				"epsilon=" << epsilon << " n=" << n << " q=" << q << endl;
 	}
 
 	N = Gg.nb_pts_Qepsilon(epsilon, n, q);
 
 	if (f_v) {
-		cout << "number of points = " << N << endl;
+		cout << "graph_theory_domain::make_orthogonal_collinearity_graph "
+				"number of points = " << N << endl;
 	}
 
 	F = NEW_OBJECT(finite_field);
@@ -1484,7 +1477,8 @@ void graph_theory_domain::make_orthogonal_collinearity_graph(int *&Adj, int &N,
 	}
 	F->Gram_matrix(epsilon, n, c1, c2, c3, Gram, verbose_level - 1);
 	if (f_v) {
-		cout << "Gram matrix" << endl;
+		cout << "graph_theory_domain::make_orthogonal_collinearity_graph "
+				"Gram matrix" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout, Gram, d, d, d, 2);
 	}
 
@@ -1503,43 +1497,37 @@ void graph_theory_domain::make_orthogonal_collinearity_graph(int *&Adj, int &N,
 
 
 	if (f_v) {
-		cout << "allocating adjacency matrix" << endl;
+		cout << "graph_theory_domain::make_orthogonal_collinearity_graph "
+				"allocating adjacency matrix" << endl;
 	}
 	Adj = NEW_int(N * N);
 	if (f_v) {
-		cout << "allocating adjacency matrix was successful" << endl;
+		cout << "graph_theory_domain::make_orthogonal_collinearity_graph "
+				"allocating adjacency matrix was successful" << endl;
 	}
 	nb_e = 0;
 	nb_inc = 0;
 	for (i = 0; i < N; i++) {
-		//cout << i << " : ";
 		F->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i, 0 /* verbose_level */);
 		for (j = i + 1; j < N; j++) {
 			F->Q_epsilon_unrank(v2, 1, epsilon, n, c1, c2, c3, j, 0 /* verbose_level */);
 			a = F->evaluate_bilinear_form(v, v2, n + 1, Gram);
 			if (a == 0) {
-				//cout << j << " ";
-				//k = ij2k(i, j, N);
-				//cout << k << ", ";
 				nb_e++;
-				//if ((nb_e % 50) == 0)
-					//cout << endl;
 				Adj[i * N + j] = 1;
 				Adj[j * N + i] = 1;
 			}
 			else {
 				Adj[i * N + j] = 0;
 				Adj[j * N + i] = 0;
-				; //cout << " 0";
 				nb_inc++;
 			}
 		}
-		//cout << endl;
 		Adj[i * N + i] = 0;
 	}
-	//cout << endl;
 	if (f_v) {
-		cout << "The adjacency matrix of the collinearity graph has been computed" << endl;
+		cout << "graph_theory_domain::make_orthogonal_collinearity_graph "
+				"The adjacency matrix of the collinearity graph has been computed" << endl;
 	}
 
 
@@ -1552,6 +1540,55 @@ void graph_theory_domain::make_orthogonal_collinearity_graph(int *&Adj, int &N,
 		cout << "graph_theory_domain::make_orthogonal_collinearity_graph done" << endl;
 	}
 }
+
+void graph_theory_domain::make_non_attacking_queens_graph(int *&Adj, int &N,
+		int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_non_attacking_queens_graph" << endl;
+	}
+	int i1, j1, n1;
+	int i2, j2, n2;
+
+	N = n * n;
+
+
+	Adj = NEW_int(N * N);
+	Orbiter->Int_vec.zero(Adj, N * N);
+
+
+	for (n1 = 0; n1 < N; n1++) {
+		i1 = n1 / n;
+		j1 = n1 % n;
+		for (n2 = n1 + 1; n2 < N; n2++) {
+			i2 = n2 / n;
+			j2 = n2 % n;
+			if (i2 == i1) {
+				continue;
+			}
+			if (j2 == j1) {
+				continue;
+			}
+			if (j2 - j1 == i2 - i1) {
+				continue;
+			}
+			if (j2 - j1 == i1 - i2) {
+				continue;
+			}
+			Adj[n1 * N + n2] = 1;
+			Adj[n2 * N + n1] = 1;
+		}
+	}
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_non_attacking_queens_graph done" << endl;
+	}
+
+}
+
+
 
 void graph_theory_domain::compute_adjacency_matrix(
 		int *Table, int nb_sets, int set_size,
@@ -1566,7 +1603,7 @@ void graph_theory_domain::compute_adjacency_matrix(
 		cout << "graph_theory_domain::compute_adjacency_matrix" << endl;
 	}
 
-	N2 = (nb_sets * nb_sets) >> 1;
+	N2 = (nb_sets * (nb_sets - 1)) >> 1;
 	if (f_v) {
 		cout << "graph_theory_domain::compute_adjacency_matrix N2=" << N2 << endl;
 	}
@@ -1652,7 +1689,6 @@ void graph_theory_domain::compute_adjacency_matrix(
 
 	fname.assign(prefix_for_graph);
 	fname.append("_disjointness.colored_graph");
-	//snprintf(fname, 1000, "%s_disjointness.colored_graph", prefix_for_graph);
 
 	CG->save(fname, verbose_level);
 

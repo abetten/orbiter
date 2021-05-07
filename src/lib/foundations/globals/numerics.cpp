@@ -3220,6 +3220,34 @@ void numerics::clebsch_map_up(
 		}
 }
 
+
+void numerics::project_to_disc(int f_projection_on, int f_transition, int step, int nb_steps,
+	double rad, double height, double x, double y, double &xp, double &yp)
+{
+	double f;
+
+	if (f_transition) {
+		double x1, y1, d0, d1;
+		f = rad / sqrt(height * height + x * x + y * y);
+		x1 = x * f;
+		y1 = y * f;
+		d1 = (double) step / (double) nb_steps;
+		d0 = 1. - d1;
+		xp = x * d0 + x1 * d1;
+		yp = y * d0 + y1 * d1;
+	}
+	else if (f_projection_on) {
+		f = rad / sqrt(height * height + x * x + y * y);
+		xp = x * f;
+		yp = y * f;
+	}
+	else {
+		xp = x;
+		yp = y;
+	}
+}
+
+
 }}
 
 

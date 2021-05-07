@@ -714,6 +714,7 @@ void packing_was::reduce_spreads(int verbose_level)
 	}
 
 
+
 	Spread_tables_reduced = NEW_OBJECT(spread_tables);
 
 	if (f_v) {
@@ -723,10 +724,21 @@ void packing_was::reduce_spreads(int verbose_level)
 	Spread_tables_reduced->init_reduced(
 			nb_good_spreads, good_spreads,
 			P->Spread_table_with_selection->Spread_tables,
+			P->path_to_spread_tables,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "packing_was::reduce_spreads after "
 				"Spread_tables_reduced->init_reduced" << endl;
+	}
+
+	if (f_v) {
+		cout << "packing_was::reduce_spreads before "
+				"Spread_tables_reduced->save" << endl;
+	}
+	Spread_tables_reduced->save(verbose_level);
+	if (f_v) {
+		cout << "packing_was::reduce_spreads after "
+				"Spread_tables_reduced->save" << endl;
 	}
 
 	if (f_v) {

@@ -276,6 +276,17 @@ void surface_create::create_surface_from_description(int verbose_level)
 				verbose_level);
 
 	}
+	else if (Descr->f_Cayley_form) {
+
+
+		create_surface_Cayley_form(
+				Descr->Cayley_form_k,
+				Descr->Cayley_form_l,
+				Descr->Cayley_form_m,
+				Descr->Cayley_form_n,
+				verbose_level);
+
+	}
 	else if (Descr->f_by_equation) {
 
 		create_surface_by_equation(
@@ -316,13 +327,16 @@ void surface_create::create_surface_from_description(int verbose_level)
 		cout << endl;
 	}
 
-	if (f_has_group) {
-		cout << "surface_create::init2 the stabilizer is:" << endl;
-		Sg->print_generators_tex(cout);
-	}
-	else {
-		cout << "surface_create::init2 "
-				"The surface has no group computed" << endl;
+
+	if (f_v) {
+		if (f_has_group) {
+			cout << "surface_create::init2 the stabilizer is:" << endl;
+			Sg->print_generators_tex(cout);
+		}
+		else {
+			cout << "surface_create::init2 "
+					"The surface has no group computed" << endl;
+		}
 	}
 
 	if (f_has_group) {
@@ -1526,6 +1540,88 @@ void surface_create::create_surface_by_arc_lifting_with_two_lines(
 		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines done" << endl;
 	}
 }
+
+void surface_create::create_surface_Cayley_form(
+		int k, int l, int m, int n,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_Cayley_form" << endl;
+	}
+	if (f_v) {
+		cout << "surface_create::create_surface_Cayley_form by "
+				"arc lifting with two lines" << endl;
+	}
+
+#if 0
+	if (f_v) {
+		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines arc: ";
+		Orbiter->Lint_vec.print(cout, arc, 6);
+		cout << endl;
+		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines lines: ";
+		Orbiter->Lint_vec.print(cout, lines, 2);
+		cout << endl;
+	}
+#endif
+
+	int coeffs20[20];
+
+
+	Surf->create_equation_Cayley_klmn(k, l, m, n, coeffs20, verbose_level);
+
+
+	SO = NEW_OBJECT(surface_object);
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines before SO->init_equation_points_and_lines_only" << endl;
+	}
+
+	SO->init_equation_points_and_lines_only(Surf, coeffs20, verbose_level);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines after SO->init_equation_points_and_lines_only" << endl;
+	}
+
+
+	f_has_group = FALSE;
+
+	char str_q[1000];
+	char str_parameters[1000];
+
+	sprintf(str_q, "%d", F->q);
+	sprintf(str_parameters, "klmn_%d_%d_%d_%d", k, l, m, n);
+
+
+	prefix.assign("Cayley_q");
+	prefix.append(str_q);
+	prefix.append("_");
+	prefix.append(str_parameters);
+
+	label_txt.assign("Cayley_q");
+	label_txt.append(str_q);
+	label_txt.append("_");
+	label_txt.append(str_parameters);
+
+	sprintf(str_parameters, "klmn\\_%d\\_%d\\_%d\\_%d", k, l, m, n);
+
+	label_tex.assign("Cayley\\_q");
+	label_tex.append(str_q);
+	label_tex.append("\\_");
+	label_tex.append(str_parameters);
+
+
+
+
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_arc_lifting_with_two_lines done" << endl;
+	}
+}
+
 
 
 void surface_create::create_surface_by_equation(

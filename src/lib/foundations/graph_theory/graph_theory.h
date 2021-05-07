@@ -154,10 +154,8 @@ public:
 	int is_adjacent(int depth, int i, int j);
 	int is_viable(int depth, int pt);
 	void write_entry_to_tree_file(int depth, int verbose_level);
-	//void m_iji(int i, int j, int a);
 	int s_ij(int i, int j);
 	void delinearize_adjacency_list(int verbose_level);
-	//void allocate_bitmatrix(int verbose_level);
 
 private:
 	void parallel_delinearize_adjacency_list();
@@ -369,19 +367,6 @@ public:
 		int f_labels, 
 		double scale, double line_width, 
 		int verbose_level);
-#if 0
-	colored_graph *compute_neighborhood_subgraph(int pt, 
-		fancy_set *&vertex_subset, fancy_set *&color_subset, 
-		int verbose_level);
-	colored_graph *
-	compute_neighborhood_subgraph_with_additional_test_function(
-		int pt, 
-		fancy_set *&vertex_subset, fancy_set *&color_subset, 
-		int (*test_function)(colored_graph *CG, int test_point, 
-		int pt, void *test_function_data, int verbose_level),
-		void *test_function_data, 
-		int verbose_level);
-#endif
 	void export_to_magma(std::string &fname, int verbose_level);
 	void export_to_maple(std::string &fname, int verbose_level);
 	void export_to_file(std::string &fname, int verbose_level);
@@ -407,13 +392,6 @@ public:
 	void draw_it(std::string &fname_base,
 		int xmax_in, int ymax_in, int xmax_out, int ymax_out, 
 		double scale, double line_width, int verbose_level);
-	//int rainbow_cliques_nonrecursive(int &nb_backtrack_nodes, int verbose_level);
-#if 0
-	void create_Levi_graph_from_incidence_matrix(
-		int *M, int nb_rows, int nb_cols,
-		int f_point_labels, long int *point_labels,
-		int verbose_level);
-#endif
 };
 
 void call_back_clique_found_using_file_output(clique_finder *CF, 
@@ -616,6 +594,8 @@ public:
 			int n, int k, int q, int r, int verbose_level);
 	void make_orthogonal_collinearity_graph(int *&Adj, int &N,
 			int epsilon, int d, int q, int verbose_level);
+	void make_non_attacking_queens_graph(int *&Adj, int &N,
+			int n, int verbose_level);
 	void compute_adjacency_matrix(
 			int *Table, int nb_sets, int set_size,
 			std::string &prefix_for_graph,

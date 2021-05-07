@@ -896,6 +896,809 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 
 }
 
+
+void graphical_output::draw_projective_curve(draw_projective_curve_description *Descr,
+		layered_graph_draw_options *Opt, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graphical_output::draw_projective_curve" << endl;
+	}
+
+	os_interface Os;
+	int t0 = Os.os_ticks();
+	int xmax = Opt->xin; //1500;
+	int ymax = Opt->yin; //1500;
+	int i;
+
+
+	if (Descr->f_animate) {
+
+		for (i = 0; i <= Descr->animate_nb_of_steps; i++) {
+
+
+			if (f_v) {
+				cout << "animate step " << i << " / " << Descr->animate_nb_of_steps << ":" << endl;
+				}
+			mp_graphics G;
+
+			char str[1000];
+			string fname;
+
+			sprintf(str, "%s_%d_%d", Descr->fname.c_str(), Descr->number, i);
+			fname.assign(str);
+
+			G.setup(fname, 0, 0, ONE_MILLION, ONE_MILLION,
+					xmax, ymax, Opt->f_embedded, Opt->f_sideways, Opt->scale, Opt->line_width, verbose_level - 1);
+			//G.setup(fname2, 0, 0, ONE_MILLION, ONE_MILLION, xmax, ymax);
+
+
+			//G.frame(0.05);
+
+
+			draw_projective(G, Descr->number, i, Descr->animate_nb_of_steps, FALSE, 0, 0, FALSE, 0, FALSE, 0);
+			G.finish(cout, TRUE);
+
+		}
+	}
+	else if (Descr->f_animate_with_transition) {
+		int frame;
+
+		frame = 0;
+
+		if (Descr->f_title_page) {
+
+			for (i = 0; i < 4; i++, frame++) {
+				mp_graphics G;
+
+				char str[1000];
+				string fname;
+
+				sprintf(str, "%s_%d_%d", Descr->fname.c_str(), Descr->number, frame);
+				fname.assign(str);
+
+				G.setup(fname, 0, 0, ONE_MILLION, ONE_MILLION,
+						xmax, ymax, Opt->f_embedded, Opt->f_sideways, Opt->scale, Opt->line_width,
+						verbose_level - 1);
+
+				draw_projective(G, Descr->number, 0, Descr->animate_nb_of_steps, TRUE, i, Descr->animate_transition_nb_of_steps, TRUE, i, FALSE, 0);
+
+
+				G.finish(cout, TRUE);
+
+
+			}
+		}
+
+		for (i = 0; i <= Descr->animate_transition_nb_of_steps; i++, frame++) {
+
+			if (f_v) {
+				cout << "frame " << frame << " transition in step " << i << " / " << Descr->animate_transition_nb_of_steps << ":" << endl;
+			}
+			mp_graphics G;
+
+			char str[1000];
+			string fname;
+
+			sprintf(str, "%s_%d_%d", Descr->fname.c_str(), Descr->number, frame);
+			fname.assign(str);
+
+			G.setup(fname, 0, 0, ONE_MILLION, ONE_MILLION,
+					xmax, ymax, Opt->f_embedded, Opt->f_sideways, Opt->scale, Opt->line_width,
+					verbose_level - 1);
+			//G.setup(fname2, 0, 0, ONE_MILLION, ONE_MILLION, xmax, ymax);
+
+			//G.frame(0.05);
+
+
+			draw_projective(G, Descr->number, 0, Descr->animate_nb_of_steps, TRUE, i, Descr->animate_transition_nb_of_steps, FALSE, 0, FALSE, 0);
+			G.finish(cout, TRUE);
+
+		}
+
+		for (i = 0; i <= Descr->animate_nb_of_steps; i++, frame++) {
+
+
+			if (f_v) {
+				cout << "frame " << frame << " animate step " << i << " / " << Descr->animate_nb_of_steps << ":" << endl;
+			}
+			mp_graphics G;
+
+			char str[1000];
+			string fname;
+
+			sprintf(str, "%s_%d_%d", Descr->fname.c_str(), Descr->number, frame);
+			fname.assign(str);
+
+			G.setup(fname, 0, 0, ONE_MILLION, ONE_MILLION,
+					xmax, ymax, Opt->f_embedded, Opt->f_sideways, Opt->scale, Opt->line_width,
+					verbose_level - 1);
+			//G.setup(fname2, 0, 0, ONE_MILLION, ONE_MILLION, xmax, ymax);
+
+			//G.frame(0.05);
+
+
+			draw_projective(G, Descr->number, i, Descr->animate_nb_of_steps, FALSE, 0, 0, FALSE, 0, FALSE, 0);
+			G.finish(cout, TRUE);
+
+		}
+
+		for (i = 0; i <= Descr->animate_transition_nb_of_steps; i++, frame++) {
+
+			if (f_v) {
+				cout << "frame " << frame << " transition in step " << i << " / " << Descr->animate_transition_nb_of_steps << ":" << endl;
+			}
+			mp_graphics G;
+
+			char str[1000];
+			string fname;
+
+			sprintf(str, "%s_%d_%d", Descr->fname.c_str(), Descr->number, frame);
+			fname.assign(str);
+
+			G.setup(fname, 0, 0, ONE_MILLION, ONE_MILLION,
+					xmax, ymax, Opt->f_embedded, Opt->f_sideways, Opt->scale, Opt->line_width,
+					verbose_level - 1);
+			//G.setup(fname2, 0, 0, ONE_MILLION, ONE_MILLION, xmax, ymax);
+
+			//G.frame(0.05);
+
+
+			draw_projective(G, Descr->number,
+					Descr->animate_nb_of_steps, Descr->animate_nb_of_steps, TRUE,
+					Descr->animate_transition_nb_of_steps - i, Descr->animate_transition_nb_of_steps,
+					FALSE, 0, FALSE, 0);
+			G.finish(cout, TRUE);
+
+		}
+		if (Descr->f_trailer_page) {
+
+			for (i = 0; i <= 7; i++, frame++) {
+				mp_graphics G;
+
+				char str[1000];
+				string fname;
+
+				sprintf(str, "%s_%d_%d", Descr->fname.c_str(), Descr->number, frame);
+				fname.assign(str);
+
+				G.setup(fname, 0, 0, ONE_MILLION, ONE_MILLION,
+						xmax, ymax, Opt->f_embedded, Opt->f_sideways, Opt->scale, Opt->line_width,
+						verbose_level - 1);
+
+				draw_projective(G, Descr->number, 0,
+						Descr->animate_nb_of_steps, TRUE, i, Descr->animate_transition_nb_of_steps,
+						FALSE, 0, TRUE, i);
+
+
+				G.finish(cout, TRUE);
+
+
+			}
+		}
+
+
+		cout << "frame=" << frame << endl;
+	}
+
+
+
+	Os.time_check(cout, t0);
+	cout << endl;
+}
+
+
+
+void graphical_output::draw_projective(mp_graphics &G, int number, int animate_step, int animate_nb_of_steps,
+	int f_transition, int transition_step, int transition_nb_steps,
+	int f_title_page, int title_page_step,
+	int f_trailer_page, int trailer_page_step)
+{
+	double *Dx, *Dy;
+	int *Px, *Py;
+	double x_stretch = 1.;
+	double y_stretch = 1.;
+	double dx = ONE_MILLION * 50 * x_stretch;
+	double dy = ONE_MILLION * 50 * y_stretch; // stretch factor
+	double x_labels_offset = -.5;
+	double y_labels_offset = -.5;
+	double x_tick_half_width = 0.1;
+	double y_tick_half_width = 0.1;
+	int N = 30;
+	int i;
+	double x_min = -10;
+	double x_max = 10;
+	double t_min = -1.13;
+	double t_max = 5;
+	double Delta_t;
+	double step;
+	double y_min = 0;
+	double y_max = 2;
+	double x, y, t;
+	int subdivide_v = 4;
+	int subdivide_h = 4;
+	int f_plot_grid = TRUE;
+	int f_plot_curve = TRUE;
+	int x_mod = 1;
+	int y_mod = 1;
+	int x_tick_mod = 1;
+	int y_tick_mod = 1;
+	double height = 3.;
+	double R, R2, X, Y;
+	int mirror;
+	int f_projection_on = TRUE;
+	double radius = 10.;
+	int N_curve = 500;
+	numerics Num;
+
+
+	cout << "draw_projective number=" << number << " animate_step=" << animate_step << " animate_nb_of_steps=" << animate_nb_of_steps << endl;
+
+	if (number == 1 || number == 3) {
+		x_min = -10;
+		x_max = 10;
+		y_min = -10;
+		y_max = 10;
+		x_stretch = .7;
+		y_stretch = .7;
+		dx = ONE_MILLION * 50 * x_stretch;
+		dy = ONE_MILLION * 50 * y_stretch; // stretch factor
+		t_min = -1.119437527;
+		t_max = 4;
+		x_mod = 100;
+		y_mod = 100;
+		x_tick_mod = 1;
+		y_tick_mod = 2;
+		subdivide_v = 1;
+		subdivide_h = 1;
+		f_plot_curve = TRUE;
+		x_labels_offset = -.5;
+		y_labels_offset = -.5;
+		x_tick_half_width = 0.2;
+		y_tick_half_width = 0.1;
+		f_plot_grid = TRUE;
+		f_plot_curve = TRUE;
+		height = 6;
+		R = 20;
+		f_projection_on = TRUE;
+		radius = 10.;
+		}
+	else if (number == 2 || number == 4) {
+		x_min = -10;
+		x_max = 10;
+		y_min = -10;
+		y_max = 10;
+		x_stretch = 0.25;
+		y_stretch = 0.25;
+		dx = ONE_MILLION * 50 * x_stretch;
+		dy = ONE_MILLION * 50 * y_stretch; // stretch factor
+		t_min = -1.119437527;
+		t_max = 4;
+		x_mod = 100;
+		y_mod = 100;
+		x_tick_mod = 1;
+		y_tick_mod = 2;
+		subdivide_v = 1;
+		subdivide_h = 1;
+		f_plot_curve = TRUE;
+		x_labels_offset = -.5;
+		y_labels_offset = -.5;
+		x_tick_half_width = 0.2;
+		y_tick_half_width = 0.1;
+		f_plot_grid = TRUE;
+		f_plot_curve = TRUE;
+		height = 6;
+		R = 20;
+		f_projection_on = FALSE;
+		radius = 10.;
+		}
+	else if (number == 5) {
+		x_min = -10;
+		x_max = 10;
+		y_min = -10;
+		y_max = 10;
+		x_stretch = 0.25;
+		y_stretch = 0.25;
+		dx = ONE_MILLION * 50 * x_stretch;
+		dy = ONE_MILLION * 50 * y_stretch; // stretch factor
+		t_min = 0;
+		t_max = 4;
+		x_mod = 100;
+		y_mod = 100;
+		x_tick_mod = 1;
+		y_tick_mod = 2;
+		subdivide_v = 1;
+		subdivide_h = 1;
+		f_plot_curve = TRUE;
+		x_labels_offset = -.5;
+		y_labels_offset = -.5;
+		x_tick_half_width = 0.2;
+		y_tick_half_width = 0.1;
+		f_plot_grid = TRUE;
+		f_plot_curve = TRUE;
+		height = 6;
+		R = 20;
+		f_projection_on = TRUE;
+		radius = 10.;
+		}
+	else if (number == 7 || number == 8) {
+		x_min = -10;
+		x_max = 10;
+		y_min = -10;
+		y_max = 10;
+		x_stretch = 0.25;
+		y_stretch = 0.25;
+		dx = ONE_MILLION * 50 * x_stretch;
+		dy = ONE_MILLION * 50 * y_stretch; // stretch factor
+		t_min = 0;
+		t_max = 10;
+		x_mod = 100;
+		y_mod = 100;
+		x_tick_mod = 1;
+		y_tick_mod = 2;
+		subdivide_v = 1;
+		subdivide_h = 1;
+		f_plot_curve = TRUE;
+		x_labels_offset = -.5;
+		y_labels_offset = -.5;
+		x_tick_half_width = 0.2;
+		y_tick_half_width = 0.1;
+		f_plot_grid = TRUE;
+		f_plot_curve = TRUE;
+		height = 6;
+		R = 20;
+		if (number == 8) {
+			f_projection_on = FALSE;
+			}
+		else {
+			f_projection_on = TRUE;
+			}
+		radius = 10.;
+		N_curve = 2000;
+		}
+
+	Delta_t = t_max - t_min;
+
+	G.sl_thickness(100);
+	//G.sf_color(1);
+	//G.sf_interior(10);
+	Px = new int[N];
+	Py = new int[N];
+	Dx = new double[N];
+	Dy = new double[N];
+
+
+	cout << "draw_projective dx=" << dx << " dy=" << dy << endl;
+
+	double box_x_min = x_min * 1.2;
+	double box_x_max = x_max * 1.2;
+	double box_y_min = y_min * 1.2;
+	double box_y_max = y_max * 1.2;
+
+	// draw a black frame:
+	Dx[0] = box_x_min;
+	Dy[0] = box_y_min;
+	Dx[1] = box_x_max;
+	Dy[1] = box_y_min;
+	Dx[2] = box_x_max;
+	Dy[2] = box_y_max;
+	Dx[3] = box_x_min;
+	Dy[3] = box_y_max;
+	for (i = 0; i < 4; i++) {
+		//project_to_disc(f_projection_on, radius, height, Dx[i], Dy[i], Dx[i], Dy[i]);
+		Px[i] = Dx[i] * dx;
+		Py[i] = Dy[i] * dy;
+		}
+	G.polygon5(Px, Py, 0, 1, 2, 3, 0);
+
+
+	if (f_title_page) {
+
+		X = 0;
+		Y = 9;
+		for (i = 0; i < 11; i++) {
+			Dx[i] = X;
+			Dy[i] = Y;
+			Y = Y - 1.8;
+			}
+
+		for (i = 0; i < 11; i++) {
+			Px[i] = Dx[i] * dx;
+			Py[i] = Dy[i] * dy;
+			}
+
+		G.aligned_text_array(Px, Py, 0, "", "Transforming a Parabola");
+		G.aligned_text_array(Px, Py, 1, "", "into a Hyperbola");
+		if (title_page_step == 0) {
+			return;
+			}
+		G.aligned_text_array(Px, Py, 4, "", "Step 1: Move into");
+		G.aligned_text_array(Px, Py, 5, "", "the projective plane");
+		if (title_page_step == 1) {
+			return;
+			}
+		G.aligned_text_array(Px, Py, 6, "", "Step 2: Transform the equation");
+		if (title_page_step == 2) {
+			return;
+			}
+		G.aligned_text_array(Px, Py, 7, "", "Step 3: Move back");
+		G.aligned_text_array(Px, Py, 8, "", "in the affine plane");
+		if (title_page_step == 3) {
+			return;
+			}
+		G.aligned_text_array(Px, Py, 10, "", "Created by Anton Betten 2017");
+		return;
+
+		}
+
+
+	if (f_trailer_page) {
+
+		X = 0;
+		Y = 9.5;
+		for (i = 0; i < 18; i++) {
+			Dx[i] = X;
+			Dy[i] = Y;
+			Y = Y - 1.4;
+			}
+
+		for (i = 0; i < 18; i++) {
+			Px[i] = Dx[i] * dx;
+			Py[i] = Dy[i] * dy;
+			}
+
+		G.aligned_text_array(Px, Py, 0, "", "Thanks for watching!");
+		if (trailer_page_step == 0) {
+			return;
+			}
+		G.aligned_text_array(Px, Py, 2, "", "credits:");
+		if (trailer_page_step == 1) {
+			return;
+			}
+		G.aligned_text_array(Px, Py, 4, "", "Felix Klein:");
+		if (trailer_page_step == 2) {
+			return;
+			}
+		G.aligned_text_array(Px, Py, 5, "", "Introduction to");
+		G.aligned_text_array(Px, Py, 6, "", "non-euclidean geometry");
+		G.aligned_text_array(Px, Py, 7, "", "(in German) 1928");
+		if (trailer_page_step == 3) {
+			return;
+			}
+		G.aligned_text_array(Px, Py, 9, "", "Latex: Donald Knuth");
+		G.aligned_text_array(Px, Py, 10, "", "Leslie Lamport");
+		if (trailer_page_step == 4) {
+			return;
+			}
+		G.aligned_text_array(Px, Py, 11, "", "Tikz: Till Tantau");
+		if (trailer_page_step == 5) {
+			return;
+			}
+		G.aligned_text_array(Px, Py, 12, "", "ImageMagick Studio LLC");
+		if (trailer_page_step == 6) {
+			return;
+			}
+		G.aligned_text_array(Px, Py, 14, "", "Created by Anton Betten 2017");
+		return;
+
+		}
+
+#if 1
+	if (f_plot_grid) {
+
+		int *f_DNE;
+
+		f_DNE = NEW_int(N);
+
+
+		G.sl_thickness(10);
+
+		for (x = 0; x < R; x++) {
+
+			for (mirror = 0; mirror < 2; mirror++) {
+				R2 = sqrt(R * R - x * x);
+
+				// vertical line:
+				t_min = -R2;
+				t_max = R2;
+
+				Delta_t = t_max - t_min;
+				step = Delta_t / (double) N;
+
+				for (i = 0; i < N; i++) {
+					f_DNE[i] = FALSE;
+					t = t_min + i * step;
+
+
+					if (mirror == 0) {
+						X = x;
+						Y = t;
+						}
+					else {
+						X = -x;
+						Y = t;
+						}
+
+
+					if (f_DNE[i] == FALSE) {
+						Dx[i] = X;
+						Dy[i] = Y;
+						Num.project_to_disc(f_projection_on, f_transition, transition_step, transition_nb_steps, radius, height, Dx[i], Dy[i], Dx[i], Dy[i]);
+						if (Dx[i] < box_x_min || Dx[i] > box_x_max || Dy[i] < box_y_min || Dy[i] > box_y_max) {
+							f_DNE[i] = TRUE;
+							}
+						}
+					}
+				G.plot_curve(N, f_DNE, Dx, Dy, dx, dy);
+				}
+			}
+		for (y = 0; y < R; y++) {
+
+			for (mirror = 0; mirror < 2; mirror++) {
+				R2 = sqrt(R * R - y * y);
+
+				// horizontal line:
+				t_min = -R2;
+				t_max = R2;
+
+				Delta_t = t_max - t_min;
+				step = Delta_t / (double) N;
+
+				for (i = 0; i < N; i++) {
+					f_DNE[i] = FALSE;
+					t = t_min + i * step;
+
+
+					if (mirror == 0) {
+						X = t;
+						Y = y;
+						}
+					else {
+						X = t;
+						Y = -y;
+						}
+
+
+					if (f_DNE[i] == FALSE) {
+						Dx[i] = X;
+						Dy[i] = Y;
+						Num.project_to_disc(f_projection_on, f_transition, transition_step, transition_nb_steps, radius, height, Dx[i], Dy[i], Dx[i], Dy[i]);
+						if (Dx[i] < box_x_min || Dx[i] > box_x_max || Dy[i] < box_y_min || Dy[i] > box_y_max) {
+							f_DNE[i] = TRUE;
+							}
+						}
+					}
+				G.plot_curve(N, f_DNE, Dx, Dy, dx, dy);
+				}
+			}
+
+		FREE_int(f_DNE);
+		}
+#endif
+
+	if (f_plot_curve) {
+
+
+		G.sl_color(2);
+
+		double omega;
+
+		omega = -1 * animate_step * M_PI / (2 * animate_nb_of_steps);
+		cout << "animate_step=" << animate_step << " omega=" << omega << endl;
+		double cos_omega, sin_omega;
+
+		cos_omega = cos(omega);
+		sin_omega = sin(omega);
+		cout << "sin_omega=" << sin_omega << " cos_omega=" << cos_omega << endl;
+
+		N = N_curve;
+
+		delete [] Px;
+		delete [] Py;
+		delete [] Dx;
+		delete [] Dy;
+
+		int *f_DNE;
+
+		f_DNE = NEW_int(N);
+		Px = new int[N];
+		Py = new int[N];
+		Dx = new double[N];
+		Dy = new double[N];
+
+
+		G.sl_thickness(100);
+
+		// draw the function as a parametric curve:
+
+		double s_min, s_max, s, Delta_s;
+		int h;
+
+		for (h = 0; h < 2; h++) {
+			if (number == 1 || number == 2) {
+				s_min = 0;
+				}
+			else if (number == 5) {
+				s_min = -30;
+				}
+			else if (number == 7 || number == 8) {
+				s_min = -30;
+				}
+			else {
+				s_min = -1.119437527;
+				}
+			s_max = 30;
+
+			//t_min = -R;
+			//t_max = R;
+
+			//Delta_t = t_max - t_min;
+			Delta_s = s_max - s_min;
+			step = Delta_s / (double) N;
+
+			cout << "Delta_s=" << Delta_s << " step=" << step << endl;
+			cout << "draw_projective dx=" << dx << " dy=" << dy << endl;
+
+			for (i = 0; i < N; i++) {
+
+
+				f_DNE[i] = FALSE;
+
+				s = exp(s_min + i * step);
+					// this allows us to get many very small values and many very big values as well.
+
+#if 0
+				if (f_projection_on) {
+					if (s > 10) {
+						s = 10 + exp(s - 10);
+						}
+					}
+#endif
+				t = s;
+				//t = exp(s);
+				//t = t_min + i * step;
+
+				//cout << "i=" << i << " s=" << s << " t=" << t << endl;
+
+
+				if (number == 1 || number == 2) {
+					X = t;
+					Y = t * t;
+					}
+				else if (number == 3 || number == 4) {
+					X = t;
+					Y = t * t * t + 5 * t + 7;
+					if (Y < 0) {
+						f_DNE[i] = TRUE;
+						}
+					else {
+						Y = sqrt(Y);
+						}
+					}
+				else if (number == 5) {
+					double denom, x, y;
+					x = t;
+					y = t * t;
+					denom = x * sin_omega + cos_omega;
+
+					if (ABS(denom) < 0.0000000001) {
+						f_DNE[i] = TRUE;
+						}
+					else {
+						if (h == 0) {
+							X = (x * cos_omega - sin_omega) / denom;
+							}
+						else {
+							X = (-x * cos_omega - sin_omega) / denom;
+							}
+						Y = y / denom;
+						}
+					}
+				else if (number == 7 || number == 8) {
+					X = t;
+					if (t < 0) {
+						f_DNE[i] = TRUE;
+						}
+					else {
+						Y = log(t);
+						if (ABS(Y) < 0.0001) {
+							f_DNE[i] = TRUE;
+							}
+						}
+					}
+
+#if 0
+				if (!f_DNE[i]) {
+					double z;
+
+					z = sqrt(X * X + Y * Y);
+					if (z > 2 * R) {
+						f_DNE[i] = TRUE;
+						//cout << endl;
+						//cout << "x=" << x << " y=" << y << " is out of bounds" << endl;
+						}
+					}
+#endif
+
+#if 0
+				cout << "i=" << i << " s=" << s << " t=" << t << " f_DNE[i]=" << f_DNE[i];
+				if (f_DNE[i] == FALSE) {
+					cout << " X=" << X << " Y=" << Y << endl;
+					}
+				else {
+					cout << endl;
+					}
+#endif
+
+				if (f_DNE[i] == FALSE) {
+					//double z;
+
+					Dx[i] = X;
+					Dy[i] = Y;
+#if 0
+					if (animate_step == 8) {
+						cout << "X=" << X << " Y=" << Y << endl;
+						}
+#endif
+					Num.project_to_disc(f_projection_on, f_transition, transition_step, transition_nb_steps, radius, height, Dx[i], Dy[i], Dx[i], Dy[i]);
+
+					//z = sqrt(Dx[i] * Dx[i] + Dy[i] * Dy[i]);
+					if (Dx[i] < box_x_min || Dx[i] > box_x_max || Dy[i] < box_y_min || Dy[i] > box_y_max) {
+						f_DNE[i] = TRUE;
+						//cout << endl;
+						//cout << "x=" << x << " y=" << y << " is out of bounds" << endl;
+						}
+					if (!f_DNE[i] && isnan(Dx[i])) {
+						f_DNE[i] = TRUE;
+						}
+					if (!f_DNE[i] && isnan(Dy[i])) {
+						f_DNE[i] = TRUE;
+						}
+					if (!f_DNE[i] && ABS(Dx[i]) < 0.0001) {
+						f_DNE[i] = TRUE;
+						}
+					if (!f_DNE[i] && ABS(Dy[i]) < 0.0001) {
+						f_DNE[i] = TRUE;
+						}
+					}
+				cout << i << " : s=" << s << " : " << " : t=" << t << " : ";
+				if (f_DNE[i]) {
+					cout << "-";
+					}
+				else {
+					cout << Dx[i] << ", " << Dy[i];
+					}
+				cout << endl;
+				}
+
+			if (FALSE) {
+				cout << "before plot_curve:" << endl;
+				for (i = 0; i < N; i++) {
+					cout << i << " : ";
+					if (f_DNE[i]) {
+						cout << "-";
+						}
+					else {
+						cout << Dx[i] << ", " << Dy[i];
+						}
+					cout << endl;
+					}
+				}
+
+			G.plot_curve(N, f_DNE, Dx, Dy, dx, dy);
+			} // next h
+
+
+		FREE_int(f_DNE);
+		}
+
+
+}
+
+
+
+
 std::vector<int> get_color(int bit_depth, int max_value, int loopCount, int f_invert_colors, int verbose_level)
 {
 	int f_v = (verbose_level>= 1);

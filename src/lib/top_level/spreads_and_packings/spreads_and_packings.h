@@ -68,6 +68,8 @@ public:
 
 	projective_space_with_action *PA;
 
+	std::string path_to_spread_tables;
+
 	spread_classify *T;
 	finite_field *F;
 	int spread_size;

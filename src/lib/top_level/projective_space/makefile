@@ -9,6 +9,7 @@ MODULES = \
 	canonical_form_classifier_description.o \
 	canonical_form_classifier.o \
 	canonical_form.o \
+	compute_stabilizer.o \
 	object_in_projective_space_with_action.o \
 	projective_space_activity_description.o \
 	projective_space_activity.o \

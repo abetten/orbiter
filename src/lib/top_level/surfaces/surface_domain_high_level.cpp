@@ -1502,12 +1502,9 @@ struct table_surfaces_field_order {
 	int p;
 	int h;
 
-	//linear_group_description *Descr;
-
 	finite_field *F;
 
 	projective_space_with_action *PA;
-	//linear_group *LG;
 
 	surface_domain *Surf;
 	surface_with_action *Surf_A;
@@ -1788,7 +1785,6 @@ void surface_domain_high_level::do_create_surface_atlas(int q_max, int verbose_l
 
 			latex_interface L;
 
-			//latex_head_easy(fp);
 			L.head(ost,
 				FALSE /* f_book */,
 				TRUE /* f_title */,

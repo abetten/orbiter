@@ -1194,31 +1194,69 @@ void cryptography_domain::do_EC_points(finite_field *F, std::string &label,
 		}
 	}
 
-	int *M;
+	{
+		int *M;
 
-	M = NEW_int(F->q * F->q);
-	Orbiter->Int_vec.zero(M, F->q * F->q);
+		M = NEW_int(F->q * F->q);
+		Orbiter->Int_vec.zero(M, F->q * F->q);
 
 
-	for (i = 0; i < (int) Pts.size(); i++) {
-		vector<int> pt;
-		int x, y, z;
+		for (i = 0; i < (int) Pts.size(); i++) {
+			vector<int> pt;
+			int x, y, z;
 
-		pt = Pts[i];
-		x = pt[0];
-		y = pt[1];
-		z = pt[2];
-		if (z == 1) {
-			M[(F->q - 1 - y) * F->q + x] = 1;
+			pt = Pts[i];
+			x = pt[0];
+			y = pt[1];
+			z = pt[2];
+			if (z == 1) {
+				M[(F->q - 1 - y) * F->q + x] = 1;
+			}
 		}
-	}
-	string fname;
-	file_io Fio;
+		string fname;
+		file_io Fio;
 
-	fname.assign(label);
-	fname.append("_points_xy.csv");
-	Fio.int_matrix_write_csv(fname, M, F->q, F->q);
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		fname.assign(label);
+		fname.append("_points_xy.csv");
+		Fio.int_matrix_write_csv(fname, M, F->q, F->q);
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+		FREE_int(M);
+	}
+
+	{
+		int *M;
+		int cnt = 0;
+
+		M = NEW_int((int) Pts.size() * 2);
+		Orbiter->Int_vec.zero(M, (int) Pts.size() * 2);
+
+
+		for (i = 0; i < (int) Pts.size(); i++) {
+			vector<int> pt;
+			int x, y, z;
+
+			pt = Pts[i];
+			x = pt[0];
+			y = pt[1];
+			z = pt[2];
+			if (z == 1) {
+				M[cnt * 2 + 0] = x;
+				M[cnt * 2 + 1] = y;
+				cnt++;
+			}
+		}
+		string fname;
+		file_io Fio;
+
+		fname.assign(label);
+		fname.append("_points_xy_affine_pts.csv");
+		Fio.int_matrix_write_csv(fname, M, cnt, 2);
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+		FREE_int(M);
+	}
+
 
 	if (f_v) {
 		cout << "do_EC_points done" << endl;

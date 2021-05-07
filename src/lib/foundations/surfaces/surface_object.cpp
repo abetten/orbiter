@@ -75,13 +75,13 @@ void surface_object::null()
 {
 }
 
-void surface_object::init_equation(surface_domain *Surf, int *eqn,
+void surface_object::init_equation_points_and_lines_only(surface_domain *Surf, int *eqn,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "surface_object::init_equation" << endl;
+		cout << "surface_object::init_equation_points_and_lines_only" << endl;
 		Orbiter->Int_vec.print(cout, eqn, 20);
 		cout << endl;
 	}
@@ -92,7 +92,7 @@ void surface_object::init_equation(surface_domain *Surf, int *eqn,
 
 	//int_vec_copy(Lines, surface_object::Lines, 27);
 	Orbiter->Int_vec.copy(eqn, surface_object::eqn, 20);
-	
+
 
 	//long int *Points;
 	//int nb_points;
@@ -103,11 +103,11 @@ void surface_object::init_equation(surface_domain *Surf, int *eqn,
 		// allocate enough space in case we have a surface with too many points
 
 	if (f_v) {
-		cout << "surface_object::init_equation before enumerate_points_and_lines" << endl;
+		cout << "surface_object::init_equation_points_and_lines_only before enumerate_points_and_lines" << endl;
 	}
 	enumerate_points_and_lines(0/*verbose_level - 1*/);
 	if (f_v) {
-		cout << "surface_object::init_equation after enumerate_points_and_lines" << endl;
+		cout << "surface_object::init_equation_points_and_lines_only after enumerate_points_and_lines" << endl;
 	}
 
 #if 0
@@ -120,13 +120,30 @@ void surface_object::init_equation(surface_domain *Surf, int *eqn,
 		return FALSE;
 	}
 #endif
-	
+	if (f_v) {
+		cout << "surface_object::init_equation_points_and_lines_only done" << endl;
+	}
+}
+
+
+void surface_object::init_equation(surface_domain *Surf, int *eqn,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_object::init_equation" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_object::init_equation before init_equation_points_and_lines_only" << endl;
+	}
+	init_equation_points_and_lines_only(Surf, eqn, verbose_level);
+	if (f_v) {
+		cout << "surface_object::init_equation after init_equation_points_and_lines_only" << endl;
+	}
 
 	
-	//FREE_lint(Points);
-
-
-
 	if (nb_lines == 27) {
 		if (f_v) {
 			cout << "surface_object::init_equation before "

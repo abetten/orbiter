@@ -69,6 +69,7 @@ interface_combinatorics::interface_combinatorics()
 
 	f_create_design = FALSE;
 	Design_create_description = NULL;
+
 	f_convert_stack_to_tdo = FALSE;
 	//stack_fname;
 

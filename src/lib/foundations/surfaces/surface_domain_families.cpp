@@ -106,6 +106,37 @@ void surface_domain::create_equation_general_abcd(int a, int b, int c, int d, in
 	}
 }
 
+void surface_domain::create_equation_Cayley_klmn(int k, int l, int m, int n, int *coeff, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "surface_domain::create_equation_Cayley_klmn" << endl;
+	}
+	Orbiter->Int_vec.zero(coeff, nb_monomials);
+
+	coeff[6] = coeff[9] = coeff[12] = coeff[3] = 1;
+
+	coeff[16] = k;
+
+	int mn, nl, lm;
+
+	mn = F->mult(l, m);
+	nl = F->mult(n, l);
+	lm = F->mult(l, m);
+
+	coeff[19] = F->add(mn, F->inverse(mn));
+	coeff[18] = F->add(nl, F->inverse(nl));
+	coeff[17] = F->add(lm, F->inverse(lm));
+	coeff[13] = F->add(l, F->inverse(l));
+	coeff[14] = F->add(m, F->inverse(m));
+	coeff[15] = F->add(n, F->inverse(n));
+
+	if (f_v) {
+		cout << "surface_domain::create_equation_Cayley_klmn done" << endl;
+	}
+}
 
 
 void surface_domain::create_equation_bes(int a, int c, int *coeff, int verbose_level)

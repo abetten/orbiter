@@ -843,6 +843,7 @@ public:
 
 	// surface_domain_families.cpp:
 	void create_equation_general_abcd(int a, int b, int c, int d, int *coeff, int verbose_level);
+	void create_equation_Cayley_klmn(int k, int l, int m, int n, int *coeff, int verbose_level);
 	void create_equation_bes(int a, int c, int *coeff, int verbose_level);
 	void create_equation_F13(int a, int *coeff, int verbose_level);
 	void create_equation_G13(int a, int *coeff, int verbose_level);
@@ -1070,6 +1071,8 @@ public:
 	~surface_object();
 	void freeself();
 	void null();
+	void init_equation_points_and_lines_only(surface_domain *Surf, int *eqn,
+		int verbose_level);
 	void init_equation(surface_domain *Surf, int *eqn, int verbose_level);
 	void enumerate_points(int verbose_level);
 	void enumerate_points_and_lines(int verbose_level);

@@ -673,6 +673,10 @@ public:
 		int &orbit_idx, int verbose_level);
 	void classify_k_subsets(long int *the_set, int n, int k,
 		tally *&C, int verbose_level);
+	void trace_all_k_subsets_and_compute_frequencies(
+			long int *the_set,
+			int n, int k, int &nCk, int *&isotype, int *&orbit_frequencies, int &nb_orbits,
+			int verbose_level);
 	void trace_all_k_subsets(long int *the_set, int n, int k,
 		int &nCk, int *&isotype, int verbose_level);
 	void get_orbit_representatives(int level, int &nb_orbits, 

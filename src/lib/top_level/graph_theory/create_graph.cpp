@@ -271,6 +271,35 @@ void create_graph::init(
 		FREE_OBJECT(Surf);
 		FREE_OBJECT(F);
 	}
+	else if (description->f_non_attacking_queens_graph) {
+
+		char str[1000];
+
+		graph_theory_domain GT;
+
+		int n;
+
+		n = description->non_attacking_queens_graph_n;
+
+
+		if (f_v) {
+			cout << "create_graph::init before GT.make_non_attacking_queens_graph" << endl;
+		}
+		GT.make_non_attacking_queens_graph(Adj, N, n, verbose_level);
+		if (f_v) {
+			cout << "create_graph::init after GT.make_non_attacking_queens_graph" << endl;
+		}
+
+
+
+		sprintf(str, "non_attacking_queens_graph_%d", n);
+		label.assign(str);
+		sprintf(str, "non\\_attacking\\_queens\\_graph\\_%d", n);
+		label_tex.assign(str);
+
+	}
+
+
 
 	if (description->f_subset) {
 		if (f_v) {
@@ -332,11 +361,11 @@ void create_graph::create_cycle(int &N, int *&Adj,
 
 
 	if (f_v) {
-		cout << "create_graph::create_cycle before Combi.make_cycle_graph" << endl;
+		cout << "create_graph::create_cycle before GT.make_cycle_graph" << endl;
 	}
 	GT.make_cycle_graph(Adj, N, n, verbose_level);
 	if (f_v) {
-		cout << "create_graph::create_cycle after Combi.make_cycle_graph" << endl;
+		cout << "create_graph::create_cycle after GT.make_cycle_graph" << endl;
 	}
 
 	char str[1000];
@@ -365,11 +394,11 @@ void create_graph::create_Hamming(int &N, int *&Adj,
 
 
 	if (f_v) {
-		cout << "create_graph::create_Hamming before Combi.make_Hamming_graph" << endl;
+		cout << "create_graph::create_Hamming before GT.make_Hamming_graph" << endl;
 	}
 	GT.make_Hamming_graph(Adj, N, n, q, verbose_level);
 	if (f_v) {
-		cout << "create_graph::create_Hamming after Combi.make_Hamming_graph" << endl;
+		cout << "create_graph::create_Hamming after GT.make_Hamming_graph" << endl;
 	}
 
 	char str[1000];
@@ -398,11 +427,11 @@ void create_graph::create_Johnson(int &N, int *&Adj,
 
 
 	if (f_v) {
-		cout << "create_graph::create_Johnson before Combi.make_Johnson_graph" << endl;
+		cout << "create_graph::create_Johnson before GT.make_Johnson_graph" << endl;
 	}
 	GT.make_Johnson_graph(Adj, N, n, k, s, verbose_level);
 	if (f_v) {
-		cout << "create_graph::create_Johnson after Combi.make_Johnson_graph" << endl;
+		cout << "create_graph::create_Johnson after GT.make_Johnson_graph" << endl;
 	}
 
 	char str[1000];
@@ -431,11 +460,11 @@ void create_graph::create_Paley(int &N, int *&Adj,
 
 
 	if (f_v) {
-		cout << "create_graph::create_Paley before Combi.make_Paley_graph" << endl;
+		cout << "create_graph::create_Paley before GT.make_Paley_graph" << endl;
 	}
 	GT.make_Paley_graph(Adj, N, q, verbose_level);
 	if (f_v) {
-		cout << "create_graph::create_Paley after Combi.make_Paley_graph" << endl;
+		cout << "create_graph::create_Paley after GT.make_Paley_graph" << endl;
 	}
 
 	char str[1000];
@@ -785,11 +814,11 @@ void create_graph::create_Schlaefli(int &N, int *&Adj,
 
 
 	if (f_v) {
-		cout << "create_graph::create_Schlaefli before Combi.make_Schlaefli_graph" << endl;
+		cout << "create_graph::create_Schlaefli before GT.make_Schlaefli_graph" << endl;
 	}
 	GT.make_Schlaefli_graph(Adj, N, q, verbose_level);
 	if (f_v) {
-		cout << "create_graph::create_Schlaefli after Combi.make_Schlaefli_graph" << endl;
+		cout << "create_graph::create_Schlaefli after GT.make_Schlaefli_graph" << endl;
 	}
 
 	char str[1000];
@@ -1026,11 +1055,11 @@ void create_graph::create_Grassmann(int &N, int *&Adj,
 
 
 	if (f_v) {
-		cout << "create_graph::create_Grassmann before Combi.make_Grassmann_graph" << endl;
+		cout << "create_graph::create_Grassmann before GT.make_Grassmann_graph" << endl;
 	}
 	GT.make_Grassmann_graph(Adj, N, n, k, q, r, verbose_level);
 	if (f_v) {
-		cout << "create_graph::create_Grassmann after Combi.make_Grassmann_graph" << endl;
+		cout << "create_graph::create_Grassmann after GT.make_Grassmann_graph" << endl;
 	}
 
 
@@ -1060,13 +1089,13 @@ void create_graph::create_coll_orthogonal(int &N, int *&Adj,
 
 	if (f_v) {
 		cout << "create_graph::create_coll_orthogonal before "
-				"Combi.make_orthogonal_collinearity_graph" << endl;
+				"GT.make_orthogonal_collinearity_graph" << endl;
 	}
 	GT.make_orthogonal_collinearity_graph(Adj, N,
 			epsilon, d, q, verbose_level);
 	if (f_v) {
 		cout << "create_graph::create_coll_orthogonal after "
-				"Combi.make_orthogonal_collinearity_graph" << endl;
+				"GT.make_orthogonal_collinearity_graph" << endl;
 	}
 
 

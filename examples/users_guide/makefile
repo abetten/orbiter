@@ -6480,7 +6480,20 @@ quartic_curves_q19_classify:
 # should be 14:
 # ago dist: 4^1, 9^1, 2^4, 6^2, 8^3, 24^3
 
+quartic_curves_q19_set_stabilizer:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-list_arguments \
+		-draw_options -end \
+		-define F -finite_field -q 19 -end \
+		-define P -projective_space 2 F \
+		-with P -do \
+		-projective_space_activity \
+			-set_stabilizer 4 surface_catalogue_q19_iso%d_quartics.csv $(NB_CUBIC_SURFACES_Q19) \
+		-end \
+		-print_symbols \
 
+
+# needs work!!!
 
 quartic_curves_17_classify_old: 
 	$(ORBITER_PATH)/orbiter.out -v 3 \
@@ -6854,6 +6867,20 @@ surface_recognize_F13_q4:
 		-print_symbols
 
 
+surface_sweep_Cayley_13:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-draw_options  -end \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space 3 F \
+		-with P -do \
+		-projective_space_activity \
+			-classify_surfaces_with_double_sixes Surf27 -W -end \
+		-end \
+		-with Surf27 -do \
+		-classification_of_cubic_surfaces_with_double_sixes_activity \
+			-sweep \
+		-end \
+		-print_symbols
 
 
 
@@ -7617,7 +7644,7 @@ surface_table:
 	open surfaces_report.pdf
 
 surface_atlas:
-	$(ORBITER_PATH)/orbiter.out -v 3 -create_surface_atlas 17
+	$(ORBITER_PATH)/orbiter.out -v 3 -create_surface_atlas 97
 	~/bin/tth surface_atlas.tex
 
 
@@ -8566,6 +8593,31 @@ F_16_7_power_5:
 
 
 
+
+
+Queens_graph:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define G -graph -non_attacking_queens_graph 8 -end \
+		-with G -do \
+		-graph_theoretic_activity -export_csv -end \
+		-with G -do \
+		-graph_theoretic_activity -export_graphviz -end \
+		-with G -do \
+		-graph_theoretic_activity -save -end \
+		-with G -do \
+		-graph_theoretic_activity -automorphism_group -end \
+		-with G -do \
+		-graph_theoretic_activity -find_cliques \
+			-target_size 8 -output_file 8queens -end \
+		-end 
+
+
+
+	#$(ORBITER_PATH)/orbiter.out -v 2 -draw_matrix  -input_csv_file non_attacking_queens_graph_8.csv \
+	#	-box_width 8 -bit_depth 24 -partition 4 64 64 -end
+	#twopi -Tpng non_attacking_queens_graph_8.gv >non_attacking_queens_graph_8.png
+	pdflatex non_attacking_queens_graph_8_report.tex
+	open non_attacking_queens_graph_8_report.pdf
 
 
 
@@ -11128,460 +11180,6 @@ packing_2Cx2_0_long_orbits_5_fixpoints:
 
 
 
-#######################################
-# PG(3,5)
-#######################################
-
-
-PG_3_5_again:
-	$(ORBITER_PATH)/orbiter.out \
-		-draw_options -end \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space 3 F \
-		-with P -do -projective_space_activity -cheat_sheet -end
-	pdflatex PG_3_5.tex 
-	open PG_3_5.pdf
-
-
-PG_3_5_desarguesian_spread:
-	$(ORBITER_PATH)/orbiter.out -v 3 \
-		-define FQ -finite_field -q 25 -end \
-		-define Fq -finite_field -q 5 -end \
-		-with FQ -and Fq -do \
-		-finite_field_activity \
-			-cheat_sheet_desarguesian_spread 2 \
-		-end
-	pdflatex Desarguesian_Spread_3_5.tex
-	open Desarguesian_Spread_3_5.pdf
-
-#Spread elements by rank: (0, 805, 36, 108, 72, 144, 581, 509, 686, 415, 639, 758, 285, 722, 332, 343, 202, 592, 473, 238, 675, 379, 166, 545, 249, 451 )
-
-
-PG_3_5_spread_table_reg:
-	- mkdir SPREAD_TABLES_5_REG
-	$(ORBITER_PATH)/orbiter.out -v 6 \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space 3 F \
-		-define T -spread_table P 2 "12" "SPREAD_TABLES_5_REG/" \
-		-print_symbols
-	pdflatex Spreads.tex
-	open Spreads.pdf
-
-
-# 12/9/2020: 34 sec on Mac
-# 12 is the index of the regular spread in the classification of spreads
-# 155000 spreads
-
-
-PG_3_5_spread_table_find_and_print_special_regular_spread:
-	- mkdir SPREAD_TABLES_5_REG
-	$(ORBITER_PATH)/orbiter.out -v 6 \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space 3 F \
-		-define T -spread_table P 2 "12" "SPREAD_TABLES_5_REG/" \
-		-with T -do \
-			-spread_table_activity -find_spread $(PG_3_5_DESARGUESIAN_SPREAD) \
-		-end \
-		-with T -do \
-			-spread_table_activity -print_spreads 616 \
-		-end \
-		-print_symbols
-	pdflatex Spreads.tex
-	open Spreads.pdf
-
-#The given spread has index 4 in the spread table
-
-
-
-
-
-# number of spreads: 155000
-
-PG_3_5_spread_table_find_lines_0_805:
-	- mkdir SPREAD_TABLES_5_REG
-	$(ORBITER_PATH)/orbiter.out -v 6 \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space 3 F \
-		-define T -spread_table P 2 "12" "SPREAD_TABLES_5_REG/" \
-		-with T -do \
-			-spread_table_activity -find_spread $(PG_3_4_DESARGUESIAN_SPREAD) \
-		-end \
-		-with T -do \
-			-spread_table_activity -find_spreads_containing_two_lines 0 805 \
-		-end \
-		-print_symbols
-
-
-
-SPREADS_THROUGH_TWO_LINES="0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 440, 441, 442, 443, 444, 445, 446, 447, 448, 449, 610, 611, 612, 613, 614, 615, 616, 617, 618, 619, 830, 831, 832, 833, 834, 835, 836, 837, 838, 839, 1100, 1101, 1102, 1103, 1104, 1105, 1106, 1107, 1108, 1109, 1320, 1321, 1322, 1323, 1324, 1325, 1326, 1327, 1328, 1329, 1540, 1541, 1542, 1543, 1544, 1545, 1546, 1547, 1548, 1549, 1710, 1711, 1712, 1713, 1714, 1715, 1716, 1717, 1718, 1719, 1930, 1931, 1932, 1933, 1934, 1935, 1936, 1937, 1938, 1939, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2220, 2221, 2222, 2223, 2224, 2225, 2226, 2227, 2228, 2229, 2440, 2441, 2442, 2443, 2444, 2445, 2446, 2447, 2448, 2449, 2610, 2611, 2612, 2613, 2614, 2615, 2616, 2617, 2618, 2619, 2830, 2831, 2832, 2833, 2834, 2835, 2836, 2837, 2838, 2839, 3100, 3101, 3102, 3103, 3104, 3105, 3106, 3107, 3108, 3109, 3320, 3321, 3322, 3323, 3324, 3325, 3326, 3327, 3328, 3329, 3540, 3541, 3542, 3543, 3544, 3545, 3546, 3547, 3548, 3549, 3710, 3711, 3712, 3713, 3714, 3715, 3716, 3717, 3718, 3719, 3930, 3931, 3932, 3933, 3934, 3935, 3936, 3937, 3938, 3939"
-
-PG_3_5_print_spreads_through_2_lines_and_export:
-	- mkdir SPREAD_TABLES_5_REG
-	$(ORBITER_PATH)/orbiter.out -v 6 \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space 3 F \
-		-define T -spread_table P 2 "12" "SPREAD_TABLES_5_REG/" \
-		-with T -do \
-			-spread_table_activity -print_spreads $(SPREADS_THROUGH_TWO_LINES) \
-		-end \
-		-with T -do \
-			-spread_table_activity -export_spreads_to_csv \
-			spreads_through_0_805.csv $(SPREADS_THROUGH_TWO_LINES) \
-		-end \
-		-print_symbols
-	pdflatex Spreads.tex
-	open Spreads.pdf
-
-PG_3_5_print_spreads_through_2_lines:
-	- mkdir SPREAD_TABLES_5_REG
-	$(ORBITER_PATH)/orbiter.out -v 6 \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space 3 F \
-		-define T -spread_table P 2 "12" "SPREAD_TABLES_5_REG/" \
-		-with T -do \
-			-spread_table_activity \
-			-print_spreads $(SPREADS_THROUGH_TWO_LINES) \
-		-end \
-		-print_symbols
-
-
-PG_3_5_export_spreads_through_2_lines:
-	- mkdir SPREAD_TABLES_5_REG
-	$(ORBITER_PATH)/orbiter.out -v 6 \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space 3 F \
-		-define T -spread_table P 2 "12" "SPREAD_TABLES_5_REG/" \
-		-with T -do \
-			-spread_table_activity -export_spreads_to_csv \
-			spreads_through_0_805.csv $(SPREADS_THROUGH_TWO_LINES) \
-		-end \
-		-print_symbols
-
-
-
-
-
-#type of covering based on all lines together with line 0:
-#( 200^625, 0^181 )
-
-
-#Exterior square roots:
-
-#elt of order 3:
-#the exterior square root of f is X=
-#[1 0 0 0]
-#[0 1 0 0]
-#[0 0 2 2]
-#[0 0 4 2]
-
-#elt of order 31:
-#the exterior square root of g is Z=
-#[1 0 0 0]
-#[0 3 4 3]
-#[0 3 3 4]
-#[0 3 2 3]
-
-
-PGL_4_5_order_3:
-	$(ORBITER_PATH)/orbiter.out -v 3 \
-		-draw_options -end \
-		-define G -linear_group -PGL 4 5 \
-			-subgroup_by_generators "PGL_4_5_order_3"  3 1 \
-			"1,0,0,0, 0,1,0,0, 0,0,2,2, 0,0,4,2" \
-		-end \
-		-with G -do \
-		-group_theoretic_activities \
-		-report \
-		-end
-	pdflatex PGL_4_5_Subgroup_PGL_4_5_order_3_3_report.tex
-	open PGL_4_5_Subgroup_PGL_4_5_order_3_3_report.pdf
-
-PGL_4_5_order_31:
-	$(ORBITER_PATH)/orbiter.out -v 3 \
-		-draw_options -end \
-		-define G -linear_group -PGL 4 5 \
-			-subgroup_by_generators "PGL_4_5_order_31"  31 1 \
-			"1,0,0,0, 0,3,4,3, 0,3,3,4, 0,3,2,3" \
-		-end \
-		-with G -do \
-		-group_theoretic_activities \
-		-report \
-		-end
-	pdflatex PGL_4_5_Subgroup_PGL_4_5_order_31_31_report.tex
-	open PGL_4_5_Subgroup_PGL_4_5_order_31_31_report.pdf
-
-
-PGL_4_5_order_93:
-	$(ORBITER_PATH)/orbiter.out -v 3 \
-		-draw_options -end \
-		-define G -linear_group -PGL 4 5 \
-			-subgroup_by_generators "Michael"  93 2 \
-			"1,0,0,0, 0,1,0,0, 0,0,2,2, 0,0,4,2" \
-			"1,0,0,0, 0,3,4,3, 0,3,3,4, 0,3,2,3" \
-		-end \
-		-with G -do \
-		-group_theoretic_activities \
-		-report \
-		-end
-	pdflatex PGL_4_5_Subgroup_Michael_93_report.tex
-	open PGL_4_5_Subgroup_Michael_93_report.pdf
-
-
-PGL_4_5_order_3_props:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-draw_options -end \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space 3 F  \
-		-with P -do \
-		-projective_space_activity \
-			-cheat_sheet_for_decomposition_by_element_PG 1 "1,0,0,0, 0,1,0,0, 0,0,2,2, 0,0,4,2" "PG_3_5_elt_3.tex" \
-		-end
-		pdflatex PG_3_5_elt_3.tex
-		open PG_3_5_elt_3.pdf
-
-
-
-PGL_4_5_order_3_norm:
-	$(ORBITER_PATH)/orbiter.out -v 6 \
-		-define G -linear_group -PGL 4 5 -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-normalizer_of_cyclic_subgroup "3B" "1,0,0,0, 0,1,0,0, 0,0,2,2, 0,0,4,2"
-	pdflatex normalizer_of_3B_in_PGL_4_5.tex
-	open normalizer_of_3B_in_PGL_4_5.pdf
-
-
-#5760
-#"1,0,0,0,0,4,0,0,0,0,1,0,0,0,0,1, " \
-#"1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,4, " \
-#"1,0,0,0,0,4,0,0,0,0,4,0,0,0,0,4, " \
-#"1,0,0,0,0,1,0,0,0,0,3,0,0,0,0,3, " \
-#"1,0,0,0,0,3,0,0,0,0,1,0,0,0,0,1, " \
-#"1,0,0,0,0,1,0,0,0,0,2,4,0,0,2,3, " \
-#"1,0,0,0,4,4,0,0,0,0,1,0,0,0,0,1, " \
-#"0,1,0,0,1,0,0,0,0,0,4,0,0,0,0,4," \
-
-
-
-PGL_4_5_order_31_norm:
-	$(ORBITER_PATH)/orbiter.out -v 6 \
-		-define G -linear_group -PGL 4 5 -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-normalizer_of_cyclic_subgroup "31" "1,0,0,0, 0,3,4,3, 0,3,3,4, 0,3,2,3"
-	pdflatex normalizer_of_31_in_PGL_4_5.tex
-	open normalizer_of_31_in_PGL_4_5.pdf
-
-#372:
-#"1,0,0,0,0,4,0,0,0,0,4,0,0,0,0,4, " \
-#"1,0,0,0,0,3,0,0,0,0,3,0,0,0,0,3, " \
-#"1,0,0,0,0,4,0,0,0,0,2,1,0,3,2,4, " \
-#"1,0,0,0,0,0,1,0,0,0,0,1,0,1,1,3," \
-
-
-# assume symmetry group #B:
-
-
-PG_3_5_3B:
-	$(ORBITER_PATH)/orbiter.out -v 5 \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space 3 F \
-		-define T -spread_table P 2 "12" "SPREAD_TABLES_5_REG/" \
-		-define PW -packing_with_symmetry_assumption T \
-				-problem_label _reg_spreads \
-				-output_path PG_3_5_regular_spreads_3B_ \
-				-H $(PGL_4_5_SUBGROUP_3B) -end \
-				-N $(PGL_4_5_SUBGROUP_3B_NORMALIZER) -end \
-			-end \
-		-with PW -do \
-		-packing_with_symmetry_assumption_activity \
-			-report \
-		-end \
-		-print_symbols
-
-
-# produces 
-# PG_3_5_regular_spreads_3B_PGL_4_5_Subgroup_3B_3_reg_spreads_line_orbits_orbits_report.tex
-# H_spread_orbits_orbit_types_report.tex
-# H_spread_orbits_reduced_orbit_types_report.tex
-
-
-
-PG_3_5_3B_fixp:
-	$(ORBITER_PATH)/orbiter.out -v 5 \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space 3 F \
-		-define T -spread_table P 2 "12" "SPREAD_TABLES_5_REG/" \
-		-define PW -packing_with_symmetry_assumption T \
-				-problem_label _reg_spreads \
-				-output_path PG_3_5_regular_spreads_3B_ \
-				-H $(PGL_4_5_SUBGROUP_3B) -end \
-				-N $(PGL_4_5_SUBGROUP_3B_NORMALIZER) -end \
-			-end \
-		-define PWF -packing_with_symmetry_assumption_choose_fixed_points PW \
-			1 -W \
-				-problem_label PG_3_5_regular_spreads_3B_PGL_4_5_Subgroup_3B_3_reg_spreads_fixp_graph_cliques \
-			-end \
-		-with PWF -do \
-			-packing_fixed_points_activity \
-				-report \
-			-end \
-		-print_symbols
-	pdflatex Packings_q5.tex
-	open Packings_q5.pdf
-
-
-
-
-# PG_3_5_regular_spreads_3B_PGL_4_5_Subgroup_3B_3_reg_spreads_line_orbits_orbits_report.tex
-# H_spread_orbits_orbit_types_report.tex
-# H_spread_orbits_reduced_orbit_types_report.tex
-# PG_3_5_regular_spreads_3B_PGL_4_5_Subgroup_3B_3_reg_spreads_graph.bin
-# PG_3_5_regular_spreads_3B_PGL_4_5_Subgroup_3B_3_reg_spreads_fixp_graph_cliques_lvl_1
-# PG_3_5_regular_spreads_3B_PGL_4_5_Subgroup_3B_3_reg_spreads_fixp_graph_cliques.csv
-
-
-
-
-PG_3_5_3B_long:
-	$(ORBITER_PATH)/orbiter.out -v 5 \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space 3 F \
-		-define T -spread_table P 2 "12" "SPREAD_TABLES_5_REG/" \
-		-define PW -packing_with_symmetry_assumption T \
-				-problem_label _reg_spreads \
-				-output_path PG_3_5_regular_spreads_3B_ \
-				-H $(PGL_4_5_SUBGROUP_3B) -end \
-				-N $(PGL_4_5_SUBGROUP_3B_NORMALIZER) -end \
-			-end \
-		-define PWF -packing_choose_fixed_points PW \
-			1 -W \
-				-problem_label \
-				PG_3_5_regular_spreads_3B_PGL_4_5_Subgroup_3B_3_reg_spreads_fixp_graph_cliques \
-			-end \
-		-define L -packing_long_orbits PWF -orbit_length 3 -clique_size 10 \
-			-list_of_cases_from_file \
-			PG_3_5_regular_spreads_3B_PGL_4_5_Subgroup_3B_3_reg_spreads_fixp_graph_cliques.csv \
-			-create_graphs \
-		-end \
-		-print_symbols
-
-
-
-	#pdflatex Packings_q5.tex
-	#open Packings_q5.pdf
-
-
-#-rw-r--r--    1 betten  staff   16433357 Apr  6 10:04 PG_3_5_regular_spreads_3B_PGL_4_5_Subgroup_3B_3_reg_spreads_fpc0.graph
-#-rw-r--r--    1 betten  staff         36 Apr  6 10:04 PG_3_5_regular_spreads_3B_PGL_4_5_Subgroup_3B_3_reg_spreads_fixp_graph_cliques_count.csv
-#-rw-r--r--    1 betten  staff        122 Apr  6 10:04 G PG_3_5_regular_spreads_3B_PGL_4_5_Subgroup_3B_3_reg_spreads_fixp_graph_cliques_packings.csv 
-
-
-
-
-
-
-
-PG_3_5_3B_fp0_long_orbits_find_cliques:
-	$(ORBITER_PATH)/orbiter.out -v 20 \
-		-define Gamma -graph \
-			-load_from_file \
-			PG_3_5_regular_spreads_3B_PGL_4_5_Subgroup_3B_3_reg_spreads_fpc0.graph \
-		-end \
-		-with Gamma -do \
-		-graph_theoretic_activity \
-			-find_cliques -target_size 10 \
-		-end \
-		-end \
-		-print_symbols
-		
-
-
-#nb_sol = 768
-# user time 8:33
-#PG_3_5_regular_spreads_3B_PGL_4_5_Subgroup_3B_3_reg_spreads_fpc0_sol.txt
-
-
-
-#nb_sol = 768
-#User time: 7:52
-# Michael Epstein: about 8hrs on ripoff with magma
-
-
-
-PG_3_5_3B_long_read:
-	$(ORBITER_PATH)/orbiter.out -v 5 \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space 3 F \
-		-define T -spread_table P 2 "12" "SPREAD_TABLES_5_REG/" \
-		-define PW -packing_with_symmetry_assumption T \
-				-problem_label _reg_spreads \
-				-output_path PG_3_5_regular_spreads_3B_ \
-				-H $(PGL_4_5_SUBGROUP_3B) -end \
-				-N $(PGL_4_5_SUBGROUP_3B_NORMALIZER) -end \
-			-end \
-		-define PWF -packing_choose_fixed_points PW \
-			1 -W \
-				-problem_label \
-				PG_3_5_regular_spreads_3B_PGL_4_5_Subgroup_3B_3_reg_spreads_fixp_graph_cliques \
-			-end \
-		-define L -packing_long_orbits PWF -orbit_length 3 -clique_size 10 \
-			-list_of_cases_from_file \
-			PG_3_5_regular_spreads_3B_PGL_4_5_Subgroup_3B_3_reg_spreads_fixp_graph_cliques.csv \
-			-read_solutions \
-		-end \
-		-print_symbols
-
-#-rw-r--r--    1 betten  staff     103119 Apr  6 10:57 PG_3_5_regular_spreads_3B_PGL_4_5_Subgroup_3B_3_reg_spreads_line_orbits_orbits_report.tex
-#-rw-r--r--    1 betten  staff      70559 Apr  6 10:57 H_spread_orbits_orbit_types_report.tex
-#-rw-r--r--@   1 betten  staff      69505 Apr  6 10:57 H_spread_orbits_reduced_orbit_types_report.tex
-#-rw-r--r--    1 betten  staff        288 Apr  6 10:57 PG_3_5_regular_spreads_3B_PGL_4_5_Subgroup_3B_3_reg_spreads_graph.bin
-#-rw-r--r--@   1 betten  staff        233 Apr  6 10:57 PG_3_5_regular_spreads_3B_PGL_4_5_Subgroup_3B_3_reg_spreads_fixp_graph_cliques_lvl_1
-#-rw-r--r--@   1 betten  staff         15 Apr  6 10:57 PG_3_5_regular_spreads_3B_PGL_4_5_Subgroup_3B_3_reg_spreads_fixp_graph_cliques.csv
-#-rw-r--r--    1 betten  staff         36 Apr  6 10:57 PG_3_5_regular_spreads_3B_PGL_4_5_Subgroup_3B_3_reg_spreads_fixp_graph_cliques_count.csv
-#-rw-r--r--    1 betten  staff       1690 Apr  6 10:57 PG_3_5_regular_spreads_3B_PGL_4_5_Subgroup_3B_3_reg_spreads_fixp_graph_cliques_packings.csv
-
-
-
-
-
-PGL_4_5_3B_clique0_sajeeb:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-create_graph \
-			-load_from_file PGL_4_5_Subgroup_3B_3_reg_spreads_fpc0.graph \
-		-end \
-		-graph_theoretic_activity \
-			-find_cliques -Sajeeb -target_size 10 \
-		-end
-	- mkdir SOLUTIONS
-	cp PGL_4_5_Subgroup_3B_3_reg_spreads_fpc0_sol.txt SOLUTIONS
-
-# 768 solutions
-# PGL_4_5_Subgroup_3B_3_reg_spreads_fpc0_sol.txt
-# PGL_4_5_Subgroup_3B_3_reg_spreads_fpc0_sol.txt
-
-
-
-PGL_4_5_packing_3B_iso:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space 3 F \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-		-input -file_of_packings_through_spread_table \
-			PGL_4_5_Subgroup_3B_3_reg_spreads_graph_cliques_by_type_100000000000000000000_packings.csv \
-			SPREAD_TABLES_5/spread_25_spreads.csv \
-		-end \
-		-classification_prefix packings_3B \
-		-report \
-		-end
-	pdflatex packings_3B_classification.tex
-	open packings_3B_classification.pdf
-
-#User time: 14:43
-
-
 
 
 #####
@@ -13378,3 +12976,7 @@ create_notes:
 		-line_numeric "%%%%tth: \begin{html} <a href="PNG/notes_page%03d.png"> Page %03d </a> \end{html}  "  \
 		-line_numeric ""
 	cat job* >J.txt
+	
+michael:
+	$(ORBITER_PATH)/orbiter.out -v 5 -inverse_mod 25 31
+

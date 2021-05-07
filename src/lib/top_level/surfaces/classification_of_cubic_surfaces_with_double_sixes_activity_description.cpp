@@ -37,6 +37,8 @@ classification_of_cubic_surfaces_with_double_sixes_activity_description::classif
 
 	f_create_source_code = FALSE;
 
+	f_sweep = FALSE;
+
 }
 
 classification_of_cubic_surfaces_with_double_sixes_activity_description::~classification_of_cubic_surfaces_with_double_sixes_activity_description()
@@ -114,6 +116,9 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 		}
 		else if (stringcmp(argv[i], "-create_source_code") == 0) {
 			f_create_source_code = TRUE;
+		}
+		else if (stringcmp(argv[i], "-sweep") == 0) {
+			f_sweep = TRUE;
 		}
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "classification_of_cubic_surfaces_with_double_sixes_activity_description::read_arguments -end" << endl;
