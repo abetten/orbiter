@@ -130,6 +130,7 @@ class graph_classification_activity;
 class canonical_form_classifier_description;
 class canonical_form_classifier;
 class canonical_form;
+class compute_stabilizer;
 class object_in_projective_space_with_action;
 class projective_space_activity_description;
 class projective_space_activity;

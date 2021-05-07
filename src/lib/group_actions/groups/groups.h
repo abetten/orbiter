@@ -867,6 +867,8 @@ public:
 		int verbose_level);
 	void compute_orbit_statistic(int *set, int set_size, 
 		int *orbit_count, int verbose_level);
+	void compute_orbit_statistic_lint(long int *set, int set_size,
+		int *orbit_count, int verbose_level);
 	void orbits_as_set_of_sets(set_of_sets *&S, int verbose_level);
 	void get_orbit_reps(int *&Reps, int &nb_reps, int verbose_level);
 	int find_shortest_orbit_if_unique(int &idx);

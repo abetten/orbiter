@@ -69,6 +69,9 @@ create_graph_description::create_graph_description()
 
 	f_trihedral_pair_disjointness_graph = FALSE;
 
+	f_non_attacking_queens_graph = FALSE;
+	non_attacking_queens_graph_n = 0;
+
 	f_subset = FALSE;
 	//std::string subset_label;
 	//std::string subset_label_tex;
@@ -167,6 +170,11 @@ int create_graph_description::read_arguments(
 		else if (stringcmp(argv[i], "-trihedral_pair_disjointness_graph") == 0) {
 			f_trihedral_pair_disjointness_graph = TRUE;
 			cout << "-trihedral_pair_disjointness_graph " << endl;
+		}
+		else if (stringcmp(argv[i], "-non_attacking_queens_graph") == 0) {
+			f_non_attacking_queens_graph = TRUE;
+			non_attacking_queens_graph_n = strtoi(argv[++i]);
+			cout << "-non_attacking_queens_graph " << non_attacking_queens_graph_n << endl;
 		}
 		else if (stringcmp(argv[i], "-subset") == 0) {
 			f_subset = TRUE;

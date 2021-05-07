@@ -1121,7 +1121,6 @@ int compare_decreasingly_int(int a, int b);
 int compare_increasingly_lint(long int a, long int b);
 int compare_decreasingly_lint(long int a, long int b);
 int int_vec_compare(int *p, int *q, int len);
-//int int_vec_compare(int *p, int *q, int len);
 int lint_vec_compare(long int *p, long int *q, int len);
 int int_vec_compare_stride(int *p, int *q, int len, int stride);
 

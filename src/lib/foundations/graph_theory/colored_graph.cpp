@@ -2300,7 +2300,6 @@ void colored_graph::early_test_func_for_clique_search(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
 	long int j, a, pt;
 
 	if (f_v) {

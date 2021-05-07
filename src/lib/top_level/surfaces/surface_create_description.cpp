@@ -62,6 +62,13 @@ surface_create_description::surface_create_description()
 	//arc_lifting_two_lines_text = NULL;
 	f_arc_lifting_with_two_lines = FALSE;
 
+	f_Cayley_form = FALSE;
+	Cayley_form_k = 0;
+	Cayley_form_l = 0;
+	Cayley_form_m = 0;
+	Cayley_form_n = 0;
+
+
 	f_by_equation = FALSE;
 	//std::string equation_name_of_formula;
 	//std::string equation_name_of_formula_tex;
@@ -174,7 +181,7 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 			family_general_abcd_c = strtoi(argv[++i]);
 			family_general_abcd_d = strtoi(argv[++i]);
 			cout << "-family_general_abcd "
-					<< family_general_abcd_a << " " << family_general_abcd_b
+					<< family_general_abcd_a << " " << family_general_abcd_b << " "
 					<< family_general_abcd_c << " " << family_general_abcd_d
 					<< endl;
 		}
@@ -189,6 +196,17 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 			arc_lifting_two_lines_text.assign(argv[++i]);
 			cout << "-arc_lifting_with_two_lines " << arc_lifting_text
 					<< " " << arc_lifting_two_lines_text << endl;
+		}
+		else if (stringcmp(argv[i], "-Cayley_form") == 0) {
+			f_Cayley_form = TRUE;
+			Cayley_form_k = strtoi(argv[++i]);
+			Cayley_form_l = strtoi(argv[++i]);
+			Cayley_form_m = strtoi(argv[++i]);
+			Cayley_form_n = strtoi(argv[++i]);
+			cout << "-Cayley_form "
+					<< Cayley_form_k << " " << Cayley_form_l << " "
+					<< Cayley_form_m << " " << Cayley_form_n
+					<< endl;
 		}
 		else if (stringcmp(argv[i], "-by_equation") == 0) {
 			f_by_equation = TRUE;

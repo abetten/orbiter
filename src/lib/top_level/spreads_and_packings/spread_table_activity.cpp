@@ -212,12 +212,24 @@ void spread_table_activity::report_spreads(int *spread_idx, int nb, int verbose_
 		char title[1000];
 		char author[1000];
 
-		snprintf(str, 1000, "Spreads.tex");
-		fname.assign(str);
 		snprintf(title, 1000, "Spreads");
 		//strcpy(author, "");
 		author[0] = 0;
 
+		sprintf(str, "Spreads");
+		fname.assign(str);
+
+
+
+		int i, idx;
+
+
+		for (i = 0; i < nb; i++) {
+			idx = spread_idx[i];
+			sprintf(str, "_%d", idx);
+			fname.append(str);
+		}
+		fname.append(".tex");
 
 		{
 			ofstream ost(fname);
@@ -239,7 +251,6 @@ void spread_table_activity::report_spreads(int *spread_idx, int nb, int verbose_
 				cout << "spread_table_activity::report_spread before report_spread2" << endl;
 			}
 
-			int i, idx;
 
 
 			for (i = 0; i < nb; i++) {

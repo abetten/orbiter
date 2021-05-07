@@ -2561,6 +2561,27 @@ void schreier::compute_orbit_statistic(int *set, int set_size,
 	}
 }
 
+void schreier::compute_orbit_statistic_lint(long int *set, int set_size,
+	int *orbit_count, int verbose_level)
+// orbit_count[nb_orbits]
+{
+	int f_v = (verbose_level >= 1);
+	int i, a, o;
+
+	if (f_v) {
+		cout << "schreier::compute_orbit_statistic_lint" << endl;
+	}
+	Orbiter->Int_vec.zero(orbit_count, nb_orbits);
+	for (i = 0; i < set_size; i++) {
+		a = set[i];
+		o = orbit_number(a);
+		orbit_count[o]++;
+	}
+	if (f_v) {
+		cout << "schreier::compute_orbit_statistic_lint done" << endl;
+	}
+}
+
 
 void schreier::orbits_as_set_of_sets(
 		set_of_sets *&S, int verbose_level)

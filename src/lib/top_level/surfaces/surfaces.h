@@ -173,6 +173,8 @@ public:
 
 	int f_create_source_code;
 
+	int f_sweep;
+
 
 	classification_of_cubic_surfaces_with_double_sixes_activity_description();
 	~classification_of_cubic_surfaces_with_double_sixes_activity_description();
@@ -216,6 +218,8 @@ public:
 			surface_create_description *surface_descr,
 			int verbose_level);
 	void do_write_source_code(int verbose_level);
+	void do_sweep(
+			int verbose_level);
 
 
 };
@@ -788,6 +792,7 @@ public:
 	void recognition(
 			surface_create_description *Descr,
 			int verbose_level);
+	void sweep_Cayley(int verbose_level);
 
 };
 
@@ -932,6 +937,9 @@ public:
 			std::string &arc_lifting_text,
 			std::string &arc_lifting_two_lines_text,
 			int verbose_level);
+	void create_surface_Cayley_form(
+			int k, int l, int m, int n,
+			int verbose_level);
 	void create_surface_by_equation(
 			std::string &name_of_formula,
 			std::string &name_of_formula_tex,
@@ -1011,6 +1019,13 @@ public:
 
 	int f_arc_lifting_with_two_lines;
 	std::vector<std::string> select_double_six_string;
+
+	int f_Cayley_form;
+	int Cayley_form_k;
+	int Cayley_form_l;
+	int Cayley_form_m;
+	int Cayley_form_n;
+
 
 	int f_by_equation;
 	std::string equation_name_of_formula;

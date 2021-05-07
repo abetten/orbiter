@@ -143,6 +143,7 @@ MODULES= \
 		foundations/graphics/animate.o \
 		foundations/graphics/draw_bitmap_control.o \
 		foundations/graphics/draw_mod_n_description.o \
+		foundations/graphics/draw_projective_curve_description.o \
 		foundations/graphics/drawable_set_of_objects.o \
 		foundations/graphics/EasyBMP.o \
 		foundations/graphics/graphical_output.o \
@@ -403,6 +404,7 @@ MODULES= \
 		top_level/projective_space/canonical_form_classifier_description.o \
 		top_level/projective_space/canonical_form_classifier.o \
 		top_level/projective_space/canonical_form.o \
+		top_level/projective_space/compute_stabilizer.o \
 		top_level/projective_space/object_in_projective_space_with_action.o \
 		top_level/projective_space/projective_space_activity_description.o \
 		top_level/projective_space/projective_space_activity.o \

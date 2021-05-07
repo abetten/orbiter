@@ -9,6 +9,7 @@ MODULES = \
 	animate.o \
 	draw_bitmap_control.o \
 	draw_mod_n_description.o \
+	draw_projective_curve_description.o \
 	drawable_set_of_objects.o \
 	EasyBMP.o \
 	graphical_output.o \

@@ -2138,6 +2138,7 @@ public:
 			int nb_iso_types_of_spreads,
 			std::string &path_to_spread_tables,
 			int verbose_level);
+	void create_file_names(int verbose_level);
 	void init_spread_table(int nb_spreads,
 			long int *spread_table, int *spread_iso_type,
 			int verbose_level);
@@ -2149,6 +2150,7 @@ public:
 	void init_reduced(
 			int nb_select, int *select,
 			spread_tables *old_spread_table,
+			std::string &path_to_spread_tables,
 			int verbose_level);
 	long int *get_spread(int spread_idx);
 	void find_spreads_containing_two_lines(std::vector<int> &v, int line1, int line2, int verbose_level);

@@ -132,24 +132,8 @@ void spread_tables::init(projective_space *P,
 		cout << "spread_tables::init prefix=" << spread_tables::prefix << endl;
 	}
 
-	fname_dual_line_idx.assign(prefix);
-	fname_dual_line_idx.append("_dual_line_idx.csv");
 
-	fname_self_dual_lines.assign(prefix);
-	fname_self_dual_lines.append("_self_dual_line_idx.csv");
-
-	fname_spreads.assign(prefix);
-	fname_spreads.append("_spreads.csv");
-
-	fname_isomorphism_type_of_spreads.assign(prefix);
-	fname_isomorphism_type_of_spreads.append("_spreads_iso.csv");
-
-	fname_dual_spread.assign(prefix);
-	fname_dual_spread.append("_dual_spread_idx.csv");
-
-	fname_self_dual_spreads.assign(prefix);
-	fname_self_dual_spreads.append("_self_dual_spreads.csv");
-
+	create_file_names(verbose_level);
 
 	if (f_v) {
 		cout << "spread_tables::init before Gr->compute_dual_line_idx" << endl;
@@ -177,6 +161,27 @@ void spread_tables::init(projective_space *P,
 	}
 }
 
+void spread_tables::create_file_names(int verbose_level)
+{
+	fname_dual_line_idx.assign(prefix);
+	fname_dual_line_idx.append("_dual_line_idx.csv");
+
+	fname_self_dual_lines.assign(prefix);
+	fname_self_dual_lines.append("_self_dual_line_idx.csv");
+
+	fname_spreads.assign(prefix);
+	fname_spreads.append("_spreads.csv");
+
+	fname_isomorphism_type_of_spreads.assign(prefix);
+	fname_isomorphism_type_of_spreads.append("_spreads_iso.csv");
+
+	fname_dual_spread.assign(prefix);
+	fname_dual_spread.append("_dual_spread_idx.csv");
+
+	fname_self_dual_spreads.assign(prefix);
+	fname_self_dual_spreads.append("_self_dual_spreads.csv");
+
+}
 void spread_tables::init_spread_table(int nb_spreads,
 		long int *spread_table, int *spread_iso_type,
 		int verbose_level)
@@ -219,10 +224,12 @@ void spread_tables::init_tables(int nb_spreads,
 void spread_tables::init_reduced(
 		int nb_select, int *select,
 		spread_tables *old_spread_table,
+		std::string &path_to_spread_tables,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, a;
+	number_theory_domain NT;
 
 	if (f_v) {
 		cout << "spread_tables::init_reduced" << endl;
@@ -233,6 +240,18 @@ void spread_tables::init_reduced(
 	Gr = P->Grass_lines;
 	q = F->q;
 	d = 4; // = 4
+
+
+	prefix.assign(path_to_spread_tables);
+
+	char str[1000];
+	sprintf(str, "reduced_spread_%d", NT.i_power_j(q, 2));
+
+	prefix.append(str);
+
+	create_file_names(verbose_level);
+
+
 #if 0
 	P = NEW_OBJECT(projective_space);
 	P->init(3, F,
@@ -263,6 +282,69 @@ void spread_tables::init_reduced(
 				spread_table + i * spread_size, spread_size);
 		spread_iso_type[i] = old_spread_table->spread_iso_type[a];
 	}
+
+	sorting Sorting;
+	int *select_sorted;
+	int *select_original_idx;
+
+	select_sorted = NEW_int(nb_select);
+	select_original_idx = NEW_int(nb_select);
+	Orbiter->Int_vec.copy(select, select_sorted, nb_select);
+
+	if (f_v) {
+		cout << "spread_tables::init_reduced "
+				"sorting good spreads" << endl;
+	}
+	Sorting.int_vec_heapsort_with_log(select_sorted, select_original_idx, nb_select);
+	for (i = 0; i < nb_spreads; i++) {
+		select_original_idx[i] = i;
+	}
+	if (f_v) {
+		cout << "spread_tables::init_reduced "
+				"sorting good spreads done" << endl;
+	}
+	int idx;
+
+	if (f_v) {
+		cout << "spread_tables::init_reduced computing dual_spread_idx" << endl;
+	}
+	dual_spread_idx = NEW_lint(nb_spreads);
+	for (i = 0; i < nb_spreads; i++) {
+		a = select[i];
+		if (!Sorting.int_vec_search(select_sorted, nb_spreads, old_spread_table->dual_spread_idx[a], idx)) {
+			//cout << "spread_tables::init_reduced unable to find the dual spread in the selection" << endl;
+			//exit(1);
+			idx = -1;
+		}
+		else {
+			idx = select_original_idx[idx];
+		}
+		dual_spread_idx[i] = idx;
+	}
+	if (f_v) {
+		cout << "spread_tables::init_reduced computing dual_spread_idx done" << endl;
+	}
+
+	FREE_int(select_sorted);
+	FREE_int(select_original_idx);
+
+	if (f_v) {
+		cout << "spread_tables::init_reduced computing self_dual_spreads" << endl;
+	}
+	nb_self_dual_spreads = 0;
+	self_dual_spreads = NEW_lint(nb_spreads);
+	for (i = 0; i < nb_spreads; i++) {
+		idx = dual_spread_idx[i];
+		if (idx == i) {
+			self_dual_spreads[nb_self_dual_spreads++] = i;
+		}
+	}
+	if (f_v) {
+		cout << "spread_tables::init_reduced computing self_dual_spreads done" << endl;
+	}
+
+
+
 	if (f_v) {
 		cout << "spread_tables::init_reduced done" << endl;
 	}

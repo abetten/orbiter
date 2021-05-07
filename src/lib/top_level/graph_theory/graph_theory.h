@@ -160,6 +160,9 @@ public:
 
 	int f_trihedral_pair_disjointness_graph;
 
+	int f_non_attacking_queens_graph;
+	int non_attacking_queens_graph_n;
+
 	int f_subset;
 	std::string subset_label;
 	std::string subset_label_tex;

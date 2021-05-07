@@ -3150,6 +3150,8 @@ void surface_classify_wedge::test_isomorphism(
 }
 
 
+
+
 void surface_classify_wedge::recognition(
 		surface_create_description *Descr,
 		int verbose_level)
@@ -3209,6 +3211,150 @@ void surface_classify_wedge::recognition(
 		cout << "surface_classify_wedge::recognition done" << endl;
 	}
 }
+
+
+void surface_classify_wedge::sweep_Cayley(
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_classify_wedge::sweep_Cayley" << endl;
+	}
+	int isomorphic_to;
+	int *Elt_isomorphism;
+
+	Elt_isomorphism = NEW_int(A->elt_size_in_int);
+
+
+	int k, l, m, n;
+	int q4 = q * q * q * q;
+	int *Table;
+	int *Table_reverse;
+	int nb_iso;
+	int cnt = 0;
+	int nb_identified = 0;
+	int h;
+
+
+	knowledge_base K;
+
+	nb_iso = K.cubic_surface_nb_reps(q);
+
+	Table = NEW_int(q4 * 5);
+	Table_reverse = NEW_int(nb_iso * 5);
+
+	for (h = 0; h < nb_iso; h++) {
+		Table_reverse[h * 5 + 0] = -1;
+		Table_reverse[h * 5 + 1] = -1;
+		Table_reverse[h * 5 + 2] = -1;
+		Table_reverse[h * 5 + 3] = -1;
+		Table_reverse[h * 5 + 4] = -1;
+	}
+
+
+	for (k = 0; k < q; k++) {
+		for (l = 1; l < q; l++) {
+			for (m = 1; m < q; m++) {
+				for (n = 1; n < q; n++) {
+
+
+					surface_create_description Descr;
+					surface_create *SC;
+
+					SC = NEW_OBJECT(surface_create);
+
+					Descr.f_Cayley_form = TRUE;
+					Descr.Cayley_form_k = k;
+					Descr.Cayley_form_l = l;
+					Descr.Cayley_form_m = m;
+					Descr.Cayley_form_n = n;
+
+					Descr.f_q = TRUE;
+					Descr.q = q;
+
+					if (f_v) {
+						cout << "k=" << k << " l=" << l << " m=" << m << " n=" << n << " before SC->init" << endl;
+					}
+					SC->init(&Descr, Surf_A, 0 /*verbose_level*/);
+					if (FALSE) {
+						cout << "after SC->init" << endl;
+					}
+
+					if (SC->SO->nb_lines == 27) {
+
+						identify_surface(
+							SC->SO->eqn,
+							isomorphic_to, Elt_isomorphism,
+							verbose_level);
+						if (f_v) {
+							cout << "surface " << SC->label_txt << " belongs to iso type " << isomorphic_to << endl;
+						}
+
+						Table[cnt * 5 + 0] = k;
+						Table[cnt * 5 + 1] = l;
+						Table[cnt * 5 + 2] = m;
+						Table[cnt * 5 + 3] = n;
+						Table[cnt * 5 + 4] = isomorphic_to;
+
+						if (Table_reverse[isomorphic_to * 5 + 0] == -1) {
+							Table_reverse[isomorphic_to * 5 + 0] = cnt;
+							Table_reverse[isomorphic_to * 5 + 1] = k;
+							Table_reverse[isomorphic_to * 5 + 2] = l;
+							Table_reverse[isomorphic_to * 5 + 3] = m;
+							Table_reverse[isomorphic_to * 5 + 4] = n;
+							nb_identified++;
+						}
+						cnt++;
+
+					}
+
+					FREE_OBJECT(SC);
+
+					if (nb_identified == nb_iso) {
+						break;
+					}
+
+				}
+				if (nb_identified == nb_iso) {
+					break;
+				}
+			}
+			if (nb_identified == nb_iso) {
+				break;
+			}
+		}
+		if (nb_identified == nb_iso) {
+			break;
+		}
+	}
+
+	string fname;
+	char str[1000];
+
+	fname.assign("Cayley_q");
+	sprintf(str, "%d.csv", q);
+	fname.append(str);
+	file_io Fio;
+
+	Fio.int_matrix_write_csv(fname, Table, cnt, 5);
+
+	fname.assign("Cayley_reverse_q");
+	sprintf(str, "%d.csv", q);
+	fname.append(str);
+
+	Fio.int_matrix_write_csv(fname, Table_reverse, nb_iso, 5);
+
+
+
+	FREE_int(Elt_isomorphism);
+
+
+	if (f_v) {
+		cout << "surface_classify_wedge::sweep_Cayley done" << endl;
+	}
+}
+
 
 
 

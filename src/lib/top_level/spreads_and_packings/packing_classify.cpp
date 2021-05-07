@@ -116,6 +116,7 @@ void packing_classify::spread_table_init(
 
 
 	packing_classify::PA = PA;
+	packing_classify::path_to_spread_tables.assign(path_to_spread_tables);
 	n = PA->A->matrix_group_dimension();
 	Mtx = PA->A->get_matrix_group();
 	F = Mtx->GFq;

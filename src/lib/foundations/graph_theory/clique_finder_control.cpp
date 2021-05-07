@@ -140,29 +140,31 @@ void clique_finder_control::all_cliques(colored_graph *CG,
 {
 	int f_v = (verbose_level >= 1);
 
-	//colored_graph CG;
 	string fname_sol;
 	string_tools ST;
 
 	if (f_v) {
 		cout << "clique_finder_control::all_cliques" << endl;
 		}
-	//CG.load(fname_graph, verbose_level - 1);
 	if (f_output_file) {
 		fname_sol.assign(output_file);
-		//snprintf(fname_sol, 1000, "%s", output_file);
 	}
 	else {
 		fname_sol.assign(fname_graph);
-		//strcpy(fname_sol, fname_graph);
 		ST.replace_extension_with(fname_sol, "_sol.txt");
-		//snprintf(fname_sol, 1000, "%s_sol.txt", fname_graph);
 	}
 
 	//CG.print();
 
 	{
-		ofstream fp(fname_sol.c_str());
+		string fname_sol_csv;
+		string_tools ST;
+
+
+		fname_sol_csv.assign(fname_sol);
+		ST.replace_extension_with(fname_sol_csv, ".csv");
+		ofstream fp(fname_sol);
+		ofstream fp_csv(fname_sol_csv);
 
 
 		if (f_rainbow) {
@@ -226,11 +228,28 @@ void clique_finder_control::all_cliques(colored_graph *CG,
 				// Print the solutions
 				cout << "clique_finder_control::do_Sajeeb Found " << solutions.size() << " solution(s)." << endl;
 				#if 1
-					for (size_t i = 0; i < solutions.size(); ++i) {
-						for (size_t j = 0; j < solutions[i].size(); ++j) {
-							fp << CG->points[solutions[i][j]] << " ";
-						} fp << endl;
+				for (size_t i = 0; i < solutions.size(); ++i) {
+					for (size_t j = 0; j < solutions[i].size(); ++j) {
+						fp << CG->points[solutions[i][j]] << " ";
 					}
+					fp << endl;
+				}
+
+				fp_csv << "ROW";
+				for (int j = 0; j < target_size; ++j) {
+					fp_csv << ",C" << j;
+				}
+				fp_csv << endl;
+
+				for (size_t i = 0; i < solutions.size(); ++i) {
+					for (size_t j = 0; j < solutions[i].size(); ++j) {
+						fp_csv << CG->points[solutions[i][j]];
+						if (j < solutions[i].size() - 1) {
+							fp_csv << " ";
+						}
+					}
+					fp_csv << endl;
+				}
 				#endif
 				if (f_v) {
 					cout << "clique_finder_control::all_cliques "
@@ -249,15 +268,37 @@ void clique_finder_control::all_cliques(colored_graph *CG,
 						verbose_level);
 				for (int i = 0; i < nb_sol; ++i) {
 					for (int j = 0; j < target_size; ++j) {
-						fp << CG->points[Sol[i * target_size + j]] << " ";
+						fp << CG->points[Sol[i * target_size + j]];
+						if (j < target_size - 1) {
+							fp << " ";
+						}
 					}
 					fp << endl;
+				}
+
+
+				fp_csv << "ROW";
+				for (int j = 0; j < target_size; ++j) {
+					fp_csv << ",C" << j;
+				}
+				fp_csv << endl;
+
+				for (int i = 0; i < nb_sol; ++i) {
+					fp_csv << i << ",";
+					for (int j = 0; j < target_size; ++j) {
+						fp_csv << CG->points[Sol[i * target_size + j]];
+						if (j < target_size - 1) {
+							fp_csv << ",";
+						}
+					}
+					fp_csv << endl;
 				}
 				FREE_int(Sol);
 			}
 		}
 		fp << -1 << " " << nb_sol << " " << nb_search_steps
 			<< " " << nb_decision_steps << " " << dt << endl;
+		fp_csv << "END" << endl;
 	}
 	if (f_v) {
 		cout << "clique_finder_control::all_cliques done" << endl;

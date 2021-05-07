@@ -121,6 +121,11 @@ projective_space_activity_description::projective_space_activity_description()
 	//std::string classify_quartic_curves_fname_mask;
 	classify_quartic_curves_nb = 0;
 
+	f_set_stabilizer = FALSE;
+	set_stabilizer_intermediate_set_size = 0;
+	//std::string set_stabilizer_fname_mask;
+	set_stabilizer_nb = 0;
+
 }
 
 projective_space_activity_description::~projective_space_activity_description()
@@ -431,6 +436,16 @@ int projective_space_activity_description::read_arguments(
 			classify_quartic_curves_nb = strtoi(argv[++i]);
 			cout << "-classify_quartic_curves "
 					<< classify_quartic_curves_fname_mask << " " << classify_quartic_curves_nb << endl;
+		}
+		else if (stringcmp(argv[i], "-set_stabilizer") == 0) {
+			f_set_stabilizer = TRUE;
+			set_stabilizer_intermediate_set_size = strtoi(argv[++i]);
+			set_stabilizer_fname_mask.assign(argv[++i]);
+			set_stabilizer_nb = strtoi(argv[++i]);
+			cout << "-set_stabilizer "
+					<< set_stabilizer_intermediate_set_size << " "
+					<< set_stabilizer_fname_mask << " "
+					<< set_stabilizer_nb << endl;
 		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {

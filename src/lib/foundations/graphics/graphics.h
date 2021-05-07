@@ -211,6 +211,43 @@ public:
 };
 
 
+// #############################################################################
+// draw_projective_curve_description.cpp
+// #############################################################################
+
+
+//! options for drawing a projective curve
+
+
+class draw_projective_curve_description {
+public:
+
+	int f_number;
+	int number;
+
+	int f_file;
+	std::string fname;
+
+	int f_animate;
+	int animate_nb_of_steps;
+
+	int f_animate_with_transition;
+	int animate_transition_nb_of_steps;
+
+	int f_title_page;
+	int f_trailer_page;
+
+
+
+	draw_projective_curve_description();
+	~draw_projective_curve_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+
+};
+
+
 
 // #############################################################################
 // drawable_set_of_objects.cpp
@@ -218,7 +255,7 @@ public:
 
 
 
-//! a specific description of a set of objects that should be drawn
+//! a set of objects that should be drawn with certain povray properties
 
 
 
@@ -309,6 +346,12 @@ public:
 			double t_min, double t_max, double boundary,
 			function_polish_description *FP_descr, int verbose_level);
 	void draw_bitmap(draw_bitmap_control *C, int verbose_level);
+	void draw_projective_curve(draw_projective_curve_description *Descr,
+			layered_graph_draw_options *Opt, int verbose_level);
+	void draw_projective(mp_graphics &G, int number, int animate_step, int animate_nb_of_steps,
+		int f_transition, int transition_step, int transition_nb_steps,
+		int f_title_page, int title_page_step,
+		int f_trailer_page, int trailer_page_step);
 
 };
 
@@ -1384,9 +1427,6 @@ public:
 	double camera_sky[1000 * 3];
 	double camera_location[1000 * 3];
 	double camera_look_at[1000 * 3];
-	//const char *camera_sky[1000];
-	//const char *camera_location[1000];
-	//const char *camera_look_at[1000];
 
 	int nb_zoom;
 	int zoom_round[1000];
@@ -1448,9 +1488,6 @@ public:
 	int latex_file_count;
 	int f_omit_bottom_plane;
 
-	//const char *sky;
-	//const char *location;
-	//const char *look_at;
 	double sky[3];
 	double location[3];
 	double look_at[3];

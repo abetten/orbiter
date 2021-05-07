@@ -317,6 +317,8 @@ public:
 		double *Cubic_coords_povray_ordering,
 		int line1_idx, int line2_idx,
 		int verbose_level);
+	void project_to_disc(int f_projection_on, int f_transition, int step, int nb_steps,
+		double rad, double height, double x, double y, double &xp, double &yp);
 
 };
 

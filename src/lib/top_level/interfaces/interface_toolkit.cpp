@@ -76,6 +76,8 @@ interface_toolkit::interface_toolkit()
 	f_plot_function = FALSE;
 	//std::string plot_function_fname;
 
+	f_draw_projective_curve = FALSE;
+	Draw_projective_curve_description = NULL;
 
 }
 
@@ -119,6 +121,9 @@ void interface_toolkit::print_help(int argc,
 	}
 	else if (stringcmp(argv[i], "-plot_function") == 0) {
 		cout << "-plot_function <string : fname_csv>" << endl;
+	}
+	else if (stringcmp(argv[i], "-draw_projective_curve") == 0) {
+		cout << "-draw_projective_curve ..." << endl;
 	}
 }
 
@@ -164,6 +169,9 @@ int interface_toolkit::recognize_keyword(int argc,
 	else if (stringcmp(argv[i], "-plot_function") == 0) {
 		return true;
 	}
+	else if (stringcmp(argv[i], "-draw_projective_curve") == 0) {
+		return true;
+	}
 	return false;
 }
 
@@ -183,13 +191,15 @@ void interface_toolkit::read_arguments(int argc,
 		f_csv_file_select_rows = TRUE;
 		csv_file_select_rows_fname.assign(argv[++i]);
 		csv_file_select_rows_text.assign(argv[++i]);
-		cout << "-csv_file_select_rows " << csv_file_select_rows_fname << " " << csv_file_select_rows_text << endl;
+		cout << "-csv_file_select_rows " << csv_file_select_rows_fname
+				<< " " << csv_file_select_rows_text << endl;
 	}
 	else if (stringcmp(argv[i], "-csv_file_select_cols") == 0) {
 		f_csv_file_select_cols = TRUE;
 		csv_file_select_cols_fname.assign(argv[++i]);
 		csv_file_select_cols_text.assign(argv[++i]);
-		cout << "-csv_file_select_cols " << csv_file_select_cols_fname << " " << csv_file_select_cols_text << endl;
+		cout << "-csv_file_select_cols " << csv_file_select_cols_fname
+				<< " " << csv_file_select_cols_text << endl;
 	}
 	else if (stringcmp(argv[i], "-csv_file_select_rows_and_cols") == 0) {
 		f_csv_file_select_rows_and_cols = TRUE;
@@ -236,7 +246,9 @@ void interface_toolkit::read_arguments(int argc,
 		reformat_fname_in.assign(argv[++i]);
 		reformat_fname_out.assign(argv[++i]);
 		reformat_nb_cols = strtoi(argv[++i]);
-		cout << "-reformat " << reformat_fname_in << " " << reformat_fname_out << " " << reformat_nb_cols << endl;
+		cout << "-reformat " << reformat_fname_in
+				<< " " << reformat_fname_out
+				<< " " << reformat_nb_cols << endl;
 	}
 	else if (stringcmp(argv[i], "-split_by_values") == 0) {
 		f_split_by_values = TRUE;
@@ -250,7 +262,9 @@ void interface_toolkit::read_arguments(int argc,
 		store_as_csv_file_n = strtoi(argv[++i]);
 		store_as_csv_file_data.assign(argv[++i]);
 		cout << "-store_as_csv_file " << store_as_csv_file_fname
-				<< " " << store_as_csv_file_m << " " << store_as_csv_file_n << " " << store_as_csv_file_data << endl;
+				<< " " << store_as_csv_file_m
+				<< " " << store_as_csv_file_n
+				<< " " << store_as_csv_file_data << endl;
 	}
 	else if (stringcmp(argv[i], "-mv") == 0) {
 		f_mv = TRUE;
@@ -296,8 +310,24 @@ void interface_toolkit::read_arguments(int argc,
 		plot_function_fname.assign(argv[++i]);
 		cout << "-plot_function " << plot_function_fname << endl;
 	}
+	else if (stringcmp(argv[i], "-draw_projective_curve") == 0) {
+		f_draw_projective_curve = TRUE;
+		Draw_projective_curve_description = NEW_OBJECT(draw_projective_curve_description);
+		cout << "reading -draw_projective_curve" << endl;
+		i += Draw_projective_curve_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+		cout << "-draw_projective_curve " << endl;
+	}
+
+
+
 	if (f_v) {
-		cout << "interface_toolkit::read_arguments done" << endl;
+			cout << "interface_toolkit::read_arguments done" << endl;
 	}
 }
 
@@ -510,6 +540,14 @@ void interface_toolkit::worker(int verbose_level)
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 	}
+	else if (f_draw_projective_curve) {
+		graphical_output GO;
+
+		GO.draw_projective_curve(Draw_projective_curve_description,
+				Orbiter->draw_options, verbose_level);
+
+	}
+
 
 	if (f_v) {
 		cout << "interface_toolkit::worker done" << endl;
