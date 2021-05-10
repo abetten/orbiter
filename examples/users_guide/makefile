@@ -5994,6 +5994,25 @@ F_abcd:
 		-with F -do -finite_field_activity -parse_and_evaluate "Fabcd" "X0,X1,X2,X3" $(F_abcd_eqn) "a=4,b=2,c=2,d=4" -end
 	#dot -Tpng F_alpha_beta_gamma_delta.gv >F_alpha_beta_gamma_delta.png
 
+
+
+F_abcd_sweep_4_27_q7:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-draw_options -end \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space 3 F \
+		-with P -do \
+		-projective_space_activity \
+		-sweep_4_27 sweep_4_27_q7 -q 7 -by_equation "F_abcd" \
+			"\DF_{a,b,c,d}\D" "X0,X1,X2,X3" \
+			$(F_abcd_eqn) \
+			"a=2,b=3,c=4,d=5" \
+			"\Da=2,b=3,c=4,d=5\D" \
+		-end \
+		-end \
+
+
+
 F_alpha_beta_gamma_delta_q7:
 	$(ORBITER_PATH)/orbiter.out -v 3 \
 		-define F -finite_field -q 7 -end \
@@ -6444,6 +6463,7 @@ quartic_curves_q19:
 		pdflatex surface_catalogue_q19_iso0_quartics.tex
 		open surface_catalogue_q19_iso0_quartics.pdf
 
+#surface_catalogue_q19_iso%d_quartics.csv
 
 quartic_curves_q19_classify:
 	$(ORBITER_PATH)/orbiter.out -v 3 \

@@ -371,6 +371,7 @@ public:
 	void unrank_subset_recursion(int *set, int &sz, int n, int a0, int &r);
 	int rank_k_subset(int *set, int n, int k);
 	void unrank_k_subset(int rk, int *set, int n, int k);
+	void unrank_k_subset_and_complement(int rk, int *set, int n, int k);
 	int first_k_subset(int *set, int n, int k);
 	int next_k_subset(int *set, int n, int k);
 	int next_k_subset_at_level(int *set, int n, int k, int backtrack_level);

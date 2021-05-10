@@ -703,9 +703,6 @@ class surface_classify_wedge {
 public:
 	finite_field *F;
 	int q;
-	//linear_group *LG;
-
-	//int f_semilinear;
 
 	std::string fname_base;
 
@@ -1076,6 +1073,11 @@ public:
 			surface_create_description *Surface_Descr,
 			std::string &sweep_fname,
 			int verbose_level);
+	void do_sweep_4_27(
+			projective_space_with_action *PA,
+			surface_create_description *Surface_Descr,
+			std::string &sweep_fname,
+			int verbose_level);
 	void do_create_surface(
 			projective_space_with_action *PA,
 			surface_create_description *Surface_Descr,
@@ -1422,6 +1424,10 @@ public:
 			surface_create *SC,
 			int verbose_level);
 	void sweep_4(
+			surface_create_description *Surface_Descr,
+			std::string &sweep_fname,
+			int verbose_level);
+	void sweep_4_27(
 			surface_create_description *Surface_Descr,
 			std::string &sweep_fname,
 			int verbose_level);
