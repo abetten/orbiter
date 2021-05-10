@@ -19,8 +19,6 @@ surface_classify_wedge::surface_classify_wedge()
 {
 	F = NULL;
 	q = 0;
-	//LG = NULL;
-	//f_semilinear = FALSE;
 
 	//std::string fname_base;
 
@@ -41,13 +39,6 @@ surface_classify_wedge::surface_classify_wedge()
 	Flag_orbits = NULL;
 	Surfaces = NULL;
 	
-#if 0
-	nb_identify = 0;
-	Identify_label = NULL;
-	Identify_coeff = NULL;
-	Identify_monomial = NULL;
-	Identify_length = NULL;
-#endif
 	//null();
 
 }
@@ -129,8 +120,6 @@ void surface_classify_wedge::init(
 		cout << "surface_classify_wedge::init" << endl;
 	}
 	surface_classify_wedge::F = Surf_A->PA->F;
-	//surface_classify_wedge::LG = LG;
-	//surface_classify_wedge::f_semilinear = f_semilinear;
 	surface_classify_wedge::Surf_A = Surf_A;
 	surface_classify_wedge::Surf = Surf_A->Surf;
 	q = F->q;
@@ -143,8 +132,6 @@ void surface_classify_wedge::init(
 
 	
 	
-	//A = LG->A_linear;
-	//A2 = LG->A2;
 	A = Surf_A->PA->A;
 	A2 = Surf_A->PA->A_on_lines;
 
@@ -2143,18 +2130,12 @@ void surface_classify_wedge::latex_surfaces(
 	int f_v = (verbose_level >= 1);
 	char str[1000];
 	string title;
-	//string title_ds;
 
 	if (f_v) {
 		cout << "surface_classify_wedge::latex_surfaces" << endl;
 	}
 	sprintf(str, "Cubic Surfaces with 27 Lines in $\\PG(3,%d)$", q);
 	title.assign(str);
-	//sprintf(str, "Double Sixes in $\\PG(3,%d)$", q);
-	//title_ds.assign(str);
-
-	//ost << "\\clearpage" << endl;
-	//ost << "\\subsection*{" << title << "}" << endl;
 
 
 	ost << "\\subsection*{The Group $\\PGGL(4," << q << ")$}" << endl;

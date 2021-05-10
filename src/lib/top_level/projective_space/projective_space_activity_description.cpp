@@ -87,6 +87,10 @@ projective_space_activity_description::projective_space_activity_description()
 	//std::string sweep_4_fname;
 	sweep_4_surface_description = NULL;
 
+	f_sweep_4_27 = FALSE;
+	//std::string sweep_4_27_fname;
+	sweep_4_27_surface_description = NULL;
+
 	f_six_arcs = FALSE;
 	f_filter_by_nb_Eckardt_points = FALSE;
 	nb_Eckardt_points = 0;
@@ -317,6 +321,23 @@ int projective_space_activity_description::read_arguments(
 				cout << "next argument is " << argv[i] << endl;
 			}
 			cout << "-sweep_4 " << sweep_4_fname << endl;
+		}
+
+		else if (stringcmp(argv[i], "-sweep_4_27") == 0) {
+			f_sweep_4_27 = TRUE;
+			sweep_4_27_fname.assign(argv[++i]);
+			sweep_4_27_surface_description = NEW_OBJECT(surface_create_description);
+			cout << "-sweep_4_27" << endl;
+			i += sweep_4_27_surface_description->read_arguments(
+					argc - (i + 1), argv + i + 1,
+					verbose_level);
+			cout << "done with -sweep_4_27" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-sweep_4_27 " << sweep_4_27_fname << endl;
 		}
 
 		else if (stringcmp(argv[i], "-six_arcs") == 0) {

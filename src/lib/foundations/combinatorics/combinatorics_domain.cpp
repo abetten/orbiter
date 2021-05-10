@@ -690,6 +690,23 @@ void combinatorics_domain::unrank_k_subset(int rk, int *set, int n, int k)
 	}
 }
 
+void combinatorics_domain::unrank_k_subset_and_complement(int rk, int *set, int n, int k)
+{
+	int i, j, l;
+
+	unrank_k_subset(rk, set, n, k);
+	j = 0;
+	l = 0;
+	for (i = 0; i < n; i++) {
+		if (j < k && set[j] == i) {
+			j++;
+			continue;
+		}
+		set[k + l] = i;
+		l++;
+	}
+
+}
 int combinatorics_domain::first_k_subset(int *set, int n, int k)
 {
 	int i;

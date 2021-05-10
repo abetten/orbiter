@@ -437,6 +437,7 @@ void action::make_canonical(int size, long int *set,
 	
 	if (!check_if_transporter_for_set(transporter,
 			size, set, canonical_set, verbose_level - 3)) {
+		cout << "action::make_canonical check_if_transporter_for_set returns FALSE" << endl;
 		exit(1);
 		}
 	if (f_v) {

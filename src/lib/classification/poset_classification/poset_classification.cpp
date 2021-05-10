@@ -1752,8 +1752,8 @@ void poset_classification::get_whole_orbit(
 }
 
 void poset_classification::map_to_canonical_k_subset(
-	long int *the_set,
-	int set_size, int subset_size, int subset_rk,
+	long int *the_set, int set_size,
+	int subset_size, int subset_rk,
 	long int *reduced_set, int *transporter, int &local_idx,
 	int verbose_level)
 // fills reduced_set[set_size - subset_size], transporter and local_idx
@@ -1770,7 +1770,7 @@ void poset_classification::map_to_canonical_k_subset(
 	long int *subset;
 	long int *canonical_subset;
 	int *Elt1;
-	int i, j, k;
+	int i; //, j, k;
 	int reduced_set_size;
 	combinatorics_domain Combi;
 	
@@ -1781,6 +1781,9 @@ void poset_classification::map_to_canonical_k_subset(
 	reduced_set_size = set_size - subset_size;
 
 	// unrank the k-subset and its complement to our_set[set_size]:
+	Combi.unrank_k_subset_and_complement(subset_rk,
+			our_set, set_size, subset_size);
+#if 0
 	Combi.unrank_k_subset(subset_rk, our_set, set_size, subset_size);
 	j = 0;
 	k = 0;
@@ -1792,6 +1795,7 @@ void poset_classification::map_to_canonical_k_subset(
 		our_set[subset_size + k] = i;
 		k++;
 	}
+#endif
 	for (i = 0; i < set_size; i++) {
 		subset[i] = the_set[our_set[i]];
 		set[0][i] = subset[i];
@@ -1840,7 +1844,7 @@ void poset_classification::map_to_canonical_k_subset(
 	if (f_v) {
 		cout << "poset_classification::"
 				"map_to_canonical_k_subset done" << endl;
-		}
+	}
 }
 
 void poset_classification::get_representative_of_subset_orbit(

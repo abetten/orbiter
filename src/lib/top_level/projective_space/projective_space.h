@@ -138,7 +138,7 @@ public:
 
 	action *A;
 	action *A2;
-	poset_classification *gen;
+	poset_classification *PC;
 
 	action *A_on_the_set;
 
@@ -153,6 +153,10 @@ public:
 
 	long int *interesting_subsets; // [nb_interesting_subsets]
 	int nb_interesting_subsets;
+
+	strong_generators *selected_set_stab_gens;
+	sims *selected_set_stab;
+
 
 	int first_at_level;
 	int reduced_set_size; // = set_size - level
@@ -169,7 +173,7 @@ public:
 	int *elt2, *Elt2;
 
 
-	strong_generators *Strong_gens_G;
+	//strong_generators *Strong_gens_G; // is now selected_set_stab_gens
 	//group *G;
 	longinteger_object go_G;
 
@@ -219,18 +223,18 @@ public:
 	void null();
 	void freeself();
 	void init(long int *the_set, int set_size,
-			poset_classification *gen, action *A, action *A2,
+			poset_classification *PC, action *A, action *A2,
 			int level, int interesting_orbit,
 			int nb_interesting_subsets, long int *interesting_subsets,
 			int verbose_level);
 	void init_U(int verbose_level);
 	void compute_orbits(int verbose_level);
-		// uses Strong_gens_G to compute orbits on points in action A2
+		// uses selected_set_stab_gens to compute orbits on points in action A2
 	void restricted_action(int verbose_level);
 	void main_loop(int verbose_level);
 	void main_loop_handle_case(int cnt, int verbose_level);
-	void map_the_first_set(int cnt, int verbose_level);
-	void map_the_second_set(int cnt, int verbose_level);
+	void map_the_first_set_and_do_orbit_counting(int cnt, int verbose_level);
+	void map_the_second_set_and_do_orbit_counting(int cnt, int verbose_level);
 	void update_stabilizer(int verbose_level);
 	void add_automorphism(int verbose_level);
 	void retrieve_automorphism(int verbose_level);
@@ -366,6 +370,10 @@ public:
 	std::string sweep_4_fname;
 	surface_create_description *sweep_4_surface_description;
 
+	int f_sweep_4_27;
+	std::string sweep_4_27_fname;
+	surface_create_description *sweep_4_27_surface_description;
+
 	int f_six_arcs;
 	int f_filter_by_nb_Eckardt_points;
 	int nb_Eckardt_points;
@@ -482,9 +490,14 @@ public:
 			int intermediate_subset_size,
 			std::string &fname_mask, int nb,
 			int verbose_level);
-	int handle_frequencies(int lvl,
-			int *frequency, int nb_orbits, int *orbit_idx_of_subset,
-			int &counter, int n_choose_k, strong_generators *&Aut_gens, int verbose_level);
+	void handle_orbit(tally &C,
+			int *isotype,
+			int selected_orbit, int selected_frequency, int n_choose_k,
+			int intermediate_subset_size,
+			poset_classification *PC, action *A, action *A2,
+			long int *pts,
+			int nb_pts,
+			strong_generators *&Aut_gens, int verbose_level);
 	void print_interesting_subsets(int set_size, int lvl, int nb_interesting_subsets, int *interesting_subsets);
 
 

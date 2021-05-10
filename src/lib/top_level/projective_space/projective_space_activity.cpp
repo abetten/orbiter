@@ -207,6 +207,17 @@ void projective_space_activity::perform_activity(int verbose_level)
 				Descr->sweep_4_fname,
 				verbose_level);
 	}
+	else if (Descr->f_sweep_4_27) {
+
+		surface_domain_high_level SH;
+
+
+		SH.do_sweep_4_27(
+				PA,
+				Descr->sweep_4_27_surface_description,
+				Descr->sweep_4_27_fname,
+				verbose_level);
+	}
 	else if (Descr->f_create_surface) {
 		if (!Descr->f_control_six_arcs) {
 			cout << "please use option -control_six_arcs <description> -end" << endl;
@@ -1051,19 +1062,19 @@ void projective_space_activity::set_stabilizer(
 			j = 1;
 			t = S.Table[(row + 1) * S.nb_cols + j];
 			if (S.tokens[t] == NULL) {
-				cout << "canonical_form_classifier::classify token[t] == NULL" << endl;
+				cout << "projective_space_activity::set_stabilizer token[t] == NULL" << endl;
 			}
 			eqn_txt.assign(S.tokens[t]);
 			j = 2;
 			t = S.Table[(row + 1) * S.nb_cols + j];
 			if (S.tokens[t] == NULL) {
-				cout << "canonical_form_classifier::classify token[t] == NULL" << endl;
+				cout << "projective_space_activity::set_stabilizer token[t] == NULL" << endl;
 			}
 			pts_txt.assign(S.tokens[t]);
 			j = 3;
 			t = S.Table[(row + 1) * S.nb_cols + j];
 			if (S.tokens[t] == NULL) {
-				cout << "canonical_form_classifier::classify token[t] == NULL" << endl;
+				cout << "projective_space_activity::set_stabilizer token[t] == NULL" << endl;
 			}
 			bitangents_txt.assign(S.tokens[t]);
 
@@ -1098,7 +1109,7 @@ void projective_space_activity::set_stabilizer(
 			tally *T;
 
 			if (f_v) {
-				cout << "canonical_form_classifier::classify before PC->trace_all_k_subsets_and_compute_frequencies" << endl;
+				cout << "projective_space_activity::set_stabilizer before PC->trace_all_k_subsets_and_compute_frequencies" << endl;
 			}
 
 			PC->trace_all_k_subsets_and_compute_frequencies(
@@ -1106,7 +1117,7 @@ void projective_space_activity::set_stabilizer(
 					0 /*verbose_level*/);
 
 			if (f_v) {
-				cout << "canonical_form_classifier::classify after PC->trace_all_k_subsets_and_compute_frequencies" << endl;
+				cout << "projective_space_activity::set_stabilizer after PC->trace_all_k_subsets_and_compute_frequencies" << endl;
 			}
 
 
@@ -1131,46 +1142,87 @@ void projective_space_activity::set_stabilizer(
 			int *types;
 			int nb_types;
 			int i, f, l, idx;
+			int selected_type = -1;
+			int selected_orbit = -1;
+			int selected_frequency;
+			longinteger_domain D;
+
 
 
 			SoS = T->get_set_partition_and_types(types, nb_types, verbose_level);
 
-
-			if (f_v) {
-				for (i = 0; i < nb_types; i++) {
-					f = T->type_first[i];
-					l = T->type_len[i];
-					cout << types[i];
-					cout << " : ";
-					Orbiter->Lint_vec.print(cout, SoS->Sets[i], SoS->Set_size[i]);
-					cout << " : ";
-
-					for (j = 0; j < SoS->Set_size[i]; j++) {
-
-						idx = SoS->Sets[i][j];
-
-						//strong_generators *Strong_gens;
-
-						longinteger_object go;
-
-						PC->get_stabilizer_order(intermediate_subset_size, idx, go);
-
-						//PC->get_stabilizer_generators(
-						//		Strong_gens,
-						//		intermediate_subset_size, idx, 0 /* verbose_level*/);
+			longinteger_object go_min;
 
 
-						//Strong_gens->group_order(go);
+			for (i = 0; i < nb_types; i++) {
+				f = T->type_first[i];
+				l = T->type_len[i];
+				cout << types[i];
+				cout << " : ";
+				Orbiter->Lint_vec.print(cout, SoS->Sets[i], SoS->Set_size[i]);
+				cout << " : ";
 
-						//FREE_OBJECT(Strong_gens);
 
-						cout << go;
-						if (j < SoS->Set_size[i] - 1) {
-							cout << ", ";
+				for (j = 0; j < SoS->Set_size[i]; j++) {
+
+					idx = SoS->Sets[i][j];
+
+					longinteger_object go;
+
+					PC->get_stabilizer_order(intermediate_subset_size, idx, go);
+
+					if (selected_type == -1) {
+						selected_type = j;
+						selected_orbit = idx;
+						selected_frequency = types[i];
+						go.assign_to(go_min);
+					}
+					else {
+						if (D.compare_unsigned(go, go_min) < 0) {
+							selected_type = j;
+							selected_orbit = idx;
+							selected_frequency = types[i];
+							go.assign_to(go_min);
 						}
 					}
-					cout << endl;
+
+					cout << go;
+					if (j < SoS->Set_size[i] - 1) {
+						cout << ", ";
+					}
 				}
+				cout << endl;
+			}
+
+			cout << "selected_type = " << selected_type
+					<< " selected_orbit = " << selected_orbit
+					<< " selected_frequency = " << selected_frequency
+					<< " go_min = " << go_min << endl;
+
+			strong_generators *gens;
+
+			PC->get_stabilizer_generators(
+				gens,
+				intermediate_subset_size, selected_orbit, verbose_level);
+
+
+			strong_generators *Aut_gens;
+
+			if (f_v) {
+				cout << "projective_space_activity::set_stabilizer before handle_type" << endl;
+			}
+
+
+			handle_orbit(*T,
+					isotype,
+					selected_orbit, selected_frequency, nCk,
+					intermediate_subset_size,
+					PC, PA->A, PA->A,
+					pts, nb_pts,
+					Aut_gens, verbose_level);
+
+			if (f_v) {
+				cout << "projective_space_activity::set_stabilizer after handle_type" << endl;
 			}
 
 
@@ -1191,153 +1243,102 @@ void projective_space_activity::set_stabilizer(
 }
 
 
-#if 0
-int projective_space_activity::handle_frequencies(
-		long int *pts, int nb_pts, int intermediate_subset_size,
-		int *frequency, int nb_orbits, int *orbit_idx_of_subset,
-		int &counter, int n_choose_k, strong_generators *&Aut_gens, int verbose_level)
+void projective_space_activity::handle_orbit(tally &C,
+		int *isotype,
+		int selected_orbit, int selected_frequency, int n_choose_k,
+		int intermediate_subset_size,
+		poset_classification *PC, action *A, action *A2,
+		long int *pts,
+		int nb_pts,
+		strong_generators *&Aut_gens, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	tally C;
-	int nb_types;
-	int i, j, selected_type, selected_frequency, first, len, orb_idx;
-	int nb_interesting_orbits;
+	// interesting_subsets are the lvl-subsets of the given set
+	// which are of the chosen type.
+	// There is nb_interesting_subsets of them.
+	long int *interesting_subsets;
+	int nb_interesting_subsets;
+
+	int i, j;
 
 	if (f_v) {
-		cout << "projective_space_activity::handle_frequencies" << endl;
-		cout << "verbose_level = " << verbose_level << endl;
-		cout << "intermediate_subset_size = " << intermediate_subset_size << endl;
-		cout << "nb_orbits = " << nb_orbits << endl;
-		}
-	C.init(frequency, nb_orbits, FALSE, verbose_level);
-	if (f_v) {
-		cout << "orbit type: ";
-		C.print(FALSE /*f_backwards*/);
-		//cout << endl;
-		}
+		cout << "projective_space_activity::handle_orbit" << endl;
+		cout << "selected_orbit = " << selected_orbit << endl;
+	}
 
-	nb_types = C.nb_types;
 	if (f_v) {
-		cout << "nb_types = " << nb_types << endl;
-		}
+		cout << "projective_space_activity::handle_orbit we decide to go for subsets of size " << intermediate_subset_size << ", selected_frequency = " << selected_frequency << endl;
+	}
 
-	nb_interesting_orbits = 0;
-	for (i = 0; i < nb_types; i++) {
-		if (C.data_sorted[C.type_first[i]]) {
-			nb_interesting_orbits += C.type_len[i];
+	j = 0;
+	interesting_subsets = NEW_lint(selected_frequency);
+	for (i = 0; i < n_choose_k; i++) {
+		if (isotype[i] == selected_orbit) {
+			interesting_subsets[j++] = i;
+			//cout << "subset of rank " << i << " is isomorphic to orbit " << orb_idx << " j=" << j << endl;
 			}
 		}
-
-	if (f_v) {
-		cout << "nb_interesting_orbits = " << nb_interesting_orbits << endl;
-		}
-
-	// Search for the isomorphism type of lvl-sets which is represented
-	// the fewest number of times amongst the lvl-subsets of the given set (but not zero times).
-	// If there is more than one isomorphism type with the same frequency, one of them is picked.
-	// It does not matter which one is picked.
-	for (selected_type = 0; selected_type < nb_types; selected_type++) {
-		if (C.data_sorted[C.type_first[selected_type]]) {
-			break;
-			}
-		}
-	if (selected_type == nb_types) {
-		cout << "selected_type == nb_types, error" << endl;
+	if (j != selected_frequency) {
+		cout << "j != nb_interesting_subsets" << endl;
 		exit(1);
 		}
-
-	// selected_frequency is how many lvl-subsets are of this isomorphism type:
-	selected_frequency = C.data_sorted[C.type_first[selected_type]];
-	if (f_v) {
-		cout << "selected_frequency = " << selected_frequency << endl;
+	nb_interesting_subsets = selected_frequency;
+#if 0
+	if (f_vv) {
+		print_interesting_subsets(nb_pts, intermediate_subset_size, nb_interesting_subsets, interesting_subsets);
 		}
-
-
-	if (nb_interesting_orbits > 1 /*lvl >= 1 && counter >= 1*/ /* lvl == 4 */) {
-
-
-		// interesting_subsets are the lvl-subsets of the given set
-		// which are of the chosen type.
-		// There is nb_interesting_subsets of them.
-		int *interesting_subsets;
-		int nb_interesting_subsets;
-
-
-		cout << "projective_space_activity::handle_frequencies we decide to go for subsets of size " << intermediate_subset_size << ", selected_frequency = " << selected_frequency << endl;
-		first = C.type_first[selected_type];
-		len = C.type_len[selected_type];
-		orb_idx = C.sorting_perm_inv[first];
-		nb_interesting_subsets = C.data_sorted[first];
-
-		if (nb_interesting_subsets != selected_frequency) {
-			cout << "nb_interesting_subsets != selected_frequency" << endl;
-			exit(1);
-			}
-
-		cout << "orbit " << orb_idx << " has frequency " << nb_interesting_subsets << " first=" << first << " len=" << len << endl;
-		cout << "n_choose_k=" << n_choose_k << endl;
-		j = 0;
-		interesting_subsets = NEW_int(nb_interesting_subsets);
-		for (i = 0; i < n_choose_k; i++) {
-			if (orbit_idx_of_subset[i] == orb_idx) {
-				interesting_subsets[j++] = i;
-				//cout << "subset of rank " << i << " is isomorphic to orbit " << orb_idx << " j=" << j << endl;
-				}
-			}
-		if (j != nb_interesting_subsets) {
-			cout << "j != nb_interesting_subsets" << endl;
-			exit(1);
-			}
-		if (f_vv) {
-			print_interesting_subsets(nb_pts, intermediate_subset_size, nb_interesting_subsets, interesting_subsets);
-			}
-
-
-		//overall_backtrack_nodes = 0;
-		if (f_v) {
-			cout << "projective_space_activity::handle_frequencies calling compute_stabilizer_function" << endl;
-			}
-		//INT nodes;
-
-
-		//compute_stabilizer_function(the_set, set_size, A, A, gen, lvl, orb_idx, orb_mult, interesting_subsets, Stab, nodes, verbose_level);
-
-		compute_stabilizer *CS;
-
-		CS = NEW_OBJECT(compute_stabilizer);
-
-		CS->init(pts, nb_pts, gen, A, A2,
-				intermediate_subset_size, orb_idx, nb_interesting_subsets, interesting_subsets,
-				verbose_level);
-
-
-		Aut_gens = NEW_OBJECT(strong_generators);
-
-		Aut_gens->init_from_sims(CS->Stab, verbose_level);
-
-		if (f_v) {
-			cout << "projective_space_activity::handle_frequencies done with compute_stabilizer" << endl;
-			cout << "projective_space_activity::init backtrack_nodes_first_time = " << CS->backtrack_nodes_first_time << endl;
-			cout << "projective_space_activity::init backtrack_nodes_total_in_loop = " << CS->backtrack_nodes_total_in_loop << endl;
-			}
-
-
-		FREE_OBJECT(CS);
-
-		//overall_backtrack_nodes += CS->nodes;
-
-		FREE_int(interesting_subsets);
-
-		cout << "projective_space_activity::handle_frequencies: Stabilizer computation finished.";
-		//the_end_quietly(t0);
-		//exit(0);
-		return TRUE;
-
-		}
-	return FALSE;
-}
 #endif
+
+
+	//overall_backtrack_nodes = 0;
+	if (f_v) {
+		cout << "projective_space_activity::handle_orbit calling compute_stabilizer_function" << endl;
+		}
+	//INT nodes;
+
+
+	//compute_stabilizer_function(the_set, set_size, A, A, gen, lvl, orb_idx, orb_mult, interesting_subsets, Stab, nodes, verbose_level);
+
+	compute_stabilizer *CS;
+
+	CS = NEW_OBJECT(compute_stabilizer);
+
+	if (f_v) {
+		cout << "projective_space_activity::handle_orbit before CS->init" << endl;
+	}
+	CS->init(pts, nb_pts,
+			PC, A, A2,
+			intermediate_subset_size, selected_orbit,
+			nb_interesting_subsets, interesting_subsets,
+			verbose_level);
+	if (f_v) {
+		cout << "projective_space_activity::handle_orbit after CS->init" << endl;
+	}
+
+
+
+	Aut_gens = NEW_OBJECT(strong_generators);
+
+	Aut_gens->init_from_sims(CS->Stab, verbose_level);
+
+	if (f_v) {
+		cout << "projective_space_activity::handle_orbit done with compute_stabilizer" << endl;
+		cout << "projective_space_activity::handle_orbit backtrack_nodes_first_time = " << CS->backtrack_nodes_first_time << endl;
+		cout << "projective_space_activity::handle_orbit backtrack_nodes_total_in_loop = " << CS->backtrack_nodes_total_in_loop << endl;
+		}
+
+
+	FREE_OBJECT(CS);
+
+	//overall_backtrack_nodes += CS->nodes;
+
+	FREE_lint(interesting_subsets);
+
+	if (f_v) {
+		cout << "projective_space_activity::handle_orbit done" << endl;
+	}
+}
+
 
 void projective_space_activity::print_interesting_subsets(int set_size, int lvl, int nb_interesting_subsets, int *interesting_subsets)
 {

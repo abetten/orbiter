@@ -95,6 +95,7 @@ set_and_stabilizer *poset_classification::identify_and_get_stabilizer(
 
 	SaS = get_set_and_stabilizer(sz,
 			orbit_at_level, 0 /* verbose_level */);
+
 	Poset->A->element_invert(transporter, Elt, 0);
 	SaS->apply_to_self(Elt, 0 /* verbose_level */);
 
@@ -127,7 +128,6 @@ void poset_classification::identify(long int *data, int sz,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
 	int f_implicit_fusion = FALSE;
 	int final_node;
 
@@ -147,7 +147,7 @@ void poset_classification::identify(long int *data, int sz,
 	recognize(data, sz,
 		transporter, f_implicit_fusion,
 		final_node,
-		verbose_level);
+		verbose_level - 2);
 
 	if (f_v) {
 		cout << "poset_classification::identify after recognize" << endl;
@@ -179,7 +179,6 @@ void poset_classification::test_identify(int level, int nb_times,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
 	int *transporter;
 	int f_implicit_fusion = FALSE;
 	int final_node;
@@ -206,8 +205,11 @@ void poset_classification::test_identify(int level, int nb_times,
 	S = Poset->Strong_gens->create_sims(0 /*verbose_level*/);
 
 	S->group_order(go);
-	cout << "Group of order " << go << " created" << endl;
 
+	if (f_v) {
+		cout << "poset_classification::test_identify "
+				"Group of order " << go << " has been created" << endl;
+	}
 
 
 
@@ -226,9 +228,11 @@ void poset_classification::test_identify(int level, int nb_times,
 		Poset->A->random_element(S, Elt, 0 /* verbose_level */);
 		Poset->A2->map_a_set_and_reorder(set1, set2, level, Elt,
 				0 /* verbose_level */);
-		cout << "mapped set is ";
-		Orbiter->Lint_vec.print(cout, set2, level);
-		cout << endl;
+		if (f_v) {
+			cout << "mapped set is ";
+			Orbiter->Lint_vec.print(cout, set2, level);
+			cout << endl;
+		}
 
 		recognize(set2, level, transporter, f_implicit_fusion,
 			final_node, verbose_level);
@@ -239,7 +243,9 @@ void poset_classification::test_identify(int level, int nb_times,
 			exit(1);
 		}
 		else {
-			cout << "recognition is successful" << endl;
+			if (f_v) {
+				cout << "recognition is successful" << endl;
+			}
 		}
 	}
 
@@ -586,6 +592,7 @@ int poset_classification::trace_set_recursion(
 			return -1;
 		}
 		Poset->A->element_move(tmp_Elt1, Elt_transporter, 0);
+
 		for (i = 0; i < size; i++) {
 			canonical_set[i] = tmp_set1[i];
 		}
@@ -605,6 +612,7 @@ int poset_classification::trace_set_recursion(
 				Elt_transporter, tmp_Elt1, 
 				f_tolerant, 
 				verbose_level);
+
 			if (f_v) {
 				cout << "poset_classification::trace_set_recursion "
 						"after trace_set_recursion" << endl;
@@ -691,7 +699,6 @@ long int poset_classification::find_node_for_subspace_by_rank(
 	int f_vv = (verbose_level >= 2);
 	int *v;
 	int *basis;
-	//int *base_cols;
 	long int rk, node, i, j, pt;
 
 	if (f_v) {
@@ -701,10 +708,6 @@ long int poset_classification::find_node_for_subspace_by_rank(
 	}
 	v = tmp_find_node_for_subspace_by_rank1;
 	basis = tmp_find_node_for_subspace_by_rank2;
-	//base_cols = tmp_find_node_for_subspace_by_rank3;
-	//v = NEW_int(vector_space_dimension);
-	//basis = NEW_int(len * vector_space_dimension);
-	//base_cols = NEW_int(vector_space_dimension);
 
 	unrank_basis(basis, set, len);
 
@@ -753,9 +756,6 @@ long int poset_classification::find_node_for_subspace_by_rank(
 		cout << " at node " << node << endl;
 	}
 	
-	//FREE_int(v);
-	//FREE_int(basis);
-	//FREE_int(base_cols);
 	return node;
 }
 

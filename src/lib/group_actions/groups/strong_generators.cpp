@@ -2025,6 +2025,8 @@ schreier *strong_generators::orbits_on_points_schreier(
 	if (f_v) {
 		cout << "strong_generators::orbits_on_points_schreier "
 				"degree = " << A_given->degree << endl;
+		cout << "A_given=";
+		A_given->print_info();
 	}
 	group_order(go);
 
@@ -2034,17 +2036,27 @@ schreier *strong_generators::orbits_on_points_schreier(
 	}
 	if (f_v) {
 		cout << "strong_generators::orbits_on_points_schreier "
-				"action ";
-		A_given->print_info();
-		cout << endl;
+				"generators:" << endl;
+		print_generators_tex();
 	}
-
 	Sch = NEW_OBJECT(schreier);
 
 	Sch->init(A_given, verbose_level - 2);
 	Sch->initialize_tables();
+	if (f_v) {
+		cout << "strong_generators::orbits_on_points_schreier "
+				"before Sch->init_generators" << endl;
+	}
 	Sch->init_generators(*gens, verbose_level - 2);
+	if (f_v) {
+		cout << "strong_generators::orbits_on_points_schreier "
+				"before Sch->compute_all_point_orbits" << endl;
+	}
 	Sch->compute_all_point_orbits(verbose_level);
+	if (f_v) {
+		cout << "strong_generators::orbits_on_points_schreier "
+				"after Sch->compute_all_point_orbits" << endl;
+	}
 
 	if (f_v) {
 		cout << "strong_generators::orbits_on_points_schreier "
