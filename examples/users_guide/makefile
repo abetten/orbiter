@@ -1497,7 +1497,8 @@ F_16_over_F_4_field_reduction:
 # the polynomial 31 is not primitive:
 
 F_16_poly31:
-	$(ORBITER_PATH)/orbiter.out -v 3 -define F -finite_field -q 16 -override_polynomial 31 -end \
+	$(ORBITER_PATH)/orbiter.out -v 3 -define F \
+		-finite_field -q 16 -override_polynomial 31 -end \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
 
 
@@ -4609,7 +4610,7 @@ fano_plane_arcs:
 		-linear_group -PGL 3 2 -end \
 		-with G -do \
 		-group_theoretic_activities \
-				-poset_classification_control -lex -problem_label arcs_q2_d2 -w -depth 7 -report -draw_options -end \
+				-poset_classification_control -lex -problem_label arcs_q2_d2 -w -depth 7 -report -draw_options -end -end \
 			-classify_arcs \
 				-target_size 7 \
 				-q 2 \
@@ -4631,7 +4632,7 @@ arcs_q7_6:
 		-linear_group -PGL 3 7 -end \
 		-with G -do \
 		-group_theoretic_activities \
-				-poset_classification_control -problem_label arcs_q7_d2 -W -depth 6 -report -draw_poset -draw_options -end \
+				-poset_classification_control -problem_label arcs_q7_d2 -W -depth 6 -report -draw_poset -draw_options -end -end \
 			-classify_arcs \
 				-target_size 6 \
 				-q 7 \
@@ -4650,7 +4651,7 @@ arcs_4_q8:
 		-linear_group -PGGL 3 8 -end \
 		-with G -do \
 		-group_theoretic_activities \
-				-poset_classification_control -problem_label arcs_q8_d2 -W -depth 5 -report -draw_poset -draw_options -end \
+			-poset_classification_control -problem_label arcs_q8_d2 -W -depth 5 -report -draw_poset -draw_options -end -end \
 			-classify_arcs \
 				-target_size 5 \
 				-q 8 \
@@ -5587,22 +5588,28 @@ HCV_tangents_ideal:
 		-end
 
 
+# 13_0 has 4 Eckardt points
+# 13_1 has 6 Eckardt points
+# 13_2 has 9 Eckardt points
+# 13_3 has 18 Eckardt points
+#
 
 surface_13_0:
 	$(ORBITER_PATH)/orbiter.out -v 3 \
 		-draw_options -end \
-		-define F -finite_field -q 4 -end \
+		-defi+ne F -finite_field -q 13 -end \
 		-define P -projective_space 3 F  \
 		-with P -do \
 		-projective_space_activity \
-			-define_surface S13_0 -q 4 -catalogue 0 -end \
+			-define_surface S13_0 -q 13 -catalogue 0 -end \
 		-end \
 		-with S13_0 -do \
 		-cubic_surface_activity \
 			-report \
 			-report_with_group \
-			-all_quartic_curves \
 		-end
+	pdflatex surface_catalogue_q13_iso0_report.tex
+	open surface_catalogue_q13_iso0_report.pdf
 
 
 # clean equation for Tekirdag-2:
