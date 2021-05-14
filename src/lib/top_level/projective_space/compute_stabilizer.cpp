@@ -961,6 +961,8 @@ void compute_stabilizer::compute_local_labels(long int *set_in, long int *set_ou
 		set_out[i] = f + pos_local;
 	}
 
+	Sorting.lint_vec_heapsort(set_out, sz);
+
 }
 void compute_stabilizer::init_U(int verbose_level)
 {

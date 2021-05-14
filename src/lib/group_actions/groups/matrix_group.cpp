@@ -98,6 +98,7 @@ void matrix_group::init_projective_group(int n,
 		cout << "n=" << n << endl;
 		cout << "q=" << F->q << endl;
 		cout << "f_semilinear=" << f_semilinear << endl;
+		cout << "verbose_level=" << verbose_level << endl;
 	}
 	matrix_group::f_projective = TRUE;
 	matrix_group::f_affine = FALSE;
@@ -129,16 +130,40 @@ void matrix_group::init_projective_group(int n,
 	label_tex.assign(str2);
 
 
-	compute_elt_size(verbose_level - 1);
+	if (f_v) {
+		cout << "matrix_group::init_projective_group "
+				"before compute_elt_size" << endl;
+	}
+	compute_elt_size(0 /*verbose_level - 1*/);
+	if (f_v) {
+		cout << "matrix_group::init_projective_group "
+				"after compute_elt_size" << endl;
+	}
 
 	if (f_v) {
 		cout << "matrix_group::init_projective_group "
 				"elt_size_int = " << elt_size_int << endl;
 	}
 	
-	allocate_data(verbose_level);
+	if (f_v) {
+		cout << "matrix_group::init_projective_group "
+				"before allocate_data" << endl;
+	}
+	allocate_data(0/*verbose_level*/);
+	if (f_v) {
+		cout << "matrix_group::init_projective_group "
+				"after allocate_data" << endl;
+	}
 
-	setup_page_storage(page_length_log, verbose_level - 1);
+	if (f_v) {
+		cout << "matrix_group::init_projective_group "
+				"before setup_page_storage" << endl;
+	}
+	setup_page_storage(page_length_log, 0 /*verbose_level - 1*/);
+	if (f_v) {
+		cout << "matrix_group::init_projective_group "
+				"after setup_page_storage" << endl;
+	}
 
 
 
@@ -147,7 +172,7 @@ void matrix_group::init_projective_group(int n,
 		cout << "matrix_group::init_projective_group "
 				"before init_base" << endl;
 	}
-	init_base(A, verbose_level - 1);
+	init_base(A, 0 /*verbose_level - 1*/);
 	if (f_vv) {
 		cout << "matrix_group::init_projective_group "
 				"after init_base" << endl;
@@ -205,7 +230,7 @@ void matrix_group::init_affine_group(int n,
 	label_tex.assign(str2);
 
 
-	compute_elt_size(verbose_level - 1);
+	compute_elt_size(0 /*verbose_level - 1*/);
 
 	if (f_v) {
 		cout << "matrix_group::init_affine_group "
@@ -214,7 +239,7 @@ void matrix_group::init_affine_group(int n,
 	
 	allocate_data(verbose_level);
 
-	setup_page_storage(page_length_log, verbose_level - 1);
+	setup_page_storage(page_length_log, 0 /*verbose_level - 1*/);
 
 
 
@@ -223,7 +248,7 @@ void matrix_group::init_affine_group(int n,
 		cout << "matrix_group::init_affine_group "
 				"before init_base" << endl;
 	}
-	init_base(A, verbose_level - 1);
+	init_base(A, 0 /*verbose_level - 1*/);
 	if (f_vv) {
 		cout << "matrix_group::init_affine_group "
 				"after init_base" << endl;
@@ -280,14 +305,14 @@ void matrix_group::init_general_linear_group(int n,
 	label_tex.assign(str2);
 
 
-	compute_elt_size(verbose_level - 1);
+	compute_elt_size(0 /*verbose_level - 1*/);
 
 	if (f_v) {
 		cout << "matrix_group::init_general_linear_group "
 				"elt_size_int = " << elt_size_int << endl;
 	}
 	
-	allocate_data(verbose_level);
+	allocate_data(0 /*verbose_level*/);
 
 	setup_page_storage(page_length_log, verbose_level - 1);
 
@@ -298,7 +323,7 @@ void matrix_group::init_general_linear_group(int n,
 		cout << "matrix_group::init_general_linear_group "
 				"before init_base" << endl;
 	}
-	init_base(A, verbose_level - 1);
+	init_base(A, 0 /*verbose_level - 1*/);
 	if (f_vv) {
 		cout << "matrix_group::init_general_linear_group "
 				"after init_base" << endl;
@@ -429,7 +454,7 @@ void matrix_group::setup_page_storage(
 		int page_length_log, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	int hdl;
 	
 	if (f_v) {
@@ -474,7 +499,7 @@ void matrix_group::setup_page_storage(
 void matrix_group::compute_elt_size(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	number_theory_domain NT;
 
 	if (f_v) {
@@ -540,7 +565,7 @@ void matrix_group::compute_elt_size(int verbose_level)
 void matrix_group::init_base(action *A, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
 		cout << "matrix_group::init_base" << endl;
@@ -594,7 +619,7 @@ void matrix_group::init_base_projective(
 // transversal_length, orbit, orbit_inv
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	int q = GFq->q;
 	group_generators_domain GG;
 	int base_len;
