@@ -2119,6 +2119,7 @@ public:
 	std::string fname_isomorphism_type_of_spreads;
 	std::string fname_dual_spread;
 	std::string fname_self_dual_spreads;
+	std::string fname_schreier_table;
 
 	int *dual_line_idx; // [nb_lines]
 	int *self_dual_lines; // [nb_self_dual_lines]
@@ -2130,6 +2131,8 @@ public:
 	long int *dual_spread_idx; // [nb_spreads]
 	long int *self_dual_spreads; // [nb_self_dual_spreads]
 	int nb_self_dual_spreads;
+
+	int *schreier_table; // [nb_spreads * 4]
 
 	spread_tables();
 	~spread_tables();
@@ -2147,13 +2150,16 @@ public:
 			long int *dual_spread_idx,
 			long int *self_dual_spreads, int nb_self_dual_spreads,
 			int verbose_level);
+	void init_schreier_table(int *schreier_table,
+			int verbose_level);
 	void init_reduced(
 			int nb_select, int *select,
 			spread_tables *old_spread_table,
 			std::string &path_to_spread_tables,
 			int verbose_level);
 	long int *get_spread(int spread_idx);
-	void find_spreads_containing_two_lines(std::vector<int> &v, int line1, int line2, int verbose_level);
+	void find_spreads_containing_two_lines(std::vector<int> &v,
+			int line1, int line2, int verbose_level);
 
 	void classify_self_dual_spreads(int *&type,
 			set_of_sets *&SoS,
@@ -2163,7 +2169,6 @@ public:
 	void load(int verbose_level);
 	void compute_adjacency_matrix(
 			bitvector *&Bitvec,
-			//uchar *&bitvector_adjacency, long int &bitvector_length,
 			int verbose_level);
 	int test_if_spreads_are_disjoint(int a, int b);
 	void compute_dual_spreads(long int **Sets,

@@ -1266,7 +1266,8 @@ public:
 		int verbose_level);
 	void make_spread_table(
 			action *A, action *A2, strong_generators *Strong_gens,
-			long int **&Sets, int *&isomorphism_type_of_spread,
+			long int **&Sets, int *&Prev, int *&Label, int *&first, int *&len,
+			int *&isomorphism_type_of_spread,
 			int verbose_level);
 	void compute_covered_points(
 		long int *&points_covered_by_starter,

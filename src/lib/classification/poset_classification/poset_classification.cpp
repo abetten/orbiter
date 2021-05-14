@@ -39,7 +39,7 @@ vector_ge *poset_classification::get_transporter()
 
 long int *poset_classification::get_S()
 {
-	return S;
+	return set_S;
 }
 
 long int *poset_classification::get_set_i(int i)
@@ -1761,7 +1761,7 @@ void poset_classification::map_to_canonical_k_subset(
 // (in the list of orbit of subsets of size subset_size)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	//int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "poset_classification::map_to_canonical_k_subset" << endl;
@@ -1783,6 +1783,11 @@ void poset_classification::map_to_canonical_k_subset(
 	// unrank the k-subset and its complement to our_set[set_size]:
 	Combi.unrank_k_subset_and_complement(subset_rk,
 			our_set, set_size, subset_size);
+	if (f_v) {
+		cout << "poset_classification::map_to_canonical_k_subset our_set=";
+		Orbiter->Int_vec.print(cout, our_set, set_size);
+		cout << endl;
+	}
 #if 0
 	Combi.unrank_k_subset(subset_rk, our_set, set_size, subset_size);
 	j = 0;
@@ -1800,37 +1805,57 @@ void poset_classification::map_to_canonical_k_subset(
 		subset[i] = the_set[our_set[i]];
 		set[0][i] = subset[i];
 	}
+	for (i = 0; i < sz; i++) {
+		set[0][i] = subset[i];
+	}
+	if (f_v) {
+		cout << "poset_classification::map_to_canonical_k_subset subset=";
+		Orbiter->Lint_vec.print(cout, subset, set_size);
+		cout << endl;
+	}
 	
 	Poset->A->element_one(poset_classification::transporter->ith(0), FALSE);
 
 
 	// trace the subset:
 	
-	if (f_vv) {
+	if (f_v) {
 		cout << "poset_classification::map_to_canonical_k_subset "
 				"before trace_set" << endl;
 	}
+
+	if (set_size > max_set_size) {
+		cout << "poset_classification::map_to_canonical_k_subset set_size > max_set_size" << endl;
+		cout << "poset_classification::map_to_canonical_k_subset set_size = " << set_size << endl;
+		cout << "poset_classification::map_to_canonical_k_subset max_set_size = " << max_set_size << endl;
+		exit(1);
+	}
+
 	local_idx = trace_set(
 		subset, set_size, subset_size,
 		canonical_subset, Elt1, 
-		verbose_level - 3);
-
-
-	if (f_vv) {
+		verbose_level);
+	if (f_v) {
 		cout << "poset_classification::"
 				"map_to_canonical_k_subset "
 				"after trace_set local_idx=" << local_idx << endl;
+		cout << "poset_classification::map_to_canonical_k_subset canonical_subset=";
+		Orbiter->Lint_vec.print(cout, canonical_subset, set_size);
+		cout << endl;
 	}
-	if (FALSE) {
+
+
+	if (f_v) {
 		cout << "the transporter is" << endl;
 		Poset->A->element_print(Elt1, cout);
 		cout << endl;
 	}
 	Poset->A->element_move(Elt1, transporter, FALSE);
+
 	for (i = 0; i < reduced_set_size; i++) {
 		reduced_set[i] = canonical_subset[subset_size + i];
 	}
-	if (FALSE) {
+	if (f_v) {
 		cout << "poset_classification::"
 				"map_to_canonical_k_subset reduced set = ";
 		Orbiter->Lint_vec.print(cout, reduced_set, reduced_set_size);

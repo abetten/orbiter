@@ -1787,6 +1787,28 @@ void sorting::Heapsort_general(void *data, int len,
 		}
 }
 	
+void sorting::Heapsort_general_with_log(void *data, int *w, int len,
+	int (*compare_func)(void *data,
+			int i, int j, void *extra_data),
+	void (*swap_func)(void *data,
+			int i, int j, void *extra_data),
+	void *extra_data)
+{
+	int end;
+
+	//cout << "Heapsort_general len=" << len << endl;
+	Heapsort_general_make_heap_with_log(data, w, len,
+			compare_func, swap_func, extra_data);
+	for (end = len - 1; end > 0; ) {
+		(*swap_func)(data, 0, end, extra_data);
+		int_swap(w[0], w[end]);
+		//Heapsort_general_swap(v, 0, end);
+		end--;
+		Heapsort_general_sift_down_with_log(data, w, 0, end,
+				compare_func, swap_func, extra_data);
+		}
+}
+
 
 
 int sorting::search_general(void *data, int len,
@@ -1794,7 +1816,7 @@ int sorting::search_general(void *data, int len,
 	int (*compare_func)(void *data, int i,
 			void *search_object, void *extra_data),
 	void *extra_data, int verbose_level)
-// This function finds the last occurence of the element a.
+// This function finds the last occurrence of the element a.
 // If a is not found, it returns in idx the
 // position where it should be inserted if
 // the vector is assumed to be in increasing order.
@@ -1994,6 +2016,20 @@ void sorting::Heapsort_general_make_heap(void *data, int len,
 		}
 }
 
+void sorting::Heapsort_general_make_heap_with_log(void *data, int *w, int len,
+	int (*compare_func)(void *data, int i, int j, void *extra_data),
+	void (*swap_func)(void *data, int i, int j, void *extra_data),
+	void *extra_data)
+{
+	int start;
+
+	//cout << "Heapsort_general_make_heap len=" << len << endl;
+	for (start = (len - 2) >> 1 ; start >= 0; start--) {
+		Heapsort_general_sift_down_with_log(data, w, start, len - 1,
+			compare_func, swap_func, extra_data);
+		}
+}
+
 void sorting::heapsort_sift_down(int *v, int start, int end)
 {
 	int root, child;
@@ -2143,6 +2179,39 @@ void sorting::Heapsort_general_sift_down(void *data, int start, int end,
 	}
 }
 
+void sorting::Heapsort_general_sift_down_with_log(void *data, int *w, int start, int end,
+	int (*compare_func)(void *data, int i, int j, void *extra_data),
+	void (*swap_func)(void *data, int i, int j, void *extra_data),
+	void *extra_data)
+{
+	int root, child, c;
+
+	//cout << "Heapsort_general_sift_down " << start << " : " << end << endl;
+	root = start;
+	while (2 * root + 1 <= end) {
+		child = 2 * root + 1; // left child
+		if (child + 1 <= end) {
+			//cout << "compare " << child << " : " << child + 1 << endl;
+			c = (*compare_func)(data, child, child + 1, extra_data);
+			if (c < 0 /*v[child] < v[child + 1]*/) {
+				child++;
+			}
+		}
+		//cout << "compare " << root << " : " << child << endl;
+		c = (*compare_func)(data, root, child, extra_data);
+		if (c < 0 /*v[root] < v[child] */) {
+			(*swap_func)(data, root, child, extra_data);
+			int_swap(w[root], w[child]);
+			//Heapsort_swap(v, root, child, entry_size_in_chars);
+			root = child;
+		}
+		else {
+			return;
+		}
+	}
+}
+
+
 void sorting::heapsort_swap(int *v, int i, int j)
 {
 	int a;
@@ -2203,6 +2272,19 @@ void sorting::int_vec_bubblesort_increasing(int len, int *p)
 
 
 int sorting::integer_vec_compare(int *p, int *q, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		if (p[i] < q[i])
+			return -1;
+		if (p[i] > q[i])
+			return 1;
+		}
+	return 0;
+}
+
+int sorting::lint_vec_compare(long int *p, long int *q, int len)
 {
 	int i;
 

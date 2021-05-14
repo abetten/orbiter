@@ -8,7 +8,8 @@ LFLAGS = -lm
 MODULES = \
 	canonical_form_classifier_description.o \
 	canonical_form_classifier.o \
-	canonical_form.o \
+	canonical_form_nauty.o \
+	canonical_form_substructure.o \
 	compute_stabilizer.o \
 	object_in_projective_space_with_action.o \
 	projective_space_activity_description.o \

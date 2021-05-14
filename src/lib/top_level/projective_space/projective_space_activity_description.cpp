@@ -121,9 +121,15 @@ projective_space_activity_description::projective_space_activity_description()
 
 	f_cheat_sheet = FALSE;
 
-	f_classify_quartic_curves = FALSE;
-	//std::string classify_quartic_curves_fname_mask;
-	classify_quartic_curves_nb = 0;
+	f_classify_quartic_curves_nauty = FALSE;
+	//std::string classify_quartic_curves_nauty_fname_mask;
+	classify_quartic_curves_nauty_nb = 0;
+
+	f_classify_quartic_curves_with_substructure = FALSE;
+	//std::string classify_quartic_curves_with_substructure_fname_mask;
+	classify_quartic_curves_with_substructure_nb = 0;
+	classify_quartic_curves_with_substructure_size = 0;
+	//std::string classify_quartic_curves_with_substructure_fname_classification;
 
 	f_set_stabilizer = FALSE;
 	set_stabilizer_intermediate_set_size = 0;
@@ -451,12 +457,26 @@ int projective_space_activity_description::read_arguments(
 			f_cheat_sheet = TRUE;
 			cout << "-cheat_sheet " << endl;
 		}
-		else if (stringcmp(argv[i], "-classify_quartic_curves") == 0) {
-			f_classify_quartic_curves = TRUE;
-			classify_quartic_curves_fname_mask.assign(argv[++i]);
-			classify_quartic_curves_nb = strtoi(argv[++i]);
-			cout << "-classify_quartic_curves "
-					<< classify_quartic_curves_fname_mask << " " << classify_quartic_curves_nb << endl;
+		else if (stringcmp(argv[i], "-classify_quartic_curves_nauty") == 0) {
+			f_classify_quartic_curves_nauty = TRUE;
+			classify_quartic_curves_nauty_fname_mask.assign(argv[++i]);
+			classify_quartic_curves_nauty_nb = strtoi(argv[++i]);
+			cout << "-classify_quartic_curves_nauty "
+					<< classify_quartic_curves_nauty_fname_mask
+					<< " " << classify_quartic_curves_nauty_nb << endl;
+		}
+		else if (stringcmp(argv[i], "-classify_quartic_curves_with_substructure") == 0) {
+			f_classify_quartic_curves_with_substructure = TRUE;
+			classify_quartic_curves_with_substructure_fname_mask.assign(argv[++i]);
+			classify_quartic_curves_with_substructure_nb = strtoi(argv[++i]);
+			classify_quartic_curves_with_substructure_size = strtoi(argv[++i]);
+			classify_quartic_curves_with_substructure_fname_classification.assign(argv[++i]);
+			cout << "-classify_quartic_curves_with_substructure "
+					<< classify_quartic_curves_with_substructure_fname_mask
+					<< " " << classify_quartic_curves_with_substructure_nb
+					<< " " << classify_quartic_curves_with_substructure_size
+					<< " " << classify_quartic_curves_with_substructure_fname_classification
+					<< endl;
 		}
 		else if (stringcmp(argv[i], "-set_stabilizer") == 0) {
 			f_set_stabilizer = TRUE;

@@ -286,10 +286,19 @@ void projective_space_activity::perform_activity(int verbose_level)
 				O,
 				verbose_level);
 	}
-	else if (Descr->f_classify_quartic_curves) {
+	else if (Descr->f_classify_quartic_curves_nauty) {
 
-		classify_quartic_curves(PA,
-				Descr->classify_quartic_curves_fname_mask, Descr->classify_quartic_curves_nb,
+		classify_quartic_curves_nauty(PA,
+				Descr->classify_quartic_curves_nauty_fname_mask, Descr->classify_quartic_curves_nauty_nb,
+				verbose_level);
+	}
+	else if (Descr->f_classify_quartic_curves_with_substructure) {
+
+		classify_quartic_curves_with_substructure(PA,
+				Descr->classify_quartic_curves_with_substructure_fname_mask,
+				Descr->classify_quartic_curves_with_substructure_nb,
+				Descr->classify_quartic_curves_with_substructure_size,
+				Descr->classify_quartic_curves_with_substructure_fname_classification,
 				verbose_level);
 	}
 	else if (Descr->f_set_stabilizer) {
@@ -860,7 +869,7 @@ void projective_space_activity::do_cheat_sheet_PG(
 }
 
 
-void projective_space_activity::classify_quartic_curves(
+void projective_space_activity::classify_quartic_curves_nauty(
 		projective_space_with_action *PA,
 		std::string &fname_mask, int nb,
 		int verbose_level)
@@ -869,7 +878,7 @@ void projective_space_activity::classify_quartic_curves(
 
 
 	if (f_v) {
-		cout << "projective_space_activity::classify_quartic_curves" << endl;
+		cout << "projective_space_activity::classify_quartic_curves_nauty" << endl;
 	}
 
 
@@ -881,6 +890,8 @@ void projective_space_activity::classify_quartic_curves(
 	Descr.f_degree = TRUE;
 	Descr.degree = 4;
 	Descr.nb_files = nb;
+	Descr.f_algorithm_nauty = TRUE;
+	Descr.f_algorithm_substructure = FALSE;
 
 	canonical_form_classifier Classifier;
 
@@ -889,6 +900,66 @@ void projective_space_activity::classify_quartic_curves(
 	cout << "The number of types of quartic curves is " << Classifier.CB->nb_types << endl;
 
 
+	int idx;
+
+	cout << "idx : ago" << endl;
+	for (idx = 0; idx < Classifier.CB->nb_types; idx++) {
+
+		canonical_form_nauty *C1;
+		longinteger_object go;
+
+		C1 = (canonical_form_nauty *) Classifier.CB->Type_extra_data[idx];
+
+		C1->Stab_gens_quartic->group_order(go);
+
+		cout << idx << " : " << go << endl;
+
+
+	}
+
+
+
+	if (f_v) {
+		cout << "projective_space_activity::classify_quartic_curves_nauty done" << endl;
+	}
+}
+
+
+void projective_space_activity::classify_quartic_curves_with_substructure(
+		projective_space_with_action *PA,
+		std::string &fname_mask, int nb, int substructure_size,
+		std::string &fname_classification,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "projective_space_activity::classify_quartic_curves_with_substructure" << endl;
+	}
+
+
+
+	canonical_form_classifier_description Descr;
+
+	Descr.fname_mask.assign(fname_mask);
+	Descr.PA = PA;
+	Descr.f_degree = TRUE;
+	Descr.degree = 4;
+	Descr.nb_files = nb;
+	Descr.f_algorithm_nauty = FALSE;
+	Descr.f_algorithm_substructure = TRUE;
+	Descr.substructure_size = substructure_size;
+
+	canonical_form_classifier Classifier;
+
+	Classifier.classify(&Descr, verbose_level);
+
+
+	Classifier.report(fname_classification, verbose_level);
+
+#if 0
+	cout << "The number of types of quartic curves is " << Classifier.CB->nb_types << endl;
 	int idx;
 
 	cout << "idx : ago" << endl;
@@ -905,15 +976,13 @@ void projective_space_activity::classify_quartic_curves(
 
 
 	}
-
+#endif
 
 
 	if (f_v) {
-		cout << "projective_space_activity::classify_quartic_curves done" << endl;
+		cout << "projective_space_activity::classify_quartic_curves_with_substructure done" << endl;
 	}
 }
-
-
 
 void projective_space_activity::set_stabilizer(
 		projective_space_with_action *PA,
@@ -1023,6 +1092,8 @@ void projective_space_activity::set_stabilizer(
 				"nb_objects_to_test = " << nb_objects_to_test << endl;
 	}
 
+
+
 	for (cnt = 0; cnt < nb; cnt++) {
 
 		char str[1000];
@@ -1048,6 +1119,7 @@ void projective_space_activity::set_stabilizer(
 		int sz;
 		long int *pts;
 		int nb_pts;
+		long int *canonical_pts;
 		long int *bitangents;
 		int nb_bitangents;
 
@@ -1056,6 +1128,7 @@ void projective_space_activity::set_stabilizer(
 		for (row = 0; row < S.nb_rows - 1; row++) {
 
 			if (f_v) {
+				cout << "#############################################################################" << endl;
 				cout << "cnt = " << cnt << " / " << nb << " row = " << row << " / " << S.nb_rows - 1 << endl;
 			}
 
@@ -1091,6 +1164,9 @@ void projective_space_activity::set_stabilizer(
 			Orbiter->Int_vec.scan(eqn_txt, eqn, sz);
 			Orbiter->Lint_vec.scan(pts_txt, pts, nb_pts);
 			Orbiter->Lint_vec.scan(bitangents_txt, bitangents, nb_bitangents);
+
+			canonical_pts = NEW_lint(nb_pts);
+
 
 			if (f_v) {
 				cout << "row = " << row << " eqn=";
@@ -1133,7 +1209,14 @@ void projective_space_activity::set_stabilizer(
 				Orbiter->Int_vec.print(cout, eqn, sz);
 				cout << " pts=";
 				Orbiter->Lint_vec.print(cout, pts, nb_pts);
-				cout << " orbit frequencies=";
+				cout << endl;
+				cout << "orbit isotype=";
+				Orbiter->Int_vec.print(cout, isotype, nCk);
+				cout << endl;
+				cout << "orbit frequencies=";
+				Orbiter->Int_vec.print(cout, orbit_frequencies, nb_orbits);
+				cout << endl;
+				cout << "orbit frequency types=";
 				T->print_naked(FALSE /* f_backwards */);
 				cout << endl;
 			}
@@ -1171,18 +1254,24 @@ void projective_space_activity::set_stabilizer(
 
 					PC->get_stabilizer_order(intermediate_subset_size, idx, go);
 
-					if (selected_type == -1) {
-						selected_type = j;
-						selected_orbit = idx;
-						selected_frequency = types[i];
-						go.assign_to(go_min);
-					}
-					else {
-						if (D.compare_unsigned(go, go_min) < 0) {
+					if (types[i]) {
+
+						// types[i] must be greater than zero
+						// so the type really appears.
+
+						if (selected_type == -1) {
 							selected_type = j;
 							selected_orbit = idx;
 							selected_frequency = types[i];
 							go.assign_to(go_min);
+						}
+						else {
+							if (D.compare_unsigned(go, go_min) < 0) {
+								selected_type = j;
+								selected_orbit = idx;
+								selected_frequency = types[i];
+								go.assign_to(go_min);
+							}
 						}
 					}
 
@@ -1194,10 +1283,12 @@ void projective_space_activity::set_stabilizer(
 				cout << endl;
 			}
 
-			cout << "selected_type = " << selected_type
+			if (f_v) {
+				cout << "selected_type = " << selected_type
 					<< " selected_orbit = " << selected_orbit
 					<< " selected_frequency = " << selected_frequency
 					<< " go_min = " << go_min << endl;
+			}
 
 			strong_generators *gens;
 
@@ -1206,11 +1297,14 @@ void projective_space_activity::set_stabilizer(
 				intermediate_subset_size, selected_orbit, verbose_level);
 
 
-			strong_generators *Aut_gens;
+			int *transporter_to_canonical_form;
+			strong_generators *Gens_stabilizer_original_set;
 
 			if (f_v) {
-				cout << "projective_space_activity::set_stabilizer before handle_type" << endl;
+				cout << "projective_space_activity::set_stabilizer before handle_orbit" << endl;
 			}
+
+			transporter_to_canonical_form = NEW_int(PA->A->elt_size_in_int);
 
 
 			handle_orbit(*T,
@@ -1219,16 +1313,73 @@ void projective_space_activity::set_stabilizer(
 					intermediate_subset_size,
 					PC, PA->A, PA->A,
 					pts, nb_pts,
-					Aut_gens, verbose_level);
+					canonical_pts,
+					transporter_to_canonical_form,
+					Gens_stabilizer_original_set,
+					0 /*verbose_level*/);
 
 			if (f_v) {
-				cout << "projective_space_activity::set_stabilizer after handle_type" << endl;
+				cout << "projective_space_activity::set_stabilizer after handle_orbit" << endl;
+				cout << "canonical point set: ";
+				Orbiter->Lint_vec.print(cout, canonical_pts, nb_pts);
+				longinteger_object go;
+
+				Gens_stabilizer_original_set->group_order(go);
+				cout << "_{" << go << "}" << endl;
+				cout << endl;
+				cout << "transporter to canonical form:" << endl;
+				PA->A->element_print(transporter_to_canonical_form, cout);
+				cout << "Stabilizer of the original set:" << endl;
+				Gens_stabilizer_original_set->print_generators_tex();
+			}
+
+			strong_generators *Gens_stabilizer_canonical_form;
+
+			Gens_stabilizer_canonical_form = NEW_OBJECT(strong_generators);
+
+			if (f_v) {
+				cout << "projective_space_activity::set_stabilizer before init_generators_for_the_conjugate_group_avGa" << endl;
+			}
+			Gens_stabilizer_canonical_form->init_generators_for_the_conjugate_group_avGa(
+					Gens_stabilizer_original_set, transporter_to_canonical_form,
+					verbose_level);
+			if (f_v) {
+				cout << "projective_space_activity::set_stabilizer after init_generators_for_the_conjugate_group_avGa" << endl;
+			}
+
+			if (f_v) {
+				cout << "projective_space_activity::set_stabilizer after handle_orbit" << endl;
+				cout << "canonical point set: ";
+				Orbiter->Lint_vec.print(cout, canonical_pts, nb_pts);
+				longinteger_object go;
+
+				Gens_stabilizer_canonical_form->group_order(go);
+				cout << "_{" << go << "}" << endl;
+				cout << endl;
+				cout << "transporter to canonical form:" << endl;
+				PA->A->element_print(transporter_to_canonical_form, cout);
+				cout << "Stabilizer of the canonical form:" << endl;
+				Gens_stabilizer_canonical_form->print_generators_tex();
 			}
 
 
+
+
+			FREE_int(transporter_to_canonical_form);
+			FREE_OBJECT(gens);
+			FREE_OBJECT(Gens_stabilizer_original_set);
+			FREE_OBJECT(Gens_stabilizer_canonical_form);
+			FREE_OBJECT(SoS);
+			FREE_int(types);
+
 			FREE_int(isotype);
+			FREE_int(orbit_frequencies);
 			FREE_OBJECT(T);
 
+			FREE_int(eqn);
+			FREE_lint(pts);
+			FREE_lint(bitangents);
+			FREE_lint(canonical_pts);
 
 
 		} // row
@@ -1250,7 +1401,10 @@ void projective_space_activity::handle_orbit(tally &C,
 		poset_classification *PC, action *A, action *A2,
 		long int *pts,
 		int nb_pts,
-		strong_generators *&Aut_gens, int verbose_level)
+		long int *canonical_pts,
+		int *transporter_to_canonical_form,
+		strong_generators *&Gens_stabilizer_original_set,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	// interesting_subsets are the lvl-subsets of the given set
@@ -1294,10 +1448,6 @@ void projective_space_activity::handle_orbit(tally &C,
 	if (f_v) {
 		cout << "projective_space_activity::handle_orbit calling compute_stabilizer_function" << endl;
 		}
-	//INT nodes;
-
-
-	//compute_stabilizer_function(the_set, set_size, A, A, gen, lvl, orb_idx, orb_mult, interesting_subsets, Stab, nodes, verbose_level);
 
 	compute_stabilizer *CS;
 
@@ -1307,6 +1457,7 @@ void projective_space_activity::handle_orbit(tally &C,
 		cout << "projective_space_activity::handle_orbit before CS->init" << endl;
 	}
 	CS->init(pts, nb_pts,
+			canonical_pts,
 			PC, A, A2,
 			intermediate_subset_size, selected_orbit,
 			nb_interesting_subsets, interesting_subsets,
@@ -1316,10 +1467,11 @@ void projective_space_activity::handle_orbit(tally &C,
 	}
 
 
+	A->element_move(CS->T1, transporter_to_canonical_form, 0);
 
-	Aut_gens = NEW_OBJECT(strong_generators);
+	Gens_stabilizer_original_set = NEW_OBJECT(strong_generators);
 
-	Aut_gens->init_from_sims(CS->Stab, verbose_level);
+	Gens_stabilizer_original_set->init_from_sims(CS->Stab, verbose_level);
 
 	if (f_v) {
 		cout << "projective_space_activity::handle_orbit done with compute_stabilizer" << endl;

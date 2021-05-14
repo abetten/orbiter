@@ -633,9 +633,11 @@ int poset_classification::trace_set_recursion(
 	exit(1);
 }
 
-int poset_classification::trace_set(long int *set, int size, int level,
-	long int *canonical_set, int *Elt_transporter,
-	int verbose_level)
+int poset_classification::trace_set(
+		long int *set,
+		int size, int level,
+		long int *canonical_set, int *Elt_transporter,
+		int verbose_level)
 // called by map_set_to_set_BLT in orbits.cpp
 // returns the case number of the canonical set
 {
@@ -684,6 +686,10 @@ int poset_classification::trace_set(long int *set, int size, int level,
 	if (case_nb < 0) {
 		cout << "poset_classification::trace_set, "
 				"case_nb < 0, case_nb = " << case_nb << endl;
+		cout << "poset_classification::trace_set, "
+				"level = " << level << endl;
+		cout << "poset_classification::trace_set, "
+				"first_poset_orbit_node_at_level[level] = " << first_poset_orbit_node_at_level[level] << endl;
 		exit(1);
 	}
 	FREE_lint(tmp_set1);

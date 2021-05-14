@@ -242,9 +242,13 @@ void spread_table_with_selection::compute_spread_table_from_scratch(int verbose_
 		cout << "spread_table_with_selection::compute_spread_table_from_scratch" << endl;
 	}
 
-	int i;
+	int i, j;
 	long int **Sets;
 	int nb_spreads;
+	int *Prev;
+	int *Label;
+	int *First;
+	int *Len;
 	int *isomorphism_type_of_spread;
 	long int *Spread_table;
 	sorting Sorting;
@@ -260,10 +264,17 @@ void spread_table_with_selection::compute_spread_table_from_scratch(int verbose_
 
 	make_spread_table(
 			T->A, T->A2, T->A->Strong_gens,
-			Sets, isomorphism_type_of_spread,
+			Sets,
+			Prev, Label, First, Len,
+			isomorphism_type_of_spread,
 			verbose_level);
 
 	// does not sort the spread table
+
+	FREE_int(Prev);
+	FREE_int(Label);
+	FREE_int(First);
+	FREE_int(Len);
 
 	if (f_v) {
 		cout << "spread_table_with_selection::compute_spread_table_from_scratch "
@@ -279,13 +290,26 @@ void spread_table_with_selection::compute_spread_table_from_scratch(int verbose_
 
 	// for packing_swap_func
 
-	Sorting.Heapsort_general(Sets, total_nb_of_spreads,
+	int *original_position;
+	int *original_position_inv;
+
+	original_position = NEW_int(total_nb_of_spreads);
+	original_position_inv = NEW_int(total_nb_of_spreads);
+	for (i = 0; i < total_nb_of_spreads; i++) {
+		original_position[i] = i;
+	}
+
+	Sorting.Heapsort_general_with_log(Sets, original_position, total_nb_of_spreads,
 			spread_table_with_selection_compare_func,
 			spread_table_with_selection_swap_func,
 			this);
 	if (f_v) {
 		cout << "spread_table_with_selection::compute_spread_table_from_scratch after "
 				"sorting spread table of size " << total_nb_of_spreads << endl;
+	}
+	for (i = 0; i < total_nb_of_spreads; i++) {
+		j = original_position[i];
+		original_position_inv[j] = i;
 	}
 
 	Spread_table = NEW_lint(nb_spreads * spread_size);
@@ -601,7 +625,8 @@ void spread_table_with_selection::predict_spread_table_length(
 
 void spread_table_with_selection::make_spread_table(
 		action *A, action *A2, strong_generators *Strong_gens,
-		long int **&Sets, int *&isomorphism_type_of_spread,
+		long int **&Sets, int *&Prev, int *&Label, int *&First, int *&Len,
+		int *&isomorphism_type_of_spread,
 		int verbose_level)
 // does not sort the table
 {
@@ -616,6 +641,10 @@ void spread_table_with_selection::make_spread_table(
 		cout << "spread_table_with_selection::make_spread_table verbose_level = " << verbose_level << endl;
 	}
 	Sets = NEW_plint(total_nb_of_spreads);
+	Prev = NEW_int(total_nb_of_spreads);
+	Label = NEW_int(total_nb_of_spreads);
+	First = NEW_int(nb_spread_reps);
+	Len = NEW_int(nb_spread_reps);
 	isomorphism_type_of_spread = NEW_int(total_nb_of_spreads);
 
 	orbit_of_sets *SetOrb;
@@ -651,11 +680,17 @@ void spread_table_with_selection::make_spread_table(
 
 	for (i = 0; i < nb_spread_reps; i++) {
 
+		First[i] = nb_spreads1;
+		Len[i] = SetOrb[i].used_length;
+
 		for (j = 0; j < SetOrb[i].used_length; j++) {
 
 			Sets[nb_spreads1] = NEW_lint(spread_size);
 
 			Orbiter->Lint_vec.copy(SetOrb[i].Sets[j], Sets[nb_spreads1], spread_size);
+
+			Prev[nb_spreads1] = First[i] + SetOrb[i].Extra[j * 2 + 0];
+			Label[nb_spreads1] = SetOrb[i].Extra[j * 2 + 1];
 
 			isomorphism_type_of_spread[nb_spreads1] = i;
 

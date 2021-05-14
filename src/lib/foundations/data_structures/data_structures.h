@@ -1054,6 +1054,12 @@ public:
 		int (*compare_func)(void *data, int i, int j, void *extra_data),
 		void (*swap_func)(void *data, int i, int j, void *extra_data),
 		void *extra_data);
+	void Heapsort_general_with_log(void *data, int *w, int len,
+		int (*compare_func)(void *data,
+				int i, int j, void *extra_data),
+		void (*swap_func)(void *data,
+				int i, int j, void *extra_data),
+		void *extra_data);
 	int search_general(void *data, int len, void *search_object, int &idx,
 		int (*compare_func)(void *data, int i, void *search_object,
 		void *extra_data),
@@ -1076,6 +1082,10 @@ public:
 		int (*compare_func)(void *data, int i, int j, void *extra_data),
 		void (*swap_func)(void *data, int i, int j, void *extra_data),
 		void *extra_data);
+	void Heapsort_general_make_heap_with_log(void *data, int *w, int len,
+		int (*compare_func)(void *data, int i, int j, void *extra_data),
+		void (*swap_func)(void *data, int i, int j, void *extra_data),
+		void *extra_data);
 	void heapsort_sift_down(int *v, int start, int end);
 	void lint_heapsort_sift_down(long int *v, int start, int end);
 	void heapsort_sift_down_with_log(int *v, int *w, int start, int end);
@@ -1087,6 +1097,10 @@ public:
 		int (*compare_func)(void *data, int i, int j, void *extra_data),
 		void (*swap_func)(void *data, int i, int j, void *extra_data),
 		void *extra_data);
+	void Heapsort_general_sift_down_with_log(void *data, int *w, int start, int end,
+		int (*compare_func)(void *data, int i, int j, void *extra_data),
+		void (*swap_func)(void *data, int i, int j, void *extra_data),
+		void *extra_data);
 	void heapsort_swap(int *v, int i, int j);
 	void lint_heapsort_swap(long int *v, int i, int j);
 	void Heapsort_swap(void *v, int i, int j, int entry_size_in_chars);
@@ -1094,6 +1108,7 @@ public:
 		int *&pts, int &nb_pts);
 	void int_vec_bubblesort_increasing(int len, int *p);
 	int integer_vec_compare(int *p, int *q, int len);
+	int lint_vec_compare(long int *p, long int *q, int len);
 	void schreier_vector_compute_depth_and_ancestor(
 		int n, int *pts, int *prev, int f_use_pts_inv, int *pts_inv,
 		int *&depth, int *&ancestor, int verbose_level);

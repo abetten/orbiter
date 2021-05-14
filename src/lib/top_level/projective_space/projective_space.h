@@ -34,6 +34,11 @@ public:
 	int f_degree;
 	int degree;
 
+	int f_algorithm_nauty;
+	int f_algorithm_substructure;
+
+	int substructure_size;
+
 	projective_space_with_action *PA;
 
 	canonical_form_classifier_description();
@@ -63,7 +68,33 @@ public:
 
 	int nb_objects_to_test;
 
+	// nauty stuff:
 	classify_bitvectors *CB;
+	int canonical_labeling_len;
+	long int *alpha;
+	int *gamma;
+
+	// substructure stuff:
+	poset_classification *PC;
+	poset_classification_control *Control;
+	poset *Poset;
+	int nb_orbits;
+	canonical_form_substructure **CFS_table; // [nb_objects_to_test]
+
+
+
+
+
+	int *Elt;
+	int *eqn2;
+
+	int *canonical_equation;
+	int *transporter_to_canonical_form;
+	//longinteger_object go_eqn;
+
+	int counter;
+	int *Canonical_forms; // [nb_objects_to_test * Poly_ring->get_nb_monomials()]
+	long int *Goi; // [nb_objects_to_test]
 
 
 	canonical_form_classifier();
@@ -71,20 +102,33 @@ public:
 	void count_nb_objects_to_test(int verbose_level);
 	void classify(canonical_form_classifier_description *Descr,
 			int verbose_level);
+	void classify_nauty(int verbose_level);
+	void classify_with_substructure(int verbose_level);
+	void main_loop(int verbose_level);
+	void classify_curve_nauty(int cnt, int row,
+			int *eqn,
+			int sz,
+			long int *pts,
+			int nb_pts,
+			long int *bitangents,
+			int nb_bitangents,
+			int verbose_level);
+	void report(std::string &fname, int verbose_level);
+	void report2(std::ostream &ost, std::string &fname_base, int verbose_level);
 
 };
 
 
 // #############################################################################
-// canonical_form.cpp
+// canonical_form_nauty.cpp
 // #############################################################################
 
 
 
-//! to represent an object in canonical form
+//! to compute the canonical form of an object using nauty
 
 
-class canonical_form {
+class canonical_form_nauty {
 
 public:
 
@@ -111,8 +155,8 @@ public:
 	strong_generators *Stab_gens_quartic;
 
 
-	canonical_form();
-	~canonical_form();
+	canonical_form_nauty();
+	~canonical_form_nauty();
 	void quartic_curve(
 			projective_space_with_action *PA,
 			homogeneous_polynomial_domain *Poly4_x123,
@@ -120,10 +164,108 @@ public:
 			int idx, int *eqn, int sz,
 			long int *Pts_on_curve, int sz_curve,
 			long int *bitangents, int nb_bitangents,
+			int *canonical_equation,
+			int *transporter_to_canonical_form,
+			strong_generators *&gens_stab_of_canonical_equation,
 			int verbose_level);
 
 };
 
+
+
+// #############################################################################
+// canonical_form_substructure.cpp
+// #############################################################################
+
+
+
+//! to compute the canonical form of an object using substructure canonization
+
+class canonical_form_substructure {
+
+public:
+
+	canonical_form_classifier *Canonical_form_classifier;
+
+	int cnt;
+	int row;
+	int counter;
+	int *eqn;
+	int sz;
+	long int *pts;
+	int nb_pts;
+	long int *bitangents;
+	int nb_bitangents;
+
+	long int *canonical_pts;
+
+	int nCk;
+	int *isotype;
+	int *orbit_frequencies;
+	int nb_orbits;
+	tally *T;
+
+	set_of_sets *SoS;
+	int *types;
+	int nb_types;
+	int selected_type;
+	int selected_orbit;
+	int selected_frequency;
+
+	longinteger_object go_min;
+
+	strong_generators *gens;
+
+
+	long int *interesting_subsets;
+	int nb_interesting_subsets;
+
+	compute_stabilizer *CS;
+
+	strong_generators *Gens_stabilizer_original_set;
+	strong_generators *Gens_stabilizer_canonical_form;
+
+
+	orbit_of_equations *Orb;
+
+	strong_generators *gens_stab_of_canonical_equation;
+
+	int *trans1;
+	int *trans2;
+	int *intermediate_equation;
+
+
+
+	int *Elt;
+	int *eqn2;
+
+	int *canonical_equation;
+	int *transporter_to_canonical_form;
+
+
+	canonical_form_substructure();
+	~canonical_form_substructure();
+	void classify_curve_with_substructure(
+			canonical_form_classifier *Canonical_form_classifier,
+			int counter, int cnt, int row,
+			int *eqn,
+			int sz,
+			long int *pts,
+			int nb_pts,
+			long int *bitangents,
+			int nb_bitangents,
+			int *canonical_equation,
+			int *transporter_to_canonical_form,
+			longinteger_object &go_eqn,
+			int verbose_level);
+	void handle_orbit(
+			int *transporter_to_canonical_form,
+			strong_generators *&Gens_stabilizer_original_set,
+			strong_generators *&Gens_stabilizer_canonical_form,
+			int verbose_level);
+
+
+};
 
 // ####################################################################################
 // compute_stabilizer.cpp
@@ -140,9 +282,14 @@ public:
 	action *A2;
 	poset_classification *PC;
 
-	action *A_on_the_set;
 
-	sims *Stab;
+	action *A_on_the_set;
+		// only used to print the induced action on the set
+		// of the set stabilizer
+
+	sims *Stab; // the stabilizer of the original set
+
+
 	longinteger_object stab_order, new_stab_order;
 	int nb_times_orbit_count_does_not_match_up;
 	int backtrack_nodes_first_time;
@@ -158,11 +305,11 @@ public:
 	sims *selected_set_stab;
 
 
-	int first_at_level;
 	int reduced_set_size; // = set_size - level
 
 
-	// maintained by null1, allocate1, free1:
+
+
 	long int *reduced_set1; // [set_size]
 	long int *reduced_set2; // [set_size]
 	long int *reduced_set1_new_labels; // [set_size]
@@ -171,10 +318,8 @@ public:
 	long int *canonical_set2; // [set_size]
 	int *elt1, *Elt1, *Elt1_inv, *new_automorphism, *Elt4;
 	int *elt2, *Elt2;
+	int *transporter0; // = elt1 * elt2
 
-
-	//strong_generators *Strong_gens_G; // is now selected_set_stab_gens
-	//group *G;
 	longinteger_object go_G;
 
 	schreier *Stab_orbits;
@@ -182,6 +327,15 @@ public:
 	int *orbit_count1; // [nb_orbits]
 	int *orbit_count2; // [nb_orbits]
 
+
+	int nb_interesting_subsets_reduced;
+	long int *interesting_subsets_reduced;
+
+	int *Orbit_patterns; // [nb_interesting_subsets * nb_orbits]
+
+
+
+	int *orbit_to_interesting_orbit; // [nb_orbits]
 	int nb_interesting_orbits;
 	int *interesting_orbits;
 	int nb_interesting_points;
@@ -217,24 +371,43 @@ public:
 
 	union_find_on_k_subsets *U;
 
+
+	long int *Canonical_forms; // [nb_interesting_subsets_reduced * reduced_set_size]
+	int nb_interesting_subsets_rr;
+	long int *interesting_subsets_rr;
+
+
 	compute_stabilizer();
 	~compute_stabilizer();
 
 	void null();
 	void freeself();
 	void init(long int *the_set, int set_size,
+			long int *canonical_pts,
 			poset_classification *PC, action *A, action *A2,
 			int level, int interesting_orbit,
 			int nb_interesting_subsets, long int *interesting_subsets,
 			int verbose_level);
+	void compute_automorphism_group(int verbose_level);
+	void compute_automorphism_group_handle_case(int cnt2, int verbose_level);
+	void setup_stabilizer(sims *Stab0, int verbose_level);
+	void compute_canonical_form(int verbose_level);
+	void compute_canonical_form_handle_case(int cnt, int verbose_level);
+	void compute_canonical_set(long int *set_in, long int *set_out, int sz,
+			int *transporter, int verbose_level);
+	void compute_canonical_set_and_group(long int *set_in, long int *set_out, int sz,
+			int *transporter, sims *&stab, int verbose_level);
+	void compute_local_labels(long int *set_in, long int *set_out, int sz, int verbose_level);
 	void init_U(int verbose_level);
+	void compute_orbits_and_find_minimal_pattern(int verbose_level);
+	void find_interesting_orbits(int verbose_level);
+	void find_orbit_pattern(int cnt, int *transp, int verbose_level);
 	void compute_orbits(int verbose_level);
 		// uses selected_set_stab_gens to compute orbits on points in action A2
-	void restricted_action(int verbose_level);
-	void main_loop(int verbose_level);
-	void main_loop_handle_case(int cnt, int verbose_level);
+	void restricted_action_on_interesting_points(int verbose_level);
 	void map_the_first_set_and_do_orbit_counting(int cnt, int verbose_level);
-	void map_the_second_set_and_do_orbit_counting(int cnt, int verbose_level);
+	void map_reduced_set_and_do_orbit_counting(int cnt,
+			long int subset_idx, int *transporter, int verbose_level);
 	void update_stabilizer(int verbose_level);
 	void add_automorphism(int verbose_level);
 	void retrieve_automorphism(int verbose_level);
@@ -242,9 +415,10 @@ public:
 	int compute_second_reduced_set();
 	int check_orbit_count();
 	void print_orbit_count(int f_both);
-	void null1();
 	void allocate1();
 	void free1();
+	void report(std::ostream &ost);
+
 };
 
 
@@ -396,9 +570,15 @@ public:
 
 	int f_cheat_sheet;
 
-	int f_classify_quartic_curves;
-	std::string classify_quartic_curves_fname_mask;
-	int classify_quartic_curves_nb;
+	int f_classify_quartic_curves_nauty;
+	std::string classify_quartic_curves_nauty_fname_mask;
+	int classify_quartic_curves_nauty_nb;
+
+	int f_classify_quartic_curves_with_substructure;
+	std::string classify_quartic_curves_with_substructure_fname_mask;
+	int classify_quartic_curves_with_substructure_nb;
+	int classify_quartic_curves_with_substructure_size;
+	std::string classify_quartic_curves_with_substructure_fname_classification;
 
 	int f_set_stabilizer;
 	int set_stabilizer_intermediate_set_size;
@@ -481,9 +661,14 @@ public:
 			projective_space_with_action *PA,
 			layered_graph_draw_options *O,
 			int verbose_level);
-	void classify_quartic_curves(
+	void classify_quartic_curves_nauty(
 			projective_space_with_action *PA,
 			std::string &fname_mask, int nb,
+			int verbose_level);
+	void classify_quartic_curves_with_substructure(
+			projective_space_with_action *PA,
+			std::string &fname_mask, int nb, int substructure_size,
+			std::string &fname_classification,
 			int verbose_level);
 	void set_stabilizer(
 			projective_space_with_action *PA,
@@ -497,7 +682,10 @@ public:
 			poset_classification *PC, action *A, action *A2,
 			long int *pts,
 			int nb_pts,
-			strong_generators *&Aut_gens, int verbose_level);
+			long int *canonical_pts,
+			int *transporter_to_canonical_form,
+			strong_generators *&Gens_stabilizer_original_set,
+			int verbose_level);
 	void print_interesting_subsets(int set_size, int lvl, int nb_interesting_subsets, int *interesting_subsets);
 
 

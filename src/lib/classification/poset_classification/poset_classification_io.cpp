@@ -2002,7 +2002,7 @@ void poset_classification::log_current_node(ostream &f, int size)
 
 	f << size << " ";
 	for (i = 0; i < size; i++) {
-		f << S[i] << " ";
+		f << set_S[i] << " ";
 		}
 	f << endl;
 
