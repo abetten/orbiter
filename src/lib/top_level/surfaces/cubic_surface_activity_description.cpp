@@ -30,6 +30,8 @@ cubic_surface_activity_description::cubic_surface_activity_description()
 
 	f_all_quartic_curves = FALSE;
 
+	f_export_all_quartic_curves = FALSE;
+
 }
 
 cubic_surface_activity_description::~cubic_surface_activity_description()
@@ -70,6 +72,10 @@ int cubic_surface_activity_description::read_arguments(
 		else if (stringcmp(argv[i], "-all_quartic_curves") == 0) {
 			f_all_quartic_curves = TRUE;
 			cout << "-all_quartic_curves " << endl;
+		}
+		else if (stringcmp(argv[i], "-export_all_quartic_curves") == 0) {
+			f_export_all_quartic_curves = TRUE;
+			cout << "-export_all_quartic_curves " << endl;
 		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {

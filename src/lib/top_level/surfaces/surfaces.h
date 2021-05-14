@@ -492,6 +492,8 @@ public:
 
 	int f_all_quartic_curves;
 
+	int f_export_all_quartic_curves;
+
 	cubic_surface_activity_description();
 	~cubic_surface_activity_description();
 	int read_arguments(
@@ -588,7 +590,7 @@ public:
 	quartic_curve();
 	~quartic_curve();
 	void init(surface_object_with_action *SOA, int verbose_level);
-	void quartic(std::string &surface_prefix, int pt_orbit, int verbose_level);
+	void quartic(std::string &surface_prefix, int pt_orbit, int f_TDO, int verbose_level);
 	void compute_quartic(int pt_orbit,
 		int *equation, long int *Lines, int nb_lines,
 		int verbose_level);
@@ -1262,6 +1264,9 @@ public:
 			std::string &surface_prefix,
 			std::ostream &ost,
 			std::ostream &ost_quartics,
+			int verbose_level);
+	void export_all_quartic_curves(
+			std::string &surface_prefix,
 			std::ostream &ost_quartics_csv,
 			int verbose_level);
 	void print_full_del_Pezzo(std::ostream &ost, int verbose_level);
