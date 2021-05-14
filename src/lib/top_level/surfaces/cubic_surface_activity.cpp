@@ -123,7 +123,6 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 
 		string surface_prefix;
 		string fname_tex;
-		string fname_curves;
 		string fname_quartics;
 		string fname_mask;
 		string label;
@@ -141,8 +140,6 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 		fname_tex.assign(label);
 		fname_tex.append(".tex");
 
-		fname_curves.assign(label);
-		fname_curves.append(".txt");
 
 
 		fname_quartics.assign(label);
@@ -158,7 +155,6 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 
 		{
 			ofstream ost(fname_tex);
-			ofstream ost_curves(fname_curves);
 			ofstream ost_quartics(fname_quartics);
 
 			latex_interface L;
@@ -168,12 +164,12 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 			if (f_v) {
 				cout << "cubic_surface_activity::perform_activity before SoA->all_quartic_curves" << endl;
 			}
-			SoA->all_quartic_curves(surface_prefix, ost, ost_curves, ost_quartics, verbose_level);
+			SoA->all_quartic_curves(surface_prefix, ost, ost_quartics, verbose_level);
 			if (f_v) {
 				cout << "cubic_surface_activity::perform_activity after SoA->all_quartic_curves" << endl;
 			}
 
-			ost_curves << -1 << endl;
+			//ost_curves << -1 << endl;
 
 			L.foot(ost);
 		}
@@ -181,6 +177,67 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 
 		cout << "Written file " << fname_tex << " of size "
 				<< Fio.file_size(fname_tex) << endl;
+
+
+		FREE_OBJECT(SoA);
+
+	}
+
+
+	if (Descr->f_export_all_quartic_curves) {
+
+		surface_object_with_action *SoA;
+
+		if (!SC->f_has_group) {
+			cout << "-all_quartic_curves: The automorphism group of the surface is missing" << endl;
+			exit(1);
+		}
+
+		if (f_v) {
+			cout << "cubic_surface_activity::perform_activity before SC->Surf_A->create_surface_object_with_action" << endl;
+		}
+		SC->Surf_A->create_surface_object_with_action(
+				SC,
+				SoA,
+				verbose_level);
+		if (f_v) {
+			cout << "cubic_surface_activity::perform_activity after SC->Surf_A->create_surface_object_with_action" << endl;
+		}
+
+		string surface_prefix;
+		string fname_curves;
+		string label;
+
+
+		surface_prefix.assign("surface_");
+		surface_prefix.append(SC->label_txt);
+
+		label.assign("surface_");
+		label.append(SC->label_txt);
+		label.append("_quartics");
+
+
+		fname_curves.assign(label);
+		fname_curves.append(".csv");
+
+
+
+		{
+			ofstream ost_curves(fname_curves);
+
+			if (f_v) {
+				cout << "cubic_surface_activity::perform_activity before SoA->export_all_quartic_curves" << endl;
+			}
+			SoA->export_all_quartic_curves(surface_prefix, ost_curves, verbose_level);
+			if (f_v) {
+				cout << "cubic_surface_activity::perform_activity after SoA->export_all_quartic_curves" << endl;
+			}
+
+			ost_curves << -1 << endl;
+
+		}
+		file_io Fio;
+
 		cout << "Written file " << fname_curves << " of size "
 				<< Fio.file_size(fname_curves) << endl;
 

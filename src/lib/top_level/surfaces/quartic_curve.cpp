@@ -140,7 +140,7 @@ void quartic_curve::init(surface_object_with_action *SOA, int verbose_level)
 	}
 }
 
-void quartic_curve::quartic(std::string &surface_prefix, int pt_orbit, int verbose_level)
+void quartic_curve::quartic(std::string &surface_prefix, int pt_orbit, int f_TDO, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	sorting Sorting;
@@ -368,36 +368,37 @@ void quartic_curve::quartic(std::string &surface_prefix, int pt_orbit, int verbo
 
 
 	if (f_v) {
-		cout << "We found " << sz_curve
-			<< " points on the quartic." << endl;
+		cout << "We found " << sz_curve << " points on the quartic." << endl;
 	}
 
 
-	geometry_global GG;
-	string fname_base;
-	char str[1000];
+	if (f_TDO) {
+		geometry_global GG;
+		string fname_base;
+		char str[1000];
 
-	sprintf(str, "_orb%d", pt_orbit);
-	fname_base.assign(surface_prefix);
-	fname_base.append(str);
-	fname_base.append("_quartic");
+		sprintf(str, "_orb%d", pt_orbit);
+		fname_base.assign(surface_prefix);
+		fname_base.append(str);
+		fname_base.append("_quartic");
 
-	if (f_v) {
-		cout << "quartic_curve::quartic "
-			"before GG.create_decomposition_of_projective_plane" << endl;
+		if (f_v) {
+			cout << "quartic_curve::quartic "
+				"before GG.create_decomposition_of_projective_plane" << endl;
+		}
+
+		GG.create_decomposition_of_projective_plane(fname_base,
+				SOA->Surf_A->PA->PA2->P,
+				Pts_on_curve, sz_curve,
+				Bitangents, nb_bitangents,
+				verbose_level);
+
+		if (f_v) {
+			cout << "quartic_curve::quartic "
+				"after GG.create_decomposition_of_projective_plane" << endl;
+		}
+
 	}
-
-	GG.create_decomposition_of_projective_plane(fname_base,
-			SOA->Surf_A->PA->PA2->P,
-			Pts_on_curve, sz_curve,
-			Bitangents, nb_bitangents,
-			verbose_level);
-
-	if (f_v) {
-		cout << "quartic_curve::quartic "
-			"after GG.create_decomposition_of_projective_plane" << endl;
-	}
-
 
 
 #else

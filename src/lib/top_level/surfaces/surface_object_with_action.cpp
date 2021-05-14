@@ -1657,17 +1657,17 @@ void surface_object_with_action::all_quartic_curves(
 		std::string &surface_prefix,
 		std::ostream &ost,
 		std::ostream &ost_quartics,
-		std::ostream &ost_quartics_csv,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+
+	int f_TDO = FALSE;
 
 	if (f_v) {
 		cout << "surface_object_with_action::all_quartic_curves surface_prefix=" << surface_prefix << endl;
 	}
 	int pt_orbit;
 
-	ost_quartics_csv << "orbit,curve,pts_on_curve,bitangents,go" << endl;
 	for (pt_orbit = 0; pt_orbit < Orbits_on_points_not_on_lines->nb_orbits; pt_orbit++) {
 
 		ost << "\\section{Quartic curve associated with orbit " << pt_orbit
@@ -1684,7 +1684,7 @@ void surface_object_with_action::all_quartic_curves(
 		if (f_v) {
 			cout << "surface_object_with_action::all_quartic_curves before QC->quartic" << endl;
 		}
-		QC->quartic(surface_prefix, pt_orbit, verbose_level);
+		QC->quartic(surface_prefix, pt_orbit, f_TDO, verbose_level);
 		if (f_v) {
 			cout << "surface_object_with_action::all_quartic_curves after QC->quartic" << endl;
 		}
@@ -1708,6 +1708,64 @@ void surface_object_with_action::all_quartic_curves(
 		if (f_v) {
 			cout << "surface_object_with_action::all_quartic_curves after QC->cheat_sheet_quartic_curve" << endl;
 		}
+
+		FREE_OBJECT(QC);
+	}
+	if (f_v) {
+		cout << "surface_object_with_action::all_quartic_curves done" << endl;
+	}
+}
+
+void surface_object_with_action::export_all_quartic_curves(
+		std::string &surface_prefix,
+		std::ostream &ost_quartics_csv,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_TDO = FALSE;
+
+	if (f_v) {
+		cout << "surface_object_with_action::export_all_quartic_curves surface_prefix=" << surface_prefix << endl;
+	}
+	int pt_orbit;
+
+	ost_quartics_csv << "orbit,curve,pts_on_curve,bitangents,go" << endl;
+	for (pt_orbit = 0; pt_orbit < Orbits_on_points_not_on_lines->nb_orbits; pt_orbit++) {
+
+		cout << "Quartic curve associated with surface " << surface_prefix
+				<< " and with orbit " << pt_orbit
+				<< " / " << Orbits_on_points_not_on_lines->nb_orbits << "}" << endl;
+
+
+		quartic_curve *QC;
+
+		QC = NEW_OBJECT(quartic_curve);
+
+		QC->init(this, verbose_level);
+
+
+		if (f_v) {
+			cout << "surface_object_with_action::export_all_quartic_curves before QC->quartic" << endl;
+		}
+		QC->quartic(surface_prefix, pt_orbit, f_TDO, verbose_level);
+		if (f_v) {
+			cout << "surface_object_with_action::export_all_quartic_curves after QC->quartic" << endl;
+		}
+
+
+#if 0
+		// the quartic curve is now in QC->curve
+		// as a Surf->Poly4_x123
+
+		if (f_v) {
+			cout << "surface_object_with_action::export_all_quartic_curves before QC->compute_stabilizer" << endl;
+		}
+		QC->compute_stabilizer(verbose_level);
+		if (f_v) {
+			cout << "surface_object_with_action::export_all_quartic_curves after QC->compute_stabilizer" << endl;
+		}
+
+#endif
 
 		ost_quartics_csv << pt_orbit;
 
@@ -1748,10 +1806,10 @@ void surface_object_with_action::all_quartic_curves(
 			ost_quartics_csv << ",\"" << s.str() << "\"";
 		}
 		{
-			longinteger_object go;
+			//longinteger_object go;
 
-			QC->Stab_gens_quartic->group_order(go);
-			ost_quartics_csv << "," << go;
+			//QC->Stab_gens_quartic->group_order(go);
+			ost_quartics_csv << "," << -1;
 		}
 
 		ost_quartics_csv << endl;
@@ -1760,7 +1818,7 @@ void surface_object_with_action::all_quartic_curves(
 	}
 	ost_quartics_csv << "END" << endl;
 	if (f_v) {
-		cout << "surface_object_with_action::all_quartic_curves done" << endl;
+		cout << "surface_object_with_action::export_all_quartic_curves done" << endl;
 	}
 }
 
