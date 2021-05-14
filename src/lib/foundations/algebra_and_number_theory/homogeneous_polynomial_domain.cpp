@@ -157,7 +157,7 @@ void homogeneous_polynomial_domain::init(finite_field *F,
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::init before make_monomials" << endl;
 	}
-	make_monomials(Monomial_ordering_type, verbose_level);
+	make_monomials(Monomial_ordering_type, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::init after make_monomials" << endl;
 	}
