@@ -1245,13 +1245,6 @@ void compute_stabilizer::restricted_action_on_interesting_points(int verbose_lev
 	if (f_v) {
 		cout << "compute_stabilizer::restricted_action_on_interesting_points computing induced action by restriction" << endl;
 	}
-#if 0
-	A_induced = NEW_OBJECT(action);
-	A_induced->induced_action_by_restriction(*A2,
-		TRUE, G->S,
-		nb_interesting_points, interesting_points,
-		0 /*verbose_level - 3*/);
-#endif
 
 	A_induced = A2->restricted_action(interesting_points, nb_interesting_points, 0 /*verbose_level*/);
 	if (f_v) {
@@ -1291,170 +1284,6 @@ void compute_stabilizer::restricted_action_on_interesting_points(int verbose_lev
 		//A_induced.Kernel->gens.print_as_permutation(cout);
 	}
 
-#if 0
-	transporter_witness = NEW_int(A_induced->elt_size_in_int);
-	transporter1 = NEW_int(A_induced->elt_size_in_int);
-	transporter2 = NEW_int(A_induced->elt_size_in_int);
-	T1 = NEW_int(A->elt_size_in_int);
-	T1v = NEW_int(A->elt_size_in_int);
-	T2 = NEW_int(A->elt_size_in_int);
-
-	K = NEW_OBJECT(sims);
-	Kernel_original = NEW_OBJECT(sims);
-
-	K->init(A, 0 /* verbose_level */);
-	K->init_trivial_group(0 /*verbose_level - 1*/);
-
-	A_induced->Kernel->group_order(K_go);
-	if (f_v) {
-		cout << "compute_stabilizer::restricted_action_on_interesting_points kernel has order " << K_go << endl;
-	}
-
-	// conjugate the Kernel so that it is a subgroup of
-	// the stabilizer of the set the_set[] that we wanted to stabilizer originally:
-	// remember that elt1 is the transporter that was computed in map_it() above
-
-	Kernel_original->conjugate(A_induced->Kernel->A,
-			A_induced->Kernel, elt1,
-			FALSE, 0 /*verbose_level - 3*/);
-	Kernel_original->group_order(K_go);
-	if (f_v) {
-		cout << "compute_stabilizer::restricted_action_on_interesting_points after conjugation, kernel has order " << K_go << endl;
-	}
-
-	if (f_v) {
-		cout << "compute_stabilizer::restricted_action_on_interesting_points adding kernel of order " << K_go
-			<< " to the stabilizer (in action " << Stab->A->label << ")" << endl;
-	}
-	Stab->build_up_group_random_process(K, Kernel_original,
-		K_go, FALSE, NULL, 0 /*verbose_level - 3*/);
-	Stab->group_order(stab_order);
-
-	if (f_v) {
-		cout << "compute_stabilizer::restricted_action_on_interesting_points kernel of action on the set has been added to stabilizer" << endl;
-		cout << "compute_stabilizer::restricted_action_on_interesting_points current stabilizer order " << stab_order << endl;
-	}
-#if 0
-	if (!Stab->test_if_in_set_stabilizer(A, the_set, set_size, verbose_level)) {
-		cout << "set stabilizer does not stabilize" << endl;
-		exit(1);
-	}
-	if (f_v) {
-		cout << "set stabilizer of order " << stab_order << " is OK" << endl;
-	}
-#endif
-	// here we need the stabilizer of the set the_set[]
-	// and the kernel of the action has to go into Stab first.
-
-
-	Aut = NEW_OBJECT(sims);
-	Aut_original = NEW_OBJECT(sims);
-
-
-	// computes the stabilizer of reduced_set[] in the stabilizer
-	// of the k-subset and in the induced action:
-	if (f_v) {
-		cout << "compute_stabilizer::restricted_action_on_interesting_points before A_induced.make_canonical" << endl;
-		cout << "verbose_level=" << verbose_level << endl;
-		cout << "before make_canonical: ";
-		Orbiter->Lint_vec.print(cout, reduced_set1_new_labels, reduced_set_size);
-		cout << endl;
-	}
-	A_induced->make_canonical(
-		reduced_set_size, reduced_set1_new_labels,
-		canonical_set1, transporter1, nodes,
-		TRUE, Aut,
-		verbose_level /*- 3*/);
-
-	if (f_v) {
-		cout << "after  make_canonical: ";
-		Orbiter->Lint_vec.print(cout, canonical_set1, reduced_set_size);
-		cout << endl;
-		cout << "compute_stabilizer::restricted_action_on_interesting_points after A_induced.make_canonical" << endl;
-	}
-
-	// Now, Aut is the stabilizer of canonical_set1 in the induced action (A_induced)
-
-	backtrack_nodes_first_time = nodes;
-
-
-	Aut->group_order(ago);
-	if (f_v) {
-		cout << "compute_stabilizer::restricted_action_on_interesting_points backtrack_nodes=" << nodes << endl;
-#if 0
-		cout << "canonical set1: ";
-		INT_vec_print(cout, canonical_set1, reduced_set_size);
-		cout << endl;
-#endif
-		cout << "compute_stabilizer::restricted_action_on_interesting_points automorphism group order " << ago << endl;
-	}
-	if (FALSE) {
-		cout << "transporter1:" << endl;
-		A_induced->element_print(transporter1, cout);
-		cout << endl;
-		A_induced->element_print_as_permutation(transporter1, cout);
-		cout << endl;
-	}
-
-#if 0
-	if (f_v) {
-		cout << "testing stabilizer of canonical set" << endl;
-		if (!Aut.test_if_in_set_stabilizer(&A_induced, canonical_set1, reduced_set_size, verbose_level)) {
-			cout << "set stabilizer does not stabilize" << endl;
-			exit(1);
-		}
-	}
-#endif
-
-	A->mult(elt1, transporter1, T1);
-
-	if (FALSE) {
-		cout << "T1:" << endl;
-		A->element_print(T1, cout);
-		cout << endl;
-	}
-	A->element_invert(T1, T1v, FALSE);
-
-	// T1 := elt1 * transporter1
-	// moves the_set to the canonical set.
-
-	Aut->group_order(ago);
-	Aut_original->conjugate(A /*Aut.A */, Aut, T1,
-		TRUE /* f_overshooting_OK */, 0 /*verbose_level - 3*/);
-	Aut_original->group_order(ago1);
-	if (f_v) {
-		cout << "compute_stabilizer::restricted_action_on_interesting_points after conjugation, group in action " << Aut_original->A->label << endl;
-		cout << "compute_stabilizer::restricted_action_on_interesting_points automorphism group order before = " << ago << endl;
-		cout << "compute_stabilizer::restricted_action_on_interesting_points automorphism group order after = " << ago1 << endl;
-	}
-
-	longinteger_domain D;
-
-	D.mult(K_go, ago, target_go);
-	if (f_v) {
-		cout << "compute_stabilizer::restricted_action_on_interesting_points target_go=" << target_go << endl;
-		cout << "compute_stabilizer::restricted_action_on_interesting_points adding automorphisms to set-stabilizer" << endl;
-	}
-	Stab->build_up_group_random_process(K, Aut_original,
-		target_go, FALSE, NULL, 0 /*verbose_level - 3*/);
-	Stab->group_order(stab_order);
-	if (f_v) {
-		cout << "compute_stabilizer::restricted_action_on_interesting_points set stabilizer is added to stabilizer" << endl;
-		cout << "compute_stabilizer::restricted_action_on_interesting_points current stabilizer order " << stab_order << endl;
-	}
-#if 0
-	if (!Stab->test_if_in_set_stabilizer(A, the_set, set_size, verbose_level)) {
-		cout << "set stabilizer does not stabilize" << endl;
-		exit(1);
-	}
-	if (f_v) {
-		cout << "set stabilizer of order " << stab_order << " is OK" << endl;
-	}
-#endif
-
-	//A->element_mult(elt1, transporter1, Elt1, FALSE);
-	//A->element_invert(Elt1, Elt1_inv, FALSE);
-#endif
 
 
 	if (f_v) {
@@ -1548,13 +1377,6 @@ void compute_stabilizer::update_stabilizer(int verbose_level)
 			Strong_gens->print_generators(cout);
 		}
 		FREE_OBJECT(Strong_gens);
-
-#if 0
-		char fname[1000];
-		sprintf(fname, "stab_order_%ld.txt", new_stab_order.as_INT());
-		Stab->write_sgs(fname, 0 /*verbose_level */);
-		cout << "Written file " << fname << " of size " << file_size(fname) << endl;
-#endif
 
 		FREE_OBJECT(U);
 

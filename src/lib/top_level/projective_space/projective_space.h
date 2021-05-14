@@ -96,6 +96,8 @@ public:
 	int *Canonical_forms; // [nb_objects_to_test * Poly_ring->get_nb_monomials()]
 	long int *Goi; // [nb_objects_to_test]
 
+	tally_vector_data *Classification_of_quartic_curves;
+
 
 	canonical_form_classifier();
 	~canonical_form_classifier();
