@@ -352,7 +352,7 @@ void poset_classification::report_number_of_orbits_at_level(std::ostream &ost)
 void poset_classification::report_orbits_summary(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	int f_vv = (verbose_level >= 10);
 
 	if (f_v) {
 		cout << "poset_classification::report_orbits_summary" << endl;
