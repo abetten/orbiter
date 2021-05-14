@@ -46,6 +46,8 @@ canonical_form_classifier::canonical_form_classifier()
 	Canonical_forms = NULL;
 	Goi = NULL;
 
+	Classification_of_quartic_curves = NULL;
+
 }
 
 canonical_form_classifier::~canonical_form_classifier()
@@ -179,8 +181,8 @@ void canonical_form_classifier::classify(canonical_form_classifier_description *
 		exit(1);
 	}
 
-	FREE_int(eqn2);
-	FREE_int(Elt);
+	//FREE_int(eqn2);
+	//FREE_int(Elt);
 	//FREE_int(canonical_equation);
 	//FREE_int(transporter_to_canonical_form);
 
@@ -194,22 +196,23 @@ void canonical_form_classifier::classify(canonical_form_classifier_description *
 		cout << " : " << Goi[i] << endl;
 	}
 
+	Classification_of_quartic_curves = NEW_OBJECT(tally_vector_data);
 
-	tally_vector_data T;
-
-	T.init(Canonical_forms, nb_objects_to_test, Poly_ring->get_nb_monomials(), verbose_level);
+	Classification_of_quartic_curves->init(Canonical_forms, nb_objects_to_test, Poly_ring->get_nb_monomials(), verbose_level);
 
 	cout << "Classification of curves:" << endl;
-	//T.print();
+	//Classification_of_quartic_curves->print();
 
-	for (i = 0; i < T.nb_types; i++) {
+	for (i = 0; i < Classification_of_quartic_curves->nb_types; i++) {
 
 		//h = int_vec_hash(Reps + i * data_set_sz, data_set_sz);
 
-		cout << T.Frequency[i] << " x ";
-		Orbiter->Int_vec.print(cout, T.Reps + i * T.data_set_sz, T.data_set_sz);
+		cout << Classification_of_quartic_curves->Frequency[i] << " x ";
+		Orbiter->Int_vec.print(cout,
+				Classification_of_quartic_curves->Reps + i * Classification_of_quartic_curves->data_set_sz,
+				Classification_of_quartic_curves->data_set_sz);
 		cout << " : ";
-		j = T.sorting_perm_inv[T.type_first[i]];
+		j = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[i]];
 		cout << Goi[j] << endl;
 #if 0
 		cout << "for elements ";

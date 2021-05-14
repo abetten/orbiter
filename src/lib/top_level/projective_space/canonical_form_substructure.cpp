@@ -138,12 +138,6 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		cout << endl;
 	}
 
-	//int nCk;
-	//int *isotype;
-	//int *orbit_frequencies;
-	//int nb_orbits;
-	//tally *T;
-
 	if (f_v) {
 		cout << "canonical_form_substructure::classify_curve_with_substructure before PC->trace_all_k_subsets_and_compute_frequencies" << endl;
 	}
@@ -188,9 +182,6 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		cout << endl;
 	}
 
-	//set_of_sets *SoS;
-	//int *types;
-	//int nb_types;
 	selected_type = -1;
 	selected_orbit = -1;
 	selected_frequency = 0;
@@ -201,9 +192,6 @@ void canonical_form_substructure::classify_curve_with_substructure(
 
 
 	SoS = T->get_set_partition_and_types(types, nb_types, verbose_level);
-
-	//longinteger_object go_min;
-
 
 	for (i = 0; i < nb_types; i++) {
 		f = T->type_first[i];
@@ -267,16 +255,11 @@ void canonical_form_substructure::classify_curve_with_substructure(
 			<< " go_min = " << go_min << endl;
 	}
 
-	//strong_generators *gens;
-
 	Canonical_form_classifier->PC->get_stabilizer_generators(
 		gens,
 		Canonical_form_classifier->Descr->substructure_size,
 		selected_orbit, 0 /*verbose_level*/);
 
-
-	//strong_generators *Gens_stabilizer_original_set;
-	//strong_generators *Gens_stabilizer_canonical_form;
 
 	if (f_vv) {
 		cout << "canonical_form_substructure::classify_curve_with_substructure before handle_orbit" << endl;
@@ -346,8 +329,6 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		cout << "canonical_form_substructure::classify_curve_with_substructure after AonHPD->compute_image_int_low_level" << endl;
 	}
 
-	//orbit_of_equations *Orb;
-
 	Orb = NEW_OBJECT(orbit_of_equations);
 
 
@@ -405,26 +386,6 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		cout << "_{" << go_eqn << "}" << endl;
 		cout << endl;
 	}
-
-
-#if 0
-	FREE_OBJECT(Orb);
-
-	FREE_OBJECT(gens);
-	FREE_OBJECT(Gens_stabilizer_original_set);
-	FREE_OBJECT(Gens_stabilizer_canonical_form);
-	FREE_OBJECT(SoS);
-	FREE_int(types);
-
-	FREE_int(isotype);
-	FREE_int(orbit_frequencies);
-	FREE_OBJECT(T);
-
-	FREE_int(eqn);
-	FREE_lint(pts);
-	FREE_lint(bitangents);
-	FREE_lint(canonical_pts);
-#endif
 
 
 	if (f_v) {
@@ -532,11 +493,6 @@ void canonical_form_substructure::handle_orbit(
 		}
 
 
-	//FREE_OBJECT(CS);
-
-	//overall_backtrack_nodes += CS->nodes;
-
-	//FREE_lint(interesting_subsets);
 
 	if (f_v) {
 		cout << "canonical_form_substructure::handle_orbit done" << endl;
