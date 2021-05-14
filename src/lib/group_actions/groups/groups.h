@@ -1624,8 +1624,6 @@ public:
 		int group_index, int verbose_level);
 	void group_order(longinteger_object &go);
 	long int group_order_as_lint();
-	//void print_generators();
-	//void print_generators_ost(std::ostream &ost);
 	void print_generators_in_source_code();
 	void print_generators_in_source_code_to_file(
 	const char *fname);
@@ -1724,10 +1722,6 @@ public:
 	void init_linear_group_from_scratch(action *&A, 
 		finite_field *F, int n, 
 		linear_group_description *Descr,
-		//int f_projective, int f_general, int f_affine,
-		//int f_semilinear, int f_special,
-		//int f_GL_d_wreath_Sym_n,
-		//int GL_wreath_Sym_d, int GL_wreath_Sym_n,
 		vector_ge *&nice_gens,
 		int verbose_level);
 	void special_subgroup(int verbose_level);

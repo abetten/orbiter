@@ -307,9 +307,9 @@ class design_create {
 public:
 	design_create_description *Descr;
 
-	char prefix[1000];
-	char label_txt[1000];
-	char label_tex[1000];
+	std::string prefix;
+	std::string label_txt;
+	std::string label_tex;
 
 	int q;
 	finite_field *F;

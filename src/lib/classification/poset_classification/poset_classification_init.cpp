@@ -34,8 +34,9 @@ poset_classification::poset_classification()
 	depth = 0;
 
 	Schreier_vector_handler = NULL;
-	S = NULL;
+	set_S = NULL;
 	sz = 0; // = depth
+	max_set_size = 0;
 
 	Elt_memory = NULL;
 	Elt1 = NULL;
@@ -131,11 +132,11 @@ void poset_classification::freeself()
 	// do not free Strong_gens
 	
 
-	if (S) {
+	if (set_S) {
 		if (f_v) {
 			cout << "poset_classification::freeself deleting S" << endl;
 		}
-		FREE_lint(S);
+		FREE_lint(set_S);
 	}
 	if (Schreier_vector_handler) {
 		FREE_OBJECT(Schreier_vector_handler);
@@ -225,6 +226,12 @@ void poset_classification::init_internal(
 				"Poset->A2 == NULL" << endl;
 		exit(1);
 	}
+
+	max_set_size = Poset->A2->degree;
+	if (f_v) {
+		cout << "poset_classification::init_internal max_set_size=" << max_set_size << endl;
+	}
+
 	if (f_v) {
 		cout << "poset_classification::init_internal "
 				"sz = " << sz << endl;
@@ -271,9 +278,9 @@ void poset_classification::init_internal(
 		cout << "poset_classification::init_internal "
 				"allocating S of size " << sz << endl;
 	}
-	S = NEW_lint(sz);
+	set_S = NEW_lint(sz);
 	for (i = 0; i < sz; i++) {
-		S[i] = i;
+		set_S[i] = i;
 	}
 
 	tmp_set_apply_fusion = NEW_lint(sz + 1);
@@ -299,7 +306,7 @@ void poset_classification::init_internal(
 	
 	set = NEW_plint(sz + 1);
 	for (i = 0; i <= sz; i++) {
-		set[i] = NEW_lint(sz);
+		set[i] = NEW_lint(max_set_size);
 	}
 
 		
@@ -599,9 +606,9 @@ void poset_classification::init_poset_orbit_node(
 	first_poset_orbit_node_at_level = NEW_lint(sz + 2);
 	first_poset_orbit_node_at_level[0] = 0;
 	first_poset_orbit_node_at_level[1] = 1;
-	set0 = NEW_lint(sz + 1);
-	set1 = NEW_lint(sz + 1);
-	set3 = NEW_lint(sz + 1);
+	set0 = NEW_lint(max_set_size);
+	set1 = NEW_lint(max_set_size);
+	set3 = NEW_lint(max_set_size);
 	nb_extension_nodes_at_level_total = NEW_lint(sz + 1);
 	nb_extension_nodes_at_level = NEW_lint(sz + 1);
 	nb_fusion_nodes_at_level = NEW_lint(sz + 1);

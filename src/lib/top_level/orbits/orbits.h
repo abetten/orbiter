@@ -70,12 +70,18 @@ public:
 		// transporter is an element which maps 
 		// the orbit representative to the given subspace.
 	void get_random_schreier_generator(int *Elt, int verbose_level);
-	void compute_stabilizer(action *default_action, 
+	void get_canonical_form(
+			int *canonical_equation,
+			int *transporter_to_canonical_form,
+			strong_generators *&gens_stab_of_canonical_equation,
+			longinteger_object &full_group_order,
+			int verbose_level);
+	strong_generators *stabilizer_orbit_rep(
+		longinteger_object &full_group_order, int verbose_level);
+	void stabilizer_orbit_rep_work(action *default_action,
 		longinteger_object &go, 
 		sims *&Stab, int verbose_level);
 		// this function allocates a sims structure into Stab.
-	strong_generators *stabilizer_orbit_rep(
-		longinteger_object &full_group_order, int verbose_level);
 	strong_generators *stabilizer_any_point(
 		longinteger_object &full_group_order, int idx,
 		int verbose_level);

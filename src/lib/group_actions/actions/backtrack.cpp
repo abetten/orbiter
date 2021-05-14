@@ -373,6 +373,7 @@ void action::make_canonical(int size, long int *set,
 	if (f_v) {
 		cout << "action::make_canonical" << endl;
 		cout << "verbose_level=" << verbose_level << endl;
+		cout << "elt_size_in_int=" << elt_size_in_int << endl;
 		}
 	if (f_vv) {
 		cout << "the input set is ";
@@ -406,7 +407,9 @@ void action::make_canonical(int size, long int *set,
 			backtrack_level, set2, Elt2, 
 			backtrack_nodes, 
 			f_get_automorphism_group, *Aut,
-			0 /*verbose_level - 1*/)) {
+			verbose_level)) {
+
+
 			total_backtrack_nodes += backtrack_nodes;
 			if (f_v) {
 				cout << "action::make_canonical: is minimal, "
@@ -474,35 +477,35 @@ int action::is_minimal_witness(int size, long int *set,
 	int i;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 4);
-	int f_vvv = (verbose_level >= 5);
-	int f_vvvv = (verbose_level >= 7);
+	//int f_vvv = (verbose_level >= 5);
+	//int f_vvvv = (verbose_level >= 7);
 	sorting Sorting;
 
-	if (f_vv) {
+	if (f_v) {
 		cout << "action::is_minimal_witness" << endl;
 		cout << "verbose_level=" << verbose_level << endl;
-		}
-	if (f_vvv) {
-		cout << "the input set is ";
+	}
+	if (f_v) {
+		cout << "action::is_minimal_witness the input set is ";
 		Orbiter->Lint_vec.print(cout, set, size);
 		cout << endl;
-		}
+	}
 	
 	backtrack_nodes = 0;
 	backtrack_level = size - 1;
 	//cout << "action::is_minimal_witness backtrack_level = "
 	//"size - 1 = " << backtrack_level << endl;
 
-	if (f_vvvv) {
-		cout << "current base is ";
+	if (f_v) {
+		cout << "action::is_minimal_witness current base is ";
 		print_base();
-		cout << "doing base change" << endl;
-		}
+		cout << "action::is_minimal_witness doing base change" << endl;
+	}
 	A.base_change(this, size, set, MINIMUM(1, verbose_level - 4));
 	//A.eliminate_redundant_base_points(verbose_level - 4); 
 	// !!! A Betten July 10, 2014
-	if (f_vv) {
-		cout << "base changed to ";
+	if (f_v) {
+		cout << "action::is_minimal_witnessbase changed to ";
 		A.print_base();
 		}
 	
@@ -514,7 +517,7 @@ int action::is_minimal_witness(int size, long int *set,
 	
 #if 0
 	if (f_vvvv) {
-		cout << "action " << A.label << endl;
+		cout << "action::is_minimal_witness action " << A.label << endl;
 		cout << "we have the following strong generators:" << endl;
 		A.strong_generators->print_as_permutation(cout);
 		cout << "and Sims:" << endl;
@@ -542,13 +545,13 @@ int action::is_minimal_witness(int size, long int *set,
 	D.f_automorphism_seen = FALSE;
 	
 	if (f_vv) {
-		cout << "computing stabilizer orbits" << endl;
+		cout << "action::is_minimal_witness computing stabilizer orbits" << endl;
 		}
 	
 	A.compute_stabilizer_orbits(D.Staborbits, verbose_level - 4);
 	
 	if (f_vv) {
-		cout << "computing stabilizer orbits finished" << endl;
+		cout << "action::is_minimal_witness computing stabilizer orbits finished" << endl;
 		}
 
 	D.the_set = NEW_lint((A.base_len() + 1) * size);
@@ -593,7 +596,7 @@ int action::is_minimal_witness(int size, long int *set,
 						<< " which is a smaller point" << endl;
 					}
 				if (FALSE) {
-					cout << "partitionstack:" << endl;
+					cout << "action::is_minimal_witness partitionstack:" << endl;
 					S->print(cout);
 					S->print_raw();
 					}
@@ -661,7 +664,7 @@ int action::is_minimal_witness(int size, long int *set,
 finish:
 	if (!ret) {
 		if (f_vv) {
-			cout << "computing witness" << endl;
+			cout << "action::is_minimal_witness computing witness" << endl;
 			}
 		for (i = 0; i < size; i++) {
 			witness[i] = A.image_of(transporter_witness, set[i]);
@@ -675,7 +678,7 @@ finish:
 		if (f_vv) {
 			int j, /*image_point,*/ coset;
 			
-			cout << "automorphism generators:" << endl;
+			cout << "action::is_minimal_witness automorphism generators:" << endl;
 			for (i = 0; i < D.nb_auts; i++) {
 				cout << setw(3) << i << " : (";
 				for (j = 0; j < base_len(); j++) {
@@ -695,37 +698,49 @@ finish:
 		longinteger_object go, go2;
 		
 		if (f_vv) {
-			cout << "building up automorphism group" << endl;
-			}
+			cout << "action::is_minimal_witness building up automorphism group" << endl;
+		}
 		A.build_up_automorphism_group_from_aut_data(
 				D.nb_auts, D.aut_data,
-			Aut2, verbose_level - 3);
+				Aut2, verbose_level - 3);
 		Aut2.group_order(go2);
 		if (f_v) {
-			cout << "automorphism group in changed base "
+			cout << "action::is_minimal_witness automorphism group in changed base "
 					"has order " << go2 << endl;
-			}
+		}
 		
+		if (f_v) {
+			cout << "action::is_minimal_witness before Aut.init" << endl;
+		}
 		Aut.init(this, verbose_level - 2);
-		Aut.init_trivial_group(verbose_level - 1);
+		Aut.init_trivial_group(0 /*verbose_level - 1*/);
+		if (f_v) {
+			cout << "action::is_minimal_witness before K.init" << endl;
+		}
 		K.init(this, verbose_level - 2);
-		K.init_trivial_group(verbose_level - 1);
+		K.init_trivial_group(0 /*verbose_level - 1*/);
 		
 		
+		if (f_v) {
+			cout << "action::is_minimal_witness before Aut.build_up_group_random_process" << endl;
+		}
 		Aut.build_up_group_random_process(&K, &Aut2, go2, 
 			FALSE /* f_override_choose_next_base_point */,
 			NULL, 
 			verbose_level - 4);	
+		if (f_v) {
+			cout << "action::is_minimal_witness after Aut.build_up_group_random_process" << endl;
+		}
 		//Aut.build_up_group_random_process_no_kernel(&Aut2, verbose_level);
 		Aut.group_order(go);
 		if (f_v) {
-			cout << "automorphism group has order " << go << endl;
-			}
+			cout << "action::is_minimal_witness automorphism group has order " << go << endl;
 		}
+	}
 	
 	if (FALSE) {
-		cout << "freeing memory" << endl;
-		}
+		cout << "action::is_minimal_witness freeing memory" << endl;
+	}
 	
 	FREE_int(D.aut_data);
 	delete [] D.Staborbits;
@@ -735,6 +750,10 @@ finish:
 	FREE_int(D.current_choice);
 	FREE_int(D.is_minimal_base_point);
 	FREE_int(D.coset_rep);
+
+	if (f_v) {
+		cout << "action::is_minimal_witness done" << endl;
+		}
 
 	return ret;
 }

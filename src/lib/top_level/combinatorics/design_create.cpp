@@ -19,9 +19,9 @@ design_create::design_create()
 {
 	Descr = NULL;
 
-	//char prefix[1000];
-	//char label_txt[1000];
-	//char label_tex[1000];
+	//std::string prefix;
+	//std::string label_txt;
+	//std::string label_tex;
 
 	q = 0;
 	F = NULL;
@@ -110,9 +110,16 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 			}
 			create_design_PG_2_q(F, set, sz, k, verbose_level);
 
-			sprintf(prefix, "PG_2_q%d", q);
-			sprintf(label_txt, "PG_2_%d", q);
-			sprintf(label_tex, "PG\\_2\\_%d", q);
+			char str[1000];
+
+			sprintf(str, "PG_2_q%d", q);
+			prefix.assign(str);
+
+			sprintf(str, "PG_2_%d", q);
+			label_txt.assign(str);
+
+			sprintf(str, "PG\\_2\\_%d", q);
+			label_tex.assign(str);
 		}
 
 	}

@@ -499,7 +499,87 @@ void orbit_of_equations::get_random_schreier_generator(
 	}
 }
 
-void orbit_of_equations::compute_stabilizer(action *default_action, 
+void orbit_of_equations::get_canonical_form(
+		int *canonical_equation,
+		int *transporter_to_canonical_form,
+		strong_generators *&gens_stab_of_canonical_equation,
+		longinteger_object &full_group_order,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int idx = 0;
+
+	if (f_v) {
+		cout << "orbit_of_equations::get_canonical_form" << endl;
+	}
+
+	Orbiter->Int_vec.copy(Equations[0] + 1, canonical_equation, nb_monomials);
+
+	if (f_v) {
+		cout << "orbit_of_equations::get_canonical_form before stabilizer_any_point" << endl;
+	}
+	gens_stab_of_canonical_equation = stabilizer_any_point(
+		full_group_order, idx, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "orbit_of_equations::get_canonical_form after stabilizer_any_point" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "orbit_of_equations::get_canonical_form before get_transporter" << endl;
+	}
+	get_transporter(idx, transporter_to_canonical_form, 0);
+	if (f_v) {
+		cout << "orbit_of_equations::get_canonical_form after get_transporter" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "orbit_of_equations::get_canonical_form done" << endl;
+	}
+}
+
+strong_generators *orbit_of_equations::stabilizer_orbit_rep(
+	longinteger_object &full_group_order, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	strong_generators *gens;
+	sims *Stab;
+
+	if (f_v) {
+		cout << "orbit_of_equations::stabilizer_orbit_rep" << endl;
+	}
+
+	if (f_v) {
+		cout << "orbit_of_equations::stabilizer_orbit_rep before stabilizer_orbit_rep_work" << endl;
+	}
+	stabilizer_orbit_rep_work(A /* default_action */, full_group_order,
+		Stab, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "orbit_of_equations::stabilizer_orbit_rep after stabilizer_orbit_rep_work" << endl;
+	}
+
+	longinteger_object stab_order;
+
+	Stab->group_order(stab_order);
+	if (f_v) {
+		cout << "orbit_of_equations::stabilizer_orbit_rep "
+				"found a stabilizer group of order "
+				<< stab_order << endl;
+	}
+
+	gens = NEW_OBJECT(strong_generators);
+	gens->init(A);
+	gens->init_from_sims(Stab, verbose_level);
+
+	FREE_OBJECT(Stab);
+	if (f_v) {
+		cout << "orbit_of_equations::stabilizer_orbit_rep done" << endl;
+	}
+	return gens;
+}
+
+void orbit_of_equations::stabilizer_orbit_rep_work(action *default_action,
 	longinteger_object &go, 
 	sims *&Stab, int verbose_level)
 // this function allocates a sims structure into Stab.
@@ -511,7 +591,7 @@ void orbit_of_equations::compute_stabilizer(action *default_action,
 
 
 	if (f_v) {
-		cout << "orbit_of_equations::compute_stabilizer" << endl;
+		cout << "orbit_of_equations::stabilizer_orbit_rep_work" << endl;
 	}
 
 	Stab = NEW_OBJECT(sims);
@@ -523,7 +603,7 @@ void orbit_of_equations::compute_stabilizer(action *default_action,
 	
 	
 	if (f_v) {
-		cout << "orbit_of_equations::compute_stabilizer computing "
+		cout << "orbit_of_equations::stabilizer_orbit_rep_work computing "
 				"stabilizer inside a group of order " << go << " in action ";
 		default_action->print_info();
 		cout << endl;
@@ -533,12 +613,12 @@ void orbit_of_equations::compute_stabilizer(action *default_action,
 	len = used_length;
 	D.integral_division_by_int(go, len, target_go, r);
 	if (r) {	
-		cout << "orbit_of_equations::compute_stabilizer orbit length "
+		cout << "orbit_of_equations::stabilizer_orbit_rep_work orbit length "
 				"does not divide group order" << endl;
 		exit(1);
 	}
 	if (f_vv) {
-		cout << "orbit_of_equations::compute_stabilizer expecting "
+		cout << "orbit_of_equations::stabilizer_orbit_rep_work expecting "
 				"group of order " << target_go << endl;
 	}
 	
@@ -552,7 +632,7 @@ void orbit_of_equations::compute_stabilizer(action *default_action,
 		if (cnt % 2 || Stab->nb_gen[0] == 0) {
 			get_random_schreier_generator(E1, 0 /* verbose_level */);
 			if (f_vvv) {
-				cout << "orbit_of_equations::compute_stabilizer "
+				cout << "orbit_of_equations::stabilizer_orbit_rep_work "
 						"created random Schreier generator" << endl;
 				//default_action->element_print(E1, cout);
 			}
@@ -561,7 +641,7 @@ void orbit_of_equations::compute_stabilizer(action *default_action,
 			Stab->random_schreier_generator(E1, 0 /* verbose_level */);
 			//A->element_move(Stab->schreier_gen, E1, 0);
 			if (f_v4) {
-				cout << "orbit_of_equations::compute_stabilizer "
+				cout << "orbit_of_equations::stabilizer_orbit_rep_work "
 						"created random schreier generator from sims"
 						<< endl;
 				//default_action->element_print(E1, cout);
@@ -573,7 +653,7 @@ void orbit_of_equations::compute_stabilizer(action *default_action,
 		if (Stab->strip(E1, residue, drop_out_level, image,
 				0 /*verbose_level - 3*/)) {
 			if (f_vvv) {
-				cout << "orbit_of_equations::compute_stabilizer "
+				cout << "orbit_of_equations::stabilizer_orbit_rep_work "
 						"element strips through" << endl;
 				if (FALSE) {
 					cout << "residue:" << endl;
@@ -586,7 +666,7 @@ void orbit_of_equations::compute_stabilizer(action *default_action,
 		else {
 			f_added = TRUE;
 			if (f_vvv) {
-				cout << "orbit_of_equations::compute_stabilizer "
+				cout << "orbit_of_equations::stabilizer_orbit_rep_work "
 						"element needs to be inserted at level = "
 					<< drop_out_level << " with image " << image << endl;
 				if (FALSE) {
@@ -608,43 +688,10 @@ void orbit_of_equations::compute_stabilizer(action *default_action,
 	FREE_int(E1);
 	FREE_int(residue);
 	if (f_v) {
-		cout << "orbit_of_equations::compute_stabilizer finished" << endl;
+		cout << "orbit_of_equations::stabilizer_orbit_rep_work finished" << endl;
 	}
 }
 
-strong_generators *orbit_of_equations::stabilizer_orbit_rep(
-	longinteger_object &full_group_order, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	strong_generators *gens;
-	sims *Stab;
-
-	if (f_v) {
-		cout << "orbit_of_equations::generators_for_stabilizer_of_orbit_rep" << endl;
-	}
-
-	compute_stabilizer(A /* default_action */, full_group_order, 
-		Stab, 0 /*verbose_level*/);
-
-	longinteger_object stab_order;
-
-	Stab->group_order(stab_order);
-	if (f_v) {
-		cout << "orbit_of_equations::generators_for_stabilizer_of_orbit_rep "
-				"found a stabilizer group of order "
-				<< stab_order << endl;
-	}
-	
-	gens = NEW_OBJECT(strong_generators);
-	gens->init(A);
-	gens->init_from_sims(Stab, verbose_level);
-
-	FREE_OBJECT(Stab);
-	if (f_v) {
-		cout << "orbit_of_equations::generators_for_stabilizer_of_orbit_rep done" << endl;
-	}
-	return gens;
-}
 
 strong_generators *orbit_of_equations::stabilizer_any_point(
 	longinteger_object &full_group_order, int idx,

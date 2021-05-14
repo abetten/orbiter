@@ -25,10 +25,10 @@ large_set_classify::large_set_classify()
 	nb_lines = 0;
 	search_depth = 0;
 
-	//char starter_directory_name[1000];
-	//char prefix[1000];
-	//char path[1000];
-	//char prefix_with_directory[1000];
+	//std::string starter_directory_name;
+	//std::string prefix;
+	//std::string path;
+	//std::string prefix_with_directory;
 
 
 	f_lexorder_test = FALSE;
@@ -36,7 +36,7 @@ large_set_classify::large_set_classify()
 
 
 	Design_table = NULL;
-	//design_table_prefix = NULL;
+	//std::string design_table_prefix;
 	nb_designs = 0;
 	nb_colors = 0;
 	design_color_table = NULL;
@@ -45,8 +45,6 @@ large_set_classify::large_set_classify()
 
 
 	Bitvec = NULL;
-	//bitvector_adjacency = NULL;
-	//bitvector_length = 0;
 	degree = 0;
 
 	Control = NULL;
@@ -686,28 +684,28 @@ void large_set_classify::process_starter_case(
 		}
 
 		{
-		long int *Orbits_under_N;
-		file_io Fio;
-		string fname_out;
-		int i, a, l;
+			long int *Orbits_under_N;
+			file_io Fio;
+			string fname_out;
+			int i, a, l;
 
 
-		Orbits_under_N = NEW_lint(Sch->nb_orbits * 2);
+			Orbits_under_N = NEW_lint(Sch->nb_orbits * 2);
 
-		fname_out.assign(prefix);
-		fname_out.append("_graph_");
-		fname_out.append(group_label);
-		fname_out.append("_N_orbit_reps.csv");
+			fname_out.assign(prefix);
+			fname_out.append("_graph_");
+			fname_out.append(group_label);
+			fname_out.append("_N_orbit_reps.csv");
 
-		for (i = 0; i < Sch->nb_orbits; i++) {
-			l = Sch->orbit_len[i];
-			a = Sch->orbit[Sch->orbit_first[i]];
-			Orbits_under_N[2 * i + 0] = a;
-			Orbits_under_N[2 * i + 1] = l;
-		}
-		Fio.lint_matrix_write_csv(fname_out, Orbits_under_N, Sch->nb_orbits, 2);
+			for (i = 0; i < Sch->nb_orbits; i++) {
+				l = Sch->orbit_len[i];
+				a = Sch->orbit[Sch->orbit_first[i]];
+				Orbits_under_N[2 * i + 0] = a;
+				Orbits_under_N[2 * i + 1] = l;
+			}
+			Fio.lint_matrix_write_csv(fname_out, Orbits_under_N, Sch->nb_orbits, 2);
 
-		FREE_lint(Orbits_under_N);
+			FREE_lint(Orbits_under_N);
 		}
 
 		FREE_OBJECT(Sch);
@@ -777,16 +775,16 @@ void large_set_classify::process_starter_case(
 			}
 		}
 		{
-		file_io Fio;
-		string fname_out;
-		string_tools ST;
+			file_io Fio;
+			string fname_out;
+			string_tools ST;
 
-		fname_out.assign(solution_file_name);
-		ST.replace_extension_with(fname_out, "_packings.csv");
+			fname_out.assign(solution_file_name);
+			ST.replace_extension_with(fname_out, "_packings.csv");
 
-		ST.replace_extension_with(fname_out, "_packings.csv");
+			ST.replace_extension_with(fname_out, "_packings.csv");
 
-		Fio.lint_matrix_write_csv(fname_out, Large_sets, nb_solutions, sz);
+			Fio.lint_matrix_write_csv(fname_out, Large_sets, nb_solutions, sz);
 		}
 		long int *Packings_explicit;
 		int Sz = sz * design_size;
@@ -802,14 +800,14 @@ void large_set_classify::process_starter_case(
 			}
 		}
 		{
-		file_io Fio;
-		string fname_out;
-		string_tools ST;
+			file_io Fio;
+			string fname_out;
+			string_tools ST;
 
-		fname_out.assign(solution_file_name);
-		ST.replace_extension_with(fname_out, "_packings_explicit.csv");
+			fname_out.assign(solution_file_name);
+			ST.replace_extension_with(fname_out, "_packings_explicit.csv");
 
-		Fio.lint_matrix_write_csv(fname_out, Packings_explicit, nb_solutions, Sz);
+			Fio.lint_matrix_write_csv(fname_out, Packings_explicit, nb_solutions, Sz);
 		}
 		FREE_lint(Large_sets);
 		FREE_lint(Packings_explicit);

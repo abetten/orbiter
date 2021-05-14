@@ -200,9 +200,8 @@ trace_result upstep_work::recognize_recursion(
 
 		if (f_v) {
 			print_level_extension_coset_info();
-			cout << "upstep_work::recognize_recursion "
-					"after trace_starter, calling find_automorphism_by_"
-					"tracing_recursion for node "
+			cout << "upstep_work::recognize_recursion after trace_starter, "
+					"calling find_automorphism_by_tracing_recursion for node "
 					<< gen->get_Base_case()->size << endl;
 		}
 		trace_result r;
@@ -260,8 +259,7 @@ trace_result upstep_work::recognize_recursion(
 			verbose_level);
 		if (f_v) {
 			print_level_extension_coset_info();
-			cout << "upstep_work::recognize_"
-					"after start_over" << endl;
+			cout << "upstep_work::recognize_after start_over" << endl;
 		}
 		return r;
 	}
@@ -346,11 +344,10 @@ trace_result upstep_work::recognize_recursion(
 				"point " << pt0 << " is extension no "
 				<< current_extension << endl;
 	}
-	if (gen->allowed_to_show_group_elements()
-			&& f_v4) {
-		int *transporter = gen->get_transporter()->ith(lvl + 1);
+	if (gen->allowed_to_show_group_elements() && f_v4) {
 		cout << "upstep_work::recognize_recursion "
 				"transporter element:" << endl;
+		int *transporter = gen->get_transporter()->ith(lvl + 1);
 		gen->get_A2()->element_print_quick(transporter, cout);
 		//gen->A2->element_print_as_permutation(transporter, cout);
 		cout << endl;

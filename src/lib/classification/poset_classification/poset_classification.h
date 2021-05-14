@@ -435,10 +435,11 @@ private:
 
 
 	// used as storage for the current set:
-	long int *S; // [sz]
+	// poset_orbit_node::store_set stores to set_S[]
+	long int *set_S; // [sz]
 	
-	int sz; // = depth
-		// the target depth
+	int sz; // = depth, the target depth
+	int max_set_size; // A2->degree
 		
 	
 	int *Elt_memory; // [6 * elt_size_in_int]
@@ -468,7 +469,8 @@ private:
 	
 	// data for recognize:
 	vector_ge *transporter; // [sz + 1]
-	long int **set; // [sz + 1][sz]
+	long int **set; // [sz + 1][max_set_size]
+		// used in poset_classification_recognize.cpp
 
 	
 	
@@ -482,9 +484,9 @@ private:
 	poset_orbit_node *root;
 	
 	long int *first_poset_orbit_node_at_level;
-	long int *set0; // [sz + 1] temporary storage
-	long int *set1; // [sz + 1] temporary storage
-	long int *set3; // [sz + 1] temporary storage
+	long int *set0; // [max_set_size] temporary storage
+	long int *set1; // [max_set_size] temporary storage
+	long int *set3; // [max_set_size] temporary storage
 	
 	long int *nb_extension_nodes_at_level_total;
 	long int *nb_extension_nodes_at_level;

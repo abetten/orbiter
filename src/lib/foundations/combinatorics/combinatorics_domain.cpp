@@ -707,6 +707,7 @@ void combinatorics_domain::unrank_k_subset_and_complement(int rk, int *set, int 
 	}
 
 }
+
 int combinatorics_domain::first_k_subset(int *set, int n, int k)
 {
 	int i;

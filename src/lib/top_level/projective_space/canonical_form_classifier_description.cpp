@@ -21,9 +21,14 @@ canonical_form_classifier_description::canonical_form_classifier_description()
 {
 	//std::string fname_mask;
 	nb_files = 0;
-	PA = NULL;
 	f_degree = FALSE;
 	degree = 0;
+
+	f_algorithm_nauty = FALSE;
+	f_algorithm_substructure = FALSE;
+	substructure_size = 0;
+
+	PA = NULL;
 
 }
 

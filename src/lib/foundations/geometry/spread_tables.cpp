@@ -29,6 +29,17 @@ spread_tables::spread_tables()
 	spread_size = 0;
 	nb_iso_types_of_spreads = 0;
 
+	//std::string prefix;
+
+	//std::string fname_dual_line_idx;
+	//std::string fname_self_dual_lines;
+	//std::string fname_spreads;
+	//std::string fname_isomorphism_type_of_spreads;
+	//std::string fname_dual_spread;
+	//std::string fname_self_dual_spreads;
+	//std::string fname_schreier_table;
+
+
 	dual_line_idx = NULL;
 	self_dual_lines = NULL;
 	nb_self_dual_lines = 0;
@@ -39,6 +50,8 @@ spread_tables::spread_tables()
 	dual_spread_idx = NULL;
 	self_dual_spreads = NULL;
 	nb_self_dual_spreads = 0;
+
+	schreier_table = NULL;
 
 	//null();
 }
@@ -68,7 +81,9 @@ spread_tables::~spread_tables()
 	if (dual_spread_idx) {
 		FREE_lint(dual_spread_idx);
 	}
-	//freeself();
+	if (schreier_table) {
+		FREE_int(schreier_table);
+	}
 }
 
 void spread_tables::init(projective_space *P,
@@ -93,22 +108,7 @@ void spread_tables::init(projective_space *P,
 	Gr = P->Grass_lines;
 	q = F->q;
 	d = 4;
-#if 0
-	P = NEW_OBJECT(projective_space);
-	if (f_v) {
-		cout << "spread_tables::init before P->init" << endl;
-	}
-	P->init(3, F,
-		TRUE /* f_init_incidence_structure */,
-		verbose_level - 1);
-	if (f_v) {
-		cout << "spread_tables::init after P->init" << endl;
-	}
 
-
-	Gr = NEW_OBJECT(grassmann);
-	Gr->init(d, 2, F, 0 /* verbose_level */);
-#endif
 	nb_lines = Gr->nCkq.as_int();
 	spread_size = q * q + 1;
 	spread_tables::nb_iso_types_of_spreads = nb_iso_types_of_spreads;
@@ -181,6 +181,9 @@ void spread_tables::create_file_names(int verbose_level)
 	fname_self_dual_spreads.assign(prefix);
 	fname_self_dual_spreads.append("_self_dual_spreads.csv");
 
+	fname_self_dual_spreads.assign(prefix);
+	fname_schreier_table.append("_schreier_table.csv");
+
 }
 void spread_tables::init_spread_table(int nb_spreads,
 		long int *spread_table, int *spread_iso_type,
@@ -218,6 +221,20 @@ void spread_tables::init_tables(int nb_spreads,
 	spread_tables::nb_self_dual_spreads = nb_self_dual_spreads;
 	if (f_v) {
 		cout << "spread_tables::init_tables done" << endl;
+	}
+}
+
+void spread_tables::init_schreier_table(int *schreier_table,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "spread_tables::init_schreier_table" << endl;
+	}
+	spread_tables::schreier_table = schreier_table;
+	if (f_v) {
+		cout << "spread_tables::init_schreier_table done" << endl;
 	}
 }
 
@@ -514,6 +531,24 @@ void spread_tables::save(int verbose_level)
 
 
 
+	if (schreier_table) {
+		if (f_v) {
+			cout << "spread_tables::save "
+					"writing file " << fname_schreier_table << endl;
+		}
+
+		Fio.int_matrix_write_csv(fname_schreier_table,
+				schreier_table, nb_spreads, 4);
+		if (f_v) {
+			cout << "spread_tables::save "
+					"written file " << fname_schreier_table << endl;
+		}
+	}
+	else {
+		cout << "spread_tables::save no schreier table" << endl;
+	}
+
+
 	if (f_v) {
 		cout << "spread_tables::save done" << endl;
 	}
@@ -597,6 +632,34 @@ void spread_tables::load(int verbose_level)
 	}
 
 
+	if (Fio.file_size(fname_schreier_table) > 0) {
+		if (f_v) {
+			cout << "spread_tables::load, "
+					"reading file " << fname_schreier_table
+					<< endl;
+		}
+		Fio.int_matrix_read_csv(fname_schreier_table,
+				schreier_table, a, b,
+				0 /* verbose_level */);
+		if (a != nb_spreads) {
+			cout << "spread_tables::load a != nb_spreads" << endl;
+			exit(1);
+		}
+		if (b != 4) {
+			cout << "spread_tables::load b != 4" << endl;
+			exit(1);
+		}
+		if (f_v) {
+			cout << "spread_tables::load, "
+					"read file " << fname_schreier_table
+					<< endl;
+		}
+	}
+	else {
+		cout << "spread_tables::load no schreier tables" << endl;
+		exit(1);
+	}
+
 
 	if (f_v) {
 		cout << "spread_tables::load done" << endl;
@@ -606,7 +669,6 @@ void spread_tables::load(int verbose_level)
 
 void spread_tables::compute_adjacency_matrix(
 		bitvector *&Bitvec,
-		//uchar *&bitvector_adjacency, long int &bitvector_length,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -699,7 +761,6 @@ void spread_tables::compute_adjacency_matrix(
 
 		fname.assign(prefix);
 		fname.append("_disjoint_spreads.colored_graph");
-		//snprintf(fname, 2000, "%s_disjoint_spreads.colored_graph", prefix);
 
 		CG->save(fname, verbose_level);
 
@@ -720,7 +781,6 @@ int spread_tables::test_if_spreads_are_disjoint(int a, int b)
 {
 	long int *p, *q;
 	sorting Sorting;
-	//int u, v;
 
 	p = spread_table + a * spread_size;
 	q = spread_table + b * spread_size;
@@ -734,7 +794,6 @@ void spread_tables::compute_dual_spreads(long int **Sets,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
 	long int *dual_spread;
 	int i, j;
 	long int a, b;
