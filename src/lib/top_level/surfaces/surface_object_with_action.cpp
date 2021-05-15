@@ -1704,7 +1704,7 @@ void surface_object_with_action::all_quartic_curves(
 		if (f_v) {
 			cout << "surface_object_with_action::all_quartic_curves before QC->cheat_sheet_quartic_curve" << endl;
 		}
-		QC->cheat_sheet_quartic_curve(surface_prefix, ost, ost_quartics, verbose_level);
+		QC->cheat_sheet_quartic_curve(surface_prefix, ost, ost_quartics, f_TDO, verbose_level);
 		if (f_v) {
 			cout << "surface_object_with_action::all_quartic_curves after QC->cheat_sheet_quartic_curve" << endl;
 		}

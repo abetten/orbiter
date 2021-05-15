@@ -5478,13 +5478,13 @@ surface_8_0_clean:
 		-define P -projective_space 3 F  \
 		-with P -do \
 		-projective_space_activity \
-		-define_surface S8_0 -q 8 -catalogue 0 -end \
+		-define_surface S8_0 -q 8 -catalogue 0 \
 			-select_double_six "15,11,22,19,24,5,16,10,23,20,25,4" \
 			-select_double_six "3,2,1,0,5,4,9,8,7,6,11,10" \
 			-transform_inverse "1,4,4,0,6,0,0,0,6,2,0,1,7,0,4,0,0" \
 			-transform "4,4,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1, 0" \
 			-transform_inverse "2,0,0,0,0,2,0,0,0,0,2,0,1,1,2,3,0" \
-		-end \
+		-end -end  \
 		-with S8_0 -do \
 		-cubic_surface_activity \
 			-report \

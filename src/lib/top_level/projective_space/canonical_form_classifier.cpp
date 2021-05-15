@@ -207,13 +207,17 @@ void canonical_form_classifier::classify(canonical_form_classifier_description *
 
 		//h = int_vec_hash(Reps + i * data_set_sz, data_set_sz);
 
-		cout << Classification_of_quartic_curves->Frequency[i] << " x ";
+		cout << i << " : " << Classification_of_quartic_curves->Frequency[i] << " x ";
 		Orbiter->Int_vec.print(cout,
 				Classification_of_quartic_curves->Reps + i * Classification_of_quartic_curves->data_set_sz,
 				Classification_of_quartic_curves->data_set_sz);
 		cout << " : ";
 		j = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[i]];
-		cout << Goi[j] << endl;
+		cout << Goi[j] << " : ";
+		Orbiter->Int_vec.print(cout,
+				Classification_of_quartic_curves->sorting_perm_inv + Classification_of_quartic_curves->type_first[i],
+				Classification_of_quartic_curves->Frequency[i]);
+		cout << endl;
 #if 0
 		cout << "for elements ";
 		int_vec_print(cout, sorting_perm_inv + type_first[i], Frequency[i]);
@@ -448,42 +452,63 @@ void canonical_form_classifier::main_loop(int verbose_level)
 			}
 			else if (Descr->f_algorithm_substructure) {
 
-				canonical_form_substructure *CFS;
 
-				CFS = NEW_OBJECT(canonical_form_substructure);
 
-				if (f_v) {
-					cout << "canonical_form_classifier::main_loop "
-							"before CFS->classify_curve_with_substructure" << endl;
+
+
+				if (nb_pts >= Descr->substructure_size) {
+
+					if (f_v) {
+						cout << "canonical_form_classifier::main_loop "
+								"before CFS->classify_curve_with_substructure" << endl;
+					}
+
+					longinteger_object go_eqn;
+
+					canonical_form_substructure *CFS;
+
+					CFS = NEW_OBJECT(canonical_form_substructure);
+
+					CFS->classify_curve_with_substructure(
+							this,
+							counter, cnt, row,
+							eqn,
+							sz,
+							pts,
+							nb_pts,
+							bitangents,
+							nb_bitangents,
+							canonical_equation,
+							transporter_to_canonical_form,
+							go_eqn,
+							verbose_level);
+
+					CFS_table[counter] = CFS;
+					Orbiter->Int_vec.copy(CFS->canonical_equation,
+							Canonical_forms + counter * Poly_ring->get_nb_monomials(),
+							Poly_ring->get_nb_monomials());
+					Goi[counter] = go_eqn.as_lint();
+
+					if (f_v) {
+						cout << "canonical_form_classifier::main_loop "
+								"after CFS->classify_curve_with_substructure" << endl;
+					}
 				}
+				else {
 
-				longinteger_object go_eqn;
 
-				CFS->classify_curve_with_substructure(
-						this,
-						counter, cnt, row,
-						eqn,
-						sz,
-						pts,
-						nb_pts,
-						bitangents,
-						nb_bitangents,
-						canonical_equation,
-						transporter_to_canonical_form,
-						go_eqn,
-						verbose_level);
+					if (f_v) {
+						cout << "canonical_form_classifier::main_loop "
+								"too small for substructure algorithm. Skipping" << endl;
+					}
 
-				CFS_table[counter] = CFS;
-				Orbiter->Int_vec.copy(CFS->canonical_equation,
-						Canonical_forms + counter * Poly_ring->get_nb_monomials(),
-						Poly_ring->get_nb_monomials());
-				Goi[counter] = go_eqn.as_lint();
+					CFS_table[counter] = NULL;
+					Orbiter->Int_vec.zero(
+							Canonical_forms + counter * Poly_ring->get_nb_monomials(),
+							Poly_ring->get_nb_monomials());
+					Goi[counter] = -1;
 
-				if (f_v) {
-					cout << "canonical_form_classifier::main_loop "
-							"after CFS->classify_curve_with_substructure" << endl;
 				}
-
 			}
 			else {
 				cout << "canonical_form_classifier::main_loop please select which algorithm to use" << endl;
@@ -860,36 +885,42 @@ void canonical_form_classifier::report2(std::ostream &ost, std::string &fname_ba
 
 		cout << "i=" << i << endl;
 
-		Table[i * nb_cols + 0] = i;
-		Table[i * nb_cols + 1] = CFS_table[i]->cnt;
-		Table[i * nb_cols + 2] = CFS_table[i]->row;
-		Table[i * nb_cols + 3] = CFS_table[i]->nb_pts;
-		Table[i * nb_cols + 4] = nb_orbits;
 
-		//cout << "i=" << i << " getting orbit_frequencies" << endl;
+		if (CFS_table[i]) {
+			Table[i * nb_cols + 0] = i;
+			Table[i * nb_cols + 1] = CFS_table[i]->cnt;
+			Table[i * nb_cols + 2] = CFS_table[i]->row;
+			Table[i * nb_cols + 3] = CFS_table[i]->nb_pts;
+			Table[i * nb_cols + 4] = nb_orbits;
 
-		for (j = 0; j < nb_orbits; j++) {
-			Table[i * nb_cols + 5 + j] = CFS_table[i]->orbit_frequencies[j];
+			//cout << "i=" << i << " getting orbit_frequencies" << endl;
+
+			for (j = 0; j < nb_orbits; j++) {
+				Table[i * nb_cols + 5 + j] = CFS_table[i]->orbit_frequencies[j];
+			}
+
+			//cout << "i=" << i << " getting orbit_frequencies part 3" << endl;
+
+			Table[i * nb_cols + 5 + nb_orbits + 0] = CFS_table[i]->nb_types;
+			Table[i * nb_cols + 5 + nb_orbits + 1] = CFS_table[i]->selected_type;
+			Table[i * nb_cols + 5 + nb_orbits + 2] = CFS_table[i]->selected_orbit;
+			Table[i * nb_cols + 5 + nb_orbits + 3] = CFS_table[i]->selected_frequency;
+			Table[i * nb_cols + 5 + nb_orbits + 4] = CFS_table[i]->go_min.as_lint();
+			Table[i * nb_cols + 5 + nb_orbits + 5] = CFS_table[i]->Gens_stabilizer_original_set->group_order_as_lint();
+			Table[i * nb_cols + 5 + nb_orbits + 6] = CFS_table[i]->CS->reduced_set_size;
+			Table[i * nb_cols + 5 + nb_orbits + 7] = CFS_table[i]->nb_interesting_subsets;
+			Table[i * nb_cols + 5 + nb_orbits + 8] = CFS_table[i]->CS->nb_interesting_subsets_reduced;
+			Table[i * nb_cols + 5 + nb_orbits + 9] = CFS_table[i]->CS->nb_interesting_subsets_rr;
+			Table[i * nb_cols + 5 + nb_orbits + 10] = CFS_table[i]->CS->nb_orbits;
+			Table[i * nb_cols + 5 + nb_orbits + 11] = CFS_table[i]->CS->nb_interesting_orbits;
+			Table[i * nb_cols + 5 + nb_orbits + 12] = CFS_table[i]->CS->nb_interesting_points;
+			Table[i * nb_cols + 5 + nb_orbits + 13] = CFS_table[i]->Orb->used_length;
+			Table[i * nb_cols + 5 + nb_orbits + 14] = CFS_table[i]->gens_stab_of_canonical_equation->group_order_as_lint();
 		}
-
-		//cout << "i=" << i << " getting orbit_frequencies part 3" << endl;
-
-		Table[i * nb_cols + 5 + nb_orbits + 0] = CFS_table[i]->nb_types;
-		Table[i * nb_cols + 5 + nb_orbits + 1] = CFS_table[i]->selected_type;
-		Table[i * nb_cols + 5 + nb_orbits + 2] = CFS_table[i]->selected_orbit;
-		Table[i * nb_cols + 5 + nb_orbits + 3] = CFS_table[i]->selected_frequency;
-		Table[i * nb_cols + 5 + nb_orbits + 4] = CFS_table[i]->go_min.as_lint();
-		Table[i * nb_cols + 5 + nb_orbits + 5] = CFS_table[i]->Gens_stabilizer_original_set->group_order_as_lint();
-		Table[i * nb_cols + 5 + nb_orbits + 6] = CFS_table[i]->CS->reduced_set_size;
-		Table[i * nb_cols + 5 + nb_orbits + 7] = CFS_table[i]->nb_interesting_subsets;
-		Table[i * nb_cols + 5 + nb_orbits + 8] = CFS_table[i]->CS->nb_interesting_subsets_reduced;
-		Table[i * nb_cols + 5 + nb_orbits + 9] = CFS_table[i]->CS->nb_interesting_subsets_rr;
-		Table[i * nb_cols + 5 + nb_orbits + 10] = CFS_table[i]->CS->nb_orbits;
-		Table[i * nb_cols + 5 + nb_orbits + 11] = CFS_table[i]->CS->nb_interesting_orbits;
-		Table[i * nb_cols + 5 + nb_orbits + 12] = CFS_table[i]->CS->nb_interesting_points;
-		Table[i * nb_cols + 5 + nb_orbits + 13] = CFS_table[i]->Orb->used_length;
-		Table[i * nb_cols + 5 + nb_orbits + 14] = CFS_table[i]->gens_stab_of_canonical_equation->group_order_as_lint();
-
+		else {
+			Orbiter->Lint_vec.zero(Table + i * nb_cols, nb_cols);
+			Table[i * nb_cols + 0] = i;
+		}
 
 	}
 	if (f_v) {

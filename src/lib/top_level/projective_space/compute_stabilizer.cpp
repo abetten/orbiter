@@ -303,7 +303,7 @@ void compute_stabilizer::init(long int *the_set, int set_size,
 	if (f_v) {
 		cout << "compute_stabilizer::init before compute_orbits_and_find_minimal_pattern" << endl;
 	}
-	compute_orbits_and_find_minimal_pattern(verbose_level);
+	compute_orbits_and_find_minimal_pattern(0 /*verbose_level*/);
 	if (f_v) {
 		cout << "compute_stabilizer::init after compute_orbits_and_find_minimal_pattern" << endl;
 		cout << "compute_stabilizer::init nb_interesting_subsets_reduced = " << nb_interesting_subsets_reduced << endl;

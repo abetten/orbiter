@@ -2015,7 +2015,7 @@ void poset_classification::trace_all_k_subsets_and_compute_frequencies(
 	trace_all_k_subsets(
 			the_set,
 			n, k, nCk, isotype,
-			verbose_level);
+			0 /*verbose_level*/);
 
 	nb_orbits = nb_orbits_at_level(k);
 	orbit_frequencies = NEW_int(nb_orbits);
@@ -2037,7 +2037,7 @@ void poset_classification::trace_all_k_subsets(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	int f_vv = FALSE; //(verbose_level >= 2);
 	int *index_set;
 	long int *subset;
 	long int *canonical_subset;
