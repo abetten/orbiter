@@ -750,7 +750,8 @@ void quartic_curve::cheat_sheet_quartic_curve(
 		std::string &surface_prefix,
 		std::ostream &ost,
 		std::ostream &ost_curves,
-	int verbose_level)
+		int f_TDO,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1014,35 +1015,36 @@ void quartic_curve::cheat_sheet_quartic_curve(
 
 
 
-	string fname_base;
-	char str[1000];
+	if (f_TDO) {
+		string fname_base;
+		char str[1000];
 
-	string fname_row_scheme;
-	string fname_col_scheme;
-
-
-	sprintf(str, "_orb%d", pt_orbit);
-	fname_base.assign(surface_prefix);
-	fname_base.append(str);
-	fname_base.append("_quartic");
+		string fname_row_scheme;
+		string fname_col_scheme;
 
 
+		sprintf(str, "_orb%d", pt_orbit);
+		fname_base.assign(surface_prefix);
+		fname_base.append(str);
+		fname_base.append("_quartic");
 
-	fname_row_scheme.assign(fname_base);
-	fname_row_scheme.append("_row_scheme.tex");
-	fname_col_scheme.assign(fname_base);
-	fname_col_scheme.append("_col_scheme.tex");
 
 
-	ost << endl << endl;
-	ost << "$$" << endl;
-	ost << "\\input " << fname_row_scheme << endl;
-	ost << "$$" << endl;
-	ost << "$$" << endl;
-	ost << "\\input " << fname_col_scheme << endl;
-	ost << "$$" << endl;
-	ost << endl << endl;
+		fname_row_scheme.assign(fname_base);
+		fname_row_scheme.append("_row_scheme.tex");
+		fname_col_scheme.assign(fname_base);
+		fname_col_scheme.append("_col_scheme.tex");
 
+
+		ost << endl << endl;
+		ost << "$$" << endl;
+		ost << "\\input " << fname_row_scheme << endl;
+		ost << "$$" << endl;
+		ost << "$$" << endl;
+		ost << "\\input " << fname_col_scheme << endl;
+		ost << "$$" << endl;
+		ost << endl << endl;
+	}
 
 	if (f_v) {
 		cout << "quartic_curve::cheat_sheet_quartic_curve" << endl;
