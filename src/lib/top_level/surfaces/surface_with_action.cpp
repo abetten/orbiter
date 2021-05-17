@@ -1238,161 +1238,229 @@ void surface_with_action::sweep_4(
 	vector<vector<long int>> Properties;
 	vector<vector<long int>> Points;
 
+	string sweep_fname_csv;
 
-	for (alpha = 0; alpha < F->q; alpha++) {
+	sweep_fname_csv.assign(sweep_fname);
+	char str[1000];
 
-		if (alpha == 0) {
-			continue;
-		}
-
-		if (alpha == 1) {
-			continue;
-		}
+	sprintf(str, "_q%d", F->q);
+	sweep_fname_csv.assign(Surface_Descr->equation_name_of_formula);
+	sweep_fname_csv.append(str);
+	sweep_fname_csv.append("_sweep4_15_data.csv");
 
 
-		for (beta = 0; beta < F->q; beta++) {
+	{
+		ofstream ost_csv(sweep_fname_csv);
 
-			if (beta == 0) {
+		ost_csv << "orbit,equation,pts,parameters,go" << endl;
+
+		for (alpha = 0; alpha < F->q; alpha++) {
+
+			if (alpha == 0) {
 				continue;
 			}
 
-			if (beta == F->negate(1)) {
+			if (alpha == 1) {
 				continue;
 			}
 
-		for (delta = 0; delta < F->q; delta++) {
 
+			for (beta = 0; beta < F->q; beta++) {
 
-				if (delta == 0) {
+				if (beta == 0) {
 					continue;
 				}
 
-				if (delta == F->negate(1)) {
+				if (beta == F->negate(1)) {
 					continue;
 				}
 
-				if (delta == beta) {
-					continue;
-				}
+			for (delta = 0; delta < F->q; delta++) {
 
-				cout << "alpha=" << alpha << " beta=" << beta << " delta=" << delta << endl;
 
-#if 0
-				if (delta == F->mult(F->mult(alpha, beta),F->inverse(F->add(alpha,F->negate(1))))) {
-					continue;
-				}
-#endif
-				for (gamma = 0; gamma < F->q; gamma++) {
-
-					if (gamma == 0) {
+					if (delta == 0) {
 						continue;
 					}
 
-					if (gamma == F->negate(1)) {
+					if (delta == F->negate(1)) {
 						continue;
 					}
 
-					cout << "alpha=" << alpha << " beta=" << beta
-							<< " delta=" << delta << " gamma=" << gamma << endl;
-
-
-# if 0
-					if (gamma == F->mult((F->add3(1,F->mult(F->negate(1),alpha),F->negate(F->mult(alpha,beta)))),
-							F->inverse(F->add3(F->mult(alpha,beta),F->negate(F->mult(alpha,delta)),delta)))) {
+					if (delta == beta) {
 						continue;
 					}
-#endif
 
+					cout << "alpha=" << alpha << " beta=" << beta << " delta=" << delta << endl;
 
-
-					char str[1000];
-
-					sprintf(str, "alpha=%d,beta=%d,gamma=%d,delta=%d", alpha, beta, gamma, delta);
-
-
-					Surface_Descr->equation_parameters.assign(str);
-
-					//int f_by_equation;
-					//std::string equation_name_of_formula;
-					//std::string equation_name_of_formula_tex;
-					//std::string equation_managed_variables;
-					//std::string equation_text;
-					//std::string equation_parameters;
-					//std::string equation_parameters_tex;
-
-
-					surface_create *SC;
-					SC = NEW_OBJECT(surface_create);
-
-					if (f_v) {
-						cout << "surface_with_action::create_surface_sweep before SC->init" << endl;
-					}
-					SC->init(Surface_Descr, this /*Surf_A*/, verbose_level);
-					if (f_v) {
-						cout << "surface_with_action::create_surface_sweep after SC->init" << endl;
-					}
-
-
-
-#if 0
-					if (f_v) {
-						cout << "surface_with_action::create_surface_sweep "
-								"before SC->apply_transformations" << endl;
-					}
-					SC->apply_transformations(Surface_Descr->transform_coeffs,
-								Surface_Descr->f_inverse_transform,
-								verbose_level - 2);
-
-					if (f_v) {
-						cout << "surface_with_action::create_surface_sweep "
-								"after SC->apply_transformations" << endl;
-					}
-#endif
-
-
-#if 1
-					if (SC->SO->nb_lines != 15) {
+	#if 0
+					if (delta == F->mult(F->mult(alpha, beta),F->inverse(F->add(alpha,F->negate(1))))) {
 						continue;
 					}
-					if (SC->SO->SOP->nb_singular_pts) {
-						continue;
-					}
-#endif
+	#endif
+					for (gamma = 0; gamma < F->q; gamma++) {
+
+						if (gamma == 0) {
+							continue;
+						}
+
+						if (gamma == F->negate(1)) {
+							continue;
+						}
+
+						cout << "alpha=" << alpha << " beta=" << beta
+								<< " delta=" << delta << " gamma=" << gamma << endl;
 
 
-					vector<long int> Props;
-					vector<long int> Pts;
+	# if 0
+						if (gamma == F->mult((F->add3(1,F->mult(F->negate(1),alpha),F->negate(F->mult(alpha,beta)))),
+								F->inverse(F->add3(F->mult(alpha,beta),F->negate(F->mult(alpha,delta)),delta)))) {
+							continue;
+						}
+	#endif
 
-					Props.push_back(alpha);
-					Props.push_back(beta);
-					Props.push_back(gamma);
-					Props.push_back(delta);
-					Props.push_back(SC->SO->nb_lines);
-					Props.push_back(SC->SO->nb_pts);
-					Props.push_back(SC->SO->SOP->nb_singular_pts);
-					Props.push_back(SC->SO->SOP->nb_Eckardt_points);
-					Props.push_back(SC->SO->SOP->nb_Double_points);
-					Props.push_back(SC->SO->SOP->nb_Single_points);
-					Props.push_back(SC->SO->SOP->nb_pts_not_on_lines);
-					Props.push_back(SC->SO->SOP->nb_Hesse_planes);
-					Props.push_back(SC->SO->SOP->nb_axes);
-					Properties.push_back(Props);
 
-					int i;
-					for (i = 0; i < SC->SO->nb_pts; i++) {
-						Pts.push_back(SC->SO->Pts[i]);
-					}
-					Points.push_back(Pts);
 
-					FREE_OBJECT(SC);
+						char str[1000];
 
-				} // gamma
+						sprintf(str, "alpha=%d,beta=%d,gamma=%d,delta=%d", alpha, beta, gamma, delta);
 
-			} // delta
 
-		} // beta
+						Surface_Descr->equation_parameters.assign(str);
 
-	} // alpha
+						//int f_by_equation;
+						//std::string equation_name_of_formula;
+						//std::string equation_name_of_formula_tex;
+						//std::string equation_managed_variables;
+						//std::string equation_text;
+						//std::string equation_parameters;
+						//std::string equation_parameters_tex;
+
+
+						surface_create *SC;
+						SC = NEW_OBJECT(surface_create);
+
+						if (f_v) {
+							cout << "surface_with_action::create_surface_sweep before SC->init" << endl;
+						}
+						SC->init(Surface_Descr, this /*Surf_A*/, verbose_level);
+						if (f_v) {
+							cout << "surface_with_action::create_surface_sweep after SC->init" << endl;
+						}
+
+
+
+	#if 0
+						if (f_v) {
+							cout << "surface_with_action::create_surface_sweep "
+									"before SC->apply_transformations" << endl;
+						}
+						SC->apply_transformations(Surface_Descr->transform_coeffs,
+									Surface_Descr->f_inverse_transform,
+									verbose_level - 2);
+
+						if (f_v) {
+							cout << "surface_with_action::create_surface_sweep "
+									"after SC->apply_transformations" << endl;
+						}
+	#endif
+
+
+	#if 1
+						if (SC->SO->nb_lines != 15) {
+							continue;
+						}
+						if (SC->SO->SOP->nb_singular_pts) {
+							continue;
+						}
+	#endif
+
+
+						vector<long int> Props;
+						vector<long int> Pts;
+
+						Props.push_back(alpha);
+						Props.push_back(beta);
+						Props.push_back(gamma);
+						Props.push_back(delta);
+						Props.push_back(SC->SO->nb_lines);
+						Props.push_back(SC->SO->nb_pts);
+						Props.push_back(SC->SO->SOP->nb_singular_pts);
+						Props.push_back(SC->SO->SOP->nb_Eckardt_points);
+						Props.push_back(SC->SO->SOP->nb_Double_points);
+						Props.push_back(SC->SO->SOP->nb_Single_points);
+						Props.push_back(SC->SO->SOP->nb_pts_not_on_lines);
+						Props.push_back(SC->SO->SOP->nb_Hesse_planes);
+						Props.push_back(SC->SO->SOP->nb_axes);
+						Properties.push_back(Props);
+
+						int i;
+						for (i = 0; i < SC->SO->nb_pts; i++) {
+							Pts.push_back(SC->SO->Pts[i]);
+						}
+						Points.push_back(Pts);
+
+
+						ost_csv << Properties.size() - 1;
+						ost_csv << ",";
+
+						{
+							ostringstream s;
+
+
+							for (i = 0; i < 20; i++) {
+								s << SC->SO->eqn[i];
+								if (i < 20 - 1) {
+									s << ",";
+								}
+							}
+							ost_csv << "\"" << s.str() << "\"";
+						}
+						ost_csv << ",";
+
+						{
+							ostringstream s;
+
+
+							for (i = 0; i < SC->SO->nb_pts; i++) {
+								s << SC->SO->Pts[i];
+								if (i < SC->SO->nb_pts - 1) {
+									s << ",";
+								}
+							}
+							ost_csv << "\"" << s.str() << "\"";
+						}
+
+						ost_csv << ",";
+
+						{
+							ostringstream s;
+
+
+							s << alpha << "," << beta << "," << gamma << "," << delta;
+							ost_csv << "\"" << s.str() << "\"";
+						}
+
+						ost_csv << ",";
+
+
+						ost_csv << -1;
+						ost_csv << endl;
+
+
+
+						FREE_OBJECT(SC);
+
+					} // gamma
+
+				} // delta
+
+			} // beta
+
+		} // alpha
+		ost_csv << "END" << endl;
+	}
+	file_io Fio;
+	cout << "Written file " << sweep_fname_csv << " of size " << Fio.file_size(sweep_fname_csv) << endl;
 
 
 	long int *T;
@@ -1406,9 +1474,8 @@ void surface_with_action::sweep_4(
 			T[i * 13 + j] = Properties[i][j];
 		}
 	}
-	file_io Fio;
 	std::string fname;
-	char str[1000];
+	//char str[1000];
 
 	sprintf(str, "_q%d", F->q);
 	fname.assign(Surface_Descr->equation_name_of_formula);

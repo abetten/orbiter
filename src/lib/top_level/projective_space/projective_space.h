@@ -588,6 +588,7 @@ public:
 	std::string classify_quartic_curves_with_substructure_fname_mask;
 	int classify_quartic_curves_with_substructure_nb;
 	int classify_quartic_curves_with_substructure_size;
+	int classify_quartic_curves_with_substructure_degree;
 	std::string classify_quartic_curves_with_substructure_fname_classification;
 
 	int f_set_stabilizer;
@@ -678,7 +679,7 @@ public:
 			int verbose_level);
 	void classify_quartic_curves_with_substructure(
 			projective_space_with_action *PA,
-			std::string &fname_mask, int nb, int substructure_size,
+			std::string &fname_mask, int nb, int substructure_size, int degree,
 			std::string &fname_classification,
 			int verbose_level);
 	void set_stabilizer(

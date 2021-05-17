@@ -130,6 +130,7 @@ projective_space_activity_description::projective_space_activity_description()
 	//std::string classify_quartic_curves_with_substructure_fname_mask;
 	classify_quartic_curves_with_substructure_nb = 0;
 	classify_quartic_curves_with_substructure_size = 0;
+	classify_quartic_curves_with_substructure_degree = 0;
 	//std::string classify_quartic_curves_with_substructure_fname_classification;
 
 	f_set_stabilizer = FALSE;
@@ -474,11 +475,13 @@ int projective_space_activity_description::read_arguments(
 			classify_quartic_curves_with_substructure_fname_mask.assign(argv[++i]);
 			classify_quartic_curves_with_substructure_nb = strtoi(argv[++i]);
 			classify_quartic_curves_with_substructure_size = strtoi(argv[++i]);
+			classify_quartic_curves_with_substructure_degree = strtoi(argv[++i]);
 			classify_quartic_curves_with_substructure_fname_classification.assign(argv[++i]);
 			cout << "-classify_quartic_curves_with_substructure "
 					<< classify_quartic_curves_with_substructure_fname_mask
 					<< " " << classify_quartic_curves_with_substructure_nb
 					<< " " << classify_quartic_curves_with_substructure_size
+					<< " " << classify_quartic_curves_with_substructure_degree
 					<< " " << classify_quartic_curves_with_substructure_fname_classification
 					<< endl;
 		}

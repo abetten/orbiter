@@ -302,6 +302,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 				Descr->classify_quartic_curves_with_substructure_fname_mask,
 				Descr->classify_quartic_curves_with_substructure_nb,
 				Descr->classify_quartic_curves_with_substructure_size,
+				Descr->classify_quartic_curves_with_substructure_degree,
 				Descr->classify_quartic_curves_with_substructure_fname_classification,
 				verbose_level);
 	}
@@ -934,7 +935,7 @@ void projective_space_activity::classify_quartic_curves_nauty(
 
 void projective_space_activity::classify_quartic_curves_with_substructure(
 		projective_space_with_action *PA,
-		std::string &fname_mask, int nb, int substructure_size,
+		std::string &fname_mask, int nb, int substructure_size, int degree,
 		std::string &fname_classification,
 		int verbose_level)
 {
@@ -954,7 +955,7 @@ void projective_space_activity::classify_quartic_curves_with_substructure(
 	Descr.fname_base_out.assign(fname_classification);
 	Descr.PA = PA;
 	Descr.f_degree = TRUE;
-	Descr.degree = 4;
+	Descr.degree = degree;
 	Descr.nb_files = nb;
 	Descr.f_algorithm_nauty = FALSE;
 	Descr.f_algorithm_substructure = TRUE;
