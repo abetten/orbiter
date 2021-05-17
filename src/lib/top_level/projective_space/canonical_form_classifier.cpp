@@ -362,8 +362,7 @@ void canonical_form_classifier::generate_source_code(
 			cout << "canonical_form_classifier::generate_source_code "
 					"preparing Bitangents" << endl;
 		}
-		f << "// the lines in the order double six "
-				"a_i, b_i and 15 more lines c_ij:" << endl;
+		f << "// the 28 bitangents:" << endl;
 		f << "static int " << fname_base.c_str() << "_Bitangents[] = { " << endl;
 
 
@@ -445,7 +444,7 @@ void canonical_form_classifier::generate_source_code(
 				cout << "canonical_form_classifier::generate_source_code "
 						"preparing stab_gens_fst" << endl;
 			}
-			f << "static int " << fname_base.c_str() << "_stab_gens_fst[] = { ";
+			f << "static int " << fname_base.c_str() << "_stab_gens_fst[] = { " << endl << "\t";
 			for (orbit_index = 0;
 					orbit_index < nb_orbits;
 					orbit_index++) {
@@ -463,7 +462,7 @@ void canonical_form_classifier::generate_source_code(
 				cout << "canonical_form_classifier::generate_source_code "
 						"preparing stab_gens_len" << endl;
 			}
-			f << "static int " << fname_base.c_str() << "_stab_gens_len[] = { ";
+			f << "static int " << fname_base.c_str() << "_stab_gens_len[] = { " << endl << "\t";
 			for (orbit_index = 0;
 					orbit_index < nb_orbits;
 					orbit_index++) {
