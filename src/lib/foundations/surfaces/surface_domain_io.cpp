@@ -219,6 +219,7 @@ void surface_domain::print_lines_tex(ostream &ost, long int *Lines, int nb_lines
 	int i;
 	latex_interface L;
 	long int *Rk;
+	int vv[6];
 
 	Rk = NEW_lint(nb_lines);
 
@@ -249,7 +250,9 @@ void surface_domain::print_lines_tex(ostream &ost, long int *Lines, int nb_lines
 
 		P->Pluecker_coordinates(Lines[i], v6, 0 /* verbose_level */);
 
-		Rk[i] = F->Qplus_rank(v6, 1, 5, 0 /* verbose_level*/);
+		Orbiter->Int_vec.copy(v6, vv, 6); // mistake found by Alice Hui
+
+		Rk[i] = F->Qplus_rank(vv, 1, 5, 0 /* verbose_level*/);
 
 		ost << "={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
 				<< v6[2] << "," << v6[3] << "," << v6[4]

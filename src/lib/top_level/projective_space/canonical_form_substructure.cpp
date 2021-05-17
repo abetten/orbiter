@@ -178,10 +178,10 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		cout << "orbit isotype=";
 		Orbiter->Int_vec.print(cout, isotype, nCk);
 		cout << endl;
+#endif
 		cout << "orbit frequencies=";
 		Orbiter->Int_vec.print(cout, orbit_frequencies, nb_orbits);
 		cout << endl;
-#endif
 		cout << " orbit frequency types=";
 		T->print_naked(FALSE /* f_backwards */);
 		cout << endl;
@@ -210,7 +210,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		}
 
 
-		for (j = 0; j < SoS->Set_size[i]; j++) {
+		for (j = 0; j < 1 /*SoS->Set_size[i]*/; j++) {
 
 			idx = SoS->Sets[i][j];
 
@@ -241,7 +241,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 				}
 			}
 
-			if (f_vv) {
+			if (FALSE) {
 				cout << go;
 				if (j < SoS->Set_size[i] - 1) {
 					cout << ", ";

@@ -24,15 +24,15 @@ static const char *quartic_curves_q19_stab_order[] = {
 	"8",
 	"2",
 	"2",
-	"2",
-	"2",
 	"9",
 	"8",
-	"2",
 	"4",
 	"8",
 	"6",
 	"2",
+	"24",
+	"24",
+	"24",
 };
 // the 28 bitangents:
 static int quartic_curves_q19_Bitangents[] = { 
