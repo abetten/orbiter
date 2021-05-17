@@ -599,7 +599,7 @@ static void matrix_group_element_print_verbose(action &A,
 	ost << "\n";
 	int i, j;
 	
-	if (A.degree < 1000) {
+	if (A.degree < 100) {
 		int *p = NEW_int(A.degree);
 		for (i = 0; i < A.degree; i++) {
 			j = A.element_image_of(i, Elt, FALSE);

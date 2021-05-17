@@ -175,6 +175,14 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		search_element_of_order(Descr->search_element_order, verbose_level);
 	}
 
+	if (Descr->f_find_standard_generators) {
+		find_standard_generators(Descr->find_standard_generators_order_a,
+				Descr->find_standard_generators_order_b,
+				Descr->find_standard_generators_order_ab,
+				verbose_level);
+
+	}
+
 	if (Descr->f_element_rank) {
 		element_rank(Descr->element_rank_data, verbose_level);
 	}
@@ -876,8 +884,8 @@ void group_theoretic_activity::print_elements_tex(int verbose_level)
 		latex_interface L;
 		L.head_easy(fp);
 
-		//H->print_all_group_elements_tex(fp);
-		H->print_all_group_elements_with_permutations_tex(fp);
+		H->print_all_group_elements_tex(fp);
+		//H->print_all_group_elements_with_permutations_tex(fp);
 
 		//Schreier.print_and_list_orbits_tex(fp);
 
@@ -1025,6 +1033,27 @@ void group_theoretic_activity::search_element_of_order(int order, int verbose_le
 	}
 }
 
+void group_theoretic_activity::find_standard_generators(int order_a,
+		int order_b,
+		int order_ab,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::find_standard_generators" << endl;
+	}
+	algebra_global_with_action Algebra;
+
+	Algebra.find_standard_generators(LG,
+			A1, A2,
+			order_a, order_b, order_ab, verbose_level);
+
+	if (f_v) {
+		cout << "group_theoretic_activity::find_standard_generators done" << endl;
+	}
+
+}
 void group_theoretic_activity::element_rank(std::string &elt_data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

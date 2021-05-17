@@ -114,7 +114,10 @@ void canonical_form_substructure::classify_curve_with_substructure(
 	canonical_form_substructure::sz = sz;
 	canonical_form_substructure::pts = pts;
 	canonical_form_substructure::nb_pts = nb_pts;
-	canonical_form_substructure::bitangents = bitangents;
+
+
+	canonical_form_substructure::bitangents = NEW_lint(nb_bitangents);
+	Orbiter->Lint_vec.copy(bitangents, canonical_form_substructure::bitangents, nb_bitangents);
 	canonical_form_substructure::nb_bitangents = nb_bitangents;
 	canonical_form_substructure::canonical_equation = canonical_equation;
 	canonical_form_substructure::transporter_to_canonical_form = transporter_to_canonical_form;
@@ -139,7 +142,8 @@ void canonical_form_substructure::classify_curve_with_substructure(
 	}
 
 	if (f_v) {
-		cout << "canonical_form_substructure::classify_curve_with_substructure before PC->trace_all_k_subsets_and_compute_frequencies" << endl;
+		cout << "canonical_form_substructure::classify_curve_with_substructure "
+				"before PC->trace_all_k_subsets_and_compute_frequencies" << endl;
 	}
 
 	Canonical_form_classifier->PC->trace_all_k_subsets_and_compute_frequencies(
@@ -148,7 +152,8 @@ void canonical_form_substructure::classify_curve_with_substructure(
 			0 /*verbose_level*/);
 
 	if (f_v) {
-		cout << "canonical_form_substructure::classify_curve_with_substructure after PC->trace_all_k_subsets_and_compute_frequencies" << endl;
+		cout << "canonical_form_substructure::classify_curve_with_substructure "
+				"after PC->trace_all_k_subsets_and_compute_frequencies" << endl;
 	}
 
 

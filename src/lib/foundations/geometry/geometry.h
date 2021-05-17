@@ -1342,7 +1342,7 @@ public:
 // knowledge_base.cpp:
 // #############################################################################
 
-//! provides access to pre-computed combinatorial data from the Orbiter knowledge base
+//! provides access to pre-computed combinatorial data in encoded form
 
 
 class knowledge_base {
@@ -1351,7 +1351,7 @@ public:
 	~knowledge_base();
 
 
-	// i starts from 0 in all of below:
+	// the index i is zero-based:
 
 	int cubic_surface_nb_reps(int q);
 	int *cubic_surface_representative(int q, int i);
@@ -1555,7 +1555,7 @@ public:
 	int plane_exponent;
 	int nb_pts;
 	int f_plane_data_computed; 
-		// indicats whether or not plane and dual_plane 
+		// indicates whether or not plane and dual_plane
 		// have been computed by init_plane_data()
 	
 	struct plane_data plane;

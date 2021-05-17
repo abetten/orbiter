@@ -21,6 +21,12 @@ canonical_form_classifier_description::canonical_form_classifier_description()
 {
 	//std::string fname_mask;
 	nb_files = 0;
+
+
+	f_fname_base_out = FALSE;
+	//std::string fname_base_out;
+
+
 	f_degree = FALSE;
 	degree = 0;
 

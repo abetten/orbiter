@@ -797,47 +797,6 @@ void surface_with_action::create_surface_and_do_report(
 		}
 	}
 
-#if 0
-	if (SC->f_has_lines) {
-		if (f_v) {
-			cout << "surface_with_action::create_surface_and_do_report "
-					"The lines are:" << endl;
-			SC->Surf->Gr->print_set_tex(cout, SC->SO->Lines, SC->SO->nb_lines);
-		}
-
-
-		surface_object *SO;
-
-		SO = NEW_OBJECT(surface_object);
-		if (f_v) {
-			cout << "surface_with_action::create_surface_and_do_report before SO->init_with_27_lines" << endl;
-			}
-		SO->init_with_27_lines(SC->Surf, SC->Lines, SC->coeffs,
-				FALSE /*f_find_double_six_and_rearrange_lines */, verbose_level);
-		if (f_v) {
-			cout << "surface_with_action::create_surface_and_do_report after SO->init_with_27_lines" << endl;
-			}
-
-		string fname_points;
-
-		fname_points.assign("surface_");
-		fname_points.append(SC->label_txt);
-		fname_points.append("_points.txt");
-		Fio.write_set_to_file(fname_points, SO->Pts, SO->nb_pts, 0 /*verbose_level*/);
-		cout << "group_theoretic_activity::do_create_surface "
-				"Written file " << fname_points << " of size "
-				<< Fio.file_size(fname_points) << endl;
-	}
-	else {
-		cout << "surface_with_action::create_surface_and_do_report "
-				"The surface " << SC->label_txt
-				<< " does not come with lines" << endl;
-	}
-#else
-
-	//export_points(SC, verbose_level);
-
-#endif
 
 
 
@@ -1003,36 +962,10 @@ void surface_with_action::report_with_group(
 
 	// classify six arcs not on a conic:
 
-	if (f_v) {
-		cout << "surface_with_action::report_with_group "
-				"Setting up the group of the plane:" << endl;
-	}
-
 	action *A;
 
 
-#if 0
-	A = NEW_OBJECT(action);
-
-
-	int f_semilinear = TRUE;
-	number_theory_domain NT;
-
-	if (NT.is_prime(F->q)) {
-		f_semilinear = FALSE;
-	}
-
-	{
-		vector_ge *nice_gens;
-		A->init_projective_group(3, F,
-				f_semilinear, TRUE /*f_basis*/, TRUE /* f_init_sims */,
-				nice_gens,
-				0 /*verbose_level*/);
-		FREE_OBJECT(nice_gens);
-	}
-#else
 	A = PA->PA2->A;
-#endif
 
 	if (f_v) {
 		cout << "surface_with_action::report_with_group "
