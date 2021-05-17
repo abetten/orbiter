@@ -1353,6 +1353,13 @@ public:
 
 	// the index i is zero-based:
 
+
+	int quartic_curves_nb_reps(int q);
+	int *quartic_curves_representative(int q, int i);
+	void quartic_curves_stab_gens(int q, int i,
+			int *&data, int &nb_gens, int &data_size, const char *&stab_order);
+
+
 	int cubic_surface_nb_reps(int q);
 	int *cubic_surface_representative(int q, int i);
 	void cubic_surface_stab_gens(int q, int i, int *&data, int &nb_gens,

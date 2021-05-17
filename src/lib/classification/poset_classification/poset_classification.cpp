@@ -2009,13 +2009,13 @@ void poset_classification::trace_all_k_subsets_and_compute_frequencies(
 
 	if (f_v) {
 		cout << "poset_classification::trace_all_k_subsets_and_compute_frequencies "
-				"n = " << n << " k = " << k << endl;
+				"n = " << n << " k = " << k << " nCk=" << nCk << endl;
 	}
 
 	trace_all_k_subsets(
 			the_set,
 			n, k, nCk, isotype,
-			0 /*verbose_level*/);
+			verbose_level);
 
 	nb_orbits = nb_orbits_at_level(k);
 	orbit_frequencies = NEW_int(nb_orbits);
@@ -2066,7 +2066,7 @@ void poset_classification::trace_all_k_subsets(
 	subset_rk = 0;
 
 	while (TRUE) {
-		if (f_vv && ((subset_rk % 10000) == 0)) {
+		if (TRUE && ((subset_rk % 10000) == 0)) {
 			cout << "poset_classification::trace_all_k_subsets "
 					"k=" << k
 				<< " testing set " << subset_rk << " / " << nCk 

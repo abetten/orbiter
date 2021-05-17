@@ -344,7 +344,12 @@ void canonical_form_classifier::generate_source_code(
 
 			longinteger_object ago;
 
-			ago.create(Goi[orbit_index], __FILE__, __LINE__);
+			int idx;
+
+			idx = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[orbit_index]];
+
+
+			ago.create(Goi[idx], __FILE__, __LINE__);
 
 			f << "\t\"";
 

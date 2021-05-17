@@ -149,7 +149,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 	Canonical_form_classifier->PC->trace_all_k_subsets_and_compute_frequencies(
 			pts, nb_pts, Canonical_form_classifier->Descr->substructure_size,
 			nCk, isotype, orbit_frequencies, nb_orbits,
-			0 /*verbose_level*/);
+			verbose_level);
 
 	if (f_v) {
 		cout << "canonical_form_substructure::classify_curve_with_substructure "

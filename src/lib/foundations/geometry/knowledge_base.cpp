@@ -26,6 +26,11 @@ namespace foundations {
 
 
 
+#include "./DATA/quartic_curves_q13.cpp"
+#include "./DATA/quartic_curves_q19.cpp"
+#include "./DATA/quartic_curves_q25.cpp"
+#include "./DATA/quartic_curves_q27.cpp"
+
 #include "./DATA/data_hyperovals.cpp"
 
 #include "./DATA/surface_4.cpp"
@@ -89,6 +94,141 @@ knowledge_base::~knowledge_base()
 {
 
 }
+
+
+// #############################################################################
+// quartic curves:
+// #############################################################################
+
+
+
+int knowledge_base::quartic_curves_nb_reps(int q)
+{
+	int nb;
+
+	if (q == 13) {
+		nb = quartic_curves_q13_nb_reps;
+	}
+	else if (q == 19) {
+		nb = quartic_curves_q19_nb_reps;
+	}
+	else if (q == 25) {
+		nb = quartic_curves_q25_nb_reps;
+	}
+	else if (q == 27) {
+		nb = quartic_curves_q27_nb_reps;
+	}
+	else {
+		cout << "knowledge_base::quartic_curves_nb_reps q=" << q
+				<< " I don't have information for this case" << endl;
+		exit(1);
+		}
+	return nb;
+}
+
+int *knowledge_base::quartic_curves_representative(int q, int i)
+// i starts from 0
+{
+	int *p, nb, sz;
+
+	if (q == 13) {
+		p = surface_13_reps;
+		nb = surface_13_nb_reps;
+		sz = surface_13_size;
+	}
+	else if (q == 19) {
+		p = surface_19_reps;
+		nb = surface_19_nb_reps;
+		sz = surface_19_size;
+	}
+	else if (q == 25) {
+		p = surface_25_reps;
+		nb = surface_25_nb_reps;
+		sz = surface_25_size;
+	}
+	else if (q == 27) {
+		p = surface_27_reps;
+		nb = surface_27_nb_reps;
+		sz = surface_27_size;
+	}
+	else {
+		cout << "knowledge_base::quartic_curves_representative q=" << q
+				<< " I don't have information for this case" << endl;
+		exit(1);
+	}
+	if (i < 0) {
+		cout << "knowledge_base::quartic_curves_representative q=" << q << " i=" << i
+				<< " but i must be at least 0 (numbering starts at 0)" << endl;
+		exit(1);
+	}
+	if (i >= nb) {
+		cout << "knowledge_base::quartic_curves_representative q=" << q << " i=" << i
+				<< " but I have only " << nb << " representatives" << endl;
+		exit(1);
+	}
+	p += i * sz;
+	return p;
+}
+
+void knowledge_base::quartic_curves_stab_gens(int q, int i,
+		int *&data, int &nb_gens, int &data_size, const char *&stab_order)
+{
+	int *Reps;
+	int nb, make_element_size;
+	int f, l;
+
+	if (q == 13) {
+		Reps = quartic_curves_q13_stab_gens;
+		nb = quartic_curves_q13_nb_reps;
+		make_element_size = quartic_curves_q13_make_element_size;
+		f = quartic_curves_q13_stab_gens_fst[i];
+		l = quartic_curves_q13_stab_gens_len[i];
+		stab_order = quartic_curves_q13_stab_order[i];
+	}
+	else if (q == 19) {
+		Reps = quartic_curves_q19_stab_gens;
+		nb = quartic_curves_q19_nb_reps;
+		make_element_size = quartic_curves_q19_make_element_size;
+		f = quartic_curves_q19_stab_gens_fst[i];
+		l = quartic_curves_q19_stab_gens_len[i];
+		stab_order = quartic_curves_q19_stab_order[i];
+	}
+	else if (q == 25) {
+		Reps = quartic_curves_q25_stab_gens;
+		nb = quartic_curves_q25_nb_reps;
+		make_element_size = quartic_curves_q25_make_element_size;
+		f = quartic_curves_q25_stab_gens_fst[i];
+		l = quartic_curves_q25_stab_gens_len[i];
+		stab_order = quartic_curves_q25_stab_order[i];
+	}
+	else if (q == 27) {
+		Reps = quartic_curves_q27_stab_gens;
+		nb = quartic_curves_q27_nb_reps;
+		make_element_size = quartic_curves_q27_make_element_size;
+		f = quartic_curves_q27_stab_gens_fst[i];
+		l = quartic_curves_q27_stab_gens_len[i];
+		stab_order = quartic_curves_q27_stab_order[i];
+	}
+	else {
+		cout << "knowledge_base::quartic_curves_stab_gens q=" << q
+				<< " I don't have information for this field order" << endl;
+		exit(1);
+	}
+	if (i < 0) {
+		cout << "knowledge_base::quartic_curves_stab_gens q=" << q << " i=" << i
+				<< " but i must be at least 0 (numbering starts at 0)" << endl;
+		exit(1);
+	}
+	if (i >= nb) {
+		cout << "knowledge_base::quartic_curves_stab_gens q=" << q << " i=" << i
+				<< " but I have only " << nb << " representatives" << endl;
+		exit(1);
+	}
+	nb_gens = l;
+	data_size = make_element_size;
+	data = Reps + f * make_element_size;
+}
+
 
 
 // #############################################################################
