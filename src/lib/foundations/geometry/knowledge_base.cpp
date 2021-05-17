@@ -219,7 +219,7 @@ int knowledge_base::cubic_surface_nb_reps(int q)
 		nb = surface_128_nb_reps;
 		}
 	else {
-		cout << "cubic_surface_nb_reps q=" << q
+		cout << "knowledge_base::cubic_surface_nb_reps q=" << q
 				<< " I don't have information for this case" << endl;
 		exit(1);
 		}
@@ -431,17 +431,17 @@ int *knowledge_base::cubic_surface_representative(int q, int i)
 		sz = surface_128_size;
 		}
 	else {
-		cout << "cubic_surface_representative q=" << q
+		cout << "knowledge_base::cubic_surface_representative q=" << q
 				<< " I don't have information for this case" << endl;
 		exit(1);
 		}
 	if (i < 0) {
-		cout << "cubic_surface_representative q=" << q << " i=" << i
+		cout << "knowledge_base::cubic_surface_representative q=" << q << " i=" << i
 				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (i >= nb) {
-		cout << "cubic_surface_representative q=" << q << " i=" << i
+		cout << "knowledge_base::cubic_surface_representative q=" << q << " i=" << i
 				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
@@ -777,17 +777,17 @@ void knowledge_base::cubic_surface_stab_gens(int q, int i,
 		stab_order = surface_128_stab_order[i];
 		}
 	else {
-		cout << "cubic_surface_stab_gens q=" << q
+		cout << "knowledge_base::cubic_surface_stab_gens q=" << q
 				<< " I don't have information for this field order" << endl;
 		exit(1);
 		}
 	if (i < 0) {
-		cout << "cubic_surface_stab_gens q=" << q << " i=" << i
+		cout << "knowledge_base::cubic_surface_stab_gens q=" << q << " i=" << i
 				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (i >= nb) {
-		cout << "cubic_surface_stab_gens q=" << q << " i=" << i
+		cout << "knowledge_base::cubic_surface_stab_gens q=" << q << " i=" << i
 				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
@@ -1001,17 +1001,17 @@ int knowledge_base::cubic_surface_nb_Eckardt_points(int q, int i)
 		//sz = surface_128_size;
 		}
 	else {
-		cout << "cubic_surface_nb_Eckardt_points q=" << q
+		cout << "knowledge_base::cubic_surface_nb_Eckardt_points q=" << q
 				<< " I don't have information for this case" << endl;
 		exit(1);
 		}
 	if (i < 0) {
-		cout << "cubic_surface_nb_Eckardt_points q=" << q << " i=" << i
+		cout << "knowledge_base::cubic_surface_nb_Eckardt_points q=" << q << " i=" << i
 				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (i >= nb) {
-		cout << "cubic_surface_nb_Eckardt_points q=" << q << " i=" << i
+		cout << "knowledge_base::cubic_surface_nb_Eckardt_points q=" << q << " i=" << i
 				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
@@ -1368,17 +1368,17 @@ long int *knowledge_base::cubic_surface_Lines(int q, int i)
 		nb = surface_128_nb_reps;
 		}
 	else {
-		cout << "cubic_surface_Lines q=" << q
+		cout << "knowledge_base::cubic_surface_Lines q=" << q
 				<< " I don't have information for this case" << endl;
 		exit(1);
 		}
 	if (i < 0) {
-		cout << "cubic_surface_Lines q=" << q << " i=" << i
+		cout << "knowledge_base::cubic_surface_Lines q=" << q << " i=" << i
 				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (i >= nb) {
-		cout << "cubic_surface_Lines q=" << q << " i=" << i
+		cout << "knowledge_base::cubic_surface_Lines q=" << q << " i=" << i
 				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
@@ -1406,7 +1406,7 @@ int knowledge_base::hyperoval_nb_reps(int q)
 		nb = arcs_32_34_nb_reps;
 		}
 	else {
-		cout << "hyperoval_nb_reps q=" << q
+		cout << "knowledge_base::hyperoval_nb_reps q=" << q
 				<< " I don't have information for this case" << endl;
 		exit(1);
 		}
@@ -1433,17 +1433,17 @@ int *knowledge_base::hyperoval_representative(int q, int i)
 		sz = arcs_32_34_size;
 		}
 	else {
-		cout << "hyperovals_representative q=" << q
+		cout << "knowledge_base::hyperovals_representative q=" << q
 				<< " I don't have information for this case" << endl;
 		exit(1);
 		}
 	if (i < 0) {
-		cout << "hyperoval_representative q=" << q << " i=" << i
+		cout << "knowledge_base::hyperoval_representative q=" << q << " i=" << i
 				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (i >= nb) {
-		cout << "hyperoval_representative q=" << q << " i=" << i
+		cout << "knowledge_base::hyperoval_representative q=" << q << " i=" << i
 				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
@@ -1483,17 +1483,17 @@ void knowledge_base::hyperoval_gens(int q, int i,
 		stab_order = arcs_32_34_stab_order[i];
 		}
 	else {
-		cout << "hyperoval_representative q=" << q
+		cout << "knowledge_base::hyperoval_representative q=" << q
 				<< " I don't have information for this field order" << endl;
 		exit(1);
 		}
 	if (i < 0) {
-		cout << "hyperoval_representative q=" << q << " i=" << i
+		cout << "knowledge_base::hyperoval_representative q=" << q << " i=" << i
 				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (i >= nb) {
-		cout << "hyperoval_representative q=" << q << " i=" << i
+		cout << "knowledge_base::hyperoval_representative q=" << q << " i=" << i
 				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
@@ -1523,7 +1523,7 @@ int knowledge_base::DH_nb_reps(int k, int n)
 		nb = DH_4_8_nb_reps;
 		}
 	else {
-		cout << "DH_nb_reps k=" << k << " n=" << n
+		cout << "knowledge_base::DH_nb_reps k=" << k << " n=" << n
 				<< " I don't have information for this case" << endl;
 		exit(1);
 		}
@@ -1545,17 +1545,17 @@ long int *knowledge_base::DH_representative(int k, int n, int i)
 		sz = DH_4_8_size;
 		}
 	else {
-		cout << "DH_representative k=" << k << " n=" << n
+		cout << "knowledge_base::DH_representative k=" << k << " n=" << n
 				<< " I don't have information for this case" << endl;
 		exit(1);
 		}
 	if (i < 0) {
-		cout << "DH_representative k=" << k << " n=" << n << " i=" << i
+		cout << "knowledge_base::DH_representative k=" << k << " n=" << n << " i=" << i
 				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (i >= nb) {
-		cout << "DH_representative k=" << k << " n=" << n << " i=" << i
+		cout << "knowledge_base::DH_representative k=" << k << " n=" << n << " i=" << i
 				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
@@ -1587,17 +1587,17 @@ void knowledge_base::DH_stab_gens(int k, int n, int i,
 		stab_order = DH_4_8_stab_order[i];
 		}
 	else {
-		cout << "DH_representative k=" << k << " n=" << n
+		cout << "knowledge_base::DH_representative k=" << k << " n=" << n
 				<< " I don't have information for this field order" << endl;
 		exit(1);
 		}
 	if (i < 0) {
-		cout << "DH_representative k=" << k << " n=" << n << " i=" << i
+		cout << "knowledge_base::DH_representative k=" << k << " n=" << n << " i=" << i
 				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (i >= nb) {
-		cout << "DH_representative k=" << k << " n=" << n << " i=" << i
+		cout << "knowledge_base::DH_representative k=" << k << " n=" << n << " i=" << i
 				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
@@ -1640,7 +1640,7 @@ int knowledge_base::Spread_nb_reps(int q, int k)
 		nb = Spreads_3_3_nb_reps;
 		}
 	else {
-		cout << "Spread_nb_reps q=" << q << " k=" << k
+		cout << "knowledge_base::Spread_nb_reps q=" << q << " k=" << k
 				<< " I don't have information for this case" << endl;
 		exit(1);
 		}
@@ -1684,17 +1684,17 @@ long int *knowledge_base::Spread_representative(int q, int k, int i, int &sz)
 		sz = Spreads_3_3_size;
 		}
 	else {
-		cout << "Spread_representative q=" << q << " k=" << k
+		cout << "knowledge_base::Spread_representative q=" << q << " k=" << k
 				<< " I don't have information for this field order" << endl;
 		exit(1);
 		}
 	if (i < 0) {
-		cout << "Spread_representative q=" << q << " k=" << k << " i=" << i
+		cout << "knowledge_base::Spread_representative q=" << q << " k=" << k << " i=" << i
 				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (i >= nb) {
-		cout << "Spread_representative q=" << q << " k=" << k << " i=" << i
+		cout << "knowledge_base::Spread_representative q=" << q << " k=" << k << " i=" << i
 				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
@@ -1758,17 +1758,17 @@ void knowledge_base::Spread_stab_gens(int q, int k, int i,
 		stab_order = Spreads_3_3_stab_order[i];
 		}
 	else {
-		cout << "Spread_representative q=" << q << " k=" << k
+		cout << "knowledge_base::Spread_representative q=" << q << " k=" << k
 				<< " I don't have information for this field order" << endl;
 		exit(1);
 		}
 	if (i < 0) {
-		cout << "Spread_representative q=" << q << " k=" << k << " i=" << i
+		cout << "knowledge_base::Spread_representative q=" << q << " k=" << k << " i=" << i
 				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (i >= nb) {
-		cout << "Spread_representative q=" << q << " k=" << k << " i=" << i
+		cout << "knowledge_base::Spread_representative q=" << q << " k=" << k << " i=" << i
 				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
@@ -1862,7 +1862,7 @@ int knowledge_base::BLT_nb_reps(int q)
 		nb = BLT_73_nb_reps;
 		}
 	else {
-		cout << "BLT_nb_reps q=" << q
+		cout << "knowledge_base::BLT_nb_reps q=" << q
 				<< " I don't have information for this order" << endl;
 		exit(1);
 		}
@@ -1996,17 +1996,17 @@ long int *knowledge_base::BLT_representative(int q, int no)
 		sz = BLT_73_size;
 		}
 	else {
-		cout << "BLT_representative q=" << q
+		cout << "knowledge_base::BLT_representative q=" << q
 				<< " I don't have information for this field order" << endl;
 		exit(1);
 		}
 	if (no < 0) {
-		cout << "BLT_representative q=" << q << " no=" << no
+		cout << "knowledge_base::BLT_representative q=" << q << " no=" << no
 				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (no >= nb) {
-		cout << "BLT_representative q=" << q << " no=" << no
+		cout << "knowledge_base::BLT_representative q=" << q << " no=" << no
 				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
@@ -2214,17 +2214,17 @@ void knowledge_base::BLT_stab_gens(int q, int no,
 		stab_order = BLT_73_stab_order[no];
 		}
 	else {
-		cout << "BLT_representative q=" << q << " I don't have "
+		cout << "knowledge_base::BLT_representative q=" << q << " I don't have "
 				"information for this field order" << endl;
 		exit(1);
 		}
 	if (no < 0) {
-		cout << "BLT_representative q=" << q << " no=" << no
+		cout << "knowledge_base::BLT_representative q=" << q << " no=" << no
 				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (no >= nb) {
-		cout << "BLT_representative q=" << q << " no=" << no
+		cout << "knowledge_base::BLT_representative q=" << q << " no=" << no
 				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
@@ -2243,7 +2243,7 @@ const char *knowledge_base::override_polynomial_subfield(int q)
 	number_theory_domain NT;
 	
 	if (!NT.is_prime_power(q, p, h)) {
-		cout << "override_polynomial_subfield "
+		cout << "knowledge_base::override_polynomial_subfield "
 				"q is not a prime power" << endl;
 		exit(1);
 		}
@@ -2272,21 +2272,21 @@ const char *knowledge_base::override_polynomial_subfield(int q)
 		override_poly = "200";
 		}
 	if (override_poly == NULL) {
-		cout << "override_polynomial_subfield, "
+		cout << "knowledge_base::override_polynomial_subfield, "
 				"do not have a polynomial for q=" << q << endl;
 		
 		int verbose_level = 2;
 		finite_field f, F;
 		int qq = q * q;
 		
-		cout << "initializing large field" << endl;
+		cout << "knowledge_base::override_polynomial_subfield initializing large field" << endl;
 		F.finite_field_init(qq, verbose_level);
-		cout << "initializing small field" << endl;
+		cout << "knowledge_base::override_polynomial_subfield initializing small field" << endl;
 		f.finite_field_init(q, verbose_level);
 		if (f.e > 1) {
 			F.finite_field_init(qq, 1);
 			f.finite_field_init(q, 3);
-			cout << "need to choose the generator "
+			cout << "knowledge_base::override_polynomial_subfield need to choose the generator "
 					"polynomial for the field" << endl;
 			F.compute_subfields(verbose_level);
 			//exit(1);
@@ -2305,7 +2305,7 @@ const char *knowledge_base::override_polynomial_extension_field(int q)
 	number_theory_domain NT;
 	
 	if (!NT.is_prime_power(q, p, h)) {
-		cout << "override_polynomial_extension_field "
+		cout << "knowledge_base::override_polynomial_extension_field "
 				"q is not a prime power" << endl;
 		exit(1);
 		}
@@ -2338,7 +2338,7 @@ const char *knowledge_base::override_polynomial_extension_field(int q)
 		override_poly = "15985";
 		}
 	if (override_poly == NULL) {
-		cout << "override_polynomial_extension_field, "
+		cout << "knowledge_base::override_polynomial_extension_field, "
 				"do not have a polynomial for q=" << q << endl;
 		exit(1);
 		}

@@ -289,9 +289,13 @@ void projective_space_activity::perform_activity(int verbose_level)
 	else if (Descr->f_classify_quartic_curves_nauty) {
 
 		classify_quartic_curves_nauty(PA,
-				Descr->classify_quartic_curves_nauty_fname_mask, Descr->classify_quartic_curves_nauty_nb,
+				Descr->classify_quartic_curves_nauty_fname_mask,
+				Descr->classify_quartic_curves_nauty_nb,
+				Descr->classify_quartic_curves_nauty_fname_classification,
 				verbose_level);
 	}
+
+
 	else if (Descr->f_classify_quartic_curves_with_substructure) {
 
 		classify_quartic_curves_with_substructure(PA,
@@ -872,6 +876,7 @@ void projective_space_activity::do_cheat_sheet_PG(
 void projective_space_activity::classify_quartic_curves_nauty(
 		projective_space_with_action *PA,
 		std::string &fname_mask, int nb,
+		std::string &fname_classification,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -886,6 +891,8 @@ void projective_space_activity::classify_quartic_curves_nauty(
 	canonical_form_classifier_description Descr;
 
 	Descr.fname_mask.assign(fname_mask);
+	Descr.f_fname_base_out = TRUE;
+	Descr.fname_base_out.assign(fname_classification);
 	Descr.PA = PA;
 	Descr.f_degree = TRUE;
 	Descr.degree = 4;
@@ -943,6 +950,8 @@ void projective_space_activity::classify_quartic_curves_with_substructure(
 	canonical_form_classifier_description Descr;
 
 	Descr.fname_mask.assign(fname_mask);
+	Descr.f_fname_base_out = TRUE;
+	Descr.fname_base_out.assign(fname_classification);
 	Descr.PA = PA;
 	Descr.f_degree = TRUE;
 	Descr.degree = 4;

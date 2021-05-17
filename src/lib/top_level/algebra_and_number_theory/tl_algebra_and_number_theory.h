@@ -143,6 +143,9 @@ public:
 	void search_element_of_order(linear_group *LG,
 			action *A1, action *A2,
 			int order, int verbose_level);
+	void find_standard_generators(linear_group *LG,
+			action *A1, action *A2,
+			int order_a, int order_b, int order_ab, int verbose_level);
 	void element_rank(linear_group *LG,
 			action *A1,
 			std::string &elt_data, int verbose_level);
@@ -238,6 +241,11 @@ public:
 
 	int f_search_element_of_order;
 	int search_element_order;
+
+	int f_find_standard_generators;
+	int find_standard_generators_order_a;
+	int find_standard_generators_order_b;
+	int find_standard_generators_order_ab;
 
 	int f_element_rank;
 	std::string element_rank_data;
@@ -429,6 +437,10 @@ public:
 	void print_elements_tex(int verbose_level);
 	void find_singer_cycle(int verbose_level);
 	void search_element_of_order(int order, int verbose_level);
+	void find_standard_generators(int order_a,
+			int order_b,
+			int order_ab,
+			int verbose_level);
 	void element_rank(std::string &elt_data, int verbose_level);
 	void element_unrank(std::string &rank_string, int verbose_level);
 	void conjugacy_class_of(std::string &rank_string, int verbose_level);

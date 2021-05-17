@@ -107,7 +107,7 @@ public:
 // arc_partition.cpp
 // #############################################################################
 
-//! orbits on the partitions of the remaining four point of a non-conical arc
+//! orbits on the partitions of the remaining four points of a non-conical arc
 
 
 class arc_partition {
@@ -1538,7 +1538,7 @@ public:
 	// po = Lift->Flag_orbits->Flag_orbit_node[f].downstep_primary_orbit;
 	// so = Lift->Flag_orbits->Flag_orbit_node[f].downstep_secondary_orbit;
 
-	// 3x3 matrices or elements in PGGL(3,q)
+	// 3x3 matrices of elements in PGGL(3,q)
 	int *Elt_alpha2;
 		// Using local coordinates P6_local[6],
 		// maps the arc P6[6] to the canonical arc in the classification.
@@ -1588,8 +1588,6 @@ public:
 	void init(surfaces_arc_lifting_upstep *Up,
 			int seventytwo_case_idx, int verbose_level);
 	void process_flag_orbit(surfaces_arc_lifting_upstep *Up, int verbose_level);
-	//void trace_second_flag_orbit(int verbose_level);
-	//void compute_arc(int verbose_level);
 	void move_arc(int verbose_level);
 	void move_plane_and_arc(long int *P6a, int verbose_level);
 	void make_arc_canonical(

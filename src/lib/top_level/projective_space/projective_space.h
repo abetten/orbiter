@@ -31,6 +31,9 @@ public:
 	std::string fname_mask;
 	int nb_files;
 
+	int f_fname_base_out;
+	std::string fname_base_out;
+
 	int f_degree;
 	int degree;
 
@@ -103,6 +106,10 @@ public:
 	~canonical_form_classifier();
 	void count_nb_objects_to_test(int verbose_level);
 	void classify(canonical_form_classifier_description *Descr,
+			int verbose_level);
+	void generate_source_code(
+			std::string &fname_base,
+			tally_vector_data *Classification_of_quartic_curves,
 			int verbose_level);
 	void classify_nauty(int verbose_level);
 	void classify_with_substructure(int verbose_level);
@@ -575,6 +582,7 @@ public:
 	int f_classify_quartic_curves_nauty;
 	std::string classify_quartic_curves_nauty_fname_mask;
 	int classify_quartic_curves_nauty_nb;
+	std::string classify_quartic_curves_nauty_fname_classification;
 
 	int f_classify_quartic_curves_with_substructure;
 	std::string classify_quartic_curves_with_substructure_fname_mask;
@@ -666,6 +674,7 @@ public:
 	void classify_quartic_curves_nauty(
 			projective_space_with_action *PA,
 			std::string &fname_mask, int nb,
+			std::string &fname_classification,
 			int verbose_level);
 	void classify_quartic_curves_with_substructure(
 			projective_space_with_action *PA,

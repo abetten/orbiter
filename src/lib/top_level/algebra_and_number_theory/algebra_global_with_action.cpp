@@ -3989,6 +3989,105 @@ void algebra_global_with_action::search_element_of_order(linear_group *LG,
 	}
 }
 
+void algebra_global_with_action::find_standard_generators(linear_group *LG,
+		action *A1, action *A2,
+		int order_a, int order_b, int order_ab, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global_with_action::find_standard_generators" << endl;
+	}
+	sims *H;
+
+	H = LG->Strong_gens->create_sims(verbose_level);
+
+	cout << "group order H = " << H->group_order_lint() << endl;
+
+	int *Elt_a;
+	int *Elt_b;
+	int *Elt_ab;
+	longinteger_object go;
+	int i, j, cnt, ord;
+
+	Elt_a = NEW_int(A1->elt_size_in_int);
+	Elt_b = NEW_int(A1->elt_size_in_int);
+	Elt_ab = NEW_int(A1->elt_size_in_int);
+	H->group_order(go);
+
+	cnt = 0;
+	for (i = 0; i < go.as_int(); i++) {
+		H->element_unrank_lint(i, Elt_a);
+
+
+		ord = A2->element_order(Elt_a);
+
+	#if 0
+		cout << "Element " << setw(5) << i << " / "
+				<< go.as_int() << ":" << endl;
+		A->element_print(Elt, cout);
+		cout << endl;
+		A->element_print_as_permutation(Elt, cout);
+		cout << endl;
+	#endif
+
+		if (ord != order_a) {
+			continue;
+		}
+
+		for (j = 0; j < go.as_int(); j++) {
+			H->element_unrank_lint(j, Elt_b);
+
+
+			ord = A2->element_order(Elt_b);
+
+			if (ord != order_b) {
+				continue;
+			}
+
+			A2->element_mult(Elt_a, Elt_b, Elt_ab, 0);
+
+			ord = A2->element_order(Elt_ab);
+
+			if (ord != order_ab) {
+				continue;
+			}
+
+			if (f_v) {
+				cout << "a = " << setw(5) << i << ", b=" << setw(5) << j << " : " << cnt << ":" << endl;
+				cout << "a=" << endl;
+				A2->element_print(Elt_a, cout);
+				cout << endl;
+				A2->element_print_as_permutation(Elt_a, cout);
+				cout << endl;
+				cout << "b=" << endl;
+				A2->element_print(Elt_b, cout);
+				cout << endl;
+				A2->element_print_as_permutation(Elt_b, cout);
+				cout << endl;
+				cout << "ab=" << endl;
+				A2->element_print(Elt_ab, cout);
+				cout << endl;
+				A2->element_print_as_permutation(Elt_ab, cout);
+				cout << endl;
+			}
+			cnt++;
+		}
+	}
+	if (f_v) {
+		cout << "we found " << cnt << " group elements with "
+				"ord_a = " << order_a << " ord_b  = " << order_b << " and ord_ab = " << order_ab << endl;
+	}
+
+	FREE_int(Elt_a);
+	FREE_int(Elt_b);
+	FREE_int(Elt_ab);
+	if (f_v) {
+		cout << "algebra_global_with_action::find_standard_generators done" << endl;
+	}
+}
+
+
 void algebra_global_with_action::element_rank(linear_group *LG,
 		action *A1,
 		std::string &elt_data, int verbose_level)

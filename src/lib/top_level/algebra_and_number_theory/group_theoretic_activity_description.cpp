@@ -36,6 +36,11 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_search_element_of_order = FALSE;
 	search_element_order = 0;
 
+	f_find_standard_generators = FALSE;
+	find_standard_generators_order_a = 0;
+	find_standard_generators_order_b = 0;
+	find_standard_generators_order_ab = 0;
+
 	f_element_rank = FALSE;
 	// std::string element_rank_data;
 
@@ -217,6 +222,17 @@ int group_theoretic_activity_description::read_arguments(
 			search_element_order = strtoi(argv[++i]);
 			cout << "-search_element_of_order " << search_element_order << endl;
 		}
+		else if (stringcmp(argv[i], "-find_standard_generators") == 0) {
+			f_find_standard_generators = TRUE;
+			find_standard_generators_order_a = strtoi(argv[++i]);
+			find_standard_generators_order_b = strtoi(argv[++i]);
+			find_standard_generators_order_ab = strtoi(argv[++i]);
+			cout << "-find_standard_generators " << find_standard_generators_order_a
+					<< " " << find_standard_generators_order_b
+					<< " " << find_standard_generators_order_ab
+					<< endl;
+		}
+
 		else if (stringcmp(argv[i], "-element_rank") == 0) {
 			f_element_rank = TRUE;
 			element_rank_data.assign(argv[++i]);
