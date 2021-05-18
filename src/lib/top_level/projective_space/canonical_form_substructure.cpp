@@ -92,8 +92,6 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		int nb_pts,
 		long int *bitangents,
 		int nb_bitangents,
-		int *canonical_equation,
-		int *transporter_to_canonical_form,
 		longinteger_object &go_eqn,
 		int verbose_level)
 {
@@ -119,8 +117,8 @@ void canonical_form_substructure::classify_curve_with_substructure(
 	canonical_form_substructure::bitangents = NEW_lint(nb_bitangents);
 	Orbiter->Lint_vec.copy(bitangents, canonical_form_substructure::bitangents, nb_bitangents);
 	canonical_form_substructure::nb_bitangents = nb_bitangents;
-	canonical_form_substructure::canonical_equation = canonical_equation;
-	canonical_form_substructure::transporter_to_canonical_form = transporter_to_canonical_form;
+	canonical_form_substructure::canonical_equation = NEW_int(Canonical_form_classifier->Poly_ring->get_nb_monomials());
+	canonical_form_substructure::transporter_to_canonical_form = NEW_int(Canonical_form_classifier->Descr->PA->A->elt_size_in_int);
 
 	//long int *canonical_pts;
 

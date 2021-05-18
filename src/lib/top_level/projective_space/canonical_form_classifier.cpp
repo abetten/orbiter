@@ -37,8 +37,8 @@ canonical_form_classifier::canonical_form_classifier()
 	Elt = NULL;
 	eqn2 = NULL;
 
-	canonical_equation = NULL;
-	transporter_to_canonical_form = NULL;
+	//canonical_equation = NULL;
+	//transporter_to_canonical_form = NULL;
 	//longinteger_object go_eqn;
 
 	CFS_table = NULL;
@@ -152,9 +152,7 @@ void canonical_form_classifier::classify(canonical_form_classifier_description *
 	}
 
 	Elt = NEW_int(Descr->PA->A->elt_size_in_int);
-	transporter_to_canonical_form = NEW_int(Descr->PA->A->elt_size_in_int);
 	eqn2 = NEW_int(Poly_ring->get_nb_monomials());
-	canonical_equation = NEW_int(Poly_ring->get_nb_monomials());
 
 
 
@@ -277,6 +275,7 @@ void canonical_form_classifier::write_canonical_forms_csv(
 	//int f_vv = (verbose_level >= 2);
 	std::string fname;
 	int i, j;
+	sorting Sorting;
 
 	int nb_orbits;
 	int nb_monomials;
@@ -354,6 +353,7 @@ void canonical_form_classifier::write_canonical_forms_csv(
 			for (j = 0; j < CFS_table[i]->nb_pts; j++) {
 				Pts_canonical[j] = A->element_image_of(Pts_orig[j], CFS_table[i]->transporter_to_canonical_form, 0 /* verbose_level */);
 			}
+			Sorting.lint_vec_heapsort(Pts_canonical, CFS_table[i]->nb_pts);
 
 
 			{
@@ -372,6 +372,8 @@ void canonical_form_classifier::write_canonical_forms_csv(
 			for (j = 0; j < CFS_table[i]->nb_bitangents; j++) {
 				bitangents_canonical[j] = A_on_lines->element_image_of(bitangents_orig[j], CFS_table[i]->transporter_to_canonical_form, 0 /* verbose_level */);
 			}
+
+			Sorting.lint_vec_heapsort(bitangents_canonical, CFS_table[i]->nb_bitangents);
 
 			{
 				string str;
@@ -563,6 +565,7 @@ void canonical_form_classifier::generate_source_code(
 			for (j = 0; j < 28; j++) {
 				bitangents_canonical[j] = A_on_lines->element_image_of(bitangents_orig[j], CFS->transporter_to_canonical_form, 0 /* verbose_level */);
 			}
+
 
 
 
@@ -907,9 +910,28 @@ void canonical_form_classifier::main_loop(int verbose_level)
 					cout << "canonical_form_classifier::main_loop "
 							"before classify_curve_nauty" << endl;
 				}
+
+
+				int *canonical_equation;
+				int *transporter_to_canonical_form;
+
+				canonical_equation = NEW_int(Poly_ring->get_nb_monomials());
+				transporter_to_canonical_form = NEW_int(Descr->PA->A->elt_size_in_int);
+
+
 				classify_curve_nauty(cnt, row,
 						eqn, sz, pts, nb_pts, bitangents, nb_bitangents,
+						canonical_equation,
+						transporter_to_canonical_form,
 						verbose_level);
+
+				Orbiter->Int_vec.copy(canonical_equation,
+						Canonical_forms + counter * Poly_ring->get_nb_monomials(),
+						Poly_ring->get_nb_monomials());
+
+				FREE_int(canonical_equation);
+				FREE_int(transporter_to_canonical_form);
+
 				if (f_v) {
 					cout << "canonical_form_classifier::main_loop "
 							"after classify_curve_nauty" << endl;
@@ -943,8 +965,6 @@ void canonical_form_classifier::main_loop(int verbose_level)
 							nb_pts,
 							bitangents,
 							nb_bitangents,
-							canonical_equation,
-							transporter_to_canonical_form,
 							go_eqn,
 							verbose_level);
 
@@ -1004,6 +1024,8 @@ void canonical_form_classifier::classify_curve_nauty(int cnt, int row,
 		int nb_pts,
 		long int *bitangents,
 		int nb_bitangents,
+		int *canonical_equation,
+		int *transporter_to_canonical_form,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -43,6 +43,11 @@ interface_toolkit::interface_toolkit()
 	//csv_file_join_fname
 	//csv_file_join_identifier
 
+
+	f_csv_file_concatenate = FALSE;
+	//std::string csv_file_concatenate_fname_out;
+	//std::vector<std::string> csv_file_concatenate_fname_in;
+
 	f_csv_file_latex = FALSE;
 	//std::vector<std::string> csv_file_latex_fname;
 
@@ -102,7 +107,10 @@ void interface_toolkit::print_help(int argc,
 		cout << "-csv_file_select_rows_and_cols <string : csv_file_name> <string : list of rows> <string : list of cols>" << endl;
 	}
 	else if (stringcmp(argv[i], "-csv_file_join") == 0) {
-		cout << "-cvs_file_join <string : file_name> <string : column label by which we join>" << endl;
+		cout << "-cvs_file_join <int : number of files> <string : input file1> <string : column label1> ..." << endl;
+	}
+	else if (stringcmp(argv[i], "-csv_file_concatenate") == 0) {
+		cout << "-csv_file_concatenate <string : fname_out> <int : number of input files> <string : inout file1> ..." << endl;
 	}
 	else if (stringcmp(argv[i], "-csv_file_latex") == 0) {
 		cout << "-cvs_file_latex <string : file_name>" << endl;
@@ -153,6 +161,9 @@ int interface_toolkit::recognize_keyword(int argc,
 		return true;
 	}
 	else if (stringcmp(argv[i], "-csv_file_join") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-csv_file_concatenate") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-csv_file_latex") == 0) {
@@ -231,14 +242,36 @@ void interface_toolkit::read_arguments(int argc,
 	}
 	else if (stringcmp(argv[i], "-csv_file_join") == 0) {
 		string s;
+		int nb, j;
 
 		f_csv_file_join = TRUE;
-		s.assign(argv[++i]);
-		csv_file_join_fname.push_back(s);
-		s.assign(argv[++i]);
-		csv_file_join_identifier.push_back(s);
-		cout << "-join " << csv_file_join_fname[csv_file_join_fname.size() - 1] << " "
-				<< csv_file_join_identifier[csv_file_join_identifier.size() - 1] << endl;
+		nb = strtoi(argv[++i]);
+		for (j = 0; j < nb; j++) {
+			s.assign(argv[++i]);
+			csv_file_join_fname.push_back(s);
+			s.assign(argv[++i]);
+			csv_file_join_identifier.push_back(s);
+		}
+		cout << "-csv_file_join " << endl;
+		for (j = 0; j < nb; j++) {
+			cout << j << " : " << csv_file_join_fname[j] << " : " << csv_file_join_identifier[j] << endl;
+		}
+	}
+	else if (stringcmp(argv[i], "-csv_file_concatenate") == 0) {
+		string s;
+		int nb, j;
+
+		f_csv_file_concatenate = TRUE;
+		csv_file_concatenate_fname_out.assign(argv[++i]);
+		nb = strtoi(argv[++i]);
+		for (j = 0; j < nb; j++) {
+			s.assign(argv[++i]);
+			csv_file_concatenate_fname_in.push_back(s);
+		}
+		cout << "-csv_file_concatenate " << csv_file_concatenate_fname_out << endl;
+		for (j = 0; j < nb; j++) {
+			cout << j << " : " << csv_file_concatenate_fname_in[j] << endl;
+		}
 	}
 	else if (stringcmp(argv[i], "-csv_file_latex") == 0) {
 		f_csv_file_latex = TRUE;
@@ -392,6 +425,13 @@ void interface_toolkit::worker(int verbose_level)
 
 		Fio.do_csv_file_join(csv_file_join_fname,
 				csv_file_join_identifier, verbose_level);
+	}
+	else if (f_csv_file_concatenate) {
+
+		file_io Fio;
+
+		Fio.do_csv_file_concatenate(csv_file_concatenate_fname_in,
+				csv_file_concatenate_fname_out, verbose_level);
 	}
 	else if (f_csv_file_latex) {
 

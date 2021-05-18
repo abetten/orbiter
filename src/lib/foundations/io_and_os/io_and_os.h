@@ -260,6 +260,8 @@ public:
 	void do_csv_file_join(
 			std::vector<std::string> &csv_file_join_fname,
 			std::vector<std::string> &csv_file_join_identifier, int verbose_level);
+	void do_csv_file_concatenate(
+			std::vector<std::string> &fname, std::string &fname_out, int verbose_level);
 	void do_csv_file_latex(std::string &fname,
 			int verbose_level);
 	void read_solutions_and_tally(std::string &fname, int sz, int verbose_level);
