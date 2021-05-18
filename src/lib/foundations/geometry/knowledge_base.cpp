@@ -140,34 +140,34 @@ int *knowledge_base::quartic_curves_representative(int q, int i)
 	int *p, nb, sz;
 
 	if (q == 13) {
-		p = quartic_curves_13_reps;
-		nb = quartic_curves_13_nb_reps;
-		sz = quartic_curves_13_size;
+		p = quartic_curves_q13_reps;
+		nb = quartic_curves_q13_nb_reps;
+		sz = quartic_curves_q13_size;
 	}
 	else if (q == 19) {
-		p = quartic_curves_19_reps;
-		nb = quartic_curves_19_nb_reps;
-		sz = quartic_curves_19_size;
+		p = quartic_curves_q19_reps;
+		nb = quartic_curves_q19_nb_reps;
+		sz = quartic_curves_q19_size;
 	}
 	else if (q == 25) {
-		p = quartic_curves_25_reps;
-		nb = quartic_curves_25_nb_reps;
-		sz = quartic_curves_25_size;
+		p = quartic_curves_q25_reps;
+		nb = quartic_curves_q25_nb_reps;
+		sz = quartic_curves_q25_size;
 	}
 	else if (q == 27) {
-		p = quartic_curves_27_reps;
-		nb = quartic_curves_27_nb_reps;
-		sz = quartic_curves_27_size;
+		p = quartic_curves_q27_reps;
+		nb = quartic_curves_q27_nb_reps;
+		sz = quartic_curves_q27_size;
 	}
 	else if (q == 29) {
-		p = quartic_curves_29_reps;
-		nb = quartic_curves_29_nb_reps;
-		sz = quartic_curves_29_size;
+		p = quartic_curves_q29_reps;
+		nb = quartic_curves_q29_nb_reps;
+		sz = quartic_curves_q29_size;
 	}
 	else if (q == 31) {
-		p = quartic_curves_31_reps;
-		nb = quartic_curves_31_nb_reps;
-		sz = quartic_curves_31_size;
+		p = quartic_curves_q31_reps;
+		nb = quartic_curves_q31_nb_reps;
+		sz = quartic_curves_q31_size;
 	}
 	else {
 		cout << "knowledge_base::quartic_curves_representative q=" << q
