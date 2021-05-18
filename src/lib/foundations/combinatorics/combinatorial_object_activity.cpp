@@ -21,6 +21,7 @@ combinatorial_object_activity::combinatorial_object_activity()
 {
 	Descr = NULL;
 	COC = NULL;
+
 }
 
 combinatorial_object_activity::~combinatorial_object_activity()
@@ -55,7 +56,12 @@ void combinatorial_object_activity::perform_activity(int verbose_level)
 		cout << "combinatorial_object_activity::perform_activity" << endl;
 	}
 
+#if 0
+	if (Descr->f_conic_type) {
+		COC->Pts, COC->nb_pts
 
+	}
+#endif
 	if (Descr->f_save) {
 
 		file_io Fio;

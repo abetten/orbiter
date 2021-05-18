@@ -599,6 +599,9 @@ public:
 	std::string set_stabilizer_fname_mask;
 	int set_stabilizer_nb;
 
+	int f_conic_type;
+	std::string conic_type_set_text;
+
 	projective_space_activity_description();
 	~projective_space_activity_description();
 	int read_arguments(
@@ -702,7 +705,10 @@ public:
 			strong_generators *&Gens_stabilizer_original_set,
 			int verbose_level);
 	void print_interesting_subsets(int set_size, int lvl, int nb_interesting_subsets, int *interesting_subsets);
-
+	void conic_type(
+			projective_space_with_action *PA,
+			std::string &set_text,
+			int verbose_level);
 
 };
 

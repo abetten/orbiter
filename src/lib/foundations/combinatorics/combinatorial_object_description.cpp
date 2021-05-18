@@ -121,6 +121,9 @@ combinatorial_object_description::combinatorial_object_description()
 	curve_degree = 0;
 	//curve_coeffs = NULL;
 
+	f_set = FALSE;
+	//set_text;
+
 }
 
 combinatorial_object_description::~combinatorial_object_description()
@@ -441,6 +444,11 @@ int combinatorial_object_description::read_arguments(int argc, std::string *argv
 		else if (stringcmp(argv[i], "-monomial_type_PART") == 0) {
 			Monomial_ordering_type = t_PART;
 			cout << "-monomial_type_PART " << endl;
+		}
+		else if (stringcmp(argv[i], "-set") == 0) {
+			f_set = TRUE;
+			set_text.assign(argv[++i]);
+			cout << "-set " << set_text << endl;
 		}
 		else if (stringcmp(argv[i], "-end") == 0) {
 			break;

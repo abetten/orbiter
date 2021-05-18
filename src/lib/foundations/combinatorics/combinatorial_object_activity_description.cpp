@@ -20,6 +20,8 @@ namespace foundations {
 combinatorial_object_activity_description::combinatorial_object_activity_description()
 {
 	f_save = FALSE;
+
+	f_conic_type = FALSE;
 }
 
 combinatorial_object_activity_description::~combinatorial_object_activity_description()
@@ -41,6 +43,10 @@ int combinatorial_object_activity_description::read_arguments(
 		if (stringcmp(argv[i], "-save") == 0) {
 			f_save = TRUE;
 			cout << "-save " << endl;
+		}
+		else if (stringcmp(argv[i], "-conic_type") == 0) {
+			f_conic_type = TRUE;
+			cout << "-conic_type " << endl;
 		}
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;

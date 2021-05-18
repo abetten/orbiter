@@ -205,7 +205,7 @@ void surface_domain::print_equation_in_trihedral_form(ostream &ost,
 	ost << "\\end{align*}" << endl;
 }
 
-void surface_domain::print_equation_wrapped(ostream &ost, int *the_equation)
+void surface_domain::print_equation_wrapped(std::ostream &ost, int *the_equation)
 {
 	ost << "\\begin{align*}" << endl;
 	ost << "0 & = " << endl;
@@ -214,7 +214,7 @@ void surface_domain::print_equation_wrapped(ostream &ost, int *the_equation)
 	ost << "\\end{align*}" << endl;
 }
 
-void surface_domain::print_lines_tex(ostream &ost, long int *Lines, int nb_lines)
+void surface_domain::print_lines_tex(std::ostream &ost, long int *Lines, int nb_lines)
 {
 	int i;
 	latex_interface L;
@@ -267,9 +267,84 @@ void surface_domain::print_lines_tex(ostream &ost, long int *Lines, int nb_lines
 	Orbiter->Lint_vec.print(ost, Rk, nb_lines);
 	ost << "\\\\" << endl;
 
+	alice(ost, Lines, nb_lines);
+
 	FREE_lint(Rk);
 
 }
+
+
+void surface_domain::alice(std::ostream &ost, long int *Lines, int nb_lines)
+{
+	int Pa6[6];
+	int Pb6[6];
+	int Pa2[6];
+	int P_line[6];
+	int tmp[6];
+	long int rk_a6;
+	long int rk_b6;
+	int h;
+
+	P->Pluecker_coordinates(Lines[5], Pa6, 0 /* verbose_level */);
+	P->Pluecker_coordinates(Lines[11], Pb6, 0 /* verbose_level */);
+	P->Pluecker_coordinates(Lines[1], Pa2, 0 /* verbose_level */);
+
+	Orbiter->Int_vec.copy(Pa6, tmp, 6);
+	rk_a6 = F->Qplus_rank(tmp, 1, 5, 0 /* verbose_level*/);
+
+	Orbiter->Int_vec.copy(Pb6, tmp, 6);
+	rk_b6 = F->Qplus_rank(tmp, 1, 5, 0 /* verbose_level*/);
+
+	if (rk_a6 != 1) {
+		return;
+	}
+	if (rk_b6 != 0) {
+		return;
+	}
+	Orbiter->Int_vec.copy(Pa2, tmp, 6);
+	if (Pa2[2] || Pa2[3] || Pa2[4]) {
+		return;
+	}
+
+	int v[3];
+	long int rk;
+
+	ost << "\\section*{Projected points:}" << endl;
+	for (h = 0; h < 27; h++) {
+		if (h == 5 || h == 11 || h == 1) {
+			continue;
+		}
+
+		P->Pluecker_coordinates(Lines[h], P_line, 0 /* verbose_level */);
+		Orbiter->Int_vec.copy(P_line + 2, v, 3);
+
+		rk = P2->rank_point(v);
+
+
+		ost << "$" << Schlaefli->Line_label_tex[h];
+		ost << " = ";
+		Orbiter->Int_vec.print(ost, v, 3);
+		ost << "_{";
+		ost << rk;
+		ost << "}$\\\\" << endl;
+
+
+	}
+	for (h = 0; h < 27; h++) {
+		if (h == 5 || h == 11 || h == 1) {
+			continue;
+		}
+		P->Pluecker_coordinates(Lines[h], P_line, 0 /* verbose_level */);
+		Orbiter->Int_vec.copy(P_line + 2, v, 3);
+
+		rk = P2->rank_point(v);
+		ost << rk << ",";
+	}
+	ost << "\\\\" << endl;
+
+
+}
+
 
 void surface_domain::print_clebsch_P(ostream &ost)
 {
