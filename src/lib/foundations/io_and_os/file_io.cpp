@@ -3542,7 +3542,7 @@ void file_io::do_csv_file_split_rows_modulo(std::string &fname,
 				if ((i % split_modulo) != I) {
 					continue;
 				}
-				ost << i << ",";
+				//ost << i << ",";
 				S.print_table_row(i + 1, FALSE, ost);
 				}
 			ost << "END" << endl;
