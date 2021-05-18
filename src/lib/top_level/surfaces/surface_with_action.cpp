@@ -1404,40 +1404,31 @@ void surface_with_action::sweep_4(
 						ost_csv << ",";
 
 						{
-							ostringstream s;
-
-
-							for (i = 0; i < 20; i++) {
-								s << SC->SO->eqn[i];
-								if (i < 20 - 1) {
-									s << ",";
-								}
-							}
-							ost_csv << "\"" << s.str() << "\"";
-						}
-						ost_csv << ",";
-
-						{
-							ostringstream s;
-
-
-							for (i = 0; i < SC->SO->nb_pts; i++) {
-								s << SC->SO->Pts[i];
-								if (i < SC->SO->nb_pts - 1) {
-									s << ",";
-								}
-							}
-							ost_csv << "\"" << s.str() << "\"";
+							string str;
+							Orbiter->Int_vec.create_string_with_quotes(str, SC->SO->eqn, 20);
+							ost_csv << str;
 						}
 
 						ost_csv << ",";
 
 						{
-							ostringstream s;
+							string str;
+							Orbiter->Lint_vec.create_string_with_quotes(str, SC->SO->Pts, SC->SO->nb_pts);
+							ost_csv << str;
+						}
 
+						ost_csv << ",";
 
-							s << alpha << "," << beta << "," << gamma << "," << delta;
-							ost_csv << "\"" << s.str() << "\"";
+						{
+							int params[4];
+
+							params[0] = alpha;
+							params[1] = beta;
+							params[2] = gamma;
+							params[3] = delta;
+							string str;
+							Orbiter->Int_vec.create_string_with_quotes(str, params, 4);
+							ost_csv << str;
 						}
 
 						ost_csv << ",";

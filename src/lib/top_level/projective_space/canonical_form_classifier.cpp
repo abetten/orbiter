@@ -236,6 +236,19 @@ void canonical_form_classifier::classify(canonical_form_classifier_description *
 
 	if (f_v) {
 		cout << "canonical_form_classifier::classify "
+				"before write_canonical_forms_csv" << endl;
+	}
+	write_canonical_forms_csv(
+			Descr->fname_base_out,
+			verbose_level);
+	if (f_v) {
+		cout << "canonical_form_classifier::classify "
+				"after write_canonical_forms_csv" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "canonical_form_classifier::classify "
 				"before generate_source_code" << endl;
 	}
 
@@ -254,6 +267,157 @@ void canonical_form_classifier::classify(canonical_form_classifier_description *
 		cout << "canonical_form_classifier::classify done" << endl;
 	}
 }
+
+
+void canonical_form_classifier::write_canonical_forms_csv(
+		std::string &fname_base,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	std::string fname;
+	int i, j;
+
+	int nb_orbits;
+	int nb_monomials;
+
+	action *A;
+	action *A_on_lines;
+
+	if (f_v) {
+		cout << "canonical_form_classifier::write_canonical_forms_csv" << endl;
+	}
+	fname.assign(fname_base);
+	fname.append("_canonical_form.csv");
+
+
+	nb_orbits = Classification_of_quartic_curves->nb_types;
+	nb_monomials = Poly_ring->get_nb_monomials();
+
+
+	A = Descr->PA->A;
+	A_on_lines = Descr->PA->A_on_lines;
+
+
+	{
+		ofstream ost(fname.c_str());
+
+		ost << "ROW,SourceFile,SourceRow,Eqn,Pts,Lines,Transporter,CanEqn,CanPts,CanLines,AutTl,AutGens,Ago" << endl;
+		for (i = 0; i < nb_objects_to_test; i++) {
+			ost << i;
+			ost << ",";
+			ost << CFS_table[i]->cnt;
+			ost << ",";
+			ost << CFS_table[i]->row;
+			ost << ",";
+
+			//Orbiter->Int_vec.print(cout, Canonical_forms + i * Poly_ring->get_nb_monomials(), Poly_ring->get_nb_monomials());
+			//cout << " : " << Goi[i] << endl;
+
+			{
+				string str;
+				Orbiter->Int_vec.create_string_with_quotes(str, CFS_table[i]->eqn, nb_monomials);
+				ost << str;
+			}
+			ost << ",";
+			{
+				string str;
+				Orbiter->Lint_vec.create_string_with_quotes(str, CFS_table[i]->pts, CFS_table[i]->nb_pts);
+				ost << str;
+			}
+			ost << ",";
+			{
+				string str;
+				Orbiter->Lint_vec.create_string_with_quotes(str, CFS_table[i]->bitangents, CFS_table[i]->nb_bitangents);
+				ost << str;
+			}
+			ost << ",";
+			{
+				string str;
+				Orbiter->Int_vec.create_string_with_quotes(str, CFS_table[i]->transporter_to_canonical_form, A->make_element_size);
+				ost << str;
+			}
+			ost << ",";
+			{
+				string str;
+				Orbiter->Int_vec.create_string_with_quotes(str, CFS_table[i]->canonical_equation, nb_monomials);
+				ost << str;
+			}
+			ost << ",";
+
+
+			long int *Pts_orig;
+			long int *Pts_canonical;
+
+			Pts_orig = CFS_table[i]->pts;
+			Pts_canonical = NEW_lint(CFS_table[i]->nb_pts);
+			for (j = 0; j < CFS_table[i]->nb_pts; j++) {
+				Pts_canonical[j] = A->element_image_of(Pts_orig[j], CFS_table[i]->transporter_to_canonical_form, 0 /* verbose_level */);
+			}
+
+
+			{
+				string str;
+				Orbiter->Lint_vec.create_string_with_quotes(str, Pts_canonical, CFS_table[i]->nb_pts);
+				ost << str;
+			}
+			ost << ",";
+
+
+			long int *bitangents_orig;
+			long int *bitangents_canonical;
+
+			bitangents_orig = CFS_table[i]->bitangents;
+			bitangents_canonical = NEW_lint(CFS_table[i]->nb_bitangents);
+			for (j = 0; j < CFS_table[i]->nb_bitangents; j++) {
+				bitangents_canonical[j] = A_on_lines->element_image_of(bitangents_orig[j], CFS_table[i]->transporter_to_canonical_form, 0 /* verbose_level */);
+			}
+
+			{
+				string str;
+				Orbiter->Lint_vec.create_string_with_quotes(str, bitangents_canonical, CFS_table[i]->nb_bitangents);
+				ost << str;
+			}
+			ost << ",";
+
+			strong_generators *gens;
+
+			gens = CFS_table[i]->gens_stab_of_canonical_equation;
+			{
+				string str;
+				Orbiter->Int_vec.create_string_with_quotes(str, gens->tl, A->base_len());
+				ost << str;
+			}
+			ost << ",";
+
+			{
+				string str;
+
+				gens->get_gens_data_as_string_with_quotes(str, verbose_level);
+				ost << str;
+			}
+			ost << ",";
+
+			longinteger_object go;
+
+			gens->group_order(go);
+			ost << go << endl;
+
+
+		}
+		ost << "END" << endl;
+	}
+
+
+	file_io Fio;
+
+	cout << "written file " << fname << " of size "
+			<< Fio.file_size(fname.c_str()) << endl;
+	if (f_v) {
+		cout << "canonical_form_classifier::write_canonical_forms_csv done" << endl;
+	}
+}
+
 
 
 void canonical_form_classifier::generate_source_code(
@@ -495,8 +659,8 @@ void canonical_form_classifier::generate_source_code(
 				for (j = 0; j < stab_gens_len[orbit_index]; j++) {
 					if (f_vv) {
 						cout << "canonical_form_classifier::generate_source_code "
-								"before extract_strong_generators_in_"
-								"order generator " << j << " / "
+								"before extract_strong_generators_in_order "
+								"generator " << j << " / "
 								<< stab_gens_len[orbit_index] << endl;
 					}
 					f << "\t";

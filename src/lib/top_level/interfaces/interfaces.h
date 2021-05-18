@@ -705,6 +705,10 @@ class interface_toolkit {
 	std::string csv_file_select_rows_fname;
 	std::string csv_file_select_rows_text;
 
+	int f_csv_file_split_rows_modulo;
+	std::string csv_file_split_rows_modulo_fname;
+	int csv_file_split_rows_modulo_n;
+
 	int f_csv_file_select_cols;
 	std::string csv_file_select_cols_fname;
 	std::string csv_file_select_cols_text;

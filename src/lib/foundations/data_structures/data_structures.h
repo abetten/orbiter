@@ -386,6 +386,7 @@ public:
 	void set_print(std::ostream &ost, int *v, int len);
 	void integer_vec_print(std::ostream &ost, int *v, int len);
 	int hash(int *v, int len, int bit_length);
+	void create_string_with_quotes(std::string &str, int *v, int len);
 
 };
 
@@ -476,6 +477,8 @@ public:
 	void scan_from_stream(std::istream & is, long int *&v, int &len);
 	void print_to_str(char *str, long int *data, int len);
 	void print_to_str_naked(char *str, long int *data, int len);
+	void create_string_with_quotes(std::string &str, long int *v, int len);
+
 
 };
 

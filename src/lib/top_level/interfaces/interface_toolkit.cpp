@@ -26,6 +26,10 @@ interface_toolkit::interface_toolkit()
 	//std::string csv_file_select_rows_fname;
 	//std::string csv_file_select_rows_text;
 
+	f_csv_file_split_rows_modulo = FALSE;
+	//std::string csv_file_split_rows_modulo_fname;
+	csv_file_split_rows_modulo_n = 0;
+
 	f_csv_file_select_cols = FALSE;
 	//std::string csv_file_select_cols_fname;
 	//std::string csv_file_select_cols_text;
@@ -88,6 +92,9 @@ void interface_toolkit::print_help(int argc,
 	if (stringcmp(argv[i], "-csv_file_select_rows") == 0) {
 		cout << "-cvs_file_select_rows <string : csv_file_name> <string : list of rows>" << endl;
 	}
+	else if (stringcmp(argv[i], "-csv_file_split_rows_modulo") == 0) {
+		cout << "-csv_file_split_rows_modulo <string : csv_file_name> <int : n>" << endl;
+	}
 	else if (stringcmp(argv[i], "-csv_file_select_cols") == 0) {
 		cout << "-cvs_file_select_cols <string : csv_file_name> <string : list of cols>" << endl;
 	}
@@ -134,6 +141,9 @@ int interface_toolkit::recognize_keyword(int argc,
 		return false;
 	}
 	if (stringcmp(argv[i], "-csv_file_select_rows") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-csv_file_split_rows_modulo") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-csv_file_select_cols") == 0) {
@@ -193,6 +203,13 @@ void interface_toolkit::read_arguments(int argc,
 		csv_file_select_rows_text.assign(argv[++i]);
 		cout << "-csv_file_select_rows " << csv_file_select_rows_fname
 				<< " " << csv_file_select_rows_text << endl;
+	}
+	else if (stringcmp(argv[i], "-csv_file_split_rows_modulo") == 0) {
+		f_csv_file_split_rows_modulo = TRUE;
+		csv_file_split_rows_modulo_fname.assign(argv[++i]);
+		csv_file_split_rows_modulo_n = strtoi(argv[++i]);
+		cout << "-csv_file_split_rows_modulo " << csv_file_split_rows_modulo_fname
+				<< " " << csv_file_split_rows_modulo_n << endl;
 	}
 	else if (stringcmp(argv[i], "-csv_file_select_cols") == 0) {
 		f_csv_file_select_cols = TRUE;
@@ -345,6 +362,13 @@ void interface_toolkit::worker(int verbose_level)
 
 		Fio.do_csv_file_select_rows(csv_file_select_rows_fname,
 				csv_file_select_rows_text, verbose_level);
+	}
+	else if (f_csv_file_split_rows_modulo) {
+
+		file_io Fio;
+
+		Fio.do_csv_file_split_rows_modulo(csv_file_split_rows_modulo_fname,
+				csv_file_split_rows_modulo_n, verbose_level);
 	}
 	else if (f_csv_file_select_cols) {
 

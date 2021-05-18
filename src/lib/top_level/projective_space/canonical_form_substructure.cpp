@@ -98,11 +98,11 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 3);
+	int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 5);
 
 	if (f_v) {
-		cout << "canonical_form_substructure::classify_curve_with_substructure" << endl;
+		cout << "canonical_form_substructure::classify_curve_with_substructure verbose_level=" << verbose_level << endl;
 	}
 
 	canonical_form_substructure::Canonical_form_classifier = Canonical_form_classifier;
@@ -164,7 +164,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 	T->init(orbit_frequencies, nb_orbits, FALSE, 0);
 
 
-	if (f_vv) {
+	if (f_v) {
 		cout << "counter = " << counter << " cnt = " << cnt << " / "
 				<< Canonical_form_classifier->Descr->nb_files
 				<< ", row = " << row << " eqn=";
@@ -202,7 +202,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		f = T->type_first[i];
 		l = T->type_len[i];
 
-		if (f_vv) {
+		if (f_v) {
 			cout << types[i];
 			cout << " : ";
 			Orbiter->Lint_vec.print(cout, SoS->Sets[i], SoS->Set_size[i]);
@@ -214,6 +214,9 @@ void canonical_form_substructure::classify_curve_with_substructure(
 
 			idx = SoS->Sets[i][j];
 
+			if (f_vv) {
+				cout << "type = " << i << " j=" << j << " idx=" << idx << endl;
+			}
 			longinteger_object go;
 
 			Canonical_form_classifier->PC->get_stabilizer_order(
@@ -253,7 +256,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		}
 	}
 
-	if (f_vv) {
+	if (f_v) {
 		cout << "selected_type = " << selected_type
 			<< " selected_orbit = " << selected_orbit
 			<< " selected_frequency = " << selected_frequency
@@ -266,7 +269,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		selected_orbit, 0 /*verbose_level*/);
 
 
-	if (f_vv) {
+	if (f_v) {
 		cout << "canonical_form_substructure::classify_curve_with_substructure before handle_orbit" << endl;
 	}
 
@@ -276,7 +279,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 			trans1,
 			Gens_stabilizer_original_set,
 			Gens_stabilizer_canonical_form,
-			verbose_level - 2);
+			verbose_level);
 
 
 

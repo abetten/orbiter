@@ -3504,6 +3504,57 @@ void file_io::do_csv_file_select_rows(std::string &fname,
 	}
 }
 
+void file_io::do_csv_file_split_rows_modulo(std::string &fname,
+		int split_modulo,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::do_csv_file_split_rows_modulo" << endl;
+	}
+	string_tools ST;
+	spreadsheet S;
+
+	S.read_spreadsheet(fname, verbose_level);
+
+
+	int i, I;
+
+
+
+
+
+	for (I = 0; I < split_modulo; I++) {
+
+		string fname_out;
+		char str[1000];
+
+		fname_out.assign(fname);
+		ST.chop_off_extension(fname_out);
+		sprintf(str, "_split_%d_mod_%d.csv", I, split_modulo);
+		fname_out.append(str);
+
+		{
+			ofstream ost(fname_out);
+			S.print_table_row(0, FALSE, ost);
+			for (i = 0; i < S.nb_rows - 1; i++) {
+				if ((i % split_modulo) != I) {
+					continue;
+				}
+				ost << i << ",";
+				S.print_table_row(i + 1, FALSE, ost);
+				}
+			ost << "END" << endl;
+		}
+		cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
+	}
+
+	if (f_v) {
+		cout << "file_io::do_csv_file_split_rows_modulo done" << endl;
+	}
+}
+
 void file_io::do_csv_file_select_cols(std::string &fname,
 		std::string &cols_text,
 		int verbose_level)
