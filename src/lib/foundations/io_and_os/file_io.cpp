@@ -3746,7 +3746,7 @@ void file_io::do_csv_file_join(
 		cout << "Joining table " << 0 << " = " << csv_file_join_fname[0] << " with table " << i << " = " << csv_file_join_fname[i] << endl;
 		S[0].join_with(S + i, identifier_column[0], identifier_column[i], verbose_level - 2);
 		cout << "joining " << csv_file_join_fname[0] << " with table " << csv_file_join_fname[i] << " done" << endl;
-#if 1
+#if 0
 		cout << "After join, the table is:" << endl;
 		S[0].print_table(cout, FALSE);
 #endif
@@ -3774,12 +3774,68 @@ void file_io::do_csv_file_join(
 	{
 		ofstream f(save_fname);
 		S[0].print_table(f, FALSE);
+		f << "END" << endl;
 	}
 	cout << "Written file " << save_fname << " of size " << file_size(save_fname) << endl;
 
 
 	if (f_v) {
 		cout << "file_io::do_csv_file_join done" << endl;
+	}
+}
+
+void file_io::do_csv_file_concatenate(
+		std::vector<std::string> &fname_in, std::string &fname_out, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::do_csv_file_concatenate" << endl;
+	}
+
+	int nb_files;
+	int i;
+
+	nb_files = fname_in.size();
+
+	spreadsheet *S;
+	int *identifier_column;
+
+	S = new spreadsheet[nb_files];
+	identifier_column = NEW_int(nb_files);
+
+	for (i = 0; i < nb_files; i++) {
+		cout << "Reading table " << fname_in[i] << endl;
+		S[i].read_spreadsheet(fname_in[i], 0 /*verbose_level*/);
+		cout << "Table " << fname_in[i] << " has been read" << endl;
+
+		if (FALSE) {
+			cout << "The " << i << "-th table is:" << endl;
+			S[i].print_table(cout, FALSE);
+		}
+
+
+	}
+
+	{
+		ofstream ost(fname_out);
+		int j;
+		int f_enclose_in_parentheses = FALSE;
+
+		S[0].print_table_row(0, f_enclose_in_parentheses, ost);
+		for (i = 0; i < nb_files; i++) {
+			//S[i].print_table(ost, FALSE);
+			for (j = 1; j < S[i].nb_rows; j++) {
+				S[i].print_table_row(j, f_enclose_in_parentheses, ost);
+			}
+		}
+		ost << "END" << endl;
+	}
+	cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
+
+
+	if (f_v) {
+		cout << "file_io::do_csv_file_concatenate done" << endl;
 	}
 }
 

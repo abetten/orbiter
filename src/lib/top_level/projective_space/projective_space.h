@@ -91,8 +91,8 @@ public:
 	int *Elt;
 	int *eqn2;
 
-	int *canonical_equation;
-	int *transporter_to_canonical_form;
+	//int *canonical_equation;
+	//int *transporter_to_canonical_form;
 	//longinteger_object go_eqn;
 
 	int counter;
@@ -124,6 +124,8 @@ public:
 			int nb_pts,
 			long int *bitangents,
 			int nb_bitangents,
+			int *canonical_equation,
+			int *transporter_to_canonical_form,
 			int verbose_level);
 	void report(std::string &fname, int verbose_level);
 	void report2(std::ostream &ost, std::string &fname_base, int verbose_level);
@@ -266,8 +268,6 @@ public:
 			int nb_pts,
 			long int *bitangents,
 			int nb_bitangents,
-			int *canonical_equation,
-			int *transporter_to_canonical_form,
 			longinteger_object &go_eqn,
 			int verbose_level);
 	void handle_orbit(
