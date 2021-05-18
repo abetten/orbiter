@@ -140,34 +140,34 @@ int *knowledge_base::quartic_curves_representative(int q, int i)
 	int *p, nb, sz;
 
 	if (q == 13) {
-		p = surface_13_reps;
-		nb = surface_13_nb_reps;
-		sz = surface_13_size;
+		p = quartic_curves_13_reps;
+		nb = quartic_curves_13_nb_reps;
+		sz = quartic_curves_13_size;
 	}
 	else if (q == 19) {
-		p = surface_19_reps;
-		nb = surface_19_nb_reps;
-		sz = surface_19_size;
+		p = quartic_curves_19_reps;
+		nb = quartic_curves_19_nb_reps;
+		sz = quartic_curves_19_size;
 	}
 	else if (q == 25) {
-		p = surface_25_reps;
-		nb = surface_25_nb_reps;
-		sz = surface_25_size;
+		p = quartic_curves_25_reps;
+		nb = quartic_curves_25_nb_reps;
+		sz = quartic_curves_25_size;
 	}
 	else if (q == 27) {
-		p = surface_27_reps;
-		nb = surface_27_nb_reps;
-		sz = surface_27_size;
+		p = quartic_curves_27_reps;
+		nb = quartic_curves_27_nb_reps;
+		sz = quartic_curves_27_size;
 	}
 	else if (q == 29) {
-		p = surface_29_reps;
-		nb = surface_29_nb_reps;
-		sz = surface_29_size;
+		p = quartic_curves_29_reps;
+		nb = quartic_curves_29_nb_reps;
+		sz = quartic_curves_29_size;
 	}
 	else if (q == 31) {
-		p = surface_31_reps;
-		nb = surface_31_nb_reps;
-		sz = surface_31_size;
+		p = quartic_curves_31_reps;
+		nb = quartic_curves_31_nb_reps;
+		sz = quartic_curves_31_size;
 	}
 	else {
 		cout << "knowledge_base::quartic_curves_representative q=" << q
