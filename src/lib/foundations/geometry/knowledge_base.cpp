@@ -30,6 +30,8 @@ namespace foundations {
 #include "./DATA/quartic_curves_q19.cpp"
 #include "./DATA/quartic_curves_q25.cpp"
 #include "./DATA/quartic_curves_q27.cpp"
+#include "./DATA/quartic_curves_q29.cpp"
+#include "./DATA/quartic_curves_q31.cpp"
 
 #include "./DATA/data_hyperovals.cpp"
 
@@ -118,6 +120,12 @@ int knowledge_base::quartic_curves_nb_reps(int q)
 	else if (q == 27) {
 		nb = quartic_curves_q27_nb_reps;
 	}
+	else if (q == 29) {
+		nb = quartic_curves_q29_nb_reps;
+	}
+	else if (q == 31) {
+		nb = quartic_curves_q31_nb_reps;
+	}
 	else {
 		cout << "knowledge_base::quartic_curves_nb_reps q=" << q
 				<< " I don't have information for this case" << endl;
@@ -150,6 +158,16 @@ int *knowledge_base::quartic_curves_representative(int q, int i)
 		p = surface_27_reps;
 		nb = surface_27_nb_reps;
 		sz = surface_27_size;
+	}
+	else if (q == 29) {
+		p = surface_29_reps;
+		nb = surface_29_nb_reps;
+		sz = surface_29_size;
+	}
+	else if (q == 31) {
+		p = surface_31_reps;
+		nb = surface_31_nb_reps;
+		sz = surface_31_size;
 	}
 	else {
 		cout << "knowledge_base::quartic_curves_representative q=" << q
@@ -208,6 +226,22 @@ void knowledge_base::quartic_curves_stab_gens(int q, int i,
 		f = quartic_curves_q27_stab_gens_fst[i];
 		l = quartic_curves_q27_stab_gens_len[i];
 		stab_order = quartic_curves_q27_stab_order[i];
+	}
+	else if (q == 29) {
+		Reps = quartic_curves_q29_stab_gens;
+		nb = quartic_curves_q29_nb_reps;
+		make_element_size = quartic_curves_q29_make_element_size;
+		f = quartic_curves_q29_stab_gens_fst[i];
+		l = quartic_curves_q29_stab_gens_len[i];
+		stab_order = quartic_curves_q29_stab_order[i];
+	}
+	else if (q == 31) {
+		Reps = quartic_curves_q31_stab_gens;
+		nb = quartic_curves_q31_nb_reps;
+		make_element_size = quartic_curves_q31_make_element_size;
+		f = quartic_curves_q31_stab_gens_fst[i];
+		l = quartic_curves_q31_stab_gens_len[i];
+		stab_order = quartic_curves_q31_stab_order[i];
 	}
 	else {
 		cout << "knowledge_base::quartic_curves_stab_gens q=" << q

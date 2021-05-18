@@ -1717,6 +1717,9 @@ public:
 			projective_space *P3,
 			int verbose_level);
 	void reverse_isomorphism_exterior_square(int verbose_level);
+	void get_gens_data(int *&data, int &sz, int verbose_level);
+	void get_gens_data_as_string_with_quotes(std::string &str, int verbose_level);
+
 
 	// strong_generators_groups.cpp
 	void init_linear_group_from_scratch(action *&A, 

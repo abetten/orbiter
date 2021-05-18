@@ -1057,6 +1057,22 @@ int int_vec::hash(int *v, int len, int bit_length)
 }
 
 
+void int_vec::create_string_with_quotes(std::string &str, int *v, int len)
+{
+	ostringstream s;
+	int i;
+
+	s << "\"";
+	for (i = 0; i < len; i++) {
+		s << v[i];
+		if (i < len - 1) {
+			s << ",";
+		}
+	}
+	s << "\"";
+	str.assign(s.str());
+}
+
 
 }}
 

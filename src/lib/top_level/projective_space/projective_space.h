@@ -107,6 +107,9 @@ public:
 	void count_nb_objects_to_test(int verbose_level);
 	void classify(canonical_form_classifier_description *Descr,
 			int verbose_level);
+	void write_canonical_forms_csv(
+			std::string &fname_base,
+			int verbose_level);
 	void generate_source_code(
 			std::string &fname_base,
 			tally_vector_data *Classification_of_quartic_curves,

@@ -2314,7 +2314,7 @@ public:
 	int *Q4_rk; // [nb_lines]
 	int *Line_idx; // [nb_lines]
 		// Q4_rk[] and Line_idx[] are inverse permutations
-		// for a line a, Q4_rk[a] is the point b on the quadric correponding to it.
+		// for a line a, Q4_rk[a] is the point b on the quadric corresponding to it.
 		// For a quadric point b, Line_idx[b] is the line index a corresponding to it
 
 	int v5[5];

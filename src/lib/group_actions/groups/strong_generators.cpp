@@ -3295,6 +3295,45 @@ void strong_generators::reverse_isomorphism_exterior_square(int verbose_level)
 	}
 }
 
+void strong_generators::get_gens_data(int *&data, int &sz, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::get_gens_data" << endl;
+	}
+	int i;
+
+	sz = gens->len * A->make_element_size;
+	data = NEW_int(sz);
+	for (i = 0; i < gens->len; i++) {
+		Orbiter->Int_vec.copy(gens->ith(i), data + i * A->make_element_size, A->make_element_size);
+	}
+	if (f_v) {
+		cout << "strong_generators::get_gens_data done" << endl;
+	}
+}
+
+void strong_generators::get_gens_data_as_string_with_quotes(std::string &str, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::get_gens_data_as_string_with_quotes" << endl;
+	}
+	int *data;
+	int sz;
+
+	get_gens_data(data, sz, verbose_level);
+
+
+	Orbiter->Int_vec.create_string_with_quotes(str, data, sz);
+
+	if (f_v) {
+		cout << "strong_generators::get_gens_data_as_string_with_quotes done" << endl;
+	}
+}
+
 
 
 

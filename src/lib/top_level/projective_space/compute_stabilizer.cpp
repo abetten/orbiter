@@ -303,7 +303,7 @@ void compute_stabilizer::init(long int *the_set, int set_size,
 	if (f_v) {
 		cout << "compute_stabilizer::init before compute_orbits_and_find_minimal_pattern" << endl;
 	}
-	compute_orbits_and_find_minimal_pattern(0 /*verbose_level*/);
+	compute_orbits_and_find_minimal_pattern(verbose_level);
 	if (f_v) {
 		cout << "compute_stabilizer::init after compute_orbits_and_find_minimal_pattern" << endl;
 		cout << "compute_stabilizer::init nb_interesting_subsets_reduced = " << nb_interesting_subsets_reduced << endl;
@@ -1017,8 +1017,8 @@ void compute_stabilizer::compute_orbits_and_find_minimal_pattern(int verbose_lev
 
 	for (cnt = 0; cnt < nb_interesting_subsets; cnt++) {
 
-		if (f_v) {
-			cout << "compute_stabilizer::compute_orbits_and_find_minimal_pattern computing Orbit_patterns cnt = " << cnt << endl;
+		if ((cnt % 10000) == 0) {
+			cout << "compute_stabilizer::compute_orbits_and_find_minimal_pattern computing Orbit_patterns cnt = " << cnt << " / " << nb_interesting_subsets << endl;
 		}
 		find_orbit_pattern(cnt, elt1 /* transp */, verbose_level - 4);
 
@@ -1036,8 +1036,13 @@ void compute_stabilizer::compute_orbits_and_find_minimal_pattern(int verbose_lev
 		cout << "orbit patterns (top row is orbit length): " << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout,
 				Stab_orbits->orbit_len, 1, nb_orbits, nb_orbits, 2);
-		Orbiter->Int_vec.print_integer_matrix_width(cout,
+		if (nb_interesting_subsets < 100) {
+			Orbiter->Int_vec.print_integer_matrix_width(cout,
 				Orbit_patterns, nb_interesting_subsets, nb_orbits, nb_orbits, 2);
+		}
+		else {
+			cout << "too large to print" << endl;
+		}
 		//Orbiter->Int_vec.print(cout, Orbit_patterns, nb_orbits);
 		//cout << endl;
 	}
