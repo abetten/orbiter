@@ -1789,6 +1789,16 @@ PG_1_16:
 	open PG_1_16.pdf
 
 
+PG_2_13:
+	$(ORBITER_PATH)/orbiter.out \
+		-draw_options -end \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space 2 F \
+		-with P -do -projective_space_activity -cheat_sheet -end
+	pdflatex PG_2_13.tex 
+	open PG_2_13.pdf
+
+
 
 
 PG_3_2:
@@ -1800,13 +1810,6 @@ PG_3_2:
 	pdflatex PG_3_2.tex 
 	open PG_3_2.pdf
 
-PG_3_4_old:
-	$(ORBITER_PATH)/orbiter.out \
-		-draw_options -end \
-		-define F -finite_field -q 4 -end \
-		-with F -do -finite_field_activity -cheat_sheet_PG 3 -end
-	pdflatex PG_3_4.tex 
-	open PG_3_4.pdf
 
 PG_3_4:
 	$(ORBITER_PATH)/orbiter.out \
@@ -2084,8 +2087,10 @@ del_Pezzo_F13ab_report:
 	$(ORBITER_PATH)/orbiter.out -v 3 \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space 3 F \
-		-define f3 -formula "del_Pezzo_F13a" "del\_Pezzo\_F13a" "x,y,z" \ 			"x*x*x*x+y*y*y*y+z*z*z*z+8*x*x*y*y+8*x*x*z*z+8*y*y*z*z"   \
-		-define f4 -formula "del_Pezzo_F13b" "del\_Pezzo\_F13b" "x,y,z" \ 			"x*x*x*x+y*y*y*y+z*z*z*z-x*x*y*y"   \
+		-define f3 -formula "del_Pezzo_F13a" "del\_Pezzo\_F13a" "x,y,z" \
+			"x*x*x*x+y*y*y*y+z*z*z*z+8*x*x*y*y+8*x*x*z*z+8*y*y*z*z" \
+		-define f4 -formula "del_Pezzo_F13b" "del\_Pezzo\_F13b" "x,y,z" \
+					"x*x*x*x+y*y*y*y+z*z*z*z-x*x*y*y"   \
 		-define del_Pezzo13 -collection "f3,f4" \
 	-with P -do \
 	-projective_space_activity \
@@ -5403,6 +5408,29 @@ surface_4_0:
 
 
 
+surface_7_0:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-draw_options -end \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space 3 F  \
+		-with P -do \
+		-projective_space_activity \
+			-define_surface S7_0 -q 7 -catalogue 0 -end \
+		-end \
+		-with S7_0 -do \
+		-cubic_surface_activity \
+			-report \
+			-report_with_group \
+			-all_quartic_curves \
+		-end
+	pdflatex surface_catalogue_q7_iso0_report.tex
+	open surface_catalogue_q7_iso0_report.pdf
+	pdflatex surface_catalogue_q7_iso0_with_group.tex
+	open surface_catalogue_q7_iso0_with_group.pdf
+
+
+
+
 Family_general_F7:
 	$(ORBITER_PATH)/orbiter.out -v 3 \
 		-draw_options -end \
@@ -6101,10 +6129,33 @@ F_alpha_beta_gamma_delta_sweep_4_q7:
 			"alpha=2,beta=3,gamma=4,delta=5" \
 			"\D\alpha=2,\beta=3,\gamma=4,\delta=5\D" \
 		-end \
+		-end 
+
+
+# creates F_alpha_beta_gamma_delta_q7_sweep4_15_data.csv
+
+
+F_alpha_beta_gamma_delta_sweep_4_q7_split:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-csv_file_split_rows_modulo  F_alpha_beta_gamma_delta_q7_sweep4_15_data.csv 10
+
+#F_alpha_beta_gamma_delta_q7_sweep4_15_data_split_0_mod_10.csv
+
+
+F_alpha_beta_gamma_delta_sweep_4_q7_classify:
+	$(ORBITER_PATH)/orbiter.out -v 4 \
+		-list_arguments \
+		-draw_options -end \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space 3 F \
+		-with P -do \
+		-projective_space_activity \
+			-classify_quartic_curves_with_substructure F_alpha_beta_gamma_delta_q7_sweep4_15_data.csv 1 4 3 F_alpha_beta_gamma_delta_sweep_4_q7_classify \
 		-end \
+		-print_symbols
 
 
-F_alpha_beta_gamma_delta_sweep_4_classify_q7:
+F_alpha_beta_gamma_delta_sweep_4_classify_q7_nauty:
 	$(ORBITER_PATH)/orbiter.out -v 2 \
 		-define F -finite_field -q 7 -end \
 		-define P -projective_space 3 F \
@@ -6804,6 +6855,24 @@ surface_classify_q4_arc_lifting_two_lines:
 	open surfaces_arc_lifting_4.pdf
 
 
+
+
+surface_classify_q7:
+	$(ORBITER_PATH)/orbiter.out -v 5 \
+		-draw_options  -end \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space 3 F \
+		-with P -do \
+		-projective_space_activity \
+			-classify_surfaces_with_double_sixes Surf27 -W -end \
+		-end \
+		-with Surf27 -do \
+		-classification_of_cubic_surfaces_with_double_sixes_activity \
+			-report \
+		-end \
+		-print_symbols
+	pdflatex Surfaces_q7.tex
+	open Surfaces_q7.pdf
 
 
 #############################################################################################################
@@ -7807,9 +7876,10 @@ create_dickson_makefiles_top_line_q64:
 
 surfaces_q4_join:
 	$(ORBITER_PATH)/orbiter.out -v 3 \
-		-csv_file_join Orb0_q4_summary.csv "Surface" \
-		-csv_file_join Orb1_q4_summary.csv "Surface" \
-		-csv_file_join Orb2_q4_summary.csv "Surface"
+		-csv_file_join 3 \
+			Orb0_q4_summary.csv "Surface" \
+			Orb1_q4_summary.csv "Surface" \
+			Orb2_q4_summary.csv "Surface"
 
 create_dickson_makefiles_join_q2:
 	$(ORBITER_PATH)/orbiter.out -create_files -file_mask dickson_q2_join -N 1 -repeat 141 0 1  "join: \n\t\D(ORBITER_PATH)/orbiter.out -v 3 \B" \
@@ -13006,4 +13076,51 @@ create_notes:
 	
 michael:
 	$(ORBITER_PATH)/orbiter.out -v 5 -inverse_mod 25 31
+
+
+
+surface_13_1_transform:
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-draw_options -end \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space 3 F  \
+		-with P -do \
+		-projective_space_activity \
+			-define_surface S4_0 -q 13 -catalogue 1 \
+				-transform "1,0,0,0,0,1,0,0,1,4,12,1,4,3,9,0" \
+			-end \
+		-end \
+		-with S4_0 -do \
+		-cubic_surface_activity \
+			-report \
+			-report_with_group \
+		-end  
+	pdflatex surface_catalogue_q13_iso1_report.tex
+	open surface_catalogue_q13_iso1_report.pdf
+
+
+
+SURFACE_13_1_PROJECTED_LINES="27,178,76,42,91,56,158,153,131,182,59,53,60,41,24,92,0,63,57,165,64,154,133"
+
+surface_13_1_conic_type:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-draw_options -end \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space 2 F  \
+		-with P -do \
+		-projective_space_activity \
+			-conic_type $(SURFACE_13_1_PROJECTED_LINES) \
+		-end
+
+
+
+
+
+#	$(ORBITER_PATH)/orbiter.out -v 2 \
+#		-define PL -combinatorial_object -q 13 -set $(SURFACE_13_1_PROJECTED_LINES) -end \
+#		-with PL -do -combinatorial_object_activity -conic_type -end
+		
+
+
+
 

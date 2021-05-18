@@ -125,6 +125,8 @@ public:
 
 	int f_save;
 
+	int f_conic_type;
+
 	combinatorial_object_activity_description();
 	~combinatorial_object_activity_description();
 	int read_arguments(
@@ -304,6 +306,9 @@ public:
 	int curve_nb_vars;
 	int curve_degree;
 	std::string curve_coeffs;
+
+	int f_set;
+	std::string set_text;
 
 
 	combinatorial_object_description();

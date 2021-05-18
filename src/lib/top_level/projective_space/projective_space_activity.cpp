@@ -314,6 +314,13 @@ void projective_space_activity::perform_activity(int verbose_level)
 				verbose_level);
 	}
 
+	else if (Descr->f_conic_type) {
+
+		conic_type(PA,
+				Descr->conic_type_set_text,
+				verbose_level);
+	}
+
 
 	if (f_v) {
 		cout << "projective_space_activity::perform_activity done" << endl;
@@ -1548,5 +1555,54 @@ void projective_space_activity::print_interesting_subsets(int set_size, int lvl,
 		cout << "Too many to print" << endl;
 		}
 }
+
+
+void projective_space_activity::conic_type(
+		projective_space_with_action *PA,
+		std::string &set_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "projective_space_activity::conic_type" << endl;
+	}
+
+	long int *Pts;
+	int nb_pts;
+	long int **Pts_on_conic;
+	int *nb_pts_on_conic;
+	int len;
+	int h;
+
+	Orbiter->Lint_vec.scan(set_text, Pts, nb_pts);
+
+	if (f_v) {
+		cout << "projective_space_activity::conic_type before PA->P->conic_type" << endl;
+	}
+
+	PA->P->conic_type(Pts, nb_pts,
+			Pts_on_conic, nb_pts_on_conic, len,
+			verbose_level);
+
+	if (f_v) {
+		cout << "projective_space_activity::conic_type after PA->P->conic_type" << endl;
+	}
+
+	cout << "We found the following conics:" << endl;
+	for (h = 0; h < len; h++) {
+		cout << h << " : " << nb_pts_on_conic[h] << " : ";
+		Orbiter->Lint_vec.print(cout, Pts_on_conic[h], nb_pts_on_conic[h]);
+		cout << endl;
+	}
+
+
+	if (f_v) {
+		cout << "projective_space_activity::conic_type done" << endl;
+	}
+}
+
+
 
 }}
