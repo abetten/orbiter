@@ -23,7 +23,6 @@ MODULES= \
 		foundations/algebra_and_number_theory/number_theory_domain.o \
 		foundations/algebra_and_number_theory/partial_derivative.o \
 		foundations/algebra_and_number_theory/rank_checker.o \
-		foundations/algebra_and_number_theory/subfield_structure.o \
 		foundations/algebra_and_number_theory/table_of_irreducible_polynomials.o \
 		foundations/algebra_and_number_theory/unipoly_domain.o \
 		foundations/algebra_and_number_theory/unipoly_domain2.o \
@@ -86,6 +85,7 @@ MODULES= \
 		foundations/finite_fields/finite_field_RREF.o \
 		foundations/finite_fields/finite_field_tables.o \
 		foundations/finite_fields/finite_field.o \
+		foundations/finite_fields/subfield_structure.o \
 		foundations/geometry/andre_construction.o \
 		foundations/geometry/andre_construction_line_element.o \
 		foundations/geometry/andre_construction_point_element.o \

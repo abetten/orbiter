@@ -24,7 +24,6 @@ MODULES = \
 	number_theory_domain.o \
 	partial_derivative.o \
 	rank_checker.o \
-	subfield_structure.o \
 	table_of_irreducible_polynomials.o \
 	unipoly_domain.o \
 	unipoly_domain2.o \

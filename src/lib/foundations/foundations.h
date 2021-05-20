@@ -76,10 +76,6 @@
 #include <fstream>
 #include <iomanip>
 
-//#include <stdlib.h>
-//#include <stdio.h>
-//#include <stdint.h>
-//#include <string.h>
 #include <cstring>
 #include <math.h>
 #include <limits.h>
@@ -253,154 +249,157 @@ namespace orbiter {
 namespace foundations {
 
 
-class finite_field;
-class longinteger_object;
-typedef longinteger_object *plonginteger_object;
-class longinteger_domain;
-class rank_checker;
-class tally;
-typedef void *unipoly_object;
-class unipoly_domain;
-class partitionstack;
-class orthogonal;
-class vector_hashing;
-class unusual_model;
-class grassmann;
-class grassmann_embedded;
-class hermitian;
-class incidence_structure;
-class finite_ring;
-class hjelmslev;
-class norm_tables;
-class coordinate_frame;
-class data_file;
-class subfield_structure;
-class clique_finder;
-class colored_graph;
-class rainbow_cliques;
-class set_of_sets;
-class decomposition;
-class brick_domain;
-class spreadsheet;
-class andre_construction;
-class andre_construction_point_element;
-class andre_construction_line_element;
-class memory_object;
-class int_matrix;
-class gl_classes;
-class gl_class_rep;
-class matrix_block_data;
-class layered_graph;
-class graph_layer;
-class graph_node;
-class int_vector;
-class projective_space;
-class buekenhout_metz;
+
+
+
+// algebra_and_number_theory
 class a_domain;
-class diophant;
-class null_polarity_generator;
-class layered_graph_draw_options;
-class klein_correspondence;
-class file_output;
+class algebra_global;
+class finite_ring;
 class generators_symplectic_group;
-class flag;
-class W3q; // added March 4, 2011
-class knarr; // added March 30, 2011
-class surface_domain; // added July 26, 2016
-class homogeneous_polynomial_domain;
-// added Sept 9, 2016
-class eckardt_point;
-class surface_object;
-class heisenberg;
-class desarguesian_spread;
-class classify_bitvectors;
-class object_in_projective_space;
-class point_line;
-class tdo_scheme;
-class tdo_data;
-struct solution_file_data;
-class geo_parameter;
-class mem_object_registry;
-class mem_object_registry_entry;
-class eckardt_point_info;
-class vector_space;
-class elliptic_curve;
-// added November 19, 2014
-class arc_lifting_with_two_lines;
-class page_storage;
-class numerics;
-class polynomial_double;
-class polynomial_double_domain;
-class spread_tables;
-class cubic_curve;
-class partial_derivative;
-class blt_set_domain;
-class blt_set_invariants;
-class magma_interface;
-class latex_interface;
-class number_theory_domain;
+class gl_class_rep;
+class gl_classes;
 class group_generators_domain;
-class knowledge_base;
-class combinatorics_domain;
-class sorting;
-class coding_theory_domain;
-class file_io;
+class heisenberg;
+class homogeneous_polynomial_domain;
+class longinteger_domain;
+class longinteger_object;
+class matrix_block_data;
+class norm_tables;
+class null_polarity_generator;
+class number_theoretic_transform;
+class number_theory_domain;
+class partial_derivative;
+class rank_checker;
 class table_of_irreducible_polynomials;
-class set_of_sets_lint;
-class tally_vector_data;
-class clebsch_map;
-class bitmatrix;
-class override_double;
-class os_interface;
+class unipoly_domain;
+class vector_space;
+
+
+
+// coding_theory:
+class coding_theory_domain;
+
+
+// combinatorics:
+class boolean_function_domain;
+class brick_domain;
+class combinatorial_object_activity_description;
+class combinatorial_object_activity;
+class combinatorial_object_create;
+class combinatorial_object_description;
+class combinatorics_domain;
+class geo_parameter;
+class pentomino_puzzle;
+class tdo_data;
 class tdo_refinement_description;
 class tdo_refinement;
-class algebra_global;
-class combinatorial_object_description;
-class combinatorial_object_create;
+class tdo_scheme;
+struct solution_file_data;
+
+
+// cryptography
+class cryptography_domain;
+
+
+// data_structures:
+class bitmatrix;
+class bitvector;
+class classify_bitvectors;
+class data_file;
+class data_input_stream;
+class data_structures_global;
+class fancy_set;
+class int_matrix;
+class int_vec;
+class int_vector;
+class lint_vec;
+class page_storage;
+class partitionstack;
+class set_builder_description;
+class set_builder;
+class set_of_sets_lint;
+class set_of_sets;
+class sorting;
+class spreadsheet;
+class string_tools;
+class vector_hashing;
+
+
+// expression_parser:
+class expression_parser_domain;
+class expression_parser;
+class formula;
+class lexer;
+class syntax_tree_node_terminal;
+class syntax_tree_node;
+class syntax_tree;
+
+
+// finite_fields:
+class finite_field_activity_description;
+class finite_field_activity;
+class finite_field_description;
+class finite_field;
+class subfield_structure;
+
+// geometry:
+class andre_construction_line_element;
+class andre_construction_point_element;
+class andre_construction;
+class blt_set_domain;
+class blt_set_invariants;
+class buekenhout_metz;
+class cubic_curve;
+class decomposition;
+class desarguesian_spread;
+class elliptic_curve;
+class flag;
+class geometry_global;
+class grassmann_embedded;
+class grassmann;
+class hermitian;
+class hjelmslev;
+class incidence_structure;
+class klein_correspondence;
+class knarr;
+class knowledge_base;
+class object_in_projective_space;
+class point_line;
+class points_and_lines;
+class projective_space;
+class spread_tables;
+class unusual_model;
+class W3q;
+
+// globals:
 class function_command;
 class function_polish_description;
 class function_polish;
-class nauty_interface;
-class diophant_description;
-class diophant_create;
-class diophant_activity_description;
-class diophant_activity;
-class web_of_cubic_curves;
-class pentomino_puzzle;
-class number_theoretic_transform;
-class create_file_description;
-class prepare_frames;
-class seventytwo_cases;
+class magma_interface;
+class numerics;
 class orbiter_session;
-class data_input_stream;
-class bitvector;
-class data_structures_global;
-class surface_object_properties;
-class schlaefli;
-class cryptography_domain;
-class boolean_function_domain;
-class set_builder;
-class set_builder_description;
-class finite_field_description;
 class orbiter_symbol_table_entry;
 class orbiter_symbol_table;
-class syntax_tree_node_terminal;
-class lexer;
-class syntax_tree_node;
-class expression_parser;
-class syntax_tree;
-class formula;
-class del_pezzo_surface_of_degree_two_domain;
-class del_pezzo_surface_of_degree_two_object;
-class points_and_lines;
-class int_vec;
-class finite_field_activity_description;
-class finite_field_activity;
-class combinatorial_object_activity_description;
-class combinatorial_object_activity;
-class expression_parser_domain;
-class lint_vec;
-class string_tools;
+class polynomial_double_domain;
+class polynomial_double;
+
+
+// graph_theory
+class clique_finder_control;
+class clique_finder;
+class colored_graph;
+class graph_layer;
+class graph_node;
+class graph_theory_domain;
+class layered_graph_draw_options;
+class layered_graph;
+class rainbow_cliques;
+
+
+// graph_theory_nauty
+class nauty_interface;
+
 
 // graphics:
 class animate;
@@ -417,8 +416,55 @@ class povray_interface;
 class scene;
 class tree;
 class tree_node;
-typedef tree_node *ptree_node;
 class video_draw_options;
+
+// io_and_os:
+class create_file_description;
+class file_io;
+class file_output;
+class latex_interface;
+class mem_object_registry_entry;
+class mem_object_registry;
+class memory_object;
+class orbiter_data_file;
+class os_interface;
+class override_double;
+class prepare_frames;
+
+// orthogonal:
+class orthogonal;
+
+// solvers
+class diophant_activity_description;
+class diophant_activity;
+class diophant_create;
+class diophant_description;
+class diophant;
+
+// statistics:
+class tally_vector_data;
+class tally;
+
+// surfaces:
+class arc_lifting_with_two_lines;
+class clebsch_map;
+class del_pezzo_surface_of_degree_two_domain;
+class del_pezzo_surface_of_degree_two_object;
+class eckardt_point_info;
+class eckardt_point;
+class schlaefli;
+class seventytwo_cases;
+class surface_domain;
+class surface_object_properties;
+class surface_object;
+class web_of_cubic_curves;
+
+
+
+// pointer types
+typedef longinteger_object *plonginteger_object;
+typedef void *unipoly_object;
+typedef tree_node *ptree_node;
 
 
 

@@ -2037,7 +2037,7 @@ void poset_classification::trace_all_k_subsets(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
+	//int f_vv = FALSE; //(verbose_level >= 2);
 	int *index_set;
 	long int *subset;
 	long int *canonical_subset;

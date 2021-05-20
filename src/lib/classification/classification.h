@@ -20,20 +20,22 @@ namespace orbiter {
 
 namespace classification {
 
+// classify
+class classification_step;
+class flag_orbit_node;
+class flag_orbits;
+class orbit_node;
 
+// poset_classification
+class classification_base_case;
 class extension;
 class orbit_based_testing;
 class poset_classification;
-class poset_orbit_node;
-class upstep_work;
-class flag_orbits;
-class flag_orbit_node;
-class classification_step;
-class orbit_node;
-class poset;
-class poset_description;
 class poset_classification_control;
-class classification_base_case;
+class poset_description;
+class poset_orbit_node;
+class poset;
+class upstep_work;
 
 
 enum trace_result { 
@@ -54,7 +56,6 @@ enum find_isomorphism_result {
 
 #include "./classify/classify.h"
 #include "./poset_classification/poset_classification.h"
-//#include "./set_stabilizer/set_stabilizer.h"
 
 
 

@@ -1789,6 +1789,7 @@ public:
 	int test_nb_Eckardt_points(surface_domain *Surf,
 			long int *S, int len, int pt, int nb_E, int verbose_level);
 	int conic_test(long int *S, int len, int pt, int verbose_level);
+	int test_if_conic_contains_point(int *six_coeffs, int pt);
 	int determine_conic_in_plane(
 			long int *input_pts, int nb_pts,
 			int *six_coeffs,
@@ -1992,7 +1993,7 @@ public:
 		int verbose_level);
 	void conic_type(
 		long int *set, int set_size,
-		long int **&Pts_on_conic, int *&nb_pts_on_conic, int &len,
+		long int **&Pts_on_conic, int **&Conic_eqn, int *&nb_pts_on_conic, int &len,
 		int verbose_level);
 	void find_nucleus(int *set, int set_size, int &nucleus, 
 		int verbose_level);
@@ -2220,16 +2221,36 @@ public:
 	int q;
 	int Q;
 	int alpha;
-	int T_alpha, N_alpha;
-	int nb_terms, *form_i, *form_j, *form_coeff, *Gram;
-	int r_nb_terms, *r_form_i, *r_form_j, *r_form_coeff, *r_Gram;
-	int rr_nb_terms, *rr_form_i, *rr_form_j, *rr_form_coeff, *rr_Gram;
+	int T_alpha;
+	int N_alpha;
+
+	int nb_terms;
+	int *form_i;
+	int *form_j;
+	int *form_coeff;
+	int *Gram;
+
+	int r_nb_terms;
+	int *r_form_i;
+	int *r_form_j;
+	int *r_form_coeff;
+	int *r_Gram;
+
+	int rr_nb_terms;
+	int *rr_form_i;
+	int *rr_form_j;
+	int *rr_form_coeff;
+	int *rr_Gram;
+
 	int hyperbolic_basis[4 * 4];
 	int hyperbolic_basis_inverse[4 * 4];
 	int basis[4 * 4];
 	int basis_subspace[2 * 2];
 	int *M;
-	int *components, *embedding, *pair_embedding;
+
+	int *components;
+	int *embedding;
+	int *pair_embedding;
 		// data computed by F.subfield_embedding_2dimensional
 	
 	unusual_model();

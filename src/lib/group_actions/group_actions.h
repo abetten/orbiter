@@ -22,71 +22,84 @@ namespace orbiter {
 namespace group_actions {
 
 
+
+
+// actions
 class action;
-class matrix_group;
-class permutation_representation_domain;
-class vector_ge;
-typedef class vector_ge *p_vector_ge;
-class schreier;
-class sims;
-typedef class sims *p_sims;
-class group;
-class action_on_sets;
-class action_on_k_subsets;
-class action_by_right_multiplication;
-class action_by_restriction;
-class action_by_conjugation;
-class action_on_orbits;
-class action_on_flags;
-class action_on_galois_group;
-class action_by_representation;
-class action_by_subfield_structure;
-class action_on_grassmannian;
-class action_on_spread_set;
-class action_on_orthogonal;
-class action_on_wedge_product;
-class action_on_cosets;
-class action_on_factor_space;
-class action_on_determinant;
-class action_on_sign;
-class action_on_homogeneous_polynomials;
-class product_action;
-class union_find;
-class union_find_on_k_subsets;
-class schreier_sims;
-typedef sims *psims;
-class action_on_bricks;
-class action_on_andre;
-class strong_generators;
-typedef strong_generators *pstrong_generators;
-class linear_group_description;
-class linear_group;
-class set_and_stabilizer;
-class subgroup;
-typedef class subgroup *psubgroup;
-class action_on_subgroups;
-class orbit_transversal;
-class wreath_product;
-class direct_product;
-class schreier_vector_handler;
-class schreier_vector;
-class action_on_set_partitions;
+class action_global;
 class action_pointer_table;
 class nauty_interface_with_group;
-class exceptional_isomorphism_O4;
-class orbit_rep;
 class stabilizer_chain_base_data;
-class orbits_on_something;
-class orbit_type_repository;
-class permutation_representation;
+
+
+// data_structures
+class group;
 class incidence_structure_with_group;
-class action_global;
+class orbit_rep;
+class orbit_transversal;
+class orbit_type_repository;
 class orthogonal_space_with_action_description;
 class orthogonal_space_with_action;
+class schreier_vector_handler;
+class schreier_vector;
+class set_and_stabilizer;
+class union_find_on_k_subsets;
+class union_find;
+class vector_ge;
+
+
+// groups
+class direct_product;
+class exceptional_isomorphism_O4;
+class linear_group_description;
+class linear_group;
+class matrix_group;
+class orbits_on_something;
+class permutation_representation_domain;
+class permutation_representation;
+class schreier;
+class schreier_sims;
+class sims;
+class strong_generators;
+class subgroup;
+class sylow_structure;
+class wreath_product;
 
 
 
+// induced_actions
+class action_by_conjugation;
+class action_by_representation;
+class action_by_restriction;
+class action_by_right_multiplication;
+class action_by_subfield_structure;
+class action_on_andre;
+class action_on_bricks;
+class action_on_cosets;
+class action_on_determinant;
+class action_on_factor_space;
+class action_on_flags;
+class action_on_galois_group;
+class action_on_grassmannian;
+class action_on_homogeneous_polynomials;
+class action_on_k_subsets;
+class action_on_orbits;
+class action_on_orthogonal;
+class action_on_set_partitions;
+class action_on_sets;
+class action_on_sign;
+class action_on_spread_set;
+class action_on_subgroups;
+class action_on_wedge_product;
+class product_action;
 
+
+// pointer types:
+typedef class sims *p_sims;
+typedef sims *psims;
+typedef strong_generators *pstrong_generators;
+typedef class subgroup *psubgroup;
+typedef class vector_ge *p_vector_ge;
 
 
 //! enumeration to distinguish between the various types of group actions
@@ -185,7 +198,7 @@ union symmetry_group {
 // vector_ge.cpp
 // #############################################################################
 
-//! vector of group elements
+//! to hold a vector of group elements
 
 
 class vector_ge {
@@ -216,9 +229,7 @@ public:
 		int verbose_level);
 	int *ith(int i);
 	void print(std::ostream &ost);
-	//ostream& print(ostream& ost);
 	void print_quick(std::ostream& ost);
-	//std::ostream& print_tex(std::ostream& ost);
 	void print_tex(std::ostream &ost);
 	void print_generators_tex(
 			foundations::longinteger_object &go,
@@ -228,8 +239,6 @@ public:
 	void reallocate(int new_length, int verbose_level);
 	void reallocate_and_insert_at(int position, int *elt, int verbose_level);
 	void insert_at(int length_before, int position, int *elt, int verbose_level);
-		// does not reallocate, but shifts elements up to make space.
-		// the last element might be lost if there is no space.
 	void append(int *elt, int verbose_level);
 	void copy_in(int i, int *elt);
 	void copy_out(int i, int *elt);

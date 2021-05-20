@@ -114,12 +114,14 @@ void buekenhout_metz::freeself()
 	if (ovoid) {
 		FREE_lint(ovoid);
 		}
+#if 0
 	if (FQ) {
-		delete FQ;
+		FREE_OBJECT(FQ);
 		}
 	if (Fq) {
-		delete Fq;
+		FREE_OBJECT(Fq);
 		}
+#endif
 	if (P2) {
 		FREE_OBJECT(P2);
 		}

@@ -779,6 +779,7 @@ void arc_generator::print(int len, long int *S)
 	}
 	else {
 		long int **Pts_on_conic;
+		int **Conic_eqn;
 		int *nb_pts_on_conic;
 		int len1;
 
@@ -792,7 +793,7 @@ void arc_generator::print(int len, long int *S)
 		}
 		P->conic_type(
 			S, len, 
-			Pts_on_conic, nb_pts_on_conic, len1, 
+			Pts_on_conic, Conic_eqn, nb_pts_on_conic, len1,
 			0 /*verbose_level*/);
 		cout << "The arc intersects " << len1
 				<< " conics in 6 or more points. " << endl;
@@ -813,9 +814,11 @@ void arc_generator::print(int len, long int *S)
 
 		for (i = 0; i < len1; i++) {
 			FREE_lint(Pts_on_conic[i]);
+			FREE_int(Conic_eqn[i]);
 		}
 		FREE_int(nb_pts_on_conic);
 		FREE_plint(Pts_on_conic);
+		FREE_pint(Conic_eqn);
 	}
 	
 #if 0

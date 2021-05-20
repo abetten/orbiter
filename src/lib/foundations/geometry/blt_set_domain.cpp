@@ -230,7 +230,6 @@ void blt_set_domain::compute_adjacency_list_fast(
 			}
 			c2 = point_color[j];
 			if (c1 == c2) {
-				//bitvector_m_ii(bitvector_adjacency, k, 0);
 				Bitvec->m_i(k, 0);
 				continue;
 			}
@@ -245,16 +244,13 @@ void blt_set_domain::compute_adjacency_list_fast(
 				);
 			d = F->product3(f12, f13, f23);
 			if (d == 0) {
-				//bitvector_m_ii(bitvector_adjacency, k, 0);
 				Bitvec->m_i(k, 0);
 			}
 			else {
 				if (O->f_is_minus_square[d]) {
-					//bitvector_m_ii(bitvector_adjacency, k, 0);
 					Bitvec->m_i(k, 0);
 				}
 				else {
-					//bitvector_m_ii(bitvector_adjacency, k, 1);
 					Bitvec->m_i(k, 1);
 				}
 			}

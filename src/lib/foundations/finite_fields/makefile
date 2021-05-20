@@ -18,7 +18,8 @@ MODULES = \
 	finite_field_representations.o \
 	finite_field_RREF.o \
 	finite_field_tables.o \
-	finite_field.o 
+	finite_field.o \
+	subfield_structure.o 
 
 
 all : $(MODULES)
