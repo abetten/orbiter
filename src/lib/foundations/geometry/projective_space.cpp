@@ -1502,6 +1502,34 @@ int projective_space::conic_test(long int *S, int len, int pt, int verbose_level
 }
 
 
+int projective_space::test_if_conic_contains_point(int *six_coeffs, int pt)
+{
+	int v[3];
+	int c[6];
+	int x, y, z, s, i;
+
+	unrank_point(v, pt);
+	x = v[0];
+	y = v[1];
+	z = v[2];
+	c[0] = F->mult(x, x);
+	c[1] = F->mult(y, y);
+	c[2] = F->mult(z, z);
+	c[3] = F->mult(x, y);
+	c[4] = F->mult(x, z);
+	c[5] = F->mult(y, z);
+	s = 0;
+	for (i = 0; i < 6; i++) {
+		s = F->add(s, F->mult(six_coeffs[i], c[i]));
+	}
+	if (s == 0) {
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
+ }
+
 int projective_space::determine_conic_in_plane(
 	long int *input_pts, int nb_pts,
 	int *six_coeffs, 

@@ -571,7 +571,7 @@ void subfield_structure::create_adelaide_hyperoval(
 
 void subfield_structure::field_reduction(int *input, int sz, int *output,
 		int verbose_level)
-// input[sz], output[(s * sz) * (s * n)],
+// input[sz], output[(s * sz) * (s * sz * s)],
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a, b, c, t, J;

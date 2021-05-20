@@ -606,11 +606,12 @@ void projective_space_job::perform_job_for_one_set(
 				cout << endl;
 
 				long int **Pts_on_conic;
+				int **Conic_eqn;
 				int *nb_pts_on_conic;
 				int len1;
 				P2->conic_type(
 						pts, nb_pts,
-						Pts_on_conic, nb_pts_on_conic, len1,
+						Pts_on_conic, Conic_eqn, nb_pts_on_conic, len1,
 						verbose_level);
 				for (int j = 0; j < len1; j++) {
 					if (nb_pts_on_conic[j] == Descr->q + 1) {
@@ -619,8 +620,10 @@ void projective_space_job::perform_job_for_one_set(
 				}
 				for (int j = 0; j < len1; j++) {
 					FREE_lint(Pts_on_conic[j]);
+					FREE_int(Conic_eqn[j]);
 				}
 				FREE_plint(Pts_on_conic);
+				FREE_pint(Conic_eqn);
 				FREE_int(nb_pts_on_conic);
 				FREE_lint(pts);
 			}

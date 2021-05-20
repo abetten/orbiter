@@ -28,102 +28,92 @@ namespace top_level {
 
 
 
-class representatives;
-	// added 7/3/12
-class isomorph;
-	// added 3/22/09
-class search_blocking_set;
-	// added Nov 2, 2010
-class choose_points_or_lines;
-	// added Nov 29, 2010
-class orbit_of_sets;
-	// added March 27, 2013
-class singer_cycle;
-	// added March 27, 2013
-class exact_cover;
-	// added April 30, 2013
-class polar;
-class orbit_of_subspaces;
-	// added April 10, 2014
-class young;
-	// added March 16, 2015
-class exact_cover_arguments;
-	// added January 12, 2016
-class translation_plane_via_andre_model;
-	// added January 25, 2016
-class isomorph_arguments;
-	// added January 27, 2016
-struct isomorph_worker_data;
-class arc_generator;
-	// moved here February 23, 2017
-class BLT_set_create_description;
-	// added March 17, 2018
-class BLT_set_create;
-	// added March 17, 2018
-//class k_arc_generator;
-class arc_lifting_simeon;
-	// added Jan 6, 2019
-class blt_set_classify;
-	// started 8/13/2006, added Jan 6, 2019
-class surfaces_arc_lifting;
-	// started 1/9/2019
-class classify_cubic_curves;
-class cubic_curve_with_action;
-class blt_set_with_action;
-class semifield_classify;
-class semifield_level_two;
-class semifield_lifting;
-class semifield_downstep_node;
-class semifield_flag_orbit_node;
-class semifield_trace;
-class trace_record;
-class semifield_substructure;
-class semifield_classify_with_substructure;
-class tactical_decomposition;
-class tensor_classify;
-class design_create;
-class design_create_description;
-class large_set_classify;
-class ovoid_classify;
-class regular_ls_classify;
-class difference_set_in_heisenberg_group;
-class hadamard_classify;
-class linear_set_classify;
-class delandtsheer_doyen_description;
-class delandtsheer_doyen;
-class boolean_function;
-class hermitian_spread_classify;
-class character_table_burnside;
+
+
+// algbra_and_number_theory
 class algebra_global_with_action;
+class character_table_burnside;
 class group_theoretic_activity_description;
 class group_theoretic_activity;
-class regular_linear_space_description;
-class arc_generator_description;
-class ovoid_classify_description;
-class semifield_classify_description;
 class orbits_on_polynomials;
 class orthogonal_space_activity_description;
 class orthogonal_space_activity;
+class young;
+
+
+// combinatorics
+class boolean_function_classify;
+class delandtsheer_doyen_description;
+class delandtsheer_doyen;
+class design_create_description;
+class design_create;
+class difference_set_in_heisenberg_group;
+class hadamard_classify;
+class hall_system_classify;
+class large_set_classify;
+class regular_linear_space_description;
+class regular_ls_classify;
+class tactical_decomposition;
+
+
+// geometry
+class arc_generator_description;
+class arc_generator;
+class arc_lifting_simeon;
+class blt_set_classify;
+class BLT_set_create_description;
+class BLT_set_create;
+class blt_set_with_action;
+class choose_points_or_lines;
+class classify_cubic_curves;
+class cubic_curve_with_action;
+class hermitian_spread_classify;
+class linear_set_classify;
+class ovoid_classify_description;
+class ovoid_classify;
+class polar;
+class search_blocking_set;
+class singer_cycle;
+class tensor_classify;
+
+
+
+// graph_theory.h:
+class cayley_graph_search;
+class create_graph_description;
+class create_graph;
+class graph_classification_activity_description;
+class graph_classification_activity;
+class graph_classify_description;
+class graph_classify;
+class graph_theoretic_activity_description;
+class graph_theoretic_activity;
+
+
+// interfaces
 class interface_algebra;
 class interface_coding_theory;
 class interface_combinatorics;
 class interface_cryptography;
 class interface_povray;
 class interface_projective;
+class interface_symbol_table;
 class interface_toolkit;
 class orbiter_top_level_session;
 
-// graph_theory.h:
-class cayley_graph_search;
-class create_graph_description;
-class create_graph;
-class graph_classify_description;
-class graph_classify;
-class graph_theoretic_activity_description;
-class graph_theoretic_activity;
-class graph_generator;
-class graph_classification_activity_description;
-class graph_classification_activity;
+
+// isomorph
+class isomorph_arguments;
+class isomorph;
+struct isomorph_worker_data;
+class representatives;
+
+
+// orbits
+class orbit_of_equations;
+class orbit_of_sets;
+class orbit_of_subspaces;
+
 
 
 // projective_space.h:
@@ -143,6 +133,24 @@ class projective_space_with_action_description;
 class projective_space_with_action;
 
 
+// semifield
+class semifield_classify_description;
+class semifield_classify_with_substructure;
+class semifield_classify;
+class semifield_downstep_node;
+class semifield_flag_orbit_node;
+class semifield_level_two;
+class semifield_lifting;
+class semifield_substructure;
+class semifield_trace;
+class trace_record;
+
+
+// solver:
+class exact_cover_arguments;
+class exact_cover;
+
+
 // spreads and packings:
 class spread_table_activity_description;
 class spread_table_activity;
@@ -155,45 +163,30 @@ class packing_classify;
 class packing_invariants;
 class invariants_packing;
 class spread_create_description;
-	// added March 22, 2018
 class spread_create;
-	// added March 22, 2018
 class spread_lifting;
-	// added April 1, 2018
 class packing_was;
 class packing_long_orbits;
 class recoordinatize;
-	// added November 2, 2013
 class spread_classify;
-	// added November 2, 2013
 class packing_was_activity_description;
 class packing_was_activity;
 class packing_was_fixpoints_activity_description;
 class packing_was_fixpoints_activity;
 
-// surfaces.h:
+// surfaces:
 class arc_orbits_on_pairs;
-	// started 1/9/2019
 class arc_partition;
-	// started 1/9/2019
 class classification_of_cubic_surfaces_with_double_sixes_activity_description;
 class classification_of_cubic_surfaces_with_double_sixes_activity;
 class surface_with_action;
-	// added March 22, 2017
 class surface_object_with_action;
-	// added October 4, 2017
 class classify_trihedral_pairs;
-	// added October 9, 2017
 class classify_double_sixes;
-	// added October 10, 2017
 class surface_create_description;
-	// added January 14, 2018
 class surface_create;
-	// added January 14, 2018
 class arc_lifting;
-	// added January 14, 2018
 class six_arcs_not_on_a_conic;
-	// added March 6, 2018
 class surface_study;
 class quartic_curve;
 class surface_classify_using_arc;
@@ -201,14 +194,18 @@ class surface_create_by_arc_lifting;
 class surface_clebsch_map;
 class trihedral_pair_with_action;
 class surfaces_arc_lifting_upstep;
+class surfaces_arc_lifting;
 class surfaces_arc_lifting_trace;
-typedef class surfaces_arc_lifting_trace psurfaces_arc_lifting_trace;
 class surfaces_arc_lifting_definition_node;
 class cubic_surface_activity_description;
 class cubic_surface_activity;
 class surface_domain_high_level;
 class surface_classify_wedge;
-	// added September 2, 2016
+
+
+
+// pointer types:
+typedef class surfaces_arc_lifting_trace psurfaces_arc_lifting_trace;
 
 
 // #############################################################################

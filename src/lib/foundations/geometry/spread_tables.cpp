@@ -249,7 +249,7 @@ void spread_tables::init_reduced(
 	number_theory_domain NT;
 
 	if (f_v) {
-		cout << "spread_tables::init_reduced" << endl;
+		cout << "spread_tables::init_reduced, nb_select=" << nb_select << endl;
 	}
 
 	P = old_spread_table->P;
@@ -269,16 +269,6 @@ void spread_tables::init_reduced(
 	create_file_names(verbose_level);
 
 
-#if 0
-	P = NEW_OBJECT(projective_space);
-	P->init(3, F,
-		TRUE /* f_init_incidence_structure */,
-		0 /* verbose_level - 2 */);
-
-
-	Gr = NEW_OBJECT(grassmann);
-	Gr->init(d, 2, F, 0 /* verbose_level */);
-#endif
 	nb_lines = Gr->nCkq.as_int();
 	spread_size = old_spread_table->spread_size;
 	nb_iso_types_of_spreads = old_spread_table->nb_iso_types_of_spreads;
@@ -781,10 +771,12 @@ int spread_tables::test_if_spreads_are_disjoint(int a, int b)
 {
 	long int *p, *q;
 	sorting Sorting;
+	int ret;
 
 	p = spread_table + a * spread_size;
 	q = spread_table + b * spread_size;
-	return Sorting.test_if_sets_are_disjoint(p, q, spread_size, spread_size);
+	ret = Sorting.test_if_sets_are_disjoint(p, q, spread_size, spread_size);
+	return ret;
 }
 
 void spread_tables::compute_dual_spreads(long int **Sets,

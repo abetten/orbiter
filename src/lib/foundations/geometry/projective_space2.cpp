@@ -2233,6 +2233,7 @@ void projective_space::conic_intersection_type(
 	int f_v = (verbose_level >= 1);
 	//longinteger_object *R;
 	long int **Pts_on_conic;
+	int **Conic_eqn;
 	int *nb_pts_on_conic;
 	int nb_conics;
 	int i, j, idx, f, l, a, t;
@@ -2258,7 +2259,7 @@ void projective_space::conic_intersection_type(
 		}
 		conic_type(
 			set, set_size,
-			Pts_on_conic, nb_pts_on_conic, nb_conics,
+			Pts_on_conic, Conic_eqn, nb_pts_on_conic, nb_conics,
 			verbose_level - 1);
 	}
 
@@ -2306,15 +2307,17 @@ void projective_space::conic_intersection_type(
 
 	for (i = 0; i < nb_conics; i++) {
 		FREE_lint(Pts_on_conic[i]);
+		FREE_int(Conic_eqn[i]);
 	}
 	FREE_plint(Pts_on_conic);
+	FREE_pint(Conic_eqn);
 	FREE_int(nb_pts_on_conic);
 
 }
 
 void projective_space::conic_type(
 	long int *set, int set_size,
-	long int **&Pts_on_conic, int *&nb_pts_on_conic, int &len,
+	long int **&Pts_on_conic, int **&Conic_eqn, int *&nb_pts_on_conic, int &len,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2361,6 +2364,7 @@ void projective_space::conic_type(
 	// allocate data that is returned:
 	allocation_length = 1024;
 	Pts_on_conic = NEW_plint(allocation_length);
+	Conic_eqn = NEW_pint(allocation_length);
 	nb_pts_on_conic = NEW_int(allocation_length);
 
 
@@ -2480,7 +2484,7 @@ void projective_space::conic_type(
 			}
 
 
-			if (l >= 6) {
+			if (l >= 5) {
 
 				if (f_v) {
 					cout << "We found an " << l << "-conic, "
@@ -2505,6 +2509,8 @@ void projective_space::conic_type(
 
 				//conic_rk.assign_to(R[len]);
 				Pts_on_conic[len] = pts_on_conic;
+				Conic_eqn[len] = NEW_int(6);
+				Orbiter->Int_vec.copy(six_coeffs, Conic_eqn[len], 6);
 				nb_pts_on_conic[len] = l;
 
 #endif
@@ -2536,18 +2542,23 @@ void projective_space::conic_type(
 
 
 					long int **Pts_on_conic1;
+					int **Conic_eqn1;
 					int *nb_pts_on_conic1;
 
 					Pts_on_conic1 = NEW_plint(new_allocation_length);
+					Conic_eqn1 = NEW_pint(new_allocation_length);
 					nb_pts_on_conic1 = NEW_int(new_allocation_length);
 					for (i = 0; i < len; i++) {
 						//R1[i] = R[i];
 						Pts_on_conic1[i] = Pts_on_conic[i];
+						Conic_eqn1[i] = Conic_eqn[i];
 						nb_pts_on_conic1[i] = nb_pts_on_conic[i];
 					}
 					FREE_plint(Pts_on_conic);
+					FREE_pint(Conic_eqn);
 					FREE_int(nb_pts_on_conic);
 					Pts_on_conic = Pts_on_conic1;
+					Conic_eqn = Conic_eqn1;
 					nb_pts_on_conic = nb_pts_on_conic1;
 					allocation_length = new_allocation_length;
 				}

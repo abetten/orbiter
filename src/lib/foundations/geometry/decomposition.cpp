@@ -40,10 +40,10 @@ void decomposition::freeself()
 		FREE_int(Inc);
 		}
 	if (I) {
-		delete I;
+		FREE_OBJECT(I);
 		}
 	if (Stack) {
-		delete Stack;
+		FREE_OBJECT(Stack);
 		}
 	if (f_has_decomposition) {
 		FREE_int(row_classes);

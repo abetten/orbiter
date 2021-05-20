@@ -1572,6 +1572,7 @@ void projective_space_activity::conic_type(
 	long int *Pts;
 	int nb_pts;
 	long int **Pts_on_conic;
+	int **Conic_eqn;
 	int *nb_pts_on_conic;
 	int len;
 	int h;
@@ -1583,19 +1584,105 @@ void projective_space_activity::conic_type(
 	}
 
 	PA->P->conic_type(Pts, nb_pts,
-			Pts_on_conic, nb_pts_on_conic, len,
+			Pts_on_conic, Conic_eqn, nb_pts_on_conic, len,
 			verbose_level);
 
 	if (f_v) {
 		cout << "projective_space_activity::conic_type after PA->P->conic_type" << endl;
 	}
 
+
 	cout << "We found the following conics:" << endl;
 	for (h = 0; h < len; h++) {
 		cout << h << " : " << nb_pts_on_conic[h] << " : ";
+		Orbiter->Int_vec.print(cout, Conic_eqn[h], 6);
+		cout << " : ";
 		Orbiter->Lint_vec.print(cout, Pts_on_conic[h], nb_pts_on_conic[h]);
 		cout << endl;
 	}
+
+	cout << "computing intersection types with bisecants of the first 11 points:" << endl;
+	int Line_P1[55];
+	int Line_P2[55];
+	int P1, P2;
+	long int p1, p2, line_rk;
+	long int *pts_on_line;
+	long int pt;
+	int *Conic_line_intersection_sz;
+	int cnt;
+	int i, j, q, u, v;
+	int nb_pts_per_line;
+
+	q = PA->P->F->q;
+	nb_pts_per_line = q + 1;
+	pts_on_line = NEW_lint(55 * nb_pts_per_line);
+
+	cnt = 0;
+	for (i = 0; i < 11; i++) {
+		for (j = i + 1; j < 11; j++) {
+			Line_P1[cnt] = i;
+			Line_P2[cnt] = j;
+			cnt++;
+		}
+	}
+	if (cnt != 55) {
+		cout << "cnt != 55" << endl;
+		cout << "cnt = " << cnt << endl;
+		exit(1);
+	}
+	for (u = 0; u < 55; u++) {
+		P1 = Line_P1[u];
+		P2 = Line_P2[u];
+		p1 = Pts[P1];
+		p2 = Pts[P2];
+		line_rk = PA->P->line_through_two_points(p1, p2);
+		PA->P->create_points_on_line(line_rk, pts_on_line + u * nb_pts_per_line, 0 /*verbose_level*/);
+	}
+
+	Conic_line_intersection_sz = NEW_int(len * 55);
+	Orbiter->Int_vec.zero(Conic_line_intersection_sz, len * 55);
+
+	for (h = 0; h < len; h++) {
+		for (u = 0; u < 55; u++) {
+			for (v = 0; v < nb_pts_per_line; v++) {
+				if (PA->P->test_if_conic_contains_point(Conic_eqn[h], pts_on_line[u * nb_pts_per_line + v])) {
+					Conic_line_intersection_sz[h * 55 + u]++;
+				}
+
+			}
+		}
+	}
+
+	sorting Sorting;
+	int idx;
+
+	cout << "We found the following conics and their intersections with the 55 bisecants:" << endl;
+	for (h = 0; h < len; h++) {
+		cout << h << " : " << nb_pts_on_conic[h] << " : ";
+		Orbiter->Int_vec.print(cout, Conic_eqn[h], 6);
+		cout << " : ";
+		Orbiter->Int_vec.print_fully(cout, Conic_line_intersection_sz + h * 55, 55);
+		cout << " : ";
+		Orbiter->Lint_vec.print(cout, Pts_on_conic[h], nb_pts_on_conic[h]);
+		cout << " : ";
+		cout << endl;
+	}
+
+	for (u = 0; u < 55; u++) {
+		cout << "line " << u << " : ";
+		int str[55];
+
+		Orbiter->Int_vec.zero(str, 55);
+		for (v = 0; v < nb_pts; v++) {
+			pt = Pts[v];
+			if (Sorting.lint_vec_search_linear(pts_on_line + u * nb_pts_per_line, nb_pts_per_line, pt, idx)) {
+				str[v] = 1;
+			}
+		}
+		Orbiter->Int_vec.print_fully(cout, str, 55);
+		cout << endl;
+	}
+
 
 
 	if (f_v) {

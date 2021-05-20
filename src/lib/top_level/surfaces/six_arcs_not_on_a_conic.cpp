@@ -146,6 +146,7 @@ void six_arcs_not_on_a_conic::init(
 		
 		
 		long int **Pts_on_conic;
+		int **Conic_eqn;
 		int *nb_pts_on_conic;
 		int len1;
 
@@ -157,7 +158,7 @@ void six_arcs_not_on_a_conic::init(
 		}
 		P2->conic_type(
 			Arc6, 6, 
-			Pts_on_conic, nb_pts_on_conic, len1, 
+			Pts_on_conic, Conic_eqn, nb_pts_on_conic, len1,
 			verbose_level - 2);
 		if (f_v) {
 			cout << "The arc intersects " << len1
@@ -170,8 +171,10 @@ void six_arcs_not_on_a_conic::init(
 
 		for (j = 0; j < len1; j++) {
 			FREE_lint(Pts_on_conic[j]);
+			FREE_int(Conic_eqn[j]);
 		}
 		FREE_plint(Pts_on_conic);
+		FREE_pint(Conic_eqn);
 		FREE_int(nb_pts_on_conic);
 	}
 
