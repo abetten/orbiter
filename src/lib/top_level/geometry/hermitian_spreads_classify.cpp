@@ -295,7 +295,7 @@ void hermitian_spreads_classify::read_arguments(int argc, std::string *argv)
 	int i;
 
 	Control = NEW_OBJECT(poset_classification_control);
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 	gen = NEW_OBJECT(poset_classification);
 
 #if 0

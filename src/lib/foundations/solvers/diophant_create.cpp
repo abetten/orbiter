@@ -98,32 +98,70 @@ void diophant_create::init(
 		FREE_OBJECT(P);
 	}
 	if (Descr->f_coefficient_matrix) {
-			int *A;
-			int sz;
-			int i, j;
+		int *A;
+		int sz;
+		int i, j;
 
-			Orbiter->Int_vec.scan(Descr->coefficient_matrix_text, A, sz);
+		Orbiter->Int_vec.scan(Descr->coefficient_matrix_text, A, sz);
 
-			D = NEW_OBJECT(diophant);
-			D->open(Descr->coefficient_matrix_m, Descr->coefficient_matrix_n);
+		D = NEW_OBJECT(diophant);
+		D->open(Descr->coefficient_matrix_m, Descr->coefficient_matrix_n);
 
-			if (sz != Descr->coefficient_matrix_m * Descr->coefficient_matrix_n) {
-				cout << "sz != m * n" << endl;
-				exit(1);
-			}
-			for (i = 0; i < Descr->coefficient_matrix_m; i++) {
-				for (j = 0; j < Descr->coefficient_matrix_n; j++) {
-					D->Aij(i, j) = A[i * Descr->coefficient_matrix_n + j];
-				}
-			}
-			FREE_int(A);
+		if (sz != Descr->coefficient_matrix_m * Descr->coefficient_matrix_n) {
+			cout << "sz != m * n" << endl;
+			exit(1);
 		}
+		for (i = 0; i < Descr->coefficient_matrix_m; i++) {
+			for (j = 0; j < Descr->coefficient_matrix_n; j++) {
+				D->Aij(i, j) = A[i * Descr->coefficient_matrix_n + j];
+			}
+		}
+		FREE_int(A);
+	}
+	if (Descr->f_problem_of_Steiner_type) {
+		file_io Fio;
+		int *Covering_matrix;
+		int nb_rows, nb_cols;
+		int i, j, h;
+
+		if (f_v) {
+			cout << "f_problem_of_Steiner_type" << endl;
+			cout << "reading coefficient matrix from file "
+					<< Descr->coefficient_matrix_csv << endl;
+		}
+		Fio.int_matrix_read_csv(Descr->problem_of_Steiner_type_covering_matrix_fname,
+				Covering_matrix,
+				nb_rows, nb_cols, verbose_level);
+
+		int nb_t_orbits = Descr->problem_of_Steiner_type_nb_t_orbits;
+		int nb_k_orbits = nb_rows;
+
+		D = NEW_OBJECT(diophant);
+		D->open(nb_t_orbits, nb_k_orbits);
+
+		for (j = 0; j < nb_k_orbits; j++) {
+			for (h = 0; h < nb_cols; h++) {
+				i = Covering_matrix[j * nb_cols + h];
+				D->Aij(i, j) = 1;
+			}
+		}
+		FREE_int(Covering_matrix);
+
+		for (i = 0; i < D->m; i++) {
+			D->RHS_low[i] = 1;
+			D->RHS[i] = 1;
+			D->type[i] = t_EQ;
+		}
+		for (i = 0; i < D->n; i++) {
+			D->x_max[i] = 1;
+		}
+	}
 
 	if (Descr->f_coefficient_matrix_csv) {
+		file_io Fio;
 		int *A;
 		int m, n;
 		int i, j;
-		file_io Fio;
 
 		if (f_v) {
 			cout << "reading coefficient matrix from file "

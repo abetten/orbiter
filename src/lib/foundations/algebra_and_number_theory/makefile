@@ -18,7 +18,6 @@ MODULES = \
 	longinteger_domain.o \
 	longinteger_object.o \
 	matrix_block_data.o \
-	norm_tables.o \
 	null_polarity_generator.o \
 	number_theoretic_transform.o \
 	number_theory_domain.o \

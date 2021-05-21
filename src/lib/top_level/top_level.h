@@ -131,6 +131,11 @@ class projective_space_object_classifier_description;
 class projective_space_object_classifier;
 class projective_space_with_action_description;
 class projective_space_with_action;
+class quartic_curve_activity_description;
+class quartic_curve_activity;
+class quartic_curve_create_description;
+class quartic_curve_create;
+class quartic_curve_domain_with_action;
 
 
 // semifield

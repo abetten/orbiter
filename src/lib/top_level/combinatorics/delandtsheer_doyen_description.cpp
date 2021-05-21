@@ -38,6 +38,9 @@ delandtsheer_doyen_description::delandtsheer_doyen_description()
 	f_mask_label = FALSE;
 	//mask_label = NULL;
 
+	f_problem_label = FALSE;
+	//std::string problem_label;
+
 	DELANDTSHEER_DOYEN_X = -1;
 	DELANDTSHEER_DOYEN_Y = -1;
 	f_K = FALSE;
@@ -58,6 +61,9 @@ delandtsheer_doyen_description::delandtsheer_doyen_description()
 	nb_col_types = 0;
 	col_type = NULL;     		// [nb_col_types + 1]
 
+	f_nb_orbits_on_blocks = FALSE;
+	nb_orbits_on_blocks = 1;
+
 	// mask related test:
 	nb_mask_tests = 0;
 
@@ -65,6 +71,8 @@ delandtsheer_doyen_description::delandtsheer_doyen_description()
 	f_subgroup = FALSE;
 	//subgroup_gens = NULL;
 	//subgroup_order = NULL;
+
+	f_search_wrt_subgroup = FALSE;
 
 }
 
@@ -111,6 +119,11 @@ int delandtsheer_doyen_description::read_arguments(
 			f_mask_label = TRUE;
 			mask_label.assign(argv[++i]);
 			cout << "-mask_label " << mask_label << endl;
+		}
+		else if (stringcmp(argv[i], "-problem_label") == 0) {
+			f_problem_label = TRUE;
+			problem_label.assign(argv[++i]);
+			cout << "-problem_label " << problem_label << endl;
 		}
 		else if (stringcmp(argv[i], "-depth") == 0) {
 			f_depth = TRUE;
@@ -175,6 +188,11 @@ int delandtsheer_doyen_description::read_arguments(
 			cout << "-C ";
 			Orbiter->Int_vec.print(cout, col_type + 1, nb_col_types);
 			cout << endl;
+		}
+		else if (stringcmp(argv[i], "-nb_orbits_on_blocks") == 0) {
+			f_nb_orbits_on_blocks = TRUE;
+			nb_orbits_on_blocks = strtoi(argv[++i]);
+			cout << "-nb_orbits_on_blocks " << nb_orbits_on_blocks << endl;
 		}
 		else if (stringcmp(argv[i], "-masktest") == 0) {
 			string who;
@@ -253,6 +271,11 @@ int delandtsheer_doyen_description::read_arguments(
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-search_wrt_subgroup") == 0) {
+			f_search_wrt_subgroup = TRUE;
+			cout << "-search_wrt_subgroup " << endl;
+		}
+
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;

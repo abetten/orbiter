@@ -67,6 +67,8 @@ interface_symbol_table::interface_symbol_table()
 	f_graph_classification = FALSE;
 	Graph_classify_description = NULL;
 
+	f_diophant = FALSE;
+	Diophant_description = NULL;
 
 
 	f_print_symbols = FALSE;
@@ -88,6 +90,9 @@ interface_symbol_table::interface_symbol_table()
 	f_cubic_surface_activity = FALSE;
 	Cubic_surface_activity_description = NULL;
 
+	f_quartic_curve_activity = FALSE;
+	Quartic_curve_activity_description = NULL;
+
 	f_combinatorial_object_activity = FALSE;
 	Combinatorial_object_activity_description = NULL;
 
@@ -108,6 +113,9 @@ interface_symbol_table::interface_symbol_table()
 
 	f_graph_classification_activity = FALSE;
 	Graph_classification_activity_description = NULL;
+
+	f_diophant_activity = FALSE;
+	Diophant_activity_description = NULL;
 
 }
 
@@ -523,6 +531,33 @@ void interface_symbol_table::read_definition(
 			cout << "interface_symbol_table::read_definition after definition_of_graph_classification" << endl;
 		}
 	}
+	else if (stringcmp(argv[i], "-diophant") == 0) {
+		f_diophant = TRUE;
+
+		Diophant_description = NEW_OBJECT(diophant_description);
+		cout << "reading -diophant_description" << endl;
+		i += Diophant_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		cout << "-diophant_description" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+		cout << "-diophant_description "
+				<< endl;
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition before definition_of_graph_classification" << endl;
+		}
+		definition_of_diophant(Orbiter_top_level_session, verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition after definition_of_graph_classification" << endl;
+		}
+	}
+
 
 	else {
 		cout << "unrecognized command after -define" << endl;
@@ -673,6 +708,23 @@ void interface_symbol_table::read_activity_arguments(int argc,
 			cout << "next argument is " << argv[i] << endl;
 		}
 	}
+	else if (stringcmp(argv[i], "-quartic_curve_activity") == 0) {
+		f_quartic_curve_activity = TRUE;
+		Quartic_curve_activity_description =
+				NEW_OBJECT(quartic_curve_activity_description);
+		cout << "reading -quartic_curve_activity" << endl;
+		i += Quartic_curve_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		cout << "-quartic_curve_activity" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+	}
 	else if (stringcmp(argv[i], "-combinatorial_object_activity") == 0) {
 		f_combinatorial_object_activity = TRUE;
 		Combinatorial_object_activity_description =
@@ -792,7 +844,23 @@ void interface_symbol_table::read_activity_arguments(int argc,
 			cout << "next argument is " << argv[i] << endl;
 		}
 	}
+	else if (stringcmp(argv[i], "-diophant_activity") == 0) {
+		f_diophant_activity = TRUE;
+		Diophant_activity_description =
+				NEW_OBJECT(diophant_activity_description);
+		cout << "reading -diophant_activity" << endl;
+		i += Diophant_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
 
+		i++;
+
+		cout << "-diophant_activity" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+	}
 
 	else {
 		cout << "expecting activity after -do but seeing " << argv[i] << endl;
@@ -866,6 +934,14 @@ void interface_symbol_table::worker(orbiter_top_level_session *Orbiter_top_level
 		do_cubic_surface_activity(Orbiter_top_level_session, verbose_level);
 
 	}
+	else if (f_quartic_curve_activity) {
+
+		if (f_v) {
+			cout << "interface_symbol_table::worker f_quartic_curve_activity" << endl;
+		}
+		do_quartic_curve_activity(Orbiter_top_level_session, verbose_level);
+
+	}
 	else if (f_combinatorial_object_activity) {
 
 		if (f_v) {
@@ -921,6 +997,14 @@ void interface_symbol_table::worker(orbiter_top_level_session *Orbiter_top_level
 		}
 
 		do_graph_classification_activity(Orbiter_top_level_session, verbose_level);
+	}
+	else if (f_diophant_activity) {
+
+		if (f_v) {
+			cout << "interface_symbol_table::worker f_diophant_activity" << endl;
+		}
+
+		do_diophant_activity(Orbiter_top_level_session, verbose_level);
 	}
 
 

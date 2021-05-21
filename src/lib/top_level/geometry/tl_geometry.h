@@ -101,7 +101,7 @@ public:
 	action_on_grassmannian *AG;
 	action *A_on_lines;
 	
-	poset *Poset;
+	poset_with_group_action *Poset;
 
 	projective_space *P; // projective n-space
 	
@@ -207,7 +207,7 @@ public:
 	int *Elt;
 	int *v;
 	schreier *Sch;
-	poset *Poset;
+	poset_with_group_action *Poset;
 	poset_classification *Gen;
 	projective_space *P;
 
@@ -257,7 +257,7 @@ public:
 	int q;
 
 	poset_classification_control *Control;
-	poset *Poset;
+	poset_with_group_action *Poset;
 	poset_classification *gen;
 	int degree;
 
@@ -482,7 +482,7 @@ public:
 
 	poset_classification *gen;
 	poset_classification_control *Control;
-	poset *Poset;
+	poset_with_group_action *Poset;
 
 	int nb_orbits;
 	int current_orbit;
@@ -665,7 +665,7 @@ public:
 	action *A2r;
 
 	poset_classification_control *Control;
-	poset *Poset;
+	poset_with_group_action *Poset;
 	poset_classification *gen;
 
 
@@ -753,7 +753,7 @@ public:
 
 	vector_space *VS;
 	poset_classification_control *Control1;
-	poset *Poset1;
+	poset_with_group_action *Poset1;
 	poset_classification *Gen;
 	int vector_space_dimension; // = n
 
@@ -785,11 +785,11 @@ public:
 	int secondary_schreier_depth;
 
 	poset_classification_control *Control_stab;
-	poset *Poset_stab;
+	poset_with_group_action *Poset_stab;
 	poset_classification *Gen_stab;
 
 	poset_classification_control *Control2;
-	poset *Poset2;
+	poset_with_group_action *Poset2;
 	poset_classification *Gen2;
 	int *is_allowed;
 
@@ -895,7 +895,7 @@ public:
 
 	int m; // Witt index
 
-	poset *Poset;
+	poset_with_group_action *Poset;
 	poset_classification *gen;
 
 
@@ -992,7 +992,7 @@ public:
 
 	vector_space *VS;
 	poset_classification_control *Control;
-	poset *Poset;
+	poset_with_group_action *Poset;
 	poset_classification *Gen;
 
 	int schreier_depth;
@@ -1032,7 +1032,7 @@ public:
 		int *candidates, int nb_candidates, 
 		int *good_candidates, int &nb_good_candidates, 
 		int verbose_level);
-	void get_stabilizer(int orbit_idx, group &G, longinteger_object &go_G);
+	void get_stabilizer(int orbit_idx, group_container &G, longinteger_object &go_G);
 	void get_orbit_length(int orbit_idx, longinteger_object &length);
 	int get_orbit_length_as_int(int orbit_idx);
 	void orbit_element_unrank(int orbit_idx, long int rank,
@@ -1066,7 +1066,7 @@ public:
 	incidence_structure *Inc; // do not free
 	action *A; // do not free
 	poset_classification_control *Control;
-	poset *Poset;
+	poset_with_group_action *Poset;
 	poset_classification *gen;
 
 	fancy_set *Line_intersections; // [Inc->nb_cols]
@@ -1183,7 +1183,7 @@ public:
 	wreath_product *W;
 	vector_space *VS;
 	poset_classification_control *Control;
-	poset *Poset;
+	poset_with_group_action *Poset;
 	poset_classification *Gen;
 	int vector_space_dimension;
 	int *v; // [vector_space_dimension]

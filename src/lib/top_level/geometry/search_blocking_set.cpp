@@ -166,7 +166,7 @@ void search_blocking_set::find_partial_blocking_sets(int depth, int verbose_leve
 	Control->f_depth = TRUE;
 	Control->depth = Inc->nb_rows;
 
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 	Poset->init_subset_lattice(A, A,
 			A->Strong_gens,
 			verbose_level);

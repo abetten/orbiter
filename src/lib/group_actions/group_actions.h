@@ -33,7 +33,7 @@ class stabilizer_chain_base_data;
 
 
 // data_structures
-class group;
+class group_container;
 class incidence_structure_with_group;
 class orbit_rep;
 class orbit_transversal;

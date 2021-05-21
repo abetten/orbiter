@@ -1777,9 +1777,9 @@ void group_theoretic_activity::orbits_on_subsets(int verbose_level)
 	}
 	poset_classification *PC;
 	poset_classification_control *Control;
-	poset *Poset;
+	poset_with_group_action *Poset;
 
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 
 
 	if (Descr->f_poset_classification_control) {
@@ -1858,7 +1858,7 @@ void group_theoretic_activity::orbits_on_subspaces(int verbose_level)
 	n = LG->n;
 
 	orbits_on_subspaces_PC = NEW_OBJECT(poset_classification);
-	orbits_on_subspaces_Poset = NEW_OBJECT(poset);
+	orbits_on_subspaces_Poset = NEW_OBJECT(poset_with_group_action);
 
 
 
@@ -1893,7 +1893,7 @@ void group_theoretic_activity::orbits_on_subspaces(int verbose_level)
 	}
 #endif
 
-	orbits_on_subspaces_Poset = NEW_OBJECT(poset);
+	orbits_on_subspaces_Poset = NEW_OBJECT(poset_with_group_action);
 	orbits_on_subspaces_Poset->init_subspace_lattice(LG->A_linear,
 			LG->A2, LG->Strong_gens,
 			orbits_on_subspaces_VS,

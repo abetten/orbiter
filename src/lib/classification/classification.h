@@ -34,7 +34,7 @@ class poset_classification;
 class poset_classification_control;
 class poset_description;
 class poset_orbit_node;
-class poset;
+class poset_with_group_action;
 class upstep_work;
 
 

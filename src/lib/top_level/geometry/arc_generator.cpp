@@ -396,7 +396,7 @@ void arc_generator::prepare_generator(int verbose_level)
 
 
 
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 	Poset->init_subset_lattice(A, A, SG /* A->Strong_gens*/, verbose_level);
 
 	Poset->f_print_function = FALSE;

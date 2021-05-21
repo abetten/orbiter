@@ -152,6 +152,23 @@ void orbiter_symbol_table_entry::init_cubic_surface(std::string &label,
 	}
 }
 
+void orbiter_symbol_table_entry::init_quartic_curve(std::string &label,
+		void *p, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_quartic_curve" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_quartic_curve;
+	ptr = p;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_quartic_curve done" << endl;
+	}
+}
+
 void orbiter_symbol_table_entry::init_classification_of_cubic_surfaces_with_double_sixes(
 		std::string &label,
 		void *p, int verbose_level)
@@ -333,6 +350,23 @@ void orbiter_symbol_table_entry::init_graph_classify(std::string &label,
 	}
 }
 
+void orbiter_symbol_table_entry::init_diophant(std::string &label,
+		void *Dio, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_diophant" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_diophant;
+	ptr = Dio;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_diophant done" << endl;
+	}
+}
+
 
 void orbiter_symbol_table_entry::print()
 {
@@ -365,6 +399,9 @@ void orbiter_symbol_table_entry::print()
 		}
 		else if (object_type == t_cubic_surface) {
 			cout << "cubic surface" << endl;
+		}
+		else if (object_type == t_quartic_curve) {
+			cout << "quartic curve" << endl;
 		}
 		else if (object_type == t_classification_of_cubic_surfaces_with_double_sixes) {
 			cout << "classification_of_cubic_surfaces_with_double_sixes" << endl;
@@ -399,6 +436,9 @@ void orbiter_symbol_table_entry::print()
 		}
 		else if (object_type == t_graph_classify) {
 			cout << "graph_classification" << endl;
+		}
+		else if (object_type == t_diophant) {
+			cout << "diophant" << endl;
 		}
 
 

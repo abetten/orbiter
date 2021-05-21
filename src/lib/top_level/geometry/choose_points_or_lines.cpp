@@ -200,7 +200,7 @@ void choose_points_or_lines::compute_orbits(strong_generators *Strong_gens,
 	Control->f_depth = TRUE;
 	Control->depth = nb_points_or_lines;
 
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 	Poset->init_subset_lattice(A, A2, Strong_gens, verbose_level);
 
 	gen->initialize_and_allocate_root_node(Control, Poset,
@@ -263,7 +263,7 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 	int f, nd, i;
 	int f_changed;
 	long int *the_favorite_representative;
-	group *G;
+	group_container *G;
 	poset_orbit_node *O;
 	
 	f_hit_favorite = FALSE;
@@ -281,7 +281,7 @@ void choose_points_or_lines::choose_orbit(int orbit_no,
 	
 	longinteger_object go;
 	
-	G = NEW_OBJECT(group);
+	G = NEW_OBJECT(group_container);
 	representative = NEW_lint(nb_points_or_lines);
 	the_favorite_representative = NEW_lint(nb_points_or_lines);
 	

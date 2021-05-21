@@ -904,6 +904,226 @@ void action_global::perm_print_cycles_sorted_by_length_offset(ostream &ost,
 }
 
 
+
+action *action_global::init_direct_product_group_and_restrict(
+		matrix_group *M1, matrix_group *M2, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	action *A_direct_product;
+	action *Adp;
+	direct_product *P;
+	long int *points;
+	int nb_points;
+	int i;
+
+	if (f_v) {
+		cout << "action_global::init_direct_product_group_and_restrict" << endl;
+		cout << "M1=" << M1->label << endl;
+		cout << "M2=" << M2->label << endl;
+	}
+	A_direct_product = NEW_OBJECT(action);
+	A_direct_product = init_direct_product_group(M1, M2, verbose_level);
+	if (f_v) {
+		cout << "action_global::init_direct_product_group_and_restrict "
+				"after A_direct_product->init_direct_product_group" << endl;
+	}
+
+	P = A_direct_product->G.direct_product_group;
+	nb_points = P->degree_of_product_action;
+	points = NEW_lint(nb_points);
+	for (i = 0; i < nb_points; i++) {
+		points[i] = P->perm_offset_i[2] + i;
+	}
+
+	if (f_v) {
+		cout << "action_global::init_direct_product_group_and_restrict "
+				"before A_direct_product->restricted_action" << endl;
+	}
+	Adp = A_direct_product->restricted_action(points, nb_points,
+			verbose_level);
+	Adp->f_is_linear = FALSE;
+
+
+	if (f_v) {
+		cout << "action_global::init_direct_product_group_and_restrict "
+				"after A_direct_product->restricted_action" << endl;
+	}
+	return Adp;
+}
+
+action *action_global::init_direct_product_group(
+		matrix_group *M1, matrix_group *M2,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	direct_product *P;
+	action *A;
+
+	if (f_v) {
+		cout << "action_global::init_direct_product_group" << endl;
+		cout << "M1=" << M1->label << endl;
+		cout << "M2=" << M2->label << endl;
+	}
+
+	A = NEW_OBJECT(action);
+	P = NEW_OBJECT(direct_product);
+
+
+
+	A->type_G = direct_product_t;
+	A->G.direct_product_group = P;
+	A->f_allocated = TRUE;
+
+	if (f_v) {
+		cout << "action_global::init_direct_product_group "
+				"before P->init" << endl;
+	}
+	P->init(M1, M2, verbose_level);
+	if (f_v) {
+		cout << "action_global::init_direct_product_group "
+				"after P->init" << endl;
+	}
+
+	A->f_is_linear = FALSE;
+	A->dimension = 0;
+
+
+	A->low_level_point_size = 0;
+	if (f_v) {
+		cout << "action_global::init_direct_product_group low_level_point_size="
+			<< A->low_level_point_size<< endl;
+	}
+
+	A->label.assign(P->label);
+	A->label_tex.assign(P->label_tex);
+
+
+	if (f_v) {
+		cout << "action_global::init_direct_product_group "
+				"label=" << A->label << endl;
+	}
+
+	A->degree = P->degree_overall;
+	A->make_element_size = P->make_element_size;
+
+	A->ptr = NEW_OBJECT(action_pointer_table);
+	A->ptr->init_function_pointers_direct_product_group();
+
+	A->elt_size_in_int = P->elt_size_int;
+	A->coded_elt_size_in_char = P->char_per_elt;
+	A->allocate_element_data();
+
+
+
+
+	A->degree = P->degree_overall;
+	if (f_v) {
+		cout << "action_global::init_direct_product_group "
+				"degree=" << A->degree << endl;
+	}
+
+	A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+	A->Stabilizer_chain->allocate_base_data(A, P->base_length, verbose_level);
+
+	if (f_v) {
+		cout << "action_global::init_direct_product_group "
+				"base_len=" << A->base_len() << endl;
+	}
+
+
+	Orbiter->Lint_vec.copy(P->the_base, A->get_base(), A->base_len());
+	Orbiter->Int_vec.copy(P->the_transversal_length,
+			A->get_transversal_length(), A->base_len());
+
+	int *gens_data;
+	int gens_size;
+	int gens_nb;
+
+	if (f_v) {
+		cout << "action_global::init_direct_product_group "
+				"before W->make_strong_generators_data" << endl;
+	}
+	P->make_strong_generators_data(gens_data,
+			gens_size, gens_nb, verbose_level - 1);
+	if (f_v) {
+		cout << "action_global::init_direct_product_group "
+				"after W->make_strong_generators_data" << endl;
+	}
+	A->Strong_gens = NEW_OBJECT(strong_generators);
+	if (f_v) {
+		cout << "action_global::init_direct_product_group "
+				"before A->Strong_gens->init_from_data" << endl;
+	}
+
+	vector_ge *nice_gens;
+
+	A->Strong_gens->init_from_data(A,
+			gens_data, gens_nb, gens_size,
+			A->get_transversal_length(),
+			nice_gens,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "action_global::init_direct_product_group "
+				"after A->Strong_gens->init_from_data" << endl;
+	}
+	FREE_OBJECT(nice_gens);
+	A->f_has_strong_generators = TRUE;
+	FREE_int(gens_data);
+
+	sims *S;
+
+	S = NEW_OBJECT(sims);
+
+	S->init(A, verbose_level - 2);
+	if (f_v) {
+		cout << "action_global::init_direct_product_group "
+				"before S->init_generators" << endl;
+	}
+	S->init_generators(*A->Strong_gens->gens, verbose_level);
+	if (f_v) {
+		cout << "action_global::init_direct_product_group "
+				"after S->init_generators" << endl;
+	}
+	if (f_v) {
+		cout << "action_global::init_direct_product_group "
+				"before S->compute_base_orbits_known_length" << endl;
+	}
+	S->compute_base_orbits_known_length(A->get_transversal_length(), verbose_level);
+	if (f_v) {
+		cout << "action_global::init_direct_product_group "
+				"after S->compute_base_orbits_known_length" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "action_global::init_direct_product_group "
+				"before init_sims_only" << endl;
+	}
+
+	A->init_sims_only(S, verbose_level);
+
+	if (f_v) {
+		cout << "action_global::init_direct_product_group "
+				"after init_sims_only" << endl;
+	}
+
+	A->compute_strong_generators_from_sims(0/*verbose_level - 2*/);
+
+	if (f_v) {
+		cout << "action_global::init_direct_product_group, finished setting up "
+				<< A->label;
+		cout << ", a permutation group of degree " << A->degree << " ";
+		cout << "and of order ";
+		A->print_group_order(cout);
+		cout << endl;
+		//cout << "make_element_size=" << make_element_size << endl;
+		//cout << "base_len=" << base_len << endl;
+		//cout << "f_semilinear=" << f_semilinear << endl;
+	}
+	return A;
+}
+
+
 void callback_choose_random_generator_orthogonal(int iteration,
 	int *Elt, void *data, int verbose_level)
 {
@@ -958,7 +1178,6 @@ void callback_choose_random_generator_orthogonal(int iteration,
 				"iteration=" << iteration << " done" << endl;
 	}
 }
-
 
 
 }}

@@ -1424,9 +1424,9 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 					<< " computing orbits on subsets" << endl;
 			}
 		poset_classification_control *Control;
-		poset *Poset;
+		poset_with_group_action *Poset;
 		Control = NEW_OBJECT(poset_classification_control);
-		Poset = NEW_OBJECT(poset);
+		Poset = NEW_OBJECT(poset_with_group_action);
 		Poset->init_subset_lattice(
 				Iso->A_base, Iso->AA, Strong_gens,
 				verbose_level);

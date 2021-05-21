@@ -74,7 +74,7 @@ public:
 	action *A_on_arc;
 
 	int arc_idx;
-	poset *Poset;
+	poset_with_group_action *Poset;
 	poset_classification_control *Control;
 	poset_classification *Orbits_on_pairs;
 
@@ -309,7 +309,7 @@ public:
 		// restricted action A2 on the set Neighbors[]
 
 	poset_classification_control *Control;
-	poset *Poset;
+	poset_with_group_action *Poset;
 	poset_classification *Five_plus_one;
 		// orbits on five-plus-one configurations
 
@@ -400,8 +400,8 @@ public:
 	strong_generators *gens_type1;
 	strong_generators *gens_type2;
 
-	poset *Poset1;
-	poset *Poset2;
+	poset_with_group_action *Poset1;
+	poset_with_group_action *Poset2;
 	poset_classification *orbits_on_trihedra_type1;
 	poset_classification *orbits_on_trihedra_type2;
 

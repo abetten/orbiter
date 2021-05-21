@@ -2356,12 +2356,12 @@ void action::get_generators_from_ascii_coding(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	longinteger_object go;
-	group *G;
+	group_container *G;
 
 	if (f_v) {
 		cout << "action::get_generators_from_ascii_coding" << endl;
 		}
-	G = NEW_OBJECT(group);
+	G = NEW_OBJECT(group_container);
 	G->init(this, verbose_level - 2);
 	if (f_vv) {
 		cout << "action::get_generators_from_ascii_coding "
@@ -2559,6 +2559,53 @@ void action::stabilizer_of_spread_representative(
 		cout << "action::stabilizer_of_spread_representative done"
 				<< endl;
 		}
+}
+
+void action::stabilizer_of_quartic_curve_representative(
+		int q, int no,
+		vector_ge *&gens, const char *&stab_order,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *data, nb_gens, data_size;
+	int i;
+	knowledge_base K;
+
+	if (f_v) {
+		cout << "action::stabilizer_of_quartic_curve_representative" << endl;
+	}
+	K.quartic_curves_stab_gens(q, no, data, nb_gens, data_size, stab_order);
+
+	gens = NEW_OBJECT(vector_ge);
+#if 0
+	if (f_v) {
+		cout << "action::stabilizer_of_quartic_curve_representative "
+				"before gens->init_from_data" << endl;
+	}
+	gens->init_from_data(this, data,
+			nb_gens, data_size, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "action::stabilizer_of_quartic_curve_representative "
+				"after gens->init_from_data" << endl;
+	}
+#else
+	gens->init(this, verbose_level - 2);
+	gens->allocate(nb_gens, verbose_level - 2);
+	if (f_vv) {
+		cout << "action::stabilizer_of_quartic_curve_representative "
+				"creating stabilizer generators:" << endl;
+	}
+	for (i = 0; i < nb_gens; i++) {
+		make_element(gens->ith(i),
+				data + i * data_size, 0 /*verbose_level*/);
+	}
+#endif
+
+	if (f_v) {
+		cout << "action::stabilizer_of_quartic_curve_representative done"
+				<< endl;
+	}
 }
 
 void action::point_stabilizer_any_point(int &pt, 

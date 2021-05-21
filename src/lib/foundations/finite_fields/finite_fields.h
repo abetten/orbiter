@@ -1381,6 +1381,29 @@ extern int finitefield_largest_degree_irreducible_polynomial[];
 extern const char *finitefield_primitive_polynomial[][100];
 
 
+// #############################################################################
+// norm_tables.cpp:
+// #############################################################################
+
+//! tables for the norm map in a finite field
+
+class norm_tables {
+public:
+	int *norm_table;
+	int *norm_table_sorted;
+	int *sorting_perm, *sorting_perm_inv;
+	int nb_types;
+	int *type_first, *type_len;
+	int *the_type;
+
+	norm_tables();
+	~norm_tables();
+	void init(unusual_model &U, int verbose_level);
+	int choose_an_element_of_given_norm(int norm, int verbose_level);
+
+};
+
+
 
 
 // #############################################################################

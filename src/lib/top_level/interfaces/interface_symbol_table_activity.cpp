@@ -320,6 +320,65 @@ void interface_symbol_table::do_cubic_surface_activity(
 }
 
 
+void interface_symbol_table::do_quartic_curve_activity(
+		orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		int i;
+		cout << "interface_symbol_table::do_quartic_curve_activity "
+				"activity for " << with_labels.size() << " objects:";
+		for (i = 0; i < with_labels.size(); i++) {
+			cout << with_labels[i];
+			if (i < with_labels.size() - 1) {
+				cout << ", ";
+			}
+		}
+		cout << endl;
+	}
+
+
+
+	int *Idx;
+
+	Orbiter_top_level_session->find_symbols(with_labels, Idx);
+
+	if (with_labels.size() < 1) {
+		cout << "-group_theoretic_activity requires at least one input" << endl;
+		exit(1);
+	}
+
+	quartic_curve_create *QC;
+
+	QC = (quartic_curve_create *) Orbiter_top_level_session->get_object(Idx[0]);
+	{
+		quartic_curve_activity Activity;
+
+		Activity.init(Quartic_curve_activity_description, QC, verbose_level);
+
+		if (f_v) {
+			cout << "interface_symbol_table::do_quartic_curve_activity "
+					"before Activity.perform_activity" << endl;
+		}
+		Activity.perform_activity(verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::do_quartic_curve_activity "
+					"after Activity.perform_activity" << endl;
+		}
+
+	}
+
+	FREE_int(Idx);
+
+	if (f_v) {
+		cout << "interface_symbol_table::do_quartic_curve_activity done" << endl;
+	}
+
+}
+
+
 void interface_symbol_table::do_combinatorial_object_activity(
 		orbiter_top_level_session *Orbiter_top_level_session,
 		int verbose_level)
@@ -728,6 +787,65 @@ void interface_symbol_table::do_graph_classification_activity(
 	}
 
 }
+
+void interface_symbol_table::do_diophant_activity(
+		orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		int i;
+		cout << "interface_symbol_table::do_diophant_activity "
+				"activity for " << with_labels.size() << " objects:";
+		for (i = 0; i < with_labels.size(); i++) {
+			cout << with_labels[i];
+			if (i < with_labels.size() - 1) {
+				cout << ", ";
+			}
+		}
+		cout << endl;
+	}
+
+
+
+	int *Idx;
+
+	Orbiter_top_level_session->find_symbols(with_labels, Idx);
+
+	if (with_labels.size() < 1) {
+		cout << "-do_spread_table_activity requires at least one input" << endl;
+		exit(1);
+	}
+
+	diophant_create *Dio;
+
+	Dio = (diophant_create *) Orbiter_top_level_session->get_object(Idx[0]);
+	{
+		diophant_activity Activity;
+
+
+		if (f_v) {
+			cout << "interface_symbol_table::do_diophant_activity "
+					"before Activity.perform_activity" << endl;
+		}
+		Activity.perform_activity(Diophant_activity_description, Dio->D, verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::do_diophant_activity "
+					"after Activity.perform_activity" << endl;
+		}
+
+	}
+
+	FREE_int(Idx);
+
+	if (f_v) {
+		cout << "interface_symbol_table::do_diophant_activity done" << endl;
+	}
+
+}
+
+
 
 
 

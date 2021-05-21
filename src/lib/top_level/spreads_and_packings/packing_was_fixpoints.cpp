@@ -367,7 +367,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch(
 				"before compute_orbits_on_subsets" << endl;
 	}
 
-	Poset_fixpoint_cliques = NEW_OBJECT(poset);
+	Poset_fixpoint_cliques = NEW_OBJECT(poset_with_group_action);
 	Poset_fixpoint_cliques->init_subset_lattice(
 			PW->P->T->A, A_on_fixpoints,
 			PW->N_gens,

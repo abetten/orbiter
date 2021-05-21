@@ -224,7 +224,7 @@ void graph_classify::init(graph_classify_description *Descr, int verbose_level)
 		cout << "please use -poset_classification_control ... -end" << endl;
 		exit(1);
 	}
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 	Poset->init_subset_lattice(A_base, A_on_edges,
 			A_base->Strong_gens,
 			verbose_level);

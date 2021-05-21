@@ -185,7 +185,7 @@ void BLT_set_create::init(
 			set = NEW_lint(OA->Descr->F->q + 1);
 			ABC = NEW_int(3 * (OA->Descr->F->q + 1));
 			OA->O->create_K1_BLT_set(set, ABC, verbose_level);
-			// for a nonsquare m, and q=p^e
+			// for a non-square m, and q=p^e
 			// a(t)= t, b(t) = 0, c(t) = -m*t^p, all t \in GF(q)
 			// together with the point (0, 0, 0, 1, 0)
 			sprintf(str, "K1");

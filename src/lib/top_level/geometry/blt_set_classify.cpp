@@ -159,7 +159,7 @@ void blt_set_classify::init_basic(linear_group *LG,
 
 
 
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 	Poset->init_subset_lattice(A, A,
 			LG->Strong_gens,
 			verbose_level);

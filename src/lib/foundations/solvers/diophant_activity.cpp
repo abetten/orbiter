@@ -28,20 +28,20 @@ diophant_activity::~diophant_activity()
 }
 
 
-void diophant_activity::init(diophant_activity_description *Descr,
+void diophant_activity::init_from_file(diophant_activity_description *Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "diophant_activity::init" << endl;
+		cout << "diophant_activity::init_from_file" << endl;
 	}
 
 	diophant_activity::Descr = Descr;
 	string_tools ST;
 
 	if (!Descr->f_input_file) {
-		cout << "diophant_activity::init please use option -q <q>" << endl;
+		cout << "diophant_activity::init_from_file please use option -q <q>" << endl;
 		exit(1);
 	}
 
@@ -49,6 +49,21 @@ void diophant_activity::init(diophant_activity_description *Descr,
 
 	Dio = NEW_OBJECT(diophant);
 	Dio->read_general_format(Descr->input_file, verbose_level);
+
+}
+
+void diophant_activity::perform_activity(diophant_activity_description *Descr, diophant *Dio,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "diophant_activity::perform_activity" << endl;
+	}
+
+	diophant_activity::Descr = Descr;
+	string_tools ST;
+
 
 	if (Descr->f_solve_mckay) {
 
@@ -166,7 +181,7 @@ void diophant_activity::init(diophant_activity_description *Descr,
 
 	}
 	else {
-		cout << "diophant_activity::init no activity found" << endl;
+		cout << "diophant_activity::perform_activity no activity found" << endl;
 		exit(1);
 	}
 
@@ -174,7 +189,7 @@ void diophant_activity::init(diophant_activity_description *Descr,
 
 
 	if (f_v) {
-		cout << "diophant_activity::init done" << endl;
+		cout << "diophant_activity::perform_activity done" << endl;
 	}
 }
 

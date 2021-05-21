@@ -70,7 +70,7 @@ public:
 	longinteger_object Aut_order;
 	action *Aut;
 	action *A2;
-	poset *Poset;
+	poset_with_group_action *Poset;
 	poset_classification_control *Control;
 	poset_classification *gen;
 
@@ -337,7 +337,7 @@ public:
 
 	graph_classify_description *Descr;
 
-	poset *Poset;
+	poset_with_group_action *Poset;
 	poset_classification *gen;
 
 	action *A_base; // symmetric group on n vertices

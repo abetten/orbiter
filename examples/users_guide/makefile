@@ -566,6 +566,16 @@ CODE_HAMMING="1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 
 CODE_GV_N15_K6="1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1"
 CODE_GV_N15_K6_CHECK="1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1"
 
+
+DELANDTSHEER_DOYEN_PROBLEM_COLBOURN_COLBOURN_7_13 = -d1 1 -q1 7 -d2 1 -q2 13 -K 6 -search_control -W  -end -problem_label DD_CC_7_13
+DELANDTSHEER_DOYEN_PROBLEM_COLBOURN_COLBOURN_7_13_GROUP1=-subgroup "1,1,1,1, " "91" -group_label "cyclic91"
+DELANDTSHEER_DOYEN_PROBLEM_COLBOURN_COLBOURN_7_13_MASK1=\
+	-nb_orbits_on_blocks 3 \
+	-depth 6 \
+	-mask_label "no_mask"
+
+
+
 DELANDTSHEER_DOYEN_PROBLEM_27_53 = -d1 1 -q1 27 -d2 1 -q2 53 -K 11 -DDx 2 -DDy 1 -search_control -W -end 
 DELANDTSHEER_DOYEN_PROBLEM_27_53_GROUP1=-subgroup "1,1,1,0, 1,3,1,0, 1,9,1,0, 1,0,1,1, -2,0,-4,0" "18603" -group_label "group1"
 # mask 1:
@@ -6800,8 +6810,20 @@ quartic_curve_25_0_0_canonical:
 
 
 
-
-
+quartic_curve_13_0: 
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space 2 F  \
+		-with P -do \
+			-projective_space_activity \
+				-define_quartic_curve QC13_0 -q 13 -catalogue 0 -end \
+			-end \
+		-with QC13_0 -do \
+			-quartic_curve_activity \
+				-report \
+			-end
+	pdflatex quartic_curve_catalogue_q13_iso0_report.tex
+	open quartic_curve_catalogue_q13_iso0_report.pdf
 
 
 
@@ -10244,6 +10266,52 @@ STS13:
 
 SECTION_DESIGN_THEORY_DELANDTHSHEER_DOYEN:
 
+PP4 = -d1 1 -q1 3 -d2 1 -q2 7 -K 5 -search_control -W -end -problem_label PP4
+PP4_GROUP1=-subgroup "1,1,1,1, " "21" -group_label "cyclic21"
+PP4_MASK1=\
+	-nb_orbits_on_blocks 1 \
+	-depth 5 \
+	-mask_label "no_mask"
+
+DD_PP4:
+	$(ORBITER_PATH)/orbiter.out -v 6  \
+		-Delandtsheer_Doyen  $(PP4) $(PP4_GROUP1) $(PP4_MASK1) \
+			-end 
+
+DD_PP4_system:
+	$(ORBITER_PATH)/orbiter.out -v 4 -diophant -label PP4  \
+		-problem_of_Steiner_type 10 PP4_pair_covering.csv \
+		-has_sum 1
+	
+DD_PP4_system_solve:
+	$(ORBITER_PATH)/orbiter.out -v 2 -diophant_activity -input_file PP4.diophant -solve_mckay 
+
+
+DD_CC:
+	$(ORBITER_PATH)/orbiter.out -v 6  \
+		-Delandtsheer_Doyen  -search_wrt_subgroup $(DELANDTSHEER_DOYEN_PROBLEM_COLBOURN_COLBOURN_7_13) $(DELANDTSHEER_DOYEN_PROBLEM_COLBOURN_COLBOURN_7_13_GROUP1) $(DELANDTSHEER_DOYEN_PROBLEM_COLBOURN_COLBOURN_7_13_MASK1) \
+			-end 
+
+#target level: 6
+#k2: 15
+#number of k-orbits at target level: 1774964
+
+# creates DD_CC_7_13_pair_covering.csv
+
+
+DD_CC_system:
+	$(ORBITER_PATH)/orbiter.out -v 4 -define D -diophant -label DD_CC_7_13  \
+		-problem_of_Steiner_type 45 DD_CC_7_13_pair_covering.csv \
+		-has_sum 3 -end \
+		-with D -do \
+		-diophant_activity -solve_mckay -end
+	
+
+DD_CC_system_solve:
+	$(ORBITER_PATH)/orbiter.out -v 2 -diophant_activity -input_file DD_CC_7_13.diophant -solve_mckay 
+
+
+# no solution
 
 
 
@@ -13100,7 +13168,9 @@ surface_13_1_transform:
 
 
 
-SURFACE_13_1_PROJECTED_LINES="27,178,76,42,91,56,158,153,131,182,59,53,60,41,24,92,0,63,57,165,64,154,133"
+#SURFACE_13_1_PROJECTED_LINES="27,178,76,42,91,56,158,153,131,182,59,53,60,41,24,92,0,63,57,165,64,154,133"
+SURFACE_13_1_PROJECTED_LINES="0,1,27,178,76,42,91,56,158,153,131,182,59,53,60,41,24,92,63,57,165,64,154,133"
+
 
 surface_13_1_conic_type:
 	$(ORBITER_PATH)/orbiter.out -v 2 \
@@ -13110,6 +13180,34 @@ surface_13_1_conic_type:
 		-with P -do \
 		-projective_space_activity \
 			-conic_type $(SURFACE_13_1_PROJECTED_LINES) \
+		-end
+
+
+
+SURFACE_13_0_PROJECTED_LINES="0,1,24,109,147,53,99,139,45,157,125,141,137,143,101,58,173,66,132,44"
+
+surface_13_0_conic_type:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-draw_options -end \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space 2 F  \
+		-with P -do \
+		-projective_space_activity \
+			-conic_type $(SURFACE_13_0_PROJECTED_LINES) \
+		-end
+
+
+SURFACE_13_2_PROJECTED_LINES="0,1,19,108,167,100,2,38,173,91,138,40,33,34,39,121,78,36,3,29,89,139"
+#deleted 0,19,38,173
+
+surface_13_2_conic_type:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-draw_options -end \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space 2 F  \
+		-with P -do \
+		-projective_space_activity \
+			-conic_type $(SURFACE_13_2_PROJECTED_LINES) \
 		-end
 
 

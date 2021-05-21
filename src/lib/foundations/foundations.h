@@ -363,11 +363,13 @@ class hjelmslev;
 class incidence_structure;
 class klein_correspondence;
 class knarr;
-class knowledge_base;
 class object_in_projective_space;
 class point_line;
 class points_and_lines;
 class projective_space;
+class quartic_curve_domain;
+class quartic_curve_object_properties;
+class quartic_curve_object;
 class spread_tables;
 class unusual_model;
 class W3q;
@@ -430,6 +432,10 @@ class orbiter_data_file;
 class os_interface;
 class override_double;
 class prepare_frames;
+
+// knowledge_base:
+class knowledge_base;
+
 
 // orthogonal:
 class orthogonal;
@@ -712,6 +718,7 @@ std::ostream& operator<<(std::ostream& ost, longinteger_object& p);
 #include "./graph_theory_nauty/graph_theory_nauty.h"
 #include "./graphics/graphics.h"
 #include "./io_and_os/io_and_os.h"
+#include "./knowledge_base/knowledge_base.h"
 #include "./orthogonal/orthogonal.h"
 #include "./solvers/solvers.h"
 #include "./statistics/statistics.h"

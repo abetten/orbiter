@@ -18,7 +18,7 @@ namespace group_actions {
 
 
 // #############################################################################
-// group.cpp
+// group_container.cpp
 // #############################################################################
 
 
@@ -27,7 +27,7 @@ namespace group_actions {
 
 
 
-class group {
+class group_container {
 
 public:
 	action *A;
@@ -42,13 +42,13 @@ public:
 	int f_has_sims;
 	sims *S;
 	
-	group();
-	~group();
+	group_container();
+	~group_container();
 	void null();
 	void freeself();
-	group(action *A, int verbose_level);
-	group(action *A, const char *ascii_coding, int verbose_level);
-	group(action *A, vector_ge &SG, int *tl, int verbose_level);
+	group_container(action *A, int verbose_level);
+	group_container(action *A, const char *ascii_coding, int verbose_level);
+	group_container(action *A, vector_ge &SG, int *tl, int verbose_level);
 	void init(action *A, int verbose_level);
 	void init_ascii_coding_to_sims(const char *ascii_coding, int verbose_level);
 	void init_ascii_coding(const char *ascii_coding, int verbose_level);
@@ -72,12 +72,12 @@ public:
 	void decode_ascii(int verbose_level);
 	void schreier_sims(int verbose_level);
 	void get_strong_generators(int verbose_level);
-	void point_stabilizer(group &stab, int pt, int verbose_level);
+	void point_stabilizer(group_container &stab, int pt, int verbose_level);
 	void point_stabilizer_with_action(action *A2, 
-		group &stab, int pt, int verbose_level);
+			group_container &stab, int pt, int verbose_level);
 	void induced_action(action &induced_action, 
-		group &H, group &K, int verbose_level);
-	void extension(group &N, group &H, int verbose_level);
+			group_container &H, group_container &K, int verbose_level);
+	void extension(group_container &N, group_container &H, int verbose_level);
 		// N needs to have strong generators, 
 		// H needs to have sims
 		// N and H may have different actions, 

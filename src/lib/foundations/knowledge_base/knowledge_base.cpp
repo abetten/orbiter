@@ -1,4 +1,4 @@
-// knowldege_base.cpp
+// knowledge_base.cpp
 //
 // Anton Betten
 //
@@ -26,65 +26,65 @@ namespace foundations {
 
 
 
-#include "./DATA/quartic_curves_q13.cpp"
-#include "./DATA/quartic_curves_q19.cpp"
-#include "./DATA/quartic_curves_q25.cpp"
-#include "./DATA/quartic_curves_q27.cpp"
-#include "./DATA/quartic_curves_q29.cpp"
-#include "./DATA/quartic_curves_q31.cpp"
+#include "DATA/quartic_curves_q13.cpp"
+#include "DATA/quartic_curves_q19.cpp"
+#include "DATA/quartic_curves_q25.cpp"
+#include "DATA/quartic_curves_q27.cpp"
+#include "DATA/quartic_curves_q29.cpp"
+#include "DATA/quartic_curves_q31.cpp"
 
-#include "./DATA/data_hyperovals.cpp"
+#include "DATA/data_hyperovals.cpp"
 
-#include "./DATA/surface_4.cpp"
-#include "./DATA/surface_7.cpp"
-#include "./DATA/surface_8.cpp"
-#include "./DATA/surface_9.cpp"
-#include "./DATA/surface_11.cpp"
-#include "./DATA/surface_13.cpp"
-#include "./DATA/surface_16.cpp"
-#include "./DATA/surface_17.cpp"
-#include "./DATA/surface_19.cpp"
-#include "./DATA/surface_23.cpp"
-#include "./DATA/surface_25.cpp"
-#include "./DATA/surface_27.cpp"
-#include "./DATA/surface_29.cpp"
-#include "./DATA/surface_31.cpp"
-#include "./DATA/surface_32.cpp"
-#include "./DATA/surface_37.cpp"
-#include "./DATA/surface_41.cpp"
-#include "./DATA/surface_43.cpp"
-#include "./DATA/surface_47.cpp"
-#include "./DATA/surface_49.cpp"
-#include "./DATA/surface_53.cpp"
-#include "./DATA/surface_59.cpp"
-#include "./DATA/surface_61.cpp"
-#include "./DATA/surface_64.cpp"
-#include "./DATA/surface_67.cpp"
-#include "./DATA/surface_71.cpp"
-#include "./DATA/surface_73.cpp"
-#include "./DATA/surface_79.cpp"
-#include "./DATA/surface_81.cpp"
-#include "./DATA/surface_83.cpp"
-#include "./DATA/surface_89.cpp"
-#include "./DATA/surface_97.cpp"
-#include "./DATA/surface_101.cpp"
-#include "./DATA/surface_103.cpp"
-#include "./DATA/surface_107.cpp"
-#include "./DATA/surface_109.cpp"
-#include "./DATA/surface_113.cpp"
-#include "./DATA/surface_121.cpp"
-#include "./DATA/surface_127.cpp"
-#include "./DATA/surface_128.cpp"
+#include "DATA/surface_4.cpp"
+#include "DATA/surface_7.cpp"
+#include "DATA/surface_8.cpp"
+#include "DATA/surface_9.cpp"
+#include "DATA/surface_11.cpp"
+#include "DATA/surface_13.cpp"
+#include "DATA/surface_16.cpp"
+#include "DATA/surface_17.cpp"
+#include "DATA/surface_19.cpp"
+#include "DATA/surface_23.cpp"
+#include "DATA/surface_25.cpp"
+#include "DATA/surface_27.cpp"
+#include "DATA/surface_29.cpp"
+#include "DATA/surface_31.cpp"
+#include "DATA/surface_32.cpp"
+#include "DATA/surface_37.cpp"
+#include "DATA/surface_41.cpp"
+#include "DATA/surface_43.cpp"
+#include "DATA/surface_47.cpp"
+#include "DATA/surface_49.cpp"
+#include "DATA/surface_53.cpp"
+#include "DATA/surface_59.cpp"
+#include "DATA/surface_61.cpp"
+#include "DATA/surface_64.cpp"
+#include "DATA/surface_67.cpp"
+#include "DATA/surface_71.cpp"
+#include "DATA/surface_73.cpp"
+#include "DATA/surface_79.cpp"
+#include "DATA/surface_81.cpp"
+#include "DATA/surface_83.cpp"
+#include "DATA/surface_89.cpp"
+#include "DATA/surface_97.cpp"
+#include "DATA/surface_101.cpp"
+#include "DATA/surface_103.cpp"
+#include "DATA/surface_107.cpp"
+#include "DATA/surface_109.cpp"
+#include "DATA/surface_113.cpp"
+#include "DATA/surface_121.cpp"
+#include "DATA/surface_127.cpp"
+#include "DATA/surface_128.cpp"
 
-#include "./DATA/data_DH.cpp"
+#include "DATA/data_DH.cpp"
 
-#include "./DATA/data_spreads.cpp"
+#include "DATA/data_spreads.cpp"
 
-#include "./DATA/data_tensor.cpp"
+#include "DATA/data_tensor.cpp"
 
-#include "./DATA/data_BLT.cpp"
+#include "DATA/data_BLT.cpp"
 
-#include "./DATA/planes_16.cpp"
+#include "DATA/planes_16.cpp"
 
 
 knowledge_base::knowledge_base()
@@ -185,6 +185,55 @@ int *knowledge_base::quartic_curves_representative(int q, int i)
 		exit(1);
 	}
 	p += i * sz;
+	return p;
+}
+
+long int *knowledge_base::quartic_curves_bitangents(int q, int i)
+// i starts from 0
+{
+	long int *p;
+	int nb;
+
+	if (q == 13) {
+		p = quartic_curves_q13_Bitangents;
+		nb = quartic_curves_q13_nb_reps;
+	}
+	else if (q == 19) {
+		p = quartic_curves_q19_Bitangents;
+		nb = quartic_curves_q19_nb_reps;
+	}
+	else if (q == 25) {
+		p = quartic_curves_q25_Bitangents;
+		nb = quartic_curves_q25_nb_reps;
+	}
+	else if (q == 27) {
+		p = quartic_curves_q27_Bitangents;
+		nb = quartic_curves_q27_nb_reps;
+	}
+	else if (q == 29) {
+		p = quartic_curves_q29_Bitangents;
+		nb = quartic_curves_q29_nb_reps;
+	}
+	else if (q == 31) {
+		p = quartic_curves_q31_Bitangents;
+		nb = quartic_curves_q31_nb_reps;
+	}
+	else {
+		cout << "knowledge_base::quartic_curves_bitangents q=" << q
+				<< " I don't have information for this case" << endl;
+		exit(1);
+	}
+	if (i < 0) {
+		cout << "knowledge_base::quartic_curves_bitangents q=" << q << " i=" << i
+				<< " but i must be at least 0 (numbering starts at 0)" << endl;
+		exit(1);
+	}
+	if (i >= nb) {
+		cout << "knowledge_base::quartic_curves_bitangents q=" << q << " i=" << i
+				<< " but I have only " << nb << " representatives" << endl;
+		exit(1);
+	}
+	p += i * 28;
 	return p;
 }
 

@@ -127,11 +127,11 @@ void arc_lifting_simeon::init(int q, int d, int n, int k,
 
 	P->init_incidence_structure(0 /*verbose_level*/);
 
-	poset *Poset;
+	poset_with_group_action *Poset;
 	poset_classification_control *Control;
 
 	Control = NEW_OBJECT(poset_classification_control);
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 	Poset->init_subset_lattice(A, A,
 			A->Strong_gens,
 			verbose_level);
@@ -357,11 +357,11 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 
 
 	int target_depth = 6;
-	poset *Poset2;
+	poset_with_group_action *Poset2;
 	poset_classification_control *Control2;
 	poset_classification *Gen2;
 
-	Poset2 = NEW_OBJECT(poset);
+	Poset2 = NEW_OBJECT(poset_with_group_action);
 	Control2 = NEW_OBJECT(poset_classification_control);
 	Poset2->init_subset_lattice(A, A3,
 			SaS->Strong_gens,
@@ -371,8 +371,6 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 
 	Gen2->compute_orbits_on_subsets(
 		target_depth,
-		//"" /* const char *prefix */,
-		//FALSE /* f_W */, FALSE /* f_w */,
 		Control2,
 		Poset2,
 		//NULL /* int (*candidate_incremental_check_func)(

@@ -556,6 +556,10 @@ class interface_symbol_table {
 	int f_graph_classification;
 	graph_classify_description * Graph_classify_description;
 
+	int f_diophant;
+	diophant_description *Diophant_description;
+
+
 
 
 	int f_print_symbols;
@@ -576,6 +580,9 @@ class interface_symbol_table {
 
 	int f_cubic_surface_activity;
 	cubic_surface_activity_description *Cubic_surface_activity_description;
+
+	int f_quartic_curve_activity;
+	quartic_curve_activity_description *Quartic_curve_activity_description;
 
 	int f_combinatorial_object_activity;
 	combinatorial_object_activity_description *Combinatorial_object_activity_description;
@@ -598,6 +605,8 @@ class interface_symbol_table {
 	int f_graph_classification_activity;
 	graph_classification_activity_description *Graph_classification_activity_description;
 
+	int f_diophant_activity;
+	diophant_activity_description *Diophant_activity_description;
 
 public:
 
@@ -634,6 +643,9 @@ public:
 	void do_cubic_surface_activity(
 			orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
+	void do_quartic_curve_activity(
+			orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
 	void do_combinatorial_object_activity(
 			orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
@@ -653,6 +665,9 @@ public:
 			orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 	void do_graph_classification_activity(
+			orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void do_diophant_activity(
 			orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 
@@ -685,6 +700,8 @@ public:
 	void definition_of_packing_long_orbits(orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 	void definition_of_graph_classification(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void definition_of_diophant(orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 
 

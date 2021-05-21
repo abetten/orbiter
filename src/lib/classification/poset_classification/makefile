@@ -28,7 +28,7 @@ MODULES = \
 	poset_orbit_node_upstep_subspace_action.o \
 	poset_orbit_node_upstep.o \
 	poset_orbit_node.o \
-	poset.o \
+	poset_with_group_action.o \
 	upstep_work_subspace_action.o \
 	upstep_work_trace.o \
 	upstep_work.o 

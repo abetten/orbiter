@@ -177,7 +177,7 @@ void tensor_classify::classify_poset(int depth,
 				"after create_restricted_action_on_rank_one_tensors" << endl;
 	}
 
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 	Poset->init_subset_lattice(A, Ar,
 			SG,
 			verbose_level);

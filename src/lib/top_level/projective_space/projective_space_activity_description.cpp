@@ -61,6 +61,10 @@ projective_space_activity_description::projective_space_activity_description()
 	Surface_Descr = NULL;
 
 
+	f_define_quartic_curve = FALSE;
+	//std::string define_quartic_curve_label;
+	Quartic_curve_descr = NULL;
+
 	f_classify_surfaces_with_double_sixes = FALSE;
 	//std::string classify_surfaces_with_double_sixes_label;
 	classify_surfaces_with_double_sixes_control = NULL;
@@ -262,6 +266,23 @@ int projective_space_activity_description::read_arguments(
 			}
 			cout << "-define_surface " << define_surface_label << endl;
 		}
+		else if (stringcmp(argv[i], "-define_quartic_curve") == 0) {
+			f_define_quartic_curve = TRUE;
+			cout << "-define_quartic_curve, reading extra arguments" << endl;
+
+			define_quartic_curve_label.assign(argv[++i]);
+			Quartic_curve_descr = NEW_OBJECT(quartic_curve_create_description);
+
+			i += Quartic_curve_descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
+			cout << "done reading -define_quartic_curve " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-define_quartic_curve " << define_quartic_curve_label << endl;
+		}
+
 
 		// cubic surfaces:
 		else if (stringcmp(argv[i], "-classify_surfaces_with_double_sixes") == 0) {

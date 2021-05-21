@@ -400,7 +400,7 @@ public:
 	action *A2;
 
 	// local data for orbits on subspaces:
-	poset *orbits_on_subspaces_Poset;
+	poset_with_group_action *orbits_on_subspaces_Poset;
 	poset_classification *orbits_on_subspaces_PC;
 	vector_space *orbits_on_subspaces_VS;
 	int *orbits_on_subspaces_M;

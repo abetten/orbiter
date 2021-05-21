@@ -500,7 +500,7 @@ void orthogonal::create_Law_71_BLT_set(
 // The University of Western Australia, 2003.
 // Note the coordinates here are different (for an unknown reason).
 // Law suggests to construct an infinite family
-// starting form the subgroup A_4 of
+// starting from the subgroup A_4 of
 // the stabilizer of the Fisher/Thas/Walker/Kantor examples.
 {
 	int f_v = (verbose_level >= 1);

@@ -3108,7 +3108,7 @@ void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
 		cout << "algebra_global_with_action::linear_codes_with_bounded_minimum_distance" << endl;
 	}
 
-	poset *Poset;
+	poset_with_group_action *Poset;
 	poset_classification *PC;
 
 
@@ -3123,7 +3123,7 @@ void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
 				<< LG->A2->f_has_strong_generators << endl;
 	}
 
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 
 	Poset->init_subset_lattice(LG->A_linear, LG->A_linear,
 			LG->Strong_gens,

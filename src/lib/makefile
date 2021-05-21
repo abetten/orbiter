@@ -17,7 +17,6 @@ MODULES= \
 		foundations/algebra_and_number_theory/longinteger_domain.o \
 		foundations/algebra_and_number_theory/longinteger_object.o \
 		foundations/algebra_and_number_theory/matrix_block_data.o \
-		foundations/algebra_and_number_theory/norm_tables.o \
 		foundations/algebra_and_number_theory/null_polarity_generator.o \
 		foundations/algebra_and_number_theory/number_theoretic_transform.o \
 		foundations/algebra_and_number_theory/number_theory_domain.o \
@@ -85,6 +84,7 @@ MODULES= \
 		foundations/finite_fields/finite_field_RREF.o \
 		foundations/finite_fields/finite_field_tables.o \
 		foundations/finite_fields/finite_field.o \
+		foundations/finite_fields/norm_tables.o \
 		foundations/finite_fields/subfield_structure.o \
 		foundations/geometry/andre_construction.o \
 		foundations/geometry/andre_construction_line_element.o \
@@ -105,14 +105,16 @@ MODULES= \
 		foundations/geometry/incidence_structure.o \
 		foundations/geometry/klein_correspondence.o \
 		foundations/geometry/knarr.o \
-		foundations/geometry/knowledge_base.o \
 		foundations/geometry/object_in_projective_space.o \
 		foundations/geometry/point_line.o \
 		foundations/geometry/points_and_lines.o \
 		foundations/geometry/projective_space.o \
 		foundations/geometry/projective_space2.o \
+		foundations/geometry/quartic_curve_domain.o \
+		foundations/geometry/quartic_curve_object_properties.o \
+		foundations/geometry/quartic_curve_object.o \
 		foundations/geometry/spread_tables.o \
-		foundations/geometry/unusual.o \
+		foundations/geometry/unusual_model.o \
 		foundations/geometry/w3q.o \
 		foundations/globals/function_command.o \
 		foundations/globals/function_polish_description.o \
@@ -169,6 +171,7 @@ MODULES= \
 		foundations/io_and_os/override_double.o \
 		foundations/io_and_os/prepare_frames.o \
 		foundations/io_and_os/util.o \
+		foundations/knowledge_base/knowledge_base.o \
 		foundations/orthogonal/orthogonal_blt.o \
 		foundations/orthogonal/orthogonal_group.o \
 		foundations/orthogonal/orthogonal_hyperbolic.o \
@@ -221,7 +224,7 @@ MODULES= \
 		group_actions/actions/interface_wreath_product.o \
 		group_actions/actions/nauty_interface_with_group.o \
 		group_actions/actions/stabilizer_chain_base_data.o \
-		group_actions/data_structures/group.o \
+		group_actions/data_structures/group_container.o \
 		group_actions/data_structures/incidence_structure_with_group.o \
 		group_actions/data_structures/orbit_rep.o \
 		group_actions/data_structures/orbit_transversal.o \
@@ -288,7 +291,6 @@ MODULES= \
 		classification/poset_classification/classification_base_case.o \
 		classification/poset_classification/extension.o \
 		classification/poset_classification/orbit_based_testing.o \
-		classification/poset_classification/poset.o \
 		classification/poset_classification/poset_description.o \
 		classification/poset_classification/poset_classification.o \
 		classification/poset_classification/poset_classification_classify.o \
@@ -308,6 +310,7 @@ MODULES= \
 		classification/poset_classification/poset_orbit_node_io.o \
 		classification/poset_classification/poset_orbit_node_upstep.o \
 		classification/poset_classification/poset_orbit_node_upstep_subspace_action.o \
+		classification/poset_classification/poset_with_group_action.o \
 		classification/poset_classification/upstep_work.o \
 		classification/poset_classification/upstep_work_subspace_action.o \
 		classification/poset_classification/upstep_work_trace.o \
@@ -415,6 +418,11 @@ MODULES= \
 		top_level/projective_space/projective_space_object_classifier.o \
 		top_level/projective_space/projective_space_with_action_description.o \
 		top_level/projective_space/projective_space_with_action.o \
+		top_level/projective_space/quartic_curve_activity_description.o \
+		top_level/projective_space/quartic_curve_activity.o \
+		top_level/projective_space/quartic_curve_create_description.o \
+		top_level/projective_space/quartic_curve_create.o \
+		top_level/projective_space/quartic_curve_domain_with_action.o \
 		top_level/semifields/semifield_classify_description.o \
 		top_level/semifields/semifield_classify_with_substructure.o \
 		top_level/semifields/semifield_classify.o \

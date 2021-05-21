@@ -534,7 +534,7 @@ void canonical_form_classifier::generate_source_code(
 					"preparing Bitangents" << endl;
 		}
 		f << "// the 28 bitangents:" << endl;
-		f << "static int " << fname_base.c_str() << "_Bitangents[] = { " << endl;
+		f << "static long int " << fname_base.c_str() << "_Bitangents[] = { " << endl;
 
 
 		for (orbit_index = 0;
@@ -737,7 +737,7 @@ void canonical_form_classifier::classify_with_substructure(int verbose_level)
 
 	int j;
 
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 
 
 	Control = NEW_OBJECT(poset_classification_control);

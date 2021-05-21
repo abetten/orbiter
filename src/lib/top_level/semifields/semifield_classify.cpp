@@ -648,7 +648,7 @@ void semifield_classify::init_poset_classification(
 		cout << "semifield_classify::init_poset_classification" << endl;
 	}
 
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 
 	vector_space *VS;
 	VS = NEW_OBJECT(vector_space);

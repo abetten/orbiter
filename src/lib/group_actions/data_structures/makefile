@@ -6,7 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-	group.o \
+	group_container.o \
 	incidence_structure_with_group.o \
 	orbit_rep.o \
 	orbit_transversal.o \

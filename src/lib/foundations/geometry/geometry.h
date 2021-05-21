@@ -166,8 +166,6 @@ public:
 	void compute_adjacency_list_fast(int first_point_of_starter,
 		long int *points, int nb_points, int *point_color,
 		bitvector *&Bitvec,
-		//uchar *&bitvector_adjacency,
-		//long int &bitvector_length_in_bits, long int &bitvector_length,
 		int verbose_level);
 	void compute_colors(int orbit_at_level,
 		long int *starter, int starter_sz,
@@ -251,7 +249,7 @@ public:
 // buekenhout_metz.cpp
 // #############################################################################
 
-//! Buekenhout Metz unitals
+//! Buekenhout-Metz unitals
 
 
 class buekenhout_metz {
@@ -1338,69 +1336,6 @@ public:
 	
 };
 
-// #############################################################################
-// knowledge_base.cpp:
-// #############################################################################
-
-//! provides access to pre-computed combinatorial data in encoded form
-
-
-class knowledge_base {
-public:
-	knowledge_base();
-	~knowledge_base();
-
-
-	// the index i is zero-based:
-
-
-	int quartic_curves_nb_reps(int q);
-	int *quartic_curves_representative(int q, int i);
-	void quartic_curves_stab_gens(int q, int i,
-			int *&data, int &nb_gens, int &data_size, const char *&stab_order);
-
-
-	int cubic_surface_nb_reps(int q);
-	int *cubic_surface_representative(int q, int i);
-	void cubic_surface_stab_gens(int q, int i, int *&data, int &nb_gens,
-		int &data_size, const char *&stab_order);
-	int cubic_surface_nb_Eckardt_points(int q, int i);
-	long int *cubic_surface_Lines(int q, int i);
-
-	int hyperoval_nb_reps(int q);
-	int *hyperoval_representative(int q, int i);
-	void hyperoval_gens(int q, int i, int *&data, int &nb_gens,
-		int &data_size, const char *&stab_order);
-
-
-	int DH_nb_reps(int k, int n);
-	long int *DH_representative(int k, int n, int i);
-	void DH_stab_gens(int k, int n, int i, int *&data, int &nb_gens,
-		int &data_size, const char *&stab_order);
-
-	int Spread_nb_reps(int q, int k);
-	long int *Spread_representative(int q, int k, int i, int &sz);
-	void Spread_stab_gens(int q, int k, int i, int *&data, int &nb_gens,
-		int &data_size, const char *&stab_order);
-
-	int BLT_nb_reps(int q);
-	long int *BLT_representative(int q, int no);
-	void BLT_stab_gens(int q, int no, int *&data, int &nb_gens,
-		int &data_size, const char *&stab_order);
-
-	const char *override_polynomial_subfield(int q);
-	const char *override_polynomial_extension_field(int q);
-
-	void get_projective_plane_list_of_lines(int *&list_of_lines,
-			int &order, int &nb_lines, int &line_size,
-			const char *label, int verbose_level);
-
-	int tensor_orbits_nb_reps(int n);
-	long int *tensor_orbits_rep(int n, int idx);
-
-};
-
-
 
 // #############################################################################
 // object_in_projective_space.cpp
@@ -2099,6 +2034,118 @@ public:
 		int verbose_level);
 
 };
+
+// #############################################################################
+// quartic_curve_domain.cpp
+// #############################################################################
+
+//! domain for quartic curves in PG(2,q) with 28 bitangents
+
+
+class quartic_curve_domain {
+
+public:
+	finite_field *F;
+	projective_space *P;
+
+	homogeneous_polynomial_domain *Poly3_3;
+		// cubic polynomials in three variables
+	homogeneous_polynomial_domain *Poly4_3;
+		// quartic polynomials in three variables
+
+	partial_derivative *Partials; // [3]
+
+	quartic_curve_domain();
+	~quartic_curve_domain();
+	void init(finite_field *F, int verbose_level);
+	void init_polynomial_domains(int verbose_level);
+	void print_equation_with_line_breaks_tex(std::ostream &ost, int *coeffs);
+
+};
+
+
+// #############################################################################
+// quartic_curve_object_properties.cpp
+// #############################################################################
+
+//! properties of a particular quartic curve surface in PG(2,q), as defined by an object of class quartic_curve_object
+
+
+class quartic_curve_object_properties {
+
+public:
+
+	quartic_curve_object *QO;
+
+
+
+	quartic_curve_object_properties();
+	~quartic_curve_object_properties();
+	void init(quartic_curve_object *QO, int verbose_level);
+	void create_summary_file(std::string &fname,
+			std::string &surface_label, std::string &col_postfix, int verbose_level);
+	void report_properties_simple(std::ostream &ost, int verbose_level);
+	void print_equation(std::ostream &ost);
+	void print_general(std::ostream &ost);
+
+};
+
+
+
+// #############################################################################
+// quartic_curve_object.cpp
+// #############################################################################
+
+//! a particular quartic curve in PG(2,q), given by its equation
+
+
+class quartic_curve_object {
+
+public:
+	int q;
+	finite_field *F;
+	quartic_curve_domain *Dom;
+
+	long int *Pts; // in increasing order
+	int nb_pts;
+
+
+	long int *Lines;
+	int nb_lines;
+
+	int eqn15[15];
+
+	int f_has_bitangents;
+	long int bitangents28[28];
+
+	quartic_curve_object_properties *QP;
+
+
+
+	quartic_curve_object();
+	~quartic_curve_object();
+	void freeself();
+	void null();
+	void init_equation_but_no_bitangents(quartic_curve_domain *Dom,
+			int *eqn15,
+			int verbose_level);
+	void init_equation_and_bitangents(quartic_curve_domain *Dom,
+			int *eqn15, long int *bitangents28,
+			int verbose_level);
+	void init_equation_and_bitangents_and_compute_properties(quartic_curve_domain *Dom,
+			int *eqn15, long int *bitangents28,
+			int verbose_level);
+	void enumerate_points(int verbose_level);
+	void compute_properties(int verbose_level);
+	void recompute_properties(int verbose_level);
+	void identify_lines(long int *lines, int nb_lines, int *line_idx,
+		int verbose_level);
+	int find_point(long int P, int &idx);
+
+
+};
+
+
 
 // #############################################################################
 // spread_tables.cpp

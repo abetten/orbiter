@@ -31,7 +31,7 @@ namespace classification {
 class classification_base_case {
 
 public:
-	poset *Poset;
+	poset_with_group_action *Poset;
 
 	int size;
 	long int *orbit_rep; // [size]
@@ -45,7 +45,7 @@ public:
 
 	classification_base_case();
 	~classification_base_case();
-	void init(poset *Poset,
+	void init(poset_with_group_action *Poset,
 			int size, long int *orbit_rep,
 			long int *live_points, int nb_live_points,
 			strong_generators *Stab_gens,
@@ -181,87 +181,6 @@ public:
 };
 
 
-// #############################################################################
-// poset.cpp
-// #############################################################################
-
-//! a poset with a group action on it
-
-
-class poset {
-public:
-	poset_description *description;
-
-	int f_subset_lattice;
-	int n;
-
-	int f_subspace_lattice;
-	vector_space *VS;
-
-	action *A; // the action in which the group is given
-	action *A2; // the action in which we do the search
-
-	strong_generators *Strong_gens;
-	longinteger_object go;
-
-	int f_has_orbit_based_testing;
-	orbit_based_testing *Orbit_based_testing;
-
-	int f_print_function;
-	void (*print_function)(std::ostream &ost, int len, long int *S, void *data);
-	void *print_function_data;
-
-	poset();
-	~poset();
-	void null();
-	void freeself();
-	void init_subset_lattice(action *A, action *A2,
-			strong_generators *Strong_gens,
-			int verbose_level);
-	void init_subspace_lattice(action *A, action *A2,
-			strong_generators *Strong_gens,
-			vector_space *VS,
-			int verbose_level);
-	void init(poset_description *description,
-		action *A, // the action in which the group is given
-		action *A2, // the action in which we do the search
-		strong_generators *Strong_gens,
-		int verbose_level);
-	void add_independence_condition(
-			int independence_value,
-			int verbose_level);
-	void add_testing(
-			int (*func)(orbit_based_testing *Obt,
-					long int *S, int len, void *data, int verbose_level),
-			void *data,
-			int verbose_level);
-	void add_testing_without_group(
-			void (*func)(long int *S, int len,
-					long int *candidates, int nb_candidates,
-					long int *good_candidates, int &nb_good_candidates,
-					void *data, int verbose_level),
-			void *data,
-			int verbose_level);
-	void print();
-	void early_test_func(
-		long int *S, int len,
-		long int *candidates, int nb_candidates,
-		long int *good_candidates, int &nb_good_candidates,
-		int verbose_level);
-	void unrank_point(int *v, long int rk);
-	long int rank_point(int *v);
-	void orbits_on_k_sets(
-			poset_classification_control *Control,
-			int k, long int *&orbit_reps, int &nb_orbits, int verbose_level);
-	poset_classification *orbits_on_k_sets_compute(
-			poset_classification_control *Control,
-			int k, int verbose_level);
-	void invoke_print_function(std::ostream &ost, int sz, long int *set);
-};
-
-int callback_test_independence_condition(orbit_based_testing *Obt,
-					long int *S, int len, void *data, int verbose_level);
-
 
 
 // #############################################################################
@@ -378,7 +297,6 @@ public:
 	int f_show_whole_orbits;
 
 
-	//int nb_recognize;
 	std::vector<std::string> recognize;
 
 
@@ -421,7 +339,7 @@ private:
 	std::string problem_label_with_path; // Control->path + Control->problem_label
 
 	
-	poset *Poset;
+	poset_with_group_action *Poset;
 
 
 	int f_base_case;
@@ -539,7 +457,7 @@ public:
 	long int *get_tmp_set_apply_fusion();
 	int allowed_to_show_group_elements();
 	int do_group_extension_in_upstep();
-	poset *get_poset();
+	poset_with_group_action *get_poset();
 	poset_classification_control *get_control();
 	action *get_A();
 	action *get_A2();
@@ -608,7 +526,7 @@ public:
 			int level, int order, int verbose_level);
 	void get_stabilizer_order(int level, int orbit_at_level, 
 		longinteger_object &go);
-	void get_stabilizer_group(group *&G,  
+	void get_stabilizer_group(group_container *&G,
 		int level, int orbit_at_level, int verbose_level);
 	void get_stabilizer_generators_cleaned_up(strong_generators *&gens,
 		int level, int orbit_at_level, int verbose_level);
@@ -695,16 +613,16 @@ public:
 	void freeself();
 	void init_internal(
 		poset_classification_control *PC_control,
-		poset *Poset,
+		poset_with_group_action *Poset,
 		int sz, int verbose_level);
 	void initialize_and_allocate_root_node(
 		poset_classification_control *PC_control,
-		poset *Poset,
+		poset_with_group_action *Poset,
 		int depth, 
 		int verbose_level);
 	void initialize_with_base_case(
 		poset_classification_control *PC_control,
-		poset *Poset,
+		poset_with_group_action *Poset,
 		int depth,
 		classification_base_case *Base_case,
 		int verbose_level);
@@ -727,7 +645,7 @@ public:
 	void compute_orbits_on_subsets(
 		int target_depth,
 		poset_classification_control *PC_control,
-		poset *Poset,
+		poset_with_group_action *Poset,
 		int verbose_level);
 	int main(int t0, 
 		int schreier_depth, 
@@ -1179,7 +1097,7 @@ public:
 	void get_stabilizer_order(poset_classification *gen,
 		longinteger_object &go);
 	void get_stabilizer(poset_classification *PC,
-		group &G, longinteger_object &go_G,
+			group_container &G, longinteger_object &go_G,
 		int verbose_level);
 	int test_if_stabilizer_is_trivial();
 	void get_stabilizer_generators(poset_classification *PC,
@@ -1187,7 +1105,7 @@ public:
 		int verbose_level);
 	void init_extension_node_prepare_G(
 		poset_classification *gen,
-		int prev, int prev_ex, int size, group &G,
+		int prev, int prev_ex, int size, group_container &G,
 		longinteger_object &go_G,
 		int verbose_level);
 		// sets up the group G using the strong
@@ -1195,8 +1113,8 @@ public:
 	void init_extension_node_prepare_H(
 		poset_classification *gen,
 		int prev, int prev_ex, int size,
-		group &G, longinteger_object &go_G,
-		group &H, longinteger_object &go_H,
+		group_container &G, longinteger_object &go_G,
+		group_container &H, longinteger_object &go_H,
 		long int pt, int pt_orbit_len,
 		int verbose_level);
 		// sets up the group H which is the stabilizer
@@ -1204,15 +1122,15 @@ public:
 	void compute_point_stabilizer_in_subspace_setting(
 		poset_classification *gen,
 		int prev, int prev_ex, int size,
-		group &G, longinteger_object &go_G,
-		group &H, longinteger_object &go_H,
+		group_container &G, longinteger_object &go_G,
+		group_container &H, longinteger_object &go_H,
 		long int pt, int pt_orbit_len,
 		int verbose_level);
 	void compute_point_stabilizer_in_standard_setting(
 		poset_classification *gen,
 		int prev, int prev_ex, int size,
-		group &G, longinteger_object &go_G,
-		group &H, /* longinteger_object &go_H, */
+		group_container &G, longinteger_object &go_G,
+		group_container &H, /* longinteger_object &go_H, */
 		int pt, int pt_orbit_len,
 		int verbose_level);
 	void create_schreier_vector_wrapper(
@@ -1516,6 +1434,87 @@ public:
 };
 
 
+// #############################################################################
+// poset_with_group_action.cpp
+// #############################################################################
+
+//! a poset with a group action on it
+
+
+class poset_with_group_action {
+public:
+	poset_description *description;
+
+	int f_subset_lattice;
+	int n;
+
+	int f_subspace_lattice;
+	vector_space *VS;
+
+	action *A; // the action in which the group is given
+	action *A2; // the action in which we do the search
+
+	strong_generators *Strong_gens;
+	longinteger_object go;
+
+	int f_has_orbit_based_testing;
+	orbit_based_testing *Orbit_based_testing;
+
+	int f_print_function;
+	void (*print_function)(std::ostream &ost, int len, long int *S, void *data);
+	void *print_function_data;
+
+	poset_with_group_action();
+	~poset_with_group_action();
+	void null();
+	void freeself();
+	void init_subset_lattice(action *A, action *A2,
+			strong_generators *Strong_gens,
+			int verbose_level);
+	void init_subspace_lattice(action *A, action *A2,
+			strong_generators *Strong_gens,
+			vector_space *VS,
+			int verbose_level);
+	void init(poset_description *description,
+		action *A, // the action in which the group is given
+		action *A2, // the action in which we do the search
+		strong_generators *Strong_gens,
+		int verbose_level);
+	void add_independence_condition(
+			int independence_value,
+			int verbose_level);
+	void add_testing(
+			int (*func)(orbit_based_testing *Obt,
+					long int *S, int len, void *data, int verbose_level),
+			void *data,
+			int verbose_level);
+	void add_testing_without_group(
+			void (*func)(long int *S, int len,
+					long int *candidates, int nb_candidates,
+					long int *good_candidates, int &nb_good_candidates,
+					void *data, int verbose_level),
+			void *data,
+			int verbose_level);
+	void print();
+	void early_test_func(
+		long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+	void unrank_point(int *v, long int rk);
+	long int rank_point(int *v);
+	void orbits_on_k_sets(
+			poset_classification_control *Control,
+			int k, long int *&orbit_reps, int &nb_orbits, int verbose_level);
+	poset_classification *orbits_on_k_sets_compute(
+			poset_classification_control *Control,
+			int k, int verbose_level);
+	void invoke_print_function(std::ostream &ost, int sz, long int *set);
+};
+
+int callback_test_independence_condition(orbit_based_testing *Obt,
+					long int *S, int len, void *data, int verbose_level);
+
 
 
 
@@ -1574,8 +1573,8 @@ public:
 	poset_orbit_node *O_prev;
 	poset_orbit_node *O_cur;
 
-	group *G;
-	group *H;	
+	group_container *G;
+	group_container *H;
 	longinteger_object go_G, go_H;
 
 	int coset;

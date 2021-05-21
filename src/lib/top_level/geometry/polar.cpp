@@ -229,7 +229,7 @@ void polar::init2(int depth, int verbose_level)
 
 
 
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 	Poset->init_subspace_lattice(A, A,
 			gens,
 			VS,
@@ -1114,7 +1114,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 }
 
 
-void polar::get_stabilizer(int orbit_idx, group &G,
+void polar::get_stabilizer(int orbit_idx, group_container &G,
 		longinteger_object &go_G)
 {
 	Gen->get_node(first_node + orbit_idx)->get_stabilizer(Gen,
@@ -1162,7 +1162,7 @@ void polar::list_whole_orbit(int depth,
 	long int *set;
 	int ii;
 	long int len, j, h, jj;
-	group G;
+	group_container G;
 	longinteger_object go_G, Rank;
 	int *M1;
 	int *base_cols;

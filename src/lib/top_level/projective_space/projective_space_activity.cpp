@@ -132,6 +132,32 @@ void projective_space_activity::perform_activity(int verbose_level)
 		//FREE_OBJECT(Surf_A);
 	}
 
+	else if (Descr->f_define_quartic_curve) {
+
+		cout << "f_define_quartic_curve label = " << Descr->f_define_quartic_curve << endl;
+
+		quartic_curve_create *QC;
+
+		do_create_quartic_curve(
+			PA,
+			Descr->Quartic_curve_descr,
+			QC,
+			verbose_level);
+
+		orbiter_symbol_table_entry *Symb;
+
+		Symb = NEW_OBJECT(orbiter_symbol_table_entry);
+
+		Symb->init_quartic_curve(Descr->define_quartic_curve_label, QC, verbose_level);
+		if (f_v) {
+			cout << "before Orbiter->add_symbol_table_entry " << Descr->define_surface_label << endl;
+		}
+		Orbiter->add_symbol_table_entry(Descr->define_quartic_curve_label, Symb, verbose_level);
+
+
+		//FREE_OBJECT(SC);
+	}
+
 	// surfaces:
 
 
@@ -700,6 +726,59 @@ void projective_space_activity::do_create_surface(
 }
 
 
+void projective_space_activity::do_create_quartic_curve(
+		projective_space_with_action *PA,
+		quartic_curve_create_description *Quartic_curve_descr,
+		quartic_curve_create *&QC,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_activity::do_create_quartic_curve" << endl;
+		cout << "projective_space_activity::do_create_quartic_curve verbose_level=" << verbose_level << endl;
+	}
+
+	int q;
+
+	if (f_v) {
+		cout << "projective_space_activity::do_create_quartic_curve before Surface_Descr->get_q" << endl;
+	}
+	q = Quartic_curve_descr->get_q();
+	if (f_v) {
+		cout << "projective_space_activity::do_create_quartic_curve q = " << q << endl;
+	}
+
+	if (PA->q != q) {
+		cout << "projective_space_activity::do_create_quartic_curve PA->q != q" << endl;
+		exit(1);
+	}
+	if (PA->n != 2) {
+		cout << "projective_space_activity::do_create_quartic_curve we need a two-dimensional projective space" << endl;
+		exit(1);
+	}
+
+
+	if (f_v) {
+		cout << "projective_space_activity::do_create_quartic_curve before PA->create_quartic_curve" << endl;
+	}
+
+	PA->create_quartic_curve(
+				Quartic_curve_descr,
+				QC,
+				verbose_level);
+
+	if (f_v) {
+		cout << "projective_space_activity::do_create_quartic_curve after PA->create_quartic_curve" << endl;
+	}
+
+	if (f_v) {
+		cout << "projective_space_activity::do_create_quartic_curve done" << endl;
+	}
+}
+
+
+
 void projective_space_activity::do_spread_classify(
 		projective_space_with_action *PA,
 		int k,
@@ -1016,11 +1095,11 @@ void projective_space_activity::set_stabilizer(
 
 	poset_classification *PC;
 	poset_classification_control *Control;
-	poset *Poset;
+	poset_with_group_action *Poset;
 	int nb_orbits;
 	int j;
 
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 
 
 	Control = NEW_OBJECT(poset_classification_control);

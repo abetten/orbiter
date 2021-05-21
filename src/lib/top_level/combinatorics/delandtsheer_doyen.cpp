@@ -327,6 +327,12 @@ void delandtsheer_doyen::init(delandtsheer_doyen_description *Descr,
 	}
 
 
+	if (Descr->f_search_wrt_subgroup) {
+		SG = Strong_gens;
+		cout << "searching wrt subgroup" << endl;
+	}
+
+
 
 	f_row_used = NEW_int(Xsize);
 	f_col_used = NEW_int(Ysize);
@@ -637,9 +643,11 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 
 	Gen = NEW_OBJECT(poset_classification);
 
-	//Gen->read_arguments(argc, argv, 0);
 
-	//Gen->prefix[0] = 0;
+	if (!Descr->f_problem_label) {
+		cout << "please use -problem_label <string : problem_label>" << endl;
+		exit(1);
+	}
 
 	if (Descr->f_subgroup) {
 
@@ -662,7 +670,7 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 	Descr->Search_control->f_problem_label = TRUE;
 	//Gen->depth = Descr->depth;
 	//Control_search = NEW_OBJECT(poset_classification_control);
-	Poset_search = NEW_OBJECT(poset);
+	Poset_search = NEW_OBJECT(poset_with_group_action);
 	Poset_search->init_subset_lattice(A0, A, SG,
 			verbose_level);
 
@@ -718,6 +726,62 @@ void delandtsheer_doyen::search_starter(int verbose_level)
 	}
 
 
+	int nb_k_orbits;
+	int sz;
+	int h, i, pi, j, pj, o;
+	int k = Descr->depth;
+	int l;
+	int *Covered_orbits;
+	int k2 = k * (k - 1) >> 1;
+
+	nb_k_orbits = Gen->nb_orbits_at_level(Descr->depth);
+	cout << "target level: " << Descr->depth << endl;
+	cout << "k2: " << k2 << endl;
+	cout << "number of k-orbits at target level: " << nb_k_orbits << endl;
+
+
+	Covered_orbits = NEW_int(nb_k_orbits * k2);
+
+	for (h = 0; h < nb_k_orbits; h++) {
+
+		Gen->get_set(k, h, line, sz);
+
+		if (FALSE) {
+			cout << h << " : ";
+			Orbiter->Lint_vec.print(cout, line, sz);
+		}
+
+		l = 0;
+		for (i = 0; i < k; i++) {
+			pi = line[i];
+			for (j = i + 1; j < k; j++, l++) {
+				pj = line[j];
+				o = find_pair_orbit(pi, pj, 0 /*verbose_level - 1*/);
+				if (pi == pj) {
+					cout << "delandtsheer_doyen::search_starter "
+							"pi = " << pi << " == pj = " << pj << endl;
+					exit(1);
+				}
+				Covered_orbits[h * k2 + l] = o;
+			}
+		}
+		if (FALSE) {
+			cout << " : ";
+			Orbiter->Int_vec.print(cout, Covered_orbits + h * k2, k2);
+			cout << endl;
+		}
+
+	}
+	file_io Fio;
+	string fname;
+
+	fname.assign(Descr->problem_label);
+	fname.append("_pair_covering.csv");
+	Fio.int_matrix_write_csv(fname, Covered_orbits, nb_k_orbits, k2);
+
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
 #if 0
 
 	if (f_v) {
@@ -752,7 +816,7 @@ void delandtsheer_doyen::compute_orbits_on_pairs(strong_generators *Strong_gens,
 	Descr->Pair_search_control->f_depth = TRUE;
 	Descr->Pair_search_control->depth = 2;
 
-	Poset_pairs = NEW_OBJECT(poset);
+	Poset_pairs = NEW_OBJECT(poset_with_group_action);
 	Poset_pairs->init_subset_lattice(A0, A, Strong_gens,
 			verbose_level);
 
@@ -823,15 +887,18 @@ void delandtsheer_doyen::compute_orbits_on_pairs(strong_generators *Strong_gens,
 
 	Orbiter->Int_vec.zero(orbit_covered, nb_orbits);
 
+
+
 	for (i = 0; i < nb_orbits; i++) {
 		orbit_length[i] = Pairs->orbit_length_as_int(
 				i /* orbit_at_level*/, 2 /* level*/);
-		orbit_covered_max[i] = orbit_length[i] / b;
-		if (orbit_covered_max[i] * b != orbit_length[i]) {
+		orbit_covered_max[i] = (orbit_length[i] * Descr->nb_orbits_on_blocks) / b;
+		if (orbit_covered_max[i] * b != orbit_length[i] * Descr->nb_orbits_on_blocks) {
 			cout << "integrality conditions violated (2)" << endl;
-			cout << "b=" << b << endl;
-			cout << "i=" << i << endl;
+			cout << "Descr->nb_orbits_on_blocks = " << Descr->nb_orbits_on_blocks << endl;
+			cout << "pair orbit i=" << i << " / " << nb_orbits << endl;
 			cout << "orbit_length[i]=" << orbit_length[i] << endl;
+			cout << "b=" << b << endl;
 			exit(1);
 		}
 	}
@@ -975,7 +1042,6 @@ void delandtsheer_doyen::create_action(int verbose_level)
 	if (f_v) {
 		cout << "delandtsheer_doyen::create_action" << endl;
 	}
-	A = NEW_OBJECT(action);
 	A1 = NEW_OBJECT(action);
 	A2 = NEW_OBJECT(action);
 
@@ -986,7 +1052,9 @@ void delandtsheer_doyen::create_action(int verbose_level)
 		F1->finite_field_init(2, 0);
 		F2->finite_field_init(2, 0);
 
-		cout << "initializing projective groups:" << endl;
+		if (f_v) {
+			cout << "delandtsheer_doyen::create_action initializing projective groups:" << endl;
+		}
 
 		A1->init_projective_group(Descr->d1, F1,
 				FALSE /* f_semilinear */, TRUE /* f_basis */, TRUE /* f_init_sims */,
@@ -1012,7 +1080,7 @@ void delandtsheer_doyen::create_action(int verbose_level)
 		b = (V * (V - 1)) / (Descr->K * (Descr->K - 1));
 
 		if (b * (Descr->K * (Descr->K - 1)) != (V * (V - 1))) {
-			cout << "integrality conditions violated" << endl;
+			cout << "delandtsheer_doyen::create_action integrality conditions violated" << endl;
 			exit(1);
 		}
 
@@ -1025,7 +1093,9 @@ void delandtsheer_doyen::create_action(int verbose_level)
 
 
 
-		cout << "initializing affine groups:" << endl;
+		if (f_v) {
+			cout << "delandtsheer_doyen::create_action initializing affine groups:" << endl;
+		}
 
 		M1->init_affine_group(Descr->d1, F1,
 				FALSE /* f_semilinear */, A1, verbose_level);
@@ -1034,17 +1104,23 @@ void delandtsheer_doyen::create_action(int verbose_level)
 				FALSE /* f_semilinear */, A2, verbose_level);
 	}
 
-	cout << "direct_product_action::init before "
-			"A->init_direct_product_group_and_restrict" << endl;
+	if (f_v) {
+		cout << "delandtsheer_doyen::create_action before "
+				"AG.init_direct_product_group_and_restrict" << endl;
+	}
 
-	A->init_direct_product_group_and_restrict(M1, M2,
+	action_global AG;
+
+	A = AG.init_direct_product_group_and_restrict(M1, M2,
 			verbose_level);
 
-	cout << "direct_product_action::init after "
-			"A->init_direct_product_group_and_restrict" << endl;
+	if (f_v) {
+		cout << "delandtsheer_doyen::create_action after "
+				"AG.init_direct_product_group_and_restrict" << endl;
+	}
 
 	if (!A->f_has_subaction) {
-		cout << "direct_product_action::init action "
+		cout << "delandtsheer_doyen::create_action action "
 				"A does not have a subaction" << endl;
 		exit(1);
 	}

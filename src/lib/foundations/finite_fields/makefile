@@ -19,6 +19,7 @@ MODULES = \
 	finite_field_RREF.o \
 	finite_field_tables.o \
 	finite_field.o \
+	norm_tables.o \
 	subfield_structure.o 
 
 
