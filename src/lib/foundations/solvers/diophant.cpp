@@ -2967,6 +2967,7 @@ void diophant::save_in_general_format(std::string &fname, int verbose_level)
 void diophant::read_general_format(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 1);
 	int m, n, s;
 	int cnt, i, j, d, h, a, nb_types, t, val;
 	int f_has_sum1;
@@ -2983,11 +2984,13 @@ void diophant::read_general_format(std::string &fname, int verbose_level)
 	{
 	ifstream myfile (fname);
 	if (myfile.is_open()) {
-		cout << "diophant::read_general_format" << endl;
+		if (f_vv) {
+			cout << "diophant::read_general_format" << endl;
+		}
 		getline (myfile, line); // file name
 
 
-		cout << "diophant::read_general_format parsing '" << line << "'" << endl;
+		//cout << "diophant::read_general_format parsing '" << line << "'" << endl;
 		getline (myfile, line); // m n sum
 
 		i = line.find(" ");
@@ -3021,9 +3024,11 @@ void diophant::read_general_format(std::string &fname, int verbose_level)
 		//		"m=" << m << " n=" << n << " remainder3=" << remainder3 << endl;
 
 		//str = remainder3.substr(i + 1);
-		cout << "diophant::read_general_format "
-				"m=" << m << " n=" << n << " sum=" << s
-				<< " f_has_var_labels=" << f_has_var_labels_save << endl;
+		if (f_vv) {
+			cout << "diophant::read_general_format "
+					"m=" << m << " n=" << n << " sum=" << s
+					<< " f_has_var_labels=" << f_has_var_labels_save << endl;
+		}
 
 		open(m, n);
 		f_has_var_labels = f_has_var_labels_save;
@@ -3032,7 +3037,9 @@ void diophant::read_general_format(std::string &fname, int verbose_level)
 
 		if (f_has_var_labels) {
 
-			cout << "reading var labels" << endl;
+			if (f_vv) {
+				cout << "reading var labels" << endl;
+			}
 			var_labels = NEW_int(n);
 			getline (myfile, line);
 			for (j = 0; j < n; j++) {
@@ -3046,16 +3053,22 @@ void diophant::read_general_format(std::string &fname, int verbose_level)
 			}
 		}
 		else {
-			cout << "not reading var labels" << endl;
+			if (f_vv) {
+				cout << "not reading var labels" << endl;
+			}
 		}
 
 		for (cnt = 0; cnt < m; cnt++) {
-			cout << "reading equation " << cnt << " / " << m << ":" << endl;
+			if (f_v) {
+				cout << "reading equation " << cnt << " / " << m << ":" << endl;
+			}
 			getline (myfile, line);
 			i = line.find(" ");
 			remainder = line.substr(i + 1);
 			line = remainder;
-			cout << "remainder = '" << remainder << "'" << endl;
+			if (f_v) {
+				cout << "remainder = '" << remainder << "'" << endl;
+			}
 			i = line.find(" ");
 			str = line.substr(0, i);
 			remainder = line.substr(i + 1);

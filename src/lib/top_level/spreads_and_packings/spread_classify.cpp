@@ -449,7 +449,7 @@ void spread_classify::init2(poset_classification_control *Control,
 		cout << "spread_classify::init2" << endl;
 	}
 
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 	Poset->init_subset_lattice(A, A2,
 			A->Strong_gens,
 			verbose_level);

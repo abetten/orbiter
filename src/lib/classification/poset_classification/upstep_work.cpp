@@ -453,8 +453,8 @@ int upstep_work::init_extension_node(int verbose_level)
 				"H is already allocated" << endl;
 		exit(1);
 	}
-	G = NEW_OBJECT(group);
-	H = NEW_OBJECT(group);
+	G = NEW_OBJECT(group_container);
+	H = NEW_OBJECT(group_container);
 	
 
 	if (f_v) {

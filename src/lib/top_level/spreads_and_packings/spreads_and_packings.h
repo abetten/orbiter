@@ -98,7 +98,7 @@ public:
 	int *degree;
 
 	poset_classification_control *Control;
-	poset *Poset;
+	poset_with_group_action *Poset;
 	poset_classification *gen;
 
 	int nb_needed;
@@ -514,7 +514,7 @@ public:
 		//reduced_spread_orbits_under_H->Orbits_classified->Sets[fixpoints_idx])
 
 	colored_graph *fixpoint_graph;
-	poset *Poset_fixpoint_cliques;
+	poset_with_group_action *Poset_fixpoint_cliques;
 	poset_classification *fixpoint_clique_gen;
 
 	int cliques_on_fixpoint_graph_size;
@@ -867,7 +867,7 @@ public:
 	int *tmp_M3;
 	int *tmp_M4;
 
-	poset *Poset;
+	poset_with_group_action *Poset;
 	poset_classification *gen;
 
 
@@ -1340,7 +1340,7 @@ public:
 	partitionstack *Stack;
 
 	poset_classification_control *Control;
-	poset *Poset;
+	poset_with_group_action *Poset;
 	poset_classification *arcs;
 
 	tactical_decomposition *T;

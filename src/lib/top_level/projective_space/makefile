@@ -19,7 +19,12 @@ MODULES = \
 	projective_space_object_classifier_description.o \
 	projective_space_object_classifier.o \
 	projective_space_with_action_description.o \
-	projective_space_with_action.o
+	projective_space_with_action.o \
+	quartic_curve_activity_description.o \
+	quartic_curve_activity.o \
+	quartic_curve_create_description.o \
+	quartic_curve_create.o \
+	quartic_curve_domain_with_action.o
 
 
 all : $(MODULES)

@@ -1,4 +1,4 @@
-// unusual.cpp
+// unusual_model.cpp
 // 
 // Anton Betten
 // started 2007

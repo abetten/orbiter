@@ -966,6 +966,8 @@ void action::init_symmetric_group(int degree, int verbose_level)
 	given_base_length = degree - 1;
 	gens = NEW_int(nb_gens * degree);
 	given_base = NEW_lint(given_base_length);
+
+	// Coxeter generators for the symmetric group:
 	for (i = 0; i < nb_gens; i++) {
 		for (j = 0; j < degree; j++) {
 			gens[i * degree + j] = j;
@@ -973,6 +975,7 @@ void action::init_symmetric_group(int degree, int verbose_level)
 		gens[i * degree + i] = i + 1;
 		gens[i * degree + i + 1] = i;
 	}
+
 	for (i = 0; i < given_base_length; i++) {
 		given_base[i] = i;
 	}
@@ -1121,221 +1124,6 @@ void action::create_orthogonal_group(action *subaction,
 	}
 }
 
-void action::init_direct_product_group_and_restrict(
-		matrix_group *M1, matrix_group *M2, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	action *A_direct_product;
-	action *Adp;
-	direct_product *P;
-	long int *points;
-	int nb_points;
-	int i;
-
-	if (f_v) {
-		cout << "action::init_direct_product_group_and_restrict" << endl;
-		cout << "M1=" << M1->label << endl;
-		cout << "M2=" << M2->label << endl;
-	}
-	A_direct_product = NEW_OBJECT(action);
-	A_direct_product->init_direct_product_group(M1, M2, verbose_level);
-	if (f_v) {
-		cout << "action::init_direct_product_group_and_restrict "
-				"after A_direct_product->init_direct_product_group" << endl;
-	}
-
-	P = A_direct_product->G.direct_product_group;
-	nb_points = P->degree_of_product_action;
-	points = NEW_lint(nb_points);
-	for (i = 0; i < nb_points; i++) {
-		points[i] = P->perm_offset_i[2] + i;
-	}
-
-	if (f_v) {
-		cout << "action::init_direct_product_group_and_restrict "
-				"before A_direct_product->restricted_action" << endl;
-	}
-	Adp = A_direct_product->restricted_action(points, nb_points,
-			verbose_level);
-	Adp->f_is_linear = FALSE;
-	if (f_v) {
-		cout << "action::init_direct_product_group_and_restrict "
-				"after A_direct_product->restricted_action" << endl;
-	}
-
-	memcpy(this, Adp, sizeof(action)); // ToDo
-	Adp->null();
-	delete Adp;
-}
-
-void action::init_direct_product_group(
-		matrix_group *M1, matrix_group *M2,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	direct_product *P;
-
-	if (f_v) {
-		cout << "action::init_direct_product_group" << endl;
-		cout << "M1=" << M1->label << endl;
-		cout << "M2=" << M2->label << endl;
-	}
-
-	P = NEW_OBJECT(direct_product);
-
-
-
-	type_G = direct_product_t;
-	G.direct_product_group = P;
-	f_allocated = TRUE;
-
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"before P->init" << endl;
-	}
-	P->init(M1, M2, verbose_level);
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"after P->init" << endl;
-	}
-
-	f_is_linear = FALSE;
-	dimension = 0;
-
-
-	low_level_point_size = 0;
-	if (f_v) {
-		cout << "action::init_direct_product_group low_level_point_size="
-			<< low_level_point_size<< endl;
-	}
-
-	label.assign(P->label);
-	label_tex.assign(P->label_tex);
-
-
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"label=" << label << endl;
-	}
-
-	degree = P->degree_overall;
-	make_element_size = P->make_element_size;
-
-	ptr = NEW_OBJECT(action_pointer_table);
-	ptr->init_function_pointers_direct_product_group();
-
-	elt_size_in_int = P->elt_size_int;
-	coded_elt_size_in_char = P->char_per_elt;
-	allocate_element_data();
-
-
-
-
-	degree = P->degree_overall;
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"degree=" << degree << endl;
-	}
-
-	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	Stabilizer_chain->allocate_base_data(this, P->base_length, verbose_level);
-
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"base_len=" << base_len() << endl;
-	}
-
-
-	Orbiter->Lint_vec.copy(P->the_base, get_base(), base_len());
-	Orbiter->Int_vec.copy(P->the_transversal_length,
-			get_transversal_length(), base_len());
-
-	int *gens_data;
-	int gens_size;
-	int gens_nb;
-
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"before W->make_strong_generators_data" << endl;
-	}
-	P->make_strong_generators_data(gens_data,
-			gens_size, gens_nb, verbose_level - 1);
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"after W->make_strong_generators_data" << endl;
-	}
-	Strong_gens = NEW_OBJECT(strong_generators);
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"before Strong_gens->init_from_data" << endl;
-	}
-
-	vector_ge *nice_gens;
-
-	Strong_gens->init_from_data(this,
-			gens_data, gens_nb, gens_size,
-			get_transversal_length(),
-			nice_gens,
-			verbose_level - 1);
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"after Strong_gens->init_from_data" << endl;
-	}
-	FREE_OBJECT(nice_gens);
-	f_has_strong_generators = TRUE;
-	FREE_int(gens_data);
-
-	sims *S;
-
-	S = NEW_OBJECT(sims);
-
-	S->init(this, verbose_level - 2);
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"before S->init_generators" << endl;
-	}
-	S->init_generators(*Strong_gens->gens, verbose_level);
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"after S->init_generators" << endl;
-	}
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"before S->compute_base_orbits_known_length" << endl;
-	}
-	S->compute_base_orbits_known_length(get_transversal_length(), verbose_level);
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"after S->compute_base_orbits_known_length" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"before init_sims_only" << endl;
-	}
-
-	init_sims_only(S, verbose_level);
-
-	if (f_v) {
-		cout << "action::init_direct_product_group "
-				"after init_sims_only" << endl;
-	}
-
-	compute_strong_generators_from_sims(0/*verbose_level - 2*/);
-
-	if (f_v) {
-		cout << "action::init_direct_product_group, finished setting up "
-				<< label;
-		cout << ", a permutation group of degree " << degree << " ";
-		cout << "and of order ";
-		print_group_order(cout);
-		cout << endl;
-		//cout << "make_element_size=" << make_element_size << endl;
-		//cout << "base_len=" << base_len << endl;
-		//cout << "f_semilinear=" << f_semilinear << endl;
-	}
-}
 
 void action::init_wreath_product_group_and_restrict(
 		int nb_factors, int n,

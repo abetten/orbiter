@@ -244,7 +244,7 @@ void hall_system_classify::init(
 	}
 
 
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 	if (f_v) {
 		cout << "hall_system_classify::init "
 				"before Poset->init_subset_lattice" << endl;

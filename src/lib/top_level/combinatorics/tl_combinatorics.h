@@ -86,6 +86,9 @@ public:
 	int f_mask_label;
 	std::string mask_label;
 
+	int f_problem_label;
+	std::string problem_label;
+
 
 
 	int DELANDTSHEER_DOYEN_X;
@@ -110,6 +113,10 @@ public:
 	int *col_type;     		// [nb_col_types + 1]
 
 
+	int f_nb_orbits_on_blocks;
+	int nb_orbits_on_blocks;
+
+
 	// mask related test:
 	int nb_mask_tests;
 	int mask_test_level[MAX_MASK_TESTS];
@@ -128,6 +135,9 @@ public:
 	int f_subgroup;
 	std::string subgroup_gens;
 	std::string subgroup_order;
+
+	int f_search_wrt_subgroup;
+
 
 	delandtsheer_doyen_description();
 	~delandtsheer_doyen_description();
@@ -178,8 +188,8 @@ public:
 	strong_generators *SG;
 	longinteger_object go;
 	direct_product *P;
-	poset *Poset_pairs;
-	poset *Poset_search;
+	poset_with_group_action *Poset_pairs;
+	poset_with_group_action *Poset_search;
 	poset_classification *Pairs;
 	poset_classification *Gen;
 
@@ -323,7 +333,7 @@ public:
 
 	action *Aut;
 	// PGGL(3,q) in case of PG_2_q with q not prime
-	// PGL(3,q) in case of PG_2_q withq  prime
+	// PGL(3,q) in case of PG_2_q with q prime
 	action *Aut_on_lines; // Aut induced on lines
 
 	int degree;
@@ -576,7 +586,7 @@ public:
 	int f_play_it_safe;
 
 	poset_classification_control *Control;
-	poset *Poset;
+	poset_with_group_action *Poset;
 		// subset lattice for action A_on_orbits
 	poset_classification *PC;
 		// Classification of subsets in the action A_on_orbits
@@ -647,7 +657,7 @@ public:
 	int *degree;
 
 	poset_classification_control *Control;
-	poset *Poset;
+	poset_with_group_action *Poset;
 	poset_classification *gen;
 
 	int nb_needed;
@@ -796,7 +806,7 @@ public:
 	int m2;
 	int *v1; // [k]
 
-	poset *Poset;
+	poset_with_group_action *Poset;
 	poset_classification *gen;
 	action *A;
 	action *A2;

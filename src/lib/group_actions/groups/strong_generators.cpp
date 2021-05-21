@@ -116,12 +116,12 @@ void strong_generators::init_from_ascii_coding(action *A,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	longinteger_object go;
-	group *G;
+	group_container *G;
 
 	if (f_v) {
 		cout << "strong_generators::init_from_ascii_coding" << endl;
 	}
-	G = NEW_OBJECT(group);
+	G = NEW_OBJECT(group_container);
 	G->init(A, verbose_level - 2);
 	if (f_vv) {
 		cout << "strong_generators::init_from_ascii_coding "

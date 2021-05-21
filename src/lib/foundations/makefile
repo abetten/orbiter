@@ -19,6 +19,7 @@ all: algebra_and_number_theory \
 	graph_theory_nauty \
 	graphics \
 	io_and_os \
+	knowledge_base \
 	orthogonal \
 	solvers \
 	statistics \
@@ -41,6 +42,7 @@ graph_theory : graph_theory2
 graph_theory_nauty : graph_theory_nauty2 
 graphics : graphics2 
 io_and_os : io_and_os2  
+knowledge_base : knowledge_base2  
 orthogonal : orthogonal2  
 solvers : solvers2 
 statistics : statistics2
@@ -60,6 +62,7 @@ graph_theory2 : ; cd graph_theory; $(MAKE)
 graph_theory_nauty2 : ; cd graph_theory_nauty; $(MAKE)
 graphics2 : ; cd graphics; $(MAKE)
 io_and_os2 : ; cd io_and_os; $(MAKE)
+knowledge_base2 : ; cd knowledge_base; $(MAKE)
 orthogonal2 : ; cd orthogonal; $(MAKE)
 solvers2 : ; cd solvers; $(MAKE)
 statistics2 : ; cd statistics; $(MAKE)
@@ -80,6 +83,7 @@ clean:
 	cd graph_theory_nauty; $(MAKE) clean
 	cd graphics; $(MAKE) clean
 	cd io_and_os; $(MAKE) clean
+	cd knowledge_base; $(MAKE) clean
 	cd orthogonal; $(MAKE) clean
 	cd solvers; $(MAKE) clean
 	cd statistics; $(MAKE) clean

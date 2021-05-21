@@ -152,7 +152,7 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 				"computing orbits on 3-subsets of points (type 1):" << endl;
 	}
 
-	Poset1 = NEW_OBJECT(poset);
+	Poset1 = NEW_OBJECT(poset_with_group_action);
 	Poset1->init_subset_lattice(A, A, gens_type1,
 			verbose_level);
 
@@ -183,7 +183,7 @@ void classify_trihedral_pairs::classify_orbits_on_trihedra(
 				"computing orbits on 3-subsets of points (type 2):" << endl;
 	}
 	
-	Poset2 = NEW_OBJECT(poset);
+	Poset2 = NEW_OBJECT(poset_with_group_action);
 	Poset2->init_subset_lattice(A, A, gens_type2,
 			verbose_level);
 

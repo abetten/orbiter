@@ -257,7 +257,7 @@ void large_set_classify::init_designs(orbit_of_sets *SetOrb,
 				"A_on_designs->degree=" << A_on_designs->degree << endl;
 	}
 
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 	Poset->init_subset_lattice(DC->A, A_on_designs,
 			DC->A->Strong_gens,
 			verbose_level);

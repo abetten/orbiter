@@ -3388,7 +3388,6 @@ int surface_object_properties::test_full_del_pezzo(int P_idx, int *f_deleted, in
 	return TRUE;
 }
 
-//long int *tangent_plane_rank_global; // [SO->nb_pts]
 
 
 

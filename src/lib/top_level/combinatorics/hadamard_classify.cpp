@@ -312,9 +312,9 @@ void hadamard_classify::init(int n, int f_draw,
 		}
 
 	poset_classification_control *Control;
-	poset *Poset;
+	poset_with_group_action *Poset;
 
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 	Poset->init_subset_lattice(A, A,
 			A->Strong_gens,
 			verbose_level);

@@ -180,7 +180,7 @@ public:
 		// infinity and zero
 
 
-	poset *Poset;
+	poset_with_group_action *Poset;
 	poset_classification_control *Control;
 
 	poset_classification *Gen;

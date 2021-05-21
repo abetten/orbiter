@@ -420,7 +420,7 @@ void linear_set_classify::init(
 
 
 	Control1 = NEW_OBJECT(poset_classification_control);
-	Poset1 = NEW_OBJECT(poset);
+	Poset1 = NEW_OBJECT(poset_with_group_action);
 	Gen = NEW_OBJECT(poset_classification);
 
 
@@ -955,7 +955,7 @@ void linear_set_classify::init_secondary(int argc, const char **argv,
 	secondary_nb_candidates = nb_candidates;
 
 	Control2 = NEW_OBJECT(poset_classification_control);
-	Poset2 = NEW_OBJECT(poset);
+	Poset2 = NEW_OBJECT(poset_with_group_action);
 	Gen2 = NEW_OBJECT(poset_classification);
 
 	secondary_depth = n - secondary_level;
@@ -1329,7 +1329,7 @@ void linear_set_classify::init_compute_stabilizer(int argc, const char **argv,
 	}
 
 	Control_stab = NEW_OBJECT(poset_classification_control);
-	Poset_stab = NEW_OBJECT(poset);
+	Poset_stab = NEW_OBJECT(poset_with_group_action);
 
 
 	Control_stab->f_depth = TRUE;

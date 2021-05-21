@@ -120,7 +120,7 @@ void arc_orbits_on_pairs::init(
 	Control->f_depth = TRUE;
 	Control->depth = 2;
 
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 	Poset->init_subset_lattice(A, A_on_arc,
 			The_arc->Strong_gens,
 			verbose_level);

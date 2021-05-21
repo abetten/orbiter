@@ -25,14 +25,16 @@ MODULES = \
 	incidence_structure.o \
 	klein_correspondence.o \
 	knarr.o \
-	knowledge_base.o \
 	object_in_projective_space.o \
 	point_line.o \
 	points_and_lines.o \
 	projective_space.o \
 	projective_space2.o \
+	quartic_curve_domain.o \
+	quartic_curve_object_properties.o \
+	quartic_curve_object.o \
 	spread_tables.o \
-	unusual.o \
+	unusual_model.o \
 	w3q.o 
 
 

@@ -120,7 +120,7 @@ public:
 	action *subaction;
 
 
-	/** whether the group has a strong generators */
+	/** whether the group has strong generators */
 	int f_has_strong_generators;
 
 	/** strong generating set for the group */
@@ -140,10 +140,10 @@ public:
 	int dimension;
 
 
-	/** how many int we need to store one group element */
+	/** the number of int needed to store one group element */
 	int elt_size_in_int;
 
-	/** how many char do we need
+	/** the number of char needed
 	 * to store a group element in the compressed form */
 	int coded_elt_size_in_char;
 
@@ -347,6 +347,10 @@ public:
 	void stabilizer_of_spread_representative(int q,
 		int k, int no, vector_ge *&gens, const char *&stab_order, 
 		int verbose_level);
+	void stabilizer_of_quartic_curve_representative(
+			int q, int no,
+			vector_ge *&gens, const char *&stab_order,
+			int verbose_level);
 	void point_stabilizer_any_point(int &pt,
 		schreier *&Sch, sims *&Stab,
 		strong_generators *&stab_gens,
@@ -458,7 +462,7 @@ public:
 	// action_init.cpp
 
 	/** Create any linear group */
-	void init_linear_group(//sims *&S,
+	void init_linear_group(
 		finite_field *F, int m,
 		int f_projective, int f_general, int f_affine,
 		int f_semilinear, int f_special,
@@ -531,15 +535,6 @@ public:
 		int f_semilinear,
 		int f_basis, int verbose_level);
 
-	/** Create the direct product group M1 x M2 in product action
-	 * and restrict the action to the grid. */
-	void init_direct_product_group_and_restrict(
-			matrix_group *M1, matrix_group *M2, int verbose_level);
-
-	/** Create the direct product group M1 x M2 in product action */
-	void init_direct_product_group(
-			matrix_group *M1, matrix_group *M2,
-			int verbose_level);
 
 	/** Create the wreath product group AGL(n,q) wreath Sym(nb_factors)
 	 * in wreath product action
@@ -642,12 +637,6 @@ public:
 		int f_induce_action, sims *old_G, 
 		int verbose_level);
 	action *induced_action_on_wedge_product(int verbose_level);
-#if 0
-	void induced_action_on_wedge_product(action *A_old, 
-		action_on_wedge_product *AW, 
-		int f_induce_action, sims *old_G, 
-		int verbose_level);
-#endif
 	void induced_action_by_subfield_structure(action *A_old, 
 		action_by_subfield_structure *SubfieldStructure, 
 		int f_induce_action, sims *old_G, 
@@ -935,7 +924,6 @@ public:
 		projective_space *P,
 		long int *set, int set_size, int &canonical_pt,
 		int *canonical_set_or_NULL,
-		//int f_save_incma_in_and_out, const char *save_incma_in_and_out_prefix,
 		int verbose_level);
 	int reverse_engineer_semilinear_map(
 		projective_space *P,
@@ -1007,6 +995,12 @@ public:
 		int degree, int *perm, int offset,
 		int f_do_it_anyway_even_for_big_degree,
 		int f_print_cycles_of_length_one, int verbose_level);
+	action *init_direct_product_group_and_restrict(
+			matrix_group *M1, matrix_group *M2, int verbose_level);
+	action *init_direct_product_group(
+			matrix_group *M1, matrix_group *M2,
+			int verbose_level);
+
 };
 
 void callback_choose_random_generator_orthogonal(int iteration,

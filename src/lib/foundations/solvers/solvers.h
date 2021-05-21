@@ -76,7 +76,9 @@ public:
 
 	diophant_activity();
 	~diophant_activity();
-	void init(diophant_activity_description *Descr,
+	void init_from_file(diophant_activity_description *Descr,
+			int verbose_level);
+	void perform_activity(diophant_activity_description *Descr, diophant *Dio,
 			int verbose_level);
 
 
@@ -135,6 +137,10 @@ public:
 	int coefficient_matrix_m;
 	int coefficient_matrix_n;
 	std::string coefficient_matrix_text;
+
+	int f_problem_of_Steiner_type;
+	int problem_of_Steiner_type_nb_t_orbits;
+	std::string problem_of_Steiner_type_covering_matrix_fname;
 
 	int f_coefficient_matrix_csv;
 	std::string coefficient_matrix_csv;
@@ -325,9 +331,6 @@ public:
 	int maximum_number_of_non_zero_coefficients_in_row();
 	void get_coefficient_matrix(int *&M, int &nb_rows, int &nb_cols, 
 		int verbose_level);
-	//void save_as_Levi_graph(std::string &fname, int verbose_level);
-	//void save_in_compact_format(const char *fname, int verbose_level);
-	//void read_compact_format(const char *fname, int verbose_level);
 	void save_in_general_format(std::string &fname, int verbose_level);
 	void read_general_format(std::string &fname, int verbose_level);
 	void eliminate_zero_rows_quick(int verbose_level);

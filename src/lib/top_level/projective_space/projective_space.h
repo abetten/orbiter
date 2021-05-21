@@ -80,7 +80,7 @@ public:
 	// substructure stuff:
 	poset_classification *PC;
 	poset_classification_control *Control;
-	poset *Poset;
+	poset_with_group_action *Poset;
 	int nb_orbits;
 	canonical_form_substructure **CFS_table; // [nb_objects_to_test]
 
@@ -530,6 +530,11 @@ public:
 	surface_create_description *Surface_Descr;
 
 
+	int f_define_quartic_curve;
+	std::string define_quartic_curve_label;
+	quartic_curve_create_description *Quartic_curve_descr;
+
+
 	int f_classify_surfaces_with_double_sixes;
 	std::string classify_surfaces_with_double_sixes_label;
 	poset_classification_control *classify_surfaces_with_double_sixes_control;
@@ -663,6 +668,11 @@ public:
 			surface_create_description *Surface_Descr,
 			surface_with_action *&Surf_A,
 			surface_create *&SC,
+			int verbose_level);
+	void do_create_quartic_curve(
+			projective_space_with_action *PA,
+			quartic_curve_create_description *Quartic_curve_descr,
+			quartic_curve_create *&QC,
 			int verbose_level);
 	void do_spread_classify(
 			projective_space_with_action *PA,
@@ -1099,8 +1109,13 @@ public:
 
 	projective_space *P;
 
+	// if n >= 3:
 	projective_space_with_action *PA2;
-		// only if n >= 3
+
+
+	// if n == 2:
+	quartic_curve_domain *Dom;
+	quartic_curve_domain_with_action *QCDA;
 
 
 	action *A; // linear group PGGL(d,q) in the action on points
@@ -1204,6 +1219,10 @@ public:
 		std::ostream &ost,
 		layered_graph_draw_options *O,
 		int verbose_level);
+	void create_quartic_curve(
+			quartic_curve_create_description *Quartic_curve_descr,
+			quartic_curve_create *&QC,
+			int verbose_level);
 
 };
 
@@ -1227,6 +1246,238 @@ int table_of_sets_compare_func(void *data, int i,
 		void *search_object,
 		void *extra_data);
 
+
+
+// #############################################################################
+// quartic_curve_activity_description.cpp
+// #############################################################################
+
+//! description of an activity associated with a quartic curve
+
+
+class quartic_curve_activity_description {
+public:
+
+	int f_report;
+
+	int f_report_with_group;
+
+	int f_export_points;
+
+
+	quartic_curve_activity_description();
+	~quartic_curve_activity_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+
+};
+
+
+// #############################################################################
+// quartic_curve_activity.cpp
+// #############################################################################
+
+//! an activity associated with a quartic curve
+
+
+class quartic_curve_activity {
+public:
+
+	quartic_curve_activity_description *Descr;
+	quartic_curve_create *QC;
+
+
+	quartic_curve_activity();
+	~quartic_curve_activity();
+	void init(quartic_curve_activity_description *Quartic_curve_activity_description,
+			quartic_curve_create *QC, int verbose_level);
+	void perform_activity(int verbose_level);
+	void do_report(
+			quartic_curve_create *QC,
+			int verbose_level);
+
+};
+
+
+
+
+// #############################################################################
+// quartic_curve_create_description.cpp
+// #############################################################################
+
+
+
+//! to describe a quartic curve from the command line
+
+
+class quartic_curve_create_description {
+
+public:
+
+	int f_q;
+	int q;
+
+	int f_label_txt;
+	std::string label_txt;
+
+	int f_label_tex;
+	std::string label_tex;
+
+	int f_label_for_summary;
+	std::string label_for_summary;
+
+	int f_catalogue;
+	int iso;
+
+	int f_by_coefficients;
+	std::string coefficients_text;
+
+
+	int f_by_equation;
+	std::string equation_name_of_formula;
+	std::string equation_name_of_formula_tex;
+	std::string equation_managed_variables;
+	std::string equation_text;
+	std::string equation_parameters;
+	std::string equation_parameters_tex;
+
+	int f_override_group;
+	std::string override_group_order;
+	int override_group_nb_gens;
+	std::string override_group_gens;
+
+	std::vector<std::string> transform_coeffs;
+	std::vector<int> f_inverse_transform;
+
+
+
+	quartic_curve_create_description();
+	~quartic_curve_create_description();
+	void null();
+	void freeself();
+	int read_arguments(int argc, std::string *argv,
+		int verbose_level);
+	int get_q();
+};
+
+
+
+// #############################################################################
+// quartic_curve_create.cpp
+// #############################################################################
+
+
+//! to create a quartic curve from a description using class quartic_curve_create_description
+
+
+class quartic_curve_create {
+
+public:
+	quartic_curve_create_description *Descr;
+
+	std::string prefix;
+	std::string label_txt;
+	std::string label_tex;
+
+	int f_ownership;
+
+	int q;
+	finite_field *F;
+
+	int f_semilinear;
+
+
+	projective_space_with_action *PA;
+
+	quartic_curve_domain_with_action *QCDA;
+
+	quartic_curve_object *QO;
+
+	int f_has_group;
+	strong_generators *Sg;
+	int f_has_nice_gens;
+	vector_ge *nice_gens;
+
+
+
+
+	quartic_curve_create();
+	~quartic_curve_create();
+	void null();
+	void freeself();
+	void init_with_data(
+			quartic_curve_create_description *Descr,
+			projective_space_with_action *PA,
+			quartic_curve_domain_with_action *QCDA,
+			int verbose_level);
+	void init(quartic_curve_create_description *Descr,
+			projective_space_with_action *PA,
+			quartic_curve_domain_with_action *QCDA,
+			int verbose_level);
+	void create_quartic_curve_from_description(int verbose_level);
+	void override_group(std::string &group_order_text,
+			int nb_gens, std::string &gens_text, int verbose_level);
+	void create_quartic_curve_by_coefficients(std::string &coefficients_text,
+			int verbose_level);
+	void create_quartic_curve_by_coefficient_vector(int *eqn15,
+			int verbose_level);
+	void create_quartic_curve_from_catalogue(int iso,
+			int verbose_level);
+	void create_quartic_curve_by_equation(
+			std::string &name_of_formula,
+			std::string &name_of_formula_tex,
+			std::string &managed_variables,
+			std::string &equation_text,
+			std::string &equation_parameters,
+			std::string &equation_parameters_tex,
+			int verbose_level);
+	void apply_transformations(
+		std::vector<std::string> &transform_coeffs,
+		std::vector<int> &f_inverse_transform,
+		int verbose_level);
+	void compute_group(projective_space_with_action *PA,
+			int verbose_level);
+
+};
+
+
+// #############################################################################
+// quartic_curve_domain_with_action.cpp
+// #############################################################################
+
+//! a domain for quartic curves in projective space with group action
+
+
+
+class quartic_curve_domain_with_action {
+
+public:
+
+
+	projective_space_with_action *PA;
+
+	int f_semilinear;
+
+	quartic_curve_domain *Dom; // do not free
+
+	action *A; // linear group PGGL(3,q)
+
+
+	action *A_on_lines; // linear group PGGL(3,q) acting on lines
+
+	int *Elt1;
+
+	action_on_homogeneous_polynomials *AonHPD_4_3;
+
+
+	quartic_curve_domain_with_action();
+	~quartic_curve_domain_with_action();
+	void init(quartic_curve_domain *Dom,
+			projective_space_with_action *PA,
+			int verbose_level);
+
+};
 
 
 }}

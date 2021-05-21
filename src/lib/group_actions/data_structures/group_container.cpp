@@ -1,4 +1,4 @@
-// group.cpp
+// group_container.cpp
 //
 // Anton Betten
 // December 24, 2003
@@ -12,17 +12,17 @@ using namespace std;
 namespace orbiter {
 namespace group_actions {
 
-group::group()
+group_container::group_container()
 {
 	null();
 }
 
-group::~group()
+group_container::~group_container()
 {
 	freeself();
 }
 
-void group::null()
+void group_container::null()
 {
 	A = NULL;
 	f_has_ascii_coding = FALSE;
@@ -36,40 +36,40 @@ void group::null()
 	S = NULL;
 }
 
-void group::freeself()
+void group_container::freeself()
 {
 	delete_ascii_coding();
 	delete_strong_generators();
 	delete_sims();
 }
 
-group::group(action *A, int verbose_level)
+group_container::group_container(action *A, int verbose_level)
 {
 	null();
 	init(A, verbose_level);
 };
 
-group::group(action *A, const char *ascii_coding, int verbose_level)
+group_container::group_container(action *A, const char *ascii_coding, int verbose_level)
 {
 	null();
 	init(A, verbose_level);
 	init_ascii_coding(ascii_coding, verbose_level);
 };
 
-group::group(action *A, vector_ge &SG, int *tl, int verbose_level)
+group_container::group_container(action *A, vector_ge &SG, int *tl, int verbose_level)
 {
 	null();
 	init(A, verbose_level);
 	init_strong_generators(SG, tl, verbose_level - 1);
 };
 
-void group::init(action *A, int verbose_level)
+void group_container::init(action *A, int verbose_level)
 {
 	null();
-	group::A = A;
+	group_container::A = A;
 }
 
-void group::init_ascii_coding_to_sims(const char *ascii_coding, int verbose_level)
+void group_container::init_ascii_coding_to_sims(const char *ascii_coding, int verbose_level)
 {
 	if (strlen(ascii_coding)) {
 		init_ascii_coding(ascii_coding, verbose_level);
@@ -87,16 +87,16 @@ void group::init_ascii_coding_to_sims(const char *ascii_coding, int verbose_leve
 	schreier_sims(0);
 }
 
-void group::init_ascii_coding(const char *ascii_coding, int verbose_level)
+void group_container::init_ascii_coding(const char *ascii_coding, int verbose_level)
 {
 	delete_ascii_coding();
 	
-	group::ascii_coding = NEW_char(strlen(ascii_coding) + 1);
-	strcpy(group::ascii_coding, ascii_coding);
+	group_container::ascii_coding = NEW_char(strlen(ascii_coding) + 1);
+	strcpy(group_container::ascii_coding, ascii_coding);
 	f_has_ascii_coding = TRUE;
 }
 
-void group::delete_ascii_coding()
+void group_container::delete_ascii_coding()
 {
 	if (f_has_ascii_coding) {
 		FREE_char(ascii_coding);
@@ -105,42 +105,42 @@ void group::delete_ascii_coding()
 	}
 }
 
-void group::init_strong_generators_empty_set(int verbose_level)
+void group_container::init_strong_generators_empty_set(int verbose_level)
 {
 	int i;
 	
 	delete_strong_generators();
 	
-	group::SG = NEW_OBJECT(vector_ge);
-	group::SG->init(A, verbose_level - 2);
-	group::SG->allocate(0, verbose_level - 2);
-	group::tl = NEW_int(A->base_len());
+	group_container::SG = NEW_OBJECT(vector_ge);
+	group_container::SG->init(A, verbose_level - 2);
+	group_container::SG->allocate(0, verbose_level - 2);
+	group_container::tl = NEW_int(A->base_len());
 	for (i = 0; i < A->base_len(); i++) {
-		group::tl[i] = 1;
+		group_container::tl[i] = 1;
 	}
 	f_has_strong_generators = TRUE;
 }
 
-void group::init_strong_generators(vector_ge &SG, int *tl, int verbose_level)
+void group_container::init_strong_generators(vector_ge &SG, int *tl, int verbose_level)
 {
 	int i;
 	
 	delete_strong_generators();
 	
-	group::SG = NEW_OBJECT(vector_ge);
-	group::SG->init(A, verbose_level - 2);
-	group::SG->allocate(SG.len, verbose_level - 2);
+	group_container::SG = NEW_OBJECT(vector_ge);
+	group_container::SG->init(A, verbose_level - 2);
+	group_container::SG->allocate(SG.len, verbose_level - 2);
 	for (i = 0; i < SG.len; i++) {
-		group::SG->copy_in(i, SG.ith(i));
+		group_container::SG->copy_in(i, SG.ith(i));
 	}
-	group::tl = NEW_int(A->base_len());
+	group_container::tl = NEW_int(A->base_len());
 	for (i = 0; i < A->base_len(); i++) {
-		group::tl[i] = tl[i];
+		group_container::tl[i] = tl[i];
 	}
 	f_has_strong_generators = TRUE;
 }
 
-void group::init_strong_generators_by_handle_and_with_tl(std::vector<int> &gen_handle,
+void group_container::init_strong_generators_by_handle_and_with_tl(std::vector<int> &gen_handle,
 		std::vector<int> &tl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -149,7 +149,7 @@ void group::init_strong_generators_by_handle_and_with_tl(std::vector<int> &gen_h
 	int *Tl;
 
 	if (f_v) {
-		cout << "group::init_strong_generators_by_handle" << endl;
+		cout << "group_container::init_strong_generators_by_handle" << endl;
 	}
 	Gen_hdl = NEW_int(gen_handle.size());
 	for (i = 0; i < gen_handle.size(); i++) {
@@ -168,11 +168,11 @@ void group::init_strong_generators_by_handle_and_with_tl(std::vector<int> &gen_h
 	FREE_int(Tl);
 
 	if (f_v) {
-		cout << "group::init_strong_generators_by_handle done" << endl;
+		cout << "group_container::init_strong_generators_by_handle done" << endl;
 	}
 }
 
-void group::init_strong_generators_by_hdl(int nb_gen,
+void group_container::init_strong_generators_by_hdl(int nb_gen,
 		int *gen_hdl, int *tl, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -219,15 +219,15 @@ void group::init_strong_generators_by_hdl(int nb_gen,
 		cout << "group::init_strong_generators_by_hdl "
 				"before allocating tl of size " << A->base_len() << endl;
 	}
-	group::tl = NEW_int(A->base_len());
+	group_container::tl = NEW_int(A->base_len());
 	if (nb_gen) {
 		for (i = 0; i < A->base_len(); i++) {
-			group::tl[i] = tl[i];
+			group_container::tl[i] = tl[i];
 		}
 	}
 	else {
 		for (i = 0; i < A->base_len(); i++) {
-			group::tl[i] = 1;
+			group_container::tl[i] = 1;
 		}
 	}
 	f_has_strong_generators = TRUE;
@@ -236,7 +236,7 @@ void group::init_strong_generators_by_hdl(int nb_gen,
 	}
 }
 
-void group::delete_strong_generators()
+void group_container::delete_strong_generators()
 {
 	if (f_has_strong_generators) {
 		FREE_OBJECT(SG);
@@ -247,7 +247,7 @@ void group::delete_strong_generators()
 	}
 }
 
-void group::delete_sims()
+void group_container::delete_sims()
 {
 	if (f_has_sims) {
 		if (S) {
@@ -258,33 +258,31 @@ void group::delete_sims()
 	}
 }
 
-void group::require_ascii_coding()
+void group_container::require_ascii_coding()
 {
 	if (!f_has_ascii_coding) {
-		cout << "group::require_ascii_coding() "
-				"!f_has_ascii_coding" << endl;
+		cout << "group_container::require_ascii_coding !f_has_ascii_coding" << endl;
 		exit(1);
 	}
 }
 
-void group::require_strong_generators()
+void group_container::require_strong_generators()
 {
 	if (!f_has_strong_generators) {
-		cout << "group::require_strong_generators() "
-			"!f_has_strong_generators" << endl;
+		cout << "group_container::require_strong_generators !f_has_strong_generators" << endl;
 		exit(1);
 	}
 }
 
-void group::require_sims()
+void group_container::require_sims()
 {
 	if (!f_has_sims) {
-		cout << "group::require_sims !f_has_sims" << endl;
+		cout << "group_container::require_sims !f_has_sims" << endl;
 		exit(1);
 	}
 }
 
-void group::group_order(longinteger_object &go)
+void group_container::group_order(longinteger_object &go)
 {
 	longinteger_domain D;
 	
@@ -301,14 +299,14 @@ void group::group_order(longinteger_object &go)
 	}
 }
 
-void group::print_group_order(ostream &ost)
+void group_container::print_group_order(ostream &ost)
 {
 	longinteger_object go;
 	group_order(go);
 	ost << go;
 }
 
-void group::print_tl()
+void group_container::print_tl()
 {
 	int i;
 	
@@ -320,7 +318,7 @@ void group::print_tl()
 	}
 }
 
-void group::code_ascii(int verbose_level)
+void group_container::code_ascii(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int sz, i, j;
@@ -328,7 +326,7 @@ void group::code_ascii(int verbose_level)
 	os_interface Os;
 
 	if (f_v) {
-		cout << "group::code_ascii action " << A->label
+		cout << "group_container::code_ascii action " << A->label
 				<< " base_len=" << A->base_len() << endl;
 	}
 	require_strong_generators();
@@ -356,16 +354,16 @@ void group::code_ascii(int verbose_level)
 	}
 	*p++ = 0;
 	if (p - ascii_coding != sz) {
-		cout << "group::code_ascii p - ascii_coding != sz" << endl;
+		cout << "group_container::code_ascii p - ascii_coding != sz" << endl;
 		exit(1);
 	}
 	f_has_ascii_coding = TRUE;
 	if (f_v) {
-		cout << "group::code_ascii " << ascii_coding << endl;
+		cout << "group_container::code_ascii " << ascii_coding << endl;
 	}
 }
 
-void group::decode_ascii(int verbose_level)
+void group_container::decode_ascii(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
@@ -376,14 +374,14 @@ void group::decode_ascii(int verbose_level)
 	os_interface Os;
 
 	require_ascii_coding();
-	//cout << "group::decode_ascii ascii_coding=" << ascii_coding << endl;
+	//cout << "group_container::decode_ascii ascii_coding=" << ascii_coding << endl;
 	p = ascii_coding;
 	p0 = p;
 	str_len = strlen(ascii_coding);
 	len = Os.decode_int4(p);
 	nbsg = Os.decode_int4(p);
 	if (len != A->base_len()) {
-		cout << "group::decode_ascii len != A->base_len" << endl;
+		cout << "group_container::decode_ascii len != A->base_len" << endl;
 		cout << "len=" << len << " (from file)" << endl;
 		cout << "A->base_len=" << A->base_len() << endl;
 		cout << "action A is " << A->label << endl;
@@ -400,7 +398,7 @@ void group::decode_ascii(int verbose_level)
 	}
 	for (i = 0; i < A->base_len(); i++) {
 		if (base1[i] != A->base_i(i)) {
-			cout << "group::decode_ascii base mismatch" << endl;
+			cout << "group_container::decode_ascii base mismatch" << endl;
 			exit(1);
 		}
 	}
@@ -415,7 +413,7 @@ void group::decode_ascii(int verbose_level)
 	}
 	FREE_int(base1);
 	if (p - p0 != str_len) {
-		cout << "group::decode_ascii p - p0 != str_len" << endl;
+		cout << "group_container::decode_ascii p - p0 != str_len" << endl;
 		cout << "p - p0 = " << p - p0 << endl;
 		cout << "str_len = " << str_len << endl;
 		exit(1);
@@ -430,31 +428,31 @@ void group::decode_ascii(int verbose_level)
 	}
 }
 
-void group::schreier_sims(int verbose_level)
+void group_container::schreier_sims(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 	
 	if (f_v) {
-		cout << "group::schreier_sims" << endl;
+		cout << "group_container::schreier_sims" << endl;
 		cout << "verbose_level = " << verbose_level << endl;
 	}
 	require_strong_generators();
 	if (f_v) {
-		cout << "group::schreier_sims before delete_sims" << endl;
+		cout << "group_container::schreier_sims before delete_sims" << endl;
 	}
 	delete_sims();
 	if (f_v) {
-		cout << "group::schreier_sims after delete_sims" << endl;
+		cout << "group_container::schreier_sims after delete_sims" << endl;
 	}
 	S = NEW_OBJECT(sims);
 	if (FALSE) {
-		cout << "group::schreier_sims calling S->init(A)" << endl;
+		cout << "group_container::schreier_sims calling S->init(A)" << endl;
 	}
 	S->init(A, verbose_level - 2);
 	if (FALSE) {
-		cout << "group::schreier_sims calling S->init_generators" << endl;
+		cout << "group_container::schreier_sims calling S->init_generators" << endl;
 	}
 	if (FALSE) {
 		cout << "generators" << endl;
@@ -462,30 +460,30 @@ void group::schreier_sims(int verbose_level)
 	}
 	S->init_generators(*SG, verbose_level - 2);
 	if (f_v) {
-		cout << "group::schreier_sims after S->init_generators" << endl;
+		cout << "group_container::schreier_sims after S->init_generators" << endl;
 		cout << "tl: ";
 		Orbiter->Int_vec.print(cout, tl, A->base_len());
 		cout << endl;
 	}
 	if (f_v) {
-		cout << "group::schreier_sims before "
+		cout << "group_container::schreier_sims before "
 				"compute_base_orbits_known_length" << endl;
 	}
 	S->compute_base_orbits_known_length(tl, verbose_level - 2);
 	if (f_v) {
-		cout << "group::schreier_sims after "
+		cout << "group_container::schreier_sims after "
 				"compute_base_orbits_known_length" << endl;
 	}
 	
 	if (f_v) {
-		cout << "group::schreier_sims done. Found a group of order ";
+		cout << "group_container::schreier_sims done. Found a group of order ";
 		S->print_group_order(cout);
 		cout << endl;
 	}
 	f_has_sims = TRUE;
 }
 
-void group::get_strong_generators(int verbose_level)
+void group_container::get_strong_generators(int verbose_level)
 {
 	require_sims();
 	delete_strong_generators();
@@ -495,7 +493,7 @@ void group::get_strong_generators(int verbose_level)
 	S->extract_strong_generators_in_order(*SG, tl, verbose_level - 1);
 }
 
-void group::point_stabilizer(group &stab, int pt, int verbose_level)
+void group_container::point_stabilizer(group_container &stab, int pt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -505,7 +503,7 @@ void group::point_stabilizer(group &stab, int pt, int verbose_level)
 	int *tl;
 	
 	if (f_v) {
-		cout << "group::point_stabilizer "
+		cout << "group_container::point_stabilizer "
 				"computing stabilizer of point " << pt << endl;
 	}
 	
@@ -537,8 +535,8 @@ void group::point_stabilizer(group &stab, int pt, int verbose_level)
 	}
 }
 
-void group::point_stabilizer_with_action(action *A2,
-		group &stab, int pt, int verbose_level)
+void group_container::point_stabilizer_with_action(action *A2,
+		group_container &stab, int pt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -548,7 +546,7 @@ void group::point_stabilizer_with_action(action *A2,
 	int *tl;
 	
 	if (f_v) {
-		cout << "group::point_stabilizer_with_action ";
+		cout << "group_container::point_stabilizer_with_action ";
 		cout << "computing stabilizer of point " << pt 
 			<< " in action " << A2->label 
 			<< " internal action is " << stab.A->label << endl;
@@ -558,12 +556,12 @@ void group::point_stabilizer_with_action(action *A2,
 	
 	tl = NEW_int(A->base_len());
 	if (f_v) {
-		cout << "group::point_stabilizer_with_action "
+		cout << "group_container::point_stabilizer_with_action "
 				"calling S->point_stabilizer_with_action" << endl;
 	}
 	S->point_stabilizer_with_action(A2, stab_gens, tl, pt, verbose_level - 1);
 	if (f_v) {
-		cout << "group::point_stabilizer_with_action "
+		cout << "group_container::point_stabilizer_with_action "
 				"after S->point_stabilizer_with_action" << endl;
 	}
 	
@@ -578,12 +576,12 @@ void group::point_stabilizer_with_action(action *A2,
 	stab.freeself();
 	stab.init(A, verbose_level - 2);
 	if (f_v) {
-		cout << "group::point_stabilizer_with_action "
+		cout << "group_container::point_stabilizer_with_action "
 				"before stab.init_strong_generators" << endl;
 	}
 	stab.init_strong_generators(stab_gens, tl, verbose_level - 2);
 	if (f_v) {
-		cout << "group::point_stabilizer_with_action "
+		cout << "group_container::point_stabilizer_with_action "
 				"after stab.init_strong_generators" << endl;
 	}
 	FREE_int(tl);
@@ -599,14 +597,14 @@ void group::point_stabilizer_with_action(action *A2,
 	}
 }
 
-void group::induced_action(action &induced_action,
-		group &H, group &K, int verbose_level)
+void group_container::induced_action(action &induced_action,
+		group_container &H, group_container &K, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
-		cout << "group::induced_action" << endl;
+		cout << "group_container::induced_action" << endl;
 		}
 	{
 		vector_ge H_SG, K_SG;
@@ -713,7 +711,7 @@ void group::induced_action(action &induced_action,
 		H.init_strong_generators(H_SG, H_tl, verbose_level - 2);
 		K.init_strong_generators(K_SG, K_tl, verbose_level - 2);
 		if (f_v) {
-			cout << "group::induced_action finished after "
+			cout << "group_container::induced_action finished after "
 					<< n << " iterations" << endl;
 			cout << "order of the induced group  = ";
 			H.print_group_order(cout);
@@ -743,11 +741,11 @@ void group::induced_action(action &induced_action,
 		//cout << "group::induced_action deleting SG" << endl;
 	}
 	if (f_v) {
-		cout << "group::induced_action finished" << endl;
+		cout << "group_container::induced_action finished" << endl;
 	}
 }
 
-void group::extension(group &N, group &H, int verbose_level)
+void group_container::extension(group_container &N, group_container &H, int verbose_level)
 	// N needs to have strong generators, 
 	// H needs to have sims
 	// N and H may have different actions, 
@@ -765,7 +763,7 @@ void group::extension(group &N, group &H, int verbose_level)
 	int *Elt;
 	
 	if (f_v) {
-		cout << "group::extension" << endl;
+		cout << "group_container::extension" << endl;
 	}
 	N.require_strong_generators();
 	N.group_order(go_N);
@@ -775,7 +773,7 @@ void group::extension(group &N, group &H, int verbose_level)
 	Elt = NEW_int(A->elt_size_in_int);
 
 	if (f_v) {
-		cout << "group::extension |N| = " << go_N << " |H| = "
+		cout << "group_container::extension |N| = " << go_N << " |H| = "
 			<< go_H << " |G| = |N|*|H| = " << go_G << endl;
 	}
 	H.require_sims();
@@ -842,7 +840,7 @@ void group::extension(group &N, group &H, int verbose_level)
 	init_strong_generators(SG, tl, verbose_level - 2);
 	
 	if (f_v) {
-		cout << "group::extension finished after "
+		cout << "group_container::extension finished after "
 				<< n << " iterations" << endl;
 		cout << "order of the extension = ";
 		print_group_order(cout);
@@ -852,13 +850,13 @@ void group::extension(group &N, group &H, int verbose_level)
 	FREE_int(tl);
 }
 
-void group::print_strong_generators(ostream &ost,
+void group_container::print_strong_generators(ostream &ost,
 		int f_print_as_permutation)
 {
 	int i, l;
 	
 	if (!f_has_strong_generators) {
-		cout << "group::print_strong_generators "
+		cout << "group_container::print_strong_generators "
 				"no strong generators" << endl;
 		exit(1);
 	}
@@ -877,14 +875,14 @@ void group::print_strong_generators(ostream &ost,
 	}
 }
 
-void group::print_strong_generators_with_different_action(
+void group_container::print_strong_generators_with_different_action(
 		ostream &ost, action *A2)
 {
 	print_strong_generators_with_different_action_verbose(
 			ost, A2, 0);
 }
 
-void group::print_strong_generators_with_different_action_verbose(
+void group_container::print_strong_generators_with_different_action_verbose(
 		ostream &ost, action *A2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -893,15 +891,15 @@ void group::print_strong_generators_with_different_action_verbose(
 	int *Elt;
 	
 	if (f_v) {
-		cout << "group::print_strong_generators_with_different_"
+		cout << "group_container::print_strong_generators_with_different_"
 				"action_verbose" << endl;
 	}
 	if (!f_has_strong_generators) {
-		cout << "group::print_strong_generators_with_different_"
+		cout << "group_container::print_strong_generators_with_different_"
 				"action no strong generators" << endl;
 		exit(1);
 	}
-	ost << "group::print_strong_generators_with_different_"
+	ost << "group_container::print_strong_generators_with_different_"
 			"action_verbose a group with tl=";
 	Orbiter->Int_vec.print(ost, tl, A->base_len());
 	l = SG->len;
@@ -913,7 +911,7 @@ void group::print_strong_generators_with_different_action_verbose(
 		Elt = SG->ith(i);
 		if (f_vv) {
 			if (f_v) {
-				cout << "group::print_strong_generators_with_"
+				cout << "group_container::print_strong_generators_with_"
 						"different_action_verbose computing images "
 						"individually" << endl;
 			}

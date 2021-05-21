@@ -34,6 +34,8 @@ void projective_space_with_action::null()
 	F = NULL;
 	P = NULL;
 	PA2 = NULL;
+	Dom = NULL;
+	QCDA = NULL;
 	A = NULL;
 	A_on_lines = NULL;
 	Elt1 = NULL;
@@ -46,6 +48,12 @@ void projective_space_with_action::freeself()
 	}
 	if (PA2) {
 		FREE_OBJECT(PA2);
+	}
+	if (Dom) {
+		FREE_OBJECT(Dom);
+	}
+	if (QCDA) {
+		FREE_OBJECT(QCDA);
 	}
 	if (A) {
 		FREE_OBJECT(A);
@@ -83,6 +91,26 @@ void projective_space_with_action::init(
 	
 	init_group(f_semilinear, verbose_level);
 
+	if (n == 2) {
+		Dom = NEW_OBJECT(quartic_curve_domain);
+
+		if (f_v) {
+			cout << "projective_space_with_action::init before Dom->init" << endl;
+		}
+		Dom->init(F, verbose_level);
+		if (f_v) {
+			cout << "projective_space_with_action::init after Dom->init" << endl;
+		}
+		QCDA = NEW_OBJECT(quartic_curve_domain_with_action);
+		if (f_v) {
+			cout << "projective_space_with_action::init before QCDA->init" << endl;
+		}
+		QCDA->init(Dom, this, verbose_level);
+		if (f_v) {
+			cout << "projective_space_with_action::init after QCDA->init" << endl;
+		}
+	}
+
 	if (n >= 3) {
 		if (f_v) {
 			cout << "projective_space_with_action::init n >= 3, so we initialize a plane" << endl;
@@ -98,6 +126,7 @@ void projective_space_with_action::init(
 			cout << "projective_space_with_action::init after PA2->init" << endl;
 		}
 	}
+
 
 	
 	Elt1 = NEW_int(A->elt_size_in_int);
@@ -2945,6 +2974,49 @@ void projective_space_with_action::report(
 		cout << "projective_space_with_action::report done" << endl;
 	}
 }
+
+
+void projective_space_with_action::create_quartic_curve(
+		quartic_curve_create_description *Quartic_curve_descr,
+		quartic_curve_create *&QC,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_with_action::create_quartic_curve" << endl;
+	}
+	QC = NEW_OBJECT(quartic_curve_create);
+
+	if (f_v) {
+		cout << "projective_space_with_action::create_quartic_curve before SC->init" << endl;
+	}
+	QC->init(Quartic_curve_descr, this, QCDA, verbose_level);
+	if (f_v) {
+		cout << "projective_space_with_action::create_quartic_curve after SC->init" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "projective_space_with_action::create_quartic_curve "
+				"before SC->apply_transformations" << endl;
+	}
+	QC->apply_transformations(Quartic_curve_descr->transform_coeffs,
+			Quartic_curve_descr->f_inverse_transform,
+			verbose_level - 2);
+
+	if (f_v) {
+		cout << "projective_space_with_action::create_quartic_curve "
+				"after SC->apply_transformations" << endl;
+	}
+
+	QC->F->PG_element_normalize(QC->QO->eqn15, 1, 15);
+
+	if (f_v) {
+		cout << "projective_space_with_action::create_quartic_curve done" << endl;
+	}
+}
+
 
 
 // #############################################################################

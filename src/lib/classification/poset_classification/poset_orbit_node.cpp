@@ -496,7 +496,7 @@ void poset_orbit_node::log_current_node(poset_classification *gen,
 				"node=" << node << " creating group" << endl;
 	}
 
-	group G;
+	group_container G;
 
 	G.init(gen->get_poset()->A, verbose_level - 2);
 
@@ -633,7 +633,7 @@ void poset_orbit_node::log_current_node_after_applying_group_element(
 	for (i = 0; i < s; i++) {
 		f << S[i] << " ";
 		}
-	group G;
+	group_container G;
 
 	G.init(gen->get_poset()->A, verbose_level - 2);
 

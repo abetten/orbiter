@@ -417,6 +417,7 @@ enum symbol_table_object_type {
 	t_orthogonal_space,
 	t_formula,
 	t_cubic_surface,
+	t_quartic_curve,
 	t_classification_of_cubic_surfaces_with_double_sixes,
 	t_collection,
 	t_combinatorial_object,
@@ -426,6 +427,7 @@ enum symbol_table_object_type {
 	t_packing_was_choose_fixed_points,
 	t_packing_long_orbits,
 	t_graph_classify,
+	t_diophant,
 	t_action,
 	t_poset,
 	t_poset_classification,
@@ -462,6 +464,8 @@ public:
 			void *p, int verbose_level);
 	void init_cubic_surface(std::string &label,
 			void *p, int verbose_level);
+	void init_quartic_curve(std::string &label,
+			void *p, int verbose_level);
 	void init_classification_of_cubic_surfaces_with_double_sixes(
 			std::string &label,
 			void *p, int verbose_level);
@@ -481,6 +485,8 @@ public:
 			void *PL, int verbose_level);
 	void init_graph_classify(std::string &label,
 			void *GC, int verbose_level);
+	void init_diophant(std::string &label,
+			void *Dio, int verbose_level);
 	void print();
 };
 

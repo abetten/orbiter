@@ -368,7 +368,7 @@ void packing_classify::prepare_generator(
 	if (f_v) {
 		cout << "packing_classify::prepare_generator" << endl;
 	}
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 	Poset->init_subset_lattice(T->A, Spread_table_with_selection->A_on_spreads,
 			T->A->Strong_gens,
 			verbose_level);

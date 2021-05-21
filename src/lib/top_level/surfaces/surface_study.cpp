@@ -1496,7 +1496,7 @@ void move_point_set(action *A2,
 		cout << "move_point_set" << endl;
 		}
 	poset_classification_control *Control;
-	poset *Poset;
+	poset_with_group_action *Poset;
 	poset_classification *gen;
 	//char prefix[1000];
 	//int f_W = FALSE;
@@ -1516,7 +1516,7 @@ void move_point_set(action *A2,
 		}
 
 	Control = NEW_OBJECT(poset_classification_control);
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 	Poset->init_subset_lattice(
 			Universe->A, A2,
 			Universe->Strong_gens,

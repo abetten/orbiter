@@ -521,7 +521,7 @@ void translation_plane_via_andre_model::classify_arcs(
 	Control->f_depth = TRUE;
 	Control->depth = depth;
 
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 	Poset->init_subset_lattice(An1, OnAndre,
 			strong_gens,
 			verbose_level);
@@ -626,7 +626,7 @@ void translation_plane_via_andre_model::classify_subplanes(
 	Control->f_depth = TRUE;
 	Control->depth = depth;
 
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 	Poset->init_subset_lattice(An1, OnAndre,
 			strong_gens,
 			verbose_level);

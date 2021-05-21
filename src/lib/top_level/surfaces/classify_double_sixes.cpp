@@ -236,7 +236,7 @@ void classify_double_sixes::init(
 	}
 
 
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 	Poset->init_subset_lattice(A, A_on_neighbors,
 			SG_line_stab,
 			verbose_level);

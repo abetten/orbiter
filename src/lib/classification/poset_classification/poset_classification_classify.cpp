@@ -19,7 +19,7 @@ namespace classification {
 void poset_classification::compute_orbits_on_subsets(
 	int target_depth,
 	poset_classification_control *PC_control,
-	poset *Poset,
+	poset_with_group_action *Poset,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

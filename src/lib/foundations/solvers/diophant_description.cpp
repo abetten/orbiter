@@ -41,6 +41,10 @@ diophant_description::diophant_description()
 	coefficient_matrix_n = 0;
 	//coefficient_matrix_text;
 
+	f_problem_of_Steiner_type = FALSE;
+	problem_of_Steiner_type_nb_t_orbits = 0;
+	//std::string problem_of_Steiner_type_covering_matrix_fname;
+
 	f_coefficient_matrix_csv = FALSE;
 	//coefficient_matrix_csv;
 
@@ -108,6 +112,14 @@ int diophant_description::read_arguments(
 			cout << "-coefficient_matrix " << coefficient_matrix_m << " "
 					<< coefficient_matrix_n << " " << coefficient_matrix_text << endl;
 		}
+		else if (stringcmp(argv[i], "-problem_of_Steiner_type") == 0) {
+			f_problem_of_Steiner_type = TRUE;
+			problem_of_Steiner_type_nb_t_orbits = strtoi(argv[++i]);
+			problem_of_Steiner_type_covering_matrix_fname.assign(argv[++i]);
+			cout << "-problem_of_Steiner_type " << problem_of_Steiner_type_nb_t_orbits
+					<< " " << problem_of_Steiner_type_covering_matrix_fname << endl;
+		}
+
 		else if (stringcmp(argv[i], "-coefficient_matrix_csv") == 0) {
 			f_coefficient_matrix_csv = TRUE;
 			coefficient_matrix_csv.assign(argv[++i]);

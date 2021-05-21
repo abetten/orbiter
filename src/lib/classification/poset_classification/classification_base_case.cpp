@@ -37,7 +37,7 @@ classification_base_case::~classification_base_case()
 	}
 }
 
-void classification_base_case::init(poset *Poset,
+void classification_base_case::init(poset_with_group_action *Poset,
 		int size, long int *orbit_rep,
 		long int *live_points, int nb_live_points,
 		strong_generators *Stab_gens,

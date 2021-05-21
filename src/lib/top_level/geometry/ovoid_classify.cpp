@@ -221,7 +221,7 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 		}
 #endif
 	
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 	Poset->init_subset_lattice(A, A,
 			A->Strong_gens,
 			verbose_level);

@@ -11,7 +11,7 @@ static const char *quartic_curves_q13_stab_order[] = {
 	"48",
 };
 // the 28 bitangents:
-static int quartic_curves_q13_Bitangents[] = { 
+static long int quartic_curves_q13_Bitangents[] = {
 	167, 122, 156, 169, 69, 89, 53, 64, 22, 87, 170, 99, 12, 7, 27, 45, 179, 173, 120, 68, 2, 162, 21, 10, 66, 85, 109, 15, 
 	157, 165, 130, 21, 83, 137, 32, 20, 6, 173, 101, 99, 48, 61, 75, 140, 13, 53, 121, 4, 141, 91, 63, 45, 79, 112, 37, 85, 
 };

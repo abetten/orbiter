@@ -499,11 +499,11 @@ void action::read_file_and_print_representatives(
 		Orbiter->Lint_vec.print(cout, Sets[i], Set_sizes[i]);
 		cout << endl;
 
-		group *G;
+		group_container *G;
 		vector_ge *gens;
 		int *tl;
 
-		G = NEW_OBJECT(group);
+		G = NEW_OBJECT(group_container);
 		G->init(this, verbose_level - 2);
 		G->init_ascii_coding_to_sims(Aut_ascii[i], verbose_level - 2);
 
@@ -552,7 +552,7 @@ void action::read_set_and_stabilizer(std::string &fname,
 	char **Ago_ascii;
 	char **Aut_ascii;
 	int *Casenumbers;
-	group *G;
+	group_container *G;
 	int i;
 	file_io Fio;
 
@@ -584,7 +584,7 @@ void action::read_set_and_stabilizer(std::string &fname,
 		}
 
 
-	G = NEW_OBJECT(group);
+	G = NEW_OBJECT(group_container);
 	G->init(this, verbose_level - 2);
 	if (f_vv) {
 		cout << "action::read_set_and_stabilizer "

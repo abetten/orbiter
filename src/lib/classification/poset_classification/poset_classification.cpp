@@ -87,7 +87,7 @@ int poset_classification::do_group_extension_in_upstep()
 	return f_do_group_extension_in_upstep;
 }
 
-poset *poset_classification::get_poset()
+poset_with_group_action *poset_classification::get_poset()
 {
 	return Poset;
 }
@@ -1075,7 +1075,7 @@ void poset_classification::get_stabilizer_order(int level,
 }
 
 void poset_classification::get_stabilizer_group(
-	group *&G,
+		group_container *&G,
 	int level, int orbit_at_level,
 	int verbose_level)
 {
@@ -1109,7 +1109,7 @@ void poset_classification::get_stabilizer_group(
 #else
 	longinteger_object go;
 
-	G = NEW_OBJECT(group);
+	G = NEW_OBJECT(group_container);
 	O->get_stabilizer(
 		this,
 		*G, go,
@@ -1134,7 +1134,7 @@ void poset_classification::get_stabilizer_generators_cleaned_up(
 				"get_stabilizer_generators_cleaned_up level=" << level
 				<< " orbit_at_level=" << orbit_at_level << endl;
 	}
-	group *G;
+	group_container *G;
 
 	get_stabilizer_group(G,
 			level, orbit_at_level, verbose_level - 1);
@@ -1323,7 +1323,7 @@ void poset_classification::coset_unrank(
 {
 	int f_v = (verbose_level >= 1);
 	long int *the_set;
-	group *G1, *G2;
+	group_container *G1, *G2;
 	int *Elt_gk;
 	longinteger_object G_order, U_order;
 	poset_orbit_node *O1, *O2;
@@ -1345,8 +1345,8 @@ void poset_classification::coset_unrank(
 
 
 	
-	G1 = NEW_OBJECT(group);
-	G2 = NEW_OBJECT(group);
+	G1 = NEW_OBJECT(group_container);
+	G2 = NEW_OBJECT(group_container);
 	the_set = NEW_lint(depth);
 	Elt_gk = NEW_int(Poset->A->elt_size_in_int);
 	
@@ -1379,7 +1379,7 @@ long int poset_classification::coset_rank(
 	int f_v = (verbose_level >= 1);
 	long int rank;
 	long int *the_set;
-	group *G1, *G2;
+	group_container *G1, *G2;
 	int *Elt_gk;
 	longinteger_object G_order, U_order;
 	poset_orbit_node *O1, *O2;
@@ -1401,8 +1401,8 @@ long int poset_classification::coset_rank(
 
 
 	
-	G1 = NEW_OBJECT(group);
-	G2 = NEW_OBJECT(group);
+	G1 = NEW_OBJECT(group_container);
+	G2 = NEW_OBJECT(group_container);
 	the_set = NEW_lint(depth);
 	Elt_gk = NEW_int(Poset->A->elt_size_in_int);
 	

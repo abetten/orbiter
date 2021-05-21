@@ -800,7 +800,7 @@ void interface_combinatorics::do_diophant_activity(
 
 	DA = NEW_OBJECT(diophant_activity);
 
-	DA->init(Descr, verbose_level);
+	DA->init_from_file(Descr, verbose_level);
 
 	FREE_OBJECT(DA);
 

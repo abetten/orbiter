@@ -694,6 +694,56 @@ void interface_symbol_table::definition_of_graph_classification(orbiter_top_leve
 	}
 }
 
+void interface_symbol_table::definition_of_diophant(orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_diophant" << endl;
+	}
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_diophant "
+				"using existing object " << packing_long_orbits_choose_fixed_points_label << endl;
+	}
+
+
+	diophant_create *Dio;
+
+
+	Dio = NEW_OBJECT(diophant_create);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_diophant before Dio->init" << endl;
+	}
+
+	Dio->init(Diophant_description, verbose_level);
+
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_diophant after Dio->init" << endl;
+	}
+
+
+
+
+	orbiter_symbol_table_entry Symb;
+
+	Symb.init_diophant(define_label, Dio, verbose_level);
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_diophant before add_symbol_table_entry" << endl;
+	}
+	Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, &Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_diophant done" << endl;
+	}
+}
+
 
 
 

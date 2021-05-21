@@ -2642,7 +2642,6 @@ void strong_generators::stabilizer_of_cubic_surface_from_catalogue(
 	action *A,
 	finite_field *F, int iso, 
 	int verbose_level)
-// before generators_for_the_stabilizer_of_the_cubic_surface
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2673,16 +2672,6 @@ void strong_generators::stabilizer_of_cubic_surface_from_catalogue(
 
 	gens = NEW_OBJECT(vector_ge);
 
-#if 0
-	int i;
-	gens->init(A, verbose_level - 2);
-
-
-	gens->allocate(nb_gens, verbose_level - 2);
-	for (i = 0; i < nb_gens; i++) {
-		A->make_element(gens->ith(i), data + i * data_size, 0);
-	}
-#else
 	if (f_v) {
 		cout << "strong_generators::stabilizer_of_cubic_surface_from_catalogue before "
 				"gens->init_from_data" << endl;
@@ -2692,7 +2681,6 @@ void strong_generators::stabilizer_of_cubic_surface_from_catalogue(
 		cout << "strong_generators::stabilizer_of_cubic_surface_from_catalogue after "
 				"gens->init_from_data" << endl;
 	}
-#endif
 
 
 
@@ -2722,6 +2710,77 @@ void strong_generators::stabilizer_of_cubic_surface_from_catalogue(
 	}
 }
 
+void strong_generators::stabilizer_of_quartic_curve_from_catalogue(
+	action *A,
+	finite_field *F, int iso,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_quartic_curve_from_catalogue" << endl;
+		cout << "q=" << F->q << endl;
+		cout << "iso=" << iso << endl;
+	}
+
+	int *data;
+	int nb_gens;
+	int data_size;
+	const char *ascii_target_go;
+	longinteger_object target_go;
+	knowledge_base K;
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_quartic_curve_from_catalogue before "
+				"cubic_surface_stab_gens" << endl;
+	}
+	K.quartic_curves_stab_gens(F->q, iso,
+			data, nb_gens, data_size, ascii_target_go);
+
+	target_go.create_from_base_10_string(ascii_target_go);
+
+
+	vector_ge *gens;
+
+	gens = NEW_OBJECT(vector_ge);
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_quartic_curve_from_catalogue before "
+				"gens->init_from_data" << endl;
+	}
+	gens->init_from_data(A, data, nb_gens, data_size, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_quartic_curve_from_catalogue after "
+				"gens->init_from_data" << endl;
+	}
+
+
+
+	strong_generators *Strong_gens2;
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_quartic_curve_from_catalogue before "
+				"generators_to_strong_generators" << endl;
+	}
+	A->generators_to_strong_generators(
+		TRUE /* f_target_go */, target_go,
+		gens, Strong_gens2,
+		0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_quartic_curve_from_catalogue after "
+				"generators_to_strong_generators" << endl;
+	}
+
+	init_copy(Strong_gens2, 0 /* verbose_level */);
+
+	FREE_OBJECT(Strong_gens2);
+	FREE_OBJECT(gens);
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_quartic_curve_from_catalogue done" << endl;
+	}
+}
 
 void
 strong_generators::stabilizer_of_HCV_surface(

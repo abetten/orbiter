@@ -780,7 +780,7 @@ void cayley_graph_search::classify_subsets(int verbose_level)
 	Control->problem_label = prefix;
 	Control->f_problem_label = TRUE;
 
-	Poset = NEW_OBJECT(poset);
+	Poset = NEW_OBJECT(poset_with_group_action);
 	Poset->init_subset_lattice(Aut, Aut,
 			Aut_gens,
 			verbose_level);
