@@ -139,6 +139,106 @@ void quartic_curve_domain::print_equation_with_line_breaks_tex(std::ostream &ost
 	ost << "$$}" << endl;
 }
 
+void quartic_curve_domain::unrank_point(int *v, long int rk)
+{
+	P->unrank_point(v, rk);
+}
+
+long int quartic_curve_domain::rank_point(int *v)
+{
+	long int rk;
+
+	rk = P->rank_point(v);
+	return rk;
+}
+
+void quartic_curve_domain::print_lines_tex(std::ostream &ost, long int *Lines, int nb_lines)
+{
+	int i;
+	latex_interface L;
+
+	ost << "The lines are:\\\\" << endl;
+
+	for (i = 0; i < nb_lines; i++) {
+		//fp << "Line " << i << " is " << v[i] << ":\\\\" << endl;
+		P->Grass_lines->unrank_lint(Lines[i], 0 /*verbose_level*/);
+		ost << "$$" << endl;
+		ost << "\\ell_{" << i << "}";
+
+#if 0
+		if (nb_lines == 27) {
+			ost << " = " << Schlaefli->Line_label_tex[i];
+		}
+#endif
+		ost << " = " << endl;
+		//print_integer_matrix_width(cout,
+		// P->Grass_lines->M, k, n, n, F->log10_of_q + 1);
+		P->Grass_lines->latex_matrix(ost, P->Grass_lines->M);
+		//print_integer_matrix_tex(ost, P->Grass_lines->M, 2, 4);
+		//ost << "\\right]_{" << Lines[i] << "}" << endl;
+		ost << "_{" << Lines[i] << "}" << endl;
+		ost << "=" << endl;
+		ost << "\\left[" << endl;
+		L.print_integer_matrix_tex(ost, P->Grass_lines->M, 2, 3);
+		ost << "\\right]_{" << Lines[i] << "}" << endl;
+
+		ost << "$$" << endl;
+	}
+	ost << "Rank of lines: ";
+	Orbiter->Lint_vec.print(ost, Lines, nb_lines);
+	ost << "\\\\" << endl;
+
+}
+
+
+void quartic_curve_domain::compute_points_on_lines(
+		long int *Pts, int nb_points,
+		long int *Lines, int nb_lines,
+		set_of_sets *&pts_on_lines,
+		int *&f_is_on_line,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, l, r;
+	int *pt_coords;
+	int Basis[6];
+	int Mtx[9];
+
+	if (f_v) {
+		cout << "quartic_curve_domain::compute_points_on_lines" << endl;
+	}
+	f_is_on_line = NEW_int(nb_points);
+	Orbiter->Int_vec.zero(f_is_on_line, nb_points);
+
+	pts_on_lines = NEW_OBJECT(set_of_sets);
+	pts_on_lines->init_basic_constant_size(nb_points,
+		nb_lines, F->q + 1, 0 /* verbose_level */);
+	pt_coords = NEW_int(nb_points * 3);
+	for (i = 0; i < nb_points; i++) {
+		P->unrank_point(pt_coords + i * 3, Pts[i]);
+	}
+
+	Orbiter->Lint_vec.zero(pts_on_lines->Set_size, nb_lines);
+	for (i = 0; i < nb_lines; i++) {
+		l = Lines[i];
+		P->unrank_line(Basis, l);
+		for (j = 0; j < nb_points; j++) {
+			Orbiter->Int_vec.copy(Basis, Mtx, 6);
+			Orbiter->Int_vec.copy(pt_coords + j * 3, Mtx + 6, 3);
+			r = F->Gauss_easy(Mtx, 3, 3);
+			if (r == 2) {
+				pts_on_lines->add_element(i, j);
+				f_is_on_line[j] = TRUE;
+			}
+		}
+	}
+
+	FREE_int(pt_coords);
+
+	if (f_v) {
+		cout << "quartic_curve_domain::compute_points_on_lines done" << endl;
+	}
+}
 
 
 }}

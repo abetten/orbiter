@@ -2060,6 +2060,15 @@ public:
 	void init(finite_field *F, int verbose_level);
 	void init_polynomial_domains(int verbose_level);
 	void print_equation_with_line_breaks_tex(std::ostream &ost, int *coeffs);
+	void unrank_point(int *v, long int rk);
+	long int rank_point(int *v);
+	void print_lines_tex(std::ostream &ost, long int *Lines, int nb_lines);
+	void compute_points_on_lines(
+			long int *Pts, int nb_points,
+			long int *Lines, int nb_lines,
+			set_of_sets *&pts_on_lines,
+			int *&f_is_on_line,
+			int verbose_level);
 
 };
 
@@ -2078,6 +2087,32 @@ public:
 	quartic_curve_object *QO;
 
 
+	set_of_sets *pts_on_lines;
+		// points are stored as indices into Pts[]
+	int *f_is_on_line; // [QO->nb_pts]
+
+	tally *Bitangent_line_type;
+
+	set_of_sets *lines_on_point;
+	tally *Point_type;
+
+	int f_fullness_has_been_established;
+	int f_is_full;
+	int nb_Kowalevski;
+	int nb_Kowalevski_on;
+	int nb_Kowalevski_off;
+
+	long int *Pts_off;
+	int nb_pts_off;
+
+	set_of_sets *pts_off_on_lines;
+	int *f_is_on_line2; // [QO->nb_pts]
+
+	set_of_sets *lines_on_points_off;
+	tally *Point_off_type;
+
+
+
 
 	quartic_curve_object_properties();
 	~quartic_curve_object_properties();
@@ -2087,6 +2122,12 @@ public:
 	void report_properties_simple(std::ostream &ost, int verbose_level);
 	void print_equation(std::ostream &ost);
 	void print_general(std::ostream &ost);
+	void print_points(std::ostream &ost);
+	void print_all_points(std::ostream &ost);
+	void print_bitangents(std::ostream &ost);
+	void print_bitangents_with_points_on_them(std::ostream &ost);
+	void points_on_curve_on_lines(int verbose_level);
+	void report_bitangent_line_type(std::ostream &ost);
 
 };
 

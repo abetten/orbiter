@@ -472,6 +472,14 @@ void quartic_curve_create::create_quartic_curve_from_catalogue(int iso,
 	p_eqn = K.quartic_curves_representative(q, iso);
 	p_bitangents = K.quartic_curves_bitangents(q, iso);
 
+	if (f_v) {
+		cout << "eqn15:";
+		Orbiter->Int_vec.print(cout, p_eqn, 15);
+		cout << endl;
+		cout << "bitangents28:";
+		Orbiter->Lint_vec.print(cout, p_bitangents, 28);
+		cout << endl;
+	}
 	Orbiter->Int_vec.copy(p_eqn, eqn15, 15);
 	Orbiter->Lint_vec.copy(p_bitangents, bitangents28, 28);
 
