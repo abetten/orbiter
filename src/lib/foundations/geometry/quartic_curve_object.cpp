@@ -119,7 +119,11 @@ void quartic_curve_object::init_equation_and_bitangents(quartic_curve_domain *Do
 
 	if (f_v) {
 		cout << "quartic_curve_object::init_equation_and_bitangents" << endl;
+		cout << "eqn15:";
 		Orbiter->Int_vec.print(cout, eqn15, 15);
+		cout << endl;
+		cout << "bitangents28:";
+		Orbiter->Lint_vec.print(cout, bitangents28, 28);
 		cout << endl;
 	}
 

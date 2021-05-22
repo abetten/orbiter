@@ -6396,17 +6396,16 @@ quartic_curves_q13:
 		-loop L 0 $(NB_CUBIC_SURFACES_Q13) 1 \
 			-with S13_%L -do \
 			-cubic_surface_activity \
-				-report \
-				-all_quartic_curves \
+				-export_all_quartic_curves \
 			-end \
 		-end_loop \
 		-print_symbols
-		pdflatex surface_catalogue_q13_iso0_quartics.tex
-		open surface_catalogue_q13_iso0_quartics.pdf
-		pdflatex surface_catalogue_q13_iso1_quartics.tex
-		open surface_catalogue_q13_iso1_quartics.pdf
-		pdflatex surface_catalogue_q13_iso2_quartics.tex
-		open surface_catalogue_q13_iso2_quartics.pdf
+		#pdflatex surface_catalogue_q13_iso0_quartics.tex
+		#open surface_catalogue_q13_iso0_quartics.pdf
+		#pdflatex surface_catalogue_q13_iso1_quartics.tex
+		#open surface_catalogue_q13_iso1_quartics.pdf
+		#pdflatex surface_catalogue_q13_iso2_quartics.tex
+		#open surface_catalogue_q13_iso2_quartics.pdf
 		#pdflatex surface_catalogue_q13_iso3_quartics.tex
 		#open surface_catalogue_q13_iso3_quartics.pdf
 
@@ -6419,7 +6418,7 @@ quartic_curves_q13_classify:
 		-define P -projective_space 2 F \
 		-with P -do \
 		-projective_space_activity \
-			-classify_quartic_curves surface_catalogue_q13_iso%d_quartics.csv 3 \
+			-classify_quartic_curves_with_substructure surface_catalogue_q13_iso%d_quartics.csv 3 4 4 quartic_curves_q13 \
 		-end \
 		-print_symbols \
 
@@ -6471,7 +6470,7 @@ quartic_curves_q17:
 			-with S17_%L -do \
 			-cubic_surface_activity \
 				-report \
-				-all_quartic_curves \
+				-export_all_quartic_curves \
 			-end \
 		-end_loop \
 		-print_symbols
@@ -6488,7 +6487,7 @@ quartic_curves_q17_classify:
 		-define P -projective_space 2 F \
 		-with P -do \
 		-projective_space_activity \
-			-classify_quartic_curves surface_catalogue_q17_iso%d_quartics.csv $(NB_CUBIC_SURFACES_Q17) \
+			-classify_quartic_curves_with_substructure surface_catalogue_q17_iso%d_quartics.csv $(NB_CUBIC_SURFACES_Q17) \
 		-end \
 		-print_symbols \
 
@@ -6524,7 +6523,7 @@ quartic_curves_q19:
 			-with S19_%L -do \
 			-cubic_surface_activity \
 				-report \
-				-all_quartic_curves \
+				-export_all_quartic_curves \
 			-end \
 		-end_loop \
 		-print_symbols
@@ -6541,7 +6540,7 @@ quartic_curves_q19_classify:
 		-define P -projective_space 2 F \
 		-with P -do \
 		-projective_space_activity \
-			-classify_quartic_curves surface_catalogue_q19_iso%d_quartics.csv $(NB_CUBIC_SURFACES_Q19) \
+			-classify_quartic_curves_with_substructure surface_catalogue_q19_iso%d_quartics.csv $(NB_CUBIC_SURFACES_Q19) \
 		-end \
 		-print_symbols \
 
@@ -6638,7 +6637,7 @@ surface_13_0_quartics:
 		-with S13_0 -do \
 		-cubic_surface_activity \
 			-report \
-			-all_quartic_curves \
+			-export_all_quartic_curves \
 		-end
 	pdflatex surface_catalogue_q13_iso0_quartics.tex
 	open surface_catalogue_q13_iso0_quartics.pdf
@@ -6656,7 +6655,7 @@ surface_13_1_quartics:
 		-with S13_1 -do \
 		-cubic_surface_activity \
 			-report \
-			-all_quartic_curves \
+			-export_all_quartic_curves \
 		-end
 	pdflatex surface_catalogue_q13_iso1_quartics.tex
 	open surface_catalogue_q13_iso1_quartics.pdf
@@ -6779,7 +6778,7 @@ surface_25_0:
 		-with S25_0 -do \
 		-cubic_surface_activity \
 			-report \
-			-all_quartic_curves \
+			-export_all_quartic_curves \
 		-end
 	pdflatex surface_catalogue_q25_iso0_quartics.tex
 	open surface_catalogue_q25_iso0_quartics.pdf
@@ -6810,7 +6809,7 @@ quartic_curve_25_0_0_canonical:
 
 
 
-quartic_curve_13_0: 
+quartic_curve_13_0_report: 
 	$(ORBITER_PATH)/orbiter.out -v 3 \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space 2 F  \
@@ -6825,6 +6824,21 @@ quartic_curve_13_0:
 	pdflatex quartic_curve_catalogue_q13_iso0_report.tex
 	open quartic_curve_catalogue_q13_iso0_report.pdf
 
+
+quartic_curve_13_1_report: 
+	$(ORBITER_PATH)/orbiter.out -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space 2 F  \
+		-with P -do \
+			-projective_space_activity \
+				-define_quartic_curve QC13_1 -q 13 -catalogue 1 -end \
+			-end \
+		-with QC13_1 -do \
+			-quartic_curve_activity \
+				-report \
+			-end
+	pdflatex quartic_curve_catalogue_q13_iso1_report.tex
+	open quartic_curve_catalogue_q13_iso1_report.pdf
 
 
 

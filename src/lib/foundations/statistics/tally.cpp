@@ -474,7 +474,7 @@ void tally::print_array_tex(ostream &ost, int f_backwards)
 			l = type_len[i];
 			a = data_sorted[f];
 			ost << "\\hline" << endl;
-			ost << a << " & " << l << " & ";
+			ost << l << " & " << a << " & ";
 			ost << "\\begin{array}{l}" << endl;
 			for (j = 0; j < l; j++) {
 				ost << sorting_perm_inv[f + j];
@@ -496,7 +496,7 @@ void tally::print_array_tex(ostream &ost, int f_backwards)
 			l = type_len[i];
 			a = data_sorted[f];
 			ost << "\\hline" << endl;
-			ost << a << " & " << l << " & ";
+			ost << l << " & " << a << " & ";
 			ost << "\\begin{array}{l}" << endl;
 			for (j = 0; j < l; j++) {
 				ost << sorting_perm_inv[f + j];

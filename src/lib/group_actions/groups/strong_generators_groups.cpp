@@ -2739,6 +2739,10 @@ void strong_generators::stabilizer_of_quartic_curve_from_catalogue(
 
 	target_go.create_from_base_10_string(ascii_target_go);
 
+	if (f_v) {
+		cout << "data:" << endl;
+		Orbiter->Int_vec.matrix_print(data, nb_gens, data_size);
+	}
 
 	vector_ge *gens;
 

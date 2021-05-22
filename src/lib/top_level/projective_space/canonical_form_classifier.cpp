@@ -373,7 +373,7 @@ void canonical_form_classifier::write_canonical_forms_csv(
 				bitangents_canonical[j] = A_on_lines->element_image_of(bitangents_orig[j], CFS_table[i]->transporter_to_canonical_form, 0 /* verbose_level */);
 			}
 
-			Sorting.lint_vec_heapsort(bitangents_canonical, CFS_table[i]->nb_bitangents);
+			//Sorting.lint_vec_heapsort(bitangents_canonical, CFS_table[i]->nb_bitangents);
 
 			{
 				string str;
@@ -481,10 +481,15 @@ void canonical_form_classifier::generate_source_code(
 						"orbit_index = " << orbit_index << endl;
 			}
 
+			int idx;
 
-			equation = Classification_of_quartic_curves->Reps +
-					orbit_index * Classification_of_quartic_curves->data_set_sz;
+			idx = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[orbit_index]];
 
+			canonical_form_substructure *CFS = CFS_table[idx];
+
+
+			//equation = Classification_of_quartic_curves->Reps + orbit_index * Classification_of_quartic_curves->data_set_sz;
+			equation = CFS->canonical_equation;
 
 			f << "\t";
 			for (i = 0; i < nb_monomials; i++) {
@@ -558,6 +563,17 @@ void canonical_form_classifier::generate_source_code(
 				exit(1);
 			}
 
+
+			long int *bitangents_orig;
+			long int *bitangents_canonical;
+
+			bitangents_orig = CFS->bitangents;
+			bitangents_canonical = NEW_lint(CFS->nb_bitangents);
+			for (j = 0; j < CFS->nb_bitangents; j++) {
+				bitangents_canonical[j] = A_on_lines->element_image_of(bitangents_orig[j], CFS->transporter_to_canonical_form, 0 /* verbose_level */);
+			}
+
+#if 0
 			long int *bitangents_orig;
 			long int bitangents_canonical[28];
 
@@ -565,6 +581,7 @@ void canonical_form_classifier::generate_source_code(
 			for (j = 0; j < 28; j++) {
 				bitangents_canonical[j] = A_on_lines->element_image_of(bitangents_orig[j], CFS->transporter_to_canonical_form, 0 /* verbose_level */);
 			}
+#endif
 
 
 
@@ -604,7 +621,9 @@ void canonical_form_classifier::generate_source_code(
 				idx = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[orbit_index]];
 
 				canonical_form_substructure *CFS = CFS_table[idx];
-				gens = CFS->Gens_stabilizer_canonical_form;
+				//gens = CFS->Gens_stabilizer_canonical_form;
+				gens = CFS->gens_stab_of_canonical_equation;
+
 
 				stab_gens_first[orbit_index] = fst;
 				stab_gens_len[orbit_index] = gens->gens->len;
@@ -675,7 +694,8 @@ void canonical_form_classifier::generate_source_code(
 					idx = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[orbit_index]];
 
 					canonical_form_substructure *CFS = CFS_table[idx];
-					gens = CFS->Gens_stabilizer_canonical_form;
+					//gens = CFS->Gens_stabilizer_canonical_form;
+					gens = CFS->gens_stab_of_canonical_equation;
 
 
 					A->element_print_for_make_element(gens->gens->ith(j), f);
