@@ -955,6 +955,10 @@ public:
 	int f_normalizer_on_orbits_of_a_given_length;
 	int normalizer_on_orbits_of_a_given_length_length;
 
+	int f_read_solution_file;
+	int read_solution_file_orbit_length;
+	std::string read_solution_file_name;
+
 
 
 	large_set_was_activity_description();
@@ -1049,6 +1053,8 @@ public:
 
 	orbits_on_something *N_orbits;
 
+
+#if 0
 	// reduced designs are those which are compatible
 	// with all the designs in the chosen set
 
@@ -1069,6 +1075,7 @@ public:
 		// reduced action A_on_designs based on Design_table_reduced_idx[]
 	schreier *Orbits_on_reduced;
 	int *color_of_reduced_orbits;
+#endif
 
 	int selected_type_idx;
 
@@ -1080,6 +1087,12 @@ public:
 			int verbose_level);
 	void do_normalizer_on_orbits_of_a_given_length(
 			int select_orbits_of_length_length,
+			int verbose_level);
+	void read_solution_file(
+			std::string &solution_file_name,
+			long int *starter_set,
+			int starter_set_sz,
+			int orbit_length,
 			int verbose_level);
 
 };
