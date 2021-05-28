@@ -33,6 +33,7 @@ large_set_was::large_set_was()
 
 	N_orbits = NULL;
 
+#if 0
 	Design_table_reduced = NULL;
 
 	Design_table_reduced_idx = NULL;
@@ -46,6 +47,7 @@ large_set_was::large_set_was()
 	Orbits_on_reduced = NULL;
 
 	color_of_reduced_orbits = NULL;
+#endif
 
 	selected_type_idx = 0;
 }
@@ -271,6 +273,127 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length(
 
 	if (f_v) {
 		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length done" << endl;
+	}
+
+}
+
+
+void large_set_was::read_solution_file(
+		std::string &solution_file_name,
+		long int *starter_set,
+		int starter_set_sz,
+		int orbit_length,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "large_set_was::read_solution_file" << endl;
+	}
+
+	long int *Large_sets;
+	int nb_large_sets;
+	long int *Packings_explicit;
+	int Sz;
+
+
+	if (f_v) {
+		cout << "large_set_was::read_solution_file "
+				"trying to read solution file " << solution_file_name << endl;
+	}
+	int i, j, a, b, l, h;
+
+	file_io Fio;
+	int nb_solutions;
+	int *Solutions;
+	int solution_size;
+
+	Fio.read_solutions_from_file_and_get_solution_size(solution_file_name,
+			nb_solutions, Solutions, solution_size,
+			verbose_level);
+	cout << "Read the following solutions from file:" << endl;
+	Orbiter->Int_vec.matrix_print(Solutions, nb_solutions, solution_size);
+	cout << "Number of solutions = " << nb_solutions << endl;
+	cout << "solution_size = " << solution_size << endl;
+
+	int sz = starter_set_sz + solution_size * orbit_length;
+
+	if (sz != LS->size_of_large_set) {
+		cout << "large_set_was::read_solution_file sz != LS->size_of_large_set" << endl;
+		exit(1);
+	}
+
+
+
+	nb_large_sets = nb_solutions;
+	Large_sets = NEW_lint(nb_solutions * sz);
+	for (i = 0; i < nb_solutions; i++) {
+		Orbiter->Lint_vec.copy(starter_set, Large_sets + i * sz, starter_set_sz);
+		for (j = 0; j < solution_size; j++) {
+#if 0
+			a = Solutions[i * solution_size + j];
+			b = OoS->Orbits_classified->Sets[selected_type_idx][a];
+#else
+			b = Solutions[i * solution_size + j];
+				// the labels in the graph are set according to
+				// OoS->Orbits_classified->Sets[selected_type_idx][]
+			//b = OoS->Orbits_classified->Sets[selected_type_idx][a];
+#endif
+			H_orbits->Sch->get_orbit(b,
+					Large_sets + i * sz + starter_set_sz + j * orbit_length,
+					l, 0 /* verbose_level*/);
+			if (l != orbit_length) {
+				cout << "large_set_was::read_solution_file l != orbit_length" << endl;
+				exit(1);
+			}
+		}
+		for (j = 0; j < solution_size * orbit_length; j++) {
+			a = Large_sets[i * sz + starter_set_sz + j];
+			//b = Design_table_reduced_idx[a];
+			b = a;
+			Large_sets[i * sz + starter_set_sz + j] = b;
+		}
+	}
+	{
+		file_io Fio;
+		string fname_out;
+		string_tools ST;
+
+		fname_out.assign(solution_file_name);
+		ST.replace_extension_with(fname_out, "_packings.csv");
+
+		ST.replace_extension_with(fname_out, "_packings.csv");
+
+		Fio.lint_matrix_write_csv(fname_out, Large_sets, nb_solutions, sz);
+	}
+	Sz = sz * LS->design_size;
+
+	Packings_explicit = NEW_lint(nb_solutions * Sz);
+	for (i = 0; i < nb_solutions; i++) {
+		for (j = 0; j < sz; j++) {
+			a = Large_sets[i * sz + j];
+			for (h = 0; h < LS->design_size; h++) {
+				b = LS->Design_table->the_table[a * LS->design_size + h];
+				Packings_explicit[i * Sz + j * LS->design_size + h] = b;
+			}
+		}
+	}
+	{
+		file_io Fio;
+		string fname_out;
+		string_tools ST;
+
+		fname_out.assign(solution_file_name);
+		ST.replace_extension_with(fname_out, "_packings_explicit.csv");
+
+		Fio.lint_matrix_write_csv(fname_out, Packings_explicit, nb_solutions, Sz);
+	}
+	FREE_lint(Large_sets);
+	FREE_lint(Packings_explicit);
+
+
+	if (f_v) {
+		cout << "large_set_was::read_solution_file done" << endl;
 	}
 
 }

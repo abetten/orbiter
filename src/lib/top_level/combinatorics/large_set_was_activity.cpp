@@ -47,6 +47,18 @@ void large_set_was_activity::perform_activity(large_set_was_activity_description
 				verbose_level);
 	}
 
+	if (Descr->f_read_solution_file) {
+
+		long int *starter_set = NULL;
+		int starter_set_sz = 0;
+
+		LSW->read_solution_file(
+				Descr->read_solution_file_name,
+				starter_set,
+				starter_set_sz,
+				Descr->read_solution_file_orbit_length,
+				verbose_level);
+	}
 
 
 	if (f_v) {
