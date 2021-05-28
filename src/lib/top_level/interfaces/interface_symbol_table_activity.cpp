@@ -845,6 +845,121 @@ void interface_symbol_table::do_diophant_activity(
 
 }
 
+void interface_symbol_table::do_design_activity(
+		orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		int i;
+		cout << "interface_symbol_table::do_design_activity "
+				"activity for " << with_labels.size() << " objects:";
+		for (i = 0; i < with_labels.size(); i++) {
+			cout << with_labels[i];
+			if (i < with_labels.size() - 1) {
+				cout << ", ";
+			}
+		}
+		cout << endl;
+	}
+
+
+
+	int *Idx;
+
+	Orbiter_top_level_session->find_symbols(with_labels, Idx);
+
+	if (with_labels.size() < 1) {
+		cout << "-do_spread_table_activity requires at least one input" << endl;
+		exit(1);
+	}
+
+	design_create *DC;
+
+	DC = (design_create *) Orbiter_top_level_session->get_object(Idx[0]);
+	{
+		design_activity Activity;
+
+
+		if (f_v) {
+			cout << "interface_symbol_table::do_design_activity "
+					"before Activity.perform_activity" << endl;
+		}
+		Activity.perform_activity(Design_activity_description, DC, verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::do_design_activity "
+					"after Activity.perform_activity" << endl;
+		}
+
+	}
+
+	FREE_int(Idx);
+
+	if (f_v) {
+		cout << "interface_symbol_table::do_design_activity done" << endl;
+	}
+
+}
+
+void interface_symbol_table::do_large_set_was_activity(
+		orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		int i;
+		cout << "interface_symbol_table::do_large_set_was_activity "
+				"activity for " << with_labels.size() << " objects:";
+		for (i = 0; i < with_labels.size(); i++) {
+			cout << with_labels[i];
+			if (i < with_labels.size() - 1) {
+				cout << ", ";
+			}
+		}
+		cout << endl;
+	}
+
+
+
+	int *Idx;
+
+	Orbiter_top_level_session->find_symbols(with_labels, Idx);
+
+	if (with_labels.size() < 1) {
+		cout << "-do_large_set_was_activity requires at least one input" << endl;
+		exit(1);
+	}
+
+	large_set_was *LSW;
+
+	LSW = (large_set_was *) Orbiter_top_level_session->get_object(Idx[0]);
+	{
+		large_set_was_activity Activity;
+
+		if (f_v) {
+			cout << "interface_symbol_table::do_large_set_was_activity "
+					"before Activity.perform_activity" << endl;
+		}
+		Activity.perform_activity(Large_set_was_activity_description, LSW, verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::do_large_set_was_activity "
+					"after Activity.perform_activity" << endl;
+		}
+
+	}
+
+	FREE_int(Idx);
+
+	if (f_v) {
+		cout << "interface_symbol_table::do_large_set_was_activity done" << endl;
+	}
+
+}
+
+
+
 
 
 

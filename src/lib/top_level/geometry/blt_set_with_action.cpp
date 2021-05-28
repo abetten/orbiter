@@ -99,7 +99,7 @@ void blt_set_with_action::init_orbits_on_points(
 			Blt_set_domain->target_size,
 			0 /*verbose_level*/);
 	if (f_v) {
-		cout << "surface_object_with_action action "
+		cout << "blt_set_with_action action "
 				"on points done" << endl;
 	}
 

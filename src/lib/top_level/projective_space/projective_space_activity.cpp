@@ -132,6 +132,14 @@ void projective_space_activity::perform_activity(int verbose_level)
 		//FREE_OBJECT(Surf_A);
 	}
 
+	else if (Descr->f_table_of_quartic_curves) {
+
+		cout << "table_of_quartic_curves" << endl;
+
+
+		table_of_quartic_curves(PA, verbose_level);
+	}
+
 	else if (Descr->f_define_quartic_curve) {
 
 		cout << "f_define_quartic_curve label = " << Descr->f_define_quartic_curve << endl;
@@ -549,101 +557,17 @@ void projective_space_activity::canonical_form_of_code(
 		cout << "data=" << data << endl;
 	}
 
-	int *genma;
-	int sz;
-	int i, j;
-	int *v;
-	long int *set;
-
 	if (f_v) {
-		cout << "projective_space_activity::canonical_form_of_code before int_vec_scan" << endl;
+		cout << "projective_space_activity::canonical_form_of_code before PA->canonical_form_of_code" << endl;
 	}
-	Orbiter->Int_vec.scan(data, genma, sz);
+	PA->canonical_form_of_code(
+				label, m, n,
+				data,
+				verbose_level);
 	if (f_v) {
-		cout << "projective_space_activity::canonical_form_of_code after int_vec_scan, sz=" << sz << endl;
+		cout << "projective_space_activity::canonical_form_of_code after PA->canonical_form_of_code" << endl;
 	}
 
-	if (sz != m * n) {
-		cout << "projective_space_activity::canonical_form_of_code sz != m * n" << endl;
-		exit(1);
-	}
-	if (f_v) {
-		cout << "genma: " << endl;
-		Orbiter->Int_vec.print(cout, genma, sz);
-		cout << endl;
-	}
-	v = NEW_int(m);
-	set = NEW_lint(n);
-	for (j = 0; j < n; j++) {
-		for (i = 0; i < m; i++) {
-			v[i] = genma[i * n + j];
-		}
-		if (f_v) {
-			cout << "projective_space_activity::canonical_form_of_code before PA->P->rank_point" << endl;
-			Orbiter->Int_vec.print(cout, v, m);
-			cout << endl;
-		}
-		if (PA->P == NULL) {
-			cout << "PA->P == NULL" << endl;
-			exit(1);
-		}
-		set[j] = PA->P->rank_point(v);
-	}
-	if (f_v) {
-		cout << "projective_space_activity::canonical_form_of_code set=";
-		Orbiter->Lint_vec.print(cout, set, n);
-		cout << endl;
-	}
-
-	projective_space_object_classifier_description Descr;
-	data_input_stream Data;
-	string points_as_string;
-	char str[1000];
-
-	sprintf(str, "%ld", set[0]);
-	points_as_string.assign(str);
-	for (i = 1; i < n; i++) {
-		points_as_string.append(",");
-		sprintf(str, "%ld", set[i]);
-		points_as_string.append(str);
-	}
-	if (f_v) {
-		cout << "projective_space_activity::canonical_form_of_code points_as_string=" << points_as_string << endl;
-	}
-
-	Descr.f_input = TRUE;
-	Descr.Data = &Data;
-
-	Descr.f_save_classification = TRUE;
-	Descr.save_prefix.assign("code_");
-
-	Descr.f_report = TRUE;
-	Descr.report_prefix.assign("code_");
-	Descr.report_prefix.append(label);
-
-	Descr.f_classification_prefix = TRUE;
-	Descr.classification_prefix.assign("classify_code_");
-	Descr.classification_prefix.append(label);
-
-	Data.nb_inputs = 0;
-	Data.input_type[Data.nb_inputs] = INPUT_TYPE_SET_OF_POINTS;
-	Data.input_string[Data.nb_inputs] = points_as_string;
-	Data.nb_inputs++;
-
-
-	if (f_v) {
-		cout << "projective_space_activity::canonical_form_of_code before PA->canonical_form" << endl;
-	}
-
-	PA->canonical_form(&Descr, verbose_level);
-
-	if (f_v) {
-		cout << "projective_space_activity::canonical_form_of_code after PA->canonical_form" << endl;
-	}
-
-
-	FREE_int(v);
-	FREE_lint(set);
 
 	if (f_v) {
 		cout << "projective_space_activity::canonical_form_of_code done" << endl;
@@ -726,6 +650,23 @@ void projective_space_activity::do_create_surface(
 }
 
 
+void projective_space_activity::table_of_quartic_curves(
+		projective_space_with_action *PA,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_activity::table_of_quartic_curves" << endl;
+	}
+
+	PA->table_of_quartic_curves(verbose_level);
+
+	if (f_v) {
+		cout << "projective_space_activity::table_of_quartic_curves done" << endl;
+	}
+}
+
 void projective_space_activity::do_create_quartic_curve(
 		projective_space_with_action *PA,
 		quartic_curve_create_description *Quartic_curve_descr,
@@ -791,45 +732,9 @@ void projective_space_activity::do_spread_classify(
 		cout << "projective_space_activity::do_spread_classify" << endl;
 	}
 
-
-	spread_classify *SC;
-
-	SC = NEW_OBJECT(spread_classify);
-
-	if (f_v) {
-		cout << "projective_space_activity::do_spread_classify before SC->init" << endl;
-	}
-
-	SC->init(
-			PA,
-			k,
-			TRUE /* f_recoordinatize */,
-			verbose_level - 1);
-	if (f_v) {
-		cout << "projective_space_activity::do_spread_classify after SC->init" << endl;
-	}
-
-	if (f_v) {
-		cout << "projective_space_activity::do_spread_classify before SC->init2" << endl;
-	}
-	SC->init2(Control, verbose_level);
-	if (f_v) {
-		cout << "group_theoretic_activity::do_spread_classify after SC->init2" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "projective_space_activity::do_spread_classify before SC->compute" << endl;
-	}
-
-	SC->compute(verbose_level);
-
-	if (f_v) {
-		cout << "projective_space_activity::do_spread_classify after SC->compute" << endl;
-	}
-
-
-	FREE_OBJECT(SC);
+	PA->do_spread_classify(k,
+			Control,
+			verbose_level);
 
 	if (f_v) {
 		cout << "projective_space_activity::do_spread_classify done" << endl;
@@ -886,71 +791,7 @@ void projective_space_activity::do_cheat_sheet_PG(
 	}
 
 
-
-	{
-		char fname[1000];
-		char title[1000];
-		char author[1000];
-
-		snprintf(fname, 1000, "PG_%d_%d.tex", PA->n, PA->F->q);
-		snprintf(title, 1000, "Cheat Sheet ${\\rm PG}(%d,%d)$", PA->n, PA->F->q);
-		//strcpy(author, "");
-		author[0] = 0;
-
-
-		{
-			ofstream ost(fname);
-			latex_interface L;
-
-			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
-					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
-
-
-			if (f_v) {
-				cout << "projective_space_with_action::do_cheat_sheet_PG before PA->A->report" << endl;
-			}
-
-			PA->A->report(ost, PA->A->f_has_sims, PA->A->Sims,
-					PA->A->f_has_strong_generators, PA->A->Strong_gens,
-					O,
-					verbose_level);
-
-			if (f_v) {
-				cout << "projective_space_with_action::do_cheat_sheet_PG after PA->A->report" << endl;
-			}
-
-			if (f_v) {
-				cout << "projective_space_with_action::do_cheat_sheet_PG before PA->P->report" << endl;
-			}
-
-
-
-			PA->P->report(ost, O, verbose_level);
-
-			if (f_v) {
-				cout << "projective_space_with_action::do_cheat_sheet_PG after PA->P->report" << endl;
-			}
-
-
-			L.foot(ost);
-
-		}
-		file_io Fio;
-
-		if (f_v) {
-			cout << "written file " << fname << " of size "
-					<< Fio.file_size(fname) << endl;
-		}
-
-	}
+	PA->cheat_sheet(O, verbose_level);
 
 
 	if (f_v) {
@@ -1093,394 +934,14 @@ void projective_space_activity::set_stabilizer(
 		cout << "projective_space_activity::set_stabilizer" << endl;
 	}
 
-	poset_classification *PC;
-	poset_classification_control *Control;
-	poset_with_group_action *Poset;
-	int nb_orbits;
-	int j;
 
-	Poset = NEW_OBJECT(poset_with_group_action);
+	top_level_geometry_global T;
 
-
-	Control = NEW_OBJECT(poset_classification_control);
-
-	Control->f_depth = TRUE;
-	Control->depth = intermediate_subset_size;
-
-
-	if (f_v) {
-		cout << "projective_space_activity::set_stabilizer control=" << endl;
-		Control->print();
-	}
-
-
-	Poset->init_subset_lattice(PA->A, PA->A,
-			PA->A->Strong_gens,
-			verbose_level);
-
-	if (f_v) {
-		cout << "projective_space_activity::set_stabilizer "
-				"before Poset->orbits_on_k_sets_compute" << endl;
-	}
-	PC = Poset->orbits_on_k_sets_compute(
-			Control,
-			intermediate_subset_size,
-			verbose_level);
-	if (f_v) {
-		cout << "projective_space_activity::set_stabilizer "
-				"after Poset->orbits_on_k_sets_compute" << endl;
-	}
-
-	nb_orbits = PC->nb_orbits_at_level(intermediate_subset_size);
-
-	cout << "We found " << nb_orbits << " orbits at level " << intermediate_subset_size << ":" << endl;
-	for (j = 0; j < nb_orbits; j++) {
-
-
-		strong_generators *Strong_gens;
-
-		PC->get_stabilizer_generators(
-				Strong_gens,
-				intermediate_subset_size, j, 0 /* verbose_level*/);
-
-		longinteger_object go;
-
-		Strong_gens->group_order(go);
-
-		FREE_OBJECT(Strong_gens);
-
-		cout << j << " : " << go << endl;
-
-
-	}
-
-
-	int nb_objects_to_test;
-	int cnt;
-	int row;
-
-	nb_objects_to_test = 0;
-
-
-	for (cnt = 0; cnt < nb; cnt++) {
-
-		char str[1000];
-		string fname;
-
-		sprintf(str, fname_mask.c_str(), cnt);
-		fname.assign(str);
-
-		spreadsheet S;
-
-		S.read_spreadsheet(fname, 0 /*verbose_level*/);
-
-		nb_objects_to_test += S.nb_rows - 1;
-		if (f_v) {
-			cout << "projective_space_activity::set_stabilizer "
-					"file " << cnt << " / " << nb << " has  "
-					<< S.nb_rows - 1 << " objects" << endl;
-		}
-
-	}
-
-	if (f_v) {
-		cout << "projective_space_activity::set_stabilizer "
-				"nb_objects_to_test = " << nb_objects_to_test << endl;
-	}
-
-
-
-	for (cnt = 0; cnt < nb; cnt++) {
-
-		char str[1000];
-		string fname;
-
-		sprintf(str, fname_mask.c_str(), cnt);
-		fname.assign(str);
-
-		spreadsheet S;
-
-		S.read_spreadsheet(fname, verbose_level);
-
-		if (f_v) {
-			cout << "projective_space_activity::set_stabilizer S.nb_rows = " << S.nb_rows << endl;
-			cout << "projective_space_activity::set_stabilizer S.nb_cols = " << S.nb_cols << endl;
-		}
-
-		int j, t;
-		string eqn_txt;
-		string pts_txt;
-		string bitangents_txt;
-		int *eqn;
-		int sz;
-		long int *pts;
-		int nb_pts;
-		long int *canonical_pts;
-		long int *bitangents;
-		int nb_bitangents;
-
-
-
-		for (row = 0; row < S.nb_rows - 1; row++) {
-
-			if (f_v) {
-				cout << "#############################################################################" << endl;
-				cout << "cnt = " << cnt << " / " << nb << " row = " << row << " / " << S.nb_rows - 1 << endl;
-			}
-
-			j = 1;
-			t = S.Table[(row + 1) * S.nb_cols + j];
-			if (S.tokens[t] == NULL) {
-				cout << "projective_space_activity::set_stabilizer token[t] == NULL" << endl;
-			}
-			eqn_txt.assign(S.tokens[t]);
-			j = 2;
-			t = S.Table[(row + 1) * S.nb_cols + j];
-			if (S.tokens[t] == NULL) {
-				cout << "projective_space_activity::set_stabilizer token[t] == NULL" << endl;
-			}
-			pts_txt.assign(S.tokens[t]);
-			j = 3;
-			t = S.Table[(row + 1) * S.nb_cols + j];
-			if (S.tokens[t] == NULL) {
-				cout << "projective_space_activity::set_stabilizer token[t] == NULL" << endl;
-			}
-			bitangents_txt.assign(S.tokens[t]);
-
-			string_tools ST;
-
-			ST.remove_specific_character(eqn_txt, '\"');
-			ST.remove_specific_character(pts_txt, '\"');
-			ST.remove_specific_character(bitangents_txt, '\"');
-
-			if (FALSE) {
-				cout << "row = " << row << " eqn=" << eqn_txt << " pts_txt=" << pts_txt << " =" << bitangents_txt << endl;
-			}
-
-			Orbiter->Int_vec.scan(eqn_txt, eqn, sz);
-			Orbiter->Lint_vec.scan(pts_txt, pts, nb_pts);
-			Orbiter->Lint_vec.scan(bitangents_txt, bitangents, nb_bitangents);
-
-			canonical_pts = NEW_lint(nb_pts);
-
-
-			if (f_v) {
-				cout << "row = " << row << " eqn=";
-				Orbiter->Int_vec.print(cout, eqn, sz);
-				//cout << " pts=";
-				//Orbiter->Lint_vec.print(cout, pts, nb_pts);
-				//cout << " bitangents=";
-				//Orbiter->Lint_vec.print(cout, bitangents, nb_bitangents);
-				cout << endl;
-			}
-
-			int nCk;
-			int *isotype;
-			int *orbit_frequencies;
-			int nb_orbits;
-			tally *T;
-
-			if (f_v) {
-				cout << "projective_space_activity::set_stabilizer before PC->trace_all_k_subsets_and_compute_frequencies" << endl;
-			}
-
-			PC->trace_all_k_subsets_and_compute_frequencies(
-					pts, nb_pts, intermediate_subset_size, nCk, isotype, orbit_frequencies, nb_orbits,
-					0 /*verbose_level*/);
-
-			if (f_v) {
-				cout << "projective_space_activity::set_stabilizer after PC->trace_all_k_subsets_and_compute_frequencies" << endl;
-			}
-
-
-
-
-			T = NEW_OBJECT(tally);
-
-			T->init(orbit_frequencies, nb_orbits, FALSE, 0);
-
-
-			if (f_v) {
-				cout << "cnt = " << cnt << " / " << nb << ", row = " << row << " eqn=";
-				Orbiter->Int_vec.print(cout, eqn, sz);
-				cout << " pts=";
-				Orbiter->Lint_vec.print(cout, pts, nb_pts);
-				cout << endl;
-				cout << "orbit isotype=";
-				Orbiter->Int_vec.print(cout, isotype, nCk);
-				cout << endl;
-				cout << "orbit frequencies=";
-				Orbiter->Int_vec.print(cout, orbit_frequencies, nb_orbits);
-				cout << endl;
-				cout << "orbit frequency types=";
-				T->print_naked(FALSE /* f_backwards */);
-				cout << endl;
-			}
-
-			set_of_sets *SoS;
-			int *types;
-			int nb_types;
-			int i, f, l, idx;
-			int selected_type = -1;
-			int selected_orbit = -1;
-			int selected_frequency;
-			longinteger_domain D;
-
-
-
-			SoS = T->get_set_partition_and_types(types, nb_types, verbose_level);
-
-			longinteger_object go_min;
-
-
-			for (i = 0; i < nb_types; i++) {
-				f = T->type_first[i];
-				l = T->type_len[i];
-				cout << types[i];
-				cout << " : ";
-				Orbiter->Lint_vec.print(cout, SoS->Sets[i], SoS->Set_size[i]);
-				cout << " : ";
-
-
-				for (j = 0; j < SoS->Set_size[i]; j++) {
-
-					idx = SoS->Sets[i][j];
-
-					longinteger_object go;
-
-					PC->get_stabilizer_order(intermediate_subset_size, idx, go);
-
-					if (types[i]) {
-
-						// types[i] must be greater than zero
-						// so the type really appears.
-
-						if (selected_type == -1) {
-							selected_type = j;
-							selected_orbit = idx;
-							selected_frequency = types[i];
-							go.assign_to(go_min);
-						}
-						else {
-							if (D.compare_unsigned(go, go_min) < 0) {
-								selected_type = j;
-								selected_orbit = idx;
-								selected_frequency = types[i];
-								go.assign_to(go_min);
-							}
-						}
-					}
-
-					cout << go;
-					if (j < SoS->Set_size[i] - 1) {
-						cout << ", ";
-					}
-				}
-				cout << endl;
-			}
-
-			if (f_v) {
-				cout << "selected_type = " << selected_type
-					<< " selected_orbit = " << selected_orbit
-					<< " selected_frequency = " << selected_frequency
-					<< " go_min = " << go_min << endl;
-			}
-
-			strong_generators *gens;
-
-			PC->get_stabilizer_generators(
-				gens,
-				intermediate_subset_size, selected_orbit, verbose_level);
-
-
-			int *transporter_to_canonical_form;
-			strong_generators *Gens_stabilizer_original_set;
-
-			if (f_v) {
-				cout << "projective_space_activity::set_stabilizer before handle_orbit" << endl;
-			}
-
-			transporter_to_canonical_form = NEW_int(PA->A->elt_size_in_int);
-
-
-			handle_orbit(*T,
-					isotype,
-					selected_orbit, selected_frequency, nCk,
-					intermediate_subset_size,
-					PC, PA->A, PA->A,
-					pts, nb_pts,
-					canonical_pts,
-					transporter_to_canonical_form,
-					Gens_stabilizer_original_set,
-					0 /*verbose_level*/);
-
-			if (f_v) {
-				cout << "projective_space_activity::set_stabilizer after handle_orbit" << endl;
-				cout << "canonical point set: ";
-				Orbiter->Lint_vec.print(cout, canonical_pts, nb_pts);
-				longinteger_object go;
-
-				Gens_stabilizer_original_set->group_order(go);
-				cout << "_{" << go << "}" << endl;
-				cout << endl;
-				cout << "transporter to canonical form:" << endl;
-				PA->A->element_print(transporter_to_canonical_form, cout);
-				cout << "Stabilizer of the original set:" << endl;
-				Gens_stabilizer_original_set->print_generators_tex();
-			}
-
-			strong_generators *Gens_stabilizer_canonical_form;
-
-			Gens_stabilizer_canonical_form = NEW_OBJECT(strong_generators);
-
-			if (f_v) {
-				cout << "projective_space_activity::set_stabilizer before init_generators_for_the_conjugate_group_avGa" << endl;
-			}
-			Gens_stabilizer_canonical_form->init_generators_for_the_conjugate_group_avGa(
-					Gens_stabilizer_original_set, transporter_to_canonical_form,
-					verbose_level);
-			if (f_v) {
-				cout << "projective_space_activity::set_stabilizer after init_generators_for_the_conjugate_group_avGa" << endl;
-			}
-
-			if (f_v) {
-				cout << "projective_space_activity::set_stabilizer after handle_orbit" << endl;
-				cout << "canonical point set: ";
-				Orbiter->Lint_vec.print(cout, canonical_pts, nb_pts);
-				longinteger_object go;
-
-				Gens_stabilizer_canonical_form->group_order(go);
-				cout << "_{" << go << "}" << endl;
-				cout << endl;
-				cout << "transporter to canonical form:" << endl;
-				PA->A->element_print(transporter_to_canonical_form, cout);
-				cout << "Stabilizer of the canonical form:" << endl;
-				Gens_stabilizer_canonical_form->print_generators_tex();
-			}
-
-
-
-
-			FREE_int(transporter_to_canonical_form);
-			FREE_OBJECT(gens);
-			FREE_OBJECT(Gens_stabilizer_original_set);
-			FREE_OBJECT(Gens_stabilizer_canonical_form);
-			FREE_OBJECT(SoS);
-			FREE_int(types);
-
-			FREE_int(isotype);
-			FREE_int(orbit_frequencies);
-			FREE_OBJECT(T);
-
-			FREE_int(eqn);
-			FREE_lint(pts);
-			FREE_lint(bitangents);
-			FREE_lint(canonical_pts);
-
-
-		} // row
-
-	}
+	T.set_stabilizer(
+				PA,
+				intermediate_subset_size,
+				fname_mask, nb,
+				verbose_level);
 
 
 	if (f_v) {
@@ -1489,151 +950,6 @@ void projective_space_activity::set_stabilizer(
 
 }
 
-
-void projective_space_activity::handle_orbit(tally &C,
-		int *isotype,
-		int selected_orbit, int selected_frequency, int n_choose_k,
-		int intermediate_subset_size,
-		poset_classification *PC, action *A, action *A2,
-		long int *pts,
-		int nb_pts,
-		long int *canonical_pts,
-		int *transporter_to_canonical_form,
-		strong_generators *&Gens_stabilizer_original_set,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	// interesting_subsets are the lvl-subsets of the given set
-	// which are of the chosen type.
-	// There is nb_interesting_subsets of them.
-	long int *interesting_subsets;
-	int nb_interesting_subsets;
-
-	int i, j;
-
-	if (f_v) {
-		cout << "projective_space_activity::handle_orbit" << endl;
-		cout << "selected_orbit = " << selected_orbit << endl;
-	}
-
-	if (f_v) {
-		cout << "projective_space_activity::handle_orbit we decide to go for subsets of size " << intermediate_subset_size << ", selected_frequency = " << selected_frequency << endl;
-	}
-
-	j = 0;
-	interesting_subsets = NEW_lint(selected_frequency);
-	for (i = 0; i < n_choose_k; i++) {
-		if (isotype[i] == selected_orbit) {
-			interesting_subsets[j++] = i;
-			//cout << "subset of rank " << i << " is isomorphic to orbit " << orb_idx << " j=" << j << endl;
-			}
-		}
-	if (j != selected_frequency) {
-		cout << "j != nb_interesting_subsets" << endl;
-		exit(1);
-		}
-	nb_interesting_subsets = selected_frequency;
-#if 0
-	if (f_vv) {
-		print_interesting_subsets(nb_pts, intermediate_subset_size, nb_interesting_subsets, interesting_subsets);
-		}
-#endif
-
-
-	//overall_backtrack_nodes = 0;
-	if (f_v) {
-		cout << "projective_space_activity::handle_orbit calling compute_stabilizer_function" << endl;
-		}
-
-	compute_stabilizer *CS;
-
-	CS = NEW_OBJECT(compute_stabilizer);
-
-	if (f_v) {
-		cout << "projective_space_activity::handle_orbit before CS->init" << endl;
-	}
-	CS->init(pts, nb_pts,
-			canonical_pts,
-			PC, A, A2,
-			intermediate_subset_size, selected_orbit,
-			nb_interesting_subsets, interesting_subsets,
-			verbose_level);
-	if (f_v) {
-		cout << "projective_space_activity::handle_orbit after CS->init" << endl;
-	}
-
-
-	A->element_move(CS->T1, transporter_to_canonical_form, 0);
-
-	Gens_stabilizer_original_set = NEW_OBJECT(strong_generators);
-
-	Gens_stabilizer_original_set->init_from_sims(CS->Stab, verbose_level);
-
-	if (f_v) {
-		cout << "projective_space_activity::handle_orbit done with compute_stabilizer" << endl;
-		cout << "projective_space_activity::handle_orbit backtrack_nodes_first_time = " << CS->backtrack_nodes_first_time << endl;
-		cout << "projective_space_activity::handle_orbit backtrack_nodes_total_in_loop = " << CS->backtrack_nodes_total_in_loop << endl;
-		}
-
-
-	FREE_OBJECT(CS);
-
-	//overall_backtrack_nodes += CS->nodes;
-
-	FREE_lint(interesting_subsets);
-
-	if (f_v) {
-		cout << "projective_space_activity::handle_orbit done" << endl;
-	}
-}
-
-
-void projective_space_activity::print_interesting_subsets(int set_size, int lvl, int nb_interesting_subsets, int *interesting_subsets)
-{
-
-	cout << "the ranks of the corresponding subsets are:" << endl;
-	Orbiter->Int_vec.print(cout, interesting_subsets, nb_interesting_subsets);
-	cout << endl;
-	int set[1000];
-	int i, j, ii;
-	combinatorics_domain Combi;
-
-	cout << "the interesting subsets are:" << endl;
-
-	if (nb_interesting_subsets < 50) {
-		for (i = 0; i < nb_interesting_subsets; i++) {
-
-			j = interesting_subsets[i];
-			Combi.unrank_k_subset(j, set, set_size, lvl);
-			cout << setw(3) << i << " : " << setw(6) << j << " : (";
-			for (ii = 0; ii < lvl; ii++) {
-				cout << setw(3) << set[ii];
-				if (ii < lvl - 1)
-					cout << ", ";
-				}
-			//INT_vec_print(cout, set, lvl);
-			cout << ")" << endl;
-#if 0
-			cout << " : (";
-			for (ii = 0; ii < lvl; ii++) {
-				cout << setw(6) << the_set[set[ii]];
-				if (ii < lvl - 1)
-					cout << ", ";
-				}
-			cout << ") : (";
-			for (ii = 0; ii < lvl; ii++) {
-				A->print_point(the_set[set[ii]], cout);
-				if (ii < lvl - 1)
-					cout << ", ";
-				}
-			cout << ")" << endl;
-#endif
-			}
-		}
-	else {
-		cout << "Too many to print" << endl;
-		}
-}
 
 
 void projective_space_activity::conic_type(
@@ -1650,119 +966,19 @@ void projective_space_activity::conic_type(
 
 	long int *Pts;
 	int nb_pts;
-	long int **Pts_on_conic;
-	int **Conic_eqn;
-	int *nb_pts_on_conic;
-	int len;
-	int h;
 
 	Orbiter->Lint_vec.scan(set_text, Pts, nb_pts);
 
-	if (f_v) {
-		cout << "projective_space_activity::conic_type before PA->P->conic_type" << endl;
-	}
-
-	PA->P->conic_type(Pts, nb_pts,
-			Pts_on_conic, Conic_eqn, nb_pts_on_conic, len,
-			verbose_level);
 
 	if (f_v) {
-		cout << "projective_space_activity::conic_type after PA->P->conic_type" << endl;
+		cout << "projective_space_activity::conic_type before PA->conic_type" << endl;
 	}
 
+	PA->conic_type(Pts, nb_pts, verbose_level);
 
-	cout << "We found the following conics:" << endl;
-	for (h = 0; h < len; h++) {
-		cout << h << " : " << nb_pts_on_conic[h] << " : ";
-		Orbiter->Int_vec.print(cout, Conic_eqn[h], 6);
-		cout << " : ";
-		Orbiter->Lint_vec.print(cout, Pts_on_conic[h], nb_pts_on_conic[h]);
-		cout << endl;
+	if (f_v) {
+		cout << "projective_space_activity::conic_type after PA->conic_type" << endl;
 	}
-
-	cout << "computing intersection types with bisecants of the first 11 points:" << endl;
-	int Line_P1[55];
-	int Line_P2[55];
-	int P1, P2;
-	long int p1, p2, line_rk;
-	long int *pts_on_line;
-	long int pt;
-	int *Conic_line_intersection_sz;
-	int cnt;
-	int i, j, q, u, v;
-	int nb_pts_per_line;
-
-	q = PA->P->F->q;
-	nb_pts_per_line = q + 1;
-	pts_on_line = NEW_lint(55 * nb_pts_per_line);
-
-	cnt = 0;
-	for (i = 0; i < 11; i++) {
-		for (j = i + 1; j < 11; j++) {
-			Line_P1[cnt] = i;
-			Line_P2[cnt] = j;
-			cnt++;
-		}
-	}
-	if (cnt != 55) {
-		cout << "cnt != 55" << endl;
-		cout << "cnt = " << cnt << endl;
-		exit(1);
-	}
-	for (u = 0; u < 55; u++) {
-		P1 = Line_P1[u];
-		P2 = Line_P2[u];
-		p1 = Pts[P1];
-		p2 = Pts[P2];
-		line_rk = PA->P->line_through_two_points(p1, p2);
-		PA->P->create_points_on_line(line_rk, pts_on_line + u * nb_pts_per_line, 0 /*verbose_level*/);
-	}
-
-	Conic_line_intersection_sz = NEW_int(len * 55);
-	Orbiter->Int_vec.zero(Conic_line_intersection_sz, len * 55);
-
-	for (h = 0; h < len; h++) {
-		for (u = 0; u < 55; u++) {
-			for (v = 0; v < nb_pts_per_line; v++) {
-				if (PA->P->test_if_conic_contains_point(Conic_eqn[h], pts_on_line[u * nb_pts_per_line + v])) {
-					Conic_line_intersection_sz[h * 55 + u]++;
-				}
-
-			}
-		}
-	}
-
-	sorting Sorting;
-	int idx;
-
-	cout << "We found the following conics and their intersections with the 55 bisecants:" << endl;
-	for (h = 0; h < len; h++) {
-		cout << h << " : " << nb_pts_on_conic[h] << " : ";
-		Orbiter->Int_vec.print(cout, Conic_eqn[h], 6);
-		cout << " : ";
-		Orbiter->Int_vec.print_fully(cout, Conic_line_intersection_sz + h * 55, 55);
-		cout << " : ";
-		Orbiter->Lint_vec.print(cout, Pts_on_conic[h], nb_pts_on_conic[h]);
-		cout << " : ";
-		cout << endl;
-	}
-
-	for (u = 0; u < 55; u++) {
-		cout << "line " << u << " : ";
-		int str[55];
-
-		Orbiter->Int_vec.zero(str, 55);
-		for (v = 0; v < nb_pts; v++) {
-			pt = Pts[v];
-			if (Sorting.lint_vec_search_linear(pts_on_line + u * nb_pts_per_line, nb_pts_per_line, pt, idx)) {
-				str[v] = 1;
-			}
-		}
-		Orbiter->Int_vec.print_fully(cout, str, 55);
-		cout << endl;
-	}
-
-
 
 	if (f_v) {
 		cout << "projective_space_activity::conic_type done" << endl;

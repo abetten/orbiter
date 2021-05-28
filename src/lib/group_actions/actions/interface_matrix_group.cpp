@@ -544,7 +544,9 @@ static void matrix_group_element_print_latex(action &A,
 	int *Elt = (int *) elt;
 
 	G.GL_print_latex(Elt, ost);
-	//G.GL_print_easy_latex(Elt, ost);
+	ost << "=" << endl;
+	//G.GL_print_easy_normalized(Elt, ost);
+	G.GL_print_easy_latex_with_option_numerical(Elt, TRUE, ost);
 }
 
 static void matrix_group_element_print_latex_with_print_point_function(

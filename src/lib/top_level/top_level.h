@@ -43,14 +43,24 @@ class young;
 
 // combinatorics
 class boolean_function_classify;
+class combinatorics_global;
 class delandtsheer_doyen_description;
 class delandtsheer_doyen;
+class design_activity_description;
+class design_activity;
 class design_create_description;
 class design_create;
+class design_tables;
 class difference_set_in_heisenberg_group;
 class hadamard_classify;
 class hall_system_classify;
+class large_set_activity_description;
+class large_set_activity;
 class large_set_classify;
+class large_set_was_activity_description;
+class large_set_was_activity;
+class large_set_was_description;
+class large_set_was;
 class regular_linear_space_description;
 class regular_ls_classify;
 class tactical_decomposition;
@@ -75,6 +85,7 @@ class polar;
 class search_blocking_set;
 class singer_cycle;
 class tensor_classify;
+class top_level_geometry_global;
 
 
 
@@ -115,6 +126,20 @@ class orbit_of_sets;
 class orbit_of_subspaces;
 
 
+// packings:
+class spread_table_activity_description;
+class spread_table_activity;
+class spread_table_with_selection;
+class packing_was_fixpoints;
+class packing_long_orbits_description;
+class regular_packing;
+class packing_was_description;
+class packing_classify;
+class packing_invariants;
+class invariants_packing;
+
+
+
 
 // projective_space.h:
 class canonical_form_classifier_description;
@@ -131,11 +156,15 @@ class projective_space_object_classifier_description;
 class projective_space_object_classifier;
 class projective_space_with_action_description;
 class projective_space_with_action;
+
+// quartic curves
 class quartic_curve_activity_description;
 class quartic_curve_activity;
 class quartic_curve_create_description;
 class quartic_curve_create;
 class quartic_curve_domain_with_action;
+class quartic_curve_from_surface;
+class quartic_curve_object_with_action;
 
 
 // semifield
@@ -156,17 +185,7 @@ class exact_cover_arguments;
 class exact_cover;
 
 
-// spreads and packings:
-class spread_table_activity_description;
-class spread_table_activity;
-class spread_table_with_selection;
-class packing_was_fixpoints;
-class packing_long_orbits_description;
-class regular_packing;
-class packing_was_description;
-class packing_classify;
-class packing_invariants;
-class invariants_packing;
+// spreads:
 class spread_create_description;
 class spread_create;
 class spread_lifting;
@@ -193,7 +212,6 @@ class surface_create;
 class arc_lifting;
 class six_arcs_not_on_a_conic;
 class surface_study;
-class quartic_curve;
 class surface_classify_using_arc;
 class surface_create_by_arc_lifting;
 class surface_clebsch_map;
@@ -304,9 +322,11 @@ public:
 #include "./isomorph/isomorph.h"
 #include "./orbits/orbits.h"
 #include "./projective_space/projective_space.h"
+#include "./quartic_curves/quartic_curves.h"
 #include "./semifields/semifields.h"
 #include "./solver/solver.h"
-#include "./spreads_and_packings/spreads_and_packings.h"
+#include "./spreads/spreads.h"
+#include "./packings/packings.h"
 #include "./surfaces/surfaces.h"
 
 

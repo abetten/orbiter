@@ -93,11 +93,11 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 	if (f_v) {
 		cout << "clebsch_map::init_half_double_six "
 			"line1=" << line1
-			<< " = " << Surf->Schlaefli->Line_label_tex[line1]
+			<< " = " << Surf->Schlaefli->Labels->Line_label_tex[line1]
 			<< " line2=" << line2
-			<< " = " << Surf->Schlaefli->Line_label_tex[line2]
+			<< " = " << Surf->Schlaefli->Labels->Line_label_tex[line2]
 			<< " transversal=" << transversal
-			<< " = " << Surf->Schlaefli->Line_label_tex[transversal]
+			<< " = " << Surf->Schlaefli->Labels->Line_label_tex[transversal]
 			<< endl;
 	}
 
@@ -139,7 +139,7 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 		Orbiter->Lint_vec.print(cout, Surf->Schlaefli->Half_double_sixes + hds * 6, 6);
 		cout << " = \\{" << endl;
 		for (h = 0; h < 6; h++) {
-			cout << Surf->Schlaefli->Line_label_tex[
+			cout << Surf->Schlaefli->Labels->Line_label_tex[
 					Surf->Schlaefli->Half_double_sixes[hds * 6 + h]];
 			if (h < 6 - 1) {
 				cout << ", ";
@@ -294,7 +294,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 	Surf->P->Grass_lines->unrank_lint_here(Line_a,
 			SO->Lines[line_idx[0]], 0 /* verbose_level */);
 	if (f_v) {
-		cout << "Line a = " << Surf->Schlaefli->Line_label_tex[line_idx[0]]
+		cout << "Line a = " << Surf->Schlaefli->Labels->Line_label_tex[line_idx[0]]
 			<< " = " << SO->Lines[line_idx[0]] << ":" << endl;
 		Orbiter->Int_vec.matrix_print(Line_a, 2, 4);
 	}
@@ -313,7 +313,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 	Surf->P->Grass_lines->unrank_lint_here(Line_b,
 			SO->Lines[line_idx[1]], 0 /* verbose_level */);
 	if (f_v) {
-		cout << "Line b = " << Surf->Schlaefli->Line_label_tex[line_idx[1]]
+		cout << "Line b = " << Surf->Schlaefli->Labels->Line_label_tex[line_idx[1]]
 			<< " = " << SO->Lines[line_idx[1]] << ":" << endl;
 		Orbiter->Int_vec.matrix_print(Line_b, 2, 4);
 	}
@@ -694,20 +694,20 @@ void clebsch_map::report(std::ostream &ost, int verbose_level)
 	Orbiter->Lint_vec.print(ost, Surf->Schlaefli->Half_double_sixes + hds * 6, 6);
 	ost << " = \\{" << endl;
 	for (h = 0; h < 6; h++) {
-		ost << Surf->Schlaefli->Line_label_tex[Surf->Schlaefli->Half_double_sixes[hds * 6 + h]];
+		ost << Surf->Schlaefli->Labels->Line_label_tex[Surf->Schlaefli->Half_double_sixes[hds * 6 + h]];
 		if (h < 6 - 1) {
 			ost << ", ";
 		}
 	}
 	ost << "\\}$\\\\" << endl;
 
-	ost << "line1$=" << line1 << " = " << Surf->Schlaefli->Line_label_tex[line1]
-			<< "$ line2$=" << line2 << " = " << Surf->Schlaefli->Line_label_tex[line2]
+	ost << "line1$=" << line1 << " = " << Surf->Schlaefli->Labels->Line_label_tex[line1]
+			<< "$ line2$=" << line2 << " = " << Surf->Schlaefli->Labels->Line_label_tex[line2]
 			<< "$ transversal$=" << transversal << " = "
-			<< Surf->Schlaefli->Line_label_tex[transversal] << "$\\\\" << endl;
+			<< Surf->Schlaefli->Labels->Line_label_tex[transversal] << "$\\\\" << endl;
 
 	ost << "transversal = " << transversal << " = $"
-			<< Surf->Schlaefli->Line_label_tex[transversal] << "$\\\\" << endl;
+			<< Surf->Schlaefli->Labels->Line_label_tex[transversal] << "$\\\\" << endl;
 	ost << "plane\\_rk = $\\pi_{" << tritangent_plane_idx << "} = \\pi_{"
 			<< Surf->Schlaefli->Eckard_point_label_tex[tritangent_plane_idx] << "} = "
 			<< plane_rk_global << "$\\\\" << endl;
@@ -717,16 +717,16 @@ void clebsch_map::report(std::ostream &ost, int verbose_level)
 	Surf->P->Grass_planes->print_set_tex(ost, &plane_rk_global, 1);
 
 	ost << "Clebsch map for lines $" << line1
-			<< " = " << Surf->Schlaefli->Line_label_tex[line1] << ", "
+			<< " = " << Surf->Schlaefli->Labels->Line_label_tex[line1] << ", "
 			<< line2 << " = "
-			<< Surf->Schlaefli->Line_label_tex[line2]
+			<< Surf->Schlaefli->Labels->Line_label_tex[line2]
 			<< "$\\\\" << endl;
 
 	//SOA->SO->clebsch_map_latex(fp, Clebsch_map, Clebsch_coeff);
 
 	ost << "Clebsch map for lines $" << line1
-		<< " = " << Surf->Schlaefli->Line_label_tex[line1] << ", "
-		<< line2 << " = " << Surf->Schlaefli->Line_label_tex[line2]
+		<< " = " << Surf->Schlaefli->Labels->Line_label_tex[line1] << ", "
+		<< line2 << " = " << Surf->Schlaefli->Labels->Line_label_tex[line2]
 		<< "$ yields arc = $";
 	L.lint_set_print_tex(ost, Arc, 6);
 	ost << "$ : blown up lines = ";

@@ -198,7 +198,7 @@ class hollerith;		// derived from base
 // there are so many string classes around so that I call 
 // my string class hollerith class!
 // n.b.: Herman Hollerith (Buffalo 1860 - Washington 1929),
-// American engeneer; he invented   
+// American engineer; he invented
 // statistical machines working with perforated cards
 // In 1896, he founded the Tabulating Machine Corporation 
 // which later became IBM.

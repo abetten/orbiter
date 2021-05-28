@@ -573,16 +573,6 @@ void canonical_form_classifier::generate_source_code(
 				bitangents_canonical[j] = A_on_lines->element_image_of(bitangents_orig[j], CFS->transporter_to_canonical_form, 0 /* verbose_level */);
 			}
 
-#if 0
-			long int *bitangents_orig;
-			long int bitangents_canonical[28];
-
-			bitangents_orig = CFS->bitangents;
-			for (j = 0; j < 28; j++) {
-				bitangents_canonical[j] = A_on_lines->element_image_of(bitangents_orig[j], CFS->transporter_to_canonical_form, 0 /* verbose_level */);
-			}
-#endif
-
 
 
 
@@ -1446,57 +1436,6 @@ void canonical_form_classifier::report2(std::ostream &ost, std::string &fname_ba
 	}
 
 }
-
-#if 0
-int cnt;
-int row;
-int counter;
-int *eqn;
-int sz;
-long int *pts;
-int nb_pts;
-long int *bitangents;
-int nb_bitangents;
-
-long int *canonical_pts;
-
-int nCk;
-int *isotype;
-int *orbit_frequencies;
-int nb_orbits;
-tally *T;
-
-set_of_sets *SoS;
-int *types;
-int nb_types;
-int selected_type;
-int selected_orbit;
-int selected_frequency;
-
-longinteger_object go_min;
-
-strong_generators *gens;
-
-strong_generators *Gens_stabilizer_original_set;
-strong_generators *Gens_stabilizer_canonical_form;
-
-
-orbit_of_equations *Orb;
-
-strong_generators *gens_stab_of_canonical_equation;
-
-int *trans1;
-int *trans2;
-int *intermediate_equation;
-
-
-
-int *Elt;
-int *eqn2;
-
-int *canonical_equation;
-int *transporter_to_canonical_form;
-#endif
 
 
 }}

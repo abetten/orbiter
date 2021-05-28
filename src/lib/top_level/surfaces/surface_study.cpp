@@ -1609,10 +1609,10 @@ void matrix_entry_print(long int *p,
 	char str[1000];
 
 	if (i == -1) {
-		strcpy(str, Surf->Schlaefli->Line_label_tex[val].c_str());
+		strcpy(str, Surf->Schlaefli->Labels->Line_label_tex[val].c_str());
 		}
 	else if (j == -1) {
-		strcpy(str, Surf->Schlaefli->Line_label_tex[val].c_str());
+		strcpy(str, Surf->Schlaefli->Labels->Line_label_tex[val].c_str());
 		}
 	else {
 		if (val == -1) {

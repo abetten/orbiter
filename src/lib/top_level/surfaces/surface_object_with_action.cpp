@@ -1256,7 +1256,7 @@ void surface_object_with_action::cheat_sheet(std::ostream &ost,
 				projectivity_group_gens,
 				verbose_level);
 
-#if 0
+#if 1
 		ost << "The elements of the projectivity group "
 				"in the action on the lines:\\\\" << endl;
 		print_elements_on_lines(
@@ -1674,9 +1674,9 @@ void surface_object_with_action::all_quartic_curves(
 				<< " / " << Orbits_on_points_not_on_lines->nb_orbits << "}" << endl;
 
 
-		quartic_curve *QC;
+		quartic_curve_from_surface *QC;
 
-		QC = NEW_OBJECT(quartic_curve);
+		QC = NEW_OBJECT(quartic_curve_from_surface);
 
 		QC->init(this, verbose_level);
 
@@ -1737,9 +1737,9 @@ void surface_object_with_action::export_all_quartic_curves(
 				<< " / " << Orbits_on_points_not_on_lines->nb_orbits << "}" << endl;
 
 
-		quartic_curve *QC;
+		quartic_curve_from_surface *QC;
 
-		QC = NEW_OBJECT(quartic_curve);
+		QC = NEW_OBJECT(quartic_curve_from_surface);
 
 		QC->init(this, verbose_level);
 

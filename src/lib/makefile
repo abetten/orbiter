@@ -194,6 +194,7 @@ MODULES= \
 		foundations/surfaces/del_pezzo_surface_of_degree_two_object.o \
 		foundations/surfaces/eckardt_point_info.o \
 		foundations/surfaces/eckardt_point.o \
+		foundations/surfaces/schlaefli_labels.o \
 		foundations/surfaces/schlaefli.o \
 		foundations/surfaces/seventytwo_cases.o \
 		foundations/surfaces/surface_domain_families.o \
@@ -343,14 +344,24 @@ MODULES= \
 		top_level/algebra_and_number_theory/orthogonal_space_activity.o \
 		top_level/algebra_and_number_theory/young.o \
 		top_level/combinatorics/boolean_function_classify.o \
+		top_level/combinatorics/combinatorics_global.o \
 		top_level/combinatorics/delandtsheer_doyen_description.o \
 		top_level/combinatorics/delandtsheer_doyen.o \
+		top_level/combinatorics/design_activity_description.o \
+		top_level/combinatorics/design_activity.o \
 		top_level/combinatorics/design_create_description.o \
 		top_level/combinatorics/design_create.o \
+		top_level/combinatorics/design_tables.o \
 		top_level/combinatorics/difference_set_in_heisenberg_group.o \
 		top_level/combinatorics/hadamard_classify.o \
 		top_level/combinatorics/hall_system_classify.o \
+		top_level/combinatorics/large_set_activity_description.o \
+		top_level/combinatorics/large_set_activity.o \
 		top_level/combinatorics/large_set_classify.o \
+		top_level/combinatorics/large_set_was_activity_description.o \
+		top_level/combinatorics/large_set_was_activity.o \
+		top_level/combinatorics/large_set_was_description.o \
+		top_level/combinatorics/large_set_was.o \
 		top_level/combinatorics/regular_linear_space_description.o \
 		top_level/combinatorics/regular_ls_classify.o \
 		top_level/combinatorics/tactical_decomposition.o \
@@ -365,7 +376,6 @@ MODULES= \
 		top_level/geometry/classify_cubic_curves.o \
 		top_level/geometry/cubic_curve_with_action.o \
 		top_level/geometry/hermitian_spreads_classify.o \
-		top_level/geometry/hill_cap.o \
 		top_level/geometry/linear_set_classify.o \
 		top_level/geometry/ovoid_classify_description.o \
 		top_level/geometry/ovoid_classify.o \
@@ -373,6 +383,7 @@ MODULES= \
 		top_level/geometry/search_blocking_set.o \
 		top_level/geometry/singer_cycle.o \
 		top_level/geometry/tensor_classify.o \
+		top_level/geometry/top_level_geometry_global.o \
 		top_level/graph_theory/cayley_graph_search.o \
 		top_level/graph_theory/create_graph_description.o \
 		top_level/graph_theory/create_graph.o \
@@ -404,6 +415,20 @@ MODULES= \
 		top_level/orbits/orbit_of_equations.o \
 		top_level/orbits/orbit_of_sets.o \
 		top_level/orbits/orbit_of_subspaces.o \
+		top_level/packings/invariants_packing.o \
+		top_level/packings/packing_classify.o \
+		top_level/packings/packing_classify2.o \
+		top_level/packings/packing_invariants.o \
+		top_level/packings/packing_long_orbits_description.o \
+		top_level/packings/packing_long_orbits.o \
+		top_level/packings/packing_was_activity_description.o \
+		top_level/packings/packing_was_activity.o \
+		top_level/packings/packing_was_description.o \
+		top_level/packings/packing_was_fixpoints_activity_description.o \
+		top_level/packings/packing_was_fixpoints_activity.o \
+		top_level/packings/packing_was_fixpoints.o \
+		top_level/packings/packing_was.o \
+		top_level/packings/regular_packing.o \
 		top_level/projective_space/canonical_form_classifier_description.o \
 		top_level/projective_space/canonical_form_classifier.o \
 		top_level/projective_space/canonical_form_nauty.o \
@@ -418,11 +443,13 @@ MODULES= \
 		top_level/projective_space/projective_space_object_classifier.o \
 		top_level/projective_space/projective_space_with_action_description.o \
 		top_level/projective_space/projective_space_with_action.o \
-		top_level/projective_space/quartic_curve_activity_description.o \
-		top_level/projective_space/quartic_curve_activity.o \
-		top_level/projective_space/quartic_curve_create_description.o \
-		top_level/projective_space/quartic_curve_create.o \
-		top_level/projective_space/quartic_curve_domain_with_action.o \
+		top_level/quartic_curves/quartic_curve_activity_description.o \
+		top_level/quartic_curves/quartic_curve_activity.o \
+		top_level/quartic_curves/quartic_curve_create_description.o \
+		top_level/quartic_curves/quartic_curve_create.o \
+		top_level/quartic_curves/quartic_curve_domain_with_action.o \
+		top_level/quartic_curves/quartic_curve_from_surface.o \
+		top_level/quartic_curves/quartic_curve_object_with_action.o \
 		top_level/semifields/semifield_classify_description.o \
 		top_level/semifields/semifield_classify_with_substructure.o \
 		top_level/semifields/semifield_classify.o \
@@ -435,30 +462,16 @@ MODULES= \
 		top_level/semifields/trace_record.o \
 		top_level/solver/exact_cover.o \
 		top_level/solver/exact_cover_arguments.o \
-		top_level/spreads_and_packings/invariants_packing.o \
-		top_level/spreads_and_packings/packing_classify.o \
-		top_level/spreads_and_packings/packing_classify2.o \
-		top_level/spreads_and_packings/packing_invariants.o \
-		top_level/spreads_and_packings/packing_long_orbits_description.o \
-		top_level/spreads_and_packings/packing_long_orbits.o \
-		top_level/spreads_and_packings/packing_was_activity_description.o \
-		top_level/spreads_and_packings/packing_was_activity.o \
-		top_level/spreads_and_packings/packing_was_description.o \
-		top_level/spreads_and_packings/packing_was_fixpoints_activity_description.o \
-		top_level/spreads_and_packings/packing_was_fixpoints_activity.o \
-		top_level/spreads_and_packings/packing_was_fixpoints.o \
-		top_level/spreads_and_packings/packing_was.o \
-		top_level/spreads_and_packings/recoordinatize.o \
-		top_level/spreads_and_packings/regular_packing.o \
-		top_level/spreads_and_packings/spread_classify.o \
-		top_level/spreads_and_packings/spread_classify2.o \
-		top_level/spreads_and_packings/spread_create_description.o \
-		top_level/spreads_and_packings/spread_create.o \
-		top_level/spreads_and_packings/spread_lifting.o \
-		top_level/spreads_and_packings/spread_table_activity_description.o \
-		top_level/spreads_and_packings/spread_table_activity.o \
-		top_level/spreads_and_packings/spread_table_with_selection.o \
-		top_level/spreads_and_packings/translation_plane_via_andre_model.o \
+		top_level/spreads/recoordinatize.o \
+		top_level/spreads/spread_classify.o \
+		top_level/spreads/spread_classify2.o \
+		top_level/spreads/spread_create_description.o \
+		top_level/spreads/spread_create.o \
+		top_level/spreads/spread_lifting.o \
+		top_level/spreads/spread_table_activity_description.o \
+		top_level/spreads/spread_table_activity.o \
+		top_level/spreads/spread_table_with_selection.o \
+		top_level/spreads/translation_plane_via_andre_model.o \
 		top_level/surfaces/arc_lifting.o \
 		top_level/surfaces/arc_orbits_on_pairs.o \
 		top_level/surfaces/arc_partition.o \
@@ -468,7 +481,6 @@ MODULES= \
 		top_level/surfaces/classify_trihedral_pairs.o \
 		top_level/surfaces/cubic_surface_activity_description.o \
 		top_level/surfaces/cubic_surface_activity.o \
-		top_level/surfaces/quartic_curve.o \
 		top_level/surfaces/six_arcs_not_on_a_conic.o \
 		top_level/surfaces/surface_classify_using_arc.o \
 		top_level/surfaces/surface_classify_wedge.o \

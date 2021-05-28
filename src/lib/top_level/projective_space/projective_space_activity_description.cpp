@@ -61,6 +61,8 @@ projective_space_activity_description::projective_space_activity_description()
 	Surface_Descr = NULL;
 
 
+	f_table_of_quartic_curves = FALSE;
+
 	f_define_quartic_curve = FALSE;
 	//std::string define_quartic_curve_label;
 	Quartic_curve_descr = NULL;
@@ -265,6 +267,10 @@ int projective_space_activity_description::read_arguments(
 				cout << "next argument is " << argv[i] << endl;
 			}
 			cout << "-define_surface " << define_surface_label << endl;
+		}
+		else if (stringcmp(argv[i], "-table_of_quartic_curves") == 0) {
+			f_table_of_quartic_curves = TRUE;
+			cout << "-table_of_quartic_curves " << endl;
 		}
 		else if (stringcmp(argv[i], "-define_quartic_curve") == 0) {
 			f_define_quartic_curve = TRUE;

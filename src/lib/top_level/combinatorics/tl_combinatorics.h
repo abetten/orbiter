@@ -51,6 +51,39 @@ void boolean_function_classify_print_function(int *poly, int sz, void *data);
 void boolean_function_classify_reduction_function(int *poly, void *data);
 
 
+// #############################################################################
+// combinatorics_global.cpp
+// #############################################################################
+
+
+//! combinatorics stuff
+
+
+class combinatorics_global {
+
+public:
+
+	combinatorics_global();
+	~combinatorics_global();
+	void create_design_table(design_create *DC,
+			std::string &problem_label,
+			design_tables *&T,
+			strong_generators *Gens,
+			int verbose_level);
+	void load_design_table(design_create *DC,
+			std::string &problem_label,
+			design_tables *&T,
+			strong_generators *Gens,
+			int verbose_level);
+
+	void Hill_cap56(
+		char *fname, int &nb_Pts, long int *&Pts,
+		int verbose_level);
+	void append_orbit_and_adjust_size(schreier *Orb, int idx, int *set, int &sz);
+
+
+};
+
 
 // #############################################################################
 // delandtsheer_doyen_description.cpp
@@ -272,6 +305,78 @@ void delandtsheer_doyen_early_test_func_callback(long int *S, int len,
 	void *data, int verbose_level);
 
 
+
+// #############################################################################
+// design_activity_description.cpp
+// #############################################################################
+
+//! to describe an activity for a design
+
+
+
+class design_activity_description {
+
+public:
+
+	int f_create_table;
+	std::string create_table_label;
+	std::string create_table_group_order;
+	std::string create_table_gens;
+
+	int f_load_table;
+
+	std::string load_table_H_label;
+	std::string load_table_H_group_order;
+	std::string load_table_H_gens;
+	int load_table_selected_orbit_length;
+
+
+	design_activity_description();
+	~design_activity_description();
+	int read_arguments(int argc, std::string *argv,
+		int verbose_level);
+};
+
+
+// #############################################################################
+// design_activity.cpp
+// #############################################################################
+
+//! an activity for a design
+
+
+
+class design_activity {
+
+public:
+	design_activity_description *Descr;
+
+
+	design_activity();
+	~design_activity();
+	void perform_activity(design_activity_description *Descr,
+			design_create *DC, int verbose_level);
+	void do_create_table(
+			design_create *DC,
+			std::string &label,
+			std::string &go_text,
+			std::string &generators_data,
+			int verbose_level);
+	void do_load_table(
+			design_create *DC,
+			std::string &label,
+			std::string &go_text,
+			std::string &generators_data,
+			std::string &H_label,
+			std::string &H_go_text,
+			std::string &H_generators_data,
+			int selected_orbit_length,
+			int verbose_level);
+
+};
+
+
+
 // #############################################################################
 // design_create_description.cpp
 // #############################################################################
@@ -366,6 +471,58 @@ public:
 	int get_color_as_two_design_assume_sorted(long int *design, int verbose_level);
 };
 
+
+// #############################################################################
+// design_tables.cpp
+// #############################################################################
+
+//! a set of designs to be used for a large set
+
+
+class design_tables {
+
+public:
+
+	action *A;
+	action *A2;
+	long int *initial_set;
+	int design_size;
+	std::string label;
+	std::string fname_design_table;
+	strong_generators *Strong_generators;
+
+	int nb_designs;
+	long int *the_table; // [nb_designs * design_size]
+
+
+	design_tables();
+	~design_tables();
+	void init(action *A, action *A2, long int *initial_set, int design_size,
+			std::string &label,
+			strong_generators *Strong_generators, int verbose_level);
+	void make_reduced_design_table(
+			long int *set, int set_sz,
+			long int *&reduced_table, long int *&reduced_table_idx, int &nb_reduced_designs,
+			int verbose_level);
+	void init_from_file(action *A, action *A2,
+			long int *initial_set, int design_size,
+			std::string &label,
+			strong_generators *Strong_generators, int verbose_level);
+	int test_if_table_exists(
+			std::string &label,
+			int verbose_level);
+	void save(int verbose_level);
+	void load(int verbose_level);
+	int test_if_designs_are_disjoint(int i, int j);
+	int test_set_within_itself(long int *set_of_designs_by_index, int set_size);
+	int test_between_two_sets(
+			long int *set_of_designs_by_index1, int set_size1,
+			long int *set_of_designs_by_index2, int set_size2);
+
+};
+
+int design_tables_compare_func(void *data, int i, int j, void *extra_data);
+void design_tables_swap_func(void *data, int i, int j, void *extra_data);
 
 
 
@@ -620,6 +777,52 @@ void hall_system_early_test_function(long int *S, int len,
 
 
 
+
+// #############################################################################
+// large_set_activity_description.cpp
+// #############################################################################
+
+//! description of an activity for a spread table
+
+
+class large_set_activity_description {
+public:
+
+
+
+	large_set_activity_description();
+	~large_set_activity_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+
+};
+
+
+// #############################################################################
+// large_set_activity.cpp
+// #############################################################################
+
+//! an activity for a spread table
+
+
+class large_set_activity {
+public:
+
+	large_set_activity_description *Descr;
+	large_set_was *LSW;
+
+
+
+	large_set_activity();
+	~large_set_activity();
+	void perform_activity(large_set_activity_description *Descr,
+			large_set_was *LSW, int verbose_level);
+
+};
+
+
+
 // #############################################################################
 // large_set_classify.cpp
 // #############################################################################
@@ -634,19 +837,14 @@ public:
 	int nb_lines; // = DC->A2->degree
 	int search_depth;
 
-	std::string starter_directory_name;
-	std::string prefix;
-	std::string path;
-	std::string prefix_with_directory;
-
+	std::string problem_label;
 
 	int f_lexorder_test;
 	int size_of_large_set; // = nb_lines / design_size
 
 
-	long int *Design_table; // [nb_designs * design_size]
-	std::string design_table_prefix;
-	int nb_designs; // = SetOrb->used_length;
+	design_tables *Design_table;
+
 	int nb_colors; // = DC->get_nb_colors_as_two_design(0 /* verbose_level */);
 	int *design_color_table; // [nb_designs]
 
@@ -662,6 +860,8 @@ public:
 
 	int nb_needed;
 
+
+#if 0
 	// reduced designs are those which are compatible
 	// with all the designs in the chosen set
 	long int *Design_table_reduced; // [nb_reduced * design_size]
@@ -681,6 +881,8 @@ public:
 	orbits_on_something *OoS;
 		// in action A_reduced
 	int selected_type_idx;
+#endif
+
 
 
 	large_set_classify();
@@ -688,25 +890,18 @@ public:
 	void null();
 	void freeself();
 	void init(design_create *DC,
-			std::string &input_prefix, std::string &base_fname,
-			int search_depth,
-			int f_lexorder_test,
-			std::string &design_table_prefix,
+			design_tables *T,
 			int verbose_level);
-	void init_designs(orbit_of_sets *SetOrb,
-			int verbose_level);
+	void create_action_and_poset(int verbose_level);
 	void compute(int verbose_level);
 	void read_classification(orbit_transversal *&T,
 			int level, int verbose_level);
 	void read_classification_single_case(set_and_stabilizer *&Rep,
 			int level, int case_nr, int verbose_level);
-	void make_reduced_design_table(
-			long int *set, int set_sz,
-			long int *&Design_table_out, long int *&Design_table_out_idx, int &nb_out,
-			int verbose_level);
 	void compute_colors(
-			long int *Design_table, int nb_designs, int *&design_color_table,
+			design_tables *Design_table, int *&design_color_table,
 			int verbose_level);
+#if 0
 	void compute_reduced_colors(
 			long int *chosen_set, int chosen_set_sz,
 			int verbose_level);
@@ -714,18 +909,19 @@ public:
 	void process_starter_case(
 			long int *starter_set, int starter_set_sz,
 			strong_generators *SG, std::string &prefix,
-			const char *group_label, int orbit_length,
+			std::string &group_label, int orbit_length,
 			int f_read_solution_file, std::string &solution_file_name,
 			long int *&Large_sets, int &nb_large_sets,
 			int f_compute_normalizer_orbits, strong_generators *N_gens,
 			int verbose_level);
-	int test_orbit(long int *orbit, int orbit_length);
-	int test_pair_of_orbits(
-			long int *orbit1, int orbit_length1,
-			long int *orbit2, int orbit_length2);
+#endif
+	int test_if_designs_are_disjoint(int i, int j);
 
 };
 
+
+
+#if 0
 int large_set_design_test_orbit(long int *orbit, int orbit_length,
 		void *extra_data);
 int large_set_design_test_pair_of_orbits(long int *orbit1, int orbit_length1,
@@ -734,14 +930,162 @@ int large_set_design_compare_func_for_invariants(void *data, int i, int j, void 
 void large_set_swap_func_for_invariants(void *data, int i, int j, void *extra_data);
 int large_set_design_compare_func(void *data, int i, int j, void *extra_data);
 void large_set_swap_func(void *data, int i, int j, void *extra_data);
+int large_set_compute_color_of_reduced_orbits_callback(schreier *Sch,
+		int orbit_idx, void *data, int verbose_level);
+#endif
 void large_set_early_test_function(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
-int large_set_compute_color_of_reduced_orbits_callback(schreier *Sch,
-		int orbit_idx, void *data, int verbose_level);
 
 
+
+
+
+// #############################################################################
+// large_set_was_activity_description.cpp
+// #############################################################################
+
+//! description of an activity for a large set search with assumed symmetry
+
+
+class large_set_was_activity_description {
+public:
+
+	int f_normalizer_on_orbits_of_a_given_length;
+	int normalizer_on_orbits_of_a_given_length_length;
+
+
+
+	large_set_was_activity_description();
+	~large_set_was_activity_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+
+};
+
+
+// #############################################################################
+// large_set_was_activity.cpp
+// #############################################################################
+
+//! an activity for a large set search with assumed symmetry
+
+
+class large_set_was_activity {
+public:
+
+	large_set_was_activity_description *Descr;
+	large_set_was *LSW;
+
+
+	large_set_was_activity();
+	~large_set_was_activity();
+	void perform_activity(large_set_was_activity_description *Descr,
+			large_set_was *LSW, int verbose_level);
+	void do_normalizer_on_orbits_of_a_given_length(
+			int select_orbits_of_length_length, int verbose_level);
+
+};
+
+
+
+
+
+// #############################################################################
+// large_set_was_description.cpp
+// #############################################################################
+
+//! command line description of tasks for large sets with assumed symmetry
+
+class large_set_was_description {
+public:
+
+
+	int f_H;
+	std::string H_go;
+	std::string H_generators_text;
+
+	int f_N;
+	std::string N_go;
+	std::string N_generators_text;
+
+	int f_report;
+
+	int f_prefix;
+	std::string prefix;
+
+	int f_selected_orbit_length;
+	int selected_orbit_length;
+
+	large_set_was_description();
+	~large_set_was_description();
+	int read_arguments(int argc, std::string *argv,
+		int verbose_level);
+
+};
+
+
+
+// #############################################################################
+// large_set_was.cpp
+// #############################################################################
+
+//! classification of large sets of designs with assumed symmetry
+
+class large_set_was {
+public:
+
+	large_set_was_description *Descr;
+
+	large_set_classify *LS;
+
+	strong_generators *H_gens;
+
+	orbits_on_something *H_orbits;
+
+	strong_generators *N_gens;
+
+	orbits_on_something *N_orbits;
+
+	// reduced designs are those which are compatible
+	// with all the designs in the chosen set
+
+	design_tables *Design_table_reduced;
+
+	//long int *Design_table_reduced; // [nb_reduced * design_size]
+	long int *Design_table_reduced_idx; // [nb_reduced], index into Design_table[]
+	//int nb_reduced;
+
+
+	int nb_remaining_colors; // = nb_colors - set_sz; // we assume that k = 4
+	int *reduced_design_color_table; // [nb_reduced]
+		// colors of the reduced designs after throwing away
+		// the colors covered by the designs in the chosen set.
+		// The remaining colors are relabeled consecutively.
+
+	action *A_reduced;
+		// reduced action A_on_designs based on Design_table_reduced_idx[]
+	schreier *Orbits_on_reduced;
+	int *color_of_reduced_orbits;
+
+	int selected_type_idx;
+
+
+	large_set_was();
+	~large_set_was();
+	void init(large_set_was_description *Descr,
+			large_set_classify *LS,
+			int verbose_level);
+	void do_normalizer_on_orbits_of_a_given_length(
+			int select_orbits_of_length_length,
+			int verbose_level);
+
+};
+
+int large_set_was_design_test_orbit(long int *orbit, int orbit_length,
+		void *extra_data);
 
 
 // #############################################################################

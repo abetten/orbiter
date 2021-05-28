@@ -25,6 +25,7 @@ quartic_curve_create::quartic_curve_create()
 	PA = NULL;
 	QCDA = NULL;
 	QO = NULL;
+	QOA = NULL;
 	f_has_group = FALSE;
 	Sg = NULL;
 	f_has_nice_gens = FALSE;
@@ -100,7 +101,7 @@ void quartic_curve_create::init_with_data(
 		cout << "quartic_curve_create::init_with_data "
 				"before create_surface_from_description" << endl;
 	}
-	create_quartic_curve_from_description(verbose_level - 1);
+	create_quartic_curve_from_description(QCDA, verbose_level - 1);
 	if (f_v) {
 		cout << "quartic_curve_create::init_with_data "
 				"after create_surface_from_description" << endl;
@@ -113,7 +114,8 @@ void quartic_curve_create::init_with_data(
 }
 
 
-void quartic_curve_create::init(quartic_curve_create_description *Descr,
+void quartic_curve_create::init(
+		quartic_curve_create_description *Descr,
 		projective_space_with_action *PA,
 		quartic_curve_domain_with_action *QCDA,
 		int verbose_level)
@@ -159,7 +161,7 @@ void quartic_curve_create::init(quartic_curve_create_description *Descr,
 	if (f_v) {
 		cout << "quartic_curve_create::init before create_surface_from_description" << endl;
 	}
-	create_quartic_curve_from_description(verbose_level);
+	create_quartic_curve_from_description(QCDA, verbose_level);
 	if (f_v) {
 		cout << "quartic_curve_create::init after create_surface_from_description" << endl;
 	}
@@ -170,7 +172,7 @@ void quartic_curve_create::init(quartic_curve_create_description *Descr,
 	}
 }
 
-void quartic_curve_create::create_quartic_curve_from_description(int verbose_level)
+void quartic_curve_create::create_quartic_curve_from_description(quartic_curve_domain_with_action *DomA, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -194,6 +196,7 @@ void quartic_curve_create::create_quartic_curve_from_description(int verbose_lev
 
 
 		create_quartic_curve_from_catalogue(
+				DomA,
 				Descr->iso,
 				verbose_level);
 
@@ -443,7 +446,8 @@ void quartic_curve_create::create_quartic_curve_by_coefficient_vector(int *eqn15
 }
 
 
-void quartic_curve_create::create_quartic_curve_from_catalogue(int iso,
+void quartic_curve_create::create_quartic_curve_from_catalogue(quartic_curve_domain_with_action *DomA,
+		int iso,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -510,6 +514,14 @@ void quartic_curve_create::create_quartic_curve_from_catalogue(int iso,
 	if (f_v) {
 		cout << "quartic_curve_create::create_quartic_curve_from_catalogue after Sg->stabilizer_of_cubic_surface_from_catalogue" << endl;
 	}
+
+	QOA = NEW_OBJECT(quartic_curve_object_with_action);
+
+	QOA->init(DomA,
+			QO,
+			Sg,
+			verbose_level);
+
 
 	char str_q[1000];
 	char str_a[1000];

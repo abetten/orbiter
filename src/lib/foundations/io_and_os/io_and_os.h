@@ -775,8 +775,6 @@ void print_repeated_character(std::ostream &ost, char c, int n);
 void print_pointer_hex(std::ostream &ost, void *p);
 void print_hex_digit(std::ostream &ost, int digit);
 int compare_sets(int *set1, int *set2, int sz1, int sz2);
-int test_if_sets_are_disjoint_assuming_sorted(int *set1, int *set2, int sz1, int sz2);
-int test_if_sets_are_disjoint_assuming_sorted_lint(long int *set1, long int *set2, int sz1, int sz2);
 int hashing(int hash0, int a);
 int hashing_fixed_width(int hash0, int a, int bit_length);
 

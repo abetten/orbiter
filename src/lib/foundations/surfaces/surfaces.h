@@ -276,7 +276,32 @@ public:
 };
 
 // #############################################################################
-// surface_domain.cpp
+// schlaefli_labels.cpp
+// #############################################################################
+
+//! schlaefli labeling of objects in cubic surfaces with 27 lines
+
+
+class schlaefli_labels {
+
+public:
+
+	long int *Sets; // [30 * 2]
+	int *M; // [6 * 6]
+	long int *Sets2; // [15 * 2]
+
+
+	std::string *Line_label; // [27]
+	std::string *Line_label_tex; // [27]
+
+	schlaefli_labels();
+	~schlaefli_labels();
+	void init(int verbose_level);
+};
+
+
+// #############################################################################
+// schlaefli.cpp
 // #############################################################################
 
 //! schlaefli labeling of objects in cubic surfaces with 27 lines
@@ -288,6 +313,10 @@ public:
 
 	surface_domain *Surf;
 
+
+	schlaefli_labels *Labels;
+
+#if 0
 	long int *Sets; // [30 * 2]
 	int *M; // [6 * 6]
 	long int *Sets2; // [15 * 2]
@@ -296,6 +325,7 @@ public:
 
 	std::string *Line_label; // [27]
 	std::string *Line_label_tex; // [27]
+#endif
 
 	int *Trihedral_pairs; // [nb_trihedral_pairs * 9]
 	std::string *Trihedral_pair_labels; // [nb_trihedral_pairs]

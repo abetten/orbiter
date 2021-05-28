@@ -2092,6 +2092,7 @@ public:
 	int *f_is_on_line; // [QO->nb_pts]
 
 	tally *Bitangent_line_type;
+	int line_type_distribution[3];
 
 	set_of_sets *lines_on_point;
 	tally *Point_type;
@@ -2101,6 +2102,8 @@ public:
 	int nb_Kowalevski;
 	int nb_Kowalevski_on;
 	int nb_Kowalevski_off;
+	int *Kowalevski_point_idx;
+	long int *Kowalevski_points;
 
 	long int *Pts_off;
 	int nb_pts_off;

@@ -1871,7 +1871,7 @@ void projective_space_object_classifier::latex_report(
 					fp << "$$" << endl;
 					PA->A->element_print_latex(Elt, fp);
 					fp << "$$" << endl;
-					PA->report_fixed_objects_in_PG_3_tex(
+					PA->report_fixed_points_lines_and_planes(
 						Elt, fp,
 						verbose_level);
 				}

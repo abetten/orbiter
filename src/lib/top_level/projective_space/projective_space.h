@@ -529,6 +529,7 @@ public:
 	std::string define_surface_label;
 	surface_create_description *Surface_Descr;
 
+	int f_table_of_quartic_curves;
 
 	int f_define_quartic_curve;
 	std::string define_quartic_curve_label;
@@ -669,6 +670,9 @@ public:
 			surface_with_action *&Surf_A,
 			surface_create *&SC,
 			int verbose_level);
+	void table_of_quartic_curves(
+			projective_space_with_action *PA,
+			int verbose_level);
 	void do_create_quartic_curve(
 			projective_space_with_action *PA,
 			quartic_curve_create_description *Quartic_curve_descr,
@@ -703,21 +707,12 @@ public:
 			int intermediate_subset_size,
 			std::string &fname_mask, int nb,
 			int verbose_level);
-	void handle_orbit(tally &C,
-			int *isotype,
-			int selected_orbit, int selected_frequency, int n_choose_k,
-			int intermediate_subset_size,
-			poset_classification *PC, action *A, action *A2,
-			long int *pts,
-			int nb_pts,
-			long int *canonical_pts,
-			int *transporter_to_canonical_form,
-			strong_generators *&Gens_stabilizer_original_set,
-			int verbose_level);
-	void print_interesting_subsets(int set_size, int lvl, int nb_interesting_subsets, int *interesting_subsets);
 	void conic_type(
 			projective_space_with_action *PA,
 			std::string &set_text,
+			int verbose_level);
+	void cheat_sheet(
+			layered_graph_draw_options *O,
 			int verbose_level);
 
 };
@@ -1150,17 +1145,10 @@ public:
 		// object_in_projective_space::encoding_size(
 		//   int &nb_rows, int &nb_cols,
 		//   int verbose_level)
-#if 0
-	void save_Levi_graph(std::string &prefix,
-			const char *mask,
-			int *Incma, int nb_rows, int nb_cols,
-			long int *canonical_labeling, int canonical_labeling_len,
-			int verbose_level);
-#endif
-	void report_fixed_objects_in_PG_3_tex(
+	void report_fixed_points_lines_and_planes(
 		int *Elt, std::ostream &ost,
 		int verbose_level);
-	void report_orbits_in_PG_3_tex(
+	void report_orbits_on_points_lines_and_planes(
 		int *Elt, std::ostream &ost,
 		int verbose_level);
 	void report_decomposition_by_single_automorphism(
@@ -1223,6 +1211,20 @@ public:
 			quartic_curve_create_description *Quartic_curve_descr,
 			quartic_curve_create *&QC,
 			int verbose_level);
+	void canonical_form_of_code(
+			std::string &label, int m, int n,
+			std::string &data,
+			int verbose_level);
+	void table_of_quartic_curves(int verbose_level);
+	void conic_type(
+			long int *Pts, int nb_pts,
+			int verbose_level);
+	void cheat_sheet(
+			layered_graph_draw_options *O,
+			int verbose_level);
+	void do_spread_classify(int k,
+			poset_classification_control *Control,
+			int verbose_level);
 
 };
 
@@ -1247,237 +1249,6 @@ int table_of_sets_compare_func(void *data, int i,
 		void *extra_data);
 
 
-
-// #############################################################################
-// quartic_curve_activity_description.cpp
-// #############################################################################
-
-//! description of an activity associated with a quartic curve
-
-
-class quartic_curve_activity_description {
-public:
-
-	int f_report;
-
-	int f_report_with_group;
-
-	int f_export_points;
-
-
-	quartic_curve_activity_description();
-	~quartic_curve_activity_description();
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-
-};
-
-
-// #############################################################################
-// quartic_curve_activity.cpp
-// #############################################################################
-
-//! an activity associated with a quartic curve
-
-
-class quartic_curve_activity {
-public:
-
-	quartic_curve_activity_description *Descr;
-	quartic_curve_create *QC;
-
-
-	quartic_curve_activity();
-	~quartic_curve_activity();
-	void init(quartic_curve_activity_description *Quartic_curve_activity_description,
-			quartic_curve_create *QC, int verbose_level);
-	void perform_activity(int verbose_level);
-	void do_report(
-			quartic_curve_create *QC,
-			int verbose_level);
-
-};
-
-
-
-
-// #############################################################################
-// quartic_curve_create_description.cpp
-// #############################################################################
-
-
-
-//! to describe a quartic curve from the command line
-
-
-class quartic_curve_create_description {
-
-public:
-
-	int f_q;
-	int q;
-
-	int f_label_txt;
-	std::string label_txt;
-
-	int f_label_tex;
-	std::string label_tex;
-
-	int f_label_for_summary;
-	std::string label_for_summary;
-
-	int f_catalogue;
-	int iso;
-
-	int f_by_coefficients;
-	std::string coefficients_text;
-
-
-	int f_by_equation;
-	std::string equation_name_of_formula;
-	std::string equation_name_of_formula_tex;
-	std::string equation_managed_variables;
-	std::string equation_text;
-	std::string equation_parameters;
-	std::string equation_parameters_tex;
-
-	int f_override_group;
-	std::string override_group_order;
-	int override_group_nb_gens;
-	std::string override_group_gens;
-
-	std::vector<std::string> transform_coeffs;
-	std::vector<int> f_inverse_transform;
-
-
-
-	quartic_curve_create_description();
-	~quartic_curve_create_description();
-	void null();
-	void freeself();
-	int read_arguments(int argc, std::string *argv,
-		int verbose_level);
-	int get_q();
-};
-
-
-
-// #############################################################################
-// quartic_curve_create.cpp
-// #############################################################################
-
-
-//! to create a quartic curve from a description using class quartic_curve_create_description
-
-
-class quartic_curve_create {
-
-public:
-	quartic_curve_create_description *Descr;
-
-	std::string prefix;
-	std::string label_txt;
-	std::string label_tex;
-
-	int f_ownership;
-
-	int q;
-	finite_field *F;
-
-	int f_semilinear;
-
-
-	projective_space_with_action *PA;
-
-	quartic_curve_domain_with_action *QCDA;
-
-	quartic_curve_object *QO;
-
-	int f_has_group;
-	strong_generators *Sg;
-	int f_has_nice_gens;
-	vector_ge *nice_gens;
-
-
-
-
-	quartic_curve_create();
-	~quartic_curve_create();
-	void null();
-	void freeself();
-	void init_with_data(
-			quartic_curve_create_description *Descr,
-			projective_space_with_action *PA,
-			quartic_curve_domain_with_action *QCDA,
-			int verbose_level);
-	void init(quartic_curve_create_description *Descr,
-			projective_space_with_action *PA,
-			quartic_curve_domain_with_action *QCDA,
-			int verbose_level);
-	void create_quartic_curve_from_description(int verbose_level);
-	void override_group(std::string &group_order_text,
-			int nb_gens, std::string &gens_text, int verbose_level);
-	void create_quartic_curve_by_coefficients(std::string &coefficients_text,
-			int verbose_level);
-	void create_quartic_curve_by_coefficient_vector(int *eqn15,
-			int verbose_level);
-	void create_quartic_curve_from_catalogue(int iso,
-			int verbose_level);
-	void create_quartic_curve_by_equation(
-			std::string &name_of_formula,
-			std::string &name_of_formula_tex,
-			std::string &managed_variables,
-			std::string &equation_text,
-			std::string &equation_parameters,
-			std::string &equation_parameters_tex,
-			int verbose_level);
-	void apply_transformations(
-		std::vector<std::string> &transform_coeffs,
-		std::vector<int> &f_inverse_transform,
-		int verbose_level);
-	void compute_group(projective_space_with_action *PA,
-			int verbose_level);
-
-};
-
-
-// #############################################################################
-// quartic_curve_domain_with_action.cpp
-// #############################################################################
-
-//! a domain for quartic curves in projective space with group action
-
-
-
-class quartic_curve_domain_with_action {
-
-public:
-
-
-	projective_space_with_action *PA;
-
-	int f_semilinear;
-
-	quartic_curve_domain *Dom; // do not free
-
-	action *A; // linear group PGGL(3,q)
-
-
-	action *A_on_lines; // linear group PGGL(3,q) acting on lines
-
-	int *Elt1;
-
-	action_on_homogeneous_polynomials *AonHPD_4_3;
-
-
-	quartic_curve_domain_with_action();
-	~quartic_curve_domain_with_action();
-	void init(quartic_curve_domain *Dom,
-			projective_space_with_action *PA,
-			int verbose_level);
-
-};
 
 
 }}

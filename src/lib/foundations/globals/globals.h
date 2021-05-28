@@ -428,6 +428,9 @@ enum symbol_table_object_type {
 	t_packing_long_orbits,
 	t_graph_classify,
 	t_diophant,
+	t_design,
+	t_design_table,
+	t_large_set_was,
 	t_action,
 	t_poset,
 	t_poset_classification,
@@ -487,6 +490,12 @@ public:
 			void *GC, int verbose_level);
 	void init_diophant(std::string &label,
 			void *Dio, int verbose_level);
+	void init_design(std::string &label,
+			void *DC, int verbose_level);
+	void init_design_table(std::string &label,
+			void *DT, int verbose_level);
+	void init_large_set_was(std::string &label,
+			void *LSW, int verbose_level);
 	void print();
 };
 

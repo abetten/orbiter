@@ -1234,8 +1234,10 @@ long int projective_space::line_through_two_points(
 int projective_space::test_if_lines_are_disjoint(
 		long int l1, long int l2)
 {
+	sorting Sorting;
+
 	if (Lines) {
-		return test_if_sets_are_disjoint_assuming_sorted(
+		return Sorting.test_if_sets_are_disjoint_assuming_sorted(
 				Lines + l1 * k, Lines + l2 * k, k, k);
 	}
 	else {

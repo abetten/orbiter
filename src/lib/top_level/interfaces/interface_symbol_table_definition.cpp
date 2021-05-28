@@ -746,6 +746,194 @@ void interface_symbol_table::definition_of_diophant(orbiter_top_level_session *O
 
 
 
+void interface_symbol_table::definition_of_design(orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_design" << endl;
+	}
+
+
+	design_create *DC;
+
+
+	DC = NEW_OBJECT(design_create);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_design before DC->init" << endl;
+	}
+
+	DC->init(Design_create_description, verbose_level);
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_design after DC->init" << endl;
+	}
+
+
+
+
+	orbiter_symbol_table_entry Symb;
+
+	Symb.init_design(define_label, DC, verbose_level);
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_design before add_symbol_table_entry" << endl;
+	}
+	Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, &Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_design done" << endl;
+	}
+}
+
+
+
+void interface_symbol_table::definition_of_design_table(orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_design_table" << endl;
+	}
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_design_table "
+				"using existing design " << design_table_label_design << endl;
+	}
+	int idx;
+	design_create *DC;
+
+	idx = Orbiter_top_level_session->find_symbol(design_table_label_design);
+	DC = (design_create *) Orbiter_top_level_session->get_object(idx);
+
+
+
+
+
+
+	strong_generators *Gens;
+	Gens = NEW_OBJECT(strong_generators);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_design_table before Gens->init_from_data_with_go" << endl;
+	}
+	Gens->init_from_data_with_go(
+			DC->A, design_table_generators_data,
+			design_table_go_text,
+			verbose_level);
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_design_table after Gens->init_from_data_with_go" << endl;
+	}
+
+
+	combinatorics_global Combi;
+	design_tables *T;
+
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_design_table before Combi.create_design_table" << endl;
+	}
+
+	Combi.create_design_table(DC,
+			design_table_label,
+			T,
+			Gens,
+			verbose_level);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_design_table after Combi.create_design_table" << endl;
+	}
+
+
+
+	large_set_classify *LS;
+
+	LS = NEW_OBJECT(large_set_classify);
+
+	LS->init(DC,
+			T,
+			verbose_level);
+
+
+
+	orbiter_symbol_table_entry Symb;
+	Symb.init_design_table(define_label, LS, verbose_level);
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_design_table before add_symbol_table_entry" << endl;
+	}
+	Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, &Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_design_table done" << endl;
+	}
+}
+
+
+void interface_symbol_table::definition_of_large_set_was(orbiter_top_level_session *Orbiter_top_level_session,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_large_set_was" << endl;
+	}
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_large_set_was "
+				"using existing spread table " << packing_was_label_spread_table << endl;
+	}
+	int idx;
+	large_set_classify *LS;
+
+	idx = Orbiter_top_level_session->find_symbol(large_set_was_label_design_table);
+	LS = (large_set_classify *) Orbiter_top_level_session->get_object(idx);
+
+
+
+
+
+
+	large_set_was *LSW;
+
+	LSW = NEW_OBJECT(large_set_was);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_large_set_was before LSW->init" << endl;
+	}
+
+	LSW->init(large_set_was_descr, LS, verbose_level);
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_large_set_was after LSW->init" << endl;
+	}
+
+
+
+
+	orbiter_symbol_table_entry Symb;
+	Symb.init_large_set_was(define_label, LSW, verbose_level);
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_large_set_was before add_symbol_table_entry" << endl;
+	}
+	Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, &Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "interface_symbol_table::definition_of_large_set_was done" << endl;
+	}
+}
+
+
+
 
 }}
 

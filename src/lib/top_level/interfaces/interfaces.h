@@ -559,6 +559,19 @@ class interface_symbol_table {
 	int f_diophant;
 	diophant_description *Diophant_description;
 
+	int f_design;
+	design_create_description *Design_create_description;
+
+	int f_design_table;
+	std::string design_table_label_design;
+	std::string design_table_label;
+	std::string design_table_go_text;
+	std::string design_table_generators_data;
+
+
+	int f_large_set_was;
+	std::string  large_set_was_label_design_table;
+	large_set_was_description *large_set_was_descr;
 
 
 
@@ -607,6 +620,12 @@ class interface_symbol_table {
 
 	int f_diophant_activity;
 	diophant_activity_description *Diophant_activity_description;
+
+	int f_design_activity;
+	design_activity_description *Design_activity_description;
+
+	int f_large_set_was_activity;
+	large_set_was_activity_description *Large_set_was_activity_description;
 
 public:
 
@@ -670,6 +689,12 @@ public:
 	void do_diophant_activity(
 			orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
+	void do_design_activity(
+			orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void do_large_set_was_activity(
+			orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
 
 
 	// interface_symbol_table_definition.cpp:
@@ -702,6 +727,12 @@ public:
 	void definition_of_graph_classification(orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 	void definition_of_diophant(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void definition_of_design(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void definition_of_design_table(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
+	void definition_of_large_set_was(orbiter_top_level_session *Orbiter_top_level_session,
 			int verbose_level);
 
 

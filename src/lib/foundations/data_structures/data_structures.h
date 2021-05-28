@@ -1131,6 +1131,9 @@ public:
 	void d_partition(double *v, int left, int right, int *middle);
 	void d_quicksort(double *v, int left, int right);
 	void d_quicksort_array(int len, double *v);
+	int test_if_sets_are_disjoint_assuming_sorted(int *set1, int *set2, int sz1, int sz2);
+	int test_if_sets_are_disjoint_assuming_sorted_lint(long int *set1, long int *set2, int sz1, int sz2);
+
 };
 
 int int_compare_increasingly(void *a, void *b, void *data);

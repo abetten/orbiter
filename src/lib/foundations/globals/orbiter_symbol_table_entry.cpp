@@ -367,6 +367,57 @@ void orbiter_symbol_table_entry::init_diophant(std::string &label,
 	}
 }
 
+void orbiter_symbol_table_entry::init_design(std::string &label,
+		void *DC, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_design" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_design;
+	ptr = DC;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_design done" << endl;
+	}
+}
+
+void orbiter_symbol_table_entry::init_design_table(std::string &label,
+		void *DT, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_design_table" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_design_table;
+	ptr = DT;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_design_table done" << endl;
+	}
+}
+
+void orbiter_symbol_table_entry::init_large_set_was(std::string &label,
+		void *LSW, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_large_set_was" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_large_set_was;
+	ptr = LSW;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_large_set_was done" << endl;
+	}
+}
+
 
 void orbiter_symbol_table_entry::print()
 {
@@ -439,6 +490,15 @@ void orbiter_symbol_table_entry::print()
 		}
 		else if (object_type == t_diophant) {
 			cout << "diophant" << endl;
+		}
+		else if (object_type == t_design) {
+			cout << "design" << endl;
+		}
+		else if (object_type == t_design_table) {
+			cout << "design_table" << endl;
+		}
+		else if (object_type == t_large_set_was) {
+			cout << "large_set_was" << endl;
 		}
 
 

@@ -1484,7 +1484,7 @@ void surface_object_properties::print_adjacency_list(std::ostream &ost)
 		for (i = 0; i < m; i++) {
 			ost << i << " & ";
 			if (SO->nb_lines == 27) {
-				ost << SO->Surf->Schlaefli->Line_label_tex[i];
+				ost << SO->Surf->Schlaefli->Labels->Line_label_tex[i];
 			}
 			else {
 				ost << i;
@@ -1498,7 +1498,7 @@ void surface_object_properties::print_adjacency_list(std::ostream &ost)
 			}
 			for (j = 0; j < h; j++) {
 				if (SO->nb_lines == 27) {
-					ost << SO->Surf->Schlaefli->Line_label_tex[set[j]];
+					ost << SO->Surf->Schlaefli->Labels->Line_label_tex[set[j]];
 				}
 				else {
 					ost << set[j];
@@ -1516,7 +1516,7 @@ void surface_object_properties::print_adjacency_list(std::ostream &ost)
 			}
 			for (j = 0; j < h; j++) {
 				if (SO->nb_lines == 27) {
-					ost << SO->Surf->Schlaefli->Line_label_tex[set[j]];
+					ost << SO->Surf->Schlaefli->Labels->Line_label_tex[set[j]];
 				}
 				else {
 					ost << set[j];
@@ -1561,7 +1561,7 @@ void surface_object_properties::print_adjacency_matrix(std::ostream &ost)
 		if (SO->nb_lines == 27) {
 			ost << " & ";
 			for (j = 0; j < n; j++) {
-				ost << " & " << SO->Surf->Schlaefli->Line_label_tex[j];
+				ost << " & " << SO->Surf->Schlaefli->Labels->Line_label_tex[j];
 			}
 			ost << "\\\\" << endl;
 		}
@@ -1569,7 +1569,7 @@ void surface_object_properties::print_adjacency_matrix(std::ostream &ost)
 		for (i = 0; i < m; i++) {
 			ost << i << " & ";
 			if (SO->nb_lines == 27) {
-				ost << SO->Surf->Schlaefli->Line_label_tex[i];
+				ost << SO->Surf->Schlaefli->Labels->Line_label_tex[i];
 			}
 			for (j = 0; j < n; j++) {
 				ost << " & " << p[i * n + j];
@@ -1609,7 +1609,7 @@ void surface_object_properties::print_adjacency_matrix_with_intersection_points(
 		if (SO->nb_lines == 27) {
 			ost << " & ";
 			for (j = 0; j < n; j++) {
-				ost << " & " << SO->Surf->Schlaefli->Line_label_tex[j];
+				ost << " & " << SO->Surf->Schlaefli->Labels->Line_label_tex[j];
 			}
 			ost << "\\\\" << endl;
 		}
@@ -1617,7 +1617,7 @@ void surface_object_properties::print_adjacency_matrix_with_intersection_points(
 		for (i = 0; i < m; i++) {
 			ost << i;
 			if (SO->nb_lines == 27) {
-				ost << " & " << SO->Surf->Schlaefli->Line_label_tex[i];
+				ost << " & " << SO->Surf->Schlaefli->Labels->Line_label_tex[i];
 			}
 			else {
 				ost << " & ";
@@ -1905,7 +1905,7 @@ void surface_object_properties::print_lines_with_points_on_them(std::ostream &os
 			ost << "$$" << endl;
 			ost << "\\ell_{" << i << "} ";
 			if (SO->nb_lines == 27) {
-				ost << " = " << SO->Surf->Schlaefli->Line_label_tex[i];
+				ost << " = " << SO->Surf->Schlaefli->Labels->Line_label_tex[i];
 			}
 			ost << " = \\left[" << endl;
 			//print_integer_matrix_width(cout, Gr->M,
@@ -2140,9 +2140,9 @@ void surface_object_properties::print_Eckardt_points(std::ostream &ost)
 			//ost << "\\ell_{" << b << "} \\cap ";
 			//ost << "\\ell_{" << c << "}";
 			//ost << " = ";
-			ost << SO->Surf->Schlaefli->Line_label_tex[a] << " \\cap ";
-			ost << SO->Surf->Schlaefli->Line_label_tex[b] << " \\cap ";
-			ost << SO->Surf->Schlaefli->Line_label_tex[c];
+			ost << SO->Surf->Schlaefli->Labels->Line_label_tex[a] << " \\cap ";
+			ost << SO->Surf->Schlaefli->Labels->Line_label_tex[b] << " \\cap ";
+			ost << SO->Surf->Schlaefli->Labels->Line_label_tex[c];
 			ost << " = ";
 		}
 		//ost << "P_{" << p << "} = ";
@@ -2428,8 +2428,8 @@ void surface_object_properties::print_double_points(std::ostream &ost)
 					ost << "\\ell_{" << a << "} \\cap ";
 					ost << "\\ell_{" << b << "} ";
 					ost << " = ";
-					ost << SO->Surf->Schlaefli->Line_label_tex[a] << " \\cap ";
-					ost << SO->Surf->Schlaefli->Line_label_tex[b];
+					ost << SO->Surf->Schlaefli->Labels->Line_label_tex[a] << " \\cap ";
+					ost << SO->Surf->Schlaefli->Labels->Line_label_tex[b];
 				}
 				else {
 					ost << " = ";
@@ -2486,7 +2486,7 @@ void surface_object_properties::print_single_points(std::ostream &ost)
 			Orbiter->Int_vec.print_fully(ost, v, 4);
 			ost << "$";
 			if (SO->nb_lines == 27) {
-				ost << " lies on line $" << SO->Surf->Schlaefli->Line_label_tex[a] << "$";
+				ost << " lies on line $" << SO->Surf->Schlaefli->Labels->Line_label_tex[a] << "$";
 			}
 			else {
 				ost << " lies on line $\\ell_{" << a << "}$";
@@ -2583,7 +2583,7 @@ void surface_object_properties::print_points_on_lines(std::ostream &ost)
 
 			if (SO->nb_lines == 27) {
 				ost << " = "
-					"$" << SO->Surf->Schlaefli->Line_label_tex[i]
+					"$" << SO->Surf->Schlaefli->Labels->Line_label_tex[i]
 				<< "$ " << endl;
 			}
 
@@ -2845,7 +2845,7 @@ void surface_object_properties::latex_trihedral_pair(std::ostream &ost, int t_id
 		ost << "F_" << i;
 		for (j = 0; j < 3; j++) {
 			a = SO->Surf->Schlaefli->Trihedral_pairs[t_idx * 9 + i * 3 + j];
-			ost << " & {" << SO->Surf->Schlaefli->Line_label_tex[a] << "=\\atop";
+			ost << " & {" << SO->Surf->Schlaefli->Labels->Line_label_tex[a] << "=\\atop";
 			ost << "\\left[" << endl;
 			SO->Surf->Gr->print_single_generator_matrix_tex(ost, SO->Lines[a]);
 			ost << "\\right]}" << endl;
@@ -3135,7 +3135,7 @@ void surface_object_properties::clebsch_map_latex(std::ostream &ost,
 
 		for (j = 0; j < lines_on_point->Set_size[i]; j++) {
 			a = lines_on_point->Sets[i][j];
-			ost << SO->Surf->Schlaefli->Line_label_tex[a];
+			ost << SO->Surf->Schlaefli->Labels->Line_label_tex[a];
 			if (j < lines_on_point->Set_size[i] - 1) {
 				ost << ", ";
 			}

@@ -70,10 +70,30 @@ interface_symbol_table::interface_symbol_table()
 	f_diophant = FALSE;
 	Diophant_description = NULL;
 
+	f_design = FALSE;
+	Design_create_description = NULL;
+
+
+	f_design_table = FALSE;
+	//std::string design_table_label_design;
+	//std::string design_table_label;
+	//std::string design_table_go_text;
+	//std::string design_table_generators_data;
+
+
+	f_large_set_was = FALSE;
+	//std::string  large_set_was_label_design_table;
+	large_set_was_descr = NULL;
+
+
 
 	f_print_symbols = FALSE;
 	f_with = FALSE;
 	//std::vector<std::string> with_labels;
+
+
+
+
 
 	f_finite_field_activity = FALSE;
 	Finite_field_activity_description = NULL;
@@ -116,6 +136,13 @@ interface_symbol_table::interface_symbol_table()
 
 	f_diophant_activity = FALSE;
 	Diophant_activity_description = NULL;
+
+	f_design_activity = FALSE;
+	Design_activity_description = NULL;
+
+
+	f_large_set_was_activity = FALSE;
+	Large_set_was_activity_description = NULL;
 
 }
 
@@ -557,7 +584,86 @@ void interface_symbol_table::read_definition(
 			cout << "interface_symbol_table::read_definition after definition_of_graph_classification" << endl;
 		}
 	}
+	else if (stringcmp(argv[i], "-design") == 0) {
 
+		f_design = TRUE;
+		Design_create_description = NEW_OBJECT(design_create_description);
+		cout << "reading -design" << endl;
+
+		i += Design_create_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		cout << "-design" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition before definition_of_design" << endl;
+		}
+		definition_of_design(Orbiter_top_level_session, verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition after definition_of_design" << endl;
+		}
+	}
+	else if (stringcmp(argv[i], "-design_table") == 0) {
+		f_design_table = TRUE;
+
+		design_table_label_design.assign(argv[++i]);
+		design_table_label.assign(argv[++i]);
+		design_table_go_text.assign(argv[++i]);
+		design_table_generators_data.assign(argv[++i]);
+
+
+		i++;
+
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+		cout << "-design_table " << design_table_label_design
+				<< " " << design_table_label
+				<< " " << design_table_go_text
+				<< " " << design_table_generators_data
+				<< endl;
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition before definition_of_design_table" << endl;
+		}
+		definition_of_design_table(Orbiter_top_level_session, verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition after definition_of_design_table" << endl;
+		}
+	}
+	else if (stringcmp(argv[i], "-large_set_with_symmetry_assumption") == 0) {
+		f_large_set_was = TRUE;
+
+		large_set_was_label_design_table.assign(argv[++i]);
+
+		large_set_was_descr = NEW_OBJECT(large_set_was_description);
+		cout << "reading -large_set_with_symmetry_assumption" << endl;
+		i += large_set_was_descr->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		cout << "-large_set_with_symmetry_assumption" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+		cout << "-large_set_with_symmetry_assumption " << large_set_was_label_design_table
+				<< endl;
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition before definition_of_packing_was" << endl;
+		}
+		definition_of_large_set_was(Orbiter_top_level_session, verbose_level);
+		if (f_v) {
+			cout << "interface_symbol_table::read_definition after definition_of_packing_was" << endl;
+		}
+	}
 
 	else {
 		cout << "unrecognized command after -define" << endl;
@@ -861,6 +967,40 @@ void interface_symbol_table::read_activity_arguments(int argc,
 			cout << "next argument is " << argv[i] << endl;
 		}
 	}
+	else if (stringcmp(argv[i], "-design_activity") == 0) {
+		f_design_activity = TRUE;
+		Design_activity_description =
+				NEW_OBJECT(design_activity_description);
+		cout << "reading -design_activity" << endl;
+		i += Design_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		cout << "-design_activity" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+	}
+	else if (stringcmp(argv[i], "-large_set_with_symmetry_assumption_activity") == 0) {
+		f_large_set_was_activity = TRUE;
+		Large_set_was_activity_description =
+				NEW_OBJECT(large_set_was_activity_description);
+		cout << "reading -large_set_with_symmetry_assumption_activity" << endl;
+		i += Large_set_was_activity_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		cout << "-large_set_with_symmetry_assumption_activity" << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+	}
 
 	else {
 		cout << "expecting activity after -do but seeing " << argv[i] << endl;
@@ -1005,6 +1145,23 @@ void interface_symbol_table::worker(orbiter_top_level_session *Orbiter_top_level
 		}
 
 		do_diophant_activity(Orbiter_top_level_session, verbose_level);
+	}
+	else if (f_design_activity) {
+
+		if (f_v) {
+			cout << "interface_symbol_table::worker f_design_activity" << endl;
+		}
+
+		do_design_activity(Orbiter_top_level_session, verbose_level);
+
+	}
+	else if (f_large_set_was_activity) {
+
+		if (f_v) {
+			cout << "interface_symbol_table::worker f_large_set_was_activity" << endl;
+		}
+
+		do_large_set_was_activity(Orbiter_top_level_session, verbose_level);
 	}
 
 

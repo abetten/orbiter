@@ -441,6 +441,7 @@ public:
 			void (*point_label)(std::stringstream &sstr, int pt, void *data),
 			void *point_label_data);
 	void GL_print_easy_latex(int *Elt, std::ostream &ost);
+	void GL_print_easy_latex_with_option_numerical(int *Elt, int f_numerical, std::ostream &ost);
 	int get_digit(uchar *elt, int i, int j);
 	int get_digit_frobenius(uchar *elt);
 	void put_digit(uchar *elt, int i, int j, int d);
@@ -1579,6 +1580,10 @@ public:
 		int data_gens_size, int nb_gens, 
 		longinteger_object &target_go, 
 		vector_ge *&nice_gens,
+		int verbose_level);
+	void init_from_data_with_go(
+		action *A, std::string &generators_data,
+		std::string &go_text,
 		int verbose_level);
 	void init_point_stabilizer_of_arbitrary_point_through_schreier(
 		schreier *Sch, 

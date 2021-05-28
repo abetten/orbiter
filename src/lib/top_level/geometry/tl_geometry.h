@@ -692,16 +692,6 @@ int disjoint_sets(long int *v, long int *w, int len);
 void projective_space_init_line_action(projective_space *P,
 		action *A_points, action *&A_on_lines, int verbose_level);
 
-// #############################################################################
-// hill_cap.cpp
-// #############################################################################
-
-
-void Hill_cap56(
-	char *fname, int &nb_Pts, long int *&Pts,
-	int verbose_level);
-void append_orbit_and_adjust_size(schreier *Orb, int idx, int *set, int &sz);
-
 
 
 
@@ -1219,6 +1209,56 @@ void wreath_product_rank_one_early_test_func_callback(long int *S, int len,
 
 
 
+
+
+// #############################################################################
+// top_level_geometry_global.cpp
+// #############################################################################
+
+
+
+//! catch all class for geometry
+
+
+
+
+class top_level_geometry_global {
+public:
+
+	top_level_geometry_global();
+	~top_level_geometry_global();
+	void set_stabilizer(
+			projective_space_with_action *PA,
+			int intermediate_subset_size,
+			std::string &fname_mask, int nb,
+			int verbose_level);
+	void set_stabilizer_of_set(
+			projective_space_with_action *PA,
+			int intermediate_subset_size,
+			poset_classification *PC,
+			int cnt, int nb, int row,
+			int *eqn,
+			int sz,
+			long int *pts,
+			int nb_pts,
+			long int *canonical_pts,
+			long int *bitangents,
+			int nb_bitangents,
+			int verbose_level);
+	void handle_orbit(tally &C,
+			int *isotype,
+			int selected_orbit, int selected_frequency, int n_choose_k,
+			int intermediate_subset_size,
+			poset_classification *PC, action *A, action *A2,
+			long int *pts,
+			int nb_pts,
+			long int *canonical_pts,
+			int *transporter_to_canonical_form,
+			strong_generators *&Gens_stabilizer_original_set,
+			int verbose_level);
+
+
+};
 
 
 
