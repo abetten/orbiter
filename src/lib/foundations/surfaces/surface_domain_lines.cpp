@@ -968,8 +968,8 @@ void surface_domain::create_the_fifteen_other_lines(
 		cout << "creating the 30 planes:" << endl;
 	}
 	for (h = 0; h < 30; h++) {
-		i = Schlaefli->Sets[h * 2 + 0];
-		j = Schlaefli->Sets[h * 2 + 1];
+		i = Schlaefli->Labels->Sets[h * 2 + 0];
+		j = Schlaefli->Labels->Sets[h * 2 + 1];
 		Gr->unrank_lint_here(Basis0, double_six[i],
 				0/* verbose_level*/);
 		Gr->unrank_lint_here(Basis0 + 8, double_six[j],
@@ -992,8 +992,8 @@ void surface_domain::create_the_fifteen_other_lines(
 		cout << "creating the 15 lines:" << endl;
 	}
 	for (h = 0; h < 15; h++) {
-		i = Schlaefli->Sets2[h * 2 + 0];
-		j = Schlaefli->Sets2[h * 2 + 1];
+		i = Schlaefli->Labels->Sets2[h * 2 + 0];
+		j = Schlaefli->Labels->Sets2[h * 2 + 1];
 		Gr3->unrank_lint_here(Basis1, Planes[i],
 				0/* verbose_level*/);
 		Gr3->unrank_lint_here(Basis2, Planes[j],

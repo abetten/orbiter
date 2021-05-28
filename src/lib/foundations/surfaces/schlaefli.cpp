@@ -21,13 +21,8 @@ schlaefli::schlaefli()
 {
 	Surf = NULL;
 
-	Sets = NULL;
-	M = NULL;
-	Sets2 = NULL;
+	Labels = NULL;
 
-
-	Line_label = NULL;
-	Line_label_tex = NULL;
 	Trihedral_pairs = NULL;
 	Trihedral_pair_labels = NULL;
 	nb_trihedral_pairs = 0;
@@ -69,23 +64,6 @@ schlaefli::~schlaefli()
 {
 	int f_v = FALSE;
 
-	if (Sets) {
-		FREE_lint(Sets);
-	}
-	if (M) {
-		FREE_int(M);
-	}
-	if (Sets2) {
-		FREE_lint(Sets2);
-	}
-
-
-	if (Line_label) {
-		delete [] Line_label;
-	}
-	if (Line_label_tex) {
-		delete [] Line_label_tex;
-	}
 	if (Eckard_point_label) {
 		delete [] Eckard_point_label;
 	}
@@ -93,6 +71,9 @@ schlaefli::~schlaefli()
 		delete [] Eckard_point_label_tex;
 	}
 
+	if (Labels) {
+		FREE_OBJECT(Labels);
+	}
 
 	if (Trihedral_to_Eckardt) {
 		FREE_lint(Trihedral_to_Eckardt);
@@ -182,20 +163,15 @@ void schlaefli::init(surface_domain *Surf, int verbose_level)
 	schlaefli::Surf = Surf;
 
 
+	Labels = NEW_OBJECT(schlaefli_labels);
 	if (f_v) {
-		cout << "schlaefli::init before init_line_data" << endl;
+		cout << "schlaefli::init before Labels->init" << endl;
 	}
-	init_line_data(verbose_level);
+	Labels->init(verbose_level);
 	if (f_v) {
-		cout << "schlaefli::init after init_line_data" << endl;
+		cout << "schlaefli::init after Labels->init" << endl;
 	}
-	if (f_v) {
-		cout << "schlaefli::init before init_Schlaefli_labels" << endl;
-	}
-	init_Schlaefli_labels(verbose_level);
-	if (f_v) {
-		cout << "schlaefli::init after init_Schlaefli_labels" << endl;
-	}
+
 
 	if (f_v) {
 		cout << "schlaefli::init before make_trihedral_pairs" << endl;
@@ -284,133 +260,7 @@ void schlaefli::init(surface_domain *Surf, int verbose_level)
 	}
 }
 
-void schlaefli::init_line_data(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	latex_interface L;
 
-	int i, j, h, h2;
-
-	if (f_v) {
-		cout << "schlaefli::init_line_data" << endl;
-	}
-
-	Sets = NEW_lint(30 * 2);
-	M = NEW_int(6 * 6);
-	Orbiter->Int_vec.zero(M, 6 * 6);
-
-	h = 0;
-	for (i = 0; i < 6; i++) {
-		for (j = 0; j < 6; j++) {
-			if (j == i) {
-				continue;
-			}
-			M[i * 6 + j] = h;
-			Sets[h * 2 + 0] = i;
-			Sets[h * 2 + 1] = 6 + j;
-			h++;
-		}
-	}
-
-
-	if (h != 30) {
-		cout << "h != 30" << endl;
-		exit(1);
-	}
-
-
-	if (f_v) {
-		cout << "schlaefli::init_line_data Sets:" << endl;
-		L.print_lint_matrix_with_standard_labels(cout,
-			Sets, 30, 2, FALSE /* f_tex */);
-	}
-
-
-	Sets2 = NEW_lint(15 * 2);
-	h2 = 0;
-	for (i = 0; i < 6; i++) {
-		for (j = i + 1; j < 6; j++) {
-			Sets2[h2 * 2 + 0] = M[i * 6 + j];
-			Sets2[h2 * 2 + 1] = M[j * 6 + i];
-			h2++;
-		}
-	}
-	if (h2 != 15) {
-		cout << "h2 != 15" << endl;
-		exit(1);
-	}
-
-	if (f_v) {
-		cout << "Sets2:" << endl;
-		L.print_lint_matrix_with_standard_labels(cout,
-			Sets2, 15, 2, FALSE /* f_tex */);
-	}
-	if (f_v) {
-		cout << "schlaefli::init_line_data done" << endl;
-	}
-}
-
-void schlaefli::init_Schlaefli_labels(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	latex_interface L;
-
-	int i, h;
-
-	if (f_v) {
-		cout << "schlaefli::init_Schlaefli_labels" << endl;
-		}
-	Line_label = new std::string[27];
-	Line_label_tex = new std::string[27];
-	char str[1000];
-	int a, b, c;
-
-	for (i = 0; i < 27; i++) {
-		if (i < 6) {
-			snprintf(str, 1000, "a_%d", i + 1);
-			}
-		else if (i < 12) {
-			snprintf(str, 1000, "b_%d", i - 6 + 1);
-			}
-		else {
-			h = i - 12;
-			c = Sets2[h * 2 + 0];
-			a = Sets[c * 2 + 0] + 1;
-			b = Sets[c * 2 + 1] - 6 + 1;
-			snprintf(str, 1000, "c_{%d%d}", a, b);
-			}
-		if (f_v) {
-			cout << "creating label " << str
-				<< " for line " << i << endl;
-			}
-		Line_label[i].assign(str);
-		}
-
-	for (i = 0; i < 27; i++) {
-		if (i < 6) {
-			snprintf(str, 1000, "a_{%d}", i + 1);
-			}
-		else if (i < 12) {
-			snprintf(str, 1000, "b_{%d}", i - 6 + 1);
-			}
-		else {
-			h = i - 12;
-			c = Sets2[h * 2 + 0];
-			a = Sets[c * 2 + 0] + 1;
-			b = Sets[c * 2 + 1] - 6 + 1;
-			snprintf(str, 1000, "c_{%d%d}", a, b);
-			}
-		if (f_v) {
-			cout << "creating label " << str
-				<< " for line " << i << endl;
-			}
-		Line_label_tex[i].assign(str);
-		}
-
-	if (f_v) {
-		cout << "schlaefli::init_Schlaefli_labels done" << endl;
-		}
-}
 
 void schlaefli::find_tritangent_planes_intersecting_in_a_line(
 	int line_idx,
@@ -2348,7 +2198,7 @@ void schlaefli::latex_table_of_double_sixes(std::ostream &ost)
 		ost << "\\begin{array}{cccccc}" << endl;
 		for (i = 0; i < 2; i++) {
 			for (j = 0; j < 6; j++) {
-				ost << Line_label_tex[D[i * 6 + j]];
+				ost << Labels->Line_label_tex[D[i * 6 + j]];
 				if (j < 6 - 1) {
 					ost << " & ";
 				}
@@ -2421,7 +2271,7 @@ void schlaefli::latex_half_double_six(std::ostream &ost, int idx)
 
 	ost << " = \\{";
 	for (j = 0; j < 6; j++) {
-		ost << Line_label_tex[H[j]];
+		ost << Labels->Line_label_tex[H[j]];
 		if (j < 6 - 1) {
 			ost << ", ";
 			}
@@ -2461,7 +2311,7 @@ void schlaefli::latex_table_of_Eckardt_points(std::ostream &ost)
 		Eckardt_points[i].latex(ost);
 		ost << " = ";
 		for (j = 0; j < 3; j++) {
-			ost << Line_label_tex[three_lines[j]];
+			ost << Labels->Line_label_tex[three_lines[j]];
 			if (j < 3 - 1) {
 				ost << " \\cap ";
 				}
@@ -2487,7 +2337,7 @@ void schlaefli::latex_table_of_tritangent_planes(std::ostream &ost)
 		Eckardt_points[i].latex_index_only(ost);
 		ost << "} = ";
 		for (j = 0; j < 3; j++) {
-			ost << Line_label_tex[three_lines[j]];
+			ost << Labels->Line_label_tex[three_lines[j]];
 			}
 		ost << "$\\\\" << endl;
 		}
@@ -2528,7 +2378,7 @@ void schlaefli::print_Schlaefli_labelling(ostream &ost)
 		ost << "\\hline" << endl;
 		for (h = 0; h < 9; h++) {
 			ost << j * 9 + h << " & "
-				<< Line_label_tex[j * 9 + h] << "\\\\" << endl;
+				<< Labels->Line_label_tex[j * 9 + h] << "\\\\" << endl;
 			}
 		ost << "\\hline" << endl;
 		ost << "\\end{array}" << endl;
@@ -2545,7 +2395,7 @@ void schlaefli::print_set_of_lines_tex(ostream &ost, long int *v, int len)
 
 	ost << "\\{";
 	for (i = 0; i < len; i++) {
-		ost << Line_label_tex[v[i]];
+		ost << Labels->Line_label_tex[v[i]];
 		if (i < len - 1) {
 			ost << ", ";
 			}
@@ -2712,11 +2562,11 @@ void schlaefli::latex_table_of_clebsch_maps(ostream &ost)
 									ost << "$, $\\;$ " << endl;
 #endif
 
-									ost << "$" << Line_label_tex[transversal_line] << "$, $\\;$ ";
+									ost << "$" << Labels->Line_label_tex[transversal_line] << "$, $\\;$ ";
 									//ost << "$(" << Line_label_tex[c1] << ", " << Line_label_tex[c2];
 									//ost << ")$, $\\;$ ";
 
-									ost << "$(" << Line_label_tex[l1] << "," << Line_label_tex[l2] << ")$, $\\;$ ";
+									ost << "$(" << Labels->Line_label_tex[l1] << "," << Labels->Line_label_tex[l2] << ")$, $\\;$ ";
 #if 0
 									ost << "$(" << Line_label_tex[t1]
 										<< "," << Line_label_tex[t2]
@@ -2725,18 +2575,18 @@ void schlaefli::latex_table_of_clebsch_maps(ostream &ost)
 										<< ")$, $\\;$ ";
 #endif
 									ost << "$"
-											<< Line_label_tex[c1] << " \\cap \\{";
+											<< Labels->Line_label_tex[c1] << " \\cap \\{";
 									for (j = 0; j < n1; j++) {
-										ost << Line_label_tex[tc1[j]];
+										ost << Labels->Line_label_tex[tc1[j]];
 										if (j < n1 - 1) {
 											ost << ", ";
 										}
 									}
 									ost << "\\}$ ";
 									ost << "$"
-											<< Line_label_tex[c2] << " \\cap \\{";
+											<< Labels->Line_label_tex[c2] << " \\cap \\{";
 									for (j = 0; j < n2; j++) {
-										ost << Line_label_tex[tc2[j]];
+										ost << Labels->Line_label_tex[tc2[j]];
 										if (j < n2 - 1) {
 											ost << ", ";
 										}

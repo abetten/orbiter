@@ -25,6 +25,8 @@ large_set_classify::large_set_classify()
 	nb_lines = 0;
 	search_depth = 0;
 
+	//std::string problem_label;
+
 	//std::string starter_directory_name;
 	//std::string prefix;
 	//std::string path;
@@ -36,8 +38,7 @@ large_set_classify::large_set_classify()
 
 
 	Design_table = NULL;
-	//std::string design_table_prefix;
-	nb_designs = 0;
+	//nb_designs = 0;
 	nb_colors = 0;
 	design_color_table = NULL;
 
@@ -53,6 +54,7 @@ large_set_classify::large_set_classify()
 
 	nb_needed = 0;
 
+#if 0
 	Design_table_reduced = NULL;
 	Design_table_reduced_idx = NULL;
 	nb_reduced = 0;
@@ -65,7 +67,7 @@ large_set_classify::large_set_classify()
 
 	OoS = NULL;
 	selected_type_idx = 0;
-
+#endif
 
 	//null();
 }
@@ -82,7 +84,7 @@ void large_set_classify::null()
 void large_set_classify::freeself()
 {
 	if (Design_table) {
-		FREE_lint(Design_table);
+		FREE_OBJECT(Design_table);
 	}
 	if (Bitvec) {
 		FREE_OBJECT(Bitvec);
@@ -90,6 +92,7 @@ void large_set_classify::freeself()
 	if (design_color_table) {
 		FREE_int(design_color_table);
 	}
+#if 0
 	if (Design_table_reduced) {
 		FREE_lint(Design_table_reduced);
 	}
@@ -99,125 +102,46 @@ void large_set_classify::freeself()
 	if (OoS) {
 		FREE_OBJECT(OoS);
 	}
+#endif
 	null();
 }
 
 void large_set_classify::init(design_create *DC,
-		std::string &input_prefix, std::string &base_fname,
-		int search_depth,
-		int f_lexorder_test,
-		std::string &design_table_prefix,
+		design_tables *T,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "large_set_classify::init" << endl;
-		}
+	}
 
 	large_set_classify::DC = DC;
-	large_set_classify::f_lexorder_test = f_lexorder_test;
-	design_size = DC->sz;
+	large_set_classify::Design_table = T;
+	design_size = T->design_size;
 	nb_points = DC->A->degree;
 	nb_lines = DC->A2->degree;
 	size_of_large_set = nb_lines / design_size;
 
-	large_set_classify::search_depth = search_depth;
 
 	if (f_v) {
 		cout << "large_set_classify::init nb_points=" << nb_points << endl;
 		cout << "large_set_classify::init nb_lines=" << nb_lines << endl;
 		cout << "large_set_classify::init design_size=" << design_size << endl;
-		cout << "large_set_classify::init input_prefix=" << input_prefix << endl;
-		cout << "large_set_classify::init base_fname=" << base_fname << endl;
 		cout << "large_set_classify::init size_of_large_set=" << size_of_large_set << endl;
-		cout << "large_set_classify::init search_depth=" << search_depth << endl;
-		}
+	}
 
 
-	starter_directory_name.assign(input_prefix);
-	prefix.assign(base_fname);
-	path.assign(starter_directory_name);
-	prefix_with_directory.assign(starter_directory_name);
-	prefix_with_directory.append(base_fname);
-
-	large_set_classify::design_table_prefix.assign(design_table_prefix);
-
+	problem_label.assign("LS_");
+	problem_label.append(DC->label_txt);
 
 	if (f_v) {
-		cout << "large_set_classify::init done" << endl;
-		}
-}
-
-void large_set_classify::init_designs(orbit_of_sets *SetOrb,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "large_set_classify::init_designs" << endl;
+		cout << "large_set_classify::init before compute_colors" << endl;
 	}
-
-	long int **Sets;
-	int i;
-	sorting Sorting;
-	combinatorics_domain Combi;
-
-	if (f_v) {
-		cout << "large_set_classify::init_designs" << endl;
-	}
-
-	nb_designs = SetOrb->used_length;
-	Sets = NEW_plint(nb_designs);
-	for (i = 0; i < nb_designs; i++) {
-
-		Sets[i] = NEW_lint(design_size);
-		Orbiter->Lint_vec.copy(SetOrb->Sets[i], Sets[i], design_size);
-	}
-
-	if (f_v) {
-		cout << "large_set_classify::init_designs before "
-				"sorting design table of size " << nb_designs << endl;
-	}
-
-	Sorting.Heapsort_general(Sets, nb_designs,
-			large_set_design_compare_func,
-			large_set_swap_func,
-			this);
-	if (f_v) {
-		cout << "large_set_classify::init_designs after "
-				"sorting design table of size " << nb_designs << endl;
-	}
-
-	Design_table = NEW_lint(nb_designs * design_size);
-	for (i = 0; i < nb_designs; i++) {
-		Orbiter->Lint_vec.copy(Sets[i], Design_table + i * design_size, design_size);
-	}
-
-	cout << "Designs:" << endl;
-	if (nb_designs < 100) {
-		for (i = 0; i < nb_designs; i++) {
-			cout << i << " : ";
-			Orbiter->Lint_vec.print(cout, Design_table + i * design_size, design_size);
-			cout << endl;
-		}
-	}
-	else {
-		cout << "too many to print" << endl;
-	}
-
-	for (i = 0; i < nb_designs; i++) {
-		FREE_lint(Sets[i]);
-	}
-	FREE_plint(Sets);
-
-	if (f_v) {
-		cout << "large_set_classify::init_designs before compute_colors" << endl;
-	}
-	compute_colors(Design_table, nb_designs, design_color_table,
+	compute_colors(Design_table, design_color_table,
 				verbose_level);
 	if (f_v) {
-		cout << "large_set_classify::init_designs after compute_colors" << endl;
+		cout << "large_set_classify::init after compute_colors" << endl;
 	}
 
 	if (f_v) {
@@ -226,34 +150,44 @@ void large_set_classify::init_designs(orbit_of_sets *SetOrb,
 	}
 
 
-#if 0
-	char prefix_for_graph[1000];
-
-	sprintf(prefix_for_graph, "large_sets_PG_2_%d", DC->q);
-	Combi.compute_adjacency_matrix(
-			Design_table, nb_designs, design_size,
-			prefix_for_graph,
-				bitvector_adjacency,
-				bitvector_length,
-				verbose_level);
 	if (f_v) {
-		cout << "large_set_classify::init_designs "
-				"creating graph done" << endl;
+		cout << "large_set_classify::init before create_action_and_poset" << endl;
 	}
-#endif
+	create_action_and_poset(verbose_level);
+	if (f_v) {
+		cout << "large_set_classify::init after create_action_and_poset" << endl;
+	}
+
+
 
 	if (f_v) {
-		cout << "large_set_classify::init_designs "
+		cout << "large_set_classify::init done" << endl;
+		}
+}
+
+void large_set_classify::create_action_and_poset(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "large_set_classify::create_action_and_poset" << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "large_set_classify::create_action_and_poset "
 				"creating action A_on_designs" << endl;
 	}
 	A_on_designs = DC->A2->create_induced_action_on_sets(
-			nb_designs, design_size,
-			Design_table,
+			Design_table->nb_designs, Design_table->design_size,
+			Design_table->the_table,
 			//f_induce,
 			0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "large_set_classify::init_designs "
+		cout << "large_set_classify::create_action_and_poset "
 				"A_on_designs->degree=" << A_on_designs->degree << endl;
 	}
 
@@ -263,7 +197,7 @@ void large_set_classify::init_designs(orbit_of_sets *SetOrb,
 			verbose_level);
 
 	if (f_v) {
-		cout << "large_set_classify::init_designs before "
+		cout << "large_set_classify::create_action_and_poset before "
 				"Poset->add_testing_without_group" << endl;
 	}
 	Poset->add_testing_without_group(
@@ -277,10 +211,10 @@ void large_set_classify::init_designs(orbit_of_sets *SetOrb,
 
 	Control->f_T = TRUE;
 	Control->f_W = TRUE;
-	Control->problem_label = prefix;
+	Control->problem_label.assign(problem_label);
 	Control->f_problem_label = TRUE;
-	Control->path = path;
-	Control->f_path = TRUE;
+	//Control->path = path;
+	//Control->f_path = TRUE;
 	Control->f_depth = TRUE;
 	Control->depth = search_depth;
 
@@ -290,7 +224,7 @@ void large_set_classify::init_designs(orbit_of_sets *SetOrb,
 	Control->print_function_data = this;
 #endif
 	if (f_v) {
-		cout << "large_set_classify::init_designs "
+		cout << "large_set_classify::create_action_and_poset "
 				"calling gen->initialize" << endl;
 	}
 
@@ -304,7 +238,7 @@ void large_set_classify::init_designs(orbit_of_sets *SetOrb,
 
 
 	if (f_v) {
-		cout << "large_set_classify::init_designs done" << endl;
+		cout << "large_set_classify::create_action_and_poset done" << endl;
 	}
 }
 
@@ -417,43 +351,8 @@ void large_set_classify::read_classification_single_case(set_and_stabilizer *&Re
 		}
 }
 
-void large_set_classify::make_reduced_design_table(
-		long int *set, int set_sz,
-		long int *&Design_table_out, long int *&Design_table_out_idx, int &nb_out,
-		int verbose_level)
-// Design_table_out[nb_designs * design_size]
-{
-	int f_v = (verbose_level >= 1);
-	long int i, j, a;
-
-	if (f_v) {
-		cout << "large_set_classify::make_reduced_design_table" << endl;
-	}
-	Design_table_out = NEW_lint(nb_designs * design_size);
-	Design_table_out_idx = NEW_lint(nb_designs);
-	nb_out = 0;
-	for (i = 0; i < nb_designs; i++) {
-		for (j = 0; j < set_sz; j++) {
-			a = set[j];
-			if (!designs_are_disjoint(i, a)) {
-				break;
-			}
-		}
-		if (j == set_sz) {
-			Orbiter->Lint_vec.copy(Design_table + i * design_size,
-					Design_table_out + nb_out * design_size, design_size);
-			Design_table_out_idx[nb_out] = i;
-			nb_out++;
-		}
-	}
-	if (f_v) {
-		cout << "large_set_classify::make_reduced_design_table done" << endl;
-	}
-}
-
-
 void large_set_classify::compute_colors(
-		long int *Design_table, int nb_designs, int *&design_color_table,
+		design_tables *Design_table, int *&design_color_table,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -463,11 +362,11 @@ void large_set_classify::compute_colors(
 		cout << "large_set_classify::compute_colors" << endl;
 	}
 	nb_colors = DC->get_nb_colors_as_two_design(0 /* verbose_level */);
-	design_color_table = NEW_int(nb_designs);
-	for (i = 0; i < nb_designs; i++) {
+	design_color_table = NEW_int(Design_table->nb_designs);
+	for (i = 0; i < Design_table->nb_designs; i++) {
 		design_color_table[i] =
 				DC->get_color_as_two_design_assume_sorted(
-						Design_table + i * design_size,
+						Design_table->the_table + i * Design_table->design_size,
 						0 /* verbose_level */);
 	}
 
@@ -476,6 +375,7 @@ void large_set_classify::compute_colors(
 	}
 }
 
+#if 0
 void large_set_classify::compute_reduced_colors(
 		long int *chosen_set, int chosen_set_sz,
 		int verbose_level)
@@ -518,29 +418,16 @@ void large_set_classify::compute_reduced_colors(
 		cout << "large_set_classify::compute_reduced_colors done" << endl;
 	}
 }
-
-
-int large_set_classify::designs_are_disjoint(int i, int j)
-{
-	long int *p1, *p2;
-
-	p1 = Design_table + i * design_size;
-	p2 = Design_table + j * design_size;
-	if (test_if_sets_are_disjoint_assuming_sorted_lint(
-			p1, p2, design_size, design_size)) {
-		return TRUE;
-	}
-	else {
-		return FALSE;
-	}
-}
+#endif
 
 
 
+
+#if 0
 void large_set_classify::process_starter_case(
 		long int *starter_set, int starter_set_sz,
 		strong_generators *SG, std::string &prefix,
-		const char *group_label, int orbit_length,
+		std::string &group_label, int orbit_length,
 		int f_read_solution_file, std::string &solution_file_name,
 		long int *&Large_sets, int &nb_large_sets,
 		int f_compute_normalizer_orbits, strong_generators *N_gens,
@@ -644,78 +531,6 @@ void large_set_classify::process_starter_case(
 
 
 	//Orbits_classified->Set_size[type_idx] = j;
-
-	if (f_compute_normalizer_orbits) {
-		if (f_v) {
-			cout << "large_set_classify::process_starter_case computing orbits "
-					"of normalizer on orbits of index " << selected_type_idx << endl;
-		}
-
-		action *A_on_orbits;
-		action *A_on_orbits_restricted;
-		schreier *Sch;
-
-		A_on_orbits = NEW_OBJECT(action);
-		A_on_orbits->induced_action_on_orbits(A_reduced,
-				OoS->Sch /* H_orbits_on_spreads*/,
-				TRUE /*f_play_it_safe*/, verbose_level - 1);
-
-		A_on_orbits_restricted = A_on_orbits->restricted_action(
-				OoS->Orbits_classified->Sets[selected_type_idx],
-				OoS->Orbits_classified->Set_size[selected_type_idx],
-				verbose_level);
-
-		if (f_v) {
-			cout << "large_set_classify::process_starter_case before "
-					"compute_orbits_on_points for the restricted action "
-					"on the good orbits" << endl;
-		}
-		A_on_orbits_restricted->compute_orbits_on_points(
-				Sch, N_gens->gens, verbose_level - 1);
-
-		if (f_v) {
-			cout << "large_set_classify::process_starter_case "
-					"the number of orbits of the normalizer on the "
-					"good orbits is " << Sch->nb_orbits << endl;
-			Sch->print_and_list_orbits_tex(cout);
-			cout << "printing orbits through Design_table_reduced_idx:" << endl;
-			Sch->print_and_list_orbits_using_labels(
-					cout, Design_table_reduced_idx);
-		}
-
-		{
-			long int *Orbits_under_N;
-			file_io Fio;
-			string fname_out;
-			int i, a, l;
-
-
-			Orbits_under_N = NEW_lint(Sch->nb_orbits * 2);
-
-			fname_out.assign(prefix);
-			fname_out.append("_graph_");
-			fname_out.append(group_label);
-			fname_out.append("_N_orbit_reps.csv");
-
-			for (i = 0; i < Sch->nb_orbits; i++) {
-				l = Sch->orbit_len[i];
-				a = Sch->orbit[Sch->orbit_first[i]];
-				Orbits_under_N[2 * i + 0] = a;
-				Orbits_under_N[2 * i + 1] = l;
-			}
-			Fio.lint_matrix_write_csv(fname_out, Orbits_under_N, Sch->nb_orbits, 2);
-
-			FREE_lint(Orbits_under_N);
-		}
-
-		FREE_OBJECT(Sch);
-		FREE_OBJECT(A_on_orbits_restricted);
-		FREE_OBJECT(A_on_orbits);
-		if (f_v) {
-			cout << "large_set_classify::process_starter_case "
-					"computing orbits of normalizer done" << endl;
-		}
-	}
 
 
 	if (f_read_solution_file) {
@@ -890,49 +705,15 @@ void large_set_classify::process_starter_case(
 	}
 }
 
-int large_set_classify::test_orbit(long int *orbit, int orbit_length)
-{
-	int i, j, a, b;
-	long int *p1;
-	long int *p2;
+#endif
 
-	for (i = 0; i < orbit_length; i++) {
-		a = orbit[i];
-		p1 = Design_table_reduced + a * design_size;
-		for (j = i + 1; j < orbit_length; j++) {
-			b = orbit[j];
-			p2 = Design_table_reduced + b * design_size;
-			if (!test_if_sets_are_disjoint_assuming_sorted_lint(
-					p1, p2, design_size, design_size)) {
-				return FALSE;
-			}
-		}
-	}
-	return TRUE;
+
+int large_set_classify::test_if_designs_are_disjoint(int i, int j)
+{
+	return Design_table->test_if_designs_are_disjoint(i, j);
 }
 
-int large_set_classify::test_pair_of_orbits(
-		long int *orbit1, int orbit_length1,
-		long int *orbit2, int orbit_length2)
-{
-	int i, j, a, b;
-	long int *p1;
-	long int *p2;
-
-	for (i = 0; i < orbit_length1; i++) {
-		a = orbit1[i];
-		p1 = Design_table_reduced + a * design_size;
-		for (j = 0; j < orbit_length2; j++) {
-			b = orbit2[j];
-			p2 = Design_table_reduced + b * design_size;
-			if (!test_if_sets_are_disjoint_assuming_sorted_lint(
-					p1, p2, design_size, design_size)) {
-				return FALSE;
-			}
-		}
-	}
-	return TRUE;
-}
+#if 0
 
 int large_set_design_test_orbit(long int *orbit, int orbit_length,
 		void *extra_data)
@@ -1002,6 +783,28 @@ void large_set_swap_func(void *data, int i, int j, void *extra_data)
 	Sets[j] = p;
 }
 
+int large_set_compute_color_of_reduced_orbits_callback(schreier *Sch,
+		int orbit_idx, void *data, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	large_set_classify *LS = (large_set_classify *) data;
+
+	int a, c;
+
+	if (f_v) {
+		cout << "large_set_compute_color_of_reduced_orbits_callback" << endl;
+	}
+	a = Sch->orbit[Sch->orbit_first[orbit_idx]];
+	c = LS->DC->get_color_as_two_design_assume_sorted(
+			LS->Design_table_reduced + a * LS->design_size, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "large_set_compute_color_of_reduced_orbits_callback done" << endl;
+	}
+	return c;
+}
+#endif
+
+
 void large_set_early_test_function(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
@@ -1031,7 +834,7 @@ void large_set_early_test_function(long int *S, int len,
 				continue;
 			}
 			if (LS->Bitvec) {
-				k = Combi.ij2k(a, b, LS->nb_designs);
+				k = Combi.ij2k(a, b, LS->Design_table->nb_designs);
 				if (LS->Bitvec->s_i(k)) {
 					good_candidates[nb_good_candidates++] = b;
 				}
@@ -1039,7 +842,7 @@ void large_set_early_test_function(long int *S, int len,
 			else {
 				//cout << "large_set_early_test_function bitvector_adjacency has not been computed" << endl;
 				//exit(1);
-				if (LS->designs_are_disjoint(a, b)) {
+				if (LS->test_if_designs_are_disjoint(a, b)) {
 					good_candidates[nb_good_candidates++] = b;
 				}
 			}
@@ -1049,27 +852,6 @@ void large_set_early_test_function(long int *S, int len,
 		cout << "large_set_early_test_function done" << endl;
 		}
 }
-
-int large_set_compute_color_of_reduced_orbits_callback(schreier *Sch,
-		int orbit_idx, void *data, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	large_set_classify *LS = (large_set_classify *) data;
-
-	int a, c;
-
-	if (f_v) {
-		cout << "large_set_compute_color_of_reduced_orbits_callback" << endl;
-	}
-	a = Sch->orbit[Sch->orbit_first[orbit_idx]];
-	c = LS->DC->get_color_as_two_design_assume_sorted(
-			LS->Design_table_reduced + a * LS->design_size, 0 /* verbose_level */);
-	if (f_v) {
-		cout << "large_set_compute_color_of_reduced_orbits_callback done" << endl;
-	}
-	return c;
-}
-
 
 
 

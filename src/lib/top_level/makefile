@@ -11,9 +11,11 @@ all: algebra_and_number_theory \
 	isomorph \
 	orbits \
 	projective_space \
+	quartic_curves \
 	semifields \
 	solver \
-	spreads_and_packings \
+	spreads \
+	packings \
 	surfaces
 
 
@@ -27,9 +29,11 @@ interfaces : interfaces2 ;
 isomorph : isomorph2 ; 
 orbits : orbits2 ; 
 projective_space : projective_space2 ; 
+quartic_curves : quartic_curves2 ; 
 semifields : semifields2 ; 
 solver : solver2 ; 
-spreads_and_packings : spreads_and_packings2 ; 
+spreads : spreads2 ; 
+packings : packings2 ; 
 surfaces : surfaces2 ; 
 
 algebra_and_number_theory2 :  ; cd algebra_and_number_theory; $(MAKE)
@@ -40,9 +44,11 @@ interfaces2 :  ; cd interfaces; $(MAKE)
 isomorph2 :  ; cd isomorph; $(MAKE)
 orbits2 :  ; cd orbits; $(MAKE)
 projective_space2 :  ; cd projective_space; $(MAKE)
+quartic_curves2 :  ; cd quartic_curves; $(MAKE)
 semifields2 :  ; cd semifields; $(MAKE)
 solver2 :  ; cd solver; $(MAKE)
-spreads_and_packings2 :  ; cd spreads_and_packings; $(MAKE)
+spreads2 :  ; cd spreads; $(MAKE)
+packings2 :  ; cd packings; $(MAKE)
 surfaces2 :  ; cd surfaces; $(MAKE)
 
 
@@ -64,9 +70,11 @@ clean:
 	cd isomorph; $(MAKE) clean
 	cd orbits; $(MAKE) clean
 	cd projective_space; $(MAKE) clean
+	cd quartic_curves; $(MAKE) clean
 	cd semifields; $(MAKE) clean
 	cd solver; $(MAKE) clean
-	cd spreads_and_packings; $(MAKE) clean
+	cd spreads; $(MAKE) clean
+	cd packings; $(MAKE) clean
 	cd surfaces; $(MAKE) clean
 	- rm *.o *.a 
 

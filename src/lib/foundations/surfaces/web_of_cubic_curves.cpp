@@ -870,7 +870,7 @@ void web_of_cubic_curves::print_lines(ostream &ost)
 		a = Lines27[i];
 		ost << "$$" << endl;
 		ost << "\\ell_{" << i << "} = "
-				<< Surf->Schlaefli->Line_label_tex[i] << " = " << a << " = ";
+				<< Surf->Schlaefli->Labels->Line_label_tex[i] << " = " << a << " = ";
 		Surf->unrank_line(v, a);
 		//ost << "\\left[ " << endl;
 		Surf->Gr->print_single_generator_matrix_tex(ost, a);

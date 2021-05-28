@@ -232,7 +232,7 @@ void surface_domain::print_lines_tex(std::ostream &ost, long int *Lines, int nb_
 		ost << "\\ell_{" << i << "}";
 
 		if (nb_lines == 27) {
-			ost << " = " << Schlaefli->Line_label_tex[i];
+			ost << " = " << Schlaefli->Labels->Line_label_tex[i];
 		}
 		ost << " = " << endl;
 		//print_integer_matrix_width(cout,
@@ -321,7 +321,7 @@ void surface_domain::alice(std::ostream &ost, long int *Lines, int nb_lines)
 		rk = P2->rank_point(v);
 
 
-		ost << "$" << Schlaefli->Line_label_tex[h];
+		ost << "$" << Schlaefli->Labels->Line_label_tex[h];
 		ost << " = ";
 		Orbiter->Int_vec.print(ost, v, 3);
 		ost << "_{";
@@ -580,7 +580,7 @@ void surface_domain::sstr_line_label(stringstream &sstr, long int pt)
 		cout << "surface_domain::sstr_line_label pt < 0, pt=" << pt << endl;
 		exit(1);
 	}
-	sstr << Schlaefli->Line_label_tex[pt];
+	sstr << Schlaefli->Labels->Line_label_tex[pt];
 }
 
 

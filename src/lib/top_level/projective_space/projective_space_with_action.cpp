@@ -654,18 +654,18 @@ void projective_space_with_action::save_Levi_graph(std::string &prefix,
 }
 #endif
 
-void projective_space_with_action::report_fixed_objects_in_PG_3_tex(
+void projective_space_with_action::report_fixed_points_lines_and_planes(
 	int *Elt, ostream &ost, 
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "projective_space_with_action::report_fixed_objects_in_PG_3_tex" << endl;
+		cout << "projective_space_with_action::report_fixed_points_lines_and_planes" << endl;
 	}
 
-	if (P->n != 3) {
-		cout << "projective_space_with_action::report_fixed_objects_in_PG_3_tex P->n != 3" << endl;
+	if (P->n < 3) {
+		cout << "projective_space_with_action::report_fixed_points_lines_and_planes P->n < 3" << endl;
 		exit(1);
 	}
 	projective_space *P3;
@@ -768,22 +768,22 @@ void projective_space_with_action::report_fixed_objects_in_PG_3_tex(
 	}
 
 	if (f_v) {
-		cout << "projective_space_with_action::report_fixed_objects_in_PG_3_tex done" << endl;
+		cout << "projective_space_with_action::report_fixed_points_lines_and_planes done" << endl;
 	}
 }
 
-void projective_space_with_action::report_orbits_in_PG_3_tex(
+void projective_space_with_action::report_orbits_on_points_lines_and_planes(
 	int *Elt, ostream &ost,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "projective_space_with_action::report_orbits_in_PG_3_tex" << endl;
+		cout << "projective_space_with_action::report_orbits_on_points_lines_and_planes" << endl;
 	}
 
-	if (P->n != 3) {
-		cout << "projective_space_with_action::report_orbits_in_PG_3_tex P->n != 3" << endl;
+	if (P->n < 3) {
+		cout << "projective_space_with_action::report_orbits_on_points_lines_and_planes P->n < 3" << endl;
 		exit(1);
 	}
 	//projective_space *P3;
@@ -860,7 +860,7 @@ void projective_space_with_action::report_orbits_in_PG_3_tex(
 	}
 
 	if (f_v) {
-		cout << "projective_space_with_action::report_orbits_in_PG_3_tex done" << endl;
+		cout << "projective_space_with_action::report_orbits_on_points_lines_and_planes done" << endl;
 	}
 }
 
@@ -3017,6 +3017,493 @@ void projective_space_with_action::create_quartic_curve(
 	}
 }
 
+void projective_space_with_action::canonical_form_of_code(
+		std::string &label, int m, int n,
+		std::string &data,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_with_action::canonical_form_of_code" << endl;
+	}
+	int *genma;
+	int sz;
+	int i, j;
+	int *v;
+	long int *set;
+
+	if (f_v) {
+		cout << "projective_space_with_action::canonical_form_of_code before int_vec_scan" << endl;
+	}
+	Orbiter->Int_vec.scan(data, genma, sz);
+	if (f_v) {
+		cout << "projective_space_with_action::canonical_form_of_code after int_vec_scan, sz=" << sz << endl;
+	}
+
+	if (sz != m * n) {
+		cout << "projective_space_with_action::canonical_form_of_code sz != m * n" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "genma: " << endl;
+		Orbiter->Int_vec.print(cout, genma, sz);
+		cout << endl;
+	}
+	v = NEW_int(m);
+	set = NEW_lint(n);
+	for (j = 0; j < n; j++) {
+		for (i = 0; i < m; i++) {
+			v[i] = genma[i * n + j];
+		}
+		if (f_v) {
+			cout << "projective_space_with_action::canonical_form_of_code before PA->P->rank_point" << endl;
+			Orbiter->Int_vec.print(cout, v, m);
+			cout << endl;
+		}
+		if (P == NULL) {
+			cout << "P == NULL" << endl;
+			exit(1);
+		}
+		set[j] = P->rank_point(v);
+	}
+	if (f_v) {
+		cout << "projective_space_with_action::canonical_form_of_code set=";
+		Orbiter->Lint_vec.print(cout, set, n);
+		cout << endl;
+	}
+
+	projective_space_object_classifier_description Descr;
+	data_input_stream Data;
+	string points_as_string;
+	char str[1000];
+
+	sprintf(str, "%ld", set[0]);
+	points_as_string.assign(str);
+	for (i = 1; i < n; i++) {
+		points_as_string.append(",");
+		sprintf(str, "%ld", set[i]);
+		points_as_string.append(str);
+	}
+	if (f_v) {
+		cout << "projective_space_with_action::canonical_form_of_code points_as_string=" << points_as_string << endl;
+	}
+
+	Descr.f_input = TRUE;
+	Descr.Data = &Data;
+
+	Descr.f_save_classification = TRUE;
+	Descr.save_prefix.assign("code_");
+
+	Descr.f_report = TRUE;
+	Descr.report_prefix.assign("code_");
+	Descr.report_prefix.append(label);
+
+	Descr.f_classification_prefix = TRUE;
+	Descr.classification_prefix.assign("classify_code_");
+	Descr.classification_prefix.append(label);
+
+	Data.nb_inputs = 0;
+	Data.input_type[Data.nb_inputs] = INPUT_TYPE_SET_OF_POINTS;
+	Data.input_string[Data.nb_inputs] = points_as_string;
+	Data.nb_inputs++;
+
+
+	if (f_v) {
+		cout << "projective_space_with_action::canonical_form_of_code before PA->canonical_form" << endl;
+	}
+
+	canonical_form(&Descr, verbose_level);
+
+	if (f_v) {
+		cout << "projective_space_with_action::canonical_form_of_code after PA->canonical_form" << endl;
+	}
+
+
+	FREE_int(v);
+	FREE_lint(set);
+	if (f_v) {
+		cout << "projective_space_with_action::canonical_form_of_code done" << endl;
+	}
+
+}
+
+void projective_space_with_action::table_of_quartic_curves(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_with_action::table_of_quartic_curves" << endl;
+	}
+
+	if (n != 2) {
+		cout << "projective_space_with_action::table_of_quartic_curves we need a two-dimensional projective space" << endl;
+		exit(1);
+	}
+
+	knowledge_base K;
+
+	int nb_quartic_curves;
+	int h;
+	quartic_curve_create **QC;
+	int *nb_K;
+	long int *Table;
+	int nb_cols = 3;
+
+	nb_quartic_curves = K.quartic_curves_nb_reps(q);
+
+	QC = (quartic_curve_create **) NEW_pvoid(nb_quartic_curves);
+
+	nb_K = NEW_int(nb_quartic_curves);
+
+	Table = NEW_lint(nb_quartic_curves * nb_cols);
+
+	for (h = 0; h < nb_quartic_curves; h++) {
+
+		if (f_v) {
+			cout << "projective_space_with_action::table_of_quartic_curves " << h << " / " << nb_quartic_curves << endl;
+		}
+		quartic_curve_create_description Quartic_curve_descr;
+
+		Quartic_curve_descr.f_q = TRUE;
+		Quartic_curve_descr.q = q;
+		Quartic_curve_descr.f_catalogue = TRUE;
+		Quartic_curve_descr.iso = h;
+
+
+
+		create_quartic_curve(
+					&Quartic_curve_descr,
+					QC[h],
+					verbose_level);
+
+		nb_K[h] = QC[h]->QO->QP->nb_Kowalevski;
+		Table[h * nb_cols + 0] = nb_K[h];
+		Table[h * nb_cols + 1] = QC[h]->QOA->Aut_gens->group_order_as_lint();
+		Table[h * nb_cols + 2] = QC[h]->QO->nb_pts;
+
+	}
+
+	file_io Fio;
+	char str[1000];
+
+	sprintf(str, "_q%d", q);
+
+	string fname;
+	fname.assign("quartic_curves");
+	fname.append(str);
+	fname.append("_info.csv");
+
+	//Fio.lint_matrix_write_csv(fname, Table, nb_quartic_curves, nb_cols);
+
+	{
+		ofstream f(fname);
+		int i, j;
+
+		f << "Row,Kowalewski,Ago,NbPts,BisecantType,Eqn15,Bitangents28";
+		f << endl;
+		for (i = 0; i < nb_quartic_curves; i++) {
+			f << i;
+			for (j = 0; j < nb_cols; j++) {
+				f << "," << Table[i * nb_cols + j];
+			}
+			{
+				string str;
+				f << ",";
+				Orbiter->Int_vec.create_string_with_quotes(str, QC[i]->QO->QP->line_type_distribution, 3);
+				f << str;
+			}
+			{
+				string str;
+				f << ",";
+				Orbiter->Int_vec.create_string_with_quotes(str, QC[i]->QO->eqn15, 15);
+				f << str;
+			}
+			{
+				string str;
+				f << ",";
+				Orbiter->Lint_vec.create_string_with_quotes(str, QC[i]->QO->bitangents28, 28);
+				f << str;
+			}
+			f << endl;
+		}
+		f << "END" << endl;
+	}
+
+
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+	if (f_v) {
+		cout << "projective_space_with_action::table_of_quartic_curves done" << endl;
+	}
+
+}
+
+void projective_space_with_action::conic_type(
+		long int *Pts, int nb_pts,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_with_action::conic_type" << endl;
+	}
+
+
+	long int **Pts_on_conic;
+	int **Conic_eqn;
+	int *nb_pts_on_conic;
+	int len;
+	int h;
+
+
+	if (f_v) {
+		cout << "projective_space_with_action::conic_type before PA->P->conic_type" << endl;
+	}
+
+	P->conic_type(Pts, nb_pts,
+			Pts_on_conic, Conic_eqn, nb_pts_on_conic, len,
+			verbose_level);
+
+	if (f_v) {
+		cout << "projective_space_with_action::conic_type after PA->P->conic_type" << endl;
+	}
+
+
+	cout << "We found the following conics:" << endl;
+	for (h = 0; h < len; h++) {
+		cout << h << " : " << nb_pts_on_conic[h] << " : ";
+		Orbiter->Int_vec.print(cout, Conic_eqn[h], 6);
+		cout << " : ";
+		Orbiter->Lint_vec.print(cout, Pts_on_conic[h], nb_pts_on_conic[h]);
+		cout << endl;
+	}
+
+	cout << "computing intersection types with bisecants of the first 11 points:" << endl;
+	int Line_P1[55];
+	int Line_P2[55];
+	int P1, P2;
+	long int p1, p2, line_rk;
+	long int *pts_on_line;
+	long int pt;
+	int *Conic_line_intersection_sz;
+	int cnt;
+	int i, j, q, u, v;
+	int nb_pts_per_line;
+
+	q = P->F->q;
+	nb_pts_per_line = q + 1;
+	pts_on_line = NEW_lint(55 * nb_pts_per_line);
+
+	cnt = 0;
+	for (i = 0; i < 11; i++) {
+		for (j = i + 1; j < 11; j++) {
+			Line_P1[cnt] = i;
+			Line_P2[cnt] = j;
+			cnt++;
+		}
+	}
+	if (cnt != 55) {
+		cout << "cnt != 55" << endl;
+		cout << "cnt = " << cnt << endl;
+		exit(1);
+	}
+	for (u = 0; u < 55; u++) {
+		P1 = Line_P1[u];
+		P2 = Line_P2[u];
+		p1 = Pts[P1];
+		p2 = Pts[P2];
+		line_rk = P->line_through_two_points(p1, p2);
+		P->create_points_on_line(line_rk, pts_on_line + u * nb_pts_per_line, 0 /*verbose_level*/);
+	}
+
+	Conic_line_intersection_sz = NEW_int(len * 55);
+	Orbiter->Int_vec.zero(Conic_line_intersection_sz, len * 55);
+
+	for (h = 0; h < len; h++) {
+		for (u = 0; u < 55; u++) {
+			for (v = 0; v < nb_pts_per_line; v++) {
+				if (P->test_if_conic_contains_point(Conic_eqn[h], pts_on_line[u * nb_pts_per_line + v])) {
+					Conic_line_intersection_sz[h * 55 + u]++;
+				}
+
+			}
+		}
+	}
+
+	sorting Sorting;
+	int idx;
+
+	cout << "We found the following conics and their intersections with the 55 bisecants:" << endl;
+	for (h = 0; h < len; h++) {
+		cout << h << " : " << nb_pts_on_conic[h] << " : ";
+		Orbiter->Int_vec.print(cout, Conic_eqn[h], 6);
+		cout << " : ";
+		Orbiter->Int_vec.print_fully(cout, Conic_line_intersection_sz + h * 55, 55);
+		cout << " : ";
+		Orbiter->Lint_vec.print(cout, Pts_on_conic[h], nb_pts_on_conic[h]);
+		cout << " : ";
+		cout << endl;
+	}
+
+	for (u = 0; u < 55; u++) {
+		cout << "line " << u << " : ";
+		int str[55];
+
+		Orbiter->Int_vec.zero(str, 55);
+		for (v = 0; v < nb_pts; v++) {
+			pt = Pts[v];
+			if (Sorting.lint_vec_search_linear(pts_on_line + u * nb_pts_per_line, nb_pts_per_line, pt, idx)) {
+				str[v] = 1;
+			}
+		}
+		Orbiter->Int_vec.print_fully(cout, str, 55);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "projective_space_with_action::conic_type done" << endl;
+	}
+
+}
+
+void projective_space_with_action::cheat_sheet(
+		layered_graph_draw_options *O,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_with_action::cheat_sheet" << endl;
+	}
+
+
+
+	{
+		char fname[1000];
+		char title[1000];
+		char author[1000];
+
+		snprintf(fname, 1000, "PG_%d_%d.tex", n, F->q);
+		snprintf(title, 1000, "Cheat Sheet ${\\rm PG}(%d,%d)$", n, F->q);
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		{
+			ofstream ost(fname);
+			latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "projective_space_with_action::do_cheat_sheet_PG before A->report" << endl;
+			}
+
+			A->report(ost, A->f_has_sims, A->Sims,
+					A->f_has_strong_generators, A->Strong_gens,
+					O,
+					verbose_level);
+
+			if (f_v) {
+				cout << "projective_space_with_action::do_cheat_sheet_PG after PA->A->report" << endl;
+			}
+
+			if (f_v) {
+				cout << "projective_space_with_action::do_cheat_sheet_PG before PA->P->report" << endl;
+			}
+
+
+
+			P->report(ost, O, verbose_level);
+
+			if (f_v) {
+				cout << "projective_space_with_action::do_cheat_sheet_PG after PP->report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		file_io Fio;
+
+		if (f_v) {
+			cout << "written file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
+		}
+
+	}
+
+	if (f_v) {
+		cout << "projective_space_with_action::cheat_sheet done" << endl;
+	}
+
+
+}
+
+
+void projective_space_with_action::do_spread_classify(int k,
+		poset_classification_control *Control,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_with_action::do_spread_classify" << endl;
+	}
+	spread_classify *SC;
+
+	SC = NEW_OBJECT(spread_classify);
+
+	if (f_v) {
+		cout << "projective_space_with_action::do_spread_classify before SC->init" << endl;
+	}
+
+	SC->init(
+			this,
+			k,
+			TRUE /* f_recoordinatize */,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "projective_space_with_action::do_spread_classify after SC->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "projective_space_with_action::do_spread_classify before SC->init2" << endl;
+	}
+	SC->init2(Control, verbose_level);
+	if (f_v) {
+		cout << "projective_space_with_action::do_spread_classify after SC->init2" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "projective_space_with_action::do_spread_classify before SC->compute" << endl;
+	}
+
+	SC->compute(verbose_level);
+
+	if (f_v) {
+		cout << "projective_space_with_action::do_spread_classify after SC->compute" << endl;
+	}
+
+
+	FREE_OBJECT(SC);
+
+	if (f_v) {
+		cout << "projective_space_with_action::do_spread_classify done" << endl;
+	}
+}
 
 
 // #############################################################################

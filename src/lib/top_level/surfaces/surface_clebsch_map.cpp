@@ -108,16 +108,16 @@ void surface_clebsch_map::init(surface_object_with_action *SOA, int orbit_idx, i
 
 	if (f_v) {
 		cout << "clebsch map for lines " << Clebsch_map->line_idx[0]
-			<< " = " << SOA->Surf->Schlaefli->Line_label_tex[Clebsch_map->line_idx[0]] << ", "
-			<< Clebsch_map->line_idx[1] << " = " << SOA->Surf->Schlaefli->Line_label_tex[Clebsch_map->line_idx[1]]
+			<< " = " << SOA->Surf->Schlaefli->Labels->Line_label_tex[Clebsch_map->line_idx[0]] << ", "
+			<< Clebsch_map->line_idx[1] << " = " << SOA->Surf->Schlaefli->Labels->Line_label_tex[Clebsch_map->line_idx[1]]
 			<< " before clebsch_map_print_fibers:" << endl;
 	}
 	Clebsch_map->clebsch_map_print_fibers();
 
 	if (f_v) {
 		cout << "clebsch map for lines " << Clebsch_map->line_idx[0]
-			<< " = " << SOA->Surf->Schlaefli->Line_label_tex[Clebsch_map->line_idx[0]] << ", "
-			<< Clebsch_map->line_idx[1] << " = " << SOA->Surf->Schlaefli->Line_label_tex[Clebsch_map->line_idx[1]]
+			<< " = " << SOA->Surf->Schlaefli->Labels->Line_label_tex[Clebsch_map->line_idx[0]] << ", "
+			<< Clebsch_map->line_idx[1] << " = " << SOA->Surf->Schlaefli->Labels->Line_label_tex[Clebsch_map->line_idx[1]]
 			<< "  before Clebsch_map->clebsch_map_find_arc_and_lines:" << endl;
 	}
 

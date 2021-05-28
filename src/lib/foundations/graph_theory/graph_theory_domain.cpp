@@ -1711,6 +1711,7 @@ void graph_theory_domain::make_graph_of_disjoint_sets_from_rows_of_matrix(
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a;
+	sorting Sorting;
 
 	if (f_v) {
 		cout << "graph_theory_domain::make_graph_of_disjoint_sets_from_rows_of_matrix" << endl;
@@ -1722,7 +1723,7 @@ void graph_theory_domain::make_graph_of_disjoint_sets_from_rows_of_matrix(
 
 	for (i = 0; i < m; i++) {
 		for (j = i + 1; j < m; j++) {
-			if (test_if_sets_are_disjoint_assuming_sorted(
+			if (Sorting.test_if_sets_are_disjoint_assuming_sorted(
 				M + i * n, M + j * n, n, n)) {
 				a = 1;
 			}

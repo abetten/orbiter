@@ -53,7 +53,8 @@ DYNALLSTAT(set,dnwork,dnwork_sz);
 static TLS_ATTR set workset[MAXM];   /* used for scratch work */
 static TLS_ATTR int workperm[MAXN];
 static TLS_ATTR int bucket[MAXN+2];
-static TLS_ATTR set dnwork[40*MAXM];
+static TLS_ATTR set dnwork[2*60*MAXM]; // Anton Betten 05/25/2021
+//static TLS_ATTR set dnwork[40*MAXM];
 #endif
 
 /*****************************************************************************

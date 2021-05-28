@@ -553,66 +553,6 @@ void print_hex_digit(ostream &ost, int digit)
 }
 
 
-int test_if_sets_are_disjoint_assuming_sorted(int *set1, int *set2, int sz1, int sz2)
-{
-	int sz;
-	int *p, *q;
-	int u, v;
-
-	sz = sz1 + sz2;
-	u = v = 0;
-	p = set1;
-	q = set2;
-	while (u + v < sz) {
-		if (p[u] == q[v]) {
-			return FALSE;
-		}
-		if (u == sz1) {
-			v++;
-		}
-		else if (v == sz2) {
-			u++;
-		}
-		else if (p[u] < q[v]) {
-			u++;
-		}
-		else {
-			v++;
-		}
-	}
-	return TRUE;
-}
-
-int test_if_sets_are_disjoint_assuming_sorted_lint(
-		long int *set1, long int *set2, int sz1, int sz2)
-{
-	int sz;
-	long int *p, *q;
-	int u, v;
-
-	sz = sz1 + sz2;
-	u = v = 0;
-	p = set1;
-	q = set2;
-	while (u + v < sz) {
-		if (p[u] == q[v]) {
-			return FALSE;
-		}
-		if (u == sz1) {
-			v++;
-		}
-		else if (v == sz2) {
-			u++;
-		}
-		else if (p[u] < q[v]) {
-			u++;
-		}
-		else {
-			v++;
-		}
-	}
-	return TRUE;
-}
 
 #if 1
 //#define HASH_PRIME ((int) 1 << 30 - 1)

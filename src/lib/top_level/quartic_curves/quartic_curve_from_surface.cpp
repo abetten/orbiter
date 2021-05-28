@@ -1,5 +1,5 @@
 /*
- * quartic_curve.cpp
+ * quartic_curve_from_surface.cpp
  *
  *  Created on: Jul 15, 2020
  *      Author: betten
@@ -16,7 +16,7 @@ namespace orbiter {
 namespace top_level {
 
 
-quartic_curve::quartic_curve()
+quartic_curve_from_surface::quartic_curve_from_surface()
 {
 	SOA = NULL;
 	pt_orbit = 0;
@@ -67,7 +67,7 @@ quartic_curve::quartic_curve()
 
 
 
-quartic_curve::~quartic_curve()
+quartic_curve_from_surface::~quartic_curve_from_surface()
 {
 	if (transporter) {
 		FREE_int(transporter);
@@ -125,29 +125,29 @@ quartic_curve::~quartic_curve()
 	}
 }
 
-void quartic_curve::init(surface_object_with_action *SOA, int verbose_level)
+void quartic_curve_from_surface::init(surface_object_with_action *SOA, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "quartic_curve::init" << endl;
+		cout << "quartic_curve_from_surface::init" << endl;
 	}
 
-	quartic_curve::SOA = SOA;
+	quartic_curve_from_surface::SOA = SOA;
 
 	if (f_v) {
-		cout << "quartic_curve::init done" << endl;
+		cout << "quartic_curve_from_surface::init done" << endl;
 	}
 }
 
-void quartic_curve::quartic(std::string &surface_prefix, int pt_orbit, int f_TDO, int verbose_level)
+void quartic_curve_from_surface::quartic(std::string &surface_prefix, int pt_orbit, int f_TDO, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	sorting Sorting;
 	int i, a;
 
 	if (f_v) {
-		cout << "quartic_curve::quartic" << endl;
+		cout << "quartic_curve_from_surface::quartic" << endl;
 	}
 
 
@@ -159,7 +159,7 @@ void quartic_curve::quartic(std::string &surface_prefix, int pt_orbit, int f_TDO
 	transporter = NEW_int(SOA->Surf_A->A->elt_size_in_int);
 
 	if (f_v) {
-		cout << "quartic_curve::quartic before compute_quartic" << endl;
+		cout << "quartic_curve_from_surface::quartic before compute_quartic" << endl;
 	}
 
 
@@ -168,10 +168,10 @@ void quartic_curve::quartic(std::string &surface_prefix, int pt_orbit, int f_TDO
 			SOA->SO->eqn, SOA->SO->Lines, SOA->SO->nb_lines,
 			verbose_level);
 	if (f_v) {
-		cout << "quartic_curve::quartic after compute_quartic" << endl;
+		cout << "quartic_curve_from_surface::quartic after compute_quartic" << endl;
 	}
 	if (f_v) {
-		cout << "quartic_curve::quartic "
+		cout << "quartic_curve_from_surface::quartic "
 				"equation_nice=" << endl;
 		SOA->Surf->Poly3_4->print_equation(cout, equation_nice);
 		cout << endl;
@@ -180,13 +180,13 @@ void quartic_curve::quartic(std::string &surface_prefix, int pt_orbit, int f_TDO
 
 
 	if (f_v) {
-		cout << "quartic_curve::quartic "
+		cout << "quartic_curve_from_surface::quartic "
 				"before Surf->split_nice_equation" << endl;
 	}
 	SOA->Surf->split_nice_equation(equation_nice, f1, f2, f3,
 			0 /* verbose_level */);
 	if (f_v) {
-		cout << "quartic_curve::quartic "
+		cout << "quartic_curve_from_surface::quartic "
 			"after Surf->split_nice_equation" << endl;
 	}
 
@@ -211,13 +211,13 @@ void quartic_curve::quartic(std::string &surface_prefix, int pt_orbit, int f_TDO
 
 
 	if (f_v) {
-		cout << "quartic_curve::quartic "
+		cout << "quartic_curve_from_surface::quartic "
 			"before Surf_A->A->map_a_set_and_reorder" << endl;
 	}
 	SOA->Surf_A->A->map_a_set_and_reorder(SOA->SO->Pts, Pts_on_surface,
 			nb_pts_on_surface, transporter, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "quartic_curve::quartic "
+		cout << "quartic_curve_from_surface::quartic "
 			"after Surf_A->A->map_a_set_and_reorder" << endl;
 	}
 	for (i = 0; i < nb_pts_on_surface; i++) {
@@ -260,7 +260,7 @@ void quartic_curve::quartic(std::string &surface_prefix, int pt_orbit, int f_TDO
 
 
 	if (f_v) {
-		cout << "quartic_curve::quartic before "
+		cout << "quartic_curve_from_surface::quartic before "
 				"Surf->assemble_tangent_quadric" << endl;
 	}
 	SOA->Surf->assemble_tangent_quadric(f1, f2, f3,
@@ -270,7 +270,7 @@ void quartic_curve::quartic(std::string &surface_prefix, int pt_orbit, int f_TDO
 	Pts_on_tangent_quadric = NEW_lint(SOA->Surf->P->N_points);
 
 	if (f_v) {
-		cout << "quartic_curve::quartic "
+		cout << "quartic_curve_from_surface::quartic "
 			"before Surf->Poly2_4->enumerate_points" << endl;
 	}
 
@@ -351,7 +351,7 @@ void quartic_curve::quartic(std::string &surface_prefix, int pt_orbit, int f_TDO
 
 
 	if (f_v) {
-		cout << "quartic_curve::quartic before "
+		cout << "quartic_curve_from_surface::quartic before "
 			"Surf->Poly4_x123->enumerate_points" << endl;
 	}
 
@@ -383,7 +383,7 @@ void quartic_curve::quartic(std::string &surface_prefix, int pt_orbit, int f_TDO
 		fname_base.append("_quartic");
 
 		if (f_v) {
-			cout << "quartic_curve::quartic "
+			cout << "quartic_curve_from_surface::quartic "
 				"before GG.create_decomposition_of_projective_plane" << endl;
 		}
 
@@ -394,7 +394,7 @@ void quartic_curve::quartic(std::string &surface_prefix, int pt_orbit, int f_TDO
 				verbose_level);
 
 		if (f_v) {
-			cout << "quartic_curve::quartic "
+			cout << "quartic_curve_from_surface::quartic "
 				"after GG.create_decomposition_of_projective_plane" << endl;
 		}
 
@@ -469,7 +469,7 @@ void quartic_curve::quartic(std::string &surface_prefix, int pt_orbit, int f_TDO
 }
 
 
-void quartic_curve::compute_quartic(int pt_orbit,
+void quartic_curve_from_surface::compute_quartic(int pt_orbit,
 	int *equation, long int *Lines, int nb_lines,
 	int verbose_level)
 {
@@ -477,23 +477,23 @@ void quartic_curve::compute_quartic(int pt_orbit,
 	int fst;
 
 	if (f_v) {
-		cout << "quartic_curve::compute_quartic" << endl;
+		cout << "quartic_curve_from_surface::compute_quartic" << endl;
 		cout << "pt_orbit=" << pt_orbit << endl;
 	}
 
 	if (SOA->Orbits_on_points_not_on_lines == NULL) {
-		cout << "quartic_curve::compute_quartic "
+		cout << "quartic_curve_from_surface::compute_quartic "
 				"Orbits_on_points_not_on_lines has not been computed" << endl;
 		exit(1);
 	}
 	if (pt_orbit >= SOA->Orbits_on_points_not_on_lines->nb_orbits) {
-		cout << "quartic_curve::compute_quartic "
+		cout << "quartic_curve_from_surface::compute_quartic "
 				"pt_orbit >= Orbits_on_points_not_on_lines->nb_orbits" << endl;
 		exit(1);
 	}
 	int i;
 
-	quartic_curve::pt_orbit = pt_orbit;
+	quartic_curve_from_surface::pt_orbit = pt_orbit;
 	v[0] = 1;
 	v[1] = 0;
 	v[2] = 0;
@@ -504,7 +504,7 @@ void quartic_curve::compute_quartic(int pt_orbit,
 	pt_A = SOA->SO->SOP->Pts_not_on_lines[i];
 
 	if (f_v) {
-		cout << "quartic_curve::compute_quartic "
+		cout << "quartic_curve_from_surface::compute_quartic "
 			"pt_A = " << pt_A << " pt_B=" << pt_B << endl;
 	}
 
@@ -513,7 +513,7 @@ void quartic_curve::compute_quartic(int pt_orbit,
 			pt_A, pt_B, transporter, verbose_level);
 
 	if (f_v) {
-		cout << "quartic_curve::compute_quartic transporter element=" << endl;
+		cout << "quartic_curve_from_surface::compute_quartic transporter element=" << endl;
 	}
 	SOA->Surf_A->A->element_print_quick(transporter, cout);
 
@@ -521,16 +521,16 @@ void quartic_curve::compute_quartic(int pt_orbit,
 			transporter, equation /*int *input*/,
 			equation_nice /* int *output */, verbose_level);
 	if (f_v) {
-		cout << "quartic_curve::compute_quartic "
+		cout << "quartic_curve_from_surface::compute_quartic "
 			"equation_nice=" << endl;
 		SOA->Surf->Poly3_4->print_equation(cout, equation_nice);
 		cout << endl;
 	}
 
 	if (f_v) {
-		cout << "quartic_curve::compute_quartic mapping the lines" << endl;
+		cout << "quartic_curve_from_surface::compute_quartic mapping the lines" << endl;
 	}
-	quartic_curve::nb_lines = nb_lines;
+	quartic_curve_from_surface::nb_lines = nb_lines;
 	Lines_nice = NEW_lint(nb_lines);
 	nb_bitangents = nb_lines + 1;
 	Bitangents = NEW_lint(nb_lines + 1);
@@ -544,7 +544,7 @@ void quartic_curve::compute_quartic(int pt_orbit,
 
 		SOA->Surf_A->PA->P->Grass_lines->unrank_lint_here(Basis8, Lines_nice[i], 0);
 		if (f_v) {
-			cout << "quartic_curve::compute_quartic Basis8=" << endl;
+			cout << "quartic_curve_from_surface::compute_quartic Basis8=" << endl;
 			Orbiter->Int_vec.matrix_print(Basis8, 2, 4);
 		}
 
@@ -552,38 +552,38 @@ void quartic_curve::compute_quartic(int pt_orbit,
 			Orbiter->Int_vec.copy(Basis8 + j * 4 + 1, Basis6 + j * 3, 3);
 		}
 		if (f_v) {
-			cout << "quartic_curve::compute_quartic Basis6=" << endl;
+			cout << "quartic_curve_from_surface::compute_quartic Basis6=" << endl;
 			Orbiter->Int_vec.matrix_print(Basis6, 2, 3);
 		}
 		Bitangents[i] = SOA->Surf_A->PA->PA2->P->Grass_lines->rank_lint_here(Basis6, 0);
 		if (f_v) {
-			cout << "quartic_curve::compute_quartic Bitangents[" << i << "] = " << Bitangents[i] << endl;
+			cout << "quartic_curve_from_surface::compute_quartic Bitangents[" << i << "] = " << Bitangents[i] << endl;
 		}
 	}
 	if (f_v) {
-		cout << "quartic_curve::compute_quartic after mapping the lines" << endl;
+		cout << "quartic_curve_from_surface::compute_quartic after mapping the lines" << endl;
 	}
 
 	long int plane_rk;
 
 	if (f_v) {
-		cout << "quartic_curve::compute_quartic before SOA->SO->Surf->compute_tangent_plane" << endl;
+		cout << "quartic_curve_from_surface::compute_quartic before SOA->SO->Surf->compute_tangent_plane" << endl;
 	}
 
 	plane_rk = SOA->SO->Surf->compute_tangent_plane(v, equation_nice, verbose_level);
 
 
 	if (f_v) {
-		cout << "quartic_curve::compute_quartic after SOA->SO->Surf->compute_tangent_plane" << endl;
+		cout << "quartic_curve_from_surface::compute_quartic after SOA->SO->Surf->compute_tangent_plane" << endl;
 	}
 	if (f_v) {
-		cout << "quartic_curve::compute_quartic plane_rk = " << plane_rk << endl;
+		cout << "quartic_curve_from_surface::compute_quartic plane_rk = " << plane_rk << endl;
 	}
 	int Basis12[12];
 
 	SOA->Surf->unrank_plane(Basis12, plane_rk);
 	if (f_v) {
-		cout << "quartic_curve::compute_quartic Basis12=" << endl;
+		cout << "quartic_curve_from_surface::compute_quartic Basis12=" << endl;
 		Orbiter->Int_vec.matrix_print(Basis12, 3, 4);
 	}
 	int Basis6[6];
@@ -594,12 +594,12 @@ void quartic_curve::compute_quartic(int pt_orbit,
 	}
 	Bitangents[nb_lines] = SOA->Surf_A->PA->PA2->P->Grass_lines->rank_lint_here(Basis6, 0);
 	if (f_v) {
-		cout << "quartic_curve::compute_quartic Bitangents[nb_lines] = " << Bitangents[nb_lines] << endl;
+		cout << "quartic_curve_from_surface::compute_quartic Bitangents[nb_lines] = " << Bitangents[nb_lines] << endl;
 	}
 
 
 	if (f_v) {
-		cout << "quartic_curve::compute_quartic Lines_nice = ";
+		cout << "quartic_curve_from_surface::compute_quartic Lines_nice = ";
 		Orbiter->Lint_vec.print(cout, Lines_nice, nb_lines);
 		cout << endl;
 	}
@@ -607,17 +607,17 @@ void quartic_curve::compute_quartic(int pt_orbit,
 
 
 	if (f_v) {
-		cout << "quartic_curve::compute_quartic done" << endl;
+		cout << "quartic_curve_from_surface::compute_quartic done" << endl;
 	}
 }
 
 
-void quartic_curve::compute_stabilizer(int verbose_level)
+void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "quartic_curve::compute_stabilizer" << endl;
+		cout << "quartic_curve_from_surface::compute_stabilizer" << endl;
 	}
 	surface_with_action *Surf_A;
 
@@ -638,13 +638,13 @@ void quartic_curve::compute_stabilizer(int verbose_level)
 	OiP = NEW_OBJECT(object_in_projective_space);
 
 	if (f_v) {
-		cout << "quartic_curve::compute_stabilizer before OiP->init_point_set" << endl;
+		cout << "quartic_curve_from_surface::compute_stabilizer before OiP->init_point_set" << endl;
 	}
 	OiP->init_point_set(Surf_A->PA->PA2->P,
 			Pts_on_curve, sz_curve,
 			verbose_level - 1);
 	if (f_v) {
-		cout << "quartic_curve::compute_stabilizer after OiP->init_point_set" << endl;
+		cout << "quartic_curve_from_surface::compute_stabilizer after OiP->init_point_set" << endl;
 	}
 
 	int nb_rows, nb_cols;
@@ -653,14 +653,14 @@ void quartic_curve::compute_stabilizer(int verbose_level)
 				nb_rows, nb_cols,
 				verbose_level);
 	if (f_v) {
-		cout << "quartic_curve::compute_stabilizer nb_rows = " << nb_rows << endl;
-		cout << "quartic_curve::compute_stabilizer nb_cols = " << nb_cols << endl;
+		cout << "quartic_curve_from_surface::compute_stabilizer nb_rows = " << nb_rows << endl;
+		cout << "quartic_curve_from_surface::compute_stabilizer nb_cols = " << nb_cols << endl;
 	}
 
 	canonical_labeling = NEW_lint(nb_rows + nb_cols);
 
 	if (f_v) {
-		cout << "quartic_curve::compute_stabilizer before Surf_A->PA->PA2->set_stabilizer_of_object" << endl;
+		cout << "quartic_curve_from_surface::compute_stabilizer before Surf_A->PA->PA2->set_stabilizer_of_object" << endl;
 	}
 	SG_pt_stab = Surf_A->PA->PA2->set_stabilizer_of_object(
 		OiP,
@@ -668,13 +668,13 @@ void quartic_curve::compute_stabilizer(int verbose_level)
 		canonical_labeling, canonical_labeling_len,
 		verbose_level);
 	if (f_v) {
-		cout << "quartic_curve::compute_stabilizer after Surf_A->PA->PA2->set_stabilizer_of_object" << endl;
+		cout << "quartic_curve_from_surface::compute_stabilizer after Surf_A->PA->PA2->set_stabilizer_of_object" << endl;
 	}
 
 
 	SG_pt_stab->group_order(pt_stab_order);
 	if (f_v) {
-		cout << "quartic_curve::compute_stabilizer "
+		cout << "quartic_curve_from_surface::compute_stabilizer "
 				"pt_stab_order = " << pt_stab_order << endl;
 	}
 
@@ -685,12 +685,12 @@ void quartic_curve::compute_stabilizer(int verbose_level)
 
 	AonHPD = NEW_OBJECT(action_on_homogeneous_polynomials);
 	if (f_v) {
-		cout << "quartic_curve::compute_stabilizer "
+		cout << "quartic_curve_from_surface::compute_stabilizer "
 				"before AonHPD->init" << endl;
 	}
 	AonHPD->init(Surf_A->PA->PA2->A, Surf_A->Surf->Poly4_x123, verbose_level);
 	if (f_v) {
-		cout << "quartic_curve::compute_stabilizer "
+		cout << "quartic_curve_from_surface::compute_stabilizer "
 				"after AonHPD->init" << endl;
 	}
 
@@ -707,7 +707,7 @@ void quartic_curve::compute_stabilizer(int verbose_level)
 
 #if 1
 	if (f_v) {
-		cout << "quartic_curve::compute_stabilizer "
+		cout << "quartic_curve_from_surface::compute_stabilizer "
 				"before Orb->init" << endl;
 	}
 	Orb->init(Surf_A->PA->PA2->A, Surf_A->PA->F,
@@ -715,22 +715,22 @@ void quartic_curve::compute_stabilizer(int verbose_level)
 		SG_pt_stab /* A->Strong_gens*/, curve,
 		verbose_level);
 	if (f_v) {
-		cout << "quartic_curve::compute_stabilizer "
+		cout << "quartic_curve_from_surface::compute_stabilizer "
 				"after Orb->init" << endl;
-		cout << "quartic_curve::compute_stabilizer found an orbit of length " << Orb->used_length << endl;
+		cout << "quartic_curve_from_surface::compute_stabilizer found an orbit of length " << Orb->used_length << endl;
 	}
 
 
 
 
 	if (f_v) {
-		cout << "quartic_curve::compute_stabilizer "
+		cout << "quartic_curve_from_surface::compute_stabilizer "
 				"before Orb->stabilizer_orbit_rep" << endl;
 	}
 	Stab_gens_quartic = Orb->stabilizer_orbit_rep(
 			pt_stab_order, verbose_level);
 	if (f_v) {
-		cout << "quartic_curve::compute_stabilizer "
+		cout << "quartic_curve_from_surface::compute_stabilizer "
 				"after Orb->stabilizer_orbit_rep" << endl;
 	}
 	Stab_gens_quartic->print_generators_tex(cout);
@@ -742,11 +742,11 @@ void quartic_curve::compute_stabilizer(int verbose_level)
 
 
 	if (f_v) {
-		cout << "quartic_curve::compute_stabilizer" << endl;
+		cout << "quartic_curve_from_surface::compute_stabilizer" << endl;
 	}
 }
 
-void quartic_curve::cheat_sheet_quartic_curve(
+void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 		std::string &surface_prefix,
 		std::ostream &ost,
 		std::ostream &ost_curves,
@@ -756,14 +756,14 @@ void quartic_curve::cheat_sheet_quartic_curve(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "quartic_curve::cheat_sheet_quartic_curve" << endl;
+		cout << "quartic_curve_from_surface::cheat_sheet_quartic_curve" << endl;
 	}
 
 	int i;
 
 
 
-	cout << "quartic_curve::cheat_sheet_quartic_curve "
+	cout << "quartic_curve_from_surface::cheat_sheet_quartic_curve "
 			"equation_nice=" << endl;
 	SOA->Surf->Poly3_4->print_equation(cout, equation_nice);
 	cout << endl;
@@ -973,7 +973,7 @@ void quartic_curve::cheat_sheet_quartic_curve(
 	moved_surface = NEW_OBJECT(set_and_stabilizer);
 
 	if (f_v) {
-		cout << "quartic_curve::cheat_sheet_quartic_curve creating moved_surface" << endl;
+		cout << "quartic_curve_from_surface::cheat_sheet_quartic_curve creating moved_surface" << endl;
 	}
 	moved_surface->init_everything(SOA->Surf_A->A,
 			SOA->Surf_A->A, SOA->SO->Pts, SOA->SO->nb_pts,
@@ -982,19 +982,19 @@ void quartic_curve::cheat_sheet_quartic_curve(
 	//stab_gens_moved_surface = SaS->Strong_gens->create_copy();
 
 	if (f_v) {
-		cout << "quartic_curve::cheat_sheet_quartic_curve before apply_to_self" << endl;
+		cout << "quartic_curve_from_surface::cheat_sheet_quartic_curve before apply_to_self" << endl;
 	}
 	moved_surface->apply_to_self(transporter,
 			0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "quartic_curve::cheat_sheet_quartic_curve before moved_surface->Strong_gens->point_stabilizer"
+		cout << "quartic_curve_from_surface::cheat_sheet_quartic_curve before moved_surface->Strong_gens->point_stabilizer"
 			<< endl;
 	}
 	stab_gens_P0 = moved_surface->Strong_gens->point_stabilizer(
 			0 /*int pt */, verbose_level);
 	if (f_v) {
-		cout << "quartic_curve::cheat_sheet_quartic_curve after moved_surface->Strong_gens->point_stabilizer"
+		cout << "quartic_curve_from_surface::cheat_sheet_quartic_curve after moved_surface->Strong_gens->point_stabilizer"
 			<< endl;
 	}
 
@@ -1047,7 +1047,7 @@ void quartic_curve::cheat_sheet_quartic_curve(
 	}
 
 	if (f_v) {
-		cout << "quartic_curve::cheat_sheet_quartic_curve" << endl;
+		cout << "quartic_curve_from_surface::cheat_sheet_quartic_curve" << endl;
 	}
 }
 

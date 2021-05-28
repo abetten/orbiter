@@ -437,6 +437,57 @@ void strong_generators::init_from_data_with_target_go(
 	}
 }
 
+void strong_generators::init_from_data_with_go(
+	action *A, std::string &generators_data,
+	std::string &go_text,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int i;
+
+	if (f_v) {
+		cout << "strong_generators::init_from_data_with_go" << endl;
+	}
+
+
+	int *gens_data;
+	int gens_data_sz;
+	int nb_elements;
+
+	Orbiter->Int_vec.scan(generators_data, gens_data, gens_data_sz);
+	cout << "gens_data = ";
+	Orbiter->Int_vec.print(cout, gens_data, gens_data_sz);
+	cout << endl;
+	cout << "go_text = " << go_text << endl;
+
+
+	init(A);
+
+
+	nb_elements = gens_data_sz / A->make_element_size;
+
+	//strong_generators *Gens;
+	vector_ge *nice_gens;
+	//int orbit_length;
+
+	//Gens = NEW_OBJECT(strong_generators);
+
+	cout << "before SG->init_from_data_with_target_go_ascii" << endl;
+	init_from_data_with_target_go_ascii(A,
+			gens_data,
+			nb_elements, A->make_element_size,
+			go_text.c_str(),
+			nice_gens,
+			verbose_level);
+
+
+	FREE_OBJECT(nice_gens);
+
+	if (f_v) {
+		cout << "strong_generators::init_from_data_with_go done" << endl;
+	}
+
+}
 void
 strong_generators::init_point_stabilizer_of_arbitrary_point_through_schreier(
 	schreier *Sch,
@@ -1526,7 +1577,7 @@ void strong_generators::print_generators_tex(ostream &ost)
 		if (i < gens->len - 1) {
 			ost << ", " << endl;
 		}
-		if (((i + 1) % 3) == 0 && i < gens->len - 1) {
+		if (((i + 1) % 1) == 0 && i < gens->len - 1) {
 			ost << "$$" << endl;
 			ost << "$$" << endl;
 		}

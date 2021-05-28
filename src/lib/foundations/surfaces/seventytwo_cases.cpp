@@ -295,15 +295,15 @@ void seventytwo_cases::report_seventytwo_maps_line(ostream &ost)
 	c = line_idx * 24 + line_l1_l2_idx;
 	ost << c << " & ";
 	ost << line_idx << " & ";
-	ost << "(" << Surf->Schlaefli->Line_label_tex[m1]
-		<< ", " << Surf->Schlaefli->Line_label_tex[m2]
-		<< ", " << Surf->Schlaefli->Line_label_tex[m3] << ") & ";
-	ost << "(" << Surf->Schlaefli->Line_label_tex[l1]
-		<< ", " << Surf->Schlaefli->Line_label_tex[l2] << ") & ";
-	ost << "(" << Surf->Schlaefli->Line_label_tex[transversals4[0]]
-		<< ", " << Surf->Schlaefli->Line_label_tex[transversals4[1]]
-		<< ", " << Surf->Schlaefli->Line_label_tex[transversals4[2]]
-		<< ", " << Surf->Schlaefli->Line_label_tex[transversals4[3]]
+	ost << "(" << Surf->Schlaefli->Labels->Line_label_tex[m1]
+		<< ", " << Surf->Schlaefli->Labels->Line_label_tex[m2]
+		<< ", " << Surf->Schlaefli->Labels->Line_label_tex[m3] << ") & ";
+	ost << "(" << Surf->Schlaefli->Labels->Line_label_tex[l1]
+		<< ", " << Surf->Schlaefli->Labels->Line_label_tex[l2] << ") & ";
+	ost << "(" << Surf->Schlaefli->Labels->Line_label_tex[transversals4[0]]
+		<< ", " << Surf->Schlaefli->Labels->Line_label_tex[transversals4[1]]
+		<< ", " << Surf->Schlaefli->Labels->Line_label_tex[transversals4[2]]
+		<< ", " << Surf->Schlaefli->Labels->Line_label_tex[transversals4[3]]
 		<< ") & ";
 	ost << half_double_six_index << " & ";
 	ost << orbit_not_on_conic_idx << " & ";
@@ -363,25 +363,25 @@ void seventytwo_cases::report_Clebsch_map_details(ostream &ost, surface_object *
 
 	ost << "\\bigskip" << endl << endl;
 
-	ost << "$\\ell_1=" << Surf->Schlaefli->Line_label_tex[l1] << " = " << SO->Lines[l1] << " = ";
+	ost << "$\\ell_1=" << Surf->Schlaefli->Labels->Line_label_tex[l1] << " = " << SO->Lines[l1] << " = ";
 	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[l1]);
 	ost << "$\\\\" << endl;
 
-	ost << "$\\ell_2=" << Surf->Schlaefli->Line_label_tex[l2] << " = " << SO->Lines[l2] << " = ";
+	ost << "$\\ell_2=" << Surf->Schlaefli->Labels->Line_label_tex[l2] << " = " << SO->Lines[l2] << " = ";
 	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[l2]);
 	ost << "$\\\\" << endl;
 
 	SO->SOP->print_single_tritangent_plane(ost, tritangent_plane_idx);
 
-	ost << "$m_1=" << Surf->Schlaefli->Line_label_tex[m1] << " = " << SO->Lines[m1] << " = ";
+	ost << "$m_1=" << Surf->Schlaefli->Labels->Line_label_tex[m1] << " = " << SO->Lines[m1] << " = ";
 	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[m1]);
 	ost << "$\\\\" << endl;
 
-	ost << "$m_2=" << Surf->Schlaefli->Line_label_tex[m2] << " = " << SO->Lines[m2] << " = ";
+	ost << "$m_2=" << Surf->Schlaefli->Labels->Line_label_tex[m2] << " = " << SO->Lines[m2] << " = ";
 	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[m2]);
 	ost << "$\\\\" << endl;
 
-	ost << "$m_3=" << Surf->Schlaefli->Line_label_tex[m3] << " = " << SO->Lines[m3] << " = ";
+	ost << "$m_3=" << Surf->Schlaefli->Labels->Line_label_tex[m3] << " = " << SO->Lines[m3] << " = ";
 	Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[m3]);
 	ost << "$\\\\" << endl;
 
@@ -391,7 +391,7 @@ void seventytwo_cases::report_Clebsch_map_details(ostream &ost, surface_object *
 	ost << "The associated half double six " << half_double_six_index << " is: $";
 	H = Surf->Schlaefli->Double_six + half_double_six_index * 6;
 	for (i = 0; i < 6; i++) {
-		ost << Surf->Schlaefli->Line_label_tex[H[i]];
+		ost << Surf->Schlaefli->Labels->Line_label_tex[H[i]];
 		if (i < 6 - 1) {
 			ost << ", ";
 		}
@@ -399,7 +399,7 @@ void seventytwo_cases::report_Clebsch_map_details(ostream &ost, surface_object *
 	ost << "$\\\\" << endl;
 	for (i = 0; i < 6; i++) {
 		ost << "$";
-		ost << Surf->Schlaefli->Line_label_tex[H[i]];
+		ost << Surf->Schlaefli->Labels->Line_label_tex[H[i]];
 		ost << " = " << SO->Lines[H[i]] << " = ";
 		Surf->P->Grass_lines->print_single_generator_matrix_tex(ost, SO->Lines[H[i]]);
 		ost << "$\\\\" << endl;
@@ -455,20 +455,20 @@ void seventytwo_cases::report_Clebsch_map_aut_coset(ostream &ost, int coset, int
 	ost << coset << " & ";
 	ost << c << " & ";
 	//ost << line_idx << " & ";
-	ost << "(" << Surf->Schlaefli->Line_label_tex[m1]
-		<< ", " << Surf->Schlaefli->Line_label_tex[m2]
-		<< ", " << Surf->Schlaefli->Line_label_tex[m3] << ") & ";
-	ost << "(" << Surf->Schlaefli->Line_label_tex[l1]
-		<< ", " << Surf->Schlaefli->Line_label_tex[l2] << ") & ";
-	ost << "(" << Surf->Schlaefli->Line_label_tex[transversals4[0]]
-		<< ", " << Surf->Schlaefli->Line_label_tex[transversals4[1]]
-		<< ", " << Surf->Schlaefli->Line_label_tex[transversals4[2]]
-		<< ", " << Surf->Schlaefli->Line_label_tex[transversals4[3]]
+	ost << "(" << Surf->Schlaefli->Labels->Line_label_tex[m1]
+		<< ", " << Surf->Schlaefli->Labels->Line_label_tex[m2]
+		<< ", " << Surf->Schlaefli->Labels->Line_label_tex[m3] << ") & ";
+	ost << "(" << Surf->Schlaefli->Labels->Line_label_tex[l1]
+		<< ", " << Surf->Schlaefli->Labels->Line_label_tex[l2] << ") & ";
+	ost << "(" << Surf->Schlaefli->Labels->Line_label_tex[transversals4[0]]
+		<< ", " << Surf->Schlaefli->Labels->Line_label_tex[transversals4[1]]
+		<< ", " << Surf->Schlaefli->Labels->Line_label_tex[transversals4[2]]
+		<< ", " << Surf->Schlaefli->Labels->Line_label_tex[transversals4[3]]
 		<< ") & ";
 	ost << Surf->Schlaefli->Double_six_label_tex[ds] << " & ";
 	H = Surf->Schlaefli->Double_six + half_double_six_index * 6;
 	for (i = 0; i < 6; i++) {
-		ost << Surf->Schlaefli->Line_label_tex[H[i]];
+		ost << Surf->Schlaefli->Labels->Line_label_tex[H[i]];
 		if (i < 6 - 1) {
 			ost << ", ";
 		}

@@ -15,7 +15,6 @@ MODULES = \
 	classify_trihedral_pairs.o \
 	cubic_surface_activity_description.o \
 	cubic_surface_activity.o \
-	quartic_curve.o \
 	six_arcs_not_on_a_conic.o \
 	surface_classify_using_arc.o \
 	surface_classify_wedge.o \

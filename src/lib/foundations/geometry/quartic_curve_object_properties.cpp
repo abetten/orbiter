@@ -27,6 +27,7 @@ quartic_curve_object_properties::quartic_curve_object_properties()
 	pts_on_lines = NULL;
 	f_is_on_line = NULL;
 	Bitangent_line_type = NULL;
+	//line_type_distribution[3];
 	lines_on_point = NULL;
 	Point_type = NULL;
 	f_fullness_has_been_established = FALSE;
@@ -34,6 +35,8 @@ quartic_curve_object_properties::quartic_curve_object_properties()
 	nb_Kowalevski = 0;
 	nb_Kowalevski_on = 0;
 	nb_Kowalevski_off = 0;
+	Kowalevski_point_idx = NULL;
+	Kowalevski_points = NULL;
 	Pts_off = NULL;
 	nb_pts_off = 0;
 	pts_off_on_lines = NULL;
@@ -58,6 +61,12 @@ quartic_curve_object_properties::~quartic_curve_object_properties()
 	}
 	if (Point_type) {
 		FREE_OBJECT(Point_type);
+	}
+	if (Kowalevski_point_idx) {
+		FREE_int(Kowalevski_point_idx);
+	}
+	if (Kowalevski_points) {
+		FREE_lint(Kowalevski_points);
 	}
 	if (Pts_off) {
 		FREE_lint(Pts_off);
@@ -253,10 +262,12 @@ void quartic_curve_object_properties::print_equation(std::ostream &ost)
 	Orbiter->Int_vec.print(ost, QO->eqn15, 15);
 	ost << "\\\\" << endl;
 
+#if 0
 	long int rk;
 
 	QO->F->PG_element_rank_modified_lint(QO->eqn15, 1, 15, rk);
 	ost << "The point rank of the equation over GF$(" << QO->F->q << ")$ is " << rk << "\\\\" << endl;
+#endif
 
 	//ost << "Number of points on the surface " << SO->nb_pts << "\\\\" << endl;
 
@@ -302,6 +313,16 @@ void quartic_curve_object_properties::print_general(std::ostream &ost)
 	ost << "\\hline" << endl;
 
 
+	ost << "\\mbox{Line type (2,1,0)} & ";
+	ost << line_type_distribution[2];
+	ost << "," << endl;
+	ost << line_type_distribution[1];
+	ost << "," << endl;
+	ost << line_type_distribution[0];
+	ost << "\\\\" << endl;
+	ost << "\\hline" << endl;
+
+
 #if 0
 	ost << "\\mbox{Number of singular points} & " << nb_singular_pts << "\\\\" << endl;
 	ost << "\\hline" << endl;
@@ -326,6 +347,8 @@ void quartic_curve_object_properties::print_general(std::ostream &ost)
 	ost << "\\\\" << endl;
 	ost << "\\hline" << endl;
 #endif
+
+
 	ost << "\\end{array}" << endl;
 	ost << "$$}" << endl;
 #if 0
@@ -390,8 +413,10 @@ void quartic_curve_object_properties::print_all_points(std::ostream &ost)
 		ost << "The points on the quartic curve are:\\\\" << endl;
 		ost << "\\begin{multicols}{3}" << endl;
 		ost << "\\noindent" << endl;
-		int i;
+		int i, j;
 		int v[3];
+		int a;
+		long int b;
 
 		for (i = 0; i < QO->nb_pts; i++) {
 			QO->Dom->unrank_point(v, QO->Pts[i]);
@@ -400,8 +425,63 @@ void quartic_curve_object_properties::print_all_points(std::ostream &ost)
 			ost << "$\\\\" << endl;
 			}
 		ost << "\\end{multicols}" << endl;
+		ost << "The points by rank are: " << endl;
 		Orbiter->Lint_vec.print_fully(ost, QO->Pts, QO->nb_pts);
 		ost << "\\\\" << endl;
+
+
+		schlaefli_labels *Labels;
+
+		Labels = NEW_OBJECT(schlaefli_labels);
+		if (FALSE) {
+			cout << "schlaefli::init before Labels->init" << endl;
+		}
+		Labels->init(0 /*verbose_level*/);
+		if (FALSE) {
+			cout << "schlaefli::init after Labels->init" << endl;
+		}
+
+
+
+		ost << "The Kowalevski points are: \\\\" << endl;
+		for (i = 0; i < nb_Kowalevski; i++) {
+			a = Kowalevski_point_idx[i];
+			QO->Dom->unrank_point(v, Kowalevski_points[i]);
+			ost << i << " : $P_{" << Kowalevski_points[i] << "}=";
+			Orbiter->Int_vec.print_fully(ost, v, 3);
+
+			ost << " = ";
+
+			for (j = 0; j < 4; j++) {
+				b = lines_on_points_off->Sets[a][j];
+				//ost << "\\ell_{" << b << "}";
+				ost << Labels->Line_label_tex[b];
+				if (j < 4 - 1) {
+					ost << " \\cap ";
+				}
+			}
+			ost << "$\\\\" << endl;
+		}
+
+		FREE_OBJECT(Labels);
+
+		ost << "The Kowalevski points by rank are: " << endl;
+		Orbiter->Lint_vec.print_fully(ost, Kowalevski_points, nb_Kowalevski);
+		ost << "\\\\" << endl;
+
+		ost << "The points off the curve are: \\\\" << endl;
+		ost << "\\begin{multicols}{3}" << endl;
+		ost << "\\noindent" << endl;
+		for (i = 0; i < nb_pts_off; i++) {
+			QO->Dom->unrank_point(v, Pts_off[i]);
+			ost << i << " : $P_{" << Pts_off[i] << "}=";
+			Orbiter->Int_vec.print_fully(ost, v, 3);
+			ost << "$\\\\" << endl;
+			}
+		ost << "\\end{multicols}" << endl;
+		Orbiter->Lint_vec.print_fully(ost, Pts_off, nb_pts_off);
+		ost << "\\\\" << endl;
+
 	}
 	else {
 		ost << "Too many to print.\\\\" << endl;
@@ -530,6 +610,19 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 		cout << endl;
 	}
 
+	int i, j;
+
+	for (i = 0; i <= 2; i++) {
+		j = Bitangent_line_type->determine_class_by_value(i);
+		if (j == -1) {
+			line_type_distribution[i] = 0;
+		}
+		else {
+			line_type_distribution[i] = Bitangent_line_type->type_len[j];
+		}
+	}
+
+
 	pts_on_lines->dualize(lines_on_point, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "quartic_curve_object_properties::points_on_curve_on_lines lines_on_point:" << endl;
@@ -545,7 +638,7 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 		cout << endl;
 	}
 
-	int i, f, l, a;
+	int f, l, a;
 
 	f_is_full = TRUE;
 	nb_Kowalevski_on = 0;
@@ -600,6 +693,9 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 		cout << endl;
 	}
 
+	int b;
+	vector<int> K;
+
 	nb_Kowalevski_off = 0;
 	for (i = Point_off_type->nb_types - 1; i >= 0; i--) {
 		f = Point_off_type->type_first[i];
@@ -607,10 +703,24 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 		a = Point_off_type->data_sorted[f];
 		if (a == 4) {
 			nb_Kowalevski_off += l;
+			for (j = 0; j < l; j++) {
+				b = Point_off_type->sorting_perm_inv[f + j];
+				K.push_back(b);
+			}
 		}
 	}
 	nb_Kowalevski = nb_Kowalevski_on + nb_Kowalevski_off;
+	if (K.size() != nb_Kowalevski) {
+		cout << "K.size() != nb_Kowalevski" << endl;
+		exit(1);
+	}
 
+	Kowalevski_point_idx = NEW_int(nb_Kowalevski);
+	Kowalevski_points = NEW_lint(nb_Kowalevski);
+	for (j = 0; j < nb_Kowalevski; j++) {
+		Kowalevski_point_idx[j] = K[j];
+		Kowalevski_points[j] = Pts_off[K[j]];
+	}
 
 	if (f_v) {
 		cout << "quartic_curve_object_properties::points_on_curve_on_lines done" << endl;
@@ -632,6 +742,7 @@ void quartic_curve_object_properties::report_bitangent_line_type(std::ostream &o
 	ost << "$$" << endl;
 	Bitangent_line_type->print_array_tex(ost, TRUE /* f_backwards */);
 	ost << "$$" << endl;
+
 
 	ost << "point types: $" << endl;
 	Point_type->print_naked_tex(ost, TRUE);

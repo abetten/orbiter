@@ -17,14 +17,14 @@ MODULES = \
 	classify_cubic_curves.o \
 	cubic_curve_with_action.o \
 	hermitian_spreads_classify.o \
-	hill_cap.o \
 	linear_set_classify.o \
 	ovoid_classify_description.o \
 	ovoid_classify.o \
 	polar.o \
 	search_blocking_set.o \
 	singer_cycle.o \
-	tensor_classify.o
+	tensor_classify.o \
+	top_level_geometry_global.o
 
 
 all : $(MODULES)

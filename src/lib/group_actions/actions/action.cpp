@@ -2481,16 +2481,23 @@ void action::compute_orbits_on_points(schreier *&Sch,
 
 	if (f_v) {
 		cout << "action::compute_orbits_on_points" << endl;
-		}
+	}
 	Sch = NEW_OBJECT(schreier);
 	Sch->init(this, verbose_level - 2);
 	Sch->init_generators(*gens, verbose_level - 2);
-	Sch->compute_all_point_orbits(verbose_level);
+	if (f_v) {
+		cout << "action::compute_orbits_on_points before Sch->compute_all_point_orbits, degree = " << degree << endl;
+	}
+	Sch->compute_all_point_orbits(verbose_level - 3);
+	if (f_v) {
+		cout << "action::compute_orbits_on_points after Sch->compute_all_point_orbits" << endl;
+		cout << "action::compute_orbits_on_points Sch->nb_orbits=" << Sch->nb_orbits << endl;
+	}
 	//Sch.print_and_list_orbits(cout);
 	if (f_v) {
 		cout << "action::compute_orbits_on_points done, we found "
 				<< Sch->nb_orbits << " orbits" << endl;
-		}
+	}
 }
 
 void action::stabilizer_of_dual_hyperoval_representative(

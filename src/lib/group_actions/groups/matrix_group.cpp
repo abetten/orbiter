@@ -1710,7 +1710,7 @@ void matrix_group::GL_print_latex(int *Elt, ostream &ost)
 }
 
 void matrix_group::GL_print_latex_with_print_point_function(int *Elt,
-		ostream &ost,
+		std::ostream &ost,
 		void (*point_label)(std::stringstream &sstr, int pt, void *data),
 		void *point_label_data)
 {
@@ -1771,20 +1771,46 @@ void matrix_group::GL_print_latex_with_print_point_function(int *Elt,
 
 }
 
-void matrix_group::GL_print_easy_latex(int *Elt, ostream &ost)
+void matrix_group::GL_print_easy_latex(int *Elt, std::ostream &ost)
+{
+
+	GL_print_easy_latex_with_option_numerical(Elt, FALSE, ost);
+
+}
+
+void matrix_group::GL_print_easy_latex_with_option_numerical(int *Elt, int f_numerical, std::ostream &ost)
 {
     int i, j, a;
     //int w;
-	
+
 	//w = (int) GFq->log10_of_q;
+	int *D;
+	D = NEW_int(n * n);
+
+    if (f_projective) {
+		Orbiter->Int_vec.copy(Elt, D, n * n);
+		//GFq->PG_element_normalize_from_front(D, 1, n * n);
+		GFq->PG_element_normalize(D, 1, n * n);
+    }
+    else {
+    	Orbiter->Int_vec.copy(Elt, D, n * n);
+    }
+
 
 	if (GFq->q <= 9) {
 		ost << "\\left[" << endl;
 		ost << "\\begin{array}{c}" << endl;
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < n; j++) {
-				a = Elt[i * n + j];	
+				a = D[i * n + j];
 
+
+				if (f_numerical) {
+					ost << a;
+				}
+				else {
+					GFq->print_element(ost, a);
+				}
 #if 0
 				if (is_prime(GFq->q)) {
 					ost << a;
@@ -1794,9 +1820,9 @@ void matrix_group::GL_print_easy_latex(int *Elt, ostream &ost)
 					//GFq->print_element(ost, a);
 				}
 #else
-				GFq->print_element(ost, a);
+				//GFq->print_element(ost, a);
 #endif
-			
+
 				//if (j < n - 1)
 				//	ost << " & ";
 			}
@@ -1810,7 +1836,14 @@ void matrix_group::GL_print_easy_latex(int *Elt, ostream &ost)
 		ost << "\\begin{array}{*{" << n << "}{r}}" << endl;
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < n; j++) {
-				a = Elt[i * n + j];	
+				a = D[i * n + j];
+
+				if (f_numerical) {
+					ost << a;
+				}
+				else {
+					GFq->print_element(ost, a);
+				}
 
 #if 0
 				if (is_prime(GFq->q)) {
@@ -1821,9 +1854,9 @@ void matrix_group::GL_print_easy_latex(int *Elt, ostream &ost)
 					// GFq->print_element(ost, a);
 				}
 #else
-				GFq->print_element(ost, a);
+				//GFq->print_element(ost, a);
 #endif
-			
+
 				if (j < n - 1)
 					ost << " & ";
 			}
@@ -1843,6 +1876,8 @@ void matrix_group::GL_print_easy_latex(int *Elt, ostream &ost)
 			ost << "_{" << Elt[n * n] << "}" << endl;
 		}
 	}
+	FREE_int(D);
+
 }
 
 int matrix_group::get_digit(uchar *elt, int i, int j)

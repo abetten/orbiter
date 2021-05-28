@@ -668,40 +668,6 @@ void spread_tables::compute_adjacency_matrix(
 		cout << "spread_tables::compute_adjacency_matrix" << endl;
 	}
 
-#if 0
-
-	N2 = ((long int) nb_spreads * (long int) nb_spreads) >> 1;
-
-	bitvector_length = (N2 + 7) >> 3;
-
-	bitvector_adjacency = NEW_uchar(bitvector_length);
-
-	if (f_v) {
-		cout << "after allocating adjacency bitvector" << endl;
-		cout << "computing adjacency matrix:" << endl;
-	}
-	k = 0;
-	//cnt = 0;
-	for (i = 0; i < nb_spreads; i++) {
-
-		for (j = i + 1; j < nb_spreads; j++) {
-
-
-			if (test_if_spreads_are_disjoint(i, j)) {
-				bitvector_m_ii(bitvector_adjacency, k, 1);
-				//cnt++;
-			}
-			else {
-				bitvector_m_ii(bitvector_adjacency, k, 0);
-			}
-
-			k++;
-			if ((k & ((1 << 21) - 1)) == 0) {
-				cout << "i=" << i << " j=" << j << " k=" << k << " / " << N2 << endl;
-			}
-		}
-	}
-#else
 	N2 = ((long int) nb_spreads * (long int) nb_spreads) >> 1;
 
 	Bitvec = NEW_OBJECT(bitvector);
@@ -729,7 +695,6 @@ void spread_tables::compute_adjacency_matrix(
 		}
 	}
 
-#endif
 
 
 
