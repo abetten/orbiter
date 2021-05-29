@@ -867,6 +867,10 @@ public:
 	int *design_color_table; // [nb_designs]
 
 	action *A_on_designs; // action on designs in Design_table
+		//DC->A2->create_induced_action_on_sets(
+		//		Design_table->nb_designs, Design_table->design_size,
+		//		Design_table->the_table,
+		//		0 /* verbose_level */);
 
 
 	bitvector *Bitvec;
@@ -1066,6 +1070,12 @@ public:
 	strong_generators *H_gens;
 
 	orbits_on_something *H_orbits;
+
+		//H_orbits->init(LS->A_on_designs,
+		//		H_gens,
+		//			FALSE /* f_load_save */,
+		//			Descr->prefix,
+		//			verbose_level);
 
 	strong_generators *N_gens;
 

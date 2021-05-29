@@ -183,7 +183,6 @@ void large_set_classify::create_action_and_poset(int verbose_level)
 	A_on_designs = DC->A2->create_induced_action_on_sets(
 			Design_table->nb_designs, Design_table->design_size,
 			Design_table->the_table,
-			//f_induce,
 			0 /* verbose_level */);
 
 	if (f_v) {

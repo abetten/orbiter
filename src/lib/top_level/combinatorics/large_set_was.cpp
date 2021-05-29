@@ -334,10 +334,10 @@ void large_set_was::read_solution_file(
 			a = Solutions[i * solution_size + j];
 			b = H_orbits->Orbits_classified->Sets[selected_type_idx][a];
 #else
-			a = Solutions[i * solution_size + j];
+			b = Solutions[i * solution_size + j];
 				// the labels in the graph are set according to
 				// H_orbits->Orbits_classified->Sets[selected_type_idx][]
-			b = H_orbits->Orbits_classified->Sets[selected_type_idx][a];
+			//b = H_orbits->Orbits_classified->Sets[selected_type_idx][a];
 #endif
 			H_orbits->Sch->get_orbit(b,
 					Large_sets + i * sz + starter_set_sz + j * orbit_length,
