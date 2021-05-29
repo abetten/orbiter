@@ -64,6 +64,7 @@ public:
 	bitvector();
 	~bitvector();
 	void allocate(long int length);
+	long int get_length();
 	long int get_allocated_length();
 	uchar *get_data();
 	void m_i(long int i, int a);
@@ -223,10 +224,6 @@ public:
 	~data_input_stream();
 	void null();
 	void freeself();
-#if 0
-	void read_arguments_from_string(
-			const char *str, int verbose_level);
-#endif
 	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 	int count_number_of_objects_to_test(

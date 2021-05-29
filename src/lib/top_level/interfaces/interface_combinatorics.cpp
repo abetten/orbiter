@@ -108,6 +108,9 @@ interface_combinatorics::interface_combinatorics()
 	Dedekind_q_min = 0;
 	Dedekind_q_max = 0;
 
+	f_canonical_form_nauty = FALSE;
+	Canonical_form_nauty_Descr = NULL;
+
 }
 
 
@@ -188,6 +191,9 @@ void interface_combinatorics::print_help(int argc,
 	}
 	else if (stringcmp(argv[i], "-Dedekind_numbers") == 0) {
 		cout << "-Dedekind_numbers <int : n_min> <int : n_max> <int : q_min> <int : q_max>  " << endl;
+	}
+	else if (stringcmp(argv[i], "-canonical_form_nauty") == 0) {
+		cout << "-canonical_form_nauty <description>  " << endl;
 	}
 }
 
@@ -270,6 +276,9 @@ int interface_combinatorics::recognize_keyword(int argc,
 		return true;
 	}
 	else if (stringcmp(argv[i], "-Dedekind_numbers") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-canonical_form_nauty") == 0) {
 		return true;
 	}
 	return false;
@@ -532,6 +541,20 @@ void interface_combinatorics::read_arguments(int argc,
 				<< " " << Dedekind_q_max
 				<< " " << endl;
 	}
+	else if (stringcmp(argv[i], "-canonical_form_nauty") == 0) {
+		f_canonical_form_nauty = TRUE;
+		cout << "-canonical_form_nauty, reading extra arguments" << endl;
+
+		Canonical_form_nauty_Descr = NEW_OBJECT(projective_space_object_classifier_description);
+
+		i += Canonical_form_nauty_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
+		cout << "done reading -canonical_form_nauty " << endl;
+		cout << "i = " << i << endl;
+		cout << "argc = " << argc << endl;
+		if (i < argc) {
+			cout << "next argument is " << argv[i] << endl;
+		}
+	}
 
 	if (f_v) {
 		cout << "interface_combinatorics::read_arguments done" << endl;
@@ -691,6 +714,28 @@ void interface_combinatorics::worker(int verbose_level)
 
 		Combi.Dedekind_numbers(
 				Dedekind_n_min, Dedekind_n_max, Dedekind_q_min, Dedekind_q_max,
+				verbose_level);
+
+	}
+	else if (f_canonical_form_nauty) {
+
+		combinatorics_global Combi;
+
+
+		if (!Canonical_form_nauty_Descr->f_save_classification) {
+			cout << "please use option -save_classification <save_prefix>" << endl;
+			exit(1);
+		}
+
+		classify_bitvectors *CB;
+
+		CB = NEW_OBJECT(classify_bitvectors);
+
+
+		Combi.classify_objects_using_nauty(
+				Canonical_form_nauty_Descr->Data,
+				CB,
+				Canonical_form_nauty_Descr->save_prefix,
 				verbose_level);
 
 	}

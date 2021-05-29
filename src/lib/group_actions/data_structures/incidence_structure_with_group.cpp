@@ -221,7 +221,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 					Inc_out->M, Inc->nb_rows, Inc->nb_cols, Inc->nb_cols, 1);
 		}
 		else {
-			cout << "set_stabilizer_of_incma_object too large to print" << endl;
+			cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form too large to print" << endl;
 		}
 	}
 
@@ -267,7 +267,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 	A_perm = NEW_OBJECT(action);
 
 	if (f_v) {
-		cout << "set_stabilizer_of_incma_object before init_permutation_group_from_generators" << endl;
+		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form before init_permutation_group_from_generators" << endl;
 	}
 
 	A_perm->init_permutation_group_from_generators(N,

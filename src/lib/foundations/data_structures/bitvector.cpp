@@ -42,6 +42,11 @@ void bitvector::allocate(long int length)
 	}
 }
 
+long int bitvector::get_length()
+{
+	return length;
+}
+
 long int bitvector::get_allocated_length()
 {
 	return allocated_length;
