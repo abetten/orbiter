@@ -367,6 +367,8 @@ void large_set_was::read_solution_file(
 	}
 	Sz = sz * LS->design_size;
 
+	combinatorics_domain Combi;
+
 	Packings_explicit = NEW_lint(nb_solutions * Sz);
 	for (i = 0; i < nb_solutions; i++) {
 		for (j = 0; j < sz; j++) {
@@ -376,7 +378,16 @@ void large_set_was::read_solution_file(
 				Packings_explicit[i * Sz + j * LS->design_size + h] = b;
 			}
 		}
+		if (!Combi.is_permutation_lint(Packings_explicit + i * Sz, Sz)) {
+			cout << "error: the packing does not pass the permutation test" << endl;
+			exit(1);
+		}
 	}
+
+	if (f_v) {
+		cout << "all packings pass the permutation test" << endl;
+	}
+
 	{
 		file_io Fio;
 		string fname_out;

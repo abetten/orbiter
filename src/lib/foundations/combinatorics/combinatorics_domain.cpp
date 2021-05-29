@@ -1635,6 +1635,29 @@ int combinatorics_domain::is_permutation(int *perm, long int n)
 	}
 }
 
+int combinatorics_domain::is_permutation_lint(long int *perm, long int n)
+{
+	long int *perm2;
+	long int i;
+	sorting Sorting;
+
+	perm2 = NEW_lint(n);
+	Orbiter->Lint_vec.copy(perm, perm2, n);
+	Sorting.lint_vec_heapsort(perm2, n);
+	for (i = 0; i < n; i++) {
+		if (perm2[i] != i) {
+			break;
+		}
+	}
+	FREE_lint(perm2);
+	if (i == n) {
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
+}
+
 void combinatorics_domain::first_lehmercode(int n, int *v)
 {
 	int i;
