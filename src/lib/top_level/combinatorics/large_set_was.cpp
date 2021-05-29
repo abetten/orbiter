@@ -332,12 +332,12 @@ void large_set_was::read_solution_file(
 		for (j = 0; j < solution_size; j++) {
 #if 0
 			a = Solutions[i * solution_size + j];
-			b = OoS->Orbits_classified->Sets[selected_type_idx][a];
+			b = H_orbits->Orbits_classified->Sets[selected_type_idx][a];
 #else
-			b = Solutions[i * solution_size + j];
+			a = Solutions[i * solution_size + j];
 				// the labels in the graph are set according to
-				// OoS->Orbits_classified->Sets[selected_type_idx][]
-			//b = OoS->Orbits_classified->Sets[selected_type_idx][a];
+				// H_orbits->Orbits_classified->Sets[selected_type_idx][]
+			b = H_orbits->Orbits_classified->Sets[selected_type_idx][a];
 #endif
 			H_orbits->Sch->get_orbit(b,
 					Large_sets + i * sz + starter_set_sz + j * orbit_length,
@@ -360,9 +360,8 @@ void large_set_was::read_solution_file(
 		string_tools ST;
 
 		fname_out.assign(solution_file_name);
-		ST.replace_extension_with(fname_out, "_packings.csv");
+		ST.replace_extension_with(fname_out, "_packings_design_indices.csv");
 
-		ST.replace_extension_with(fname_out, "_packings.csv");
 
 		Fio.lint_matrix_write_csv(fname_out, Large_sets, nb_solutions, sz);
 	}
