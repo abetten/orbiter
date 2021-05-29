@@ -80,6 +80,24 @@ public:
 		char *fname, int &nb_Pts, long int *&Pts,
 		int verbose_level);
 	void append_orbit_and_adjust_size(schreier *Orb, int idx, int *set, int &sz);
+	void classify_objects_using_nauty(
+		data_input_stream *Data,
+		classify_bitvectors *CB,
+		std::string &output_fname,
+		int verbose_level);
+	void handle_input_file(classify_bitvectors *CB,
+			int nb_objects_to_test, int t0,
+			std::string &fname, int input_file_idx, int nb_input_files,
+			int N_points, int design_b, int design_k, int partition_class_size,
+			long int *Ago, std::vector<std::vector<long int> > &Reps,
+			int verbose_level);
+	void process_object(
+		classify_bitvectors *CB,
+		incidence_structure_with_group *IG,
+		int nb_objects_to_test,
+		int &f_found, int &idx,
+		longinteger_object &go,
+		int verbose_level);
 
 
 };

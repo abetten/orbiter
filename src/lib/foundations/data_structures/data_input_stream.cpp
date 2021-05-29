@@ -34,45 +34,6 @@ void data_input_stream::freeself()
 	null();
 }
 
-#if 0
-void data_input_stream::read_arguments_from_string(
-		const char *str, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-
-	int argc;
-	char **argv;
-	int i;
-
-	if (f_v) {
-		cout << "data_input_stream::read_arguments_from_string" << endl;
-	}
-	chop_string(str, argc, argv);
-
-	if (f_vv) {
-		cout << "argv:" << endl;
-		for (i = 0; i < argc; i++) {
-			cout << i << " : " << argv[i] << endl;
-		}
-	}
-
-
-	read_arguments(
-		argc, (const char **) argv,
-		verbose_level);
-
-	for (i = 0; i < argc; i++) {
-		FREE_char(argv[i]);
-	}
-	FREE_pchar(argv);
-	if (f_v) {
-		cout << "data_input_stream::read_arguments_from_string "
-				"done" << endl;
-	}
-}
-#endif
-
 int data_input_stream::read_arguments(
 	int argc, std::string *argv,
 	int verbose_level)

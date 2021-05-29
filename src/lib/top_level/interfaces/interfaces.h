@@ -251,6 +251,9 @@ class interface_combinatorics {
 	int Dedekind_q_min;
 	int Dedekind_q_max;
 
+	int f_canonical_form_nauty;
+	projective_space_object_classifier_description *Canonical_form_nauty_Descr;
+
 
 public:
 	interface_combinatorics();
