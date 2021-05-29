@@ -434,6 +434,7 @@ public:
 	int perm_order(int *a, long int n);
 	int perm_signum(int *perm, long int n);
 	int is_permutation(int *perm, long int n);
+	int is_permutation_lint(long int *perm, long int n);
 	void first_lehmercode(int n, int *v);
 	int next_lehmercode(int n, int *v);
 	void lehmercode_to_permutation(int n, int *code, int *perm);
