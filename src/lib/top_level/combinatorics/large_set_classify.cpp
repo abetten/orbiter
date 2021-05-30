@@ -712,6 +712,10 @@ int large_set_classify::test_if_designs_are_disjoint(int i, int j)
 	return Design_table->test_if_designs_are_disjoint(i, j);
 }
 
+
+
+
+
 #if 0
 
 int large_set_design_test_orbit(long int *orbit, int orbit_length,
@@ -725,17 +729,6 @@ int large_set_design_test_orbit(long int *orbit, int orbit_length,
 	return ret;
 }
 
-int large_set_design_test_pair_of_orbits(long int *orbit1, int orbit_length1,
-		long int *orbit2, int orbit_length2, void *extra_data)
-{
-	large_set_classify *LS = (large_set_classify *) extra_data;
-	int ret = FALSE;
-
-	ret = LS->test_pair_of_orbits(orbit1, orbit_length1,
-			orbit2, orbit_length2);
-
-	return ret;
-}
 
 int large_set_design_compare_func_for_invariants(void *data, int i, int j, void *extra_data)
 {

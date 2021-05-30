@@ -94,6 +94,7 @@ public:
 	void process_object(
 		classify_bitvectors *CB,
 		incidence_structure_with_group *IG,
+		incidence_structure *&Inc_out,
 		int nb_objects_to_test,
 		int &f_found, int &idx,
 		longinteger_object &go,
@@ -977,6 +978,10 @@ public:
 	int f_normalizer_on_orbits_of_a_given_length;
 	int normalizer_on_orbits_of_a_given_length_length;
 
+	int f_create_graph_on_orbits_of_length;
+	std::string create_graph_on_orbits_of_length_fname;
+	int create_graph_on_orbits_of_length_length;
+
 	int f_read_solution_file;
 	int read_solution_file_orbit_length;
 	std::string read_solution_file_name;
@@ -1116,6 +1121,7 @@ public:
 	void do_normalizer_on_orbits_of_a_given_length(
 			int select_orbits_of_length_length,
 			int verbose_level);
+	void create_graph_on_orbits_of_length(std::string &fname, int orbit_length, int verbose_level);
 	void read_solution_file(
 			std::string &solution_file_name,
 			long int *starter_set,
@@ -1127,6 +1133,8 @@ public:
 
 int large_set_was_design_test_orbit(long int *orbit, int orbit_length,
 		void *extra_data);
+int large_set_was_classify_test_pair_of_orbits(long int *orbit1, int orbit_length1,
+		long int *orbit2, int orbit_length2, void *extra_data);
 
 
 // #############################################################################

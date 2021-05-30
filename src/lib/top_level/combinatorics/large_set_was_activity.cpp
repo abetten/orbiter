@@ -47,6 +47,13 @@ void large_set_was_activity::perform_activity(large_set_was_activity_description
 				verbose_level);
 	}
 
+	if (Descr->f_create_graph_on_orbits_of_length) {
+		LSW->create_graph_on_orbits_of_length(
+				Descr->create_graph_on_orbits_of_length_fname,
+				Descr->create_graph_on_orbits_of_length_length,
+				verbose_level);
+	}
+
 	if (Descr->f_read_solution_file) {
 
 		long int *starter_set = NULL;

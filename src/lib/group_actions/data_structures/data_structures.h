@@ -127,6 +127,7 @@ public:
 		int verbose_level);
 	void set_stabilizer_and_canonical_form(
 			int f_compute_canonical_form,
+			incidence_structure *&Inc_out,
 			int verbose_level);
 };
 
