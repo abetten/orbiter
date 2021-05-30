@@ -110,9 +110,9 @@ void large_set_was::init(large_set_was_description *Descr,
 
 	H_orbits->init(LS->A_on_designs,
 			H_gens,
-				FALSE /* f_load_save */,
-				Descr->prefix,
-				verbose_level);
+			FALSE /* f_load_save */,
+			Descr->prefix,
+			verbose_level);
 
 	// computes all orbits and classifies the orbits by their length
 
@@ -277,6 +277,44 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length(
 
 }
 
+void large_set_was::create_graph_on_orbits_of_length(std::string &fname, int orbit_length, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "large_set_was::create_graph_on_orbits_of_length" << endl;
+	}
+
+	colored_graph *CG;
+
+	H_orbits->create_graph_on_orbits_of_a_certain_length(
+		CG,
+		fname,
+		orbit_length,
+		selected_type_idx,
+		FALSE /*f_has_user_data*/, NULL /* int *user_data */, 0 /* user_data_size */,
+		TRUE /* f_has_colors */, LS->nb_colors, LS->design_color_table,
+		large_set_was_classify_test_pair_of_orbits,
+		this /* *test_function_data */,
+		verbose_level);
+
+	if (f_v) {
+		cout << "large_set_classify::process_starter_case "
+				"after OoS->create_graph_on_orbits_of_a_certain_length" << endl;
+	}
+	if (f_v) {
+		cout << "large_set_classify::process_starter_case "
+				"before CG->save" << endl;
+	}
+
+	CG->save(fname, verbose_level);
+
+	FREE_OBJECT(CG);
+
+	if (f_v) {
+		cout << "large_set_was::create_graph_on_orbits_of_length done" << endl;
+	}
+}
 
 void large_set_was::read_solution_file(
 		std::string &solution_file_name,
@@ -424,6 +462,17 @@ int large_set_was_design_test_orbit(long int *orbit, int orbit_length,
 	return ret;
 }
 
+int large_set_was_classify_test_pair_of_orbits(long int *orbit1, int orbit_length1,
+		long int *orbit2, int orbit_length2, void *extra_data)
+{
+	large_set_was *LSW = (large_set_was *) extra_data;
+	int ret = FALSE;
+
+	ret = LSW->LS->Design_table->test_between_two_sets(orbit1, orbit_length1,
+			orbit2, orbit_length2);
+
+	return ret;
+}
 
 
 

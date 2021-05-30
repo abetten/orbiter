@@ -94,12 +94,13 @@ void incidence_structure_with_group::init(incidence_structure *Inc,
 
 void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 		int f_compute_canonical_form,
+		incidence_structure *&Inc_out,
 		int verbose_level)
 {
 
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int f_vvv = (verbose_level >= 3);
+	//int f_vvv = (verbose_level >= 3);
 
 	int *Aut, Aut_counter;
 	int *Base, Base_length;
@@ -208,12 +209,13 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 		}
 	}
 
-	incidence_structure *Inc_out;
+
 
 	Inc_out = Inc->apply_canonical_labeling(
 			canonical_labeling, verbose_level - 2);
 
 
+#if 0
 	if (f_vvv) {
 		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form Incma Out:" << endl;
 		if (Inc->nb_rows < 10) {
@@ -224,6 +226,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 			cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form too large to print" << endl;
 		}
 	}
+#endif
 
 #if 0
 	if (f_save_incma_in_and_out) {
@@ -261,7 +264,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 
 
 
-	FREE_OBJECT(Inc_out);
+	//FREE_OBJECT(Inc_out);
 
 
 	A_perm = NEW_OBJECT(action);

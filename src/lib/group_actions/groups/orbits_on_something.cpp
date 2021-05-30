@@ -621,6 +621,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	L100 = L / 100 + 1;
 
 	if (f_v) {
+		cout << "nb_points = " << nb_points << endl;
 		cout << "L = " << L << endl;
 		cout << "L100 = " << L100 << endl;
 	}

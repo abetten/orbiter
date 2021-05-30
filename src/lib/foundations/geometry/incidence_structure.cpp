@@ -3858,6 +3858,7 @@ incidence_structure *incidence_structure::apply_canonical_labeling(
 	}
 
 	Incma_out = NEW_int(nb_rows * nb_cols);
+	//Orbiter->Int_vec.zero(Incma_out, nb_rows * nb_cols);
 	for (i = 0; i < nb_rows; i++) {
 		ii = canonical_labeling[i];
 		for (j = 0; j < nb_cols; j++) {
@@ -3914,6 +3915,13 @@ void incidence_structure::init_large_set(
 		int N_points, int design_b, int design_k, int partition_class_size,
 		int *&partition, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "incidence_structure::init_large_set" << endl;
+	}
+
 	int *block;
 	int *Incma;
 	int nb_classes;
@@ -3928,6 +3936,9 @@ void incidence_structure::init_large_set(
 	nb_rows = N_points + nb_classes;
 	nb_cols = design_b + 1;
 	N = nb_rows + nb_cols;
+	if (f_v) {
+		cout << "incidence_structure::init_large_set nb_rows=" << nb_rows << " nb_cols=" << nb_cols << " N=" << N << endl;
+	}
 
 	Incma = NEW_int(nb_rows * nb_cols);
 	Orbiter->Int_vec.zero(Incma, nb_rows * nb_cols);
@@ -3947,6 +3958,9 @@ void incidence_structure::init_large_set(
 	}
 
 	init_by_matrix(nb_rows, nb_cols, Incma, verbose_level);
+	if (f_v) {
+		Orbiter->Int_vec.matrix_print(Incma, nb_rows, nb_cols);
+	}
 
 
 	partition = NEW_int(N);
@@ -3958,11 +3972,25 @@ void incidence_structure::init_large_set(
 	partition[nb_rows + design_b - 1] = 0;
 	partition[nb_rows + nb_cols - 1] = 0;
 
+
+	if (f_v) {
+		tally T;
+
+		T.init(partition, N, FALSE, 0);
+		T.print_array_tex(cout, TRUE);
+	}
+
+
 	FREE_int(Incma);
 	FREE_int(block);
+
+	if (f_v) {
+		cout << "incidence_structure::init_large_set done" << endl;
+	}
 }
 
-}
-}
+
+
+}}
 
 

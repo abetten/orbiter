@@ -1120,26 +1120,60 @@ void combinatorics_global::handle_input_file(classify_bitvectors *CB,
 				N_points, design_b, design_k, partition_class_size,
 				partition, 0 /*verbose_level*/);
 
+
+		{
+			string fname_input;
+			char str[1000];
+			string_tools ST;
+			file_io Fio;
+
+			fname_input.assign(fname);
+			ST.chop_off_extension(fname_input);
+			sprintf(str, "_input_%d.csv", h);
+			fname_input.append(str);
+			Fio.int_matrix_write_csv(fname_input, Inc->M, Inc->nb_rows, Inc->nb_cols);
+		}
+
+
 		incidence_structure_with_group *IG;
 
 		IG = NEW_OBJECT(incidence_structure_with_group);
 		IG->init(Inc,
 				partition,
-				verbose_level - 2);
+				0/*verbose_level - 2*/);
 
 		int f_found;
 		int idx;
 		longinteger_object go;
 
+		incidence_structure *Inc_out;
+
+
 		process_object(
 					CB,
 					IG,
+					Inc_out,
 					//f_save_incma_in_and_out, save_incma_in_and_out_prefix,
 					nb_objects_to_test,
 					f_found, idx,
 					go,
 					verbose_level - 2);
 
+
+		{
+			string fname_output;
+			char str[1000];
+			string_tools ST;
+			file_io Fio;
+
+			fname_output.assign(fname);
+			ST.chop_off_extension(fname_output);
+			sprintf(str, "_output_%d.csv", h);
+			fname_output.append(str);
+			Fio.int_matrix_write_csv(fname_output, Inc_out->M, Inc_out->nb_rows, Inc_out->nb_cols);
+		}
+
+		FREE_OBJECT(Inc_out);
 		FREE_OBJECT(IG);
 		FREE_OBJECT(Inc);
 		FREE_int(partition);
@@ -1215,6 +1249,7 @@ void combinatorics_global::handle_input_file(classify_bitvectors *CB,
 void combinatorics_global::process_object(
 	classify_bitvectors *CB,
 	incidence_structure_with_group *IG,
+	incidence_structure *&Inc_out,
 	int nb_objects_to_test,
 	int &f_found, int &idx,
 	longinteger_object &go,
@@ -1227,19 +1262,16 @@ void combinatorics_global::process_object(
 		cout << "process_object n=" << CB->n << endl;
 	}
 
-
-
-
-
-
 	if (f_v) {
 		cout << "process_object "
 				"before IG->set_stabilizer_and_canonical_form" << endl;
 	}
 
+
 	IG->set_stabilizer_and_canonical_form(
 			//f_save_incma_in_and_out, save_incma_in_and_out_prefix,
 			TRUE /* f_compute_canonical_form */,
+			Inc_out,
 			verbose_level);
 
 
@@ -1259,8 +1291,8 @@ void combinatorics_global::process_object(
 
 	if (CB->n == 0) {
 		cout << "process_object CB->n == 0, calling CB->init with "
-				"IG->canonical_form_len=" << IG->canonical_form->get_length() << endl;
-		CB->init(nb_objects_to_test, IG->canonical_form->get_length(), verbose_level);
+				"IG->canonical_form_len=" << IG->canonical_form->get_allocated_length() << endl;
+		CB->init(nb_objects_to_test, IG->canonical_form->get_allocated_length(), verbose_level);
 	}
 
 #if 0
