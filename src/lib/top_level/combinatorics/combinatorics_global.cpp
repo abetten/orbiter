@@ -1120,7 +1120,7 @@ void combinatorics_global::handle_input_file(classify_bitvectors *CB,
 				N_points, design_b, design_k, partition_class_size,
 				partition, 0 /*verbose_level*/);
 
-
+#if 0
 		{
 			string fname_input;
 			char str[1000];
@@ -1133,6 +1133,7 @@ void combinatorics_global::handle_input_file(classify_bitvectors *CB,
 			fname_input.append(str);
 			Fio.int_matrix_write_csv(fname_input, Inc->M, Inc->nb_rows, Inc->nb_cols);
 		}
+#endif
 
 
 		incidence_structure_with_group *IG;
@@ -1159,7 +1160,7 @@ void combinatorics_global::handle_input_file(classify_bitvectors *CB,
 					go,
 					verbose_level - 2);
 
-
+#if 0
 		{
 			string fname_output;
 			char str[1000];
@@ -1172,6 +1173,7 @@ void combinatorics_global::handle_input_file(classify_bitvectors *CB,
 			fname_output.append(str);
 			Fio.int_matrix_write_csv(fname_output, Inc_out->M, Inc_out->nb_rows, Inc_out->nb_cols);
 		}
+#endif
 
 		FREE_OBJECT(Inc_out);
 		FREE_OBJECT(IG);
