@@ -288,6 +288,55 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 		}
 
 	}
+
+	if (Descr->f_split) {
+		cout << "splitting by file " << Descr->split_by_file << endl;
+		file_io Fio;
+		long int *Split;
+		int m, n;
+		int a, c;
+		string_tools ST;
+
+		colored_graph *CG;
+
+		if (Gr->f_has_CG) {
+			CG = Gr->CG;
+		}
+		else {
+			CG = NEW_OBJECT(colored_graph);
+			CG->init_adjacency_no_colors(Gr->N, Gr->Adj, verbose_level);
+		}
+
+
+		Fio.lint_matrix_read_csv(Descr->split_by_file, Split, m, n, verbose_level - 2);
+		cout << "We found " << m << " cases for splitting" << endl;
+		for (c = 0; c < m; c++) {
+
+			cout << "splitting case " << c << " / " << m << ":" << endl;
+			a = Split[2 * c + 0];
+
+			colored_graph *Subgraph;
+			fancy_set *color_subset;
+			fancy_set *vertex_subset;
+
+			Subgraph = CG->compute_neighborhood_subgraph(a,
+					vertex_subset, color_subset,
+					verbose_level);
+
+			string fname_out;
+
+			fname_out.assign(Descr->split_input_fname);
+			ST.chop_off_extension(fname_out);
+
+			char str[1000];
+			sprintf(str, "_case_%03d.bin", c);
+			fname_out.append(str);
+
+
+			Subgraph->save(fname_out, verbose_level - 2);
+		}
+	}
+
 	else if (Descr->f_save) {
 
 		colored_graph *CG;

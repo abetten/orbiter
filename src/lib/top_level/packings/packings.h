@@ -425,8 +425,10 @@ public:
 	int f_spread_tables_prefix;
 	std::string spread_tables_prefix;
 
+#if 0
 	int f_output_path;
 	std::string output_path;
+#endif
 
 	int f_exact_cover;
 	exact_cover_arguments *ECA;
@@ -435,9 +437,11 @@ public:
 	isomorph_arguments *IA;
 
 	int f_H;
+	std::string H_label;
 	linear_group_description *H_Descr;
 
 	int f_N;
+	std::string N_label;
 	linear_group_description *N_Descr;
 
 	int f_report;
@@ -517,10 +521,10 @@ public:
 	poset_with_group_action *Poset_fixpoint_cliques;
 	poset_classification *fixpoint_clique_gen;
 
-	int cliques_on_fixpoint_graph_size;
-	long int *Cliques; // [nb_cliques * cliques_on_fixpoint_graph_size]
+	int fixpoint_clique_size;
+	long int *Cliques; // [nb_cliques * fixpoint_clique_size]
 	int nb_cliques;
-	std::string fname_fixp_graph_cliques_orbiter;
+	std::string fname_fixpoint_cliques_orbiter;
 	orbit_transversal *Fixp_cliques;
 
 
@@ -528,7 +532,9 @@ public:
 
 	packing_was_fixpoints();
 	~packing_was_fixpoints();
-	void init(packing_was *PW, int verbose_level);
+	void init(packing_was *PW,
+			int fixpoint_clique_size, poset_classification_control *Control,
+			int verbose_level);
 	void create_graph_on_fixpoints(int verbose_level);
 	void action_on_fixpoints(int verbose_level);
 	void compute_cliques_on_fixpoint_graph(

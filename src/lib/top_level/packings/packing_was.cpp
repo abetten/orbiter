@@ -440,6 +440,7 @@ void packing_was::compute_H_orbits_on_lines(int verbose_level)
 		cout << "packing_was::compute_H_orbits_on_lines" << endl;
 	}
 
+#if 0
 	if (Descr->f_output_path) {
 		prefix_line_orbits.assign(Descr->output_path);
 	}
@@ -451,7 +452,9 @@ void packing_was::compute_H_orbits_on_lines(int verbose_level)
 		prefix_line_orbits.append(Descr->problem_label);
 	}
 	prefix_line_orbits.append("_line_orbits");
-
+#endif
+	prefix_line_orbits.assign(Descr->H_label);
+	prefix_line_orbits.append("_line_orbits");
 
 	Line_orbits_under_H = NEW_OBJECT(orbits_on_something);
 
@@ -518,6 +521,7 @@ void packing_was::compute_H_orbits_on_spreads(int verbose_level)
 
 	Spread_orbits_under_H = NEW_OBJECT(orbits_on_something);
 
+#if 0
 	if (Descr->f_output_path) {
 		prefix_spread_orbits.assign(Descr->output_path);
 	}
@@ -528,6 +532,9 @@ void packing_was::compute_H_orbits_on_spreads(int verbose_level)
 	if (Descr->f_problem_label) {
 		prefix_spread_orbits.append(Descr->problem_label);
 	}
+	prefix_spread_orbits.append("_spread_orbits");
+#endif
+	prefix_spread_orbits.assign(Descr->H_label);
 	prefix_spread_orbits.append("_spread_orbits");
 
 
@@ -573,6 +580,7 @@ void packing_was::test_orbits_on_spreads(int verbose_level)
 				<< " orbits are partial packings:" << endl;
 	}
 
+#if 0
 	if (Descr->f_output_path) {
 		fname_good_orbits.assign(Descr->output_path);
 	}
@@ -584,7 +592,10 @@ void packing_was::test_orbits_on_spreads(int verbose_level)
 		fname_good_orbits.append(Descr->problem_label);
 	}
 	fname_good_orbits.append("_good_orbits");
+#endif
 
+	fname_good_orbits.assign(Descr->H_label);
+	fname_good_orbits.append("_good_orbits");
 
 
 	if (Fio.file_size(fname_good_orbits.c_str()) > 0) {
@@ -771,7 +782,8 @@ void packing_was::compute_reduced_spread_types_wrt_H(int verbose_level)
 
 	std::string prefix;
 
-	prefix.assign("H_spread_orbits_reduced");
+	prefix.assign(Descr->H_label);
+	prefix.append("_spread_types_reduced");
 
 	Spread_type_reduced->create_latex_report(prefix, verbose_level);
 
@@ -807,17 +819,8 @@ void packing_was::compute_H_orbits_on_reduced_spreads(int verbose_level)
 
 	reduced_spread_orbits_under_H = NEW_OBJECT(orbits_on_something);
 
-	if (Descr->f_output_path) {
-		prefix_reduced_spread_orbits.assign(Descr->output_path);
-	}
-	else {
-		prefix_reduced_spread_orbits.assign("");
-	}
 
-	prefix_reduced_spread_orbits.append(H_LG->label);
-	if (Descr->f_problem_label) {
-		prefix_reduced_spread_orbits.append(Descr->problem_label);
-	}
+	prefix_reduced_spread_orbits.assign(Descr->H_label);
 	prefix_reduced_spread_orbits.append("_reduced_spread_orbits");
 
 
@@ -1192,7 +1195,7 @@ void packing_was::report2(std::ostream &ost, int verbose_level)
 	ost << endl;
 
 	ost << "\\clearpage" << endl;
-	ost << "\\section{Reduced Spread Orbits}" << endl;
+	ost << "\\section{Reduced Spread Orbits under $H$}" << endl;
 	reduced_spread_orbits_under_H->report_classified_orbit_lengths(ost);
 	ost << endl;
 
@@ -1497,17 +1500,27 @@ void packing_was::report_reduced_spread_orbits(std::ostream &ost, int f_original
 				<< " orbits of length " << orbit_length << ":\\\\" << endl;
 
 		int j;
+		int nb_orbits1 = 100;
 
-		for (j = 0; j < nb_orbits; j++) {
+		if (nb_orbits > 100) {
+
+			ost << "Too many to list, listing only the first " << nb_orbits1 << ":\\\\" << endl;
+		}
+		else {
+			nb_orbits1 = nb_orbits;
+		}
+
+		for (j = 0; j < nb_orbits1; j++) {
 			ost << j << " : " << orbit_idx[j] << " : ";
 			Orbiter->Lint_vec.print(ost, spreads_in_reduced_orbits_by_type + j * orbit_length, orbit_length);
 			ost << "\\\\" << endl;
-			if (j && (j % 100) == 0) {
+			if (j && (j % 40) == 0) {
 				ost << endl;
 				ost << "\\clearpage" << endl;
 				ost << endl;
 			}
 		}
+		ost << "\\clearpage" << endl;
 
 	}
 
