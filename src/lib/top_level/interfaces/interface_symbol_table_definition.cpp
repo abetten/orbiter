@@ -552,7 +552,10 @@ void interface_symbol_table::definition_of_packing_was_choose_fixed_points(orbit
 		cout << "interface_symbol_table::definition_of_packing_was_choose_fixed_points before PWF->init" << endl;
 	}
 
-	PWF->init(PW, verbose_level);
+	PWF->init(PW,
+			packing_with_assumed_symmetry_choose_fixed_points_clique_size,
+			packing_with_assumed_symmetry_choose_fixed_points_control,
+			verbose_level);
 
 	if (f_v) {
 		cout << "interface_symbol_table::definition_of_packing_was_choose_fixed_points after PWF->init" << endl;

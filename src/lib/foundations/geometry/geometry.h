@@ -2280,6 +2280,7 @@ public:
 			long int *set2, int sz2,
 			int verbose_level);
 	int test_if_set_of_spreads_is_line_disjoint(long int *set, int len);
+	int test_if_set_of_spreads_is_line_disjoint_and_complain_if_not(long int *set, int len);
 	void make_exact_cover_problem(diophant *&Dio,
 			long int *live_point_index, int nb_live_points,
 			long int *live_blocks, int nb_live_blocks,

@@ -271,10 +271,6 @@ void spread_table_with_selection::compute_spread_table_from_scratch(int verbose_
 
 	// does not sort the spread table
 
-	FREE_int(Prev);
-	FREE_int(Label);
-	FREE_int(First);
-	FREE_int(Len);
 
 	if (f_v) {
 		cout << "spread_table_with_selection::compute_spread_table_from_scratch "
@@ -326,6 +322,7 @@ void spread_table_with_selection::compute_spread_table_from_scratch(int verbose_
 	Spread_tables->init_spread_table(nb_spreads,
 			Spread_table, isomorphism_type_of_spread,
 			verbose_level);
+
 	long int *Dual_spread_idx;
 	long int *self_dual_spread_idx;
 	int nb_self_dual_spreads;
@@ -343,6 +340,33 @@ void spread_table_with_selection::compute_spread_table_from_scratch(int verbose_
 			Dual_spread_idx,
 			self_dual_spread_idx, nb_self_dual_spreads,
 			verbose_level);
+
+
+	if (f_v) {
+		cout << "spread_table_with_selection::compute_spread_table_from_scratch preparing schreier_table" << endl;
+	}
+
+	int *schreier_table;
+
+	schreier_table = NEW_int(nb_spreads * 4);
+	for (i = 0; i < nb_spreads; i++) {
+		schreier_table[i * 4 + 0] = original_position[i];
+		schreier_table[i * 4 + 1] = original_position_inv[i];
+		schreier_table[i * 4 + 2] = Prev[i];
+		schreier_table[i * 4 + 3] = Label[i];
+	}
+
+	FREE_int(Prev);
+	FREE_int(Label);
+	FREE_int(First);
+	FREE_int(Len);
+
+
+	Spread_tables->init_schreier_table(schreier_table, verbose_level);
+
+	if (f_v) {
+		cout << "spread_table_with_selection::compute_spread_table_from_scratch before Spread_tables->save" << endl;
+	}
 
 	Spread_tables->save(verbose_level);
 

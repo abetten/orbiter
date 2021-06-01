@@ -181,7 +181,7 @@ void spread_tables::create_file_names(int verbose_level)
 	fname_self_dual_spreads.assign(prefix);
 	fname_self_dual_spreads.append("_self_dual_spreads.csv");
 
-	fname_self_dual_spreads.assign(prefix);
+	fname_schreier_table.assign(prefix);
 	fname_schreier_table.append("_schreier_table.csv");
 
 }
@@ -869,6 +869,36 @@ int spread_tables::test_if_set_of_spreads_is_line_disjoint(long int *set, int le
 			b = set[j];
 			if (!test_if_spreads_are_disjoint(a, b)) {
 				break;
+			}
+		}
+		if (j < len) {
+			break;
+		}
+	}
+	if (i < len) {
+		//cout << "is NOT a partial packing" << endl;
+		ret = FALSE;
+	}
+	else {
+		ret = TRUE;
+		//cout << "IS a partial packing" << endl;
+	}
+	return ret;
+
+}
+
+int spread_tables::test_if_set_of_spreads_is_line_disjoint_and_complain_if_not(long int *set, int len)
+{
+	int i, j, ret;
+	long int a, b;
+
+	for (i = 0; i < len; i++) {
+		a = set[i];
+		for (j = i + 1; j < len; j++) {
+			b = set[j];
+			if (!test_if_spreads_are_disjoint(a, b)) {
+				cout << "elements i=" << i << " j=" << j << " corresponding to spreads " << a << " and " << b << " are not line disjoint" << endl;
+				exit(1);
 			}
 		}
 		if (j < len) {

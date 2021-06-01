@@ -28,7 +28,7 @@ packing_was_fixpoints::packing_was_fixpoints()
 	fixpoint_graph = NULL;
 	Poset_fixpoint_cliques = NULL;
 	fixpoint_clique_gen = NULL;
-	cliques_on_fixpoint_graph_size = 0;
+	fixpoint_clique_size = 0;
 	Cliques = NULL;
 	nb_cliques = 0;
 	//fname_fixp_graph_cliques_orbiter;
@@ -40,44 +40,32 @@ packing_was_fixpoints::~packing_was_fixpoints()
 {
 }
 
-void packing_was_fixpoints::init(packing_was *PW, int verbose_level)
+void packing_was_fixpoints::init(packing_was *PW,
+		int fixpoint_clique_size, poset_classification_control *Control,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "packing_was_fixpoints::init" << endl;
+		cout << "packing_was_fixpoints::init fixpoint_clique_size = " << fixpoint_clique_size << endl;
 	}
 
 	packing_was_fixpoints::PW = PW;
+	packing_was_fixpoints::fixpoint_clique_size = fixpoint_clique_size;
 
-	if (PW->Descr->f_output_path) {
-		fname_fixp_graph.assign(PW->Descr->output_path);
-	}
-	else {
-		fname_fixp_graph.assign("");
-	}
-	fname_fixp_graph.append(PW->H_LG->label);
-	if (PW->Descr->f_problem_label) {
-		fname_fixp_graph.append(PW->Descr->problem_label);
-	}
-	fname_fixp_graph.append("_graph.bin");
+
+	fname_fixp_graph.assign(PW->Descr->H_label);
+	fname_fixp_graph.append("_fixp_graph.bin");
 
 
 	if (f_v) {
 		cout << "packing_was_fixpoints::init fname_fixp_graph=" << fname_fixp_graph << endl;
 	}
 
-	if (PW->Descr->f_output_path) {
-		fname_fixp_graph_cliques.assign(PW->Descr->output_path);
-	}
-	else {
-		fname_fixp_graph_cliques.assign("");
-	}
-	fname_fixp_graph_cliques.append(PW->H_LG->label);
-	if (PW->Descr->f_problem_label) {
-		fname_fixp_graph_cliques.append(PW->Descr->problem_label);
-	}
-	fname_fixp_graph_cliques.append("_fixp_graph_cliques.csv");
+
+	fname_fixp_graph_cliques.assign(PW->Descr->N_label);
+	fname_fixp_graph_cliques.append("_fixp_cliques.csv");
+
 
 	if (f_v) {
 		cout << "packing_was_fixpoints::init fname_fixp_graph_cliques=" << fname_fixp_graph_cliques << endl;
@@ -112,6 +100,21 @@ void packing_was_fixpoints::init(packing_was *PW, int verbose_level)
 		}
 	}
 
+
+	if (f_v) {
+		cout << "packing_was_fixpoints::init_spreads "
+				"before compute_cliques_on_fixpoint_graph" << endl;
+	}
+
+	compute_cliques_on_fixpoint_graph(
+			fixpoint_clique_size,
+			Control,
+			verbose_level);
+
+	if (f_v) {
+		cout << "packing_was_fixpoints::init_spreads "
+				"after compute_cliques_on_fixpoint_graph" << endl;
+	}
 
 
 	if (f_v) {
@@ -201,7 +204,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 				"clique_size=" << clique_size << endl;
 	}
 
-	cliques_on_fixpoint_graph_size = clique_size;
+	fixpoint_clique_size = clique_size;
 	//PW->Descr->clique_size = clique_size;
 
 
@@ -249,11 +252,11 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 	if (f_v) {
 		cout << "packing_was_fixpoints::compute_cliques_on_fixpoint_graph "
 				"before Fixp_cliques->read_from_file, "
-				"file=" << fname_fixp_graph_cliques_orbiter << endl;
+				"file=" << fname_fixpoint_cliques_orbiter << endl;
 	}
 	Fixp_cliques->read_from_file(
 			PW->P->T->A, A_on_fixpoints,
-			fname_fixp_graph_cliques_orbiter, verbose_level);
+			fname_fixpoint_cliques_orbiter, verbose_level);
 	if (f_v) {
 		cout << "packing_was_fixpoints::compute_cliques_on_fixpoint_graph "
 				"after Fixp_cliques->read_from_file" << endl;
@@ -343,23 +346,16 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch(
 
 	char str[1000];
 
-	if (PW->Descr->f_output_path) {
-		fname_fixp_graph_cliques_orbiter.assign(PW->Descr->output_path);
-	}
-	else {
-		fname_fixp_graph_cliques_orbiter.assign("");
-	}
-	fname_fixp_graph_cliques_orbiter.append(PW->H_LG->label);
-	if (PW->Descr->f_problem_label) {
-		fname_fixp_graph_cliques_orbiter.append(PW->Descr->problem_label);
-	}
-	sprintf(str, "_fixp_graph_cliques_lvl_%d", clique_size);
-	fname_fixp_graph_cliques_orbiter.append(str);
+
+
+	fname_fixpoint_cliques_orbiter.assign(PW->Descr->N_label);
+	sprintf(str, "_fixp_cliques_lvl_%d", clique_size);
+	fname_fixpoint_cliques_orbiter.append(str);
 
 
 	if (f_v) {
 		cout << "packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch "
-				"fname_fixp_graph_cliques_orbiter=" << fname_fixp_graph_cliques_orbiter << endl;
+				"fname_fixp_graph_cliques_orbiter=" << fname_fixpoint_cliques_orbiter << endl;
 	}
 
 	if (f_v) {
@@ -410,6 +406,8 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch(
 		}
 		else {
 			Orbiter->Lint_vec.matrix_print(Cliques, nb_cliques, clique_size);
+
+			fixpoint_clique_gen->print_representatives_at_level(clique_size);
 		}
 	}
 
@@ -467,11 +465,29 @@ void packing_was_fixpoints::process_long_orbits(int verbose_level)
 
 long int *packing_was_fixpoints::clique_by_index(int idx)
 {
-	return Cliques + idx * cliques_on_fixpoint_graph_size;
+
+	if (Cliques == NULL) {
+		cout << "packing_was_fixpoints::clique_by_index Cliques == NULL" << endl;
+		exit(1);
+	}
+	if (idx >= nb_cliques) {
+		cout << "packing_was_fixpoints::clique_by_index idx >= nb_cliques" << endl;
+		exit(1);
+	}
+	return Cliques + idx * fixpoint_clique_size;
 }
 
 strong_generators *packing_was_fixpoints::get_stabilizer(int idx)
 {
+	if (Fixp_cliques == NULL) {
+		cout << "packing_was_fixpoints::get_stabilizer Fixp_cliques == NULL" << endl;
+		exit(1);
+	}
+	if (idx >= nb_cliques) {
+		cout << "packing_was_fixpoints::get_stabilizer idx >= nb_cliques" << endl;
+		exit(1);
+	}
+
 	return Fixp_cliques->Reps[idx].Strong_gens;
 }
 
@@ -487,7 +503,7 @@ void packing_was_fixpoints::report(int verbose_level)
 
 	sprintf(title, "Packings in PG(3,%d) ", PW->P->q);
 	sprintf(author, "Orbiter");
-	sprintf(fname, "Packings_q%d.tex", PW->P->q);
+	sprintf(fname, "Packings_was_fixp_q%d.tex", PW->P->q);
 
 		{
 		ofstream fp(fname);
@@ -530,7 +546,11 @@ void packing_was_fixpoints::report(int verbose_level)
 
 		PW->report2(fp, verbose_level);
 
-		report2(fp, /*L,*/ verbose_level);
+		fp << "\\section{Cliques on the fixpoint graph}" << endl;
+
+		if (fixpoints_idx >= 0) {
+			report2(fp, /*L,*/ verbose_level);
+		}
 
 		Li.foot(fp);
 		}
@@ -543,70 +563,72 @@ void packing_was_fixpoints::report(int verbose_level)
 void packing_was_fixpoints::report2(ostream &ost, /*packing_long_orbits *L,*/ int verbose_level)
 {
 
+	ost << "\\section{Orbits of cliques on the fixpoint graph under $N$}" << endl;
+	ost << "The Group $N$ has " << nb_cliques << " orbits on "
+			"cliques of size " << fixpoint_clique_size << "\\\\" << endl;
+	Fixp_cliques->report_ago_distribution(ost);
+	ost << endl;
+
+
+#if 0
+	cout << "before PW->report_reduced_spread_orbits" << endl;
+	ost << "Reduced spread orbits under $H$: \\\\" << endl;
+
+
 	int f_original_spread_numbers = TRUE;
 
 
-	if (fixpoints_idx >= 0) {
-		ost << "\\section{Orbits of cliques on the fixpoint graph under $N$}" << endl;
-		ost << "The Group $N$ has " << nb_cliques << " orbits on "
-				"cliques of size " << cliques_on_fixpoint_graph_size << "\\\\" << endl;
-		Fixp_cliques->report_ago_distribution(ost);
-		ost << endl;
+	PW->report_reduced_spread_orbits(ost, f_original_spread_numbers, verbose_level);
 
+	//PW->report_good_spreads(ost);
 
-		cout << "before PW->report_reduced_spread_orbits" << endl;
-		ost << "Reduced spread orbits under $H$: \\\\" << endl;
-		PW->report_reduced_spread_orbits(ost, f_original_spread_numbers, verbose_level);
-
-		//PW->report_good_spreads(ost);
-
-		PW->reduced_spread_orbits_under_H->report_orbits_of_type(ost, fixpoints_idx);
-
-		int idx;
-
-		ost << "The fixed points are the orbits of type " << fixpoints_idx << "\\\\" << endl;
-
-		for (idx = 0; idx < nb_cliques; idx++) {
-
-			long int *Orbit_numbers;
-			strong_generators *Stab_gens;
-
-			Orbit_numbers = clique_by_index(idx);
-
-			Stab_gens = get_stabilizer(idx);
-
-			ost << "Clique " << idx << ":\\\\" << endl;
-
-
-			ost << "Orbit numbers: ";
-			Orbiter->Lint_vec.print(ost, Orbit_numbers, cliques_on_fixpoint_graph_size);
-			ost << "\\\\" << endl;
-
-			ost << "Stabilizer:\\\\" << endl;
-
-			Stab_gens->print_generators_tex(ost);
-
-		}
-
-#if 0
-		if (PW->Descr->f_process_long_orbits) {
-			if (L) {
-				latex_interface Li;
-
-				ost << "After selecting fixpoint clique $" << L->fixpoints_clique_case_number << " = ";
-				Li.lint_set_print_tex(ost, L->fixpoint_clique, L->fixpoint_clique_size);
-				ost << "$, we find the following filtered orbits:\\\\" << endl;
-				L->report_filtered_orbits(ost);
-#if 0
-				ost << "A graph with " << L->CG->nb_points << " vertices "
-						"has been created and saved in the file \\verb'"
-						<< L->fname_graph << "'\\\\" << endl;
+	PW->reduced_spread_orbits_under_H->report_orbits_of_type(ost, fixpoints_idx);
 #endif
-			}
-		}
-#endif
+
+	int idx;
+
+	ost << "The fixed points are the orbits of type " << fixpoints_idx << "\\\\" << endl;
+
+	for (idx = 0; idx < nb_cliques; idx++) {
+
+		long int *Orbit_numbers;
+		strong_generators *Stab_gens;
+
+		Orbit_numbers = clique_by_index(idx);
+
+		Stab_gens = get_stabilizer(idx);
+
+		ost << "Clique " << idx << ":\\\\" << endl;
+
+
+		ost << "Orbit numbers: ";
+		Orbiter->Lint_vec.print(ost, Orbit_numbers, fixpoint_clique_size);
+		ost << "\\\\" << endl;
+
+		ost << "Stabilizer:\\\\" << endl;
+
+		Stab_gens->print_generators_tex(ost);
 
 	}
+
+#if 0
+	if (PW->Descr->f_process_long_orbits) {
+		if (L) {
+			latex_interface Li;
+
+			ost << "After selecting fixpoint clique $" << L->fixpoints_clique_case_number << " = ";
+			Li.lint_set_print_tex(ost, L->fixpoint_clique, L->fixpoint_clique_size);
+			ost << "$, we find the following filtered orbits:\\\\" << endl;
+			L->report_filtered_orbits(ost);
+#if 0
+			ost << "A graph with " << L->CG->nb_points << " vertices "
+					"has been created and saved in the file \\verb'"
+					<< L->fname_graph << "'\\\\" << endl;
+#endif
+		}
+	}
+#endif
+
 
 }
 
@@ -618,10 +640,22 @@ long int packing_was_fixpoints::fixpoint_to_reduced_spread(int a, int verbose_le
 	long int set[1];
 
 	if (f_v) {
-		cout << "packing_was_fixpoints::fixpoint_to_reduced_spread" << endl;
+		cout << "packing_was_fixpoints::fixpoint_to_reduced_spread a=" << a << endl;
 	}
 	//a = fixpoint_clique[i];
 	b = PW->reduced_spread_orbits_under_H->Orbits_classified->Sets[fixpoints_idx][a];
+	if (f_v) {
+		cout << "packing_was_fixpoints::fixpoint_to_reduced_spread b=" << b << endl;
+	}
+
+	if (b >= PW->reduced_spread_orbits_under_H->Sch->nb_orbits) {
+		cout << "packing_was_fixpoints::fixpoint_to_reduced_spread b >= PW->reduced_spread_orbits_under_H->Sch->nb_orbits" << endl;
+		exit(1);
+	}
+	if (PW->reduced_spread_orbits_under_H->Sch->orbit_len[b] != 1) {
+		cout << "packing_was_fixpoints::fixpoint_to_reduced_spread PW->reduced_spread_orbits_under_H->Sch->orbit_len[b] != 1" << endl;
+		exit(1);
+	}
 	PW->reduced_spread_orbits_under_H->Sch->get_orbit(b /* orbit_idx */, set, len,
 			0 /*verbose_level */);
 	if (len != 1) {

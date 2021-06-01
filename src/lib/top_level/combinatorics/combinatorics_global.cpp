@@ -834,7 +834,7 @@ void combinatorics_global::append_orbit_and_adjust_size(schreier *Orb,
 	len = Orb->orbit_len[idx];
 	for (i = 0; i < len; i++) {
 		set[sz++] = Orb->orbit[f + i];
-		}
+	}
 }
 
 

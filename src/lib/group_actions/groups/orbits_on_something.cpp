@@ -402,6 +402,9 @@ void orbits_on_something::classify_orbits_by_length(int verbose_level)
 			Orbits_classified_length,
 			Orbits_classified_nb_types,
 			0 /* verbose_level */);
+
+	Orbits_classified->sort();
+
 	if (f_v) {
 		int i;
 		cout << "orbits_on_something::classify_orbits_by_length "
@@ -629,16 +632,18 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 	Bitvec = NEW_OBJECT(bitvector);
 	Bitvec->allocate(L);
 
-	cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length point sets:" << endl;
-	for (i = 0; i < nb_points; i++) {
-		a = Orbits_classified->Sets[type_idx][i];
-		Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
-		Orbiter->Lint_vec.print(cout, orbit1, l1);
-		if (i < nb_points - 1) {
-			cout << ",";
+	if (FALSE) {
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length point sets:" << endl;
+		for (i = 0; i < nb_points; i++) {
+			a = Orbits_classified->Sets[type_idx][i];
+			Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
+			Orbiter->Lint_vec.print(cout, orbit1, l1);
+			if (i < nb_points - 1) {
+				cout << ",";
+			}
 		}
+		cout << endl;
 	}
-	cout << endl;
 
 	k = 0;
 	for (i = 0; i < nb_points; i++) {
@@ -764,7 +769,7 @@ void orbits_on_something::extract_orbits(
 	int nb_orbits,
 	int *orbits,
 	long int *extracted_set,
-	set_of_sets *my_orbits_classified,
+	//set_of_sets *my_orbits_classified,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

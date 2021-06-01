@@ -31,8 +31,10 @@ packing_was_description::packing_was_description()
 	//f_label = FALSE;
 	//label = NULL;
 
+#if 0
 	f_output_path = FALSE;
 	//output_path = "";
+#endif
 
 	f_spread_tables_prefix = FALSE;
 	//spread_tables_prefix = "";
@@ -44,9 +46,11 @@ packing_was_description::packing_was_description()
 	IA = NULL;
 
 	f_H = FALSE;
+	//std::string H_label;
 	H_Descr = NULL;
 
 	f_N = FALSE;
+	//std::string N_label;
 	N_Descr = NULL;
 
 	f_report = FALSE;
@@ -72,6 +76,7 @@ int packing_was_description::read_arguments(int argc, std::string *argv,
 		if (stringcmp(argv[i], "-H") == 0) {
 			f_H = TRUE;
 			cout << "reading -H" << endl;
+			H_label.assign(argv[++i]);
 			H_Descr = NEW_OBJECT(linear_group_description);
 			i += H_Descr->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
@@ -88,6 +93,7 @@ int packing_was_description::read_arguments(int argc, std::string *argv,
 		else if (stringcmp(argv[i], "-N") == 0) {
 			f_N = TRUE;
 			cout << "reading -N" << endl;
+			N_label.assign(argv[++i]);
 			N_Descr = NEW_OBJECT(linear_group_description);
 			i += N_Descr->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
@@ -155,11 +161,13 @@ int packing_was_description::read_arguments(int argc, std::string *argv,
 				<< spread_tables_prefix << endl;
 		}
 
+#if 0
 		else if (stringcmp(argv[i], "-output_path") == 0) {
 			f_output_path = TRUE;
 			output_path.assign(argv[++i]);
 			cout << "-output_path " << output_path << endl;
 		}
+#endif
 
 		else if (stringcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;

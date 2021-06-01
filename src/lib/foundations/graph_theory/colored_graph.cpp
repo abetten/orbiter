@@ -1638,7 +1638,7 @@ void colored_graph::draw_partitioned(std::string &fname,
 	}
 }
 
-#if 0
+
 colored_graph *colored_graph::compute_neighborhood_subgraph(
 	int pt,
 	fancy_set *&vertex_subset, fancy_set *&color_subset,
@@ -1648,11 +1648,12 @@ colored_graph *colored_graph::compute_neighborhood_subgraph(
 	colored_graph *S;
 	int *color_in_graph;
 	int *color_in_subgraph;
-	long int i, j, l, len, ii, jj;
+	long int i, j, l, ii, jj;
 	long int *point_labels;
 	int c, idx;
 	int nb_points_subgraph;
-	uchar *bitvec;
+	//uchar *bitvec;
+	bitvector *Bitvec;
 	sorting Sorting;
 	long int *subgraph_user_data;
 
@@ -1671,7 +1672,7 @@ colored_graph *colored_graph::compute_neighborhood_subgraph(
 
 	// new user data = old user data plus the label of the point pt:
 	subgraph_user_data = NEW_lint(user_data_size + 1);
-	lint_vec_copy(user_data, subgraph_user_data, user_data_size);
+	Orbiter->Lint_vec.copy(user_data, subgraph_user_data, user_data_size);
 	subgraph_user_data[user_data_size] = points[pt];
 
 	color_in_graph = NEW_int(nb_points * nb_colors_per_vertex);
@@ -1718,17 +1719,24 @@ colored_graph *colored_graph::compute_neighborhood_subgraph(
 		}
 	}
 	
+	Bitvec = NEW_OBJECT(bitvector);
+
 	l = ((long int) nb_points_subgraph * (long int) (nb_points_subgraph - 1)) >> 1;
-	len = (l + 7) >> 3;
-	bitvec = NEW_uchar(len);
-	for (i = 0; i < len; i++) {
-		bitvec[i] = 0;
-	}
-	S->init(nb_points_subgraph, color_subset->k, nb_colors_per_vertex,
-			color_in_subgraph, bitvec, TRUE, verbose_level);
+
+
+	Bitvec->allocate(l);
+
+	S->init(nb_points_subgraph,
+			color_subset->k, nb_colors_per_vertex,
+			color_in_subgraph,
+			Bitvec, TRUE,
+			verbose_level);
+
+
+
 
 	// set the vertex labels:
-	lint_vec_copy(point_labels, S->points, nb_points_subgraph);
+	Orbiter->Lint_vec.copy(point_labels, S->points, nb_points_subgraph);
 
 	S->init_user_data(subgraph_user_data, user_data_size + 1, verbose_level);
 
@@ -1759,6 +1767,7 @@ colored_graph *colored_graph::compute_neighborhood_subgraph(
 	return S;
 }
 
+#if 0
 colored_graph
 *colored_graph::compute_neighborhood_subgraph_with_additional_test_function(
 	int pt,
