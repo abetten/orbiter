@@ -374,7 +374,7 @@ void interface_symbol_table::definition_of_graph(orbiter_top_level_session *Orbi
 
 
 	if (f_v) {
-		cout << "interface_symbol_table::definition_of_graph we created a set on " << Gr->N
+		cout << "interface_symbol_table::definition_of_graph we created a graph on " << Gr->N
 				<< " points, called " << Gr->label << endl;
 
 #if 0
