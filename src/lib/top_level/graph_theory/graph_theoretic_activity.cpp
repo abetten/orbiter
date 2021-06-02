@@ -75,13 +75,19 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 
 
 
-		cout << "before Clique_finder_control->all_cliques" << endl;
+		if (f_v) {
+			cout << "before Clique_finder_control->all_cliques" << endl;
+		}
 		Descr->Clique_finder_control->all_cliques(
 				CG, Gr->label,
 				verbose_level);
-		cout << "after Clique_finder_control->all_cliques" << endl;
+		if (f_v) {
+			cout << "after Clique_finder_control->all_cliques" << endl;
+		}
 
-		cout << "nb_sol = " << Descr->Clique_finder_control->nb_sol << endl;
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity Gr->label=" << Gr->label << " nb_sol = " << Descr->Clique_finder_control->nb_sol << endl;
+		}
 
 		if (!Gr->f_has_CG) {
 			FREE_OBJECT(CG);
