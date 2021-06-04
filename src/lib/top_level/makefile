@@ -10,12 +10,12 @@ all: algebra_and_number_theory \
 	interfaces \
 	isomorph \
 	orbits \
+	packings \
 	projective_space \
 	quartic_curves \
 	semifields \
 	solver \
 	spreads \
-	packings \
 	surfaces
 
 
@@ -28,12 +28,12 @@ graph_theory : graph_theory2 ;
 interfaces : interfaces2 ; 
 isomorph : isomorph2 ; 
 orbits : orbits2 ; 
+packings : packings2 ; 
 projective_space : projective_space2 ; 
 quartic_curves : quartic_curves2 ; 
 semifields : semifields2 ; 
 solver : solver2 ; 
 spreads : spreads2 ; 
-packings : packings2 ; 
 surfaces : surfaces2 ; 
 
 algebra_and_number_theory2 :  ; cd algebra_and_number_theory; $(MAKE)
@@ -43,12 +43,12 @@ graph_theory2 :  ; cd graph_theory; $(MAKE)
 interfaces2 :  ; cd interfaces; $(MAKE)
 isomorph2 :  ; cd isomorph; $(MAKE)
 orbits2 :  ; cd orbits; $(MAKE)
+packings2 :  ; cd packings; $(MAKE)
 projective_space2 :  ; cd projective_space; $(MAKE)
 quartic_curves2 :  ; cd quartic_curves; $(MAKE)
 semifields2 :  ; cd semifields; $(MAKE)
 solver2 :  ; cd solver; $(MAKE)
 spreads2 :  ; cd spreads; $(MAKE)
-packings2 :  ; cd packings; $(MAKE)
 surfaces2 :  ; cd surfaces; $(MAKE)
 
 

@@ -26,6 +26,12 @@ packing_long_orbits::packing_long_orbits()
 	fixpoint_clique_orbit_numbers = NULL;
 	fixpoint_clique_stabilizer_gens = NULL;
 	fixpoint_clique = NULL;
+
+
+	Orbit_lengths = NULL;
+	nb_orbit_lengths = 0;
+	Type_idx = NULL;
+
 	long_orbit_idx = 0;
 	set = NULL;
 
@@ -67,14 +73,31 @@ void packing_long_orbits::init(packing_was_fixpoints *PWF,
 	packing_long_orbits::PWF = PWF;
 	packing_long_orbits::Descr = Descr;
 
+#if 0
 	if (!Descr->f_orbit_length) {
 		cout << "packing_long_orbits::init please specify orbit length" << endl;
 		exit(1);
 	}
+#endif
 
-	long_orbit_idx = PWF->PW->find_orbits_of_length(Descr->orbit_length);
-	if (f_v) {
-		cout << "packing_long_orbits::init long_orbit_idx = " << long_orbit_idx << endl;
+	if (Descr->f_mixed_orbits) {
+		Orbiter->Int_vec.scan(Descr->mixed_orbits_length_text, Orbit_lengths, nb_orbit_lengths);
+		if (f_v) {
+			cout << "packing_long_orbits::init Orbit_lengths=";
+			Orbiter->Int_vec.print(cout, Orbit_lengths, nb_orbit_lengths);
+			cout << endl;
+		}
+	}
+	else if (Descr->f_orbit_length) {
+
+		long_orbit_idx = PWF->PW->find_orbits_of_length(Descr->orbit_length);
+		if (f_v) {
+			cout << "packing_long_orbits::init long_orbit_idx = " << long_orbit_idx << endl;
+		}
+	}
+	else {
+		cout << "please use either -mixed_orbits or -orbit_length" << endl;
+		exit(1);
 	}
 
 
@@ -201,7 +224,9 @@ void packing_long_orbits::list_of_cases_from_file(int verbose_level)
 	for (idx = 0; idx < Packings_by_case.size(); idx++) {
 		total += Packings_by_case[idx].size();
 	}
-	cout << "total number of packings = " << total << endl;
+	if (f_v) {
+		cout << "total number of packings = " << total << endl;
+	}
 
 	std::string fname_out;
 	string_tools ST;
@@ -212,7 +237,9 @@ void packing_long_orbits::list_of_cases_from_file(int verbose_level)
 
 	Fio.int_vec_write_csv(Nb, m, fname_out, "nb packings before iso");
 
-	cout << "written file " << fname_out << " of size " << Fio.file_size(fname_out.c_str()) << endl;
+	if (f_v) {
+		cout << "written file " << fname_out << " of size " << Fio.file_size(fname_out.c_str()) << endl;
+	}
 
 
 	FREE_int(Nb);
@@ -320,18 +347,21 @@ void packing_long_orbits::process_single_case(
 	fixpoint_clique_stabilizer_gens = PWF->get_stabilizer(fixpoints_clique_case_number);
 
 
-#if 1
+
 	if (f_v) {
 		cout << "packing_long_orbits::process_single_case before init_fixpoint_clique_from_orbit_numbers" << endl;
 	}
-
 	init_fixpoint_clique_from_orbit_numbers(verbose_level);
+	if (f_v) {
+		cout << "packing_long_orbits::process_single_case after init_fixpoint_clique_from_orbit_numbers" << endl;
+	}
+
+
+
 
 	if (f_v) {
 		cout << "packing_long_orbits::process_single_case before L->filter_orbits" << endl;
 	}
-#endif
-
 	filter_orbits(verbose_level - 2);
 	if (f_v) {
 		cout << "packing_long_orbits::process_single_case after L->filter_orbits" << endl;
@@ -342,8 +372,6 @@ void packing_long_orbits::process_single_case(
 		cout << "packing_long_orbits::process_single_case "
 				"before L->create_graph_on_remaining_long_orbits" << endl;
 	}
-
-
 	create_graph_on_remaining_long_orbits(
 			Packings_classified,
 			Packings,
@@ -354,13 +382,6 @@ void packing_long_orbits::process_single_case(
 	}
 
 
-#if 0
-	if (PWF->PW->Descr->f_report) {
-		cout << "doing a report" << endl;
-
-		//PWF->report(this, verbose_level);
-	}
-#endif
 
 	if (f_v) {
 		cout << "packing_long_orbits::process_single_case " << fixpoints_clique_case_number << " done" << endl;
@@ -437,6 +458,9 @@ void packing_long_orbits::filter_orbits(int verbose_level)
 		orbit_length = PWF->PW->reduced_spread_orbits_under_H->Orbits_classified_length[t];
 		Filtered_orbits->Set_size[t] = 0;
 
+		if (f_v) {
+			cout << "packing_long_orbits::filter_orbits testing orbits of length " << orbit_length << ", there are " << Input->Set_size[t] << " orbits before the test" << endl;
+		}
 		for (i = 0; i < Input->Set_size[t]; i++) {
 			b = Input->element(t, i);
 
@@ -447,7 +471,7 @@ void packing_long_orbits::filter_orbits(int verbose_level)
 				exit(1);
 			}
 
-			if (f_v) {
+			if (FALSE) {
 				cout << "packing_long_orbits::filter_orbits t=" << t << " i=" << i << " b=" << b << " orbit=";
 				Orbiter->Lint_vec.print(cout, set, len1);
 				cout << endl;
@@ -459,15 +483,21 @@ void packing_long_orbits::filter_orbits(int verbose_level)
 				// add b to the list in Reduced_Orbits_by_length:
 
 				Filtered_orbits->add_element(t, b);
-				if (f_v) {
+				if (FALSE) {
 					cout << "accepted as vertex " << Filtered_orbits->Set_size[t] - 1 << endl;
 				}
 			}
 			else {
-				if (f_v) {
+				if (FALSE) {
 					cout << "rejected" << endl;
 				}
 			}
+		}
+		if (f_v) {
+			cout << "packing_long_orbits::filter_orbits testing orbits of length " << orbit_length << " done, "
+					"there are " << Input->Set_size[t] << " orbits before the test, "
+					" of which " << Filtered_orbits->Set_size[t] << " survive."
+					<< endl;
 		}
 	}
 
@@ -547,7 +577,6 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 		create_graph_and_save_to_file(
 					CG,
 					fname_graph,
-					Descr->orbit_length /* orbit_length */,
 					FALSE /* f_has_user_data */, NULL /*user_data*/, 0 /*user_data_sz*/,
 					verbose_level);
 		if (f_v) {
@@ -559,6 +588,12 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 		FREE_OBJECT(CG);
 	}
 	if (Descr->f_solve) {
+
+
+		cout << "calling solver is disabled for now" << endl;
+		exit(1);
+
+#if 0
 		if (f_v) {
 			cout << "calling solver" << endl;
 		}
@@ -583,6 +618,8 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 			cout << "executing command: " << cmd << endl;
 		}
 		system(cmd.c_str());
+#endif
+
 	}
 
 
@@ -899,7 +936,6 @@ void packing_long_orbits::create_fname_graph_on_remaining_long_orbits()
 void packing_long_orbits::create_graph_and_save_to_file(
 	colored_graph *&CG,
 	std::string &fname,
-	int orbit_length,
 	int f_has_user_data, long int *user_data, int user_data_size,
 	int verbose_level)
 {
@@ -910,18 +946,67 @@ void packing_long_orbits::create_graph_and_save_to_file(
 	}
 
 
-	int type_idx;
+	if (Descr->f_orbit_length) {
 
-	PWF->PW->reduced_spread_orbits_under_H->create_graph_on_orbits_of_a_certain_length_override_orbits_classified(
-		CG,
-		fname,
-		orbit_length,
-		type_idx,
-		f_has_user_data, user_data, user_data_size,
-		packing_long_orbit_test_function,
-		this /* void *test_function_data */,
-		Filtered_orbits,
-		verbose_level);
+
+		if (f_v) {
+			cout << "packing_long_orbits::create_graph_and_save_to_file before create_graph_on_orbits_of_a_certain_length_override_orbits_classified" << endl;
+		}
+		int type_idx;
+
+		PWF->PW->reduced_spread_orbits_under_H->create_graph_on_orbits_of_a_certain_length_override_orbits_classified(
+			CG,
+			fname,
+			Descr->orbit_length,
+			type_idx,
+			f_has_user_data, user_data, user_data_size,
+			packing_long_orbit_test_function,
+			this /* void *test_function_data */,
+			Filtered_orbits,
+			verbose_level);
+
+		if (f_v) {
+			cout << "packing_long_orbits::create_graph_and_save_to_file after create_graph_on_orbits_of_a_certain_length_override_orbits_classified" << endl;
+		}
+	}
+	else if (Descr->f_mixed_orbits) {
+
+		if (f_v) {
+			cout << "packing_long_orbits::create_graph_and_save_to_file before create_weighted_graph_on_orbits" << endl;
+		}
+
+
+		PWF->PW->reduced_spread_orbits_under_H->create_weighted_graph_on_orbits(
+			CG,
+			fname,
+			Orbit_lengths,
+			nb_orbit_lengths,
+			Type_idx,
+			f_has_user_data, user_data, user_data_size,
+			packing_long_orbit_test_function,
+			this /* void *test_function_data */,
+			Filtered_orbits,
+			verbose_level);
+
+
+		if (f_v) {
+			int i;
+			cout << "i : Orbit_lengths[i] : Type_idx[i]" << endl;
+			for (i = 0; i < nb_orbit_lengths; i++) {
+				cout << i << " : " << Orbit_lengths[i] << " : " << Type_idx[i] << endl;
+			}
+		}
+
+		if (f_v) {
+			cout << "packing_long_orbits::create_graph_and_save_to_file after create_weighted_graph_on_orbits" << endl;
+		}
+
+
+	}
+	else {
+		cout << "neither -orbit_length nor -mixed_orbits has been given" << endl;
+		exit(1);
+	}
 
 	CG->save(fname, verbose_level);
 
@@ -947,7 +1032,6 @@ void packing_long_orbits::create_graph_on_long_orbits(
 	create_graph_and_save_to_file(
 			CG,
 			fname_graph,
-			Descr->orbit_length /* orbit_length */,
 			TRUE /* f_has_user_data */, user_data, user_data_sz,
 			verbose_level);
 

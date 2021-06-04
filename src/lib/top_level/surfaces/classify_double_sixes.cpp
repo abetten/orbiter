@@ -487,7 +487,7 @@ void classify_double_sixes::classify_partial_ovoids(int verbose_level)
 		schreier_depth, 
 		f_use_invariant_subset_if_available, 
 		f_debug, 
-		verbose_level);
+		verbose_level - 3);
 	if (f_v) {
 		cout << "classify_double_sixes::classify_partial_ovoids "
 				"classifying starter done" << endl;

@@ -338,6 +338,35 @@ void diophant::init_partition_problem(
 	}
 }
 
+void diophant::init_partition_problem_with_bounds(
+	int *weights, int *bounds, int nb_weights, int target_value,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int j;
+
+	if (f_v) {
+		cout << "diophant::init_partition_problem_with_bounds" << endl;
+	}
+	open(1, nb_weights);
+	for (j = 0; j < nb_weights; j++) {
+		x_max[j] = bounds[j]; // target_value / weights[j];
+		x_min[j] = 0;
+	}
+	//f_x_max = TRUE;
+	f_has_sum = FALSE;
+	//sum = nb_to_select;
+	for (j = 0; j < nb_weights; j++) {
+		Aij(0, j) = weights[j];
+	}
+	RHSi(0) = target_value;
+	RHS_low_i(0) = 0; // not used
+	if (f_v) {
+		cout << "diophant::init_partition_problem_with_bounds" << endl;
+	}
+}
+
+
 
 void diophant::init_problem_of_Steiner_type_with_RHS(
 	int nb_rows, int nb_cols, int *Inc, int nb_to_select,

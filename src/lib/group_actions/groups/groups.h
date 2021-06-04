@@ -557,6 +557,17 @@ public:
 		void *test_function_data,
 		set_of_sets *my_orbits_classified,
 		int verbose_level);
+	void create_weighted_graph_on_orbits(
+		colored_graph *&CG,
+		std::string &fname,
+		int *Orbit_lengths,
+		int nb_orbit_lengths,
+		int *&Type_idx,
+		int f_has_user_data, long int *user_data, int user_data_size,
+		int (*test_function)(long int *orbit1, int orbit_length1, long int *orbit2, int orbit_length2, void *data),
+		void *test_function_data,
+		set_of_sets *my_orbits_classified,
+		int verbose_level);
 	void compute_orbit_invariant_after_classification(
 			set_of_sets *&Orbit_invariant,
 			int (*evaluate_orbit_invariant_function)(int a, int i, int j, void *evaluate_data, int verbose_level),

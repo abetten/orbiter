@@ -26,8 +26,16 @@ packing_long_orbits_description::packing_long_orbits_description()
 	f_orbit_length = FALSE;
 	orbit_length = 0;
 
+	f_mixed_orbits = FALSE;
+	//std::string mixed_orbits_length_text;
+
+#if 0
 	f_clique_size = FALSE;
 	clique_size = 0;
+
+	f_max_clique_size = FALSE;
+	max_clique_size = 0;
+#endif
 
 	f_list_of_cases_from_file = FALSE;
 	//std::string process_list_of_cases_from_file_fname;
@@ -71,11 +79,25 @@ int packing_long_orbits_description::read_arguments(int argc, std::string *argv,
 			cout << "-orbit_length " << orbit_length << " " << endl;
 		}
 
+		else if (stringcmp(argv[i], "-mixed_orbits") == 0) {
+			f_mixed_orbits = TRUE;
+			mixed_orbits_length_text.assign(argv[++i]);
+			cout << "-mixed_orbits " << mixed_orbits_length_text << " " << endl;
+		}
+
+#if 0
 		else if (stringcmp(argv[i], "-clique_size") == 0) {
 			f_clique_size = TRUE;
 			clique_size = strtoi(argv[++i]);
 			cout << "-clique_size " << clique_size << " " << endl;
 		}
+
+		else if (stringcmp(argv[i], "-max_clique_size") == 0) {
+			f_max_clique_size = TRUE;
+			max_clique_size = strtoi(argv[++i]);
+			cout << "-max_clique_size " << max_clique_size << " " << endl;
+		}
+#endif
 
 		else if (stringcmp(argv[i], "-list_of_cases_from_file") == 0) {
 			f_list_of_cases_from_file = TRUE;

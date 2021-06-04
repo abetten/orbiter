@@ -258,6 +258,9 @@ public:
 	void init_partition_problem(
 		int *weights, int nb_weights, int target_value,
 		int verbose_level);
+	void init_partition_problem_with_bounds(
+		int *weights, int *bounds, int nb_weights, int target_value,
+		int verbose_level);
 	void init_problem_of_Steiner_type_with_RHS(int nb_rows, 
 		int nb_cols, int *Inc, int nb_to_select, 
 		int *Rhs, int verbose_level);

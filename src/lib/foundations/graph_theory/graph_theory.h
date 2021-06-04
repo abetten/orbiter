@@ -183,7 +183,10 @@ public:
 	int f_target_size;
 	int target_size;
 	int f_weighted;
+	int weights_total;
+	int weights_offset;
 	std::string weights_string;
+	std::string weights_bounds;
 	int f_Sajeeb;
 	int f_nonrecursive;
 	int f_output_solution_raw;
@@ -216,8 +219,6 @@ public:
 	void do_Sajeeb_black_and_white(colored_graph *CG,
 			int clique_size, std::vector<std::vector<long int> >& solutions,
 			int verbose_level);
-	void all_cliques_weighted(colored_graph *CG,
-		int verbose_level);
 
 };
 
@@ -608,6 +609,9 @@ public:
 	void make_graph_of_disjoint_sets_from_rows_of_matrix(
 		int *M, int m, int n,
 		int *&Adj, int verbose_level);
+	void all_cliques_weighted_with_two_colors(clique_finder_control *Descr,
+			colored_graph *CG,
+			int verbose_level);
 
 };
 

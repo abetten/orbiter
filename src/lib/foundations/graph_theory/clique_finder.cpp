@@ -30,10 +30,6 @@ clique_finder::clique_finder()
 	f_write_tree = FALSE;
 	fp_tree = NULL;
 
-	//f_has_bitmatrix = FALSE;
-	//Bitmatrix_adjacency = NULL;
-	//bitmatrix_adjacency = NULL;
-
 	f_has_row_by_row_adjacency_matrix = FALSE;
 	row_by_row_adjacency_matrix = NULL;
 
@@ -87,11 +83,6 @@ void clique_finder::free()
 	if (point_is_suspicous) {
 		FREE_int(point_is_suspicous);
 	}
-#if 0
-	if (Bitmatrix_adjacency) {
-		FREE_OBJECT(Bitmatrix_adjacency);
-	}
-#endif
 	if (pt_list) {
 		FREE_int(pt_list);
 	}
@@ -152,7 +143,6 @@ void clique_finder::init(std::string &label, int n,
 	int i;
 	
 	label.assign(label);
-	//strcpy(clique_finder::label, label);
 	
 	clique_finder::f_store_solutions = f_store_solutions;
 	clique_finder::n = n;
@@ -220,7 +210,6 @@ void clique_finder::init(std::string &label, int n,
 	counter = 0;
 	decision_step_counter = 0;
 
-	//allocate_bitmatrix(verbose_level);
 
 	if (f_v) {
 		cout << "clique_finder::init finished" << endl;
