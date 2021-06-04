@@ -26,6 +26,7 @@ namespace foundations {
 
 
 
+#include "DATA/quartic_curves_q9.cpp"
 #include "DATA/quartic_curves_q13.cpp"
 #include "DATA/quartic_curves_q19.cpp"
 #include "DATA/quartic_curves_q25.cpp"
@@ -108,7 +109,10 @@ int knowledge_base::quartic_curves_nb_reps(int q)
 {
 	int nb;
 
-	if (q == 13) {
+	if (q == 9) {
+		nb = quartic_curves_q9_nb_reps;
+	}
+	else if (q == 13) {
 		nb = quartic_curves_q13_nb_reps;
 	}
 	else if (q == 19) {
@@ -139,7 +143,12 @@ int *knowledge_base::quartic_curves_representative(int q, int i)
 {
 	int *p, nb, sz;
 
-	if (q == 13) {
+	if (q == 9) {
+		p = quartic_curves_q9_reps;
+		nb = quartic_curves_q9_nb_reps;
+		sz = quartic_curves_q9_size;
+	}
+	else if (q == 13) {
 		p = quartic_curves_q13_reps;
 		nb = quartic_curves_q13_nb_reps;
 		sz = quartic_curves_q13_size;
@@ -194,7 +203,11 @@ long int *knowledge_base::quartic_curves_bitangents(int q, int i)
 	long int *p;
 	int nb;
 
-	if (q == 13) {
+	if (q == 9) {
+		p = quartic_curves_q9_Bitangents;
+		nb = quartic_curves_q9_nb_reps;
+	}
+	else if (q == 13) {
 		p = quartic_curves_q13_Bitangents;
 		nb = quartic_curves_q13_nb_reps;
 	}
@@ -244,7 +257,15 @@ void knowledge_base::quartic_curves_stab_gens(int q, int i,
 	int nb, make_element_size;
 	int f, l;
 
-	if (q == 13) {
+	if (q == 9) {
+		Reps = quartic_curves_q9_stab_gens;
+		nb = quartic_curves_q9_nb_reps;
+		make_element_size = quartic_curves_q9_make_element_size;
+		f = quartic_curves_q9_stab_gens_fst[i];
+		l = quartic_curves_q9_stab_gens_len[i];
+		stab_order = quartic_curves_q9_stab_order[i];
+	}
+	else if (q == 13) {
 		Reps = quartic_curves_q13_stab_gens;
 		nb = quartic_curves_q13_nb_reps;
 		make_element_size = quartic_curves_q13_make_element_size;

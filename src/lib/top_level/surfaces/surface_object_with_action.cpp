@@ -1668,6 +1668,9 @@ void surface_object_with_action::all_quartic_curves(
 	}
 	int pt_orbit;
 
+
+	ost << "Orbits on points not on lines nb orbits = " << Orbits_on_points_not_on_lines->nb_orbits << "\\\\" << endl;
+
 	for (pt_orbit = 0; pt_orbit < Orbits_on_points_not_on_lines->nb_orbits; pt_orbit++) {
 
 		ost << "\\section{Quartic curve associated with orbit " << pt_orbit
