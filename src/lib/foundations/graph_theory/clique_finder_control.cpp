@@ -24,7 +24,10 @@ clique_finder_control::clique_finder_control()
 	f_target_size = FALSE;
 	target_size = 0;
 	f_weighted = FALSE;
+	weights_total = FALSE;
+	weights_offset = 0;
 	//weights_string;
+	//weights_bounds
 	f_Sajeeb = FALSE;
 	//f_file = FALSE;
 	//fname_graph = NULL;
@@ -68,8 +71,11 @@ int clique_finder_control::parse_arguments(
 		}
 		else if (stringcmp(argv[i], "-weighted") == 0) {
 			f_weighted = TRUE;
+			weights_total = strtoi(argv[++i]);
+			weights_offset = strtoi(argv[++i]);
 			weights_string.assign(argv[++i]);
-			cout << "-weighted " << weights_string << endl;
+			weights_bounds.assign(argv[++i]);
+			cout << "-weighted " << weights_total << " " << weights_offset << " " << weights_string << " " << weights_bounds << endl;
 		}
 		else if (stringcmp(argv[i], "-Sajeeb") == 0) {
 			f_Sajeeb = TRUE;
@@ -145,7 +151,7 @@ void clique_finder_control::all_cliques(colored_graph *CG,
 
 	if (f_v) {
 		cout << "clique_finder_control::all_cliques" << endl;
-		}
+	}
 	if (f_output_file) {
 		fname_sol.assign(output_file);
 	}
@@ -175,7 +181,10 @@ void clique_finder_control::all_cliques(colored_graph *CG,
 							"weighted cliques" << endl;
 				}
 
-				all_cliques_weighted(CG, verbose_level);
+				graph_theory_domain GT;
+
+
+				GT.all_cliques_weighted_with_two_colors(this, CG, verbose_level);
 
 
 
@@ -221,12 +230,23 @@ void clique_finder_control::all_cliques(colored_graph *CG,
 			if (f_Sajeeb) {
 				if (f_v) {
 					cout << "clique_finder_control::all_cliques "
-							"before do_Sajeeb" << endl;
+							"before do_Sajeeb_black_and_white" << endl;
 				}
 				std::vector<std::vector<long int> > solutions;
-				do_Sajeeb_black_and_white(CG, target_size, solutions, verbose_level);
+
+				do_Sajeeb_black_and_white(CG, target_size, solutions, verbose_level - 2);
+
 				// Print the solutions
-				cout << "clique_finder_control::do_Sajeeb Found " << solutions.size() << " solution(s)." << endl;
+				if (f_v) {
+					cout << "clique_finder_control::all_cliques after do_Sajeeb_black_and_white Found " << solutions.size() << " solution(s)." << endl;
+				}
+
+
+				if (f_v) {
+					cout << "clique_finder_control::all_cliques "
+							"before writing solutions to file" << endl;
+				}
+
 				#if 1
 				for (size_t i = 0; i < solutions.size(); ++i) {
 					fp << solutions[i].size() << " ";
@@ -254,7 +274,7 @@ void clique_finder_control::all_cliques(colored_graph *CG,
 				#endif
 				if (f_v) {
 					cout << "clique_finder_control::all_cliques "
-							"after do_Sajeeb" << endl;
+							"after writing solutions to file" << endl;
 				}
 			}
 			else {
@@ -262,11 +282,24 @@ void clique_finder_control::all_cliques(colored_graph *CG,
 				int *Sol = NULL;
 				unsigned long int decision_step_counter = 0;
 
+				if (f_v) {
+					cout << "clique_finder_control::all_cliques "
+							"before CG->all_cliques_of_size_k_ignore_colors" << endl;
+				}
 				CG->all_cliques_of_size_k_ignore_colors(
 						target_size,
 						Sol, nb_sol,
 						decision_step_counter,
-						verbose_level);
+						verbose_level - 2);
+				if (f_v) {
+					cout << "clique_finder_control::all_cliques "
+							"before CG->all_cliques_of_size_k_ignore_colors" << endl;
+				}
+
+				if (f_v) {
+					cout << "clique_finder_control::all_cliques "
+							"before writing solutions to file" << endl;
+				}
 				for (int i = 0; i < nb_sol; ++i) {
 					fp << target_size << " ";
 					for (int j = 0; j < target_size; ++j) {
@@ -295,6 +328,11 @@ void clique_finder_control::all_cliques(colored_graph *CG,
 					}
 					fp_csv << endl;
 				}
+				if (f_v) {
+					cout << "clique_finder_control::all_cliques "
+							"after writing solutions to file" << endl;
+				}
+
 				FREE_int(Sol);
 			}
 		}
@@ -302,9 +340,10 @@ void clique_finder_control::all_cliques(colored_graph *CG,
 			<< " " << nb_decision_steps << " " << dt << endl;
 		fp_csv << "END" << endl;
 	}
+
 	if (f_v) {
 		cout << "clique_finder_control::all_cliques done" << endl;
-		}
+	}
 }
 
 void clique_finder_control::do_Sajeeb(colored_graph *CG, int verbose_level)
@@ -381,126 +420,6 @@ void clique_finder_control::do_Sajeeb_black_and_white(colored_graph *CG,
 		cout << "clique_finder_control::do_Sajeeb done" << endl;
 	}
 }
-void clique_finder_control::all_cliques_weighted(colored_graph *CG,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "clique_finder_control::all_cliques_weighted" << endl;
-		}
-
-	int *weights;
-	int nb_weights;
-	int target_value;
-	int i;
 
 
-	Orbiter->Int_vec.scan(weights_string, weights, nb_weights);
-
-	if (CG->nb_colors + 1 != nb_weights) {
-		cout << "CG.nb_colors + 1 != nb_weights" << endl;
-		exit(1);
-	}
-	target_value = weights[0];
-
-	for (i = 1; i < nb_weights; i++) {
-		weights[i - 1] = weights[i];
-	}
-	nb_weights--;
-
-	cout << "target_value = " << target_value << endl;
-	cout << "the weights are ";
-	Orbiter->Int_vec.print(cout, weights, nb_weights);
-	cout << endl;
-
-	if (nb_weights != 2) {
-		cout << "clique_finder_control::all_cliques_weighted "
-				"nb_weights != 2" << endl;
-		exit(1);
-	}
-
-	diophant D;
-	long int nb_backtrack_nodes;
-	int nb_sol;
-	int *Sol_weights;
-	int j;
-	vector<int> res;
-
-	D.init_partition_problem(
-			weights, nb_weights, target_value,
-			verbose_level);
-	D.solve_mckay("weights", INT_MAX /* maxresults */,
-			nb_backtrack_nodes, nb_sol, verbose_level);
-	cout << "we found " << nb_sol << " solutions for the "
-			"weight distribution" << endl;
-	Sol_weights = NEW_int(nb_sol * nb_weights);
-	for (i = 0; i < D._resultanz; i++) {
-		res = D._results.front();
-		for (j = 0; j < nb_weights; j++) {
-			Sol_weights[i * nb_weights + j] = res[j];
-			}
-		D._results.pop_front();
-		}
-	cout << "The solutions are:" << endl;
-	for (i = 0; i < nb_sol; i++) {
-		cout << i << " : ";
-		Orbiter->Int_vec.print(cout, Sol_weights + i * nb_weights, nb_weights);
-		cout << endl;
-	}
-
-	int c1 = 0;
-	int c2 = 1;
-
-	cout << "creating subgraph of color " << c1 << ":" << endl;
-	colored_graph *subgraph;
-	subgraph = CG->subgraph_by_color_classes(
-			c1, verbose_level);
-
-	cout << "The subgraph has size " << subgraph->nb_points << endl;
-
-	int target_depth1;
-	int target_depth2;
-	int nb_cliques_in_subgraph;
-	unsigned long int decision_step_counter;
-	int nb_solutions_total;
-	int *Sol;
-
-	nb_solutions_total = 0;
-	for (i = 0; i < nb_sol; i++) {
-		target_depth1 = Sol_weights[i * nb_weights + c1];
-		target_depth2 = Sol_weights[i * nb_weights + c2];
-		subgraph->all_cliques_of_size_k_ignore_colors(target_depth1,
-				Sol, nb_cliques_in_subgraph, decision_step_counter, verbose_level);
-		cout << "solution " << i << " with target_depth = " << target_depth1
-				<< " nb_cliques_in_subgraph=" << nb_cliques_in_subgraph << endl;
-
-		for (j = 0; j < nb_cliques_in_subgraph; j++) {
-			colored_graph *subgraph2;
-			int nb_cliques_in_subgraph2;
-			int *Sol2;
-			cout << "clique1 " << j << " / " << nb_cliques_in_subgraph << ":" << endl;
-			subgraph2 = CG->subgraph_by_color_classes_with_condition(
-						Sol + j * target_depth1, target_depth1,
-						c2, verbose_level);
-			cout << "subgraph2 has " << subgraph2->nb_points << " vertices" << endl;
-			subgraph2->all_cliques_of_size_k_ignore_colors(target_depth2,
-					Sol2, nb_cliques_in_subgraph2, decision_step_counter, verbose_level);
-			nb_solutions_total += nb_cliques_in_subgraph2;
-			cout << "nb_cliques_in_subgraph2=" << nb_cliques_in_subgraph2
-					<< " nb_solutions_total=" << nb_solutions_total << endl;
-			FREE_int(Sol2);
-			delete subgraph2;
-		}
-		FREE_int(Sol);
-	}
-	cout << "nb_solutions_total=" << nb_solutions_total << endl;
-	FREE_int(Sol_weights);
-
-	if (f_v) {
-		cout << "clique_finder_control::all_cliques_weighted done" << endl;
-		}
-}
-
-}
-}
+}}

@@ -822,9 +822,6 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 	}
 	int nb_points;
 	bitvector *Bitvec;
-	//uchar *bitvector_adjacency;
-	//long int bitvector_length_in_bits;
-	//long int bitvector_length;
 	long int L, L100;
 	long int i, j, k;
 	int a, b;
@@ -849,22 +846,13 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 
 	L100 = L / 100;
 
-	//bitvector_length_in_bits = L;
 	if (f_v) {
 		cout << "L = " << L << endl;
 		cout << "L100 = " << L100 << endl;
 	}
 
-#if 0
-	bitvector_length = (L + 7) >> 3;
-	bitvector_adjacency = NEW_uchar(bitvector_length);
-	for (i = 0; i < bitvector_length; i++) {
-		bitvector_adjacency[i] = 0;
-	}
-#else
 	Bitvec = NEW_OBJECT(bitvector);
 	Bitvec->allocate(L);
-#endif
 
 	t0 = Os.os_ticks();
 	k = 0;
@@ -884,7 +872,6 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 			}
 			//k = Combi.ij2k_lint(i, j, nb_points);
 
-#if 1
 			//cout << "i=" << i << " j=" << j << " k=" << k << endl;
 			if (L100) {
 				if ((k % L100) == 0) {
@@ -896,17 +883,15 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 					cout << endl;
 				}
 			}
-#endif
+
 
 			if ((*test_function)(orbit1, orbit_length, orbit2, orbit_length, test_function_data)) {
 				//cout << "is adjacent" << endl;
 				Bitvec->m_i(k, 1);
-				//bitvector_m_ii(bitvector_adjacency, k, 1);
 			}
 			else {
 				//cout << "is NOT adjacent" << endl;
-				Bitvec->m_i(k, 0);
-				//bitvector_m_ii(bitvector_adjacency, k, 0);
+				//Bitvec->m_i(k, 0);
 				// not needed because we initialize with zero.
 			}
 		k++;
@@ -923,12 +908,14 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 
 	CG = NEW_OBJECT(colored_graph);
 
-	CG->init_with_point_labels(nb_points, 1, 1,
-		NULL /*point_color*/,
-		Bitvec, TRUE /* f_ownership_of_bitvec */,
-		my_orbits_classified->Sets[type_idx],
-		verbose_level - 2);
-		// the adjacency becomes part of the colored_graph object
+	CG->init_with_point_labels(nb_points,
+			1 /*nb_colors*/,
+			1 /* nb_colors_per_vertex */,
+			NULL /*point_color*/,
+			Bitvec, TRUE /* f_ownership_of_bitvec */,
+			my_orbits_classified->Sets[type_idx],
+			verbose_level - 2);
+			// the adjacency becomes part of the colored_graph object
 
 	if (f_has_user_data) {
 		long int *my_user_data;
@@ -942,14 +929,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified" << endl;
 		}
 
-#if 0
-		int_vec_apply(user_data,
-			Orbits_classified->Sets[short_orbit_idx],
-			my_user_data,
-			user_data_size);
-#else
 		Orbiter->Lint_vec.copy(user_data, my_user_data, user_data_size);
-#endif
 
 		if (f_v) {
 			cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified user_data after: ";
@@ -962,8 +942,6 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 		FREE_lint(my_user_data);
 	}
 
-	//int_vec_copy(my_orbits_classified->Sets[type_idx], CG->points, nb_points);
-	//sprintf(CG->fname_base, "%s", fname);
 	CG->fname_base.assign(fname);
 
 
@@ -972,9 +950,6 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 	}
 
 
-	//CG->save(fname, verbose_level);
-
-	//FREE_OBJECT(CG);
 
 	FREE_lint(orbit1);
 	FREE_lint(orbit2);
@@ -983,6 +958,235 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified done" << endl;
 	}
 }
+
+
+void orbits_on_something::create_weighted_graph_on_orbits(
+	colored_graph *&CG,
+	std::string &fname,
+	int *Orbit_lengths,
+	int nb_orbit_lengths,
+	int *&Type_idx,
+	int f_has_user_data, long int *user_data, int user_data_size,
+	int (*test_function)(long int *orbit1, int orbit_length1, long int *orbit2, int orbit_length2, void *data),
+	void *test_function_data,
+	set_of_sets *my_orbits_classified,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_on_something::create_weighted_graph_on_orbits "
+				"orbit_lengths=";
+		Orbiter->Int_vec.print(cout, Orbit_lengths, nb_orbit_lengths);
+		cout << endl;
+	}
+	int nb_points_total;
+	long int *Pt_labels;
+	int *Pt_color;
+	int *Pts_fst;
+	int *Pts_len;
+	int max_orbit_length;
+	bitvector *Bitvec;
+	long int L, L100;
+	long int i, j, k;
+	int a, b;
+	combinatorics_domain Combi;
+	long int *orbit1;
+	long int *orbit2;
+	int l1, l2;
+	int t0, t1, dt;
+	os_interface Os;
+	int I, J, j0, fst, t;
+	int ol1, ol2;
+
+
+	Pts_fst = NEW_int(nb_orbit_lengths);
+	Pts_len = NEW_int(nb_orbit_lengths);
+	Type_idx = NEW_int(nb_orbit_lengths);
+
+	nb_points_total = 0;
+	max_orbit_length = 0;
+	for (i = 0; i < nb_orbit_lengths; i++) {
+		Type_idx[i] = get_orbit_type_index(Orbit_lengths[i]);
+		Pts_fst[i] = nb_points_total;
+		Pts_len[i] = my_orbits_classified->Set_size[Type_idx[i]];
+		nb_points_total += Pts_len[i];
+		max_orbit_length = MAX(max_orbit_length, Orbit_lengths[i]);
+	}
+
+
+
+	if (f_v) {
+		cout << "orbits_on_something::create_weighted_graph_on_orbits "
+				"max_orbit_length=" << max_orbit_length << endl;
+		cout << "orbits_on_something::create_weighted_graph_on_orbits "
+				"nb_points_total=" << nb_points_total << endl;
+
+		cout << "i : Type_idx[i] : Pts_fst[i] : Pts_len[i]" << endl;
+		for (i = 0; i < nb_orbit_lengths; i++) {
+			cout << i << " : " << Type_idx[i] << " : " << Pts_fst[i] << " : " << Pts_len[i] << endl;
+		}
+	}
+
+	if (f_v) {
+		cout << "orbits_on_something::create_weighted_graph_on_orbits creating Pt_labels[] and Pt_color[]" << endl;
+	}
+	Pt_labels = NEW_lint(nb_points_total);
+	Pt_color = NEW_int(nb_points_total);
+	for (I = 0; I < nb_orbit_lengths; I++) {
+		fst = Pts_fst[I];
+		t = Type_idx[I];
+		for (i = 0; i < Pts_len[I]; i++) {
+			Pt_labels[fst + i] = my_orbits_classified->Sets[t][fst + i];
+			Pt_color[fst + i] = I;
+		}
+	}
+
+
+	orbit1 = NEW_lint(max_orbit_length);
+	orbit2 = NEW_lint(max_orbit_length);
+
+	L = ((long int) nb_points_total * (long int) (nb_points_total - 1)) >> 1;
+
+	L100 = L / 100;
+
+	if (f_v) {
+		cout << "L = " << L << endl;
+		cout << "L100 = " << L100 << endl;
+	}
+
+	Bitvec = NEW_OBJECT(bitvector);
+	Bitvec->allocate(L);
+
+	t0 = Os.os_ticks();
+	k = 0;
+	for (I = 0; I < nb_orbit_lengths; I++) {
+		ol1 = Orbit_lengths[I];
+		for (i = 0; i < Pts_len[I]; i++) {
+			a = my_orbits_classified->Sets[Type_idx[I]][i];
+			Sch->get_orbit(a, orbit1, l1, 0 /* verbose_level*/);
+			if (l1 != ol1) {
+				cout << "orbits_on_something::create_weighted_graph_on_orbits l1 != ol1" << endl;
+				exit(1);
+			}
+			for (J = I; J < nb_orbit_lengths; J++) {
+				ol2 = Orbit_lengths[J];
+				if (I == J) {
+					j0 = i + 1;
+				}
+				else {
+					j0 = 0;
+				}
+				for (j = j0; j < Pts_len[J]; j++) {
+					b = my_orbits_classified->Sets[Type_idx[J]][j];
+					Sch->get_orbit(b, orbit2, l2, 0 /* verbose_level*/);
+					if (l2 != ol2) {
+						cout << "orbits_on_something::create_weighted_graph_on_orbits l2!= ol2" << endl;
+						exit(1);
+					}
+
+					//cout << "i=" << i << " j=" << j << " k=" << k << endl;
+
+					if (L100) {
+						if ((k % L100) == 0) {
+							t1 = Os.os_ticks();
+							dt = t1 - t0;
+							cout << "progress: "
+									<< (double) k / (double) L100 << " % dt=";
+							Os.time_check_delta(cout, dt);
+							cout << endl;
+						}
+					}
+
+
+					if ((*test_function)(orbit1, ol1, orbit2, ol2, test_function_data)) {
+						//cout << "is adjacent" << endl;
+						Bitvec->m_i(k, 1);
+					}
+					else {
+						//cout << "is NOT adjacent" << endl;
+						//Bitvec->m_i(k, 0);
+						// not needed because we initialize with zero.
+					}
+				k++;
+				}
+			}
+		}
+	}
+	if (k != L) {
+		cout << "orbits_on_something::create_weighted_graph_on_orbits l != L" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "orbits_on_something::create_weighted_graph_on_orbits the graph has been created" << endl;
+	}
+
+	if (f_v) {
+		cout << "orbits_on_something::create_weighted_graph_on_orbits creating colored_graph" << endl;
+	}
+
+
+	CG = NEW_OBJECT(colored_graph);
+
+	int nb_colors = nb_orbit_lengths;
+	//int nb_colors = my_orbits_classified->nb_sets;
+
+	CG->init_with_point_labels(nb_points_total,
+			nb_colors,
+			1 /* nb_colors_per_vertex */,
+			Pt_color /* point_color */,
+			Bitvec, TRUE /* f_ownership_of_bitvec */,
+			Pt_labels,
+			verbose_level - 2);
+			// the adjacency becomes part of the colored_graph object
+
+	if (f_has_user_data) {
+		long int *my_user_data;
+
+		my_user_data = NEW_lint(user_data_size);
+
+		if (f_v) {
+			cout << "orbits_on_something::create_weighted_graph_on_orbits user_data before: ";
+			Orbiter->Lint_vec.print(cout, user_data, user_data_size);
+			cout << endl;
+			cout << "orbits_on_something::create_weighted_graph_on_orbits" << endl;
+		}
+
+		Orbiter->Lint_vec.copy(user_data, my_user_data, user_data_size);
+
+		if (f_v) {
+			cout << "orbits_on_something::create_weighted_graph_on_orbits user_data after: ";
+			Orbiter->Lint_vec.print(cout, my_user_data, user_data_size);
+			cout << endl;
+		}
+
+		CG->init_user_data(my_user_data,
+				user_data_size, 0 /* verbose_level */);
+		FREE_lint(my_user_data);
+	}
+
+	CG->fname_base.assign(fname);
+
+
+	if (f_v) {
+		cout << "orbits_on_something::create_weighted_graph_on_orbits colored_graph created" << endl;
+	}
+
+
+	FREE_lint(Pt_labels);
+	FREE_int(Pt_color);
+	FREE_int(Pts_fst);
+	FREE_int(Pts_len);
+	FREE_lint(orbit1);
+	FREE_lint(orbit2);
+
+	if (f_v) {
+		cout << "orbits_on_something::create_weighted_graph_on_orbits done" << endl;
+	}
+}
+
+
 
 void orbits_on_something::compute_orbit_invariant_after_classification(
 		set_of_sets *&Orbit_invariant,

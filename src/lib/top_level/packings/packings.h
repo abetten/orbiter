@@ -268,9 +268,16 @@ public:
 	int f_orbit_length;
 	int orbit_length;
 
+	int f_mixed_orbits;
+	std::string mixed_orbits_length_text;
+
+#if 0
 	int f_clique_size;
 	int clique_size;
 
+	int f_max_clique_size;
+	int max_clique_size;
+#endif
 
 	int f_list_of_cases_from_file;
 	std::string list_of_cases_from_file_fname;
@@ -304,8 +311,13 @@ public:
 
 	int fixpoints_idx;
 	int fixpoint_clique_size;
+
+	int *Orbit_lengths;
+	int nb_orbit_lengths;
+	int *Type_idx;
+
 	int long_orbit_idx;
-	long int *set;
+	long int *set; // [Descr->orbit_length]
 
 
 
@@ -342,7 +354,6 @@ public:
 	void create_graph_and_save_to_file(
 			colored_graph *&CG,
 			std::string &fname,
-			int orbit_length,
 			int f_has_user_data, long int *user_data, int user_data_size,
 			int verbose_level);
 	void create_graph_on_long_orbits(

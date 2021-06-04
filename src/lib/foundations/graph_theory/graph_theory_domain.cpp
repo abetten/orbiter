@@ -1740,6 +1740,178 @@ void graph_theory_domain::make_graph_of_disjoint_sets_from_rows_of_matrix(
 }
 
 
+void graph_theory_domain::all_cliques_weighted_with_two_colors(clique_finder_control *Descr,
+		colored_graph *CG,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::all_cliques_weighted_with_two_colors" << endl;
+	}
+
+	int *weights;
+	int nb_weights;
+	int *bounds;
+	int nb_bounds;
+	int target_value;
+	int i;
+
+
+	Orbiter->Int_vec.scan(Descr->weights_string, weights, nb_weights);
+	Orbiter->Int_vec.scan(Descr->weights_bounds, bounds, nb_bounds);
+
+	if (nb_bounds != nb_weights) {
+		cout << "graph_theory_domain::all_cliques_weighted_with_two_colors nb_bounds != nb_weights" << endl;
+		exit(1);
+	}
+
+	if (nb_weights != 2) {
+		cout << "graph_theory_domain::all_cliques_weighted_with_two_colors "
+				"nb_weights != 2" << endl;
+		exit(1);
+	}
+	if (CG->nb_colors < nb_weights + Descr->weights_offset) {
+		cout << "graph_theory_domain::all_cliques_weighted_with_two_colors CG->nb_colors < nb_weights + weights_offset" << endl;
+		exit(1);
+	}
+
+	target_value = Descr->weights_total;
+
+	if (f_v) {
+		cout << "graph_theory_domain::all_cliques_weighted_with_two_colors target_value = " << target_value << endl;
+		cout << "graph_theory_domain::all_cliques_weighted_with_two_colors the weights are ";
+		Orbiter->Int_vec.print(cout, weights, nb_weights);
+		cout << endl;
+	}
+
+
+	diophant D;
+	long int nb_backtrack_nodes;
+	int nb_sol;
+	int *Sol_weights;
+	int j;
+	vector<int> res;
+
+	D.init_partition_problem_with_bounds(
+			weights, bounds, nb_weights, target_value,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "graph_theory_domain::all_cliques_weighted_with_two_colors before D.solve_mckay" << endl;
+	}
+	D.solve_mckay("weights", INT_MAX /* maxresults */,
+			nb_backtrack_nodes, nb_sol, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "graph_theory_domain::all_cliques_weighted_with_two_colors after D.solve_mckay" << endl;
+	}
+	if (f_v) {
+		cout << "graph_theory_domain::all_cliques_weighted_with_two_colors we found " << nb_sol << " solutions for the "
+			"weight distribution" << endl;
+	}
+
+	Sol_weights = NEW_int(nb_sol * nb_weights);
+
+	for (i = 0; i < D._resultanz; i++) {
+		res = D._results.front();
+		for (j = 0; j < nb_weights; j++) {
+			Sol_weights[i * nb_weights + j] = res[j];
+			}
+		D._results.pop_front();
+		}
+
+	if (f_v) {
+		cout << "graph_theory_domain::all_cliques_weighted_with_two_colors The solutions are:" << endl;
+		for (i = 0; i < nb_sol; i++) {
+			cout << i << " : ";
+			Orbiter->Int_vec.print(cout, Sol_weights + i * nb_weights, nb_weights);
+			cout << endl;
+		}
+	}
+
+	int c1 = Descr->weights_offset + 0;
+	int c2 = Descr->weights_offset + 1;
+
+	if (f_v) {
+		cout << "creating subgraph of color " << c1 << ":" << endl;
+	}
+
+	colored_graph *subgraph;
+
+	subgraph = CG->subgraph_by_color_classes(c1, verbose_level);
+
+	if (f_v) {
+		cout << "The subgraph of color " << c1 << " has size " << subgraph->nb_points << endl;
+	}
+
+	int target_depth1;
+	int target_depth2;
+	int nb_cliques_in_subgraph;
+	unsigned long int decision_step_counter;
+	int nb_solutions_total;
+	int *Sol;
+
+	nb_solutions_total = 0;
+
+	for (i = 0; i < nb_sol; i++) {
+
+		target_depth1 = Sol_weights[i * nb_weights + c1];
+		target_depth2 = Sol_weights[i * nb_weights + c2];
+
+		subgraph->all_cliques_of_size_k_ignore_colors(target_depth1,
+				Sol, nb_cliques_in_subgraph,
+				decision_step_counter, verbose_level);
+
+		if (f_v) {
+			cout << "solution " << i << " / " << nb_sol << " with target_depth = " << target_depth1
+					<< " nb_cliques_in_subgraph=" << nb_cliques_in_subgraph << endl;
+		}
+
+		for (j = 0; j < nb_cliques_in_subgraph; j++) {
+			colored_graph *subgraph2;
+			int nb_cliques_in_subgraph2;
+			int *Sol2;
+
+			if (f_v) {
+				cout <<  "solution " << i << " / " << nb_sol << ", clique1 " << j << " / " << nb_cliques_in_subgraph << ":" << endl;
+			}
+
+			subgraph2 = CG->subgraph_by_color_classes_with_condition(
+						Sol + j * target_depth1, target_depth1,
+						c2, verbose_level);
+
+			if (f_v) {
+				cout << "solution " << i << " / " << nb_sol << ", clique1 " << j << " / " << nb_cliques_in_subgraph << ", subgraph2 has " << subgraph2->nb_points << " vertices" << endl;
+			}
+
+			subgraph2->all_cliques_of_size_k_ignore_colors(target_depth2,
+					Sol2, nb_cliques_in_subgraph2,
+					decision_step_counter, verbose_level);
+
+			nb_solutions_total += nb_cliques_in_subgraph2;
+
+			if (f_v) {
+				cout << "solution " << i << " / " << nb_sol << ", clique1 " << j << " / " << nb_cliques_in_subgraph << ", nb_cliques_in_subgraph2=" << nb_cliques_in_subgraph2
+					<< " nb_solutions_total=" << nb_solutions_total << endl;
+			}
+
+			FREE_int(Sol2);
+			FREE_OBJECT(subgraph2);
+		}
+		FREE_int(Sol);
+	}
+
+	if (f_v) {
+		cout << "nb_solutions_total=" << nb_solutions_total << endl;
+	}
+
+	FREE_int(Sol_weights);
+
+	if (f_v) {
+		cout << "graph_theory_domain::all_cliques_weighted_with_two_colors done" << endl;
+	}
+}
 
 
 
