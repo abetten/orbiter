@@ -791,11 +791,11 @@ void surface_create::create_surface_by_coefficients(std::string &coefficients_te
 	for (i = 0; i < nb_terms; i++) {
 		a = surface_coeffs[2 * i + 0];
 		b = surface_coeffs[2 * i + 1];
-		if (a < 0 || a >= q) {
-			if (F->e == 1) {
+		if (a < 0) {
+			if (TRUE /*F->e == 1*/) {
 				number_theory_domain NT;
 
-				a = NT.mod(a, F->q);
+				a = NT.mod(a, F->p);
 			}
 			else {
 				cout << "surface_create::create_surface_by_coefficients "
