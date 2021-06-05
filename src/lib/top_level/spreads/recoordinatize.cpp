@@ -723,64 +723,20 @@ void recoordinatize::make_first_three(
 		long int &j1, long int &j2, long int &j3, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int f_v3 = (verbose_level >= 3);
-	int *M;
-	int i;
 	
 	if (f_v) {
 		cout << "recoordinatize::make_first_three" << endl;
 	}
-	M = NEW_int(k * n);
 
-	// make the element (I_k | 0). Let j1 be its rank
-	Orbiter->Int_vec.zero(M, k * n);
-	for (i = 0; i < k; i++) {
-		M[i * n + i] = 1;
-	}
-	if (f_v3) {
-		cout << "recoordinatize::compute_starter M1:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
-	}
-	j1 = Grass->rank_lint_here(M, 0/*verbose_level - 4*/);
-	if (f_v3) {
-		cout << "recoordinatize::compute_starter j1=" << j1 << endl;
+
+	j1 = Grass->make_special_element_zero(0 /* verbose_level */);
+	j2 = Grass->make_special_element_infinity(0 /* verbose_level */);
+	j3 = Grass->make_special_element_one(0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "recoordinatize::make_first_three j1=" << j1 << " j2=" << j2 << " j3=" << j3 << endl;
 	}
 
-	// make the element (0 | I_k). Let j2 be its rank
-	Orbiter->Int_vec.zero(M, k * n);
-	for (i = 0; i < k; i++) {
-		M[i * n + k + i] = 1;
-	}
-	if (f_v3) {
-		cout << "recoordinatize::compute_starter M2:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
-	}
-	j2 = Grass->rank_lint_here(M, 0/*verbose_level - 4*/);
-	if (f_v3) {
-		cout << "recoordinatize::compute_starter j2=" << j2 << endl;
-	}
-
-	// make the element (I_k | I_k). Let j3 be its rank
-	Orbiter->Int_vec.zero(M, k * n);
-	for (i = 0; i < k; i++) {
-		M[i * n + i] = 1;
-		M[i * n + k + i] = 1;
-	}
-	if (f_v3) {
-		cout << "recoordinatize::compute_starter M3:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
-	}
-	j3 = Grass->rank_lint_here(M, 0/*verbose_level - 4*/);
-	if (f_v3) {
-		cout << "recoordinatize::compute_starter j3=" << j3 << endl;
-	}
-
-	FREE_int(M);
-	if (f_vv) {
-		cout << "recoordinatize::make_first_three j1=" << j1
-				<< ", j2=" << j2 << ", j3=" << j3 << endl;
-	}
 	if (f_v) {
 		cout << "recoordinatize::make_first_three done" << endl;
 	}

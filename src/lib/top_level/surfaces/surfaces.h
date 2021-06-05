@@ -1302,7 +1302,7 @@ public:
 	classify_trihedral_pairs *Classify_trihedral_pairs;
 
 	recoordinatize *Recoordinatize;
-	int *regulus; // [regulus_size]
+	long int *regulus; // [regulus_size]
 	int regulus_size; // q + 1
 
 
@@ -1314,6 +1314,13 @@ public:
 			projective_space_with_action *PA,
 			int f_recoordinatize,
 			int verbose_level);
+	long int apply_null_polarity(
+		long int a, int verbose_level);
+	void complete_skew_hexagon(
+		long int *skew_hexagon, int verbose_level);
+	void create_regulus_and_opposite_regulus(
+		long int *three_skew_lines, long int *&regulus, long int *&opp_regulus, int &regulus_sz,
+		int verbose_level);
 	int create_double_six_safely(
 		long int *five_lines, long int transversal_line,
 		long int *double_six, int verbose_level);

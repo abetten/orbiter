@@ -147,6 +147,9 @@ projective_space_activity_description::projective_space_activity_description()
 	f_conic_type = FALSE;
 	//std::string conic_type_set_text;
 
+	f_lift_skew_hexagon = FALSE;
+	//lift_skew_hexagon_text
+
 }
 
 projective_space_activity_description::~projective_space_activity_description()
@@ -530,6 +533,13 @@ int projective_space_activity_description::read_arguments(
 			conic_type_set_text.assign(argv[++i]);
 			cout << "-conic_type "
 					<< conic_type_set_text << endl;
+		}
+
+		else if (stringcmp(argv[i], "-lift_skew_hexagon") == 0) {
+			f_lift_skew_hexagon = TRUE;
+			lift_skew_hexagon_text.assign(argv[++i]);
+			cout << "-lift_skew_hexagon "
+					<< lift_skew_hexagon_text << endl;
 		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {

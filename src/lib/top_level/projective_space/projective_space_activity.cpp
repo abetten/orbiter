@@ -355,6 +355,13 @@ void projective_space_activity::perform_activity(int verbose_level)
 				verbose_level);
 	}
 
+	else if (Descr->f_lift_skew_hexagon) {
+
+		do_lift_skew_hexagon(PA,
+				Descr->lift_skew_hexagon_text,
+				verbose_level);
+	}
+
 
 	if (f_v) {
 		cout << "projective_space_activity::perform_activity done" << endl;
@@ -982,6 +989,75 @@ void projective_space_activity::conic_type(
 
 	if (f_v) {
 		cout << "projective_space_activity::conic_type done" << endl;
+	}
+}
+
+void projective_space_activity::do_lift_skew_hexagon(
+		projective_space_with_action *PA,
+		std::string &text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "projective_space_activity::do_lift_skew_hexagon" << endl;
+	}
+
+	long int *Pts;
+	int nb_pts;
+
+	Orbiter->Lint_vec.scan(text, Pts, nb_pts);
+
+
+	if (nb_pts != 6) {
+		cout << "projective_space_activity::do_lift_skew_hexagon nb_pts != 6" << endl;
+		exit(1);
+	}
+
+	surface_domain *Surf;
+	surface_with_action *Surf_A;
+
+	if (PA->n != 3) {
+		cout << "projective_space_activity::do_lift_skew_hexagon we need a three-dimensional projective space" << endl;
+		exit(1);
+	}
+
+
+	if (f_v) {
+		cout << "projective_space_activity::do_lift_skew_hexagon before Surf->init" << endl;
+	}
+	Surf = NEW_OBJECT(surface_domain);
+	Surf->init(PA->F, 0 /*verbose_level - 1*/);
+	if (f_v) {
+		cout << "projective_space_activity::do_lift_skew_hexagon after Surf->init" << endl;
+	}
+
+	Surf_A = NEW_OBJECT(surface_with_action);
+
+	if (f_v) {
+		cout << "projective_space_activity::do_lift_skew_hexagon before Surf_A->init" << endl;
+	}
+	Surf_A->init(Surf, PA, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "projective_space_activity::do_lift_skew_hexagon after Surf_A->init" << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "projective_space_activity::do_lift_skew_hexagon before Surf_A->complete_skew_hexagon" << endl;
+	}
+
+	Surf_A->complete_skew_hexagon(Pts, verbose_level);
+
+	if (f_v) {
+		cout << "projective_space_activity::do_lift_skew_hexagon after Surf_A->complete_skew_hexagon" << endl;
+	}
+
+	if (f_v) {
+		cout << "projective_space_activity::do_lift_skew_hexagon done" << endl;
 	}
 }
 

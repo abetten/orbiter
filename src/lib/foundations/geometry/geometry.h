@@ -804,8 +804,8 @@ public:
 	void unrank_lint_here_and_compute_perp(int *Mtx, long int rk,
 		int verbose_level);
 		// Mtx must be n x n
-	void line_regulus_in_PG_3_q(int *&regulus,
-		int &regulus_size, int verbose_level);
+	void line_regulus_in_PG_3_q(long int *&regulus,
+		int &regulus_size, int f_opposite, int verbose_level);
 		// the equation of the hyperboloid is x_0x_3-x_1x_2 = 0
 	void compute_dual_line_idx(int *&dual_line_idx,
 			int *&self_dual_lines, int &nb_self_dual_lines,
@@ -815,6 +815,9 @@ public:
 	void latex_matrix(std::ostream &ost, int *p);
 	void latex_matrix_numerical(std::ostream &ost, int *p);
 	void create_Schlaefli_graph(int *&Adj, int &sz, int verbose_level);
+	long int make_special_element_zero(int verbose_level);
+	long int make_special_element_one(int verbose_level);
+	long int make_special_element_infinity(int verbose_level);
 
 };
 
