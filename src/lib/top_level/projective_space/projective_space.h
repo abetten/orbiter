@@ -608,6 +608,9 @@ public:
 	int f_conic_type;
 	std::string conic_type_set_text;
 
+	int f_lift_skew_hexagon;
+	std::string lift_skew_hexagon_text;
+
 	projective_space_activity_description();
 	~projective_space_activity_description();
 	int read_arguments(
@@ -711,8 +714,9 @@ public:
 			projective_space_with_action *PA,
 			std::string &set_text,
 			int verbose_level);
-	void cheat_sheet(
-			layered_graph_draw_options *O,
+	void do_lift_skew_hexagon(
+			projective_space_with_action *PA,
+			std::string &text,
 			int verbose_level);
 
 };

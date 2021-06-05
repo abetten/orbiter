@@ -69,7 +69,7 @@ void surface_with_action::freeself()
 		FREE_OBJECT(Recoordinatize);
 	}
 	if (regulus) {
-		FREE_int(regulus);
+		FREE_lint(regulus);
 	}
 	null();
 }
@@ -203,7 +203,7 @@ void surface_with_action::init(surface_domain *Surf,
 				"Surf->Gr->line_regulus_in_PG_3_q" << endl;
 	}
 	Surf->Gr->line_regulus_in_PG_3_q(regulus,
-			regulus_size, verbose_level);
+			regulus_size, FALSE /* f_opposite */, verbose_level);
 	if (f_v) {
 		cout << "surface_with_action::init after "
 				"Surf->Gr->line_regulus_in_PG_3_q" << endl;
@@ -286,6 +286,295 @@ int surface_with_action::create_double_six_safely(
 	return TRUE;
 }
 
+long int surface_with_action::apply_null_polarity(
+	long int a, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_with_action::apply_null_polarity" << endl;
+	}
+
+	int v[6];
+	int w[6];
+	int basis_line[8];
+	long int a_perp;
+
+	Surf->Klein->line_to_Pluecker(a, v, 0 /* verbose_level */);
+	w[0] = v[1];
+	w[1] = v[0];
+	w[2] = v[2];
+	w[3] = v[3];
+	w[4] = v[4];
+	w[5] = v[5];
+
+	Surf->Klein->Pluecker_to_line(w, basis_line, verbose_level);
+
+	a_perp = Surf->Klein->P3->rank_line(basis_line);
+
+	if (f_v) {
+		cout << "surface_with_action::apply_null_polarity done" << endl;
+	}
+	return a_perp;
+}
+
+void surface_with_action::complete_skew_hexagon(
+	long int *skew_hexagon, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "surface_with_action::complete_skew_hexagon" << endl;
+	}
+
+	long int three_skew_lines[3];
+	long int *regulus;
+	long int *opp_regulus;
+	int regulus_size;
+	int i, j, r;
+	long int a;
+	int Basis[8];
+	int Mtx[16];
+	int forbidden_points[6];
+	int Forbidden_points[6 * 4];
+	finite_field *F;
+	long int a1, a2, a3;
+	long int b1, b2, b3;
+	long int a4, a5, a6;
+	long int b4, b5, b6;
+	long int b6_image;
+	long int a4_image;
+	long int a5_image;
+	int v[2];
+	int w[8];
+	int z[4];
+	int idx[2];
+	long int double_six[12];
+
+	F = PA->F;
+
+	a1 = skew_hexagon[0];
+	a2 = skew_hexagon[1];
+	a3 = skew_hexagon[2];
+	b1 = skew_hexagon[3];
+	b2 = skew_hexagon[4];
+	b3 = skew_hexagon[5];
+
+	three_skew_lines[0] = skew_hexagon[0];
+	three_skew_lines[1] = skew_hexagon[1];
+	three_skew_lines[2] = skew_hexagon[2];
+
+	forbidden_points[0] = 0;
+	forbidden_points[1] = 1;
+	forbidden_points[2] = 2;
+	forbidden_points[3] = 3;
+
+	Orbiter->Int_vec.zero(Basis, 4);
+	Basis[0] = 1;
+	Basis[3] = 1;
+	forbidden_points[4] = PA->P->rank_point(Basis);
+
+	Orbiter->Int_vec.zero(Basis, 4);
+	Basis[1] = 1;
+	Basis[2] = 1;
+	forbidden_points[5] = PA->P->rank_point(Basis);
+
+	for (j = 0; j < 6; j++) {
+		PA->P->unrank_point(Forbidden_points + j * 4, forbidden_points[j]);
+	}
+	if (f_v) {
+		cout << "surface_with_action::complete_skew_hexagon Forbidden_points:" << endl;
+		Orbiter->Int_vec.matrix_print(Forbidden_points, 6, 4);
+	}
+
+	create_regulus_and_opposite_regulus(
+			three_skew_lines, regulus, opp_regulus, regulus_size,
+			verbose_level);
+
+
+	A->element_invert(Recoordinatize->Elt, Elt1, 0);
+
+
+	for (i = 0; i < regulus_size; i++) {
+
+		a = opp_regulus[i];
+		if (f_v) {
+			cout << "surface_with_action::complete_skew_hexagon i=" <<i << " / " << regulus_size << " a=" << a << endl;
+		}
+		Surf->Gr->unrank_lint_here(Basis, a, 0 /* verbose_level */);
+		for (j = 0; j < 6; j++) {
+			Orbiter->Int_vec.copy(Basis, Mtx, 8);
+			Orbiter->Int_vec.copy(Forbidden_points + j * 4, Mtx + 8, 4);
+			r = F->rank_of_rectangular_matrix(Mtx,
+					3, 4, 0 /* verbose_level*/);
+			if (r == 2) {
+				break;
+			}
+		}
+		if (j < 6) {
+			if (f_v) {
+				cout << "surface_with_action::complete_skew_hexagon i=" <<i << " / " << regulus_size << " a=" << a << " contains point " << j << ", skipping" << endl;
+			}
+			continue;
+		}
+		b6 = a;
+		if (f_v) {
+			cout << "surface_with_action::complete_skew_hexagon i=" <<i << " / " << regulus_size << " b6=" << b6 << endl;
+		}
+
+		// We map b1, b2, b3 to
+		// \ell_0,\ell_1,\ell_2, the first three lines in a regulus:
+		// This cannot go wrong because we know
+		// that the three lines are pairwise skew,
+		// and hence determine a regulus.
+		// This is because they are part of a
+		// partial ovoid on the Klein quadric.
+		Recoordinatize->do_recoordinatize(
+				b1, b2, b3,
+				verbose_level - 2);
+
+		A->element_invert(Recoordinatize->Elt, Elt1, 0);
+
+
+		b6_image = A2->element_image_of(b6,
+				Recoordinatize->Elt, 0 /* verbose_level */);
+
+
+		Surf->Gr->unrank_lint_here(Basis, b6_image, 0 /* verbose_level */);
+
+
+		int Pts4[4];
+		int nb_pts;
+
+		F->find_secant_points_wrt_x0x3mx1x2(Basis, Pts4, nb_pts, FALSE /* verbose_level */);
+
+		if (nb_pts != 2) {
+			cout << "surface_with_action::complete_skew_hexagon nb_pts != 2" << endl;
+			exit(1);
+		}
+		for (j = 0; j < nb_pts; j++) {
+			v[0] = Pts4[j * 2 + 0];
+			v[1] = Pts4[j * 2 + 1];
+			F->mult_matrix_matrix(v, Basis, w + j * 4, 1, 2, 4, 0 /* verbose_level */);
+		}
+
+		for (j = 0; j < nb_pts; j++) {
+			Orbiter->Int_vec.copy(w + j * 4, z, 4);
+			if (z[0] == 0 && z[2] == 0) {
+				idx[j] = 0;
+			}
+			else {
+				F->PG_element_normalize_from_front(z, 1, 4);
+				idx[j] = z[1] + 1;
+			}
+		}
+		a4_image = opp_regulus[idx[0]];
+		a5_image = opp_regulus[idx[1]];
+
+		a4 = A2->element_image_of(a4_image, Elt1, 0 /* verbose_level */);
+		a5 = A2->element_image_of(a5_image, Elt1, 0 /* verbose_level */);
+
+		b4 = apply_null_polarity(a4, 0 /* verbose_level */);
+		b5 = apply_null_polarity(a5, 0 /* verbose_level */);
+		a6 = apply_null_polarity(b6, 0 /* verbose_level */);
+
+		double_six[0] = a1;
+		double_six[1] = a2;
+		double_six[2] = a3;
+		double_six[3] = a4;
+		double_six[4] = a5;
+		double_six[5] = a6;
+		double_six[6] = b1;
+		double_six[7] = b2;
+		double_six[8] = b3;
+		double_six[9] = b4;
+		double_six[10] = b5;
+		double_six[11] = b6;
+
+		cout << "The double six for i=" << i << " is:" << endl;
+		Surf->latex_double_six(cout, double_six);
+
+	}
+
+	if (f_v) {
+		cout << "surface_with_action::complete_skew_hexagon done" << endl;
+	}
+}
+
+void surface_with_action::create_regulus_and_opposite_regulus(
+	long int *three_skew_lines, long int *&regulus, long int *&opp_regulus, int &regulus_size,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "surface_with_action::create_regulus_and_opposite_regulus" << endl;
+	}
+
+
+	if (Recoordinatize == NULL) {
+		cout << "surface_with_action::create_regulus_and_opposite_regulus "
+				"Recoordinatize == NULL" << endl;
+		exit(1);
+	}
+	finite_field *F;
+	int i, sz;
+
+
+	F = PA->F;
+
+
+	// We map a_{1}, a_{2}, a_{3} to
+	// \ell_0,\ell_1,\ell_2, the first three lines in a regulus on the
+	// hyperbolic quadric x_0x_3-x_1x_2 = 0:
+
+	// the first three lines are:
+	//int L0[] = {0,0,1,0, 0,0,0,1};
+	//int L1[] = {1,0,0,0, 0,1,0,0};
+	//int L2[] = {1,0,1,0, 0,1,0,1};
+
+	// This cannot go wrong because we know
+	// that the three lines are pairwise skew,
+	// and hence determine a regulus.
+	// This is because they are part of a
+	// partial ovoid on the Klein quadric.
+	Recoordinatize->do_recoordinatize(
+			three_skew_lines[0], three_skew_lines[1], three_skew_lines[2],
+			verbose_level - 2);
+
+	A->element_invert(Recoordinatize->Elt, Elt1, 0);
+
+	Recoordinatize->Grass->line_regulus_in_PG_3_q(
+			regulus, regulus_size, FALSE /* f_opposite */, verbose_level);
+
+	Recoordinatize->Grass->line_regulus_in_PG_3_q(
+			opp_regulus, sz, TRUE /* f_opposite */, verbose_level);
+
+	if (sz != regulus_size) {
+		cout << "sz != regulus_size" << endl;
+		exit(1);
+	}
+
+
+	// map regulus back:
+	for (i = 0; i < regulus_size; i++) {
+		regulus[i] = A2->element_image_of(regulus[i], Elt1, 0 /* verbose_level */);
+	}
+
+	// map opposite regulus back:
+	for (i = 0; i < regulus_size; i++) {
+		opp_regulus[i] = A2->element_image_of(opp_regulus[i], Elt1, 0 /* verbose_level */);
+	}
+
+
+	if (f_v) {
+		cout << "surface_with_action::create_regulus_and_opposite_regulus done" << endl;
+	}
+}
+
+
 int surface_with_action::create_double_six_from_five_lines_with_a_common_transversal(
 	long int *five_lines, long int transversal_line, long int *double_six,
 	int verbose_level)
@@ -324,7 +613,8 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	finite_field *F;
 	
 	if (f_v) {
-		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal, verbose_level = " << verbose_level << endl;
+		cout << "surface_with_action::create_double_six_from_five_lines_with_a_common_transversal, "
+				"verbose_level = " << verbose_level << endl;
 	}
 
 	F = PA->F;

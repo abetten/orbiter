@@ -998,7 +998,7 @@ void grassmann::unrank_lint_here_and_compute_perp(
 }
 
 void grassmann::line_regulus_in_PG_3_q(
-		int *&regulus, int &regulus_size, int verbose_level)
+		long int *&regulus, int &regulus_size, int f_opposite, int verbose_level)
 // the equation of the hyperboloid is x_0x_3-x_1x_2 = 0
 {
 	int f_v = (verbose_level >= 1);
@@ -1019,26 +1019,48 @@ void grassmann::line_regulus_in_PG_3_q(
 		exit(1);
 	}
 	regulus_size = q + 1;
-	regulus = NEW_int(regulus_size);
+	regulus = NEW_lint(regulus_size);
 	// the equation of the hyperboloid is x_0x_3-x_1x_2 = 0
 	for (u = 0; u < regulus_size; u++) {
 		Orbiter->Int_vec.zero(M, 8);
 		if (u == 0) {
-			// create the infinity component, which is 
-			// [0,0,1,0]
-			// [0,0,0,1]
-			M[0 * 4 + 2] = 1;
-			M[1 * 4 + 3] = 1;
+
+			if (f_opposite) {
+				// create the infinity component, which is
+				// [0,1,0,0]
+				// [0,0,0,1]
+				M[0 * 4 + 1] = 1;
+				M[1 * 4 + 3] = 1;
+			}
+			else {
+				// create the infinity component, which is
+				// [0,0,1,0]
+				// [0,0,0,1]
+				M[0 * 4 + 2] = 1;
+				M[1 * 4 + 3] = 1;
+			}
 		}
 		else {
-			// create
-			// [1,0,a,0]
-			// [0,1,0,a]
-			a = u - 1;
-			M[0 * 4 + 0] = 1;
-			M[1 * 4 + 1] = 1;
-			M[0 * 4 + 2] = a;
-			M[1 * 4 + 3] = a;
+			if (f_opposite) {
+				// create
+				// [1,a,0,0]
+				// [0,0,1,a]
+				a = u - 1;
+				M[0 * 4 + 0] = 1;
+				M[0 * 4 + 1] = a;
+				M[1 * 4 + 2] = 1;
+				M[1 * 4 + 3] = a;
+			}
+			else {
+				// create
+				// [1,0,a,0]
+				// [0,1,0,a]
+				a = u - 1;
+				M[0 * 4 + 0] = 1;
+				M[1 * 4 + 1] = 1;
+				M[0 * 4 + 2] = a;
+				M[1 * 4 + 3] = a;
+			}
 		}
 		
 		if (f_v3) {
@@ -1051,7 +1073,7 @@ void grassmann::line_regulus_in_PG_3_q(
 	} // next u
 	if (f_vv) {
 		cout << "grassmann::line_regulus_in_PG_3_q regulus:" << endl;
-		Orbiter->Int_vec.print(cout, regulus, regulus_size);
+		Orbiter->Lint_vec.print(cout, regulus, regulus_size);
 		cout << endl;
 	}
 	if (f_v) {
@@ -1258,6 +1280,94 @@ void grassmann::create_Schlaefli_graph(int *&Adj, int &sz, int verbose_level)
 		cout << "grassmann::create_Schlaefli_graph done" << endl;
 	}
 
+}
+
+long int grassmann::make_special_element_zero(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_v3 = (verbose_level >= 3);
+	long int a;
+
+	if (f_v) {
+		cout << "grassmann::make_special_element_zero" << endl;
+	}
+
+	int i;
+
+	// make the element (I_k | 0).
+	// Let a be its rank
+	Orbiter->Int_vec.zero(M, k * n);
+	for (i = 0; i < k; i++) {
+		M[i * n + i] = 1;
+	}
+	if (f_v3) {
+		cout << "grassmann::make_special_element_zero M:" << endl;
+		Orbiter->Int_vec.print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
+	}
+	a = rank_lint(0/*verbose_level - 4*/);
+	if (f_v3) {
+		cout << "grassmann::make_special_element_zero a=" << a << endl;
+	}
+	return a;
+}
+
+long int grassmann::make_special_element_one(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_v3 = (verbose_level >= 3);
+	long int a;
+
+	if (f_v) {
+		cout << "grassmann::make_special_element_one" << endl;
+	}
+
+	int i;
+
+	// make the element (I_k | I_k).
+	// Let a be its rank
+	Orbiter->Int_vec.zero(M, k * n);
+	for (i = 0; i < k; i++) {
+		M[i * n + i] = 1;
+		M[i * n + k + i] = 1;
+	}
+	if (f_v3) {
+		cout << "grassmann::make_special_element_one M:" << endl;
+		Orbiter->Int_vec.print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
+	}
+	a = rank_lint(0/*verbose_level - 4*/);
+	if (f_v3) {
+		cout << "grassmann::make_special_element_one a=" << a << endl;
+	}
+	return a;
+}
+
+long int grassmann::make_special_element_infinity(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_v3 = (verbose_level >= 3);
+	long int a;
+
+	if (f_v) {
+		cout << "grassmann::make_special_element_infinity" << endl;
+	}
+
+	int i;
+
+	// make the element (I_k | I_k).
+	// Let a be its rank
+	Orbiter->Int_vec.zero(M, k * n);
+	for (i = 0; i < k; i++) {
+		M[i * n + k + i] = 1;
+	}
+	if (f_v3) {
+		cout << "grassmann::make_special_element_infinity M:" << endl;
+		Orbiter->Int_vec.print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
+	}
+	a = rank_lint(0/*verbose_level - 4*/);
+	if (f_v3) {
+		cout << "grassmann::make_special_element_infinity a=" << a << endl;
+	}
+	return a;
 }
 
 

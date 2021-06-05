@@ -1009,6 +1009,8 @@ public:
 	int evaluate_symplectic_form(int len, int *x, int *y);
 	int evaluate_symmetric_form(int len, int *x, int *y);
 	int evaluate_quadratic_form_x0x3mx1x2(int *x);
+	void solve_y2py(int a, int *Y2, int &nb_sol);
+	void find_secant_points_wrt_x0x3mx1x2(int *Basis_line, int *Pts4, int &nb_pts, int verbose_level);
 	int is_totally_isotropic_wrt_symplectic_form(int k,
 		int n, int *Basis);
 	int evaluate_monomial(int *monomial, int *variables, int nb_vars);

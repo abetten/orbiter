@@ -1346,6 +1346,109 @@ int finite_field::evaluate_quadratic_form_x0x3mx1x2(int *x)
 	return a;
 }
 
+void finite_field::solve_y2py(int a, int *Y2, int &nb_sol)
+{
+	int y, y2py;
+
+	nb_sol = 0;
+	for (y = 0; y < q; y++) {
+		y2py = add(mult(y, y), y);
+		if (y2py == a) {
+			Y2[nb_sol++] = y;
+		}
+	}
+	if (nb_sol > 2) {
+		cout << "finite_field::solve_y2py nb_sol > 2" << endl;
+		exit(1);
+	}
+}
+
+void finite_field::find_secant_points_wrt_x0x3mx1x2(int *Basis_line, int *Pts4, int &nb_pts, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int u;
+	int b0, b1, b2, b3, b4, b5, b6, b7;
+	int a, av, b, c, bv, acbv, cav, t, r, i;
+
+	if (f_v) {
+		cout << "finite_field::find_secant_points_wrt_x0x3mx1x2" << endl;
+	}
+	nb_pts = 0;
+
+#if 0
+	u = evaluate_quadratic_form_x0x3mx1x2(Basis_line);
+	if (u == 0) {
+		Pts4[nb_pts * 2 + 0] = 1;
+		Pts4[nb_pts * 2 + 1] = 0;
+		nb_pts++;
+	}
+#endif
+
+	u = evaluate_quadratic_form_x0x3mx1x2(Basis_line + 4);
+	if (u == 0) {
+		Pts4[nb_pts * 2 + 0] = 0;
+		Pts4[nb_pts * 2 + 1] = 1;
+		nb_pts++;
+	}
+
+	b0 = Basis_line[0];
+	b1 = Basis_line[1];
+	b2 = Basis_line[2];
+	b3 = Basis_line[3];
+	b4 = Basis_line[4];
+	b5 = Basis_line[5];
+	b6 = Basis_line[6];
+	b7 = Basis_line[7];
+	a = add(mult(b4, b7), negate(mult(b5, b6)));
+	c = add(mult(b0, b3), negate(mult(b1, b2)));
+	b = add4(mult(b0, b7), mult(b3, b4), negate(mult(b1, b6)), negate(mult(b2, b5)));
+	if (a == 0) {
+		cout << "finite_field::find_secant_points_wrt_x0x3mx1x2 a == 0" << endl;
+		exit(1);
+	}
+	av = inverse(a);
+	if (EVEN(p)) {
+		if (b == 0) {
+			cav = mult(c, av);
+			r = frobenius_power(cav, e - 1);
+			Pts4[nb_pts * 2 + 0] = 1;
+			Pts4[nb_pts * 2 + 1] = r;
+			nb_pts++;
+		}
+		else {
+			bv = inverse(b);
+			acbv = mult3(a, c, bv);
+			t = absolute_trace(acbv);
+			if (t == 0) {
+				int Y2[2];
+				int nb_sol;
+
+				solve_y2py(acbv, Y2, nb_sol);
+				if (nb_sol + nb_pts > 2) {
+					cout << "finite_field::find_secant_points_wrt_x0x3mx1x2 nb_sol + nb_pts > 2" << endl;
+					exit(1);
+				}
+				for (i = 0; i < nb_sol; i++) {
+					r = mult3(c, Y2[i], av);
+					Pts4[nb_pts * 2 + 0] = 1;
+					Pts4[nb_pts * 2 + 1] = r;
+					nb_pts++;
+				}
+			}
+			else {
+				// no solution
+			}
+		}
+	}
+	else {
+
+	}
+
+	if (f_v) {
+		cout << "finite_field::find_secant_points_wrt_x0x3mx1x2 done" << endl;
+	}
+}
+
 int finite_field::is_totally_isotropic_wrt_symplectic_form(
 		int k, int n, int *Basis)
 {
