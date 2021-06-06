@@ -300,6 +300,23 @@ void surface_create::create_surface_from_description(int verbose_level)
 				verbose_level);
 	}
 
+	else if (Descr->f_by_double_six) {
+
+		create_surface_by_double_six(
+				Descr->by_double_six_label,
+				Descr->by_double_six_label_tex,
+				Descr->by_double_six_text,
+				verbose_level);
+	}
+
+	else if (Descr->f_by_skew_hexagon) {
+
+		create_surface_by_skew_hexagon(
+				Descr->by_skew_hexagon_label,
+				Descr->by_skew_hexagon_label_tex,
+				verbose_level);
+	}
+
 	else {
 		cout << "surface_create::init2 we do not "
 				"recognize the type of surface" << endl;
@@ -1939,6 +1956,264 @@ void surface_create::create_surface_by_equation(
 	}
 }
 
+
+void surface_create::create_surface_by_double_six(
+		std::string &by_double_six_label,
+		std::string &by_double_six_label_tex,
+		std::string &by_double_six_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_double_six" << endl;
+	}
+
+	int coeffs20[20];
+	long int Lines27[27];
+	long int *double_six;
+	int sz;
+
+	Orbiter->Lint_vec.scan(by_double_six_text, double_six, sz);
+	if (sz != 12) {
+		cout << "surface_create::create_surface_by_double_six need exactly 12 input lines" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_double_six before Surf->build_cubic_surface_from_lines" << endl;
+	}
+	Surf->build_cubic_surface_from_lines(
+		12, double_six,
+		coeffs20, 0/* verbose_level*/);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_double_six after Surf->build_cubic_surface_from_lines" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_double_six "
+				"coeffs20:" << endl;
+		Orbiter->Int_vec.print(cout, coeffs20, 20);
+		cout << endl;
+
+		Surf->Poly3_4->print_equation(cout, coeffs20);
+		cout << endl;
+	}
+
+
+	Orbiter->Lint_vec.copy(double_six, Lines27, 12);
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_double_six before Surf->create_the_fifteen_other_lines" << endl;
+	}
+	Surf->create_the_fifteen_other_lines(Lines27,
+			Lines27 + 12, verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_double_six after Surf->create_the_fifteen_other_lines" << endl;
+	}
+
+
+
+	SO = NEW_OBJECT(surface_object);
+
+#if 0
+	if (f_v) {
+		cout << "surface_create::create_surface_by_double_six before SO->init_equation_points_and_lines_only" << endl;
+	}
+
+	SO->init_equation_points_and_lines_only(Surf, coeffs20, verbose_level);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_double_six after SO->init_equation_points_and_lines_only" << endl;
+	}
+#else
+	if (f_v) {
+		cout << "surface_create::create_surface_by_double_six before SO->init_with_27_lines" << endl;
+	}
+
+	SO->init_with_27_lines(Surf,
+		Lines27, coeffs20,
+		FALSE /* f_find_double_six_and_rearrange_lines */,
+		verbose_level);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_double_six after SO->init_with_27_lines" << endl;
+	}
+
+
+#endif
+
+
+	f_has_group = FALSE;
+
+	char str_q[1000];
+
+	sprintf(str_q, "%d", F->q);
+
+
+	prefix.assign("DoubleSix_q");
+	prefix.append(str_q);
+	prefix.append("_");
+	prefix.append(by_double_six_label);
+
+	label_txt.assign("DoubleSix_q");
+	label_txt.append(str_q);
+	label_txt.append("_");
+	label_txt.append(by_double_six_label);
+
+	label_tex.assign("DoubleSix\\_q");
+	label_tex.append(str_q);
+	label_tex.append("\\_");
+	label_tex.append(by_double_six_label_tex);
+
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_double_six done" << endl;
+	}
+}
+
+void surface_create::create_surface_by_skew_hexagon(
+		std::string &given_label,
+		std::string &given_label_tex,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_skew_hexagon" << endl;
+	}
+
+	int Pluecker_ccords[] = {1,0,0,0,0,0, 0,1,0,1,0,0, 0,1,1,0,0,0, 0,1,0,0,0,0, 1,0,0,1,0,0, 1,0,1,0,0,0};
+	int i;
+	long int *Pts;
+	int nb_pts = 6;
+
+	Pts = NEW_lint(nb_pts);
+
+	for (i = 0; i < nb_pts; i++) {
+		Pts[i] = Surf_A->Surf->Klein->Pluecker_to_line_rk(Pluecker_ccords + i * 6, 0 /*verbose_level*/);
+	}
+
+	if (nb_pts != 6) {
+		cout << "surface_create::create_surface_by_skew_hexagon nb_pts != 6" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "lines:" << endl;
+		Orbiter->Lint_vec.print(cout, Pts, 6);
+		cout << endl;
+	}
+
+
+	std::vector<std::vector<long int> > Double_sixes;
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_skew_hexagon before Surf_A->complete_skew_hexagon" << endl;
+	}
+
+	Surf_A->complete_skew_hexagon(Pts, Double_sixes, verbose_level);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_skew_hexagon after Surf_A->complete_skew_hexagon" << endl;
+	}
+
+
+	int coeffs20[20];
+	long int Lines27[27];
+	long int double_six[12];
+
+	for (i = 0; i < 12; i++) {
+		double_six[i] = Double_sixes[0][i];
+	}
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_skew_hexagon before Surf->build_cubic_surface_from_lines" << endl;
+	}
+	Surf->build_cubic_surface_from_lines(
+		12, double_six,
+		coeffs20, 0/* verbose_level*/);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_skew_hexagon after Surf->build_cubic_surface_from_lines" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_skew_hexagon "
+				"coeffs20:" << endl;
+		Orbiter->Int_vec.print(cout, coeffs20, 20);
+		cout << endl;
+
+		Surf->Poly3_4->print_equation(cout, coeffs20);
+		cout << endl;
+	}
+
+
+	Orbiter->Lint_vec.copy(double_six, Lines27, 12);
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_skew_hexagon before Surf->create_the_fifteen_other_lines" << endl;
+	}
+	Surf->create_the_fifteen_other_lines(Lines27,
+			Lines27 + 12, verbose_level);
+	if (f_v) {
+		cout << "surface_create::create_surface_by_skew_hexagon after Surf->create_the_fifteen_other_lines" << endl;
+	}
+
+
+
+
+
+
+
+	SO = NEW_OBJECT(surface_object);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_skew_hexagon before SO->init_with_27_lines" << endl;
+	}
+
+	SO->init_with_27_lines(Surf,
+		Lines27, coeffs20,
+		FALSE /* f_find_double_six_and_rearrange_lines */,
+		verbose_level);
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_skew_hexagon after SO->init_with_27_lines" << endl;
+	}
+
+
+
+	f_has_group = FALSE;
+
+	char str_q[1000];
+
+	sprintf(str_q, "%d", F->q);
+
+
+	prefix.assign("SkewHexagon_q");
+	prefix.append(str_q);
+	prefix.append("_");
+	prefix.append(given_label);
+
+	label_txt.assign("SkewHexagon_q");
+	label_txt.append(str_q);
+	label_txt.append("_");
+	label_txt.append(given_label);
+
+	label_tex.assign("SkewHexagon\\_q");
+	label_tex.append(str_q);
+	label_tex.append("\\_");
+	label_tex.append(given_label_tex);
+
+
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_skew_hexagon done" << endl;
+	}
+}
 
 void surface_create::apply_transformations(
 	std::vector<std::string> &transform_coeffs,

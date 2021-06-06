@@ -546,6 +546,30 @@ void klein_correspondence::Pluecker_to_line(int *v6, int *basis_line, int verbos
 	}
 }
 
+long int klein_correspondence::Pluecker_to_line_rk(int *v6, int verbose_level)
+{
+	//verbose_level = 1;
+	int f_v = (verbose_level >= 1);
+	int basis_line[8];
+	long int line_rk;
+
+	if (f_v) {
+		cout << "klein_correspondence::Pluecker_to_line_rk" << endl;
+	}
+
+	Pluecker_to_line(v6, basis_line, 0 /*verbose_level*/);
+
+	line_rk = P3->rank_line(basis_line);
+
+
+	if (f_v) {
+		cout << "klein_correspondence::Pluecker_to_line_rk done" << endl;
+	}
+
+	return line_rk;
+}
+
+
 void klein_correspondence::exterior_square_to_line(int *v, int *basis_line, int verbose_level)
 {
 	//verbose_level = 1;

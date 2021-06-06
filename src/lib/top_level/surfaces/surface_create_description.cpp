@@ -34,6 +34,7 @@ surface_create_description::surface_create_description()
 
 	f_catalogue = FALSE;
 	iso = 0;
+
 	f_by_coefficients = FALSE;
 	//coefficients_text = NULL;
 
@@ -45,18 +46,24 @@ surface_create_description::surface_create_description()
 	f_family_HCV = FALSE;
 	family_HCV_a = 0;
 	family_HCV_b = 0;
+
 	f_family_G13 = FALSE;
 	family_G13_a = 0;
+
 	f_family_F13 = FALSE;
 	family_F13_a = 0;
+
 	f_family_bes = FALSE;
 	family_bes_a = 0;
 	family_bes_c = 0;
+
+
 	f_family_general_abcd = FALSE;
 	family_general_abcd_a = 0;
 	family_general_abcd_b = 0;
 	family_general_abcd_c = 0;
 	family_general_abcd_d = 0;
+
 	f_arc_lifting = FALSE;
 	//arc_lifting_text = NULL;
 	//arc_lifting_two_lines_text = NULL;
@@ -78,6 +85,15 @@ surface_create_description::surface_create_description()
 	//std::string equation_parameters_tex;
 
 
+	f_by_double_six = FALSE;
+	//std::string by_double_six_label;
+	//std::string by_double_six_label_tex;
+	//std::string by_double_six_text;
+
+
+	f_by_skew_hexagon = FALSE;
+	//std::string by_skew_hexagon_label;
+	//std::string by_skew_hexagon_label_tex
 
 	//nb_select_double_six = 0;
 	//select_double_six_string[];
@@ -225,8 +241,27 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 					<< equation_parameters_tex << " "
 					<< endl;
 		}
+		else if (stringcmp(argv[i], "-by_double_six") == 0) {
+			f_by_double_six = TRUE;
+			by_double_six_label.assign(argv[++i]);
+			by_double_six_label_tex.assign(argv[++i]);
+			by_double_six_text.assign(argv[++i]);
+			cout << "-by_double_six "
+					<< by_double_six_label << " "
+					<< by_double_six_label_tex << " "
+					<< by_double_six_text << " "
+					<< endl;
+		}
+		else if (stringcmp(argv[i], "-by_skew_hexagon") == 0) {
+			f_by_skew_hexagon = TRUE;
 
-
+			by_skew_hexagon_label.assign(argv[++i]);
+			by_skew_hexagon_label_tex.assign(argv[++i]);
+			cout << "-by_double_six "
+					<< by_skew_hexagon_label << " "
+					<< by_skew_hexagon_label_tex << " "
+					<< endl;
+		}
 
 		else if (stringcmp(argv[i], "-select_double_six") == 0) {
 			//f_select_double_six = TRUE;
@@ -252,6 +287,7 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 					<< " " << override_group_gens
 					<< endl;
 		}
+
 
 		else if (stringcmp(argv[i], "-transform") == 0) {
 
