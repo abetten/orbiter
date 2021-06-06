@@ -1031,6 +1031,52 @@ void surface_domain::create_the_fifteen_other_lines(
 
 }
 
+void surface_domain::test_double_six_property(long int *S12, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+	int expect;
+
+	if (f_v) {
+		cout << "surface_domain::test_double_six_property" << endl;
+	}
+
+	int *Adj;
+
+	compute_adjacency_matrix_of_line_intersection_graph(
+		Adj, S12, 12, 0 /*verbose_level*/);
+
+
+	for (i = 0; i < 12; i++) {
+		for (j = i + 1; j < 12; j++) {
+			if (i < 6 && j < 6) {
+				expect = 0;
+			}
+			else if (i >= 6 && j >= 6) {
+				expect = 0;
+			}
+			else if (i < 6 && j >= 6) {
+				if (i == j - 6) {
+					expect = 0;
+				}
+				else {
+					expect = 1;
+				}
+			}
+			if (Adj[i * 12 + j] != expect) {
+				cout << "surface_domain::test_double_six_property double six property is "
+						"violated for i=" << i << " j=" << j << endl;
+				exit(1);
+			}
+		}
+	}
+
+	FREE_int(Adj);
+
+	if (f_v) {
+		cout << "surface_domain::test_double_six_property done" << endl;
+	}
+}
 
 void surface_domain::compute_adjacency_matrix_of_line_intersection_graph(
 	int *&Adj, long int *S, int n, int verbose_level)

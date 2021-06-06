@@ -55,6 +55,9 @@ void surface_domain::latex_double_six(std::ostream &ost, long int *double_six)
 		for (j = 0; j < 2; j++) {
 			a = double_six[j * 6 + i];
 			Gr->unrank_lint(a, 0);
+
+			ost << Schlaefli->Labels->Line_label[i + j * 6];
+			ost << " = ";
 			ost << "\\left[" << endl;
 			ost << "\\begin{array}{*{4}{c}}" << endl;
 			for (u = 0; u < 2; u++) {

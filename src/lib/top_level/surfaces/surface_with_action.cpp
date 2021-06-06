@@ -329,8 +329,10 @@ void surface_with_action::complete_skew_hexagon(
 	}
 
 	long int three_skew_lines[3];
-	long int *regulus;
-	long int *opp_regulus;
+	long int *regulus_a123;
+	long int *opp_regulus_a123;
+	long int *regulus_b123;
+	long int *opp_regulus_b123;
 	int regulus_size;
 	int i, j, r;
 	long int a;
@@ -344,8 +346,8 @@ void surface_with_action::complete_skew_hexagon(
 	long int a4, a5, a6;
 	long int b4, b5, b6;
 	long int b6_image;
-	long int a4_image;
-	long int a5_image;
+	//long int a4_image;
+	//long int a5_image;
 	int v[2];
 	int w[8];
 	int z[4];
@@ -389,7 +391,7 @@ void surface_with_action::complete_skew_hexagon(
 	}
 
 	create_regulus_and_opposite_regulus(
-			three_skew_lines, regulus, opp_regulus, regulus_size,
+			three_skew_lines, regulus_a123, opp_regulus_a123, regulus_size,
 			verbose_level);
 
 
@@ -398,7 +400,7 @@ void surface_with_action::complete_skew_hexagon(
 
 	for (i = 0; i < regulus_size; i++) {
 
-		a = opp_regulus[i];
+		a = opp_regulus_a123[i];
 		if (f_v) {
 			cout << "surface_with_action::complete_skew_hexagon i=" <<i << " / " << regulus_size << " a=" << a << endl;
 		}
@@ -436,18 +438,53 @@ void surface_with_action::complete_skew_hexagon(
 
 		A->element_invert(Recoordinatize->Elt, Elt1, 0);
 
-
 		b6_image = A2->element_image_of(b6,
 				Recoordinatize->Elt, 0 /* verbose_level */);
 
+		if (f_v) {
+			cout << "surface_with_action::complete_skew_hexagon after F->find_secant_points_wrt_x0x3mx1x2" << endl;
+			cout << "surface_with_action::complete_skew_hexagon b6_image=" << b6_image << endl;
+		}
 
 		Surf->Gr->unrank_lint_here(Basis, b6_image, 0 /* verbose_level */);
 
 
+		if (f_v) {
+			cout << "surface_with_action::complete_skew_hexagon basis=" << endl;
+			Orbiter->Int_vec.matrix_print(Basis, 2, 4);
+		}
+
+		three_skew_lines[0] = b1;
+		three_skew_lines[1] = b2;
+		three_skew_lines[2] = b3;
+
+		int sz;
+
+		create_regulus_and_opposite_regulus(
+				three_skew_lines, regulus_b123, opp_regulus_b123, sz,
+				verbose_level);
+
+
+
+		if (f_v) {
+			cout << "surface_with_action::complete_skew_hexagon basis=" << endl;
+			Orbiter->Int_vec.matrix_print(Basis, 2, 4);
+		}
+
+
 		int Pts4[4];
 		int nb_pts;
+		int u;
 
-		F->find_secant_points_wrt_x0x3mx1x2(Basis, Pts4, nb_pts, FALSE /* verbose_level */);
+		if (f_v) {
+			cout << "surface_with_action::complete_skew_hexagon before F->find_secant_points_wrt_x0x3mx1x2" << endl;
+		}
+		F->find_secant_points_wrt_x0x3mx1x2(Basis, Pts4, nb_pts, verbose_level);
+		if (f_v) {
+			cout << "surface_with_action::complete_skew_hexagon after F->find_secant_points_wrt_x0x3mx1x2" << endl;
+			cout << "surface_with_action::complete_skew_hexagon Pts4=" << endl;
+			Orbiter->Int_vec.matrix_print(Pts4, 2, 2);
+		}
 
 		if (nb_pts != 2) {
 			cout << "surface_with_action::complete_skew_hexagon nb_pts != 2" << endl;
@@ -458,8 +495,31 @@ void surface_with_action::complete_skew_hexagon(
 			v[1] = Pts4[j * 2 + 1];
 			F->mult_matrix_matrix(v, Basis, w + j * 4, 1, 2, 4, 0 /* verbose_level */);
 		}
+		if (f_v) {
+			cout << "surface_with_action::complete_skew_hexagon after multiplying" << endl;
+			cout << "surface_with_action::complete_skew_hexagon w=" << endl;
+			Orbiter->Int_vec.matrix_print(w, 2, 4);
+		}
+
+		// test if the intersection points lie on the quadric:
+		u = F->evaluate_quadratic_form_x0x3mx1x2(w);
+		if (u) {
+			cout << "the first secant point does not lie on the quadric" << endl;
+			exit(1);
+		}
+		u = F->evaluate_quadratic_form_x0x3mx1x2(w + 4);
+		if (u) {
+			cout << "the second secant point does not lie on the quadric" << endl;
+			exit(1);
+		}
 
 		for (j = 0; j < nb_pts; j++) {
+
+			if (f_v) {
+				cout << "the " << j << "-th secant points is: ";
+				Orbiter->Int_vec.print(cout, w + j * 4, 4);
+				cout << endl;
+			}
 			Orbiter->Int_vec.copy(w + j * 4, z, 4);
 			if (z[0] == 0 && z[2] == 0) {
 				idx[j] = 0;
@@ -468,12 +528,23 @@ void surface_with_action::complete_skew_hexagon(
 				F->PG_element_normalize_from_front(z, 1, 4);
 				idx[j] = z[1] + 1;
 			}
+			if (f_v) {
+				cout << "idx[" << j << "] = " << idx[j] << endl;
+			}
 		}
-		a4_image = opp_regulus[idx[0]];
-		a5_image = opp_regulus[idx[1]];
+		a4 = opp_regulus_b123[idx[0]];
+		if (f_v) {
+			cout << "a4 = " << a4 << " = " << endl;
+			Surf->Gr->print_single_generator_matrix_tex(cout, a4);
+		}
+		a5 = opp_regulus_b123[idx[1]];
+		if (f_v) {
+			cout << "a5 = " << a5 << " = " << endl;
+			Surf->Gr->print_single_generator_matrix_tex(cout, a5);
+		}
 
-		a4 = A2->element_image_of(a4_image, Elt1, 0 /* verbose_level */);
-		a5 = A2->element_image_of(a5_image, Elt1, 0 /* verbose_level */);
+		//a4 = A2->element_image_of(a4_image, Elt1, 0 /* verbose_level */);
+		//a5 = A2->element_image_of(a5_image, Elt1, 0 /* verbose_level */);
 
 		b4 = apply_null_polarity(a4, 0 /* verbose_level */);
 		b5 = apply_null_polarity(a5, 0 /* verbose_level */);
@@ -492,6 +563,8 @@ void surface_with_action::complete_skew_hexagon(
 		double_six[10] = b5;
 		double_six[11] = b6;
 
+		Surf->test_double_six_property(double_six, verbose_level);
+
 		cout << "The double six for i=" << i << " is:" << endl;
 		Surf->latex_double_six(cout, double_six);
 
@@ -505,6 +578,18 @@ void surface_with_action::complete_skew_hexagon(
 void surface_with_action::create_regulus_and_opposite_regulus(
 	long int *three_skew_lines, long int *&regulus, long int *&opp_regulus, int &regulus_size,
 	int verbose_level)
+// 6/4/2021:
+//Hi Anton,
+//
+//The opposite regulus consists of
+//[0 1 0 0]
+//[0 0 0 1]
+//and
+//[1 a 0 0]
+//[0 0 1 a]
+//
+//Cheers,
+//Alice
 {
 	int f_v = (verbose_level >= 1);
 

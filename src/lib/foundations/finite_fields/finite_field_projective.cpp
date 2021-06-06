@@ -1368,7 +1368,7 @@ void finite_field::find_secant_points_wrt_x0x3mx1x2(int *Basis_line, int *Pts4, 
 	int f_v = (verbose_level >= 1);
 	int u;
 	int b0, b1, b2, b3, b4, b5, b6, b7;
-	int a, av, b, c, bv, acbv, cav, t, r, i;
+	int a, av, b, c, bv, acbv2, cav, t, r, i;
 
 	if (f_v) {
 		cout << "finite_field::find_secant_points_wrt_x0x3mx1x2" << endl;
@@ -1402,6 +1402,9 @@ void finite_field::find_secant_points_wrt_x0x3mx1x2(int *Basis_line, int *Pts4, 
 	a = add(mult(b4, b7), negate(mult(b5, b6)));
 	c = add(mult(b0, b3), negate(mult(b1, b2)));
 	b = add4(mult(b0, b7), mult(b3, b4), negate(mult(b1, b6)), negate(mult(b2, b5)));
+	if (f_v) {
+		cout << "finite_field::find_secant_points_wrt_x0x3mx1x2 a=" << a << " b=" << b << " c=" << c << endl;
+	}
 	if (a == 0) {
 		cout << "finite_field::find_secant_points_wrt_x0x3mx1x2 a == 0" << endl;
 		exit(1);
@@ -1410,26 +1413,49 @@ void finite_field::find_secant_points_wrt_x0x3mx1x2(int *Basis_line, int *Pts4, 
 	if (EVEN(p)) {
 		if (b == 0) {
 			cav = mult(c, av);
+			if (f_v) {
+				cout << "finite_field::find_secant_points_wrt_x0x3mx1x2 cav=" << cav << endl;
+			}
 			r = frobenius_power(cav, e - 1);
+			if (f_v) {
+				cout << "finite_field::find_secant_points_wrt_x0x3mx1x2 r=" << r << endl;
+			}
 			Pts4[nb_pts * 2 + 0] = 1;
 			Pts4[nb_pts * 2 + 1] = r;
 			nb_pts++;
 		}
 		else {
 			bv = inverse(b);
-			acbv = mult3(a, c, bv);
-			t = absolute_trace(acbv);
+			acbv2 = mult4(a, c, bv, bv);
+			if (f_v) {
+				cout << "finite_field::find_secant_points_wrt_x0x3mx1x2 acbv2=" << acbv2 << endl;
+			}
+			t = absolute_trace(acbv2);
+			if (f_v) {
+				cout << "finite_field::find_secant_points_wrt_x0x3mx1x2 t=" << t << endl;
+			}
 			if (t == 0) {
 				int Y2[2];
 				int nb_sol;
 
-				solve_y2py(acbv, Y2, nb_sol);
+				if (f_v) {
+					cout << "finite_field::find_secant_points_wrt_x0x3mx1x2 before solve_y2py" << endl;
+				}
+				solve_y2py(acbv2, Y2, nb_sol);
+				if (f_v) {
+					cout << "finite_field::find_secant_points_wrt_x0x3mx1x2 after solve_y2py nb_sol= " << nb_sol << endl;
+					Orbiter->Int_vec.print(cout, Y2, nb_sol);
+					cout << endl;
+				}
 				if (nb_sol + nb_pts > 2) {
 					cout << "finite_field::find_secant_points_wrt_x0x3mx1x2 nb_sol + nb_pts > 2" << endl;
 					exit(1);
 				}
 				for (i = 0; i < nb_sol; i++) {
-					r = mult3(c, Y2[i], av);
+					r = mult3(b, Y2[i], av);
+					if (f_v) {
+						cout << "finite_field::find_secant_points_wrt_x0x3mx1x2 solution " << i << " r=" << r << endl;
+					}
 					Pts4[nb_pts * 2 + 0] = 1;
 					Pts4[nb_pts * 2 + 1] = r;
 					nb_pts++;
@@ -1441,7 +1467,8 @@ void finite_field::find_secant_points_wrt_x0x3mx1x2(int *Basis_line, int *Pts4, 
 		}
 	}
 	else {
-
+		cout << "finite_field::find_secant_points_wrt_x0x3mx1x2 odd characteristic not yet implemented" << endl;
+		exit(1);
 	}
 
 	if (f_v) {

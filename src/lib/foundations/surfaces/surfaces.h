@@ -794,6 +794,7 @@ public:
 			long int *double_six, int verbose_level);
 	void create_the_fifteen_other_lines(long int *double_six,
 		long int *fifteen_other_lines, int verbose_level);
+	void test_double_six_property(long int *S12, int verbose_level);
 	void compute_adjacency_matrix_of_line_intersection_graph(
 		int *&Adj,
 		long int *S, int n, int verbose_level);
