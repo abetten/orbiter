@@ -868,6 +868,15 @@ public:
 			std::string &equation_parameters_tex,
 			std::vector<std::string> &select_double_six_string,
 			int verbose_level);
+	void create_surface_by_double_six(
+			std::string &by_double_six_label,
+			std::string &by_double_six_label_tex,
+			std::string &by_double_six_text,
+			int verbose_level);
+	void create_surface_by_skew_hexagon(
+			std::string &given_label,
+			std::string &given_label_tex,
+			int verbose_level);
 	void apply_transformations(
 		std::vector<std::string> &transform_coeffs,
 		std::vector<int> &f_inverse_transform,
@@ -953,6 +962,16 @@ public:
 	std::string equation_text;
 	std::string equation_parameters;
 	std::string equation_parameters_tex;
+
+
+	int f_by_double_six;
+	std::string by_double_six_label;
+	std::string by_double_six_label_tex;
+	std::string by_double_six_text;
+
+	int f_by_skew_hexagon;
+	std::string by_skew_hexagon_label;
+	std::string by_skew_hexagon_label_tex;
 
 	int f_override_group;
 	std::string override_group_order;
@@ -1317,7 +1336,9 @@ public:
 	long int apply_null_polarity(
 		long int a, int verbose_level);
 	void complete_skew_hexagon(
-		long int *skew_hexagon, int verbose_level);
+		long int *skew_hexagon,
+		std::vector<std::vector<long int> > &Double_sixes,
+		int verbose_level);
 	void create_regulus_and_opposite_regulus(
 		long int *three_skew_lines, long int *&regulus, long int *&opp_regulus, int &regulus_sz,
 		int verbose_level);

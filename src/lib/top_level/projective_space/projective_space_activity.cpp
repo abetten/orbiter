@@ -1004,15 +1004,24 @@ void projective_space_activity::do_lift_skew_hexagon(
 		cout << "projective_space_activity::do_lift_skew_hexagon" << endl;
 	}
 
+	int *Pluecker_ccords;
+	int sz;
+
+	Orbiter->Int_vec.scan(text, Pluecker_ccords, sz);
+
 	long int *Pts;
 	int nb_pts;
 
-	Orbiter->Lint_vec.scan(text, Pts, nb_pts);
+	nb_pts = sz / 6;
 
-
-	if (nb_pts != 6) {
-		cout << "projective_space_activity::do_lift_skew_hexagon nb_pts != 6" << endl;
+	if (nb_pts * 6 != sz) {
+		cout << "projective_space_activity::do_lift_skew_hexagon the number of coordinates must be a multiple of 6" << endl;
 		exit(1);
+	}
+
+	if (f_v) {
+		cout << "Pluecker coordinates of lines:" << endl;
+		Orbiter->Int_vec.matrix_print(Pluecker_ccords, nb_pts, 6);
 	}
 
 	surface_domain *Surf;
@@ -1046,14 +1055,53 @@ void projective_space_activity::do_lift_skew_hexagon(
 
 
 
+	int i;
+
+	Pts = NEW_lint(nb_pts);
+
+	for (i = 0; i < nb_pts; i++) {
+		Pts[i] = Surf_A->Surf->Klein->Pluecker_to_line_rk(Pluecker_ccords + i * 6, 0 /*verbose_level*/);
+	}
+
+	if (nb_pts != 6) {
+		cout << "projective_space_activity::do_lift_skew_hexagon nb_pts != 6" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "lines:" << endl;
+		Orbiter->Lint_vec.print(cout, Pts, 6);
+		cout << endl;
+	}
+
+
+	std::vector<std::vector<long int> > Double_sixes;
+
 	if (f_v) {
 		cout << "projective_space_activity::do_lift_skew_hexagon before Surf_A->complete_skew_hexagon" << endl;
 	}
 
-	Surf_A->complete_skew_hexagon(Pts, verbose_level);
+	Surf_A->complete_skew_hexagon(Pts, Double_sixes, verbose_level);
 
 	if (f_v) {
 		cout << "projective_space_activity::do_lift_skew_hexagon after Surf_A->complete_skew_hexagon" << endl;
+	}
+
+	cout << "We found " << Double_sixes.size() << " double sixes. They are:" << endl;
+	for (i = 0; i < Double_sixes.size(); i++) {
+		cout << Double_sixes[i][0] << ",";
+		cout << Double_sixes[i][1] << ",";
+		cout << Double_sixes[i][2] << ",";
+		cout << Double_sixes[i][3] << ",";
+		cout << Double_sixes[i][4] << ",";
+		cout << Double_sixes[i][5] << ",";
+		cout << Double_sixes[i][6] << ",";
+		cout << Double_sixes[i][7] << ",";
+		cout << Double_sixes[i][8] << ",";
+		cout << Double_sixes[i][9] << ",";
+		cout << Double_sixes[i][10] << ",";
+		cout << Double_sixes[i][11] << "," << endl;
+
 	}
 
 	if (f_v) {

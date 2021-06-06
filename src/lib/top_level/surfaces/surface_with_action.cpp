@@ -319,7 +319,9 @@ long int surface_with_action::apply_null_polarity(
 }
 
 void surface_with_action::complete_skew_hexagon(
-	long int *skew_hexagon, int verbose_level)
+	long int *skew_hexagon,
+	std::vector<std::vector<long int> > &Double_sixes,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -568,6 +570,23 @@ void surface_with_action::complete_skew_hexagon(
 		cout << "The double six for i=" << i << " is:" << endl;
 		Surf->latex_double_six(cout, double_six);
 
+
+		std::vector<long int> Double_six;
+
+		Double_six.push_back(a1);
+		Double_six.push_back(a2);
+		Double_six.push_back(a3);
+		Double_six.push_back(a4);
+		Double_six.push_back(a5);
+		Double_six.push_back(a6);
+		Double_six.push_back(b1);
+		Double_six.push_back(b2);
+		Double_six.push_back(b3);
+		Double_six.push_back(b4);
+		Double_six.push_back(b5);
+		Double_six.push_back(b6);
+
+		Double_sixes.push_back(Double_six);
 	}
 
 	if (f_v) {
