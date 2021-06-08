@@ -970,6 +970,82 @@ void surface_domain::save_lines_in_three_kinds(std::string &fname_csv,
 }
 
 
+int surface_domain::build_surface_from_double_six_and_count_Eckardt_points(long int *double_six, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points" << endl;
+	}
+	if (f_v) {
+		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points before Surf->build_cubic_surface_from_lines" << endl;
+	}
+
+	int coeffs20[20];
+	long int Lines27[27];
+	int nb_E;
+
+	build_cubic_surface_from_lines(
+		12, double_six,
+		coeffs20, 0/* verbose_level*/);
+
+	if (f_v) {
+		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points after Surf->build_cubic_surface_from_lines" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points "
+				"coeffs20:" << endl;
+		Orbiter->Int_vec.print(cout, coeffs20, 20);
+		cout << endl;
+
+		Poly3_4->print_equation(cout, coeffs20);
+		cout << endl;
+	}
+
+
+	Orbiter->Lint_vec.copy(double_six, Lines27, 12);
+
+
+	if (f_v) {
+		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points before Surf->create_the_fifteen_other_lines" << endl;
+	}
+	create_the_fifteen_other_lines(Lines27,
+			Lines27 + 12, verbose_level);
+	if (f_v) {
+		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points after Surf->create_the_fifteen_other_lines" << endl;
+	}
+
+
+
+	surface_object *SO;
+
+	SO = NEW_OBJECT(surface_object);
+
+	if (f_v) {
+		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points before SO->init_with_27_lines" << endl;
+	}
+
+	SO->init_with_27_lines(this,
+		Lines27, coeffs20,
+		FALSE /* f_find_double_six_and_rearrange_lines */,
+		verbose_level);
+	if (f_v) {
+		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points after SO->init_with_27_lines" << endl;
+	}
+
+	nb_E = SO->SOP->nb_Eckardt_points;
+	if (f_v) {
+		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points the surface has " << nb_E << " Eckardt points" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points done" << endl;
+	}
+	return nb_E;
+
+}
 
 
 }

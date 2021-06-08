@@ -1031,11 +1031,12 @@ void surface_domain::create_the_fifteen_other_lines(
 
 }
 
-void surface_domain::test_double_six_property(long int *S12, int verbose_level)
+int surface_domain::test_double_six_property(long int *S12, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
 	int expect;
+	int f_fail = FALSE;
 
 	if (f_v) {
 		cout << "surface_domain::test_double_six_property" << endl;
@@ -1065,8 +1066,8 @@ void surface_domain::test_double_six_property(long int *S12, int verbose_level)
 			}
 			if (Adj[i * 12 + j] != expect) {
 				cout << "surface_domain::test_double_six_property double six property is "
-						"violated for i=" << i << " j=" << j << endl;
-				exit(1);
+						"violated for " << Schlaefli->Labels->Line_label[i] << " and " << Schlaefli->Labels->Line_label[j] << endl;
+				f_fail = TRUE;
 			}
 		}
 	}
@@ -1075,6 +1076,12 @@ void surface_domain::test_double_six_property(long int *S12, int verbose_level)
 
 	if (f_v) {
 		cout << "surface_domain::test_double_six_property done" << endl;
+	}
+	if (f_fail) {
+		return FALSE;
+	}
+	else {
+		return TRUE;
 	}
 }
 

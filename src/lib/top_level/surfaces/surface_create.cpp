@@ -1967,6 +1967,7 @@ void surface_create::create_surface_by_double_six(
 
 	if (f_v) {
 		cout << "surface_create::create_surface_by_double_six" << endl;
+		cout << "surface_create::create_surface_by_double_six double_six=" << by_double_six_text << endl;
 	}
 
 	int coeffs20[20];
@@ -1979,13 +1980,31 @@ void surface_create::create_surface_by_double_six(
 		cout << "surface_create::create_surface_by_double_six need exactly 12 input lines" << endl;
 		exit(1);
 	}
+	if (f_v) {
+		cout << "surface_create::create_surface_by_double_six double_six=";
+		Orbiter->Lint_vec.print(cout, double_six, 12);
+		cout << endl;
+	}
+
+
+	if (!Surf->test_double_six_property(double_six, 0 /* verbose_level*/)) {
+		cout << "The double six is wrong" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "surface_create::create_surface_by_double_six passes the double six property test" << endl;
+	}
+
 
 	if (f_v) {
 		cout << "surface_create::create_surface_by_double_six before Surf->build_cubic_surface_from_lines" << endl;
 	}
+
 	Surf->build_cubic_surface_from_lines(
 		12, double_six,
 		coeffs20, 0/* verbose_level*/);
+
 	if (f_v) {
 		cout << "surface_create::create_surface_by_double_six after Surf->build_cubic_surface_from_lines" << endl;
 	}

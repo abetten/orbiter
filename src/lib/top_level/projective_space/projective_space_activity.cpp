@@ -362,6 +362,12 @@ void projective_space_activity::perform_activity(int verbose_level)
 				verbose_level);
 	}
 
+	else if (Descr->f_lift_skew_hexagon_with_polarity) {
+
+		do_lift_skew_hexagon_with_polarity(PA,
+				Descr->lift_skew_hexagon_with_polarity_polarity,
+				verbose_level);
+	}
 
 	if (f_v) {
 		cout << "projective_space_activity::perform_activity done" << endl;
@@ -1109,6 +1115,172 @@ void projective_space_activity::do_lift_skew_hexagon(
 	}
 }
 
+
+void projective_space_activity::do_lift_skew_hexagon_with_polarity(
+		projective_space_with_action *PA,
+		std::string &polarity_36,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "projective_space_activity::do_lift_skew_hexagon_with_polarity" << endl;
+	}
+
+	int *Polarity36;
+	int sz1;
+
+	Orbiter->Int_vec.scan(polarity_36, Polarity36, sz1);
+
+	if (sz1 != 36) {
+		cout << "projective_space_activity::do_lift_skew_hexagon_with_polarity I need exactly 36 coefficients for the polarity" << endl;
+		exit(1);
+	}
+
+
+	surface_domain *Surf;
+	surface_with_action *Surf_A;
+
+	if (PA->n != 3) {
+		cout << "projective_space_activity::do_lift_skew_hexagon_with_polarity we need a three-dimensional projective space" << endl;
+		exit(1);
+	}
+
+
+	if (f_v) {
+		cout << "projective_space_activity::do_lift_skew_hexagon_with_polarity before Surf->init" << endl;
+	}
+	Surf = NEW_OBJECT(surface_domain);
+	Surf->init(PA->F, 0 /*verbose_level - 1*/);
+	if (f_v) {
+		cout << "projective_space_activity::do_lift_skew_hexagon_with_polarity after Surf->init" << endl;
+	}
+
+	Surf_A = NEW_OBJECT(surface_with_action);
+
+	if (f_v) {
+		cout << "projective_space_activity::do_lift_skew_hexagon_with_polarity before Surf_A->init" << endl;
+	}
+	Surf_A->init(Surf, PA, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "projective_space_activity::do_lift_skew_hexagon_with_polarity after Surf_A->init" << endl;
+	}
+
+
+
+
+	std::vector<std::vector<long int> > Double_sixes;
+
+	int Pluecker_coords[36];
+	int alpha, beta;
+	int i, j;
+
+	Orbiter->Int_vec.zero(Pluecker_coords, 36);
+	// a1 = 1,0,0,0,0,0
+	Pluecker_coords[0] = 1;
+
+	for (alpha = 1; alpha < PA->F->q; alpha++) {
+
+
+
+		for (beta = 1; beta < PA->F->q; beta++) {
+
+			// a2 = 0,beta,0,alpha,alpha,0
+
+			Pluecker_coords[6 + 1] = beta;
+			Pluecker_coords[6 + 3] = alpha;
+			Pluecker_coords[6 + 4] = alpha;
+
+			// a3 = 0,beta,0,alpha,alpha,0
+
+			Pluecker_coords[12 + 1] = alpha;
+			Pluecker_coords[12 + 2] = beta;
+
+
+			for (j = 0; j < 3; j++) {
+				Surf->F->mult_matrix_matrix(Pluecker_coords + j * 6, Polarity36,
+						Pluecker_coords + 18 + j * 6, 1, 6, 6, 0 /* verbose_level */);
+			}
+
+			int nb_pts;
+
+			nb_pts = 6;
+
+			if (f_v) {
+				cout << "Pluecker coordinates of lines:" << endl;
+				Orbiter->Int_vec.matrix_print(Pluecker_coords, nb_pts, 6);
+			}
+
+
+			long int *Pts;
+
+
+			Pts = NEW_lint(nb_pts);
+
+			for (i = 0; i < nb_pts; i++) {
+				Pts[i] = Surf_A->Surf->Klein->Pluecker_to_line_rk(Pluecker_coords + i * 6, 0 /*verbose_level*/);
+			}
+
+			if (nb_pts != 6) {
+				cout << "projective_space_activity::do_lift_skew_hexagon_with_polarity nb_pts != 6" << endl;
+				exit(1);
+			}
+
+			if (f_v) {
+				cout << "lines:" << endl;
+				Orbiter->Lint_vec.print(cout, Pts, 6);
+				cout << endl;
+			}
+
+
+			string label;
+			char str[1000];
+
+			sprintf(str, "alpha=%d beta=%d", alpha, beta);
+
+			label.assign(str);
+
+			if (f_v) {
+				cout << "projective_space_activity::do_lift_skew_hexagon_with_polarity before Surf_A->complete_skew_hexagon_with_polarity" << endl;
+			}
+
+			Surf_A->complete_skew_hexagon_with_polarity(label, Pts, Polarity36, Double_sixes, verbose_level);
+
+			if (f_v) {
+				cout << "projective_space_activity::do_lift_skew_hexagon_with_polarity after Surf_A->complete_skew_hexagon_with_polarity" << endl;
+			}
+
+			FREE_lint(Pts);
+
+
+		}
+
+	}
+
+
+
+	cout << "We found " << Double_sixes.size() << " double sixes. They are:" << endl;
+	for (i = 0; i < Double_sixes.size(); i++) {
+		cout << Double_sixes[i][0] << ",";
+		cout << Double_sixes[i][1] << ",";
+		cout << Double_sixes[i][2] << ",";
+		cout << Double_sixes[i][3] << ",";
+		cout << Double_sixes[i][4] << ",";
+		cout << Double_sixes[i][5] << ",";
+		cout << Double_sixes[i][6] << ",";
+		cout << Double_sixes[i][7] << ",";
+		cout << Double_sixes[i][8] << ",";
+		cout << Double_sixes[i][9] << ",";
+		cout << Double_sixes[i][10] << ",";
+		cout << Double_sixes[i][11] << "," << endl;
+
+	}
+
+	if (f_v) {
+		cout << "projective_space_activity::do_lift_do_lift_skew_hexagon_with_polarityskew_hexagon done" << endl;
+	}
+}
 
 
 }}

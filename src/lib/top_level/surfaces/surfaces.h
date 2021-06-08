@@ -1335,8 +1335,16 @@ public:
 			int verbose_level);
 	long int apply_null_polarity(
 		long int a, int verbose_level);
+	long int apply_polarity(
+		long int a, int *Polarity36, int verbose_level);
 	void complete_skew_hexagon(
 		long int *skew_hexagon,
+		std::vector<std::vector<long int> > &Double_sixes,
+		int verbose_level);
+	void complete_skew_hexagon_with_polarity(
+			std::string &label_for_printing,
+		long int *skew_hexagon,
+		int *Polarity36,
 		std::vector<std::vector<long int> > &Double_sixes,
 		int verbose_level);
 	void create_regulus_and_opposite_regulus(

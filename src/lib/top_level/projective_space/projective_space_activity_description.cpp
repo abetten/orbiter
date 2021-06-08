@@ -150,6 +150,10 @@ projective_space_activity_description::projective_space_activity_description()
 	f_lift_skew_hexagon = FALSE;
 	//lift_skew_hexagon_text
 
+	f_lift_skew_hexagon_with_polarity = FALSE;
+	//std::string lift_skew_hexagon_with_polarity_polarity;
+
+
 }
 
 projective_space_activity_description::~projective_space_activity_description()
@@ -540,6 +544,14 @@ int projective_space_activity_description::read_arguments(
 			lift_skew_hexagon_text.assign(argv[++i]);
 			cout << "-lift_skew_hexagon "
 					<< lift_skew_hexagon_text << endl;
+		}
+
+		else if (stringcmp(argv[i], "-lift_skew_hexagon_with_polarity") == 0) {
+			f_lift_skew_hexagon_with_polarity = TRUE;
+			lift_skew_hexagon_with_polarity_polarity.assign(argv[++i]);
+			cout << "-lift_skew_hexagon_with_polarity "
+					<< " " << lift_skew_hexagon_with_polarity_polarity
+					<< endl;
 		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {

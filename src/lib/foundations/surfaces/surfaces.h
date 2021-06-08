@@ -703,6 +703,7 @@ public:
 	void klein_to_wedge_vec(long int *Klein_rk, long int *Wedge_rk, int len);
 	void save_lines_in_three_kinds(std::string &fname_csv,
 		long int *Lines_wedge, long int *Lines, long int *Lines_klein, int nb_lines);
+	int build_surface_from_double_six_and_count_Eckardt_points(long int *double_six, int verbose_level);
 
 
 	// surface_domain2.cpp:
@@ -794,7 +795,7 @@ public:
 			long int *double_six, int verbose_level);
 	void create_the_fifteen_other_lines(long int *double_six,
 		long int *fifteen_other_lines, int verbose_level);
-	void test_double_six_property(long int *S12, int verbose_level);
+	int test_double_six_property(long int *S12, int verbose_level);
 	void compute_adjacency_matrix_of_line_intersection_graph(
 		int *&Adj,
 		long int *S, int n, int verbose_level);

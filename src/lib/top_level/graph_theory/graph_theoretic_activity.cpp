@@ -72,18 +72,18 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 			CG->init_adjacency_no_colors(Gr->N, Gr->Adj, verbose_level);
 		}
 
-
-
-
 		if (f_v) {
-			cout << "before Clique_finder_control->all_cliques" << endl;
+			cout << "graph_theoretic_activity::perform_activity before CG->all_cliques" << endl;
 		}
-		Descr->Clique_finder_control->all_cliques(
-				CG, Gr->label,
-				verbose_level);
+		CG->all_cliques(
+				Descr->Clique_finder_control,
+				Gr->label, verbose_level);
 		if (f_v) {
-			cout << "after Clique_finder_control->all_cliques" << endl;
+			cout << "graph_theoretic_activity::perform_activity after CG->all_cliques" << endl;
 		}
+
+
+
 
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity Gr->label=" << Gr->label << " nb_sol = " << Descr->Clique_finder_control->nb_sol << endl;

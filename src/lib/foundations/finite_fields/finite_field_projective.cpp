@@ -1463,6 +1463,10 @@ void finite_field::find_secant_points_wrt_x0x3mx1x2(int *Basis_line, int *Pts4, 
 			}
 			else {
 				// no solution
+				if (f_v) {
+					cout << "finite_field::find_secant_points_wrt_x0x3mx1x2 no solution" << endl;
+				}
+				nb_pts = 0;
 			}
 		}
 	}
