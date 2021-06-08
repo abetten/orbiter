@@ -611,6 +611,10 @@ public:
 	int f_lift_skew_hexagon;
 	std::string lift_skew_hexagon_text;
 
+	int f_lift_skew_hexagon_with_polarity;
+	std::string lift_skew_hexagon_with_polarity_polarity;
+
+
 	projective_space_activity_description();
 	~projective_space_activity_description();
 	int read_arguments(
@@ -717,6 +721,10 @@ public:
 	void do_lift_skew_hexagon(
 			projective_space_with_action *PA,
 			std::string &text,
+			int verbose_level);
+	void do_lift_skew_hexagon_with_polarity(
+			projective_space_with_action *PA,
+			std::string &polarity_36,
 			int verbose_level);
 
 };

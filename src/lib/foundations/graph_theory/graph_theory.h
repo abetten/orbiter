@@ -17,6 +17,73 @@ namespace orbiter {
 namespace foundations {
 
 
+
+// #############################################################################
+// clique_finder_control.cpp
+// #############################################################################
+
+
+#define CLIQUE_FINDER_CONTROL_MAX_RESTRICTIONS 100
+
+//! parameters that control the clique finding process
+
+
+class clique_finder_control {
+
+public:
+	int f_rainbow;
+
+	int f_target_size;
+	int target_size;
+
+	int f_weighted;
+	int weights_total;
+	int weights_offset;
+	std::string weights_string;
+	std::string weights_bounds;
+
+
+	int f_Sajeeb;
+	int f_nonrecursive;
+	int f_output_solution_raw;
+	int f_store_solutions;
+
+	int f_output_file;
+	std::string output_file;
+
+	int f_maxdepth;
+	int maxdepth;
+
+	int f_restrictions;
+	int nb_restrictions;
+	int restrictions[CLIQUE_FINDER_CONTROL_MAX_RESTRICTIONS * 3];
+
+	int f_tree;
+	int f_decision_nodes_only;
+	std::string fname_tree;
+
+	int print_interval;
+
+	// output variables:
+	unsigned long int nb_search_steps;
+	unsigned long int nb_decision_steps;
+	int dt;
+
+	int *Sol;
+	int nb_sol;
+
+
+	clique_finder_control();
+	~clique_finder_control();
+	int parse_arguments(
+			int argc, std::string *argv);
+
+};
+
+
+
+
+
 // #############################################################################
 // clique_finder.cpp
 // #############################################################################
@@ -27,24 +94,23 @@ namespace foundations {
 
 class clique_finder {
 public:
+
+
+	clique_finder_control *Control;
+
+
 	std::string label;
 	int n; // number of points
-	
-	int print_interval;
-	
+
+
 	int f_write_tree;
-	int f_decision_nodes_only;
 	std::string fname_tree;
 	std::ofstream *fp_tree;
 
-	
-	int f_maxdepth;
-	int maxdepth;
-	
+
 	int *point_labels;
-	int *point_is_suspicous;
+	int *point_is_suspicious;
 	
-	int target_depth;
 	int verbose_level;
 	
 
@@ -64,6 +130,8 @@ public:
 	int *nb_candidates; // [max_depth]
 	int *current_choice; // [max_depth]
 	int *level_counter; // [max_depth] (added Nov 8, 2014)
+
+	// restrictions for partial search
 	int *f_level_mod; // [max_depth] (added Nov 8, 2014)
 	int *level_r; // [max_depth] (added Nov 8, 2014)
 	int *level_m; // [max_depth] (added Nov 8, 2014)
@@ -75,7 +143,6 @@ public:
 		// number of backtrack nodes that are decision nodes
 
 	// solution storage:
-	int f_store_solutions;
 	std::deque<std::vector<int> > solutions;
 	int nb_sol;
 
@@ -99,6 +166,7 @@ public:
 
 	int (*call_back_is_adjacent)(clique_finder *CF, 
 		int pt1, int pt2, int verbose_level);
+
 	// added Oct 2011:
 	void (*call_back_after_reduction)(clique_finder *CF, 
 		int depth, int nb_points, int verbose_level);
@@ -117,29 +185,25 @@ public:
 	~clique_finder();
 	void null();
 	void free();
-	void init(std::string &label, int n,
-		int target_depth, 
-		int f_has_adj_list, int *adj_list_coded, 
-		int f_has_bitvector, bitvector *Bitvec_adjacency,
-		int print_interval, 
-		int f_maxdepth, int maxdepth, 
-		int f_store_solutions, 
-		int verbose_level);
+	void init(clique_finder_control *Control,
+			std::string &label, int n,
+			int f_has_adj_list, int *adj_list_coded,
+			int f_has_bitvector, bitvector *Bitvec_adjacency,
+			int verbose_level);
 	void init_restrictions(int *restrictions, int verbose_level);
 	void init_point_labels(int *pt_labels);
-	void init_suspicous_points(int nb, int *point_list);
+	void init_suspicious_points(int nb, int *point_list);
 	void backtrack_search(int depth, int verbose_level);
 	int solve_decision_problem(int depth, int verbose_level);
 		// returns TRUE if we found a solution
-	void backtrack_search_not_recursive(int verbose_level);
-	void open_tree_file(std::string &fname_base,
-		int f_decision_nodes_only);
+	//void backtrack_search_not_recursive(int verbose_level);
+	void open_tree_file(std::string &fname_base);
 	void close_tree_file();
 	void get_solutions(int *&Sol, int &nb_solutions, int &clique_sz,
 		int verbose_level);
-	void print_suspicous_points();
+	void print_suspicious_points();
 	void print_set(int size, int *set);
-	void print_suspicous_point_subset(int size, int *set);
+	void print_suspicious_point_subset(int size, int *set);
 	void log_position_and_choice(int depth,
 			unsigned long int  counter_save, unsigned long int counter);
 	void log_position(int depth,
@@ -149,7 +213,7 @@ public:
 	void degree_of_point_statistic(int depth, int nb_points, 
 		int verbose_level);
 	int degree_of_point(int depth, int i, int nb_points);
-	int is_suspicous(int i);
+	int is_suspicious(int i);
 	int point_label(int i);
 	int is_adjacent(int depth, int i, int j);
 	int is_viable(int depth, int pt);
@@ -166,62 +230,6 @@ void all_cliques_of_given_size(int *Adj, int nb_pts, int clique_sz,
 
 
 
-// #############################################################################
-// clique_finder_control.cpp
-// #############################################################################
-
-
-#define CLIQUE_FINDER_CONTROL_MAX_RESTRICTIONS 100
-
-//! parameters that control the clique finding process
-
-
-class clique_finder_control {
-
-public:
-	int f_rainbow;
-	int f_target_size;
-	int target_size;
-	int f_weighted;
-	int weights_total;
-	int weights_offset;
-	std::string weights_string;
-	std::string weights_bounds;
-	int f_Sajeeb;
-	int f_nonrecursive;
-	int f_output_solution_raw;
-	int f_output_file;
-	std::string output_file;
-	int f_maxdepth;
-	int maxdepth;
-	int f_restrictions;
-	int nb_restrictions;
-	int restrictions[CLIQUE_FINDER_CONTROL_MAX_RESTRICTIONS * 3];
-	int f_tree;
-	int f_decision_nodes_only;
-	std::string fname_tree;
-	int print_interval;
-	unsigned long int nb_search_steps;
-	unsigned long int nb_decision_steps;
-	int nb_sol;
-	int dt;
-
-
-	clique_finder_control();
-	~clique_finder_control();
-	int parse_arguments(
-			int argc, std::string *argv);
-	void all_cliques(colored_graph *CG,
-			std::string &fname_graph,
-			int verbose_level);
-	void do_Sajeeb(colored_graph *CG,
-			int verbose_level);
-	void do_Sajeeb_black_and_white(colored_graph *CG,
-			int clique_size, std::vector<std::vector<long int> >& solutions,
-			int verbose_level);
-
-};
-
 
 
 // #############################################################################
@@ -234,6 +242,7 @@ public:
 
 class colored_graph {
 public:
+
 
 	std::string fname_base;
 	
@@ -300,45 +309,6 @@ public:
 	void init_user_data(long int *data, int data_size, int verbose_level);
 	void save(std::string &fname, int verbose_level);
 	void load(std::string &fname, int verbose_level);
-	void all_cliques_of_size_k_ignore_colors(
-		int target_depth,
-		int *&Sol, int &nb_solutions,
-		unsigned long int &decision_step_counter,
-		int verbose_level);
-	void all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file(
-		int target_depth, 
-		const char *fname, 
-		int f_restrictions, int *restrictions, 
-		int &nb_sol, unsigned long int &decision_step_counter,
-		int verbose_level);
-	void all_rainbow_cliques(std::ofstream *fp, int f_output_solution_raw,
-		int f_maxdepth, int maxdepth, 
-		int f_restrictions, int *restrictions, 
-		int f_tree, int f_decision_nodes_only, std::string &fname_tree,
-		int print_interval, 
-		unsigned long int &search_steps, unsigned long int &decision_steps,
-		int &nb_sol, int &dt,
-		int verbose_level);
-	void all_rainbow_cliques_with_additional_test_function(std::ofstream *fp,
-		int f_output_solution_raw, 
-		int f_maxdepth, int maxdepth, 
-		int f_restrictions, int *restrictions, 
-		int f_tree, int f_decision_nodes_only, std::string &fname_tree,
-		int print_interval, 
-		int f_has_additional_test_function,
-		void (*call_back_additional_test_function)(rainbow_cliques *R, 
-			void *user_data, 
-			int current_clique_size, int *current_clique, 
-			int nb_pts, int &reduced_nb_pts, 
-			int *pt_list, int *pt_list_inv, 
-			int verbose_level), 
-		int f_has_print_current_choice_function,
-		void (*call_back_print_current_choice)(clique_finder *CF, 
-			int depth, void *user_data, int verbose_level), 
-		void *user_data, 
-		unsigned long int &search_steps, unsigned long int &decision_steps,
-		int &nb_sol, int &dt,
-		int verbose_level);
 	void draw_on_circle(std::string &fname,
 		int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 		int f_radius, double radius, 
@@ -397,6 +367,42 @@ public:
 	void draw_it(std::string &fname_base,
 		int xmax_in, int ymax_in, int xmax_out, int ymax_out, 
 		double scale, double line_width, int verbose_level);
+	void all_cliques(
+			clique_finder_control *Control,
+			std::string &fname_graph, int verbose_level);
+	void do_Sajeeb(clique_finder_control *Control, int verbose_level);
+	void do_Sajeeb_black_and_white(
+			clique_finder_control *Control,
+			std::vector<std::vector<long int> >& solutions,
+			int verbose_level);
+	void all_cliques_weighted_with_two_colors(
+			clique_finder_control *Control,
+			int verbose_level);
+	void all_cliques_of_size_k_ignore_colors(
+			clique_finder_control *Control,
+			//int *&Sol, int &nb_solutions,
+			//unsigned long int &decision_step_counter,
+			int verbose_level);
+	void all_rainbow_cliques(
+			clique_finder_control *Control,
+			std::ofstream *fp,
+			int verbose_level);
+	void all_rainbow_cliques_with_additional_test_function(
+			clique_finder_control *Control,
+			std::ofstream *fp,
+			int f_has_additional_test_function,
+			void (*call_back_additional_test_function)(rainbow_cliques *R,
+				void *user_data,
+				int current_clique_size, int *current_clique,
+				int nb_pts, int &reduced_nb_pts,
+				int *pt_list, int *pt_list_inv,
+				int verbose_level),
+			int f_has_print_current_choice_function,
+			void (*call_back_print_current_choice)(clique_finder *CF,
+				int depth, void *user_data, int verbose_level),
+			void *user_data,
+			int verbose_level);
+
 };
 
 void call_back_clique_found_using_file_output(clique_finder *CF, 
@@ -523,34 +529,19 @@ public:
 		double scale, double line_width,
 		int verbose_level);
 	void colored_graph_all_cliques(
-			std::string &fname, int f_output_solution_raw,
-		int f_output_fname, std::string &output_fname,
-		int f_maxdepth, int maxdepth,
-		int f_restrictions, int *restrictions,
-		int f_tree, int f_decision_nodes_only, std::string &fname_tree,
-		int print_interval,
-		unsigned long int &search_steps, unsigned long int &decision_steps,
-		int &nb_sol, int &dt,
-		int verbose_level);
+			clique_finder_control *Control,
+			std::string &fname,
+			int f_output_solution_raw,
+			int f_output_fname, std::string &output_fname,
+			int verbose_level);
 	void colored_graph_all_cliques_list_of_cases(
-		long int *list_of_cases, int nb_cases,
-		int f_output_solution_raw,
-		std::string &fname_template,
-		std::string &fname_sol,
-		std::string &fname_stats,
-		int f_split, int split_r, int split_m,
-		int f_maxdepth, int maxdepth,
-		int f_prefix, std::string &prefix,
-		int print_interval,
-		int verbose_level);
-	void colored_graph_all_cliques_list_of_files(int nb_cases,
-		int *Case_number, const char **Case_fname,
-		int f_output_solution_raw,
-		const char *fname_sol, const char *fname_stats,
-		int f_maxdepth, int maxdepth,
-		int f_prefix, const char *prefix,
-		int print_interval,
-		int verbose_level);
+			clique_finder_control *Control,
+			long int *list_of_cases, int nb_cases,
+			std::string &fname_template, std::string &fname_sol,
+			std::string &fname_stats,
+			int f_split, int split_r, int split_m,
+			int f_prefix, std::string &prefix,
+			int verbose_level);
 	void save_as_colored_graph_easy(std::string &fname_base,
 			int n, int *Adj, int verbose_level);
 	void save_colored_graph(std::string &fname,
@@ -609,9 +600,6 @@ public:
 	void make_graph_of_disjoint_sets_from_rows_of_matrix(
 		int *M, int m, int n,
 		int *&Adj, int verbose_level);
-	void all_cliques_weighted_with_two_colors(clique_finder_control *Descr,
-			colored_graph *CG,
-			int verbose_level);
 
 };
 
@@ -778,16 +766,17 @@ public:
 class rainbow_cliques {
 public:
 
+	clique_finder_control *Control;
 
 	std::ofstream *fp_sol;
-	int f_output_solution_raw;
+	//int f_output_solution_raw;
 	
 	colored_graph *graph;
 	clique_finder *CF;
 	int *f_color_satisfied;
 	int *color_chosen_at_depth;
 	int *color_frequency;
-	int target_depth;
+	//int target_depth;
 
 	// added November 5, 2014:
 	int f_has_additional_test_function;
@@ -805,38 +794,25 @@ public:
 	void null();
 	void freeself();
 
-	void search(colored_graph *graph, std::ofstream *fp_sol,
-		int f_output_solution_raw, 
-		int f_maxdepth, int maxdepth, 
-		int f_restrictions, int *restrictions, 
-		int f_tree, int f_decision_nodes_only, 
-		std::string &fname_tree,
-		int print_interval, 
-		unsigned long int &search_steps,
-		unsigned long int &decision_steps, int &nb_sol, int &dt,
-		int verbose_level);
-	void search_with_additional_test_function(colored_graph *graph, 
-			std::ofstream *fp_sol, int f_output_solution_raw,
-		int f_maxdepth, int maxdepth, 
-		int f_restrictions, int *restrictions, 
-		int f_tree, int f_decision_nodes_only, 
-		std::string &fname_tree,
-		int print_interval, 
-		int f_has_additional_test_function,
-		void (*call_back_additional_test_function)(
-			rainbow_cliques *R, 
+	void search(clique_finder_control *Control,
+			colored_graph *graph, std::ofstream *fp_sol,
+			int verbose_level);
+	void search_with_additional_test_function(clique_finder_control *Control,
+			colored_graph *graph,
+			std::ofstream *fp_sol,
+			int f_has_additional_test_function,
+			void (*call_back_additional_test_function)(
+				rainbow_cliques *R,
+				void *user_data,
+				int current_clique_size, int *current_clique,
+				int nb_pts, int &reduced_nb_pts,
+				int *pt_list, int *pt_list_inv,
+				int verbose_level),
+			int f_has_print_current_choice_function,
+			void (*call_back_print_current_choice)(clique_finder *CF,
+				int depth, void *user_data, int verbose_level),
 			void *user_data, 
-			int current_clique_size, int *current_clique, 
-			int nb_pts, int &reduced_nb_pts, 
-			int *pt_list, int *pt_list_inv, 
-			int verbose_level), 
-		int f_has_print_current_choice_function,
-		void (*call_back_print_current_choice)(clique_finder *CF, 
-			int depth, void *user_data, int verbose_level), 
-		void *user_data, 
-		unsigned long int &search_steps, unsigned long int &decision_steps,
-		int &nb_sol, int &dt, 
-		int verbose_level);
+			int verbose_level);
 	int find_candidates(
 		int current_clique_size, int *current_clique, 
 		int nb_pts, int &reduced_nb_pts, 

@@ -8,6 +8,8 @@
 
 
 #include "foundations.h"
+#include "Clique/RainbowClique.h"
+#include "KClique.h"
 
 
 using namespace std;
@@ -19,6 +21,7 @@ namespace foundations {
 
 colored_graph::colored_graph()
 {
+
 	//fname_base[0] = 0;
 	nb_points = nb_colors = nb_colors_per_vertex = 0;
 	//bitvector_length = 0;
@@ -135,15 +138,13 @@ void colored_graph::compute_edges(int verbose_level)
 		}
 	}
 	if (nb_edges != nb) {
-		cout << "colored_graph::compute_edges "
-				"nb_edges != nb" << endl;
+		cout << "colored_graph::compute_edges nb_edges != nb" << endl;
 		exit(1);
 	}
 
 	f_has_list_of_edges = TRUE;
 	if (f_v) {
-		cout << "colored_graph::compute_edges "
-				"done" << endl;
+		cout << "colored_graph::compute_edges done" << endl;
 	}
 }
 
@@ -154,10 +155,10 @@ int colored_graph::is_adjacent(int i, int j)
 
 	if (i == j) {
 		return FALSE;
-		}
+	}
 	if (i > j) {
 		return is_adjacent(j, i);
-		}
+	}
 	long int k;
 	
 	k = Combi.ij2k_lint(i, j, nb_points);
@@ -723,8 +724,6 @@ void colored_graph::init_adjacency(int nb_points,
 {
 	int f_v = (verbose_level >= 1);
 	long int i, j, k;
-	//long int bitvector_length;
-	//uchar *bitvec;
 	combinatorics_domain Combi;
 
 
@@ -737,12 +736,6 @@ void colored_graph::init_adjacency(int nb_points,
 
 	//bitvector_length = (L + 7) >> 3;
 	Bitvec = NEW_OBJECT(bitvector);
-#if 0
-	bitvec = NEW_uchar(bitvector_length);
-	for (i = 0; i < bitvector_length; i++) {
-		bitvec[i] = 0;
-	}
-#endif
 	Bitvec->allocate(L);
 	k = 0;
 	for (i = 0; i < nb_points; i++) {
@@ -933,218 +926,6 @@ void colored_graph::load(std::string &fname, int verbose_level)
 	if (f_v) {
 		cout << "colored_graph::load Read file " << fname
 				<< " of size " << Fio.file_size(fname.c_str()) << endl;
-	}
-}
-
-void colored_graph::all_cliques_of_size_k_ignore_colors(
-	int target_depth,
-	int *&Sol, int &nb_solutions,
-	unsigned long int &decision_step_counter,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	clique_finder *CF;
-	int print_interval = 10000000;
-
-	if (f_v) {
-		cout << "colored_graph::all_cliques_of_size_k_ignore_colors" << endl;
-	}
-	CF = NEW_OBJECT(clique_finder);
-
-	string dummy;
-
-	dummy.assign("");
-	CF->init(dummy, nb_points,
-		target_depth, 
-		FALSE /* f_has_adj_list */, NULL /* int *adj_list_coded */, 
-		TRUE /* f_has_bitvector */, Bitvec,
-		print_interval, 
-		FALSE /* f_maxdepth */, 0 /* maxdepth */, 
-		TRUE /* f_store_solutions */, 
-		verbose_level - 1);
-
-	CF->backtrack_search(0 /* depth */, 0 /* verbose_level */);
-
-	nb_solutions = CF->nb_sol;
-	decision_step_counter = CF->decision_step_counter;
-
-	CF->get_solutions(Sol,
-			nb_solutions, target_depth, verbose_level);
-
-
-
-	FREE_OBJECT(CF);
-	if (f_v) {
-		cout << "colored_graph::all_cliques_of_size_k_ignore_colors done" << endl;
-	}
-}
-
-void
-colored_graph::all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file(
-	int target_depth,
-	const char *fname, 
-	int f_restrictions, int *restrictions, 
-	int &nb_sol, unsigned long int &decision_step_counter,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	clique_finder *CF;
-	int print_interval = 1000000;
-
-	if (f_v) {
-		cout << "colored_graph::all_cliques_of_size_k_ignore_colors_"
-				"and_write_solutions_to_file " << fname << endl;
-		if (f_restrictions) {
-			cout << "with restrictions: ";
-			Orbiter->Int_vec.print(cout, restrictions, 3);
-			cout << endl;
-		}
-	}
-	CF = NEW_OBJECT(clique_finder);
-
-
-	file_output *FO;
-	FO = NEW_OBJECT(file_output);
-	FO->open(fname, CF, verbose_level);
-
-	CF->call_back_clique_found =
-			call_back_clique_found_using_file_output;
-	CF->call_back_clique_found_data1 = FO;
-	CF->call_back_clique_found_data2 = this;
-
-	string dummy;
-
-	dummy.assign("");
-
-	CF->init(dummy, nb_points,
-		target_depth, 
-		FALSE /* f_has_adj_list */, NULL /* int *adj_list_coded */, 
-		TRUE /* f_has_bitvector */, Bitvec,
-		print_interval, 
-		FALSE /* f_maxdepth */, 0 /* maxdepth */, 
-		TRUE /* f_store_solutions */, 
-		verbose_level - 1);
-
-	if (f_restrictions) {
-		if (f_v) {
-			cout << "colored_graph::all_cliques_of_size_k_ignore_"
-					"colors_and_write_solutions_to_file "
-					"before init_restrictions" << endl;
-		}
-		CF->init_restrictions(restrictions, verbose_level - 2);
-	}
-
-
-
-	CF->backtrack_search(0 /* depth */, 0 /* verbose_level */);
-
-	nb_sol = CF->nb_sol;
-	decision_step_counter = CF->decision_step_counter;
-
-	FO->write_EOF(nb_sol, 0 /* verbose_level*/);
-	
-	FREE_OBJECT(FO);
-	FREE_OBJECT(CF);
-	if (f_v) {
-		cout << "colored_graph::all_cliques_of_size_k_ignore_"
-				"colors_and_write_solutions_to_file done" << endl;
-	}
-}
-
-void colored_graph::all_rainbow_cliques(ofstream *fp,
-	int f_output_solution_raw,
-	int f_maxdepth, int maxdepth, 
-	int f_restrictions, int *restrictions, 
-	int f_tree, int f_decision_nodes_only, std::string &fname_tree,
-	int print_interval, 
-	unsigned long int &search_steps, unsigned long int &decision_steps,
-	int &nb_sol, int &dt,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	rainbow_cliques *R;
-
-	if (f_v) {
-		cout << "colored_graph::all_rainbow_cliques" << endl;
-	}
-	R = NEW_OBJECT(rainbow_cliques);
-	if (f_v) {
-		cout << "colored_graph::all_rainbow_cliques "
-				"before R->search" << endl;
-	}
-	R->search(this, fp, f_output_solution_raw, 
-		f_maxdepth, maxdepth, 
-		f_restrictions, restrictions, 
-		f_tree, f_decision_nodes_only, fname_tree,  
-		print_interval, 
-		search_steps, decision_steps, nb_sol, dt, 
-		verbose_level - 1);
-	if (f_v) {
-		cout << "colored_graph::all_rainbow_cliques "
-				"after R->search" << endl;
-	}
-	FREE_OBJECT(R);
-	if (f_v) {
-		cout << "colored_graph::all_rainbow_cliques "
-				"done" << endl;
-	}
-}
-
-void colored_graph::all_rainbow_cliques_with_additional_test_function(
-	ofstream *fp, int f_output_solution_raw,
-	int f_maxdepth, int maxdepth, 
-	int f_restrictions, int *restrictions, 
-	int f_tree, int f_decision_nodes_only, std::string &fname_tree,
-	int print_interval, 
-	int f_has_additional_test_function,
-	void (*call_back_additional_test_function)(
-		rainbow_cliques *R, void *user_data,
-		int current_clique_size, int *current_clique, 
-		int nb_pts, int &reduced_nb_pts, 
-		int *pt_list, int *pt_list_inv, 
-		int verbose_level), 
-	int f_has_print_current_choice_function,
-	void (*call_back_print_current_choice)(clique_finder *CF, 
-		int depth, void *user_data, int verbose_level), 
-	void *user_data, 
-	unsigned long int &search_steps, unsigned long int &decision_steps,
-	int &nb_sol, int &dt,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	rainbow_cliques *R;
-
-	if (f_v) {
-		cout << "colored_graph::all_rainbow_cliques_with_additional_"
-				"test_function" << endl;
-	}
-	R = NEW_OBJECT(rainbow_cliques);
-	if (f_v) {
-		cout << "colored_graph::all_rainbow_cliques_with_additional_"
-				"test_function before R->search_with_additional_"
-				"test_function" << endl;
-	}
-	R->search_with_additional_test_function(this, fp, f_output_solution_raw, 
-		f_maxdepth, maxdepth, 
-		f_restrictions, restrictions, 
-		f_tree, f_decision_nodes_only, fname_tree,  
-		print_interval, 
-		f_has_additional_test_function,
-		call_back_additional_test_function, 
-		f_has_print_current_choice_function,
-		call_back_print_current_choice, 
-		user_data, 
-		search_steps, decision_steps, nb_sol, dt, 
-		verbose_level - 1);
-	if (f_v) {
-		cout << "colored_graph::all_rainbow_cliques_with_additional_"
-				"test_function after R->search_with_additional_"
-				"test_function" << endl;
-	}
-	FREE_OBJECT(R);
-	if (f_v) {
-		cout << "colored_graph::all_rainbow_cliques_with_additional_"
-				"test_function done" << endl;
 	}
 }
 
@@ -2966,6 +2747,604 @@ void colored_graph::create_Levi_graph_from_incidence_matrix(
 
 
 
+void colored_graph::all_cliques(
+		clique_finder_control *Control,
+		std::string &fname_graph, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	string fname_sol;
+	string_tools ST;
+
+	if (f_v) {
+		cout << "colored_graph::all_cliques" << endl;
+	}
+	if (Control->f_output_file) {
+		fname_sol.assign(Control->output_file);
+	}
+	else {
+		fname_sol.assign(fname_graph);
+		ST.replace_extension_with(fname_sol, "_sol.txt");
+	}
+
+
+
+	{
+		string fname_sol_csv;
+		string_tools ST;
+
+
+		fname_sol_csv.assign(fname_sol);
+		ST.replace_extension_with(fname_sol_csv, ".csv");
+		ofstream fp(fname_sol);
+		ofstream fp_csv(fname_sol_csv);
+
+
+		if (Control->f_rainbow) {
+			if (Control->f_weighted) {
+
+				if (f_v) {
+					cout << "colored_graph::all_cliques "
+							"weighted cliques" << endl;
+				}
+
+
+
+				all_cliques_weighted_with_two_colors(Control, verbose_level);
+
+
+
+
+			}
+			else if (Control->f_Sajeeb) {
+				if (f_v) {
+					cout << "colored_graph::all_cliques "
+							"before do_Sajeeb" << endl;
+				}
+				do_Sajeeb(Control, verbose_level);
+				if (f_v) {
+					cout << "colored_graph::all_cliques "
+							"after do_Sajeeb" << endl;
+				}
+			}
+			else {
+				if (f_v) {
+					cout << "colored_graph::all_cliques "
+							"before CG.all_rainbow_cliques" << endl;
+					}
+				all_rainbow_cliques(Control,
+						&fp,
+						verbose_level - 1);
+				if (f_v) {
+					cout << "colored_graph::all_cliques "
+							"after CG.all_rainbow_cliques" << endl;
+				}
+			}
+		}
+		else {
+			cout << "colored_graph::all_cliques not rainbow" << endl;
+			if (!Control->f_target_size) {
+				cout << "colored_graph::all_cliques please use -target_size <int : target_size>" << endl;
+				exit(1);
+			}
+
+			if (Control->f_Sajeeb) {
+				if (f_v) {
+					cout << "colored_graph::all_cliques "
+							"before do_Sajeeb_black_and_white" << endl;
+				}
+				std::vector<std::vector<long int> > solutions;
+
+				do_Sajeeb_black_and_white(Control, solutions, verbose_level - 2);
+
+				// Print the solutions
+				if (f_v) {
+					cout << "colored_graph::all_cliques after do_Sajeeb_black_and_white Found " << solutions.size() << " solution(s)." << endl;
+				}
+
+
+				if (f_v) {
+					cout << "colored_graph::all_cliques "
+							"before writing solutions to file" << endl;
+				}
+
+				#if 1
+				for (size_t i = 0; i < solutions.size(); ++i) {
+					fp << solutions[i].size() << " ";
+					for (size_t j = 0; j < solutions[i].size(); ++j) {
+						fp << points[solutions[i][j]] << " ";
+					}
+					fp << endl;
+				}
+
+				fp_csv << "ROW";
+				for (int j = 0; j < Control->target_size; ++j) {
+					fp_csv << ",C" << j;
+				}
+				fp_csv << endl;
+
+				for (size_t i = 0; i < solutions.size(); ++i) {
+					for (size_t j = 0; j < solutions[i].size(); ++j) {
+						fp_csv << points[solutions[i][j]];
+						if (j < solutions[i].size() - 1) {
+							fp_csv << " ";
+						}
+					}
+					fp_csv << endl;
+				}
+				#endif
+				if (f_v) {
+					cout << "colored_graph::all_cliques "
+							"after writing solutions to file" << endl;
+				}
+			}
+			else {
+
+
+				if (f_v) {
+					cout << "colored_graph::all_cliques "
+							"before CG->all_cliques_of_size_k_ignore_colors" << endl;
+				}
+				all_cliques_of_size_k_ignore_colors(
+						Control,
+						verbose_level - 2);
+				if (f_v) {
+					cout << "colored_graph::all_cliques "
+							"before CG->all_cliques_of_size_k_ignore_colors" << endl;
+				}
+
+				if (f_v) {
+					cout << "colored_graph::all_cliques "
+							"before writing solutions to file" << endl;
+				}
+				for (int i = 0; i < Control->nb_sol; ++i) {
+					fp << Control->target_size << " ";
+					for (int j = 0; j < Control->target_size; ++j) {
+						fp << points[Control->Sol[i * Control->target_size + j]];
+						if (j < Control->target_size - 1) {
+							fp << " ";
+						}
+					}
+					fp << endl;
+				}
+
+
+				fp_csv << "ROW";
+				for (int j = 0; j < Control->target_size; ++j) {
+					fp_csv << ",C" << j;
+				}
+				fp_csv << endl;
+
+				for (int i = 0; i < Control->nb_sol; ++i) {
+					fp_csv << i << ",";
+					for (int j = 0; j < Control->target_size; ++j) {
+						fp_csv << points[Control->Sol[i * Control->target_size + j]];
+						if (j < Control->target_size - 1) {
+							fp_csv << ",";
+						}
+					}
+					fp_csv << endl;
+				}
+				if (f_v) {
+					cout << "colored_graph::all_cliques "
+							"after writing solutions to file" << endl;
+				}
+
+			}
+		}
+		fp << -1 << " " << Control->nb_sol << " " << Control->nb_search_steps
+			<< " " << Control->nb_decision_steps << " " << Control->dt << endl;
+		fp_csv << "END" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "colored_graph::all_cliques done" << endl;
+	}
+}
+
+void colored_graph::do_Sajeeb(clique_finder_control *Control, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "colored_graph::do_Sajeeb" << endl;
+	}
+
+#if 1
+	Graph<> G (nb_points, nb_colors, nb_colors_per_vertex);
+
+	for (size_t i=0; i<G.nb_vertices; ++i) G.vertex_label[i] = points[i];
+	for (size_t i=0; i<G.nb_colors; ++i) G.vertex_color[i] = point_color[i];
+
+	G.set_edge_from_bitvector_adjacency(Bitvec);
+
+	// Create the solution storage. The base type of the solution
+	// storage must be the same as data type of the vertex label
+	// in the graph
+	std::vector<std::vector<unsigned int> > solutions;
+	cout << __FILE__ << ":" << __LINE__ << endl;
+
+    // Call the Rainbow Clique finding algorithm
+	RainbowClique::find_cliques(G, solutions, 0 /* nb_threads */);
+		// nb_threads = 0 automatically detects the number of threads
+	cout << __FILE__ << ":" << __LINE__ << endl;
+
+	// Print the solutions
+	cout << "colored_graph::do_Sajeeb Found " << solutions.size() << " solution(s)." << endl;
+//	for (size_t i=0; i<solutions.size(); ++i) {
+//		for (size_t j=0; j<solutions[i].size(); ++j) {
+//			cout << solutions[i][j] << " ";
+//		} cout << endl;
+//	}
+
+	//this->nb_sol = solutions.size();
+#endif
+
+
+
+	if (f_v) {
+		cout << "colored_graph::do_Sajeeb done" << endl;
+	}
+}
+
+void colored_graph::do_Sajeeb_black_and_white(
+		clique_finder_control *Control,
+		std::vector<std::vector<long int> >& solutions,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "colored_graph::do_Sajeeb" << endl;
+	}
+
+#if 1
+	Graph<long int, int> G (nb_points, nb_colors, nb_colors_per_vertex);
+	G.set_vertex_labels(points);
+	G.set_vertex_colors(point_color);
+	G.set_edge_from_bitvector_adjacency(Bitvec);
+
+    // Call the Rainbow Clique finding algorithm
+	KClique::find_cliques(G, solutions, Control->target_size);
+	//RainbowClique::find_cliques(G, solutions, 0 /* nb_threads */);
+
+	//this->nb_sol = solutions.size();
+#endif
+
+
+
+	if (f_v) {
+		cout << "colored_graph::do_Sajeeb done" << endl;
+	}
+}
+
+
+void colored_graph::all_cliques_weighted_with_two_colors(
+		clique_finder_control *Control,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "colored_graph::all_cliques_weighted_with_two_colors" << endl;
+	}
+
+	int *weights;
+	int nb_weights;
+	int *bounds;
+	int nb_bounds;
+	int target_value;
+	int i;
+
+
+	Orbiter->Int_vec.scan(Control->weights_string, weights, nb_weights);
+	Orbiter->Int_vec.scan(Control->weights_bounds, bounds, nb_bounds);
+
+	if (nb_bounds != nb_weights) {
+		cout << "colored_graph::all_cliques_weighted_with_two_colors nb_bounds != nb_weights" << endl;
+		exit(1);
+	}
+
+	if (nb_weights != 2) {
+		cout << "colored_graph::all_cliques_weighted_with_two_colors "
+				"nb_weights != 2" << endl;
+		exit(1);
+	}
+	if (nb_colors < nb_weights + Control->weights_offset) {
+		cout << "colored_graph::all_cliques_weighted_with_two_colors CG->nb_colors < nb_weights + weights_offset" << endl;
+		exit(1);
+	}
+
+	target_value = Control->weights_total;
+
+	if (f_v) {
+		cout << "colored_graph::all_cliques_weighted_with_two_colors target_value = " << target_value << endl;
+		cout << "colored_graph::all_cliques_weighted_with_two_colors the weights are ";
+		Orbiter->Int_vec.print(cout, weights, nb_weights);
+		cout << endl;
+	}
+
+
+	diophant D;
+	long int nb_backtrack_nodes;
+	int nb_sol;
+	int *Sol_weights;
+	int j;
+	vector<int> res;
+
+	D.init_partition_problem_with_bounds(
+			weights, bounds, nb_weights, target_value,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "colored_graph::all_cliques_weighted_with_two_colors before D.solve_mckay" << endl;
+	}
+	D.solve_mckay("weights", INT_MAX /* maxresults */,
+			nb_backtrack_nodes, nb_sol, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "colored_graph::all_cliques_weighted_with_two_colors after D.solve_mckay" << endl;
+	}
+	if (f_v) {
+		cout << "colored_graph::all_cliques_weighted_with_two_colors we found " << nb_sol << " solutions for the "
+			"weight distribution" << endl;
+	}
+
+	Sol_weights = NEW_int(nb_sol * nb_weights);
+
+	for (i = 0; i < D._resultanz; i++) {
+		res = D._results.front();
+		for (j = 0; j < nb_weights; j++) {
+			Sol_weights[i * nb_weights + j] = res[j];
+			}
+		D._results.pop_front();
+		}
+
+	if (f_v) {
+		cout << "colored_graph::all_cliques_weighted_with_two_colors The solutions are:" << endl;
+		for (i = 0; i < nb_sol; i++) {
+			cout << i << " : ";
+			Orbiter->Int_vec.print(cout, Sol_weights + i * nb_weights, nb_weights);
+			cout << endl;
+		}
+	}
+
+	int c1 = Control->weights_offset + 0;
+	int c2 = Control->weights_offset + 1;
+
+	if (f_v) {
+		cout << "creating subgraph of color " << c1 << ":" << endl;
+	}
+
+	colored_graph *subgraph;
+
+	subgraph = subgraph_by_color_classes(c1, verbose_level);
+
+	if (f_v) {
+		cout << "The subgraph of color " << c1 << " has size " << subgraph->nb_points << endl;
+	}
+
+	int target_depth1;
+	int target_depth2;
+	int nb_solutions_total;
+
+	clique_finder_control *Control1;
+
+	Control1 = NEW_OBJECT(clique_finder_control);
+
+	nb_solutions_total = 0;
+
+	for (i = 0; i < nb_sol; i++) {
+
+		target_depth1 = Sol_weights[i * nb_weights + c1];
+		target_depth2 = Sol_weights[i * nb_weights + c2];
+
+
+		clique_finder_control *Control1;
+
+		Control1 = NEW_OBJECT(clique_finder_control);
+		Control1->target_size = target_depth1;
+
+		subgraph->all_cliques_of_size_k_ignore_colors(Control1,
+				verbose_level);
+
+		if (f_v) {
+			cout << "solution " << i << " / " << nb_sol << " with target_depth = " << target_depth1
+					<< " Control1->nb_sol=" << Control1->nb_sol << endl;
+		}
+
+		for (j = 0; j < Control1->nb_sol; j++) {
+
+
+
+
+			colored_graph *subgraph2;
+			clique_finder_control *Control2;
+
+			Control2 = NEW_OBJECT(clique_finder_control);
+			Control2->target_size = target_depth2;
+
+			if (f_v) {
+				cout <<  "solution " << i << " / " << nb_sol << ", clique1 " << j << " / " << Control1->nb_sol << ":" << endl;
+			}
+
+			subgraph2 = subgraph_by_color_classes_with_condition(
+					Control1->Sol + j * target_depth1, target_depth1,
+					c2, verbose_level);
+
+			if (f_v) {
+				cout << "solution " << i << " / " << nb_sol << ", clique1 " << j << " / " << Control1->nb_sol << ", subgraph2 has " << subgraph2->nb_points << " vertices" << endl;
+			}
+
+			subgraph2->all_cliques_of_size_k_ignore_colors(
+					Control2,
+					verbose_level);
+
+			nb_solutions_total += Control2->nb_sol;
+
+			if (f_v) {
+				cout << "solution " << i << " / " << nb_sol << ", "
+						"clique1 " << j << " / " << Control1->nb_sol << ", Control2->nb_sol=" << Control2->nb_sol
+					<< " nb_solutions_total=" << nb_solutions_total << endl;
+			}
+
+			FREE_OBJECT(subgraph2);
+			FREE_OBJECT(Control2);
+		}
+		FREE_OBJECT(Control1);
+	}
+
+	if (f_v) {
+		cout << "nb_solutions_total=" << nb_solutions_total << endl;
+	}
+
+	FREE_int(Sol_weights);
+
+	if (f_v) {
+		cout << "colored_graph::all_cliques_weighted_with_two_colors done" << endl;
+	}
+}
+
+
+void colored_graph::all_cliques_of_size_k_ignore_colors(
+	clique_finder_control *Control,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	clique_finder *CF;
+
+	if (f_v) {
+		cout << "colored_graph::all_cliques_of_size_k_ignore_colors target_size = " << Control->target_size << endl;
+	}
+	CF = NEW_OBJECT(clique_finder);
+
+	string dummy;
+
+	dummy.assign("");
+	if (f_v) {
+		cout << "colored_graph::all_cliques_of_size_k_ignore_colors before CF->init" << endl;
+	}
+	CF->init(
+			Control,
+			dummy, nb_points,
+			FALSE /* f_has_adj_list */, NULL /* int *adj_list_coded */,
+			TRUE /* f_has_bitvector */, Bitvec,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "colored_graph::all_cliques_of_size_k_ignore_colors after CF->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "colored_graph::all_cliques_of_size_k_ignore_colors before CF->backtrack_search" << endl;
+	}
+	CF->backtrack_search(0 /* depth */, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "colored_graph::all_cliques_of_size_k_ignore_colors after CF->backtrack_search, nb_sol = " << CF->solutions.size() << endl;
+	}
+
+	Control->nb_sol = CF->solutions.size();
+	Control->nb_decision_steps = CF->decision_step_counter;
+
+	if (f_v) {
+		cout << "colored_graph::all_cliques_of_size_k_ignore_colors before CF->get_solutions" << endl;
+	}
+	int nb_sol;
+	CF->get_solutions(Control->Sol,
+			nb_sol, Control->target_size, verbose_level);
+	if (f_v) {
+		cout << "colored_graph::all_cliques_of_size_k_ignore_colors after CF->get_solutions" << endl;
+	}
+	if (nb_sol != Control->nb_sol) {
+		cout << "colored_graph::all_cliques_of_size_k_ignore_colors nb_sol != Control->nb_sol" << endl;
+		exit(1);
+	}
+
+	FREE_OBJECT(CF);
+	if (f_v) {
+		cout << "colored_graph::all_cliques_of_size_k_ignore_colors done" << endl;
+	}
+}
+
+
+void colored_graph::all_rainbow_cliques(
+		clique_finder_control *Control,
+		ofstream *fp,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	rainbow_cliques *R;
+
+	if (f_v) {
+		cout << "colored_graph::all_rainbow_cliques" << endl;
+	}
+	R = NEW_OBJECT(rainbow_cliques);
+	if (f_v) {
+		cout << "colored_graph::all_rainbow_cliques "
+				"before R->search" << endl;
+	}
+	R->search(Control, this, fp, verbose_level - 1);
+	if (f_v) {
+		cout << "colored_graph::all_rainbow_cliques "
+				"after R->search" << endl;
+	}
+	FREE_OBJECT(R);
+	if (f_v) {
+		cout << "colored_graph::all_rainbow_cliques "
+				"done" << endl;
+	}
+}
+
+void colored_graph::all_rainbow_cliques_with_additional_test_function(
+	clique_finder_control *Control,
+	ofstream *fp,
+	int f_has_additional_test_function,
+	void (*call_back_additional_test_function)(
+		rainbow_cliques *R, void *user_data,
+		int current_clique_size, int *current_clique,
+		int nb_pts, int &reduced_nb_pts,
+		int *pt_list, int *pt_list_inv,
+		int verbose_level),
+	int f_has_print_current_choice_function,
+	void (*call_back_print_current_choice)(clique_finder *CF,
+		int depth, void *user_data, int verbose_level),
+	void *user_data,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	rainbow_cliques *R;
+
+	if (f_v) {
+		cout << "colored_graph::all_rainbow_cliques_with_additional_test_function" << endl;
+	}
+	R = NEW_OBJECT(rainbow_cliques);
+	if (f_v) {
+		cout << "colored_graph::all_rainbow_cliques_with_additional_test_function "
+				"before R->search_with_additional_test_function" << endl;
+	}
+	R->search_with_additional_test_function(Control,
+		this, fp,
+		f_has_additional_test_function,
+		call_back_additional_test_function,
+		f_has_print_current_choice_function,
+		call_back_print_current_choice,
+		user_data,
+		verbose_level - 1);
+	if (f_v) {
+		cout << "colored_graph::all_rainbow_cliques_with_additional_test_function "
+				"after R->search_with_additional_test_function" << endl;
+	}
+	FREE_OBJECT(R);
+	if (f_v) {
+		cout << "colored_graph::all_rainbow_cliques_with_additional_test_function done" << endl;
+	}
+}
+
+
+
+
+
+
 // #############################################################################
 // global functions:
 // #############################################################################
@@ -2983,18 +3362,18 @@ void call_back_clique_found_using_file_output(
 
 	if (CG->user_data_size && CG->points) {
 		int i, a;
-		*FO->fp << CG->user_data_size + CF->target_depth;
+		*FO->fp << CG->user_data_size + CF->Control->target_size;
 		for (i = 0; i < CG->user_data_size; i++) {
 			*FO->fp << " " << CG->user_data[i];
 		}
-		for (i = 0; i < CF->target_depth; i++) {
+		for (i = 0; i < CF->Control->target_size; i++) {
 			a = CF->current_clique[i];
 			*FO->fp << " " << CG->points[a];
 		}
 		*FO->fp << endl;
 	}
 	else {
-		FO->write_line(CF->target_depth,
+		FO->write_line(CF->Control->target_size,
 				CF->current_clique, verbose_level);
 	}
 }

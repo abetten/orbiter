@@ -46,13 +46,13 @@ void graph_theory_domain::colored_graph_draw(std::string &fname, int xmax_in,
 	}
 }
 
-void graph_theory_domain::colored_graph_all_cliques(std::string &fname,
-		int f_output_solution_raw, int f_output_fname, std::string &output_fname,
-		int f_maxdepth, int maxdepth, int f_restrictions, int *restrictions,
-		int f_tree, int f_decision_nodes_only, std::string &fname_tree,
-		int print_interval, unsigned long int &search_steps,
-		unsigned long int &decision_steps, int &nb_sol, int &dt,
-		int verbose_level) {
+void graph_theory_domain::colored_graph_all_cliques(
+		clique_finder_control *Control,
+		std::string &fname,
+		int f_output_solution_raw,
+		int f_output_fname, std::string &output_fname,
+		int verbose_level)
+{
 	int f_v = (verbose_level >= 1);
 	colored_graph CG;
 	std::string fname_sol;
@@ -83,16 +83,15 @@ void graph_theory_domain::colored_graph_all_cliques(std::string &fname,
 			cout << "colored_graph_all_cliques "
 					"before CG.all_rainbow_cliques" << endl;
 		}
-		CG.all_rainbow_cliques(&fp, f_output_solution_raw, f_maxdepth, maxdepth,
-				f_restrictions, restrictions, f_tree, f_decision_nodes_only,
-				fname_tree, print_interval, search_steps, decision_steps,
-				nb_sol, dt, verbose_level - 1);
+		CG.all_rainbow_cliques(Control,
+				&fp,
+				verbose_level - 1);
 		if (f_v) {
 			cout << "colored_graph_all_cliques "
 					"after CG.all_rainbow_cliques" << endl;
 		}
-		fp << -1 << " " << nb_sol << " " << search_steps << " "
-				<< decision_steps << " " << dt << endl;
+		fp << -1 << " " << Control->nb_sol << " " << Control->nb_search_steps << " "
+				<< Control->nb_decision_steps << " " << Control->dt << endl;
 	}
 	{
 		ofstream fp(fname_success);
@@ -104,18 +103,17 @@ void graph_theory_domain::colored_graph_all_cliques(std::string &fname,
 }
 
 void graph_theory_domain::colored_graph_all_cliques_list_of_cases(
-		long int *list_of_cases, int nb_cases, int f_output_solution_raw,
+		clique_finder_control *Control,
+		long int *list_of_cases, int nb_cases,
 		std::string &fname_template, std::string &fname_sol,
 		std::string &fname_stats,
 		int f_split, int split_r, int split_m,
-		int f_maxdepth, int maxdepth,
 		int f_prefix, std::string &prefix,
-		int print_interval, int verbose_level) {
+		int verbose_level)
+{
 	int f_v = (verbose_level >= 1);
 	int i, c;
 	int Search_steps = 0, Decision_steps = 0, Nb_sol = 0, Dt = 0;
-	unsigned long int search_steps, decision_steps;
-	int nb_sol, dt;
 	std::string fname;
 	char fname_tmp[2000];
 
@@ -158,21 +156,19 @@ void graph_theory_domain::colored_graph_all_cliques_list_of_cases(
 
 			string dummy;
 
-			CG->all_rainbow_cliques(&fp, f_output_solution_raw, f_maxdepth,
-					maxdepth,
-					FALSE /* f_restrictions */, NULL /* restrictions */,
-					FALSE /* f_tree */, FALSE /* f_decision_nodes_only */,
-					dummy /* fname_tree */, print_interval, search_steps,
-					decision_steps, nb_sol, dt, verbose_level - 1);
-			fp << "# end case " << c << " " << nb_sol << " " << search_steps
-					<< " " << decision_steps << " " << dt << endl;
-			fp_stats << i << "," << c << "," << nb_sol << "," << CG->nb_points
-					<< "," << search_steps << "," << decision_steps << "," << dt
+			CG->all_rainbow_cliques(Control,
+					&fp,
+					verbose_level - 1);
+
+			fp << "# end case " << c << " " << Control->nb_sol << " " << Control->nb_search_steps
+					<< " " << Control->nb_decision_steps << " " << Control->dt << endl;
+			fp_stats << i << "," << c << "," << Control->nb_sol << "," << CG->nb_points
+					<< "," << Control->nb_search_steps << "," << Control->nb_decision_steps << "," << Control->dt
 					<< endl;
-			Search_steps += search_steps;
-			Decision_steps += decision_steps;
-			Nb_sol += nb_sol;
-			Dt += dt;
+			Search_steps += Control->nb_search_steps;
+			Decision_steps += Control->nb_decision_steps;
+			Nb_sol += Control->nb_sol;
+			Dt += Control->dt;
 
 			FREE_OBJECT(CG);
 		}
@@ -186,117 +182,6 @@ void graph_theory_domain::colored_graph_all_cliques_list_of_cases(
 	}
 }
 
-void graph_theory_domain::colored_graph_all_cliques_list_of_files(int nb_cases,
-		int *Case_number, const char **Case_fname, int f_output_solution_raw,
-		const char *fname_sol, const char *fname_stats, int f_maxdepth,
-		int maxdepth, int f_prefix, const char *prefix, int print_interval,
-		int verbose_level) {
-	int f_v = (verbose_level >= 1);
-	int i, c;
-	int Search_steps = 0, Decision_steps = 0, Nb_sol = 0, Dt = 0;
-	unsigned long int search_steps, decision_steps;
-	int nb_sol, dt;
-	file_io Fio;
-
-	if (f_v) {
-		cout << "colored_graph_all_cliques_list_of_files" << endl;
-	}
-	{
-		ofstream fp(fname_sol);
-		ofstream fp_stats(fname_stats);
-
-		fp_stats << "i,Case,Nb_sol,Nb_vertices,search_steps,"
-				"decision_steps,dt" << endl;
-		for (i = 0; i < nb_cases; i++) {
-
-			colored_graph *CG;
-			std::string fname;
-
-			CG = NEW_OBJECT(colored_graph);
-
-			c = Case_number[i];
-			fname.assign(Case_fname[i]);
-			//fname = Case_fname[i];
-
-			if (f_v) {
-				cout << "colored_graph_all_cliques_list_of_files case " << i
-						<< " / " << nb_cases << " which is " << c << " in file "
-						<< fname << endl;
-			}
-
-			if (Fio.file_size(fname) <= 0) {
-				cout << "colored_graph_all_cliques_list_of_files file " << fname
-						<< " does not exist" << endl;
-				exit(1);
-			}
-			CG->load(fname, verbose_level - 2);
-
-			//CG->print();
-
-			fp << "# start case " << c << endl;
-
-			string dummy;
-
-			CG->all_rainbow_cliques(&fp, f_output_solution_raw, f_maxdepth,
-					maxdepth,
-					FALSE /* f_restrictions */, NULL /* restrictions */,
-					FALSE /* f_tree */, FALSE /* f_decision_nodes_only */,
-					dummy /* fname_tree */, print_interval, search_steps,
-					decision_steps, nb_sol, dt, verbose_level - 1);
-			fp << "# end case " << c << " " << nb_sol << " " << search_steps
-					<< " " << decision_steps << " " << dt << endl;
-			fp_stats << i << "," << c << "," << nb_sol << "," << CG->nb_points
-					<< "," << search_steps << "," << decision_steps << "," << dt
-					<< endl;
-			Search_steps += search_steps;
-			Decision_steps += decision_steps;
-			Nb_sol += nb_sol;
-			Dt += dt;
-
-			FREE_OBJECT(CG);
-		}
-		fp << -1 << " " << Nb_sol << " " << Search_steps << " "
-				<< Decision_steps << " " << Dt << endl;
-		fp_stats << "END" << endl;
-	}
-	if (f_v) {
-		cout << "colored_graph_all_cliques_list_of_files "
-				"done Nb_sol=" << Nb_sol << endl;
-	}
-}
-
-#if 0
-int graph_theory_domain::colored_graph_all_rainbow_cliques_nonrecursive(
-	const char *fname,
-	int &nb_backtrack_nodes,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	colored_graph CG;
-	int nb_sol;
-
-	if (f_v) {
-		cout << "colored_graph_all_rainbow_cliques_"
-				"nonrecursive" << endl;
-		}
-	CG.load(fname, verbose_level - 1);
-	//CG.print();
-
-	{
-	if (f_v) {
-		cout << "colored_graph_all_cliques "
-				"before CG.all_rainbow_cliques" << endl;
-		}
-	nb_sol = CG.rainbow_cliques_nonrecursive(
-			nb_backtrack_nodes, verbose_level - 1);
-	}
-	if (f_v) {
-		cout << "colored_graph_all_rainbow_cliques_"
-				"nonrecursive done" << endl;
-		}
-	return nb_sol;
-}
-#endif
 
 void graph_theory_domain::save_as_colored_graph_easy(std::string &fname_base,
 		int n, int *Adj, int verbose_level)
@@ -560,138 +445,6 @@ void graph_theory_domain::load_colored_graph(std::string &fname,
 	}
 }
 
-#if 0
-void graph_theory_domain::write_colored_graph(ofstream &ost, char *label,
-		int point_offset, int nb_points,
-		int f_has_adjacency_matrix, int *Adj,
-		int f_has_adjacency_list, int *adj_list, int f_has_bitvector,
-		uchar *bitvector_adjacency, int f_has_is_adjacent_callback,
-		int (*is_adjacent_callback)(int i, int j, void *data),
-		void *is_adjacent_callback_data, int f_colors, int nb_colors,
-		int *point_color, int f_point_labels, long int *point_label) {
-	long int i, j, h, d;
-	int aij = 0;
-	int w;
-	number_theory_domain NT;
-	combinatorics_domain Combi;
-
-	cout << "write_graph " << label << " with " << nb_points
-			<< " points, point_offset=" << point_offset << endl;
-	w = NT.int_log10(nb_points);
-	cout << "w=" << w << endl;
-	ost << "<GRAPH label=\"" << label << "\" num_pts=\"" << nb_points
-			<< "\" f_has_colors=\"" << f_colors << "\" num_colors=\""
-			<< nb_colors << "\" point_offset=\"" << point_offset
-			<< "\" f_point_labels=\"" << f_point_labels << "\">" << endl;
-	for (i = 0; i < nb_points; i++) {
-		d = 0;
-		for (j = 0; j < nb_points; j++) {
-			if (j == i) {
-				continue;
-			}
-			if (f_has_adjacency_matrix) {
-				aij = Adj[i * nb_points + j];
-			}
-			else if (f_has_adjacency_list) {
-				if (i < j) {
-					h = Combi.ij2k_lint(i, j, nb_points);
-				}
-				else {
-					h = Combi.ij2k_lint(j, i, nb_points);
-				}
-				aij = adj_list[h];
-			}
-			else if (f_has_bitvector) {
-				if (i < j) {
-					h = Combi.ij2k_lint(i, j, nb_points);
-				}
-				else {
-					h = Combi.ij2k_lint(j, i, nb_points);
-				}
-				aij = bitvector_s_i(bitvector_adjacency, h);
-			}
-			else if (f_has_is_adjacent_callback) {
-				aij = (*is_adjacent_callback)(i, j, is_adjacent_callback_data);
-			}
-			else {
-				cout << "write_colored_graph cannot "
-						"determine adjacency" << endl;
-			}
-
-			if (aij) {
-				d++;
-			}
-		}
-		ost << setw(w) << i + point_offset << " " << setw(w) << d << " ";
-		for (j = 0; j < nb_points; j++) {
-			if (j == i) {
-				continue;
-			}
-			if (f_has_adjacency_matrix) {
-				aij = Adj[i * nb_points + j];
-			}
-			else if (f_has_adjacency_list) {
-				if (i < j) {
-					h = Combi.ij2k_lint(i, j, nb_points);
-				}
-				else {
-					h = Combi.ij2k_lint(j, i, nb_points);
-				}
-				aij = adj_list[h];
-			}
-			else if (f_has_bitvector) {
-				if (i < j) {
-					h = Combi.ij2k_lint(i, j, nb_points);
-				}
-				else {
-					h = Combi.ij2k_lint(j, i, nb_points);
-				}
-				aij = bitvector_s_i(bitvector_adjacency, h);
-			}
-			else if (f_has_is_adjacent_callback) {
-				aij = (*is_adjacent_callback)(i, j, is_adjacent_callback_data);
-			}
-			else {
-				cout << "write_colored_graph cannot "
-						"determine adjacency" << endl;
-			}
-			if (aij) {
-				ost << setw(w) << j + point_offset << " ";
-			}
-		}
-		ost << endl;
-
-	}
-
-	if (f_colors) {
-		ost << endl;
-		for (j = 0; j < nb_colors; j++) {
-			d = 0;
-			for (i = 0; i < nb_points; i++) {
-				if (point_color[i] == j)
-					d++;
-			}
-			ost << setw(w) << j + point_offset << " " << setw(w) << d << " ";
-			for (i = 0; i < nb_points; i++) {
-				if (point_color[i] == j)
-					ost << setw(w) << i + point_offset << " ";
-			}
-			ost << endl;
-		}
-	}
-
-	if (f_point_labels) {
-		ost << endl;
-		for (i = 0; i < nb_points; i++) {
-			ost << setw(w) << i + point_offset << " " << setw(6)
-					<< point_label[i] << endl;
-		}
-	}
-
-	ost << "</GRAPH>" << endl;
-
-}
-#endif
 
 int graph_theory_domain::is_association_scheme(int *color_graph, int n,
 		int *&Pijk, int *&colors, int &nb_colors, int verbose_level)
@@ -1740,178 +1493,6 @@ void graph_theory_domain::make_graph_of_disjoint_sets_from_rows_of_matrix(
 }
 
 
-void graph_theory_domain::all_cliques_weighted_with_two_colors(clique_finder_control *Descr,
-		colored_graph *CG,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "graph_theory_domain::all_cliques_weighted_with_two_colors" << endl;
-	}
-
-	int *weights;
-	int nb_weights;
-	int *bounds;
-	int nb_bounds;
-	int target_value;
-	int i;
-
-
-	Orbiter->Int_vec.scan(Descr->weights_string, weights, nb_weights);
-	Orbiter->Int_vec.scan(Descr->weights_bounds, bounds, nb_bounds);
-
-	if (nb_bounds != nb_weights) {
-		cout << "graph_theory_domain::all_cliques_weighted_with_two_colors nb_bounds != nb_weights" << endl;
-		exit(1);
-	}
-
-	if (nb_weights != 2) {
-		cout << "graph_theory_domain::all_cliques_weighted_with_two_colors "
-				"nb_weights != 2" << endl;
-		exit(1);
-	}
-	if (CG->nb_colors < nb_weights + Descr->weights_offset) {
-		cout << "graph_theory_domain::all_cliques_weighted_with_two_colors CG->nb_colors < nb_weights + weights_offset" << endl;
-		exit(1);
-	}
-
-	target_value = Descr->weights_total;
-
-	if (f_v) {
-		cout << "graph_theory_domain::all_cliques_weighted_with_two_colors target_value = " << target_value << endl;
-		cout << "graph_theory_domain::all_cliques_weighted_with_two_colors the weights are ";
-		Orbiter->Int_vec.print(cout, weights, nb_weights);
-		cout << endl;
-	}
-
-
-	diophant D;
-	long int nb_backtrack_nodes;
-	int nb_sol;
-	int *Sol_weights;
-	int j;
-	vector<int> res;
-
-	D.init_partition_problem_with_bounds(
-			weights, bounds, nb_weights, target_value,
-			verbose_level);
-
-
-	if (f_v) {
-		cout << "graph_theory_domain::all_cliques_weighted_with_two_colors before D.solve_mckay" << endl;
-	}
-	D.solve_mckay("weights", INT_MAX /* maxresults */,
-			nb_backtrack_nodes, nb_sol, 0 /*verbose_level*/);
-	if (f_v) {
-		cout << "graph_theory_domain::all_cliques_weighted_with_two_colors after D.solve_mckay" << endl;
-	}
-	if (f_v) {
-		cout << "graph_theory_domain::all_cliques_weighted_with_two_colors we found " << nb_sol << " solutions for the "
-			"weight distribution" << endl;
-	}
-
-	Sol_weights = NEW_int(nb_sol * nb_weights);
-
-	for (i = 0; i < D._resultanz; i++) {
-		res = D._results.front();
-		for (j = 0; j < nb_weights; j++) {
-			Sol_weights[i * nb_weights + j] = res[j];
-			}
-		D._results.pop_front();
-		}
-
-	if (f_v) {
-		cout << "graph_theory_domain::all_cliques_weighted_with_two_colors The solutions are:" << endl;
-		for (i = 0; i < nb_sol; i++) {
-			cout << i << " : ";
-			Orbiter->Int_vec.print(cout, Sol_weights + i * nb_weights, nb_weights);
-			cout << endl;
-		}
-	}
-
-	int c1 = Descr->weights_offset + 0;
-	int c2 = Descr->weights_offset + 1;
-
-	if (f_v) {
-		cout << "creating subgraph of color " << c1 << ":" << endl;
-	}
-
-	colored_graph *subgraph;
-
-	subgraph = CG->subgraph_by_color_classes(c1, verbose_level);
-
-	if (f_v) {
-		cout << "The subgraph of color " << c1 << " has size " << subgraph->nb_points << endl;
-	}
-
-	int target_depth1;
-	int target_depth2;
-	int nb_cliques_in_subgraph;
-	unsigned long int decision_step_counter;
-	int nb_solutions_total;
-	int *Sol;
-
-	nb_solutions_total = 0;
-
-	for (i = 0; i < nb_sol; i++) {
-
-		target_depth1 = Sol_weights[i * nb_weights + c1];
-		target_depth2 = Sol_weights[i * nb_weights + c2];
-
-		subgraph->all_cliques_of_size_k_ignore_colors(target_depth1,
-				Sol, nb_cliques_in_subgraph,
-				decision_step_counter, verbose_level);
-
-		if (f_v) {
-			cout << "solution " << i << " / " << nb_sol << " with target_depth = " << target_depth1
-					<< " nb_cliques_in_subgraph=" << nb_cliques_in_subgraph << endl;
-		}
-
-		for (j = 0; j < nb_cliques_in_subgraph; j++) {
-			colored_graph *subgraph2;
-			int nb_cliques_in_subgraph2;
-			int *Sol2;
-
-			if (f_v) {
-				cout <<  "solution " << i << " / " << nb_sol << ", clique1 " << j << " / " << nb_cliques_in_subgraph << ":" << endl;
-			}
-
-			subgraph2 = CG->subgraph_by_color_classes_with_condition(
-						Sol + j * target_depth1, target_depth1,
-						c2, verbose_level);
-
-			if (f_v) {
-				cout << "solution " << i << " / " << nb_sol << ", clique1 " << j << " / " << nb_cliques_in_subgraph << ", subgraph2 has " << subgraph2->nb_points << " vertices" << endl;
-			}
-
-			subgraph2->all_cliques_of_size_k_ignore_colors(target_depth2,
-					Sol2, nb_cliques_in_subgraph2,
-					decision_step_counter, verbose_level);
-
-			nb_solutions_total += nb_cliques_in_subgraph2;
-
-			if (f_v) {
-				cout << "solution " << i << " / " << nb_sol << ", clique1 " << j << " / " << nb_cliques_in_subgraph << ", nb_cliques_in_subgraph2=" << nb_cliques_in_subgraph2
-					<< " nb_solutions_total=" << nb_solutions_total << endl;
-			}
-
-			FREE_int(Sol2);
-			FREE_OBJECT(subgraph2);
-		}
-		FREE_int(Sol);
-	}
-
-	if (f_v) {
-		cout << "nb_solutions_total=" << nb_solutions_total << endl;
-	}
-
-	FREE_int(Sol_weights);
-
-	if (f_v) {
-		cout << "graph_theory_domain::all_cliques_weighted_with_two_colors done" << endl;
-	}
-}
 
 
 
