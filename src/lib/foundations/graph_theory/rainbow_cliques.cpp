@@ -330,6 +330,8 @@ int rainbow_cliques::find_candidates(
 	}
 	if (h != c0_freq) {
 		cout << "rainbow_cliques::find_candidates h != c0_freq" << endl;
+		cout << "h=" << h << endl;
+		cout << "c0_freq=" << c0_freq << endl;
 		exit(1);
 	}
 
