@@ -48,6 +48,8 @@ void surface_domain::print_equation_tex_lint(std::ostream &ost, long int *coeffs
 
 void surface_domain::latex_double_six(std::ostream &ost, long int *double_six)
 {
+
+#if 0
 	long int i, j, a, u, v;
 
 	ost << "\\begin{array}{cc}" << endl;
@@ -70,7 +72,8 @@ void surface_domain::latex_double_six(std::ostream &ost, long int *double_six)
 				ost << "\\\\" << endl;
 			}
 			ost << "\\end{array}" << endl;
-			ost << "\\right]" << endl;
+			ost << "\\right]_{" << a << "}" << endl;
+
 			if (j < 2 - 1) {
 				ost << ", " << endl;
 			}
@@ -78,6 +81,11 @@ void surface_domain::latex_double_six(std::ostream &ost, long int *double_six)
 		ost << "\\\\" << endl;
 	}
 	ost << "\\end{array}" << endl;
+#else
+
+	print_lines_tex(ost, double_six, 12 /* nb_lines */);
+
+#endif
 }
 
 void surface_domain::make_spreadsheet_of_lines_in_three_kinds(
@@ -270,7 +278,7 @@ void surface_domain::print_lines_tex(std::ostream &ost, long int *Lines, int nb_
 	Orbiter->Lint_vec.print(ost, Rk, nb_lines);
 	ost << "\\\\" << endl;
 
-	alice(ost, Lines, nb_lines);
+	//alice(ost, Lines, nb_lines);
 
 	FREE_lint(Rk);
 

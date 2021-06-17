@@ -2789,8 +2789,7 @@ void action::make_element_which_moves_a_line_in_PG3q(
 	make_element(Elt, N, 0);
 
 	if (f_v) {
-		cout << "action::make_element_which_moves_a_line_in_PG3q "
-				"done" << endl;
+		cout << "action::make_element_which_moves_a_line_in_PG3q done" << endl;
 		}
 }
 
@@ -2829,8 +2828,7 @@ int action::matrix_group_dimension()
 finite_field *action::matrix_group_finite_field()
 {
 	if (!is_matrix_group()) {
-			cout << "action::matrix_group_finite_field "
-					"is not a matrix group" << endl;
+			cout << "action::matrix_group_finite_field is not a matrix group" << endl;
 			exit(1);
 	}
 	else {
@@ -2844,8 +2842,7 @@ finite_field *action::matrix_group_finite_field()
 int action::is_semilinear_matrix_group()
 {
 	if (!is_matrix_group()) {
-			cout << "action::is_semilinear_matrix_group "
-					"is not a matrix group" << endl;
+			cout << "action::is_semilinear_matrix_group is not a matrix group" << endl;
 			exit(1);
 	}
 	else {
@@ -2864,8 +2861,7 @@ int action::is_semilinear_matrix_group()
 int action::is_projective()
 {
 	if (!is_matrix_group()) {
-			cout << "action::is_projective "
-					"is not a matrix group" << endl;
+			cout << "action::is_projective is not a matrix group" << endl;
 			exit(1);
 	}
 	else {
@@ -2884,8 +2880,7 @@ int action::is_projective()
 int action::is_affine()
 {
 	if (!is_matrix_group()) {
-			cout << "action::is_affine "
-					"is not a matrix group" << endl;
+			cout << "action::is_affine is not a matrix group" << endl;
 			exit(1);
 	}
 	else {
@@ -2904,8 +2899,7 @@ int action::is_affine()
 int action::is_general_linear()
 {
 	if (!is_matrix_group()) {
-			cout << "action::is_general_linear "
-					"is not a matrix group" << endl;
+			cout << "action::is_general_linear is not a matrix group" << endl;
 			exit(1);
 	}
 	else {
@@ -2937,8 +2931,7 @@ int action::is_matrix_group()
 matrix_group *action::get_matrix_group()
 {
 	if (type_G == unknown_symmetry_group_t) {
-		cout << "action::get_matrix_group type_G == "
-				"unknown_symmetry_group_t" << endl;
+		cout << "action::get_matrix_group type_G == unknown_symmetry_group_t" << endl;
 		exit(1);
 	}
 	else if (type_G == matrix_group_t) {

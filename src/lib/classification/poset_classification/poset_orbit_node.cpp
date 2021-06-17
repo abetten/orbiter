@@ -887,7 +887,7 @@ void poset_orbit_node::print_set(poset_classification *gen)
 			}
 		cout << " = " << go << "}";
 		cout << " in action ";
-		cout << gen->get_A()->label << endl;
+		cout << gen->get_A2()->label << endl;
 	}
 
 	//gen->print_lex_rank(set, size);

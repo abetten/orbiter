@@ -33,21 +33,22 @@ large_set_was::large_set_was()
 
 	N_orbits = NULL;
 
-#if 0
-	Design_table_reduced = NULL;
+	orbit_length = 0;
+	type_idx = 0;
+	Orbit1 = NULL;
+	Orbit2 = NULL;
 
-	Design_table_reduced_idx = NULL;
+	A_on_orbits = NULL;
+	A_on_orbits_restricted = NULL;
 
-	nb_remaining_colors = 0;
 
-	reduced_design_color_table = NULL;
+	// used in do_normalizer_on_orbits_of_a_given_length_multiple_orbits::
+	PC = NULL;
+	Control = NULL;
+	Poset = NULL;
 
-	A_reduced = NULL;
-
-	Orbits_on_reduced = NULL;
-
-	color_of_reduced_orbits = NULL;
-#endif
+	orbit_length2 = 0;
+	type_idx2 = 0;
 
 	selected_type_idx = 0;
 }
@@ -154,10 +155,6 @@ void large_set_was::init(large_set_was_description *Descr,
 	}
 
 
-
-
-
-
 	if (f_v) {
 		cout << "large_set_was::init done" << endl;
 	}
@@ -167,22 +164,34 @@ void large_set_was::init(large_set_was_description *Descr,
 
 
 void large_set_was::do_normalizer_on_orbits_of_a_given_length(
-		int select_orbits_of_length_length,
+		int orbit_length,
+		int nb_of_orbits_to_choose,
+		poset_classification_control *Control,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length" << endl;
+		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length, "
+				"orbit_length=" << orbit_length << " nb_of_orbits_to_choose=" << nb_of_orbits_to_choose << endl;
+	}
+	if (f_v) {
+		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length control=" << endl;
+		Control->print();
 	}
 
-	int type_idx;
+	large_set_was::orbit_length = orbit_length;
+	large_set_was::nb_of_orbits_to_choose = nb_of_orbits_to_choose;
+	type_idx = H_orbits->get_orbit_type_index(orbit_length);
 
-	type_idx = H_orbits->get_orbit_type_index(select_orbits_of_length_length);
+	Orbit1 = NEW_lint(orbit_length);
+	Orbit2 = NEW_lint(orbit_length);
 
 	if (f_v) {
 		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length computing orbits "
-				"of normalizer on orbits of index " << type_idx << endl;
+				"of normalizer on orbits of length " << orbit_length
+				<< ", type_idx=" << type_idx
+				<< ", number of orbits = " << H_orbits->Orbits_classified->Set_size[type_idx] << endl;
 	}
 
 
@@ -200,12 +209,17 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length(
 	}
 
 
+	if (f_v) {
+		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length normalizer has order ";
+		N_gens->print_group_order(cout);
+		cout << endl;
+	}
 
 
 
-	action *A_on_orbits;
-	action *A_on_orbits_restricted;
-	schreier *Sch;
+
+	//action *A_on_orbits;
+	//action *A_on_orbits_restricted;
 
 	A_on_orbits = NEW_OBJECT(action);
 	A_on_orbits->induced_action_on_orbits(LS->A_on_designs,
@@ -218,11 +232,69 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length(
 			H_orbits->Orbits_classified->Set_size[type_idx],
 			verbose_level);
 
+
+
+	if (nb_of_orbits_to_choose == 1) {
+
+		do_normalizer_on_orbits_of_a_given_length_single_orbit(
+				orbit_length,
+				verbose_level);
+
+	}
+	else {
+
+		do_normalizer_on_orbits_of_a_given_length_multiple_orbits(
+				orbit_length,
+				nb_of_orbits_to_choose,
+				Control,
+				verbose_level);
+	}
+
+#if 0
+	FREE_OBJECT(A_on_orbits_restricted);
+	A_on_orbits_restricted = NULL;
+
+	FREE_OBJECT(A_on_orbits);
+	A_on_orbits = NULL;
+
+	FREE_lint(Orbit1);
+	Orbit1 = NULL;
+
+	FREE_lint(Orbit2);
+	Orbit2 = NULL;
+#endif
+
+	if (f_v) {
+		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length "
+				"computing orbits of normalizer done" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length done" << endl;
+	}
+
+}
+
+void large_set_was::do_normalizer_on_orbits_of_a_given_length_single_orbit(
+		int orbit_length,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length_single_orbit, "
+				"orbit_length=" << orbit_length << endl;
+	}
+
+	schreier *Sch;
+
 	if (f_v) {
 		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length before "
 				"compute_orbits_on_points for the restricted action "
 				"on the good orbits" << endl;
 	}
+
 	A_on_orbits_restricted->compute_orbits_on_points(
 			Sch, N_gens->gens, verbose_level - 1);
 
@@ -263,19 +335,101 @@ void large_set_was::do_normalizer_on_orbits_of_a_given_length(
 	}
 
 	FREE_OBJECT(Sch);
-	FREE_OBJECT(A_on_orbits_restricted);
-	FREE_OBJECT(A_on_orbits);
-	if (f_v) {
-		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length "
-				"computing orbits of normalizer done" << endl;
-	}
-
 
 	if (f_v) {
-		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length done" << endl;
+		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length_single_orbit done" << endl;
 	}
-
 }
+
+
+void large_set_was::do_normalizer_on_orbits_of_a_given_length_multiple_orbits(
+		int orbit_length,
+		int nb_of_orbits_to_choose,
+		poset_classification_control *Control,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length_multiple_orbits, "
+				"orbit_length=" << orbit_length << " nb_of_orbits_to_choose=" << nb_of_orbits_to_choose << endl;
+	}
+
+
+	if (f_v) {
+		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length_multiple_orbits before "
+				"compute_orbits_on_points for the restricted action "
+				"on the good orbits" << endl;
+	}
+
+
+	Poset = NEW_OBJECT(poset_with_group_action);
+
+#if 0
+	Control = NEW_OBJECT(poset_classification_control);
+	Control->f_depth = TRUE;
+	Control->depth = nb_of_orbits_to_choose;
+#endif
+
+#if 0
+	if (Descr->f_poset_classification_control) {
+		Control = Descr->Control;
+	}
+	else {
+		cout << "please use option -poset_classification_control" << endl;
+		exit(1);
+	}
+#endif
+	if (f_v) {
+		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length_multiple_orbits control=" << endl;
+		Control->print();
+	}
+
+
+	Poset->init_subset_lattice(
+			LS->DC->A,
+			A_on_orbits_restricted,
+			N_gens,
+			verbose_level);
+
+	if (f_v) {
+		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length_multiple_orbits before "
+				"Poset->add_testing_without_group" << endl;
+		}
+	Poset->add_testing_without_group(
+			large_set_was_normalizer_orbits_early_test_func_callback,
+			this /* void *data */,
+			verbose_level);
+
+
+
+	if (f_v) {
+		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length_multiple_orbits "
+				"before Poset->orbits_on_k_sets_compute, nb_of_orbits_to_choose=" << nb_of_orbits_to_choose << endl;
+	}
+	PC = Poset->orbits_on_k_sets_compute(
+			Control,
+			nb_of_orbits_to_choose,
+			verbose_level);
+	if (f_v) {
+		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length_multiple_orbits "
+				"after Poset->orbits_on_k_sets_compute" << endl;
+	}
+
+	//FREE_OBJECT(Control);
+
+	if (f_v) {
+		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length_multiple_orbits done" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "large_set_was::do_normalizer_on_orbits_of_a_given_length_multiple_orbits done" << endl;
+	}
+}
+
+
+
 
 void large_set_was::create_graph_on_orbits_of_length(std::string &fname, int orbit_length, int verbose_level)
 {
@@ -316,6 +470,102 @@ void large_set_was::create_graph_on_orbits_of_length(std::string &fname, int orb
 	}
 }
 
+void large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits(std::string &fname_mask, int orbit_length2, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits, "
+				"orbit_length2=" << orbit_length2 << endl;
+	}
+
+	large_set_was::orbit_length2 = orbit_length2;
+	type_idx2 = H_orbits->get_orbit_type_index(orbit_length2);
+
+	int nb_N_orbits;
+	int idx_N;
+
+	long int *Orbit1_idx;
+	long int *extracted_set;
+	int extracted_set_size;
+
+	Orbit1_idx = NEW_lint(nb_of_orbits_to_choose);
+
+	extracted_set_size = nb_of_orbits_to_choose * orbit_length;
+	extracted_set = NEW_lint(extracted_set_size);
+
+	nb_N_orbits = PC->nb_orbits_at_level(nb_of_orbits_to_choose);
+
+	if (f_v) {
+		cout << "large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits, "
+				"nb_N_orbits = " << nb_N_orbits << endl;
+	}
+
+	for (idx_N = nb_N_orbits - 1; idx_N >= 0; idx_N--) {
+
+		if (f_v) {
+			cout << "large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits, "
+					"idx_N = " << idx_N << " / " << nb_N_orbits << endl;
+		}
+
+		PC->get_set_by_level(nb_of_orbits_to_choose, idx_N, Orbit1_idx);
+
+
+		H_orbits->extract_orbits_using_classification(
+			orbit_length,
+			nb_of_orbits_to_choose,
+			Orbit1_idx,
+			extracted_set,
+			verbose_level);
+
+
+		char str[1000];
+
+		sprintf(str, fname_mask.c_str(), idx_N);
+		std::string fname;
+
+		fname.assign(str);
+		if (f_v) {
+			cout << "large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits, "
+					"fname = " << fname << endl;
+		}
+
+		colored_graph *CG;
+
+
+		H_orbits->create_graph_on_orbits_of_a_certain_length_after_filtering(
+				CG,
+				fname,
+				extracted_set /*filter_by_set*/,
+				extracted_set_size /*filter_by_set_size*/,
+				orbit_length2,
+				type_idx2,
+				TRUE /*f_has_user_data*/, extracted_set /* long int *user_data */, extracted_set_size /* user_data_size */,
+				TRUE /* f_has_colors */, LS->nb_colors, LS->design_color_table,
+				large_set_was_classify_test_pair_of_orbits,
+				this /* *test_function_data */,
+				verbose_level);
+
+
+		if (f_v) {
+			cout << "large_set_classify::create_graph_on_orbits_of_length_based_on_N_orbits "
+					"after OoS->create_graph_on_orbits_of_a_certain_length" << endl;
+		}
+		if (f_v) {
+			cout << "large_set_classify::create_graph_on_orbits_of_length_based_on_N_orbits "
+					"before CG->save" << endl;
+		}
+
+		CG->save(fname, verbose_level);
+
+		FREE_OBJECT(CG);
+	}
+
+	if (f_v) {
+		cout << "large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits done" << endl;
+	}
+}
+
 void large_set_was::read_solution_file(
 		std::string &solution_file_name,
 		long int *starter_set,
@@ -350,7 +600,12 @@ void large_set_was::read_solution_file(
 			nb_solutions, Solutions, solution_size,
 			verbose_level);
 	cout << "Read the following solutions from file:" << endl;
-	Orbiter->Int_vec.matrix_print(Solutions, nb_solutions, solution_size);
+	if (nb_solutions < 100) {
+		Orbiter->Int_vec.matrix_print(Solutions, nb_solutions, solution_size);
+	}
+	else {
+		cout << "too large to print" << endl;
+	}
 	cout << "Number of solutions = " << nb_solutions << endl;
 	cout << "solution_size = " << solution_size << endl;
 
@@ -446,6 +701,129 @@ void large_set_was::read_solution_file(
 
 }
 
+void large_set_was::normalizer_orbits_early_test_func(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int j;
+	int f_OK;
+
+	if (f_v) {
+		cout << "large_set_was::normalizer_orbits_early_test_func checking set ";
+		print_set(cout, len, S);
+		cout << endl;
+		cout << "candidate set of size "
+				<< nb_candidates << ":" << endl;
+		Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
+		cout << endl;
+	}
+
+
+	if (len == 0) {
+		Orbiter->Lint_vec.copy(candidates, good_candidates, nb_candidates);
+		nb_good_candidates = nb_candidates;
+	}
+	else {
+		nb_good_candidates = 0;
+
+		if (f_vv) {
+			cout << "large_set_was::normalizer_orbits_early_test_func before testing" << endl;
+		}
+		for (j = 0; j < nb_candidates; j++) {
+
+			S[len] = candidates[j];
+
+			f_OK = normalizer_orbits_check_conditions(S, len + 1, verbose_level);
+			if (f_vv) {
+				cout << "large_set_was::normalizer_orbits_early_test_func "
+						"testing " << j << " / "
+						<< nb_candidates << endl;
+			}
+
+			if (f_OK) {
+				good_candidates[nb_good_candidates++] = candidates[j];
+			}
+		} // next j
+	} // else
+}
+
+int large_set_was::normalizer_orbits_check_conditions(long int *S, int len, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int idx, i;
+	long int a, b;
+	sorting Sorting;
+
+	if (f_v) {
+		cout << "large_set_was::normalizer_orbits_check_conditions "
+				"checking set ";
+		print_set(cout, len, S);
+		cout << endl;
+		//cout << "offset=" << offset << endl;
+	}
+
+	b = S[len - 1];
+	if (Sorting.lint_vec_search_linear(S, len - 1, b, idx)) {
+		if (f_v) {
+			cout << "large_set_was::normalizer_orbits_check_conditions "
+					"not OK, "
+					"repeat entry" << endl;
+		}
+		return FALSE;
+	}
+
+	for (i = 0; i < len - 1; i++) {
+		a = S[i];
+
+		if (!H_orbits->test_pair_of_orbits_of_a_equal_length(
+				orbit_length,
+				type_idx,
+				a, b,
+				Orbit1,
+				Orbit2,
+				large_set_was_classify_test_pair_of_orbits,
+				this /*  test_function_data */,
+				verbose_level)) {
+			return FALSE;
+		}
+	}
+	return TRUE;
+}
+
+
+
+// #############################################################################
+// global functions:
+// #############################################################################
+
+
+void large_set_was_normalizer_orbits_early_test_func_callback(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level)
+{
+	large_set_was *LSW = (large_set_was *) data;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "large_set_was_normalizer_orbits_early_test_func_callback for set ";
+		print_set(cout, len, S);
+		cout << endl;
+	}
+	LSW->normalizer_orbits_early_test_func(S, len,
+		candidates, nb_candidates,
+		good_candidates, nb_good_candidates,
+		verbose_level - 2);
+	if (f_v) {
+		cout << "large_set_was_normalizer_orbits_early_test_func_callback done" << endl;
+	}
+}
+
+
+
 
 
 // globals:
@@ -473,6 +851,8 @@ int large_set_was_classify_test_pair_of_orbits(long int *orbit1, int orbit_lengt
 
 	return ret;
 }
+
+
 
 
 

@@ -38,8 +38,6 @@ class incidence_structure_with_group;
 class orbit_rep;
 class orbit_transversal;
 class orbit_type_repository;
-class orthogonal_space_with_action_description;
-class orthogonal_space_with_action;
 class schreier_vector_handler;
 class schreier_vector;
 class set_and_stabilizer;

@@ -143,6 +143,7 @@ projective_space_activity_description::projective_space_activity_description()
 	set_stabilizer_intermediate_set_size = 0;
 	//std::string set_stabilizer_fname_mask;
 	set_stabilizer_nb = 0;
+	//std::string set_stabilizer_column_label;
 
 	f_conic_type = FALSE;
 	//std::string conic_type_set_text;
@@ -527,10 +528,13 @@ int projective_space_activity_description::read_arguments(
 			set_stabilizer_intermediate_set_size = strtoi(argv[++i]);
 			set_stabilizer_fname_mask.assign(argv[++i]);
 			set_stabilizer_nb = strtoi(argv[++i]);
+			set_stabilizer_column_label.assign(argv[++i]);
 			cout << "-set_stabilizer "
 					<< set_stabilizer_intermediate_set_size << " "
 					<< set_stabilizer_fname_mask << " "
-					<< set_stabilizer_nb << endl;
+					<< set_stabilizer_nb << " "
+					<< set_stabilizer_column_label << " "
+					<< endl;
 		}
 		else if (stringcmp(argv[i], "-conic_type") == 0) {
 			f_conic_type = TRUE;

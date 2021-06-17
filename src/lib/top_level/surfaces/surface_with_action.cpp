@@ -433,7 +433,8 @@ void surface_with_action::complete_skew_hexagon(
 
 		a = opp_regulus_a123[i];
 		if (f_v) {
-			cout << "surface_with_action::complete_skew_hexagon i=" <<i << " / " << regulus_size << " a=" << a << endl;
+			cout << "surface_with_action::complete_skew_hexagon "
+					"i=" <<i << " / " << regulus_size << " a=" << a << endl;
 		}
 		Surf->Gr->unrank_lint_here(Basis, a, 0 /* verbose_level */);
 		for (j = 0; j < 6; j++) {
@@ -447,13 +448,15 @@ void surface_with_action::complete_skew_hexagon(
 		}
 		if (j < 6) {
 			if (f_v) {
-				cout << "surface_with_action::complete_skew_hexagon i=" <<i << " / " << regulus_size << " a=" << a << " contains point " << j << ", skipping" << endl;
+				cout << "surface_with_action::complete_skew_hexagon "
+						"i=" <<i << " / " << regulus_size << " a=" << a << " contains point " << j << ", skipping" << endl;
 			}
 			continue;
 		}
 		b6 = a;
 		if (f_v) {
-			cout << "surface_with_action::complete_skew_hexagon i=" <<i << " / " << regulus_size << " b6=" << b6 << endl;
+			cout << "surface_with_action::complete_skew_hexagon "
+					"i=" <<i << " / " << regulus_size << " b6=" << b6 << endl;
 		}
 
 		// We map b1, b2, b3 to

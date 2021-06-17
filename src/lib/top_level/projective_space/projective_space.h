@@ -72,28 +72,27 @@ public:
 	int nb_objects_to_test;
 
 	// nauty stuff:
+
 	classify_bitvectors *CB;
 	int canonical_labeling_len;
 	long int *alpha;
 	int *gamma;
 
 	// substructure stuff:
-	poset_classification *PC;
-	poset_classification_control *Control;
-	poset_with_group_action *Poset;
-	int nb_orbits;
+
+
+	// needed once for the whole classification process:
+	substructure_classifier *SubC;
+
+
+	// needed once for each object:
 	canonical_form_substructure **CFS_table; // [nb_objects_to_test]
-
-
 
 
 
 	int *Elt;
 	int *eqn2;
 
-	//int *canonical_equation;
-	//int *transporter_to_canonical_form;
-	//longinteger_object go_eqn;
 
 	int counter;
 	int *Canonical_forms; // [nb_objects_to_test * Poly_ring->get_nb_monomials()]
@@ -107,13 +106,6 @@ public:
 	void count_nb_objects_to_test(int verbose_level);
 	void classify(canonical_form_classifier_description *Descr,
 			int verbose_level);
-	void write_canonical_forms_csv(
-			std::string &fname_base,
-			int verbose_level);
-	void generate_source_code(
-			std::string &fname_base,
-			tally_vector_data *Classification_of_quartic_curves,
-			int verbose_level);
 	void classify_nauty(int verbose_level);
 	void classify_with_substructure(int verbose_level);
 	void main_loop(int verbose_level);
@@ -126,6 +118,13 @@ public:
 			int nb_bitangents,
 			int *canonical_equation,
 			int *transporter_to_canonical_form,
+			int verbose_level);
+	void write_canonical_forms_csv(
+			std::string &fname_base,
+			int verbose_level);
+	void generate_source_code(
+			std::string &fname_base,
+			tally_vector_data *Classification_of_quartic_curves,
 			int verbose_level);
 	void report(std::string &fname, int verbose_level);
 	void report2(std::ostream &ost, std::string &fname_base, int verbose_level);
@@ -200,6 +199,8 @@ class canonical_form_substructure {
 public:
 
 	canonical_form_classifier *Canonical_form_classifier;
+		// has substructure_classifier *SubC
+
 
 	int cnt;
 	int row;
@@ -213,26 +214,12 @@ public:
 
 	long int *canonical_pts;
 
-	int nCk;
-	int *isotype;
-	int *orbit_frequencies;
-	int nb_orbits;
-	tally *T;
 
-	set_of_sets *SoS;
-	int *types;
-	int nb_types;
-	int selected_type;
-	int selected_orbit;
-	int selected_frequency;
-
-	longinteger_object go_min;
-
-	strong_generators *gens;
+	substructure_stats_and_selection *SubSt;
 
 
-	long int *interesting_subsets;
-	int nb_interesting_subsets;
+
+
 
 	compute_stabilizer *CS;
 
@@ -287,13 +274,8 @@ class compute_stabilizer {
 
 public:
 
-	int set_size;
-	long int *the_set;
 
-	action *A;
-	action *A2;
-	poset_classification *PC;
-
+	substructure_stats_and_selection *SubSt;
 
 	action *A_on_the_set;
 		// only used to print the induced action on the set
@@ -307,12 +289,7 @@ public:
 	int backtrack_nodes_first_time;
 	int backtrack_nodes_total_in_loop;
 
-	int level;
-	int interesting_orbit; // previously orb_idx
-
-	long int *interesting_subsets; // [nb_interesting_subsets]
-	int nb_interesting_subsets;
-
+#if 0
 	strong_generators *selected_set_stab_gens;
 	sims *selected_set_stab;
 
@@ -328,6 +305,7 @@ public:
 	long int *reduced_set2_new_labels; // [set_size]
 	long int *canonical_set1; // [set_size]
 	long int *canonical_set2; // [set_size]
+
 	int *elt1, *Elt1, *Elt1_inv, *new_automorphism, *Elt4;
 	int *elt2, *Elt2;
 	int *transporter0; // = elt1 * elt2
@@ -345,16 +323,24 @@ public:
 
 	int *Orbit_patterns; // [nb_interesting_subsets * nb_orbits]
 
-
-
 	int *orbit_to_interesting_orbit; // [nb_orbits]
+
 	int nb_interesting_orbits;
 	int *interesting_orbits;
+
 	int nb_interesting_points;
 	long int *interesting_points;
+
 	int *interesting_orbit_first;
 	int *interesting_orbit_len;
+
 	int local_idx1, local_idx2;
+
+#else
+	stabilizer_orbits_and_types *Stab_orbits;
+#endif
+
+
 
 
 
@@ -381,7 +367,7 @@ public:
 	longinteger_object target_go;
 
 
-	union_find_on_k_subsets *U;
+	//union_find_on_k_subsets *U;
 
 
 	long int *Canonical_forms; // [nb_interesting_subsets_reduced * reduced_set_size]
@@ -394,41 +380,25 @@ public:
 
 	void null();
 	void freeself();
-	void init(long int *the_set, int set_size,
+	void init(
+			substructure_stats_and_selection *SubSt,
 			long int *canonical_pts,
-			poset_classification *PC, action *A, action *A2,
-			int level, int interesting_orbit,
-			int nb_interesting_subsets, long int *interesting_subsets,
 			int verbose_level);
 	void compute_automorphism_group(int verbose_level);
 	void compute_automorphism_group_handle_case(int cnt2, int verbose_level);
 	void setup_stabilizer(sims *Stab0, int verbose_level);
+	void restricted_action_on_interesting_points(int verbose_level);
 	void compute_canonical_form(int verbose_level);
 	void compute_canonical_form_handle_case(int cnt, int verbose_level);
 	void compute_canonical_set(long int *set_in, long int *set_out, int sz,
 			int *transporter, int verbose_level);
 	void compute_canonical_set_and_group(long int *set_in, long int *set_out, int sz,
 			int *transporter, sims *&stab, int verbose_level);
-	void compute_local_labels(long int *set_in, long int *set_out, int sz, int verbose_level);
 	void init_U(int verbose_level);
-	void compute_orbits_and_find_minimal_pattern(int verbose_level);
-	void find_interesting_orbits(int verbose_level);
-	void find_orbit_pattern(int cnt, int *transp, int verbose_level);
-	void compute_orbits(int verbose_level);
-		// uses selected_set_stab_gens to compute orbits on points in action A2
-	void restricted_action_on_interesting_points(int verbose_level);
-	void map_the_first_set_and_do_orbit_counting(int cnt, int verbose_level);
-	void map_reduced_set_and_do_orbit_counting(int cnt,
-			long int subset_idx, int *transporter, int verbose_level);
 	void update_stabilizer(int verbose_level);
 	void add_automorphism(int verbose_level);
 	void retrieve_automorphism(int verbose_level);
 	void make_canonical_second_set(int verbose_level);
-	int compute_second_reduced_set();
-	int check_orbit_count();
-	void print_orbit_count(int f_both);
-	void allocate1();
-	void free1();
 	void report(std::ostream &ost);
 
 };
@@ -604,6 +574,7 @@ public:
 	int set_stabilizer_intermediate_set_size;
 	std::string set_stabilizer_fname_mask;
 	int set_stabilizer_nb;
+	std::string set_stabilizer_column_label;
 
 	int f_conic_type;
 	std::string conic_type_set_text;
@@ -712,7 +683,7 @@ public:
 	void set_stabilizer(
 			projective_space_with_action *PA,
 			int intermediate_subset_size,
-			std::string &fname_mask, int nb,
+			std::string &fname_mask, int nb, std::string &column_label,
 			int verbose_level);
 	void conic_type(
 			projective_space_with_action *PA,
@@ -1261,6 +1232,87 @@ int table_of_sets_compare_func(void *data, int i,
 		void *extra_data);
 
 
+// #############################################################################
+// stabilizer_orbits_and_types.cpp
+// #############################################################################
+
+
+
+
+//! orbits of the stabilizer of the substructure and orbit types
+
+
+
+class stabilizer_orbits_and_types {
+
+public:
+	compute_stabilizer *CS;
+
+	strong_generators *selected_set_stab_gens;
+	sims *selected_set_stab;
+
+
+	int reduced_set_size; // = set_size - level
+
+
+
+
+	long int *reduced_set1; // [set_size]
+	long int *reduced_set2; // [set_size]
+	long int *reduced_set1_new_labels; // [set_size]
+	long int *reduced_set2_new_labels; // [set_size]
+	long int *canonical_set1; // [set_size]
+	long int *canonical_set2; // [set_size]
+
+	int *elt1, *Elt1, *Elt1_inv, *new_automorphism, *Elt4;
+	int *elt2, *Elt2;
+	int *transporter0; // = elt1 * elt2
+
+	longinteger_object go_G;
+
+	schreier *Schreier;
+	int nb_orbits;
+	int *orbit_count1; // [nb_orbits]
+	int *orbit_count2; // [nb_orbits]
+
+
+	int nb_interesting_subsets_reduced;
+	long int *interesting_subsets_reduced;
+
+	int *Orbit_patterns; // [nb_interesting_subsets * nb_orbits]
+
+
+	int *orbit_to_interesting_orbit; // [nb_orbits]
+
+	int nb_interesting_orbits;
+	int *interesting_orbits;
+
+	int nb_interesting_points;
+	long int *interesting_points;
+
+	int *interesting_orbit_first;
+	int *interesting_orbit_len;
+
+	int local_idx1, local_idx2;
+
+
+
+	stabilizer_orbits_and_types();
+	~stabilizer_orbits_and_types();
+	void init(compute_stabilizer *CS, int verbose_level);
+	void compute_stabilizer_orbits_and_find_minimal_pattern(int verbose_level);
+	// uses selected_set_stab_gens to compute orbits on points in action A2
+	void find_orbit_pattern(int cnt, int *transp, int verbose_level);
+	// computes transporter to transp
+	void find_interesting_orbits(int verbose_level);
+	void compute_local_labels(long int *set_in, long int *set_out, int sz, int verbose_level);
+	void map_subset_and_compute_local_labels(int cnt, int verbose_level);
+	void map_reduced_set_and_do_orbit_counting(int cnt,
+			long int subset_idx, int *transporter, int verbose_level);
+	int check_orbit_count();
+	void print_orbit_count(int f_both);
+
+};
 
 
 }}

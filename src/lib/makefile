@@ -230,8 +230,6 @@ MODULES= \
 		group_actions/data_structures/orbit_rep.o \
 		group_actions/data_structures/orbit_transversal.o \
 		group_actions/data_structures/orbit_type_repository.o \
-		group_actions/data_structures/orthogonal_space_with_action_description.o \
-		group_actions/data_structures/orthogonal_space_with_action.o \
 		group_actions/data_structures/schreier_vector_handler.o \
 		group_actions/data_structures/schreier_vector.o \
 		group_actions/data_structures/set_and_stabilizer.o \
@@ -340,8 +338,6 @@ MODULES= \
 		top_level/algebra_and_number_theory/group_theoretic_activity_description.o \
 		top_level/algebra_and_number_theory/group_theoretic_activity.o \
 		top_level/algebra_and_number_theory/orbits_on_polynomials.o \
-		top_level/algebra_and_number_theory/orthogonal_space_activity_description.o \
-		top_level/algebra_and_number_theory/orthogonal_space_activity.o \
 		top_level/algebra_and_number_theory/young.o \
 		top_level/combinatorics/boolean_function_classify.o \
 		top_level/combinatorics/combinatorics_global.o \
@@ -368,10 +364,6 @@ MODULES= \
 		top_level/geometry/arc_generator_description.o \
 		top_level/geometry/arc_generator.o \
 		top_level/geometry/arc_lifting_simeon.o \
-		top_level/geometry/blt_set_classify.o \
-		top_level/geometry/BLT_set_create_description.o \
-		top_level/geometry/BLT_set_create.o \
-		top_level/geometry/blt_set_with_action.o \
 		top_level/geometry/choose_points_or_lines.o \
 		top_level/geometry/classify_cubic_curves.o \
 		top_level/geometry/cubic_curve_with_action.o \
@@ -382,6 +374,8 @@ MODULES= \
 		top_level/geometry/polar.o \
 		top_level/geometry/search_blocking_set.o \
 		top_level/geometry/singer_cycle.o \
+		top_level/geometry/substructure_classifier.o \
+		top_level/geometry/substructure_stats_and_selection.o \
 		top_level/geometry/tensor_classify.o \
 		top_level/geometry/top_level_geometry_global.o \
 		top_level/graph_theory/cayley_graph_search.o \
@@ -415,6 +409,14 @@ MODULES= \
 		top_level/orbits/orbit_of_equations.o \
 		top_level/orbits/orbit_of_sets.o \
 		top_level/orbits/orbit_of_subspaces.o \
+		top_level/orthogonal/blt_set_classify.o \
+		top_level/orthogonal/BLT_set_create_description.o \
+		top_level/orthogonal/BLT_set_create.o \
+		top_level/orthogonal/blt_set_with_action.o \
+		top_level/orthogonal/orthogonal_space_activity_description.o \
+		top_level/orthogonal/orthogonal_space_activity.o \
+		top_level/orthogonal/orthogonal_space_with_action_description.o \
+		top_level/orthogonal/orthogonal_space_with_action.o \
 		top_level/packings/invariants_packing.o \
 		top_level/packings/packing_classify.o \
 		top_level/packings/packing_classify2.o \
@@ -443,6 +445,7 @@ MODULES= \
 		top_level/projective_space/projective_space_object_classifier.o \
 		top_level/projective_space/projective_space_with_action_description.o \
 		top_level/projective_space/projective_space_with_action.o \
+		top_level/projective_space/stabilizer_orbits_and_types.o \
 		top_level/quartic_curves/quartic_curve_activity_description.o \
 		top_level/quartic_curves/quartic_curve_activity.o \
 		top_level/quartic_curves/quartic_curve_create_description.o \

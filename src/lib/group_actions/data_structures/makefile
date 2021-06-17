@@ -11,8 +11,6 @@ MODULES = \
 	orbit_rep.o \
 	orbit_transversal.o \
 	orbit_type_repository.o \
-	orthogonal_space_with_action_description.o \
-	orthogonal_space_with_action.o \
 	schreier_vector_handler.o \
 	schreier_vector.o \
 	set_and_stabilizer.o \

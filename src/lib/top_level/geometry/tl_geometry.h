@@ -232,214 +232,6 @@ public:
 
 
 
-// #############################################################################
-// blt_set_classify.cpp
-// #############################################################################
-
-//! classification of BLT-sets
-
-
-
-class blt_set_classify {
-
-public:
-
-	blt_set_domain *Blt_set_domain;
-
-	linear_group *LG;
-	action *A; // orthogonal group
-
-
-	int starter_size;
-
-	int f_semilinear;
-
-	int q;
-
-	poset_classification_control *Control;
-	poset_with_group_action *Poset;
-	poset_classification *gen;
-	int degree;
-
-
-	int target_size;
-
-
-	blt_set_classify();
-	~blt_set_classify();
-	void null();
-	void freeself();
-	void init_basic(linear_group *LG,
-			poset_classification_control *Control,
-			int starter_size,
-			int verbose_level);
-	void create_graphs(
-		int orbit_at_level_r, int orbit_at_level_m,
-		int level_of_candidates_file,
-		std::string &output_prefix,
-		int f_lexorder_test, int f_eliminate_graphs_if_possible,
-		int verbose_level);
-	void create_graphs_list_of_cases(
-		const char *case_label,
-		const char *list_of_cases_text,
-		int level_of_candidates_file,
-		std::string &output_prefix,
-		int f_lexorder_test, int f_eliminate_graphs_if_possible,
-		int verbose_level);
-	int create_graph(
-		int orbit_at_level, int level_of_candidates_file,
-		int f_lexorder_test, int f_eliminate_graphs_if_possible,
-		int &nb_vertices,
-		colored_graph *&CG,
-		int verbose_level);
-
-	void lifting_prepare_function_new(exact_cover *E, int starter_case,
-		long int *candidates, int nb_candidates,
-		strong_generators *Strong_gens,
-		diophant *&Dio, long int *&col_labels,
-		int &f_ruled_out,
-		int verbose_level);
-	void report_from_iso(isomorph &Iso, int verbose_level);
-	void report(orbit_transversal *T, int verbose_level);
-	void report2(std::ostream &ost,
-			orbit_transversal *T, int verbose_level);
-};
-
-// global functions:
-void blt_set_classify_print(std::ostream &ost, int len, long int *S, void *data);
-void blt_set_classify_lifting_prepare_function_new(exact_cover *EC, int starter_case,
-	long int *candidates, int nb_candidates, strong_generators *Strong_gens,
-	diophant *&Dio, long int *&col_labels,
-	int &f_ruled_out,
-	int verbose_level);
-void blt_set_classify_early_test_func_callback(long int *S, int len,
-	long int *candidates, int nb_candidates,
-	long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
-void blt_set_classify_callback_report(isomorph *Iso, void *data, int verbose_level);
-
-
-// #############################################################################
-// BLT_set_create_description.cpp
-// #############################################################################
-
-//! to create BLT set with a description from the command line
-
-
-
-class BLT_set_create_description {
-
-public:
-
-	int f_catalogue;
-	int iso;
-	int f_family;
-	std::string family_name;
-
-
-
-	BLT_set_create_description();
-	~BLT_set_create_description();
-	void null();
-	void freeself();
-	int read_arguments(int argc, std::string *argv,
-		int verbose_level);
-};
-
-
-
-
-// #############################################################################
-// BLT_set_create.cpp
-// #############################################################################
-
-//! to create a BLT-set from a description using class BLT_set_create_description
-
-
-
-class BLT_set_create {
-
-public:
-	BLT_set_create_description *Descr;
-
-	std::string prefix;
-	std::string label_txt;
-	std::string label_tex;
-
-
-
-	orthogonal_space_with_action *OA;
-
-	long int *set;
-
-	int *ABC;
-
-
-	int f_has_group;
-	strong_generators *Sg;
-
-	blt_set_domain *Blt_set_domain;
-	blt_set_with_action *BA;
-
-
-	BLT_set_create();
-	~BLT_set_create();
-	void null();
-	void freeself();
-	void init(
-			blt_set_domain *Blt_set_domain,
-			BLT_set_create_description *Descr,
-			orthogonal_space_with_action *OA,
-			int verbose_level);
-	void apply_transformations(
-			std::vector<std::string> transform_coeffs,
-			std::vector<int> f_inverse_transform, int verbose_level);
-	void report(int verbose_level);
-	void report2(std::ostream &ost, int verbose_level);
-	void print_set_of_points(std::ostream &ost, long int *Pts, int nb_pts);
-	void print_set_of_points_with_ABC(std::ostream &ost, long int *Pts, int nb_pts);
-
-};
-
-// #############################################################################
-// blt_set_with_action.cpp
-// #############################################################################
-
-
-//! a BLT-set together with its stabilizer
-
-
-class blt_set_with_action {
-
-public:
-
-	action *A;
-	blt_set_domain *Blt_set_domain;
-
-	long int *set;
-
-	strong_generators *Aut_gens;
-	blt_set_invariants *Inv;
-
-	action *A_on_points;
-	schreier *Orbits_on_points;
-
-	blt_set_with_action();
-	~blt_set_with_action();
-	void null();
-	void freeself();
-	void init_set(
-			action *A,
-			blt_set_domain *Blt_set_domain,
-			long int *set,
-			strong_generators *Aut_gens, int verbose_level);
-	void init_orbits_on_points(
-			int verbose_level);
-	void print_automorphism_group(
-		std::ostream &ost);
-	void report(std::ostream &ost, int verbose_level);
-};
-
 
 
 // #############################################################################
@@ -1143,6 +935,100 @@ public:
 };
 
 
+// #############################################################################
+// substructure_classifier.cpp
+// #############################################################################
+
+
+
+//! classification of substructures
+
+
+
+
+class substructure_classifier {
+public:
+
+
+	int substructure_size;
+
+	poset_classification *PC;
+	poset_classification_control *Control;
+	action *A;
+	action *A2;
+	poset_with_group_action *Poset;
+	int nb_orbits;
+
+
+	substructure_classifier();
+	~substructure_classifier();
+	void classify_substructures(
+			action *A,
+			action *A2,
+			strong_generators *gens,
+			int substructure_size,
+			int verbose_level);
+
+
+};
+
+
+// #############################################################################
+// substructure_stats_and_selection.cpp
+// #############################################################################
+
+
+
+//! analyzing the substructures of a given set
+
+
+
+
+class substructure_stats_and_selection {
+public:
+
+	substructure_classifier *SubC;
+
+	long int *Pts;
+	int nb_pts;
+
+	int nCk;
+	int *isotype;
+	int *orbit_frequencies;
+	int nb_orbits;
+	tally *T;
+
+
+	set_of_sets *SoS;
+	int *types;
+	int nb_types;
+	int selected_type;
+	int selected_orbit;
+	int selected_frequency;
+
+	long int *interesting_subsets;
+	int nb_interesting_subsets;
+		// interesting_subsets are the lvl-subsets of the given set
+		// which are of the chosen type.
+		// There is nb_interesting_subsets of them.
+
+	strong_generators *gens;
+	//int *transporter_to_canonical_form;
+	//strong_generators *Gens_stabilizer_original_set;
+
+
+	substructure_stats_and_selection();
+	~substructure_stats_and_selection();
+	void init(
+			substructure_classifier *SubC,
+			long int *Pts,
+			int nb_pts,
+			int verbose_level);
+
+};
+
+
+
 
 // #############################################################################
 // tensor_classify.cpp
@@ -1227,31 +1113,29 @@ public:
 
 	top_level_geometry_global();
 	~top_level_geometry_global();
-	void set_stabilizer(
+	void set_stabilizer_projective_space(
 			projective_space_with_action *PA,
 			int intermediate_subset_size,
-			std::string &fname_mask, int nb,
+			std::string &fname_mask, int nb, std::string &column_label,
+			int verbose_level);
+	void set_stabilizer_orthogonal_space(
+			orthogonal_space_with_action *OA,
+			int intermediate_subset_size,
+			std::string &fname_mask, int nb, std::string &column_label,
 			int verbose_level);
 	void set_stabilizer_of_set(
-			projective_space_with_action *PA,
-			int intermediate_subset_size,
-			poset_classification *PC,
+			substructure_classifier *SubC,
 			int cnt, int nb, int row,
-			int *eqn,
-			int sz,
+			//int *eqn,
+			//int sz,
 			long int *pts,
 			int nb_pts,
 			long int *canonical_pts,
-			long int *bitangents,
-			int nb_bitangents,
+			//long int *bitangents,
+			//int nb_bitangents,
 			int verbose_level);
-	void handle_orbit(tally &C,
-			int *isotype,
-			int selected_orbit, int selected_frequency, int n_choose_k,
-			int intermediate_subset_size,
-			poset_classification *PC, action *A, action *A2,
-			long int *pts,
-			int nb_pts,
+	void handle_orbit(
+			substructure_stats_and_selection *SubSt,
 			long int *canonical_pts,
 			int *transporter_to_canonical_form,
 			strong_generators *&Gens_stabilizer_original_set,

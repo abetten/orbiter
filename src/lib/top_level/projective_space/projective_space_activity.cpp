@@ -344,7 +344,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 		set_stabilizer(PA,
 				Descr->set_stabilizer_intermediate_set_size,
-				Descr->set_stabilizer_fname_mask, Descr->set_stabilizer_nb,
+				Descr->set_stabilizer_fname_mask, Descr->set_stabilizer_nb, Descr->set_stabilizer_column_label,
 				verbose_level);
 	}
 
@@ -937,7 +937,7 @@ void projective_space_activity::classify_quartic_curves_with_substructure(
 void projective_space_activity::set_stabilizer(
 		projective_space_with_action *PA,
 		int intermediate_subset_size,
-		std::string &fname_mask, int nb,
+		std::string &fname_mask, int nb, std::string &column_label,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -950,10 +950,10 @@ void projective_space_activity::set_stabilizer(
 
 	top_level_geometry_global T;
 
-	T.set_stabilizer(
+	T.set_stabilizer_projective_space(
 				PA,
 				intermediate_subset_size,
-				fname_mask, nb,
+				fname_mask, nb, column_label,
 				verbose_level);
 
 

@@ -167,6 +167,42 @@ void spreadsheet::fill_entry_with_text(int row_idx,
 	strcpy(tokens[t], text);
 }
 
+void spreadsheet::fill_entry_with_text(int row_idx,
+		int col_idx, std::string &text)
+{
+	int l, t;
+
+	t = Table[row_idx * nb_cols + col_idx];
+	if (tokens[t]) {
+		//cout << "fill_column_with_text before FREE_char i="
+		//<< i << " col_idx=" << col_idx << " t=" << t << endl;
+		FREE_char(tokens[t]);
+		}
+	l = text.size();
+	tokens[t] = NEW_char(l + 1);
+	strcpy(tokens[t], text.c_str());
+}
+
+void spreadsheet::set_entry_lint(int row_idx,
+		int col_idx, long int val)
+{
+	int l, t;
+	char str[1000];
+
+	sprintf(str, "%ld", val);
+
+	t = Table[row_idx * nb_cols + col_idx];
+	if (tokens[t]) {
+		//cout << "fill_column_with_text before FREE_char i="
+		//<< i << " col_idx=" << col_idx << " t=" << t << endl;
+		FREE_char(tokens[t]);
+		}
+	l = strlen(str);
+	tokens[t] = NEW_char(l + 1);
+	strcpy(tokens[t], str);
+}
+
+
 void spreadsheet::fill_column_with_text(int col_idx,
 		const char **text, const char *heading)
 {
@@ -761,6 +797,11 @@ void spreadsheet::reallocate_table_add_row()
 	FREE_int(Table);
 	Table = Table2;
 	nb_rows++;
+}
+
+int spreadsheet::find_column(std::string &column_label)
+{
+ return find_by_column(column_label.c_str());
 }
 
 int spreadsheet::find_by_column(const char *join_by)

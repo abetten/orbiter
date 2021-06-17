@@ -20,10 +20,16 @@ large_set_was_activity_description::large_set_was_activity_description()
 {
 	f_normalizer_on_orbits_of_a_given_length = FALSE;
 	normalizer_on_orbits_of_a_given_length_length = 0;
+	normalizer_on_orbits_of_a_given_length_nb_orbits = 0;
+	normalizer_on_orbits_of_a_given_length_control = NULL;
 
 	f_create_graph_on_orbits_of_length = FALSE;
 	//std::string create_graph_on_orbits_of_length_fname;
 	create_graph_on_orbits_of_length_length = 0;
+
+	f_create_graph_on_orbits_of_length_based_on_N_orbits = FALSE;
+	//std::string create_graph_on_orbits_of_length_based_on_N_orbits_fname;
+	create_graph_on_orbits_of_length_based_on_N_orbits_length = 0;
 
 	f_read_solution_file = FALSE;
 	read_solution_file_orbit_length = 0;
@@ -48,7 +54,23 @@ int large_set_was_activity_description::read_arguments(int argc, std::string *ar
 		if (stringcmp(argv[i], "-normalizer_on_orbits_of_a_given_length") == 0) {
 			f_normalizer_on_orbits_of_a_given_length = TRUE;
 			normalizer_on_orbits_of_a_given_length_length = strtoi(argv[++i]);
+			normalizer_on_orbits_of_a_given_length_nb_orbits = strtoi(argv[++i]);
+
+			cout << "-normalizer_on_orbits_of_a_given_length reading poset_classification_control options" << endl;
+
+			normalizer_on_orbits_of_a_given_length_control = NEW_OBJECT(poset_classification_control);
+			i += normalizer_on_orbits_of_a_given_length_control->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+
+
 			cout << "-normalizer_on_orbits_of_a_given_length " << normalizer_on_orbits_of_a_given_length_length
+					<< " " << normalizer_on_orbits_of_a_given_length_nb_orbits
 					<< endl;
 		}
 		else if (stringcmp(argv[i], "-create_graph_on_orbits_of_length") == 0) {
@@ -60,6 +82,15 @@ int large_set_was_activity_description::read_arguments(int argc, std::string *ar
 					<< " " << create_graph_on_orbits_of_length_length
 					<< endl;
 		}
+		else if (stringcmp(argv[i], "-create_graph_on_orbits_of_length_based_on_N_orbits") == 0) {
+			f_create_graph_on_orbits_of_length_based_on_N_orbits = TRUE;
+			create_graph_on_orbits_of_length_based_on_N_orbits_fname.assign(argv[++i]);
+			create_graph_on_orbits_of_length_based_on_N_orbits_length = strtoi(argv[++i]);
+			cout << "-create_graph_on_orbits_of_length_based_on_N_orbits "
+					<< " " << create_graph_on_orbits_of_length_based_on_N_orbits_fname
+					<< " " << create_graph_on_orbits_of_length_based_on_N_orbits_length
+					<< endl;
+		}
 		else if (stringcmp(argv[i], "-read_solution_file") == 0) {
 			f_read_solution_file = TRUE;
 			read_solution_file_orbit_length = strtoi(argv[++i]);
@@ -69,7 +100,7 @@ int large_set_was_activity_description::read_arguments(int argc, std::string *ar
 					<< " " << read_solution_file_name
 					<< endl;
 		}
-		if (stringcmp(argv[i], "-end") == 0) {
+		else if (stringcmp(argv[i], "-end") == 0) {
 			break;
 		}
 	} // next i

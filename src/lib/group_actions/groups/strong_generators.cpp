@@ -1260,6 +1260,14 @@ long int strong_generators::group_order_as_lint()
 	return go.as_lint();
 }
 
+void strong_generators::print_group_order(std::ostream &ost)
+{
+	longinteger_object go;
+
+	group_order(go);
+	ost << go;
+}
+
 void strong_generators::print_generators_gap(std::ostream &ost)
 {
 	int i;
@@ -1269,6 +1277,32 @@ void strong_generators::print_generators_gap(std::ostream &ost)
 		ost << "G := Group([";
 		for (i = 0; i < gens->len; i++) {
 			A->element_print_as_permutation_with_offset(
+					gens->ith(i), ost,
+					1 /*offset*/,
+					TRUE /* f_do_it_anyway_even_for_big_degree */,
+					FALSE /* f_print_cycles_of_length_one */,
+					0 /* verbose_level*/);
+			if (i < gens->len - 1) {
+				ost << ", " << endl;
+			}
+		}
+		ost << "]);" << endl;
+	}
+	else {
+		ost << "too big to print" << endl;
+	}
+}
+
+
+void strong_generators::print_generators_gap_in_different_action(std::ostream &ost, action *A2)
+{
+	int i;
+
+	ost << "Generators in GAP format are:" << endl;
+	if (A->degree < 200) {
+		ost << "G := Group([";
+		for (i = 0; i < gens->len; i++) {
+			A2->element_print_as_permutation_with_offset(
 					gens->ith(i), ost,
 					1 /*offset*/,
 					TRUE /* f_do_it_anyway_even_for_big_degree */,
@@ -1308,7 +1342,7 @@ void strong_generators::print_generators_compact(std::ostream &ost)
 	}
 }
 
-void strong_generators::print_generators(ostream &ost)
+void strong_generators::print_generators(std::ostream &ost)
 {
 	int i;
 	longinteger_object go;
@@ -1355,7 +1389,7 @@ void strong_generators::print_generators(ostream &ost)
 	}
 }
 
-void strong_generators::print_generators_in_latex_individually(ostream &ost)
+void strong_generators::print_generators_in_latex_individually(std::ostream &ost)
 {
 	int i;
 	longinteger_object go;
@@ -1452,7 +1486,7 @@ void strong_generators::print_generators_even_odd()
 	}
 }
 
-void strong_generators::print_generators_MAGMA(action *A, ostream &ost)
+void strong_generators::print_generators_MAGMA(action *A, std::ostream &ost)
 {
 	int i;
 
@@ -1471,7 +1505,7 @@ void strong_generators::print_generators_MAGMA(action *A, ostream &ost)
 	}
 }
 
-void strong_generators::export_magma(action *A, ostream &ost)
+void strong_generators::export_magma(action *A, std::ostream &ost)
 {
 	cout << "strong_generators::export_magma" << endl;
 	A->print_info();
@@ -1562,7 +1596,7 @@ void strong_generators::print_generators_tex()
 	print_generators_tex(cout);
 }
 
-void strong_generators::print_generators_tex(ostream &ost)
+void strong_generators::print_generators_tex(std::ostream &ost)
 {
 	int i;
 	longinteger_object go;
@@ -1591,9 +1625,39 @@ void strong_generators::print_generators_tex(ostream &ost)
 	}
 }
 
+void strong_generators::print_generators_in_different_action_tex(std::ostream &ost, action *A2)
+{
+	int i;
+	longinteger_object go;
+
+	group_order(go);
+	ost << "Strong generators for a group of order " << go << ":" << endl;
+	ost << "$$" << endl;
+	for (i = 0; i < gens->len; i++) {
+		//cout << "Generator " << i << " / " << gens->len
+		// << " is:" << endl;
+		A2->element_print_as_permutation(gens->ith(i), ost);
+		if (i < gens->len - 1) {
+			ost << ", " << endl;
+		}
+		if (((i + 1) % 1) == 0 && i < gens->len - 1) {
+			ost << "$$" << endl;
+			ost << "$$" << endl;
+		}
+	}
+	ost << "$$" << endl;
+	for (i = 0; i < gens->len; i++) {
+		//cout << "Generator " << i << " / " << gens->len
+		// << " is:" << endl;
+		A->element_print_for_make_element(gens->ith(i), ost);
+		ost << "\\\\" << endl;
+	}
+}
+
+
 void strong_generators::print_generators_tex_with_print_point_function(
 		action *A_given,
-		ostream &ost,
+		std::ostream &ost,
 		void (*point_label)(stringstream &sstr, long int pt, void *data),
 		void *point_label_data)
 {
@@ -1621,9 +1685,16 @@ void strong_generators::print_generators_tex_with_print_point_function(
 		A->element_print_for_make_element(gens->ith(i), ost);
 		ost << "\\\\" << endl;
 	}
+
+	for (i = 0; i < gens->len; i++) {
+		ost << "$";
+		A_given->element_print_latex(gens->ith(i), ost);
+		ost << "$\\\\" << endl;
+	}
+
 }
 
-void strong_generators::print_generators_for_make_element(ostream &ost)
+void strong_generators::print_generators_for_make_element(std::ostream &ost)
 {
 	int i;
 	longinteger_object go;
@@ -1662,7 +1733,7 @@ void strong_generators::print_generators_as_permutations()
 	}
 }
 
-void strong_generators::print_generators_as_permutations_tex(ostream &ost, action *A2)
+void strong_generators::print_generators_as_permutations_tex(std::ostream &ost, action *A2)
 {
 	int i;
 	longinteger_object go;
@@ -1687,7 +1758,7 @@ void strong_generators::print_generators_as_permutations_tex(ostream &ost, actio
 }
 
 void strong_generators::print_with_given_action(
-		ostream &ost, action *A2)
+		std::ostream &ost, action *A2)
 {
 	int i;
 	
@@ -1715,7 +1786,7 @@ void strong_generators::print_with_given_action(
 	}
 }
 
-void strong_generators::print_elements_ost(ostream &ost)
+void strong_generators::print_elements_ost(std::ostream &ost)
 {
 	long int i;
 	longinteger_object go;
@@ -1739,7 +1810,7 @@ void strong_generators::print_elements_ost(ostream &ost)
 	FREE_int(Elt);
 }
 
-void strong_generators::print_elements_with_special_orthogonal_action_ost(ostream &ost)
+void strong_generators::print_elements_with_special_orthogonal_action_ost(std::ostream &ost)
 {
 	long int i;
 	longinteger_object go;
@@ -1774,7 +1845,7 @@ void strong_generators::print_elements_with_special_orthogonal_action_ost(ostrea
 }
 
 
-void strong_generators::print_elements_with_given_action(ostream &ost, action *A2)
+void strong_generators::print_elements_with_given_action(std::ostream &ost, action *A2)
 {
 	long int i;
 	longinteger_object go;
@@ -1806,7 +1877,7 @@ void strong_generators::print_elements_with_given_action(ostream &ost, action *A
 	FREE_int(Elt);
 }
 
-void strong_generators::print_elements_latex_ost(ostream &ost)
+void strong_generators::print_elements_latex_ost(std::ostream &ost)
 {
 	long int i, order, m;
 	longinteger_object go;
@@ -1839,8 +1910,8 @@ void strong_generators::print_elements_latex_ost(ostream &ost)
 
 void strong_generators::print_elements_latex_ost_with_print_point_function(
 		action *A_given,
-		ostream &ost,
-		void (*point_label)(stringstream &sstr, long int pt, void *data),
+		std::ostream &ost,
+		void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 		void *point_label_data)
 {
 	long int i, order, m;
@@ -2790,7 +2861,7 @@ void strong_generators::decode_ascii_coding(
 }
 
 void strong_generators::export_permutation_group_to_magma(
-		std::string &fname, int verbose_level)
+		std::string &fname, action *A2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -2802,9 +2873,9 @@ void strong_generators::export_permutation_group_to_magma(
 	{
 		ofstream fp(fname);
 
-		fp << "G := sub< Sym(" << A->degree << ") |" << endl;
+		fp << "G := sub< Sym(" << A2->degree << ") |" << endl;
 		for (i = 0; i < gens->len; i++) {
-			A->element_print_as_permutation_with_offset(
+			A2->element_print_as_permutation_with_offset(
 				gens->ith(i), fp,
 				1 /* offset */,
 				TRUE /* f_do_it_anyway_even_for_big_degree */,
@@ -2828,7 +2899,7 @@ void strong_generators::export_permutation_group_to_magma(
 }
 
 void strong_generators::export_permutation_group_to_GAP(
-		std::string &fname, int verbose_level)
+		std::string &fname, action *A2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -2842,7 +2913,7 @@ void strong_generators::export_permutation_group_to_GAP(
 
 		fp << "G := Group([" << endl;
 		for (i = 0; i < gens->len; i++) {
-			A->element_print_as_permutation_with_offset(
+			A2->element_print_as_permutation_with_offset(
 				gens->ith(i), fp,
 				1 /* offset */,
 				TRUE /* f_do_it_anyway_even_for_big_degree */,
@@ -3173,6 +3244,7 @@ void strong_generators::make_element_which_moves_a_point_from_A_to_B(
 void strong_generators::export_group_to_magma_and_copy_to_latex(
 		std::string &label_txt,
 		ostream &ost,
+		action *A2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3188,7 +3260,7 @@ void strong_generators::export_group_to_magma_and_copy_to_latex(
 	export_fname.append("_group.magma");
 
 	export_permutation_group_to_magma(
-			export_fname, verbose_level - 2);
+			export_fname, A2, verbose_level - 2);
 	if (f_v) {
 		cout << "written file " << export_fname << " of size "
 				<< Fio.file_size(export_fname) << endl;
@@ -3225,6 +3297,7 @@ void strong_generators::export_group_to_magma_and_copy_to_latex(
 void strong_generators::export_group_to_GAP_and_copy_to_latex(
 		std::string &label_txt,
 		ostream &ost,
+		action *A2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3240,7 +3313,7 @@ void strong_generators::export_group_to_GAP_and_copy_to_latex(
 	export_fname.append("_group.gap");
 
 	export_permutation_group_to_GAP(
-			export_fname, verbose_level - 2);
+			export_fname, A2, verbose_level - 2);
 	if (f_v) {
 		cout << "written file " << export_fname << " of size "
 				<< Fio.file_size(export_fname) << endl;
@@ -3277,6 +3350,7 @@ void strong_generators::export_group_to_GAP_and_copy_to_latex(
 void strong_generators::export_group_and_copy_to_latex(
 		std::string &label_txt,
 		ostream &ost,
+		action *A2,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3285,8 +3359,8 @@ void strong_generators::export_group_and_copy_to_latex(
 	if (f_v) {
 		cout << "strong_generators::export_group_and_copy_to_latex" << endl;
 	}
-	export_group_to_magma_and_copy_to_latex(label_txt, ost, verbose_level);
-	export_group_to_GAP_and_copy_to_latex(label_txt, ost, verbose_level);
+	export_group_to_magma_and_copy_to_latex(label_txt, ost, A2, verbose_level);
+	export_group_to_GAP_and_copy_to_latex(label_txt, ost, A2, verbose_level);
 	if (f_v) {
 		cout << "strong_generators::export_group_and_copy_to_latex done" << endl;
 	}

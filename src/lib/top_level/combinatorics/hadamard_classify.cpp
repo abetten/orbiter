@@ -290,7 +290,7 @@ void hadamard_classify::init(int n, int f_draw,
 	if (f_v) {
 		cout << "computing automorphism group of "
 				"uncolored graph done, group order = " << go << endl;
-		}
+	}
 
 	string fname_group;
 
@@ -301,7 +301,7 @@ void hadamard_classify::init(int n, int f_draw,
 	fname_group.append(".magma");
 
 	A->Strong_gens->export_permutation_group_to_magma(
-			fname_group, 1 /* verbose_level */);
+			fname_group, A, 1 /* verbose_level */);
 
 	char prefix[1000];
 	sprintf(prefix, "./had_%d", n);

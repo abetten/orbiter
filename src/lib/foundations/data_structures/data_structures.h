@@ -1174,6 +1174,10 @@ public:
 	void init_empty_table(int nb_rows, int nb_cols);
 	void fill_entry_with_text(int row_idx, 
 		int col_idx, const char *text);
+	void fill_entry_with_text(int row_idx,
+			int col_idx, std::string &text);
+	void set_entry_lint(int row_idx,
+			int col_idx, long int val);
 	void fill_column_with_text(int col_idx, const char **text, 
 		const char *heading);
 	void fill_column_with_int(int col_idx, int *data, 
@@ -1206,6 +1210,7 @@ public:
 	void add_column_with_text(const char *label, char **Value);
 	void reallocate_table();
 	void reallocate_table_add_row();
+	int find_column(std::string &column_label);
 	int find_by_column(const char *join_by);
 	void tokenize(std::string &fname,
 		char **&tokens, int &nb_tokens, int verbose_level);

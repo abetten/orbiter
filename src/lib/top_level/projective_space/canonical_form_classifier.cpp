@@ -28,11 +28,7 @@ canonical_form_classifier::canonical_form_classifier()
 	alpha = NULL;
 	gamma = NULL;
 
-	PC = NULL;
-	Control = NULL;
-	Poset = NULL;
-	nb_orbits = 0;
-
+	SubC = NULL;
 
 	Elt = NULL;
 	eqn2 = NULL;
@@ -102,7 +98,13 @@ void canonical_form_classifier::classify(canonical_form_classifier_description *
 
 
 	if (f_v) {
-		cout << "canonical_form_classifier::classify" << endl;
+		cout << "canonical_form_classifier::classify";
+		if (Descr->f_algorithm_nauty) {
+			cout << " using nauty" << endl;
+		}
+		else if (Descr->f_algorithm_substructure) {
+			cout << " using substructure" << endl;
+		}
 	}
 
 
@@ -267,449 +269,6 @@ void canonical_form_classifier::classify(canonical_form_classifier_description *
 }
 
 
-void canonical_form_classifier::write_canonical_forms_csv(
-		std::string &fname_base,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
-	std::string fname;
-	int i, j;
-	sorting Sorting;
-
-	int nb_orbits;
-	int nb_monomials;
-
-	action *A;
-	action *A_on_lines;
-
-	if (f_v) {
-		cout << "canonical_form_classifier::write_canonical_forms_csv" << endl;
-	}
-	fname.assign(fname_base);
-	fname.append("_canonical_form.csv");
-
-
-	nb_orbits = Classification_of_quartic_curves->nb_types;
-	nb_monomials = Poly_ring->get_nb_monomials();
-
-
-	A = Descr->PA->A;
-	A_on_lines = Descr->PA->A_on_lines;
-
-
-	{
-		ofstream ost(fname.c_str());
-
-		ost << "ROW,SourceFile,SourceRow,Eqn,Pts,Lines,Transporter,CanEqn,CanPts,CanLines,AutTl,AutGens,Ago" << endl;
-		for (i = 0; i < nb_objects_to_test; i++) {
-			ost << i;
-			ost << ",";
-			ost << CFS_table[i]->cnt;
-			ost << ",";
-			ost << CFS_table[i]->row;
-			ost << ",";
-
-			//Orbiter->Int_vec.print(cout, Canonical_forms + i * Poly_ring->get_nb_monomials(), Poly_ring->get_nb_monomials());
-			//cout << " : " << Goi[i] << endl;
-
-			{
-				string str;
-				Orbiter->Int_vec.create_string_with_quotes(str, CFS_table[i]->eqn, nb_monomials);
-				ost << str;
-			}
-			ost << ",";
-			{
-				string str;
-				Orbiter->Lint_vec.create_string_with_quotes(str, CFS_table[i]->pts, CFS_table[i]->nb_pts);
-				ost << str;
-			}
-			ost << ",";
-			{
-				string str;
-				Orbiter->Lint_vec.create_string_with_quotes(str, CFS_table[i]->bitangents, CFS_table[i]->nb_bitangents);
-				ost << str;
-			}
-			ost << ",";
-			{
-				string str;
-				Orbiter->Int_vec.create_string_with_quotes(str, CFS_table[i]->transporter_to_canonical_form, A->make_element_size);
-				ost << str;
-			}
-			ost << ",";
-			{
-				string str;
-				Orbiter->Int_vec.create_string_with_quotes(str, CFS_table[i]->canonical_equation, nb_monomials);
-				ost << str;
-			}
-			ost << ",";
-
-
-			long int *Pts_orig;
-			long int *Pts_canonical;
-
-			Pts_orig = CFS_table[i]->pts;
-			Pts_canonical = NEW_lint(CFS_table[i]->nb_pts);
-			for (j = 0; j < CFS_table[i]->nb_pts; j++) {
-				Pts_canonical[j] = A->element_image_of(Pts_orig[j], CFS_table[i]->transporter_to_canonical_form, 0 /* verbose_level */);
-			}
-			Sorting.lint_vec_heapsort(Pts_canonical, CFS_table[i]->nb_pts);
-
-
-			{
-				string str;
-				Orbiter->Lint_vec.create_string_with_quotes(str, Pts_canonical, CFS_table[i]->nb_pts);
-				ost << str;
-			}
-			ost << ",";
-
-
-			long int *bitangents_orig;
-			long int *bitangents_canonical;
-
-			bitangents_orig = CFS_table[i]->bitangents;
-			bitangents_canonical = NEW_lint(CFS_table[i]->nb_bitangents);
-			for (j = 0; j < CFS_table[i]->nb_bitangents; j++) {
-				bitangents_canonical[j] = A_on_lines->element_image_of(bitangents_orig[j], CFS_table[i]->transporter_to_canonical_form, 0 /* verbose_level */);
-			}
-
-			//Sorting.lint_vec_heapsort(bitangents_canonical, CFS_table[i]->nb_bitangents);
-
-			{
-				string str;
-				Orbiter->Lint_vec.create_string_with_quotes(str, bitangents_canonical, CFS_table[i]->nb_bitangents);
-				ost << str;
-			}
-			ost << ",";
-
-			strong_generators *gens;
-
-			gens = CFS_table[i]->gens_stab_of_canonical_equation;
-			{
-				string str;
-				Orbiter->Int_vec.create_string_with_quotes(str, gens->tl, A->base_len());
-				ost << str;
-			}
-			ost << ",";
-
-			{
-				string str;
-
-				gens->get_gens_data_as_string_with_quotes(str, verbose_level);
-				ost << str;
-			}
-			ost << ",";
-
-			longinteger_object go;
-
-			gens->group_order(go);
-			ost << go << endl;
-
-
-		}
-		ost << "END" << endl;
-	}
-
-
-	file_io Fio;
-
-	cout << "written file " << fname << " of size "
-			<< Fio.file_size(fname.c_str()) << endl;
-	if (f_v) {
-		cout << "canonical_form_classifier::write_canonical_forms_csv done" << endl;
-	}
-}
-
-
-
-void canonical_form_classifier::generate_source_code(
-		std::string &fname_base,
-		tally_vector_data *Classification_of_quartic_curves,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	std::string fname;
-	int orbit_index;
-	int i, j;
-
-	int nb_orbits;
-	int nb_monomials;
-
-	action *A;
-	action *A_on_lines;
-
-	if (f_v) {
-		cout << "canonical_form_classifier::generate_source_code" << endl;
-	}
-	fname.assign(fname_base);
-	fname.append(".cpp");
-
-
-	nb_orbits = Classification_of_quartic_curves->nb_types;
-	nb_monomials = Poly_ring->get_nb_monomials();
-
-
-	A = Descr->PA->A;
-	A_on_lines = Descr->PA->A_on_lines;
-
-	{
-		ofstream f(fname.c_str());
-
-		f << "static int " << fname_base.c_str() << "_nb_reps = "
-				<< nb_orbits << ";" << endl;
-		f << "static int " << fname_base.c_str() << "_size = "
-				<< nb_monomials << ";" << endl;
-
-
-
-		if (f_v) {
-			cout << "canonical_form_classifier::generate_source_code "
-					"preparing reps" << endl;
-		}
-		f << "// the equations:" << endl;
-		f << "static int " << fname_base.c_str() << "_reps[] = {" << endl;
-		for (orbit_index = 0;
-				orbit_index < nb_orbits;
-				orbit_index++) {
-
-
-			int *equation;
-
-			if (f_v) {
-				cout << "canonical_form_classifier::generate_source_code "
-						"orbit_index = " << orbit_index << endl;
-			}
-
-			int idx;
-
-			idx = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[orbit_index]];
-
-			canonical_form_substructure *CFS = CFS_table[idx];
-
-
-			//equation = Classification_of_quartic_curves->Reps + orbit_index * Classification_of_quartic_curves->data_set_sz;
-			equation = CFS->canonical_equation;
-
-			f << "\t";
-			for (i = 0; i < nb_monomials; i++) {
-				f << equation[i];
-				f << ", ";
-			}
-			f << endl;
-
-		}
-		f << "};" << endl;
-
-
-
-		if (f_v) {
-			cout << "canonical_form_classifier::generate_source_code "
-					"preparing stab_order" << endl;
-		}
-		f << "// the stabilizer orders:" << endl;
-		f << "static const char *" << fname_base.c_str() << "_stab_order[] = {" << endl;
-		for (orbit_index = 0;
-				orbit_index < nb_orbits;
-				orbit_index++) {
-
-			longinteger_object ago;
-
-			int idx;
-
-			idx = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[orbit_index]];
-
-
-			ago.create(Goi[idx], __FILE__, __LINE__);
-
-			f << "\t\"";
-
-			ago.print_not_scientific(f);
-			f << "\"," << endl;
-
-		}
-		f << "};" << endl;
-
-
-
-
-
-		if (f_v) {
-			cout << "canonical_form_classifier::generate_source_code "
-					"preparing Bitangents" << endl;
-		}
-		f << "// the 28 bitangents:" << endl;
-		f << "static long int " << fname_base.c_str() << "_Bitangents[] = { " << endl;
-
-
-		for (orbit_index = 0;
-				orbit_index < nb_orbits;
-				orbit_index++) {
-
-
-			if (f_v) {
-				cout << "canonical_form_classifier::generate_source_code "
-						"orbit_index = " << orbit_index << endl;
-			}
-
-			int idx;
-
-			idx = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[orbit_index]];
-
-			canonical_form_substructure *CFS = CFS_table[idx];
-
-			if (CFS == NULL) {
-				cout << "canonical_form_classifier::generate_source_code CFS == NULL" << endl;
-				exit(1);
-			}
-
-
-			long int *bitangents_orig;
-			long int *bitangents_canonical;
-
-			bitangents_orig = CFS->bitangents;
-			bitangents_canonical = NEW_lint(CFS->nb_bitangents);
-			for (j = 0; j < CFS->nb_bitangents; j++) {
-				bitangents_canonical[j] = A_on_lines->element_image_of(bitangents_orig[j], CFS->transporter_to_canonical_form, 0 /* verbose_level */);
-			}
-
-
-
-
-			f << "\t";
-			for (j = 0; j < 28; j++) {
-				f << bitangents_canonical[j];
-				f << ", ";
-			}
-			f << endl;
-
-		}
-		f << "};" << endl;
-
-		f << "static int " << fname_base.c_str() << "_make_element_size = "
-				<< A->make_element_size << ";" << endl;
-
-		{
-			int *stab_gens_first;
-			int *stab_gens_len;
-			int fst;
-
-
-
-			stab_gens_first = NEW_int(nb_orbits);
-			stab_gens_len = NEW_int(nb_orbits);
-			fst = 0;
-			for (orbit_index = 0;
-					orbit_index < nb_orbits;
-					orbit_index++) {
-
-
-				strong_generators *gens;
-
-				int idx;
-
-				idx = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[orbit_index]];
-
-				canonical_form_substructure *CFS = CFS_table[idx];
-				//gens = CFS->Gens_stabilizer_canonical_form;
-				gens = CFS->gens_stab_of_canonical_equation;
-
-
-				stab_gens_first[orbit_index] = fst;
-				stab_gens_len[orbit_index] = gens->gens->len;
-				fst += stab_gens_len[orbit_index];
-			}
-
-
-			if (f_v) {
-				cout << "canonical_form_classifier::generate_source_code "
-						"preparing stab_gens_fst" << endl;
-			}
-			f << "static int " << fname_base.c_str() << "_stab_gens_fst[] = { " << endl << "\t";
-			for (orbit_index = 0;
-					orbit_index < nb_orbits;
-					orbit_index++) {
-				f << stab_gens_first[orbit_index];
-				if (orbit_index < nb_orbits - 1) {
-					f << ", ";
-				}
-				if (((orbit_index + 1) % 10) == 0) {
-					f << endl << "\t";
-				}
-			}
-			f << "};" << endl;
-
-			if (f_v) {
-				cout << "canonical_form_classifier::generate_source_code "
-						"preparing stab_gens_len" << endl;
-			}
-			f << "static int " << fname_base.c_str() << "_stab_gens_len[] = { " << endl << "\t";
-			for (orbit_index = 0;
-					orbit_index < nb_orbits;
-					orbit_index++) {
-				f << stab_gens_len[orbit_index];
-				if (orbit_index < nb_orbits - 1) {
-					f << ", ";
-				}
-				if (((orbit_index + 1) % 10) == 0) {
-					f << endl << "\t";
-				}
-			}
-			f << "};" << endl;
-
-
-			if (f_v) {
-				cout << "canonical_form_classifier::generate_source_code "
-						"preparing stab_gens" << endl;
-			}
-			f << "static int " << fname_base.c_str() << "_stab_gens[] = {" << endl;
-			for (orbit_index = 0;
-					orbit_index < nb_orbits;
-					orbit_index++) {
-				int j;
-
-				for (j = 0; j < stab_gens_len[orbit_index]; j++) {
-					if (f_vv) {
-						cout << "canonical_form_classifier::generate_source_code "
-								"before extract_strong_generators_in_order "
-								"generator " << j << " / "
-								<< stab_gens_len[orbit_index] << endl;
-					}
-					f << "\t";
-
-					strong_generators *gens;
-
-					int idx;
-
-					idx = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[orbit_index]];
-
-					canonical_form_substructure *CFS = CFS_table[idx];
-					//gens = CFS->Gens_stabilizer_canonical_form;
-					gens = CFS->gens_stab_of_canonical_equation;
-
-
-					A->element_print_for_make_element(gens->gens->ith(j), f);
-					f << endl;
-				}
-			}
-			f << "};" << endl;
-
-
-			FREE_int(stab_gens_first);
-			FREE_int(stab_gens_len);
-		}
-	}
-
-	file_io Fio;
-
-	cout << "written file " << fname << " of size "
-			<< Fio.file_size(fname.c_str()) << endl;
-	if (f_v) {
-		cout << "canonical_form_classifier::generate_source_code done" << endl;
-	}
-}
-
-
 void canonical_form_classifier::classify_nauty(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -740,67 +299,32 @@ void canonical_form_classifier::classify_with_substructure(int verbose_level)
 
 
 	if (f_v) {
-		cout << "canonical_form_classifier::classify_with_substructure" << endl;
+		cout << "canonical_form_classifier::classify_with_substructure, "
+				"Descr->substructure_size=" << Descr->substructure_size << endl;
 	}
 
 
 
-	int j;
 
-	Poset = NEW_OBJECT(poset_with_group_action);
-
-
-	Control = NEW_OBJECT(poset_classification_control);
-
-	Control->f_depth = TRUE;
-	Control->depth = Descr->substructure_size;
-
+	SubC = NEW_OBJECT(substructure_classifier);
 
 	if (f_v) {
-		cout << "projective_space_activity::set_stabilizer control=" << endl;
-		Control->print();
+		cout << "canonical_form_classifier::classify_with_substructure before SubC->classify_substructures" << endl;
 	}
 
-
-	Poset->init_subset_lattice(Descr->PA->A, Descr->PA->A,
+	SubC->classify_substructures(
+			Descr->PA->A,
+			Descr->PA->A,
 			Descr->PA->A->Strong_gens,
-			verbose_level);
-
-	if (f_v) {
-		cout << "projective_space_activity::set_stabilizer "
-				"before Poset->orbits_on_k_sets_compute" << endl;
-	}
-	PC = Poset->orbits_on_k_sets_compute(
-			Control,
 			Descr->substructure_size,
-			verbose_level);
+			verbose_level - 3);
+
 	if (f_v) {
-		cout << "projective_space_activity::set_stabilizer "
-				"after Poset->orbits_on_k_sets_compute" << endl;
+		cout << "canonical_form_classifier::classify_with_substructure after SubC->classify_substructures" << endl;
+		cout << "canonical_form_classifier::classify_with_substructure We found " << SubC->nb_orbits
+				<< " orbits at level " << Descr->substructure_size << ":" << endl;
 	}
 
-	nb_orbits = PC->nb_orbits_at_level(Descr->substructure_size);
-
-	cout << "We found " << nb_orbits << " orbits at level " << Descr->substructure_size << ":" << endl;
-	for (j = 0; j < nb_orbits; j++) {
-
-
-		strong_generators *Strong_gens;
-
-		PC->get_stabilizer_generators(
-				Strong_gens,
-				Descr->substructure_size, j, 0 /* verbose_level*/);
-
-		longinteger_object go;
-
-		Strong_gens->group_order(go);
-
-		FREE_OBJECT(Strong_gens);
-
-		cout << j << " : " << go << endl;
-
-
-	}
 
 
 	CFS_table = (canonical_form_substructure **) NEW_pvoid(nb_objects_to_test);
@@ -808,7 +332,13 @@ void canonical_form_classifier::classify_with_substructure(int verbose_level)
 
 
 
+	if (f_v) {
+		cout << "canonical_form_classifier::classify_with_substructure before main_loop" << endl;
+	}
 	main_loop(verbose_level);
+	if (f_v) {
+		cout << "canonical_form_classifier::classify_with_substructure after main_loop" << endl;
+	}
 
 
 
@@ -1321,6 +851,451 @@ void canonical_form_classifier::classify_curve_nauty(int cnt, int row,
 }
 
 
+void canonical_form_classifier::write_canonical_forms_csv(
+		std::string &fname_base,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	std::string fname;
+	int i, j;
+	sorting Sorting;
+
+	int nb_orbits;
+	int nb_monomials;
+
+	action *A;
+	action *A_on_lines;
+
+	if (f_v) {
+		cout << "canonical_form_classifier::write_canonical_forms_csv" << endl;
+	}
+	fname.assign(fname_base);
+	fname.append("_canonical_form.csv");
+
+
+	nb_orbits = Classification_of_quartic_curves->nb_types;
+	nb_monomials = Poly_ring->get_nb_monomials();
+
+
+	A = Descr->PA->A;
+	A_on_lines = Descr->PA->A_on_lines;
+
+
+	{
+		ofstream ost(fname.c_str());
+
+		ost << "ROW,SourceFile,SourceRow,Eqn,Pts,Lines,Transporter,CanEqn,CanPts,CanLines,AutTl,AutGens,Ago" << endl;
+		for (i = 0; i < nb_objects_to_test; i++) {
+			ost << i;
+			ost << ",";
+			ost << CFS_table[i]->cnt;
+			ost << ",";
+			ost << CFS_table[i]->row;
+			ost << ",";
+
+			//Orbiter->Int_vec.print(cout, Canonical_forms + i * Poly_ring->get_nb_monomials(), Poly_ring->get_nb_monomials());
+			//cout << " : " << Goi[i] << endl;
+
+			{
+				string str;
+				Orbiter->Int_vec.create_string_with_quotes(str, CFS_table[i]->eqn, nb_monomials);
+				ost << str;
+			}
+			ost << ",";
+			{
+				string str;
+				Orbiter->Lint_vec.create_string_with_quotes(str, CFS_table[i]->pts, CFS_table[i]->nb_pts);
+				ost << str;
+			}
+			ost << ",";
+			{
+				string str;
+				Orbiter->Lint_vec.create_string_with_quotes(str, CFS_table[i]->bitangents, CFS_table[i]->nb_bitangents);
+				ost << str;
+			}
+			ost << ",";
+			{
+				string str;
+				Orbiter->Int_vec.create_string_with_quotes(str, CFS_table[i]->transporter_to_canonical_form, A->make_element_size);
+				ost << str;
+			}
+			ost << ",";
+			{
+				string str;
+				Orbiter->Int_vec.create_string_with_quotes(str, CFS_table[i]->canonical_equation, nb_monomials);
+				ost << str;
+			}
+			ost << ",";
+
+
+			long int *Pts_orig;
+			long int *Pts_canonical;
+
+			Pts_orig = CFS_table[i]->pts;
+			Pts_canonical = NEW_lint(CFS_table[i]->nb_pts);
+			for (j = 0; j < CFS_table[i]->nb_pts; j++) {
+				Pts_canonical[j] = A->element_image_of(Pts_orig[j], CFS_table[i]->transporter_to_canonical_form, 0 /* verbose_level */);
+			}
+			Sorting.lint_vec_heapsort(Pts_canonical, CFS_table[i]->nb_pts);
+
+
+			{
+				string str;
+				Orbiter->Lint_vec.create_string_with_quotes(str, Pts_canonical, CFS_table[i]->nb_pts);
+				ost << str;
+			}
+			ost << ",";
+
+
+			long int *bitangents_orig;
+			long int *bitangents_canonical;
+
+			bitangents_orig = CFS_table[i]->bitangents;
+			bitangents_canonical = NEW_lint(CFS_table[i]->nb_bitangents);
+			for (j = 0; j < CFS_table[i]->nb_bitangents; j++) {
+				bitangents_canonical[j] = A_on_lines->element_image_of(bitangents_orig[j], CFS_table[i]->transporter_to_canonical_form, 0 /* verbose_level */);
+			}
+
+			//Sorting.lint_vec_heapsort(bitangents_canonical, CFS_table[i]->nb_bitangents);
+
+			{
+				string str;
+				Orbiter->Lint_vec.create_string_with_quotes(str, bitangents_canonical, CFS_table[i]->nb_bitangents);
+				ost << str;
+			}
+			ost << ",";
+
+			strong_generators *gens;
+
+			gens = CFS_table[i]->gens_stab_of_canonical_equation;
+			{
+				string str;
+				Orbiter->Int_vec.create_string_with_quotes(str, gens->tl, A->base_len());
+				ost << str;
+			}
+			ost << ",";
+
+			{
+				string str;
+
+				gens->get_gens_data_as_string_with_quotes(str, verbose_level);
+				ost << str;
+			}
+			ost << ",";
+
+			longinteger_object go;
+
+			gens->group_order(go);
+			ost << go << endl;
+
+
+		}
+		ost << "END" << endl;
+	}
+
+
+	file_io Fio;
+
+	cout << "written file " << fname << " of size "
+			<< Fio.file_size(fname.c_str()) << endl;
+	if (f_v) {
+		cout << "canonical_form_classifier::write_canonical_forms_csv done" << endl;
+	}
+}
+
+
+
+void canonical_form_classifier::generate_source_code(
+		std::string &fname_base,
+		tally_vector_data *Classification_of_quartic_curves,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	std::string fname;
+	int orbit_index;
+	int i, j;
+
+	int nb_orbits;
+	int nb_monomials;
+
+	action *A;
+	action *A_on_lines;
+
+	if (f_v) {
+		cout << "canonical_form_classifier::generate_source_code" << endl;
+	}
+	fname.assign(fname_base);
+	fname.append(".cpp");
+
+
+	nb_orbits = Classification_of_quartic_curves->nb_types;
+	nb_monomials = Poly_ring->get_nb_monomials();
+
+
+	A = Descr->PA->A;
+	A_on_lines = Descr->PA->A_on_lines;
+
+	{
+		ofstream f(fname.c_str());
+
+		f << "static int " << fname_base.c_str() << "_nb_reps = "
+				<< nb_orbits << ";" << endl;
+		f << "static int " << fname_base.c_str() << "_size = "
+				<< nb_monomials << ";" << endl;
+
+
+
+		if (f_v) {
+			cout << "canonical_form_classifier::generate_source_code "
+					"preparing reps" << endl;
+		}
+		f << "// the equations:" << endl;
+		f << "static int " << fname_base.c_str() << "_reps[] = {" << endl;
+		for (orbit_index = 0;
+				orbit_index < nb_orbits;
+				orbit_index++) {
+
+
+			int *equation;
+
+			if (f_v) {
+				cout << "canonical_form_classifier::generate_source_code "
+						"orbit_index = " << orbit_index << endl;
+			}
+
+			int idx;
+
+			idx = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[orbit_index]];
+
+			canonical_form_substructure *CFS = CFS_table[idx];
+
+
+			//equation = Classification_of_quartic_curves->Reps + orbit_index * Classification_of_quartic_curves->data_set_sz;
+			equation = CFS->canonical_equation;
+
+			f << "\t";
+			for (i = 0; i < nb_monomials; i++) {
+				f << equation[i];
+				f << ", ";
+			}
+			f << endl;
+
+		}
+		f << "};" << endl;
+
+
+
+		if (f_v) {
+			cout << "canonical_form_classifier::generate_source_code "
+					"preparing stab_order" << endl;
+		}
+		f << "// the stabilizer orders:" << endl;
+		f << "static const char *" << fname_base.c_str() << "_stab_order[] = {" << endl;
+		for (orbit_index = 0;
+				orbit_index < nb_orbits;
+				orbit_index++) {
+
+			longinteger_object ago;
+
+			int idx;
+
+			idx = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[orbit_index]];
+
+
+			ago.create(Goi[idx], __FILE__, __LINE__);
+
+			f << "\t\"";
+
+			ago.print_not_scientific(f);
+			f << "\"," << endl;
+
+		}
+		f << "};" << endl;
+
+
+
+
+
+		if (f_v) {
+			cout << "canonical_form_classifier::generate_source_code "
+					"preparing Bitangents" << endl;
+		}
+		f << "// the 28 bitangents:" << endl;
+		f << "static long int " << fname_base.c_str() << "_Bitangents[] = { " << endl;
+
+
+		for (orbit_index = 0;
+				orbit_index < nb_orbits;
+				orbit_index++) {
+
+
+			if (f_v) {
+				cout << "canonical_form_classifier::generate_source_code "
+						"orbit_index = " << orbit_index << endl;
+			}
+
+			int idx;
+
+			idx = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[orbit_index]];
+
+			canonical_form_substructure *CFS = CFS_table[idx];
+
+			if (CFS == NULL) {
+				cout << "canonical_form_classifier::generate_source_code CFS == NULL" << endl;
+				exit(1);
+			}
+
+
+			long int *bitangents_orig;
+			long int *bitangents_canonical;
+
+			bitangents_orig = CFS->bitangents;
+			bitangents_canonical = NEW_lint(CFS->nb_bitangents);
+			for (j = 0; j < CFS->nb_bitangents; j++) {
+				bitangents_canonical[j] = A_on_lines->element_image_of(bitangents_orig[j], CFS->transporter_to_canonical_form, 0 /* verbose_level */);
+			}
+
+
+
+
+			f << "\t";
+			for (j = 0; j < 28; j++) {
+				f << bitangents_canonical[j];
+				f << ", ";
+			}
+			f << endl;
+
+		}
+		f << "};" << endl;
+
+		f << "static int " << fname_base.c_str() << "_make_element_size = "
+				<< A->make_element_size << ";" << endl;
+
+		{
+			int *stab_gens_first;
+			int *stab_gens_len;
+			int fst;
+
+
+
+			stab_gens_first = NEW_int(nb_orbits);
+			stab_gens_len = NEW_int(nb_orbits);
+			fst = 0;
+			for (orbit_index = 0;
+					orbit_index < nb_orbits;
+					orbit_index++) {
+
+
+				strong_generators *gens;
+
+				int idx;
+
+				idx = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[orbit_index]];
+
+				canonical_form_substructure *CFS = CFS_table[idx];
+				//gens = CFS->Gens_stabilizer_canonical_form;
+				gens = CFS->gens_stab_of_canonical_equation;
+
+
+				stab_gens_first[orbit_index] = fst;
+				stab_gens_len[orbit_index] = gens->gens->len;
+				fst += stab_gens_len[orbit_index];
+			}
+
+
+			if (f_v) {
+				cout << "canonical_form_classifier::generate_source_code "
+						"preparing stab_gens_fst" << endl;
+			}
+			f << "static int " << fname_base.c_str() << "_stab_gens_fst[] = { " << endl << "\t";
+			for (orbit_index = 0;
+					orbit_index < nb_orbits;
+					orbit_index++) {
+				f << stab_gens_first[orbit_index];
+				if (orbit_index < nb_orbits - 1) {
+					f << ", ";
+				}
+				if (((orbit_index + 1) % 10) == 0) {
+					f << endl << "\t";
+				}
+			}
+			f << "};" << endl;
+
+			if (f_v) {
+				cout << "canonical_form_classifier::generate_source_code "
+						"preparing stab_gens_len" << endl;
+			}
+			f << "static int " << fname_base.c_str() << "_stab_gens_len[] = { " << endl << "\t";
+			for (orbit_index = 0;
+					orbit_index < nb_orbits;
+					orbit_index++) {
+				f << stab_gens_len[orbit_index];
+				if (orbit_index < nb_orbits - 1) {
+					f << ", ";
+				}
+				if (((orbit_index + 1) % 10) == 0) {
+					f << endl << "\t";
+				}
+			}
+			f << "};" << endl;
+
+
+			if (f_v) {
+				cout << "canonical_form_classifier::generate_source_code "
+						"preparing stab_gens" << endl;
+			}
+			f << "static int " << fname_base.c_str() << "_stab_gens[] = {" << endl;
+			for (orbit_index = 0;
+					orbit_index < nb_orbits;
+					orbit_index++) {
+				int j;
+
+				for (j = 0; j < stab_gens_len[orbit_index]; j++) {
+					if (f_vv) {
+						cout << "canonical_form_classifier::generate_source_code "
+								"before extract_strong_generators_in_order "
+								"generator " << j << " / "
+								<< stab_gens_len[orbit_index] << endl;
+					}
+					f << "\t";
+
+					strong_generators *gens;
+
+					int idx;
+
+					idx = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[orbit_index]];
+
+					canonical_form_substructure *CFS = CFS_table[idx];
+					//gens = CFS->Gens_stabilizer_canonical_form;
+					gens = CFS->gens_stab_of_canonical_equation;
+
+
+					A->element_print_for_make_element(gens->gens->ith(j), f);
+					f << endl;
+				}
+			}
+			f << "};" << endl;
+
+
+			FREE_int(stab_gens_first);
+			FREE_int(stab_gens_len);
+		}
+	}
+
+	file_io Fio;
+
+	cout << "written file " << fname << " of size "
+			<< Fio.file_size(fname.c_str()) << endl;
+	if (f_v) {
+		cout << "canonical_form_classifier::generate_source_code done" << endl;
+	}
+}
+
+
+
+
 void canonical_form_classifier::report(std::string &fname_base, int verbose_level)
 {
 
@@ -1372,51 +1347,112 @@ void canonical_form_classifier::report2(std::ostream &ost, std::string &fname_ba
 	fname.append("_data.csv");
 
 	int i, j;
-	int nb_cols = 5 + nb_orbits + 15;
+	//int nb_cols = 5 + SubC->nb_orbits + 15;
+	int nb_cols = 21;
 
-	long int *Table;
+	//long int *Table;
 
-	Table = NEW_lint(nb_objects_to_test * nb_cols);
+	spreadsheet S;
 
-	for (i = 0; i < nb_objects_to_test; i++) {
+	S.init_empty_table(nb_objects_to_test + 1, nb_cols);
+
+	//Table = NEW_lint(nb_objects_to_test * nb_cols);
+
+	S.fill_entry_with_text(0, 0, "Line");
+	S.fill_entry_with_text(0, 1, "File");
+	S.fill_entry_with_text(0, 2, "RowInFile");
+	S.fill_entry_with_text(0, 3, "nb_pts");
+	S.fill_entry_with_text(0, 4, "nb_sub_orbs");
+	S.fill_entry_with_text(0, 5, "frequencies");
+	S.fill_entry_with_text(0, 6, "nb_types");
+	S.fill_entry_with_text(0, 7, "selected_type");
+	S.fill_entry_with_text(0, 8, "selected_orbit");
+	S.fill_entry_with_text(0, 9, "selected_frequency");
+	S.fill_entry_with_text(0, 10, "go_min");
+	S.fill_entry_with_text(0, 11, "set_stabilizer_order");
+	S.fill_entry_with_text(0, 12, "reduced_set_size");
+	S.fill_entry_with_text(0, 13, "nb_interesting_subsets");
+	S.fill_entry_with_text(0, 14, "nb_interesting_subsets_reduced");
+	S.fill_entry_with_text(0, 15, "nb_interesting_subsets_rr");
+	S.fill_entry_with_text(0, 16, "nb_orbits");
+	S.fill_entry_with_text(0, 17, "nb_interesting_orbits");
+	S.fill_entry_with_text(0, 18, "nb_interesting_points");
+	S.fill_entry_with_text(0, 19, "orbit_length_under_set_stab");
+	S.fill_entry_with_text(0, 20, "stab_of_eqn");
+
+	j = 1;
+	for (i = 0; i < nb_objects_to_test; i++, j++) {
 
 		cout << "i=" << i << endl;
 
 
 		if (CFS_table[i]) {
+
+			S.set_entry_lint(j, 0, i);
+			S.set_entry_lint(j, 1, CFS_table[i]->cnt);
+			S.set_entry_lint(j, 2, CFS_table[i]->row);
+			S.set_entry_lint(j, 3, CFS_table[i]->nb_pts);
+			S.set_entry_lint(j, 4, SubC->nb_orbits);
+#if 0
 			Table[i * nb_cols + 0] = i;
 			Table[i * nb_cols + 1] = CFS_table[i]->cnt;
 			Table[i * nb_cols + 2] = CFS_table[i]->row;
 			Table[i * nb_cols + 3] = CFS_table[i]->nb_pts;
-			Table[i * nb_cols + 4] = nb_orbits;
-
+			Table[i * nb_cols + 4] = SubC->nb_orbits;
+#endif
 			//cout << "i=" << i << " getting orbit_frequencies" << endl;
 
-			for (j = 0; j < nb_orbits; j++) {
+			string str;
+
+			Orbiter->Int_vec.create_string_with_quotes(str, CFS_table[i]->SubSt->orbit_frequencies, SubC->nb_orbits);
+
+			S.fill_entry_with_text(j, 5, str);
+
+#if 0
+			for (j = 0; j < SubC->nb_orbits; j++) {
 				Table[i * nb_cols + 5 + j] = CFS_table[i]->orbit_frequencies[j];
 			}
+#endif
 
 			//cout << "i=" << i << " getting orbit_frequencies part 3" << endl;
 
-			Table[i * nb_cols + 5 + nb_orbits + 0] = CFS_table[i]->nb_types;
-			Table[i * nb_cols + 5 + nb_orbits + 1] = CFS_table[i]->selected_type;
-			Table[i * nb_cols + 5 + nb_orbits + 2] = CFS_table[i]->selected_orbit;
-			Table[i * nb_cols + 5 + nb_orbits + 3] = CFS_table[i]->selected_frequency;
-			Table[i * nb_cols + 5 + nb_orbits + 4] = CFS_table[i]->go_min.as_lint();
-			Table[i * nb_cols + 5 + nb_orbits + 5] = CFS_table[i]->Gens_stabilizer_original_set->group_order_as_lint();
-			Table[i * nb_cols + 5 + nb_orbits + 6] = CFS_table[i]->CS->reduced_set_size;
-			Table[i * nb_cols + 5 + nb_orbits + 7] = CFS_table[i]->nb_interesting_subsets;
-			Table[i * nb_cols + 5 + nb_orbits + 8] = CFS_table[i]->CS->nb_interesting_subsets_reduced;
-			Table[i * nb_cols + 5 + nb_orbits + 9] = CFS_table[i]->CS->nb_interesting_subsets_rr;
-			Table[i * nb_cols + 5 + nb_orbits + 10] = CFS_table[i]->CS->nb_orbits;
-			Table[i * nb_cols + 5 + nb_orbits + 11] = CFS_table[i]->CS->nb_interesting_orbits;
-			Table[i * nb_cols + 5 + nb_orbits + 12] = CFS_table[i]->CS->nb_interesting_points;
-			Table[i * nb_cols + 5 + nb_orbits + 13] = CFS_table[i]->Orb->used_length;
-			Table[i * nb_cols + 5 + nb_orbits + 14] = CFS_table[i]->gens_stab_of_canonical_equation->group_order_as_lint();
+			S.set_entry_lint(j, 6, CFS_table[i]->SubSt->nb_types);
+			S.set_entry_lint(j, 7, CFS_table[i]->SubSt->selected_type);
+			S.set_entry_lint(j, 8, CFS_table[i]->SubSt->selected_orbit);
+			S.set_entry_lint(j, 9, CFS_table[i]->SubSt->selected_frequency);
+			S.set_entry_lint(j, 10, CFS_table[i]->SubSt->gens->group_order_as_lint());
+			S.set_entry_lint(j, 11, CFS_table[i]->Gens_stabilizer_original_set->group_order_as_lint());
+			S.set_entry_lint(j, 12, CFS_table[i]->CS->Stab_orbits->reduced_set_size);
+			S.set_entry_lint(j, 13, CFS_table[i]->SubSt->nb_interesting_subsets);
+			S.set_entry_lint(j, 14, CFS_table[i]->CS->Stab_orbits->nb_interesting_subsets_reduced);
+			S.set_entry_lint(j, 15, CFS_table[i]->CS->nb_interesting_subsets_rr);
+			S.set_entry_lint(j, 16, CFS_table[i]->CS->Stab_orbits->nb_orbits);
+			S.set_entry_lint(j, 17, CFS_table[i]->CS->Stab_orbits->nb_interesting_orbits);
+			S.set_entry_lint(j, 18, CFS_table[i]->CS->Stab_orbits->nb_interesting_points);
+			S.set_entry_lint(j, 19, CFS_table[i]->Orb->used_length);
+			S.set_entry_lint(j, 20, CFS_table[i]->gens_stab_of_canonical_equation->group_order_as_lint());
+
+#if 0
+			Table[i * nb_cols + 5 + SubC->nb_orbits + 0] = CFS_table[i]->nb_types;
+			Table[i * nb_cols + 5 + SubC->nb_orbits + 1] = CFS_table[i]->selected_type;
+			Table[i * nb_cols + 5 + SubC->nb_orbits + 2] = CFS_table[i]->selected_orbit;
+			Table[i * nb_cols + 5 + SubC->nb_orbits + 3] = CFS_table[i]->selected_frequency;
+			Table[i * nb_cols + 5 + SubC->nb_orbits + 4] = CFS_table[i]->go_min.as_lint();
+			Table[i * nb_cols + 5 + SubC->nb_orbits + 5] = CFS_table[i]->Gens_stabilizer_original_set->group_order_as_lint();
+			Table[i * nb_cols + 5 + SubC->nb_orbits + 6] = CFS_table[i]->CS->reduced_set_size;
+			Table[i * nb_cols + 5 + SubC->nb_orbits + 7] = CFS_table[i]->nb_interesting_subsets;
+			Table[i * nb_cols + 5 + SubC->nb_orbits + 8] = CFS_table[i]->CS->nb_interesting_subsets_reduced;
+			Table[i * nb_cols + 5 + SubC->nb_orbits + 9] = CFS_table[i]->CS->nb_interesting_subsets_rr;
+			Table[i * nb_cols + 5 + SubC->nb_orbits + 10] = CFS_table[i]->CS->nb_orbits;
+			Table[i * nb_cols + 5 + SubC->nb_orbits + 11] = CFS_table[i]->CS->nb_interesting_orbits;
+			Table[i * nb_cols + 5 + SubC->nb_orbits + 12] = CFS_table[i]->CS->nb_interesting_points;
+			Table[i * nb_cols + 5 + SubC->nb_orbits + 13] = CFS_table[i]->Orb->used_length;
+			Table[i * nb_cols + 5 + SubC->nb_orbits + 14] = CFS_table[i]->gens_stab_of_canonical_equation->group_order_as_lint();
+#endif
 		}
 		else {
-			Orbiter->Lint_vec.zero(Table + i * nb_cols, nb_cols);
-			Table[i * nb_cols + 0] = i;
+			//Orbiter->Lint_vec.zero(Table + i * nb_cols, nb_cols);
+			//Table[i * nb_cols + 0] = i;
 		}
 
 	}
@@ -1426,7 +1462,9 @@ void canonical_form_classifier::report2(std::ostream &ost, std::string &fname_ba
 
 	file_io Fio;
 
-	Fio.lint_matrix_write_csv(fname, Table, nb_objects_to_test, nb_cols);
+	S.save(fname, 0 /* verbose_level*/);
+
+	//Fio.lint_matrix_write_csv(fname, Table, nb_objects_to_test, nb_cols);
 
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
