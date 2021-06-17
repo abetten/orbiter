@@ -42,16 +42,29 @@ void large_set_was_activity::perform_activity(large_set_was_activity_description
 
 
 	if (Descr->f_normalizer_on_orbits_of_a_given_length) {
+
 		LSW->do_normalizer_on_orbits_of_a_given_length(
 				Descr->normalizer_on_orbits_of_a_given_length_length,
+				Descr->normalizer_on_orbits_of_a_given_length_nb_orbits,
+				Descr->normalizer_on_orbits_of_a_given_length_control,
 				verbose_level);
 	}
 
 	if (Descr->f_create_graph_on_orbits_of_length) {
+
 		LSW->create_graph_on_orbits_of_length(
 				Descr->create_graph_on_orbits_of_length_fname,
 				Descr->create_graph_on_orbits_of_length_length,
 				verbose_level);
+	}
+
+	if (Descr->f_create_graph_on_orbits_of_length_based_on_N_orbits) {
+
+		LSW->create_graph_on_orbits_of_length_based_on_N_orbits(
+				Descr->create_graph_on_orbits_of_length_based_on_N_orbits_fname,
+				Descr->create_graph_on_orbits_of_length_based_on_N_orbits_length,
+				verbose_level);
+
 	}
 
 	if (Descr->f_read_solution_file) {

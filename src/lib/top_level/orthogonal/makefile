@@ -6,12 +6,14 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-	algebra_global_with_action.o \
-	character_table_burnside.o \
-	group_theoretic_activity_description.o \
-	group_theoretic_activity.o \
-	orbits_on_polynomials.o \
-	young.o 
+	blt_set_classify.o \
+	BLT_set_create_description.o \
+	BLT_set_create.o \
+	blt_set_with_action.o \
+	orthogonal_space_activity_description.o \
+	orthogonal_space_activity.o \
+	orthogonal_space_with_action_description.o \
+	orthogonal_space_with_action.o 
 
 
 all : $(MODULES)

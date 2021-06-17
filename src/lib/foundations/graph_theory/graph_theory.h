@@ -64,6 +64,24 @@ public:
 
 	int print_interval;
 
+	// extra stuff for the clique finder that does not come from the command line:
+
+	int f_has_additional_test_function;
+	void (*call_back_additional_test_function)(
+		rainbow_cliques *R, void *user_data,
+		int current_clique_size, int *current_clique,
+		int nb_pts, int &reduced_nb_pts,
+		int *pt_list, int *pt_list_inv,
+		int verbose_level);
+	void *additional_test_function_data; // previously user_data
+
+	int f_has_print_current_choice_function;
+	void (*call_back_print_current_choice)(clique_finder *CF,
+		int depth, void *user_data, int verbose_level);
+	void *print_current_choice_data; // previously user_data
+
+
+
 	// output variables:
 	unsigned long int nb_search_steps;
 	unsigned long int nb_decision_steps;
@@ -171,11 +189,14 @@ public:
 	void (*call_back_after_reduction)(clique_finder *CF, 
 		int depth, int nb_points, int verbose_level);
 
+
+#if 0
 	// added Nov 2014:
 	int f_has_print_current_choice_function;
 	void (*call_back_print_current_choice)(clique_finder *CF, 
 		int depth, void *user_data, int verbose_level);
 	void *print_current_choice_data;
+#endif
 	
 	void *call_back_clique_found_data1;
 	void *call_back_clique_found_data2;
@@ -380,27 +401,10 @@ public:
 			int verbose_level);
 	void all_cliques_of_size_k_ignore_colors(
 			clique_finder_control *Control,
-			//int *&Sol, int &nb_solutions,
-			//unsigned long int &decision_step_counter,
 			int verbose_level);
 	void all_rainbow_cliques(
 			clique_finder_control *Control,
 			std::ofstream *fp,
-			int verbose_level);
-	void all_rainbow_cliques_with_additional_test_function(
-			clique_finder_control *Control,
-			std::ofstream *fp,
-			int f_has_additional_test_function,
-			void (*call_back_additional_test_function)(rainbow_cliques *R,
-				void *user_data,
-				int current_clique_size, int *current_clique,
-				int nb_pts, int &reduced_nb_pts,
-				int *pt_list, int *pt_list_inv,
-				int verbose_level),
-			int f_has_print_current_choice_function,
-			void (*call_back_print_current_choice)(clique_finder *CF,
-				int depth, void *user_data, int verbose_level),
-			void *user_data,
 			int verbose_level);
 
 };
@@ -778,6 +782,8 @@ public:
 	int *color_frequency;
 	//int target_depth;
 
+#if 0
+	// now in clique_finder_control *Control
 	// added November 5, 2014:
 	int f_has_additional_test_function;
 	void (*call_back_additional_test_function)(rainbow_cliques *R, 
@@ -787,7 +793,7 @@ public:
 		int *pt_list, int *pt_list_inv, 
 		int verbose_level);
 	void *user_data;
-
+#endif
 
 	rainbow_cliques();
 	~rainbow_cliques();
@@ -797,6 +803,7 @@ public:
 	void search(clique_finder_control *Control,
 			colored_graph *graph, std::ofstream *fp_sol,
 			int verbose_level);
+#if 0
 	void search_with_additional_test_function(clique_finder_control *Control,
 			colored_graph *graph,
 			std::ofstream *fp_sol,
@@ -813,6 +820,7 @@ public:
 				int depth, void *user_data, int verbose_level),
 			void *user_data, 
 			int verbose_level);
+#endif
 	int find_candidates(
 		int current_clique_size, int *current_clique, 
 		int nb_pts, int &reduced_nb_pts, 

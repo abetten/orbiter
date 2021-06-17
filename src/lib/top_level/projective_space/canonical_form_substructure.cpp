@@ -34,6 +34,8 @@ canonical_form_substructure::canonical_form_substructure()
 
 	canonical_pts = NULL;
 
+	SubSt = NULL;
+#if 0
 	nCk = 0;
 	isotype = NULL;
 	orbit_frequencies = NULL;
@@ -53,6 +55,7 @@ canonical_form_substructure::canonical_form_substructure()
 
 	interesting_subsets = NULL;
 	nb_interesting_subsets = 0;
+#endif
 
 	CS = NULL;
 
@@ -96,7 +99,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	//int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 5);
 
 	if (f_v) {
@@ -139,12 +142,15 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		cout << endl;
 	}
 
+
+
+#if 0
 	if (f_v) {
 		cout << "canonical_form_substructure::classify_curve_with_substructure "
 				"before PC->trace_all_k_subsets_and_compute_frequencies" << endl;
 	}
 
-	Canonical_form_classifier->PC->trace_all_k_subsets_and_compute_frequencies(
+	Canonical_form_classifier->SubC->PC->trace_all_k_subsets_and_compute_frequencies(
 			pts, nb_pts, Canonical_form_classifier->Descr->substructure_size,
 			nCk, isotype, orbit_frequencies, nb_orbits,
 			verbose_level);
@@ -217,7 +223,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 			}
 			longinteger_object go;
 
-			Canonical_form_classifier->PC->get_stabilizer_order(
+			Canonical_form_classifier->SubC->PC->get_stabilizer_order(
 					Canonical_form_classifier->Descr->substructure_size,
 					idx, go);
 
@@ -261,11 +267,27 @@ void canonical_form_substructure::classify_curve_with_substructure(
 			<< " go_min = " << go_min << endl;
 	}
 
-	Canonical_form_classifier->PC->get_stabilizer_generators(
+	Canonical_form_classifier->SubC->PC->get_stabilizer_generators(
 		gens,
 		Canonical_form_classifier->Descr->substructure_size,
 		selected_orbit, 0 /*verbose_level*/);
+#else
 
+
+	SubSt = NEW_OBJECT(substructure_stats_and_selection);
+
+	if (f_v) {
+		cout << "canonical_form_substructure::classify_curve_with_substructure before SubSt->init" << endl;
+	}
+	SubSt->init(
+			Canonical_form_classifier->SubC,
+			pts, nb_pts,
+			verbose_level);
+	if (f_v) {
+		cout << "canonical_form_substructure::classify_curve_with_substructure after SubSt->init" << endl;
+	}
+
+#endif
 
 	if (f_v) {
 		cout << "canonical_form_substructure::classify_curve_with_substructure before handle_orbit" << endl;
@@ -410,19 +432,20 @@ void canonical_form_substructure::handle_orbit(
 	// interesting_subsets are the lvl-subsets of the given set
 	// which are of the chosen type.
 	// There is nb_interesting_subsets of them.
-	poset_classification *PC;
-	action *A;
-	action *A2;
-	int intermediate_subset_size;
+	//poset_classification *PC;
+	//action *A;
+	//action *A2;
+	//int intermediate_subset_size;
 
-	int i, j;
+	//int i, j;
 
 	if (f_v) {
 		cout << "canonical_form_substructure::handle_orbit" << endl;
-		cout << "selected_orbit = " << selected_orbit << endl;
+		cout << "selected_orbit = " << SubSt->selected_orbit << endl;
 	}
 
-	PC = Canonical_form_classifier->PC;
+#if 0
+	PC = Canonical_form_classifier->SubC->PC;
 	A = Canonical_form_classifier->Descr->PA->A;
 	A2 = Canonical_form_classifier->Descr->PA->A;
 	intermediate_subset_size = Canonical_form_classifier->Descr->substructure_size;
@@ -432,9 +455,9 @@ void canonical_form_substructure::handle_orbit(
 	}
 
 	j = 0;
-	interesting_subsets = NEW_lint(selected_frequency);
-	for (i = 0; i < nCk; i++) {
-		if (isotype[i] == selected_orbit) {
+	interesting_subsets = NEW_lint(SubSt->selected_frequency);
+	for (i = 0; i < SubSt->nCk; i++) {
+		if (SubSt->isotype[i] == selected_orbit) {
 			interesting_subsets[j++] = i;
 			//cout << "subset of rank " << i << " is isomorphic to orbit " << orb_idx << " j=" << j << endl;
 			}
@@ -444,7 +467,7 @@ void canonical_form_substructure::handle_orbit(
 		exit(1);
 		}
 	nb_interesting_subsets = selected_frequency;
-
+#endif
 
 	//overall_backtrack_nodes = 0;
 	if (f_v) {
@@ -457,18 +480,20 @@ void canonical_form_substructure::handle_orbit(
 	if (f_v) {
 		cout << "canonical_form_substructure::handle_orbit before CS->init" << endl;
 	}
-	CS->init(pts, nb_pts,
+	CS->init(
+			SubSt,
+			//pts, nb_pts,
 			canonical_pts,
-			PC, A, A2,
-			intermediate_subset_size, selected_orbit,
-			nb_interesting_subsets, interesting_subsets,
+			//PC, A, A2,
+			//intermediate_subset_size, selected_orbit,
+			//nb_interesting_subsets, interesting_subsets,
 			verbose_level);
 	if (f_v) {
 		cout << "canonical_form_substructure::handle_orbit after CS->init" << endl;
 	}
 
 
-	A->element_move(CS->T1, transporter_to_canonical_form, 0);
+	Canonical_form_classifier->SubC->A->element_move(CS->T1, transporter_to_canonical_form, 0);
 
 	Gens_stabilizer_original_set = NEW_OBJECT(strong_generators);
 	Gens_stabilizer_canonical_form = NEW_OBJECT(strong_generators);

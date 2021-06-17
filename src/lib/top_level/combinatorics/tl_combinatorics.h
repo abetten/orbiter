@@ -977,10 +977,16 @@ public:
 
 	int f_normalizer_on_orbits_of_a_given_length;
 	int normalizer_on_orbits_of_a_given_length_length;
+	int normalizer_on_orbits_of_a_given_length_nb_orbits;
+	poset_classification_control *normalizer_on_orbits_of_a_given_length_control;
 
 	int f_create_graph_on_orbits_of_length;
 	std::string create_graph_on_orbits_of_length_fname;
 	int create_graph_on_orbits_of_length_length;
+
+	int f_create_graph_on_orbits_of_length_based_on_N_orbits;
+	std::string create_graph_on_orbits_of_length_based_on_N_orbits_fname;
+	int create_graph_on_orbits_of_length_based_on_N_orbits_length;
 
 	int f_read_solution_file;
 	int read_solution_file_orbit_length;
@@ -1087,6 +1093,28 @@ public:
 	orbits_on_something *N_orbits;
 
 
+	// used in do_normalizer_on_orbits_of_a_given_length:
+	int orbit_length;
+	int nb_of_orbits_to_choose;
+	int type_idx; // orbits of length orbit_length in H_orbits->Orbits_classified
+	long int *Orbit1;
+	long int *Orbit2;
+
+	action *A_on_orbits;
+		// action on H_orbits->Sch
+	action *A_on_orbits_restricted;
+		// action A_on_orbits restricted to H_orbits->Orbits_classified->Sets[type_idx]
+
+
+	// used in do_normalizer_on_orbits_of_a_given_length_multiple_orbits::
+	poset_classification *PC;
+	poset_classification_control *Control;
+	poset_with_group_action *Poset;
+
+
+	int orbit_length2;
+	int type_idx2; // orbits of length orbit_length2 in H_orbits->Orbits_classified
+
 #if 0
 	// reduced designs are those which are compatible
 	// with all the designs in the chosen set
@@ -1119,18 +1147,38 @@ public:
 			large_set_classify *LS,
 			int verbose_level);
 	void do_normalizer_on_orbits_of_a_given_length(
-			int select_orbits_of_length_length,
+			int orbit_length,
+			int nb_of_orbits_to_choose,
+			poset_classification_control *Control,
+			int verbose_level);
+	void do_normalizer_on_orbits_of_a_given_length_single_orbit(
+			int orbit_length,
+			int verbose_level);
+	void do_normalizer_on_orbits_of_a_given_length_multiple_orbits(
+			int orbit_length,
+			int nb_of_orbits_to_choose,
+			poset_classification_control *Control,
 			int verbose_level);
 	void create_graph_on_orbits_of_length(std::string &fname, int orbit_length, int verbose_level);
+	void create_graph_on_orbits_of_length_based_on_N_orbits(std::string &fname_mask, int orbit_length2, int verbose_level);
 	void read_solution_file(
 			std::string &solution_file_name,
 			long int *starter_set,
 			int starter_set_sz,
 			int orbit_length,
 			int verbose_level);
+	void normalizer_orbits_early_test_func(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+	int normalizer_orbits_check_conditions(long int *S, int len, int verbose_level);
 
 };
 
+void large_set_was_normalizer_orbits_early_test_func_callback(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
 int large_set_was_design_test_orbit(long int *orbit, int orbit_length,
 		void *extra_data);
 int large_set_was_classify_test_pair_of_orbits(long int *orbit1, int orbit_length1,

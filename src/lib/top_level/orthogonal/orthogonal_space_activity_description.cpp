@@ -22,6 +22,9 @@ orthogonal_space_activity_description::orthogonal_space_activity_description()
 	f_input = FALSE;
 	Data = NULL;
 
+	f_create_BLT_set = FALSE;
+	BLT_Set_create_description = NULL;
+
 	f_fname_base_out = FALSE;
 	//fname_base_out;
 
@@ -37,8 +40,13 @@ orthogonal_space_activity_description::orthogonal_space_activity_description()
 	f_perp = FALSE;
 	//std::string perp_text;
 
-	f_create_BLT_set = FALSE;
-	BLT_Set_create_description = NULL;
+	f_set_stabilizer = FALSE;
+	set_stabilizer_intermediate_set_size = 0;
+	//std::string set_stabilizer_fname_mask;
+	set_stabilizer_nb = 0;
+	//std::string set_stabilizer_column_label;
+
+
 
 }
 
@@ -111,6 +119,20 @@ int orthogonal_space_activity_description::read_arguments(
 			f_perp = TRUE;
 			perp_text.assign(argv[++i]);
 			cout << "-perp " << perp_text << endl;
+		}
+
+		else if (stringcmp(argv[i], "-set_stabilizer") == 0) {
+			f_set_stabilizer = TRUE;
+			set_stabilizer_intermediate_set_size = strtoi(argv[++i]);
+			set_stabilizer_fname_mask.assign(argv[++i]);
+			set_stabilizer_nb = strtoi(argv[++i]);
+			set_stabilizer_column_label.assign(argv[++i]);
+			cout << "-set_stabilizer "
+					<< set_stabilizer_intermediate_set_size << " "
+					<< set_stabilizer_fname_mask << " "
+					<< set_stabilizer_nb << " "
+					<< set_stabilizer_column_label << " "
+					<< endl;
 		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {

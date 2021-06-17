@@ -123,7 +123,7 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 	magma_fname.append("_group.magma");
 
 	AL->Trihedral_pair->Aut_gens->export_permutation_group_to_magma(
-			magma_fname, verbose_level - 2);
+			magma_fname, AL->Trihedral_pair->Aut_gens->A, verbose_level - 2);
 
 	if (f_v) {
 		cout << "written file " << magma_fname << " of size "

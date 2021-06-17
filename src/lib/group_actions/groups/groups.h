@@ -530,7 +530,28 @@ public:
 		int (*test_function)(long int *orbit, int orbit_length, void *data),
 		void *test_function_data,
 		int verbose_level);
+	int test_pair_of_orbits_of_a_equal_length(
+			int orbit_length,
+			int type_idx,
+			int idx1, int idx2,
+			long int *Orbit1,
+			long int *Orbit2,
+			int (*test_function)(long int *orbit1, int orbit_length1, long int *orbit2, int orbit_length2, void *data),
+			void *test_function_data,
+			int verbose_level);
 	void report_orbits_of_type(std::ostream &ost, int type_idx);
+	void create_graph_on_orbits_of_a_certain_length_after_filtering(
+		colored_graph *&CG,
+		std::string &fname,
+		long int *filter_by_set,
+		int filter_by_set_size,
+		int orbit_length,
+		int &type_idx,
+		int f_has_user_data, long int *user_data, int user_data_size,
+		int f_has_colors, int number_colors, int *color_table,
+		int (*test_function)(long int *orbit1, int orbit_length1, long int *orbit2, int orbit_length2, void *data),
+		void *test_function_data,
+		int verbose_level);
 	void create_graph_on_orbits_of_a_certain_length(
 		colored_graph *&CG,
 		std::string &fname,
@@ -545,6 +566,12 @@ public:
 		int orbit_length,
 		int nb_orbits,
 		int *orbits,
+		long int *extracted_set,
+		int verbose_level);
+	void extract_orbits_using_classification(
+		int orbit_length,
+		int nb_orbits,
+		long int *orbits_idx,
 		long int *extracted_set,
 		int verbose_level);
 	void create_graph_on_orbits_of_a_certain_length_override_orbits_classified(
@@ -1639,6 +1666,7 @@ public:
 		int group_index, int verbose_level);
 	void group_order(longinteger_object &go);
 	long int group_order_as_lint();
+	void print_group_order(std::ostream &ost);
 	void print_generators_in_source_code();
 	void print_generators_in_source_code_to_file(
 	const char *fname);
@@ -1646,11 +1674,13 @@ public:
 	void print_generators_MAGMA(action *A, std::ostream &ost);
 	void export_magma(action *A, std::ostream &ost);
 	void print_generators_gap(std::ostream &ost);
+	void print_generators_gap_in_different_action(std::ostream &ost, action *A2);
 	void print_generators_compact(std::ostream &ost);
 	void print_generators(std::ostream &ost);
 	void print_generators_in_latex_individually(std::ostream &ost);
 	void print_generators_tex();
 	void print_generators_tex(std::ostream &ost);
+	void print_generators_in_different_action_tex(std::ostream &ost, action *A2);
 	void print_generators_tex_with_print_point_function(
 			action *A,
 			std::ostream &ost,
@@ -1700,9 +1730,9 @@ public:
 	void compute_ascii_coding(char *&ascii_coding, int verbose_level);
 	void decode_ascii_coding(char *ascii_coding, int verbose_level);
 	void export_permutation_group_to_magma(std::string &fname,
-		int verbose_level);
+			action *A2, int verbose_level);
 	void export_permutation_group_to_GAP(std::string &fname,
-		int verbose_level);
+			action *A2, int verbose_level);
 	void compute_and_print_orbits_on_a_given_set(action *A_given,
 		long int *set, int len, int verbose_level);
 	void compute_and_print_orbits(action *A_given, 
@@ -1718,14 +1748,17 @@ public:
 	void export_group_to_magma_and_copy_to_latex(
 			std::string &label_txt,
 			std::ostream &ost,
+			action *A2,
 			int verbose_level);
 	void export_group_to_GAP_and_copy_to_latex(
 			std::string &label_txt,
 			std::ostream &ost,
+			action *A2,
 			int verbose_level);
 	void export_group_and_copy_to_latex(
 			std::string &label_txt,
 			std::ostream &ost,
+			action *A2,
 			int verbose_level);
 	void report_fixed_objects_in_P3(
 			std::ostream &ost,

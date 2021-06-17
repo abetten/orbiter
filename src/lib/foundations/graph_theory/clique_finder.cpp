@@ -76,9 +76,11 @@ clique_finder::clique_finder()
 	call_back_is_adjacent = NULL;
 	call_back_after_reduction = NULL;
 
+#if 0
 	f_has_print_current_choice_function = FALSE;
 	call_back_print_current_choice = NULL;
 	print_current_choice_data = NULL;
+#endif
 
 	call_back_clique_found_data1 = NULL;
 	call_back_clique_found_data2 = NULL;
@@ -581,9 +583,9 @@ void clique_finder::backtrack_search(int depth, int verbose_level)
 
 
 	// added Dec 2014:
-	if (f_has_print_current_choice_function) {
-		(*call_back_print_current_choice)(this, depth,
-				print_current_choice_data, verbose_level);
+	if (Control->f_has_print_current_choice_function) {
+		(*Control->call_back_print_current_choice)(this, depth,
+				Control->print_current_choice_data, verbose_level);
 	}
 	
 	// Now we are ready to go in the backtrack search.
@@ -1516,9 +1518,9 @@ void clique_finder::get_solutions(int *&Sol,
 	Sol = NEW_int(solutions.size() * Control->target_size);
 	for (i = 0; i < solutions.size(); i++) {
 		for (j = 0; j < Control->target_size; j++) {
-			Sol[i * Control->target_size + j] = solutions.front()[j];
+			Sol[i * Control->target_size + j] = solutions[i][j];
 		}
-		solutions.pop_front();
+		//solutions.pop_front();
 	}
 	if (f_v) {
 		cout << "clique_finder::get_solutions done" << endl;

@@ -19,7 +19,8 @@ MODULES = \
 	projective_space_object_classifier_description.o \
 	projective_space_object_classifier.o \
 	projective_space_with_action_description.o \
-	projective_space_with_action.o
+	projective_space_with_action.o \
+	stabilizer_orbits_and_types.o
 
 
 all : $(MODULES)

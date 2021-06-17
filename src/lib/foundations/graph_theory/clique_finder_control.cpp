@@ -45,6 +45,14 @@ clique_finder_control::clique_finder_control()
 	//fname_tree = NULL;
 	print_interval = 1;
 
+	f_has_additional_test_function = FALSE;
+	call_back_additional_test_function = NULL;
+	additional_test_function_data = NULL;
+
+	f_has_print_current_choice_function = FALSE;
+	call_back_print_current_choice = NULL;
+	print_current_choice_data = NULL;
+
 	// output variables:
 	nb_search_steps = 0;
 	nb_decision_steps = 0;

@@ -10,6 +10,7 @@ all: algebra_and_number_theory \
 	interfaces \
 	isomorph \
 	orbits \
+	orthogonal \
 	packings \
 	projective_space \
 	quartic_curves \
@@ -28,6 +29,7 @@ graph_theory : graph_theory2 ;
 interfaces : interfaces2 ; 
 isomorph : isomorph2 ; 
 orbits : orbits2 ; 
+orthogonal : orthogonal2 ; 
 packings : packings2 ; 
 projective_space : projective_space2 ; 
 quartic_curves : quartic_curves2 ; 
@@ -43,6 +45,7 @@ graph_theory2 :  ; cd graph_theory; $(MAKE)
 interfaces2 :  ; cd interfaces; $(MAKE)
 isomorph2 :  ; cd isomorph; $(MAKE)
 orbits2 :  ; cd orbits; $(MAKE)
+orthogonal2 :  ; cd orthogonal; $(MAKE)
 packings2 :  ; cd packings; $(MAKE)
 projective_space2 :  ; cd projective_space; $(MAKE)
 quartic_curves2 :  ; cd quartic_curves; $(MAKE)
@@ -69,6 +72,7 @@ clean:
 	cd interfaces; $(MAKE) clean
 	cd isomorph; $(MAKE) clean
 	cd orbits; $(MAKE) clean
+	cd orthogonal; $(MAKE) clean
 	cd projective_space; $(MAKE) clean
 	cd quartic_curves; $(MAKE) clean
 	cd semifields; $(MAKE) clean

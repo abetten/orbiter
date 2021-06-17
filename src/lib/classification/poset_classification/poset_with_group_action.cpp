@@ -65,6 +65,9 @@ void poset_with_group_action::init_subset_lattice(action *A, action *A2,
 	}
 	f_subset_lattice = TRUE;
 	n = A2->degree;
+	if (f_v) {
+		cout << "poset_with_group_action::init_subset_lattice degree of action = " << n << endl;
+	}
 	f_subspace_lattice = FALSE;
 	poset_with_group_action::A = A;
 	poset_with_group_action::A2 = A2;

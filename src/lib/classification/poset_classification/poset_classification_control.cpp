@@ -372,6 +372,9 @@ void poset_classification_control::print()
 	if (f_problem_label) {
 		cout << "-problem_label " << problem_label << endl;
 	}
+	if (f_depth) {
+		cout << "-depth " << depth << endl;
+	}
 	if (f_path) {
 		cout << "-path" << path << endl;
 	}

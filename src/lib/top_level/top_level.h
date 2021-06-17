@@ -36,8 +36,6 @@ class character_table_burnside;
 class group_theoretic_activity_description;
 class group_theoretic_activity;
 class orbits_on_polynomials;
-class orthogonal_space_activity_description;
-class orthogonal_space_activity;
 class young;
 
 
@@ -70,10 +68,6 @@ class tactical_decomposition;
 class arc_generator_description;
 class arc_generator;
 class arc_lifting_simeon;
-class blt_set_classify;
-class BLT_set_create_description;
-class BLT_set_create;
-class blt_set_with_action;
 class choose_points_or_lines;
 class classify_cubic_curves;
 class cubic_curve_with_action;
@@ -84,6 +78,7 @@ class ovoid_classify;
 class polar;
 class search_blocking_set;
 class singer_cycle;
+class substructure_classifier;
 class tensor_classify;
 class top_level_geometry_global;
 
@@ -126,6 +121,17 @@ class orbit_of_sets;
 class orbit_of_subspaces;
 
 
+// orthogonal
+class blt_set_classify;
+class BLT_set_create_description;
+class BLT_set_create;
+class blt_set_with_action;
+class orthogonal_space_activity_description;
+class orthogonal_space_activity;
+class orthogonal_space_with_action_description;
+class orthogonal_space_with_action;
+
+
 // packings:
 class spread_table_activity_description;
 class spread_table_activity;
@@ -156,6 +162,7 @@ class projective_space_object_classifier_description;
 class projective_space_object_classifier;
 class projective_space_with_action_description;
 class projective_space_with_action;
+class stabilizer_orbits_and_types;
 
 // quartic curves
 class quartic_curve_activity_description;
@@ -321,6 +328,7 @@ public:
 #include "./interfaces/interfaces.h"
 #include "./isomorph/isomorph.h"
 #include "./orbits/orbits.h"
+#include "./orthogonal/tl_orthogonal.h"
 #include "./projective_space/projective_space.h"
 #include "./quartic_curves/quartic_curves.h"
 #include "./semifields/semifields.h"

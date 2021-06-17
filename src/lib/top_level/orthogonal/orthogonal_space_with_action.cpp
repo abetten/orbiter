@@ -8,15 +8,12 @@
 
 
 
-#include "foundations/foundations.h"
-#include "group_actions.h"
-
+#include "orbiter.h"
 
 using namespace std;
 
-
 namespace orbiter {
-namespace group_actions {
+namespace top_level {
 
 
 orthogonal_space_with_action::orthogonal_space_with_action()
@@ -207,6 +204,7 @@ void orthogonal_space_with_action::report(layered_graph_draw_options *LG_Draw_op
 
 			L.foot(ost);
 		}
+
 		cout << "Written file " << fname_report << " of size "
 				<< Fio.file_size(fname_report) << endl;
 	}

@@ -2890,7 +2890,7 @@ void colored_graph::all_cliques(
 						verbose_level - 2);
 				if (f_v) {
 					cout << "colored_graph::all_cliques "
-							"before CG->all_cliques_of_size_k_ignore_colors" << endl;
+							"after CG->all_cliques_of_size_k_ignore_colors, nb_cliques = " << Control->nb_sol << endl;
 				}
 
 				if (f_v) {
@@ -2919,6 +2919,7 @@ void colored_graph::all_cliques(
 					fp_csv << i << ",";
 					for (int j = 0; j < Control->target_size; ++j) {
 						fp_csv << points[Control->Sol[i * Control->target_size + j]];
+						//fp_csv << Control->Sol[i * Control->target_size + j];
 						if (j < Control->target_size - 1) {
 							fp_csv << ",";
 						}
@@ -3295,20 +3296,10 @@ void colored_graph::all_rainbow_cliques(
 	}
 }
 
+#if 0
 void colored_graph::all_rainbow_cliques_with_additional_test_function(
 	clique_finder_control *Control,
 	ofstream *fp,
-	int f_has_additional_test_function,
-	void (*call_back_additional_test_function)(
-		rainbow_cliques *R, void *user_data,
-		int current_clique_size, int *current_clique,
-		int nb_pts, int &reduced_nb_pts,
-		int *pt_list, int *pt_list_inv,
-		int verbose_level),
-	int f_has_print_current_choice_function,
-	void (*call_back_print_current_choice)(clique_finder *CF,
-		int depth, void *user_data, int verbose_level),
-	void *user_data,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3339,6 +3330,7 @@ void colored_graph::all_rainbow_cliques_with_additional_test_function(
 		cout << "colored_graph::all_rainbow_cliques_with_additional_test_function done" << endl;
 	}
 }
+#endif
 
 
 

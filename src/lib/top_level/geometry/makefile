@@ -9,10 +9,6 @@ MODULES = \
 	arc_generator_description.o \
 	arc_generator.o \
 	arc_lifting_simeon.o \
-	blt_set_classify.o \
-	BLT_set_create_description.o \
-	BLT_set_create.o \
-	blt_set_with_action.o \
 	choose_points_or_lines.o \
 	classify_cubic_curves.o \
 	cubic_curve_with_action.o \
@@ -23,6 +19,8 @@ MODULES = \
 	polar.o \
 	search_blocking_set.o \
 	singer_cycle.o \
+	substructure_classifier.o \
+	substructure_stats_and_selection.o \
 	tensor_classify.o \
 	top_level_geometry_global.o
 
