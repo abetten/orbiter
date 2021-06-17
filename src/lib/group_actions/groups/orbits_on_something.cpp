@@ -799,7 +799,8 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 
 	CG = NEW_OBJECT(colored_graph);
 
-	CG->init_with_point_labels(filtered_set_of_orbits_size /* nb_points */,
+	CG->init_with_point_labels(
+			filtered_set_of_orbits_size /* nb_points */,
 			nb_reduced_colors /* number_colors */, orbit_length,
 			point_color,
 			Bitvec, TRUE /* f_ownership_of_bitvec */,
