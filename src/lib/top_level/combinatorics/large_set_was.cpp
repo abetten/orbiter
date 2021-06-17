@@ -34,6 +34,7 @@ large_set_was::large_set_was()
 	N_orbits = NULL;
 
 	orbit_length = 0;
+	nb_of_orbits_to_choose = 0;
 	type_idx = 0;
 	Orbit1 = NULL;
 	Orbit2 = NULL;
