@@ -368,7 +368,9 @@ void graph_theory_domain::load_colored_graph(std::string &fname,
 				Sorting.int_vec_heapsort(vertex_colors + i * nb_colors_per_vertex, nb_colors_per_vertex);
 				for (j = 1; j < nb_colors_per_vertex; j++) {
 					if (vertex_colors[i * nb_colors_per_vertex + j - 1] == vertex_colors[i * nb_colors_per_vertex + j]) {
-						cout << "graph_theory_domain::load_colored_graph repeated color for vertex " << i << endl;
+						cout << "graph_theory_domain::load_colored_graph repeated color for vertex " << i << " : " << endl;
+						Orbiter->Int_vec.print(cout, vertex_colors + i * nb_colors_per_vertex, nb_colors_per_vertex);
+						cout << endl;
 						exit(1);
 					}
 				}
