@@ -291,6 +291,7 @@ void graph_theory_domain::load_colored_graph(std::string &fname,
 
 	{
 		ifstream fp(fname, ios::binary);
+		sorting Sorting;
 
 		fp.read((char *) &a, sizeof(int));
 		if (a == -1) {
@@ -312,14 +313,14 @@ void graph_theory_domain::load_colored_graph(std::string &fname,
 
 			fp.read((char *) &b, sizeof(int));
 			if (f_v) {
-				cout << "load_colored_graph version=" << b << endl;
+				cout << "graph_theory_domain::load_colored_graph version=" << b << endl;
 			}
 
 			fp.read((char *) &nb_vertices, sizeof(int));
 			fp.read((char *) &nb_colors, sizeof(int));
 			fp.read((char *) &nb_colors_per_vertex, sizeof(int));
 			if (f_v) {
-				cout << "load_colored_graph nb_vertices=" << nb_vertices
+				cout << "graph_theory_domain::load_colored_graph nb_vertices=" << nb_vertices
 						<< " nb_colors=" << nb_colors
 						<< " nb_colors_per_vertex=" << nb_colors_per_vertex
 					<< endl;
@@ -331,14 +332,14 @@ void graph_theory_domain::load_colored_graph(std::string &fname,
 #if 0
 			bitvector_length = (L + 7) >> 3;
 			if (f_v) {
-				cout << "load_colored_graph bitvector_length="
+				cout << "graph_theory_domain::load_colored_graph bitvector_length="
 						<< bitvector_length << endl;
 				}
 #endif
 
 			fp.read((char *) &user_data_size, sizeof(int));
 			if (f_v) {
-				cout << "load_colored_graph user_data_size="
+				cout << "graph_theory_domain::load_colored_graph user_data_size="
 						<< user_data_size << endl;
 				}
 			user_data = NEW_lint(user_data_size);
@@ -355,7 +356,7 @@ void graph_theory_domain::load_colored_graph(std::string &fname,
 				for (j = 0; j < nb_colors_per_vertex; j++) {
 					fp.read((char *) &vertex_colors[i * nb_colors_per_vertex + j], sizeof(int));
 					if (vertex_colors[i * nb_colors_per_vertex + j] >= nb_colors) {
-						cout << "load_colored_graph" << endl;
+						cout << "graph_theory_domain::load_colored_graph" << endl;
 						cout << "vertex_colors[i * nb_colors_per_vertex + j] >= nb_colors" << endl;
 						cout << "vertex_colors[i * nb_colors_per_vertex + j]=" << vertex_colors[i * nb_colors_per_vertex + j] << endl;
 						cout << "i=" << i << endl;
@@ -363,6 +364,13 @@ void graph_theory_domain::load_colored_graph(std::string &fname,
 						cout << "nb_colors=" << nb_colors << endl;
 						exit(1);
 						}
+				}
+				Sorting.int_vec_heapsort(vertex_colors + i * nb_colors_per_vertex, nb_colors_per_vertex);
+				for (j = 1; j < nb_colors_per_vertex; j++) {
+					if (vertex_colors[i * nb_colors_per_vertex + j - 1] == vertex_colors[i * nb_colors_per_vertex + j]) {
+						cout << "graph_theory_domain::load_colored_graph repeated color for vertex " << i << endl;
+						exit(1);
+					}
 				}
 			}
 		}
@@ -380,7 +388,7 @@ void graph_theory_domain::load_colored_graph(std::string &fname,
 			fp.read((char *) &nb_colors, sizeof(int));
 			nb_colors_per_vertex = 1;
 			if (f_v) {
-				cout << "load_colored_graph nb_vertices=" << nb_vertices
+				cout << "graph_theory_domain::load_colored_graph nb_vertices=" << nb_vertices
 						<< " nb_colors=" << nb_colors
 						<< " nb_colors_per_vertex=" << nb_colors_per_vertex
 					<< endl;
@@ -392,14 +400,14 @@ void graph_theory_domain::load_colored_graph(std::string &fname,
 #if 0
 			bitvector_length = (L + 7) >> 3;
 			if (f_v) {
-				cout << "load_colored_graph bitvector_length="
+				cout << "graph_theory_domain::load_colored_graph bitvector_length="
 						<< bitvector_length << endl;
 				}
 #endif
 
 			fp.read((char *) &user_data_size, sizeof(int));
 			if (f_v) {
-				cout << "load_colored_graph user_data_size="
+				cout << "graph_theory_domain::load_colored_graph user_data_size="
 						<< user_data_size << endl;
 				}
 			user_data = NEW_lint(user_data_size);
@@ -418,7 +426,7 @@ void graph_theory_domain::load_colored_graph(std::string &fname,
 				for (j = 0; j < nb_colors_per_vertex; j++) {
 					fp.read((char *) &vertex_colors[i * nb_colors_per_vertex + j], sizeof(int));
 					if (vertex_colors[i * nb_colors_per_vertex + j] >= nb_colors) {
-						cout << "load_colored_graph" << endl;
+						cout << "graph_theory_domain::load_colored_graph" << endl;
 						cout << "vertex_colors[i * nb_colors_per_vertex + j] >= nb_colors" << endl;
 						cout << "vertex_colors[i * nb_colors_per_vertex + j]=" << vertex_colors[i * nb_colors_per_vertex + j] << endl;
 						cout << "i=" << i << endl;

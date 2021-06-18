@@ -3296,44 +3296,6 @@ void colored_graph::all_rainbow_cliques(
 	}
 }
 
-#if 0
-void colored_graph::all_rainbow_cliques_with_additional_test_function(
-	clique_finder_control *Control,
-	ofstream *fp,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	rainbow_cliques *R;
-
-	if (f_v) {
-		cout << "colored_graph::all_rainbow_cliques_with_additional_test_function" << endl;
-	}
-	R = NEW_OBJECT(rainbow_cliques);
-	if (f_v) {
-		cout << "colored_graph::all_rainbow_cliques_with_additional_test_function "
-				"before R->search_with_additional_test_function" << endl;
-	}
-	R->search_with_additional_test_function(Control,
-		this, fp,
-		f_has_additional_test_function,
-		call_back_additional_test_function,
-		f_has_print_current_choice_function,
-		call_back_print_current_choice,
-		user_data,
-		verbose_level - 1);
-	if (f_v) {
-		cout << "colored_graph::all_rainbow_cliques_with_additional_test_function "
-				"after R->search_with_additional_test_function" << endl;
-	}
-	FREE_OBJECT(R);
-	if (f_v) {
-		cout << "colored_graph::all_rainbow_cliques_with_additional_test_function done" << endl;
-	}
-}
-#endif
-
-
-
 
 
 
