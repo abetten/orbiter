@@ -126,33 +126,38 @@ void large_set_was::init(large_set_was_description *Descr,
 		H_orbits->report_classified_orbit_lengths(cout);
 	}
 
-	int prev_nb;
-
+	//int prev_nb;
 
 	if (f_v) {
-		cout << "large_set_was::init before OoS->test_orbits_of_a_certain_length" << endl;
+		cout << "large_set_was::init after OoS->test_orbits_of_a_certain_length "
+				"the number of orbits before filtering is " << endl;
+		int type_idx;
+
+		for (type_idx = 0; type_idx < H_orbits->Classify_orbits_by_length->nb_types; type_idx++) {
+			cout << type_idx << " : " << H_orbits->Orbits_classified->Set_size[type_idx] << endl;
+		}
 	}
-	H_orbits->test_orbits_of_a_certain_length(
-			Descr->selected_orbit_length,
-			selected_type_idx,
-			prev_nb,
+
+	if (f_v) {
+		cout << "large_set_was::init before OoS->test_all_orbits_by_length" << endl;
+	}
+	H_orbits->test_all_orbits_by_length(
 			large_set_was_design_test_orbit,
 			this /* *test_function_data*/,
 			verbose_level);
 	if (f_v) {
-		cout << "large_set_was::init after OoS->test_orbits_of_a_certain_length" << endl;
+		cout << "large_set_was::init after OoS->test_all_orbits_by_length" << endl;
 	}
 
 
 	if (f_v) {
 		cout << "large_set_was::init after OoS->test_orbits_of_a_certain_length "
-				"the number of filtered orbits is " << H_orbits->Orbits_classified->Set_size[selected_type_idx] << endl;
+				"the number of orbits after filtering is " << endl;
+		int type_idx;
 
-		Orbiter->Lint_vec.print(cout,
-				H_orbits->Orbits_classified->Sets[selected_type_idx],
-				H_orbits->Orbits_classified->Set_size[selected_type_idx]);
-		cout << endl;
-
+		for (type_idx = 0; type_idx < H_orbits->Classify_orbits_by_length->nb_types; type_idx++) {
+			cout << type_idx << " : " << H_orbits->Orbits_classified->Set_size[type_idx] << endl;
+		}
 	}
 
 
@@ -836,7 +841,6 @@ int large_set_was_design_test_orbit(long int *orbit, int orbit_length,
 	int ret = FALSE;
 
 	ret = LSW->LS->Design_table->test_set_within_itself(orbit, orbit_length);
-
 
 	return ret;
 }

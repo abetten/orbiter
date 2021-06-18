@@ -480,6 +480,33 @@ int orbits_on_something::get_orbit_type_index_if_present(int orbit_length)
 	return -1;
 }
 
+void orbits_on_something::test_all_orbits_by_length(
+	int (*test_function)(long int *orbit, int orbit_length, void *data),
+	void *test_function_data,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_on_something::test_all_orbits_by_length" << endl;
+	}
+
+	int type_idx, orbit_length, type_idx2, prev_nb;
+
+	for (type_idx = 0; type_idx < Classify_orbits_by_length->nb_types; type_idx++) {
+		orbit_length = Classify_orbits_by_length->get_value_of_class(type_idx);
+		test_orbits_of_a_certain_length(
+			orbit_length,
+			type_idx2,
+			prev_nb,
+			test_function, test_function_data,
+			verbose_level);
+	}
+	if (f_v) {
+		cout << "orbits_on_something::test_all_orbits_by_length" << endl;
+	}
+}
+
 void orbits_on_something::test_orbits_of_a_certain_length(
 	int orbit_length,
 	int &type_idx,
@@ -495,7 +522,7 @@ void orbits_on_something::test_orbits_of_a_certain_length(
 				"orbit_length=" << orbit_length << endl;
 	}
 	long int *orbit;
-	int i, j, a, l;
+	int i, j, a, l, r;
 	int nb_points;
 
 	type_idx = get_orbit_type_index(orbit_length);
@@ -515,7 +542,23 @@ void orbits_on_something::test_orbits_of_a_certain_length(
 			cout << "orbits_on_something::test_orbits_of_a_certain_length l != orbit_length" << endl;
 			exit(1);
 		}
-		if ((*test_function)(orbit, orbit_length, test_function_data)) {
+
+#if 0
+		if (a == 73910) {
+			cout << "orbits_on_something::test_orbits_of_a_certain_length a == 73910" << endl;
+			Orbiter->Lint_vec.print(cout, orbit, orbit_length);
+			cout << endl;
+		}
+#endif
+		r = (*test_function)(orbit, orbit_length, test_function_data);
+
+#if 0
+		if (a == 73910) {
+			cout << "r=" << r << endl;
+		}
+#endif
+
+		if (r) {
 			Orbits_classified->Sets[type_idx][j++] = a;
 		}
 	}
@@ -644,7 +687,6 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 	long int *filtered_set_of_orbits;
 	int filtered_set_of_orbits_size;
 
-
 	filtered_set_of_orbits_size = 0;
 	filtered_set_of_orbits = NEW_lint(nb_points_original);
 	for (i = 0; i < nb_points_original; i++) {
@@ -674,6 +716,13 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 
 		int c2;
 
+		cout << "i : filter_by_set[i] : color_table[filter_by_set[i]]" << endl;
+		for (i = 0; i < filter_by_set_size; i++) {
+			cout << i << " : " << filter_by_set[i] << " : " << color_table[filter_by_set[i]] << endl;
+		}
+
+
+
 		reduced_color = NEW_int(number_colors);
 		for (i = 0; i < number_colors; i++) {
 			reduced_color[i] = -1;
@@ -694,6 +743,10 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 		}
 
 
+		cout << "c : reduced_color[c]" << endl;
+		for (c = 0; c < number_colors; c++) {
+			cout << c << " : " << reduced_color[c] << endl;
+		}
 
 
 		point_color = NEW_int(filtered_set_of_orbits_size * orbit_length);
@@ -705,12 +758,21 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 				cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering l1 != orbit_length" << endl;
 				exit(1);
 			}
+
+			if (i == 29044) {
+				cout << "i = 29044, a=" << a << " orbit1:" << endl;
+				Orbiter->Lint_vec.print(cout, orbit1, l1);
+				cout << endl;
+			}
 			for (j = 0; j < orbit_length; j++) {
 				c = color_table[orbit1[j]];
 				c2 = reduced_color[c];
 				if (c2 < 0) {
 					cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering c2 < 0" << endl;
 					exit(1);
+				}
+				if (i == 29044) {
+					cout << "j=" << j << " c=" << c << " c2=" << c2 << endl;
 				}
 				point_color[i * orbit_length + j] = c2;
 			}
