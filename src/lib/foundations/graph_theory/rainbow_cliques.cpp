@@ -332,10 +332,29 @@ int rainbow_cliques::find_candidates(
 		cout << "rainbow_cliques::find_candidates h != c0_freq" << endl;
 		cout << "h=" << h << endl;
 		cout << "c0_freq=" << c0_freq << endl;
+		cout << "c0=" << c0 << endl;
+		cout << "nb_pts=" << nb_pts << endl;
+		cout << "nb_colors=" << graph->nb_colors << endl;
+		cout << "nb_points=" << graph->nb_points << endl;
+		cout << "nb_colors_per_vertex=" << graph->nb_colors_per_vertex << endl;
+		cout << "current_clique_size=" << current_clique_size << endl;
+		cout << "color_frequency=";
+		Orbiter->Int_vec.print(cout, color_frequency, graph->nb_colors);
+		cout << endl;
+		cout << "f_color_satisfied=";
+		Orbiter->Int_vec.print(cout, f_color_satisfied, graph->nb_colors);
+		cout << endl;
+		cout << "current clique:";
+		Orbiter->Int_vec.print(cout, current_clique, current_clique_size);
+		cout << endl;
+		cout << "c : f_color_satisfied[c] : color_frequency[c]" << endl;
+		for (c = 0; c < graph->nb_colors; c++) {
+			cout << c << " : " << f_color_satisfied[c] << " : " << color_frequency[c] << endl;
+		}
 		exit(1);
 	}
 
-	// Mark color c0 as chosen:
+	// mark color c0 as chosen:
 	color_chosen_at_depth[current_clique_size] = c0;
 
 	// we return the size of the candidate set:
