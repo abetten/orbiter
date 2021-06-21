@@ -84,7 +84,7 @@ void graph_theory_domain::colored_graph_all_cliques(
 					"before CG.all_rainbow_cliques" << endl;
 		}
 		CG.all_rainbow_cliques(Control,
-				&fp,
+				fp,
 				verbose_level - 1);
 		if (f_v) {
 			cout << "colored_graph_all_cliques "
@@ -157,7 +157,7 @@ void graph_theory_domain::colored_graph_all_cliques_list_of_cases(
 			string dummy;
 
 			CG->all_rainbow_cliques(Control,
-					&fp,
+					fp,
 					verbose_level - 1);
 
 			fp << "# end case " << c << " " << Control->nb_sol << " " << Control->nb_search_steps
@@ -243,10 +243,16 @@ void graph_theory_domain::save_colored_graph(std::string &fname,
 		fp.write((char*) &nb_colors, sizeof(int));
 		fp.write((char*) &nb_colors_per_vertex, sizeof(int));
 		fp.write((char*) &data_sz, sizeof(int));
+		if (FALSE) {
+			cout << "save_colored_graph before writing data" << endl;
+		}
 		for (i = 0; i < data_sz; i++) {
 			fp.write((char*) &data[i], sizeof(long int));
 		}
 		for (i = 0; i < nb_vertices; i++) {
+			if (FALSE) {
+				cout << "save_colored_graph before writing vertex " << i << " / " << nb_vertices << endl;
+			}
 			if (points) {
 				fp.write((char*) &points[i], sizeof(long int));
 			}
@@ -255,12 +261,17 @@ void graph_theory_domain::save_colored_graph(std::string &fname,
 				fp.write((char*) &a, sizeof(int));
 			}
 			for (j = 0; j < nb_colors_per_vertex; j++) {
-				fp.write((char*) &point_color[i * nb_colors_per_vertex + j],
-						sizeof(int));
+				fp.write((char*) &point_color[i * nb_colors_per_vertex + j], sizeof(int));
 			}
+		}
+		if (FALSE) {
+			cout << "save_colored_graph before writing bitvec" << endl;
 		}
 		//Bitvec->save(fp);
 		fp.write((char*) Bitvec->get_data(), Bitvec->get_allocated_length());
+		if (FALSE) {
+			cout << "save_colored_graph after writing bitvec" << endl;
+		}
 	}
 
 	if (f_v) {
@@ -1436,29 +1447,29 @@ void graph_theory_domain::compute_adjacency_matrix(
 	}
 
 	{
-	colored_graph *CG;
-	std::string fname;
-	file_io Fio;
+		colored_graph *CG;
+		std::string fname;
+		file_io Fio;
 
-	CG = NEW_OBJECT(colored_graph);
-	int *color;
+		CG = NEW_OBJECT(colored_graph);
+		int *color;
 
-	color = NEW_int(nb_sets);
-	Orbiter->Int_vec.zero(color, nb_sets);
+		color = NEW_int(nb_sets);
+		Orbiter->Int_vec.zero(color, nb_sets);
 
-	CG->init(nb_sets, 1 /* nb_colors */, 1 /* nb_colors_per_vertex */,
-			color, B,
-			FALSE, verbose_level);
+		CG->init(nb_sets, 1 /* nb_colors */, 1 /* nb_colors_per_vertex */,
+				color, B,
+				FALSE, verbose_level);
 
-	fname.assign(prefix_for_graph);
-	fname.append("_disjointness.colored_graph");
+		fname.assign(prefix_for_graph);
+		fname.append("_disjointness.colored_graph");
 
-	CG->save(fname, verbose_level);
+		CG->save(fname, verbose_level);
 
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
-	FREE_int(color);
-	FREE_OBJECT(CG);
+		FREE_int(color);
+		FREE_OBJECT(CG);
 	}
 
 
@@ -1499,6 +1510,84 @@ void graph_theory_domain::make_graph_of_disjoint_sets_from_rows_of_matrix(
 	}
 	if (f_v) {
 		cout << "graph_theory_domain::make_graph_of_disjoint_sets_from_rows_of_matrix done" << endl;
+	}
+}
+
+void graph_theory_domain::all_cliques_of_given_size(int *Adj,
+		int nb_pts, int clique_sz, int *&Sol, long int &nb_sol,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::all_cliques_of_given_size" << endl;
+	}
+
+	int *adj_list_coded;
+	int n2;
+	int i, j, h;
+	clique_finder *C;
+	std::string label;
+	int f_maxdepth = FALSE;
+	int maxdepth = 0;
+
+
+	label.assign("all_cliques_of_given_size");
+
+	n2 = (nb_pts * (nb_pts - 1)) >> 1;
+	adj_list_coded = NEW_int(n2);
+	h = 0;
+	cout << "graph_theory_domain::all_cliques_of_given_size: "
+			"computing adj_list_coded" << endl;
+	for (i = 0; i < nb_pts; i++) {
+		for (j = i + 1; j < nb_pts; j++) {
+			adj_list_coded[h++] = Adj[i * nb_pts + j];
+		}
+	}
+
+	clique_finder_control *Control;
+
+	Control = NEW_OBJECT(clique_finder_control);
+	Control->target_size = clique_sz;
+	Control->f_maxdepth = f_maxdepth;
+	Control->maxdepth = maxdepth;
+	Control->f_store_solutions = TRUE;
+
+	C = NEW_OBJECT(clique_finder);
+
+	if (f_v) {
+		cout << "graph_theory_domain::all_cliques_of_given_size: before C->init" << endl;
+	}
+	C->init(Control,
+			label, nb_pts,
+			TRUE, adj_list_coded,
+			FALSE, NULL,
+			verbose_level);
+
+	C->backtrack_search(0 /* depth */, 0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "graph_theory_domain::all_cliques_of_given_size done with search, "
+				"we found " << C->solutions.size() << " solutions" << endl;
+	}
+
+	int sz;
+	if (f_v) {
+		cout << "graph_theory_domain::all_cliques_of_given_size before C->get_solutions" << endl;
+	}
+	C->get_solutions(Sol, nb_sol, sz, verbose_level);
+	if (f_v) {
+		cout << "graph_theory_domain::all_cliques_of_given_size after C->get_solutions" << endl;
+	}
+	if (sz != clique_sz) {
+		cout << "graph_theory_domain::all_cliques_of_given_size sz != clique_sz" << endl;
+		exit(1);
+	}
+	FREE_OBJECT(C);
+	FREE_OBJECT(Control);
+	FREE_int(adj_list_coded);
+	if (f_v) {
+		cout << "graph_theory_domain::all_cliques_of_given_size done" << endl;
 	}
 }
 

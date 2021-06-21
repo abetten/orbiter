@@ -102,6 +102,29 @@ int draw_projective_curve_description::read_arguments(
 	return i + 1;
 }
 
+void draw_projective_curve_description::print()
+{
+	if (f_number) {
+		cout << "-number " << number << endl;
+	}
+	else if (f_file) {
+		cout << "-file " << fname << endl;
+	}
+	else if (f_animate) {
+		cout << "-animate " << animate_nb_of_steps << endl;
+	}
+	else if (f_animate_with_transition) {
+		cout << "-animate_with_transition " << animate_nb_of_steps
+				<< " " << animate_transition_nb_of_steps << endl;
+	}
+	else if (f_title_page) {
+		cout << "-title_page " << endl;
+	}
+	else if (f_trailer_page) {
+		cout << "-trailer_page " << endl;
+	}
+}
+
 
 
 }}

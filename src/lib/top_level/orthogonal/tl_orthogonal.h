@@ -28,11 +28,14 @@ public:
 
 	blt_set_domain *Blt_set_domain;
 
-	linear_group *LG;
+	//linear_group *LG;
 	action *A; // orthogonal group
 
 
+
 	int starter_size;
+
+	strong_generators *Strong_gens;
 
 	int f_semilinear;
 
@@ -51,21 +54,22 @@ public:
 	~blt_set_classify();
 	void null();
 	void freeself();
-	void init_basic(linear_group *LG,
-			poset_classification_control *Control,
+	void init_basic(action *A,
+			strong_generators *Strong_gens,
 			int starter_size,
+			int verbose_level);
+	void compute_starter(
+			poset_classification_control *Control,
 			int verbose_level);
 	void create_graphs(
 		int orbit_at_level_r, int orbit_at_level_m,
 		int level_of_candidates_file,
-		std::string &output_prefix,
 		int f_lexorder_test, int f_eliminate_graphs_if_possible,
 		int verbose_level);
 	void create_graphs_list_of_cases(
-		const char *case_label,
-		const char *list_of_cases_text,
+			std::string &case_label,
+			std::string &list_of_cases_text,
 		int level_of_candidates_file,
-		std::string &output_prefix,
 		int f_lexorder_test, int f_eliminate_graphs_if_possible,
 		int verbose_level);
 	int create_graph(
@@ -242,6 +246,15 @@ public:
 	BLT_set_create_description * BLT_Set_create_description;
 
 
+	int f_BLT_set_starter;
+	int BLT_set_starter_size;
+	poset_classification_control *BLT_set_starter_control;
+
+	int f_BLT_set_graphs;
+	int BLT_set_graphs_starter_size;
+	int BLT_set_graphs_r;
+	int BLT_set_graphs_m;
+
 	int f_fname_base_out;
 	std::string fname_base_out;
 
@@ -270,6 +283,7 @@ public:
 	int read_arguments(
 		int argc, std::string *argv,
 		int verbose_level);
+	void print();
 
 
 };

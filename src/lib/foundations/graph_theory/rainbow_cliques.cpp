@@ -19,7 +19,7 @@ namespace foundations {
 
 rainbow_cliques::rainbow_cliques()
 {
-	fp_sol = NULL;
+	ost_sol = NULL;
 	//f_output_solution_raw = FALSE;
 
 	graph = NULL;
@@ -29,12 +29,6 @@ rainbow_cliques::rainbow_cliques()
 	color_frequency = NULL;
 	//target_depth = 0;
 
-#if 0
-	// added November 5, 2014:
-	f_has_additional_test_function = FALSE;
-	call_back_additional_test_function = NULL;
-	user_data = NULL;
-#endif
 	null();
 }
 
@@ -51,49 +45,13 @@ void rainbow_cliques::freeself()
 	null();
 }
 
-#if 0
-void rainbow_cliques::search(clique_finder_control *Control,
-	colored_graph *graph,
-	ofstream *fp_sol,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "rainbow_cliques::search" << endl;
-	}
-
-	if (f_v) {
-		cout << "rainbow_cliques::search before search_with_additional_test_function" << endl;
-	}
-
-	search_with_additional_test_function(Control, graph,
-		fp_sol,
-		FALSE /* f_has_additional_test_function */,
-		NULL, 
-		FALSE /* f_has_print_current_choice_function */, 
-		NULL, 
-		NULL /* user_data */,
-		verbose_level);
-
-	if (f_v) {
-		cout << "rainbow_cliques::search after search_with_additional_test_function" << endl;
-	}
-	
-	if (f_v) {
-		cout << "rainbow_cliques::search done" << endl;
-	}
-}
-#endif
-
 void rainbow_cliques::search(
 	clique_finder_control *Control,
 	colored_graph *graph,
-	ofstream *fp_sol,
+	std::ostream &ost_sol,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
 	int i;
 	os_interface Os;
 	
@@ -104,19 +62,8 @@ void rainbow_cliques::search(
 	rainbow_cliques::Control = Control;
 	//rainbow_cliques::f_output_solution_raw = f_output_solution_raw;
 
-#if 0
-	if (f_has_additional_test_function) {
-		rainbow_cliques::f_has_additional_test_function = TRUE;
-		rainbow_cliques::call_back_additional_test_function =
-				call_back_additional_test_function;
-		rainbow_cliques::user_data = user_data;
-	}
-	else {
-		rainbow_cliques::f_has_additional_test_function = FALSE;
-	}
-#endif
 	rainbow_cliques::graph = graph;
-	rainbow_cliques::fp_sol = fp_sol;
+	rainbow_cliques::ost_sol = &ost_sol;
 	f_color_satisfied = NEW_int(graph->nb_colors);
 	color_chosen_at_depth = NEW_int(graph->nb_colors);
 	color_frequency = NEW_int(graph->nb_colors);
@@ -148,14 +95,6 @@ void rainbow_cliques::search(
 	//CF->call_back_after_reduction = call_back_after_reduction;
 	CF->call_back_after_reduction = NULL;
 
-#if 0
-	if (f_has_print_current_choice_function) {
-		CF->f_has_print_current_choice_function = TRUE;
-		CF->call_back_print_current_choice = call_back_print_current_choice;
-		CF->print_current_choice_data = user_data;
-	}
-#endif
-	
 	CF->call_back_clique_found_data1 = this;
 	
 	
@@ -179,21 +118,9 @@ void rainbow_cliques::search(
 		cout << "rainbow_cliques::search before backtrack_search" << endl;
 	}
 
-#if 1
 
 	CF->backtrack_search(0, 0 /*verbose_level*/);
 
-#else
-	if (f_vv) {
-		cout << "rainbow_cliques::search before "
-				"CF->backtrack_search_not_recursive" << endl;
-		}
-	CF->backtrack_search_not_recursive(verbose_level - 2);
-	if (f_vv) {
-		cout << "rainbow_cliques::search after "
-				"CF->backtrack_search_not_recursive" << endl;
-		}
-#endif
 
 	if (f_v) {
 		cout << "rainbow_cliques::search after backtrack_search" << endl;
@@ -213,7 +140,27 @@ void rainbow_cliques::search(
 
 	Control->nb_search_steps = CF->counter;
 	Control->nb_decision_steps = CF->decision_step_counter;
-	Control->nb_sol = CF->solutions.size();
+
+
+	if (Control->f_store_solutions) {
+		Control->nb_sol = CF->solutions.size();
+
+
+		long int nb_sol;
+
+		if (f_v) {
+			cout << "rainbow_cliques::search before CF->get_solutions" << endl;
+		}
+
+		CF->get_solutions(Control->Sol,
+				nb_sol, Control->target_size, verbose_level);
+
+		if (f_v) {
+			cout << "rainbow_cliques::search after CF->get_solutions" << endl;
+		}
+	}
+
+
 	
 	t1 = Os.os_ticks();
 
@@ -277,7 +224,9 @@ int rainbow_cliques::find_candidates(
 		cout << endl;
 	}
 
-	// Determine the color c0 with the minimal frequency:
+	// Determine the color c0 with the least positive frequency
+	// A frequency of zero means that we cannot complete the partial rainbow clique:
+
 	c0 = -1;
 	c0_freq = 0;
 	for (c = 0; c < graph->nb_colors; c++) {
@@ -329,6 +278,10 @@ int rainbow_cliques::find_candidates(
 		}
 	}
 	if (h != c0_freq) {
+		// this should not happen.
+		// I may happen if the coloring is not correct.
+		// For instance, each color can appear at most once for each vertex (i.e., no repeats allowed)
+
 		cout << "rainbow_cliques::find_candidates h != c0_freq" << endl;
 		cout << "h=" << h << endl;
 		cout << "c0_freq=" << c0_freq << endl;
@@ -367,9 +320,9 @@ void rainbow_cliques::clique_found(
 	int i;
 	
 	for (i = 0; i < Control->target_size; i++) {
-		*fp_sol << current_clique[i] << " ";
+		*ost_sol << current_clique[i] << " ";
 		}
-	*fp_sol << endl;
+	*ost_sol << endl;
 }
 
 void rainbow_cliques::clique_found_record_in_original_labels(
@@ -377,14 +330,14 @@ void rainbow_cliques::clique_found_record_in_original_labels(
 {
 	int i;
 	
-	*fp_sol << graph->user_data_size + Control->target_size << " ";
+	*ost_sol << graph->user_data_size + Control->target_size << " ";
 	for (i = 0; i < graph->user_data_size; i++) {
-		*fp_sol << graph->user_data[i] << " ";
+		*ost_sol << graph->user_data[i] << " ";
 	}
 	for (i = 0; i < Control->target_size; i++) {
-		*fp_sol << graph->points[current_clique[i]] << " ";
+		*ost_sol << graph->points[current_clique[i]] << " ";
 	}
-	*fp_sol << endl;
+	*ost_sol << endl;
 }
 
 
@@ -395,8 +348,7 @@ void call_back_colored_graph_clique_found(
 
 	//cout << "call_back_colored_graph_clique_found" << endl;
 	
-	rainbow_cliques *R = (rainbow_cliques *)
-			CF->call_back_clique_found_data1;
+	rainbow_cliques *R = (rainbow_cliques *)  CF->call_back_clique_found_data1;
 
 	if (f_v) {
 		int i, j, pt, c;

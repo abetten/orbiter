@@ -984,78 +984,6 @@ int clique_finder::solve_decision_problem(int depth, int verbose_level)
 	return FALSE;
 }
 
-void all_cliques_of_given_size(int *Adj,
-		int nb_pts, int clique_sz, int *&Sol, int &nb_sol,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "all_cliques_of_given_size" << endl;
-	}
-
-	int *adj_list_coded;
-	int n2;
-	int i, j, h;
-	clique_finder *C;
-	std::string label;
-	int f_maxdepth = FALSE;
-	int maxdepth = 0;
-
-
-	label.assign("all_cliques_of_given_size");
-
-	n2 = (nb_pts * (nb_pts - 1)) >> 1;
-	adj_list_coded = NEW_int(n2);
-	h = 0;
-	cout << "all_cliques_of_given_size: "
-			"computing adj_list_coded" << endl;
-	for (i = 0; i < nb_pts; i++) {
-		for (j = i + 1; j < nb_pts; j++) {
-			adj_list_coded[h++] = Adj[i * nb_pts + j];
-		}
-	}
-	
-	clique_finder_control *Control;
-
-	Control = NEW_OBJECT(clique_finder_control);
-	Control->target_size = clique_sz;
-	Control->f_maxdepth = f_maxdepth;
-	Control->maxdepth = maxdepth;
-	Control->f_store_solutions = TRUE;
-
-	C = NEW_OBJECT(clique_finder);
-	
-	if (f_v) {
-		cout << "all_cliques_of_given_size: before C->init" << endl;
-	}
-	C->init(Control,
-			label, nb_pts,
-			TRUE, adj_list_coded,
-			FALSE, NULL,
-			verbose_level);
-
-	C->backtrack_search(0 /* depth */, 0 /* verbose_level */);
-
-	if (f_v) {
-		cout << "all_cliques_of_given_size done with search, "
-				"we found " << C->solutions.size() << " solutions" << endl;
-	}
-
-	int sz;
-	C->get_solutions(Sol, nb_sol, sz, verbose_level);
-	if (sz != clique_sz) {
-		cout << "all_cliques_of_given_size sz != clique_sz" << endl;
-		exit(1);
-	}
-	FREE_OBJECT(C);
-	FREE_OBJECT(Control);
-	FREE_int(adj_list_coded);
-	if (f_v) {
-		cout << "all_cliques_of_given_size done" << endl;
-	}
-}
-
 #if 0
 	static int *nb_old, *nb_new;
 	static int *pt1, *pt2, *pt, *pass, *f_go;
@@ -1492,8 +1420,8 @@ void clique_finder::close_tree_file()
 			<< Fio.file_size(fname_tree) << endl;
 }
 
-void clique_finder::get_solutions(int *&Sol,
-		int &nb_solutions, int &clique_sz, int verbose_level)
+void clique_finder::get_solutions(int *&Sol, long int &nb_solutions, int &clique_sz,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

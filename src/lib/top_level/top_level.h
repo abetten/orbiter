@@ -97,6 +97,7 @@ class graph_theoretic_activity;
 
 
 // interfaces
+class activity_description;
 class interface_algebra;
 class interface_coding_theory;
 class interface_combinatorics;
@@ -105,7 +106,9 @@ class interface_povray;
 class interface_projective;
 class interface_symbol_table;
 class interface_toolkit;
+class orbiter_command;
 class orbiter_top_level_session;
+class symbol_definition;
 
 
 // isomorph
@@ -156,8 +159,6 @@ class compute_stabilizer;
 class object_in_projective_space_with_action;
 class projective_space_activity_description;
 class projective_space_activity;
-class projective_space_job_description;
-class projective_space_job;
 class projective_space_object_classifier_description;
 class projective_space_object_classifier;
 class projective_space_with_action_description;

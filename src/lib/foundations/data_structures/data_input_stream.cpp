@@ -145,6 +145,53 @@ int data_input_stream::read_arguments(
 	return i + 1;
 }
 
+void data_input_stream::print()
+{
+	int i;
+
+	for (i = 0; i < nb_inputs; i++) {
+		print_item(i);
+	}
+}
+
+void data_input_stream::print_item(int i)
+{
+	if (input_type[i] == INPUT_TYPE_SET_OF_POINTS) {
+		cout << "-set_of_points " << input_string[i] << endl;
+	}
+	else if (input_type[i] == INPUT_TYPE_SET_OF_LINES) {
+		cout << "-set_of_lines " << input_string[i] << endl;
+	}
+	else if (input_type[i] == INPUT_TYPE_SET_OF_PACKING) {
+		cout << "-set_of_packing " << input_string[i] << " " << input_string2[i] << endl;
+	}
+	else if (input_type[i] == INPUT_TYPE_FILE_OF_POINTS) {
+		cout << "-file_of_points " << input_string[i] << endl;
+	}
+	else if (input_type[i] == INPUT_TYPE_FILE_OF_LINES) {
+		cout << "-file_of_lines " << input_string[i] << endl;
+	}
+	else if (input_type[i] == INPUT_TYPE_FILE_OF_PACKINGS) {
+		cout << "-file_of_packings " << input_string[i] << " " << input_string2[i] << endl;
+	}
+	else if (input_type[i] == INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
+		cout << "-file_of_packings_through_spread_table "
+			<< input_string[i] << " "
+			<< input_string2[i] << endl;
+	}
+	else if (input_type[i] == INPUT_TYPE_FILE_OF_POINT_SET) {
+		cout << "-file_of_point_set " << input_string[i] << " " << input_string2[i] << endl;
+	}
+	else if (input_type[i] == INPUT_TYPE_FILE_OF_DESIGNS) {
+		cout << "-file_of_designs " << input_string[i]
+				<< " " << input_data1[i]
+				<< " " << input_data2[i]
+				<< " " << input_data3[i]
+				<< " " << input_data4[i]
+				<< endl;
+	}
+}
+
 int data_input_stream::count_number_of_objects_to_test(
 	int verbose_level)
 {

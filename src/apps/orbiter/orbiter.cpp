@@ -68,19 +68,19 @@ int main(int argc, const char **argv)
 
 	verbose_level = Top_level_session.Orbiter_session->verbose_level;
 
-	int f_v = (verbose_level > 1);
+	//int f_v = (verbose_level > 1);
 
-	if (f_v) {
+	if (FALSE) {
 		cout << "main, before Top_level_session.handle_everything" << endl;
 	}
 
 	Top_level_session.handle_everything(argc, Argv, i, verbose_level);
 
-	if (f_v) {
+	if (FALSE) {
 		cout << "main, after Top_level_session.handle_everything" << endl;
 	}
 
-	cout << "Orbiter session finished." << endl;
+	cout << "Orbiter session is finished." << endl;
 	cout << "User time: ";
 	the_end(Top_level_session.Orbiter_session->t0);
 

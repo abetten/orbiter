@@ -39,22 +39,31 @@ int finite_field_description::read_arguments(
 	int argc, std::string *argv,
 	int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i;
 
-	cout << "finite_field_description::read_arguments" << endl;
+	if (f_v) {
+		cout << "finite_field_description::read_arguments" << endl;
+	}
 	for (i = 0; i < argc; i++) {
 		if (stringcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
 			q = strtoi(argv[++i]);
-			cout << "-q " << q << endl;
+			if (f_v) {
+				cout << "-q " << q << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-override_polynomial") == 0) {
 			f_override_polynomial = TRUE;
 			override_polynomial.assign(argv[++i]);
-			cout << "-override_polynomial " << override_polynomial << endl;
+			if (f_v) {
+				cout << "-override_polynomial " << override_polynomial << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-end") == 0) {
-			cout << "-end" << endl;
+			if (f_v) {
+				cout << "-end" << endl;
+			}
 			break;
 		}
 		else {
@@ -62,19 +71,21 @@ int finite_field_description::read_arguments(
 					"unrecognized option " << argv[i] << endl;
 		}
 	} // next i
-	cout << "finite_field_description::read_arguments done" << endl;
+	if (f_v) {
+		cout << "finite_field_description::read_arguments done" << endl;
+	}
 	return i + 1;
 }
 
 void finite_field_description::print()
 {
-	cout << "finite_field_description::print:" << endl;
+	//cout << "finite_field_description::print:" << endl;
 
 	if (f_q) {
-		cout << "q: " << q << endl;
+		cout << "-q " << q << endl;
 	}
 	if (f_override_polynomial) {
-		cout << "override_polynomial: " << override_polynomial << endl;
+		cout << "-override_polynomial " << override_polynomial << endl;
 	}
 }
 

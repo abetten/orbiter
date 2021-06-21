@@ -146,6 +146,7 @@ public:
 	int target_size;
 	int degree; // number of points on the quadric
 
+	std::string prefix; // "BLT_q%d"
 
 	orthogonal *O;
 	int f_orthogonal_allocated;

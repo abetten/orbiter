@@ -157,16 +157,17 @@ int orbiter_session::read_arguments(int argc,
 	for (i = i0; i < argc; i++) {
 		if (stringcmp(argv[i], "-v") == 0) {
 			verbose_level = strtoi(argv[++i]);
-			cout << "-v " << verbose_level << endl;
+			//cout << "-v " << verbose_level << endl;
 		}
 		else if (stringcmp(argv[i], "-draw_options") == 0) {
 			f_draw_options = TRUE;
 
 			draw_options = NEW_OBJECT(layered_graph_draw_options);
-			cout << "-draw_options " << endl;
+			//cout << "-draw_options " << endl;
 			i += draw_options->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
+				argv + i + 1, 0 /*verbose_level*/);
 
+#if 0
 			cout << "done reading -draw_options " << endl;
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
@@ -174,30 +175,31 @@ int orbiter_session::read_arguments(int argc,
 				cout << "next argument is " << argv[i] << endl;
 			}
 			cout << "-f_draw_options " << endl;
+#endif
 		}
 		else if (stringcmp(argv[i], "-list_arguments") == 0) {
 			f_list_arguments = TRUE;
-			cout << "-list_arguments " << endl;
+			//cout << "-list_arguments " << endl;
 		}
 		else if (stringcmp(argv[i], "-seed") == 0) {
 			f_seed = TRUE;
 			the_seed = strtoi(argv[++i]);
-			cout << "-seed " << the_seed << endl;
+			//cout << "-seed " << the_seed << endl;
 		}
 		else if (stringcmp(argv[i], "-memory_debug") == 0) {
 			f_memory_debug = TRUE;
 			memory_debug_verbose_level = strtoi(argv[++i]);
-			cout << "-memory_debug " << memory_debug_verbose_level << endl;
+			//cout << "-memory_debug " << memory_debug_verbose_level << endl;
 		}
 		else if (stringcmp(argv[i], "-override_polynomial") == 0) {
 			f_override_polynomial = TRUE;
 			override_polynomial.assign(argv[++i]);
-			cout << "-override_polynomial " << override_polynomial << endl;
+			//cout << "-override_polynomial " << override_polynomial << endl;
 		}
 		else if (stringcmp(argv[i], "-orbiter_path") == 0) {
 			f_orbiter_path = TRUE;
 			orbiter_path.assign(argv[++i]);
-			cout << "-orbiter_path " << orbiter_path << endl;
+			//cout << "-orbiter_path " << orbiter_path << endl;
 		}
 		else if (stringcmp(argv[i], "-magma_path") == 0) {
 			f_magma_path = TRUE;
@@ -212,7 +214,7 @@ int orbiter_session::read_arguments(int argc,
 			fork_from = strtoi(argv[++i]);
 			fork_to = strtoi(argv[++i]);
 			fork_step = strtoi(argv[++i]);
-			cout << "-fork " << fork_variable << " " << fork_logfile_mask << " " << fork_from << " " << fork_to << " " << fork_step << endl;
+			//cout << "-fork " << fork_variable << " " << fork_logfile_mask << " " << fork_from << " " << fork_to << " " << fork_step << endl;
 		}
 		else {
 			break;

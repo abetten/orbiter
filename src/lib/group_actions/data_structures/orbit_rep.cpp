@@ -77,17 +77,17 @@ void orbit_rep::init_from_file(
 	int rep_sz;
 	
 	if (f_v) {
-		cout << "orbit_rep::init_from_file orbit_at_level="
-				<< orbit_at_level << endl;
-		}
+		cout << "orbit_rep::init_from_file orbit_at_level=" << orbit_at_level << endl;
+	}
 	orbit_rep::A = A;
 	orbit_rep::level = level;
 	orbit_rep::orbit_at_level = orbit_at_level;
-	orbit_rep::early_test_func_callback =
-			early_test_func_callback;
-	orbit_rep::early_test_func_callback_data =
-			early_test_func_callback_data;
+	orbit_rep::early_test_func_callback = early_test_func_callback;
+	orbit_rep::early_test_func_callback_data = early_test_func_callback_data;
 
+	if (f_v) {
+		cout << "orbit_rep::init_from_file before A->read_orbit_rep_and_candidates_from_files_and_process" << endl;
+	}
 	A->read_orbit_rep_and_candidates_from_files_and_process(prefix,
 		level, orbit_at_level, level_of_candidates_file, 
 		early_test_func_callback, 
@@ -99,7 +99,10 @@ void orbit_rep::init_from_file(
 		candidates,
 		nb_candidates,
 		nb_cases, 
-		verbose_level - 1);
+		verbose_level);
+	if (f_v) {
+		cout << "orbit_rep::init_from_file after A->read_orbit_rep_and_candidates_from_files_and_process" << endl;
+	}
 	
 #if 0
 	void action::read_orbit_rep_and_candidates_from_files_and_process(

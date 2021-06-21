@@ -81,5 +81,21 @@ int spread_create_description::read_arguments(int argc, std::string *argv,
 	return i + 1;
 }
 
+void spread_create_description::print()
+{
+	if (f_q) {
+		cout << "-q " << q << endl;
+	}
+	if (f_k) {
+		cout << "-k " << k << endl;
+	}
+	if (f_catalogue) {
+		cout << "-catalogue " << iso << endl;
+	}
+	if (f_family) {
+		cout << "-family " << family_name << endl;
+	}
+}
+
 
 }}

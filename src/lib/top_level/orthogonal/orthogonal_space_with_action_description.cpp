@@ -92,10 +92,10 @@ void orthogonal_space_with_action_description::print()
 	cout << "n = " << n << endl;
 	cout << "q = " << input_q << endl;
 	if (f_label_txt) {
-		cout << "label_txt = " << label_txt << endl;
+		cout << "-label_txt " << label_txt << endl;
 	}
 	if (f_label_tex) {
-		cout << "label_tex = " << label_tex << endl;
+		cout << "-label_tex " << label_tex << endl;
 	}
 	if (f_without_group) {
 		cout << "without group" << endl;

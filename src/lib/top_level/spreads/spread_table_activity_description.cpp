@@ -105,6 +105,34 @@ int spread_table_activity_description::read_arguments(
 	return i + 1;
 }
 
+void spread_table_activity_description::print()
+{
+	if (f_find_spread) {
+		cout << "-find_spread " << find_spread_text << endl;
+	}
+	if (f_print_spreads) {
+		cout << "-print_spreads " << print_spreads_idx_text << endl;
+	}
+	if (f_export_spreads_to_csv) {
+		cout << "-export_spreads_to_csv " << export_spreads_to_csv_fname
+				<< " " << export_spreads_to_csv_idx_text << endl;
+	}
+	if (f_find_spreads_containing_two_lines) {
+		cout << "-find_spreads_containing_two_lines "
+				<< " " << find_spreads_containing_two_lines_line1
+				<< " " << find_spreads_containing_two_lines_line2
+				<< endl;
+	}
+
+	if (f_find_spreads_containing_one_line) {
+		cout << "-find_spreads_containing_one_line "
+				<< " " << find_spreads_containing_one_line_line_idx
+				<< endl;
+	}
+}
+
+
+
 
 }}
 

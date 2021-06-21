@@ -225,8 +225,11 @@ void action::read_orbit_rep_and_candidates_from_files_and_process(
 
 	if (f_v) {
 		cout << "action::read_orbit_rep_and_candidates_from_files_and_process" << endl;
-		}
+	}
 
+	if (f_v) {
+		cout << "action::read_orbit_rep_and_candidates_from_files_and_process before read_orbit_rep_and_candidates_from_files" << endl;
+	}
 	read_orbit_rep_and_candidates_from_files(prefix,
 		level, orbit_at_level, level_of_candidates_file,
 		starter,
@@ -236,7 +239,10 @@ void action::read_orbit_rep_and_candidates_from_files_and_process(
 		candidates1,
 		nb_candidates1,
 		nb_cases,
-		verbose_level - 1);
+		verbose_level);
+	if (f_v) {
+		cout << "action::read_orbit_rep_and_candidates_from_files_and_process after read_orbit_rep_and_candidates_from_files" << endl;
+	}
 
 	for (h = level_of_candidates_file; h < level; h++) {
 
@@ -253,7 +259,7 @@ void action::read_orbit_rep_and_candidates_from_files_and_process(
 		(*early_test_func_callback)(starter, h + 1,
 			candidates1, nb_candidates1,
 			candidates2, nb_candidates2,
-			early_test_func_callback_data, 0 /*verbose_level - 1*/);
+			early_test_func_callback_data, verbose_level - 1);
 
 		if (f_vv) {
 			cout << "action::read_orbit_rep_and_candidates_from_files_and_process "
@@ -297,100 +303,109 @@ void action::read_orbit_rep_and_candidates_from_files(
 
 
 	if (f_v) {
-		cout << "action::read_orbit_rep_and_candidates_from_files" << endl;
-		}
+		cout << "action::read_orbit_rep_and_candidates_from_files prefix=" << prefix << endl;
+	}
 
 	{
-	candidates = NULL;
-	//longinteger_object stab_go;
+		candidates = NULL;
+		//longinteger_object stab_go;
 
-	string fname1;
-	char str[1000];
-	sprintf(str, "_lvl_%d", level);
-	fname1.assign(prefix);
-	fname1.append(str);
+		string fname1;
+		char str[1000];
+		sprintf(str, "_lvl_%d", level);
+		fname1.assign(prefix);
+		fname1.append(str);
 
-	read_set_and_stabilizer(fname1,
-		orbit_at_level, starter, starter_sz, Stab,
-		Strong_gens,
-		nb_cases,
-		verbose_level);
-
-
-
-	//Stab->group_order(stab_go);
-
-	if (f_v) {
-		cout << "action::read_orbit_rep_and_candidates_from_files "
-				"Read starter " << orbit_at_level << " / "
-				<< nb_cases << " : ";
-		Orbiter->Lint_vec.print(cout, starter, starter_sz);
-		cout << endl;
-		//cout << "read_orbit_rep_and_candidates_from_files "
-		//"Group order=" << stab_go << endl;
+		if (f_v) {
+			cout << "action::read_orbit_rep_and_candidates_from_files before read_set_and_stabilizer fname1=" << fname1 << endl;
 		}
-
-	if (level == level_of_candidates_file) {
-		orbit_at_candidate_level = orbit_at_level;
-		}
-	else {
-		// level_of_candidates_file < level
-		// Now, we need to find out the orbit representative
-		// at level_of_candidates_file
-		// that matches with the prefix of starter
-		// so that we can retrieve it's set of candidates.
-		// Once we have the candidates for the prefix, we run it through the
-		// test function to find the candidate set of starter as a subset
-		// of this set.
-
-		orbit_at_candidate_level =
-				Fio.find_orbit_index_in_data_file(prefix,
-				level_of_candidates_file, starter,
-				verbose_level);
-		}
-	if (f_v) {
-		cout << "action::read_orbit_rep_and_candidates_from_files "
-				"Found starter, orbit_at_candidate_level="
-				<< orbit_at_candidate_level << endl;
+		read_set_and_stabilizer(fname1,
+			orbit_at_level, starter, starter_sz, Stab,
+			Strong_gens,
+			nb_cases,
+			verbose_level);
+		if (f_v) {
+			cout << "action::read_orbit_rep_and_candidates_from_files after read_set_and_stabilizer" << endl;
 		}
 
 
-	// read the set of candidates from the binary file:
 
-	if (f_v) {
-		cout << "action::read_orbit_rep_and_candidates_from_files "
-				"before generator_read_candidates_of_orbit" << endl;
-		}
-	string fname2;
-	//char str[1000];
-	fname2.assign(prefix);
-	sprintf(str, "_lvl_%d_candidates.bin", level_of_candidates_file);
-	fname2.append(str);
-	Fio.poset_classification_read_candidates_of_orbit(
-		fname2, orbit_at_candidate_level,
-		candidates, nb_candidates, verbose_level - 1);
+		//Stab->group_order(stab_go);
 
-	if (f_v) {
-		cout << "action::read_orbit_rep_and_candidates_from_files "
-				"generator_read_candidates_of_orbit done" << endl;
+		if (f_v) {
+			cout << "action::read_orbit_rep_and_candidates_from_files "
+					"Read starter " << orbit_at_level << " / "
+					<< nb_cases << " : ";
+			Orbiter->Lint_vec.print(cout, starter, starter_sz);
+			cout << endl;
+			//cout << "read_orbit_rep_and_candidates_from_files "
+			//"Group order=" << stab_go << endl;
 		}
 
-
-	if (candidates == NULL) {
-		cout << "action::read_orbit_rep_and_candidates_from_files "
-				"cound not read the candidates" << endl;
-		exit(1);
+		if (level == level_of_candidates_file) {
+			orbit_at_candidate_level = orbit_at_level;
 		}
-	if (f_v) {
-		cout << "action::read_orbit_rep_and_candidates_from_files "
-				"Found " << nb_candidates << " candidates at level "
-				<< level_of_candidates_file << endl;
+		else {
+			// level_of_candidates_file < level
+			// Now, we need to find out the orbit representative
+			// at level_of_candidates_file
+			// that matches with the prefix of starter
+			// so that we can retrieve it's set of candidates.
+			// Once we have the candidates for the prefix, we run it through the
+			// test function to find the candidate set of starter as a subset
+			// of this set.
+
+			orbit_at_candidate_level = Fio.find_orbit_index_in_data_file(prefix,
+					level_of_candidates_file, starter,
+					verbose_level);
+		}
+		if (f_v) {
+			cout << "action::read_orbit_rep_and_candidates_from_files "
+					"Found starter, orbit_at_candidate_level="
+					<< orbit_at_candidate_level << endl;
+		}
+
+
+		// read the set of candidates from the binary file:
+
+		if (f_v) {
+			cout << "action::read_orbit_rep_and_candidates_from_files "
+					"before generator_read_candidates_of_orbit" << endl;
+		}
+		string fname2;
+		fname2.assign(prefix);
+		sprintf(str, "_lvl_%d_candidates.bin", level_of_candidates_file);
+		fname2.append(str);
+
+
+		if (f_v) {
+			cout << "action::read_orbit_rep_and_candidates_from_files "
+					"before Fio.poset_classification_read_candidates_of_orbit" << endl;
+		}
+		Fio.poset_classification_read_candidates_of_orbit(
+			fname2, orbit_at_candidate_level,
+			candidates, nb_candidates, verbose_level - 1);
+
+		if (f_v) {
+			cout << "action::read_orbit_rep_and_candidates_from_files "
+					"after Fio.poset_classification_read_candidates_of_orbit" << endl;
+		}
+
+
+		if (candidates == NULL) {
+			cout << "action::read_orbit_rep_and_candidates_from_files "
+					"could not read the candidates" << endl;
+			exit(1);
+		}
+		if (f_v) {
+			cout << "action::read_orbit_rep_and_candidates_from_files "
+					"Found " << nb_candidates << " candidates at level "
+					<< level_of_candidates_file << endl;
 		}
 	}
 	if (f_v) {
-		cout << "action::read_orbit_rep_and_candidates_from_files "
-				"done" << endl;
-		}
+		cout << "action::read_orbit_rep_and_candidates_from_files done" << endl;
+	}
 }
 
 

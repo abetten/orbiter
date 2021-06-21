@@ -197,13 +197,13 @@ void file_io::poset_classification_read_candidates_of_orbit(
 
 
 	if (f_v) {
-		cout << "poset_classification_read_candidates_of_orbit" << endl;
+		cout << "file_io::poset_classification_read_candidates_of_orbit" << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		cout << "orbit_at_level=" << orbit_at_level << endl;
 	}
 
 	if (file_size(fname) <= 0) {
-		cout << "poset_classification_read_candidates_of_orbit file "
+		cout << "file_io::poset_classification_read_candidates_of_orbit file "
 				<< fname << " does not exist" << endl;
 		exit(1);
 	}
@@ -212,7 +212,7 @@ void file_io::poset_classification_read_candidates_of_orbit(
 		ifstream fp(fname, ios::binary);
 		fp.read((char *) &nb, sizeof(int));
 		if (orbit_at_level >= nb) {
-			cout << "poset_classification_read_candidates_of_orbit "
+			cout << "file_io::poset_classification_read_candidates_of_orbit "
 					"orbit_at_level >= nb" << endl;
 			cout << "orbit_at_level=" << orbit_at_level << endl;
 			cout << "nb=" << nb << endl;
@@ -232,17 +232,20 @@ void file_io::poset_classification_read_candidates_of_orbit(
 			cout << "cand_first=" << cand_first << endl;
 		}
 		candidates = NEW_lint(nb_candidates);
+
+		int *candidates0;
+		candidates0 = NEW_int(nb_candidates);
 		fp.seekg((1 + nb * 2 + cand_first) * sizeof(int), ios::beg);
 		for (i = 0; i < nb_candidates; i++) {
-			fp.read((char *) &candidates[i], sizeof(long int));
-
+			fp.read((char *) &candidates0[i], sizeof(int));
+			candidates[i] = candidates0[i];
 		}
+		FREE_int(candidates0);
 
 	}
 
 	if (f_v) {
-		cout << "poset_classification_read_candidates_of_orbit "
-				"done" << endl;
+		cout << "file_io::poset_classification_read_candidates_of_orbit done" << endl;
 	}
 }
 

@@ -349,8 +349,8 @@ void orbit_transversal::print_table_latex(
 }
 
 void orbit_transversal::export_data_in_source_code_inside_tex(
-		const char *prefix,
-		char *label_of_structure, ostream &ost,
+		std::string &prefix,
+		std::string &label_of_structure, std::ostream &ost,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

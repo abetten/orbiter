@@ -242,6 +242,56 @@ void interface_algebra::read_arguments(int argc,
 }
 
 
+void interface_algebra::print()
+{
+	if (f_count_subprimitive) {
+		cout << "-count_subprimitive "
+				<< count_subprimitive_Q_max
+				<< " " << count_subprimitive_H_max
+				<< endl;
+	}
+	if (f_equivalence_class_of_fractions) {
+		cout << "-equivalence_class_of_fractions " << equivalence_class_of_fractions_N
+				<< endl;
+	}
+	if (f_character_table_symmetric_group) {
+		cout << "-character_table_symmetric_group " << deg << endl;
+	}
+	if (f_make_A5_in_PSL_2_q) {
+		cout << "-make_A5_in_PSL_2_q " << q << endl;
+	}
+	if (f_search_for_primitive_polynomial_in_range) {
+		cout << "-search_for_primitive_polynomial_in_range " << p_min
+				<< " " << p_max
+				<< " " << deg_min
+				<< " " << deg_max << " " << endl;
+	}
+
+	if (f_order_of_q_mod_n) {
+		cout << "-order_of_q_mod_n " << order_of_q_mod_n_q
+				<< " " << order_of_q_mod_n_n_min
+				<< " " << order_of_q_mod_n_n_max << " " << endl;
+	}
+
+
+
+	if (f_young_symmetrizer) {
+		cout << "-young_symmetrizer " << " " << young_symmetrizer_n << endl;
+	}
+	if (f_young_symmetrizer_sym_4) {
+		cout << "-young_symmetrizer_sym_4 " << endl;
+	}
+	if (f_draw_mod_n) {
+		cout << "-draw_mod_n " << endl;
+	}
+	if (f_power_mod_n) {
+		cout << "-power_mod_n " << " " << power_mod_n_a << " " << power_mod_n_n << endl;
+	}
+
+
+}
+
+
 void interface_algebra::worker(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

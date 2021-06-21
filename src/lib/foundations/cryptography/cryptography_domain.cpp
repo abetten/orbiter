@@ -59,22 +59,26 @@ cryptography_domain::~cryptography_domain()
 
 }
 
-void cryptography_domain::affine_cipher(char *ptext, char *ctext, int a, int b)
+void cryptography_domain::affine_cipher(std::string &ptext, std::string &ctext, int a, int b)
 {
 	int i, l, x, y;
+	char *str;
 
 	cout << "applying key (" << a << "," << b << ")" << endl;
-	l = strlen(ptext);
+	l = ptext.length();
+	str = NEW_char(l + 1);
 	for (i = 0; i < l; i++) {
 		x = (int)(upper_case(ptext[i]) - 'A');
 		y = a * x + b;
 		y = y % 26;
-		ctext[i] = 'A' + y;
+		str[i] = 'A' + y;
 	}
-	ctext[l] = 0;
+	str[l] = 0;
+	ctext.assign(str);
+	FREE_char(str);
 }
 
-void cryptography_domain::affine_decipher(char *ctext, char *ptext, char *guess)
+void cryptography_domain::affine_decipher(std::string &ctext, std::string &ptext, std::string &guess)
 // we have ax_1 + b = y_1
 // and     ax_2 + b = y_2
 // or equivalently
@@ -86,7 +90,7 @@ void cryptography_domain::affine_decipher(char *ctext, char *ptext, char *guess)
 	int a, b, a0, av, c, g, dxv, n, gg;
 	number_theory_domain NT;
 
-	if (strlen(guess) != 4) {
+	if (guess.length() != 4) {
 		cout << "guess must be 4 characters long!" << endl;
 		exit(1);
 	}
@@ -146,12 +150,14 @@ void cryptography_domain::affine_decipher(char *ctext, char *ptext, char *guess)
 	}
 }
 
-void cryptography_domain::vigenere_cipher(char *ptext, char *ctext, char *key)
+void cryptography_domain::vigenere_cipher(std::string &ptext, std::string &ctext, std::string &key)
 {
 	int i, j, l, key_len, a, b, c;
+	char *str;
 
-	key_len = strlen(key);
-	l = strlen(ptext);
+	key_len = key.length();
+	l = ptext.length();
+	str = NEW_char(l + 1);
 	for (i = 0, j = 0; i < l; i++, j++) {
 		if (j == key_len) {
 			j = 0;
@@ -161,21 +167,25 @@ void cryptography_domain::vigenere_cipher(char *ptext, char *ctext, char *key)
 			b = (int)(lower_case(key[j]) - 'a');
 			c = a + b;
 			c = c % 26;
-			ctext[i] = 'a' + c;
+			str[i] = 'a' + c;
 		}
 		else {
-			ctext[i] = ptext[i];
+			str[i] = ptext[i];
 		}
 	}
-	ctext[l] = 0;
+	str[l] = 0;
+	ctext.assign(str);
+	FREE_char(str);
 }
 
-void cryptography_domain::vigenere_decipher(char *ctext, char *ptext, char *key)
+void cryptography_domain::vigenere_decipher(std::string &ctext, std::string &ptext, std::string &key)
 {
 	int i, j, l, key_len, a, b, c;
+	char *str;
 
-	key_len = strlen(key);
-	l = strlen(ctext);
+	key_len = key.length();
+	l = ctext.length();
+	str = NEW_char(l + 1);
 	for (i = 0, j = 0; i < l; i++, j++) {
 		if (j == key_len)
 			j = 0;
@@ -185,23 +195,25 @@ void cryptography_domain::vigenere_decipher(char *ctext, char *ptext, char *key)
 			c = a - b;
 			if (c < 0)
 				c += 26;
-			ptext[i] = 'a' + c;
+			str[i] = 'a' + c;
 		}
 		else {
-			ptext[i] = ctext[i];
+			str[i] = ctext[i];
 		}
 	}
-	ptext[l] = 0;
+	str[l] = 0;
+	ptext.assign(str);
+	FREE_char(str);
 }
 
-void cryptography_domain::vigenere_analysis(char *ctext)
+void cryptography_domain::vigenere_analysis(std::string &ctext)
 {
 	int stride, l, n, m, j;
 	int mult[100];
 	double I, II;
 
 	cout.precision(3);
-	l = strlen(ctext);
+	l = ctext.length();
 	cout << "key length : Friedman indices in 1/1000-th : average" << endl;
 	for (stride = 1; stride <= MINIMUM(l, 20); stride++) {
 		m = l / stride;
@@ -216,7 +228,12 @@ void cryptography_domain::vigenere_analysis(char *ctext)
 			else {
 				n = m;
 			}
-			single_frequencies2(ctext + j, stride, n, mult);
+
+			std::string str2;
+
+			str2 = ctext.substr(j, n);
+			single_frequencies2(str2, stride, n, mult);
+
 			//print_frequencies(mult);
 			I = friedman_index(mult, n);
 			if (stride < 20) {
@@ -232,7 +249,7 @@ void cryptography_domain::vigenere_analysis(char *ctext)
 	}
 }
 
-void cryptography_domain::vigenere_analysis2(char *ctext, int key_length)
+void cryptography_domain::vigenere_analysis2(std::string &ctext, int key_length)
 {
 	int i, j, shift, n, m, l, a, h;
 	int mult[100];
@@ -241,7 +258,7 @@ void cryptography_domain::vigenere_analysis2(char *ctext, int key_length)
 	double I;
 	char c;
 
-	l = strlen(ctext);
+	l = ctext.length();
 	m = l / key_length;
 	cout << "    :";
 	for (shift = 0; shift < 26; shift++) {
@@ -259,7 +276,10 @@ void cryptography_domain::vigenere_analysis2(char *ctext, int key_length)
 		else {
 			n = m;
 		}
-		single_frequencies2(ctext + j, key_length, n, mult);
+
+		std::string str = ctext.substr(j, n);
+		single_frequencies2(str, key_length, n, mult);
+
 		//print_frequencies(mult);
 		for (shift = 0; shift < 26; shift++) {
 			I = friedman_index_shifted(mult, n, shift);
@@ -296,7 +316,7 @@ void cryptography_domain::vigenere_analysis2(char *ctext, int key_length)
 	}
 }
 
-int cryptography_domain::kasiski_test(char *ctext, int threshold)
+int cryptography_domain::kasiski_test(std::string &ctext, int threshold)
 {
 	int l, i, j, k, u, h, offset;
 	int *candidates, nb_candidates, *Nb_candidates;
@@ -304,7 +324,7 @@ int cryptography_domain::kasiski_test(char *ctext, int threshold)
 	int g = 0, g1;
 	number_theory_domain NT;
 
-	l = strlen(ctext);
+	l = ctext.length();
 	candidates = new int[l];
 	f_taken = new int[l];
 	Nb_candidates = new int[l];
@@ -373,12 +393,14 @@ int cryptography_domain::kasiski_test(char *ctext, int threshold)
 	return g;
 }
 
-void cryptography_domain::print_candidates(char *ctext, int i, int h, int nb_candidates, int *candidates)
+void cryptography_domain::print_candidates(std::string &ctext,
+		int i, int h, int nb_candidates, int *candidates)
 {
 	int k, j, u;
 
-	if (nb_candidates == 0)
+	if (nb_candidates == 0) {
 		return;
+	}
 	cout << "there are " << nb_candidates << " level " << h << " coincidences with position " << i << endl;
 	for (k = 0; k < nb_candidates; k++) {
 		j = candidates[k];
@@ -405,12 +427,12 @@ void cryptography_domain::print_set(int l, int *s)
 	cout << endl;
 }
 
-void cryptography_domain::print_on_top(char *text1, char *text2)
+void cryptography_domain::print_on_top(std::string &text1, std::string &text2)
 {
 	int i, j, l, l2, lines, line_length;
 
-	l = strlen(text1);
-	l2 = strlen(text1);
+	l = text1.length();
+	l2 = text2.length();
 	if (l2 != l) {
 		cout << "text lengths do not match" << endl;
 		exit(1);
@@ -435,16 +457,16 @@ void cryptography_domain::print_on_top(char *text1, char *text2)
 	}
 }
 
-void cryptography_domain::decipher(char *ctext, char *ptext, char *guess)
+void cryptography_domain::decipher(std::string &ctext, std::string &ptext, std::string &guess)
 {
 	int i, j, l;
-	char key[1000], c1, c2;
+	char str_key[1000], c1, c2;
 
-	l = strlen(guess) / 2;
+	l = guess.length() / 2;
 	for (i = 0; i < 26; i++) {
-		key[i] = '-';
+		str_key[i] = '-';
 	}
-	key[26] = 0;
+	str_key[26] = 0;
 	for (i = 0; i < l; i++) {
 		c1 = guess[2 * i + 0];
 		c2 = guess[2 * i + 1];
@@ -453,12 +475,15 @@ void cryptography_domain::decipher(char *ctext, char *ptext, char *guess)
 		cout << c1 << " -> " << c2 << endl;
 		j = c1 - 'a';
 		//cout << "j=" << j << endl;
-		key[j] = c2;
+		str_key[j] = c2;
 	}
+	string key;
+
+	key.assign(str_key);
 	substition_cipher(ctext, ptext, key);
 }
 
-void cryptography_domain::analyze(char *text)
+void cryptography_domain::analyze(std::string &text)
 {
 	int mult[100];
 	int mult2[100];
@@ -551,11 +576,11 @@ void cryptography_domain::print_frequencies(int *mult)
 	}
 }
 
-void cryptography_domain::single_frequencies(char *text, int *mult)
+void cryptography_domain::single_frequencies(std::string &text, int *mult)
 {
 	int i, l;
 
-	l = strlen(text);
+	l = text.length();
 	for (i = 0; i < 26; i++) {
 		mult[i] = 0;
 	}
@@ -564,7 +589,7 @@ void cryptography_domain::single_frequencies(char *text, int *mult)
 	}
 }
 
-void cryptography_domain::single_frequencies2(char *text, int stride, int n, int *mult)
+void cryptography_domain::single_frequencies2(std::string &text, int stride, int n, int *mult)
 {
 	int i;
 
@@ -576,11 +601,11 @@ void cryptography_domain::single_frequencies2(char *text, int stride, int n, int
 	}
 }
 
-void cryptography_domain::double_frequencies(char *text, int *mult)
+void cryptography_domain::double_frequencies(std::string &text, int *mult)
 {
 	int i, l;
 
-	l = strlen(text);
+	l = text.length();
 	for (i = 0; i < 26; i++) {
 		mult[i] = 0;
 	}
@@ -591,10 +616,11 @@ void cryptography_domain::double_frequencies(char *text, int *mult)
 	}
 }
 
-void cryptography_domain::substition_cipher(char *ptext, char *ctext, char *key)
+void cryptography_domain::substition_cipher(std::string &ptext, std::string &ctext, std::string &key)
 {
 	int i, l;
 	char c;
+	char *str;
 
 	cout << "applying key:" << endl;
 	for (i = 0; i < 26; i++) {
@@ -603,16 +629,19 @@ void cryptography_domain::substition_cipher(char *ptext, char *ctext, char *key)
 	}
 	cout << endl;
 	cout << key << endl;
-	l = strlen(ptext);
+	l = ptext.length();
+	str = NEW_char(l + 1);
 	for (i = 0; i < l; i++) {
 		if (is_alnum(ptext[i])) {
-			ctext[i] = key[lower_case(ptext[i]) - 'a'];
+			str[i] = key[lower_case(ptext[i]) - 'a'];
 		}
 		else {
-			ctext[i] = ptext[i];
+			str[i] = ptext[i];
 		}
 	}
-	ctext[l] = 0;
+	str[l] = 0;
+	ctext.assign(str);
+	FREE_char(str);
 }
 
 char cryptography_domain::lower_case(char c)
@@ -658,7 +687,7 @@ char cryptography_domain::is_alnum(char c)
 	return FALSE;
 }
 
-void cryptography_domain::get_random_permutation(char *p)
+void cryptography_domain::get_random_permutation(std::string &p)
 {
 	char digits[100];
 	int i, j, k, l;
@@ -677,6 +706,7 @@ void cryptography_domain::get_random_permutation(char *p)
 		}
 		l--;
 	}
+	p.assign(digits);
 }
 
 

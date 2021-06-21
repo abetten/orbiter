@@ -82,9 +82,7 @@ void BLT_set_create::init(
 	
 	if (Descr->f_family) {
 		if (f_v) {
-			cout << "BLT_set_create::init before "
-					"Surf->create_surface_family family_name="
-					<< Descr->family_name << endl;
+			cout << "BLT_set_create::init family_name=" << Descr->family_name << endl;
 		}
 
 		char str[1000];

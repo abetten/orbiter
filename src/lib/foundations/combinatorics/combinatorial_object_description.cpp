@@ -458,6 +458,171 @@ int combinatorial_object_description::read_arguments(int argc, std::string *argv
 	return i + 1;
 }
 
+void combinatorial_object_description::print()
+{
+	if (f_q) {
+		cout << "-q " << q << endl;
+	}
+	if (f_Q) {
+		cout << "-Q " << Q << endl;
+	}
+	if (f_n) {
+		cout << "-n " << n << endl;
+	}
+	if (f_hyperoval) {
+		cout << "-hyperoval " << endl;
+	}
+	if (f_subiaco_oval) {
+		cout << "-subiaco_oval " << f_short << endl;
+	}
+	if (f_subiaco_hyperoval) {
+		cout << "-subiaco_hyperoval " << endl;
+	}
+	if (f_adelaide_hyperoval) {
+		cout << "-adelaide_hyperoval " << endl;
+	}
+	if (f_translation) {
+		cout << "-translation " << translation_exponent << endl;
+	}
+	if (f_Segre) {
+		cout << "-segre" << endl;
+	}
+	if (f_Payne) {
+		cout << "-Payne" << endl;
+	}
+	if (f_Cherowitzo) {
+		cout << "-Cherowitzo" << endl;
+	}
+	if (f_OKeefe_Penttila) {
+		cout << "-OKeefe_Penttila" << endl;
+	}
+
+
+	if (f_BLT_database) {
+		cout << "-BLT_database " << BLT_k << endl;
+	}
+	if (f_BLT_in_PG) {
+		cout << "-BLT_in_PG " << endl;
+	}
+
+	if (f_ovoid) {
+		cout << "-ovoid " << endl;
+	}
+	if (f_Baer) {
+		cout << "-Baer " << endl;
+	}
+	if (f_orthogonal) {
+		cout << "-orthogonal " << orthogonal_epsilon << endl;
+	}
+	if (f_hermitian) {
+		cout << "-hermitian" << endl;
+	}
+	if (f_cuspidal_cubic) {
+		cout << "-cuspidal_cubic " << endl;
+	}
+	if (f_twisted_cubic) {
+		f_twisted_cubic = TRUE;
+		cout << "-twisted_cubic " << endl;
+	}
+	if (f_elliptic_curve) {
+		cout << "-elliptic_curve " << elliptic_curve_b
+				<< " " << elliptic_curve_c << endl;
+	}
+	if (f_ttp_construction_A) {
+		cout << "-ttp_construction_A" << endl;
+	}
+	if (f_ttp_construction_A && f_hyperoval) {
+		cout << "-ttp_construction_A_hyperoval" << endl;
+	}
+	if (f_ttp_construction_B) {
+		cout << "-ttp_construction_B" << endl;
+	}
+	if (f_unital_XXq_YZq_ZYq) {
+		cout << "-unital_XXq_YZq_ZYq" << endl;
+	}
+	if (f_desarguesian_line_spread_in_PG_3_q) {
+		cout << "-desarguesian_line_spread_in_PG_3_q" << endl;
+	}
+	if (f_embedded_in_PG_4_q) {
+		cout << "-embedded_in_PG_4_q" << endl;
+	}
+	if (f_Buekenhout_Metz) {
+		cout << "-Buekenhout_Metz " << endl;
+	}
+	if (f_classical) {
+		cout << "-classical " << endl;
+	}
+	if (f_Uab) {
+		cout << "-Uab " << parameter_a << " " << parameter_b << endl;
+	}
+	if (f_whole_space) {
+		cout << "-whole_space " << endl;
+	}
+	if (f_hyperplane) {
+		cout << "-hyperplane " << pt << endl;
+	}
+	if (f_segre_variety) {
+		cout << "-segre_variety " << segre_variety_a
+				<< " " << segre_variety_b << endl;
+	}
+	if (f_Maruta_Hamada_arc) {
+		cout << "-Maruta_Hamada_arc " << endl;
+	}
+#if 0
+	if (stringcmp(argv[i], "-poly") == 0) {
+		f_poly = TRUE;
+		poly.assign(argv[++i]);
+		cout << "-poly " << poly << endl;
+	}
+	if (stringcmp(argv[i], "-poly_Q") == 0) {
+		f_poly_Q = TRUE;
+		poly_Q.assign(argv[++i]);
+		cout << "-poly_Q " << poly_Q << endl;
+	}
+#endif
+	if (f_projective_variety) {
+		cout << "-projective_variety "
+				<< variety_label << " "
+				<< variety_degree << " "
+				<< variety_coeffs << endl;
+	}
+	if (f_intersection_of_zariski_open_sets) {
+		cout << "-intersection_of_zariski_open_sets "
+				<< variety_label << " "
+				<< variety_degree << " "
+				<< n << endl;
+		int j;
+		for (j = 0; j < n; j++) {
+			cout << j << " : " << Variety_coeffs[j] << endl;
+		}
+	}
+
+
+	if (f_number_of_conditions_satisfied) {
+		cout << "-number_of_conditions_satisfied "
+				<< variety_label << " "
+				<< variety_degree << " "
+				<< n << endl;
+		int j;
+		for (j = 0; j < n; j++) {
+			cout << j << " : " << Variety_coeffs[j] << endl;
+		}
+	}
+
+
+
+	if (f_projective_curve) {
+		cout << "-projective_curve "
+				<< curve_label << " "
+				<< curve_nb_vars << " "
+				<< curve_degree << " "
+				<< curve_coeffs << endl;
+	}
+	if (f_set) {
+		cout << "-set " << set_text << endl;
+	}
+}
+
 
 
 

@@ -31,8 +31,8 @@ interface_combinatorics::interface_combinatorics()
 	f_diophant_activity = FALSE;
 	Diophant_activity_description = NULL;
 
-	f_process_combinatorial_objects = FALSE;
-	Job_description = NULL;
+	//f_process_combinatorial_objects = FALSE;
+	//Job_description = NULL;
 
 	f_bent = FALSE;
 	bent_n = 0;
@@ -126,9 +126,11 @@ void interface_combinatorics::print_help(int argc,
 	else if (stringcmp(argv[i], "-diophant_activity") == 0) {
 		cout << "-diophant_activity <description> " << endl;
 	}
+#if 0
 	else if (stringcmp(argv[i], "-process_combinatorial_objects") == 0) {
 		cout << "-process_combinatorial_objects " << endl;
 	}
+#endif
 	else if (stringcmp(argv[i], "-bent") == 0) {
 		cout << "-bent <int : n>" << endl;
 	}
@@ -212,9 +214,11 @@ int interface_combinatorics::recognize_keyword(int argc,
 	else if (stringcmp(argv[i], "-diophant_activity") == 0) {
 		return true;
 	}
+#if 0
 	else if (stringcmp(argv[i], "-process_combinatorial_objects") == 0) {
 		return true;
 	}
+#endif
 	else if (stringcmp(argv[i], "-bent") == 0) {
 		return true;
 	}
@@ -343,6 +347,7 @@ void interface_combinatorics::read_arguments(int argc,
 			cout << "next argument is " << argv[i] << endl;
 		}
 	}
+#if 0
 	else if (stringcmp(argv[i], "-process_combinatorial_objects") == 0) {
 		f_process_combinatorial_objects = TRUE;
 
@@ -359,6 +364,7 @@ void interface_combinatorics::read_arguments(int argc,
 			cout << "next argument is " << argv[i] << endl;
 		}
 	}
+#endif
 	else if (stringcmp(argv[i], "-bent") == 0) {
 		f_bent = TRUE;
 		bent_n = strtoi(argv[++i]);
@@ -562,6 +568,112 @@ void interface_combinatorics::read_arguments(int argc,
 }
 
 
+void interface_combinatorics::print()
+{
+	if (f_create_combinatorial_object) {
+		cout << "-create_combinatorial_object " << endl;
+		Combinatorial_object_description->print();
+	}
+	if (f_diophant) {
+		cout << "-diophant " << endl;
+		Diophant_description->print();
+	}
+	if (f_diophant_activity) {
+		cout << "-diophant_activity " << endl;
+		Diophant_activity_description->print();
+	}
+#if 0
+	if (f_process_combinatorial_objects) {
+		cout << "-process_combinatorial_objects " << endl;
+		Job_description->print();
+	}
+#endif
+	if (f_bent) {
+		cout << "-bent " << bent_n << endl;
+	}
+	if (f_random_permutation) {
+		cout << "-random_permutation " << random_permutation_degree << endl;
+	}
+	if (f_read_poset_file) {
+		cout << "-read_poset_file " << read_poset_file_fname << endl;
+	}
+	if (f_read_poset_file) {
+		cout << "-read_poset_file_with_grouping "
+				<< read_poset_file_fname << " " << x_stretch << endl;
+	}
+	if (f_list_parameters_of_SRG) {
+		cout << "-list_parameters_of_SRG " << v_max << endl;
+	}
+	if (f_conjugacy_classes_Sym_n) {
+		cout << "-conjugacy_classes_Sym_n " << n << endl;
+	}
+	if (f_tree_of_all_k_subsets) {
+		cout << "-tree_of_all_k_subsets " << tree_n << " " << tree_k << endl;
+	}
+	if (f_Delandtsheer_Doyen) {
+		cout << "-Delandtsheer_Doyen" << endl;
+		//Delandtsheer_Doyen_description->print();
+	}
+	if (f_tdo_refinement) {
+		cout << "-tdo_refinement " << endl;
+		//Tdo_refinement_descr->print();
+	}
+	if (f_tdo_print) {
+		cout << "-tdo_print " << tdo_print_fname << endl;
+	}
+	if (f_create_design) {
+		cout << "-create_design" << endl;
+		Design_create_description->print();
+	}
+	if (f_convert_stack_to_tdo) {
+		cout << "-convert_stack_to_tdo " << stack_fname << endl;
+	}
+	if (f_maximal_arc_parameters) {
+		cout << "-maximal_arc_parameters " << maximal_arc_parameters_q
+				<< " " << maximal_arc_parameters_r << endl;
+	}
+	if (f_arc_parameters) {
+		cout << "-arc_parameters " << arc_parameters_q
+				<< " " << arc_parameters_s
+				<< " " << arc_parameters_r
+				<< endl;
+	}
+	if (f_pentomino_puzzle) {
+		cout << "-pentomino_puzzle " <<endl;
+	}
+	if (f_regular_linear_space_classify) {
+		cout << "-regular_linear_space_classify " << endl;
+		//Rls_descr->print();
+	}
+	if (f_create_files) {
+		cout << "-create_files " << endl;
+		//Create_file_description->print();
+	}
+	if (f_draw_layered_graph) {
+		cout << "-draw_layered_graph " << endl;
+	}
+	if (f_read_solutions_and_tally) {
+		cout << "-read_solutions_and_tally " << read_solutions_and_tally_fname
+				<< " " << read_solutions_and_tally_sz << endl;
+	}
+
+	if (f_make_elementary_symmetric_functions) {
+		cout << "-make_elementary_symmetric_functions " << make_elementary_symmetric_functions_n
+				<< " " << make_elementary_symmetric_functions_k_max << endl;
+	}
+	if (f_Dedekind_numbers) {
+		cout << "-Dedekind_numbers " << Dedekind_n_min
+				<< " " << Dedekind_n_max
+				<< " " << Dedekind_q_min
+				<< " " << Dedekind_q_max
+				<< " " << endl;
+	}
+	if (f_canonical_form_nauty) {
+		cout << "-canonical_form_nauty" << endl;
+	}
+}
+
+
 void interface_combinatorics::worker(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -578,9 +690,11 @@ void interface_combinatorics::worker(int verbose_level)
 	else if (f_diophant_activity) {
 		do_diophant_activity(Diophant_activity_description, verbose_level);
 	}
+#if 0
 	else if (f_process_combinatorial_objects) {
 		do_process_combinatorial_object(verbose_level);
 	}
+#endif
 	else if (f_bent) {
 		do_bent(bent_n, verbose_level);
 	}
@@ -854,6 +968,7 @@ void interface_combinatorics::do_diophant_activity(
 	}
 }
 
+#if 0
 void interface_combinatorics::do_process_combinatorial_object(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -862,6 +977,7 @@ void interface_combinatorics::do_process_combinatorial_object(int verbose_level)
 		cout << "interface_combinatorics::do_process_combinatorial_object" << endl;
 	}
 
+#if 0
 	if (!Job_description->f_q) {
 		cout << "please use option -q <q> within the job description" << endl;
 		exit(1);
@@ -871,6 +987,7 @@ void interface_combinatorics::do_process_combinatorial_object(int verbose_level)
 				"dimension within the job description" << endl;
 		exit(1);
 	}
+#endif
 	if (!Job_description->f_fname_base_out) {
 		cout << "please use option -fname_base_out <fname_base_out> "
 				"within the job description" << endl;
@@ -885,6 +1002,7 @@ void interface_combinatorics::do_process_combinatorial_object(int verbose_level)
 		cout << "interface_combinatorics::do_process_combinatorial_object done" << endl;
 	}
 }
+#endif
 
 void interface_combinatorics::do_bent(int n, int verbose_level)
 {

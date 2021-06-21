@@ -174,6 +174,17 @@ void interface_povray::read_arguments(int argc, std::string *argv, int &i, int v
 	}
 }
 
+void interface_povray::print()
+{
+	if (f_povray) {
+		cout << "-povray " << endl;
+		S->print();
+	}
+	if (f_prepare_frames) {
+		Prepare_frames->print();
+	}
+}
+
 void interface_povray::worker(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

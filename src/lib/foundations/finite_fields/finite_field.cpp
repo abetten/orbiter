@@ -138,12 +138,12 @@ void finite_field::init(finite_field_description *Descr, int verbose_level)
 			cout << "finite_field::init override_polynomial=" << Descr->override_polynomial << endl;
 		}
 		init_override_polynomial(Descr->q,
-				Descr->override_polynomial, verbose_level);
+				Descr->override_polynomial, 0 /*verbose_level*/);
 
 
 	}
 	else {
-		finite_field_init(Descr->q, verbose_level);
+		finite_field_init(Descr->q, 0 /*verbose_level*/);
 
 	}
 	if (f_v) {

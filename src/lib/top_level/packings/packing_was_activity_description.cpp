@@ -68,6 +68,18 @@ int packing_was_activity_description::read_arguments(
 	return i + 1;
 }
 
+void packing_was_activity_description::print()
+{
+	if (f_report) {
+		cout << "-report" << endl;
+	}
+	if (f_export_reduced_spread_orbits) {
+		cout << "-export_reduced_spread_orbits " << export_reduced_spread_orbits_fname_base << endl;
+	}
+}
+
+
+
 
 }}
 

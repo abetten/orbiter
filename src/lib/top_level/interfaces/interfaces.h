@@ -15,6 +15,94 @@ namespace orbiter {
 namespace top_level {
 
 
+// #############################################################################
+// activity_description.cpp
+// #############################################################################
+
+//! description of an activity for an orbiter symbol
+
+
+class activity_description {
+
+	interface_symbol_table *Sym;
+
+
+	int f_finite_field_activity;
+	finite_field_activity_description *Finite_field_activity_description;
+
+	int f_projective_space_activity;
+	projective_space_activity_description *Projective_space_activity_description;
+
+	int f_orthogonal_space_activity;
+	orthogonal_space_activity_description *Orthogonal_space_activity_description;
+
+	int f_group_theoretic_activity;
+	group_theoretic_activity_description *Group_theoretic_activity_description;
+
+	int f_cubic_surface_activity;
+	cubic_surface_activity_description *Cubic_surface_activity_description;
+
+	int f_quartic_curve_activity;
+	quartic_curve_activity_description *Quartic_curve_activity_description;
+
+	int f_combinatorial_object_activity;
+	combinatorial_object_activity_description *Combinatorial_object_activity_description;
+
+	int f_graph_theoretic_activity;
+	graph_theoretic_activity_description * Graph_theoretic_activity_description;
+
+	int f_classification_of_cubic_surfaces_with_double_sixes_activity;
+	classification_of_cubic_surfaces_with_double_sixes_activity_description *Classification_of_cubic_surfaces_with_double_sixes_activity_description;
+
+	int f_spread_table_activity;
+	spread_table_activity_description * Spread_table_activity_description;
+
+	int f_packing_with_symmetry_assumption_activity;
+	packing_was_activity_description *Packing_was_activity_description;
+
+	int f_packing_fixed_points_activity;
+	packing_was_fixpoints_activity_description *Packing_was_fixpoints_activity_description;
+
+	int f_graph_classification_activity;
+	graph_classification_activity_description *Graph_classification_activity_description;
+
+	int f_diophant_activity;
+	diophant_activity_description *Diophant_activity_description;
+
+	int f_design_activity;
+	design_activity_description *Design_activity_description;
+
+	int f_large_set_was_activity;
+	large_set_was_activity_description *Large_set_was_activity_description;
+
+public:
+	activity_description();
+	~activity_description();
+	void read_arguments(
+			interface_symbol_table *Sym,
+			int argc, std::string *argv, int &i, int verbose_level);
+	void worker(int verbose_level);
+	void print();
+	void do_finite_field_activity(int verbose_level);
+	void print_finite_field_activity();
+	void do_projective_space_activity(int verbose_level);
+	void do_orthogonal_space_activity(int verbose_level);
+	void do_group_theoretic_activity(int verbose_level);
+	void do_cubic_surface_activity(int verbose_level);
+	void do_quartic_curve_activity(int verbose_level);
+	void do_combinatorial_object_activity(int verbose_level);
+	void do_graph_theoretic_activity(int verbose_level);
+	void do_classification_of_cubic_surfaces_with_double_sixes_activity(int verbose_level);
+	void do_spread_table_activity(int verbose_level);
+	void do_packing_was_activity(int verbose_level);
+	void do_packing_fixed_points_activity(int verbose_level);
+	void do_graph_classification_activity(int verbose_level);
+	void do_diophant_activity(int verbose_level);
+	void do_design_activity(int verbose_level);
+	void do_large_set_was_activity(int verbose_level);
+
+};
+
 
 
 // #############################################################################
@@ -64,6 +152,7 @@ public:
 	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
 	void read_arguments(int argc,
 			std::string *argv, int &i, int verbose_level);
+	void print();
 	void worker(int verbose_level);
 	void do_linear_group(
 			linear_group_description *Descr, int verbose_level);
@@ -156,6 +245,7 @@ public:
 	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
 	void read_arguments(int argc,
 			std::string *argv, int &i, int verbose_level);
+	void print();
 	void worker(int verbose_level);
 };
 
@@ -178,8 +268,8 @@ class interface_combinatorics {
 	int f_diophant_activity;
 	diophant_activity_description *Diophant_activity_description;
 
-	int f_process_combinatorial_objects;
-	projective_space_job_description *Job_description;
+	//int f_process_combinatorial_objects;
+	//projective_space_job_description *Job_description;
 
 	int f_bent;
 	int bent_n;
@@ -261,11 +351,11 @@ public:
 	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
 	void read_arguments(int argc,
 			std::string *argv, int &i, int verbose_level);
+	void print();
 	void worker(int verbose_level);
 	void do_create_combinatorial_object(int verbose_level);
 	void do_diophant(diophant_description *Descr, int verbose_level);
 	void do_diophant_activity(diophant_activity_description *Descr, int verbose_level);
-	void do_process_combinatorial_object(int verbose_level);
 	void do_bent(int n, int verbose_level);
 	void do_conjugacy_classes_Sym_n(int n, int verbose_level);
 	void do_Delandtsheer_Doyen(delandtsheer_doyen_description *Descr, int verbose_level);
@@ -296,10 +386,12 @@ class interface_cryptography {
 	int key_length, threshold;
 	int affine_a;
 	int affine_b;
-	char ptext[1000];
-	char ctext[1000];
-	char guess[1000];
-	char key[1000];
+
+	std::string ptext;
+	std::string ctext;
+	std::string guess;
+	std::string key;
+
 	int f_RSA;
 	long int RSA_d;
 	long int RSA_m;
@@ -391,6 +483,7 @@ public:
 	void print_help(int argc, std::string *argv, int i, int verbose_level);
 	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
 	void read_arguments(int argc, std::string *argv, int &i, int verbose_level);
+	void print();
 	void worker(int verbose_level);
 
 
@@ -428,6 +521,7 @@ public:
 	void print_help(int argc, std::string *argv, int i, int verbose_level);
 	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
 	void read_arguments(int argc, std::string *argv, int &i, int verbose_level);
+	void print();
 	void worker(int verbose_level);
 };
 
@@ -492,6 +586,7 @@ public:
 	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
 	void read_arguments(int argc,
 			std::string *argv, int &i, int verbose_level);
+	void print();
 	void worker(int verbose_level);
 	void do_cheat_sheet_PG(orbiter_session *Session,
 			int n, int q,
@@ -515,229 +610,39 @@ public:
 
 class interface_symbol_table {
 
+public:
+	orbiter_top_level_session *Orbiter_top_level_session;
+
+
 	int f_define;
-	std::string define_label;
-
-	int f_finite_field;
-	finite_field_description *Finite_field_description;
-
-	int f_projective_space;
-	projective_space_with_action_description *Projective_space_with_action_description;
-
-	int f_orthogonal_space;
-	orthogonal_space_with_action_description *Orthogonal_space_with_action_description;
-
-	int f_linear_group;
-	linear_group_description *Linear_group_description;
-
-	int f_combinatorial_object;
-	combinatorial_object_description *Combinatorial_object_description;
-
-	int f_graph;
-	create_graph_description *Create_graph_description;
-
-	int f_spread_table;
-	std::string spread_table_label_PA;
-	int dimension_of_spread_elements;
-	std::string spread_selection_text;
-	std::string spread_tables_prefix;
-
-	int f_packing_was;
-	std::string packing_was_label_spread_table;
-	packing_was_description * packing_was_descr;
-
-	int f_packing_was_choose_fixed_points;
-	std::string packing_with_assumed_symmetry_label;
-	int packing_with_assumed_symmetry_choose_fixed_points_clique_size;
-	poset_classification_control *packing_with_assumed_symmetry_choose_fixed_points_control;
-
-
-	int f_packing_long_orbits;
-	std::string packing_long_orbits_choose_fixed_points_label;
-	packing_long_orbits_description * Packing_long_orbits_description;
-
-	int f_graph_classification;
-	graph_classify_description * Graph_classify_description;
-
-	int f_diophant;
-	diophant_description *Diophant_description;
-
-	int f_design;
-	design_create_description *Design_create_description;
-
-	int f_design_table;
-	std::string design_table_label_design;
-	std::string design_table_label;
-	std::string design_table_go_text;
-	std::string design_table_generators_data;
-
-
-	int f_large_set_was;
-	std::string  large_set_was_label_design_table;
-	large_set_was_description *large_set_was_descr;
+	symbol_definition *Symbol_definition;
 
 
 
 	int f_print_symbols;
+
 	int f_with;
 	std::vector<std::string> with_labels;
 
-	int f_finite_field_activity;
-	finite_field_activity_description *Finite_field_activity_description;
+	int f_activity;
+	activity_description *Activity_description;
 
-	int f_projective_space_activity;
-	projective_space_activity_description *Projective_space_activity_description;
 
-	int f_orthogonal_space_activity;
-	orthogonal_space_activity_description *Orthogonal_space_activity_description;
 
-	int f_group_theoretic_activity;
-	group_theoretic_activity_description *Group_theoretic_activity_description;
-
-	int f_cubic_surface_activity;
-	cubic_surface_activity_description *Cubic_surface_activity_description;
-
-	int f_quartic_curve_activity;
-	quartic_curve_activity_description *Quartic_curve_activity_description;
-
-	int f_combinatorial_object_activity;
-	combinatorial_object_activity_description *Combinatorial_object_activity_description;
-
-	int f_graph_theoretic_activity;
-	graph_theoretic_activity_description * Graph_theoretic_activity_description;
-
-	int f_classification_of_cubic_surfaces_with_double_sixes_activity;
-	classification_of_cubic_surfaces_with_double_sixes_activity_description *Classification_of_cubic_surfaces_with_double_sixes_activity_description;
-
-	int f_spread_table_activity;
-	spread_table_activity_description * Spread_table_activity_description;
-
-	int f_packing_with_symmetry_assumption_activity;
-	packing_was_activity_description *Packing_was_activity_description;
-
-	int f_packing_fixed_points_activity;
-	packing_was_fixpoints_activity_description *Packing_was_fixpoints_activity_description;
-
-	int f_graph_classification_activity;
-	graph_classification_activity_description *Graph_classification_activity_description;
-
-	int f_diophant_activity;
-	diophant_activity_description *Diophant_activity_description;
-
-	int f_design_activity;
-	design_activity_description *Design_activity_description;
-
-	int f_large_set_was_activity;
-	large_set_was_activity_description *Large_set_was_activity_description;
-
-public:
 
 
 	interface_symbol_table();
+	void init(orbiter_top_level_session *Orbiter_top_level_session,
+			int verbose_level);
 	void print_help(int argc, std::string *argv, int i, int verbose_level);
 	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
 	void read_arguments(
-			orbiter_top_level_session *Orbiter_top_level_session,
-			int argc, std::string *argv, int &i, int verbose_level);
-	void read_definition(
-			orbiter_top_level_session *Orbiter_top_level_session,
 			int argc, std::string *argv, int &i, int verbose_level);
 	void read_with(
-			orbiter_top_level_session *Orbiter_top_level_session,
 			int argc, std::string *argv, int &i, int verbose_level);
-	void read_activity_arguments(int argc,
-			std::string *argv, int &i, int verbose_level);
-	void worker(orbiter_top_level_session *Orbiter_top_level_session, int verbose_level);
-
-
-	// interface_symbol_table_activity.cpp:
-
-	void do_finite_field_activity(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void do_projective_space_activity(
-			orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void do_orthogonal_space_activity(
-			orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void do_group_theoretic_activity(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void do_cubic_surface_activity(
-			orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void do_quartic_curve_activity(
-			orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void do_combinatorial_object_activity(
-			orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void do_graph_theoretic_activity(
-			orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void do_classification_of_cubic_surfaces_with_double_sixes_activity(
-			orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void do_spread_table_activity(
-			orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void do_packing_was_activity(
-			orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void do_packing_fixed_points_activity(
-			orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void do_graph_classification_activity(
-			orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void do_diophant_activity(
-			orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void do_design_activity(
-			orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void do_large_set_was_activity(
-			orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-
-
-	// interface_symbol_table_definition.cpp:
-	void definition_of_finite_field(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void definition_of_projective_space(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void definition_of_orthogonal_space(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void definition_of_linear_group(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void definition_of_formula(orbiter_top_level_session *Orbiter_top_level_session,
-			formula *F,
-			int verbose_level);
-	void definition_of_collection(orbiter_top_level_session *Orbiter_top_level_session,
-			std::string &list_of_objects,
-			int verbose_level);
-	void definition_of_combinatorial_object(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void definition_of_graph(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void definition_of_spread_table(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void definition_of_packing_was(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void definition_of_packing_was_choose_fixed_points(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void definition_of_packing_long_orbits(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void definition_of_graph_classification(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void definition_of_diophant(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void definition_of_design(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void definition_of_design_table(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-	void definition_of_large_set_was(orbiter_top_level_session *Orbiter_top_level_session,
-			int verbose_level);
-
+	void worker(int verbose_level);
+	void print();
+	void print_with();
 
 };
 
@@ -828,7 +733,57 @@ public:
 	int recognize_keyword(int argc, std::string *argv, int i, int verbose_level);
 	void read_arguments(int argc,
 			std::string *argv, int &i, int verbose_level);
+	void print();
 	void worker(int verbose_level);
+
+};
+
+// #############################################################################
+// orbiter_command.cpp
+// #############################################################################
+
+
+
+//! a command unit
+
+
+class orbiter_command {
+
+public:
+
+	orbiter_top_level_session *Orbiter_top_level_session;
+
+
+	int f_algebra;
+	interface_algebra *Algebra;
+
+	int f_coding_theory;
+	interface_coding_theory *Coding_theory;
+
+	int f_combinatorics;
+	interface_combinatorics *Combinatorics;
+
+	int f_cryptography;
+	interface_cryptography *Cryptography;
+
+	int f_povray;
+	interface_povray *Povray;
+
+	int f_projective;
+	interface_projective *Projective;
+
+	int f_symbol_table;
+	interface_symbol_table *Symbol_table;
+
+	int f_toolkit;
+	interface_toolkit *Toolkit;
+
+	orbiter_command();
+	~orbiter_command();
+	void parse(orbiter_top_level_session *Orbiter_top_level_session,
+			int argc, std::string *Argv, int &i, int verbose_level);
+	void execute(int verbose_level);
+	void print();
 
 };
 
@@ -846,7 +801,6 @@ class orbiter_top_level_session {
 
 public:
 
-
 	orbiter_session *Orbiter_session;
 
 	orbiter_top_level_session();
@@ -855,6 +809,7 @@ public:
 			std::string *argv, int i0);
 	void handle_everything(int argc, std::string *Argv, int i, int verbose_level);
 	void parse_and_execute(int argc, std::string *Argv, int i, int verbose_level);
+	void parse(int argc, std::string *Argv, int &i, std::vector<void * > &program, int verbose_level);
 	void *get_object(int idx);
 	int find_symbol(std::string &label);
 	void find_symbols(std::vector<std::string> &Labels, int *&Idx);
@@ -865,6 +820,119 @@ public:
 };
 
 
+
+// #############################################################################
+// symbol_definition.cpp
+// #############################################################################
+
+//! definition of an orbiter symbol
+
+
+class symbol_definition {
+
+public:
+	interface_symbol_table *Sym;
+
+
+	std::string define_label;
+
+	int f_finite_field;
+	finite_field_description *Finite_field_description;
+
+	int f_projective_space;
+	projective_space_with_action_description *Projective_space_with_action_description;
+
+	int f_orthogonal_space;
+	orthogonal_space_with_action_description *Orthogonal_space_with_action_description;
+
+	int f_linear_group;
+	linear_group_description *Linear_group_description;
+
+	int f_formula;
+	formula *F;
+	std::string label;
+	std::string label_tex;
+	std::string managed_variables;
+	std::string formula_text;
+
+	int f_collection;
+	std::string list_of_objects;
+
+	int f_combinatorial_object;
+	combinatorial_object_description *Combinatorial_object_description;
+
+	int f_graph;
+	create_graph_description *Create_graph_description;
+
+	int f_spread_table;
+	std::string spread_table_label_PA;
+	int dimension_of_spread_elements;
+	std::string spread_selection_text;
+	std::string spread_tables_prefix;
+
+	int f_packing_was;
+	std::string packing_was_label_spread_table;
+	packing_was_description * packing_was_descr;
+
+	int f_packing_was_choose_fixed_points;
+	std::string packing_with_assumed_symmetry_label;
+	int packing_with_assumed_symmetry_choose_fixed_points_clique_size;
+	poset_classification_control *packing_with_assumed_symmetry_choose_fixed_points_control;
+
+
+	int f_packing_long_orbits;
+	std::string packing_long_orbits_choose_fixed_points_label;
+	packing_long_orbits_description * Packing_long_orbits_description;
+
+	int f_graph_classification;
+	graph_classify_description * Graph_classify_description;
+
+	int f_diophant;
+	diophant_description *Diophant_description;
+
+	int f_design;
+	design_create_description *Design_create_description;
+
+	int f_design_table;
+	std::string design_table_label_design;
+	std::string design_table_label;
+	std::string design_table_go_text;
+	std::string design_table_generators_data;
+
+
+	int f_large_set_was;
+	std::string  large_set_was_label_design_table;
+	large_set_was_description *large_set_was_descr;
+
+	symbol_definition();
+	~symbol_definition();
+	void read_definition(
+			interface_symbol_table *Sym,
+			int argc, std::string *argv, int &i, int verbose_level);
+	void perform_definition(int verbose_level);
+	void print();
+	void definition_of_finite_field(int verbose_level);
+	void definition_of_projective_space(int verbose_level);
+	void print_definition_of_projective_space(int verbose_level);
+	void definition_of_orthogonal_space(int verbose_level);
+	void definition_of_linear_group(int verbose_level);
+	void definition_of_formula(formula *F,
+			int verbose_level);
+	void definition_of_collection(std::string &list_of_objects,
+			int verbose_level);
+	void definition_of_combinatorial_object(int verbose_level);
+	void definition_of_graph(int verbose_level);
+	void definition_of_spread_table(int verbose_level);
+	void definition_of_packing_was(int verbose_level);
+	void definition_of_packing_was_choose_fixed_points(int verbose_level);
+	void definition_of_packing_long_orbits(int verbose_level);
+	void definition_of_graph_classification(int verbose_level);
+	void definition_of_diophant(int verbose_level);
+	void definition_of_design(int verbose_level);
+	void definition_of_design_table(int verbose_level);
+	void definition_of_large_set_was(int verbose_level);
+
+};
 
 
 

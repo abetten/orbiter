@@ -98,6 +98,30 @@ int large_set_was_description::read_arguments(int argc, std::string *argv,
 	return i + 1;
 }
 
+void large_set_was_description::print()
+{
+	if (f_H) {
+		cout << "-H " << H_go
+				<< " " << H_generators_text
+				<< endl;
+	}
+
+	if (f_N) {
+		cout << "-N " << N_go
+				<< " " << N_generators_text
+				<< endl;
+	}
+	if (f_report) {
+		cout << "-report " << endl;
+	}
+	if (f_prefix) {
+		cout << "-prefix " << prefix << endl;
+	}
+	if (f_selected_orbit_length) {
+		cout << "-selected_orbit_length " << selected_orbit_length << endl;
+	}
+}
+
 
 
 }}

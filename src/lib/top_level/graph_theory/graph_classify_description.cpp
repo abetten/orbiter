@@ -137,6 +137,38 @@ int graph_classify_description::read_arguments(int argc, std::string *argv,
 	return i + 1;
 }
 
+void graph_classify_description::print()
+{
+	if (f_regular) {
+		cout << "-regular " << regularity << endl;
+	}
+	if (f_control) {
+	}
+	if (f_n) {
+		cout << "-n " << n << endl;
+	}
+	if (f_girth) {
+		cout << "-girth " << girth << endl;
+	}
+	if (f_tournament) {
+		cout << "-tournament " << endl;
+	}
+	if (f_no_superking) {
+		cout << "-no_superking " << endl;
+	}
+	if (f_test_multi_edge) {
+		cout << "-test_multi_edge " << endl;
+	}
+	if (f_identify) {
+		cout << "-identify ";
+		Orbiter->Lint_vec.print(cout, identify_data, identify_data_sz);
+		cout << endl;
+	}
+	if (f_depth) {
+		cout << "-depth " << depth << endl;
+	}
+}
+
 
 }}
 

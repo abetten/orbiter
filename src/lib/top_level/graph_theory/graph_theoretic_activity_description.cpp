@@ -52,9 +52,12 @@ int graph_theoretic_activity_description::read_arguments(
 	int argc, std::string *argv,
 	int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i;
 
-	cout << "graph_theoretic_activity_description::read_arguments" << endl;
+	if (f_v) {
+		cout << "graph_theoretic_activity_description::read_arguments" << endl;
+	}
 	for (i = 0; i < argc; i++) {
 		if (stringcmp(argv[i], "-find_cliques") == 0) {
 			f_find_cliques = TRUE;
@@ -63,44 +66,64 @@ int graph_theoretic_activity_description::read_arguments(
 		}
 		else if (stringcmp(argv[i], "-export_magma") == 0) {
 			f_export_magma = TRUE;
-			cout << "-export_magma" << endl;
+			if (f_v) {
+				cout << "-export_magma" << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-export_maple") == 0) {
 			f_export_maple = TRUE;
-			cout << "-export_maple" << endl;
+			if (f_v) {
+				cout << "-export_maple" << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-export_csv") == 0) {
 			f_export_csv = TRUE;
-			cout << "-export_csv" << endl;
+			if (f_v) {
+				cout << "-export_csv" << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-export_graphviz") == 0) {
 			f_export_graphviz = TRUE;
-			cout << "-export_graphviz" << endl;
+			if (f_v) {
+				cout << "-export_graphviz" << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-print") == 0) {
 			f_print = TRUE;
-			cout << "-print" << endl;
+			if (f_v) {
+				cout << "-print" << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-sort_by_colors") == 0) {
 			f_sort_by_colors = TRUE;
-			cout << "-sort_by_colors " << endl;
+			if (f_v) {
+				cout << "-sort_by_colors " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-split") == 0) {
 			f_split = TRUE;
 			split_input_fname.assign(argv[++i]);
 			split_by_file.assign(argv[++i]);
-			cout << "-split " << split_input_fname << " " << split_by_file << endl;
+			if (f_v) {
+				cout << "-split " << split_input_fname << " " << split_by_file << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-save") == 0) {
 			f_save = TRUE;
-			cout << "-save " << endl;
+			if (f_v) {
+				cout << "-save " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-automorphism_group") == 0) {
 			f_automorphism_group = TRUE;
-			cout << "-automorphism_group " << endl;
+			if (f_v) {
+				cout << "-automorphism_group " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-end") == 0) {
-			cout << "-end" << endl;
+			if (f_v) {
+				cout << "-end" << endl;
+			}
 			break;
 			}
 		else {
@@ -109,8 +132,45 @@ int graph_theoretic_activity_description::read_arguments(
 		}
 
 	} // next i
-	cout << "graph_theoretic_activity_description::read_arguments done" << endl;
+	if (f_v) {
+		cout << "graph_theoretic_activity_description::read_arguments done" << endl;
+	}
 	return i + 1;
+}
+
+void graph_theoretic_activity_description::print()
+{
+	if (f_find_cliques) {
+		cout << "-find_cliques" << endl;
+		Clique_finder_control->print();
+	}
+	if (f_export_magma) {
+		cout << "-export_magma" << endl;
+	}
+	if (f_export_maple) {
+		cout << "-export_maple" << endl;
+	}
+	if (f_export_csv) {
+		cout << "-export_csv" << endl;
+	}
+	if (f_export_graphviz) {
+		cout << "-export_graphviz" << endl;
+	}
+	if (f_print) {
+		cout << "-print" << endl;
+	}
+	if (f_sort_by_colors) {
+		cout << "-sort_by_colors " << endl;
+	}
+	if (f_split) {
+		cout << "-split " << split_input_fname << " " << split_by_file << endl;
+	}
+	if (f_save) {
+		cout << "-save " << endl;
+	}
+	if (f_automorphism_group) {
+		cout << "-automorphism_group " << endl;
+	}
 }
 
 

@@ -154,6 +154,29 @@ projective_space_activity_description::projective_space_activity_description()
 	f_lift_skew_hexagon_with_polarity = FALSE;
 	//std::string lift_skew_hexagon_with_polarity_polarity;
 
+	f_arc_with_given_set_as_s_lines_after_dualizing = FALSE;
+	arc_size = 0;
+	arc_d = 0;
+	arc_d_low = 0;
+	arc_s = 0;
+	//std::string arc_input_set;
+	//std::string arc_label;
+
+	f_arc_with_two_given_sets_of_lines_after_dualizing = FALSE;
+	//int arc_size;
+	//int arc_d;
+	arc_t = 0;
+	//t_lines_string;
+
+
+	f_arc_with_three_given_sets_of_lines_after_dualizing = FALSE;
+	arc_u = 0;
+	//u_lines_string;
+
+	f_dualize_hyperplanes_to_points = FALSE;
+	f_dualize_points_to_hyperplanes = FALSE;
+	//std::string dualize_input_set;
+
 
 }
 
@@ -557,6 +580,57 @@ int projective_space_activity_description::read_arguments(
 					<< " " << lift_skew_hexagon_with_polarity_polarity
 					<< endl;
 		}
+		else if (stringcmp(argv[i], "-arc_with_given_set_as_s_lines_after_dualizing") == 0) {
+			f_arc_with_given_set_as_s_lines_after_dualizing = TRUE;
+			arc_size = strtoi(argv[++i]);
+			arc_d = strtoi(argv[++i]);
+			arc_d_low = strtoi(argv[++i]);
+			arc_s = strtoi(argv[++i]);
+			arc_input_set.assign(argv[++i]);
+			arc_label.assign(argv[++i]);
+			cout << "-arc_with_given_set_as_s_lines_after_dualizing "
+					<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << " " << arc_input_set << " " << arc_label << endl;
+		}
+		else if (stringcmp(argv[i], "-arc_with_two_given_sets_of_lines_after_dualizing") == 0) {
+			f_arc_with_two_given_sets_of_lines_after_dualizing = TRUE;
+			arc_size = strtoi(argv[++i]);
+			arc_d = strtoi(argv[++i]);
+			arc_d_low = strtoi(argv[++i]);
+			arc_s = strtoi(argv[++i]);
+			arc_t = strtoi(argv[++i]);
+			t_lines_string.assign(argv[++i]);
+			arc_input_set.assign(argv[++i]);
+			arc_label.assign(argv[++i]);
+			cout << "-arc_with_two_given_sets_of_lines_after_dualizing src_size="
+					<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << " t=" << arc_t << " " << t_lines_string << " " << arc_input_set << " " << arc_label << endl;
+		}
+		else if (stringcmp(argv[i], "-arc_with_three_given_sets_of_lines_after_dualizing") == 0) {
+			f_arc_with_three_given_sets_of_lines_after_dualizing = TRUE;
+			arc_size = strtoi(argv[++i]);
+			arc_d = strtoi(argv[++i]);
+			arc_d_low = strtoi(argv[++i]);
+			arc_s = strtoi(argv[++i]);
+			arc_t = strtoi(argv[++i]);
+			t_lines_string.assign(argv[++i]);
+			arc_u = strtoi(argv[++i]);
+			u_lines_string.assign(argv[++i]);
+			arc_input_set.assign(argv[++i]);
+			arc_label.assign(argv[++i]);
+			cout << "-arc_with_three_given_sets_of_lines_after_dualizing "
+					<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << " " << arc_input_set << " " << arc_label << endl;
+			cout << "arc_t = " << arc_t << " t_lines_string = " << t_lines_string << endl;
+			cout << "arc_u = " << arc_u << " u_lines_string = " << u_lines_string << endl;
+		}
+		else if (stringcmp(argv[i], "-dualize_hyperplanes_to_points") == 0) {
+			f_dualize_hyperplanes_to_points = TRUE;
+			dualize_input_set.assign(argv[++i]);
+			cout << "-dualize_hyperplanes_to_points " << dualize_input_set << endl;
+		}
+		else if (stringcmp(argv[i], "-dualize_points_to_hyperplanes") == 0) {
+			f_dualize_points_to_hyperplanes = TRUE;
+			dualize_input_set.assign(argv[++i]);
+			cout << "-dualize_points_to_hyperplanes " << dualize_input_set << endl;
+		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
@@ -573,6 +647,199 @@ int projective_space_activity_description::read_arguments(
 	cout << "projective_space_activity_description::read_arguments done" << endl;
 	return i + 1;
 }
+
+void projective_space_activity_description::print()
+{
+	if (f_input) {
+		f_input = TRUE;
+		cout << "-input" << endl;
+	}
+	if (f_canonical_form_PG) {
+		cout << "-canonical_form_PG " << endl;
+	}
+	if (f_table_of_cubic_surfaces_compute_properties) {
+		cout << "-table_of_cubic_surfaces_compute_properties "
+				<< table_of_cubic_surfaces_compute_fname_csv << " "
+				<< table_of_cubic_surfaces_compute_defining_q << " "
+				<< table_of_cubic_surfaces_compute_column_offset << " "
+				<< endl;
+	}
+	if (f_cubic_surface_properties_analyze) {
+		cout << "-cubic_surface_properties " << cubic_surface_properties_fname_csv
+				<< " " << cubic_surface_properties_defining_q << endl;
+	}
+	if (f_canonical_form_of_code) {
+		cout << "-canonical_form_of_code "
+				<< canonical_form_of_code_label << " "
+				<< canonical_form_of_code_m << " "
+				<< canonical_form_of_code_n << " "
+				<< canonical_form_of_code_text << " "
+				<< endl;
+	}
+	if (f_map) {
+		cout << "-map "
+				<< map_label << " "
+				<< map_parameters << " "
+				<< endl;
+	}
+	if (f_analyze_del_Pezzo_surface) {
+		cout << "-analyze_del_Pezzo_surface "
+				<< analyze_del_Pezzo_surface_label << " "
+				<< analyze_del_Pezzo_surface_parameters << " "
+				<< endl;
+	}
+	if (f_cheat_sheet_for_decomposition_by_element_PG) {
+		cout << "-cheat_sheet_for_decomposition_by_element_PG "
+				<< decomposition_by_element_power
+				<< " " << decomposition_by_element_data
+				<< " " << decomposition_by_element_fname
+				<< endl;
+	}
+	if (f_define_surface) {
+		cout << "-define_surface " << define_surface_label << endl;
+	}
+	if (f_table_of_quartic_curves) {
+		cout << "-table_of_quartic_curves " << endl;
+	}
+	if (f_define_quartic_curve) {
+		cout << "-define_quartic_curve " << define_quartic_curve_label << endl;
+	}
+
+
+	// cubic surfaces:
+	if (f_classify_surfaces_with_double_sixes) {
+		cout << "-classify_surfaces_with_double_sixes " << classify_surfaces_with_double_sixes_label << endl;
+		classify_surfaces_with_double_sixes_control->print();
+	}
+
+	if (f_classify_surfaces_through_arcs_and_two_lines) {
+		cout << "-classify_surfaces_through_arcs_and_two_lines " << endl;
+	}
+
+	if (f_test_nb_Eckardt_points) {
+		cout << "-test_nb_Eckardt_points " << nb_E << endl;
+	}
+	if (f_classify_surfaces_through_arcs_and_trihedral_pairs) {
+		cout << "-classify_surfaces_through_arcs_and_trihedral_pairs " << endl;
+	}
+	if (f_create_surface) {
+		cout << "-create_surface" << endl;
+	}
+
+	if (f_sweep) {
+		cout << "-sweep " << sweep_fname << endl;
+	}
+
+	if (f_sweep_4) {
+		cout << "-sweep_4 " << sweep_4_fname << endl;
+	}
+
+	if (f_sweep_4_27) {
+		cout << "-sweep_4_27 " << sweep_4_27_fname << endl;
+	}
+
+	if (f_six_arcs) {
+		cout << "-six_arcs" << endl;
+	}
+	if (f_filter_by_nb_Eckardt_points) {
+		cout << "-filter_by_nb_Eckardt_points " << nb_Eckardt_points << endl;
+	}
+	if (f_surface_quartic) {
+		cout << "-surface_quartic" << endl;
+	}
+	if (f_surface_quartic) {
+		cout << "-surface_clebsch" << endl;
+	}
+	if (f_surface_codes) {
+		cout << "-surface_codes" << endl;
+	}
+	if (f_trihedra1_control) {
+		cout << "-trihedra1_control " << endl;
+	}
+	if (f_trihedra2_control) {
+		cout << "-trihedra2_control " << endl;
+	}
+	if (f_control_six_arcs) {
+		cout << "-control_six_arcs " << endl;
+	}
+	if (f_make_gilbert_varshamov_code) {
+		cout << "-make_gilbert_varshamov_code" << make_gilbert_varshamov_code_n
+				<< " " << make_gilbert_varshamov_code_d << endl;
+	}
+
+	if (f_spread_classify) {
+		f_spread_classify = TRUE;
+		cout << "-spread_classify " << spread_classify_k << endl;
+		spread_classify_Control->print();
+	}
+	// semifields
+	if (f_classify_semifields) {
+		cout << "-classify_semifields " << endl;
+	}
+	if (f_cheat_sheet) {
+		cout << "-cheat_sheet " << endl;
+	}
+	if (f_classify_quartic_curves_nauty) {
+		cout << "-classify_quartic_curves_nauty "
+				<< classify_quartic_curves_nauty_fname_mask
+				<< " " << classify_quartic_curves_nauty_nb
+				<< " " << classify_quartic_curves_nauty_fname_classification
+				<< endl;
+	}
+	if (f_classify_quartic_curves_with_substructure) {
+		cout << "-classify_quartic_curves_with_substructure "
+				<< classify_quartic_curves_with_substructure_fname_mask
+				<< " " << classify_quartic_curves_with_substructure_nb
+				<< " " << classify_quartic_curves_with_substructure_size
+				<< " " << classify_quartic_curves_with_substructure_degree
+				<< " " << classify_quartic_curves_with_substructure_fname_classification
+				<< endl;
+	}
+	if (f_set_stabilizer) {
+		cout << "-set_stabilizer "
+				<< set_stabilizer_intermediate_set_size << " "
+				<< set_stabilizer_fname_mask << " "
+				<< set_stabilizer_nb << " "
+				<< set_stabilizer_column_label << " "
+				<< endl;
+	}
+	if (f_conic_type) {
+		cout << "-conic_type "
+				<< conic_type_set_text << endl;
+	}
+
+	if (f_lift_skew_hexagon) {
+		cout << "-lift_skew_hexagon "
+				<< lift_skew_hexagon_text << endl;
+	}
+
+	if (f_lift_skew_hexagon_with_polarity) {
+		cout << "-lift_skew_hexagon_with_polarity "
+				<< " " << lift_skew_hexagon_with_polarity_polarity
+				<< endl;
+	}
+	if (f_arc_with_given_set_as_s_lines_after_dualizing) {
+		cout << "-arc_with_given_set_as_s_lines_after_dualizing "
+				<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << " " << arc_input_set << " " << arc_label << endl;
+	}
+	if (f_arc_with_two_given_sets_of_lines_after_dualizing) {
+		cout << "-arc_with_two_given_sets_of_lines_after_dualizing src_size="
+				<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << " t=" << arc_t << " " << t_lines_string << " " << arc_input_set << " " << arc_label << endl;
+	}
+	if (f_arc_with_three_given_sets_of_lines_after_dualizing) {
+		cout << "-arc_with_three_given_sets_of_lines_after_dualizing "
+				<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << " " << arc_input_set << " " << arc_label << endl;
+		cout << "arc_t = " << arc_t << " t_lines_string = " << t_lines_string << endl;
+		cout << "arc_u = " << arc_u << " u_lines_string = " << u_lines_string << endl;
+	}
+	if (f_dualize_hyperplanes_to_points) {
+		cout << "-dualize_hyperplanes_to_points" << " " << dualize_input_set << endl;
+	}
+	if (f_dualize_points_to_hyperplanes) {
+		cout << "-dualize_points_to_hyperplanes" << " " << dualize_input_set << endl;
+	}
+}
+
 
 
 }}

@@ -56,6 +56,15 @@ int packing_was_fixpoints_activity_description::read_arguments(
 	return i + 1;
 }
 
+void packing_was_fixpoints_activity_description::print()
+{
+	if (f_report) {
+		cout << "-report" << endl;
+	}
+}
+
+
+
 
 }}
 

@@ -141,6 +141,12 @@ int function_polish_description::read_arguments(
 	return i + 1;
 }
 
+void function_polish_description::print()
+{
+	cout << "-function_polish_description" << endl;
+}
+
+
 }}
 
 
