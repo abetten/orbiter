@@ -667,9 +667,8 @@ void colored_graph::init(int nb_points, int nb_colors, int nb_colors_per_vertex,
 	colored_graph::nb_colors = nb_colors;
 	colored_graph::nb_colors_per_vertex = nb_colors_per_vertex;
 	
-	L = ((long int) nb_points * (long int) (nb_points - 1)) >> 1;
 
-	//bitvector_length = (L + 7) >> 3;
+	L = ((long int) nb_points * (long int) (nb_points - 1)) >> 1;
 
 	user_data_size = 0;
 	
@@ -763,8 +762,8 @@ void colored_graph::init_adjacency_upper_triangle(
 {
 	int f_v = (verbose_level >= 1);
 	long int i, j, k;
-	long int bitvector_length;
-	uchar *bitvec;
+	//long int bitvector_length;
+	//uchar *bitvec;
 	combinatorics_domain Combi;
 
 
@@ -776,11 +775,17 @@ void colored_graph::init_adjacency_upper_triangle(
 		}
 	L = ((long int) nb_points * (long int) (nb_points - 1)) >> 1;
 
-	bitvector_length = (L + 7) >> 3;
-	bitvec = NEW_uchar(bitvector_length);
+	//bitvector_length = (L + 7) >> 3;
+
+	Bitvec = NEW_OBJECT(bitvector);
+	Bitvec->allocate(L);
+
+#if 0
+	Bitvec = NEW_uchar(bitvector_length);
 	for (i = 0; i < bitvector_length; i++) {
-		bitvec[i] = 0;
+		Bitvec[i] = 0;
 	}
+#endif
 	k = 0;
 	for (i = 0; i < nb_points; i++) {
 		for (j = i + 1; j < nb_points; j++, k++) {
@@ -794,7 +799,7 @@ void colored_graph::init_adjacency_upper_triangle(
 		colors, Bitvec, TRUE /* f_ownership_of_bitvec */,
 		verbose_level);
 
-	// do not free bitvec here
+	// do not free Bitvec here
 
 	if (f_v) {
 		cout << "colored_graph::init_adjacency_upper_triangle done" << endl;
@@ -859,7 +864,6 @@ void colored_graph::init_user_data(long int *data,
 	int data_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int i;
 	
 	if (f_v) {
 		cout << "colored_graph::init_user_data" << endl;
@@ -911,7 +915,6 @@ void colored_graph::load(std::string &fname, int verbose_level)
 		points /*vertex_labels*/, point_color /*vertex_colors*/, 
 		user_data, user_data_size, 
 		Bitvec,
-		//bitvector_adjacency, bitvector_length,
 		verbose_level);
 	if (f_v) {
 		cout << "colored_graph::load after Graph.load_colored_graph" << endl;
@@ -976,7 +979,6 @@ void colored_graph::draw_on_circle_2(
 	double phi = 360. / (double) n;
 	double rad1 = 500000;
 	double rad2 = 5000;
-	//char str[1000];
 	numerics Num;
 	
 	Px = NEW_int(n);
@@ -1052,6 +1054,33 @@ void colored_graph::draw_on_circle_2(
 	FREE_int(Py1);
 }
 
+void colored_graph::create_bitmatrix(bitmatrix *&Bitmatrix,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "colored_graph::create_bitmatrix" << endl;
+	}
+	long int i, j, k;
+
+	Bitmatrix = NEW_OBJECT(bitmatrix);
+	Bitmatrix->init(nb_points, nb_points, verbose_level);
+	k = 0;
+	for (i = 0; i < nb_points; i++) {
+		for (j = i + 1; j < nb_points; j++, k++) {
+			//k = Combi.ij2k(i, j, nb_points);
+			if (Bitvec->s_i(k)) {
+				Bitmatrix->m_ij(i, j, 1);
+				Bitmatrix->m_ij(j, i, 1);
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "colored_graph::create_bitmatrix done" << endl;
+	}
+}
 
 
 void colored_graph::draw(std::string &fname,
@@ -1063,8 +1092,8 @@ void colored_graph::draw(std::string &fname,
 	int f_dots = FALSE;
 	bitmatrix *Bitmatrix;
 	//uchar *D = NULL;
-	long int len, i, j, k;
-	int nb_vertices;
+	//long int len, i, j, k;
+	//int nb_vertices;
 	combinatorics_domain Combi;
 	graph_theory_domain Graph;
 	
@@ -1073,40 +1102,7 @@ void colored_graph::draw(std::string &fname,
 	}
 
 
-	nb_vertices = nb_points;
-
-	len = ((long int) nb_vertices * (long int) nb_vertices + 7) >> 3;
-	if (f_v) {
-		cout << "colored_graph::draw len = " << len << endl;
-	}
-
-#if 1
-	Bitmatrix = NEW_OBJECT(bitmatrix);
-	Bitmatrix->init(nb_vertices, nb_vertices, verbose_level);
-	for (i = 0; i < nb_vertices; i++) {
-		for (j = i + 1; j < nb_vertices; j++) {
-			k = Combi.ij2k(i, j, nb_vertices);
-			if (Bitvec->s_i(k)) {
-				Bitmatrix->m_ij(i, j, 1);
-				Bitmatrix->m_ij(j, i, 1);
-			}
-		}
-	}
-#else
-	D = NEW_uchar(len);
-	for (i = 0; i < len; i++) {
-		D[i] = 0;
-	}
-	for (i = 0; i < nb_vertices; i++) {
-		for (j = i + 1; j < nb_vertices; j++) {
-			k = Combi.ij2k(i, j, nb_vertices);
-			if (bitvector_s_i(bitvector_adjacency, k)) {
-				bitvector_m_ii(D, i * nb_vertices + j, 1);
-				bitvector_m_ii(D, j * nb_vertices + i, 1);
-			}
-		}
-	}
-#endif
+	create_bitmatrix(Bitmatrix, verbose_level);
 
 	int f_row_grid = FALSE;
 	int f_col_grid = FALSE;
@@ -1115,7 +1111,7 @@ void colored_graph::draw(std::string &fname,
 		FALSE, 0, NULL, 0, NULL, 
 		f_row_grid, f_col_grid, 
 		TRUE /* f_bitmatrix */, Bitmatrix, NULL,
-		nb_vertices, nb_vertices, 
+		nb_points, nb_points,
 		xmax_in, ymax_in, xmax_out, ymax_out, 
 		scale, line_width, 
 		FALSE, NULL, verbose_level - 1);
@@ -1239,10 +1235,11 @@ void colored_graph::draw_with_a_given_partition(
 	int f_dots = FALSE;
 	int f_row_grid = FALSE;
 	int f_col_grid = FALSE;
-	int nb_vertices;
+	//int nb_vertices;
 	bitmatrix *Bitmatrix;
 	//uchar *D = NULL;
-	long int i, j, k, len;
+	//long int i, j, k, len;
+	int i;
 	int *P;
 	combinatorics_domain Combi;
 	graph_theory_domain Graph;
@@ -1258,41 +1255,7 @@ void colored_graph::draw_with_a_given_partition(
 		P[i + 1] = P[i] + parts[i];
 	}
 	
-	nb_vertices = nb_points;
-
-	len = ((long int) nb_vertices * (long int) nb_vertices + 7) >> 3;
-	if (f_v) {
-		cout << "colored_graph::draw_with_a_given_partition "
-				"len = " << len << endl;
-	}
-#if 1
-	Bitmatrix = NEW_OBJECT(bitmatrix);
-	Bitmatrix->init(nb_vertices, nb_vertices, verbose_level);
-	for (i = 0; i < nb_vertices; i++) {
-		for (j = i + 1; j < nb_vertices; j++) {
-			k = Combi.ij2k_lint(i, j, nb_vertices);
-			if (Bitvec->s_i(k)) {
-				Bitmatrix->m_ij(i, j, 1);
-				Bitmatrix->m_ij(j, i, 1);
-			}
-		}
-	}
-#else
-	D = NEW_uchar(len);
-	for (i = 0; i < len; i++) {
-		D[i] = 0;
-	}
-
-	for (i = 0; i < nb_vertices; i++) {
-		for (j = i + 1; j < nb_vertices; j++) {
-			k = Combi.ij2k_lint(i, j, nb_vertices);
-			if (bitvector_s_i(bitvector_adjacency, k)) {
-				bitvector_m_ii(D, i * nb_vertices + j, 1);
-				bitvector_m_ii(D, j * nb_vertices + i, 1);
-			}
-		}
-	}
-#endif
+	create_bitmatrix(Bitmatrix, verbose_level);
 
 	Graph.draw_bitmatrix(fname, f_dots,
 		TRUE, nb_parts, P, nb_parts, P, 
@@ -1327,7 +1290,7 @@ void colored_graph::draw_partitioned(std::string &fname,
 	//int xmax_out = 1000000;
 	//int ymax_out = 1000000;
 	long int len, i, j, k, ii, jj;
-	int nb_vertices;
+	//int nb_vertices;
 	combinatorics_domain Combi;
 	graph_theory_domain Graph;
 	
@@ -1336,9 +1299,9 @@ void colored_graph::draw_partitioned(std::string &fname,
 	}
 
 
-	nb_vertices = nb_points;
+	//nb_vertices = nb_points;
 
-	len = ((long int) nb_vertices * (long int) nb_vertices + 7) >> 3;
+	len = ((long int) nb_points * (long int) nb_points + 7) >> 3;
 	if (f_v) {
 		cout << "colored_graph::draw_partitioned len = " << len << endl;
 	}
@@ -1346,47 +1309,27 @@ void colored_graph::draw_partitioned(std::string &fname,
 
 	tally C;
 
-	C.init(point_color, nb_vertices, FALSE, 0);
+	C.init(point_color, nb_points, FALSE, 0);
 	if (f_v) {
 		cout << "colored_graph::draw_partitioned we found "
 				<< C.nb_types << " classes" << endl;
 	}
 
 
-#if 1
 	Bitmatrix = NEW_OBJECT(bitmatrix);
-	Bitmatrix->init(nb_vertices, nb_vertices, verbose_level);
-	for (i = 0; i < nb_vertices; i++) {
+	Bitmatrix->init(nb_points, nb_points, verbose_level);
+	k = 0;
+	for (i = 0; i < nb_points; i++) {
 		ii = C.sorting_perm_inv[i];
-		for (j = i + 1; j < nb_vertices; j++) {
+		for (j = i + 1; j < nb_points; j++, k++) {
 			jj = C.sorting_perm_inv[j];
-			k = Combi.ij2k_lint(ii, jj, nb_vertices);
+			//k = Combi.ij2k_lint(ii, jj, nb_vertices);
 			if (Bitvec->s_i(k)) {
 				Bitmatrix->m_ij(i, j, 1);
 				Bitmatrix->m_ij(j, i, 1);
 			}
 		}
 	}
-#else
-	D = NEW_uchar(len);
-	for (i = 0; i < len; i++) {
-		D[i] = 0;
-	}
-	
-	
-	for (i = 0; i < nb_vertices; i++) {
-		ii = C.sorting_perm_inv[i];
-		for (j = i + 1; j < nb_vertices; j++) {
-			jj = C.sorting_perm_inv[j];
-			k = Combi.ij2k(ii, jj, nb_vertices);
-			if (bitvector_s_i(bitvector_adjacency, k)) {
-				bitvector_m_ii(D, i * nb_vertices + j, 1);
-				bitvector_m_ii(D, j * nb_vertices + i, 1);
-			}
-		}
-	}
-#endif
-
 
 	
 	int *part;
@@ -1395,7 +1338,7 @@ void colored_graph::draw_partitioned(std::string &fname,
 	for (i = 0; i < C.nb_types; i++) {
 		part[i] = C.type_first[i];
 	}
-	part[C.nb_types] = nb_vertices;
+	part[C.nb_types] = nb_points;
 
 	int f_row_grid = FALSE;
 	int f_col_grid = FALSE;
@@ -1404,7 +1347,7 @@ void colored_graph::draw_partitioned(std::string &fname,
 		TRUE, C.nb_types, part, C.nb_types, part, 
 		f_row_grid, f_col_grid, 
 		TRUE /* f_bitmatrix */, Bitmatrix, NULL,
-		nb_vertices, nb_vertices, 
+		nb_points, nb_points,
 		xmax_in, ymax_in, xmax_out, ymax_out, 
 		scale, line_width, 
 		f_labels /*f_has_labels*/, C.sorting_perm_inv /*labels*/, verbose_level - 1);
@@ -2264,47 +2207,11 @@ void colored_graph::draw_it(std::string &fname_base,
 	int f_row_grid = FALSE;
 	int f_col_grid = FALSE;
 
-	int i, j;
-	long int k;
 	bitmatrix *Bitmatrix;
-	//uchar *bitvec;
 	combinatorics_domain Combi;
 	graph_theory_domain Graph;
 
-#if 1
-	Bitmatrix = NEW_OBJECT(bitmatrix);
-	Bitmatrix->init(nb_points, nb_points, verbose_level);
-	for (i = 0; i < nb_points; i++) {
-		for (j = i + 1; j < nb_points; j++) {
-			k = Combi.ij2k_lint(i, j, nb_points);
-			if (Bitvec->s_i(k)) {
-				Bitmatrix->m_ij(i, j, 1);
-				Bitmatrix->m_ij(j, i, 1);
-			}
-		}
-	}
-#else
-	int L, length;
-
-	L = nb_points * nb_points;
-	length = (L + 7) >> 3;
-	bitvec = NEW_uchar(length);
-	for (i = 0; i < length; i++) {
-		bitvec[i] = 0;
-	}
-	for (i = 0; i < nb_points; i++) {
-		for (j = i + 1; j < nb_points; j++) {
-			k = Combi.ij2k(i, j, nb_points);
-			a = bitvector_s_i(bitvector_adjacency, k);
-			if (a) {
-				k = i * nb_points + j;
-				bitvector_m_ii(bitvec, k, 1);
-				k = j * nb_points + i;
-				bitvector_m_ii(bitvec, k, 1);
-			}
-		}
-	}
-#endif
+	create_bitmatrix(Bitmatrix, verbose_level);
 
 	Graph.draw_bitmatrix(fname_base, f_dots,
 		f_partition, 0, NULL, 0, NULL, 
@@ -2315,7 +2222,6 @@ void colored_graph::draw_it(std::string &fname_base,
 		scale, line_width, 
 		FALSE, NULL, verbose_level - 1);
 
-	//FREE_uchar(bitvec);
 	FREE_OBJECT(Bitmatrix);
 	
 }
@@ -2781,157 +2687,34 @@ void colored_graph::all_cliques(
 
 
 		if (Control->f_rainbow) {
-			if (Control->f_weighted) {
 
-				if (f_v) {
-					cout << "colored_graph::all_cliques "
-							"weighted cliques" << endl;
-				}
-
-
-
-				all_cliques_weighted_with_two_colors(Control, verbose_level);
-
-
-
-
+			if (f_v) {
+				cout << "colored_graph::all_cliques before all_cliques_rainbow" << endl;
 			}
-			else if (Control->f_Sajeeb) {
-				if (f_v) {
-					cout << "colored_graph::all_cliques "
-							"before do_Sajeeb" << endl;
-				}
-				do_Sajeeb(Control, verbose_level);
-				if (f_v) {
-					cout << "colored_graph::all_cliques "
-							"after do_Sajeeb" << endl;
-				}
+			all_cliques_rainbow(
+					Control,
+					fp,
+					fp_csv,
+					verbose_level);
+			if (f_v) {
+				cout << "colored_graph::all_cliques after all_cliques_rainbow" << endl;
 			}
-			else {
-				if (f_v) {
-					cout << "colored_graph::all_cliques "
-							"before CG.all_rainbow_cliques" << endl;
-					}
-				all_rainbow_cliques(Control,
-						&fp,
-						verbose_level - 1);
-				if (f_v) {
-					cout << "colored_graph::all_cliques "
-							"after CG.all_rainbow_cliques" << endl;
-				}
-			}
+
 		}
 		else {
-			cout << "colored_graph::all_cliques not rainbow" << endl;
-			if (!Control->f_target_size) {
-				cout << "colored_graph::all_cliques please use -target_size <int : target_size>" << endl;
-				exit(1);
+
+			if (f_v) {
+				cout << "colored_graph::all_cliques before all_cliques_black_and_white" << endl;
+			}
+			all_cliques_black_and_white(
+					Control,
+					fp,
+					fp_csv,
+					verbose_level);
+			if (f_v) {
+				cout << "colored_graph::all_cliques after all_cliques_black_and_white" << endl;
 			}
 
-			if (Control->f_Sajeeb) {
-				if (f_v) {
-					cout << "colored_graph::all_cliques "
-							"before do_Sajeeb_black_and_white" << endl;
-				}
-				std::vector<std::vector<long int> > solutions;
-
-				do_Sajeeb_black_and_white(Control, solutions, verbose_level - 2);
-
-				// Print the solutions
-				if (f_v) {
-					cout << "colored_graph::all_cliques after do_Sajeeb_black_and_white Found " << solutions.size() << " solution(s)." << endl;
-				}
-
-
-				if (f_v) {
-					cout << "colored_graph::all_cliques "
-							"before writing solutions to file" << endl;
-				}
-
-				#if 1
-				for (size_t i = 0; i < solutions.size(); ++i) {
-					fp << solutions[i].size() << " ";
-					for (size_t j = 0; j < solutions[i].size(); ++j) {
-						fp << points[solutions[i][j]] << " ";
-					}
-					fp << endl;
-				}
-
-				fp_csv << "ROW";
-				for (int j = 0; j < Control->target_size; ++j) {
-					fp_csv << ",C" << j;
-				}
-				fp_csv << endl;
-
-				for (size_t i = 0; i < solutions.size(); ++i) {
-					for (size_t j = 0; j < solutions[i].size(); ++j) {
-						fp_csv << points[solutions[i][j]];
-						if (j < solutions[i].size() - 1) {
-							fp_csv << " ";
-						}
-					}
-					fp_csv << endl;
-				}
-				#endif
-				if (f_v) {
-					cout << "colored_graph::all_cliques "
-							"after writing solutions to file" << endl;
-				}
-			}
-			else {
-
-
-				if (f_v) {
-					cout << "colored_graph::all_cliques "
-							"before CG->all_cliques_of_size_k_ignore_colors" << endl;
-				}
-				all_cliques_of_size_k_ignore_colors(
-						Control,
-						verbose_level - 2);
-				if (f_v) {
-					cout << "colored_graph::all_cliques "
-							"after CG->all_cliques_of_size_k_ignore_colors, nb_cliques = " << Control->nb_sol << endl;
-				}
-
-				if (f_v) {
-					cout << "colored_graph::all_cliques "
-							"before writing solutions to file" << endl;
-				}
-				for (int i = 0; i < Control->nb_sol; ++i) {
-					fp << Control->target_size << " ";
-					for (int j = 0; j < Control->target_size; ++j) {
-						fp << points[Control->Sol[i * Control->target_size + j]];
-						if (j < Control->target_size - 1) {
-							fp << " ";
-						}
-					}
-					fp << endl;
-				}
-
-
-				fp_csv << "ROW";
-				for (int j = 0; j < Control->target_size; ++j) {
-					fp_csv << ",C" << j;
-				}
-				fp_csv << endl;
-
-				for (int i = 0; i < Control->nb_sol; ++i) {
-					fp_csv << i << ",";
-					for (int j = 0; j < Control->target_size; ++j) {
-						fp_csv << points[Control->Sol[i * Control->target_size + j]];
-						//fp_csv << Control->Sol[i * Control->target_size + j];
-						if (j < Control->target_size - 1) {
-							fp_csv << ",";
-						}
-					}
-					fp_csv << endl;
-				}
-				if (f_v) {
-					cout << "colored_graph::all_cliques "
-							"after writing solutions to file" << endl;
-				}
-
-			}
 		}
 		fp << -1 << " " << Control->nb_sol << " " << Control->nb_search_steps
 			<< " " << Control->nb_decision_steps << " " << Control->dt << endl;
@@ -2942,6 +2725,216 @@ void colored_graph::all_cliques(
 	if (f_v) {
 		cout << "colored_graph::all_cliques done" << endl;
 	}
+}
+
+
+
+
+void colored_graph::all_cliques_rainbow(
+		clique_finder_control *Control,
+		std::ostream &ost_txt,
+		std::ostream &ost_csv,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "colored_graph::all_cliques_rainbow" << endl;
+	}
+
+	if (Control->f_weighted) {
+
+		if (f_v) {
+			cout << "colored_graph::all_cliques_rainbow "
+					"weighted cliques" << endl;
+		}
+
+
+
+		all_cliques_weighted_with_two_colors(Control, verbose_level);
+
+
+
+
+	}
+	else if (Control->f_Sajeeb) {
+		if (f_v) {
+			cout << "colored_graph::all_cliques_rainbow before do_Sajeeb" << endl;
+		}
+		do_Sajeeb(Control, verbose_level);
+		if (f_v) {
+			cout << "colored_graph::all_cliques_rainbow after do_Sajeeb" << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "colored_graph::all_cliques_rainbow before CG.all_rainbow_cliques" << endl;
+			}
+		all_rainbow_cliques(Control,
+				ost_txt,
+				verbose_level - 1);
+		if (f_v) {
+			cout << "colored_graph::all_cliques_rainbow after CG.all_rainbow_cliques" << endl;
+		}
+
+
+		if (Control->f_store_solutions) {
+			write_solutions_to_csv_file(Control, ost_csv, verbose_level);
+		}
+
+	}
+	if (f_v) {
+		cout << "colored_graph::all_cliques_rainbow done" << endl;
+	}
+}
+
+void colored_graph::all_cliques_black_and_white(
+		clique_finder_control *Control,
+		std::ostream &ost_txt,
+		std::ostream &ost_csv,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "colored_graph::all_cliques_black_and_white" << endl;
+	}
+
+	if (!Control->f_target_size) {
+		cout << "colored_graph::all_cliques_black_and_white please use -target_size <int : target_size>" << endl;
+		exit(1);
+	}
+
+	if (Control->f_Sajeeb) {
+		if (f_v) {
+			cout << "colored_graph::all_cliques_black_and_white before do_Sajeeb_black_and_white" << endl;
+		}
+		std::vector<std::vector<long int> > solutions;
+
+		do_Sajeeb_black_and_white(Control, solutions, verbose_level - 2);
+
+		// Print the solutions
+		if (f_v) {
+			cout << "colored_graph::all_cliques_black_and_white after do_Sajeeb_black_and_white "
+					"Found " << solutions.size() << " solution(s)." << endl;
+		}
+
+
+		if (f_v) {
+			cout << "colored_graph::all_cliques_black_and_white before writing solutions to file" << endl;
+		}
+
+		#if 1
+		for (size_t i = 0; i < solutions.size(); ++i) {
+			ost_txt << solutions[i].size() << " ";
+			for (size_t j = 0; j < solutions[i].size(); ++j) {
+				ost_txt << points[solutions[i][j]] << " ";
+			}
+			ost_txt << endl;
+		}
+
+		ost_csv << "ROW";
+		for (int j = 0; j < Control->target_size; ++j) {
+			ost_csv << ",C" << j;
+		}
+		ost_csv << endl;
+
+		for (size_t i = 0; i < solutions.size(); ++i) {
+			for (size_t j = 0; j < solutions[i].size(); ++j) {
+				ost_csv << points[solutions[i][j]];
+				if (j < solutions[i].size() - 1) {
+					ost_csv << " ";
+				}
+			}
+			ost_csv << endl;
+		}
+		#endif
+		if (f_v) {
+			cout << "colored_graph::all_cliques_black_and_white "
+					"after writing solutions to file" << endl;
+		}
+	}
+	else {
+
+
+		if (f_v) {
+			cout << "colored_graph::all_cliques_black_and_white "
+					"before CG->all_cliques_of_size_k_ignore_colors" << endl;
+		}
+		all_cliques_of_size_k_ignore_colors(
+				Control,
+				verbose_level - 2);
+		if (f_v) {
+			cout << "colored_graph::all_cliques_black_and_white "
+					"after CG->all_cliques_of_size_k_ignore_colors, nb_cliques = " << Control->nb_sol << endl;
+		}
+
+		if (f_v) {
+			cout << "colored_graph::all_cliques_black_and_white "
+					"before writing solutions to file" << endl;
+		}
+		for (int i = 0; i < Control->nb_sol; ++i) {
+			ost_txt << Control->target_size << " ";
+			for (int j = 0; j < Control->target_size; ++j) {
+				ost_txt << points[Control->Sol[i * Control->target_size + j]];
+				if (j < Control->target_size - 1) {
+					ost_txt << " ";
+				}
+			}
+			ost_txt << endl;
+		}
+
+		write_solutions_to_csv_file(Control, ost_csv, verbose_level);
+
+		if (f_v) {
+			cout << "colored_graph::all_cliques_black_and_white "
+					"after writing solutions to file" << endl;
+		}
+
+	}
+
+	if (f_v) {
+		cout << "colored_graph::all_cliques_black_and_white done" << endl;
+	}
+}
+
+
+void colored_graph::write_solutions_to_csv_file(clique_finder_control *Control, std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "colored_graph::write_solutions_to_csv_file" << endl;
+	}
+
+	ost << "ROW";
+	for (int j = 0; j < Control->target_size; ++j) {
+		ost << ",C" << j;
+	}
+	ost << endl;
+
+	for (int i = 0; i < Control->nb_sol; ++i) {
+		ost << i << ",";
+		for (int j = 0; j < Control->target_size; ++j) {
+
+			if (points) {
+				ost << points[Control->Sol[i * Control->target_size + j]];
+			}
+			else {
+				ost << Control->Sol[i * Control->target_size + j];
+			}
+			//fp_csv << Control->Sol[i * Control->target_size + j];
+			if (j < Control->target_size - 1) {
+				ost << ",";
+			}
+		}
+		ost << endl;
+	}
+
+	if (f_v) {
+		cout << "colored_graph::write_solutions_to_csv_file done" << endl;
+	}
+
 }
 
 void colored_graph::do_Sajeeb(clique_finder_control *Control, int verbose_level)
@@ -3250,7 +3243,7 @@ void colored_graph::all_cliques_of_size_k_ignore_colors(
 	if (f_v) {
 		cout << "colored_graph::all_cliques_of_size_k_ignore_colors before CF->get_solutions" << endl;
 	}
-	int nb_sol;
+	long int nb_sol;
 	CF->get_solutions(Control->Sol,
 			nb_sol, Control->target_size, verbose_level);
 	if (f_v) {
@@ -3270,7 +3263,7 @@ void colored_graph::all_cliques_of_size_k_ignore_colors(
 
 void colored_graph::all_rainbow_cliques(
 		clique_finder_control *Control,
-		ofstream *fp,
+		std::ostream &ost,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3284,7 +3277,7 @@ void colored_graph::all_rainbow_cliques(
 		cout << "colored_graph::all_rainbow_cliques "
 				"before R->search" << endl;
 	}
-	R->search(Control, this, fp, verbose_level - 1);
+	R->search(Control, this, ost, verbose_level - 1);
 	if (f_v) {
 		cout << "colored_graph::all_rainbow_cliques "
 				"after R->search" << endl;

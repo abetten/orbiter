@@ -70,6 +70,20 @@ int quartic_curve_activity_description::read_arguments(
 	return i + 1;
 }
 
+void quartic_curve_activity_description::print()
+{
+	if (f_report) {
+		cout << "-report " << endl;
+	}
+	if (f_report_with_group) {
+		cout << "-report_with_group " << endl;
+	}
+	if (f_export_points) {
+		cout << "-export_points " << endl;
+	}
+}
+
+
 
 
 

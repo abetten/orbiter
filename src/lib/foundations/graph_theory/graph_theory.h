@@ -88,13 +88,14 @@ public:
 	int dt;
 
 	int *Sol;
-	int nb_sol;
+	long int nb_sol;
 
 
 	clique_finder_control();
 	~clique_finder_control();
 	int parse_arguments(
 			int argc, std::string *argv);
+	void print();
 
 };
 
@@ -162,7 +163,7 @@ public:
 
 	// solution storage:
 	std::deque<std::vector<int> > solutions;
-	int nb_sol;
+	long int nb_sol;
 
 
 	// callbacks:
@@ -190,14 +191,6 @@ public:
 		int depth, int nb_points, int verbose_level);
 
 
-#if 0
-	// added Nov 2014:
-	int f_has_print_current_choice_function;
-	void (*call_back_print_current_choice)(clique_finder *CF, 
-		int depth, void *user_data, int verbose_level);
-	void *print_current_choice_data;
-#endif
-	
 	void *call_back_clique_found_data1;
 	void *call_back_clique_found_data2;
 	
@@ -220,7 +213,7 @@ public:
 	//void backtrack_search_not_recursive(int verbose_level);
 	void open_tree_file(std::string &fname_base);
 	void close_tree_file();
-	void get_solutions(int *&Sol, int &nb_solutions, int &clique_sz,
+	void get_solutions(int *&Sol, long int &nb_solutions, int &clique_sz,
 		int verbose_level);
 	void print_suspicious_points();
 	void print_set(int size, int *set);
@@ -246,8 +239,6 @@ private:
 	void parallel_delinearize_adjacency_list();
 };
 
-void all_cliques_of_given_size(int *Adj, int nb_pts, int clique_sz, 
-	int *&Sol, int &nb_sol, int verbose_level);
 
 
 
@@ -338,6 +329,8 @@ public:
 		int verbose_level);
 	void draw_on_circle_2(mp_graphics &G, int f_labels, 
 		int f_radius, double radius);
+	void create_bitmatrix(bitmatrix *&Bitmatrix,
+		int verbose_level);
 	void draw(std::string &fname,
 		int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 		double scale, double line_width, 
@@ -391,6 +384,17 @@ public:
 	void all_cliques(
 			clique_finder_control *Control,
 			std::string &fname_graph, int verbose_level);
+	void all_cliques_rainbow(
+			clique_finder_control *Control,
+			std::ostream &ost_txt,
+			std::ostream &ost_csv,
+			int verbose_level);
+	void all_cliques_black_and_white(
+			clique_finder_control *Control,
+			std::ostream &ost_txt,
+			std::ostream &ost_csv,
+			int verbose_level);
+	void write_solutions_to_csv_file(clique_finder_control *Control, std::ostream &ost, int verbose_level);
 	void do_Sajeeb(clique_finder_control *Control, int verbose_level);
 	void do_Sajeeb_black_and_white(
 			clique_finder_control *Control,
@@ -404,7 +408,7 @@ public:
 			int verbose_level);
 	void all_rainbow_cliques(
 			clique_finder_control *Control,
-			std::ofstream *fp,
+			std::ostream &fp,
 			int verbose_level);
 
 };
@@ -604,6 +608,9 @@ public:
 	void make_graph_of_disjoint_sets_from_rows_of_matrix(
 		int *M, int m, int n,
 		int *&Adj, int verbose_level);
+	void all_cliques_of_given_size(int *Adj,
+			int nb_pts, int clique_sz, int *&Sol, long int &nb_sol,
+			int verbose_level);
 
 };
 
@@ -772,28 +779,13 @@ public:
 
 	clique_finder_control *Control;
 
-	std::ofstream *fp_sol;
-	//int f_output_solution_raw;
+	std::ostream *ost_sol;
 	
 	colored_graph *graph;
 	clique_finder *CF;
 	int *f_color_satisfied;
 	int *color_chosen_at_depth;
 	int *color_frequency;
-	//int target_depth;
-
-#if 0
-	// now in clique_finder_control *Control
-	// added November 5, 2014:
-	int f_has_additional_test_function;
-	void (*call_back_additional_test_function)(rainbow_cliques *R, 
-		void *user_data, 
-		int current_clique_size, int *current_clique, 
-		int nb_pts, int &reduced_nb_pts, 
-		int *pt_list, int *pt_list_inv, 
-		int verbose_level);
-	void *user_data;
-#endif
 
 	rainbow_cliques();
 	~rainbow_cliques();
@@ -801,26 +793,9 @@ public:
 	void freeself();
 
 	void search(clique_finder_control *Control,
-			colored_graph *graph, std::ofstream *fp_sol,
-			int verbose_level);
-#if 0
-	void search_with_additional_test_function(clique_finder_control *Control,
 			colored_graph *graph,
-			std::ofstream *fp_sol,
-			int f_has_additional_test_function,
-			void (*call_back_additional_test_function)(
-				rainbow_cliques *R,
-				void *user_data,
-				int current_clique_size, int *current_clique,
-				int nb_pts, int &reduced_nb_pts,
-				int *pt_list, int *pt_list_inv,
-				int verbose_level),
-			int f_has_print_current_choice_function,
-			void (*call_back_print_current_choice)(clique_finder *CF,
-				int depth, void *user_data, int verbose_level),
-			void *user_data, 
+			std::ostream &ost_sol,
 			int verbose_level);
-#endif
 	int find_candidates(
 		int current_clique_size, int *current_clique, 
 		int nb_pts, int &reduced_nb_pts, 

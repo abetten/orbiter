@@ -80,6 +80,30 @@ int prepare_frames::parse_arguments(int argc, std::string *argv)
 	return i + 1;
 }
 
+void prepare_frames::print()
+{
+	int i;
+
+	if (f_step) {
+		cout << "-step " << step << endl;
+	}
+	if (f_o) {
+		cout << "-o " << output_mask << endl;
+	}
+	if (f_output_starts_at) {
+		cout << "-output_starts_at " << output_starts_at << endl;
+	}
+	for (i = 0; i < nb_inputs; i++) {
+		print_item(i);
+	}
+}
+
+void prepare_frames::print_item(int i)
+{
+	cout << "-i " << input_first[i] << " " << input_len[i] << " " << input_mask[i] << endl;
+}
+
+
 void prepare_frames::do_the_work(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

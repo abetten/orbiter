@@ -381,6 +381,86 @@ void interface_toolkit::read_arguments(int argc,
 	}
 }
 
+void interface_toolkit::print()
+{
+	int j;
+
+	if (f_csv_file_select_rows) {
+		cout << "-csv_file_select_rows " << csv_file_select_rows_fname
+				<< " " << csv_file_select_rows_text << endl;
+	}
+	else if (f_csv_file_split_rows_modulo) {
+		cout << "-csv_file_split_rows_modulo " << csv_file_split_rows_modulo_fname
+				<< " " << csv_file_split_rows_modulo_n << endl;
+	}
+	else if (f_csv_file_select_cols) {
+		cout << "-csv_file_select_cols " << csv_file_select_cols_fname
+				<< " " << csv_file_select_cols_text << endl;
+	}
+	else if (f_csv_file_select_rows_and_cols) {
+		cout << "-csv_file_select_rows_and_cols "
+				<< csv_file_select_rows_and_cols_fname
+				<< " " << csv_file_select_rows_and_cols_R_text
+				<< " " << csv_file_select_rows_and_cols_C_text
+				<< endl;
+	}
+	else if (f_csv_file_join) {
+		cout << "-csv_file_join " << endl;
+		for (j = 0; j < csv_file_join_fname.size(); j++) {
+			cout << j << " : " << csv_file_join_fname[j] << " : " << csv_file_join_identifier[j] << endl;
+		}
+	}
+	else if (f_csv_file_concatenate) {
+		cout << "-csv_file_concatenate " << csv_file_concatenate_fname_out << endl;
+		for (j = 0; j < csv_file_concatenate_fname_in.size(); j++) {
+			cout << j << " : " << csv_file_concatenate_fname_in[j] << endl;
+		}
+	}
+	else if (f_csv_file_latex) {
+		cout << "-csv_file_latex " << csv_file_latex_fname << endl;
+	}
+	else if (f_draw_matrix) {
+		cout << "-draw_matrix " << endl;
+		Draw_bitmap_control->print();
+	}
+	else if (f_reformat) {
+		cout << "-reformat " << reformat_fname_in
+				<< " " << reformat_fname_out
+				<< " " << reformat_nb_cols << endl;
+	}
+	else if (f_split_by_values) {
+		cout << "-split_by_values " << split_by_values_fname_in << endl;
+	}
+	else if (f_store_as_csv_file) {
+		cout << "-store_as_csv_file " << store_as_csv_file_fname
+				<< " " << store_as_csv_file_m
+				<< " " << store_as_csv_file_n
+				<< " " << store_as_csv_file_data << endl;
+	}
+	else if (f_mv) {
+		cout << "-mv " << mv_a
+				<< " " << mv_b << endl;
+	}
+	else if (f_loop) {
+		cout << "-loop " << loop_variable
+				<< " " << loop_from
+				<< " " << loop_to
+				<< " " << loop_step
+				<< " " << loop_start_idx
+				<< " " << loop_end_idx;
+
+		cout << endl;
+
+	}
+	else if (f_plot_function) {
+		cout << "-plot_function " << plot_function_fname << endl;
+	}
+	else if (f_draw_projective_curve) {
+		cout << "-draw_projective_curve " << endl;
+		Draw_projective_curve_description->print();
+	}
+}
+
 void interface_toolkit::worker(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

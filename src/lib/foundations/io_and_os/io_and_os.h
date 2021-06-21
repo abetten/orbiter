@@ -724,6 +724,8 @@ public:
 	prepare_frames();
 	~prepare_frames();
 	int parse_arguments(int argc, std::string *argv);
+	void print();
+	void print_item(int i);
 	void do_the_work(int verbose_level);
 };
 

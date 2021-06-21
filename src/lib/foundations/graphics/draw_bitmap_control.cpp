@@ -101,6 +101,7 @@ int draw_bitmap_control::read_arguments(
 		else {
 			cout << "draw_bitmap_control::read_arguments "
 					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 
 	}
@@ -108,6 +109,26 @@ int draw_bitmap_control::read_arguments(
 		cout << "draw_bitmap_control::read_arguments done" << endl;
 	}
 	return i + 1;
+}
+
+
+void draw_bitmap_control::print()
+{
+	if (f_input_csv_file) {
+		cout << "-input_csv_file " << input_csv_file_name << endl;
+	}
+	if (f_partition) {
+		cout << "-partition " << part_width << " " << part_row << " " << part_col << endl;
+	}
+	if (f_box_width) {
+		cout << "-box_width " << box_width << endl;
+	}
+	if (bit_depth) {
+		cout << "-bit_depth " << bit_depth << endl;
+	}
+	if (f_invert_colors) {
+		cout << "-invert_colors " << endl;
+	}
 }
 
 

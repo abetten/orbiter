@@ -49,8 +49,6 @@ int projective_space_with_action_description::read_arguments(
 
 void projective_space_with_action_description::print()
 {
-	cout << "projective_space_with_action_description::print:" << endl;
-
 	cout << "n = " << n << endl;
 	cout << "q = " << input_q << endl;
 }

@@ -83,6 +83,20 @@ int design_create_description::get_q()
 	return q;
 }
 
+void design_create_description::print()
+{
+	if (f_q) {
+		cout << "-q " << q << endl;
+	}
+	if (f_catalogue) {
+		cout << "-catalogue " << iso << endl;
+	}
+	if (f_family) {
+		cout << "-family " << family_name << endl;
+	}
+}
+
+
 }}
 
 

@@ -136,6 +136,38 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 	return i + 1;
 }
 
+void classification_of_cubic_surfaces_with_double_sixes_activity_description::print()
+{
+	if (f_report) {
+		cout << "-report " << endl;
+	}
+	if (f_identify_HCV) {
+		cout << "-identify_HCV " << endl;
+	}
+	if (f_identify_F13) {
+		cout << "-identify_F13 " << endl;
+	}
+	if (f_identify_Bes) {
+		cout << "-identify_Bes " << endl;
+	}
+	if (f_identify_general_abcd) {
+		cout << "-identify_general_abcd " << endl;
+	}
+	if (f_isomorphism_testing) {
+		cout << "-isomorphism_testing " << endl;
+	}
+	if (f_recognize) {
+		cout << "-recognize " << endl;
+	}
+	if (f_create_source_code) {
+		cout << "-create_source_code " << endl;
+	}
+	if (f_sweep) {
+		cout << "-sweep " << endl;
+	}
+}
+
+
 
 
 }}

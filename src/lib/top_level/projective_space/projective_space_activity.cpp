@@ -368,6 +368,335 @@ void projective_space_activity::perform_activity(int verbose_level)
 				Descr->lift_skew_hexagon_with_polarity_polarity,
 				verbose_level);
 	}
+	else if (Descr->f_arc_with_given_set_as_s_lines_after_dualizing) {
+		if (f_v) {
+			cout << "perform_job_for_one_set f_arc_with_given_set_as_i_lines_after_dualizing" << endl;
+		}
+		diophant *D = NULL;
+		int f_save_system = TRUE;
+
+		long int *the_set_in;
+		int set_size_in;
+
+		Orbiter->Lint_vec.scan(Descr->arc_input_set, the_set_in, set_size_in);
+
+		PA->P->arc_with_given_set_of_s_lines_diophant(
+				the_set_in /*one_lines*/, set_size_in /* nb_one_lines */,
+				Descr->arc_size /*target_sz*/, Descr->arc_d /* target_d */,
+				Descr->arc_d_low, Descr->arc_s /* target_s */,
+				TRUE /* f_dualize */,
+				D,
+				verbose_level);
+
+		if (FALSE) {
+			D->print_tight();
+		}
+
+		if (f_save_system) {
+
+			string fname_system;
+
+			fname_system.assign(Descr->arc_label);
+			fname_system.append(".diophant");
+			cout << "perform_job_for_one_set saving the system "
+					"to file " << fname_system << endl;
+			D->save_in_general_format(fname_system, 0 /* verbose_level */);
+			cout << "perform_job_for_one_set saving the system "
+					"to file " << fname_system << " done" << endl;
+			//D->print();
+			//D->print_tight();
+			}
+
+		long int nb_backtrack_nodes;
+		long int *Sol;
+		int nb_sol;
+
+		D->solve_all_mckay(nb_backtrack_nodes, INT_MAX, verbose_level);
+
+		if (f_v) {
+			cout << "before D->get_solutions" << endl;
+			}
+		D->get_solutions(Sol, nb_sol, verbose_level);
+		if (f_v) {
+			cout << "after D->get_solutions, nb_sol=" << nb_sol << endl;
+			}
+		string fname_solutions;
+
+		fname_solutions.assign(Descr->arc_label);
+		fname_solutions.append(".solutions");
+
+		{
+			ofstream fp(fname_solutions);
+			int i, j, a;
+
+			for (i = 0; i < nb_sol; i++) {
+				fp << D->sum;
+				for (j = 0; j < D->sum; j++) {
+					a = Sol[i * D->sum + j];
+					fp << " " << a;
+					}
+				fp << endl;
+				}
+			fp << -1 << " " << nb_sol << endl;
+		}
+		file_io Fio;
+
+		cout << "Written file " << fname_solutions << " of size "
+				<< Fio.file_size(fname_solutions) << endl;
+		FREE_lint(Sol);
+		FREE_lint(the_set_in);
+
+
+	}
+	else if (Descr->f_arc_with_two_given_sets_of_lines_after_dualizing) {
+		if (f_v) {
+			cout << "perform_job_for_one_set f_arc_with_two_given_sets_of_lines_after_dualizing" << endl;
+		}
+
+		long int *t_lines;
+		int nb_t_lines;
+
+		Orbiter->Lint_vec.scan(Descr->t_lines_string, t_lines, nb_t_lines);
+
+		cout << "The t-lines, t=" << Descr->arc_t << " are ";
+		Orbiter->Lint_vec.print(cout, t_lines, nb_t_lines);
+		cout << endl;
+
+
+		long int *the_set_in;
+		int set_size_in;
+
+		Orbiter->Lint_vec.scan(Descr->arc_input_set, the_set_in, set_size_in);
+
+
+		diophant *D = NULL;
+		int f_save_system = TRUE;
+
+		PA->P->arc_with_two_given_line_sets_diophant(
+				the_set_in /* s_lines */, set_size_in /* nb_s_lines */, Descr->arc_s,
+				t_lines, nb_t_lines, Descr->arc_t,
+				Descr->arc_size /*target_sz*/, Descr->arc_d, Descr->arc_d_low,
+				TRUE /* f_dualize */,
+				D,
+				verbose_level);
+
+		if (FALSE) {
+			D->print_tight();
+		}
+
+		if (f_save_system) {
+			string fname_system;
+
+			fname_system.assign(Descr->arc_label);
+			fname_system.append(".diophant");
+
+			//sprintf(fname_system, "system_%d.diophant", back_end_counter);
+			cout << "perform_job_for_one_set saving the system "
+					"to file " << fname_system << endl;
+			D->save_in_general_format(fname_system, 0 /* verbose_level */);
+			cout << "perform_job_for_one_set saving the system "
+					"to file " << fname_system << " done" << endl;
+			//D->print();
+		}
+
+		long int nb_backtrack_nodes;
+		long int *Sol;
+		int nb_sol;
+
+		D->solve_all_mckay(nb_backtrack_nodes, INT_MAX, verbose_level);
+
+		if (f_v) {
+			cout << "before D->get_solutions" << endl;
+		}
+		D->get_solutions(Sol, nb_sol, verbose_level);
+		if (f_v) {
+			cout << "after D->get_solutions, nb_sol=" << nb_sol << endl;
+		}
+		string fname_solutions;
+
+		fname_solutions.assign(Descr->arc_label);
+		fname_solutions.append(".solutions");
+
+		{
+			ofstream fp(fname_solutions);
+			int i, j, a;
+
+			for (i = 0; i < nb_sol; i++) {
+				fp << D->sum;
+				for (j = 0; j < D->sum; j++) {
+					a = Sol[i * D->sum + j];
+					fp << " " << a;
+				}
+				fp << endl;
+			}
+			fp << -1 << " " << nb_sol << endl;
+		}
+
+		file_io Fio;
+
+		cout << "Written file " << fname_solutions << " of size "
+				<< Fio.file_size(fname_solutions) << endl;
+		FREE_lint(Sol);
+		FREE_lint(the_set_in);
+
+
+	}
+	else if (Descr->f_arc_with_three_given_sets_of_lines_after_dualizing) {
+		if (f_v) {
+			cout << "perform_job_for_one_set f_arc_with_three_given_sets_of_lines_after_dualizing" << endl;
+		}
+		//int arc_size;
+		//int arc_d;
+		diophant *D = NULL;
+		int f_save_system = TRUE;
+
+		long int *t_lines;
+		int nb_t_lines;
+		long int *u_lines;
+		int nb_u_lines;
+
+
+		Orbiter->Lint_vec.scan(Descr->t_lines_string, t_lines, nb_t_lines);
+		Orbiter->Lint_vec.scan(Descr->u_lines_string, u_lines, nb_u_lines);
+		//lint_vec_print(cout, t_lines, nb_t_lines);
+		//cout << endl;
+
+		cout << "The t-lines, t=" << Descr->arc_t << " are ";
+		Orbiter->Lint_vec.print(cout, t_lines, nb_t_lines);
+		cout << endl;
+		cout << "The u-lines, u=" << Descr->arc_u << " are ";
+		Orbiter->Lint_vec.print(cout, u_lines, nb_u_lines);
+		cout << endl;
+
+
+		long int *the_set_in;
+		int set_size_in;
+
+		Orbiter->Lint_vec.scan(Descr->arc_input_set, the_set_in, set_size_in);
+
+
+		PA->P->arc_with_three_given_line_sets_diophant(
+				the_set_in /* s_lines */, set_size_in /* nb_s_lines */, Descr->arc_s,
+				t_lines, nb_t_lines, Descr->arc_t,
+				u_lines, nb_u_lines, Descr->arc_u,
+				Descr->arc_size /*target_sz*/, Descr->arc_d, Descr->arc_d_low,
+				TRUE /* f_dualize */,
+				D,
+				verbose_level);
+
+		if (FALSE) {
+			D->print_tight();
+		}
+		if (f_save_system) {
+			string fname_system;
+
+			fname_system.assign(Descr->arc_label);
+			fname_system.append(".diophant");
+
+			cout << "perform_job_for_one_set saving the system "
+					"to file " << fname_system << endl;
+			D->save_in_general_format(fname_system, 0 /* verbose_level */);
+			cout << "perform_job_for_one_set saving the system "
+					"to file " << fname_system << " done" << endl;
+			//D->print();
+			//D->print_tight();
+		}
+
+		long int nb_backtrack_nodes;
+		long int *Sol;
+		int nb_sol;
+
+		D->solve_all_mckay(nb_backtrack_nodes, INT_MAX, verbose_level);
+
+		if (f_v) {
+			cout << "before D->get_solutions" << endl;
+		}
+		D->get_solutions(Sol, nb_sol, verbose_level);
+		if (f_v) {
+			cout << "after D->get_solutions, nb_sol=" << nb_sol << endl;
+		}
+		string fname_solutions;
+
+		fname_solutions.assign(Descr->arc_label);
+		fname_solutions.append(".solutions");
+
+		{
+			ofstream fp(fname_solutions);
+			int i, j, a;
+
+			for (i = 0; i < nb_sol; i++) {
+				fp << D->sum;
+				for (j = 0; j < D->sum; j++) {
+					a = Sol[i * D->sum + j];
+					fp << " " << a;
+				}
+				fp << endl;
+			}
+			fp << -1 << " " << nb_sol << endl;
+		}
+		file_io Fio;
+
+		cout << "Written file " << fname_solutions << " of size "
+				<< Fio.file_size(fname_solutions) << endl;
+		FREE_lint(Sol);
+		FREE_lint(the_set_in);
+
+
+	}
+	else if (Descr->f_dualize_hyperplanes_to_points) {
+		if (f_v) {
+			cout << "projective_space_job_description::perform_job_for_one_set f_dualize_hyperplanes_to_points" << endl;
+		}
+		long int *the_set_in;
+		int set_size_in;
+		long int *the_set_out;
+		int set_size_out;
+
+		Orbiter->Lint_vec.scan(Descr->dualize_input_set, the_set_in, set_size_in);
+
+		int i;
+		long int a;
+
+		set_size_out = set_size_in;
+		the_set_out = NEW_lint(set_size_in);
+		for (i = 0; i < set_size_in; i++) {
+			a = the_set_in[i];
+			the_set_out[i] = PA->P->Polarity_hyperplane_to_point[a];
+		}
+
+		// only if n = 2:
+		//int *Polarity_point_to_hyperplane; // [N_points]
+		//int *Polarity_hyperplane_to_point; // [N_points]
+
+		FREE_lint(the_set_in);
+		FREE_lint(the_set_out);
+
+	}
+	else if (Descr->f_dualize_points_to_hyperplanes) {
+		if (f_v) {
+			cout << "projective_space_job_description::perform_job_for_one_set f_dualize_points_to_hyperplanes" << endl;
+		}
+		long int *the_set_in;
+		int set_size_in;
+		long int *the_set_out;
+		int set_size_out;
+
+		Orbiter->Lint_vec.scan(Descr->dualize_input_set, the_set_in, set_size_in);
+
+		int i;
+		long int a;
+
+		set_size_out = set_size_in;
+		the_set_out = NEW_lint(set_size_in);
+		for (i = 0; i < set_size_in; i++) {
+			a = the_set_in[i];
+			the_set_out[i] = PA->P->Polarity_point_to_hyperplane[a];
+		}
+
+		FREE_lint(the_set_in);
+		FREE_lint(the_set_out);
+
+	}
 
 	if (f_v) {
 		cout << "projective_space_activity::perform_activity done" << endl;

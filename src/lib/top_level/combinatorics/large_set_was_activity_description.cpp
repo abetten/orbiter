@@ -108,6 +108,33 @@ int large_set_was_activity_description::read_arguments(int argc, std::string *ar
 	return i + 1;
 }
 
+void large_set_was_activity_description::print()
+{
+	if (f_normalizer_on_orbits_of_a_given_length) {
+		cout << "-normalizer_on_orbits_of_a_given_length " << normalizer_on_orbits_of_a_given_length_length
+				<< " " << normalizer_on_orbits_of_a_given_length_nb_orbits
+				<< endl;
+	}
+	if (f_create_graph_on_orbits_of_length) {
+		cout << "-create_graph_on_orbits_of_length "
+				<< " " << create_graph_on_orbits_of_length_fname
+				<< " " << create_graph_on_orbits_of_length_length
+				<< endl;
+	}
+	if (f_create_graph_on_orbits_of_length_based_on_N_orbits) {
+		cout << "-create_graph_on_orbits_of_length_based_on_N_orbits "
+				<< " " << create_graph_on_orbits_of_length_based_on_N_orbits_fname
+				<< " " << create_graph_on_orbits_of_length_based_on_N_orbits_length
+				<< endl;
+	}
+	if (f_read_solution_file) {
+		cout << "-read_solution_file "
+				<< read_solution_file_orbit_length
+				<< " " << read_solution_file_name
+				<< endl;
+	}
+}
+
 
 
 

@@ -226,6 +226,8 @@ public:
 	void freeself();
 	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
+	void print();
+	void print_item(int i);
 	int count_number_of_objects_to_test(
 		int verbose_level);
 };

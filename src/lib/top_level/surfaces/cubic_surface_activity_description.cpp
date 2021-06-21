@@ -94,6 +94,31 @@ int cubic_surface_activity_description::read_arguments(
 	return i + 1;
 }
 
+void cubic_surface_activity_description::print()
+{
+	if (f_report) {
+		cout << "-report " << endl;
+	}
+	if (f_report_with_group) {
+		cout << "-report_with_group " << endl;
+	}
+	if (f_export_points) {
+		cout << "-export_points " << endl;
+	}
+	if (f_clebsch) {
+		cout << "-clebsch " << endl;
+	}
+	if (f_codes) {
+		cout << "-codes " << endl;
+	}
+	if (f_all_quartic_curves) {
+		cout << "-all_quartic_curves " << endl;
+	}
+	if (f_export_all_quartic_curves) {
+		cout << "-export_all_quartic_curves " << endl;
+	}
+}
+
 
 
 }}

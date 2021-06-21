@@ -188,5 +188,61 @@ int diophant_description::read_arguments(
 	return i + 1;
 }
 
+
+void diophant_description::print()
+{
+	if (f_maximal_arc) {
+		cout << "-maximal_arc " << maximal_arc_sz << " " << maximal_arc_d
+				<< " " << maximal_arc_secants_text
+				<< " " << external_lines_as_subset_of_secants_text << endl;
+	}
+	if (f_label) {
+		cout << "-label " << label << endl;
+	}
+	if (f_coefficient_matrix) {
+		cout << "-coefficient_matrix " << coefficient_matrix_m << " "
+				<< coefficient_matrix_n << " " << coefficient_matrix_text << endl;
+	}
+	if (f_problem_of_Steiner_type) {
+		cout << "-problem_of_Steiner_type " << problem_of_Steiner_type_nb_t_orbits
+				<< " " << problem_of_Steiner_type_covering_matrix_fname << endl;
+	}
+
+	if (f_coefficient_matrix_csv) {
+		cout << "-coefficient_matrix_csv " << coefficient_matrix_csv << endl;
+	}
+	if (f_RHS) {
+		cout << "-RHS " << RHS_text << endl;
+	}
+	if (f_RHS_csv) {
+		cout << "-RHS_csv " << RHS_csv_text << endl;
+	}
+	if (f_RHS_constant) {
+		cout << "-RHS_constant " << RHS_constant_text << endl;
+	}
+	if (f_x_max_global) {
+		cout << "-x_max_global " << x_max_global << endl;
+	}
+	if (f_x_min_global) {
+		cout << "-x_min_global " << x_min_global << endl;
+	}
+	if (f_x_bounds) {
+		cout << "-x_bounds " << x_bounds_text << endl;
+	}
+	if (f_x_bounds_csv) {
+		cout << "-x_bounds_csv " << x_bounds_csv << endl;
+	}
+	if (f_has_sum) {
+		cout << "-has_sum " << has_sum << endl;
+	}
+	if (f_q) {
+		cout << "-q" << input_q << endl;
+	}
+	if (f_override_polynomial) {
+		cout << "-override_polynomial" << override_polynomial << endl;
+	}
+}
+
+
 }}
 

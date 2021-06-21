@@ -73,11 +73,11 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		Blt_set_domain = NEW_OBJECT(blt_set_domain);
 
 		if (f_v) {
-			cout << "BLT_set_create::init before Blt_set_domain->init" << endl;
+			cout << "orthogonal_space_activity::perform_activity before Blt_set_domain->init" << endl;
 		}
 		Blt_set_domain->init(OA->O, verbose_level);
 		if (f_v) {
-			cout << "BLT_set_create::init after Blt_set_domain->init" << endl;
+			cout << "orthogonal_space_activity::perform_activity after Blt_set_domain->init" << endl;
 		}
 
 		BLT_set_create *BC;
@@ -110,6 +110,111 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		}
 
 	}
+	else if (Descr->f_BLT_set_starter) {
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity f_BLT_set_starter" << endl;
+		}
+
+
+		Blt_set_domain = NEW_OBJECT(blt_set_domain);
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity before Blt_set_domain->init" << endl;
+		}
+		Blt_set_domain->init(OA->O, verbose_level);
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity after Blt_set_domain->init" << endl;
+		}
+
+
+		blt_set_classify *BLT_classify;
+
+		BLT_classify = NEW_OBJECT(blt_set_classify);
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity before BLT_classify->init_basic" << endl;
+		}
+		BLT_classify->init_basic(OA->A,
+				OA->A->Strong_gens,
+				Descr->BLT_set_starter_size,
+				verbose_level);
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity after BLT_classify->init_basic" << endl;
+		}
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity before BLT_classify->compute_starter" << endl;
+		}
+		BLT_classify->compute_starter(
+				Descr->BLT_set_starter_control,
+				verbose_level);
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity after BLT_classify->compute_starter" << endl;
+		}
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity f_BLT_set_starter done" << endl;
+		}
+
+	}
+
+	else if (Descr->f_BLT_set_graphs) {
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity f_BLT_set_graphs" << endl;
+		}
+
+
+		Blt_set_domain = NEW_OBJECT(blt_set_domain);
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity before Blt_set_domain->init" << endl;
+		}
+		Blt_set_domain->init(OA->O, verbose_level);
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity after Blt_set_domain->init" << endl;
+		}
+
+
+		blt_set_classify *BLT_classify;
+
+		BLT_classify = NEW_OBJECT(blt_set_classify);
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity before BLT_classify->init_basic" << endl;
+		}
+		BLT_classify->init_basic(OA->A,
+				OA->A->Strong_gens,
+				Descr->BLT_set_graphs_starter_size,
+				verbose_level);
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity after BLT_classify->init_basic" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity before BLT_classify->create_graphs" << endl;
+		}
+
+
+		BLT_classify->create_graphs(
+				Descr->BLT_set_graphs_r, Descr->BLT_set_graphs_m,
+				Descr->BLT_set_graphs_starter_size - 1,
+				TRUE /* f_lexorder_test */, FALSE /* f_eliminate_graphs_if_possible */,
+				verbose_level);
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity after BLT_classify->create_graphs" << endl;
+		}
+
+		if (f_v) {
+			cout << "orthogonal_space_activity::perform_activity f_BLT_set_graphs done" << endl;
+		}
+
+	}
+
+
 	else if (Descr->f_cheat_sheet_orthogonal) {
 
 		if (f_v) {

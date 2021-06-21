@@ -6,17 +6,18 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	activity_description.o \
 	interface_algebra.o \
 	interface_coding_theory.o \
 	interface_combinatorics.o \
 	interface_cryptography.o \
 	interface_povray.o \
 	interface_projective.o \
-	interface_symbol_table_activity.o \
-	interface_symbol_table_definition.o \
 	interface_symbol_table.o \
 	interface_toolkit.o \
-	orbiter_top_level_session.o
+	orbiter_command.o \
+	orbiter_top_level_session.o \
+	symbol_definition.o
 
 
 all : $(MODULES)

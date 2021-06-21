@@ -2995,12 +2995,23 @@ void group_theoretic_activity::do_BLT_starter(
 	if (f_v) {
 		cout << "group_theoretic_activity::do_BLT_starter before BLT->init_basic" << endl;
 	}
-	BLT->init_basic(LG,
-			Control,
+	BLT->init_basic(LG->A2,
+			LG->Strong_gens,
 			starter_size,
 			verbose_level);
 	if (f_v) {
 		cout << "group_theoretic_activity::do_BLT_starter after BLT->init_basic" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "group_theoretic_activity::do_BLT_starter before BLT->compute_starter" << endl;
+	}
+	BLT->compute_starter(
+			Control,
+			verbose_level);
+	if (f_v) {
+		cout << "group_theoretic_activity::do_BLT_starter after BLT->compute_starter" << endl;
 	}
 
 	FREE_OBJECT(BLT);

@@ -585,12 +585,33 @@ public:
 	int f_lift_skew_hexagon_with_polarity;
 	std::string lift_skew_hexagon_with_polarity_polarity;
 
+	int f_arc_with_given_set_as_s_lines_after_dualizing;
+	int arc_size;
+	int arc_d;
+	int arc_d_low;
+	int arc_s;
+	std::string arc_input_set;
+	std::string arc_label;
+
+	int f_arc_with_two_given_sets_of_lines_after_dualizing;
+	int arc_t;
+	std::string t_lines_string;
+
+	int f_arc_with_three_given_sets_of_lines_after_dualizing;
+	int arc_u;
+	std::string u_lines_string;
+
+	int f_dualize_hyperplanes_to_points;
+	int f_dualize_points_to_hyperplanes;
+	std::string dualize_input_set;
+
 
 	projective_space_activity_description();
 	~projective_space_activity_description();
 	int read_arguments(
 		int argc, std::string *argv,
 		int verbose_level);
+	void print();
 
 
 };
@@ -702,7 +723,7 @@ public:
 
 
 
-
+#if 0
 // #############################################################################
 // projective_space_job_description.cpp
 // #############################################################################
@@ -727,24 +748,28 @@ public:
 	int f_fname_base_out;
 	std::string fname_base_out;
 
-
+#if 0
 	int f_q;
 	int q;
 	int f_n;
 	int n;
 	int f_poly;
 	std::string poly;
+#endif
 
 	int f_embed;
 		// follow up option for f_print:
 		//f_orthogonal, orthogonal_epsilon
 
 	int f_andre;
+
+#if 0
 		// follow up option for f_andre:
 		int f_Q;
 		int Q;
 		int f_poly_Q;
 		std::string poly_Q;
+#endif
 
 
 	int f_print;
@@ -805,22 +830,6 @@ public:
 	int f_intersect_with_set_from_file;
 	std::string intersect_with_set_from_file_fname;
 
-	int f_arc_with_given_set_as_s_lines_after_dualizing;
-	int arc_size;
-	int arc_d;
-	int arc_d_low;
-	int arc_s;
-
-	int f_arc_with_two_given_sets_of_lines_after_dualizing;
-	int arc_t;
-	std::string t_lines_string;
-
-	int f_arc_with_three_given_sets_of_lines_after_dualizing;
-	int arc_u;
-	std::string u_lines_string;
-
-	int f_dualize_hyperplanes_to_points;
-	int f_dualize_points_to_hyperplanes;
 
 
 
@@ -830,6 +839,7 @@ public:
 	int read_arguments(
 		int argc, std::string *argv,
 		int verbose_level);
+	void print();
 
 };
 
@@ -864,10 +874,6 @@ public:
 	long int *intersect_with_set_from_file_set;
 	int intersect_with_set_from_file_set_size;
 
-	long int *t_lines;
-	int nb_t_lines;
-	long int *u_lines;
-	int nb_u_lines;
 
 
 	projective_space_job();
@@ -883,11 +889,15 @@ public:
 		int &set_size_out,
 		std::ostream &fp_tex,
 		int verbose_level);
+#if 0
 	void do_canonical_form(
 		long int *set, int set_size, int f_semilinear,
 		std::string &fname_base, int verbose_level);
+#endif
 
 };
+#endif
+
 
 // #############################################################################
 // projective_space_object_classifier_description.cpp

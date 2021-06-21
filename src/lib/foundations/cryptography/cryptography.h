@@ -27,30 +27,30 @@ public:
 
 	cryptography_domain();
 	~cryptography_domain();
-	void affine_cipher(char *ptext, char *ctext, int a, int b);
-	void affine_decipher(char *ctext, char *ptext, char *guess);
-	void vigenere_cipher(char *ptext, char *ctext, char *key);
-	void vigenere_decipher(char *ctext, char *ptext, char *key);
-	void vigenere_analysis(char *ctext);
-	void vigenere_analysis2(char *ctext, int key_length);
-	int kasiski_test(char *ctext, int threshold);
-	void print_candidates(char *ctext,
+	void affine_cipher(std::string &ptext, std::string &ctext, int a, int b);
+	void affine_decipher(std::string &ctext, std::string &ptext, std::string &guess);
+	void vigenere_cipher(std::string &ptext, std::string &ctext, std::string &key);
+	void vigenere_decipher(std::string &ctext, std::string &ptext, std::string &key);
+	void vigenere_analysis(std::string &ctext);
+	void vigenere_analysis2(std::string &ctext, int key_length);
+	int kasiski_test(std::string &ctext, int threshold);
+	void print_candidates(std::string &ctext,
 			int i, int h, int nb_candidates, int *candidates);
 	void print_set(int l, int *s);
-	void print_on_top(char *text1, char *text2);
-	void decipher(char *ctext, char *ptext, char *guess);
-	void analyze(char *text);
+	void print_on_top(std::string &text1, std::string &text2);
+	void decipher(std::string &ctext, std::string &ptext, std::string &guess);
+	void analyze(std::string &text);
 	double friedman_index(int *mult, int n);
 	double friedman_index_shifted(int *mult, int n, int shift);
 	void print_frequencies(int *mult);
-	void single_frequencies(char *text, int *mult);
-	void single_frequencies2(char *text, int stride, int n, int *mult);
-	void double_frequencies(char *text, int *mult);
-	void substition_cipher(char *ptext, char *ctext, char *key);
+	void single_frequencies(std::string &text, int *mult);
+	void single_frequencies2(std::string &text, int stride, int n, int *mult);
+	void double_frequencies(std::string &text, int *mult);
+	void substition_cipher(std::string &ptext, std::string &ctext, std::string &key);
 	char lower_case(char c);
 	char upper_case(char c);
 	char is_alnum(char c);
-	void get_random_permutation(char *p);
+	void get_random_permutation(std::string &p);
 
 	void make_affine_sequence(int a, int c, int m, int verbose_level);
 	void make_2D_plot(int *orbit, int orbit_len, int cnt,

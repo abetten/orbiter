@@ -55,7 +55,7 @@ void orbiter_top_level_session::handle_everything(int argc, std::string *Argv, i
 {
 	int f_v = (verbose_level >= 1);
 
-	if (f_v) {
+	if (FALSE) {
 		cout << "orbiter_top_level_session::handle_everything" << endl;
 	}
 	if (Orbiter_session->f_list_arguments) {
@@ -80,6 +80,8 @@ void orbiter_top_level_session::handle_everything(int argc, std::string *Argv, i
 		exit(1);
 #endif
 	}
+
+
 	if (Orbiter_session->f_fork) {
 		if (f_v) {
 			cout << "before Top_level_session.Orbiter_session->fork" << endl;
@@ -121,169 +123,63 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 {
 	//verbose_level = 1;
 	int f_v = (verbose_level >= 1);
-	long int cnt = 0;
-	int i_prev = -1;
+	int f_vv = FALSE;
 
-	if (f_v) {
-		cout << "orbiter_top_level_session::parse_and_execute, argc=" << argc << endl;
+	if (FALSE) {
+		cout << "orbiter_top_level_session::parse_and_execute, parsing the orbiter dash code" << endl;
 	}
 
 
-	while (i < argc) {
-		if (f_v) {
-			cout << "orbiter_top_level_session::parse_and_execute "
-					"cnt = " << cnt << ", i = " << i << endl;
-			if (i < argc) {
-				cout << "orbiter_top_level_session::parse_and_execute i=" << i << ", next argument is " << Argv[i] << endl;
-			}
-		}
-		if (i_prev == i) {
-			cout << "orbiter_top_level_session::parse_and_execute we seem to be stuck in a look" << endl;
-			exit(1);
-		}
-		i_prev = i;
-		if (f_v) {
-			cout << "orbiter_top_level_session::parse_and_execute before Interface_symbol_table, i = " << i << endl;
-		}
-		{
+	vector<void *> program;
 
-			interface_symbol_table Interface_symbol_table;
-			if (Interface_symbol_table.recognize_keyword(argc, Argv, i, verbose_level)) {
-				if (f_v) {
-					cout << "orbiter_top_level_session::parse_and_execute recognizing keyword from Interface_symbol_table" << endl;
-				}
-				Interface_symbol_table.read_arguments(this, argc, Argv, i, verbose_level);
-				if (f_v) {
-					cout << "orbiter_top_level_session::parse_and_execute after Interface_symbol_table.read_arguments, i=" << i << endl;
-				}
-				if (i < argc) {
-					cout << "orbiter_top_level_session::parse_and_execute next argument is " << Argv[i] << endl;
-				}
-				Interface_symbol_table.worker(this, verbose_level);
-				continue;
-			}
-		}
+	if (f_vv) {
+		cout << "orbiter_top_level_session::parse_and_execute before parse" << endl;
+	}
+	parse(argc, Argv, i, program, 0 /* verbose_level */);
+	if (f_vv) {
+		cout << "orbiter_top_level_session::parse_and_execute after parse" << endl;
+	}
 
-		if (i < argc) {
-			cout << "orbiter_top_level_session::parse_and_execute i=" << i << ", next argument is " << Argv[i] << endl;
-		}
+	if (f_v) {
+		cout << "orbiter_top_level_session::parse_and_execute, we parsed the following orbiter dash code program:" << endl;
+	}
+	for (i = 0; i < program.size(); i++) {
+
+		orbiter_command *OC;
+
+		OC = (orbiter_command *) program[i];
+
+		cout << "Command " << i << ":" << endl;
+		OC->print();
+	}
+
+	if (f_v) {
+		cout << "################################################################################################" << endl;
+	}
+	if (f_v) {
+		cout << "Executing commands:" << endl;
+	}
+
+	for (i = 0; i < program.size(); i++) {
+
+		orbiter_command *OC;
+
+		OC = (orbiter_command *) program[i];
 
 		if (f_v) {
-			cout << "orbiter_top_level_session::parse_and_execute before Interface_algebra, i = " << i << " " << Argv[i] << endl;
-		}
-		{
-
-			interface_algebra Interface_algebra;
-			if (Interface_algebra.recognize_keyword(argc, Argv, i, verbose_level)) {
-				if (f_v) {
-					cout << "orbiter_top_level_session::parse_and_execute recognizing keyword from Interface_algebra" << endl;
-				}
-				Interface_algebra.read_arguments(argc, Argv, i, verbose_level);
-				i++;
-				Interface_algebra.worker(verbose_level);
-				continue;
-			}
+			cout << "################################################################################################" << endl;
+			cout << "Executing command " << i << ":" << endl;
+			OC->print();
+			cout << "################################################################################################" << endl;
 		}
 
-		if (f_v) {
-			cout << "orbiter_top_level_session::parse_and_execute before Interface_cryptography, i = " << i << " " << Argv[i] << endl;
-		}
-		{
+		OC->execute(verbose_level);
 
-			interface_cryptography Interface_cryptography;
-			if (Interface_cryptography.recognize_keyword(argc, Argv, i, verbose_level)) {
-				if (f_v) {
-					cout << "orbiter_top_level_session::parse_and_execute recognizing keyword from Interface_cryptography" << endl;
-				}
-				Interface_cryptography.read_arguments(argc, Argv, i, verbose_level);
-				i++;
-				Interface_cryptography.worker(verbose_level);
-				continue;
-			}
-		}
+	}
 
-		if (f_v) {
-			cout << "orbiter_top_level_session::parse_and_execute before Interface_combinatorics, i = " << i << " " << Argv[i] << endl;
-		}
-		{
 
-			interface_combinatorics Interface_combinatorics;
-			if (Interface_combinatorics.recognize_keyword(argc, Argv, i, verbose_level)) {
-				if (f_v) {
-					cout << "orbiter_top_level_session::parse_and_execute recognizing keyword from Interface_combinatorics" << endl;
-				}
-				Interface_combinatorics.read_arguments(argc, Argv, i, verbose_level);
-				i++;
-				Interface_combinatorics.worker(verbose_level);
-				continue;
-			}
-		}
-
-		if (f_v) {
-			cout << "orbiter_top_level_session::parse_and_execute before Interface_coding_theory, i = " << i << " " << Argv[i] << endl;
-		}
-		{
-
-			interface_coding_theory Interface_coding_theory;
-			if (Interface_coding_theory.recognize_keyword(argc, Argv, i, verbose_level)) {
-				if (f_v) {
-					cout << "orbiter_top_level_session::parse_and_execute recognizing keyword from Interface_coding_theory" << endl;
-				}
-				Interface_coding_theory.read_arguments(argc, Argv, i, verbose_level);
-				i++;
-				Interface_coding_theory.worker(verbose_level);
-				continue;
-			}
-		}
-
-		if (f_v) {
-			cout << "orbiter_top_level_session::parse_and_execute before Interface_povray, i = " << i << " " << Argv[i] << endl;
-		}
-		{
-
-			interface_povray Interface_povray;
-			if (Interface_povray.recognize_keyword(argc, Argv, i, verbose_level)) {
-				if (f_v) {
-					cout << "orbiter_top_level_session::parse_and_execute recognizing keyword from Interface_povray" << endl;
-				}
-				Interface_povray.read_arguments(argc, Argv, i, verbose_level);
-				i++;
-				Interface_povray.worker(verbose_level);
-				continue;
-			}
-		}
-
-		if (f_v) {
-			cout << "orbiter_top_level_session::parse_and_execute before Interface_projective, i = " << i << " " << Argv[i] << endl;
-		}
-		{
-
-			interface_projective Interface_projective;
-			if (Interface_projective.recognize_keyword(argc, Argv, i, verbose_level)) {
-				Interface_projective.read_arguments(argc, Argv, i, verbose_level);
-				i++;
-				Interface_projective.worker(verbose_level);
-				continue;
-			}
-		}
-
-		if (f_v) {
-			cout << "orbiter_top_level_session::parse_and_execute before Interface_toolkit, i = " << i << endl;
-		}
-		{
-
-			interface_toolkit Interface_toolkit;
-			if (Interface_toolkit.recognize_keyword(argc, Argv, i, verbose_level)) {
-				Interface_toolkit.read_arguments(argc, Argv, i, verbose_level);
-				i++;
-				Interface_toolkit.worker(verbose_level);
-				continue;
-			}
-		}
-
-		cout << "Command is unrecognized " << Argv[i] << endl;
-		exit(1);
-		cnt++;
+	if (f_v) {
+		cout << "Executing commands done" << endl;
 	}
 
 	if (f_v) {
@@ -291,6 +187,71 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 	}
 }
 
+void orbiter_top_level_session::parse(int argc, std::string *Argv, int &i, std::vector<void *> &program, int verbose_level)
+{
+	int cnt = 0;
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE;
+	int i_prev = -1;
+
+	if (f_v) {
+		cout << "orbiter_top_level_session::parse, parsing the orbiter dash code" << endl;
+	}
+
+	while (i < argc) {
+		if (f_vv) {
+			cout << "orbiter_top_level_session::parse "
+					"cnt = " << cnt << ", i = " << i << endl;
+			if (i < argc) {
+				if (f_vv) {
+					cout << "orbiter_top_level_session::parse i=" << i << ", next argument is " << Argv[i] << endl;
+				}
+			}
+		}
+		if (i_prev == i) {
+			cout << "orbiter_top_level_session::parse we seem to be stuck in a look" << endl;
+			exit(1);
+		}
+		i_prev = i;
+		if (f_v) {
+			cout << "orbiter_top_level_session::parse before Interface_symbol_table, i = " << i << endl;
+		}
+
+		orbiter_command *OC;
+
+		OC = NEW_OBJECT(orbiter_command);
+		if (f_vv) {
+			cout << "orbiter_top_level_session::parse before OC->parse" << endl;
+		}
+		OC->parse(this, argc, Argv, i, 0 /*verbose_level*/);
+		if (f_vv) {
+			cout << "orbiter_top_level_session::parse after OC->parse" << endl;
+		}
+
+		program.push_back(OC);
+
+#if 0
+		if (f_v) {
+			cout << "orbiter_top_level_session::parse before OC->execute" << endl;
+		}
+		OC->execute(verbose_level);
+		if (f_v) {
+			cout << "orbiter_top_level_session::parse after OC->execute" << endl;
+		}
+#endif
+
+
+
+
+		//cout << "Command is unrecognized " << Argv[i] << endl;
+		//exit(1);
+		cnt++;
+	}
+
+	if (f_v) {
+		cout << "orbiter_top_level_session::parse, parsing the orbiter dash code done" << endl;
+	}
+}
 
 void *orbiter_top_level_session::get_object(int idx)
 {

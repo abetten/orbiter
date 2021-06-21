@@ -6,7 +6,7 @@
  */
 
 
-
+#if 0
 
 #include "orbiter.h"
 
@@ -26,6 +26,7 @@ projective_space_job_description::projective_space_job_description()
 	f_fname_base_out = FALSE;
 	//fname_base_out;
 
+#if 0
 	f_q = FALSE;
 	q = 0;
 
@@ -34,18 +35,21 @@ projective_space_job_description::projective_space_job_description()
 
 	f_poly = FALSE;
 	//poly = NULL;
+#endif
 
 	f_embed = FALSE;
 		// follow up option for f_print:
 		//f_orthogonal, orthogonal_epsilon
 
 	f_andre = FALSE;
+
+#if 0
 		// follow up option for f_andre:
 		f_Q = FALSE;
 		Q = 0;
 		f_poly_Q = FALSE;
 		//poly_Q = NULL;
-
+#endif
 
 	f_print = FALSE;
 		// follow up option for f_print:
@@ -100,25 +104,6 @@ projective_space_job_description::projective_space_job_description()
 	f_intersect_with_set_from_file = FALSE;
 	//intersect_with_set_from_file_fname = NULL;
 
-	f_arc_with_given_set_as_s_lines_after_dualizing = FALSE;
-	arc_size = 0;
-	arc_d = 0;
-	arc_d_low = 0;
-	arc_s = 0;
-
-	f_arc_with_two_given_sets_of_lines_after_dualizing = FALSE;
-	//int arc_size;
-	//int arc_d;
-	arc_t = 0;
-	//t_lines_string;
-
-
-	f_arc_with_three_given_sets_of_lines_after_dualizing = FALSE;
-	arc_u = 0;
-	//u_lines_string;
-
-	f_dualize_hyperplanes_to_points = FALSE;
-	f_dualize_points_to_hyperplanes = FALSE;
 }
 
 projective_space_job_description::~projective_space_job_description()
@@ -140,6 +125,7 @@ int projective_space_job_description::read_arguments(
 			verbose_level = strtoi(argv[++i]);
 			cout << "-v " << verbose_level << endl;
 		}
+#if 0
 		else if (stringcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
 			q = strtoi(argv[++i]);
@@ -165,6 +151,7 @@ int projective_space_job_description::read_arguments(
 			poly_Q.assign(argv[++i]);
 			cout << "-poly_Q " << poly_Q << endl;
 		}
+#endif
 		else if (stringcmp(argv[i], "-input") == 0) {
 			f_input = TRUE;
 			Data = NEW_OBJECT(data_input_stream);
@@ -307,49 +294,6 @@ int projective_space_job_description::read_arguments(
 			intersect_with_set_from_file_fname.assign(argv[++i]);
 			cout << "-intersect_with_set_from_file " << intersect_with_set_from_file_fname << endl;
 		}
-		else if (stringcmp(argv[i], "-arc_with_given_set_as_s_lines_after_dualizing") == 0) {
-			f_arc_with_given_set_as_s_lines_after_dualizing = TRUE;
-			arc_size = strtoi(argv[++i]);
-			arc_d = strtoi(argv[++i]);
-			arc_d_low = strtoi(argv[++i]);
-			arc_s = strtoi(argv[++i]);
-			cout << "-arc_with_given_set_as_s_lines_after_dualizing "
-					<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << endl;
-		}
-		else if (stringcmp(argv[i], "-arc_with_two_given_sets_of_lines_after_dualizing") == 0) {
-			f_arc_with_two_given_sets_of_lines_after_dualizing = TRUE;
-			arc_size = strtoi(argv[++i]);
-			arc_d = strtoi(argv[++i]);
-			arc_d_low = strtoi(argv[++i]);
-			arc_s = strtoi(argv[++i]);
-			arc_t = strtoi(argv[++i]);
-			t_lines_string.assign(argv[++i]);
-			cout << "-arc_with_two_given_sets_of_lines_after_dualizing src_size="
-					<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << " t=" << arc_t << " " << t_lines_string << endl;
-		}
-		else if (stringcmp(argv[i], "-arc_with_three_given_sets_of_lines_after_dualizing") == 0) {
-			f_arc_with_three_given_sets_of_lines_after_dualizing = TRUE;
-			arc_size = strtoi(argv[++i]);
-			arc_d = strtoi(argv[++i]);
-			arc_d_low = strtoi(argv[++i]);
-			arc_s = strtoi(argv[++i]);
-			arc_t = strtoi(argv[++i]);
-			t_lines_string.assign(argv[++i]);
-			arc_u = strtoi(argv[++i]);
-			u_lines_string.assign(argv[++i]);
-			cout << "-arc_with_three_given_sets_of_lines_after_dualizing "
-					<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << endl;
-			cout << "arc_t = " << arc_t << " t_lines_string = " << t_lines_string << endl;
-			cout << "arc_u = " << arc_u << " u_lines_string = " << u_lines_string << endl;
-		}
-		else if (stringcmp(argv[i], "-dualize_hyperplanes_to_points") == 0) {
-			f_dualize_hyperplanes_to_points = TRUE;
-			cout << "-dualize_hyperplanes_to_points" << endl;
-		}
-		else if (stringcmp(argv[i], "-dualize_points_to_hyperplanes") == 0) {
-			f_dualize_points_to_hyperplanes = TRUE;
-			cout << "-dualize_points_to_hyperplanes" << endl;
-		}
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
@@ -366,6 +310,126 @@ int projective_space_job_description::read_arguments(
 }
 
 
+void projective_space_job_description::print()
+{
+#if 0
+	if (f_q) {
+		cout << "-q " << q << endl;
+	}
+	else if (f_Q) {
+		cout << "-Q " << Q << endl;
+	}
+	else if (f_n) {
+		cout << "-n " << n << endl;
+	}
+	else if (stringcmp(argv[i], "-poly") == 0) {
+		f_poly = TRUE;
+		poly.assign(argv[++i]);
+		cout << "-poly " << poly << endl;
+	}
+	else if (stringcmp(argv[i], "-poly_Q") == 0) {
+		f_poly_Q = TRUE;
+		poly_Q.assign(argv[++i]);
+		cout << "-poly_Q " << poly_Q << endl;
+	}
+#endif
+	if (f_input) {
+		cout << "-input" << endl;
+		Data->print();
+	}
+	if (f_fname_base_out) {
+		cout << "-fname_base_out " << fname_base_out << endl;
+	}
+	if (f_embed) {
+		cout << "-embed" << endl;
+	}
+	if (f_orthogonal) {
+		cout << "-orthogonal " << orthogonal_epsilon << endl;
+	}
+	if (f_homogeneous_polynomials_LEX) {
+		cout << "-homogeneous_polynomials_LEX " << homogeneous_polynomials_degree << endl;
+	}
+	if (f_homogeneous_polynomials_PART) {
+		cout << "-homogeneous_polynomials_PART " << homogeneous_polynomials_degree << endl;
+	}
+	if (f_andre) {
+		cout << "-andre " << endl;
+	}
+	if (f_print) {
+		cout << "-print " << endl;
+	}
+	if (f_lines_in_PG) {
+		cout << "-lines_in_PG " << endl;
+	}
+	if (f_points_in_PG) {
+		cout << "-points_in_PG " << endl;
+	}
+	if (f_points_on_grassmannian) {
+		cout << "-points_on_grassmannian " << points_on_grassmannian_k << endl;
+	}
+	if (f_list_group_elements) {
+		cout << "-list_group_elements" << endl;
+	}
+	if (f_line_type) {
+		cout << "-line_type" << endl;
+	}
+	if (f_plane_type) {
+		cout << "-plane_type" << endl;
+	}
+	if (f_plane_type_failsafe) {
+		cout << "-plane_type_failsafe" << endl;
+	}
+	if (f_conic_type) {
+		cout << "-conic_type " << endl;
+	}
+	if (f_randomized) {
+		cout << "-randomized " << nb_times << endl;
+	}
+	if (f_hyperplane_type) {
+		cout << "-hyperplane_type" << endl;
+	}
+	if (f_show) {
+		cout << "-show" << endl;
+	}
+	if (f_cone_over) {
+		cout << "-cone_over" << endl;
+	}
+	if (f_bsf3) {
+		cout << "-bsf3" << endl;
+	}
+	if (f_test_diagonals) {
+		cout << "-test_diagonals " << test_diagonals_fname << endl;
+	}
+	if (f_klein) {
+		cout << "-klein" << endl;
+	}
+	if (f_draw_points_in_plane) {
+		cout << "-draw_points_in_plane" << draw_points_in_plane_fname_base << endl;
+	}
+
+
+
+	if (f_point_labels) {
+		cout << "-point_labels" << endl;
+	}
+
+	if (f_canonical_form) {
+		cout << "-canonical_form" << canonical_form_fname_base << endl;
+	}
+
+	if (f_canonical_form) {
+		cout << "-ideal_LEX " << ideal_degree << endl;
+	}
+	if (f_ideal_PART) {
+		cout << "-ideal_PART " << ideal_degree << endl;
+	}
+	if (f_intersect_with_set_from_file) {
+		cout << "-intersect_with_set_from_file " << intersect_with_set_from_file_fname << endl;
+	}
+}
+
 
 }}
+
+#endif
 

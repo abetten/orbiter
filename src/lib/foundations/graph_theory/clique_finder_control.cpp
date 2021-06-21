@@ -164,5 +164,49 @@ int clique_finder_control::parse_arguments(
 }
 
 
+void clique_finder_control::print()
+{
+	if (f_rainbow) {
+		cout << "-rainbow " << endl;
+	}
+	else if (f_target_size) {
+		cout << "-target_size " << target_size << endl;
+	}
+	else if (f_weighted) {
+		cout << "-weighted " << weights_total
+				<< " " << weights_offset
+				<< " " << weights_string
+				<< " " << weights_bounds
+				<< endl;
+	}
+	else if (f_Sajeeb) {
+		cout << "-Sajeeb " << endl;
+	}
+	else if (f_nonrecursive) {
+		cout << "-nonrecursive " << endl;
+	}
+	else if (f_tree && !f_decision_nodes_only) {
+		cout << "-tree " << fname_tree << endl;
+	}
+	else if (f_tree && f_decision_nodes_only) {
+		cout << "-tree_decision_nodes_only " << fname_tree << endl;
+	}
+	else if (f_output_file) {
+		cout << "-output_file " << output_file << endl;
+	}
+	else if (f_output_solution_raw) {
+		cout << "-output_solution_raw " << endl;
+	}
+	else if (f_store_solutions) {
+		cout << "-count_solutions_only " << endl;
+	}
+	else if (f_restrictions) {
+		cout << "-restrictions ";
+		Orbiter->Int_vec.print(cout, restrictions, 3 * nb_restrictions);
+		cout << endl;
+	}
+}
+
+
 
 }}

@@ -387,17 +387,18 @@ MODULES= \
 		top_level/graph_theory/graph_classify.o \
 		top_level/graph_theory/graph_theoretic_activity_description.o \
 		top_level/graph_theory/graph_theoretic_activity.o \
+		top_level/interfaces/activity_description.o \
 		top_level/interfaces/interface_algebra.o \
 		top_level/interfaces/interface_coding_theory.o \
 		top_level/interfaces/interface_combinatorics.o \
 		top_level/interfaces/interface_cryptography.o \
 		top_level/interfaces/interface_povray.o \
 		top_level/interfaces/interface_projective.o \
-		top_level/interfaces/interface_symbol_table_activity.o \
-		top_level/interfaces/interface_symbol_table_definition.o \
 		top_level/interfaces/interface_symbol_table.o \
 		top_level/interfaces/interface_toolkit.o \
+		top_level/interfaces/orbiter_command.o \
 		top_level/interfaces/orbiter_top_level_session.o \
+		top_level/interfaces/symbol_definition.o \
 		top_level/isomorph/isomorph.o \
 		top_level/isomorph/isomorph_arguments.o \
 		top_level/isomorph/isomorph_database.o \
@@ -439,8 +440,6 @@ MODULES= \
 		top_level/projective_space/object_in_projective_space_with_action.o \
 		top_level/projective_space/projective_space_activity_description.o \
 		top_level/projective_space/projective_space_activity.o \
-		top_level/projective_space/projective_space_job_description.o \
-		top_level/projective_space/projective_space_job.o \
 		top_level/projective_space/projective_space_object_classifier_description.o \
 		top_level/projective_space/projective_space_object_classifier.o \
 		top_level/projective_space/projective_space_with_action_description.o \

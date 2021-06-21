@@ -226,8 +226,8 @@ public:
 			void *callback_data2,
 			int verbose_level);
 	void export_data_in_source_code_inside_tex(
-			const char *prefix,
-			char *label_of_structure, std::ostream &ost,
+			std::string &prefix,
+			std::string &label_of_structure, std::ostream &ost,
 			int verbose_level);
 };
 

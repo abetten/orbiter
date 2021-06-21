@@ -354,6 +354,8 @@ public:
 	~design_activity_description();
 	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
+	void print();
+
 };
 
 
@@ -424,6 +426,8 @@ public:
 	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 	int get_q();
+	void print();
+
 };
 
 
@@ -999,6 +1003,7 @@ public:
 	int read_arguments(
 		int argc, std::string *argv,
 		int verbose_level);
+	void print();
 
 };
 
@@ -1060,6 +1065,7 @@ public:
 	~large_set_was_description();
 	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
+	void print();
 
 };
 

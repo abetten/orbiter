@@ -196,6 +196,61 @@ int create_graph_description::read_arguments(
 	return i + 1;
 }
 
+void create_graph_description::print()
+{
+	if (f_load_from_file) {
+		cout << "-load_from_file " << fname << endl;
+	}
+	if (f_edge_list) {
+		cout << "-edge_list " << n << " " << edge_list_text << endl;
+	}
+	if (f_edges_as_pairs) {
+		cout << "-edges_as_pairs " << n << " " << edges_as_pairs_text << endl;
+	}
+	if (f_cycle) {
+		cout << "-cycle " << cycle_n << endl;
+	}
+	if (f_Hamming) {
+		cout << "-Hamming " << Hamming_n << " " << Hamming_q << endl;
+	}
+	if (f_Johnson) {
+		cout << "-Johnson " << Johnson_n << " " << Johnson_k << " " << Johnson_s << endl;
+	}
+	if (f_Paley) {
+		cout << "-Paley " << Paley_q << endl;
+	}
+	if (f_Sarnak) {
+		cout << "-Sarnak " << Sarnak_p << " " << Sarnak_q << endl;
+	}
+	if (f_Schlaefli) {
+		cout << "-Schlaefli " << Schlaefli_q << endl;
+	}
+	if (f_Shrikhande) {
+		cout << "-Shrikhande " << endl;
+	}
+	if (f_Winnie_Li) {
+		cout << "-Winnie_Li " << Winnie_Li_q << " " << Winnie_Li_index << endl;
+	}
+	if (f_Grassmann) {
+		cout << "-Grassmann " << Grassmann_n << " " << Grassmann_k
+				<< " " << Grassmann_q << " " << Grassmann_r << endl;
+	}
+	if (f_coll_orthogonal) {
+		cout << "-coll_orthogonal " << coll_orthogonal_epsilon
+				<< " " << coll_orthogonal_d
+				<< " " << coll_orthogonal_q << endl;
+	}
+	if (f_trihedral_pair_disjointness_graph) {
+		cout << "-trihedral_pair_disjointness_graph " << endl;
+	}
+	if (f_non_attacking_queens_graph) {
+		cout << "-non_attacking_queens_graph " << non_attacking_queens_graph_n << endl;
+	}
+	if (f_subset) {
+		cout << "-subset " << subset_label << " " << subset_label_tex << " " << subset_text << endl;
+	}
+}
+
 
 
 

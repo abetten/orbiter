@@ -716,9 +716,11 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 
 		int c2;
 
-		cout << "i : filter_by_set[i] : color_table[filter_by_set[i]]" << endl;
-		for (i = 0; i < filter_by_set_size; i++) {
-			cout << i << " : " << filter_by_set[i] << " : " << color_table[filter_by_set[i]] << endl;
+		if (f_v) {
+			cout << "i : filter_by_set[i] : color_table[filter_by_set[i]]" << endl;
+			for (i = 0; i < filter_by_set_size; i++) {
+				cout << i << " : " << filter_by_set[i] << " : " << color_table[filter_by_set[i]] << endl;
+			}
 		}
 
 
@@ -743,9 +745,11 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 		}
 
 
-		cout << "c : reduced_color[c]" << endl;
-		for (c = 0; c < number_colors; c++) {
-			cout << c << " : " << reduced_color[c] << endl;
+		if (f_v) {
+			cout << "c : reduced_color[c]" << endl;
+			for (c = 0; c < number_colors; c++) {
+				cout << c << " : " << reduced_color[c] << endl;
+			}
 		}
 
 
@@ -759,11 +763,13 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 				exit(1);
 			}
 
+#if 0
 			if (i == 29044) {
 				cout << "i = 29044, a=" << a << " orbit1:" << endl;
 				Orbiter->Lint_vec.print(cout, orbit1, l1);
 				cout << endl;
 			}
+#endif
 			for (j = 0; j < orbit_length; j++) {
 				c = color_table[orbit1[j]];
 				c2 = reduced_color[c];
@@ -771,9 +777,11 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 					cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filtering c2 < 0" << endl;
 					exit(1);
 				}
+#if 0
 				if (i == 29044) {
 					cout << "j=" << j << " c=" << c << " c2=" << c2 << endl;
 				}
+#endif
 				point_color[i * orbit_length + j] = c2;
 			}
 		} // next i

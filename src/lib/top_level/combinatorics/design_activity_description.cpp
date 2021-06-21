@@ -82,6 +82,25 @@ int design_activity_description::read_arguments(int argc, std::string *argv,
 	return i + 1;
 }
 
+void design_activity_description::print()
+{
+	if (f_create_table) {
+		cout << "-create_table " << create_table_label
+				<< " " << create_table_group_order
+				<< " " << create_table_gens
+				<< endl;
+	}
+	else if (f_load_table) {
+		cout << "-load_table " << create_table_label
+				<< " " << create_table_group_order
+				<< " " << create_table_gens
+				<< " " << load_table_H_label
+				<< " " << load_table_H_group_order
+				<< " " << load_table_H_gens
+				<< " " << load_table_selected_orbit_length
+				<< endl;
+	}
+}
 
 
 

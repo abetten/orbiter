@@ -122,6 +122,43 @@ int diophant_activity_description::read_arguments(
 	return i + 1;
 }
 
+void diophant_activity_description::print()
+{
+	if (f_input_file) {
+		cout << "-input_file " << input_file << endl;
+	}
+	else if (f_print) {
+		cout << "-print " << endl;
+	}
+	else if (f_solve_mckay) {
+		cout << "-solve_mckay " << endl;
+	}
+	else if (f_solve_standard) {
+		cout << "-solve_standard " << endl;
+	}
+	else if (f_draw_as_bitmap) {
+		cout << "-draw_as_bitmap " << box_width << " " << bit_depth << endl;
+	}
+	else if (f_draw) {
+		cout << "-draw " << endl;
+	}
+	else if (f_perform_column_reductions) {
+		cout << "-perform_column_reductions " << endl;
+	}
+	else if (f_test_single_equation) {
+		cout << "-test_single_equation " << max_number_of_coefficients << endl;
+	}
+	else if (f_project_to_single_equation_and_solve) {
+		cout << "-project_to_single_equation_and_solve " << eqn_idx << " " << solve_case_idx << endl;
+	}
+	else if (f_project_to_two_equations_and_solve) {
+		cout << "-project_to_single_equation_and_solve " << eqn1_idx << " " << eqn2_idx
+				<< " " << solve_case_idx_r
+				<< " " << solve_case_idx_m
+				<< endl;
+	}
+}
+
 
 }}
 

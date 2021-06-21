@@ -86,6 +86,22 @@ int graph_classification_activity_description::read_arguments(
 }
 
 
+void graph_classification_activity_description::print()
+{
+	if (f_draw_level_graph) {
+		cout << "-draw_level_graph " << draw_level_graph_level << endl;
+	}
+	if (f_draw_graphs) {
+		cout << "-draw_graphs " << endl;
+	}
+	if (f_draw_graphs_at_level) {
+		cout << "-draw_graphs_at_level " << draw_graphs_at_level_level << endl;
+	}
+	if (f_draw_options) {
+		cout << "-f_draw_options " << endl;
+	}
+}
+
 
 
 }}

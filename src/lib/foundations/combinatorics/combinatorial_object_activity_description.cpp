@@ -63,6 +63,16 @@ int combinatorial_object_activity_description::read_arguments(
 	return i + 1;
 }
 
+void combinatorial_object_activity_description::print()
+{
+	if (f_save) {
+		cout << "-save " << endl;
+	}
+	if (f_conic_type) {
+		cout << "-conic_type " << endl;
+	}
+}
+
 
 
 }}

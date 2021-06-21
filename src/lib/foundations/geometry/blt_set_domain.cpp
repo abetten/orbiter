@@ -104,6 +104,11 @@ void blt_set_domain::init(orthogonal *O,
 	n = O->n; // vector space dimension
 	epsilon = O->epsilon;
 
+	char str[1000];
+
+	sprintf(str, "BLT_q%d", q);
+	prefix.assign(str);
+
 
 	target_size = q + 1;
 	degree = O->nb_points;
@@ -169,6 +174,7 @@ void blt_set_domain::compute_adjacency_list_fast(
 {
 	int f_v = (verbose_level >= 1);
 	long int L;
+	long int L100;
 	long int i, j, k;
 	int c1, c2;
 	int *Pts;
@@ -176,7 +182,7 @@ void blt_set_domain::compute_adjacency_list_fast(
 	int v1[5];
 	int m[5];
 	int f12, f13, f23, d;
-	long int cnt;
+	//long int cnt;
 	int two;
 	int *Pi, *Pj;
 	combinatorics_domain Combi;
@@ -185,29 +191,30 @@ void blt_set_domain::compute_adjacency_list_fast(
 		cout << "blt_set_domain::compute_adjacency_list_fast" << endl;
 	}
 	L = ((long int) nb_points * ((long int) nb_points - 1)) >> 1;
+	L100 = (L / 100) + 1;
 
+	Bitvec = NEW_OBJECT(bitvector);
 	Bitvec->allocate(L);
 
 	Pts = NEW_int(nb_points * 5);
 	form_value = NEW_int(nb_points);
 	O->unrank_point(v1, 1, first_point_of_starter, 0);
 	if (f_v) {
-		cout << "blt_set_domain::compute_adjacency_list_fast "
-				"unranking points" << endl;
+		cout << "blt_set_domain::compute_adjacency_list_fast unranking points" << endl;
 	}
 	for (i = 0; i < nb_points; i++) {
 		O->unrank_point(Pts + i * 5, 1, points[i], 0);
-		form_value[i] = O->evaluate_bilinear_form(
-				v1, Pts + i * 5, 1);
+		form_value[i] = O->evaluate_bilinear_form(v1, Pts + i * 5, 1);
 	}
 
 	if (f_v) {
-		cout << "blt_set_domain::compute_adjacency_list_fast "
-				"computing adjacencies" << endl;
+		cout << "blt_set_domain::compute_adjacency_list_fast computing adjacency matrix" << endl;
 	}
 
-	cnt = 0;
+	//cnt = 0;
 	two = F->add(1, 1);
+
+	k = 0;
 
 	for (i = 0; i < nb_points; i++) {
 		f12 = form_value[i];
@@ -219,14 +226,14 @@ void blt_set_domain::compute_adjacency_list_fast(
 		m[3] = Pi[4];
 		m[4] = Pi[3];
 
-		for (j = i + 1; j < nb_points; j++, cnt++) {
-			k = Combi.ij2k_lint(i, j, nb_points);
+		for (j = i + 1; j < nb_points; j++, /*cnt++,*/ k++) {
+			//k = Combi.ij2k_lint(i, j, nb_points);
 
-			if ((cnt & ((1 << 25) - 1)) == 0 && cnt) {
+			if ((k % L100) == 0 && k) {
 				cout << "blt_set_domain::compute_adjacency_list_fast "
-						"nb_points=" << nb_points << " adjacency "
-						<< cnt << " / " << L << " i=" << i
-						<< " j=" << j << endl;
+						"nb_points=" << nb_points << " progress: "
+						<< k / L100
+						<< " %" << endl;
 			}
 			c2 = point_color[j];
 			if (c1 == c2) {
@@ -846,7 +853,6 @@ int blt_set_domain::create_graph(
 	int f_vv = (verbose_level >= 1);
 	int special_line;
 	int ret = TRUE;
-	std::string fname;
 
 	if (f_v) {
 		cout << "blt_set_domain::create_graph" << endl;
@@ -870,12 +876,18 @@ int blt_set_domain::create_graph(
 
 	special_line = lines_on_pt[0];
 
+	if (f_v) {
+		cout << "blt_set_domain::create_graph before compute_colors" << endl;
+	}
 	compute_colors(case_number,
 			Starter_set, starter_size,
 			special_line,
 			candidates, nb_candidates,
 			point_color, nb_colors,
 			verbose_level);
+	if (f_v) {
+		cout << "blt_set_domain::create_graph after compute_colors" << endl;
+	}
 
 
 	tally C;
@@ -952,18 +964,14 @@ int blt_set_domain::create_graph(
 						"nb_points=" << nb_candidates << endl;
 	}
 
-#if 0
-	uchar *bitvector_adjacency;
-	long int bitvector_length_in_bits;
-	long int bitvector_length;
-#else
 	bitvector *Bitvec;
-#endif
 
+	if (f_v) {
+		cout << "blt_set_domain::create_graph before compute_adjacency_list_fast" << endl;
+	}
 	compute_adjacency_list_fast(Starter_set[0],
 			candidates, nb_candidates, point_color,
 			Bitvec,
-			//bitvector_adjacency, bitvector_length_in_bits, bitvector_length,
 			verbose_level - 2);
 
 	if (f_vv) {
@@ -986,21 +994,24 @@ int blt_set_domain::create_graph(
 
 	CG->init(nb_candidates /* nb_points */, nb_colors, 1 /* nb_colors_per_vertex */,
 		point_color, Bitvec, TRUE, verbose_level - 2);
-		// the adjacency becomes part of the colored_graph object
+		// Bitvec becomes part of the colored_graph object
 
 	int i;
 	for (i = 0; i < nb_candidates; i++) {
 		CG->points[i] = candidates[i];
 	}
 
-	char fname_char[1000];
+	{
 
-	sprintf(fname_char, "graph_BLT_%d_%d_%d", q, starter_size, case_number);
-	fname.assign(fname_char);
-	CG->init_user_data(Starter_set, starter_size, verbose_level - 2);
-	CG->fname_base.assign(fname);
-	//snprintf(CG->fname_base, 1000, "graph_BLT_%d_%d_%d",
-	//		q, starter_size, case_number);
+		char str[1000];
+		std::string fname;
+
+		sprintf(str, "_graph_%d_%d", starter_size, case_number);
+		fname.assign(prefix);
+		fname.append(str);
+		CG->init_user_data(Starter_set, starter_size, verbose_level - 2);
+		CG->fname_base.assign(fname);
+	}
 
 
 	if (f_v) {
