@@ -63,6 +63,9 @@ projective_space_activity_description::projective_space_activity_description()
 
 	f_table_of_quartic_curves = FALSE;
 
+	f_table_of_cubic_surfaces = FALSE;
+
+
 	f_define_quartic_curve = FALSE;
 	//std::string define_quartic_curve_label;
 	Quartic_curve_descr = NULL;
@@ -109,13 +112,6 @@ projective_space_activity_description::projective_space_activity_description()
 	f_make_gilbert_varshamov_code = FALSE;
 	make_gilbert_varshamov_code_n = 0;
 	make_gilbert_varshamov_code_d = 0;
-
-#if 0
-	f_spread_table_init = FALSE;
-	dimension_of_spread_elements = 0;
-	//spread_selection_text = NULL;
-	//spread_tables_prefix = NULL;
-#endif
 
 	f_spread_classify = FALSE;
 	spread_classify_k = 0;
@@ -302,6 +298,10 @@ int projective_space_activity_description::read_arguments(
 		else if (stringcmp(argv[i], "-table_of_quartic_curves") == 0) {
 			f_table_of_quartic_curves = TRUE;
 			cout << "-table_of_quartic_curves " << endl;
+		}
+		else if (stringcmp(argv[i], "-table_of_cubic_surfaces") == 0) {
+			f_table_of_cubic_surfaces = TRUE;
+			cout << "-table_of_cubic_surfaces " << endl;
 		}
 		else if (stringcmp(argv[i], "-define_quartic_curve") == 0) {
 			f_define_quartic_curve = TRUE;
@@ -700,6 +700,9 @@ void projective_space_activity_description::print()
 	}
 	if (f_table_of_quartic_curves) {
 		cout << "-table_of_quartic_curves " << endl;
+	}
+	if (f_table_of_cubic_surfaces) {
+		cout << "-table_of_cubic_surfaces " << endl;
 	}
 	if (f_define_quartic_curve) {
 		cout << "-define_quartic_curve " << define_quartic_curve_label << endl;

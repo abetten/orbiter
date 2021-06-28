@@ -121,8 +121,7 @@ void unipoly_domain::create_object_of_degree_with_coefficients(
 		unipoly_object &p, int d, int *coeff)
 {
 	if (f_factorring) {
-		cout << "unipoly_domain::create_object_of_degree_"
-				"with_coefficients a factorring" << endl;
+		cout << "unipoly_domain::create_object_of_degree_with_coefficients a factorring" << endl;
 		exit(1);
 	}
 	int *rep = NEW_int(d + 2);
@@ -2433,7 +2432,7 @@ void unipoly_domain::get_a_primitive_polynomial(
 		}
 		if (is_irreducible(x, verbose_level - 1)) {
 			if (f_v) {
-				cout << "is is_irreducible" << endl;
+				cout << "is irreducible" << endl;
 			}
 			if (is_primitive(x, qm1, nb_primes,
 					primes, verbose_level - 1)) {
@@ -2441,7 +2440,7 @@ void unipoly_domain::get_a_primitive_polynomial(
 					cout << "is irreducible and primitive" << endl;
 				}
 				if (f_v) {
-					cout << "unipoly::get_a_primitive_polynomial() ";
+					cout << "unipoly::get_a_primitive_polynomial ";
 					print_object(x, cout);
 					cout << endl;
 				}

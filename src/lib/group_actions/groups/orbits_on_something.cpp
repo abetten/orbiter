@@ -98,6 +98,9 @@ void orbits_on_something::init(
 	fname.assign(prefix);
 	fname.append("_orbits.bin");
 
+	fname_csv.assign(prefix);
+	fname_csv.append("_orbits.csv");
+
 	//sprintf(fname, "%s_orbits.bin", prefix);
 
 
@@ -163,6 +166,19 @@ void orbits_on_something::init(
 		}
 		cout << "Written file " << fname << " of size "
 				<< Fio.file_size(fname.c_str()) << endl;
+
+		if (f_v) {
+			cout << "orbits_on_something::init "
+					"before Sch->write_to_file_csv" << endl;
+		}
+		Sch->write_to_file_csv(fname_csv, verbose_level);
+		if (f_v) {
+			cout << "orbits_on_something::init "
+					"after Sch->write_to_file_csv" << endl;
+		}
+		cout << "Written file " << fname_csv << " of size "
+				<< Fio.file_size(fname_csv) << endl;
+
 	}
 
 	if (f_v) {
@@ -258,7 +274,7 @@ void orbits_on_something::orbit_type_of_set(
 	}
 }
 
-void orbits_on_something::report_type(ostream &ost, long int *orbit_type, long int goi)
+void orbits_on_something::report_type(std::ostream &ost, long int *orbit_type, long int goi)
 {
 #if 0
 	ost << "\\left[" << endl;
@@ -368,10 +384,41 @@ void orbits_on_something::compute_compact_type(long int *orbit_type, long int go
 
 }
 
-void orbits_on_something::report_orbit_lengths(ostream &ost)
+void orbits_on_something::report_orbit_lengths(std::ostream &ost)
 {
 	Sch->print_orbit_lengths_tex(ost);
 }
+
+void orbits_on_something::print_orbits_based_on_filtered_orbits(std::ostream &ost, set_of_sets *Filtered_orbits)
+{
+	int i, j;
+	int a;
+	long int *Orbit1;
+	int l, len;
+
+	for (i = 0; i < Filtered_orbits->nb_sets; i++) {
+		cout << "set " << i << " has size " << Filtered_orbits->Set_size[i] << " : ";
+		len = Classify_orbits_by_length->get_value_of_class(i);
+		cout << "and consists of orbits of length " << len << ":" << endl;
+
+
+		Orbit1 = NEW_lint(len);
+
+		for (j = 0; j < Filtered_orbits->Set_size[i]; j++) {
+			a = Filtered_orbits->Sets[i][j];
+			ost << "orbit " << j << " / " << Filtered_orbits->Set_size[i] << " is " << a << " : ";
+			Sch->get_orbit(a, Orbit1, l, 0 /* verbose_level*/);
+			if (l != len) {
+				cout << "orbits_on_something::print_orbits_based_on_filtered_orbits l != len" << endl;
+				exit(1);
+			}
+			Orbiter->Lint_vec.print(cout, Orbit1, l);
+			cout << endl;
+		}
+		FREE_lint(Orbit1);
+	}
+}
+
 
 
 void orbits_on_something::classify_orbits_by_length(int verbose_level)
@@ -1630,6 +1677,23 @@ void orbits_on_something::compute_orbit_invariant_after_classification(
 }
 
 
+void orbits_on_something::get_orbit_number_and_position(long int a, int &orbit_idx, int &orbit_pos, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_on_something::get_orbit_number_and_position" << endl;
+	}
+
+	Sch->get_orbit_number_and_position(a, orbit_idx, orbit_pos, verbose_level);
+
+	if (f_v) {
+		cout << "orbits_on_something::get_orbit_number_and_position done" << endl;
+	}
+}
+
+
+
 void orbits_on_something::create_latex_report(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1728,9 +1792,52 @@ void orbits_on_something::report(std::ostream &ost, int verbose_level)
 	ost << "Orbits classified:\\\\" << endl;
 	Orbits_classified->print_table_tex(ost);
 
+
 	cout << "orbits_on_something::report step 2" << endl;
 
+	ost << "\\section*{Orbit Representatives}" << endl;
+
 	long int *Orb;
+	long int a;
+
+	for (i = 0; i < Orbits_classified->nb_sets; i++) {
+		orbit_length = Orbits_classified_length[i];
+		ost << "Orbits of length " << orbit_length << ":\\\\" << endl;
+		nb_orbits = Orbits_classified->Set_size[i];
+
+		Orb = NEW_lint(orbit_length);
+
+		for (j = 0; j < nb_orbits; j++) {
+			idx = Orbits_classified->Sets[i][j];
+			ost << "Orbit " << idx << ":" << endl;
+
+
+			Sch->get_orbit(idx, Orb, l1, 0 /* verbose_level*/);
+
+			a = Orb[0];
+
+			ost << "$$" << endl;
+			A->print_point(a, ost);
+			//Orbiter->Lint_vec.print(ost, Orb, orbit_length);
+			ost << "$$" << endl;
+			ost << "\\\\" << endl;
+
+			//A->latex_point_set(ost, Orb, orbit_length, 0 /* verbose_level */);
+		}
+		FREE_lint(Orb);
+	}
+
+	ost << "\\bigskip" << endl;
+
+
+
+
+
+#if 1
+	cout << "orbits_on_something::report step 3" << endl;
+
+	ost << "\\section*{Orbits}" << endl;
+
 
 	for (i = 0; i < Orbits_classified->nb_sets; i++) {
 		orbit_length = Orbits_classified_length[i];
@@ -1750,12 +1857,17 @@ void orbits_on_something::report(std::ostream &ost, int verbose_level)
 
 			A->latex_point_set(ost, Orb, orbit_length, 0 /* verbose_level */);
 		}
+		FREE_lint(Orb);
 	}
 
 	ost << "\\bigskip" << endl;
+#endif
 
 
-	cout << "orbits_on_something::report step 3" << endl;
+#if 0
+	cout << "orbits_on_something::report step 4" << endl;
+
+	ost << "\\section*{Stabilizers}" << endl;
 
 	for (i = 0; i < Orbits_classified->nb_sets; i++) {
 		orbit_length = Orbits_classified_length[i];
@@ -1791,6 +1903,10 @@ void orbits_on_something::report(std::ostream &ost, int verbose_level)
 
 		FREE_lint(Orb);
 	}
+#endif
+
+
+
 
 	if (f_v) {
 		cout << "orbits_on_something::report done" << endl;

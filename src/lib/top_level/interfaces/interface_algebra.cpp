@@ -57,6 +57,31 @@ interface_algebra::interface_algebra()
 	power_mod_n_a = 0;
 	power_mod_n_n = 0;
 
+
+	f_all_rational_normal_forms = FALSE;
+	//std::string all_rational_normal_forms_finite_field_label;
+	all_rational_normal_forms_d = 0;
+
+	f_eigenstuff = FALSE;
+	f_eigenstuff_from_file = FALSE;
+	//std::string eigenstuff_finite_field_label;
+	eigenstuff_n = 0;
+	//eigenstuff_coeffs = NULL;
+	//eigenstuff_fname = NULL;
+
+#if 0
+	//
+	f_study_surface = FALSE;
+	study_surface_nb = 0;
+
+	f_decomposition_by_element = FALSE;
+	decomposition_by_element_n = 0;
+	decomposition_by_element_power = 1;
+	//std::string decomposition_by_element_data
+	//decomposition_by_element_fname_base
+#endif
+
+
 }
 
 
@@ -93,7 +118,17 @@ void interface_algebra::print_help(int argc,
 	else if (stringcmp(argv[i], "-power_mod_n") == 0) {
 		cout << "-power_mod_n <int : a> <int : n>" << endl;
 	}
+	else if (stringcmp(argv[i], "-all_rational_normal_forms") == 0) {
+		cout << "-all_rational_normal_forms <string : finite_field_label> <int : degree>" << endl;
+	}
+	else if (stringcmp(argv[i], "-eigenstuff") == 0) {
+		cout << "-eigenstuff <string : finite_field_label> <int : n> <intvec : coeffs>" << endl;
+	}
+	else if (stringcmp(argv[i], "-eigenstuff_from_file") == 0) {
+		cout << "-eigenstuff_from_file <string : finite_field_label>  <int : n> <string : fname>" << endl;
+	}
 }
+
 
 int interface_algebra::recognize_keyword(int argc,
 		std::string *argv, int i, int verbose_level)
@@ -134,6 +169,15 @@ int interface_algebra::recognize_keyword(int argc,
 		return true;
 	}
 	else if (stringcmp(argv[i], "-power_mod_n") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-all_rational_normal_forms") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-eigenstuff") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-eigenstuff_from_file") == 0) {
 		return true;
 	}
 	if (f_v) {
@@ -237,6 +281,55 @@ void interface_algebra::read_arguments(int argc,
 		power_mod_n_n = strtoi(argv[++i]);
 		cout << "-power_mod_n " << " " << power_mod_n_a << " " << power_mod_n_n << endl;
 	}
+	else if (stringcmp(argv[i], "-all_rational_normal_forms") == 0) {
+		f_all_rational_normal_forms = TRUE;
+		all_rational_normal_forms_finite_field_label.assign(argv[++i]);
+		all_rational_normal_forms_d = strtoi(argv[++i]);
+		if (f_v) {
+			cout << "-f_all_rational_normal_forms " << all_rational_normal_forms_finite_field_label << " " << all_rational_normal_forms_d << endl;
+		}
+	}
+	else if (stringcmp(argv[i], "-eigenstuff") == 0) {
+		f_eigenstuff = TRUE;
+		eigenstuff_finite_field_label.assign(argv[++i]);
+		eigenstuff_n = strtoi(argv[++i]);
+		eigenstuff_coeffs.assign(argv[++i]);
+		if (f_v) {
+			cout << "-eigenstuff " << eigenstuff_finite_field_label << " " << eigenstuff_n
+				<< " " << eigenstuff_coeffs << endl;
+		}
+	}
+	else if (stringcmp(argv[i], "-eigenstuff_matrix_from_file") == 0) {
+		f_eigenstuff_from_file = TRUE;
+		eigenstuff_finite_field_label.assign(argv[++i]);
+		eigenstuff_n = strtoi(argv[++i]);
+		eigenstuff_fname.assign(argv[++i]);
+		if (f_v) {
+			cout << "-eigenstuff_from_file " << eigenstuff_finite_field_label << " " << eigenstuff_n
+				<< " " << eigenstuff_fname << endl;
+		}
+	}
+#if 0
+	else if (stringcmp(argv[i], "-study_surface") == 0) {
+		f_study_surface = TRUE;
+		study_surface_nb = strtoi(argv[++i]);
+		if (f_v) {
+			cout << "-study_surface" << study_surface_nb << endl;
+		}
+	}
+	else if (stringcmp(argv[i], "-decomposition_by_element") == 0) {
+		f_decomposition_by_element = TRUE;
+		decomposition_by_element_n = strtoi(argv[++i]);
+		decomposition_by_element_power = strtoi(argv[++i]);
+		decomposition_by_element_data.assign(argv[++i]);
+		decomposition_by_element_fname_base.assign(argv[++i]);
+		if (f_v) {
+			cout << "-decomposition_by_element " <<  decomposition_by_element_power
+				<< " " << decomposition_by_element_data
+				<< " " << decomposition_by_element_fname_base << endl;
+		}
+	}
+#endif
 
 
 }
@@ -288,6 +381,19 @@ void interface_algebra::print()
 		cout << "-power_mod_n " << " " << power_mod_n_a << " " << power_mod_n_n << endl;
 	}
 
+	if (f_all_rational_normal_forms) {
+		cout << "-all_rational_normal_forms " << all_rational_normal_forms_finite_field_label
+				<< " " << all_rational_normal_forms_d << endl;
+	}
+	if (f_eigenstuff) {
+		cout << "-eigenstuff "
+			<< eigenstuff_finite_field_label << " " << eigenstuff_n << " " << eigenstuff_coeffs << endl;
+	}
+	if (f_eigenstuff_from_file) {
+		cout << "-eigenstuff_from_file "
+				<< eigenstuff_finite_field_label << " " << eigenstuff_n
+			<< " " << eigenstuff_fname << endl;
+	}
 
 }
 
@@ -378,6 +484,67 @@ void interface_algebra::worker(int verbose_level)
 				verbose_level);
 
 	}
+
+	else if (f_all_rational_normal_forms) {
+
+		algebra_global_with_action Algebra;
+
+		finite_field *F;
+		int idx;
+
+
+		idx = The_Orbiter_top_level_session->find_symbol(all_rational_normal_forms_finite_field_label);
+
+		F = (finite_field *) The_Orbiter_top_level_session->get_object(idx);
+
+		Algebra.classes_GL(F, all_rational_normal_forms_d,
+				FALSE /* f_no_eigenvalue_one */, verbose_level);
+
+
+
+	}
+
+	else if (f_eigenstuff) {
+
+
+		algebra_global_with_action Algebra;
+		int *data;
+		int sz;
+		finite_field *F;
+		int idx;
+
+
+		idx = The_Orbiter_top_level_session->find_symbol(all_rational_normal_forms_finite_field_label);
+
+		F = (finite_field *) The_Orbiter_top_level_session->get_object(idx);
+
+		Orbiter->Int_vec.scan(eigenstuff_coeffs, data, sz);
+
+		if (sz != eigenstuff_n * eigenstuff_n) {
+			cout << "sz != eigenstuff_n * eigenstuff_n" << endl;
+			exit(1);
+		}
+
+		Algebra.do_eigenstuff(F, eigenstuff_n, data, verbose_level);
+
+	}
+
+	else if (f_eigenstuff_from_file) {
+
+
+#if 0
+		eigenstuff_n = strtoi(argv[++i]);
+		eigenstuff_fname.assign(argv[++i]);
+		algebra_global Algebra;
+
+		Algebra.power_mod_n(
+				power_mod_n_a, power_mod_n_n,
+				verbose_level);
+#endif
+
+	}
+
+
 
 	if (f_v) {
 		cout << "interface_algebra::worker done" << endl;

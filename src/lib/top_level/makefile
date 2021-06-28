@@ -13,7 +13,6 @@ all: algebra_and_number_theory \
 	orthogonal \
 	packings \
 	projective_space \
-	quartic_curves \
 	semifields \
 	solver \
 	spreads \
@@ -32,7 +31,6 @@ orbits : orbits2 ;
 orthogonal : orthogonal2 ; 
 packings : packings2 ; 
 projective_space : projective_space2 ; 
-quartic_curves : quartic_curves2 ; 
 semifields : semifields2 ; 
 solver : solver2 ; 
 spreads : spreads2 ; 
@@ -48,7 +46,6 @@ orbits2 :  ; cd orbits; $(MAKE)
 orthogonal2 :  ; cd orthogonal; $(MAKE)
 packings2 :  ; cd packings; $(MAKE)
 projective_space2 :  ; cd projective_space; $(MAKE)
-quartic_curves2 :  ; cd quartic_curves; $(MAKE)
 semifields2 :  ; cd semifields; $(MAKE)
 solver2 :  ; cd solver; $(MAKE)
 spreads2 :  ; cd spreads; $(MAKE)
@@ -74,7 +71,6 @@ clean:
 	cd orbits; $(MAKE) clean
 	cd orthogonal; $(MAKE) clean
 	cd projective_space; $(MAKE) clean
-	cd quartic_curves; $(MAKE) clean
 	cd semifields; $(MAKE) clean
 	cd solver; $(MAKE) clean
 	cd spreads; $(MAKE) clean

@@ -528,8 +528,8 @@ public:
 		// index of orbits of length 1 in reduced_spread_orbits_under_H
 	action *A_on_fixpoints;
 		// A_on_reduced_spread_orbits->create_induced_action_by_restriction(
-		//reduced_spread_orbits_under_H->Orbits_classified->Set_size[fixpoints_idx],
-		//reduced_spread_orbits_under_H->Orbits_classified->Sets[fixpoints_idx])
+		// reduced_spread_orbits_under_H->Orbits_classified->Set_size[fixpoints_idx],
+		// reduced_spread_orbits_under_H->Orbits_classified->Sets[fixpoints_idx])
 
 	colored_graph *fixpoint_graph;
 	poset_with_group_action *Poset_fixpoint_cliques;
@@ -549,6 +549,7 @@ public:
 	void init(packing_was *PW,
 			int fixpoint_clique_size, poset_classification_control *Control,
 			int verbose_level);
+	void setup_file_names(int verbose_level);
 	void create_graph_on_fixpoints(int verbose_level);
 	void action_on_fixpoints(int verbose_level);
 	void compute_cliques_on_fixpoint_graph(
@@ -573,7 +574,7 @@ public:
 			std::string &solution_path,
 			std::vector<std::vector<int> > &Packings,
 			int verbose_level);
-	void report(/*packing_long_orbits *L,*/ int verbose_level);
+	void report(int verbose_level);
 	void report2(std::ostream &ost, /*packing_long_orbits *L,*/ int verbose_level);
 	long int fixpoint_to_reduced_spread(int a, int verbose_level);
 
@@ -603,6 +604,7 @@ public:
 	strong_generators *H_gens;
 	longinteger_object H_go;
 	long int H_goi;
+	sims *H_sims;
 
 	action *A;
 	int f_semilinear;
@@ -614,14 +616,35 @@ public:
 	long int N_goi;
 
 
-	std::string prefix_line_orbits;
-	orbits_on_something *Line_orbits_under_H;
+	std::string prefix_point_orbits_under_H;
+	orbits_on_something *Point_orbits_under_H;
+		// using H_gens in action P->T->A
 
+
+	std::string prefix_point_orbits_under_N;
+	orbits_on_something *Point_orbits_under_N;
+		// using N_gens in action P->T->A
+
+
+	std::string prefix_line_orbits_under_H;
+	orbits_on_something *Line_orbits_under_H;
+		// using H_gens in action P->T->A2
+
+	std::string prefix_line_orbits_under_N;
+	orbits_on_something *Line_orbits_under_N;
+		// using H_gens in action P->T->A2
+
+	std::string prefix_spread_types;
 	orbit_type_repository *Spread_type;
 
 	std::string prefix_spread_orbits;
 	orbits_on_something *Spread_orbits_under_H;
+		// using H_gens in action
+		// P->Spread_table_with_selection->A_on_spreads
+
+
 	action *A_on_spread_orbits;
+		// derived from P->Spread_table_with_selection->A_on_spreads
 		// restricted action on Spread_orbits_under_H:
 		// = induced_action_on_orbits(P->A_on_spreads, Spread_orbits_under_H)
 
@@ -636,6 +659,13 @@ public:
 		// the union of all good orbits on spreads
 
 	spread_tables *Spread_tables_reduced;
+		// The spreads in the good orbits, listed one-by-one
+		// This table is *not* sorted.
+		// The induced action on reduced spreads (A_on_reduced_spreads)
+		// maintains a sorted table.
+
+
+	std::string prefix_spread_types_reduced;
 	orbit_type_repository *Spread_type_reduced;
 
 	action *A_on_reduced_spreads;
@@ -644,21 +674,28 @@ public:
 	std::string prefix_reduced_spread_orbits;
 	orbits_on_something *reduced_spread_orbits_under_H;
 		// = reduced_spread_orbits_under_H->init(A_on_reduced_spreads, H_gens)
+
 	action *A_on_reduced_spread_orbits;
-		// induced_action_on_orbits(A_on_reduced_spreads, reduced_spread_orbits_under_H)
+		// induced_action_on_orbits(A_on_reduced_spreads,
+		// reduced_spread_orbits_under_H)
 
 	set_of_sets *Orbit_invariant;
-	// the values of Spread_type_reduced->type[spread_idx]
-	// for the spreads in one orbit.
-	// Since it is an orbit invariant, the value is constant for all elements of the orbit,
-	// so it need to be stored only once for each orbit.
-	// more precisely, Orbit_invariant->Sets[i][j] is
-	// the type of the spreads belonging to the orbit
-	// reduced_spread_orbits_under_H->Orbits_classified->Sets[i][j]
+		// the values of Spread_type_reduced->type[spread_idx]
+		// for the spreads in one orbit.
+		// Since it is an orbit invariant,
+		// the value is constant for all elements of the orbit,
+		// so it need to be stored only once for each orbit.
+		// more precisely, Orbit_invariant->Sets[i][j] is
+		// the type of the spreads belonging to the orbit
+		// reduced_spread_orbits_under_H->Orbits_classified->Sets[i][j]
+
 	int nb_sets;
 	tally *Classify_spread_invariant_by_orbit_length;
 
 	regular_packing *Regular_packing;
+		// correspondence between regular spreads and external lines
+		// to the Klein quadric
+
 
 	packing_was();
 	~packing_was();
@@ -670,17 +707,26 @@ public:
 	void init_regular_packing(int verbose_level);
 	void init_N(int verbose_level);
 	void init_H(int verbose_level);
+	void compute_H_orbits_on_points(int verbose_level);
+	// computes the orbits of H on points
+	// and writes to file prefix_point_orbits
+	void compute_N_orbits_on_points(int verbose_level);
+	// computes the orbits of N on points
+	// and writes to file prefix_point_orbits
 	void compute_H_orbits_on_lines(int verbose_level);
-	// computes the orbits of H on lines (NOT on spreads!)
+		// computes the orbits of H on lines (NOT on spreads!)
+		// and writes to file prefix_line_orbits
+	void compute_N_orbits_on_lines(int verbose_level);
+	// computes the orbits of N on lines (NOT on spreads!)
 	// and writes to file prefix_line_orbits
 	void compute_spread_types_wrt_H(int verbose_level);
 	void compute_H_orbits_on_spreads(int verbose_level);
-	// computes the orbits of H on spreads (NOT on lines!)
-	// and writes to file fname_orbits
+		// computes the orbits of H on spreads (NOT on lines!)
+		// and writes to file fname_orbits
 	void test_orbits_on_spreads(int verbose_level);
 	void reduce_spreads(int verbose_level);
 	void compute_reduced_spread_types_wrt_H(int verbose_level);
-	// Spread_types[P->nb_spreads * (group_order + 1)]
+		// Spread_types[P->nb_spreads * (group_order + 1)]
 	void compute_H_orbits_on_reduced_spreads(int verbose_level);
 	action *restricted_action(int orbit_length, int verbose_level);
 	int test_if_pair_of_sets_of_reduced_spreads_are_adjacent(
@@ -694,7 +740,7 @@ public:
 		int orbit_length,
 		int f_has_user_data, long int *user_data, int user_data_size,
 		int verbose_level);
-	int find_orbits_of_length(int orbit_length);
+	int find_orbits_of_length_in_reduced_spread_table(int orbit_length);
 	void compute_orbit_invariant_on_classified_orbits(int verbose_level);
 	int evaluate_orbit_invariant_function(int a, int i, int j, int verbose_level);
 	void classify_orbit_invariant(int verbose_level);
@@ -708,8 +754,10 @@ public:
 			long int *&spreads_in_reduced_orbits_by_type,
 			int f_original_spread_numbers,
 			int verbose_level);
-	void export_reduced_spread_orbits_csv(std::string &fname_base, int f_original_spread_numbers, int verbose_level);
-	void report_reduced_spread_orbits(std::ostream &ost, int f_original_spread_numbers, int verbose_level);
+	void export_reduced_spread_orbits_csv(std::string &fname_base,
+			int f_original_spread_numbers, int verbose_level);
+	void report_reduced_spread_orbits(std::ostream &ost,
+			int f_original_spread_numbers, int verbose_level);
 	void report_good_spreads(std::ostream &ost);
 
 };
@@ -720,6 +768,7 @@ int packing_was_set_of_reduced_spreads_adjacency_test_function(long int *orbit1,
 		long int *orbit2, int len2, void *data);
 int packing_was_evaluate_orbit_invariant_function(
 		int a, int i, int j, void *evaluate_data, int verbose_level);
+void packing_was_print_function(std::ostream &ost, long int a, void *data);
 
 
 // #############################################################################

@@ -36,6 +36,7 @@ void surface_domain_high_level::do_sweep_4(
 		cout << "surface_domain_high_level::do_sweep_4 verbose_level=" << verbose_level << endl;
 	}
 
+#if 0
 	int q;
 	finite_field *F;
 	surface_domain *Surf;
@@ -75,6 +76,16 @@ void surface_domain_high_level::do_sweep_4(
 	if (f_v) {
 		cout << "surface_domain_high_level::do_sweep_4 after Surf_A->init" << endl;
 	}
+#else
+
+	surface_with_action *Surf_A;
+
+	PA->setup_surface_with_action(
+			Surf_A,
+			verbose_level);
+
+
+#endif
 
 
 	if (f_v) {
@@ -107,6 +118,7 @@ void surface_domain_high_level::do_sweep_4_27(
 		cout << "surface_domain_high_level::do_sweep_4_27 verbose_level=" << verbose_level << endl;
 	}
 
+#if 0
 	int q;
 	finite_field *F;
 	surface_domain *Surf;
@@ -146,6 +158,17 @@ void surface_domain_high_level::do_sweep_4_27(
 	if (f_v) {
 		cout << "surface_domain_high_level::do_sweep_4_27 after Surf_A->init" << endl;
 	}
+#else
+
+	surface_with_action *Surf_A;
+
+	PA->setup_surface_with_action(
+			Surf_A,
+			verbose_level);
+
+	//Surf = Surf_A->Surf;
+
+#endif
 
 
 	if (f_v) {
@@ -180,11 +203,13 @@ void surface_domain_high_level::do_create_surface(
 	}
 
 
-	int q;
-	finite_field *F;
-	surface_domain *Surf;
+	//int q;
+	//finite_field *F;
+	//surface_domain *Surf;
 	surface_with_action *Surf_A;
 
+
+#if 0
 	if (f_v) {
 		cout << "surface_domain_high_level::do_create_surface before Surface_Descr->get_q" << endl;
 	}
@@ -219,6 +244,14 @@ void surface_domain_high_level::do_create_surface(
 	if (f_v) {
 		cout << "surface_domain_high_level::do_create_surface after Surf_A->init" << endl;
 	}
+#else
+	PA->setup_surface_with_action(
+			Surf_A,
+			verbose_level);
+
+	//Surf = Surf_A->Surf;
+
+#endif
 
 
 	if (f_v) {
@@ -238,6 +271,7 @@ void surface_domain_high_level::do_create_surface(
 		cout << "surface_domain_high_level::do_create_surface done" << endl;
 	}
 }
+
 
 
 void surface_domain_high_level::classify_surfaces_with_double_sixes(
@@ -326,6 +360,13 @@ void surface_domain_high_level::prepare_surface_classify_wedge(
 	}
 
 
+	PA->setup_surface_with_action(
+			Surf_A,
+			verbose_level);
+
+	Surf = Surf_A->Surf;
+
+#if 0
 	if (f_v) {
 		cout << "surface_domain_high_level::prepare_surface_classify_wedge before Surf->init" << endl;
 	}
@@ -350,7 +391,7 @@ void surface_domain_high_level::prepare_surface_classify_wedge(
 	if (f_v) {
 		cout << "surface_domain_high_level::prepare_surface_classify_wedge after Surf_A->init" << endl;
 	}
-
+#endif
 
 
 	SCW = NEW_OBJECT(surface_classify_wedge);

@@ -64,13 +64,7 @@ interface_projective::interface_projective()
 void interface_projective::print_help(int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	if (stringcmp(argv[i], "-classify_cubic_curves") == 0) {
-		cout << "-classify_cubic_curves" << endl;
-	}
-	else if (stringcmp(argv[i], "-control_arcs") == 0) {
-		cout << "-control_arcs <description>" << endl;
-	}
-	else if (stringcmp(argv[i], "-create_points_on_quartic") == 0) {
+	if (stringcmp(argv[i], "-create_points_on_quartic") == 0) {
 		cout << "-create_points_on_quartic <double : desired_distance>" << endl;
 	}
 	else if (stringcmp(argv[i], "-create_points_on_parabola") == 0) {
@@ -104,13 +98,7 @@ int interface_projective::recognize_keyword(int argc,
 	if (i >= argc) {
 		return false;
 	}
-	if (stringcmp(argv[i], "-classify_cubic_curves") == 0) {
-		return true;
-	}
-	else if (stringcmp(argv[i], "-control_arcs") == 0) {
-		return true;
-	}
-	else if (stringcmp(argv[i], "-create_points_on_quartic") == 0) {
+	if (stringcmp(argv[i], "-create_points_on_quartic") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-create_points_on_parabola") == 0) {

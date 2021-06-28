@@ -130,6 +130,7 @@ public:
 	void freeself();
 	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
+	void print();
 };
 
 
@@ -311,7 +312,7 @@ public:
 			int verbose_level);
 	void perform_activity(int verbose_level);
 	void set_stabilizer(
-			orthogonal_space_with_action *PA,
+			orthogonal_space_with_action *OA,
 			int intermediate_subset_size,
 			std::string &fname_mask, int nb, std::string &column_label,
 			int verbose_level);

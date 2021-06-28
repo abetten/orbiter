@@ -19,8 +19,6 @@ MODULES = \
 	polar.o \
 	search_blocking_set.o \
 	singer_cycle.o \
-	substructure_classifier.o \
-	substructure_stats_and_selection.o \
 	tensor_classify.o \
 	top_level_geometry_global.o
 

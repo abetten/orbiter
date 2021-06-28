@@ -32,6 +32,11 @@ void action_on_grassmannian::null()
 	subspace_basis = NULL;
 	subspace_basis2 = NULL;
 	f_embedding = FALSE;
+
+	f_has_print_function = FALSE;
+	print_function = NULL;
+	print_function_data = NULL;
+
 }
 
 void action_on_grassmannian::free()
@@ -85,7 +90,7 @@ void action_on_grassmannian::init(action &A,
 	
 	if (f_v) {
 		cout << "action_on_grassmannian::init" << endl;
-		}
+	}
 	action_on_grassmannian::A = &A;
 	action_on_grassmannian::G = G;
 	n = G->n;
@@ -100,7 +105,7 @@ void action_on_grassmannian::init(action &A,
 		cout << "n=" << n << endl;
 		cout << "k=" << k << endl;
 		cout << "q=" << q << endl;
-		}
+	}
 	
 
 	M1 = NEW_int(k * n);
@@ -110,16 +115,16 @@ void action_on_grassmannian::init(action &A,
 		cout << "action_on_grassmannian::init "
 				"action not of linear type" << endl;
 		exit(1);
-		}
+	}
 
 #if 0
 	if (A.type_G == matrix_group_t) {
 		M = A.G.matrix_grp;
-		}
+	}
 	else {
 		action *sub = A.subaction;
 		M = sub->G.matrix_grp;
-		}
+	}
 #endif
 	
 	C.q_binomial(degree, n, k, q, 0);
@@ -128,12 +133,28 @@ void action_on_grassmannian::init(action &A,
 		cout << "degree = " << degree << endl;
 		cout << "max_string_length = " << max_string_length << endl;
 		cout << "low_level_point_size = " << low_level_point_size << endl;
-		}
+	}
 	
 	if (f_v) {
 		cout << "action_on_grassmannian::init done" << endl;
-		}
+	}
 }
+
+void action_on_grassmannian::add_print_function(
+		void (*print_function)(std::ostream &ost, long int a, void *data),
+		void *print_function_data,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_on_grassmannian::add_print_function" << endl;
+	}
+	action_on_grassmannian::f_has_print_function = TRUE;
+	action_on_grassmannian::print_function = print_function;
+	action_on_grassmannian::print_function_data = print_function_data;
+}
+
 
 void action_on_grassmannian::init_embedding(int big_n,
 		int *ambient_space, int verbose_level)
@@ -352,7 +373,7 @@ long int action_on_grassmannian::compute_image_int_embedded(
 	return j;
 }
 
-void action_on_grassmannian::print_point(long int a, ostream &ost)
+void action_on_grassmannian::print_point(long int a, std::ostream &ost)
 {
 	//cout << "action_on_grassmannian::print_point k=" << G->k << " n=" << G->n << endl;
 	G->unrank_lint(a, 0);
@@ -365,7 +386,13 @@ void action_on_grassmannian::print_point(long int a, ostream &ost)
 	ost << "\\left[" << endl;
 	Li.print_integer_matrix_tex(ost,
 			G->M, G->k, G->n);
-	ost << "\\right]" << endl;
+	ost << "\\right]_{" << a << "}" << endl;
+
+	if (f_has_print_function) {
+		print_function(ost, a, print_function_data);
+	}
+
+
 #endif
 
 }

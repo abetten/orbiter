@@ -347,7 +347,6 @@ void quartic_curve_from_surface::quartic(std::string &surface_prefix, int pt_orb
 
 
 
-#if 1
 
 
 	if (f_v) {
@@ -401,70 +400,8 @@ void quartic_curve_from_surface::quartic(std::string &surface_prefix, int pt_orb
 	}
 
 
-#else
-
-	sz_curve = nb_pts_intersection - 1;
-	Pts_on_curve = NEW_int(sz_curve);
 
 
-	// skip the first point (1,0,0,0):
-	for (i = 1; i < nb_pts_intersection; i++) {
-		Surf->unrank_point(v, Pts_intersection[i]);
-		Pts_on_curve[i - 1] = Surf->P2->rank_point(v + 1);
-		}
-
-	ost << "The " << sz_curve << " projected points are:\\\\" << endl;
-	ost << "\\begin{multicols}{2}" << endl;
-	for (i = 0; i < sz_curve; i++) {
-		Surf->P2->unrank_point(v, Pts_on_curve[i]);
-		ost << i << " : $P_{" << i << "} = P_{" << Pts_on_curve[i] << "}=";
-		int_vec_print_fully(ost, v, 3);
-		ost << "$\\\\" << endl;
-	}
-	ost << "\\end{multicols}" << endl;
-
-
-	int r;
-	int *Kernel;
-
-	Kernel = NEW_int(Surf->Poly4_x123->nb_monomials
-				* Surf->Poly4_x123->nb_monomials);
-	Surf->Poly4_x123->vanishing_ideal(Pts_on_curve,
-			sz_curve, r, Kernel, verbose_level);
-	cout << "r=" << r << endl;
-	ost << "The quartics have "
-			<< Surf->Poly4_x123->nb_monomials << " terms.\\\\" << endl;
-	ost << "The kernel has dimension "
-			<< Surf->Poly4_x123->nb_monomials - r << " .\\\\" << endl;
-#endif
-
-
-
-
-#if 0
-	gens_copy = SOA->Aut_gens->create_copy();
-
-	moved_surface = NEW_OBJECT(set_and_stabilizer);
-
-	cout << "creating moved_surface" << endl;
-	moved_surface->init_everything(SOA->Surf_A->A,
-			SOA->Surf_A->A, SOA->SO->Pts, SOA->SO->nb_pts,
-			gens_copy, 0 /*verbose_level */);
-
-	//stab_gens_moved_surface = SaS->Strong_gens->create_copy();
-
-	cout << "before apply_to_self" << endl;
-	moved_surface->apply_to_self(transporter,
-			0 /* verbose_level */);
-
-	cout << "before moved_surface->Strong_gens->point_stabilizer" << endl;
-	stab_gens_P0 = moved_surface->Strong_gens->point_stabilizer(
-			0 /*int pt */, verbose_level);
-
-	ost << "The stabilizer of $P0$ and the moved surface "
-			"is the following group:\\\\" << endl;
-	stab_gens_P0->print_generators_tex(ost);
-#endif
 
 }
 
@@ -660,7 +597,8 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 	canonical_labeling = NEW_lint(nb_rows + nb_cols);
 
 	if (f_v) {
-		cout << "quartic_curve_from_surface::compute_stabilizer before Surf_A->PA->PA2->set_stabilizer_of_object" << endl;
+		cout << "quartic_curve_from_surface::compute_stabilizer "
+				"before Surf_A->PA->PA2->set_stabilizer_of_object" << endl;
 	}
 	SG_pt_stab = Surf_A->PA->PA2->set_stabilizer_of_object(
 		OiP,
@@ -668,7 +606,8 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 		canonical_labeling, canonical_labeling_len,
 		verbose_level);
 	if (f_v) {
-		cout << "quartic_curve_from_surface::compute_stabilizer after Surf_A->PA->PA2->set_stabilizer_of_object" << endl;
+		cout << "quartic_curve_from_surface::compute_stabilizer "
+				"after Surf_A->PA->PA2->set_stabilizer_of_object" << endl;
 	}
 
 
@@ -717,7 +656,8 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_stabilizer "
 				"after Orb->init" << endl;
-		cout << "quartic_curve_from_surface::compute_stabilizer found an orbit of length " << Orb->used_length << endl;
+		cout << "quartic_curve_from_surface::compute_stabilizer "
+				"found an orbit of length " << Orb->used_length << endl;
 	}
 
 
@@ -889,7 +829,6 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 	ost << "\\end{align*}" << endl;
 
 
-#if 1
 
 
 	cout << "We found " << sz_curve << " points on "
@@ -926,83 +865,7 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 	}
 	ost_curves << endl;
 
-	#else
 
-	sz_curve = nb_pts_intersection - 1;
-	Pts_on_curve = NEW_int(sz_curve);
-
-
-	// skip the first point (1,0,0,0):
-	for (i = 1; i < nb_pts_intersection; i++) {
-		Surf->unrank_point(v, Pts_intersection[i]);
-		Pts_on_curve[i - 1] = Surf->P2->rank_point(v + 1);
-		}
-
-	ost << "The " << sz_curve << " projected points are:\\\\" << endl;
-	ost << "\\begin{multicols}{2}" << endl;
-	for (i = 0; i < sz_curve; i++) {
-		Surf->P2->unrank_point(v, Pts_on_curve[i]);
-		ost << i << " : $P_{" << i << "} = P_{" << Pts_on_curve[i] << "}=";
-		int_vec_print_fully(ost, v, 3);
-		ost << "$\\\\" << endl;
-	}
-	ost << "\\end{multicols}" << endl;
-
-
-	int r;
-	int *Kernel;
-
-	Kernel = NEW_int(Surf->Poly4_x123->nb_monomials *
-			Surf->Poly4_x123->nb_monomials);
-	Surf->Poly4_x123->vanishing_ideal(Pts_on_curve,
-			sz_curve, r, Kernel, verbose_level);
-	cout << "r=" << r << endl;
-	ost << "The quartics have " << Surf->Poly4_x123->nb_monomials
-			<< " terms.\\\\" << endl;
-	ost << "The kernel has dimension "
-			<< Surf->Poly4_x123->nb_monomials - r << " .\\\\" << endl;
-	FREE_int(Kernel);
-#endif
-
-
-
-
-#if 0
-	gens_copy = SOA->Aut_gens->create_copy();
-
-	moved_surface = NEW_OBJECT(set_and_stabilizer);
-
-	if (f_v) {
-		cout << "quartic_curve_from_surface::cheat_sheet_quartic_curve creating moved_surface" << endl;
-	}
-	moved_surface->init_everything(SOA->Surf_A->A,
-			SOA->Surf_A->A, SOA->SO->Pts, SOA->SO->nb_pts,
-			gens_copy, 0 /*verbose_level */);
-
-	//stab_gens_moved_surface = SaS->Strong_gens->create_copy();
-
-	if (f_v) {
-		cout << "quartic_curve_from_surface::cheat_sheet_quartic_curve before apply_to_self" << endl;
-	}
-	moved_surface->apply_to_self(transporter,
-			0 /* verbose_level */);
-
-	if (f_v) {
-		cout << "quartic_curve_from_surface::cheat_sheet_quartic_curve before moved_surface->Strong_gens->point_stabilizer"
-			<< endl;
-	}
-	stab_gens_P0 = moved_surface->Strong_gens->point_stabilizer(
-			0 /*int pt */, verbose_level);
-	if (f_v) {
-		cout << "quartic_curve_from_surface::cheat_sheet_quartic_curve after moved_surface->Strong_gens->point_stabilizer"
-			<< endl;
-	}
-
-
-	ost << "The stabilizer of $P0$ and the moved surface is "
-			"the following group:\\\\" << endl;
-	stab_gens_P0->print_generators_tex(ost);
-#endif
 
 
 	ost << "The stabilizer of the quartic curve is the following group:\\\\" << endl;

@@ -715,6 +715,7 @@ int group_theoretic_activity_description::read_arguments(
 		else {
 			cout << "group_theoretic_activity_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 	} // next i
 	if (f_v) {
@@ -767,6 +768,7 @@ void group_theoretic_activity_description::print()
 
 
 	if (f_poset_classification_control) {
+		Control->print();
 	}
 	if (f_orbits_on_points) {
 		cout << "-orbits_on_points" << endl;
@@ -829,7 +831,6 @@ void group_theoretic_activity_description::print()
 		cout << "-report" << endl;
 	}
 	if (f_sylow) {
-		f_sylow = TRUE;
 		cout << "-sylow" << endl;
 	}
 	if (f_draw_tree) {
@@ -887,6 +888,7 @@ void group_theoretic_activity_description::print()
 
 	if (f_classify_arcs) {
 		cout << "-classify_arcs " << endl;
+		Arc_generator_description->print();
 	}
 
 	if (f_exact_cover) {
@@ -928,11 +930,13 @@ void group_theoretic_activity_description::print()
 
 	if (f_classify_ovoids) {
 		cout << "-classify_ovoids" << endl;
+		Ovoid_classify_description->print();
 	}
 
 	// cubic curves
 	if (f_classify_cubic_curves) {
 		cout << "-classify_cubic_curves" << endl;
+		Arc_generator_description->print();
 	}
 
 

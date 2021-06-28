@@ -627,6 +627,7 @@ static void matrix_group_print_point(action &A, long int a, ostream &ost)
 	matrix_group *G = A.G.matrix_grp;
 	geometry_global Gg;
 	
+	cout << "matrix_group_print_point" << endl;
 	if (G->f_projective) {
 		G->GFq->PG_element_unrank_modified_lint(G->v1, 1, G->n, a);
 		}

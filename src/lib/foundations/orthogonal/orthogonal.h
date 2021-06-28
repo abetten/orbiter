@@ -13,6 +13,126 @@ namespace foundations {
 
 
 // #############################################################################
+// blt_set_domain.cpp
+// #############################################################################
+
+//! BLT-sets in Q(4,q)
+
+
+
+class blt_set_domain {
+
+public:
+	finite_field *F;
+	int f_semilinear; // from the command line
+	int epsilon; // the type of the quadric (0, 1 or -1)
+	int n; // algebraic dimension
+	int q; // field order
+	int target_size;
+	int degree; // number of points on the quadric
+
+	std::string prefix; // "BLT_q%d"
+
+	orthogonal *O;
+	int f_orthogonal_allocated;
+
+
+	int *Pts; // [target_size * n]
+	int *Candidates; // [degree * n]
+
+	projective_space *P;
+	grassmann *G53;
+
+	blt_set_domain();
+	~blt_set_domain();
+	void null();
+	void freeself();
+	void init(orthogonal *O,
+		int verbose_level);
+	void compute_adjacency_list_fast(int first_point_of_starter,
+		long int *points, int nb_points, int *point_color,
+		bitvector *&Bitvec,
+		int verbose_level);
+	void compute_colors(int orbit_at_level,
+		long int *starter, int starter_sz,
+		long int special_line,
+		long int *candidates, int nb_candidates,
+		int *&point_color, int &nb_colors,
+		int verbose_level);
+	void early_test_func(long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+	int pair_test(int a, int x, int y, int verbose_level);
+		// We assume that a is an element of a set S
+		// of size at least two such that
+		// S \cup \{ x \} is BLT and
+		// S \cup \{ y \} is BLT.
+		// In order to test of S \cup \{ x, y \}
+		// is BLT, we only need to test
+		// the triple \{ x,y,a\}
+	int check_conditions(int len, long int *S, int verbose_level);
+	int collinearity_test(long int *S, int len, int verbose_level);
+	void print(std::ostream &ost, long int *S, int len);
+	void find_free_points(long int *S, int S_sz,
+			long int *&free_pts, int *&free_pt_idx, int &nb_free_pts,
+		int verbose_level);
+	int create_graph(
+		int case_number, int nb_cases_total,
+		long int *Starter_set, int starter_size,
+		long int *candidates, int nb_candidates,
+		int f_eliminate_graphs_if_possible,
+		colored_graph *&CG,
+		int verbose_level);
+};
+
+
+// #############################################################################
+// blt_set_invariants.cpp
+// #############################################################################
+
+//! invariants of a BLT-sets in Q(4,q)
+
+
+
+class blt_set_invariants {
+
+public:
+
+	blt_set_domain *D;
+
+	int set_size; // = D->q + 1
+	long int *the_set_in_orthogonal; // [set_size]
+	long int *the_set_in_PG; // [set_size]
+
+	int *intersection_type;
+	int highest_intersection_number;
+	int *intersection_matrix;
+	int nb_planes;
+
+	set_of_sets *Sos;
+	set_of_sets *Sos2;
+	set_of_sets *Sos3;
+
+	decomposition *D2;
+	decomposition *D3;
+
+	int *Sos2_idx;
+	int *Sos3_idx;
+
+	blt_set_invariants();
+	~blt_set_invariants();
+	void null();
+	void freeself();
+	void init(blt_set_domain *D, long int *the_set,
+		int verbose_level);
+	void compute(int verbose_level);
+	void latex(std::ostream &ost, int verbose_level);
+};
+
+
+
+// #############################################################################
 // orthogonal.cpp
 // #############################################################################
 
@@ -493,6 +613,107 @@ public:
 };
 
 
+// #############################################################################
+// unusual.cpp
+// #############################################################################
+
+//! Penttila's unusual model to create BLT-sets
+
+
+class unusual_model {
+public:
+	finite_field *FQ;
+	finite_field *Fq;
+	int q;
+	int Q;
+	int alpha;
+	int T_alpha;
+	int N_alpha;
+
+	int nb_terms;
+	int *form_i;
+	int *form_j;
+	int *form_coeff;
+	int *Gram;
+
+	int r_nb_terms;
+	int *r_form_i;
+	int *r_form_j;
+	int *r_form_coeff;
+	int *r_Gram;
+
+	int rr_nb_terms;
+	int *rr_form_i;
+	int *rr_form_j;
+	int *rr_form_coeff;
+	int *rr_Gram;
+
+	int hyperbolic_basis[4 * 4];
+	int hyperbolic_basis_inverse[4 * 4];
+	int basis[4 * 4];
+	int basis_subspace[2 * 2];
+	int *M;
+
+	int *components;
+	int *embedding;
+	int *pair_embedding;
+		// data computed by F.subfield_embedding_2dimensional
+
+	unusual_model();
+	~unusual_model();
+	void setup(finite_field *FQ, finite_field *Fq,
+			int verbose_level);
+	void setup2(
+			finite_field *FQ, finite_field *Fq,
+			int f_sum_of_squares, int verbose_level);
+	void convert_to_ranks(int n, int *unusual_coordinates,
+		long int *ranks, int verbose_level);
+	void convert_from_ranks(int n, long int *ranks,
+		int *unusual_coordinates, int verbose_level);
+	long int convert_to_rank(int *unusual_coordinates, int verbose_level);
+	void convert_from_rank(long int rank, int *unusual_coordinates,
+		int verbose_level);
+	void convert_to_usual(int n, int *unusual_coordinates,
+		int *usual_coordinates, int verbose_level);
+	void create_Fisher_BLT_set(long int *Fisher_BLT, int *ABC, int verbose_level);
+	void convert_from_usual(int n, int *usual_coordinates,
+		int *unusual_coordinates, int verbose_level);
+	void create_Linear_BLT_set(long int *BLT, int *ABC, int verbose_level);
+	void create_Mondello_BLT_set(long int *BLT, int *ABC, int verbose_level);
+	int N2(int a);
+	int T2(int a);
+	int quadratic_form(int a, int b, int c, int verbose_level);
+	int bilinear_form(int a1, int b1, int c1, int a2, int b2, int c2,
+		int verbose_level);
+	void print_coordinates_detailed_set(long int *set, int len);
+	void print_coordinates_detailed(long int pt, int cnt);
+	int build_candidate_set(orthogonal &O, int q,
+		int gamma, int delta, int m, long int *Set,
+		int f_second_half, int verbose_level);
+	int build_candidate_set_with_offset(orthogonal &O, int q,
+		int gamma, int delta, int offset, int m, long int *Set,
+		int f_second_half, int verbose_level);
+	int build_candidate_set_with_or_without_test(orthogonal &O, int q,
+		int gamma, int delta, int offset, int m, long int *Set,
+		int f_second_half, int f_test, int verbose_level);
+	int create_orbit_of_psi(orthogonal &O, int q,
+		int gamma, int delta, int m, long int *Set,
+		int f_test, int verbose_level);
+	void transform_matrix_unusual_to_usual(orthogonal *O,
+		int *M4, int *M5, int verbose_level);
+	void transform_matrix_usual_to_unusual(orthogonal *O,
+		int *M5, int *M4, int verbose_level);
+
+	void parse_4by4_matrix(int *M4,
+		int &a, int &b, int &c, int &d,
+		int &f_semi1, int &f_semi2, int &f_semi3, int &f_semi4);
+	void create_4by4_matrix(int *M4,
+		int a, int b, int c, int d,
+		int f_semi1, int f_semi2, int f_semi3, int f_semi4,
+		int verbose_level);
+	void print_2x2(int *v, int *f_semi);
+	void print_M5(orthogonal *O, int *M5);
+};
 
 
 

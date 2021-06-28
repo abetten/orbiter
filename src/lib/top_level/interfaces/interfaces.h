@@ -145,6 +145,28 @@ class interface_algebra {
 	int power_mod_n_a;
 	int power_mod_n_n;
 
+	int f_all_rational_normal_forms;
+	std::string all_rational_normal_forms_finite_field_label;
+	int all_rational_normal_forms_d;
+
+	int f_eigenstuff;
+	int f_eigenstuff_from_file;
+	std::string eigenstuff_finite_field_label;
+	int eigenstuff_n;
+	std::string eigenstuff_coeffs;
+	std::string eigenstuff_fname;
+
+#if 0
+	int f_study_surface;
+	int study_surface_nb;
+
+	int f_decomposition_by_element;
+	int decomposition_by_element_n;
+	int decomposition_by_element_power;
+	std::string decomposition_by_element_data;
+	std::string decomposition_by_element_fname_base;
+#endif
+
 
 public:
 	interface_algebra();
@@ -684,6 +706,7 @@ class interface_toolkit {
 	std::vector<std::string> csv_file_concatenate_fname_in;
 
 	int f_csv_file_latex;
+	int f_produce_latex_header;
 	std::string csv_file_latex_fname;
 
 	int f_draw_matrix;

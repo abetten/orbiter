@@ -49,6 +49,7 @@ interface_toolkit::interface_toolkit()
 	//std::vector<std::string> csv_file_concatenate_fname_in;
 
 	f_csv_file_latex = FALSE;
+	f_produce_latex_header = FALSE;
 	//std::vector<std::string> csv_file_latex_fname;
 
 	f_draw_matrix = FALSE;
@@ -113,7 +114,7 @@ void interface_toolkit::print_help(int argc,
 		cout << "-csv_file_concatenate <string : fname_out> <int : number of input files> <string : inout file1> ..." << endl;
 	}
 	else if (stringcmp(argv[i], "-csv_file_latex") == 0) {
-		cout << "-cvs_file_latex <string : file_name>" << endl;
+		cout << "-cvs_file_latex <int : f_produce_header> <string : file_name>" << endl;
 	}
 	else if (stringcmp(argv[i], "-draw_matrix") == 0) {
 		cout << "-draw_matrix options -end" << endl;
@@ -275,8 +276,9 @@ void interface_toolkit::read_arguments(int argc,
 	}
 	else if (stringcmp(argv[i], "-csv_file_latex") == 0) {
 		f_csv_file_latex = TRUE;
+		f_produce_latex_header = strtoi(argv[++i]);
 		csv_file_latex_fname.assign(argv[++i]);
-		cout << "-csv_file_latex " << csv_file_latex_fname << endl;
+		cout << "-csv_file_latex " << f_produce_latex_header << " " << csv_file_latex_fname << endl;
 	}
 	else if (stringcmp(argv[i], "-draw_matrix") == 0) {
 		f_draw_matrix = TRUE;
@@ -517,7 +519,7 @@ void interface_toolkit::worker(int verbose_level)
 
 		file_io Fio;
 
-		Fio.do_csv_file_latex(csv_file_latex_fname, verbose_level);
+		Fio.do_csv_file_latex(csv_file_latex_fname, f_produce_latex_header, verbose_level);
 	}
 	else if (f_draw_matrix) {
 		graphical_output GO;

@@ -6,13 +6,16 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	blt_set_domain.o \
+	blt_set_invariants.o \
 	orthogonal_blt.o \
 	orthogonal_group.o \
 	orthogonal_hyperbolic.o \
 	orthogonal_io.o \
 	orthogonal_parabolic.o \
 	orthogonal_rank_unrank.o \
-	orthogonal.o 
+	orthogonal.o \
+	unusual_model.o
 
 
 

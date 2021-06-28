@@ -140,6 +140,14 @@ void projective_space_activity::perform_activity(int verbose_level)
 		table_of_quartic_curves(PA, verbose_level);
 	}
 
+	else if (Descr->f_table_of_cubic_surfaces) {
+
+		cout << "table_of_cubic_surfaces" << endl;
+
+
+		table_of_cubic_surfaces(PA, verbose_level);
+	}
+
 	else if (Descr->f_define_quartic_curve) {
 
 		cout << "f_define_quartic_curve label = " << Descr->f_define_quartic_curve << endl;
@@ -1009,6 +1017,23 @@ void projective_space_activity::table_of_quartic_curves(
 	}
 }
 
+void projective_space_activity::table_of_cubic_surfaces(
+		projective_space_with_action *PA,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_activity::table_of_cubic_surfaces" << endl;
+	}
+
+	PA->table_of_cubic_surfaces(verbose_level);
+
+	if (f_v) {
+		cout << "projective_space_activity::table_of_cubic_surfaces done" << endl;
+	}
+}
+
 void projective_space_activity::do_create_quartic_curve(
 		projective_space_with_action *PA,
 		quartic_curve_create_description *Quartic_curve_descr,
@@ -1276,7 +1301,7 @@ void projective_space_activity::set_stabilizer(
 		cout << "projective_space_activity::set_stabilizer" << endl;
 	}
 
-
+#if 0
 	top_level_geometry_global T;
 
 	T.set_stabilizer_projective_space(
@@ -1284,7 +1309,17 @@ void projective_space_activity::set_stabilizer(
 				intermediate_subset_size,
 				fname_mask, nb, column_label,
 				verbose_level);
+#endif
+	substructure_classifier *SubC;
 
+	SubC = NEW_OBJECT(substructure_classifier);
+
+	SubC->set_stabilizer_in_any_space(
+			PA->A, PA->A, PA->A->Strong_gens,
+			intermediate_subset_size,
+			fname_mask, nb, column_label,
+			verbose_level);
+	FREE_OBJECT(SubC);
 
 	if (f_v) {
 		cout << "projective_space_activity::set_stabilizer done" << endl;
@@ -1339,10 +1374,10 @@ void projective_space_activity::do_lift_skew_hexagon(
 		cout << "projective_space_activity::do_lift_skew_hexagon" << endl;
 	}
 
-	int *Pluecker_ccords;
+	int *Pluecker_coords;
 	int sz;
 
-	Orbiter->Int_vec.scan(text, Pluecker_ccords, sz);
+	Orbiter->Int_vec.scan(text, Pluecker_coords, sz);
 
 	long int *Pts;
 	int nb_pts;
@@ -1356,7 +1391,7 @@ void projective_space_activity::do_lift_skew_hexagon(
 
 	if (f_v) {
 		cout << "Pluecker coordinates of lines:" << endl;
-		Orbiter->Int_vec.matrix_print(Pluecker_ccords, nb_pts, 6);
+		Orbiter->Int_vec.matrix_print(Pluecker_coords, nb_pts, 6);
 	}
 
 	surface_domain *Surf;
@@ -1395,7 +1430,7 @@ void projective_space_activity::do_lift_skew_hexagon(
 	Pts = NEW_lint(nb_pts);
 
 	for (i = 0; i < nb_pts; i++) {
-		Pts[i] = Surf_A->Surf->Klein->Pluecker_to_line_rk(Pluecker_ccords + i * 6, 0 /*verbose_level*/);
+		Pts[i] = Surf_A->Surf->Klein->Pluecker_to_line_rk(Pluecker_coords + i * 6, 0 /*verbose_level*/);
 	}
 
 	if (nb_pts != 6) {

@@ -9,8 +9,6 @@ MODULES = \
 	andre_construction.o \
 	andre_construction_line_element.o \
 	andre_construction_point_element.o \
-	blt_set_domain.o \
-	blt_set_invariants.o \
 	buekenhout_metz.o \
 	cubic_curve.o \
 	decomposition.o \
@@ -34,7 +32,6 @@ MODULES = \
 	quartic_curve_object_properties.o \
 	quartic_curve_object.o \
 	spread_tables.o \
-	unusual_model.o \
 	w3q.o 
 
 

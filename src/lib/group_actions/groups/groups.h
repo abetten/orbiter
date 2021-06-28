@@ -490,6 +490,7 @@ public:
 	int f_load_save;
 	std::string prefix;
 	std::string fname;
+	std::string fname_csv;
 
 	tally *Classify_orbits_by_length;
 	set_of_sets *Orbits_classified;
@@ -520,6 +521,7 @@ public:
 	void compute_compact_type(long int *orbit_type, long int goi,
 			long int *&compact_type, long int *&row_labels, long int *&col_labels, int &m, int &n);
 	void report_orbit_lengths(std::ostream &ost);
+	void print_orbits_based_on_filtered_orbits(std::ostream &ost, set_of_sets *Filtered_orbits);
 	void classify_orbits_by_length(int verbose_level);
 	void report_classified_orbit_lengths(std::ostream &ost);
 	void report_classified_orbits_by_lengths(std::ostream &ost);
@@ -605,6 +607,7 @@ public:
 			set_of_sets *&Orbit_invariant,
 			int (*evaluate_orbit_invariant_function)(int a, int i, int j, void *evaluate_data, int verbose_level),
 			void *evaluate_data, int verbose_level);
+	void get_orbit_number_and_position(long int a, int &orbit_idx, int &orbit_pos, int verbose_level);
 	void create_latex_report(int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
 
@@ -921,6 +924,7 @@ public:
 	void get_orbit_lengths_once_each(int *&orbit_lengths, 
 		int &nb_orbit_lengths);
 	int orbit_number(int pt);
+	void get_orbit_number_and_position(int pt, int &orbit_idx, int &orbit_pos, int verbose_level);
 	void get_orbit_decomposition_scheme_of_graph(
 		int *Adj, int n, int *&Decomp_scheme, int verbose_level);
 	void create_point_list_sorted(
@@ -1053,6 +1057,7 @@ public:
 		int i, int last);
 	int subtree_depth_first(std::ostream &ost, int *path, int i, int last);
 	void print_path(std::ostream &ost, int *path, int l);
+	void write_to_file_csv(std::string &fname_csv, int verbose_level);
 	void write_to_file_binary(std::ofstream &fp, int verbose_level);
 	void read_from_file_binary(std::ifstream &fp, int verbose_level);
 	void write_file_binary(std::string &fname, int verbose_level);

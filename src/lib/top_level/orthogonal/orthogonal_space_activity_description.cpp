@@ -223,7 +223,8 @@ void orthogonal_space_activity_description::print()
 		cout << "-input" << endl;
 	}
 	if (f_create_BLT_set) {
-		cout << "-create_BLT_set" << endl;
+		cout << "-create_BLT_set ";
+		BLT_Set_create_description->print();
 	}
 	if (f_BLT_set_starter) {
 		cout << "-BLT_set_starter " << BLT_set_starter_size << endl;

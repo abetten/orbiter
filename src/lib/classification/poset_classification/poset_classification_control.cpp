@@ -108,7 +108,9 @@ int poset_classification_control::read_arguments(
 	int i;
 	int f_v = (verbose_level >= 1);
 
-	cout << "poset_classification_control::read_arguments" << endl;
+	if (f_v) {
+		cout << "poset_classification_control::read_arguments" << endl;
+	}
 	for (i = 0; i < argc; i++) {
 
 		if (stringcmp(argv[i], "-problem_label") == 0) {
@@ -136,15 +138,19 @@ int poset_classification_control::read_arguments(
 			f_draw_options = TRUE;
 
 			draw_options = NEW_OBJECT(layered_graph_draw_options);
-			cout << "-draw_options " << endl;
+			if (f_v) {
+				cout << "-draw_options " << endl;
+			}
 			i += draw_options->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
-			cout << "done reading -draw_options " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
+			if (f_v) {
+				cout << "done reading -draw_options " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
 			}
 			//cout << "-f_draw_options " << endl;
 		}
@@ -236,41 +242,59 @@ int poset_classification_control::read_arguments(
 		}
 		else if (stringcmp(argv[i], "-draw_poset") == 0) {
 			f_draw_poset = TRUE;
-			cout << "-draw_poset " << endl;
+			if (f_v) {
+				cout << "-draw_poset " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-draw_full_poset") == 0) {
 			f_draw_full_poset = TRUE;
-			cout << "-draw_full_poset " << endl;
+			if (f_v) {
+				cout << "-draw_full_poset " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-plesken") == 0) {
 			f_plesken = TRUE;
-			cout << "-plesken " << endl;
+			if (f_v) {
+				cout << "-plesken " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-print_data_structure") == 0) {
 			f_print_data_structure = TRUE;
-			cout << "-print_data_structure " << endl;
+			if (f_v) {
+				cout << "-print_data_structure " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-list") == 0) {
 			f_list = TRUE;
-			cout << "-list" << endl;
+			if (f_v) {
+				cout << "-list" << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-list_all") == 0) {
 			f_list_all = TRUE;
-			cout << "-list_all" << endl;
+			if (f_v) {
+				cout << "-list_all" << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-table_of_nodes") == 0) {
 			f_table_of_nodes = TRUE;
-			cout << "-table_of_nodes" << endl;
+			if (f_v) {
+				cout << "-table_of_nodes" << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-make_relations_with_flag_orbits") == 0) {
 			f_make_relations_with_flag_orbits = TRUE;
-			cout << "-make_relation_with_flag_orbits" << endl;
+			if (f_v) {
+				cout << "-make_relation_with_flag_orbits" << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-Kramer_Mesner_matrix") == 0) {
 			f_Kramer_Mesner_matrix = TRUE;
 			Kramer_Mesner_t = strtoi(argv[++i]);
 			Kramer_Mesner_k = strtoi(argv[++i]);
-			cout << "-Kramer_Mesner_matrix " << Kramer_Mesner_t << " " << Kramer_Mesner_k << endl;
+			if (f_v) {
+				cout << "-Kramer_Mesner_matrix " << Kramer_Mesner_t << " " << Kramer_Mesner_k << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-level_summary_csv") == 0) {
 			f_level_summary_csv = TRUE;
@@ -333,39 +357,52 @@ int poset_classification_control::read_arguments(
 
 			s.assign(argv[++i]);
 			recognize.push_back(s);
-			cout << "-recognize " << recognize[recognize.size() - 1] << endl;
+			if (f_v) {
+				cout << "-recognize " << recognize[recognize.size() - 1] << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-export_schreier_trees") == 0) {
 			f_export_schreier_trees = TRUE;
-			cout << "-export_schreier_trees" << endl;
+			if (f_v) {
+				cout << "-export_schreier_trees" << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-draw_schreier_trees") == 0) {
 			f_draw_schreier_trees = TRUE;
 			schreier_tree_prefix.assign(argv[++i]);
-			cout << "-draw_schreier_trees " << schreier_tree_prefix << endl;
+			if (f_v) {
+				cout << "-draw_schreier_trees " << schreier_tree_prefix << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-test_multi_edge_in_decomposition_matrix") == 0) {
 			f_test_multi_edge_in_decomposition_matrix = TRUE;
-			cout << "-test_multi_edge_in_decomposition_matrix " << endl;
+			if (f_v) {
+				cout << "-test_multi_edge_in_decomposition_matrix " << endl;
+			}
 		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {
-			cout << "-end" << endl;
+			if (f_v) {
+				cout << "-end" << endl;
+			}
 			break;
 		}
 		else {
 			cout << "poset_classification_control::read_arguments "
 					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 
 	} // next i
-	cout << "poset_classification_control::read_arguments done" << endl;
+	if (f_v) {
+		cout << "poset_classification_control::read_arguments done" << endl;
+	}
 	return i + 1;
 }
 
 void poset_classification_control::print()
 {
-	cout << "poset_classification_control::print:" << endl;
+	//cout << "poset_classification_control::print:" << endl;
 
 
 

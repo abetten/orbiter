@@ -44,42 +44,61 @@ int cubic_surface_activity_description::read_arguments(
 	int argc, std::string *argv,
 	int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i;
 
-	cout << "cubic_surface_activity_description::read_arguments" << endl;
+	if (f_v) {
+		cout << "cubic_surface_activity_description::read_arguments" << endl;
+	}
 	for (i = 0; i < argc; i++) {
 
 		if (stringcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
-			cout << "-report " << endl;
+			if (f_v) {
+				cout << "-report " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-report_with_group") == 0) {
 			f_report_with_group = TRUE;
-			cout << "-report_with_group " << endl;
+			if (f_v) {
+				cout << "-report_with_group " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-export_points") == 0) {
 			f_export_points = TRUE;
-			cout << "-export_points " << endl;
+			if (f_v) {
+				cout << "-export_points " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-clebsch") == 0) {
 			f_clebsch = TRUE;
-			cout << "-clebsch " << endl;
+			if (f_v) {
+				cout << "-clebsch " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-codes") == 0) {
 			f_codes = TRUE;
-			cout << "-codes " << endl;
+			if (f_v) {
+				cout << "-codes " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-all_quartic_curves") == 0) {
 			f_all_quartic_curves = TRUE;
-			cout << "-all_quartic_curves " << endl;
+			if (f_v) {
+				cout << "-all_quartic_curves " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-export_all_quartic_curves") == 0) {
 			f_export_all_quartic_curves = TRUE;
-			cout << "-export_all_quartic_curves " << endl;
+			if (f_v) {
+				cout << "-export_all_quartic_curves " << endl;
+			}
 		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {
-			cout << "-end" << endl;
+			if (f_v) {
+				cout << "-end" << endl;
+			}
 			break;
 		}
 		else {
@@ -87,10 +106,14 @@ int cubic_surface_activity_description::read_arguments(
 					"unrecognized option " << argv[i] << endl;
 			exit(1);
 		}
-		cout << "cubic_surface_activity_description::read_arguments looping, i=" << i << endl;
+		if (f_v) {
+			cout << "cubic_surface_activity_description::read_arguments looping, i=" << i << endl;
+		}
 	} // next i
 
-	cout << "cubic_surface_activity_description::read_arguments done" << endl;
+	if (f_v) {
+		cout << "cubic_surface_activity_description::read_arguments done" << endl;
+	}
 	return i + 1;
 }
 

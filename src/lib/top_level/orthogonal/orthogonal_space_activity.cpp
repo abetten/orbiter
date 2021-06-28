@@ -341,7 +341,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 
 
 void orthogonal_space_activity::set_stabilizer(
-		orthogonal_space_with_action *PA,
+		orthogonal_space_with_action *OA,
 		int intermediate_subset_size,
 		std::string &fname_mask, int nb, std::string &column_label,
 		int verbose_level)
@@ -354,6 +354,17 @@ void orthogonal_space_activity::set_stabilizer(
 	}
 
 
+	substructure_classifier SubC;
+
+	SubC.set_stabilizer_in_any_space(
+			OA->A, OA->A, OA->A->Strong_gens,
+			intermediate_subset_size,
+			fname_mask, nb, column_label,
+			verbose_level);
+
+
+
+#if 0
 	top_level_geometry_global T;
 
 	T.set_stabilizer_orthogonal_space(
@@ -361,7 +372,7 @@ void orthogonal_space_activity::set_stabilizer(
 				intermediate_subset_size,
 				fname_mask, nb, column_label,
 				verbose_level);
-
+#endif
 
 	if (f_v) {
 		cout << "orthogonal_space_activity::set_stabilizer done" << endl;

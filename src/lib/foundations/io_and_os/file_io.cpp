@@ -3843,6 +3843,7 @@ void file_io::do_csv_file_concatenate(
 }
 
 void file_io::do_csv_file_latex(std::string &fname,
+		int f_produce_latex_header,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3884,14 +3885,28 @@ void file_io::do_csv_file_latex(std::string &fname,
 		f_column_select[0] = FALSE;
 
 
-		L.head_easy(ost);
+		if (f_produce_latex_header) {
+			//L.head_easy(ost);
+			L.head(ost,
+				FALSE /* f_book */,
+				TRUE /* f_title */,
+				"File", "Orbiter",
+				FALSE /*f_toc */,
+				FALSE /* f_landscape */,
+				FALSE /* f_12pt */,
+				FALSE /* f_enlarged_page */,
+				TRUE /* f_pagenumbers */,
+				NULL /* extras_for_preamble */);
+		}
 
 		S.print_table_latex(ost,
 				f_column_select, FALSE /* f_enclose_in_parentheses */);
 
 		FREE_int(f_column_select);
 
-		L.foot(ost);
+		if (f_produce_latex_header) {
+			L.foot(ost);
+		}
 
 	}
 	cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;

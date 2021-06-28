@@ -197,7 +197,7 @@ void text_to_three_double(const char *text, double *d)
 
 	Num.vec_scan(rotation_axis_custom_text, data, data_sz);
 	if (data_sz != 3) {
-		cout << "text_to_three_double; is " << data_sz << endl;
+		cout << "text_to_three_double data_sz != 3, data_sz = " << data_sz << endl;
 		exit(1);
 	}
 	d[0] = data[0];
@@ -215,7 +215,7 @@ void text_to_three_double(std::string &text, double *d)
 
 	Num.vec_scan(text.c_str(), data, data_sz);
 	if (data_sz != 3) {
-		cout << "text_to_three_double; is " << data_sz << endl;
+		cout << "text_to_three_double data_sz != 3, data_sz = " << data_sz << endl;
 		exit(1);
 	}
 	d[0] = data[0];

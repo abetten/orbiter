@@ -1508,9 +1508,9 @@ static void induced_action_print_point(action &A,
 {
 	action_global AG;
 
-#if 0
+#if 1
 	cout << "induced_action_print_point type=";
-	AG.action_print_symmetry_group_type(ost, A.type_G);
+	AG.action_print_symmetry_group_type(cout, A.type_G);
 	cout << endl;
 #endif
 
@@ -1571,15 +1571,25 @@ static void induced_action_print_point(action &A,
 		ost << a;
 		}
 	else if (A.type_G == action_on_sets_t) {
-		//action_on_sets *AOS = A.G.on_sets;
+		action_on_sets *AOS = A.G.on_sets;
 		action *sub;
+		int i;
+		long int b;
 		
 		sub = A.subaction;
 		if (sub == NULL) {
 			cout << "induced_action_print_point no subaction" << endl;
 			exit(1);
 			}
-		ost << a;
+		ost << a << "=";
+		Orbiter->Lint_vec.print(ost, AOS->sets[AOS->perm[a]], AOS->set_size);
+		ost << endl;
+		for (i = 0; i < AOS->set_size; i++) {
+			ost << "$$" << endl;
+			ost << "$$" << endl;
+			b = AOS->sets[AOS->perm[a]][i];
+			sub->print_point(b, ost);
+		}
 		//AOS->compute_image(sub, Elt, a, b, verbose_level);
 		}
 	else if (A.type_G == action_on_subgroups_t) {

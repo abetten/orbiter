@@ -20,10 +20,10 @@ namespace top_level {
 
 regular_packing::regular_packing()
 {
-		PW = NULL;
+	PW = NULL;
 
-		spread_to_external_line_idx = NULL;
-		external_line_to_spread = NULL;
+	spread_to_external_line_idx = NULL;
+	external_line_to_spread = NULL;
 }
 
 regular_packing::~regular_packing()

@@ -930,7 +930,7 @@ void homogeneous_polynomial_domain::print_equation_numerical(std::ostream &ost, 
 	}
 }
 
-void homogeneous_polynomial_domain::print_equation_lint(ostream &ost, long int *coeffs)
+void homogeneous_polynomial_domain::print_equation_lint(std::ostream &ost, long int *coeffs)
 {
 	int i, c;
 	int f_first = TRUE;
@@ -955,7 +955,7 @@ void homogeneous_polynomial_domain::print_equation_lint(ostream &ost, long int *
 	}
 }
 
-void homogeneous_polynomial_domain::print_equation_lint_tex(ostream &ost, long int *coeffs)
+void homogeneous_polynomial_domain::print_equation_lint_tex(std::ostream &ost, long int *coeffs)
 {
 	int i, c;
 	int f_first = TRUE;
@@ -980,7 +980,7 @@ void homogeneous_polynomial_domain::print_equation_lint_tex(ostream &ost, long i
 	}
 }
 
-void homogeneous_polynomial_domain::print_equation_str(stringstream &ost, int *coeffs)
+void homogeneous_polynomial_domain::print_equation_str(std::stringstream &ost, int *coeffs)
 {
 	int i, c;
 	int f_first = TRUE;
@@ -995,7 +995,7 @@ void homogeneous_polynomial_domain::print_equation_str(stringstream &ost, int *c
 			f_first = FALSE;
 		}
 		else {
-			ost << " + ";
+			ost << "+";
 		}
 		if (c > 1) {
 			F->print_element_str(ost, c);
@@ -1006,7 +1006,7 @@ void homogeneous_polynomial_domain::print_equation_str(stringstream &ost, int *c
 }
 
 void homogeneous_polynomial_domain::print_equation_with_line_breaks_tex(
-	ostream &ost, int *coeffs, int nb_terms_per_line,
+		std::ostream &ost, int *coeffs, int nb_terms_per_line,
 	const char *new_line_text)
 {
 	int i, c, cnt = 0;

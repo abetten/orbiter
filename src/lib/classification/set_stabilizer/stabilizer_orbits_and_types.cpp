@@ -8,12 +8,14 @@
 
 
 
-#include "orbiter.h"
+#include "foundations/foundations.h"
+#include "group_actions/group_actions.h"
+#include "classification/classification.h"
 
 using namespace std;
 
 namespace orbiter {
-namespace top_level {
+namespace classification {
 
 
 
