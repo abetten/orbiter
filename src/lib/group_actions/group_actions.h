@@ -100,6 +100,8 @@ typedef class subgroup *psubgroup;
 typedef class vector_ge *p_vector_ge;
 
 
+
+
 //! enumeration to distinguish between the various types of group actions
 
 enum symmetry_group_type { 

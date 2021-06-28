@@ -174,7 +174,7 @@ void quartic_curve_object::init_equation_and_bitangents_and_compute_properties(q
 		cout << "quartic_curve_object::init_equation_and_bitangents_and_compute_properties before "
 				"compute_properties" << endl;
 	}
-	compute_properties(0/*verbose_level - 2*/);
+	compute_properties(verbose_level - 2);
 	if (f_v) {
 		cout << "quartic_curve_object::init_equation_and_bitangents_and_compute_properties after "
 				"compute_properties" << endl;

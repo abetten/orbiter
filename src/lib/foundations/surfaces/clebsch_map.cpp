@@ -382,7 +382,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 		F->RREF_and_kernel(4, 3, M, 0 /* verbose_level */);
 		Orbiter->Int_vec.copy(M + 3 * 4, Dual_planes + 4, 4);
 		if (f_vv) {
-			cout << "clebsch_map::compute_Clebsch_map_down_workerSecond plane in dual coordinates: ";
+			cout << "clebsch_map::compute_Clebsch_map_down_worker Second plane in dual coordinates: ";
 			Orbiter->Int_vec.print(cout, M + 3 * 4, 4);
 			cout << endl;
 		}
@@ -400,16 +400,16 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 		r = F->RREF_and_kernel(4, 3,
 				Dual_planes, 0 /* verbose_level */);
 		if (f_vv) {
-			cout << "Dual coordinates and perp: " << endl;
+			cout << "clebsch_map::compute_Clebsch_map_down_worker Dual coordinates and perp: " << endl;
 			Orbiter->Int_vec.matrix_print(Dual_planes, 4, 4);
 			cout << endl;
-			cout << "matrix of dual coordinates has rank " << r << endl;
+			cout << "clebsch_map::compute_Clebsch_map_down_worker matrix of dual coordinates has rank " << r << endl;
 		}
 
 
 		if (r < 3) {
 			if (f_v) {
-				cout << "The line is contained in the plane" << endl;
+				cout << "clebsch_map::compute_Clebsch_map_down_worker The line is contained in the plane" << endl;
 			}
 			Image_rk[h] = -1;
 			continue;
@@ -429,7 +429,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 			0 /* verbose_level */);
 		Image_rk[h] = Surf->P2->rank_point(coefficients);
 		if (f_vv) {
-			cout << "pt " << h << " / " << SO->nb_pts
+			cout << "clebsch_map::compute_Clebsch_map_down_worker pt " << h << " / " << SO->nb_pts
 				<< " is " << pt << " : image = ";
 			Orbiter->Int_vec.print(cout, Image_coeff + h * 4, 4);
 			cout << " image = " << Image_rk[h] << endl;

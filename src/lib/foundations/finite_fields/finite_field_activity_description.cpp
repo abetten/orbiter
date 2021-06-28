@@ -223,27 +223,6 @@ finite_field_activity_description::finite_field_activity_description()
 	rank_point_in_PG_given_as_pairs_n = 0;
 	//std::string f_rank_point_in_PG_given_as_pairs_text;
 
-#if 0
-	f_all_rational_normal_forms = FALSE;
-	d = 0;
-	//
-	f_study_surface = FALSE;
-	study_surface_nb = 0;
-
-	f_eigenstuff = FALSE;
-	f_eigenstuff_from_file = FALSE;
-	eigenstuff_n = 0;
-	//eigenstuff_coeffs = NULL;
-	//eigenstuff_fname = NULL;
-
-	f_decomposition_by_element = FALSE;
-	decomposition_by_element_n = 0;
-	decomposition_by_element_power = 1;
-	//std::string decomposition_by_element_data
-	//decomposition_by_element_fname_base
-
-
-#endif
 
 }
 
@@ -813,53 +792,6 @@ int finite_field_activity_description::read_arguments(
 			}
 		}
 
-#if 0
-		else if (stringcmp(argv[i], "-study_surface") == 0) {
-			f_study_surface = TRUE;
-			study_surface_nb = strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-study_surface" << study_surface_nb << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-eigenstuff") == 0) {
-			f_eigenstuff = TRUE;
-			eigenstuff_n = strtoi(argv[++i]);
-			eigenstuff_coeffs.assign(argv[++i]);
-			if (f_v) {
-				cout << "-eigenstuff " << eigenstuff_n
-					<< " " << eigenstuff_coeffs << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-eigenstuff_matrix_from_file") == 0) {
-			f_eigenstuff_from_file = TRUE;
-			eigenstuff_n = strtoi(argv[++i]);
-			eigenstuff_fname.assign(argv[++i]);
-			if (f_v) {
-				cout << "-eigenstuff_from_file " << eigenstuff_n
-					<< " " << eigenstuff_fname << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-all_rational_normal_forms") == 0) {
-			f_all_rational_normal_forms = TRUE;
-			d = strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-f_all_rational_normal_forms " << d << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-decomposition_by_element") == 0) {
-			f_decomposition_by_element = TRUE;
-			decomposition_by_element_n = strtoi(argv[++i]);
-			decomposition_by_element_power = strtoi(argv[++i]);
-			decomposition_by_element_data.assign(argv[++i]);
-			decomposition_by_element_fname_base.assign(argv[++i]);
-			if (f_v) {
-				cout << "-decomposition_by_element " <<  decomposition_by_element_power
-					<< " " << decomposition_by_element_data
-					<< " " << decomposition_by_element_fname_base << endl;
-			}
-		}
-
-#endif
 
 		else if (stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -990,14 +922,21 @@ void finite_field_activity_description::print()
 				<< " " << EC_multiple_of_n << endl;
 	}
 	if (f_EC_discrete_log) {
-		cout << "-EC_discrete_log " << " " << EC_b << " " << EC_c << " " << EC_pt_text << " "
-				<< EC_discrete_log_pt_text << endl;
+		cout << "-EC_discrete_log "
+				<< " " << EC_b
+				<< " " << EC_c
+				<< " " << EC_pt_text
+				<< " " << EC_discrete_log_pt_text
+				<< endl;
 	}
 	if (f_EC_baby_step_giant_step) {
-		cout << "-EC_baby_step_giant_step " << " " << EC_b << " " << EC_c << " "
-				<< EC_bsgs_G << " "
-				<< EC_bsgs_N << " "
-				<< EC_bsgs_cipher_text << endl;
+		cout << "-EC_baby_step_giant_step "
+				<< " " << EC_b
+				<< " " << EC_c
+				<< " " << EC_bsgs_G
+				<< " " << EC_bsgs_N
+				<< " " << EC_bsgs_cipher_text
+				<< endl;
 	}
 	if (f_EC_baby_step_giant_step_decode) {
 		cout << "-EC_baby_step_giant_step_decode "

@@ -64,6 +64,7 @@ public:
 	arc_generator_description();
 	~arc_generator_description();
 	int read_arguments(int argc, std::string *argv, int verbose_level);
+	void print();
 
 
 };
@@ -656,6 +657,7 @@ public:
 	~ovoid_classify_description();
 	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
+	void print();
 
 };
 
@@ -935,99 +937,6 @@ public:
 };
 
 
-// #############################################################################
-// substructure_classifier.cpp
-// #############################################################################
-
-
-
-//! classification of substructures
-
-
-
-
-class substructure_classifier {
-public:
-
-
-	int substructure_size;
-
-	poset_classification *PC;
-	poset_classification_control *Control;
-	action *A;
-	action *A2;
-	poset_with_group_action *Poset;
-	int nb_orbits;
-
-
-	substructure_classifier();
-	~substructure_classifier();
-	void classify_substructures(
-			action *A,
-			action *A2,
-			strong_generators *gens,
-			int substructure_size,
-			int verbose_level);
-
-
-};
-
-
-// #############################################################################
-// substructure_stats_and_selection.cpp
-// #############################################################################
-
-
-
-//! analyzing the substructures of a given set
-
-
-
-
-class substructure_stats_and_selection {
-public:
-
-	substructure_classifier *SubC;
-
-	long int *Pts;
-	int nb_pts;
-
-	int nCk;
-	int *isotype;
-	int *orbit_frequencies;
-	int nb_orbits;
-	tally *T;
-
-
-	set_of_sets *SoS;
-	int *types;
-	int nb_types;
-	int selected_type;
-	int selected_orbit;
-	int selected_frequency;
-
-	long int *interesting_subsets;
-	int nb_interesting_subsets;
-		// interesting_subsets are the lvl-subsets of the given set
-		// which are of the chosen type.
-		// There is nb_interesting_subsets of them.
-
-	strong_generators *gens;
-	//int *transporter_to_canonical_form;
-	//strong_generators *Gens_stabilizer_original_set;
-
-
-	substructure_stats_and_selection();
-	~substructure_stats_and_selection();
-	void init(
-			substructure_classifier *SubC,
-			long int *Pts,
-			int nb_pts,
-			int verbose_level);
-
-};
-
-
 
 
 // #############################################################################
@@ -1118,29 +1027,6 @@ public:
 			int intermediate_subset_size,
 			std::string &fname_mask, int nb, std::string &column_label,
 			int verbose_level);
-	void set_stabilizer_orthogonal_space(
-			orthogonal_space_with_action *OA,
-			int intermediate_subset_size,
-			std::string &fname_mask, int nb, std::string &column_label,
-			int verbose_level);
-	void set_stabilizer_of_set(
-			substructure_classifier *SubC,
-			int cnt, int nb, int row,
-			//int *eqn,
-			//int sz,
-			long int *pts,
-			int nb_pts,
-			long int *canonical_pts,
-			//long int *bitangents,
-			//int nb_bitangents,
-			int verbose_level);
-	void handle_orbit(
-			substructure_stats_and_selection *SubSt,
-			long int *canonical_pts,
-			int *transporter_to_canonical_form,
-			strong_generators *&Gens_stabilizer_original_set,
-			int verbose_level);
-
 
 };
 

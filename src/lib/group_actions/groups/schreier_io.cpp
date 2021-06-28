@@ -1770,6 +1770,75 @@ void schreier::print_path(std::ostream &ost, int *path, int l)
 	ost << endl;
 }
 
+void schreier::write_to_file_csv(std::string &fname_csv, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "schreier::write_to_file_csv" << endl;
+	}
+	spreadsheet S;
+
+	int nb_rows;
+	int nb_cols;
+	int i;
+
+	nb_rows = 1 + nb_orbits;
+	nb_cols = 6;
+	S.init_empty_table(nb_rows, nb_cols);
+
+	std::string text;
+	text.assign("OrbitNumber");
+	S.fill_entry_with_text(0, 0, text);
+	text.assign("OrbitLength");
+	S.fill_entry_with_text(0, 1, text);
+	text.assign("OrbitRep");
+	S.fill_entry_with_text(0, 2, text);
+	text.assign("OrbitElements");
+	S.fill_entry_with_text(0, 3, text);
+	text.assign("OrbitSVPrev");
+	S.fill_entry_with_text(0, 4, text);
+	text.assign("OrbitSVLabel");
+	S.fill_entry_with_text(0, 5, text);
+	for (i = 0; i < nb_orbits; i++) {
+
+		int len;
+
+		len = orbit_len[i];
+
+		S.set_entry_lint(1 + i, 0, i);
+		S.set_entry_lint(1 + i, 1, len);
+		S.set_entry_lint(1 + i, 2, orbit[orbit_first[i]]);
+
+		string str;
+
+		Orbiter->Int_vec.create_string_with_quotes(str, orbit + orbit_first[i], len);
+		S.fill_entry_with_text(1 + i, 3, str);
+
+
+		str.assign("");
+		Orbiter->Int_vec.create_string_with_quotes(str, prev + orbit_first[i], len);
+		S.fill_entry_with_text(1 + i, 4, str);
+
+
+		str.assign("");
+		Orbiter->Int_vec.create_string_with_quotes(str, label + orbit_first[i], len);
+		S.fill_entry_with_text(1 + i, 5, str);
+
+	}
+	S.save(fname_csv, 0/* verbose_level*/);
+	file_io Fio;
+
+	if (f_v) {
+		cout << "Written file " << fname_csv << " of size " << Fio.file_size(fname_csv) << endl;
+	}
+
+	if (f_v) {
+		cout << "schreier::write_to_file_csv done" << endl;
+	}
+}
+
+
 void schreier::write_to_file_binary(std::ofstream &fp, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

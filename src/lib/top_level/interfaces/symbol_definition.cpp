@@ -734,6 +734,9 @@ void symbol_definition::print()
 	}
 	else if (f_packing_was_choose_fixed_points) {
 		cout << "-packing_was_choose_fixed_points ";
+		cout << packing_with_assumed_symmetry_label;
+		cout << " " << packing_with_assumed_symmetry_choose_fixed_points_clique_size << " ";
+		packing_with_assumed_symmetry_choose_fixed_points_control->print();
 		//std::string packing_with_assumed_symmetry_label;
 		//int packing_with_assumed_symmetry_choose_fixed_points_clique_size;
 		//poset_classification_control *packing_with_assumed_symmetry_choose_fixed_points_control;

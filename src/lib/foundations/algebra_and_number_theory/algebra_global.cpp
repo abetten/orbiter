@@ -1264,7 +1264,7 @@ void algebra_global::find_CRC_polynomials(finite_field *F,
 
 
 	int C[dc + 1]; //Array C (what we divide by)
-		// C(x) has the leading coefficeint of one included,
+		// C(x) has the leading coefficient of one included,
 		// hence we need one more array element
 
 	int i = 0;

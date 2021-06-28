@@ -78,7 +78,6 @@ class ovoid_classify;
 class polar;
 class search_blocking_set;
 class singer_cycle;
-class substructure_classifier;
 class tensor_classify;
 class top_level_geometry_global;
 
@@ -155,7 +154,6 @@ class canonical_form_classifier_description;
 class canonical_form_classifier;
 class canonical_form_nauty;
 class canonical_form_substructure;
-class compute_stabilizer;
 class object_in_projective_space_with_action;
 class projective_space_activity_description;
 class projective_space_activity;
@@ -163,16 +161,7 @@ class projective_space_object_classifier_description;
 class projective_space_object_classifier;
 class projective_space_with_action_description;
 class projective_space_with_action;
-class stabilizer_orbits_and_types;
 
-// quartic curves
-class quartic_curve_activity_description;
-class quartic_curve_activity;
-class quartic_curve_create_description;
-class quartic_curve_create;
-class quartic_curve_domain_with_action;
-class quartic_curve_from_surface;
-class quartic_curve_object_with_action;
 
 
 // semifield
@@ -206,32 +195,46 @@ class packing_was_activity;
 class packing_was_fixpoints_activity_description;
 class packing_was_fixpoints_activity;
 
-// surfaces:
+// surfaces/quartic curves
+class quartic_curve_activity_description;
+class quartic_curve_activity;
+class quartic_curve_create_description;
+class quartic_curve_create;
+class quartic_curve_domain_with_action;
+class quartic_curve_from_surface;
+class quartic_curve_object_with_action;
+
+// surfaces/surfaces_and_arcs:
+class arc_lifting;
 class arc_orbits_on_pairs;
 class arc_partition;
-class classification_of_cubic_surfaces_with_double_sixes_activity_description;
-class classification_of_cubic_surfaces_with_double_sixes_activity;
-class surface_with_action;
-class surface_object_with_action;
 class classify_trihedral_pairs;
-class classify_double_sixes;
-class surface_create_description;
-class surface_create;
-class arc_lifting;
 class six_arcs_not_on_a_conic;
-class surface_study;
 class surface_classify_using_arc;
 class surface_create_by_arc_lifting;
-class surface_clebsch_map;
-class trihedral_pair_with_action;
+class surfaces_arc_lifting_definition_node;
+class surfaces_arc_lifting_trace;
 class surfaces_arc_lifting_upstep;
 class surfaces_arc_lifting;
-class surfaces_arc_lifting_trace;
-class surfaces_arc_lifting_definition_node;
+class trihedral_pair_with_action;
+
+// surfaces/surfaces_and_double_sixes:
+class classification_of_cubic_surfaces_with_double_sixes_activity_description;
+class classification_of_cubic_surfaces_with_double_sixes_activity;
+class classify_double_sixes;
+class surface_classify_wedge;
+
+
+// surfaces/surfaces_general:
+class surface_with_action;
+class surface_object_with_action;
+class surface_create_description;
+class surface_create;
+class surface_study;
+class surface_clebsch_map;
 class cubic_surface_activity_description;
 class cubic_surface_activity;
 class surface_domain_high_level;
-class surface_classify_wedge;
 
 
 
@@ -331,12 +334,14 @@ public:
 #include "./orbits/orbits.h"
 #include "./orthogonal/tl_orthogonal.h"
 #include "./projective_space/projective_space.h"
-#include "./quartic_curves/quartic_curves.h"
 #include "./semifields/semifields.h"
 #include "./solver/solver.h"
 #include "./spreads/spreads.h"
 #include "./packings/packings.h"
-#include "./surfaces/surfaces.h"
+#include "./surfaces/quartic_curves/quartic_curves.h"
+#include "./surfaces/surfaces_and_arcs/surfaces_and_arcs.h"
+#include "./surfaces/surfaces_and_double_sixes/surfaces_and_double_sixes.h"
+#include "./surfaces/surfaces_general/surfaces_general.h"
 
 
 

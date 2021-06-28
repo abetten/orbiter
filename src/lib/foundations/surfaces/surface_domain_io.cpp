@@ -23,6 +23,12 @@ void surface_domain::print_equation(std::ostream &ost, int *coeffs)
 	Poly3_4->print_equation(ost, coeffs);
 }
 
+void surface_domain::print_equation_maple(std::stringstream &ost, int *coeffs)
+{
+	Poly3_4->print_equation_str(ost, coeffs);
+}
+
+
 void surface_domain::print_equation_tex(std::ostream &ost, int *coeffs)
 {
 	Poly3_4->print_equation_tex(ost, coeffs);

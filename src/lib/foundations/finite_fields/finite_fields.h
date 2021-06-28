@@ -60,6 +60,7 @@ public:
 	std::string RREF_text;
 
 	int f_weight_enumerator;
+		//RREF_m, RREF_n, RREF_text
 
 	int f_Walsh_Hadamard_transform;
 	std::string Walsh_Hadamard_transform_fname_csv_in;
@@ -93,6 +94,7 @@ public:
 	int f_EC_Koblitz_encoding;
 	std::string EC_message;
 	int EC_s;
+	// EC_b, EC_c, EC_s, EC_pt_text, EC_message
 
 	int f_EC_points;
 	std::string EC_label;
@@ -108,8 +110,12 @@ public:
 
 	int f_EC_multiple_of;
 	int EC_multiple_of_n;
+
+
 	int f_EC_discrete_log;
 	std::string EC_discrete_log_pt_text;
+	// EC_b, EC_c, EC_pt_text, EC_discrete_log_pt_text
+
 
 	int f_EC_baby_step_giant_step;
 	std::string EC_bsgs_G;
@@ -233,24 +239,6 @@ public:
 	std::string evaluate_formula_label;
 	std::string evaluate_parameters;
 
-#if 0
-	int f_all_rational_normal_forms;
-	int d;
-	int f_study_surface;
-	int study_surface_nb;
-
-	int f_eigenstuff;
-	int f_eigenstuff_from_file;
-	int eigenstuff_n;
-	std::string eigenstuff_coeffs;
-	std::string eigenstuff_fname;
-
-	int f_decomposition_by_element;
-	int decomposition_by_element_n;
-	int decomposition_by_element_power;
-	std::string decomposition_by_element_data;
-	std::string decomposition_by_element_fname_base;
-#endif
 
 	finite_field_activity_description();
 	~finite_field_activity_description();

@@ -38,6 +38,14 @@ class poset_with_group_action;
 class upstep_work;
 
 
+// set_stabilizer
+class compute_stabilizer;
+class stabilizer_orbits_and_types;
+class substructure_classifier;
+class substructure_stats_and_selection;
+
+
+
 enum trace_result { 
 	found_automorphism, 
 	not_canonical, 
@@ -56,6 +64,7 @@ enum find_isomorphism_result {
 
 #include "./classify/classify.h"
 #include "./poset_classification/poset_classification.h"
+#include "./set_stabilizer/set_stabilizer.h"
 
 
 

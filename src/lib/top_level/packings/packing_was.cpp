@@ -33,6 +33,7 @@ packing_was::packing_was()
 
 	H_gens = NULL;
 	H_goi = 0;
+	H_sims = NULL;
 
 
 	A = NULL;
@@ -44,26 +45,42 @@ packing_was::packing_was()
 	N_goi = 0;
 
 
+	//std::string prefix_point_orbits_under_H;
+	Point_orbits_under_H = NULL;
+
+	//std::string prefix_point_orbits_under_N;
+	Point_orbits_under_N = NULL;
+
+
+	//std::string prefix_line_orbits_under_H;
 	Line_orbits_under_H = NULL;
+
+	//std::string prefix_line_orbits_under_N;
+	Line_orbits_under_N = NULL;
+
+	//std::string prefix_spread_types;
 	Spread_type = NULL;
 
-	prefix_spread_orbits[0] = 0;
+	//prefix_spread_orbits
 	Spread_orbits_under_H = NULL;
 	A_on_spread_orbits = NULL;
 
-	fname_good_orbits[0] = 0;
+	//fname_good_orbits
 	nb_good_orbits = 0;
 	Good_orbit_idx = NULL;
 	Good_orbit_len = NULL;
 	orb = NULL;
 
 	Spread_tables_reduced = NULL;
+	//std::string prefix_spread_types_reduced;
 	Spread_type_reduced = NULL;
 
 	nb_good_spreads = 0;
 	good_spreads = NULL;
 
 	A_on_reduced_spreads = NULL;
+
+	//std::string prefix_reduced_spread_orbits;
 	reduced_spread_orbits_under_H = NULL;
 	A_on_reduced_spread_orbits = NULL;
 
@@ -150,6 +167,14 @@ void packing_was::init(packing_was_description *Descr,
 	}
 
 
+	if (f_v) {
+		cout << "packing_was::compute_N_orbits_and_reduce before compute_N_orbits_on_lines" << endl;
+	}
+	compute_N_orbits_on_lines(verbose_level);
+	if (f_v) {
+		cout << "packing_was::compute_N_orbits_and_reduce after compute_N_orbits_on_lines" << endl;
+	}
+
 
 
 
@@ -166,14 +191,70 @@ void packing_was::compute_H_orbits_and_reduce(int verbose_level)
 		cout << "packing_was::compute_H_orbits_and_reduce" << endl;
 	}
 
+	if (f_v) {
+		cout << "H_gens in action on points:" << endl;
+		H_gens->print_with_given_action(cout, P->T->A);
+	}
 
 	if (f_v) {
-		cout << "packing_was::compute_H_orbits_and_reduce before P->read_spread_table" << endl;
+		cout << "N_gens in action on points:" << endl;
+		N_gens->print_with_given_action(cout, P->T->A);
+	}
+
+
+	if (f_v) {
+		cout << "H_gens in action on lines:" << endl;
+		H_gens->print_with_given_action(cout, P->T->A2);
+	}
+
+	if (f_v) {
+		cout << "N_gens in action on lines:" << endl;
+		N_gens->print_with_given_action(cout, P->T->A2);
+	}
+
+
+
+	if (f_v) {
+		cout << "packing_was::compute_H_orbits_and_reduce before compute_H_orbits_on_points" << endl;
+	}
+	compute_H_orbits_on_points(verbose_level);
+	if (f_v) {
+		cout << "packing_was::compute_H_orbits_and_reduce after compute_H_orbits_on_points" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "packing_was::compute_H_orbits_and_reduce before compute_N_orbits_on_points" << endl;
+	}
+	compute_N_orbits_on_points(verbose_level);
+	if (f_v) {
+		cout << "packing_was::compute_H_orbits_and_reduce after compute_N_orbits_on_points" << endl;
+	}
+
+
+
+
+	action_on_grassmannian *AG = P->T->A2->G.AG;
+
+
+	AG->add_print_function(
+			packing_was_print_function,
+			this /* print_function_data */,
+			verbose_level);
+
+
+	if (f_v) {
+		cout << "packing_was::compute_H_orbits_and_reduce before compute_H_orbits_on_lines" << endl;
 	}
 	compute_H_orbits_on_lines(verbose_level);
 	if (f_v) {
-		cout << "packing_was::compute_H_orbits_and_reduce after P->read_spread_table" << endl;
+		cout << "packing_was::compute_H_orbits_and_reduce after compute_H_orbits_on_lines" << endl;
 	}
+
+
+
+
+
 
 
 	if (f_v) {
@@ -360,6 +441,21 @@ void packing_was::init_N(int verbose_level)
 			cout << "packing_was::init_N N_goi=" << N_goi << endl;
 		}
 
+
+		if (H_sims) {
+			if (f_v) {
+				cout << "packing_was::init_N before test_if_normalizing" << endl;
+			}
+			N_gens->test_if_normalizing(H_sims, 0 /* verbose_level*/);
+			if (f_v) {
+				cout << "packing_was::init_N after test_if_normalizing" << endl;
+			}
+		}
+		else {
+			cout << "packing_was::init_N H_sims is unavailable" << endl;
+			exit(1);
+		}
+
 	}
 	if (f_v) {
 		cout << "packing_was::init_N done" << endl;
@@ -425,9 +521,119 @@ void packing_was::init_H(int verbose_level)
 	}
 
 	if (f_v) {
+		cout << "packing_was::init_H before H_gens->create_sims" << endl;
+	}
+
+	H_sims = H_gens->create_sims(verbose_level - 2);
+	if (f_v) {
+		cout << "packing_was::init_H after H_gens->create_sims" << endl;
+	}
+
+	prefix_point_orbits_under_H.assign(Descr->H_label);
+	prefix_point_orbits_under_H.append("_point_orbits");
+	prefix_point_orbits_under_N.assign(Descr->N_label);
+	prefix_point_orbits_under_N.append("_point_orbits");
+	prefix_line_orbits_under_H.assign(Descr->H_label);
+	prefix_line_orbits_under_H.append("_line_orbits");
+	prefix_line_orbits_under_N.assign(Descr->N_label);
+	prefix_line_orbits_under_N.append("_line_orbits");
+	prefix_spread_types.assign(Descr->H_label);
+	prefix_spread_types.append("_spread_types");
+	prefix_spread_orbits.assign(Descr->H_label);
+	prefix_spread_orbits.append("_spread_orbits");
+	fname_good_orbits.assign(Descr->H_label);
+	fname_good_orbits.append("_good_orbits");
+	prefix_spread_types_reduced.assign(Descr->H_label);
+	prefix_spread_types_reduced.append("_spread_types_reduced");
+	prefix_reduced_spread_orbits.assign(Descr->H_label);
+	prefix_reduced_spread_orbits.append("_reduced_spread_orbits");
+
+
+	if (f_v) {
+		cout << "packing_was::init_H prefix_point_orbits_under_H=" << prefix_point_orbits_under_H << endl;
+		cout << "packing_was::init_H prefix_line_orbits_under_H=" << prefix_line_orbits_under_H << endl;
+		cout << "packing_was::init_H prefix_spread_types=" << prefix_spread_types << endl;
+		cout << "packing_was::init_H prefix_spread_orbits=" << prefix_spread_orbits << endl;
+		cout << "packing_was::init_H fname_good_orbits=" << fname_good_orbits << endl;
+		cout << "packing_was::init_H prefix_spread_types_reduced=" << prefix_spread_types_reduced << endl;
+		cout << "packing_was::init_H prefix_reduced_spread_orbits=" << prefix_reduced_spread_orbits << endl;
+	}
+
+	if (f_v) {
 		cout << "packing_was::init_H done" << endl;
 	}
 }
+
+void packing_was::compute_H_orbits_on_points(int verbose_level)
+// computes the orbits of H on points
+// and writes to file prefix_point_orbits
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "packing_was::compute_H_orbits_on_points" << endl;
+	}
+
+
+	Point_orbits_under_H = NEW_OBJECT(orbits_on_something);
+
+	if (f_v) {
+		cout << "packing_was::compute_H_orbits_on_points "
+				"prefix_point_orbits_under_H=" << prefix_point_orbits_under_H << endl;
+	}
+
+	Point_orbits_under_H->init(P->T->A, H_gens, TRUE /*f_load_save*/,
+			prefix_point_orbits_under_H,
+			verbose_level);
+
+	if (f_v) {
+		cout << "packing_was::compute_H_orbits_on_points before Point_orbits_under_H->create_latex_report" << endl;
+	}
+	Point_orbits_under_H->create_latex_report(verbose_level);
+	if (f_v) {
+		cout << "packing_was::compute_H_orbits_on_points after Point_orbits_under_H->create_latex_report" << endl;
+	}
+
+	if (f_v) {
+		cout << "packing_was::compute_H_orbits_on_points done" << endl;
+	}
+}
+
+void packing_was::compute_N_orbits_on_points(int verbose_level)
+// computes the orbits of N on points
+// and writes to file prefix_point_orbits
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "packing_was::compute_N_orbits_on_points" << endl;
+	}
+
+
+	Point_orbits_under_N = NEW_OBJECT(orbits_on_something);
+
+	if (f_v) {
+		cout << "packing_was::compute_N_orbits_on_points "
+				"prefix_point_orbits_under_N=" << prefix_point_orbits_under_N << endl;
+	}
+
+	Point_orbits_under_N->init(P->T->A, N_gens, TRUE /*f_load_save*/,
+			prefix_point_orbits_under_N,
+			verbose_level);
+
+	if (f_v) {
+		cout << "packing_was::compute_N_orbits_on_points before Point_orbits_under_N->create_latex_report" << endl;
+	}
+	Point_orbits_under_N->create_latex_report(verbose_level);
+	if (f_v) {
+		cout << "packing_was::compute_N_orbits_on_points after Point_orbits_under_N->create_latex_report" << endl;
+	}
+
+	if (f_v) {
+		cout << "packing_was::compute_N_orbits_on_points done" << endl;
+	}
+}
+
 
 
 void packing_was::compute_H_orbits_on_lines(int verbose_level)
@@ -440,37 +646,63 @@ void packing_was::compute_H_orbits_on_lines(int verbose_level)
 		cout << "packing_was::compute_H_orbits_on_lines" << endl;
 	}
 
-#if 0
-	if (Descr->f_output_path) {
-		prefix_line_orbits.assign(Descr->output_path);
-	}
-	else {
-		prefix_line_orbits.assign("");
-	}
-	prefix_line_orbits.append(H_LG->label);
-	if (Descr->f_problem_label) {
-		prefix_line_orbits.append(Descr->problem_label);
-	}
-	prefix_line_orbits.append("_line_orbits");
-#endif
-	prefix_line_orbits.assign(Descr->H_label);
-	prefix_line_orbits.append("_line_orbits");
 
 	Line_orbits_under_H = NEW_OBJECT(orbits_on_something);
 
 	if (f_v) {
 		cout << "packing_was::compute_H_orbits_on_lines "
-				"prefix_line_orbits=" << prefix_line_orbits << endl;
+				"prefix_line_orbits_under_H=" << prefix_line_orbits_under_H << endl;
 	}
 
 	Line_orbits_under_H->init(P->T->A2, H_gens, TRUE /*f_load_save*/,
-			prefix_line_orbits,
+			prefix_line_orbits_under_H,
 			verbose_level);
 
+	if (f_v) {
+		cout << "packing_was::compute_H_orbits_on_lines before Line_orbits_under_H->create_latex_report" << endl;
+	}
 	Line_orbits_under_H->create_latex_report(verbose_level);
+	if (f_v) {
+		cout << "packing_was::compute_H_orbits_on_lines after Line_orbits_under_H->create_latex_report" << endl;
+	}
 
 	if (f_v) {
 		cout << "packing_was::compute_H_orbits_on_lines done" << endl;
+	}
+}
+
+void packing_was::compute_N_orbits_on_lines(int verbose_level)
+// computes the orbits of N on lines (NOT on spreads!)
+// and writes to file prefix_line_orbits
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "packing_was::compute_N_orbits_on_lines" << endl;
+	}
+
+
+	Line_orbits_under_N = NEW_OBJECT(orbits_on_something);
+
+	if (f_v) {
+		cout << "packing_was::compute_N_orbits_on_lines "
+				"prefix_line_orbits_under_N=" << prefix_line_orbits_under_N << endl;
+	}
+
+	Line_orbits_under_N->init(P->T->A2, N_gens, TRUE /*f_load_save*/,
+			prefix_line_orbits_under_N,
+			verbose_level);
+
+	if (f_v) {
+		cout << "packing_was::compute_N_orbits_on_lines before Line_orbits_under_N->create_latex_report" << endl;
+	}
+	Line_orbits_under_N->create_latex_report(verbose_level);
+	if (f_v) {
+		cout << "packing_was::compute_N_orbits_on_lines after Line_orbits_under_N->create_latex_report" << endl;
+	}
+
+	if (f_v) {
+		cout << "packing_was::compute_N_orbits_on_lines done" << endl;
 	}
 }
 
@@ -496,11 +728,10 @@ void packing_was::compute_spread_types_wrt_H(int verbose_level)
 		Spread_type->report(cout, verbose_level);
 	}
 
-	std::string prefix;
 
-	prefix.assign("H_spread_orbits");
 
-	Spread_type->create_latex_report(prefix, verbose_level);
+
+	Spread_type->create_latex_report(prefix_spread_types, verbose_level);
 
 	if (f_v) {
 		cout << "packing_was::compute_spread_types_wrt_H done" << endl;
@@ -521,27 +752,29 @@ void packing_was::compute_H_orbits_on_spreads(int verbose_level)
 
 	Spread_orbits_under_H = NEW_OBJECT(orbits_on_something);
 
-#if 0
-	if (Descr->f_output_path) {
-		prefix_spread_orbits.assign(Descr->output_path);
-	}
-	else {
-		prefix_spread_orbits.assign("");
-	}
-	prefix_spread_orbits.append(H_LG->label);
-	if (Descr->f_problem_label) {
-		prefix_spread_orbits.append(Descr->problem_label);
-	}
-	prefix_spread_orbits.append("_spread_orbits");
-#endif
-	prefix_spread_orbits.assign(Descr->H_label);
-	prefix_spread_orbits.append("_spread_orbits");
 
 
+	if (f_v) {
+		cout << "packing_was::compute_H_orbits_on_spreads before Spread_orbits_under_H->init" << endl;
+	}
 	Spread_orbits_under_H->init(P->Spread_table_with_selection->A_on_spreads,
-			H_gens, TRUE /*f_load_save*/,
-			prefix_spread_orbits,
+			H_gens,
+			TRUE /*f_load_save*/, prefix_spread_orbits,
 			verbose_level);
+	if (f_v) {
+		cout << "packing_was::compute_H_orbits_on_spreads after Spread_orbits_under_H->init" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "packing_was::compute_H_orbits_on_lines before Spread_orbits_under_H->create_latex_report" << endl;
+	}
+	Spread_orbits_under_H->create_latex_report(verbose_level);
+	if (f_v) {
+		cout << "packing_was::compute_H_orbits_on_lines after Spread_orbits_under_H->create_latex_report" << endl;
+	}
+
 
 
 	if (f_v) {
@@ -580,22 +813,7 @@ void packing_was::test_orbits_on_spreads(int verbose_level)
 				<< " orbits are partial packings:" << endl;
 	}
 
-#if 0
-	if (Descr->f_output_path) {
-		fname_good_orbits.assign(Descr->output_path);
-	}
-	else {
-		fname_good_orbits.assign("");
-	}
-	fname_good_orbits.append(H_LG->label);
-	if (Descr->f_problem_label) {
-		fname_good_orbits.append(Descr->problem_label);
-	}
-	fname_good_orbits.append("_good_orbits");
-#endif
 
-	fname_good_orbits.assign(Descr->H_label);
-	fname_good_orbits.append("_good_orbits");
 
 
 	if (Fio.file_size(fname_good_orbits.c_str()) > 0) {
@@ -742,6 +960,22 @@ void packing_was::reduce_spreads(int verbose_level)
 				"Spread_tables_reduced->init_reduced" << endl;
 	}
 
+	string fname_reduced_spread_original_idx;
+	number_theory_domain NT;
+
+	fname_reduced_spread_original_idx.assign(P->path_to_spread_tables);
+
+	char str[1000];
+	sprintf(str, "reduced_spread_%d_original_idx", NT.i_power_j(P->F->q, 2));
+
+	fname_reduced_spread_original_idx.append(str);
+	fname_reduced_spread_original_idx.append(".csv");
+
+	if (f_v) {
+		cout << "packing_was::reduce_spreads fname_original_idx = " << fname_reduced_spread_original_idx << endl;
+	}
+	Fio.int_matrix_write_csv(fname_reduced_spread_original_idx, good_spreads, nb_good_spreads, 1);
+
 	if (f_v) {
 		cout << "packing_was::reduce_spreads before "
 				"Spread_tables_reduced->save" << endl;
@@ -775,17 +1009,13 @@ void packing_was::compute_reduced_spread_types_wrt_H(int verbose_level)
 			Spread_tables_reduced->spread_table,
 			H_goi,
 			verbose_level - 2);
+
 	if (FALSE) {
 		cout << "The reduced spread types are:" << endl;
 		Spread_type_reduced->report(cout, verbose_level);
 	}
 
-	std::string prefix;
-
-	prefix.assign(Descr->H_label);
-	prefix.append("_spread_types_reduced");
-
-	Spread_type_reduced->create_latex_report(prefix, verbose_level);
+	Spread_type_reduced->create_latex_report(prefix_spread_types_reduced, verbose_level);
 
 	if (f_v) {
 		cout << "packing_was::compute_reduced_spread_types_wrt_H done" << endl;
@@ -814,21 +1044,62 @@ void packing_was::compute_H_orbits_on_reduced_spreads(int verbose_level)
 	if (f_v) {
 		cout << "packing_was::compute_H_orbits_on_reduced_spreads "
 				"creating action A_on_reduced_spreads done" << endl;
+		cout << "A_on_reduced_spreads->degree = " << A_on_reduced_spreads->degree << endl;
 	}
+
+
+
+	if (f_v) {
+		cout << "H_gens in action on reduced spreads:" << endl;
+		H_gens->print_with_given_action(cout, A_on_reduced_spreads);
+	}
+
+#if 0
+	if (f_v) {
+		cout << "N_gens in action on reduced spreads:" << endl;
+		N_gens->print_with_given_action(cout, A_on_reduced_spreads);
+	}
+#endif
 
 
 	reduced_spread_orbits_under_H = NEW_OBJECT(orbits_on_something);
 
 
-	prefix_reduced_spread_orbits.assign(Descr->H_label);
-	prefix_reduced_spread_orbits.append("_reduced_spread_orbits");
 
 
 
+	if (f_v) {
+		cout << "packing_was::compute_H_orbits_on_reduced_spreads "
+				"before reduced_spread_orbits_under_H->init" << endl;
+	}
 	reduced_spread_orbits_under_H->init(A_on_reduced_spreads,
 			H_gens, TRUE /*f_load_save*/,
 			prefix_reduced_spread_orbits,
 			verbose_level);
+	if (f_v) {
+		cout << "packing_was::compute_H_orbits_on_reduced_spreads "
+				"after reduced_spread_orbits_under_H->init" << endl;
+	}
+
+	if (f_v) {
+		cout << "reduced_spread_orbits_under_H->Sch->nb_orbits = "
+				<< reduced_spread_orbits_under_H->Sch->nb_orbits << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "packing_was::compute_H_orbits_on_lines before reduced_spread_orbits_under_H->create_latex_report" << endl;
+	}
+	reduced_spread_orbits_under_H->create_latex_report(verbose_level);
+	if (f_v) {
+		cout << "packing_was::compute_H_orbits_on_lines after reduced_spread_orbits_under_H->create_latex_report" << endl;
+	}
+
+
+
+
 
 	reduced_spread_orbits_under_H->classify_orbits_by_length(verbose_level);
 
@@ -865,7 +1136,7 @@ action *packing_was::restricted_action(int orbit_length, int verbose_level)
 		cout << "packing_was::restricted_action" << endl;
 	}
 
-	orbit_idx = find_orbits_of_length(orbit_length);
+	orbit_idx = find_orbits_of_length_in_reduced_spread_table(orbit_length);
 	if (orbit_idx == -1) {
 		cout << "packing_was::restricted_action "
 				"we don't have any orbits of length " << orbit_length << endl;
@@ -873,7 +1144,7 @@ action *packing_was::restricted_action(int orbit_length, int verbose_level)
 	}
 	if (f_v) {
 		cout << "orbit_idx = " << orbit_idx << endl;
-		cout << "Number of orbits of length " << orbit_length << " = "
+		cout << "Number of orbits of length " << orbit_length << " is "
 				<< reduced_spread_orbits_under_H->Orbits_classified->Set_size[orbit_idx] << endl;
 	}
 	Ar = A_on_reduced_spread_orbits->create_induced_action_by_restriction(
@@ -953,7 +1224,7 @@ void packing_was::create_graph_and_save_to_file(
 
 
 
-int packing_was::find_orbits_of_length(int orbit_length)
+int packing_was::find_orbits_of_length_in_reduced_spread_table(int orbit_length)
 {
 	return reduced_spread_orbits_under_H->get_orbit_type_index_if_present(orbit_length);
 }
@@ -1745,6 +2016,31 @@ int packing_was_evaluate_orbit_invariant_function(int a, int i, int j,
 	return val;
 }
 
+
+void packing_was_print_function(std::ostream &ost, long int a, void *data)
+{
+	packing_was *P = (packing_was *) data;
+	action_on_grassmannian *AG = P->P->T->A2->G.AG;
+
+	int verbose_level = 0;
+	int orbit_idx1, orbit_pos1;
+	int orbit_idx2, orbit_pos2;
+	int Mtx[4 * 4];
+	long int b;
+
+	AG->G->unrank_lint_here_and_compute_perp(
+			Mtx, a, 0 /*verbose_level*/);
+
+	b = AG->G->rank_lint_here(
+			Mtx + 8, 0 /*verbose_level*/);
+
+	P->Line_orbits_under_H->get_orbit_number_and_position(a, orbit_idx1, orbit_pos1, verbose_level);
+	P->Line_orbits_under_H->get_orbit_number_and_position(b, orbit_idx2, orbit_pos2, verbose_level);
+	ost << "=(" << orbit_idx1 << "," << orbit_pos1 << ")" << endl;
+	ost << "dual=";
+	Orbiter->Int_vec.print(ost, Mtx + 8, 8);
+	ost << "=(" << orbit_idx2 << "," << orbit_pos2 << ")" << endl;
+}
 
 }}
 

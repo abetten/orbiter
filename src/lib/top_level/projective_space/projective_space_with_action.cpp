@@ -3148,7 +3148,7 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 	quartic_curve_create **QC;
 	int *nb_K;
 	long int *Table;
-	int nb_cols = 3;
+	int nb_cols = 6;
 
 	nb_quartic_curves = K.quartic_curves_nb_reps(q);
 
@@ -3178,9 +3178,14 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 					verbose_level);
 
 		nb_K[h] = QC[h]->QO->QP->nb_Kowalevski;
-		Table[h * nb_cols + 0] = nb_K[h];
-		Table[h * nb_cols + 1] = QC[h]->QOA->Aut_gens->group_order_as_lint();
-		Table[h * nb_cols + 2] = QC[h]->QO->nb_pts;
+
+
+		Table[h * nb_cols + 0] = h;
+		Table[h * nb_cols + 1] = nb_K[h];
+		Table[h * nb_cols + 2] = QC[h]->QO->QP->nb_Kowalevski_on;
+		Table[h * nb_cols + 3] = QC[h]->QO->QP->nb_Kowalevski_off;
+		Table[h * nb_cols + 4] = QC[h]->QOA->Aut_gens->group_order_as_lint();
+		Table[h * nb_cols + 5] = QC[h]->QO->nb_pts;
 
 	}
 
@@ -3200,7 +3205,7 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 		ofstream f(fname);
 		int i, j;
 
-		f << "Row,Kowalewski,Ago,NbPts,BisecantType,Eqn15,Bitangents28";
+		f << "Row,OCN,K,Kon,Koff,Ago,NbPts,BisecantType,Eqn15,Eqn,Pts,Bitangents28";
 		f << endl;
 		for (i = 0; i < nb_quartic_curves; i++) {
 			f << i;
@@ -3219,6 +3224,24 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 				Orbiter->Int_vec.create_string_with_quotes(str, QC[i]->QO->eqn15, 15);
 				f << str;
 			}
+
+			{
+				stringstream sstr;
+				string str;
+				QC[i]->QCDA->Dom->print_equation_maple(sstr, QC[i]->QO->eqn15);
+				str.assign(sstr.str());
+				f << ",";
+				f << "\"$";
+				f << str;
+				f << "$\"";
+			}
+
+			{
+				string str;
+				f << ",";
+				Orbiter->Lint_vec.create_string_with_quotes(str, QC[i]->QO->Pts, QC[i]->QO->nb_pts);
+				f << str;
+			}
 			{
 				string str;
 				f << ",";
@@ -3235,6 +3258,174 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 
 	if (f_v) {
 		cout << "projective_space_with_action::table_of_quartic_curves done" << endl;
+	}
+
+}
+
+void projective_space_with_action::table_of_cubic_surfaces(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_with_action::table_of_cubic_surfaces" << endl;
+	}
+
+	if (n != 3) {
+		cout << "projective_space_with_action::table_of_cubic_surfaces we need a three-dimensional projective space" << endl;
+		exit(1);
+	}
+
+	surface_with_action *Surf_A;
+
+	setup_surface_with_action(
+			Surf_A,
+			verbose_level);
+
+
+	knowledge_base K;
+
+	int nb_cubic_surfaces;
+	int h;
+	surface_create **SC;
+	int *nb_E;
+	long int *Table;
+	int nb_cols = 5;
+
+
+	poset_classification_control Control_six_arcs;
+
+
+	nb_cubic_surfaces = K.cubic_surface_nb_reps(q);
+
+	SC = (surface_create **) NEW_pvoid(nb_cubic_surfaces);
+
+	nb_E = NEW_int(nb_cubic_surfaces);
+
+	Table = NEW_lint(nb_cubic_surfaces * nb_cols);
+
+
+
+	for (h = 0; h < nb_cubic_surfaces; h++) {
+
+		if (f_v) {
+			cout << "projective_space_with_action::table_of_cubic_surfaces " << h << " / " << nb_cubic_surfaces << endl;
+		}
+		surface_create_description Surface_create_description;
+
+		Surface_create_description.f_q = TRUE;
+		Surface_create_description.q = q;
+		Surface_create_description.f_catalogue = TRUE;
+		Surface_create_description.iso = h;
+
+
+		if (f_v) {
+			cout << "projective_space_with_action::table_of_cubic_surfaces before create_surface" << endl;
+		}
+		Surf_A->create_surface(
+				&Surface_create_description,
+				SC[h],
+				verbose_level);
+		if (f_v) {
+			cout << "projective_space_with_action::table_of_cubic_surfaces after create_surface" << endl;
+		}
+
+
+
+		nb_E[h] = SC[h]->SO->SOP->nb_Eckardt_points;
+
+
+		Table[h * nb_cols + 0] = h;
+		Table[h * nb_cols + 1] = nb_E[h];
+		if (SC[h]->f_has_group) {
+			Table[h * nb_cols + 2] = SC[h]->Sg->group_order_as_lint();
+		}
+		else {
+			Table[h * nb_cols + 2] = 0;
+		}
+		Table[h * nb_cols + 3] = SC[h]->SO->nb_pts;
+		Table[h * nb_cols + 4] = SC[h]->SO->nb_lines;
+
+	}
+
+	file_io Fio;
+	char str[1000];
+
+	sprintf(str, "_q%d", q);
+
+	string fname;
+	fname.assign("table_of_cubic_surfaces");
+	fname.append(str);
+	fname.append("_info.csv");
+
+	//Fio.lint_matrix_write_csv(fname, Table, nb_quartic_curves, nb_cols);
+
+	{
+		ofstream f(fname);
+		int i, j;
+
+		f << "Row,OCN,nbE,Ago,NbPts,NbLines,Eqn20,Eqn,Lines";
+		f << endl;
+		for (i = 0; i < nb_cubic_surfaces; i++) {
+			f << i;
+			for (j = 0; j < nb_cols; j++) {
+				f << "," << Table[i * nb_cols + j];
+			}
+			{
+				string str;
+				f << ",";
+				Orbiter->Int_vec.create_string_with_quotes(str, SC[i]->SO->eqn, 20);
+				f << str;
+			}
+
+			{
+				stringstream sstr;
+				string str;
+				SC[i]->Surf->print_equation_maple(sstr, SC[i]->SO->eqn);
+				str.assign(sstr.str());
+				f << ",";
+				f << "\"$";
+				f << str;
+				f << "$\"";
+			}
+			{
+				string str;
+				f << ",";
+				Orbiter->Lint_vec.create_string_with_quotes(str, SC[i]->SO->Lines, SC[i]->SO->nb_lines);
+				f << str;
+			}
+
+#if 0
+			{
+				string str;
+				f << ",";
+				Orbiter->Int_vec.create_string_with_quotes(str, SC[i]->SO->eqn15, 15);
+				f << str;
+			}
+
+
+			{
+				string str;
+				f << ",";
+				Orbiter->Lint_vec.create_string_with_quotes(str, SC[i]->SO->Pts, SC[i]->SO->nb_pts);
+				f << str;
+			}
+			{
+				string str;
+				f << ",";
+				Orbiter->Lint_vec.create_string_with_quotes(str, SC[i]->SO->bitangents28, 28);
+				f << str;
+			}
+#endif
+			f << endl;
+		}
+		f << "END" << endl;
+	}
+
+
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+	if (f_v) {
+		cout << "projective_space_with_action::table_of_cubic_surfaces done" << endl;
 	}
 
 }
@@ -3504,6 +3695,44 @@ void projective_space_with_action::do_spread_classify(int k,
 		cout << "projective_space_with_action::do_spread_classify done" << endl;
 	}
 }
+
+void projective_space_with_action::setup_surface_with_action(
+		surface_with_action *&Surf_A,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_with_action::setup_surface_with_action" << endl;
+		cout << "projective_space_with_action::setup_surface_with_action verbose_level=" << verbose_level << endl;
+	}
+
+
+	surface_domain *Surf;
+
+
+	if (f_v) {
+		cout << "projective_space_with_action::setup_surface_with_action before Surf->init" << endl;
+	}
+	Surf = NEW_OBJECT(surface_domain);
+	Surf->init(F, 0 /*verbose_level - 1*/);
+	if (f_v) {
+		cout << "projective_space_with_action::setup_surface_with_action after Surf->init" << endl;
+	}
+
+	Surf_A = NEW_OBJECT(surface_with_action);
+
+	if (f_v) {
+		cout << "projective_space_with_action::setup_surface_with_action before Surf_A->init" << endl;
+	}
+	Surf_A->init(Surf, this, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "projective_space_with_action::setup_surface_with_action after Surf_A->init" << endl;
+	}
+
+}
+
+
 
 
 // #############################################################################

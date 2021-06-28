@@ -93,8 +93,8 @@ public:
 	int base_cols[4];
 
 
-	long int *Clebsch_map; // [SO->nb_pts]
-	int *Clebsch_coeff; // [SO->nb_pts * 4]
+	long int *Clebsch_map; // [SO->nb_pts], = Image_rk
+	int *Clebsch_coeff; // [SO->nb_pts * 4], = Image_coeff
 
 	long int Arc[6];
 	long int Blown_up_lines[6];
@@ -106,14 +106,12 @@ public:
 			int hds, int verbose_level);
 	void compute_Clebsch_map_down(int verbose_level);
 	int compute_Clebsch_map_down_worker(
-			//long int *Lines, long int *Pts, int nb_pts,
-		//int line_idx[2], long int plane_rk,
 		long int *Image_rk, int *Image_coeff,
 		int verbose_level);
 	// assuming:
 	// In:
-	// Lines[27]
-	// Pts[nb_pts]
+	// SO->Lines[27]
+	// SO->Pts[SO->nb_pts]
 	// Out:
 	// Image_rk[nb_pts]  (image point in the plane in local coordinates)
 	//   Note Image_rk[i] is -1 if Pts[i] does not have an image.
@@ -841,6 +839,7 @@ public:
 
 	// surface_domain_io.cpp:
 	void print_equation(std::ostream &ost, int *coeffs);
+	void print_equation_maple(std::stringstream &ost, int *coeffs);
 	void print_equation_tex(std::ostream &ost, int *coeffs);
 	void print_equation_with_line_breaks_tex(std::ostream &ost, int *coeffs);
 	void print_equation_tex_lint(std::ostream &ost, long int *coeffs);

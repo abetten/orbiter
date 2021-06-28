@@ -487,13 +487,16 @@ void spreadsheet::print_table_latex(ostream &ost,
 	ost << "\\begin{tabular}{|";
 	for (j = 0; j < nb_cols; j++) {
 		if (f_column_select[j]) {
-			ost << "p{3cm}|";
+			ost << "r|";
+			//ost << "p{3cm}|";
 			}
 		}
 	ost << "}" << endl;
+	ost << "\\hline" << endl;
 	for (i = 0; i < nb_rows; i++) {
 		print_table_row_latex(i,
 				f_column_select, f_enclose_in_parentheses, ost);
+		ost << "\\hline" << endl;
 		}
 	ost << "\\end{tabular}" << endl;
 }

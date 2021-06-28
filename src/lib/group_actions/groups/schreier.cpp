@@ -2730,6 +2730,42 @@ int schreier::orbit_number(int pt)
 	}
 }
 
+void schreier::get_orbit_number_and_position(int pt, int &orbit_idx, int &orbit_pos, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int pos;
+	sorting Sorting;
+
+	if (f_v) {
+		cout << "schreier::get_orbit_number_and_position" << endl;
+	}
+	pos = orbit_inv[pt];
+	if (Sorting.int_vec_search(orbit_first, nb_orbits, pos, orbit_idx)) {
+		;
+	}
+	else {
+		if (orbit_idx == 0) {
+			cout << "schreier::get_orbit_number_and_position orbit_idx == 0" << endl;
+			exit(1);
+		}
+		orbit_idx--;
+	}
+	if (orbit_first[orbit_idx] <= pos &&
+			pos < orbit_first[orbit_idx] + orbit_len[orbit_idx]) {
+		orbit_pos = pos - orbit_first[orbit_idx];
+	}
+	else {
+		cout << "schreier::get_orbit_number_and_position something is wrong, "
+				"perhaps the orbit of the point has not yet "
+				"been computed" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "schreier::get_orbit_number_and_position done" << endl;
+	}
+}
+
+
 void schreier::get_orbit_decomposition_scheme_of_graph(
 	int *Adj, int n, int *&Decomp_scheme, 
 	int verbose_level)

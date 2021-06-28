@@ -126,17 +126,16 @@ void quartic_curve_domain::init_polynomial_domains(int verbose_level)
 
 }
 
+void quartic_curve_domain::print_equation_maple(std::stringstream &ost, int *coeffs)
+{
+	Poly4_3->print_equation_str(ost, coeffs);
+}
+
 void quartic_curve_domain::print_equation_with_line_breaks_tex(std::ostream &ost, int *coeffs)
 {
-	ost << "{\\renewcommand{\\arraystretch}{1.5}" << endl;
-	ost << "$$" << endl;
-	ost << "\\begin{array}{c}" << endl;
 	Poly4_3->print_equation_with_line_breaks_tex(
 			ost, coeffs, 8 /* nb_terms_per_line*/,
 			"\\\\\n" /* const char *new_line_text*/);
-	ost << "=0" << endl;
-	ost << "\\end{array}" << endl;
-	ost << "$$}" << endl;
 }
 
 void quartic_curve_domain::unrank_point(int *v, long int rk)

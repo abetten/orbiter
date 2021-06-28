@@ -347,8 +347,6 @@ class subfield_structure;
 class andre_construction_line_element;
 class andre_construction_point_element;
 class andre_construction;
-class blt_set_domain;
-class blt_set_invariants;
 class buekenhout_metz;
 class cubic_curve;
 class decomposition;
@@ -371,7 +369,6 @@ class quartic_curve_domain;
 class quartic_curve_object_properties;
 class quartic_curve_object;
 class spread_tables;
-class unusual_model;
 class W3q;
 
 // globals:
@@ -438,7 +435,10 @@ class knowledge_base;
 
 
 // orthogonal:
+class blt_set_domain;
+class blt_set_invariants;
 class orthogonal;
+class unusual_model;
 
 // solvers
 class diophant_activity_description;

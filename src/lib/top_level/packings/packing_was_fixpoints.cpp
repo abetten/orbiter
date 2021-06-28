@@ -54,25 +54,10 @@ void packing_was_fixpoints::init(packing_was *PW,
 	packing_was_fixpoints::fixpoint_clique_size = fixpoint_clique_size;
 
 
-	fname_fixp_graph.assign(PW->Descr->H_label);
-	fname_fixp_graph.append("_fixp_graph.bin");
+	setup_file_names(verbose_level);
 
 
-	if (f_v) {
-		cout << "packing_was_fixpoints::init fname_fixp_graph=" << fname_fixp_graph << endl;
-	}
-
-
-	fname_fixp_graph_cliques.assign(PW->Descr->N_label);
-	fname_fixp_graph_cliques.append("_fixp_cliques.csv");
-
-
-	if (f_v) {
-		cout << "packing_was_fixpoints::init fname_fixp_graph_cliques=" << fname_fixp_graph_cliques << endl;
-	}
-
-
-	fixpoints_idx = PW->find_orbits_of_length(1);
+	fixpoints_idx = PW->find_orbits_of_length_in_reduced_spread_table(1);
 	if (fixpoints_idx >= 0) {
 		if (f_v) {
 			cout << "packing_was_fixpoints::init_spreads "
@@ -101,25 +86,60 @@ void packing_was_fixpoints::init(packing_was *PW,
 	}
 
 
-	if (f_v) {
-		cout << "packing_was_fixpoints::init_spreads "
-				"before compute_cliques_on_fixpoint_graph" << endl;
-	}
+	//if (fixpoint_clique_size) {
 
-	compute_cliques_on_fixpoint_graph(
-			fixpoint_clique_size,
-			Control,
-			verbose_level);
+		if (f_v) {
+			cout << "packing_was_fixpoints::init_spreads "
+					"before compute_cliques_on_fixpoint_graph" << endl;
+		}
 
-	if (f_v) {
-		cout << "packing_was_fixpoints::init_spreads "
-				"after compute_cliques_on_fixpoint_graph" << endl;
-	}
+		compute_cliques_on_fixpoint_graph(
+				fixpoint_clique_size,
+				Control,
+				verbose_level);
+
+		if (f_v) {
+			cout << "packing_was_fixpoints::init_spreads "
+					"after compute_cliques_on_fixpoint_graph" << endl;
+		}
+	//}
 
 
 	if (f_v) {
 		cout << "packing_was_fixpoints::init done" << endl;
 	}
+}
+
+void packing_was_fixpoints::setup_file_names(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "packing_was_fixpoints::setup_file_names" << endl;
+	}
+
+
+	fname_fixp_graph.assign(PW->Descr->H_label);
+	fname_fixp_graph.append("_fixp_graph.bin");
+
+
+	if (f_v) {
+		cout << "packing_was_fixpoints::setup_file_names fname_fixp_graph=" << fname_fixp_graph << endl;
+	}
+
+
+	fname_fixp_graph_cliques.assign(PW->Descr->N_label);
+	fname_fixp_graph_cliques.append("_fixp_cliques.csv");
+
+
+	if (f_v) {
+		cout << "packing_was_fixpoints::setup_file_names fname_fixp_graph_cliques=" << fname_fixp_graph_cliques << endl;
+	}
+
+	if (f_v) {
+		cout << "packing_was_fixpoints::setup_file_names done" << endl;
+	}
+
 }
 
 void packing_was_fixpoints::create_graph_on_fixpoints(int verbose_level)
@@ -130,7 +150,7 @@ void packing_was_fixpoints::create_graph_on_fixpoints(int verbose_level)
 		cout << "packing_was::create_graph_on_fixpoints" << endl;
 	}
 
-	fixpoints_idx = PW->find_orbits_of_length(1);
+	fixpoints_idx = PW->find_orbits_of_length_in_reduced_spread_table(1);
 	if (fixpoints_idx == -1) {
 		cout << "packing_was::create_graph_on_fixpoints "
 				"we don't have any orbits of length 1" << endl;
@@ -158,7 +178,7 @@ void packing_was_fixpoints::action_on_fixpoints(int verbose_level)
 				"creating action on fixpoints" << endl;
 	}
 
-	fixpoints_idx = PW->find_orbits_of_length(1);
+	fixpoints_idx = PW->find_orbits_of_length_in_reduced_spread_table(1);
 	if (fixpoints_idx == -1) {
 		cout << "packing_was_fixpoints::action_on_fixpoints "
 				"we don't have any orbits of length 1" << endl;
@@ -201,10 +221,18 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 
 	if (f_v) {
 		cout << "packing_was_fixpoints::compute_cliques_on_fixpoint_graph "
-				"clique_size=" << clique_size << endl;
+				"fixpoint_clique_size=" << clique_size << endl;
 	}
 
 	fixpoint_clique_size = clique_size;
+
+	if (fixpoint_clique_size == 0) {
+		if (f_v) {
+			cout << "packing_was_fixpoints::compute_cliques_on_fixpoint_graph "
+					"fixpoint_clique_size=" << fixpoint_clique_size << " is zero, so we return" << endl;
+		}
+		return;
+	}
 	//PW->Descr->clique_size = clique_size;
 
 
@@ -215,7 +243,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 	ST.chop_off_extension(my_prefix);
 	my_prefix.append("_cliques");
 
-	if (FALSE /*Fio.file_size(fname_fixp_graph_cliques) > 0*/) {
+	if (Fio.file_size(fname_fixp_graph_cliques) > 0) {
 		if (f_v) {
 			cout << "packing_was_fixpoints::compute_cliques_on_fixpoint_graph "
 					"The file " << fname_fixp_graph_cliques << " exists" << endl;

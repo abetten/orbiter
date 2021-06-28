@@ -10,7 +10,6 @@ MODULES = \
 	canonical_form_classifier.o \
 	canonical_form_nauty.o \
 	canonical_form_substructure.o \
-	compute_stabilizer.o \
 	object_in_projective_space_with_action.o \
 	projective_space_activity_description.o \
 	projective_space_activity.o \
@@ -18,7 +17,6 @@ MODULES = \
 	projective_space_object_classifier.o \
 	projective_space_with_action_description.o \
 	projective_space_with_action.o \
-	stabilizer_orbits_and_types.o
 
 
 all : $(MODULES)

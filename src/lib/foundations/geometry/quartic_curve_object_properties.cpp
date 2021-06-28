@@ -638,7 +638,9 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 		cout << endl;
 	}
 
-	int f, l, a;
+	int f, l, a, b;
+	vector<int> K;
+
 
 	f_is_full = TRUE;
 	nb_Kowalevski_on = 0;
@@ -651,6 +653,10 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 		}
 		if (a == 4) {
 			nb_Kowalevski_on += l;
+			for (j = 0; j < l; j++) {
+				b = Point_type->sorting_perm_inv[f + j];
+				K.push_back(b);
+			}
 		}
 	}
 	f_fullness_has_been_established = TRUE;
@@ -693,8 +699,6 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 		cout << endl;
 	}
 
-	int b;
-	vector<int> K;
 
 	nb_Kowalevski_off = 0;
 	for (i = Point_off_type->nb_types - 1; i >= 0; i--) {
@@ -712,6 +716,8 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 	nb_Kowalevski = nb_Kowalevski_on + nb_Kowalevski_off;
 	if (K.size() != nb_Kowalevski) {
 		cout << "K.size() != nb_Kowalevski" << endl;
+		cout << "K.size()=" << K.size() << endl;
+		cout << "nb_Kowalevski=" << nb_Kowalevski << endl;
 		exit(1);
 	}
 

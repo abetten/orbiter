@@ -27,6 +27,8 @@ MODULES= \
 		foundations/algebra_and_number_theory/unipoly_domain2.o \
 		foundations/algebra_and_number_theory/vector_space.o \
 		foundations/coding_theory/coding_theory_domain.o \
+		foundations/coding_theory/cyclic_codes.o \
+		foundations/coding_theory/tensor_codes.o \
 		foundations/coding_theory/mindist.o \
 		foundations/combinatorics/boolean_function_domain.o \
 		foundations/combinatorics/brick_domain.o \
@@ -89,8 +91,6 @@ MODULES= \
 		foundations/geometry/andre_construction.o \
 		foundations/geometry/andre_construction_line_element.o \
 		foundations/geometry/andre_construction_point_element.o \
-		foundations/geometry/blt_set_domain.o \
-		foundations/geometry/blt_set_invariants.o \
 		foundations/geometry/buekenhout_metz.o \
 		foundations/geometry/cubic_curve.o \
 		foundations/geometry/decomposition.o \
@@ -114,7 +114,6 @@ MODULES= \
 		foundations/geometry/quartic_curve_object_properties.o \
 		foundations/geometry/quartic_curve_object.o \
 		foundations/geometry/spread_tables.o \
-		foundations/geometry/unusual_model.o \
 		foundations/geometry/w3q.o \
 		foundations/globals/function_command.o \
 		foundations/globals/function_polish_description.o \
@@ -172,6 +171,8 @@ MODULES= \
 		foundations/io_and_os/prepare_frames.o \
 		foundations/io_and_os/util.o \
 		foundations/knowledge_base/knowledge_base.o \
+		foundations/orthogonal/blt_set_domain.o \
+		foundations/orthogonal/blt_set_invariants.o \
 		foundations/orthogonal/orthogonal_blt.o \
 		foundations/orthogonal/orthogonal_group.o \
 		foundations/orthogonal/orthogonal_hyperbolic.o \
@@ -179,6 +180,7 @@ MODULES= \
 		foundations/orthogonal/orthogonal_parabolic.o \
 		foundations/orthogonal/orthogonal_rank_unrank.o \
 		foundations/orthogonal/orthogonal.o \
+		foundations/orthogonal/unusual_model.o \
 		foundations/solvers/diophant_activity_description.o \
 		foundations/solvers/diophant_activity.o \
 		foundations/solvers/diophant_create.o \
@@ -313,6 +315,10 @@ MODULES= \
 		classification/poset_classification/upstep_work.o \
 		classification/poset_classification/upstep_work_subspace_action.o \
 		classification/poset_classification/upstep_work_trace.o \
+		classification/set_stabilizer/compute_stabilizer.o \
+		classification/set_stabilizer/stabilizer_orbits_and_types.o \
+		classification/set_stabilizer/substructure_classifier.o \
+		classification/set_stabilizer/substructure_stats_and_selection.o \
 		DISCRETA/base.o \
 		DISCRETA/bt_key.o \
 		DISCRETA/btree.o \
@@ -374,8 +380,6 @@ MODULES= \
 		top_level/geometry/polar.o \
 		top_level/geometry/search_blocking_set.o \
 		top_level/geometry/singer_cycle.o \
-		top_level/geometry/substructure_classifier.o \
-		top_level/geometry/substructure_stats_and_selection.o \
 		top_level/geometry/tensor_classify.o \
 		top_level/geometry/top_level_geometry_global.o \
 		top_level/graph_theory/cayley_graph_search.o \
@@ -436,7 +440,6 @@ MODULES= \
 		top_level/projective_space/canonical_form_classifier.o \
 		top_level/projective_space/canonical_form_nauty.o \
 		top_level/projective_space/canonical_form_substructure.o \
-		top_level/projective_space/compute_stabilizer.o \
 		top_level/projective_space/object_in_projective_space_with_action.o \
 		top_level/projective_space/projective_space_activity_description.o \
 		top_level/projective_space/projective_space_activity.o \
@@ -444,14 +447,6 @@ MODULES= \
 		top_level/projective_space/projective_space_object_classifier.o \
 		top_level/projective_space/projective_space_with_action_description.o \
 		top_level/projective_space/projective_space_with_action.o \
-		top_level/projective_space/stabilizer_orbits_and_types.o \
-		top_level/quartic_curves/quartic_curve_activity_description.o \
-		top_level/quartic_curves/quartic_curve_activity.o \
-		top_level/quartic_curves/quartic_curve_create_description.o \
-		top_level/quartic_curves/quartic_curve_create.o \
-		top_level/quartic_curves/quartic_curve_domain_with_action.o \
-		top_level/quartic_curves/quartic_curve_from_surface.o \
-		top_level/quartic_curves/quartic_curve_object_with_action.o \
 		top_level/semifields/semifield_classify_description.o \
 		top_level/semifields/semifield_classify_with_substructure.o \
 		top_level/semifields/semifield_classify.o \
@@ -474,31 +469,38 @@ MODULES= \
 		top_level/spreads/spread_table_activity.o \
 		top_level/spreads/spread_table_with_selection.o \
 		top_level/spreads/translation_plane_via_andre_model.o \
-		top_level/surfaces/arc_lifting.o \
-		top_level/surfaces/arc_orbits_on_pairs.o \
-		top_level/surfaces/arc_partition.o \
-		top_level/surfaces/classification_of_cubic_surfaces_with_double_sixes_activity_description.o \
-		top_level/surfaces/classification_of_cubic_surfaces_with_double_sixes_activity.o \
-		top_level/surfaces/classify_double_sixes.o \
-		top_level/surfaces/classify_trihedral_pairs.o \
-		top_level/surfaces/cubic_surface_activity_description.o \
-		top_level/surfaces/cubic_surface_activity.o \
-		top_level/surfaces/six_arcs_not_on_a_conic.o \
-		top_level/surfaces/surface_classify_using_arc.o \
-		top_level/surfaces/surface_classify_wedge.o \
-		top_level/surfaces/surface_clebsch_map.o \
-		top_level/surfaces/surface_create_by_arc_lifting.o \
-		top_level/surfaces/surface_create_description.o \
-		top_level/surfaces/surface_create.o \
-		top_level/surfaces/surface_domain_high_level.o \
-		top_level/surfaces/surface_object_with_action.o \
-		top_level/surfaces/surface_study.o \
-		top_level/surfaces/surface_with_action.o \
-		top_level/surfaces/surfaces_arc_lifting_definition_node.o \
-		top_level/surfaces/surfaces_arc_lifting_trace.o \
-		top_level/surfaces/surfaces_arc_lifting_upstep.o \
-		top_level/surfaces/surfaces_arc_lifting.o \
-		top_level/surfaces/trihedral_pair_with_action.o 
+		top_level/surfaces/quartic_curves/quartic_curve_activity_description.o \
+		top_level/surfaces/quartic_curves/quartic_curve_activity.o \
+		top_level/surfaces/quartic_curves/quartic_curve_create_description.o \
+		top_level/surfaces/quartic_curves/quartic_curve_create.o \
+		top_level/surfaces/quartic_curves/quartic_curve_domain_with_action.o \
+		top_level/surfaces/quartic_curves/quartic_curve_from_surface.o \
+		top_level/surfaces/quartic_curves/quartic_curve_object_with_action.o \
+		top_level/surfaces/surfaces_and_arcs/arc_lifting.o \
+		top_level/surfaces/surfaces_and_arcs/arc_orbits_on_pairs.o \
+		top_level/surfaces/surfaces_and_arcs/arc_partition.o \
+		top_level/surfaces/surfaces_and_arcs/classify_trihedral_pairs.o \
+		top_level/surfaces/surfaces_and_arcs/six_arcs_not_on_a_conic.o \
+		top_level/surfaces/surfaces_and_arcs/surface_classify_using_arc.o \
+		top_level/surfaces/surfaces_and_arcs/surface_create_by_arc_lifting.o \
+		top_level/surfaces/surfaces_and_arcs/surfaces_arc_lifting_definition_node.o \
+		top_level/surfaces/surfaces_and_arcs/surfaces_arc_lifting_trace.o \
+		top_level/surfaces/surfaces_and_arcs/surfaces_arc_lifting_upstep.o \
+		top_level/surfaces/surfaces_and_arcs/surfaces_arc_lifting.o \
+		top_level/surfaces/surfaces_and_arcs/trihedral_pair_with_action.o \
+		top_level/surfaces/surfaces_and_double_sixes/classification_of_cubic_surfaces_with_double_sixes_activity_description.o \
+		top_level/surfaces/surfaces_and_double_sixes/classification_of_cubic_surfaces_with_double_sixes_activity.o \
+		top_level/surfaces/surfaces_and_double_sixes/classify_double_sixes.o \
+		top_level/surfaces/surfaces_and_double_sixes/surface_classify_wedge.o \
+		top_level/surfaces/surfaces_general/cubic_surface_activity_description.o \
+		top_level/surfaces/surfaces_general/cubic_surface_activity.o \
+		top_level/surfaces/surfaces_general/surface_clebsch_map.o \
+		top_level/surfaces/surfaces_general/surface_create_description.o \
+		top_level/surfaces/surfaces_general/surface_create.o \
+		top_level/surfaces/surfaces_general/surface_domain_high_level.o \
+		top_level/surfaces/surfaces_general/surface_object_with_action.o \
+		top_level/surfaces/surfaces_general/surface_study.o \
+		top_level/surfaces/surfaces_general/surface_with_action.o
 
 
 all:

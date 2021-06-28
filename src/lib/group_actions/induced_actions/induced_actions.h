@@ -560,11 +560,19 @@ public:
 	longinteger_object degree;
 	int max_string_length;
 	
+	int f_has_print_function;
+	void (*print_function)(std::ostream &ost, long int a, void *data);
+	void *print_function_data;
+
 	action_on_grassmannian();
 	~action_on_grassmannian();
 	void null();
 	void free();
 	void init(action &A, grassmann *G, int verbose_level);
+	void add_print_function(
+			void (*print_function)(std::ostream &ost, long int a, void *data),
+			void *print_function_data,
+			int verbose_level);
 	void init_embedding(int big_n, int *ambient_space, 
 		int verbose_level);
 	void unrank(long int i, int *v, int verbose_level);

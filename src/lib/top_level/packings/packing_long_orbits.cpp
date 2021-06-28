@@ -90,7 +90,7 @@ void packing_long_orbits::init(packing_was_fixpoints *PWF,
 	}
 	else if (Descr->f_orbit_length) {
 
-		long_orbit_idx = PWF->PW->find_orbits_of_length(Descr->orbit_length);
+		long_orbit_idx = PWF->PW->find_orbits_of_length_in_reduced_spread_table(Descr->orbit_length);
 		if (f_v) {
 			cout << "packing_long_orbits::init long_orbit_idx = " << long_orbit_idx << endl;
 		}
@@ -110,25 +110,69 @@ void packing_long_orbits::init(packing_was_fixpoints *PWF,
 	fixpoint_clique = NEW_lint(fixpoint_clique_size);
 
 
+	if (fixpoint_clique_size) {
 
-	set = NEW_lint(Descr->orbit_length);
+		set = NEW_lint(Descr->orbit_length);
 
-
-	if (Descr->f_list_of_cases_from_file) {
-		if (f_v) {
-			cout << "packing_long_orbits::init f_list_of_cases_from_file" << endl;
+		if (Descr->f_list_of_cases_from_file) {
+			if (f_v) {
+				cout << "packing_long_orbits::init f_list_of_cases_from_file" << endl;
+			}
+			list_of_cases_from_file(verbose_level);
 		}
+		else {
+			if (f_v) {
+				cout << "packing_long_orbits::init do_single_case" << endl;
+			}
 
-		list_of_cases_from_file(verbose_level);
+			do_single_case(verbose_level);
+		}
 	}
 	else {
 		if (f_v) {
-			cout << "packing_long_orbits::init do_single_case" << endl;
+			cout << "fixpoint_clique_size is zero" << endl;
 		}
 
-		do_single_case(verbose_level);
-	}
+		if (f_v) {
+			cout << "packing_long_orbits::init before create_graph_on_remaining_long_orbits" << endl;
+		}
+		fixpoints_clique_case_number = 0;
+		Filtered_orbits = PWF->PW->reduced_spread_orbits_under_H->Orbits_classified;
 
+		if (f_v) {
+			cout << "packing_long_orbits::init Filtered_orbits=" << endl;
+
+			Filtered_orbits->print_table();
+			PWF->PW->reduced_spread_orbits_under_H->print_orbits_based_on_filtered_orbits(cout, Filtered_orbits);
+
+			cout << "H_gens in action on reduced spreads:" << endl;
+			PWF->PW->H_gens->print_with_given_action(cout, PWF->PW->A_on_reduced_spreads);
+
+			//cout << "N_gens in action on reduced spreads:" << endl;
+			//PWF->PW->N_gens->print_with_given_action(cout, PWF->PW->A_on_reduced_spreads);
+
+
+		}
+
+
+		fixpoint_clique_stabilizer_gens = PWF->PW->N_gens;
+
+		std::vector<std::vector<int> > Packings_classified;
+		std::vector<std::vector<int> > Packings;
+
+
+		create_graph_on_remaining_long_orbits(
+				Packings_classified,
+				Packings,
+				verbose_level);
+
+		if (f_v) {
+			cout << "packing_long_orbits::init after create_graph_on_remaining_long_orbits" << endl;
+			cout << "Packings_classified.size()=" << Packings_classified.size() << endl;
+			cout << "Packings.size()=" << Packings.size() << endl;
+		}
+
+	}
 
 
 
@@ -201,10 +245,28 @@ void packing_long_orbits::list_of_cases_from_file(int verbose_level)
 			if (f_v) {
 				cout << "packing_long_orbits::list_of_cases_from_file before process_single_case, idx = " << idx << endl;
 			}
-			process_single_case(
-					Packings_classified,
-					Packings,
-					verbose_level);
+			if (Descr->f_create_graphs) {
+
+
+				colored_graph *CG;
+				if (f_v) {
+					cout << "solution file does not exist" << endl;
+					cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
+						"before create_graph_and_save_to_file" << endl;
+				}
+				create_graph_and_save_to_file(
+							CG,
+							fname_graph,
+							FALSE /* f_has_user_data */, NULL /*user_data*/, 0 /*user_data_sz*/,
+							verbose_level);
+				if (f_v) {
+					cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
+						"the graph on long orbits has been created with "
+						<< CG->nb_points
+						<< " vertices" << endl;
+				}
+				FREE_OBJECT(CG);
+			}
 			if (f_v) {
 				cout << "packing_long_orbits::list_of_cases_from_file after process_single_case, idx = " << idx << endl;
 			}
@@ -528,6 +590,8 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 		cout << "packing_long_orbits::create_graph_on_remaining_long_orbits" << endl;
 		cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
 				"long_orbit_idx = " << long_orbit_idx << endl;
+		cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
+				"Descr->orbit_length = " << Descr->orbit_length << endl;
 	}
 
 	create_fname_graph_on_remaining_long_orbits();
@@ -587,6 +651,10 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 		}
 		FREE_OBJECT(CG);
 	}
+	else {
+		cout << "Descr->f_create_graphs is FALSE, we are not creating the graph" << endl;
+	}
+
 	if (Descr->f_solve) {
 
 
@@ -692,7 +760,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 
 			int type_idx;
 
-			type_idx = PWF->PW->reduced_spread_orbits_under_H->get_orbit_type_index(1);
+			type_idx = PWF->PW->reduced_spread_orbits_under_H->get_orbit_type_index(Descr->orbit_length);
 			//nb_points = Orbits_classified->Set_size[type_idx];
 
 			for (i = 0; i < fixpoint_clique_size; i++) {
@@ -774,6 +842,13 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 		action *Ar_On_Packings;
 
 		//Ar = PWF->PW->restricted_action(Descr->orbit_length, verbose_level);
+
+		if (f_v) {
+			cout << "packing_long_orbits::create_graph_on_remaining_long_orbits before PWF->PW->A_on_reduced_spreads->create_induced_action_on_sets" << endl;
+			cout << "PWF->PW->A_on_reduced_spreads->degree=" << PWF->PW->A_on_reduced_spreads->degree << endl;
+			cout << "Packings_table:" << endl;
+			Orbiter->Lint_vec.matrix_print(Packings_table, nb_solutions, PWF->PW->P->size_of_packing);
+		}
 
 		Ar_On_Packings = PWF->PW->A_on_reduced_spreads->create_induced_action_on_sets(nb_solutions,
 				PWF->PW->P->size_of_packing, Packings_table,
@@ -1008,7 +1083,13 @@ void packing_long_orbits::create_graph_and_save_to_file(
 		exit(1);
 	}
 
+	if (f_v) {
+		cout << "packing_long_orbits::create_graph_and_save_to_file before CG->save, fname=" << fname << endl;
+	}
 	CG->save(fname, verbose_level);
+	if (f_v) {
+		cout << "packing_long_orbits::create_graph_and_save_to_file after CG->save, fname=" << fname << endl;
+	}
 
 	//FREE_OBJECT(CG);
 
