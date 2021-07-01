@@ -66,6 +66,29 @@ void packing_was_fixpoints_activity::perform_activity(int verbose_level)
 
 
 	}
+	else if (Descr->f_print_packing) {
+
+
+		if (f_v) {
+			cout << "packing_was_fixpoints_activity::perform_activity before PW->report" << endl;
+		}
+
+		long int *packing;
+		int sz;
+
+		Orbiter->Lint_vec.scan(Descr->print_packing_text, packing, sz);
+
+		PWF->print_packing(packing, sz, verbose_level);
+
+
+
+
+		if (f_v) {
+			cout << "packing_was_fixpoints_activity::perform_activity after PW->report" << endl;
+		}
+
+
+	}
 
 
 

@@ -44,8 +44,8 @@ symbol_definition::symbol_definition()
 	f_collection = FALSE;
 	//std::string list_of_objects;
 
-	f_combinatorial_object = FALSE;
-	Combinatorial_object_description = NULL;
+	//f_combinatorial_object = FALSE;
+	//Combinatorial_object_description = NULL;
 
 	f_graph = FALSE;
 	Create_graph_description = NULL;
@@ -233,6 +233,7 @@ void symbol_definition::read_definition(
 		i++;
 
 	}
+#if 0
 	else if (stringcmp(argv[i], "-combinatorial_object") == 0) {
 
 		f_combinatorial_object = TRUE;
@@ -254,7 +255,7 @@ void symbol_definition::read_definition(
 			}
 		}
 	}
-
+#endif
 	else if (stringcmp(argv[i], "-graph") == 0) {
 
 		f_graph = TRUE;
@@ -573,6 +574,7 @@ void symbol_definition::perform_definition(int verbose_level)
 			cout << "symbol_definition::perform_definition after definition_of_collection" << endl;
 		}
 	}
+#if 0
 	else if (f_combinatorial_object) {
 		if (f_v) {
 			cout << "symbol_definition::perform_definition before definition_of_combinatorial_object" << endl;
@@ -582,6 +584,7 @@ void symbol_definition::perform_definition(int verbose_level)
 			cout << "symbol_definition::perform_definition after definition_of_combinatorial_object" << endl;
 		}
 	}
+#endif
 	else if (f_graph) {
 		if (f_v) {
 			cout << "symbol_definition::perform_definition before definition_of_graph" << endl;
@@ -712,39 +715,36 @@ void symbol_definition::print()
 		cout << "-collection ";
 		//cout << list_of_objects << endl;
 	}
+#if 0
 	else if (f_combinatorial_object) {
 		cout << "-combinatorial_object ";
 		Combinatorial_object_description->print();
 	}
+#endif
 	else if (f_graph) {
 		cout << "-graph ";
 		Create_graph_description->print();
 	}
 	else if (f_spread_table) {
 		cout << "-spread_table ";
-		//std::string spread_table_label_PA;
-		//int dimension_of_spread_elements;
-		//std::string spread_selection_text;
-		//std::string spread_tables_prefix;
+		cout << spread_table_label_PA << " " << dimension_of_spread_elements << " " << spread_selection_text << " " << spread_tables_prefix << endl;
 	}
 	else if (f_packing_was) {
-		cout << "-packing_was ";
-		//std::string packing_was_label_spread_table;
-		//packing_was_description * packing_was_descr;
+		cout << "-packing_was " << packing_was_label_spread_table << endl;
+		packing_was_descr->print();
 	}
 	else if (f_packing_was_choose_fixed_points) {
 		cout << "-packing_was_choose_fixed_points ";
 		cout << packing_with_assumed_symmetry_label;
-		cout << " " << packing_with_assumed_symmetry_choose_fixed_points_clique_size << " ";
+		cout << " " << packing_with_assumed_symmetry_choose_fixed_points_clique_size << " " << endl;
 		packing_with_assumed_symmetry_choose_fixed_points_control->print();
 		//std::string packing_with_assumed_symmetry_label;
 		//int packing_with_assumed_symmetry_choose_fixed_points_clique_size;
 		//poset_classification_control *packing_with_assumed_symmetry_choose_fixed_points_control;
 	}
 	else if (f_packing_long_orbits) {
-		cout << "-packing_long_orbits ";
-		//std::string packing_long_orbits_choose_fixed_points_label;
-		//packing_long_orbits_description * Packing_long_orbits_description;
+		cout << "-packing_long_orbits " << packing_long_orbits_choose_fixed_points_label << endl;
+		Packing_long_orbits_description->print();
 	}
 	else if (f_graph_classification) {
 		cout << "-graph_classification ";
@@ -759,15 +759,10 @@ void symbol_definition::print()
 		Design_create_description->print();
 	}
 	else if (f_design_table) {
-		cout << "-design_table ";
-		//std::string design_table_label_design;
-		//std::string design_table_label;
-		//std::string design_table_go_text;
-		//std::string design_table_generators_data;
+		cout << "-design_table " << design_table_label_design << " " << design_table_label << " " << design_table_go_text << " " << design_table_generators_data;
 	}
 	else if (f_large_set_was) {
-		cout << "-large_set_was ";
-		//std::string  large_set_was_label_design_table;
+		cout << "-large_set_was " << large_set_was_label_design_table << endl;
 		large_set_was_descr->print();
 	}
 	else {
@@ -1058,6 +1053,7 @@ void symbol_definition::definition_of_collection(std::string &list_of_objects,
 	}
 }
 
+#if 0
 void symbol_definition::definition_of_combinatorial_object(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1110,7 +1106,7 @@ void symbol_definition::definition_of_combinatorial_object(int verbose_level)
 		cout << "symbol_definition::definition_of_combinatorial_object done" << endl;
 	}
 }
-
+#endif
 
 void symbol_definition::definition_of_graph(int verbose_level)
 {

@@ -281,8 +281,8 @@ public:
 
 class interface_combinatorics {
 
-	int f_create_combinatorial_object;
-	combinatorial_object_description *Combinatorial_object_description;
+	//int f_create_combinatorial_object;
+	//combinatorial_object_description *Combinatorial_object_description;
 
 	int f_diophant;
 	diophant_description *Diophant_description;
@@ -375,7 +375,7 @@ public:
 			std::string *argv, int &i, int verbose_level);
 	void print();
 	void worker(int verbose_level);
-	void do_create_combinatorial_object(int verbose_level);
+	//void do_create_combinatorial_object(int verbose_level);
 	void do_diophant(diophant_description *Descr, int verbose_level);
 	void do_diophant_activity(diophant_activity_description *Descr, int verbose_level);
 	void do_bent(int n, int verbose_level);
@@ -881,8 +881,8 @@ public:
 	int f_collection;
 	std::string list_of_objects;
 
-	int f_combinatorial_object;
-	combinatorial_object_description *Combinatorial_object_description;
+	//int f_combinatorial_object;
+	//combinatorial_object_description *Combinatorial_object_description;
 
 	int f_graph;
 	create_graph_description *Create_graph_description;
@@ -943,7 +943,7 @@ public:
 			int verbose_level);
 	void definition_of_collection(std::string &list_of_objects,
 			int verbose_level);
-	void definition_of_combinatorial_object(int verbose_level);
+	//void definition_of_combinatorial_object(int verbose_level);
 	void definition_of_graph(int verbose_level);
 	void definition_of_spread_table(int verbose_level);
 	void definition_of_packing_was(int verbose_level);

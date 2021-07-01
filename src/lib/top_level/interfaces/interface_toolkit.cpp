@@ -213,33 +213,41 @@ void interface_toolkit::read_arguments(int argc,
 		f_csv_file_select_rows = TRUE;
 		csv_file_select_rows_fname.assign(argv[++i]);
 		csv_file_select_rows_text.assign(argv[++i]);
-		cout << "-csv_file_select_rows " << csv_file_select_rows_fname
+		if (f_v) {
+			cout << "-csv_file_select_rows " << csv_file_select_rows_fname
 				<< " " << csv_file_select_rows_text << endl;
+		}
 	}
 	else if (stringcmp(argv[i], "-csv_file_split_rows_modulo") == 0) {
 		f_csv_file_split_rows_modulo = TRUE;
 		csv_file_split_rows_modulo_fname.assign(argv[++i]);
 		csv_file_split_rows_modulo_n = strtoi(argv[++i]);
-		cout << "-csv_file_split_rows_modulo " << csv_file_split_rows_modulo_fname
+		if (f_v) {
+			cout << "-csv_file_split_rows_modulo " << csv_file_split_rows_modulo_fname
 				<< " " << csv_file_split_rows_modulo_n << endl;
+		}
 	}
 	else if (stringcmp(argv[i], "-csv_file_select_cols") == 0) {
 		f_csv_file_select_cols = TRUE;
 		csv_file_select_cols_fname.assign(argv[++i]);
 		csv_file_select_cols_text.assign(argv[++i]);
-		cout << "-csv_file_select_cols " << csv_file_select_cols_fname
+		if (f_v) {
+			cout << "-csv_file_select_cols " << csv_file_select_cols_fname
 				<< " " << csv_file_select_cols_text << endl;
+		}
 	}
 	else if (stringcmp(argv[i], "-csv_file_select_rows_and_cols") == 0) {
 		f_csv_file_select_rows_and_cols = TRUE;
 		csv_file_select_rows_and_cols_fname.assign(argv[++i]);
 		csv_file_select_rows_and_cols_R_text.assign(argv[++i]);
 		csv_file_select_rows_and_cols_C_text.assign(argv[++i]);
-		cout << "-csv_file_select_rows_and_cols "
+		if (f_v) {
+			cout << "-csv_file_select_rows_and_cols "
 				<< csv_file_select_rows_and_cols_fname
 				<< " " << csv_file_select_rows_and_cols_R_text
 				<< " " << csv_file_select_rows_and_cols_C_text
 				<< endl;
+		}
 	}
 	else if (stringcmp(argv[i], "-csv_file_join") == 0) {
 		string s;
@@ -253,9 +261,12 @@ void interface_toolkit::read_arguments(int argc,
 			s.assign(argv[++i]);
 			csv_file_join_identifier.push_back(s);
 		}
-		cout << "-csv_file_join " << endl;
-		for (j = 0; j < nb; j++) {
-			cout << j << " : " << csv_file_join_fname[j] << " : " << csv_file_join_identifier[j] << endl;
+		if (f_v) {
+			cout << "-csv_file_join " << endl;
+			for (j = 0; j < nb; j++) {
+				cout << j << " : " << csv_file_join_fname[j]
+					<< " : " << csv_file_join_identifier[j] << endl;
+			}
 		}
 	}
 	else if (stringcmp(argv[i], "-csv_file_concatenate") == 0) {
@@ -269,43 +280,56 @@ void interface_toolkit::read_arguments(int argc,
 			s.assign(argv[++i]);
 			csv_file_concatenate_fname_in.push_back(s);
 		}
-		cout << "-csv_file_concatenate " << csv_file_concatenate_fname_out << endl;
-		for (j = 0; j < nb; j++) {
-			cout << j << " : " << csv_file_concatenate_fname_in[j] << endl;
+		if (f_v) {
+			cout << "-csv_file_concatenate " << csv_file_concatenate_fname_out << endl;
+			for (j = 0; j < nb; j++) {
+				cout << j << " : " << csv_file_concatenate_fname_in[j] << endl;
+			}
 		}
 	}
 	else if (stringcmp(argv[i], "-csv_file_latex") == 0) {
 		f_csv_file_latex = TRUE;
 		f_produce_latex_header = strtoi(argv[++i]);
 		csv_file_latex_fname.assign(argv[++i]);
-		cout << "-csv_file_latex " << f_produce_latex_header << " " << csv_file_latex_fname << endl;
+		if (f_v) {
+			cout << "-csv_file_latex " << f_produce_latex_header << " " << csv_file_latex_fname << endl;
+		}
 	}
 	else if (stringcmp(argv[i], "-draw_matrix") == 0) {
 		f_draw_matrix = TRUE;
 		Draw_bitmap_control = NEW_OBJECT(draw_bitmap_control);
-		cout << "reading -draw_matrix" << endl;
+		if (f_v) {
+			cout << "reading -draw_matrix" << endl;
+		}
 		i += Draw_bitmap_control->read_arguments(argc - (i + 1),
 			argv + i + 1, verbose_level);
-		cout << "i = " << i << endl;
-		cout << "argc = " << argc << endl;
-		if (i < argc) {
-			cout << "next argument is " << argv[i] << endl;
+		if (f_v) {
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-draw_matrix " << endl;
+			Draw_bitmap_control->print();
 		}
-		cout << "-draw_matrix " << endl;
 	}
 	else if (stringcmp(argv[i], "-reformat") == 0) {
 		f_reformat = TRUE;
 		reformat_fname_in.assign(argv[++i]);
 		reformat_fname_out.assign(argv[++i]);
 		reformat_nb_cols = strtoi(argv[++i]);
-		cout << "-reformat " << reformat_fname_in
+		if (f_v) {
+			cout << "-reformat " << reformat_fname_in
 				<< " " << reformat_fname_out
 				<< " " << reformat_nb_cols << endl;
+		}
 	}
 	else if (stringcmp(argv[i], "-split_by_values") == 0) {
 		f_split_by_values = TRUE;
 		split_by_values_fname_in.assign(argv[++i]);
-		cout << "-split_by_values " << split_by_values_fname_in << endl;
+		if (f_v) {
+			cout << "-split_by_values " << split_by_values_fname_in << endl;
+		}
 	}
 	else if (stringcmp(argv[i], "-store_as_csv_file") == 0) {
 		f_store_as_csv_file = TRUE;
@@ -313,17 +337,21 @@ void interface_toolkit::read_arguments(int argc,
 		store_as_csv_file_m = strtoi(argv[++i]);
 		store_as_csv_file_n = strtoi(argv[++i]);
 		store_as_csv_file_data.assign(argv[++i]);
-		cout << "-store_as_csv_file " << store_as_csv_file_fname
+		if (f_v) {
+			cout << "-store_as_csv_file " << store_as_csv_file_fname
 				<< " " << store_as_csv_file_m
 				<< " " << store_as_csv_file_n
 				<< " " << store_as_csv_file_data << endl;
+		}
 	}
 	else if (stringcmp(argv[i], "-mv") == 0) {
 		f_mv = TRUE;
 		mv_a.assign(argv[++i]);
 		mv_b.assign(argv[++i]);
-		cout << "-mv " << mv_a
+		if (f_v) {
+			cout << "-mv " << mv_a
 				<< " " << mv_b << endl;
+		}
 	}
 	else if (stringcmp(argv[i], "-loop") == 0) {
 		f_loop = TRUE;
@@ -344,36 +372,44 @@ void interface_toolkit::read_arguments(int argc,
 			cout << "-loop cannot find -end_loop" << endl;
 			exit(1);
 		}
-		cout << "-loop " << loop_variable
+		if (f_v) {
+			cout << "-loop " << loop_variable
 				<< " " << loop_from
 				<< " " << loop_to
 				<< " " << loop_step
 				<< " " << loop_start_idx
 				<< " " << loop_end_idx;
 
-		for (int j = loop_start_idx; j < loop_end_idx; j++) {
-			cout << " " << argv[j];
+			for (int j = loop_start_idx; j < loop_end_idx; j++) {
+				cout << " " << argv[j];
+			}
+			cout << endl;
 		}
-		cout << endl;
-
 	}
 	else if (stringcmp(argv[i], "-plot_function") == 0) {
 		f_plot_function = TRUE;
 		plot_function_fname.assign(argv[++i]);
-		cout << "-plot_function " << plot_function_fname << endl;
+		if (f_v) {
+			cout << "-plot_function " << plot_function_fname << endl;
+		}
 	}
 	else if (stringcmp(argv[i], "-draw_projective_curve") == 0) {
 		f_draw_projective_curve = TRUE;
 		Draw_projective_curve_description = NEW_OBJECT(draw_projective_curve_description);
-		cout << "reading -draw_projective_curve" << endl;
+		if (f_v) {
+			cout << "reading -draw_projective_curve" << endl;
+		}
 		i += Draw_projective_curve_description->read_arguments(argc - (i + 1),
 			argv + i + 1, verbose_level);
-		cout << "i = " << i << endl;
-		cout << "argc = " << argc << endl;
-		if (i < argc) {
-			cout << "next argument is " << argv[i] << endl;
+		if (f_v) {
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-draw_projective_curve " << endl;
+			Draw_projective_curve_description->print();
 		}
-		cout << "-draw_projective_curve " << endl;
 	}
 
 

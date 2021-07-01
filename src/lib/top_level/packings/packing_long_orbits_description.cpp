@@ -29,13 +29,6 @@ packing_long_orbits_description::packing_long_orbits_description()
 	f_mixed_orbits = FALSE;
 	//std::string mixed_orbits_length_text;
 
-#if 0
-	f_clique_size = FALSE;
-	clique_size = 0;
-
-	f_max_clique_size = FALSE;
-	max_clique_size = 0;
-#endif
 
 	f_list_of_cases_from_file = FALSE;
 	//std::string process_list_of_cases_from_file_fname;
@@ -85,19 +78,6 @@ int packing_long_orbits_description::read_arguments(int argc, std::string *argv,
 			cout << "-mixed_orbits " << mixed_orbits_length_text << " " << endl;
 		}
 
-#if 0
-		else if (stringcmp(argv[i], "-clique_size") == 0) {
-			f_clique_size = TRUE;
-			clique_size = strtoi(argv[++i]);
-			cout << "-clique_size " << clique_size << " " << endl;
-		}
-
-		else if (stringcmp(argv[i], "-max_clique_size") == 0) {
-			f_max_clique_size = TRUE;
-			max_clique_size = strtoi(argv[++i]);
-			cout << "-max_clique_size " << max_clique_size << " " << endl;
-		}
-#endif
 
 		else if (stringcmp(argv[i], "-list_of_cases_from_file") == 0) {
 			f_list_of_cases_from_file = TRUE;
@@ -143,6 +123,49 @@ int packing_long_orbits_description::read_arguments(int argc, std::string *argv,
 
 	cout << "packing_long_orbits_description::read_arguments done" << endl;
 	return i + 1;
+}
+
+void packing_long_orbits_description::print()
+{
+	if (f_split) {
+		cout << "-split " << split_r << " " << split_m << " " << endl;
+	}
+
+
+	if (f_orbit_length) {
+		cout << "-orbit_length " << orbit_length << " " << endl;
+	}
+
+	if (f_mixed_orbits) {
+		cout << "-mixed_orbits " << mixed_orbits_length_text << " " << endl;
+	}
+
+
+	if (f_list_of_cases_from_file) {
+		cout << "-list_of_cases_from_file "
+			<< list_of_cases_from_file_fname << " "
+			<< endl;
+	}
+
+
+
+
+	if (f_solution_path) {
+		cout << "-solution_path " << solution_path << endl;
+	}
+
+	if (f_create_graphs) {
+		cout << "-create_graphs " << endl;
+	}
+
+	if (f_solve) {
+		cout << "-solve " << endl;
+	}
+
+	if (f_read_solutions) {
+		cout << "-read_solutions " << endl;
+	}
+
 }
 
 

@@ -758,7 +758,7 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 
 				cout << "Time ";
 				Os.time_check_delta(cout, dt);
-				cout << " --- New isomorphism type! input set " << h
+				cout << " --- New isomorphism type! ago=" << SG->group_order_as_lint() << ", input set " << h
 						<< " / " << SoS->nb_sets << " The n e w number of "
 						"isomorphism types is " << CB->nb_types << endl;
 

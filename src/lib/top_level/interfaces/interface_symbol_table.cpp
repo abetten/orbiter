@@ -129,7 +129,9 @@ void interface_symbol_table::read_arguments(
 
 	else if (stringcmp(argv[i], "-print_symbols") == 0) {
 		f_print_symbols = TRUE;
-		cout << "-print_symbols" << endl;
+		if (f_v) {
+			cout << "-print_symbols" << endl;
+		}
 		i++;
 	}
 

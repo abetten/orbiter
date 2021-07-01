@@ -59,7 +59,7 @@ int interface_povray::recognize_keyword(int argc, std::string *argv, int i, int 
 	if (stringcmp(argv[i], "-povray") == 0) {
 		return true;
 	}
-	if (stringcmp(argv[i], "-prepare_frames") == 0) {
+	else if (stringcmp(argv[i], "-prepare_frames") == 0) {
 		return true;
 	}
 	return false;
@@ -78,7 +78,9 @@ void interface_povray::read_arguments(int argc, std::string *argv, int &i, int v
 	}
 	if (stringcmp(argv[i], "-povray") == 0) {
 		f_povray = TRUE;
-		cout << "-povray " << endl;
+		if (f_v) {
+			cout << "-povray " << endl;
+		}
 		i++;
 
 		S = NEW_OBJECT(scene);
@@ -91,52 +93,69 @@ void interface_povray::read_arguments(int argc, std::string *argv, int &i, int v
 				i += Opt->read_arguments(argc - (i - 1),
 					argv + i + 1, verbose_level);
 
-				cout << "-video_options" << endl;
-				cout << "done with -video_options " << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
+				if (f_v) {
+					cout << "-video_options" << endl;
+					cout << "done with -video_options " << endl;
+					cout << "i = " << i << endl;
+					cout << "argc = " << argc << endl;
+					if (i < argc) {
+						cout << "next argument is " << argv[i] << endl;
+					}
 				}
 			}
 			else if (stringcmp(argv[i], "-round") == 0) {
 				f_round = TRUE;
 				round = strtoi(argv[++i]);
-				cout << "-round " << round << endl;
+				if (f_v) {
+					cout << "-round " << round << endl;
+				}
 			}
 
 			else if (stringcmp(argv[i], "-rounds") == 0) {
 				f_rounds = TRUE;
 				rounds_as_string.assign(argv[++i]);
-				cout << "-rounds " << rounds_as_string << endl;
+				if (f_v) {
+					cout << "-rounds " << rounds_as_string << endl;
+				}
 			}
 			else if (stringcmp(argv[i], "-nb_frames_default") == 0) {
 				f_nb_frames_default = TRUE;
 				nb_frames_default = strtoi(argv[++i]);
-				cout << "-nb_frames_default " << nb_frames_default << endl;
+				if (f_v) {
+					cout << "-nb_frames_default " << nb_frames_default << endl;
+				}
 			}
 			else if (stringcmp(argv[i], "-output_mask") == 0) {
 				f_output_mask = TRUE;
 				output_mask.assign(argv[++i]);
-				cout << "-output_mask " << output_mask << endl;
+				if (f_v) {
+					cout << "-output_mask " << output_mask << endl;
+				}
 			}
 			else if (stringcmp(argv[i], "-scene_objects") == 0) {
-				cout << "-scene_objects " << endl;
+				if (f_v) {
+					cout << "-scene_objects " << endl;
+				}
 				i++;
 				i = S->read_scene_objects(argc, argv, i, verbose_level);
-				cout << "done with -scene_objects " << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
+				if (f_v) {
+					cout << "done with -scene_objects " << endl;
+					cout << "i = " << i << endl;
+					cout << "argc = " << argc << endl;
+					if (i < argc) {
+						cout << "next argument is " << argv[i] << endl;
+					}
 				}
 			}
 			else if (stringcmp(argv[i], "-povray_end") == 0) {
-				cout << "-povray_end " << endl;
+				if (f_v) {
+					cout << "-povray_end " << endl;
+				}
 				break;
 			}
 			else {
 				cout << "unrecognized option " << argv[i] << endl;
+				exit(1);
 			}
 		}
 		if (Opt == NULL) {
@@ -160,13 +179,15 @@ void interface_povray::read_arguments(int argc, std::string *argv, int &i, int v
 	else if (stringcmp(argv[i], "-prepare_frames") == 0) {
 		f_prepare_frames = TRUE;
 		Prepare_frames = NEW_OBJECT(prepare_frames);
-		i += Prepare_frames->parse_arguments(argc - (i + 1), argv + i + 1);
+		i += Prepare_frames->parse_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 
-		cout << "done reading -prepare_frames " << endl;
-		cout << "i = " << i << endl;
-		cout << "argc = " << argc << endl;
-		if (i < argc) {
-			cout << "next argument is " << argv[i] << endl;
+		if (f_v) {
+			cout << "done reading -prepare_frames " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
 		}
 	}
 	if (f_v) {

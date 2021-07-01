@@ -271,14 +271,6 @@ public:
 	int f_mixed_orbits;
 	std::string mixed_orbits_length_text;
 
-#if 0
-	int f_clique_size;
-	int clique_size;
-
-	int f_max_clique_size;
-	int max_clique_size;
-#endif
-
 	int f_list_of_cases_from_file;
 	std::string list_of_cases_from_file_fname;
 
@@ -296,6 +288,8 @@ public:
 	~packing_long_orbits_description();
 	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
+	void print();
+
 };
 
 // #############################################################################
@@ -338,8 +332,8 @@ public:
 			packing_long_orbits_description *Descr,
 			int verbose_level);
 	void list_of_cases_from_file(int verbose_level);
-	void save_packings_by_case(std::vector<std::vector<std::vector<int> > > &Packings_by_case, int verbose_level);
-	void do_single_case(int verbose_level);
+	void save_packings_by_case(std::string &fname_packings,
+			std::vector<std::vector<std::vector<int> > > &Packings_by_case, int verbose_level);
 	void process_single_case(
 			std::vector<std::vector<int> > &Packings_classified,
 			std::vector<std::vector<int> > &Packings,
@@ -424,24 +418,14 @@ public:
 
 class packing_was_description {
 public:
-	//int f_spreads_invariant_under_H;
 
 	int f_process_long_orbits;
 	packing_long_orbits_description *Long_Orbits_Descr;
 
-	int f_problem_label;
-	std::string problem_label;
-
-	//int f_type_of_fixed_spreads;
 	int f_fixp_clique_types_save_individually;
 
 	int f_spread_tables_prefix;
 	std::string spread_tables_prefix;
-
-#if 0
-	int f_output_path;
-	std::string output_path;
-#endif
 
 	int f_exact_cover;
 	exact_cover_arguments *ECA;
@@ -459,14 +443,13 @@ public:
 
 	int f_report;
 
-	//int clique_size;
-
 	int f_regular_packing;
 
 	packing_was_description();
 	~packing_was_description();
 	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
+	void print();
 
 };
 
@@ -479,6 +462,9 @@ public:
 class packing_was_fixpoints_activity_description {
 public:
 	int f_report;
+
+	int f_print_packing;
+	std::string print_packing_text;
 
 	packing_was_fixpoints_activity_description();
 	~packing_was_fixpoints_activity_description();
@@ -549,7 +535,7 @@ public:
 	void init(packing_was *PW,
 			int fixpoint_clique_size, poset_classification_control *Control,
 			int verbose_level);
-	void setup_file_names(int verbose_level);
+	void setup_file_names(int clique_size, int verbose_level);
 	void create_graph_on_fixpoints(int verbose_level);
 	void action_on_fixpoints(int verbose_level);
 	void compute_cliques_on_fixpoint_graph(
@@ -568,6 +554,7 @@ public:
 	void process_long_orbits(int verbose_level);
 	long int *clique_by_index(int idx);
 	strong_generators *get_stabilizer(int idx);
+	void print_packing(long int *packing, int sz, int verbose_level);
 	void process_long_orbits(
 			int clique_index,
 			int f_solution_path,

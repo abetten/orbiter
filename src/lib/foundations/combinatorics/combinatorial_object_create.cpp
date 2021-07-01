@@ -20,7 +20,8 @@ namespace foundations {
 
 combinatorial_object_create::combinatorial_object_create()
 {
-	F = NULL;
+	Descr = NULL;
+	//F = NULL;
 	//A = NULL;
 	//f_has_group = FALSE;
 	//Sg = NULL;
@@ -29,30 +30,22 @@ combinatorial_object_create::combinatorial_object_create()
 	nb_pts = 0;
 	Pts = NULL;
 
-	null();
+	//null();
 }
 
 combinatorial_object_create::~combinatorial_object_create()
 {
-	freeself();
-}
-
-void combinatorial_object_create::null()
-{
-}
-
-void combinatorial_object_create::freeself()
-{
+#if 0
 	if (F) {
 		delete F;
 		}
+#endif
 	if (Pts) {
 		FREE_lint(Pts);
-		}
-	null();
+	}
 }
 
-void combinatorial_object_create::init(combinatorial_object_description *Descr, int verbose_level)
+void combinatorial_object_create::init(combinatorial_object_description *Descr, projective_space *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	number_theory_domain NT;
@@ -60,8 +53,11 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 
 	if (f_v) {
 		cout << "combinatorial_object_create::init" << endl;
-		}
+	}
+	Descr->P = P;
 	combinatorial_object_create::Descr = Descr;
+
+#if 0
 	if (!Descr->f_q) {
 		cout << "combinatorial_object_create::init !Descr->f_q" << endl;
 		exit(1);
@@ -72,8 +68,12 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 		}
 	F = NEW_OBJECT(finite_field);
 	F->finite_field_init(q, 0);
+#endif
 
 
+	finite_field *F;
+
+	F = P->F;
 
 
 	if (Descr->f_hyperoval) {
@@ -109,6 +109,7 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 		F->export_gap(3, Pts, nb_pts, fname);
 
 	}
+#if 0
 	else if (Descr->f_adelaide_hyperoval) {
 
 		finite_field *FQ;
@@ -132,6 +133,7 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 		FREE_OBJECT(S);
 		FREE_OBJECT(FQ);
 	}
+#endif
 	else if (Descr->f_BLT_database) {
 		F->create_BLT_from_database(Descr->f_BLT_in_PG /* f_embedded */, Descr->BLT_k,
 			fname, nb_pts, Pts,
@@ -188,6 +190,7 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 			fname, nb_pts, Pts,
 			verbose_level);
 	}
+#if 0
 	else if (Descr->f_Baer) {
 		if (!Descr->f_n) {
 			cout << "please specify the projective dimension "
@@ -211,23 +214,14 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 			verbose_level);
 		FREE_OBJECT(FQ);
 	}
+#endif
 	else if (Descr->f_orthogonal) {
-		if (!Descr->f_n) {
-			cout << "please specify the projective dimension "
-					"using the option -n <n>" << endl;
-			exit(1);
-			}
-		F->create_orthogonal(Descr->orthogonal_epsilon, Descr->n,
+		F->create_orthogonal(Descr->orthogonal_epsilon, P->n,
 			fname, nb_pts, Pts,
 			verbose_level);
 	}
 	else if (Descr->f_hermitian) {
-		if (!Descr->f_n) {
-			cout << "please specify the projective dimension "
-					"using the option -n <n>" << endl;
-			exit(1);
-			}
-		F->create_hermitian(Descr->n,
+		F->create_hermitian(P->n,
 			fname, nb_pts, Pts,
 			verbose_level);
 	}
@@ -247,13 +241,8 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 			fname, nb_pts, Pts,
 			verbose_level);
 	}
+
 #if 0
-	else if (Descr->f_Hill_cap_56) {
-		Hill_cap56(
-			fname, nb_pts, Pts,
-			verbose_level);
-	}
-#endif
 	else if (Descr->f_ttp_code) {
 
 		if (!Descr->f_Q) {
@@ -272,11 +261,13 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 			verbose_level);
 		FREE_OBJECT(FQ);
 	}
+#endif
 	else if (Descr->f_unital_XXq_YZq_ZYq) {
 		F->create_unital_XXq_YZq_ZYq(
 			fname, nb_pts, Pts,
 			verbose_level);
 	}
+#if 0
 	else if (Descr->f_desarguesian_line_spread_in_PG_3_q) {
 
 		if (!Descr->f_Q) {
@@ -297,6 +288,9 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 		FREE_OBJECT(FQ);
 
 	}
+#endif
+
+#if 0
 	else if (Descr->f_Buekenhout_Metz) {
 
 		finite_field *FQ;
@@ -311,23 +305,15 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 			verbose_level);
 
 	}
+#endif
+
 	else if (Descr->f_whole_space) {
-		if (!Descr->f_n) {
-			cout << "please specify the projective dimension "
-					"using the option -n <n>" << endl;
-			exit(1);
-			}
-		F->create_whole_space(Descr->n,
+		F->create_whole_space(P->n,
 			fname, nb_pts, Pts,
 			verbose_level);
 	}
 	else if (Descr->f_hyperplane) {
-		if (!Descr->f_n) {
-			cout << "please specify the projective dimension "
-					"using the option -n <n>" << endl;
-			exit(1);
-			}
-		F->create_hyperplane(Descr->n,
+		F->create_hyperplane(P->n,
 				Descr->pt,
 			fname, nb_pts, Pts,
 			verbose_level);
@@ -345,7 +331,7 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 	else if (Descr->f_projective_variety) {
 		F->create_projective_variety(
 				Descr->variety_label,
-				Descr->n + 1, Descr->variety_degree,
+				P->n + 1, Descr->variety_degree,
 				Descr->variety_coeffs,
 				Descr->Monomial_ordering_type,
 				fname, nb_pts, Pts,
@@ -354,7 +340,7 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 	else if (Descr->f_intersection_of_zariski_open_sets) {
 		F->create_intersection_of_zariski_open_sets(
 				Descr->variety_label,
-				Descr->n + 1, Descr->variety_degree,
+				P->n + 1, Descr->variety_degree,
 				Descr->Variety_coeffs,
 				Descr->Monomial_ordering_type,
 				fname, nb_pts, Pts,
@@ -363,7 +349,7 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 	else if (Descr->f_number_of_conditions_satisfied) {
 		F->number_of_conditions_satisfied(
 				Descr->variety_label,
-				Descr->n + 1, Descr->variety_degree,
+				P->n + 1, Descr->variety_degree,
 				Descr->Variety_coeffs,
 				Descr->Monomial_ordering_type,
 				Descr->number_of_conditions_satisfied_fname,

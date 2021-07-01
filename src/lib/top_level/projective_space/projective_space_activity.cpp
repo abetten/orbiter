@@ -103,6 +103,27 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 	}
 
+	else if (Descr->f_define_object) {
+		cout << "-define_object " << Descr->define_object_label << endl;
+		//Object_Descr->print();
+
+		combinatorial_object_create *CombObj;
+
+		CombObj = NEW_OBJECT(combinatorial_object_create);
+
+		CombObj->init(Descr->Object_Descr, PA->P, verbose_level);
+
+		orbiter_symbol_table_entry *Symb;
+
+		Symb = NEW_OBJECT(orbiter_symbol_table_entry);
+
+		Symb->init_combinatorial_object(Descr->define_object_label, CombObj, verbose_level);
+		if (f_v) {
+			cout << "before Orbiter->add_symbol_table_entry " << Descr->define_surface_label << endl;
+		}
+		Orbiter->add_symbol_table_entry(Descr->define_surface_label, Symb, verbose_level);
+
+	}
 	else if (Descr->f_define_surface) {
 
 		cout << "f_define_surface label = " << Descr->define_surface_label << endl;
@@ -273,7 +294,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 				Descr->surface_description, Descr->Control_six_arcs,
 				verbose_level);
 	}
-	else if (Descr->f_six_arcs) {
+	else if (Descr->f_six_arcs_not_on_conic) {
 		if (!Descr->f_control_six_arcs) {
 			cout << "please use option -control_six_arcs <description> -end" << endl;
 			exit(1);
@@ -1045,25 +1066,6 @@ void projective_space_activity::do_create_quartic_curve(
 	if (f_v) {
 		cout << "projective_space_activity::do_create_quartic_curve" << endl;
 		cout << "projective_space_activity::do_create_quartic_curve verbose_level=" << verbose_level << endl;
-	}
-
-	int q;
-
-	if (f_v) {
-		cout << "projective_space_activity::do_create_quartic_curve before Surface_Descr->get_q" << endl;
-	}
-	q = Quartic_curve_descr->get_q();
-	if (f_v) {
-		cout << "projective_space_activity::do_create_quartic_curve q = " << q << endl;
-	}
-
-	if (PA->q != q) {
-		cout << "projective_space_activity::do_create_quartic_curve PA->q != q" << endl;
-		exit(1);
-	}
-	if (PA->n != 2) {
-		cout << "projective_space_activity::do_create_quartic_curve we need a two-dimensional projective space" << endl;
-		exit(1);
 	}
 
 

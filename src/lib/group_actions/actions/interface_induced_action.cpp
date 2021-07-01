@@ -1508,7 +1508,7 @@ static void induced_action_print_point(action &A,
 {
 	action_global AG;
 
-#if 1
+#if 0
 	cout << "induced_action_print_point type=";
 	AG.action_print_symmetry_group_type(cout, A.type_G);
 	cout << endl;

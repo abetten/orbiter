@@ -349,6 +349,11 @@ public:
 	std::string decomposition_by_element_data;
 	std::string decomposition_by_element_fname;
 
+	int f_define_object;
+	std::string define_object_label;
+	combinatorial_object_description *Object_Descr;
+
+
 	int f_define_surface;
 	std::string define_surface_label;
 	surface_create_description *Surface_Descr;
@@ -394,7 +399,7 @@ public:
 	std::string sweep_4_27_fname;
 	surface_create_description *sweep_4_27_surface_description;
 
-	int f_six_arcs;
+	int f_six_arcs_not_on_conic;
 	int f_filter_by_nb_Eckardt_points;
 	int nb_Eckardt_points;
 	int f_surface_quartic;
@@ -820,6 +825,7 @@ public:
 	int read_arguments(
 		int argc, std::string *argv,
 		int verbose_level);
+	void print();
 
 };
 

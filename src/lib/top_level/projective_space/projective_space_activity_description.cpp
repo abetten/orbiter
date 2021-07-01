@@ -56,6 +56,12 @@ projective_space_activity_description::projective_space_activity_description()
 	//std::string decomposition_by_element_fname;
 
 
+	f_define_object = FALSE;
+	//std::string define_object_label;
+	Object_Descr = NULL;
+
+
+
 	f_define_surface = FALSE;
 	//std::string define_surface_label
 	Surface_Descr = NULL;
@@ -100,7 +106,7 @@ projective_space_activity_description::projective_space_activity_description()
 	//std::string sweep_4_27_fname;
 	sweep_4_27_surface_description = NULL;
 
-	f_six_arcs = FALSE;
+	f_six_arcs_not_on_conic = FALSE;
 	f_filter_by_nb_Eckardt_points = FALSE;
 	nb_Eckardt_points = 0;
 
@@ -279,6 +285,22 @@ int projective_space_activity_description::read_arguments(
 					<< " " << decomposition_by_element_fname
 					<< endl;
 		}
+		else if (stringcmp(argv[i], "-define_object") == 0) {
+			f_define_object = TRUE;
+			cout << "-define_object, reading extra arguments" << endl;
+
+			define_object_label.assign(argv[++i]);
+			Object_Descr = NEW_OBJECT(combinatorial_object_description);
+
+			i += Object_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
+			cout << "done reading -define_object " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-define_object " << define_object_label << endl;
+		}
 		else if (stringcmp(argv[i], "-define_surface") == 0) {
 			f_define_surface = TRUE;
 			cout << "-define_surface, reading extra arguments" << endl;
@@ -409,9 +431,9 @@ int projective_space_activity_description::read_arguments(
 			cout << "-sweep_4_27 " << sweep_4_27_fname << endl;
 		}
 
-		else if (stringcmp(argv[i], "-six_arcs") == 0) {
-			f_six_arcs = TRUE;
-			cout << "-six_arcs" << endl;
+		else if (stringcmp(argv[i], "-six_arcs_not_on_conic") == 0) {
+			f_six_arcs_not_on_conic = TRUE;
+			cout << "-six_arcs_not_on_conic" << endl;
 		}
 		else if (stringcmp(argv[i], "-filter_by_nb_Eckardt_points") == 0) {
 			f_filter_by_nb_Eckardt_points = TRUE;
@@ -651,11 +673,12 @@ int projective_space_activity_description::read_arguments(
 void projective_space_activity_description::print()
 {
 	if (f_input) {
-		f_input = TRUE;
 		cout << "-input" << endl;
+		Data->print();
 	}
 	if (f_canonical_form_PG) {
 		cout << "-canonical_form_PG " << endl;
+		Canonical_form_PG_Descr->print();
 	}
 	if (f_table_of_cubic_surfaces_compute_properties) {
 		cout << "-table_of_cubic_surfaces_compute_properties "
@@ -695,8 +718,13 @@ void projective_space_activity_description::print()
 				<< " " << decomposition_by_element_fname
 				<< endl;
 	}
+	if (f_define_object) {
+		cout << "-define_object " << define_object_label << endl;
+		Object_Descr->print();
+	}
 	if (f_define_surface) {
 		cout << "-define_surface " << define_surface_label << endl;
+		Surface_Descr->print();
 	}
 	if (f_table_of_quartic_curves) {
 		cout << "-table_of_quartic_curves " << endl;
@@ -706,6 +734,7 @@ void projective_space_activity_description::print()
 	}
 	if (f_define_quartic_curve) {
 		cout << "-define_quartic_curve " << define_quartic_curve_label << endl;
+		Quartic_curve_descr->print();
 	}
 
 
@@ -741,8 +770,8 @@ void projective_space_activity_description::print()
 		cout << "-sweep_4_27 " << sweep_4_27_fname << endl;
 	}
 
-	if (f_six_arcs) {
-		cout << "-six_arcs" << endl;
+	if (f_six_arcs_not_on_conic) {
+		cout << "-six_arcs_not_on_conic" << endl;
 	}
 	if (f_filter_by_nb_Eckardt_points) {
 		cout << "-filter_by_nb_Eckardt_points " << nb_Eckardt_points << endl;
@@ -758,12 +787,15 @@ void projective_space_activity_description::print()
 	}
 	if (f_trihedra1_control) {
 		cout << "-trihedra1_control " << endl;
+		Trihedra1_control->print();
 	}
 	if (f_trihedra2_control) {
 		cout << "-trihedra2_control " << endl;
+		Trihedra2_control->print();
 	}
 	if (f_control_six_arcs) {
 		cout << "-control_six_arcs " << endl;
+		Control_six_arcs->print();
 	}
 	if (f_make_gilbert_varshamov_code) {
 		cout << "-make_gilbert_varshamov_code" << make_gilbert_varshamov_code_n
@@ -778,6 +810,7 @@ void projective_space_activity_description::print()
 	// semifields
 	if (f_classify_semifields) {
 		cout << "-classify_semifields " << endl;
+		Semifield_classify_Control->print();
 	}
 	if (f_cheat_sheet) {
 		cout << "-cheat_sheet " << endl;

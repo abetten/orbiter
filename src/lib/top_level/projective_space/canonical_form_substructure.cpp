@@ -35,27 +35,6 @@ canonical_form_substructure::canonical_form_substructure()
 	canonical_pts = NULL;
 
 	SubSt = NULL;
-#if 0
-	nCk = 0;
-	isotype = NULL;
-	orbit_frequencies = NULL;
-	nb_orbits = 0;
-	T = NULL;
-
-	SoS = NULL;
-	types = NULL;
-	nb_types = 0;
-	selected_type = 0;
-	selected_orbit = 0;
-	selected_frequency = 0;
-
-	//longinteger_object go_min;
-
-	gens = NULL;
-
-	interesting_subsets = NULL;
-	nb_interesting_subsets = 0;
-#endif
 
 	CS = NULL;
 
@@ -144,134 +123,6 @@ void canonical_form_substructure::classify_curve_with_substructure(
 
 
 
-#if 0
-	if (f_v) {
-		cout << "canonical_form_substructure::classify_curve_with_substructure "
-				"before PC->trace_all_k_subsets_and_compute_frequencies" << endl;
-	}
-
-	Canonical_form_classifier->SubC->PC->trace_all_k_subsets_and_compute_frequencies(
-			pts, nb_pts, Canonical_form_classifier->Descr->substructure_size,
-			nCk, isotype, orbit_frequencies, nb_orbits,
-			verbose_level);
-
-	if (f_v) {
-		cout << "canonical_form_substructure::classify_curve_with_substructure "
-				"after PC->trace_all_k_subsets_and_compute_frequencies" << endl;
-	}
-
-
-
-
-	T = NEW_OBJECT(tally);
-
-	T->init(orbit_frequencies, nb_orbits, FALSE, 0);
-
-
-	if (f_v) {
-		cout << "counter = " << counter << " cnt = " << cnt << " / "
-				<< Canonical_form_classifier->Descr->nb_files
-				<< ", row = " << row << " eqn=";
-		Orbiter->Int_vec.print(cout, eqn, sz);
-
-		cout << " pts=";
-		Orbiter->Lint_vec.print(cout, pts, nb_pts);
-		cout << endl;
-
-#if 0
-		cout << "orbit isotype=";
-		Orbiter->Int_vec.print(cout, isotype, nCk);
-		cout << endl;
-#endif
-		cout << "orbit frequencies=";
-		Orbiter->Int_vec.print(cout, orbit_frequencies, nb_orbits);
-		cout << endl;
-		cout << " orbit frequency types=";
-		T->print_naked(FALSE /* f_backwards */);
-		cout << endl;
-	}
-
-	selected_type = -1;
-	selected_orbit = -1;
-	selected_frequency = 0;
-	longinteger_domain D;
-	int i, f, l, idx;
-	int j;
-
-
-
-	SoS = T->get_set_partition_and_types(types, nb_types, verbose_level);
-
-	for (i = 0; i < nb_types; i++) {
-		f = T->type_first[i];
-		l = T->type_len[i];
-
-		if (f_v) {
-			cout << types[i];
-			cout << " : ";
-			Orbiter->Lint_vec.print(cout, SoS->Sets[i], SoS->Set_size[i]);
-			cout << " : ";
-		}
-
-
-		for (j = 0; j < 1 /*SoS->Set_size[i]*/; j++) {
-
-			idx = SoS->Sets[i][j];
-
-			if (f_vv) {
-				cout << "type = " << i << " j=" << j << " idx=" << idx << endl;
-			}
-			longinteger_object go;
-
-			Canonical_form_classifier->SubC->PC->get_stabilizer_order(
-					Canonical_form_classifier->Descr->substructure_size,
-					idx, go);
-
-			if (types[i]) {
-
-				// types[i] must be greater than zero
-				// so the type really appears.
-
-				if (selected_type == -1) {
-					selected_type = j;
-					selected_orbit = idx;
-					selected_frequency = types[i];
-					go.assign_to(go_min);
-				}
-				else {
-					if (D.compare_unsigned(go, go_min) < 0) {
-						selected_type = j;
-						selected_orbit = idx;
-						selected_frequency = types[i];
-						go.assign_to(go_min);
-					}
-				}
-			}
-
-			if (FALSE) {
-				cout << go;
-				if (j < SoS->Set_size[i] - 1) {
-					cout << ", ";
-				}
-			}
-		}
-		if (f_vv) {
-			cout << endl;
-		}
-	}
-
-	if (f_v) {
-		cout << "selected_type = " << selected_type
-			<< " selected_orbit = " << selected_orbit
-			<< " selected_frequency = " << selected_frequency
-			<< " go_min = " << go_min << endl;
-	}
-
-	Canonical_form_classifier->SubC->PC->get_stabilizer_generators(
-		gens,
-		Canonical_form_classifier->Descr->substructure_size,
-		selected_orbit, 0 /*verbose_level*/);
-#else
 
 
 	SubSt = NEW_OBJECT(substructure_stats_and_selection);
@@ -287,7 +138,6 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		cout << "canonical_form_substructure::classify_curve_with_substructure after SubSt->init" << endl;
 	}
 
-#endif
 
 	if (f_v) {
 		cout << "canonical_form_substructure::classify_curve_with_substructure before handle_orbit" << endl;
@@ -349,12 +199,14 @@ void canonical_form_substructure::classify_curve_with_substructure(
 
 
 	if (f_v) {
-		cout << "canonical_form_substructure::classify_curve_with_substructure before AonHPD->compute_image_int_low_level" << endl;
+		cout << "canonical_form_substructure::classify_curve_with_substructure "
+				"before AonHPD->compute_image_int_low_level" << endl;
 	}
 	Canonical_form_classifier->AonHPD->compute_image_int_low_level(
 			trans1, eqn, intermediate_equation, verbose_level - 2);
 	if (f_v) {
-		cout << "canonical_form_substructure::classify_curve_with_substructure after AonHPD->compute_image_int_low_level" << endl;
+		cout << "canonical_form_substructure::classify_curve_with_substructure "
+				"after AonHPD->compute_image_int_low_level" << endl;
 	}
 
 	Orb = NEW_OBJECT(orbit_of_equations);
@@ -373,7 +225,8 @@ void canonical_form_substructure::classify_curve_with_substructure(
 	if (f_v) {
 		cout << "canonical_form_substructure::classify_curve_with_substructure "
 				"after Orb->init" << endl;
-		cout << "canonical_form_substructure::classify_curve_with_substructure found an orbit of length " << Orb->used_length << endl;
+		cout << "canonical_form_substructure::classify_curve_with_substructure "
+				"found an orbit of length " << Orb->used_length << endl;
 	}
 
 
@@ -444,30 +297,6 @@ void canonical_form_substructure::handle_orbit(
 		cout << "selected_orbit = " << SubSt->selected_orbit << endl;
 	}
 
-#if 0
-	PC = Canonical_form_classifier->SubC->PC;
-	A = Canonical_form_classifier->Descr->PA->A;
-	A2 = Canonical_form_classifier->Descr->PA->A;
-	intermediate_subset_size = Canonical_form_classifier->Descr->substructure_size;
-
-	if (f_v) {
-		cout << "canonical_form_substructure::handle_orbit we decide to go for subsets of size " << intermediate_subset_size << ", selected_frequency = " << selected_frequency << endl;
-	}
-
-	j = 0;
-	interesting_subsets = NEW_lint(SubSt->selected_frequency);
-	for (i = 0; i < SubSt->nCk; i++) {
-		if (SubSt->isotype[i] == selected_orbit) {
-			interesting_subsets[j++] = i;
-			//cout << "subset of rank " << i << " is isomorphic to orbit " << orb_idx << " j=" << j << endl;
-			}
-		}
-	if (j != selected_frequency) {
-		cout << "j != nb_interesting_subsets" << endl;
-		exit(1);
-		}
-	nb_interesting_subsets = selected_frequency;
-#endif
 
 	//overall_backtrack_nodes = 0;
 	if (f_v) {
@@ -504,13 +333,15 @@ void canonical_form_substructure::handle_orbit(
 
 
 	if (f_v) {
-		cout << "canonical_form_substructure::classify_curve_with_substructure before init_generators_for_the_conjugate_group_avGa" << endl;
+		cout << "canonical_form_substructure::classify_curve_with_substructure "
+				"before init_generators_for_the_conjugate_group_avGa" << endl;
 	}
 	Gens_stabilizer_canonical_form->init_generators_for_the_conjugate_group_avGa(
 			Gens_stabilizer_original_set, transporter_to_canonical_form,
 			0 /*verbose_level*/);
 	if (f_v) {
-		cout << "canonical_form_substructure::classify_curve_with_substructure after init_generators_for_the_conjugate_group_avGa" << endl;
+		cout << "canonical_form_substructure::classify_curve_with_substructure "
+				"after init_generators_for_the_conjugate_group_avGa" << endl;
 	}
 
 
@@ -519,8 +350,10 @@ void canonical_form_substructure::handle_orbit(
 
 	if (f_v) {
 		cout << "canonical_form_substructure::handle_orbit done with compute_stabilizer" << endl;
-		cout << "canonical_form_substructure::handle_orbit backtrack_nodes_first_time = " << CS->backtrack_nodes_first_time << endl;
-		cout << "canonical_form_substructure::handle_orbit backtrack_nodes_total_in_loop = " << CS->backtrack_nodes_total_in_loop << endl;
+		cout << "canonical_form_substructure::handle_orbit "
+				"backtrack_nodes_first_time = " << CS->backtrack_nodes_first_time << endl;
+		cout << "canonical_form_substructure::handle_orbit "
+				"backtrack_nodes_total_in_loop = " << CS->backtrack_nodes_total_in_loop << endl;
 		}
 
 

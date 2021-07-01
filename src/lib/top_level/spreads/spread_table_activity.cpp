@@ -70,10 +70,68 @@ void spread_table_activity::perform_activity(int verbose_level)
 
 		Sorting.lint_vec_heapsort(spread_elts, sz);
 
-
 		idx = P->find_spread(spread_elts, verbose_level);
 
 		cout << "The given spread has index " << idx << " in the spread table" << endl;
+
+
+	}
+	else if (Descr->f_find_spread_and_dualize) {
+		cout << "f_find_spread_and_dualize" << endl;
+		long int *spread_elts;
+		int sz;
+		int a, b;
+		sorting Sorting;
+
+
+
+		Orbiter->Lint_vec.scan(Descr->find_spread_and_dualize_text, spread_elts, sz);
+
+		if (sz != P->spread_size) {
+			cout << "the set does not have the right size" << endl;
+			cout << "sz=" << sz << endl;
+			cout << "P->spread_size=" << P->spread_size << endl;
+			exit(1);
+		}
+
+		Sorting.lint_vec_heapsort(spread_elts, sz);
+
+
+		a = P->find_spread(spread_elts, verbose_level);
+
+		cout << "The given spread has index " << a << " in the spread table" << endl;
+
+		b = P->Spread_table_with_selection->Spread_tables->dual_spread_idx[a];
+
+		cout << "The dual spread has index " << b << " in the spread table" << endl;
+
+	}
+	else if (Descr->f_dualize_packing) {
+		cout << "f_dualize_packing" << endl;
+		long int *packing;
+		int sz;
+		long int *dual_packing;
+		int a, b;
+		sorting Sorting;
+
+
+
+		Orbiter->Lint_vec.scan(Descr->dualize_packing_text, packing, sz);
+
+		cout << "The packing is : ";
+		Orbiter->Lint_vec.print(cout, packing, sz);
+		cout << endl;
+
+		dual_packing = NEW_lint(sz);
+		for (int i = 0; i < sz; i++) {
+			a = packing[i];
+			b = P->Spread_table_with_selection->Spread_tables->dual_spread_idx[a];
+			dual_packing[i] = b;
+		}
+
+		cout << "The dual packing is : ";
+		Orbiter->Lint_vec.print(cout, dual_packing, sz);
+		cout << endl;
 
 	}
 	else if (Descr->f_print_spreads) {

@@ -746,129 +746,129 @@ void interface_cryptography::print()
 	if (f_cipher && t == substitution) {
 		cout << "-cipher_substitution " << ptext << endl;
 	}
-	else if (f_cipher && t == vigenere) {
+	if (f_cipher && t == vigenere) {
 		cout << "cipher_vigenere" << ptext << " " << key << endl;
 	}
-	else if (f_cipher && t == affine) {
+	if (f_cipher && t == affine) {
 		cout << "-cipher_affine " << ptext << " " << affine_a << " " << affine_b << endl;
 	}
-	else if (f_analyze && t == substitution) {
+	if (f_analyze && t == substitution) {
 		cout << "-analyze_substitution " << ctext << endl;
 	}
-	else if (f_analyze && t == vigenere) {
+	if (f_analyze && t == vigenere) {
 		cout << "-analyze_vigenere " << ctext << endl;
 	}
-	else if (f_avk) {
+	if (f_avk) {
 		cout << "-analyze_vigenere_kasiski " << ctext << " " << key_length << endl;
 	}
-	else if (f_kasiski) {
+	if (f_kasiski) {
 		cout << "-kasiski " << ctext << " " << threshold << endl;
 	}
-	else if (f_decipher && t == substitution) {
+	if (f_decipher && t == substitution) {
 		cout << "-decipher_substitution " << ctext << " " << guess << endl;
 	}
-	else if (f_decipher && t == vigenere) {
+	if (f_decipher && t == vigenere) {
 		cout << "-decipher_vigenere " << ctext << " " << key << endl;
 	}
-	else if (f_decipher && t == affine) {
+	if (f_decipher && t == affine) {
 		cout << "-decipher_affine " << ctext << " " << guess << endl;
 	}
-	else if (f_RSA) {
+	if (f_RSA) {
 		cout << "-RSA " << RSA_d << " " << RSA_m << " " << RSA_block_size << " " << RSA_text << endl;
 	}
-	else if (f_RSA_encrypt_text) {
+	if (f_RSA_encrypt_text) {
 		cout << "-RSA_encrypt_text " << RSA_d << " "
 				<< RSA_m << " " << RSA_block_size << " " << RSA_encrypt_text << endl;
 	}
-	else if (f_RSA_setup) {
+	if (f_RSA_setup) {
 		cout << "-RSA_setup " << RSA_setup_nb_bits << " "
 				<< RSA_setup_nb_tests_solovay_strassen << " "
 				<< RSA_setup_f_miller_rabin_test << endl;
 	}
-	else if (f_primitive_root) {
+	if (f_primitive_root) {
 		cout << "-primitive_root " << primitive_root_p << endl;
 	}
-	else if (f_smallest_primitive_root) {
+	if (f_smallest_primitive_root) {
 		cout << "-smallest_primitive_root " << smallest_primitive_root_p << endl;
 	}
-	else if (f_smallest_primitive_root_interval) {
+	if (f_smallest_primitive_root_interval) {
 		cout << "-smallest_primitive_root_interval " << smallest_primitive_root_interval_min
 				<< " " << smallest_primitive_root_interval_max << endl;
 	}
-	else if (f_number_of_primitive_roots_interval) {
+	if (f_number_of_primitive_roots_interval) {
 		cout << "-number_of_primitive_roots_interval " << smallest_primitive_root_interval_min
 				<< " " << smallest_primitive_root_interval_max << endl;
 	}
-	else if (f_inverse_mod) {
+	if (f_inverse_mod) {
 		cout << "-inverse_mod " << inverse_mod_a << " " << inverse_mod_n << endl;
 	}
-	else if (f_extended_gcd) {
+	if (f_extended_gcd) {
 		cout << "-extended_gcd " << extended_gcd_a << " " << extended_gcd_b << endl;
 	}
-	else if (f_power_mod) {
+	if (f_power_mod) {
 		cout << "-power_mod " << power_mod_a << " " << power_mod_k << " " << power_mod_n << endl;
 	}
-	else if (f_discrete_log) {
+	if (f_discrete_log) {
 		cout << "-discrete_log " << discrete_log_y << " "
 				<< discrete_log_a << " " << discrete_log_m << endl;
 	}
-	else if (f_sift_smooth) {
+	if (f_sift_smooth) {
 		cout << "-sift_smooth " << sift_smooth_from << " "
 				<< sift_smooth_len << " " << sift_smooth_factor_base << endl;
 	}
-	else if (f_square_root) {
+	if (f_square_root) {
 		cout << "-square_root " << square_root_number << endl;
 	}
-	else if (f_square_root_mod) {
+	if (f_square_root_mod) {
 		cout << "-square_root_mod " << square_root_mod_a << " "
 				<< square_root_mod_m << endl;
 	}
-	else if (f_all_square_roots_mod_n) {
+	if (f_all_square_roots_mod_n) {
 		cout << "-all_square_roots_mod_n " << all_square_roots_mod_n_a << " "
 				<< all_square_roots_mod_n_n << endl;
 	}
-	else if (f_quadratic_sieve) {
+	if (f_quadratic_sieve) {
 		cout << "-quadratic_sieve " << quadratic_sieve_n << " "
 				<< quadratic_sieve_factorbase << " " << quadratic_sieve_x0 << endl;
 	}
-	else if (f_jacobi) {
+	if (f_jacobi) {
 		cout << "-jacobi " << jacobi_top << " "
 				<< jacobi_bottom << endl;
 	}
-	else if (f_solovay_strassen) {
+	if (f_solovay_strassen) {
 		cout << "-solovay_strassen " << solovay_strassen_p << " "
 				<< solovay_strassen_a << endl;
 	}
-	else if (f_miller_rabin) {
+	if (f_miller_rabin) {
 		cout << "-miller_rabin " << miller_rabin_p << " " << miller_rabin_nb_times << endl;
 	}
-	else if (f_fermat_test) {
+	if (f_fermat_test) {
 		cout << "-fermat_test " << fermat_test_p << " " << fermat_test_nb_times << endl;
 	}
-	else if (f_find_pseudoprime) {
+	if (f_find_pseudoprime) {
 		cout << "-find_pseudoprime " << find_pseudoprime_nb_digits
 				<< " " << find_pseudoprime_nb_fermat
 				<< " " << find_pseudoprime_nb_miller_rabin
 				<< " " << find_pseudoprime_nb_solovay_strassen << endl;
 	}
-	else if (f_find_strong_pseudoprime) {
+	if (f_find_strong_pseudoprime) {
 		cout << "-find_strong_pseudoprime " << find_pseudoprime_nb_digits
 				<< " " << find_pseudoprime_nb_fermat
 				<< " " << find_pseudoprime_nb_miller_rabin
 				<< endl;
 	}
-	else if (f_miller_rabin_text) {
+	if (f_miller_rabin_text) {
 		cout << "-miller_rabin " << miller_rabin_text_nb_times
 				<< " " << miller_rabin_number_text
 				<< endl;
 	}
-	else if (f_random) {
+	if (f_random) {
 		cout << "-random " << random_nb << " " << random_fname_csv << endl;
 	}
-	else if (f_random_last) {
+	if (f_random_last) {
 		cout << "-random_last " << random_last_nb << endl;
 	}
-	else if (f_affine_sequence) {
+	if (f_affine_sequence) {
 		cout << "-affine_sequence " << affine_sequence_a
 				<< " " << affine_sequence_c << " " << affine_sequence_m << endl;
 	}

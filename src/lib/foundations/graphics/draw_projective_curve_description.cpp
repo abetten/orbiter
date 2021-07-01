@@ -60,35 +60,49 @@ int draw_projective_curve_description::read_arguments(
 		if (stringcmp(argv[i], "-number") == 0) {
 			f_number = TRUE;
 			number = strtoi(argv[++i]);
-			cout << "-number " << number << endl;
+			if (f_v) {
+				cout << "-number " << number << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-file") == 0) {
 			f_file = TRUE;
 			fname.assign(argv[++i]);
-			cout << "-file " << fname << endl;
+			if (f_v) {
+				cout << "-file " << fname << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-animate") == 0) {
 			f_animate = TRUE;
 			animate_nb_of_steps = strtoi(argv[++i]);
-			cout << "-animate " << animate_nb_of_steps << endl;
+			if (f_v) {
+				cout << "-animate " << animate_nb_of_steps << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-animate_with_transition") == 0) {
 			f_animate_with_transition = TRUE;
 			animate_nb_of_steps = strtoi(argv[++i]);
 			animate_transition_nb_of_steps = strtoi(argv[++i]);
-			cout << "-animate_with_transition " << animate_nb_of_steps
-					<< " " << animate_transition_nb_of_steps << endl;
+			if (f_v) {
+				cout << "-animate_with_transition " << animate_nb_of_steps
+						<< " " << animate_transition_nb_of_steps << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-title_page") == 0) {
 			f_title_page = TRUE;
-			cout << "-title_page " << endl;
+			if (f_v) {
+				cout << "-title_page " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-trailer_page") == 0) {
 			f_trailer_page = TRUE;
-			cout << "-trailer_page " << endl;
+			if (f_v) {
+				cout << "-trailer_page " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-end") == 0) {
-			cout << "-end" << endl;
+			if (f_v) {
+				cout << "-end" << endl;
+			}
 			break;
 		}
 		else {
@@ -107,20 +121,20 @@ void draw_projective_curve_description::print()
 	if (f_number) {
 		cout << "-number " << number << endl;
 	}
-	else if (f_file) {
+	if (f_file) {
 		cout << "-file " << fname << endl;
 	}
-	else if (f_animate) {
+	if (f_animate) {
 		cout << "-animate " << animate_nb_of_steps << endl;
 	}
-	else if (f_animate_with_transition) {
+	if (f_animate_with_transition) {
 		cout << "-animate_with_transition " << animate_nb_of_steps
 				<< " " << animate_transition_nb_of_steps << endl;
 	}
-	else if (f_title_page) {
+	if (f_title_page) {
 		cout << "-title_page " << endl;
 	}
-	else if (f_trailer_page) {
+	if (f_trailer_page) {
 		cout << "-trailer_page " << endl;
 	}
 }

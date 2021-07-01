@@ -18,23 +18,11 @@ namespace top_level {
 
 packing_was_description::packing_was_description()
 {
-	//f_spreads_invariant_under_H = FALSE;
 
 	f_process_long_orbits = FALSE;
 	Long_Orbits_Descr = NULL;
 
-	f_problem_label = FALSE;
-	//problem_label;
-
-	//f_type_of_fixed_spreads = FALSE;
 	f_fixp_clique_types_save_individually = FALSE;
-	//f_label = FALSE;
-	//label = NULL;
-
-#if 0
-	f_output_path = FALSE;
-	//output_path = "";
-#endif
 
 	f_spread_tables_prefix = FALSE;
 	//spread_tables_prefix = "";
@@ -107,22 +95,6 @@ int packing_was_description::read_arguments(int argc, std::string *argv,
 			}
 		}
 
-#if 0
-		else if (stringcmp(argv[i], "-spreads_invariant_under_H") == 0) {
-			f_spreads_invariant_under_H = TRUE;
-			cout << "-spreads_invariant_under_H " << endl;
-		}
-#endif
-
-
-#if 0
-		else if (stringcmp(argv[i], "-type_of_fixed_spreads") == 0) {
-			f_type_of_fixed_spreads = TRUE;
-			clique_size = atoi(argv[++i]);
-			cout << "-type_of_fixed_spreads " << clique_size << endl;
-		}
-#endif
-
 		else if (stringcmp(argv[i], "-fixp_clique_types_save_individually") == 0) {
 			f_fixp_clique_types_save_individually = TRUE;
 			cout << "-fixp_clique_types_save_individually " << endl;
@@ -147,27 +119,12 @@ int packing_was_description::read_arguments(int argc, std::string *argv,
 
 
 
-		else if (stringcmp(argv[i], "-problem_label") == 0) {
-			f_problem_label = TRUE;
-			problem_label.assign(argv[++i]);
-			cout << "-problem_label " << problem_label << endl;
-		}
-
-
 		else if (stringcmp(argv[i], "-spread_tables_prefix") == 0) {
 			f_spread_tables_prefix = TRUE;
 			spread_tables_prefix.assign(argv[++i]);
 			cout << "-spread_tables_prefix "
 				<< spread_tables_prefix << endl;
 		}
-
-#if 0
-		else if (stringcmp(argv[i], "-output_path") == 0) {
-			f_output_path = TRUE;
-			output_path.assign(argv[++i]);
-			cout << "-output_path " << output_path << endl;
-		}
-#endif
 
 		else if (stringcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
@@ -215,12 +172,60 @@ int packing_was_description::read_arguments(int argc, std::string *argv,
 			break;
 		}
 		else {
-			cout << "ignoring argument " << argv[i] << endl;
+			cout << "packing_was_description::read_arguments unknown argument " << argv[i] << endl;
+			exit(1);
 		}
 	} // next i
 
 	cout << "packing_was_description::read_arguments done" << endl;
 	return i + 1;
+}
+
+
+void packing_was_description::print()
+{
+	if (f_H) {
+		cout << "-H" << " " << H_label << endl;
+		H_Descr->print();
+	}
+
+	if (f_N) {
+		cout << "-N" << " " << N_label << endl;
+		N_Descr->print();
+	}
+
+	if (f_fixp_clique_types_save_individually) {
+		cout << "-fixp_clique_types_save_individually " << endl;
+	}
+
+
+	if (f_process_long_orbits) {
+		cout << "-process_long_orbits " << endl;
+		Long_Orbits_Descr->print();
+	}
+
+
+
+
+	if (f_spread_tables_prefix) {
+		cout << "-spread_tables_prefix " << spread_tables_prefix << endl;
+	}
+
+	if (f_report) {
+		cout << "-report " << endl;
+	}
+
+	if (f_exact_cover) {
+		cout << "-exact_cover " << endl;
+	}
+
+	if (f_isomorph) {
+		cout << "-isomorph " << endl;
+	}
+
+	if (f_regular_packing) {
+		cout << "-regular_packing " << endl;
+	}
 }
 
 
