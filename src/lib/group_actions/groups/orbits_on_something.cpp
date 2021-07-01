@@ -1292,6 +1292,10 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 	os_interface Os;
 
 	type_idx = get_orbit_type_index(orbit_length);
+	if (f_v) {
+		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified "
+				"type_idx=" << type_idx << endl;
+	}
 	nb_points = my_orbits_classified->Set_size[type_idx];
 	if (f_v) {
 		cout << "orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_orbits_classified "
@@ -1807,7 +1811,14 @@ void orbits_on_something::report(std::ostream &ost, int verbose_level)
 
 		Orb = NEW_lint(orbit_length);
 
-		for (j = 0; j < nb_orbits; j++) {
+		int j_max;
+
+		j_max = MINIMUM(nb_orbits, 100);
+		if (j_max < nb_orbits) {
+			cout << "orbits_on_something::report step 2, cutting off at " << j_max << " because the number of orbits is too large: " << nb_orbits << endl;
+		}
+
+		for (j = 0; j < j_max; j++) {
 			idx = Orbits_classified->Sets[i][j];
 			ost << "Orbit " << idx << ":" << endl;
 

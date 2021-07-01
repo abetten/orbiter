@@ -23,6 +23,7 @@ namespace foundations {
 
 combinatorial_object_description::combinatorial_object_description()
 {
+#if 0
 	f_q = FALSE;
 	q = 0;
 	f_n = FALSE;
@@ -33,6 +34,9 @@ combinatorial_object_description::combinatorial_object_description()
 	Q = 0;
 	f_poly_Q = FALSE;
 	//poly_Q = NULL;
+#endif
+
+	P = NULL;
 
 	f_subiaco_oval = FALSE;
 	f_short = FALSE;
@@ -105,6 +109,7 @@ combinatorial_object_description::combinatorial_object_description()
 	f_projective_variety = FALSE;
 	//variety_label = NULL;
 	variety_degree = 0;
+	variety_n = 0;
 	//variety_coeffs = NULL;
 	Monomial_ordering_type = t_PART;
 
@@ -140,6 +145,7 @@ int combinatorial_object_description::read_arguments(int argc, std::string *argv
 	cout << "combinatorial_object_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
+#if 0
 		if (stringcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
 			q = strtoi(argv[++i]);
@@ -155,7 +161,19 @@ int combinatorial_object_description::read_arguments(int argc, std::string *argv
 			n = strtoi(argv[++i]);
 			cout << "-n " << n << endl;
 		}
-		else if (stringcmp(argv[i], "-hyperoval") == 0) {
+		else if (stringcmp(argv[i], "-poly") == 0) {
+			f_poly = TRUE;
+			poly.assign(argv[++i]);
+			cout << "-poly " << poly << endl;
+		}
+		else if (stringcmp(argv[i], "-poly_Q") == 0) {
+			f_poly_Q = TRUE;
+			poly_Q.assign(argv[++i]);
+			cout << "-poly_Q " << poly_Q << endl;
+		}
+#endif
+
+		if (stringcmp(argv[i], "-hyperoval") == 0) {
 			f_hyperoval = TRUE;
 			cout << "-hyperoval " << endl;
 		}
@@ -324,16 +342,6 @@ int combinatorial_object_description::read_arguments(int argc, std::string *argv
 			f_Maruta_Hamada_arc = TRUE;
 			cout << "-Maruta_Hamada_arc " << endl;
 		}
-		else if (stringcmp(argv[i], "-poly") == 0) {
-			f_poly = TRUE;
-			poly.assign(argv[++i]);
-			cout << "-poly " << poly << endl;
-		}
-		else if (stringcmp(argv[i], "-poly_Q") == 0) {
-			f_poly_Q = TRUE;
-			poly_Q.assign(argv[++i]);
-			cout << "-poly_Q " << poly_Q << endl;
-		}
 		else if (stringcmp(argv[i], "-projective_variety") == 0) {
 			f_projective_variety = TRUE;
 			variety_label.assign(argv[++i]);
@@ -355,19 +363,19 @@ int combinatorial_object_description::read_arguments(int argc, std::string *argv
 			f_intersection_of_zariski_open_sets = TRUE;
 			variety_label.assign(argv[++i]);
 			variety_degree = strtoi(argv[++i]);
+			variety_n = strtoi(argv[++i]);
 
-			int n, j;
+			int j;
 
-			n = strtoi(argv[++i]);
 
 			os_interface Os;
 
 			i++;
 
-			for (j = 0; j < n; j++) {
+			for (j = 0; j < variety_n; j++) {
 				string s;
 
-				cout << "reading argument " << j << " / " << n << " : " << argv[i] << endl;
+				cout << "reading argument " << j << " / " << variety_n << " : " << argv[i] << endl;
 
 				Os.get_string_from_command_line(s, argc, argv, i, verbose_level);
 				Variety_coeffs.push_back(s);
@@ -379,8 +387,8 @@ int combinatorial_object_description::read_arguments(int argc, std::string *argv
 			cout << "-intersection_of_zariski_open_sets "
 					<< variety_label << " "
 					<< variety_degree << " "
-					<< n << endl;
-			for (j = 0; j < n; j++) {
+					<< variety_n << endl;
+			for (j = 0; j < variety_n; j++) {
 				cout << j << " : " << Variety_coeffs[j] << endl;
 			}
 		}
@@ -390,22 +398,21 @@ int combinatorial_object_description::read_arguments(int argc, std::string *argv
 			f_number_of_conditions_satisfied = TRUE;
 			variety_label.assign(argv[++i]);
 			variety_degree = strtoi(argv[++i]);
+			variety_n = strtoi(argv[++i]);
 
 			number_of_conditions_satisfied_fname.assign(argv[++i]);
 
 
-			int n, j;
-
-			n = strtoi(argv[++i]);
+			int j;
 
 			os_interface Os;
 
 			i++;
 
-			for (j = 0; j < n; j++) {
+			for (j = 0; j < variety_n; j++) {
 				string s;
 
-				cout << "reading argument " << j << " / " << n << " : " << argv[i] << endl;
+				cout << "reading argument " << j << " / " << variety_n << " : " << argv[i] << endl;
 
 				Os.get_string_from_command_line(s, argc, argv, i, verbose_level);
 				Variety_coeffs.push_back(s);
@@ -417,8 +424,8 @@ int combinatorial_object_description::read_arguments(int argc, std::string *argv
 			cout << "-number_of_conditions_satisfied "
 					<< variety_label << " "
 					<< variety_degree << " "
-					<< n << endl;
-			for (j = 0; j < n; j++) {
+					<< variety_n << endl;
+			for (j = 0; j < variety_n; j++) {
 				cout << j << " : " << Variety_coeffs[j] << endl;
 			}
 		}
@@ -460,6 +467,7 @@ int combinatorial_object_description::read_arguments(int argc, std::string *argv
 
 void combinatorial_object_description::print()
 {
+#if 0
 	if (f_q) {
 		cout << "-q " << q << endl;
 	}
@@ -469,6 +477,17 @@ void combinatorial_object_description::print()
 	if (f_n) {
 		cout << "-n " << n << endl;
 	}
+	if (stringcmp(argv[i], "-poly") == 0) {
+		f_poly = TRUE;
+		poly.assign(argv[++i]);
+		cout << "-poly " << poly << endl;
+	}
+	if (stringcmp(argv[i], "-poly_Q") == 0) {
+		f_poly_Q = TRUE;
+		poly_Q.assign(argv[++i]);
+		cout << "-poly_Q " << poly_Q << endl;
+	}
+#endif
 	if (f_hyperoval) {
 		cout << "-hyperoval " << endl;
 	}
@@ -568,18 +587,6 @@ void combinatorial_object_description::print()
 	if (f_Maruta_Hamada_arc) {
 		cout << "-Maruta_Hamada_arc " << endl;
 	}
-#if 0
-	if (stringcmp(argv[i], "-poly") == 0) {
-		f_poly = TRUE;
-		poly.assign(argv[++i]);
-		cout << "-poly " << poly << endl;
-	}
-	if (stringcmp(argv[i], "-poly_Q") == 0) {
-		f_poly_Q = TRUE;
-		poly_Q.assign(argv[++i]);
-		cout << "-poly_Q " << poly_Q << endl;
-	}
-#endif
 	if (f_projective_variety) {
 		cout << "-projective_variety "
 				<< variety_label << " "
@@ -590,9 +597,10 @@ void combinatorial_object_description::print()
 		cout << "-intersection_of_zariski_open_sets "
 				<< variety_label << " "
 				<< variety_degree << " "
-				<< n << endl;
+				<< variety_n << " "
+				<< endl;
 		int j;
-		for (j = 0; j < n; j++) {
+		for (j = 0; j < variety_n; j++) {
 			cout << j << " : " << Variety_coeffs[j] << endl;
 		}
 	}
@@ -602,9 +610,10 @@ void combinatorial_object_description::print()
 		cout << "-number_of_conditions_satisfied "
 				<< variety_label << " "
 				<< variety_degree << " "
-				<< n << endl;
+				<< variety_n << " "
+				<< endl;
 		int j;
-		for (j = 0; j < n; j++) {
+		for (j = 0; j < variety_n; j++) {
 			cout << j << " : " << Variety_coeffs[j] << endl;
 		}
 	}

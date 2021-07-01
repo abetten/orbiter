@@ -54,7 +54,7 @@ void packing_was_fixpoints::init(packing_was *PW,
 	packing_was_fixpoints::fixpoint_clique_size = fixpoint_clique_size;
 
 
-	setup_file_names(verbose_level);
+	setup_file_names(fixpoint_clique_size, verbose_level);
 
 
 	fixpoints_idx = PW->find_orbits_of_length_in_reduced_spread_table(1);
@@ -110,7 +110,7 @@ void packing_was_fixpoints::init(packing_was *PW,
 	}
 }
 
-void packing_was_fixpoints::setup_file_names(int verbose_level)
+void packing_was_fixpoints::setup_file_names(int clique_size, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -134,6 +134,21 @@ void packing_was_fixpoints::setup_file_names(int verbose_level)
 
 	if (f_v) {
 		cout << "packing_was_fixpoints::setup_file_names fname_fixp_graph_cliques=" << fname_fixp_graph_cliques << endl;
+	}
+
+
+	char str[1000];
+
+
+
+	fname_fixpoint_cliques_orbiter.assign(PW->Descr->N_label);
+	sprintf(str, "_fixp_cliques_lvl_%d", clique_size);
+	fname_fixpoint_cliques_orbiter.append(str);
+
+
+	if (f_v) {
+		cout << "packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch "
+				"fname_fixp_graph_cliques_orbiter=" << fname_fixpoint_cliques_orbiter << endl;
 	}
 
 	if (f_v) {
@@ -250,6 +265,10 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 		}
 		Fio.lint_matrix_read_csv(fname_fixp_graph_cliques,
 				Cliques, nb_cliques, clique_size, verbose_level);
+		if (f_v) {
+			cout << "packing_was_fixpoints::compute_cliques_on_fixpoint_graph "
+					"The file " << fname_fixp_graph_cliques << " contains " << nb_cliques << " cliques" << endl;
+		}
 		if (nb_cliques == 0) {
 			cout << "packing_was_fixpoints::compute_cliques_on_fixpoint_graph nb_cliques == 0" << endl;
 			exit(1);
@@ -372,19 +391,6 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch(
 	}
 
 
-	char str[1000];
-
-
-
-	fname_fixpoint_cliques_orbiter.assign(PW->Descr->N_label);
-	sprintf(str, "_fixp_cliques_lvl_%d", clique_size);
-	fname_fixpoint_cliques_orbiter.append(str);
-
-
-	if (f_v) {
-		cout << "packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch "
-				"fname_fixp_graph_cliques_orbiter=" << fname_fixpoint_cliques_orbiter << endl;
-	}
 
 	if (f_v) {
 		cout << "packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch "
@@ -517,6 +523,79 @@ strong_generators *packing_was_fixpoints::get_stabilizer(int idx)
 	}
 
 	return Fixp_cliques->Reps[idx].Strong_gens;
+}
+
+void packing_was_fixpoints::print_packing(long int *packing, int sz, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "packing_was_fixpoints::print_packing" << endl;
+	}
+
+	cout << "packing: ";
+	Orbiter->Lint_vec.print(cout, packing, sz);
+	cout << endl;
+
+	long int a;
+	int b;
+	int i, j;
+	int *Lines;
+	int *Orbit_number;
+
+	Lines = NEW_int(sz * PW->P->spread_size);
+	Orbit_number = NEW_int(sz * PW->P->spread_size);
+
+	for (i = 0; i < sz; i++) {
+		a = packing[i];
+		for (j = 0; j < PW->P->spread_size; j++) {
+			b = PW->P->Spread_table_with_selection->Spread_tables->spread_table[a * PW->P->spread_size + j];
+			Lines[i * PW->P->spread_size + j] = b;
+		}
+	}
+
+	cout << "Lines in the packing:" << endl;
+	Orbiter->Int_vec.matrix_print(Lines, sz, PW->P->spread_size);
+
+
+	combinatorics_domain Combi;
+
+
+	if (Combi.is_permutation(Lines, sz * PW->P->spread_size)) {
+		cout << "The packing passes the permutation test" << endl;
+	}
+	else {
+		cout << "The packing is wrong." << endl;
+		exit(1);
+	}
+
+	int orbit_idx1, orbit_pos1;
+
+
+	for (i = 0; i < sz; i++) {
+		for (j = 0; j < PW->P->spread_size; j++) {
+			b = Lines[i * PW->P->spread_size + j];
+			PW->Line_orbits_under_H->get_orbit_number_and_position(b, orbit_idx1, orbit_pos1, verbose_level);
+			Orbit_number[i * PW->P->spread_size + j] = orbit_idx1;
+		}
+	}
+
+	cout << "Orbit_number in the packing:" << endl;
+	Orbiter->Int_vec.matrix_print(Orbit_number, sz, PW->P->spread_size);
+
+
+	for (i = 0; i < sz; i++) {
+		tally T;
+
+		T.init(Orbit_number + i * PW->P->spread_size, PW->P->spread_size, TRUE, 0);
+		cout << i << " : ";
+		T.print_naked(TRUE /* f_backwards*/);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "packing_was_fixpoints::print_packing done" << endl;
+	}
 }
 
 void packing_was_fixpoints::report(int verbose_level)

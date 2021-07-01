@@ -40,36 +40,49 @@ prepare_frames::~prepare_frames()
 
 }
 
-int prepare_frames::parse_arguments(int argc, std::string *argv)
+int prepare_frames::parse_arguments(int argc, std::string *argv, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i;
 
-	cout << "prepare_frames::parse_arguments" << endl;
+	if (f_v) {
+		cout << "prepare_frames::parse_arguments" << endl;
+	}
 	for (i = 0; i < argc; i++) {
 		if (stringcmp(argv[i], "-i") == 0) {
 			input_first[nb_inputs] = strtoi(argv[++i]);
 			input_len[nb_inputs] = strtoi(argv[++i]);
 			input_mask[nb_inputs].assign(argv[++i]);
-			cout << "-i " << input_first[nb_inputs] << " " << input_len[nb_inputs] << " " << input_mask[nb_inputs] << endl;
+			if (f_v) {
+				cout << "-i " << input_first[nb_inputs] << " " << input_len[nb_inputs] << " " << input_mask[nb_inputs] << endl;
+			}
 			nb_inputs++;
 		}
 		else if (stringcmp(argv[i], "-step") == 0) {
 			f_step = TRUE;
 			step = strtoi(argv[++i]);
-			cout << "-step " << step << endl;
+			if (f_v) {
+				cout << "-step " << step << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-o") == 0) {
 			f_o = TRUE;
 			output_mask.assign(argv[++i]);
-			cout << "-o " << output_mask << endl;
+			if (f_v) {
+				cout << "-o " << output_mask << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-output_starts_at") == 0) {
 			f_output_starts_at = TRUE;
 			output_starts_at = strtoi(argv[++i]);
-			cout << "-output_starts_at " << output_starts_at << endl;
+			if (f_v) {
+				cout << "-output_starts_at " << output_starts_at << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-end") == 0) {
-			cout << "-end" << endl;
+			if (f_v) {
+				cout << "-end" << endl;
+			}
 			break;
 		}
 		else {

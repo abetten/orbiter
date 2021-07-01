@@ -2986,6 +2986,16 @@ void projective_space_with_action::create_quartic_curve(
 	if (f_v) {
 		cout << "projective_space_with_action::create_quartic_curve" << endl;
 	}
+	if (n != 2) {
+		cout << "projective_space_with_action::create_quartic_curve we need a two-dimensional projective space" << endl;
+		exit(1);
+	}
+
+	if (Quartic_curve_descr->get_q() != q) {
+		cout << "projective_space_activity::do_create_quartic_curve Quartic_curve_descr->get_q() != q" << endl;
+		exit(1);
+	}
+
 	QC = NEW_OBJECT(quartic_curve_create);
 
 	if (f_v) {
@@ -3289,7 +3299,7 @@ void projective_space_with_action::table_of_cubic_surfaces(int verbose_level)
 	surface_create **SC;
 	int *nb_E;
 	long int *Table;
-	int nb_cols = 5;
+	int nb_cols = 6;
 
 
 	poset_classification_control Control_six_arcs;
@@ -3335,17 +3345,94 @@ void projective_space_with_action::table_of_cubic_surfaces(int verbose_level)
 
 
 		Table[h * nb_cols + 0] = h;
-		Table[h * nb_cols + 1] = nb_E[h];
 		if (SC[h]->f_has_group) {
-			Table[h * nb_cols + 2] = SC[h]->Sg->group_order_as_lint();
+			Table[h * nb_cols + 1] = SC[h]->Sg->group_order_as_lint();
 		}
 		else {
-			Table[h * nb_cols + 2] = 0;
+			Table[h * nb_cols + 1] = 0;
 		}
-		Table[h * nb_cols + 3] = SC[h]->SO->nb_pts;
-		Table[h * nb_cols + 4] = SC[h]->SO->nb_lines;
+		//Table[h * nb_cols + 3] = SC[h]->SO->nb_pts;
+		Table[h * nb_cols + 2] = nb_E[h];
+		Table[h * nb_cols + 3] = SC[h]->SO->SOP->nb_Double_points;
+		Table[h * nb_cols + 4] = SC[h]->SO->SOP->nb_Single_points;
+		Table[h * nb_cols + 5] = SC[h]->SO->SOP->nb_pts_not_on_lines;
+		//Table[h * nb_cols + 6] = SC[h]->SO->nb_lines;
 
 	}
+
+#if 0
+	set_of_sets *pts_on_lines;
+		// points are stored as indices into Pts[]
+	int *f_is_on_line; // [SO->nb_pts]
+
+
+	set_of_sets *lines_on_point;
+	tally *Type_pts_on_lines;
+	tally *Type_lines_on_point;
+
+	long int *Eckardt_points; // the orbiter rank of the Eckardt points
+	int *Eckardt_points_index; // index into SO->Pts
+	int *Eckardt_points_schlaefli_labels; // Schlaefli labels
+	int *Eckardt_point_bitvector_in_Schlaefli_labeling;
+		// true if the i-th Eckardt point in the Schlaefli labeling is present
+	int nb_Eckardt_points;
+
+	int *Eckardt_points_line_type; // [nb_Eckardt_points + 1]
+	int *Eckardt_points_plane_type; // [SO->Surf->P->Nb_subspaces[2]]
+
+	long int *Hesse_planes;
+	int nb_Hesse_planes;
+	int *Eckardt_point_Hesse_plane_incidence; // [nb_Eckardt_points * nb_Hesse_planes]
+
+
+	int nb_axes;
+	int *Axes_index; // [nb_axes] two times the index into trihedral pairs + 0 or +1
+	long int *Axes_Eckardt_points; // [nb_axes * 3] the Eckardt points in Schlaefli labels that lie on the axes
+	long int *Axes_line_rank;
+
+
+	long int *Double_points;
+	int *Double_points_index;
+	int nb_Double_points;
+
+	long int *Single_points;
+	int *Single_points_index;
+	int nb_Single_points;
+
+	long int *Pts_not_on_lines;
+	int nb_pts_not_on_lines;
+
+	int nb_planes;
+	int *plane_type_by_points;
+	int *plane_type_by_lines;
+	tally *C_plane_type_by_points;
+
+	long int *Tritangent_plane_rk; // [45]
+		// list of tritangent planes in Schlaefli labeling
+	int nb_tritangent_planes;
+
+	long int *Lines_in_tritangent_planes; // [nb_tritangent_planes * 3]
+
+	long int *Trihedral_pairs_as_tritangent_planes; // [nb_trihedral_pairs * 6]
+
+	long int *All_Planes; // [nb_trihedral_pairs * 6]
+	int *Dual_point_ranks; // [nb_trihedral_pairs * 6]
+
+	int *Adj_line_intersection_graph; // [SO->nb_lines * SO->nb_lines]
+	set_of_sets *Line_neighbors;
+	int *Line_intersection_pt; // [SO->nb_lines * SO->nb_lines]
+	int *Line_intersection_pt_idx; // [SO->nb_lines * SO->nb_lines]
+
+
+	int *gradient;
+
+	long int *singular_pts;
+	int nb_singular_pts;
+	int nb_non_singular_pts;
+
+	long int *tangent_plane_rank_global; // [SO->nb_pts]
+	long int *tangent_plane_rank_dual; // [nb_non_singular_pts]
+#endif
 
 	file_io Fio;
 	char str[1000];
@@ -3363,7 +3450,7 @@ void projective_space_with_action::table_of_cubic_surfaces(int verbose_level)
 		ofstream f(fname);
 		int i, j;
 
-		f << "Row,OCN,nbE,Ago,NbPts,NbLines,Eqn20,Eqn,Lines";
+		f << "Row,OCN,Ago,nbE,nbDouble,nbSingle,nbNotOn,Equation";
 		f << endl;
 		for (i = 0; i < nb_cubic_surfaces; i++) {
 			f << i;
@@ -3377,6 +3464,7 @@ void projective_space_with_action::table_of_cubic_surfaces(int verbose_level)
 				f << str;
 			}
 
+#if 0
 			{
 				stringstream sstr;
 				string str;
@@ -3393,6 +3481,7 @@ void projective_space_with_action::table_of_cubic_surfaces(int verbose_level)
 				Orbiter->Lint_vec.create_string_with_quotes(str, SC[i]->SO->Lines, SC[i]->SO->nb_lines);
 				f << str;
 			}
+#endif
 
 #if 0
 			{

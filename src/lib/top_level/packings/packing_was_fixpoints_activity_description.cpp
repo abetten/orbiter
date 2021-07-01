@@ -18,6 +18,9 @@ namespace top_level {
 packing_was_fixpoints_activity_description::packing_was_fixpoints_activity_description()
 {
 	f_report = FALSE;
+
+	f_print_packing = FALSE;
+	//std::string print_packing_text;
 }
 
 packing_was_fixpoints_activity_description::~packing_was_fixpoints_activity_description()
@@ -41,6 +44,11 @@ int packing_was_fixpoints_activity_description::read_arguments(
 			f_report = TRUE;
 			cout << "-report" << endl;
 		}
+		else if (stringcmp(argv[i], "-print_packing") == 0) {
+			f_print_packing = TRUE;
+			print_packing_text.assign(argv[++i]);
+			cout << "-print_packing" << print_packing_text << endl;
+		}
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
@@ -60,6 +68,9 @@ void packing_was_fixpoints_activity_description::print()
 {
 	if (f_report) {
 		cout << "-report" << endl;
+	}
+	if (f_print_packing) {
+		cout << "-print_packing " << print_packing_text << endl;
 	}
 }
 

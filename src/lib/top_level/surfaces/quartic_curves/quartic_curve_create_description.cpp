@@ -177,6 +177,60 @@ int quartic_curve_create_description::read_arguments(int argc, std::string *argv
 }
 
 
+void quartic_curve_create_description::print()
+{
+	if (f_q) {
+		cout << "-q " << q << endl;
+	}
+	if (f_label_txt) {
+		cout << "-label_txt " << label_txt << endl;
+	}
+	if (f_label_tex) {
+		cout << "-label_tex " << label_tex << endl;
+	}
+	if (f_label_for_summary) {
+		cout << "-label_for_summary " << label_for_summary << endl;
+	}
+	if (f_catalogue) {
+		cout << "-catalogue " << iso << endl;
+	}
+	if (f_by_coefficients) {
+		cout << "-by_coefficients " << coefficients_text << endl;
+	}
+	if (f_by_equation) {
+		cout << "-by_equation "
+				<< equation_name_of_formula << " "
+				<< equation_name_of_formula_tex << " "
+				<< equation_managed_variables << " "
+				<< equation_text << " "
+				<< equation_parameters << " "
+				<< equation_parameters_tex << " "
+				<< endl;
+	}
+
+
+
+	if (f_override_group) {
+		cout << "-override_group "
+				<< override_group_order
+				<< " " << override_group_nb_gens
+				<< " " << override_group_gens
+				<< endl;
+	}
+
+	for (int i = 0; i < transform_coeffs.size(); i++) {
+		if (f_inverse_transform[i]) {
+			cout << "-transform_inverse " << transform_coeffs[i] << endl;
+		}
+		{
+			cout << "-transform " << transform_coeffs[i] << endl;
+		}
+	}
+
+}
+
+
+
 int quartic_curve_create_description::get_q()
 {
 	if (!f_q) {

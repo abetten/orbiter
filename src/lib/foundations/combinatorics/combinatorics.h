@@ -177,9 +177,10 @@ class combinatorial_object_create {
 public:
 	combinatorial_object_description *Descr;
 
-
+#if 0
 	int q;
 	finite_field *F;
+#endif
 
 	std::string fname;
 	int nb_pts;
@@ -190,9 +191,7 @@ public:
 
 	combinatorial_object_create();
 	~combinatorial_object_create();
-	void null();
-	void freeself();
-	void init(combinatorial_object_description *Descr, int verbose_level);
+	void init(combinatorial_object_description *Descr, projective_space *P, int verbose_level);
 };
 
 
@@ -210,6 +209,7 @@ class combinatorial_object_description {
 
 public:
 
+#if 0
 	int f_q;
 	int q;
 	int f_n;
@@ -220,6 +220,10 @@ public:
 	int Q;
 	int f_poly_Q;
 	std::string poly_Q;
+#endif
+
+
+	projective_space *P;
 
 	int f_subiaco_oval;
 	int f_short;
@@ -292,6 +296,7 @@ public:
 	int f_projective_variety;
 	std::string variety_label;
 	int variety_degree;
+	int variety_n;
 	std::string variety_coeffs;
 	monomial_ordering_type Monomial_ordering_type;
 

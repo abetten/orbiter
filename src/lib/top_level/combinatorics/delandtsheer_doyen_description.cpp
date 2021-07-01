@@ -306,6 +306,79 @@ int delandtsheer_doyen_description::read_arguments(
 	return i + 1;
 }
 
+void delandtsheer_doyen_description::print()
+{
+
+	if (f_group_label) {
+		cout << "-group_label " << group_label << endl;
+	}
+	if (f_mask_label) {
+		cout << "-mask_label " << mask_label << endl;
+	}
+	if (f_problem_label) {
+		cout << "-problem_label " << problem_label << endl;
+	}
+	if (f_depth) {
+		cout << "-depth " << depth << endl;
+	}
+	if (f_d1) {
+		cout << "-d1 " << d1 << endl;
+	}
+	if (f_d2) {
+		cout << "-d2 " << d2 << endl;
+	}
+	if (f_q1) {
+		cout << "-q1 " << q1 << endl;
+	}
+	if (f_q2) {
+		cout << "-q2 " << q2 << endl;
+	}
+	cout << "-DDx " << DELANDTSHEER_DOYEN_X << endl;
+	cout << "-DDy " << DELANDTSHEER_DOYEN_Y << endl;
+	if (f_K) {
+		cout << "-K " << K << endl;
+	}
+	if (f_R) {
+		cout << "-R ";
+		Orbiter->Int_vec.print(cout, row_type + 1, nb_row_types);
+		cout << endl;
+	}
+	if (f_C) {
+		cout << "-C ";
+		Orbiter->Int_vec.print(cout, col_type + 1, nb_col_types);
+		cout << endl;
+	}
+	if (f_nb_orbits_on_blocks) {
+		cout << "-nb_orbits_on_blocks " << nb_orbits_on_blocks << endl;
+	}
+	for (int i = 0; i < nb_mask_tests; i++) {
+		cout << "-masktest "
+			<< mask_test_level[i] << " "
+			<< mask_test_who[i] << " "
+			<< mask_test_what[i] << " "
+			<< mask_test_value[i] << endl;
+
+	}
+	if (f_singletons) {
+		cout << "-singletons" << endl;
+	}
+	if (f_subgroup) {
+		cout << "-subgroup " << subgroup_gens << " " << subgroup_order << endl;
+	}
+	if (f_pair_search_control) {
+		cout << "-pair_search_control" << endl;
+		Pair_search_control->print();
+	}
+	if (f_search_control) {
+		cout << "-search_control" << endl;
+		Search_control->print();
+	}
+	if (f_search_wrt_subgroup) {
+		cout << "-search_wrt_subgroup " << endl;
+	}
+
+}
+
 
 
 

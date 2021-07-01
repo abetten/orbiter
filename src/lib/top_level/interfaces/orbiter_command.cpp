@@ -245,7 +245,11 @@ void orbiter_command::parse(orbiter_top_level_session *Orbiter_top_level_session
 			FREE_OBJECT(Interface_toolkit);
 		}
 	}
-	cout << "orbiter_command::parse command is unrecognized" << endl;
+	cout << "orbiter_command::parse command " << Argv[i] << " is unrecognized" << endl;
+
+	for (int j = 0; j <= i; j++) {
+		cout << Argv[j] << endl;
+	}
 	exit(1);
 
 }

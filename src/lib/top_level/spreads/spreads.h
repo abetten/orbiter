@@ -431,6 +431,12 @@ public:
 	int f_find_spread;
 	std::string find_spread_text;
 
+	int f_find_spread_and_dualize;
+	std::string find_spread_and_dualize_text;
+
+	int f_dualize_packing;
+	std::string dualize_packing_text;
+
 	int f_print_spreads;
 	std::string print_spreads_idx_text;
 

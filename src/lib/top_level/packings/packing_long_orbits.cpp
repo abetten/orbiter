@@ -125,7 +125,9 @@ void packing_long_orbits::init(packing_was_fixpoints *PWF,
 				cout << "packing_long_orbits::init do_single_case" << endl;
 			}
 
-			do_single_case(verbose_level);
+			cout << "packing_long_orbits::init do_single_case not yet implemented" << endl;
+			exit(1);
+			//do_single_case(verbose_level);
 		}
 	}
 	else {
@@ -133,9 +135,6 @@ void packing_long_orbits::init(packing_was_fixpoints *PWF,
 			cout << "fixpoint_clique_size is zero" << endl;
 		}
 
-		if (f_v) {
-			cout << "packing_long_orbits::init before create_graph_on_remaining_long_orbits" << endl;
-		}
 		fixpoints_clique_case_number = 0;
 		Filtered_orbits = PWF->PW->reduced_spread_orbits_under_H->Orbits_classified;
 
@@ -160,7 +159,11 @@ void packing_long_orbits::init(packing_was_fixpoints *PWF,
 		std::vector<std::vector<int> > Packings_classified;
 		std::vector<std::vector<int> > Packings;
 
+		std::vector<std::vector<std::vector<int> > > Packings_by_case;
 
+		if (f_v) {
+			cout << "packing_long_orbits::init before create_graph_on_remaining_long_orbits" << endl;
+		}
 		create_graph_on_remaining_long_orbits(
 				Packings_classified,
 				Packings,
@@ -170,6 +173,23 @@ void packing_long_orbits::init(packing_was_fixpoints *PWF,
 			cout << "packing_long_orbits::init after create_graph_on_remaining_long_orbits" << endl;
 			cout << "Packings_classified.size()=" << Packings_classified.size() << endl;
 			cout << "Packings.size()=" << Packings.size() << endl;
+		}
+
+		Packings_by_case.push_back(Packings);
+
+		std::string fname_packings;
+
+		fname_packings.assign(PWF->PW->Descr->H_label);
+		fname_packings.append("_packings.csv");
+
+
+
+		if (f_v) {
+			cout << "packing_long_orbits::init before save_packings_by_case" << endl;
+		}
+		save_packings_by_case(fname_packings, Packings_by_case, verbose_level);
+		if (f_v) {
+			cout << "packing_long_orbits::init after save_packings_by_case" << endl;
 		}
 
 	}
@@ -242,39 +262,42 @@ void packing_long_orbits::list_of_cases_from_file(int verbose_level)
 			std::vector<std::vector<int> > Packings;
 			std::vector<std::vector<int> > Packings_classified;
 
-			if (f_v) {
-				cout << "packing_long_orbits::list_of_cases_from_file before process_single_case, idx = " << idx << endl;
-			}
-			if (Descr->f_create_graphs) {
+
+			fixpoint_clique_orbit_numbers = PWF->clique_by_index(fixpoints_clique_case_number);
+
+			fixpoint_clique_stabilizer_gens = PWF->get_stabilizer(fixpoints_clique_case_number);
+
+			create_fname_graph_on_remaining_long_orbits();
 
 
-				colored_graph *CG;
-				if (f_v) {
-					cout << "solution file does not exist" << endl;
-					cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
-						"before create_graph_and_save_to_file" << endl;
-				}
-				create_graph_and_save_to_file(
-							CG,
-							fname_graph,
-							FALSE /* f_has_user_data */, NULL /*user_data*/, 0 /*user_data_sz*/,
-							verbose_level);
-				if (f_v) {
-					cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
-						"the graph on long orbits has been created with "
-						<< CG->nb_points
-						<< " vertices" << endl;
-				}
-				FREE_OBJECT(CG);
-			}
 			if (f_v) {
-				cout << "packing_long_orbits::list_of_cases_from_file after process_single_case, idx = " << idx << endl;
+				cout << "packing_long_orbits::list_of_cases_from_file before process_single_case, "
+						"idx = " << idx << " / " << m << endl;
+			}
+
+			process_single_case(
+					Packings_classified,
+					Packings,
+					verbose_level);
+
+			if (f_v) {
+				cout << "packing_long_orbits::list_of_cases_from_file after process_single_case, "
+						"idx = " << idx << " / " << m << endl;
+			}
+
+
+
+
+			if (f_v) {
+				cout << "packing_long_orbits::list_of_cases_from_file after process_single_case, "
+						"idx = " << idx << " / " << m << endl;
 			}
 
 			Nb[idx] = Packings.size();
 			Packings_by_case.push_back(Packings);
 			if (f_v) {
-				cout << "packing_long_orbits::list_of_cases_from_file after process_single_case, idx = " << idx << " we found " << Nb[idx] << " solutions" << endl;
+				cout << "packing_long_orbits::list_of_cases_from_file after process_single_case, "
+						"idx = " << idx << " / " << m << ", we found " << Nb[idx] << " solutions" << endl;
 			}
 		}
 	}
@@ -304,17 +327,25 @@ void packing_long_orbits::list_of_cases_from_file(int verbose_level)
 	}
 
 
-	FREE_int(Nb);
-	FREE_int(List_of_cases);
+
+	std::string fname_packings;
+
+
+	fname_packings.assign(PWF->PW->Descr->H_label);
+	fname_packings.append("_packings.csv");
+
+
 
 	if (f_v) {
 		cout << "packing_long_orbits::list_of_cases_from_file before save_packings_by_case" << endl;
 	}
-	save_packings_by_case(Packings_by_case, verbose_level);
+	save_packings_by_case(fname_packings, Packings_by_case, verbose_level);
 	if (f_v) {
 		cout << "packing_long_orbits::list_of_cases_from_file after save_packings_by_case" << endl;
 	}
 
+	FREE_int(Nb);
+	FREE_int(List_of_cases);
 
 
 	if (f_v) {
@@ -322,7 +353,7 @@ void packing_long_orbits::list_of_cases_from_file(int verbose_level)
 	}
 }
 
-void packing_long_orbits::save_packings_by_case(
+void packing_long_orbits::save_packings_by_case(std::string &fname_packings,
 		std::vector<std::vector<std::vector<int> > > &Packings_by_case, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -330,16 +361,10 @@ void packing_long_orbits::save_packings_by_case(
 	int idx;
 	int total = 0;
 	file_io Fio;
-	string_tools ST;
 
 	if (f_v) {
 		cout << "packing_long_orbits::save_packings_by_case" << endl;
 	}
-	std::string fname_packings;
-
-	fname_packings.assign(Descr->list_of_cases_from_file_fname);
-	ST.replace_extension_with(fname_packings, "_packings.csv");
-
 	for (idx = 0; idx < Packings_by_case.size(); idx++) {
 		total += Packings_by_case[idx].size();
 	}
@@ -376,23 +401,6 @@ void packing_long_orbits::save_packings_by_case(
 	}
 }
 
-void packing_long_orbits::do_single_case(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "packing_long_orbits::do_single_case" << endl;
-	}
-
-	cout << "packing_long_orbits::do_single_case not yet implemented" << endl;
-	exit(1);
-
-	if (f_v) {
-		cout << "packing_long_orbits::do_single_case done" << endl;
-	}
-
-}
-
 void packing_long_orbits::process_single_case(
 		std::vector<std::vector<int> > &Packings_classified,
 		std::vector<std::vector<int> > &Packings,
@@ -401,7 +409,8 @@ void packing_long_orbits::process_single_case(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "packing_long_orbits::process_single_case fixpoints_clique_case_number=" << fixpoints_clique_case_number << endl;
+		cout << "packing_long_orbits::process_single_case "
+				"fixpoints_clique_case_number=" << fixpoints_clique_case_number << endl;
 	}
 
 	fixpoint_clique_orbit_numbers = PWF->clique_by_index(fixpoints_clique_case_number);
@@ -428,6 +437,8 @@ void packing_long_orbits::process_single_case(
 	if (f_v) {
 		cout << "packing_long_orbits::process_single_case after L->filter_orbits" << endl;
 	}
+
+
 
 
 	if (f_v) {
@@ -521,7 +532,8 @@ void packing_long_orbits::filter_orbits(int verbose_level)
 		Filtered_orbits->Set_size[t] = 0;
 
 		if (f_v) {
-			cout << "packing_long_orbits::filter_orbits testing orbits of length " << orbit_length << ", there are " << Input->Set_size[t] << " orbits before the test" << endl;
+			cout << "packing_long_orbits::filter_orbits testing orbits of length " << orbit_length
+					<< ", there are " << Input->Set_size[t] << " orbits before the test" << endl;
 		}
 		for (i = 0; i < Input->Set_size[t]; i++) {
 			b = Input->element(t, i);
@@ -694,7 +706,8 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 
 	if (Descr->f_read_solutions) {
 		if (Fio.file_size(fname_solutions) < 0) {
-			cout << "packing_long_orbits::create_graph_on_remaining_long_orbits solution file " << fname_solutions << " is missing" << endl;
+			cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
+					"solution file " << fname_solutions << " is missing" << endl;
 			exit(1);
 		}
 
@@ -706,7 +719,8 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 
 		solution_size = (PWF->PW->P->size_of_packing - fixpoint_clique_size) / Descr->orbit_length;
 		if (f_v) {
-			cout << "packing_long_orbits::create_graph_on_remaining_long_orbits solution_size = " << solution_size << endl;
+			cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
+					"solution_size = " << solution_size << endl;
 		}
 
 
@@ -719,7 +733,8 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 #endif
 
 		if (f_v) {
-			cout << "packing_long_orbits::create_graph_on_remaining_long_orbits solution file contains " << nb_solutions << " solutions" << endl;
+			cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
+					"solution file contains " << nb_solutions << " solutions" << endl;
 		}
 
 		int i, a, b;
@@ -844,7 +859,8 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 		//Ar = PWF->PW->restricted_action(Descr->orbit_length, verbose_level);
 
 		if (f_v) {
-			cout << "packing_long_orbits::create_graph_on_remaining_long_orbits before PWF->PW->A_on_reduced_spreads->create_induced_action_on_sets" << endl;
+			cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
+					"before PWF->PW->A_on_reduced_spreads->create_induced_action_on_sets" << endl;
 			cout << "PWF->PW->A_on_reduced_spreads->degree=" << PWF->PW->A_on_reduced_spreads->degree << endl;
 			cout << "Packings_table:" << endl;
 			Orbiter->Lint_vec.matrix_print(Packings_table, nb_solutions, PWF->PW->P->size_of_packing);
@@ -859,13 +875,15 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 		Orbits = NEW_OBJECT(schreier);
 
 		if (f_v) {
-			cout << "packing_long_orbits::create_graph_on_remaining_long_orbits before Ar_On_Packings->all_point_orbits_from_generators" << endl;
+			cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
+					"before Ar_On_Packings->all_point_orbits_from_generators" << endl;
 		}
 		Ar_On_Packings->all_point_orbits_from_generators(*Orbits,
 				fixpoint_clique_stabilizer_gens,
 				verbose_level);
 		if (f_v) {
-			cout << "packing_long_orbits::create_graph_on_remaining_long_orbits after Ar_On_Packings->all_point_orbits_from_generators" << endl;
+			cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
+					"after Ar_On_Packings->all_point_orbits_from_generators" << endl;
 		}
 
 		int *iso_type;

@@ -318,6 +318,109 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 	return i + 1;
 }
 
+void surface_create_description::print()
+{
+	if (f_q) {
+		cout << "-q " << q << endl;
+	}
+	if (f_label_txt) {
+		cout << "-label_txt " << label_txt << endl;
+	}
+	if (f_label_tex) {
+		cout << "-label_tex " << label_tex << endl;
+	}
+	if (f_label_for_summary) {
+		cout << "-label_for_summary " << label_for_summary << endl;
+	}
+	if (f_catalogue) {
+		cout << "-catalogue " << iso << endl;
+	}
+	if (f_by_coefficients) {
+		cout << "-by_coefficients " << coefficients_text << endl;
+	}
+	if (f_by_rank) {
+		cout << "-by_rank " << rank_text << " " << rank_defining_q << endl;
+	}
+	if (f_family_HCV) {
+		cout << "-family_HCV " << family_HCV_a << " " << family_HCV_b << endl;
+	}
+	if (f_family_G13) {
+		cout << "-family_G13 " << family_G13_a << endl;
+	}
+	if (f_family_F13) {
+		cout << "-family_F13 " << family_F13_a << endl;
+	}
+	if (f_family_bes) {
+		cout << "-family_bes " << family_bes_a << " " << family_bes_c << endl;
+	}
+	if (f_family_general_abcd) {
+		cout << "-family_general_abcd "
+				<< family_general_abcd_a << " " << family_general_abcd_b << " "
+				<< family_general_abcd_c << " " << family_general_abcd_d
+				<< endl;
+	}
+	if (f_arc_lifting) {
+		cout << "-arc_lifting " << arc_lifting_text << endl;
+	}
+	if (f_arc_lifting_with_two_lines) {
+		cout << "-arc_lifting_with_two_lines " << arc_lifting_text
+				<< " " << arc_lifting_two_lines_text << endl;
+	}
+	if (f_Cayley_form) {
+		cout << "-Cayley_form "
+				<< Cayley_form_k << " " << Cayley_form_l << " "
+				<< Cayley_form_m << " " << Cayley_form_n
+				<< endl;
+	}
+	if (f_by_equation) {
+		cout << "-by_equation "
+				<< equation_name_of_formula << " "
+				<< equation_name_of_formula_tex << " "
+				<< equation_managed_variables << " "
+				<< equation_text << " "
+				<< equation_parameters << " "
+				<< equation_parameters_tex << " "
+				<< endl;
+	}
+	if (f_by_double_six) {
+		cout << "-by_double_six "
+				<< by_double_six_label << " "
+				<< by_double_six_label_tex << " "
+				<< by_double_six_text << " "
+				<< endl;
+	}
+	if (f_by_skew_hexagon) {
+		cout << "-by_skew_hexagon "
+				<< by_skew_hexagon_label << " "
+				<< by_skew_hexagon_label_tex << " "
+				<< endl;
+	}
+
+	for (int i = 0; i < select_double_six_string.size(); i++) {
+		cout << "-select_double_six " << select_double_six_string[i] << endl;
+	}
+
+
+	if (f_override_group) {
+		cout << "-override_group "
+				<< override_group_order
+				<< " " << override_group_nb_gens
+				<< " " << override_group_gens
+				<< endl;
+	}
+
+	for (int i = 0; i < transform_coeffs.size(); i++) {
+		if (f_inverse_transform[i]) {
+			cout << "-transform_inverse " << transform_coeffs[i] << endl;
+		}
+		else {
+			cout << "-transform " << transform_coeffs[i] << endl;
+		}
+	}
+
+}
+
+
 
 int surface_create_description::get_q()
 {

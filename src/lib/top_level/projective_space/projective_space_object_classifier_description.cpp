@@ -196,6 +196,72 @@ int projective_space_object_classifier_description::read_arguments(
 	return i + 1;
 }
 
+void projective_space_object_classifier_description::print()
+{
+	if (f_input) {
+		cout << "-input" << endl;
+		Data->print();
+	}
+
+
+	if (f_save_classification) {
+		cout << "-save_classification" << save_prefix << endl;
+	}
+
+#if 0
+	if (stringcmp(argv[i], "-fixed_structure_of_element_of_order") == 0) {
+		fixed_structure_order_list[fixed_structure_order_list_sz] = strtoi(argv[++i]);
+		cout << "-fixed_structure_of_element_of_order "
+				<< fixed_structure_order_list[fixed_structure_order_list_sz] << endl;
+		fixed_structure_order_list_sz++;
+	}
+#endif
+	if (f_report) {
+		cout << "-report " << report_prefix << endl;
+	}
+
+	if (f_max_TDO_depth) {
+		cout << "-max_TDO_depth " << max_TDO_depth << endl;
+	}
+
+	if (f_classification_prefix) {
+		cout << "-classification_prefix " << classification_prefix << endl;
+	}
+
+
+	if (f_save_canonical_labeling) {
+		cout << "-save_canonical_labeling " << endl;
+	}
+
+	if (f_save_ago) {
+		cout << "-save_ago " << endl;
+	}
+
+	if (f_load_canonical_labeling) {
+		cout << "-load_canonical_labeling " << endl;
+	}
+
+	if (f_load_ago) {
+		cout << "-load_ago " << endl;
+	}
+
+	if (f_save_cumulative_canonical_labeling) {
+		cout << "-save_cumulative_canonical_labeling " << cumulative_canonical_labeling_fname << endl;
+	}
+
+	if (f_save_cumulative_ago) {
+		cout << "-save_cumulative_ago " << cumulative_ago_fname << endl;
+	}
+
+	if (f_save_cumulative_data) {
+		cout << "-save_cumulative_data " << cumulative_data_fname << endl;
+	}
+
+	if (f_save_fibration) {
+		cout << "-save_fibration " << fibration_fname << endl;
+	}
+}
+
 
 }}
 

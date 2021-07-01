@@ -514,7 +514,7 @@ void interface_algebra::worker(int verbose_level)
 		int idx;
 
 
-		idx = The_Orbiter_top_level_session->find_symbol(all_rational_normal_forms_finite_field_label);
+		idx = The_Orbiter_top_level_session->find_symbol(eigenstuff_finite_field_label);
 
 		F = (finite_field *) The_Orbiter_top_level_session->get_object(idx);
 

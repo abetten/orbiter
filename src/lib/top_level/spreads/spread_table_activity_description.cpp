@@ -22,6 +22,12 @@ spread_table_activity_description::spread_table_activity_description()
 	f_find_spread = FALSE;
 	//std::string find_spread_text
 
+	f_find_spread_and_dualize = FALSE;
+	//std::string find_spread_and_dualize_text
+
+	f_dualize_packing = FALSE;
+	//std::string dualize_packing_text;
+
 	f_print_spreads = FALSE;
 	//std::string print_spreads_idx_text;
 
@@ -59,6 +65,16 @@ int spread_table_activity_description::read_arguments(
 			f_find_spread = TRUE;
 			find_spread_text.assign(argv[++i]);
 			cout << "-find_spread " << find_spread_text << endl;
+		}
+		else if (stringcmp(argv[i], "-find_spread_and_dualize") == 0) {
+			f_find_spread_and_dualize = TRUE;
+			find_spread_and_dualize_text.assign(argv[++i]);
+			cout << "-find_spread_and_dualize " << find_spread_and_dualize_text << endl;
+		}
+		else if (stringcmp(argv[i], "-dualize_packing") == 0) {
+			f_dualize_packing = TRUE;
+			dualize_packing_text.assign(argv[++i]);
+			cout << "-dualize_packing " << dualize_packing_text << endl;
 		}
 		else if (stringcmp(argv[i], "-print_spreads") == 0) {
 			f_print_spreads = TRUE;
@@ -109,6 +125,12 @@ void spread_table_activity_description::print()
 {
 	if (f_find_spread) {
 		cout << "-find_spread " << find_spread_text << endl;
+	}
+	if (f_find_spread_and_dualize) {
+		cout << "-find_spread_and_dualize " << find_spread_and_dualize_text << endl;
+	}
+	if (f_dualize_packing) {
+		cout << "-dualize_packing " << dualize_packing_text << endl;
 	}
 	if (f_print_spreads) {
 		cout << "-print_spreads " << print_spreads_idx_text << endl;

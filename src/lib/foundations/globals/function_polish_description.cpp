@@ -36,13 +36,18 @@ int function_polish_description::read_arguments(
 	int argc, std::string *argv,
 	int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i, i0, h;
 
-	cout << "function_polish_description::read_arguments" << endl;
+	if (f_v) {
+		cout << "function_polish_description::read_arguments" << endl;
+	}
 	for (i = 0; i < argc; i++) {
 
 		if (stringcmp(argv[i], "-const") == 0) {
-			cout << "-const" << endl;
+			if (f_v) {
+				cout << "-const" << endl;
+			}
 			i0 = i + 1;
 			for (++i; i < argc; i++) {
 				if (stringcmp(argv[i], "-const_end") == 0) {
@@ -65,7 +70,9 @@ int function_polish_description::read_arguments(
 					const_values.push_back(str);
 
 				}
-				cout << "read " << nb_constants << " constants" << endl;
+				if (f_v) {
+					cout << "read " << nb_constants << " constants" << endl;
+				}
 			}
 			else {
 				cout << "cannot find -cost_end command" << endl;
@@ -73,7 +80,9 @@ int function_polish_description::read_arguments(
 			}
 		}
 		else if (stringcmp(argv[i], "-var") == 0) {
-			cout << "-var" << endl;
+			if (f_v) {
+				cout << "-var" << endl;
+			}
 			i0 = i + 1;
 			for (++i; i < argc; i++) {
 				if (stringcmp(argv[i], "-var_end") == 0) {
@@ -93,7 +102,9 @@ int function_polish_description::read_arguments(
 					variable_names.push_back(str);
 
 				}
-				cout << "read " << nb_variables << " variables" << endl;
+				if (f_v) {
+					cout << "read " << nb_variables << " variables" << endl;
+				}
 			}
 			else {
 				cout << "cannot find -var_end command" << endl;
@@ -101,7 +112,9 @@ int function_polish_description::read_arguments(
 			}
 		}
 		else if (stringcmp(argv[i], "-code") == 0) {
-			cout << "-code" << endl;
+			if (f_v) {
+				cout << "-code" << endl;
+			}
 			i0 = i + 1;
 			for (++i; i < argc; i++) {
 				if (stringcmp(argv[i], "-code_end") == 0) {
@@ -118,9 +131,11 @@ int function_polish_description::read_arguments(
 
 					code.push_back(str);
 				}
-				cout << "read " << code_sz << " code items" << endl;
-				for (h = 0; h < code_sz; h++) {
-					cout << h << " : " << code[h] << endl;
+				if (f_v) {
+					cout << "read " << code_sz << " code items" << endl;
+					for (h = 0; h < code_sz; h++) {
+						cout << h << " : " << code[h] << endl;
+					}
 				}
 			}
 			else {
@@ -129,7 +144,9 @@ int function_polish_description::read_arguments(
 			}
 		}
 		else if (stringcmp(argv[i], "-function_end") == 0) {
-			cout << "-function_end" << endl;
+			if (f_v) {
+				cout << "-function_end" << endl;
+			}
 			break;
 		}
 		else {
@@ -137,7 +154,9 @@ int function_polish_description::read_arguments(
 					"unrecognized option " << argv[i] << endl;
 		}
 	} // next i
-	cout << "function_polish_description::read_arguments done" << endl;
+	if (f_v) {
+		cout << "function_polish_description::read_arguments done" << endl;
+	}
 	return i + 1;
 }
 
