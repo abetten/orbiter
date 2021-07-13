@@ -100,12 +100,14 @@ public:
 	long int *points; // [nb_points]
 	long int *points_sorted; // [nb_points]
 	long int *perm_inv; // [nb_points]
+	int f_single_orbit;
+	int pt;
+	int idx_of_root_node;
 
 	action_by_restriction();
 	~action_by_restriction();
-	void null();
 	void free();
-	void init_from_schreier_vector(
+	void init_single_orbit_from_schreier_vector(
 			schreier_vector *Schreier_vector,
 			int pt, int verbose_level);
 	void init(int nb_points, long int *points, int verbose_level);

@@ -70,7 +70,7 @@ void packing_was_fixpoints_activity::perform_activity(int verbose_level)
 
 
 		if (f_v) {
-			cout << "packing_was_fixpoints_activity::perform_activity before PW->report" << endl;
+			cout << "packing_was_fixpoints_activity::perform_activity f_print_packing" << endl;
 		}
 
 		long int *packing;
@@ -84,11 +84,64 @@ void packing_was_fixpoints_activity::perform_activity(int verbose_level)
 
 
 		if (f_v) {
-			cout << "packing_was_fixpoints_activity::perform_activity after PW->report" << endl;
+			cout << "packing_was_fixpoints_activity::perform_activity f_print_packing" << endl;
 		}
 
 
 	}
+	else if (Descr->f_compare_files_of_packings) {
+
+
+		if (f_v) {
+			cout << "packing_was_fixpoints_activity::perform_activity f_print_packing" << endl;
+		}
+
+		file_io Fio;
+		int *M1;
+		int *M2;
+		int m1, n1;
+		int m2, n2;
+		int len1, len2;
+
+		Fio.int_matrix_read_csv(Descr->compare_files_of_packings_fname1, M1,
+				m1, n1, verbose_level);
+
+		Fio.int_matrix_read_csv(Descr->compare_files_of_packings_fname2, M2,
+				m2, n2, verbose_level);
+
+
+		len1 = m1 * n1;
+		len2 = m2 * n2;
+
+		sorting Sorting;
+
+		Sorting.int_vec_sort_and_remove_duplicates(M1, len1);
+		Sorting.int_vec_sort_and_remove_duplicates(M2, len2);
+
+
+		int *v3;
+		int len3;
+
+		v3 = NEW_int(len1 + len2);
+		Sorting.int_vec_intersect_sorted_vectors(M1, len1,
+				M2, len2, v3, len3);
+
+
+		cout << "The intersection has size " << len3 << ":" << endl;
+		Orbiter->Int_vec.print(cout, v3, len3);
+		cout << endl;
+
+
+
+
+		if (f_v) {
+			cout << "packing_was_fixpoints_activity::perform_activity f_print_packing" << endl;
+		}
+
+
+	}
+
+
 
 
 

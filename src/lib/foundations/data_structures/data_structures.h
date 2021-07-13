@@ -1223,6 +1223,7 @@ public:
 		int verbose_level);
 	void find_rows(int verbose_level);
 	void get_value_double_or_NA(int i, int j, double &val, int &f_NA);
+	void get_string_entry(std::string &entry, int i, int j);
 	char *get_string(int i, int j);
 	int get_int(int i, int j);
 	double get_double(int i, int j);

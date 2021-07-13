@@ -724,7 +724,7 @@ public:
 	int depth;
 	int N;
 		// {nb_pairs choose 3} * 8
-		// {nb_pairs choose 3} counts the number of ways to shoose three lines
+		// {nb_pairs choose 3} counts the number of ways to choose three lines
 		// through the reflection point.
 		// the times 8 is because every triple of lines through the
 		// reflection point has 2^3 ways of choosing one point on each line.
@@ -889,28 +889,6 @@ public:
 	int nb_needed;
 
 
-#if 0
-	// reduced designs are those which are compatible
-	// with all the designs in the chosen set
-	long int *Design_table_reduced; // [nb_reduced * design_size]
-	long int *Design_table_reduced_idx; // [nb_reduced], index into Design_table[]
-	int nb_reduced;
-	int nb_remaining_colors; // = nb_colors - set_sz; // we assume that k = 4
-	int *reduced_design_color_table; // [nb_reduced]
-		// colors of the reduced designs after throwing away
-		// the colors covered by the designs in the chosen set.
-		// The remaining colors are relabeled consecutively.
-
-	action *A_reduced;
-		// reduced action A_on_designs based on Design_table_reduced_idx[]
-	schreier *Orbits_on_reduced;
-	int *color_of_reduced_orbits;
-
-	orbits_on_something *OoS;
-		// in action A_reduced
-	int selected_type_idx;
-#endif
-
 
 
 	large_set_classify();
@@ -929,38 +907,12 @@ public:
 	void compute_colors(
 			design_tables *Design_table, int *&design_color_table,
 			int verbose_level);
-#if 0
-	void compute_reduced_colors(
-			long int *chosen_set, int chosen_set_sz,
-			int verbose_level);
-	int designs_are_disjoint(int i, int j);
-	void process_starter_case(
-			long int *starter_set, int starter_set_sz,
-			strong_generators *SG, std::string &prefix,
-			std::string &group_label, int orbit_length,
-			int f_read_solution_file, std::string &solution_file_name,
-			long int *&Large_sets, int &nb_large_sets,
-			int f_compute_normalizer_orbits, strong_generators *N_gens,
-			int verbose_level);
-#endif
 	int test_if_designs_are_disjoint(int i, int j);
 
 };
 
 
 
-#if 0
-int large_set_design_test_orbit(long int *orbit, int orbit_length,
-		void *extra_data);
-int large_set_design_test_pair_of_orbits(long int *orbit1, int orbit_length1,
-		long int *orbit2, int orbit_length2, void *extra_data);
-int large_set_design_compare_func_for_invariants(void *data, int i, int j, void *extra_data);
-void large_set_swap_func_for_invariants(void *data, int i, int j, void *extra_data);
-int large_set_design_compare_func(void *data, int i, int j, void *extra_data);
-void large_set_swap_func(void *data, int i, int j, void *extra_data);
-int large_set_compute_color_of_reduced_orbits_callback(schreier *Sch,
-		int orbit_idx, void *data, int verbose_level);
-#endif
 void large_set_early_test_function(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,

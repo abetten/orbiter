@@ -1617,14 +1617,13 @@ void action::induced_action_by_restriction_on_orbit_with_schreier_vector(
 	action_by_restriction *ABR;
 	
 	if (f_v) {
-		cout << "action::induced_action_by_restriction_"
-				"on_orbit_with_schreier_vector" << endl;
+		cout << "action::induced_action_by_restriction_on_orbit_with_schreier_vector" << endl;
 		cout << "old_action ";
 		old_action.print_info();
 		cout << "pt = " << pt << endl;
 		cout << "f_induce_action = " << f_induce_action << endl;
 		cout << "verbose_level = " << verbose_level << endl;
-		}
+	}
 
 
 	char str1[1000];
@@ -1642,15 +1641,13 @@ void action::induced_action_by_restriction_on_orbit_with_schreier_vector(
 	ABR = NEW_OBJECT(action_by_restriction);
 	
 	if (f_v) {
-		cout << "action::induced_action_by_restriction_"
-				"on_orbit_with_schreier_vector "
-				"before ABR->init_from_schreier_vector" << endl;
+		cout << "action::induced_action_by_restriction_on_orbit_with_schreier_vector "
+				"before ABR->init_single_orbit_from_schreier_vector" << endl;
 	}
-	ABR->init_from_schreier_vector(Schreier_vector, pt, verbose_level - 1);
+	ABR->init_single_orbit_from_schreier_vector(Schreier_vector, pt, verbose_level - 1);
 	if (f_v) {
-		cout << "action::induced_action_by_restriction_"
-				"on_orbit_with_schreier_vector "
-				"after ABR->init_from_schreier_vector" << endl;
+		cout << "action::induced_action_by_restriction_on_orbit_with_schreier_vector "
+				"after ABR->init_single_orbit_from_schreier_vector" << endl;
 	}
 	
 	type_G = action_by_restriction_t;
@@ -1666,10 +1663,9 @@ void action::induced_action_by_restriction_on_orbit_with_schreier_vector(
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_induced_action();
 	if (FALSE) {
-		cout << "action::induced_action_by_restriction_"
-				"on_orbit_with_schreier_vector "
+		cout << "action::induced_action_by_restriction_on_orbit_with_schreier_vector "
 				"calling allocate_base_data" << endl;
-		}
+	}
 	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
 	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
 	//allocate_base_data(0);
@@ -1682,20 +1678,18 @@ void action::induced_action_by_restriction_on_orbit_with_schreier_vector(
 	
 	if (f_induce_action) {
 		if (f_v) {
-			cout << "action::induced_action_by_restriction_"
-					"on_orbit_with_schreier_vector "
+			cout << "action::induced_action_by_restriction_on_orbit_with_schreier_vector "
 					"calling induced_action_override_sims" << endl;
-			}
-		induced_action_override_sims(old_action, old_G, verbose_level - 2);
 		}
+		induced_action_override_sims(old_action, old_G, verbose_level - 2);
+	}
 	if (f_v) {
-		cout << "action::induced_action_by_restriction_"
-				"on_orbit_with_schreier_vector "
+		cout << "action::induced_action_by_restriction_on_orbit_with_schreier_vector "
 				"finished, created action " << label << endl;
 		//Sims->print_transversal_lengths();
 		//cout << endl;
 		print_info();
-		}
+	}
 }
 
 void action::original_point_labels(long int *points, int nb_points,

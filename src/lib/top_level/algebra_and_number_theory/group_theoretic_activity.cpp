@@ -322,13 +322,14 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 					verbose_level);
 	}
 
-
+#if 0
 	else if (Descr->f_BLT_starter) {
 		do_BLT_starter(
 					LG,
 					Descr->BLT_starter_size,
 					verbose_level);
 	}
+#endif
 
 
 	if (f_v) {
@@ -2966,6 +2967,7 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(int spread_no,
 	}
 }
 
+#if 0
 void group_theoretic_activity::do_BLT_starter(
 		linear_group *LG,
 		int starter_size,
@@ -3021,6 +3023,7 @@ void group_theoretic_activity::do_BLT_starter(
 	}
 
 }
+#endif
 
 // #############################################################################
 // global functions:

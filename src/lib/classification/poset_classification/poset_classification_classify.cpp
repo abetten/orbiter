@@ -90,10 +90,10 @@ void poset_classification::compute_orbits_on_subsets(
 	F = 0;
 	for (level = 0; level <= target_depth; level++) {
 		N += nb_orbits_at_level(level);
-		}
+	}
 	for (level = 0; level < target_depth; level++) {
 		F += nb_flag_orbits_up_at_level(level);
-		}
+	}
 	if (f_v) {
 		cout << "poset_classification::compute_orbits_on_subsets N=" << N << endl;
 		cout << "poset_classification::compute_orbits_on_subsets F=" << F << endl;

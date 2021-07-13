@@ -92,8 +92,8 @@ projective_space_activity_description::projective_space_activity_description()
 	Trihedra2_control = NULL;
 	f_control_six_arcs = FALSE;
 			Control_six_arcs = NULL;
-	f_create_surface = FALSE;
-	surface_description = NULL;
+	//f_create_surface = FALSE;
+	//surface_description = NULL;
 
 	f_sweep = FALSE;
 	//std::string sweep_fname;
@@ -376,6 +376,7 @@ int projective_space_activity_description::read_arguments(
 			f_classify_surfaces_through_arcs_and_trihedral_pairs = TRUE;
 			cout << "-classify_surfaces_through_arcs_and_trihedral_pairs " << endl;
 		}
+#if 0
 		else if (stringcmp(argv[i], "-create_surface") == 0) {
 			f_create_surface = TRUE;
 			surface_description = NEW_OBJECT(surface_create_description);
@@ -390,6 +391,7 @@ int projective_space_activity_description::read_arguments(
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
+#endif
 
 		else if (stringcmp(argv[i], "-sweep") == 0) {
 			f_sweep = TRUE;
@@ -754,9 +756,11 @@ void projective_space_activity_description::print()
 	if (f_classify_surfaces_through_arcs_and_trihedral_pairs) {
 		cout << "-classify_surfaces_through_arcs_and_trihedral_pairs " << endl;
 	}
+#if 0
 	if (f_create_surface) {
 		cout << "-create_surface" << endl;
 	}
+#endif
 
 	if (f_sweep) {
 		cout << "-sweep " << sweep_fname << endl;

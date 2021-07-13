@@ -308,6 +308,12 @@ public:
 
 	int f_test_multi_edge_in_decomposition_matrix;
 
+	int f_preferred_choice;
+	std::vector<std::vector<int> > preferred_choice;
+	//int preferred_choice_function_node;
+	//void (*preferred_choice_function)(int pt, int &pt_pref, schreier *Sch, void *data, int verbose_level);
+	//void *preferred_choice_function_data;
+
 
 	poset_classification_control();
 	~poset_classification_control();
@@ -317,6 +323,10 @@ public:
 	void print();
 
 };
+
+
+void poset_classification_control_preferred_choice_function(int pt, int &pt_pref,
+		schreier *Sch, void *data, int data2, int verbose_level);
 
 
 

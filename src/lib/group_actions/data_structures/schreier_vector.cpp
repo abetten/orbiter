@@ -184,8 +184,8 @@ int schreier_vector::count_number_of_orbits()
 		for (i = 0; i < n; i++) {
 			if (prev[i] == -1) {
 				nb++;
-				}
 			}
+		}
 		return nb;
 	}
 }
@@ -209,7 +209,7 @@ void schreier_vector::count_number_of_orbits_and_get_orbit_reps(
 		orbit_reps = NEW_int(nb_orbits);
 		for (i = 0; i < n; i++) {
 			orbit_reps[i] = pts[i];
-			}
+		}
 	}
 	else {
 		int nb;
@@ -220,15 +220,15 @@ void schreier_vector::count_number_of_orbits_and_get_orbit_reps(
 		for (i = 0; i < n; i++) {
 			if (prev[i] == -1) {
 				nb_orbits++;
-				}
 			}
+		}
 		orbit_reps = NEW_int(nb_orbits);
 		nb = 0;
 		for (i = 0; i < n; i++) {
 			if (prev[i] == -1) {
 				orbit_reps[nb++] = pts[i];
-				}
 			}
+		}
 	}
 }
 
@@ -244,7 +244,7 @@ int schreier_vector::determine_depth_recursion(
 		depth[pos] = 0;
 		ancestor[pos] = pts[pos];
 		return 0;
-		}
+	}
 	if (!Sorting.int_vec_search(pts, n, pt, pt_loc)) {
 		int i;
 
@@ -264,17 +264,17 @@ int schreier_vector::determine_depth_recursion(
 				<< setw(5) << depth[i] << " : "
 				<< setw(5) << ancestor[i]
 				<< endl;
-			}
-		exit(1);
 		}
+		exit(1);
+	}
 	d = depth[pt_loc];
 	if (d >= 0) {
 		d++;
-		}
+	}
 	else {
 		d = determine_depth_recursion(n,
 				pts, prev, depth, ancestor, pt_loc) + 1;
-		}
+	}
 	depth[pos] = d;
 	ancestor[pos] = ancestor[pt_loc];
 	return d;
@@ -305,7 +305,7 @@ void schreier_vector::relabel_points(
 
 	if (f_v) {
 		cout << "schreier_vector::relabel_points" << endl;
-		}
+	}
 	if (nb_gen == 0) {
 		f_trivial_group = TRUE;
 	}
@@ -317,7 +317,7 @@ void schreier_vector::relabel_points(
 		cout << "schreier_vector::relabel_points "
 				"changing point labels: fatal: !f_compact" << endl;
 		exit(1);
-		}
+	}
 #endif
 	n = sv[0];
 	pts = sv + 1;
@@ -326,7 +326,7 @@ void schreier_vector::relabel_points(
 		if (f_v) {
 			cout << "schreier_vector::relabel_points "
 					"trivial group" << endl;
-			}
+		}
 		new_sv = NEW_int(n + 1);
 		new_pts = new_sv + 1;
 		new_sv[0] = n;
@@ -338,16 +338,16 @@ void schreier_vector::relabel_points(
 			if (FALSE) {
 				cout << "i=" << i << " pt=" << pt
 						<< " pre=" << pre << " q=" << q << endl;
-				}
-			new_pts[i] = q;
 			}
+			new_pts[i] = q;
+		}
 		Sorting.int_vec_heapsort(new_pts, n);
 		for (i = 0; i < n + 1; i++) {
 			sv[i] = new_sv[i];
-			}
+		}
 		FREE_int(new_sv);
 		return;
-		}
+	}
 
 
 	int *prev;
@@ -365,7 +365,7 @@ void schreier_vector::relabel_points(
 	new_sv_label = new_sv_prev + n;
 	for (i = 0; i < n; i++) {
 		perm[i] = i;
-		}
+	}
 	if (f_v) {
 		nb_old_orbit_reps = 0;
 		cout << "schreier_vector::relabel_points "
@@ -374,15 +374,15 @@ void schreier_vector::relabel_points(
 			if (prev[i] == -1) {
 				cout << "orbit rep " << pts[i] << endl;
 				nb_old_orbit_reps++;
-				}
 			}
+		}
 		old_orbit_reps = NEW_int(nb_old_orbit_reps);
 		j = 0;
 		for (i = 0; i < n; i++) {
 			if (prev[i] == -1) {
 				old_orbit_reps[j++] = pts[i];
-				}
 			}
+		}
 		Sorting.int_vec_heapsort(old_orbit_reps, nb_old_orbit_reps);
 		Orbiter->Int_vec.print(cout, old_orbit_reps, nb_old_orbit_reps);
 		cout << endl;
@@ -392,8 +392,8 @@ void schreier_vector::relabel_points(
 		for (i = 0; i < nb_old_orbit_reps; i++) {
 			cout << i << " / " << nb_old_orbit_reps
 					<< " : " << old_orbit_reps[i] << endl;
-			}
 		}
+	}
 	if (f_vv) {
 		cout << "schreier_vector::relabel_points "
 				"before:" << endl;
@@ -402,22 +402,22 @@ void schreier_vector::relabel_points(
 					nb_old_orbit_reps, pts[i], idx)) {
 				cout << setw(5) << i << " : "
 						<< setw(5) << pts[i] << endl;
-				}
 			}
 		}
+	}
 	if (f_vv) {
 		cout << "schreier_vector::relabel_points "
 				"computing new_pts" << endl;
-		}
+	}
 	for (i = 0; i < n; i++) {
 		pt = pts[i];
 		if (FALSE) {
 			cout << "i=" << i << " pt=" << pt << endl;
-			}
+		}
 		pre = AF->preimage(pt, 0/*verbose_level - 3*/);
 		if (FALSE) {
 			cout << "pre=" << pre << endl;
-			}
+		}
 		q = AF->project_onto_Gauss_reduced_vector(
 				pre, 0 /*verbose_level - 2*/);
 		if (FALSE) {
@@ -425,10 +425,10 @@ void schreier_vector::relabel_points(
 					nb_old_orbit_reps, pt, idx)) {
 				cout << "i=" << i << " pt=" << pt
 						<< " pre=" << pre << " q=" << q << endl << endl;
-				}
 			}
-		new_pts[i] = q;
 		}
+		new_pts[i] = q;
+	}
 	if (f_vv) {
 		//cout << "after:" << endl;
 		cout << "i : pts[i] : new_pts[i]" << endl;
@@ -438,16 +438,16 @@ void schreier_vector::relabel_points(
 				cout << setw(5) << i << " : "
 						<< setw(5) << pts[i] << " : "
 						<< setw(5) << new_pts[i] << endl;
-				}
 			}
 		}
+	}
 	if (f_vv) {
 		cout << "schreier_vector::relabel_points "
 				"sorting:" << endl;
-		}
+	}
 	for (i = 0; i < n; i++) {
 		new_pts_sorted[i] = new_pts[i];
-		}
+	}
 	Sorting.int_vec_heapsort_with_log(new_pts_sorted, perm, n);
 	if (f_vv) {
 		cout << "schreier_vector::relabel_points "
@@ -460,9 +460,9 @@ void schreier_vector::relabel_points(
 					<< setw(5) << pts[i] << " : "
 					<< setw(5) << new_pts_sorted[i]
 					<< " : " << setw(5) << perm[i] << endl;
-				}
 			}
 		}
+	}
 	new_sv[0] = n;
 	for (i = 0; i < n; i++) {
 		new_sv_pts[i] = new_pts_sorted[i];
@@ -470,13 +470,13 @@ void schreier_vector::relabel_points(
 		pr = prev[pos];
 		if (pr == -1) {
 			new_pr = -1;
-			}
+		}
 		else {
 			new_pr = new_pts[pr];
-			}
+		}
 		new_sv_prev[i] = new_pr;
 		new_sv_label[i] = label[pos];
-		}
+	}
 	if (f_vv) {
 		cout << "schreier_vector::relabel_points "
 				"old / n e w schreier vector:" << endl;
@@ -495,7 +495,7 @@ void schreier_vector::relabel_points(
 				<< setw(5) << new_sv_prev[i] << " : "
 				<< setw(5) << new_sv_label[i]
 				<< endl;
-			}
+		}
 		cout << "i : orbit_rep : lexleast : project : "
 				"project : preimage" << endl;
 		for (i = 0; i < n; i++) {
@@ -519,25 +519,25 @@ void schreier_vector::relabel_points(
 						<< AF->preimage(
 								AF->project(new_sv_pts[i], 0), 0)
 								<< endl;
-				}
 			}
-		cout << "copying over" << endl;
 		}
+		cout << "copying over" << endl;
+	}
 	for (i = 0; i < 3 * n + 1; i++) {
 		sv[i] = new_sv[i];
-		}
+	}
 	FREE_int(new_sv);
 	FREE_int(new_pts);
 	FREE_int(new_pts_sorted);
 	FREE_int(perm);
 	if (old_orbit_reps) {
 		FREE_int(old_orbit_reps);
-		}
+	}
 	if (f_v) {
 		cout << "schreier_vector::relabel_points "
 				"n e w schreier vector created" << endl;
 		cout << "schreier_vector::relabel_points done" << endl;
-		}
+	}
 }
 
 void schreier_vector::orbit_stats(
@@ -659,10 +659,10 @@ void schreier_vector::orbit_stats(
 }
 
 void schreier_vector::orbit_of_point(
-		int pt, long int *&orbit_elts, int &orbit_len,
+		int pt, long int *&orbit_elts, int &orbit_len, int &idx_of_root_node,
 		int verbose_level)
 {
-	int i, idx;
+	int i;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
@@ -671,7 +671,7 @@ void schreier_vector::orbit_of_point(
 	if (f_v) {
 		cout << "schreier_vector::orbit_of_point "
 				"pt=" << pt << endl;
-		}
+	}
 	int n;
 	int *pts;
 	int *depth;
@@ -697,13 +697,17 @@ void schreier_vector::orbit_of_point(
 	if (f_v) {
 		cout << "schreier_vector::orbit_of_point "
 				"schreier vector of length " << n << endl;
-		}
+	}
 
-	if (!Sorting.int_vec_search(pts, n, pt, idx)) {
+
+	if (!Sorting.int_vec_search(pts, n, pt, idx_of_root_node)) {
 		cout << "schreier_vector::orbit_of_point "
 				"fatal: point " << pt << " not found" << endl;
 		exit(1);
-		}
+	}
+	if (f_v) {
+		cout << "schreier_vector::orbit_of_point idx_of_root_node = " << idx_of_root_node << endl;
+	}
 
 	depth = NEW_int(n);
 	ancestor = NEW_int(n);
@@ -712,21 +716,19 @@ void schreier_vector::orbit_of_point(
 	for (i = 0; i < n; i++) {
 		depth[i] = -1;
 		ancestor[i] = -1;
-		}
+	}
 	if (f_vv) {
 		cout << "schreier_vector::orbit_of_point "
-				"determining depth using schreier_vector_determine_"
-				"depth_recursion" << endl;
-		}
+				"determining depth using schreier_vector_determine_depth_recursion" << endl;
+	}
 	for (i = 0; i < n; i++) {
 		Sorting.schreier_vector_determine_depth_recursion(n,
 				pts, prev, FALSE, NULL, depth, ancestor, i);
-		}
+	}
 	if (f_vv) {
 		cout << "schreier_vector::orbit_of_point "
-				"determining depth using schreier_vector_"
-				"determine_depth_recursion done" << endl;
-		}
+				"determining depth using schreier_vector_determine_depth_recursion done" << endl;
+	}
 	if (f_vvv && n < 100) {
 		cout << "i : pts[i] : prev[i] : label[i] : "
 				"depth[i] : ancestor[i]" << endl;
@@ -739,40 +741,50 @@ void schreier_vector::orbit_of_point(
 				<< setw(5) << depth[i] << " : "
 				<< setw(5) << ancestor[i]
 				<< endl;
-			}
 		}
+	}
 	orbit_len = 0;
 	for (i = 0; i < n; i++) {
 		if (ancestor[i] == pt) {
-			orbit_elt_idx[orbit_len++] = i;
+			if (i == idx_of_root_node) {
+				idx_of_root_node = orbit_len;
 			}
+			orbit_elt_idx[orbit_len++] = i;
 		}
+	}
 	if (f_v) {
 		cout << "schreier_vector::orbit_of_point "
 				"found orbit of length " << orbit_len << endl;
-		}
+	}
 	orbit_elts = NEW_lint(orbit_len);
 	for (i = 0; i < orbit_len; i++) {
 		orbit_elts[i] = pts[orbit_elt_idx[i]];
-		}
+	}
 	if (f_vv) {
 		cout << "schreier_vector::orbit_of_point "
 				"the points in the orbit are: ";
 		Orbiter->Lint_vec.print(cout, orbit_elts, orbit_len);
 		cout << endl;
-		}
-	if (orbit_elts[0] != pt) {
+	}
+
+
+	if (orbit_elts[idx_of_root_node] != pt) {
 		cout << "schreier_vector::orbit_of_point "
-				"fatal: orbit_elts[0] != pt" << endl;
+				"fatal: orbit_elts[idx_of_root_node] != pt" << endl;
+		cout << "pt=" << pt << endl;
+		cout << "idx_of_root_node=" << idx_of_root_node << endl;
+		cout << "orbit_elts[idx_of_root_node]=" << orbit_elts[idx_of_root_node] << endl;
 		exit(1);
-		}
+	}
+
+
 	for (i = 1; i < orbit_len; i++) {
 		if (orbit_elts[i] < orbit_elts[i - 1]) {
 			cout << "schreier_vector::orbit_of_point "
 					"fatal: orbit_elts[] not increasing" << endl;
 			exit(1);
-			}
 		}
+	}
 
 	FREE_int(depth);
 	FREE_int(ancestor);
@@ -972,14 +984,15 @@ void schreier_vector::export_tree_as_layered_graph(
 	int *orbit_depth;
 	int *points;
 	int orbit_len;
+	int idx_of_root_node;
 	sorting Sorting;
 
 	if (f_v) {
 		cout << "schreier_vector::export_tree_as_layered_graph" << endl;
-		}
+	}
 
 	orbit_of_point(
-			orbit_rep, orbit_elts, orbit_len,
+			orbit_rep, orbit_elts, orbit_len, idx_of_root_node,
 			verbose_level);
 	len = orbit_len;
 	n = sv[0];
@@ -1167,7 +1180,7 @@ void schreier_vector::export_tree_as_layered_graph(
 	if (f_v) {
 		cout << "schreier_vector::export_tree_as_layered_graph "
 				"done" << endl;
-		}
+	}
 }
 
 void schreier_vector::trace_back(int pt, int &depth)

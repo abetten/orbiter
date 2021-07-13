@@ -787,11 +787,21 @@ public:
 	void (*print_function)(std::ostream &ost, int pt, void *data);
 	void *print_function_data;
 
+	int f_preferred_choice_function;
+	void (*preferred_choice_function)(int pt, int &pt_pref, schreier *Sch, void *data, int data2, int verbose_level);
+	void *preferred_choice_function_data;
+	int preferred_choice_function_data2;
+
 	schreier();
 	schreier(action *A, int verbose_level);
 	~schreier();
 	void freeself();
 	void delete_images();
+	void init_preferred_choice_function(
+			void (*preferred_choice_function)(int pt, int &pt_pref, schreier *Sch, void *data, int data2, int verbose_level),
+			void *preferred_choice_function_data,
+			int preferred_choice_function_data2,
+			int verbose_level);
 	void init_images(int nb_images, int verbose_level);
 	void init_images_only(int nb_images,
 			long int degree, int *images, int verbose_level);

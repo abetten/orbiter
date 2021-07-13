@@ -93,12 +93,16 @@ poset_classification_control::poset_classification_control()
 
 	f_test_multi_edge_in_decomposition_matrix = FALSE;
 
+	f_preferred_choice = FALSE;
+	//preferred_choice
+
 }
 
 poset_classification_control::~poset_classification_control()
 {
 
 }
+
 
 
 int poset_classification_control::read_arguments(
@@ -380,6 +384,25 @@ int poset_classification_control::read_arguments(
 				cout << "-test_multi_edge_in_decomposition_matrix " << endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-preferred_choice") == 0) {
+
+			f_preferred_choice = TRUE;
+
+			int node, pt, pt_pref;
+			vector<int> v;
+
+			node = strtoi(argv[++i]);
+			pt = strtoi(argv[++i]);
+			pt_pref = strtoi(argv[++i]);
+			v.push_back(node);
+			v.push_back(pt);
+			v.push_back(pt_pref);
+			preferred_choice.push_back(v);
+
+			if (f_v) {
+				cout << "-preferred_choice " << node << " " << pt << " " << pt_pref << endl;
+			}
+		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -522,7 +545,49 @@ void poset_classification_control::print()
 	if (f_test_multi_edge_in_decomposition_matrix) {
 		cout << "-test_multi_edge_in_decomposition_matrix" << endl;
 	}
+	if (f_preferred_choice) {
+		for (int i = 0; i < preferred_choice.size(); i++) {
+			cout << "-preferred_choice "
+				<< preferred_choice[i][0]
+				<< " " << preferred_choice[i][1]
+				<< " " << preferred_choice[i][2] << endl;
+		}
+	}
 }
+
+
+void poset_classification_control_preferred_choice_function(int pt, int &pt_pref,
+		schreier *Sch, void *data, int data2,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	poset_classification *PC = (poset_classification *) data;
+
+	if (f_v) {
+		cout << "poset_classification_control_preferred_choice_function data2=" << data2 << endl;
+	}
+	int i, l;
+	int node1, pt1, pt_prev1;
+
+	pt_pref = pt;
+
+	l = PC->get_control()->preferred_choice.size();
+	for (i = 0; i < l; i++) {
+		node1 = PC->get_control()->preferred_choice[i][0];
+		pt1 = PC->get_control()->preferred_choice[i][1];
+		pt_prev1 = PC->get_control()->preferred_choice[i][2];
+		if (node1 == data2 && pt == pt1) {
+			if (f_v) {
+				cout << "poset_classification_control_preferred_choice_function "
+						"node=" << data2 << " pt=" << pt << " pt_pref=" << pt_pref << endl;
+			}
+			pt_pref = pt_prev1;
+			break;
+		}
+	}
+
+}
+
 
 
 }}

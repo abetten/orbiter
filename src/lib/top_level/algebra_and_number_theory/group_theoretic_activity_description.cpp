@@ -161,8 +161,8 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	Andre_Bruck_Bose_construction_spread_no = 0;
 	// Andre_Bruck_Bose_construction_label
 
-	f_BLT_starter = FALSE;
-	BLT_starter_size = 0;
+	//f_BLT_starter = FALSE;
+	//BLT_starter_size = 0;
 
 }
 
@@ -697,6 +697,7 @@ int group_theoretic_activity_description::read_arguments(
 			}
 		}
 
+#if 0
 		else if (stringcmp(argv[i], "-BLT_starter") == 0) {
 			f_BLT_starter = TRUE;
 			BLT_starter_size = strtoi(argv[++i]);
@@ -704,6 +705,7 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-BLT_starter " << BLT_starter_size << endl;
 			}
 		}
+#endif
 
 
 		else if (stringcmp(argv[i], "-end") == 0) {
@@ -964,9 +966,11 @@ void group_theoretic_activity_description::print()
 			<< " " << Andre_Bruck_Bose_construction_label << endl;
 	}
 
+#if 0
 	if (f_BLT_starter) {
 		cout << "-BLT_starter " << BLT_starter_size << endl;
 	}
+#endif
 }
 
 

@@ -337,11 +337,13 @@ public:
 			surface_create_description *Surface_Descr,
 			std::string &sweep_fname,
 			int verbose_level);
+#if 0
 	void do_create_surface(
 			projective_space_with_action *PA,
 			surface_create_description *Surface_Descr,
 			poset_classification_control *Control_six_arcs,
 			int verbose_level);
+#endif
 	void classify_surfaces_with_double_sixes(
 			projective_space_with_action *PA,
 			poset_classification_control *Control,

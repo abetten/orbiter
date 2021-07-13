@@ -281,6 +281,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 				Descr->sweep_4_27_fname,
 				verbose_level);
 	}
+
+#if 0
 	else if (Descr->f_create_surface) {
 		if (!Descr->f_control_six_arcs) {
 			cout << "please use option -control_six_arcs <description> -end" << endl;
@@ -294,6 +296,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 				Descr->surface_description, Descr->Control_six_arcs,
 				verbose_level);
 	}
+#endif
 	else if (Descr->f_six_arcs_not_on_conic) {
 		if (!Descr->f_control_six_arcs) {
 			cout << "please use option -control_six_arcs <description> -end" << endl;
