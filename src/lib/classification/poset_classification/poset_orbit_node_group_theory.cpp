@@ -335,7 +335,7 @@ void poset_orbit_node::init_extension_node_prepare_H(
 			G, go_G,
 			H,
 			pt, pt_orbit_len,
-			verbose_level - 3);
+			verbose_level - 1);
 		if (f_vv) {
 			gen->print_level_extension_info(size - 1, prev, prev_ex);
 			Orbiter->Lint_vec.print(cout, gen->get_S(), size);
@@ -668,8 +668,7 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 			if (f_v) {
 				gen->print_level_extension_info(size - 1, prev, prev_ex);
 				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_setting "
-						"calling AR.induced_action_by_restriction_"
-						"on_orbit_with_schreier_vector" << endl;
+						"calling AR.induced_action_by_restriction_on_orbit_with_schreier_vector" << endl;
 			}
 			AR.induced_action_by_restriction_on_orbit_with_schreier_vector(
 				*gen->get_A2(),
@@ -689,7 +688,7 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 						"G.point_stabilizer_with_action"
 						<< endl;
 			}
-			G.point_stabilizer_with_action(&AR, H, 0 /*pt */, verbose_level - 3);
+			G.point_stabilizer_with_action(&AR, H, AR.G.ABR->idx_of_root_node /* 0 */ /*pt */, verbose_level - 3);
 			if (f_v) {
 				gen->print_level_extension_info(size - 1, prev, prev_ex);
 				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_setting after "
@@ -710,8 +709,7 @@ void poset_orbit_node::compute_point_stabilizer_in_standard_setting(
 
 			if (f_v) {
 				gen->print_level_extension_info(size - 1, prev, prev_ex);
-				cout << " poset_orbit_node::compute_point_stabilizer_"
-						"in_standard_setting "
+				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_setting "
 						"G.point_stabilizer_with_action done"
 						<< endl;
 			}

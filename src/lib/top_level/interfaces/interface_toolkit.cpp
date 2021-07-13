@@ -39,6 +39,9 @@ interface_toolkit::interface_toolkit()
 	//std::string csv_file_select_rows_and_cols_R_text;
 	//std::string csv_file_select_rows_and_cols_C_text;
 
+	f_csv_file_sort_each_row = FALSE;
+	//std::string csv_file_sort_each_row_fname;
+
 	f_csv_file_join = FALSE;
 	//csv_file_join_fname
 	//csv_file_join_identifier
@@ -47,6 +50,10 @@ interface_toolkit::interface_toolkit()
 	f_csv_file_concatenate = FALSE;
 	//std::string csv_file_concatenate_fname_out;
 	//std::vector<std::string> csv_file_concatenate_fname_in;
+
+	f_csv_file_extract_column_to_txt = FALSE;
+	//std::string csv_file_extract_column_to_txt_fname;
+	//std::string csv_file_extract_column_to_txt_col_label;
 
 	f_csv_file_latex = FALSE;
 	f_produce_latex_header = FALSE;
@@ -107,11 +114,17 @@ void interface_toolkit::print_help(int argc,
 	else if (stringcmp(argv[i], "-csv_file_select_rows_and_cols") == 0) {
 		cout << "-csv_file_select_rows_and_cols <string : csv_file_name> <string : list of rows> <string : list of cols>" << endl;
 	}
+	else if (stringcmp(argv[i], "-csv_file_sort_each_row") == 0) {
+		cout << "-csv_file_sort_each_row <string : input file>" << endl;
+	}
 	else if (stringcmp(argv[i], "-csv_file_join") == 0) {
 		cout << "-cvs_file_join <int : number of files> <string : input file1> <string : column label1> ..." << endl;
 	}
 	else if (stringcmp(argv[i], "-csv_file_concatenate") == 0) {
 		cout << "-csv_file_concatenate <string : fname_out> <int : number of input files> <string : inout file1> ..." << endl;
+	}
+	else if (stringcmp(argv[i], "-csv_file_extract_column_to_txt") == 0) {
+		cout << "-csv_file_extract_column_to_txt <string : csv_fname> <string : col_label>" << endl;
 	}
 	else if (stringcmp(argv[i], "-csv_file_latex") == 0) {
 		cout << "-cvs_file_latex <int : f_produce_header> <string : file_name>" << endl;
@@ -161,10 +174,16 @@ int interface_toolkit::recognize_keyword(int argc,
 	else if (stringcmp(argv[i], "-csv_file_select_rows_and_cols") == 0) {
 		return true;
 	}
+	else if (stringcmp(argv[i], "-csv_file_sort_each_row") == 0) {
+		return true;
+	}
 	else if (stringcmp(argv[i], "-csv_file_join") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-csv_file_concatenate") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-csv_file_extract_column_to_txt") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-csv_file_latex") == 0) {
@@ -249,6 +268,15 @@ void interface_toolkit::read_arguments(int argc,
 				<< endl;
 		}
 	}
+	else if (stringcmp(argv[i], "-csv_file_sort_each_row") == 0) {
+		f_csv_file_sort_each_row = TRUE;
+		csv_file_sort_each_row_fname.assign(argv[++i]);
+		if (f_v) {
+			cout << "-csv_file_sort_each_row "
+				<< csv_file_sort_each_row_fname
+				<< endl;
+		}
+	}
 	else if (stringcmp(argv[i], "-csv_file_join") == 0) {
 		string s;
 		int nb, j;
@@ -287,6 +315,15 @@ void interface_toolkit::read_arguments(int argc,
 			}
 		}
 	}
+	else if (stringcmp(argv[i], "-csv_file_extract_column_to_txt") == 0) {
+		f_csv_file_extract_column_to_txt = TRUE;
+		csv_file_extract_column_to_txt_fname.assign(argv[++i]);
+		csv_file_extract_column_to_txt_col_label.assign(argv[++i]);
+		if (f_v) {
+			cout << "-csv_file_extract_column_to_txt " << csv_file_extract_column_to_txt_fname << " " << csv_file_extract_column_to_txt_col_label << endl;
+		}
+	}
+
 	else if (stringcmp(argv[i], "-csv_file_latex") == 0) {
 		f_csv_file_latex = TRUE;
 		f_produce_latex_header = strtoi(argv[++i]);
@@ -427,59 +464,67 @@ void interface_toolkit::print()
 		cout << "-csv_file_select_rows " << csv_file_select_rows_fname
 				<< " " << csv_file_select_rows_text << endl;
 	}
-	else if (f_csv_file_split_rows_modulo) {
+	if (f_csv_file_split_rows_modulo) {
 		cout << "-csv_file_split_rows_modulo " << csv_file_split_rows_modulo_fname
 				<< " " << csv_file_split_rows_modulo_n << endl;
 	}
-	else if (f_csv_file_select_cols) {
+	if (f_csv_file_select_cols) {
 		cout << "-csv_file_select_cols " << csv_file_select_cols_fname
 				<< " " << csv_file_select_cols_text << endl;
 	}
-	else if (f_csv_file_select_rows_and_cols) {
+	if (f_csv_file_select_rows_and_cols) {
 		cout << "-csv_file_select_rows_and_cols "
 				<< csv_file_select_rows_and_cols_fname
 				<< " " << csv_file_select_rows_and_cols_R_text
 				<< " " << csv_file_select_rows_and_cols_C_text
 				<< endl;
 	}
-	else if (f_csv_file_join) {
+	if (f_csv_file_sort_each_row) {
+		cout << "-csv_file_sort_each_row "
+				<< csv_file_sort_each_row_fname
+				<< endl;
+	}
+	if (f_csv_file_join) {
 		cout << "-csv_file_join " << endl;
 		for (j = 0; j < csv_file_join_fname.size(); j++) {
 			cout << j << " : " << csv_file_join_fname[j] << " : " << csv_file_join_identifier[j] << endl;
 		}
 	}
-	else if (f_csv_file_concatenate) {
+	if (f_csv_file_concatenate) {
 		cout << "-csv_file_concatenate " << csv_file_concatenate_fname_out << endl;
 		for (j = 0; j < csv_file_concatenate_fname_in.size(); j++) {
 			cout << j << " : " << csv_file_concatenate_fname_in[j] << endl;
 		}
 	}
-	else if (f_csv_file_latex) {
+	if (f_csv_file_extract_column_to_txt) {
+		cout << "-csv_file_extract_column_to_txt " << csv_file_extract_column_to_txt_fname << " " << csv_file_extract_column_to_txt_col_label << endl;
+	}
+	if (f_csv_file_latex) {
 		cout << "-csv_file_latex " << csv_file_latex_fname << endl;
 	}
-	else if (f_draw_matrix) {
+	if (f_draw_matrix) {
 		cout << "-draw_matrix " << endl;
 		Draw_bitmap_control->print();
 	}
-	else if (f_reformat) {
+	if (f_reformat) {
 		cout << "-reformat " << reformat_fname_in
 				<< " " << reformat_fname_out
 				<< " " << reformat_nb_cols << endl;
 	}
-	else if (f_split_by_values) {
+	if (f_split_by_values) {
 		cout << "-split_by_values " << split_by_values_fname_in << endl;
 	}
-	else if (f_store_as_csv_file) {
+	if (f_store_as_csv_file) {
 		cout << "-store_as_csv_file " << store_as_csv_file_fname
 				<< " " << store_as_csv_file_m
 				<< " " << store_as_csv_file_n
 				<< " " << store_as_csv_file_data << endl;
 	}
-	else if (f_mv) {
+	if (f_mv) {
 		cout << "-mv " << mv_a
 				<< " " << mv_b << endl;
 	}
-	else if (f_loop) {
+	if (f_loop) {
 		cout << "-loop " << loop_variable
 				<< " " << loop_from
 				<< " " << loop_to
@@ -490,10 +535,10 @@ void interface_toolkit::print()
 		cout << endl;
 
 	}
-	else if (f_plot_function) {
+	if (f_plot_function) {
 		cout << "-plot_function " << plot_function_fname << endl;
 	}
-	else if (f_draw_projective_curve) {
+	if (f_draw_projective_curve) {
 		cout << "-draw_projective_curve " << endl;
 		Draw_projective_curve_description->print();
 	}
@@ -537,6 +582,12 @@ void interface_toolkit::worker(int verbose_level)
 				csv_file_select_rows_and_cols_R_text, csv_file_select_rows_and_cols_C_text,
 				verbose_level);
 	}
+	else if (f_csv_file_sort_each_row) {
+		file_io Fio;
+
+		Fio.do_csv_file_sort_each_row(csv_file_sort_each_row_fname, verbose_level);
+
+	}
 	else if (f_csv_file_join) {
 
 		file_io Fio;
@@ -550,6 +601,13 @@ void interface_toolkit::worker(int verbose_level)
 
 		Fio.do_csv_file_concatenate(csv_file_concatenate_fname_in,
 				csv_file_concatenate_fname_out, verbose_level);
+	}
+	else if (f_csv_file_extract_column_to_txt) {
+
+		file_io Fio;
+
+		Fio.do_csv_file_extract_column_to_txt(csv_file_extract_column_to_txt_fname, csv_file_extract_column_to_txt_col_label, verbose_level);
+
 	}
 	else if (f_csv_file_latex) {
 

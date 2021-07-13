@@ -400,7 +400,7 @@ public:
 			int &nb_orbits, int *&orbit_reps, int *&orbit_length, int *&total_depth,
 			int verbose_level);
 	void orbit_of_point(
-			int pt, long int *&orbit_elts, int &orbit_len,
+			int pt, long int *&orbit_elts, int &orbit_len, int &idx_of_root_node,
 			int verbose_level);
 	void init_from_schreier(schreier *S,
 		int f_trivial_group, int verbose_level);

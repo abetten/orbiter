@@ -3686,6 +3686,102 @@ void file_io::do_csv_file_select_rows_and_cols(std::string &fname,
 	}
 }
 
+void file_io::do_csv_file_extract_column_to_txt(
+		std::string &csv_fname, std::string &col_label, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::do_csv_file_extract_column_to_txt" << endl;
+	}
+	string fname;
+	string_tools ST;
+
+	spreadsheet *S;
+	int identifier_column;
+
+	S = NEW_OBJECT(spreadsheet);
+
+	S->read_spreadsheet(csv_fname, 0 /*verbose_level*/);
+	cout << "Table " << csv_fname << " has been read" << endl;
+
+
+	identifier_column = S->find_column(col_label);
+
+
+	fname.assign(csv_fname);
+	ST.replace_extension_with(fname, "_");
+	fname.append(col_label);
+	fname.append(".txt");
+
+
+
+
+	{
+		ofstream ost(fname);
+
+		int i, j;
+
+		for (i = 1; i < S->nb_rows; i++) {
+			string entry;
+			long int *v;
+			int sz;
+
+			S->get_string_entry(entry, i, identifier_column);
+			Orbiter->Lint_vec.scan(entry, v, sz);
+			ost << sz;
+			for (j = 0; j < sz; j++) {
+				ost << " " << v[j];
+			}
+			ost << endl;
+			FREE_lint(v);
+		}
+		ost << -1 << endl;
+	}
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "file_io::do_csv_file_extract_column_to_txt done" << endl;
+	}
+}
+
+
+
+void file_io::do_csv_file_sort_each_row(
+		std::string &csv_fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::do_csv_file_sort_each_row" << endl;
+	}
+	int *M;
+	int m, n;
+	sorting Sorting;
+	int i;
+	string fname;
+	string_tools ST;
+
+	int_matrix_read_csv(csv_fname, M, m, n, verbose_level);
+	for (i = 0; i < m; i++) {
+		Sorting.int_vec_heapsort(M + i * n, n);
+	}
+	fname.assign(csv_fname);
+	ST.replace_extension_with(fname, "_sorted.csv");
+
+	int_matrix_write_csv(fname, M, m, n);
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "file_io::do_csv_file_sort_each_row done" << endl;
+	}
+}
+
 void file_io::do_csv_file_join(
 		std::vector<std::string> &csv_file_join_fname,
 		std::vector<std::string> &csv_file_join_identifier, int verbose_level)

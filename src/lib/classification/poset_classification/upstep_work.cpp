@@ -303,7 +303,7 @@ void upstep_work::handle_extension_unprocessed_type(int verbose_level)
 		
 	if (f_vv) {
 		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		cout << "with point " << pt
+		cout << "with point " << pt << ", pt_orbit_len=" << pt_orbit_len
 				<< " : before init_extension_node" << endl;
 	}
 	
@@ -509,7 +509,7 @@ int upstep_work::init_extension_node(int verbose_level)
 		*G, go_G,
 		*H, go_H, 
 		pt, pt_orbit_len, 
-		verbose_level - 4);
+		verbose_level - 2);
 
 
 #if 0

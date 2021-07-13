@@ -385,8 +385,10 @@ public:
 		int f_control_six_arcs;
 		poset_classification_control *Control_six_arcs;
 
+#if 0
 		int f_create_surface;
 		surface_create_description *surface_description;
+#endif
 
 	int f_sweep;
 	std::string sweep_fname;

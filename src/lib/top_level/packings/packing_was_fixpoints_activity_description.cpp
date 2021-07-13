@@ -21,6 +21,11 @@ packing_was_fixpoints_activity_description::packing_was_fixpoints_activity_descr
 
 	f_print_packing = FALSE;
 	//std::string print_packing_text;
+
+	f_compare_files_of_packings = FALSE;
+	//std::string compare_files_of_packings_fname1;
+	//std::string compare_files_of_packings_fname2;
+
 }
 
 packing_was_fixpoints_activity_description::~packing_was_fixpoints_activity_description()
@@ -49,6 +54,12 @@ int packing_was_fixpoints_activity_description::read_arguments(
 			print_packing_text.assign(argv[++i]);
 			cout << "-print_packing" << print_packing_text << endl;
 		}
+		else if (stringcmp(argv[i], "-compare_files_of_packings") == 0) {
+			f_compare_files_of_packings = TRUE;
+			compare_files_of_packings_fname1.assign(argv[++i]);
+			compare_files_of_packings_fname2.assign(argv[++i]);
+			cout << "-compare_files_of_packings" << compare_files_of_packings_fname1 << " " << compare_files_of_packings_fname2 << endl;
+		}
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
@@ -71,6 +82,9 @@ void packing_was_fixpoints_activity_description::print()
 	}
 	if (f_print_packing) {
 		cout << "-print_packing " << print_packing_text << endl;
+	}
+	if (f_compare_files_of_packings) {
+		cout << "-compare_files_of_packings" << compare_files_of_packings_fname1 << " " << compare_files_of_packings_fname2 << endl;
 	}
 }
 

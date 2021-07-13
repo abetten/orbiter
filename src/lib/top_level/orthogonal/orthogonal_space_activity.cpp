@@ -199,7 +199,8 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 
 
 		BLT_classify->create_graphs(
-				Descr->BLT_set_graphs_r, Descr->BLT_set_graphs_m,
+				Descr->BLT_set_graphs_r,
+				Descr->BLT_set_graphs_m,
 				Descr->BLT_set_graphs_starter_size - 1,
 				TRUE /* f_lexorder_test */, FALSE /* f_eliminate_graphs_if_possible */,
 				verbose_level);
@@ -249,12 +250,16 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		p1 = strtolint(Descr->unrank_line_through_two_points_p1);
 		p2 = strtolint(Descr->unrank_line_through_two_points_p2);
 
-		cout << "point rank p1 = " << p1 << endl;
-		cout << "point rank p2 = " << p2 << endl;
+		if (f_v) {
+			cout << "point rank p1 = " << p1 << endl;
+			cout << "point rank p2 = " << p2 << endl;
+		}
 
 		rk = OA->O->rank_line(p1, p2, verbose_level);
 
-		cout << "line rank = " << rk << endl;
+		if (TRUE) {
+			cout << "line rank = " << rk << endl;
+		}
 
 		if (f_v) {
 			cout << "orthogonal_space_activity::perform_activity f_unrank_line_through_two_points done" << endl;
@@ -272,15 +277,19 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 
 		line_pencil_line_ranks = NEW_lint(OA->O->alpha);
 
-		cout << "point rank = " << Descr->lines_on_point_rank << endl;
+		if (f_v) {
+			cout << "point rank = " << Descr->lines_on_point_rank << endl;
+		}
 
 		OA->O->lines_on_point_by_line_rank(Descr->lines_on_point_rank,
 				line_pencil_line_ranks, verbose_level);
 
-		cout << "There are " << OA->O->alpha << " lines on point = "
-				<< Descr->lines_on_point_rank << ". They are: ";
-		Orbiter->Lint_vec.print_fully(cout, line_pencil_line_ranks, OA->O->alpha);
-		cout << endl;
+		if (TRUE) {
+			cout << "There are " << OA->O->alpha << " lines on point = "
+					<< Descr->lines_on_point_rank << ". They are: ";
+			Orbiter->Lint_vec.print_fully(cout, line_pencil_line_ranks, OA->O->alpha);
+			cout << endl;
+		}
 
 		if (f_v) {
 			cout << "orthogonal_space_activity::perform_activity f_lines_on_point done" << endl;
@@ -299,9 +308,11 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 
 		Orbiter->Lint_vec.scan(Descr->perp_text.c_str(), pts, nb_pts);
 
-		cout << "Computing the common perp of the set ";
-		Orbiter->Lint_vec.print(cout, pts, nb_pts);
-		cout << endl;
+		if (f_v) {
+			cout << "Computing the common perp of the set ";
+			Orbiter->Lint_vec.print(cout, pts, nb_pts);
+			cout << endl;
+		}
 
 		long int *Perp;
 		int sz;
@@ -326,7 +337,9 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 
 		set_stabilizer(OA,
 				Descr->set_stabilizer_intermediate_set_size,
-				Descr->set_stabilizer_fname_mask, Descr->set_stabilizer_nb, Descr->set_stabilizer_column_label,
+				Descr->set_stabilizer_fname_mask,
+				Descr->set_stabilizer_nb,
+				Descr->set_stabilizer_column_label,
 				verbose_level);
 	}
 

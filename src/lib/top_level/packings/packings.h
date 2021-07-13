@@ -466,6 +466,10 @@ public:
 	int f_print_packing;
 	std::string print_packing_text;
 
+	int f_compare_files_of_packings;
+	std::string compare_files_of_packings_fname1;
+	std::string compare_files_of_packings_fname2;
+
 	packing_was_fixpoints_activity_description();
 	~packing_was_fixpoints_activity_description();
 	int read_arguments(

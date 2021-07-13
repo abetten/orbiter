@@ -1163,6 +1163,15 @@ void spreadsheet::get_value_double_or_NA(int i, int j,
 	FREE_char(str);
 }
 
+void spreadsheet::get_string_entry(std::string &entry, int i, int j)
+{
+	char *p;
+
+	p = get_string(i, j);
+	entry.assign(p);
+	FREE_char(p);
+}
+
 char *spreadsheet::get_string(int i, int j)
 // the caller needs to free the returned pointer
 {

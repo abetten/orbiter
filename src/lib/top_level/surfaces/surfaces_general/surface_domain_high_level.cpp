@@ -189,6 +189,7 @@ void surface_domain_high_level::do_sweep_4_27(
 }
 
 
+#if 0
 void surface_domain_high_level::do_create_surface(
 		projective_space_with_action *PA,
 		surface_create_description *Surface_Descr,
@@ -271,7 +272,7 @@ void surface_domain_high_level::do_create_surface(
 		cout << "surface_domain_high_level::do_create_surface done" << endl;
 	}
 }
-
+#endif
 
 
 void surface_domain_high_level::classify_surfaces_with_double_sixes(

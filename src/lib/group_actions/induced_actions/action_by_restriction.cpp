@@ -14,19 +14,18 @@ namespace group_actions {
 
 action_by_restriction::action_by_restriction()
 {
-	null();
+	nb_points = 0;
+	points = NULL;
+	points_sorted = NULL;
+	perm_inv = NULL;
+	f_single_orbit = FALSE;
+	pt = 0;
+	idx_of_root_node = 0;
 }
 
 action_by_restriction::~action_by_restriction()
 {
 	free();
-}
-
-void action_by_restriction::null()
-{
-	points = NULL;
-	points_sorted = NULL;
-	perm_inv = NULL;
 }
 
 void action_by_restriction::free()
@@ -40,34 +39,57 @@ void action_by_restriction::free()
 	if (perm_inv) {
 		FREE_lint(perm_inv);
 		}
-	null();
 }
 
-void action_by_restriction::init_from_schreier_vector(
+void action_by_restriction::init_single_orbit_from_schreier_vector(
 		schreier_vector *Schreier_vector,
 		int pt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "action_by_restriction::init_from_schreier_vector "
+		cout << "action_by_restriction::init_single_orbit_from_schreier_vector "
 				"pt=" << pt << endl;
-		}
+	}
+
+	f_single_orbit = TRUE;
+	action_by_restriction::pt = pt;
+
 	long int *orbit_elts;
 	int orbit_len;
 
-	Schreier_vector->orbit_of_point(
-			pt, orbit_elts, orbit_len,
-			verbose_level);
 
+	if (f_v) {
+		cout << "action_by_restriction::init_single_orbit_from_schreier_vector "
+				"before Schreier_vector->orbit_of_point pt=" << pt << endl;
+	}
+	Schreier_vector->orbit_of_point(
+			pt, orbit_elts, orbit_len, idx_of_root_node,
+			verbose_level);
+	if (f_v) {
+		cout << "action_by_restriction::init_single_orbit_from_schreier_vector "
+				"after Schreier_vector->orbit_of_point pt=" << pt << endl;
+		cout << "orbit_elts = ";
+		Orbiter->Lint_vec.print(cout, orbit_elts, orbit_len);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "action_by_restriction::init_single_orbit_from_schreier_vector "
+				"before init" << endl;
+	}
 	init(orbit_len, orbit_elts, verbose_level);
+	if (f_v) {
+		cout << "action_by_restriction::init_single_orbit_from_schreier_vector "
+				"after init" << endl;
+	}
 
 	FREE_lint(orbit_elts);
 
 	if (f_v) {
-		cout << "action_by_restriction::init_from_schreier_vector "
+		cout << "action_by_restriction::init_single_orbit_from_schreier_vector "
 				"done" << endl;
-		}
+	}
 }
 
 void action_by_restriction::init(int nb_points, long int *points,

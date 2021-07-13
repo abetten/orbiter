@@ -45,8 +45,8 @@ void poset_orbit_node::compute_flag_orbits(
 		cout << " verbose_level=" << verbose_level << endl;
 		if (f_vvv) {
 			print_set_verbose(gen);
-			}
 		}
+	}
 
 	if (f_v) {
 		cout << "poset_orbit_node::compute_flag_orbits "
@@ -67,7 +67,7 @@ void poset_orbit_node::compute_flag_orbits(
 		cout << "poset_orbit_node::compute_flag_orbits "
 				"after downstep_orbits" << endl;
 		gen->root[49].print_extensions(cout);
-		}
+	}
 #endif
 	nb_orbits = Schreier.nb_orbits;
 
@@ -87,7 +87,7 @@ void poset_orbit_node::compute_flag_orbits(
 	if (f_v) {
 		cout << "poset_orbit_node::compute_flag_orbits "
 				"before downstep_orbit_test_and_schreier_vector" << endl;
-		}
+	}
 	downstep_orbit_test_and_schreier_vector(
 		gen, &Schreier, AR,
 		lvl, 
@@ -101,20 +101,20 @@ void poset_orbit_node::compute_flag_orbits(
 	if (f_v) {
 		cout << "poset_orbit_node::compute_flag_orbits "
 				"after downstep_orbit_test_and_schreier_vector" << endl;
-		}
+	}
 
 #if 0
 	if (node == 50) {
 		cout << "poset_orbit_node::compute_flag_orbits "
 				"after downstep_orbit_test_and_schreier_vector" << endl;
 		gen->root[49].print_extensions(cout);
-		}
+	}
 #endif
 
 	if (f_v) {
 		cout << "poset_orbit_node::compute_flag_orbits "
 				"before downstep_implicit_fusion" << endl;
-		}
+	}
 	downstep_implicit_fusion(
 		gen, Schreier, AR, f_using_invariant_subset,
 		lvl, 
@@ -124,14 +124,14 @@ void poset_orbit_node::compute_flag_orbits(
 	if (f_v) {
 		cout << "poset_orbit_node::compute_flag_orbits "
 				"after downstep_implicit_fusion" << endl;
-		}
+	}
 
 #if 0
 	if (node == 50) {
 		cout << "poset_orbit_node::compute_flag_orbits "
 				"after downstep_implicit_fusion" << endl;
 		gen->root[49].print_extensions(cout);
-		}
+	}
 #endif
 
 	save_shallow_schreier_forest(gen, verbose_level);
@@ -140,11 +140,11 @@ void poset_orbit_node::compute_flag_orbits(
 	if (f_vvv) {
 		gen->print_level_info(lvl, node);
 		cout << " : calling find_extensions" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "poset_orbit_node::compute_flag_orbits "
 				"before find_extensions" << endl;
-		}
+	}
 	find_extensions(
 		gen, Schreier, AR, f_using_invariant_subset,
 		lvl, 
@@ -152,16 +152,16 @@ void poset_orbit_node::compute_flag_orbits(
 	if (f_v) {
 		cout << "poset_orbit_node::compute_flag_orbits "
 				"after find_extensions" << endl;
-		}
+	}
 	if (f_v) {
 		gen->print_level_info(lvl, node);
 		cout << " : after test_orbits and find_extensions, "
 				"we have " << nb_extensions << " extensions" << endl;
-		}
+	}
 
 	if (FALSE) {
 		print_extensions(gen);
-		}
+	}
 	
 	
 	
@@ -170,14 +170,13 @@ void poset_orbit_node::compute_flag_orbits(
 		cout << " : found " << nb_extensions << " extensions (out of "
 				<< nb_orbits << " orbits) with "
 				<< nb_extension_points() << " points " << endl;
-		}
+	}
 
 	FREE_OBJECT(AR);
 
 	if (f_v) {
 		cout << "poset_orbit_node::compute_flag_orbits done" << endl;
-		}
-
+	}
 }
 
 
@@ -673,6 +672,22 @@ void poset_orbit_node::schreier_forest(
 
 	//Schreier.compute_all_point_orbits_with_preferred_labels(
 	// n, subset, verbose_level - 4);
+
+
+	if (gen->get_control()->f_preferred_choice) {
+
+		for (int i = 0; i < gen->get_control()->preferred_choice.size(); i++) {
+			if (gen->get_control()->preferred_choice[i][0] == node) {
+				Schreier.init_preferred_choice_function(
+						poset_classification_control_preferred_choice_function,
+						gen, node,
+						verbose_level);
+			}
+		}
+	}
+
+
+#if 0
 	if (lvl == 0) {
 		if (f_v) {
 			gen->print_level_info(lvl, node);
@@ -695,6 +710,17 @@ void poset_orbit_node::schreier_forest(
 			cout << " : poset_orbit_node::schreier_forest after Schreier.compute_all_point_orbits" << endl;
 		}
 	}
+#else
+	if (f_v) {
+		gen->print_level_info(lvl, node);
+		cout << " : poset_orbit_node::schreier_forest before Schreier.compute_all_point_orbits" << endl;
+	}
+	Schreier.compute_all_point_orbits( 0 /*verbose_level - 1 */);
+	if (f_v) {
+		gen->print_level_info(lvl, node);
+		cout << " : poset_orbit_node::schreier_forest after Schreier.compute_all_point_orbits" << endl;
+	}
+#endif
 
 	if (FALSE) {
 		int f_print_orbits = FALSE;

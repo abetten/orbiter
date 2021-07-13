@@ -696,6 +696,9 @@ class interface_toolkit {
 	std::string csv_file_select_rows_and_cols_R_text;
 	std::string csv_file_select_rows_and_cols_C_text;
 
+	int f_csv_file_sort_each_row;
+	std::string csv_file_sort_each_row_fname;
+
 
 	int f_csv_file_join;
 	std::vector<std::string> csv_file_join_fname;
@@ -704,6 +707,11 @@ class interface_toolkit {
 	int f_csv_file_concatenate;
 	std::string csv_file_concatenate_fname_out;
 	std::vector<std::string> csv_file_concatenate_fname_in;
+
+	int f_csv_file_extract_column_to_txt;
+	std::string csv_file_extract_column_to_txt_fname;
+	std::string csv_file_extract_column_to_txt_col_label;
+
 
 	int f_csv_file_latex;
 	int f_produce_latex_header;

@@ -39,6 +39,13 @@ schreier::schreier()
 	print_function = NULL;
 	print_function_data = NULL;
 	nb_orbits = 0;
+
+	f_preferred_choice_function = FALSE;
+	preferred_choice_function = NULL;
+	preferred_choice_function_data = NULL;
+	preferred_choice_function_data2 = 0;
+		// for compute_all_point_orbits
+
 }
 
 schreier::schreier(action *A, int verbose_level)
@@ -103,6 +110,27 @@ void schreier::delete_images()
 		nb_images = 0;
 	}
 }
+
+void schreier::init_preferred_choice_function(
+		void (*preferred_choice_function)(int pt, int &pt_pref, schreier *Sch, void *data, int data2, int verbose_level),
+		void *preferred_choice_function_data,
+		int preferred_choice_function_data2,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "schreier::init_preferred_choice_function" << endl;
+	}
+	f_preferred_choice_function = TRUE;
+	schreier::preferred_choice_function = preferred_choice_function;
+	schreier::preferred_choice_function_data = preferred_choice_function_data;
+	schreier::preferred_choice_function_data2 = preferred_choice_function_data2;
+	if (f_v) {
+		cout << "schreier::init_preferred_choice_function done" << endl;
+	}
+}
+
 
 void schreier::init_images(int nb_images, int verbose_level)
 {
@@ -976,22 +1004,56 @@ void schreier::compute_all_point_orbits(int verbose_level)
 		if (pt_loc < cur) {
 			continue;
 		}
+
+		int pt_pref;
+
+		if (f_preferred_choice_function) {
+
+			if (TRUE) {
+				cout << "schreier::compute_all_point_orbits "
+						"before preferred_choice_function, pt=" << pt << endl;
+			}
+			(*preferred_choice_function)(pt, pt_pref,
+					this,
+					preferred_choice_function_data,
+					preferred_choice_function_data2,
+					verbose_level);
+			if (TRUE) {
+				cout << "schreier::compute_all_point_orbits "
+						"before preferred_choice_function, pt=" << pt << " pt_pref=" << pt_pref << endl;
+			}
+
+			if (orbit_inv[pt_pref] < cur) {
+				cout << "schreier::compute_all_point_orbits preferred point is already in some other orbit" << endl;
+				exit(1);
+			}
+
+		}
+		else {
+			pt_pref = pt;
+		}
+
+		//int f_preferred_choice_function;
+		//void (*preferred_choice_function)(int pt, int &pt_pref, void *data);
+		//void *preferred_choice_function_data;
+
+
 		if (f_vv) {
 			cout << "schreier::compute_all_point_orbits pt = "
 					<< pt << " / " << degree
 					<< " nb_orbits=" << nb_orbits
 					<< " cur=" << cur
-					<< ", computing orbit" << endl;
+					<< ", computing orbit of pt_pref=" << pt_pref << endl;
 		}
 		if (degree > ONE_MILLION && (pt - pt0) > 50000) {
 			cout << "schreier::compute_all_point_orbits pt = "
 					<< pt << " / " << degree
 					<< " nb_orbits=" << nb_orbits
 					<< " cur=" << cur
-					<< ", computing orbit" << endl;
+					<< ", computing orbit of pt_pref=" << pt_pref << endl;
 			pt0 = pt;
 		}
-		compute_point_orbit(pt, verbose_level - 2);
+		compute_point_orbit(pt_pref, verbose_level - 2);
 	}
 	if (f_v) {
 		cout << "schreier::compute_all_point_orbits found "
@@ -1012,8 +1074,7 @@ void schreier::compute_all_point_orbits_with_prefered_reps(
 	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "schreier::compute_all_point_orbits_"
-				"with_prefered_reps" << endl;
+		cout << "schreier::compute_all_point_orbits_with_prefered_reps" << endl;
 	}
 	initialize_tables();
 	for (i = 0; i < nb_prefered_reps; i++) {
