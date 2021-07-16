@@ -520,7 +520,7 @@ void linear_group::linear_group_init(
 		if (f_v) {
 			cout << "linear_group::linear_group_init f_export_magma" << endl;
 		}
-		Strong_gens->export_magma(A_linear, cout);
+		Strong_gens->export_magma(A_linear, cout, verbose_level);
 	}
 
 	if (f_v) {

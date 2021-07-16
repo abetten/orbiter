@@ -201,6 +201,9 @@ void interface_povray::print()
 		cout << "-povray " << endl;
 		S->print();
 	}
+	if (Opt) {
+		Opt->print();
+	}
 	if (f_prepare_frames) {
 		Prepare_frames->print();
 	}

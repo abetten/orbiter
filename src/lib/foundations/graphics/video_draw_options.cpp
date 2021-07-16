@@ -134,10 +134,12 @@ video_draw_options::video_draw_options()
 	location[0] = -3;
 	location[1] = 1;
 	location[2] = 3;
+	f_look_at = FALSE;
 	look_at[0] = 0;
 	look_at[1] = 0;
 	look_at[2] = 0;
 
+	f_scale_factor = FALSE;
 	scale_factor = 1.;
 
 	f_line_radius = FALSE;
@@ -162,72 +164,100 @@ int video_draw_options::read_arguments(
 	for (i = 1; i < argc; i++) {
 		if (stringcmp(argv[i], "-v") == 0) {
 			verbose_level = strtoi(argv[++i]);
-			cout << "-v " << verbose_level << endl;
+			if (f_v) {
+				cout << "-v " << verbose_level << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-do_not_rotate") == 0) {
 			f_rotate = FALSE;
-			cout << "video_draw_options::read_arguments -do_not_rotate " << endl;
+			if (f_v) {
+				cout << "video_draw_options::read_arguments -do_not_rotate " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-rotate_about_z_axis") == 0) {
 			f_rotate = TRUE;
 			rotation_axis_type = 2;
-			cout << "-rotate_about_z_axis " << endl;
+			if (f_v) {
+				cout << "-rotate_about_z_axis " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-rotate_about_111") == 0) {
 			f_rotate = TRUE;
 			rotation_axis_type = 1;
-			cout << "-rotate_about_111 " << endl;
+			if (f_v) {
+				cout << "-rotate_about_111 " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-rotate_about_custom_axis") == 0) {
 			f_rotate = TRUE;
 			rotation_axis_type = 3;
 
 			text_to_three_double(argv[++i], rotation_axis_custom);
-			cout << "-rotate_about_custom_axis " << endl;
+			if (f_v) {
+				cout << "-rotate_about_custom_axis " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-boundary_none") == 0) {
 			boundary_type = 3;
-			cout << "-boundary_none " << endl;
+			if (f_v) {
+				cout << "-boundary_none " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-boundary_box") == 0) {
 			boundary_type = 2;
-			cout << "-boundary_box " << endl;
+			if (f_v) {
+				cout << "-boundary_box " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-boundary_sphere") == 0) {
 			boundary_type = 1;
-			cout << "-boundary_sphere " << endl;
+			if (f_v) {
+				cout << "-boundary_sphere " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-font_size") == 0) {
 			f_has_font_size = TRUE;
 			font_size = strtoi(argv[++i]);
-			cout << "-font_size " << font_size << endl;
+			if (f_v) {
+				cout << "-font_size " << font_size << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-stroke_width") == 0) {
 			f_has_stroke_width = TRUE;
 			stroke_width = strtoi(argv[++i]);
-			cout << "-stroke_width " << stroke_width << endl;
+			if (f_v) {
+				cout << "-stroke_width " << stroke_width << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-omit_bottom_plane") == 0) {
 			f_omit_bottom_plane = TRUE;
-			cout << "-omit_bottom_plane " << endl;
+			if (f_v) {
+				cout << "-omit_bottom_plane " << endl;
+			}
 		}
 
 		else if (stringcmp(argv[i], "-W") == 0) {
 			f_W = TRUE;
 			W = strtoi(argv[++i]);
-			cout << "-W " << W << endl;
+			if (f_v) {
+				cout << "-W " << W << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-H") == 0) {
 			f_H = TRUE;
 			H = strtoi(argv[++i]);
-			cout << "-H " << H << endl;
+			if (f_v) {
+				cout << "-H " << H << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-nb_frames") == 0) {
 			nb_frames_round[cnt_nb_frames] = strtoi(argv[++i]);
 			nb_frames_value[cnt_nb_frames] = strtoi(argv[++i]);
-			cout << "-nb_frames "
-				<< nb_frames_round[cnt_nb_frames] << " "
-				<< nb_frames_value[cnt_nb_frames] << endl;
+			if (f_v) {
+				cout << "-nb_frames "
+					<< nb_frames_round[cnt_nb_frames] << " "
+					<< nb_frames_value[cnt_nb_frames] << endl;
+			}
 			cnt_nb_frames++;
 		}
 		else if (stringcmp(argv[i], "-zoom") == 0) {
@@ -244,21 +274,25 @@ int video_draw_options::read_arguments(
 			i++;
 			d = strtof(argv[++i]);
 			zoom_clipping_end[nb_zoom] = d;
-			cout << "-zoom "
-				<< zoom_round[nb_zoom] << " "
-				<< zoom_start[nb_zoom] << " "
-				<< zoom_end[nb_zoom] << " "
-				<< zoom_clipping_start[nb_zoom] << " "
-				<< zoom_clipping_end[nb_zoom] << " "
-				<< endl;
+			if (f_v) {
+				cout << "-zoom "
+					<< zoom_round[nb_zoom] << " "
+					<< zoom_start[nb_zoom] << " "
+					<< zoom_end[nb_zoom] << " "
+					<< zoom_clipping_start[nb_zoom] << " "
+					<< zoom_clipping_end[nb_zoom] << " "
+					<< endl;
+			}
 			nb_zoom++;
 		}
 		else if (stringcmp(argv[i], "-zoom_sequence") == 0) {
 			zoom_sequence_round[nb_zoom_sequence] = strtoi(argv[++i]);
 			zoom_sequence_text[nb_zoom_sequence].assign(argv[++i]);
-			cout << "-zoom_sequence "
-				<< zoom_sequence_round[nb_zoom_sequence] << " "
-				<< zoom_sequence_text[nb_zoom_sequence] << endl;
+			if (f_v) {
+				cout << "-zoom_sequence "
+					<< zoom_sequence_round[nb_zoom_sequence] << " "
+					<< zoom_sequence_text[nb_zoom_sequence] << endl;
+			}
 			nb_zoom_sequence++;
 		}
 		else if (stringcmp(argv[i], "-pan") == 0) {
@@ -271,15 +305,17 @@ int video_draw_options::read_arguments(
 			text_to_three_double(argv[++i], pan_to + nb_pan * 3);
 			text_to_three_double(argv[++i], pan_center + nb_pan * 3);
 
-			cout << "video_draw_options::read_arguments -pan "
-				<< pan_round[nb_pan];
-			cout << " ";
-			Num.vec_print(pan_from + 3 * nb_pan, 3);
-			cout << " ";
-			Num.vec_print(pan_to + 3 * nb_pan, 3);
-			cout << " ";
-			Num.vec_print(pan_center + 3 * nb_pan, 3);
-			cout << endl;
+			if (f_v) {
+				cout << "video_draw_options::read_arguments -pan "
+						<< pan_round[nb_pan];
+				cout << " ";
+				Num.vec_print(pan_from + 3 * nb_pan, 3);
+				cout << " ";
+				Num.vec_print(pan_to + 3 * nb_pan, 3);
+				cout << " ";
+				Num.vec_print(pan_center + 3 * nb_pan, 3);
+				cout << endl;
+			}
 			nb_pan++;
 		}
 		else if (stringcmp(argv[i], "-pan_reverse") == 0) {
@@ -292,27 +328,33 @@ int video_draw_options::read_arguments(
 			text_to_three_double(argv[++i], pan_to + nb_pan * 3);
 			text_to_three_double(argv[++i], pan_center + nb_pan * 3);
 
-			cout << "-pan_reverse "
-				<< pan_round[nb_pan];
-			cout << " ";
-			Num.vec_print(pan_from + 3 * nb_pan, 3);
-			cout << " ";
-			Num.vec_print(pan_to + 3 * nb_pan, 3);
-			cout << " ";
-			Num.vec_print(pan_center + 3 * nb_pan, 3);
-			cout << endl;
+			if (f_v) {
+				cout << "-pan_reverse "
+					<< pan_round[nb_pan];
+				cout << " ";
+				Num.vec_print(pan_from + 3 * nb_pan, 3);
+				cout << " ";
+				Num.vec_print(pan_to + 3 * nb_pan, 3);
+				cout << " ";
+				Num.vec_print(pan_center + 3 * nb_pan, 3);
+				cout << endl;
+			}
 			nb_pan++;
 		}
 		else if (stringcmp(argv[i], "-no_background") == 0) {
 			no_background_round[nb_no_background] = strtoi(argv[++i]);
-			cout << "-no_background "
-				<< no_background_round[nb_no_background] << endl;
+			if (f_v) {
+				cout << "-no_background "
+					<< no_background_round[nb_no_background] << endl;
+			}
 			nb_no_background++;
 		}
 		else if (stringcmp(argv[i], "-no_bottom_plane") == 0) {
 			no_bottom_plane_round[nb_no_bottom_plane] = strtoi(argv[++i]);
-			cout << "-no_bottom_plane "
-				<< no_bottom_plane_round[nb_no_bottom_plane] << endl;
+			if (f_v) {
+				cout << "-no_bottom_plane "
+					<< no_bottom_plane_round[nb_no_bottom_plane] << endl;
+			}
 			nb_no_bottom_plane++;
 		}
 		else if (stringcmp(argv[i], "-camera") == 0) {
@@ -324,18 +366,20 @@ int video_draw_options::read_arguments(
 			text_to_three_double(argv[++i], camera_location + nb_camera * 3);
 			text_to_three_double(argv[++i], camera_look_at + nb_camera * 3);
 
-			cout << "-camera "
-					<< camera_round[nb_camera] << " "
-					<< camera_sky[nb_camera * 3 + 0] << " "
-					<< camera_sky[nb_camera * 3 + 1] << " "
-					<< camera_sky[nb_camera * 3 + 2] << " "
-					<< camera_location[nb_camera * 3 + 0] << " "
-					<< camera_location[nb_camera * 3 + 1] << " "
-					<< camera_location[nb_camera * 3 + 2] << " "
-					<< camera_look_at[nb_camera * 3 + 0] << " "
-					<< camera_look_at[nb_camera * 3 + 1] << " "
-					<< camera_look_at[nb_camera * 3 + 2] << " "
-					<< endl;
+			if (f_v) {
+				cout << "-camera "
+						<< camera_round[nb_camera] << " "
+						<< camera_sky[nb_camera * 3 + 0] << " "
+						<< camera_sky[nb_camera * 3 + 1] << " "
+						<< camera_sky[nb_camera * 3 + 2] << " "
+						<< camera_location[nb_camera * 3 + 0] << " "
+						<< camera_location[nb_camera * 3 + 1] << " "
+						<< camera_location[nb_camera * 3 + 2] << " "
+						<< camera_look_at[nb_camera * 3 + 0] << " "
+						<< camera_look_at[nb_camera * 3 + 1] << " "
+						<< camera_look_at[nb_camera * 3 + 2] << " "
+						<< endl;
+			}
 			nb_camera++;
 
 			   //sky <1,1,1>
@@ -349,19 +393,23 @@ int video_draw_options::read_arguments(
 			double d;
 			d = strtof(argv[++i]);
 			clipping_value[nb_clipping] = d;
-			cout << "-clipping "
-				<< clipping_round[nb_clipping] << " "
-				<< clipping_value[nb_clipping] << endl;
+			if (f_v) {
+				cout << "-clipping "
+					<< clipping_round[nb_clipping] << " "
+					<< clipping_value[nb_clipping] << endl;
+			}
 			nb_clipping++;
 		}
 		else if (stringcmp(argv[i], "-text") == 0) {
 			round_text_round[nb_round_text] = strtoi(argv[++i]);
 			round_text_sustain[nb_round_text] = strtoi(argv[++i]);
 			round_text_text[nb_round_text].assign(argv[++i]);
-			cout << "-text "
-				<< round_text_round[nb_round_text] << " "
-				<< round_text_sustain[nb_round_text] << " "
-				<< round_text_text[nb_round_text] << endl;
+			if (f_v) {
+				cout << "-text "
+					<< round_text_round[nb_round_text] << " "
+					<< round_text_sustain[nb_round_text] << " "
+					<< round_text_text[nb_round_text] << endl;
+			}
 			nb_round_text++;
 		}
 		else if (stringcmp(argv[i], "-label") == 0) {
@@ -370,13 +418,15 @@ int video_draw_options::read_arguments(
 			label_sustain[nb_label] = strtoi(argv[++i]);
 			label_gravity[nb_label].assign(argv[++i]);
 			label_text[nb_label].assign(argv[++i]);
-			cout << "-label "
-				<< label_round[nb_label] << " "
-				<< label_start[nb_label] << " "
-				<< label_sustain[nb_label] << " "
-				<< label_gravity[nb_label] << " "
-				<< label_text[nb_label] << " "
-				<< endl;
+			if (f_v) {
+				cout << "-label "
+					<< label_round[nb_label] << " "
+					<< label_start[nb_label] << " "
+					<< label_sustain[nb_label] << " "
+					<< label_gravity[nb_label] << " "
+					<< label_text[nb_label] << " "
+					<< endl;
+			}
 			nb_label++;
 		}
 		else if (stringcmp(argv[i], "-latex") == 0) {
@@ -388,14 +438,16 @@ int video_draw_options::read_arguments(
 			latex_label_text[nb_latex_label].assign(argv[++i]);
 			latex_f_label_has_been_prepared[nb_latex_label] = FALSE;
 			//latex_fname_base[nb_latex_label] = NEW_char(1000);
-			cout << "-latex "
-				<< latex_label_round[nb_latex_label] << " "
-				<< latex_label_start[nb_latex_label] << " "
-				<< latex_label_sustain[nb_latex_label] << " "
-				<< latex_extras_for_praeamble[nb_latex_label] << " "
-				<< latex_label_gravity[nb_latex_label] << " "
-				<< latex_label_text[nb_latex_label] << " "
-				<< endl;
+			if (f_v) {
+				cout << "-latex "
+					<< latex_label_round[nb_latex_label] << " "
+					<< latex_label_start[nb_latex_label] << " "
+					<< latex_label_sustain[nb_latex_label] << " "
+					<< latex_extras_for_praeamble[nb_latex_label] << " "
+					<< latex_label_gravity[nb_latex_label] << " "
+					<< latex_label_text[nb_latex_label] << " "
+					<< endl;
+			}
 			nb_latex_label++;
 		}
 		else if (stringcmp(argv[i], "-global_picture_scale") == 0) {
@@ -403,7 +455,9 @@ int video_draw_options::read_arguments(
 			double d;
 			d = strtof(argv[++i]);
 			global_picture_scale = d;
-			cout << "-global_picture_scale " << d << endl;
+			if (f_v) {
+				cout << "-global_picture_scale " << d << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-picture") == 0) {
 			picture_round[nb_picture] = strtoi(argv[++i]);
@@ -412,44 +466,59 @@ int video_draw_options::read_arguments(
 			picture_scale[nb_picture] = d;
 			picture_fname[nb_picture].assign(argv[++i]);
 			picture_options[nb_picture].assign(argv[++i]);
-			cout << "-picture "
-				<< picture_round[nb_picture] << " "
-				<< picture_scale[nb_picture] << " "
-				<< picture_fname[nb_picture] << " "
-				<< picture_options[nb_picture] << " "
-				<< endl;
+			if (f_v) {
+				cout << "-picture "
+					<< picture_round[nb_picture] << " "
+					<< picture_scale[nb_picture] << " "
+					<< picture_fname[nb_picture] << " "
+					<< picture_options[nb_picture] << " "
+					<< endl;
+			}
 			nb_picture++;
 		}
 		else if (stringcmp(argv[i], "-look_at") == 0) {
 			//look_at = argv[++i];
-
+			f_look_at = TRUE;
 
 			text_to_three_double(argv[++i], look_at);
-			cout << "-look_at "
-					<< look_at[0] << " " << look_at[1] << " " << look_at[2] << " " << endl;
+			if (f_v) {
+				cout << "-look_at "
+						<< look_at[0] << " " << look_at[1] << " " << look_at[2] << " " << endl;
+			}
 		}
 
 		else if (stringcmp(argv[i], "-default_angle") == 0) {
 			f_default_angle = TRUE;
 			default_angle = strtoi(argv[++i]);
-			cout << "-default_angle " << default_angle << endl;
+			if (f_v) {
+				cout << "-default_angle " << default_angle << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-clipping_radius") == 0) {
 			f_clipping_radius = TRUE;
 			clipping_radius = strtof(argv[++i]);
-			cout << "-clipping_radius " << clipping_radius << endl;
+			if (f_v) {
+				cout << "-clipping_radius " << clipping_radius << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-scale_factor") == 0) {
+			f_scale_factor = TRUE;
 			scale_factor = strtof(argv[++i]);
-			cout << "-scale_factor " << scale_factor << endl;
+			if (f_v) {
+				cout << "-scale_factor " << scale_factor << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-line_radius") == 0) {
 			f_line_radius = TRUE;
 			line_radius = strtof(argv[++i]);
-			cout << "-line_radius " << line_radius << endl;
+			if (f_v) {
+				cout << "-line_radius " << line_radius << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-end") == 0) {
-			cout << "-end" << endl;
+			if (f_v) {
+				cout << "-end" << endl;
+			}
 			return i;
 		}
 		else {
@@ -459,6 +528,175 @@ int video_draw_options::read_arguments(
 	}
 	return 0;
 }
+
+
+void video_draw_options::print()
+{
+	if (f_rotate == FALSE) {
+		cout << "-do_not_rotate " << endl;
+	}
+	if (f_rotate && rotation_axis_type == 2) {
+		cout << "-rotate_about_z_axis " << endl;
+	}
+	if (f_rotate && rotation_axis_type == 1) {
+		cout << "-rotate_about_111 " << endl;
+	}
+	if (f_rotate && rotation_axis_type == 3) {
+		cout << "-rotate_about_custom_axis " << endl;
+	}
+	if (boundary_type == 3) {
+		cout << "-boundary_none " << endl;
+	}
+	if (boundary_type == 2) {
+		cout << "-boundary_box " << endl;
+	}
+	if (boundary_type == 1) {
+		cout << "-boundary_sphere " << endl;
+	}
+	if (f_has_font_size) {
+		cout << "-font_size " << font_size << endl;
+	}
+	if (f_has_stroke_width) {
+		cout << "-stroke_width " << stroke_width << endl;
+	}
+	if (f_omit_bottom_plane) {
+		cout << "-omit_bottom_plane " << endl;
+	}
+
+	if (f_W) {
+		cout << "-W " << W << endl;
+	}
+	if (f_H) {
+		cout << "-H " << H << endl;
+	}
+	for (int i = 0; i < cnt_nb_frames; i++) {
+		cout << "-nb_frames "
+			<< nb_frames_round[i] << " "
+			<< nb_frames_value[i] << endl;
+	}
+	for (int i = 0; i < nb_zoom; i++) {
+		cout << "-zoom "
+			<< zoom_round[i] << " "
+			<< zoom_start[i] << " "
+			<< zoom_end[i] << " "
+			<< zoom_clipping_start[i] << " "
+			<< zoom_clipping_end[i] << " "
+			<< endl;
+	}
+	for (int i = 0; i < nb_zoom_sequence; i++) {
+		cout << "-zoom_sequence "
+			<< zoom_sequence_round[i] << " "
+			<< zoom_sequence_text[i] << endl;
+	}
+	for (int i = 0; i < nb_pan; i++) {
+		if (pan_f_reverse[nb_pan]) {
+			numerics Num;
+			cout << "-pan_reverse "
+					<< pan_round[i];
+			cout << " ";
+			Num.vec_print(pan_from + 3 * i, 3);
+			cout << " ";
+			Num.vec_print(pan_to + 3 * i, 3);
+			cout << " ";
+			Num.vec_print(pan_center + 3 * i, 3);
+			cout << endl;
+
+		}
+		else {
+			numerics Num;
+			cout << "-pan "
+					<< pan_round[i];
+			cout << " ";
+			Num.vec_print(pan_from + 3 * i, 3);
+			cout << " ";
+			Num.vec_print(pan_to + 3 * i, 3);
+			cout << " ";
+			Num.vec_print(pan_center + 3 * i, 3);
+			cout << endl;
+		}
+	}
+	for (int i = 0; i < nb_no_background; i++) {
+		cout << "-no_background "
+			<< no_background_round[i] << endl;
+	}
+	for (int i = 0; i < nb_no_bottom_plane; i++) {
+		cout << "-no_bottom_plane "
+			<< no_bottom_plane_round[i] << endl;
+	}
+	for (int i = 0; i < nb_camera; i++) {
+		cout << "-camera "
+				<< camera_round[i] << " "
+				<< camera_sky[i * 3 + 0] << " "
+				<< camera_sky[i * 3 + 1] << " "
+				<< camera_sky[i * 3 + 2] << " "
+				<< camera_location[i * 3 + 0] << " "
+				<< camera_location[i * 3 + 1] << " "
+				<< camera_location[i * 3 + 2] << " "
+				<< camera_look_at[i * 3 + 0] << " "
+				<< camera_look_at[i * 3 + 1] << " "
+				<< camera_look_at[i * 3 + 2] << " "
+				<< endl;
+	}
+	for (int i = 0; i < nb_clipping; i++) {
+		cout << "-clipping "
+			<< clipping_round[i] << " "
+			<< clipping_value[i] << endl;
+	}
+	for (int i = 0; i < nb_round_text; i++) {
+		cout << "-text "
+			<< round_text_round[i] << " "
+			<< round_text_sustain[i] << " "
+			<< round_text_text[i] << endl;
+	}
+	for (int i = 0; i < nb_label; i++) {
+		cout << "-label "
+			<< label_round[i] << " "
+			<< label_start[i] << " "
+			<< label_sustain[i] << " "
+			<< label_gravity[i] << " "
+			<< label_text[i] << " "
+			<< endl;
+	}
+	for (int i = 0; i < nb_latex_label; i++) {
+		cout << "-latex "
+			<< latex_label_round[i] << " "
+			<< latex_label_start[i] << " "
+			<< latex_label_sustain[i] << " "
+			<< latex_extras_for_praeamble[i] << " "
+			<< latex_label_gravity[i] << " "
+			<< latex_label_text[i] << " "
+			<< endl;
+	}
+	if (f_has_global_picture_scale) {
+		cout << "-global_picture_scale " << global_picture_scale << endl;
+	}
+	for (int i = 0; i < nb_picture; i++) {
+		cout << "-picture "
+			<< picture_round[i] << " "
+			<< picture_scale[i] << " "
+			<< picture_fname[i] << " "
+			<< picture_options[i] << " "
+			<< endl;
+	}
+	if (f_look_at) {
+		cout << "-look_at "
+					<< look_at[0] << " " << look_at[1] << " " << look_at[2] << " " << endl;
+	}
+
+	if (f_default_angle) {
+		cout << "-default_angle " << default_angle << endl;
+	}
+	if (f_clipping_radius) {
+		cout << "-clipping_radius " << clipping_radius << endl;
+	}
+	if (f_scale_factor) {
+		cout << "-scale_factor " << scale_factor << endl;
+	}
+	if (f_line_radius) {
+		cout << "-line_radius " << line_radius << endl;
+	}
+}
+
 
 
 

@@ -1492,8 +1492,10 @@ public:
 
 	double sky[3];
 	double location[3];
+	int f_look_at;
 	double look_at[3];
 
+	int f_scale_factor;
 	double scale_factor;
 
 	int f_line_radius;
@@ -1504,6 +1506,7 @@ public:
 	int read_arguments(
 			int argc, std::string *argv,
 			int verbose_level);
+	void print();
 };
 
 

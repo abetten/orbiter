@@ -1505,10 +1505,14 @@ void strong_generators::print_generators_MAGMA(action *A, std::ostream &ost)
 	}
 }
 
-void strong_generators::export_magma(action *A, std::ostream &ost)
+void strong_generators::export_magma(action *A, std::ostream &ost, int verbose_level)
 {
-	cout << "strong_generators::export_magma" << endl;
-	A->print_info();
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::export_magma" << endl;
+		A->print_info();
+	}
 	if (A->type_G == matrix_group_t) {
 		matrix_group *M;
 		int *Elt;
@@ -1525,7 +1529,9 @@ void strong_generators::export_magma(action *A, std::ostream &ost)
 		if (F->e > 1) {
 			int a;
 
-			cout << "strong_generators::export_magma extendion field" << endl;
+			if (f_v) {
+				cout << "strong_generators::export_magma extension field" << endl;
+			}
 			ost << "F<w>:=GF(" << F->q << ");" << endl;
 			ost << "G := GeneralLinearGroup(" << M->n << ", F);" << endl;
 			ost << "H := sub< G | ";
@@ -1581,6 +1587,9 @@ void strong_generators::export_magma(action *A, std::ostream &ost)
 			}
 			ost << " >;" << endl;
 		}
+	}
+	if (f_v) {
+		cout << "strong_generators::export_magma done" << endl;
 	}
 }
 

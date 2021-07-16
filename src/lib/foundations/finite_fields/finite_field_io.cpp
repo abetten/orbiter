@@ -74,22 +74,22 @@ void finite_field::print_detailed(int f_add_mult_table)
 		print_tables_extension_field(polynomial);
 	}
 	if (f_add_mult_table) {
-		print_add_mult_tables();
+		print_add_mult_tables(cout);
 		print_add_mult_tables_in_C(label);
 	}
 }
 
 
-void finite_field::print_add_mult_tables()
+void finite_field::print_add_mult_tables(std::ostream &ost)
 {
-	cout << "addition table:" << endl;
-	Orbiter->Int_vec.print_integer_matrix_width(cout, add_table, q, q, q, log10_of_q + 1);
-	cout << endl;
+	ost << "addition table:" << endl;
+	Orbiter->Int_vec.print_integer_matrix_width(ost, add_table, q, q, q, log10_of_q + 1);
+	ost << endl;
 
 
-	cout << "multiplication table:" << endl;
-	Orbiter->Int_vec.print_integer_matrix_width(cout, mult_table, q, q, q, log10_of_q + 1);
-	cout << endl;
+	ost << "multiplication table:" << endl;
+	Orbiter->Int_vec.print_integer_matrix_width(ost, mult_table, q, q, q, log10_of_q + 1);
+	ost << endl;
 }
 
 void finite_field::print_add_mult_tables_in_C(std::string &fname_base)
@@ -793,7 +793,9 @@ void finite_field::cheat_sheet(ostream &f, int verbose_level)
 	int f_add_mult_table = TRUE;
 
 	if (f_add_mult_table) {
-		print_add_mult_tables();
+		if (f_v) {
+			print_add_mult_tables(cout);
+		}
 		print_add_mult_tables_in_C(label);
 	}
 

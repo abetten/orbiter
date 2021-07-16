@@ -480,9 +480,11 @@ void group_theoretic_activity::do_export_magma(int verbose_level)
 	fname.append("_generators.magma");
 	{
 		ofstream fp(fname);
-		LG->Strong_gens->export_magma(LG->A_linear, fp);
+		LG->Strong_gens->export_magma(LG->A_linear, fp, verbose_level);
 	}
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
 
 
 	if (f_v) {
