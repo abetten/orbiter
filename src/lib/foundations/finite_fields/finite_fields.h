@@ -1238,7 +1238,7 @@ public:
 	void print_minimum_polynomial(int p, const char *polynomial);
 	void print();
 	void print_detailed(int f_add_mult_table);
-	void print_add_mult_tables();
+	void print_add_mult_tables(std::ostream &ost);
 	void print_add_mult_tables_in_C(std::string &fname_base);
 	void print_tables();
 	void print_tables_extension_field(const char *poly);

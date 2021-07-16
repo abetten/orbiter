@@ -192,56 +192,71 @@ int projective_space_activity_description::read_arguments(
 	int argc, std::string *argv,
 	int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i;
 
-	cout << "projective_space_activity_description::read_arguments" << endl;
+	if (f_v) {
+		cout << "projective_space_activity_description::read_arguments" << endl;
+	}
 	for (i = 0; i < argc; i++) {
 
 		if (stringcmp(argv[i], "-input") == 0) {
 			f_input = TRUE;
 			Data = NEW_OBJECT(data_input_stream);
-			cout << "-input" << endl;
+			if (f_v) {
+				cout << "-input" << endl;
+			}
 			i += Data->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
-			cout << "projective_space_activity_description::read_arguments finished reading -input" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
+			if (f_v) {
+				cout << "projective_space_activity_description::read_arguments finished reading -input" << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
 			}
 		}
 		else if (stringcmp(argv[i], "-canonical_form_PG") == 0) {
 			f_canonical_form_PG = TRUE;
-			cout << "-canonical_form_PG, reading extra arguments" << endl;
+			if (f_v) {
+				cout << "-canonical_form_PG, reading extra arguments" << endl;
+			}
 
 			Canonical_form_PG_Descr = NEW_OBJECT(projective_space_object_classifier_description);
 
 			i += Canonical_form_PG_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
-			cout << "done reading -canonical_form_PG " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
+			if (f_v) {
+				cout << "done reading -canonical_form_PG " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
 			}
 		}
 		else if (stringcmp(argv[i], "-table_of_cubic_surfaces_compute_properties") == 0) {
 			f_table_of_cubic_surfaces_compute_properties = TRUE;
-			cout << "-table_of_cubic_surfaces_compute_properties next argument is " << argv[i + 1] << endl;
-			table_of_cubic_surfaces_compute_fname_csv.assign(argv[++i]);
-			table_of_cubic_surfaces_compute_defining_q = strtoi(argv[++i]);
-			table_of_cubic_surfaces_compute_column_offset = strtoi(argv[++i]);
-			cout << "-table_of_cubic_surfaces_compute_properties "
-					<< table_of_cubic_surfaces_compute_fname_csv << " "
-					<< table_of_cubic_surfaces_compute_defining_q << " "
-					<< table_of_cubic_surfaces_compute_column_offset << " "
-					<< endl;
+			if (f_v) {
+				cout << "-table_of_cubic_surfaces_compute_properties next argument is " << argv[i + 1] << endl;
+				table_of_cubic_surfaces_compute_fname_csv.assign(argv[++i]);
+				table_of_cubic_surfaces_compute_defining_q = strtoi(argv[++i]);
+				table_of_cubic_surfaces_compute_column_offset = strtoi(argv[++i]);
+				cout << "-table_of_cubic_surfaces_compute_properties "
+						<< table_of_cubic_surfaces_compute_fname_csv << " "
+						<< table_of_cubic_surfaces_compute_defining_q << " "
+						<< table_of_cubic_surfaces_compute_column_offset << " "
+						<< endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-cubic_surface_properties_analyze") == 0) {
 			f_cubic_surface_properties_analyze = TRUE;
 			cubic_surface_properties_fname_csv.assign(argv[++i]);
 			cubic_surface_properties_defining_q = strtoi(argv[++i]);
-			cout << "-cubic_surface_properties " << cubic_surface_properties_fname_csv
-					<< " " << cubic_surface_properties_defining_q << endl;
+			if (f_v) {
+				cout << "-cubic_surface_properties " << cubic_surface_properties_fname_csv
+						<< " " << cubic_surface_properties_defining_q << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-canonical_form_of_code") == 0) {
 			f_canonical_form_of_code = TRUE;
@@ -249,97 +264,121 @@ int projective_space_activity_description::read_arguments(
 			canonical_form_of_code_m = strtoi(argv[++i]);
 			canonical_form_of_code_n = strtoi(argv[++i]);
 			canonical_form_of_code_text.assign(argv[++i]);
-			cout << "-canonical_form_of_code "
-					<< canonical_form_of_code_label << " "
-					<< canonical_form_of_code_m << " "
-					<< canonical_form_of_code_n << " "
-					<< canonical_form_of_code_text << " "
-					<< endl;
+			if (f_v) {
+				cout << "-canonical_form_of_code "
+						<< canonical_form_of_code_label << " "
+						<< canonical_form_of_code_m << " "
+						<< canonical_form_of_code_n << " "
+						<< canonical_form_of_code_text << " "
+						<< endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-map") == 0) {
 			f_map = TRUE;
 			map_label.assign(argv[++i]);
 			map_parameters.assign(argv[++i]);
-			cout << "-map "
-					<< map_label << " "
-					<< map_parameters << " "
-					<< endl;
+			if (f_v) {
+				cout << "-map "
+						<< map_label << " "
+						<< map_parameters << " "
+						<< endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-analyze_del_Pezzo_surface") == 0) {
 			f_analyze_del_Pezzo_surface = TRUE;
 			analyze_del_Pezzo_surface_label.assign(argv[++i]);
 			analyze_del_Pezzo_surface_parameters.assign(argv[++i]);
-			cout << "-analyze_del_Pezzo_surface "
-					<< analyze_del_Pezzo_surface_label << " "
-					<< analyze_del_Pezzo_surface_parameters << " "
-					<< endl;
+			if (f_v) {
+				cout << "-analyze_del_Pezzo_surface "
+						<< analyze_del_Pezzo_surface_label << " "
+						<< analyze_del_Pezzo_surface_parameters << " "
+						<< endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-cheat_sheet_for_decomposition_by_element_PG") == 0) {
 			f_cheat_sheet_for_decomposition_by_element_PG = TRUE;
 			decomposition_by_element_power = strtoi(argv[++i]);
 			decomposition_by_element_data.assign(argv[++i]);
 			decomposition_by_element_fname.assign(argv[++i]);
-			cout << "-cheat_sheet_for_decomposition_by_element_PG "
-					<< decomposition_by_element_power
-					<< " " << decomposition_by_element_data
-					<< " " << decomposition_by_element_fname
-					<< endl;
+			if (f_v) {
+				cout << "-cheat_sheet_for_decomposition_by_element_PG "
+						<< decomposition_by_element_power
+						<< " " << decomposition_by_element_data
+						<< " " << decomposition_by_element_fname
+						<< endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-define_object") == 0) {
 			f_define_object = TRUE;
-			cout << "-define_object, reading extra arguments" << endl;
+			if (f_v) {
+				cout << "-define_object, reading extra arguments" << endl;
+			}
 
 			define_object_label.assign(argv[++i]);
 			Object_Descr = NEW_OBJECT(combinatorial_object_description);
 
 			i += Object_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
-			cout << "done reading -define_object " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
+			if (f_v) {
+				cout << "done reading -define_object " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+				cout << "-define_object " << define_object_label << endl;
 			}
-			cout << "-define_object " << define_object_label << endl;
 		}
 		else if (stringcmp(argv[i], "-define_surface") == 0) {
 			f_define_surface = TRUE;
-			cout << "-define_surface, reading extra arguments" << endl;
+			if (f_v) {
+				cout << "-define_surface, reading extra arguments" << endl;
+			}
 
 			define_surface_label.assign(argv[++i]);
 			Surface_Descr = NEW_OBJECT(surface_create_description);
 
 			i += Surface_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
-			cout << "done reading -define_surface " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
+			if (f_v) {
+				cout << "done reading -define_surface " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+				cout << "-define_surface " << define_surface_label << endl;
 			}
-			cout << "-define_surface " << define_surface_label << endl;
 		}
 		else if (stringcmp(argv[i], "-table_of_quartic_curves") == 0) {
 			f_table_of_quartic_curves = TRUE;
-			cout << "-table_of_quartic_curves " << endl;
+			if (f_v) {
+				cout << "-table_of_quartic_curves " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-table_of_cubic_surfaces") == 0) {
 			f_table_of_cubic_surfaces = TRUE;
-			cout << "-table_of_cubic_surfaces " << endl;
+			if (f_v) {
+				cout << "-table_of_cubic_surfaces " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-define_quartic_curve") == 0) {
 			f_define_quartic_curve = TRUE;
-			cout << "-define_quartic_curve, reading extra arguments" << endl;
+			if (f_v) {
+				cout << "-define_quartic_curve, reading extra arguments" << endl;
+			}
 
 			define_quartic_curve_label.assign(argv[++i]);
 			Quartic_curve_descr = NEW_OBJECT(quartic_curve_create_description);
 
 			i += Quartic_curve_descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
-			cout << "done reading -define_quartic_curve " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
+			if (f_v) {
+				cout << "done reading -define_quartic_curve " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+				cout << "-define_quartic_curve " << define_quartic_curve_label << endl;
 			}
-			cout << "-define_quartic_curve " << define_quartic_curve_label << endl;
 		}
 
 
@@ -348,33 +387,43 @@ int projective_space_activity_description::read_arguments(
 			f_classify_surfaces_with_double_sixes = TRUE;
 			classify_surfaces_with_double_sixes_label.assign(argv[++i]);
 			classify_surfaces_with_double_sixes_control = NEW_OBJECT(poset_classification_control);
-			cout << "-classify_surfaces_with_double_sixes " << endl;
+			if (f_v) {
+				cout << "-classify_surfaces_with_double_sixes " << endl;
+			}
 			i += classify_surfaces_with_double_sixes_control->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
-			cout << "done reading -poset_classification_control " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
+			if (f_v) {
+				cout << "done reading -poset_classification_control " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+				cout << "-classify_surfaces_with_double_sixes " << classify_surfaces_with_double_sixes_label << endl;
+				classify_surfaces_with_double_sixes_control->print();
 			}
-			cout << "-classify_surfaces_with_double_sixes " << classify_surfaces_with_double_sixes_label << endl;
-			classify_surfaces_with_double_sixes_control->print();
 		}
 
 		else if (stringcmp(argv[i], "-classify_surfaces_through_arcs_and_two_lines") == 0) {
 			f_classify_surfaces_through_arcs_and_two_lines = TRUE;
-			cout << "-classify_surfaces_through_arcs_and_two_lines " << endl;
+			if (f_v) {
+				cout << "-classify_surfaces_through_arcs_and_two_lines " << endl;
+			}
 		}
 
 		else if (stringcmp(argv[i], "-test_nb_Eckardt_points") == 0) {
 			f_test_nb_Eckardt_points = TRUE;
 			nb_E = strtoi(argv[++i]);
-			cout << "-test_nb_Eckardt_points " << nb_E << endl;
+			if (f_v) {
+				cout << "-test_nb_Eckardt_points " << nb_E << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-classify_surfaces_through_arcs_and_trihedral_pairs") == 0) {
 			f_classify_surfaces_through_arcs_and_trihedral_pairs = TRUE;
-			cout << "-classify_surfaces_through_arcs_and_trihedral_pairs " << endl;
+			if (f_v) {
+				cout << "-classify_surfaces_through_arcs_and_trihedral_pairs " << endl;
+			}
 		}
 #if 0
 		else if (stringcmp(argv[i], "-create_surface") == 0) {
@@ -396,63 +445,83 @@ int projective_space_activity_description::read_arguments(
 		else if (stringcmp(argv[i], "-sweep") == 0) {
 			f_sweep = TRUE;
 			sweep_fname.assign(argv[++i]);
-			cout << "-sweep " << sweep_fname << endl;
+			if (f_v) {
+				cout << "-sweep " << sweep_fname << endl;
+			}
 		}
 
 		else if (stringcmp(argv[i], "-sweep_4") == 0) {
 			f_sweep_4 = TRUE;
 			sweep_4_fname.assign(argv[++i]);
 			sweep_4_surface_description = NEW_OBJECT(surface_create_description);
-			cout << "-sweep_4" << endl;
+			if (f_v) {
+				cout << "-sweep_4" << endl;
+			}
 			i += sweep_4_surface_description->read_arguments(
 					argc - (i + 1), argv + i + 1,
 					verbose_level);
-			cout << "done with -sweep_4" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
+			if (f_v) {
+				cout << "done with -sweep_4" << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+				cout << "-sweep_4 " << sweep_4_fname << endl;
 			}
-			cout << "-sweep_4 " << sweep_4_fname << endl;
 		}
 
 		else if (stringcmp(argv[i], "-sweep_4_27") == 0) {
 			f_sweep_4_27 = TRUE;
 			sweep_4_27_fname.assign(argv[++i]);
 			sweep_4_27_surface_description = NEW_OBJECT(surface_create_description);
-			cout << "-sweep_4_27" << endl;
+			if (f_v) {
+				cout << "-sweep_4_27" << endl;
+			}
 			i += sweep_4_27_surface_description->read_arguments(
 					argc - (i + 1), argv + i + 1,
 					verbose_level);
-			cout << "done with -sweep_4_27" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
+			if (f_v) {
+				cout << "done with -sweep_4_27" << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+				cout << "-sweep_4_27 " << sweep_4_27_fname << endl;
 			}
-			cout << "-sweep_4_27 " << sweep_4_27_fname << endl;
 		}
 
 		else if (stringcmp(argv[i], "-six_arcs_not_on_conic") == 0) {
 			f_six_arcs_not_on_conic = TRUE;
-			cout << "-six_arcs_not_on_conic" << endl;
+			if (f_v) {
+				cout << "-six_arcs_not_on_conic" << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-filter_by_nb_Eckardt_points") == 0) {
 			f_filter_by_nb_Eckardt_points = TRUE;
 			nb_Eckardt_points = strtoi(argv[++i]);
-			cout << "-filter_by_nb_Eckardt_points " << nb_Eckardt_points << endl;
+			if (f_v) {
+				cout << "-filter_by_nb_Eckardt_points " << nb_Eckardt_points << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-surface_quartic") == 0) {
 			f_surface_quartic = TRUE;
-			cout << "-surface_quartic" << endl;
+			if (f_v) {
+				cout << "-surface_quartic" << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-surface_clebsch") == 0) {
 			f_surface_clebsch = TRUE;
-			cout << "-surface_clebsch" << endl;
+			if (f_v) {
+				cout << "-surface_clebsch" << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-surface_codes") == 0) {
 			f_surface_codes = TRUE;
-			cout << "-surface_codes" << endl;
+			if (f_v) {
+				cout << "-surface_codes" << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-trihedra1_control") == 0) {
 			f_trihedra1_control = TRUE;
@@ -460,11 +529,13 @@ int projective_space_activity_description::read_arguments(
 			i += Trihedra1_control->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
-			cout << "done reading -trihedra1_control " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
+			if (f_v) {
+				cout << "done reading -trihedra1_control " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
 			}
 		}
 		else if (stringcmp(argv[i], "-trihedra2_control") == 0) {
@@ -473,11 +544,13 @@ int projective_space_activity_description::read_arguments(
 			i += Trihedra2_control->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
-			cout << "done reading -trihedra2_control " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
+			if (f_v) {
+				cout << "done reading -trihedra2_control " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
 			}
 		}
 		else if (stringcmp(argv[i], "-control_six_arcs") == 0) {
@@ -486,74 +559,94 @@ int projective_space_activity_description::read_arguments(
 			i += Control_six_arcs->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
-			cout << "done reading -control_six_arcs " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
+			if (f_v) {
+				cout << "done reading -control_six_arcs " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
 			}
 		}
 		else if (stringcmp(argv[i], "-make_gilbert_varshamov_code") == 0) {
 			f_make_gilbert_varshamov_code = TRUE;
 			make_gilbert_varshamov_code_n = strtoi(argv[++i]);
 			make_gilbert_varshamov_code_d = strtoi(argv[++i]);
-			cout << "-make_gilbert_varshamov_code" << make_gilbert_varshamov_code_n
-					<< " " << make_gilbert_varshamov_code_d << endl;
+			if (f_v) {
+				cout << "-make_gilbert_varshamov_code" << make_gilbert_varshamov_code_n
+						<< " " << make_gilbert_varshamov_code_d << endl;
+			}
 		}
 
 		else if (stringcmp(argv[i], "-spread_classify") == 0) {
 			f_spread_classify = TRUE;
 			spread_classify_k = strtoi(argv[++i]);
 			spread_classify_Control = NEW_OBJECT(poset_classification_control);
-			cout << "-spread_classify " << endl;
+			if (f_v) {
+				cout << "-spread_classify " << endl;
+			}
 			i += spread_classify_Control->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
-			cout << "done reading -spread_classify " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
+			if (f_v) {
+				cout << "done reading -spread_classify " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+				cout << "-spread_classify " << spread_classify_k << endl;
+				spread_classify_Control->print();
 			}
-			cout << "-spread_classify " << spread_classify_k << endl;
-			spread_classify_Control->print();
 		}
 		// semifields
 		else if (stringcmp(argv[i], "-classify_semifields") == 0) {
 			f_classify_semifields = TRUE;
 			Semifield_classify_description = NEW_OBJECT(semifield_classify_description);
-			cout << "-classify_semifields" << endl;
+			if (f_v) {
+				cout << "-classify_semifields" << endl;
+			}
 			i += Semifield_classify_description->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
-			cout << "done reading -classify_semifields " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
+			if (f_v) {
+				cout << "done reading -classify_semifields " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
 			}
 			Semifield_classify_Control = NEW_OBJECT(poset_classification_control);
-			cout << "reading control " << endl;
+			if (f_v) {
+				cout << "reading control " << endl;
+			}
 			i += Semifield_classify_Control->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 
-			cout << "done reading control " << endl;
-			cout << "-classify_semifields " << endl;
+			if (f_v) {
+				cout << "done reading control " << endl;
+				cout << "-classify_semifields " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-cheat_sheet") == 0) {
 			f_cheat_sheet = TRUE;
-			cout << "-cheat_sheet " << endl;
+			if (f_v) {
+				cout << "-cheat_sheet " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-classify_quartic_curves_nauty") == 0) {
 			f_classify_quartic_curves_nauty = TRUE;
 			classify_quartic_curves_nauty_fname_mask.assign(argv[++i]);
 			classify_quartic_curves_nauty_nb = strtoi(argv[++i]);
 			classify_quartic_curves_nauty_fname_classification.assign(argv[++i]);
-			cout << "-classify_quartic_curves_nauty "
-					<< classify_quartic_curves_nauty_fname_mask
-					<< " " << classify_quartic_curves_nauty_nb
-					<< " " << classify_quartic_curves_nauty_fname_classification
-					<< endl;
+			if (f_v) {
+				cout << "-classify_quartic_curves_nauty "
+						<< classify_quartic_curves_nauty_fname_mask
+						<< " " << classify_quartic_curves_nauty_nb
+						<< " " << classify_quartic_curves_nauty_fname_classification
+						<< endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-classify_quartic_curves_with_substructure") == 0) {
 			f_classify_quartic_curves_with_substructure = TRUE;
@@ -562,13 +655,15 @@ int projective_space_activity_description::read_arguments(
 			classify_quartic_curves_with_substructure_size = strtoi(argv[++i]);
 			classify_quartic_curves_with_substructure_degree = strtoi(argv[++i]);
 			classify_quartic_curves_with_substructure_fname_classification.assign(argv[++i]);
-			cout << "-classify_quartic_curves_with_substructure "
-					<< classify_quartic_curves_with_substructure_fname_mask
-					<< " " << classify_quartic_curves_with_substructure_nb
-					<< " " << classify_quartic_curves_with_substructure_size
-					<< " " << classify_quartic_curves_with_substructure_degree
-					<< " " << classify_quartic_curves_with_substructure_fname_classification
-					<< endl;
+			if (f_v) {
+				cout << "-classify_quartic_curves_with_substructure "
+						<< classify_quartic_curves_with_substructure_fname_mask
+						<< " " << classify_quartic_curves_with_substructure_nb
+						<< " " << classify_quartic_curves_with_substructure_size
+						<< " " << classify_quartic_curves_with_substructure_degree
+						<< " " << classify_quartic_curves_with_substructure_fname_classification
+						<< endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-set_stabilizer") == 0) {
 			f_set_stabilizer = TRUE;
@@ -576,33 +671,41 @@ int projective_space_activity_description::read_arguments(
 			set_stabilizer_fname_mask.assign(argv[++i]);
 			set_stabilizer_nb = strtoi(argv[++i]);
 			set_stabilizer_column_label.assign(argv[++i]);
-			cout << "-set_stabilizer "
-					<< set_stabilizer_intermediate_set_size << " "
-					<< set_stabilizer_fname_mask << " "
-					<< set_stabilizer_nb << " "
-					<< set_stabilizer_column_label << " "
-					<< endl;
+			if (f_v) {
+				cout << "-set_stabilizer "
+						<< set_stabilizer_intermediate_set_size << " "
+						<< set_stabilizer_fname_mask << " "
+						<< set_stabilizer_nb << " "
+						<< set_stabilizer_column_label << " "
+						<< endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-conic_type") == 0) {
 			f_conic_type = TRUE;
 			conic_type_set_text.assign(argv[++i]);
-			cout << "-conic_type "
-					<< conic_type_set_text << endl;
+			if (f_v) {
+				cout << "-conic_type "
+						<< conic_type_set_text << endl;
+			}
 		}
 
 		else if (stringcmp(argv[i], "-lift_skew_hexagon") == 0) {
 			f_lift_skew_hexagon = TRUE;
 			lift_skew_hexagon_text.assign(argv[++i]);
-			cout << "-lift_skew_hexagon "
-					<< lift_skew_hexagon_text << endl;
+			if (f_v) {
+				cout << "-lift_skew_hexagon "
+						<< lift_skew_hexagon_text << endl;
+			}
 		}
 
 		else if (stringcmp(argv[i], "-lift_skew_hexagon_with_polarity") == 0) {
 			f_lift_skew_hexagon_with_polarity = TRUE;
 			lift_skew_hexagon_with_polarity_polarity.assign(argv[++i]);
-			cout << "-lift_skew_hexagon_with_polarity "
-					<< " " << lift_skew_hexagon_with_polarity_polarity
-					<< endl;
+			if (f_v) {
+				cout << "-lift_skew_hexagon_with_polarity "
+						<< " " << lift_skew_hexagon_with_polarity_polarity
+						<< endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-arc_with_given_set_as_s_lines_after_dualizing") == 0) {
 			f_arc_with_given_set_as_s_lines_after_dualizing = TRUE;
@@ -612,8 +715,10 @@ int projective_space_activity_description::read_arguments(
 			arc_s = strtoi(argv[++i]);
 			arc_input_set.assign(argv[++i]);
 			arc_label.assign(argv[++i]);
-			cout << "-arc_with_given_set_as_s_lines_after_dualizing "
-					<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << " " << arc_input_set << " " << arc_label << endl;
+			if (f_v) {
+				cout << "-arc_with_given_set_as_s_lines_after_dualizing "
+						<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << " " << arc_input_set << " " << arc_label << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-arc_with_two_given_sets_of_lines_after_dualizing") == 0) {
 			f_arc_with_two_given_sets_of_lines_after_dualizing = TRUE;
@@ -625,8 +730,10 @@ int projective_space_activity_description::read_arguments(
 			t_lines_string.assign(argv[++i]);
 			arc_input_set.assign(argv[++i]);
 			arc_label.assign(argv[++i]);
-			cout << "-arc_with_two_given_sets_of_lines_after_dualizing src_size="
-					<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << " t=" << arc_t << " " << t_lines_string << " " << arc_input_set << " " << arc_label << endl;
+			if (f_v) {
+				cout << "-arc_with_two_given_sets_of_lines_after_dualizing src_size="
+						<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << " t=" << arc_t << " " << t_lines_string << " " << arc_input_set << " " << arc_label << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-arc_with_three_given_sets_of_lines_after_dualizing") == 0) {
 			f_arc_with_three_given_sets_of_lines_after_dualizing = TRUE;
@@ -640,24 +747,32 @@ int projective_space_activity_description::read_arguments(
 			u_lines_string.assign(argv[++i]);
 			arc_input_set.assign(argv[++i]);
 			arc_label.assign(argv[++i]);
-			cout << "-arc_with_three_given_sets_of_lines_after_dualizing "
-					<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << " " << arc_input_set << " " << arc_label << endl;
-			cout << "arc_t = " << arc_t << " t_lines_string = " << t_lines_string << endl;
-			cout << "arc_u = " << arc_u << " u_lines_string = " << u_lines_string << endl;
+			if (f_v) {
+				cout << "-arc_with_three_given_sets_of_lines_after_dualizing "
+						<< arc_size << " d=" << arc_d << " d_low=" << arc_d_low << " s=" << arc_s << " " << arc_input_set << " " << arc_label << endl;
+				cout << "arc_t = " << arc_t << " t_lines_string = " << t_lines_string << endl;
+				cout << "arc_u = " << arc_u << " u_lines_string = " << u_lines_string << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-dualize_hyperplanes_to_points") == 0) {
 			f_dualize_hyperplanes_to_points = TRUE;
 			dualize_input_set.assign(argv[++i]);
-			cout << "-dualize_hyperplanes_to_points " << dualize_input_set << endl;
+			if (f_v) {
+				cout << "-dualize_hyperplanes_to_points " << dualize_input_set << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-dualize_points_to_hyperplanes") == 0) {
 			f_dualize_points_to_hyperplanes = TRUE;
 			dualize_input_set.assign(argv[++i]);
-			cout << "-dualize_points_to_hyperplanes " << dualize_input_set << endl;
+			if (f_v) {
+				cout << "-dualize_points_to_hyperplanes " << dualize_input_set << endl;
+			}
 		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {
-			cout << "-end" << endl;
+			if (f_v) {
+				cout << "-end" << endl;
+			}
 			break;
 		}
 		else {
@@ -665,10 +780,14 @@ int projective_space_activity_description::read_arguments(
 					"unrecognized option " << argv[i] << endl;
 			exit(1);
 		}
-		cout << "projective_space_activity_description::read_arguments looping, i=" << i << endl;
+		if (f_v) {
+			cout << "projective_space_activity_description::read_arguments looping, i=" << i << endl;
+		}
 	} // next i
 
-	cout << "projective_space_activity_description::read_arguments done" << endl;
+	if (f_v) {
+		cout << "projective_space_activity_description::read_arguments done" << endl;
+	}
 	return i + 1;
 }
 

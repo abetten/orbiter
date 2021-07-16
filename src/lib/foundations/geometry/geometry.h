@@ -1800,7 +1800,7 @@ public:
 	void cheat_sheet_points_on_lines(std::ostream &f, int verbose_level);
 	void cheat_sheet_lines_on_points(std::ostream &f, int verbose_level);
 	void cheat_sheet_subspaces(std::ostream &f, int k, int verbose_level);
-	void do_pluecker_reverse(std::ostream &ost, grassmann *Gr, int k, int nb_k_subspaces);
+	void do_pluecker_reverse(std::ostream &ost, grassmann *Gr, int k, int nb_k_subspaces, int verbose_level);
 	void cheat_sheet_line_intersection(std::ostream &f, int verbose_level);
 	void cheat_sheet_line_through_pairs_of_points(std::ostream &f,
 		int verbose_level);

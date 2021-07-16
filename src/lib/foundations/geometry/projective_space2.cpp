@@ -329,7 +329,6 @@ void projective_space::create_unital_XXq_YZq_ZYq(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	//finite_field *FQ;
 	int *v;
 	long int e, i, a;
 	long int X, Y, Z, Xq, Yq, Zq;
@@ -347,7 +346,6 @@ void projective_space::create_unital_XXq_YZq_ZYq(
 				"ODD(F->e)" << endl;
 		exit(1);
  	}
-	//FQ = F;
 
 	v = NEW_int(3);
 	e = F->e >> 1;
@@ -1009,10 +1007,10 @@ void projective_space::plane_intersection_type_fast(
 						rank_idx[rr] = idx;
 					}
 					else if (rank_idx[rr] != idx) {
-						cout << "projective_space::plane_intersection_"
-							"type_fast f_subset_done[rr] && "
-							"rank_idx[rr] >= 0 && "
-							"rank_idx[rr] != idx" << endl;
+						cout << "projective_space::plane_intersection_type_fast "
+								"f_subset_done[rr] && "
+								"rank_idx[rr] >= 0 && "
+								"rank_idx[rr] != idx" << endl;
 						exit(1);
 					}
 				}
@@ -1053,15 +1051,13 @@ void projective_space::find_planes_which_intersect_in_at_least_s_points(
 	sorting Sorting;
 
 	if (f_v) {
-		cout << "projective_space::find_planes_which_intersect_"
-				"in_at_least_s_points" << endl;
+		cout << "projective_space::find_planes_which_intersect_in_at_least_s_points" << endl;
 	}
 	if (f_vv) {
 		print_set_numerical(cout, set, set_size);
 	}
 	if (!Sorting.test_if_set_with_return_value_lint(set, set_size)) {
-		cout << "projective_space::find_planes_which_intersect_"
-				"in_at_least_s_points "
+		cout << "projective_space::find_planes_which_intersect_in_at_least_s_points "
 				"the input set if not a set" << endl;
 		exit(1);
 	}
@@ -1081,8 +1077,7 @@ void projective_space::find_planes_which_intersect_in_at_least_s_points(
 		unrank_point(Coords + i * d, set[i]);
 	}
 	if (f_vv) {
-		cout << "projective_space::find_planes_which_intersect_"
-				"in_at_least_s_points "
+		cout << "projective_space::find_planes_which_intersect_in_at_least_s_points "
 				"Coords:" << endl;
 		Orbiter->Int_vec.matrix_print(Coords, set_size, d);
 	}
@@ -1096,8 +1091,7 @@ void projective_space::find_planes_which_intersect_in_at_least_s_points(
 
 		if (one_percent > 0) {
 			if ((rk % one_percent) == 0) {
-				cout << "projective_space::find_planes_which_intersect_"
-						"in_at_least_s_points "
+				cout << "projective_space::find_planes_which_intersect_in_at_least_s_points "
 						<< rk << " / " << N_planes << " which is "
 						<< rk / one_percent << " percent done" << endl;
 			}
@@ -1122,8 +1116,7 @@ void projective_space::find_planes_which_intersect_in_at_least_s_points(
 		}
 	} // rk
 	if (f_v) {
-		cout << "projective_space::find_planes_which_intersect_"
-				"in_at_least_s_points we found "
+		cout << "projective_space::find_planes_which_intersect_in_at_least_s_points we found "
 				<< plane_ranks.size() << " planes which intersect "
 						"in at least " << s << " points" << endl;
 	}
@@ -1132,8 +1125,7 @@ void projective_space::find_planes_which_intersect_in_at_least_s_points(
 	FREE_int(Basis_save);
 	FREE_int(Coords);
 	if (f_v) {
-		cout << "projective_space::find_planes_which_intersect_"
-				"in_at_least_s_points "
+		cout << "projective_space::find_planes_which_intersect_in_at_least_s_points "
 				"done" << endl;
 	}
 }
@@ -1466,13 +1458,12 @@ void projective_space::klein_correspondence_special_model(
 
 	//FREE_int(table);
 	if (f_v) {
-		cout << "projective_space::klein_correspondence_"
-				"special_model done" << endl;
+		cout << "projective_space::klein_correspondence_special_model done" << endl;
 	}
 }
 
 void projective_space::cheat_sheet_points(
-		ostream &f, int verbose_level)
+		std::ostream &f, int verbose_level)
 {
 	int i, d;
 	int *v;
@@ -1549,7 +1540,7 @@ void projective_space::cheat_sheet_points(
 }
 
 void projective_space::cheat_sheet_point_table(
-		ostream &f, int verbose_level)
+		std::ostream &f, int verbose_level)
 {
 	int I, i, j, a, d, nb_rows, nb_cols = 5;
 	int nb_rows_per_page = 40, nb_tables;
@@ -1604,7 +1595,7 @@ void projective_space::cheat_sheet_point_table(
 
 
 void projective_space::cheat_sheet_points_on_lines(
-	ostream &f, int verbose_level)
+	std::ostream &f, int verbose_level)
 {
 	latex_interface L;
 
@@ -1643,7 +1634,7 @@ void projective_space::cheat_sheet_points_on_lines(
 }
 
 void projective_space::cheat_sheet_lines_on_points(
-	ostream &f, int verbose_level)
+	std::ostream &f, int verbose_level)
 {
 	latex_interface L;
 
@@ -1687,13 +1678,12 @@ void projective_space::cheat_sheet_lines_on_points(
 
 
 void projective_space::cheat_sheet_subspaces(
-	ostream &f, int k, int verbose_level)
+	std::ostream &f, int k, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	grassmann *Gr;
 	int *v;
 	int n1, k1;
-	//int nb_points;
 	int nb_k_subspaces;
 	int i, j, u;
 	int f_need_comma = FALSE;
@@ -1766,7 +1756,7 @@ void projective_space::cheat_sheet_subspaces(
 
 
 		if (n == 3 && k == 1) {
-			do_pluecker_reverse(f, Gr, k, nb_k_subspaces);
+			do_pluecker_reverse(f, Gr, k, nb_k_subspaces, verbose_level);
 		}
 
 	}
@@ -1823,8 +1813,9 @@ void projective_space::cheat_sheet_subspaces(
 	}
 }
 
-void projective_space::do_pluecker_reverse(ostream &ost, grassmann *Gr, int k, int nb_k_subspaces)
+void projective_space::do_pluecker_reverse(ostream &ost, grassmann *Gr, int k, int nb_k_subspaces, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i, j;
 	int v6[6];
 	int *T;
@@ -1841,9 +1832,11 @@ void projective_space::do_pluecker_reverse(ostream &ost, grassmann *Gr, int k, i
 		Pos[i] = i;
 	}
 	Sorting.int_vec_heapsort_with_log(T, Pos, nb_k_subspaces);
-	cout << "after sort:" << endl;
-	for (i = 0; i < nb_k_subspaces; i++) {
-		cout << i << " : " << T[i] << " : " << Pos[i] << endl;
+	if (f_v) {
+		cout << "projective_space::do_pluecker_reverse after sort:" << endl;
+		for (i = 0; i < nb_k_subspaces; i++) {
+			cout << i << " : " << T[i] << " : " << Pos[i] << endl;
+		}
 	}
 
 
@@ -1901,7 +1894,7 @@ void projective_space::do_pluecker_reverse(ostream &ost, grassmann *Gr, int k, i
 }
 
 void projective_space::cheat_sheet_line_intersection(
-	ostream &f, int verbose_level)
+		std::ostream &f, int verbose_level)
 {
 	int i, j, a;
 
@@ -1935,7 +1928,7 @@ void projective_space::cheat_sheet_line_intersection(
 }
 
 void projective_space::cheat_sheet_line_through_pairs_of_points(
-	ostream &f, int verbose_level)
+		std::ostream &f, int verbose_level)
 {
 	int i, j, a;
 
@@ -3153,12 +3146,10 @@ int projective_space::point_of_intersection_of_a_line_and_a_line_in_three_space(
 	int M[16];
 
 	if (f_v) {
-		cout << "projective_space::point_of_intersection_of_a_"
-				"line_and_a_line_in_three_space" << endl;
+		cout << "projective_space::point_of_intersection_of_a_line_and_a_line_in_three_space" << endl;
 	}
 	if (n != 3) {
-		cout << "projective_space::point_of_intersection_of_a_"
-				"line_and_a_line_in_three_space n != 3" << endl;
+		cout << "projective_space::point_of_intersection_of_a_line_and_a_line_in_three_space n != 3" << endl;
 		exit(1);
 	}
 	if (f_v) {
@@ -3177,8 +3168,7 @@ int projective_space::point_of_intersection_of_a_line_and_a_line_in_three_space(
 	F->intersect_subspaces(4, 2, Basis1, 2, Basis2,
 		rk, M, 0 /* verbose_level */);
 	if (rk != 1) {
-		cout << "projective_space::point_of_intersection_of_a_"
-				"line_and_a_line_in_three_space intersection "
+		cout << "projective_space::point_of_intersection_of_a_line_and_a_line_in_three_space intersection "
 				"is not a point" << endl;
 		cout << "line1:" << endl;
 		Orbiter->Int_vec.matrix_print(Basis1, 2, 4);
@@ -3196,8 +3186,7 @@ int projective_space::point_of_intersection_of_a_line_and_a_line_in_three_space(
 		cout << "point rank = " << a << endl;
 	}
 	if (f_v) {
-		cout << "projective_space::point_of_intersection_of_a_"
-				"line_and_a_line_in_three_space done" << endl;
+		cout << "projective_space::point_of_intersection_of_a_line_and_a_line_in_three_space done" << endl;
 	}
 	return a;
 }
@@ -3212,12 +3201,10 @@ int projective_space::point_of_intersection_of_a_line_and_a_plane_in_three_space
 	int M[16];
 
 	if (f_v) {
-		cout << "projective_space::point_of_intersection_of_a_"
-				"line_and_a_plane_in_three_space" << endl;
+		cout << "projective_space::point_of_intersection_of_a_line_and_a_plane_in_three_space" << endl;
 	}
 	if (n != 3) {
-		cout << "projective_space::point_of_intersection_of_a_"
-				"line_and_a_plane_in_three_space n != 3" << endl;
+		cout << "projective_space::point_of_intersection_of_a_line_and_a_plane_in_three_space n != 3" << endl;
 		exit(1);
 	}
 	if (f_v) {
@@ -3236,8 +3223,7 @@ int projective_space::point_of_intersection_of_a_line_and_a_plane_in_three_space
 	F->intersect_subspaces(4, 2, Basis1, 3, Basis2,
 		rk, M, 0 /* verbose_level */);
 	if (rk != 1) {
-		cout << "projective_space::point_of_intersection_of_a_"
-				"line_and_a_plane_in_three_space intersection "
+		cout << "projective_space::point_of_intersection_of_a_line_and_a_plane_in_three_space intersection "
 				"is not a point" << endl;
 	}
 	if (f_v) {
@@ -3249,8 +3235,7 @@ int projective_space::point_of_intersection_of_a_line_and_a_plane_in_three_space
 		cout << "point rank = " << a << endl;
 	}
 	if (f_v) {
-		cout << "projective_space::point_of_intersection_of_a_"
-				"line_and_a_plane_in_three_space done" << endl;
+		cout << "projective_space::point_of_intersection_of_a_line_and_a_plane_in_three_space done" << endl;
 	}
 	return a;
 }
@@ -3277,13 +3262,11 @@ long int projective_space::line_of_intersection_of_two_planes_in_three_space(
 	F->intersect_subspaces(4, 3, Basis1, 3, Basis2,
 		rk, M, 0 /* verbose_level */);
 	if (rk != 2) {
-		cout << "projective_space::line_of_intersection_of_"
-				"two_planes_in_three_space intersection is not a line" << endl;
+		cout << "projective_space::line_of_intersection_of_two_planes_in_three_space intersection is not a line" << endl;
 	}
 	a = rank_line(M);
 	if (f_v) {
-		cout << "projective_space::line_of_intersection_of_"
-				"two_planes_in_three_space done" << endl;
+		cout << "projective_space::line_of_intersection_of_two_planes_in_three_space done" << endl;
 	}
 	return a;
 }
@@ -3298,12 +3281,10 @@ long int projective_space::line_of_intersection_of_two_planes_in_three_space_usi
 	long int rk;
 
 	if (f_v) {
-		cout << "projective_space::line_of_intersection_of_"
-				"two_planes_in_three_space_using_dual_coordinates" << endl;
+		cout << "projective_space::line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates" << endl;
 	}
 	if (n != 3) {
-		cout << "projective_space::line_of_intersection_of_"
-				"two_planes_in_three_space_using_dual_coordinates "
+		cout << "projective_space::line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates "
 				"n != 3" << endl;
 		exit(1);
 	}
@@ -3328,12 +3309,10 @@ long int projective_space::transversal_to_two_skew_lines_through_a_point(
 	long int a;
 
 	if (f_v) {
-		cout << "projective_space::transversal_to_two_skew_lines_"
-				"through_a_point" << endl;
+		cout << "projective_space::transversal_to_two_skew_lines_through_a_point" << endl;
 	}
 	if (n != 3) {
-		cout << "projective_space::transversal_to_two_skew_lines_"
-				"through_a_point "
+		cout << "projective_space::transversal_to_two_skew_lines_through_a_point "
 				"n != 3" << endl;
 		exit(1);
 	}
@@ -3348,8 +3327,7 @@ long int projective_space::transversal_to_two_skew_lines_through_a_point(
 	F->RREF_and_kernel(4, 2, Basis3, 0 /* verbose_level */);
 	a = rank_line(Basis3 + 8);
 	if (f_v) {
-		cout << "projective_space::transversal_to_two_skew_lines_"
-				"through_a_point "
+		cout << "projective_space::transversal_to_two_skew_lines_through_a_point "
 				"done" << endl;
 	}
 	return a;
@@ -3365,8 +3343,7 @@ void projective_space::plane_intersection_matrix_in_three_space(
 	int i, j, a, b, rk;
 
 	if (f_v) {
-		cout << "projective_space::plane_intersection_matrix_"
-				"in_three_space" << endl;
+		cout << "projective_space::plane_intersection_matrix_in_three_space" << endl;
 	}
 	Intersection_matrix = NEW_int(nb_planes * nb_planes);
 	for (i = 0; i < nb_planes; i++) {
@@ -3385,8 +3362,7 @@ void projective_space::plane_intersection_matrix_in_three_space(
 	}
 
 	if (f_v) {
-		cout << "projective_space::plane_intersection_matrix_"
-				"in_three_space done" << endl;
+		cout << "projective_space::plane_intersection_matrix_in_three_space done" << endl;
 	}
 }
 
@@ -3447,21 +3423,18 @@ void projective_space::plane_equation_from_three_lines_in_three_space(
 	int rk;
 
 	if (f_v) {
-		cout << "projective_space::plane_equation_from_three_"
-				"lines_in_three_space" << endl;
+		cout << "projective_space::plane_equation_from_three_lines_in_three_space" << endl;
 	}
 	unrank_lines(Basis, three_lines, 3);
 	rk = F->RREF_and_kernel(4, 6, Basis, 0 /* verbose_level*/);
 	if (rk != 3) {
-		cout << "projective_space::plane_equation_from_three_"
-				"lines_in_three_space rk != 3" << endl;
+		cout << "projective_space::plane_equation_from_three_lines_in_three_space rk != 3" << endl;
 		exit(1);
 	}
 	Orbiter->Int_vec.copy(Basis + 3 * 4, plane_eqn4, 4);
 
 	if (f_v) {
-		cout << "projective_space::plane_equation_from_three_"
-				"lines_in_three_space done" << endl;
+		cout << "projective_space::plane_equation_from_three_lines_in_three_space done" << endl;
 	}
 }
 

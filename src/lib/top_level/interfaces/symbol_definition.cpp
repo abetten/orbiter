@@ -691,19 +691,19 @@ void symbol_definition::print()
 		cout << "-finite_field ";
 		Finite_field_description->print();
 	}
-	else if (f_projective_space) {
+	if (f_projective_space) {
 		cout << "-projective_space ";
 		Projective_space_with_action_description->print();
 	}
-	else if (f_orthogonal_space) {
+	if (f_orthogonal_space) {
 		cout << "-orthogonal_space ";
 		Orthogonal_space_with_action_description->print();
 	}
-	else if (f_linear_group) {
+	if (f_linear_group) {
 		cout << "-linear_group ";
 		Linear_group_description->print();
 	}
-	else if (f_formula) {
+	if (f_formula) {
 		cout << "-formula " << label << " " << label_tex << " " << managed_variables << " " << formula_text;
 		//formula *F;
 		//std::string label;
@@ -711,29 +711,29 @@ void symbol_definition::print()
 		//std::string managed_variables;
 		//std::string formula_text;
 	}
-	else if (f_collection) {
+	if (f_collection) {
 		cout << "-collection ";
 		//cout << list_of_objects << endl;
 	}
 #if 0
-	else if (f_combinatorial_object) {
+	if (f_combinatorial_object) {
 		cout << "-combinatorial_object ";
 		Combinatorial_object_description->print();
 	}
 #endif
-	else if (f_graph) {
+	if (f_graph) {
 		cout << "-graph ";
 		Create_graph_description->print();
 	}
-	else if (f_spread_table) {
+	if (f_spread_table) {
 		cout << "-spread_table ";
 		cout << spread_table_label_PA << " " << dimension_of_spread_elements << " " << spread_selection_text << " " << spread_tables_prefix << endl;
 	}
-	else if (f_packing_was) {
+	if (f_packing_was) {
 		cout << "-packing_was " << packing_was_label_spread_table << endl;
 		packing_was_descr->print();
 	}
-	else if (f_packing_was_choose_fixed_points) {
+	if (f_packing_was_choose_fixed_points) {
 		cout << "-packing_was_choose_fixed_points ";
 		cout << packing_with_assumed_symmetry_label;
 		cout << " " << packing_with_assumed_symmetry_choose_fixed_points_clique_size << " " << endl;
@@ -742,32 +742,28 @@ void symbol_definition::print()
 		//int packing_with_assumed_symmetry_choose_fixed_points_clique_size;
 		//poset_classification_control *packing_with_assumed_symmetry_choose_fixed_points_control;
 	}
-	else if (f_packing_long_orbits) {
+	if (f_packing_long_orbits) {
 		cout << "-packing_long_orbits " << packing_long_orbits_choose_fixed_points_label << endl;
 		Packing_long_orbits_description->print();
 	}
-	else if (f_graph_classification) {
+	if (f_graph_classification) {
 		cout << "-graph_classification ";
 		Graph_classify_description->print();
 	}
-	else if (f_diophant) {
+	if (f_diophant) {
 		cout << "-diophant ";
 		Diophant_description->print();
 	}
-	else if (f_design) {
+	if (f_design) {
 		cout << "-design ";
 		Design_create_description->print();
 	}
-	else if (f_design_table) {
+	if (f_design_table) {
 		cout << "-design_table " << design_table_label_design << " " << design_table_label << " " << design_table_go_text << " " << design_table_generators_data;
 	}
-	else if (f_large_set_was) {
+	if (f_large_set_was) {
 		cout << "-large_set_was " << large_set_was_label_design_table << endl;
 		large_set_was_descr->print();
-	}
-	else {
-		cout << "symbol_definition::print unknown type" << endl;
-		exit(1);
 	}
 }
 

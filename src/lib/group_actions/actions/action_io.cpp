@@ -145,7 +145,7 @@ void action::report(ostream &ost, int f_sims, sims *S,
 
 			ost << "Magma export: \\\\" << endl;
 			ost << "\\begin{verbatim}" << endl;
-			SG->export_magma(this, ost);
+			SG->export_magma(this, ost, verbose_level);
 			ost << "\\end{verbatim}" << endl;
 
 			ost << "Compact form: \\\\" << endl;
