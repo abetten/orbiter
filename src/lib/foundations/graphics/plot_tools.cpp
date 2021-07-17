@@ -692,7 +692,13 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 		Orbiter->Int_vec.print(cout, reps, nb_reps);
 		cout << " modulo " << Descr->cyclotomic_sets_q << endl;
 
-		G.sl_thickness(110);
+		if (Descr->f_cyclotomic_sets_thickness) {
+			G.sl_thickness(Descr->cyclotomic_sets_thickness);
+		}
+		else {
+			G.sl_thickness(110);
+		}
+
 		for (i = 0; i < nb_reps; i++) {
 			std::vector<int> cyclotomic_set;
 			int a, b, h;

@@ -202,6 +202,9 @@ public:
 	int cyclotomic_sets_q;
 	std::string cyclotomic_sets_reps;
 
+	int f_cyclotomic_sets_thickness;
+	int cyclotomic_sets_thickness;
+
 
 	draw_mod_n_description();
 	~draw_mod_n_description();
