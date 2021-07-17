@@ -427,7 +427,7 @@ void finite_field::init_binary_operations(int verbose_level)
 			}
 		}
 		if (FALSE) {
-			print_add_mult_tables();
+			print_add_mult_tables(cout);
 		}
 
 		f_has_table = TRUE;

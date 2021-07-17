@@ -34,6 +34,9 @@ draw_mod_n_description::draw_mod_n_description()
 	cyclotomic_sets_q = 0;
 	//std::string cyclotomic_sets_reps;
 
+	f_cyclotomic_sets_thickness = FALSE;
+	cyclotomic_sets_thickness = 100;
+
 }
 
 draw_mod_n_description::~draw_mod_n_description()
@@ -83,6 +86,11 @@ int draw_mod_n_description::read_arguments(
 			cyclotomic_sets_q = strtoi(argv[++i]);
 			cyclotomic_sets_reps.assign(argv[++i]);
 			cout << "-cyclotomic_sets " << cyclotomic_sets_q << " " << cyclotomic_sets_reps << endl;
+		}
+		else if (stringcmp(argv[i], "-cyclotomic_sets_thickness") == 0) {
+			f_cyclotomic_sets_thickness = TRUE;
+			cyclotomic_sets_thickness = strtoi(argv[++i]);
+			cout << "-cyclotomic_sets_thickness " << cyclotomic_sets_thickness << endl;
 		}
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
