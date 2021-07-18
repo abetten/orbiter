@@ -387,6 +387,7 @@ public:
 	void integer_vec_print(std::ostream &ost, int *v, int len);
 	int hash(int *v, int len, int bit_length);
 	void create_string_with_quotes(std::string &str, int *v, int len);
+	void transpose(int *M, int m, int n, int *Mt);
 
 };
 

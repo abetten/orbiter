@@ -1866,7 +1866,7 @@ public:
 		action *A,
 		finite_field *F, int iso,
 		int verbose_level);
-	void stabilizer_of_HCV_surface(
+	void stabilizer_of_Eckardt_surface(
 		action *A, 
 		finite_field *F, int f_with_normalizer, int f_semilinear, 
 		vector_ge *&nice_gens,

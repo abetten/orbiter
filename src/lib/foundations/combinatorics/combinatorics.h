@@ -177,11 +177,6 @@ class combinatorial_object_create {
 public:
 	combinatorial_object_description *Descr;
 
-#if 0
-	int q;
-	finite_field *F;
-#endif
-
 	std::string fname;
 	int nb_pts;
 	long int *Pts;
@@ -208,20 +203,6 @@ public:
 class combinatorial_object_description {
 
 public:
-
-#if 0
-	int f_q;
-	int q;
-	int f_n;
-	int n;
-	int f_poly;
-	std::string poly;
-	int f_Q;
-	int Q;
-	int f_poly_Q;
-	std::string poly_Q;
-#endif
-
 
 	projective_space *P;
 

@@ -26,7 +26,7 @@ public:
 
 	int f_report;
 
-	int f_identify_HCV;
+	int f_identify_Eckardt;
 
 	int f_identify_F13;
 
@@ -77,7 +77,7 @@ public:
 			int verbose_level);
 	void perform_activity(int verbose_level);
 	void report(int verbose_level);
-	void do_surface_identify_HCV(int verbose_level);
+	void do_surface_identify_Eckardt(int verbose_level);
 	void do_surface_identify_F13(int verbose_level);
 	void do_surface_identify_Bes(int verbose_level);
 	void do_surface_identify_general_abcd(int verbose_level);
@@ -303,11 +303,11 @@ public:
 	void write_file(std::ofstream &fp, int verbose_level);
 	void read_file(std::ifstream &fp, int verbose_level);
 
-	void identify_HCV_and_print_table(int verbose_level);
+	void identify_Eckardt_and_print_table(int verbose_level);
 	void identify_F13_and_print_table(int verbose_level);
 	void identify_Bes_and_print_table(int verbose_level);
 	void identify_general_abcd_and_print_table(int verbose_level);
-	void identify_HCV(int *Iso_type, int *Nb_lines, int verbose_level);
+	void identify_Eckardt(int *Iso_type, int *Nb_lines, int verbose_level);
 	void identify_F13(
 		int *Iso_type, int *Nb_lines, int verbose_level);
 	void identify_Bes(

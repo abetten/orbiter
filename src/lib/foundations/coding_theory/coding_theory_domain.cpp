@@ -1365,6 +1365,10 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 		}
 		cout << endl;
 
+		cout << "weight enumerator:" << endl;
+		Orbiter->Int_vec.print_fully(cout, weight_enumerator, n + 1);
+		cout << endl;
+
 	}
 
 
@@ -3210,6 +3214,64 @@ int coding_theory_domain::Hamming_distance_binary(int a, int b, int n)
 }
 
 
+void coding_theory_domain::generator_matrix_cyclic_code(finite_field *F,
+		int n,
+		std::string &poly_coeffs,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "coding_theory_domain::generator_matrix_cyclic_code" << endl;
+	}
+
+	int *coeffs;
+	int sz;
+	int k;
+	int d;
+	int *M;
+	int *v;
+	int i, j;
+	long int rk;
+	long int *Rk;
+
+	Orbiter->Int_vec.scan(poly_coeffs, coeffs, sz);
+	d = sz - 1;
+	k = n - d;
+
+	M = NEW_int(k * n);
+	Orbiter->Int_vec.zero(M, k * n);
+	for (i = 0; i < k; i++) {
+		Orbiter->Int_vec.copy(coeffs, M + i * n + i, d + 1);
+	}
+
+	cout << "generator matrix:" << endl;
+	Orbiter->Int_vec.matrix_print(M, k, n);
+
+
+	cout << "generator matrix:" << endl;
+	Orbiter->Int_vec.print_fully(cout, M, k * n);
+	cout << endl;
+
+	v = NEW_int(k);
+	Rk = NEW_lint(n);
+	for (j = 0; j < n; j++) {
+		for (i = 0; i < k; i++) {
+			v[i] = M[i * n + j];
+		}
+		F->PG_element_rank_modified_lint(
+				v, 1, k, rk);
+		Rk[j] = rk;
+	}
+
+	cout << "generator matrix in projective points:" << endl;
+	Orbiter->Lint_vec.print_fully(cout, Rk, n);
+	cout << endl;
+
+	if (f_v) {
+		cout << "coding_theory_domain::generator_matrix_cyclic_code" << endl;
+	}
+}
 
 }}
 

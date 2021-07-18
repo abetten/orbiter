@@ -2413,7 +2413,7 @@ void animate::draw_frame_Hilbert_round_76(video_draw_options *Opt,
 }
 
 
-void animate::draw_frame_HCV_surface(
+void animate::draw_frame_Eckardt_surface(
 	int h, int nb_frames, int round,
 	double clipping_radius,
 	ostream &fp,
@@ -2423,7 +2423,7 @@ void animate::draw_frame_HCV_surface(
 	//povray_interface Pov;
 
 
-	cout << "animate::draw_frame_HCV_surface" << endl;
+	cout << "animate::draw_frame_Eckardt_surface" << endl;
 
 	double scale_factor;
 

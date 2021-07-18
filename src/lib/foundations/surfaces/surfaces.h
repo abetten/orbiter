@@ -885,15 +885,15 @@ public:
 		int verbose_level);
 	surface_object *create_surface_F13(int a, int verbose_level);
 	surface_object *create_surface_G13(int a, int verbose_level);
-	surface_object *create_surface_HCV(int a, int b,
+	surface_object *create_Eckardt_surface(int a, int b,
 		int &alpha, int &beta,
 		int verbose_level);
-	void create_equation_HCV(int a, int b, int *coeff, int verbose_level);
-	int test_HCV_form_alpha_beta(int *coeff, int &alpha, int &beta,
+	void create_equation_Eckardt_surface(int a, int b, int *coeff, int verbose_level);
+	int test_Eckardt_form_alpha_beta(int *coeff, int &alpha, int &beta,
 		int verbose_level);
-	void create_HCV_double_six(long int *double_six, int a, int b,
+	void create_Eckardt_double_six(long int *double_six, int a, int b,
 		int verbose_level);
-	void create_HCV_fifteen_lines(long int *fifteen_lines, int a, int b,
+	void create_Eckardt_fifteen_lines(long int *fifteen_lines, int a, int b,
 		int verbose_level);
 
 };

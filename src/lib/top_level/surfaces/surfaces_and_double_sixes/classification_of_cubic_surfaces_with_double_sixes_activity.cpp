@@ -57,8 +57,8 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::perform_activi
 		cout << "SCW->Surf->n = " << SCW->Surf->n << endl;
 		report(verbose_level);
 	}
-	else if (Descr->f_identify_HCV) {
-		do_surface_identify_HCV(verbose_level);
+	else if (Descr->f_identify_Eckardt) {
+		do_surface_identify_Eckardt(verbose_level);
 	}
 	else if (Descr->f_identify_F13) {
 		do_surface_identify_F13(verbose_level);
@@ -118,28 +118,28 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::report(int ver
 	}
 }
 
-void classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_HCV(int verbose_level)
+void classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_Eckardt(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_HCV" << endl;
+		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_Eckardt" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_HCV "
-				"before SCW->identify_HCV_and_print_table" << endl;
+		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_Eckardt "
+				"before SCW->identify_Eckardt_and_print_table" << endl;
 	}
-	SCW->identify_HCV_and_print_table(verbose_level);
+	SCW->identify_Eckardt_and_print_table(verbose_level);
 	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_HCV "
-				"after SCW->identify_HCV_and_print_table" << endl;
+		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_Eckardt "
+				"after SCW->identify_Eckardt_and_print_table" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_HCV done" << endl;
+		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_Eckardt done" << endl;
 	}
 }
 
@@ -154,12 +154,12 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_ide
 
 	if (f_v) {
 		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_F13 "
-				"before SCW->identify_HCV_and_print_table" << endl;
+				"before SCW->identify_F13_and_print_table" << endl;
 	}
 	SCW->identify_F13_and_print_table(verbose_level);
 	if (f_v) {
 		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::do_surface_identify_F13 "
-				"after SCW->identify_HCV_and_print_table" << endl;
+				"after SCW->identify_F13_and_print_table" << endl;
 	}
 
 	if (f_v) {

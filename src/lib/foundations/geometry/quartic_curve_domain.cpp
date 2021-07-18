@@ -21,8 +21,11 @@ quartic_curve_domain::quartic_curve_domain()
 {
 	F = NULL;
 	P = NULL;
+	Poly1_3 = NULL;
+	Poly2_3 = NULL;
 	Poly3_3 = NULL;
 	Poly4_3 = NULL;
+	Poly3_4 = NULL;
 	Partials = NULL;
 }
 
@@ -78,6 +81,36 @@ void quartic_curve_domain::init_polynomial_domains(int verbose_level)
 	}
 
 
+	Poly1_3 = NEW_OBJECT(homogeneous_polynomial_domain);
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains before Poly1_3->init" << endl;
+	}
+	Poly1_3->init(F,
+			3 /* nb_vars */, 1 /* degree */,
+			FALSE /* f_init_incidence_structure */,
+			t_PART,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains after Poly1_3->init" << endl;
+	}
+
+
+
+	Poly2_3 = NEW_OBJECT(homogeneous_polynomial_domain);
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains before Poly2_3->init" << endl;
+	}
+	Poly2_3->init(F,
+			3 /* nb_vars */, 2 /* degree */,
+			FALSE /* f_init_incidence_structure */,
+			t_PART,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains after Poly2_3->init" << endl;
+	}
+
+
+
 	Poly3_3 = NEW_OBJECT(homogeneous_polynomial_domain);
 	if (f_v) {
 		cout << "surface_domain::init_polynomial_domains before Poly3_3->init" << endl;
@@ -103,6 +136,19 @@ void quartic_curve_domain::init_polynomial_domains(int verbose_level)
 			verbose_level);
 	if (f_v) {
 		cout << "surface_domain::init_polynomial_domains after Poly4_3->init" << endl;
+	}
+
+	Poly3_4 = NEW_OBJECT(homogeneous_polynomial_domain);
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains before Poly3_4->init" << endl;
+	}
+	Poly3_4->init(F,
+			4 /* nb_vars */, 3 /* degree */,
+			FALSE /* f_init_incidence_structure */,
+			t_PART,
+			verbose_level);
+	if (f_v) {
+		cout << "surface_domain::init_polynomial_domains after Poly3_4->init" << endl;
 	}
 
 	Partials = NEW_OBJECTS(partial_derivative, 3);
@@ -149,6 +195,18 @@ long int quartic_curve_domain::rank_point(int *v)
 
 	rk = P->rank_point(v);
 	return rk;
+}
+
+
+void quartic_curve_domain::unrank_line_in_dual_coordinates(int *v, long int rk)
+{
+	int basis[9];
+	int r;
+
+	P->unrank_line(basis, rk);
+	r = F->RREF_and_kernel(3, 2, basis,
+			0 /* verbose_level */);
+	Orbiter->Int_vec.copy(basis + 6, v, 3);
 }
 
 void quartic_curve_domain::print_lines_tex(std::ostream &ost, long int *Lines, int nb_lines)
@@ -238,6 +296,275 @@ void quartic_curve_domain::compute_points_on_lines(
 		cout << "quartic_curve_domain::compute_points_on_lines done" << endl;
 	}
 }
+
+
+
+void quartic_curve_domain::multiply_conic_times_conic(int *six_coeff_a,
+	int *six_coeff_b, int *fifteen_coeff,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, a, b, c, idx, u;
+	int M[3];
+
+	if (f_v) {
+		cout << "quartic_curve_domain::multiply_conic_times_conic" << endl;
+	}
+
+
+	Orbiter->Int_vec.zero(fifteen_coeff, 15);
+	for (i = 0; i < 6; i++) {
+		a = six_coeff_a[i];
+		if (a == 0) {
+			continue;
+		}
+		for (j = 0; j < 6; j++) {
+			b = six_coeff_b[j];
+			if (b == 0) {
+				continue;
+			}
+			c = F->mult(a, b);
+
+			for (u = 0; u < 3; u++) {
+				M[u] = Poly2_3->get_monomial(i, u) + Poly2_3->get_monomial(j, u);
+			}
+			idx = Poly4_3->index_of_monomial(M);
+			if (idx >= 15) {
+				cout << "quartic_curve_domain::multiply_conic_times_conic "
+						"idx >= 15" << endl;
+				exit(1);
+			}
+			fifteen_coeff[idx] = F->add(fifteen_coeff[idx], c);
+		}
+	}
+
+
+	if (f_v) {
+		cout << "quartic_curve_domain::multiply_conic_times_conic done" << endl;
+	}
+}
+
+void quartic_curve_domain::multiply_conic_times_line(int *six_coeff,
+	int *three_coeff, int *ten_coeff,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, a, b, c, idx, u;
+	int M[3];
+
+	if (f_v) {
+		cout << "quartic_curve_domain::multiply_conic_times_line" << endl;
+	}
+
+
+	Orbiter->Int_vec.zero(ten_coeff, 10);
+	for (i = 0; i < 6; i++) {
+		a = six_coeff[i];
+		if (a == 0) {
+			continue;
+		}
+		for (j = 0; j < 3; j++) {
+			b = three_coeff[j];
+			if (b == 0) {
+				continue;
+			}
+			c = F->mult(a, b);
+
+			for (u = 0; u < 3; u++) {
+				M[u] = Poly2_3->get_monomial(i, u) + Poly1_3->get_monomial(j, u);
+			}
+			idx = Poly3_3->index_of_monomial(M);
+			if (idx >= 10) {
+				cout << "quartic_curve_domain::multiply_conic_times_line "
+						"idx >= 10" << endl;
+				exit(1);
+			}
+			ten_coeff[idx] = F->add(ten_coeff[idx], c);
+		}
+	}
+
+
+	if (f_v) {
+		cout << "quartic_curve_domain::multiply_conic_times_line done" << endl;
+	}
+}
+
+void quartic_curve_domain::multiply_line_times_line(int *line1,
+	int *line2, int *six_coeff,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, a, b, c, idx, u;
+	int M[3];
+
+	if (f_v) {
+		cout << "quartic_curve_domain::multiply_line_times_line" << endl;
+	}
+
+
+	Orbiter->Int_vec.zero(six_coeff, 6);
+	for (i = 0; i < 3; i++) {
+		a = line1[i];
+		if (a == 0) {
+			continue;
+		}
+		for (j = 0; j < 3; j++) {
+			b = line2[j];
+			if (b == 0) {
+				continue;
+			}
+			c = F->mult(a, b);
+
+			for (u = 0; u < 3; u++) {
+				M[u] = Poly1_3->get_monomial(i, u) + Poly1_3->get_monomial(j, u);
+			}
+			idx = Poly2_3->index_of_monomial(M);
+			if (idx >= 15) {
+				cout << "quartic_curve_domain::multiply_line_times_line "
+						"idx >= 6" << endl;
+				exit(1);
+			}
+			six_coeff[idx] = F->add(six_coeff[idx], c);
+		}
+	}
+
+
+	if (f_v) {
+		cout << "quartic_curve_domain::multiply_line_times_line done" << endl;
+	}
+}
+
+void quartic_curve_domain::multiply_three_lines(int *line1, int *line2, int *line3,
+	int *ten_coeff,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int six[6];
+
+	if (f_v) {
+		cout << "quartic_curve_domain::multiply_three_lines" << endl;
+	}
+
+
+	multiply_line_times_line(line1, line2, six, verbose_level);
+	multiply_conic_times_line(six, line3, ten_coeff, verbose_level);
+
+
+	if (f_v) {
+		cout << "quartic_curve_domain::multiply_three_lines done" << endl;
+	}
+}
+
+
+void quartic_curve_domain::multiply_four_lines(int *line1, int *line2, int *line3, int *line4,
+	int *fifteen_coeff,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int six1[6];
+	int six2[6];
+
+	if (f_v) {
+		cout << "quartic_curve_domain::multiply_four_lines" << endl;
+	}
+
+
+	multiply_line_times_line(line1, line2, six1, verbose_level);
+	multiply_line_times_line(line3, line4, six2, verbose_level);
+	multiply_conic_times_conic(six1, six2, fifteen_coeff, verbose_level);
+
+
+	if (f_v) {
+		cout << "quartic_curve_domain::multiply_four_lines done" << endl;
+	}
+}
+
+
+
+void quartic_curve_domain::assemble_cubic_surface(int *f1, int *f2, int *f3, int *eqn20,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "quartic_curve_domain::assemble_cubic_surface" << endl;
+	}
+
+	Orbiter->Int_vec.zero(eqn20, 20);
+
+	int i, a, idx;
+	int mon[4];
+
+
+	for (i = 0; i < Poly1_3->get_nb_monomials(); i++) {
+		a = f1[i];
+		if (a == 0) {
+			continue;
+		}
+		if (f_v) {
+			cout << "f1[" << i << "] = " << a << endl;
+		}
+		mon[0] = 2;
+		Orbiter->Int_vec.copy(Poly1_3->get_monomial_pointer(i), mon + 1, 3);
+
+		idx = Poly3_4->index_of_monomial(mon);
+		if (idx >= 20) {
+			cout << "quartic_curve_domain::assemble_cubic_surface "
+					"idx >= 20" << endl;
+			exit(1);
+		}
+		eqn20[idx] = F->add(eqn20[idx], a);
+	}
+
+	for (i = 0; i < Poly2_3->get_nb_monomials(); i++) {
+		a = f2[i];
+		if (a == 0) {
+			continue;
+		}
+		if (f_v) {
+			cout << "f2[" << i << "] = " << a << endl;
+		}
+		mon[0] = 1;
+		Orbiter->Int_vec.copy(Poly2_3->get_monomial_pointer(i), mon + 1, 3);
+
+		idx = Poly3_4->index_of_monomial(mon);
+		if (idx >= 20) {
+			cout << "quartic_curve_domain::assemble_cubic_surface "
+					"idx >= 20" << endl;
+			exit(1);
+		}
+		eqn20[idx] = F->add(eqn20[idx], a);
+	}
+
+	for (i = 0; i < Poly3_3->get_nb_monomials(); i++) {
+		a = f3[i];
+		if (a == 0) {
+			continue;
+		}
+		if (f_v) {
+			cout << "f3[" << i << "] = " << a << endl;
+		}
+		mon[0] = 0;
+		Orbiter->Int_vec.copy(Poly3_3->get_monomial_pointer(i), mon + 1, 3);
+
+		idx = Poly3_4->index_of_monomial(mon);
+		if (idx >= 20) {
+			cout << "quartic_curve_domain::assemble_cubic_surface "
+					"idx >= 20" << endl;
+			exit(1);
+		}
+		eqn20[idx] = F->add(eqn20[idx], a);
+	}
+
+
+
+
+	if (f_v) {
+		cout << "quartic_curve_domain::assemble_cubic_surface done" << endl;
+	}
+}
+
 
 
 }}

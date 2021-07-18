@@ -752,6 +752,9 @@ public:
 		int *coeff_in, int *coeff_out,
 		int *Pt1_coeff, int *Pt2_coeff,
 		int verbose_level);
+	void multiply_by_scalar(
+		int *coeff_in, int scalar, int *coeff_out,
+		int verbose_level);
 	void multiply_mod(
 		int *coeff1, int *coeff2, int *coeff3,
 		int verbose_level);

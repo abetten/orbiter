@@ -26,6 +26,8 @@ quartic_curve_activity_description::quartic_curve_activity_description()
 
 	f_export_points = FALSE;
 
+	f_create_surface = FALSE;
+
 
 }
 
@@ -54,6 +56,10 @@ int quartic_curve_activity_description::read_arguments(
 			f_export_points = TRUE;
 			cout << "-export_points " << endl;
 		}
+		else if (stringcmp(argv[i], "-create_surface") == 0) {
+			f_create_surface = TRUE;
+			cout << "-create_surface " << endl;
+		}
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
@@ -80,6 +86,9 @@ void quartic_curve_activity_description::print()
 	}
 	if (f_export_points) {
 		cout << "-export_points " << endl;
+	}
+	if (f_create_surface) {
+		cout << "-create_surface " << endl;
 	}
 }
 

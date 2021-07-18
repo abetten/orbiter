@@ -365,7 +365,7 @@ surface_object *surface_domain::create_surface_G13(int a, int verbose_level)
 	return SO;
 }
 
-surface_object *surface_domain::create_surface_HCV(int a, int b,
+surface_object *surface_domain::create_Eckardt_surface(int a, int b,
 	int &alpha, int &beta,
 	int verbose_level)
 {
@@ -377,7 +377,7 @@ surface_object *surface_domain::create_surface_HCV(int a, int b,
 	sorting Sorting;
 
 	if (f_v) {
-		cout << "surface_domain::create_surface_HCV" << endl;
+		cout << "surface_domain::create_Eckardt_surface" << endl;
 	}
 	alpha = -1;
 	beta = -1;
@@ -389,7 +389,7 @@ surface_object *surface_domain::create_surface_HCV(int a, int b,
 	a2p1 = F->add(a2, 1);
 	a2m1 = F->add(a2, F->negate(1));
 	if (a2p1 == 0 || a2m1 == 0) {
-		cout << "surface_domain::create_surface_HCV "
+		cout << "surface_domain::create_Eckardt_surface "
 				"a2p1 == 0 || a2m1 == 0" << endl;
 		return FALSE;
 	}
@@ -402,7 +402,7 @@ surface_object *surface_domain::create_surface_HCV(int a, int b,
 	beta0 = F->mult(F->mult(F->power(b, 3),
 		F->add(1, F->mult(a, a))), F->inverse(a));
 	if (f_v) {
-		cout << "surface_domain::create_surface_HCV a="
+		cout << "surface_domain::create_Eckardt_surface a="
 			<< a << " b=" << b << " alpha0=" << alpha0
 			<< " beta0=" << beta0 << endl;
 	}
@@ -429,7 +429,7 @@ surface_object *surface_domain::create_surface_HCV(int a, int b,
 	long int *Oab;
 
 	Oab = NEW_lint(12);
-	create_HCV_double_six(Oab, a, b, 0 /* verbose_level */);
+	create_Eckardt_double_six(Oab, a, b, 0 /* verbose_level */);
 
 #if 0
 	if (!test_if_sets_are_equal(Oab, Lines, 12)) {
@@ -439,7 +439,7 @@ surface_object *surface_domain::create_surface_HCV(int a, int b,
 #endif
 
 	if (f_v) {
-		cout << "surface_domain::create_surface_HCV The double six is:" << endl;
+		cout << "surface_domain::create_Eckardt_surface The double six is:" << endl;
 		Gr->print_set(Oab, 12);
 	}
 
@@ -451,7 +451,7 @@ surface_object *surface_domain::create_surface_HCV(int a, int b,
 	nb = 12;
 
 	if (f_v) {
-		cout << "surface_domain::create_surface_HCV We have a set of "
+		cout << "surface_domain::create_Eckardt_surface We have a set of "
 				"lines of size " << nb << ":";
 		Orbiter->Lint_vec.print(cout, Lines27, nb);
 		cout << endl;
@@ -461,7 +461,7 @@ surface_object *surface_domain::create_surface_HCV(int a, int b,
 		Lines27 + 12, 0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "surface_domain::create_surface_HCV The remaining 15 lines are:";
+		cout << "surface_domain::create_Eckardt_surface The remaining 15 lines are:";
 		Orbiter->Lint_vec.print(cout, Lines27 + 12, 15);
 		cout << endl;
 		Gr->print_set(Lines27 + 12, 15);
@@ -469,34 +469,34 @@ surface_object *surface_domain::create_surface_HCV(int a, int b,
 
 
 	if (f_v) {
-		cout << "surface_domain::create_surface_HCV before create_HCV_fifteen_lines" << endl;
+		cout << "surface_domain::create_Eckardt_surface before create_HCV_fifteen_lines" << endl;
 	}
 
 	long int special_lines[15];
 
-	create_HCV_fifteen_lines(special_lines, a, b, verbose_level);
+	create_Eckardt_fifteen_lines(special_lines, a, b, verbose_level);
 	for (i = 0; i < 15; i++) {
 		if (special_lines[i] != Lines27[12 + i]) {
-			cout << "surface_domain::create_surface_HCV something is wrong "
+			cout << "surface_domain::create_Eckardt_surface something is wrong "
 					"with the special line " << i << " / 15 " << endl;
 			exit(1);
 		}
 	}
 	if (f_v) {
-		cout << "surface_domain::create_surface_HCV after create_special_fifteen_lines" << endl;
+		cout << "surface_domain::create_Eckardt_surface after create_special_fifteen_lines" << endl;
 	}
 
 	if (f_v) {
-		cout << "surface_domain::create_surface_HCV before rank_of_system" << endl;
+		cout << "surface_domain::create_Eckardt_surface before rank_of_system" << endl;
 	}
 	rk = rank_of_system(27, Lines27, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "surface_domain::create_surface_HCV "
+		cout << "surface_domain::create_Eckardt_surface "
 				"a=" << a << " b=" << b << " rk=" << rk << endl;
 	}
 
 	if (rk != 19) {
-		cout << "surface_domain::create_surface_HCV rk != 19" << endl;
+		cout << "surface_domain::create_Eckardt_surface rk != 19" << endl;
 		exit(1);
 	}
 
@@ -510,19 +510,19 @@ surface_object *surface_domain::create_surface_HCV(int a, int b,
 
 
 
-	if (!test_HCV_form_alpha_beta(coeff20, alpha, beta,
+	if (!test_Eckardt_form_alpha_beta(coeff20, alpha, beta,
 		0 /* verbose_level */)) {
-		cout << "surface_domain::create_surface_HCV not of special form" << endl;
+		cout << "surface_domain::create_Eckardt_surface not of special form" << endl;
 		exit(1);
 	}
 
 
 	if (alpha != alpha0) {
-		cout << "surface_domain::create_surface_HCV alpha != alpha0" << endl;
+		cout << "surface_domain::create_Eckardt_surface alpha != alpha0" << endl;
 		exit(1);
 	}
 	if (beta != beta0) {
-		cout << "surface_domain::create_surface_HCV beta != beta0" << endl;
+		cout << "surface_domain::create_Eckardt_surface beta != beta0" << endl;
 		exit(1);
 	}
 
@@ -533,7 +533,7 @@ surface_object *surface_domain::create_surface_HCV(int a, int b,
 	SO = NEW_OBJECT(surface_object);
 
 	if (f_v) {
-		cout << "surface_domain::create_surface_HCV before SO->init_with_27_lines" << endl;
+		cout << "surface_domain::create_Eckardt_surface before SO->init_with_27_lines" << endl;
 	}
 	SO->init_with_27_lines(this,
 		Lines27, coeff20,
@@ -541,20 +541,20 @@ surface_object *surface_domain::create_surface_HCV(int a, int b,
 		verbose_level);
 
 	if (f_v) {
-		cout << "surface_domain::create_surface_HCV done" << endl;
+		cout << "surface_domain::create_Eckardt_surface done" << endl;
 	}
 	return SO;
 }
 
 
-void surface_domain::create_equation_HCV(int a, int b,
+void surface_domain::create_equation_Eckardt_surface(int a, int b,
 		int *coeff, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int alpha, beta;
 
 	if (f_v) {
-		cout << "surface_domain::create_equation_HCV" << endl;
+		cout << "surface_domain::create_equation_Eckardt_surface" << endl;
 	}
 	alpha = F->negate(F->mult(b, b));
 	beta = F->mult(F->mult(F->power(b, 3),
@@ -568,11 +568,11 @@ void surface_domain::create_equation_HCV(int a, int b,
 	coeff[16] = beta;
 	//coeff[19] = beta;
 	if (f_v) {
-		cout << "surface_domain::create_equation_HCV done" << endl;
+		cout << "surface_domain::create_equation_Eckardt_surface done" << endl;
 	}
 }
 
-int surface_domain::test_HCV_form_alpha_beta(int *coeff,
+int surface_domain::test_Eckardt_form_alpha_beta(int *coeff,
 	int &alpha, int &beta, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -583,48 +583,48 @@ int surface_domain::test_HCV_form_alpha_beta(int *coeff,
 	int a;
 
 	if (f_v) {
-		cout << "surface_domain::test_HCV_form_alpha_beta" << endl;
+		cout << "surface_domain::test_Eckardt_form_alpha_beta" << endl;
 	}
 	if (!Orbiter->Int_vec.is_constant_on_subset(coeff,
 		zeroes, sizeof(zeroes) / sizeof(int), a)) {
-		cout << "surface_domain::test_HCV_form_alpha_beta "
+		cout << "surface_domain::test_Eckardt_form_alpha_beta "
 				"not constant on zero set" << endl;
 		return FALSE;
 	}
 	if (a != 0) {
-		cout << "surface_domain::test_HCV_form_alpha_beta "
+		cout << "surface_domain::test_Eckardt_form_alpha_beta "
 				"not zero on zero set" << endl;
 		return FALSE;
 	}
 	if (coeff[3] != 1) {
-		cout << "surface_domain::test_special_form_alpha_beta "
+		cout << "surface_domain::test_Eckardt_form_alpha_beta "
 				"not normalized" << endl;
 		exit(1);
 	}
 	if (!Orbiter->Int_vec.is_constant_on_subset(coeff,
 		alphas, sizeof(alphas) / sizeof(int), a)) {
-		cout << "surface_domain::test_HCV_form_alpha_beta "
+		cout << "surface_domain::test_Eckardt_form_alpha_beta "
 				"not constant on alpha set" << endl;
 		return FALSE;
 	}
 	alpha = a;
 	if (!Orbiter->Int_vec.is_constant_on_subset(coeff,
 		betas, sizeof(betas) / sizeof(int), a)) {
-		cout << "surface_domain::test_HCV_form_alpha_beta "
+		cout << "surface_domain::test_Eckardt_form_alpha_beta "
 				"not constant on beta set" << endl;
 		return FALSE;
 	}
 	beta = a;
 
 	if (f_v) {
-		cout << "surface_domain::test_HCV_form_alpha_beta done" << endl;
+		cout << "surface_domain::test_Eckardt_form_alpha_beta done" << endl;
 	}
 	return ret;
 }
 
-void surface_domain::create_HCV_double_six(long int *double_six,
+void surface_domain::create_Eckardt_double_six(long int *double_six,
 	int a, int b, int verbose_level)
-// create double-six for the Hilbert, Cohn-Vossen surface
+// create double-six for the Eckardt surface
 {
 	int f_v = (verbose_level >= 1);
 	int Basis[12 * 8] = {
@@ -644,7 +644,7 @@ void surface_domain::create_HCV_double_six(long int *double_six,
 	int i, c, ma, mb, av, mav;
 
 	if (f_v) {
-		cout << "surface_domain::create_HCV_double_six "
+		cout << "surface_domain::create_Eckardt_double_six "
 				"a=" << a << " b=" << b << endl;
 	}
 	ma = F->negate(a);
@@ -678,11 +678,11 @@ void surface_domain::create_HCV_double_six(long int *double_six,
 				0 /* verbose_level */);
 	}
 	if (f_v) {
-		cout << "surface_domain::create_HCV_double_six done" << endl;
+		cout << "surface_domain::create_Eckardt_double_six done" << endl;
 	}
 }
 
-void surface_domain::create_HCV_fifteen_lines(long int *fifteen_lines,
+void surface_domain::create_Eckardt_fifteen_lines(long int *fifteen_lines,
 	int a, int b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -716,7 +716,7 @@ void surface_domain::create_HCV_fifteen_lines(long int *fifteen_lines,
 	// -5 stands for -3 inverse
 
 	if (f_v) {
-		cout << "surface_domain::create_HCV_fifteen_lines "
+		cout << "surface_domain::create_Eckardt_fifteen_lines "
 				"a=" << a << " b=" << b << endl;
 	}
 	m1 = F->negate(1);
@@ -728,7 +728,7 @@ void surface_domain::create_HCV_fifteen_lines(long int *fifteen_lines,
 	//ba2m1 = F->mult(b, a2m1);
 
 	if (ba2p1 == 0) {
-		cout << "surface_domain::create_HCV_fifteen_lines "
+		cout << "surface_domain::create_Eckardt_fifteen_lines "
 				"ba2p1 = 0, cannot invert" << endl;
 		exit(1);
 	}
@@ -737,7 +737,7 @@ void surface_domain::create_HCV_fifteen_lines(long int *fifteen_lines,
 	c3 = F->mult(a2m1, F->inverse(ba2p1));
 	cm3 = F->negate(c3);
 	if (a2m1 == 0) {
-		cout << "surface_domain::create_HCV_fifteen_lines "
+		cout << "surface_domain::create_Eckardt_fifteen_lines "
 				"a2m1 = 0, cannot invert" << endl;
 		exit(1);
 	}
@@ -745,13 +745,13 @@ void surface_domain::create_HCV_fifteen_lines(long int *fifteen_lines,
 	cm4 = F->negate(c4);
 
 	if (c3 == 0) {
-		cout << "surface_domain::create_HCV_fifteen_lines "
+		cout << "surface_domain::create_Eckardt_fifteen_lines "
 				"c3 = 0, cannot invert" << endl;
 		exit(1);
 	}
 	c5 = F->inverse(c3);
 	if (cm3 == 0) {
-		cout << "surface_domain::create_HCV_fifteen_lines "
+		cout << "surface_domain::create_Eckardt_fifteen_lines "
 				"cm3 = 0, cannot invert" << endl;
 		exit(1);
 	}
@@ -794,7 +794,7 @@ void surface_domain::create_HCV_fifteen_lines(long int *fifteen_lines,
 			c = cm5;
 		}
 		else {
-			cout << "surface_domain::create_HCV_fifteen_lines "
+			cout << "surface_domain::create_Eckardt_fifteen_lines "
 					"unknown value" << c << endl;
 			exit(1);
 		}
@@ -805,7 +805,7 @@ void surface_domain::create_HCV_fifteen_lines(long int *fifteen_lines,
 			Basis + i * 8, 0 /* verbose_level */);
 	}
 	if (f_v) {
-		cout << "surface_domain::create_HCV_fifteen_lines done" << endl;
+		cout << "surface_domain::create_Eckardt_fifteen_lines done" << endl;
 	}
 }
 

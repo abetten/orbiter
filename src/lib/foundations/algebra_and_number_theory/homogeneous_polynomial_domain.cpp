@@ -1512,6 +1512,36 @@ void homogeneous_polynomial_domain::substitute_line(
 	}
 }
 
+void homogeneous_polynomial_domain::multiply_by_scalar(
+	int *coeff_in, int scalar, int *coeff_out,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, a, b, c, idx;
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::multiply_by_scalar" << endl;
+	}
+
+	Orbiter->Int_vec.zero(coeff_out, nb_monomials);
+	for (i = 0; i < nb_monomials; i++) {
+		a = coeff_in[i];
+		if (a == 0) {
+			continue;
+		}
+		if (f_v) {
+			cout << "coeff_in[" << i << "] = " << a << endl;
+		}
+		c = F->mult(a, scalar);
+		coeff_out[i] = c;
+	}
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::multiply_by_scalar done" << endl;
+	}
+}
+
+
 void homogeneous_polynomial_domain::multiply_mod(
 	int *coeff1, int *coeff2, int *coeff3,
 	int verbose_level)

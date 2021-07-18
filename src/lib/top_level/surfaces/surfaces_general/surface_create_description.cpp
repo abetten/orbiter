@@ -43,9 +43,9 @@ surface_create_description::surface_create_description()
 	rank_defining_q = 0;
 
 
-	f_family_HCV = FALSE;
-	family_HCV_a = 0;
-	family_HCV_b = 0;
+	f_family_Eckardt = FALSE;
+	family_Eckardt_a = 0;
+	family_Eckardt_b = 0;
 
 	f_family_G13 = FALSE;
 	family_G13_a = 0;
@@ -168,11 +168,11 @@ int surface_create_description::read_arguments(int argc, std::string *argv,
 			rank_defining_q = strtoi(argv[++i]);
 			cout << "-by_rank " << rank_text << " " << rank_defining_q << endl;
 		}
-		else if (stringcmp(argv[i], "-family_HCV") == 0) {
-			f_family_HCV = TRUE;
-			family_HCV_a = strtoi(argv[++i]);
-			family_HCV_b = strtoi(argv[++i]);
-			cout << "-family_HCV " << family_HCV_a << " " << family_HCV_b << endl;
+		else if (stringcmp(argv[i], "-family_Eckardt") == 0) {
+			f_family_Eckardt = TRUE;
+			family_Eckardt_a = strtoi(argv[++i]);
+			family_Eckardt_b = strtoi(argv[++i]);
+			cout << "-family_Eckardt " << family_Eckardt_a << " " << family_Eckardt_b << endl;
 		}
 		else if (stringcmp(argv[i], "-family_G13") == 0) {
 			f_family_G13 = TRUE;
@@ -341,8 +341,8 @@ void surface_create_description::print()
 	if (f_by_rank) {
 		cout << "-by_rank " << rank_text << " " << rank_defining_q << endl;
 	}
-	if (f_family_HCV) {
-		cout << "-family_HCV " << family_HCV_a << " " << family_HCV_b << endl;
+	if (f_family_Eckardt) {
+		cout << "-family_Eckardt " << family_Eckardt_a << " " << family_Eckardt_b << endl;
 	}
 	if (f_family_G13) {
 		cout << "-family_G13 " << family_G13_a << endl;

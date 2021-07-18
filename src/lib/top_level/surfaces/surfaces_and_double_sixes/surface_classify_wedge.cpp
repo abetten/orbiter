@@ -943,14 +943,14 @@ void surface_classify_wedge::read_file(
 
 
 
-void surface_classify_wedge::identify_HCV_and_print_table(int verbose_level)
+void surface_classify_wedge::identify_Eckardt_and_print_table(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
 	//int m;
 	
 	if (f_v) {
-		cout << "surface_classify_wedge::identify_HCV_and_print_table" << endl;
+		cout << "surface_classify_wedge::identify_Eckardt_and_print_table" << endl;
 	}
 
 	int *Iso_type;
@@ -964,7 +964,7 @@ void surface_classify_wedge::identify_HCV_and_print_table(int verbose_level)
 		Iso_type[i] = -1;
 		//Nb_E[i] = -1;
 	}
-	identify_HCV(Iso_type, Nb_lines, verbose_level);
+	identify_Eckardt(Iso_type, Nb_lines, verbose_level);
 
 #if 0
 	m = q - 3;
@@ -1005,7 +1005,7 @@ void surface_classify_wedge::identify_HCV_and_print_table(int verbose_level)
 	FREE_int(Nb_lines);
 
 	if (f_v) {
-		cout << "surface_classify_wedge::identify_HCV_and_print_table done" << endl;
+		cout << "surface_classify_wedge::identify_Eckardt_and_print_table done" << endl;
 	}
 }
 
@@ -1240,7 +1240,7 @@ void surface_classify_wedge::identify_general_abcd_and_print_table(int verbose_l
 	}
 }
 
-void surface_classify_wedge::identify_HCV(
+void surface_classify_wedge::identify_Eckardt(
 	int *Iso_type, int *Nb_lines, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1249,21 +1249,21 @@ void surface_classify_wedge::identify_HCV(
 	int *Elt;
 
 	if (f_v) {
-		cout << "surface_classify_wedge::identify_HCV" << endl;
+		cout << "surface_classify_wedge::identify_Eckardt" << endl;
 	}
 
 	Elt = NEW_int(A->elt_size_in_int);
-	cout << "surface_classify_wedge::identify_HCV "
+	cout << "surface_classify_wedge::identify_Eckardt "
 			"looping over all a:" << endl;
 	b = 1;
 	for (a = 2; a < q - 1; a++) {
-		cout << "surface_classify_wedge::identify_HCV "
+		cout << "surface_classify_wedge::identify_Eckardt "
 				"a = " << a << endl;
 
 
 		surface_object *SO;
 		
-		SO = Surf->create_surface_HCV(
+		SO = Surf->create_Eckardt_surface(
 				a, b,
 				alpha, beta,
 				verbose_level);
@@ -1272,7 +1272,7 @@ void surface_classify_wedge::identify_HCV(
 			iso_type, Elt,
 			verbose_level);
 
-		cout << "surface_classify_wedge::identify_HCV "
+		cout << "surface_classify_wedge::identify_Eckardt "
 			"a = " << a << " is isomorphic to iso_type "
 			<< iso_type << ", an isomorphism is:" << endl;
 		A->element_print_quick(Elt, cout);
@@ -1287,7 +1287,7 @@ void surface_classify_wedge::identify_HCV(
 
 	FREE_int(Elt);
 	if (f_v) {
-		cout << "surface_classify_wedge::identify_HCV done" << endl;
+		cout << "surface_classify_wedge::identify_Eckardt done" << endl;
 	}
 }
 
