@@ -1935,10 +1935,17 @@ public:
 	finite_field *F;
 	projective_space *P;
 
+	homogeneous_polynomial_domain *Poly1_3;
+		// linear polynomials in three variables
+	homogeneous_polynomial_domain *Poly2_3;
+		// quadratic polynomials in three variables
 	homogeneous_polynomial_domain *Poly3_3;
 		// cubic polynomials in three variables
 	homogeneous_polynomial_domain *Poly4_3;
 		// quartic polynomials in three variables
+
+	homogeneous_polynomial_domain *Poly3_4;
+		// cubic polynomials in four variables
 
 	partial_derivative *Partials; // [3]
 
@@ -1950,6 +1957,7 @@ public:
 	void print_equation_with_line_breaks_tex(std::ostream &ost, int *coeffs);
 	void unrank_point(int *v, long int rk);
 	long int rank_point(int *v);
+	void unrank_line_in_dual_coordinates(int *v, long int rk);
 	void print_lines_tex(std::ostream &ost, long int *Lines, int nb_lines);
 	void compute_points_on_lines(
 			long int *Pts, int nb_points,
@@ -1957,6 +1965,23 @@ public:
 			set_of_sets *&pts_on_lines,
 			int *&f_is_on_line,
 			int verbose_level);
+	void multiply_conic_times_conic(int *six_coeff_a,
+		int *six_coeff_b, int *fifteen_coeff,
+		int verbose_level);
+	void multiply_conic_times_line(int *six_coeff,
+		int *three_coeff, int *ten_coeff,
+		int verbose_level);
+	void multiply_line_times_line(int *line1,
+		int *line2, int *six_coeff,
+		int verbose_level);
+	void multiply_three_lines(int *line1, int *line2, int *line3,
+		int *ten_coeff,
+		int verbose_level);
+	void multiply_four_lines(int *line1, int *line2, int *line3, int *line4,
+		int *fifteen_coeff,
+		int verbose_level);
+	void assemble_cubic_surface(int *f1, int *f2, int *f3, int *eqn20,
+		int verbose_level);
 
 };
 
@@ -2073,7 +2098,7 @@ public:
 	void identify_lines(long int *lines, int nb_lines, int *line_idx,
 		int verbose_level);
 	int find_point(long int P, int &idx);
-
+	void create_surface(int *eqn20, int verbose_level);
 
 };
 

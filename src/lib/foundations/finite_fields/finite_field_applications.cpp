@@ -945,7 +945,7 @@ void finite_field::do_nullspace(
 		cout << "rank of nullspace = " << rk1 << endl;
 
 		cout << "finite_field::do_nullspace coefficients:" << endl;
-		Orbiter->Int_vec.print(cout, A + rk * n, rk1 * n);
+		Orbiter->Int_vec.print_fully(cout, A + rk * n, rk1 * n);
 		cout << endl;
 
 		cout << "$$" << endl;

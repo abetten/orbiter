@@ -94,6 +94,35 @@ void quartic_curve_activity::perform_activity(int verbose_level)
 		}
 
 	}
+	if (Descr->f_create_surface) {
+
+		int eqn20[20];
+
+		if (f_v) {
+			cout << "quartic_curve_activity::perform_activity before QC->QO->create_surface" << endl;
+		}
+		QC->QO->create_surface(eqn20, verbose_level);
+		if (f_v) {
+			cout << "quartic_curve_activity::perform_activity after QC->QO->create_surface" << endl;
+		}
+
+		if (f_v) {
+			cout << "quartic_curve_activity::perform_activity eqn20 = ";
+			Orbiter->Int_vec.print(cout, eqn20, 20);
+			cout << endl;
+
+			int i;
+
+			for (i = 0; i < 20; i++) {
+				if (eqn20[i]) {
+					cout << eqn20[i] << ","	<< i << ",";
+				}
+			}
+			cout << endl;
+		}
+
+
+	}
 
 
 	if (f_v) {

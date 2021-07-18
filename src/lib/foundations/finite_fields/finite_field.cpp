@@ -1698,7 +1698,9 @@ int finite_field::square_root(int i, int &root)
 
 	r = log_alpha(i);
 	if (ODD(r)) {
-		return FALSE;
+		cout << "finite_field::square_root not a square: " << i << endl;
+		exit(1);
+		//return FALSE;
 	}
 	r >>= 1;
 	root = alpha_power(r);

@@ -149,7 +149,7 @@ public:
 	void create_surface_from_description(int verbose_level);
 	void override_group(std::string &group_order_text,
 			int nb_gens, std::string &gens_text, int verbose_level);
-	void create_surface_HCV(int a, int b, int verbose_level);
+	void create_Eckardt_surface(int a, int b, int verbose_level);
 	void create_surface_G13(int a, int verbose_level);
 	void create_surface_F13(int a, int verbose_level);
 	void create_surface_bes(int a, int c, int verbose_level);
@@ -238,9 +238,9 @@ public:
 	std::string rank_text;
 	int rank_defining_q;
 
-	int f_family_HCV;
-	int family_HCV_a;
-	int family_HCV_b;
+	int f_family_Eckardt;
+	int family_Eckardt_a;
+	int family_Eckardt_b;
 
 	int f_family_G13;
 	int family_G13_a;

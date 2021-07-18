@@ -4315,13 +4315,13 @@ void scene::create_affine_space(int q, int verbose_level)
 }
 
 
-void scene::create_HCV_surface(int N, int verbose_level)
+void scene::create_Eckardt_surface(int N, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
 
 	if (f_v) {
-		cout << "scene::create_HCV_surface" << endl;
+		cout << "scene::create_Eckardt_surface" << endl;
 	}
 
 	//double coeff_in[20] = {0,3,3,5,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1};
@@ -4558,7 +4558,7 @@ void scene::create_HCV_surface(int N, int verbose_level)
 
 
 	if (f_v) {
-		cout << "scene::create_HCV_surface done" << endl;
+		cout << "scene::create_Eckardt_surface done" << endl;
 	}
 }
 

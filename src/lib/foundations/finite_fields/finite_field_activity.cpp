@@ -498,58 +498,19 @@ void finite_field_activity::perform_activity(int verbose_level)
 				verbose_level);
 
 	}
+	else if (Descr->f_generator_matrix_cyclic_code) {
 
+		cout << "before generator_matrix_cyclic_code" << endl;
 
-#if 0
-	else if (Descr->f_all_rational_normal_forms) {
+		coding_theory_domain Coding;
 
-		algebra_global_with_action Algebra;
-
-		Algebra.classes_GL(F, Descr->d,
-				FALSE /* f_no_eigenvalue_one */, verbose_level);
-
-
-	}
-	else if (Descr->f_study_surface) {
-
-		algebra_global_with_action Algebra;
-
-		Algebra.do_study_surface(F,
-				Descr->study_surface_nb,
+		Coding.generator_matrix_cyclic_code(F,
+				Descr->generator_matrix_cyclic_code_n,
+				Descr->generator_matrix_cyclic_code_poly,
 				verbose_level);
+
 	}
-	else if (Descr->f_eigenstuff) {
 
-		algebra_global_with_action Algebra;
-
-		Algebra.do_eigenstuff_with_coefficients(
-				F,
-				Descr->eigenstuff_n,
-				Descr->eigenstuff_coeffs,
-				verbose_level);
-	}
-	else if (Descr->f_eigenstuff_from_file) {
-
-		algebra_global_with_action Algebra;
-
-		Algebra.do_eigenstuff_from_file(
-				F,
-				Descr->eigenstuff_n,
-				Descr->eigenstuff_fname,
-				verbose_level);
-	}
-	else if (Descr->f_decomposition_by_element) {
-
-		algebra_global_with_action Algebra;
-
-		Algebra.do_cheat_sheet_for_decomposition_by_element_PG(F,
-				Descr->decomposition_by_element_n,
-				Descr->decomposition_by_element_power,
-				Descr->decomposition_by_element_data,
-				Descr->decomposition_by_element_fname_base,
-				verbose_level);
-	}
-#endif
 
 
 

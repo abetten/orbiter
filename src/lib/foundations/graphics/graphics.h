@@ -80,7 +80,7 @@ public:
 			std::ostream &fp,
 			int verbose_level);
 		// tritangent plane, 6 arc points, 2 blue lines, 6 red lines, text
-	void draw_frame_HCV_surface(
+	void draw_frame_Eckardt_surface(
 		int h, int nb_frames, int round,
 		double clipping_radius,
 		std::ostream &fp,
@@ -1250,7 +1250,7 @@ public:
 	void create_cube_and_tetrahedra(int verbose_level);
 	void create_affine_space(int q, int verbose_level);
 	//void create_surface_13_1(int verbose_level);
-	void create_HCV_surface(int N, int verbose_level);
+	void create_Eckardt_surface(int N, int verbose_level);
 	void create_E4_surface(int N, int verbose_level);
 	void create_twisted_cubic(int N, int verbose_level);
 	void create_triangulation_of_cube(int N, int verbose_level);

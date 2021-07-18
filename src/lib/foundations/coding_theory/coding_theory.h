@@ -141,6 +141,10 @@ public:
 	void field_induction(std::string &fname_in, std::string &fname_out, int nb_bits, int verbose_level);
 	int Hamming_distance(int *v1, int *v2, int n);
 	int Hamming_distance_binary(int a, int b, int n);
+	void generator_matrix_cyclic_code(finite_field *F,
+			int n,
+			std::string &poly_coeffs,
+			int verbose_level);
 
 
 	// cyclic_codes.cpp:

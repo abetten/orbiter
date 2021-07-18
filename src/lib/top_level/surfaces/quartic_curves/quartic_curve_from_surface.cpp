@@ -243,6 +243,8 @@ void quartic_curve_from_surface::quartic(std::string &surface_prefix, int pt_orb
 
 
 
+	// the equation of the quartic curve in x1,x2,x3 is
+	// (f_2)^2 - 4*f_1*f_3 = 0
 
 	curve = NEW_int(SOA->Surf->Poly4_x123->get_nb_monomials());
 	poly1 = NEW_int(SOA->Surf->Poly4_x123->get_nb_monomials());

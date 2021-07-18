@@ -32,6 +32,8 @@ public:
 
 	int f_export_points;
 
+	int f_create_surface;
+
 
 	quartic_curve_activity_description();
 	~quartic_curve_activity_description();

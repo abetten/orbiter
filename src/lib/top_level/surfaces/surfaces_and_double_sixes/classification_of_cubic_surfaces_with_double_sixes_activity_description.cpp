@@ -20,7 +20,7 @@ classification_of_cubic_surfaces_with_double_sixes_activity_description::classif
 {
 	f_report = FALSE;
 
-	f_identify_HCV = FALSE;
+	f_identify_Eckardt = FALSE;
 
 	f_identify_F13 = FALSE;
 
@@ -60,9 +60,9 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 			f_report = TRUE;
 			cout << "-report " << endl;
 		}
-		else if (stringcmp(argv[i], "-identify_HCV") == 0) {
-			f_identify_HCV = TRUE;
-			cout << "-identify_HCV " << endl;
+		else if (stringcmp(argv[i], "-identify_Eckardt") == 0) {
+			f_identify_Eckardt = TRUE;
+			cout << "-identify_Eckardt " << endl;
 		}
 		else if (stringcmp(argv[i], "-identify_F13") == 0) {
 			f_identify_F13 = TRUE;
@@ -141,8 +141,8 @@ void classification_of_cubic_surfaces_with_double_sixes_activity_description::pr
 	if (f_report) {
 		cout << "-report " << endl;
 	}
-	if (f_identify_HCV) {
-		cout << "-identify_HCV " << endl;
+	if (f_identify_Eckardt) {
+		cout << "-identify_Eckardt " << endl;
 	}
 	if (f_identify_F13) {
 		cout << "-identify_F13 " << endl;

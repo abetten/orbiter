@@ -19,12 +19,6 @@ namespace foundations {
 
 finite_field_activity_description::finite_field_activity_description()
 {
-#if 0
-	f_q = FALSE;
-	q = 0;
-	f_override_polynomial = FALSE;
-	//std::string override_polynomial;
-#endif
 
 	f_cheat_sheet_GF = FALSE;
 
@@ -60,7 +54,7 @@ finite_field_activity_description::finite_field_activity_description()
 	RREF_m = 0;
 	RREF_n = 0;
 
-	//cout << "interface_cryptography::interface_cryptography 3" << endl;
+	//cout << "finite_field_activity_description::finite_field_activity_description 3" << endl;
 	//RREF_text = NULL;
 
 	f_weight_enumerator = FALSE;
@@ -118,7 +112,7 @@ finite_field_activity_description::finite_field_activity_description()
 	//EC_bsgs_keys = NULL;
 
 
-	//cout << "interface_cryptography::interface_cryptography done" << endl;
+	//cout << "finite_field_activity_description::finite_field_activity_description done" << endl;
 	f_NTRU_encrypt = FALSE;
 	NTRU_encrypt_N = 0;
 	NTRU_encrypt_p = 0;
@@ -224,6 +218,9 @@ finite_field_activity_description::finite_field_activity_description()
 	//std::string f_rank_point_in_PG_given_as_pairs_text;
 
 
+	f_generator_matrix_cyclic_code = FALSE;
+	generator_matrix_cyclic_code_n = 0;
+	//std::string generator_matrix_cyclic_code_poly
 }
 
 
@@ -791,6 +788,17 @@ int finite_field_activity_description::read_arguments(
 					<< endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-generator_matrix_cyclic_code") == 0) {
+			f_generator_matrix_cyclic_code = TRUE;
+			generator_matrix_cyclic_code_n = strtoi(argv[++i]);
+			generator_matrix_cyclic_code_poly.assign(argv[++i]);
+			if (f_v) {
+				cout << "-generator_matrix_cyclic_code " << generator_matrix_cyclic_code_n
+					<< " " << generator_matrix_cyclic_code_poly
+					<< endl;
+			}
+		}
+
 
 
 		else if (stringcmp(argv[i], "-end") == 0) {
@@ -1087,6 +1095,12 @@ void finite_field_activity_description::print()
 				<< " " << evaluate_parameters
 				<< endl;
 	}
+	if (f_generator_matrix_cyclic_code) {
+		cout << "-generator_matrix_cyclic_code " << generator_matrix_cyclic_code_n
+			<< " " << generator_matrix_cyclic_code_poly
+			<< endl;
+	}
+
 }
 
 

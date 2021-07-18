@@ -1085,6 +1085,18 @@ void int_vec::create_string_with_quotes(std::string &str, int *v, int len)
 	str.assign(s.str());
 }
 
+void int_vec::transpose(int *M, int m, int n, int *Mt)
+// Mt must point to the right amount of memory (n * m int's)
+{
+	int i, j;
+
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			Mt[j * m + i] = M[i * n + j];
+		}
+	}
+}
+
 
 }}
 

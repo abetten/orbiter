@@ -239,6 +239,9 @@ public:
 	std::string evaluate_formula_label;
 	std::string evaluate_parameters;
 
+	int f_generator_matrix_cyclic_code;
+	int generator_matrix_cyclic_code_n;
+	std::string generator_matrix_cyclic_code_poly;
 
 	finite_field_activity_description();
 	~finite_field_activity_description();

@@ -182,10 +182,10 @@ void surface_create::create_surface_from_description(int verbose_level)
 	}
 
 
-	if (Descr->f_family_HCV) {
+	if (Descr->f_family_Eckardt) {
 
 
-		create_surface_HCV(Descr->family_HCV_a, Descr->family_HCV_b, verbose_level);
+		create_Eckardt_surface(Descr->family_Eckardt_a, Descr->family_Eckardt_b, verbose_level);
 		
 	}
 	else if (Descr->f_family_G13) {
@@ -412,28 +412,28 @@ void surface_create::override_group(std::string &group_order_text,
 	}
 }
 
-void surface_create::create_surface_HCV(int a, int b, int verbose_level)
+void surface_create::create_Eckardt_surface(int a, int b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int alpha, beta;
 
 	if (f_v) {
-		cout << "surface_create::create_surface_HCV "
-				"a=" << Descr->family_HCV_a
-				<< " b=" << Descr->family_HCV_b << endl;
+		cout << "surface_create::create_Eckardt_surface "
+				"a=" << Descr->family_Eckardt_a
+				<< " b=" << Descr->family_Eckardt_b << endl;
 	}
 
 
 	if (f_v) {
-		cout << "surface_create::create_surface_HCV before Surf->create_surface_HCV" << endl;
+		cout << "surface_create::create_Eckardt_surface before Surf->create_Eckardt_surface" << endl;
 	}
 
-	SO = Surf->create_surface_HCV(a, b,
+	SO = Surf->create_Eckardt_surface(a, b,
 			alpha, beta,
 			verbose_level);
 
 	if (f_v) {
-		cout << "surface_create::create_surface_HCV after Surf->create_surface_family_HCV" << endl;
+		cout << "surface_create::create_Eckardt_surface after Surf->create_Eckardt_surface" << endl;
 	}
 
 
@@ -444,10 +444,10 @@ void surface_create::create_surface_HCV(int a, int b, int verbose_level)
 
 
 	if (f_v) {
-		cout << "surface_create::create_surface_HCV before Sg->stabilizer_of_HCV_surface" << endl;
+		cout << "surface_create::create_Eckardt_surface before Sg->stabilizer_of_Eckardt_surface" << endl;
 	}
 
-	Sg->stabilizer_of_HCV_surface(
+	Sg->stabilizer_of_Eckardt_surface(
 		Surf_A->A,
 		F, FALSE /* f_with_normalizer */,
 		f_semilinear,
@@ -455,7 +455,7 @@ void surface_create::create_surface_HCV(int a, int b, int verbose_level)
 		verbose_level);
 
 	if (f_v) {
-		cout << "surface_create::create_surface_HCV after Sg->stabilizer_of_HCV_surface" << endl;
+		cout << "surface_create::create_Eckardt_surface after Sg->stabilizer_of_Eckardt_surface" << endl;
 	}
 
 	f_has_group = TRUE;
@@ -470,21 +470,21 @@ void surface_create::create_surface_HCV(int a, int b, int verbose_level)
 	sprintf(str_b, "%d", b);
 
 
-	prefix.assign("family_HCV_q");
+	prefix.assign("family_Eckardt_q");
 	prefix.append(str_q);
 	prefix.append("_a");
 	prefix.append(str_a);
 	prefix.append("_b");
 	prefix.append(str_b);
 
-	label_txt.assign("family_HCV_q");
+	label_txt.assign("family_Eckardt_q");
 	label_txt.append(str_q);
 	label_txt.append("_a");
 	label_txt.append(str_a);
 	label_txt.append("_b");
 	label_txt.append(str_b);
 
-	label_tex.assign("family\\_HCV\\_q");
+	label_tex.assign("family\\_Eckardt\\_q");
 	label_tex.append(str_q);
 	label_tex.append("\\_a");
 	label_tex.append(str_a);
@@ -492,7 +492,7 @@ void surface_create::create_surface_HCV(int a, int b, int verbose_level)
 	label_tex.append(str_b);
 
 	if (f_v) {
-		cout << "surface_create::create_surface_HCV done" << endl;
+		cout << "surface_create::create_Eckardt_surface done" << endl;
 	}
 
 }

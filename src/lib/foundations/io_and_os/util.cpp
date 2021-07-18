@@ -357,6 +357,7 @@ void uchar_move(uchar *p, uchar *q, int len)
 	}
 }
 
+#if 0
 void int_submatrix_all_rows(int *A, int m, int n,
 	int nb_cols, int *cols, int *B)
 {
@@ -433,7 +434,6 @@ void int_matrix_shorten_rows(int *&p, int m, int n)
 }
 
 
-
 void pint_matrix_shorten_rows(pint *&p, int m, int n)
 {
 	pint *q = NEW_pint(m * n);
@@ -447,6 +447,7 @@ void pint_matrix_shorten_rows(pint *&p, int m, int n)
 	FREE_pint(p);
 	p = q;
 }
+#endif
 
 
 

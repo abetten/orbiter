@@ -2787,7 +2787,7 @@ void strong_generators::stabilizer_of_quartic_curve_from_catalogue(
 }
 
 void
-strong_generators::stabilizer_of_HCV_surface(
+strong_generators::stabilizer_of_Eckardt_surface(
 	action *A,
 	finite_field *F, int f_with_normalizer, int f_semilinear, 
 	vector_ge *&nice_gens,
@@ -2796,7 +2796,7 @@ strong_generators::stabilizer_of_HCV_surface(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "strong_generators::stabilizer_of_HCV_surface" << endl;
+		cout << "strong_generators::stabilizer_of_Eckardt_surface" << endl;
 		cout << "q=" << F->q << endl;
 		cout << "f_with_normalizer=" << f_with_normalizer << endl;
 		cout << "f_semilinear=" << f_semilinear << endl;
@@ -2810,7 +2810,7 @@ strong_generators::stabilizer_of_HCV_surface(
 	int i;
 	
 	if (f_v) {
-		cout << "strong_generators::stabilizer_of_HCV_surface before "
+		cout << "strong_generators::stabilizer_of_Eckardt_surface before "
 				"F->cubic_surface_family_24_generators" << endl;
 	}
 
@@ -2837,7 +2837,7 @@ strong_generators::stabilizer_of_HCV_surface(
 	strong_generators *Strong_gens2;
 
 	if (f_v) {
-		cout << "strong_generators::stabilizer_of_HCV_surface before "
+		cout << "strong_generators::stabilizer_of_Eckardt_surface before "
 				"generators_to_strong_generators" << endl;
 	}
 	A->generators_to_strong_generators(
@@ -2846,7 +2846,7 @@ strong_generators::stabilizer_of_HCV_surface(
 		0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "strong_generators::stabilizer_of_HCV_surface after "
+		cout << "strong_generators::stabilizer_of_Eckardt_surface after "
 				"generators_to_strong_generators" << endl;
 	}
 	
@@ -2857,7 +2857,7 @@ strong_generators::stabilizer_of_HCV_surface(
 	//FREE_OBJECT(gens);
 
 	if (f_v) {
-		cout << "strong_generators::stabilizer_of_HCV_surface done" << endl;
+		cout << "strong_generators::stabilizer_of_Eckardt_surface done" << endl;
 	}
 }
 
