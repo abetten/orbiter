@@ -3299,7 +3299,7 @@ void projective_space_with_action::table_of_cubic_surfaces(int verbose_level)
 	surface_create **SC;
 	int *nb_E;
 	long int *Table;
-	int nb_cols = 6;
+	int nb_cols = 20;
 
 
 	poset_classification_control Control_six_arcs;
@@ -3312,6 +3312,7 @@ void projective_space_with_action::table_of_cubic_surfaces(int verbose_level)
 	nb_E = NEW_int(nb_cubic_surfaces);
 
 	Table = NEW_lint(nb_cubic_surfaces * nb_cols);
+
 
 
 
@@ -3344,21 +3345,103 @@ void projective_space_with_action::table_of_cubic_surfaces(int verbose_level)
 		nb_E[h] = SC[h]->SO->SOP->nb_Eckardt_points;
 
 
+		if (!SC[h]->f_has_group) {
+			cout << "!SC[h]->f_has_group" << endl;
+			exit(1);
+		}
+
+		surface_object_with_action *SoA;
+
+		SoA = NEW_OBJECT(surface_object_with_action);
+
+		if (f_v) {
+			cout << "projective_space_with_action::table_of_cubic_surfaces before SoA->init_with_surface_object" << endl;
+		}
+		SoA->init_with_surface_object(Surf_A,
+				SC[h]->SO,
+				SC[h]->Sg,
+				FALSE /* f_has_nice_gens */, NULL /* vector_ge *nice_gens */,
+				verbose_level);
+		if (f_v) {
+			cout << "projective_space_with_action::table_of_cubic_surfaces after SoA->init_with_surface_object" << endl;
+		}
+
+
+
 		Table[h * nb_cols + 0] = h;
+
+		if (f_v) {
+			cout << "collineation stabilizer order" << endl;
+		}
 		if (SC[h]->f_has_group) {
 			Table[h * nb_cols + 1] = SC[h]->Sg->group_order_as_lint();
 		}
 		else {
 			Table[h * nb_cols + 1] = 0;
 		}
-		//Table[h * nb_cols + 3] = SC[h]->SO->nb_pts;
-		Table[h * nb_cols + 2] = nb_E[h];
-		Table[h * nb_cols + 3] = SC[h]->SO->SOP->nb_Double_points;
-		Table[h * nb_cols + 4] = SC[h]->SO->SOP->nb_Single_points;
-		Table[h * nb_cols + 5] = SC[h]->SO->SOP->nb_pts_not_on_lines;
-		//Table[h * nb_cols + 6] = SC[h]->SO->nb_lines;
+		if (f_v) {
+			cout << "projectivity stabilizer order" << endl;
+		}
+		if (Surf_A->A->is_semilinear_matrix_group()) {
+			Table[h * nb_cols + 2] = SoA->projectivity_group_gens->group_order_as_lint();
+		}
+		else {
+			Table[h * nb_cols + 2] = SC[h]->Sg->group_order_as_lint();
+		}
 
-	}
+		Table[h * nb_cols + 3] = SC[h]->SO->nb_pts;
+		Table[h * nb_cols + 4] = SC[h]->SO->nb_lines;
+		Table[h * nb_cols + 5] = SC[h]->SO->SOP->nb_Eckardt_points;
+		Table[h * nb_cols + 6] = SC[h]->SO->SOP->nb_Double_points;
+		Table[h * nb_cols + 7] = SC[h]->SO->SOP->nb_Single_points;
+		Table[h * nb_cols + 8] = SC[h]->SO->SOP->nb_pts_not_on_lines;
+		Table[h * nb_cols + 9] = SC[h]->SO->SOP->nb_Hesse_planes;
+		Table[h * nb_cols + 10] = SC[h]->SO->SOP->nb_axes;
+		if (f_v) {
+			cout << "SoA->Orbits_on_Eckardt_points->nb_orbits" << endl;
+		}
+		Table[h * nb_cols + 11] = SoA->Orbits_on_Eckardt_points->nb_orbits;
+		Table[h * nb_cols + 12] = SoA->Orbits_on_Double_points->nb_orbits;
+		Table[h * nb_cols + 13] = SoA->Orbits_on_points_not_on_lines->nb_orbits;
+		Table[h * nb_cols + 14] = SoA->Orbits_on_lines->nb_orbits;
+		Table[h * nb_cols + 15] = SoA->Orbits_on_single_sixes->nb_orbits;
+		Table[h * nb_cols + 16] = SoA->Orbits_on_tritangent_planes->nb_orbits;
+		Table[h * nb_cols + 17] = SoA->Orbits_on_Hesse_planes->nb_orbits;
+		Table[h * nb_cols + 18] = SoA->Orbits_on_trihedral_pairs->nb_orbits;
+		Table[h * nb_cols + 19] = SoA->Orbits_on_tritangent_planes->nb_orbits;
+
+
+		FREE_OBJECT(SoA);
+
+
+	} // next h
+
+
+#if 0
+	strong_generators *projectivity_group_gens;
+	sylow_structure *Syl;
+
+	action *A_on_points;
+	action *A_on_Eckardt_points;
+	action *A_on_Double_points;
+	action *A_on_the_lines;
+	action *A_single_sixes;
+	action *A_on_tritangent_planes;
+	action *A_on_Hesse_planes;
+	action *A_on_trihedral_pairs;
+	action *A_on_pts_not_on_lines;
+
+
+	schreier *Orbits_on_points;
+	schreier *Orbits_on_Eckardt_points;
+	schreier *Orbits_on_Double_points;
+	schreier *Orbits_on_lines;
+	schreier *Orbits_on_single_sixes;
+	schreier *Orbits_on_tritangent_planes;
+	schreier *Orbits_on_Hesse_planes;
+	schreier *Orbits_on_trihedral_pairs;
+	schreier *Orbits_on_points_not_on_lines;
+#endif
 
 #if 0
 	set_of_sets *pts_on_lines;
@@ -3450,7 +3533,13 @@ void projective_space_with_action::table_of_cubic_surfaces(int verbose_level)
 		ofstream f(fname);
 		int i, j;
 
-		f << "Row,OCN,Ago,nbE,nbDouble,nbSingle,nbNotOn,Equation";
+		f << "Row,OCN,CollStabOrder,ProjStabOrder,nbPts,nbLines,"
+				"nbE,nbDouble,nbSingle,nbPtsNotOn,nbHesse,nbAxes,"
+				"nbOrbE,nbOrbDouble,nbOrbPtsNotOn,nbOrbLines,nbOrbSingleSix,nbOrbTriPlanes,nbOrbHesse,nbOrbTrihedralPairs,nbOrbTritangentPlanes,"
+				"Eqn20,Equation,Lines";
+
+
+
 		f << endl;
 		for (i = 0; i < nb_cubic_surfaces; i++) {
 			f << i;
@@ -3464,7 +3553,7 @@ void projective_space_with_action::table_of_cubic_surfaces(int verbose_level)
 				f << str;
 			}
 
-#if 0
+#if 1
 			{
 				stringstream sstr;
 				string str;
