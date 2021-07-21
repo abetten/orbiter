@@ -542,12 +542,17 @@ void orbits_on_something::test_all_orbits_by_length(
 
 	for (type_idx = 0; type_idx < Classify_orbits_by_length->nb_types; type_idx++) {
 		orbit_length = Classify_orbits_by_length->get_value_of_class(type_idx);
+
+		if (f_v) {
+			cout << "orbits_on_something::test_all_orbits_by_length type_idx = " << type_idx << " orbit_length = " << orbit_length << endl;
+		}
 		test_orbits_of_a_certain_length(
 			orbit_length,
 			type_idx2,
 			prev_nb,
 			test_function, test_function_data,
 			verbose_level);
+
 	}
 	if (f_v) {
 		cout << "orbits_on_something::test_all_orbits_by_length" << endl;
@@ -611,12 +616,41 @@ void orbits_on_something::test_orbits_of_a_certain_length(
 	}
 	Orbits_classified->Set_size[type_idx] = j;
 
+
+
 	FREE_lint(orbit);
 	if (f_v) {
 		cout << "orbits_on_something::test_orbits_of_a_certain_length done" << endl;
 	}
 }
 
+void orbits_on_something::print_orbits_of_a_certain_length(int orbit_length)
+{
+	int i, type_idx;
+	long int *orbit;
+	long int a;
+	int l;
+
+	type_idx = get_orbit_type_index(orbit_length);
+	orbit = NEW_lint(orbit_length);
+
+	cout << "There are " << Orbits_classified->Set_size[type_idx] << " orbits of length " << orbit_length << ":" << endl;
+	if (Orbits_classified->Set_size[type_idx] < 1000) {
+		for (i = 0; i < Orbits_classified->Set_size[type_idx]; i++) {
+			a = Orbits_classified->Sets[type_idx][i];
+			Sch->get_orbit(a, orbit, l, 0 /* verbose_level*/);
+
+			cout << i << " : ";
+			Orbiter->Lint_vec.print(cout, orbit, l);
+			cout << endl;
+
+		}
+	}
+	else {
+		cout << "Too many to print" << endl;
+	}
+
+}
 int orbits_on_something::test_pair_of_orbits_of_a_equal_length(
 		int orbit_length,
 		int type_idx,

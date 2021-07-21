@@ -111,6 +111,11 @@ interface_combinatorics::interface_combinatorics()
 	f_canonical_form_nauty = FALSE;
 	Canonical_form_nauty_Descr = NULL;
 
+	f_rank_k_subset = FALSE;
+	rank_k_subset_n = 0;
+	rank_k_subset_k = 0;
+	rank_k_subset_text;
+
 }
 
 
@@ -198,6 +203,9 @@ void interface_combinatorics::print_help(int argc,
 	}
 	else if (stringcmp(argv[i], "-canonical_form_nauty") == 0) {
 		cout << "-canonical_form_nauty <description>  " << endl;
+	}
+	else if (stringcmp(argv[i], "-rank_k_subset") == 0) {
+		cout << "-rank_k_subset <int : n> <int : k> <string : text>  " << endl;
 	}
 }
 
@@ -287,6 +295,9 @@ int interface_combinatorics::recognize_keyword(int argc,
 		return true;
 	}
 	else if (stringcmp(argv[i], "-canonical_form_nauty") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-rank_k_subset") == 0) {
 		return true;
 	}
 	return false;
@@ -632,6 +643,18 @@ void interface_combinatorics::read_arguments(int argc,
 			}
 		}
 	}
+	else if (stringcmp(argv[i], "-rank_k_subset") == 0) {
+		f_rank_k_subset = TRUE;
+		rank_k_subset_n = strtoi(argv[++i]);
+		rank_k_subset_k = strtoi(argv[++i]);
+		rank_k_subset_text.assign(argv[++i]);
+		if (f_v) {
+			cout << "-rank_k_subset " << rank_k_subset_n
+				<< " " << rank_k_subset_k
+				<< " " << rank_k_subset_text
+				<< " " << endl;
+		}
+	}
 
 	if (f_v) {
 		cout << "interface_combinatorics::read_arguments done" << endl;
@@ -743,6 +766,12 @@ void interface_combinatorics::print()
 	}
 	if (f_canonical_form_nauty) {
 		cout << "-canonical_form_nauty" << endl;
+	}
+	if (f_rank_k_subset) {
+		cout << "-rank_k_subset " << rank_k_subset_n
+			<< " " << rank_k_subset_k
+			<< " " << rank_k_subset_text
+			<< " " << endl;
 	}
 }
 
@@ -926,6 +955,50 @@ void interface_combinatorics::worker(int verbose_level)
 				CB,
 				Canonical_form_nauty_Descr->save_prefix,
 				verbose_level);
+
+	}
+
+	else if (f_rank_k_subset) {
+
+		combinatorics_domain Combi;
+
+
+		int *set;
+		int sz;
+		int i, j, r, N;
+		int *Rk;
+
+		Orbiter->Int_vec.scan(rank_k_subset_text, set, sz);
+
+		N = (sz + rank_k_subset_k - 1) / rank_k_subset_k;
+		Rk = NEW_int(N);
+		i = 0;
+		j = 0;
+		while (i < sz) {
+
+
+			r = Combi.rank_k_subset(set + i, rank_k_subset_n, rank_k_subset_k);
+
+			cout << "The rank of ";
+			Orbiter->Int_vec.print(cout, set + i, rank_k_subset_k);
+			cout << " is " << r << endl;
+			Rk[j] = r;
+
+			i += rank_k_subset_k;
+			j++;
+		}
+
+		cout << "the ranks of all subsets are: ";
+		Orbiter->Int_vec.print(cout, Rk, N);
+		cout << endl;
+
+		sorting Sorting;
+
+		Sorting.int_vec_heapsort(Rk, N);
+
+		cout << "the sorted ranks of all subsets are: ";
+		Orbiter->Int_vec.print(cout, Rk, N);
+		cout << endl;
 
 	}
 
