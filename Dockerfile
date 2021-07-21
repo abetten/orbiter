@@ -6,6 +6,7 @@ RUN apt-get update
 RUN cd /opt && \
     git clone https://github.com/abetten/orbiter && \
     cd /opt/orbiter && \
+    make -f makefile clean && \
     make -f makefile && \
     make install
 

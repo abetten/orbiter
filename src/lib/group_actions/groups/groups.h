@@ -538,6 +538,7 @@ public:
 		int (*test_function)(long int *orbit, int orbit_length, void *data),
 		void *test_function_data,
 		int verbose_level);
+	void print_orbits_of_a_certain_length(int orbit_length);
 	int test_pair_of_orbits_of_a_equal_length(
 			int orbit_length,
 			int type_idx,

@@ -1,9 +1,21 @@
+
 #MY_PATH=../orbiter
 MY_PATH=~/DEV.21/GITHUB/orbiter
 #MY_PATH=/scratch/betten/COMPILE/orbiter
 
-GINAC_PATH=$(MY_PATH)/src/apps/ginac
+
+# uncomment exactly one of the following two lines.
+# uncomment the first if you want to run orbiter through docker.
+# uncomment the second if you have an installed copy of orbiter and you want to run it directly 
+#ORBITER_PATH=docker run -it --volume ${PWD}:/mnt -w /mnt abetten/orbiter 
 ORBITER_PATH=$(MY_PATH)/src/apps/orbiter/
+
+
+#############################################################################################################
+# End of configuration part
+#############################################################################################################
+
+GINAC_PATH=$(MY_PATH)/src/apps/ginac
 SANDBOX_PATH=$(MY_PATH)/src/apps/sandbox
 
 update:
@@ -5815,28 +5827,27 @@ surface_8_0b:
 
 
 
-
-HCV_13:
+Eckardt_13:
 	$(ORBITER_PATH)orbiter.out -v 3 \
 		-draw_options -end \
 		-define F -finite_field -q 13 -end \
 		-define P -projective_space 3 F  \
 		-with P -do \
 		-projective_space_activity \
-		-define_surface S_HCV_q13 -q 13 -family_HCV 3 1 -end \
+		-define_surface S_q13 -q 13 -family_Eckardt 3 1 -end \
 		-end \
-		-with S_HCV_q13 -do \
+		-with S_q13 -do \
 		-cubic_surface_activity \
 			-report \
 			-report_with_group \
 		-end
-	pdflatex surface_family_HCV_q13_a3_b1_with_group.tex
-	open surface_family_HCV_q13_a3_b1_with_group.pdf
+	pdflatex surface_family_Eckardt_q13_a3_b1_with_group.tex
+	open surface_family_Eckardt_q13_a3_b1_with_group.pdf
 
 
 # writes tangents.txt
 
-HCV_tangents_ideal:
+Eckardt_tangents_ideal:
 	$(ORBITER_PATH)orbiter.out -v 5 \
 		-process_combinatorial_objects -n 3 -q 13 \
 			-input \
@@ -6306,7 +6317,9 @@ F_alpha_beta_gamma_delta_sweep_4_q7_classify:
 		-define P -projective_space 3 F \
 		-with P -do \
 		-projective_space_activity \
-			-classify_quartic_curves_with_substructure F_alpha_beta_gamma_delta_q7_sweep4_15_data.csv 1 4 3 F_alpha_beta_gamma_delta_sweep_4_q7_classify \
+			-classify_quartic_curves_with_substructure \
+				F_alpha_beta_gamma_delta_q7_sweep4_15_data.csv \
+				1 4 3 F_alpha_beta_gamma_delta_sweep_4_q7_classify \
 		-end \
 		-print_symbols
 
@@ -6437,47 +6450,50 @@ iso0_rec_q49:
 
 McKean_15lines_q7:
 	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define G -linear_group -PGL 4 7 -wedge -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-control_six_arcs -end \
-		-define_surface -by_coefficients $(SURFACE_MCKEAN_15_LINES) -q 7 \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space 3 F  \
+		-with P -do \
+		-projective_space_activity \
+		-define_surface S -by_coefficients $(SURFACE_MCKEAN_15_LINES) -q 7 \
 		-end \
 		-end 
-	pdflatex surface_by_coefficients_q7_report.tex
-	open surface_by_coefficients_q7_report.pdf
+	#pdflatex surface_by_coefficients_q7_report.tex
+	#open surface_by_coefficients_q7_report.pdf
 
 # 2 Eckardt points
 
 F_4_4_3_3_q7:
 	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define G -linear_group -PGL 4 7 -wedge -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-control_six_arcs -end \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space 3 F  \
+		-with P -do \
+		-projective_space_activity \
 		-define_surface -q 7 -by_equation "F_alpha_beta_gamma_delta" \
 			"\DF_{\alpha,\beta,\gamma,\delta}\D" "x0,x1,x2,x3" \
 			$(F_ALPHA_BETA_GAMMA_DELTA) \
-			"alpha=4,beta=4,gamma=3,delta=3" "\D\alpha=4,\beta=4,\gamma=3,\delta=3\D" \
+			"alpha=4,beta=4,gamma=3,delta=3" \
+			"\D\alpha=4,\beta=4,\gamma=3,\delta=3\D" \
 		-end \
 		-end
-	pdflatex surface_equation_F_alpha_beta_gamma_delta_q7_report.tex
-	open surface_equation_F_alpha_beta_gamma_delta_q7_report.pdf
+	#pdflatex surface_equation_F_alpha_beta_gamma_delta_q7_report.tex
+	#open surface_equation_F_alpha_beta_gamma_delta_q7_report.pdf
 
 # has 4 Eckardt points
 
 
 
 F_alpha_beta_gamma_delta_points.txt:
-	$(ORBITER_PATH)orbiter.out -v 3 -define G -linear_group -PGL 4 7 -wedge -end \
-		-with G -do \
-		-group_theoretic_activities \
-		-control_six_arcs -end \
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space 3 F  \
+		-with P -do \
+		-projective_space_activity \
 		-sweep nothing \
 		-define_surface -q 7 -by_equation "F_alpha_beta_gamma_delta" \
 			"\DF_{\alpha,\beta,\gamma,\delta}\D" "x0,x1,x2,x3" \
 			$(F_ALPHA_BETA_GAMMA_DELTA) \
-			"alpha=2,beta=3,gamma=4,delta=5" "\D\alpha=2,\beta=3,\gamma=4,\delta=5\D" \
+			"alpha=2,beta=3,gamma=4,delta=5" \
+			"\D\alpha=2,\beta=3,\gamma=4,\delta=5\D" \
 		-end \
 		-end 
 
@@ -6557,6 +6573,8 @@ quartic_curves_q13:
 		#pdflatex surface_catalogue_q13_iso3_quartics.tex
 		#open surface_catalogue_q13_iso3_quartics.pdf
 
+
+#surface_catalogue_q13_iso0_quartics.csv
 
 quartic_curves_q13_classify:
 	$(ORBITER_PATH)orbiter.out -v 3 \
@@ -6914,7 +6932,8 @@ Nathan_19_1:
 		-with P -do \
 		-projective_space_activity \
 			-define_object N19_1 \
-				-projective_variety "Nathan19_1" 4 "16,0,9,3,10,4,11,9,14,12,9,5,4,14,3,7,16,1,4,6,17,11,17,8,6,2" \
+				-projective_variety "Nathan19_1" 4 \
+				"16,0,9,3,10,4,11,9,14,12,9,5,4,14,3,7,16,1,4,6,17,11,17,8,6,2" \
 				-monomial_type_PART \
 			-end \
 		-end \
@@ -7145,7 +7164,8 @@ quartic_curve_19_table:
 			-end
 
 quartic_curve_19_table_latex: 
-	$(ORBITER_PATH)orbiter.out -v 3 -csv_file_latex 1 quartic_curves_q19_info.csv
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-csv_file_latex 1 quartic_curves_q19_info.csv
 	~/bin/tth quartic_curves_q19_info.tex
 
 
@@ -7348,7 +7368,8 @@ PG_2_25_lines:
 		-define G -linear_group -PGGL 3 25 -on_k_subspaces 2 -end \
 		-with G -do \
 		-group_theoretic_activities \
-			-poset_classification_control -problem_label PGGL_3_25 \
+			-poset_classification_control \
+				-problem_label PGGL_3_25 \
 				-depth 3 -draw_poset -draw_options -radius 200 -end -report \
 				-recognize "0,25,650" \
 				-recognize "430,16,364" \
@@ -7402,7 +7423,8 @@ PG_2_25_stab_of_triangle:
 		-end \
 		-with G -do \
 		-group_theoretic_activities \
-			-poset_classification_control -problem_label PGGL_3_25 \
+			-poset_classification_control \
+				-problem_label PGGL_3_25 \
 				-depth 3 -draw_poset -draw_options -radius 200 -end \
 				-recognize "8,44,226" \
 			-end \
@@ -7530,7 +7552,38 @@ surface_25_12_t8_quartic_curves:
 	open surface_catalogue_q25_iso12_quartics.pdf
 
 
+quartic_curve_13_0_surface: 
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space 2 F  \
+		-with P -do \
+			-projective_space_activity \
+				-define_quartic_curve QC13_0 -q 13 -catalogue 0 -end \
+			-end \
+		-with QC13_0 -do \
+			-quartic_curve_activity \
+				-create_surface \
+			-end
 
+#surface equation: 0, 0, 9, 0, 3, 0, 1, 0, 12, 7, 0, 4, 4, 0, 7, 12, 6, 2, 5, 10
+#9,2,3,4,1,6,12,8,7,9,4,11,4,12,7,14,12,15,6,16,2,17,5,18,10,19
+
+quartic_curve_13_0_surface_create:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space 3 F  \
+		-with P -do \
+		-projective_space_activity \
+			-define_surface S -by_coefficients "9,2,3,4,1,6,12,8,7,9,4,11,4,12,7,14,12,15,6,16,2,17,5,18,10,19" -q 13 -end \
+		-end \
+		-with S -do \
+		-cubic_surface_activity \
+			-report \
+		-end
+	pdflatex surface_by_coefficients_q13_report.tex
+	open surface_by_coefficients_q13_report.pdf
+
+#			-report_with_group \
 
 #############################################################################################################
 # Section 7.3: Cubic Surfaces Classification 
@@ -8228,7 +8281,7 @@ cubic_surfaces_tables_up_to_19:
 	$(ORBITER_PATH)orbiter.out -v 3 -define F -finite_field -q 17 -end $(MAKE_TABLE_OF_CUBIC_SURFACES)
 
 
-cubic_surfaces_tables_19_and_up: 
+cubic_surfaces_tables_19_37: 
 	$(ORBITER_PATH)orbiter.out -v 3 -define F -finite_field -q 19 -end $(MAKE_TABLE_OF_CUBIC_SURFACES)
 	$(ORBITER_PATH)orbiter.out -v 3 -define F -finite_field -q 23 -end $(MAKE_TABLE_OF_CUBIC_SURFACES)
 	$(ORBITER_PATH)orbiter.out -v 3 -define F -finite_field -q 25 -end $(MAKE_TABLE_OF_CUBIC_SURFACES)
@@ -8237,6 +8290,9 @@ cubic_surfaces_tables_19_and_up:
 	$(ORBITER_PATH)orbiter.out -v 3 -define F -finite_field -q 31 -end $(MAKE_TABLE_OF_CUBIC_SURFACES)
 	$(ORBITER_PATH)orbiter.out -v 3 -define F -finite_field -q 32 -end $(MAKE_TABLE_OF_CUBIC_SURFACES)
 	$(ORBITER_PATH)orbiter.out -v 3 -define F -finite_field -q 37 -end $(MAKE_TABLE_OF_CUBIC_SURFACES)
+
+
+cubic_surfaces_tables_41_and_up: 
 	$(ORBITER_PATH)orbiter.out -v 3 -define F -finite_field -q 41 -end $(MAKE_TABLE_OF_CUBIC_SURFACES)
 	$(ORBITER_PATH)orbiter.out -v 3 -define F -finite_field -q 43 -end $(MAKE_TABLE_OF_CUBIC_SURFACES)
 	$(ORBITER_PATH)orbiter.out -v 3 -define F -finite_field -q 47 -end $(MAKE_TABLE_OF_CUBIC_SURFACES)
@@ -8274,11 +8330,11 @@ cubic_surfaces_tables_latex:
 	$(ORBITER_PATH)orbiter.out -v 3 -csv_file_latex 0 table_of_cubic_surfaces_q16_info.csv
 	$(ORBITER_PATH)orbiter.out -v 3 -csv_file_latex 0 table_of_cubic_surfaces_q17_info.csv
 	$(ORBITER_PATH)orbiter.out -v 3 -csv_file_latex 0 table_of_cubic_surfaces_q19_info.csv
-	$(ORBITER_PATH)orbiter.out -v 3 -csv_file_latex 0 table_of_cubic_surfaces_q23_info.csv
-	$(ORBITER_PATH)orbiter.out -v 3 -csv_file_latex 0 table_of_cubic_surfaces_q25_info.csv
 
 
 cubic_surfaces_tables_latex_big:
+	$(ORBITER_PATH)orbiter.out -v 3 -csv_file_latex 0 table_of_cubic_surfaces_q23_info.csv
+	$(ORBITER_PATH)orbiter.out -v 3 -csv_file_latex 0 table_of_cubic_surfaces_q25_info.csv
 	$(ORBITER_PATH)orbiter.out -v 3 -csv_file_latex 0 table_of_cubic_surfaces_q27_info.csv
 	$(ORBITER_PATH)orbiter.out -v 3 -csv_file_latex 0 table_of_cubic_surfaces_q29_info.csv
 	$(ORBITER_PATH)orbiter.out -v 3 -csv_file_latex 0 table_of_cubic_surfaces_q31_info.csv
@@ -8329,7 +8385,9 @@ create_dickson_makefiles_q2:
 		-line_numeric "\t\t-linear_group -PGL 4 2 -wedge -end \\" \
 		-line_numeric "\t\t-group_theoretic_activities \\" \
 		-line_numeric "\t\t-control_six_arcs -end \\" \
-		-line_numeric "\t\t-define_surface -label_txt \"Orb%d_q2\" -label_tex \"Rank-\D(Orb%d)\" -label_for_summary \"Orb%d\" -by_rank \D(Orb%d) 2 -q 2 \\" \
+		-line_numeric "\t\t-define_surface -label_txt \"Orb%d_q2\" \
+			-label_tex \"Rank-\D(Orb%d)\" \
+			-label_for_summary \"Orb%d\" -by_rank \D(Orb%d) 2 -q 2 \\" \
 		-line_numeric "\t\t-end \\" \
 		-line_numeric "\t\t-end" \
 		-line_numeric "" \
@@ -8345,7 +8403,9 @@ create_dickson_makefiles_q4:
 		-line_numeric "\t\t-linear_group -PGL 4 4 -wedge -end \\" \
 		-line_numeric "\t\t-group_theoretic_activities \\" \
 		-line_numeric "\t\t-control_six_arcs -end \\" \
-		-line_numeric "\t\t-define_surface -label_txt \"Orb%d_q4\" -label_tex \"Rank-\D(Orb%d)\" -label_for_summary \"Orb%d\" -by_rank \D(Orb%d) 2 -q 4 \\" \
+		-line_numeric "\t\t-define_surface -label_txt \"Orb%d_q4\" \
+			-label_tex \"Rank-\D(Orb%d)\" \
+			-label_for_summary \"Orb%d\" -by_rank \D(Orb%d) 2 -q 4 \\" \
 		-line_numeric "\t\t-end \\" \
 		-line_numeric "\t\t-end" \
 		-line_numeric "" \
@@ -8360,7 +8420,8 @@ create_dickson_makefiles_q8:
 		-line_numeric "\t\t-linear_group -PGL 4 8 -wedge -end \\" \
 		-line_numeric "\t\t-group_theoretic_activities \\" \
 		-line_numeric "\t\t-control_six_arcs -end \\" \
-		-line_numeric "\t\t-define_surface -label_txt \"Orb%d_q8\" -label_tex \"Rank-\D(Orb%d)\" -by_rank \D(Orb%d) 2 -q 8 \\" \
+		-line_numeric "\t\t-define_surface -label_txt \"Orb%d_q8\" \
+			-label_tex \"Rank-\D(Orb%d)\" -by_rank \D(Orb%d) 2 -q 8 \\" \
 		-line_numeric "\t\t-end \\" \
 		-line_numeric "\t\t-end" \
 		-line_numeric "" \
@@ -8375,7 +8436,8 @@ create_dickson_makefiles_q16:
 		-line_numeric "\t\t-linear_group -PGL 4 16 -wedge -end \\" \
 		-line_numeric "\t\t-group_theoretic_activities \\" \
 		-line_numeric "\t\t-control_six_arcs -end \\" \
-		-line_numeric "\t\t-define_surface -label_txt \"Orb%d_q16\" -label_tex \"Rank-\D(Orb%d)\" -by_rank \D(Orb%d) 2 -q 16 \\" \
+		-line_numeric "\t\t-define_surface -label_txt \"Orb%d_q16\" \
+			-label_tex \"Rank-\D(Orb%d)\" -by_rank \D(Orb%d) 2 -q 16 \\" \
 		-line_numeric "\t\t-end \\" \
 		-line_numeric "\t\t-end" \
 		-line_numeric "" \
@@ -8390,7 +8452,8 @@ create_dickson_makefiles_q32:
 		-line_numeric "\t\t-linear_group -PGL 4 32 -wedge -end \\" \
 		-line_numeric "\t\t-group_theoretic_activities \\" \
 		-line_numeric "\t\t-control_six_arcs -end \\" \
-		-line_numeric "\t\t-define_surface -label_txt \"Orb%d_q32\" -label_tex \"Rank-\D(Orb%d)\" -by_rank \D(Orb%d) 2 -q 32 \\" \
+		-line_numeric "\t\t-define_surface -label_txt \"Orb%d_q32\" \
+			-label_tex \"Rank-\D(Orb%d)\" -by_rank \D(Orb%d) 2 -q 32 \\" \
 		-line_numeric "\t\t-end \\" \
 		-line_numeric "\t\t-end" \
 		-line_numeric "" \
@@ -8405,7 +8468,8 @@ create_dickson_makefiles_q64:
 		-line_numeric "\t\t-linear_group -PGL 4 64 -wedge -end \\" \
 		-line_numeric "\t\t-group_theoretic_activities \\" \
 		-line_numeric "\t\t-control_six_arcs -end \\" \
-		-line_numeric "\t\t-define_surface -label_txt \"Orb%d_q64\" -label_tex \"Rank-\D(Orb%d)\" -by_rank \D(Orb%d) 2 -q 64 \\" \
+		-line_numeric "\t\t-define_surface -label_txt \"Orb%d_q64\" \
+			-label_tex \"Rank-\D(Orb%d)\" -by_rank \D(Orb%d) 2 -q 64 \\" \
 		-line_numeric "\t\t-end \\" \
 		-line_numeric "\t\t-end" \
 		-line_numeric "" \
@@ -8414,28 +8478,34 @@ create_dickson_makefiles_q64:
 
 
 create_dickson_makefiles_top_line_q2:
-	$(ORBITER_PATH)orbiter.out -create_files -file_mask dickson_q2_top -N 1 -repeat 141 0 1  "Surface_q2: \\" -command "\tSurface_Orb%d_q2 \\" \
+	$(ORBITER_PATH)orbiter.out -create_files -file_mask dickson_q2_top \
+		-N 1 -repeat 141 0 1  "Surface_q2: \\" -command "\tSurface_Orb%d_q2 \\" \
 		-end
 
 
 create_dickson_makefiles_top_line_q4:
-	$(ORBITER_PATH)orbiter.out -create_files -file_mask dickson_q4_top -N 1 -repeat 141 0 1  "Surface_q4: \\" -command "\tSurface_Orb%d_q4 \\" \
+	$(ORBITER_PATH)orbiter.out -create_files -file_mask dickson_q4_top \
+		-N 1 -repeat 141 0 1  "Surface_q4: \\" -command "\tSurface_Orb%d_q4 \\" \
 		-end
 
 create_dickson_makefiles_top_line_q8:
-	$(ORBITER_PATH)orbiter.out -create_files -file_mask dickson_q8_top -N 1 -repeat 141 0 1  "Surface_q8: \\" -command "\tSurface_Orb%d_q8 \\" \
+	$(ORBITER_PATH)orbiter.out -create_files -file_mask dickson_q8_top \
+		-N 1 -repeat 141 0 1  "Surface_q8: \\" -command "\tSurface_Orb%d_q8 \\" \
 		-end
 
 create_dickson_makefiles_top_line_q16:
-	$(ORBITER_PATH)orbiter.out -create_files -file_mask dickson_q16_top -N 1 -repeat 141 0 1  "Surface_q16: \\" -command "\tSurface_Orb%d_q16 \\" \
+	$(ORBITER_PATH)orbiter.out -create_files -file_mask dickson_q16_top \
+		-N 1 -repeat 141 0 1  "Surface_q16: \\" -command "\tSurface_Orb%d_q16 \\" \
 		-end
 
 create_dickson_makefiles_top_line_q32:
-	$(ORBITER_PATH)orbiter.out -create_files -file_mask dickson_q32_top -N 1 -repeat 141 0 1  "Surface_q32: \\" -command "\tSurface_Orb%d_q32 \\" \
+	$(ORBITER_PATH)orbiter.out -create_files -file_mask dickson_q32_top \
+		-N 1 -repeat 141 0 1  "Surface_q32: \\" -command "\tSurface_Orb%d_q32 \\" \
 		-end
 
 create_dickson_makefiles_top_line_q64:
-	$(ORBITER_PATH)orbiter.out -create_files -file_mask dickson_q64_top -N 1 -repeat 141 0 1  "Surface_q64: \\" -command "\tSurface_Orb%d_q64 \\" \
+	$(ORBITER_PATH)orbiter.out -create_files -file_mask dickson_q64_top \
+		-N 1 -repeat 141 0 1  "Surface_q64: \\" -command "\tSurface_Orb%d_q64 \\" \
 		-end
 
 
@@ -8447,14 +8517,16 @@ surfaces_q4_join:
 			Orb2_q4_summary.csv "Surface"
 
 create_dickson_makefiles_join_q2:
-	$(ORBITER_PATH)orbiter.out -create_files -file_mask dickson_q2_join -N 1 -repeat 141 0 1  "join: \n\t\D(ORBITER_PATH)/orbiter.out -v 3 \B" \
+	$(ORBITER_PATH)orbiter.out -create_files -file_mask dickson_q2_join \
+		-N 1 -repeat 141 0 1  "join: \n\t\D(ORBITER_PATH)/orbiter.out -v 3 \B" \
 		-command "\t\t-csv_file_join Orb%d_q2_summary.csv \"Surface\" \B" \
 		-end
 
 
 
 create_dickson_makefiles_join_q4:
-	$(ORBITER_PATH)orbiter.out -create_files -file_mask dickson_q4_join -N 1 -repeat 141 0 1  "join: \n\t\D(ORBITER_PATH)/orbiter.out -v 3 \B" \
+	$(ORBITER_PATH)orbiter.out -create_files -file_mask dickson_q4_join \
+		-N 1 -repeat 141 0 1  "join: \n\t\D(ORBITER_PATH)/orbiter.out -v 3 \B" \
 		-command "\t\t-csv_file_join Orb%d_q4_summary.csv \"Surface\" \B" \
 		-end
 
@@ -10467,16 +10539,188 @@ draw_mod_255_cyclotomic_1_and_3:
 	pdflatex mod_255_cyclotomic_1_and_3_draw.tex
 	open mod_255_cyclotomic_1_and_3_draw.pdf
 
-draw_mod_63_cyclotomic_4:
+draw_mod_63_4_cyclotomic_3_6:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-draw_options -nodes_empty -radius 20 \
+		-draw_options -radius 20 \
 			-line_width 0.1 -embedded -end \
-		-draw_mod_n -n 63 -file mod_63_cyclotomic_1 \
-		-cyclotomic_sets 4 "1,3" \
+		-draw_mod_n -n 63 -file mod_63_4_cyclotomic_3_6 \
+		-cyclotomic_sets 4 "3,6" \
 		-cyclotomic_sets_thickness 50 \
 		-end
-	pdflatex mod_63_cyclotomic_1_draw.tex
-	open mod_63_cyclotomic_1_draw.pdf
+	pdflatex mod_63_4_cyclotomic_3_6_draw.tex
+	open mod_63_4_cyclotomic_3_6_draw.pdf
+
+BCH_F_64:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 64 -end \
+		-with F -do -finite_field_activity -cheat_sheet_GF -end
+	pdflatex GF_64.tex
+
+
+BCH_elementary_symmetric_functions_3:
+	$(ORBITER_PATH)orbiter.out -make_elementary_symmetric_functions 3 3
+
+
+ELEMENTARY_SYMMETRIC_3_1="x0 + x1 + x2"
+ELEMENTARY_SYMMETRIC_3_2="x0*x1 + x0*x2 + x1*x2"
+ELEMENTARY_SYMMETRIC_3_3="x0*x1*x2"
+
+
+ELEMENTARY_SYMMETRIC_4_1="x0 + x1 + x2 + x3"
+ELEMENTARY_SYMMETRIC_4_2="x0*x1 + x0*x2 + x0*x3 + x1*x2 + x1*x3 + x2*x3"
+ELEMENTARY_SYMMETRIC_4_3="x0*x1*x2 + x0*x1*x3 + x0*x2*x3 + x1*x2*x3"
+ELEMENTARY_SYMMETRIC_4_4="x0*x1*x2*x3"
+
+BCH_63_4_evaluate_elementary_symmetric_functions_1:
+	$(ORBITER_PATH)orbiter.out -v 3 -define F -finite_field -q 64 -end \
+		-define e1 -formula "e1" "e1" "" $(ELEMENTARY_SYMMETRIC_3_1)    \
+		-define e2 -formula "e2" "e2" "" $(ELEMENTARY_SYMMETRIC_3_2)    \
+		-define e3 -formula "e3" "e3" "" $(ELEMENTARY_SYMMETRIC_3_3)    \
+		-define E3 -collection "e1,e2,e3" \
+		-with F -do -finite_field_activity \
+			-evaluate E3 "x0=8,x1=62,x2=15" -end
+
+
+#The values of the formulae are:
+#0 : 57
+#1 : 0
+#2 : 1
+
+
+# poly: 1,0,2,1
+
+BCH_63_4_evaluate_elementary_symmetric_functions_2:
+	$(ORBITER_PATH)orbiter.out -v 3 -define F -finite_field -q 64 -end \
+		-define e1 -formula "e1" "e1" "" $(ELEMENTARY_SYMMETRIC_3_1)    \
+		-define e2 -formula "e2" "e2" "" $(ELEMENTARY_SYMMETRIC_3_2)    \
+		-define e3 -formula "e3" "e3" "" $(ELEMENTARY_SYMMETRIC_3_3)    \
+		-define E3 -collection "e1,e2,e3" \
+		-with F -do -finite_field_activity \
+			-evaluate E3 "x0=33,x1=45,x2=52" -end
+
+#The values of the formulae are:
+#0 : 56
+#1 : 0
+#2 : 1
+
+
+# poly: 1,0,3,1
+
+
+
+BCH_21_poly_mult_mod_F4:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 4 -end \
+		-with F -do \
+		-finite_field_activity \
+		-polynomial_mult_mod "1,0,2,1" "1,0,3,1" "1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1" -end
+
+#C(X)=X^{6} + X^{5} + X^{4} + X^{2} + 1
+
+# poly 1,0,1,0,1,1,1
+
+
+BCH_21_poly_division_a:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 4 -end \
+		-with F -do \
+		-finite_field_activity \
+		-polynomial_division "1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1" "1,0,2,1" -end
+
+BCH_21_poly_division_b:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 4 -end \
+		-with F -do \
+		-finite_field_activity \
+		-polynomial_division "1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1" "1,0,3,1" -end
+
+
+BCH_21_poly_division_ab:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 4 -end \
+		-with F -do \
+		-finite_field_activity \
+		-polynomial_division "1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1" "1,0,1,0,1,1,1" -end
+
+BCH_21_generator_matrix:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 4 -end \
+		-with F -do \
+		-finite_field_activity \
+		-generator_matrix_cyclic_code 21 "1,0,1,0,1,1,1" -end
+
+
+BCH_21_15_PROJ=" 0, 1, 19, 37, 113, 420, 1651, 6577, 26284, 105115, 420442, 1681753, 6727000, 26907991, 107631958, 27874647, 111498582, 43341143, 173364566, 156587350, 14 "
+
+
+BCH_21_15="1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1"
+
+
+BCH_21_15_weight_enumerator:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 4 -end \
+		-with F -do \
+		-finite_field_activity -weight_enumerator 15 21 $(BCH_21_15) -end
+
+# too slow!
+
+BCH_21_15_dual:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 4 -end \
+		-with F -do -finite_field_activity  \
+		-nullspace 15 21 $(BCH_21_15)  \
+		-normalize_from_the_right \
+		-end
+
+
+BCH_21_6=" 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1 "
+
+BCH_21_6_weight_enumerator:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 4 -end \
+		-with F -do \
+		-finite_field_activity -weight_enumerator 6 21 $(BCH_21_6) -end
+
+# 1y^{21} + 63x^8y^{13} + 294x^{12}y^9 + 756x^{14}y^7 + 1890x^{16}y^5 + 1092x^{18}y^3
+
+#( 1, 0, 0, 0, 0, 0, 0, 0, 63, 0, 0, 0, 294, 0, 756, 0, 1890, 0, 1092, 0, 0, 0 )
+
+
+
+BCH_21_6_4_macwilliams:
+	$(ORBITER_PATH)orbiter.out -v 2 -make_macwilliams_system 21 6 4
+	pdflatex MacWilliams_n21_k6_q4.tex
+	open MacWilliams_n21_k6_q4.pdf
+
+
+#[[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],[63,59,55,51,47,43,39,35,31,27,23,19,15,11,7,3,-1,-5,-9,-13,-17,-21],[1890,1650,1426,1218,1026,850,690,546,418,306,210,130,66,18,-14,-30,-30,-14,18,66,130,210],[35910,29070,23142,18062,13766,10190,7270,4942,3142,1806,870,270,-58,-178,-154,-50,70,142,102,-114,-570,-1330],[484785,361665,263169,185841,126481,82145,50145,28049,13681,5121,705,-975,-1071,-479,161,465,305,-191,-639,-399,1425,5985],[4944807,3375027,2223855,1403163,837879,464963,232383,98091,28999,-45,-7281,-5061,-873,1635,1631,75,-1305,-1037,1071,2907,-969,-20349],[39558456,24488568,14441976,8008632,4091832,1859064,696952,170296,-14792,-43656,-21768,696,8376,4344,-2184,-4040,-200,4216,2040,-7752,-7752,54264],[254304360,141280200,73465704,34997832,14713704,5044680,1094760,-113080,-239000,-93240,15720,35400,9576,-11832,-9624,4680,9320,-3128,-13464,7752,38760,-116280],[1335097890,656952930,295275618,116816418,37677474,7829730,-499230,-1254750,-424670,94050,140130,18210,-45918,-19998,20706,16290,-16350,-16286,27234,17442,-106590,203490],[5785424190,2479467510,936687726,290962854,61114014,-52650,-6384690,-2121210,407550,550070,35630,-159130,-39586,66326,24206,-45370,-12610,52598,-12818,-92378,209950,-293930],[20827527084,7603700364,2314169676,504593388,30288492,-30667572,-11460852,1287468,2186028,128268,-528692,-86932,190956,31564,-107380,4524,87724,-57460,-71604,218348,-319124,352716],[62482581252,18843953076,4297743684,469793844,-125665020,-63950796,1099332,8697780,852228,-1718604,-260796,528692,42756,-242892,47684,141492,-126204,-41548,230724,-352716,386308,-352716],[156206453130,37192012650,5454828522,-252296694,-345095478,-27578070,33074730,5882058,-5372406,-1068822,1432170,106890,-550070,135850,235690,-236470,650,251498,-399126,428298,-377910,293930],[324428787270,56646296190,3089797974,-1608140466,-320557338,107272350,35626230,-15094674,-4859514,3719358,491670,-1261170,282150,424670,-418250,55470,289990,-465154,480726,-405042,300390,-203490],[556163635320,61795959480,-4119730632,-2385107208,184705272,183445560,-30705480,-21047688,8625528,2326968,-2867400,424440,839160,-717000,113080,364920,-560520,544952,-432072,302328,-193800,116280],[778629089448,37077575688,-12359191896,-1084139640,746851752,11809800,-79519320,14329224,9500328,-6106104,169128,1763208,-1178712,133128,510888,-696952,619688,-454648,296616,-178296,100776,-54264],[875957725629,-13904090883,-13904090883,1707519933,551104317,-231176835,-4428675,32102973,-10727235,-1909251,3689469,-1769283,3645,782973,-882819,697149,-464963,279293,-155907,82365,-41667,20349],[772903875555,-61341577425,-5725213893,3056317191,-304515693,-162089505,82373355,-9506889,-9428157,7026831,-2132325,-513945,1244403,-1108161,757323,-451305,246435,-126481,61947,-29241,13395,-5985],[515269250370,-73609892910,4907326194,1463588514,-679181598,111602610,26572050,-27280638,10510722,-1141614,-1771470,1902690,-1316574,763506,-400302,196290,-91710,41298,-18062,7714,-3230,1330],[244074908070,-50364663570,8523250758,-774840978,-200884698,143489070,-47829690,7440174,3188646,-3897234,2558790,-1377810,669222,-304722,132678,-55890,22950,-9234,3654,-1426,550,-210],[73222472421,-19758444939,5036466357,-1162261467,215233605,-14348907,-14348907,11160261,-5845851,2657205,-1121931,452709,-177147,67797,-25515,9477,-3483,1269,-459,165,-59,21],[10460353203,-3486784401,1162261467,-387420489,129140163,-43046721,14348907,-4782969,1594323,-531441,177147,-59049,19683,-6561,2187,-729,243,-81,27,-9,3,-1]]
+
+#ww := [1, 0, 0, 84, 252, 1575, 10080, 58032, 319662, 1411116, 5133744, 15282792, 37951620, 79336530, 135622080, 190615824, 213273081, 188911548, 125744304, 59721732, 17767512, 2580255]
+
+
+BCH_21_15_4_field_reduction:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 4 -end \
+		-with F -do \
+		-finite_field_activity \
+		-field_reduction "BCH_21_15_4" 2 15 21 $(BCH_21_15) -end
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-draw_matrix -input_csv_file BCH_21_15_4.csv \
+		-box_width 20 -bit_depth 24 \
+		-partition  4 "30" "42"  -end
+	pdflatex field_reduction_Q4_q2_15_21.tex
+	open BCH_21_15_4_draw.bmp
+	#open field_reduction_Q4_q2_15_21.pdf
+
+# poly of degree 12: 1,0,1,0,1,0,0,0,1,0,0,0,1
+
+BCH_21_poly_division_c:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-with F -do \
+		-finite_field_activity \
+		-polynomial_division "1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1" "1,0,1,0,1,0,0,0,1,0,0,0,1" -end
+
 
 
 #############################################################################################################
@@ -11085,7 +11329,36 @@ STS13:
 		-m 13 -n 26 -r 6 -k 3 -target_size 26  \
 		-control -problem_label STS13 -w -depth 7 -end
 	
-	
+PLANE_1="0,3,6,8,0,4,5,10,3,7,10,12,2,5,7,8,1,8,9,10,0,7,9,11,1,3,5,11,5,6,9,12,4,8,11,12,1,4,6,7,0,1,2,12,2,6,10,11,2,3,4,9"
+PLANE_2="1,5,7,12,2,4,5,11,3,6,7,11,0,3,5,9,5,6,8,10,1,3,4,10,1,2,6,9,9,10,11,12,0,1,8,11,0,2,7,10,0,4,6,12,4,7,8,9,2,3,8,12"
+PLANE_3="0,5,9,10,0,2,3,7,2,4,9,11,4,6,7,10,3,4,5,12,2,8,10,12,1,2,5,6,5,7,8,11,1,7,9,12,1,3,10,11,3,6,8,9,0,1,4,8,0,6,11,12"
+PLANE_4="1,3,9,12,1,4,5,8,5,7,9,10,2,4,10,12,6,7,8,12,0,3,4,7,0,5,11,12,0,1,6,10,2,3,5,6,1,2,7,11,3,8,10,11,4,6,9,11,0,2,8,9"
+
+
+#the sorted ranks of all subsets are: ( 9, 116, 140, 205, 278, 308, 375, 389, 455, 482, 577, 640, 656 )
+#the sorted ranks of all subsets are: ( 47, 87, 111, 148, 246, 270, 339, 414, 426, 557, 625, 651, 714 )
+#the sorted ranks of all subsets are: ( 22, 58, 179, 199, 237, 298, 371, 444, 499, 511, 559, 612, 662 )
+#the sorted ranks of all subsets are: ( 37, 90, 102, 184, 253, 297, 303, 393, 447, 582, 620, 664, 683 )
+
+#191704,9,116,140,205,278,308,375,389,455,482,577,640,656
+#964499,47,87,111,148,246,270,339,414,426,557,625,651,714
+#445252,22,58,179,199,237,298,371,444,499,511,559,612,662
+#761894,37,90,102,184,253,297,303,393,447,582,620,664,683
+
+#191704,445252,761894,964499
+
+
+design_large_set_rank_k_subsets_a:
+	$(ORBITER_PATH)orbiter.out -v 2 -rank_k_subset 13 4 $(PLANE_1)
+
+design_large_set_rank_k_subsets_b:
+	$(ORBITER_PATH)orbiter.out -v 2 -rank_k_subset 13 4 $(PLANE_2)
+
+design_large_set_rank_k_subsets_c:
+	$(ORBITER_PATH)orbiter.out -v 2 -rank_k_subset 13 4 $(PLANE_3)
+
+design_large_set_rank_k_subsets_d:
+	$(ORBITER_PATH)orbiter.out -v 2 -rank_k_subset 13 4 $(PLANE_4)
 
 
 #############################################################################################################
@@ -12460,10 +12733,10 @@ monkey:
 
 
 
-HCV:
+Eckardt:
 	$(ORBITER_PATH)orbiter.out -v 2 -povray \
 		-round 0 -nb_frames_default 30 \
-		-output_mask HCV_%d_%03d.pov \
+		-output_mask Eckardt_%d_%03d.pov \
 		-video_options -W 1024 -H 768 \
 		-global_picture_scale 0.9 \
 		-default_angle 75 \
@@ -12514,7 +12787,7 @@ HCV:
 		-povray_end
 	- rm -rf POV
 	mkdir POV
-	mv HCV_0_*.pov POV
+	mv Eckardt_0_*.pov POV
 	mv makefile_animation POV
 
 #"-3,2.333,4"  * 1.5 = "-4.5,3.5,6"
@@ -12527,10 +12800,10 @@ HCV:
 #-W 4096 -H 3072 
 
 
-HCV_deform:
+Eckardt_deform:
 	$(ORBITER_PATH)orbiter.out -v 2 -povray \
 		-round 0 -nb_frames_default 93 \
-		-output_mask HCV_deform_%d_%03d.pov \
+		-output_mask Eckardt_deform_%d_%03d.pov \
 		-video_options -W 1024 -H 768 \
 		-global_picture_scale 0.9 \
 		-default_angle 75 \
@@ -12550,17 +12823,17 @@ HCV_deform:
 		-povray_end
 	- rm -rf POV
 	mkdir POV
-	mv HCV_deform_0_*.pov POV
+	mv Eckardt_deform_0_*.pov POV
 	mv makefile_animation POV
 
 
 
 
 
-HCV_deform_2:
+Eckardt_deform_2:
 	$(ORBITER_PATH)orbiter.out -v 2 -povray \
 		-round 0 -nb_frames_default 30 \
-		-output_mask HCV_deform_%d_%03d.pov \
+		-output_mask Eckardt_deform_%d_%03d.pov \
 		-video_options -W 1024 -H 768 \
 		-global_picture_scale 0.9 \
 		-default_angle 75 \
@@ -12585,7 +12858,7 @@ HCV_deform_2:
 		-povray_end
 	- rm -rf POV
 	mkdir POV
-	mv HCV_deform_0_*.pov POV
+	mv Eckardt_deform_0_*.pov POV
 	mv makefile_animation POV
 
 
@@ -12692,18 +12965,18 @@ monkey_video:
 	ffmpeg -r 5 -f image2 -i FRAMES/frame%04d.png \
 		-f mp4 -q:v 0 -vcodec mpeg4  monkey.mp4
 
-HCV_deform_video:
+Eckardt_deform_video:
 	- rm -r FRAMES
 	- mkdir FRAMES
-	- rm HCV_deform.mp4
+	- rm Eckardt_deform.mp4
 	$(ORBITER_PATH)orbiter.out \
 		-prepare_frames \
-			-i 0 93 HCV_deform_0/HCV_deform_0_%03d.png \
+			-i 0 93 Eckardt_deform_0/Eckardt_deform_0_%03d.png \
 			-output_starts_at 0 \
 			-o FRAMES/frame%04d.png \
 		-end
 	ffmpeg -r 5 -f image2 -i FRAMES/frame%04d.png \
-		-f mp4 -q:v 0 -vcodec mpeg4  HCV_deform.mp4
+		-f mp4 -q:v 0 -vcodec mpeg4  Eckardt_deform.mp4
 
 
 Eckardt_surface:

@@ -16,22 +16,28 @@ Please find the programmer's guide here:
 https://www.math.colostate.edu/~betten/orbiter/orbiter_programmers_guide.pdf
 
 
-Anton Betten
-July 18, 2021
-
-
-===
-
-Installation:
 
 Requirements:
+terminal application (for instance SuperShell in Windows, Terminal on Macintosh)
 
+
+a) if you decide to compile Orbiter and install it locally:
 C++ development and standard library
-
 make
 
-Optional:
 
+b) if you want to run Orbiter through docker:
+docker
+
+
+Optional:
 latex, povray
+
+
+
+Anton Betten
+July 21, 2021
+
+
 
 

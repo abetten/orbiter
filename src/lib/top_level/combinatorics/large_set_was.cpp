@@ -158,6 +158,13 @@ void large_set_was::init(large_set_was_description *Descr,
 		for (type_idx = 0; type_idx < H_orbits->Classify_orbits_by_length->nb_types; type_idx++) {
 			cout << type_idx << " : " << H_orbits->Orbits_classified->Set_size[type_idx] << endl;
 		}
+
+		//int type_idx;
+
+		for (type_idx = 0; type_idx < H_orbits->Classify_orbits_by_length->nb_types; type_idx++) {
+			H_orbits->print_orbits_of_a_certain_length(H_orbits->Orbits_classified_length[type_idx]);
+		}
+
 	}
 
 
@@ -508,6 +515,11 @@ void large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits(std::stri
 	}
 
 	for (idx_N = nb_N_orbits - 1; idx_N >= 0; idx_N--) {
+
+		if (idx_N != 3239) {
+			continue;
+		}
+
 
 		if (f_v) {
 			cout << "large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits, "
