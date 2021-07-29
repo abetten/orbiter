@@ -1263,6 +1263,7 @@ public:
 	void scan_permutation_from_stream(std::istream & is,
 		int *&perm, int &degree, int verbose_level);
 	void chop_string(const char *str, int &argc, char **&argv);
+	void chop_string_comma_separated(const char *str, int &argc, char **&argv);
 	void convert_arguments(int &argc, const char **argv, std::string *&Argv);
 	char get_character(std::istream & is, int verbose_level);
 	void replace_extension_with(char *p, const char *new_ext);

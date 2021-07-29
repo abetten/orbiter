@@ -216,6 +216,7 @@ int string_tools::s_scan_token_arbitrary(char **s, char *str)
 	return TRUE;
 }
 
+
 int string_tools::s_scan_str(char **s, char *str)
 {
 	char c;
@@ -583,6 +584,72 @@ void string_tools::chop_string(const char *str, int &argc, char **&argv)
 	FREE_pchar(argv);
 #endif
 }
+
+
+void string_tools::chop_string_comma_separated(const char *str, int &argc, char **&argv)
+{
+	int l, i, len;
+	char *s;
+	char *buf;
+	const char *p_buf;
+
+	l = strlen(str);
+	s = NEW_char(l + 1);
+	buf = NEW_char(l + 1);
+
+	strcpy(s, str);
+	p_buf = s;
+	i = 0;
+	while (TRUE) {
+		if (*p_buf == 0) {
+			break;
+		}
+		s_scan_token_comma_separated(&p_buf, buf);
+
+		if (FALSE) {
+			cout << "Token " << setw(6) << i << " is '"
+					<< buf << "'" << endl;
+		}
+		i++;
+	}
+	argc = i;
+	argv = NEW_pchar(argc);
+	i = 0;
+	p_buf = s;
+	while (TRUE) {
+		if (*p_buf == 0) {
+			break;
+		}
+		s_scan_token_comma_separated(&p_buf, buf);
+
+		if (FALSE) {
+			cout << "Token " << setw(6) << i << " is '"
+					<< buf << "'" << endl;
+		}
+		len = strlen(buf);
+		argv[i] = NEW_char(len + 1);
+		strcpy(argv[i], buf);
+		i++;
+	}
+
+#if 0
+	cout << "argv:" << endl;
+	for (i = 0; i < argc; i++) {
+		cout << i << " : " << argv[i] << endl;
+	}
+#endif
+
+
+	FREE_char(s);
+	FREE_char(buf);
+#if 0
+	for (i = 0; i < argc; i++) {
+		FREE_char(argv[i]);
+	}
+	FREE_pchar(argv);
+#endif
+}
+
 
 
 void string_tools::convert_arguments(int &argc, const char **argv, std::string *&Argv)
