@@ -836,6 +836,8 @@ public:
 	int compute_transversals_of_any_four(
 			long int *&Trans, int &nb_subsets,
 			long int *lines, int sz, int verbose_level);
+	int read_schlaefli_label(const char *p);
+	void read_string_of_schlaefli_labels(std::string &str, int *&v, int &sz, int verbose_level);
 
 	// surface_domain_io.cpp:
 	void print_equation(std::ostream &ost, int *coeffs);

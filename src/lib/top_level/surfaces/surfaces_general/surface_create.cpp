@@ -1044,7 +1044,11 @@ void surface_create::create_surface_by_coefficient_vector(int *coeffs20,
 				cout << "surface_create::create_surface_by_coefficient_vector selecting "
 						"double six " << i << " / " << nb_select_double_six << endl;
 			}
-			Orbiter->Int_vec.scan(select_double_six_string[i], select_double_six, sz);
+
+			Surf_A->Surf->read_string_of_schlaefli_labels(select_double_six_string[i], select_double_six, sz, verbose_level);
+
+
+			//Orbiter->Int_vec.scan(select_double_six_string[i], select_double_six, sz);
 			if (sz != 12) {
 				cout << "surface_create::create_surface_by_coefficient_vector "
 						"f_select_double_six double six must consist of 12 numbers" << endl;

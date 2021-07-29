@@ -546,6 +546,10 @@ void large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits(std::stri
 		if (f_v) {
 			cout << "large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits, "
 					"fname = " << fname << endl;
+			cout << "large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits, "
+					"extracted set = ";
+			Orbiter->Lint_vec.print(cout, extracted_set, extracted_set_size);
+			cout << endl;
 		}
 
 		colored_graph *CG;
