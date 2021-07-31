@@ -793,6 +793,7 @@ void arc_generator::print(int len, long int *S)
 		}
 		P->conic_type(
 			S, len, 
+			6 /* threshold */,
 			Pts_on_conic, Conic_eqn, nb_pts_on_conic, len1,
 			0 /*verbose_level*/);
 		cout << "The arc intersects " << len1

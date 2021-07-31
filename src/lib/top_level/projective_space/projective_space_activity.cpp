@@ -105,7 +105,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_define_object) {
 		cout << "-define_object " << Descr->define_object_label << endl;
-		//Object_Descr->print();
+		Descr->Object_Descr->print();
 
 		combinatorial_object_create *CombObj;
 
@@ -307,7 +307,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 		SH.do_six_arcs(
 				PA,
 				Descr->Control_six_arcs,
-				Descr->f_filter_by_nb_Eckardt_points, Descr->nb_Eckardt_points,
+				Descr->f_filter_by_nb_Eckardt_points,
+				Descr->nb_Eckardt_points,
 				verbose_level);
 	}
 	else if (Descr->f_make_gilbert_varshamov_code) {
@@ -376,13 +377,16 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 		set_stabilizer(PA,
 				Descr->set_stabilizer_intermediate_set_size,
-				Descr->set_stabilizer_fname_mask, Descr->set_stabilizer_nb, Descr->set_stabilizer_column_label,
+				Descr->set_stabilizer_fname_mask,
+				Descr->set_stabilizer_nb,
+				Descr->set_stabilizer_column_label,
 				verbose_level);
 	}
 
 	else if (Descr->f_conic_type) {
 
 		conic_type(PA,
+				Descr->conic_type_threshold,
 				Descr->conic_type_set_text,
 				verbose_level);
 	}
@@ -1336,6 +1340,7 @@ void projective_space_activity::set_stabilizer(
 
 void projective_space_activity::conic_type(
 		projective_space_with_action *PA,
+		int threshold,
 		std::string &set_text,
 		int verbose_level)
 {
@@ -1356,7 +1361,7 @@ void projective_space_activity::conic_type(
 		cout << "projective_space_activity::conic_type before PA->conic_type" << endl;
 	}
 
-	PA->conic_type(Pts, nb_pts, verbose_level);
+	PA->conic_type(Pts, nb_pts, threshold, verbose_level);
 
 	if (f_v) {
 		cout << "projective_space_activity::conic_type after PA->conic_type" << endl;

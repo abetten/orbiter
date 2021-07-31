@@ -146,6 +146,7 @@ projective_space_activity_description::projective_space_activity_description()
 	//std::string set_stabilizer_column_label;
 
 	f_conic_type = FALSE;
+	conic_type_threshold = 0;
 	//std::string conic_type_set_text;
 
 	f_lift_skew_hexagon = FALSE;
@@ -706,10 +707,12 @@ int projective_space_activity_description::read_arguments(
 
 		else if (stringcmp(argv[i], "-conic_type") == 0) {
 			f_conic_type = TRUE;
+			conic_type_threshold = strtoi(argv[++i]);
 			conic_type_set_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-conic_type "
-						<< conic_type_set_text << endl;
+						<< " " << conic_type_threshold
+						<< " " << conic_type_set_text  << endl;
 			}
 		}
 

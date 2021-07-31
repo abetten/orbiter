@@ -1160,6 +1160,7 @@ public:
 	void do_conic_type(int n,
 			int f_randomized, int nb_times,
 			long int *set, int set_size,
+			int threshold,
 			int *&intersection_type, int &highest_intersection_number,
 			int verbose_level);
 	void do_test_diagonal_line(int n,

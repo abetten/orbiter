@@ -110,6 +110,12 @@ void six_arcs_not_on_a_conic::init(
 	
 	Gen->compute_starter(verbose_level - 1);
 
+	if (f_v) {
+		cout << "six_arcs_not_on_a_conic::init "
+				"Classifying 6-arcs for q=" << Descr->F->q << endl;
+		cout << "six_arcs_not_on_a_conic::init after Gen->compute_starter" << endl;
+	}
+
 
 	nb_orbits = Gen->gen->nb_orbits_at_level(level);
 
@@ -150,6 +156,13 @@ void six_arcs_not_on_a_conic::init(
 		int *nb_pts_on_conic;
 		int len1;
 
+		if (f_v) {
+			cout << "six_arcs_not_on_a_conic::init "
+					"testing arc " << h << " / " << nb_orbits << " : ";
+			Orbiter->Lint_vec.print(cout, Arc6, 6);
+			cout << endl;
+		}
+
 
 		
 		if (f_v) {
@@ -158,6 +171,7 @@ void six_arcs_not_on_a_conic::init(
 		}
 		P2->conic_type(
 			Arc6, 6, 
+			6 /* threshold */,
 			Pts_on_conic, Conic_eqn, nb_pts_on_conic, len1,
 			verbose_level - 2);
 		if (f_v) {

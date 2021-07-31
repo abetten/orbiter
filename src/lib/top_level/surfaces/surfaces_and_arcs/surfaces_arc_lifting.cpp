@@ -198,7 +198,7 @@ void surfaces_arc_lifting::init(
 		A3,
 		Surf->P2,
 		f_test_nb_Eckardt_points, nb_E, Surf,
-		verbose_level);
+		verbose_level - 2);
 
 
 	if (f_v) {

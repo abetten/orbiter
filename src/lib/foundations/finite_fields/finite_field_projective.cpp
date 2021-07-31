@@ -4119,7 +4119,7 @@ void finite_field::create_unital_XXq_YZq_ZYq(
 
 void finite_field::create_whole_space(int n,
 		std::string &fname, int &nb_pts, long int *&Pts,
-	int verbose_level)
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	projective_space *P;
@@ -4551,13 +4551,13 @@ void finite_field::do_m_subspace_type(int n, int m,
 	if (f_v) {
 		cout << "finite_field::do_m_subspace_type" << endl;
 		cout << "We will now compute the m_subspace type" << endl;
-		}
+	}
 
 	P = NEW_OBJECT(projective_space);
 
 	if (f_v) {
 		cout << "do_m_subspace_type before P->init" << endl;
-		}
+	}
 
 
 	P->init(n, this,
@@ -4566,7 +4566,7 @@ void finite_field::do_m_subspace_type(int n, int m,
 
 	if (f_v) {
 		cout << "finite_field::do_m_subspace_type after P->init" << endl;
-		}
+	}
 
 
 	v = NEW_int(d);
@@ -4574,29 +4574,29 @@ void finite_field::do_m_subspace_type(int n, int m,
 	N = P->nb_rk_k_subspaces_as_lint(m + 1);
 	if (f_v) {
 		cout << "do_m_subspace_type N = " << N << endl;
-		}
+	}
 
 	intersection_numbers = NEW_int(N);
 	if (f_v) {
 		cout << "after allocating intersection_numbers" << endl;
-		}
+	}
 	if (m == 1) {
 		P->line_intersection_type_basic(set, set_size,
 				intersection_numbers, verbose_level - 1);
-		}
+	}
 	else if (m == 2) {
 		P->plane_intersection_type_basic(set, set_size,
 				intersection_numbers, verbose_level - 1);
-		}
+	}
 	else if (m == n - 1) {
 		P->hyperplane_intersection_type_basic(set, set_size,
 				intersection_numbers, verbose_level - 1);
-		}
+	}
 	else {
 		cout << "finite_field::do_m_subspace_type m=" << m
 				<< " not implemented" << endl;
 		exit(1);
-		}
+	}
 
 	tally C;
 	int f_second = FALSE;
@@ -4606,7 +4606,7 @@ void finite_field::do_m_subspace_type(int n, int m,
 		cout << "finite_field::do_m_subspace_type: " << m
 				<< "-subspace intersection type: ";
 		C.print(FALSE /*f_backwards*/);
-		}
+	}
 
 	if (f_show) {
 		int h, f, l, b;
@@ -4626,16 +4626,16 @@ void finite_field::do_m_subspace_type(int n, int m,
 			a = C.data_sorted[f];
 			if (f_v) {
 				cout << a << "-spaces: ";
-				}
+			}
 			for (j = 0; j < l; j++) {
 				b = C.sorting_perm_inv[f + j];
 				S[j] = b;
-				}
+			}
 			Sorting.int_vec_quicksort_increasingly(S, l);
 			if (f_v) {
 				Orbiter->Int_vec.print(cout, S, l);
 				cout << endl;
-				}
+			}
 
 
 			for (j = 0; j < l; j++) {
@@ -4662,8 +4662,8 @@ void finite_field::do_m_subspace_type(int n, int m,
 				P->print_set(intersection_set, intersection_set_size);
 
 				FREE_lint(intersection_set);
-				}
 			}
+		}
 		FREE_int(S);
 		//FREE_int(basis);
 		FREE_OBJECT(G);
@@ -4672,13 +4672,16 @@ void finite_field::do_m_subspace_type(int n, int m,
 		for (i = 0; i < N_planes; i++) {
 			cout << setw(4) << i << " : " << setw(3)
 					<< intersection_numbers[i] << endl;
-			}
-#endif
 		}
+#endif
+	}
 
 	FREE_int(v);
 	FREE_int(intersection_numbers);
 	FREE_OBJECT(P);
+	if (f_v) {
+		cout << "finite_field::do_m_subspace_type done" << endl;
+	}
 }
 
 void finite_field::do_m_subspace_type_fast(int n, int m,
@@ -4701,13 +4704,13 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 	if (f_v) {
 		cout << "finite_field::do_m_subspace_type_fast" << endl;
 		cout << "We will now compute the m_subspace type" << endl;
-		}
+	}
 
 	P = NEW_OBJECT(projective_space);
 
 	if (f_v) {
 		cout << "finite_field::do_m_subspace_type_fast before P->init" << endl;
-		}
+	}
 
 	P->init(n, this,
 		TRUE /* f_init_incidence_structure */,
@@ -4715,7 +4718,7 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 
 	if (f_v) {
 		cout << "finite_field::do_m_subspace_type_fast after P->init" << endl;
-		}
+	}
 
 
 	v = NEW_int(d);
@@ -4723,7 +4726,7 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 	N = P->nb_rk_k_subspaces_as_lint(m + 1);
 	if (f_v) {
 		cout << "finite_field::do_m_subspace_type_fast N = " << N << endl;
-		}
+	}
 
 	G = NEW_OBJECT(grassmann);
 
@@ -4733,12 +4736,12 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 		P->plane_intersection_type_fast(G, set, set_size,
 			R, Pts_on_plane, nb_pts_on_plane, len,
 			verbose_level - 1);
-		}
+	}
 	else {
 		cout << "finite_field::do_m_subspace_type m=" << m
 				<< " not implemented" << endl;
 		exit(1);
-		}
+	}
 
 	if (f_v) {
 		cout << "finite_field::do_m_subspace_type_fast: We found "
@@ -4749,9 +4752,9 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 				<< " : " << setw(5) << nb_pts_on_plane[i] << " : ";
 			Orbiter->Lint_vec.print(cout, Pts_on_plane[i], nb_pts_on_plane[i]);
 			cout << endl;
-			}
-#endif
 		}
+#endif
+	}
 
 	tally C;
 	int f_second = FALSE;
@@ -4761,7 +4764,7 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 		cout << "finite_field::do_m_subspace_type_fast: " << m
 				<< "-subspace intersection type: ";
 		C.print(FALSE /*f_backwards*/);
-		}
+	}
 
 
 	// we will now look at the subspaces that intersect in
@@ -4783,16 +4786,16 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 	intersection_size = C.data_sorted[f];
 	if (f_v) {
 		cout << intersection_size << "-spaces: ";
-		}
+	}
 	for (j = 0; j < nb_planes; j++) {
 		b = C.sorting_perm_inv[f + j];
 		S[j] = b;
-		}
+	}
 	Sorting.int_vec_quicksort_increasingly(S, nb_planes);
 	if (f_v) {
 		Orbiter->Int_vec.print(cout, S, nb_planes);
 		cout << endl;
-		}
+	}
 
 
 
@@ -4822,7 +4825,7 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 			cout << "u=" << u << endl;
 			cout << "intersection_size=" << intersection_size << endl;
 			exit(1);
-			}
+		}
 		cout << "intersection set of size " << intersection_size
 				<< ":" << endl;
 		P->print_set(intersection_set, intersection_size);
@@ -4832,12 +4835,12 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 			if (!Sorting.lint_vec_search_linear(set, set_size, a, b)) {
 				cout << "did not find point" << endl;
 				exit(1);
-				}
-			Blocks[i * intersection_size + j] = b;
 			}
+			Blocks[i * intersection_size + j] = b;
+		}
 
 		FREE_lint(intersection_set);
-		} // next i
+	} // next i
 
 	cout << "Blocks:" << endl;
 	Orbiter->Int_vec.matrix_print(Blocks, nb_planes, intersection_size);
@@ -4850,19 +4853,19 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 	if (f_v) {
 		cout << "Computing plane invariant for " << nb_planes
 				<< " planes:" << endl;
-		}
+	}
 	Incma = NEW_int(set_size * nb_planes);
 	ItI = NEW_int(nb_planes * nb_planes);
 	IIt = NEW_int(set_size * set_size);
 	for (i = 0; i < set_size * nb_planes; i++) {
 		Incma[i] = 0;
-		}
+	}
 	for (u = 0; u < nb_planes; u++) {
 		for (g = 0; g < intersection_size; g++) {
 			i = Blocks[u * intersection_size + g];
 			Incma[i * nb_planes + u] = 1;
-			}
 		}
+	}
 
 	cout << "Incma:" << endl;
 	Orbiter->Int_vec.matrix_print(Incma, set_size, nb_planes);
@@ -4873,10 +4876,10 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 			for (u = 0; u < set_size; u++) {
 				a += Incma[u * nb_planes + i] *
 						Incma[u * nb_planes + j];
-				}
-			ItI[i * nb_planes + j] = a;
 			}
+			ItI[i * nb_planes + j] = a;
 		}
+	}
 
 	cout << "I^t*I:" << endl;
 	Orbiter->Int_vec.matrix_print(ItI, nb_planes, nb_planes);
@@ -4887,10 +4890,10 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 			for (u = 0; u < nb_planes; u++) {
 				a += Incma[i * nb_planes + u] *
 						Incma[j * nb_planes + u];
-				}
-			IIt[i * set_size + j] = a;
 			}
+			IIt[i * set_size + j] = a;
 		}
+	}
 
 	cout << "I*I^t:" << endl;
 	Orbiter->Int_vec.matrix_print(IIt, set_size, set_size);
@@ -4907,6 +4910,9 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 
 	FREE_int(v);
 	FREE_OBJECT(P);
+	if (f_v) {
+		cout << "finite_field::do_m_subspace_type_fast done" << endl;
+	}
 }
 
 void finite_field::do_line_type(int n,
@@ -4923,13 +4929,13 @@ void finite_field::do_line_type(int n,
 	if (f_v) {
 		cout << "finite_field::do_line_type" << endl;
 		cout << "We will now compute the line type" << endl;
-		}
+	}
 
 	P = NEW_OBJECT(projective_space);
 
 	if (f_v) {
 		cout << "finite_field::do_line_type before P->init" << endl;
-		}
+	}
 
 	P->init(n, this,
 		TRUE /* f_init_incidence_structure */,
@@ -4937,7 +4943,7 @@ void finite_field::do_line_type(int n,
 
 	if (f_v) {
 		cout << "finite_field::do_line_type after P->init" << endl;
-		}
+	}
 
 
 	v = NEW_int(n + 1);
@@ -4946,7 +4952,7 @@ void finite_field::do_line_type(int n,
 	intersection_numbers = NEW_int(P->N_lines);
 	if (f_v) {
 		cout << "after allocating intersection_numbers" << endl;
-		}
+	}
 	P->line_intersection_type(set, set_size,
 			intersection_numbers, 0 /* verbose_level */);
 
@@ -4963,8 +4969,8 @@ void finite_field::do_line_type(int n,
 			//<< a << " lies on line 17" << endl;
 			//	}
 			intersection_numbers[j]++;
-			}
 		}
+	}
 #endif
 
 	tally C;
@@ -4975,7 +4981,7 @@ void finite_field::do_line_type(int n,
 	if (TRUE) {
 		cout << "finite_field::do_line_type: line intersection type: ";
 		C.print(TRUE /*f_backwards*/);
-		}
+	}
 
 	if (f_vv) {
 		int h, f, l, b;
@@ -4992,16 +4998,16 @@ void finite_field::do_line_type(int n,
 			a = C.data_sorted[f];
 			if (f_v) {
 				cout << a << "-lines: ";
-				}
+			}
 			for (j = 0; j < l; j++) {
 				b = C.sorting_perm_inv[f + j];
 				S[j] = b;
-				}
+			}
 			Sorting.int_vec_quicksort_increasingly(S, l);
 			if (f_v) {
 				Orbiter->Int_vec.print(cout, S, l);
 				cout << endl;
-				}
+			}
 			for (j = 0; j < l; j++) {
 				b = S[j];
 				P->unrank_line(basis, b);
@@ -5010,7 +5016,7 @@ void finite_field::do_line_type(int n,
 					Orbiter->Int_vec.print_integer_matrix_width(cout,
 							basis, 2, P->n + 1, P->n + 1,
 							P->F->log10_of_q);
-					}
+				}
 				int sz;
 
 				P->intersect_with_line(set, set_size,
@@ -5023,9 +5029,9 @@ void finite_field::do_line_type(int n,
 					cout << endl;
 					cout << "they are:" << endl;
 					P->print_set(I, sz);
-					}
-
 				}
+
+			}
 		}
 		FREE_lint(I);
 		FREE_int(S);
@@ -5035,13 +5041,16 @@ void finite_field::do_line_type(int n,
 		for (i = 0; i < P->N_lines; i++) {
 			cout << setw(4) << i << " : " << setw(3)
 					<< intersection_numbers[i] << endl;
-			}
-#endif
 		}
+#endif
+	}
 
 	FREE_int(v);
 	FREE_int(intersection_numbers);
 	FREE_OBJECT(P);
+	if (f_v) {
+		cout << "finite_field::do_line_type" << endl;
+	}
 }
 
 void finite_field::do_plane_type(int n,
@@ -5057,13 +5066,13 @@ void finite_field::do_plane_type(int n,
 	if (f_v) {
 		cout << "finite_field::do_plane_type" << endl;
 		cout << "We will now compute the plane type" << endl;
-		}
+	}
 
 	P = NEW_OBJECT(projective_space);
 
 	if (f_v) {
 		cout << "do_plane_type before P->init" << endl;
-		}
+	}
 
 	P->init(n, this,
 		FALSE /* f_init_incidence_structure */,
@@ -5071,7 +5080,7 @@ void finite_field::do_plane_type(int n,
 
 	if (f_v) {
 		cout << "finite_field::do_plane_type after P->init" << endl;
-		}
+	}
 
 	G = NEW_OBJECT(grassmann);
 
@@ -5085,6 +5094,9 @@ void finite_field::do_plane_type(int n,
 	//FREE_int(intersection_type);
 	FREE_OBJECT(G);
 	FREE_OBJECT(P);
+	if (f_v) {
+		cout << "finite_field::do_plane_type done" << endl;
+	}
 }
 
 void finite_field::do_plane_type_failsafe(int n,
@@ -5099,13 +5111,13 @@ void finite_field::do_plane_type_failsafe(int n,
 	if (f_v) {
 		cout << "finite_field::do_plane_type_failsafe" << endl;
 		cout << "We will now compute the plane type" << endl;
-		}
+	}
 
 	P = NEW_OBJECT(projective_space);
 
 	if (f_v) {
 		cout << "finite_field::do_plane_type_failsafe before P->init" << endl;
-		}
+	}
 
 	P->init(n, this,
 		FALSE /* f_init_incidence_structure */,
@@ -5113,7 +5125,7 @@ void finite_field::do_plane_type_failsafe(int n,
 
 	if (f_v) {
 		cout << "finite_field::do_plane_type_failsafe after P->init" << endl;
-		}
+	}
 
 
 	N_planes = P->nb_rk_k_subspaces_as_lint(3);
@@ -5134,12 +5146,13 @@ void finite_field::do_plane_type_failsafe(int n,
 	FREE_OBJECT(P);
 	if (f_v) {
 		cout << "finite_field::do_plane_type_failsafe done" << endl;
-		}
+	}
 }
 
 void finite_field::do_conic_type(int n,
 	int f_randomized, int nb_times,
 	long int *set, int set_size,
+	int threshold,
 	int *&intersection_type, int &highest_intersection_number,
 	int verbose_level)
 {
@@ -5150,14 +5163,14 @@ void finite_field::do_conic_type(int n,
 
 	if (f_v) {
 		cout << "finite_field::do_conic_type" << endl;
-		cout << "We will now compute the plane type" << endl;
-		}
+		cout << "We will now compute the conic type, threshold = " << threshold << endl;
+	}
 
 	P = NEW_OBJECT(projective_space);
 
 	if (f_v) {
 		cout << "finite_field::do_conic_type before P->init" << endl;
-		}
+	}
 
 	P->init(n, this,
 		FALSE /* f_init_incidence_structure */,
@@ -5165,16 +5178,20 @@ void finite_field::do_conic_type(int n,
 
 	if (f_v) {
 		cout << "finite_field::do_conic_type after P->init" << endl;
-		}
+	}
 
 
 	P->conic_intersection_type(f_randomized, nb_times,
 		set, set_size,
+		threshold,
 		intersection_type, highest_intersection_number,
 		f_save_largest_sets, largest_sets,
 		verbose_level - 2);
 
 	FREE_OBJECT(P);
+	if (f_v) {
+		cout << "finite_field::do_conic_type done" << endl;
+	}
 }
 
 void finite_field::do_test_diagonal_line(int n,

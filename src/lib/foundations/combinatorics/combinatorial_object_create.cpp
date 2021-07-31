@@ -380,14 +380,14 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 	else {
 		cout << "combinatorial_object_create::init nothing to create" << endl;
 		exit(1);
-		}
+	}
 
 
 	if (f_v) {
 		cout << "combinatorial_object_create::init created a set of size " << nb_pts << endl;
 		//lint_vec_print(cout, Pts, nb_pts);
 		//cout << endl;
-		}
+	}
 
 
 

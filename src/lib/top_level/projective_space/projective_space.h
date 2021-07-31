@@ -442,6 +442,7 @@ public:
 	std::string set_stabilizer_column_label;
 
 	int f_conic_type;
+	int conic_type_threshold;
 	std::string conic_type_set_text;
 
 	int f_lift_skew_hexagon;
@@ -576,6 +577,7 @@ public:
 			int verbose_level);
 	void conic_type(
 			projective_space_with_action *PA,
+			int threshold,
 			std::string &set_text,
 			int verbose_level);
 	void do_lift_skew_hexagon(
@@ -1075,7 +1077,7 @@ public:
 	void table_of_quartic_curves(int verbose_level);
 	void table_of_cubic_surfaces(int verbose_level);
 	void conic_type(
-			long int *Pts, int nb_pts,
+			long int *Pts, int nb_pts, int threshold,
 			int verbose_level);
 	void cheat_sheet(
 			layered_graph_draw_options *O,
