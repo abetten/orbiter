@@ -802,7 +802,7 @@ void surface_domain_high_level::do_six_arcs(
 
 	for (h = 0; h < nb_orbits; h++) {
 
-		if (f_v) {
+		if (f_v && (h % 10000) == 0) {
 			cout << "surface_domain_high_level::do_six_arcs "
 					"testing arc " << h << " / " << nb_orbits << endl;
 		}

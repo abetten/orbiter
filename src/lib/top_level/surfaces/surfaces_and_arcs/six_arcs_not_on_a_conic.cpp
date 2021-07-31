@@ -142,7 +142,7 @@ void six_arcs_not_on_a_conic::init(
 
 	for (h = 0; h < nb_orbits; h++) {
 
-		if (f_v) {
+		if (f_v && (h % 10000) == 0) {
 			cout << "six_arcs_not_on_a_conic::init "
 					"testing arc " << h << " / " << nb_orbits << endl;
 		}
@@ -156,7 +156,7 @@ void six_arcs_not_on_a_conic::init(
 		int *nb_pts_on_conic;
 		int len1;
 
-		if (f_v) {
+		if (f_v && (h % 10000) == 0) {
 			cout << "six_arcs_not_on_a_conic::init "
 					"testing arc " << h << " / " << nb_orbits << " : ";
 			Orbiter->Lint_vec.print(cout, Arc6, 6);
@@ -165,7 +165,7 @@ void six_arcs_not_on_a_conic::init(
 
 
 		
-		if (f_v) {
+		if (f_v && (h % 10000) == 0) {
 			cout << "six_arcs_not_on_a_conic::init "
 					"computing conic intersections:" << endl;
 		}
@@ -173,8 +173,8 @@ void six_arcs_not_on_a_conic::init(
 			Arc6, 6, 
 			6 /* threshold */,
 			Pts_on_conic, Conic_eqn, nb_pts_on_conic, len1,
-			verbose_level - 2);
-		if (f_v) {
+			0 /*verbose_level - 2*/);
+		if (f_v && (h % 10000) == 0) {
 			cout << "The arc intersects " << len1
 					<< " conics in 6 or more points. " << endl;
 		}

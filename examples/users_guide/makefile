@@ -5428,6 +5428,11 @@ six_arcs_64_nbE13:
 		-six_arcs_not_on_conic -filter_by_nb_Eckardt_points 13 -end
 
 
+#User time: 0:7
+# 9 arcs: ago: 4, 8, 24^5, 48^2
+
+
+
 six_arcs_128_nbE13:
 	$(ORBITER_PATH)orbiter.out -v 3 \
 		-define F -finite_field -q 128 -end \
@@ -5450,6 +5455,9 @@ six_arcs_256_nbE13:
 		-six_arcs_not_on_conic -filter_by_nb_Eckardt_points 13 -end
 
 # 27 minutes on ripoff
+#User time: 35:22 on ripoff 7/30/21
+
+
 
 
 awss:
@@ -6043,7 +6051,7 @@ Colorado1:
 
 # recognize the arcs from Colorado-1,2,3:
 
-nc_arcs_128:
+nc_arcs_128_recognize_CO:
 	$(ORBITER_PATH)orbiter.out -v 4 \
 		-define G \
 		-linear_group -PGGL 3 128 -end \
