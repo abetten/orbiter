@@ -242,7 +242,7 @@ void finite_field::create_intersection_of_zariski_open_sets(
 
 		FREE_int(coeff);
 
-		if (h ==0) {
+		if (h == 0) {
 			int i;
 			nb_pts = Points.size();
 			Pts1 = NEW_lint(nb_pts);

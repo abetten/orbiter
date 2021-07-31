@@ -1517,7 +1517,7 @@ void homogeneous_polynomial_domain::multiply_by_scalar(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, j, a, b, c, idx;
+	int i, a, c;
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::multiply_by_scalar" << endl;
