@@ -114,7 +114,7 @@ interface_combinatorics::interface_combinatorics()
 	f_rank_k_subset = FALSE;
 	rank_k_subset_n = 0;
 	rank_k_subset_k = 0;
-	rank_k_subset_text;
+	//rank_k_subset_text;
 
 }
 

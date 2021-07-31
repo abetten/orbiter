@@ -551,7 +551,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines(
 		Surf_A,
 		Control_six_arcs,
 		f_test_nb_Eckardt_points, nb_E,
-		verbose_level);
+		verbose_level - 2);
 	if (f_v) {
 		cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines "
 				"after SAL->init" << endl;
@@ -562,7 +562,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines(
 			cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines "
 					"before SAL->report" << endl;
 		}
-		SAL->report(Control_six_arcs->draw_options, verbose_level);
+		SAL->report(Control_six_arcs->draw_options, verbose_level - 2);
 		if (f_v) {
 			cout << "surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines "
 					"after SAL->report" << endl;

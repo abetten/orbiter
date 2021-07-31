@@ -2675,25 +2675,6 @@ PGL_4_2_wd:
 	open PGL_4_2_Wedge_4_0_detached_report.pdf
 
 
-PGL_4_2_wd_ideal:
-	$(ORBITER_PATH)orbiter.out -v 5 \
-		-process_combinatorial_objects -n 5 -q 2 \
-			-input \
-			-set_of_points \
-				-long_string \
-				"0, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 18, 21, " \
-				"22, 25, 26, 31, 32, 34, 36, 38, 40, 42, 45, 47, 48, " \
-				"51, 52, 55, 56, 59, 61, 62" \
-				-end_string \
-			-end \
-		-ideal_PART 2 \
-		-fname_base_out "form" \
-		-end
-	#pdflatex form.tex
-	#open form.pdf
-
-#invariant form:
-#X_0X_5 + X_1X_4 + X_2X_3
 
 
 PGL_4_2_wd_reverse:
@@ -5221,12 +5202,13 @@ hyperoval_32:
 
 nc_arcs_4:
 	$(ORBITER_PATH)orbiter.out -v 8 \
+		-draw_options -end \
 		-define G \
 		-linear_group -PGGL 3 4 -end \
 		-with G -do \
 		-group_theoretic_activities \
 			-poset_classification_control \
-				-problem_label nc_arcs_q4_d2 -W -depth 4 -list -end \
+				-problem_label nc_arcs_q4_d2 -W -depth 4 -list -report -end \
 			-classify_arcs \
 				-target_size 4 \
 				-q 4 \
@@ -5235,6 +5217,8 @@ nc_arcs_4:
 				-conic_test \
 			-end \
 		-end
+	pdflatex nc_arcs_q4_d2_poset.tex
+	open nc_arcs_q4_d2_poset.pdf
 
 
 
@@ -5257,9 +5241,10 @@ nc_arcs_8:
 			-end \
 		-report \
 		-end
-	pdflatex nc_arcs_q8_d2_poset.tex
-	open nc_arcs_q8_d2_poset.pdf
+	#pdflatex nc_arcs_q8_d2_poset.tex
+	#open nc_arcs_q8_d2_poset.pdf
 	
+#User time: 0:00
 
 # finds 2 nonconical 6-arcs:
 ## 6
@@ -5305,6 +5290,11 @@ nc_arcs_16:
 			-end \
 		-end
 
+
+#User time: 0:00
+
+
+
 nc_arcs_32:
 	$(ORBITER_PATH)orbiter.out -v 4 \
 		-define G \
@@ -5321,6 +5311,9 @@ nc_arcs_32:
 				-conic_test \
 			-end \
 		-end
+
+#User time: 0:00
+
 
 
 nc_arcs_64:
@@ -5340,7 +5333,12 @@ nc_arcs_64:
 			-end \
 		-end
 
-nc_arcs_128b:
+
+#User time: 0:2
+
+
+
+nc_arcs_128:
 	$(ORBITER_PATH)orbiter.out -v 4 \
 		-define G \
 		-linear_group -PGGL 3 128 -end \
@@ -5356,6 +5354,10 @@ nc_arcs_128b:
 				-conic_test \
 			-end \
 		-end
+
+
+#User time: 0:52
+
 
 nc_arcs_256:
 	$(ORBITER_PATH)orbiter.out -v 4 \
@@ -5373,6 +5375,11 @@ nc_arcs_256:
 				-conic_test \
 			-end \
 		-end
+
+
+#User time: 37:54 on Mac
+
+
 
 six_arcs_4_nbE13:
 	$(ORBITER_PATH)orbiter.out -v 3 \
@@ -5431,6 +5438,7 @@ six_arcs_128_nbE13:
 		-six_arcs_not_on_conic -filter_by_nb_Eckardt_points 13 -end
 
 # 1 min 39 sec
+# 12 arcs, ago: 4^3, 24^9
 
 six_arcs_256_nbE13:
 	$(ORBITER_PATH)orbiter.out -v 3 \
@@ -5737,15 +5745,6 @@ Family_general_F7:
 # no automorphism group, so no -report_with_group and no -all_quartic_curves
 
 
-Family_general_F7_tangents:
-	$(ORBITER_PATH)orbiter.out -v 5 \
-		-process_combinatorial_objects -n 3 -q 7 \
-			-input \
-			-set_of_points "56, 0, 3, 156, 350, 23, 212, 216, 284, 321, 70, 261, 384, 149, 381, 297, 234, 63" \
-			-end \
-		-ideal_PART 3 \
-		-fname_base_out "form" \
-		-end
 
 
 
@@ -5846,16 +5845,6 @@ Eckardt_13:
 
 
 # writes tangents.txt
-
-Eckardt_tangents_ideal:
-	$(ORBITER_PATH)orbiter.out -v 5 \
-		-process_combinatorial_objects -n 3 -q 13 \
-			-input \
-			-file_of_points "tangents.txt" \
-			-end \
-		-ideal_PART 4 \
-		-fname_base_out "form" \
-		-end
 
 
 # 13_0 has 4 Eckardt points
@@ -7620,14 +7609,14 @@ surface_classify_q4:
 
 
 surface_classify_q4_arc_lifting_two_lines:
-	$(ORBITER_PATH)orbiter.out -v 4 \
+	$(ORBITER_PATH)orbiter.out -v 10 \
 		-draw_options -end \
 		-define F -finite_field -q 4 -end \
 		-define P -projective_space 3 F \
 		-with P -do \
 		-projective_space_activity \
-		-control_six_arcs -problem_label sixarcs_q4 -end \
-		-classify_surfaces_through_arcs_and_two_lines \
+			-control_six_arcs -problem_label sixarcs_q4 -end \
+			-classify_surfaces_through_arcs_and_two_lines \
 		-end
 	pdflatex surfaces_arc_lifting_4.tex
 	open surfaces_arc_lifting_4.pdf
@@ -8078,19 +8067,6 @@ Dickson_q4_aut:
 	open D_classification.pdf
 
 
-# ToDo:
-Dickson_13_ideal:
-	$(ORBITER_PATH)orbiter.out -v 5 \
-		-process_combinatorial_objects -n 3 -q 2 \
-			-input \
-			-set_of_points \
-				-long_string \
-				"2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14" \
-				-end_string \
-			-end \
-		-ideal_PART 3 \
-		-fname_base_out "form" \
-		-end
 
 
 
@@ -11478,26 +11454,6 @@ design_27c:
 
 
 
-design_27_line_type:
-	$(ORBITER_PATH)orbiter.out -v 4 -override_polynomial 46 \
-		-process_combinatorial_objects -n 2 -q 27 -poly 46 \
-		-input \
-		-set_of_points "2,56,30,112,253,90,440,508" \
-		-end \
-		-line_type \
-		-fname_base_out design \
-		-end
-
-
-design_27_conic_type:
-	$(ORBITER_PATH)orbiter.out -v 4 -override_polynomial 46 \
-		-process_combinatorial_objects -n 2 -q 27 -poly 46 \
-		-input \
-		-set_of_points "2,56,30,112,253,90,440,508" \
-		-end \
-		-conic_type \
-		-fname_base_out design \
-		-end
 
 
 
@@ -12935,14 +12891,6 @@ endrass8:
 	mv makefile_animation POV
 
 
-
-EC_draw: elliptic_curve_b1_c3_q11.txt
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-process_combinatorial_objects -q 11 -n 2  \
-		-draw_points_in_plane EC_11_1_3 \
-		-fname_base_out EC_11_1_3 -embedded \
-		-input -file_of_points elliptic_curve_b1_c3_q11.txt -end \
-		-end
 
 
 

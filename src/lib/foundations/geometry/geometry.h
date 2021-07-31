@@ -1810,11 +1810,13 @@ public:
 		int verbose_level);
 	void conic_intersection_type(int f_randomized, int nb_times, 
 		long int *set, int set_size,
+		int threshold,
 		int *&intersection_type, int &highest_intersection_number, 
 		int f_save_largest_sets, set_of_sets *&largest_sets, 
 		int verbose_level);
 	void conic_type(
 		long int *set, int set_size,
+		int threshold,
 		long int **&Pts_on_conic, int **&Conic_eqn, int *&nb_pts_on_conic, int &len,
 		int verbose_level);
 	void find_nucleus(int *set, int set_size, int &nucleus, 

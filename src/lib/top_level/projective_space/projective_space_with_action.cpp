@@ -3609,13 +3609,13 @@ void projective_space_with_action::table_of_cubic_surfaces(int verbose_level)
 }
 
 void projective_space_with_action::conic_type(
-		long int *Pts, int nb_pts,
+		long int *Pts, int nb_pts, int threshold,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "projective_space_with_action::conic_type" << endl;
+		cout << "projective_space_with_action::conic_type threshold = " << threshold << endl;
 	}
 
 
@@ -3631,6 +3631,7 @@ void projective_space_with_action::conic_type(
 	}
 
 	P->conic_type(Pts, nb_pts,
+			threshold,
 			Pts_on_conic, Conic_eqn, nb_pts_on_conic, len,
 			verbose_level);
 

@@ -2219,6 +2219,7 @@ void projective_space::conic_type_randomized(int nb_times,
 void projective_space::conic_intersection_type(
 	int f_randomized, int nb_times,
 	long int *set, int set_size,
+	int threshold,
 	int *&intersection_type, int &highest_intersection_number,
 	int f_save_largest_sets, set_of_sets *&largest_sets,
 	int verbose_level)
@@ -2232,7 +2233,7 @@ void projective_space::conic_intersection_type(
 	int i, j, idx, f, l, a, t;
 
 	if (f_v) {
-		cout << "projective_space::conic_intersection_type" << endl;
+		cout << "projective_space::conic_intersection_type threshold = " << threshold << endl;
 	}
 
 	if (f_randomized) {
@@ -2251,7 +2252,7 @@ void projective_space::conic_intersection_type(
 					"not randomized" << endl;
 		}
 		conic_type(
-			set, set_size,
+			set, set_size, threshold,
 			Pts_on_conic, Conic_eqn, nb_pts_on_conic, nb_conics,
 			verbose_level - 1);
 	}
@@ -2310,6 +2311,7 @@ void projective_space::conic_intersection_type(
 
 void projective_space::conic_type(
 	long int *set, int set_size,
+	int threshold,
 	long int **&Pts_on_conic, int **&Conic_eqn, int *&nb_pts_on_conic, int &len,
 	int verbose_level)
 {
@@ -2331,7 +2333,7 @@ void projective_space::conic_type(
 	sorting Sorting;
 
 	if (f_v) {
-		cout << "projective_space::conic_type" << endl;
+		cout << "projective_space::conic_type, threshold = " << threshold << endl;
 	}
 	if (n != 2) {
 		cout << "projective_space::conic_type n != 2" << endl;
@@ -2477,7 +2479,7 @@ void projective_space::conic_type(
 			}
 
 
-			if (l >= 5) {
+			if (l >= threshold) {
 
 				if (f_v) {
 					cout << "We found an " << l << "-conic, "
