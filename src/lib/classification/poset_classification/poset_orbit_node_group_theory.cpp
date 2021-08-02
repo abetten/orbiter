@@ -68,6 +68,19 @@ void poset_orbit_node::get_stabilizer_order(poset_classification *PC, longintege
 }
 #endif
 
+long int poset_orbit_node::get_stabilizer_order_lint(poset_classification *PC)
+{
+	longinteger_object go;
+
+	if (nb_strong_generators) {
+		go.create_product(PC->get_poset()->A->base_len(), tl);
+	}
+	else {
+		go.create(1, __FILE__, __LINE__);
+	}
+	return go.as_lint();
+}
+
 void poset_orbit_node::get_stabilizer(
 	poset_classification *PC,
 	group_container &G, longinteger_object &go_G,
@@ -101,14 +114,14 @@ void poset_orbit_node::get_stabilizer(
 		cout << "poset_orbit_node::get_stabilizer "
 				"calling schreier_sims for stabilizer with "
 			<< nb_strong_generators << " strong generators" << endl;
-		}
+	}
 	G.schreier_sims(verbose_level - 3);
 	G.group_order(go_G);
 	if (f_v) {
 		cout << "poset_orbit_node::get_stabilizer "
 				"stabilizer has order "
 				<< go_G << endl;
-		}
+	}
 }
 
 int poset_orbit_node::test_if_stabilizer_is_trivial()
@@ -133,7 +146,7 @@ void poset_orbit_node::get_stabilizer_generators(
 		cout << "poset_orbit_node::get_stabilizer_generators" << endl;
 		cout << "poset_orbit_node::get_stabilizer_generators "
 				"nb_strong_generators=" << nb_strong_generators << endl;
-		}
+	}
 	Strong_gens = NEW_OBJECT(strong_generators);
 
 #if 0
@@ -142,13 +155,13 @@ void poset_orbit_node::get_stabilizer_generators(
 	if (nb_strong_generators == 0) {
 		for (i = 0; i < PC->get_A()->base_len(); i++) {
 			Strong_gens->tl[i] = 1;
-			}
 		}
+	}
 	else {
 		for (i = 0; i < PC->get_A()->base_len(); i++) {
 			Strong_gens->tl[i] = poset_orbit_node::tl[i];
-			}
 		}
+	}
 #else
 	std::vector<int> gen_handle;
 	std::vector<int> tl;
@@ -428,7 +441,7 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 		cout << "poset_orbit_node::compute_point_stabilizer_"
 				"in_subspace_setting, "
 				"verbose_level = " << verbose_level << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "generators for G of order " << go_G << endl;
@@ -473,136 +486,136 @@ void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 
 	{
 #if 1
-	action_on_factor_space *AF;
-	action A_factor_space;
-	poset_orbit_node *Op = gen->get_node(prev);
+		action_on_factor_space *AF;
+		action A_factor_space;
+		poset_orbit_node *Op = gen->get_node(prev);
 
-	AF = NEW_OBJECT(action_on_factor_space);
-	if (FALSE /*gen->f_early_test_func*/) {
+		AF = NEW_OBJECT(action_on_factor_space);
+		if (FALSE /*gen->f_early_test_func*/) {
 #if 0
-		int i;
+			int i;
 
-		if (f_v) {
-			cout << "poset_orbit_node::compute_point_stabilizer_"
-					"in_subspace_setting, "
-					"with early test function, "
-					"before Op->setup_factor_space_action_with_early_test"
-					<< endl;
-			}
-		Op->setup_factor_space_action_with_early_test(gen,
-			AF, A_factor_space, size - 1,
-			verbose_level - 4);
-		if (f_v) {
-			cout << "poset_orbit_node::compute_point_stabilizer_"
-					"in_subspace_setting after "
-					"Op->setup_factor_space_action_with_early_test"
-					<< endl;
-			}
-		for (i = 0; i < AF.nb_cosets; i++) {
-			if (AF.preimage(i, 0) == pt) {
-				if (f_vv) {
-					cout << "poset_orbit_node::compute_point_stabilizer_"
-							"in_subspace_setting: point pt=" << pt
-							<< " is coset " << i << endl;
-					}
-				break;
+			if (f_v) {
+				cout << "poset_orbit_node::compute_point_stabilizer_"
+						"in_subspace_setting, "
+						"with early test function, "
+						"before Op->setup_factor_space_action_with_early_test"
+						<< endl;
 				}
-			}
-		if (i == AF.nb_cosets) {
-			cout << "poset_orbit_node::compute_point_stabilizer_"
-					"in_subspace_setting "
-					"fatal: could not find the coset corresponding "
-					"to point " << pt << endl;
-			exit(1);
-			}
-		projected_pt = i;
+			Op->setup_factor_space_action_with_early_test(gen,
+				AF, A_factor_space, size - 1,
+				verbose_level - 4);
+			if (f_v) {
+				cout << "poset_orbit_node::compute_point_stabilizer_"
+						"in_subspace_setting after "
+						"Op->setup_factor_space_action_with_early_test"
+						<< endl;
+				}
+			for (i = 0; i < AF.nb_cosets; i++) {
+				if (AF.preimage(i, 0) == pt) {
+					if (f_vv) {
+						cout << "poset_orbit_node::compute_point_stabilizer_"
+								"in_subspace_setting: point pt=" << pt
+								<< " is coset " << i << endl;
+						}
+					break;
+					}
+				}
+			if (i == AF.nb_cosets) {
+				cout << "poset_orbit_node::compute_point_stabilizer_"
+						"in_subspace_setting "
+						"fatal: could not find the coset corresponding "
+						"to point " << pt << endl;
+				exit(1);
+				}
+			projected_pt = i;
 #endif
 		}
-	else {
-		// no early_test_func:
+		else {
+			// no early_test_func:
+
+			if (f_vvv) {
+				gen->print_level_extension_info(size - 1, prev, prev_ex);
+				cout << " poset_orbit_node::compute_point_stabilizer_"
+						"in_subspace_setting, "
+						"without early test function, setting up factor "
+						"space action:" << endl;
+			}
+			Op->setup_factor_space_action(
+				gen,
+				*AF,
+				A_factor_space,
+				size - 1,
+				TRUE /*f_compute_tables*/,
+				verbose_level - 4);
+			// now AF is part of A_factor_space
+			// and should not be freed.
+			projected_pt = AF->project(pt, verbose_level - 4);
+		}
+#endif
+
+#if 0
+		if (f_vvv) {
+			gen->print_level_extension_info(size - 1, prev, prev_ex);
+			cout << " poset_orbit_node::compute_point_stabilizer_"
+					"in_subspace_setting "
+					" before AF->project_onto_Gauss_reduced_vector"
+					<< endl;
+		}
+#endif
+		//projected_pt = AF->project(pt, verbose_level - 4);
+		//projected_pt = AF->project_onto_Gauss_reduced_vector(
+		//		pt, verbose_level - 4);
 
 		if (f_vvv) {
 			gen->print_level_extension_info(size - 1, prev, prev_ex);
 			cout << " poset_orbit_node::compute_point_stabilizer_"
-					"in_subspace_setting, "
-					"without early test function, setting up factor "
-					"space action:" << endl;
-			}
-		Op->setup_factor_space_action(
-			gen,
-			*AF,
-			A_factor_space,
-			size - 1,
-			TRUE /*f_compute_tables*/,
-			verbose_level - 4);
-		// now AF is part of A_factor_space
-		// and should not be freed.
-		projected_pt = AF->project(pt, verbose_level - 4);
+					"in_subspace_setting "
+					" pt=" << pt << " projected_pt=" << projected_pt << endl;
 		}
-#endif
-
-#if 0
-	if (f_vvv) {
-		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		cout << " poset_orbit_node::compute_point_stabilizer_"
-				"in_subspace_setting "
-				" before AF->project_onto_Gauss_reduced_vector"
-				<< endl;
+		if (projected_pt == -1) {
+			cout << "poset_orbit_node::compute_point_stabilizer_"
+					"in_subspace_setting "
+					"fatal: projected_pt == -1" << endl;
+			exit(1);
 		}
-#endif
-	//projected_pt = AF->project(pt, verbose_level - 4);
-	//projected_pt = AF->project_onto_Gauss_reduced_vector(
-	//		pt, verbose_level - 4);
-
-	if (f_vvv) {
-		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		cout << " poset_orbit_node::compute_point_stabilizer_"
-				"in_subspace_setting "
-				" pt=" << pt << " projected_pt=" << projected_pt << endl;
-		}
-	if (projected_pt == -1) {
-		cout << "poset_orbit_node::compute_point_stabilizer_"
-				"in_subspace_setting "
-				"fatal: projected_pt == -1" << endl;
-		exit(1);
-		}
-	if (f_vvv) {
-		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		cout << " poset_orbit_node::compute_point_stabilizer_"
-				"in_subspace_setting "
-				"calling G.point_stabilizer_with_action "
-				"verbose_level=" << verbose_level << endl;
+		if (f_vvv) {
+			gen->print_level_extension_info(size - 1, prev, prev_ex);
+			cout << " poset_orbit_node::compute_point_stabilizer_"
+					"in_subspace_setting "
+					"calling G.point_stabilizer_with_action "
+					"verbose_level=" << verbose_level << endl;
 		}
 
 #if 0
-	if (size == 2 && prev == 2 && prev_ex == 6) {
-		verbose_level += 10;
-		cout << "START" << endl;
-	}
+		if (size == 2 && prev == 2 && prev_ex == 6) {
+			verbose_level += 10;
+			cout << "START" << endl;
+		}
 #endif
-	G.point_stabilizer_with_action(
-			&A_factor_space,
-			H,
-			projected_pt,
-			verbose_level - 4);
-	if (f_vvv) {
-		gen->print_level_extension_info(size - 1, prev, prev_ex);
-		cout << " poset_orbit_node::compute_point_stabilizer_"
-				"in_subspace_setting "
-				"G.point_stabilizer_with_action done" << endl;
+		G.point_stabilizer_with_action(
+				&A_factor_space,
+				H,
+				projected_pt,
+				verbose_level - 4);
+		if (f_vvv) {
+			gen->print_level_extension_info(size - 1, prev, prev_ex);
+			cout << " poset_orbit_node::compute_point_stabilizer_"
+					"in_subspace_setting "
+					"G.point_stabilizer_with_action done" << endl;
 		}
 
-	if (f_v) {
-		cout << "poset_orbit_node::compute_point_stabilizer_"
-				"in_subspace_setting "
-				"before freeing A_factor_space" << endl;
+		if (f_v) {
+			cout << "poset_orbit_node::compute_point_stabilizer_"
+					"in_subspace_setting "
+					"before freeing A_factor_space" << endl;
 		}
 	}
 	if (f_v) {
 		cout << "poset_orbit_node::compute_point_stabilizer_"
 				"in_subspace_setting "
 				"done" << endl;
-		}
+	}
 
 }
 
@@ -806,7 +819,7 @@ void poset_orbit_node::create_schreier_vector_wrapper(
 	}
 	else {
 		Schreier_vector = NULL;
-		}
+	}
 	if (f_v) {
 		cout << "poset_orbit_node::create_schreier_vector_wrapper "
 				"done" << endl;

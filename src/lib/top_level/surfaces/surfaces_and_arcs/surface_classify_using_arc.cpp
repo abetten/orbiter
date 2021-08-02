@@ -20,8 +20,8 @@ surface_classify_using_arc::surface_classify_using_arc()
 {
 	Surf_A = NULL;
 
-	A = NULL;
-	nice_gens = NULL;
+	//A = NULL;
+	//nice_gens = NULL;
 
 	Six_arcs = NULL;
 	Descr = NULL;
@@ -39,11 +39,15 @@ surface_classify_using_arc::surface_classify_using_arc()
 
 }
 
+
+
 surface_classify_using_arc::~surface_classify_using_arc()
 {
+#if 0
 	if (nice_gens) {
 		FREE_OBJECT(nice_gens);
 	}
+#endif
 	if (transporter) {
 		FREE_int(transporter);
 	}
@@ -79,7 +83,7 @@ void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pa
 	int i, j, arc_idx;
 	number_theory_domain NT;
 
-	int f_semilinear = TRUE;
+	//int f_semilinear = TRUE;
 
 	surface_classify_using_arc::Surf_A = Surf_A;
 
@@ -91,6 +95,7 @@ void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pa
 	F = Surf_A->PA->F;
 	Surf = Surf_A->Surf;
 
+#if 0
 	A = NEW_OBJECT(action);
 
 
@@ -112,15 +117,17 @@ void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pa
 		cout << "surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pairs "
 				"after A->init_projective_group" << endl;
 	}
-
+#endif
 
 
 	Descr = NEW_OBJECT(arc_generator_description);
+#if 0
 	Descr->F = F;
 	Descr->f_q = TRUE;
 	Descr->q = F->q;
 	Descr->f_n = TRUE;
 	Descr->n = 3;
+#endif
 	Descr->f_d = TRUE;
 	Descr->d = 2;
 	Descr->f_target_size = TRUE;
@@ -138,8 +145,7 @@ void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pa
 	Six_arcs = NEW_OBJECT(six_arcs_not_on_a_conic);
 	Six_arcs->init(
 			Descr,
-			A,
-			Surf->P2,
+			Surf_A->PA,
 			f_test_nb_Eckardt_points, nb_E, Surf,
 			verbose_level - 2);
 	if (f_v) {

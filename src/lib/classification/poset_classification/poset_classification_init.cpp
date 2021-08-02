@@ -59,22 +59,7 @@ poset_classification::poset_classification()
 	transporter = NULL;
 	set = NULL;
 	
-	
-	nb_poset_orbit_nodes_used = 0;
-	nb_poset_orbit_nodes_allocated = 0;
-	poset_orbit_nodes_increment = 0;
-	poset_orbit_nodes_increment_last = 0;
-
-	root = NULL;
-	first_poset_orbit_node_at_level = NULL;
-	set0 = NULL;
-	set1 = NULL;
-	set3 = NULL;
-	nb_extension_nodes_at_level_total = NULL;
-	nb_extension_nodes_at_level = NULL;
-	nb_fusion_nodes_at_level = NULL;
-	nb_unprocessed_nodes_at_level = NULL;
-
+	Poo = NULL;
 
 
 	f_has_invariant_subset_for_root_node = FALSE;
@@ -162,14 +147,9 @@ void poset_classification::freeself()
 		}
 		FREE_plint(set);
 	}
-	if (f_v) {
-		cout << "poset_classification::freeself "
-				"before exit_poset_orbit_node" << endl;
-	}
-	exit_poset_orbit_node();
-	if (f_v) {
-		cout << "poset_classification::freeself "
-				"after exit_poset_orbit_node" << endl;
+
+	if (Poo) {
+		FREE_OBJECT(Poo);
 	}
 
 
@@ -309,9 +289,20 @@ void poset_classification::init_internal(
 		set[i] = NEW_lint(max_set_size);
 	}
 
-		
-	nb_poset_orbit_nodes_used = 0;
-	nb_poset_orbit_nodes_allocated = 0;
+	int nb_poset_orbit_nodes = 1000;
+
+	Poo = NEW_OBJECT(poset_of_orbits);
+	if (f_vv) {
+		cout << "poset_classification::init_internal "
+				"before Poo->init" << endl;
+	}
+	Poo->init(this, nb_poset_orbit_nodes, sz, max_set_size, t0, verbose_level);
+	if (f_vv) {
+		cout << "poset_classification::init_internal "
+				"after Poo->init" << endl;
+	}
+
+
 
 	nb_times_image_of_called0 = Poset->A->ptr->nb_times_image_of_called;
 	nb_times_mult_called0 = Poset->A->ptr->nb_times_mult_called;
@@ -370,18 +361,7 @@ void poset_classification::initialize_and_allocate_root_node(
 				"after init_internal" << endl;
 	}
 	
-	int nb_poset_orbit_nodes = 1000;
-	
-	if (f_vv) {
-		cout << "poset_classification::initialize_and_allocate_root_node "
-				"calling gen->init_poset_orbit_node" << endl;
-	}
-	init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
-	if (f_vv) {
-		cout << "poset_classification::initialize_and_allocate_root_node "
-				"calling gen->init_root_node" << endl;
-	}
-	init_root_node(verbose_level - 1);
+	Poo->init_root_node(verbose_level - 1);
 
 
 	if (f_v) {
@@ -432,18 +412,7 @@ void poset_classification::initialize_with_base_case(
 	}
 	init_base_case(Base_case, verbose_level);
 
-	int nb_poset_orbit_nodes = 1000;
-	
-	if (f_vv) {
-		cout << "poset_classification::initialize_with_base_case "
-				"calling gen->init_poset_orbit_node" << endl;
-	}
-	init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
-	if (f_vv) {
-		cout << "poset_classification::initialize_with_base_case "
-				"calling gen->init_root_node" << endl;
-	}
-	init_root_node(verbose_level);
+	Poo->init_root_node(verbose_level);
 
 	if (f_v) {
 		cout << "poset_classification::initialize_with_base_case done" << endl;
@@ -468,275 +437,6 @@ void poset_classification::init_root_node_invariant_subset(
 				"invariant_subset "
 				"installed invariant subset of size "
 				<< invariant_subset_size << endl;
-	}
-}
-
-void poset_classification::init_root_node_from_base_case(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i;
-
-	if (f_v) {
-		cout << "poset_classification::init_root_node_from_base_case" << endl;
-	}
-
-	if (Base_case == NULL) {
-		cout << "poset_classification::init_root_node_from_base_case Base_case == NULL" << endl;
-		exit(1);
-	}
-
-	first_poset_orbit_node_at_level[0] = 0;
-#if 0
-	root[0].freeself();
-	root[0].node = 0;
-	root[0].prev = -1;
-	root[0].nb_strong_generators = 0;
-	root[0].Schreier_vector = NULL;
-#else
-	root[0].init_node(0,
-			-1 /* the root node does not have an ancestor */,
-			-1 /* the root node does not have a pt */,
-			verbose_level);
-#endif
-
-	for (i = 0; i < Base_case->size; i++) {
-
-		nb_extension_nodes_at_level_total[i] = 0;
-		nb_extension_nodes_at_level[i] = 0;
-		nb_fusion_nodes_at_level[i] = 0;
-		nb_unprocessed_nodes_at_level[i] = 0;
-
-		if (f_v) {
-			cout << "poset_classification::init_root_node_from_base_case "
-					"initializing node at level " << i << endl;
-		}
-		first_poset_orbit_node_at_level[i + 1] =
-				first_poset_orbit_node_at_level[i] + 1;
-#if 0
-		root[i].E = NEW_OBJECTS(extension, 1);
-		root[i].nb_extensions = 1;
-#else
-		root[i].allocate_E(1 /* nb_extensions */, verbose_level);
-#endif
-		root[i].get_E(0)->set_type(EXTENSION_TYPE_EXTENSION);
-		root[i].get_E(0)->set_data(i + 1);
-#if 0
-		root[i + 1].freeself();
-		root[i + 1].node = i + 1;
-		root[i + 1].prev = i;
-		root[i + 1].pt = Base_case->orbit_rep[i];
-		root[i + 1].nb_strong_generators = 0;
-		root[i + 1].Schreier_vector = NULL;
-#else
-		root[i + 1].init_node(i + 1,
-					i,
-					Base_case->orbit_rep[i],
-					verbose_level);
-#endif
-	}
-	if (f_v) {
-		cout << "poset_classification::init_root_node_from_base_case "
-				"storing strong poset_classifications" << endl;
-	}
-	root[Base_case->size].store_strong_generators(this, Base_case->Stab_gens);
-	first_poset_orbit_node_at_level[Base_case->size + 1] =
-			Base_case->size + 1;
-	if (f_v) {
-		cout << "i : first_poset_orbit_node_at_level[i]" << endl;
-		for (i = 0; i <= Base_case->size + 1; i++) {
-			cout << i << " : "
-					<< first_poset_orbit_node_at_level[i] << endl;
-		}
-	}
-
-	if (f_v) {
-		cout << "poset_classification::init_root_node_from_base_case done" << endl;
-	}
-}
-
-void poset_classification::init_root_node(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	
-	if (f_v) {
-		cout << "poset_classification::init_root_node" << endl;
-	}
-	if (f_base_case) {
-
-		if (f_v) {
-			cout << "poset_classification::init_root_node before init_root_node_from_base_case" << endl;
-		}
-		init_root_node_from_base_case(verbose_level);
-		if (f_v) {
-			cout << "poset_classification::init_root_node after init_root_node_from_base_case" << endl;
-		}
-
-	}
-	else {
-		if (f_v) {
-			cout << "poset_classification::init_root_node before root[0].init_root_node" << endl;
-		}
-		root[0].init_root_node(this, verbose_level - 1);
-		if (f_v) {
-			cout << "poset_classification::init_root_node after root[0].init_root_node" << endl;
-		}
-	}
-	if (f_v) {
-		cout << "poset_classification::init_root_node done" << endl;
-	}
-}
-
-void poset_classification::init_poset_orbit_node(
-		int nb_poset_orbit_nodes, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i;
-
-	if (f_v) {
-		cout << "poset_classification::init_poset_orbit_node" << endl;
-	}
-	root = NEW_OBJECTS(poset_orbit_node, nb_poset_orbit_nodes);
-	for (i = 0; i < nb_poset_orbit_nodes; i++) {
-		root[i].set_node(i);
-	}
-	nb_poset_orbit_nodes_allocated = nb_poset_orbit_nodes;
-	nb_poset_orbit_nodes_used = 0;
-	poset_orbit_nodes_increment = nb_poset_orbit_nodes;
-	poset_orbit_nodes_increment_last = nb_poset_orbit_nodes;
-	first_poset_orbit_node_at_level = NEW_lint(sz + 2);
-	first_poset_orbit_node_at_level[0] = 0;
-	first_poset_orbit_node_at_level[1] = 1;
-	set0 = NEW_lint(max_set_size);
-	set1 = NEW_lint(max_set_size);
-	set3 = NEW_lint(max_set_size);
-	nb_extension_nodes_at_level_total = NEW_lint(sz + 1);
-	nb_extension_nodes_at_level = NEW_lint(sz + 1);
-	nb_fusion_nodes_at_level = NEW_lint(sz + 1);
-	nb_unprocessed_nodes_at_level = NEW_lint(sz + 1);
-	for (i = 0; i < sz + 1; i++) {
-		nb_extension_nodes_at_level_total[i] = 0;
-		nb_extension_nodes_at_level[i] = 0;
-		nb_fusion_nodes_at_level[i] = 0;
-		nb_unprocessed_nodes_at_level[i] = 0;
-	}
-	if (f_v) {
-		cout << "poset_classification::init_poset_orbit_node done" << endl;
-	}
-}
-
-
-void poset_classification::exit_poset_orbit_node()
-{
-	int verbose_level = 0;
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "poset_classification::exit_poset_orbit_node" << endl;
-	}
-
-	if (root) {
-		if (f_v) {
-			cout << "poset_classification::exit_poset_orbit_node deleting root" << endl;
-		}
-		FREE_OBJECTS(root);
-		if (f_v) {
-			cout << "poset_classification::exit_poset_orbit_node after deleting root" << endl;
-		}
-		root = NULL;
-	}
-	if (set0) {
-		FREE_lint(set0);
-		set0 = NULL;
-	}
-	if (set1) {
-		FREE_lint(set1);
-		set1 = NULL;
-	}
-	if (set3) {
-		FREE_lint(set3);
-		set3 = NULL;
-	}
-	if (first_poset_orbit_node_at_level) {
-		FREE_lint(first_poset_orbit_node_at_level);
-		first_poset_orbit_node_at_level = NULL;
-	}
-
-	if (nb_extension_nodes_at_level_total) {
-		FREE_lint(nb_extension_nodes_at_level_total);
-		nb_extension_nodes_at_level_total = NULL;
-	}
-	if (nb_extension_nodes_at_level) {
-		FREE_lint(nb_extension_nodes_at_level);
-		nb_extension_nodes_at_level = NULL;
-	}
-	if (nb_fusion_nodes_at_level) {
-		FREE_lint(nb_fusion_nodes_at_level);
-		nb_fusion_nodes_at_level = NULL;
-	}
-	if (nb_unprocessed_nodes_at_level) {
-		FREE_lint(nb_unprocessed_nodes_at_level);
-		nb_unprocessed_nodes_at_level = NULL;
-	}
-}
-
-void poset_classification::reallocate()
-{
-	long int increment_new;
-	long int length;
-	int verbose_level = 0;
-	
-	increment_new = poset_orbit_nodes_increment + poset_orbit_nodes_increment_last;
-
-
-	length = nb_poset_orbit_nodes_allocated +
-			poset_orbit_nodes_increment;
-
-	if (length > (1L << 31) - 1) {
-		long int length_wanted;
-
-		length_wanted = length;
-		length = (1L << 31) - 1;
-		cout << "poset_classification::reallocate reducing length from " << length_wanted << " to " << length << endl;
-		poset_orbit_nodes_increment = length_wanted - nb_poset_orbit_nodes_allocated;
-	}
-	cout << "poset_classification::reallocate from " << nb_poset_orbit_nodes_allocated << " to " << length << endl;
-	reallocate_to(length, verbose_level - 1);
-	poset_orbit_nodes_increment_last = poset_orbit_nodes_increment;
-	poset_orbit_nodes_increment = increment_new;
-	
-}
-
-void poset_classification::reallocate_to(long int new_number_of_nodes,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i;
-	poset_orbit_node *new_root;
-	
-	if (f_v) {
-		cout << "poset_classification::reallocate_to" << endl;
-	}
-	if (new_number_of_nodes <= nb_poset_orbit_nodes_allocated) {
-		cout << "poset_classification::reallocate_to "
-				"new_number_of_nodes <= "
-				"nb_poset_orbit_nodes_allocated" << endl;
-		exit(1);
-	}
-	if (f_v) {
-		cout << "poset_classification::reallocate_to from "
-				<< nb_poset_orbit_nodes_allocated
-				<< " to " << new_number_of_nodes << endl;
-	}
-	new_root = NEW_OBJECTS(poset_orbit_node, new_number_of_nodes);
-	for (i = 0; i < nb_poset_orbit_nodes_allocated; i++) {
-		new_root[i] = root[i];
-		root[i].null();
-	}
-	FREE_OBJECTS(root);
-	root = new_root;
-	nb_poset_orbit_nodes_allocated = new_number_of_nodes;
-	if (f_v) {
-		cout << "poset_classification::reallocate_to done" << endl;
 	}
 }
 

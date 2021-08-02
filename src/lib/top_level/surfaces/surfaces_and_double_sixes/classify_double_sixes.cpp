@@ -512,6 +512,7 @@ void classify_double_sixes::classify_partial_ovoids(int verbose_level)
 
 void classify_double_sixes::report(std::ostream &ost,
 		layered_graph_draw_options *draw_options,
+		poset_classification_report_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -555,7 +556,7 @@ void classify_double_sixes::report(std::ostream &ost,
 		cout << "classify_double_sixes::report before Five_plus_one->report" << endl;
 	}
 	ost << "\\section*{The classification of five-plus-ones}" << endl;
-	Five_plus_one->report(ost, verbose_level);
+	Five_plus_one->report(ost, Opt, verbose_level);
 	if (f_v) {
 		cout << "classify_double_sixes::report after Five_plus_one->report" << endl;
 	}

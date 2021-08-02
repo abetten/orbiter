@@ -57,13 +57,13 @@ void flag_orbit_node::freeself()
 	}
 	if (fusion_elt) {
 		FREE_int(fusion_elt);
-		}
+	}
 	if (f_v) {
 		cout << "flag_orbit_node::freeself before FREE_OBJECT(gens)" << endl;
 	}
 	if (gens) {
 		FREE_OBJECT(gens);
-		}
+	}
 	if (Receptacle) {
 		int i;
 
@@ -140,7 +140,7 @@ void flag_orbit_node::write_file(ofstream &fp, int verbose_level)
 	
 	if (f_v) {
 		cout << "flag_orbit_node::write_file" << endl;
-		}
+	}
 	fp.write((char *) &downstep_primary_orbit, sizeof(int));
 	fp.write((char *) &downstep_secondary_orbit, sizeof(int));
 	fp.write((char *) &downstep_orbit_len, sizeof(int));
@@ -150,19 +150,19 @@ void flag_orbit_node::write_file(ofstream &fp, int verbose_level)
 	if (f_fusion_node) {
 		if (f_v) {
 			cout << "flag_orbit_node::write_file f_fusion_node" << endl;
-			}
+		}
 		fp.write((char *) &fusion_with, sizeof(int));
 		Flag_orbits->A->element_write_to_file_binary(fusion_elt, fp, 0);
-		}
+	}
 	if (f_v) {
 		cout << "flag_orbit_node::write_file "
 				"before gens->write_to_file_binary" << endl;
-		}
+	}
 	gens->write_to_file_binary(fp, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "flag_orbit_node::write_file finished" << endl;
-		}
+	}
 }
 
 void flag_orbit_node::read_file(ifstream &fp, int verbose_level)
@@ -171,7 +171,7 @@ void flag_orbit_node::read_file(ifstream &fp, int verbose_level)
 	
 	if (f_v) {
 		cout << "flag_orbit_node::read_file" << endl;
-		}
+	}
 	
 	fp.read((char *) &downstep_primary_orbit, sizeof(int));
 	fp.read((char *) &downstep_secondary_orbit, sizeof(int));
@@ -182,22 +182,22 @@ void flag_orbit_node::read_file(ifstream &fp, int verbose_level)
 	if (f_fusion_node) {
 		if (f_v) {
 			cout << "flag_orbit_node::read_file f_fusion_node" << endl;
-			}
+		}
 		fp.read((char *) &fusion_with, sizeof(int));
 		fusion_elt = NEW_int(Flag_orbits->A->elt_size_in_int);
 		Flag_orbits->A->element_read_from_file_binary(fusion_elt, fp, 0);
-		}
+	}
 
 	if (f_v) {
 		cout << "flag_orbit_node::read_file "
 				"before gens->read_from_file_binary" << endl;
-		}
+	}
 	gens = NEW_OBJECT(strong_generators);
 	gens->read_from_file_binary(Flag_orbits->A, fp, verbose_level);
 
 	if (f_v) {
 		cout << "flag_orbit_node::read_file finished" << endl;
-		}
+	}
 }
 
 void flag_orbit_node::print_latex(flag_orbits *Flag_orbits,

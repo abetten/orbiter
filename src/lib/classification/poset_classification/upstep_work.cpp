@@ -595,7 +595,7 @@ int upstep_work::init_extension_node(int verbose_level)
 		//print_coset_table(coset_table, nb_cosets_processed);
 	}
 
-	gen->change_extension_type(size - 1, prev, prev_ex,
+	gen->get_Poo()->change_extension_type(size - 1, prev, prev_ex,
 			EXTENSION_TYPE_EXTENSION, 0/* verbose_level*/);
 
 

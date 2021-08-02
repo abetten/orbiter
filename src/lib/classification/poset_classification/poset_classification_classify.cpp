@@ -77,8 +77,8 @@ void poset_classification::compute_orbits_on_subsets(
 		cout << "depth : number of orbits" << endl;
 	}
 	for (i = 0; i < target_depth + 1; i++) {
-		fst = first_poset_orbit_node_at_level[i];
-		len = first_poset_orbit_node_at_level[i + 1] - fst;
+		fst = Poo->first_node_at_level(i);
+		len = Poo->first_node_at_level(i + 1) - fst;
 		if (f_v) {
 			cout << i << " : " << len << endl;
 		}
@@ -313,8 +313,8 @@ int poset_classification::compute_orbits(int from_level, int to_level,
 		if (nb_nodes == 0) {
 			int j;
 			for (j = level + 2; j <= to_level + 1; j++) {
-				first_poset_orbit_node_at_level[j] =
-						first_poset_orbit_node_at_level[j - 1];
+				Poo->set_first_node_at_level(j,
+						Poo->first_node_at_level(j - 1));
 				}
 			break;
 		}
@@ -339,7 +339,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 	}
 
 	if (Control->f_write_tree) {
-		print_tree();
+		Poo->print_tree();
 		write_treefile(
 				problem_label_with_path, depth,
 				Control->draw_options,
@@ -351,26 +351,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 		if (f_v) {
 			cout << "poset_classification::post_processing f_table_of_nodes" << endl;
 		}
-		long int *Table;
-		int nb_rows, nb_cols;
-		string fname;
-		file_io Fio;
-
-		get_table_of_nodes(Table,
-			nb_rows, nb_cols, 0 /*verbose_level*/);
-
-		fname.assign(problem_label_with_path);
-		fname.append("_table_of_orbits.csv");
-
-		Fio.lint_matrix_write_csv(fname, Table, nb_rows, nb_cols);
-
-		if (f_v) {
-			cout << "poset_classification::post_processing written file " << fname
-					<< " of size " << Fio.file_size(fname) << endl;
-		}
-
-
-		FREE_lint(Table);
+		Poo->make_tabe_of_nodes(verbose_level);
 	}
 
 	if (Control->f_list_all) {
@@ -493,8 +474,6 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 		draw_poset(get_problem_label_with_path(), actual_size,
 			0 /* data1 */,
 			Control->draw_options,
-			//Control->f_embedded, Control->f_sideways, Control->radius,
-			//Control->scale, Control->line_width,
 			verbose_level);
 		if (f_v) {
 			cout << "poset_classification::post_processing after draw_poset" << endl;
@@ -508,8 +487,6 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 		draw_poset_full(get_problem_label_with_path(), actual_size,
 				0 /* data1 */,
 				Control->draw_options,
-				//Control->f_embedded, Control->f_sideways, Control->radius,
-				//Control->scale, Control->line_width,
 				1 /* x_stretch */, verbose_level);
 		if (f_v) {
 			cout << "poset_classification::post_processing after draw_full_poset" << endl;
@@ -681,7 +658,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 					cout << "poset_classification::post_processing "
 							"before report" << endl;
 				}
-				report(ost, verbose_level);
+				report(ost, Control->report_options, verbose_level);
 				if (f_v) {
 					cout << "poset_classification::post_processing "
 							"after report" << endl;
@@ -820,7 +797,7 @@ void poset_classification::extend_level(int size,
 					"size = " << size
 					<< " before write_candidates_binary_using_sv" << endl;
 		}
-		write_candidates_binary_using_sv(problem_label_with_path.c_str(),
+		Poo->write_candidates_binary_using_sv(problem_label_with_path.c_str(),
 				size, t0, verbose_level - 1);
 		if (f_v) {
 			cout << "poset_classification::extend_level "
@@ -858,8 +835,8 @@ void poset_classification::compute_flag_orbits(int size,
 	int f_print = f_v;
 	double progress;
 
-	f = first_poset_orbit_node_at_level[size];
-	cur = first_poset_orbit_node_at_level[size + 1];
+	f = Poo->first_node_at_level(size);
+	cur = Poo->first_node_at_level(size + 1);
 	l = cur - f;
 
 	if (f_v) {
@@ -892,7 +869,7 @@ void poset_classification::compute_flag_orbits(int size,
 				cout << "poset_classification::compute_flag_orbits "
 						"level " << size << " before compute_flag_orbits_subspace_action" << endl;
 			}
-			root[prev].compute_flag_orbits_subspace_action(this, size,
+			Poo->get_node(prev)->compute_flag_orbits_subspace_action(this, size,
 				f_create_schreier_vector,
 				f_use_invariant_subset_if_available, 
 				Control->f_lex,
@@ -907,7 +884,7 @@ void poset_classification::compute_flag_orbits(int size,
 				cout << "poset_classification::compute_flag_orbits "
 						"level " << size << " before compute_flag_orbits" << endl;
 			}
-			root[prev].compute_flag_orbits(this, size,
+			Poo->get_node(prev)->compute_flag_orbits(this, size,
 				f_create_schreier_vector,
 				f_use_invariant_subset_if_available, 
 				Control->f_lex,
@@ -922,14 +899,14 @@ void poset_classification::compute_flag_orbits(int size,
 			print_level_info(size, prev);
 			cout << " compute_flag_orbits level " << size << " node " << u << " / " << l
 					<< " finished : ";
-			if (root[prev].has_Schreier_vector()) {
+			if (Poo->get_node(prev)->has_Schreier_vector()) {
 				//int nb = root[prev].sv[0];
-				int nb = root[prev].get_nb_of_live_points();
+				int nb = Poo->get_node(prev)->get_nb_of_live_points();
 				cout << " found " << nb << " live points in "
-					<< root[prev].get_nb_of_extensions() << " orbits : ";
+					<< Poo->node_get_nb_of_extensions(prev) << " orbits : ";
 
 				if (FALSE) {
-					int *live_points = root[prev].live_points();
+					int *live_points = Poo->get_node(prev)->live_points();
 					cout << "The live points are : ";
 					Orbiter->Int_vec.print(cout, live_points, nb);
 				}
@@ -940,7 +917,7 @@ void poset_classification::compute_flag_orbits(int size,
 				cout << " compute_flag_orbits level " << size << " node " << u << " / " << l
 						<< " the extensions are : ";
 				if (FALSE) {
-					root[prev].print_extensions(this);
+					Poo->get_node(prev)->print_extensions(this);
 				}
 			}
 			print_progress(progress);
@@ -985,8 +962,8 @@ void poset_classification::upstep(int size,
 	
 
 
-	f = first_poset_orbit_node_at_level[size];
-	cur = first_poset_orbit_node_at_level[size + 1];
+	f = Poo->first_node_at_level(size);
+	cur = Poo->first_node_at_level(size + 1);
 	l = cur - f;
 
 	progress_last_time = 0;
@@ -1003,7 +980,7 @@ void poset_classification::upstep(int size,
 	}
 	count_extension_nodes_at_level(size);
 	if (f_v) {
-		cout << "with " << nb_extension_nodes_at_level_total[size]
+		cout << "with " << Poo->get_nb_extension_nodes_at_level_total(size)
 			<< " extension nodes" << endl;
 	}
 	for (u = 0; u < l; u++) {
@@ -1068,8 +1045,8 @@ void poset_classification::upstep(int size,
 
 	}
 
-	first_poset_orbit_node_at_level[size + 2] = cur;
-	nb_poset_orbit_nodes_used = cur;
+	Poo->set_first_node_at_level(size + 2, cur);
+	Poo->set_nb_poset_orbit_nodes_used(cur);
 
 
 
@@ -1099,21 +1076,21 @@ void poset_classification::extend_node(
 				<< " cur=" << cur << endl;
 	}
 	
-	while (cur + root[prev].get_nb_of_extensions() + 10 >=
-			nb_poset_orbit_nodes_allocated) {
+	while (cur + Poo->node_get_nb_of_extensions(prev) + 10 >=
+			Poo->get_nb_poset_orbit_nodes_allocated()) {
 		print_level_info(size, prev);
 		if (f_v) {
 			cout << "poset_classification::extend_node "
 					"running out of nodes" << endl;
 			cout << "cur = " << cur << endl;
 			cout << "allocated nodes = "
-					<< nb_poset_orbit_nodes_allocated << endl;
+					<< Poo->get_nb_poset_orbit_nodes_allocated() << endl;
 			cout << "reallocating" << endl;
 		}
-		reallocate();
+		Poo->reallocate();
 		if (f_v) {
 			cout << "allocated nodes = "
-					<< nb_poset_orbit_nodes_allocated << endl;
+					<< Poo->get_nb_poset_orbit_nodes_allocated() << endl;
 		}
 	}
 			
@@ -1129,39 +1106,39 @@ void poset_classification::extend_node(
 
 		print_set(prev);
 
-		if (root[prev].has_Schreier_vector()) {
+		if (Poo->get_node(prev)->has_Schreier_vector()) {
 			//int nb = root[prev].sv[0];
-			int nb = root[prev].get_nb_of_live_points();
+			int nb = Poo->get_node(prev)->get_nb_of_live_points();
 			cout << " with " << nb << " live points" << endl;
 		}
 
-		cout << " with " << root[prev].get_nb_of_extensions()
+		cout << " with " << Poo->node_get_nb_of_extensions(prev)
 				<< " extensions" << endl;
 		cout << " verbose_level=" << verbose_level << endl;
 		if (FALSE) {
 			cout << "poset_classification::extend_node prev=" << prev
 					<< " cur=" << cur << " extensions:" << endl;
-			root[prev].print_extensions(this);
+			Poo->get_node(prev)->print_extensions(this);
 		}
 	}
 
 
 
 	int f_show_progress = FALSE;
-	if (root[prev].get_nb_of_extensions() > 10000) {
+	if (Poo->node_get_nb_of_extensions(prev) > 10000) {
 		f_show_progress = TRUE;
 	}
 	int nb_flags_10;
 
-	nb_flags_10 = root[prev].get_nb_of_extensions() / 10 + 1;
+	nb_flags_10 = Poo->node_get_nb_of_extensions(prev) / 10 + 1;
 
-	for (prev_ex = 0; prev_ex < root[prev].get_nb_of_extensions(); prev_ex++) {
+	for (prev_ex = 0; prev_ex < Poo->node_get_nb_of_extensions(prev); prev_ex++) {
 		
 		if (f_show_progress && (prev_ex % nb_flags_10) == 0) {
 			print_level_info(size, prev);
 			cout << "poset_classification::extend_node "
 					"working on extension "
-					<< prev_ex << " / " << root[prev].get_nb_of_extensions()
+					<< prev_ex << " / " << Poo->node_get_nb_of_extensions(prev)
 					<< " : progress " << prev_ex / nb_flags_10 << " * 10 %" << endl;
 
 
@@ -1171,7 +1148,7 @@ void poset_classification::extend_node(
 			print_level_info(size, prev);
 			cout << "poset_classification::extend_node "
 					"working on extension "
-					<< prev_ex << " / " << root[prev].get_nb_of_extensions()
+					<< prev_ex << " / " << Poo->node_get_nb_of_extensions(prev)
 					<< ":" << endl;
 			}
 	
@@ -1196,7 +1173,7 @@ void poset_classification::extend_node(
 			print_level_info(size, prev);
 			cout << "poset_classification::extend_node "
 					"working on extension "
-					<< prev_ex << " / " << root[prev].get_nb_of_extensions()
+					<< prev_ex << " / " << Poo->node_get_nb_of_extensions(prev)
 					<< ": before Work.init" << endl;
 		}
 
@@ -1210,7 +1187,7 @@ void poset_classification::extend_node(
 			print_level_info(size, prev);
 			cout << "poset_classification::extend_node "
 					"working on extension "
-					<< prev_ex << " / " << root[prev].get_nb_of_extensions()
+					<< prev_ex << " / " << Poo->node_get_nb_of_extensions(prev)
 					<< ": after Work.init" << endl;
 		}
 		
@@ -1226,7 +1203,7 @@ void poset_classification::extend_node(
 			print_level_info(size, prev);
 			cout << "poset_classification::extend_node "
 					"working on extension "
-					<< prev_ex << " / " << root[prev].get_nb_of_extensions()
+					<< prev_ex << " / " << Poo->node_get_nb_of_extensions(prev)
 					<< ": before Work.handle_extension nb_ext_cur="
 					<< nb_ext_cur << endl;
 		}
@@ -1250,7 +1227,7 @@ void poset_classification::extend_node(
 			print_level_info(size, prev);
 			cout << "poset_classification::extend_node "
 					"working on extension "
-					<< prev_ex << " / " << root[prev].get_nb_of_extensions()
+					<< prev_ex << " / " << Poo->node_get_nb_of_extensions(prev)
 					<< ":" << endl;
 			cout << "poset_classification::extend_node "
 					"after freeing Work" << endl;

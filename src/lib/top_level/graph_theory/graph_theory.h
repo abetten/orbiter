@@ -168,6 +168,8 @@ public:
 	std::string subset_label_tex;
 	std::string subset_text;
 
+	int f_disjoint_sets_graph;
+	std::string disjoint_sets_graph_fname;
 
 
 	create_graph_description();

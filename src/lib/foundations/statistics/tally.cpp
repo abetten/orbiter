@@ -132,6 +132,8 @@ void tally::init_lint(long int *data,
 	data_int = NEW_int(data_length);
 	for (i = 0; i < data_length; i++) {
 		data_int[i] = (int) data[i];
+
+#if 0
 		if (data_int[i] != data[i]) {
 			cout << "tally::init_lint data loss" << endl;
 			cout << "i=" << i << endl;
@@ -139,6 +141,8 @@ void tally::init_lint(long int *data,
 			cout << "data_int[i]=" << data_int[i] << endl;
 			exit(1);
 		}
+#endif
+
 	}
 	f_data_ownership = TRUE;
 	tally::data = data_int;

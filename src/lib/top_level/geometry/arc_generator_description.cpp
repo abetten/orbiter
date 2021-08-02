@@ -17,17 +17,21 @@ namespace top_level {
 
 arc_generator_description::arc_generator_description()
 {
+#if 0
 	f_q = FALSE;
 	LG = NULL;
 	F = NULL;
 	q = 0;
+#endif
 
 	f_poset_classification_control = FALSE;
 	Control = NULL;
 	f_d = FALSE;
 	d = 0;
+#if 0
 	f_n = FALSE;
 	n = 0;
+#endif
 	f_target_size = FALSE;
 	target_size = 0;
 	f_conic_test = FALSE;
@@ -57,6 +61,7 @@ int arc_generator_description::read_arguments(int argc, std::string *argv,
 	}
 	for (i = 0; i < argc; i++) {
 
+#if 0
 		if (stringcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
 			q = strtoi(argv[++i]);
@@ -64,7 +69,8 @@ int arc_generator_description::read_arguments(int argc, std::string *argv,
 				cout << "-q " << q << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-poset_classification_control") == 0) {
+#endif
+		if (stringcmp(argv[i], "-poset_classification_control") == 0) {
 			f_poset_classification_control = TRUE;
 			Control = NEW_OBJECT(poset_classification_control);
 			if (f_v) {
@@ -80,7 +86,6 @@ int arc_generator_description::read_arguments(int argc, std::string *argv,
 				if (i < argc) {
 					cout << "next argument is " << argv[i] << endl;
 				}
-				cout << "-q " << q << endl;
 			}
 		}
 		else if (stringcmp(argv[i], "-d") == 0) {
@@ -90,6 +95,7 @@ int arc_generator_description::read_arguments(int argc, std::string *argv,
 				cout << "-d " << d << endl;
 			}
 		}
+#if 0
 		else if (stringcmp(argv[i], "-n") == 0) {
 			f_n = TRUE;
 			n = strtoi(argv[++i]);
@@ -97,6 +103,7 @@ int arc_generator_description::read_arguments(int argc, std::string *argv,
 				cout << "-n " << n << endl;
 			}
 		}
+#endif
 		else if (stringcmp(argv[i], "-target_size") == 0) {
 			f_target_size = TRUE;
 			target_size = strtoi(argv[++i]);
@@ -159,18 +166,22 @@ int arc_generator_description::read_arguments(int argc, std::string *argv,
 
 void arc_generator_description::print()
 {
+#if 0
 	if (f_q) {
 		cout << "-q " << q << endl;
 	}
+#endif
 	if (f_poset_classification_control) {
 		Control->print();
 	}
 	if (f_d) {
 		cout << "-d " << d << endl;
 	}
+#if 0
 	if (f_n) {
 		cout << "-n " << n << endl;
 	}
+#endif
 	if (f_target_size) {
 		cout << "-target_size " << target_size << endl;
 	}

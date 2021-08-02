@@ -322,10 +322,11 @@ public:
 	int linear_codes_target_size;
 
 
+#if 0
 	// classification of arcs in projective spaces:
 	int f_classify_arcs;
 	arc_generator_description *Arc_generator_description;
-
+#endif
 
 	int f_exact_cover;
 	exact_cover_arguments *ECA;
@@ -457,15 +458,6 @@ public:
 			poset_classification *PC,
 			int depth,
 			int verbose_level);
-	void do_classify_arcs(
-			arc_generator_description *Arc_generator_description,
-			int verbose_level);
-	void do_spread_table_init(int dimension_of_spread_elements,
-			std::string &spread_selection_text,
-			std::string &spread_tables_prefix,
-			int starter_size,
-			packing_classify *&P,
-			int verbose_level);
 	void do_tensor_classify(int depth, int verbose_level);
 	void do_tensor_permutations(int verbose_level);
 	void do_linear_codes(int minimum_distance,
@@ -473,9 +465,6 @@ public:
 	void do_classify_ovoids(
 			poset_classification_control *Control,
 			ovoid_classify_description *Ovoid_classify_description,
-			int verbose_level);
-	void do_classify_cubic_curves(
-			arc_generator_description *Arc_generator_description,
 			int verbose_level);
 	int subspace_orbits_test_set(
 			int len, long int *S, int verbose_level);
@@ -489,12 +478,6 @@ public:
 			int f_Fano, int f_arcs, int f_depth, int depth,
 			std::string &label,
 			int verbose_level);
-#if 0
-	void do_BLT_starter(
-			linear_group *LG,
-			int starter_size,
-			int verbose_level);
-#endif
 
 
 };

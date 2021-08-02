@@ -25,6 +25,7 @@ class classification_of_cubic_surfaces_with_double_sixes_activity_description {
 public:
 
 	int f_report;
+	poset_classification_report_options *report_options;
 
 	int f_identify_Eckardt;
 
@@ -76,7 +77,9 @@ public:
 			surface_classify_wedge *SCW,
 			int verbose_level);
 	void perform_activity(int verbose_level);
-	void report(int verbose_level);
+	void report(
+			poset_classification_report_options *report_options,
+			int verbose_level);
 	void do_surface_identify_Eckardt(int verbose_level);
 	void do_surface_identify_F13(int verbose_level);
 	void do_surface_identify_Bes(int verbose_level);
@@ -221,6 +224,7 @@ public:
 		int verbose_level);
 	void report(std::ostream &ost,
 			layered_graph_draw_options *draw_options,
+			poset_classification_report_options *Opt,
 			int verbose_level);
 	void partial_ovoid_test_early(long int *S, int len,
 		long int *candidates, int nb_candidates,
@@ -335,9 +339,11 @@ public:
 	void read_double_sixes(int verbose_level);
 	void create_report(int f_with_stabilizers,
 			layered_graph_draw_options *draw_options,
+			poset_classification_report_options *Opt,
 			int verbose_level);
 	void report(std::ostream &ost, int f_with_stabilizers,
 			layered_graph_draw_options *draw_options,
+			poset_classification_report_options *Opt,
 			int verbose_level);
 	void create_report_double_sixes(int verbose_level);
 	void test_isomorphism(

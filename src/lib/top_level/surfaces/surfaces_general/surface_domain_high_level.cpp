@@ -320,6 +320,7 @@ void surface_domain_high_level::classify_surfaces_with_double_sixes(
 	}
 #endif
 
+#if 0
 	if (FALSE) {
 
 		layered_graph_draw_options *O;
@@ -336,6 +337,7 @@ void surface_domain_high_level::classify_surfaces_with_double_sixes(
 				O,
 				verbose_level);
 	}
+#endif
 
 	//FREE_OBJECT(Surf_A);
 	//FREE_OBJECT(Surf);
@@ -732,11 +734,13 @@ void surface_domain_high_level::do_six_arcs(
 	Six_arcs = NEW_OBJECT(six_arcs_not_on_a_conic);
 
 	Six_arc_descr = NEW_OBJECT(arc_generator_description);
+#if 0
 	Six_arc_descr->F = F;
 	Six_arc_descr->f_q = TRUE;
 	Six_arc_descr->q = F->q;
 	Six_arc_descr->f_n = TRUE;
 	Six_arc_descr->n = 3;
+#endif
 	Six_arc_descr->f_target_size = TRUE;
 	Six_arc_descr->target_size = 6;
 	Six_arc_descr->Control = Control_six_arcs;
@@ -760,12 +764,12 @@ void surface_domain_high_level::do_six_arcs(
 
 	Six_arcs->init(
 			Six_arc_descr,
-			PA->A,
-			Surf->P2,
+			PA,
+			//Surf->P2,
 			FALSE, 0, NULL,
 			verbose_level);
 
-	transporter = NEW_int(Six_arcs->Gen->A->elt_size_in_int);
+	transporter = NEW_int(Six_arcs->Gen->PA->A->elt_size_in_int);
 
 	int nb_orbits;
 	int level = 6;

@@ -15,8 +15,9 @@ namespace top_level {
 
 six_arcs_not_on_a_conic::six_arcs_not_on_a_conic()
 {
-	P2 = NULL;
+	//P2 = NULL;
 	Descr = NULL;
+	PA = NULL;
 	Gen = NULL;
 	nb_orbits = 0;
 	Not_on_conic_idx = NULL;
@@ -47,8 +48,7 @@ void six_arcs_not_on_a_conic::freeself()
 
 void six_arcs_not_on_a_conic::init(
 	arc_generator_description *Descr,
-	action *A,
-	projective_space *P2,
+	projective_space_with_action *PA,
 	int f_test_nb_Eckardt_points, int nb_E, surface_domain *Surf,
 	int verbose_level)
 {
@@ -59,8 +59,14 @@ void six_arcs_not_on_a_conic::init(
 		cout << "six_arcs_not_on_a_conic::init" << endl;
 	}
 
-	six_arcs_not_on_a_conic::P2 = P2;
+	if (PA->n != 2) {
+		cout << "six_arcs_not_on_a_conic::init PA->n != 2" << endl;
+		exit(1);
+	}
+
+	//six_arcs_not_on_a_conic::P2 = P2;
 	six_arcs_not_on_a_conic::Descr = Descr;
+	six_arcs_not_on_a_conic::PA = PA;
 	
 
 	
@@ -69,8 +75,8 @@ void six_arcs_not_on_a_conic::init(
 	Descr->target_size = 6;
 	Descr->f_d = TRUE;
 	Descr->d = 2;
-	Descr->f_n = TRUE;
-	Descr->n = 3;
+	//Descr->f_n = TRUE;
+	//Descr->n = 3;
 	Descr->f_conic_test = TRUE;
 	Descr->f_test_nb_Eckardt_points = f_test_nb_Eckardt_points;
 	Descr->nb_E = nb_E;
@@ -90,7 +96,8 @@ void six_arcs_not_on_a_conic::init(
 
 	Gen->init(
 			Descr,
-			A, A->Strong_gens,
+			PA,
+			PA->A->Strong_gens,
 			verbose_level - 2);
 
 
@@ -104,7 +111,7 @@ void six_arcs_not_on_a_conic::init(
 
 	if (f_v) {
 		cout << "six_arcs_not_on_a_conic::init "
-				"Classifying 6-arcs for q=" << Descr->F->q << endl;
+				"Classifying 6-arcs for q=" << PA->F->q << endl;
 		cout << "six_arcs_not_on_a_conic::init before Gen->compute_starter" << endl;
 	}
 	
@@ -112,7 +119,7 @@ void six_arcs_not_on_a_conic::init(
 
 	if (f_v) {
 		cout << "six_arcs_not_on_a_conic::init "
-				"Classifying 6-arcs for q=" << Descr->F->q << endl;
+				"Classifying 6-arcs for q=" << PA->F->q << endl;
 		cout << "six_arcs_not_on_a_conic::init after Gen->compute_starter" << endl;
 	}
 
@@ -169,7 +176,7 @@ void six_arcs_not_on_a_conic::init(
 			cout << "six_arcs_not_on_a_conic::init "
 					"computing conic intersections:" << endl;
 		}
-		P2->conic_type(
+		PA->P->conic_type(
 			Arc6, 6, 
 			6 /* threshold */,
 			Pts_on_conic, Conic_eqn, nb_pts_on_conic, len1,
@@ -242,14 +249,14 @@ void six_arcs_not_on_a_conic::report_latex(ostream &ost)
 	int h;
 	
 	ost << "\\subsection*{Classification of 6-arcs not on a conic "
-			"in $\\PG(2," << Descr->F->q << ")$}" << endl;
+			"in $\\PG(2," << PA->F->q << ")$}" << endl;
 	
 	longinteger_object go;
 	longinteger_domain D;
 	{
-	Gen->A->Strong_gens->group_order(go);
+	PA->A->Strong_gens->group_order(go);
 
-	ost << "The order of the group $" << Gen->A->label_tex << "$ is ";
+	ost << "The order of the group $" << PA->A->label_tex << "$ is ";
 	go.print_not_scientific(ost);
 	ost << endl;
 
@@ -281,7 +288,7 @@ void six_arcs_not_on_a_conic::report_latex(ostream &ost)
 		FREE_OBJECT(R);
 	}
 	ost << "The overall number of 6-arcs not on a conic "
-			"in $\\PG(2," << Descr->F->q << ")$ is: " << Ol << "\\\\" << endl;
+			"in $\\PG(2," << PA->F->q << ")$ is: " << Ol << "\\\\" << endl;
 }
 
 void six_arcs_not_on_a_conic::report_specific_arc_basic(ostream &ost, int arc_idx)
@@ -335,7 +342,7 @@ void six_arcs_not_on_a_conic::report_specific_arc(ostream &ost, int arc_idx)
 	//ost << "\}_{" << go << "}";
 	ost << "$$" << endl;
 
-	P2->F->display_table_of_projective_points(ost, The_arc->data, 6, 3);
+	PA->F->display_table_of_projective_points(ost, The_arc->data, 6, 3);
 
 
 	//ost << "The arc-stabilizer is the following group:\\\\" << endl;

@@ -460,6 +460,10 @@ int combinatorial_object_description::read_arguments(int argc, std::string *argv
 		else if (stringcmp(argv[i], "-end") == 0) {
 			break;
 		}
+		else {
+			cout << "combinatorial_object_description::read_arguments unknown command " << argv[i] << endl;
+			exit(1);
+		}
 	} // next i
 	cout << "combinatorial_object_description::read_arguments done" << endl;
 	return i + 1;

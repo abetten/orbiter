@@ -26,11 +26,13 @@ namespace top_level {
 class arc_generator_description {
 
 public:
+#if 0
 	linear_group *LG;
 
 	int f_q;
 	int q;
 	finite_field *F;
+#endif
 
 	int f_poset_classification_control;
 	poset_classification_control *Control;
@@ -39,9 +41,11 @@ public:
 	int d;
 	// d is the maximum number of points per line
 
+#if 0
 	int f_n;
 	int n;
 	// n is the dimension of the matrix group
+#endif
 
 	int f_target_size;
 	int target_size;
@@ -83,32 +87,35 @@ public:
 
 
 	arc_generator_description *Descr;
+	projective_space_with_action *PA;
 
 	int nb_points_total;
 	int nb_affine_lines;
 
 
 
-	int f_semilinear;
+	//int f_semilinear;
 
 	int *forbidden_points;
 	int nb_forbidden_points;
 	int *f_is_forbidden;
 
-	action *A;
+	//action *A;
 	strong_generators *SG;
 	
+#if 0
 	grassmann *Grass;
 	action_on_grassmannian *AG;
 	action *A_on_lines;
+#endif
 	
 	poset_with_group_action *Poset;
 
-	projective_space *P; // projective n-space
+	//projective_space *P; // projective n-space
 	
 
 
-	int *line_type; // [P2->N_lines]
+	int *line_type; // [PA->P->N_lines]
 
 		
 	poset_classification *gen;
@@ -122,12 +129,16 @@ public:
 	void null();
 	void freeself();
 	void main(int verbose_level);
+#if 0
 	void init_from_description(
 		arc_generator_description *Descr,
 		int verbose_level);
+#endif
 	void init(
 		arc_generator_description *Descr,
-		action *A, strong_generators *SG,
+		projective_space_with_action *PA,
+		//action *A,
+		strong_generators *SG,
 		int verbose_level);
 	void prepare_generator(int verbose_level);
 	void compute_starter(int verbose_level);
@@ -367,7 +378,7 @@ public:
 	void null();
 	void freeself();
 	void init(
-			group_theoretic_activity *GTA,
+			projective_space_with_action *PA,
 			cubic_curve_with_action *CCA,
 			arc_generator_description *Descr,
 			int verbose_level);

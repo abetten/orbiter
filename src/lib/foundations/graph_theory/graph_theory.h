@@ -600,6 +600,8 @@ public:
 			int epsilon, int d, int q, int verbose_level);
 	void make_non_attacking_queens_graph(int *&Adj, int &N,
 			int n, int verbose_level);
+	void make_disjoint_sets_graph(int *&Adj, int &N,
+			std::string &fname, int verbose_level);
 	void compute_adjacency_matrix(
 			int *Table, int nb_sets, int set_size,
 			std::string &prefix_for_graph,

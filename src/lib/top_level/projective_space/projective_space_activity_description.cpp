@@ -177,6 +177,10 @@ projective_space_activity_description::projective_space_activity_description()
 	f_dualize_points_to_hyperplanes = FALSE;
 	//std::string dualize_input_set;
 
+	f_classify_arcs = FALSE;
+	Arc_generator_description = NULL;
+
+	f_classify_cubic_curves = FALSE;
 }
 
 projective_space_activity_description::~projective_space_activity_description()
@@ -800,6 +804,44 @@ int projective_space_activity_description::read_arguments(
 				cout << "-dualize_points_to_hyperplanes " << dualize_input_set << endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-classify_arcs") == 0) {
+			f_classify_arcs = TRUE;
+			Arc_generator_description = NEW_OBJECT(arc_generator_description);
+			if (f_v) {
+				cout << "-classify_arcs" << endl;
+			}
+			i += Arc_generator_description->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			if (f_v) {
+				cout << "done reading -classify_arcs " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+			}
+		}
+		// cubic curves
+		else if (stringcmp(argv[i], "-classify_cubic_curves") == 0) {
+			f_classify_cubic_curves = TRUE;
+			Arc_generator_description = NEW_OBJECT(arc_generator_description);
+			if (f_v) {
+				cout << "-classify_cubic_curves" << endl;
+			}
+			i += Arc_generator_description->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			if (f_v) {
+				cout << "done reading -classify_cubic_curves " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+				cout << "-classify_cubic_curves " << endl;
+			}
+		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -1032,6 +1074,17 @@ void projective_space_activity_description::print()
 	if (f_dualize_points_to_hyperplanes) {
 		cout << "-dualize_points_to_hyperplanes" << " " << dualize_input_set << endl;
 	}
+	if (f_classify_arcs) {
+		cout << "-classify_arcs " << endl;
+		Arc_generator_description->print();
+	}
+	// cubic curves
+	if (f_classify_cubic_curves) {
+		cout << "-classify_cubic_curves" << endl;
+		Arc_generator_description->print();
+	}
+
+
 }
 
 

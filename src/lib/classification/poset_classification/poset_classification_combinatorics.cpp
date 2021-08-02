@@ -396,7 +396,7 @@ void poset_classification::test_for_multi_edge_in_classification_graph(
 				"depth=" << depth << endl;
 	}
 	for (i = 0; i <= depth; i++) {
-		f = first_poset_orbit_node_at_level[i];
+		f = Poo->first_node_at_level(i);
 		l = nb_orbits_at_level(i);
 		if (f_v) {
 			cout << "poset_classification::test_for_multi_edge_in_classification_graph "
@@ -405,7 +405,8 @@ void poset_classification::test_for_multi_edge_in_classification_graph(
 		for (j = 0; j < l; j++) {
 			poset_orbit_node *O;
 
-			O = &root[f + j];
+			//O = &root[f + j];
+			O = get_node_ij(i, j);
 			for (h1 = 0; h1 < O->get_nb_of_extensions(); h1++) {
 				extension *E1 = O->get_E(h1); // O->E + h1;
 

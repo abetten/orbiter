@@ -244,17 +244,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 
 
-	// arcs:
 
-
-	else if (Descr->f_classify_arcs) {
-		if (!Descr->f_poset_classification_control) {
-			cout << "For classifying arcs, please use -poset_classification_control <descr> -end" << endl;
-			exit(1);
-		}
-		do_classify_arcs(Descr->Arc_generator_description,
-				verbose_level);
-	}
 
 
 
@@ -276,11 +266,6 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	}
 
 
-	else if (Descr->f_classify_cubic_curves) {
-		do_classify_cubic_curves(
-				Descr->Arc_generator_description,
-				verbose_level);
-	}
 
 	else if (Descr->f_orbits_on_polynomials) {
 
@@ -2090,76 +2075,6 @@ void group_theoretic_activity::orbits_on_poset_post_processing(
 
 
 
-void group_theoretic_activity::do_classify_arcs(
-		arc_generator_description *Arc_generator_description,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_arcs" << endl;
-	}
-
-	if (!Arc_generator_description->f_q) {
-		cout << "please use -q <q>" << endl;
-		exit(1);
-	}
-
-	if (!Arc_generator_description->f_n) {
-		cout << "please use -n <n>" << endl;
-		exit(1);
-	}
-
-	if (Arc_generator_description->q != LG->F->q) {
-		cout << "group_theoretic_activity::do_classify_arcs the order of the fields don't match" << endl;
-		exit(1);
-	}
-	Arc_generator_description->F = LG->F;
-	Arc_generator_description->LG = LG;
-	Arc_generator_description->Control = Descr->Control;
-
-	if (Arc_generator_description->n != LG->A2->matrix_group_dimension()) {
-		cout << "group_theoretic_activity::do_classify_arcs the dimensions don't match" << endl;
-		exit(1);
-	}
-
-	{
-	arc_generator *Gen;
-
-	Gen = NEW_OBJECT(arc_generator);
-
-
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_arcs before Gen->init" << endl;
-	}
-	Gen->init_from_description(Arc_generator_description,
-			verbose_level);
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_arcs after Gen->init" << endl;
-	}
-
-
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_arcs before Gen->main" << endl;
-	}
-	Gen->main(verbose_level);
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_arcs after Gen->main" << endl;
-	}
-
-
-	FREE_OBJECT(Gen);
-	}
-
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_arcs done" << endl;
-	}
-}
-
 
 
 
@@ -2296,160 +2211,6 @@ void group_theoretic_activity::do_classify_ovoids(
 
 	if (f_v) {
 		cout << "group_theoretic_activity::do_classify_ovoids done" << endl;
-	}
-}
-
-
-void group_theoretic_activity::do_classify_cubic_curves(
-		arc_generator_description *Arc_generator_description,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_cubic_curves" << endl;
-	}
-
-
-
-	finite_field *F;
-
-	F = LG->A2->matrix_group_finite_field();
-
-	Arc_generator_description->F = F;
-	if (Arc_generator_description->q != F->q) {
-		cout << "Arc_generator_description->q != F->q" << endl;
-		exit(1);
-	}
-
-
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_cubic_curves q = " << F->q << endl;
-	}
-
-	cubic_curve *CC;
-
-	CC = NEW_OBJECT(cubic_curve);
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_cubic_curves before CC->init" << endl;
-	}
-	CC->init(F, verbose_level);
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_cubic_curves after CC->init" << endl;
-	}
-
-
-	cubic_curve_with_action *CCA;
-
-	CCA = NEW_OBJECT(cubic_curve_with_action);
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_cubic_curves before CCA->init" << endl;
-	}
-	CCA->init(CC, LG->A2, verbose_level);
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_cubic_curves after CCA->init" << endl;
-	}
-
-
-	classify_cubic_curves *CCC;
-
-	CCC = NEW_OBJECT(classify_cubic_curves);
-
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_cubic_curves before CCC->init" << endl;
-	}
-	CCC->init(
-			this,
-			CCA,
-			Arc_generator_description,
-			verbose_level);
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_cubic_curves after CCC->init" << endl;
-	}
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_cubic_curves before CCC->compute_starter" << endl;
-	}
-	CCC->compute_starter(verbose_level);
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_cubic_curves after CCC->compute_starter" << endl;
-	}
-
-#if 0
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_cubic_curves before CCC->test_orbits" << endl;
-	}
-	CCC->test_orbits(verbose_level);
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_cubic_curves after CCC->test_orbits" << endl;
-	}
-#endif
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_cubic_curves before CCC->do_classify" << endl;
-	}
-	CCC->do_classify(verbose_level);
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_cubic_curves after CCC->do_classify" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_cubic_curves creating cheat sheet" << endl;
-	}
-	char fname[1000];
-	char title[1000];
-	char author[1000];
-	snprintf(title, 1000, "Cubic Curves in PG$(2,%d)$", F->q);
-	strcpy(author, "");
-	snprintf(fname, 1000, "Cubic_curves_q%d.tex", F->q);
-
-	{
-		ofstream fp(fname);
-		latex_interface L;
-
-		//latex_head_easy(fp);
-		L.head(fp,
-			FALSE /* f_book */,
-			TRUE /* f_title */,
-			title, author,
-			FALSE /*f_toc */,
-			FALSE /* f_landscape */,
-			FALSE /* f_12pt */,
-			TRUE /*f_enlarged_page */,
-			TRUE /* f_pagenumbers*/,
-			NULL /* extra_praeamble */);
-
-		fp << "\\subsection*{" << title << "}" << endl;
-
-		if (f_v) {
-			cout << "group_theoretic_activity::do_classify_cubic_curves before CCC->report" << endl;
-		}
-		CCC->report(fp, verbose_level);
-		if (f_v) {
-			cout << "group_theoretic_activity::do_classify_cubic_curves after CCC->report" << endl;
-		}
-
-		L.foot(fp);
-	}
-
-	file_io Fio;
-
-	cout << "Written file " << fname << " of size "
-		<< Fio.file_size(fname) << endl;
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_cubic_curves writing cheat sheet on "
-				"cubic curves done" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "group_theoretic_activity::do_classify_cubic_curves done" << endl;
 	}
 }
 
@@ -2880,7 +2641,8 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(int spread_no,
 	q = F->q;
 
 	if (f_v) {
-		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction n=" << n << " k=" << k << " q=" << q << endl;
+		cout << "group_theoretic_activity::do_Andre_Bruck_Bose_construction "
+				"n=" << n << " k=" << k << " q=" << q << endl;
 	}
 
 	order_of_plane = NT.i_power_j(q, k);

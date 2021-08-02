@@ -56,12 +56,54 @@ void combinatorial_object_activity::perform_activity(int verbose_level)
 		cout << "combinatorial_object_activity::perform_activity" << endl;
 	}
 
-#if 0
+
 	if (Descr->f_conic_type) {
-		COC->Pts, COC->nb_pts
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity f_conic_type" << endl;
+		}
+
+		projective_space *P;
+
+		P = COC->Descr->P;
+
+		long int **Pts_on_conic;
+		int **Conic_eqn;
+		int *nb_pts_on_conic;
+		int len;
+
+		P->conic_type(
+				COC->Pts, COC->nb_pts,
+				Descr->conic_type_threshold,
+				Pts_on_conic, Conic_eqn, nb_pts_on_conic, len,
+				verbose_level);
+
+		//
 
 	}
-#endif
+
+	if (Descr->f_non_conical_type) {
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity f_conic_type" << endl;
+		}
+
+		projective_space *P;
+
+		P = COC->Descr->P;
+
+		std::vector<int> Rk;
+
+		P->determine_nonconical_six_subsets(
+				COC->Pts, COC->nb_pts,
+				Rk,
+				verbose_level);
+
+		cout << "We found " << Rk.size() << " non-conical 6 subsets" << endl;
+
+	}
+
+
 	if (Descr->f_save) {
 
 		file_io Fio;

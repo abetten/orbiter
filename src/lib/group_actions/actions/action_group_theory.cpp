@@ -1905,7 +1905,59 @@ void action::element_commutator_abavbv(int *Elt_A,
 	FREE_int(Elt4);
 }
 
+void action::compute_projectivity_subgroup(strong_generators *&projectivity_gens,
+		strong_generators *Aut_gens, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "action::compute_projectivity_subgroup" << endl;
+	}
+
+	if (is_semilinear_matrix_group()) {
+		if (f_v) {
+			cout << "action::compute_projectivity_subgroup "
+					"computing projectivity subgroup" << endl;
+		}
+
+		projectivity_gens = NEW_OBJECT(strong_generators);
+		{
+			sims *S;
+
+			if (f_v) {
+				cout << "action::compute_projectivity_subgroup "
+						"before Aut_gens->create_sims" << endl;
+			}
+			S = Aut_gens->create_sims(0 /*verbose_level */);
+			if (f_v) {
+				cout << "action::compute_projectivity_subgroup "
+						"after Aut_gens->create_sims" << endl;
+			}
+			if (f_v) {
+				cout << "action::compute_projectivity_subgroup "
+						"before projectivity_group_gens->projectivity_subgroup" << endl;
+			}
+			projectivity_gens->projectivity_subgroup(S, verbose_level - 3);
+			if (f_v) {
+				cout << "action::compute_projectivity_subgroup "
+						"after projectivity_group_gens->projectivity_subgroup" << endl;
+			}
+			FREE_OBJECT(S);
+		}
+		if (f_v) {
+			cout << "action::compute_projectivity_subgroup "
+					"computing projectivity subgroup done" << endl;
+		}
+	}
+	else {
+		projectivity_gens = NULL;
+	}
+
+
+	if (f_v) {
+		cout << "action::compute_projectivity_subgroup done" << endl;
+	}
+}
 
 
 

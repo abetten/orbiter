@@ -76,6 +76,10 @@ create_graph_description::create_graph_description()
 	//std::string subset_label;
 	//std::string subset_label_tex;
 	//std::string subset_text;
+
+	f_disjoint_sets_graph = FALSE;
+	//std::string disjoint_sets_graph_fname;
+
 }
 
 
@@ -218,6 +222,14 @@ int create_graph_description::read_arguments(
 				cout << "-subset " << subset_label << " " << subset_label_tex << " " << subset_text << endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-disjoint_sets_graph") == 0) {
+			f_disjoint_sets_graph = TRUE;
+			disjoint_sets_graph_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-disjoint_sets_graph " << disjoint_sets_graph_fname << endl;
+			}
+		}
+
 		else if (stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;

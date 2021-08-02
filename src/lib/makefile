@@ -292,7 +292,6 @@ MODULES= \
 		classification/poset_classification/classification_base_case.o \
 		classification/poset_classification/extension.o \
 		classification/poset_classification/orbit_based_testing.o \
-		classification/poset_classification/poset_description.o \
 		classification/poset_classification/poset_classification.o \
 		classification/poset_classification/poset_classification_classify.o \
 		classification/poset_classification/poset_classification_combinatorics.o \
@@ -302,8 +301,11 @@ MODULES= \
 		classification/poset_classification/poset_classification_init.o \
 		classification/poset_classification/poset_classification_io.o \
 		classification/poset_classification/poset_classification_recognize.o \
+		classification/poset_classification/poset_classification_report_options.o \
 		classification/poset_classification/poset_classification_report.o \
 		classification/poset_classification/poset_classification_trace.o \
+		classification/poset_classification/poset_description.o \
+		classification/poset_classification/poset_of_orbits.o \
 		classification/poset_classification/poset_orbit_node.o \
 		classification/poset_classification/poset_orbit_node_downstep.o \
 		classification/poset_classification/poset_orbit_node_downstep_subspace_action.o \

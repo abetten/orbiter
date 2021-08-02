@@ -181,7 +181,7 @@ void poset_orbit_node::install_fusion_node(
 		}
 	hdl = gen->get_A()->element_store(gen->get_Elt1(), FALSE);
 	//E[current_extension].type = EXTENSION_TYPE_FUSION;
-	gen->change_extension_type(lvl,
+	gen->get_Poo()->change_extension_type(lvl,
 			current_node, current_extension,
 			EXTENSION_TYPE_FUSION,
 			0/* verbose_level*/);

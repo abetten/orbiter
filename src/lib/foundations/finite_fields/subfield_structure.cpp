@@ -47,25 +47,25 @@ void subfield_structure::freeself()
 {
 	if (Basis) {
 		FREE_int(Basis);
-		}
+	}
 	if (embedding) {
 		FREE_int(embedding);
-		}
+	}
 	if (embedding_inv) {
 		FREE_int(embedding_inv);
-		}
+	}
 	if (components) {
 		FREE_int(components);
-		}
+	}
 	if (FQ_embedding) {
 		FREE_int(FQ_embedding);
-		}
+	}
 	if (Fq_element) {
 		FREE_int(Fq_element);
-		}
+	}
 	if (v) {
 		FREE_int(v);
-		}
+	}
 	null();
 }
 
@@ -78,7 +78,7 @@ void subfield_structure::init(finite_field *FQ,
 
 	if (f_v) {
 		cout << "subfield_structure::init" << endl;
-		}
+	}
 	subfield_structure::FQ = FQ;
 	subfield_structure::Fq = Fq;
 	Q = FQ->q;
@@ -87,15 +87,15 @@ void subfield_structure::init(finite_field *FQ,
 		cout << "subfield_structure::init "
 				"different characteristics" << endl;
 		exit(1);
-		}
+	}
 	s = FQ->e / Fq->e;
 	if (Fq->e * s != FQ->e) {
 		cout << "Fq is not a subfield of FQ" << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "index = " << s << endl;
-		}
+	}
 
 
 	my_basis = NEW_int(s);
@@ -103,14 +103,14 @@ void subfield_structure::init(finite_field *FQ,
 	omega = FQ->power(alpha, s);
 	for (i = 0; i < s; i++) {
 		my_basis[i] = FQ->power(omega, i);
-		}
+	}
 	init_with_given_basis(FQ, Fq, my_basis, verbose_level);
 
 	FREE_int(my_basis);
 
 	if (f_v) {
 		cout << "subfield_structure::init done" << endl;
-		}
+	}
 }
 
 void subfield_structure::init_with_given_basis(
@@ -123,7 +123,7 @@ void subfield_structure::init_with_given_basis(
 
 	if (f_v) {
 		cout << "subfield_structure::init_with_given_basis" << endl;
-		}
+	}
 	subfield_structure::FQ = FQ;
 	subfield_structure::Fq = Fq;
 	Q = FQ->q;
@@ -132,15 +132,15 @@ void subfield_structure::init_with_given_basis(
 		cout << "subfield_structure::init_with_given_basis "
 				"different characteristics" << endl;
 		exit(1);
-		}
+	}
 	s = FQ->e / Fq->e;
 	if (Fq->e * s != FQ->e) {
 		cout << "Fq is not a subfield of FQ" << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "index = " << s << endl;
-		}
+	}
 	Basis = NEW_int(s);
 	embedding = NEW_int(Q);
 	embedding_inv = NEW_int(Q);
@@ -153,20 +153,20 @@ void subfield_structure::init_with_given_basis(
 	//omega = FQ->power(alpha, s);
 	for (i = 0; i < s; i++) {
 		Basis[i] = given_basis[i];
-		}
+	}
 	if (f_v) {
 		cout << "Field basis: ";
 		Orbiter->Int_vec.print(cout, Basis, s);
 		cout << endl;
-		}
+	}
 	for (i = 0; i < Q; i++) {
 		Fq_element[i] = -1;
-		}
+	}
 	for (i = 0; i < q; i++) {
 		j = FQ->embed(*Fq, s, i, 0 /* verbose_level */);
 		FQ_embedding[i] = j;
 		Fq_element[j] = i;
-		}
+	}
 
 	for (i = 0; i < Q; i++) {
 		Gg.AG_element_unrank(q, v, 1, s, i);
@@ -175,13 +175,13 @@ void subfield_structure::init_with_given_basis(
 		embedding_inv[j] = i;
 		for (h = 0; h < s; h++) {
 			components[j * s + h] = v[h];
-			}
 		}
+	}
 	
 	
 	if (f_v) {
 		cout << "subfield_structure::init_with_given_basis done" << endl;
-		}
+	}
 }
 
 void subfield_structure::print_embedding()
@@ -197,7 +197,7 @@ void subfield_structure::print_embedding()
 		cout << setw(4) << i << " : ";
 		Orbiter->Int_vec.print(cout, v, s);
 		cout << " : " << j << endl;
-		}
+	}
 	cout << "subfield_structure::print_embedding in reverse:" << endl;
 	cout << "element i in F_Q : vector over F_q : vector AG_rank" << endl;
 	for (i = 0; i < Q; i++) {
@@ -205,7 +205,7 @@ void subfield_structure::print_embedding()
 		cout << setw(4) << i << " : ";
 		Orbiter->Int_vec.print(cout, components + i * s, s);
 		cout << " : " << j << endl;
-		}
+	}
 	
 }
 
@@ -215,13 +215,14 @@ void subfield_structure::report(std::ostream &ost)
 	geometry_global Gg;
 
 
+	ost << "\\subsection*{The Subfield of Order $" << q << "$}" << endl;
 	ost << "Field basis:\\\\" << endl;
 	ost << "$$" << endl;
 	Orbiter->Int_vec.print(ost, Basis, s);
-	cout << endl;
+	//cout << endl;
 	ost << "$$" << endl;
 	ost << "Embedding:\\\\" << endl;
-	ost << "$$";
+	ost << "$$" << endl;
 	ost << "\\begin{array}{|r|r|r|}" << endl;
 	ost << "\\hline" << endl;
 	for (i = 0; i < Q; i++) {
@@ -230,14 +231,14 @@ void subfield_structure::report(std::ostream &ost)
 		ost << setw(4) << i << " & ";
 		Orbiter->Int_vec.print(ost, v, s);
 		ost << " & " << j << "\\\\" << endl;
-		}
+	}
 	ost << "\\hline" << endl;
 	ost << "\\end{array}" << endl;
-	ost << "$$";
+	ost << "$$" << endl;
 
 
 	ost << "In reverse:\\\\" << endl;
-	ost << "$$";
+	ost << "$$" << endl;
 	ost << "\\begin{array}{|r|r|r|}" << endl;
 	ost << "\\hline" << endl;
 	ost << "i \\in {\\mathbb F}_Q & \\mbox{vector} & \\mbox{rank}\\\\" << endl;
@@ -250,7 +251,7 @@ void subfield_structure::report(std::ostream &ost)
 	}
 	ost << "\\hline" << endl;
 	ost << "\\end{array}" << endl;
-	ost << "$$";
+	ost << "$$" << endl;
 
 }
 
@@ -262,7 +263,7 @@ int subfield_structure::evaluate_over_FQ(int *v)
 	for (i = 0; i < s; i++) {
 		b = FQ->mult(v[i], Basis[i]);
 		a = FQ->add(a, b);
-		}
+	}
 	return a;
 }
 
@@ -275,7 +276,7 @@ int subfield_structure::evaluate_over_Fq(int *v)
 		c = FQ_embedding[v[i]];
 		b = FQ->mult(c, Basis[i]);
 		a = FQ->add(a, b);
-		}
+	}
 	return a;
 }
 
@@ -287,7 +288,7 @@ void subfield_structure::lift_matrix(int *MQ,
 
 	if (f_v) {
 		cout << "subfield_structure::lift_matrix" << endl;
-		}
+	}
 	n = m * s;
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < m; j++) {
@@ -300,14 +301,14 @@ void subfield_structure::lift_matrix(int *MQ,
 				for (v = 0; v < s; v++) {
 					d = components[c * s + v];
 					Mq[(I + u) * n + J + v] = d;
-					}
 				}
 			}
 		}
+	}
 
 	if (f_v) {
 		cout << "subfield_structure::lift_matrix done" << endl;
-		}
+	}
 }
 
 void subfield_structure::retract_matrix(int *Mq,
@@ -320,11 +321,11 @@ void subfield_structure::retract_matrix(int *Mq,
 
 	if (f_v) {
 		cout << "subfield_structure::retract_matrix" << endl;
-		}
+	}
 	if (m * s != n) {
 		cout << "subfield_structure::retract_matrix m * s != n" << endl;
 		exit(1);
-		}
+	}
 	vec = NEW_int(s);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < m; j++) {
@@ -333,7 +334,7 @@ void subfield_structure::retract_matrix(int *Mq,
 			for (u = 0; u < s; u++) {
 				for (v = 0; v < s; v++) {
 					vec[v] = Mq[(I + u) * n + J + v];
-					}
+				}
 				rk = Gg.AG_element_rank(q, vec, 1, s);
 				d = embedding[rk];
 				b = Basis[u];
@@ -341,21 +342,21 @@ void subfield_structure::retract_matrix(int *Mq,
 				a = FQ->mult(d, bv);
 				if (u == 0) {
 					MQ[i * m + j] = a;
-					}
+				}
 				else {
 					if (a != MQ[i * m + j]) {
 						cout << "subfield_structure::retract_matrix "
 								"a != MQ[i * m + j]" << endl;
 						exit(1);
-						}
 					}
 				}
 			}
 		}
+	}
 	FREE_int(vec);
 	if (f_v) {
 		cout << "subfield_structure::retract_matrix done" << endl;
-		}
+	}
 }
 
 
@@ -404,13 +405,13 @@ void subfield_structure::Adelaide_hyperoval(
 	if (f_v) {
 		cout << "subfield_structure::Adelaide_hyperoval "
 				"q=" << q << endl;
-		}
+	}
 
 	if (ODD(e)) {
 		cout << "subfield_structure::Adelaide_hyperoval "
 				"need e even" << endl;
 		exit(1);
-		}
+	}
 	nb_pts = N;
 
 	k = (q - 1) / 3;
@@ -418,7 +419,7 @@ void subfield_structure::Adelaide_hyperoval(
 		cout << "subfield_structure::Adelaide_hyperoval "
 				"k * 3 != q - 1" << endl;
 		exit(1);
-		}
+	}
 
 	alpha = FQ->alpha;
 	b = FQ->power(alpha, q - 1);
@@ -426,7 +427,7 @@ void subfield_structure::Adelaide_hyperoval(
 		cout << "subfield_structure::Adelaide_hyperoval "
 				"FQ->power(b, q + 1) != 1" << endl;
 		exit(1);
-		}
+	}
 	bk = FQ->power(b, k);
 	bq = FQ->frobenius_power(b, e);
 	tr_b = FQ->add(b, bq);
@@ -436,13 +437,13 @@ void subfield_structure::Adelaide_hyperoval(
 		cout << "subfield_structure::Adelaide_hyperoval "
 				"tr_b_down == -1" << endl;
 		exit(1);
-		}
+	}
 	tr_bk_down = Fq_element[tr_bk];
 	if (tr_bk_down == -1) {
 		cout << "subfield_structure::Adelaide_hyperoval "
 				"tr_bk_down == -1" << endl;
 		exit(1);
-		}
+	}
 
 	tr_b_down_inv = Fq->inverse(tr_b_down);
 
@@ -457,7 +458,7 @@ void subfield_structure::Adelaide_hyperoval(
 			cout << "subfield_structure::Adelaide_hyperoval "
 					"Fq->mult(sqrt_t, sqrt_t) != t" << endl;
 			exit(1);
-			}
+		}
 
 
 		t_lift = FQ_embedding[t];
@@ -468,7 +469,7 @@ void subfield_structure::Adelaide_hyperoval(
 			cout << "subfield_structure::Adelaide_hyperoval "
 					"tr_a_down == -1" << endl;
 			exit(1);
-			}
+		}
 
 		c = Fq->add3(t, Fq->mult(tr_b_down, sqrt_t), 1);
 		cv = Fq->inverse(c);
@@ -488,7 +489,7 @@ void subfield_structure::Adelaide_hyperoval(
 		Mtx[t * 3 + 0] = 1;
 		Mtx[t * 3 + 1] = t;
 		Mtx[t * 3 + 2] = w;
-		}
+	}
 	t = q;
 	Mtx[t * 3 + 0] = 0;
 	Mtx[t * 3 + 1] = 1;
@@ -500,16 +501,14 @@ void subfield_structure::Adelaide_hyperoval(
 	for (i = 0; i < N; i++) {
 		Fq->PG_element_rank_modified(Mtx + i * 3, 1, 3, r);
 		Pts[i] = r;
-		}
+	}
 
 	FREE_int(Mtx);
 
 	if (f_v) {
 		cout << "subfield_structure::Adelaide_hyperoval "
 				"q=" << q << " done" << endl;
-		}
-
-
+	}
 
 }
 
@@ -524,7 +523,7 @@ void subfield_structure::create_adelaide_hyperoval(
 
 	if (f_v) {
 		cout << "subfield_structure::create_adelaide_hyperoval" << endl;
-		}
+	}
 
 	Adelaide_hyperoval(Pts, nb_pts, verbose_level);
 
@@ -553,18 +552,18 @@ void subfield_structure::create_adelaide_hyperoval(
 				cout << setw(4) << i << " : ";
 				Orbiter->Int_vec.print(cout, v, d);
 				cout << endl;
-				}
 			}
+		}
 		FREE_int(v);
 		FREE_OBJECT(P);
-		}
+	}
 
 	if (!Sorting.test_if_set_with_return_value_lint(Pts, nb_pts)) {
 		cout << "subfield_structure::create_adelaide_hyperoval "
 				"the set is not a set, "
 				"something is wrong" << endl;
 		exit(1);
-		}
+	}
 
 }
 

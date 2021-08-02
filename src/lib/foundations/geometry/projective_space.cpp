@@ -1429,6 +1429,27 @@ int projective_space::determine_line_in_plane(
 	return TRUE;
 }
 
+int projective_space::nonconical_six_arc_get_nb_Eckardt_points(
+		long int *Arc6, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space::nonconical_six_arc_get_nb_Eckardt_points" << endl;
+	}
+	eckardt_point_info *E;
+	int nb_E;
+	surface_domain *Surf = NULL;
+
+	E = compute_eckardt_point_info(Surf, Arc6, 0/*verbose_level*/);
+
+
+
+	nb_E = E->nb_E;
+
+	FREE_OBJECT(E);
+	return nb_E;
+}
 int projective_space::test_nb_Eckardt_points(surface_domain *Surf,
 		long int *S, int len, int pt, int nb_E, int verbose_level)
 {

@@ -2854,6 +2854,7 @@ void surface_classify_wedge::read_double_sixes(int verbose_level)
 
 void surface_classify_wedge::create_report(int f_with_stabilizers,
 		layered_graph_draw_options *draw_options,
+		poset_classification_report_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2890,7 +2891,7 @@ void surface_classify_wedge::create_report(int f_with_stabilizers,
 		if (f_v) {
 			cout << "surface_classify_wedge::create_report before report" << endl;
 		}
-		report(fp, f_with_stabilizers, draw_options, verbose_level - 1);
+		report(fp, f_with_stabilizers, draw_options, Opt, verbose_level - 1);
 		if (f_v) {
 			cout << "surface_classify_wedge::create_report after report" << endl;
 		}
@@ -2904,6 +2905,7 @@ void surface_classify_wedge::create_report(int f_with_stabilizers,
 
 void surface_classify_wedge::report(ostream &ost, int f_with_stabilizers,
 		layered_graph_draw_options *draw_options,
+		poset_classification_report_options *Opt,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2925,7 +2927,7 @@ void surface_classify_wedge::report(ostream &ost, int f_with_stabilizers,
 	if (f_v) {
 		cout << "surface_classify_wedge::report before Classify_double_sixes->report" << endl;
 	}
-	Classify_double_sixes->report(ost, draw_options, verbose_level);
+	Classify_double_sixes->report(ost, draw_options, Opt, verbose_level);
 	if (f_v) {
 		cout << "surface_classify_wedge::report after Classify_double_sixes->report" << endl;
 	}

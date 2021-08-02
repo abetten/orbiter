@@ -936,7 +936,7 @@ public:
 	void lint_vec_search_vec_linear(
 			long int *v, int len, long int *A, int A_sz, long int *Idx);
 	int int_vec_is_subset_of(int *set, int sz, int *big_set, int big_set_sz);
-	int lint_vec_is_subset_of(int *set, int sz, long int *big_set, int big_set_sz);
+	int lint_vec_is_subset_of(int *set, int sz, long int *big_set, int big_set_sz, int verbose_level);
 	void int_vec_swap_points(int *list, int *list_inv, int idx1, int idx2);
 	int int_vec_is_sorted(int *v, int len);
 	void int_vec_sort_and_remove_duplicates(int *v, int &len);
@@ -958,6 +958,7 @@ public:
 			int verbose_level);
 	int int_vec_is_zero(int *v, int len);
 	int test_if_sets_are_equal(int *set1, int *set2, int set_size);
+	int test_if_sets_are_disjoint(long int *set1, int sz1, long int *set2, int sz2);
 	void test_if_set(int *set, int set_size);
 	int test_if_set_with_return_value(int *set, int set_size);
 	int test_if_set_with_return_value_lint(long int *set, int set_size);

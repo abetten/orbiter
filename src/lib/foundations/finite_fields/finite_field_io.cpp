@@ -342,33 +342,33 @@ void finite_field::print_embedding_tex(finite_field &subfield,
 	for (j = 0; j < q; j++) {
 		cout << " & ";
 		subfield.print_element(cout, j);
-		}
+	}
 	cout << "\\\\" << endl;
 	cout << "\\hline" << endl;
 	for (i = 0; i < q; i++) {
 		subfield.print_element(cout, i);
 		if (i == 0) {
 			a = 0;
-			}
+		}
 		else {
 			a = subfield.alpha_power(i - 1);
-			}
+		}
 		aa = embedding[a];
 		for (j = 0; j < q; j++) {
 			if (j == 0) {
 				b = 0;
-				}
+			}
 			else {
 				b = subfield.alpha_power(j - 1);
-				}
+			}
 			bb = embedding[b];
 			c = add(aa, mult(bb, p));
 			cout << " & ";
 			print_element(cout, c);
-			}
-		cout << "\\\\" << endl;
 		}
+		cout << "\\\\" << endl;
 	}
+}
 
 void finite_field::print_indicator_square_nonsquare(int a)
 {
@@ -830,9 +830,9 @@ void finite_field::cheat_sheet_subfields(ostream &f, int verbose_level)
 		cout << "finite_field::cheat_sheet_subfields" << endl;
 	}
 
-	f << "\\small" << endl;
+	//f << "\\small" << endl;
 	if (!f_is_prime_field) {
-		f << "polynomial: ";
+		f << "The polynomial used to define the field is : ";
 		finite_field GFp;
 		GFp.finite_field_init(p, 0);
 
@@ -844,7 +844,7 @@ void finite_field::cheat_sheet_subfields(ostream &f, int verbose_level)
 		f << "$";
 		FX.print_object(m, f);
 		f << "$ = " << polynomial << "\\\\" << endl;
-		}
+	}
 
 	f << "$Z_i = \\log_\\alpha (1 + \\alpha^i)$\\\\" << endl;
 
@@ -869,7 +869,7 @@ void finite_field::report_subfields(std::ostream &ost, int verbose_level)
 	if (f_v) {
 		cout << "finite_field::report_subfields" << endl;
 	}
-	ost << "Subfields:" << endl;
+	ost << "\\subsection*{Subfields}" << endl;
 	ost << "$$" << endl;
 	ost << "\\begin{array}{|r|r|r|}" << endl;
 	ost << "\\hline" << endl;
@@ -926,6 +926,7 @@ void finite_field::report_subfields_detailed(std::ostream &ost, int verbose_leve
 	if (f_v) {
 		cout << "finite_field::report_subfields_detailed" << endl;
 	}
+	ost << "\\subsection*{Subfields in Detail}" << endl;
 	for (h = 1; h < e; h++) {
 		if (e % h) {
 			continue;
@@ -1060,7 +1061,7 @@ void finite_field::cheat_sheet_power_table(std::ostream &ost, int f_with_polynom
 	Powers = NEW_int(len);
 	power_table(t, Powers, len);
 
-	ost << "Cyclic structure:\\\\" << endl;
+	ost << "\\subsection*{Cyclic structure}" << endl;
 
 
 	ost << "$$" << endl;
@@ -1134,8 +1135,8 @@ void finite_field::cheat_sheet_table_of_elements(std::ostream &ost, int verbose_
 
 	//my_symbol.assign("\alpha");
 
-	ost << "Table of elements:\\\\" << endl;
-	ost << "$$";
+	ost << "\\subsection*{Table of Elements of ${\\mathbb F}_{" << q << "}$}" << endl;
+	ost << "$$" << endl;
 	ost << "\\begin{array}{|r|r|r|}" << endl;
 	ost << "\\hline" << endl;
 
@@ -1166,7 +1167,7 @@ void finite_field::cheat_sheet_table_of_elements(std::ostream &ost, int verbose_
 	}
 	ost << "\\hline" << endl;
 	ost << "\\end{array}" << endl;
-	ost << "$$";
+	ost << "$$" << endl;
 
 	FREE_int(v);
 
@@ -1335,7 +1336,7 @@ void finite_field::cheat_sheet_main_table(std::ostream &f, int verbose_level)
 
 void finite_field::cheat_sheet_main_table_top(std::ostream &f, int nb_cols)
 {
-	f << "$$";
+	f << "$$" << endl;
 	f << "\\begin{array}{|*{" << nb_cols << "}{r|}}" << endl;
 	f << "\\hline" << endl;
 	f << "i & \\gamma_i ";

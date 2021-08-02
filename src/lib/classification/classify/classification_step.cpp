@@ -44,10 +44,10 @@ void classification_step::freeself()
 {
 	if (Orbit) {
 		FREE_OBJECTS(Orbit);
-		}
+	}
 	if (Rep) {
 		FREE_lint(Rep);
-		}
+	}
 	null();
 }
 
@@ -62,7 +62,7 @@ void classification_step::init(action *A, action *A2,
 				"group order = " << go
 				<< " representation_sz = " << representation_sz
 				<< " max_orbits = " << max_orbits << endl;
-		}
+	}
 	classification_step::A = A;
 	classification_step::A2 = A2;
 	//f_lint = FALSE;
@@ -73,7 +73,7 @@ void classification_step::init(action *A, action *A2,
 	Rep = NEW_lint(max_orbits * representation_sz);
 	if (f_v) {
 		cout << "classification_step::init done" << endl;
-		}
+	}
 }
 
 set_and_stabilizer *classification_step::get_set_and_stabilizer(
@@ -86,7 +86,7 @@ set_and_stabilizer *classification_step::get_set_and_stabilizer(
 
 	if (f_v) {
 		cout << "classification_step::get_set_and_stabilizer" << endl;
-		}
+	}
 
 	SaS = NEW_OBJECT(set_and_stabilizer);
 
@@ -98,14 +98,14 @@ set_and_stabilizer *classification_step::get_set_and_stabilizer(
 	if (f_v) {
 		cout << "classification_step::get_set_and_stabilizer "
 				"before Orbit[orbit_index].gens->create_copy" << endl;
-		}
+	}
 
 	Strong_gens = Orbit[orbit_index].gens->create_copy();
 
 	if (f_v) {
 		cout << "classification_step::get_set_and_stabilizer "
 				"before SaS->init_everything" << endl;
-		}
+	}
 
 	SaS->init_everything(
 		A, A2, data, representation_sz,
@@ -113,7 +113,7 @@ set_and_stabilizer *classification_step::get_set_and_stabilizer(
 
 	if (f_v) {
 		cout << "classification_step::get_set_and_stabilizer done" << endl;
-		}
+	}
 
 	return SaS;
 }
@@ -215,7 +215,7 @@ void classification_step::generate_source_code(std::string &fname_base,
 
 	if (f_v) {
 		cout << "classification_step::generate_source_code" << endl;
-		}
+	}
 	fname.assign(fname_base);
 	fname.append(".cpp");
 
@@ -234,7 +234,7 @@ void classification_step::generate_source_code(std::string &fname_base,
 		if (f_v) {
 			cout << "classification_step::generate_source_code "
 					"preparing reps" << endl;
-			}
+		}
 
 
 #if 0
@@ -248,17 +248,17 @@ void classification_step::generate_source_code(std::string &fname_base,
 
 				if (f_vv) {
 					cout << "classification_step::generate_source_code orbit_index = " << orbit_index << endl;
-					}
+				}
 
 				f << "\t";
 				for (i = 0; i < representation_sz; i++) {
 					f << Rep_lint_ith(orbit_index)[i];
 					f << ", ";
-					}
+				}
 				f << endl;
 
 
-				}
+			}
 			f << "};" << endl;
 		}
 #endif
@@ -268,7 +268,7 @@ void classification_step::generate_source_code(std::string &fname_base,
 
 		if (f_v) {
 			cout << "classification_step::generate_source_code preparing stab_order" << endl;
-			}
+		}
 		f << "// the stabilizer orders:" << endl;
 		f << "static const char *" << prefix << "_stab_order[] = {" << endl;
 		for (orbit_index = 0;
@@ -284,7 +284,7 @@ void classification_step::generate_source_code(std::string &fname_base,
 			ago.print_not_scientific(f);
 			f << "\"," << endl;
 
-			}
+		}
 		f << "};" << endl;
 
 
@@ -310,12 +310,12 @@ void classification_step::generate_source_code(std::string &fname_base,
 				//stab_gens_len[orbit_index] =
 				//The_surface[iso_type]->stab_gens->gens->len;
 				fst += stab_gens_len[orbit_index];
-				}
+			}
 
 
 			if (f_v) {
 				cout << "classification_step::generate_source_code preparing stab_gens_fst" << endl;
-				}
+			}
 			f << "static int " << prefix << "_stab_gens_fst[] = { " << endl << "\t";
 			for (orbit_index = 0;
 					orbit_index < nb_orbits;
@@ -323,16 +323,16 @@ void classification_step::generate_source_code(std::string &fname_base,
 				f << stab_gens_first[orbit_index];
 				if (orbit_index < nb_orbits - 1) {
 					f << ", ";
-					}
+				}
 				if (((orbit_index + 1) % 10) == 0) {
 					f << endl << "\t";
-					}
 				}
+			}
 			f << "};" << endl;
 
 			if (f_v) {
 				cout << "classification_step::generate_source_code preparing stab_gens_len" << endl;
-				}
+			}
 			f << "static int " << prefix << "_stab_gens_len[] = { " << endl << "\t";
 			for (orbit_index = 0;
 					orbit_index < nb_orbits;
@@ -340,17 +340,17 @@ void classification_step::generate_source_code(std::string &fname_base,
 				f << stab_gens_len[orbit_index];
 				if (orbit_index < nb_orbits - 1) {
 					f << ", ";
-					}
+				}
 				if (((orbit_index + 1) % 10) == 0) {
 					f << endl << "\t";
-					}
 				}
+			}
 			f << "};" << endl;
 
 
 			if (f_v) {
 				cout << "classification_step::generate_source_code preparing stab_gens" << endl;
-				}
+			}
 			f << "static int " << prefix << "_stab_gens[] = {" << endl;
 			for (orbit_index = 0;
 					orbit_index < nb_orbits;
@@ -362,15 +362,15 @@ void classification_step::generate_source_code(std::string &fname_base,
 						cout << "classification_step::generate_source_code "
 								"before extract_strong_generators_in_order generator " << j << " / "
 								<< stab_gens_len[orbit_index] << endl;
-						}
+					}
 					f << "\t";
 					A->element_print_for_make_element(
 							Orbit[orbit_index].gens->gens->ith(j), f);
 					//A->element_print_for_make_element(
 					//The_surface[iso_type]->stab_gens->gens->ith(j), f);
 					f << endl;
-					}
 				}
+			}
 			f << "};" << endl;
 
 
@@ -386,7 +386,7 @@ void classification_step::generate_source_code(std::string &fname_base,
 	if (f_v) {
 		cout << "classification_step::generate_source_"
 				"code done" << endl;
-		}
+	}
 }
 
 long int *classification_step::Rep_ith(int i)
@@ -464,11 +464,11 @@ void classification_step::print_latex(ostream &ost,
 
 	{
 
-	ost << "The order of the group is ";
-	go.print_not_scientific(ost);
-	ost << "\\\\" << endl;
+		ost << "The order of the group is ";
+		go.print_not_scientific(ost);
+		ost << "\\\\" << endl;
 
-	ost << "\\bigskip" << endl;
+		ost << "\\bigskip" << endl;
 	}
 
 	ost << "The group has " << nb_orbits << " orbits: \\\\" << endl;
@@ -484,19 +484,19 @@ void classification_step::print_latex(ostream &ost,
 
 		if (f_v) {
 			cout << "orbit " << i << " / " << nb_orbits << ":" << endl;
-			}
+		}
 
 		Orbit[i].gens->group_order(go1);
 
 		if (f_v) {
 			cout << "stab order " << go1 << endl;
-			}
+		}
 
 		D.integral_division_exact(go, go1, ol);
 
 		if (f_v) {
 			cout << "orbit length " << ol << endl;
-			}
+		}
 
 		ost << "\\item" << endl;
 		ost << "$" << i << " / " << nb_orbits << "$ " << endl;
@@ -522,7 +522,7 @@ void classification_step::print_latex(ostream &ost,
 		if (f_print_stabilizer_gens) {
 			//ost << "Strong generators are:" << endl;
 			Orbit[i].gens->print_generators_tex(ost);
-			}
+		}
 
 
 
@@ -530,7 +530,7 @@ void classification_step::print_latex(ostream &ost,
 		D.add_in_place(Ol, ol);
 
 
-		}
+	}
 	ost << "\\end{enumerate}" << endl;
 
 	ost << "The overall number of objects is: " << Ol << "\\\\" << endl;

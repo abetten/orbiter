@@ -119,8 +119,6 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	// classification:
 
-	f_classify_arcs = FALSE;
-	Arc_generator_description = NULL;
 	f_exact_cover = FALSE;
 	ECA = NULL;
 	f_isomorph_arguments = FALSE;
@@ -511,27 +509,7 @@ int group_theoretic_activity_description::read_arguments(
 		}
 
 
-		// arcs:
 
-
-		else if (stringcmp(argv[i], "-classify_arcs") == 0) {
-			f_classify_arcs = TRUE;
-			Arc_generator_description = NEW_OBJECT(arc_generator_description);
-			if (f_v) {
-				cout << "-classify_arcs" << endl;
-			}
-			i += Arc_generator_description->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			if (f_v) {
-				cout << "done reading -classify_arcs " << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-			}
-		}
 
 		else if (stringcmp(argv[i], "-exact_cover") == 0) {
 			f_exact_cover = TRUE;
@@ -630,26 +608,6 @@ int group_theoretic_activity_description::read_arguments(
 			}
 		}
 
-		// cubic curves
-		else if (stringcmp(argv[i], "-classify_cubic_curves") == 0) {
-			f_classify_cubic_curves = TRUE;
-			Arc_generator_description = NEW_OBJECT(arc_generator_description);
-			if (f_v) {
-				cout << "-classify_cubic_curves" << endl;
-			}
-			i += Arc_generator_description->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-			if (f_v) {
-				cout << "done reading -classify_cubic_curves " << endl;
-				cout << "i = " << i << endl;
-				cout << "argc = " << argc << endl;
-				if (i < argc) {
-					cout << "next argument is " << argv[i] << endl;
-				}
-				cout << "-classify_cubic_curves " << endl;
-			}
-		}
 
 
 
@@ -885,13 +843,7 @@ void group_theoretic_activity_description::print()
 	}
 
 
-	// arcs:
 
-
-	if (f_classify_arcs) {
-		cout << "-classify_arcs " << endl;
-		Arc_generator_description->print();
-	}
 
 	if (f_exact_cover) {
 		cout << "-exact_cover" << endl;
@@ -933,12 +885,6 @@ void group_theoretic_activity_description::print()
 	if (f_classify_ovoids) {
 		cout << "-classify_ovoids" << endl;
 		Ovoid_classify_description->print();
-	}
-
-	// cubic curves
-	if (f_classify_cubic_curves) {
-		cout << "-classify_cubic_curves" << endl;
-		Arc_generator_description->print();
 	}
 
 

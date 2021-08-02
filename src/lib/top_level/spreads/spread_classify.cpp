@@ -341,17 +341,17 @@ void spread_classify::init(
 		if (f_v) {
 			cout << "spread_classify::init before recoordinatize::init" << endl;
 		}
-		char str[1000];
-		string fname_live_points;
+		//char str[1000];
+		//string fname_live_points;
 
-		sprintf(str, "live_points_q%d", q);
-		fname_live_points.assign(str);
+		//sprintf(str, "live_points_q%d", q);
+		//fname_live_points.assign(str);
 
 		R = NEW_OBJECT(recoordinatize);
 		R->init(n, k, Mtx->GFq, Grass, A, A2,
 			TRUE /*f_projective*/, Mtx->f_semilinear,
 			callback_incremental_check_function, (void *) this,
-			fname_live_points,
+			//fname_live_points,
 			verbose_level);
 
 		if (f_v) {
