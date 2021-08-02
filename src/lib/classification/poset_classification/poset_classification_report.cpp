@@ -16,192 +16,10 @@ namespace orbiter {
 namespace classification {
 
 
-#if 0
-void poset_classification::report_schreier_trees(
-		ostream &ost, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j, h, degree, a;
-	int N, Nb_gen;
-	int *data1;
-	int *data2;
-	int *data3;
-	int level, nb_orbits, cnt, cnt3, elt_size, hdl;
-	int *Elt1;
-	poset_orbit_node *O;
-	longinteger_object stab_order, orbit_length;
 
-	if (f_v) {
-		cout << "poset_classification::report_schreier_trees" << endl;
-	}
-	N = 0;
-	for (level = 0; level < depth; level++) {
-		N += nb_orbits_at_level(level);
-	}
-
-
-	degree = Poset->A2->degree;
-	elt_size= Poset->A->make_element_size;
-
-	Nb_gen = 0;
-	for (level = 0; level < depth; level++) {
-		nb_orbits = nb_orbits_at_level(level);
-		for (i = 0; i < nb_orbits; i++) {
-			O = get_node_ij(level, i);
-
-			Nb_gen += O->nb_strong_generators;
-
-		}
-	}
-
-
-	ost << "# N = number of nodes in the poset classification" << endl;
-	ost << N << endl;
-	ost << "# degree of permutation action = size of the set "
-			"we act on" << endl;
-	ost << degree << endl;
-	ost << "# size of a group element in int" << endl;
-	ost << elt_size << endl;
-	ost << "# Nb_gen = total number of generators = number of rows "
-			"of data_matrix3" << endl;
-	ost << Nb_gen << endl;
-
-
-	ost << "# number of generators at each node, row in data_matrix3 "
-			"where these generators start:" << endl;
-
-	cnt3 = 0;
-	for (level = 0; level < depth; level++) {
-		nb_orbits = nb_orbits_at_level(level);
-		for (i = 0; i < nb_orbits; i++) {
-			O = get_node_ij(level, i);
-			ost << O->nb_strong_generators << " " << cnt3 << endl;
-			cnt3 += O->nb_strong_generators;
-		}
-	}
-	ost << endl;
-
-	data1 = NEW_int(N * degree);
-	data2 = NEW_int(N * degree);
-	data3 = NEW_int(Nb_gen * elt_size);
-	Elt1 = NEW_int(Poset->A->elt_size_in_int);
-
-
-	//rep = NEW_int(depth + 1);
-
-	cnt = 0;
-	cnt3 = 0;
-	for (level = 0; level < depth; level++) {
-		//first = first_poset_orbit_node_at_level[level];
-		nb_orbits = nb_orbits_at_level(level);
-		for (i = 0; i < nb_orbits; i++) {
-
-			//get_set_by_level(level, i, rep);
-			//int_vec_print_to_str_naked(str, rep, level);
-
-			get_orbit_length_and_stabilizer_order(i, level,
-				stab_order, orbit_length);
-			//stab_order.print_to_string(str);
-
-			//orbit_length.print_to_string(str);
-
-			O = get_node_ij(level, i);
-			schreier_vector *Schreier_vector;
-
-			Schreier_vector = O->Schreier_vector;
-
-			//nb_live_pts = O->get_nb_of_live_points();
-
-			int *sv = Schreier_vector->sv;
-			int nb_live_pts = sv[0];
-			int *points = sv + 1;
-			int *parent = points + nb_live_pts;
-			int *label = parent + nb_live_pts;
-			int f_group_is_trivial;
-			if (O->nb_strong_generators == 0) {
-				f_group_is_trivial = TRUE;
-			}
-			else {
-				f_group_is_trivial = FALSE;
-			}
-
-			cout << "Node " << level << "/" << i << endl;
-			cout << "points : parent : label" << endl;
-			for (h = 0; h < nb_live_pts; h++) {
-				cout << "points[h]" << " : ";
-				if (!f_group_is_trivial) {
-					cout << parent[h] << " : " << label[h];
-				}
-				cout << endl;
-			}
-			for (j = 0; j < degree; j++) {
-				data1[cnt * degree + j] = -2;
-				data2[cnt * degree + j] = -2;
-			}
-			cout << "node " << level << "/" << i
-					<< " computing data1/data2" << endl;
-			for (h = 0; h < nb_live_pts; h++) {
-				a = points[h];
-				if (f_group_is_trivial) {
-					data1[cnt * degree + a] = -1;
-					data2[cnt * degree + a] = -1;
-				}
-				else {
-					data1[cnt * degree + a] = parent[h];
-					data2[cnt * degree + a] = label[h];
-				}
-			}
-			cnt++;
-			cout << "node " << level << "/" << i
-					<< " computing data3 cnt3=" << cnt3 << endl;
-			if (!f_group_is_trivial) {
-				for (h = 0; h < O->nb_strong_generators; h++) {
-					cout << "h=" << h << " / "
-							<< O->nb_strong_generators << endl;
-					hdl = O->hdl_strong_generators[h];
-					cout << "before element_retrieve, hdl=" << hdl << endl;
-					Poset->A->element_retrieve(hdl, Elt1, 0);
-					cout << "after element_retrieve" << endl;
-					for (j = 0; j < elt_size; j++) {
-						data3[cnt3 * elt_size + j] = Elt1[j];
-					}
-					cnt3++;
-				}
-			}
-		}
-	}
-
-	ost << "# data_matrix1: parent information" << endl;
-	for (i = 0; i < N; i++) {
-		for (j = 0; j < degree; j++) {
-			ost << data1[i * degree + j] << " ";
-		}
-		ost << endl;
-	}
-	ost << endl;
-
-	ost << "# data_matrix2: label" << endl;
-	for (i = 0; i < N; i++) {
-		for (j = 0; j < degree; j++) {
-			ost << data2[i * degree + j] << " ";
-		}
-		ost << endl;
-	}
-	ost << endl;
-
-	ost << "# data_matrix3: schreier generators" << endl;
-	for (i = 0; i < Nb_gen; i++) {
-		for (j = 0; j < elt_size; j++) {
-			ost << data3[i * elt_size + j] << " ";
-		}
-		ost << endl;
-	}
-	ost << endl;
-
-}
-#endif
-
-void poset_classification::report(std::ostream &ost, int verbose_level)
+void poset_classification::report(std::ostream &ost,
+		poset_classification_report_options *Opt,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -232,7 +50,7 @@ void poset_classification::report(std::ostream &ost, int verbose_level)
 	if (f_v) {
 		cout << "poset_classification::report before report_number_of_orbits_at_level" << endl;
 	}
-	report_number_of_orbits_at_level(ost);
+	report_number_of_orbits_at_level(ost, Opt);
 	if (f_v) {
 		cout << "poset_classification::report after report_number_of_orbits_at_level" << endl;
 	}
@@ -252,7 +70,7 @@ void poset_classification::report(std::ostream &ost, int verbose_level)
 	if (f_v) {
 		cout << "poset_classification::report before report_orbits_summary" << endl;
 	}
-	report_orbits_summary(ost, verbose_level);
+	report_orbits_summary(ost, Opt, verbose_level);
 	if (f_v) {
 		cout << "poset_classification::report after report_orbits_summary" << endl;
 	}
@@ -269,7 +87,7 @@ void poset_classification::report(std::ostream &ost, int verbose_level)
 		}
 		ost << "\\section*{The Poset of Orbits: Diagram}" << endl;
 
-		report_poset_of_orbits(ost);
+		report_poset_of_orbits(ost, verbose_level);
 
 	}
 	else {
@@ -286,12 +104,33 @@ void poset_classification::report(std::ostream &ost, int verbose_level)
 	ost << "\\section*{Poset of Orbits in Detail}" << endl;
 	ost << endl;
 
+	report_orbits_in_detail(ost, Opt, verbose_level);
+
+
+	if (f_v) {
+		cout << "poset_classification::report done" << endl;
+	}
+
+}
+
+void poset_classification::report_orbits_in_detail(std::ostream &ost,
+		poset_classification_report_options *Opt,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_classification::report_orbits_in_detail" << endl;
+	}
 	int orbit_at_level;
 	int level;
 	int nb_orbits;
 
 	for (level = 0; level <= depth; level++) {
 
+		if (Opt->f_select_orbits_by_level && level != Opt->select_orbits_by_level_level) {
+			continue;
+		}
 
 		if (f_v) {
 			cout << "poset_classification::report Orbits at Level " << level << ":" << endl;
@@ -310,19 +149,18 @@ void poset_classification::report(std::ostream &ost, int verbose_level)
 				orbit_at_level < nb_orbits;
 				orbit_at_level++) {
 
-			report_orbit(level, orbit_at_level, ost);
+			report_orbit(level, orbit_at_level, Opt, ost);
 
 		}
 	}
 
 	if (f_v) {
-		cout << "poset_classification::report done" << endl;
+		cout << "poset_classification::report_orbits_in_detail done" << endl;
 	}
-
 }
 
-
-void poset_classification::report_number_of_orbits_at_level(std::ostream &ost)
+void poset_classification::report_number_of_orbits_at_level(std::ostream &ost,
+		poset_classification_report_options *Opt)
 {
 	int *N;
 	int i;
@@ -332,13 +170,30 @@ void poset_classification::report_number_of_orbits_at_level(std::ostream &ost)
 		N[i] = nb_orbits_at_level(i);
 	}
 	ost << "$$" << endl;
-	ost << "\\begin{array}{|r|r|}" << endl;
+	ost << "\\begin{array}{|r|r|r|}" << endl;
 	ost << "\\hline" << endl;
-	ost << "\\mbox{Depth} & \\mbox{Nb of orbits}\\\\" << endl;
+	ost << "\\mbox{Depth} & \\mbox{Nb of orbits} & \\mbox{Ago}\\\\" << endl;
 	ost << "\\hline" << endl;
 	ost << "\\hline" << endl;
 	for (i = 0; i <= depth; i++) {
-		ost << i << " & " << N[i] << "\\\\" << endl;
+
+		long int *Ago;
+		int nb;
+
+		get_all_stabilizer_orders_at_level(i, Ago, nb);
+
+
+
+		ost << i << " & " << N[i] << " & ";
+
+		tally T;
+
+		T.init_lint(Ago, nb, FALSE, 0);
+		T.print_file_tex_we_are_in_math_mode(ost, TRUE /* f_backwards */);
+
+
+
+		ost << "\\\\" << endl;
 		ost << "\\hline" << endl;
 	}
 	ost << "\\end{array}" << endl;
@@ -349,7 +204,8 @@ void poset_classification::report_number_of_orbits_at_level(std::ostream &ost)
 
 }
 
-void poset_classification::report_orbits_summary(std::ostream &ost, int verbose_level)
+void poset_classification::report_orbits_summary(std::ostream &ost,
+		poset_classification_report_options *Opt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 10);
@@ -412,6 +268,13 @@ void poset_classification::report_orbits_summary(std::ostream &ost, int verbose_
 			cout << "poset_classification::report_orbits_summary printing orbit representative at level " << level << endl;
 		}
 
+
+		if (Opt->f_select_orbits_by_level && level != Opt->select_orbits_by_level_level) {
+			continue;
+		}
+
+
+
 		nb_orbits = nb_orbits_at_level(level);
 		for (i = 0; i < nb_orbits; i++) {
 
@@ -442,6 +305,15 @@ void poset_classification::report_orbits_summary(std::ostream &ost, int verbose_
 			//orbit_length.print_to_string(str);
 
 			O = get_node_ij(level, i);
+
+			long int so;
+
+			so = O->get_stabilizer_order_lint(this);
+
+			if (!Opt->is_selected_by_group_order(so)) {
+				continue;
+			}
+
 
 			if (f_vv) {
 				cout << "poset_classification::report_orbits_summary after get_node_ij" << endl;
@@ -561,9 +433,14 @@ void poset_classification::report_orbits_summary(std::ostream &ost, int verbose_
 }
 
 
-void poset_classification::report_poset_of_orbits(std::ostream &ost)
+void poset_classification::report_poset_of_orbits(std::ostream &ost, int verbose_level)
 {
 
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_classification::report_poset_of_orbits depth=" << depth << endl;
+	}
 
 	string fname_base;
 	string fname_poset;
@@ -636,10 +513,15 @@ void poset_classification::report_poset_of_orbits(std::ostream &ost)
 	ost << "\\input " << fname_out_base << ".tex" << endl;
 	//ost << "\\includegraphics[width=160mm]{" << fname_mp << ".1}\\\\" << endl;
 
+	if (f_v) {
+		cout << "poset_classification::report_poset_of_orbits done" << endl;
+	}
 }
 
 
-void poset_classification::report_orbit(int level, int orbit_at_level, std::ostream &ost)
+void poset_classification::report_orbit(int level, int orbit_at_level,
+		poset_classification_report_options *Opt,
+		std::ostream &ost)
 {
 	int nb_orbits;
 	int nb_gens;
@@ -647,10 +529,13 @@ void poset_classification::report_orbit(int level, int orbit_at_level, std::ostr
 	poset_orbit_node *O;
 	longinteger_object stab_order, orbit_length;
 	char str[1000];
+	char str2[1000];
 	long int *rep = NULL;
 	schreier_vector *Schreier_vector;
 	latex_interface L;
+	long int so;
 
+	str2[0] = 0;
 	rep = NEW_lint(depth + 1);
 
 
@@ -658,11 +543,18 @@ void poset_classification::report_orbit(int level, int orbit_at_level, std::ostr
 
 	O = get_node_ij(level, orbit_at_level);
 
+	so = O->get_stabilizer_order_lint(this);
+
+	if (!Opt->is_selected_by_group_order(so)) {
+		return;
+	}
+
 	ost << "\\subsection*{Orbit " << orbit_at_level
 			<< " / " << nb_orbits << " at Level " << level << "}" << endl;
 
 
 	ost << "Node number: " << O->get_node() << "\\\\" << endl;
+	ost << "Parent node: " << O->get_prev() << "\\\\" << endl;
 
 
 
@@ -671,8 +563,24 @@ void poset_classification::report_orbit(int level, int orbit_at_level, std::ostr
 
 	get_stabilizer_generators(gens,
 			level, orbit_at_level, Control->verbose_level);
+
+	strong_generators *projectivity_group_gens;
+
+	Poset->A->compute_projectivity_subgroup(projectivity_group_gens,
+			gens, 0 /*verbose_level*/);
+
+
+	if (projectivity_group_gens) {
+		longinteger_object proj_stab_order;
+
+		projectivity_group_gens->group_order(proj_stab_order);
+		proj_stab_order.print_to_string(str2);
+	}
+
 	get_orbit_length_and_stabilizer_order(orbit_at_level, level,
 		stab_order, orbit_length);
+
+
 
 	stab_order.print_to_string(str);
 
@@ -691,6 +599,11 @@ void poset_classification::report_orbit(int level, int orbit_at_level, std::ostr
 	L.lint_set_print_tex(ost, rep, level);
 	ost << "_{";
 	ost << str;
+	if (projectivity_group_gens) {
+		ost << "," << str2;
+		FREE_OBJECT(projectivity_group_gens);
+		projectivity_group_gens = NULL;
+	}
 	ost << "}";
 	ost << "$$" << endl;
 

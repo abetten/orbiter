@@ -1362,6 +1362,52 @@ void graph_theory_domain::make_non_attacking_queens_graph(int *&Adj, int &N,
 
 }
 
+void graph_theory_domain::make_disjoint_sets_graph(int *&Adj, int &N,
+		std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_disjoint_sets_graph" << endl;
+	}
+
+	file_io Fio;
+	long int *M;
+	int m, n;
+
+	Fio.lint_matrix_read_csv(fname, M, m, n, verbose_level);
+
+
+	int i, j;
+	sorting Sorting;
+
+	N = m;
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_disjoint_sets_graph N=" << N << endl;
+	}
+
+	Adj = NEW_int(N * N);
+	Orbiter->Int_vec.zero(Adj, N * N);
+
+
+	for (i = 0; i < N; i++) {
+		for (j = i + 1; j < N; j++) {
+
+			if (Sorting.test_if_sets_are_disjoint(M + i * n, n, M + j * n, n)) {
+				Adj[i * N + j] = 1;
+				Adj[j * N + i] = 1;
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "graph_theory_domain::make_disjoint_sets_graph done" << endl;
+	}
+
+}
+
+
 
 
 void graph_theory_domain::compute_adjacency_matrix(

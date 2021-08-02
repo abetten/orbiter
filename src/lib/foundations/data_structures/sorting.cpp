@@ -117,23 +117,27 @@ int sorting::int_vec_is_subset_of(
 }
 
 int sorting::lint_vec_is_subset_of(
-		int *set, int sz, long int *big_set, int big_set_sz)
+		int *set, int sz, long int *big_set, int big_set_sz, int verbose_level)
 {
 	long int i, j, a;
+	int f_v = (verbose_level >= 1);
 
 	j = 0;
 	for (i = 0; i < sz; i++) {
 		a = set[i];
 		while (big_set[j] < a && j < big_set_sz) {
 			j++;
-			}
+		}
 		if (j == big_set_sz) {
 			return FALSE;
-			}
+		}
 		if (big_set[j] == a) {
 			j++;
-			continue;
+			if (f_v) {
+				cout << "element " << a << " has been found" << endl;
 			}
+			continue;
+		}
 		return FALSE;
 		}
 	return TRUE;
@@ -496,11 +500,38 @@ int sorting::test_if_sets_are_equal(int *set1, int *set2, int set_size)
 	int_vec_heapsort(S2, set_size);
 	for (i = 0; i < set_size; i++) {
 		if (S1[i] != S2[i]) {
+			FREE_int(S1);
+			FREE_int(S2);
 			return FALSE;
-			}
 		}
+	}
 	FREE_int(S1);
 	FREE_int(S2);
+	return TRUE;
+}
+
+int sorting::test_if_sets_are_disjoint(long int *set1, int sz1, long int *set2, int sz2)
+{
+	long int *S1, *S2;
+	int i, idx;
+	long int a;
+
+	S1 = NEW_lint(sz1);
+	S2 = NEW_lint(sz2);
+	Orbiter->Lint_vec.copy(set1, S1, sz1);
+	Orbiter->Lint_vec.copy(set2, S2, sz2);
+	lint_vec_heapsort(S1, sz1);
+	lint_vec_heapsort(S2, sz2);
+	for (i = 0; i < sz1; i++) {
+		a = set1[i];
+		if (lint_vec_search(S2, sz2, a, idx, 0 /*verbose_level*/)) {
+			FREE_lint(S1);
+			FREE_lint(S2);
+			return FALSE;
+		}
+	}
+	FREE_lint(S1);
+	FREE_lint(S2);
 	return TRUE;
 }
 

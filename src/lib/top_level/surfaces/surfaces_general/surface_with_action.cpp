@@ -166,11 +166,11 @@ void surface_with_action::init(surface_domain *Surf,
 #endif
 
 	if (f_recoordinatize) {
-		char str[1000];
-		string fname_live_points;
+		//char str[1000];
+		//string fname_live_points;
 
-		sprintf(str, "live_points_q%d", PA->F->q);
-		fname_live_points.assign(str);
+		//sprintf(str, "live_points_q%d", PA->F->q);
+		//fname_live_points.assign(str);
 
 		Recoordinatize = NEW_OBJECT(recoordinatize);
 
@@ -184,7 +184,7 @@ void surface_with_action::init(surface_domain *Surf,
 			NULL /*int (*check_function_incremental)(int len,
 				int *S, void *data, int verbose_level)*/,
 			NULL /*void *check_function_incremental_data */,
-			fname_live_points,
+			//fname_live_points,
 			verbose_level);
 		if (f_v) {
 			cout << "surface_with_action::init after "
@@ -1702,11 +1702,13 @@ void surface_with_action::report_with_group(
 	Six_arcs = NEW_OBJECT(six_arcs_not_on_a_conic);
 
 	Six_arc_descr = NEW_OBJECT(arc_generator_description);
+#if 0
 	Six_arc_descr->F = F;
 	Six_arc_descr->f_q = TRUE;
 	Six_arc_descr->q = F->q;
 	Six_arc_descr->f_n = TRUE;
 	Six_arc_descr->n = 3;
+#endif
 	Six_arc_descr->f_target_size = TRUE;
 	Six_arc_descr->target_size = 6;
 
@@ -1721,10 +1723,10 @@ void surface_with_action::report_with_group(
 
 	// classify six arcs not on a conic:
 
-	action *A;
+	//action *A;
 
 
-	A = PA->PA2->A;
+	//A = PA->PA2->A;
 
 	if (f_v) {
 		cout << "surface_with_action::report_with_group "
@@ -1734,12 +1736,13 @@ void surface_with_action::report_with_group(
 
 	Six_arcs->init(
 			Six_arc_descr,
-			A,
-			SC->Surf->P2,
+			PA->PA2,
+			//A,
+			//SC->Surf->P2,
 			FALSE, 0, NULL,
 			verbose_level);
 
-	transporter = NEW_int(Six_arcs->Gen->A->elt_size_in_int);
+	transporter = NEW_int(Six_arcs->Gen->PA->A->elt_size_in_int);
 
 
 	if (f_v) {

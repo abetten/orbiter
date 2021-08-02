@@ -71,7 +71,7 @@ void classify_cubic_curves::freeself()
 }
 
 void classify_cubic_curves::init(
-		group_theoretic_activity *GTA,
+		projective_space_with_action *PA,
 		cubic_curve_with_action *CCA,
 		arc_generator_description *Descr,
 		int verbose_level)
@@ -80,7 +80,7 @@ void classify_cubic_curves::init(
 
 	if (f_v) {
 		cout << "classify_cubic_curves::init" << endl;
-		}
+	}
 	classify_cubic_curves::CCA = CCA;
 	F = CCA->F;
 	q = F->q;
@@ -92,16 +92,16 @@ void classify_cubic_curves::init(
 
 	if (f_v) {
 		cout << "classify_cubic_curves::init before Arc_gen->init" << endl;
-		}
+	}
 
-	//Arc_gen->read_arguments(argc, argv);
 
 
 	// ToDo
 
 	Arc_gen->init(
 			Descr,
-			A, A->Strong_gens,
+			PA,
+			A->Strong_gens,
 			verbose_level);
 
 #if 0
@@ -507,7 +507,7 @@ void classify_cubic_curves::upstep(int verbose_level)
 		so = Flag_orbits->Flag_orbit_node[f].downstep_secondary_orbit;
 		if (f_v) {
 			cout << "po=" << po << " so=" << so << endl;
-			}
+		}
 		Orbiter->Lint_vec.copy(Flag_orbits->Pt + f * 19, dataset, 19);
 
 

@@ -126,6 +126,9 @@ public:
 	int f_save;
 
 	int f_conic_type;
+	int conic_type_threshold;
+
+	int f_non_conical_type;
 
 	combinatorial_object_activity_description();
 	~combinatorial_object_activity_description();

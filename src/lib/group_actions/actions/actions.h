@@ -447,6 +447,8 @@ public:
 		int *Elt_B, int *Elt_C, int verbose_level);
 	void element_commutator_abavbv(int *Elt_A,
 		int *Elt_B, int *Elt_C, int verbose_level);
+	void compute_projectivity_subgroup(strong_generators *&projectivity_gens,
+			strong_generators *Aut_gens, int verbose_level);
 
 
 	// action_indexing_cosets.cpp

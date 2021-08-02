@@ -155,7 +155,7 @@ void poset_classification::identify(long int *data, int sz,
 
 	longinteger_object go;
 
-	orbit_at_level = final_node - first_poset_orbit_node_at_level[sz];
+	orbit_at_level = final_node - Poo->first_node_at_level(sz);
 	get_stabilizer_order(sz, orbit_at_level, go);
 
 	if (f_v) {
@@ -237,7 +237,7 @@ void poset_classification::test_identify(int level, int nb_times,
 		recognize(set2, level, transporter, f_implicit_fusion,
 			final_node, verbose_level);
 		
-		r2 = final_node - first_poset_orbit_node_at_level[level];
+		r2 = final_node - Poo->first_node_at_level(level);
 		if (r2 != r) {
 			cout << "recognition fails" << endl;
 			exit(1);
@@ -315,7 +315,8 @@ int poset_classification::poset_classification_apply_isomorphism(
 	poset_orbit_node *O;
 	sorting Sorting;
 
-	O = &root[current_node];
+	O = get_node(current_node);
+	//O = &root[current_node];
 
 	if (f_v) {
 		cout << "poset_classification::poset_"
@@ -412,7 +413,7 @@ int poset_classification::trace_set_recursion(
 	long int pt, pt0;
 	int current_extension, i, t, next_node;
 	int f_failure_to_find_point;
-	poset_orbit_node *O = &root[cur_node];
+	poset_orbit_node *O = get_node(cur_node); //&root[cur_node];
 	sorting Sorting;
 	
 	if (f_v) {
@@ -681,7 +682,7 @@ int poset_classification::trace_set(
 		cout << "n = " << n << endl;
 	}
 
-	case_nb = n - first_poset_orbit_node_at_level[level];
+	case_nb = n - Poo->first_node_at_level(level);
 
 	if (case_nb < 0) {
 		cout << "poset_classification::trace_set, "
@@ -689,7 +690,7 @@ int poset_classification::trace_set(
 		cout << "poset_classification::trace_set, "
 				"level = " << level << endl;
 		cout << "poset_classification::trace_set, "
-				"first_poset_orbit_node_at_level[level] = " << first_poset_orbit_node_at_level[level] << endl;
+				"first_poset_orbit_node_at_level[level] = " << Poo->first_node_at_level(level) << endl;
 		exit(1);
 	}
 	FREE_lint(tmp_set1);
@@ -728,7 +729,8 @@ long int poset_classification::find_node_for_subspace_by_rank(
 	for (i = 0; i < len; i++) {
 		poset_orbit_node *O;
 
-		O = &root[node];
+		//O = &root[node];
+		O = get_node(node);
 		for (j = 0; j < O->get_nb_of_extensions(); j++) {
 			if (O->get_E(j)->get_type() != EXTENSION_TYPE_EXTENSION) {
 				continue;

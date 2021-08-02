@@ -27,16 +27,16 @@ void poset_classification::recognize_start_over(
 
 	if (f_v) {
 		cout << "poset_classification::recognize_start_over" << endl;
-		}
+	}
 	// this is needed if implicit fusion nodes are used:
 	if (lvl == size - 1) {
 		if (f_v) {
 			cout << "poset_classification::recognize_start_over "
 					"lvl == size - 1" << endl;
-			}
+		}
 		final_node = current_node;
 		exit(1);
-		}
+	}
 
 
 	Sorting.lint_vec_heapsort(set[lvl + 1], size /* - 1 */);
@@ -46,14 +46,14 @@ void poset_classification::recognize_start_over(
 	if (f_vv) {
 		Orbiter->Lint_vec.set_print(cout, set[0], size);
 		cout << endl;
-		}
+	}
 	Poset->A->element_move(
 		transporter->ith(lvl + 1),
 		transporter->ith(0), FALSE);
 	if (f_v) {
 		cout << "poset_classification::recognize_start_over "
 				"before recognize_recursion" << endl;
-		}
+	}
 	recognize_recursion(
 		size, f_implicit_fusion,
 		0, 0, final_node,
@@ -61,10 +61,10 @@ void poset_classification::recognize_start_over(
 	if (f_v) {
 		cout << "poset_classification::recognize_start_over "
 				"after recognize_recursion" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "poset_classification::recognize_start_over done" << endl;
-		}
+	}
 }
 
 void poset_classification::recognize_recursion(
@@ -87,13 +87,13 @@ void poset_classification::recognize_recursion(
 	int node;
 
 
-	node = current_node - first_poset_orbit_node_at_level[lvl];
+	node = current_node - Poo->first_node_at_level(lvl);
 	
 
 	if (f_v) {
 		cout << "poset_classification::recognize_recursion at ";
 		cout << "(" << lvl << "/" << node  << ")" << endl;
-		}
+	}
 
 
 	if (lvl == size) {
@@ -101,14 +101,15 @@ void poset_classification::recognize_recursion(
 			cout << "poset_classification::recognize_recursion at ";
 			cout << "(" << lvl << "/" << node  << ") "
 					"lvl == size, terminating" << endl;
-			}
+		}
 		final_node = current_node;
 		return;
-		}
+	}
 
 	poset_orbit_node *O;
 
-	O = &root[current_node];
+	//O = &root[current_node];
+	O = Poo->get_node(current_node);
 	if (f_vvv) {
 		cout << "poset_classification::recognize_recursion"
 			<< " lvl = " << lvl 
@@ -119,13 +120,13 @@ void poset_classification::recognize_recursion(
 				<< " pt=" << O->get_pt() << endl;
 		Orbiter->Lint_vec.set_print(cout, set[lvl], size);
 		cout << endl;
-		}
+	}
 	if (f_v4) {
 		if (Poset->f_print_function) {
 			(*Poset->print_function)(cout, size, set[lvl],
 					Poset->print_function_data);
-			}
 		}
+	}
 	
 #if 0
 	if (f_debug) {
@@ -139,8 +140,8 @@ void poset_classification::recognize_recursion(
 			int_set_print(cout, set3, lvl);
 			cout << endl;
 			exit(1);
-			}
 		}
+	}
 #endif
 
 	if (lvl == 0 && f_base_case) {
@@ -158,7 +159,7 @@ void poset_classification::recognize_recursion(
 			cout << "(" << lvl << "/" << node << ") "
 					"after trace_starter, "
 					"calling recognize_recursion" << endl;
-			}
+		}
 		recognize_recursion(
 			size, f_implicit_fusion,
 			Base_case->size, Base_case->size, final_node,
@@ -168,16 +169,16 @@ void poset_classification::recognize_recursion(
 			cout << "poset_classification::recognize_recursion at ";
 			cout << "(" << lvl << "/" << node << ") "
 					"after recognize_recursion" << endl;
-			}
+		}
 
 		return;
-		}
+	}
 	
 	if (f_v) {
 		cout << "poset_classification::recognize_recursion at ";
 		cout << "(" << lvl << "/" << node << ") "
 				"before O->trace_next_point_wrapper" << endl;
-		}
+	}
 	if (!O->trace_next_point_wrapper(this,
 		lvl, current_node, size - 1 /*len*/, 
 		f_implicit_fusion, f_failure_to_find_point,
@@ -192,7 +193,7 @@ void poset_classification::recognize_recursion(
 			cout << "(" << lvl << "/" << node
 					<< ") O->trace_next_point_wrapper "
 							"returns FALSE, starting over" << endl;
-			}
+		}
 
 		
 		recognize_start_over(
@@ -204,20 +205,20 @@ void poset_classification::recognize_recursion(
 			cout << "(" << lvl << "/" << node << ") "
 					"O->trace_next_point_wrapper "
 					"returns FALSE, after over" << endl;
-			}
 		}
+	}
 
 	if (f_v) {
 		cout << "poset_classification::recognize_recursion at ";
 		cout << "(" << lvl << "/" << node << ") after "
 				"O->trace_next_point_wrapper" << endl;
-		}
+	}
 	
 	if (f_failure_to_find_point) {
 		cout << "poset_classification::recognize_recursion "
 				"failure to find point" << endl;
 		exit(1);
-		}
+	}
 
 	pt0 = set[lvl + 1][lvl];
 
@@ -225,7 +226,7 @@ void poset_classification::recognize_recursion(
 		cout << "poset_classification::recognize_recursion at ";
 		cout << "(" << lvl << "/" << node << ") trying to find "
 				"extension for point pt0=" << pt0 << endl;
-		}
+	}
 
 
 
@@ -236,7 +237,7 @@ void poset_classification::recognize_recursion(
 		cout << "poset_classification::recognize_recursion at ";
 		cout << "(" << lvl << "/" << node << "/" << current_extension
 				<< ") current_extension=" << current_extension << endl;
-		}
+	}
 	if (current_extension == -1) {
 
 		cout << "poset_classification::recognize_recursion failure in "
@@ -260,8 +261,8 @@ void poset_classification::recognize_recursion(
 			//}
 		cout << "poset_classification::recognize_recursion "
 				"the node corresponds to" << endl;
-		O->store_set_to(this, lvl - 1, set3);
-		Orbiter->Lint_vec.set_print(cout, set3, lvl);
+		O->store_set_to(this, lvl - 1, Poo->set3);
+		Orbiter->Lint_vec.set_print(cout, Poo->set3, lvl);
 		cout << endl;
 
 		cout << "poset_classification::recognize_recursion "
@@ -271,21 +272,21 @@ void poset_classification::recognize_recursion(
 
 		exit(1);
 
-		}
+	}
 
 
 
 	if (f_v5) {
 		cout << "poset_classification::recognize_recursion point " << pt0
 				<< " is extension no " << current_extension << endl;
-		}
+	}
 	if (f_allowed_to_show_group_elements && f_v4) {
 		int *transporter1 = transporter->ith(lvl + 1);
 		cout << "recognize_recursion transporter element:" << endl;
 		Poset->A2->element_print_quick(transporter1, cout);
 		//A2->element_print_as_permutation(transporter1, cout);
 		cout << endl;
-		}
+	}
 	
 
 	
@@ -299,7 +300,7 @@ void poset_classification::recognize_recursion(
 			cout << "(" << lvl << "/" << node << "/"
 					<< current_extension << ")";
 			cout << " fusion node " << O->get_node() << endl;
-			}
+		}
 		next_node = O->apply_isomorphism(this,
 			lvl, current_node, 
 			current_extension, size - 1 /* len */,
@@ -312,19 +313,19 @@ void poset_classification::recognize_recursion(
 					<< current_extension << ")";
 			cout << " fusion from " << O->get_node() << " to "
 					<< next_node << endl;
-			}
+		}
 		if (next_node == -1) {
 			cout << "poset_classification::recognize_recursion "
 					"next_node == -1" << endl;
 			exit(1);
-			}
+		}
 		if (f_v5) {
 			cout << "poset_classification::recognize_recursion at ";
 			cout << "(" << lvl << "/" << node << "/"
 					<< current_extension << ")";
 			cout << " after apply_isomorphism, "
 					"next_node=" << next_node << endl;
-			}
+		}
 #if 0
 		if (next_node < path[lvl + 1]) {
 			if (f_v) {
@@ -332,9 +333,9 @@ void poset_classification::recognize_recursion(
 						"lvl " << lvl << " not canonical" << endl;
 				cout << "next_node=" << next_node << endl;
 				//cout << "path[lvl + 1]=" << path[lvl + 1] << endl;
-				}
-			return not_canonical;
 			}
+			return not_canonical;
+		}
 #endif
 		
 
@@ -346,14 +347,14 @@ void poset_classification::recognize_recursion(
 
 		return;
 
-		}
+	}
 	else if (O->get_E(current_extension)->get_type() == EXTENSION_TYPE_EXTENSION) {
 		int next_node;
 		
 		if (f_v4) {
 			cout << "poset_classification::recognize_recursion "
 					"extension node" << endl;
-			}
+		}
 		next_node = O->get_E(current_extension)->get_data();
 		if (f_v) {
 			cout << "poset_classification::recognize_recursion at ";
@@ -361,7 +362,7 @@ void poset_classification::recognize_recursion(
 					<< current_extension << ")";
 			cout << " extension from " << O->get_node() << " to "
 					<< next_node << endl;
-			}
+		}
 
 		recognize_recursion(
 			size, f_implicit_fusion,
@@ -369,19 +370,19 @@ void poset_classification::recognize_recursion(
 			verbose_level);
 		
 		return;
-		}
+	}
 	else if (O->get_E(current_extension)->get_type() == EXTENSION_TYPE_UNPROCESSED) {
 		cout << "poset_classification::recognize_recursion "
 				"unprocessed node, "
 				"this should not happen" << endl;
 		exit(1);
-		}
+	}
 	else if (O->get_E(current_extension)->get_type() == EXTENSION_TYPE_PROCESSING) {
 		cout << "poset_classification::recognize_recursion "
 				"processing node, "
 				"this should not happen" << endl;
 		exit(1);
-		}
+	}
 	cout << "poset_classification::recognize_recursion "
 			"unknown type of extension" << endl;
 	exit(1);
@@ -416,7 +417,7 @@ void poset_classification::recognize(
 	
 	if (f_vvv) {
 		cout << "poset_classification::recognize" << endl;
-		}
+	}
 	// put in default values just in case we are doing a 
 	// tolerant search and do not have a final result
 	final_node = -1;
@@ -431,19 +432,19 @@ void poset_classification::recognize(
 		if (Poset->f_print_function) {
 			(*Poset->print_function)(cout, size, set[0],
 					Poset->print_function_data);
-			}
 		}
+	}
 	if (size > sz) {
 		cout << "poset_classification::recognize size > sz" << endl;
 		cout << "size=" << size << endl;
 		cout << "gen->sz=" << sz << endl;
 		exit(1);
-		}
+	}
 
 	//nb_times_trace++;
 
 	
-	Orbiter->Lint_vec.copy(set[0], set0, size);
+	Orbiter->Lint_vec.copy(set[0], Poo->set0, size);
 
 	recognize_recursion(
 		size, f_implicit_fusion, 
@@ -455,7 +456,7 @@ void poset_classification::recognize(
 		cout << "poset_classification::recognize "
 				"after recognize_recursion, "
 				"copying transporter" << endl;
-		}
+	}
 
 
 	Poset->A->element_move(
@@ -465,7 +466,7 @@ void poset_classification::recognize(
 
 	if (f_v) {
 		cout << "poset_classification::recognize done" << endl;
-		}
+	}
 }
 
 

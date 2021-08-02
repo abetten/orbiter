@@ -52,10 +52,9 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::perform_activi
 		cout << "classification_of_cubic_surfaces_with_double_sixes_activity::perform_activity" << endl;
 	}
 	if (Descr->f_report) {
-
 		cout << "f_report" << endl;
 		cout << "SCW->Surf->n = " << SCW->Surf->n << endl;
-		report(verbose_level);
+		report(Descr->report_options, verbose_level);
 	}
 	else if (Descr->f_identify_Eckardt) {
 		do_surface_identify_Eckardt(verbose_level);
@@ -88,7 +87,9 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::perform_activi
 }
 
 
-void classification_of_cubic_surfaces_with_double_sixes_activity::report(int verbose_level)
+void classification_of_cubic_surfaces_with_double_sixes_activity::report(
+		poset_classification_report_options *report_options,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -108,7 +109,7 @@ void classification_of_cubic_surfaces_with_double_sixes_activity::report(int ver
 				"before SCW->create_report" << endl;
 		cout << "SCW->Surf->n = " << SCW->Surf->n << endl;
 	}
-	SCW->create_report(f_with_stabilizers, Orbiter->draw_options, verbose_level - 1);
+	SCW->create_report(f_with_stabilizers, Orbiter->draw_options, report_options, verbose_level - 1);
 	if (f_v) {
 		cout << "surface_domain_high_level::report "
 				"after SCW->create_report" << endl;

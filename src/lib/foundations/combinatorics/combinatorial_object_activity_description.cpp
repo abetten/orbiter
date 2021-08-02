@@ -22,6 +22,9 @@ combinatorial_object_activity_description::combinatorial_object_activity_descrip
 	f_save = FALSE;
 
 	f_conic_type = FALSE;
+	conic_type_threshold = 0;
+
+	f_non_conical_type = FALSE;
 }
 
 combinatorial_object_activity_description::~combinatorial_object_activity_description()
@@ -46,7 +49,12 @@ int combinatorial_object_activity_description::read_arguments(
 		}
 		else if (stringcmp(argv[i], "-conic_type") == 0) {
 			f_conic_type = TRUE;
-			cout << "-conic_type " << endl;
+			conic_type_threshold = strtoi(argv[++i]);
+			cout << "-conic_type " << conic_type_threshold << endl;
+		}
+		else if (stringcmp(argv[i], "-non_conical_type") == 0) {
+			f_non_conical_type = TRUE;
+			cout << "-non_conical_type " << endl;
 		}
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
@@ -69,7 +77,10 @@ void combinatorial_object_activity_description::print()
 		cout << "-save " << endl;
 	}
 	if (f_conic_type) {
-		cout << "-conic_type " << endl;
+		cout << "-conic_type " << conic_type_threshold << endl;
+	}
+	if (f_non_conical_type) {
+		cout << "-f_non_conical_type" << endl;
 	}
 }
 

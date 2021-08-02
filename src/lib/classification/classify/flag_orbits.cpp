@@ -57,13 +57,13 @@ void flag_orbits::freeself()
 			cout << "flag_orbits::freeself before FREE_OBJECTS(Flag_orbit_node)" << endl;
 		}
 		FREE_OBJECTS(Flag_orbit_node);
-		}
+	}
 	if (Pt) {
 		if (f_v) {
 			cout << "flag_orbits::freeself before FREE_lint(Pt)" << endl;
 		}
 		FREE_lint(Pt);
-		}
+	}
 	if (f_v) {
 		cout << "flag_orbits::freeself done" << endl;
 	}
@@ -83,7 +83,7 @@ void flag_orbits::init(action *A, action *A2,
 
 	if (f_v) {
 		cout << "flag_orbits::init" << endl;
-		}
+	}
 	flag_orbits::A = A;
 	flag_orbits::A2 = A2;
 	flag_orbits::nb_primary_orbits_lower = nb_primary_orbits_lower;
@@ -98,7 +98,7 @@ void flag_orbits::init(action *A, action *A2,
 	Flag_orbit_node = NEW_OBJECTS(flag_orbit_node, nb_flag_orbits);
 	if (f_v) {
 		cout << "flag_orbits::init done" << endl;
-		}
+	}
 }
 
 int flag_orbits::find_node_by_po_so(int po, int so, int &idx,
@@ -108,7 +108,7 @@ int flag_orbits::find_node_by_po_so(int po, int so, int &idx,
 
 	if (f_v) {
 		cout << "flag_orbits::find_node_by_po_so" << endl;
-		}
+	}
 	int l, r, m, res;
 	int f_found = FALSE;
 	int len;
@@ -116,11 +116,11 @@ int flag_orbits::find_node_by_po_so(int po, int so, int &idx,
 	len = nb_flag_orbits;
 	if (f_v) {
 		cout << "flag_orbits::find_node_by_po_so len=" << len << endl;
-		}
+	}
 	if (len == 0) {
 		idx = 0;
 		return FALSE;
-		}
+	}
 	l = 0;
 	r = len;
 	// invariant:
@@ -131,7 +131,7 @@ int flag_orbits::find_node_by_po_so(int po, int so, int &idx,
 		if (f_v) {
 			cout << "flag_orbits::find_node_by_po_so "
 					"l=" << l << " r=" << r << endl;
-			}
+		}
 		m = (l + r) >> 1;
 		// if the length of the search area is even
 		// we examine the element above the middle
@@ -174,7 +174,7 @@ int flag_orbits::find_node_by_po_so(int po, int so, int &idx,
 	// and f_found is set accordingly */
 	if (f_found) {
 		l--;
-		}
+	}
 	idx = l;
 	return f_found;
 }
@@ -187,7 +187,7 @@ void flag_orbits::write_file(ofstream &fp, int verbose_level)
 	
 	if (f_v) {
 		cout << "flag_orbits::write_file" << endl;
-		}
+	}
 	fp.write((char *) &nb_primary_orbits_lower, sizeof(int));
 	fp.write((char *) &nb_primary_orbits_upper, sizeof(int));
 	fp.write((char *) &nb_flag_orbits, sizeof(int));
@@ -196,20 +196,20 @@ void flag_orbits::write_file(ofstream &fp, int verbose_level)
 	if (f_vv) {
 		cout << "flag_orbits::write_file Pt matrix:" << endl;
 		Orbiter->Lint_vec.matrix_print(Pt, nb_flag_orbits, pt_representation_sz);
-		}
+	}
 	for (i = 0; i < nb_flag_orbits * pt_representation_sz; i++) {
 		fp.write((char *) &Pt[i], sizeof(long int));
 	}
 	if (f_v) {
 		cout << "flag_orbits::write_file writing " << nb_flag_orbits << " nodes" << endl;
-		}
+	}
 	for (i = 0; i < nb_flag_orbits; i++) {
 		Flag_orbit_node[i].write_file(fp, 0 /*verbose_level*/);
-		}
+	}
 
 	if (f_v) {
 		cout << "flag_orbits::write_file finished" << endl;
-		}
+	}
 }
 
 void flag_orbits::read_file(ifstream &fp,
@@ -222,7 +222,7 @@ void flag_orbits::read_file(ifstream &fp,
 	
 	if (f_v) {
 		cout << "flag_orbits::read_file" << endl;
-		}
+	}
 	flag_orbits::A = A;
 	flag_orbits::A2 = A2;
 	fp.read((char *) &nb_primary_orbits_lower, sizeof(int));
@@ -233,29 +233,29 @@ void flag_orbits::read_file(ifstream &fp,
 	Pt = NEW_lint(nb_flag_orbits * pt_representation_sz);
 	for (i = 0; i < nb_flag_orbits * pt_representation_sz; i++) {
 		fp.read((char *) &Pt[i], sizeof(long int));
-		}
+	}
 	if (f_vv) {
 		cout << "flag_orbits::read_file Pt matrix:" << endl;
 		Orbiter->Lint_vec.matrix_print(Pt, nb_flag_orbits, pt_representation_sz);
-		}
+	}
 
 	if (f_v) {
 		cout << "flag_orbits::read_file reading " << nb_flag_orbits << " nodes" << endl;
-		}
+	}
 	Flag_orbit_node = NEW_OBJECTS(flag_orbit_node, nb_flag_orbits);
 	for (i = 0; i < nb_flag_orbits; i++) {
 		if (f_vv) {
 			cout << "flag_orbits::read_file "
 					"node " << i << " / " << nb_flag_orbits << endl;
-			}
+		}
 		Flag_orbit_node[i].Flag_orbits = this;
 		Flag_orbit_node[i].flag_orbit_index = i;
 		Flag_orbit_node[i].read_file(fp, 0 /*verbose_level*/);
-		}
+	}
 
 	if (f_v) {
 		cout << "flag_orbits::read_file finished" << endl;
-		}
+	}
 }
 
 void flag_orbits::print_latex(ostream &ost,

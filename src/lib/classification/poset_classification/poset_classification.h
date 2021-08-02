@@ -183,37 +183,6 @@ public:
 
 
 
-// #############################################################################
-// poset_description.cpp
-// #############################################################################
-
-//! description of a poset from the command line
-
-
-class poset_description {
-public:
-	int f_subset_lattice;
-
-	int f_subspace_lattice;
-	int dimension;
-	int q;
-
-
-	int f_independence_condition;
-	int independence_condition_value;
-
-
-	poset_description();
-	~poset_description();
-	void null();
-	void freeself();
-	void read_arguments_from_string(
-			const char *str, int verbose_level);
-	int read_arguments(int argc, const char **argv,
-		int verbose_level);
-};
-
-
 
 // #############################################################################
 // poset_classification_control.cpp
@@ -286,7 +255,9 @@ public:
 
 	int f_level_summary_csv;
 	int f_orbit_reps_csv;
+
 	int f_report;
+	poset_classification_report_options *report_options;
 
 	int f_node_label_is_group_order;
 	int f_node_label_is_element;
@@ -310,9 +281,6 @@ public:
 
 	int f_preferred_choice;
 	std::vector<std::vector<int> > preferred_choice;
-	//int preferred_choice_function_node;
-	//void (*preferred_choice_function)(int pt, int &pt_pref, schreier *Sch, void *data, int verbose_level);
-	//void *preferred_choice_function_data;
 
 
 	poset_classification_control();
@@ -327,6 +295,7 @@ public:
 
 void poset_classification_control_preferred_choice_function(int pt, int &pt_pref,
 		schreier *Sch, void *data, int data2, int verbose_level);
+
 
 
 
@@ -401,25 +370,7 @@ private:
 		// used in poset_classification_recognize.cpp
 
 	
-	
-	// the following is maintained
-	// by init_poset_orbit_node / exit_poset_orbit_node:
-	long int nb_poset_orbit_nodes_used;
-	long int nb_poset_orbit_nodes_allocated;
-	long int poset_orbit_nodes_increment;
-	long int poset_orbit_nodes_increment_last;
-	
-	poset_orbit_node *root;
-	
-	long int *first_poset_orbit_node_at_level;
-	long int *set0; // [max_set_size] temporary storage
-	long int *set1; // [max_set_size] temporary storage
-	long int *set3; // [max_set_size] temporary storage
-	
-	long int *nb_extension_nodes_at_level_total;
-	long int *nb_extension_nodes_at_level;
-	long int *nb_fusion_nodes_at_level;
-	long int *nb_unprocessed_nodes_at_level;
+	poset_of_orbits *Poo;
 
 
 
@@ -452,6 +403,7 @@ public:
 
 
 	// poset_classification.cpp:
+	poset_of_orbits *get_Poo();
 	std::string &get_problem_label_with_path();
 	std::string &get_problem_label();
 	int first_node_at_level(int i);
@@ -508,9 +460,6 @@ public:
 	int find_poset_orbit_node_for_set_basic(int from, 
 		int node, int len, long int *set, int f_tolerant,
 		int verbose_level);
-	void poset_orbit_node_depth_breadth_perm_and_inverse(
-		int max_depth,
-		int *&perm, int *&perm_inv, int verbose_level);
 	long int count_extension_nodes_at_level(int lvl);
 	double level_progress(int lvl);
 	void count_automorphism_group_orders(int lvl, int &nb_agos, 
@@ -528,22 +477,19 @@ public:
 		int verbose_level);
 	void recreate_schreier_vectors_at_level(int i,
 		int verbose_level);
-	void get_table_of_nodes(long int *&Table, int &nb_rows, int &nb_cols,
-		int verbose_level);
-	int count_live_points(int level, int node_local,
-		int verbose_level);
 	void find_node_by_stabilizer_order(
 			int level, int order, int verbose_level);
+	void get_all_stabilizer_orders_at_level(int level, long int *&Ago, int &nb);
 	void get_stabilizer_order(int level, int orbit_at_level, 
 		longinteger_object &go);
+	long int get_stabilizer_order_lint(int level,
+			int orbit_at_level);
 	void get_stabilizer_group(group_container *&G,
 		int level, int orbit_at_level, int verbose_level);
 	void get_stabilizer_generators_cleaned_up(strong_generators *&gens,
 		int level, int orbit_at_level, int verbose_level);
 	void get_stabilizer_generators(strong_generators *&gens,
 		int level, int orbit_at_level, int verbose_level);
-	void change_extension_type(int level, int node, int cur_ext, 
-		int type, int verbose_level);
 	void orbit_element_unrank(int depth, int orbit_idx, 
 		long int rank, long int *set, int verbose_level);
 	void orbit_element_rank(int depth, int &orbit_idx, 
@@ -639,13 +585,6 @@ public:
 	void init_root_node_invariant_subset(
 		int *invariant_subset, int invariant_subset_size, 
 		int verbose_level);
-	void init_root_node_from_base_case(int verbose_level);
-	void init_root_node(int verbose_level);
-	void init_poset_orbit_node(int nb_poset_orbit_nodes,
-		int verbose_level);
-	void exit_poset_orbit_node();
-	void reallocate();
-	void reallocate_to(long int new_number_of_nodes, int verbose_level);
 	void init_base_case(classification_base_case *Base_case,
 		int verbose_level);
 		// Does not initialize the first starter nodes. 
@@ -837,7 +776,6 @@ public:
 	void print_level_extension_coset_info(int prev_level,
 		int prev, int cur_extension, int coset, int nb_cosets);
 	void print_node(int node);
-	void print_tree();
 	void print_extensions_at_level(std::ostream &ost, int lvl);
 	void print_fusion_nodes(int depth);
 	void read_data_file(int &depth_completed,
@@ -848,11 +786,6 @@ public:
 		int verbose_level);
 	void read_file(std::ifstream &fp, int &depth_completed,
 		int verbose_level);
-	void read_memory_object(int &depth_completed,
-		memory_object *m, int &nb_group_elements, int verbose_level);
-	void write_memory_object(int depth_completed,
-		memory_object *m, int &nb_group_elements, int verbose_level);
-	long int calc_size_on_file(int depth_completed, int verbose_level);
 	void housekeeping(int i, int f_write_files, int t0, 
 		int verbose_level);
 	void housekeeping_no_data_file(int i, int t0, int verbose_level);
@@ -866,43 +799,16 @@ public:
 	void write_sv_level_file_binary(int level, std::string &fname_base,
 		int f_split, int split_mod, int split_case, 
 		int verbose_level);
-	void read_sv_level_file_binary2(int level, std::ifstream &fp,
-		int f_split, int split_mod, int split_case, 
-		int f_recreate_extensions, int f_dont_keep_sv, 
-		int verbose_level);
-	void write_sv_level_file_binary2(int level, std::ofstream &fp,
-		int f_split, int split_mod, int split_case, 
-		int verbose_level);
 	void read_level_file_binary(int level, std::string &fname_base,
 		int verbose_level);
 	void write_level_file_binary(int level, std::string &fname_base,
 		int verbose_level);
-	void read_level_file_binary2(int level, std::ifstream &fp,
-		int &nb_group_elements, int verbose_level);
-	void write_level_file_binary2(int level, std::ofstream &fp,
-		int &nb_group_elements, int verbose_level);
-	void write_candidates_binary_using_sv(
-			const char *fname_base,
-		int lvl, int t0, int verbose_level);
-	void read_level_file(int level, std::string &fname, int verbose_level);
 	void recover(std::string &recover_fname,
 		int &depth_completed, int verbose_level);
 	void make_fname_lvl_file_candidates(std::string &fname,
 			std::string &fname_base, int lvl);
 	void make_fname_lvl_file(std::string &fname,
 			std::string &fname_base, int lvl);
-	void write_lvl_file_with_candidates(std::string &fname_base,
-		int lvl, int t0, int verbose_level);
-	void write_lvl_file(
-			std::string &fname_base,
-			int lvl,
-		int t0, int f_with_stabilizer_generators, int f_long_version,
-		int verbose_level);
-	void write_lvl(std::ostream &f, int lvl, int t0,
-		int f_with_stabilizer_generators, int f_long_version,
-		int verbose_level);
-	void log_nodes_for_treefile(int cur, int depth, 
-			std::ostream &f, int f_recurse, int verbose_level);
 	void log_current_node(std::ostream &f, int size);
 	void make_spreadsheet_of_orbit_reps(spreadsheet *&Sp, 
 		int max_depth);
@@ -948,12 +854,18 @@ public:
 
 
 	// in poset_classification_report.cpp:
-	//void report_schreier_trees(std::ostream &ost, int verbose_level);
-	void report(std::ostream &ost, int verbose_level);
-	void report_number_of_orbits_at_level(std::ostream &ost);
-	void report_orbits_summary(std::ostream &ost, int verbose_level);
-	void report_poset_of_orbits(std::ostream &ost);
-	void report_orbit(int level, int orbit_at_level, std::ostream &ost);
+	void report(std::ostream &ost, poset_classification_report_options *Opt, int verbose_level);
+	void report_orbits_in_detail(std::ostream &ost,
+			poset_classification_report_options *Opt,
+			int verbose_level);
+	void report_number_of_orbits_at_level(std::ostream &ost,
+			poset_classification_report_options *Opt);
+	void report_orbits_summary(std::ostream &ost,
+			poset_classification_report_options *Opt, int verbose_level);
+	void report_poset_of_orbits(std::ostream &ost, int verbose_level);
+	void report_orbit(int level, int orbit_at_level,
+			poset_classification_report_options *Opt,
+			std::ostream &ost);
 
 	// poset_classification_trace.cpp:
 	int find_isomorphism(long int *set1, long int *set2, int sz,
@@ -997,6 +909,209 @@ public:
 
 const char *trace_result_as_text(trace_result r);
 int trace_result_is_no_result(trace_result r);
+
+
+
+// #############################################################################
+// poset_classification_report_options.cpp
+// #############################################################################
+
+
+//! to control the behavior of the poset classification report function
+
+
+class poset_classification_report_options {
+
+public:
+
+	int f_select_orbits_by_level;
+	int select_orbits_by_level_level;
+
+	int f_select_orbits_by_stabilizer_order;
+	int select_orbits_by_stabilizer_order_so;
+
+	int f_select_orbits_by_stabilizer_order_multiple_of;
+	int select_orbits_by_stabilizer_order_so_multiple_of;
+
+	int f_include_projective_stabilizer;
+
+	poset_classification_report_options();
+	~poset_classification_report_options();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+	int is_selected_by_group_order(long int so);
+
+};
+
+
+
+
+// #############################################################################
+// poset_of_orbits.cpp
+// #############################################################################
+
+//! the data structure for the poset of orbits in the poset classification algorithm
+
+
+class poset_of_orbits {
+
+private:
+
+	poset_classification *PC;
+
+	int sz;
+	int max_set_size;
+	long int t0;
+
+	long int nb_poset_orbit_nodes_used;
+	long int nb_poset_orbit_nodes_allocated;
+	long int poset_orbit_nodes_increment;
+	long int poset_orbit_nodes_increment_last;
+
+	poset_orbit_node *root;
+
+	long int *first_poset_orbit_node_at_level;
+
+	long int *nb_extension_nodes_at_level_total;
+	long int *nb_extension_nodes_at_level;
+	long int *nb_fusion_nodes_at_level;
+	long int *nb_unprocessed_nodes_at_level;
+
+public:
+	long int *set0; // [max_set_size] temporary storage
+	long int *set1; // [max_set_size] temporary storage
+	long int *set3; // [max_set_size] temporary storage
+
+
+	poset_of_orbits();
+	~poset_of_orbits();
+	void init(poset_classification *PC,
+			int nb_poset_orbit_nodes, int sz, int max_set_size, long int t0,
+			int verbose_level);
+	void init_poset_orbit_node(
+			int nb_poset_orbit_nodes,
+			int verbose_level);
+	void reallocate();
+	void reallocate_to(long int new_number_of_nodes,
+			int verbose_level);
+	long int get_nb_poset_orbit_nodes_allocated();
+	long int get_nb_extension_nodes_at_level_total(int level);
+	void set_nb_poset_orbit_nodes_used(int value);
+	int first_node_at_level(int i);
+	void set_first_node_at_level(int i, int value);
+	poset_orbit_node *get_node(int node_idx);
+	long int *get_set0();
+	long int *get_set1();
+	long int *get_set3();
+	int nb_orbits_at_level(int level);
+	long int nb_flag_orbits_up_at_level(int level);
+	poset_orbit_node *get_node_ij(int level, int node);
+	int node_get_nb_of_extensions(int node);
+	void get_set(int node, long int *set, int &size);
+	void get_set(int level, int orbit, long int *set, int &size);
+	int find_extension_from_point(
+			int node_idx,
+			long int pt, int verbose_level);
+	long int count_extension_nodes_at_level(int lvl);
+	double level_progress(int lvl);
+	void change_extension_type(int level,
+			int node, int cur_ext, int type, int verbose_level);
+	void get_table_of_nodes(long int *&Table,
+			int &nb_rows, int &nb_cols, int verbose_level);
+	int count_live_points(
+			int level,
+			int node_local, int verbose_level);
+	void print_progress_by_level(int lvl);
+	void print_tree();
+	void init_root_node_from_base_case(int verbose_level);
+	void init_root_node(int verbose_level);
+	void make_tabe_of_nodes(int verbose_level);
+	void poset_orbit_node_depth_breadth_perm_and_inverse(
+		int max_depth,
+		int *&perm, int *&perm_inv, int verbose_level);
+	void read_memory_object(
+			int &depth_completed,
+			memory_object *m, int &nb_group_elements,
+			int verbose_level);
+	void write_memory_object(
+			int depth_completed,
+			memory_object *m, int &nb_group_elements,
+			int verbose_level);
+	long int calc_size_on_file(int depth_completed,
+			int verbose_level);
+	void read_sv_level_file_binary2(
+		int level, std::ifstream &fp,
+		int f_split, int split_mod, int split_case,
+		int f_recreate_extensions, int f_dont_keep_sv,
+		int verbose_level);
+	void write_sv_level_file_binary2(
+		int level, std::ofstream &fp,
+		int f_split, int split_mod, int split_case,
+		int verbose_level);
+	void read_level_file_binary2(
+		int level, std::ifstream &fp,
+		int &nb_group_elements, int verbose_level);
+	void write_level_file_binary2(
+		int level, std::ofstream &fp,
+		int &nb_group_elements, int verbose_level);
+	void write_candidates_binary_using_sv(
+			const char *fname_base,
+			int lvl, int t0, int verbose_level);
+	void read_level_file(int level,
+			std::string &fname, int verbose_level);
+	void write_lvl_file_with_candidates(
+			std::string &fname_base, int lvl, int t0,
+			int verbose_level);
+	void write_lvl_file(
+			std::string &fname_base,
+			int lvl, int t0, int f_with_stabilizer_generators,
+			int f_long_version,
+			int verbose_level);
+	void write_lvl(
+			std::ostream &f, int lvl, int t0,
+			int f_with_stabilizer_generators, int f_long_version,
+			int verbose_level);
+	void log_nodes_for_treefile(
+			int cur, int depth,
+			std::ostream &f, int f_recurse, int verbose_level);
+
+};
+
+
+
+// #############################################################################
+// poset_description.cpp
+// #############################################################################
+
+//! description of a poset from the command line
+
+
+class poset_description {
+public:
+	int f_subset_lattice;
+
+	int f_subspace_lattice;
+	int dimension;
+	int q;
+
+
+	int f_independence_condition;
+	int independence_condition_value;
+
+
+	poset_description();
+	~poset_description();
+	void null();
+	void freeself();
+	void read_arguments_from_string(
+			const char *str, int verbose_level);
+	int read_arguments(int argc, const char **argv,
+		int verbose_level);
+};
+
+
 
 
 
@@ -1106,6 +1221,7 @@ public:
 		strong_generators *Strong_gens);
 	void get_stabilizer_order(poset_classification *gen,
 		longinteger_object &go);
+	long int get_stabilizer_order_lint(poset_classification *PC);
 	void get_stabilizer(poset_classification *PC,
 			group_container &G, longinteger_object &go_G,
 		int verbose_level);

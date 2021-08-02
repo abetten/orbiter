@@ -247,8 +247,9 @@ class six_arcs_not_on_a_conic {
 
 public:
 
-	projective_space *P2; // do not free
+	//projective_space *P2; // do not free
 	arc_generator_description *Descr;
+	projective_space_with_action *PA;
 
 	arc_generator *Gen;
 
@@ -263,8 +264,7 @@ public:
 	void freeself();
 	void init(
 		arc_generator_description *Descr,
-		action *A,
-		projective_space *P2,
+		projective_space_with_action *PA,
 		int f_test_nb_Eckardt_points, int nb_E, surface_domain *Surf,
 		int verbose_level);
 	void recognize(long int *arc6, int *transporter,
@@ -288,8 +288,8 @@ public:
 
 	surface_with_action *Surf_A;
 
-	action *A; // PGL(3,q)
-	vector_ge *nice_gens;
+	//action *A; // PGL(3,q)
+	//vector_ge *nice_gens;
 
 
 	six_arcs_not_on_a_conic *Six_arcs;

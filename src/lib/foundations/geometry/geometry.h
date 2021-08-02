@@ -1608,6 +1608,7 @@ public:
 	int determine_line_in_plane(long int *two_input_pts,
 		int *three_coeffs, 
 		int verbose_level);
+	int nonconical_six_arc_get_nb_Eckardt_points(long int *Arc6, int verbose_level);
 	int test_nb_Eckardt_points(surface_domain *Surf,
 			long int *S, int len, int pt, int nb_E, int verbose_level);
 	int conic_test(long int *S, int len, int pt, int verbose_level);
@@ -1641,7 +1642,7 @@ public:
 		// conics[6 * 6]
 	eckardt_point_info *compute_eckardt_point_info(
 			surface_domain *Surf, long int *arc6,
-		int verbose_level);
+			int verbose_level);
 	void PG_2_8_create_conic_plus_nucleus_arc_1(long int *the_arc, int &size,
 		int verbose_level);
 	void PG_2_8_create_conic_plus_nucleus_arc_2(long int *the_arc, int &size,
@@ -1813,6 +1814,10 @@ public:
 		int threshold,
 		int *&intersection_type, int &highest_intersection_number, 
 		int f_save_largest_sets, set_of_sets *&largest_sets, 
+		int verbose_level);
+	void determine_nonconical_six_subsets(
+		long int *set, int set_size,
+		std::vector<int> &Rk,
 		int verbose_level);
 	void conic_type(
 		long int *set, int set_size,

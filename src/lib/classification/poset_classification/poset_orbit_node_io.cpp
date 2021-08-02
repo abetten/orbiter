@@ -244,7 +244,7 @@ long int poset_orbit_node::calc_size_on_file(action *A, int verbose_level)
 	if (nb_strong_generators) {
 		s += A->base_len() * sizeof(int);
 		// tl[]
-		}
+	}
 
 	s += sizeof(int); // nb_extensions
 	//m->write_int(nb_extensions);
@@ -260,7 +260,7 @@ long int poset_orbit_node::calc_size_on_file(action *A, int verbose_level)
 			// extension node
 			s += sizeof(int); // data
 			//m->write_int(E[i].data); // next poset_orbit_node
-			}
+		}
 		else if (E[i].get_type() == EXTENSION_TYPE_FUSION) {
 			// fusion node
 			s += A->coded_elt_size_in_char; // group element
@@ -270,8 +270,8 @@ long int poset_orbit_node::calc_size_on_file(action *A, int verbose_level)
 			s += 2 * sizeof(int); // data1, data2
 			//m->write_int(E[i].data1);
 			//m->write_int(E[i].data2);
-			}
 		}
+	}
 	return s;
 }
 
@@ -283,7 +283,7 @@ void poset_orbit_node::sv_read_file(poset_classification *PC,
 	
 	if (f_v) {
 		cout << "poset_orbit_node::sv_read_file node " << node << endl;
-		}
+	}
 	int hdl;
 
 	if (nb_strong_generators) {
@@ -299,7 +299,7 @@ void poset_orbit_node::sv_read_file(poset_classification *PC,
 	if (f_v) {
 		cout << "poset_orbit_node::sv_read_file node " << node
 				<< " finished" << endl;
-		}
+	}
 }
 
 void poset_orbit_node::sv_write_file(poset_classification *PC,
@@ -309,7 +309,7 @@ void poset_orbit_node::sv_write_file(poset_classification *PC,
 	
 	if (f_v) {
 		cout << "poset_orbit_node::sv_write_file node " << node << endl;
-		}
+	}
 
 	PC->get_schreier_vector_handler()->sv_write_file(Schreier_vector,
 			fp, verbose_level);
@@ -317,7 +317,7 @@ void poset_orbit_node::sv_write_file(poset_classification *PC,
 	if (f_v) {
 		cout << "poset_orbit_node::sv_write_file node "
 				<< node << " finished" << endl;
-		}
+	}
 }
 
 void poset_orbit_node::read_file(action *A,
@@ -368,7 +368,7 @@ void poset_orbit_node::read_file(action *A,
 			if (f_vv) {
 				cout << "read element" << endl;
 				A->element_print_quick(Elt, cout);
-				}
+			}
 			if (i == 0) {
 				first_strong_generator_handle = A->element_store(Elt, FALSE);
 			}
@@ -703,7 +703,7 @@ void poset_orbit_node::draw_schreier_forest(
 			if (f_using_invariant_subset) {
 				f_has_point_labels = TRUE;
 				point_labels = AR->G.ABR->points;
-				}
+			}
 
 			if (f_v) {
 				cout << "poset_orbit_node::draw_schreier_forest"

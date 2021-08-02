@@ -43,7 +43,7 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 
 	if (f_v) {
 		cout << "poset_orbit_node::compute_flag_orbits_subspace_action" << endl;
-		}
+	}
 	store_set(gen, lvl - 1); // stores a set of size lvl to gen->S
 	
 
@@ -61,7 +61,7 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 		//		<< gen->f_early_test_func << endl;
 		if (f_vvv) {
 			print_set_verbose(gen);
-			}
+		}
 		if (prev >= 0 && gen->node_has_schreier_vector(prev)) {
 			int nb = gen->get_node(prev)->get_nb_of_live_points();
 			cout << " with " << nb << " live points";
@@ -70,13 +70,13 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 				Orbiter->Int_vec.print(cout, gen->get_node(prev)->live_points(),
 						gen->get_node(prev)->get_nb_of_live_points());
 				cout << endl;
-				}
+			}
 			else {
 				cout << endl;
-				}
 			}
-		cout << endl;
 		}
+		cout << endl;
+	}
 
 	strong_generators *Strong_gens;
 	longinteger_object go;
@@ -88,8 +88,8 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 		if (f_vv) {
 			cout << "With the following generators:" << endl;
 			Strong_gens->print_generators(cout);
-			}
 		}
+	}
 	
 
 	//if (TRUE /*gen->f_early_test_func*/) {
@@ -98,7 +98,7 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 			cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 					"before setup_factor_space_action_with_early_test"
 					<< endl;
-			}
+		}
 		//cout << "setup_factor_space_action_with_early_test unavailable" << endl;
 		//exit(1);
 #if 1
@@ -111,7 +111,7 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 			cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 					"after setup_factor_space_action_with_early_test"
 					<< endl;
-			}
+		}
 
 		//}
 #if 0
@@ -119,7 +119,7 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 		if (f_v) {
 			cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 					"before setup_factor_space_action" << endl;
-			}
+		}
 		setup_factor_space_action(gen,
 				*AF, *A_factor_space, lvl,
 				TRUE /*f_compute_tables*/,
@@ -127,14 +127,14 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 		if (f_v) {
 			cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 					"after setup_factor_space_action" << endl;
-			}
 		}
+	}
 #endif
 	
 	if (f_v) {
 		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 				"before Schreier.init" << endl;
-		}
+	}
 
 
 
@@ -155,7 +155,7 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 	if (f_v) {
 		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 				"before Schreier.init_generators_by_handle" << endl;
-		}
+	}
 
 	std::vector<int> gen_handle;
 
@@ -168,7 +168,7 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 	if (f_v) {
 		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 				"before downstep_orbits_subspace_action" << endl;
-		}
+	}
 	downstep_orbits_subspace_action(
 		gen,
 		*Schreier,
@@ -179,7 +179,7 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 	if (f_v) {
 		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 				"after downstep_orbits_subspace_action" << endl;
-		}
+	}
 
 
 
@@ -188,13 +188,13 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 				"after downstep_orbits_subspace_action "
 				"nb_orbits=" << nb_orbits << endl;
-		}
+	}
 	
 	if (f_v) {
 		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 				"before create_schreier_vector_wrapper_subspace_action "
 				<< endl;
-		}
+	}
 	create_schreier_vector_wrapper_subspace_action(
 		gen,
 		f_create_schreier_vector, 
@@ -205,16 +205,16 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 				"after create_schreier_vector_wrapper_subspace_action "
 				<< endl;
-		}
+	}
 
 	if (f_v4) {
 		gen->print_level_info(lvl, node);
 		cout << " : calling find_extensions_subspace_action" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 				"before find_extensions_subspace_action" << endl;
-		}
+	}
 	find_extensions_subspace_action(
 		gen, *Schreier, 
 		A_factor_space, AF, 
@@ -223,12 +223,12 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 	if (f_v) {
 		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 				"after find_extensions_subspace_action" << endl;
-		}
+	}
 	if (f_v4) {
 		gen->print_level_info(lvl, node);
 		cout << " : after test_orbits and find_extensions, "
 				"we have " << nb_extensions << " extensions" << endl;
-		}
+	}
 	
 	
 	if (f_v) {
@@ -236,18 +236,18 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 		cout << " : found " << nb_extensions << " extensions "
 				"(out of " << nb_orbits << " orbits) with "
 				<< nb_extension_points() << " points " << endl;
-		}
+	}
 	if (f_vv) {
 		downstep_subspace_action_print_orbits(
 			gen, *Schreier, 
 			lvl, 
 			f_vvv /* f_print_orbits */, 
 			verbose_level);
-		}
+	}
 	if (f_v) {
 		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 				"before deleting things" << endl;
-		}
+	}
 	FREE_OBJECT(Strong_gens);
 	FREE_OBJECT(Schreier);
 
@@ -259,7 +259,7 @@ void poset_orbit_node::compute_flag_orbits_subspace_action(
 	if (f_v) {
 		cout << "poset_orbit_node::compute_flag_orbits_subspace_action "
 				"done" << endl;
-		}
+	}
 
 }
 
@@ -277,7 +277,7 @@ void poset_orbit_node::setup_factor_space_action_light(
 		cout << "poset_orbit_node::setup_factor_space_action_light "
 				"node=" << node << " prev=" << prev
 				<< " pt=" << pt << endl;
-		}
+	}
 	the_set = NEW_lint(lvl);
 	store_set_to(gen, lvl - 1, the_set);
 
@@ -312,7 +312,7 @@ void poset_orbit_node::setup_factor_space_action_with_early_test(
 		cout << "poset_orbit_node::setup_factor_space_action_"
 				"with_early_test "
 				"A2->degree=" << gen->get_A2()->degree << endl;
-		}
+	}
 	the_set = NEW_lint(lvl + 1);
 		// the +1 is for safety !!!
 		// Namely, so that the test function has one more entry
@@ -353,7 +353,7 @@ void poset_orbit_node::setup_factor_space_action_with_early_test(
 	if (f_vv) {
 		gen->print_level_info(lvl, node);
 		cout << " : number of live points = " << n << endl;
-		}
+	}
 	candidates = NEW_lint(gen->get_A2()->degree);
 
 	if (f_vv) {
@@ -362,7 +362,7 @@ void poset_orbit_node::setup_factor_space_action_with_early_test(
 				"calling early_test_func, degree = "
 				<< gen->get_A2()->degree
 				<< " n = " << n << endl;
-		}
+	}
 
 	gen->invoke_early_test_func(
 			the_set, lvl,
@@ -382,13 +382,13 @@ void poset_orbit_node::setup_factor_space_action_with_early_test(
 		//cout << "candidates: ";
 		//int_vec_print(cout, candidates, nb_candidates);
 		//cout << endl;
-		}
+	}
 
 	if (f_vv) {
 		cout << "poset_orbit_node::setup_factor_space_action_"
 				"with_early_test "
 				"before AF.init_by_rank_table_mode" << endl;
-		}
+	}
 	AF.init_by_rank_table_mode(
 		gen->get_VS(),
 		*gen->get_A(),
@@ -400,20 +400,20 @@ void poset_orbit_node::setup_factor_space_action_with_early_test(
 		cout << "poset_orbit_node::setup_factor_space_action_"
 				"with_early_test "
 				"after AF.init_by_rank_table_mode" << endl;
-		}
+	}
 
 	FREE_lint(candidates);
 	FREE_lint(the_set);
 	if (TRUE /* lvl == 0*/) {
 		FREE_lint(subset);
-		}
+	}
 
 	if (f_vv) {
 		cout << "poset_orbit_node::setup_factor_space_action_"
 				"with_early_test "
 				"before A_factor_space.induced_action_on_factor_space"
 				<< endl;
-		}
+	}
 	A_factor_space.induced_action_on_factor_space(
 		gen->get_A2(), &AF,
 		FALSE /*f_induce_action*/,
@@ -424,7 +424,7 @@ void poset_orbit_node::setup_factor_space_action_with_early_test(
 				"with_early_test "
 				"after A_factor_space.induced_action_on_factor_space"
 				<< endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "poset_orbit_node::setup_factor_space_action_"
@@ -434,7 +434,7 @@ void poset_orbit_node::setup_factor_space_action_with_early_test(
 				"with_early_test "
 				"node=" << node << " prev=" << prev
 				<< " pt=" << pt << " done" << endl;
-		}
+	}
 }
 
 void poset_orbit_node::setup_factor_space_action(
@@ -460,7 +460,7 @@ void poset_orbit_node::setup_factor_space_action(
 				"node=" << node << " prev=" << prev
 				<< " pt=" << pt << endl;
 		cout << "f_compute_tables=" << f_compute_tables << endl;
-		}
+	}
 	the_set = NEW_lint(lvl);
 	coordinates = NEW_int(lvl * gen->get_VS()->dimension);
 	store_set_to(gen, lvl - 1, the_set);
@@ -469,7 +469,7 @@ void poset_orbit_node::setup_factor_space_action(
 		cout << "the set: ";
 		Orbiter->Lint_vec.print(cout, the_set, lvl);
 		cout << endl;
-		}
+	}
 	gen->unrank_basis(coordinates, the_set, lvl);
 
 
@@ -491,12 +491,12 @@ void poset_orbit_node::setup_factor_space_action(
 
 	if (f_v20) {
 		AF.list_all_elements();
-		}
+	}
 	if (f_vv) {
 		cout << "poset_orbit_node::setup_factor_space_action "
 				"before A_factor_space->induced_action_on_factor_space"
 				<< endl;
-		}
+	}
 	A_factor_space.induced_action_on_factor_space(
 		gen->get_A2(), &AF,
 		FALSE /*f_induce_action*/,
@@ -506,7 +506,7 @@ void poset_orbit_node::setup_factor_space_action(
 		cout << "poset_orbit_node::setup_factor_space_action "
 				"after A_factor_space->induced_action_on_factor_space"
 				<< endl;
-		}
+	}
 
 	FREE_lint(the_set);
 	FREE_int(coordinates);
@@ -539,10 +539,10 @@ void poset_orbit_node::downstep_subspace_action_print_orbits(
 	AF = Schreier.A->G.AF;
 	if (f_print_orbits) {
 		cout << "i : orbit rep : orbit length : orbit" << endl;
-		}
+	}
 	else {
 		cout << "i : orbit rep : orbit length" << endl;
-		}
+	}
 
 	for (h = 0; h < Schreier.nb_orbits; h++) {
 		first = Schreier.orbit_first[h];
@@ -563,13 +563,13 @@ void poset_orbit_node::downstep_subspace_action_print_orbits(
 				cout << " : ";
 				Schreier.print_orbit_through_labels(
 						cout, h, AF->preimage_table);
-				}
+			}
 			else {
 				cout << " : too long to print";
-				}
 			}
-		cout << endl;
 		}
+		cout << endl;
+	}
 	cout << "poset_orbit_node::downstep_subspace_action_"
 			"print_orbits done" << endl;
 }
@@ -734,10 +734,10 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 		gen->print_level_info(lvl, node);
 		cout << "poset_orbit_node::downstep_orbits: "
 				"we found " << Schreier.nb_orbits << " orbits" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "poset_orbit_node::downstep_orbits_subspace_action done" << endl;
-		}
+	}
 }
 
 void poset_orbit_node::find_extensions_subspace_action(

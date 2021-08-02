@@ -471,6 +471,10 @@ public:
 	int f_dualize_points_to_hyperplanes;
 	std::string dualize_input_set;
 
+	int f_classify_arcs;
+	arc_generator_description *Arc_generator_description;
+
+	int f_classify_cubic_curves;
 
 	projective_space_activity_description();
 	~projective_space_activity_description();
@@ -587,6 +591,14 @@ public:
 	void do_lift_skew_hexagon_with_polarity(
 			projective_space_with_action *PA,
 			std::string &polarity_36,
+			int verbose_level);
+	void do_classify_arcs(
+			projective_space_with_action *PA,
+			arc_generator_description *Arc_generator_description,
+			int verbose_level);
+	void do_classify_cubic_curves(
+			projective_space_with_action *PA,
+			arc_generator_description *Arc_generator_description,
 			int verbose_level);
 
 };

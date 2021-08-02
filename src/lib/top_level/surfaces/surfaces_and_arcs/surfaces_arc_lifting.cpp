@@ -185,18 +185,21 @@ void surfaces_arc_lifting::init(
 
 	Descr->Control = Control_six_arcs;
 	//Descr->LG = LG3; // not needed if we are not using init_from_description
+#if 0
 	Descr->F = F;
 	Descr->f_q = TRUE;
 	Descr->q = F->q;
 	Descr->f_n = TRUE;
 	Descr->n = 3;
+#endif
 	Descr->f_target_size = TRUE;
 	Descr->target_size = 6;
 
 	Six_arcs->init(
 		Descr,
-		A3,
-		Surf->P2,
+		Surf_A->PA->PA2,
+		//A3,
+		//Surf->P2,
 		f_test_nb_Eckardt_points, nb_E, Surf,
 		verbose_level - 2);
 
@@ -983,7 +986,9 @@ void surfaces_arc_lifting::report2(ostream &ost,
 
 	ost << "\\section{Six-Arcs in Detail}" << endl << endl;
 
-	Six_arcs->Gen->gen->report(ost, verbose_level);
+	poset_classification_report_options Opt;
+
+	Six_arcs->Gen->gen->report(ost, &Opt, verbose_level);
 
 
 

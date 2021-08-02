@@ -17,10 +17,12 @@ MODULES = \
 	poset_classification_init.o \
 	poset_classification_io.o \
 	poset_classification_recognize.o \
+	poset_classification_report_options.o \
 	poset_classification_report.o \
 	poset_classification_trace.o \
 	poset_classification.o \
 	poset_description.o \
+	poset_of_orbits.o \
 	poset_orbit_node_downstep_subspace_action.o \
 	poset_orbit_node_downstep.o \
 	poset_orbit_node_group_theory.o \

@@ -367,6 +367,8 @@ void surface_object_with_action::compute_projectivity_group(
 		cout << "surface_object_with_action::compute_projectivity_group "
 				"verbose_level=" << verbose_level << endl;
 	}
+
+#if 0
 	if (Surf_A->A->is_semilinear_matrix_group()) {
 		if (f_v) {
 			cout << "surface_object_with_action::compute_projectivity_group "
@@ -405,6 +407,13 @@ void surface_object_with_action::compute_projectivity_group(
 	else {
 		projectivity_group_gens = NULL;
 	}
+#else
+
+	Surf_A->A->compute_projectivity_subgroup(projectivity_group_gens,
+			Aut_gens, verbose_level);
+
+
+#endif
 
 
 	if (f_v) {

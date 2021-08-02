@@ -74,7 +74,9 @@ poset_classification_control::poset_classification_control()
 
 	f_level_summary_csv = FALSE;
 	f_orbit_reps_csv = FALSE;
+
 	f_report = FALSE;
+	report_options = NULL;
 
 	f_node_label_is_group_order = FALSE;
 	f_node_label_is_element = FALSE;
@@ -314,6 +316,23 @@ int poset_classification_control::read_arguments(
 		}
 		else if (stringcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
+
+			report_options = NEW_OBJECT(poset_classification_report_options);
+			if (f_v) {
+				cout << "-report " << endl;
+			}
+			i += report_options->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			if (f_v) {
+				cout << "done reading -report " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+			}
+
 			if (f_v) {
 				cout << "-report" << endl;
 			}
@@ -511,7 +530,8 @@ void poset_classification_control::print()
 		cout << "-orbit_reps_csv" << endl;
 	}
 	if (f_report) {
-		cout << "-report" << endl;
+		cout << "-report ";
+		report_options->print();
 	}
 	if (f_node_label_is_group_order) {
 		cout << "-node_label_is_group_order" << endl;

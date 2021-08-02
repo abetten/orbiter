@@ -36,7 +36,7 @@ public:
 		void *check_function_incremental_data, int verbose_level);
 	void *check_function_incremental_data;
 
-	std::string fname_live_points;
+	//std::string fname_live_points;
 
 
 	int f_data_is_allocated;
@@ -71,7 +71,7 @@ public:
 		int (*check_function_incremental)(int len, long int *S,
 			void *data, int verbose_level),
 		void *check_function_incremental_data,
-		std::string &fname_live_points,
+		//std::string &fname_live_points,
 		int verbose_level);
 	void do_recoordinatize(long int i1, long int i2, long int i3, int verbose_level);
 	void compute_starter(long int *&S, int &size,

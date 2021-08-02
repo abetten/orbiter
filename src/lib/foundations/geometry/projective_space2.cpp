@@ -2030,7 +2030,7 @@ void projective_space::conic_type_randomized(int nb_times,
 
 		for (i = 0; i < len; i++) {
 			if (Sorting.lint_vec_is_subset_of(subset, 5,
-					Pts_on_conic[i], nb_pts_on_conic[i])) {
+					Pts_on_conic[i], nb_pts_on_conic[i], 0 /* verbose_level */)) {
 
 #if 0
 				cout << "The set ";
@@ -2309,6 +2309,212 @@ void projective_space::conic_intersection_type(
 
 }
 
+void projective_space::determine_nonconical_six_subsets(
+	long int *set, int set_size,
+	std::vector<int> &Rk,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int rk, i;
+	int threshold = 6;
+	int N;
+
+	long int **Pts_on_conic;
+	int **Conic_eqn;
+	int *nb_pts_on_conic;
+	int len;
+
+	//geometry_global Gg;
+	combinatorics_domain Combi;
+	sorting Sorting;
+
+	if (f_v) {
+		cout << "projective_space::determine_nonconical_six_subsets" << endl;
+	}
+	if (n != 2) {
+		cout << "projective_space::determine_nonconical_six_subsets n != 2" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "projective_space::determine_nonconical_six_subsets before conic_type" << endl;
+	}
+	conic_type(
+		set, set_size,
+		threshold,
+		Pts_on_conic, Conic_eqn, nb_pts_on_conic, len,
+		0 /*verbose_level*/);
+	if (f_v) {
+		cout << "projective_space::determine_nonconical_six_subsets after conic_type" << endl;
+	}
+	if (f_v) {
+		cout << "There are " << len << " conics. They contain the following points:" << endl;
+		for (i = 0; i < len; i++) {
+			cout << i << " : " << nb_pts_on_conic[i] << " : ";
+			Orbiter->Lint_vec.print(cout, Pts_on_conic[i], nb_pts_on_conic[i]);
+			cout << endl;
+		}
+	}
+
+	int subset[6];
+
+	N = Combi.int_n_choose_k(set_size, 6);
+
+	if (f_v) {
+		cout << "set_size=" << set_size << endl;
+		cout << "N=number of 6-subsets of the set=" << N << endl;
+	}
+
+
+	for (rk = 0; rk < N; rk++) {
+
+		Combi.unrank_k_subset(rk, subset, set_size, 6);
+		if (f_v) {
+			cout << "projective_space::conic_type rk=" << rk << " / " << N << " : ";
+			Orbiter->Int_vec.print(cout, subset, 6);
+			cout << endl;
+		}
+
+		for (i = 0; i < len; i++) {
+			if (Sorting.lint_vec_is_subset_of(subset, 6,
+					Pts_on_conic[i], nb_pts_on_conic[i], 0 /* verbose_level */)) {
+
+#if 1
+				if (f_v) {
+					cout << "The set ";
+					Orbiter->Int_vec.print(cout, subset, 6);
+					cout << " is a subset of the " << i << "th conic ";
+					Orbiter->Lint_vec.print(cout,
+							Pts_on_conic[i], nb_pts_on_conic[i]);
+					cout << endl;
+				}
+#endif
+
+				break;
+			}
+			else {
+				if (FALSE) {
+					cout << " not on conic " << i << endl;
+				}
+			}
+		}
+		if (i == len) {
+			Rk.push_back(rk);
+		}
+	}
+
+	for (i = 0; i < len; i++) {
+		FREE_lint(Pts_on_conic[i]);
+		FREE_int(Conic_eqn[i]);
+	}
+	FREE_plint(Pts_on_conic);
+	FREE_pint(Conic_eqn);
+	FREE_int(nb_pts_on_conic);
+
+	int nb, j, nb_E;
+	int *Nb_E;
+	long int Arc6[6];
+
+	nb = Rk.size();
+	Nb_E = NEW_int(nb);
+	if (f_v) {
+		cout << "computing Eckardt point number distribution" << endl;
+	}
+	for (i = 0; i < nb; i++) {
+		if ((i % 500) == 0) {
+			cout << i << " / " << nb << endl;
+		}
+		rk = Rk[i];
+		Combi.unrank_k_subset(rk, subset, set_size, 6);
+		for (j = 0; j < 6; j++) {
+			Arc6[j] = set[subset[j]];
+		}
+		nb_E = nonconical_six_arc_get_nb_Eckardt_points(
+				Arc6, 0 /* verbose_level */);
+		Nb_E[i] = nb_E;
+	}
+
+	tally T;
+
+	T.init(Nb_E, nb, FALSE, 0);
+	if (f_v) {
+		cout << "Eckardt point number distribution : ";
+		T.print_file_tex(cout, TRUE /* f_backwards*/);
+		cout << endl;
+	}
+
+	if (nb) {
+		int m, idx;
+		int *Idx;
+		int nb_idx;
+		int *System;
+
+		m = Orbiter->Int_vec.maximum(Nb_E, nb);
+		T.get_class_by_value(Idx, nb_idx, m /* value */, verbose_level);
+		if (f_v) {
+			cout << "The class of " << m << " is ";
+			Orbiter->Int_vec.print(cout, Idx, nb_idx);
+			cout << endl;
+		}
+
+		System = NEW_int(nb_idx * 6);
+
+		for (i = 0; i < nb_idx; i++) {
+			idx = Idx[i];
+
+			rk = Rk[idx];
+			if (f_v) {
+				cout << i << " / " << nb_idx << " idx=" << idx << ", rk=" << rk << " :" << endl;
+			}
+			Combi.unrank_k_subset(rk, subset, set_size, 6);
+
+			Orbiter->Int_vec.copy(subset, System + i * 6, 6);
+
+			for (j = 0; j < 6; j++) {
+				Arc6[j] = set[subset[j]];
+			}
+			nb_E = nonconical_six_arc_get_nb_Eckardt_points(
+					Arc6, 0 /* verbose_level */);
+			if (nb_E != m) {
+				cout << "nb_E != m" << endl;
+				exit(1);
+			}
+			if (f_v) {
+				cout << "The subset is ";
+				Orbiter->Int_vec.print(cout, subset, 6);
+				cout << " : ";
+				cout << " the arc is ";
+				Orbiter->Lint_vec.print(cout, Arc6, 6);
+				cout << " nb_E = " << nb_E << endl;
+			}
+		}
+
+		file_io Fio;
+		std::string fname;
+
+		fname.assign("set_system.csv");
+		Fio.int_matrix_write_csv(fname, System, nb_idx, 6);
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+		tally T2;
+
+		T2.init(System, nb_idx * 6, FALSE, 0);
+		if (f_v) {
+			cout << "distribution of points: ";
+			T2.print_file_tex(cout, TRUE /* f_backwards*/);
+			cout << endl;
+		}
+
+
+	}
+
+
+	if (f_v) {
+		cout << "projective_space::determine_nonconical_six_subsets done" << endl;
+	}
+}
+
 void projective_space::conic_type(
 	long int *set, int set_size,
 	int threshold,
@@ -2375,7 +2581,7 @@ void projective_space::conic_type(
 
 		for (i = 0; i < len; i++) {
 			if (Sorting.lint_vec_is_subset_of(subset, 5,
-					Pts_on_conic[i], nb_pts_on_conic[i])) {
+					Pts_on_conic[i], nb_pts_on_conic[i], 0)) {
 
 #if 0
 				cout << "The set ";

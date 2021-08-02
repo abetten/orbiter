@@ -459,8 +459,9 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 			fp << "\\section{Poset Classification}" << endl;
 			fp << endl;
 
+			poset_classification_report_options Opt;
 
-			Gen->report(fp, verbose_level);
+			Gen->report(fp, &Opt, verbose_level);
 			fp << "\\subsection*{Orbits at level " << poset_classify_depth << "}" << endl;
 			int nb_orbits, orbit_idx;
 
