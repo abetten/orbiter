@@ -940,6 +940,8 @@ public:
 	std::string input_q;
 	finite_field *F;
 
+	int f_use_projectivity_subgroup;
+
 	projective_space_with_action_description();
 	~projective_space_with_action_description();
 	int read_arguments(

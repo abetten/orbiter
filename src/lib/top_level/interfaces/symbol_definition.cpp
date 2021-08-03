@@ -840,6 +840,10 @@ void symbol_definition::definition_of_projective_space(int verbose_level)
 		f_semilinear = TRUE;
 	}
 
+	if (Projective_space_with_action_description->f_use_projectivity_subgroup) {
+		f_semilinear = FALSE;
+	}
+
 	projective_space_with_action *PA;
 
 	PA = NEW_OBJECT(projective_space_with_action);
