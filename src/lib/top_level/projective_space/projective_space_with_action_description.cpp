@@ -23,6 +23,7 @@ projective_space_with_action_description::projective_space_with_action_descripti
 	n = 0;
 	//input_q;
 	F = NULL;
+	f_use_projectivity_subgroup = FALSE;
 
 }
 
@@ -40,7 +41,6 @@ int projective_space_with_action_description::read_arguments(
 
 	if (f_v) {
 		cout << "projective_space_with_action_description::read_arguments" << endl;
-		cout << "next argument is " << argv[i] << endl;
 	}
 	n = strtoi(argv[i++]);
 	if (f_v) {
@@ -51,12 +51,49 @@ int projective_space_with_action_description::read_arguments(
 		cout << "q = " << input_q << endl;
 		cout << "projective_space_with_action_description::read_arguments done" << endl;
 	}
-	return i;
+	for (; i < argc; i++) {
+
+		if (stringcmp(argv[i], "-use_projectivity_subgroup") == 0) {
+			f_use_projectivity_subgroup = TRUE;
+			if (f_v) {
+				cout << "-f_use_projectivity_subgroup" << endl;
+			}
+		}
+
+
+		else if (stringcmp(argv[i], "-end") == 0) {
+			if (f_v) {
+				cout << "-end" << endl;
+			}
+			break;
+		}
+
+		else {
+			cout << "projective_space_with_action_description::read_arguments "
+					"unrecognized option " << argv[i] << endl;
+			exit(1);
+		}
+
+		if (f_v) {
+			cout << "projective_space_with_action_description::read_arguments looping, i=" << i << endl;
+		}
+	} // next i
+
+	if (f_v) {
+		cout << "projective_space_with_action_description::read_arguments done" << endl;
+	}
+	return i + 1;
 }
+
+
 
 void projective_space_with_action_description::print()
 {
-	cout << n << " " << input_q << endl;
+	cout << n << " " << input_q;
+	if (f_use_projectivity_subgroup) {
+		cout << " -f_use_projectivity_subgroup";
+	}
+	cout << endl;
 }
 
 }}
