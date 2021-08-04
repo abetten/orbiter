@@ -368,52 +368,10 @@ void surface_object_with_action::compute_projectivity_group(
 				"verbose_level=" << verbose_level << endl;
 	}
 
-#if 0
-	if (Surf_A->A->is_semilinear_matrix_group()) {
-		if (f_v) {
-			cout << "surface_object_with_action::compute_projectivity_group "
-					"computing projectivity subgroup" << endl;
-		}
-
-		projectivity_group_gens = NEW_OBJECT(strong_generators);
-		{
-			sims *S;
-
-			if (f_v) {
-				cout << "surface_object_with_action::compute_projectivity_group "
-						"before Aut_gens->create_sims" << endl;
-			}
-			S = Aut_gens->create_sims(0 /*verbose_level */);
-			if (f_v) {
-				cout << "surface_object_with_action::compute_projectivity_group "
-						"after Aut_gens->create_sims" << endl;
-			}
-			if (f_v) {
-				cout << "surface_object_with_action::compute_projectivity_group "
-						"before projectivity_group_gens->projectivity_subgroup" << endl;
-			}
-			projectivity_group_gens->projectivity_subgroup(S, verbose_level - 3);
-			if (f_v) {
-				cout << "surface_object_with_action::compute_projectivity_group "
-						"after projectivity_group_gens->projectivity_subgroup" << endl;
-			}
-			FREE_OBJECT(S);
-		}
-		if (f_v) {
-			cout << "surface_object_with_action::compute_projectivity_group "
-					"computing projectivity subgroup done" << endl;
-		}
-	}
-	else {
-		projectivity_group_gens = NULL;
-	}
-#else
-
 	Surf_A->A->compute_projectivity_subgroup(projectivity_group_gens,
 			Aut_gens, verbose_level);
 
 
-#endif
 
 
 	if (f_v) {
