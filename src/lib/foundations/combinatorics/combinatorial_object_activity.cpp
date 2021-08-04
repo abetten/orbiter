@@ -104,6 +104,122 @@ void combinatorial_object_activity::perform_activity(int verbose_level)
 	}
 
 
+	if (Descr->f_ideal) {
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity f_ideal" << endl;
+		}
+
+		projective_space *P;
+		homogeneous_polynomial_domain *HPD;
+
+		P = COC->Descr->P;
+
+		HPD = NEW_OBJECT(homogeneous_polynomial_domain);
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity before HPD->init" << endl;
+		}
+		HPD->init(P->F, P->n + 1, Descr->ideal_degree,
+			FALSE /* f_init_incidence_structure */,
+			t_PART /*Monomial_ordering_type*/,
+			verbose_level - 2);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity after HPD->init" << endl;
+		}
+
+		int *Kernel;
+		int *w1, *w2;
+		int r;
+
+		Kernel = NEW_int(HPD->get_nb_monomials() * HPD->get_nb_monomials());
+		w1 = NEW_int(HPD->get_nb_monomials());
+		w2 = NEW_int(HPD->get_nb_monomials());
+
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity the input set is:" << endl;
+			HPD->get_P()->print_set_numerical(cout, COC->Pts, COC->nb_pts);
+		}
+
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity before HPD->vanishing_ideal" << endl;
+		}
+		HPD->vanishing_ideal(COC->Pts, COC->nb_pts,
+				r, Kernel, verbose_level - 1);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity after HPD->vanishing_ideal" << endl;
+		}
+
+		int h, ns;
+		int nb_pts;
+		long int *Pts;
+
+		ns = HPD->get_nb_monomials() - r; // dimension of null space
+
+		cout << "looping over all generators of the ideal:" << endl;
+		for (h = 0; h < ns; h++) {
+			cout << "generator " << h << " / " << ns << " is ";
+			Orbiter->Int_vec.print(cout, Kernel + h * HPD->get_nb_monomials(), HPD->get_nb_monomials());
+			cout << " : " << endl;
+
+			vector<long int> Points;
+			int i;
+
+			HPD->enumerate_points(Kernel + h * HPD->get_nb_monomials(),
+					Points, verbose_level);
+			nb_pts = Points.size();
+
+			Pts = NEW_lint(nb_pts);
+			for (i = 0; i < nb_pts; i++) {
+				Pts[i] = Points[i];
+			}
+
+
+			cout << "We found " << nb_pts << " points on the generator of the ideal" << endl;
+			cout << "They are : ";
+			Orbiter->Lint_vec.print(cout, Pts, nb_pts);
+			cout << endl;
+			HPD->get_P()->print_set_numerical(cout, Pts, nb_pts);
+
+#if 0
+			if (h == 0) {
+				size_out = HPD->get_nb_monomials();
+				set_out = NEW_lint(size_out);
+				//int_vec_copy(Kernel + h * HPD->nb_monomials, set_out, size_out);
+				int u;
+				for (u = 0; u < size_out; u++) {
+					set_out[u] = Kernel[h * HPD->get_nb_monomials() + u];
+				}
+				//break;
+			}
+#endif
+			FREE_lint(Pts);
+
+		} // next h
+
+#if 0
+		long int *the_set_out;
+		int set_size_out;
+		P->F->do_ideal(P->n,
+				COC->Pts, COC->nb_pts, Descr->ideal_degree,
+				the_set_out, set_size_out,
+				t_PART,
+				verbose_level);
+#endif
+
+#if 0
+		P->determine_nonconical_six_subsets(
+				COC->Pts, COC->nb_pts,
+				Rk,
+				verbose_level);
+#endif
+
+
+	}
+
+
 	if (Descr->f_save) {
 
 		file_io Fio;

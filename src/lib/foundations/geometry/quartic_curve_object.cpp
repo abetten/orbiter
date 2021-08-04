@@ -319,6 +319,16 @@ int quartic_curve_object::find_point(long int P, int &idx)
 }
 
 void quartic_curve_object::create_surface(int *eqn20, int verbose_level)
+// Given a quartic Q in X1,X2,X3, compute an associated cubic surface
+// whose projection from (1,0,0,0) gives back the quartic Q.
+// Pick 4 bitangents L0,L1,L2,L3 so that the 8 points of tangency lie on a conic C.
+// Then, create the cubic surface with equation
+// (- lambda * mu) / 4 * X0^2 * L0 (the equation of the first of the four bitangents)
+// + X0 * lambda * C (the conic equation)
+// + L1 * L2 * L3 (the product of the equations of the last three bitangents)
+// Here 1, lambda, mu are the coefficients of a linear dependency between
+// Q (the quartic), C^2, L0*L1*L2*L3, so
+// Q + lambda * C^2 + mu * L0*L1*L2*L3 = 0.
 {
 	int f_v = (verbose_level >= 1);
 
@@ -474,9 +484,9 @@ void quartic_curve_object::create_surface(int *eqn20, int verbose_level)
 		cout << "quartic_curve_object::create_surface lambda = " << lambda << " mu = " << mu << endl;
 	}
 
-	int f1_three_coeff[3];
-	int f2_six_coeff[6];
-	int f3_ten_coeff[10];
+	int f1_three_coeff[3]; // - lambda * mu / 4 * the equation of the first of the four bitangents
+	int f2_six_coeff[6]; // lambda * conic equation
+	int f3_ten_coeff[10]; // the product of the last three bitangents
 
 	Dom->multiply_three_lines(
 			Bitangents_coeffs + 1 * 3,
@@ -512,6 +522,11 @@ void quartic_curve_object::create_surface(int *eqn20, int verbose_level)
 			verbose_level);
 
 
+	// and now, create the cubic with equation
+	// (- lambda * mu) / 4 * X0^2 * L0 (the equation of the first of the four bitangents)
+	// + X0 * lambda * conic equation
+	// + L1 * L2 * L3 (the product of the equations of the last three bitangents)
+
 	Dom->assemble_cubic_surface(f1_three_coeff, f2_six_coeff, f3_ten_coeff, eqn20,
 		verbose_level);
 
@@ -520,6 +535,8 @@ void quartic_curve_object::create_surface(int *eqn20, int verbose_level)
 		Orbiter->Int_vec.print(cout, eqn20, 20);
 		cout << endl;
 	}
+
+	FREE_int(Bitangents);
 
 	if (f_v) {
 		cout << "quartic_curve_object::create_surface done" << endl;

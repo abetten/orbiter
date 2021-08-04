@@ -2041,6 +2041,15 @@ PG_2_13:
 	pdflatex PG_2_13.tex 
 	open PG_2_13.pdf
 
+PG_2_64:
+	$(ORBITER_PATH)orbiter.out \
+		-draw_options -end \
+		-define F -finite_field -q 64 -end \
+		-define P -projective_space 2 F -end \
+		-with P -do -projective_space_activity -cheat_sheet -end
+	pdflatex PG_2_64.tex 
+	open PG_2_64.pdf
+
 
 
 
@@ -2327,6 +2336,19 @@ EC_11.txt:
 		-end
 
 
+conic_ideal_q13:
+	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define F -finite_field -q 13 -end \
+		-define P -projective_space 2 F -end \
+		-with P -do \
+		-projective_space_activity \
+			-define_object S \
+				-set "0,1,2,3,43" \
+			-end \
+		-end \
+		-with S -do -combinatorial_object_activity \
+			-ideal 2 \
+		-end
 
 
 
@@ -2903,8 +2925,22 @@ Weyl_E8:
 		-draw_options -end \
 		-define G -linear_group -GL 8 3 \
 		-subgroup_by_generators "Weyl_E8" "696729600" 2 \
-		"-1,-1,-1,-1,0,0,0,0, 0,0,0,1,0,0,0,0, 1,0,0,0,0,0,0,0, 0,0,1,0,0,0,0,0, 0,1,0,1,1,0,0,0, 0,0,0,0,0,1,0,0, 0,0,0,0,0,0,1,0, 0,0,0,0,0,0,0,1" \
-		"-1,0,-1,-1,-1,-1,-1,-1, 0,1,0,1,1,1,1,1, 1,0,0,0,0,0,0,0, 0,0,1,0,0,0,0,0, 0,0,0,1,0,0,0,0, 0,0,0,0,1,0,0,0, 0,0,0,0,0,1,0,0, 0,0,0,0,0,0,1,0" \
+		"-1,-1,-1,-1,0,0,0,0, \
+		0,0,0,1,0,0,0,0, \
+		1,0,0,0,0,0,0,0, \
+		0,0,1,0,0,0,0,0, \
+		0,1,0,1,1,0,0,0, \
+		0,0,0,0,0,1,0,0, \
+		0,0,0,0,0,0,1,0, \
+		0,0,0,0,0,0,0,1" \
+		"-1,0,-1,-1,-1,-1,-1,-1, \
+		0,1,0,1,1,1,1,1, \
+		1,0,0,0,0,0,0,0, \
+		0,0,1,0,0,0,0,0, \
+		0,0,0,1,0,0,0,0, \
+		0,0,0,0,1,0,0,0, \
+		0,0,0,0,0,1,0,0, \
+		0,0,0,0,0,0,1,0" \
 		-end \
 		-with G -do \
 		-group_theoretic_activities \
@@ -2930,10 +2966,10 @@ U_3_2:
 		-draw_options -end \
 		-define F -finite_field -q 9 -override_polynomial "17"  -end \
 		-define G -linear_group -PGL 3 F \
-		-subgroup_by_generators "U_3_3" "6048" 2 \
-		"1,6,4, 5,0,6, 8,5,1" \
-		"6,2,1, 7,8,4, 0,6,6" \
-		-end \
+			-subgroup_by_generators "U_3_3" "6048" 2 \
+			"1,6,4, 5,0,6, 8,5,1" \
+			"6,2,1, 7,8,4, 0,6,6" \
+			-end \
 		-with G -do \
 		-group_theoretic_activities \
 			-report \
@@ -3890,6 +3926,18 @@ PGGL_4_4_subgroups_of_type_2C_2C: 2C_orbit_under_PGGL_4_4_elements_coded.csv
 #group_theoretic_activity::do_orbits_on_group_elements_under_conjugation after Classes.compute_all_point_orbits
 #found 29 conjugacy classes
 #User time: 0:57
+
+
+
+orbits_on_conics_q13:
+	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define G -linear_group -PGL 3 13 -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-orbits_on_polynomials 2 \
+		-end 
+	pdflatex poly_orbits_d2_n2_q13.tex
+	open poly_orbits_d2_n2_q13.pdf
 
 
 orbits_cubic_curves_q2:
@@ -5097,7 +5145,7 @@ hyperoval_16c:
 nc_arcs_16:
 	$(ORBITER_PATH)orbiter.out -v 4 \
 		-define F -finite_field -q 16 -end \
-		-define P -projective_space 2 F -use_projectivity_subgroup -end \
+		-define P -projective_space 2 F -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_arcs \
@@ -5121,7 +5169,7 @@ nc_arcs_16:
 nc_arcs_32_E13:
 	$(ORBITER_PATH)orbiter.out -v 4 \
 		-define F -finite_field -q 32 -end \
-		-define P -projective_space 2 F -use_projectivity_subgroup -end \
+		-define P -projective_space 2 F -end \
 		-with P -do \
 		-projective_space_activity \
 			-classify_arcs \
@@ -5172,6 +5220,18 @@ nc_arcs_64_E13:
 			-classify_arcs \
 				-poset_classification_control \
 					-problem_label nc_arcs_q64_d2 -W -depth 6 \
+					-recognize "0,1,2,3,326,389" \
+					-recognize "0,1,2,3,1106,1169" \
+					-recognize "0,1,2,3,2599,2536" \
+					-recognize "0,1,2,3,2796,2859" \
+					-recognize "0,1,2,3,1756,1819" \
+					-recognize "0,1,2,3,2469,2406" \
+					-recognize "0,1,2,3,3056,3119" \
+					-recognize "0,1,2,3,2339,2276" \
+					-recognize "0,1,2,3,3836,3899" \
+					-recognize "0,1,2,3,3966,4029" \
+					-recognize "0,1,2,3,2666,2729" \
+					-recognize "0,1,2,3,2016,2079" \
 					-report  -end \
 				-end \
 				-target_size 6 \
@@ -5180,8 +5240,43 @@ nc_arcs_64_E13:
 				-conic_test \
 			-end \
 		-end
-	pdflatex nc_arcs_q64_d2_poset.tex
-	open nc_arcs_q64_d2_poset.pdf
+	#pdflatex nc_arcs_q64_d2_poset.tex
+	#open nc_arcs_q64_d2_poset.pdf
+
+
+F64_work:
+	$(ORBITER_PATH)orbiter.out -v 3 -define F -finite_field -q 64 -end \
+		-define f -formula "f" "f" "" "a*a+a"    \
+		-with F -do -finite_field_activity \
+			-evaluate f "a=2" -end
+
+F64_frob:
+	$(ORBITER_PATH)orbiter.out -v 3 -define F -finite_field -q 64 -end \
+		-define f -formula "f" "f" "" "a*a*a*a*a*a*a*a"    \
+		-with F -do -finite_field_activity \
+			-evaluate f "a=61" -end
+
+
+# surfaces with 13 Eckardt points have OCN=0,98,99
+
+surface_64_0:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-draw_options -end \
+		-define F -finite_field -q 64 -end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
+			-define_surface S -q 64 -catalogue 0 \
+			-end \
+		-end \
+		-with S -do \
+		-cubic_surface_activity \
+			-report \
+			-report_with_group \
+		-end
+	pdflatex surface_catalogue_q64_iso0_with_group.tex
+	open surface_catalogue_q64_iso0_with_group.pdf
+
 
 
 
@@ -5237,6 +5332,28 @@ nc_arcs_256_E13:
 	pdflatex nc_arcs_q256_d2_poset.tex
 	open nc_arcs_q256_d2_poset.pdf
 
+
+
+
+##
+
+
+
+Example_F64:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-draw_options -end \
+		-define F -finite_field -q 64 -end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+			-projective_space_activity \
+			-define_surface S64_abcd_52_8_8_52 -q 64 \
+				-family_general_abcd 52 8 8 52 -end \
+		-end \
+		-with S64_abcd_52_8_8_52 -do \
+			-cubic_surface_activity \
+			-report \
+		-end
+	pdflatex surface_family_general_abcd_q64_a52_b8_c8_d52_report.tex
 
 
 

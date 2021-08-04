@@ -130,6 +130,9 @@ public:
 
 	int f_non_conical_type;
 
+	int f_ideal;
+	int ideal_degree;
+
 	combinatorial_object_activity_description();
 	~combinatorial_object_activity_description();
 	int read_arguments(

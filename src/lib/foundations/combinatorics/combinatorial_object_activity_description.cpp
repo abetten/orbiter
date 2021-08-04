@@ -25,6 +25,9 @@ combinatorial_object_activity_description::combinatorial_object_activity_descrip
 	conic_type_threshold = 0;
 
 	f_non_conical_type = FALSE;
+
+	f_ideal = FALSE;
+	ideal_degree = 0;
 }
 
 combinatorial_object_activity_description::~combinatorial_object_activity_description()
@@ -56,6 +59,11 @@ int combinatorial_object_activity_description::read_arguments(
 			f_non_conical_type = TRUE;
 			cout << "-non_conical_type " << endl;
 		}
+		else if (stringcmp(argv[i], "-ideal") == 0) {
+			f_ideal = TRUE;
+			ideal_degree = strtoi(argv[++i]);
+			cout << "-ideal " << ideal_degree << endl;
+		}
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
@@ -81,6 +89,9 @@ void combinatorial_object_activity_description::print()
 	}
 	if (f_non_conical_type) {
 		cout << "-f_non_conical_type" << endl;
+	}
+	if (f_ideal) {
+		cout << "-ideal " << ideal_degree << endl;
 	}
 }
 

@@ -650,6 +650,15 @@ void poset_classification::report_orbit(int level, int orbit_at_level,
 			cout << "nb_o != nb_orbits_sv" << endl;
 			exit(1);
 		}
+
+		tally T;
+
+		T.init(orbit_length, nb_o, FALSE, 0);
+		ost << "Orbit type of flag orbits: \\\\" << endl;
+		ost << "$$" << endl;
+		T.print_file_tex_we_are_in_math_mode(ost, TRUE /* f_backwards*/);
+		ost << "$$" << endl;
+
 		for (h = 0; h < nb_o; h++) {
 			ost << "\\noindent Orbit " << h << " / " << nb_o
 					<< ": Point " << orbit_reps[h]
