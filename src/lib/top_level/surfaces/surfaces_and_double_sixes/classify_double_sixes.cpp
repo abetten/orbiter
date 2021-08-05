@@ -314,7 +314,7 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 		cout << "classify_double_sixes::compute_neighbors "
 				"before Surf->O->perp" << endl;
 		}
-	Surf->O->perp(0, Neighbors, sz, verbose_level - 3);
+	Surf->O->perp(0, Neighbors, sz, 0 /*verbose_level - 3*/);
 	if (f_v) {
 		cout << "classify_double_sixes::compute_neighbors "
 				"after Surf->O->perp" << endl;
@@ -349,7 +349,7 @@ void classify_double_sixes::compute_neighbors(int verbose_level)
 #endif
 
 
-	// Convert Neighbors from points
+	// Convert Neighbors[] from points
 	// on the Klein quadric to wedge points:
 	if (f_v) {
 		cout << "classify_double_sixes::compute_neighbors "
@@ -487,7 +487,7 @@ void classify_double_sixes::classify_partial_ovoids(int verbose_level)
 		schreier_depth, 
 		f_use_invariant_subset_if_available, 
 		f_debug, 
-		verbose_level - 3);
+		verbose_level);
 	if (f_v) {
 		cout << "classify_double_sixes::classify_partial_ovoids "
 				"classifying starter done" << endl;
@@ -573,7 +573,7 @@ void classify_double_sixes::partial_ovoid_test_early(long int *S, int len,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	int f_vv = FALSE; //(verbose_level >= 2);
 	int i, j;
 	int u[6];
 	int v[6];
@@ -664,7 +664,7 @@ void classify_double_sixes::test_orbits(int verbose_level)
 	nb = 0;
 	Idx = NEW_int(len);
 	for (i = 0; i < len; i++) {
-		if (f_vv || ((i % 1000) == 0)) {
+		if ((i % 1000) == 0) {
 			cout << "classify_double_sixes::test_orbits orbit "
 				<< i << " / " << len << ":" << endl;
 		}

@@ -129,12 +129,12 @@ void combinatorial_object_activity::perform_activity(int verbose_level)
 		}
 
 		int *Kernel;
-		int *w1, *w2;
+		//int *w1, *w2;
 		int r;
 
 		Kernel = NEW_int(HPD->get_nb_monomials() * HPD->get_nb_monomials());
-		w1 = NEW_int(HPD->get_nb_monomials());
-		w2 = NEW_int(HPD->get_nb_monomials());
+		//w1 = NEW_int(HPD->get_nb_monomials());
+		//w2 = NEW_int(HPD->get_nb_monomials());
 
 
 		if (f_v) {
