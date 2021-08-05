@@ -3287,6 +3287,7 @@ void surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P
 // P_idx = index into SO->Pts[]
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE;
 	int i, idx;
 	long int P, R, Q;
 	int Basis_of_PR[8];
@@ -3312,7 +3313,7 @@ void surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P
 
 		for (j = 0; j < SO->F->q + 1; j++) {
 			SO->F->PG_element_unrank_modified(v, 1, 2, j);
-			if (f_v) {
+			if (f_vv) {
 				cout << "surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P v=" << endl;
 				Orbiter->Int_vec.print(cout, v, 2);
 				cout << endl;
@@ -3320,7 +3321,7 @@ void surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P
 
 			SO->F->mult_matrix_matrix(v, Basis_of_PR, w, 1, 2, 4,
 					0 /* verbose_level */);
-			if (f_v) {
+			if (f_vv) {
 				cout << "surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P w=" << endl;
 				Orbiter->Int_vec.print(cout, w, 4);
 				cout << endl;
