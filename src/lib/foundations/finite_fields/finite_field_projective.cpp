@@ -5857,6 +5857,7 @@ void finite_field::do_draw_points_in_plane(
 
 }
 
+#if 0
 void finite_field::do_ideal(int n,
 		long int *set_in, int set_size, int degree,
 		long int *&set_out, int &size_out,
@@ -5977,7 +5978,7 @@ void finite_field::do_ideal(int n,
 	FREE_int(w1);
 	FREE_int(w2);
 }
-
+#endif
 
 void finite_field::PG_element_modified_not_in_subspace_perm(int n, int m,
 	long int *orbit, long int *orbit_inv,

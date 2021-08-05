@@ -199,24 +199,6 @@ void combinatorial_object_activity::perform_activity(int verbose_level)
 
 		} // next h
 
-#if 0
-		long int *the_set_out;
-		int set_size_out;
-		P->F->do_ideal(P->n,
-				COC->Pts, COC->nb_pts, Descr->ideal_degree,
-				the_set_out, set_size_out,
-				t_PART,
-				verbose_level);
-#endif
-
-#if 0
-		P->determine_nonconical_six_subsets(
-				COC->Pts, COC->nb_pts,
-				Rk,
-				verbose_level);
-#endif
-
-
 	}
 
 

@@ -1192,11 +1192,6 @@ public:
 			long int *set, int set_size,
 			std::string &fname_base, int f_point_labels,
 			int verbose_level);
-	void do_ideal(int n,
-			long int *set_in, int set_size, int degree,
-			long int *&set_out, int &size_out,
-			monomial_ordering_type Monomial_ordering_type,
-			int verbose_level);
 	void PG_element_modified_not_in_subspace_perm(int n, int m,
 		long int *orbit, long int *orbit_inv,
 		int verbose_level);
