@@ -271,7 +271,7 @@ void substructure_classifier::set_stabilizer_in_any_space(
 						pts,
 						nb_pts,
 						canonical_pts,
-						verbose_level);
+						verbose_level - 3);
 			if (f_v) {
 				cout << "substructure_classifier::set_stabilizer_in_any_space "
 						"after set_stabilizer_of_set" << endl;
