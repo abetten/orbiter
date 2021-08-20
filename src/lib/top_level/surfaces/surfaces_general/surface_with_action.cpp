@@ -434,7 +434,7 @@ void surface_with_action::complete_skew_hexagon(
 		a = opp_regulus_a123[i];
 		if (f_v) {
 			cout << "surface_with_action::complete_skew_hexagon "
-					"i=" <<i << " / " << regulus_size << " a=" << a << endl;
+					"i=" << i << " / " << regulus_size << " a=" << a << endl;
 		}
 		Surf->Gr->unrank_lint_here(Basis, a, 0 /* verbose_level */);
 		for (j = 0; j < 6; j++) {
@@ -449,14 +449,15 @@ void surface_with_action::complete_skew_hexagon(
 		if (j < 6) {
 			if (f_v) {
 				cout << "surface_with_action::complete_skew_hexagon "
-						"i=" <<i << " / " << regulus_size << " a=" << a << " contains point " << j << ", skipping" << endl;
+						"i=" << i << " / " << regulus_size
+						<< " a=" << a << " contains point " << j << ", skipping" << endl;
 			}
 			continue;
 		}
 		b6 = a;
 		if (f_v) {
 			cout << "surface_with_action::complete_skew_hexagon "
-					"i=" <<i << " / " << regulus_size << " b6=" << b6 << endl;
+					"i=" << i << " / " << regulus_size << " b6=" << b6 << endl;
 		}
 
 		// We map b1, b2, b3 to
@@ -476,7 +477,8 @@ void surface_with_action::complete_skew_hexagon(
 				Recoordinatize->Elt, 0 /* verbose_level */);
 
 		if (f_v) {
-			cout << "surface_with_action::complete_skew_hexagon after F->find_secant_points_wrt_x0x3mx1x2" << endl;
+			cout << "surface_with_action::complete_skew_hexagon "
+					"after F->find_secant_points_wrt_x0x3mx1x2" << endl;
 			cout << "surface_with_action::complete_skew_hexagon b6_image=" << b6_image << endl;
 		}
 
@@ -511,11 +513,13 @@ void surface_with_action::complete_skew_hexagon(
 		int u;
 
 		if (f_v) {
-			cout << "surface_with_action::complete_skew_hexagon before F->find_secant_points_wrt_x0x3mx1x2" << endl;
+			cout << "surface_with_action::complete_skew_hexagon "
+					"before F->find_secant_points_wrt_x0x3mx1x2" << endl;
 		}
 		F->find_secant_points_wrt_x0x3mx1x2(Basis, Pts4, nb_pts, verbose_level);
 		if (f_v) {
-			cout << "surface_with_action::complete_skew_hexagon after F->find_secant_points_wrt_x0x3mx1x2" << endl;
+			cout << "surface_with_action::complete_skew_hexagon "
+					"after F->find_secant_points_wrt_x0x3mx1x2" << endl;
 			cout << "surface_with_action::complete_skew_hexagon Pts4=" << endl;
 			Orbiter->Int_vec.matrix_print(Pts4, 2, 2);
 		}
@@ -736,7 +740,7 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 
 		a = opp_regulus_a123[i];
 		if (f_v) {
-			cout << "surface_with_action::complete_skew_hexagon_with_polarity i=" <<i << " / " << regulus_size << " a=" << a << endl;
+			cout << "surface_with_action::complete_skew_hexagon_with_polarity i=" << i << " / " << regulus_size << " a=" << a << endl;
 		}
 		Surf->Gr->unrank_lint_here(Basis, a, 0 /* verbose_level */);
 		for (j = 0; j < 6; j++) {
@@ -750,13 +754,15 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 		}
 		if (j < 6) {
 			if (f_v) {
-				cout << "surface_with_action::complete_skew_hexagon_with_polarity i=" <<i << " / " << regulus_size << " a=" << a << " contains point " << j << ", skipping" << endl;
+				cout << "surface_with_action::complete_skew_hexagon_with_polarity "
+						"i=" << i << " / " << regulus_size << " a=" << a << " contains point " << j << ", skipping" << endl;
 			}
 			continue;
 		}
 		b6 = a;
 		if (f_v) {
-			cout << "surface_with_action::complete_skew_hexagon_with_polarity i=" <<i << " / " << regulus_size << " b6=" << b6 << endl;
+			cout << "surface_with_action::complete_skew_hexagon_with_polarity "
+					"i=" << i << " / " << regulus_size << " b6=" << b6 << endl;
 		}
 		if (f_v) {
 			cout << "b6 = " << b6 << " = " << endl;
@@ -780,7 +786,8 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 				Recoordinatize->Elt, 0 /* verbose_level */);
 
 		if (f_v) {
-			cout << "surface_with_action::complete_skew_hexagon_with_polarity after F->find_secant_points_wrt_x0x3mx1x2" << endl;
+			cout << "surface_with_action::complete_skew_hexagon_with_polarity "
+					"after F->find_secant_points_wrt_x0x3mx1x2" << endl;
 			cout << "surface_with_action::complete_skew_hexagon_with_polarity b6_image=" << b6_image << endl;
 		}
 
@@ -815,11 +822,13 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 		int u;
 
 		if (f_v) {
-			cout << "surface_with_action::complete_skew_hexagon_with_polarity before F->find_secant_points_wrt_x0x3mx1x2" << endl;
+			cout << "surface_with_action::complete_skew_hexagon_with_polarity "
+					"before F->find_secant_points_wrt_x0x3mx1x2" << endl;
 		}
 		F->find_secant_points_wrt_x0x3mx1x2(Basis, Pts4, nb_pts, verbose_level);
 		if (f_v) {
-			cout << "surface_with_action::complete_skew_hexagon_with_polarity after F->find_secant_points_wrt_x0x3mx1x2" << endl;
+			cout << "surface_with_action::complete_skew_hexagon_with_polarity "
+					"after F->find_secant_points_wrt_x0x3mx1x2" << endl;
 			cout << "surface_with_action::complete_skew_hexagon_with_polarity Pts4=" << endl;
 			Orbiter->Int_vec.matrix_print(Pts4, 2, 2);
 		}
@@ -1786,14 +1795,16 @@ void surface_with_action::create_surface_object_with_action(
 
 
 	if (!SC->f_has_group) {
-		cout << "surface_with_action::create_surface_object_with_action The automorphism group of the surface is missing" << endl;
+		cout << "surface_with_action::create_surface_object_with_action "
+				"The automorphism group of the surface is missing" << endl;
 		exit(1);
 	}
 
 	SoA = NEW_OBJECT(surface_object_with_action);
 
 	if (f_v) {
-		cout << "surface_with_action::create_surface_object_with_action before SoA->init_with_group" << endl;
+		cout << "surface_with_action::create_surface_object_with_action "
+				"before SoA->init_with_group" << endl;
 	}
 	SoA->init_with_group(
 		SC->Surf_A,
@@ -1804,7 +1815,8 @@ void surface_with_action::create_surface_object_with_action(
 		SC->f_has_nice_gens, SC->nice_gens,
 		verbose_level - 1);
 	if (f_v) {
-		cout << "surface_with_action::create_surface_object_with_action after SoA->init_with_group" << endl;
+		cout << "surface_with_action::create_surface_object_with_action "
+				"after SoA->init_with_group" << endl;
 	}
 
 	if (f_v) {
@@ -2014,21 +2026,25 @@ void surface_with_action::sweep_4(
 	{
 		ofstream ost_csv(sweep_fname_csv);
 
-		ost_csv << "orbit,equation,pts,parameters,go" << endl;
+		ost_csv << "orbit,equation,pts,parameters,nb_lines,nb_sing_pts,go" << endl;
 
 		for (alpha = 0; alpha < F->q; alpha++) {
 
+#if 0
 			if (alpha == 0) {
 				continue;
 			}
+#endif
 
 			if (alpha == 1) {
 				continue;
 			}
 
+			cout << "alpha=" << alpha << endl;
 
 			for (beta = 0; beta < F->q; beta++) {
 
+#if 0
 				if (beta == 0) {
 					continue;
 				}
@@ -2036,10 +2052,14 @@ void surface_with_action::sweep_4(
 				if (beta == F->negate(1)) {
 					continue;
 				}
+#endif
+
+			cout << "alpha=" << alpha << " beta=" << beta << endl;
 
 			for (delta = 0; delta < F->q; delta++) {
 
 
+#if 0
 					if (delta == 0) {
 						continue;
 					}
@@ -2047,6 +2067,7 @@ void surface_with_action::sweep_4(
 					if (delta == F->negate(1)) {
 						continue;
 					}
+#endif
 
 					if (delta == beta) {
 						continue;
@@ -2061,9 +2082,11 @@ void surface_with_action::sweep_4(
 	#endif
 					for (gamma = 0; gamma < F->q; gamma++) {
 
+#if 0
 						if (gamma == 0) {
 							continue;
 						}
+#endif
 
 						if (gamma == F->negate(1)) {
 							continue;
@@ -2126,12 +2149,17 @@ void surface_with_action::sweep_4(
 						}
 	#endif
 
+						cout << "the number of lines is " << SC->SO->nb_lines << endl;
 
-	#if 1
+						SC->SO->SOP->print_everything(cout, verbose_level);
+
+	#if 0
 						if (SC->SO->nb_lines != 15) {
+							cout << "the number of lines is " << SC->SO->nb_lines << " skipping" << endl;
 							continue;
 						}
 						if (SC->SO->SOP->nb_singular_pts) {
+							cout << "the number of singular points is " << SC->SO->SOP->nb_singular_pts << " skipping" << endl;
 							continue;
 						}
 	#endif
@@ -2195,6 +2223,11 @@ void surface_with_action::sweep_4(
 
 						ost_csv << ",";
 
+						ost_csv << SC->SO->nb_lines;
+						ost_csv << ",";
+
+						ost_csv << SC->SO->SOP->nb_singular_pts;
+						ost_csv << ",";
 
 						ost_csv << -1;
 						ost_csv << endl;

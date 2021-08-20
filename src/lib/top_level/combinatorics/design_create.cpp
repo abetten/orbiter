@@ -85,19 +85,17 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 	}
 	design_create::Descr = Descr;
 
-	if (!Descr->f_q) {
-		cout << "design_create::init !Descr->f_q" << endl;
-		exit(1);
-	}
+	if (Descr->f_q) {
 
-	q = Descr->q;
+		q = Descr->q;
 
-	if (f_v) {
-		cout << "design_create::init q = " << q << endl;
-		//cout << "design_create::init k = " << k << endl;
+		if (f_v) {
+			cout << "design_create::init q = " << q << endl;
+			//cout << "design_create::init k = " << k << endl;
+		}
+		F = NEW_OBJECT(finite_field);
+		F->finite_field_init(q, 0);
 	}
-	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(q, 0);
 
 	if (Descr->f_family) {
 		if (f_v) {
@@ -107,6 +105,10 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 		if (stringcmp(Descr->family_name, "PG_2_q") == 0) {
 			if (f_v) {
 				cout << "design_create::init PG(2," << q << ")" << endl;
+			}
+			if (!Descr->f_q) {
+				cout << "please use option -q <q> to specify the field order" << endl;
+				exit(1);
 			}
 			create_design_PG_2_q(F, set, sz, k, verbose_level);
 
@@ -136,9 +138,10 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 
 		}
 	else {
-		cout << "design_create::init we do not "
-				"recognize the type of spread" << endl;
-		exit(1);
+		cout << "design_create::init no design created" << endl;
+		sz = 0;
+		f_has_group = FALSE;
+		//exit(1);
 	}
 
 

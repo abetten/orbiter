@@ -232,7 +232,7 @@ void set_of_sets::init_basic_constant_size(
 
 #define MY_BUFSIZE ONE_MILLION
 
-void set_of_sets::init_from_file(int underlying_set_size,
+void set_of_sets::init_from_file(int &underlying_set_size,
 		std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -245,19 +245,52 @@ void set_of_sets::init_from_file(int underlying_set_size,
 		if (f_v) {
 			cout << "set_of_sets::init_from_file "
 					"the file is a csv file" << endl;
-			}
-		init_from_csv_file(underlying_set_size, fname, verbose_level);
 		}
+		init_from_csv_file(underlying_set_size, fname, verbose_level);
+	}
+	else if (ST.is_inc_file(fname.c_str())) {
+		if (f_v) {
+			cout << "set_of_sets::init_from_file "
+					"the file is an inc file" << endl;
+		}
+		file_io Fio;
+		int m, n, nb_flags;
+		int h, f;
+
+		std::vector<std::vector<int> > Geos;
+
+		Fio.read_incidence_file(Geos, m, n, nb_flags, fname, verbose_level);
+		if (f_v) {
+			cout << "set_of_sets::init_from_file "
+					"the file contains " << Geos.size() << " incidence geometries" << endl;
+			cout << "set_of_sets::init_from_file "
+					"m=" << m << " n=" << n << " nb_flags=" << nb_flags << endl;
+		}
+
+		underlying_set_size = m * n;
+
+		init_basic_constant_size(underlying_set_size,
+				Geos.size() /* nb_sets */,
+				nb_flags/* constant_size */,
+				0 /* verbose_level */);
+
+		for (h = 0; h < Geos.size(); h++) {
+			for (f = 0; f < nb_flags; f++) {
+				Sets[h][f] = Geos[h][f];
+			}
+		}
+
+	}
 	else {
 		if (f_v) {
 			cout << "set_of_sets::init_from_file "
 					"assuming the file is an orbiter file" << endl;
-			}
-		init_from_orbiter_file(underlying_set_size, fname, verbose_level);
 		}
+		init_from_orbiter_file(underlying_set_size, fname, verbose_level);
+	}
 	if (f_v) {
 		cout << "set_of_sets::init_from_file done" << endl;
-		}
+	}
 }
 
 void set_of_sets::init_from_csv_file(int underlying_set_size,

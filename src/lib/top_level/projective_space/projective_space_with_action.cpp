@@ -216,6 +216,7 @@ void projective_space_with_action::canonical_form(
 	}
 	OC->do_the_work(
 			Canonical_form_PG_Descr,
+			TRUE,
 			this,
 			verbose_level);
 	if (f_v) {
@@ -350,10 +351,12 @@ strong_generators
 //   int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int f_vvv = (verbose_level >= 3);
+	//int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
 
 	action *A_linear;
+
+#if 0
 	int *Incma;
 	int *partition;
 	//int *labeling;
@@ -367,6 +370,10 @@ strong_generators
 	combinatorics_domain Combi;
 	file_io Fio;
 	nauty_interface Nau;
+#endif
+
+
+
 
 
 	if (f_v) {
@@ -376,6 +383,27 @@ strong_generators
 
 	A_linear = A;
 
+
+	nauty_output *NO;
+
+	if (f_v) {
+		cout << "projective_space_with_action::set_stabilizer_of_object before OiP->run_nauty" << endl;
+
+	}
+
+	OiP->run_nauty(
+			f_compute_canonical_form, Canonical_form,
+			canonical_labeling, canonical_labeling_len,
+			NO,
+			verbose_level);
+
+	if (f_v) {
+		cout << "projective_space_with_action::set_stabilizer_of_object after OiP->run_nauty" << endl;
+
+	}
+
+
+#if 0
 	if (f_v) {
 		cout << "projective_space_with_action::set_stabilizer_of_object "
 				"before OiP->encode_incma" << endl;
@@ -535,6 +563,15 @@ strong_generators
 
 	FREE_int(Incma_out);
 
+	if (f_v) {
+		cout << "before freeing Incma" << endl;
+	}
+	FREE_int(Incma);
+	if (f_v) {
+		cout << "before freeing partition" << endl;
+	}
+	FREE_int(partition);
+#endif
 
 	nauty_interface_with_group Nauty;
 
@@ -548,11 +585,11 @@ strong_generators
 			A_linear,
 			P,
 			SG,
-			N,
-			Aut, Aut_counter,
-			Base, Base_length,
-			Base_lint,
-			Transversal_length, Ago,
+			NO->N,
+			NO->Aut, NO->Aut_counter,
+			NO->Base, NO->Base_length,
+			NO->Base_lint,
+			NO->Transversal_length, NO->Ago,
 			verbose_level);
 	if (f_v) {
 		cout << "projective_space_with_action::set_stabilizer_of_object "
@@ -560,15 +597,7 @@ strong_generators
 	}
 
 
-
-	if (f_v) {
-		cout << "before freeing Incma" << endl;
-	}
-	FREE_int(Incma);
-	if (f_v) {
-		cout << "before freeing partition" << endl;
-	}
-	FREE_int(partition);
+#if 0
 
 	if (f_v) {
 		cout << "before freeing Aut" << endl;
@@ -584,7 +613,9 @@ strong_generators
 	}
 	FREE_int(Transversal_length);
 
+#endif
 
+	FREE_OBJECT(NO);
 
 	if (f_v) {
 		cout << "projective_space_with_action::set_stabilizer_of_object done" << endl;
@@ -2595,6 +2626,7 @@ void projective_space_with_action::compute_group_of_set(long int *set, int set_s
 
 	Classifier->do_the_work(
 			Descr,
+			TRUE,
 			this,
 			verbose_level);
 

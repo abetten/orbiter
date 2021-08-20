@@ -160,7 +160,8 @@ void canonical_form_nauty::quartic_curve(
 	if (f_v) {
 		cout << "canonical_form_nauty::quartic_curve "
 				"after Orb->init" << endl;
-		cout << "canonical_form_nauty::quartic_curve found an orbit of length " << Orb->used_length << endl;
+		cout << "canonical_form_nauty::quartic_curve "
+				"found an orbit of length " << Orb->used_length << endl;
 	}
 
 

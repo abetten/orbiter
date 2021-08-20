@@ -191,7 +191,7 @@ int poset_classification::main(int t0,
 	size = compute_orbits(depth_completed, target_depth,
 			schreier_depth,
 			f_use_invariant_subset_if_available,
-			verbose_level - 1);
+			verbose_level);
 	if (f_v) {
 		cout << "poset_classification::main after compute_orbits" << endl;
 	}

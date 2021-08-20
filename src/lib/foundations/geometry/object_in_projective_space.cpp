@@ -39,6 +39,8 @@ void object_in_projective_space::null()
 	//set_as_string = NULL;
 	set = NULL;
 	sz = 0;
+	v = 0;
+	b = 0;
 	SoS = NULL;
 	C = NULL;
 }
@@ -333,6 +335,7 @@ void object_in_projective_space::init_packing_from_set_of_sets(
 	}
 }
 
+
 void object_in_projective_space::init_packing_from_spread_table(
 	projective_space *P,
 	long int *data,
@@ -357,9 +360,9 @@ void object_in_projective_space::init_packing_from_spread_table(
 	}
 	SoS = NEW_OBJECT(set_of_sets);
 
-	SoS->init_basic_constant_size(P->N_lines, 
-		size_of_packing /* nb_sets */, 
-		size_of_spread /* constant_size */, 
+	SoS->init_basic_constant_size(P->N_lines,
+		size_of_packing /* nb_sets */,
+		size_of_spread /* constant_size */,
 		0 /* verbose_level */);
 
 	for (i = 0; i < size_of_packing; i++) {
@@ -392,11 +395,38 @@ void object_in_projective_space::init_packing_from_spread_table(
 			}
 		}
 	}
+	FREE_int(M);
 
 	if (f_v) {
 		cout << "object_in_projective_space::init_packing_from_spread_table done" << endl;
 		}
 }
+
+void object_in_projective_space::init_incidence_geometry(
+	long int *data, int data_sz, int v, int b, int nb_flags,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int a, i, q, size_of_spread, size_of_packing;
+
+	if (f_v) {
+		cout << "object_in_projective_space::init_incidence_geometry" << endl;
+	}
+	if (nb_flags != data_sz) {
+		cout << "object_in_projective_space::init_incidence_geometry nb_flags != data_sz" << endl;
+	}
+	//object_in_projective_space::P = P;
+	type = t_INC;
+	object_in_projective_space::set = NEW_lint(data_sz);
+	Orbiter->Lint_vec.copy(data, object_in_projective_space::set, data_sz);
+	object_in_projective_space::sz = data_sz;
+	object_in_projective_space::v = v;
+	object_in_projective_space::b = b;
+	if (f_v) {
+		cout << "object_in_projective_space::init_incidence_geometry done" << endl;
+	}
+}
+
 
 void object_in_projective_space::encoding_size(
 		int &nb_rows, int &nb_cols,
@@ -434,6 +464,16 @@ void object_in_projective_space::encoding_size(
 					"before encoding_size_packing" << endl;
 		}
 		encoding_size_packing(
+				nb_rows, nb_cols, verbose_level);
+
+	}
+	else if (type == t_INC) {
+
+		if (f_v) {
+			cout << "object_in_projective_space::encoding_size "
+					"before encoding_size_packing" << endl;
+		}
+		encoding_size_incidence_geometry(
 				nb_rows, nb_cols, verbose_level);
 
 	}
@@ -528,6 +568,21 @@ void object_in_projective_space::encoding_size_packing(
 
 }
 
+void object_in_projective_space::encoding_size_incidence_geometry(
+		int &nb_rows, int &nb_cols,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_in_projective_space::encoding_size_packing" << endl;
+	}
+
+	nb_rows = v;
+	nb_cols = b;
+
+}
+
 void object_in_projective_space::canonical_form_given_canonical_labeling(
 		long int *canonical_labeling,
 		bitvector *&B,
@@ -610,6 +665,12 @@ void object_in_projective_space::encode_incma(
 	else if (type == t_PAC) {
 		
 		encode_packing(Incma,
+				nb_rows, nb_cols, partition, verbose_level);
+
+	}
+	else if (type == t_INC) {
+
+		encode_incidence_geometry(Incma,
 				nb_rows, nb_cols, partition, verbose_level);
 
 	}
@@ -917,6 +978,64 @@ void object_in_projective_space::encode_packing(
 	}
 }
 
+void object_in_projective_space::encode_incidence_geometry(
+		int *&Incma, int &nb_rows, int &nb_cols, int *&partition,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_in_projective_space::encode_incidence_geometry" << endl;
+	}
+	int i, j, a;
+	int f_vvv = (verbose_level >= 3);
+
+
+	nb_rows = v;
+	nb_cols = b;
+
+	int N, L;
+
+	N = nb_rows + nb_cols;
+	L = nb_rows * nb_cols;
+
+	Incma = NEW_int(L);
+	partition = NEW_int(N);
+
+
+	Orbiter->Int_vec.zero(Incma, L);
+
+	for (i = 0; i < nb_rows; i++) {
+		for (j = 0; j < nb_cols; j++) {
+			Incma[i * nb_cols + j] = 0;
+		}
+	}
+	for (i = 0; i < sz; i++) {
+		a = set[i];
+		Incma[a] = 1;
+	}
+
+
+	for (i = 0; i < N; i++) {
+		partition[i] = 1;
+	}
+	partition[nb_rows - 1] = 0;
+	partition[N - 1] = 0;
+	if (f_vvv) {
+		cout << "object_in_projective_space::encode_incidence_geometry "
+				"partition:" << endl;
+		for (i = 0; i < N; i++) {
+			//cout << i << " : " << partition[i] << endl;
+			cout << partition[i];
+		}
+		cout << endl;
+	}
+	if (f_v) {
+		cout << "object_in_projective_space::encode_incidence_geometry "
+				"done" << endl;
+	}
+}
+
 void object_in_projective_space::encode_incma_and_make_decomposition(
 	int *&Incma, int &nb_rows, int &nb_cols, int *&partition, 
 	incidence_structure *&Inc, 
@@ -926,8 +1045,7 @@ void object_in_projective_space::encode_incma_and_make_decomposition(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "object_in_projective_space::encode_incma_and_"
-				"make_decomposition" << endl;
+		cout << "object_in_projective_space::encode_incma_and_make_decomposition" << endl;
 	}
 	if (type == t_PTS) {
 		
@@ -947,9 +1065,14 @@ void object_in_projective_space::encode_incma_and_make_decomposition(
 				nb_rows, nb_cols, partition, verbose_level);
 
 	}
+	else if (type == t_INC) {
+
+		encode_incidence_geometry(Incma,
+				nb_rows, nb_cols, partition, verbose_level);
+
+	}
 	else {
-		cout << "object_in_projective_space::encode_incma_and_"
-				"make_decomposition unknown type" << endl;
+		cout << "object_in_projective_space::encode_incma_and_make_decomposition unknown type" << endl;
 		exit(1);
 	}
 
@@ -967,16 +1090,14 @@ void object_in_projective_space::encode_incma_and_make_decomposition(
 	if (type == t_PTS) {
 		
 		if (f_v) {
-			cout << "object_in_projective_space::encode_incma_and_"
-					"make_decomposition t_PTS split1" << endl;
+			cout << "object_in_projective_space::encode_incma_and_make_decomposition t_PTS split1" << endl;
 		}
 		Stack->subset_continguous(
 				Inc->nb_points() + P->N_lines,
 				nb_cols - P->N_lines);
 		Stack->split_cell(0);
 		if (f_v) {
-			cout << "object_in_projective_space::encode_incma_and_"
-					"make_decomposition t_PTS split2" << endl;
+			cout << "object_in_projective_space::encode_incma_and_make_decomposition t_PTS split2" << endl;
 		}
 		if (nb_rows - Inc->nb_points()) {
 			Stack->subset_continguous(
@@ -990,8 +1111,7 @@ void object_in_projective_space::encode_incma_and_make_decomposition(
 	else if (type == t_LNS) {
 		
 		if (f_v) {
-			cout << "object_in_projective_space::encode_incma_and_"
-					"make_decomposition t_LNS" << endl;
+			cout << "object_in_projective_space::encode_incma_and_make_decomposition t_LNS" << endl;
 		}
 		Stack->subset_continguous(P->N_points, 1);
 		Stack->split_cell(0);
@@ -1004,8 +1124,7 @@ void object_in_projective_space::encode_incma_and_make_decomposition(
 	else if (type == t_PAC) {
 		
 		if (f_v) {
-			cout << "object_in_projective_space::encode_incma_and_"
-					"make_decomposition t_PAC" << endl;
+			cout << "object_in_projective_space::encode_incma_and_make_decomposition t_PAC" << endl;
 		}
 		Stack->subset_continguous(P->N_points, nb_rows - P->N_points);
 		Stack->split_cell(0);
@@ -1015,10 +1134,18 @@ void object_in_projective_space::encode_incma_and_make_decomposition(
 		Stack->split_cell(0);
 
 	}
+	else if (type == t_INC) {
+
+		if (f_v) {
+			cout << "object_in_projective_space::encode_incma_and_make_decomposition t_INC" << endl;
+		}
+		Stack->subset_continguous(v, b);
+		Stack->split_cell(0);
+
+	}
 	
 	if (f_v) {
-		cout << "object_in_projective_space::encode_incma_and_"
-				"make_decomposition done" << endl;
+		cout << "object_in_projective_space::encode_incma_and_make_decomposition done" << endl;
 	}
 }
 
@@ -1043,6 +1170,11 @@ void object_in_projective_space::encode_object(
 	else if (type == t_PAC) {
 		
 		encode_object_packing(encoding, encoding_sz, verbose_level);
+
+	}
+	else if (type == t_INC) {
+
+		encode_object_incidence_geometry(encoding, encoding_sz, verbose_level);
 
 	}
 	else {
@@ -1108,6 +1240,19 @@ void object_in_projective_space::encode_object_packing(
 				"h != encoding_sz" << endl;
 		exit(1);
 	}
+}
+
+void object_in_projective_space::encode_object_incidence_geometry(
+		long int *&encoding, int &encoding_sz, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_in_projective_space::encode_object_incidence_geometry" << endl;
+	}
+	encoding_sz = sz;
+	encoding = NEW_lint(sz);
+	Orbiter->Lint_vec.copy(set, encoding, sz);
 }
 
 void object_in_projective_space::klein(int verbose_level)
@@ -1230,7 +1375,214 @@ void object_in_projective_space::klein(int verbose_level)
 	}
 }
 
+void object_in_projective_space::run_nauty(
+		int f_compute_canonical_form, bitvector *&Canonical_form,
+		long int *canonical_labeling, int &canonical_labeling_len,
+		nauty_output *&NO,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_in_projective_space::run_nauty" << endl;
+	}
+	int *Incma;
+	int *partition;
+	int nb_rows, nb_cols;
+	//int *Aut, Aut_counter;
+	//int *Base, Base_length;
+	//long int *Base_lint;
+	//int *Transversal_length;
+	//longinteger_object Ago;
+	int i, j, a, L;
+	combinatorics_domain Combi;
+	file_io Fio;
+	nauty_interface Nau;
+
+
+	if (f_v) {
+		cout << "object_in_projective_space::run_nauty" << endl;
+		cout << "verbose_level = " << verbose_level << endl;
+	}
+
+
+	if (f_v) {
+		cout << "object_in_projective_space::run_nauty "
+				"before encode_incma" << endl;
+	}
+	encode_incma(Incma, nb_rows, nb_cols, partition, verbose_level - 1);
+	if (f_v) {
+		cout << "object_in_projective_space::run_nauty "
+				"after encode_incma" << endl;
+	}
+	if (verbose_level > 5) {
+		cout << "object_in_projective_space::run_nauty Incma:" << endl;
+		//int_matrix_print_tight(Incma, nb_rows, nb_cols);
+	}
+
+	//canonical_labeling = NEW_int(nb_rows + nb_cols);
+
+	canonical_labeling_len = nb_rows + nb_cols;
+	for (i = 0; i < canonical_labeling_len; i++) {
+		canonical_labeling[i] = i;
+	}
+
+#if 0
+	if (f_save_incma_in_and_out) {
+		save_Levi_graph(save_incma_in_and_out_prefix,
+				"Incma_in_%d_%d",
+				Incma, nb_rows, nb_cols,
+				canonical_labeling, canonical_labeling_len,
+				verbose_level);
+
+	}
+#endif
+
+
+	NO = NEW_OBJECT(nauty_output);
+
+	NO->N = canonical_labeling_len;
+	L = nb_rows * nb_cols;
+
+	if (verbose_level > 5) {
+		cout << "object_in_projective_space::run_nauty "
+				"initializing Aut, Base, Transversal_length" << endl;
+	}
+
+	NO->allocate(canonical_labeling_len, verbose_level - 2);
+
+	if (f_v) {
+		cout << "object_in_projective_space::run_nauty "
+				"calling Nau.nauty_interface_matrix_int" << endl;
+	}
+	int t0, t1, dt, tps;
+	double delta_t_in_sec;
+	os_interface Os;
+
+	tps = Os.os_ticks_per_second();
+	t0 = Os.os_ticks();
+
+	int *can_labeling;
+
+	can_labeling = NEW_int(canonical_labeling_len);
+
+	Nau.nauty_interface_matrix_int(
+		Incma, nb_rows, nb_cols,
+		can_labeling, partition,
+		NO->Aut, NO->Aut_counter,
+		NO->Base, NO->Base_length,
+		NO->Transversal_length, NO->Ago,
+		verbose_level - 3);
+
+	for (i = 0; i < canonical_labeling_len; i++) {
+		canonical_labeling[i] = can_labeling[i];
+	}
+	FREE_int(can_labeling);
+
+	Orbiter->Int_vec.copy_to_lint(NO->Base, NO->Base_lint, NO->Base_length);
+
+	t1 = Os.os_ticks();
+	dt = t1 - t0;
+	delta_t_in_sec = (double) dt / (double) tps;
+
+	if (f_v) {
+		cout << "object_in_projective_space::run_nauty "
+				"done with Nau.nauty_interface_matrix_int, "
+				"Ago=" << NO->Ago << " dt=" << dt
+				<< " delta_t_in_sec=" << delta_t_in_sec << endl;
+	}
+	if (verbose_level > 5) {
+		int h;
+		//int degree = nb_rows +  nb_cols;
+
+		for (h = 0; h < NO->Aut_counter; h++) {
+			cout << "aut generator " << h << " / " << NO->Aut_counter << " : " << endl;
+			//Combi.perm_print(cout, Aut + h * degree, degree);
+			cout << endl;
+		}
+	}
+
+	int *Incma_out;
+	int ii, jj;
+	if (verbose_level > 5) {
+		cout << "object_in_projective_space::run_nauty "
+				"labeling:" << endl;
+		//lint_vec_print(cout, canonical_labeling, canonical_labeling_len);
+		cout << endl;
+	}
+
+	Incma_out = NEW_int(L);
+	for (i = 0; i < nb_rows; i++) {
+		ii = canonical_labeling[i];
+		for (j = 0; j < nb_cols; j++) {
+			jj = canonical_labeling[nb_rows + j] - nb_rows;
+			//cout << "i=" << i << " j=" << j << " ii=" << ii
+			//<< " jj=" << jj << endl;
+			Incma_out[i * nb_cols + j] = Incma[ii * nb_cols + jj];
+		}
+	}
+	if (verbose_level > 5) {
+		cout << "object_in_projective_space::run_nauty "
+				"Incma Out:" << endl;
+		if (nb_rows < 20) {
+			Orbiter->Int_vec.print_integer_matrix_width(cout,
+					Incma_out, nb_rows, nb_cols, nb_cols, 1);
+		}
+		else {
+			cout << "object_in_projective_space::run_nauty "
+					"too large to print" << endl;
+		}
+	}
+
+
+
+	if (f_compute_canonical_form) {
+
+		Canonical_form = NEW_OBJECT(bitvector);
+		Canonical_form->allocate(L);
+		for (i = 0; i < nb_rows; i++) {
+			for (j = 0; j < nb_cols; j++) {
+				if (Incma_out[i * nb_cols + j]) {
+					a = i * nb_cols + j;
+					//bitvector_set_bit(canonical_form, a);
+					Canonical_form->m_i(a, 1);
+				}
+			}
+		}
+
+	}
+
+#if 0
+	if (f_save_incma_in_and_out) {
+		save_Levi_graph(save_incma_in_and_out_prefix,
+				"Incma_out_%d_%d",
+				Incma_out, nb_rows, nb_cols,
+				canonical_labeling, N,
+				verbose_level);
+
+	}
+#endif
+
+	if (f_v) {
+		cout << "object_in_projective_space::run_nauty before freeing Incma" << endl;
+	}
+	FREE_int(Incma);
+	if (f_v) {
+		cout << "object_in_projective_space::run_nauty before freeing partition" << endl;
+	}
+	FREE_int(partition);
+
+	FREE_int(Incma_out);
+
+	if (f_v) {
+		cout << "object_in_projective_space::run_nauty done" << endl;
+	}
+
+
 }
-}
+
+
+
+}}
 
 

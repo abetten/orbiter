@@ -42,6 +42,19 @@ int string_tools::is_csv_file(const char *fname)
 	}
 }
 
+int string_tools::is_inc_file(const char *fname)
+{
+	char ext[1000];
+
+	get_extension_if_present(fname, ext);
+	if (strcmp(ext, ".inc") == 0) {
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
+}
+
 int string_tools::is_xml_file(const char *fname)
 {
 	char ext[1000];

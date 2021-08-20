@@ -20,8 +20,8 @@ namespace top_level {
 projective_space_activity_description::projective_space_activity_description()
 {
 
-	f_input = FALSE;
-	Data = NULL;
+	//f_input = FALSE;
+	//Data = NULL;
 
 	f_canonical_form_PG = FALSE;
 	//canonical_form_PG_n = 0;
@@ -201,6 +201,7 @@ int projective_space_activity_description::read_arguments(
 	}
 	for (i = 0; i < argc; i++) {
 
+#if 0
 		if (stringcmp(argv[i], "-input") == 0) {
 			f_input = TRUE;
 			Data = NEW_OBJECT(data_input_stream);
@@ -218,8 +219,8 @@ int projective_space_activity_description::read_arguments(
 				}
 			}
 		}
-
-		else if (stringcmp(argv[i], "-canonical_form_PG") == 0) {
+#endif
+		if (stringcmp(argv[i], "-canonical_form_PG") == 0) {
 			f_canonical_form_PG = TRUE;
 			if (f_v) {
 				cout << "-canonical_form_PG, reading extra arguments" << endl;
@@ -869,10 +870,12 @@ int projective_space_activity_description::read_arguments(
 
 void projective_space_activity_description::print()
 {
+#if 0
 	if (f_input) {
 		cout << "-input" << endl;
 		Data->print();
 	}
+#endif
 	if (f_canonical_form_PG) {
 		cout << "-canonical_form_PG " << endl;
 		Canonical_form_PG_Descr->print();
