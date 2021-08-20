@@ -42,33 +42,37 @@ void diophant_create::init(
 	D = NULL;
 
 
-	finite_field *F = NULL;
 
 	if (!Descr->f_label) {
 		cout << "please use -label <label> to give the system a name" << endl;
 		exit(1);
 	}
 
-	if (Descr->f_q) {
-		F = NEW_OBJECT(finite_field);
 
-		if (Descr->f_override_polynomial) {
-			cout << "creating finite field of order q=" << Descr->input_q
-					<< " using override polynomial " << Descr->override_polynomial << endl;
-			F->init_override_polynomial(Descr->input_q,
-					Descr->override_polynomial, verbose_level);
-		}
-		else {
-			cout << "diophant_create::init creating finite field "
-					"of order q=" << Descr->input_q
-					<< " using the default polynomial (if necessary)" << endl;
-			F->finite_field_init(Descr->input_q, 0);
-		}
-
-	}
 
 
 	if (Descr->f_maximal_arc) {
+
+		finite_field *F = NULL;
+
+		if (Descr->f_q) {
+			F = NEW_OBJECT(finite_field);
+
+			if (Descr->f_override_polynomial) {
+				cout << "creating finite field of order q=" << Descr->input_q
+						<< " using override polynomial " << Descr->override_polynomial << endl;
+				F->init_override_polynomial(Descr->input_q,
+						Descr->override_polynomial, verbose_level);
+			}
+			else {
+				cout << "diophant_create::init creating finite field "
+						"of order q=" << Descr->input_q
+						<< " using the default polynomial (if necessary)" << endl;
+				F->finite_field_init(Descr->input_q, 0);
+			}
+
+		}
+
 
 		projective_space *P;
 
@@ -96,6 +100,9 @@ void diophant_create::init(
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 		FREE_OBJECT(P);
+		if (F) {
+			FREE_OBJECT(F);
+		}
 	}
 	if (Descr->f_coefficient_matrix) {
 		int *A;
@@ -194,7 +201,7 @@ void diophant_create::init(
 		}
 		Orbiter->Int_vec.scan(Descr->RHS_text, RHS, sz);
 		if (sz != 3 * D->m) {
-			cout << "number of values must be 3 times the number of rows of the system" << endl;
+			cout << "number of values for RHS must be 3 times the number of rows of the system" << endl;
 			exit(1);
 		}
 		for (i = 0; i < D->m; i++) {
@@ -410,17 +417,15 @@ void diophant_create::init(
 
 
 
-
-	if (F) {
-		FREE_OBJECT(F);
-	}
-
 	string fname;
 	file_io Fio;
 
+
+	D->label.assign(Descr->label);
+
 	fname.assign(Descr->label);
 	fname.append(".diophant");
-	//sprintf(fname, "%s.diophant", Descr->label);
+
 	D->save_in_general_format(fname, verbose_level);
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 

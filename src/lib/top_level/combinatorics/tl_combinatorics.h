@@ -351,6 +351,9 @@ public:
 	int load_table_selected_orbit_length;
 
 
+	int f_canonical_form;
+	projective_space_object_classifier_description *Canonical_form_Descr;
+
 	design_activity_description();
 	~design_activity_description();
 	int read_arguments(int argc, std::string *argv,
@@ -393,6 +396,8 @@ public:
 			std::string &H_go_text,
 			std::string &H_generators_data,
 			int selected_orbit_length,
+			int verbose_level);
+	void do_canonical_form(projective_space_object_classifier_description *Canonical_form_Descr,
 			int verbose_level);
 
 };

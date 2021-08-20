@@ -132,6 +132,19 @@ int data_input_stream::read_arguments(
 					<< endl;
 			nb_inputs++;
 			}
+		else if (stringcmp(argv[i], "-file_of_incidence_geometries") == 0) {
+			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_INCIDENCE_GEOMETRIES;
+			input_string[nb_inputs].assign(argv[++i]);
+			input_data1[nb_inputs] = strtoi(argv[++i]); // v = number of points
+			input_data2[nb_inputs] = strtoi(argv[++i]); // b = number of blocks
+			input_data3[nb_inputs] = strtoi(argv[++i]); // f = numbr of flags
+			cout << "-file_of_incidence_geometries " << input_string[nb_inputs]
+				<< " " << input_data1[nb_inputs]
+				<< " " << input_data2[nb_inputs]
+				<< " " << input_data3[nb_inputs]
+				<< endl;
+			nb_inputs++;
+			}
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
@@ -188,6 +201,13 @@ void data_input_stream::print_item(int i)
 				<< " " << input_data2[i]
 				<< " " << input_data3[i]
 				<< " " << input_data4[i]
+				<< endl;
+	}
+	else if (input_type[i] == INPUT_TYPE_FILE_OF_INCIDENCE_GEOMETRIES) {
+		cout << "-file_of_designs " << input_string[i]
+				<< " " << input_data1[i]
+				<< " " << input_data2[i]
+				<< " " << input_data3[i]
 				<< endl;
 	}
 }
@@ -336,6 +356,35 @@ int data_input_stream::count_number_of_objects_to_test(
 
 			nb_objects_to_test += nb_obj;
 			}
+		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_INCIDENCE_GEOMETRIES) {
+			if (f_v) {
+				cout << "input incidence geometries from file "
+						<< input_string[input_idx] << ":" << endl;
+			}
+			file_io Fio;
+			int m, n, nb_flags;
+
+			std::vector<std::vector<int> > Geos;
+
+			Fio.read_incidence_file(Geos, m, n, nb_flags, input_string[input_idx], verbose_level);
+			if (f_v) {
+				cout << "input incidence geometries from file "
+						"the file contains " << Geos.size() << "incidence geometries" << endl;
+			}
+			nb_objects_to_test += Geos.size();
+			if (input_data1[input_idx] != m) {
+				cout << "v does not match" << endl;
+				exit(1);
+			}
+			if (input_data2[input_idx] != n) {
+				cout << "b does not match" << endl;
+				exit(1);
+			}
+			if (input_data3[input_idx] != nb_flags) {
+				cout << "f does not match" << endl;
+				exit(1);
+			}
+		}
 		else {
 			cout << "unknown input type" << endl;
 			exit(1);

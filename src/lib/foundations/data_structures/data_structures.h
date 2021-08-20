@@ -201,6 +201,7 @@ class data_file {
 #define INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE 7
 #define INPUT_TYPE_FILE_OF_POINT_SET 8
 #define INPUT_TYPE_FILE_OF_DESIGNS 9
+#define INPUT_TYPE_FILE_OF_INCIDENCE_GEOMETRIES 10
 
 
 
@@ -480,6 +481,34 @@ public:
 	void print_to_str_naked(char *str, long int *data, int len);
 	void create_string_with_quotes(std::string &str, long int *v, int len);
 
+
+};
+
+
+
+// #############################################################################
+// nauty_output.cpp:
+// #############################################################################
+
+
+//! output data created by a run of nauty
+
+class nauty_output {
+public:
+
+
+	int N;
+	int *Aut;
+	int Aut_counter;
+	int *Base;
+	int Base_length;
+	long int *Base_lint;
+	int *Transversal_length;
+	longinteger_object Ago;
+
+	nauty_output();
+	~nauty_output();
+	void allocate(int N, int verbose_level);
 
 };
 
@@ -844,7 +873,7 @@ public:
 			int nb_sets, int *Sz, int verbose_level);
 	void init_basic_constant_size(int underlying_set_size, 
 		int nb_sets, int constant_size, int verbose_level);
-	void init_from_file(int underlying_set_size, 
+	void init_from_file(int &underlying_set_size,
 			std::string &fname, int verbose_level);
 	void init_from_csv_file(int underlying_set_size, 
 			std::string &fname, int verbose_level);
@@ -1020,7 +1049,7 @@ public:
 			long int a, int &idx, int verbose_level);
 	int int_vec_search_first_occurence(int *v, int len, int a, int &idx,
 			int verbose_level);
-		// This function finds the first occurence of the element a.
+		// This function finds the first occurrence of the element a.
 	int longinteger_vec_search(longinteger_object *v, int len,
 		longinteger_object &a, int &idx);
 	void int_vec_classify_and_print(std::ostream &ost, int *v, int l);
@@ -1069,7 +1098,7 @@ public:
 		int (*compare_func)(void *data, int i, void *search_object,
 		void *extra_data),
 		void *extra_data, int verbose_level);
-		// This function finds the last occurence of the element a.
+		// This function finds the last occurrence of the element a.
 		// If a is not found, it returns in idx the position
 		// where it should be inserted if
 		// the vector is assumed to be in increasing order.
@@ -1251,6 +1280,7 @@ public:
 	string_tools();
 	~string_tools();
 	int is_csv_file(const char *fname);
+	int is_inc_file(const char *fname);
 	int is_xml_file(const char *fname);
 	int s_scan_int(char **s, int *i);
 	int s_scan_lint(char **s, long int *i);

@@ -314,8 +314,8 @@ public:
 class projective_space_activity_description {
 public:
 
-	int f_input;
-	data_input_stream *Data;
+	//int f_input;
+	//data_input_stream *Data;
 
 
 	int f_canonical_form_PG;
@@ -605,182 +605,6 @@ public:
 
 
 
-#if 0
-// #############################################################################
-// projective_space_job_description.cpp
-// #############################################################################
-
-
-
-
-
-//! description of a job to be applied to a set in projective space PG(n,q)
-
-
-
-class projective_space_job_description {
-
-
-public:
-
-	int f_input;
-	data_input_stream *Data;
-
-
-	int f_fname_base_out;
-	std::string fname_base_out;
-
-#if 0
-	int f_q;
-	int q;
-	int f_n;
-	int n;
-	int f_poly;
-	std::string poly;
-#endif
-
-	int f_embed;
-		// follow up option for f_print:
-		//f_orthogonal, orthogonal_epsilon
-
-	int f_andre;
-
-#if 0
-		// follow up option for f_andre:
-		int f_Q;
-		int Q;
-		int f_poly_Q;
-		std::string poly_Q;
-#endif
-
-
-	int f_print;
-		// follow up option for f_print:
-		int f_lines_in_PG;
-		int f_points_in_PG;
-		int f_points_on_grassmannian;
-		int points_on_grassmannian_k;
-		int f_orthogonal;
-		int orthogonal_epsilon;
-		int f_homogeneous_polynomials_LEX;
-		int f_homogeneous_polynomials_PART;
-		int homogeneous_polynomials_degree;
-
-
-
-	//int f_group = FALSE;
-	int f_list_group_elements;
-	int f_line_type;
-	int f_plane_type;
-	int f_plane_type_failsafe;
-	int f_conic_type;
-		// follow up option for f_conic_type:
-		int f_randomized;
-		int nb_times;
-
-	int f_hyperplane_type;
-	// follow up option for f_hyperplane_type:
-		int f_show;
-
-
-	int f_cone_over;
-
-	//int f_move_line = FALSE;
-	//int from_line = 0, to_line = 0;
-
-	int f_bsf3;
-	int f_test_diagonals;
-	std::string test_diagonals_fname;
-	int f_klein;
-
-	int f_draw_points_in_plane;
-		std::string draw_points_in_plane_fname_base;
-		// follow up option for f_draw_points_in_plane:
-
-	int f_point_labels;
-		//int f_embedded;
-		//int f_sideways;
-
-	int f_canonical_form;
-	std::string canonical_form_fname_base;
-
-	int f_ideal_LEX;
-	int f_ideal_PART;
-	int ideal_degree;
-	//int f_find_Eckardt_points_from_arc = FALSE;
-
-	int f_intersect_with_set_from_file;
-	std::string intersect_with_set_from_file_fname;
-
-
-
-
-
-	projective_space_job_description();
-	~projective_space_job_description();
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-};
-
-
-
-// #############################################################################
-// projective_space_job.cpp
-// #############################################################################
-
-
-
-//! perform a job for a set in projective space PG(n,q) as described by projective_space_job_description
-
-
-class projective_space_job {
-
-
-	int t0;
-	finite_field *F;
-	projective_space_with_action *PA;
-	int back_end_counter;
-
-
-public:
-
-	projective_space_job_description *Descr;
-
-	int f_homogeneous_polynomial_domain_has_been_allocated;
-	homogeneous_polynomial_domain *HPD;
-
-	int intersect_with_set_from_file_set_has_beed_read;
-	long int *intersect_with_set_from_file_set;
-	int intersect_with_set_from_file_set_size;
-
-
-
-	projective_space_job();
-	void perform_job(projective_space_job_description *Descr, int verbose_level);
-	void back_end(int input_idx,
-			object_in_projective_space *OiP,
-			std::ostream &fp,
-			std::ostream &fp_tex,
-			int verbose_level);
-	void perform_job_for_one_set(int input_idx,
-		object_in_projective_space *OiP,
-		long int *&the_set_out,
-		int &set_size_out,
-		std::ostream &fp_tex,
-		int verbose_level);
-#if 0
-	void do_canonical_form(
-		long int *set, int set_size, int f_semilinear,
-		std::string &fname_base, int verbose_level);
-#endif
-
-};
-#endif
-
-
 // #############################################################################
 // projective_space_object_classifier_description.cpp
 // #############################################################################
@@ -863,6 +687,7 @@ public:
 
 	projective_space_object_classifier_description *Descr;
 
+	int f_projective_space;
 	projective_space_with_action *PA;
 
 	int nb_objects_to_test;
@@ -875,6 +700,7 @@ public:
 	projective_space_object_classifier();
 	~projective_space_object_classifier();
 	void do_the_work(projective_space_object_classifier_description *Descr,
+			int f_projective_space,
 			projective_space_with_action *PA,
 			int verbose_level);
 	void classify_objects_using_nauty(
@@ -902,7 +728,7 @@ public:
 			int verbose_level);
 	int process_object(
 		object_in_projective_space *OiP,
-		strong_generators *&SG,
+		strong_generators *&SG, long int &ago,
 		long int *canonical_labeling, int &canonical_labeling_len,
 		int &idx,
 		int verbose_level);

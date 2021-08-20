@@ -1253,6 +1253,10 @@ public:
 		// set[sz] is used by t_PTS and t_LNS
 
 
+		// if t_INC:
+	int v;
+	int b;
+
 		// t_PAC = packing, uses SoS
 	set_of_sets *SoS;
 		// SoS is used by t_PAC
@@ -1290,6 +1294,9 @@ public:
 	void init_packing_from_spread_table(projective_space *P, 
 		long int *data, long int *Spread_table, int nb_spreads,
 		int spread_size, int verbose_level);
+	void init_incidence_geometry(
+		long int *data, int data_sz, int v, int b, int nb_flags,
+		int verbose_level);
 	void encoding_size(
 			int &nb_rows, int &nb_cols,
 			int verbose_level);
@@ -1300,6 +1307,9 @@ public:
 			int &nb_rows, int &nb_cols,
 			int verbose_level);
 	void encoding_size_packing(
+			int &nb_rows, int &nb_cols,
+			int verbose_level);
+	void encoding_size_incidence_geometry(
 			int &nb_rows, int &nb_cols,
 			int verbose_level);
 	void canonical_form_given_canonical_labeling(
@@ -1314,6 +1324,9 @@ public:
 		int *&partition, int verbose_level);
 	void encode_packing(int *&Incma, int &nb_rows, int &nb_cols, 
 		int *&partition, int verbose_level);
+	void encode_incidence_geometry(
+			int *&Incma, int &nb_rows, int &nb_cols, int *&partition,
+			int verbose_level);
 	void encode_incma_and_make_decomposition(
 		int *&Incma, int &nb_rows, int &nb_cols, int *&partition, 
 		incidence_structure *&Inc, 
@@ -1327,7 +1340,14 @@ public:
 		int verbose_level);
 	void encode_object_packing(long int *&encoding, int &encoding_sz,
 		int verbose_level);
+	void encode_object_incidence_geometry(
+			long int *&encoding, int &encoding_sz, int verbose_level);
 	void klein(int verbose_level);
+	void run_nauty(
+			int f_compute_canonical_form, bitvector *&Canonical_form,
+			long int *canonical_labeling, int &canonical_labeling_len,
+			nauty_output *&NO,
+			int verbose_level);
 
 };
 

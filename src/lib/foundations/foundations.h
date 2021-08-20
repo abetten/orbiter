@@ -314,6 +314,7 @@ class int_matrix;
 class int_vec;
 class int_vector;
 class lint_vec;
+class nauty_output;
 class page_storage;
 class partitionstack;
 class set_builder_description;
@@ -544,7 +545,8 @@ enum monomial_ordering_type {
 enum object_in_projective_space_type {
 	t_PTS, // points
 	t_LNS, // lines
-	t_PAC // packing
+	t_PAC, // packing
+	t_INC // incidence geometry
 };
 
 enum diophant_equation_type {

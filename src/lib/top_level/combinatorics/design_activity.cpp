@@ -56,7 +56,10 @@ void design_activity::perform_activity(design_activity_description *Descr,
 				Descr->load_table_selected_orbit_length,
 				verbose_level);
 	}
-
+	else if (Descr->f_canonical_form) {
+		do_canonical_form(Descr->Canonical_form_Descr,
+				verbose_level);
+	}
 
 
 	if (f_v) {
@@ -226,6 +229,44 @@ void design_activity::do_load_table(
 	}
 }
 
+void design_activity::do_canonical_form(projective_space_object_classifier_description *Canonical_form_Descr,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "design_activity::do_canonical_form" << endl;
+	}
+
+	projective_space_object_classifier *OC;
+
+	if (f_v) {
+		cout << "design_activity::do_canonical_form" << endl;
+	}
+
+	OC = NEW_OBJECT(projective_space_object_classifier);
+
+	if (f_v) {
+		cout << "design_activity::do_canonical_form before OC->do_the_work" << endl;
+	}
+	OC->do_the_work(
+			Canonical_form_Descr,
+			FALSE,
+			NULL,
+			verbose_level);
+	if (f_v) {
+		cout << "design_activity::do_canonical_form after OC->do_the_work" << endl;
+	}
+
+	FREE_OBJECT(OC);
+
+
+
+	if (f_v) {
+		cout << "design_activity::do_canonical_form done" << endl;
+	}
+
+}
 
 
 }}

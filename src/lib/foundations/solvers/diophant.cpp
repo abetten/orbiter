@@ -69,7 +69,7 @@ diophant::~diophant()
 
 void diophant::null()
 {
-	label[0] = 0;
+	//label[0] = 0;
 
 	m = 0;
 	n = 0;
@@ -109,7 +109,7 @@ void diophant::null()
 
 void diophant::freeself()
 {
-	int verbose_level = 0;
+	int verbose_level = 1;
 	int f_v = (verbose_level >= 1);
 	int i;
 

@@ -17,6 +17,7 @@ MODULES = \
 	int_vec.o \
 	int_vector.o \
 	lint_vec.o \
+	nauty_output.o \
 	page_storage.o \
 	partitionstack.o \
 	set_builder_description.o \

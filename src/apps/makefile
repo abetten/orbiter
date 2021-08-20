@@ -10,6 +10,7 @@ clean:
 	cd ginac; $(MAKE) clean
 	cd orbiter; $(MAKE) clean
 	cd sandbox; $(MAKE) clean
+	cd LSP.99; $(MAKE) clean
 
 install: 
 	cd orbiter; $(MAKE) install

@@ -1989,17 +1989,17 @@ void file_io::read_and_parse_data_file(
 	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
-		cout << "read_and_parse_data_file: reading file "
+		cout << "file_io::read_and_parse_data_file: reading file "
 			<< fname << endl;
 	}
 	if (try_to_read_file(fname, nb_cases, data, verbose_level)) {
 		if (f_vv) {
-			cout << "file read containing " << nb_cases
+			cout << "file_io::read_and_parse_data_file file read containing " << nb_cases
 				<< " cases" << endl;
 		}
 	}
 	else {
-		cout << "read_and_parse_data_file couldn't read file "
+		cout << "file_io::read_and_parse_data_file couldn't read file "
 			<< fname << endl;
 		exit(1);
 	}
@@ -2012,7 +2012,7 @@ void file_io::read_and_parse_data_file(
 
 
 	if (f_v) {
-		cout << "read_and_parse_data_file: parsing sets" << endl;
+		cout << "file_io::read_and_parse_data_file: parsing sets" << endl;
 	}
 	//parse_sets(nb_cases, data, set_sizes, sets);
 
@@ -2039,7 +2039,7 @@ void file_io::read_and_parse_data_file(
 	FREE_pchar(Ago_ascii);
 	FREE_pchar(Aut_ascii);
 	if (f_v) {
-		cout << "read_and_parse_data_file done" << endl;
+		cout << "file_io::read_and_parse_data_file done" << endl;
 	}
 }
 
@@ -2058,7 +2058,7 @@ void file_io::parse_sets_and_check_sizes_easy(int len, int nb_cases,
 		0/*verbose_level - 2*/);
 	for (i = 0; i < nb_cases; i++) {
 		if (set_sizes[i] != len) {
-			cout << "parse_sets_and_check_sizes_easy "
+			cout << "file_io::parse_sets_and_check_sizes_easy "
 					"set_sizes[i] != len" << endl;
 			exit(1);
 		}
@@ -2133,23 +2133,23 @@ void file_io::read_and_parse_data_file_fancy(
 	int i;
 
 	if (f_v) {
-		cout << "read_and_parse_data_file_fancy "
+		cout << "file_io::read_and_parse_data_file_fancy "
 				"reading file "
 			<< fname << endl;
 	}
 	if (f_vv) {
-		cout << "read_and_parse_data_file_fancy "
+		cout << "file_io::read_and_parse_data_file_fancy "
 				"before try_to_read_file" << endl;
 	}
 	if (try_to_read_file(fname, nb_cases, data, verbose_level - 1)) {
 		if (f_vv) {
-			cout << "read_and_parse_data_file_fancy "
+			cout << "file_io::read_and_parse_data_file_fancy "
 					"file read containing "
 				<< nb_cases << " cases" << endl;
 		}
 	}
 	else {
-		cout << "read_and_parse_data_file_fancy "
+		cout << "file_io::read_and_parse_data_file_fancy "
 				"couldn't read file fname="
 			<< fname << endl;
 		exit(1);
@@ -2166,7 +2166,7 @@ void file_io::read_and_parse_data_file_fancy(
 
 
 	if (f_vv) {
-		cout << "read_and_parse_data_file_fancy "
+		cout << "file_io::read_and_parse_data_file_fancy "
 				"parsing sets" << endl;
 	}
 	parse_sets(nb_cases, data, f_casenumbers,
@@ -2175,7 +2175,7 @@ void file_io::read_and_parse_data_file_fancy(
 		verbose_level - 2);
 
 	if (f_vv) {
-		cout << "read_and_parse_data_file_fancy "
+		cout << "file_io::read_and_parse_data_file_fancy "
 				"freeing temporary data" << endl;
 	}
 	for (i = 0; i < nb_cases; i++) {
@@ -2183,7 +2183,7 @@ void file_io::read_and_parse_data_file_fancy(
 	}
 	FREE_pchar(data);
 	if (f_vv) {
-		cout << "read_and_parse_data_file_fancy done" << endl;
+		cout << "file_io::read_and_parse_data_file_fancy done" << endl;
 	}
 }
 
@@ -2711,6 +2711,95 @@ void file_io::read_incidence_matrix_from_inc_file(int *&M, int &m, int &n,
 	}
 	FREE_int(X);
 }
+
+
+void file_io::read_incidence_file(std::vector<std::vector<int> > &Geos,
+		int &m, int &n, int &nb_flags,
+		std::string &inc_file_name, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int a, h, cnt;
+	char buf[READ_INCIDENCE_BUFSIZE];
+	char *p_buf;
+	int *X = NULL;
+	string_tools ST;
+
+
+	if (f_v) {
+		cout << "file_io::read_incidence_file " << inc_file_name << endl;
+	}
+	{
+		ifstream f(inc_file_name);
+
+		if (f.eof()) {
+			exit(1);
+		}
+		f.getline(buf, READ_INCIDENCE_BUFSIZE, '\n');
+		if (strlen(buf) == 0) {
+			exit(1);
+		}
+		sscanf(buf, "%d %d %d", &m, &n, &nb_flags);
+		if (f_vv) {
+			cout << "m=" << m;
+			cout << " n=" << n;
+			cout << " nb_flags=" << nb_flags << endl;
+		}
+		X = NEW_int(nb_flags);
+		cnt = 0;
+		while (TRUE) {
+			if (f.eof()) {
+				break;
+			}
+			f.getline(buf, READ_INCIDENCE_BUFSIZE, '\n');
+			if (strlen(buf) == 0) {
+				continue;
+			}
+
+			// check for comment line:
+			if (buf[0] == '#') {
+				continue;
+			}
+
+			p_buf = buf;
+
+			ST.s_scan_int(&p_buf, &a);
+			if (f_vv) {
+				//cout << cnt << " : " << a << " ";
+			}
+			if (a == -1) {
+				cout << "file_io::read_incidence_file: "
+						"found a complete file with "
+					<< cnt << " solutions" << endl;
+				break;
+			}
+			X[0] = a;
+
+			//cout << "reading " << nb_inc << " incidences" << endl;
+			for (h = 1; h < nb_flags; h++) {
+				ST.s_scan_int(&p_buf, &a);
+				if (a < 0 || a >= m * n) {
+					cout << "attention, read " << a
+						<< " h=" << h << endl;
+					exit(1);
+				}
+				X[h] = a;
+				//M[a] = 1;
+			}
+			//f >> a; // skip aut group order
+
+			vector<int> v;
+
+			for (h = 0; h < nb_flags; h++) {
+				v.push_back(X[h]);
+			}
+			Geos.push_back(v);
+			cnt++;
+		}
+	}
+	FREE_int(X);
+}
+
 
 int file_io::inc_file_get_number_of_geometries(
 	char *inc_file_name, int verbose_level)

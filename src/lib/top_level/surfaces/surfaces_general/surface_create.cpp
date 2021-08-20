@@ -2489,6 +2489,7 @@ void surface_create::compute_group(projective_space_with_action *PA,
 
 	Classifier->do_the_work(
 			Descr,
+			TRUE,
 			PA,
 			verbose_level);
 

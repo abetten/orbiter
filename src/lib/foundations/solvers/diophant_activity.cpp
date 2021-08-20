@@ -79,7 +79,7 @@ void diophant_activity::perform_activity(diophant_activity_description *Descr, d
 		if (TRUE) {
 			string output_file;
 
-			output_file.assign(Descr->input_file);
+			output_file.assign(Dio->label);
 			ST.replace_extension_with(output_file, ".sol");
 
 
@@ -99,7 +99,7 @@ void diophant_activity::perform_activity(diophant_activity_description *Descr, d
 		if (TRUE) {
 			string output_file;
 
-			output_file.assign(Descr->input_file);
+			output_file.assign(Dio->label);
 			ST.replace_extension_with(output_file, ".sol");
 
 
@@ -184,8 +184,6 @@ void diophant_activity::perform_activity(diophant_activity_description *Descr, d
 		cout << "diophant_activity::perform_activity no activity found" << endl;
 		exit(1);
 	}
-
-	FREE_OBJECT(Dio);
 
 
 	if (f_v) {

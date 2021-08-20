@@ -55,6 +55,7 @@ MODULES= \
 		foundations/data_structures/int_vec.o \
 		foundations/data_structures/int_vector.o \
 		foundations/data_structures/lint_vec.o \
+		foundations/data_structures/nauty_output.o \
 		foundations/data_structures/page_storage.o \
 		foundations/data_structures/partitionstack.o \
 		foundations/data_structures/set_builder_description.o \
