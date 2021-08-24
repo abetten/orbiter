@@ -13,6 +13,86 @@ namespace orbiter {
 namespace group_actions {
 
 
+action *action::induced_action_on_interior_direct_product(
+		int nb_rows,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	action_on_interior_direct_product *IDP;
+	action *A;
+
+	if (f_v) {
+		cout << "action::induced_action_on_interior_direct_product" << endl;
+	}
+	A = NEW_OBJECT(action);
+
+
+
+	char str1[1000];
+	char str2[1000];
+	snprintf(str1, 1000, "_on_interior_direct_product_%ld_%d", A->degree, nb_rows);
+	snprintf(str2, 1000, " {\\rm OnIntDirectProduct}_{%ld,%d}", A->degree, nb_rows);
+
+	A->label.assign(label);
+	A->label.append(str1);
+
+	A->label_tex.assign(label_tex);
+	A->label_tex.append(str2);
+
+
+
+	if (f_v) {
+		cout << "the old_action " << label
+				<< " has base_length = " << base_len()
+			<< " and degree " << degree << endl;
+	}
+	A->f_has_subaction = TRUE;
+	A->subaction = this;
+	IDP = NEW_OBJECT(action_on_interior_direct_product);
+
+	IDP->init(this, nb_rows, verbose_level);
+
+	A->type_G = action_on_interior_direct_product_t;
+	A->G.OnInteriorDirectProduct = IDP;
+	A->f_allocated = TRUE;
+	A->make_element_size = make_element_size;
+	A->low_level_point_size = 0;
+
+	A->f_has_strong_generators = FALSE;
+
+	A->degree = IDP->degree;
+	//A->base_len = 0;
+	if (f_v) {
+		cout << "action::induced_action_on_interior_direct_product "
+				"before init_function_pointers_induced_action" << endl;
+	}
+	A->ptr = NEW_OBJECT(action_pointer_table);
+	A->ptr->init_function_pointers_induced_action();
+
+
+
+	A->elt_size_in_int = elt_size_in_int;
+	A->coded_elt_size_in_char = coded_elt_size_in_char;
+
+	if (f_v) {
+		cout << "action::induced_action_on_interior_direct_product "
+				"before allocate_element_data" << endl;
+	}
+	allocate_element_data();
+
+
+	if (f_v) {
+		cout << "action::induced_action_on_interior_direct_product "
+				"finished, created action " << A->label << endl;
+		cout << "degree=" << A->degree << endl;
+		cout << "make_element_size=" << A->make_element_size << endl;
+		cout << "low_level_point_size=" << A->low_level_point_size << endl;
+		print_info();
+	}
+	return A;
+}
+
+
 action *action::induced_action_on_set_partitions(
 		int partition_class_size,
 		int verbose_level)
@@ -33,10 +113,13 @@ action *action::induced_action_on_set_partitions(
 	snprintf(str1, 1000, "_on_set_partitions_%ld_%d", A->degree, partition_class_size);
 	snprintf(str2, 1000, " {\\rm OnSetPart}_{%ld,%d}", A->degree, partition_class_size);
 
-	label.assign(A->label);
-	label_tex.assign(A->label_tex);
-	label.append(str1);
-	label_tex.append(str2);
+	A->label.assign(label);
+	A->label.append(str1);
+
+	A->label_tex.assign(label_tex);
+	A->label_tex.append(str2);
+
+
 
 
 
@@ -1255,12 +1338,12 @@ void action::induced_action_by_conjugation(sims *old_G,
 		cout << "the old_action " << A->label
 				<< " has base_length = " << A->base_len()
 			<< " and degree " << A->degree << endl;
-		}
+	}
 	Base_group->group_order(go);
 	goi = go.as_lint();
 	if (f_v) {
 		cout << "we are acting on a group of order " << goi << endl;
-		}
+	}
 
 
 
@@ -1306,14 +1389,14 @@ void action::induced_action_by_conjugation(sims *old_G,
 		if (f_v) {
 			cout << "action::induced_action_by_conjugation "
 					"calling induced_action_override_sims" << endl;
-			}
-		induced_action_override_sims(*A, old_G, verbose_level - 2);
 		}
+		induced_action_override_sims(*A, old_G, verbose_level - 2);
+	}
 	if (f_v) {
 		cout << "action::induced_action_by_conjugation "
 				"finished, created action " << label << endl;
 		print_info();
-		}
+	}
 }
 
 void action::induced_action_by_right_multiplication(
@@ -1332,7 +1415,7 @@ void action::induced_action_by_right_multiplication(
 		cout << "the old_action " << A->label
 				<< " has base_length = " << A->base_len()
 			<< " and degree " << A->degree << endl;
-		}
+	}
 	Base_group->group_order(go);
 	goi = go.as_int();
 
@@ -1350,7 +1433,7 @@ void action::induced_action_by_right_multiplication(
 
 	if (f_v) {
 		cout << "we are acting on a group of order " << goi << endl;
-		}
+	}
 	f_has_subaction = TRUE;
 	subaction = A;
 	ABRM = NEW_OBJECT(action_by_right_multiplication);
@@ -1379,12 +1462,12 @@ void action::induced_action_by_right_multiplication(
 	
 	if (f_basis) {
 		induced_action_override_sims(*A, old_G, verbose_level - 2);
-		}
+	}
 	if (f_v) {
 		cout << "action::induced_action_by_right_multiplication "
 				"finished, created action " << label << endl;
 		print_info();
-		}
+	}
 }
 
 action *action::create_induced_action_on_sets(
@@ -1396,22 +1479,22 @@ action *action::create_induced_action_on_sets(
 	
 	if (f_v) {
 		cout << "action::create_induced_action_on_sets" << endl;
-		}
+	}
 	A = NEW_OBJECT(action);
 	if (f_v) {
 		cout << "action::create_induced_action_on_sets "
 				"before A->induced_action_on_sets" << endl;
-		}
+	}
 	A->induced_action_on_sets(*this, NULL, 
 		nb_sets, set_size, sets, 
 		FALSE /*f_induce_action*/, verbose_level);
 	if (f_v) {
 		cout << "action::create_induced_action_on_sets "
 				"after A->induced_action_on_sets" << endl;
-		}
+	}
 	if (f_v) {
 		cout << "action::create_induced_action_on_sets done" << endl;
-		}
+	}
 	return A;
 }
 
@@ -1436,7 +1519,7 @@ void action::induced_action_on_sets(
 
 		cout << "action::induced_action_on_sets "
 				"verbose_level = " << verbose_level << endl;
-		}
+	}
 
 	char str1[1000];
 	char str2[1000];
@@ -1454,15 +1537,15 @@ void action::induced_action_on_sets(
 	if (f_v) {
 		cout << "action::induced_action_on_sets "
 				"allocating action_on_sets" << endl;
-		}
+	}
 	AOS = NEW_OBJECT(action_on_sets);
 	if (f_v) {
 		cout << "action::induced_action_on_sets before AOS->init" << endl;
-		}
+	}
 	AOS->init(nb_sets, set_size, sets, verbose_level - 1);
 	if (f_v) {
 		cout << "action::induced_action_on_sets after AOS->init" << endl;
-		}
+	}
 	type_G = action_on_sets_t;
 	G.on_sets = AOS;
 	f_allocated = TRUE;
@@ -1478,7 +1561,7 @@ void action::induced_action_on_sets(
 	if (f_v) {
 		cout << "action::induced_action_on_sets "
 				"calling allocate_base_data" << endl;
-		}
+	}
 	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
 	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
 	//allocate_base_data(0);
@@ -1493,21 +1576,21 @@ void action::induced_action_on_sets(
 		if (f_v) {
 			cout << "action::induced_action_on_sets "
 					"calling induced_action_override_sims" << endl;
-			}
+		}
 		induced_action_override_sims(old_action,
 				old_G, verbose_level /*- 2*/);
 		if (f_v) {
 			cout << "action::induced_action_on_sets "
 					"induced_action_override_sims done" << endl;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "action::induced_action_on_sets finished, "
 				"created action " << label << endl;
 		//Sims->print_transversal_lengths();
 		//cout << endl;
 		print_info();
-		}
+	}
 }
 
 action *action::create_induced_action_on_subgroups(sims *S, 
@@ -1519,14 +1602,14 @@ action *action::create_induced_action_on_subgroups(sims *S,
 	
 	if (f_v) {
 		cout << "action::create_induced_action_on_subgroups" << endl;
-		}
+	}
 	A = NEW_OBJECT(action);
 	A->induced_action_on_subgroups(this, S, 
 		nb_subgroups, group_order, Subgroups, 
 		0 /* verbose_level*/);
 	if (f_v) {
 		cout << "action::create_induced_action_on_subgroups done" << endl;
-		}
+	}
 	return A;
 }
 
@@ -1547,7 +1630,7 @@ void action::induced_action_on_subgroups(
 			<< " and degree " << old_action->degree << endl;
 		cout << "action::induced_action_on_subgroups "
 				"verbose_level = " << verbose_level << endl;
-		}
+	}
 
 	char str1[1000];
 	char str2[1000];
@@ -1564,14 +1647,14 @@ void action::induced_action_on_subgroups(
 	if (f_v) {
 		cout << "action::induced_action_on_subgroups "
 				"allocating action_on_subgroups" << endl;
-		}
+	}
 	AOS = NEW_OBJECT(action_on_subgroups);
 	AOS->init(old_action, S, nb_subgroups,
 			group_order, Subgroups, verbose_level - 1);
 	if (f_v) {
 		cout << "action::induced_action_on_subgroups "
 				"after action_on_subgroups init" << endl;
-		}
+	}
 	type_G = action_on_subgroups_t;
 	G.on_subgroups = AOS;
 	f_allocated = TRUE;
@@ -1587,7 +1670,7 @@ void action::induced_action_on_subgroups(
 	if (f_v) {
 		cout << "action::induced_action_on_subgroups "
 				"calling allocate_base_data" << endl;
-		}
+	}
 	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
 	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
 	//allocate_base_data(0);
@@ -1604,7 +1687,7 @@ void action::induced_action_on_subgroups(
 		//Sims->print_transversal_lengths();
 		//cout << endl;
 		print_info();
-		}
+	}
 }
 
 void action::induced_action_by_restriction_on_orbit_with_schreier_vector(
@@ -1770,7 +1853,7 @@ action *action::restricted_action(
 	if (FALSE) {
 		cout << "action::restricted_action "
 				"calling allocate_base_data" << endl;
-		}
+	}
 	A->Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
 	A->Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
 	//A->allocate_base_data(0);
@@ -1785,7 +1868,7 @@ action *action::restricted_action(
 		cout << "action::restricted_action finished, "
 				"created action " << A->label << endl;
 		A->print_info();
-		}
+	}
 	return A;
 }
 
@@ -1798,13 +1881,13 @@ action *action::create_induced_action_by_restriction(
 
 	if (f_v) {
 		cout << "action::create_induced_action_by_restriction" << endl;
-		}
+	}
 	A2 = NEW_OBJECT(action);
 	A2->induced_action_by_restriction_internal_function(*this,
 			f_induce,  S, size, set, verbose_level - 1);
 	if (f_v) {
 		cout << "action::create_induced_action_by_restriction done" << endl;
-		}
+	}
 	return A2;
 }
 
@@ -1824,7 +1907,7 @@ void action::induced_action_by_restriction_internal_function(
 		cout << "nb_points = " << nb_points << endl;
 		cout << "f_induce_action = " << f_induce_action << endl;
 		cout << "verbose_level = " << verbose_level << endl;
-		}
+	}
 
 
 	char str1[1000];
@@ -1857,7 +1940,7 @@ void action::induced_action_by_restriction_internal_function(
 	if (FALSE) {
 		cout << "action::induced_action_by_restriction_internal_function "
 				"calling allocate_base_data" << endl;
-		}
+	}
 	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
 	Stabilizer_chain->allocate_base_data(this, 0, verbose_level);
 	//allocate_base_data(0);
@@ -1872,17 +1955,17 @@ void action::induced_action_by_restriction_internal_function(
 		if (f_v) {
 			cout << "action::induced_action_by_restriction_internal_function "
 					"calling induced_action_override_sims" << endl;
-			}
+		}
 		induced_action_override_sims(old_action,
 				old_G, verbose_level - 2);
-		}
+	}
 	if (f_v) {
 		cout << "action::induced_action_by_restriction_internal_function "
 				"finished, created action " << label << endl;
 		//Sims->print_transversal_lengths();
 		//cout << endl;
 		print_info();
-		}
+	}
 }
 
 void action::induced_action_on_pairs(
@@ -1897,7 +1980,7 @@ void action::induced_action_on_pairs(
 		cout << "the old_action " << old_action.label
 			<< " has base_length = " << old_action.base_len()
 			<< " and degree " << old_action.degree << endl;
-		}
+	}
 
 	char str1[1000];
 	char str2[1000];
@@ -1937,7 +2020,7 @@ void action::induced_action_on_pairs(
 		cout << "action::induced_action_on_pairs "
 				"finished, created action " << label << endl;
 		print_info();
-		}
+	}
 }
 
 action *action::create_induced_action_on_ordered_pairs(int verbose_level)
@@ -1947,13 +2030,13 @@ action *action::create_induced_action_on_ordered_pairs(int verbose_level)
 	
 	if (f_v) {
 		cout << "action::create_induced_action_on_ordered_pairs" << endl;
-		}
+	}
 	A = NEW_OBJECT(action);
 	A->induced_action_on_ordered_pairs(*this,
 			NULL, 0 /* verbose_level*/);
 	if (f_v) {
 		cout << "action::create_induced_action_on_ordered_pairs done" << endl;
-		}
+	}
 	return A;
 }
 
@@ -1969,7 +2052,7 @@ void action::induced_action_on_ordered_pairs(
 		cout << "the old_action " << old_action.label
 				<< " has base_length = " << old_action.base_len()
 			<< " and degree " << old_action.degree << endl;
-		}
+	}
 
 	char str1[1000];
 	char str2[1000];
@@ -2006,12 +2089,12 @@ void action::induced_action_on_ordered_pairs(
 	if (old_G) {
 		induced_action_override_sims(old_action,
 				old_G, verbose_level - 2);
-		}
+	}
 	if (f_v) {
 		cout << "action::induced_action_on_ordered_pairs "
 				"finished, created action " << label << endl;
 		print_info();
-		}
+	}
 }
 
 void action::induced_action_on_k_subsets(
@@ -2026,7 +2109,7 @@ void action::induced_action_on_k_subsets(
 		cout << "the old_action " << old_action.label
 				<< " has base_length = " << old_action.base_len()
 			<< " and degree " << old_action.degree << endl;
-		}
+	}
 	char str1[1000];
 	char str2[1000];
 	snprintf(str1, 1000, "_on_%d_subsets",k);
@@ -2068,7 +2151,7 @@ void action::induced_action_on_k_subsets(
 		cout << "action::induced_action_on_k_subsets "
 				"finished, created action " << label << endl;
 		print_info();
-		}
+	}
 }
 
 void action::induced_action_on_orbits(action *old_action,
@@ -2143,7 +2226,7 @@ void action::induced_action_on_flags(action *old_action,
 		cout << "the old_action " << old_action->label
 			<< " has base_length = " << old_action->base_len()
 			<< " and degree " << old_action->degree << endl;
-		}
+	}
 
 
 	char str1[1000];
@@ -2189,7 +2272,7 @@ void action::induced_action_on_flags(action *old_action,
 		cout << "action::induced_action_on_flags "
 				"finished, created action " << label << endl;
 		print_info();
-		}
+	}
 }
 
 void action::induced_action_on_bricks(action &old_action,
@@ -2204,7 +2287,7 @@ void action::induced_action_on_bricks(action &old_action,
 		cout << "the old_action " << old_action.label
 			<< " has base_length = " << old_action.base_len()
 			<< " and degree " << old_action.degree << endl;
-		}
+	}
 
 	char str1[1000];
 	char str2[1000];
@@ -2249,7 +2332,7 @@ void action::induced_action_on_bricks(action &old_action,
 		cout << "action::induced_action_on_bricks finished, "
 				"created action " << label << endl;
 		print_info();
-		}
+	}
 }
 
 void action::induced_action_on_andre(action *An,
@@ -2265,7 +2348,7 @@ void action::induced_action_on_andre(action *An,
 				<< " has degree " << An->degree << endl;
 		cout << "action An1 = " << An1->label
 				<< " has degree " << An1->degree << endl;
-		}
+	}
 
 	char str1[1000];
 	char str2[1000];
@@ -2308,7 +2391,7 @@ void action::induced_action_on_andre(action *An,
 		cout << "action::induced_action_on_andre "
 				"finished, created action " << label << endl;
 		print_info();
-		}
+	}
 }
 
 void action::setup_product_action(action *A1, action *A2,
@@ -2321,7 +2404,7 @@ void action::setup_product_action(action *A1, action *A2,
 	
 	if (f_v) {
 		cout << "action::setup_product_action" << endl;
-		}
+	}
 
 	char str1[1000];
 	char str2[1000];
@@ -2373,28 +2456,28 @@ void action::setup_product_action(action *A1, action *A2,
 	if (f_use_projections) {
 		for (i = 0; i < A1->base_len(); i++) {
 			base_i(i) = A1->base_i(i);
-			}
+		}
 		for (i = 0; i < A2->base_len(); i++) {
 			base_i(A1->base_len() + i) = A1->degree + A2->base_i(i);
-			}
 		}
+	}
 	else {
 		for (i = 0; i < A1->base_len(); i++) {
 			base_i(i) = A1->base_i(i) * A2->degree;
-			}
+		}
 		for (i = 0; i < A2->base_len(); i++) {
 			base_i(A1->base_len() + i) = A2->base_i(i);
-			}
 		}
+	}
 	
 	if (f_vv) {
 		cout << "make_element_size=" << make_element_size << endl;
 		cout << "base_len=" << base_len() << endl;
-		}
+	}
 	if (f_v) {
 		cout << "action::setup_product_action finished" << endl;
 		print_info();
-		}
+	}
 }
 
 
@@ -2411,7 +2494,7 @@ void action::induced_action_on_homogeneous_polynomials(
 	if (f_v) {
 		cout << "action::induced_action_on_homogeneous_polynomials "
 				"f_induce_action=" << f_induce_action << endl;
-		}
+	}
 	A = A_old;
 	OnHP = NEW_OBJECT(action_on_homogeneous_polynomials);
 
@@ -2430,24 +2513,24 @@ void action::induced_action_on_homogeneous_polynomials(
 		cout << "the old_action " << A->label
 			<< " has base_length = " << A->base_len()
 			<< " and degree " << A->degree << endl;
-		}
+	}
 	f_has_subaction = TRUE;
 	subaction = A;
 	if (A->type_G != matrix_group_t) {
 		cout << "action::induced_action_on_homogeneous_polynomials "
 				"action not of matrix group type" << endl;
 		exit(1);
-		}
+	}
 
 	if (f_v) {
 		cout << "action::induced_action_on_homogeneous_polynomials "
 				"before OnHP->init" << endl;
-		}
+	}
 	OnHP->init(A, HPD, verbose_level);
 	if (f_v) {
 		cout << "action::induced_action_on_homogeneous_polynomials "
 				"after OnHP->init" << endl;
-		}
+	}
 
 	type_G = action_on_homogeneous_polynomials_t;
 	G.OnHP = OnHP;
@@ -2473,7 +2556,7 @@ void action::induced_action_on_homogeneous_polynomials(
 	
 	if (f_induce_action) {
 		induced_action_override_sims(*A, old_G, 0/*verbose_level - 2*/);
-		}
+	}
 
 	if (f_v) {
 		cout << "action::induced_action_on_homogeneous_polynomials "
@@ -2482,7 +2565,7 @@ void action::induced_action_on_homogeneous_polynomials(
 		cout << "make_element_size=" << A->make_element_size << endl;
 		cout << "low_level_point_size=" << A->low_level_point_size << endl;
 		print_info();
-		}
+	}
 }
 
 void action::induced_action_on_homogeneous_polynomials_given_by_equations(
@@ -2500,7 +2583,7 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 		cout << "action::induced_action_on_homogeneous_"
 				"polynomials_given_by_equations "
 				"f_induce_action=" << f_induce_action << endl;
-		}
+	}
 	A = A_old;
 	OnHP = NEW_OBJECT(action_on_homogeneous_polynomials);
 
@@ -2519,7 +2602,7 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 		cout << "the old_action " << A->label
 			<< " has base_length = " << A->base_len()
 			<< " and degree " << A->degree << endl;
-		}
+	}
 	f_has_subaction = TRUE;
 	subaction = A;
 	if (A->type_G != matrix_group_t) {
@@ -2527,32 +2610,32 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 				"polynomials_given_by_equations "
 				"action not of matrix group type" << endl;
 		exit(1);
-		}
+	}
 
 	if (f_v) {
 		cout << "action::induced_action_on_homogeneous_"
 				"polynomials_given_by_equations "
 				"before OnHP->init" << endl;
-		}
+	}
 	OnHP->init(A, HPD, verbose_level);
 	if (f_v) {
 		cout << "action::induced_action_on_homogeneous_"
 				"polynomials_given_by_equations "
 				"after OnHP->init" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "action::induced_action_on_homogeneous_"
 				"polynomials_given_by_equations "
 				"before OnHP->init_invariant_set_of_equations" << endl;
-		}
+	}
 	OnHP->init_invariant_set_of_equations(
 			Equations, nb_equations, verbose_level);
 	if (f_v) {
 		cout << "action::induced_action_on_homogeneous_"
 				"polynomials_given_by_equations "
 				"after OnHP->init_invariant_set_of_equations" << endl;
-		}
+	}
 
 	type_G = action_on_homogeneous_polynomials_t;
 	G.OnHP = OnHP;
@@ -2579,7 +2662,7 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 	if (f_induce_action) {
 		induced_action_override_sims(*A,
 				old_G, 0/*verbose_level - 2*/);
-		}
+	}
 
 	if (f_v) {
 		cout << "action::induced_action_on_homogeneous_"
@@ -2589,7 +2672,7 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 		cout << "make_element_size=" << A->make_element_size << endl;
 		cout << "low_level_point_size=" << A->low_level_point_size << endl;
 		print_info();
-		}
+	}
 }
 
 
@@ -2604,7 +2687,7 @@ void action::induced_action_recycle_sims(action &old_action,
 		cout << "action::induced_action_recycle_sims: "
 				"old action must have sims" << endl;
 		exit(1);
-		}
+	}
 	old_G = old_action.Sims;
 	induce(&old_action, old_G, 
 		0 /* base_of_choice_len */, NULL /* base_of_choice */, 
@@ -2619,13 +2702,13 @@ void action::induced_action_override_sims(
 	
 	if (f_v) {
 		cout << "action::induced_action_override_sims before induce" << endl;
-		}
+	}
 	induce(&old_action, old_G, 
 		0 /* base_of_choice_len */, NULL /* base_of_choice */, 
 		verbose_level);
 	if (f_v) {
 		cout << "action::induced_action_override_sims done" << endl;
-		}
+	}
 }
 
 void action::induce(action *old_action, sims *old_G, 
@@ -2649,30 +2732,30 @@ void action::induce(action *old_action, sims *old_G,
 	
 	if (f_v) {
 		cout << "action::induce verbose_level=" << verbose_level << endl;
-		}
+	}
 	if (f_v) {
 		cout << "inducing from action:" << endl;
 		old_action->print_info();
 		cout << "the old group is in action:" << endl;
 		old_G->A->print_info();
-		}
+	}
 	
 	if (old_action->subaction) {
 		if (f_vv) {
 			cout << "action::induce has subaction" << endl;
-			}
+		}
 		subaction = old_action->subaction;
 		if (f_vv) {
 			cout << "subaction is ";
 			subaction->print_info();
-			}
 		}
+	}
 	else {
 		if (f_vv) {
 			cout << "action::induce does not have subaction" << endl;
-			}
-		subaction = old_action;
 		}
+		subaction = old_action;
+	}
 	old_G->group_order(go);
 	old_action->group_order(go1);
 	subaction->group_order(go2);
@@ -2691,41 +2774,41 @@ void action::induce(action *old_action, sims *old_G,
 			cout << "base of choice:" << endl;
 			Orbiter->Lint_vec.print(cout, base_of_choice, base_of_choice_len);
 			cout << endl;
-			}
+		}
 		else {
 			cout << "no base of choice" << endl;
-			}
 		}
+	}
 	
 	G = NEW_OBJECT(sims);
 	K = NEW_OBJECT(sims);
 	if (f_v) {
 		cout << "action::induce: before G->init_without_base(this);" << endl;
-		}
+	}
 	G->init_without_base(this, verbose_level - 2);
 	if (f_v) {
 		cout << "action::induce: after G->init_without_base(this);" << endl;
-		}
+	}
 	
 	
 	if (base_of_choice_len) {
 		if (f_vv) {
 			cout << "action::induce: initializing base of choice" << endl;
-			}
+		}
 		for (i = 0; i < base_of_choice_len; i++) {
 			b = base_of_choice[i];
 			if (f_vv) {
 				cout << i << "-th base point is " << b << endl;
-				}
+			}
 			old_base_len = base_len();
 			Stabilizer_chain->reallocate_base(b);
 			G->reallocate_base(old_base_len, verbose_level - 2);
-			}
+		}
 		if (f_vv) {
 			cout << "action::induce initializing base of choice finished"
 					<< endl;
-			}
 		}
+	}
 
 	fallback_action = subaction; // changed A. Betten Dec 27, 2011 !!!
 	//fallback_action = old_action; // changed back A. Betten, May 27, 2012 !!!
@@ -2739,37 +2822,37 @@ void action::induce(action *old_action, sims *old_G,
 			cout << "subaction=" << subaction->label << endl;
 			cout << "old_action=" << old_action->label << endl;
 			cout << "old_G->A=" << old_G->A->label << endl;
-			}
+		}
 		fallback_action = old_G->A;
 		if (f_vv) {
 			cout << "changing fallback action to " << fallback_action->label
 					<< endl;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "action::induce: before K->init" << endl;
-		}
+	}
 	K->init(fallback_action, verbose_level - 2);
 	if (f_v) {
 		cout << "action::induce: after K->init" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "action::induce before G->init_trivial_group" << endl;
-		}
+	}
 		
 	G->init_trivial_group(verbose_level - 2);
 
 	if (f_v) {
 		cout << "action::induce before K->init_trivial_group" << endl;
-		}
+	}
 	K->init_trivial_group(verbose_level - 2);
 	if (f_v) {
 		cout << "action::induce "
 				"after init_trivial_group" << endl;
 		cout << "action::induce "
 				"before G->build_up_group_random_process" << endl;
-		}
+	}
 
 	G->build_up_group_random_process(K, old_G, go, 
 		FALSE /*f_override_chose_next_base_point*/,
@@ -2778,7 +2861,7 @@ void action::induce(action *old_action, sims *old_G,
 	if (f_v) {
 		cout << "action::induce "
 				"after G->build_up_group_random_process" << endl;
-		}
+	}
 
 	G->group_order(G_order);
 	K->group_order(K_order);
@@ -2801,20 +2884,20 @@ void action::induce(action *old_action, sims *old_G,
 		}
 		//int_vec_print(cout, K->get_orbit_length(), K->A->base_len());
 		cout << endl;
-		}
+	}
 	D.mult(G_order, K_order, go3);
 	if (D.compare(go3, go) != 0) {
 		cout << "action::induce group orders do not match: "
 				<< go3 << " != " << go << endl;
 		exit(1);
-		}
+	}
 	if (f_vv) {
 		cout << "action::induce product of group orders equals "
 				"old group order" << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "action::induce before init_sims_only" << endl;
-		}
+	}
 	init_sims_only(G, verbose_level - 2);
 	f_has_kernel = TRUE;
 	Kernel = K;
@@ -2823,11 +2906,11 @@ void action::induce(action *old_action, sims *old_G,
 	if (f_vv) {
 		cout << "action::induce after init_sims, "
 				"calling compute_strong_generators_from_sims" << endl;
-		}
+	}
 	compute_strong_generators_from_sims(verbose_level - 2);
 	if (f_v) {
 		cout << "action::induce done" << endl;
-		}
+	}
 }
 
 int action::least_moved_point_at_level(int level, int verbose_level)
@@ -2850,14 +2933,14 @@ void action::lex_least_base_in_place(int verbose_level)
 		print_info();
 		//cout << "the generators are:" << endl;
 		//Sims->print_generators();
-		}
+	}
 
 	set = NEW_lint(degree);
 	old_base = NEW_lint(base_len());
 	old_base_len = base_len();
 	for (i = 0; i < base_len(); i++) {
 		old_base[i] = base_i(i);
-		}
+	}
 	
 	
 	
@@ -2866,28 +2949,28 @@ void action::lex_least_base_in_place(int verbose_level)
 		if (f_v) {
 			cout << "action::lex_least_base_in_place "
 					"i=" << i << " computing the least moved point" << endl;
-			}
+		}
 		lmp = least_moved_point_at_level(i, verbose_level - 2);
 		if (f_v) {
 			cout << "action::lex_least_base_in_place "
 					"i=" << i << " the least moved point is " << lmp << endl;
-			}
+		}
 		if (lmp >= 0 && lmp < base_i(i)) {
 			if (f_v) {
 				cout << "action::lex_least_base_in_place "
 						"i=" << i << " least moved point = " << lmp
 					<< " less than base point " << base_i(i) << endl;
 				cout << "doing a base change:" << endl;
-				}
+			}
 			set[i] = lmp;
 			base_change_in_place(i + 1, set, verbose_level);
 			if (f_v) {
 				cout << "action::lex_least_base_in_place "
 						"after base_change_in_place: action:" << endl;
 				print_info();
-				}
- 			}
-		}
+			}
+ 		}
+	}
 	if (f_v) {
 		cout << "action::lex_least_base_in_place "
 				"done, action " << label << " base=";
@@ -2900,15 +2983,15 @@ void action::lex_least_base_in_place(int verbose_level)
 
 		if (old_base_len != base_len()) {
 			f_changed = TRUE;
-			}
+		}
 		if (!f_changed) {
 			for (i = 0; i < base_len(); i++) {
 				if (old_base[i] != base_i(i)) {
 					f_changed = TRUE;
 					break;
-					}
 				}
 			}
+		}
 		if (f_changed) {
 			cout << "The base has changed !!!" << endl;
 			cout << "old base: ";
@@ -2917,8 +3000,8 @@ void action::lex_least_base_in_place(int verbose_level)
 			cout << "new base: ";
 			//int_vec_print(cout, Stabilizer_chain->base, base_len());
 			cout << endl;
-			}
 		}
+	}
 	FREE_lint(old_base);
 	FREE_lint(set);
 }
@@ -2935,19 +3018,19 @@ void action::lex_least_base(action *old_action, int verbose_level)
 				<< old_action->label << " base=";
 		//int_vec_print(cout, old_action->Stabilizer_chain->base, old_action->base_len());
 		cout << endl;
-		}
+	}
 #if 0
 	if (!f_has_sims) {
 		cout << "action::lex_least_base fatal: does not have sims" << endl;
 		exit(1);
-		}
+	}
 #endif
 	
 
 	if (f_v) {
 		//cout << "the generators are:" << endl;
 		//old_action->Sims->print_generators();
-		}
+	}
 	A = NEW_OBJECT(action);
 
 	set = NEW_lint(old_action->degree);
@@ -2957,27 +3040,27 @@ void action::lex_least_base(action *old_action, int verbose_level)
 	if (!old_action->f_has_sims) {
 		cout << "action::lex_least_base does not have Sims" << endl;
 		exit(1);
-		}
+	}
 	
 	for (i = 0; i < old_A->base_len(); i++) {
 		set[i] = old_A->base_i(i);
 		if (f_v) {
 			cout << "action::lex_least_base "
 					"calling least_moved_point_at_level " << i << endl;
-			}
+		}
 		lmp = old_A->least_moved_point_at_level(i, verbose_level - 2);
 		if (lmp < old_A->base_i(i)) {
 			if (f_v) {
 				cout << "action::lex_least_base least moved point = " << lmp 
 					<< " less than base point " << old_A->base_i(i) << endl;
 				cout << "doing a base change:" << endl;
-				}
+			}
 			set[i] = lmp;
 			A = NEW_OBJECT(action);
 			A->base_change(old_A, i + 1, set, verbose_level - 2);
 			old_A = A;
-			}
 		}
+	}
 	base_change(old_A, old_A->base_len(),
 			old_A->get_base(), verbose_level - 1);
 	FREE_lint(set);
@@ -2985,7 +3068,7 @@ void action::lex_least_base(action *old_action, int verbose_level)
 		cout << "action::lex_least_base action " << label << " base=";
 		//int_vec_print(cout, Stabilizer_chain->base, base_len());
 		cout << endl;
-		}
+	}
 }
 
 int action::test_if_lex_least_base(int verbose_level)
@@ -2997,7 +3080,7 @@ int action::test_if_lex_least_base(int verbose_level)
 	if (f_v) {
 		cout << "action::test_if_lex_least_base:" << endl;
 		print_info();
-		}
+	}
 
 	AA = NEW_OBJECT(action);
 
@@ -3011,9 +3094,9 @@ int action::test_if_lex_least_base(int verbose_level)
 				cout << "AA->base[i]=" << AA->base_i(i) << endl;
 				FREE_OBJECT(AA);
 				return FALSE;
-				}
 			}
 		}
+	}
 	FREE_OBJECT(AA);
 	return TRUE;
 }
@@ -3027,30 +3110,30 @@ void action::base_change_in_place(int size, long int *set, int verbose_level)
 
 	if (f_v) {
 		cout << "action::base_change_in_place" << endl;
-		}
+	}
 	A = NEW_OBJECT(action);
 	A->base_change(this, size, set, verbose_level);
 	if (f_v) {
 		cout << "action::base_change_in_place after base_change" << endl;
-		}
+	}
 	Stabilizer_chain->free_base_data();
 	if (f_v5) {
 		cout << "action::base_change_in_place after free_base_data" << endl;
-		}
+	}
 	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
 	Stabilizer_chain->allocate_base_data(this, A->base_len(), verbose_level);
 	//allocate_base_data(A->base_len);
 	if (f_v5) {
 		cout << "action::base_change_in_place after allocate_base_data"
 				<< endl;
-		}
+	}
 	set_base_len(A->base_len());
 	for (i = 0; i < A->base_len(); i++) {
 		base_i(i) = A->base_i(i);
-		}
+	}
 	if (f_v5) {
 		cout << "action::base_change_in_place after copying base" << endl;
-		}
+	}
 	
 
 	A->Sims->A = this; 
@@ -3061,51 +3144,51 @@ void action::base_change_in_place(int size, long int *set, int verbose_level)
 	if (f_v5) {
 		cout << "action::base_change_in_place "
 				"after changing action pointer in A->Sims" << endl;
-		}
+	}
 	
 	if (f_has_sims) {
 		if (f_v5) {
 			cout << "action::base_change_in_place "
 					"before FREE_OBJECT Sims" << endl;
 			cout << "Sims=" << Sims << endl;
-			}
+		}
 		FREE_OBJECT(Sims);
 		if (f_v5) {
 			cout << "action::base_change_in_place "
 					"after FREE_OBJECT Sims" << endl;
-			}
+		}
 		Sims = NULL;
 		f_has_sims = FALSE;
-		}
+	}
 
 	if (f_v5) {
 		cout << "action::base_change_in_place after deleting sims" << endl;
-		}
+	}
 
 	if (f_v5) {
 		cout << "action::base_change_in_place before init_sims_only" << endl;
-		}
+	}
 	init_sims_only(A->Sims, verbose_level);
 	if (f_v5) {
 		cout << "action::base_change_in_place after init_sims_only" << endl;
-		}
+	}
 
 	if (f_has_strong_generators) {
 		f_has_strong_generators = FALSE;
 		FREE_OBJECT(Strong_gens);
 		Strong_gens = NULL;
-		}
+	}
 
 	A->f_has_sims = FALSE;
 	A->Sims = NULL;
 	
 	if (f_v5) {
 		cout << "action::base_change_in_place before FREE_OBJECT(A)" << endl;
-		}
+	}
 	FREE_OBJECT(A);
 	if (f_v5) {
 		cout << "action::base_change_in_place after FREE_OBJECT(A)" << endl;
-		}
+	}
 
 	compute_strong_generators_from_sims(verbose_level - 3);
 	
@@ -3117,8 +3200,7 @@ void action::base_change_in_place(int size, long int *set, int verbose_level)
 		//Sims->print_generators();
 		//cout << "Sims:" << endl;
 		//Sims->print(3);
-		}
-
+	}
 }
 
 void action::base_change(action *old_action, 
@@ -3131,11 +3213,11 @@ void action::base_change(action *old_action,
 		cout << "action::base_change to the following set:" << endl;
 		Orbiter->Lint_vec.print(cout, set, size);
 		cout << endl;
-		}
+	}
 	if (!old_action->f_has_sims) {
 		cout << "action::base_change old_action does not have sims" << endl;
 		exit(1);
-		}
+	}
 	f_has_subaction = TRUE;
 	subaction = old_action;
 	type_G = base_change_t;
@@ -3163,7 +3245,7 @@ void action::base_change(action *old_action,
 		
 	if (f_v) {
 		cout << "action::base_change calling induce" << endl;
-		}
+	}
 	induce(old_action,
 			old_action->Sims,
 			size, set,
@@ -3190,12 +3272,12 @@ void action::base_change(action *old_action,
 		cout << "kernel has order " << K_go << endl;
 		//cout << "generators are:" << endl;
 		//Sims->print_generators();
-		}
+	}
 	if (FALSE) {
 		Sims->print_generators();
 		Sims->print_generators_as_permutations();
 		Sims->print_basic_orbits();
-		}
+	}
 }
 
 
@@ -3210,7 +3292,7 @@ void action::create_orbits_on_subset_using_restricted_action(
 
 	if (f_v) {
 		cout << "action::create_orbits_on_subset_using_restricted_action" << endl;
-		}
+	}
 	A_by_restriction = create_induced_action_by_restriction(
 			S,
 			size, set,
@@ -3223,8 +3305,7 @@ void action::create_orbits_on_subset_using_restricted_action(
 	if (f_v) {
 		cout << "action::create_orbits_on_subset_using_restricted_action "
 				"done" << endl;
-		}
-
+	}
 }
 
 void action::create_orbits_on_sets_using_action_on_sets(
@@ -3238,7 +3319,7 @@ void action::create_orbits_on_sets_using_action_on_sets(
 
 	if (f_v) {
 		cout << "action::create_orbits_on_sets_using_action_on_sets" << endl;
-		}
+	}
 
 	A_on_sets = create_induced_action_on_sets(
 			nb_sets, set_size, sets,
@@ -3250,8 +3331,7 @@ void action::create_orbits_on_sets_using_action_on_sets(
 	if (f_v) {
 		cout << "action::create_orbits_on_sets_using_action_on_sets "
 				"done" << endl;
-		}
-
+	}
 }
 
 
@@ -3266,20 +3346,20 @@ int action::choose_next_base_point_default_method(
 	if (f_v) {
 		cout << "action::choose_next_base_point_default_method" << endl;
 		cout << "calling A->find_non_fixed_point" << endl;
-		}
+	}
 	b = find_non_fixed_point(Elt, verbose_level - 1);
 	if (b == -1) {
 		if (f_v) {
 			cout << "action::choose_next_base_point_default_method "
 					"cannot find another base point" << endl;
-			}
-		return -1;
 		}
+		return -1;
+	}
 	if (f_v) {
 		cout << "action::choose_next_base_point_default_method current base: ";
 		//int_vec_print(cout, Stabilizer_chain->base, base_len());
 		cout << " choosing next base point to be " << b << endl;
-		}
+	}
 	return b;
 }
 
@@ -3295,15 +3375,15 @@ void action::generators_to_strong_generators(
 		if (f_target_go) {
 			cout << "action::generators_to_strong_generators "
 					"trying to create a group of order " << target_go << endl;
-			}
 		}
+	}
 
 	sims *S;
 
 	if (f_v) {
 		cout << "action::generators_to_strong_generators "
 				"before create_sims_from_generators_randomized" << endl;
-		}
+	}
 
 	S = create_sims_from_generators_randomized(
 		gens, f_target_go,
@@ -3312,20 +3392,20 @@ void action::generators_to_strong_generators(
 	if (f_v) {
 		cout << "action::generators_to_strong_generators "
 				"after create_sims_from_generators_randomized" << endl;
-		}
+	}
 
 	Strong_gens = NEW_OBJECT(strong_generators);
 	if (f_v) {
 		cout << "action::generators_to_strong_generators "
 				"before Strong_gens->init_from_sims" << endl;
-		}
+	}
 	Strong_gens->init_from_sims(S, verbose_level - 5);
 
 	FREE_OBJECT(S);
 
 	if (f_v) {
 		cout << "action::generators_to_strong_generators done" << endl;
-		}
+	}
 }
 
 void action::orbits_on_equations(

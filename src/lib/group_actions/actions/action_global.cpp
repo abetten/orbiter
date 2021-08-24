@@ -114,6 +114,9 @@ void action_global::action_print_symmetry_group_type(ostream &ost,
 	else if (a == action_on_k_subsets_t) {
 		ost << "action_on_k_subsets_t";
 		}
+	else if (a == action_on_interior_direct_product_t) {
+		ost << "action_on_interior_direct_product_t";
+		}
 	else {
 		ost << "unknown symmetry_group_type" << endl;
 		}

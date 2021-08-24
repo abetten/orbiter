@@ -341,6 +341,7 @@ public:
 		int verbose_level);
 	void compute_orbits_on_points(schreier *&Sch, 
 		vector_ge *gens, int verbose_level);
+
 	void stabilizer_of_dual_hyperoval_representative(int k, 
 		int n, int no, vector_ge *&gens, 
 		const char *&stab_order, int verbose_level);
@@ -351,6 +352,7 @@ public:
 			int q, int no,
 			vector_ge *&gens, const char *&stab_order,
 			int verbose_level);
+
 	void point_stabilizer_any_point(int &pt,
 		schreier *&Sch, sims *&Stab,
 		strong_generators *&stab_gens,
@@ -605,6 +607,9 @@ public:
 	
 	// action_induce.cpp
 
+	action *induced_action_on_interior_direct_product(
+			int nb_rows,
+			int verbose_level);
 	action *induced_action_on_set_partitions(
 			int partition_class_size,
 			int verbose_level);
@@ -924,7 +929,7 @@ public:
 	// in action_projective.cpp:
 	strong_generators *set_stabilizer_in_projective_space(
 		projective_space *P,
-		long int *set, int set_size, int &canonical_pt,
+		long int *set, int set_size, //int &canonical_pt,
 		int *canonical_set_or_NULL,
 		int verbose_level);
 	int reverse_engineer_semilinear_map(
@@ -1119,6 +1124,7 @@ public:
 	action *create_automorphism_group_and_canonical_labeling_of_graph(
 		int *Adj, int n, int *labeling, int verbose_level);
 	// labeling[n]
+#if 0
 	action *create_automorphism_group_of_block_system(
 		int nb_points, int nb_blocks, int block_size, long int *Blocks,
 		int verbose_level);
@@ -1150,16 +1156,25 @@ public:
 	void add_configuration_graph(std::ofstream &g,
 		int m, int n, int nb_inc, int *X, int f_first,
 		int verbose_level);
+#endif
+	void automorphism_group_as_permutation_group(
+			strong_generators *&SG,
+			nauty_output *NO,
+			action *&A_perm,
+			int verbose_level);
 	void reverse_engineer_linear_group_from_permutation_group(
 			action *A_linear,
 			projective_space *P,
 			strong_generators *&SG,
-			int N,
-			int *Aut, int Aut_counter,
-			int *Base, int Base_length,
-			long int *Base_lint,
-			int *Transversal_length, longinteger_object &Ago,
+			action *&A_perm,
+			nauty_output *NO,
 			int verbose_level);
+	strong_generators *set_stabilizer_of_object(
+		object_in_projective_space *OiP,
+		action *A_linear,
+		int f_compute_canonical_form, bitvector *&Canonical_form,
+		long int *canonical_labeling, int &canonical_labeling_len,
+		int verbose_level);
 
 };
 

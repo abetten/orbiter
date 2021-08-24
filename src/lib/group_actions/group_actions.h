@@ -80,6 +80,7 @@ class action_on_flags;
 class action_on_galois_group;
 class action_on_grassmannian;
 class action_on_homogeneous_polynomials;
+class action_on_interior_direct_product;
 class action_on_k_subsets;
 class action_on_orbits;
 class action_on_orthogonal;
@@ -137,7 +138,8 @@ enum symmetry_group_type {
 	action_on_orbits_t,
 	action_on_flags_t,
 	action_on_homogeneous_polynomials_t,
-	action_on_set_partitions_t
+	action_on_set_partitions_t,
+	action_on_interior_direct_product_t
 };
 
 //! enumeration specific to action_by_representation
@@ -191,6 +193,7 @@ union symmetry_group {
 	action_on_flags *OnFlags;
 	action_on_homogeneous_polynomials *OnHP;
 	action_on_set_partitions *OnSetPartitions;
+	action_on_interior_direct_product *OnInteriorDirectProduct;
 };
 
 

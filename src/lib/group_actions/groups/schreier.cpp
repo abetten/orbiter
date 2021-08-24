@@ -656,8 +656,7 @@ long int schreier::get_image(long int i, int gen_idx, int verbose_level)
 			if (f_v) {
 				cout << "schreier::get_image before A->element_image_of" << endl;
 			}
-			a = A->element_image_of(i,
-					gens.ith(gen_idx), 0 /*verbose_level - 2*/);
+			a = A->element_image_of(i, gens.ith(gen_idx), verbose_level - 2);
 			if (f_v) {
 				cout << "schreier::get_image image of "
 						"i=" << i << " is " << a << endl;
@@ -1307,14 +1306,18 @@ void schreier::compute_point_orbit(int pt, int verbose_level)
 						"expanding point " << cur_pt
 						<< " using generator " << i << endl;
 			}
-			next_pt = get_image(cur_pt, i,
-					0 /*verbose_level */); // !!
+
+			next_pt = get_image(cur_pt, i, verbose_level);
+
+
 				// A->element_image_of(cur_pt, gens.ith(i), FALSE);
 			next_pt_loc = orbit_inv[next_pt];
+
 			if (f_vv) {
 				cout << "schreier::compute_point_orbit " << cur_pt
 						<< " -> " << next_pt << endl;
 			}
+
 			if (next_pt_loc < total) {
 				continue;
 			}

@@ -2396,11 +2396,14 @@ Endrass_F7.txt:
 
 
 octic_prepare:
-	$(ORBITER_PATH)orbiter.out -v 4 -diophant -label octic_monomials  \
+	$(ORBITER_PATH)orbiter.out -v 4 -define D \
+		-diophant -label octic_monomials  \
 		-coefficient_matrix 1 4 "1,1,1,1" -RHS "8,8,1" \
-		-x_min_global 0 -x_max_global 8
-	$(ORBITER_PATH)orbiter.out -v 3 -diophant_activity \
-		-input_file octic_monomials.diophant -solve_mckay 
+		-x_min_global 0 -x_max_global 8 \
+		-end
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end
 	sort -r octic_monomials.sol >octic_monomials_sorted.txt
 
 #Found 165 solutions with 210 backtrack steps
@@ -6058,6 +6061,10 @@ F_abcd_sweep_4_27_q7:
 
 
 
+
+
+
+
 F_alpha_beta_gamma_delta_q7:
 	$(ORBITER_PATH)orbiter.out -v 3 \
 		-define F -finite_field -q 7 -end \
@@ -6124,6 +6131,23 @@ F_alpha_beta_gamma_delta_q7_override_group:
 	open surface_equation_F_alpha_beta_gamma_delta_q7_report.pdf
 	pdflatex surface_equation_F_alpha_beta_gamma_delta_q7_with_group.tex
 	open surface_equation_F_alpha_beta_gamma_delta_q7_with_group.pdf
+
+
+F_alpha_beta_gamma_delta_sweep_4_q3:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-draw_options -end \
+		-define F -finite_field -q 3 -end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
+		-sweep_4 sweep_4_q3 -q 3 -by_equation "F_alpha_beta_gamma_delta" \
+			"\DF_{\alpha,\beta,\gamma,\delta}\D" "x0,x1,x2,x3" \
+			$(F_ALPHA_BETA_GAMMA_DELTA) \
+			"alpha=2,beta=3,gamma=4,delta=5" \
+			"\D\alpha=2,\beta=3,\gamma=4,\delta=5\D" \
+		-end \
+		-end 
+
 
 
 F_alpha_beta_gamma_delta_sweep_4_q7:
@@ -8481,6 +8505,24 @@ Char_Sym_6:
 	$(ORBITER_PATH)orbiter.out -v 2 -character_table_symmetric_group 6
 	
 
+FILE_24_3_TFC="24 24 72\
+\n0 1 2 24 27 28 48 53 54 73 79 80 97 105 106 122 131 132 146 157 158 171 175 183 195 203 208 220 225 233 244 258 259 269 272 282 293 300 308 318 325 333 342 352 358 367 379 381 392 398 400 417 428 429 442 443 450 466 471 479 492 497 502 517 519 521 542 548 551 571 574 575              48\
+\n0 1 2 24 27 28 48 53 54 73 79 80 97 105 106 122 131 132 146 157 158 171 175 183 195 203 208 220 225 233 244 258 259 269 272 281 293 301 308 318 324 327 342 354 357 367 373 378 392 400 403 417 419 430 442 446 447 466 472 479 492 500 503 518 525 526 545 549 551 571 572 574              48\
+\n0 1 2 24 27 28 48 53 54 73 79 80 97 105 106 122 131 132 146 157 158 171 175 179 195 201 207 220 226 232 244 257 258 269 274 277 293 300 307 318 323 329 342 352 356 367 374 381 392 397 406 416 423 431 441 450 454 468 476 477 494 499 503 519 521 525 544 547 550 570 572 575             144\
+\n-1 3"
+
+
+
+design_test:
+	echo $(FILE_24_3_TFC) >24_3_TFC.inc
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define D -design  -end \
+		-with D -do \
+		-design_activity \
+			-canonical_form \
+			-input -file_of_incidence_geometries 24_3_TFC.inc 24 24 72 -end \
+			-save_ago \
+		-end
 
 
 #############################################################################################################
@@ -10889,6 +10931,24 @@ five_points_in_general:
 
 
 
+codes_q13_12_4:
+	$(ORBITER_PATH)orbiter.out -v 6 \
+		-orbiter_path $(ORBITER_PATH) \
+		-define G \
+		-linear_group -PGL 4 13 -end \
+		-with G -do \
+		-group_theoretic_activities \
+		-poset_classification_control \
+			-problem_label codes_q13 \
+			-report -end \
+		-end \
+		-linear_codes 6 12 \
+		-end
+	pdflatex codes_q13_poset.tex
+	open codes_q13_poset.pdf
+
+
+
 
 #############################################################################################################
 # Chapter 10 - Incidence Geometry
@@ -10903,39 +10963,31 @@ SECTION_DIOPHANT:
 
 
 
-
 part10:
 	$(ORBITER_PATH)orbiter.out -v 4 \
-		-diophant -label part10  \
-		-coefficient_matrix 1 10 "10,9,8,7,6,5,4,3,2,1" \
-		-RHS "10,10,1" -x_min_global 0 -x_max_global 10
+		-define D -diophant -label part10  \
+			-coefficient_matrix 1 10 "10,9,8,7,6,5,4,3,2,1" \
+			-RHS "10,10,1" -x_min_global 0 -x_max_global 10 \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end
+		
 
-part10_again:
-	$(ORBITER_PATH)orbiter.out -v 4 \
-		-diophant -from_scratch part10 1 10 \
-		-coefficient_matrix_csv part10_coeff_matrix.csv \
-		-RHS_csv part10_RHS.csv \
-		-x_bounds_csv part10_x_bounds.csv
+
 	
-
-part10_solve:
-	$(ORBITER_PATH)orbiter.out -v 10 \
-		-diophant_activity -input_file part10.diophant -solve_mckay 
-
-# Found 42 solutions with 67 backtrack steps
+# Finds 42 solutions with 67 backtrack steps
 
 
 octic_monomials:
 	$(ORBITER_PATH)orbiter.out -v 4 \
-		-diophant -label octic_monomials  \
+		-define D -diophant -label octic_monomials  \
 		-coefficient_matrix 1 4 "1,1,1,1" \
-		-RHS "8,8,1" -x_min_global 0 -x_max_global 8
-
-
-octic_monomials_solve:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-diophant_activity \
-		-input_file octic_monomials.diophant -solve_mckay 
+		-RHS "8,8,1" -x_min_global 0 -x_max_global 8 \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end
 	sort -r octic_monomials.sol >octic_monomials_sorted.txt
 
 #Found 165 solutions with 210 backtrack steps
@@ -10954,39 +11006,32 @@ SECTION_COMBINATORIAL_LINEAR_SPACES:
 
 linsp7:
 	$(ORBITER_PATH)orbiter.out -v 4 \
-		-diophant -label linsp7  \
+		-define D -diophant -label linsp7  \
 		-coefficient_matrix 1 6 "21,15,10,6,3,1" \
 		-RHS "21,21,1" \
 		-x_min_global 0 \
-		-x_max_global 21 
+		-x_max_global 21 \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end
 	
-linsp7_solve:
-	$(ORBITER_PATH)orbiter.out -v 10 \
-		-diophant_activity -input_file linsp7.diophant -solve_mckay 
 
 # 32 solutions in 45 backtrack steps
-
-linsp7_again:
-	$(ORBITER_PATH)orbiter.out -v 4 -diophant -label linsp7  \
-		-coefficient_matrix_csv linsp7_coeff_matrix.csv \
-		-RHS_csv linsp7_RHS.csv \
-		-x_bounds_csv linsp7_x_bounds.csv
-	
 
 
 linsp6:
 	$(ORBITER_PATH)orbiter.out -v 4 \
-		-diophant -label linsp6  \
+		-define D -diophant -label linsp6  \
 		-coefficient_matrix 1 5 "15,10,6,3,1" \
 		-RHS "15,15,1" \
 		-x_min_global 0 \
-		-x_max_global 15
+		-x_max_global 15 \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end
 	
-linsp6_solve:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-diophant_activity \
-		-input_file linsp6.diophant -solve_mckay 
-
 # Found 15 solutions with 22 backtrack steps
 
 
@@ -10994,22 +11039,29 @@ linsp6_solve:
 
 
 linsp30_pt_types:
-	$(ORBITER_PATH)orbiter.out -v 4 -diophant -label linsp30_pt_types \
-		-coefficient_matrix 1 3 "6,4,3" -RHS "29,29,1" -x_bounds "0,1,0,27,0,24"
-	$(ORBITER_PATH)orbiter.out -v 4 \
-		-diophant_activity \
-		-input_file linsp30_pt_types.diophant -solve_mckay 
+	$(ORBITER_PATH)orbiter.out -v 4 -define D \
+		-diophant -label linsp30_pt_types \
+		-coefficient_matrix 1 3 "6,4,3" \
+		-RHS "29,29,1" -x_bounds "0,1,0,27,0,24" \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end
 
 linsp30_pt_distribution:
-	$(ORBITER_PATH)orbiter.out -v 4 -diophant -label linsp30_pt_distribution  \
+	$(ORBITER_PATH)orbiter.out -v 4 -define D \
+		-diophant -label linsp30_pt_distribution  \
 		-coefficient_matrix 6 4 \
 			"1,1,1,1,1,1,0,0,5,2,5,2,1,5,3,7,10,1,10,1,0,10,3,21" \
 			-RHS "30,30,1,7,7,1,135,135,1,96,96,1,0,351,2,0,276,2" \
-			-x_min_global 0 -x_max_global 30
-	$(ORBITER_PATH)orbiter.out -v 4 -diophant_activity -input_file \
-		linsp30_pt_distribution.diophant -solve_mckay 
-	$(ORBITER_PATH)orbiter.out -v 4 -diophant_activity -input_file \
-		linsp30_pt_distribution.diophant -draw_as_bitmap 20 8
+			-x_min_global 0 -x_max_global 30 \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end \
+		-with D -do \
+			-diophant_activity -draw_as_bitmap 20 8 \
+		-end
 
 
 #############################################################################################################
@@ -11113,24 +11165,23 @@ KM_PGGL_2_32:
 		-end
 	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
 		-input_csv_file KM_PGGL_2_32_KM_7_8.csv \
-		-box_width 20 -bit_depth 24  -partition  3 32 97  -end
+		-box_width 20 -bit_depth 24 \
+		-partition  3 32 97 -end
 	pdflatex KM_PGGL_2_32_poset_lvl_8.tex
 	open KM_PGGL_2_32_poset_lvl_8.pdf
 	open KM_PGGL_2_32_KM_7_8_draw.bmp
-	$(ORBITER_PATH)orbiter.out -v 4 -diophant \
+	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define D -diophant \
 		-label "KM_PGGL_2_32_KM_7_8_system" \
 		-coefficient_matrix_csv KM_PGGL_2_32_KM_7_8.csv  \
 		-RHS_constant "10,10,1" \
-		-x_min_global 0 -x_max_global 1
+		-x_min_global 0 -x_max_global 1 \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end
 		
 		
-KM_PGGL_2_32_solve:
-	$(ORBITER_PATH)orbiter.out -v 4 \
-		-diophant_activity -input_file \
-		KM_PGGL_2_32_KM_7_8_system.diophant -solve_mckay 
-
-#			-report
-
 
 
 KM_PSL_3_5:
@@ -11149,13 +11200,15 @@ KM_PSL_3_5:
 	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
 		-input_csv_file KM_PSL_3_5_KM_8_10.csv \
 		-box_width 10 -bit_depth 8  -partition  3 42 174  -end
-	$(ORBITER_PATH)orbiter.out -v 4 -diophant \
+	$(ORBITER_PATH)orbiter.out -v 4 -define D -diophant \
 		-label "KM_PSL_3_5_KM_8_10_system" \
 			-coefficient_matrix_csv KM_PSL_3_5_KM_8_10.csv  \
 		-RHS_constant "93,93,1" \
-		-x_min_global 0 -x_max_global 1
-	$(ORBITER_PATH)orbiter.out -v 4 -diophant_activity -input_file \
-		KM_PSL_3_5_KM_8_10_system.diophant -solve_mckay 
+		-x_min_global 0 -x_max_global 1 \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end
 
 
 
@@ -11165,24 +11218,23 @@ conf_10_3:
 	$(ORBITER_PATH)orbiter.out -v 2 -regular_linear_space_classify \
 		-m 10 -n 10 -r 3 -k 3 -target_size 10  \
 		-control -problem_label 10_3 -W -end
-	
+
 conf_11_3:
 	$(ORBITER_PATH)orbiter.out -v 2 -regular_linear_space_classify \
 		-m 11 -n 11 -r 3 -k 3 -target_size 11  \
 		-control -problem_label 11_3 -w -end
-	
+
 conf_12_3:
 	$(ORBITER_PATH)orbiter.out -v 2 -regular_linear_space_classify \
 		-m 12 -n 12 -r 3 -k 3 -target_size 12  \
 		-control -problem_label 12_3 -w -end
-	
+
 conf_18_3:
 	$(ORBITER_PATH)orbiter.out -v 2 -regular_linear_space_classify \
 		-m 18 -n 18 -r 3 -k 3 -target_size 18  \
 		-control -problem_label 18_3 -W -depth 8 -end
-	
-	
-	
+
+
 STS13:
 	$(ORBITER_PATH)orbiter.out -v 2 -regular_linear_space_classify \
 		-m 13 -n 26 -r 6 -k 3 -target_size 26  \
@@ -11219,6 +11271,16 @@ design_large_set_rank_k_subsets_c:
 design_large_set_rank_k_subsets_d:
 	$(ORBITER_PATH)orbiter.out -v 2 -rank_k_subset 13 4 $(PLANE_4)
 
+design_test:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define D -design  -end \
+		-with D -do \
+		-design_activity \
+			-canonical_form \
+			-input -file_of_incidence_geometries 24_3_TFC.inc 24 24 72 -end \
+			-save_ago \
+		-end
+
 
 #############################################################################################################
 # Section 10.4: Design Theory - Delandtsheer Doyen
@@ -11235,16 +11297,20 @@ PP4_MASK1=\
 DD_PP4:
 	$(ORBITER_PATH)orbiter.out -v 6  \
 		-Delandtsheer_Doyen  $(PP4) $(PP4_GROUP1) $(PP4_MASK1) \
-			-end 
+			-end \
 
 DD_PP4_system:
-	$(ORBITER_PATH)orbiter.out -v 4 -diophant -label PP4  \
+	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define D -diophant -label PP4  \
 		-problem_of_Steiner_type 10 PP4_pair_covering.csv \
-		-has_sum 1
-	
-DD_PP4_system_solve:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-diophant_activity -input_file PP4.diophant -solve_mckay 
+		-has_sum 1 \
+		-end \
+		-with D -do \
+			-diophant_activity -solve_mckay \
+		-end
+
+
+
 
 
 DD_CC:
@@ -11266,14 +11332,12 @@ DD_CC_system:
 	$(ORBITER_PATH)orbiter.out -v 4 \
 		-define D -diophant -label DD_CC_7_13  \
 		-problem_of_Steiner_type 45 DD_CC_7_13_pair_covering.csv \
-		-has_sum 3 -end \
+		-has_sum 3 \
+		-end \
 		-with D -do \
-		-diophant_activity -solve_mckay -end
+		-diophant_activity -solve_mckay \
+		-end
 	
-
-DD_CC_system_solve:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-diophant_activity -input_file DD_CC_7_13.diophant -solve_mckay 
 
 
 # no solution

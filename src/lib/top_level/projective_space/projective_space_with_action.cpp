@@ -238,13 +238,7 @@ void projective_space_with_action::canonical_labeling(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 
-	int *Incma;
-	int *partition;
-	int nb_rows, nb_cols;
-	int *Aut, Aut_counter;
-	int *Base, Base_length;
-	int *Transversal_length;
-	longinteger_object Ago;
+	encoded_combinatorial_object *Enc;
 	int N, i;
 	nauty_interface Nau;
 
@@ -259,8 +253,7 @@ void projective_space_with_action::canonical_labeling(
 		cout << "projective_space_with_action::canonical_labeling "
 				"before OiP->encode_incma" << endl;
 	}
-	OiP->encode_incma(Incma, nb_rows, nb_cols,
-			partition, verbose_level - 1);
+	OiP->encode_incma(Enc, verbose_level - 1);
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_labeling "
 				"after OiP->encode_incma" << endl;
@@ -268,16 +261,16 @@ void projective_space_with_action::canonical_labeling(
 	if (verbose_level > 5) {
 		cout << "projective_space_with_action::canonical_labeling "
 				"Incma:" << endl;
-		Orbiter->Int_vec.matrix_print_tight(Incma, nb_rows, nb_cols);
+		Enc->print_incma();
 	}
 
 	//canonical_labeling = NEW_int(nb_rows + nb_cols);
-	for (i = 0; i < nb_rows + nb_cols; i++) {
+	for (i = 0; i < Enc->nb_rows + Enc->nb_cols; i++) {
 		canonical_labeling[i] = i;
 	}
 
 
-	N = nb_rows + nb_cols;
+	N = Enc->nb_rows + Enc->nb_cols;
 	//L = nb_rows * nb_cols;
 
 	if (f_vv) {
@@ -285,9 +278,11 @@ void projective_space_with_action::canonical_labeling(
 				"initializing Aut, Base, "
 				"Transversal_length" << endl;
 	}
-	Aut = NEW_int(N * N);
-	Base = NEW_int(N);
-	Transversal_length = NEW_int(N);
+
+	nauty_output *NO;
+
+	NO = NEW_OBJECT(nauty_output);
+	NO->allocate(N, verbose_level);
 
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_labeling "
@@ -295,19 +290,17 @@ void projective_space_with_action::canonical_labeling(
 	}
 
 
-	int t0, t1, dt; //, tps;
+	int t0, t1, dt;
 	double delta_t_in_sec;
 	os_interface Os;
 
-	//tps = Os.os_ticks_per_second();
 	t0 = Os.os_ticks();
 
 	Nau.nauty_interface_matrix_int(
-		Incma, nb_rows, nb_cols,
-		canonical_labeling, partition,
-		Aut, Aut_counter,
-		Base, Base_length,
-		Transversal_length, Ago, verbose_level - 3);
+			Enc,
+			canonical_labeling,
+			NO,
+			verbose_level - 3);
 
 	t1 = Os.os_ticks();
 	dt = t1 - t0;
@@ -316,7 +309,7 @@ void projective_space_with_action::canonical_labeling(
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_labeling "
 				"done with nauty_interface_matrix_int, "
-				"Ago=" << Ago << " dt=" << dt
+				"Ago=" << NO->Ago << " dt=" << dt
 				<< " delta_t_in_sec=" << delta_t_in_sec << endl;
 	}
 
@@ -324,366 +317,15 @@ void projective_space_with_action::canonical_labeling(
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_labeling "
 				"done with nauty_interface_matrix_int, "
-				"Ago=" << Ago << endl;
+				"Ago=" << NO->Ago << endl;
 	}
-	FREE_int(Aut);
-	FREE_int(Base);
-	FREE_int(Transversal_length);
-	FREE_int(Incma);
-	FREE_int(partition);
+	FREE_OBJECT(Enc);
+	FREE_OBJECT(NO);
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_labeling done"
 				<< endl;
 	}
 }
-
-strong_generators
-*projective_space_with_action::set_stabilizer_of_object(
-	object_in_projective_space *OiP, 
-	int f_compute_canonical_form, bitvector *&Canonical_form,
-	long int *canonical_labeling, int &canonical_labeling_len,
-	int verbose_level)
-// canonical_labeling[nb_rows + nb_cols] contains the canonical labeling
-// where nb_rows and nb_cols is the encoding size ,
-// which can be computed using
-// object_in_projective_space::encoding_size(
-//   int &nb_rows, int &nb_cols,
-//   int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	//int f_vv = (verbose_level >= 2);
-	//int f_vvv = (verbose_level >= 3);
-
-	action *A_linear;
-
-#if 0
-	int *Incma;
-	int *partition;
-	//int *labeling;
-	int nb_rows, nb_cols;
-	int *Aut, Aut_counter;
-	int *Base, Base_length;
-	long int *Base_lint;
-	int *Transversal_length;
-	longinteger_object Ago;
-	int N, i, j, a, L;
-	combinatorics_domain Combi;
-	file_io Fio;
-	nauty_interface Nau;
-#endif
-
-
-
-
-
-	if (f_v) {
-		cout << "projective_space_with_action::set_stabilizer_of_object" << endl;
-		cout << "verbose_level = " << verbose_level << endl;
-	}
-
-	A_linear = A;
-
-
-	nauty_output *NO;
-
-	if (f_v) {
-		cout << "projective_space_with_action::set_stabilizer_of_object before OiP->run_nauty" << endl;
-
-	}
-
-	OiP->run_nauty(
-			f_compute_canonical_form, Canonical_form,
-			canonical_labeling, canonical_labeling_len,
-			NO,
-			verbose_level);
-
-	if (f_v) {
-		cout << "projective_space_with_action::set_stabilizer_of_object after OiP->run_nauty" << endl;
-
-	}
-
-
-#if 0
-	if (f_v) {
-		cout << "projective_space_with_action::set_stabilizer_of_object "
-				"before OiP->encode_incma" << endl;
-	}
-	OiP->encode_incma(Incma, nb_rows, nb_cols, partition, verbose_level - 1);
-	if (f_v) {
-		cout << "projective_space_with_action::set_stabilizer_of_object "
-				"after OiP->encode_incma" << endl;
-	}
-	if (verbose_level > 5) {
-		cout << "projective_space_with_action::set_stabilizer_of_object Incma:" << endl;
-		//int_matrix_print_tight(Incma, nb_rows, nb_cols);
-	}
-
-	//canonical_labeling = NEW_int(nb_rows + nb_cols);
-
-	canonical_labeling_len = nb_rows + nb_cols;
-	for (i = 0; i < canonical_labeling_len; i++) {
-		canonical_labeling[i] = i;
-	}
-
-#if 0
-	if (f_save_incma_in_and_out) {
-		save_Levi_graph(save_incma_in_and_out_prefix,
-				"Incma_in_%d_%d",
-				Incma, nb_rows, nb_cols,
-				canonical_labeling, canonical_labeling_len,
-				verbose_level);
-
-	}
-#endif
-
-	N = canonical_labeling_len;
-	L = nb_rows * nb_cols;
-
-	if (f_vv) {
-		cout << "projective_space_with_action::set_stabilizer_of_object "
-				"initializing Aut, Base, Transversal_length" << endl;
-	}
-	Aut = NEW_int(N * N);
-	Base = NEW_int(N);
-	Base_lint = NEW_lint(N);
-	Transversal_length = NEW_int(N);
-	
-	if (f_v) {
-		cout << "projective_space_with_action::set_stabilizer_of_object "
-				"calling Nau.nauty_interface_matrix_int" << endl;
-	}
-	int t0, t1, dt, tps;
-	double delta_t_in_sec;
-	os_interface Os;
-
-	tps = Os.os_ticks_per_second();
-	t0 = Os.os_ticks();
-
-	int *can_labeling;
-
-	can_labeling = NEW_int(canonical_labeling_len);
-
-	Nau.nauty_interface_matrix_int(
-		Incma, nb_rows, nb_cols,
-		can_labeling, partition,
-		Aut, Aut_counter, 
-		Base, Base_length, 
-		Transversal_length, Ago,
-		verbose_level - 3);
-
-	for (i = 0; i < canonical_labeling_len; i++) {
-		canonical_labeling[i] = can_labeling[i];
-	}
-	FREE_int(can_labeling);
-
-	Orbiter->Int_vec.copy_to_lint(Base, Base_lint, Base_length);
-
-	t1 = Os.os_ticks();
-	dt = t1 - t0;
-	delta_t_in_sec = (double) dt / (double) tps;
-
-	if (f_v) {
-		cout << "projective_space_with_action::set_stabilizer_of_object "
-				"done with Nau.nauty_interface_matrix_int, "
-				"Ago=" << Ago << " dt=" << dt
-				<< " delta_t_in_sec=" << delta_t_in_sec << endl;
-	}
-	if (verbose_level > 5) {
-		int h;
-		//int degree = nb_rows +  nb_cols;
-
-		for (h = 0; h < Aut_counter; h++) {
-			cout << "aut generator " << h << " / "
-					<< Aut_counter << " : " << endl;
-			//Combi.perm_print(cout, Aut + h * degree, degree);
-			cout << endl;
-		}
-	}
-
-	int *Incma_out;
-	int ii, jj;
-	if (f_vvv) {
-		cout << "projective_space_with_action::set_stabilizer_of_object "
-				"labeling:" << endl;
-		//lint_vec_print(cout, canonical_labeling, canonical_labeling_len);
-		cout << endl;
-	}
-
-	Incma_out = NEW_int(L);
-	for (i = 0; i < nb_rows; i++) {
-		ii = canonical_labeling[i];
-		for (j = 0; j < nb_cols; j++) {
-			jj = canonical_labeling[nb_rows + j] - nb_rows;
-			//cout << "i=" << i << " j=" << j << " ii=" << ii
-			//<< " jj=" << jj << endl;
-			Incma_out[i * nb_cols + j] = Incma[ii * nb_cols + jj];
-		}
-	}
-	if (f_vvv) {
-		cout << "projective_space_with_action::set_stabilizer_of_object "
-				"Incma Out:" << endl;
-		if (nb_rows < 20) {
-			Orbiter->Int_vec.print_integer_matrix_width(cout,
-					Incma_out, nb_rows, nb_cols, nb_cols, 1);
-		}
-		else {
-			cout << "projective_space_with_action::set_stabilizer_of_object "
-					"too large to print" << endl;
-		}
-	}
-
-
-
-	if (f_compute_canonical_form) {
-		
-		Canonical_form = NEW_OBJECT(bitvector);
-		Canonical_form->allocate(L);
-		for (i = 0; i < nb_rows; i++) {
-			for (j = 0; j < nb_cols; j++) {
-				if (Incma_out[i * nb_cols + j]) {
-					a = i * nb_cols + j;
-					//bitvector_set_bit(canonical_form, a);
-					Canonical_form->m_i(a, 1);
-				}
-			}
-		}
-
-	}
-
-#if 0
-	if (f_save_incma_in_and_out) {
-		save_Levi_graph(save_incma_in_and_out_prefix,
-				"Incma_out_%d_%d",
-				Incma_out, nb_rows, nb_cols,
-				canonical_labeling, N,
-				verbose_level);
-
-	}
-#endif
-
-	FREE_int(Incma_out);
-
-	if (f_v) {
-		cout << "before freeing Incma" << endl;
-	}
-	FREE_int(Incma);
-	if (f_v) {
-		cout << "before freeing partition" << endl;
-	}
-	FREE_int(partition);
-#endif
-
-	nauty_interface_with_group Nauty;
-
-	strong_generators *SG;
-
-	if (f_v) {
-		cout << "projective_space_with_action::set_stabilizer_of_object "
-				"before Nauty.reverse_engineer_linear_group_from_permutation_group" << endl;
-		}
-	Nauty.reverse_engineer_linear_group_from_permutation_group(
-			A_linear,
-			P,
-			SG,
-			NO->N,
-			NO->Aut, NO->Aut_counter,
-			NO->Base, NO->Base_length,
-			NO->Base_lint,
-			NO->Transversal_length, NO->Ago,
-			verbose_level);
-	if (f_v) {
-		cout << "projective_space_with_action::set_stabilizer_of_object "
-				"after Nauty.reverse_engineer_linear_group_from_permutation_group" << endl;
-	}
-
-
-#if 0
-
-	if (f_v) {
-		cout << "before freeing Aut" << endl;
-	}
-	FREE_int(Aut);
-	if (f_v) {
-		cout << "before freeing Base" << endl;
-	}
-	FREE_int(Base);
-	FREE_lint(Base_lint);
-	if (f_v) {
-		cout << "before freeing Transversal_length" << endl;
-	}
-	FREE_int(Transversal_length);
-
-#endif
-
-	FREE_OBJECT(NO);
-
-	if (f_v) {
-		cout << "projective_space_with_action::set_stabilizer_of_object done" << endl;
-	}
-	return SG;
-}
-
-
-#if 0
-void projective_space_with_action::save_Levi_graph(std::string &prefix,
-		const char *mask,
-		int *Incma, int nb_rows, int nb_cols,
-		long int *canonical_labeling, int canonical_labeling_len,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "projective_space_with_action::save_Levi_graph" << endl;
-	}
-	file_io Fio;
-	string fname_csv;
-	string fname_bin;
-	string fname_labeling;
-	char str[1000];
-
-	sprintf(str, mask, nb_rows, nb_cols);
-
-	fname_csv.assign(prefix);
-	fname_csv.append(str);
-	fname_csv.append(".csv");
-
-	fname_bin.assign(prefix);
-	fname_bin.append(str);
-	fname_bin.append(".graph");
-
-
-	fname_labeling.assign(prefix);
-	fname_labeling.append("_labeling");
-	fname_labeling.append(".csv");
-
-	latex_interface L;
-
-#if 0
-	cout << "labeling:" << endl;
-	L.lint_vec_print_as_matrix(cout,
-			canonical_labeling, N, 10 /* width */, TRUE /* f_tex */);
-#endif
-
-	Fio.lint_vec_write_csv(canonical_labeling, canonical_labeling_len,
-			fname_labeling, "can_lab");
-	Fio.int_matrix_write_csv(fname_csv, Incma, nb_rows, nb_cols);
-
-
-	colored_graph *CG;
-
-	CG = NEW_OBJECT(colored_graph);
-
-	CG->create_Levi_graph_from_incidence_matrix(
-			Incma, nb_rows, nb_cols,
-			TRUE, canonical_labeling, verbose_level);
-	CG->save(fname_bin, verbose_level);
-	FREE_OBJECT(CG);
-	if (f_v) {
-		cout << "projective_space_with_action::save_Levi_graph done" << endl;
-	}
-}
-#endif
 
 void projective_space_with_action::report_fixed_points_lines_and_planes(
 	int *Elt, ostream &ost, 

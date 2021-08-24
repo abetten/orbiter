@@ -20,6 +20,7 @@ MODULES = \
 	action_on_galois_group.o \
 	action_on_grassmannian.o \
 	action_on_homogeneous_polynomials.o \
+	action_on_interior_direct_product.o \
 	action_on_k_subsets.o \
 	action_on_orbits.o \
 	action_on_orthogonal.o \

@@ -122,12 +122,12 @@ static long int induced_action_element_image_of(action &A,
 		cout << "induced_action_element_image_of "
 				"computing image of " << a
 				<< " in action " << A.label << endl;
-		}
+	}
 	if (A.type_G == action_by_right_multiplication_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_by_right_multiplication_t" << endl;
-			}
+		}
 		action_by_right_multiplication *ABRM = A.G.ABRM;
 		action *sub;
 		
@@ -136,14 +136,14 @@ static long int induced_action_element_image_of(action &A,
 			cout << "induced_action_element_image_of "
 					"no subaction" << endl;
 			exit(1);
-			}
-		b = ABRM->compute_image(sub, Elt, a, verbose_level - 1);
 		}
+		b = ABRM->compute_image(sub, Elt, a, verbose_level - 1);
+	}
 	else if (A.type_G == action_by_restriction_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_by_restriction_t" << endl;
-			}
+		}
 		action_by_restriction *ABR = A.G.ABR;
 		action *sub;
 		
@@ -152,19 +152,19 @@ static long int induced_action_element_image_of(action &A,
 			cout << "induced_action_element_image_of "
 					"no subaction" << endl;
 			exit(1);
-			}
+		}
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"before ABR->compute_image a=" << a << endl;
 			cout << "verbose_level = " << verbose_level << endl;
-			}
-		b = ABR->compute_image(sub, Elt, a, verbose_level - 1);
 		}
+		b = ABR->compute_image(sub, Elt, a, verbose_level - 1);
+	}
 	else if (A.type_G == action_by_conjugation_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_by_conjugation_t" << endl;
-			}
+		}
 		action_by_conjugation *ABC = A.G.ABC;
 		action *sub;
 		
@@ -173,14 +173,14 @@ static long int induced_action_element_image_of(action &A,
 			cout << "induced_action_element_image_of "
 					"no subaction" << endl;
 			exit(1);
-			}
-		b = ABC->compute_image(sub, Elt, a, verbose_level - 1);
 		}
+		b = ABC->compute_image(sub, Elt, a, verbose_level - 1);
+	}
 	else if (A.type_G == action_by_representation_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_by_representation_t" << endl;
-			}
+		}
 		action_by_representation *Rep = A.G.Rep;
 		action *sub;
 		
@@ -189,14 +189,14 @@ static long int induced_action_element_image_of(action &A,
 			cout << "induced_action_element_image_of "
 					"no subaction" << endl;
 			exit(1);
-			}
-		b = Rep->compute_image_int(*sub, Elt, a, verbose_level - 1);
 		}
+		b = Rep->compute_image_int(*sub, Elt, a, verbose_level - 1);
+	}
 	else if (A.type_G == action_on_determinant_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_on_determinant_t" << endl;
-			}
+		}
 		action_on_determinant *AD = A.G.AD;
 		action *sub;
 		
@@ -205,32 +205,32 @@ static long int induced_action_element_image_of(action &A,
 			cout << "induced_action_element_image_of "
 					"no subaction" << endl;
 			exit(1);
-			}
-		b = AD->compute_image(sub, Elt, a, verbose_level - 1);
 		}
+		b = AD->compute_image(sub, Elt, a, verbose_level - 1);
+	}
 	else if (A.type_G == action_on_galois_group_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_on_galois_group_t" << endl;
-			}
+		}
 		action_on_galois_group *AG = A.G.on_Galois_group;
 
 		b = AG->compute_image(Elt, a, verbose_level - 1);
-		}
+	}
 	else if (A.type_G == action_on_sign_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_on_sign_t" << endl;
-			}
+		}
 		action_on_sign *OnSign = A.G.OnSign;
 
 		b = OnSign->compute_image(Elt, a, verbose_level - 1);
-		}
+	}
 	else if (A.type_G == action_on_grassmannian_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_on_grassmannian_t" << endl;
-			}
+		}
 		action_on_grassmannian *AG = A.G.AG;
 
 		action *sub;
@@ -240,23 +240,23 @@ static long int induced_action_element_image_of(action &A,
 			cout << "induced_action_element_image_of "
 					"no subaction" << endl;
 			exit(1);
-			}
-		b = AG->compute_image_int(sub, Elt, a, verbose_level - 1);
 		}
+		b = AG->compute_image_int(sub, Elt, a, verbose_level - 1);
+	}
 	else if (A.type_G == action_on_spread_set_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_on_spread_set_t" << endl;
-			}
+		}
 		action_on_spread_set *AS = A.G.AS;
 
 		b = AS->compute_image_int(Elt, a, verbose_level - 1);
-		}
+	}
 	else if (A.type_G == action_on_orthogonal_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_on_orthogonal_t" << endl;
-			}
+		}
 		action_on_orthogonal *AO = A.G.AO;
 
 #if 0
@@ -267,15 +267,15 @@ static long int induced_action_element_image_of(action &A,
 			cout << "induced_action_element_image_of "
 					"no subaction" << endl;
 			exit(1);
-			}
+		}
 #endif
 		b = AO->compute_image_int(Elt, a, verbose_level - 1);
-		}
+	}
 	else if (A.type_G == action_on_wedge_product_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_on_wedge_product_t" << endl;
-			}
+		}
 		action_on_wedge_product *AW = A.G.AW;
 
 		action *sub;
@@ -285,23 +285,23 @@ static long int induced_action_element_image_of(action &A,
 			cout << "induced_action_element_image_of "
 					"no subaction" << endl;
 			exit(1);
-			}
-		b = AW->compute_image_int(*sub, Elt, a, verbose_level - 1);
 		}
+		b = AW->compute_image_int(*sub, Elt, a, verbose_level - 1);
+	}
 	else if (A.type_G == action_on_homogeneous_polynomials_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_on_homogeneous_polynomials_t" << endl;
-			}
+		}
 		action_on_homogeneous_polynomials *OnHP = A.G.OnHP;
 
 		b = OnHP->compute_image_int(Elt, a, verbose_level - 1);
-		}
+	}
 	else if (A.type_G == action_by_subfield_structure_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_by_subfield_structure_t" << endl;
-			}
+		}
 		action_by_subfield_structure *SubfieldStructure =
 				A.G.SubfieldStructure;
 
@@ -312,15 +312,15 @@ static long int induced_action_element_image_of(action &A,
 			cout << "induced_action_element_image_of "
 					"no subaction" << endl;
 			exit(1);
-			}
+		}
 		b = SubfieldStructure->compute_image_int(
 				*sub, Elt, a, verbose_level - 1);
-		}
+	}
 	else if (A.type_G == action_on_cosets_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_on_cosets_t" << endl;
-			}
+		}
 		action_on_cosets *AC = A.G.OnCosets;
 
 		//cout << "interface.cpp: action_on_cosets "
@@ -328,12 +328,12 @@ static long int induced_action_element_image_of(action &A,
 		b = AC->compute_image(Elt, a, verbose_level - 1);
 		//cout << "interface.cpp: action_on_cosets image of "
 		// << a << " is " << b << endl;
-		}
+	}
 	else if (A.type_G == action_on_factor_space_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_on_factor_space_t" << endl;
-			}
+		}
 		action_on_factor_space *AF = A.G.AF;
 
 		action *sub;
@@ -343,14 +343,14 @@ static long int induced_action_element_image_of(action &A,
 			cout << "induced_action_element_image_of "
 					"no subaction" << endl;
 			exit(1);
-			}
-		b = AF->compute_image(sub, Elt, a, verbose_level - 1);
 		}
+		b = AF->compute_image(sub, Elt, a, verbose_level - 1);
+	}
 	else if (A.type_G == action_on_sets_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_on_sets_t" << endl;
-			}
+		}
 		action_on_sets *AOS = A.G.on_sets;
 		action *sub;
 		
@@ -359,31 +359,31 @@ static long int induced_action_element_image_of(action &A,
 			cout << "induced_action_element_image_of "
 					"no subaction" << endl;
 			exit(1);
-			}
-		b = AOS->compute_image(sub, Elt, a, verbose_level - 1);
 		}
+		b = AOS->compute_image(sub, Elt, a, verbose_level - 1);
+	}
 	else if (A.type_G == action_on_set_partitions_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_on_set_partitions_t" << endl;
-			}
+		}
 		action_on_set_partitions *OSP = A.G.OnSetPartitions;
 		b = OSP->compute_image(Elt, a, verbose_level - 1);
-		}
+	}
 	else if (A.type_G == action_on_subgroups_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_on_subgroups_t" << endl;
-			}
+		}
 		action_on_subgroups *AOS = A.G.on_subgroups;
 
 		b = AOS->compute_image(Elt, a, verbose_level - 1);
-		}
+	}
 	else if (A.type_G == action_on_k_subsets_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_on_k_subsets_t" << endl;
-			}
+		}
 		action_on_k_subsets *On_k_subsets = A.G.on_k_subsets;
 		action *sub;
 		
@@ -392,32 +392,32 @@ static long int induced_action_element_image_of(action &A,
 			cout << "induced_action_element_image_of "
 					"no subaction" << endl;
 			exit(1);
-			}
-		b = On_k_subsets->compute_image(Elt, a, verbose_level - 1);
 		}
+		b = On_k_subsets->compute_image(Elt, a, verbose_level - 1);
+	}
 	else if (A.type_G == action_on_orbits_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_on_orbits_t" << endl;
-			}
+		}
 		action_on_orbits *On_orbits = A.G.OnOrbits;
 
 		b = On_orbits->compute_image(Elt, a, verbose_level - 1);
-		}
+	}
 	else if (A.type_G == action_on_flags_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_on_flags_t" << endl;
-			}
+		}
 		action_on_flags *On_flags = A.G.OnFlags;
 
 		b = On_flags->compute_image(Elt, a, verbose_level - 1);
-		}
+	}
 	else if (A.type_G == action_on_bricks_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_on_bricks_t" << endl;
-			}
+		}
 		action_on_bricks *On_bricks = A.G.OnBricks;
 		action *sub;
 		
@@ -426,14 +426,14 @@ static long int induced_action_element_image_of(action &A,
 			cout << "induced_action_element_image_of "
 					"no subaction" << endl;
 			exit(1);
-			}
-		b = On_bricks->compute_image(Elt, a, verbose_level - 1);
 		}
+		b = On_bricks->compute_image(Elt, a, verbose_level - 1);
+	}
 	else if (A.type_G == action_on_andre_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_on_andre_t" << endl;
-			}
+		}
 		action_on_andre *On_andre = A.G.OnAndre;
 
 #if 0
@@ -444,16 +444,16 @@ static long int induced_action_element_image_of(action &A,
 			cout << "induced_action_element_image_of "
 					"no subaction" << endl;
 			exit(1);
-			}
+		}
 #endif
 
 		b = On_andre->compute_image(Elt, a, verbose_level - 1);
-		}
+	}
 	else if (A.type_G == action_on_pairs_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_on_pairs_t" << endl;
-			}
+		}
 		action *sub;
 		combinatorics_domain Combi;
 		long int i, j, u, v;
@@ -463,17 +463,17 @@ static long int induced_action_element_image_of(action &A,
 			cout << "induced_action_element_image_of "
 					"no subaction, type = action_on_pairs_t" << endl;
 			exit(1);
-			}
+		}
 		Combi.k2ij_lint(a, i, j, sub->degree);
 		u = sub->element_image_of(i, elt, verbose_level - 1);
 		v = sub->element_image_of(j, elt, verbose_level - 1);
 		b = Combi.ij2k_lint(u, v, sub->degree);
-		}
+	}
 	else if (A.type_G == action_on_ordered_pairs_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_on_ordered_pairs_t" << endl;
-			}
+		}
 		action *sub;
 		combinatorics_domain Combi;
 		long int a2, b2, swap, swap2, i, j, tmp, u, v, u2, v2;
@@ -483,7 +483,7 @@ static long int induced_action_element_image_of(action &A,
 			cout << "induced_action_element_image_of "
 					"no subaction, type = action_on_ordered_pairs_t" << endl;
 			exit(1);
-			}
+		}
 		swap = a % 2;
 		a2 = a / 2;
 		Combi.k2ij_lint(a2, i, j, sub->degree);
@@ -491,19 +491,19 @@ static long int induced_action_element_image_of(action &A,
 			tmp = i;
 			i = j;
 			j = tmp;
-			}
+		}
 		u = sub->element_image_of(i, elt, verbose_level - 1);
 		v = sub->element_image_of(j, elt, verbose_level - 1);
 		if (u > v) {
 			v2 = u;
 			u2 = v;
 			swap2 = 1;
-			}
+		}
 		else {
 			u2 = u;
 			v2 = v;
 			swap2 = 0;
-			}
+		}
 		b2 = Combi.ij2k_lint(u2, v2, sub->degree);
 		b = 2 * b2 + swap2;
 #if 0
@@ -516,29 +516,38 @@ static long int induced_action_element_image_of(action &A,
 		sub->element_print(elt, cout);
 		cout << endl;
 #endif
-		}
+	}
 	else if (A.type_G == base_change_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of base_change_t" << endl;
-			}
+		}
 		action *sub;
 		sub = A.subaction;
 		if (sub == NULL) {
 			cout << "induced_action_element_image_of "
 					"no subaction, type = base_change_t" << endl;
 			exit(1);
-			}
-		b = sub->element_image_of(a, elt, verbose_level - 1);
 		}
+		b = sub->element_image_of(a, elt, verbose_level - 1);
+	}
 	else if (A.type_G == product_action_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of product_action_t" << endl;
-			}
+		}
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
 		b = PA->compute_image(&A, (int *)elt, a, verbose_level - 1);
+	}
+	else if (A.type_G == action_on_interior_direct_product_t) {
+		if (f_v) {
+			cout << "induced_action_element_image_of action_on_interior_direct_product_t" << endl;
 		}
+		action_on_interior_direct_product *IDP;
+
+		IDP = A.G.OnInteriorDirectProduct;
+		b = IDP->compute_image((int *)elt, a, verbose_level - 1);
+	}
 	else {
 		cout << "induced_action_element_image_of type_G "
 				"unknown:: type_G = " << A.type_G << endl;
@@ -546,12 +555,12 @@ static long int induced_action_element_image_of(action &A,
 		cout << "action:" << endl;
 		A.print_info();
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "induced_action_element_image_of type=";
 			AG.action_print_symmetry_group_type(cout, A.type_G);
 			cout << " image of " << a << " is " << b << endl;
-		}
+	}
 	return b;
 }
 
@@ -566,11 +575,11 @@ static void induced_action_element_image_of_low_level(action &A,
 				"computing image of ";
 		Orbiter->Int_vec.print(cout, input, A.low_level_point_size);
 		cout << " in action " << A.label << endl;
-		}
+	}
 	if (A.type_G == action_by_right_multiplication_t) {
 		if (f_v) {
 			cout << "action_by_right_multiplication_t" << endl;
-			}
+		}
 
 		cout << "induced_action_element_image_of_low_level "
 				"action_by_right_multiplication_t "
@@ -585,14 +594,14 @@ static void induced_action_element_image_of_low_level(action &A,
 			cout << "induced_action_element_image_of "
 					"no subaction" << endl;
 			exit(1);
-			}
+		}
 		ABRM->compute_image(sub, Elt, a, b, verbose_level - 1);
 #endif
-		}
+	}
 	else if (A.type_G == action_by_restriction_t) {
 		if (f_v) {
 			cout << "action_by_restriction_t" << endl;
-			}
+		}
 
 		//cout << "induced_action_element_image_of_low_level
 		// action_by_restriction_t not yet implemented" << endl;
@@ -604,13 +613,13 @@ static void induced_action_element_image_of_low_level(action &A,
 					"type action_by_restriction_t, "
 					"no subaction" << endl;
 			exit(1);
-			}
-		sub->image_of_low_level(elt, input, output, verbose_level - 1);
 		}
+		sub->image_of_low_level(elt, input, output, verbose_level - 1);
+	}
 	else if (A.type_G == action_by_conjugation_t) {
 		if (f_v) {
 			cout << "action_by_conjugation_t" << endl;
-			}
+		}
 		cout << "induced_action_element_image_of_low_level "
 				"action_by_conjugation_t not yet implemented" << endl;
 		exit(1);
@@ -623,14 +632,14 @@ static void induced_action_element_image_of_low_level(action &A,
 			cout << "induced_action_element_image_of "
 					"no subaction" << endl;
 			exit(1);
-			}
+		}
 		ABC->compute_image(sub, Elt, a, b, verbose_level - 1);
 #endif
-		}
+	}
 	else if (A.type_G == action_by_representation_t) {
 		if (f_v) {
 			cout << "action_by_representation_t" << endl;
-			}
+		}
 		action_by_representation *Rep = A.G.Rep;
 
 		action *sub;
@@ -640,38 +649,38 @@ static void induced_action_element_image_of_low_level(action &A,
 			cout << "induced_action_element_image_of "
 					"no subaction" << endl;
 			exit(1);
-			}
+		}
 		Rep->compute_image_int_low_level(*sub,
 				Elt, input, output, verbose_level - 1);
-		}
+	}
 	else if (A.type_G == action_on_determinant_t) {
 		if (f_v) {
 			cout << "action_on_determinant_t" << endl;
-			}
+		}
 		cout << "induced_action_element_image_of_low_level "
 				"action_on_determinant_t not yet implemented" << endl;
 		exit(1);
-		}
+	}
 	else if (A.type_G == action_on_galois_group_t) {
 		if (f_v) {
 			cout << "action_on_galois_group_t" << endl;
-			}
+		}
 		cout << "induced_action_element_image_of_low_level "
 				"action_on_galois_group_t not yet implemented" << endl;
 		exit(1);
-		}
+	}
 	else if (A.type_G == action_on_sign_t) {
 		if (f_v) {
 			cout << "action_on_sign_t" << endl;
-			}
+		}
 		cout << "induced_action_element_image_of_low_level "
 				"action_on_sign_t not yet implemented" << endl;
 		exit(1);
-		}
+	}
 	else if (A.type_G == action_on_grassmannian_t) {
 		if (f_v) {
 			cout << "action_on_grassmannian_t" << endl;
-			}
+		}
 		cout << "induced_action_element_image_of_low_level "
 				"action_on_grassmannian_t not yet implemented" << endl;
 		exit(1);
@@ -685,30 +694,30 @@ static void induced_action_element_image_of_low_level(action &A,
 			cout << "induced_action_element_image_of "
 					"no subaction" << endl;
 			exit(1);
-			}
+		}
 		b = AG->compute_image_int(sub, Elt, a, verbose_level - 1);
 #endif
-		}
+	}
 	else if (A.type_G == action_on_spread_set_t) {
 		if (f_v) {
 			cout << "action_on_spread_set_t" << endl;
-			}
+		}
 		action_on_spread_set *AS = A.G.AS;
 
 		AS->compute_image_low_level(Elt, input, output, verbose_level - 1);
-		}
+	}
 	else if (A.type_G == action_on_orthogonal_t) {
 		if (f_v) {
 			cout << "action_on_orthogonal_t" << endl;
-			}
+		}
 		cout << "induced_action_element_image_of_low_level "
 				"action_on_orthogonal_t not yet implemented" << endl;
 		exit(1);
-		}
+	}
 	else if (A.type_G == action_on_wedge_product_t) {
 		if (f_v) {
 			cout << "action_on_wedge_product_t" << endl;
-			}
+		}
 		action_on_wedge_product *AW = A.G.AW;
 
 		action *sub;
@@ -718,23 +727,23 @@ static void induced_action_element_image_of_low_level(action &A,
 			cout << "induced_action_element_image_of "
 					"no subaction" << endl;
 			exit(1);
-			}
+		}
 		AW->compute_image_int_low_level(*sub,
 				Elt, input, output, verbose_level - 1);
-		}
+	}
 	else if (A.type_G == action_on_homogeneous_polynomials_t) {
 		if (f_v) {
 			cout << "action_on_homogeneous_polynomials_t" << endl;
-			}
+		}
 		action_on_homogeneous_polynomials *OnHP = A.G.OnHP;
 
 		OnHP->compute_image_int_low_level(Elt,
 				input, output, verbose_level - 1);
-		}
+	}
 	else if (A.type_G == action_by_subfield_structure_t) {
 		if (f_v) {
 			cout << "action_by_subfield_structure_t" << endl;
-			}
+		}
 		action_by_subfield_structure *SubfieldStructure =
 				A.G.SubfieldStructure;
 
@@ -746,22 +755,22 @@ static void induced_action_element_image_of_low_level(action &A,
 			cout << "induced_action_element_image_of "
 					"no subaction" << endl;
 			exit(1);
-			}
+		}
 		SubfieldStructure->compute_image_int_low_level(*sub,
 				Elt, input, output, verbose_level - 1);
-		}
+	}
 	else if (A.type_G == action_on_cosets_t) {
 		if (f_v) {
 			cout << "action_on_cosets_t" << endl;
-			}
+		}
 		cout << "induced_action_element_image_of_low_level "
 				"action_on_cosets_t not yet implemented" << endl;
 		exit(1);
-		}
+	}
 	else if (A.type_G == action_on_factor_space_t) {
 		if (f_v) {
 			cout << "action_on_factor_space_t" << endl;
-			}
+		}
 		cout << "induced_action_element_image_of_low_level "
 				"action_on_factor_space_t not yet implemented" << endl;
 		exit(1);
@@ -775,61 +784,61 @@ static void induced_action_element_image_of_low_level(action &A,
 			cout << "induced_action_element_image_of "
 					"no subaction" << endl;
 			exit(1);
-			}
+		}
 		b = AF->compute_image(sub, Elt, a, verbose_level - 1);
 #endif
-		}
+	}
 	else if (A.type_G == action_on_sets_t) {
 		if (f_v) {
 			cout << "action_on_sets_t" << endl;
-			}
+		}
 		cout << "induced_action_element_image_of_low_level "
 				"action_on_sets_t not yet implemented" << endl;
 		exit(1);
-		}
+	}
 	else if (A.type_G == action_on_set_partitions_t) {
 		if (f_v) {
 			cout << "induced_action_element_image_of "
 					"action_on_set_partitions_t" << endl;
-			}
-		exit(1);
 		}
+		exit(1);
+	}
 	else if (A.type_G == action_on_subgroups_t) {
 		if (f_v) {
 			cout << "action_on_subgroups_t" << endl;
-			}
+		}
 		cout << "induced_action_element_image_of_low_level "
 				"action_on_subgroups_t not yet implemented" << endl;
 		exit(1);
-		}
+	}
 	else if (A.type_G == action_on_k_subsets_t) {
 		if (f_v) {
 			cout << "action_on_k_subsets_t" << endl;
-			}
+		}
 		cout << "induced_action_element_image_of_low_level "
 				"action_on_k_subsets_t not yet implemented" << endl;
 		exit(1);
-		}
+	}
 	else if (A.type_G == action_on_bricks_t) {
 		if (f_v) {
 			cout << "action_on_bricks_t" << endl;
-			}
+		}
 		cout << "induced_action_element_image_of_low_level "
 				"action_on_bricks_t not yet implemented" << endl;
 		exit(1);
-		}
+	}
 	else if (A.type_G == action_on_andre_t) {
 		if (f_v) {
 			cout << "action_on_andre_t" << endl;
-			}
+		}
 		cout << "induced_action_element_image_of_low_level "
 				"action_on_andre_t not yet implemented" << endl;
 		exit(1);
-		}
+	}
 	else if (A.type_G == action_on_pairs_t) {
 		if (f_v) {
 			cout << "action_on_pairs_t" << endl;
-			}
+		}
 		cout << "induced_action_element_image_of_low_level "
 				"action_on_pairs_t not yet implemented" << endl;
 		exit(1);
@@ -842,25 +851,25 @@ static void induced_action_element_image_of_low_level(action &A,
 			cout << "induced_action_element_image_of "
 					"no subaction, type = action_on_pairs_t" << endl;
 			exit(1);
-			}
+		}
 		k2ij(a, i, j, sub->degree);
 		u = sub->element_image_of(i, elt, verbose_level - 1);
 		v = sub->element_image_of(j, elt, verbose_level - 1);
 		b = ij2k(u, v, sub->degree);
 #endif
-		}
+	}
 	else if (A.type_G == action_on_ordered_pairs_t) {
 		if (f_v) {
 			cout << "action_on_ordered_pairs_t" << endl;
-			}
+		}
 		cout << "induced_action_element_image_of_low_level "
 				"action_on_ordered_pairs_t not yet implemented" << endl;
 		exit(1);
-		}
+	}
 	else if (A.type_G == base_change_t) {
 		if (f_v) {
 			cout << "base_change_t" << endl;
-			}
+		}
 		cout << "induced_action_element_image_of_low_level "
 				"base_change_t not yet implemented" << endl;
 		exit(1);
@@ -871,14 +880,14 @@ static void induced_action_element_image_of_low_level(action &A,
 			cout << "induced_action_element_image_of "
 					"no subaction, type = base_change_t" << endl;
 			exit(1);
-			}
+		}
 		b = sub->element_image_of(a, elt, verbose_level - 1);
 #endif
-		}
+	}
 	else if (A.type_G == product_action_t) {
 		if (f_v) {
 			cout << "product_action_t" << endl;
-			}
+		}
 		cout << "induced_action_element_image_of_low_level "
 				"product_action_t not yet implemented" << endl;
 		exit(1);
@@ -887,14 +896,23 @@ static void induced_action_element_image_of_low_level(action &A,
 		
 		PA = A.G.product_action_data;
 		b = PA->compute_image(&A, (int *)elt, a, verbose_level - 1);
-		}
 #endif
+	}
+	else if (A.type_G == action_on_interior_direct_product_t) {
+		if (f_v) {
+			cout << "action_on_interior_direct_product_t" << endl;
 		}
+		//action_on_interior_direct_product *IDP;
+
+		cout << "action_on_interior_direct_product_t "
+				"not yet implemented" << endl;
+		exit(1);
+	}
 	else {
 		cout << "induced_action_element_image_of_low_level "
 				"type_G unknown:: type_G = " << A.type_G << endl;
 		exit(1);
-		}
+	}
 	if (f_v) {
 		cout << "induced_action_element_image_of_low_level  done" << endl;
 		cout << "image of ";
@@ -902,82 +920,8 @@ static void induced_action_element_image_of_low_level(action &A,
 		cout << " in action " << A.label << " is ";
 		Orbiter->Int_vec.print(cout, output, A.low_level_point_size);
 		cout << endl;
-		}
+	}
 }
-
-#if 0
-static int induced_action_element_linear_entry_ij(action &A,
-		void *elt, int i, int j, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	//matrix_group &G = *A.G.matrix_grp;
-	int *Elt = (int *) elt;
-	int b;
-
-	if (f_v) {
-		cout << "induced_action_element_linear_entry_ij "
-				"i=" << i << " j=" << j << endl;
-		}
-	if (A.type_G == action_on_wedge_product_t) {
-		if (f_v) {
-			cout << "action_on_wedge_product_t" << endl;
-			}
-		action_on_wedge_product *AW = A.G.AW;
-
-		action *sub;
-		
-		sub = A.subaction;
-		if (sub == NULL) {
-			cout << "induced_action_element_linear_entry_ij "
-					"no subaction" << endl;
-			exit(1);
-			}
-		b = AW->element_entry_ij(*sub, Elt, i, j, verbose_level - 1);
-		}
-	else {
-		cout << "induced_action_element_linear_entry_ij "
-				"type_G unknown:: type_G = " << A.type_G << endl;
-		exit(1);
-		}
-	return b;
-}
-
-static int induced_action_element_linear_entry_frobenius(
-		action &A, void *elt, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	//matrix_group &G = *A.G.matrix_grp;
-	int *Elt = (int *) elt;
-	int b;
-
-	if (f_v) {
-		cout << "induced_action_element_linear_entry_frobenius" << endl;
-		}
-	if (A.type_G == action_on_wedge_product_t) {
-		if (f_v) {
-			cout << "action_on_wedge_product_t" << endl;
-			}
-		action_on_wedge_product *AW = A.G.AW;
-
-		action *sub;
-		
-		sub = A.subaction;
-		if (sub == NULL) {
-			cout << "induced_action_element_linear_entry_frobenius "
-					"no subaction" << endl;
-			exit(1);
-			}
-		b = AW->element_entry_frobenius(*sub,
-				Elt, verbose_level - 1);
-		}
-	else {
-		cout << "induced_action_element_linear_entry_frobenius "
-				"type_G unknown:: type_G = " << A.type_G << endl;
-		exit(1);
-		}
-	return b;
-}
-#endif
 
 
 static void induced_action_element_one(action &A,
@@ -988,22 +932,22 @@ static void induced_action_element_one(action &A,
 	
 	if (f_v) {
 		cout << "induced_action_element_one ";
-		}
+	}
 	if (A.type_G == product_action_t) {
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
 		PA->element_one(&A, (int *) elt, verbose_level);
-		}
+	}
 	else {
 		sub = A.subaction;
 		if (sub == NULL) {
 			cout << "induced_action_element_one "
 					"no subaction" << endl;
 			exit(1);
-			}
-		sub->element_one(elt, verbose_level);
 		}
+		sub->element_one(elt, verbose_level);
+	}
 }
 
 static int induced_action_element_is_one(action &A,
@@ -1014,22 +958,22 @@ static int induced_action_element_is_one(action &A,
 	
 	if (f_v) {
 		cout << "induced_action_element_is_one ";
-		}
+	}
 	if (A.type_G == product_action_t) {
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
 		return PA->element_is_one(&A, (int *) elt, verbose_level);
-		}
+	}
 	else {
 		sub = A.subaction;
 		if (sub == NULL) {
 			cout << "induced_action_element_is_one "
 					"no subaction" << endl;
 			exit(1);
-			}
-		return sub->element_is_one(elt, verbose_level);
 		}
+		return sub->element_is_one(elt, verbose_level);
+	}
 }
 
 static void induced_action_element_unpack(action &A,
@@ -1040,22 +984,22 @@ static void induced_action_element_unpack(action &A,
 	
 	if (f_v) {
 		cout << "induced_action_element_unpack" << endl;
-		}
+	}
 	if (A.type_G == product_action_t) {
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
 		PA->element_unpack((uchar *)elt, (int *)Elt, verbose_level);
-		}
+	}
 	else {
 		sub = A.subaction;
 		if (sub == NULL) {
 			cout << "induced_action_element_unpack "
 					"no subaction" << endl;
 			exit(1);
-			}
-		sub->element_unpack(elt, Elt, verbose_level);
 		}
+		sub->element_unpack(elt, Elt, verbose_level);
+	}
 }
 
 static void induced_action_element_pack(action &A,
@@ -1066,23 +1010,22 @@ static void induced_action_element_pack(action &A,
 	
 	if (f_v) {
 		cout << "induced_action_element_pack" << endl;
-		}
+	}
 	if (A.type_G == product_action_t) {
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
-		PA->element_pack((int *)Elt,
-				(uchar *)elt, verbose_level);
-		}
+		PA->element_pack((int *)Elt, (uchar *)elt, verbose_level);
+	}
 	else {
 		sub = A.subaction;
 		if (sub == NULL) {
 			cout << "induced_action_element_pack "
 					"no subaction" << endl;
 			exit(1);
-			}
-		sub->element_pack(Elt, elt, verbose_level);
 		}
+		sub->element_pack(Elt, elt, verbose_level);
+	}
 }
 
 static void induced_action_element_retrieve(action &A,
@@ -1093,23 +1036,23 @@ static void induced_action_element_retrieve(action &A,
 	
 	if (f_v) {
 		cout << "induced_action_element_retrieve" << endl;
-		}
+	}
 	if (A.type_G == product_action_t) {
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
 		PA->element_retrieve(&A, hdl,
 				(int *)elt, verbose_level);
-		}
+	}
 	else {
 		sub = A.subaction;
 		if (sub == NULL) {
 			cout << "induced_action_element_retrieve "
 					"no subaction" << endl;
 			exit(1);
-			}
-		sub->element_retrieve(hdl, elt, verbose_level);
 		}
+		sub->element_retrieve(hdl, elt, verbose_level);
+	}
 }
 
 static int induced_action_element_store(action &A,
@@ -1125,18 +1068,17 @@ static int induced_action_element_store(action &A,
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
-		return PA->element_store(&A,
-				(int *)elt, verbose_level);
-		}
+		return PA->element_store(&A, (int *)elt, verbose_level);
+	}
 	else {
 		sub = A.subaction;
 		if (sub == NULL) {
 			cout << "induced_action_element_store "
 					"no subaction" << endl;
 			exit(1);
-			}
-		return sub->element_store(elt, verbose_level);
 		}
+		return sub->element_store(elt, verbose_level);
+	}
 }
 
 static void induced_action_element_mult(action &A,
@@ -1152,8 +1094,7 @@ static void induced_action_element_mult(action &A,
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
-		PA->element_mult((int *)a, (int *)b,
-				(int *)ab, verbose_level);
+		PA->element_mult((int *)a, (int *)b, (int *)ab, verbose_level);
 	}
 	else {
 		sub = A.subaction;
@@ -1177,23 +1118,23 @@ static void induced_action_element_invert(action &A,
 	
 	if (f_v) {
 		cout << "induced_action_element_invert" << endl;
-		}
+	}
 	if (A.type_G == product_action_t) {
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
 		PA->element_invert((int *)a, (int *)av,
 				verbose_level);
-		}
+	}
 	else {
 		sub = A.subaction;
 		if (sub == NULL) {
 			cout << "induced_action_element_invert "
 					"no subaction" << endl;
 			exit(1);
-			}
-		sub->element_invert(a, av, verbose_level);
 		}
+		sub->element_invert(a, av, verbose_level);
+	}
 }
 
 static void induced_action_element_transpose(action &A,
@@ -1204,23 +1145,23 @@ static void induced_action_element_transpose(action &A,
 	
 	if (f_v) {
 		cout << "induced_action_element_transpose" << endl;
-		}
+	}
 	if (A.type_G == product_action_t) {
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
 		PA->element_transpose((int *)a, (int *)at,
 				verbose_level);
-		}
+	}
 	else {
 		sub = A.subaction;
 		if (sub == NULL) {
 			cout << "induced_action_element_transpose "
 					"no subaction" << endl;
 			exit(1);
-			}
-		sub->element_transpose(a, at, verbose_level);
 		}
+		sub->element_transpose(a, at, verbose_level);
+	}
 }
 
 static void induced_action_element_move(action &A,
@@ -1231,23 +1172,23 @@ static void induced_action_element_move(action &A,
 	
 	if (f_v) {
 		cout << "induced_action_element_move" << endl;
-		}
+	}
 	if (A.type_G == product_action_t) {
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
 		PA->element_move((int *)a, (int *)b,
 				verbose_level);
-		}
+	}
 	else {
 		sub = A.subaction;
 		if (sub == NULL) {
 			cout << "induced_action_element_move "
 					"no subaction" << endl;
 			exit(1);
-			}
-		sub->element_move(a, b, verbose_level);
 		}
+		sub->element_move(a, b, verbose_level);
+	}
 }
 
 static void induced_action_element_dispose(action &A,
@@ -1258,22 +1199,22 @@ static void induced_action_element_dispose(action &A,
 	
 	if (f_v) {
 		cout << "induced_action_element_dispose" << endl;
-		}
+	}
 	if (A.type_G == product_action_t) {
 		//product_action *PA;
 		
 		//PA = A.G.product_action_data;
 		// do nothing!
-		}
+	}
 	else {
 		sub = A.subaction;
 		if (sub == NULL) {
 			cout << "induced_action_element_dispose "
 					"no subaction" << endl;
 			exit(1);
-			}
-		sub->element_dispose(hdl, verbose_level);
 		}
+		sub->element_dispose(hdl, verbose_level);
+	}
 }
 
 static void induced_action_element_print(action &A,
@@ -1284,7 +1225,7 @@ static void induced_action_element_print(action &A,
 		
 		PA = A.G.product_action_data;
 		PA->element_print((int *)elt, ost);
-		}
+	}
 	else if (A.f_has_subaction) {
 		action *sub;
 		sub = A.subaction;
@@ -1292,7 +1233,7 @@ static void induced_action_element_print(action &A,
 			cout << "induced_action_element_print "
 					"no subaction" << endl;
 			exit(1);
-			}
+		}
 		sub->element_print_quick(elt, ost);
 
 
@@ -1309,13 +1250,13 @@ static void induced_action_element_print(action &A,
 		ost << endl;
 #endif
 
-		}
+	}
 	else {
 		cout << "induced_action_element_print "
 				"not of type product_action_t and "
 				"no subaction" << endl;
 		exit(1);
-		}
+	}
 }
 
 static void induced_action_element_print_quick(action &A,
@@ -1326,7 +1267,7 @@ static void induced_action_element_print_quick(action &A,
 		
 		PA = A.G.product_action_data;
 		PA->element_print((int *)elt, ost);
-		}
+	}
 	else if (A.f_has_subaction) {
 		action *sub;
 		sub = A.subaction;
@@ -1334,16 +1275,16 @@ static void induced_action_element_print_quick(action &A,
 			cout << "induced_action_element_print "
 					"no subaction" << endl;
 			exit(1);
-			}
+		}
 		sub->element_print_quick(elt, ost);
 		
-		}
+	}
 	else {
 		cout << "induced_action_element_print_quick "
 				"not of type product_action_t and "
 				"no subaction" << endl;
 		exit(1);
-		}
+	}
 }
 
 static void induced_action_element_print_latex(action &A,
@@ -1354,7 +1295,7 @@ static void induced_action_element_print_latex(action &A,
 		
 		PA = A.G.product_action_data;
 		PA->element_print_latex((int *)elt, ost);
-		}
+	}
 	else {
 		action *sub;
 		sub = A.subaction;
@@ -1362,9 +1303,9 @@ static void induced_action_element_print_latex(action &A,
 			cout << "induced_action_element_print_latex "
 					"no subaction" << endl;
 			exit(1);
-			}
-		sub->element_print_latex(elt, ost);
 		}
+		sub->element_print_latex(elt, ost);
+	}
 }
 
 static void induced_action_element_print_latex_with_print_point_function(
@@ -1381,7 +1322,7 @@ static void induced_action_element_print_latex_with_print_point_function(
 	if (f_v) {
 		cout << "induced_action_element_print_latex_with_print_point_function "
 				"degree = " << A.degree << endl;
-		}
+	}
 	int *p = NEW_int(A.degree);
 	for (i = 0; i < A.degree; i++) {
 		//cout << "matrix_group_element_print_as_permutation
@@ -1392,7 +1333,7 @@ static void induced_action_element_print_latex_with_print_point_function(
 			//f_v = FALSE;
 		j = A.element_image_of(i, Elt, 0 /* verbose_level */);
 		p[i] = j;
-		}
+	}
 	//Combi.perm_print(ost, p, A.degree);
 	//ost << ";";
 	Combi.perm_print_with_print_point_function(ost, p,
@@ -1408,7 +1349,7 @@ static void induced_action_element_print_latex_with_print_point_function(
 
 		PA = A.G.product_action_data;
 		PA->element_print_latex((int *)elt, ost);
-		}
+	}
 	else {
 		action *sub;
 		sub = A.subaction;
@@ -1416,10 +1357,10 @@ static void induced_action_element_print_latex_with_print_point_function(
 			cout << "induced_action_element_print_latex "
 					"no subaction" << endl;
 			exit(1);
-			}
+		}
 		sub->element_print_latex_with_print_point_function(
 				elt, ost, point_label, point_label_data);
-		}
+	}
 #endif
 
 }
@@ -1432,7 +1373,7 @@ static void induced_action_element_print_verbose(action &A,
 		
 		PA = A.G.product_action_data;
 		PA->element_print((int *)elt, ost);
-		}
+	}
 	else {
 		action *sub;
 	
@@ -1441,9 +1382,9 @@ static void induced_action_element_print_verbose(action &A,
 			cout << "induced_action_element_print_verbose "
 					"no subaction" << endl;
 			exit(1);
-			}
-		sub->element_print_verbose(elt, ost);
 		}
+		sub->element_print_verbose(elt, ost);
+	}
 }
 
 static void induced_action_element_code_for_make_element(action &A,
@@ -1460,7 +1401,7 @@ static void induced_action_element_code_for_make_element(action &A,
 		cout << "induced_action_element_code_for_"
 				"make_element no subaction" << endl;
 		exit(1);
-		}
+	}
 	sub->element_code_for_make_element(elt, data);
 	//exit(1);
 }
@@ -1479,7 +1420,7 @@ static void induced_action_element_print_for_make_element(action &A,
 		cout << "induced_action_element_print_for_"
 				"make_element no subaction" << endl;
 		exit(1);
-		}
+	}
 	sub->element_print_for_make_element(elt, ost);
 	//exit(1);
 }
@@ -1498,7 +1439,7 @@ static void induced_action_element_print_for_make_element_no_commas(
 		cout << "induced_action_element_print_for_"
 				"make_element_no_commas no subaction" << endl;
 		exit(1);
-		}
+	}
 	sub->element_print_for_make_element_no_commas(elt, ost);
 	//exit(1);
 }
@@ -1522,10 +1463,10 @@ static void induced_action_print_point(action &A,
 		if (sub == NULL) {
 			cout << "induced_action_print_point no subaction" << endl;
 			exit(1);
-			}
+		}
 		ost << a;
 		//ABRM->compute_image(sub, Elt, a, b, verbose_level);
-		}
+	}
 	else if (A.type_G == action_by_restriction_t) {
 		//action_by_right_multiplication *ABRM = A.G.ABRM;
 		action *sub;
@@ -1534,10 +1475,10 @@ static void induced_action_print_point(action &A,
 		if (sub == NULL) {
 			cout << "induced_action_print_point no subaction" << endl;
 			exit(1);
-			}
+		}
 		ost << a;
 		//ABRM->compute_image(sub, Elt, a, b, verbose_level);
-		}
+	}
 	else if (A.type_G == action_by_conjugation_t) {
 		//action_by_conjugation *ABC = A.G.ABC;
 		action *sub;
@@ -1546,10 +1487,10 @@ static void induced_action_print_point(action &A,
 		if (sub == NULL) {
 			cout << "induced_action_print_point no subaction" << endl;
 			exit(1);
-			}
+		}
 		ost << a;
 		//ABC->compute_image(sub, Elt, a, b, verbose_level);
-		}
+	}
 	else if (A.type_G == action_on_determinant_t) {
 		//action_on_determinant *AD = A.G.AD;
 		action *sub;
@@ -1558,18 +1499,18 @@ static void induced_action_print_point(action &A,
 		if (sub == NULL) {
 			cout << "induced_action_print_point no subaction" << endl;
 			exit(1);
-			}
-		ost << a;
 		}
+		ost << a;
+	}
 	else if (A.type_G == action_on_galois_group_t) {
 		//action_on_galois_group *AG = A.G.on_Galois_group;
 
 		ost << a;
-		}
+	}
 	else if (A.type_G == action_on_sign_t) {
 		//action_on_sign *OnSign = A.G.OnSign;
 		ost << a;
-		}
+	}
 	else if (A.type_G == action_on_sets_t) {
 		action_on_sets *AOS = A.G.on_sets;
 		action *sub;
@@ -1580,7 +1521,7 @@ static void induced_action_print_point(action &A,
 		if (sub == NULL) {
 			cout << "induced_action_print_point no subaction" << endl;
 			exit(1);
-			}
+		}
 		ost << a << "=";
 		Orbiter->Lint_vec.print(ost, AOS->sets[AOS->perm[a]], AOS->set_size);
 		ost << endl;
@@ -1591,12 +1532,12 @@ static void induced_action_print_point(action &A,
 			sub->print_point(b, ost);
 		}
 		//AOS->compute_image(sub, Elt, a, b, verbose_level);
-		}
+	}
 	else if (A.type_G == action_on_subgroups_t) {
 		//action_on_subgroups *AOS = A.G.on_subgroups;
 		ost << a;
 		//AOS->compute_image(sub, Elt, a, b, verbose_level);
-		}
+	}
 	else if (A.type_G == action_on_k_subsets_t) {
 		//action_on_k_subsets *On_k_subsets = A.G.on_k_subsets;
 		action *sub;
@@ -1605,9 +1546,9 @@ static void induced_action_print_point(action &A,
 		if (sub == NULL) {
 			cout << "induced_action_print_point no subaction" << endl;
 			exit(1);
-			}
-		ost << a;
 		}
+		ost << a;
+	}
 	else if (A.type_G == action_on_orbits_t) {
 		//action_on_orbits *On_orbits = A.G.OnOrbits;
 #if 0
@@ -1617,10 +1558,10 @@ static void induced_action_print_point(action &A,
 		if (sub == NULL) {
 			cout << "induced_action_print_point no subaction" << endl;
 			exit(1);
-			}
+		}
 #endif
 		ost << a;
-		}
+	}
 	else if (A.type_G == action_on_bricks_t) {
 		//action_on_bricks *On_bricks = A.G.OnBricks;
 		action *sub;
@@ -1629,9 +1570,9 @@ static void induced_action_print_point(action &A,
 		if (sub == NULL) {
 			cout << "induced_action_print_point no subaction" << endl;
 			exit(1);
-			}
-		ost << a;
 		}
+		ost << a;
+	}
 	else if (A.type_G == action_on_andre_t) {
 		//action_on_andre *OnAndre = A.G.OnAndre;
 		action *sub;
@@ -1640,9 +1581,9 @@ static void induced_action_print_point(action &A,
 		if (sub == NULL) {
 			cout << "induced_action_print_point no subaction" << endl;
 			exit(1);
-			}
-		ost << a;
 		}
+		ost << a;
+	}
 	else if (A.type_G == action_on_pairs_t) {
 		action *sub;
 		combinatorics_domain Combi;
@@ -1653,10 +1594,10 @@ static void induced_action_print_point(action &A,
 			cout << "induced_action_print_point "
 					"no subaction, type = action_on_pairs_t" << endl;
 			exit(1);
-			}
+		}
 		Combi.k2ij(a, i, j, sub->degree);
 		cout << "a={" << i << "," << j << "}";
-		}
+	}
 	else if (A.type_G == action_on_ordered_pairs_t) {
 		action *sub;
 		combinatorics_domain Combi;
@@ -1667,7 +1608,7 @@ static void induced_action_print_point(action &A,
 			cout << "induced_action_print_point "
 					"no subaction, type = action_on_ordered_pairs_t" << endl;
 			exit(1);
-			}
+		}
 		swap = a % 2;
 		a2 = a / 2;
 		Combi.k2ij(a2, i, j, sub->degree);
@@ -1675,9 +1616,9 @@ static void induced_action_print_point(action &A,
 			tmp = i;
 			i = j;
 			j = tmp;
-			}
-		cout << "a=(" << i << "," << j << ")";
 		}
+		cout << "a=(" << i << "," << j << ")";
+	}
 	else if (A.type_G == base_change_t) {
 		action *sub;
 		sub = A.subaction;
@@ -1687,13 +1628,13 @@ static void induced_action_print_point(action &A,
 			exit(1);
 			}
 		ost << a;
-		}
+	}
 	else if (A.type_G == product_action_t) {
 		//product_action *PA;
 		
 		//PA = A.G.product_action_data;
 		ost << a;
-		}
+	}
 	else if (A.type_G == action_on_grassmannian_t) {
 		if (FALSE) {
 			cout << "action_on_grassmannian_t" << endl;
@@ -1713,7 +1654,7 @@ static void induced_action_print_point(action &A,
 #endif
 		AG->print_point(a, ost);
 		//b = AG->compute_image_int(sub, Elt, a, verbose_level - 1);
-		}
+	}
 	else if (A.type_G == action_on_spread_set_t) {
 		if (FALSE) {
 			cout << "action_on_spread_set_t" << endl;
@@ -1721,7 +1662,7 @@ static void induced_action_print_point(action &A,
 		//action_on_spread_set *AS = A.G.AS;
 
 		ost << a;
-		}
+	}
 	else if (A.type_G == action_on_orthogonal_t) {
 		if (FALSE) {
 			cout << "action_on_orthogonal_t" << endl;
@@ -1740,13 +1681,25 @@ static void induced_action_print_point(action &A,
 			}
 		ost << a;
 #endif
-		}
+	}
+	else if (A.type_G == action_on_interior_direct_product_t) {
+		if (FALSE) {
+			cout << "action_on_interior_direct_product_t" << endl;
+			}
+		action_on_interior_direct_product *IDP;
+		int i, j;
+
+		IDP = A.G.OnInteriorDirectProduct;
+		i = a / IDP->nb_cols;
+		j = a % IDP->nb_cols;
+		ost << "(" << i << "," << j << ")";
+	}
 	else {
 		cout << "induced_action_print_point type_G unknown:: type_G = ";
 		AG.action_print_symmetry_group_type(cout, A.type_G);
 		cout << endl;
 		exit(1);
-		}
+	}
 }
 
 

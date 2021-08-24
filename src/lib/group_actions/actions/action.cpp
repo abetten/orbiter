@@ -2483,7 +2483,17 @@ void action::compute_orbits_on_points(schreier *&Sch,
 		cout << "action::compute_orbits_on_points" << endl;
 	}
 	Sch = NEW_OBJECT(schreier);
+	if (f_v) {
+		cout << "action::compute_orbits_on_points in action ";
+		print_info();
+	}
+	if (f_v) {
+		cout << "action::compute_orbits_on_points before Sch->init" << endl;
+	}
 	Sch->init(this, verbose_level - 2);
+	if (f_v) {
+		cout << "action::compute_orbits_on_points before Sch->init_generators" << endl;
+	}
 	Sch->init_generators(*gens, verbose_level - 2);
 	if (f_v) {
 		cout << "action::compute_orbits_on_points before Sch->compute_all_point_orbits, degree = " << degree << endl;

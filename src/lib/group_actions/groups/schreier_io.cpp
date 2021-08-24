@@ -440,6 +440,7 @@ void schreier::print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 
 	gens_stab->print_generators_tex(ost);
 
+#if 0
 	long int *Subgroup_elements_by_index;
 	long int sz_subgroup;
 
@@ -464,6 +465,7 @@ void schreier::print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 		FREE_lint(Subgroup_elements_by_index);
 
 	}
+#endif
 
 	FREE_OBJECT(gens_stab);
 }
@@ -936,6 +938,7 @@ void schreier::print_orbit_tex(std::ostream &ost, int orbit_no)
 	latex_interface L;
 	int i, first, len;
 	int *v;
+	sorting Sorting;
 
 	first = orbit_first[orbit_no];
 	len = orbit_len[orbit_no];
@@ -944,7 +947,7 @@ void schreier::print_orbit_tex(std::ostream &ost, int orbit_no)
 		v[i] = orbit[first + i];
 	}
 	//int_vec_print(ost, v, len);
-	//int_vec_heapsort(v, len);
+	Sorting.int_vec_heapsort(v, len);
 	//int_vec_print_fully(ost, v, len);
 	L.int_set_print_tex(ost, v, len);
 

@@ -1316,19 +1316,13 @@ public:
 			long int *canonical_labeling,
 			bitvector *&B,
 			int verbose_level);
-	void encode_incma(int *&Incma, int &nb_rows, int &nb_cols, 
-		int *&partition, int verbose_level);
-	void encode_point_set(int *&Incma, int &nb_rows, int &nb_cols, 
-		int *&partition, int verbose_level);
-	void encode_line_set(int *&Incma, int &nb_rows, int &nb_cols, 
-		int *&partition, int verbose_level);
-	void encode_packing(int *&Incma, int &nb_rows, int &nb_cols, 
-		int *&partition, int verbose_level);
-	void encode_incidence_geometry(
-			int *&Incma, int &nb_rows, int &nb_cols, int *&partition,
-			int verbose_level);
+	void encode_incma(encoded_combinatorial_object *&Enc, int verbose_level);
+	void encode_point_set(encoded_combinatorial_object *&Enc, int verbose_level);
+	void encode_line_set(encoded_combinatorial_object *&Enc, int verbose_level);
+	void encode_packing(encoded_combinatorial_object *&Enc, int verbose_level);
+	void encode_incidence_geometry(encoded_combinatorial_object *&Enc, int verbose_level);
 	void encode_incma_and_make_decomposition(
-		int *&Incma, int &nb_rows, int &nb_cols, int *&partition, 
+			encoded_combinatorial_object *&Enc,
 		incidence_structure *&Inc, 
 		partitionstack *&Stack, 
 		int verbose_level);

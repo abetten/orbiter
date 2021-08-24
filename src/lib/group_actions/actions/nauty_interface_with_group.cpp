@@ -629,7 +629,7 @@ action *nauty_interface_with_group::create_automorphism_group_and_canonical_labe
 	return A;
 }
 
-
+#if 0
 action *nauty_interface_with_group::create_automorphism_group_of_block_system(
 	int nb_points, int nb_blocks, int block_size, long int *Blocks,
 	int verbose_level)
@@ -1274,18 +1274,58 @@ void nauty_interface_with_group::add_configuration_graph(ofstream &g,
 	FREE_int(M1);
 	FREE_OBJECT(A);
 }
+#endif
 
 
+void nauty_interface_with_group::automorphism_group_as_permutation_group(
+		strong_generators *&SG,
+		nauty_output *NO,
+		action *&A_perm,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
+
+
+	if (f_v) {
+		cout << "nauty_interface_with_group::automorphism_group_as_permutation_group" << endl;
+	}
+	A_perm = NEW_OBJECT(action);
+
+	longinteger_object ago;
+
+	if (f_v) {
+		cout << "nauty_interface_with_group::automorphism_group_as_permutation_group "
+				"before init_permutation_group_from_generators" << endl;
+		}
+	NO->Ago.assign_to(ago);
+	//ago.create(Ago, __FILE__, __LINE__);
+	A_perm->init_permutation_group_from_generators(NO->N,
+		TRUE, ago,
+		NO->Aut_counter, NO->Aut,
+		NO->Base_length, NO->Base_lint,
+		verbose_level);
+
+	if (f_vv) {
+		cout << "nauty_interface_with_group::automorphism_group_as_permutation_group "
+				"create_automorphism_group_of_incidence_structure: created action ";
+		A_perm->print_info();
+		cout << endl;
+		}
+
+
+	if (f_v) {
+		cout << "nauty_interface_with_group::automorphism_group_as_permutation_group done" << endl;
+	}
+}
 
 void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group(
 		action *A_linear,
 		projective_space *P,
 		strong_generators *&SG,
-		int N,
-		int *Aut, int Aut_counter,
-		int *Base, int Base_length,
-		long int *Base_lint,
-		int *Transversal_length, longinteger_object &Ago,
+		action *&A_perm,
+		nauty_output *NO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1297,34 +1337,26 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group" << endl;
 	}
 
-	action *A_perm;
-	longinteger_object ago;
+	//action *A_perm;
 
 	int d;
 
 	d = A_linear->matrix_group_dimension();
 
 
-	A_perm = NEW_OBJECT(action);
+	if (f_v) {
+		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group before automorphism_group_as_permutation_group" << endl;
+	}
+
+	automorphism_group_as_permutation_group(
+				SG,
+				NO,
+				A_perm,
+				verbose_level);
 
 	if (f_v) {
-		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
-				"before init_permutation_group_from_generators" << endl;
-		}
-	Ago.assign_to(ago);
-	//ago.create(Ago, __FILE__, __LINE__);
-	A_perm->init_permutation_group_from_generators(N,
-		TRUE, ago,
-		Aut_counter, Aut,
-		Base_length, Base_lint,
-		verbose_level);
-
-	if (f_vv) {
-		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
-				"create_automorphism_group_of_incidence_structure: created action ";
-		A_perm->print_info();
-		cout << endl;
-		}
+		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group after automorphism_group_as_permutation_group" << endl;
+	}
 
 	//action *A_linear;
 
@@ -1437,7 +1469,7 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 		}
 
 	S = A_linear->create_sims_from_generators_with_target_group_order(
-		gens1, ago, 0 /*verbose_level*/);
+		gens1, NO->Ago, 0 /*verbose_level*/);
 
 	if (f_vv) {
 		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
@@ -1464,10 +1496,10 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 
 	longinteger_domain D;
 
-	if (D.compare_unsigned(ago, go)) {
+	if (D.compare_unsigned(NO->Ago, go)) {
 		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
 				"the group order does not match" << endl;
-		cout << "ago = " << ago << endl;
+		cout << "ago = " << NO->Ago << endl;
 		cout << "go = " << go << endl;
 		exit(1);
 		}
@@ -1478,10 +1510,14 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 	}
 	FREE_int(labeling);
 #endif
+
+#if 0
 	if (f_v) {
 		cout << "before freeing A_perm" << endl;
 	}
 	FREE_OBJECT(A_perm);
+#endif
+
 	if (f_v) {
 		cout << "not freeing gens" << endl;
 	}
@@ -1516,6 +1552,78 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 	}
 
 }
+
+
+strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
+	object_in_projective_space *OiP,
+	action *A_linear,
+	int f_compute_canonical_form, bitvector *&Canonical_form,
+	long int *canonical_labeling, int &canonical_labeling_len,
+	int verbose_level)
+// canonical_labeling[nb_rows + nb_cols] contains the canonical labeling
+// where nb_rows and nb_cols is the encoding size.
+{
+	int f_v = (verbose_level >= 1);
+
+
+
+	if (f_v) {
+		cout << "nauty_interface_with_group::set_stabilizer_of_object" << endl;
+		cout << "verbose_level = " << verbose_level << endl;
+	}
+
+
+
+	nauty_output *NO;
+
+	if (f_v) {
+		cout << "nauty_interface_with_group::set_stabilizer_of_object before OiP->run_nauty" << endl;
+
+	}
+
+	OiP->run_nauty(
+			f_compute_canonical_form, Canonical_form,
+			canonical_labeling, canonical_labeling_len,
+			NO,
+			verbose_level);
+
+	if (f_v) {
+		cout << "nauty_interface_with_group::set_stabilizer_of_object after OiP->run_nauty" << endl;
+
+	}
+
+
+
+
+	strong_generators *SG;
+	action *A_perm;
+
+	if (f_v) {
+		cout << "nauty_interface_with_group::set_stabilizer_of_object "
+				"before Nauty.reverse_engineer_linear_group_from_permutation_group" << endl;
+		}
+	reverse_engineer_linear_group_from_permutation_group(
+			A_linear,
+			OiP->P,
+			SG,
+			A_perm,
+			NO,
+			verbose_level);
+	if (f_v) {
+		cout << "nauty_interface_with_group::set_stabilizer_of_object "
+				"after Nauty.reverse_engineer_linear_group_from_permutation_group" << endl;
+	}
+
+
+	FREE_OBJECT(A_perm);
+	FREE_OBJECT(NO);
+
+	if (f_v) {
+		cout << "nauty_interface_with_group::set_stabilizer_of_object done" << endl;
+	}
+	return SG;
+}
+
 
 
 }}

@@ -309,6 +309,7 @@ class classify_bitvectors;
 class data_file;
 class data_input_stream;
 class data_structures_global;
+class encoded_combinatorial_object;
 class fancy_set;
 class int_matrix;
 class int_vec;
