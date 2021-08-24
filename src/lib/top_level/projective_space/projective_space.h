@@ -714,6 +714,22 @@ public:
 			std::vector<std::vector<int> > &Cumulative_canonical_labeling,
 			std::vector<std::vector<std::pair<int, int> > > &Fibration,
 			int verbose_level);
+	void process_individual_object(
+			int file_type, int file_idx,
+			std::string &input_data,
+			std::string &input_data2,
+			std::vector<std::vector<int> > &Cumulative_data,
+			std::vector<long int> &Cumulative_Ago,
+			std::vector<std::vector<int> > &Cumulative_canonical_labeling,
+			std::vector<std::vector<std::pair<int, int> > > &Fibration,
+			set_of_sets *SoS, int h,
+			long int *Spread_table, int nb_spreads, int spread_size,
+			std::vector<long int> &Ago,
+			std::vector<std::vector<int> > &The_canonical_labeling,
+			int &canonical_labeling_len,
+			long int *Known_ago, long int *Known_canonical_labeling,
+			int t0,
+			int verbose_level);
 	void process_set_of_points(
 			std::string &input_data,
 			int verbose_level);
@@ -732,7 +748,7 @@ public:
 		long int *canonical_labeling, int &canonical_labeling_len,
 		int &idx,
 		int verbose_level);
-	// returns f_found, which is TRUE if the object is rejected
+	// returns f_found, which is TRUE if the object is already in the list
 	int process_object_with_known_canonical_labeling(
 		object_in_projective_space *OiP,
 		long int *canonical_labeling, int canonical_labeling_len,
@@ -833,17 +849,6 @@ public:
 		object_in_projective_space *OiP,
 		int *canonical_labeling,
 		int verbose_level);
-	strong_generators *set_stabilizer_of_object(
-		object_in_projective_space *OiP,
-		int f_compute_canonical_form, bitvector *&Canonical_form,
-		long int *canonical_labeling, int &canonical_labeling_len,
-		int verbose_level);
-		// canonical_labeling[nb_rows + nb_cols] contains the canonical labeling
-		// where nb_rows and nb_cols is the encoding size,
-		// which can be computed using
-		// object_in_projective_space::encoding_size(
-		//   int &nb_rows, int &nb_cols,
-		//   int verbose_level)
 	void report_fixed_points_lines_and_planes(
 		int *Elt, std::ostream &ost,
 		int verbose_level);

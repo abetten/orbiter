@@ -197,6 +197,10 @@ void action::print_for_make_element_no_commas(
 long int action::element_image_of(
 		long int a, void *elt, int verbose_level)
 {
+	if (ptr == NULL) {
+		cout << "action::element_image_of ptr == NULL" << endl;
+		exit(1);
+	}
 	ptr->nb_times_image_of_called++;
 	return (*ptr->ptr_element_image_of)(*this, a, elt, verbose_level);
 }

@@ -114,16 +114,20 @@ void canonical_form_nauty::quartic_curve(
 
 	canonical_labeling = NEW_lint(nb_rows + nb_cols);
 
+	nauty_interface_with_group Nau;
+
+
 	if (f_v) {
-		cout << "canonical_form_nauty::quartic_curve before Surf_A->PA->PA2->set_stabilizer_of_object" << endl;
+		cout << "canonical_form_nauty::quartic_curve before Nau.set_stabilizer_of_object" << endl;
 	}
-	SG_pt_stab = PA->set_stabilizer_of_object(
+	SG_pt_stab = Nau.set_stabilizer_of_object(
 		OiP,
+		PA->A,
 		f_compute_canonical_form, Canonical_form,
 		canonical_labeling, canonical_labeling_len,
 		0 /*verbose_level*/);
 	if (f_v) {
-		cout << "canonical_form_nauty::quartic_curve after Surf_A->PA->PA2->set_stabilizer_of_object" << endl;
+		cout << "canonical_form_nauty::quartic_curve after Nau.set_stabilizer_of_object" << endl;
 	}
 
 

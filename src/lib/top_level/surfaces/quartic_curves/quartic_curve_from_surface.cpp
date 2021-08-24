@@ -600,16 +600,22 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_stabilizer "
-				"before Surf_A->PA->PA2->set_stabilizer_of_object" << endl;
+				"before Nau.set_stabilizer_of_object" << endl;
 	}
-	SG_pt_stab = Surf_A->PA->PA2->set_stabilizer_of_object(
+
+	nauty_interface_with_group Nau;
+
+
+	SG_pt_stab = Nau.set_stabilizer_of_object(
 		OiP,
+		Surf_A->PA->PA2->A,
 		f_compute_canonical_form, Canonical_form,
 		canonical_labeling, canonical_labeling_len,
 		verbose_level);
+
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_stabilizer "
-				"after Surf_A->PA->PA2->set_stabilizer_of_object" << endl;
+				"after Nau.set_stabilizer_of_object" << endl;
 	}
 
 

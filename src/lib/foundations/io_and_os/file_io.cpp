@@ -4152,6 +4152,203 @@ void file_io::read_solutions_and_tally(std::string &fname, int sz, int verbose_l
 
 }
 
+void file_io::save_fibration(std::vector<std::vector<std::pair<int, int> > > &Fibration, std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::save_fibration" << endl;
+	}
+	string_tools ST;
+	string data_fname1;
+	string data_fname2;
+	set_of_sets *File_idx;
+	set_of_sets *Obj_idx;
+	int nb_sets;
+	int *Sz;
+	int i, j, l, a, b;
+
+	nb_sets = Fibration.size();
+	Sz = NEW_int(nb_sets);
+	for (i = 0; i < nb_sets; i++) {
+		Sz[i] = Fibration[i].size();
+	}
+
+	File_idx = NEW_OBJECT(set_of_sets);
+	Obj_idx = NEW_OBJECT(set_of_sets);
+
+	File_idx->init_basic_with_Sz_in_int(INT_MAX /* underlying_set_size */,
+				nb_sets, Sz, verbose_level);
+	Obj_idx->init_basic_with_Sz_in_int(INT_MAX /* underlying_set_size */,
+				nb_sets, Sz, verbose_level);
+	for (i = 0; i < nb_sets; i++) {
+		l = Fibration[i].size();
+		for (j = 0; j < l; j++) {
+			a = Fibration[i][j].first;
+			b = Fibration[i][j].second;
+			File_idx->Sets[i][j] = a;
+			Obj_idx->Sets[i][j] = b;
+		}
+	}
+
+
+	data_fname1.assign(fname);
+	ST.replace_extension_with(data_fname1, "1.csv");
+	data_fname2.assign(fname);
+	ST.replace_extension_with(data_fname2, "2.csv");
+
+	if (f_v) {
+		cout << "file_io::save_fibration before File_idx->save_csv" << endl;
+	}
+	File_idx->save_csv(data_fname1, TRUE, verbose_level);
+	if (f_v) {
+		cout << "file_io::save_fibration before Obj_idx->save_csv" << endl;
+	}
+	Obj_idx->save_csv(data_fname2, TRUE, verbose_level);
+	if (f_v) {
+		cout << "file_io::save_fibration after Obj_idx->save_csv" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "Written file " << data_fname1 << " of size " << file_size(data_fname1) << endl;
+		cout << "Written file " << data_fname2 << " of size " << file_size(data_fname2) << endl;
+	}
+
+	FREE_int(Sz);
+	FREE_OBJECT(File_idx);
+	FREE_OBJECT(Obj_idx);
+
+	if (f_v) {
+		cout << "file_io::save_fibration done" << endl;
+	}
+}
+
+
+void file_io::save_cumulative_canonical_labeling(std::vector<std::vector<int> > &Cumulative_canonical_labeling,
+		std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::save_cumulative_canonical_labeling" << endl;
+	}
+	//string_tools ST;
+	string canonical_labeling_fname;
+	int canonical_labeling_len;
+	int u, v;
+	long int *M;
+
+	if (Cumulative_canonical_labeling.size()) {
+		canonical_labeling_len = Cumulative_canonical_labeling[0].size();
+	}
+	else {
+		canonical_labeling_len = 0;
+	}
+
+	canonical_labeling_fname.assign(fname);
+	//ST.replace_extension_with(canonical_labeling_fname, "_can_lab.csv");
+
+
+	M = NEW_lint(Cumulative_canonical_labeling.size() * canonical_labeling_len);
+	for (u = 0; u < Cumulative_canonical_labeling.size(); u++) {
+		for (v = 0; v < canonical_labeling_len; v++) {
+			M[u * canonical_labeling_len + v] = Cumulative_canonical_labeling[u][v];
+		}
+	}
+	lint_matrix_write_csv(canonical_labeling_fname,
+			M, Cumulative_canonical_labeling.size(), canonical_labeling_len);
+
+	if (f_v) {
+		cout << "Written file " << canonical_labeling_fname << " of size " << file_size(canonical_labeling_fname) << endl;
+	}
+	FREE_lint(M);
+
+}
+
+void file_io::save_cumulative_ago(std::vector<long int> &Cumulative_Ago,
+		std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::save_cumulative_ago" << endl;
+	}
+	string ago_fname;
+	int u;
+	long int *M;
+	string_tools ST;
+
+	ago_fname.assign(fname);
+
+	M = NEW_lint(Cumulative_Ago.size());
+	for (u = 0; u < Cumulative_Ago.size(); u++) {
+		M[u] = Cumulative_Ago[u];
+	}
+	lint_vec_write_csv(M, Cumulative_Ago.size(), ago_fname, "Ago");
+
+	tally T;
+
+	T.init_lint(M, Cumulative_Ago.size(), FALSE, 0);
+	if (f_v) {
+		cout << "Written file " << ago_fname << " of size " << file_size(ago_fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "Ago distribution: ";
+		T.print(TRUE);
+		cout << endl;
+	}
+
+	string ago_fname1;
+
+	ago_fname1.assign(ago_fname);
+	ST.replace_extension_with(ago_fname1, "_ago_class_");
+	T.save_classes_individually(ago_fname1);
+
+	FREE_lint(M);
+
+}
+
+void file_io::save_cumulative_data(std::vector<std::vector<int> > &Cumulative_data,
+		std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::save_cumulative_data" << endl;
+	}
+
+	string data_fname;
+	int data_len;
+	int u, v;
+	long int *M;
+
+	if (Cumulative_data.size()) {
+		data_len = Cumulative_data[0].size();
+	}
+	else {
+		data_len = 0;
+	}
+
+	data_fname.assign(fname);
+
+	M = NEW_lint(Cumulative_data.size() * data_len);
+	for (u = 0; u < Cumulative_data.size(); u++) {
+		for (v = 0; v < data_len; v++) {
+			M[u * data_len + v] = Cumulative_data[u][v];
+		}
+	}
+	lint_matrix_write_csv(data_fname,
+			M, Cumulative_data.size(), data_len);
+
+	if (f_v) {
+		cout << "Written file " << data_fname << " of size " << file_size(data_fname) << endl;
+	}
+	FREE_lint(M);
+
+}
+
 }}
 
 

@@ -1437,6 +1437,7 @@ void strong_generators::print_generators_in_source_code()
 			"order " << go << " tl=";
 	Orbiter->Int_vec.print(cout, tl, A->base_len());
 	cout << endl;
+	A->print_base();
 	for (i = 0; i < gens->len; i++) {
 		//cout << "Generator " << i << " / "
 		// << gens->len << " is:" << endl;

@@ -12,6 +12,7 @@ MODULES = \
 	data_file.o \
 	data_input_stream.o \
 	data_structures_global.o \
+	encoded_combinatorial_object.o \
 	fancy_set.o \
 	int_matrix.o \
 	int_vec.o \

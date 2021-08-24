@@ -50,6 +50,7 @@ MODULES= \
 		foundations/data_structures/data_file.o \
 		foundations/data_structures/data_input_stream.o \
 		foundations/data_structures/data_structures_global.o \
+		foundations/data_structures/encoded_combinatorial_object.o \
 		foundations/data_structures/fancy_set.o \
 		foundations/data_structures/int_matrix.o \
 		foundations/data_structures/int_vec.o \
@@ -276,6 +277,7 @@ MODULES= \
 		group_actions/induced_actions/action_on_galois_group.o \
 		group_actions/induced_actions/action_on_grassmannian.o \
 		group_actions/induced_actions/action_on_homogeneous_polynomials.o \
+		group_actions/induced_actions/action_on_interior_direct_product.o \
 		group_actions/induced_actions/action_on_k_subsets.o \
 		group_actions/induced_actions/action_on_orbits.o \
 		group_actions/induced_actions/action_on_orthogonal.o \

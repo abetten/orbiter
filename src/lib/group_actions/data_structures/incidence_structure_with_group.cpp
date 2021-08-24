@@ -102,11 +102,11 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 	int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 
-	int *Aut, Aut_counter;
-	int *Base, Base_length;
-	long int *Base_lint;
-	int *Transversal_length;
-	longinteger_object Ago;
+	//int *Aut, Aut_counter;
+	//int *Base, Base_length;
+	//long int *Base_lint;
+	//int *Transversal_length;
+	//longinteger_object Ago;
 	int i;
 
 
@@ -126,32 +126,6 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 		canonical_labeling[i] = i;
 	}
 
-#if 0
-	if (f_save_incma_in_and_out) {
-
-		string fname_csv;
-		string fname_bin;
-		char str[1000];
-
-		sprintf(str, "Incma_in_%d_%d", Inc->nb_rows, Inc->nb_cols);
-
-		fname_csv.assign(save_incma_in_and_out_prefix);
-		fname_csv.append(str);
-		fname_csv.append(".csv");
-		fname_bin.assign(save_incma_in_and_out_prefix);
-		fname_bin.append(str);
-		fname_bin.append(".bin");
-
-
-
-		Inc->save_as_csv(fname_csv, verbose_level);
-
-		Inc->save_as_Levi_graph(fname_bin,
-				TRUE, canonical_labeling,
-				verbose_level);
-
-	}
-#endif
 
 
 
@@ -161,10 +135,12 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 				"initializing Aut, Base, "
 				"Transversal_length" << endl;
 	}
+#if 0
 	Aut = NEW_int(N * N);
 	Base = NEW_int(N);
 	Base_lint = NEW_lint(N);
 	Transversal_length = NEW_int(N);
+#endif
 
 	if (f_v) {
 		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form "
@@ -174,37 +150,60 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 
 	int *can_labeling;
 	nauty_interface Nau;
+	int N;
 
-	can_labeling = NEW_int(Inc->nb_rows + Inc->nb_cols);
+	N = Inc->nb_rows + Inc->nb_cols;
+
+	can_labeling = NEW_int(N);
+
+	encoded_combinatorial_object Enc;
+#if 0
+		int *Incma;
+		int nb_rows;
+		int nb_cols;
+		int *partition;
+		int canonical_labeling_len;
+#endif
+	Enc.Incma = Inc->M;
+	Enc.nb_rows = Inc->nb_rows;
+	Enc.nb_cols = Inc->nb_cols;
+	Enc.partition = partition;
+
+	nauty_output *NO;
+
+	NO = NEW_OBJECT(nauty_output);
+	NO->allocate(N, verbose_level);
 
 	Nau.nauty_interface_matrix_int(
-		Inc->M, Inc->nb_rows, Inc->nb_cols,
-		can_labeling, partition,
-		Aut, Aut_counter,
-		Base, Base_length,
-		Transversal_length, Ago, verbose_level - 3);
+		&Enc,
+		can_labeling,
+		NO,
+		verbose_level - 3);
+
+	Enc.Incma = NULL;
+	Enc.partition = NULL;
 
 	for (i = 0; i < N; i++) {
 		canonical_labeling[i] = can_labeling[i];
 	}
 	FREE_int(can_labeling);
 
-	Orbiter->Int_vec.copy_to_lint(Base, Base_lint, Base_length);
+	Orbiter->Int_vec.copy_to_lint(NO->Base, NO->Base_lint, NO->Base_length);
 
 	if (f_v) {
 		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form "
 				"done with nauty_interface_matrix_int, "
-				"Ago=" << Ago << endl;
+				"Ago=" << NO->Ago << endl;
 	}
 	if (verbose_level > 5) {
 		int h;
 		int degree = N;
 		combinatorics_domain Combi;
 
-		for (h = 0; h < Aut_counter; h++) {
+		for (h = 0; h < NO->Aut_counter; h++) {
 			cout << "aut generator " << h << " / "
-					<< Aut_counter << " : " << endl;
-			Combi.perm_print(cout, Aut + h * degree, degree);
+					<< NO->Aut_counter << " : " << endl;
+			Combi.perm_print(cout, NO->Aut + h * degree, degree);
 			cout << endl;
 		}
 	}
@@ -214,44 +213,6 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 	Inc_out = Inc->apply_canonical_labeling(
 			canonical_labeling, verbose_level - 2);
 
-
-#if 0
-	if (f_vvv) {
-		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form Incma Out:" << endl;
-		if (Inc->nb_rows < 10) {
-			Orbiter->Int_vec.print_integer_matrix_width(cout,
-					Inc_out->M, Inc->nb_rows, Inc->nb_cols, Inc->nb_cols, 1);
-		}
-		else {
-			cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form too large to print" << endl;
-		}
-	}
-#endif
-
-#if 0
-	if (f_save_incma_in_and_out) {
-
-		string fname_csv;
-		string fname_bin;
-		char str[1000];
-
-		sprintf(str, "Incma_out_%d_%d", Inc_out->nb_rows, Inc_out->nb_cols);
-
-		fname_csv.assign(save_incma_in_and_out_prefix);
-		fname_csv.append(str);
-		fname_csv.append(".csv");
-		fname_bin.assign(save_incma_in_and_out_prefix);
-		fname_bin.append(str);
-		fname_bin.append(".bin");
-
-
-		Inc_out->save_as_csv(fname_csv, verbose_level);
-
-		Inc_out->save_as_Levi_graph(fname_bin,
-				TRUE, canonical_labeling,
-				verbose_level);
-	}
-#endif
 
 
 
@@ -270,13 +231,14 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 	A_perm = NEW_OBJECT(action);
 
 	if (f_v) {
-		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form before init_permutation_group_from_generators" << endl;
+		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form "
+				"before init_permutation_group_from_generators" << endl;
 	}
 
 	A_perm->init_permutation_group_from_generators(N,
-		TRUE, Ago,
-		Aut_counter, Aut,
-		Base_length, Base_lint,
+		TRUE, NO->Ago,
+		NO->Aut_counter, NO->Aut,
+		NO->Base_length, NO->Base_lint,
 		verbose_level);
 
 	if (f_vv) {
@@ -284,10 +246,13 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 		A_perm->print_info();
 		cout << endl;
 	}
+	FREE_OBJECT(NO);
+#if 0
 	FREE_int(Aut);
 	FREE_int(Base);
 	FREE_lint(Base_lint);
 	FREE_int(Transversal_length);
+#endif
 
 
 	if (f_v) {

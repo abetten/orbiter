@@ -269,7 +269,7 @@ void nauty_interface::nauty_interface_graph_int(int v, int *Adj,
 #endif
 }
 
-
+#if 0
 void nauty_interface::nauty_interface_int(int v, int b, int *X, int nb_inc,
 	int *labeling, int *partition, 
 	int *Aut, int &Aut_counter, 
@@ -548,12 +548,16 @@ void nauty_interface::nauty_interface_matrix(int *M, int v, int b,
 	nauty_interface_free_data();
 #endif
 }
+#endif
 
-void nauty_interface::nauty_interface_matrix_int(int *M, int v, int b,
-	int *labeling, int *partition, 
-	int *Aut, int &Aut_counter, 
-	int *Base, int &Base_length, 
-	int *Transversal_length, longinteger_object &Ago, int verbose_level)
+void nauty_interface::nauty_interface_matrix_int(
+	encoded_combinatorial_object *Enc,
+	int *labeling,
+	nauty_output *NO,
+	//int *Aut, int &Aut_counter,
+	//int *Base, int &Base_length,
+	//int *Transversal_length, longinteger_object &Ago,
+	int verbose_level)
 {
 #if HAS_NAUTY
 	int f_v = (verbose_level >= 1);
@@ -565,7 +569,7 @@ void nauty_interface::nauty_interface_matrix_int(int *M, int v, int b,
 
 	if (f_v) {
 		cout << "nauty_interface::nauty_interface_matrix_int "
-				"v=" << v << " b=" << b << endl;
+				"nb_rows=" << Enc->nb_rows << " nb_cols=" << Enc->nb_cols << endl;
 	}
 	options.getcanon = TRUE;
 	options.defaultptn = FALSE;
@@ -573,7 +577,7 @@ void nauty_interface::nauty_interface_matrix_int(int *M, int v, int b,
 // 		options.cartesian = TRUE;
 // 		options.writemarkers = TRUE;
 
-	n = v + b;
+	n = Enc->nb_rows + Enc->nb_cols;
 	aut_counter = 0;
 
 	// global variables in nauty.c:
@@ -607,13 +611,13 @@ void nauty_interface::nauty_interface_matrix_int(int *M, int v, int b,
 		cout << "nauty_interface::nauty_interface_matrix_int init adjacency" << endl;
 	}
 
-	for (i = 0; i < v; i++) {
-		for (j = 0; j < b; j++) {
-			if (M[i * b + j] == 0) {
+	for (i = 0; i < Enc->nb_rows; i++) {
+		for (j = 0; j < Enc->nb_cols; j++) {
+			if (Enc->Incma[i * Enc->nb_cols + j] == 0) {
 				continue;
 			}
 			p1 = i;
-			p2 = v + j;
+			p2 = Enc->nb_rows + j;
 			row = GRAPHROW(g, p1, m);
 			ADDELEMENT(row, p2);
 			row = GRAPHROW(g, p2, m);
@@ -626,7 +630,7 @@ void nauty_interface::nauty_interface_matrix_int(int *M, int v, int b,
 	}
 	for (i = 0; i < n; i++) {
 		lab[i] = i;
-		ptn[i] = partition[i];
+		ptn[i] = Enc->partition[i];
 	}
 	//ptn[v - 1] = 0;
 	if (f_vv) {
@@ -647,11 +651,11 @@ void nauty_interface::nauty_interface_matrix_int(int *M, int v, int b,
 	//Ago = ago;
 	longinteger_domain Dom;
 
-	Dom.multiply_up(Ago, transversal_length, base_length, 0 /* verbose_level*/);
-	Base_length = base_length;
+	Dom.multiply_up(NO->Ago, transversal_length, base_length, 0 /* verbose_level*/);
+	NO->Base_length = base_length;
 	for (i = base_length - 1; i >= 0; i--) {
-		Base[base_length - 1 - i] = base[i];
-		Transversal_length[base_length - 1 - i] = transversal_length[i];
+		NO->Base[base_length - 1 - i] = base[i];
+		NO->Transversal_length[base_length - 1 - i] = transversal_length[i];
 	}
 	if (f_vv) {
 		cout << "transversal_length : ";
@@ -666,10 +670,10 @@ void nauty_interface::nauty_interface_matrix_int(int *M, int v, int b,
 
 	for (i = 0; i < aut_counter; i++) {
 		for (j = 0; j < n; j++) {
-			Aut[i * n + j] = aut[i * n + j];
+			NO->Aut[i * n + j] = aut[i * n + j];
 		}
 	}
-	Aut_counter = aut_counter;
+	NO->Aut_counter = aut_counter;
 #endif
 	nauty_interface_free_data();
 #endif

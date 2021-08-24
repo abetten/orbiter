@@ -273,6 +273,14 @@ public:
 			int f_produce_latex_header,
 			int verbose_level);
 	void read_solutions_and_tally(std::string &fname, int sz, int verbose_level);
+	void save_fibration(std::vector<std::vector<std::pair<int, int> > > &Fibration,
+			std::string &fname, int verbose_level);
+	void save_cumulative_canonical_labeling(std::vector<std::vector<int> > &Cumulative_canonical_labeling,
+			std::string &fname, int verbose_level);
+	void save_cumulative_ago(std::vector<long int> &Cumulative_Ago,
+			std::string &fname, int verbose_level);
+	void save_cumulative_data(std::vector<std::vector<int> > &Cumulative_data,
+			std::string &fname, int verbose_level);
 
 };
 

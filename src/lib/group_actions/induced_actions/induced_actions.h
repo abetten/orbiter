@@ -639,6 +639,30 @@ public:
 };
 
 // #############################################################################
+// action_on_interior_direct_product.cpp
+// #############################################################################
+
+
+//! induced action on the interior direct product
+
+
+class action_on_interior_direct_product {
+public:
+	action *A;
+	int nb_rows;
+	int nb_cols;
+	int degree;
+
+
+	action_on_interior_direct_product();
+	~action_on_interior_direct_product();
+	void init(action *A, int nb_rows, int verbose_level);
+	long int compute_image(int *Elt, long int a, int verbose_level);
+};
+
+
+
+// #############################################################################
 // action_on_k_subsets.cpp
 // #############################################################################
 

@@ -40,6 +40,7 @@ public:
 		int *Aut, int &Aut_counter,
 		int *Base, int &Base_length,
 		int *Transversal_length, longinteger_object &Ago, int verbose_level);
+#if 0
 	void nauty_interface_int(int v, int b, int *X, int nb_inc,
 		int *labeling, int *partition,
 		int *Aut, int &Aut_counter,
@@ -55,11 +56,15 @@ public:
 		int *Aut, int &Aut_counter,
 		int *Base, int &Base_length,
 		int *Transversal_length, longinteger_object &Ago);
-	void nauty_interface_matrix_int(int *M, int v, int b,
-		int *labeling, int *partition,
-		int *Aut, int &Aut_counter,
-		int *Base, int &Base_length,
-		int *Transversal_length, longinteger_object &Ago, int verbose_level);
+#endif
+	void nauty_interface_matrix_int(
+		encoded_combinatorial_object *Enc,
+		int *labeling,
+		nauty_output *NO,
+		//int *Aut, int &Aut_counter,
+		//int *Base, int &Base_length,
+		//int *Transversal_length, longinteger_object &Ago,
+		int verbose_level);
 
 
 };

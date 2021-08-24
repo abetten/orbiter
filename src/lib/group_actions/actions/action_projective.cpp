@@ -18,7 +18,7 @@ namespace group_actions {
 
 strong_generators *action::set_stabilizer_in_projective_space(
 	projective_space *P,
-	long int *set, int set_size, int &canonical_pt,
+	long int *set, int set_size, //int &canonical_pt,
 	int *canonical_set_or_NULL,
 	int verbose_level)
 // assuming we are in a linear action.
@@ -29,6 +29,10 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
+	object_in_projective_space *OiP;
+	nauty_interface_with_group Nau;
+
+#if 0
 	int *Incma;
 	int *partition;
 	int *labeling;
@@ -41,17 +45,47 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	longinteger_object Ago;
 	int N, i, j, h;
 	file_io Fio;
+#endif
 
 	if (f_v) {
 		cout << "action::set_stabilizer_in_projective_space" << endl;
 		cout << "verbose_level = " << verbose_level << endl;
 		cout << "set_size = " << set_size << endl;
-		}
+	}
+
+
+	OiP = NEW_OBJECT(object_in_projective_space);
+
+	OiP->init_point_set(P, set, set_size, verbose_level);
+
+	int nb_rows, nb_cols;
+	long int *canonical_labeling;
+	int canonical_labeling_len;
+	bitvector *Canonical_form = NULL;
+
+	OiP->encoding_size(
+			nb_rows, nb_cols,
+			verbose_level);
+	canonical_labeling = NEW_lint(nb_rows + nb_cols);
+
+
+	strong_generators *SG;
+
+
+	SG = Nau.set_stabilizer_of_object(
+		OiP,
+		this /* A_linear */,
+		FALSE /* f_compute_canonical_form */, Canonical_form,
+		canonical_labeling, canonical_labeling_len,
+		verbose_level);
+
+
+#if 0
 
 	if (f_vv) {
 		cout << "action::set_stabilizer_in_projective_space "
 				"computing the type of the set" << endl;
-		}
+	}
 
 	tally C;
 
@@ -60,18 +94,18 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		cout << "action::set_stabilizer_in_projective_space: "
 				"The set is a multiset:" << endl;
 		C.print(FALSE /*f_backwards*/);
-		}
+	}
 
 	if (f_vv) {
 		cout << "action::set_stabilizer_in_projective_space "
 				"The type of the set is:" << endl;
 		C.print(FALSE /*f_backwards*/);
 		cout << "C.second_nb_types = " << C.second_nb_types << endl;
-		}
+	}
 	if (f_vv) {
 		cout << "action::set_stabilizer_in_projective_space "
 				"allocating data" << endl;
-		}
+	}
 	nb_rows = P->N_points + 1;
 	nb_cols = P->N_lines + C.second_nb_types;
 	Incma = NEW_int(nb_rows * nb_cols);
@@ -82,24 +116,24 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	if (f_vv) {
 		cout << "action::set_stabilizer_in_projective_space "
 				"Initializing Incma" << endl;
-		}
+	}
 
 	for (i = 0; i < P->N_points; i++) {
 		for (j = 0; j < P->N_lines; j++) {
 			Incma[i * nb_cols + j] = P->is_incident(i, j);
-			}
 		}
+	}
 	// last columns, make zero:
 	for (j = 0; j < C.second_nb_types; j++) {
 		for (i = 0; i < P->N_points; i++) {
 			Incma[i * nb_cols + P->N_lines + j] = 0;
-			}
 		}
+	}
 
 	// last row, make zero:
 	for (j = 0; j < nb_cols; j++) {
 		Incma[P->N_points * nb_cols + j] = 0;
-		}
+	}
 
 	// last columns:
 	for (j = 0; j < C.second_nb_types; j++) {
@@ -111,7 +145,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		if (f_vvv) {
 			cout << "j=" << j << " f2=" << f2 << " l2=" << l2
 					<< " multiplicity=" << m << endl;
-			}
+		}
 		for (h = 0; h < l2; h++) {
 			idx = C.second_sorting_perm_inv[f2 + h];
 			f = C.type_first[idx];
@@ -120,99 +154,54 @@ strong_generators *action::set_stabilizer_in_projective_space(
 			if (f_vvv) {
 				cout << "h=" << h << " idx=" << idx << " f=" << f
 						<< " l=" << l << " i=" << i << endl;
-				}
-			Incma[i * nb_cols + P->N_lines + j] = 1;
 			}
+			Incma[i * nb_cols + P->N_lines + j] = 1;
+		}
 #if 0
 		for (h = 0; h < set_size; h++) {
 			i = set[h];
 			Incma[i * nb_cols + N_lines + j] = 1;
-			}
-#endif
 		}
+#endif
+	}
 	// bottom right entries:
 	for (j = 0; j < C.second_nb_types; j++) {
 		Incma[P->N_points * nb_cols + P->N_lines + j] = 1;
-		}
+	}
 
 	if (f_vvv) {
 		cout << "action::set_stabilizer_in_projective_space Incma:" << endl;
 		//int_matrix_print(Incma, nb_rows, nb_cols);
 	}
 
-#if 0
-	if (f_save_incma_in_and_out) {
-		if (f_vv) {
-			cout << "Incma in:" << endl;
-			if (nb_rows < 10) {
-				print_integer_matrix_width(cout,
-						Incma, nb_rows, nb_cols, nb_cols, 1);
-				}
-			else {
-				cout << "too large to print" << endl;
-				}
-			}
-		string fname_csv;
-		string fname_bin;
-		char str[1000];
-
-		sprintf(str, "Incma_in_%d_%d", nb_rows, nb_cols);
-
-		fname_csv.assign(save_incma_in_and_out_prefix);
-		fname_csv.append(str);
-		fname_csv.append(".csv");
-		fname_bin.assign(save_incma_in_and_out_prefix);
-		fname_bin.append(str);
-		fname_bin.append(".bin");
-		//sprintf(fname_csv, "%sIncma_in_%d_%d.csv",
-		//		save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		//sprintf(fname_bin, "%sIncma_in_%d_%d.bin",
-		//		save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		Fio.int_matrix_write_csv(fname_csv, Incma, nb_rows, nb_cols);
-
-		for (i = 0; i < nb_rows + nb_cols; i++) {
-			vertex_labeling[i] = i;
-			}
-
-		colored_graph *CG;
-
-		CG = NEW_OBJECT(colored_graph);
-
-		CG->create_Levi_graph_from_incidence_matrix(
-				Incma, nb_rows, nb_cols, TRUE, vertex_labeling, verbose_level);
-		CG->save(fname_bin, verbose_level);
-		//FREE_int(Incma);
-		FREE_OBJECT(CG);
-		}
-#endif
 
 	if (f_vv) {
 		cout << "action::set_stabilizer_in_projective_space "
 				"initializing partition" << endl;
-		}
+	}
 	N = nb_rows + nb_cols;
 	for (i = 0; i < N; i++) {
 		partition[i] = 1;
-		}
+	}
 	partition[P->N_points - 1] = 0;
 	partition[P->N_points] = 0;
 	partition[nb_rows + P->N_lines - 1] = 0;
 	for (j = 0; j < C.second_nb_types; j++) {
 		partition[nb_rows + P->N_lines + j] = 0;
-		}
+	}
 	if (f_vvv) {
 		cout << "partition:" << endl;
 		for (i = 0; i < N; i++) {
 			//cout << i << " : " << partition[i] << endl;
 			cout << partition[i];
-			}
-		cout << endl;
 		}
+		cout << endl;
+	}
 
 	if (f_vv) {
 		cout << "action::set_stabilizer_in_projective_space "
 				"initializing Aut, Base, Transversal_length" << endl;
-		}
+	}
 	Aut = NEW_int(N * N);
 	Base = NEW_int(N);
 	Base_lint = NEW_lint(N);
@@ -222,7 +211,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	if (f_v) {
 		cout << "action::set_stabilizer_in_projective_space, "
 				"calling nauty_interface_matrix_int" << endl;
-		}
+	}
 	Nau.nauty_interface_matrix_int(Incma, nb_rows, nb_cols,
 		labeling, partition,
 		Aut, Aut_counter,
@@ -231,7 +220,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	if (f_v) {
 		cout << "action::set_stabilizer_in_projective_space, "
 				"done with nauty_interface_matrix_int, Ago=" << Ago << endl;
-		}
+	}
 
 	Orbiter->Int_vec.copy_to_lint(Base, Base_lint, Base_length);
 
@@ -241,7 +230,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		cout << "action::set_stabilizer_in_projective_space labeling:" << endl;
 		//int_vec_print(cout, labeling, nb_rows + nb_cols);
 		cout << endl;
-		}
+	}
 
 	Incma_out = NEW_int(nb_rows * nb_cols);
 	for (i = 0; i < nb_rows; i++) {
@@ -251,8 +240,8 @@ strong_generators *action::set_stabilizer_in_projective_space(
 			//cout << "i=" << i << " j=" << j
 			//<< " ii=" << ii << " jj=" << jj << endl;
 			Incma_out[i * nb_cols + j] = Incma[ii * nb_cols + jj];
-			}
 		}
+	}
 
 
 	if (f_vvv) {
@@ -260,49 +249,6 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		//int_matrix_print(Incma_out, nb_rows, nb_cols);
 	}
 
-#if 0
-	if (f_save_incma_in_and_out) {
-		if (f_vv) {
-			cout << "Incma Out:" << endl;
-			if (nb_rows < 20) {
-				print_integer_matrix_width(cout,
-						Incma_out, nb_rows, nb_cols, nb_cols, 1);
-				}
-			else {
-				cout << "too large to print" << endl;
-				}
-			}
-		string fname_csv;
-		string fname_bin;
-		char str[1000];
-
-		sprintf(str, "Incma_out_%d_%d", nb_rows, nb_cols);
-
-		fname_csv.assign(save_incma_in_and_out_prefix);
-		fname_csv.append(str);
-		fname_csv.append(".csv");
-		fname_bin.assign(save_incma_in_and_out_prefix);
-		fname_bin.append(str);
-		fname_bin.append(".bin");
-
-		//sprintf(fname_csv, "%sIncma_out_%d_%d.csv",
-		//		save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		//sprintf(fname_bin, "%sIncma_out_%d_%d.bin",
-		//		save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		Fio.int_matrix_write_csv(fname_csv, Incma_out, nb_rows, nb_cols);
-
-
-		colored_graph *CG;
-
-		CG = NEW_OBJECT(colored_graph);
-
-		CG->create_Levi_graph_from_incidence_matrix(
-				Incma_out, nb_rows, nb_cols, TRUE, vertex_labeling,
-				verbose_level);
-		CG->save(fname_bin, verbose_level);
-		FREE_OBJECT(CG);
-		}
-#endif
 
 	canonical_pt = -1;
 	if (set_size) {
@@ -347,7 +293,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	if (f_v) {
 		cout << "action::set_stabilizer_in_projective_space "
 				"before init_permutation_group_from_generators" << endl;
-		}
+	}
 	Ago.assign_to(ago);
 	//ago.create(Ago, __FILE__, __LINE__);
 	A_perm->init_permutation_group_from_generators(N,
@@ -362,7 +308,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 				"created action ";
 		A_perm->print_info();
 		cout << endl;
-		}
+	}
 
 	//action *A_linear;
 
@@ -373,7 +319,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		cout << "set_stabilizer_in_projective_space: "
 				"A_linear == NULL" << endl;
 		exit(1);
-		}
+	}
 #endif
 
 	vector_ge *gens; // permutations from nauty
@@ -402,7 +348,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 					"strong generator " << g << ":" << endl;
 			//A_perm->element_print(gens->ith(g), cout);
 			cout << endl;
-			}
+		}
 
 		if (A_perm->reverse_engineer_semilinear_map(P,
 			gens->ith(g), Mtx, frobenius,
@@ -413,42 +359,42 @@ strong_generators *action::set_stabilizer_in_projective_space(
 			if (f_vv) {
 				cout << "semi-linear group element:" << endl;
 				//element_print(Elt1, cout);
-				}
+			}
 			element_move(Elt1, gens1->ith(pos), 0);
 
 
 			pos++;
-			}
+		}
 		else {
 			if (f_vv) {
 				cout << "action::set_stabilizer_in_projective_space: "
 						"generator " << g
 						<< " does not correspond to a semilinear mapping"
 						<< endl;
-				}
 			}
 		}
+	}
 	gens1->reallocate(pos, verbose_level - 2);
 	if (f_vv) {
 		cout << "action::set_stabilizer_in_projective_space "
 				"we found " << gens1->len << " generators" << endl;
-		}
+	}
 
 	if (f_vvv) {
 		//gens1->print(cout);
-		}
+	}
 
 
 	if (f_vv) {
 		cout << "action::set_stabilizer_in_projective_space: "
 				"we are now testing the generators:" << endl;
-		}
+	}
 	int j1, j2;
 
 	for (g = 0; g < gens1->len; g++) {
 		if (f_vv) {
 			cout << "generator " << g << ":" << endl;
-			}
+		}
 		//A_linear->element_print(gens1->ith(g), cout);
 		for (i = 0; i < P->N_points; i++) {
 			j1 = element_image_of(i, gens1->ith(g), 0);
@@ -461,13 +407,13 @@ strong_generators *action::set_stabilizer_in_projective_space(
 				cout << "j2=" << j2 << endl;
 				cout << endl;
 				exit(1);
-				}
 			}
 		}
+	}
 	if (f_vv) {
 		cout << "action::set_stabilizer_in_projective_space: "
 				"the generators are OK" << endl;
-		}
+	}
 
 
 
@@ -477,7 +423,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	if (f_vv) {
 		cout << "action::set_stabilizer_in_projective_space: "
 				"we are now creating the group" << endl;
-		}
+	}
 
 	S = create_sims_from_generators_with_target_group_order(
 		gens1, ago, 0 /*verbose_level*/);
@@ -488,7 +434,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	if (f_vv) {
 		cout << "action::set_stabilizer_in_projective_space: "
 				"Found a group of order " << go << endl;
-		}
+	}
 	if (f_vvv) {
 		cout << "action::set_stabilizer_in_projective_space: "
 				"strong generators are:" << endl;
@@ -496,7 +442,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		cout << "set_stabilizer_in_projective_space: "
 				"strong generators are (in tex):" << endl;
 		//S->print_generators_tex(cout);
-		}
+	}
 
 
 	longinteger_domain D;
@@ -507,7 +453,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		cout << "ago = " << ago << endl;
 		cout << "go = " << go << endl;
 		exit(1);
-		}
+	}
 
 	FREE_int(Aut);
 	FREE_int(Base);
@@ -531,7 +477,12 @@ strong_generators *action::set_stabilizer_in_projective_space(
 
 	if (f_v) {
 		cout << "action::set_stabilizer_in_projective_space done" << endl;
-		}
+	}
+#endif
+
+	FREE_lint(canonical_labeling);
+	FREE_OBJECT(OiP);
+
 	return SG;
 }
 
@@ -592,8 +543,8 @@ void action::report_fixed_objects_in_P3(ostream &ost,
 		j = element_image_of(i, Elt, 0 /* verbose_level */);
 		if (j == i) {
 			cnt++;
-			}
 		}
+	}
 
 	ost << "There are " << cnt << " fixed points, they are: \\\\" << endl;
 	for (i = 0; i < P3->N_points; i++) {
@@ -604,69 +555,69 @@ void action::report_fixed_objects_in_P3(ostream &ost,
 			Orbiter->Int_vec.print(ost, v, 4);
 			ost << "\\\\" << endl;
 			cnt++;
-			}
 		}
+	}
 
 	ost << "\\bigskip" << endl;
 	//ost << "Fixed Lines\\\\" << endl;
 
 	{
-	action *A2;
+		action *A2;
 
-	A2 = induced_action_on_grassmannian(2, 0 /* verbose_level*/);
+		A2 = induced_action_on_grassmannian(2, 0 /* verbose_level*/);
 
-	cnt = 0;
-	for (i = 0; i < A2->degree; i++) {
-		j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
-		if (j == i) {
-			cnt++;
+		cnt = 0;
+		for (i = 0; i < A2->degree; i++) {
+			j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
+			if (j == i) {
+				cnt++;
 			}
 		}
 
-	ost << "There are " << cnt << " fixed lines, they are: \\\\" << endl;
-	cnt = 0;
-	for (i = 0; i < A2->degree; i++) {
-		j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
-		if (j == i) {
-			ost << i << " : $";
-			A2->G.AG->G->print_single_generator_matrix_tex(ost, i);
-			ost << "$\\\\" << endl;
-			cnt++;
+		ost << "There are " << cnt << " fixed lines, they are: \\\\" << endl;
+		cnt = 0;
+		for (i = 0; i < A2->degree; i++) {
+			j = A2->element_image_of(i, Elt, 0 /* verbose_level */);
+			if (j == i) {
+				ost << i << " : $";
+				A2->G.AG->G->print_single_generator_matrix_tex(ost, i);
+				ost << "$\\\\" << endl;
+				cnt++;
 			}
 		}
 
-	FREE_OBJECT(A2);
+		FREE_OBJECT(A2);
 	}
 
 	ost << "\\bigskip" << endl;
 	//ost << "Fixed Planes\\\\" << endl;
 
 	{
-	action *A3;
+		action *A3;
 
-	A3 = induced_action_on_grassmannian(3, 0 /* verbose_level*/);
+		A3 = induced_action_on_grassmannian(3, 0 /* verbose_level*/);
 
-	cnt = 0;
-	for (i = 0; i < A3->degree; i++) {
-		j = A3->element_image_of(i, Elt, 0 /* verbose_level */);
-		if (j == i) {
-			cnt++;
+		cnt = 0;
+		for (i = 0; i < A3->degree; i++) {
+			j = A3->element_image_of(i, Elt, 0 /* verbose_level */);
+			if (j == i) {
+				cnt++;
 			}
 		}
 
-	ost << "There are " << cnt << " fixed planes, they are: \\\\" << endl;
-	cnt = 0;
-	for (i = 0; i < A3->degree; i++) {
-		j = A3->element_image_of(i, Elt, 0 /* verbose_level */);
-		if (j == i) {
-			ost << i << " : $";
-			A3->G.AG->G->print_single_generator_matrix_tex(ost, i);
-			ost << "$\\\\" << endl;
-			cnt++;
+		ost << "There are " << cnt << " fixed planes, they are: \\\\" << endl;
+		cnt = 0;
+		for (i = 0; i < A3->degree; i++) {
+			j = A3->element_image_of(i, Elt, 0 /* verbose_level */);
+			if (j == i) {
+				ost << i << " : $";
+				A3->G.AG->G->print_single_generator_matrix_tex(ost, i);
+				ost << "$\\\\" << endl;
+				cnt++;
 			}
 		}
 
-	FREE_OBJECT(A3);
+		FREE_OBJECT(A3);
 	}
 	if (f_v) {
 		cout << "action::report_fixed_objects_in_P3 done" << endl;

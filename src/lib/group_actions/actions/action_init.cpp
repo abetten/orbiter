@@ -109,12 +109,12 @@ void action::init_linear_group(
 		if (f_v) {
 			cout << "action::init_linear_group "
 					"induced_action_on_determinant finished" << endl;
-			}
+		}
 		A_on_det.Kernel->group_order(go);
 		if (f_v) {
 			cout << "action::init_linear_group "
 					"intersection has order " << go << endl;
-			}
+		}
 
 
 		strong_generators *SG;
@@ -124,12 +124,12 @@ void action::init_linear_group(
 			cout << "action::init_linear_group creating strong generators "
 					"for the kernel n the action "
 					"on the determinant" << endl;
-			}
+		}
 
 		SG->init_from_sims(A_on_det.Kernel, 0 /* verbose_level */);
 		//S = SG->create_sims(0 /* verbose_level */);
 		FREE_OBJECT(SG);
-		}
+	}
 #if 0
 	else {
 		if (f_v) {
@@ -156,15 +156,15 @@ void action::init_linear_group(
 #if 0
 		if (f_projective) {
 			display_all_PG_elements(m - 1, *F);
-			}
-#endif
 		}
+#endif
+	}
 
 
 
 	if (f_v) {
 		cout << "action::init_linear_group finished" << endl;
-		}
+	}
 }
 
 
@@ -182,7 +182,7 @@ void action::init_projective_group(int n, finite_field *F,
 		cout << "n=" << n << " q=" << F->q << endl;
 		cout << "f_semilinear=" << f_semilinear << endl;
 		cout << "f_basis=" << f_basis << endl;
-		}
+	}
 
 	M = NEW_OBJECT(matrix_group);
 
@@ -198,25 +198,25 @@ void action::init_projective_group(int n, finite_field *F,
 	if (f_v) {
 		cout << "action::init_projective_group "
 				"before M->init_projective_group" << endl;
-		}
+	}
 	M->init_projective_group(n,
 			F, f_semilinear, this, verbose_level - 3);
 	if (f_v) {
 		cout << "action::init_projective_group "
 				"after M->init_projective_group" << endl;
-		}
+	}
 
 
 	low_level_point_size = M->low_level_point_size;
 	if (f_v) {
 		cout << "action::init_projective_group low_level_point_size=" 
 			<< low_level_point_size<< endl;
-		}
+	}
 	label.assign(M->label);
 	label_tex.assign(M->label_tex);
 	if (f_v) {
 		cout << "action::init_projective_group label=" << label << endl;
-		}
+	}
 
 	degree = M->degree;
 	make_element_size = M->elt_size_int_half;
@@ -234,7 +234,7 @@ void action::init_projective_group(int n, finite_field *F,
 			cout << "action::init_projective_group "
 					"before setup_linear_group_from_strong_generators"
 					<< endl;
-			}
+		}
 		setup_linear_group_from_strong_generators(M,
 				nice_gens, f_init_sims,
 				verbose_level - 3);
@@ -242,8 +242,8 @@ void action::init_projective_group(int n, finite_field *F,
 			cout << "action::init_projective_group "
 					"after setup_linear_group_from_strong_generators"
 					<< endl;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "action::init_projective_group, finished setting up "
 				<< label;
@@ -254,7 +254,7 @@ void action::init_projective_group(int n, finite_field *F,
 		//cout << "make_element_size=" << make_element_size << endl;
 		//cout << "base_len=" << base_len << endl;
 		//cout << "f_semilinear=" << f_semilinear << endl;
-		}	
+	}
 }
 
 void action::init_affine_group(int n, finite_field *F, 
@@ -271,7 +271,7 @@ void action::init_affine_group(int n, finite_field *F,
 		cout << "n=" << n << " q=" << F->q << endl;
 		cout << "f_semilinear=" << f_semilinear << endl;
 		cout << "f_basis=" << f_basis << endl;
-		}
+	}
 
 	M = NEW_OBJECT(matrix_group);
 
@@ -291,12 +291,12 @@ void action::init_affine_group(int n, finite_field *F,
 	if (f_v) {
 		cout << "action::init_affine_group low_level_point_size=" 
 		<< low_level_point_size<< endl;
-		}
+	}
 	label.assign(M->label);
 	label_tex.assign(M->label_tex);
 	if (f_v) {
 		cout << "action::init_affine_group label=" << label << endl;
-		}
+	}
 
 	degree = M->degree;
 	make_element_size = M->elt_size_int_half;
@@ -311,7 +311,7 @@ void action::init_affine_group(int n, finite_field *F,
 	if (f_basis) {
 		setup_linear_group_from_strong_generators(M,
 				nice_gens, f_init_sims, verbose_level);
-		}
+	}
 	if (f_v) {
 		cout << "action::init_affine_group, finished setting up "
 				<< label;
@@ -322,7 +322,7 @@ void action::init_affine_group(int n, finite_field *F,
 		//cout << "make_element_size=" << make_element_size << endl;
 		//cout << "base_len=" << base_len << endl;
 		//cout << "f_semilinear=" << f_semilinear << endl;
-		}	
+	}
 }
 
 void action::init_general_linear_group(int n, finite_field *F, 
@@ -498,7 +498,7 @@ void action::init_projective_special_group(
 		cout << "n=" << n << " q=" << F->q << endl;
 		cout << "f_semilinear=" << f_semilinear << endl;
 		cout << "f_basis=" << f_basis << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "action::init_projective_special_group "
@@ -529,7 +529,7 @@ void action::init_projective_special_group(
 		if (f_v) {
 			cout << "action::init_projective_special_group "
 					"computing intersection with special linear group" << endl;
-			}
+		}
 		A_on_det.induced_action_on_determinant(
 				Sims, verbose_level);
 		if (f_v) {
@@ -538,7 +538,7 @@ void action::init_projective_special_group(
 			A_on_det.Kernel->group_order(go);
 			cout << "action::init_projective_special_group "
 					"intersection has order " << go << endl;
-			}
+		}
 		gens->init_from_sims(A_on_det.Kernel, verbose_level - 1);
 
 
@@ -552,7 +552,7 @@ void action::init_projective_special_group(
 
 	if (f_v) {
 		cout << "action::init_projective_special_group done" << endl;
-		}
+	}
 }
 
 void action::init_matrix_group_strong_generators_builtin(
@@ -767,23 +767,23 @@ void action::init_permutation_group_from_generators(int degree,
 			cout << i << " : ";
 			if (degree < 20) {
 				Combi.perm_print(cout, gens + i * degree, degree);
-				}
+			}
 			else {
 				cout << "too large to print";
-				}
-			cout << endl;
 			}
+			cout << endl;
 		}
+	}
 	
 	if (f_vv) {
 		cout << "action::init_permutation_group_from_generators "
 				"calling init_permutation_group" << endl;
-		}
+	}
 	init_permutation_group(degree, verbose_level - 10);
 	if (f_vv) {
 		cout << "action::init_permutation_group_from_generators "
 				"after init_permutation_group" << endl;
-		}
+	}
 
 	if (Stabilizer_chain) {
 		FREE_OBJECT(Stabilizer_chain);
@@ -795,14 +795,14 @@ void action::init_permutation_group_from_generators(int degree,
 		cout << "given_base:";
 		Orbiter->Lint_vec.print(cout, given_base, given_base_length);
 		cout << " of length " << given_base_length << endl;
-		}
+	}
 	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
 	Stabilizer_chain->allocate_base_data(this, given_base_length, verbose_level - 10);
 	
 	// init base:
 	for (i = 0; i < base_len(); i++) {
 		base_i(i) = given_base[i];
-		}
+	}
 
 
 
@@ -810,7 +810,7 @@ void action::init_permutation_group_from_generators(int degree,
 		cout << "action::init_permutation_group_from_generators, "
 				"now trying to set up the group from the given generators"
 				<< endl;
-		}
+	}
 	
 	vector_ge *generators;
 	strong_generators *Strong_gens;
@@ -819,16 +819,15 @@ void action::init_permutation_group_from_generators(int degree,
 	generators->init(this, verbose_level - 2);
 	generators->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
-		make_element(generators->ith(i), 
-			gens + i * degree, 
+		make_element(generators->ith(i), gens + i * degree,
 			0 /*verbose_level*/);
-		}
+	}
 	
 
 	if (f_vv) {
 		cout << "action::init_permutation_group_from_generators "
 				"before generators_to_strong_generators" << endl;
-		}
+	}
 	generators_to_strong_generators(
 		f_target_go, target_go, 
 		generators, Strong_gens, 
@@ -836,43 +835,43 @@ void action::init_permutation_group_from_generators(int degree,
 	if (f_vv) {
 		cout << "action::init_permutation_group_from_generators "
 				"after generators_to_strong_generators" << endl;
-		}
+	}
 
 	sims *G;
 
 	if (f_vv) {
 		cout << "action::init_permutation_group_from_generators "
 				"before Strong_gens->create_sims" << endl;
-		}
+	}
 	G = Strong_gens->create_sims(verbose_level - 10);
 	if (f_vv) {
 		cout << "action::init_permutation_group_from_generators "
 				"after Strong_gens->create_sims" << endl;
-		}
+	}
 
 	
 	if (f_vv) {
 		cout << "action::init_permutation_group_from_generators "
 				"before init_sims" << endl;
-		}
+	}
 	init_sims_only(G, verbose_level - 10);
 
 	if (f_vv) {
 		cout << "action::init_permutation_group_from_generators "
 				"after init_sims" << endl;
-		}
+	}
 
 
 
 	if (f_vv) {
 		cout << "action::init_permutation_group_from_generators "
 				"before compute_strong_generators_from_sims" << endl;
-		}
+	}
 	compute_strong_generators_from_sims(verbose_level - 10);
 	if (f_vv) {
 		cout << "action::init_permutation_group_from_generators "
 				"after_strong_generators_from_sims" << endl;
-		}
+	}
 
 
 	FREE_OBJECT(generators);
@@ -880,10 +879,10 @@ void action::init_permutation_group_from_generators(int degree,
 
 	if (f_v) {
 		print_info();
-		}
+	}
 	if (f_v) {
 		cout << "action::init_permutation_group_from_generators done" << endl;
-		}
+	}
 }
 
 void action::init_affine_group(int n, int q, 
@@ -1389,13 +1388,13 @@ void action::init_permutation_representation(action *A_original,
 		cout << "action::init_permutation_representation" << endl;
 		cout << "original action=" << A_original->label << " restricted to degree " << degree << endl;
 		cout << "f_stay_in_the_old_action=" << f_stay_in_the_old_action << endl;
-		}
+	}
 
 	P = NEW_OBJECT(permutation_representation);
 
 	if (f_v) {
 		cout << "action::init_permutation_representation before P->init" << endl;
-		}
+	}
 	P->init(A_original,
 			f_stay_in_the_old_action,
 			gens,
@@ -1403,7 +1402,7 @@ void action::init_permutation_representation(action *A_original,
 			verbose_level - 2);
 	if (f_v) {
 		cout << "action::init_permutation_representation after P->init" << endl;
-		}
+	}
 
 	type_G = permutation_representation_t;
 	G.Permutation_representation = P;
@@ -1425,20 +1424,20 @@ void action::init_permutation_representation(action *A_original,
 		if (f_v) {
 			cout << "action::init_permutation_representation "
 					"degree=" << degree << endl;
-			}
+		}
 
 		Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
 		if (f_v) {
 			cout << "action::init_permutation_representation "
 					"before Stabilizer_chain->allocate_base_data" << endl;
-			}
+		}
 		Stabilizer_chain->allocate_base_data(this, W->base_length, verbose_level);
 		//allocate_base_data(base_len);
 		//Stabilizer_chain->base_len = W->base_length;
 		if (f_v) {
 			cout << "action::init_permutation_representation "
 					"base_len=" << base_len() << endl;
-			}
+		}
 
 		Orbiter->Lint_vec.copy(W->the_base, get_base(), base_len());
 		Orbiter->Int_vec.copy(W->the_transversal_length,
@@ -1478,7 +1477,7 @@ void action::init_permutation_representation(action *A_original,
 	if (f_v) {
 		cout << "action::init_permutation_representation "
 				"label=" << label << endl;
-		}
+	}
 
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_permutation_representation_group();
@@ -1494,104 +1493,7 @@ void action::init_permutation_representation(action *A_original,
 	if (f_v) {
 		cout << "action::init_permutation_representation "
 				"degree=" << degree << endl;
-		}
-
-#if 0
-	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	if (f_v) {
-		cout << "action::init_permutation_representation "
-				"before Stabilizer_chain->allocate_base_data" << endl;
-		}
-	Stabilizer_chain->allocate_base_data(this, W->base_length, verbose_level);
-	//allocate_base_data(base_len);
-	//Stabilizer_chain->base_len = W->base_length;
-	if (f_v) {
-		cout << "action::init_permutation_representation "
-				"base_len=" << base_len() << endl;
-		}
-
-	int_vec_copy(W->the_base, get_base(), base_len());
-	int_vec_copy(W->the_transversal_length,
-			get_transversal_length(), base_len());
-
-	int *gens_data;
-	int gens_size;
-	int gens_nb;
-
-	if (f_v) {
-		cout << "action::init_permutation_representation "
-				"before W->make_strong_generators_data" << endl;
-		}
-	W->make_strong_generators_data(gens_data,
-			gens_size, gens_nb, verbose_level - 10);
-	if (f_v) {
-		cout << "action::init_permutation_representation "
-				"after W->make_strong_generators_data" << endl;
-		}
-	Strong_gens = NEW_OBJECT(strong_generators);
-	if (f_v) {
-		cout << "action::init_permutation_representation "
-				"before Strong_gens->init_from_data" << endl;
-		}
-
-	vector_ge *nice_gens;
-	Strong_gens->init_from_data(this, gens_data, gens_nb, gens_size,
-			get_transversal_length(),
-			nice_gens,
-			verbose_level - 10);
-	if (f_v) {
-		cout << "action::init_permutation_representation "
-				"after Strong_gens->init_from_data" << endl;
-		}
-	FREE_OBJECT(nice_gens);
-	f_has_strong_generators = TRUE;
-	FREE_int(gens_data);
-
-
-	if (degree < STABILIZER_CHAIN_DATA_MAX_DEGREE) {
-		sims *S;
-
-		S = NEW_OBJECT(sims);
-
-		S->finite_field_init(this, verbose_level - 2);
-		if (f_v) {
-			cout << "action::init_permutation_representation "
-					"before S->init_generators" << endl;
-			}
-		S->init_generators(*Strong_gens->gens, verbose_level);
-		if (f_v) {
-			cout << "action::init_permutation_representation "
-					"after S->init_generators" << endl;
-			}
-		if (f_v) {
-			cout << "action::init_permutation_representation "
-					"before S->compute_base_orbits_known_length" << endl;
-			}
-		S->compute_base_orbits_known_length(get_transversal_length(), verbose_level);
-		if (f_v) {
-			cout << "action::init_permutation_representation "
-					"after S->compute_base_orbits_known_length" << endl;
-			}
-
-
-		if (f_v) {
-			cout << "action::init_permutation_representation "
-					"before init_sims" << endl;
-			}
-
-		init_sims(S, verbose_level);
-
-		if (f_v) {
-			cout << "action::init_permutation_representation "
-					"after init_sims" << endl;
-			}
 	}
-	else {
-		cout << "action::init_permutation_representation "
-				"because the degree is very large, "
-				"we are not creating a sims object" << endl;
-	}
-#endif
 
 	if (f_v) {
 		cout << "action::init_permutation_representation, finished setting up "

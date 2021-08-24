@@ -1963,7 +1963,7 @@ void group_theoretic_activity::orbits_on_poset_post_processing(
 
 
 
-
+#if 0
 	if (Descr->f_test_if_geometric) {
 		int d = Descr->test_if_geometric_depth;
 
@@ -2062,7 +2062,7 @@ void group_theoretic_activity::orbits_on_poset_post_processing(
 
 		} // if nb_orbits == 2
 	} // if (f_test_if_geometric)
-
+#endif
 
 
 

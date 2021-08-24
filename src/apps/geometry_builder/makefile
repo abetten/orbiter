@@ -66,7 +66,7 @@ libgeo.a: $(MODULES) ;
 	ar ruvs $(LIB) $(MODULES)
 
 	
-clean: ;
+clean:
 	- rm -f *.o *.a  a.out erzeuger *.out *~
 
 
