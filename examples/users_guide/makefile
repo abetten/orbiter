@@ -8505,7 +8505,7 @@ Char_Sym_6:
 	$(ORBITER_PATH)orbiter.out -v 2 -character_table_symmetric_group 6
 	
 
-FILE_24_3_TFC="24 24 72\
+FILE_24_3_TFC_INC="24 24 72\
 \n0 1 2 24 27 28 48 53 54 73 79 80 97 105 106 122 131 132 146 157 158 171 175 183 195 203 208 220 225 233 244 258 259 269 272 282 293 300 308 318 325 333 342 352 358 367 379 381 392 398 400 417 428 429 442 443 450 466 471 479 492 497 502 517 519 521 542 548 551 571 574 575              48\
 \n0 1 2 24 27 28 48 53 54 73 79 80 97 105 106 122 131 132 146 157 158 171 175 183 195 203 208 220 225 233 244 258 259 269 272 281 293 301 308 318 324 327 342 354 357 367 373 378 392 400 403 417 419 430 442 446 447 466 472 479 492 500 503 518 525 526 545 549 551 571 572 574              48\
 \n0 1 2 24 27 28 48 53 54 73 79 80 97 105 106 122 131 132 146 157 158 171 175 179 195 201 207 220 226 232 244 257 258 269 274 277 293 300 307 318 323 329 342 352 356 367 374 381 392 397 406 416 423 431 441 450 454 468 476 477 494 499 503 519 521 525 544 547 550 570 572 575             144\
@@ -8514,7 +8514,7 @@ FILE_24_3_TFC="24 24 72\
 
 
 design_test:
-	echo $(FILE_24_3_TFC) >24_3_TFC.inc
+	echo $(FILE_24_3_TFC_INC) >24_3_TFC.inc
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define D -design  -end \
 		-with D -do \
@@ -13503,6 +13503,52 @@ misc_join:
 SECTION_LIMITATIONS:
 
 
+
+####
+
+
+geo_10_3:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-geometry_builder -V 10 -B 10 -TDO 3 -fuse 1 -fname_GEO 10_3 -test 4,5,6,7,8,9 FFFF \
+		-end
+
+
+# 10 geos
+# 8/26/2021: 0 sec on Mac
+
+
+geo_11_3:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-geometry_builder -V 11 -B 11 -TDO 3 -fuse 1 -fname_GEO 11_3 -test 4,5,6,7,8,9,10 FFFF \
+		-end
+
+# 31 geos
+# 8/26/2021: 0 sec on Mac
+
+geo_12_3:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-geometry_builder -V 12 -B 12 -TDO 3 -fuse 1 -fname_GEO 12_3 -test 4,5,6,7,8,9,10,11 FFFF \
+		-end
+
+# 229 geos
+# 8/26/2021: 41 sec on Mac
+
+
+geo_12_3_b:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-geometry_builder -V 12 -B 12 -TDO 3 -fuse 1 -fname_GEO 12_3 -test 4,5,6,7,12 FFFF -test2 8,9,10,11 FFFF \
+		-end
+
+
+geo_12_3_c:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define D -design  -end \
+		-with D -do \
+		-design_activity \
+			-canonical_form \
+			-input -file_of_incidence_geometries 12_3.inc 12 12 36 -end \
+			-save_ago \
+		-end
 
 
 

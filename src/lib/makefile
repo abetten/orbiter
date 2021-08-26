@@ -42,7 +42,7 @@ MODULES= \
 		foundations/combinatorics/tdo_data.o \
 		foundations/combinatorics/tdo_refinement_description.o \
 		foundations/combinatorics/tdo_refinement.o \
-		foundations/combinatorics/tdo_scheme.o \
+		foundations/combinatorics/tdo_scheme_synthetic.o \
 		foundations/cryptography/cryptography_domain.o \
 		foundations/data_structures/bitmatrix.o \
 		foundations/data_structures/bitvector.o \
@@ -117,6 +117,25 @@ MODULES= \
 		foundations/geometry/quartic_curve_object.o \
 		foundations/geometry/spread_tables.o \
 		foundations/geometry/w3q.o \
+		foundations/geometry_builder/cperm.o \
+		foundations/geometry_builder/gen_geo_conf.o \
+		foundations/geometry_builder/gen_geo.o \
+		foundations/geometry_builder/geo_frame.o \
+		foundations/geometry_builder/geo_iso.o \
+		foundations/geometry_builder/geo_main.o \
+		foundations/geometry_builder/geometry_builder_description.o \
+		foundations/geometry_builder/geometry_builder.o \
+		foundations/geometry_builder/globals.o \
+		foundations/geometry_builder/grid.o \
+		foundations/geometry_builder/inc_encoding.o \
+		foundations/geometry_builder/incidence.o \
+		foundations/geometry_builder/iso_grid.o \
+		foundations/geometry_builder/iso_info.o \
+		foundations/geometry_builder/iso_type.o \
+		foundations/geometry_builder/os.o \
+		foundations/geometry_builder/tactical_decomposition.o \
+		foundations/geometry_builder/tdo_gradient.o \
+		foundations/geometry_builder/tdo_scheme.o \
 		foundations/globals/function_command.o \
 		foundations/globals/function_polish_description.o \
 		foundations/globals/function_polish.o \

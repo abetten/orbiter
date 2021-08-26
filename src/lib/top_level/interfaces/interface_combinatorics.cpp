@@ -116,6 +116,9 @@ interface_combinatorics::interface_combinatorics()
 	rank_k_subset_k = 0;
 	//rank_k_subset_text;
 
+	f_geometry_builder = FALSE;
+	Geometry_builder_description = NULL;
+
 }
 
 
@@ -206,6 +209,9 @@ void interface_combinatorics::print_help(int argc,
 	}
 	else if (stringcmp(argv[i], "-rank_k_subset") == 0) {
 		cout << "-rank_k_subset <int : n> <int : k> <string : text>  " << endl;
+	}
+	else if (stringcmp(argv[i], "-geometry_builder") == 0) {
+		cout << "-geometry_builder <description> -end" << endl;
 	}
 }
 
@@ -298,6 +304,9 @@ int interface_combinatorics::recognize_keyword(int argc,
 		return true;
 	}
 	else if (stringcmp(argv[i], "-rank_k_subset") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-geometry_builder") == 0) {
 		return true;
 	}
 	return false;
@@ -655,6 +664,25 @@ void interface_combinatorics::read_arguments(int argc,
 				<< " " << endl;
 		}
 	}
+	else if (stringcmp(argv[i], "-geometry_builder") == 0) {
+		f_geometry_builder = TRUE;
+		if (f_v) {
+			cout << "-geometry_builder " << endl;
+		}
+		Geometry_builder_description = NEW_OBJECT(geometry_builder_description);
+		i += Geometry_builder_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		if (f_v) {
+			cout << "interface_combinatorics::read_arguments finished "
+					"reading -geometry_builder" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+	}
 
 	if (f_v) {
 		cout << "interface_combinatorics::read_arguments done" << endl;
@@ -772,6 +800,9 @@ void interface_combinatorics::print()
 			<< " " << rank_k_subset_k
 			<< " " << rank_k_subset_text
 			<< " " << endl;
+	}
+	if (f_geometry_builder) {
+		Geometry_builder_description->print();
 	}
 }
 
@@ -999,6 +1030,21 @@ void interface_combinatorics::worker(int verbose_level)
 		cout << "the sorted ranks of all subsets are: ";
 		Orbiter->Int_vec.print(cout, Rk, N);
 		cout << endl;
+
+	}
+	else if (f_geometry_builder) {
+		if (f_v) {
+			cout << "interface_combinatorics::worker -geometry_builder" << endl;
+		}
+
+		geometry_builder *GB;
+		int nb_GEN, nb_GEO, ticks, tps;
+
+		GB = NEW_OBJECT(geometry_builder);
+
+		GB->init_description(Geometry_builder_description, verbose_level);
+
+		GB->gg->main2(nb_GEN, nb_GEO, ticks, tps, verbose_level);
 
 	}
 

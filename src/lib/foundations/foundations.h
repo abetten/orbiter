@@ -294,7 +294,7 @@ class pentomino_puzzle;
 class tdo_data;
 class tdo_refinement_description;
 class tdo_refinement;
-class tdo_scheme;
+class tdo_scheme_synthetic;
 struct solution_file_data;
 
 
@@ -372,6 +372,29 @@ class quartic_curve_object_properties;
 class quartic_curve_object;
 class spread_tables;
 class W3q;
+
+
+// geometry_builder:
+class cperm;
+class gen_geo_conf;
+class gen_geo;
+class geo_frame;
+class geometry_builder;
+class grid;
+class inc_encoding;
+class incidence;
+class tactical_decomposition;
+class iso_grid;
+class iso_info;
+class iso_type;
+class tdo_gradient;
+class tdo_scheme;
+typedef tdo_scheme *ptdo_scheme;
+
+
+// geometry_builder:
+class geometry_builder_description;
+
 
 // globals:
 class function_command;
@@ -716,6 +739,7 @@ std::ostream& operator<<(std::ostream& ost, longinteger_object& p);
 #include "./expression_parser/expression_parser.h"
 #include "./finite_fields/finite_fields.h"
 #include "./geometry/geometry.h"
+#include "./geometry_builder/geometry_builder.h"
 #include "./globals/globals.h"
 #include "./graph_theory/graph_theory.h"
 #include "./graph_theory_nauty/graph_theory_nauty.h"

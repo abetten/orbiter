@@ -14,6 +14,7 @@ all: algebra_and_number_theory \
 	expression_parser \
 	finite_fields \
 	geometry \
+	geometry_builder \
 	globals \
 	graph_theory \
 	graph_theory_nauty \
@@ -37,6 +38,7 @@ data_structures : data_structures2
 expression_parser : expression_parser2  
 finite_fields : finite_fields2  
 geometry : geometry2 
+geometry_builder : geometry_builder2 
 globals : globals2 
 graph_theory : graph_theory2 
 graph_theory_nauty : graph_theory_nauty2 
@@ -57,6 +59,7 @@ data_structures2 : ; cd data_structures; $(MAKE)
 expression_parser2 : ; cd expression_parser; $(MAKE)
 finite_fields2 : ; cd finite_fields; $(MAKE)
 geometry2 : ; cd geometry; $(MAKE)
+geometry_builder2 : ; cd geometry_builder; $(MAKE)
 globals2 : ; cd globals; $(MAKE)
 graph_theory2 : ; cd graph_theory; $(MAKE)
 graph_theory_nauty2 : ; cd graph_theory_nauty; $(MAKE)
@@ -78,6 +81,7 @@ clean:
 	cd expression_parser; $(MAKE) clean
 	cd finite_fields; $(MAKE) clean
 	cd geometry; $(MAKE) clean
+	cd geometry_builder; $(MAKE) clean
 	cd globals; $(MAKE) clean
 	cd graph_theory; $(MAKE) clean
 	cd graph_theory_nauty; $(MAKE) clean

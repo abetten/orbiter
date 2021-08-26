@@ -1,61 +1,16 @@
-/* geo.h */
+/*
+ * geometry_builder.h
+ *
+ *  Created on: Aug 24, 2021
+ *      Author: betten
+ */
 
-#include <iostream>
-#include <iomanip>
-
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
-
-#define NIL 0L
-
-
-#ifndef TRUE
-#define TRUE 1
-#endif
-#ifndef FALSE
-#define FALSE 0
-#endif
+#ifndef SRC_LIB_FOUNDATIONS_GEOMETRY_BUILDER_GEOMETRY_BUILDER_H_
+#define SRC_LIB_FOUNDATIONS_GEOMETRY_BUILDER_GEOMETRY_BUILDER_H_
 
 
-
-class cperm;
-class gen_geo_conf;
-class gen_geo;
-class geometry_builder;
-class grid;
-class inc_encoding;
-class incidence;
-class tactical_decomposition;
-class iso_grid;
-class iso_info;
-class iso_type;
-class tdo_gradient;
-class tdo_scheme;
-
-
-
-
-typedef struct frame FRAME;
-
-
-typedef tdo_scheme *ptdo_scheme;
-
-
-typedef int *pint;
-
-
-
-
-#define MINIMUM(x, y)   ( ((x) < (y)) ?  (x) : (y) )
-#define MAXIMUM(x, y)   ( ((x) > (y)) ?  (x) : (y) )
-#define MIN(x, y)   ( ((x) < (y)) ?  (x) : (y) )
-#define MAX(x, y)   ( ((x) > (y)) ?  (x) : (y) )
-#define ABS(x)      ( ((x) <  0 ) ? (-(x)) : (x) )
-#define EVEN(x)     ( ((x) % 2) == 0 )
-#define ODD(x)      ( ((x) % 2) == 1 )
-
-
+namespace orbiter {
+namespace foundations {
 
 
 
@@ -66,7 +21,7 @@ typedef int *pint;
 #define MAX_B 300
 #define MAX_VB 100   /* MAX(MAX_V, MAX_B) */
 #define MAX_B2 6400    /* B ueber 2 */
-#define MAX_R 80 
+#define MAX_R 80
 #define MAX_II 80
 #define MAX_JJ 80
 
@@ -74,38 +29,16 @@ typedef int *pint;
 #define MAX_TYPE 200
 	/* at least 2 * MAX_VB + 1 */
 
-/* flags for TDO type of isot: */
-#define TTTT 15
-#define TTTF 14
-#define TTFT 13
-#define TTFF 12
-#define TFTT 11
-#define TFTF 10
-#define TFFT  9
-#define TFFF  8
-#define FTTT  7
-#define FTTF  6
-#define FTFT  5
-#define FTFF  4
-#define FFTT  3
-#define FFTF  2
-#define FFFT  1
-#define FFFF  0
-
-#define TTT  7
-#define TTF  6
-#define TFT  5
-#define TFF  4
-#define FTT  3
-#define FTF  2
-#define FFT  1
-#define FFF  0
 
 
 
 
 
-// cperm.cpp:
+// #############################################################################
+// cperm.cpp
+// #############################################################################
+
+//! a permutation for use in class gen_geo
 
 
 class cperm {
@@ -113,7 +46,7 @@ class cperm {
 public:
 	int l;
 	int *data;
-		/* a permutation of 
+		/* a permutation of
 		 * { 0, 1 ... l - 1 } */
 
 	cperm();
@@ -146,36 +79,23 @@ public:
 
 
 
-
-
-
-struct frame {
-
-
-	int G_max;
-	int first[MAX_GRID + 1];
-	int len[MAX_GRID];
-	int grid_entry[MAX_GRID];
-
-
-};
-
-
-
-
-
+// #############################################################################
 // gen_geo_conf.cpp
+// #############################################################################
+
+//! description of a configuration which is part of the description of the geometry for class gen_geo
+
 
 class gen_geo_conf {
 
 public:
 	int fuse_idx;
-	
+
 	int v;
 	int b;
 	int r;
 	// int k;
-	
+
 	int r0;
 	// int k0;
 	// int k1;
@@ -191,10 +111,15 @@ public:
 
 };
 
+// #############################################################################
 // gen_geo.cpp
+// #############################################################################
+
+//! classification of geometries, doing the work
+
 
 class gen_geo {
-	
+
 public:
 	/* the TDO: */
 	int nb_fuse;
@@ -209,36 +134,36 @@ public:
 	int II;
 	int JJ;
 	gen_geo_conf Conf[MAX_II * MAX_JJ];
-	
+
 	incidence *inc;
 	int max_r;
 	int V;
 	int B;
-	
-	int R[MAX_V];
+
+	//int R[MAX_V];
 	int K[MAX_B];
 	int f_vbar[MAX_V][MAX_R];
 	int vbar[MAX_B];
 	int hbar[MAX_V];
-		/* hbar < J:   die Kreuze 
-		 *   innerhalb des Kaestchens 
-		 *   werden weitestgehend 
-		 *   linksbuendig plaziert. 
-		 * sonst: Uebernehme Kreuzchenpositionen 
+		/* hbar < J:   die Kreuze
+		 *   innerhalb des Kaestchens
+		 *   werden weitestgehend
+		 *   linksbuendig plaziert.
+		 * sonst: Uebernehme Kreuzchenpositionen
 		 *        der Vorgaengerzeile.
-		 *  (hbar >= J kann beliebigen Wert haben, 
+		 *  (hbar >= J kann beliebigen Wert haben,
 		 *   da hbar nicht ausgetragen wird).
-		 * Sonst wird hbar auf 
-		 * J gesetzt (nur wenn es nicht 
-		 * bereits vorher auf einen Wert 
-		 * < J gesetzt war), 
-		 * wenn beim Uebernehemen 
-		 * der Kreuze der Vorgaengerzeile 
-		 * weitergeschoben 
-		 * werden musste (und damit die 
-		 * aktuelle Zeile 
+		 * Sonst wird hbar auf
+		 * J gesetzt (nur wenn es nicht
+		 * bereits vorher auf einen Wert
+		 * < J gesetzt war),
+		 * wenn beim Uebernehemen
+		 * der Kreuze der Vorgaengerzeile
+		 * weitergeschoben
+		 * werden musste (und damit die
+		 * aktuelle Zeile
 		 * lex. weiter ist). */
-	
+
 	int f_do_iso_test;
 	int f_do_aut_group;
 	int f_do_aut_group_in_iso_type_without_vhbars;
@@ -246,12 +171,12 @@ public:
 	int gen_print_intervall;
 
 	std::string inc_file_name;
-	std::string GEO_fname;
+	std::string GEO_fname; // unused
 
 
 	gen_geo();
 	~gen_geo();
-	void main2(int *nb_GEN, int *nb_GEO, int *ticks, int *tps, int verbose_level);
+	void main2(int &nb_GEN, int &nb_GEO, int &ticks, int &tps, int verbose_level);
 	void generate_all(int verbose_level);
 	int GeoFst(int verbose_level);
 	int GeoNxt(int verbose_level);
@@ -275,6 +200,7 @@ public:
 	void save_theX(FILE *GEO_fp);
 	void geo_get_theX(int lines, int *X, int *nb_X, int verbose_level);
 	void init_tdo(int fuse_idx, int tdo_line, int v, int *b, int *r, int verbose_level);
+	void print_conf();
 	void init(int v, int b, int *R, int II, int JJ,
 		int f_do_iso_test,
 		int f_do_aut_group,
@@ -291,17 +217,101 @@ public:
 };
 
 
+// #############################################################################
+// geo_frame.cpp
+// #############################################################################
+
+//! partition of a geometry
+
+
+class geo_frame {
+public:
+	int G_max;
+	int first[MAX_GRID + 1];
+	int len[MAX_GRID];
+	int grid_entry[MAX_GRID];
+
+	geo_frame();
+	~geo_frame();
+
+};
+
+
+
+// #############################################################################
+// geometry_builder_description.cpp
+// #############################################################################
+
+//! description of a geometry
+
+
+class geometry_builder_description {
+public:
+
+	int f_V;
+	std::string V_text;
+	int f_B;
+	std::string B_text;
+	int f_TDO;
+	std::string TDO_text;
+	int f_fuse;
+	std::string fuse_text;
+
+	std::vector<std::string> test_lines;
+	std::vector<std::string> test_flags;
+
+	std::vector<std::string> test2_lines;
+	std::vector<std::string> test2_flags;
+
+	int f_fname_GEO;
+	std::string fname_GEO;
+
+	geometry_builder_description();
+	~geometry_builder_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+
+
+// #############################################################################
+// geometry_builder.cpp
+// #############################################################################
+
+//! classification of geometries
+
+
+
 
 
 class geometry_builder {
 
 public:
+
+	geometry_builder_description *Descr;
+
 	int II;
 	int JJ;
-	int v[MAX_II];
-	int b[MAX_JJ];
+	//int v[MAX_II];
+	//int b[MAX_JJ];
 	int theTDO[MAX_II][MAX_JJ];
-	
+
+	int *v;
+	int v_len;
+
+	int *b;
+	int b_len;
+
+	int *fuse;
+	int fuse_len;
+
+	int *TDO;
+	int TDO_len;
+
+
 	int V;
 		// = sum(i = 0; i < II; i++) v[i]
 	int B;
@@ -310,12 +320,12 @@ public:
 	int *R; // [V]
 
 	int PV[MAX_V];
-		/* PV[i] = Anzahl der Punkte, 
+		/* PV[i] = Anzahl der Punkte,
 		 * durch die i Geraden gehen. */
 	int GV[MAX_V];
-		/* GV[i] = Anzahl der Geraden 
+		/* GV[i] = Anzahl der Geraden
 		 * der L"ange i. */
-	
+
 	int f_transpose_it;
 	int f_save_file;
 	std::string fname;
@@ -328,6 +338,8 @@ public:
 
 	geometry_builder();
 	~geometry_builder();
+	void init_description(geometry_builder_description *Descr,
+			int verbose_level);
 	void init(const char *control_file_name, int no,
 			int flag_numeric, int f_no_inc_files,
 			int verbose_level);
@@ -350,7 +362,7 @@ public:
 	void TDO_init(int verbose_level);
 	void isot(int line, int tdo_flags, int verbose_level);
 	void isot_no_vhbars(int tdo_flags, int verbose_level);
-	void isot2(int line, int tdo_flags);
+	void isot2(int line, int tdo_flags, int verbose_level);
 	void range(int line, int first, int len);
 	void flush_line(int line);
 	void init_file_name(int f_transpose_it, const char *file_name, int verbose_level);
@@ -360,19 +372,12 @@ public:
 
 // geo_main.cpp
 void geo_main(int argc, char **argv,
-	int *nb_GEN, int *nb_GEO, int *ticks, int *tps);
+	int &nb_GEN, int &nb_GEO, int &ticks, int &tps);
 
 
 
 
 // globals.cpp:
-#if 0
-void set_aut_group_order(int *theGEO, int aut_group_order);
-int get_aut_group_order(int *theGEO);
-void print_aut_group_order(int nb_aut);
-void fprint_aut_group_order(FILE *fp, int nb_aut);
-#endif
-
 void inc_transpose(int *R,
 	int *theX, int f_full, int max_r,
 	int v, int b,
@@ -384,11 +389,17 @@ void print_theX_pq(
 
 void cperm_test(void);
 
-void frame2grid(FRAME *frame, grid *grid);
+void frame2grid(geo_frame *frame, grid *grid);
 int tdos_cmp(tdo_scheme *t1, tdo_scheme *t2, int verbose_level);
+int true_false_string_numeric(const char *p);
 
 
-// grid.cpp:
+// #############################################################################
+// grid.cpp
+// #############################################################################
+
+//! holds invariants during the TDO process
+
 
 class grid {
 
@@ -421,7 +432,11 @@ public:
 
 
 
-// inc_encoding.cpp:
+// #############################################################################
+// inc_encoding.cpp
+// #############################################################################
+
+//! row-by-row encoding of an incidence geometry
 
 class inc_encoding {
 
@@ -453,7 +468,12 @@ public:
 
 
 
-// incidence.cpp:
+// #############################################################################
+// incidence.cpp
+// #############################################################################
+
+//! encoding of an incidence geometry during classification
+
 
 class incidence {
 
@@ -493,7 +513,7 @@ public:
 	void print_override_theX(std::ostream &ost, int *theX, int v);
 	void print_partitioned(std::ostream &ost, int v, incidence *inc, int f_print_isot);
 	void stuetze_nach_zeile(int i, int tdo_flags, int verbose_level);
-	void stuetze2_nach_zeile(int i, int tdo_flags);
+	void stuetze2_nach_zeile(int i, int tdo_flags, int verbose_level);
 	void set_range(int i, int first, int len);
 	void set_flush_to_inc_file(int i, std::string &fname);
 	//int close_inc_file(int i);
@@ -504,69 +524,13 @@ public:
 
 };
 
-#if 0
-// iso_geo_data.cpp
 
-class iso_geo_data {
 
-public:
-	int dim_n;
-	int *theX; /* [v][dim_n] */
+// #############################################################################
+// iso_grid.cpp
+// #############################################################################
 
-	int f_R_allocated;
-	int *R;
-	/* R[i] is number of incidences in row i */
-
-	int v, b; /* the size of this geometry */
-	int V, B; /* the size of the larger geometry (B) */
-	/* int max_r; */
-
-	/* second derivatives
-	 * (a map from the unordered pairs
-	 * of points (p) or blocks (b)
-	 * into integers,
-	 * ij2k() used for indexing) */
-	int f_use_ddp;
-	int f_use_ddb;
-	short *ddp, *ddb;
-
-	/* tdo data: */
-	int f_tdo;
-	int tdo_m;
-	int tdo_V[MAX_V];
-	int tdo_n;
-	int tdo_B[MAX_B];
-
-	/* additional coloring of
-	 * the points (p) / blocks (b)
-	 * (multiple color fields allowed) */
-	int f_colors;
-	int nb_bcol, nb_pcol;
-	int *bcol, *pcol;
-
-	/* current row-permutation (degree V),
-	 * used in ISO2;
-	 * pv = p^{-1} */
-	cperm p, pv;
-	/* current column-permutation (degree B),
-	 * qv = q^{-1} */
-	cperm q, qv;
-
-	int f_transpose_it;
-
-	int hbar[MAX_VB];
-	int hlen[MAX_VB];
-	int hlen01[MAX_VB];
-	int hlen1[MAX_VB];
-	int grid_entry[MAX_VB];
-	int G_max;
-
-	iso_geo_data();
-	~iso_geo_data();
-
-};
-#endif
-
+//! decomposition of an incidence geometry
 
 class iso_grid {
 
@@ -596,7 +560,13 @@ public:
 };
 
 
-// iso_info.cpp:
+// #############################################################################
+// iso_info.cpp
+// #############################################################################
+
+//! input for the geometric isomorphism tester
+
+
 
 class iso_info {
 
@@ -668,7 +638,11 @@ void init_ISO2(void);
 
 
 
-// iso_type.cpp:
+// #############################################################################
+// iso_type.cpp
+// #############################################################################
+
+//! isomorphism tester based on a list of objects
 
 class iso_type {
 
@@ -807,7 +781,11 @@ void k2ij(int k, int *i, int *j, int n);
 
 
 
-// tactical_decomposition.cpp:
+// #############################################################################
+// tactical_decomposition.cpp
+// #############################################################################
+
+//! compute a geometric invariant called TDO
 
 class tactical_decomposition {
 
@@ -857,7 +835,7 @@ public:
 		short *&ddb, int &Nb, short *&ddb_mult, int verbose_level);
 	void refine(int v,
 			grid *G, grid *G_next,
-		int f_points, FRAME *frame,
+		int f_points, geo_frame *frame,
 		cperm *P, cperm *Pv, cperm *Q, cperm *Qv, int verbose_level);
 	void second_order_tdo(int v, int verbose_level);
 
@@ -871,7 +849,11 @@ public:
 
 
 
-// tdo_gradient.cpp:
+// #############################################################################
+// tdo_gradient.cpp
+// #############################################################################
+
+//! compute a more refined geometric invariant called second TDO
 
 class tdo_gradient {
 
@@ -894,7 +876,11 @@ public:
 
 
 
-// tdo_scheme.cpp:
+// #############################################################################
+// tdo_scheme.cpp
+// #############################################################################
+
+//! a geometric invariant called TDO
 
 class tdo_scheme {
 
@@ -924,3 +910,11 @@ public:
 
 
 
+
+
+
+}}
+
+
+
+#endif /* SRC_LIB_FOUNDATIONS_GEOMETRY_BUILDER_GEOMETRY_BUILDER_H_ */

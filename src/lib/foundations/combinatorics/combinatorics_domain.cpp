@@ -2796,7 +2796,7 @@ void combinatorics_domain::do_tdo_print(std::string &fname, int verbose_level)
 
 
 	geo_parameter GP;
-	tdo_scheme G;
+	tdo_scheme_synthetic G;
 
 
 	//Vector vm, VM, VM_mult;
@@ -3195,7 +3195,7 @@ void combinatorics_domain::convert_stack_to_tdo(std::string &stack_fname, int ve
 	}
 	{
 		geo_parameter GP;
-		tdo_scheme G;
+		tdo_scheme_synthetic G;
 		ifstream f(stack_fname);
 		ofstream g(fname_out);
 		for (i = 0; ; i++) {

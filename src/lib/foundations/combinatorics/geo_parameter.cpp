@@ -705,7 +705,7 @@ int geo_parameter::input_mode_stack(
 	return TRUE;
 }
 
-void geo_parameter::init_tdo_scheme(tdo_scheme &G, int verbose_level)
+void geo_parameter::init_tdo_scheme(tdo_scheme_synthetic &G, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
@@ -750,7 +750,7 @@ void geo_parameter::init_tdo_scheme(tdo_scheme &G, int verbose_level)
 		}
 }
 
-void geo_parameter::print_schemes(tdo_scheme &G)
+void geo_parameter::print_schemes(tdo_scheme_synthetic &G)
 {
 	cout << "geo_parameter::print_schemes" << endl;
 	cout << "decomposition " << label << ":" << endl;
@@ -769,7 +769,7 @@ void geo_parameter::print_schemes(tdo_scheme &G)
 		}
 }
 
-void geo_parameter::print_schemes_tex(tdo_scheme &G)
+void geo_parameter::print_schemes_tex(tdo_scheme_synthetic &G)
 {
 	cout << "decomposition " << label << ":" << endl;
 	G.print_scheme_tex_fancy(cout, LAMBDA_SCHEME, TRUE, label);
@@ -788,7 +788,7 @@ void geo_parameter::print_schemes_tex(tdo_scheme &G)
 
 }
 
-void geo_parameter::print_scheme_tex(ostream &ost, tdo_scheme &G, int h)
+void geo_parameter::print_scheme_tex(ostream &ost, tdo_scheme_synthetic &G, int h)
 {
 	G.print_scheme_tex_fancy(ost, h, TRUE, label);
 }
@@ -842,7 +842,7 @@ void geo_parameter::convert_single_to_stack_fuse_simple_pt(
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int I, u, l, i, j, a, sum, s, M, c, e, h, c1, c2, f;
-	tdo_scheme G;
+	tdo_scheme_synthetic G;
 
 	if (f_v) {
 		cout << "geo_parameter::convert_single_to_stack_"
@@ -1058,7 +1058,7 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int J, u, l, i, j, a, sum, s, L, M, c, e, h, c1, c2, f;
-	tdo_scheme G;
+	tdo_scheme_synthetic G;
 
 	if (f_v) {
 		cout << "geo_parameter::convert_single_to_"
@@ -1288,7 +1288,7 @@ void int_vec_classify(int *v, int len,
 	nb_classes++;
 }
 
-int tdo_scheme_get_row_class_length_fused(tdo_scheme &G,
+int tdo_scheme_get_row_class_length_fused(tdo_scheme_synthetic &G,
 		int h, int class_first, int class_len)
 {
 	int L, u;
@@ -1300,7 +1300,7 @@ int tdo_scheme_get_row_class_length_fused(tdo_scheme &G,
 	return L;
 }
 
-int tdo_scheme_get_col_class_length_fused(tdo_scheme &G,
+int tdo_scheme_get_col_class_length_fused(tdo_scheme_synthetic &G,
 		int h, int class_first, int class_len)
 {
 	int L, u;
@@ -1321,7 +1321,7 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 	int fuse_block_first[2], fuse_block_len[2];
 	int *the_fuse[2];
 	
-	tdo_scheme G;
+	tdo_scheme_synthetic G;
 
 	if (f_v) {
 		cout << "geo_parameter::convert_single_to_"
@@ -1639,7 +1639,7 @@ void geo_parameter::cut_off_two_lines(geo_parameter &GP2,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	tdo_scheme TDO;
+	tdo_scheme_synthetic TDO;
 	int w, j, S, i;
 	int *Part;
 	int *Entries;
@@ -1916,7 +1916,7 @@ void geo_parameter::print_schemes()
 	cout << "geo_parameter::print_schemes()" << endl;
 #if 1
 	int i;
-	tdo_scheme TDO;
+	tdo_scheme_synthetic TDO;
 	int *Part, *Entries;
 
 	Part = NEW_int(nb_parts + 1);

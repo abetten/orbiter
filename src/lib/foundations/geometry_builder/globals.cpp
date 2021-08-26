@@ -5,10 +5,14 @@
  *      Author: betten
  */
 
-#include <stdlib.h>
-#include "geo.h"
+#include "foundations.h"
 
 using namespace std;
+
+
+
+namespace orbiter {
+namespace foundations {
 
 
 void inc_transpose(int *R,
@@ -26,8 +30,8 @@ void inc_transpose(int *R,
 	int dim_n;
 	int *theY1, *R1, i, r, j;
 
-	*theY = NIL;
-	*R_new = NIL;
+	*theY = NULL;
+	*R_new = NULL;
 	if (f_full)
 		dim_n = MAX_R;
 	else
@@ -153,7 +157,7 @@ void cperm_test(void)
 #endif
 }
 
-void frame2grid(FRAME *frame, grid *G)
+void frame2grid(geo_frame *frame, grid *G)
 /* kopiert alles ausser type_idx[],
  * type[][], f_points, m, n. */
 {
@@ -213,4 +217,21 @@ int tdos_cmp(tdo_scheme *t1, tdo_scheme *t2, int verbose_level)
 	return 0;
 }
 
+int true_false_string_numeric(const char *p)
+{
+	int zweipot = 8, j;
+	int flag_numeric;
+
+	flag_numeric = 0;
+	// Die Schleife wandelt den True-False-String in eine Zahl JS 120100 */
+	for (j = 0; j < strlen(p); j++) {
+		if (p[j] == 'T') {
+			flag_numeric += zweipot;
+		}
+		zweipot /= 2;
+	}
+	return flag_numeric;
+}
+
+}}
 
