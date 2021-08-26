@@ -20,6 +20,8 @@ namespace foundations {
 
 gen_geo::gen_geo()
 {
+	GB = NULL;
+
 	nb_fuse = 0;
 	//int fuse_first[MAX_II];
 	//int fuse_len[MAX_II];
@@ -187,11 +189,19 @@ void gen_geo::generate_all(int verbose_level)
 	}
 
 	it0 = inc->iso_type_at_line[inc->Encoding->v - 1];
+
+	if (it0 == NULL) {
+		cout << "please install a test at line " << inc->Encoding->v << endl;
+		exit(1);
+	}
 	it1 = inc->iso_type_no_vhbars;
+
+
 	if (it1 && forget_ivhbar_in_last_isot) {
 		cout << "gen_geo::generate_all inc.iso_type_no_vhbars && forget_ivhbar_in_last_isot" << endl;
 		goto l_exit;
 	}
+
 	inc->gl_nb_GEN = 0;
 	if (!GeoFst(verbose_level - 3)) {
 		ret = TRUE;
@@ -239,7 +249,7 @@ void gen_geo::generate_all(int verbose_level)
 		if (forget_ivhbar_in_last_isot) {
 			inc->nb_i_vbar = s_nb_i_vbar;
 			inc->nb_i_hbar = s_nb_i_hbar;
-			}
+		}
 		if (!already_there && inc->iso_type_no_vhbars) {
 			s_nb_i_vbar = inc->nb_i_vbar;
 			s_nb_i_hbar = inc->nb_i_hbar;
@@ -1551,7 +1561,8 @@ void gen_geo::print_conf()
 	}
 }
 
-void gen_geo::init(int v, int b, int *R, int II, int JJ,
+void gen_geo::init(geometry_builder *GB,
+		int v, int b, int *R, int II, int JJ,
 	int f_do_iso_test,
 	int f_do_aut_group,
 	int f_do_aut_group_in_iso_type_without_vhbars,
@@ -1566,6 +1577,8 @@ void gen_geo::init(int v, int b, int *R, int II, int JJ,
 		cout << "gen_geo::init V=" << V << endl;
 		cout << "gen_geo::init max_r=" << max_r << endl;
 	}
+	gen_geo::GB = GB;
+
 	//st_isot_fprint_status = (void (*)(FILE *, void *, int)) isot_fprint_status;
 	gen_geo::f_do_iso_test = f_do_iso_test;
 	gen_geo::f_do_aut_group = f_do_aut_group;
@@ -1778,13 +1791,9 @@ void gen_geo::TDO_init(
 				cout << "gen_geo::TDO_init fuse_idx=" << fuse_idx << " f=" << f << " l=" << l
 						<< " I=" << I << " v[I]=" << v[I] << endl;
 			}
-			init_tdo(fuse_idx,
-				I /* tdo_line */, v[I] /* v */, b,
-				theTDO[I] /* r */,
-				verbose_level);
-			}
-
+			init_tdo(fuse_idx, I /* tdo_line */, v[I] /* v */, b, theTDO[I] /* r */, verbose_level);
 		}
+	}
 	init_k();
 	conf_init_last_non_zero_flag();
 	if (f_v) {

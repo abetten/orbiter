@@ -121,6 +121,9 @@ public:
 class gen_geo {
 
 public:
+
+	geometry_builder *GB;
+
 	/* the TDO: */
 	int nb_fuse;
 	int fuse_first[MAX_II];
@@ -171,7 +174,6 @@ public:
 	int gen_print_intervall;
 
 	std::string inc_file_name;
-	std::string GEO_fname; // unused
 
 
 	gen_geo();
@@ -201,7 +203,8 @@ public:
 	void geo_get_theX(int lines, int *X, int *nb_X, int verbose_level);
 	void init_tdo(int fuse_idx, int tdo_line, int v, int *b, int *r, int verbose_level);
 	void print_conf();
-	void init(int v, int b, int *R, int II, int JJ,
+	void init(geometry_builder *GB,
+			int v, int b, int *R, int II, int JJ,
 		int f_do_iso_test,
 		int f_do_aut_group,
 		int f_do_aut_group_in_iso_type_without_vhbars,
@@ -293,8 +296,8 @@ public:
 
 	geometry_builder_description *Descr;
 
-	int II;
-	int JJ;
+	//int II;
+	//int JJ;
 	//int v[MAX_II];
 	//int b[MAX_JJ];
 	int theTDO[MAX_II][MAX_JJ];
@@ -340,6 +343,7 @@ public:
 	~geometry_builder();
 	void init_description(geometry_builder_description *Descr,
 			int verbose_level);
+#if 0
 	void init(const char *control_file_name, int no,
 			int flag_numeric, int f_no_inc_files,
 			int verbose_level);
@@ -354,10 +358,8 @@ public:
 		int gen_print_intervall,
 		int f_transpose_it, char *file_name, int verbose_level);
 	void calc_PV_GV(int verbose_level);
-	void init_tdo(
-		int *v, int *b, int *the_tdo,
-		int II, int JJ,
-		int verbose_level);
+#endif
+	void init_tdo(int *the_tdo, int verbose_level);
 	void print_tdo();
 	void TDO_init(int verbose_level);
 	void isot(int line, int tdo_flags, int verbose_level);

@@ -21,8 +21,8 @@ geometry_builder::geometry_builder()
 {
 	Descr = NULL;
 
-	II = 0;
-	JJ = 0;
+	//II = 0;
+	//JJ = 0;
 
 	v = NULL;
 	v_len = 0;
@@ -144,10 +144,7 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 		cout << "geometry_builder::init_description before init_tdo" << endl;
 	}
 
-	init_tdo(
-		v, b, TDO,
-		v_len, b_len,
-		verbose_level);
+	init_tdo(TDO, verbose_level);
 
 	if (f_v) {
 		cout << "geometry_builder::init_description after init_tdo" << endl;
@@ -161,7 +158,7 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 	if (f_v) {
 		cout << "geometry_builder::init_description before gg->init" << endl;
 	}
-	gg->init(
+	gg->init(this,
 		V, B, R,
 		v_len /* II */,
 		b_len /* JJ */,
@@ -187,7 +184,6 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 		cout << "geometry_builder::init_description set_flush_to_inc_file" << endl;
 	}
 
-	// ggg_isot(ggg, ggg->gg.inc.V, FTFF);
 	if (gg->inc_file_name.length()) {
 		gg->inc->set_flush_to_inc_file(V, gg->inc_file_name);
 	}
@@ -242,7 +238,7 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 
 
 	if (f_v) {
-		cout << "geometry_builder::init_description isot" << endl;
+		cout << "geometry_builder::init_description allocating arrays" << endl;
 	}
 
 	int *s_type = NULL, *s_flag = NULL;
@@ -269,6 +265,10 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 		f_flush[i] = 0;
 	}
 
+	if (f_v) {
+		cout << "geometry_builder::init_description reading test_lines" << endl;
+	}
+
 	for (i = 0; i < Descr->test_lines.size(); i++) {
 		int *lines;
 		int lines_len;
@@ -282,6 +282,11 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 			s_type[a] = 1;
 			s_flag[a] = flags;
 		}
+	}
+
+
+	if (f_v) {
+		cout << "geometry_builder::init_description reading test2_lines" << endl;
 	}
 
 	for (i = 0; i < Descr->test2_lines.size(); i++) {
@@ -299,7 +304,15 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 		}
 	}
 
+	if (f_v) {
+		cout << "geometry_builder::init_description installing tests" << endl;
+	}
+
 	for (i = 1; i <= V; i++) {
+		if (f_v) {
+			cout << "geometry_builder::init_description installing test on line " << i << endl;
+		}
+
 		if (s_type[i] == 1) {
 			isot(i, s_flag[i], verbose_level);
 		}
@@ -344,7 +357,7 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 }
 
 
-
+#if 0
 void geometry_builder::init(const char *control_file_name, int no,
 		int flag_numeric, int f_no_inc_files,
 		int verbose_level)
@@ -928,42 +941,40 @@ void geometry_builder::calc_PV_GV(int verbose_level)
 		cout << "geometry_builder::calc_PV_GV done" << endl;
 	}
 }
+#endif
 
 void geometry_builder::init_tdo(
-	int *v, int *b, int *the_tdo,
-	int II, int JJ,
+	int *the_tdo,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, row, h;
 
 	if (f_v) {
-		cout << "geometry_builder::init_tdo II = " << II << " JJ = " << JJ << endl;
+		cout << "geometry_builder::init_tdo v_len = " << v_len << " b_len = " << b_len << endl;
 	}
-	geometry_builder::II = II;
-	geometry_builder::JJ = JJ;
+	//geometry_builder::II = II;
+	//geometry_builder::JJ = JJ;
 	B = 0;
-	for (j = 0; j < JJ; j++) {
-		geometry_builder::b[j] = b[j];
+	for (j = 0; j < b_len; j++) {
 		B += b[j];
 	}
 	V = 0;
-	for (i = 0; i < II; i++) {
-		geometry_builder::v[i] = v[i];
+	for (i = 0; i < v_len; i++) {
 		V += v[i];
 	}
-	for (i = 0; i < II; i++) {
-		for (j = 0; j < JJ; j++) {
-			theTDO[i][j] = the_tdo[i * JJ + j];
+	for (i = 0; i < v_len; i++) {
+		for (j = 0; j < b_len; j++) {
+			theTDO[i][j] = the_tdo[i * b_len + j];
 		}
 	}
 	R = new int[V];
 	row = 0;
-	for (i = 0; i < II; i++) {
+	for (i = 0; i < v_len; i++) {
 		for (h = 0; h < v[i]; h++, row++) {
 			R[row] = 0;
-			for (j = 0; j < JJ; j++) {
-				R[row] += the_tdo[i * JJ + j];
+			for (j = 0; j < b_len; j++) {
+				R[row] += the_tdo[i * b_len + j];
 			}
 		}
 	}
@@ -979,18 +990,18 @@ void geometry_builder::print_tdo()
 	int i, j;
 
 	printf("   | ");
-	for (j = 0; j < JJ; j++) {
+	for (j = 0; j < v_len; j++) {
 		printf("%2d ", b[j]);
 	}
 	printf("\n");
 	printf("---| ");
-	for (j = 0; j < JJ; j++) {
+	for (j = 0; j < b_len; j++) {
 		printf("---");
 	}
 	printf("\n");
-	for (i = 0; i < II; i++) {
+	for (i = 0; i < v_len; i++) {
 		printf("%2d | ", v[i]);
-		for (j = 0; j < JJ; j++) {
+		for (j = 0; j < b_len; j++) {
 			printf("%2d ",
 			theTDO[i][j]);
 		}
@@ -1038,7 +1049,7 @@ void geometry_builder::init_file_name(int f_transpose_it, const char *file_name,
 	geometry_builder::f_transpose_it = f_transpose_it;
 	geometry_builder::f_save_file = TRUE;
 	fname.assign(file_name);
-	calc_PV_GV(verbose_level);
+	//calc_PV_GV(verbose_level);
 }
 
 }}

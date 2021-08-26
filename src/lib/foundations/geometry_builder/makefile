@@ -11,7 +11,6 @@ MODULES = \
 		gen_geo.o \
 		geo_frame.o \
 		geo_iso.o \
-		geo_main.o \
 		geometry_builder_description.o \
 		geometry_builder.o \
 		globals.o \
