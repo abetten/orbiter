@@ -70,7 +70,7 @@ iso_type::iso_type()
 iso_type::~iso_type()
 {
 	int i;
-	int *the_GEO;
+	//int *the_GEO;
 
 	if (dim_TDO) {
 		for (i = 0; i < nb_TDO; i++) {
@@ -230,7 +230,7 @@ void iso_type::add_geometry(
 
 
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	//int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "iso_type::add_geometry" << endl;
@@ -391,7 +391,7 @@ void iso_type::calc_theY_and_tdos_override_v(
 	if (f_v) {
 		cout << "iso_type::calc_theY_and_tdos_override_v" << endl;
 	}
-	int *pc1;
+	//int *pc1;
 	short *ddp = NULL, *ddb = NULL;
 	cperm tdo_p, tdo_q;
 	//int *theY; // [MAX_V * MAX_R]
@@ -459,14 +459,14 @@ tdo_scheme *iso_type::geo_calc_tdos(
 	tactical_decomposition *tdo = NULL;
 	short *ddp_mult = NULL;
 	short *ddb_mult = NULL;
-	int ddb_N, ddp_N;
+	//int ddb_N, ddp_N;
 	tdo_scheme *tdos;
 
 	if (f_v) {
 		cout << "iso_type::geo_calc_tdos" << endl;
 	}
 
-	tdo = new tactical_decomposition;
+	tdo = NEW_OBJECT(tactical_decomposition);
 
 #if 0
 	if (f_v) {
@@ -519,7 +519,7 @@ tdo_scheme *iso_type::geo_calc_tdos(
 	tdo->p.move_to(tdo_p);
 	tdo->q.move_to(tdo_q);
 
-	delete tdo;
+	FREE_OBJECT(tdo);
 
 	if (f_v) {
 		cout << "iso_type::geo_calc_tdos done" << endl;
@@ -729,7 +729,7 @@ void iso_type::TDO_realloc()
 {
 	tdo_scheme **tmp;
 	int new_dim_tdo;
-	int i, size;
+	int i;
 
 	new_dim_tdo = dim_TDO + MAX_TDO;
 

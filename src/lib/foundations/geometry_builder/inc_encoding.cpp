@@ -135,7 +135,7 @@ void inc_encoding::print_horizontal_bar(
 void inc_encoding::print_partitioned(
 		std::ostream &ost, int v_cur, incidence *inc, int f_print_isot)
 {
-	int i, j, k, r, I, J, f_kreuz;
+	int i, j, r, I, J, f_kreuz;
 	int *the_X;
 	iso_type *it;
 

@@ -122,7 +122,6 @@ MODULES= \
 		foundations/geometry_builder/gen_geo.o \
 		foundations/geometry_builder/geo_frame.o \
 		foundations/geometry_builder/geo_iso.o \
-		foundations/geometry_builder/geo_main.o \
 		foundations/geometry_builder/geometry_builder_description.o \
 		foundations/geometry_builder/geometry_builder.o \
 		foundations/geometry_builder/globals.o \

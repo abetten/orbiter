@@ -38,7 +38,7 @@ void cperm::free()
 	if (data) {
 		delete [] data;
 		data = NULL;
-		}
+	}
 	l = 0;
 }
 
@@ -49,9 +49,10 @@ void cperm::move_to(cperm *q)
 	if (l != q->l) {
 		cout << "cp_mv p->l != q->l" << endl;
 		exit(1);
-		}
-	for (i = 0; i < l; i++)
+	}
+	for (i = 0; i < l; i++) {
 		q->data[i] = data[i];
+	}
 }
 
 void cperm::identity()
@@ -115,36 +116,28 @@ void cperm::power(cperm *res, int exp)
 			d->move_to(c);
 			exp--;
 			continue; /* exp == 0 possible */
-			}
+		}
 		if (EVEN(exp)) {
 			b->mult(b, d);
 			d->move_to(b);
 			exp >>= 1;
-			}
 		}
+	}
 	c->move_to(res);
 
-l_exit:
 	if (b) {
 		delete b;
-		}
+	}
 	if (c) {
 		delete c;
-		}
+	}
 	if (d) {
 		delete d;
-		}
+	}
 }
 
 void cperm::print()
 {
-#if 0
-	char s[256];
-
-	s[0] = 0;
-	cp_sprint(p, s);
-	printf("%s\n", s);
-#else
 	int i;
 
 	cout << "[";
@@ -155,7 +148,6 @@ void cperm::print()
 		}
 	}
 	cout << "]";
-#endif
 }
 
 void cperm::mult_apply_forwc_r(int i, int l)
@@ -168,13 +160,15 @@ void cperm::mult_apply_forwc_r(int i, int l)
 
 	for (m = 0; m < cperm::l; m++) {
 		j = data[m];
-		if (j >= i && (k = j - i) < l)
+		if (j >= i && (k = j - i) < l) {
 			t[k] = m;
 		}
+	}
 	/* now: t[k] -> i+k -> i+k+1 for 0 < k < l-1
 	 *      t[l-1] -> i+l-1 -> i */
-	for (k = 0; k < l - 1; k++)
+	for (k = 0; k < l - 1; k++) {
 		data[t[k]] = (i + k + 1);
+	}
 	data[t[l - 1]] = i;
 
 	delete [] t;
@@ -219,8 +213,9 @@ void cperm::mult_apply_backwc_l(int i, int l)
 	/* i+m -> i+m-1 -> a[i+m-1]  for 1 < m < l
 	 * i -> i+l-1 -> a[i+l-1] */
 	t = data[i + l - 1];
-	for (m = l - 1; m > 0; m--)
+	for (m = l - 1; m > 0; m--) {
 		data[i + m] = data[i + m - 1];
+	}
 	data[i] = t;
 }
 
@@ -295,149 +290,6 @@ int cp_cmp(CPERM *a, CPERM *b)
 }
 
 
-int cp_sprint(CPERM *p, char *s)
-/* haengt an s an. */
-{
-	int *have_seen = NIL;
-	int l, l1, first, next, len;
-	int f_nothing_printed_at_all = TRUE;
-	char str1[256];
-	char str2[256];
-	
-	if (p == NIL || s == NIL) {
-		Srfs("cp_sprint", "args NIL");
-		return ERROR;
-		}
-	str1[0] = 0;
-	have_seen = (int *) my_malloc(p->l * sizeof(int), "cp_sprint");
-	if (have_seen == NIL) {
-		Srfs("cp_sprint", "no memory");
-		return ERROR;
-		}
-	for (l = 0; l < p->l; l++) {
-		have_seen[l] = FALSE;
-		}
-	l = 0;
-	while (TRUE) {
-		if (l >= p->l) {
-			if (f_nothing_printed_at_all) {
-				strcat(s, "id");
-				}
-			else {
-				strcat(s, str1);
-				}
-			if (have_seen)
-				my_free(have_seen, "cp_sprint");
-			return OK;
-			}
-		if (have_seen[l]) {
-			l++;
-			continue;
-			}
-		/* cycle starting at l: */
-		first = l;
-		l1 = l;
-		len = 1;
-		while (TRUE) {
-			have_seen[l1] = TRUE;
-			next = p->a[l1];
-			if (next == first) {
-				break;
-				}
-			l1 = next;
-			len ++;
-			}
-		if (len == 1) {
-			l++;
-			continue;
-			}
-		f_nothing_printed_at_all = FALSE;
-		/* print cycle, starting at first: */
-		l1 = first;
-		strcat(str1, "(");
-		while (TRUE) {
-			sprintf(str2, "%d", l1);
-			strcat(str1, str2);
-			next = p->a[l1];
-			if (next == first) {
-				break;
-				}
-			strcat(str1, " ");
-			l1 = next;
-			}
-		strcat(str1, ")");
-		}
-}
-
-int cp_latex(CPERM *p, FILE *fp)
-/* haengt an s an. */
-{
-	int *have_seen = NIL;
-	int l, l1, first, next, len;
-	int f_nothing_printed_at_all = TRUE;
-	char str1[256];
-	char str2[256];
-	
-	str1[0] = 0;
-	have_seen = (int *) my_malloc(p->l * sizeof(int), "cp_latex");
-	if (have_seen == NIL) {
-		Srfs("cp_latex", "no memory");
-		return ERROR;
-		}
-	for (l = 0; l < p->l; l++) {
-		have_seen[l] = FALSE;
-		}
-	l = 0;
-	while (TRUE) {
-		if (l >= p->l) {
-			if (f_nothing_printed_at_all) {
-				fprintf(fp, "id");
-				}
-			else {
-				fprintf(fp, "%s", str1);
-				}
-			if (have_seen)
-				my_free(have_seen, "cp_latex");
-			return OK;
-			}
-		if (have_seen[l]) {
-			l++;
-			continue;
-			}
-		/* cycle starting at l: */
-		first = l;
-		l1 = l;
-		len = 1;
-		while (TRUE) {
-			have_seen[l1] = TRUE;
-			next = p->a[l1];
-			if (next == first) {
-				break;
-				}
-			l1 = next;
-			len ++;
-			}
-		if (len == 1) {
-			l++;
-			continue;
-			}
-		f_nothing_printed_at_all = FALSE;
-		/* print cycle, starting at first: */
-		l1 = first;
-		strcat(str1, "(");
-		while (TRUE) {
-			sprintf(str2, "%d", l1);
-			strcat(str1, str2);
-			next = p->a[l1];
-			if (next == first) {
-				break;
-				}
-			strcat(str1, " \\, ");
-			l1 = next;
-			}
-		strcat(str1, ")");
-		}
-}
 #endif
 
 

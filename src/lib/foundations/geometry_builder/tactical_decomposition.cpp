@@ -45,19 +45,19 @@ tactical_decomposition::tactical_decomposition()
 tactical_decomposition::~tactical_decomposition()
 {
 	if (G_last) {
-		delete G_last;
+		FREE_OBJECT(G_last);
 	}
 	if (G_current) {
-		delete G_current;
+		FREE_OBJECT(G_current);
 	}
 	if (G_next) {
-		delete G_next;
+		FREE_OBJECT(G_next);
 	}
 	if (tdos) {
-		delete tdos;
+		FREE_OBJECT(tdos);
 	}
 	if (tdos2) {
-		delete tdos2;
+		FREE_OBJECT(tdos2);
 	}
 }
 
@@ -75,9 +75,9 @@ void tactical_decomposition::init(inc_encoding *Encoding,
 	f_TDO_multiple = FALSE;
 	f_TDO_d_multiple = FALSE;
 
-	G_last = new grid;
-	G_current = new grid;
-	G_next = new grid;
+	G_last = NEW_OBJECT(grid);
+	G_current = NEW_OBJECT(grid);
+	G_next = NEW_OBJECT(grid);
 
 	if (f_v) {
 		cout << "tactical_decomposition::init before cp_int" << endl;
@@ -172,7 +172,7 @@ void tactical_decomposition::tdo_calc(inc_encoding *Encoding, incidence *inc, in
 		if (f_v) {
 			cout << "tdo_calc after second_order_tdo" << endl;
 		}
-		delete tdos;
+		FREE_OBJECT(tdos);
 		tdos = tdos2;
 		tdos2 = NULL;
 	}
@@ -444,8 +444,7 @@ void tactical_decomposition::recollect_types(int v, grid *G0, grid *G1, int verb
 		cout << endl;
 	}
 
-	int i, j, x, i1, x1, ge, first, ti;
-	int old_k, old_first, old_len;
+	int i, j, x, i1, x1, ge;
 
 	for (i = 0; i < G1->m; i++) {
 		for (j = 0; j < G1->n; j++) {
@@ -621,7 +620,7 @@ tdo_scheme *tactical_decomposition::get_tdos(grid *G0, grid *G1, int f_derived, 
 	int i, j;
 	int first, i1;
 
-	tdos = new tdo_scheme;
+	tdos = NEW_OBJECT(tdo_scheme);
 
 	if (G0->f_points) {
 		Gpoints = G0;
@@ -693,11 +692,9 @@ void tactical_decomposition::dd_work(int v, int f_points,
 
 	cperm *perm, *perm_inv;
 	cperm *tdo_perm, *tdo_perm_inv;
-	int first, len, first1, len1;
 	int I, I_len, i, i0;
 	int i1, J, J_len, j, j0, j1;
 	int k;
-	int ret = FALSE;
 	short *dd1 = NULL;
 	short *dd_mult1 = NULL;
 
@@ -719,9 +716,9 @@ void tactical_decomposition::dd_work(int v, int f_points,
 	G_l = G_last;
 	G_c = G_current;
 	G_n = G_next;
-	G_last = new grid;
-	G_current = new grid;
-	G_next = new grid;
+	G_last = NEW_OBJECT(grid);
+	G_current = NEW_OBJECT(grid);
+	G_next = NEW_OBJECT(grid);
 
 	if (G_c->f_points == f_points) {
 		G0 = G_n;
@@ -758,7 +755,7 @@ void tactical_decomposition::dd_work(int v, int f_points,
 
 
 	tdo_gradient *tdog;
-	tdog = new tdo_gradient;
+	tdog = NEW_OBJECT(tdo_gradient);
 	tdog->allocate(N);
 
 
@@ -855,17 +852,16 @@ void tactical_decomposition::dd_work(int v, int f_points,
 	dd = dd1;
 	dd_mult = dd_mult1;
 
-l_exit:
-	delete tdog;
+	FREE_OBJECT(tdog);
 
 	if (G_last) {
-		delete G_last;
+		FREE_OBJECT(G_last);
 	}
 	if (G_current) {
-		delete G_current;
+		FREE_OBJECT(G_current);
 	}
 	if (G_n) {
-		delete G_n;
+		FREE_OBJECT(G_n);
 	}
 
 	G_last = G_l;
@@ -911,7 +907,7 @@ void tactical_decomposition::refine(int v,
 	cperm *perm, *perm_inv;
 	cperm *tdo_perm, *tdo_perm_inv;
 	int first, len, first1, len1;
-	int i, i1, j, j1, k, l, t;
+	int i, j, j1, k, l, t;
 
 	if (G->f_points == f_points) {
 		G0 = G_next;
@@ -955,7 +951,7 @@ void tactical_decomposition::refine(int v,
 
 		tdo_gradient *tdog;
 
-		tdog = new tdo_gradient;
+		tdog = NEW_OBJECT(tdo_gradient);
 		tdog->allocate(N);
 
 
@@ -1054,7 +1050,7 @@ void tactical_decomposition::refine(int v,
 			frame->G_max++;
 			frame->first[frame->G_max] = first + first1 + len1;
 		}
-		delete tdog;
+		FREE_OBJECT(tdog);
 
 	} /* next i */
 	if (f_v) {
@@ -1073,21 +1069,21 @@ void tactical_decomposition::second_order_tdo(int v, int verbose_level)
 	geo_frame *frame = NULL;
 	grid *G_l, *G_c, *G_n, *Gtmp;
 	cperm p, q, pv, qv;
-	int i, f_points, m, n;
+	int f_points, m, n;
 
 	p.init_and_identity(Encoding->v);
 	pv.init_and_identity(Encoding->v);
 	q.init_and_identity(Encoding->b);
 	qv.init_and_identity(Encoding->b);
 
-	frame = new geo_frame;
+	frame = NEW_OBJECT(geo_frame);
 
 	G_l = G_last;
 	G_c = G_current;
 	G_n = G_next;
-	G_last = new grid;
-	G_current = new grid;
-	G_next = new grid;
+	G_last = NEW_OBJECT(grid);
+	G_current = NEW_OBJECT(grid);
+	G_next = NEW_OBJECT(grid);
 
 	//tdog = new tdo_gradient;
 	//tdog->allocate(v + Encoding->b);
@@ -1242,20 +1238,19 @@ void tactical_decomposition::second_order_tdo(int v, int verbose_level)
 		break;
 	}
 
-l_exit:
 	//delete tdog;
 
 	if (frame) {
-		delete frame;
+		FREE_OBJECT(frame);
 	}
 	if (G_last) {
-		delete G_last;
+		FREE_OBJECT(G_last);
 	}
 	if (G_current) {
-		delete G_current;
+		FREE_OBJECT(G_current);
 	}
 	if (G_next) {
-		delete G_next;
+		FREE_OBJECT(G_next);
 	}
 	G_last = G_l;
 	G_current = G_c;

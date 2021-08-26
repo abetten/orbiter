@@ -1104,7 +1104,7 @@ static int iso2_insert_idx(
 
 static void print_hbar(ISO2 *iso)
 {
-	int i, j, len, first;
+	int i, len, first;
 	
 	for (i = 0; i < iso->info->v; i++) {
 		printf("%d %d\n", iso->hbar[i], iso->hlen[i]);

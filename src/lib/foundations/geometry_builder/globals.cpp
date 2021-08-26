@@ -95,7 +95,7 @@ int tuple_cmp(int *a, int *b, int l)
 
 void print_theX(int *theX, int dim_n, int v, int b, int *R)
 {
-	int i, j, i1, j1, o;
+	int i, j, o;
 
 	for (i = 0; i < v; i++) {
 		for (j = 0; j < b; j++) {

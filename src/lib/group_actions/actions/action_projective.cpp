@@ -27,8 +27,8 @@ strong_generators *action::set_stabilizer_in_projective_space(
 // December 31, 2014, moved here from projective_space.cpp
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int f_vvv = (verbose_level >= 3);
+	//int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
 	object_in_projective_space *OiP;
 	nauty_interface_with_group Nau;
 
