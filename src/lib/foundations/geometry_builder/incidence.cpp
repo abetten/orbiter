@@ -1,0 +1,284 @@
+// incidence.cpp
+
+#include "foundations.h"
+
+using namespace std;
+
+
+
+namespace orbiter {
+namespace foundations {
+
+
+
+incidence::incidence()
+{
+	Encoding = NULL;
+
+	//int theY[MAX_V * MAX_R];
+	//int pairs[MAX_V][MAX_V];
+	f_lambda = FALSE;
+	lambda = 0;
+	f_find_square = FALSE; /* JS 120100 */
+	f_simple = FALSE; /* JS 180100 */
+
+	/* initiale vbars / hbars: */
+	nb_i_vbar = 0;
+	//int i_vbar[MAX_JJ];
+	nb_i_hbar = 0;
+	//int i_hbar[MAX_II];
+
+	gl_nb_GEN = 0;
+
+	int i;
+
+	for (i = 0; i < MAX_V; i++) {
+		iso_type_at_line[i] = NULL;
+	}
+	iso_type_no_vhbars = NULL;
+
+	back_to_line = 0;
+
+}
+
+incidence::~incidence()
+{
+
+}
+
+void incidence::init(int v, int b, int *R, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "incidence::init" << endl;
+	}
+	Encoding = new inc_encoding;
+	Encoding->init(v, b, R, verbose_level);
+
+}
+
+int incidence::find_square(int m, int n)
+{
+	return Encoding->find_square(m, n);
+}
+
+void incidence::print_param()
+{
+	int i;
+
+	cout << "V = " << Encoding->v << ", B = " << Encoding->b << endl;
+
+	cout << "vbar: ";
+	for (i = 0; i < nb_i_vbar; i++) {
+		cout << i_vbar[i];
+		if (i < nb_i_vbar - 1) {
+			cout << ", ";
+		}
+	}
+	cout << endl;
+
+	cout << "hbar: ";
+	for (i = 0; i < nb_i_hbar; i++) {
+		cout << i_hbar[i];
+		if (i < nb_i_hbar - 1) {
+			cout << ", ";
+		}
+	}
+	cout << endl;
+
+}
+
+
+
+void incidence::free_isot()
+{
+	int i;
+
+	for (i = 0; i < Encoding->v; i++) {
+		if (iso_type_at_line[i]) {
+			delete iso_type_at_line[i];
+		}
+		iso_type_at_line[i] = NULL;
+	}
+	if (iso_type_no_vhbars) {
+		delete iso_type_no_vhbars;
+	}
+	iso_type_no_vhbars = NULL;
+}
+
+void incidence::print_R(int v, cperm *p, cperm *q)
+{
+	int i;
+
+	cout << "p = ";
+	p->print();
+	cout << ", q = ";
+	q->print();
+	cout << ", R=";
+	for (i = 0; i < v; i++) {
+		cout << Encoding->R[i];
+		if (i < v - 1) {
+			cout << ", ";
+		}
+	}
+	cout << endl;
+}
+
+
+
+void incidence::print(std::ostream &ost, int v)
+{
+	print_partitioned(ost, v, this, TRUE /* f_print_isot */);
+}
+
+
+void incidence::print_override_theX(std::ostream &ost, int *theX, int v)
+{
+	print_partitioned(ost, v, this, TRUE /* f_print_isot */);
+}
+
+
+void incidence::print_partitioned(
+	std::ostream &ost, int v_cur, incidence *inc, int f_print_isot)
+{
+	Encoding->print_partitioned(ost, v_cur, inc, f_print_isot);
+}
+
+void incidence::stuetze_nach_zeile(int i, int tdo_flags, int verbose_level)
+/* stuetze in letzter Zeile erlaubt */
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "incidence::stuetze_nach_zeile line = " << i << endl;
+	}
+	if (i > 0 && i <= Encoding->v) {
+		iso_type_at_line[i - 1] = new iso_type;
+		iso_type_at_line[i - 1]->init(i, this, tdo_flags, verbose_level);
+	}
+	else {
+		cout << "incidence::stuetze_nach_zeile "
+				"out of range: i = " << i << ", v = " << Encoding->v << endl;
+		exit(1);
+	}
+}
+
+void incidence::stuetze2_nach_zeile(int i, int tdo_flags, int verbose_level)
+/* stuetze 2 in letzter Zeile nicht erlaubt */
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "incidence::stuetze2_nach_zeile line = " << i << endl;
+	}
+	if (i > 0 && i < Encoding->v) {
+		iso_type_at_line[i - 1] = new iso_type;
+		iso_type_at_line[i - 1]->init(i, this, tdo_flags, verbose_level);
+		iso_type_at_line[i - 1]->second();
+	}
+	else {
+		cout << "incidence::stuetze2_nach_zeile "
+				"out of range: i = " << i << ", v = " << Encoding->v << endl;
+		exit(1);
+	}
+}
+
+void incidence::set_range(int i, int first, int len)
+{
+	if (i > 0 && i < Encoding->v) {
+		iso_type_at_line[i - 1]->set_range(first, len);
+	}
+	else {
+		cout << "incidence::set_range "
+				"out of range: i = " << i << ", v = " << Encoding->v << endl;
+		exit(1);
+	}
+}
+
+void incidence::set_flush_to_inc_file(int i, std::string &fname)
+// opens the geo_file and stores the file pointer is it->fp
+{
+	if (i > 0 && i <= Encoding->v) {
+		//iso_type_at_line[i - 1]->open_inc_file(fname);
+	}
+
+}
+
+#if 0
+int incidence::close_inc_file(int i)
+// returns the number of geos stored into the inc file
+{
+	iso_type *it;
+	int nb_geo = -1;
+
+	if (i > 0 && i <= Encoding->v) {
+		it = iso_type_at_line[i - 1];
+		if (it->fp) {
+			it->close_inc_file(this);
+		}
+		nb_geo = it->sum_nb_GEO;
+	}
+	return nb_geo;
+}
+#endif
+
+void incidence::set_flush_line(int i)
+{
+	iso_type *it;
+
+	if (i > 0 && i < Encoding->v) {
+		it = iso_type_at_line[i - 1];
+		it->set_flush_line();
+	}
+	else {
+		cout << "incidence::incidence_set_flush_line out of range: i = " << i << ", v = " << Encoding->v << endl;
+		exit(1);
+	}
+}
+
+#if 0
+void incidence::flush(int m)
+{
+	iso_type *it, *it1;
+	int i, j;
+
+	it = iso_type_at_line[m];
+	if (!it->f_flush_line) {
+		return;
+	}
+	for (i = m + 1; i < Encoding->v; i++) {
+		it1 = iso_type_at_line[i];
+		if (it1 && it1->fp) {
+			it1->append_inc_file(this);
+			// it1->sum_geo += it1->nb_GEO;
+			// printf("appending %d geos (in a flush)\n", it1->nb_GEO);
+		}
+		if (it1) {
+			it1->flush();
+		}
+	}
+	//printf("incidence_flush() memory usage:");
+	//memory_usage();
+}
+#endif
+
+
+void incidence::print_geo(std::ostream &ost, int v, int *theGEO)
+{
+	int i, j, s, a;
+
+	s = 0;
+	for (i = 0; i < v; i++) {
+		for (j = 0; j < Encoding->R[i]; j++, s++) {
+			a = theGEO[s];
+			ost << i * Encoding->b + a << " ";
+		}
+	}
+
+}
+
+
+}}
+
+

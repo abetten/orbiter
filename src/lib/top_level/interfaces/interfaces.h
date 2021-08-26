@@ -371,6 +371,9 @@ class interface_combinatorics {
 	int rank_k_subset_k;
 	std::string rank_k_subset_text;
 
+	int f_geometry_builder;
+	geometry_builder_description *Geometry_builder_description;
+
 
 public:
 	interface_combinatorics();

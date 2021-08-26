@@ -559,10 +559,10 @@ public:
 	int input(std::ifstream &aStream);
 	int input_mode_single(std::ifstream &aStream);
 	int input_mode_stack(std::ifstream &aStream, int verbose_level);
-	void init_tdo_scheme(tdo_scheme &G, int verbose_level);
-	void print_schemes(tdo_scheme &G);
-	void print_schemes_tex(tdo_scheme &G);
-	void print_scheme_tex(std::ostream &ost, tdo_scheme &G, int h);
+	void init_tdo_scheme(tdo_scheme_synthetic &G, int verbose_level);
+	void print_schemes(tdo_scheme_synthetic &G);
+	void print_schemes_tex(tdo_scheme_synthetic &G);
+	void print_scheme_tex(std::ostream &ost, tdo_scheme_synthetic &G, int h);
 	void print_C_source();
 	void convert_single_to_stack_fuse_simple_pt(int verbose_level);
 	void convert_single_to_stack_fuse_simple_bt(int verbose_level);
@@ -579,9 +579,9 @@ public:
 
 void int_vec_classify(int *v, int len,
 		int *class_first, int *class_len, int &nb_classes);
-int tdo_scheme_get_row_class_length_fused(tdo_scheme &G,
+int tdo_scheme_get_row_class_length_fused(tdo_scheme_synthetic &G,
 		int h, int class_first, int class_len);
-int tdo_scheme_get_col_class_length_fused(tdo_scheme &G,
+int tdo_scheme_get_col_class_length_fused(tdo_scheme_synthetic &G,
 		int h, int class_first, int class_len);
 
 
@@ -782,26 +782,26 @@ class tdo_refinement {
 	void init(tdo_refinement_description *Descr, int verbose_level);
 	void main_loop(int verbose_level);
 	void do_it(std::ofstream &g, int verbose_level);
-	void do_row_refinement(std::ofstream &g, tdo_scheme &G, partitionstack &P,
+	void do_row_refinement(std::ofstream &g, tdo_scheme_synthetic &G, partitionstack &P,
 			int verbose_level);
-	void do_col_refinement(std::ofstream &g, tdo_scheme &G, partitionstack &P,
+	void do_col_refinement(std::ofstream &g, tdo_scheme_synthetic &G, partitionstack &P,
 			int verbose_level);
-	void do_all_row_refinements(std::string &label_in, std::ofstream &g, tdo_scheme &G,
+	void do_all_row_refinements(std::string &label_in, std::ofstream &g, tdo_scheme_synthetic &G,
 		int *point_types, int nb_point_types, int point_type_len,
 		int *distributions, int nb_distributions, int &nb_tactical,
 		int verbose_level);
-	void do_all_column_refinements(std::string &label_in, std::ofstream &g, tdo_scheme &G,
+	void do_all_column_refinements(std::string &label_in, std::ofstream &g, tdo_scheme_synthetic &G,
 		int *line_types, int nb_line_types, int line_type_len,
 		int *distributions, int nb_distributions, int &nb_tactical,
 		int verbose_level);
-	int do_row_refinement(int t, std::string &label_in, std::ofstream &g, tdo_scheme &G,
+	int do_row_refinement(int t, std::string &label_in, std::ofstream &g, tdo_scheme_synthetic &G,
 		int *point_types, int nb_point_types, int point_type_len,
 		int *distributions, int nb_distributions,
 		int verbose_level);
 		// returns TRUE or FALSE depending on whether the
 		// refinement gave a tactical decomposition
 	int do_column_refinement(int t, std::string &label_in,
-			std::ofstream &g, tdo_scheme &G,
+			std::ofstream &g, tdo_scheme_synthetic &G,
 		int *line_types, int nb_line_types, int line_type_len,
 		int *distributions, int nb_distributions,
 		int verbose_level);
@@ -845,7 +845,7 @@ struct solution_file_data {
 
 //! canonical tactical decomposition of an incidence structure
 
-class tdo_scheme {
+class tdo_scheme_synthetic {
 
 public:
 
@@ -894,8 +894,8 @@ public:
 
 	// end of TDO process data
 
-	tdo_scheme();
-	~tdo_scheme();
+	tdo_scheme_synthetic();
+	~tdo_scheme_synthetic();
 
 	void init_part_and_entries(
 			int *part, int *entries, int verbose_level);

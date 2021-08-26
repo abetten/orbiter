@@ -8,10 +8,14 @@
 
 
 
-#include "geo.h"
-#include <fstream>
+#include "foundations.h"
 
 using namespace std;
+
+
+
+namespace orbiter {
+namespace foundations {
 
 
 #define MAX_GEO 100
@@ -112,7 +116,13 @@ void iso_type::init(int v, incidence *inc, int tdo_flags, int verbose_level)
 	nb_GEN = 0;
 	nb_GEO = 0;
 	nb_TDO = 0;
+	if (f_v) {
+		cout << "iso_type::init v=" << v << " before init2" << endl;
+	}
 	init2();
+	if (f_v) {
+		cout << "iso_type::init v=" << v << " after init2" << endl;
+	}
 
 	if (f_v) {
 		cout << "iso_type::init done" << endl;
@@ -135,11 +145,11 @@ void iso_type::init2()
 	theTDO = new ptdo_scheme [dim_TDO];
 
 	for (i = 0; i < dim_GEO; i++) {
-		theGEO[i] = NIL;
+		theGEO[i] = NULL;
 		GEO_TDO_idx[i] = -1;
 	}
 	for (i = 0; i < dim_TDO; i++) {
-		theTDO[i] = NIL;
+		theTDO[i] = NULL;
 	}
 }
 
@@ -162,7 +172,7 @@ int iso_type::find_geometry(
 		cout << endl;
 	}
 
-	int *theY = NIL;
+	int *theY = NULL;
 	tdo_scheme *tdos = NULL;
 	int tdo_idx, geo_idx;
 	int f_found;
@@ -228,6 +238,10 @@ void iso_type::add_geometry(
 		print_geometry(Encoding, v, inc);
 
 	}
+	if (f_v) {
+		cout << "iso_type::add_geometry v=" << v << endl;
+	}
+
 
 
 	int *theY = NULL;
@@ -237,18 +251,15 @@ void iso_type::add_geometry(
 	int status = 0;
 
 	nb_GEN++;
+	if (f_v) {
+		cout << "iso_type::add_geometry v=" << v << " nb_GEN=" << nb_GEN << endl;
+	}
 
 	if (f_v) {
 		cout << "iso_type::add_geometry before calc_theY_and_tdos_override_v" << endl;
 	}
-	int vl;
-	if (FALSE) {
-		vl = 1;
-	}
-	else {
-		vl = 0;
-	}
-	calc_theY_and_tdos_override_v(Encoding, inc, v, theY, tdos, vl);
+
+	calc_theY_and_tdos_override_v(Encoding, inc, v, theY, tdos, verbose_level - 4);
 
 	if (f_v) {
 		cout << "iso_type::add_geometry after calc_theY_and_tdos_override_v" << endl;
@@ -297,6 +308,7 @@ void iso_type::add_geometry(
 		*already_there = TRUE;
 		status = 2;
 		goto l_exit;
+		/* tdoss und pc freigeben */
 	}
 	*already_there = FALSE;
 	status = 3;
@@ -313,6 +325,7 @@ void iso_type::add_geometry(
 	 * isot->theGEO[isot->nb_GEO - 1]
 	 * abgespeichert */
 
+	/* tdoss nachher noch freigeben */
 
 calc_aut:
 	if (f_print_isot_small || f_print_isot || f_v) {
@@ -379,7 +392,7 @@ void iso_type::calc_theY_and_tdos_override_v(
 		cout << "iso_type::calc_theY_and_tdos_override_v" << endl;
 	}
 	int *pc1;
-	short *ddp = NIL, *ddb = NIL;
+	short *ddp = NULL, *ddb = NULL;
 	cperm tdo_p, tdo_q;
 	//int *theY; // [MAX_V * MAX_R]
 
@@ -443,9 +456,9 @@ tdo_scheme *iso_type::geo_calc_tdos(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	tactical_decomposition *tdo = NIL;
-	short *ddp_mult = NIL;
-	short *ddb_mult = NIL;
+	tactical_decomposition *tdo = NULL;
+	short *ddp_mult = NULL;
+	short *ddb_mult = NULL;
 	int ddb_N, ddp_N;
 	tdo_scheme *tdos;
 
@@ -498,8 +511,8 @@ tdo_scheme *iso_type::geo_calc_tdos(
 	tdos = tdo->tdos;
 	tdo->tdos = NULL;
 
-	ddp_mult = NIL;
-	ddb_mult = NIL;
+	ddp_mult = NULL;
+	ddb_mult = NULL;
 
 	tdo_p->init_and_identity(tdo->p.l);
 	tdo_q->init_and_identity(tdo->q.l);
@@ -726,7 +739,7 @@ void iso_type::TDO_realloc()
 		tmp[i] = theTDO[i];
 	}
 	for (i = nb_TDO; i < new_dim_tdo; i++) {
-		tmp[i] = NIL;
+		tmp[i] = NULL;
 	}
 	delete [] theTDO;
 
@@ -809,7 +822,7 @@ void iso_type::add_geo(int tdo_idx, int *theY)
 			tmp2[i] = GEO_TDO_idx[i];
 		}
 		for (i = nb_GEO; i < new_dim; i++) {
-			tmp1[i] = NIL;
+			tmp1[i] = NULL;
 			tmp2[i] = 0;
 		}
 		delete [] theGEO;
@@ -1028,9 +1041,13 @@ void iso_type::print_flags(std::ostream &ost)
 
 void iso_type::print_geometry(inc_encoding *Encoding, int v, incidence *inc)
 {
+	cout << "geo" << endl;
 	Encoding->print_partitioned(cout, v, inc, FALSE /* f_print_isot */);
+	cout << "end geo" << endl;
 }
 
 
 
+
+}}
 

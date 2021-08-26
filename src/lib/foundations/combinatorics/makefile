@@ -18,7 +18,7 @@ MODULES = \
 		tdo_data.o \
 		tdo_refinement_description.o \
 		tdo_refinement.o \
-		tdo_scheme.o 
+		tdo_scheme_synthetic.o 
 
 
 all : $(MODULES)

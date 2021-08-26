@@ -191,7 +191,7 @@ void tdo_refinement::do_it(ofstream &g, int verbose_level)
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 
-	tdo_scheme G;
+	tdo_scheme_synthetic G;
 	partitionstack P;
 
 	if (f_v) {
@@ -263,7 +263,7 @@ void tdo_refinement::do_it(ofstream &g, int verbose_level)
 }
 
 void tdo_refinement::do_row_refinement(
-	ofstream &g, tdo_scheme &G,
+	ofstream &g, tdo_scheme_synthetic &G,
 	partitionstack &P,
 	int verbose_level)
 {
@@ -358,7 +358,7 @@ void tdo_refinement::do_row_refinement(
 }
 
 void tdo_refinement::do_col_refinement(
-		ofstream &g, tdo_scheme &G,
+		ofstream &g, tdo_scheme_synthetic &G,
 	partitionstack &P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -461,7 +461,7 @@ void tdo_refinement::do_col_refinement(
 }
 
 void tdo_refinement::do_all_row_refinements(
-	std::string &label_in, ofstream &g, tdo_scheme &G,
+	std::string &label_in, ofstream &g, tdo_scheme_synthetic &G,
 	int *point_types, int nb_point_types, int point_type_len,
 	int *distributions, int nb_distributions, int &nb_tactical,
 	int verbose_level)
@@ -501,7 +501,7 @@ void tdo_refinement::do_all_row_refinements(
 }
 
 void tdo_refinement::do_all_column_refinements(
-		std::string &label_in, ofstream &g, tdo_scheme &G,
+		std::string &label_in, ofstream &g, tdo_scheme_synthetic &G,
 	int *line_types, int nb_line_types, int line_type_len,
 	int *distributions, int nb_distributions, int &nb_tactical,
 	int verbose_level)
@@ -543,7 +543,7 @@ void tdo_refinement::do_all_column_refinements(
 
 
 int tdo_refinement::do_row_refinement(
-	int t, std::string &label_in, ofstream &g, tdo_scheme &G,
+	int t, std::string &label_in, ofstream &g, tdo_scheme_synthetic &G,
 	int *point_types, int nb_point_types, int point_type_len,
 	int *distributions, int nb_distributions,
 	int verbose_level)
@@ -638,7 +638,7 @@ int tdo_refinement::do_row_refinement(
 
 
 	{
-		tdo_scheme G2;
+		tdo_scheme_synthetic G2;
 
 		G2.init_part_and_entries_int(GP2.part, GP2.entries, verbose_level - 2);
 
@@ -731,7 +731,7 @@ int tdo_refinement::do_row_refinement(
 
 int tdo_refinement::do_column_refinement(
 	int t, std::string &label_in,
-	ofstream &g, tdo_scheme &G,
+	ofstream &g, tdo_scheme_synthetic &G,
 	int *line_types, int nb_line_types, int line_type_len,
 	int *distributions, int nb_distributions,
 	int verbose_level)
@@ -821,9 +821,9 @@ int tdo_refinement::do_column_refinement(
 	}
 
 	{
-		tdo_scheme *G2;
+		tdo_scheme_synthetic *G2;
 
-		G2 = NEW_OBJECT(tdo_scheme);
+		G2 = NEW_OBJECT(tdo_scheme_synthetic);
 
 		G2->init_part_and_entries_int(GP2.part, GP2.entries, verbose_level - 2);
 

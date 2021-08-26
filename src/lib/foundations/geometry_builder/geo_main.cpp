@@ -5,15 +5,19 @@
 /* s_flag[v - 1] kann als Option �bergeben werden - JS 120100 */
 /* f_simple eingebaut JS 180100 */
 
-#include <stdlib.h>
-#include "geo.h"
+#include "foundations.h"
 
 using namespace std;
+
+
+
+namespace orbiter {
+namespace foundations {
 
 long int gl_t0;
 
 void geo_main(int argc, char **argv,
-	int *nb_GEN, int *nb_GEO, int *ticks, int *tps)
+	int &nb_GEN, int &nb_GEO, int &ticks, int &tps)
 {
 	int i, no = 0;
 	char *p, *control_file = 0;
@@ -98,5 +102,7 @@ void geo_main(int argc, char **argv,
 
 	delete B;
 }
+
+}}
 
 
