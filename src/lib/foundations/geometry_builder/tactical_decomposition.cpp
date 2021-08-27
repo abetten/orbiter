@@ -75,8 +75,18 @@ void tactical_decomposition::init(inc_encoding *Encoding,
 	f_TDO_multiple = FALSE;
 	f_TDO_d_multiple = FALSE;
 
+
+	if (f_v) {
+		cout << "tactical_decomposition::init before allocating G_last" << endl;
+	}
 	G_last = NEW_OBJECT(grid);
+	if (f_v) {
+		cout << "tactical_decomposition::init before allocating G_current" << endl;
+	}
 	G_current = NEW_OBJECT(grid);
+	if (f_v) {
+		cout << "tactical_decomposition::init before allocating G_next" << endl;
+	}
 	G_next = NEW_OBJECT(grid);
 
 	if (f_v) {

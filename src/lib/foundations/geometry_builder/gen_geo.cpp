@@ -31,14 +31,14 @@ gen_geo::gen_geo()
 	//int f_last_k_in_col[MAX_II][MAX_JJ];
 
 
-	II = 0;
-	JJ = 0;
+	//II = 0;
+	//JJ = 0;
 	//gen_geo_conf Conf[MAX_II * MAX_JJ];
 
 	inc = new incidence;
-	max_r = 0;
-	V = 0;
-	B = 0;
+	//max_r = 0;
+	//V = 0;
+	//B = 0;
 
 	//int R[MAX_V];
 	//int K[MAX_B];
@@ -307,7 +307,7 @@ int gen_geo::GeoFst(int verbose_level)
 	I = 0;
 	while (TRUE) {
 		while (TRUE) {
-			if (I >= II) {
+			if (I >= GB->v_len) {
 				return TRUE;
 			}
 			if (!GeoRowFst(I, verbose_level)) {
@@ -344,7 +344,7 @@ int gen_geo::GeoNxt(int verbose_level)
 	}
 	int I;
 
-	I = II - 1;
+	I = GB->v_len - 1;
 	while (TRUE) {
 		while (TRUE) {
 			if (GeoRowNxt(I, verbose_level)) {
@@ -357,7 +357,7 @@ int gen_geo::GeoNxt(int verbose_level)
 		}
 		/* I-tes Element wurde gerade erhoeht. */
 		while (TRUE) {
-			if (I >= II - 1) {
+			if (I >= GB->v_len - 1) {
 				return TRUE;
 			}
 			I++;
@@ -787,7 +787,7 @@ int gen_geo::GeoLineFst(int I, int m)
 	J = 0;
 	while (TRUE) {
 		while (TRUE) {
-			if (J >= JJ) {
+			if (J >= GB->b_len) {
 				return TRUE;
 			}
 			if (!GeoConfFst(I, m, J)) {
@@ -830,7 +830,7 @@ int gen_geo::GeoLineNxt(int I, int m)
 		inc->back_to_line == i1) {
 		inc->back_to_line = -1;
 	}
-	J = JJ - 1;
+	J = GB->b_len - 1;
 	while (TRUE) {
 		while (TRUE) {
 			if (GeoConfNxt(I, m, J)) {
@@ -843,7 +843,7 @@ int gen_geo::GeoLineNxt(int I, int m)
 		}
 		/* J-tes Element wurde gerade erhoeht. */
 		while (TRUE) {
-			if (J >= JJ - 1) {
+			if (J >= GB->b_len - 1) {
 				return TRUE;
 			}
 			J++;
@@ -862,7 +862,7 @@ void gen_geo::GeoLineClear(int I, int m)
 {
 	int J;
 
-	for (J = JJ - 1; J >= 0; J--) {
+	for (J = GB->b_len - 1; J >= 0; J--) {
 		GeoConfClear(I, m, J);
 	}
 }
@@ -1128,7 +1128,7 @@ int gen_geo::GeoXNxt(int I, int m, int J, int n)
 			}
 
 			// check scalarproduct for all previous rows:
-			if (J == JJ - 1 && n == C->r - 1) {
+			if (J == GB->b_len - 1 && n == C->r - 1) {
 				for (ii = 0; ii < i1; ii++) {
 					if (inc->pairs[i1][ii] != inc->lambda) {
 						break;
@@ -1326,7 +1326,7 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j)
 				inc->pairs[i1][ii1]++;
 			}
 			// check scalarproduct for all previous rows:
-			if (J == JJ - 1 && n == C->r - 1) {
+			if (J == GB->b_len - 1 && n == C->r - 1) {
 				for (ii = 0; ii < i1; ii++) {
 					if (inc->pairs[i1][ii] != inc->lambda) {
 						break;
@@ -1471,11 +1471,11 @@ void gen_geo::init_tdo(int fuse_idx, int tdo_line, int v, int *b, int *r, int ve
 	if (f_v) {
 		cout << "gen_geo::init_tdo tdo_line=" << tdo_line << endl;
 		cout << "r=";
-		Orbiter->Int_vec.print(cout, r, JJ);
+		Orbiter->Int_vec.print(cout, r, GB->b_len);
 		cout << endl;
 	}
-	if (tdo_line >= II) {
-		cout << "gen_geo::init_tdo tdo_line >= II" << endl;
+	if (tdo_line >= GB->v_len) {
+		cout << "gen_geo::init_tdo tdo_line >= GB->v_len" << endl;
 		exit(1);
 	}
 
@@ -1483,8 +1483,10 @@ void gen_geo::init_tdo(int fuse_idx, int tdo_line, int v, int *b, int *r, int ve
 	inc->i_hbar[inc->nb_i_hbar] = 0;
 	inc->nb_i_hbar++;
 
+	int V, B;
+
 	V = 0;
-	for (j = 0; j < JJ; j++) {
+	for (j = 0; j < GB->b_len; j++) {
 		Conf[tdo_line * MAX_JJ + j].fuse_idx = fuse_idx;
 
 		Conf[tdo_line * MAX_JJ + j].v = v;
@@ -1509,13 +1511,13 @@ void gen_geo::init_tdo(int fuse_idx, int tdo_line, int v, int *b, int *r, int ve
 		}
 		i0 = Conf[tdo_line * MAX_JJ + j].i0;
 		// conf[j].k1 = conf[j].k0 + conf[j].k;
-		if (j == JJ - 1) {
+		if (j == GB->b_len - 1) {
 			rr = Conf[tdo_line * MAX_JJ + j].r0 + Conf[tdo_line * MAX_JJ + j].r;
 			if (rr >= MAX_R) {
 				cout << "geo_tdo_init rr >= MAX_R" << endl;
 				exit(1);
 			}
-			max_r = MAXIMUM(max_r, rr);
+			//max_r = MAXIMUM(max_r, rr);
 		}
 		/* initiale vbars:
 		 * bleiben fuer immer gesetzt: */
@@ -1536,7 +1538,7 @@ void gen_geo::init_tdo(int fuse_idx, int tdo_line, int v, int *b, int *r, int ve
 		V += v;
 	}
 	inc->Encoding->b = 0;
-	for (j = 0; j < JJ; j++) {
+	for (j = 0; j < GB->b_len; j++) {
 		inc->Encoding->b += b[j];
 	}
 	B = inc->Encoding->b;
@@ -1553,8 +1555,8 @@ void gen_geo::print_conf()
 {
 	int I, J;
 
-	for (I = 0; I < II; I++) {
-		for (J = 0; J < JJ; J++) {
+	for (I = 0; I < GB->v_len; I++) {
+		for (J = 0; J < GB->b_len; J++) {
 			cout << "I=" << I << " J=" << J << ":" << endl;
 			Conf[I * MAX_JJ + J].print(cout);
 		}
@@ -1562,7 +1564,9 @@ void gen_geo::print_conf()
 }
 
 void gen_geo::init(geometry_builder *GB,
-		int v, int b, int *R, int II, int JJ,
+		//int v, int b,
+		//int *R,
+		//int II, int JJ,
 	int f_do_iso_test,
 	int f_do_aut_group,
 	int f_do_aut_group_in_iso_type_without_vhbars,
@@ -1574,10 +1578,14 @@ void gen_geo::init(geometry_builder *GB,
 
 	if (f_v) {
 		cout << "gen_geo::init" << endl;
-		cout << "gen_geo::init V=" << V << endl;
-		cout << "gen_geo::init max_r=" << max_r << endl;
+		//cout << "gen_geo::init v=" << v << endl;
+		//cout << "gen_geo::init max_r=" << max_r << endl;
 	}
 	gen_geo::GB = GB;
+	//gen_geo::V = v;
+	//gen_geo::B = b;
+	//gen_geo::II = II;
+	//gen_geo::JJ = JJ;
 
 	//st_isot_fprint_status = (void (*)(FILE *, void *, int)) isot_fprint_status;
 	gen_geo::f_do_iso_test = f_do_iso_test;
@@ -1593,7 +1601,7 @@ void gen_geo::init(geometry_builder *GB,
 	if (f_v) {
 		cout << "gen_geo::init before inc->Encoding->init" << endl;
 	}
-	inc->Encoding->init(v, b, R, verbose_level);
+	inc->Encoding->init(GB->V, GB->B, GB->R, verbose_level);
 	if (f_v) {
 		cout << "gen_geo::init after inc->Encoding->init" << endl;
 	}
@@ -1611,16 +1619,17 @@ void gen_geo::init(geometry_builder *GB,
 		}
 	}
 
-	if (II >= MAX_II) {
-		cout << "geo_init II >= MAX_II" << endl;
+
+	if (GB->v_len >= MAX_II) {
+		cout << "geo_init GB->v_len >= MAX_II" << endl;
 		exit(1);
 	}
-	gen_geo::II = II;
-	if (JJ >= MAX_JJ) {
-		cout << "geo_init JJ >= MAX_JJ" << endl;
+	//gen_geo::II = II;
+	if (GB->b_len >= MAX_JJ) {
+		cout << "geo_init GB->b_len >= MAX_JJ" << endl;
 		exit(1);
 	}
-	gen_geo::JJ = JJ;
+	//gen_geo::JJ = JJ;
 	//inc->max_r = 0;
 	/* gg_print_param(gg); */
 
@@ -1655,8 +1664,6 @@ void gen_geo::init(geometry_builder *GB,
 #endif
 	}
 	inc->iso_type_no_vhbars = NULL;
-	//V = 0;
-	//B = 0;
 	inc->nb_i_vbar = 0;
 	inc->nb_i_hbar = 0;
 	if (f_v) {
@@ -1670,7 +1677,7 @@ void gen_geo::init_k()
 	int I, J, fuse_idx, f, l, k, s, b;
 
 	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-		for (J = 0; J < JJ; J++) {
+		for (J = 0; J < GB->b_len; J++) {
 			if (fuse_idx == 0) {
 				k0[fuse_idx][J] = 0;
 			}
@@ -1681,7 +1688,7 @@ void gen_geo::init_k()
 		f = fuse_first[fuse_idx];
 		l = fuse_len[fuse_idx];
 		s = 0;
-		for (J = 0; J < JJ; J++) {
+		for (J = 0; J < GB->b_len; J++) {
 			if (fuse_idx) {
 				k0[fuse_idx][J] = k1[fuse_idx - 1][J];
 			}
@@ -1699,7 +1706,7 @@ void gen_geo::init_k()
 			k1[fuse_idx][J] = k0[fuse_idx][J] + k;
 		}
 	}
-	for (J = 0; J < JJ; J++) {
+	for (J = 0; J < GB->b_len; J++) {
 		for (fuse_idx = nb_fuse - 1; fuse_idx >= 0; fuse_idx--) {
 			k = gen_geo::k[fuse_idx][J];
 			if (k) {
@@ -1710,14 +1717,14 @@ void gen_geo::init_k()
 	}
 	cout << "k:" << endl;
 	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-		for (J = 0; J < JJ; J++) {
+		for (J = 0; J < GB->b_len; J++) {
 			cout << setw(3) << gen_geo::k[fuse_idx][J] << " ";
 		}
 		cout << endl;
 	}
 	cout << "k0:" << endl;
 	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-		for (J = 0; J < JJ; J++) {
+		for (J = 0; J < GB->b_len; J++) {
 			cout << setw(3) << k0[fuse_idx][J] << " ";
 		}
 		cout << endl;
@@ -1725,7 +1732,7 @@ void gen_geo::init_k()
 
 	cout << "k1:" << endl;
 	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-		for (J = 0; J < JJ; J++) {
+		for (J = 0; J < GB->b_len; J++) {
 			cout << setw(3) << k1[fuse_idx][J] << " ";
 		}
 		cout << endl;
@@ -1733,7 +1740,7 @@ void gen_geo::init_k()
 
 	cout << "f_last_k_in_col:" << endl;
 	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-		for (J = 0; J < JJ; J++) {
+		for (J = 0; J < GB->b_len; J++) {
 			cout << setw(3) << f_last_k_in_col[fuse_idx][J] << " ";
 		}
 		cout << endl;
@@ -1762,7 +1769,7 @@ void gen_geo::conf_init_last_non_zero_flag()
 	}
 
 	cout << "f_last_non_zero_in_fuse:" << endl;
-	for (I = 0; I < II; I++) {
+	for (I = 0; I < GB->v_len; I++) {
 		i = Conf[I * MAX_JJ + 0].f_last_non_zero_in_fuse;
 		cout << setw(3) << i << " ";
 	}
