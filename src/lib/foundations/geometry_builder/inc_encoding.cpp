@@ -288,14 +288,21 @@ void inc_encoding::apply_permutation(incidence *inc, int v,
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "inc_encoding::apply_permutation" << endl;
+		cout << "inc_encoding::apply_permutation v=" << v << " b=" << b << endl;
+		cout << "inc_encoding::apply_permutation p=";
+		p->print();
+		cout << endl;
+		cout << "inc_encoding::apply_permutation q=";
+		q->print();
+		cout << endl;
 	}
 	int i, j, r, i1, j1;
-	int theZ[MAX_V][MAX_B];
+	int *theZ;
 
+	theZ = NEW_int(v * b);
 	for (i = 0; i < v; i++) {
 		for (j = 0; j < b; j++) {
-			theZ[i][j] = 0;
+			theZ[i * b + j] = 0;
 		}
 	}
 	for (i = 0; i < v; i++) {
@@ -303,15 +310,23 @@ void inc_encoding::apply_permutation(incidence *inc, int v,
 			j = theX[i * dim_n + r];
 			i1 = p->data[i];
 			j1 = q->data[j];
+			if (i1 >= v) {
+				cout << "inc_encoding::apply_permutation i1 >= v" << endl;
+				exit(1);
+			}
+			if (j1 >= b) {
+				cout << "inc_encoding::apply_permutation j1 >= b" << endl;
+				exit(1);
+			}
 			//  (i, j) is mapped to (i1, j1)
-			theZ[i1][j1] = 1;
+			theZ[i1 * b + j1] = 1;
 		}
 	}
 	if (f_v) {
 		cout << "theZ:" << endl;
 		for (i = 0; i < v; i++) {
 			for (j = 0; j < b; j++) {
-				cout << theZ[i][j];
+				cout << theZ[i * b + j];
 			}
 			cout << endl;
 		}
@@ -323,7 +338,7 @@ void inc_encoding::apply_permutation(incidence *inc, int v,
 		}
 		r = 0;
 		for (j = 0; j < b; j++) {
-			if (theZ[i][j]) {
+			if (theZ[i * b + j]) {
 				if (r == inc->Encoding->R[i]) {
 					cout << "inc_theX_apply_pq r == inc->Encoding->R[i]" << endl;
 					inc->print_R(v, p, q);
@@ -339,6 +354,7 @@ void inc_encoding::apply_permutation(incidence *inc, int v,
 			exit(1);
 		}
 	}
+	FREE_int(theZ);
 }
 
 
