@@ -329,10 +329,12 @@ void iso_type::add_geometry(
 
 calc_aut:
 	if (f_print_isot_small || f_print_isot || f_v) {
-		if (!f_found)
-			cout << endl << "new TDO: ";
-		else
-			cout << endl << "new GEO: ";
+		if (!f_found) {
+			cout << endl << "new TDO at line " << v << " : ";
+		}
+		else {
+			cout << endl << "new GEO at line " << v << " : ";
+		}
 		print_status(cout, FALSE /* f_with_flags */);
 		cout << "  ";
 	}
@@ -403,6 +405,7 @@ void iso_type::calc_theY_and_tdos_override_v(
 		Encoding, inc, v,
 		ddp, ddb, &tdo_p, &tdo_q,
 		verbose_level);
+
 	if (f_v) {
 		cout << "iso_type::calc_theY_and_tdos_override_v after geo_calc_tdos" << endl;
 		cout << "iso_type::calc_theY_and_tdos_override_v the tdo scheme is:" << endl;
@@ -414,7 +417,20 @@ void iso_type::calc_theY_and_tdos_override_v(
 	if (f_v) {
 		cout << "iso_type::calc_theY_and_tdos_override_v before Encoding->apply_permutation" << endl;
 	}
+	Orbiter->Int_vec.copy(Encoding->theX, theY, v * Encoding->dim_n);
+
+#if 0
 	Encoding->apply_permutation(inc, v, theY, &tdo_p, &tdo_q, verbose_level);
+	if (f_v) {
+		cout << "iso_type::calc_theY_and_tdos_override_v theX=" << endl;
+		Orbiter->Int_vec.print(cout, Encoding->theX, v * Encoding->dim_n);
+		cout << endl;
+		cout << "iso_type::calc_theY_and_tdos_override_v theY=" << endl;
+		Orbiter->Int_vec.print(cout, theY, v * Encoding->dim_n);
+		cout << endl;
+	}
+#endif
+
 	if (f_v) {
 		cout << "iso_type::calc_theY_and_tdos_override_v after Encoding->apply_permutation" << endl;
 	}
@@ -753,15 +769,17 @@ void iso_type::find_tdos(tdo_scheme *tdos, int *tdo_idx, int *f_found)
 
 	*f_found = FALSE;
 	for (i = 0; i < nb_TDO; i++) {
+
 		res = tdos_cmp(tdos, theTDO[i], 0 /* verbose_level */);
+
 		if (res < 0) {
 			break;
 		}
 		if (res == 0) {
 			*f_found = TRUE;
 			break;
-			}
 		}
+	}
 	*tdo_idx = i;
 }
 
@@ -778,8 +796,7 @@ void iso_type::add_tdos_and_geo(tdo_scheme *tdos, int tdo_idx, int *theY, int ve
 	if (nb_TDO >= dim_TDO) {
 		TDO_realloc();
 	}
-	for (j = nb_TDO - 1;
-		j >= tdo_idx; j--) {
+	for (j = nb_TDO - 1; j >= tdo_idx; j--) {
 		theTDO[j + 1] = theTDO[j];
 	}
 	theTDO[tdo_idx] = tdos;
@@ -821,18 +838,23 @@ void iso_type::add_geo(int tdo_idx, int *theY)
 			tmp1[i] = theGEO[i];
 			tmp2[i] = GEO_TDO_idx[i];
 		}
+
 		for (i = nb_GEO; i < new_dim; i++) {
 			tmp1[i] = NULL;
 			tmp2[i] = 0;
 		}
+
 		delete [] theGEO;
 		delete [] GEO_TDO_idx;
+
 		theGEO = tmp1;
 		GEO_TDO_idx = tmp2;
 		dim_GEO = new_dim;
 	}
+
 	theGEO[nb_GEO] = theY;
 	GEO_TDO_idx[nb_GEO] = tdo_idx;
+
 	nb_GEO++;
 }
 
