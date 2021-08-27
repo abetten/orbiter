@@ -22,8 +22,8 @@ namespace foundations {
 #define MAX_VB 100   /* MAX(MAX_V, MAX_B) */
 #define MAX_B2 6400    /* B ueber 2 */
 #define MAX_R 80
-#define MAX_II 80
-#define MAX_JJ 80
+//#define MAX_II 80
+//#define MAX_JJ 80
 
 #define MAX_GRID 100
 #define MAX_TYPE 200
@@ -126,17 +126,17 @@ public:
 
 	/* the TDO: */
 	int nb_fuse;
-	int fuse_first[MAX_II];
-	int fuse_len[MAX_II];
-	int k0[MAX_II][MAX_JJ];
-	int k[MAX_II][MAX_JJ];
-	int k1[MAX_II][MAX_JJ];
-	int f_last_k_in_col[MAX_II][MAX_JJ];
+	int *Fuse_first; //[MAX_II];
+	int *Fuse_len; //[MAX_II];
+	int *K0; //[MAX_II][MAX_JJ];
+	int *KK; //[MAX_II][MAX_JJ];
+	int *K1; //[MAX_II][MAX_JJ];
+	int *F_last_k_in_col; //[MAX_II][MAX_JJ];
 
 
 	//int II;
 	//int JJ;
-	gen_geo_conf Conf[MAX_II * MAX_JJ];
+	gen_geo_conf *Conf; //[GB->v_len * GB->b_len];
 
 	incidence *inc;
 	//int max_r;
@@ -144,10 +144,11 @@ public:
 	//int B;
 
 	//int R[MAX_V];
-	int K[MAX_B];
-	int f_vbar[MAX_V][MAX_R];
-	int vbar[MAX_B];
-	int hbar[MAX_V];
+	int *K; //[MAX_B];
+
+	int *f_vbar; // [GB->V * inc->Encoding->dim_n] not:  MAX_V][MAX_R];
+	int *vbar; // [GB->V] not: [MAX_B];
+	int *hbar; // [GB->B] not: [MAX_V];
 		/* hbar < J:   die Kreuze
 		 *   innerhalb des Kaestchens
 		 *   werden weitestgehend
@@ -178,6 +179,20 @@ public:
 
 	gen_geo();
 	~gen_geo();
+	void init(geometry_builder *GB,
+		int f_do_iso_test,
+		int f_do_aut_group,
+		int f_do_aut_group_in_iso_type_without_vhbars,
+		int gen_print_intervall,
+		int verbose_level);
+	void init_tdo(int fuse_idx, int tdo_line, int v, int *b, int *r, int verbose_level);
+	void print_conf();
+	void init_bars(int verbose_level);
+	void init_fuse(int verbose_level);
+	void init_k();
+	void conf_init_last_non_zero_flag();
+	void TDO_init(int *v, int *b, int *theTDO, int verbose_level);
+	void print_pairs(int line);
 	void main2(int &nb_GEN, int &nb_GEO, int &ticks, int &tps, int verbose_level);
 	void generate_all(int verbose_level);
 	int GeoFst(int verbose_level);
@@ -199,23 +214,8 @@ public:
 	int GeoXNxt(int I, int m, int J, int n);
 	void GeoXClear(int I, int m, int J, int n);
 	int X_Fst(int I, int m, int J, int n, int j);
-	void save_theX(FILE *GEO_fp);
-	void geo_get_theX(int lines, int *X, int *nb_X, int verbose_level);
-	void init_tdo(int fuse_idx, int tdo_line, int v, int *b, int *r, int verbose_level);
-	void print_conf();
-	void init(geometry_builder *GB,
-			//int v, int b, int *R, int II, int JJ,
-		int f_do_iso_test,
-		int f_do_aut_group,
-		int f_do_aut_group_in_iso_type_without_vhbars,
-		int gen_print_intervall,
-		int verbose_level);
-	void init_k();
-	void conf_init_last_non_zero_flag();
-	void TDO_init(
-		int v[MAX_II], int b[MAX_JJ],
-		int theTDO[MAX_II][MAX_JJ], int verbose_level);
-	void print_pairs(int line);
+	//void save_theX(FILE *GEO_fp);
+	//void geo_get_theX(int lines, int *X, int *nb_X, int verbose_level);
 
 };
 
@@ -300,7 +300,7 @@ public:
 	//int JJ;
 	//int v[MAX_II];
 	//int b[MAX_JJ];
-	int theTDO[MAX_II][MAX_JJ];
+	//int theTDO[MAX_II][MAX_JJ];
 
 	int *v;
 	int v_len;
@@ -322,12 +322,14 @@ public:
 
 	int *R; // [V]
 
+#if 0
 	int PV[MAX_V];
 		/* PV[i] = Anzahl der Punkte,
 		 * durch die i Geraden gehen. */
 	int GV[MAX_V];
 		/* GV[i] = Anzahl der Geraden
 		 * der L"ange i. */
+#endif
 
 	int f_transpose_it;
 	int f_save_file;
@@ -359,9 +361,9 @@ public:
 		int f_transpose_it, char *file_name, int verbose_level);
 	void calc_PV_GV(int verbose_level);
 #endif
-	void init_tdo(int *the_tdo, int verbose_level);
+	void compute_VBR(int verbose_level);
 	void print_tdo();
-	void TDO_init(int verbose_level);
+	//void TDO_init(int verbose_level);
 	void isot(int line, int tdo_flags, int verbose_level);
 	void isot_no_vhbars(int tdo_flags, int verbose_level);
 	void isot2(int line, int tdo_flags, int verbose_level);
@@ -481,6 +483,7 @@ class incidence {
 
 public:
 
+	gen_geo *gg;
 	inc_encoding *Encoding;
 
 	int theY[MAX_V * MAX_R];
@@ -492,9 +495,9 @@ public:
 
 	/* initiale vbars / hbars: */
 	int nb_i_vbar;
-	int i_vbar[MAX_JJ];
+	int *i_vbar; //[MAX_JJ];
 	int nb_i_hbar;
-	int i_hbar[MAX_II];
+	int *i_hbar; //[MAX_II];
 
 	int gl_nb_GEN;
 
@@ -506,7 +509,9 @@ public:
 
 	incidence();
 	~incidence();
-	void init(int v, int b, int *R, int verbose_level);
+	void init(gen_geo *gg, int v, int b, int *R, int verbose_level);
+	void init_bars(int verbose_level);
+	void init_pairs(int verbose_level);
 	int find_square(int m, int n);
 	void print_param();
 	void free_isot();

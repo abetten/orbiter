@@ -23,26 +23,30 @@ gen_geo::gen_geo()
 	GB = NULL;
 
 	nb_fuse = 0;
-	//int fuse_first[MAX_II];
-	//int fuse_len[MAX_II];
-	//int k0[MAX_II][MAX_JJ];
-	//int k[MAX_II][MAX_JJ];
-	//int k1[MAX_II][MAX_JJ];
-	//int f_last_k_in_col[MAX_II][MAX_JJ];
+	Fuse_first = NULL; // [MAX_II];
+	Fuse_len = NULL; //[MAX_II];
+	K0 = NULL; //[MAX_II][MAX_JJ];
+	KK = NULL; //[MAX_II][MAX_JJ];
+	K1 = NULL; // [MAX_II][MAX_JJ];
+	F_last_k_in_col = NULL; // [MAX_II][MAX_JJ];
 
 
 	//II = 0;
 	//JJ = 0;
-	//gen_geo_conf Conf[MAX_II * MAX_JJ];
+	Conf = NULL;
 
-	inc = new incidence;
+	inc = NULL;
 	//max_r = 0;
 	//V = 0;
 	//B = 0;
 
 	//int R[MAX_V];
-	//int K[MAX_B];
-	//int f_vbar[MAX_V][MAX_R];
+	K = NULL;
+
+	f_vbar = NULL;
+	vbar = NULL;
+	hbar = NULL;
+
 	//int vbar[MAX_B];
 	//int hbar[MAX_V];
 
@@ -58,24 +62,466 @@ gen_geo::gen_geo()
 
 gen_geo::~gen_geo()
 {
+	if (Fuse_first) {
+		FREE_int(Fuse_first);
+	}
+	if (Fuse_len) {
+		FREE_int(Fuse_len);
+	}
+	if (K0) {
+		FREE_int(K0);
+	}
+	if (KK) {
+		FREE_int(KK);
+	}
+	if (K1) {
+		FREE_int(K1);
+	}
+	if (F_last_k_in_col) {
+		FREE_int(F_last_k_in_col);
+	}
+
+	if (Conf) {
+		FREE_OBJECTS(Conf);
+	}
+
+	if (K) {
+		FREE_int(K);
+	}
+	if (f_vbar) {
+		FREE_int(f_vbar);
+	}
+	if (vbar) {
+		FREE_int(vbar);
+	}
+	if (hbar) {
+		FREE_int(hbar);
+	}
+
+	if (Conf) {
+		FREE_OBJECT(Conf);
+	}
 	if (inc) {
-		delete inc;
+		FREE_OBJECT(inc);
 	}
 }
 
+void gen_geo::init(geometry_builder *GB,
+	int f_do_iso_test,
+	int f_do_aut_group,
+	int f_do_aut_group_in_iso_type_without_vhbars,
+	int gen_print_intervall,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "gen_geo::init" << endl;
+	}
+	gen_geo::GB = GB;
+	gen_geo::f_do_iso_test = f_do_iso_test;
+	gen_geo::f_do_aut_group = f_do_aut_group;
+	gen_geo::f_do_aut_group_in_iso_type_without_vhbars = f_do_aut_group_in_iso_type_without_vhbars;
+	gen_geo::gen_print_intervall = gen_print_intervall;
+
+	inc = NEW_OBJECT(incidence);
+
+	if (f_v) {
+		cout << "gen_geo::init before inc->init" << endl;
+	}
+	inc->init(this, GB->V, GB->B, GB->R, verbose_level);
+	if (f_v) {
+		cout << "gen_geo::init after inc->init" << endl;
+	}
+
+	forget_ivhbar_in_last_isot = FALSE;
+
+
+	K0 = NEW_int(GB->v_len * GB->b_len);
+	KK = NEW_int(GB->v_len * GB->b_len);
+	K1 = NEW_int(GB->v_len * GB->b_len);
+	F_last_k_in_col = NEW_int(GB->v_len * GB->b_len);
+
+
+	if (f_v) {
+		cout << "gen_geo::init before init_fuse" << endl;
+	}
+	init_fuse(verbose_level);
+	if (f_v) {
+		cout << "gen_geo::init after init_fuse" << endl;
+	}
+
+	if (f_v) {
+		cout << "gen_geo::init before TDO_init" << endl;
+	}
+	TDO_init(GB->v, GB->b, GB->TDO, verbose_level);
+	if (f_v) {
+		cout << "gen_geo::init after TDO_init" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "gen_geo::init before init_bars" << endl;
+	}
+	init_bars(verbose_level);
+	if (f_v) {
+		cout << "gen_geo::init before init_bars done" << endl;
+	}
+
+
+	// init_ISO();
+	// init_ISO2();
+
+
+	if (f_v) {
+		cout << "gen_geo::init done" << endl;
+	}
+
+}
+void gen_geo::init_tdo(int fuse_idx, int tdo_line, int v, int *b, int *r, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i0, j, rr;
+
+	if (f_v) {
+		cout << "gen_geo::init_tdo tdo_line=" << tdo_line << endl;
+		cout << "r=";
+		Orbiter->Int_vec.print(cout, r, GB->b_len);
+		cout << endl;
+	}
+	if (tdo_line >= GB->v_len) {
+		cout << "gen_geo::init_tdo tdo_line >= GB->v_len" << endl;
+		exit(1);
+	}
+
+
+	Conf = NEW_OBJECTS(gen_geo_conf, GB->v_len * GB->b_len);
+
+	int V, B;
+
+	V = 0;
+	for (j = 0; j < GB->b_len; j++) {
+
+		if (f_v) {
+			cout << "gen_geo::init_tdo tdo_line=" << tdo_line << " j=" << j << endl;
+		}
+
+		Conf[tdo_line * GB->b_len + j].fuse_idx = fuse_idx;
+
+		Conf[tdo_line * GB->b_len + j].v = v;
+		Conf[tdo_line * GB->b_len + j].b = b[j];
+		Conf[tdo_line * GB->b_len + j].r = r[j];
+
+		if (j == 0) {
+			Conf[tdo_line * GB->b_len + j].j0 = 0;
+			Conf[tdo_line * GB->b_len + j].r0 = 0;
+		}
+		else {
+			Conf[tdo_line * GB->b_len + j].j0 = Conf[tdo_line * GB->b_len + j - 1].j0 + Conf[tdo_line * GB->b_len + j - 1].b;
+			Conf[tdo_line * GB->b_len + j].r0 = Conf[tdo_line * GB->b_len + j - 1].r0 + Conf[tdo_line * GB->b_len + j - 1].r;
+		}
+
+		if (tdo_line == 0) {
+			Conf[tdo_line * GB->b_len + j].i0 = 0;
+		}
+		else {
+			Conf[tdo_line * GB->b_len + j].i0 = Conf[(tdo_line - 1) * GB->b_len + j].i0 + Conf[(tdo_line - 1) * GB->b_len + j].v;
+		}
+		i0 = Conf[tdo_line * GB->b_len + j].i0;
+
+		if (j == GB->b_len - 1) {
+			rr = Conf[tdo_line * GB->b_len + j].r0 + Conf[tdo_line * GB->b_len + j].r;
+			if (rr >= MAX_R) {
+				cout << "geo_tdo_init rr >= MAX_R" << endl;
+				exit(1);
+			}
+			//max_r = MAXIMUM(max_r, rr);
+		}
+#if 0
+		for (i = i0; i < i0 + v; i++) {
+			//inc->R[i] = rr;
+			R[i] = rr;
+		}
+#endif
+		V += v;
+	}
+	if (f_v) {
+		cout << "gen_geo::init_tdo computing B" << endl;
+	}
+	inc->Encoding->b = 0;
+	for (j = 0; j < GB->b_len; j++) {
+		inc->Encoding->b += b[j];
+	}
+	B = inc->Encoding->b;
+
+
+	inc->print_param();
+
+	if (f_v) {
+		cout << "gen_geo::init_tdo done" << endl;
+	}
+}
+
+void gen_geo::print_conf()
+{
+	int I, J;
+
+	for (I = 0; I < GB->v_len; I++) {
+		for (J = 0; J < GB->b_len; J++) {
+			cout << "I=" << I << " J=" << J << ":" << endl;
+			Conf[I * GB->b_len + J].print(cout);
+		}
+	}
+}
+
+void gen_geo::init_bars(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "gen_geo::init_bars" << endl;
+	}
+	f_vbar = NEW_int(GB->V * inc->Encoding->dim_n);
+
+	for (i = 0; i < GB->V * inc->Encoding->dim_n; i++) {
+		f_vbar[i] = FALSE;
+	}
+
+	hbar = NEW_int(GB->V + 1);
+	for (i = 0; i <= GB->V; i++) {
+		hbar[i] = INT_MAX;
+	}
+
+	vbar = NEW_int(GB->B + 1);
+	for (i = 0; i <= GB->B; i++) {
+		vbar[i] = INT_MAX;
+	}
+
+	if (f_v) {
+		cout << "gen_geo::init_bars before inc->init_bars" << endl;
+	}
+	inc->init_bars(verbose_level);
+	if (f_v) {
+		cout << "gen_geo::init_bars after inc->init_bars" << endl;
+	}
+
+	if (f_v) {
+		cout << "gen_geo::init_bars done" << endl;
+	}
+}
+
+void gen_geo::init_fuse(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "gen_geo::init_fuse" << endl;
+	}
+	Fuse_first = NEW_int(GB->v_len);
+	Fuse_len = NEW_int(GB->v_len);
+	int f, i;
+
+	nb_fuse = GB->fuse_len;
+	f = 0;
+	for (i = 0; i < GB->fuse_len; i++) {
+		Fuse_first[i] = f;
+		Fuse_len[i] = GB->fuse[i];
+		f += GB->fuse[i];
+	}
+
+	if (f_v) {
+		cout << "gen_geo::init_fuse done" << endl;
+	}
+
+
+}
+void gen_geo::init_k()
+{
+	int I, J, j, fuse_idx, f, l, k, s, b;
+
+	K = NEW_int(GB->B);
+	for (j = 0; j < GB->B; j++) {
+		K[j] = 0;
+	}
+
+	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
+		for (J = 0; J < GB->b_len; J++) {
+			if (fuse_idx == 0) {
+				K0[fuse_idx * GB->b_len + J] = 0;
+			}
+			F_last_k_in_col[fuse_idx * GB->b_len + J] = FALSE;
+		}
+	}
+	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
+		f = Fuse_first[fuse_idx];
+		l = Fuse_len[fuse_idx];
+		s = 0;
+		for (J = 0; J < GB->b_len; J++) {
+			if (fuse_idx) {
+				K0[fuse_idx * GB->b_len + J] = K1[(fuse_idx - 1) * GB->b_len + J];
+			}
+			s = 0;
+			for (I = f; I < f + l; I++) {
+				s += Conf[I * GB->b_len + J].v * Conf[I * GB->b_len + J].r;
+				b = Conf[I * GB->b_len + J].b;
+			}
+			k = s / b;
+			if (k * b != s) {
+				cout << "geo_init_k b does not divide s ! fuse_idx = " << fuse_idx << " J = " << J << " s = " << s << " b = " << b << endl;
+				exit(1);
+			}
+			KK[fuse_idx * GB->b_len + J] = k;
+			K1[fuse_idx * GB->b_len + J] = K0[fuse_idx * GB->b_len + J] + k;
+		}
+	}
+	for (J = 0; J < GB->b_len; J++) {
+		for (fuse_idx = nb_fuse - 1; fuse_idx >= 0; fuse_idx--) {
+			k = KK[fuse_idx * GB->b_len + J];
+			if (k) {
+				F_last_k_in_col[fuse_idx * GB->b_len + J] = TRUE;
+				break;
+			}
+		}
+	}
+	cout << "KK:" << endl;
+	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
+		for (J = 0; J < GB->b_len; J++) {
+			cout << setw(3) << KK[fuse_idx * GB->b_len + J] << " ";
+		}
+		cout << endl;
+	}
+	cout << "K0:" << endl;
+	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
+		for (J = 0; J < GB->b_len; J++) {
+			cout << setw(3) << K0[fuse_idx * GB->b_len + J] << " ";
+		}
+		cout << endl;
+	}
+
+	cout << "K1:" << endl;
+	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
+		for (J = 0; J < GB->b_len; J++) {
+			cout << setw(3) << K1[fuse_idx * GB->b_len + J] << " ";
+		}
+		cout << endl;
+	}
+
+	cout << "F_last_k_in_col:" << endl;
+	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
+		for (J = 0; J < GB->b_len; J++) {
+			cout << setw(3) << F_last_k_in_col[fuse_idx * GB->b_len + J] << " ";
+		}
+		cout << endl;
+	}
+}
+
+void gen_geo::conf_init_last_non_zero_flag()
+{
+	int fuse_idx, ff, fl, i, I, r;
+
+	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
+		ff = Fuse_first[fuse_idx];
+		fl = Fuse_len[fuse_idx];
+		for (i = fl - 1; i >= 0; i--) {
+			I = ff + i;
+			Conf[I * GB->b_len + 0].f_last_non_zero_in_fuse = FALSE;
+		}
+		for (i = fl - 1; i >= 0; i--) {
+			I = ff + i;
+			r = Conf[I * GB->b_len + 0].r;
+			if (r > 0) {
+				Conf[I * GB->b_len + 0].f_last_non_zero_in_fuse = TRUE;
+				break;
+			}
+		}
+	}
+
+	cout << "f_last_non_zero_in_fuse:" << endl;
+	for (I = 0; I < GB->v_len; I++) {
+		i = Conf[I * GB->b_len + 0].f_last_non_zero_in_fuse;
+		cout << setw(3) << i << " ";
+	}
+	cout << endl;
+}
+
+void gen_geo::TDO_init(int *v, int *b, int *theTDO, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "gen_geo::TDO_init" << endl;
+	}
+	int I, fuse_idx, f, l;
+
+	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
+		f = Fuse_first[fuse_idx];
+		l = Fuse_len[fuse_idx];
+		if (f_v) {
+			cout << "gen_geo::TDO_init fuse_idx=" << fuse_idx << " f=" << f << " l=" << l << endl;
+		}
+		for (I = f; I < f + l; I++) {
+			if (f_v) {
+				cout << "gen_geo::TDO_init fuse_idx=" << fuse_idx << " f=" << f << " l=" << l
+						<< " I=" << I << " v[I]=" << v[I] << endl;
+			}
+			init_tdo(fuse_idx,
+					I /* tdo_line */, v[I] /* v */, b,
+					theTDO + I * GB->b_len /* r */,
+					verbose_level);
+		}
+	}
+	if (f_v) {
+		cout << "gen_geo::TDO_init before init_k" << endl;
+	}
+	init_k();
+	if (f_v) {
+		cout << "gen_geo::TDO_init after init_k" << endl;
+	}
+	if (f_v) {
+		cout << "gen_geo::TDO_init before conf_init_last_non_zero_flag" << endl;
+	}
+	conf_init_last_non_zero_flag();
+	if (f_v) {
+		cout << "gen_geo::TDO_init after conf_init_last_non_zero_flag" << endl;
+	}
+	if (f_v) {
+		cout << "gen_geo::TDO_init done" << endl;
+	}
+}
+
+void gen_geo::print_pairs(int line)
+{
+	int i1, i2, a;
+
+	for (i1 = 0; i1 < line; i1++) {
+		cout << "line " << i1 << " : ";
+		for (i2 = 0; i2 < i1; i2++) {
+			a = inc->pairs[i1][i2];
+			cout << a;
+		}
+		cout << endl;
+	}
+}
 
 void gen_geo::main2(int &nb_GEN, int &nb_GEO, int &ticks, int &tps, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "gen_geo::main2" << endl;
+		cout << "gen_geo::main2, verbose_level = " << verbose_level << endl;
 	}
 	int t0, t1, user_time, V;
 
 	t0 = os_ticks();
 
+	if (f_v) {
+		cout << "gen_geo::main2 before generate_all" << endl;
+	}
 	generate_all(verbose_level);
+	if (f_v) {
+		cout << "gen_geo::main2 after generate_all" << endl;
+	}
 
 #if 0
 	if (inc_file_name.length()) {
@@ -173,7 +619,7 @@ void gen_geo::generate_all(int verbose_level)
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "do_geo" << endl;
+		cout << "gen_geo::generate_all" << endl;
 	}
 
 	int ret = FALSE;
@@ -182,10 +628,15 @@ void gen_geo::generate_all(int verbose_level)
 	iso_type *it0, *it1;
 
 	if (f_v) {
-		cout << "gen_geo::generate_all" << endl;
+		cout << "gen_geo::generate_all this = " << this << endl;
+		cout << "gen_geo::generate_all inc = " << inc << endl;
 		if (inc->f_lambda) {
 			cout << "lambda = " << inc->lambda << endl;
 		}
+	}
+
+	if (f_v) {
+		cout << "gen_geo::generate_all before it0 = ..." << endl;
 	}
 
 	it0 = inc->iso_type_at_line[inc->Encoding->v - 1];
@@ -194,6 +645,11 @@ void gen_geo::generate_all(int verbose_level)
 		cout << "please install a test at line " << inc->Encoding->v << endl;
 		exit(1);
 	}
+
+	if (f_v) {
+		cout << "gen_geo::generate_all before it1 = ..." << endl;
+	}
+
 	it1 = inc->iso_type_no_vhbars;
 
 
@@ -375,7 +831,7 @@ int gen_geo::GeoNxt(int verbose_level)
 int gen_geo::GeoRowFst(int I, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	gen_geo_conf *C = Conf + I * MAX_JJ;
+	gen_geo_conf *C = Conf + I * GB->b_len;
 
 	if (f_v) {
 		cout << "GeoRowFst I=" << I << endl;
@@ -417,7 +873,7 @@ int gen_geo::GeoRowFst(int I, int verbose_level)
 int gen_geo::GeoRowNxt(int I, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	gen_geo_conf *C = Conf + I * MAX_JJ;
+	gen_geo_conf *C = Conf + I * GB->b_len;
 
 	if (f_v) {
 		cout << "GeoRowNxt I=" << I << endl;
@@ -465,7 +921,7 @@ int gen_geo::GeoLineFstRange(int I, int m, int verbose_level)
 
 #ifdef GEO_LINE_RANGE
 	iso_type *it;
-	gen_geo_conf *C = Conf + I * MAX_JJ;
+	gen_geo_conf *C = Conf + I * GB->b_len;
 	int i1;
 
 	i1 = C->i0 + m;
@@ -507,7 +963,7 @@ int gen_geo::GeoLineNxtRange(int I, int m, int verbose_level)
 	}
 #ifdef GEO_LINE_RANGE
 	iso_type *it;
-	gen_geo_conf *C = Conf + I * MAX_JJ;
+	gen_geo_conf *C = Conf + I * GB->b_len;
 	int i1;
 
 	i1 = C->i0 + m;
@@ -548,7 +1004,7 @@ int gen_geo::geo_back_test(int I, int verbose_level)
 	if (f_v) {
 		cout << "geo_back_test I=" << I << endl;
 	}
-	gen_geo_conf *C = Conf + I * MAX_JJ;
+	gen_geo_conf *C = Conf + I * GB->b_len;
 	int i0, i1, m, already_there, control_line;
 	iso_type *it;
 
@@ -557,9 +1013,7 @@ int gen_geo::geo_back_test(int I, int verbose_level)
 	for (m = 0; m < C->v - 1; m++) {
 		i1 = i0 + m;
 		it = inc->iso_type_at_line[i1];
-		if (it &&
-			it->f_generate_first &&
-			!it->f_beginning_checked) {
+		if (it && it->f_generate_first && !it->f_beginning_checked) {
 			/* Der Stand der i1-ten Zeile
 			 * ist realisierbar
 			 * (bis control line),
@@ -615,7 +1069,7 @@ int gen_geo::GeoLineFst0(int I, int m, int verbose_level)
 	if (f_v) {
 		cout << "GeoLineFst0 I=" << I << " m=" << m << endl;
 	}
-	gen_geo_conf *C = Conf + I * MAX_JJ;
+	gen_geo_conf *C = Conf + I * GB->b_len;
 	int already_there, i1, control_line;
 	iso_type *it;
 
@@ -666,6 +1120,7 @@ int gen_geo::GeoLineFst0(int I, int m, int verbose_level)
 		while (TRUE) {
 			if (f_v) {
 				cout << "GeoLineFst0 I=" << I << " m=" << m << " before isot_add" << endl;
+				inc->print(cout, i1 + 1);
 			}
 
 			it->add_geometry(inc->Encoding,
@@ -706,7 +1161,7 @@ int gen_geo::GeoLineNxt0(int I, int m, int verbose_level)
 	if (f_v) {
 		cout << "GeoLineNxt0 I=" << I << " m=" << m << endl;
 	}
-	gen_geo_conf *C = Conf + I * MAX_JJ;
+	gen_geo_conf *C = Conf + I * GB->b_len;
 	int already_there, i1, control_line;
 	iso_type *it;
 
@@ -817,17 +1272,15 @@ int gen_geo::GeoLineFst(int I, int m)
 
 int gen_geo::GeoLineNxt(int I, int m)
 {
-	gen_geo_conf *C = Conf + I * MAX_JJ;
+	gen_geo_conf *C = Conf + I * GB->b_len;
 	int J, i1;
 
 	i1 = C->i0 + m;
-	if (inc->back_to_line != -1 &&
-		inc->back_to_line < i1) {
+	if (inc->back_to_line != -1 && inc->back_to_line < i1) {
 		GeoLineClear(I, m);
 		return FALSE;
 	}
-	if (inc->back_to_line != -1 &&
-		inc->back_to_line == i1) {
+	if (inc->back_to_line != -1 && inc->back_to_line == i1) {
 		inc->back_to_line = -1;
 	}
 	J = GB->b_len - 1;
@@ -869,7 +1322,7 @@ void gen_geo::GeoLineClear(int I, int m)
 
 int gen_geo::GeoConfFst(int I, int m, int J)
 {
-	gen_geo_conf *C = Conf + I * MAX_JJ + J;
+	gen_geo_conf *C = Conf + I * GB->b_len + J;
 	int n, i1;
 
 	if (J == 0) {
@@ -879,7 +1332,7 @@ int gen_geo::GeoConfFst(int I, int m, int J)
 			/* initialer hbar */
 		}
 		else {
-			hbar[i1] = MAX_JJ;
+			hbar[i1] = GB->b_len;
 			/* kein hbar */
 		}
 	}
@@ -916,7 +1369,7 @@ int gen_geo::GeoConfFst(int I, int m, int J)
 
 int gen_geo::GeoConfNxt(int I, int m, int J)
 {
-	gen_geo_conf *C = Conf + I * MAX_JJ + J;
+	gen_geo_conf *C = Conf + I * GB->b_len + J;
 	int n, i1;
 
 	i1 = C->i0 + m;
@@ -956,7 +1409,7 @@ int gen_geo::GeoConfNxt(int I, int m, int J)
 
 void gen_geo::GeoConfClear(int I, int m, int J)
 {
-	gen_geo_conf *C = Conf + I * MAX_JJ + J;
+	gen_geo_conf *C = Conf + I * GB->b_len + J;
 	int n;
 
 	if (C->r == 0) {
@@ -971,7 +1424,7 @@ int gen_geo::GeoXFst(int I, int m, int J, int n)
 /* Verwaltet: hbar[], vbar[],
  * f_vbar[][], theX[][], K[] */
 {
-	gen_geo_conf *C = Conf + I * MAX_JJ + J;
+	gen_geo_conf *C = Conf + I * GB->b_len + J;
 	//int f_new_situation1;
 	int i1, j0, r, j;
 
@@ -1012,7 +1465,7 @@ int gen_geo::GeoXNxt(int I, int m, int J, int n)
 /* Verwaltet: hbar[], vbar[],
  * f_vbar[][], theX[][], K[] */
 {
-	gen_geo_conf *C = Conf + I * MAX_JJ + J;
+	gen_geo_conf *C = Conf + I * GB->b_len + J;
 	int old_x;
 	int fuse_idx, i1, j0, j1, r, j, k, ii, ii1;
 
@@ -1037,9 +1490,9 @@ int gen_geo::GeoXNxt(int I, int m, int J, int n)
 	}
 
 	/* alten vbar des Kreuzchens austragen: */
-	if (f_vbar[i1][r]) {
+	if (f_vbar[i1 * inc->Encoding->dim_n + r]) {
 		vbar[old_x + 1] = MAX_V;
-		f_vbar[i1][r] = FALSE;
+		f_vbar[i1 * inc->Encoding->dim_n + r] = FALSE;
 	}
 	/* evtl. neuen vbar
 	 * des linken Nachbarkreuzchens
@@ -1048,7 +1501,7 @@ int gen_geo::GeoXNxt(int I, int m, int J, int n)
 		if (vbar[old_x] > i1 &&
 			inc->Encoding->theX[i1 * inc->Encoding->dim_n + r - 1] == old_x - 1) {
 			vbar[old_x] = i1;
-			f_vbar[i1][r - 1] = TRUE;
+			f_vbar[i1 * inc->Encoding->dim_n + r - 1] = TRUE;
 		}
 	}
 
@@ -1068,7 +1521,7 @@ int gen_geo::GeoXNxt(int I, int m, int J, int n)
 
 	for (j = old_x - j0 + 1; j < C->b; j++) {
 
-		if (K[j0 + j] >= k1[fuse_idx][J]) {
+		if (K[j0 + j] >= K1[fuse_idx * GB->b_len + J]) {
 			/* Spalte bereits voll */
 			continue;
 		}
@@ -1094,7 +1547,7 @@ int gen_geo::GeoXNxt(int I, int m, int J, int n)
 			// another test if this was the last X in this column:
 			// we check that there are no repeated columns !
 			if (inc->f_simple == TRUE) { /* JS 180100 */
-				if (f_last_k_in_col[fuse_idx][J] && k == k1[fuse_idx][J] - 1) {
+				if (F_last_k_in_col[fuse_idx * GB->b_len + J] && k == K1[fuse_idx * GB->b_len + J] - 1) {
 					for (ii = 0; ii <= k; ii++) {
 						if (inc->theY[(j1 - 1) * inc->Encoding->dim_n + ii] != inc->theY[j1 * inc->Encoding->dim_n + ii]) {
 							break; // is OK, columns differ !
@@ -1162,7 +1615,7 @@ int gen_geo::GeoXNxt(int I, int m, int J, int n)
 			exit(1);
 		}
 		if (vbar[j0 + j + 1] > i1) {
-			f_vbar[i1][r] = TRUE;
+			f_vbar[i1 * inc->Encoding->dim_n + r] = TRUE;
 			vbar[j0 + j + 1] = i1;
 		}
 
@@ -1195,7 +1648,7 @@ int gen_geo::GeoXNxt(int I, int m, int J, int n)
 
 void gen_geo::GeoXClear(int I, int m, int J, int n)
 {
-	gen_geo_conf *C = Conf + I * MAX_JJ + J;
+	gen_geo_conf *C = Conf + I * GB->b_len + J;
 	int old_x;
 	int i1, j0, r, k, ii, ii1;
 
@@ -1208,9 +1661,9 @@ void gen_geo::GeoXClear(int I, int m, int J, int n)
 	K[old_x]--;
 	/* alten vbar
 	 * des Kreuzchens austragen: */
-	if (f_vbar[i1][r]) {
+	if (f_vbar[i1 * inc->Encoding->dim_n + r]) {
 		vbar[old_x + 1] = MAX_V;
-		f_vbar[i1][r] = FALSE;
+		f_vbar[i1 * inc->Encoding->dim_n + r] = FALSE;
 	}
 	/* evtl. neuen vbar
 	 * des linken Nachbarkreuzchens
@@ -1219,7 +1672,7 @@ void gen_geo::GeoXClear(int I, int m, int J, int n)
 		if (vbar[old_x] > i1 &&
 			inc->Encoding->theX[i1 * inc->Encoding->dim_n + r - 1] == old_x - 1) {
 			vbar[old_x] = i1;
-			f_vbar[i1][r - 1] = TRUE;
+			f_vbar[i1 * inc->Encoding->dim_n + r - 1] = TRUE;
 		}
 	}
 	inc->Encoding->theX[i1 * inc->Encoding->dim_n + r] = -1;
@@ -1244,7 +1697,7 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j)
 /* Verwaltet: hbar[], vbar[],
  * f_vbar[][], theX[][], K[] */
 {
-	gen_geo_conf *C = Conf + I * MAX_JJ + J;
+	gen_geo_conf *C = Conf + I * GB->b_len + J;
 	int fuse_idx, i1, j0, j1, r, k, ii, ii1;
 
 	fuse_idx = C->fuse_idx;
@@ -1255,7 +1708,7 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j)
 
 	/* f_vbar muss zu Beginn
 	 * ausgetragen sein: */
-	if (f_vbar[i1][r]) {
+	if (f_vbar[i1 * inc->Encoding->dim_n + r]) {
 		cout << "I = " << I << " m = " << m << ", J = " << J
 				<< ", n = " << n << ", i1 = " << i1
 				<< ", r = " << r << ", j0 = " << j0 << endl;
@@ -1265,7 +1718,7 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j)
 
 	for (; j < C->b; j++) {
 
-		if (K[j0 + j] >= k1[fuse_idx][J]) {
+		if (K[j0 + j] >= K1[fuse_idx * GB->b_len + J]) {
 			/* Spalte bereits voll */
 			continue;
 		}
@@ -1293,7 +1746,7 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j)
 			// another test if this was the last X in this column:
 			// we check that there are no repeated columns !
 			if (inc->f_simple) { /* JS 180100 */
-				if (f_last_k_in_col[fuse_idx][J] && k == k1[fuse_idx][J] - 1) {
+				if (F_last_k_in_col[fuse_idx * GB->b_len + J] && k == K1[fuse_idx * GB->b_len + J] - 1) {
 					for (ii = 0; ii <= k; ii++) {
 						if (inc->theY[(j1 - 1) * inc->Encoding->dim_n + ii] != inc->theY[j1 * inc->Encoding->dim_n + ii]) {
 							break; // is OK, columns differ !
@@ -1371,11 +1824,11 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j)
 				cout << "X_Fst theX[i1 * inc.max_r + r - 1] != j0 + j - 1" << endl;
 				exit(1);
 			}
-			if (!f_vbar[i1][r - 1]) {
-				cout << "X_Fst !f_vbar[i1][r - 1]" << endl;
+			if (!f_vbar[i1 * inc->Encoding->dim_n + r - 1]) {
+				cout << "X_Fst !f_vbar[i1 * inc->Encoding->dim_n + r - 1]" << endl;
 				exit(1);
 			}
-			f_vbar[i1][r - 1] = FALSE;
+			f_vbar[i1 * inc->Encoding->dim_n + r - 1] = FALSE;
 			vbar[j0 + j] = MAX_V;
 			/* MAX_V heisst: kein vbar hier. */
 		}
@@ -1394,7 +1847,7 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j)
 			 * angelegt, da sie sich
 			 * auf die linke Seite
 			 * einer Spalte beziehen. */
-			f_vbar[i1][r] = TRUE;
+			f_vbar[i1 * inc->Encoding->dim_n + r] = TRUE;
 			vbar[j0 + j + 1] = i1;
 		}
 
@@ -1421,6 +1874,7 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j)
 	return FALSE;
 }
 
+#if 0
 void gen_geo::save_theX(FILE *GEO_fp)
 {
 	int X[MAX_V * MAX_R];
@@ -1462,365 +1916,8 @@ void gen_geo::geo_get_theX(int lines, int *X, int *nb_X, int verbose_level)
 		printf("\n");
 	*nb_X = nb_x;
 }
-
-void gen_geo::init_tdo(int fuse_idx, int tdo_line, int v, int *b, int *r, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i0, j, rr;
-
-	if (f_v) {
-		cout << "gen_geo::init_tdo tdo_line=" << tdo_line << endl;
-		cout << "r=";
-		Orbiter->Int_vec.print(cout, r, GB->b_len);
-		cout << endl;
-	}
-	if (tdo_line >= GB->v_len) {
-		cout << "gen_geo::init_tdo tdo_line >= GB->v_len" << endl;
-		exit(1);
-	}
-
-	/* initialer hbar in inc: */
-	inc->i_hbar[inc->nb_i_hbar] = 0;
-	inc->nb_i_hbar++;
-
-	int V, B;
-
-	V = 0;
-	for (j = 0; j < GB->b_len; j++) {
-		Conf[tdo_line * MAX_JJ + j].fuse_idx = fuse_idx;
-
-		Conf[tdo_line * MAX_JJ + j].v = v;
-		Conf[tdo_line * MAX_JJ + j].b = b[j];
-		Conf[tdo_line * MAX_JJ + j].r = r[j];
-
-		if (j == 0) {
-			Conf[tdo_line * MAX_JJ + j].j0 = 0;
-			Conf[tdo_line * MAX_JJ + j].r0 = 0;
-		}
-		else {
-			Conf[tdo_line * MAX_JJ + j].j0 = Conf[tdo_line * MAX_JJ + j - 1].j0 + Conf[tdo_line * MAX_JJ + j - 1].b;
-			Conf[tdo_line * MAX_JJ + j].r0 = Conf[tdo_line * MAX_JJ + j - 1].r0 + Conf[tdo_line * MAX_JJ + j - 1].r;
-		}
-		if (tdo_line == 0) {
-			Conf[tdo_line * MAX_JJ + j].i0 = 0;
-			// conf[j].k0 = 0;
-		}
-		else {
-			Conf[tdo_line * MAX_JJ + j].i0 = Conf[(tdo_line - 1) * MAX_JJ + j].i0 + Conf[(tdo_line - 1) * MAX_JJ + j].v;
-			// conf[j].k0 = gg->conf[tdo_line - 1][j].k0 + gg->conf[tdo_line - 1][j].k;
-		}
-		i0 = Conf[tdo_line * MAX_JJ + j].i0;
-		// conf[j].k1 = conf[j].k0 + conf[j].k;
-		if (j == GB->b_len - 1) {
-			rr = Conf[tdo_line * MAX_JJ + j].r0 + Conf[tdo_line * MAX_JJ + j].r;
-			if (rr >= MAX_R) {
-				cout << "geo_tdo_init rr >= MAX_R" << endl;
-				exit(1);
-			}
-			//max_r = MAXIMUM(max_r, rr);
-		}
-		/* initiale vbars:
-		 * bleiben fuer immer gesetzt: */
-		if (tdo_line == 0) {
-			vbar[Conf[tdo_line * MAX_JJ + j].j0] = -1;
-
-			/* initiale vbars in inc: */
-			inc->i_vbar[inc->nb_i_vbar] = Conf[tdo_line * MAX_JJ + j].j0;
-			inc->nb_i_vbar++;
-
-		}
-#if 0
-		for (i = i0; i < i0 + v; i++) {
-			//inc->R[i] = rr;
-			R[i] = rr;
-		}
 #endif
-		V += v;
-	}
-	inc->Encoding->b = 0;
-	for (j = 0; j < GB->b_len; j++) {
-		inc->Encoding->b += b[j];
-	}
-	B = inc->Encoding->b;
 
-
-	inc->print_param();
-
-	if (f_v) {
-		cout << "gen_geo::init_tdo done" << endl;
-	}
-}
-
-void gen_geo::print_conf()
-{
-	int I, J;
-
-	for (I = 0; I < GB->v_len; I++) {
-		for (J = 0; J < GB->b_len; J++) {
-			cout << "I=" << I << " J=" << J << ":" << endl;
-			Conf[I * MAX_JJ + J].print(cout);
-		}
-	}
-}
-
-void gen_geo::init(geometry_builder *GB,
-		//int v, int b,
-		//int *R,
-		//int II, int JJ,
-	int f_do_iso_test,
-	int f_do_aut_group,
-	int f_do_aut_group_in_iso_type_without_vhbars,
-	int gen_print_intervall,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j, i1, i2;
-
-	if (f_v) {
-		cout << "gen_geo::init" << endl;
-		//cout << "gen_geo::init v=" << v << endl;
-		//cout << "gen_geo::init max_r=" << max_r << endl;
-	}
-	gen_geo::GB = GB;
-	//gen_geo::V = v;
-	//gen_geo::B = b;
-	//gen_geo::II = II;
-	//gen_geo::JJ = JJ;
-
-	//st_isot_fprint_status = (void (*)(FILE *, void *, int)) isot_fprint_status;
-	gen_geo::f_do_iso_test = f_do_iso_test;
-	gen_geo::f_do_aut_group = f_do_aut_group;
-	gen_geo::f_do_aut_group_in_iso_type_without_vhbars = f_do_aut_group_in_iso_type_without_vhbars;
-	gen_geo::gen_print_intervall = gen_print_intervall;
-	forget_ivhbar_in_last_isot = FALSE;
-	inc->gl_nb_GEN = 0;
-	//inc->f_full_coding = FALSE;
-
-	inc->Encoding = new inc_encoding;
-
-	if (f_v) {
-		cout << "gen_geo::init before inc->Encoding->init" << endl;
-	}
-	inc->Encoding->init(GB->V, GB->B, GB->R, verbose_level);
-	if (f_v) {
-		cout << "gen_geo::init after inc->Encoding->init" << endl;
-	}
-
-
-	for (i = 0; i < MAX_V; i++) {
-		for (j = 0; j < MAX_R; j++) {
-			inc->Encoding->theX[i * inc->Encoding->dim_n + j] = -1;
-			f_vbar[i][j] = FALSE;
-		}
-	}
-	for (j = 0; j < MAX_V; j++) {
-		for (i = 0; i < MAX_R; i++) {
-			inc->theY[j * inc->Encoding->dim_n + i] = -1;
-		}
-	}
-
-
-	if (GB->v_len >= MAX_II) {
-		cout << "geo_init GB->v_len >= MAX_II" << endl;
-		exit(1);
-	}
-	//gen_geo::II = II;
-	if (GB->b_len >= MAX_JJ) {
-		cout << "geo_init GB->b_len >= MAX_JJ" << endl;
-		exit(1);
-	}
-	//gen_geo::JJ = JJ;
-	//inc->max_r = 0;
-	/* gg_print_param(gg); */
-
-	for (i1 = 0; i1 < MAX_V; i1++) {
-		for (i2 = 0; i2 < MAX_V; i2++) {
-			inc->pairs[i1][i2] = 0;
-		}
-	}
-	inc->f_lambda = FALSE;
-	inc->lambda = 0;
-	for (i = 0; i < MAX_V; i++) {
-		//R[i] = 0;
-		hbar[i] = MAX_JJ; /* kein hbar hier */
-	}
-	for (j = 0; j < MAX_B; j++) {
-		K[j] = 0;
-		vbar[j] = MAX_V; /* kein vbar hier */
-	}
-	/* init_ISO(); */
-	/* init_ISO2(); */
-
-
-	inc->back_to_line = -1;
-	for (i = 0; i < MAX_V; i++) {
-		inc->iso_type_at_line[i] = NULL;
-#if 0
-		gg->inc.f_generate_first[i] = FALSE;
-		gg->inc.nb_GEO[i] = -1;
-		gg->inc.f_sub_geo_test[i] = FALSE;
-		gg->inc.f_sub_geo_checked[i] = FALSE;
-		gg->inc.sub_geo_line[i] = FALSE;
-#endif
-	}
-	inc->iso_type_no_vhbars = NULL;
-	inc->nb_i_vbar = 0;
-	inc->nb_i_hbar = 0;
-	if (f_v) {
-		cout << "gen_geo::init done" << endl;
-	}
-
-}
-
-void gen_geo::init_k()
-{
-	int I, J, fuse_idx, f, l, k, s, b;
-
-	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-		for (J = 0; J < GB->b_len; J++) {
-			if (fuse_idx == 0) {
-				k0[fuse_idx][J] = 0;
-			}
-			f_last_k_in_col[fuse_idx][J] = FALSE;
-		}
-	}
-	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-		f = fuse_first[fuse_idx];
-		l = fuse_len[fuse_idx];
-		s = 0;
-		for (J = 0; J < GB->b_len; J++) {
-			if (fuse_idx) {
-				k0[fuse_idx][J] = k1[fuse_idx - 1][J];
-			}
-			s = 0;
-			for (I = f; I < f + l; I++) {
-				s += Conf[I * MAX_JJ + J].v * Conf[I * MAX_JJ + J].r;
-				b = Conf[I * MAX_JJ + J].b;
-			}
-			k = s / b;
-			if (k * b != s) {
-				cout << "geo_init_k(): b does not divide s ! fuse_idx = " << fuse_idx << " J = " << J << " s = " << s << " b = " << b << endl;
-				exit(1);
-			}
-			gen_geo::k[fuse_idx][J] = k;
-			k1[fuse_idx][J] = k0[fuse_idx][J] + k;
-		}
-	}
-	for (J = 0; J < GB->b_len; J++) {
-		for (fuse_idx = nb_fuse - 1; fuse_idx >= 0; fuse_idx--) {
-			k = gen_geo::k[fuse_idx][J];
-			if (k) {
-				f_last_k_in_col[fuse_idx][J] = TRUE;
-				break;
-			}
-		}
-	}
-	cout << "k:" << endl;
-	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-		for (J = 0; J < GB->b_len; J++) {
-			cout << setw(3) << gen_geo::k[fuse_idx][J] << " ";
-		}
-		cout << endl;
-	}
-	cout << "k0:" << endl;
-	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-		for (J = 0; J < GB->b_len; J++) {
-			cout << setw(3) << k0[fuse_idx][J] << " ";
-		}
-		cout << endl;
-	}
-
-	cout << "k1:" << endl;
-	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-		for (J = 0; J < GB->b_len; J++) {
-			cout << setw(3) << k1[fuse_idx][J] << " ";
-		}
-		cout << endl;
-	}
-
-	cout << "f_last_k_in_col:" << endl;
-	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-		for (J = 0; J < GB->b_len; J++) {
-			cout << setw(3) << f_last_k_in_col[fuse_idx][J] << " ";
-		}
-		cout << endl;
-	}
-}
-
-void gen_geo::conf_init_last_non_zero_flag()
-{
-	int fuse_idx, ff, fl, i, I, r;
-
-	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-		ff = fuse_first[fuse_idx];
-		fl = fuse_len[fuse_idx];
-		for (i = fl - 1; i >= 0; i--) {
-			I = ff + i;
-			Conf[I * MAX_JJ + 0].f_last_non_zero_in_fuse = FALSE;
-		}
-		for (i = fl - 1; i >= 0; i--) {
-			I = ff + i;
-			r = Conf[I * MAX_JJ + 0].r;
-			if (r > 0) {
-				Conf[I * MAX_JJ + 0].f_last_non_zero_in_fuse = TRUE;
-				break;
-			}
-		}
-	}
-
-	cout << "f_last_non_zero_in_fuse:" << endl;
-	for (I = 0; I < GB->v_len; I++) {
-		i = Conf[I * MAX_JJ + 0].f_last_non_zero_in_fuse;
-		cout << setw(3) << i << " ";
-	}
-	cout << endl;
-}
-
-void gen_geo::TDO_init(
-	int v[MAX_II], int b[MAX_JJ],
-	int theTDO[MAX_II][MAX_JJ], int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "gen_geo::TDO_init" << endl;
-	}
-	int I, fuse_idx, f, l;
-
-	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-		f = fuse_first[fuse_idx];
-		l = fuse_len[fuse_idx];
-		if (f_v) {
-			cout << "gen_geo::TDO_init fuse_idx=" << fuse_idx << " f=" << f << " l=" << l << endl;
-		}
-		for (I = f; I < f + l; I++) {
-			if (f_v) {
-				cout << "gen_geo::TDO_init fuse_idx=" << fuse_idx << " f=" << f << " l=" << l
-						<< " I=" << I << " v[I]=" << v[I] << endl;
-			}
-			init_tdo(fuse_idx, I /* tdo_line */, v[I] /* v */, b, theTDO[I] /* r */, verbose_level);
-		}
-	}
-	init_k();
-	conf_init_last_non_zero_flag();
-	if (f_v) {
-		cout << "gen_geo::TDO_init done" << endl;
-	}
-}
-
-void gen_geo::print_pairs(int line)
-{
-	int i1, i2, a;
-
-	for (i1 = 0; i1 < line; i1++) {
-		cout << "line " << i1 << " : ";
-		for (i2 = 0; i2 < i1; i2++) {
-			a = inc->pairs[i1][i2];
-			cout << a;
-		}
-		cout << endl;
-	}
-}
 
 
 }}

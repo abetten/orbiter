@@ -13,6 +13,7 @@ namespace foundations {
 
 incidence::incidence()
 {
+	gg = NULL;
 	Encoding = NULL;
 
 	//int theY[MAX_V * MAX_R];
@@ -24,9 +25,9 @@ incidence::incidence()
 
 	/* initiale vbars / hbars: */
 	nb_i_vbar = 0;
-	//int i_vbar[MAX_JJ];
+	i_vbar = NULL;
 	nb_i_hbar = 0;
-	//int i_hbar[MAX_II];
+	i_hbar = NULL;
 
 	gl_nb_GEN = 0;
 
@@ -43,20 +44,117 @@ incidence::incidence()
 
 incidence::~incidence()
 {
-
+	if (Encoding) {
+		FREE_OBJECT(Encoding);
+	}
+	if (i_vbar) {
+		FREE_int(i_vbar);
+	}
+	if (i_hbar) {
+		FREE_int(i_hbar);
+	}
 }
 
-void incidence::init(int v, int b, int *R, int verbose_level)
+void incidence::init(gen_geo *gg, int v, int b, int *R, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "incidence::init" << endl;
 	}
-	Encoding = new inc_encoding;
+
+	int i;
+
+	incidence::gg = gg;
+	Encoding = NEW_OBJECT(inc_encoding);
+
+	if (f_v) {
+		cout << "incidence::init before Encoding->init" << endl;
+	}
 	Encoding->init(v, b, R, verbose_level);
+	if (f_v) {
+		cout << "incidence::init after Encoding->init" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "incidence::init before init_pairs" << endl;
+	}
+	init_pairs(verbose_level);
+	if (f_v) {
+		cout << "incidence::init after init_pairs" << endl;
+	}
+
+	f_find_square = TRUE;
+
+	f_lambda = FALSE;
+	lambda = 0;
+	back_to_line = -1;
+	for (i = 0; i < MAX_V; i++) {
+		iso_type_at_line[i] = NULL;
+	}
+	iso_type_no_vhbars = NULL;
+
+	gl_nb_GEN = 0;
+
+	if (f_v) {
+		cout << "incidence::init done" << endl;
+	}
+}
+
+void incidence::init_bars(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int j;
+
+	if (f_v) {
+		cout << "incidence::init_bars" << endl;
+	}
+	if (f_v) {
+		cout << "incidence::init_bars before i_hbar" << endl;
+	}
+	i_vbar = NEW_int(gg->GB->b_len + 1);
+	i_hbar = NEW_int(gg->GB->v_len + 1);
+
+	nb_i_hbar = 0;
+	i_hbar[nb_i_hbar++] = 0;
+
+
+	nb_i_vbar = 0;
+
+	for (j = 0; j < gg->GB->b_len; j++) {
+		if (f_v) {
+			cout << "j=" << j << endl;
+		}
+		gg->vbar[gg->Conf[0 * gg->GB->b_len + j].j0] = -1;
+
+		i_vbar[nb_i_vbar++] = gg->Conf[0 * gg->GB->b_len + j].j0;
+
+	}
+	if (f_v) {
+		cout << "incidence::init_bars done" << endl;
+	}
 
 }
+
+void incidence::init_pairs(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i1, i2;
+
+	if (f_v) {
+		cout << "incidence::init_pairs" << endl;
+	}
+	for (i1 = 0; i1 < MAX_V; i1++) {
+		for (i2 = 0; i2 < MAX_V; i2++) {
+			pairs[i1][i2] = 0;
+		}
+	}
+	if (f_v) {
+		cout << "incidence::init_pairs done" << endl;
+	}
+}
+
 
 int incidence::find_square(int m, int n)
 {
