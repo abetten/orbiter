@@ -1038,14 +1038,15 @@ void interface_combinatorics::worker(int verbose_level)
 		}
 
 		geometry_builder *GB;
-		int nb_GEN, nb_GEO, ticks, tps;
 
 		GB = NEW_OBJECT(geometry_builder);
 
 		GB->init_description(Geometry_builder_description, verbose_level);
 
-		GB->gg->main2(nb_GEN, nb_GEO, ticks, tps, verbose_level);
+		//int nb_GEN, nb_GEO, ticks, tps;
+		//GB->gg->main2(nb_GEN, nb_GEO, ticks, tps, verbose_level);
 
+		FREE_OBJECT(GB);
 	}
 
 

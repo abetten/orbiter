@@ -159,9 +159,9 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 		cout << "geometry_builder::init_description before gg->init" << endl;
 	}
 	gg->init(this,
-		V, B, R,
-		v_len /* II */,
-		b_len /* JJ */,
+		//V, B, R,
+		//v_len /* II */,
+		//b_len /* JJ */,
 		TRUE /* f_do_iso_test */,
 		TRUE /* f_do_aut_group */,
 		TRUE /* f_do_aut_group_in_iso_type_without_vhbars */,

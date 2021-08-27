@@ -134,14 +134,14 @@ public:
 	int f_last_k_in_col[MAX_II][MAX_JJ];
 
 
-	int II;
-	int JJ;
+	//int II;
+	//int JJ;
 	gen_geo_conf Conf[MAX_II * MAX_JJ];
 
 	incidence *inc;
-	int max_r;
-	int V;
-	int B;
+	//int max_r;
+	//int V;
+	//int B;
 
 	//int R[MAX_V];
 	int K[MAX_B];
@@ -204,7 +204,7 @@ public:
 	void init_tdo(int fuse_idx, int tdo_line, int v, int *b, int *r, int verbose_level);
 	void print_conf();
 	void init(geometry_builder *GB,
-			int v, int b, int *R, int II, int JJ,
+			//int v, int b, int *R, int II, int JJ,
 		int f_do_iso_test,
 		int f_do_aut_group,
 		int f_do_aut_group_in_iso_type_without_vhbars,
