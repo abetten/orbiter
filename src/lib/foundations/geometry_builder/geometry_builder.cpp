@@ -65,6 +65,9 @@ geometry_builder::~geometry_builder()
 	if (fuse) {
 		FREE_int(fuse);
 	}
+	if (TDO) {
+		FREE_int(TDO);
+	}
 	if (R) {
 		delete R;
 	}
@@ -132,52 +135,43 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 		}
 	}
 
+#if 0
 	for (i = 0; i < MAX_V; i++) {
 		GV[i] = 0;
 	}
+#endif
 
 	f_transpose_it = FALSE;
 	f_save_file = FALSE;
 
 
 	if (f_v) {
-		cout << "geometry_builder::init_description before init_tdo" << endl;
+		cout << "geometry_builder::init_description before compute_VBR" << endl;
 	}
 
-	init_tdo(TDO, verbose_level);
+	compute_VBR(verbose_level);
 
 	if (f_v) {
-		cout << "geometry_builder::init_description after init_tdo" << endl;
+		cout << "geometry_builder::init_description after compute_VBR" << endl;
 	}
 
-	int f;
 
-
-	gg = new gen_geo;
+	gg = NEW_OBJECT(gen_geo);
 
 	if (f_v) {
 		cout << "geometry_builder::init_description before gg->init" << endl;
 	}
 	gg->init(this,
-		//V, B, R,
-		//v_len /* II */,
-		//b_len /* JJ */,
 		TRUE /* f_do_iso_test */,
 		TRUE /* f_do_aut_group */,
 		TRUE /* f_do_aut_group_in_iso_type_without_vhbars */,
-		1 /* gen_print_intervall*/, verbose_level);
+		1 /* gen_print_intervall*/,
+		verbose_level);
 	if (f_v) {
 		cout << "geometry_builder::init_description after gg->init" << endl;
 	}
 
 
-	gg->nb_fuse = fuse_len;
-	f = 0;
-	for (i = 0; i < fuse_len; i++) {
-		gg->fuse_first[i] = f;
-		gg->fuse_len[i] = fuse[i];
-		f += fuse[i];
-	}
 
 
 	if (f_v) {
@@ -190,6 +184,7 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 
 
 
+#if 0
 	if (f_v) {
 		cout << "geometry_builder::init_description before TDO_init" << endl;
 	}
@@ -198,7 +193,6 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 		cout << "geometry_builder::init_description after TDO_init" << endl;
 	}
 
-#if 0
 	if (f_v) {
 		cout << "geometry_builder::init_description before gg->inc->init" << endl;
 	}
@@ -211,13 +205,6 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 	gg->print_conf();
 
 
-	//if (f_lambda) {
-		gg->inc->f_lambda = FALSE;
-		gg->inc->lambda = 1;
-	//}
-
-	gg->inc->f_find_square = TRUE;
-	//gg->inc->f_simple = f_simple;
 
 	if (Descr->f_fname_GEO) {
 
@@ -328,10 +315,10 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 
 	iso_type *it;
 
-	for (i = 0; i < V; i++) {
+	for (i = 1; i <= V; i++) {
 		if (r_type[i] == 1) {
-			range(i + 1, r_from[i], r_len[i]);
-			it = gg->inc->iso_type_at_line[i];
+			range(i, r_from[i], r_len[i]);
+			it = gg->inc->iso_type_at_line[i - 1];
 			it->f_print_mod = TRUE;
 			it->print_mod = 1;
 		}
@@ -341,12 +328,15 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 		cout << "geometry_builder::init_description set_flush_line" << endl;
 	}
 
-	for (i = 0; i < V; i++) {
+	for (i = 1; i <= V; i++) {
 		if (f_flush[i]) {
-			gg->inc->set_flush_line(i + 1);
+			gg->inc->set_flush_line(i);
 		}
 	}
 
+	if (f_v) {
+		cout << "geometry_builder::init_description gg=" << gg << endl;
+	}
 
 
 
@@ -943,15 +933,13 @@ void geometry_builder::calc_PV_GV(int verbose_level)
 }
 #endif
 
-void geometry_builder::init_tdo(
-	int *the_tdo,
-	int verbose_level)
+void geometry_builder::compute_VBR(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, row, h;
 
 	if (f_v) {
-		cout << "geometry_builder::init_tdo v_len = " << v_len << " b_len = " << b_len << endl;
+		cout << "geometry_builder::compute_VBR v_len = " << v_len << " b_len = " << b_len << endl;
 	}
 	//geometry_builder::II = II;
 	//geometry_builder::JJ = JJ;
@@ -963,25 +951,28 @@ void geometry_builder::init_tdo(
 	for (i = 0; i < v_len; i++) {
 		V += v[i];
 	}
+#if 0
 	for (i = 0; i < v_len; i++) {
 		for (j = 0; j < b_len; j++) {
 			theTDO[i][j] = the_tdo[i * b_len + j];
 		}
 	}
+#endif
 	R = new int[V];
 	row = 0;
 	for (i = 0; i < v_len; i++) {
 		for (h = 0; h < v[i]; h++, row++) {
 			R[row] = 0;
 			for (j = 0; j < b_len; j++) {
-				R[row] += the_tdo[i * b_len + j];
+				R[row] += TDO[i * b_len + j];
 			}
 		}
 	}
 
 	print_tdo();
+
 	if (f_v) {
-		cout << "geometry_builder::init_tdo done" << endl;
+		cout << "geometry_builder::compute_VBR done" << endl;
 	}
 }
 
@@ -1003,16 +994,18 @@ void geometry_builder::print_tdo()
 		printf("%2d | ", v[i]);
 		for (j = 0; j < b_len; j++) {
 			printf("%2d ",
-			theTDO[i][j]);
+			TDO[i * b_len + j]);
 		}
 		printf("\n");
 	}
 }
 
+#if 0
 void geometry_builder::TDO_init(int verbose_level)
 {
-	gg->TDO_init(v, b, theTDO, verbose_level);
+	gg->TDO_init(v, b, TDO, verbose_level);
 }
+#endif
 
 void geometry_builder::isot(int line,
 	int tdo_flags, int verbose_level)

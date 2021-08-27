@@ -62,8 +62,8 @@ iso_type::iso_type()
 	//FILE *fp;
 		/* for isot_add()
 		 * f_print_isot */
-	f_print_mod = FALSE;
-	print_mod = 0;
+	f_print_mod = TRUE;
+	print_mod = 1;
 
 }
 
@@ -180,7 +180,7 @@ int iso_type::find_geometry(
 	if (f_v) {
 		cout << "iso_type::find_geometry before calc_theY_and_tdos_override_v" << endl;
 	}
-	calc_theY_and_tdos_override_v(Encoding, inc, v, theY, tdos, verbose_level);
+	calc_theY_and_tdos_override_v(Encoding, inc, v, theY, tdos, verbose_level - 5);
 	if (f_v) {
 		cout << "iso_type::find_geometry after calc_theY_and_tdos_override_v" << endl;
 		tdos->print();
