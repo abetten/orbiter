@@ -47,6 +47,7 @@ MODULES= \
 		foundations/data_structures/bitmatrix.o \
 		foundations/data_structures/bitvector.o \
 		foundations/data_structures/classify_bitvectors.o \
+		foundations/data_structures/classify_using_canonical_forms.o \
 		foundations/data_structures/data_file.o \
 		foundations/data_structures/data_input_stream.o \
 		foundations/data_structures/data_structures_global.o \

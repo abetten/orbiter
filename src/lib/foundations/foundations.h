@@ -306,6 +306,7 @@ class cryptography_domain;
 class bitmatrix;
 class bitvector;
 class classify_bitvectors;
+class classify_using_canonical_forms;
 class data_file;
 class data_input_stream;
 class data_structures_global;

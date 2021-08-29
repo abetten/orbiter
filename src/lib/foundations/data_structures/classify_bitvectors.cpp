@@ -322,55 +322,55 @@ void classify_bitvectors::save(
 				<< fname_txt << endl;
 		}
 	{
-	ofstream fp(fname_txt);
-	int h;
+		ofstream fp(fname_txt);
+		int h;
 
-	for (i = 0; i < nb_types; i++) {
-		j = perm[i];
+		for (i = 0; i < nb_types; i++) {
+			j = perm[i];
 
-		long int *encoding;
-		int encoding_sz;
+			long int *encoding;
+			int encoding_sz;
 
-		if (f_v) {
-			cout << "classify_bitvectors::save " << i << " / "
-					<< nb_types << " j=" << j
-					<< " before encode_function" << endl;
-			}
-		(*encode_function)(Type_extra_data[j],
-				encoding, encoding_sz, global_data);
-		if (f_v) {
-			cout << "classify_bitvectors::save " << i
-					<< " / " << nb_types
-					<< " encoding_sz=" << encoding_sz << endl;
-			}
-		fp << encoding_sz;
-		for (h = 0; h < encoding_sz; h++) {
-			fp << " " << encoding[h];
-			}
-		if (get_group_order_or_NULL) {
-			longinteger_object go;
-			
-			(*get_group_order_or_NULL)(Type_extra_data[j],
-					go, global_data);
-			fp << " ";
-			go.print_not_scientific(fp);
-			}
-		fp << endl;
-		if (i == 0) {
-			sz = encoding_sz;
-			Reps = NEW_lint(nb_types * sz);
-			Orbiter->Lint_vec.copy(encoding, Reps, sz);
-			}
-		else {
-			if (encoding_sz != sz) {
-				cout << "encoding_sz != sz" << endl;
-				exit(1);
+			if (f_v) {
+				cout << "classify_bitvectors::save " << i << " / "
+						<< nb_types << " j=" << j
+						<< " before encode_function" << endl;
 				}
-			Orbiter->Lint_vec.copy(encoding, Reps + i * sz, sz);
+			(*encode_function)(Type_extra_data[j],
+					encoding, encoding_sz, global_data);
+			if (f_v) {
+				cout << "classify_bitvectors::save " << i
+						<< " / " << nb_types
+						<< " encoding_sz=" << encoding_sz << endl;
+				}
+			fp << encoding_sz;
+			for (h = 0; h < encoding_sz; h++) {
+				fp << " " << encoding[h];
+				}
+			if (get_group_order_or_NULL) {
+				longinteger_object go;
+
+				(*get_group_order_or_NULL)(Type_extra_data[j],
+						go, global_data);
+				fp << " ";
+				go.print_not_scientific(fp);
+				}
+			fp << endl;
+			if (i == 0) {
+				sz = encoding_sz;
+				Reps = NEW_lint(nb_types * sz);
+				Orbiter->Lint_vec.copy(encoding, Reps, sz);
+				}
+			else {
+				if (encoding_sz != sz) {
+					cout << "encoding_sz != sz" << endl;
+					exit(1);
+					}
+				Orbiter->Lint_vec.copy(encoding, Reps + i * sz, sz);
+				}
+			FREE_lint(encoding);
 			}
-		FREE_lint(encoding);
-		}
-	fp << "-1 " << nb_types << " " << N << endl;
+		fp << "-1 " << nb_types << " " << N << endl;
 	}
 	file_io Fio;
 

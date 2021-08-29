@@ -135,11 +135,19 @@ void inc_encoding::print_horizontal_bar(
 void inc_encoding::print_partitioned(
 		std::ostream &ost, int v_cur, incidence *inc, int f_print_isot)
 {
-	int i, j, r, I, J, f_kreuz;
 	int *the_X;
-	iso_type *it;
 
 	the_X = theX;
+	print_partitioned_override_theX(ost, v_cur, inc, the_X, f_print_isot);
+}
+
+
+void inc_encoding::print_partitioned_override_theX(
+		std::ostream &ost, int v_cur, incidence *inc, int *the_X, int f_print_isot)
+{
+	int i, j, r, I, J, f_kreuz;
+	iso_type *it;
+
 
 	ost << endl;
 	I = 0;

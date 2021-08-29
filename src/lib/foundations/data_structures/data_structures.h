@@ -49,7 +49,7 @@ public:
 // bitvector.cpp
 // #############################################################################
 
-//! bitvectors: compact storage of 0/1-vectors
+//! compact storage of 0/1-data as bitvectors
 
 class bitvector {
 
@@ -72,6 +72,7 @@ public:
 	int s_i(long int i);
 	void save(std::ofstream &fp);
 	void load(std::ifstream &fp);
+	uint32_t compute_hash();
 
 };
 
@@ -155,6 +156,44 @@ public:
 
 int compare_func_for_bitvectors(void *a, void *b, void *data);
 
+
+
+// #############################################################################
+// classify_using_canonical_forms.cpp
+// #############################################################################
+
+//! classification of objects using canonical forms
+
+class classify_using_canonical_forms {
+public:
+
+
+	int nb_input_objects;
+
+
+	std::vector<bitvector *> B;
+	std::vector<void *> Objects;
+	std::vector<long int> Ago;
+	std::vector<int> input_index;
+
+	std::multimap<uint32_t, int> Hashing;
+		// we store the pair (hash, idx)
+		// where hash is the hash value of the set and idx is the
+		// index in the table Sets where the set is stored.
+		//
+		// we use a multimap because the hash values are not unique
+		// it happens that two sets have the same hash value.
+		// map cannot handle that.
+
+
+	//std::vector<void *> Input_objects;
+	//std::vector<int> orbit_rep_of_input_object;
+
+	classify_using_canonical_forms();
+	~classify_using_canonical_forms();
+	void add_object(object_in_projective_space *OiP, int &f_new_object, int verbose_level);
+
+};
 
 // #############################################################################
 // data_file.cpp
@@ -1197,6 +1236,7 @@ public:
 	void d_quicksort_array(int len, double *v);
 	int test_if_sets_are_disjoint_assuming_sorted(int *set1, int *set2, int sz1, int sz2);
 	int test_if_sets_are_disjoint_assuming_sorted_lint(long int *set1, long int *set2, int sz1, int sz2);
+	int uchar_vec_compare(uchar *p, uchar *q, int len);
 
 };
 

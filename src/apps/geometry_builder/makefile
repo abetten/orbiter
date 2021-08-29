@@ -78,7 +78,7 @@ test_2:
 test_7_3:
 	./geometry_builder.out -v 5 -no 22 cc
 
-test_23:
+test_8_3:
 	./geometry_builder.out -v 5 -no 23 cc
 
 test_24:

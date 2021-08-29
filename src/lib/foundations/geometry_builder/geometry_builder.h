@@ -22,8 +22,6 @@ namespace foundations {
 #define MAX_VB 100   /* MAX(MAX_V, MAX_B) */
 #define MAX_B2 6400    /* B ueber 2 */
 #define MAX_R 80
-//#define MAX_II 80
-//#define MAX_JJ 80
 
 #define MAX_GRID 100
 #define MAX_TYPE 200
@@ -94,11 +92,8 @@ public:
 	int v;
 	int b;
 	int r;
-	// int k;
 
 	int r0;
-	// int k0;
-	// int k1;
 	int i0;
 	int j0;
 	int f_last_non_zero_in_fuse;
@@ -115,7 +110,7 @@ public:
 // gen_geo.cpp
 // #############################################################################
 
-//! classification of geometries, doing the work
+//! classification of geometries given a row-tactical decomposition
 
 
 class gen_geo {
@@ -124,49 +119,24 @@ public:
 
 	geometry_builder *GB;
 
-	/* the TDO: */
 	int nb_fuse;
-	int *Fuse_first; //[MAX_II];
-	int *Fuse_len; //[MAX_II];
-	int *K0; //[MAX_II][MAX_JJ];
-	int *KK; //[MAX_II][MAX_JJ];
-	int *K1; //[MAX_II][MAX_JJ];
-	int *F_last_k_in_col; //[MAX_II][MAX_JJ];
+	int *Fuse_first;
+	int *Fuse_len;
+	int *K0;
+	int *KK;
+	int *K1;
+	int *F_last_k_in_col;
 
 
-	//int II;
-	//int JJ;
 	gen_geo_conf *Conf; //[GB->v_len * GB->b_len];
 
 	incidence *inc;
-	//int max_r;
-	//int V;
-	//int B;
 
-	//int R[MAX_V];
-	int *K; //[MAX_B];
+	int *K; //[GB->B];
 
-	int *f_vbar; // [GB->V * inc->Encoding->dim_n] not:  MAX_V][MAX_R];
-	int *vbar; // [GB->V] not: [MAX_B];
-	int *hbar; // [GB->B] not: [MAX_V];
-		/* hbar < J:   die Kreuze
-		 *   innerhalb des Kaestchens
-		 *   werden weitestgehend
-		 *   linksbuendig plaziert.
-		 * sonst: Uebernehme Kreuzchenpositionen
-		 *        der Vorgaengerzeile.
-		 *  (hbar >= J kann beliebigen Wert haben,
-		 *   da hbar nicht ausgetragen wird).
-		 * Sonst wird hbar auf
-		 * J gesetzt (nur wenn es nicht
-		 * bereits vorher auf einen Wert
-		 * < J gesetzt war),
-		 * wenn beim Uebernehemen
-		 * der Kreuze der Vorgaengerzeile
-		 * weitergeschoben
-		 * werden musste (und damit die
-		 * aktuelle Zeile
-		 * lex. weiter ist). */
+	int *f_vbar; // [GB->V * inc->Encoding->dim_n]
+	int *vbar; // [GB->V]
+	int *hbar; // [GB->B]
 
 	int f_do_iso_test;
 	int f_do_aut_group;
@@ -214,8 +184,6 @@ public:
 	int GeoXNxt(int I, int m, int J, int n);
 	void GeoXClear(int I, int m, int J, int n);
 	int X_Fst(int I, int m, int J, int n, int j);
-	//void save_theX(FILE *GEO_fp);
-	//void geo_get_theX(int lines, int *X, int *nb_X, int verbose_level);
 
 };
 
@@ -266,6 +234,8 @@ public:
 	std::vector<std::string> test2_lines;
 	std::vector<std::string> test2_flags;
 
+	std::vector<int> print_at_line;
+
 	int f_fname_GEO;
 	std::string fname_GEO;
 
@@ -296,40 +266,31 @@ public:
 
 	geometry_builder_description *Descr;
 
-	//int II;
-	//int JJ;
-	//int v[MAX_II];
-	//int b[MAX_JJ];
-	//int theTDO[MAX_II][MAX_JJ];
 
+	// the row partition:
 	int *v;
 	int v_len;
 
+	// the column partition:
 	int *b;
 	int b_len;
 
+	// a coarse grain partition of the row partition
 	int *fuse;
 	int fuse_len;
 
+	// the structure constants (# of incidences in a row)
 	int *TDO;
 	int TDO_len;
 
 
 	int V;
-		// = sum(i = 0; i < II; i++) v[i]
+		// = sum(i = 0; i < v_len; i++) v[i]
 	int B;
-		// = sum(i= 0; i < II; i++) b[i]
+		// = sum(i= 0; i < b_len; i++) b[i]
 
 	int *R; // [V]
 
-#if 0
-	int PV[MAX_V];
-		/* PV[i] = Anzahl der Punkte,
-		 * durch die i Geraden gehen. */
-	int GV[MAX_V];
-		/* GV[i] = Anzahl der Geraden
-		 * der L"ange i. */
-#endif
 
 	int f_transpose_it;
 	int f_save_file;
@@ -345,38 +306,17 @@ public:
 	~geometry_builder();
 	void init_description(geometry_builder_description *Descr,
 			int verbose_level);
-#if 0
-	void init(const char *control_file_name, int no,
-			int flag_numeric, int f_no_inc_files,
-			int verbose_level);
-	void read_control_file(int verbose_level);
-	void init2(
-		int *v, int *b, int *the_tdo,
-		int II, int JJ,
-		int nb_fuse, int *fuse,
-		int f_do_iso_test,
-		int f_do_aut_group,
-		int f_do_aut_group_in_iso_type_without_vhbars,
-		int gen_print_intervall,
-		int f_transpose_it, char *file_name, int verbose_level);
-	void calc_PV_GV(int verbose_level);
-#endif
 	void compute_VBR(int verbose_level);
 	void print_tdo();
-	//void TDO_init(int verbose_level);
 	void isot(int line, int tdo_flags, int verbose_level);
 	void isot_no_vhbars(int tdo_flags, int verbose_level);
 	void isot2(int line, int tdo_flags, int verbose_level);
 	void range(int line, int first, int len);
 	void flush_line(int line);
-	void init_file_name(int f_transpose_it, const char *file_name, int verbose_level);
 
 };
 
 
-// geo_main.cpp
-void geo_main(int argc, char **argv,
-	int &nb_GEN, int &nb_GEO, int &ticks, int &tps);
 
 
 
@@ -410,19 +350,18 @@ class grid {
 public:
 	int f_points;
 	int m;
-	/* # Zeilen in type
-	 * (= v if f_point, = b if !f_points) */
+	// # of objects
+	// = v if f_point, = b otherwise
 	int n;
-	/* # Eintraege pro Zeile
-	 * in type, (= G->G_max) */
+	// # of structure constants per object
 	int G_max;
 	int first[MAX_GRID + 1];
 	int len[MAX_GRID];
 	int type_idx[MAX_GRID];
 	int grid_entry[MAX_GRID];
-	/* the index into first / len, where to find
-	 * the row / column. */
+	// the index into first[] / len[] of the object
 	int type[MAX_GRID][MAX_GRID];
+	// the structure constants
 
 	grid();
 	~grid();
@@ -459,6 +398,8 @@ public:
 		std::ostream &ost, incidence *inc, int f_print_isot, iso_type *it);
 	void print_partitioned(
 			std::ostream &ost, int v_cur, incidence *inc, int f_print_isot);
+	void print_partitioned_override_theX(
+			std::ostream &ost, int v_cur, incidence *inc, int *the_X, int f_print_isot);
 	void print_permuted(cperm *pv, cperm *qv);
 	tactical_decomposition *calc_tdo_without_vhbar(
 		int f_second_tactical_decomposition, int verbose_level);
@@ -490,14 +431,14 @@ public:
 	int pairs[MAX_V][MAX_V];
 	int f_lambda;
 	int lambda;
-	int f_find_square; /* JS 120100 */
-	int f_simple; /* JS 180100 */
+	int f_find_square;
+	int f_simple;
 
-	/* initiale vbars / hbars: */
+	// initial vertical and horizontal bars:
 	int nb_i_vbar;
-	int *i_vbar; //[MAX_JJ];
+	int *i_vbar;
 	int nb_i_hbar;
-	int *i_hbar; //[MAX_II];
+	int *i_hbar;
 
 	int gl_nb_GEN;
 
@@ -518,15 +459,14 @@ public:
 	void print_R(int v, cperm *p, cperm *q);
 	void print(std::ostream &ost, int v);
 	void print_override_theX(std::ostream &ost, int *theX, int v);
-	void print_partitioned(std::ostream &ost, int v, incidence *inc, int f_print_isot);
 	void stuetze_nach_zeile(int i, int tdo_flags, int verbose_level);
 	void stuetze2_nach_zeile(int i, int tdo_flags, int verbose_level);
 	void set_range(int i, int first, int len);
 	void set_flush_to_inc_file(int i, std::string &fname);
-	//int close_inc_file(int i);
 	void set_flush_line(int i);
-	//void flush(int m);
 	void print_geo(std::ostream &ost, int v, int *theGEO);
+	void print_inc(std::ostream &ost, int v, long int *theInc);
+	void geo_to_inc(int v, int *theGEO, long int *theInc);
 
 
 };
@@ -542,14 +482,13 @@ public:
 class iso_grid {
 
 public:
-	int m; /* = iso->b_t */
-	int n; /* = type_len */
+	int m; // = iso->b_t
+	int n; // = type_len
 
 
 	cperm q;
-		/* column permutation;
-		 * degree m */
-	cperm qv; /* q^-1 */
+		// column permutation
+	cperm qv; // q^-1
 
 
 	int type[MAX_VB][MAX_TYPE];
@@ -592,14 +531,6 @@ public:
 
 	int *R; /* [MAX_V] */
 
-#if 0
-	/* unused: */
-	int nb_i_vbar;
-	int *i_vbar; /* [MAX_JJ] */
-	int nb_i_hbar;
-	int *i_hbar; /* [MAX_II] */
-#endif
-
 	int tdo_m;
 	int tdo_V[MAX_V];
 	int tdo_n;
@@ -614,18 +545,15 @@ public:
 	int f_use_ddb;
 	int f_transpose_it;
 
-	/* optionally: */
-	int *Ar; /* v entries */
+	// optionally:
+	int *Ar; // [v]
 	int *Br;
-	int *Ad; /* v entries */
+	int *Ad; // [v]
 	int *Bd;
-	short *Addp; /* (v \atop 2) entries */
+	short *Addp; // [v \atop 2]
 	short *Bddp;
-	short *Addb; /* (b \atop 2) entries */
+	short *Addb; // [b \atop 2]
 	short *Bddb;
-
-	//int f_igd; /* use igd instead */
-	//iso_geo_data A, B;
 
 	iso_info();
 	~iso_info();
@@ -649,7 +577,7 @@ void init_ISO2(void);
 // iso_type.cpp
 // #############################################################################
 
-//! isomorphism tester based on a list of objects
+//! classification of geometries based on using the TDO invariant
 
 class iso_type {
 
@@ -659,12 +587,11 @@ public:
 	int sum_R;
 	incidence *inc;
 
-	/* flags for the
-	 * type of TDO used: */
-	int f_transpose_it; /* first F/T */
-	int f_snd_TDO;      /* second F/T */
-	int f_ddp;          /* third F/T */
-	int f_ddb;          /* fourth F/T */
+	// flags for the type of TDO used:
+	int f_transpose_it; // first flag
+	int f_snd_TDO;      // second flag
+	int f_ddp;          // third flag
+	int f_ddb;          // fourth flag
 
 	/* test of the first
 	 * or the second kind:
@@ -680,27 +607,27 @@ public:
 	int range_len;
 
 	int f_flush_line;
-	// int sum_geo;
 
 	std::string fname;
-	//FILE *fp;
 
 	int sum_nb_GEN;
 	int sum_nb_GEO;
 	int sum_nb_TDO;
+
 	int nb_GEN;
 	int nb_GEO;
 	int nb_TDO;
+
 	int dim_GEO;
 	int dim_TDO;
-		/* allocated length */
-	int **theGEO;
-	int *GEO_TDO_idx;
-	tdo_scheme **theTDO;
 
-	//FILE *fp;
-		/* for isot_add()
-		 * f_print_isot */
+	int **theGEO1; // [dim_GEO]
+	int **theGEO2; // [dim_GEO]
+	int *GEO_TDO_idx; // [dim_GEO]
+	tdo_scheme **theTDO; // [dim_TDO]
+
+	classify_using_canonical_forms *Canonical_forms;
+
 	int f_print_mod;
 	int print_mod;
 
@@ -708,17 +635,16 @@ public:
 	~iso_type();
 	void init(int v, incidence *inc, int tdo_flags, int verbose_level);
 	void init2();
+#if 0
 	int find_geometry(
 		inc_encoding *Encoding,
 		int v, incidence *inc,
 		int verbose_level);
+#endif
 	void add_geometry(
 		inc_encoding *Encoding,
 		int v, incidence *inc,
 		int *already_there,
-		int f_do_iso_test,
-		int f_aut_group,
-		int f_print_isot, int f_print_isot_small,
 		int verbose_level);
 	void recalc_autgroup(
 		int v, incidence *inc,
@@ -737,7 +663,10 @@ public:
 		int verbose_level);
 	int find_geo(
 		int v, incidence *inc, tdo_scheme *tdos,
-		int *pc, int tdo_idx, int verbose_level);
+		int *theY, int tdo_idx, int verbose_level);
+	void find_and_add_geo(
+		int v, incidence *inc,
+		int *theY, int &f_new_object, int verbose_level);
 	int isomorphic(
 		int v, incidence *inc, tdo_scheme *tdos,
 		int *pcA, int *pcB, int verbose_level);
@@ -752,16 +681,13 @@ public:
 	void flush();
 	void TDO_realloc();
 	void find_tdos(tdo_scheme *tdos, int *tdo_idx, int *f_found);
-	void add_tdos_and_geo(tdo_scheme *tdos, int tdo_idx, int *theY, int verbose_level);
-	void add_geo(int tdo_idx, int *theY);
+	void add_tdos_and_geo(tdo_scheme *tdos, int tdo_idx,
+			int *theX, int *theY, int verbose_level);
+	void add_geo(int tdo_idx, int *theX, int *theY);
 	int *get_theX(int *theGEO);
 	void geo_free(int *theGEO);
+	void print_geos(int verbose_level);
 	void write_inc_file(std::string &fname, int verbose_level);
-#if 0
-	void open_inc_file(incidence *inc, std::string &fname);
-	void append_inc_file(incidence *inc);
-	void close_inc_file(incidence *inc);
-#endif
 	void print(std::ostream &ost, int f_with_TDO, int v, incidence *inc);
 	void print_GEO(int *pc, int v, incidence *inc);
 	void print_status(std::ostream &ost, int f_with_flags);
@@ -803,16 +729,13 @@ public:
 	int f_TDO_multiple;
 	int f_TDO_d_multiple;
 	cperm p;
-		/* row permutation;
-		 * degree tdo->v */
+		// row permutation of degree tdo->v
 	cperm q;
-		/* column permutation;
-		 * degree tdo->inc->B */
-	cperm pv; /* p^-1 */
-	cperm qv; /* q^-1 */
-		/* given theX, applying p to the rows,
-		 * q to the columns, You get the
-		 * matrix of the TDO */
+		// column permutation of degree tdo->inc->B
+	cperm pv; // p^-1
+	cperm qv; // q^-1
+		// given theX, applying p to the rows,
+		// q to the columns, the matrix of the TDO is obtained
 	grid *G_last;
 	grid *G_current;
 	grid *G_next;

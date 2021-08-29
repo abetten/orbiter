@@ -35,6 +35,8 @@ geometry_builder_description::geometry_builder_description()
 	//std::vector<std::string> test2_lines;
 	//std::vector<std::string> test2_flags;
 
+	//std::vector<int> print_at_line;
+
 	f_fname_GEO = FALSE;
 	//std::string fname_GEO;
 }
@@ -102,6 +104,14 @@ int geometry_builder_description::read_arguments(
 				cout << "-test2 " << lines << " " << flags << endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-print_at_line") == 0) {
+			int a;
+			a = strtoi(argv[++i]);
+			print_at_line.push_back(a);
+			if (f_v) {
+				cout << "-print_at_line " << a << endl;
+			}
+		}
 		else if (stringcmp(argv[i], "-fname_GEO") == 0) {
 			f_fname_GEO = TRUE;
 			fname_GEO.assign(argv[++i]);
@@ -150,6 +160,13 @@ void geometry_builder_description::print()
 
 		for (i = 0; i < test2_lines.size(); i++) {
 			cout << "-test2 " << test2_lines[i] << " " << test2_flags[i] << endl;
+		}
+	}
+	if (print_at_line.size()) {
+		int i;
+
+		for (i = 0; i < print_at_line.size(); i++) {
+			cout << "-print_at_line " << print_at_line[i] << endl;
 		}
 	}
 	if (f_fname_GEO) {

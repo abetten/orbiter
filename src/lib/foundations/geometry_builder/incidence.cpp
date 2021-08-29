@@ -227,21 +227,15 @@ void incidence::print_R(int v, cperm *p, cperm *q)
 
 void incidence::print(std::ostream &ost, int v)
 {
-	print_partitioned(ost, v, this, TRUE /* f_print_isot */);
+	Encoding->print_partitioned(ost, v, this, TRUE /* f_print_isot */);
 }
 
 
 void incidence::print_override_theX(std::ostream &ost, int *theX, int v)
 {
-	print_partitioned(ost, v, this, TRUE /* f_print_isot */);
+	Encoding->print_partitioned_override_theX(ost, v, this, theX, TRUE /* f_print_isot */);
 }
 
-
-void incidence::print_partitioned(
-	std::ostream &ost, int v_cur, incidence *inc, int f_print_isot)
-{
-	Encoding->print_partitioned(ost, v_cur, inc, f_print_isot);
-}
 
 void incidence::stuetze_nach_zeile(int i, int tdo_flags, int verbose_level)
 /* stuetze in letzter Zeile erlaubt */
@@ -303,23 +297,6 @@ void incidence::set_flush_to_inc_file(int i, std::string &fname)
 
 }
 
-#if 0
-int incidence::close_inc_file(int i)
-// returns the number of geos stored into the inc file
-{
-	iso_type *it;
-	int nb_geo = -1;
-
-	if (i > 0 && i <= Encoding->v) {
-		it = iso_type_at_line[i - 1];
-		if (it->fp) {
-			it->close_inc_file(this);
-		}
-		nb_geo = it->sum_nb_GEO;
-	}
-	return nb_geo;
-}
-#endif
 
 void incidence::set_flush_line(int i)
 {
@@ -335,32 +312,6 @@ void incidence::set_flush_line(int i)
 	}
 }
 
-#if 0
-void incidence::flush(int m)
-{
-	iso_type *it, *it1;
-	int i, j;
-
-	it = iso_type_at_line[m];
-	if (!it->f_flush_line) {
-		return;
-	}
-	for (i = m + 1; i < Encoding->v; i++) {
-		it1 = iso_type_at_line[i];
-		if (it1 && it1->fp) {
-			it1->append_inc_file(this);
-			// it1->sum_geo += it1->nb_GEO;
-			// printf("appending %d geos (in a flush)\n", it1->nb_GEO);
-		}
-		if (it1) {
-			it1->flush();
-		}
-	}
-	//printf("incidence_flush() memory usage:");
-	//memory_usage();
-}
-#endif
-
 
 void incidence::print_geo(std::ostream &ost, int v, int *theGEO)
 {
@@ -371,6 +322,35 @@ void incidence::print_geo(std::ostream &ost, int v, int *theGEO)
 		for (j = 0; j < Encoding->R[i]; j++, s++) {
 			a = theGEO[s];
 			ost << i * Encoding->b + a << " ";
+		}
+	}
+
+}
+
+void incidence::print_inc(std::ostream &ost, int v, long int *theInc)
+{
+	int i, j, s;
+	long int a;
+
+	s = 0;
+	for (i = 0; i < v; i++) {
+		for (j = 0; j < Encoding->R[i]; j++, s++) {
+			a = theInc[s];
+			ost << a << " ";
+		}
+	}
+
+}
+
+void incidence::geo_to_inc(int v, int *theGEO, long int *theInc)
+{
+	int i, j, s, a;
+
+	s = 0;
+	for (i = 0; i < v; i++) {
+		for (j = 0; j < Encoding->R[i]; j++, s++) {
+			a = theGEO[s];
+			theInc[s] = i * Encoding->b + a;
 		}
 	}
 

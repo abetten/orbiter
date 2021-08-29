@@ -193,15 +193,14 @@ void tactical_decomposition::make_point_and_block_partition(grid *Gpoints, grid 
 {
 	int i, j, first, last_p1;
 
-	/* init Gpoints (only up to tdo->v): */
+	// init point partition
 	Gpoints->f_points = TRUE;
 	Gpoints->m = Encoding->v;
-	Gpoints->n = 1 /* tdo->inc->nb_i_vbar */;
+	Gpoints->n = 1;
 	Gpoints->G_max = 0;
 	Gpoints->first[0] = 0;
-	first = 0 /* tdo->inc->i_hbar[I] */;
+	first = 0;
 	last_p1 = Encoding->v;
-	/* first[0] ist bereits gesetzt */
 	Gpoints->len[0] = last_p1 - first;
 	Gpoints->first[0 + 1] = last_p1;
 	for (j = 0; j < Gpoints->n; j++) {
@@ -213,14 +212,13 @@ void tactical_decomposition::make_point_and_block_partition(grid *Gpoints, grid 
 	}
 	Gpoints->G_max++;
 
-	/* init Gblocks: */
+	// init block partition:
 	Gblocks->f_points = FALSE;
-	Gblocks->m = Encoding->b /* tdo->inc->B */;
+	Gblocks->m = Encoding->b;
 	Gblocks->n = Gpoints->G_max;
-		/* tdo->inc->nb_i_hbar */
 	Gblocks->G_max = 0;
 	Gblocks->first[0] = 0;
-	first = 0 /* tdo->inc->i_vbar[I] */;
+	first = 0;
 	last_p1 = Encoding->b;
 	Gblocks->len[0] = last_p1 - first;
 	Gblocks->first[0 + 1] = last_p1;
@@ -244,7 +242,7 @@ void tactical_decomposition::init_partition(grid *Gpoints, grid *Gblocks,
 	}
 	int i, j, I, first, last_p1, f_break;
 
-	// init Gpoints (only up to tdo->v):
+	// init point partition
 	Gpoints->f_points = TRUE;
 	Gpoints->m = v;
 	Gpoints->n = inc->nb_i_vbar;
@@ -266,7 +264,6 @@ void tactical_decomposition::init_partition(grid *Gpoints, grid *Gblocks,
 			f_break = TRUE;
 			last_p1 = v;
 		}
-		// first[I] ist bereits gesetzt
 		Gpoints->len[I] = last_p1 - first;
 		Gpoints->first[I + 1] = last_p1;
 		for (j = 0; j < Gpoints->n; j++) {
@@ -282,7 +279,7 @@ void tactical_decomposition::init_partition(grid *Gpoints, grid *Gblocks,
 		}
 	}
 
-	// init Gblocks:
+	// init block partition:
 	Gblocks->f_points = FALSE;
 	Gblocks->m = inc->Encoding->b;
 	Gblocks->n = Gpoints->G_max;
@@ -296,7 +293,6 @@ void tactical_decomposition::init_partition(grid *Gpoints, grid *Gblocks,
 		else {
 			last_p1 = inc->Encoding->b;
 		}
-		// first[I] ist bereits gesetzt
 		Gblocks->len[I] = last_p1 - first;
 		Gblocks->first[I + 1] = last_p1;
 		for (j = 0; j < Gblocks->n; j++) {
@@ -308,6 +304,7 @@ void tactical_decomposition::init_partition(grid *Gpoints, grid *Gblocks,
 		}
 		Gblocks->G_max++;
 	}
+
 	if (f_v) {
 		cout << "tactical_decomposition::init_partition done" << endl;
 	}
@@ -421,13 +418,12 @@ void tactical_decomposition::refine_types(grid *Gm1, grid *G1, int verbose_level
 	}
 	int old_k, old_first, old_len;
 
+	// refine each class of the old partition separately:
 	for (old_k = 0; old_k < Gm1->G_max; old_k++) {
 		old_first = Gm1->first[old_k];
 		old_len = Gm1->len[old_k];
-		/* verfeinere jeden Bereich
-		 * des vorletzten grids einzeln: */
 		radix_sort(G1, 0, old_first, old_first + old_len - 1);
-	} /* next old_k */
+	}
 	if (f_v) {
 		cout << "tactical_decomposition::refine_types done" << endl;
 	}
@@ -502,7 +498,7 @@ void tactical_decomposition::collect_types(int v, grid *G0, grid *G1, int verbos
 	}
 	int i, j;
 
-	recollect_types(v, G0, G1, verbose_level);
+	recollect_types(v, G0, G1, 0 /*verbose_level*/);
 
 	for (i = 0; i < G1->m; i++) {
 		G1->type_idx[i] = i;
