@@ -556,11 +556,11 @@ int orbit_of_subspaces::rank_hash_and_find(int *subspace,
 
 	h = hash_subspace();
 
-    map<uint32_t, int>::iterator itr, itr1, itr2;
+	map<uint32_t, int>::iterator itr, itr1, itr2;
 
-    itr1 = Hashing.lower_bound(h);
-    itr2 = Hashing.upper_bound(h);
-    f_found = FALSE;
+	itr1 = Hashing.lower_bound(h);
+	itr2 = Hashing.upper_bound(h);
+	f_found = FALSE;
 	for (itr = itr1; itr != itr2; ++itr) {
     	idx = itr->second;
         if (f_lint) {

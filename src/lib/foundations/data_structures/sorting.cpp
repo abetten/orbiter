@@ -2869,6 +2869,20 @@ int sorting::test_if_sets_are_disjoint_assuming_sorted_lint(
 	return TRUE;
 }
 
+int sorting::uchar_vec_compare(uchar *p, uchar *q, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i++) {
+		if (p[i] < q[i])
+			return -1;
+		if (p[i] > q[i])
+			return 1;
+		}
+	return 0;
+}
+
+
 
 
 //##############################################################################

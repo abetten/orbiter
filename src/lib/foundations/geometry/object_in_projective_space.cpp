@@ -205,6 +205,13 @@ void object_in_projective_space::init_object_from_int_vec(
 		else if (type == t_PAC) {
 			cout << "t_PAC" << endl;
 		}
+		else if (type == t_INC) {
+			cout << "t_INC" << endl;
+		}
+		else {
+			cout << "object_in_projective_space::init_object_from_int_vec unknown type" << endl;
+			exit(1);
+		}
 	}
 
 
@@ -219,6 +226,15 @@ void object_in_projective_space::init_object_from_int_vec(
 	else if (type == t_PAC) {
 		init_packing_from_set(P,
 				the_set_in, the_set_sz, verbose_level - 1);
+	}
+	else if (type == t_INC) {
+		int v = 0, b = 0, nb_flags = 0;
+
+		cout << "object_in_projective_space::init_object_from_int_vec missing info on v and b" << endl;
+		exit(1);
+		init_incidence_geometry(
+				the_set_in, the_set_sz, v, b, nb_flags,
+				verbose_level);
 	}
 	else {
 		cout << "object_in_projective_space::init_object_from_int_vec "
@@ -383,12 +399,10 @@ void object_in_projective_space::init_packing_from_spread_table(
 	for (i = 0; i < SoS->nb_sets; i++) {
 		for (j = i + 1; j < SoS->nb_sets; j++) {
 			if (M[i * SoS->nb_sets + j]) {
-				cout << "object_in_projective_space::init_packing_"
-						"from_spread_table not a packing, spreads "
+				cout << "object_in_projective_space::init_packing_from_spread_table not a packing, spreads "
 						<< i << " and " << j << " meet in "
 						<< M[i * SoS->nb_sets + j] << " lines" << endl;
-				cout << "object_in_projective_space::init_packing_"
-						"from_spread_table Sos:" << endl;
+				cout << "object_in_projective_space::init_packing_from_spread_table Sos:" << endl;
 				SoS->print_table();
 				exit(1);
 
@@ -414,7 +428,7 @@ void object_in_projective_space::init_incidence_geometry(
 	if (nb_flags != data_sz) {
 		cout << "object_in_projective_space::init_incidence_geometry nb_flags != data_sz" << endl;
 	}
-	//object_in_projective_space::P = P;
+	object_in_projective_space::P = NULL;
 	type = t_INC;
 	object_in_projective_space::set = NEW_lint(data_sz);
 	Orbiter->Lint_vec.copy(data, object_in_projective_space::set, data_sz);

@@ -23,32 +23,23 @@ gen_geo::gen_geo()
 	GB = NULL;
 
 	nb_fuse = 0;
-	Fuse_first = NULL; // [MAX_II];
-	Fuse_len = NULL; //[MAX_II];
-	K0 = NULL; //[MAX_II][MAX_JJ];
-	KK = NULL; //[MAX_II][MAX_JJ];
-	K1 = NULL; // [MAX_II][MAX_JJ];
-	F_last_k_in_col = NULL; // [MAX_II][MAX_JJ];
+	Fuse_first = NULL;
+	Fuse_len = NULL;
+	K0 = NULL;
+	KK = NULL;
+	K1 = NULL;
+	F_last_k_in_col = NULL;
 
 
-	//II = 0;
-	//JJ = 0;
 	Conf = NULL;
 
 	inc = NULL;
-	//max_r = 0;
-	//V = 0;
-	//B = 0;
 
-	//int R[MAX_V];
 	K = NULL;
 
 	f_vbar = NULL;
 	vbar = NULL;
 	hbar = NULL;
-
-	//int vbar[MAX_B];
-	//int hbar[MAX_V];
 
 	f_do_iso_test = FALSE;
 	f_do_aut_group = FALSE;
@@ -98,9 +89,6 @@ gen_geo::~gen_geo()
 		FREE_int(hbar);
 	}
 
-	if (Conf) {
-		FREE_OBJECT(Conf);
-	}
 	if (inc) {
 		FREE_OBJECT(inc);
 	}
@@ -137,10 +125,6 @@ void gen_geo::init(geometry_builder *GB,
 	forget_ivhbar_in_last_isot = FALSE;
 
 
-	K0 = NEW_int(GB->v_len * GB->b_len);
-	KK = NEW_int(GB->v_len * GB->b_len);
-	K1 = NEW_int(GB->v_len * GB->b_len);
-	F_last_k_in_col = NEW_int(GB->v_len * GB->b_len);
 
 
 	if (f_v) {
@@ -345,6 +329,11 @@ void gen_geo::init_k()
 		K[j] = 0;
 	}
 
+	K0 = NEW_int(GB->v_len * GB->b_len);
+	KK = NEW_int(GB->v_len * GB->b_len);
+	K1 = NEW_int(GB->v_len * GB->b_len);
+	F_last_k_in_col = NEW_int(GB->v_len * GB->b_len);
+
 	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
 		for (J = 0; J < GB->b_len; J++) {
 			if (fuse_idx == 0) {
@@ -523,29 +512,9 @@ void gen_geo::main2(int &nb_GEN, int &nb_GEO, int &ticks, int &tps, int verbose_
 		cout << "gen_geo::main2 after generate_all" << endl;
 	}
 
-#if 0
-	if (inc_file_name.length()) {
-		int nb_geo;
-
-		nb_geo = inc->close_inc_file(inc->Encoding->v);
-		cout << "closed file " << inc_file_name << " with " << nb_geo << " geometries" << endl;
-	}
-	if (GEO_fname.length()) {
-		FILE *GEO_fp = NIL;
-
-		GEO_fp = fopen(GEO_fname.c_str(), "w");
-		save_theX(GEO_fp); // final output
-		fclose(GEO_fp);
-	}
-#endif
 
 
 
-#if 0
-	if (inc.iso_type_no_vhbars) {
-		inc.iso_type_no_vhbars->save_into_file();
-	}
-#endif
 
 	t1 = os_ticks();
 
@@ -585,6 +554,12 @@ void gen_geo::main2(int &nb_GEN, int &nb_GEO, int &ticks, int &tps, int verbose_
 	//f_inc_fst_time_printed = TRUE;
 	inc->print(cout, V);
 
+	int i, a;
+
+	for (i = 0; i < GB->Descr->print_at_line.size(); i++) {
+		a = GB->Descr->print_at_line[i];
+		inc->iso_type_at_line[a - 1]->print_geos(verbose_level);
+	}
 
 	// Anton Betten AB 150200:
 	it = inc->iso_type_at_line[V - 1];
@@ -659,17 +634,17 @@ void gen_geo::generate_all(int verbose_level)
 	}
 
 	inc->gl_nb_GEN = 0;
-	if (!GeoFst(verbose_level - 3)) {
+	if (!GeoFst(verbose_level - 5)) {
 		ret = TRUE;
 		goto l_exit;
 	}
 	while (TRUE) {
 
 		inc->gl_nb_GEN++;
-		if (f_v) {
+		if (FALSE) {
 			cout << "gen_geo::generate_all nb_GEN=" << inc->gl_nb_GEN << endl;
 			if ((inc->gl_nb_GEN % gen_print_intervall) == 0) {
-				inc->print(cout, inc->Encoding->v);
+				//inc->print(cout, inc->Encoding->v);
 			}
 		}
 		/* printf("*** do_geo *** geometry no. %d\n", gg->inc.gl_nb_GEN); */
@@ -686,20 +661,22 @@ void gen_geo::generate_all(int verbose_level)
 			inc->nb_i_vbar = 1;
 			inc->nb_i_hbar = 1;
 		}
-		if (f_v) {
+		if (FALSE) {
 			cout << "gen_geo::generate_all before isot_add for it0" << endl;
 		}
 
 		it0->add_geometry(inc->Encoding,
 			inc->Encoding->v, inc,
-			&already_there, f_do_iso_test,
-			0 /* verbose_level */,
-			f_do_aut_group,
-			TRUE /* f_print_isot_small */,
-			verbose_level);
+			&already_there,
+			0 /*verbose_level*/);
 
-		if (f_v) {
+		if (FALSE) {
 			cout << "gen_geo::generate_all after isot_add for it0" << endl;
+		}
+
+		if (it0->Canonical_forms->B.size() % 1024 == 0) {
+			cout << it0->Canonical_forms->B.size() << endl;
+			inc->print(cout, inc->Encoding->v);
 		}
 
 		if (forget_ivhbar_in_last_isot) {
@@ -712,19 +689,15 @@ void gen_geo::generate_all(int verbose_level)
 			inc->nb_i_vbar = 1;
 			inc->nb_i_hbar = 1;
 
-			if (f_v) {
+			if (FALSE) {
 				cout << "gen_geo::generate_all before isot_add for it1" << endl;
 			}
 			it1->add_geometry(inc->Encoding,
 					inc->Encoding->v, inc,
 					&already_there,
-					f_do_iso_test,
-					0 /* verbose_level */,
-					f_do_aut_group_in_iso_type_without_vhbars,
-					TRUE /* f_print_isot_small */,
-					verbose_level);
+					0 /*verbose_level*/);
 
-			if (f_v) {
+			if (FALSE) {
 				cout << "gen_geo::generate_all after isot_add for it1" << endl;
 			}
 			if (!already_there) {
@@ -741,7 +714,7 @@ void gen_geo::generate_all(int verbose_level)
 			//	}
 		}
 
-		if (!GeoNxt(verbose_level - 3)) {
+		if (!GeoNxt(verbose_level - 5)) {
 			break;
 		}
 	}
@@ -1035,11 +1008,7 @@ int gen_geo::geo_back_test(int I, int verbose_level)
 			it->add_geometry(inc->Encoding,
 					i1 + 1, inc,
 					&already_there,
-					TRUE /* f_do_iso_test */,
-					FALSE /* f_aut_group */,
-					FALSE /* f_print_isot */ ,
-					FALSE /* f_print_isot_small */,
-					verbose_level);
+					0 /*verbose_level*/);
 
 			/* printf("geo_back_test() nach isot_add()\n"); */
 			if (!already_there) {
@@ -1120,23 +1089,19 @@ int gen_geo::GeoLineFst0(int I, int m, int verbose_level)
 		while (TRUE) {
 			if (f_v) {
 				cout << "GeoLineFst0 I=" << I << " m=" << m << " before isot_add" << endl;
-				inc->print(cout, i1 + 1);
+				//inc->print(cout, i1 + 1);
 			}
 
 			it->add_geometry(inc->Encoding,
 					i1 + 1, inc, &already_there,
-					TRUE /* f_iso_test */,
-					FALSE /* f_aut_group */,
-					FALSE /* f_print_isot */ ,
-					FALSE/* f_print_isot_small */,
-					verbose_level);
+					0 /*verbose_level*/);
 
 			if (f_v) {
 				cout << "GeoLineFst0 I=" << I << " m=" << m << " after isot_add" << endl;
 			}
 			if (it->f_print_mod) {
 				if ((it->nb_GEN % it->print_mod) == 0) {
-					inc->print(cout, i1 + 1);
+					//inc->print(cout, i1 + 1);
 					// geo_print_pairs(gg, i1 + 1);
 				}
 			}
@@ -1207,17 +1172,13 @@ int gen_geo::GeoLineNxt0(int I, int m, int verbose_level)
 		while (TRUE) {
 			it->add_geometry(inc->Encoding,
 				i1 + 1, inc, &already_there,
-				TRUE /* f_iso_test */,
-				FALSE /* f_aut_group */,
-				FALSE /* f_print_isot */,
-				FALSE /* f_print_isot_small */,
-				verbose_level);
+				0 /*verbose_level*/);
 
 
 
 			if (it->f_print_mod) {
 				if ((it->nb_GEN % it->print_mod) == 0) {
-					inc->print(cout, i1 + 1);
+					//inc->print(cout, i1 + 1);
 					// geo_print_pairs(gg, i1 + 1);
 				}
 			}
@@ -1873,50 +1834,6 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j)
 
 	return FALSE;
 }
-
-#if 0
-void gen_geo::save_theX(FILE *GEO_fp)
-{
-	int X[MAX_V * MAX_R];
-	int i, nb_X;
-	static int nb_geo_file = 0;
-
-	geo_get_theX(inc->Encoding->v, X, &nb_X, FALSE);
-#if 0
-	if (nb_geo_file == 0) {
-		fprintf(GEO_fp, "%d %d %d\n", gg->inc.V, gg->inc.B, nb_X);
-		}
-#endif
-	for (i = 0; i < nb_X; i++) {
-		fprintf(GEO_fp, "%d ", X[i]);
-	}
-	fprintf(GEO_fp, "\n");
-	fflush(GEO_fp);
-	nb_geo_file++;
-}
-
-void gen_geo::geo_get_theX(int lines, int *X, int *nb_X, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int nb_x, i, j, r, a, b;
-
-	nb_x = 0;
-	for (i = 0; i < lines; i++) {
-		r = inc->Encoding->R[i];
-		for (j = 0; j < r; j++) {
-			a = inc->Encoding->theX[i * inc->Encoding->dim_n + j];
-			b = i * inc->Encoding->b + a;
-			if (f_v) {
-				printf("%d ", b);
-			}
-			X[nb_x++] = b;
-		}
-	}
-	if (f_v)
-		printf("\n");
-	*nb_X = nb_x;
-}
-#endif
 
 
 

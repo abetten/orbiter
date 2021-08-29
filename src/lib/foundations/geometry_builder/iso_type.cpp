@@ -44,7 +44,6 @@ iso_type::iso_type()
 	f_flush_line = FALSE;
 
 	//std::string fname;
-	//fp = NULL;
 
 	sum_nb_GEN = 0;
 	sum_nb_GEO = 0;
@@ -54,14 +53,13 @@ iso_type::iso_type()
 	nb_TDO = 0;
 	dim_GEO = 0;
 	dim_TDO = 0;
-		/* allocated length */
-	theGEO = NULL;
+	theGEO1 = NULL;
+	theGEO2 = NULL;
 	GEO_TDO_idx = NULL;
 	theTDO = NULL;
 
-	//FILE *fp;
-		/* for isot_add()
-		 * f_print_isot */
+	Canonical_forms = NULL;
+
 	f_print_mod = TRUE;
 	print_mod = 1;
 
@@ -70,7 +68,6 @@ iso_type::iso_type()
 iso_type::~iso_type()
 {
 	int i;
-	//int *the_GEO;
 
 	if (dim_TDO) {
 		for (i = 0; i < nb_TDO; i++) {
@@ -82,9 +79,11 @@ iso_type::~iso_type()
 	if (dim_GEO) {
 		delete [] GEO_TDO_idx;
 		for (i = 0; i < nb_GEO; i++) {
-			delete theGEO[i];
+			FREE_int(theGEO1[i]);
+			FREE_int(theGEO2[i]);
 		}
-		delete [] theGEO;
+		delete [] theGEO1;
+		delete [] theGEO2;
 	}
 }
 
@@ -124,6 +123,8 @@ void iso_type::init(int v, incidence *inc, int tdo_flags, int verbose_level)
 		cout << "iso_type::init v=" << v << " after init2" << endl;
 	}
 
+	Canonical_forms = NEW_OBJECT(classify_using_canonical_forms);
+
 	if (f_v) {
 		cout << "iso_type::init done" << endl;
 	}
@@ -139,13 +140,15 @@ void iso_type::init2()
 	dim_GEO = MAX_GEO;
 	dim_TDO = MAX_TDO;
 
-	theGEO = new pint[dim_GEO];
+	theGEO1 = new pint[dim_GEO];
+	theGEO2 = new pint[dim_GEO];
 	GEO_TDO_idx = new int[dim_GEO];
 
 	theTDO = new ptdo_scheme [dim_TDO];
 
 	for (i = 0; i < dim_GEO; i++) {
-		theGEO[i] = NULL;
+		theGEO1[i] = NULL;
+		theGEO2[i] = NULL;
 		GEO_TDO_idx[i] = -1;
 	}
 	for (i = 0; i < dim_TDO; i++) {
@@ -153,7 +156,7 @@ void iso_type::init2()
 	}
 }
 
-
+#if 0
 int iso_type::find_geometry(
 	inc_encoding *Encoding,
 	int v, incidence *inc,
@@ -215,34 +218,34 @@ int iso_type::find_geometry(
 	}
 	return geo_idx;
 }
+#endif
 
 void iso_type::add_geometry(
 	inc_encoding *Encoding,
 	int v, incidence *inc,
 	int *already_there,
-	int f_do_iso_test,
-	int f_aut_group,
-	int f_print_isot, int f_print_isot_small,
 	int verbose_level)
 {
-
-	static int count = 0;
-
 
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
-		cout << "iso_type::add_geometry" << endl;
-
-		print_geometry(Encoding, v, inc);
-
-	}
-	if (f_v) {
 		cout << "iso_type::add_geometry v=" << v << endl;
+
+		//inc->print(cout, v);
+		//print_geometry(Encoding, v, inc);
+
 	}
 
+#if 0
+	static int count = 0;
 
+#if 0
+	if (v == 4) {
+		verbose_level = 2;
+	}
+#endif
 
 	int *theY = NULL;
 	tdo_scheme *tdos = NULL;
@@ -259,10 +262,21 @@ void iso_type::add_geometry(
 		cout << "iso_type::add_geometry before calc_theY_and_tdos_override_v" << endl;
 	}
 
-	calc_theY_and_tdos_override_v(Encoding, inc, v, theY, tdos, verbose_level - 4);
+	int vl;
+	if (v == 10) {
+		vl = 3;
+	}
+	else {
+		vl = 0;
+	}
+	calc_theY_and_tdos_override_v(Encoding, inc, v, theY, tdos, vl);
 
 	if (f_v) {
 		cout << "iso_type::add_geometry after calc_theY_and_tdos_override_v" << endl;
+	}
+	if (f_snd_TDO) {
+		cout << "iso_type::calc_theY_and_tdos_override_v the second tdo scheme is:" << endl;
+		tdos->print();
 	}
 
 	if (f_v) {
@@ -285,10 +299,12 @@ void iso_type::add_geometry(
 		if (f_v) {
 			cout << "iso_type::add_geometry before add_tdos_and_geo" << endl;
 		}
-		add_tdos_and_geo(tdos, tdo_idx, theY, verbose_level);
+		add_tdos_and_geo(tdos, tdo_idx, Encoding->theX, theY, verbose_level);
 		status = 1;
-		goto calc_aut;
+		goto l_exit;
 	}
+
+	//int f_new_object;
 
 	if (!f_do_iso_test) {
 		cout << "iso_type::add_geometry warning: no iso test" << endl;
@@ -308,7 +324,6 @@ void iso_type::add_geometry(
 		*already_there = TRUE;
 		status = 2;
 		goto l_exit;
-		/* tdoss und pc freigeben */
 	}
 	*already_there = FALSE;
 	status = 3;
@@ -316,17 +331,20 @@ void iso_type::add_geometry(
 	if (f_v) {
 		cout << "iso_type::add_geometry before isot_add_geo" << endl;
 	}
-	add_geo(tdo_idx, theY);
+
+	int *theX;
+
+	theX = NEW_int(v * Encoding->dim_n);
+	Orbiter->Int_vec.copy(Encoding->theX, theX, v * Encoding->dim_n);
+
+	add_geo(tdo_idx, theX, theY);
 	if (f_v) {
 		cout << "iso_type::add_geometry after isot_add_geo" << endl;
 	}
+	theX = NULL;
 	theY = NULL;
-	/* jetzt in i
-	 * isot->theGEO[isot->nb_GEO - 1]
-	 * abgespeichert */
 
-	/* tdoss nachher noch freigeben */
-
+#if 0
 calc_aut:
 	if (f_print_isot_small || f_print_isot || f_v) {
 		if (!f_found) {
@@ -352,6 +370,7 @@ calc_aut:
 			cout << "iso_type::add_geometry after recalc_autgroup" << endl;
 		}
 	}
+#endif
 
 l_exit:
 	if (f_v) {
@@ -361,6 +380,21 @@ l_exit:
 		cout << endl;
 	}
 	count++;
+#else
+	int f_new_object;
+
+	find_and_add_geo(
+		v, inc,
+		inc->Encoding->theX, f_new_object, 0 /*verbose_level*/);
+
+	if (f_new_object) {
+		*already_there = FALSE;
+	}
+	else {
+		*already_there = TRUE;
+	}
+
+#endif
 	if (f_v) {
 		cout << "iso_type::add_geometry done" << endl;
 	}
@@ -377,7 +411,7 @@ void iso_type::recalc_autgroup(
 
 	do_aut_group(v, inc,
 		theTDO[tdo_idx],
-		theGEO[geo_idx],
+		theGEO2[geo_idx],
 		&aut_group_order,
 		f_print_isot_small, f_print_isot, verbose_level);
 
@@ -417,9 +451,10 @@ void iso_type::calc_theY_and_tdos_override_v(
 	if (f_v) {
 		cout << "iso_type::calc_theY_and_tdos_override_v before Encoding->apply_permutation" << endl;
 	}
+#if 0
 	Orbiter->Int_vec.copy(Encoding->theX, theY, v * Encoding->dim_n);
 
-#if 0
+#else
 	Encoding->apply_permutation(inc, v, theY, &tdo_p, &tdo_q, verbose_level);
 	if (f_v) {
 		cout << "iso_type::calc_theY_and_tdos_override_v theX=" << endl;
@@ -435,28 +470,6 @@ void iso_type::calc_theY_and_tdos_override_v(
 		cout << "iso_type::calc_theY_and_tdos_override_v after Encoding->apply_permutation" << endl;
 	}
 
-#if 0
-	pc1 = geo2pc(theY, TRUE /* f_full */,
-		ddp, ddb, v, inc,
-		0 /* aut_group_order */);
-	ddp = NIL;
-		/* jetzt bei GEO (pc)
-		 * abgespeichert */
-	ddb = NIL;
-		/* jetzt bei GEO (pc)
-		 * abgespeichert */
-#if 0
-	printf("pc theX:\n");
-	inc_theX_print_int_char(
-		inc->R, get_theX(pc1),
-		FALSE /* f_int */,
-		FALSE /* f_full */, inc->max_r, v);
-#endif
-
-	delete [] theY;
-	*pc = pc1;
-	*tdoss = tdoss1;
-#endif
 
 	if (f_v) {
 		cout << "iso_type::calc_theY_and_tdos_override_v done" << endl;
@@ -552,7 +565,9 @@ int iso_type::find_geo(
 
 	if (f_v) {
 		cout<< "iso_type::find_geo" << endl;
+		inc->print_geo(cout, v, theY);
 	}
+
 
 	ret = -1;
 	for (i = 0; i < nb_GEO; i++) {
@@ -561,23 +576,90 @@ int iso_type::find_geo(
 		}
 
 		if (f_v) {
-			cout << "iso_type::find_geo v=" << v << " i=" << i << " / " << nb_GEO << " before isomorphic: ";
-			inc->print_geo(cout, v, theGEO[i]);
+			cout << "iso_type::find_geo v=" << v
+					<< " i=" << i << " / " << nb_GEO
+					<< " find_geo: ";
+			inc->print_geo(cout, v, theGEO2[i]);
 			cout << endl;
 		}
-		f_iso = isomorphic(v, inc, tdos, theY, theGEO[i], 0 /*verbose_level*/);
+
+
+
+#if 0
+		if (v == 4) {
+			vl = 5;
+		}
+		else {
+			vl = 0;
+		}
+#endif
+		f_iso = isomorphic(v, inc, tdos, theY, theGEO2[i], 0 /* verbose_level */);
 		if (f_v) {
-			cout<< "iso_type::find_geo v=" << v << " i=" << i << " / " << nb_GEO << " after isomorphic, f_iso=" << f_iso << endl;
+			cout<< "iso_type::find_geo v=" << v
+					<< " i=" << i << " / " << nb_GEO
+					<< " after isomorphic, f_iso=" << f_iso << endl;
 		}
 		if (f_iso) {
 			ret = i;
 			break;
 		}
 	}
+
 	if (f_v) {
 		cout<< "iso_type::find_geo done" << endl;
 	}
 	return ret;
+}
+
+
+void iso_type::find_and_add_geo(
+	int v, incidence *inc,
+	int *theY, int &f_new_object, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout<< "iso_type::find_and_add_geo" << endl;
+		inc->print_geo(cout, v, theY);
+	}
+
+
+	object_in_projective_space *OiP;
+	long int *theInc;
+	int nb_flags;
+
+	nb_flags = v * inc->Encoding->dim_n;
+
+	theInc = NEW_lint(nb_flags);
+
+	inc->geo_to_inc(v, theY, theInc);
+
+	OiP = NEW_OBJECT(object_in_projective_space);
+
+	OiP->init_incidence_geometry(
+		theInc, nb_flags, v, inc->Encoding->b, nb_flags,
+		verbose_level);
+
+	if (f_v) {
+		cout << "iso_type::find_and_add_geo "
+				"before Canonical_forms->add_object" << endl;
+	}
+	Canonical_forms->add_object(OiP,
+			f_new_object, verbose_level);
+
+	if (f_v) {
+		cout << "iso_type::find_and_add_geo "
+				"before OiP->run_nauty" << endl;
+	}
+
+	if (f_v) {
+		cout << "iso_type::find_and_add_geo "
+				"after Canonical_forms->add_object" << endl;
+	}
+
+	if (f_v) {
+		cout<< "iso_type::find_and_add_geo done" << endl;
+	}
 }
 
 int iso_type::isomorphic(
@@ -639,7 +721,8 @@ int iso_type::isomorphic(
 void iso_type::do_aut_group(
 	int v, incidence *inc, tdo_scheme *tdos,
 	int *pc, int *aut_group_order,
-	int f_print_isot_small, int f_print_isot, int verbose_level)
+	int f_print_isot_small, int f_print_isot,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -783,7 +866,8 @@ void iso_type::find_tdos(tdo_scheme *tdos, int *tdo_idx, int *f_found)
 	*tdo_idx = i;
 }
 
-void iso_type::add_tdos_and_geo(tdo_scheme *tdos, int tdo_idx, int *theY, int verbose_level)
+void iso_type::add_tdos_and_geo(tdo_scheme *tdos, int tdo_idx,
+		int *theX, int *theY, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int j;
@@ -791,8 +875,8 @@ void iso_type::add_tdos_and_geo(tdo_scheme *tdos, int tdo_idx, int *theY, int ve
 	if (f_v) {
 		cout << "iso_type::add_tdos_and_geo" << endl;
 	}
-	/* neues TDO an Position tdo_idx einfuegen;
-	 * tdo_idx kann == nb_TDO sein. */
+	// Insert a new TDO at position tdo_idx
+
 	if (nb_TDO >= dim_TDO) {
 		TDO_realloc();
 	}
@@ -809,7 +893,7 @@ void iso_type::add_tdos_and_geo(tdo_scheme *tdos, int tdo_idx, int *theY, int ve
 	if (f_v) {
 		cout << "iso_type::add_tdos_and_geo before add_geo" << endl;
 	}
-	add_geo(tdo_idx, theY);
+	add_geo(tdo_idx, theX, theY);
 	if (f_v) {
 		cout << "iso_type::add_tdos_and_geo after add_geo" << endl;
 	}
@@ -819,40 +903,47 @@ void iso_type::add_tdos_and_geo(tdo_scheme *tdos, int tdo_idx, int *theY, int ve
 }
 
 
-void iso_type::add_geo(int tdo_idx, int *theY)
+void iso_type::add_geo(int tdo_idx, int *theX, int *theY)
 {
 
 	if (nb_GEO >= dim_GEO) {
 
 		int **tmp1;
-		int *tmp2;
+		int **tmp2;
+		int *tmp3;
 		int new_dim;
 		int i;
 
 		new_dim = dim_GEO + MAX_GEO;
 
 		tmp1 = new pint[new_dim];
-		tmp2 = new int[new_dim];
+		tmp2 = new pint[new_dim];
+		tmp3 = new int[new_dim];
 
 		for (i = 0; i < nb_GEO; i++) {
-			tmp1[i] = theGEO[i];
-			tmp2[i] = GEO_TDO_idx[i];
+			tmp1[i] = theGEO1[i];
+			tmp2[i] = theGEO2[i];
+			tmp3[i] = GEO_TDO_idx[i];
 		}
 
 		for (i = nb_GEO; i < new_dim; i++) {
 			tmp1[i] = NULL;
-			tmp2[i] = 0;
+			tmp2[i] = NULL;
+			tmp3[i] = 0;
 		}
 
-		delete [] theGEO;
+		delete [] theGEO1;
+		delete [] theGEO2;
 		delete [] GEO_TDO_idx;
 
-		theGEO = tmp1;
-		GEO_TDO_idx = tmp2;
+		theGEO1 = tmp1;
+		theGEO2 = tmp2;
+		GEO_TDO_idx = tmp3;
 		dim_GEO = new_dim;
 	}
 
-	theGEO[nb_GEO] = theY;
+	theGEO1[nb_GEO] = theX;
+	theGEO2[nb_GEO] = theY;
 	GEO_TDO_idx[nb_GEO] = tdo_idx;
 
 	nb_GEO++;
@@ -885,6 +976,34 @@ void iso_type::geo_free(int *theGEO)
 	//MEM_free(theGEO);
 }
 
+void iso_type::print_geos(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "iso_type::print_geos" << endl;
+	}
+	{
+		int h;
+
+		cout << v << " " << inc->Encoding->b << " " << sum_R << endl;
+		for (h = 0; h < nb_GEO; h++) {
+
+			cout << h << " / " << nb_GEO << ":" << endl;
+			inc->print_override_theX(cout, theGEO1[h], v);
+
+			inc->print_geo(cout, v, theGEO1[h]);
+			cout << endl;
+
+
+		}
+	}
+	if (f_v) {
+		cout << "iso_type::print_geos done" << endl;
+	}
+}
+
+
 void iso_type::write_inc_file(std::string &fname, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -895,90 +1014,41 @@ void iso_type::write_inc_file(std::string &fname, int verbose_level)
 	{
 		ofstream ost(fname);
 		int h;
+		long int nb_geo;
+
+		nb_geo = Canonical_forms->B.size();
 
 		ost << v << " " << inc->Encoding->b << " " << sum_R << endl;
-		for (h = 0; h < nb_GEO; h++) {
+		for (h = 0; h < nb_geo /*nb_GEO*/; h++) {
 
-			inc->print_geo(ost, v, theGEO[h]);
+			//inc->print_geo(ost, v, theGEO1[h]);
+
+			object_in_projective_space *OiP;
+
+			OiP = (object_in_projective_space *) Canonical_forms->Objects[h];
+			inc->print_inc(ost, v, OiP->set);
 
 			ost << endl;
 		}
-		ost << -1 << " " << nb_GEO << endl;
+		ost << -1 << " " << Canonical_forms->B.size() << endl;
+
+		tally T;
+		long int *Ago;
+
+		Ago = NEW_lint(nb_geo);
+		for (h = 0; h < nb_geo /*nb_GEO*/; h++) {
+			Ago[h] = Canonical_forms->Ago[h];
+		}
+
+		T.init_lint(Ago, nb_geo, FALSE, 0);
+		T.print_file(ost, TRUE /* f_backwards*/);
+		ost << endl;
 	}
-#if 0
-	open_inc_file(inc, fname);
-	append_inc_file(inc);
-	fprintf(fp, "-1 %d geometries\n", nb_GEO);
-	fclose(fp);
-	fp = NULL;
-#endif
 	if (f_v) {
 		cout << "iso_type::write_inc_file done" << endl;
 	}
 }
 
-#if 0
-void iso_type::open_inc_file(incidence *inc, std::string &fname)
-{
-	int v, b, nb_X, max_r, r;
-	int i;
-
-	v = inc->Encoding->v;
-	b = inc->Encoding->b;
-	max_r = inc->Encoding->dim_n;
-	nb_X = 0;
-	for (i = 0; i < v; i++) {
-		nb_X += inc->Encoding->R[i];
-		}
-	iso_type::fname.assign(fname);
-	fp = fopen(fname.c_str(), "w");
-	fprintf(fp, "%d %d %d\n", v, b, nb_X);
-	fflush(fp);
-}
-
-void iso_type::append_inc_file(incidence *inc)
-{
-	int *pc, *theX;
-	int v, b, nb_X, max_r, r;
-	int i, j, I, a, a1;
-
-	if (nb_GEO == 0) {
-		return;
-	}
-	v = inc->Encoding->v;
-	b = inc->Encoding->b;
-	max_r = inc->Encoding->dim_n;
-	nb_X = 0;
-	for (i = 0; i < v; i++) {
-		nb_X += inc->Encoding->R[i];
-	}
-	for (I = 0; I < nb_GEO; I++) {
-		pc = theGEO[I];
-		// isot_print_GEO(pc, v, inc);
-		theX = get_theX(pc);
-		r = 0;
-		for (i = 0; i < v; i++) {
-			for (j = 0; j < inc->Encoding->R[i]; j++) {
-				a = theX[r + j];
-				a1 = i * b + a;
-				fprintf(fp, "%d ", a1);
-			}
-			r += max_r;
-		}
-		fprintf(fp, "\n");
-	}
-}
-
-void iso_type::close_inc_file(incidence *inc)
-{
-	append_inc_file(inc);
-	//flush();
-	// isot->sum_geo += isot->nb_GEO;
-	fprintf(fp, "-1 %d geometries\n", sum_nb_GEO);
-	fclose(fp);
-	fp = NIL;
-}
-#endif
 
 void iso_type::print(std::ostream &ost, int f_with_TDO, int v, incidence *inc)
 {
@@ -988,7 +1058,7 @@ void iso_type::print(std::ostream &ost, int f_with_TDO, int v, incidence *inc)
 	ost << "The isomorphism types are:" << endl;
 	for (i = 0; i < nb_GEO; i++) {
 		ost << "GEO nr. " << i << ":";
-		pc = theGEO[i];
+		pc = theGEO1[i];
 		print_GEO(pc, v, inc);
 		tdo_idx = GEO_TDO_idx[i];
 		ost << " with TDO_idx = " << tdo_idx << ":" << endl;
@@ -1014,19 +1084,27 @@ void iso_type::print_GEO(int *theY, int v, incidence *inc)
 
 void iso_type::print_status(std::ostream &ost, int f_with_flags)
 {
+#if 1
+	ost << setw(3) << v << " : " << setw(7) << Canonical_forms->B.size();
+
+#else
+
 	if (sum_nb_GEO > 0) {
 		ost << " " << setw(3) << sum_nb_GEN << " || " << setw(3) << sum_nb_TDO << " / " << setw(3) << sum_nb_GEO << " ";
 	}
+
 	ost << " " << setw(3) << nb_GEN << " || " << setw(3) << nb_TDO << " / " << setw(3) << nb_GEO << " ";
 	if (f_with_flags) {
 		ost << " ";
 		print_flags(ost);
 	}
 	if (f_generate_first) {
-		if (f_beginning_checked)
+		if (f_beginning_checked) {
 			ost << " +";
-		else
+		}
+		else {
 			ost << " -";
+		}
 	}
 	else {
 		ost << " .";
@@ -1034,6 +1112,7 @@ void iso_type::print_status(std::ostream &ost, int f_with_flags)
 	if (f_flush_line) {
 		ost << " flush";
 	}
+#endif
 }
 
 void iso_type::print_flags(std::ostream &ost)

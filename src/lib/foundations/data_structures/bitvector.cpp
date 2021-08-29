@@ -120,5 +120,14 @@ void bitvector::load(ifstream &fp)
 	fp.read((char*) data, allocated_length);
 }
 
+uint32_t bitvector::compute_hash()
+{
+	data_structures_global Data;
+	uint32_t h;
+
+	h = Data.char_vec_hash((char*) data, allocated_length);
+	return h;
+}
+
 }}
 

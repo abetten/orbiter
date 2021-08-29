@@ -1240,6 +1240,7 @@ public:
 		// t_PTS = a multiset of points
 		// t_LNS = a set of lines 
 		// t_PAC = a packing (i.e. q^2+q+1 sets of lines of size q^2+1)
+		// t_INC = incidence geometry
 
 	std::string input_fname;
 	int input_idx;
@@ -1250,7 +1251,7 @@ public:
 
 	long int *set;
 	int sz;
-		// set[sz] is used by t_PTS and t_LNS
+		// set[sz] is used by t_PTS, t_LNS, t_INC
 
 
 		// if t_INC:
