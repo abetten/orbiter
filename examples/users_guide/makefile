@@ -13507,9 +13507,44 @@ SECTION_LIMITATIONS:
 ####
 
 
+####
+# geometry builder:
+####
+
+geo_7_3:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-geometry_builder -V 7 -B 7 -TDO 3 -fuse 1 -fname_GEO 7_3 -test 3,4,5,6,7 FFFF \
+		-end
+
+
+geo_7_3_c:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define D -design  -end \
+		-with D -do \
+		-design_activity \
+			-canonical_form \
+			-input -file_of_incidence_geometries 7_3.inc 7 7 21 -end \
+			-save_ago \
+		-end
+
+geo_8_3:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-geometry_builder -V 8 -B 8 -TDO 3 -fuse 1 -fname_GEO 8_3 -test 3,4,5,6,7,8 FFFF  \
+		-end
+
+#-print_at_line 4
+
+
+geo_9_3:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-geometry_builder -V 9 -B 9 -TDO 3 -fuse 1 -fname_GEO 9_3 -test 3,4,5,6,7,8,9 FFFF  \
+		-end
+
+
+
 geo_10_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-geometry_builder -V 10 -B 10 -TDO 3 -fuse 1 -fname_GEO 10_3 -test 4,5,6,7,8,9 FFFF \
+		-geometry_builder -V 10 -B 10 -TDO 3 -fuse 1 -fname_GEO 10_3 -test 4,5,6,7,8,9,10 FFFF \
 		-end
 
 
@@ -13517,9 +13552,30 @@ geo_10_3:
 # 8/26/2021: 0 sec on Mac
 
 
+
+geo_10_3b:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-geometry_builder -V 10 -B 10 -TDO 3 -fuse 1 -fname_GEO 10_3 \
+			-test 4,5,6,7,8,9 FFFF \
+			-test 10 FTFF \
+		-end
+
+
+geo_10_3_c:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define D -design  -end \
+		-with D -do \
+		-design_activity \
+			-canonical_form \
+			-input -file_of_incidence_geometries 10_3.inc 10 10 30 -end \
+			-save_ago \
+		-end
+
+
+
 geo_11_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-geometry_builder -V 11 -B 11 -TDO 3 -fuse 1 -fname_GEO 11_3 -test 4,5,6,7,8,9,10 FFFF \
+		-geometry_builder -V 11 -B 11 -TDO 3 -fuse 1 -fname_GEO 11_3 -test 4,5,6,7,8,9,10,11 FFFF \
 		-end
 
 # 31 geos
@@ -13527,7 +13583,7 @@ geo_11_3:
 
 geo_12_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-geometry_builder -V 12 -B 12 -TDO 3 -fuse 1 -fname_GEO 12_3 -test 4,5,6,7,8,9,10,11 FFFF \
+		-geometry_builder -V 12 -B 12 -TDO 3 -fuse 1 -fname_GEO 12_3 -test 4,5,6,7,8,9,10,11,12 FFFF \
 		-end
 
 # 229 geos
@@ -13551,4 +13607,42 @@ geo_12_3_c:
 		-end
 
 
+geo_13_3:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-geometry_builder -V 13 -B 13 -TDO 3 -fuse 1 -fname_GEO 13_3 -test 4,5,6,7,8,9,10,11,12,13 FFFF \
+		-end
+
+# 2036 geos, 96, 39, 13, 12^4, 8^3, 6^16, 4^30, 3^20, 2^190, 1^1770
+# 16 sec with new version
+
+
+geo_14_3:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-geometry_builder -V 14 -B 14 -TDO 3 -fuse 1 -fname_GEO 14_3 -test 4,5,6,7,8,9,10,11,12,13,14 FFFF \
+		-end
+
+# 21399 geos, 56448, 128, 24^2, 16^3, 14^3, 12^7, 8^15, 7, 6^12, 4^91, 3^19, 2^916, 1^20328
+# 57 sec on Mac
+
+
+geo_15_3:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-geometry_builder -V 15 -B 15 -TDO 3 -fuse 1 -fname_GEO 15_3 -test 4,5,6,7,8,9,10,11,12,13,14,15 FFFF \
+		-end
+
+# 245342 geos, 8064, 720, 192^2, 128, 72, 48^6, 32, 30^2, 24^2, 20^2, 18, 16^10, 15^2, 12^11, 10^3, 8^34, 6^59, 5^5, 4^180, 3^69, 2^3709, 1^241240
+# 8 min 11 sec on Mac 
+
+geo_15_3_c:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define D -design  -end \
+		-with D -do \
+		-design_activity \
+			-canonical_form \
+			-input -file_of_incidence_geometries 15_3.inc 15 15 45 -end \
+			-save_ago \
+		-end
+
+
+# 3 min 6 sec
 
