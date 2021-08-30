@@ -592,7 +592,7 @@ void gen_geo::main2(int &nb_GEN, int &nb_GEO, int &ticks, int &tps, int verbose_
 		FALSE /* f_with_tdo */, V, &gg->inc);
 #endif
 	//f_inc_fst_time_printed = TRUE;
-	inc->print(cout, V);
+	inc->print(cout, V, V);
 
 	int i, a;
 
@@ -716,7 +716,7 @@ void gen_geo::generate_all(int verbose_level)
 
 		if (it0->Canonical_forms->B.size() % 1 == 0) {
 			cout << it0->Canonical_forms->B.size() << endl;
-			inc->print(cout, inc->Encoding->v);
+			inc->print(cout, inc->Encoding->v, inc->Encoding->v);
 		}
 
 		if (forget_ivhbar_in_last_isot) {
@@ -770,12 +770,12 @@ void gen_geo::print_I_m(int I, int m)
 	int i1;
 
 	i1 = C->i0 + m;
-	inc->print(cout, i1 + 1);
+	inc->print(cout, i1 + 1, i1 + 1);
 }
 
 void gen_geo::print(int v)
 {
-	inc->print(cout, v);
+	inc->print(cout, v, v);
 }
 
 int gen_geo::GeoFst(int verbose_level)
@@ -1143,7 +1143,7 @@ int gen_geo::GeoLineFst0(int I, int m, int verbose_level)
 		while (TRUE) {
 			if (f_v) {
 				cout << "GeoLineFst0 I=" << I << " m=" << m << " before isot_add" << endl;
-				//inc->print(cout, i1 + 1);
+				inc->print(cout, i1 + 1, i1 + 1);
 			}
 
 			it->add_geometry(inc->Encoding,
@@ -1228,14 +1228,15 @@ int gen_geo::GeoLineNxt0(int I, int m, int verbose_level)
 				i1 + 1, inc, &already_there,
 				0 /*verbose_level*/);
 
-
-
+#if 0
 			if (it->f_print_mod) {
 				if ((it->nb_GEN % it->print_mod) == 0) {
 					//inc->print(cout, i1 + 1);
 					// geo_print_pairs(gg, i1 + 1);
 				}
 			}
+#endif
+
 			if (!already_there) {
 				//inc->flush(i1);
 				break;

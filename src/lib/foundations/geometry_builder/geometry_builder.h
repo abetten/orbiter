@@ -399,9 +399,9 @@ public:
 	void print_horizontal_bar(
 		std::ostream &ost, incidence *inc, int f_print_isot, iso_type *it);
 	void print_partitioned(
-			std::ostream &ost, int v_cur, incidence *inc, int f_print_isot);
+			std::ostream &ost, int v_cur, int v_cut, incidence *inc, int f_print_isot);
 	void print_partitioned_override_theX(
-			std::ostream &ost, int v_cur, incidence *inc, int *the_X, int f_print_isot);
+			std::ostream &ost, int v_cur, int v_cut, incidence *inc, int *the_X, int f_print_isot);
 	void print_permuted(cperm *pv, cperm *qv);
 	tactical_decomposition *calc_tdo_without_vhbar(
 		int f_second_tactical_decomposition, int verbose_level);
@@ -459,8 +459,8 @@ public:
 	void print_param();
 	void free_isot();
 	void print_R(int v, cperm *p, cperm *q);
-	void print(std::ostream &ost, int v);
-	void print_override_theX(std::ostream &ost, int *theX, int v);
+	void print(std::ostream &ost, int v, int v_cut);
+	void print_override_theX(std::ostream &ost, int *theX, int v, int v_cut);
 	void stuetze_nach_zeile(int i, int tdo_flags, int verbose_level);
 	void stuetze2_nach_zeile(int i, int tdo_flags, int verbose_level);
 	void set_range(int i, int first, int len);
@@ -472,7 +472,7 @@ public:
 	void compute_blocks(long int *&Blocks, int v, long int *theInc);
 	int compute_k(int v, long int *theInc);
 	int is_block_tactical(int v, long int *theInc);
-	void geo_to_inc(int v, int *theGEO, long int *theInc);
+	void geo_to_inc(int v, int *theGEO, long int *theInc, int nb_flags);
 
 
 };

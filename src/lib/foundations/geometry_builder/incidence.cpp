@@ -225,15 +225,15 @@ void incidence::print_R(int v, cperm *p, cperm *q)
 
 
 
-void incidence::print(std::ostream &ost, int v)
+void incidence::print(std::ostream &ost, int v, int v_cut)
 {
-	Encoding->print_partitioned(ost, v, this, TRUE /* f_print_isot */);
+	Encoding->print_partitioned(ost, v, v_cut, this, TRUE /* f_print_isot */);
 }
 
 
-void incidence::print_override_theX(std::ostream &ost, int *theX, int v)
+void incidence::print_override_theX(std::ostream &ost, int *theX, int v, int v_cut)
 {
-	Encoding->print_partitioned_override_theX(ost, v, this, theX, TRUE /* f_print_isot */);
+	Encoding->print_partitioned_override_theX(ost, v, v_cut, this, theX, TRUE /* f_print_isot */);
 }
 
 
@@ -495,7 +495,7 @@ int incidence::is_block_tactical(int v, long int *theInc)
 }
 
 
-void incidence::geo_to_inc(int v, int *theGEO, long int *theInc)
+void incidence::geo_to_inc(int v, int *theGEO, long int *theInc, int nb_flags)
 {
 	int i, j, s, a;
 
@@ -505,6 +505,10 @@ void incidence::geo_to_inc(int v, int *theGEO, long int *theInc)
 			a = theGEO[s];
 			theInc[s] = i * Encoding->b + a;
 		}
+	}
+	if (s != nb_flags) {
+		cout << "incidence::geo_to_inc s != nb_flags" << endl;
+		exit(1);
 	}
 
 }

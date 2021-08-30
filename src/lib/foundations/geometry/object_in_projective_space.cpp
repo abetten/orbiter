@@ -946,6 +946,13 @@ void object_in_projective_space::encode_incidence_geometry(
 
 	for (i = 0; i < sz; i++) {
 		a = set[i];
+		if (a >= nb_rows * nb_cols) {
+			cout << "object_in_projective_space::encode_incidence_geometry a >= nb_rows* nb_cols" << endl;
+			cout << "nb_rows = " << nb_rows << endl;
+			cout << "nb_cols = " << nb_cols << endl;
+			cout << "a = " << a << endl;
+			exit(1);
+		}
 		Enc->Incma[a] = 1;
 	}
 

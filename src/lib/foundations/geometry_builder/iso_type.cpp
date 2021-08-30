@@ -238,8 +238,24 @@ void iso_type::add_geometry(
 
 	}
 
+
+	static long int count = 0;
+
+	if (((1L << 18) - 1 & count) == 0) {
+		cout << "iso_type::add_geometry v=" << v << " count = " << count << endl;
+
+		iso_type *it;
+		int V = inc->gg->GB->V;
+
+		it = inc->iso_type_at_line[V - 1];
+
+		inc->print(cout, V, v);
+
+	}
+
+	count++;
+
 #if 0
-	static int count = 0;
 
 #if 0
 	if (v == 4) {
@@ -383,9 +399,15 @@ l_exit:
 #else
 	int f_new_object;
 
+	if (f_v) {
+		cout << "iso_type::add_geometry v=" << v << " before find_and_add_geo" << endl;
+	}
 	find_and_add_geo(
 		v, inc,
-		inc->Encoding->theX, f_new_object, 0 /*verbose_level*/);
+		inc->Encoding->theX, f_new_object, verbose_level);
+	if (f_v) {
+		cout << "iso_type::add_geometry v=" << v << " after find_and_add_geo" << endl;
+	}
 
 	if (f_new_object) {
 		*already_there = FALSE;
@@ -628,11 +650,11 @@ void iso_type::find_and_add_geo(
 	long int *theInc;
 	int nb_flags;
 
-	nb_flags = v * inc->Encoding->dim_n;
+	nb_flags = sum_R;
 
 	theInc = NEW_lint(nb_flags);
 
-	inc->geo_to_inc(v, theY, theInc);
+	inc->geo_to_inc(v, theY, theInc, nb_flags);
 
 	OiP = NEW_OBJECT(object_in_projective_space);
 
@@ -990,7 +1012,7 @@ void iso_type::print_geos(int verbose_level)
 		for (h = 0; h < nb_GEO; h++) {
 
 			cout << h << " / " << nb_GEO << ":" << endl;
-			inc->print_override_theX(cout, theGEO1[h], v);
+			inc->print_override_theX(cout, theGEO1[h], v, v);
 
 			inc->print_geo(cout, v, theGEO1[h]);
 			cout << endl;
@@ -1137,7 +1159,7 @@ void iso_type::print_GEO(int *theY, int v, incidence *inc)
 	//int aut_group_order;
 
 	//aut_group_order = get_aut_group_order(pc);
-	inc->print_override_theX(cout, theY, v);
+	inc->print_override_theX(cout, theY, v, v);
 	//cout << "automorphism group order = " << aut_group_order << endl;
 }
 
@@ -1202,7 +1224,7 @@ void iso_type::print_flags(std::ostream &ost)
 void iso_type::print_geometry(inc_encoding *Encoding, int v, incidence *inc)
 {
 	cout << "geo" << endl;
-	Encoding->print_partitioned(cout, v, inc, FALSE /* f_print_isot */);
+	Encoding->print_partitioned(cout, v, v, inc, FALSE /* f_print_isot */);
 	cout << "end geo" << endl;
 }
 
