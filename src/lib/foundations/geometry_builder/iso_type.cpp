@@ -1049,6 +1049,65 @@ void iso_type::write_inc_file(std::string &fname, int verbose_level)
 	}
 }
 
+void iso_type::write_blocks_file(std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "iso_type::write_blocks_file" << endl;
+	}
+	{
+		ofstream ost(fname);
+		int h, k;
+		long int nb_geo;
+
+
+
+		nb_geo = Canonical_forms->B.size();
+
+
+		if (nb_geo) {
+			object_in_projective_space *OiP;
+
+			OiP = (object_in_projective_space *) Canonical_forms->Objects[0];
+
+			k = inc->compute_k(v, OiP->set);
+
+
+
+
+			ost << v << " " << inc->Encoding->b << " " << k << endl;
+			for (h = 0; h < nb_geo /*nb_GEO*/; h++) {
+
+				//inc->print_geo(ost, v, theGEO1[h]);
+
+				object_in_projective_space *OiP;
+
+				OiP = (object_in_projective_space *) Canonical_forms->Objects[h];
+				inc->print_blocks(ost, v, OiP->set);
+
+				ost << endl;
+			}
+		}
+		ost << -1 << " " << Canonical_forms->B.size() << endl;
+
+		tally T;
+		long int *Ago;
+
+		Ago = NEW_lint(nb_geo);
+		for (h = 0; h < nb_geo /*nb_GEO*/; h++) {
+			Ago[h] = Canonical_forms->Ago[h];
+		}
+
+		T.init_lint(Ago, nb_geo, FALSE, 0);
+		T.print_file(ost, TRUE /* f_backwards*/);
+		ost << endl;
+	}
+	if (f_v) {
+		cout << "iso_type::write_blocks_file done" << endl;
+	}
+}
+
 
 void iso_type::print(std::ostream &ost, int f_with_TDO, int v, incidence *inc)
 {

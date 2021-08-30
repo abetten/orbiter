@@ -155,16 +155,18 @@ public:
 		int f_do_aut_group_in_iso_type_without_vhbars,
 		int gen_print_intervall,
 		int verbose_level);
-	void init_tdo(int fuse_idx, int tdo_line, int v, int *b, int *r, int verbose_level);
+	void TDO_init(int *v, int *b, int *theTDO, int verbose_level);
+	void init_tdo_line(int fuse_idx, int tdo_line, int v, int *b, int *r, int verbose_level);
 	void print_conf();
 	void init_bars(int verbose_level);
 	void init_fuse(int verbose_level);
 	void init_k();
 	void conf_init_last_non_zero_flag();
-	void TDO_init(int *v, int *b, int *theTDO, int verbose_level);
 	void print_pairs(int line);
 	void main2(int &nb_GEN, int &nb_GEO, int &ticks, int &tps, int verbose_level);
 	void generate_all(int verbose_level);
+	void print_I_m(int I, int m);
+	void print(int v);
 	int GeoFst(int verbose_level);
 	int GeoNxt(int verbose_level);
 	int GeoRowFst(int I, int verbose_level);
@@ -466,6 +468,10 @@ public:
 	void set_flush_line(int i);
 	void print_geo(std::ostream &ost, int v, int *theGEO);
 	void print_inc(std::ostream &ost, int v, long int *theInc);
+	void print_blocks(std::ostream &ost, int v, long int *theInc);
+	void compute_blocks(long int *&Blocks, int v, long int *theInc);
+	int compute_k(int v, long int *theInc);
+	int is_block_tactical(int v, long int *theInc);
 	void geo_to_inc(int v, int *theGEO, long int *theInc);
 
 
@@ -688,6 +694,7 @@ public:
 	void geo_free(int *theGEO);
 	void print_geos(int verbose_level);
 	void write_inc_file(std::string &fname, int verbose_level);
+	void write_blocks_file(std::string &fname, int verbose_level);
 	void print(std::ostream &ost, int f_with_TDO, int v, incidence *inc);
 	void print_GEO(int *pc, int v, incidence *inc);
 	void print_status(std::ostream &ost, int f_with_flags);

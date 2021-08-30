@@ -162,32 +162,95 @@ void gen_geo::init(geometry_builder *GB,
 	}
 
 }
-void gen_geo::init_tdo(int fuse_idx, int tdo_line, int v, int *b, int *r, int verbose_level)
+
+void gen_geo::TDO_init(int *v, int *b, int *theTDO, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "gen_geo::TDO_init" << endl;
+	}
+	int I, fuse_idx, f, l;
+
+	Conf = NEW_OBJECTS(gen_geo_conf, GB->v_len * GB->b_len);
+
+
+	if (f_v) {
+		cout << "gen_geo::TDO_init before loops" << endl;
+	}
+	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
+		f = Fuse_first[fuse_idx];
+		l = Fuse_len[fuse_idx];
+		if (f_v) {
+			cout << "gen_geo::TDO_init fuse_idx=" << fuse_idx << " f=" << f << " l=" << l << endl;
+		}
+		for (I = f; I < f + l; I++) {
+			if (f_v) {
+				cout << "gen_geo::TDO_init fuse_idx=" << fuse_idx << " f=" << f << " l=" << l
+						<< " I=" << I << " v[I]=" << v[I] << endl;
+			}
+			init_tdo_line(fuse_idx,
+					I /* tdo_line */, v[I] /* v */, b,
+					theTDO + I * GB->b_len /* r */,
+					verbose_level);
+		}
+	}
+	if (f_v) {
+		cout << "gen_geo::TDO_init after loops" << endl;
+	}
+
+
+	print_conf();
+
+	inc->print_param();
+
+
+
+	if (f_v) {
+		cout << "gen_geo::TDO_init before init_k" << endl;
+	}
+	init_k();
+	if (f_v) {
+		cout << "gen_geo::TDO_init after init_k" << endl;
+	}
+	if (f_v) {
+		cout << "gen_geo::TDO_init before conf_init_last_non_zero_flag" << endl;
+	}
+	conf_init_last_non_zero_flag();
+	if (f_v) {
+		cout << "gen_geo::TDO_init after conf_init_last_non_zero_flag" << endl;
+	}
+	if (f_v) {
+		cout << "gen_geo::TDO_init done" << endl;
+	}
+}
+
+
+void gen_geo::init_tdo_line(int fuse_idx, int tdo_line, int v, int *b, int *r, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i0, j, rr;
 
 	if (f_v) {
-		cout << "gen_geo::init_tdo tdo_line=" << tdo_line << endl;
+		cout << "gen_geo::init_tdo_line tdo_line=" << tdo_line << endl;
 		cout << "r=";
 		Orbiter->Int_vec.print(cout, r, GB->b_len);
 		cout << endl;
 	}
 	if (tdo_line >= GB->v_len) {
-		cout << "gen_geo::init_tdo tdo_line >= GB->v_len" << endl;
+		cout << "gen_geo::init_tdo_line tdo_line >= GB->v_len" << endl;
 		exit(1);
 	}
 
 
-	Conf = NEW_OBJECTS(gen_geo_conf, GB->v_len * GB->b_len);
 
-	int V, B;
+	//int V, B;
 
-	V = 0;
+	//V = 0;
 	for (j = 0; j < GB->b_len; j++) {
 
 		if (f_v) {
-			cout << "gen_geo::init_tdo tdo_line=" << tdo_line << " j=" << j << endl;
+			cout << "gen_geo::init_tdo_line tdo_line=" << tdo_line << " j=" << j << endl;
 		}
 
 		Conf[tdo_line * GB->b_len + j].fuse_idx = fuse_idx;
@@ -227,22 +290,22 @@ void gen_geo::init_tdo(int fuse_idx, int tdo_line, int v, int *b, int *r, int ve
 			R[i] = rr;
 		}
 #endif
-		V += v;
+		//V += v;
 	}
+
+#if 0
 	if (f_v) {
-		cout << "gen_geo::init_tdo computing B" << endl;
+		cout << "gen_geo::init_tdo_line computing B" << endl;
 	}
 	inc->Encoding->b = 0;
 	for (j = 0; j < GB->b_len; j++) {
 		inc->Encoding->b += b[j];
 	}
 	B = inc->Encoding->b;
-
-
-	inc->print_param();
+#endif
 
 	if (f_v) {
-		cout << "gen_geo::init_tdo done" << endl;
+		cout << "gen_geo::init_tdo_line done" << endl;
 	}
 }
 
@@ -434,50 +497,6 @@ void gen_geo::conf_init_last_non_zero_flag()
 	cout << endl;
 }
 
-void gen_geo::TDO_init(int *v, int *b, int *theTDO, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "gen_geo::TDO_init" << endl;
-	}
-	int I, fuse_idx, f, l;
-
-	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-		f = Fuse_first[fuse_idx];
-		l = Fuse_len[fuse_idx];
-		if (f_v) {
-			cout << "gen_geo::TDO_init fuse_idx=" << fuse_idx << " f=" << f << " l=" << l << endl;
-		}
-		for (I = f; I < f + l; I++) {
-			if (f_v) {
-				cout << "gen_geo::TDO_init fuse_idx=" << fuse_idx << " f=" << f << " l=" << l
-						<< " I=" << I << " v[I]=" << v[I] << endl;
-			}
-			init_tdo(fuse_idx,
-					I /* tdo_line */, v[I] /* v */, b,
-					theTDO + I * GB->b_len /* r */,
-					verbose_level);
-		}
-	}
-	if (f_v) {
-		cout << "gen_geo::TDO_init before init_k" << endl;
-	}
-	init_k();
-	if (f_v) {
-		cout << "gen_geo::TDO_init after init_k" << endl;
-	}
-	if (f_v) {
-		cout << "gen_geo::TDO_init before conf_init_last_non_zero_flag" << endl;
-	}
-	conf_init_last_non_zero_flag();
-	if (f_v) {
-		cout << "gen_geo::TDO_init after conf_init_last_non_zero_flag" << endl;
-	}
-	if (f_v) {
-		cout << "gen_geo::TDO_init done" << endl;
-	}
-}
 
 void gen_geo::print_pairs(int line)
 {
@@ -531,6 +550,27 @@ void gen_geo::main2(int &nb_GEN, int &nb_GEO, int &ticks, int &tps, int verbose_
 		file_io Fio;
 
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+	it = inc->iso_type_at_line[V - 1];
+
+	if (it->Canonical_forms->B.size()) {
+
+		object_in_projective_space *OiP;
+
+		OiP = (object_in_projective_space *) it->Canonical_forms->Objects[0];
+
+		if (inc->is_block_tactical(V, OiP->set)) {
+
+			string fname;
+			fname.assign(inc_file_name);
+			fname.append(".blocks");
+			it->write_blocks_file(fname, verbose_level);
+
+			file_io Fio;
+
+			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		}
 	}
 
 
@@ -674,7 +714,7 @@ void gen_geo::generate_all(int verbose_level)
 			cout << "gen_geo::generate_all after isot_add for it0" << endl;
 		}
 
-		if (it0->Canonical_forms->B.size() % 1024 == 0) {
+		if (it0->Canonical_forms->B.size() % 1 == 0) {
 			cout << it0->Canonical_forms->B.size() << endl;
 			inc->print(cout, inc->Encoding->v);
 		}
@@ -722,6 +762,20 @@ l_exit:
 	if (f_v) {
 		cout << "gen_geo::generate_all done" << endl;
 	}
+}
+
+void gen_geo::print_I_m(int I, int m)
+{
+	gen_geo_conf *C = Conf + I * GB->b_len;
+	int i1;
+
+	i1 = C->i0 + m;
+	inc->print(cout, i1 + 1);
+}
+
+void gen_geo::print(int v)
+{
+	inc->print(cout, v);
 }
 
 int gen_geo::GeoFst(int verbose_level)
