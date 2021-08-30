@@ -396,7 +396,7 @@ void geometry_builder::print_tdo()
 	int i, j;
 
 	printf("   | ");
-	for (j = 0; j < v_len; j++) {
+	for (j = 0; j < b_len; j++) {
 		printf("%2d ", b[j]);
 	}
 	printf("\n");
