@@ -178,7 +178,7 @@ void inc_encoding::print_partitioned_override_theX(
 				break;
 			}
 
-			if (v >= v_cut || r >= R[i]) {
+			if (i >= v_cut || r >= R[i]) {
 				f_kreuz = FALSE;
 			}
 			else if (the_X[r] == j) {

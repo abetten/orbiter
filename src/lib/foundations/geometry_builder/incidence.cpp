@@ -502,12 +502,30 @@ void incidence::geo_to_inc(int v, int *theGEO, long int *theInc, int nb_flags)
 	s = 0;
 	for (i = 0; i < v; i++) {
 		for (j = 0; j < Encoding->R[i]; j++, s++) {
-			a = theGEO[s];
+			a = theGEO[i * Encoding->dim_n + j];
 			theInc[s] = i * Encoding->b + a;
 		}
 	}
 	if (s != nb_flags) {
 		cout << "incidence::geo_to_inc s != nb_flags" << endl;
+		exit(1);
+	}
+
+}
+
+void incidence::inc_to_geo(int v, long int *theInc, int *theGEO, int nb_flags)
+{
+	int i, j, s, a;
+
+	s = 0;
+	for (i = 0; i < v; i++) {
+		for (j = 0; j < Encoding->R[i]; j++, s++) {
+			a = theInc[s] - i * Encoding->b;
+			theGEO[i * Encoding->dim_n + j] = a;
+		}
+	}
+	if (s != nb_flags) {
+		cout << "incidence::inc_to_geo s != nb_flags" << endl;
 		exit(1);
 	}
 
