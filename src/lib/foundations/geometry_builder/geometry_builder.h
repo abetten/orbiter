@@ -473,6 +473,7 @@ public:
 	int compute_k(int v, long int *theInc);
 	int is_block_tactical(int v, long int *theInc);
 	void geo_to_inc(int v, int *theGEO, long int *theInc, int nb_flags);
+	void inc_to_geo(int v, long int *theInc, int *theGEO, int nb_flags);
 
 
 };

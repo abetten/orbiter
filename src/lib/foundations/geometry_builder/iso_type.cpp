@@ -1007,18 +1007,49 @@ void iso_type::print_geos(int verbose_level)
 	}
 	{
 		int h;
+		long int nb_geo;
+
+		nb_geo = Canonical_forms->B.size();
 
 		cout << v << " " << inc->Encoding->b << " " << sum_R << endl;
-		for (h = 0; h < nb_GEO; h++) {
+		for (h = 0; h < nb_geo; h++) {
 
-			cout << h << " / " << nb_GEO << ":" << endl;
+			cout << h << " / " << nb_geo << ":" << endl;
+#if 0
 			inc->print_override_theX(cout, theGEO1[h], v, v);
 
 			inc->print_geo(cout, v, theGEO1[h]);
 			cout << endl;
+#else
+			object_in_projective_space *OiP;
 
+			OiP = (object_in_projective_space *) Canonical_forms->Objects[h];
+
+
+			inc->print_inc(cout, v, OiP->set);
+
+			inc->inc_to_geo(v, OiP->set, inc->Encoding->theX, sum_R);
+
+
+			inc->print(cout, inc->Encoding->v, v);
+
+			cout << endl;
+#endif
 
 		}
+		cout << -1 << " " << Canonical_forms->B.size() << endl;
+
+		tally T;
+		long int *Ago;
+
+		Ago = NEW_lint(nb_geo);
+		for (h = 0; h < nb_geo /*nb_GEO*/; h++) {
+			Ago[h] = Canonical_forms->Ago[h];
+		}
+
+		T.init_lint(Ago, nb_geo, FALSE, 0);
+		T.print_file(cout, TRUE /* f_backwards*/);
+		cout << endl;
 	}
 	if (f_v) {
 		cout << "iso_type::print_geos done" << endl;
