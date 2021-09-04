@@ -234,6 +234,7 @@ int layered_graph_draw_options::read_arguments(
 		else {
 			cout << "layered_graph_draw_options::read_arguments "
 					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 	} // next i
 	if (f_v) {

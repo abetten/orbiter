@@ -556,6 +556,18 @@ void gen_geo::main2(int &nb_GEN, int &nb_GEO, int &ticks, int &tps, int verbose_
 
 	if (it->Canonical_forms->B.size()) {
 
+		{
+			string fname;
+			fname.assign(inc_file_name);
+			fname.append(".blocks_long");
+			it->write_blocks_file_long(fname, verbose_level);
+
+			file_io Fio;
+
+			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+		}
+
 		object_in_projective_space *OiP;
 
 		OiP = (object_in_projective_space *) it->Canonical_forms->Objects[0];
@@ -743,8 +755,6 @@ void gen_geo::generate_all(int verbose_level)
 			if (!already_there) {
 				//save_theX(inc->iso_type_no_vhbars->fp);
 			}
-			// if (GEO_fp)
-			// 	geo_save_into_file(gg, GEO_fp);
 			inc->nb_i_vbar = s_nb_i_vbar;
 			inc->nb_i_hbar = s_nb_i_hbar;
 		}

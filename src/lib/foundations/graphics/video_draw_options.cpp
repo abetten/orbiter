@@ -161,7 +161,7 @@ int video_draw_options::read_arguments(
 	if (f_v) {
 		cout << "video_draw_options::read_arguments" << endl;
 	}
-	for (i = 1; i < argc; i++) {
+	for (i = 0; i < argc; i++) {
 		if (stringcmp(argv[i], "-v") == 0) {
 			verbose_level = strtoi(argv[++i]);
 			if (f_v) {
@@ -519,14 +519,18 @@ int video_draw_options::read_arguments(
 			if (f_v) {
 				cout << "-end" << endl;
 			}
-			return i;
+			break;
 		}
 		else {
 			cout << "video_draw_options::read_arguments "
 					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 	}
-	return 0;
+	if (f_v) {
+		cout << "video_draw_options::read_arguments done" << endl;
+	}
+	return i + 1;
 }
 
 
