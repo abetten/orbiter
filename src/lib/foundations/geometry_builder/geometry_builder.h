@@ -469,7 +469,8 @@ public:
 	void print_geo(std::ostream &ost, int v, int *theGEO);
 	void print_inc(std::ostream &ost, int v, long int *theInc);
 	void print_blocks(std::ostream &ost, int v, long int *theInc);
-	void compute_blocks(long int *&Blocks, int v, long int *theInc);
+	void compute_blocks(long int *&Blocks, int *&K, int v, long int *theInc);
+	void compute_blocks_ranked(long int *&Blocks, int v, long int *theInc);
 	int compute_k(int v, long int *theInc);
 	int is_block_tactical(int v, long int *theInc);
 	void geo_to_inc(int v, int *theGEO, long int *theInc, int nb_flags);
@@ -696,6 +697,7 @@ public:
 	void print_geos(int verbose_level);
 	void write_inc_file(std::string &fname, int verbose_level);
 	void write_blocks_file(std::string &fname, int verbose_level);
+	void write_blocks_file_long(std::string &fname, int verbose_level);
 	void print(std::ostream &ost, int f_with_TDO, int v, incidence *inc);
 	void print_GEO(int *pc, int v, incidence *inc);
 	void print_status(std::ostream &ost, int f_with_flags);

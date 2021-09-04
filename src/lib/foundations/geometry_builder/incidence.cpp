@@ -195,12 +195,12 @@ void incidence::free_isot()
 
 	for (i = 0; i < Encoding->v; i++) {
 		if (iso_type_at_line[i]) {
-			delete iso_type_at_line[i];
+			FREE_OBJECT(iso_type_at_line[i]);
 		}
 		iso_type_at_line[i] = NULL;
 	}
 	if (iso_type_no_vhbars) {
-		delete iso_type_no_vhbars;
+		FREE_OBJECT(iso_type_no_vhbars);
 	}
 	iso_type_no_vhbars = NULL;
 }
@@ -246,7 +246,7 @@ void incidence::stuetze_nach_zeile(int i, int tdo_flags, int verbose_level)
 		cout << "incidence::stuetze_nach_zeile line = " << i << endl;
 	}
 	if (i > 0 && i <= Encoding->v) {
-		iso_type_at_line[i - 1] = new iso_type;
+		iso_type_at_line[i - 1] = NEW_OBJECT(iso_type);
 		iso_type_at_line[i - 1]->init(i, this, tdo_flags, verbose_level);
 	}
 	else {
@@ -265,7 +265,7 @@ void incidence::stuetze2_nach_zeile(int i, int tdo_flags, int verbose_level)
 		cout << "incidence::stuetze2_nach_zeile line = " << i << endl;
 	}
 	if (i > 0 && i < Encoding->v) {
-		iso_type_at_line[i - 1] = new iso_type;
+		iso_type_at_line[i - 1] = NEW_OBJECT(iso_type);
 		iso_type_at_line[i - 1]->init(i, this, tdo_flags, verbose_level);
 		iso_type_at_line[i - 1]->second();
 	}
@@ -347,7 +347,7 @@ void incidence::print_blocks(std::ostream &ost, int v, long int *theInc)
 	long int *Blocks;
 	int i, b;
 
-	compute_blocks(Blocks, v, theInc);
+	compute_blocks_ranked(Blocks, v, theInc);
 
 	b = Encoding->b;
 
@@ -357,7 +357,48 @@ void incidence::print_blocks(std::ostream &ost, int v, long int *theInc)
 	FREE_lint(Blocks);
 }
 
-void incidence::compute_blocks(long int *&Blocks, int v, long int *theInc)
+void incidence::compute_blocks(long int *&Blocks, int *&K, int v, long int *theInc)
+{
+	int i, j, s, b, h;
+	long int a;
+	int *Incma;
+	combinatorics_domain Combi;
+
+	b = Encoding->b;
+
+	Incma = NEW_int(v * b);
+
+	K = NEW_int(b);
+	for (i = 0; i < b; i++) {
+		K[i] = 0;
+	}
+
+	Blocks = NEW_lint(b * v);
+	for (i = 0; i < v * b; i++) {
+		Incma[i] = 0;
+	}
+
+	s = 0;
+	for (i = 0; i < v; i++) {
+		for (j = 0; j < Encoding->R[i]; j++, s++) {
+			a = theInc[s];
+			Incma[a] = 1;
+		}
+	}
+	for (j = 0; j < b; j++) {
+		h = 0;
+		for (i = 0; i < v; i++) {
+			if (Incma[i * b + j]) {
+				Blocks[j * v + h++] = i;
+			}
+		}
+		K[j] = h;
+	}
+	FREE_int(Incma);
+}
+
+
+void incidence::compute_blocks_ranked(long int *&Blocks, int v, long int *theInc)
 {
 	int i, j, s, b, k, h;
 	long int a;
@@ -395,7 +436,7 @@ void incidence::compute_blocks(long int *&Blocks, int v, long int *theInc)
 		}
 		else {
 			if (k != h) {
-				cout << "incidence::compute_blocks not column tactical" << endl;
+				cout << "incidence::compute_blocks_ranked not column tactical" << endl;
 				exit(1);
 			}
 		}

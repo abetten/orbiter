@@ -1161,6 +1161,104 @@ void iso_type::write_blocks_file(std::string &fname, int verbose_level)
 	}
 }
 
+void iso_type::write_blocks_file_long(std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "iso_type::write_blocks_file_long" << endl;
+	}
+	{
+		ofstream ost(fname);
+		int h;
+		long int nb_geo;
+
+
+
+		nb_geo = Canonical_forms->B.size();
+
+
+		if (nb_geo) {
+
+			long int *theInc;
+			long int *Blocks;
+			int b;
+
+			b = inc->Encoding->b;
+
+
+
+
+
+
+
+
+			ost << v << " " << b << endl;
+			for (h = 0; h < nb_geo /*nb_GEO*/; h++) {
+
+				int *K;
+				int i, j, a;
+
+				object_in_projective_space *OiP;
+
+				OiP = (object_in_projective_space *) Canonical_forms->Objects[0];
+
+				theInc = OiP->set;
+
+				inc->compute_blocks(Blocks, K, v, theInc);
+
+				ost << "geometry " << h << " : " << endl;
+
+				for (i = 0; i < b; i++) {
+					//ost << K[i] << " ";
+					for (j = 0; j < K[i]; j++) {
+						a = Blocks[i * v + j];
+
+						if (v == 18 && b == 39) {
+							if (i >= 3) {
+								if (a >= 12) {
+									a -= 12;
+								}
+								else if (a >= 6) {
+									a -= 6;
+								}
+							}
+							a++;
+						}
+						ost << a;
+						if (j < K[i] - 1) {
+							ost << ", ";
+						}
+					}
+					ost << "\\\\" << endl;
+				}
+
+
+				FREE_int(K);
+				FREE_lint(Blocks);
+
+			}
+		}
+		ost << -1 << " " << Canonical_forms->B.size() << endl;
+
+		tally T;
+		long int *Ago;
+
+		Ago = NEW_lint(nb_geo);
+		for (h = 0; h < nb_geo /*nb_GEO*/; h++) {
+			Ago[h] = Canonical_forms->Ago[h];
+		}
+
+		T.init_lint(Ago, nb_geo, FALSE, 0);
+		T.print_file(ost, TRUE /* f_backwards*/);
+		ost << endl;
+	}
+	if (f_v) {
+		cout << "iso_type::write_blocks_file_long done" << endl;
+	}
+}
+
+
 
 void iso_type::print(std::ostream &ost, int f_with_TDO, int v, incidence *inc)
 {

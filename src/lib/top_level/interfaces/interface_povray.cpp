@@ -90,7 +90,7 @@ void interface_povray::read_arguments(int argc, std::string *argv, int &i, int v
 		for (; i < argc; i++) {
 			if (stringcmp(argv[i], "-video_options") == 0) {
 				Opt = NEW_OBJECT(video_draw_options);
-				i += Opt->read_arguments(argc - (i - 1),
+				i += Opt->read_arguments(argc - (i + 1),
 					argv + i + 1, verbose_level);
 
 				if (f_v) {

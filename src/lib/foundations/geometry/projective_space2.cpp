@@ -1497,6 +1497,18 @@ void projective_space::cheat_sheet_points(
 			f << "$\\\\" << endl;
 		}
 		f << "\\end{multicols}" << endl;
+
+		f << "\\begin{multicols}{2}" << endl;
+		for (i = 0; i < N_points; i++) {
+			F->PG_element_unrank_modified(v, 1, d, i);
+			f << "$P_{" << i << "}=";
+			Orbiter->Int_vec.print(f, v, d);
+			//f << "=";
+			//F->int_vec_print_elements_exponential(f, v, d, symbol_for_print);
+			f << "$\\\\" << endl;
+		}
+		f << "\\end{multicols}" << endl;
+
 	}
 
 	if (F->has_quadratic_subfield()) {

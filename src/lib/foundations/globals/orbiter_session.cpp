@@ -34,8 +34,8 @@ orbiter_session::orbiter_session()
 
 	t0 = 0;
 
-	f_draw_options = FALSE;
-	draw_options = NULL;
+	f_draw_options = TRUE;
+	draw_options = NEW_OBJECT(layered_graph_draw_options);
 
 
 	f_list_arguments = FALSE;

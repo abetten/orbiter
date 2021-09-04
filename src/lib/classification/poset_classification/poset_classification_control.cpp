@@ -30,8 +30,8 @@ poset_classification_control::poset_classification_control()
 	f_depth = FALSE;
 	depth = 0;
 
-	f_draw_options = FALSE;
-	draw_options = NULL;
+	f_draw_options = TRUE;
+	draw_options = NEW_OBJECT(layered_graph_draw_options);
 
 	verbose_level = 0;
 	verbose_level_group_theory = 0;

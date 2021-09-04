@@ -288,8 +288,6 @@ public:
 
 	surface_with_action *Surf_A;
 
-	//action *A; // PGL(3,q)
-	//vector_ge *nice_gens;
 
 
 	six_arcs_not_on_a_conic *Six_arcs;
@@ -307,7 +305,7 @@ public:
 	//[Six_arcs->nb_arcs_not_on_conic * Six_arcs->nb_arcs_not_on_conic]
 	int *f_deleted; // [Six_arcs->nb_arcs_not_on_conic]
 
-	int *Decomp;
+	int *Decomp; // [Six_arcs->nb_arcs_not_on_conic * nb_surfaces]
 
 	surface_classify_using_arc();
 	~surface_classify_using_arc();
@@ -415,7 +413,7 @@ public:
 	int *relative_order_table; // [nb_coset_reps]
 
 	int f_has_F2;
-	int *F2;
+	int *F2; // F2[i] = Seventytwo[i].f2;
 	tally *tally_F2;
 
 
