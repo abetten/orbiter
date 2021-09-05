@@ -71,58 +71,24 @@ void finite_field::print_detailed(int f_add_mult_table)
 		print_minimum_polynomial(p, polynomial);
 		cout << endl;
 		//cout << " = " << poly << endl;
-		print_tables_extension_field(polynomial);
+
+		if (!f_has_table) {
+			cout << "finite_field::print_detailed !f_has_table" << endl;
+			exit(1);
+		}
+		T->print_tables_extension_field(polynomial);
 	}
 	if (f_add_mult_table) {
-		print_add_mult_tables(cout);
-		print_add_mult_tables_in_C(label);
+		if (!f_has_table) {
+			cout << "finite_field::print_detailed !f_has_table" << endl;
+			exit(1);
+		}
+		T->print_add_mult_tables(cout);
+		T->print_add_mult_tables_in_C(label);
 	}
 }
 
 
-void finite_field::print_add_mult_tables(std::ostream &ost)
-{
-	ost << "addition table:" << endl;
-	Orbiter->Int_vec.print_integer_matrix_width(ost, add_table, q, q, q, log10_of_q + 1);
-	ost << endl;
-
-
-	ost << "multiplication table:" << endl;
-	Orbiter->Int_vec.print_integer_matrix_width(ost, mult_table, q, q, q, log10_of_q + 1);
-	ost << endl;
-}
-
-void finite_field::print_add_mult_tables_in_C(std::string &fname_base)
-{
-
-	string fname;
-
-	fname.assign(fname_base);
-	fname.append(".cpp");
-
-	{
-		ofstream ost(fname);
-
-		ost << "//addition, multiplication, inversion and negation table:" << endl;
-		ost << "int add_table[] = ";
-		Orbiter->Int_vec.print_integer_matrix_in_C_source(ost, add_table, q, q);
-		ost << endl;
-
-
-		ost << "int mult_table[] = ";
-		Orbiter->Int_vec.print_integer_matrix_in_C_source(ost, mult_table, q, q);
-		ost << endl;
-
-		ost << "int inv_table[] = ";
-		Orbiter->Int_vec.print_integer_matrix_in_C_source(ost, inv_table, 1, q);
-		ost << endl;
-
-		ost << "int neg_table[] = ";
-		Orbiter->Int_vec.print_integer_matrix_in_C_source(ost, negate_table, 1, q);
-		ost << endl;
-	}
-
-}
 
 
 void finite_field::print_tables()
@@ -153,87 +119,6 @@ void finite_field::print_tables()
 	}
 }
 
-void finite_field::print_tables_extension_field(const char *poly)
-{
-	int i, a, b, c, l;
-	int verbose_level = 0;
-
-	finite_field GFp;
-	GFp.finite_field_init(p, 0);
-
-	unipoly_domain FX(&GFp);
-	unipoly_object m;
-
-
-
-	FX.create_object_by_rank_string(m, poly, verbose_level);
-
-	unipoly_domain Fq(&GFp, m, 0 /* verbose_level */);
-	unipoly_object elt;
-
-
-
-	cout << "i : inverse(i) : frobenius_power(i, 1) : alpha_power(i) : "
-			"log_alpha(i) : elt[i]" << endl;
-	for (i = 0; i < q; i++) {
-		if (i)
-			a = inverse(i);
-		else
-			a = -1;
-		if (i)
-			l = log_alpha(i);
-		else
-			l = -1;
-		b = frobenius_power(i, 1);
-		c = alpha_power(i);
-		cout << setw(4) << i << " : "
-			<< setw(4) << a << " : "
-			<< setw(4) << b << " : "
-			<< setw(4) << c << " : "
-			<< setw(4) << l << " : ";
-		Fq.create_object_by_rank(elt, i, __FILE__, __LINE__, verbose_level);
-		Fq.print_object(elt, cout);
-		cout << endl;
-		Fq.delete_object(elt);
-
-		}
-	// FX.delete_object(m);  // this had to go, Anton Betten, Oct 30, 2011
-
-	//cout << "print_tables finished" << endl;
-#if 0
-	cout << "inverse table:" << endl;
-	cout << "{";
-	for (i = 1; i < q; i++) {
-		cout << inverse(i);
-		if (i < q - 1)
-			cout << ", ";
-		}
-	cout << "};" << endl;
-	cout << "frobenius_table:" << endl;
-	//print_integer_matrix(cout, frobenius_table, 1, q);
-	cout << "i : i^p" << endl;
-	for (i = 0; i < q; i++) {
-		cout << i << " : " << frobenius_table[i] << endl;
-		}
-
-
-	cout << "primitive element alpha = " << alpha << endl;
-	cout << "i : alpha^i" << endl;
-	for (i = 0; i < q; i++) {
-		//j = power(p, i);
-		cout << i << " : " << alpha_power_table[i] << endl;
-		}
-	cout << "i : log_alpha(i)" << endl;
-	for (i = 0; i < q; i++) {
-		cout << i << " : " << log_alpha_table[i] << endl;
-		}
-#endif
-
-	//cout << "alpha_power_table:" << endl;
-	//print_integer_matrix(cout, alpha_power_table, 1, q);
-	//cout << "log_alpha_table:" << endl;
-	//print_integer_matrix(cout, log_alpha_table, 1, q);
-}
 
 void finite_field::display_T2(ostream &ost)
 {
@@ -583,99 +468,85 @@ void finite_field::make_fname_multiplication_table_reordered_csv(std::string &fn
 	fname.append("_multiplication_table_reordered.csv");
 }
 
-void finite_field::addition_table_save_csv()
+void finite_field::addition_table_save_csv(int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i, j, k;
-	int *T;
+	int *M;
 	file_io Fio;
 
-	T = NEW_int(q * q);
+	M = NEW_int(q * q);
 	for (i = 0; i < q; i++) {
 		for (j = 0; j < q; j++) {
 			k = add(i, j);
-			T[i * q + j] = k;
+			M[i * q + j] = k;
 		}
 	}
 	std::string fname;
 
 	make_fname_addition_table_csv(fname);
-	Fio.int_matrix_write_csv(fname, T, q, q);
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-	FREE_int(T);
+	Fio.int_matrix_write_csv(fname, M, q, q);
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+	FREE_int(M);
 }
 
-void finite_field::multiplication_table_save_csv()
+void finite_field::multiplication_table_save_csv(int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int i, j, k;
-	int *T;
+	int *M;
 	file_io Fio;
 
-	T = NEW_int((q - 1) * (q - 1));
+	M = NEW_int((q - 1) * (q - 1));
 	for (i = 0; i < q - 1; i++) {
 		for (j = 0; j < q - 1; j++) {
 			k = mult(1 + i, 1 + j);
-			T[i * (q - 1) + j] = k;
+			M[i * (q - 1) + j] = k;
 		}
 	}
 	std::string fname;
 
 	make_fname_multiplication_table_csv(fname);
-	Fio.int_matrix_write_csv(fname, T, q - 1, q - 1);
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-	FREE_int(T);
+	Fio.int_matrix_write_csv(fname, M, q - 1, q - 1);
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+	FREE_int(M);
 }
 
-void finite_field::addition_table_reordered_save_csv()
+void finite_field::addition_table_reordered_save_csv(int verbose_level)
 {
-	int i, j, a, b, c;
-	int *T;
-	file_io Fio;
 
-	T = NEW_int(q * q);
-	for (i = 0; i < q; i++) {
-		a = reordered_list_of_elements[i];
-		for (j = 0; j < q; j++) {
-			b = reordered_list_of_elements[j];
-			c = add(a, b);
-			//k = reordered_list_of_elements_inv[c];
-			T[i * q + j] = c;
-		}
+	if (!f_has_table) {
+		cout << "finite_field::addition_table_reordered_save_csv !f_has_table" << endl;
+		exit(1);
 	}
+
 	std::string fname;
 
 	make_fname_addition_table_reordered_csv(fname);
-	Fio.int_matrix_write_csv(fname, T, q, q);
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-	FREE_int(T);
+
+	T->addition_table_reordered_save_csv(fname, verbose_level);
+
 }
 
 
-void finite_field::multiplication_table_reordered_save_csv()
+void finite_field::multiplication_table_reordered_save_csv(int verbose_level)
 {
-	int i, j, a, b, c;
-	int *T;
-	file_io Fio;
 
-	T = NEW_int(q * q);
-	for (i = 1; i < q; i++) {
-		a = reordered_list_of_elements[i];
-		for (j = 1; j < q; j++) {
-			b = reordered_list_of_elements[j];
-			c = mult(a, b);
-			//k = reordered_list_of_elements_inv[c];
-			if (c == 0) {
-				cout << "finite_field::multiplication_table_reordered_save_csv c == 0" << endl;
-				exit(1);
-			}
-			T[(i - 1) * (q - 1) + j - 1] = c;
-		}
+	if (!f_has_table) {
+		cout << "finite_field::multiplication_table_reordered_save_csv !f_has_table" << endl;
+		exit(1);
 	}
+
 	std::string fname;
 
 	make_fname_multiplication_table_reordered_csv(fname);
-	Fio.int_matrix_write_csv(fname, T, q - 1, q - 1);
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-	FREE_int(T);
+
+	T->multiplication_table_reordered_save_csv(fname, verbose_level);
+
 }
 
 
@@ -793,10 +664,15 @@ void finite_field::cheat_sheet(ostream &f, int verbose_level)
 	int f_add_mult_table = TRUE;
 
 	if (f_add_mult_table) {
-		if (f_v) {
-			print_add_mult_tables(cout);
+
+		if (!f_has_table) {
+			cout << "finite_field::cheat_sheet !f_has_table" << endl;
+			exit(1);
 		}
-		print_add_mult_tables_in_C(label);
+		if (f_v) {
+			T->print_add_mult_tables(cout);
+		}
+		T->print_add_mult_tables_in_C(label);
 	}
 
 	cheat_sheet_subfields(f, verbose_level);
