@@ -211,7 +211,11 @@ void finite_field::representing_matrix9_U(int *A,
 	int r, q, q1,q2,tq, tq1; //, tq2;
 	number_theory_domain NT;
 	
-	if (!f_has_quadratic_subfield) {
+	if (!f_has_table) {
+		cout << "finite_field::representing_matrix9_U !f_has_table" << endl;
+		exit(1);
+	}
+	if (!has_quadratic_subfield()) {
 		cout << "finite_field::representing_matrix9_U "
 				"field does not have a quadratic subfield" << endl;
 		exit(1);

@@ -1608,13 +1608,13 @@ void finite_field::do_cheat_sheet_GF(int verbose_level)
 
 
 
-	addition_table_save_csv();
+	addition_table_save_csv(verbose_level);
 
-	multiplication_table_save_csv();
+	multiplication_table_save_csv(verbose_level);
 
-	addition_table_reordered_save_csv();
+	addition_table_reordered_save_csv(verbose_level);
 
-	multiplication_table_reordered_save_csv();
+	multiplication_table_reordered_save_csv(verbose_level);
 
 
 	{

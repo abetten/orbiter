@@ -10,6 +10,7 @@ MODULES = \
 	finite_field_activity.o \
 	finite_field_applications.o \
 	finite_field_description.o \
+	finite_field_implementation_by_tables.o \
 	finite_field_io.o \
 	finite_field_linear_algebra.o \
 	finite_field_linear_algebra2.o \

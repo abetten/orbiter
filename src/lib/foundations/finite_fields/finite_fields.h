@@ -277,6 +277,78 @@ public:
 };
 
 
+// #############################################################################
+// finite_field_implementation_by_tables.cpp
+// #############################################################################
+
+//! implementation of a finite Galois field Fq using tables
+
+class finite_field_implementation_by_tables {
+
+
+private:
+
+	finite_field *F;
+
+	int *add_table; // [q * q]
+	int *mult_table; // [q * q]
+		// add_table and mult_table are needed in mindist
+
+	int *negate_table; // [q]
+	int *inv_table; // [q]
+	int *frobenius_table; // [q], x \mapsto x^p
+	int *absolute_trace_table; // [q]
+	int *log_alpha_table; // [q]
+	// log_alpha_table[i] = the integer k s.t. alpha^k = i (if i > 0)
+	// log_alpha_table[0] = -1
+	int *alpha_power_table; // [q]
+	int *v1, *v2, *v3; // [e]
+	int f_has_quadratic_subfield; // TRUE if e is even.
+	int *f_belongs_to_quadratic_subfield; // [q]
+
+	int *reordered_list_of_elements; // [q]
+	int *reordered_list_of_elements_inv; // [q]
+
+public:
+
+	finite_field_implementation_by_tables();
+	~finite_field_implementation_by_tables();
+	void init(finite_field *F, int verbose_level);
+	int *private_add_table();
+	int *private_mult_table();
+	int has_quadratic_subfield();
+	int belongs_to_quadratic_subfield(int a);
+	void create_alpha_table(int verbose_level);
+	void create_alpha_table_prime_field(int verbose_level);
+	void create_alpha_table_extension_field(int verbose_level);
+	void init_binary_operations(int verbose_level);
+	void create_tables_prime_field(int verbose_level);
+	void create_tables_extension_field(int verbose_level);
+	void print_add_mult_tables(std::ostream &ost);
+	void print_add_mult_tables_in_C(std::string &fname_base);
+	void init_quadratic_subfield(int verbose_level);
+	void init_frobenius_table(int verbose_level);
+	void init_absolute_trace_table(int verbose_level);
+	void print_tables_extension_field(const char *poly);
+	int add(int i, int j);
+	int add_without_table(int i, int j);
+	int mult_verbose(int i, int j, int verbose_level);
+	int mult_without_table(int i, int j, int verbose_level);
+	int negate(int i);
+	int negate_without_table(int i);
+	int inverse(int i);
+	int inverse_without_table(int i);
+	int frobenius_image(int a);
+	// computes a^p
+	int frobenius_power(int a, int frob_power);
+	// computes a^{p^i}
+	int alpha_power(int i);
+	int log_alpha(int i);
+	void addition_table_reordered_save_csv(std::string &fname, int verbose_level);
+	void multiplication_table_reordered_save_csv(std::string &fname, int verbose_level);
+
+};
+
 
 // #############################################################################
 // finite_field_description.cpp
@@ -313,23 +385,10 @@ public:
 class finite_field {
 
 private:
-	int f_has_table;
-	int *add_table; // [q * q]
-	int *mult_table; // [q * q]
-		// add_table and mult_table are needed in mindist
+	finite_field_implementation_by_tables *T;
 
-	int *negate_table; // [q]
-	int *inv_table; // [q]
-	int *frobenius_table; // [q], x \mapsto x^p
-	int *absolute_trace_table; // [q]
-	int *log_alpha_table; // [q]
-	// log_alpha_table[i] = the integer k s.t. alpha^k = i (if i > 0)
-	// log_alpha_table[0] = -1
-	int *alpha_power_table; // [q]
-	int *v1, *v2, *v3; // [e]
+
 	std::string symbol_for_print;
-	int f_has_quadratic_subfield; // TRUE if e is even.
-	int *f_belongs_to_quadratic_subfield; // [q]
 
 
 	int my_nb_calls_to_elliptic_curve_addition;
@@ -337,9 +396,11 @@ private:
 	int nb_times_add;
 
 public:
+	int f_has_table;
 	std::string label;
 	std::string label_tex;
 	std::string override_poly;
+	std::string my_poly;
 	char *polynomial;
 		// the actual polynomial we consider
 		// as integer (in text form)
@@ -348,40 +409,29 @@ public:
 	int alpha; // primitive element
 	int log10_of_q; // needed for printing purposes
 	int f_print_as_exponentials;
-	int *reordered_list_of_elements; // [q]
-	int *reordered_list_of_elements_inv; // [q]
 	long int nb_calls_to_mult_matrix_matrix;
 	long int nb_calls_to_PG_element_rank_modified;
 	long int nb_calls_to_PG_element_unrank_modified;
 
 	finite_field();
-	void null();
 	~finite_field();
 	void print_call_stats(std::ostream &ost);
 	int &nb_calls_to_elliptic_curve_addition();
 	void init(finite_field_description *Descr, int verbose_level);
 	void finite_field_init(int q, int verbose_level);
+	void init2(int verbose_level);
 	void set_default_symbol_for_print();
 	void init_symbol_for_print(const char *symbol);
 	void init_override_polynomial(int q, std::string &poly,
 		int verbose_level);
-	void init_binary_operations(int verbose_level);
-	void init_frobenius_table(int verbose_level);
-	void init_absolute_trace_table(int verbose_level);
 	int has_quadratic_subfield();
 	int belongs_to_quadratic_subfield(int a);
-	void init_quadratic_subfield(int verbose_level);
 	long int compute_subfield_polynomial(int order_subfield,
 			int f_latex, std::ostream &ost,
 			int verbose_level);
 	void compute_subfields(int verbose_level);
-	void create_alpha_table(int verbose_level);
 	int find_primitive_element(int verbose_level);
 	int compute_order_of_element(int elt, int verbose_level);
-	void create_alpha_table_extension_field(int verbose_level);
-	void create_alpha_table_prime_field(int verbose_level);
-	void create_tables_prime_field(int verbose_level);
-	void create_tables_extension_field(int verbose_level);
 	int *private_add_table();
 	int *private_mult_table();
 	int zero();
@@ -1237,10 +1287,7 @@ public:
 	void print_minimum_polynomial(int p, const char *polynomial);
 	void print();
 	void print_detailed(int f_add_mult_table);
-	void print_add_mult_tables(std::ostream &ost);
-	void print_add_mult_tables_in_C(std::string &fname_base);
 	void print_tables();
-	void print_tables_extension_field(const char *poly);
 	void display_T2(std::ostream &ost);
 	void display_T3(std::ostream &ost);
 	void display_N2(std::ostream &ost);
@@ -1277,10 +1324,10 @@ public:
 	void make_fname_multiplication_table_csv(std::string &fname);
 	void make_fname_addition_table_reordered_csv(std::string &fname);
 	void make_fname_multiplication_table_reordered_csv(std::string &fname);
-	void addition_table_save_csv();
-	void multiplication_table_save_csv();
-	void addition_table_reordered_save_csv();
-	void multiplication_table_reordered_save_csv();
+	void addition_table_save_csv(int verbose_level);
+	void multiplication_table_save_csv(int verbose_level);
+	void addition_table_reordered_save_csv(int verbose_level);
+	void multiplication_table_reordered_save_csv(int verbose_level);
 	void latex_addition_table(std::ostream &f,
 		int f_elements_exponential, std::string &symbol_for_print);
 	void latex_multiplication_table(std::ostream &f,

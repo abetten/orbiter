@@ -812,10 +812,14 @@ void symbol_definition::definition_of_projective_space(int verbose_level)
 		q = strtoi(Projective_space_with_action_description->input_q);
 		if (f_v) {
 			cout << "symbol_definition::definition_of_projective_space "
-					"creating finite field of order " << q << endl;
+					"creating the finite field of order " << q << endl;
 		}
 		F = NEW_OBJECT(finite_field);
-		F->finite_field_init(q, 0);
+		F->finite_field_init(q, verbose_level - 1);
+		if (f_v) {
+			cout << "symbol_definition::definition_of_projective_space "
+					"the finite field of order " << q << " has been created" << endl;
+		}
 	}
 	else {
 		if (f_v) {
@@ -900,7 +904,11 @@ void symbol_definition::definition_of_orthogonal_space(int verbose_level)
 					"creating finite field of order " << q << endl;
 		}
 		F = NEW_OBJECT(finite_field);
-		F->finite_field_init(q, 0);
+		F->finite_field_init(q, verbose_level - 1);
+		if (f_v) {
+			cout << "symbol_definition::definition_of_orthogonal_space "
+					"creating finite field of order " << q << " done" << endl;
+		}
 	}
 	else {
 		if (f_v) {
@@ -970,7 +978,11 @@ void symbol_definition::definition_of_linear_group(int verbose_level)
 					"creating finite field of order " << q << endl;
 		}
 		F = NEW_OBJECT(finite_field);
-		F->finite_field_init(q, 0);
+		F->finite_field_init(q, verbose_level - 1);
+		if (f_v) {
+			cout << "symbol_definition::definition "
+					"creating finite field of order " << q << " done" << endl;
+		}
 	}
 	else {
 		if (f_v) {
