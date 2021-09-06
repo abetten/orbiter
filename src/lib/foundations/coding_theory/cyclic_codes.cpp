@@ -152,7 +152,7 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 	if (f_v) {
 		cout << "coding_theory_domain::make_cyclic_code creating the finite field of order " << p << endl;
 	}
-	Fp.finite_field_init(p, verbose_level - 1);
+	Fp.finite_field_init(p, FALSE /* f_without_tables */, verbose_level - 1);
 
 	algebra_global Algebra;
 	unipoly_domain FpX(&Fp);
@@ -590,7 +590,7 @@ void coding_theory_domain::field_reduction(int n, int q, int p, int e, int m,
 	{
 		finite_field fq;
 
-		fq.init_override_polynomial(q, poly, verbose_level);
+		fq.init_override_polynomial(q, poly, FALSE /* f_without_tables */, verbose_level);
 		cout << "q = " << q << " override polynomial = " << poly << endl;
 
 		for (i = 0; i <= degree; i++) {

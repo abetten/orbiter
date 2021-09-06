@@ -522,7 +522,7 @@ void combinatorics_global::Hill_cap56(
 	An = NEW_OBJECT(action);
 	F = NEW_OBJECT(finite_field);
 
-	F->finite_field_init(q, 0);
+	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 	if (f_v) {
 		cout << "Hill_cap before init_orthogonal" << endl;
 		}

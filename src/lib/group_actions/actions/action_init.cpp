@@ -911,7 +911,7 @@ void action::init_affine_group(int n, int q,
 	label.assign(str1);
 	label_tex.assign(str2);
 
-	F.finite_field_init(q, verbose_level - 1);
+	F.finite_field_init(q, FALSE /* f_without_tables */, verbose_level - 1);
 	
 	
 	group_generators_domain GGD;

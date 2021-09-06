@@ -369,7 +369,7 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 		vector_ge *nice_gens;
 
 		F = NEW_OBJECT(finite_field);
-		F->finite_field_init(q, 0);
+		F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 		A->init_affine_group(4, F,
 			FALSE /* f_semilinear */,
 			TRUE /* f_basis */, TRUE /* f_init_sims */,
@@ -631,7 +631,7 @@ void cayley_graph_search::init_group_level_5(int verbose_level)
 		vector_ge *nice_gens;
 
 		F = NEW_OBJECT(finite_field);
-		F->finite_field_init(q, 0);
+		F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 		A->init_affine_group(5, F,
 			FALSE /* f_semilinear */,
 			TRUE /* f_basis */, TRUE /* f_init_sims */,

@@ -130,7 +130,7 @@ void boolean_function_domain::init(int n, int verbose_level)
 	}
 
 	Fq = NEW_OBJECT(finite_field);
-	Fq->finite_field_init(2, 0);
+	Fq->finite_field_init(2, FALSE /* f_without_tables */, 0);
 
 	//FQ = NEW_OBJECT(finite_field);
 	//FQ->finite_field_init(Q, 0);

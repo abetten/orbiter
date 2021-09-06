@@ -1264,9 +1264,11 @@ private:
 
 public:
 
+	unipoly_domain();
 	unipoly_domain(finite_field *GFq);
 	unipoly_domain(finite_field *GFq, unipoly_object m, int verbose_level);
 	~unipoly_domain();
+	void init_factorring(finite_field *F, unipoly_object m, int verbose_level);
 	finite_field *get_F();
 	int &s_i(unipoly_object p, int i)
 		{ int *rep = (int *) p; return rep[i + 1]; };

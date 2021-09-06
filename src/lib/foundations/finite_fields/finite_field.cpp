@@ -12,7 +12,6 @@
 using namespace std;
 
 
-#define CREATE_TABLE_UPPER_BOUND 1024
 
 namespace orbiter {
 namespace foundations {
@@ -24,21 +23,8 @@ finite_field::finite_field()
 {
 	f_has_table = FALSE;
 	T = NULL;
+	Iwo = NULL;
 	//std::string symbol_for_print;
-
-#if 0
-	add_table = NULL;
-	mult_table = NULL;
-	negate_table = NULL;
-	inv_table = NULL;
-	frobenius_table = NULL;
-	absolute_trace_table = NULL;
-	log_alpha_table = NULL;
-	alpha_power_table = NULL;
-	v1 = NULL;
-	v2 = NULL;
-	v3 = NULL;
-#endif
 
 
 	polynomial = NULL;
@@ -55,10 +41,6 @@ finite_field::finite_field()
 	alpha = 0;
 	log10_of_q = 1;
 
-#if 0
-	f_has_quadratic_subfield = FALSE;
-	f_belongs_to_quadratic_subfield = NULL;
-#endif
 	f_print_as_exponentials = TRUE;
 	nb_calls_to_mult_matrix_matrix = 0;
 	nb_calls_to_PG_element_rank_modified = 0;
@@ -78,56 +60,14 @@ finite_field::~finite_field()
 	if (T) {
 		FREE_OBJECT(T);
 	}
+	if (Iwo) {
+		FREE_OBJECT(Iwo);
+	}
 
-#if 0
-	if (add_table) {
-		FREE_int(add_table);
-	}
-	if (mult_table) {
-		FREE_int(mult_table);
-	}
-	if (negate_table) {
-		FREE_int(negate_table);
-	}
-	if (inv_table) {
-		FREE_int(inv_table);
-	}
-	//cout << "destroying frobenius_table" << endl;
-	if (frobenius_table) {
-		FREE_int(frobenius_table);
-	}
-	//cout << "destroying absolute_trace_table" << endl;
-	if (absolute_trace_table) {
-		FREE_int(absolute_trace_table);
-	}
-	//cout << "destroying log_alpha_table" << endl;
-	if (log_alpha_table) {
-		FREE_int(log_alpha_table);
-	}
-	//scout << "destroying alpha_power_table" << endl;
-	if (alpha_power_table) {
-		FREE_int(alpha_power_table);
-	}
-#endif
 
 	if (polynomial) {
 		FREE_char(polynomial);
 	}
-
-#if 0
-	if (v1) {
-		FREE_int(v1);
-	}
-	if (v2) {
-		FREE_int(v2);
-	}
-	if (v3) {
-		FREE_int(v3);
-	}
-	if (f_belongs_to_quadratic_subfield) {
-		FREE_int(f_belongs_to_quadratic_subfield);
-	}
-#endif
 
 }
 
@@ -163,12 +103,12 @@ void finite_field::init(finite_field_description *Descr, int verbose_level)
 			cout << "finite_field::init override_polynomial=" << Descr->override_polynomial << endl;
 		}
 		init_override_polynomial(Descr->q,
-				Descr->override_polynomial, verbose_level - 1);
+				Descr->override_polynomial, Descr->f_without_tables, verbose_level - 1);
 
 
 	}
 	else {
-		finite_field_init(Descr->q, verbose_level - 1);
+		finite_field_init(Descr->q, Descr->f_without_tables, verbose_level - 1);
 
 	}
 	if (f_v) {
@@ -176,7 +116,7 @@ void finite_field::init(finite_field_description *Descr, int verbose_level)
 	}
 }
 
-void finite_field::finite_field_init(int q, int verbose_level)
+void finite_field::finite_field_init(int q, int f_without_tables, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	string poly;
@@ -198,7 +138,7 @@ void finite_field::finite_field_init(int q, int verbose_level)
 		if (f_v) {
 			cout << "finite_field::finite_field_init q=" << q << " before init_override_polynomial poly = " << poly << endl;
 		}
-		init_override_polynomial(q, poly, verbose_level);
+		init_override_polynomial(q, poly, f_without_tables, verbose_level);
 		if (f_v) {
 			cout << "finite_field::finite_field_init q=" << q << " after init_override_polynomial" << endl;
 		}
@@ -209,7 +149,7 @@ void finite_field::finite_field_init(int q, int verbose_level)
 		if (f_v) {
 			cout << "finite_field::finite_field_init q=" << q << " before init_override_polynomial poly = " << poly << endl;
 		}
-		init_override_polynomial(q, poly, verbose_level);
+		init_override_polynomial(q, poly, f_without_tables, verbose_level);
 		if (f_v) {
 			cout << "finite_field::finite_field_init q=" << q << " after init_override_polynomial" << endl;
 		}
@@ -225,11 +165,11 @@ void finite_field::finite_field_init(int q, int verbose_level)
 
 
 	if (f_v) {
-		cout << "finite_field::finite_field_init before init2" << endl;
+		cout << "finite_field::finite_field_init before init_implementation" << endl;
 	}
-	init2(verbose_level - 1);
+	init_implementation(f_without_tables, verbose_level - 1);
 	if (f_v) {
-		cout << "finite_field::finite_field_init after init2" << endl;
+		cout << "finite_field::finite_field_init after init_implementation" << endl;
 	}
 
 	if (f_v) {
@@ -237,34 +177,51 @@ void finite_field::finite_field_init(int q, int verbose_level)
 	}
 }
 
-void finite_field::init2(int verbose_level)
+void finite_field::init_implementation(int f_without_tables, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	string poly;
 	number_theory_domain NT;
 
 	if (f_v) {
-		cout << "finite_field::init2" << endl;
+		cout << "finite_field::init_implementation" << endl;
 	}
 
-	if (q <= CREATE_TABLE_UPPER_BOUND) {
+	if (f_without_tables) {
+		if (f_v) {
+			cout << "finite_field::init_implementation implementation without field tables" << endl;
+		}
+		f_has_table = FALSE;
+
+		Iwo = NEW_OBJECT(finite_field_implementation_wo_tables);
+
+		if (f_v) {
+			cout << "finite_field::init_implementation before Iwo->init" << endl;
+		}
+		Iwo->init(this, verbose_level);
+		if (f_v) {
+			cout << "finite_field::init_implementation after Iwo->init" << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "finite_field::init_implementation implementation with field tables" << endl;
+		}
 		T = NEW_OBJECT(finite_field_implementation_by_tables);
 
 		if (f_v) {
-			cout << "finite_field::init2 before T->init" << endl;
+			cout << "finite_field::init_implementation before T->init" << endl;
 		}
 		T->init(this, verbose_level - 5);
 		if (f_v) {
-			cout << "finite_field::init2 after T->init" << endl;
+			cout << "finite_field::init_implementation after T->init" << endl;
 		}
 		f_has_table = TRUE;
-	}
-	else {
-		f_has_table = FALSE;
+
 	}
 
 	if (f_v) {
-		cout << "finite_field::init2 done" << endl;
+		cout << "finite_field::init_implementation done" << endl;
 	}
 }
 
@@ -301,7 +258,7 @@ void finite_field::init_symbol_for_print(const char *symbol)
 }
 
 void finite_field::init_override_polynomial(int q,
-		std::string &poly, int verbose_level)
+		std::string &poly, int f_without_tables, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -309,7 +266,8 @@ void finite_field::init_override_polynomial(int q,
 	number_theory_domain NT;
 
 	if (f_v) {
-		cout << "finite_field::init_override_polynomial q=" << q << " verbose_level = " << verbose_level << endl;
+		cout << "finite_field::init_override_polynomial "
+				"q=" << q << " verbose_level = " << verbose_level << endl;
 	}
 	override_poly.assign(poly);
 
@@ -378,86 +336,12 @@ void finite_field::init_override_polynomial(int q,
 
 
 	if (f_v) {
-		cout << "finite_field::init_override_polynomial before init2" << endl;
+		cout << "finite_field::init_override_polynomial before init_implementation" << endl;
 	}
-	init2(verbose_level - 1);
+	init_implementation(f_without_tables, verbose_level - 1);
 	if (f_v) {
-		cout << "finite_field::init_override_polynomial after init2" << endl;
+		cout << "finite_field::init_override_polynomial after init_implementation" << endl;
 	}
-
-#if 0
-	v1 = NEW_int(e);
-	v2 = NEW_int(e);
-	v3 = NEW_int(e);
-	
-	if (f_v) {
-		cout << "finite_field::init_override_polynomial before create_alpha_table" << endl;
-	}
-	create_alpha_table(verbose_level);
-	if (f_v) {
-		cout << "finite_field::init_override_polynomial after create_alpha_table" << endl;
-	}
-
-
-
-
-	if (f_v) {
-		cout << "finite_field::init_override_polynomial before init_binary_operations" << endl;
-	}
-	init_binary_operations(0 /*verbose_level */);
-	if (f_v) {
-		cout << "finite_field::init_override_polynomial after init_binary_operations" << endl;
-	}
-
-	
-
-
-	if (f_v) {
-		cout << "finite_field::init_override_polynomial "
-				"before init_quadratic_subfield" << endl;
-	}
-	init_quadratic_subfield(verbose_level - 2);
-	if (f_v) {
-		cout << "finite_field::init_override_polynomial "
-				"after init_quadratic_subfield" << endl;
-	}
-
-	if (f_v) {
-		cout << "finite_field::init_override_polynomial "
-				"before init_frobenius_table" << endl;
-	}
-	init_frobenius_table(verbose_level);
-	if (f_v) {
-		cout << "finite_field::init_override_polynomial "
-				"after init_frobenius_table" << endl;
-	}
-	
-	if (f_v) {
-		cout << "finite_field::init_override_polynomial "
-				"before init_absolute_trace_table" << endl;
-	}
-	init_absolute_trace_table(verbose_level);
-	if (f_v) {
-		cout << "finite_field::init_override_polynomial "
-				"after init_absolute_trace_table" << endl;
-	}
-
-	
-	if (f_vv) {
-		cout << "finite_field::init_override_polynomial field of order "
-				<< q << " initialized" << endl;
-		if (f_vv && f_has_table) {
-			if (FALSE) {
-				if (e > 1) {
-					print_tables_extension_field(my_poly.c_str());
-				}
-				else {
-					print_tables();
-				}
-			}
-		}
-	}
-#endif
 
 	if (f_vv) {
 		cout << "finite_field::init_override_polynomial "
@@ -469,17 +353,30 @@ void finite_field::init_override_polynomial(int q,
 
 int finite_field::has_quadratic_subfield()
 {
+#if 0
 	if (!f_has_table) {
 		cout << "finite_field::has_quadratic_subfield !f_has_table" << endl;
 		exit(1);
 	}
 	return T->has_quadratic_subfield();
+#else
+	if ((e % 2) == 0) {
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
+#endif
 }
 
 int finite_field::belongs_to_quadratic_subfield(int a)
 {
+	if ((e % 2) != 0) {
+		cout << "finite_field::belongs_to_quadratic_subfield does not have a quadratic subfield" << endl;
+		exit(1);
+	}
 	if (!f_has_table) {
-		cout << "finite_field::has_quadratic_subfield !f_has_table" << endl;
+		cout << "finite_field::belongs_to_quadratic_subfield !f_has_table" << endl;
 		exit(1);
 	}
 	return T->belongs_to_quadratic_subfield(a);
@@ -511,7 +408,7 @@ long int finite_field::compute_subfield_polynomial(int order_subfield,
 	}
 
 	finite_field GFp;
-	GFp.finite_field_init(p, 0);
+	GFp.finite_field_init(p, FALSE /* f_without_tables */, 0);
 
 	unipoly_domain FX(&GFp);
 	unipoly_object m;
@@ -678,7 +575,7 @@ void finite_field::compute_subfields(int verbose_level)
 	cout << "subfields of F_{" << q << "}:" << endl;
 	
 	finite_field GFp;
-	GFp.finite_field_init(p, 0);
+	GFp.finite_field_init(p, FALSE /* f_without_tables */, 0);
 
 	unipoly_domain FX(&GFp);
 	unipoly_object m;
@@ -754,7 +651,7 @@ int finite_field::compute_order_of_element(int elt, int verbose_level)
 
 
 	finite_field GFp;
-	GFp.finite_field_init(p, 0);
+	GFp.finite_field_init(p, FALSE /* f_without_tables */, 0);
 
 	unipoly_domain FX(&GFp);
 	unipoly_object m;
@@ -894,8 +791,11 @@ int finite_field::mult_verbose(int i, int j, int verbose_level)
 		c = T->mult_verbose(i, j, verbose_level);
 	}
 	else {
-		cout << "finite_field_by_tables::mult_verbose !f_has_table" << endl;
-		exit(1);
+		if (Iwo == NULL) {
+			cout << "finite_field_by_tables::mult_verbose !f_has_table && Iwo == NULL" << endl;
+			exit(1);
+		}
+		c = Iwo->mult(i, j, verbose_level);
 	}
 	return c;
 }
@@ -1031,14 +931,30 @@ int finite_field::Z_embedding(int k)
 int finite_field::add(int i, int j)
 {
 	geometry_global Gg;
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
+	int c;
 
 	nb_times_add++;
 	if (!f_has_table) {
 		cout << "finite_field::add !f_has_table" << endl;
 		exit(1);
 	}
+	if (f_has_table) {
+		if (f_v) {
+			cout << "finite_field_by_tables::add with table" << endl;
+		}
+		c = T->add(i, j);
+	}
+	else {
+		if (Iwo == NULL) {
+			cout << "finite_field_by_tables::add !f_has_table && Iwo == NULL" << endl;
+			exit(1);
+		}
+		c = Iwo->add(i, j, verbose_level);
+	}
 
-	return T->add(i, j);
+	return c;
 }
 
 int finite_field::add3(int i1, int i2, int i3)
@@ -1113,32 +1029,51 @@ int finite_field::add8(int i1, int i2, int i3, int i4, int i5,
 
 int finite_field::negate(int i)
 {
-	geometry_global Gg;
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
+	int c;
 
 	if (i < 0 || i >= q) {
 		cout << "finite_field::negate i = " << i << endl;
 		exit(1);
 	}
-	if (!f_has_table) {
-		cout << "finite_field::negate !f_has_table" << endl;
-		exit(1);
+	if (f_has_table) {
+		if (f_v) {
+			cout << "finite_field_by_tables::negate with table" << endl;
+		}
+		c = T->negate(i);
+	}
+	else {
+		if (Iwo == NULL) {
+			cout << "finite_field_by_tables::negate !f_has_table && Iwo == NULL" << endl;
+			exit(1);
+		}
+		c = Iwo->negate(i, verbose_level);
 	}
 
-	return T->negate(i);
+	return c;
 }
 
 int finite_field::inverse(int i)
 {
-	if (i <= 0 || i >= q) {
-		cout << "finite_field::inverse i = " << i << endl;
-		exit(1);
-	}
-	if (!f_has_table) {
-		cout << "finite_field::inverse !f_has_table" << endl;
-		exit(1);
-	}
+	int c;
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
 
-	return T->inverse(i);
+	if (f_has_table) {
+		if (f_v) {
+			cout << "finite_field_by_tables::inverse with table" << endl;
+		}
+		c = T->inverse(i);
+	}
+	else {
+		if (Iwo == NULL) {
+			cout << "finite_field_by_tables::inverse !f_has_table && Iwo == NULL" << endl;
+			exit(1);
+		}
+		c = Iwo->inverse(i, verbose_level);
+	}
+	return c;
 }
 
 int finite_field::power(int a, int n)
@@ -1160,7 +1095,8 @@ int finite_field::power_verbose(int a, int n, int verbose_level)
 	c = 1;
 	while (n) {
 		if (f_v) {
-			cout << "finite_field::power_verbose n=" << n << " a=" << a << " b=" << b << " c=" << c << endl;
+			cout << "finite_field::power_verbose n=" << n
+					<< " a=" << a << " b=" << b << " c=" << c << endl;
 		}
 		if (n % 2) {
 			//cout << "finite_field::power: mult(" << b << "," << c << ")=";
@@ -1173,7 +1109,8 @@ int finite_field::power_verbose(int a, int n, int verbose_level)
 		//<< n << " * " << c << endl;
 	}
 	if (f_v) {
-		cout << "finite_field::power_verbose a=" << a << " n=" << n << " c=" << c << " done" << endl;
+		cout << "finite_field::power_verbose a=" << a
+				<< " n=" << n << " c=" << c << " done" << endl;
 	}
 	return c;
 }

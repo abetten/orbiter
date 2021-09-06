@@ -464,7 +464,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 		finite_field *Fq;
 
 		Fq = NEW_OBJECT(finite_field);
-		Fq->finite_field_init(Descr->field_reduction_q, verbose_level);
+		Fq->finite_field_init(Descr->field_reduction_q, FALSE /* f_without_tables */, verbose_level);
 		Coding.field_reduction(F, Fq,
 				Descr->field_reduction_label,
 				Descr->field_reduction_m, Descr->field_reduction_n, Descr->field_reduction_text,

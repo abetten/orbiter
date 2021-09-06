@@ -207,7 +207,7 @@ void geometry_global::test_PG(int n, int q)
 	int m;
 	int verbose_level = 1;
 
-	F.finite_field_init(q, verbose_level);
+	F.finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
 
 	cout << "all elements of PG_" << n << "(" << q << ")" << endl;
 	F.display_all_PG_elements(n);
@@ -341,7 +341,7 @@ void geometry_global::determine_conic(int q, std::string &override_poly,
 		Orbiter->Lint_vec.print(cout, input_pts, nb_pts);
 		cout << endl;
 		}
-	F.init_override_polynomial(q, override_poly, verbose_level);
+	F.init_override_polynomial(q, override_poly, FALSE /* f_without_tables */, verbose_level);
 
 	P = NEW_OBJECT(projective_space);
 	if (f_vv) {
@@ -804,7 +804,7 @@ void geometry_global::test_Orthogonal(int epsilon, int k, int q)
 	int verbose_level = 0;
 
 	cout << "test_Orthogonal" << endl;
-	GFq.finite_field_init(q, verbose_level);
+	GFq.finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
 	v = NEW_int(k + 1);
 	//n = Witt_index(epsilon, k);
 	len = k + 1;
@@ -865,7 +865,7 @@ void geometry_global::test_orthogonal(int n, int q)
 	int verbose_level = 0;
 
 	cout << "test_orthogonal" << endl;
-	GFq.finite_field_init(q, verbose_level);
+	GFq.finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
 	v = NEW_int(2 * n);
 	nb = nb_pts_Sbar(n, q);
 	cout << "\\Omega^+(" << 2 * n << "," << q << ") has " << nb

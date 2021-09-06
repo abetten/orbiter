@@ -345,6 +345,7 @@ class finite_field_activity;
 class finite_field_description;
 class finite_field;
 class finite_field_implementation_by_tables;
+class finite_field_implementation_wo_tables;
 class subfield_structure;
 
 // geometry:

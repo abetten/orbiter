@@ -28,6 +28,8 @@ finite_field_description::finite_field_description()
 	f_override_polynomial = FALSE;
 	//std::string override_polynomial;
 
+	f_without_tables = FALSE;
+
 }
 
 finite_field_description::~finite_field_description()
@@ -60,6 +62,12 @@ int finite_field_description::read_arguments(
 				cout << "-override_polynomial " << override_polynomial << endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-without_tables") == 0) {
+			f_without_tables = TRUE;
+			if (f_v) {
+				cout << "-without_tables " << endl;
+			}
+		}
 		else if (stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -86,6 +94,9 @@ void finite_field_description::print()
 	}
 	if (f_override_polynomial) {
 		cout << "-override_polynomial " << override_polynomial << endl;
+	}
+	if (f_without_tables) {
+		cout << "-without_tables" << endl;
 	}
 }
 

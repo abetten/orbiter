@@ -974,7 +974,7 @@ void graph_theory_domain::make_Paley_graph(int *&Adj, int &N,
 	int i, j, a;
 
 	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(q, verbose_level);
+	F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
 
 	f_is_square = NEW_int(q);
 	Orbiter->Int_vec.zero(f_is_square, q);
@@ -1022,7 +1022,7 @@ void graph_theory_domain::make_Schlaefli_graph(int *&Adj, int &N,
 
 
 	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(q, verbose_level);
+	F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
 
 	Gr = NEW_OBJECT(grassmann);
 	Gr->init(n, k, F, verbose_level);
@@ -1053,7 +1053,7 @@ void graph_theory_domain::make_Winnie_Li_graph(int *&Adj, int &N,
 
 
 	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(q, verbose_level - 1);
+	F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level - 1);
 	p = F->p;
 
 #if 0
@@ -1152,7 +1152,7 @@ void graph_theory_domain::make_Grassmann_graph(int *&Adj, int &N,
 	combinatorics_domain Combi;
 
 	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(q, verbose_level);
+	F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
 
 
 	Gr = NEW_OBJECT(grassmann);
@@ -1238,7 +1238,7 @@ void graph_theory_domain::make_orthogonal_collinearity_graph(int *&Adj, int &N,
 
 	F = NEW_OBJECT(finite_field);
 
-	F->finite_field_init(q, verbose_level - 1);
+	F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level - 1);
 	F->print();
 
 	if (epsilon == 0) {

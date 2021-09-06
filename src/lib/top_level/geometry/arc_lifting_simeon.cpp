@@ -77,7 +77,7 @@ void arc_lifting_simeon::init(int q, int d, int n, int k,
 	v = NEW_int(n + 1);
 
 	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(q, 0);
+	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 
 	vector_ge *nice_gens;
 
