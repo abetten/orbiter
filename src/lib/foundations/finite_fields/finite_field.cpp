@@ -101,14 +101,24 @@ void finite_field::init(finite_field_description *Descr, int verbose_level)
 	if (Descr->f_override_polynomial) {
 		if (f_v) {
 			cout << "finite_field::init override_polynomial=" << Descr->override_polynomial << endl;
+			cout << "finite_field::init before init_override_polynomial" << endl;
 		}
 		init_override_polynomial(Descr->q,
 				Descr->override_polynomial, Descr->f_without_tables, verbose_level - 1);
+		if (f_v) {
+			cout << "finite_field::init after init_override_polynomial" << endl;
+		}
 
 
 	}
 	else {
+		if (f_v) {
+			cout << "finite_field::init before finite_field_init" << endl;
+		}
 		finite_field_init(Descr->q, Descr->f_without_tables, verbose_level - 1);
+		if (f_v) {
+			cout << "finite_field::init after finite_field_init" << endl;
+		}
 
 	}
 	if (f_v) {
@@ -163,14 +173,6 @@ void finite_field::finite_field_init(int q, int f_without_tables, int verbose_le
 	label_tex.assign(str);
 
 
-
-	if (f_v) {
-		cout << "finite_field::finite_field_init before init_implementation" << endl;
-	}
-	init_implementation(f_without_tables, verbose_level - 1);
-	if (f_v) {
-		cout << "finite_field::finite_field_init after init_implementation" << endl;
-	}
 
 	if (f_v) {
 		cout << "finite_field::finite_field_init done" << endl;
