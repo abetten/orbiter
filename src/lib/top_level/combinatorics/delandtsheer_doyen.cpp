@@ -1049,8 +1049,8 @@ void delandtsheer_doyen::create_action(int verbose_level)
 
 		vector_ge *nice_gens;
 
-		F1->finite_field_init(2, 0);
-		F2->finite_field_init(2, 0);
+		F1->finite_field_init(2, FALSE /* f_without_tables */, 0);
+		F2->finite_field_init(2, FALSE /* f_without_tables */, 0);
 
 		if (f_v) {
 			cout << "delandtsheer_doyen::create_action initializing projective groups:" << endl;
@@ -1088,8 +1088,8 @@ void delandtsheer_doyen::create_action(int verbose_level)
 
 
 
-		F1->finite_field_init(Descr->q1, 0);
-		F2->finite_field_init(Descr->q2, 0);
+		F1->finite_field_init(Descr->q1, FALSE /* f_without_tables */, 0);
+		F2->finite_field_init(Descr->q2, FALSE /* f_without_tables */, 0);
 
 
 

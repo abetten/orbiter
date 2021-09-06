@@ -171,7 +171,7 @@ void brick_test(int q, int verbose_level)
 	int f_vertical, x, y, x2, y2;
 	finite_field F;
 	
-	F.finite_field_init(q, 0);
+	F.finite_field_init(q, FALSE /* f_without_tables */, 0);
 	B.init(&F, verbose_level);
 	for (i = 0; i < B.nb_bricks; i++) {
 		B.unrank(i, f_vertical, x, y, 0);

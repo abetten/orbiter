@@ -692,7 +692,7 @@ void coding_theory_domain::make_Hamming_graph_and_write_file(int n, int q,
 	if (f_projective) {
 		width = height = Gg.nb_PG_elements(n - 1, q);
 		F = NEW_OBJECT(finite_field);
-		F->finite_field_init(q, 0 /* verbose_level */);
+		F->finite_field_init(q, FALSE /* f_without_tables */, 0 /* verbose_level */);
 	}
 	else {
 		width = height = Gg.nb_AG_elements(n, q);
@@ -1451,7 +1451,7 @@ void coding_theory_domain::do_linear_code_through_basis(
 	finite_field *F;
 
 	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(2, 0);
+	F->finite_field_init(2, FALSE /* f_without_tables */, 0);
 
 	for (i = 0; i < sz; i++) {
 		Gg.AG_element_unrank(2, word, 1, k, i);
@@ -1576,7 +1576,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check_projec
 	geometry_global Gg;
 
 	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(2, 0);
+	F->finite_field_init(2, FALSE /* f_without_tables */, 0);
 	genma = NEW_int(k * n);
 	v = NEW_int(k);
 	word = NEW_int(k);
@@ -1710,7 +1710,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check(
 	geometry_global Gg;
 
 	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(2, 0);
+	F->finite_field_init(2, FALSE /* f_without_tables */, 0);
 	genma = NEW_int(k * n);
 	v = NEW_int(k);
 	word = NEW_int(k);
@@ -1858,7 +1858,7 @@ void coding_theory_domain::do_polynomial(
 	Poly = NEW_OBJECT(homogeneous_polynomial_domain);
 	Fq = NEW_OBJECT(finite_field);
 
-	Fq->finite_field_init(2, 0 /* verbose_level */);
+	Fq->finite_field_init(2, FALSE /* f_without_tables */, 0 /* verbose_level */);
 
 	Poly->init(Fq, polynomial_nb_vars, polynomial_degree,
 				FALSE /* f_init_incidence_structure */,
@@ -1963,7 +1963,7 @@ void coding_theory_domain::do_sylvester_hadamard(int n,
 	finite_field *F;
 
 	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(3, 0);
+	F->finite_field_init(3, FALSE /* f_without_tables */, 0);
 	Orbiter->Int_vec.copy(H2, M1, 4);
 	sz = 2;
 	for (i = 0; i < nb_factors; i++) {
@@ -2579,7 +2579,7 @@ void coding_theory_domain::do_long_code(
 	finite_field *F;
 
 	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(2, 0);
+	F->finite_field_init(2, FALSE /* f_without_tables */, 0);
 
 	Wt = NEW_int(sz);
 	Orbiter->Int_vec.zero(Wt, sz);

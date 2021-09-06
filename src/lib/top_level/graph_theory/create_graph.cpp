@@ -260,7 +260,7 @@ void create_graph::init(
 		F = NEW_OBJECT(finite_field);
 		Surf = NEW_OBJECT(surface_domain);
 
-		F->finite_field_init(5, 0);
+		F->finite_field_init(5, FALSE /* f_without_tables */, 0);
 		Surf->init(F, verbose_level);
 
 		Surf->Schlaefli->make_trihedral_pair_disjointness_graph(Adj, verbose_level);
@@ -534,7 +534,7 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 	int f_basis = TRUE;
 
 	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(q, 0);
+	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 	//F->init_override_polynomial(q, override_poly, verbose_level);
 
 	A = NEW_OBJECT(action);

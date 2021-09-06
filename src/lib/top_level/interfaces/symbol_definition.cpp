@@ -782,7 +782,13 @@ void symbol_definition::definition_of_finite_field(int verbose_level)
 	finite_field *F;
 
 	F = NEW_OBJECT(finite_field);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_finite_field before F->init" << endl;
+	}
 	F->init(Finite_field_description, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_finite_field after F->init" << endl;
+	}
 
 	orbiter_symbol_table_entry Symb;
 	Symb.init_finite_field(define_label, F, verbose_level);
@@ -815,7 +821,7 @@ void symbol_definition::definition_of_projective_space(int verbose_level)
 					"creating the finite field of order " << q << endl;
 		}
 		F = NEW_OBJECT(finite_field);
-		F->finite_field_init(q, verbose_level - 1);
+		F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level - 1);
 		if (f_v) {
 			cout << "symbol_definition::definition_of_projective_space "
 					"the finite field of order " << q << " has been created" << endl;
@@ -904,7 +910,7 @@ void symbol_definition::definition_of_orthogonal_space(int verbose_level)
 					"creating finite field of order " << q << endl;
 		}
 		F = NEW_OBJECT(finite_field);
-		F->finite_field_init(q, verbose_level - 1);
+		F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level - 1);
 		if (f_v) {
 			cout << "symbol_definition::definition_of_orthogonal_space "
 					"creating finite field of order " << q << " done" << endl;
@@ -978,7 +984,7 @@ void symbol_definition::definition_of_linear_group(int verbose_level)
 					"creating finite field of order " << q << endl;
 		}
 		F = NEW_OBJECT(finite_field);
-		F->finite_field_init(q, verbose_level - 1);
+		F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level - 1);
 		if (f_v) {
 			cout << "symbol_definition::definition "
 					"creating finite field of order " << q << " done" << endl;

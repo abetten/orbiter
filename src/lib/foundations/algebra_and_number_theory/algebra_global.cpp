@@ -65,7 +65,7 @@ char *algebra_global::search_for_primitive_polynomial_of_given_degree(
 	if (f_v) {
 		cout << "algebra_global::search_for_primitive_polynomial_of_given_degree" << endl;
 	}
-	Fp.finite_field_init(p, 0 /*verbose_level*/);
+	Fp.finite_field_init(p, FALSE /* f_without_tables */, 0 /*verbose_level*/);
 	unipoly_domain FX(&Fp);
 
 	unipoly_object m;
@@ -134,7 +134,7 @@ void algebra_global::search_for_primitive_polynomials(
 
 		{
 			finite_field Fq;
-			Fq.finite_field_init(q, 0 /*verbose_level*/);
+			Fq.finite_field_init(q, FALSE /* f_without_tables */, 0 /*verbose_level*/);
 			unipoly_domain FX(&Fq);
 
 			unipoly_object m;
@@ -194,12 +194,12 @@ void algebra_global::factor_cyclotomic(int n, int q, int d,
 
 
 	if (f_poly) {
-		Fq.init_override_polynomial(q, poly, verbose_level - 1);
+		Fq.init_override_polynomial(q, poly, FALSE /* f_without_tables */, verbose_level - 1);
 	}
 	else {
-		Fq.finite_field_init(q, verbose_level - 2);
+		Fq.finite_field_init(q, FALSE /* f_without_tables */, verbose_level - 2);
 	}
-	FQ.finite_field_init(Q, verbose_level - 2);
+	FQ.finite_field_init(Q, FALSE /* f_without_tables */, verbose_level - 2);
 
 	FQ.compute_subfields(verbose_level);
 
@@ -791,7 +791,7 @@ void algebra_global::test_unipoly()
 	int i, j;
 	int verbose_level = 0;
 
-	GFp.finite_field_init(p, verbose_level);
+	GFp.finite_field_init(p, FALSE /* f_without_tables */, verbose_level);
 	unipoly_domain FX(&GFp);
 
 	FX.create_object_by_rank(m, 7, __FILE__, __LINE__, 0);
@@ -829,7 +829,7 @@ void algebra_global::test_unipoly2()
 	int q = 4, p = 2, i;
 	int verbose_level = 0;
 
-	Fq.finite_field_init(q, verbose_level);
+	Fq.finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
 	unipoly_domain FX(&Fq);
 
 	unipoly_object a;

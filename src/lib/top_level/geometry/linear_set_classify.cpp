@@ -241,13 +241,13 @@ void linear_set_classify::init(
 	if (f_v) {
 		cout << "linear_set_classify::init before Fq->init" << endl;
 	}
-	Fq->init_override_polynomial(q, poly_q, 0);
+	Fq->init_override_polynomial(q, poly_q, FALSE /* f_without_tables */, 0);
 
 	FQ = NEW_OBJECT(finite_field);
 	if (f_v) {
 		cout << "linear_set_classify::init before FQ->init" << endl;
 	}
-	FQ->init_override_polynomial(Q, poly_Q, 0);
+	FQ->init_override_polynomial(Q, poly_Q, FALSE /* f_without_tables */, 0);
 
 	SubS = NEW_OBJECT(subfield_structure);
 	if (f_v) {

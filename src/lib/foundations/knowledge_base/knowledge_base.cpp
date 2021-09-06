@@ -2340,12 +2340,12 @@ const char *knowledge_base::override_polynomial_subfield(int q)
 		int qq = q * q;
 		
 		cout << "knowledge_base::override_polynomial_subfield initializing large field" << endl;
-		F.finite_field_init(qq, verbose_level);
+		F.finite_field_init(qq, FALSE /* f_without_tables */, verbose_level);
 		cout << "knowledge_base::override_polynomial_subfield initializing small field" << endl;
-		f.finite_field_init(q, verbose_level);
+		f.finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
 		if (f.e > 1) {
-			F.finite_field_init(qq, 1);
-			f.finite_field_init(q, 3);
+			F.finite_field_init(qq, FALSE /* f_without_tables */, 1);
+			f.finite_field_init(q, FALSE /* f_without_tables */, 3);
 			cout << "knowledge_base::override_polynomial_subfield need to choose the generator "
 					"polynomial for the field" << endl;
 			F.compute_subfields(verbose_level);

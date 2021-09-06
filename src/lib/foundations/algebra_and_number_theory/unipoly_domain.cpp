@@ -16,6 +16,18 @@ namespace orbiter {
 namespace foundations {
 
 
+unipoly_domain::unipoly_domain()
+{
+	F = NULL;
+	variable_name.assign("X");
+	f_factorring = FALSE;
+	factor_degree = 0;
+	factor_coeffs = NULL;
+	factor_poly = NULL;
+	f_print_sub = FALSE;
+	//f_use_variable_name = FALSE;
+	//std::string variable_name;
+}
 
 unipoly_domain::unipoly_domain(finite_field *F)
 {
@@ -33,13 +45,15 @@ unipoly_domain::unipoly_domain(finite_field *F)
 unipoly_domain::unipoly_domain(finite_field *F, unipoly_object m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i, a, b;
+	//int i, a, b;
 	
 	if (f_v) {
 		cout << "unipoly_domain::unipoly_domain creating factorring modulo ";
-		print_object(m, cout);
-		cout << " of degree " << ((int *)m)[0] << endl;
+		//print_object(m, cout);
+		//cout << " of degree " << ((int *)m)[0] << endl;
 	}
+
+#if 0
 	unipoly_domain::F = F;
 	variable_name.assign("X");
 	f_factorring = TRUE;
@@ -70,21 +84,74 @@ unipoly_domain::unipoly_domain(finite_field *F, unipoly_object m, int verbose_le
 		cout << endl;
 	}
 	f_print_sub = FALSE;
+#else
+
+	init_factorring(F, m, verbose_level);
+
+#endif
 	if (f_v) {
 		cout << "unipoly_domain::unipoly_domain creating factorring done" << endl;
 	}
 }
 
-
 unipoly_domain::~unipoly_domain()
 {
 	//int i, a, b;
-	
+
 	if (f_factorring) {
 		FREE_int(factor_coeffs);
 		delete_object(factor_poly);
 	}
 }
+
+
+void unipoly_domain::init_factorring(finite_field *F, unipoly_object m, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, a, b;
+
+	if (f_v) {
+		cout << "unipoly_domain::init_factorring creating factorring modulo ";
+		print_object(m, cout);
+		cout << " of degree " << ((int *)m)[0] << endl;
+	}
+	unipoly_domain::F = F;
+	variable_name.assign("X");
+	f_factorring = TRUE;
+	factor_degree = ((int *)m)[0];
+	factor_coeffs = NEW_int(factor_degree + 1);
+	for (i = 0; i <= factor_degree; i++) {
+		factor_coeffs[i] = ((int *)m)[1 + i];
+	}
+	//factor_coeffs = ((int *)m) + 1;
+	if (factor_coeffs[factor_degree] != 1) {
+		cout << "unipoly_domain::init_factorring "
+				"factor polynomial is not monic" << endl;
+		exit(1);
+	}
+	for (i = 0; i < factor_degree; i++) {
+		a = factor_coeffs[i];
+		b = F->negate(a);
+		factor_coeffs[i] = b;
+	}
+	create_object_of_degree_no_test(factor_poly, factor_degree);
+	for (i = 0; i <= factor_degree; i++) {
+		((int *)factor_poly)[1 + i] = ((int *)m)[1 + i];
+	}
+	//factor_poly = m;
+	if (f_v) {
+		cout << "unipoly_domain::init_factorring factor_coeffs = ";
+		Orbiter->Int_vec.print(cout, factor_coeffs, factor_degree + 1);
+		cout << endl;
+	}
+	f_print_sub = FALSE;
+	if (f_v) {
+		cout << "unipoly_domain::init_factorring done" << endl;
+	}
+}
+
+
+
 
 finite_field *unipoly_domain::get_F()
 {
@@ -285,7 +352,8 @@ void unipoly_domain::create_object_by_rank_string(
 	create_object_by_rank_longinteger(p, rank, __FILE__, __LINE__, verbose_level);
 	if (f_v) {
 		cout << "unipoly_domain::create_object_by_rank_string ";
-		print_object(p, cout); cout << endl;
+		print_object(p, cout);
+		cout << endl;
 	}
 }
 

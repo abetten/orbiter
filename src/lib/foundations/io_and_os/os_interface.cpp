@@ -228,14 +228,17 @@ void os_interface::time_check_delta(ostream &ost, int dt)
 	tps = os_ticks_per_second();
 	//cout << "time_check_delta tps=" << tps << endl;
 	os_ticks_to_dhms(dt, tps, d, h, min, s);
-
-	if ((dt / tps) >= 1) {
-		print_elapsed_time(ost, d, h, min, s);
-		}
+	if (d == 0 && h == 0 && min == 0 && s == 0) {
+		ost << (double) dt / (double) tps << " of a second, dt=" << dt << " tps = " << tps << endl;
+	}
 	else {
-		ost << "0:00";
+		if ((dt / tps) >= 1) {
+			print_elapsed_time(ost, d, h, min, s);
 		}
-	//cout << endl;
+		else {
+			ost << "0:00";
+		}
+	}
 }
 
 void os_interface::print_elapsed_time(ostream &ost, int d, int h, int m, int s)
@@ -249,6 +252,7 @@ void os_interface::print_elapsed_time(ostream &ost, int d, int h, int m, int s)
 	else  {
 		ost << m << ":" << s;
 		}
+
 }
 
 void os_interface::time_check(ostream &ost, int t0)

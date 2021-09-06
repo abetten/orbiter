@@ -302,7 +302,11 @@ private:
 	// log_alpha_table[i] = the integer k s.t. alpha^k = i (if i > 0)
 	// log_alpha_table[0] = -1
 	int *alpha_power_table; // [q]
-	int *v1, *v2, *v3; // [e]
+
+	int *v1; // [e]
+	int *v2; // [e]
+	int *v3; // [e]
+
 	int f_has_quadratic_subfield; // TRUE if e is even.
 	int *f_belongs_to_quadratic_subfield; // [q]
 
@@ -333,7 +337,7 @@ public:
 	int add(int i, int j);
 	int add_without_table(int i, int j);
 	int mult_verbose(int i, int j, int verbose_level);
-	int mult_without_table(int i, int j, int verbose_level);
+	int mult_using_discrete_log(int i, int j, int verbose_level);
 	int negate(int i);
 	int negate_without_table(int i);
 	int inverse(int i);
@@ -341,13 +345,58 @@ public:
 	int frobenius_image(int a);
 	// computes a^p
 	int frobenius_power(int a, int frob_power);
-	// computes a^{p^i}
+	// computes a^{p^frob_power}
 	int alpha_power(int i);
 	int log_alpha(int i);
 	void addition_table_reordered_save_csv(std::string &fname, int verbose_level);
 	void multiplication_table_reordered_save_csv(std::string &fname, int verbose_level);
 
 };
+
+
+// #############################################################################
+// finite_field_implementation_wo_tables.cpp
+// #############################################################################
+
+//! implementation of a finite Galois field Fq without any tables
+
+class finite_field_implementation_wo_tables {
+
+
+private:
+
+	finite_field *F;
+
+	int *v1; // [e]
+	int *v2; // [e]
+	int *v3; // [e]
+
+	finite_field *GFp;
+
+	unipoly_domain *FX;
+
+	unipoly_object m;
+
+	int factor_polynomial_degree;
+	int *factor_polynomial_coefficients_negated;
+
+
+	unipoly_domain *Fq;
+
+	unipoly_object Alpha;
+
+
+public:
+	finite_field_implementation_wo_tables();
+	~finite_field_implementation_wo_tables();
+	void init(finite_field *F, int verbose_level);
+	int mult(int i, int j, int verbose_level);
+	int inverse(int i, int verbose_level);
+	int negate(int i, int verbose_level);
+	int add(int i, int j, int verbose_level);
+
+};
+
 
 
 // #############################################################################
@@ -365,6 +414,8 @@ public:
 
 	int f_override_polynomial;
 	std::string override_polynomial;
+
+	int f_without_tables;
 
 	finite_field_description();
 	~finite_field_description();
@@ -386,6 +437,8 @@ class finite_field {
 
 private:
 	finite_field_implementation_by_tables *T;
+
+	finite_field_implementation_wo_tables *Iwo;
 
 
 	std::string symbol_for_print;
@@ -418,12 +471,12 @@ public:
 	void print_call_stats(std::ostream &ost);
 	int &nb_calls_to_elliptic_curve_addition();
 	void init(finite_field_description *Descr, int verbose_level);
-	void finite_field_init(int q, int verbose_level);
-	void init2(int verbose_level);
+	void finite_field_init(int q, int f_without_tables, int verbose_level);
+	void init_implementation(int f_without_tables, int verbose_level);
 	void set_default_symbol_for_print();
 	void init_symbol_for_print(const char *symbol);
 	void init_override_polynomial(int q, std::string &poly,
-		int verbose_level);
+		int f_without_tables, int verbose_level);
 	int has_quadratic_subfield();
 	int belongs_to_quadratic_subfield(int a);
 	long int compute_subfield_polynomial(int order_subfield,

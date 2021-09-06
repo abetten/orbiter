@@ -1023,7 +1023,7 @@ void algebra_global_with_action::do_normal_form(int q, int d,
 		cout << "algebra_global_with_action::do_normal_form" << endl;
 		}
 	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(q, 0);
+	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 
 	if (f_v) {
 		cout << "algebra_global_with_action::do_normal_form before C.init" << endl;
@@ -1113,7 +1113,7 @@ void algebra_global_with_action::do_identify_one(int q, int d,
 	finite_field *F;
 
 	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(q, 0);
+	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 
 	C.init(d, F, verbose_level);
 
@@ -1184,7 +1184,7 @@ void algebra_global_with_action::do_identify_all(int q, int d,
 	finite_field *F;
 
 	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(q, 0);
+	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 
 	C.init(d, F, verbose_level);
 
@@ -1269,7 +1269,7 @@ void algebra_global_with_action::do_random(int q, int d, int f_no_eigenvalue_one
 	finite_field *F;
 
 	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(q, 0);
+	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 	C.init(d, F, verbose_level);
 
 	C.make_classes(Reps, nb_classes, f_no_eigenvalue_one, verbose_level);
@@ -1318,10 +1318,10 @@ void algebra_global_with_action::group_table(int q, int d, int f_poly, std::stri
 
 	F = NEW_OBJECT(finite_field);
 	if (f_poly) {
-		F->init_override_polynomial(q, poly, 0);
+		F->init_override_polynomial(q, poly, FALSE /* f_without_tables */, 0);
 		}
 	else {
-		F->finite_field_init(q, 0);
+		F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 		}
 
 	C.init(d, F, verbose_level);
@@ -1512,7 +1512,7 @@ void algebra_global_with_action::centralizer_brute_force(int q, int d,
 	vector_ge *nice_gens;
 
 	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(q, 0);
+	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 
 	A = NEW_OBJECT(action);
 	A->init_projective_group(d /* n */, F,
@@ -1641,7 +1641,7 @@ void algebra_global_with_action::centralizer(int q, int d,
 	vector_ge *nice_gens;
 
 	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(q, 0);
+	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 
 	A_PGL = NEW_OBJECT(action);
 	A_PGL->init_projective_group(d /* n */, F,
@@ -1715,7 +1715,7 @@ void algebra_global_with_action::centralizer(int q, int d, int verbose_level)
 	int go, i;
 
 	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(q, 0);
+	F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 	A = NEW_OBJECT(action);
 	A->init_projective_group(d /* n */, F,
 			FALSE /* f_semilinear */,

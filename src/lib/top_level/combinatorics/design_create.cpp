@@ -94,7 +94,7 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 			//cout << "design_create::init k = " << k << endl;
 		}
 		F = NEW_OBJECT(finite_field);
-		F->finite_field_init(q, 0);
+		F->finite_field_init(q, FALSE /* f_without_tables */, 0);
 	}
 
 	if (Descr->f_family) {

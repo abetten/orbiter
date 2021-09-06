@@ -86,7 +86,7 @@ void number_theoretic_transform::init(std::string &fname_code,
 
 
 	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(q, 0 /* verbose_level */);
+	F->finite_field_init(q, FALSE /* f_without_tables */, 0 /* verbose_level */);
 
 
 	minus_one = F->negate(1);
@@ -136,7 +136,7 @@ void number_theoretic_transform::init(std::string &fname_code,
 		Psi_powers = NEW_int(N[k]);
 		Q = q * q;
 		FQ = NEW_OBJECT(finite_field);
-		FQ->finite_field_init(Q, 0);
+		FQ->finite_field_init(Q, FALSE /* f_without_tables */, 0);
 		alphaQ = FQ->primitive_element();
 
 		psi = FQ->power(alphaQ, (q + 1) >> 1);

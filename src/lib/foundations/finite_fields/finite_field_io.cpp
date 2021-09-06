@@ -34,7 +34,7 @@ void finite_field::print_minimum_polynomial(int p, const char *polynomial)
 {
 	finite_field GFp;
 
-	GFp.finite_field_init(p, 0);
+	GFp.finite_field_init(p, FALSE /* f_without_tables */, 0);
 
 	unipoly_domain FX(&GFp);
 	unipoly_object m, n;
@@ -710,7 +710,7 @@ void finite_field::cheat_sheet_subfields(ostream &f, int verbose_level)
 	if (!f_is_prime_field) {
 		f << "The polynomial used to define the field is : ";
 		finite_field GFp;
-		GFp.finite_field_init(p, 0);
+		GFp.finite_field_init(p, FALSE /* f_without_tables */, 0);
 
 		unipoly_domain FX(&GFp);
 		unipoly_object m;
@@ -765,7 +765,7 @@ void finite_field::report_subfields(std::ostream &ost, int verbose_level)
 					verbose_level);
 			{
 				finite_field GFp;
-				GFp.finite_field_init(p, 0);
+				GFp.finite_field_init(p, FALSE /* f_without_tables */, 0);
 
 				unipoly_domain FX(&GFp);
 				unipoly_object m;
@@ -824,7 +824,7 @@ void finite_field::report_subfields_detailed(std::ostream &ost, int verbose_leve
 		string poly_text;
 
 		poly_text.assign(str);
-		Fq->init_override_polynomial(q0, poly_text, verbose_level);
+		Fq->init_override_polynomial(q0, poly_text, FALSE /* f_without_tables */, verbose_level);
 
 		subfield_structure *Sub;
 

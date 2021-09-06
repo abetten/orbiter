@@ -81,6 +81,7 @@ MODULES= \
 		foundations/finite_fields/finite_field_applications.o \
 		foundations/finite_fields/finite_field_description.o \
 		foundations/finite_fields/finite_field_implementation_by_tables.o \
+		foundations/finite_fields/finite_field_implementation_wo_tables.o \
 		foundations/finite_fields/finite_field_io.o \
 		foundations/finite_fields/finite_field_linear_algebra.o \
 		foundations/finite_fields/finite_field_linear_algebra2.o \
