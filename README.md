@@ -34,9 +34,15 @@ Optional:
 latex, povray
 
 
+Please see the project 
+
+    abetten/orbiter-boilerplate
+
+for how to use Orbiter as a library in C++ code.
+
 
 Anton Betten
-July 21, 2021
+Sept 26, 2021
 
 
 
