@@ -109,7 +109,7 @@ int my_atoi(char *str)
 	return 0;
 }
 
-long int my_atol(char *str)
+long int my_atol(const char *str)
 {
 	long int a;
 	if (strlen(str)) {

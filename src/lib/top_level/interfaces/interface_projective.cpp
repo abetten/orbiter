@@ -49,6 +49,8 @@ interface_projective::interface_projective()
 	f_make_table_of_surfaces = FALSE;
 
 	f_create_surface_reports = FALSE;
+	//std::string create_surface_reports_field_orders_text;
+
 	f_create_surface_atlas = FALSE;
 	create_surface_atlas_q_max = 0;
 
@@ -80,7 +82,7 @@ void interface_projective::print_help(int argc,
 		cout << "-make_table_of_surfaces " << endl;
 	}
 	else if (stringcmp(argv[i], "-create_surface_reports") == 0) {
-		cout << "-create_surface_reports <int : q_max>" << endl;
+		cout << "-create_surface_reports <string : field orders>" << endl;
 	}
 	else if (stringcmp(argv[i], "-create_surface_atlas") == 0) {
 		cout << "-create_surface_atlas <int : q_max>" << endl;
@@ -238,9 +240,9 @@ void interface_projective::read_arguments(int argc,
 	}
 	else if (stringcmp(argv[i], "-create_surface_reports") == 0) {
 		f_create_surface_reports = TRUE;
-		create_surface_atlas_q_max = strtoi(argv[++i]);
+		create_surface_reports_field_orders_text.assign(argv[++i]);
 		if (f_v) {
-			cout << "-create_surface_reports " << create_surface_atlas_q_max << endl;
+			cout << "-create_surface_reports " << create_surface_reports_field_orders_text << endl;
 		}
 	}
 	else if (stringcmp(argv[i], "-create_dickson_atlas") == 0) {
@@ -298,7 +300,7 @@ void interface_projective::print()
 		cout << "-create_surface_atlas " << create_surface_atlas_q_max << endl;
 	}
 	if (f_create_surface_reports) {
-		cout << "-create_surface_reports " << create_surface_atlas_q_max << endl;
+		cout << "-create_surface_reports " << create_surface_reports_field_orders_text << endl;
 	}
 	if (f_create_dickson_atlas) {
 		cout << "-create_dickson_atlas " << endl;
@@ -355,7 +357,7 @@ void interface_projective::worker(int verbose_level)
 
 		surface_domain_high_level SH;
 
-		SH.do_create_surface_reports(create_surface_atlas_q_max, verbose_level);
+		SH.do_create_surface_reports(create_surface_reports_field_orders_text, verbose_level);
 
 	}
 

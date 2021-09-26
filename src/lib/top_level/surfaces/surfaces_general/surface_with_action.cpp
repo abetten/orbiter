@@ -1732,11 +1732,6 @@ void surface_with_action::report_with_group(
 
 	// classify six arcs not on a conic:
 
-	//action *A;
-
-
-	//A = PA->PA2->A;
-
 	if (f_v) {
 		cout << "surface_with_action::report_with_group "
 				"before Six_arcs->init:" << endl;
@@ -1746,8 +1741,6 @@ void surface_with_action::report_with_group(
 	Six_arcs->init(
 			Six_arc_descr,
 			PA->PA2,
-			//A,
-			//SC->Surf->P2,
 			FALSE, 0, NULL,
 			verbose_level);
 

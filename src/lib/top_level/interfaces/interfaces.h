@@ -598,6 +598,7 @@ class interface_projective {
 	int f_make_table_of_surfaces;
 
 	int f_create_surface_reports;
+	std::string create_surface_reports_field_orders_text;
 
 	int f_create_surface_atlas;
 	int create_surface_atlas_q_max;

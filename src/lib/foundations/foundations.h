@@ -486,6 +486,7 @@ class del_pezzo_surface_of_degree_two_domain;
 class del_pezzo_surface_of_degree_two_object;
 class eckardt_point_info;
 class eckardt_point;
+class schlaefli_labels;
 class schlaefli;
 class seventytwo_cases;
 class surface_domain;

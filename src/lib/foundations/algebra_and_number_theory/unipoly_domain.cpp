@@ -2042,6 +2042,9 @@ int unipoly_domain::substitute_scalar_in_polynomial(
 void unipoly_domain::module_structure_apply(int *v,
 		int *Mtx, int n, unipoly_object p,
 		int verbose_level)
+// computes the effect of Mtx substituted into p=p(x) applied to the vector v.
+// Uses Horner's scheme.
+// The result is put back into v.
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);

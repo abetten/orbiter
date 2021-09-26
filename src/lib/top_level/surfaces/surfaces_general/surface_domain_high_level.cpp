@@ -1635,7 +1635,7 @@ struct table_surfaces_field_order {
 
 };
 
-void surface_domain_high_level::do_create_surface_reports(int q_max, int verbose_level)
+void surface_domain_high_level::do_create_surface_reports(std::string &field_orders_text, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1648,64 +1648,85 @@ void surface_domain_high_level::do_create_surface_reports(int q_max, int verbose
 	number_theory_domain NT;
 	file_io Fio;
 
+
+	int *Q;
+	int nb_q;
+
+	Orbiter->Int_vec.scan(field_orders_text, Q, nb_q);
+
 	int q;
 	int cur;
+	int i;
 
 	cur = 0;
-	for (q = 2; q <= q_max; q++) {
+	for (i = 0; i < nb_q; i++) {
 
-		int p;
-		int h;
+		q = Q[i];
 
-		if (!NT.is_prime_power(q, p, h)) {
-			continue;
-		}
-
-
-		if (q == 2) {
-			continue;
-		}
-		if (q == 3) {
-			continue;
-		}
-		if (q == 5) {
-			continue;
-		}
-
-		cout << "considering q=" << q << endl;
 
 		int nb_total;
 		int ocn;
 
 		nb_total = K.cubic_surface_nb_reps(q);
 
+		if (f_v) {
+			cout << "surface_domain_high_level::do_create_surface_reports considering q=" << q << " with " << nb_total << " surfaces" << endl;
+		}
+
+
 		for (ocn = 0; ocn < nb_total; ocn++) {
 
 			string cmd;
 			string fname;
 			char str[1000];
+			char str_ocn[1000];
+
+			if (f_v) {
+				cout << "surface_domain_high_level::do_create_surface_reports considering q=" << q << " ocn=" << ocn << " / " << nb_total << endl;
+			}
 
 			make_fname_surface_report_tex(fname, q, ocn);
 
+#if 0
+			$(ORBITER_PATH)orbiter.out -v 3 \
+				-define F -finite_field -q 4 -end \
+				-define P -projective_space 3 F -end \
+				-with P -do \
+				-projective_space_activity \
+					-define_surface S -q 4 -catalogue 0 -end \
+				-end \
+				-with S -do \
+				-cubic_surface_activity \
+					-report \
+					-report_with_group \
+					-all_quartic_curves \
+				-end
+#endif
+
+
+				sprintf(str, "%d ", q);
+				sprintf(str_ocn, "%d ", ocn);
+
 			cmd.assign(Orbiter->orbiter_path);
-			cmd.append("/orbiter.out -v 2  ");
-
-			if (h > 1) {
-				sprintf(str, " -linear_group -PGGL 4 %d -wedge -end", q);
-			}
-			else {
-				sprintf(str, " -linear_group -PGL 4 %d -wedge -end", q);
-			}
+			cmd.append("/orbiter.out -v 3 ");
+			cmd.append("-define F -finite_field -q ");
 			cmd.append(str);
-			cmd.append(" -group_theoretic_activities ");
-			cmd.append(" -control_six_arcs  -end ");
-
-			sprintf(str, " -create_surface -q %d -catalogue %d -end ", q, ocn);
+			cmd.append("-end ");
+			cmd.append("-define P -projective_space 3 F -end ");
+			cmd.append("-with P -do ");
+			cmd.append("-projective_space_activity ");
+			cmd.append("-define_surface S -q ");
 			cmd.append(str);
-			cmd.append(" -draw_options -end ");
-
-			cmd.append(" -end");
-
+			cmd.append("-catalogue ");
+			cmd.append(str_ocn);
+			cmd.append("-end ");
+			cmd.append("-end ");
+			cmd.append("-with S -do ");
+			cmd.append("-cubic_surface_activity ");
+			cmd.append("-report ");
+			cmd.append("-report_with_group ");
+			//cmd.append("-all_quartic_curves ");
+			cmd.append("-end >log_surface");
 
 			if (f_v) {
 				cout << "executing command: " << cmd << endl;
@@ -1718,6 +1739,11 @@ void surface_domain_high_level::do_create_surface_reports(int q_max, int verbose
 
 			cmd.assign("pdflatex ");
 			cmd.append(fname_report_tex);
+			cmd.append(" >log_pdflatex");
+
+			if (f_v) {
+				cout << "executing command: " << cmd << endl;
+			}
 			system(cmd.c_str());
 
 

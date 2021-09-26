@@ -406,7 +406,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_arc_with_given_set_as_s_lines_after_dualizing) {
 		if (f_v) {
-			cout << "perform_job_for_one_set f_arc_with_given_set_as_i_lines_after_dualizing" << endl;
+			cout << "projective_space_activity::perform_activity f_arc_with_given_set_as_i_lines_after_dualizing" << endl;
 		}
 		diophant *D = NULL;
 		int f_save_system = TRUE;
@@ -486,7 +486,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_arc_with_two_given_sets_of_lines_after_dualizing) {
 		if (f_v) {
-			cout << "perform_job_for_one_set f_arc_with_two_given_sets_of_lines_after_dualizing" << endl;
+			cout << "projective_space_activity::perform_activity f_arc_with_two_given_sets_of_lines_after_dualizing" << endl;
 		}
 
 		long int *t_lines;
@@ -579,7 +579,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_arc_with_three_given_sets_of_lines_after_dualizing) {
 		if (f_v) {
-			cout << "perform_job_for_one_set f_arc_with_three_given_sets_of_lines_after_dualizing" << endl;
+			cout << "projective_space_activity::perform_activity f_arc_with_three_given_sets_of_lines_after_dualizing" << endl;
 		}
 		//int arc_size;
 		//int arc_d;
@@ -629,10 +629,10 @@ void projective_space_activity::perform_activity(int verbose_level)
 			fname_system.assign(Descr->arc_label);
 			fname_system.append(".diophant");
 
-			cout << "perform_job_for_one_set saving the system "
+			cout << "projective_space_activity::perform_activity saving the system "
 					"to file " << fname_system << endl;
 			D->save_in_general_format(fname_system, 0 /* verbose_level */);
-			cout << "perform_job_for_one_set saving the system "
+			cout << "projective_space_activity::perform_activity saving the system "
 					"to file " << fname_system << " done" << endl;
 			//D->print();
 			//D->print_tight();
@@ -681,7 +681,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_dualize_hyperplanes_to_points) {
 		if (f_v) {
-			cout << "projective_space_job_description::perform_job_for_one_set f_dualize_hyperplanes_to_points" << endl;
+			cout << "projective_space_activity::perform_activity f_dualize_hyperplanes_to_points" << endl;
 		}
 		long int *the_set_in;
 		int set_size_in;
@@ -710,7 +710,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_dualize_points_to_hyperplanes) {
 		if (f_v) {
-			cout << "projective_space_job_description::perform_job_for_one_set f_dualize_points_to_hyperplanes" << endl;
+			cout << "projective_space_activity::perform_activity f_dualize_points_to_hyperplanes" << endl;
 		}
 		long int *the_set_in;
 		int set_size_in;
@@ -744,6 +744,41 @@ void projective_space_activity::perform_activity(int verbose_level)
 				PA,
 				Descr->Arc_generator_description,
 				verbose_level);
+	}
+	else if (Descr->f_latex_homogeneous_equation) {
+		int d = Descr->latex_homogeneous_equation_degree;
+		int *eqn;
+		int sz;
+		homogeneous_polynomial_domain *Poly;
+
+		Orbiter->Int_vec.scan(Descr->latex_homogeneous_equation_text, eqn, sz);
+		Poly = NEW_OBJECT(homogeneous_polynomial_domain);
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity before Poly->init" << endl;
+		}
+		Poly->init(PA->F,
+				PA->d /* nb_vars */, d /* degree */,
+				FALSE /* f_init_incidence_structure */,
+				t_PART,
+				verbose_level);
+
+		Poly->remake_symbols(0 /* symbol_offset */,
+					Descr->latex_homogeneous_equation_symbol_txt.c_str(),
+					Descr->latex_homogeneous_equation_symbol_tex.c_str(),
+					verbose_level);
+
+
+		if (Poly->get_nb_monomials() != sz) {
+			cout << "Poly->get_nb_monomials() = " << Poly->get_nb_monomials() << endl;
+			cout << "number of coefficients given = " << sz << endl;
+			exit(1);
+		}
+		Poly->print_equation_tex(cout, eqn);
+		cout << endl;
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity after Poly1->init" << endl;
+		}
 	}
 
 	if (f_v) {
@@ -1278,10 +1313,24 @@ void projective_space_activity::classify_quartic_curves_with_substructure(
 
 	canonical_form_classifier Classifier;
 
+
+	if (f_v) {
+		cout << "projective_space_activity::classify_quartic_curves_with_substructure before Classifier.classify" << endl;
+	}
 	Classifier.classify(&Descr, verbose_level);
+	if (f_v) {
+		cout << "projective_space_activity::classify_quartic_curves_with_substructure after Classifier.classify" << endl;
+	}
 
 
+	if (f_v) {
+		cout << "projective_space_activity::classify_quartic_curves_with_substructure before Classifier.report" << endl;
+	}
 	Classifier.report(fname_classification, verbose_level);
+	if (f_v) {
+		cout << "projective_space_activity::classify_quartic_curves_with_substructure after Classifier.report" << endl;
+	}
+
 
 #if 0
 	cout << "The number of types of quartic curves is " << Classifier.CB->nb_types << endl;

@@ -32,11 +32,11 @@ quartic_curve_object_properties::quartic_curve_object_properties()
 	Point_type = NULL;
 	f_fullness_has_been_established = FALSE;
 	f_is_full = FALSE;
-	nb_Kowalevski = 0;
-	nb_Kowalevski_on = 0;
-	nb_Kowalevski_off = 0;
-	Kowalevski_point_idx = NULL;
-	Kowalevski_points = NULL;
+	nb_Kovalevski = 0;
+	nb_Kovalevski_on = 0;
+	nb_Kovalevski_off = 0;
+	Kovalevski_point_idx = NULL;
+	Kovalevski_points = NULL;
 	Pts_off = NULL;
 	nb_pts_off = 0;
 	pts_off_on_lines = NULL;
@@ -62,11 +62,11 @@ quartic_curve_object_properties::~quartic_curve_object_properties()
 	if (Point_type) {
 		FREE_OBJECT(Point_type);
 	}
-	if (Kowalevski_point_idx) {
-		FREE_int(Kowalevski_point_idx);
+	if (Kovalevski_point_idx) {
+		FREE_int(Kovalevski_point_idx);
 	}
-	if (Kowalevski_points) {
-		FREE_lint(Kowalevski_points);
+	if (Kovalevski_points) {
+		FREE_lint(Kovalevski_points);
 	}
 	if (Pts_off) {
 		FREE_lint(Pts_off);
@@ -257,10 +257,15 @@ void quartic_curve_object_properties::print_equation(std::ostream &ost)
 	ost << "The equation of the quartic curve ";
 	ost << " is :" << endl;
 
+	ost << "$$" << endl;
+	ost << "\\begin{array}{c}" << endl;
 	QO->Dom->print_equation_with_line_breaks_tex(ost, QO->eqn15);
+	ost << "\\end{array}" << endl;
+	ost << "$$" << endl;
 
+	ost << "$$" << endl;
 	Orbiter->Int_vec.print(ost, QO->eqn15, 15);
-	ost << "\\\\" << endl;
+	ost << "$$" << endl;
 
 #if 0
 	long int rk;
@@ -309,11 +314,11 @@ void quartic_curve_object_properties::print_general(std::ostream &ost)
 			ost << "\\hline" << endl;
 		}
 	}
-	ost << "\\mbox{Number of Kowalevski points} & " << nb_Kowalevski << "\\\\" << endl;
+	ost << "\\mbox{Number of Kovalevski points} & " << nb_Kovalevski << "\\\\" << endl;
 	ost << "\\hline" << endl;
 
 
-	ost << "\\mbox{Line type (2,1,0)} & ";
+	ost << "\\mbox{Bitangent line type (2,1,0)} & ";
 	ost << line_type_distribution[2];
 	ost << "," << endl;
 	ost << line_type_distribution[1];
@@ -443,11 +448,11 @@ void quartic_curve_object_properties::print_all_points(std::ostream &ost)
 
 
 
-		ost << "The Kowalevski points are: \\\\" << endl;
-		for (i = 0; i < nb_Kowalevski; i++) {
-			a = Kowalevski_point_idx[i];
-			QO->Dom->unrank_point(v, Kowalevski_points[i]);
-			ost << i << " : $P_{" << Kowalevski_points[i] << "}=";
+		ost << "The Kovalevski points are: \\\\" << endl;
+		for (i = 0; i < nb_Kovalevski; i++) {
+			a = Kovalevski_point_idx[i];
+			QO->Dom->unrank_point(v, Kovalevski_points[i]);
+			ost << i << " : $P_{" << Kovalevski_points[i] << "}=";
 			Orbiter->Int_vec.print_fully(ost, v, 3);
 
 			ost << " = ";
@@ -465,8 +470,8 @@ void quartic_curve_object_properties::print_all_points(std::ostream &ost)
 
 		FREE_OBJECT(Labels);
 
-		ost << "The Kowalevski points by rank are: " << endl;
-		Orbiter->Lint_vec.print_fully(ost, Kowalevski_points, nb_Kowalevski);
+		ost << "The Kovalevski points by rank are: " << endl;
+		Orbiter->Lint_vec.print_fully(ost, Kovalevski_points, nb_Kovalevski);
 		ost << "\\\\" << endl;
 
 		ost << "The points off the curve are: \\\\" << endl;
@@ -643,7 +648,7 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 
 
 	f_is_full = TRUE;
-	nb_Kowalevski_on = 0;
+	nb_Kovalevski_on = 0;
 	for (i = Point_type->nb_types - 1; i >= 0; i--) {
 		f = Point_type->type_first[i];
 		l = Point_type->type_len[i];
@@ -652,7 +657,7 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 			f_is_full = FALSE;
 		}
 		if (a == 4) {
-			nb_Kowalevski_on += l;
+			nb_Kovalevski_on += l;
 			for (j = 0; j < l; j++) {
 				b = Point_type->sorting_perm_inv[f + j];
 				K.push_back(b);
@@ -700,32 +705,32 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 	}
 
 
-	nb_Kowalevski_off = 0;
+	nb_Kovalevski_off = 0;
 	for (i = Point_off_type->nb_types - 1; i >= 0; i--) {
 		f = Point_off_type->type_first[i];
 		l = Point_off_type->type_len[i];
 		a = Point_off_type->data_sorted[f];
 		if (a == 4) {
-			nb_Kowalevski_off += l;
+			nb_Kovalevski_off += l;
 			for (j = 0; j < l; j++) {
 				b = Point_off_type->sorting_perm_inv[f + j];
 				K.push_back(b);
 			}
 		}
 	}
-	nb_Kowalevski = nb_Kowalevski_on + nb_Kowalevski_off;
-	if (K.size() != nb_Kowalevski) {
-		cout << "K.size() != nb_Kowalevski" << endl;
+	nb_Kovalevski = nb_Kovalevski_on + nb_Kovalevski_off;
+	if (K.size() != nb_Kovalevski) {
+		cout << "K.size() != nb_Kovalevski" << endl;
 		cout << "K.size()=" << K.size() << endl;
-		cout << "nb_Kowalevski=" << nb_Kowalevski << endl;
+		cout << "nb_Kovalevski=" << nb_Kovalevski << endl;
 		exit(1);
 	}
 
-	Kowalevski_point_idx = NEW_int(nb_Kowalevski);
-	Kowalevski_points = NEW_lint(nb_Kowalevski);
-	for (j = 0; j < nb_Kowalevski; j++) {
-		Kowalevski_point_idx[j] = K[j];
-		Kowalevski_points[j] = Pts_off[K[j]];
+	Kovalevski_point_idx = NEW_int(nb_Kovalevski);
+	Kovalevski_points = NEW_lint(nb_Kovalevski);
+	for (j = 0; j < nb_Kovalevski; j++) {
+		Kovalevski_point_idx[j] = K[j];
+		Kovalevski_points[j] = Pts_off[K[j]];
 	}
 
 	if (f_v) {

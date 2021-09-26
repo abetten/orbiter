@@ -450,6 +450,8 @@ private:
 
 public:
 	int f_has_table;
+		// if TRUE, T is available, otherwise Two is available.
+
 	std::string label;
 	std::string label_tex;
 	std::string override_poly;

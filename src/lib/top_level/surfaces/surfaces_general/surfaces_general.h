@@ -76,7 +76,7 @@ public:
 // surface_clebsch_map.cpp
 // #############################################################################
 
-//! a Clebsch map associated to a surface and a choice of half double six
+//! a Clebsch map associated with a cubic surface and a choice of half double six
 
 
 class surface_clebsch_map {
@@ -389,7 +389,7 @@ public:
 			struct cubic_surface_data_set *Data, int nb_orbits, int verbose_level);
 	void report_surfaces_by_lines(std::ostream &ost,
 			struct cubic_surface_data_set *Data, tally &T, int verbose_level);
-	void do_create_surface_reports(int q_max, int verbose_level);
+	void do_create_surface_reports(std::string &field_orders_text, int verbose_level);
 	void do_create_surface_atlas(int q_max, int verbose_level);
 	void do_create_surface_atlas_q_e(int q_max,
 			struct table_surfaces_field_order *T, int nb_e, int *Idx, int nb,
@@ -503,6 +503,7 @@ public:
 			int f_print_orbits, std::string &fname_mask,
 			layered_graph_draw_options *Opt,
 			int verbose_level);
+	void print_automorphism_group_gnerators(std::ostream &ost, int verbose_level);
 	void investigate_surface_and_write_report(
 			layered_graph_draw_options *Opt,
 			action *A,
