@@ -864,13 +864,15 @@ public:
 	void print_polynomial_domains(std::ostream &ost);
 	void sstr_line_label(std::stringstream &sstr, long int pt);
 	void make_table_of_surfaces(int verbose_level);
+	void make_table_of_surfaces_detailed(
+			int *Q_table, int Q_table_len, int verbose_level);
 	void make_table_of_surfaces2(std::ostream &ost,
 			int *Q_table, int Q_table_len, int verbose_level);
 	void table_top(std::ostream &ost);
 	void table_bottom(std::ostream &ost);
 	void compute_table_E(
 			int *field_orders, int nb_fields,
-			int *&Table,
+			long int *&Table,
 			int *&Q, int &nb_Q,
 			int *&E, int &nb_E_types, int verbose_level);
 

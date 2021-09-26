@@ -887,6 +887,15 @@ void canonical_form_classifier::write_canonical_forms_csv(
 
 		ost << "ROW,SourceFile,SourceRow,Eqn,Pts,Lines,Transporter,CanEqn,CanPts,CanLines,AutTl,AutGens,Ago" << endl;
 		for (i = 0; i < nb_objects_to_test; i++) {
+
+			if (f_v) {
+				cout << "canonical_form_classifier::write_canonical_forms_csv i=" << i << " / " << nb_objects_to_test << endl;
+			}
+
+			if (CFS_table[i] == NULL) {
+				continue;
+			}
+
 			ost << i;
 			ost << ",";
 			ost << CFS_table[i]->cnt;
@@ -969,6 +978,7 @@ void canonical_form_classifier::write_canonical_forms_csv(
 			strong_generators *gens;
 
 			gens = CFS_table[i]->gens_stab_of_canonical_equation;
+
 			{
 				string str;
 				Orbiter->Int_vec.create_string_with_quotes(str, gens->tl, A->base_len());
@@ -979,11 +989,10 @@ void canonical_form_classifier::write_canonical_forms_csv(
 			{
 				string str;
 
-				gens->get_gens_data_as_string_with_quotes(str, verbose_level);
+				gens->get_gens_data_as_string_with_quotes(str, 0 /*verbose_level*/);
 				ost << str;
 			}
 			ost << ",";
-
 			longinteger_object go;
 
 			gens->group_order(go);
@@ -1072,15 +1081,26 @@ void canonical_form_classifier::generate_source_code(
 			canonical_form_substructure *CFS = CFS_table[idx];
 
 
-			//equation = Classification_of_quartic_curves->Reps + orbit_index * Classification_of_quartic_curves->data_set_sz;
-			equation = CFS->canonical_equation;
+			if (CFS) {
+				//equation = Classification_of_quartic_curves->Reps + orbit_index * Classification_of_quartic_curves->data_set_sz;
+				equation = CFS->canonical_equation;
 
-			f << "\t";
-			for (i = 0; i < nb_monomials; i++) {
-				f << equation[i];
-				f << ", ";
+				f << "\t";
+				for (i = 0; i < nb_monomials; i++) {
+					f << equation[i];
+					f << ", ";
+				}
+				f << endl;
 			}
-			f << endl;
+			else {
+				f << "\t";
+				for (i = 0; i < nb_monomials; i++) {
+					f << 0;
+					f << ", ";
+				}
+				f << "// problem" << endl;
+
+			}
 
 		}
 		f << "};" << endl;
@@ -1142,30 +1162,36 @@ void canonical_form_classifier::generate_source_code(
 
 			canonical_form_substructure *CFS = CFS_table[idx];
 
-			if (CFS == NULL) {
-				cout << "canonical_form_classifier::generate_source_code CFS == NULL" << endl;
-				exit(1);
+
+			if (CFS) {
+				long int *bitangents_orig;
+				long int *bitangents_canonical;
+
+				bitangents_orig = CFS->bitangents;
+				bitangents_canonical = NEW_lint(CFS->nb_bitangents);
+				for (j = 0; j < CFS->nb_bitangents; j++) {
+					bitangents_canonical[j] = A_on_lines->element_image_of(bitangents_orig[j], CFS->transporter_to_canonical_form, 0 /* verbose_level */);
+				}
+
+
+
+
+				f << "\t";
+				for (j = 0; j < 28; j++) {
+					f << bitangents_canonical[j];
+					f << ", ";
+				}
+				f << endl;
 			}
+			else {
+				f << "\t";
+				for (j = 0; j < 28; j++) {
+					f << 0;
+					f << ", ";
+				}
+				f << "// problem" << endl;
 
-
-			long int *bitangents_orig;
-			long int *bitangents_canonical;
-
-			bitangents_orig = CFS->bitangents;
-			bitangents_canonical = NEW_lint(CFS->nb_bitangents);
-			for (j = 0; j < CFS->nb_bitangents; j++) {
-				bitangents_canonical[j] = A_on_lines->element_image_of(bitangents_orig[j], CFS->transporter_to_canonical_form, 0 /* verbose_level */);
 			}
-
-
-
-
-			f << "\t";
-			for (j = 0; j < 28; j++) {
-				f << bitangents_canonical[j];
-				f << ", ";
-			}
-			f << endl;
 
 		}
 		f << "};" << endl;
@@ -1196,12 +1222,20 @@ void canonical_form_classifier::generate_source_code(
 
 				canonical_form_substructure *CFS = CFS_table[idx];
 				//gens = CFS->Gens_stabilizer_canonical_form;
-				gens = CFS->gens_stab_of_canonical_equation;
+				if (CFS) {
+					gens = CFS->gens_stab_of_canonical_equation;
 
 
-				stab_gens_first[orbit_index] = fst;
-				stab_gens_len[orbit_index] = gens->gens->len;
-				fst += stab_gens_len[orbit_index];
+					stab_gens_first[orbit_index] = fst;
+					stab_gens_len[orbit_index] = gens->gens->len;
+					fst += stab_gens_len[orbit_index];
+				}
+				else {
+					stab_gens_first[orbit_index] = fst;
+					stab_gens_len[orbit_index] = 0;
+					fst += 0;
+
+				}
 			}
 
 
@@ -1269,11 +1303,16 @@ void canonical_form_classifier::generate_source_code(
 
 					canonical_form_substructure *CFS = CFS_table[idx];
 					//gens = CFS->Gens_stabilizer_canonical_form;
-					gens = CFS->gens_stab_of_canonical_equation;
+					if (CFS) {
+						gens = CFS->gens_stab_of_canonical_equation;
 
 
-					A->element_print_for_make_element(gens->gens->ith(j), f);
-					f << endl;
+						A->element_print_for_make_element(gens->gens->ith(j), f);
+						f << endl;
+					}
+					else {
+						f << "// problem" << endl;
+					}
 				}
 			}
 			f << "};" << endl;
@@ -1298,6 +1337,12 @@ void canonical_form_classifier::generate_source_code(
 
 void canonical_form_classifier::report(std::string &fname_base, int verbose_level)
 {
+
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "canonical_form_classifier::report" << endl;
+	}
 
 	string label;
 	string fname;
@@ -1327,6 +1372,9 @@ void canonical_form_classifier::report(std::string &fname_base, int verbose_leve
 			<< Fio.file_size(fname) << endl;
 
 
+	if (f_v) {
+		cout << "canonical_form_classifier::report done" << endl;
+	}
 
 }
 

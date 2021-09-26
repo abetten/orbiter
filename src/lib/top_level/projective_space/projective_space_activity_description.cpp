@@ -181,6 +181,13 @@ projective_space_activity_description::projective_space_activity_description()
 	Arc_generator_description = NULL;
 
 	f_classify_cubic_curves = FALSE;
+
+	f_latex_homogeneous_equation = FALSE;
+	latex_homogeneous_equation_degree = 0;
+	//std::string latex_homogeneous_equation_symbol_txt
+	//std::string latex_homogeneous_equation_symbol_tex
+	//std::string latex_homogeneous_equation_text;
+
 }
 
 projective_space_activity_description::~projective_space_activity_description()
@@ -844,6 +851,21 @@ int projective_space_activity_description::read_arguments(
 			}
 		}
 
+		else if (stringcmp(argv[i], "-latex_homogeneous_equation") == 0) {
+			f_latex_homogeneous_equation = TRUE;
+			latex_homogeneous_equation_degree = strtoi(argv[++i]);
+			latex_homogeneous_equation_symbol_txt.assign(argv[++i]);
+			latex_homogeneous_equation_symbol_tex.assign(argv[++i]);
+			latex_homogeneous_equation_text.assign(argv[++i]);
+			if (f_v) {
+				cout << "-latex_homogeneous_equation " << latex_homogeneous_equation_degree
+						<< " " << latex_homogeneous_equation_symbol_txt
+						<< " " << latex_homogeneous_equation_symbol_tex
+						<< " " << latex_homogeneous_equation_text << endl;
+			}
+		}
+
+
 		else if (stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -1085,6 +1107,12 @@ void projective_space_activity_description::print()
 	if (f_classify_cubic_curves) {
 		cout << "-classify_cubic_curves" << endl;
 		Arc_generator_description->print();
+	}
+	if (f_latex_homogeneous_equation) {
+		cout << "-latex_homogeneous_equation " << latex_homogeneous_equation_degree
+				<< " " << latex_homogeneous_equation_symbol_txt
+				<< " " << latex_homogeneous_equation_symbol_tex
+				<< " " << latex_homogeneous_equation_text << endl;
 	}
 
 

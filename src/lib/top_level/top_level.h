@@ -226,15 +226,15 @@ class surface_classify_wedge;
 
 
 // surfaces/surfaces_general:
-class surface_with_action;
-class surface_object_with_action;
-class surface_create_description;
-class surface_create;
-class surface_study;
-class surface_clebsch_map;
 class cubic_surface_activity_description;
 class cubic_surface_activity;
+class surface_clebsch_map;
+class surface_create_description;
+class surface_create;
 class surface_domain_high_level;
+class surface_object_with_action;
+class surface_study;
+class surface_with_action;
 
 
 

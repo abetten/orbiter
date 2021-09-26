@@ -18,7 +18,7 @@ int main()
 {
 #if 0
 	finite_field F;
-	F.finite_field_init(16, 0);
+	F.finite_field_init(16, FALSE /* f_without_tables */, 0);
 
 	cout << "8 x 15 = " << F.mult(8, 15) << endl;
 #endif

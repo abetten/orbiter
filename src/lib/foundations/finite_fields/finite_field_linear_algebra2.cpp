@@ -252,102 +252,133 @@ int finite_field::dependency(int d,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int i, j, k, deg, f_null, c;
+	int i, j, k, f_null, c;
 
 	if (f_v) {
 		cout << "finite_field::dependency" << endl;
 		cout << "m = " << m << endl;
+		cout << "d = " << d << endl;
 	}
-	deg = d;
 	if (f_vv) {
 		cout << "finite_field::dependency A=" << endl;
-		Orbiter->Int_vec.matrix_print(A, m, deg);
+		Orbiter->Int_vec.matrix_print(A, m, d);
 		cout << "v = ";
-		Orbiter->Int_vec.print(cout, v, deg);
+		Orbiter->Int_vec.print(cout, v, d);
 		cout << endl;
 	}
 	// fill the m-th row of matrix A with v^rho:
-	for (j = 0; j < deg; j++) {
-		A[m * deg + j] = v[rho[j]];
+	for (j = 0; j < d; j++) {
+		A[m * d + j] = v[rho[j]];
 	}
 	if (f_vv) {
 		cout << "finite_field::dependency "
 				"after putting in row " << m << " A=" << endl;
-		Orbiter->Int_vec.matrix_print(A, m + 1, deg);
+		Orbiter->Int_vec.matrix_print(A, m + 1, d);
 		cout << "rho = ";
-		Orbiter->Int_vec.print(cout, rho, deg);
+		Orbiter->Int_vec.print(cout, rho, d);
 		cout << endl;
 	}
 	for (k = 0; k < m; k++) {
 
 		if (f_vv) {
 			cout << "finite_field::dependency "
-					"k=" << k << " A=" << endl;
-			Orbiter->Int_vec.matrix_print(A, m + 1, deg);
+					"k=" << k << " / m=" << m << endl;
+			cout << "finite_field::dependency A=" << endl;
+			Orbiter->Int_vec.matrix_print(A, m + 1, d);
 		}
 
-		for (j = k + 1; j < deg; j++) {
+		for (j = k + 1; j < d; j++) {
 
 			if (f_vv) {
 				cout << "finite_field::dependency "
-						"j=" << j << endl;
+						"k=" << k << " / m=" << m
+						<< ", j=" << j << " / " << d << endl;
 			}
 
-			A[m * deg + j] = mult(A[k * deg + k], A[m * deg + j]);
 
-			c = negate(mult(A[m * deg + k], A[k * deg + j]));
+			// a_{m,j} := a_{k,k} * a_{m,j}:
 
-			A[m * deg + j] = add(A[m * deg + j], c);
+			A[m * d + j] = mult(A[k * d + k], A[m * d + j]);
+
+
+			// a_{m,j} = a_{m,j} - a_{m,k} * a_{k,j}:
+
+			c = negate(mult(A[m * d + k], A[k * d + j]));
+			A[m * d + j] = add(A[m * d + j], c);
 
 			if (k > 0) {
-				c = inverse(A[(k - 1) * deg + k - 1]);
-				A[m * deg + j] = mult(A[m * deg + j], c);
+
+				// a_{m,j} := a_{m,j} / a_{k-1,k-1}:
+
+				c = inverse(A[(k - 1) * d + k - 1]);
+				A[m * d + j] = mult(A[m * d + j], c);
 			}
+
+			if (f_vv) {
+				cout << "finite_field::dependency "
+						"k=" << k << " / m=" << m
+						<< ", j=" << j << " / " << d << " done" << endl;
+				cout << "finite_field::dependency A=" << endl;
+				Orbiter->Int_vec.matrix_print(A, m + 1, d);
+			}
+
 		} // next j
 
 		if (f_vv) {
 			cout << "finite_field::dependency "
-					"k=" << k << " done, A=" << endl;
-			Orbiter->Int_vec.matrix_print(A, m + 1, deg);
+					"k=" << k << " / m=" << m << " done" << endl;
+			cout << "finite_field::dependency A=" << endl;
+			Orbiter->Int_vec.matrix_print(A, m + 1, d);
 		}
 
 	} // next k
+
 	if (f_vv) {
 		cout << "finite_field::dependency "
 				"m=" << m << " after reapply, A=" << endl;
-		Orbiter->Int_vec.matrix_print(A, m + 1, deg);
+		Orbiter->Int_vec.matrix_print(A, m + 1, d);
 		cout << "rho = ";
-		Orbiter->Int_vec.print(cout, rho, deg);
+		Orbiter->Int_vec.print(cout, rho, d);
 		cout << endl;
 	}
 
-	f_null = (m == deg);
+	if (m == d) {
+		f_null = TRUE;
+	}
+	else {
+		f_null = FALSE;
+	}
+
 	if (!f_null) {
 
+		// search for a pivot in row m:
+		//
 		// search for an non-zero entry
 		// in row m starting in column m.
 		// permute that column into column m,
 		// change the col-permutation rho
+
 		j = m;
-		while ((A[m * deg + j] == 0) && (j < deg - 1)) {
+		while ((A[m * d + j] == 0) && (j < d - 1)) {
 			j++;
 		}
-		f_null = (A[m * deg + j] == 0);
+		f_null = (A[m * d + j] == 0);
+
 		if (!f_null && j > m) {
 			if (f_vv) {
 				cout << "finite_field::dependency "
 						"choosing column " << j << endl;
 			}
 
-			// swapping columns i and j:
+			// swap columns m and j (only the first m + 1 elements in each column):
 
 			for (i = 0; i <= m; i++) {
-				c = A[i * deg + m];
-				A[i * deg + m] = A[i * deg + j];
-				A[i * deg + j] = c;
-			} // next i
+				c = A[i * d + m];
+				A[i * d + m] = A[i * d + j];
+				A[i * d + j] = c;
+			}
 
-			// updating the permutation rho:
+			// update the permutation rho:
 			c = rho[m];
 			rho[m] = rho[j];
 			rho[j] = c;
@@ -356,9 +387,9 @@ int finite_field::dependency(int d,
 	if (f_vv) {
 		cout << "finite_field::dependency m=" << m
 				<< " after pivoting, A=" << endl;
-		Orbiter->Int_vec.matrix_print(A, m + 1, deg);
+		Orbiter->Int_vec.matrix_print(A, m + 1, d);
 		cout << "rho = ";
-		Orbiter->Int_vec.print(cout, rho, deg);
+		Orbiter->Int_vec.print(cout, rho, d);
 		cout << endl;
 	}
 
@@ -403,18 +434,46 @@ void finite_field::order_ideal_generator(int d,
 	}
 
 	m = 0;
+	if (f_v) {
+		cout << "finite_field::order_ideal_generator "
+				"d = " << d << " idx = " << idx << " m=" << m << " before dependency" << endl;
+	}
 	f_null = dependency(d, v, A, m, rho, verbose_level - 1);
+	if (f_v) {
+		cout << "finite_field::order_ideal_generator "
+				"d = " << d << " idx = " << idx << " m=" << m << " after dependency" << endl;
+	}
 
 	while (!f_null) {
 
 		// apply frobenius
 		// (the images are written in the columns):
 
+		if (f_v) {
+			cout << "finite_field::order_ideal_generator v=";
+			Orbiter->Int_vec.print(cout, v, deg);
+			cout << endl;
+		}
 		mult_vector_from_the_right(Frobenius, v, v1, deg, deg);
+		if (f_v) {
+			cout << "finite_field::order_ideal_generator v1=";
+			Orbiter->Int_vec.print(cout, v1, deg);
+			cout << endl;
+		}
 		Orbiter->Int_vec.copy(v1, v, deg);
 
 		m++;
+		if (f_v) {
+			cout << "finite_field::order_ideal_generator "
+					"d = " << d << " idx = " << idx
+					<< " m=" << m << " before dependency" << endl;
+		}
 		f_null = dependency(d, v, A, m, rho, verbose_level - 1);
+		if (f_v) {
+			cout << "finite_field::order_ideal_generator "
+					"d = " << d << " idx = " << idx
+					<< " m=" << m << " after dependency, f_null=" << f_null << endl;
+		}
 
 		if (m == deg && !f_null) {
 			cout << "finite_field::order_ideal_generator "

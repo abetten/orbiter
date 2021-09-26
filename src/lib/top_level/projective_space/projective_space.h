@@ -476,6 +476,12 @@ public:
 
 	int f_classify_cubic_curves;
 
+	int f_latex_homogeneous_equation;
+	int latex_homogeneous_equation_degree;
+	std::string latex_homogeneous_equation_symbol_txt;
+	std::string latex_homogeneous_equation_symbol_tex;
+	std::string latex_homogeneous_equation_text;
+
 	projective_space_activity_description();
 	~projective_space_activity_description();
 	int read_arguments(

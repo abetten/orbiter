@@ -761,7 +761,7 @@ int is_all_digits(char *p);
 int str2int(std::string &str);
 void print_longinteger_after_multiplying(std::ostream &ost, int *factors, int len);
 int my_atoi(char *str);
-long int my_atol(char *str);
+long int my_atol(const char *str);
 int compare_strings(void *a, void *b, void *data);
 int strcmp_with_or_without(char *p, char *q);
 uint32_t root_of_tree_uint32_t (uint32_t* S, uint32_t i);

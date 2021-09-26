@@ -27,11 +27,15 @@ quartic_curve_domain::quartic_curve_domain()
 	Poly4_3 = NULL;
 	Poly3_4 = NULL;
 	Partials = NULL;
+	Schlaefli = NULL;
 }
 
 
 quartic_curve_domain::~quartic_curve_domain()
 {
+	if (Schlaefli) {
+		FREE_OBJECT(Schlaefli);
+	}
 }
 
 
@@ -66,6 +70,9 @@ void quartic_curve_domain::init(finite_field *F, int verbose_level)
 		cout << "quartic_curve_domain::init after init_polynomial_domains" << endl;
 	}
 
+
+	Schlaefli = NEW_OBJECT(schlaefli_labels);
+	Schlaefli->init(verbose_level);
 
 	if (f_v) {
 		cout << "quartic_curve_domain::init done" << endl;
@@ -215,12 +222,15 @@ void quartic_curve_domain::print_lines_tex(std::ostream &ost, long int *Lines, i
 	latex_interface L;
 
 	ost << "The lines are:\\\\" << endl;
+	ost << "\\begin{multicols}{2}" << endl;
 
 	for (i = 0; i < nb_lines; i++) {
 		//fp << "Line " << i << " is " << v[i] << ":\\\\" << endl;
 		P->Grass_lines->unrank_lint(Lines[i], 0 /*verbose_level*/);
 		ost << "$$" << endl;
-		ost << "\\ell_{" << i << "}";
+
+		ost << Schlaefli->Line_label_tex[i];
+		//ost << "\\ell_{" << i << "}";
 
 #if 0
 		if (nb_lines == 27) {
@@ -234,13 +244,17 @@ void quartic_curve_domain::print_lines_tex(std::ostream &ost, long int *Lines, i
 		//print_integer_matrix_tex(ost, P->Grass_lines->M, 2, 4);
 		//ost << "\\right]_{" << Lines[i] << "}" << endl;
 		ost << "_{" << Lines[i] << "}" << endl;
-		ost << "=" << endl;
-		ost << "\\left[" << endl;
-		L.print_integer_matrix_tex(ost, P->Grass_lines->M, 2, 3);
-		ost << "\\right]_{" << Lines[i] << "}" << endl;
+
+		if (F->e > 1) {
+			ost << "=" << endl;
+			ost << "\\left[" << endl;
+			L.print_integer_matrix_tex(ost, P->Grass_lines->M, 2, 3);
+			ost << "\\right]_{" << Lines[i] << "}" << endl;
+		}
 
 		ost << "$$" << endl;
 	}
+	ost << "\\end{multicols}" << endl;
 	ost << "Rank of lines: ";
 	Orbiter->Lint_vec.print(ost, Lines, nb_lines);
 	ost << "\\\\" << endl;

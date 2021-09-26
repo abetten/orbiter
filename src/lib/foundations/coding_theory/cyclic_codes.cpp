@@ -746,8 +746,7 @@ void coding_theory_domain::BCH_generator_polynomial(
 	}
 #endif
 
-	longinteger_object *beta_rk_table =
-			NEW_OBJECTS(longinteger_object, n);
+	longinteger_object *beta_rk_table = NEW_OBJECTS(longinteger_object, n);
 	longinteger_object ai, bi;
 
 

@@ -1971,6 +1971,8 @@ public:
 
 	partial_derivative *Partials; // [3]
 
+	schlaefli_labels *Schlaefli;
+
 	quartic_curve_domain();
 	~quartic_curve_domain();
 	void init(finite_field *F, int verbose_level);
@@ -2034,11 +2036,11 @@ public:
 
 	int f_fullness_has_been_established;
 	int f_is_full;
-	int nb_Kowalevski;
-	int nb_Kowalevski_on;
-	int nb_Kowalevski_off;
-	int *Kowalevski_point_idx;
-	long int *Kowalevski_points;
+	int nb_Kovalevski;
+	int nb_Kovalevski_on;
+	int nb_Kovalevski_off;
+	int *Kovalevski_point_idx;
+	long int *Kovalevski_points;
 
 	long int *Pts_off;
 	int nb_pts_off;

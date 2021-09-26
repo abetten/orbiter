@@ -629,14 +629,34 @@ void surface_domain::make_table_of_surfaces(int verbose_level)
 
 
 		{
-		int Q_even[] = {
-			4,8,16,32,64,128
-			};
-		int nb_Q_even = 6;
+			int Q[] = {
+					4,7,8,9,11,13,16,17,19,23,25,27,29,31,32,37,
+					41,43,47,49,53,59,61,64,67,71,73,79,81,83, 89, 97, 101, 103, 107, 109, 113, 121, 128
+				};
+			int nb_Q = sizeof(Q) / sizeof(int);
 
-		fp << "\\section*{Even Characteristic}" << endl;
+			fp << "\\section*{Cubic Surfaces}" << endl;
 
-		make_table_of_surfaces2(fp, Q_even, nb_Q_even, verbose_level);
+			make_table_of_surfaces2(fp, Q, nb_Q, verbose_level);
+		}
+
+		fp << endl;
+
+#if 0
+		fp << "\\clearpage" << endl;
+
+		fp << endl;
+
+
+		{
+			int Q_even[] = {
+				4,8,16,32,64,128
+				};
+			int nb_Q_even = 6;
+
+			fp << "\\section*{Even Characteristic}" << endl;
+
+			make_table_of_surfaces2(fp, Q_even, nb_Q_even, verbose_level);
 		}
 
 		fp << endl;
@@ -645,19 +665,20 @@ void surface_domain::make_table_of_surfaces(int verbose_level)
 
 		fp << endl;
 
+
 		{
-		int Q_odd[] = {
-				7,9,11,13,17,19,23,25,27,29,31,37,
-				41,43,47,49,53,59,61,67,71,73,79,81,83, 89, 97, 101, 103, 107, 109, 113, 121
-			};
-		int nb_Q_odd = sizeof(Q_odd) / sizeof(int);
+			int Q_odd[] = {
+					7,9,11,13,17,19,23,25,27,29,31,37,
+					41,43,47,49,53,59,61,67,71,73,79,81,83, 89, 97, 101, 103, 107, 109, 113, 121
+				};
+			int nb_Q_odd = sizeof(Q_odd) / sizeof(int);
 
 
-		fp << "\\section*{Odd Characteristic}" << endl;
+			fp << "\\section*{Odd Characteristic}" << endl;
 
-		make_table_of_surfaces2(fp, Q_odd, nb_Q_odd, verbose_level);
+			make_table_of_surfaces2(fp, Q_odd, nb_Q_odd, verbose_level);
 		}
-
+#endif
 
 		L.foot(fp);
 	}
@@ -665,7 +686,68 @@ void surface_domain::make_table_of_surfaces(int verbose_level)
 }
 
 
-void surface_domain::make_table_of_surfaces2(ostream &ost,
+void surface_domain::make_table_of_surfaces_detailed(
+		int *Q_table, int Q_table_len, int verbose_level)
+{
+	int i, j, q, cur, nb_E;
+	int nb_reps_total;
+	int *Nb_reps;
+	knowledge_base K;
+	long int *Big_table;
+	file_io Fio;
+
+	Nb_reps = NEW_int(Q_table_len);
+
+	nb_reps_total = 0;
+	for (i = 0; i < Q_table_len; i++) {
+		q = Q_table[i];
+		Nb_reps[i] = K.cubic_surface_nb_reps(q);
+		nb_reps_total += Nb_reps[i];
+	}
+	Big_table = NEW_lint(nb_reps_total * 4);
+
+	cur = 0;
+	for (i = 0; i < Q_table_len; i++) {
+		q = Q_table[i];
+		for (j = 0; j < Nb_reps[i]; j++, cur++) {
+			nb_E = K.cubic_surface_nb_Eckardt_points(q, j);
+			Big_table[cur * 4 + 0] = q;
+			Big_table[cur * 4 + 1] = nb_E;
+			Big_table[cur * 4 + 2] = j;
+
+			int *data;
+			int nb_gens;
+			int data_size;
+			const char *stab_order;
+			long int ago;
+
+			K.cubic_surface_stab_gens(q, j, data, nb_gens, data_size, stab_order);
+			ago = my_atol(stab_order);
+
+			Big_table[cur * 4 + 3] = ago;
+		}
+	}
+	std::string fname;
+
+	fname.assign("table_of_cubic_surfaces_QECA.csv");
+
+	std::string *headers;
+
+	headers = new string[4];
+
+
+	headers[0].assign("Q");
+	headers[1].assign("E");
+	headers[2].assign("OCN");
+	headers[3].assign("AUT");
+
+
+	Fio.lint_matrix_write_csv_override_headers(fname, headers, Big_table, nb_reps_total, 4);
+
+	FREE_lint(Big_table);
+}
+
+void surface_domain::make_table_of_surfaces2(std::ostream &ost,
 		int *Q_table, int Q_table_len, int verbose_level)
 {
 #if 0
@@ -691,7 +773,7 @@ void surface_domain::make_table_of_surfaces2(ostream &ost,
 		q = Q_table[i];
 		nb_reps = K.cubic_surface_nb_reps(q);
 		cout << q << " : " << nb_reps << "\\\\" << endl;
-		}
+	}
 
 #if 0
 	const char *fname_ago = "ago.csv";
@@ -747,7 +829,8 @@ void surface_domain::make_table_of_surfaces2(ostream &ost,
 			<< Fio.file_size(fname_dist) << endl;
 #endif
 
-	int *Table;
+	long int *Table;
+	long int *Table2;
 	int *Q;
 	int nb_Q;
 	int *E;
@@ -756,7 +839,35 @@ void surface_domain::make_table_of_surfaces2(ostream &ost,
 	compute_table_E(Q_table, Q_table_len,
 			Table, Q, nb_Q, E, nb_E_types, verbose_level);
 
+	Table2 = NEW_lint(nb_Q * nb_E_types + 1);
+	for (i = 0; i < nb_Q; i++) {
+		Table2[i * (nb_E_types + 1) + 0] = Q[i];
+		for (j = 0; j < nb_reps; j++) {
+			Table2[i * (nb_E_types + 1) + 1 + j] = Table[i * nb_E_types + j];
+		}
+	}
 
+	//file_io Fio;
+	std::string fname;
+
+	fname.assign("table_of_cubic_surfaces_QE.csv");
+
+	std::string *headers;
+
+	headers = new string[nb_E_types + 1];
+
+
+	headers[0].assign("Q");
+	for (j = 0; j < nb_E_types; j++) {
+		char str[1000];
+
+		sprintf(str, "E%d", E[j]);
+		headers[1 + j].assign(str);
+	}
+
+
+	Fio.lint_matrix_write_csv_override_headers(fname, headers, Table2, nb_Q, nb_E_types + 1);
+	FREE_lint(Table2);
 
 	//LG->report(fp, f_sylow, f_group_table, verbose_level);
 
@@ -905,14 +1016,17 @@ void surface_domain::make_table_of_surfaces2(ostream &ost,
 	table_bottom(ost);
 #endif
 
-	FREE_int(Table);
+	FREE_lint(Table);
 	FREE_int(Q);
 	FREE_int(E);
 
 
+	make_table_of_surfaces_detailed(Q_table, Q_table_len, verbose_level);
+
+
 }
 
-void surface_domain::table_top(ostream &ost)
+void surface_domain::table_top(std::ostream &ost)
 {
 	ost << "$" << endl;
 	ost << "\\begin{array}{|c|c||c|c|c|}" << endl;
@@ -923,7 +1037,7 @@ void surface_domain::table_top(ostream &ost)
 	ost << "\\hline" << endl;
 }
 
-void surface_domain::table_bottom(ostream &ost)
+void surface_domain::table_bottom(std::ostream &ost)
 {
 	ost << "\\hline" << endl;
 	ost << "\\end{array}" << endl;
@@ -933,7 +1047,7 @@ void surface_domain::table_bottom(ostream &ost)
 
 void surface_domain::compute_table_E(
 		int *field_orders, int nb_fields,
-		int *&Table,
+		long int *&Table,
 		int *&Q, int &nb_Q,
 		int *&E, int &nb_E_types, int verbose_level)
 {
@@ -993,8 +1107,8 @@ void surface_domain::compute_table_E(
 		}
 
 
-	Table = NEW_int(nb_Q * nb_E_types);
-	Orbiter->Int_vec.zero(Table, nb_Q * nb_E_types);
+	Table = NEW_lint(nb_Q * nb_E_types);
+	Orbiter->Lint_vec.zero(Table, nb_Q * nb_E_types);
 	for (i = 0; i < nb_fields; i++) {
 		q = Q[i];
 		nb_reps = K.cubic_surface_nb_reps(q);
@@ -1005,14 +1119,14 @@ void surface_domain::compute_table_E(
 			}
 		}
 	cout << "Table:" << endl;
-	Orbiter->Int_vec.matrix_print(Table, nb_Q, nb_E_types);
+	Orbiter->Lint_vec.matrix_print(Table, nb_Q, nb_E_types);
 
 	FREE_int(Table_idx);
 }
 
 
 
-void callback_surface_domain_sstr_line_label(stringstream &sstr, long int pt, void *data)
+void callback_surface_domain_sstr_line_label(std::stringstream &sstr, long int pt, void *data)
 {
 	surface_domain *D = (surface_domain *) data;
 

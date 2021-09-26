@@ -2855,21 +2855,52 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 		Quartic_curve_descr.iso = h;
 
 
+		int *data;
+		int nb_gens;
+		int data_size;
+		const char *stab_order;
 
-		create_quartic_curve(
-					&Quartic_curve_descr,
-					QC[h],
-					verbose_level);
+		int ago;
 
-		nb_K[h] = QC[h]->QO->QP->nb_Kowalevski;
+		if (f_v) {
+			cout << "projective_space_with_action::table_of_quartic_curves " << h << " / " << nb_quartic_curves << " before K.quartic_curves_stab_gens" << endl;
+		}
+		K.quartic_curves_stab_gens(q, h, data, nb_gens, data_size, stab_order);
+
+		if (f_v) {
+			cout << "projective_space_with_action::table_of_quartic_curves " << h << " / " << nb_quartic_curves << " stab_order=" << stab_order << endl;
+		}
+		ago = atoi(stab_order);
+
+		if (ago > 0) {
+
+			create_quartic_curve(
+						&Quartic_curve_descr,
+						QC[h],
+						verbose_level);
+
+			nb_K[h] = QC[h]->QO->QP->nb_Kovalevski;
 
 
-		Table[h * nb_cols + 0] = h;
-		Table[h * nb_cols + 1] = nb_K[h];
-		Table[h * nb_cols + 2] = QC[h]->QO->QP->nb_Kowalevski_on;
-		Table[h * nb_cols + 3] = QC[h]->QO->QP->nb_Kowalevski_off;
-		Table[h * nb_cols + 4] = QC[h]->QOA->Aut_gens->group_order_as_lint();
-		Table[h * nb_cols + 5] = QC[h]->QO->nb_pts;
+			Table[h * nb_cols + 0] = h;
+			Table[h * nb_cols + 1] = nb_K[h];
+			Table[h * nb_cols + 2] = QC[h]->QO->QP->nb_Kovalevski_on;
+			Table[h * nb_cols + 3] = QC[h]->QO->QP->nb_Kovalevski_off;
+			Table[h * nb_cols + 4] = QC[h]->QOA->Aut_gens->group_order_as_lint();
+			Table[h * nb_cols + 5] = QC[h]->QO->nb_pts;
+		}
+		else {
+			Table[h * nb_cols + 0] = h;
+			Table[h * nb_cols + 1] = -1;
+			Table[h * nb_cols + 2] = -1;
+			Table[h * nb_cols + 3] = -1;
+			Table[h * nb_cols + 4] = -1;
+			Table[h * nb_cols + 5] = -1;
+
+		}
+		if (f_v) {
+			cout << "projective_space_with_action::table_of_quartic_curves " << h << " / " << nb_quartic_curves << " done" << endl;
+		}
 
 	}
 
@@ -2893,44 +2924,56 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 		f << endl;
 		for (i = 0; i < nb_quartic_curves; i++) {
 			f << i;
-			for (j = 0; j < nb_cols; j++) {
-				f << "," << Table[i * nb_cols + j];
-			}
-			{
-				string str;
-				f << ",";
-				Orbiter->Int_vec.create_string_with_quotes(str, QC[i]->QO->QP->line_type_distribution, 3);
-				f << str;
-			}
-			{
-				string str;
-				f << ",";
-				Orbiter->Int_vec.create_string_with_quotes(str, QC[i]->QO->eqn15, 15);
-				f << str;
-			}
 
-			{
-				stringstream sstr;
-				string str;
-				QC[i]->QCDA->Dom->print_equation_maple(sstr, QC[i]->QO->eqn15);
-				str.assign(sstr.str());
-				f << ",";
-				f << "\"$";
-				f << str;
-				f << "$\"";
-			}
 
-			{
-				string str;
-				f << ",";
-				Orbiter->Lint_vec.create_string_with_quotes(str, QC[i]->QO->Pts, QC[i]->QO->nb_pts);
-				f << str;
+			if (Table[i * nb_cols + 1] == -1) {
+				for (j = 0; j < nb_cols; j++) {
+					f << ",";
+				}
+				f << ",,,,,";
 			}
-			{
-				string str;
-				f << ",";
-				Orbiter->Lint_vec.create_string_with_quotes(str, QC[i]->QO->bitangents28, 28);
-				f << str;
+			else {
+
+
+				for (j = 0; j < nb_cols; j++) {
+					f << "," << Table[i * nb_cols + j];
+				}
+				{
+					string str;
+					f << ",";
+					Orbiter->Int_vec.create_string_with_quotes(str, QC[i]->QO->QP->line_type_distribution, 3);
+					f << str;
+				}
+				{
+					string str;
+					f << ",";
+					Orbiter->Int_vec.create_string_with_quotes(str, QC[i]->QO->eqn15, 15);
+					f << str;
+				}
+
+				{
+					stringstream sstr;
+					string str;
+					QC[i]->QCDA->Dom->print_equation_maple(sstr, QC[i]->QO->eqn15);
+					str.assign(sstr.str());
+					f << ",";
+					f << "\"$";
+					f << str;
+					f << "$\"";
+				}
+
+				{
+					string str;
+					f << ",";
+					Orbiter->Lint_vec.create_string_with_quotes(str, QC[i]->QO->Pts, QC[i]->QO->nb_pts);
+					f << str;
+				}
+				{
+					string str;
+					f << ",";
+					Orbiter->Lint_vec.create_string_with_quotes(str, QC[i]->QO->bitangents28, 28);
+					f << str;
+				}
 			}
 			f << endl;
 		}

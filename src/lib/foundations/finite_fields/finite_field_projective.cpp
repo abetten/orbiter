@@ -426,8 +426,8 @@ void finite_field::create_projective_curve(
 			cout << setw(4) << i << " : ";
 			Orbiter->Int_vec.print(cout, v, curve_nb_vars);
 			cout << " : " << setw(5) << c << endl;
-			}
 		}
+	}
 
 	display_table_of_projective_points(
 			cout, Pts, nb_pts, curve_nb_vars);
@@ -566,18 +566,18 @@ void finite_field::PG_element_unrank_fining(int *v, int len, int a)
 		cout << "finite_field::PG_element_unrank_fining "
 				"len != 3" << endl;
 		exit(1);
-		}
+	}
 	if (a <= 0) {
 		cout << "finite_field::PG_element_unrank_fining "
 				"a <= 0" << endl;
 		exit(1);
-		}
+	}
 	if (a == 1) {
 		v[0] = 1;
 		v[1] = 0;
 		v[2] = 0;
 		return;
-		}
+	}
 	a--;
 	if (a <= q) {
 		if (a == 1) {
@@ -585,14 +585,14 @@ void finite_field::PG_element_unrank_fining(int *v, int len, int a)
 			v[1] = 1;
 			v[2] = 0;
 			return;
-			}
+		}
 		else {
 			v[0] = 1;
 			v[1] = a - 1;
 			v[2] = 0;
 			return;
-			}
 		}
+	}
 	a -= q;
 	if (a <= q * q) {
 		if (a == 1) {
@@ -600,7 +600,7 @@ void finite_field::PG_element_unrank_fining(int *v, int len, int a)
 			v[1] = 0;
 			v[2] = 1;
 			return;
-			}
+		}
 		a--;
 		a--;
 		b = a % (q + 1);
@@ -609,22 +609,22 @@ void finite_field::PG_element_unrank_fining(int *v, int len, int a)
 		if (b == 0) {
 			v[0] = 1;
 			v[1] = 0;
-			}
+		}
 		else if (b == 1) {
 			v[0] = 0;
 			v[1] = 1;
-			}
+		}
 		else {
 			v[0] = 1;
 			v[1] = b - 1;
-			}
-		return;
 		}
+		return;
+	}
 	else {
 		cout << "finite_field::PG_element_unrank_fining "
 				"a is illegal" << endl;
 		exit(1);
-		}
+	}
 }
 
 int finite_field::PG_element_rank_fining(int *v, int len)
@@ -635,7 +635,7 @@ int finite_field::PG_element_rank_fining(int *v, int len)
 		cout << "finite_field::PG_element_rank_fining "
 				"len != 3" << endl;
 		exit(1);
-		}
+	}
 	//PG_element_normalize(v, 1, len);
 
 	PG_element_normalize_from_front(v, 1, len);
@@ -680,30 +680,30 @@ void finite_field::PG_element_unrank_gary_cook(
 		cout << "finite_field::PG_element_unrank_gary_cook "
 				"len != 3" << endl;
 		exit(1);
-		}
+	}
 	if (q != 11) {
 		cout << "finite_field::PG_element_unrank_gary_cook "
 				"q != 11" << endl;
 		exit(1);
-		}
+	}
 	qm1o2 = (q - 1) >> 1;
 	if (a < 0) {
 		cout << "finite_field::PG_element_unrank_gary_cook "
 				"a < 0" << endl;
 		exit(1);
-		}
+	}
 	if (a == 0) {
 		v[0] = 0;
 		v[1] = 0;
 		v[2] = 1;
-		}
+	}
 	else {
 		a--;
 		if (a < q) {
 			v[0] = 0;
 			v[1] = 1;
 			v[2] = -qm1o2 + a;
-			}
+		}
 		else {
 			a -= q;
 			rk = a;
@@ -714,19 +714,19 @@ void finite_field::PG_element_unrank_gary_cook(
 				v[0] = 1;
 				v[1] = -qm1o2 + a;
 				v[2] = -qm1o2 + b;
-				}
+			}
 			else {
 				cout << "finite_field::PG_element_unrank_gary_cook "
 						"a is illegal" << endl;
 				exit(1);
-				}
 			}
 		}
+	}
 	for (i = 0; i < 3; i++) {
 		if (v[i] < 0) {
 			v[i] += q;
-			}
 		}
+	}
 }
 
 void finite_field::PG_element_rank_modified(
@@ -1960,7 +1960,7 @@ void finite_field::Subiaco_hyperoval(
 // of the divisibility properties of the orders
 // of automorphism groups
 // of hypothetical hyperovals in this plane,
-// discovered a n e w hyperoval.
+// discovered a new hyperoval.
 // Its o-polynomial is given by:
 
 //f(x) = x4 + x16 + x28 + beta*11(x6 + x10 + x14 + x18 + x22 + x26)
@@ -2813,8 +2813,7 @@ void finite_field::all_PG_elements_in_subspace_array_is_given(
 	combinatorics_domain Combi;
 
 	if (f_v) {
-		cout << "finite_field::all_PG_elements_in_"
-				"subspace_array_is_given" << endl;
+		cout << "finite_field::all_PG_elements_in_subspace_array_is_given" << endl;
 	}
 	message = NEW_int(k);
 	word = NEW_int(n);
@@ -2844,8 +2843,7 @@ void finite_field::all_PG_elements_in_subspace_array_is_given(
 	FREE_int(message);
 	FREE_int(word);
 	if (f_v) {
-		cout << "finite_field::all_PG_elements_in_"
-				"subspace_array_is_given "
+		cout << "finite_field::all_PG_elements_in_subspace_array_is_given "
 				"done" << endl;
 	}
 }
@@ -3035,7 +3033,7 @@ void finite_field::do_blocking_set_family_3(int n,
 
 		for (i = 0; i < 4; i++) {
 			p_idx[i] = set_in[idx[i]];
-			}
+		}
 
 		line[0] = P->line_through_two_points(p_idx[0], p_idx[1]);
 		line[1] = P->line_through_two_points(p_idx[0], p_idx[2]);
@@ -3051,7 +3049,7 @@ void finite_field::do_blocking_set_family_3(int n,
 		if (diag_line != P->line_through_two_points(diag_pts[0], diag_pts[2])) {
 			cout << "diaginal points not collinear!" << endl;
 			exit(1);
-			}
+		}
 		P->unrank_line(basis, diag_line);
 		Orbiter->Int_vec.matrix_print(basis, 2, 3);
 		nb = 0;
@@ -3059,14 +3057,14 @@ void finite_field::do_blocking_set_family_3(int n,
 			pt = set_in[i];
 			if (P->is_incident(pt, diag_line)) {
 				nb++;
-				}
 			}
+		}
 		cout << "nb=" << nb << endl;
 		if (nb == 0) {
 			cout << "the diagonal line is external!" << endl;
 			break;
-			}
-		} // while
+		}
+	} // while
 #endif
 
 #if 0
@@ -3077,9 +3075,9 @@ void finite_field::do_blocking_set_family_3(int n,
 		if (!int_vec_search_linear(set_in, set_size, fundamental_quadrangle[i], j)) {
 			cout << "the point " << fundamental_quadrangle[i] << " is not contained in the hyperoval" << endl;
 			exit(1);
-			}
-		idx[i] = j;
 		}
+		idx[i] = j;
+	}
 	cout << "the fundamental quadrangle is contained, the positions are " << endl;
 		cout << idx[0] << ", ";
 		cout << idx[1] << ", ";
@@ -3088,7 +3086,7 @@ void finite_field::do_blocking_set_family_3(int n,
 
 		for (i = 0; i < 4; i++) {
 			p_idx[i] = set_in[idx[i]];
-			}
+		}
 
 		line[0] = P->line_through_two_points(p_idx[0], p_idx[1]);
 		line[1] = P->line_through_two_points(p_idx[0], p_idx[2]);
@@ -3107,24 +3105,24 @@ void finite_field::do_blocking_set_family_3(int n,
 		int_matrix_print(basis, 2, 3);
 
 		if (diag_line != P->line_through_two_points(diag_pts[0], diag_pts[2])) {
-			cout << "diaginal points not collinear!" << endl;
+			cout << "diagonal points not collinear!" << endl;
 			exit(1);
-			}
+		}
 		nb = 0;
 		for (i = 0; i < set_size; i++) {
 			pt = set_in[i];
 			if (P->Incidence[pt * P->N_lines + diag_line]) {
 				nb++;
-				}
 			}
+		}
 		cout << "nb=" << nb << endl;
 		if (nb == 0) {
 			cout << "the diagonal line is external!" << endl;
-			}
+		}
 		else {
 			cout << "error: the diagonal line is not external" << endl;
 			exit(1);
-			}
+		}
 
 #endif
 
@@ -3135,9 +3133,9 @@ void finite_field::do_blocking_set_family_3(int n,
 			h = P->Lines_on_point[pt * P->r + j];
 			if (!S->is_contained(h)) {
 				S->add_element(h);
-				}
 			}
 		}
+	}
 
 	cout << "we created a blocking set of lines of "
 			"size " << S->k << ":" << endl;
@@ -3174,7 +3172,7 @@ void finite_field::do_blocking_set_family_3(int n,
 	if (S->k != sz) {
 		cout << "the size does not match the expected size" << endl;
 		exit(1);
-		}
+	}
 
 	cout << "the size is OK" << endl;
 
@@ -3184,7 +3182,7 @@ void finite_field::do_blocking_set_family_3(int n,
 	for (i = 0; i < sz; i++) {
 		j = S->set[i];
 		the_set_out[i] = P->Polarity_hyperplane_to_point[j];
-		}
+	}
 
 
 
@@ -3210,17 +3208,17 @@ void finite_field::create_hyperoval(
 
 	if (f_v) {
 		cout << "finite_field::create_hyperoval" << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "finite_field::create_hyperoval before P->init" << endl;
-		}
+	}
 	P->init(n, this,
 		FALSE /* f_init_incidence_structure */,
 		verbose_level /*MINIMUM(verbose_level - 1, 3)*/);
 	if (f_v) {
 		cout << "create_hyperoval after P->init" << endl;
-		}
+	}
 
 	v = NEW_int(d);
 	Pts = NEW_lint(P->N_points);
@@ -3232,33 +3230,33 @@ void finite_field::create_hyperoval(
 				translation_exponent, verbose_level - 0);
 		fname.assign("hyperoval_translation");
 		fname.append(str);
-		}
+	}
 	else if (f_Segre) {
 		P->create_Segre_hyperoval(Pts, nb_pts, verbose_level - 2);
 		fname.assign("hyperoval_Segre");
 		fname.append(str);
-		}
+	}
 	else if (f_Payne) {
 		P->create_Payne_hyperoval(Pts, nb_pts, verbose_level - 2);
 		fname.assign("hyperoval_Payne");
 		fname.append(str);
-		}
+	}
 	else if (f_Cherowitzo) {
 		P->create_Cherowitzo_hyperoval(Pts, nb_pts, verbose_level - 2);
 		fname.assign("hyperoval_Cherowitzo");
 		fname.append(str);
-		}
+	}
 	else if (f_OKeefe_Penttila) {
 		P->create_OKeefe_Penttila_hyperoval_32(Pts, nb_pts,
 				verbose_level - 2);
 		fname.assign("hyperoval_OKeefe_Penttila");
 		fname.append(str);
-		}
+	}
 	else {
 		P->create_regular_hyperoval(Pts, nb_pts, verbose_level - 2);
 		fname.assign("hyperoval_regular");
 		fname.append(str);
-		}
+	}
 
 	if (f_v) {
 		cout << "i : point : projective rank" << endl;
@@ -3268,15 +3266,15 @@ void finite_field::create_hyperoval(
 				cout << setw(4) << i << " : ";
 				Orbiter->Int_vec.print(cout, v, d);
 				cout << endl;
-				}
 			}
 		}
+	}
 
 	if (!Sorting.test_if_set_with_return_value_lint(Pts, nb_pts)) {
 		cout << "create_hyperoval the set is not a set, "
 				"something is wrong" << endl;
 		exit(1);
-		}
+	}
 
 	FREE_OBJECT(P);
 	FREE_int(v);
@@ -3294,18 +3292,18 @@ void finite_field::create_subiaco_oval(
 
 	if (f_v) {
 		cout << "finite_field::create_subiaco_oval" << endl;
-		}
+	}
 
 	sprintf(str, "_q%d.txt", q);
 	Subiaco_oval(Pts, nb_pts, f_short, verbose_level);
 	if (f_short) {
 		fname.assign("oval_subiaco_short");
 		fname.append(str);
-		}
+	}
 	else {
 		fname.assign("oval_subiaco_long");
 		fname.append(str);
-		}
+	}
 
 
 	if (f_v) {
@@ -3328,17 +3326,17 @@ void finite_field::create_subiaco_oval(
 				cout << setw(4) << i << " : ";
 				Orbiter->Int_vec.print(cout, v, d);
 				cout << endl;
-				}
 			}
+		}
 		FREE_int(v);
 		FREE_OBJECT(P);
-		}
+	}
 
 	if (!Sorting.test_if_set_with_return_value_lint(Pts, nb_pts)) {
 		cout << "create_subiaco_oval the set is not a set, "
 				"something is wrong" << endl;
 		exit(1);
-		}
+	}
 
 }
 
@@ -3353,7 +3351,7 @@ void finite_field::create_subiaco_hyperoval(
 
 	if (f_v) {
 		cout << "finite_field::create_subiaco_hyperoval" << endl;
-		}
+	}
 
 	Subiaco_hyperoval(Pts, nb_pts, verbose_level);
 
@@ -3383,18 +3381,18 @@ void finite_field::create_subiaco_hyperoval(
 				cout << setw(4) << i << " : ";
 				Orbiter->Int_vec.print(cout, v, d);
 				cout << endl;
-				}
 			}
+		}
 		FREE_int(v);
 		FREE_OBJECT(P);
-		}
+	}
 
 	if (!Sorting.test_if_set_with_return_value_lint(Pts, nb_pts)) {
 		cout << "finite_field::create_subiaco_hyperoval "
 				"the set is not a set, "
 				"something is wrong" << endl;
 		exit(1);
-		}
+	}
 
 }
 
@@ -3425,21 +3423,21 @@ void finite_field::create_ovoid(
 
 	if (f_v) {
 		cout << "i : point : projective rank" << endl;
-		}
+	}
 	choose_anisotropic_form(c1, c2, c3, verbose_level);
 	for (i = 0; i < nb_pts; i++) {
 		Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i, 0 /* verbose_level */);
 		for (h = 0; h < d; h++) {
 			w[h] = v[h];
-			}
+		}
 		j = P->rank_point(w);
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
 			Orbiter->Int_vec.print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
-			}
 		}
+	}
 
 #if 0
 	cout << "list of points on the ovoid:" << endl;
@@ -3491,7 +3489,7 @@ void finite_field::create_Baer_substructure(int n,
 	if (q != NT.i_power_j(p, e >> 1)) {
 		cout << "q != i_power_j(p, e >> 1)" << endl;
 		exit(1);
-		}
+	}
 
 	cout << "Q=" << Q << endl;
 	cout << "q=" << q << endl;
@@ -3510,21 +3508,21 @@ void finite_field::create_Baer_substructure(int n,
 			f_is_in_subfield = FALSE;
 			if (a == 0 || (b % index) == 0) {
 				f_is_in_subfield = TRUE;
-				}
+			}
 			if (!f_is_in_subfield) {
 				break;
-				}
-			}
-		if (j == d) {
-			Pts[nb_pts++] = i;
 			}
 		}
+		if (j == d) {
+			Pts[nb_pts++] = i;
+		}
+	}
 	cout << "the Baer substructure PG(" << n << "," << q
 			<< ") inside PG(" << n << "," << Q << ") has size "
 			<< sz << ":" << endl;
 	for (i = 0; i < sz; i++) {
 		cout << Pts[i] << " ";
-		}
+	}
 	cout << endl;
 
 
@@ -3567,15 +3565,15 @@ void finite_field::create_BLT_from_database(int f_embedded,
 
 	if (f_v) {
 		cout << "i : orthogonal rank : point : projective rank" << endl;
-		}
+	}
 	for (i = 0; i < nb_pts; i++) {
 		Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, BLT[i], 0 /* verbose_level */);
 		if (f_embedded) {
 			PG_element_rank_modified_lint(v, 1, d, j);
-			}
+		}
 		else {
 			j = BLT[i];
-			}
+		}
 		// recreate v:
 		Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, BLT[i], 0 /* verbose_level */);
 		Pts[i] = j;
@@ -3583,8 +3581,8 @@ void finite_field::create_BLT_from_database(int f_embedded,
 			cout << setw(4) << i << " : " << setw(4) << BLT[i] << " : ";
 			Orbiter->Int_vec.print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
-			}
 		}
+	}
 
 #if 0
 	cout << "list of points:" << endl;
@@ -3600,12 +3598,12 @@ void finite_field::create_BLT_from_database(int f_embedded,
 		sprintf(str, "%d_%d_embedded.txt", q, BLT_k);
 		fname.assign("BLT_");
 		fname.append(str);
-		}
+	}
 	else {
 		sprintf(str, "%d_%d.txt", q, BLT_k);
 		fname.assign("BLT_");
 		fname.append(str);
-		}
+	}
 	//write_set_to_file(fname, L, N, verbose_level);
 
 
@@ -3636,11 +3634,11 @@ void finite_field::create_orthogonal(int epsilon, int n,
 		choose_anisotropic_form(c1, c2, c3, verbose_level);
 		if (f_v) {
 			cout << "c1=" << c1 << " c2=" << c2 << " c3=" << c3 << endl;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "orthogonal rank : point : projective rank" << endl;
-		}
+	}
 	for (i = 0; i < nb_pts; i++) {
 		Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i, 0 /* verbose_level */);
 		PG_element_rank_modified(v, 1, d, j);
@@ -3649,15 +3647,15 @@ void finite_field::create_orthogonal(int epsilon, int n,
 			cout << setw(4) << i << " : ";
 			Orbiter->Int_vec.print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
-			}
 		}
+	}
 
 #if 0
 	cout << "list of points:" << endl;
 	cout << nb_pts << endl;
 	for (i = 0; i < nb_pts; i++) {
 		cout << Pts[i] << " ";
-		}
+	}
 	cout << endl;
 #endif
 
@@ -3695,7 +3693,7 @@ void finite_field::create_hermitian(int n,
 
 	if (f_v) {
 		cout << "hermitian rank : point : projective rank" << endl;
-		}
+	}
 	for (i = 0; i < nb_pts; i++) {
 		H->Sbar_unrank(v, d, i, 0 /*verbose_level*/);
 		PG_element_rank_modified(v, 1, d, j);
@@ -3704,8 +3702,8 @@ void finite_field::create_hermitian(int n,
 			cout << setw(4) << i << " : ";
 			Orbiter->Int_vec.print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
-			}
 		}
+	}
 
 #if 0
 	cout << "list of points:" << endl;
@@ -3752,7 +3750,7 @@ void finite_field::create_cuspidal_cubic(
 
 	if (f_v) {
 		cout << "i : point : projective rank" << endl;
-		}
+	}
 	for (i = 0; i < nb_pts; i++) {
 		PG_element_unrank_modified(v2, 1, 2, i);
 		s = v2[0];
@@ -3771,8 +3769,8 @@ void finite_field::create_cuspidal_cubic(
 			cout << setw(4) << i << " : ";
 			Orbiter->Int_vec.print(cout, v, d);
 			cout << " : " << setw(5) << a << endl;
-			}
 		}
+	}
 
 #if 0
 	cout << "list of points on the cubic:" << endl;
@@ -3863,7 +3861,7 @@ void finite_field::create_twisted_cubic(
 
 	if (f_v) {
 		cout << "i : point : projective rank" << endl;
-		}
+	}
 	for (i = 0; i < nb_pts; i++) {
 		PG_element_unrank_modified(v2, 1, 2, i);
 		s = v2[0];
@@ -3878,8 +3876,8 @@ void finite_field::create_twisted_cubic(
 			cout << setw(4) << i << " : ";
 			Orbiter->Int_vec.print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
-			}
 		}
+	}
 
 #if 0
 	cout << "list of points on the twisted cubic:" << endl;
@@ -3933,7 +3931,7 @@ void finite_field::create_elliptic_curve(
 
 	if (f_v) {
 		cout << "i : point : projective rank" << endl;
-		}
+	}
 	for (i = 0; i < nb_pts; i++) {
 		PG_element_rank_modified_lint(E->T + i * d, 1, d, a);
 		Pts[i] = a;
@@ -3941,8 +3939,8 @@ void finite_field::create_elliptic_curve(
 			cout << setw(4) << i << " : ";
 			Orbiter->Int_vec.print(cout, E->T + i * d, d);
 			cout << " : " << setw(5) << a << endl;
-			}
 		}
+	}
 
 #if 0
 	cout << "list of points on the elliptic curve:" << endl;
@@ -3984,7 +3982,7 @@ void finite_field::create_ttp_code(finite_field *Fq,
 
 	if (f_v) {
 		cout << "finite_field::create_ttp_code" << endl;
-		}
+	}
 
 	symbol_for_print_subfield.assign("\\alpha");
 
@@ -4002,7 +4000,7 @@ void finite_field::create_ttp_code(finite_field *Fq,
 		Orbiter->Int_vec.print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
 		//f.latex_matrix(cout, f_elements_exponential,
 		//symbol_for_print_subfield, H_subfield, m, n);
-		}
+	}
 
 	d = m;
 	P = NEW_OBJECT(projective_space);
@@ -4018,26 +4016,26 @@ void finite_field::create_ttp_code(finite_field *Fq,
 		//print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
 		Fq->latex_matrix(cout, f_elements_exponential,
 			symbol_for_print_subfield, H_subfield, m, n);
-		}
+	}
 
 	v = NEW_int(d);
 	Pts = NEW_lint(nb_pts);
 
 	if (f_v) {
 		cout << "i : point : projective rank" << endl;
-		}
+	}
 	for (i = 0; i < nb_pts; i++) {
 		for (j = 0; j < d; j++) {
 			v[j] = H_subfield[j * n + i];
-			}
+		}
 		j = P->rank_point(v);
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
 			Orbiter->Int_vec.print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
-			}
 		}
+	}
 
 #if 0
 	cout << "list of points for the ttp code:" << endl;
@@ -4052,14 +4050,14 @@ void finite_field::create_ttp_code(finite_field *Fq,
 	if (f_construction_A) {
 		if (f_hyperoval) {
 			snprintf(str, 1000, "ttp_code_Ah_%d.txt", Fq->q);
-			}
+		}
 		else {
 			snprintf(str, 1000, "ttp_code_A_%d.txt", Fq->q);
-			}
 		}
+	}
 	else if (f_construction_B) {
 		snprintf(str, 1000, "ttp_code_B_%d.txt", Fq->q);
-		}
+	}
 	fname.assign(str);
 	//write_set_to_file(fname, L, N, verbose_level);
 
@@ -4096,7 +4094,7 @@ void finite_field::create_unital_XXq_YZq_ZYq(
 
 	if (f_v) {
 		cout << "i : point : projective rank" << endl;
-		}
+	}
 	for (i = 0; i < nb_pts; i++) {
 		rk = Pts[i];
 		P2->unrank_point(v, rk);
@@ -4104,8 +4102,8 @@ void finite_field::create_unital_XXq_YZq_ZYq(
 			cout << setw(4) << i << " : ";
 			Orbiter->Int_vec.print(cout, v, d);
 			cout << " : " << setw(5) << rk << endl;
-			}
 		}
+	}
 
 
 	char str[1000];
@@ -4127,7 +4125,7 @@ void finite_field::create_whole_space(int n,
 
 	if (f_v) {
 		cout << "finite_field::create_whole_space" << endl;
-		}
+	}
 	//d = n + 1;
 	P = NEW_OBJECT(projective_space);
 
@@ -4140,7 +4138,7 @@ void finite_field::create_whole_space(int n,
 	nb_pts = P->N_points;
 	for (i = 0; i < P->N_points; i++) {
 		Pts[i] = i;
-		}
+	}
 
 	char str[1000];
 	sprintf(str, "whole_space_PG_%d_%d.txt", n, q);
@@ -4163,7 +4161,7 @@ void finite_field::create_hyperplane(int n,
 
 	if (f_v) {
 		cout << "finite_field::create_hyperplane pt=" << pt << endl;
-		}
+	}
 	d = n + 1;
 	P = NEW_OBJECT(projective_space);
 	v1 = NEW_int(d);
@@ -4186,9 +4184,9 @@ void finite_field::create_hyperplane(int n,
 				cout << setw(4) << nb_pts - 1 << " : ";
 				Orbiter->Int_vec.print(cout, v2, d);
 				cout << " : " << setw(5) << i << endl;
-				}
 			}
 		}
+	}
 
 	char str[1000];
 	sprintf(str, "hyperplane_PG_%d_%d_pt%d.txt", n, q, pt);
@@ -4217,11 +4215,11 @@ void finite_field::create_segre_variety(int a, int b,
 		cout << "finite_field::create_segre_variety" << endl;
 		cout << "a=" << a << " (projective)" << endl;
 		cout << "b=" << b << " (projective)" << endl;
-		}
+	}
 	d = (a + 1) * (b + 1);
 	if (f_v) {
 		cout << "d=" << d << " (vector space dimension)" << endl;
-		}
+	}
 	P1 = NEW_OBJECT(projective_space);
 	P2 = NEW_OBJECT(projective_space);
 	P3 = NEW_OBJECT(projective_space);
@@ -4256,9 +4254,9 @@ void finite_field::create_segre_variety(int a, int b,
 				cout << setw(4) << nb_pts - 1 << " : " << endl;
 				Orbiter->Int_vec.matrix_print(v3, a + 1, b + 1);
 				cout << " : " << setw(5) << rk << endl;
-				}
 			}
 		}
+	}
 
 	char str[1000];
 	sprintf(str, "segre_variety_%d_%d_%d.txt", a, b, q);
@@ -4282,7 +4280,7 @@ void finite_field::create_Maruta_Hamada_arc(
 
 	if (f_v) {
 		cout << "finite_field::create_Maruta_Hamada_arc" << endl;
-		}
+	}
 	P = NEW_OBJECT(projective_space);
 
 	P->init(2, this,
@@ -4331,12 +4329,12 @@ void finite_field::create_desarguesian_line_spread_in_PG_3_q(
 		cout << "create_desarguesian_line_spread_in_PG_3_q "
 				"Q != FQ->q" << endl;
 		exit(1);
-		}
+	}
 #endif
 	if (f_v) {
 		cout << "create_desarguesian_line_spread_in_PG_3_q" << endl;
 		cout << "f_embedded_in_PG_4_q=" << f_embedded_in_PG_4_q << endl;
-		}
+	}
 
 	P1->init(1, this,
 		FALSE /* f_init_incidence_structure */,
@@ -4348,14 +4346,14 @@ void finite_field::create_desarguesian_line_spread_in_PG_3_q(
 			verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
 
 		d = 5;
-		}
+	}
 	else {
 		P3->init(3, Fq,
 			TRUE /* f_init_incidence_structure */,
 			verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
 
 		d = 4;
-		}
+	}
 
 
 
@@ -4379,12 +4377,12 @@ void finite_field::create_desarguesian_line_spread_in_PG_3_q(
 	if (f_vv) {
 		print_embedding(*Fq,
 			components, embedding, pair_embedding);
-		}
+	}
 	alpha = p;
 	if (f_vv) {
 		cout << "alpha=" << alpha << endl;
 		//FQ->print(TRUE /* f_add_mult_table */);
-		}
+	}
 
 
 	nb_lines = Q + 1;
@@ -4400,7 +4398,7 @@ void finite_field::create_desarguesian_line_spread_in_PG_3_q(
 	ee = e >> 1;
 	if (f_vv) {
 		cout << "ee=" << ee << endl;
-		}
+	}
 
 
 	int a, a0, a1;
@@ -4408,11 +4406,11 @@ void finite_field::create_desarguesian_line_spread_in_PG_3_q(
 
 	if (f_v) {
 		cout << "rk : w1,w2 : line rank" << endl;
-		}
+	}
 	for (rk = 0; rk < nb_lines; rk++) {
 		if (f_vv) {
 			cout << "rk=" << rk << endl;
-			}
+		}
 		P1->unrank_point(v2, rk);
 			// w1[4] is the GF(q)-vector corresponding
 			// to the GF(q^2)-vector v[2]
@@ -4426,7 +4424,7 @@ void finite_field::create_desarguesian_line_spread_in_PG_3_q(
 			cout << "v2=";
 			Orbiter->Int_vec.print(cout, v2, 2);
 			cout << endl;
-			}
+		}
 
 		for (h = 0; h < 2; h++) {
 			a = v2[h];
@@ -4439,27 +4437,27 @@ void finite_field::create_desarguesian_line_spread_in_PG_3_q(
 			w1[2 * h + 1] = a1;
 			w2[2 * h + 0] = b0;
 			w2[2 * h + 1] = b1;
-			}
+		}
 		if (f_embedded_in_PG_4_q) {
 			w1[4] = 0;
 			w2[4] = 0;
-			}
+		}
 		if (f_vv) {
 			cout << "w1=";
 			Orbiter->Int_vec.print(cout, w1, 4);
 			cout << "w2=";
 			Orbiter->Int_vec.print(cout, w2, 4);
 			cout << endl;
-			}
+		}
 
 		for (j = 0; j < d; j++) {
 			P3->Grass_lines->M[0 * d + j] = w1[j];
 			P3->Grass_lines->M[1 * d + j] = w2[j];
-			}
+		}
 		if (f_vv) {
 			cout << "before P3->Grass_lines->rank_int:" << endl;
 			Orbiter->Int_vec.matrix_print(P3->Grass_lines->M, 2, 4);
-			}
+		}
 		rk1 = P3->Grass_lines->rank_lint(0 /* verbose_level*/);
 		Lines[rk] = rk1;
 		if (f_vv) {
@@ -4468,18 +4466,16 @@ void finite_field::create_desarguesian_line_spread_in_PG_3_q(
 			cout << ", ";
 			Orbiter->Int_vec.print(cout, w2, d);
 			cout << " : " << setw(5) << rk1 << endl;
-			}
 		}
+	}
 
 	char str[1000];
 	if (f_embedded_in_PG_4_q) {
-		sprintf(str, "desarguesian_line_spread_"
-				"in_PG_3_%d_embedded.txt", q);
-		}
+		sprintf(str, "desarguesian_line_spread_in_PG_3_%d_embedded.txt", q);
+	}
 	else {
-		sprintf(str, "desarguesian_line_spread_"
-				"in_PG_3_%d.txt", q);
-		}
+		sprintf(str, "desarguesian_line_spread_in_PG_3_%d.txt", q);
+	}
 	fname.assign(str);
 
 	FREE_OBJECT(P1);
@@ -5207,20 +5203,20 @@ void finite_field::do_test_diagonal_line(int n,
 		cout << "finite_field::do_test_diagonal_line" << endl;
 		cout << "fname_orbits_on_quadrangles="
 				<< fname_orbits_on_quadrangles << endl;
-		}
+	}
 	if (n != 2) {
 		cout << "finite_field::do_test_diagonal_line we need n = 2" << endl;
 		exit(1);
-		}
+	}
 	if (ODD(q)) {
 		cout << "finite_field::do_test_diagonal_line we need q even" << endl;
 		exit(1);
-		}
+	}
 	if (set_size != q + 2) {
 		cout << "finite_field::do_test_diagonal_line "
 				"we need set_size == q + 2" << endl;
 		exit(1);
-		}
+	}
 	P = NEW_OBJECT(projective_space);
 
 	P->init(n, this,
@@ -5256,7 +5252,7 @@ void finite_field::do_test_diagonal_line(int n,
 
 	if (f_v) {
 		cout << "read " << nb_cases << " orbits on qudrangles" << endl;
-		}
+	}
 
 	Nb = NEW_int(nb_cases);
 
@@ -5281,7 +5277,7 @@ void finite_field::do_test_diagonal_line(int n,
 		if (set_sizes[h] != 4) {
 			cout << "size != 4" << endl;
 			exit(1);
-			}
+		}
 
 		for (i = 0; i < 4; i++) {
 			a = sets[h][i];
@@ -5290,9 +5286,9 @@ void finite_field::do_test_diagonal_line(int n,
 				cout << "the point " << a << " is not contained "
 						"in the hyperoval" << endl;
 				exit(1);
-				}
-			p_idx[i] = j;
 			}
+			p_idx[i] = j;
+		}
 
 		cout << "p_idx[4]: ";
 		Orbiter->Int_vec.print(cout, p_idx, 4);
@@ -5330,34 +5326,34 @@ void finite_field::do_test_diagonal_line(int n,
 				diag_pts[0], diag_pts[2])) {
 			cout << "diaginal points not collinear!" << endl;
 			exit(1);
-			}
+		}
 		nb = 0;
 		for (i = 0; i < set_size; i++) {
 			a = set_in[i];
 			if (P->is_incident(a, diag_line)) {
 				nb++;
-				}
 			}
+		}
 		cout << "nb=" << nb << endl;
 		Nb[h] = nb;
 
 		if (nb == 0) {
 			cout << "the diagonal line is external!" << endl;
-			}
+		}
 		else if (nb == 2) {
 			cout << "the diagonal line is secant" << endl;
-			}
+		}
 		else {
 			cout << "something else" << endl;
-			}
+		}
 
 
-		} // next h
+	} // next h
 
 	cout << "h : Nb[h]" << endl;
 	for (h = 0; h < nb_cases; h++) {
 		cout << setw(3) << h << " : " << setw(3) << Nb[h] << endl;
-		}
+	}
 	int l0, l2;
 	int *V0, *V2;
 	int i, a;
@@ -5369,21 +5365,21 @@ void finite_field::do_test_diagonal_line(int n,
 	for (i = 0; i < nb_cases; i++) {
 		if (Nb[i] == 0) {
 			V0[l0++] = i;
-			}
+		}
 		else {
 			V2[l2++] = i;
-			}
 		}
+	}
 	cout << "external orbits:" << endl;
 	for (i = 0; i < l0; i++) {
 		a = V0[i];
 		cout << i << " : " << a << " : " << Ago_ascii[a] << endl;
-		}
+	}
 	cout << "secant orbits:" << endl;
 	for (i = 0; i < l2; i++) {
 		a = V2[i];
 		cout << i << " : " << a << " : " << Ago_ascii[a] << endl;
-		}
+	}
 	cout << "So, there are " << l0 << " external diagonal orbits "
 			"and " << l2 << " secant diagonal orbits" << endl;
 
@@ -5409,7 +5405,7 @@ void finite_field::do_andre(finite_field *Fq,
 
 	if (f_v) {
 		cout << "finite_field::do_andre for a set of size " << set_size_in << endl;
-		}
+	}
 	P2 = NEW_OBJECT(projective_space);
 	P4 = NEW_OBJECT(projective_space);
 
@@ -5427,7 +5423,7 @@ void finite_field::do_andre(finite_field *Fq,
 
 	if (f_v) {
 		cout << "before subfield_embedding_2dimensional" << endl;
-		}
+	}
 
 	subfield_embedding_2dimensional(*Fq,
 		components, embedding, pair_embedding, verbose_level);
@@ -5448,16 +5444,16 @@ void finite_field::do_andre(finite_field *Fq,
 
 	if (f_v) {
 		cout << "after  subfield_embedding_2dimensional" << endl;
-		}
+	}
 	if (f_vv) {
 		print_embedding(*Fq,
 			components, embedding, pair_embedding);
-		}
+	}
 	alpha = p;
 	if (f_vv) {
 		cout << "alpha=" << alpha << endl;
 		//FQ->print(TRUE /* f_add_mult_table */);
-		}
+	}
 
 
 	v = NEW_int(3);
@@ -5474,13 +5470,13 @@ void finite_field::do_andre(finite_field *Fq,
 		if (f_vv) {
 			cout << "input point " << i << " is "
 					<< the_set_in[i] << " : ";
-			}
+		}
 		P2->unrank_point(v, the_set_in[i]);
 		PG_element_normalize(v, 1, 3);
 		if (f_vv) {
 			Orbiter->Int_vec.print(cout, v, 3);
 			cout << " becomes ";
-			}
+		}
 
 		if (v[2] == 0) {
 
@@ -5491,7 +5487,7 @@ void finite_field::do_andre(finite_field *Fq,
 
 			if (f_vv) {
 				cout << endl;
-				}
+			}
 			// w1[4] is the GF(q)-vector corresponding
 			// to the GF(q^2)-vector v[2]
 			// w2[4] is the GF(q)-vector corresponding
@@ -5512,14 +5508,14 @@ void finite_field::do_andre(finite_field *Fq,
 				w1[2 * h + 1] = a1;
 				w2[2 * h + 0] = b0;
 				w2[2 * h + 1] = b1;
-				}
+			}
 			if (FALSE) {
 				cout << "w1=";
 				Orbiter->Int_vec.print(cout, w1, 4);
 				cout << "w2=";
 				Orbiter->Int_vec.print(cout, w2, 4);
 				cout << endl;
-				}
+			}
 
 			// now we create all points on the line spanned
 			// by w1[4] and w2[4]:
@@ -5533,23 +5529,23 @@ void finite_field::do_andre(finite_field *Fq,
 					cout << "v2=";
 					Orbiter->Int_vec.print(cout, v2, 2);
 					cout << " : ";
-					}
+				}
 				for (k = 0; k < 4; k++) {
 					w3[k] = Fq->add(Fq->mult(v2[0], w1[k]),
 							Fq->mult(v2[1], w2[k]));
-					}
+				}
 				w3[4] = 0;
 				if (f_vv) {
 					cout << " ";
 					Orbiter->Int_vec.print(cout, w3, 5);
-					}
+				}
 				a = P4->rank_point(w3);
 				if (f_vv) {
 					cout << " rank " << a << endl;
-					}
-				the_set_out[set_size_out++] = a;
 				}
+				the_set_out[set_size_out++] = a;
 			}
+		}
 		else {
 
 			// we are dealing with an affine point:
@@ -5563,19 +5559,19 @@ void finite_field::do_andre(finite_field *Fq,
 				a1 = components[a * 2 + 1];
 				w1[2 * h + 0] = a0;
 				w1[2 * h + 1] = a1;
-				}
+			}
 			w1[4] = 1;
 			if (f_vv) {
 				//cout << "w1=";
 				Orbiter->Int_vec.print(cout, w1, 5);
-				}
+			}
 			a = P4->rank_point(w1);
 			if (f_vv) {
 				cout << " rank " << a << endl;
-				}
-			the_set_out[set_size_out++] = a;
 			}
+			the_set_out[set_size_out++] = a;
 		}
+	}
 
 	if (f_v) {
 		for (i = 0; i < set_size_out; i++) {
@@ -5584,8 +5580,8 @@ void finite_field::do_andre(finite_field *Fq,
 			cout << setw(3) << i << " : " << setw(5) << a << " : ";
 			Orbiter->Int_vec.print(cout, w1, 5);
 			cout << endl;
-			}
 		}
+	}
 
 	FREE_OBJECT(P2);
 	FREE_OBJECT(P4);
@@ -5623,7 +5619,7 @@ void finite_field::do_print_lines_in_PG(int n,
 		latex_matrix(cout, f_elements_exponential,
 			symbol_for_print, P->Grass_lines->M, 2, d);
 		cout << endl;
-		}
+	}
 	FREE_OBJECT(P);
 }
 
@@ -5655,7 +5651,7 @@ void finite_field::do_print_points_in_PG(int n,
 		int_vec_print_elements_exponential(cout,
 				v, d, symbol_for_print);
 		cout << endl;
-		}
+	}
 	FREE_int(v);
 	FREE_OBJECT(P);
 }
@@ -5748,7 +5744,7 @@ void finite_field::do_embed_orthogonal(
 
 	if (f_v) {
 		cout << "finite_field::do_embed_orthogonal" << endl;
-		}
+	}
 	P = NEW_OBJECT(projective_space);
 
 	P->init(n, this,
@@ -5757,7 +5753,7 @@ void finite_field::do_embed_orthogonal(
 
 	if (epsilon == -1) {
 		choose_anisotropic_form(c1, c2, c3, verbose_level);
-		}
+	}
 
 	v = NEW_int(d);
 	set_out = NEW_lint(set_size);
@@ -5767,7 +5763,7 @@ void finite_field::do_embed_orthogonal(
 		Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, a, 0 /* verbose_level */);
 		b = P->rank_point(v);
 		set_out[h] = b;
-		}
+	}
 
 	FREE_int(v);
 	FREE_OBJECT(P);
@@ -5807,7 +5803,7 @@ void finite_field::do_embed_points(int n,
 		v[d - 1] = 0;
 		b = P2->rank_point(v);
 		set_out[h] = b;
-		}
+	}
 
 	FREE_int(v);
 	FREE_OBJECT(P1);
