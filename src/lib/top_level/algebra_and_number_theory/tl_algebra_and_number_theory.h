@@ -158,6 +158,118 @@ public:
 
 
 // #############################################################################
+// any_group.cpp
+// #############################################################################
+
+//! a wrapper for linear_group and permutation_group_create
+
+class any_group {
+
+public:
+
+	int f_linear_group;
+	linear_group *LG;
+	permutation_group_create *PGC;
+
+	action *A_base;
+	action *A;
+
+	std::string label;
+	std::string label_tex;
+
+	strong_generators *Subgroup_gens;
+	sims *Subgroup_sims;
+
+	any_group();
+	~any_group();
+	void init_linear_group(linear_group *LG, int verbose_level);
+	void init_permutation_group(permutation_group_create *PGC, int verbose_level);
+	void create_latex_report(
+			layered_graph_draw_options *O,
+			int f_sylow, int f_group_table, int f_classes,
+			int verbose_level);
+	void do_export_gap(int verbose_level);
+	void do_export_magma(int verbose_level);
+	void create_group_table(int verbose_level);
+	void normalizer(int verbose_level);
+	void centralizer(
+			std::string &element_label,
+			std::string &element_description_text,
+			int verbose_level);
+	void normalizer_of_cyclic_subgroup(
+			std::string &element_label,
+			std::string &element_description_text,
+			int verbose_level);
+	void do_find_subgroups(
+			int order_of_subgroup,
+			int verbose_level);
+	void print_elements(int verbose_level);
+	void print_elements_tex(int f_order_of_products, std::string &elements, int verbose_level);
+	void save_elements_csv(std::string &fname, int verbose_level);
+	void multiply_elements_csv(std::string &fname1, std::string &fname2, std::string &fname3,
+			int f_column_major_ordering, int verbose_level);
+	void apply_elements_to_set_csv(std::string &fname1, std::string &fname2,
+			std::string &set_text,
+			int verbose_level);
+	void element_rank(std::string &elt_data, int verbose_level);
+	void element_unrank(std::string &rank_string, int verbose_level);
+	void conjugacy_class_of(std::string &rank_string, int verbose_level);
+	void do_reverse_isomorphism_exterior_square(int verbose_level);
+	void orbits_on_set_system_from_file(std::string &fname_csv,
+			int number_of_columns, int first_column, int verbose_level);
+	void orbits_on_set_from_file(std::string &fname_csv, int verbose_level);
+	void orbit_of(int point_idx, int verbose_level);
+	void orbits_on_points(orbits_on_something *&Orb, int verbose_level);
+	void orbits_on_subsets(poset_classification_control *Control, int subset_size, int verbose_level);
+	void orbits_on_poset_post_processing(
+			poset_classification *PC,
+			int depth,
+			int verbose_level);
+	void do_conjugacy_class_of_element(
+			std::string &elt_label, std::string &elt_text, int verbose_level);
+	void do_orbits_on_group_elements_under_conjugation(
+			std::string &fname_group_elements_coded,
+			std::string &fname_transporter,
+			int verbose_level);
+	void create_latex_report_work(
+			layered_graph_draw_options *O,
+			int verbose_level);
+
+	// any_group_linear.cpp:
+	void classes_based_on_normal_form(int verbose_level);
+	void classes(int verbose_level);
+	void find_singer_cycle(int verbose_level);
+	void search_element_of_order(int order, int verbose_level);
+	void find_standard_generators(int order_a,
+			int order_b,
+			int order_ab,
+			int verbose_level);
+	void isomorphism_Klein_quadric(std::string &fname, int verbose_level);
+	void orbits_on_subspaces(poset_classification_control *Control, int depth, int verbose_level);
+	void do_tensor_classify(poset_classification_control *Control, int depth, int verbose_level);
+	void do_tensor_permutations(int verbose_level);
+	void do_linear_codes(poset_classification_control *Control,
+			int minimum_distance,
+			int target_size, int verbose_level);
+	void do_classify_ovoids(
+			poset_classification_control *Control,
+			ovoid_classify_description *Ovoid_classify_description,
+			int verbose_level);
+	int subspace_orbits_test_set(
+			int len, long int *S, int verbose_level);
+
+
+};
+
+long int orbits_on_subspaces_rank_point_func(int *v, void *data);
+void orbits_on_subspaces_unrank_point_func(int *v, long int rk, void *data);
+void orbits_on_subspaces_early_test_func(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
+
+
+// #############################################################################
 // character_table_burnside.cpp
 // #############################################################################
 
@@ -292,7 +404,7 @@ public:
 	int f_draw_tree;
 
 	int f_orbit_of;
-	int orbit_of_idx;
+	int orbit_of_point_idx;
 
 	int f_orbits_on_set_system_from_file;
 	std::string orbits_on_set_system_from_file_fname;
@@ -310,6 +422,25 @@ public:
 
 	int f_print_elements;
 	int f_print_elements_tex;
+	int f_save_elements_csv;
+	std::string save_elements_csv_fname;
+
+
+	int f_multiply_elements_csv_column_major_ordering;
+	std::string multiply_elements_csv_column_major_ordering_fname1;
+	std::string multiply_elements_csv_column_major_ordering_fname2;
+	std::string multiply_elements_csv_column_major_ordering_fname3;
+
+	int f_multiply_elements_csv_row_major_ordering;
+	std::string multiply_elements_csv_row_major_ordering_fname1;
+	std::string multiply_elements_csv_row_major_ordering_fname2;
+	std::string multiply_elements_csv_row_major_ordering_fname3;
+
+	int f_apply_elements_csv_to_set;
+	std::string apply_elements_csv_to_set_fname1;
+	std::string apply_elements_csv_to_set_fname2;
+	std::string apply_elements_csv_to_set_set;
+
 
 	int f_order_of_products;
 	std::string order_of_products_elements;
@@ -321,12 +452,6 @@ public:
 	int linear_codes_minimum_distance;
 	int linear_codes_target_size;
 
-
-#if 0
-	// classification of arcs in projective spaces:
-	int f_classify_arcs;
-	arc_generator_description *Arc_generator_description;
-#endif
 
 	int f_exact_cover;
 	exact_cover_arguments *ECA;
@@ -369,8 +494,6 @@ public:
 		int Andre_Bruck_Bose_construction_spread_no;
 		std::string Andre_Bruck_Bose_construction_label;
 
-		//int f_BLT_starter;
-		//int BLT_starter_size;
 
 
 
@@ -397,83 +520,28 @@ class group_theoretic_activity {
 public:
 	group_theoretic_activity_description *Descr;
 	finite_field *F;
-	linear_group *LG;
+	//int f_linear_group;
+	//linear_group *LG;
+
+	any_group *AG;
+
 	action *A1;
 	action *A2;
 
-	// local data for orbits on subspaces:
-	poset_with_group_action *orbits_on_subspaces_Poset;
-	poset_classification *orbits_on_subspaces_PC;
-	vector_space *orbits_on_subspaces_VS;
-	int *orbits_on_subspaces_M;
-	int *orbits_on_subspaces_base_cols;
 
 
 	group_theoretic_activity();
 	~group_theoretic_activity();
-	void init(group_theoretic_activity_description *Descr,
+	void init_linear_group(group_theoretic_activity_description *Descr,
 			finite_field *F, linear_group *LG,
 			int verbose_level);
+	void init_permutation_group(group_theoretic_activity_description *Descr,
+			permutation_group_create *PGC,
+			int verbose_level);
 	void perform_activity(int verbose_level);
-	void classes_based_on_normal_form(int verbose_level);
-	void classes(int verbose_level);
 	void multiply(int verbose_level);
 	void inverse(int verbose_level);
 	void raise_to_the_power(int verbose_level);
-	void do_export_gap(int verbose_level);
-	void do_export_magma(int verbose_level);
-	void create_group_table(int verbose_level);
-	void normalizer(int verbose_level);
-	void centralizer(
-			std::string &element_label,
-			std::string &element_description_text,
-			int verbose_level);
-	void normalizer_of_cyclic_subgroup(
-			std::string &element_label,
-			std::string &element_description_text,
-			int verbose_level);
-	void do_find_subgroups(
-			int order_of_subgroup,
-			int verbose_level);
-	void print_elements(int verbose_level);
-	void print_elements_tex(int verbose_level);
-	void find_singer_cycle(int verbose_level);
-	void search_element_of_order(int order, int verbose_level);
-	void find_standard_generators(int order_a,
-			int order_b,
-			int order_ab,
-			int verbose_level);
-	void element_rank(std::string &elt_data, int verbose_level);
-	void element_unrank(std::string &rank_string, int verbose_level);
-	void conjugacy_class_of(std::string &rank_string, int verbose_level);
-	void do_reverse_isomorphism_exterior_square(int verbose_level);
-	void isomorphism_Klein_quadric(std::string &fname, int verbose_level);
-	void orbits_on_set_system_from_file(int verbose_level);
-	void orbits_on_set_from_file(int verbose_level);
-	void orbit_of(int verbose_level);
-	void orbits_on_points(int verbose_level);
-	void orbits_on_subsets(int verbose_level);
-	void orbits_on_subspaces(int verbose_level);
-	void orbits_on_poset_post_processing(
-			poset_classification *PC,
-			int depth,
-			int verbose_level);
-	void do_tensor_classify(int depth, int verbose_level);
-	void do_tensor_permutations(int verbose_level);
-	void do_linear_codes(int minimum_distance,
-			int target_size, int verbose_level);
-	void do_classify_ovoids(
-			poset_classification_control *Control,
-			ovoid_classify_description *Ovoid_classify_description,
-			int verbose_level);
-	int subspace_orbits_test_set(
-			int len, long int *S, int verbose_level);
-	void do_conjugacy_class_of_element(
-			std::string &elt_label, std::string &elt_text, int verbose_level);
-	void do_orbits_on_group_elements_under_conjugation(
-			std::string &fname_group_elements_coded,
-			std::string &fname_transporter,
-			int verbose_level);
 	void do_Andre_Bruck_Bose_construction(int spread_no,
 			int f_Fano, int f_arcs, int f_depth, int depth,
 			std::string &label,
@@ -481,13 +549,6 @@ public:
 
 
 };
-
-long int gta_subspace_orbits_rank_point_func(int *v, void *data);
-void gta_subspace_orbits_unrank_point_func(int *v, long int rk, void *data);
-void gta_subspace_orbits_early_test_func(long int *S, int len,
-	long int *candidates, int nb_candidates,
-	long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
 
 
 // #############################################################################

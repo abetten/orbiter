@@ -2200,6 +2200,64 @@ void sims::get_orbit(int orbit_idx, std::vector<int> &Orb, int verbose_level)
 	}
 }
 
+void sims::all_elements(vector_ge *&vec, int verbose_level)
+{
+
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "sims::all_elements" << endl;
+	}
+
+	longinteger_object go;
+	long int i, goi;
+
+	group_order(go);
+	goi = go.as_int();
+
+	vec = NEW_OBJECT(vector_ge);
+	vec->init(A, 0 /*verbose_level*/);
+	vec->allocate(goi, verbose_level);
+
+
+	for (i = 0; i < goi; i++) {
+		element_unrank_lint(i, vec->ith(i));
+	}
+
+	if (f_v) {
+		cout << "sims::all_elements done" << endl;
+	}
+}
+
+
+void sims::all_elements_save_csv(std::string &fname, int verbose_level)
+{
+
+	int f_v = (verbose_level >= 1);
+	file_io Fio;
+
+	if (f_v) {
+		cout << "sims::all_elements_save_csv" << endl;
+	}
+
+	vector_ge *vec;
+
+	all_elements(vec, verbose_level);
+
+
+	vec->save_csv(fname, verbose_level);
+	if (f_v) {
+		cout << "sims::all_elements_save_csv Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+	FREE_OBJECT(vec);
+
+	if (f_v) {
+		cout << "sims::all_elements_save_csv done" << endl;
+	}
+}
+
+
 }}
 
 

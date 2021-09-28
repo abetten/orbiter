@@ -93,6 +93,15 @@ void *orbiter_symbol_table::get_object(int idx)
 	return Table[idx].ptr;
 }
 
+symbol_table_object_type orbiter_symbol_table::get_object_type(int idx)
+{
+	if (idx >= Table.size()) {
+		cout << "orbiter_symbol_table::get_object_type out of bounds" << endl;
+		exit(1);
+	}
+	return Table[idx].object_type;
+}
+
 
 
 }}

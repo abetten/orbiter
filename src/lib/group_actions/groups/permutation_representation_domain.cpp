@@ -498,7 +498,10 @@ void permutation_representation_domain::make_element(int *Elt, int *data, int ve
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, a;
+	int *my_data;
+	combinatorics_domain Combi;
 	
+
 	if (f_v) {
 		cout << "permutation_representation_domain::make_element" << endl;
 	}
@@ -507,10 +510,23 @@ void permutation_representation_domain::make_element(int *Elt, int *data, int ve
 		Orbiter->Int_vec.print(cout, data, elt_size_int);
 		cout << endl;
 	}
+
+	my_data = NEW_int(elt_size_int);
+
 	for (i = 0; i < elt_size_int; i++) {
 		a = data[i];
+		my_data[i] = a;
 		Elt[i] = a;
 	}
+
+	if (!Combi.is_permutation(my_data, elt_size_int)) {
+		cout << "permutation_representation_domain::make_element "
+				"The input is not a permutation" << endl;
+		exit(1);
+	}
+
+	FREE_int(my_data);
+
 	if (f_v) {
 		cout << "permutation_representation_domain::make_element done" << endl;
 	}

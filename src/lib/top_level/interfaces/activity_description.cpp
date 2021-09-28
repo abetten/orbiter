@@ -824,30 +824,68 @@ void activity_description::do_group_theoretic_activity(int verbose_level)
 		exit(1);
 	}
 
-	linear_group *LG;
 
-	LG = (linear_group *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
-	{
-		group_theoretic_activity Activity;
+	symbol_table_object_type type;
 
-		Activity.init(Group_theoretic_activity_description, LG->F, LG, verbose_level);
+	type = Sym->Orbiter_top_level_session->get_object_type(Idx[0]);
 
-		if (Sym->with_labels.size() == 2) {
-			cout << "-group_theoretic_activity has two inputs" << endl;
-			linear_group *LG2;
-			LG2 = (linear_group *) Sym->Orbiter_top_level_session->get_object(Idx[1]);
 
-			Activity.A2 = LG2->A_linear;
+	if (type == t_linear_group) {
+		linear_group *LG;
+
+		LG = (linear_group *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+		{
+			group_theoretic_activity Activity;
+
+			Activity.init_linear_group(Group_theoretic_activity_description, LG->F, LG, verbose_level);
+
+			if (Sym->with_labels.size() == 2) {
+				cout << "-group_theoretic_activity has two inputs" << endl;
+				linear_group *LG2;
+				LG2 = (linear_group *) Sym->Orbiter_top_level_session->get_object(Idx[1]);
+
+				Activity.A2 = LG2->A_linear;
+			}
+
+			if (f_v) {
+				cout << "activity_description::do_group_theoretic_activity "
+						"before Activity.perform_activity" << endl;
+			}
+			Activity.perform_activity(verbose_level);
+			if (f_v) {
+				cout << "activity_description::do_group_theoretic_activity "
+						"after Activity.perform_activity" << endl;
+			}
+
 		}
+	}
+	else if (type == t_permutation_group) {
+		permutation_group_create *PGC;
 
-		if (f_v) {
-			cout << "activity_description::do_group_theoretic_activity "
-					"before Activity.perform_activity" << endl;
-		}
-		Activity.perform_activity(verbose_level);
-		if (f_v) {
-			cout << "activity_description::do_group_theoretic_activity "
-					"after Activity.perform_activity" << endl;
+		PGC = (permutation_group_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+		{
+			group_theoretic_activity Activity;
+
+			Activity.init_permutation_group(Group_theoretic_activity_description, PGC, verbose_level);
+#if 0
+			if (Sym->with_labels.size() == 2) {
+				cout << "-group_theoretic_activity has two inputs" << endl;
+				linear_group *LG2;
+				LG2 = (linear_group *) Sym->Orbiter_top_level_session->get_object(Idx[1]);
+
+				Activity.A2 = LG2->A_linear;
+			}
+#endif
+			if (f_v) {
+				cout << "activity_description::do_group_theoretic_activity "
+						"before Activity.perform_activity" << endl;
+			}
+			Activity.perform_activity(verbose_level);
+			if (f_v) {
+				cout << "activity_description::do_group_theoretic_activity "
+						"after Activity.perform_activity" << endl;
+			}
+
 		}
 
 	}

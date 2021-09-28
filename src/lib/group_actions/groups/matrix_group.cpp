@@ -20,16 +20,31 @@ namespace group_actions {
 
 matrix_group::matrix_group()
 {
-	null();
-}
+	f_projective = FALSE;
+	f_affine = FALSE;
+	f_general_linear = FALSE;
+	n = 0;
+	degree = 0;
 
-matrix_group::~matrix_group()
-{
-	freeself();
-}
+	f_semilinear = FALSE;
+	f_kernel_is_diagonal_matrices = FALSE;
+	bits_per_digit = 0;
+	bits_per_elt = 0;
+	bits_extension_degree = 0;
+	char_per_elt = 0;
+	elt_size_int = 0;
+	elt_size_int_half = 0;
+	low_level_point_size = 0;
+	make_element_size = 0;
 
-void matrix_group::null()
-{
+	//std::string label;
+	//std::string label_tex;
+
+	f_GFq_is_allocated = FALSE;
+	GFq = NULL;
+	data = NULL;
+	C = NULL;
+
 	Elt1 = NULL;
 	Elt2 = NULL;
 	Elt3 = NULL;
@@ -44,32 +59,29 @@ void matrix_group::null()
 	elt2 = NULL;
 	elt3 = NULL;
 	Elts = NULL;
-	f_GFq_is_allocated = FALSE;
-	GFq = NULL;
-	C = NULL;
-	f_kernel_is_diagonal_matrices = FALSE;
-	low_level_point_size = 0;
-	elt_size_int = 0;
 }
 
-void matrix_group::freeself()
+
+
+
+matrix_group::~matrix_group()
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "matrix_group::freeself calling free_data" << endl;
+		cout << "matrix_group::~matrix_group calling free_data" << endl;
 	}
 	free_data(verbose_level);
 	if (f_v) {
-		cout << "matrix_group::freeself "
+		cout << "matrix_group::~matrix_group "
 				"destroying Elts" << endl;
 	}
 	if (Elts) {
 		FREE_OBJECT(Elts);
 	}
 	if (f_v) {
-		cout << "matrix_group::freeself "
+		cout << "matrix_group::~matrix_group "
 				"destroying GFq" << endl;
 	}
 	if (f_GFq_is_allocated) {
@@ -78,9 +90,8 @@ void matrix_group::freeself()
 	if (C) {
 		FREE_OBJECT(C);
 	}
-	null();
 	if (f_v) {
-		cout << "matrix_group::freeself done" << endl;
+		cout << "matrix_group::~matrix_group done" << endl;
 	}
 }
 
@@ -334,7 +345,7 @@ void matrix_group::init_general_linear_group(int n,
 
 	if (f_v) {
 		cout << "matrix_group::init_general_linear_group "
-				"finished" << endl;
+				"done" << endl;
 	}
 }
 
@@ -477,14 +488,12 @@ void matrix_group::setup_page_storage(
 	
 	
 	if (f_vv) {
-		cout << "matrix_group::setup_page_storage "
-				"calling GL_one()" << endl;
+		cout << "matrix_group::setup_page_storage before GL_one" << endl;
 	}
 	GL_one(Elt1);
 	GL_pack(Elt1, elt1);
 	if (f_vv) {
-		cout << "matrix_group::setup_page_storage "
-				"calling Elts->store()" << endl;
+		cout << "matrix_group::setup_page_storage before Elts->store" << endl;
 	}
 	hdl = Elts->store(elt1);
 	if (f_vv) {
@@ -615,8 +624,7 @@ void matrix_group::init_base(action *A, int verbose_level)
 
 void matrix_group::init_base_projective(
 		action *A, int verbose_level)
-// initializes base, base_len, degree,
-// transversal_length, orbit, orbit_inv
+// initializes A->degree, A->Stabilizer_chain
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -681,6 +689,7 @@ void matrix_group::init_base_projective(
 }
 
 void matrix_group::init_base_affine(action *A, int verbose_level)
+// initializes A->degree, A->Stabilizer_chain
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 1);
@@ -736,6 +745,7 @@ void matrix_group::init_base_affine(action *A, int verbose_level)
 
 void matrix_group::init_base_general_linear(
 		action *A, int verbose_level)
+// initializes A->degree, A->Stabilizer_chain
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 1);
@@ -1400,7 +1410,7 @@ void matrix_group::GL_unpack(uchar *elt, int *Elt, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int i, j;
+	int i;
 	
 	if (f_v) {
 		cout << "matrix_group::GL_unpack" << endl;
@@ -1417,36 +1427,24 @@ void matrix_group::GL_unpack(uchar *elt, int *Elt, int verbose_level)
 
 
 	if (f_projective) {
-		for (i = 0; i < n; i++) {
-			for (j = 0; j < n; j++) {
-				Elt[i * n + j] = get_digit(elt, i, j);
-			}
-		}
+		decode_matrix(Elt, n, elt);
 		if (f_semilinear) {
-			Elt[n * n] = get_digit_frobenius(elt);
+			Elt[n * n] = decode_frobenius(elt);
 		}
 	}
 	else if (f_affine) {
-		for (i = 0; i < n; i++) {
-			for (j = 0; j < n; j++) {
-				Elt[i * n + j] = get_digit(elt, i, j);
-			}
-		}
+		decode_matrix(Elt, n, elt);
 		for (i = 0; i < n; i++) {
 			Elt[n * n + i] = get_digit(elt, n, i);
 		}
 		if (f_semilinear) {
-			Elt[n * n] = get_digit_frobenius(elt);
+			Elt[n * n] = decode_frobenius(elt);
 		}
 	}
 	else if (f_general_linear) {
-		for (i = 0; i < n; i++) {
-			for (j = 0; j < n; j++) {
-				Elt[i * n + j] = get_digit(elt, i, j);
-			}
-		}
+		decode_matrix(Elt, n, elt);
 		if (f_semilinear) {
-			Elt[n * n] = get_digit_frobenius(elt);
+			Elt[n * n] = decode_frobenius(elt);
 		}
 	}
 	else {
@@ -1466,39 +1464,27 @@ void matrix_group::GL_unpack(uchar *elt, int *Elt, int verbose_level)
 
 void matrix_group::GL_pack(int *Elt, uchar *elt)
 {
-	int i, j;
+	int i;
 	
 	if (f_projective) {
-		for (i = 0; i < n; i++) {
-			for (j = 0; j < n; j++) {
-				put_digit(elt, i, j, Elt[i * n + j]);
-			}
-		}
+		encode_matrix(Elt, n, elt);
 		if (f_semilinear) {
-			put_digit_frobenius(elt, Elt[n * n]);
+			encode_frobenius(elt, Elt[n * n]);
 		}
 	}
 	else if (f_affine) {
-		for (i = 0; i < n; i++) {
-			for (j = 0; j < n; j++) {
-				put_digit(elt, i, j, Elt[i * n + j]);
-			}
-		}
+		encode_matrix(Elt, n, elt);
 		for (i = 0; i < n; i++) {
 			put_digit(elt, n, i, Elt[n * n + i]);
 		}
 		if (f_semilinear) {
-			put_digit_frobenius(elt, Elt[n * n + n]);
+			encode_frobenius(elt, Elt[n * n + n]);
 		}
 	}
 	else if (f_general_linear) {
-		for (i = 0; i < n; i++) {
-			for (j = 0; j < n; j++) {
-				put_digit(elt, i, j, Elt[i * n + j]);
-			}
-		}
+		encode_matrix(Elt, n, elt);
 		if (f_semilinear) {
-			put_digit_frobenius(elt, Elt[n * n]);
+			encode_frobenius(elt, Elt[n * n]);
 		}
 	}
 	else {
@@ -1513,6 +1499,7 @@ void matrix_group::GL_print_easy(int *Elt, ostream &ost)
     int w;
 	
 	w = (int) GFq->log10_of_q;
+
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < n; j++) {
 			a = Elt[i * n + j];
@@ -1880,6 +1867,17 @@ void matrix_group::GL_print_easy_latex_with_option_numerical(int *Elt, int f_num
 
 }
 
+void matrix_group::decode_matrix(int *Elt, int n, uchar *elt)
+{
+	int i, j;
+
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < n; j++) {
+			Elt[i * n + j] = get_digit(elt, i, j);
+		}
+	}
+}
+
 int matrix_group::get_digit(uchar *elt, int i, int j)
 {
 	int h0 = (int) (i * n + j) * bits_per_digit;
@@ -1899,7 +1897,7 @@ int matrix_group::get_digit(uchar *elt, int i, int j)
 	return d;
 }
 
-int matrix_group::get_digit_frobenius(uchar *elt)
+int matrix_group::decode_frobenius(uchar *elt)
 {
 	int h0;
 	int h, h1, word, bit;
@@ -1922,6 +1920,17 @@ int matrix_group::get_digit_frobenius(uchar *elt)
 		}
 	}
 	return d;
+}
+
+void matrix_group::encode_matrix(int *Elt, int n, uchar *elt)
+{
+	int i, j;
+
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < n; j++) {
+			put_digit(elt, i, j, Elt[i * n + j]);
+		}
+	}
 }
 
 void matrix_group::put_digit(uchar *elt, int i, int j, int d)
@@ -1949,7 +1958,7 @@ void matrix_group::put_digit(uchar *elt, int i, int j, int d)
 	}
 }
 
-void matrix_group::put_digit_frobenius(uchar *elt, int d)
+void matrix_group::encode_frobenius(uchar *elt, int d)
 {
 	int h0;
 	int h, h1, word, bit;

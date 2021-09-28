@@ -389,6 +389,7 @@ public:
 	void fork(int argc, std::string *argv, int verbose_level);
 
 	void *get_object(int idx);
+	symbol_table_object_type get_object_type(int idx);
 	int find_symbol(std::string &label);
 	void find_symbols(std::vector<std::string> &Labels, int *&Idx);
 	void print_symbol_table();
@@ -410,33 +411,6 @@ enum symbol_table_entry_type {
 	t_string,
 };
 
-enum symbol_table_object_type {
-	t_nothing_object,
-	t_finite_field,
-	t_linear_group,
-	t_projective_space,
-	t_orthogonal_space,
-	t_formula,
-	t_cubic_surface,
-	t_quartic_curve,
-	t_classification_of_cubic_surfaces_with_double_sixes,
-	t_collection,
-	t_combinatorial_object,
-	t_graph,
-	t_spread_table,
-	t_packing_was,
-	t_packing_was_choose_fixed_points,
-	t_packing_long_orbits,
-	t_graph_classify,
-	t_diophant,
-	t_design,
-	t_design_table,
-	t_large_set_was,
-	t_action,
-	t_poset,
-	t_poset_classification,
-};
-
 
 
 //! symbol table to store data entries for the orbiter run-time system
@@ -446,7 +420,7 @@ class orbiter_symbol_table_entry {
 public:
 	std::string label;
 	enum symbol_table_entry_type type;
-	enum symbol_table_object_type object_type ;
+	enum symbol_table_object_type object_type;
 	int *vec;
 	int vec_len;
 	std::string str;
@@ -459,6 +433,8 @@ public:
 	void init_finite_field(std::string &label,
 			finite_field *F, int verbose_level);
 	void init_linear_group(std::string &label,
+			void *p, int verbose_level);
+	void init_permutation_group(std::string &label,
 			void *p, int verbose_level);
 	void init_projective_space(std::string &label,
 			void *p, int verbose_level);
@@ -522,6 +498,7 @@ public:
 			orbiter_symbol_table_entry *Symb, int verbose_level);
 	void print_symbol_table();
 	void *get_object(int idx);
+	symbol_table_object_type get_object_type(int idx);
 
 };
 

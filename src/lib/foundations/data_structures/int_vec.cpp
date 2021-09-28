@@ -370,7 +370,7 @@ void int_vec::vec_print(std::vector<std::vector<int>> &p, int w)
 	}
 }
 
-void int_vec::distribution_compute_and_print(ostream &ost,
+void int_vec::distribution_compute_and_print(std::ostream &ost,
 	int *v, int v_len)
 {
 	int *val, *mult, len;
@@ -463,7 +463,7 @@ void int_vec::print(std::ostream &ost, int *v, int len)
 	}
 }
 
-void int_vec::print_str(stringstream &ost, int *v, int len)
+void int_vec::print_str(std::stringstream &ost, int *v, int len)
 {
 	int i;
 
@@ -475,6 +475,20 @@ void int_vec::print_str(stringstream &ost, int *v, int len)
 		}
 	}
 	ost << ")";
+}
+
+void int_vec::print_str_naked(std::stringstream &ost, int *v, int len)
+{
+	int i;
+
+	//ost << "(";
+	for (i = 0; i < len; i++) {
+		ost << v[i];
+		if (i < len - 1) {
+			ost << ",";
+		}
+	}
+	//ost << ")";
 }
 
 

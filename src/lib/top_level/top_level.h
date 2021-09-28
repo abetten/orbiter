@@ -32,6 +32,7 @@ namespace top_level {
 
 // algbra_and_number_theory
 class algebra_global_with_action;
+class any_group;
 class character_table_burnside;
 class group_theoretic_activity_description;
 class group_theoretic_activity;

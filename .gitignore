@@ -5,6 +5,7 @@ ORBITER/nbproject/
 *~
 *.dSYM
 *.exe
+.DS_Store
 orbiter.tar.gz
 .settings/language.settings.xml
 

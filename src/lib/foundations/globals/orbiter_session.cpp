@@ -297,6 +297,11 @@ void *orbiter_session::get_object(int idx)
 	return Orbiter_symbol_table->get_object(idx);
 }
 
+symbol_table_object_type orbiter_session::get_object_type(int idx)
+{
+	return Orbiter_symbol_table->get_object_type(idx);
+}
+
 int orbiter_session::find_symbol(std::string &label)
 {
 	return Orbiter_symbol_table->find_symbol(label);

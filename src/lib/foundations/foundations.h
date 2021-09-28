@@ -584,9 +584,39 @@ enum diophant_equation_type {
 	t_ZOR // zero or equal to the given value
 }; 
 
+enum symbol_table_object_type {
+	t_nothing_object,
+	t_finite_field,
+	t_linear_group,
+	t_permutation_group,
+	t_projective_space,
+	t_orthogonal_space,
+	t_formula,
+	t_cubic_surface,
+	t_quartic_curve,
+	t_classification_of_cubic_surfaces_with_double_sixes,
+	t_collection,
+	t_combinatorial_object,
+	t_graph,
+	t_spread_table,
+	t_packing_was,
+	t_packing_was_choose_fixed_points,
+	t_packing_long_orbits,
+	t_graph_classify,
+	t_diophant,
+	t_design,
+	t_design_table,
+	t_large_set_was,
+	t_action,
+	t_poset,
+	t_poset_classification,
+};
+
+
+
 typedef enum monomial_ordering_type monomial_ordering_type;
 typedef enum diophant_equation_type diophant_equation_type;
-
+typedef enum symbol_table_object_type symbol_table_object_type;
 
 
 enum TokenType
