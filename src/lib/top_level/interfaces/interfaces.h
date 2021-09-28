@@ -851,6 +851,7 @@ public:
 	void parse_and_execute(int argc, std::string *Argv, int i, int verbose_level);
 	void parse(int argc, std::string *Argv, int &i, std::vector<void * > &program, int verbose_level);
 	void *get_object(int idx);
+	symbol_table_object_type get_object_type(int idx);
 	int find_symbol(std::string &label);
 	void find_symbols(std::vector<std::string> &Labels, int *&Idx);
 	void print_symbol_table();
@@ -887,6 +888,9 @@ public:
 
 	int f_linear_group;
 	linear_group_description *Linear_group_description;
+
+	int f_permutation_group;
+	permutation_group_description *Permutation_group_description;
 
 	int f_formula;
 	formula *F;
@@ -956,6 +960,7 @@ public:
 	void print_definition_of_projective_space(int verbose_level);
 	void definition_of_orthogonal_space(int verbose_level);
 	void definition_of_linear_group(int verbose_level);
+	void definition_of_permutation_group(int verbose_level);
 	void definition_of_formula(formula *F,
 			int verbose_level);
 	void definition_of_collection(std::string &list_of_objects,

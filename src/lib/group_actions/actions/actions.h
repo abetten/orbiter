@@ -924,6 +924,8 @@ public:
 			std::ifstream &fp, int verbose_level);
 	void random_element(sims *S, int *Elt, 
 		int verbose_level);
+	void all_elements(vector_ge *&vec, int verbose_level);
+	void all_elements_save_csv(std::string &fname, int verbose_level);
 
 
 	// in action_projective.cpp:

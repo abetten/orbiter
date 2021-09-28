@@ -12,6 +12,8 @@ MODULES = \
 	linear_group_description.o \
 	matrix_group.o \
 	orbits_on_something.o \
+	permutation_group_create.o \
+	permutation_group_description.o \
 	permutation_representation_domain.o \
 	permutation_representation.o \
 	schreier.o \

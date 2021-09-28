@@ -1127,6 +1127,8 @@ action *action_global::init_direct_product_group(
 }
 
 
+
+
 void callback_choose_random_generator_orthogonal(int iteration,
 	int *Elt, void *data, int verbose_level)
 {

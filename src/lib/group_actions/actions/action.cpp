@@ -68,7 +68,7 @@ void action::null()
 	f_subaction_is_allocated = FALSE;
 	f_has_sims = FALSE;
 	f_has_kernel = FALSE;
-};
+}
 
 void action::freeself()
 {

@@ -33,7 +33,7 @@ layered_graph_draw_options::layered_graph_draw_options()
 
 	f_circle = TRUE;
 	f_corners = FALSE;
-	rad = 50;
+	rad = 200;
 	f_embedded = FALSE;
 	f_sideways = FALSE;
 	f_show_level_info = FALSE;

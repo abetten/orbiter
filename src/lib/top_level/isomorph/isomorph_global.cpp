@@ -37,183 +37,183 @@ void isomorph_read_statistic_files(
 	discreta_init();
 
 	{
-	isomorph Iso;
-	int f_use_database_for_starter = TRUE;
-	file_io Fio;
+		isomorph Iso;
+		int f_use_database_for_starter = TRUE;
+		file_io Fio;
 
 
-	if (f_v) {
-		cout << "size = " << size << endl;
-		}
-	
-	if (f_v) {
-		cout << "isomorph_read_statistic_files "
-				"before Iso.init" << endl;
-		}
-	Iso.init(prefix, A_base, A, gen, size, level,
-		f_use_database_for_starter,
-		f_implicit_fusion, verbose_level);
-		// sets level and initializes file names
-
-	
-
-	if (f_v) {
-		cout << "isomorph_read_statistic_files "
-				"before Iso.read_data_files_for_starter" << endl;
-		}
-	Iso.read_data_files_for_starter(level,
-		prefix_classify, verbose_level);
-	
-
-
-
-	// Row,Case_nb,Nb_sol,Nb_backtrack,Nb_col,Dt,Dt_in_sec
-
-	spreadsheet *S;
-	int i, h, Case_nb, Nb_sol, Nb_backtrack, Nb_col, Dt, Dt_in_sec;
-	int case_nb, nb_sol, nb_backtrack, nb_col, dt, dt_in_sec;
-	int *Stats;
-
-	S = NEW_OBJECTS(spreadsheet, nb_files);
-	for (i = 0; i < nb_files; i++) {
-		cout << "reading file " << fname[i] << ":" << endl;
-		S[i].read_spreadsheet(fname[i], 0 /* verbose_level */);
-		}
-
-	cout << "Allocating array Stats for " << Iso.nb_starter
-			<< " starter cases" << endl;
-	 
-	Stats = NEW_int(6 * Iso.nb_starter);
-	Orbiter->Int_vec.zero(Stats, 6 * Iso.nb_starter);
-	for (i = 0; i < Iso.nb_starter; i++) {
-		Stats[i * 6 + 0] = -1;
-		}
-	
-	cout << "Reading all the statistic files" << endl;
-
-	for (h = 0; h < nb_files; h++) {
-		Case_nb = S[h].find_by_column("Case_nb");
-		Nb_sol = S[h].find_by_column("Nb_sol");
-		Nb_backtrack = S[h].find_by_column("Nb_backtrack");
-		Nb_col = S[h].find_by_column("Nb_col");
-		Dt = S[h].find_by_column("Dt");
-		Dt_in_sec = S[h].find_by_column("Dt_in_sec");
-		for (i = 1; i < S[h].nb_rows; i++) {
-			case_nb = S[h].get_int(i, Case_nb);
-			nb_sol = S[h].get_int(i, Nb_sol);
-			nb_backtrack = S[h].get_int(i, Nb_backtrack);
-			nb_col = S[h].get_int(i, Nb_col);
-			dt = S[h].get_int(i, Dt);
-			dt_in_sec = S[h].get_int(i, Dt_in_sec);
-			Stats[case_nb * 6 + 0] = 1;
-			Stats[case_nb * 6 + 1] = nb_sol;
-			Stats[case_nb * 6 + 2] = nb_backtrack;
-			Stats[case_nb * 6 + 3] = nb_col;
-			Stats[case_nb * 6 + 4] = dt;
-			Stats[case_nb * 6 + 5] = dt_in_sec;
+		if (f_v) {
+			cout << "size = " << size << endl;
 			}
-		}
 
-	cout << "Read all the statistic files" << endl;
-	for (i = 0; i < Iso.nb_starter; i++) {
-		if (Stats[i * 6 + 0] == -1) {
-			cout << "The run is incomplete, I don't have data for case "
-					<< i << " for instance" << endl;
-			exit(1);
+		if (f_v) {
+			cout << "isomorph_read_statistic_files "
+					"before Iso.init" << endl;
 			}
-		}
+		Iso.init(prefix, A_base, A, gen, size, level,
+			f_use_database_for_starter,
+			f_implicit_fusion, verbose_level);
+			// sets level and initializes file names
 
-	cout << "The run is complete" << endl;
 
 
-
-	cout << "The cases where solutions exist are:" << endl;
-	for (i = 0; i < Iso.nb_starter; i++) {
-		if (Stats[i * 6 + 1]) {
-			cout << setw(5) << i << " : " << setw(5)
-					<< Stats[i * 6 + 1] << " : ";
-
+		if (f_v) {
+			cout << "isomorph_read_statistic_files "
+					"before Iso.read_data_files_for_starter" << endl;
 			}
-		}
+		Iso.read_data_files_for_starter(level,
+			prefix_classify, verbose_level);
 
-	int Nb_cases = 0;
 
-	Nb_cases = 0;
-	for (i = 0; i < Iso.nb_starter; i++) {
-		if (Stats[i * 6 + 1]) {
-			Nb_cases++;
+
+
+		// Row,Case_nb,Nb_sol,Nb_backtrack,Nb_col,Dt,Dt_in_sec
+	
+		spreadsheet *S;
+		int i, h, Case_nb, Nb_sol, Nb_backtrack, Nb_col, Dt, Dt_in_sec;
+		int case_nb, nb_sol, nb_backtrack, nb_col, dt, dt_in_sec;
+		int *Stats;
+	
+		S = NEW_OBJECTS(spreadsheet, nb_files);
+		for (i = 0; i < nb_files; i++) {
+			cout << "reading file " << fname[i] << ":" << endl;
+			S[i].read_spreadsheet(fname[i], 0 /* verbose_level */);
 			}
-		}
-
-	int *Stats_short;
-
 	
-	Stats_short = NEW_int(6 * Nb_cases);
-	h = 0;
-	for (i = 0; i < Iso.nb_starter; i++) {
-		if (Stats[i * 6 + 1]) {
-			Orbiter->Int_vec.copy(Stats + 6 * i, Stats_short + 6 * h, 6);
-			Stats_short[h * 6 + 0] = i;
-			h++;
+		cout << "Allocating array Stats for " << Iso.nb_starter
+				<< " starter cases" << endl;
+
+		Stats = NEW_int(6 * Iso.nb_starter);
+		Orbiter->Int_vec.zero(Stats, 6 * Iso.nb_starter);
+		for (i = 0; i < Iso.nb_starter; i++) {
+			Stats[i * 6 + 0] = -1;
 			}
-		}
 
-	// Row,Case_nb,Nb_sol,Nb_backtrack,Nb_col,Dt,Dt_in_sec
-
-	const char *Column_label[] = {
-		"Case_nb", 
-		"Nb_sol", 
-		"Nb_backtrack", 
-		"Nb_col", 
-		"Dt", 
-		"Dt_in_sec" 
-		};
-	string fname_collected;
-
-	fname_collected.assign("stats_collected.csv");
-	Fio.int_matrix_write_csv_with_labels(fname_collected,
-			Stats_short, Nb_cases, 6, Column_label);
-
-	cout << "Written file " << fname_collected << " of size "
-			<< Fio.file_size(fname_collected) << endl;
+		cout << "Reading all the statistic files" << endl;
 	
+		for (h = 0; h < nb_files; h++) {
+			Case_nb = S[h].find_by_column("Case_nb");
+			Nb_sol = S[h].find_by_column("Nb_sol");
+			Nb_backtrack = S[h].find_by_column("Nb_backtrack");
+			Nb_col = S[h].find_by_column("Nb_col");
+			Dt = S[h].find_by_column("Dt");
+			Dt_in_sec = S[h].find_by_column("Dt_in_sec");
+			for (i = 1; i < S[h].nb_rows; i++) {
+				case_nb = S[h].get_int(i, Case_nb);
+				nb_sol = S[h].get_int(i, Nb_sol);
+				nb_backtrack = S[h].get_int(i, Nb_backtrack);
+				nb_col = S[h].get_int(i, Nb_col);
+				dt = S[h].get_int(i, Dt);
+				dt_in_sec = S[h].get_int(i, Dt_in_sec);
+				Stats[case_nb * 6 + 0] = 1;
+				Stats[case_nb * 6 + 1] = nb_sol;
+				Stats[case_nb * 6 + 2] = nb_backtrack;
+				Stats[case_nb * 6 + 3] = nb_col;
+				Stats[case_nb * 6 + 4] = dt;
+				Stats[case_nb * 6 + 5] = dt_in_sec;
+				}
+			}
+
+		cout << "Read all the statistic files" << endl;
+		for (i = 0; i < Iso.nb_starter; i++) {
+			if (Stats[i * 6 + 0] == -1) {
+				cout << "The run is incomplete, I don't have data for case "
+						<< i << " for instance" << endl;
+				exit(1);
+				}
+			}
+
+		cout << "The run is complete" << endl;
+
+
+
+		cout << "The cases where solutions exist are:" << endl;
+		for (i = 0; i < Iso.nb_starter; i++) {
+			if (Stats[i * 6 + 1]) {
+				cout << setw(5) << i << " : " << setw(5)
+						<< Stats[i * 6 + 1] << " : ";
+
+				}
+			}
+
+		int Nb_cases = 0;
+
+		Nb_cases = 0;
+		for (i = 0; i < Iso.nb_starter; i++) {
+			if (Stats[i * 6 + 1]) {
+				Nb_cases++;
+				}
+			}
 	
-	Nb_sol = 0;
-	Nb_col = 0;
-	Dt_in_sec = 0;
-	for (i = 0; i < Iso.nb_starter; i++) {
-		Nb_sol += Stats[i * 6 + 1];
-		Nb_col += Stats[i * 6 + 3];
-		Dt_in_sec += Stats[i * 6 + 5];
-		}
+		int *Stats_short;
 
-	cout << "In total we have:" << endl;
-	cout << "Nb_sol = " << Nb_sol << endl;
-	cout << "Nb_col = " << Nb_col << endl;
-	cout << "Nb_col (average) = "
-			<< (double) Nb_col / Iso.nb_starter << endl;
-	cout << "Dt_in_sec = " << Dt_in_sec << endl;
 
+		Stats_short = NEW_int(6 * Nb_cases);
+		h = 0;
+		for (i = 0; i < Iso.nb_starter; i++) {
+			if (Stats[i * 6 + 1]) {
+				Orbiter->Int_vec.copy(Stats + 6 * i, Stats_short + 6 * h, 6);
+				Stats_short[h * 6 + 0] = i;
+				h++;
+				}
+			}
 	
+		// Row,Case_nb,Nb_sol,Nb_backtrack,Nb_col,Dt,Dt_in_sec
+	
+		const char *Column_label[] = {
+			"Case_nb",
+			"Nb_sol",
+			"Nb_backtrack",
+			"Nb_col",
+			"Dt",
+			"Dt_in_sec"
+			};
+		string fname_collected;
 
-	FREE_OBJECTS(S);
+		fname_collected.assign("stats_collected.csv");
+		Fio.int_matrix_write_csv_with_labels(fname_collected,
+				Stats_short, Nb_cases, 6, Column_label);
+	
+		cout << "Written file " << fname_collected << " of size "
+				<< Fio.file_size(fname_collected) << endl;
+
+		
+		Nb_sol = 0;
+		Nb_col = 0;
+		Dt_in_sec = 0;
+		for (i = 0; i < Iso.nb_starter; i++) {
+			Nb_sol += Stats[i * 6 + 1];
+			Nb_col += Stats[i * 6 + 3];
+			Dt_in_sec += Stats[i * 6 + 5];
+			}
+
+		cout << "In total we have:" << endl;
+		cout << "Nb_sol = " << Nb_sol << endl;
+		cout << "Nb_col = " << Nb_col << endl;
+		cout << "Nb_col (average) = "
+				<< (double) Nb_col / Iso.nb_starter << endl;
+		cout << "Dt_in_sec = " << Dt_in_sec << endl;
+
+		
+
+		FREE_OBJECTS(S);
 #if 0
-	if (f_v) {
-		cout << "isomorph_read_statistic_files "
-				"before Iso.count_solutions" << endl;
-		}
-	int f_get_statistics = FALSE;
+		if (f_v) {
+			cout << "isomorph_read_statistic_files "
+					"before Iso.count_solutions" << endl;
+			}
+		int f_get_statistics = FALSE;
 
 
-	Iso.count_solutions(nb_files, fname,
-			f_get_statistics, verbose_level);
-			//
-			// now we know Iso.N, the number of solutions
-			// from the clique finder
-		
-	registry_dump_sorted_by_size();
-		
-	Iso.build_up_database(nb_files, fname, verbose_level);
+		Iso.count_solutions(nb_files, fname,
+				f_get_statistics, verbose_level);
+				//
+				// now we know Iso.N, the number of solutions
+				// from the clique finder
+
+		registry_dump_sorted_by_size();
+
+		Iso.build_up_database(nb_files, fname, verbose_level);
 #endif
 
 	}
@@ -244,29 +244,28 @@ void isomorph_build_db(
 	discreta_init();
 
 	{
-	isomorph Iso;
-	int f_use_database_for_starter = TRUE;
-	
-	if (f_v) {
-		cout << "isomorph_build_db before Iso.init" << endl;
-		}
-	Iso.init(prefix_iso, A_base, A, gen, size, level,
-		f_use_database_for_starter,
-		f_implicit_fusion, verbose_level);
-		// sets size, level and initializes file names
+		isomorph Iso;
+		int f_use_database_for_starter = TRUE;
 
-	
-	Iso.read_data_files_for_starter(level, prefix_classify,
-			verbose_level);
-	
-	for (i = 0; i <= level; i++) {
 		if (f_v) {
-			cout << "isomorph_build_db creating level database for "
-					"level " << i << " / " << level << endl;
-			}
-		Iso.create_level_database(i, verbose_level);
+			cout << "isomorph_build_db before Iso.init" << endl;
 		}
+		Iso.init(prefix_iso, A_base, A, gen, size, level,
+			f_use_database_for_starter,
+			f_implicit_fusion, verbose_level);
+			// sets size, level and initializes file names
 	
+
+		Iso.read_data_files_for_starter(level, prefix_classify,
+				verbose_level);
+
+		for (i = 0; i <= level; i++) {
+			if (f_v) {
+				cout << "isomorph_build_db creating level database for "
+						"level " << i << " / " << level << endl;
+			}
+			Iso.create_level_database(i, verbose_level);
+		}
 
 	}
 	if (f_v) {
@@ -302,53 +301,53 @@ void isomorph_read_solution_files(
 	discreta_init();
 
 	{
-	isomorph Iso;
-	int f_use_database_for_starter = TRUE;
+		isomorph Iso;
+		int f_use_database_for_starter = TRUE;
 
 
-	if (f_v) {
-		cout << "size = " << size << endl;
-		}
+		if (f_v) {
+			cout << "size = " << size << endl;
+			}
+
+		if (f_v) {
+			cout << "isomorph_read_solution_files "
+					"before Iso.init" << endl;
+			}
+		Iso.init(prefix_iso, A_base, A, gen, size, level,
+				f_use_database_for_starter,
+			f_implicit_fusion, verbose_level);
+
+
 	
-	if (f_v) {
-		cout << "isomorph_read_solution_files "
-				"before Iso.init" << endl;
-		}
-	Iso.init(prefix_iso, A_base, A, gen, size, level,
-			f_use_database_for_starter,
-		f_implicit_fusion, verbose_level);
+		if (f_v) {
+			cout << "isomorph_read_solution_files "
+					"before Iso.read_data_files_for_starter" << endl;
+			}
+		Iso.read_data_files_for_starter(level,
+				prefix_classify, verbose_level);
 
 	
-
-	if (f_v) {
-		cout << "isomorph_read_solution_files "
-				"before Iso.read_data_files_for_starter" << endl;
-		}
-	Iso.read_data_files_for_starter(level,
-			prefix_classify, verbose_level);
 	
+		if (f_v) {
+			cout << "isomorph_read_solution_files "
+					"before Iso.count_solutions" << endl;
+			}
+		int f_get_statistics = FALSE;
+		Iso.count_solutions(nb_files, fname, f_get_statistics,
+				f_has_final_test_function,
+				final_test_function, final_test_data,
+				verbose_level);
+				//
+				// now we know Iso.N, the number of solutions
+				// from the clique finder
 
+		//registry_dump_sorted_by_size();
 
-	if (f_v) {
-		cout << "isomorph_read_solution_files "
-				"before Iso.count_solutions" << endl;
-		}
-	int f_get_statistics = FALSE;
-	Iso.count_solutions(nb_files, fname, f_get_statistics, 
+		Iso.build_up_database(nb_files, fname,
 			f_has_final_test_function,
 			final_test_function, final_test_data,
 			verbose_level);
-			//
-			// now we know Iso.N, the number of solutions
-			// from the clique finder
 		
-	//registry_dump_sorted_by_size();
-		
-	Iso.build_up_database(nb_files, fname, 
-		f_has_final_test_function,
-		final_test_function, final_test_data,
-		verbose_level);
-	
 
 	}
 	cout << "isomorph_read_solution_files done" << endl;
@@ -375,57 +374,57 @@ void isomorph_init_solutions_from_memory(
 	discreta_init();
 
 	{
-	isomorph Iso;
-	int f_use_database_for_starter = TRUE;
+		isomorph Iso;
+		int f_use_database_for_starter = TRUE;
 
 
-	if (f_v) {
-		cout << "size = " << size << endl;
-		}
-	
-	if (f_v) {
-		cout << "isomorph_init_solutions_from_memory "
-				"before Iso.init" << endl;
-		}
-	Iso.init(prefix_iso, A_base, A, gen, size,
-		level, f_use_database_for_starter,
-		f_implicit_fusion, 0/*verbose_level - 2*/);
-	if (f_v) {
-		cout << "isomorph_init_solutions_from_memory "
-				"after Iso.init" << endl;
-		}
+		if (f_v) {
+			cout << "size = " << size << endl;
+			}
 
-	
-
-	if (f_v) {
-		cout << "isomorph_init_solutions_from_memory "
-				"before Iso.read_data_files_for_starter" << endl;
-		}
-	Iso.read_data_files_for_starter(level,
-			prefix_classify, 0/*verbose_level - 4*/);
-
-	if (f_v) {
-		cout << "isomorph_init_solutions_from_memory "
-				"after Iso.read_data_files_for_starter" << endl;
-		}
+		if (f_v) {
+			cout << "isomorph_init_solutions_from_memory "
+					"before Iso.init" << endl;
+			}
+		Iso.init(prefix_iso, A_base, A, gen, size,
+			level, f_use_database_for_starter,
+			f_implicit_fusion, 0/*verbose_level - 2*/);
+		if (f_v) {
+			cout << "isomorph_init_solutions_from_memory "
+					"after Iso.init" << endl;
+			}
 	
 
-
-	if (f_v) {
-		cout << "isomorph_init_solutions_from_memory "
-				"before Iso.init_solutions" << endl;
-		}
-	//int f_get_statistics = FALSE;
-	Iso.init_solutions(Solutions, Nb_sol, verbose_level - 1);
-			//
-			// now we know Iso.N, the number of solutions
-			// from the clique finder
+	
+		if (f_v) {
+			cout << "isomorph_init_solutions_from_memory "
+					"before Iso.read_data_files_for_starter" << endl;
+			}
+		Iso.read_data_files_for_starter(level,
+				prefix_classify, 0/*verbose_level - 4*/);
+	
+		if (f_v) {
+			cout << "isomorph_init_solutions_from_memory "
+					"after Iso.read_data_files_for_starter" << endl;
+			}
 		
-	if (f_v) {
-		cout << "isomorph_init_solutions_from_memory "
-				"after Iso.init_solutions" << endl;
-		}
 	
+
+		if (f_v) {
+			cout << "isomorph_init_solutions_from_memory "
+					"before Iso.init_solutions" << endl;
+			}
+		//int f_get_statistics = FALSE;
+		Iso.init_solutions(Solutions, Nb_sol, verbose_level - 1);
+				//
+				// now we know Iso.N, the number of solutions
+				// from the clique finder
+
+		if (f_v) {
+			cout << "isomorph_init_solutions_from_memory "
+					"after Iso.init_solutions" << endl;
+			}
+
 	}
 	if (f_v) {
 		cout << "isomorph_init_solutions_from_memory done" << endl;

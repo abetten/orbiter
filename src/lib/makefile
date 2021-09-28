@@ -267,6 +267,8 @@ MODULES= \
 		group_actions/groups/linear_group_description.o \
 		group_actions/groups/matrix_group.o \
 		group_actions/groups/orbits_on_something.o \
+		group_actions/groups/permutation_group_create.o \
+		group_actions/groups/permutation_group_description.o \
 		group_actions/groups/permutation_representation_domain.o \
 		group_actions/groups/permutation_representation.o \
 		group_actions/groups/schreier.o \
@@ -366,6 +368,8 @@ MODULES= \
 		DISCRETA/unipoly.o \
 		DISCRETA/vector.o \
 		top_level/algebra_and_number_theory/algebra_global_with_action.o \
+		top_level/algebra_and_number_theory/any_group_linear.o \
+		top_level/algebra_and_number_theory/any_group.o \
 		top_level/algebra_and_number_theory/character_table_burnside.o \
 		top_level/algebra_and_number_theory/group_theoretic_activity_description.o \
 		top_level/algebra_and_number_theory/group_theoretic_activity.o \

@@ -765,6 +765,7 @@ void sims::report(std::ostream &ost,
 
 	if (f_v) {
 		cout << "sims::report" << endl;
+		cout << "sims::report prefix=" << prefix << endl;
 	}
 	//int i;
 	sorting Sorting;
@@ -814,12 +815,18 @@ void sims::report(std::ostream &ost,
 			fname_base.append(str);
 
 			layered_graph *LG;
+			if (f_v) {
+				cout << "sims::report before Sorting.schreier_vector_tree" << endl;
+			}
 			Sorting.schreier_vector_tree(
 				orbit_len[orbit_idx], orbit[orbit_idx], prev[orbit_idx], TRUE /* f_use_pts_inv */, orbit_inv[orbit_idx],
 				fname_base,
 				LG_Draw_options,
 				LG,
 				verbose_level - 3);
+			if (f_v) {
+				cout << "sims::report after Sorting.schreier_vector_tree" << endl;
+			}
 
 			FREE_OBJECT(LG);
 
@@ -827,26 +834,32 @@ void sims::report(std::ostream &ost,
 			ost << endl;
 
 			std::vector<int> Orb;
-			int *O;
+			int *Orbit_elements;
 			sorting Sorting;
 
+			if (f_v) {
+				cout << "sims::report before get_orbit" << endl;
+			}
 			get_orbit(orbit_idx, Orb, verbose_level);
+			if (f_v) {
+				cout << "sims::report after get_orbit" << endl;
+			}
 
 			ost << "Basic orbit " << orbit_idx << " has size " << Orb.size() << "\\\\" << endl;
 
-			O = NEW_int(Orb.size());
+			Orbit_elements = NEW_int(Orb.size());
 			for (int i = 0; i < Orb.size(); i++) {
-				O[i] = Orb[i];
+				Orbit_elements[i] = Orb[i];
 			}
-			Sorting.int_vec_heapsort(O, Orb.size());
+			Sorting.int_vec_heapsort(Orbit_elements, Orb.size());
 			for (int i = 0; i < Orb.size(); i++) {
-				ost << O[i];
+				ost << Orbit_elements[i];
 				if (i < Orb.size() - 1) {
 					ost << ", ";
 				}
 			}
 			ost << "\\\\" << endl;
-			FREE_int(O);
+			FREE_int(Orbit_elements);
 
 		}
 		ost << "\\bigskip" << endl;

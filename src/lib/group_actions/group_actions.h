@@ -53,6 +53,8 @@ class linear_group_description;
 class linear_group;
 class matrix_group;
 class orbits_on_something;
+class permutation_group_create;
+class permutation_group_description;
 class permutation_representation_domain;
 class permutation_representation;
 class schreier;
@@ -160,8 +162,16 @@ enum shallow_schreier_tree_strategy {
 
 
 
-//! interface for the various types of group actions
 
+//! enumeration to distinguish between the various types of permutation groups
+
+enum permutation_group_type {
+	unknown_permutation_group_t,
+	symmetric_group_t,
+};
+
+
+//! interface for the various types of group actions
 
 union symmetry_group {
 	matrix_group *matrix_grp;
@@ -195,6 +205,7 @@ union symmetry_group {
 	action_on_set_partitions *OnSetPartitions;
 	action_on_interior_direct_product *OnInteriorDirectProduct;
 };
+
 
 
 // #############################################################################
@@ -264,6 +275,8 @@ public:
 	void read_from_file_binary(std::ifstream &fp,
 		int verbose_level);
 	void write_to_csv_file_coded(std::string &fname, int verbose_level);
+	void save_csv(std::string &fname, int verbose_level);
+	void read_column_csv(std::string &fname, action *A, int col_idx, int verbose_level);
 	void extract_subset_of_elements_by_rank_text_vector(
 		const char *rank_vector_text, sims *S, 
 		int verbose_level);

@@ -744,6 +744,91 @@ void vector_ge::write_to_csv_file_coded(std::string &fname, int verbose_level)
 	}
 }
 
+void vector_ge::save_csv(std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_ge::save_csv" << endl;
+	}
+
+	file_io Fio;
+	int i;
+	int *Elt;
+	int *data;
+
+	data = NEW_int(A->make_element_size);
+	{
+		ofstream ost(fname);
+
+		ost << "Row,Element" << endl;
+		for (i = 0; i < len; i++) {
+			Elt = ith(i);
+
+			A->element_code_for_make_element(Elt, data);
+
+			stringstream ss;
+			Orbiter->Int_vec.print_str_naked(ss, data, A->make_element_size);
+			ost << i << ",\"" << ss.str() << "\"" << endl;
+		}
+		ost << "END" << endl;
+	}
+	FREE_int(data);
+
+	if (f_v) {
+		cout << "sims::save_csv Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+}
+void vector_ge::read_column_csv(std::string &fname, action *A, int col_idx, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "vector_ge::read_column_csv" << endl;
+	}
+
+	file_io Fio;
+	spreadsheet S;
+	int n, i, me_sz;
+
+
+	init(A, verbose_level);
+
+	me_sz = A->make_element_size;
+
+	if (f_v) {
+		cout << "vector_ge::read_column_csv reading file " << fname
+				<< " of size " << Fio.file_size(fname) << endl;
+	}
+
+	S.read_spreadsheet(fname, verbose_level);
+
+	n = S.nb_rows - 1;
+
+	allocate(n, verbose_level);
+	for (i = 0; i < n; i++) {
+		string s;
+		int *data;
+		int sz;
+
+		s.assign(S.get_string(i + 1, col_idx));
+		Orbiter->Int_vec.scan(s, data, sz);
+		if (sz != me_sz) {
+			cout << "vector_ge::read_column_csv sz != me_sz" << endl;
+			cout << "vector_ge::read_column_csv sz = " << sz << endl;
+			cout << "vector_ge::read_column_csv me_sz = " << me_sz << endl;
+			exit(1);
+		}
+		A->make_element(ith(i), data, 0 /*verbose_level*/);
+		FREE_int(data);
+	}
+
+	if (f_v) {
+		cout << "vector_ge::read_column_csv done" << endl;
+	}
+}
+
 void vector_ge::extract_subset_of_elements_by_rank_text_vector(
 		const char *rank_vector_text, sims *S, int verbose_level)
 {

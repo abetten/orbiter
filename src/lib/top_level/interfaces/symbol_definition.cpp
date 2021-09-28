@@ -34,6 +34,9 @@ symbol_definition::symbol_definition()
 	f_linear_group = FALSE;
 	Linear_group_description = NULL;
 
+	f_permutation_group = FALSE;
+	Permutation_group_description = NULL;
+
 	f_formula = FALSE;
 	F = NULL;
 	//std::string label;
@@ -203,6 +206,28 @@ void symbol_definition::read_definition(
 			}
 		}
 	}
+
+	else if (stringcmp(argv[i], "-permutation_group") == 0) {
+		f_permutation_group = TRUE;
+		Permutation_group_description = NEW_OBJECT(permutation_group_description);
+		if (f_v) {
+			cout << "reading -permutation_group" << endl;
+		}
+		i += Permutation_group_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-permutation_group" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+	}
+
 	else if (stringcmp(argv[i], "-formula") == 0) {
 		if (f_v) {
 			cout << "-formula" << endl;
@@ -556,6 +581,15 @@ void symbol_definition::perform_definition(int verbose_level)
 			cout << "symbol_definition::perform_definition after definition_of_linear_group" << endl;
 		}
 	}
+	else if (f_permutation_group) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition before definition_of_permutation_group" << endl;
+		}
+		definition_of_permutation_group(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition after definition_of_permutation_group" << endl;
+		}
+	}
 	else if (f_formula) {
 		if (f_v) {
 			cout << "symbol_definition::perform_definition before definition_of_formula" << endl;
@@ -702,6 +736,10 @@ void symbol_definition::print()
 	if (f_linear_group) {
 		cout << "-linear_group ";
 		Linear_group_description->print();
+	}
+	if (f_permutation_group) {
+		cout << "-permutation_group ";
+		Permutation_group_description->print();
 	}
 	if (f_formula) {
 		cout << "-formula " << label << " " << label_tex << " " << managed_variables << " " << formula_text;
@@ -1009,7 +1047,7 @@ void symbol_definition::definition_of_linear_group(int verbose_level)
 
 	LG = NEW_OBJECT(linear_group);
 	if (f_v) {
-		cout << "symbol_definition::definition before LG->init, "
+		cout << "symbol_definition::definition before LG->linear_group_init, "
 				"creating the group" << endl;
 	}
 
@@ -1024,6 +1062,41 @@ void symbol_definition::definition_of_linear_group(int verbose_level)
 			define_label, &Symb, verbose_level);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_linear_group done" << endl;
+	}
+}
+
+void symbol_definition::definition_of_permutation_group(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_permutation_group" << endl;
+	}
+
+
+	permutation_group_create *PGC;
+
+	PGC = NEW_OBJECT(permutation_group_create);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_permutation_group before PGC->permutation_group_init, "
+				"before PGC->permutation_group_init" << endl;
+	}
+
+	PGC->permutation_group_init(Permutation_group_description, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_permutation_group before PGC->permutation_group_init, "
+				"after PGC->permutation_group_init" << endl;
+	}
+
+	orbiter_symbol_table_entry Symb;
+	Symb.init_permutation_group(define_label, PGC, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_permutation_group before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, &Symb, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_permutation_group done" << endl;
 	}
 }
 

@@ -423,6 +423,7 @@ public:
 	void print(std::ostream &ost, std::vector<int> &v);
 	void print(std::ostream &ost, int *v, int len);
 	void print_str(std::stringstream &ost, int *v, int len);
+	void print_str_naked(std::stringstream &ost, int *v, int len);
 	void print_as_table(std::ostream &ost, int *v, int len, int width);
 	void print_fully(std::ostream &ost, std::vector<int> &v);
 	void print_fully(std::ostream &ost, int *v, int len);

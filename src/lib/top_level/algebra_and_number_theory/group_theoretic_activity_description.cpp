@@ -90,7 +90,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	test_if_geometric_depth = 0;
 	f_draw_tree = FALSE;
 	f_orbit_of = FALSE;
-	orbit_of_idx = 0;
+	orbit_of_point_idx = 0;
 	f_orbits_on_set_system_from_file = FALSE;
 	//orbits_on_set_system_from_file_fname = NULL;
 	orbits_on_set_system_first_column = 0;
@@ -111,6 +111,23 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	linear_codes_target_size = 0;
 	f_print_elements = FALSE;
 	f_print_elements_tex = FALSE;
+	f_save_elements_csv = FALSE;
+	//std::string save_elements_csv_fname;
+
+	f_multiply_elements_csv_column_major_ordering = FALSE;
+	//std::string multiply_elements_csv_column_major_ordering_fname1;
+	//std::string multiply_elements_csv_column_major_ordering_fname2;
+	//std::string multiply_elements_csv_column_major_ordering_fname3;
+
+	f_multiply_elements_csv_row_major_ordering = FALSE;
+	//std::string multiply_elements_csv_row_major_ordering_fname1;
+	//std::string multiply_elements_csv_row_major_ordering_fname2;
+	//std::string multiply_elements_csv_row_major_ordering_fname3;
+
+	f_apply_elements_csv_to_set = FALSE;
+	//std::string apply_elements_csv_to_set_fname1;
+	//std::string apply_elements_csv_to_set_fname2;
+	//std::string apply_elements_csv_to_set_set;
 
 	f_order_of_products = FALSE;
 	//order_of_products_elements = NULL;
@@ -159,8 +176,6 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	Andre_Bruck_Bose_construction_spread_no = 0;
 	// Andre_Bruck_Bose_construction_label
 
-	//f_BLT_starter = FALSE;
-	//BLT_starter_size = 0;
 
 }
 
@@ -424,9 +439,9 @@ int group_theoretic_activity_description::read_arguments(
 		}
 		else if (stringcmp(argv[i], "-orbit_of") == 0) {
 			f_orbit_of = TRUE;
-			orbit_of_idx = strtoi(argv[++i]);
+			orbit_of_point_idx = strtoi(argv[++i]);
 			if (f_v) {
-				cout << "-orbit_of " << orbit_of_idx << endl;
+				cout << "-orbit_of " << orbit_of_point_idx << endl;
 			}
 		}
 		else if (stringcmp(argv[i], "-orbit_of_set_from_file") == 0) {
@@ -478,6 +493,55 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-print_elements_tex " << endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-save_elements_csv") == 0) {
+			f_save_elements_csv = TRUE;
+			save_elements_csv_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-save_elements_csv " << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-multiply_elements_csv_column_major_ordering") == 0) {
+			f_multiply_elements_csv_column_major_ordering = TRUE;
+			multiply_elements_csv_column_major_ordering_fname1.assign(argv[++i]);
+			multiply_elements_csv_column_major_ordering_fname2.assign(argv[++i]);
+			multiply_elements_csv_column_major_ordering_fname3.assign(argv[++i]);
+			if (f_v) {
+				cout << "-multiply_elements_csv_column_major_ordering "
+						<< multiply_elements_csv_column_major_ordering_fname1 << " "
+						<< multiply_elements_csv_column_major_ordering_fname2 << " "
+						<< multiply_elements_csv_column_major_ordering_fname3 << " "
+						<< endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-multiply_elements_csv_row_major_ordering") == 0) {
+			f_multiply_elements_csv_row_major_ordering = TRUE;
+			multiply_elements_csv_row_major_ordering_fname1.assign(argv[++i]);
+			multiply_elements_csv_row_major_ordering_fname2.assign(argv[++i]);
+			multiply_elements_csv_row_major_ordering_fname3.assign(argv[++i]);
+			if (f_v) {
+				cout << "-multiply_elements_csv_row_major_ordering "
+						<< multiply_elements_csv_row_major_ordering_fname1 << " "
+						<< multiply_elements_csv_row_major_ordering_fname2 << " "
+						<< multiply_elements_csv_row_major_ordering_fname3 << " "
+						<< endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-apply_elements_csv_to_set") == 0) {
+			f_apply_elements_csv_to_set = TRUE;
+			apply_elements_csv_to_set_fname1.assign(argv[++i]);
+			apply_elements_csv_to_set_fname2.assign(argv[++i]);
+			apply_elements_csv_to_set_set.assign(argv[++i]);
+			if (f_v) {
+				cout << "-apply_elements_csv_to_set "
+						<< apply_elements_csv_to_set_fname1 << " "
+						<< apply_elements_csv_to_set_fname2 << " "
+						<< apply_elements_csv_to_set_set << " "
+						<< endl;
+			}
+		}
+
+
+
 		else if (stringcmp(argv[i], "-order_of_products") == 0) {
 			f_order_of_products = TRUE;
 			order_of_products_elements.assign(argv[++i]);
@@ -655,16 +719,6 @@ int group_theoretic_activity_description::read_arguments(
 			}
 		}
 
-#if 0
-		else if (stringcmp(argv[i], "-BLT_starter") == 0) {
-			f_BLT_starter = TRUE;
-			BLT_starter_size = strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-BLT_starter " << BLT_starter_size << endl;
-			}
-		}
-#endif
-
 
 		else if (stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -797,7 +851,7 @@ void group_theoretic_activity_description::print()
 		cout << "-f_draw_tree " << endl;
 	}
 	if (f_orbit_of) {
-		cout << "-orbit_of " << orbit_of_idx << endl;
+		cout << "-orbit_of " << orbit_of_point_idx << endl;
 	}
 	if (f_orbit_of_set_from_file) {
 		cout << "-orbit_of_set_from_file"
@@ -824,6 +878,35 @@ void group_theoretic_activity_description::print()
 	if (f_print_elements_tex) {
 		cout << "-print_elements_tex " << endl;
 	}
+	if (f_save_elements_csv) {
+		cout << "-save_elements_csv " << save_elements_csv_fname << endl;
+	}
+
+	if (f_multiply_elements_csv_column_major_ordering) {
+		cout << "-multiply_elements_csv_column_major_ordering "
+				<< multiply_elements_csv_column_major_ordering_fname1 << " "
+				<< multiply_elements_csv_column_major_ordering_fname2 << " "
+				<< multiply_elements_csv_column_major_ordering_fname3 << " "
+				<< endl;
+	}
+	if (f_multiply_elements_csv_row_major_ordering) {
+		cout << "-multiply_elements_csv_row_major_ordering "
+				<< multiply_elements_csv_row_major_ordering_fname1 << " "
+				<< multiply_elements_csv_row_major_ordering_fname2 << " "
+				<< multiply_elements_csv_row_major_ordering_fname3 << " "
+				<< endl;
+	}
+
+
+	if (f_apply_elements_csv_to_set) {
+		cout << "-apply_elements_csv_to_set "
+				<< apply_elements_csv_to_set_fname1 << " "
+				<< apply_elements_csv_to_set_fname2 << " "
+				<< apply_elements_csv_to_set_set << " "
+				<< endl;
+	}
+
+
 	if (f_order_of_products) {
 		cout << "-order_of_products " << order_of_products_elements << endl;
 	}
@@ -912,11 +995,6 @@ void group_theoretic_activity_description::print()
 			<< " " << Andre_Bruck_Bose_construction_label << endl;
 	}
 
-#if 0
-	if (f_BLT_starter) {
-		cout << "-BLT_starter " << BLT_starter_size << endl;
-	}
-#endif
 }
 
 

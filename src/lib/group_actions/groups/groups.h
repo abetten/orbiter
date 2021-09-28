@@ -383,8 +383,6 @@ public:
 
 	matrix_group();
 	~matrix_group();
-	void null();
-	void freeself();
 	
 	void init_projective_group(int n, finite_field *F, 
 		int f_semilinear, action *A, int verbose_level);
@@ -444,10 +442,12 @@ public:
 			void *point_label_data);
 	void GL_print_easy_latex(int *Elt, std::ostream &ost);
 	void GL_print_easy_latex_with_option_numerical(int *Elt, int f_numerical, std::ostream &ost);
+	void decode_matrix(int *Elt, int n, uchar *elt);
 	int get_digit(uchar *elt, int i, int j);
-	int get_digit_frobenius(uchar *elt);
+	int decode_frobenius(uchar *elt);
+	void encode_matrix(int *Elt, int n, uchar *elt);
 	void put_digit(uchar *elt, int i, int j, int d);
-	void put_digit_frobenius(uchar *elt, int d);
+	void encode_frobenius(uchar *elt, int d);
 	void make_element(int *Elt, int *data, int verbose_level);
 	void make_GL_element(int *Elt, int *A, int f);
 	void orthogonal_group_random_generator(
@@ -611,6 +611,76 @@ public:
 	void get_orbit_number_and_position(long int a, int &orbit_idx, int &orbit_pos, int verbose_level);
 	void create_latex_report(int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
+
+};
+
+
+// #############################################################################
+// permutation_group_create.cpp
+// #############################################################################
+
+//! a domain for permutation groups whose elements are given in the permutation representation
+
+class permutation_group_create {
+
+public:
+	permutation_group_description *Descr;
+
+	std::string label;
+	std::string label_tex;
+
+	//strong_generators *initial_strong_gens;
+	action *A_initial;
+
+	int f_has_strong_generators;
+	strong_generators *Strong_gens;
+	action *A2;
+
+	int f_has_nice_gens;
+	vector_ge *nice_gens;
+
+
+	permutation_group_create();
+	~permutation_group_create();
+	void permutation_group_init(
+			permutation_group_description *description,
+			int verbose_level);
+	void init_subgroup_by_generators(
+			std::string &subgroup_label,
+			std::string &subgroup_order_text,
+			int nb_subgroup_generators,
+			std::string *subgroup_generators_as_string,
+			int verbose_level);
+
+
+};
+
+
+// #############################################################################
+// permutation_group_description.cpp
+// #############################################################################
+
+//! a domain for permutation groups whose elements are given in the permutation representation
+
+class permutation_group_description {
+
+public:
+	int degree;
+	permutation_group_type type;
+
+	int f_subgroup_by_generators;
+	std::string subgroup_label;
+	std::string subgroup_order_text;
+	int nb_subgroup_generators;
+	std::string *subgroup_generators_as_string;
+
+	permutation_group_description();
+	~permutation_group_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
 
 };
 
@@ -1365,6 +1435,8 @@ public:
 	int get_orbit_inv(int i, int j);
 	int get_orbit_length(int i);
 	void get_orbit(int orbit_idx, std::vector<int> &Orb, int verbose_level);
+	void all_elements(vector_ge *&vec, int verbose_level);
+	void all_elements_save_csv(std::string &fname, int verbose_level);
 
 
 	// sims_main.cpp:

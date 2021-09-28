@@ -763,6 +763,11 @@ void action::latex_all_points(std::ostream &ost)
 	int i;
 	int *v;
 
+
+	if (ptr->ptr_unrank_point == NULL) {
+		cout << "action::latex_all_points ptr->ptr_unrank_point == NULL" << endl;
+		return;
+	}
 	v = NEW_int(low_level_point_size);
 #if 0
 	cout << "action::latex_all_points "
