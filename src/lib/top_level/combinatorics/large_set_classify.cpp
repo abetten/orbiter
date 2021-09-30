@@ -135,13 +135,22 @@ void large_set_classify::init(design_create *DC,
 	problem_label.assign("LS_");
 	problem_label.append(DC->label_txt);
 
-	if (f_v) {
-		cout << "large_set_classify::init before compute_colors" << endl;
+
+	if (DC->k == 4) {
+		if (f_v) {
+			cout << "large_set_classify::init before compute_colors" << endl;
+		}
+		compute_colors(Design_table, design_color_table,
+					verbose_level);
+		if (f_v) {
+			cout << "large_set_classify::init after compute_colors" << endl;
+		}
 	}
-	compute_colors(Design_table, design_color_table,
-				verbose_level);
-	if (f_v) {
-		cout << "large_set_classify::init after compute_colors" << endl;
+	else {
+		if (f_v) {
+			cout << "large_set_classify::init we are not computing colors" << endl;
+		}
+
 	}
 
 	if (f_v) {

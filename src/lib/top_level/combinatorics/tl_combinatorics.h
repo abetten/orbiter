@@ -354,6 +354,11 @@ public:
 	int f_canonical_form;
 	projective_space_object_classifier_description *Canonical_form_Descr;
 
+	int f_extract_solutions_by_index;
+	std::string extract_solutions_by_index_fname_solutions_in;
+	std::string extract_solutions_by_index_fname_solutions_out;
+
+
 	design_activity_description();
 	~design_activity_description();
 	int read_arguments(int argc, std::string *argv,
@@ -381,6 +386,14 @@ public:
 	~design_activity();
 	void perform_activity(design_activity_description *Descr,
 			design_create *DC, int verbose_level);
+	void do_extract_solutions_by_index(
+			design_create *DC,
+			std::string &label,
+			std::string &go_text,
+			std::string &generators_data,
+			std::string &fname_in,
+			std::string &fname_out,
+			int verbose_level);
 	void do_create_table(
 			design_create *DC,
 			std::string &label,
@@ -422,6 +435,10 @@ public:
 	int iso;
 	int f_family;
 	std::string family_name;
+	int f_list_of_blocks;
+	int list_of_blocks_v;
+	int list_of_blocks_k;
+	std::string list_of_blocks_text;
 
 
 
@@ -529,6 +546,10 @@ public:
 	void init(action *A, action *A2, long int *initial_set, int design_size,
 			std::string &label,
 			strong_generators *Strong_generators, int verbose_level);
+	void extract_solutions_by_index(
+			int nb_sol, int Index_width, int *Index,
+			std::string &ouput_fname_csv,
+			int verbose_level);
 	void make_reduced_design_table(
 			long int *set, int set_sz,
 			long int *&reduced_table, long int *&reduced_table_idx, int &nb_reduced_designs,

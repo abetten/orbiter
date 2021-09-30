@@ -60,6 +60,25 @@ void design_activity::perform_activity(design_activity_description *Descr,
 		do_canonical_form(Descr->Canonical_form_Descr,
 				verbose_level);
 	}
+	else if (Descr->f_extract_solutions_by_index) {
+
+		if (f_v) {
+			cout << "design_activity::perform_activity f_extract_solutions_by_index" << endl;
+		}
+
+		do_extract_solutions_by_index(
+				DC,
+				Descr->create_table_label,
+				Descr->create_table_group_order,
+				Descr->create_table_gens,
+				Descr->extract_solutions_by_index_fname_solutions_in,
+				Descr->extract_solutions_by_index_fname_solutions_out,
+				verbose_level);
+
+		if (f_v) {
+			cout << "design_activity::perform_activity f_extract_solutions_by_index done" << endl;
+		}
+	}
 
 
 	if (f_v) {
@@ -67,6 +86,81 @@ void design_activity::perform_activity(design_activity_description *Descr,
 	}
 
 }
+
+
+void design_activity::do_extract_solutions_by_index(
+		design_create *DC,
+		std::string &label,
+		std::string &go_text,
+		std::string &generators_data,
+		std::string &fname_in,
+		std::string &fname_out,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "design_activity::do_extract_solutions_by_index" << endl;
+	}
+
+	combinatorics_global Combi;
+	design_tables *T;
+
+
+	strong_generators *Gens;
+	Gens = NEW_OBJECT(strong_generators);
+
+	if (f_v) {
+		cout << "design_activity::do_extract_solutions_by_index before Gens->init_from_data_with_go" << endl;
+	}
+	Gens->init_from_data_with_go(
+			DC->A, generators_data,
+			go_text,
+			verbose_level);
+	if (f_v) {
+		cout << "design_activity::do_extract_solutions_by_index after Gens->init_from_data_with_go" << endl;
+	}
+
+
+	Combi.load_design_table(DC,
+			label,
+			T,
+			Gens,
+			verbose_level);
+
+	if (f_v) {
+		cout << "design_activity::do_extract_solutions_by_index after Combi.load_design_table" << endl;
+	}
+
+	file_io Fio;
+	int *Sol_idx;
+	int nb_sol;
+	int sol_width;
+
+	Fio.int_matrix_read_csv(fname_in, Sol_idx, nb_sol, sol_width, verbose_level);
+
+
+	if (f_v) {
+		cout << "design_activity::do_extract_solutions_by_index before T->extract_solutions_by_index" << endl;
+	}
+
+	T->extract_solutions_by_index(
+			nb_sol, sol_width, Sol_idx,
+			fname_out,
+			verbose_level);
+
+	if (f_v) {
+		cout << "design_activity::do_extract_solutions_by_index after T->extract_solutions_by_index" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "design_activity::do_extract_solutions_by_index done" << endl;
+	}
+}
+
+
 
 void design_activity::do_create_table(
 		design_create *DC,

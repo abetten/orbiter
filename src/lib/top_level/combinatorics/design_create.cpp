@@ -137,6 +137,40 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 		exit(1);
 
 		}
+	else if (Descr->f_list_of_blocks) {
+
+		if (f_v) {
+			cout << "design_create::init "
+					"list of blocks" << endl;
+		}
+
+		degree = Descr->list_of_blocks_v;
+		k = Descr->list_of_blocks_k;
+		Orbiter->Lint_vec.scan(Descr->list_of_blocks_text, set, sz);
+
+		char str[1000];
+
+		sprintf(str, "blocks_v%d_k%d", degree, k);
+		prefix.assign(str);
+
+		sprintf(str, "blocks_v%d_k%d", degree, k);
+		label_txt.assign(str);
+
+		sprintf(str, "blocks\\_v%d\\_k%d", degree, k);
+		label_tex.assign(str);
+
+		A = NEW_OBJECT(action);
+		A->init_symmetric_group(degree, verbose_level);
+
+		A2 = NEW_OBJECT(action);
+		A2->induced_action_on_k_subsets(*A, k, verbose_level);
+
+		Aut = NULL;
+		Aut_on_lines = NULL;
+		f_has_group = FALSE;
+		Sg = NULL;
+
+	}
 	else {
 		cout << "design_create::init no design created" << endl;
 		sz = 0;
@@ -154,6 +188,9 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 	if (f_has_group) {
 		cout << "design_create::init the stabilizer is:" << endl;
 		Sg->print_generators_tex(cout);
+	}
+	else {
+		cout << "design_create::init stabilizer is not available" << endl;
 	}
 
 

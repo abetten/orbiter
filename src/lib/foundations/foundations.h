@@ -574,7 +574,8 @@ enum object_in_projective_space_type {
 	t_PTS, // points
 	t_LNS, // lines
 	t_PAC, // packing
-	t_INC // incidence geometry
+	t_INC, // incidence geometry
+	t_LS // large set
 };
 
 enum diophant_equation_type {

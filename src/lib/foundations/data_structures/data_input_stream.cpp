@@ -124,7 +124,7 @@ int data_input_stream::read_arguments(
 			input_data3[nb_inputs] = strtoi(argv[++i]); // k = block size
 			input_data4[nb_inputs] = strtoi(argv[++i]); // partition class size
 
-			cout << "-file_of_point_set " << input_string[nb_inputs]
+			cout << "-file_of_designs " << input_string[nb_inputs]
 					<< " " << input_data1[nb_inputs]
 					<< " " << input_data2[nb_inputs]
 					<< " " << input_data3[nb_inputs]
