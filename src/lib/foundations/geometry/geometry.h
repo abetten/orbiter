@@ -1241,6 +1241,7 @@ public:
 		// t_LNS = a set of lines 
 		// t_PAC = a packing (i.e. q^2+q+1 sets of lines of size q^2+1)
 		// t_INC = incidence geometry
+		// t_LS = large set
 
 	std::string input_fname;
 	int input_idx;
@@ -1254,9 +1255,13 @@ public:
 		// set[sz] is used by t_PTS, t_LNS, t_INC
 
 
-		// if t_INC:
+		// if t_INC or t_LS
 	int v;
 	int b;
+
+		// if t_LS
+		int design_k;
+		int design_sz;
 
 		// t_PAC = packing, uses SoS
 	set_of_sets *SoS;
@@ -1298,6 +1303,9 @@ public:
 	void init_incidence_geometry(
 		long int *data, int data_sz, int v, int b, int nb_flags,
 		int verbose_level);
+	void init_large_set(
+		long int *data, int data_sz, int v, int k, int design_sz,
+		int verbose_level);
 	void encoding_size(
 			int &nb_rows, int &nb_cols,
 			int verbose_level);
@@ -1308,6 +1316,9 @@ public:
 			int &nb_rows, int &nb_cols,
 			int verbose_level);
 	void encoding_size_packing(
+			int &nb_rows, int &nb_cols,
+			int verbose_level);
+	void encoding_size_large_set(
 			int &nb_rows, int &nb_cols,
 			int verbose_level);
 	void encoding_size_incidence_geometry(
@@ -1321,6 +1332,9 @@ public:
 	void encode_point_set(encoded_combinatorial_object *&Enc, int verbose_level);
 	void encode_line_set(encoded_combinatorial_object *&Enc, int verbose_level);
 	void encode_packing(encoded_combinatorial_object *&Enc, int verbose_level);
+	void encode_large_set(
+			encoded_combinatorial_object *&Enc,
+			int verbose_level);
 	void encode_incidence_geometry(encoded_combinatorial_object *&Enc, int verbose_level);
 	void encode_incma_and_make_decomposition(
 			encoded_combinatorial_object *&Enc,
@@ -1336,6 +1350,8 @@ public:
 	void encode_object_packing(long int *&encoding, int &encoding_sz,
 		int verbose_level);
 	void encode_object_incidence_geometry(
+			long int *&encoding, int &encoding_sz, int verbose_level);
+	void encode_object_large_set(
 			long int *&encoding, int &encoding_sz, int verbose_level);
 	void klein(int verbose_level);
 	void run_nauty(

@@ -41,6 +41,8 @@ void object_in_projective_space::null()
 	sz = 0;
 	v = 0;
 	b = 0;
+	design_k = 0;
+	design_sz = 0;
 	SoS = NULL;
 	C = NULL;
 }
@@ -440,6 +442,29 @@ void object_in_projective_space::init_incidence_geometry(
 	}
 }
 
+void object_in_projective_space::init_large_set(
+	long int *data, int data_sz, int v, int k, int design_sz,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_in_projective_space::init_large_set" << endl;
+	}
+	object_in_projective_space::P = NULL;
+	type = t_LS;
+	object_in_projective_space::set = NEW_lint(data_sz);
+	Orbiter->Lint_vec.copy(data, object_in_projective_space::set, data_sz);
+	object_in_projective_space::sz = data_sz;
+	object_in_projective_space::v = v;
+	object_in_projective_space::b = data_sz;
+	object_in_projective_space::design_k = k;
+	object_in_projective_space::design_sz = design_sz;
+	if (f_v) {
+		cout << "object_in_projective_space::init_large_set done" << endl;
+	}
+}
+
 
 void object_in_projective_space::encoding_size(
 		int &nb_rows, int &nb_cols,
@@ -487,6 +512,16 @@ void object_in_projective_space::encoding_size(
 					"before encoding_size_packing" << endl;
 		}
 		encoding_size_incidence_geometry(
+				nb_rows, nb_cols, verbose_level);
+
+	}
+	else if (type == t_LS) {
+
+		if (f_v) {
+			cout << "object_in_projective_space::encoding_size "
+					"before encoding_size_large_set" << endl;
+		}
+		encoding_size_large_set(
 				nb_rows, nb_cols, verbose_level);
 
 	}
@@ -581,6 +616,29 @@ void object_in_projective_space::encoding_size_packing(
 
 }
 
+void object_in_projective_space::encoding_size_large_set(
+		int &nb_rows, int &nb_cols,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int nb_designs;
+
+	if (f_v) {
+		cout << "object_in_projective_space::encoding_size_large_set" << endl;
+	}
+
+	nb_designs = b / design_sz;
+	if (nb_designs * design_sz != b) {
+		cout << "object_in_projective_space::encoding_size_large_set "
+				"design_sz does not divide b" << endl;
+		exit(1);
+	}
+
+	nb_rows = v + nb_designs;
+	nb_cols = b + 1;
+
+}
+
 void object_in_projective_space::encoding_size_incidence_geometry(
 		int &nb_rows, int &nb_cols,
 		int verbose_level)
@@ -655,6 +713,11 @@ void object_in_projective_space::encode_incma(
 	else if (type == t_INC) {
 
 		encode_incidence_geometry(Enc, verbose_level);
+
+	}
+	else if (type == t_LS) {
+
+		encode_large_set(Enc, verbose_level);
 
 	}
 	else {
@@ -920,6 +983,81 @@ void object_in_projective_space::encode_packing(
 	}
 }
 
+void object_in_projective_space::encode_large_set(
+		encoded_combinatorial_object *&Enc,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_in_projective_space::encode_large_set" << endl;
+	}
+	int i, j, a, h;
+	int f_vvv = (verbose_level >= 3);
+
+
+	int nb_rows, nb_cols;
+	int nb_designs;
+
+	nb_designs = b / design_sz;
+
+	nb_rows = v + nb_designs;
+	nb_cols = b + 1;
+
+	int N, L;
+
+	N = nb_rows + nb_cols;
+	L = nb_rows * nb_cols;
+
+	Enc = NEW_OBJECT(encoded_combinatorial_object);
+	Enc->init(nb_rows, nb_cols, verbose_level);
+
+
+	combinatorics_domain Combi;
+
+	int *block;
+
+	block = NEW_int(design_k);
+
+	for (j = 0; j < sz; j++) {
+		a = set[j];
+		Combi.unrank_k_subset(a, block, v, design_k);
+		for (h = 0; h < design_k; h++) {
+			i = block[h];
+			Enc->Incma[i * nb_cols + j] = 1;
+		}
+	}
+
+	// last rows:
+	for (i = 0; i < nb_designs; i++) {
+
+		for (h = 0; h < design_sz; h++) {
+			Enc->Incma[(v + i) * nb_cols + i * design_sz + h] = 1;
+		}
+	}
+	// bottom right entries:
+	for (i = 0; i < nb_designs; i++) {
+		Enc->Incma[(v + i) * nb_cols + b] = 1;
+	}
+
+	Enc->partition[v - 1] = 0;
+	Enc->partition[nb_rows - 1] = 0;
+	Enc->partition[nb_rows + b - 1] = 0;
+	Enc->partition[nb_rows + b + 1 - 1] = 0;
+	if (f_vvv) {
+		cout << "object_in_projective_space::encode_large_set "
+				"partition:" << endl;
+		Enc->print_partition();
+	}
+
+	FREE_int(block);
+
+	if (f_v) {
+		cout << "object_in_projective_space::encode_large_set "
+				"done" << endl;
+	}
+}
+
 void object_in_projective_space::encode_incidence_geometry(
 		encoded_combinatorial_object *&Enc,
 		int verbose_level)
@@ -1001,6 +1139,11 @@ void object_in_projective_space::encode_incma_and_make_decomposition(
 		encode_incidence_geometry(Enc, verbose_level);
 
 	}
+	else if (type == t_LS) {
+
+		encode_large_set(Enc, verbose_level);
+
+	}
 	else {
 		cout << "object_in_projective_space::encode_incma_and_make_decomposition unknown type" << endl;
 		exit(1);
@@ -1073,6 +1216,24 @@ void object_in_projective_space::encode_incma_and_make_decomposition(
 		Stack->split_cell(0);
 
 	}
+	else if (type == t_LS) {
+
+		if (f_v) {
+			cout << "object_in_projective_space::encode_incma_and_make_decomposition t_LS" << endl;
+		}
+		Stack->subset_continguous(v, Enc->nb_rows - v);
+		Stack->split_cell(0);
+		Stack->subset_continguous(
+				v + b,
+				Enc->nb_cols - b);
+		Stack->split_cell(0);
+
+	}
+	else {
+		cout << "object_in_projective_space::encode_incma_and_make_decomposition "
+				"unknown type " << type << endl;
+		exit(1);
+	}
 	
 	if (f_v) {
 		cout << "object_in_projective_space::encode_incma_and_make_decomposition done" << endl;
@@ -1105,6 +1266,11 @@ void object_in_projective_space::encode_object(
 	else if (type == t_INC) {
 
 		encode_object_incidence_geometry(encoding, encoding_sz, verbose_level);
+
+	}
+	else if (type == t_LS) {
+
+		encode_object_large_set(encoding, encoding_sz, verbose_level);
 
 	}
 	else {
@@ -1179,6 +1345,19 @@ void object_in_projective_space::encode_object_incidence_geometry(
 
 	if (f_v) {
 		cout << "object_in_projective_space::encode_object_incidence_geometry" << endl;
+	}
+	encoding_sz = sz;
+	encoding = NEW_lint(sz);
+	Orbiter->Lint_vec.copy(set, encoding, sz);
+}
+
+void object_in_projective_space::encode_object_large_set(
+		long int *&encoding, int &encoding_sz, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_in_projective_space::encode_object_large_set" << endl;
 	}
 	encoding_sz = sz;
 	encoding = NEW_lint(sz);

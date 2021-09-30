@@ -256,8 +256,8 @@ void projective_space_object_classifier::classify_objects_using_nauty(
 		else if (Descr->Data->input_type[input_idx] == INPUT_TYPE_FILE_OF_POINTS ||
 				Descr->Data->input_type[input_idx] == INPUT_TYPE_FILE_OF_LINES ||
 				Descr->Data->input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS ||
-				Descr->Data->input_type[input_idx] ==
-						INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE ||
+				Descr->Data->input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE ||
+				Descr->Data->input_type[input_idx] == INPUT_TYPE_FILE_OF_DESIGNS ||
 				Descr->Data->input_type[input_idx] == INPUT_TYPE_FILE_OF_INCIDENCE_GEOMETRIES
 				) {
 
@@ -283,7 +283,7 @@ void projective_space_object_classifier::classify_objects_using_nauty(
 		}
 		else {
 			cout << "projective_space_object_classifier::classify_objects_using_nauty "
-					"unknown input type" << endl;
+					"unknown input type " << Descr->Data->input_type[input_idx] << endl;
 			exit(1);
 		}
 	}
@@ -687,6 +687,23 @@ void projective_space_object_classifier::process_individual_object(
 			Spread_table, nb_spreads, spread_size,
 			0 /*verbose_level*/);
 	}
+	else if (file_type == INPUT_TYPE_FILE_OF_DESIGNS) {
+
+		int v, b, k, design_sz, nb_flags;
+
+		v = Descr->Data->input_data1[file_idx];
+		b = Descr->Data->input_data2[file_idx];
+		k = Descr->Data->input_data3[file_idx];
+		design_sz = Descr->Data->input_data4[file_idx];
+		nb_flags = Descr->Data->input_data3[file_idx];
+
+		OiP->init_large_set(
+				the_set_in, set_size_in, v, k, design_sz,
+				verbose_level);
+
+	}
+
+
 	else if (file_type == INPUT_TYPE_FILE_OF_INCIDENCE_GEOMETRIES) {
 
 		int v, b, nb_flags;

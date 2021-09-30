@@ -24,7 +24,12 @@ design_create_description::design_create_description()
 	iso = 0;
 	f_family = FALSE;
 	//family_name;
-	//null();
+
+	f_list_of_blocks = FALSE;
+	list_of_blocks_v = 0;
+	list_of_blocks_k = 0;
+	//std::string list_of_blocks_text;
+
 }
 
 design_create_description::~design_create_description()
@@ -64,6 +69,13 @@ int design_create_description::read_arguments(int argc, std::string *argv,
 			family_name.assign(argv[++i]);
 			cout << "-family " << family_name << endl;
 		}
+		else if (stringcmp(argv[i], "-list_of_blocks") == 0) {
+			f_list_of_blocks = TRUE;
+			list_of_blocks_v = strtoi(argv[++i]);
+			list_of_blocks_k = strtoi(argv[++i]);
+			list_of_blocks_text.assign(argv[++i]);
+			cout << "-list_of_blocks " << list_of_blocks_v << " " << list_of_blocks_k << " " << list_of_blocks_text << endl;
+		}
 		else if (stringcmp(argv[i], "-end") == 0) {
 			break;
 		}
@@ -93,6 +105,9 @@ void design_create_description::print()
 	}
 	if (f_family) {
 		cout << "-family " << family_name << endl;
+	}
+	if (f_list_of_blocks) {
+		cout << "-list_of_blocks " << list_of_blocks_v << " " << list_of_blocks_k << " " << list_of_blocks_text << endl;
 	}
 }
 

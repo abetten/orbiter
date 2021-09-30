@@ -159,7 +159,45 @@ void design_tables::init(action *A, action *A2,
 	if (f_v) {
 		cout << "design_tables::init done" << endl;
 	}
+}
 
+void design_tables::extract_solutions_by_index(
+		int nb_sol, int Index_width, int *Index,
+		std::string &ouput_fname_csv,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int i, j, k, idx, N;
+	long int *Sol;
+	file_io Fio;
+
+	if (f_v) {
+		cout << "design_tables::extract_solutions_by_index" << endl;
+	}
+	N = Index_width * design_size;
+
+	Sol = NEW_lint(nb_sol * N);
+	for (i = 0; i < nb_sol; i++) {
+		k = 0;
+		for (j = 0; j < Index_width; j++, k += design_size) {
+			idx = Index[i * Index_width + j];
+			Orbiter->Lint_vec.copy(the_table + idx * design_size,
+					Sol + i * N + j * design_size,
+					design_size);
+		}
+	}
+
+
+	Fio.lint_matrix_write_csv(ouput_fname_csv, Sol, nb_sol, N);
+	if (f_v) {
+		cout << "design_tables::extract_solutions_by_index "
+				"Written file "
+				<< ouput_fname_csv << " of size " << Fio.file_size(ouput_fname_csv) << endl;
+	}
+
+	if (f_v) {
+		cout << "design_tables::extract_solutions_by_index done" << endl;
+	}
 }
 
 
