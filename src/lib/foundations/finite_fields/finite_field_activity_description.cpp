@@ -221,6 +221,18 @@ finite_field_activity_description::finite_field_activity_description()
 	f_generator_matrix_cyclic_code = FALSE;
 	generator_matrix_cyclic_code_n = 0;
 	//std::string generator_matrix_cyclic_code_poly
+
+	f_nth_roots = FALSE;
+	nth_roots_n = 0;
+
+	f_make_BCH_code = FALSE;
+	make_BCH_code_n = 0;
+	make_BCH_code_d = 0;
+
+	f_make_BCH_code_and_encode = FALSE;
+	//std::string make_BCH_code_and_encode_text;
+	//std::string make_BCH_code_and_encode_fname;
+
 }
 
 
@@ -798,7 +810,38 @@ int finite_field_activity_description::read_arguments(
 					<< endl;
 			}
 		}
-
+		else if (stringcmp(argv[i], "-nth_roots") == 0) {
+			f_nth_roots = TRUE;
+			nth_roots_n = strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-nth_roots " << nth_roots_n << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-make_BCH_code") == 0) {
+			f_make_BCH_code = TRUE;
+			make_BCH_code_n = strtoi(argv[++i]);
+			make_BCH_code_d = strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-make_BCH_code " << make_BCH_code_n
+						<< " " << make_BCH_code_d
+						<< endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-make_BCH_code_and_encode") == 0) {
+			f_make_BCH_code_and_encode = TRUE;
+			make_BCH_code_n = strtoi(argv[++i]);
+			make_BCH_code_d = strtoi(argv[++i]);
+			make_BCH_code_and_encode_text.assign(argv[++i]);
+			make_BCH_code_and_encode_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-make_BCH_code_and_encode "
+						<< " " << make_BCH_code_n
+						<< " " << make_BCH_code_d
+						<< " " << make_BCH_code_and_encode_text
+						<< " " << make_BCH_code_and_encode_fname
+						<< endl;
+			}
+		}
 
 
 		else if (stringcmp(argv[i], "-end") == 0) {
@@ -1099,6 +1142,22 @@ void finite_field_activity_description::print()
 		cout << "-generator_matrix_cyclic_code " << generator_matrix_cyclic_code_n
 			<< " " << generator_matrix_cyclic_code_poly
 			<< endl;
+	}
+	if (f_nth_roots) {
+		cout << "-nth_roots " << nth_roots_n << endl;
+	}
+	if (f_make_BCH_code) {
+		cout << "-make_BCH_code " << make_BCH_code_n
+				<< " " << make_BCH_code_d
+				<< endl;
+	}
+	if (f_make_BCH_code_and_encode) {
+		cout << "-make_BCH_code_and_encode "
+				<< " " << make_BCH_code_n
+				<< " " << make_BCH_code_d
+				<< " " << make_BCH_code_and_encode_text
+				<< " " << make_BCH_code_and_encode_fname
+				<< endl;
 	}
 
 }

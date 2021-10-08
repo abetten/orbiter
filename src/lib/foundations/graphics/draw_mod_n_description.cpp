@@ -22,6 +22,13 @@ draw_mod_n_description::draw_mod_n_description()
 {
 	f_n = FALSE;
 	n = 0;
+
+	f_mod_s = FALSE;
+	mod_s = 0;
+
+	f_divide_out_by = FALSE;
+	divide_out_by = 0;
+
 	f_file = FALSE;
 	//std::string fname;
 	f_inverse = 0;
@@ -62,6 +69,16 @@ int draw_mod_n_description::read_arguments(
 			f_n = TRUE;
 			n = strtoi(argv[++i]);
 			cout << "-n " << n << endl;
+		}
+		else if (stringcmp(argv[i], "-mod_s") == 0) {
+			f_mod_s = TRUE;
+			mod_s = strtoi(argv[++i]);
+			cout << "-mod_s " << mod_s << endl;
+		}
+		else if (stringcmp(argv[i], "-divide_out_by") == 0) {
+			f_divide_out_by = TRUE;
+			divide_out_by = strtoi(argv[++i]);
+			cout << "-divide_out_by " << divide_out_by << endl;
 		}
 		else if (stringcmp(argv[i], "-file") == 0) {
 			f_file = TRUE;
@@ -106,6 +123,39 @@ int draw_mod_n_description::read_arguments(
 	}
 	return i + 1;
 }
+
+void draw_mod_n_description::print()
+{
+	if (f_n) {
+		cout << "-n " << n << endl;
+	}
+	if (f_mod_s) {
+		cout << "-mod_s " << mod_s << endl;
+	}
+	if (f_divide_out_by) {
+		cout << "-divide_out_by " << divide_out_by << endl;
+	}
+	if (f_file) {
+		cout << "-file " << fname << endl;
+	}
+	if (f_inverse) {
+		cout << "-inverse " << endl;
+	}
+	if (f_additive_inverse) {
+		cout << "-additive_inverse " << endl;
+	}
+	if (f_power_cycle) {
+		cout << "-power_cycle " << power_cycle_base << endl;
+	}
+	if (f_cyclotomic_sets) {
+		cout << "-cyclotomic_sets " << cyclotomic_sets_q << " " << cyclotomic_sets_reps << endl;
+	}
+	if (f_cyclotomic_sets_thickness) {
+		cout << "-cyclotomic_sets_thickness " << cyclotomic_sets_thickness << endl;
+	}
+}
+
+
 
 
 

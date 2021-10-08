@@ -511,6 +511,157 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	}
 
+	else if (Descr->f_nth_roots) {
+		cout << "-nth_roots n=" << Descr->nth_roots_n << endl;
+
+		nth_roots *Nth;
+
+		Nth = NEW_OBJECT(nth_roots);
+
+		Nth->init(F, Descr->nth_roots_n, verbose_level);
+
+
+	}
+	else if (Descr->f_make_BCH_code) {
+
+		coding_theory_domain Codes;
+		nth_roots *Nth;
+		unipoly_object P;
+
+		int n;
+		int *Genma;
+		int degree;
+		int *generator_polynomial;
+		int i;
+
+		n = Descr->make_BCH_code_n;
+		Codes.make_BCH_code(n, F, Descr->make_BCH_code_d,
+					Nth, P,
+					verbose_level);
+
+		cout << "generator polynomial is ";
+		Nth->FX->print_object(P, cout);
+		cout << endl;
+
+		degree = Nth->FX->degree(P);
+		generator_polynomial = NEW_int(degree + 1);
+		for (i = 0; i <= degree; i++) {
+			generator_polynomial[i] = Nth->FX->s_i(P, i);
+		}
+
+		Codes.generator_matrix_cyclic_code(n,
+					degree, generator_polynomial, Genma);
+
+		int k = n - degree;
+
+#if 0
+		cout << "generator matrix:" << endl;
+		Orbiter->Int_vec.print_integer_matrix_width(cout, Genma,
+				k, n, n, F->log10_of_q);
+#endif
+
+		file_io Fio;
+		{
+			char str[1000];
+			string fname;
+
+			fname.assign("genma_BCH");
+			sprintf(str, "_n%d", n);
+			fname.append(str);
+			sprintf(str, "_k%d", k);
+			fname.append(str);
+			sprintf(str, "_q%d", F->q);
+			fname.append(str);
+			fname.append(".csv");
+
+			Fio.int_matrix_write_csv(fname, Genma, k, n);
+
+			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+		}
+		{
+			char str[1000];
+			string fname;
+
+			snprintf(str, 1000, "nth_roots_q%d_n%d.tex", F->q, n);
+
+			fname.assign(str);
+
+
+			{
+				ofstream ost(fname);
+				number_theory_domain NT;
+
+				char title[1000];
+				char author[1000];
+
+				snprintf(title, 1000, "nth roots");
+				//strcpy(author, "");
+				author[0] = 0;
+
+
+				latex_interface L;
+
+				L.head(ost,
+						FALSE /* f_book*/,
+						TRUE /* f_title */,
+						title, author,
+						FALSE /* f_toc */,
+						FALSE /* f_landscape */,
+						TRUE /* f_12pt */,
+						TRUE /* f_enlarged_page */,
+						TRUE /* f_pagenumbers */,
+						NULL /* extra_praeamble */);
+
+
+				Nth->report(ost, verbose_level);
+
+				L.foot(ost);
+
+
+			}
+
+			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+		}
+
+	}
+	else if (Descr->f_make_BCH_code_and_encode) {
+
+		coding_theory_domain Codes;
+		nth_roots *Nth;
+		unipoly_object P;
+
+		int n;
+		//int *Genma;
+		int degree;
+		int *generator_polynomial;
+		int i;
+
+		n = Descr->make_BCH_code_n;
+		Codes.make_BCH_code(n, F, Descr->make_BCH_code_d,
+					Nth, P,
+					verbose_level);
+
+		cout << "generator polynomial is ";
+		Nth->FX->print_object(P, cout);
+		cout << endl;
+
+		degree = Nth->FX->degree(P);
+		generator_polynomial = NEW_int(degree + 1);
+		for (i = 0; i <= degree; i++) {
+			generator_polynomial[i] = Nth->FX->s_i(P, i);
+		}
+
+		// Descr->make_BCH_code_and_encode_text
+
+		Codes.CRC_encode_text(Nth, P,
+				Descr->make_BCH_code_and_encode_text,
+				Descr->make_BCH_code_and_encode_fname,
+				verbose_level);
+
+
+	}
+
 
 
 

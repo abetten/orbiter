@@ -8,6 +8,7 @@ LFLAGS = -lm
 MODULES = \
 	a_domain.o \
 	algebra_global.o \
+	cyclotomic_sets.o \
 	finite_ring.o \
 	generators_symplectic_group.o \
 	gl_class_rep.o \

@@ -14,6 +14,89 @@ using namespace std;
 namespace orbiter {
 namespace foundations {
 
+void coding_theory_domain::make_BCH_code(int n, finite_field *F, int d,
+		nth_roots *&Nth, unipoly_object &P,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "coding_theory_domain::make_BCH_code q=" << F->q << " n=" << n
+				<< " d=" << d << endl;
+	}
+
+
+	Nth = NEW_OBJECT(nth_roots);
+
+	Nth->init(F, n, verbose_level);
+
+	int *Selection;
+	int *Sel;
+	int nb_sel;
+	int i, j;
+
+
+	Selection = NEW_int(Nth->Cyc->S->nb_sets);
+	Sel = NEW_int(Nth->Cyc->S->nb_sets);
+
+	for (i = 0; i < Nth->Cyc->S->nb_sets; i++) {
+		Selection[i] = FALSE;
+	}
+
+	for (i = 0; i < d - 1; i++) {
+		j = Nth->Cyc->Index[(1 + i) % n];
+		Selection[j] = TRUE;
+	}
+
+	nb_sel = 0;
+	for (i = 0; i < Nth->Cyc->S->nb_sets; i++) {
+		if (Selection[i]) {
+			Sel[nb_sel++] = i;
+		}
+	}
+
+	if (f_v) {
+		cout << "coding_theory_domain::make_BCH_code Sel=";
+		Orbiter->Int_vec.print(cout, Sel, nb_sel);
+		cout << endl;
+	}
+
+	unipoly_object Q;
+
+	Nth->FX->create_object_by_rank(P, 1, __FILE__, __LINE__, 0 /*verbose_level*/);
+	Nth->FX->create_object_by_rank(Q, 1, __FILE__, __LINE__, 0 /*verbose_level*/);
+
+	for (i = 0; i < nb_sel; i++) {
+
+		j = Sel[i];
+
+		if (f_v) {
+			cout << "coding_theory_domain::make_BCH_code P=";
+			Nth->FX->print_object(P, cout);
+			cout << endl;
+			cout << "j=" << j << endl;
+			Nth->FX->print_object(Nth->generator_Fq[j], cout);
+			cout << endl;
+		}
+		Nth->FX->mult(P, Nth->generator_Fq[j], Q, verbose_level);
+		if (f_v) {
+			cout << "coding_theory_domain::make_BCH_code Q=";
+			Nth->FX->print_object(Q, cout);
+			cout << endl;
+		}
+		Nth->FX->assign(Q, P, 0 /* verbose_level */);
+	}
+
+
+
+	if (f_v) {
+		cout << "coding_theory_domain::make_BCH_code q=" << F->q << " n=" << n
+				<< " d=" << d << " done" << endl;
+	}
+}
+
+
+
 void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 		int *roots, int nb_roots, int f_poly, std::string &poly,
 		int f_dual, std::string &fname_txt, std::string &fname_csv,
@@ -474,6 +557,24 @@ void coding_theory_domain::print_polynomial(unipoly_domain &Fq,
 			cout << ") * ";
 		}
 		cout << " Z^" << i;
+	}
+}
+
+void coding_theory_domain::print_polynomial_tight(std::ostream &ost, unipoly_domain &Fq,
+		int degree, unipoly_object *coeffs)
+{
+	int i, f_first = TRUE;
+
+	for (i = 0; i <= degree; i++) {
+		if (!f_first) {
+			ost << " + ";
+		}
+		f_first = FALSE;
+
+		ost << "(";
+		Fq.print_object_tight(coeffs[i], ost);
+		ost << ") ";
+		ost << " X^{" << i << "}";
 	}
 }
 

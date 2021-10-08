@@ -255,6 +255,7 @@ namespace foundations {
 // algebra_and_number_theory
 class a_domain;
 class algebra_global;
+class cyclotomic_sets;
 class finite_ring;
 class generators_symplectic_group;
 class gl_class_rep;
@@ -346,6 +347,7 @@ class finite_field_description;
 class finite_field;
 class finite_field_implementation_by_tables;
 class finite_field_implementation_wo_tables;
+class nth_roots;
 class subfield_structure;
 
 // geometry:

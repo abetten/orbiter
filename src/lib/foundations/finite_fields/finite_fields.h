@@ -243,6 +243,18 @@ public:
 	int generator_matrix_cyclic_code_n;
 	std::string generator_matrix_cyclic_code_poly;
 
+	int f_nth_roots;
+	int nth_roots_n;
+
+	int f_make_BCH_code;
+	int make_BCH_code_n;
+	int make_BCH_code_d;
+
+	int f_make_BCH_code_and_encode;
+	std::string make_BCH_code_and_encode_text;
+	std::string make_BCH_code_and_encode_fname;
+
+
 	finite_field_activity_description();
 	~finite_field_activity_description();
 	int read_arguments(
@@ -556,6 +568,17 @@ public:
 		int *&pair_embedding, int verbose_level);
 	int nb_times_mult_called();
 	int nb_times_add_called();
+	void compute_nth_roots(int *&Nth_roots, int n, int verbose_level);
+	void compute_nth_roots_as_polynomials(unipoly_domain *FpX,
+			unipoly_domain *Fq, unipoly_object *&Beta, int n1, int n2, int verbose_level);
+	void compute_powers(unipoly_domain *Fq,
+			int n, int start_idx,
+			unipoly_object *&Beta, int verbose_level);
+	void create_irreducible_polynomial(unipoly_domain *Fq,
+			unipoly_object *&Beta, int n,
+			long int *cyclotomic_set, int cylotomic_set_size,
+			unipoly_object *&generator,
+			int verbose_level);
 
 	// #########################################################################
 	// finite_field_applications.cpp
@@ -819,6 +842,14 @@ public:
 	// finite_field_linear_algebra2.cpp
 	// #########################################################################
 
+	void get_coefficients_in_linear_combination(
+		int k, int n, int *basis_of_subspace,
+		int *input_vector, int *coefficients, int verbose_level);
+		// basis[k * n]
+		// coefficients[k]
+		// input_vector[n] is the input vector.
+		// At the end, coefficients[k] are the coefficients of the linear combination
+		// which expresses input_vector[n] in terms of the given basis of the subspace.
 	void reduce_mod_subspace_and_get_coefficient_vector(
 		int k, int len, int *basis, int *base_cols,
 		int *v, int *coefficients, int verbose_level);
@@ -1495,6 +1526,48 @@ public:
 
 };
 
+
+// #############################################################################
+// nth_roots.cpp:
+// #############################################################################
+
+//! the nth roots over Fq using an extension field
+
+class nth_roots {
+public:
+
+	int n;
+	finite_field *F;
+	unipoly_object *Beta;
+	unipoly_object *Fq_Elements;
+
+	unipoly_object M;
+	finite_field *Fp;
+	unipoly_domain *FpX;
+	unipoly_domain *Fq;
+	unipoly_domain *FX;
+
+	int m, r, field_degree;
+	longinteger_object Qm1, Index, Subfield_Index;
+	cyclotomic_sets *Cyc;
+	unipoly_object **generator;
+
+	unipoly_object *generator_Fq;
+
+	int subfield_degree;
+	int *subfield_basis; // [subfield_degree * field_degree]
+
+
+
+
+
+	nth_roots();
+	~nth_roots();
+	void init(finite_field *F, int n, int verbose_level);
+	void compute_subfield(int subfield_degree, int *&field_basis, int verbose_level);
+	void report(std::ostream &ost, int verbose_level);
+
+};
 
 
 

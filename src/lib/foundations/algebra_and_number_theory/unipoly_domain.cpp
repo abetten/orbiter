@@ -42,19 +42,45 @@ unipoly_domain::unipoly_domain(finite_field *F)
 	//std::string variable_name;
 }
 
+void unipoly_domain::init_basic(finite_field *F, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "unipoly_domain::init_basic" << endl;
+	}
+	unipoly_domain::F = F;
+	variable_name.assign("X");
+	f_factorring = FALSE;
+	factor_degree = 0;
+	factor_coeffs = NULL;
+	factor_poly = NULL;
+	f_print_sub = FALSE;
+	//f_use_variable_name = FALSE;
+	//std::string variable_name;
+	if (f_v) {
+		cout << "unipoly_domain::init_basic done" << endl;
+	}
+}
+
 unipoly_domain::unipoly_domain(finite_field *F, unipoly_object m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int i, a, b;
 	
+	unipoly_domain::F = F;
+	variable_name.assign("X");
+	f_print_sub = FALSE;
+	f_factorring = FALSE;
+
 	if (f_v) {
-		cout << "unipoly_domain::unipoly_domain creating factorring modulo ";
-		//print_object(m, cout);
+		cout << "unipoly_domain::unipoly_domain creating factorring modulo " << endl;
+		print_object(m, cout);
+		cout << endl;
 		//cout << " of degree " << ((int *)m)[0] << endl;
 	}
 
 #if 0
-	unipoly_domain::F = F;
 	variable_name.assign("X");
 	f_factorring = TRUE;
 	factor_degree = ((int *)m)[0];
@@ -104,6 +130,10 @@ unipoly_domain::~unipoly_domain()
 	}
 }
 
+void unipoly_domain::init_variable_name(std::string &label)
+{
+	variable_name.assign(label);
+}
 
 void unipoly_domain::init_factorring(finite_field *F, unipoly_object m, int verbose_level)
 {
@@ -231,19 +261,32 @@ void unipoly_domain::create_object_by_rank(
 			cout << ")" << endl;
 		}
 		len = factor_degree;
+		int *rep = NEW_int_with_tracking(len + 1, file, line);
+		rep[0] = len - 1;
+		int *coeff = rep + 1;
+		int i = 0;
+
+		for (i = 0; i < factor_degree; i++) {
+			coeff[i] = rk % F->q;
+			rk /= F->q;
+		}
+		rep[0] = factor_degree - 1; //i - 1;
+		p = (void *) rep;
 	}
-	int *rep = NEW_int_with_tracking(len + 1, file, line);
-	rep[0] = len - 1;
-	int *coeff = rep + 1;
-	int i = 0;
-	
-	do {
-		coeff[i] = rk % F->q;
-		rk /= F->q;
-		i++;
-	} while (rk);
-	rep[0] = i - 1;
-	p = (void *) rep;
+	else {
+		int *rep = NEW_int_with_tracking(len + 1, file, line);
+		rep[0] = len - 1;
+		int *coeff = rep + 1;
+		int i = 0;
+
+		do {
+			coeff[i] = rk % F->q;
+			rk /= F->q;
+			i++;
+		} while (rk);
+		rep[0] = i - 1;
+		p = (void *) rep;
+	}
 	if (f_v) {
 		cout << "unipoly_domain::create_object_by_rank done" << endl;
 	}
@@ -472,7 +515,7 @@ int unipoly_domain::degree(unipoly_object p)
 }
 
 
-ostream& unipoly_domain::print_object(unipoly_object p, ostream& ost)
+void unipoly_domain::print_object(unipoly_object p, std::ostream &ost)
 {
 	int i, k;
 	int f_prev = FALSE;
@@ -493,20 +536,11 @@ ostream& unipoly_domain::print_object(unipoly_object p, ostream& ost)
 	for (i = d; i >= 0; i--) {
 		k = coeff[i];
 		if (k == 0) {
-			if (i == 0 && f_nothing_printed_at_all) {
-				ost << "0";
-			}
 			continue;
 		}
 		f_nothing_printed_at_all = FALSE;
-		if (k < 0) {
-			ost << " - ";
-		}
-		else if (f_prev) {
+		if (f_prev) {
 			ost << " + ";
-		}
-		if (k < 0) {
-			k = -k;
 		}
 		if (k != 1 || (i == 0 /*&& !unip_f_use_variable_name*/)) {
 			//l = F->log_alpha(k);
@@ -532,14 +566,35 @@ ostream& unipoly_domain::print_object(unipoly_object p, ostream& ost)
 		}
 		f_prev = TRUE;
 	}
+	if (f_nothing_printed_at_all) {
+		ost << "0";
+	}
 	// ost << ")";
-	return ost;
+	//return ost;
 }
+
+void unipoly_domain::print_object_tight(unipoly_object p, std::ostream &ost)
+{
+	int i, k;
+	int *rep = (int *) p;
+	int d = rep[0]; // degree
+	int *coeff = rep + 1;
+
+
+	for (i = 0; i <= d; i++) {
+		k = coeff[i];
+		ost << k;
+	}
+}
+
 
 void unipoly_domain::assign(unipoly_object a, unipoly_object &b, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	
+	if (f_v) {
+		cout << "unipoly_domain::assign" << endl;
+	}
 	if (f_factorring) {
 		if (f_v) {
 			cout << "unipoly_domain::assign with factorring";
@@ -549,8 +604,22 @@ void unipoly_domain::assign(unipoly_object a, unipoly_object &b, int verbose_lev
 					factor_degree + 1);
 			cout << ")" << endl;
 		}
+		if (a == NULL) {
+			cout << "unipoly_domain::assign with factorring a == NULL" << endl;
+			exit(1);
+		}
+		if (b == NULL) {
+			cout << "unipoly_domain::assign with factorring b == NULL" << endl;
+			exit(1);
+		}
 		int *ra = (int *) a;
 		int *rb = (int *) b;
+		if (rb[0] < factor_degree - 1) {
+			cout << "unipoly_domain::assign rb[0] < factor_degree - 1" << endl;
+			cout << "rb[0] = " << rb[0] << endl;
+			cout << "factor_degree = " << factor_degree << endl;
+			exit(1);
+		}
 		int *A = ra + 1;
 		int *B = rb + 1;
 		int i;
@@ -558,6 +627,9 @@ void unipoly_domain::assign(unipoly_object a, unipoly_object &b, int verbose_lev
 			B[i] = A[i];
 		}
 		rb[0] = ra[0];
+		if (f_v) {
+			cout << "unipoly_domain::assign after copy" << endl;
+		}
 	}
 	else {
 		if (f_v) {
@@ -587,8 +659,11 @@ void unipoly_domain::assign(unipoly_object a, unipoly_object &b, int verbose_lev
 			}
 		}
 		if (f_v) {
-			cout << "unipoly_domain::assign finished" << endl;
+			cout << "unipoly_domain::assign after copy" << endl;
 		}
+	}
+	if (f_v) {
+		cout << "unipoly_domain::assign done" << endl;
 	}
 }
 

@@ -14,11 +14,72 @@ using namespace std;
 namespace orbiter {
 namespace foundations {
 
+void finite_field::get_coefficients_in_linear_combination(
+	int k, int n, int *basis_of_subspace,
+	int *input_vector, int *coefficients, int verbose_level)
+// basis[k * n]
+// coefficients[k]
+// input_vector[n] is the input vector.
+// At the end, coefficients[k] are the coefficients of the linear combination
+// which expresses input_vector[n] in terms of the given basis of the subspace.
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "finite_field::get_coefficients_in_linear_combination" << endl;
+	}
+
+	int *M;
+	int *base_cols;
+	int j;
+
+	M = NEW_int(n * (k + 1));
+	base_cols = NEW_int(n);
+	for (j = 0; j < k; j++) {
+		for (i = 0; i < n; i++) {
+			M[i * (k + 1) + j] = basis_of_subspace[j * n + i];
+		}
+	}
+	for (i = 0; i < n; i++) {
+		M[i * (k + 1) + k] = input_vector[i];
+	}
+
+	if (f_v) {
+		cout << "finite_field::get_coefficients_in_linear_combination before Gauss_int" << endl;
+		Orbiter->Int_vec.matrix_print(M, n, k + 1);
+	}
+
+	Gauss_int(M, FALSE /* f_special */,
+			TRUE /* f_complete */, base_cols,
+			FALSE /* f_P */, NULL /* P */, n, k + 1,
+			k + 1 /* Pn */, 0 /* verbose_level */);
+
+
+	if (f_v) {
+		cout << "finite_field::get_coefficients_in_linear_combination after Gauss_int" << endl;
+		Orbiter->Int_vec.matrix_print(M, n, k + 1);
+	}
+
+	for (i = 0; i < k; i++) {
+		coefficients[i] = M[i * (k + 1) + k];
+	}
+
+	if (f_v) {
+		cout << "finite_field::get_coefficients_in_linear_combination done" << endl;
+	}
+}
 
 
 void finite_field::reduce_mod_subspace_and_get_coefficient_vector(
 	int k, int len, int *basis, int *base_cols,
 	int *v, int *coefficients, int verbose_level)
+// basis[k * len]
+// base_cols[k]
+// coefficients[k]
+// v[len] is the input vector and the output vector.
+// At the end, it is the residue,
+// i.e. the reduced coset representative modulo the subspace
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -33,15 +94,15 @@ void finite_field::reduce_mod_subspace_and_get_coefficient_vector(
 		cout << endl;
 	}
 	if (f_vv) {
-		cout << "finite_field::reduce_mod_subspace_and_get_"
-				"coefficient_vector subspace basis:" << endl;
+		cout << "finite_field::reduce_mod_subspace_and_get_coefficient_vector "
+				"subspace basis:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout, basis, k, len, len, log10_of_q);
 	}
 	for (i = 0; i < k; i++) {
 		idx = base_cols[i];
 		if (basis[i * len + idx] != 1) {
-			cout << "finite_field::reduce_mod_subspace_and_get_"
-					"coefficient_vector pivot entry is not one" << endl;
+			cout << "finite_field::reduce_mod_subspace_and_get_coefficient_vector "
+					"pivot entry is not one" << endl;
 			cout << "i=" << i << endl;
 			cout << "idx=" << idx << endl;
 			Orbiter->Int_vec.print_integer_matrix_width(cout, basis,
@@ -52,8 +113,8 @@ void finite_field::reduce_mod_subspace_and_get_coefficient_vector(
 		if (v[idx]) {
 			Gauss_step(basis + i * len, v, len, idx, 0/*verbose_level*/);
 			if (v[idx]) {
-				cout << "finite_field::reduce_mod_subspace_and_get_"
-						"coefficient_vector fatal: v[idx]" << endl;
+				cout << "finite_field::reduce_mod_subspace_and_get_coefficient_vector "
+						"fatal: v[idx]" << endl;
 				exit(1);
 			}
 		}

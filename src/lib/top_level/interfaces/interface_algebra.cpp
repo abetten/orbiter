@@ -367,7 +367,6 @@ void interface_algebra::print()
 	}
 
 
-
 	if (f_young_symmetrizer) {
 		cout << "-young_symmetrizer " << " " << young_symmetrizer_n << endl;
 	}
@@ -376,6 +375,7 @@ void interface_algebra::print()
 	}
 	if (f_draw_mod_n) {
 		cout << "-draw_mod_n " << endl;
+		Draw_mod_n_description->print();
 	}
 	if (f_power_mod_n) {
 		cout << "-power_mod_n " << " " << power_mod_n_a << " " << power_mod_n_n << endl;

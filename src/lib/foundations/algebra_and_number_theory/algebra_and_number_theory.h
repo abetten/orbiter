@@ -204,6 +204,33 @@ public:
 
 
 // #############################################################################
+// cyclotomic_sets.cpp
+// #############################################################################
+
+
+//! cyclotomic sets for cyclic codes
+
+
+
+class cyclotomic_sets {
+public:
+	int n;
+	int q;
+	int m;
+	int qm;
+
+	int *Index;
+	set_of_sets *S;
+
+	cyclotomic_sets();
+	~cyclotomic_sets();
+	void init(finite_field *F, int n, int verbose_level);
+	void print();
+};
+
+
+
+// #############################################################################
 // finite_ring.cpp
 // #############################################################################
 
@@ -1266,8 +1293,10 @@ public:
 
 	unipoly_domain();
 	unipoly_domain(finite_field *GFq);
+	void init_basic(finite_field *F, int verbose_level);
 	unipoly_domain(finite_field *GFq, unipoly_object m, int verbose_level);
 	~unipoly_domain();
+	void init_variable_name(std::string &label);
 	void init_factorring(finite_field *F, unipoly_object m, int verbose_level);
 	finite_field *get_F();
 	int &s_i(unipoly_object p, int i)
@@ -1295,7 +1324,8 @@ public:
 	int rank(unipoly_object p);
 	void rank_longinteger(unipoly_object p, longinteger_object &rank);
 	int degree(unipoly_object p);
-	std::ostream& print_object(unipoly_object p, std::ostream& ost);
+	void print_object(unipoly_object p, std::ostream &ost);
+	void print_object_tight(unipoly_object p, std::ostream &ost);
 	void assign(unipoly_object a, unipoly_object &b, int verbose_level);
 	void one(unipoly_object p);
 	void m_one(unipoly_object p);
