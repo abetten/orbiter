@@ -1051,7 +1051,7 @@ void symbol_definition::definition_of_linear_group(int verbose_level)
 				"creating the group" << endl;
 	}
 
-	LG->linear_group_init(Linear_group_description, verbose_level - 5);
+	LG->linear_group_init(Linear_group_description, verbose_level - 2);
 
 	orbiter_symbol_table_entry Symb;
 	Symb.init_linear_group(define_label, LG, verbose_level);

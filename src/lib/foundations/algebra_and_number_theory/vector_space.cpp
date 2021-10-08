@@ -272,6 +272,11 @@ ret:
 	return r;
 }
 
+// #############################################################################
+// global functions:
+// #############################################################################
+
+
 void vector_space_unrank_point_callback(int *v, long int rk, void *data)
 {
 	vector_space *VS = (vector_space *) data;

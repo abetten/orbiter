@@ -124,16 +124,16 @@ void finite_field::make_all_irreducible_polynomials_of_degree_d(
 	Combi.int_vec_first_regular_word(v, d, q);
 	while (TRUE) {
 		if (f_vv) {
-			cout << "finite_field::make_all_irreducible_polynomials_"
-					"of_degree_d regular word " << cnt << " : v = ";
+			cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
+					"regular word " << cnt << " : v = ";
 			Orbiter->Int_vec.print(cout, v, d);
 			cout << endl;
 		}
 
 		mult_vector_from_the_right(Normal_basis, v, w, d, d);
 		if (f_vv) {
-			cout << "finite_field::make_all_irreducible_polynomials_"
-					"of_degree_d regular word " << cnt << " : w = ";
+			cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
+					"regular word " << cnt << " : w = ";
 			Orbiter->Int_vec.print(cout, w, d);
 			cout << endl;
 		}
@@ -147,8 +147,8 @@ void finite_field::make_all_irreducible_polynomials_of_degree_d(
 		FX.minimum_polynomial_extension_field(g, m, minpol, d, Frobenius,
 				verbose_level - 3);
 		if (f_vv) {
-			cout << "finite_field::make_all_irreducible_polynomials_"
-					"of_degree_d regular word " << cnt << " : v = ";
+			cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
+					"regular word " << cnt << " : v = ";
 			Orbiter->Int_vec.print(cout, v, d);
 			cout << " irreducible polynomial = ";
 			FX.print_object(minpol, cout);
@@ -1736,11 +1736,15 @@ void finite_field::do_make_table_of_irreducible_polynomials(int deg, int verbose
 
 			ost << "There are " << Table.size() << " irreducible polynomials of "
 					"degree " << deg << " over the field F" << q << ":\\\\" << endl;
+			ost << "The coefficients in increasing order are:\\\\" << endl;
+			ost << endl;
+			ost << "\\bigskip" << endl;
+			ost << endl;
 			//ost << "\\begin{multicols}{2}" << endl;
-			//ost << "\\noindent" << endl;
+			ost << "\\noindent" << endl;
 			for (i = 0; i < Table.size(); i++) {
 				ost << i << " : $";
-				for (j = deg; j>= 0; j--) {
+				for (j = 0; j <= deg; j++) {
 					ost << T[i * (deg + 1) + j];
 				}
 				ost << " : ";

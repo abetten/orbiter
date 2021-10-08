@@ -757,13 +757,18 @@ void interface_coding_theory::worker(int verbose_level)
 	else if (f_encode_text_5bits) {
 		coding_theory_domain Codes;
 
-		Codes.encode_text_5bits(encode_text_5bits_input, encode_text_5bits_fname, verbose_level);
+		Codes.encode_text_5bits(encode_text_5bits_input,
+				encode_text_5bits_fname,
+				verbose_level);
 
 	}
 	else if (f_field_induction) {
 		coding_theory_domain Codes;
 
-		Codes.field_induction(field_induction_fname_in, field_induction_fname_out, field_induction_nb_bits, verbose_level);
+		Codes.field_induction(field_induction_fname_in,
+				field_induction_fname_out,
+				field_induction_nb_bits,
+				verbose_level);
 
 	}
 	if (f_v) {

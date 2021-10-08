@@ -7,6 +7,7 @@ LFLAGS = -lm
 MODULES= \
 		foundations/algebra_and_number_theory/a_domain.o \
 		foundations/algebra_and_number_theory/algebra_global.o \
+		foundations/algebra_and_number_theory/cyclotomic_sets.o \
 		foundations/algebra_and_number_theory/finite_ring.o \
 		foundations/algebra_and_number_theory/generators_symplectic_group.o \
 		foundations/algebra_and_number_theory/gl_class_rep.o \
@@ -92,6 +93,7 @@ MODULES= \
 		foundations/finite_fields/finite_field_tables.o \
 		foundations/finite_fields/finite_field.o \
 		foundations/finite_fields/norm_tables.o \
+		foundations/finite_fields/nth_roots.o \
 		foundations/finite_fields/subfield_structure.o \
 		foundations/geometry/andre_construction.o \
 		foundations/geometry/andre_construction_line_element.o \

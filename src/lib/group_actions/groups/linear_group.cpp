@@ -68,6 +68,11 @@ void linear_group::linear_group_init(
 	F = description->F;
 	input_q = F->q;
 	f_semilinear = description->f_semilinear;
+	if (f_v) {
+		cout << "linear_group::linear_group_init n=" << n << endl;
+		cout << "linear_group::linear_group_init q=" << input_q << endl;
+		cout << "linear_group::linear_group_init f_semilinear=" << f_semilinear << endl;
+	}
 
 
 	if (f_v) {
@@ -88,7 +93,7 @@ void linear_group::linear_group_init(
 		F, n, 
 		description,
 		nice_gens,
-		verbose_level);
+		verbose_level - 3);
 
 	if (f_v) {
 		cout << "linear_group::linear_group_init after "
@@ -507,9 +512,14 @@ void linear_group::linear_group_init(
 	}
 
 	if (!f_OK) {
+		if (f_v) {
+			cout << "linear_group::linear_group_init "
+					"!f_OK, A2 = A_linear" << endl;
+		}
 		A2 = A_linear;
 		vector_space_dimension = n;
 		q = input_q;
+		f_has_strong_generators = TRUE;
 		Strong_gens = initial_strong_gens;
 		//sprintf(prefix, "PGL_%d_%d", n, input_q);
 		//sprintf(label_latex, "\\PGL(%d,%d)", n, input_q);

@@ -214,7 +214,7 @@ void finite_field::init_implementation(int f_without_tables, int verbose_level)
 		if (f_v) {
 			cout << "finite_field::init_implementation before T->init" << endl;
 		}
-		T->init(this, verbose_level - 5);
+		T->init(this, verbose_level);
 		if (f_v) {
 			cout << "finite_field::init_implementation after T->init" << endl;
 		}
@@ -1573,6 +1573,398 @@ int finite_field::nb_times_mult_called()
 int finite_field::nb_times_add_called()
 {
 	return nb_times_add;
+}
+
+void finite_field::compute_nth_roots(int *&Nth_roots, int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, idx, beta;
+
+	if (f_v) {
+		cout << "finite_field::compute_nth_roots" << endl;
+	}
+
+	if ((q - 1) % n) {
+		cout << "finite_field::compute_nth_roots n does not divide q - 1" << endl;
+		exit(1);
+	}
+
+	idx = (q - 1) / n;
+	beta = power(alpha, idx);
+	Nth_roots = NEW_int(n);
+	Nth_roots[0] = 1;
+	Nth_roots[1] = beta;
+	for (i = 2; i < n; i++) {
+		Nth_roots[i] = mult(Nth_roots[i - 1], beta);
+	}
+
+
+	if (f_v) {
+		cout << "finite_field::compute_nth_roots done" << endl;
+	}
+}
+
+void finite_field::compute_nth_roots_as_polynomials(unipoly_domain *FpX,
+		unipoly_domain *Fq, unipoly_object *&Beta, int n1, int n2, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//unipoly_object M;
+	unipoly_object beta;
+
+	if (f_v) {
+		cout << "finite_field::compute_nth_roots_as_polynomials " << endl;
+	}
+
+#if 0
+	Fp.finite_field_init(p, FALSE /* f_without_tables */, verbose_level - 1);
+
+	algebra_global Algebra;
+	unipoly_domain FpX(&Fp);
+	FpX.create_object_by_rank_string(M,
+			Algebra.get_primitive_polynomial(p, field_degree, 0),
+			verbose_level - 2);
+#endif
+
+	int m, r;
+	int i;
+	longinteger_object Qm1, Index;
+	longinteger_domain D;
+	number_theory_domain NT;
+
+	m = NT.order_mod_p(q, n1);
+	if (f_v) {
+		cout << "coding_theory_domain::make_cyclic_code order of q mod n is m=" << m << endl;
+	}
+	D.create_qnm1(Qm1, q, m);
+
+	// q = i_power_j(p, e);
+	// GF(q)=GF(p^e) has n-th roots of unity
+	D.integral_division_by_int(Qm1, n2, Index, r);
+	if (f_v) {
+		cout << "coding_theory_domain::make_cyclic_code Index = " << Index << endl;
+	}
+
+	int subgroup_index;
+
+	subgroup_index = Index.as_int();
+	if (f_v) {
+		cout << "coding_theory_domain::make_cyclic_code subgroup_index = " << subgroup_index << endl;
+	}
+
+	//b = (q - 1) / n;
+	if (r != 0) {
+		cout << "coding_theory_domain::make_cyclic_code n does not divide q^m-1" << endl;
+		exit(1);
+	}
+
+#if 0
+	if (f_v) {
+		cout << "finite_field::compute_nth_roots_as_polynomials choosing the following irreducible "
+				"and primitive polynomial:" << endl;
+		FpX.print_object(M, cout);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "finite_field::compute_nth_roots_as_polynomials creating unipoly_domain Fq modulo M" << endl;
+	}
+	//unipoly_domain Fq(this, M, verbose_level);  // Fq = Fp[X] modulo factor polynomial M
+	if (f_v) {
+		cout << "finite_field::compute_nth_roots_as_polynomials extension field created" << endl;
+	}
+#endif
+
+	Beta = new unipoly_object[n2];
+
+	for (i = 0; i < n2; i++) {
+		Fq->create_object_by_rank(Beta[i], 0, __FILE__, __LINE__, verbose_level);
+
+	}
+
+	//Fq->create_object_by_rank(c, 0, __FILE__, __LINE__, verbose_level);
+	Fq->create_object_by_rank(beta, p, __FILE__, __LINE__, verbose_level); // the element alpha
+	//Fq->create_object_by_rank(beta_i, 1, __FILE__, __LINE__, verbose_level);
+	if (subgroup_index != 1) {
+		//Fq.power_int(beta, b);
+		if (f_v) {
+			cout << "\\alpha = ";
+			Fq->print_object(beta, cout);
+			cout << endl;
+		}
+		if (f_v) {
+			cout << "finite_field::compute_nth_roots_as_polynomials before Fq->power_int" << endl;
+		}
+		Fq->power_int(beta, subgroup_index, verbose_level - 1);
+		if (f_v) {
+			cout << "\\beta = \\alpha^" << Index << " = ";
+			Fq->print_object(beta, cout);
+			cout << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "finite_field::compute_nth_roots_as_polynomials subgroup_index is one" << endl;
+		}
+	}
+
+
+	for (i = 0; i < n2; i++) {
+		if (f_v) {
+			cout << "finite_field::compute_nth_roots_as_polynomials i=" << i << endl;
+		}
+		if (f_v) {
+			cout << "finite_field::compute_nth_roots_as_polynomials working on root " << i << endl;
+		}
+		if (f_v) {
+			cout << "finite_field::compute_nth_roots_as_polynomials before Fq.assign beta" << endl;
+		}
+		Fq->assign(beta, Beta[i], verbose_level);
+		if (f_v) {
+			cout << "finite_field::compute_nth_roots_as_polynomials before Fq.power_int" << endl;
+		}
+		Fq->power_int(Beta[i], i, verbose_level);
+	}
+
+
+	if (f_v) {
+		cout << "finite_field::compute_nth_roots_as_polynomials done" << endl;
+	}
+
+}
+
+void finite_field::compute_powers(unipoly_domain *Fq,
+		int n, int start_idx,
+		unipoly_object *&Beta, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::compute_powers" << endl;
+	}
+	int i;
+	unipoly_object beta;
+
+	Beta = new unipoly_object[n];
+
+	for (i = 0; i < n; i++) {
+		Fq->create_object_by_rank(Beta[i], 0, __FILE__, __LINE__, verbose_level);
+
+	}
+
+	Fq->create_object_by_rank(beta, p, __FILE__, __LINE__, verbose_level); // the element alpha
+
+	if (start_idx != 1) {
+
+		if (f_v) {
+			cout << "\\alpha = ";
+			Fq->print_object(beta, cout);
+			cout << endl;
+		}
+		if (f_v) {
+			cout << "finite_field::compute_powers before Fq->power_int" << endl;
+		}
+		Fq->power_int(beta, start_idx, verbose_level - 1);
+		if (f_v) {
+			cout << "\\beta = \\alpha^" << start_idx << " = ";
+			Fq->print_object(beta, cout);
+			cout << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "finite_field::compute_powers subgroup_index is one" << endl;
+		}
+	}
+
+
+	for (i = 0; i < n; i++) {
+		if (f_v) {
+			cout << "finite_field::compute_powers i=" << i << endl;
+		}
+		if (f_v) {
+			cout << "finite_field::compute_powers working on root " << i << endl;
+		}
+		if (f_v) {
+			cout << "finite_field::compute_powers before Fq.assign beta" << endl;
+		}
+		Fq->assign(beta, Beta[i], verbose_level);
+		if (f_v) {
+			cout << "finite_field::compute_powers before Fq.power_int" << endl;
+		}
+		Fq->power_int(Beta[i], i, verbose_level);
+	}
+
+	if (f_v) {
+		cout << "finite_field::compute_powers done" << endl;
+	}
+
+}
+
+void finite_field::create_irreducible_polynomial(unipoly_domain *Fq,
+		unipoly_object *&Beta, int n,
+		long int *cyclotomic_set, int cylotomic_set_size,
+		unipoly_object *&generator,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::create_irreducible_polynomial n=" << n << endl;
+	}
+	if (f_v) {
+		cout << "finite_field::create_irreducible_polynomial before allocating generator etc" << endl;
+	}
+
+	int degree = cylotomic_set_size;
+
+	coding_theory_domain Codes;
+
+	generator = NEW_OBJECTS(unipoly_object, degree + 2);
+	unipoly_object *tmp = NEW_OBJECTS(unipoly_object, degree + 1);
+	unipoly_object *linear_factor = NEW_OBJECTS(unipoly_object, 2);
+	unipoly_object Pc, Pd;
+
+	int i, j, h, r;
+
+	// create the polynomial linear_factor = X - a:
+	if (f_v) {
+		cout << "finite_field::create_irreducible_polynomial creating linear_factor = X-a" << endl;
+	}
+	for (i = 0; i < 2; i++) {
+		if (i == 1) {
+			Fq->create_object_by_rank(linear_factor[i], 1, __FILE__, __LINE__, verbose_level);
+		}
+		else {
+			Fq->create_object_by_rank(linear_factor[i], 0, __FILE__, __LINE__, verbose_level);
+		}
+	}
+	for (i = 0; i <= degree; i++) {
+		if (f_v) {
+			cout << "finite_field::create_irreducible_polynomial creating generator[" << i << "]" << endl;
+		}
+		Fq->create_object_by_rank(generator[i], 0, __FILE__, __LINE__, verbose_level);
+		Fq->create_object_by_rank(tmp[i], 0, __FILE__, __LINE__, verbose_level);
+	}
+	if (f_v) {
+		cout << "finite_field::create_irreducible_polynomial creating generator[0]" << endl;
+	}
+	Fq->create_object_by_rank(generator[0], 1, __FILE__, __LINE__, verbose_level);
+
+	// now coeffs has degree 1
+	// and generator has degree 0
+
+	if (f_v) {
+		cout << "finite_field::create_irreducible_polynomial coeffs:" << endl;
+		Codes.print_polynomial(*Fq, 1, linear_factor);
+		cout << endl;
+		cout << "finite_field::create_irreducible_polynomial generator:" << endl;
+		Codes.print_polynomial(*Fq, 0, generator);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "finite_field::create_irreducible_polynomial creating Pc" << endl;
+	}
+	Fq->create_object_by_rank(Pc, 0, __FILE__, __LINE__, verbose_level);
+	if (f_v) {
+		cout << "finite_field::create_irreducible_polynomial creating Pd" << endl;
+	}
+	Fq->create_object_by_rank(Pd, 0, __FILE__, __LINE__, verbose_level);
+
+	r = 0;
+	for (h = 0; h < cylotomic_set_size; h++) {
+		i = cyclotomic_set[h];
+		if (f_v) {
+			cout << "h=" << h << ", i=" << i << endl;
+		}
+		if (f_v) {
+			cout << "finite_field::create_irreducible_polynomial working on root " << i << endl;
+		}
+		if (f_v) {
+			cout << "finite_field::create_irreducible_polynomial before Fq.assign beta" << endl;
+		}
+		Fq->assign(Beta[i], linear_factor[0], verbose_level);
+		if (f_v) {
+			cout << "finite_field::create_irreducible_polynomial before Fq.negate" << endl;
+		}
+		Fq->negate(linear_factor[0]);
+		if (f_v) {
+			cout << "finite_field::create_irreducible_polynomial root: " << i << " : ";
+			Fq->print_object(linear_factor[0], cout);
+			//cout << " : ";
+			//print_polynomial(Fq, 2, coeffs);
+			cout << endl;
+		}
+
+
+		if (f_v) {
+			cout << "finite_field::create_irreducible_polynomial before Fq.assign(generator[j], tmp[j])" << endl;
+		}
+		for (j = 0; j <= r; j++) {
+			Fq->assign(generator[j], tmp[j], verbose_level);
+		}
+
+		//cout << "tmp:" << endl;
+		//print_polynomial(Fq, r, tmp);
+		//cout << endl;
+
+		if (f_v) {
+			cout << "finite_field::create_irreducible_polynomial before Fq.assign(tmp[j], generator[j + 1])" << endl;
+		}
+		for (j = 0; j <= r; j++) {
+			Fq->assign(tmp[j], generator[j + 1], verbose_level);
+			}
+		Fq->delete_object(generator[0]);
+		Fq->create_object_by_rank(generator[0], 0, __FILE__, __LINE__, verbose_level);
+
+		//cout << "generator after shifting up:" << endl;
+		//print_polynomial(Fq, r + 1, generator);
+		//cout << endl;
+
+		for (j = 0; j <= r; j++) {
+			if (f_v) {
+				cout << "finite_field::create_irreducible_polynomial j=" << j << endl;
+			}
+			if (f_v) {
+				cout << "finite_field::create_irreducible_polynomial before Fq.mult(tmp[j], linear_factor[0], Pc)" << endl;
+			}
+			Fq->mult(tmp[j], linear_factor[0], Pc, verbose_level - 1);
+			if (f_v) {
+				cout << "finite_field::create_irreducible_polynomial before Fq.add()" << endl;
+			}
+			Fq->add(Pc, generator[j], Pd);
+			if (f_v) {
+				cout << "finite_field::create_irreducible_polynomial before Fq.assign()" << endl;
+			}
+			Fq->assign(Pd, generator[j], verbose_level);
+		}
+		r++;
+		if (f_v) {
+			cout << "finite_field::create_irreducible_polynomial r=" << r << endl;
+		}
+		if (f_v) {
+			cout << "finite_field::create_irreducible_polynomial current polynomial: ";
+			Codes.print_polynomial(*Fq, r, generator);
+			cout << endl;
+		}
+
+	}
+
+	if (r != degree) {
+		cout << "finite_field::create_irreducible_polynomial r != degree" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "finite_field::create_irreducible_polynomial The generator polynomial is: ";
+		Codes.print_polynomial(*Fq, r, generator);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "finite_field::create_irreducible_polynomial done" << endl;
+	}
+
 }
 
 

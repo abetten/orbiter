@@ -191,6 +191,13 @@ public:
 
 	int f_n;
 	int n;
+
+	int f_mod_s;
+	int mod_s;
+
+	int f_divide_out_by;
+	int divide_out_by;
+
 	int f_file;
 	std::string fname;
 	int f_inverse;
@@ -211,6 +218,7 @@ public:
 	int read_arguments(
 		int argc, std::string *argv,
 		int verbose_level);
+	void print();
 
 };
 

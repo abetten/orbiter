@@ -497,9 +497,12 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 	int dx = O->xin * 0.25;
 	int dy = O->yin * 0.25; // stretch factor
 	int N = 1000;
-	int i;
+	int i, j;
 	double start_angle = 0;
 	numerics Num;
+	int f_do_it = FALSE;
+	char str[1000];
+
 
 	int n = Descr->n;
 
@@ -555,20 +558,53 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 	for (i = 0; i < n; i++) {
 		cout << "drawing circle " << i << " at " << Px[i] << ", " << Py[i]
 			<< " with rad=" << O->rad << endl;
-		G.circle(Px[i], Py[i], O->rad);
+
+		if (Descr->f_mod_s) {
+			if ((i % Descr->mod_s) == 0) {
+				f_do_it = TRUE;
+			}
+			else {
+				f_do_it = FALSE;
+			}
+		}
+		else {
+			f_do_it = TRUE;
+		}
+
+		if (f_do_it) {
+			G.circle(Px[i], Py[i], O->rad);
+		}
 	}
-
-
-	char str[1000];
 
 	for (i = 0; i < n; i++) {
 		if (O->f_nodes_empty) {
 			str[0] = 0;
 		}
 		else {
-			sprintf(str, "%d", i);
+
+			if (Descr->f_divide_out_by) {
+				j = i / Descr->divide_out_by;
+			}
+			else {
+				j = i;
+			}
+			sprintf(str, "%d", j);
 		}
-		G.text(Px[n + 1 + i], Py[n + 1 + i], str);
+
+		if (Descr->f_mod_s) {
+			if ((i % Descr->mod_s) == 0) {
+				f_do_it = TRUE;
+			}
+			else {
+				f_do_it = FALSE;
+			}
+		}
+		else {
+			f_do_it = TRUE;
+		}
+		if (f_do_it) {
+			G.text(Px[n + 1 + i], Py[n + 1 + i], str);
+		}
 	}
 
 
