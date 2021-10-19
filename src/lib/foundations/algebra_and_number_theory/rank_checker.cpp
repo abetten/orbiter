@@ -65,25 +65,27 @@ int rank_checker::check_rank(int len, long int *S, int verbose_level)
 		cout << "rank_checker::check_rank: checking the set ";
 		print_set(cout, len, S);
 		cout << endl;
-		}
+	}
 	// M1 will be used as a m x len matrix
 	for (j = 0; j < len; j++) {
 		GFq->PG_element_unrank_modified_lint(
 				M1 + j, len /* stride */, m /* len */, S[j]);
-		}
+	}
 	if (f_vv) {
 		cout << "\n";
 		//print_integer_matrix(cout, gen.S, 1, len);
 		Orbiter->Int_vec.print_integer_matrix(cout, M1, m, len);
-		}
-	if (len <= 1)
+	}
+	if (len <= 1) {
 		return TRUE;
-	if (d <= 1)
+	}
+	if (d <= 1) {
 		return TRUE;
+	}
 	int d1 = MINIMUM(d - 2, len  - 1);
 	if (f_vv) {
 		cout << "d1=" << d1 << endl;
-		}
+	}
 
 
 	// M2 will be used as a m x (d1 + 1) matrix	
@@ -96,20 +98,20 @@ int rank_checker::check_rank(int len, long int *S, int verbose_level)
 			cout << "subset: ";
 			Orbiter->Int_vec.print(cout, set, d1);
 			cout << endl;
-			}
+		}
 		
 		for (j = 0; j < d1; j++) {
 			aj = set[j];
 			for (i = 0; i < m; i++) {
 				M2[i * (d1 + 1) + j] = M1[i * len + aj];
-				}
 			}
+		}
 		for (i = 0; i < m; i++) {
 			M2[i * (d1 + 1) + d1] = M1[i * len + len - 1];
-			}
+		}
 		if (FALSE) {
 			Orbiter->Int_vec.print_integer_matrix(cout, M2, m, d1 + 1);
-			}
+		}
 		
 		rk = GFq->Gauss_int(M2,
 			FALSE /* f_special */,
@@ -124,14 +126,16 @@ int rank_checker::check_rank(int len, long int *S, int verbose_level)
 				cout << "not OK; subset: ";
 				Orbiter->Int_vec.print(cout, set, d1);
 				cout << " leads to a rk " << rk << " submatrix" << endl;
-				}
-			break;
 			}
-		if (!Combi.next_k_subset(set, len - 1, d1))
 			break;
 		}
-	if (!f_OK)
+		if (!Combi.next_k_subset(set, len - 1, d1)) {
+			break;
+		}
+	}
+	if (!f_OK) {
 		return FALSE;
+	}
 	return TRUE;
 }
 
@@ -144,14 +148,16 @@ int rank_checker::check_rank_matrix_input(
 	combinatorics_domain Combi;
 	
 	// S is a m x len matrix
-	if (len <= 1)
+	if (len <= 1) {
 		return TRUE;
-	if (d <= 1)
+	}
+	if (d <= 1) {
 		return TRUE;
+	}
 	int d1 = MINIMUM(d - 2, len  - 1);
 	if (f_vv) {
 		cout << "d1=" << d1 << endl;
-		}
+	}
 
 
 	// M2 will be used as a m x (d1 + 1) matrix	
@@ -164,17 +170,17 @@ int rank_checker::check_rank_matrix_input(
 			cout << "subset: ";
 			Orbiter->Int_vec.print(cout, set, d1);
 			cout << endl;
-			}
+		}
 		
 		for (j = 0; j < d1; j++) {
 			aj = set[j];
 			for (i = 0; i < m; i++) {
 				M2[i * (d1 + 1) + j] = S[i * dim_S + aj];
-				}
 			}
+		}
 		for (i = 0; i < m; i++) {
 			M2[i * (d1 + 1) + d1] = S[i * dim_S + len - 1];
-			}
+		}
 		
 		rk = GFq->Gauss_int(M2,
 			FALSE /* f_special */,
@@ -191,14 +197,16 @@ int rank_checker::check_rank_matrix_input(
 				cout << " leads to a rk " << rk
 						<< " submatrix, but we want rank "
 						<< d1 + 1 << endl;
-				}
-			break;
 			}
-		if (!Combi.next_k_subset(set, len - 1, d1))
 			break;
 		}
-	if (!f_OK)
+		if (!Combi.next_k_subset(set, len - 1, d1)) {
+			break;
+		}
+	}
+	if (!f_OK) {
 		return FALSE;
+	}
 	return TRUE;
 }
 
@@ -215,25 +223,27 @@ int rank_checker::check_rank_last_two_are_fixed(
 				"checking the set ";
 		print_set(cout, len, S);
 		cout << endl;
-		}
+	}
 	// M1 will be used as a m x len matrix
 	for (j = 0; j < len; j++) {
 		GFq->PG_element_unrank_modified(
 				M1 + j, len /* stride */, m /* len */, S[j]);
-		}
+	}
 	if (f_vv) {
 		cout << "\n";
 		//print_integer_matrix(cout, gen.S, 1, len);
 		Orbiter->Int_vec.print_integer_matrix(cout, M1, m, len);
-		}
-	if (len <= 1)
+	}
+	if (len <= 1) {
 		return TRUE;
-	if (d <= 2)
+	}
+	if (d <= 2) {
 		return TRUE;
+	}
 	int d1 = MINIMUM(d - 3, len  - 2);
 	if (f_vv) {
 		cout << "d1=" << d1 << endl;
-		}
+	}
 
 
 	// M2 will be used as a m x (d1 + 2) matrix	
@@ -246,21 +256,21 @@ int rank_checker::check_rank_last_two_are_fixed(
 			cout << "subset: ";
 			Orbiter->Int_vec.print(cout, set, d1);
 			cout << endl;
-			}
+		}
 		
 		for (j = 0; j < d1; j++) {
 			aj = set[j];
 			for (i = 0; i < m; i++) {
 				M2[i * (d1 + 2) + j] = M1[i * len + aj];
-				}
 			}
+		}
 		for (i = 0; i < m; i++) {
 			M2[i * (d1 + 2) + d1] = M1[i * len + len - 2];
 			M2[i * (d1 + 2) + d1 + 1] = M1[i * len + len - 1];
-			}
+		}
 		if (FALSE) {
 			Orbiter->Int_vec.print_integer_matrix(cout, M2, m, d1 + 2);
-			}
+		}
 		
 		rk = GFq->Gauss_int(M2,
 			FALSE /* f_special */,
@@ -275,16 +285,19 @@ int rank_checker::check_rank_last_two_are_fixed(
 				cout << "not OK; subset: ";
 				Orbiter->Int_vec.print(cout, set, d1);
 				cout << " leads to a rk " << rk << " submatrix" << endl;
-				}
-			break;
 			}
-		if (!Combi.next_k_subset(set, len - 2, d1))
 			break;
 		}
-	if (!f_OK)
+		if (!Combi.next_k_subset(set, len - 2, d1)) {
+			break;
+		}
+	}
+	if (!f_OK) {
 		return FALSE;
-	if (f_v)
+	}
+	if (f_v) {
 		cout << "is OK" << endl;
+	}
 	return TRUE;
 }
 
@@ -300,22 +313,22 @@ int rank_checker::compute_rank_row_vectors(
 		cout << "rank_checker::compute_rank_row_vectors set ";
 		print_set(cout, len, S);
 		cout << endl;
-		}
+	}
 	// M1 will be used as a len x n matrix
 	for (j = 0; j < len; j++) {
 		if (f_projective) {
 			GFq->PG_element_unrank_modified_lint(
 					M1 + j * n, 1 /* stride */, n /* len */, S[j]);
-			}
+		}
 		else {
 			Gg.AG_element_unrank(GFq->q, M1 + j * n, 1, n, S[j]);
-			}
 		}
+	}
 	if (f_v) {
 		cout << "\n";
 		//print_integer_matrix(cout, gen.S, 1, len);
 		Orbiter->Int_vec.print_integer_matrix(cout, M1, len, n);
-		}
+	}
 
 		
 	rk = GFq->Gauss_int(M1,

@@ -115,6 +115,7 @@ MODULES= \
 		foundations/geometry/object_in_projective_space.o \
 		foundations/geometry/point_line.o \
 		foundations/geometry/points_and_lines.o \
+		foundations/geometry/polarity.o \
 		foundations/geometry/projective_space.o \
 		foundations/geometry/projective_space2.o \
 		foundations/geometry/quartic_curve_domain.o \
@@ -421,6 +422,7 @@ MODULES= \
 		top_level/graph_theory/graph_classification_activity.o \
 		top_level/graph_theory/graph_classify_description.o \
 		top_level/graph_theory/graph_classify.o \
+		top_level/graph_theory/graph_modification_description.o \
 		top_level/graph_theory/graph_theoretic_activity_description.o \
 		top_level/graph_theory/graph_theoretic_activity.o \
 		top_level/interfaces/activity_description.o \
@@ -467,6 +469,7 @@ MODULES= \
 		top_level/packings/packing_was_fixpoints_activity.o \
 		top_level/packings/packing_was_fixpoints.o \
 		top_level/packings/packing_was.o \
+		top_level/packings/packings_global.o \
 		top_level/packings/regular_packing.o \
 		top_level/projective_space/canonical_form_classifier_description.o \
 		top_level/projective_space/canonical_form_classifier.o \
@@ -475,6 +478,7 @@ MODULES= \
 		top_level/projective_space/object_in_projective_space_with_action.o \
 		top_level/projective_space/projective_space_activity_description.o \
 		top_level/projective_space/projective_space_activity.o \
+		top_level/projective_space/projective_space_global.o \
 		top_level/projective_space/projective_space_object_classifier_description.o \
 		top_level/projective_space/projective_space_object_classifier.o \
 		top_level/projective_space/projective_space_with_action_description.o \

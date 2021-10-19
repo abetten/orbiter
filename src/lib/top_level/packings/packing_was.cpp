@@ -1222,6 +1222,132 @@ void packing_was::create_graph_and_save_to_file(
 	}
 }
 
+void packing_was::create_graph_on_mixed_orbits_and_save_to_file(
+		std::string &orbit_lengths_text,
+		int f_has_user_data, long int *user_data, int user_data_size,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "packing_was::create_graph_on_mixed_orbits_and_save_to_file orbit_lengths_text = " << orbit_lengths_text << endl;
+	}
+	int *Orbit_lengths;
+	int nb_orbit_lengths;
+
+	Orbiter->Int_vec.scan(orbit_lengths_text, Orbit_lengths, nb_orbit_lengths);
+	if (f_v) {
+		cout << "packing_was::create_graph_on_mixed_orbits_and_save_to_file orbit_lengths: ";
+		Orbiter->Int_vec.print(cout, Orbit_lengths, nb_orbit_lengths);
+		cout << endl;
+	}
+
+	colored_graph *CG;
+	int *Type_idx;
+	string fname;
+
+	Type_idx = NEW_int(nb_orbit_lengths);
+
+	fname.assign(H_LG->label);
+	fname.append("_spread_orbits_graph.bin");
+	if (f_v) {
+		cout << "packing_was::create_graph_on_mixed_orbits_and_save_to_file before "
+				"create_weighted_graph_on_orbits" << endl;
+	}
+	reduced_spread_orbits_under_H->create_weighted_graph_on_orbits(
+			CG,
+			fname,
+			Orbit_lengths,
+			nb_orbit_lengths,
+			Type_idx,
+			f_has_user_data, user_data, user_data_size,
+			packing_was_set_of_reduced_spreads_adjacency_test_function,
+			this /* void *test_function_data */,
+			reduced_spread_orbits_under_H->Orbits_classified,
+			verbose_level);
+
+	if (f_v) {
+		cout << "packing_was::create_graph_on_mixed_orbits_and_save_to_file after "
+				"create_weighted_graph_on_orbits" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "packing_was::create_graph_on_mixed_orbits_and_save_to_file Type_idx: ";
+		Orbiter->Int_vec.print(cout, Type_idx, nb_orbit_lengths);
+		cout << endl;
+	}
+
+	CG->save(fname, verbose_level);
+
+	int i;
+
+	for (i = 0; i < nb_orbit_lengths; i++) {
+
+		if (f_v) {
+			cout << "packing_was::create_graph_on_mixed_orbits_and_save_to_file "
+					"i=" << i << endl;
+		}
+
+		action *Ari;
+		char str[1000];
+		string fname1;
+		string label;
+
+		sprintf(str, "_on_spread_orbits_%d", i);
+
+		Ari = restricted_action(Orbit_lengths[i], verbose_level);
+
+		fname1.assign(N_LG->label);
+		fname1.append(str);
+		fname1.append(".makefile");
+
+		label.assign(N_LG->label);
+		label.append(str);
+
+		if (f_v) {
+			cout << "packing_was::create_graph_on_mixed_orbits_and_save_to_file "
+					"before A_on_mixed_orbits->export_to_orbiter" << endl;
+		}
+		Ari->export_to_orbiter(fname1, label, N_LG->Strong_gens, verbose_level);
+		if (f_v) {
+			cout << "packing_was::create_graph_on_mixed_orbits_and_save_to_file "
+					"after A_on_mixed_orbits->export_to_orbiter" << endl;
+		}
+
+	}
+
+#if 0
+	action *A_on_mixed_orbits;
+
+	A_on_mixed_orbits = NEW_OBJECT(action);
+
+	if (f_v) {
+		cout << "packing_was::create_graph_on_mixed_orbits_and_save_to_file "
+				"before creating A_on_mixed_orbits" << endl;
+	}
+	A_on_mixed_orbits = A_on_reduced_spreads->restricted_action(CG->points, CG->nb_points,
+			verbose_level);
+	if (f_v) {
+		cout << "packing_was::create_graph_on_mixed_orbits_and_save_to_file "
+				"after creating A_on_mixed_orbits" << endl;
+	}
+
+
+
+
+
+	FREE_OBJECT(A_on_mixed_orbits);
+#endif
+
+
+	FREE_OBJECT(CG);
+	FREE_int(Type_idx);
+
+	if (f_v) {
+		cout << "packing_was::create_graph_on_mixed_orbits_and_save_to_file done" << endl;
+	}
+}
 
 
 int packing_was::find_orbits_of_length_in_reduced_spread_table(int orbit_length)
@@ -1459,6 +1585,13 @@ void packing_was::report2(std::ostream &ost, int verbose_level)
 	ost << "\\section{Spread Types}" << endl;
 	Spread_type->report(ost, verbose_level);
 	ost << endl;
+
+	ost << "\\clearpage" << endl;
+	ost << "\\section{Reduced Spread Orbits of $H$}" << endl;
+	ost << endl;
+	reduced_spread_orbits_under_H->report_orbit_lengths(ost);
+	ost << endl;
+
 
 	ost << "\\clearpage" << endl;
 	ost << "\\section{Reduced Spread Types}" << endl;
@@ -1769,9 +1902,9 @@ void packing_was::report_reduced_spread_orbits(std::ostream &ost, int f_original
 
 		ost << "Type " << type_idx << " has " << nb_orbits
 				<< " orbits of length " << orbit_length << ":\\\\" << endl;
-
+#if 0
 		int j;
-		int nb_orbits1 = 100;
+		int nb_orbits1 = 5;
 
 		if (nb_orbits > 100) {
 
@@ -1792,6 +1925,7 @@ void packing_was::report_reduced_spread_orbits(std::ostream &ost, int f_original
 			}
 		}
 		ost << "\\clearpage" << endl;
+#endif
 
 	}
 

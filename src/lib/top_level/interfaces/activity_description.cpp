@@ -1068,13 +1068,18 @@ void activity_description::do_graph_theoretic_activity(int verbose_level)
 		exit(1);
 	}
 
-	create_graph *Gr;
+	//create_graph *Gr;
+	colored_graph *CG;
 
-	Gr = (create_graph *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	CG = (colored_graph *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	if (f_v) {
+		cout << "activity_description::do_graph_theoretic_activity CG->label = " << CG->label << endl;
+	}
+
 	{
 		graph_theoretic_activity Activity;
 
-		Activity.init(Graph_theoretic_activity_description, Gr, verbose_level);
+		Activity.init(Graph_theoretic_activity_description, CG, verbose_level);
 
 		if (f_v) {
 			cout << "activity_description::do_graph_theoretic_activity "

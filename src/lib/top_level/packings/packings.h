@@ -377,6 +377,9 @@ public:
 	int f_export_reduced_spread_orbits;
 	std::string export_reduced_spread_orbits_fname_base;
 
+	int f_create_graph_on_mixed_orbits;
+	std::string create_graph_on_mixed_orbits_orbit_lengths;
+
 
 	packing_was_activity_description();
 	~packing_was_activity_description();
@@ -731,6 +734,10 @@ public:
 		int orbit_length,
 		int f_has_user_data, long int *user_data, int user_data_size,
 		int verbose_level);
+	void create_graph_on_mixed_orbits_and_save_to_file(
+			std::string &orbit_lengths_text,
+			int f_has_user_data, long int *user_data, int user_data_size,
+			int verbose_level);
 	int find_orbits_of_length_in_reduced_spread_table(int orbit_length);
 	void compute_orbit_invariant_on_classified_orbits(int verbose_level);
 	int evaluate_orbit_invariant_function(int a, int i, int j, int verbose_level);
@@ -760,6 +767,42 @@ int packing_was_set_of_reduced_spreads_adjacency_test_function(long int *orbit1,
 int packing_was_evaluate_orbit_invariant_function(
 		int a, int i, int j, void *evaluate_data, int verbose_level);
 void packing_was_print_function(std::ostream &ost, long int a, void *data);
+
+
+// #############################################################################
+// packings_global.cpp
+// #############################################################################
+
+//! classification and investigation of packings in PG(3,q)
+
+class packings_global {
+public:
+
+	packings_global();
+	~packings_global();
+	void merge_packings(
+			std::string *fnames, int nb_files,
+			std::string &file_of_spreads,
+			classify_bitvectors *&CB,
+			int verbose_level);
+	void select_packings(
+			std::string &fname,
+			std::string &file_of_spreads_original,
+			spread_tables *Spread_tables,
+			int f_self_polar,
+			int f_ago, int select_ago,
+			classify_bitvectors *&CB,
+			int verbose_level);
+	void select_packings_self_dual(
+			std::string &fname,
+			std::string &file_of_spreads_original,
+			int f_split, int split_r, int split_m,
+			spread_tables *Spread_tables,
+			classify_bitvectors *&CB,
+			int verbose_level);
+
+};
+
 
 
 // #############################################################################

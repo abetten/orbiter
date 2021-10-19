@@ -98,6 +98,11 @@ poset_classification_control::poset_classification_control()
 	f_preferred_choice = FALSE;
 	//preferred_choice
 
+	f_clique_test = FALSE;
+	//std::string clique_test_graph;
+	clique_test_CG = NULL;
+
+
 }
 
 poset_classification_control::~poset_classification_control()
@@ -422,6 +427,13 @@ int poset_classification_control::read_arguments(
 				cout << "-preferred_choice " << node << " " << pt << " " << pt_pref << endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-clique_test") == 0) {
+			f_clique_test = TRUE;
+			clique_test_graph.assign(argv[++i]);
+			if (f_v) {
+				cout << "-clique_test " << clique_test_graph << endl;
+			}
+		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -573,7 +585,98 @@ void poset_classification_control::print()
 				<< " " << preferred_choice[i][2] << endl;
 		}
 	}
+	if (f_clique_test) {
+		cout << "-clique_test " << clique_test_graph << endl;
+	}
 }
+
+
+void poset_classification_control::prepare(poset_classification *PC, int verbose_level)
+{
+	int f_v = TRUE; //(verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_classification_control::prepare" << endl;
+	}
+	if (f_clique_test) {
+		if (f_v) {
+			cout << "poset_classification_control::prepare -clique_test " << clique_test_graph << endl;
+		}
+
+		int idx;
+
+		idx = Orbiter->find_symbol(clique_test_graph);
+
+		if (idx == -1) {
+			cout << "poset_classification_control::prepare -clique_test cannot find symbol " << clique_test_graph << endl;
+			exit(1);
+		}
+
+		clique_test_CG = (colored_graph *) Orbiter->get_object(idx);
+		if (f_v) {
+			cout << "poset_classification_control::prepare -clique_test "
+					"found a graph with " << clique_test_CG->nb_points << " vertices" << endl;
+			cout << "poset_classification_control::prepare -clique_test "
+					"PC->get_A2()->degree = " << PC->get_A2()->degree << endl;
+		}
+
+		if (PC->get_A2()->degree != clique_test_CG->nb_points) {
+			cout << "poset_classification_control::prepare -clique_test "
+					"found a graph with " << clique_test_CG->nb_points << " vertices" << endl;
+			cout << "poset_classification_control::prepare -clique_test "
+					"PC->get_A2()->degree = " << PC->get_A2()->degree << endl;
+			cout << "poset_classification_control::prepare -clique_test degree of group does not match size of graph" << endl;
+			exit(1);
+		}
+
+		PC->get_poset()->add_testing_without_group(
+				poset_classification_control_early_test_function_cliques,
+					this /* void *data */,
+					verbose_level);
+
+	}
+
+	if (f_v) {
+		cout << "poset_classification_control::prepare done" << endl;
+	}
+}
+
+
+void poset_classification_control::early_test_func_for_clique_search(
+	long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_classification_control::early_test_func_for_clique_search" << endl;
+	}
+
+	if (!f_clique_test) {
+		cout << "poset_classification_control::early_test_func_for_clique_search !f_clique_test" << endl;
+		exit(1);
+	}
+	if (clique_test_CG == NULL) {
+		cout << "poset_classification_control::early_test_func_for_clique_search clique_test_CG == NULL" << endl;
+		exit(1);
+	}
+
+	clique_test_CG->early_test_func_for_clique_search(
+			S, len,
+			candidates, nb_candidates,
+			good_candidates, nb_good_candidates,
+			verbose_level);
+
+	if (f_v) {
+		cout << "poset_classification_control::early_test_func_for_clique_search done" << endl;
+	}
+}
+
+
+
+
 
 
 void poset_classification_control_preferred_choice_function(int pt, int &pt_pref,
@@ -606,6 +709,32 @@ void poset_classification_control_preferred_choice_function(int pt, int &pt_pref
 		}
 	}
 
+}
+
+
+void poset_classification_control_early_test_function_cliques(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level)
+{
+	poset_classification_control *Control = (poset_classification_control *) data;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_classification_control_early_test_function_cliques for set ";
+		print_set(cout, len, S);
+		cout << endl;
+	}
+
+	Control->early_test_func_for_clique_search(S, len,
+		candidates, nb_candidates,
+		good_candidates, nb_good_candidates,
+		verbose_level - 2);
+
+
+	if (f_v) {
+		cout << "poset_classification_control_early_test_function_cliques done" << endl;
+	}
 }
 
 

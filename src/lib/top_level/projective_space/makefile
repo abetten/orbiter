@@ -13,6 +13,7 @@ MODULES = \
 	object_in_projective_space_with_action.o \
 	projective_space_activity_description.o \
 	projective_space_activity.o \
+	projective_space_global.o \
 	projective_space_object_classifier_description.o \
 	projective_space_object_classifier.o \
 	projective_space_with_action_description.o \

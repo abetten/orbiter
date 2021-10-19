@@ -713,6 +713,7 @@ public:
 			surface_create_description *Surface_Descr,
 			std::string &sweep_fname,
 			int verbose_level);
+	void table_of_cubic_surfaces(int verbose_level);
 
 };
 

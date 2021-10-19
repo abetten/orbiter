@@ -703,16 +703,23 @@ void spread_tables::compute_adjacency_matrix(
 		colored_graph *CG;
 		std::string fname;
 		file_io Fio;
+		string label;
+		string label_tex;
 
 		CG = NEW_OBJECT(colored_graph);
 		int *color;
+
+		label.assign(prefix);
+		label_tex.assign(prefix);
 
 		color = NEW_int(nb_spreads);
 		Orbiter->Int_vec.zero(color, nb_spreads);
 
 		CG->init(nb_spreads, 1, 1,
 				color, Bitvec,
-				FALSE, verbose_level);
+				FALSE,
+				label, label_tex,
+				verbose_level);
 
 		fname.assign(prefix);
 		fname.append("_disjoint_spreads.colored_graph");

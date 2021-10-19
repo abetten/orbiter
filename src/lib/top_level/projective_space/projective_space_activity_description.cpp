@@ -56,6 +56,11 @@ projective_space_activity_description::projective_space_activity_description()
 	//std::string decomposition_by_element_fname;
 
 
+	f_decomposition_by_subgroup = FALSE;
+	//std::string decomposition_by_subgroup_label;
+	decomposition_by_subgroup_Descr = NULL;
+
+
 	f_define_object = FALSE;
 	//std::string define_object_label;
 	Object_Descr = NULL;
@@ -187,6 +192,10 @@ projective_space_activity_description::projective_space_activity_description()
 	//std::string latex_homogeneous_equation_symbol_txt
 	//std::string latex_homogeneous_equation_symbol_tex
 	//std::string latex_homogeneous_equation_text;
+
+	f_lines_on_point_but_within_a_plane = FALSE;
+	lines_on_point_but_within_a_plane_point_rk = 0;
+	lines_on_point_but_within_a_plane_plane_rk = 0;
 
 }
 
@@ -325,6 +334,29 @@ int projective_space_activity_description::read_arguments(
 						<< endl;
 			}
 		}
+
+		else if (stringcmp(argv[i], "-decomposition_by_subgroup") == 0) {
+			f_decomposition_by_subgroup = TRUE;
+			decomposition_by_subgroup_label.assign(argv[++i]);
+			decomposition_by_subgroup_Descr = NEW_OBJECT(linear_group_description);
+			i += decomposition_by_subgroup_Descr->read_arguments(argc - (i + 1),
+				argv + i + 1, verbose_level);
+
+			cout << "done reading -H" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			if (f_v) {
+				cout << "-decomposition_by_subgroup "
+						<< decomposition_by_subgroup_label
+						<< " " << decomposition_by_element_data
+						<< " " << decomposition_by_element_fname
+						<< endl;
+			}
+		}
+
 
 		else if (stringcmp(argv[i], "-define_object") == 0) {
 			f_define_object = TRUE;
@@ -864,7 +896,17 @@ int projective_space_activity_description::read_arguments(
 						<< " " << latex_homogeneous_equation_text << endl;
 			}
 		}
-
+		else if (stringcmp(argv[i], "-lines_on_point_but_within_a_plane") == 0) {
+			f_lines_on_point_but_within_a_plane = TRUE;
+			lines_on_point_but_within_a_plane_point_rk = strtoi(argv[++i]);
+			lines_on_point_but_within_a_plane_plane_rk = strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-lines_on_point_but_within_a_plane "
+						<< " " << lines_on_point_but_within_a_plane_point_rk
+						<< " " << lines_on_point_but_within_a_plane_plane_rk
+						<< endl;
+			}
+		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -940,6 +982,15 @@ void projective_space_activity_description::print()
 				<< " " << decomposition_by_element_fname
 				<< endl;
 	}
+
+
+	if (f_decomposition_by_subgroup) {
+		cout << "-decomposition_by_subgroup "
+					<< decomposition_by_subgroup_label
+					<< " ";
+		decomposition_by_subgroup_Descr->print();
+	}
+
 	if (f_define_object) {
 		cout << "-define_object " << define_object_label << endl;
 		Object_Descr->print();
@@ -1114,7 +1165,12 @@ void projective_space_activity_description::print()
 				<< " " << latex_homogeneous_equation_symbol_tex
 				<< " " << latex_homogeneous_equation_text << endl;
 	}
-
+	if (f_lines_on_point_but_within_a_plane) {
+		cout << "-lines_on_point_but_within_a_plane "
+				<< " " << lines_on_point_but_within_a_plane_point_rk
+				<< " " << lines_on_point_but_within_a_plane_plane_rk
+				<< endl;
+	}
 
 }
 

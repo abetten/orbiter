@@ -19,6 +19,7 @@ MODULES = \
 	packing_was_fixpoints_activity.o \
 	packing_was_fixpoints.o \
 	packing_was.o \
+	packings_global.o \
 	regular_packing.o
 
 

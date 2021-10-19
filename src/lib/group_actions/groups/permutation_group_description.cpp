@@ -27,7 +27,7 @@ permutation_group_description::permutation_group_description()
 	//std::string subgroup_label;
 	//std::string subgroup_order_text;
 	nb_subgroup_generators = 0;
-	//std::string *subgroup_generators_as_string;
+	subgroup_generators_as_string = NULL;
 
 }
 

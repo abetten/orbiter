@@ -36,6 +36,9 @@ canonical_form_classifier_description::canonical_form_classifier_description()
 
 	PA = NULL;
 
+	Canon_substructure = NULL;
+
+
 }
 
 

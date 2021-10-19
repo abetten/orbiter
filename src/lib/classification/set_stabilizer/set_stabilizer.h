@@ -45,7 +45,8 @@ public:
 
 
 
-	action *A_induced;
+	action *A_induced; // the action on Stab_orbits->interesting_points[]
+
 	longinteger_object induced_go, K_go;
 
 	int *transporter_witness;
@@ -69,7 +70,10 @@ public:
 	//union_find_on_k_subsets *U;
 
 
+	long int *Canonical_form_input; // [nb_interesting_subsets_reduced * reduced_set_size]
 	long int *Canonical_forms; // [nb_interesting_subsets_reduced * reduced_set_size]
+	int *Canonical_form_transporter; // [nb_interesting_subsets_reduced * A_induced->elt_size_in_int]
+
 	int nb_interesting_subsets_rr;
 	long int *interesting_subsets_rr;
 
@@ -98,6 +102,7 @@ public:
 	void retrieve_automorphism(int verbose_level);
 	void make_canonical_second_set(int verbose_level);
 	void report(std::ostream &ost);
+	void print_canonical_sets();
 
 };
 
@@ -150,6 +155,7 @@ public:
 	int *orbit_count2; // [nb_orbits]
 
 
+	int minimal_orbit_pattern_idx;
 	int nb_interesting_subsets_reduced;
 	long int *interesting_subsets_reduced;
 
@@ -159,13 +165,15 @@ public:
 	int *orbit_to_interesting_orbit; // [nb_orbits]
 
 	int nb_interesting_orbits;
-	int *interesting_orbits;
+	int *interesting_orbits; // [nb_interesting_orbits]
 
-	int nb_interesting_points;
-	long int *interesting_points;
+	int nb_interesting_points; // sum of orbit length of interesting orbits
+	long int *interesting_points; // [nb_interesting_points]
+	// Note: Interesting points are sorted within each orbit.
+	// Otherwise, it would not be possible to compute a canonical form.
 
-	int *interesting_orbit_first;
-	int *interesting_orbit_len;
+	int *interesting_orbit_first; // [nb_interesting_orbits]
+	int *interesting_orbit_len; // [nb_interesting_orbits]
 
 	int local_idx1, local_idx2;
 
@@ -183,8 +191,10 @@ public:
 	void map_subset_and_compute_local_labels(int cnt, int verbose_level);
 	void map_reduced_set_and_do_orbit_counting(int cnt,
 			long int subset_idx, int *transporter, int verbose_level);
+		// computes orbit_count1[]
 	int check_orbit_count();
 	void print_orbit_count(int f_both);
+	void print_minimal_orbit_pattern();
 
 };
 
@@ -266,9 +276,11 @@ public:
 	long int *Pts;
 	int nb_pts;
 
+
+	// computed by SubC->PC->trace_all_k_subsets_and_compute_frequencies:
 	int nCk;
-	int *isotype;
-	int *orbit_frequencies;
+	int *isotype; // [nCk]
+	int *orbit_frequencies; // [nb_orbits]
 	int nb_orbits;
 	tally *T;
 
@@ -280,13 +292,13 @@ public:
 	int selected_orbit;
 	int selected_frequency;
 
-	long int *interesting_subsets;
+	long int *interesting_subsets; // [selected_frequency]
 	int nb_interesting_subsets;
 		// interesting_subsets are the lvl-subsets of the given set
 		// which are of the chosen type.
 		// There is nb_interesting_subsets of them.
 
-	strong_generators *gens;
+	strong_generators *gens; // generators for the selected canonical subset
 	//int *transporter_to_canonical_form;
 	//strong_generators *Gens_stabilizer_original_set;
 

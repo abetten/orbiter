@@ -92,6 +92,7 @@ class graph_classification_activity_description;
 class graph_classification_activity;
 class graph_classify_description;
 class graph_classify;
+class graph_modification_description;
 class graph_theoretic_activity_description;
 class graph_theoretic_activity;
 
@@ -136,16 +137,20 @@ class orthogonal_space_with_action;
 
 
 // packings:
-class spread_table_activity_description;
-class spread_table_activity;
-class spread_table_with_selection;
-class packing_was_fixpoints;
-class packing_long_orbits_description;
-class regular_packing;
-class packing_was_description;
+class invariants_packing;
 class packing_classify;
 class packing_invariants;
-class invariants_packing;
+class packing_long_orbits_description;
+class packing_long_orbits;
+class packing_was_activity_description;
+class packing_was_activity;
+class packing_was_description;
+class packing_was_fixpoints_activity_description;
+class packing_was_fixpoints_activity;
+class packing_was_fixpoints;
+class packing_was;
+class packings_global;
+class regular_packing;
 
 
 
@@ -158,6 +163,7 @@ class canonical_form_substructure;
 class object_in_projective_space_with_action;
 class projective_space_activity_description;
 class projective_space_activity;
+class projective_space_globals;
 class projective_space_object_classifier_description;
 class projective_space_object_classifier;
 class projective_space_with_action_description;
@@ -184,17 +190,15 @@ class exact_cover;
 
 
 // spreads:
+class recoordinatize;
+class spread_classify;
 class spread_create_description;
 class spread_create;
 class spread_lifting;
-class packing_was;
-class packing_long_orbits;
-class recoordinatize;
-class spread_classify;
-class packing_was_activity_description;
-class packing_was_activity;
-class packing_was_fixpoints_activity_description;
-class packing_was_fixpoints_activity;
+class spread_table_activity_description;
+class spread_table_activity;
+class spread_table_with_selection;
+class translation_plane_via_andre_model;
 
 // surfaces/quartic curves
 class quartic_curve_activity_description;

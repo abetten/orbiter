@@ -2745,6 +2745,28 @@ void schreier::elements_in_orbit_of(int pt,
 	}
 }
 
+void schreier::get_orbit_length(int *&orbit_length, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int I, f, l, h, a;
+
+	if (f_v) {
+		cout << "schreier::get_orbit_length" << endl;
+	}
+	orbit_length = NEW_int(A->degree);
+	for (I = 0; I < nb_orbits; I++) {
+		f = orbit_first[I];
+		l = orbit_len[I];
+		for (h = 0; h < l; h++) {
+			a = orbit[f + h];
+			orbit_length[a] = l;
+		}
+	}
+	if (f_v) {
+		cout << "schreier::get_orbit_length done" << endl;
+	}
+}
+
 void schreier::get_orbit_lengths_once_each(
 	int *&orbit_lengths, int &nb_orbit_lengths)
 {

@@ -132,9 +132,18 @@ void hadamard_classify::init(int n, int f_draw,
 		}
 #endif
 
+	char str[1000];
+
+	string label, label_tex;
+
+	sprintf(str, "Hadamard_graph_%d", n);
+	label.assign(str);;
+	sprintf(str, "Hadamard\\_graph\\_%d", n);
+	label_tex.assign(str);
+
+
 	{
 		colored_graph *CG;
-		char str[1000];
 		string fname;
 
 		CG = NEW_OBJECT(colored_graph);
@@ -143,10 +152,11 @@ void hadamard_classify::init(int n, int f_draw,
 		color = NEW_int(N);
 		Orbiter->Int_vec.zero(color, N);
 
-		CG->init(N, 1, 1, color, Bitvec, FALSE, verbose_level);
 
-		sprintf(str, "Hadamard_graph_%d.colored_graph", n);
-		fname.assign(str);
+		CG->init(N, 1, 1, color, Bitvec, FALSE, label, label_tex, verbose_level);
+
+		fname.assign(label);
+		fname.append(".colored_graph");
 
 		CG->save(fname, verbose_level);
 
@@ -169,17 +179,18 @@ void hadamard_classify::init(int n, int f_draw,
 	color = NEW_int(N);
 	Orbiter->Int_vec.zero(color, N);
 
-	CG->init(N, 1, 1, color, Bitvec, FALSE, verbose_level);
+	CG->init(N, 1, 1, color, Bitvec, FALSE, label, label_tex, verbose_level);
 
 	if (f_v) {
 		cout << "initializing colored graph done" << endl;
 		}
 
-	char str[1000];
 	string fname_graph;
 
 	sprintf(str, "Hadamard_graph_%d.magma", n);
-	fname_graph.assign(str);
+	fname_graph.assign(label);
+	fname_graph.append(".magma");
+
 	CG->export_to_magma(fname_graph, 1);
 
 	{

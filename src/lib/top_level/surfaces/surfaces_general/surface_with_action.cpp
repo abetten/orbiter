@@ -2543,6 +2543,340 @@ void surface_with_action::sweep_4_27(
 	}
 }
 
+void surface_with_action::table_of_cubic_surfaces(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_with_action::table_of_cubic_surfaces" << endl;
+	}
+
+
+	finite_field *F;
+
+	F = PA->F;
+
+	int q;
+
+	q = F->q;
+
+	knowledge_base K;
+
+	int nb_cubic_surfaces;
+	int h;
+	surface_create **SC;
+	int *nb_E;
+	long int *Table;
+	int nb_cols = 20;
+
+
+	poset_classification_control Control_six_arcs;
+
+
+	nb_cubic_surfaces = K.cubic_surface_nb_reps(q);
+
+	SC = (surface_create **) NEW_pvoid(nb_cubic_surfaces);
+
+	nb_E = NEW_int(nb_cubic_surfaces);
+
+	Table = NEW_lint(nb_cubic_surfaces * nb_cols);
+
+
+
+
+	for (h = 0; h < nb_cubic_surfaces; h++) {
+
+		if (f_v) {
+			cout << "surface_with_action::table_of_cubic_surfaces " << h << " / " << nb_cubic_surfaces << endl;
+		}
+		surface_create_description Surface_create_description;
+
+		Surface_create_description.f_q = TRUE;
+		Surface_create_description.q = q;
+		Surface_create_description.f_catalogue = TRUE;
+		Surface_create_description.iso = h;
+
+
+		if (f_v) {
+			cout << "surface_with_action::table_of_cubic_surfaces before create_surface" << endl;
+		}
+		create_surface(
+				&Surface_create_description,
+				SC[h],
+				verbose_level);
+		if (f_v) {
+			cout << "surface_with_action::table_of_cubic_surfaces after create_surface" << endl;
+		}
+
+
+
+		nb_E[h] = SC[h]->SO->SOP->nb_Eckardt_points;
+
+
+		if (!SC[h]->f_has_group) {
+			cout << "!SC[h]->f_has_group" << endl;
+			exit(1);
+		}
+
+		surface_object_with_action *SoA;
+
+		SoA = NEW_OBJECT(surface_object_with_action);
+
+		if (f_v) {
+			cout << "surface_with_action::table_of_cubic_surfaces before SoA->init_with_surface_object" << endl;
+		}
+		SoA->init_with_surface_object(this,
+				SC[h]->SO,
+				SC[h]->Sg,
+				FALSE /* f_has_nice_gens */, NULL /* vector_ge *nice_gens */,
+				verbose_level);
+		if (f_v) {
+			cout << "surface_with_action::table_of_cubic_surfaces after SoA->init_with_surface_object" << endl;
+		}
+
+
+
+		Table[h * nb_cols + 0] = h;
+
+		if (f_v) {
+			cout << "collineation stabilizer order" << endl;
+		}
+		if (SC[h]->f_has_group) {
+			Table[h * nb_cols + 1] = SC[h]->Sg->group_order_as_lint();
+		}
+		else {
+			Table[h * nb_cols + 1] = 0;
+		}
+		if (f_v) {
+			cout << "projectivity stabilizer order" << endl;
+		}
+		if (A->is_semilinear_matrix_group()) {
+			Table[h * nb_cols + 2] = SoA->projectivity_group_gens->group_order_as_lint();
+		}
+		else {
+			Table[h * nb_cols + 2] = SC[h]->Sg->group_order_as_lint();
+		}
+
+		Table[h * nb_cols + 3] = SC[h]->SO->nb_pts;
+		Table[h * nb_cols + 4] = SC[h]->SO->nb_lines;
+		Table[h * nb_cols + 5] = SC[h]->SO->SOP->nb_Eckardt_points;
+		Table[h * nb_cols + 6] = SC[h]->SO->SOP->nb_Double_points;
+		Table[h * nb_cols + 7] = SC[h]->SO->SOP->nb_Single_points;
+		Table[h * nb_cols + 8] = SC[h]->SO->SOP->nb_pts_not_on_lines;
+		Table[h * nb_cols + 9] = SC[h]->SO->SOP->nb_Hesse_planes;
+		Table[h * nb_cols + 10] = SC[h]->SO->SOP->nb_axes;
+		if (f_v) {
+			cout << "SoA->Orbits_on_Eckardt_points->nb_orbits" << endl;
+		}
+		Table[h * nb_cols + 11] = SoA->Orbits_on_Eckardt_points->nb_orbits;
+		Table[h * nb_cols + 12] = SoA->Orbits_on_Double_points->nb_orbits;
+		Table[h * nb_cols + 13] = SoA->Orbits_on_points_not_on_lines->nb_orbits;
+		Table[h * nb_cols + 14] = SoA->Orbits_on_lines->nb_orbits;
+		Table[h * nb_cols + 15] = SoA->Orbits_on_single_sixes->nb_orbits;
+		Table[h * nb_cols + 16] = SoA->Orbits_on_tritangent_planes->nb_orbits;
+		Table[h * nb_cols + 17] = SoA->Orbits_on_Hesse_planes->nb_orbits;
+		Table[h * nb_cols + 18] = SoA->Orbits_on_trihedral_pairs->nb_orbits;
+		Table[h * nb_cols + 19] = SoA->Orbits_on_tritangent_planes->nb_orbits;
+
+
+		FREE_OBJECT(SoA);
+
+
+	} // next h
+
+
+#if 0
+	strong_generators *projectivity_group_gens;
+	sylow_structure *Syl;
+
+	action *A_on_points;
+	action *A_on_Eckardt_points;
+	action *A_on_Double_points;
+	action *A_on_the_lines;
+	action *A_single_sixes;
+	action *A_on_tritangent_planes;
+	action *A_on_Hesse_planes;
+	action *A_on_trihedral_pairs;
+	action *A_on_pts_not_on_lines;
+
+
+	schreier *Orbits_on_points;
+	schreier *Orbits_on_Eckardt_points;
+	schreier *Orbits_on_Double_points;
+	schreier *Orbits_on_lines;
+	schreier *Orbits_on_single_sixes;
+	schreier *Orbits_on_tritangent_planes;
+	schreier *Orbits_on_Hesse_planes;
+	schreier *Orbits_on_trihedral_pairs;
+	schreier *Orbits_on_points_not_on_lines;
+#endif
+
+#if 0
+	set_of_sets *pts_on_lines;
+		// points are stored as indices into Pts[]
+	int *f_is_on_line; // [SO->nb_pts]
+
+
+	set_of_sets *lines_on_point;
+	tally *Type_pts_on_lines;
+	tally *Type_lines_on_point;
+
+	long int *Eckardt_points; // the orbiter rank of the Eckardt points
+	int *Eckardt_points_index; // index into SO->Pts
+	int *Eckardt_points_schlaefli_labels; // Schlaefli labels
+	int *Eckardt_point_bitvector_in_Schlaefli_labeling;
+		// true if the i-th Eckardt point in the Schlaefli labeling is present
+	int nb_Eckardt_points;
+
+	int *Eckardt_points_line_type; // [nb_Eckardt_points + 1]
+	int *Eckardt_points_plane_type; // [SO->Surf->P->Nb_subspaces[2]]
+
+	long int *Hesse_planes;
+	int nb_Hesse_planes;
+	int *Eckardt_point_Hesse_plane_incidence; // [nb_Eckardt_points * nb_Hesse_planes]
+
+
+	int nb_axes;
+	int *Axes_index; // [nb_axes] two times the index into trihedral pairs + 0 or +1
+	long int *Axes_Eckardt_points; // [nb_axes * 3] the Eckardt points in Schlaefli labels that lie on the axes
+	long int *Axes_line_rank;
+
+
+	long int *Double_points;
+	int *Double_points_index;
+	int nb_Double_points;
+
+	long int *Single_points;
+	int *Single_points_index;
+	int nb_Single_points;
+
+	long int *Pts_not_on_lines;
+	int nb_pts_not_on_lines;
+
+	int nb_planes;
+	int *plane_type_by_points;
+	int *plane_type_by_lines;
+	tally *C_plane_type_by_points;
+
+	long int *Tritangent_plane_rk; // [45]
+		// list of tritangent planes in Schlaefli labeling
+	int nb_tritangent_planes;
+
+	long int *Lines_in_tritangent_planes; // [nb_tritangent_planes * 3]
+
+	long int *Trihedral_pairs_as_tritangent_planes; // [nb_trihedral_pairs * 6]
+
+	long int *All_Planes; // [nb_trihedral_pairs * 6]
+	int *Dual_point_ranks; // [nb_trihedral_pairs * 6]
+
+	int *Adj_line_intersection_graph; // [SO->nb_lines * SO->nb_lines]
+	set_of_sets *Line_neighbors;
+	int *Line_intersection_pt; // [SO->nb_lines * SO->nb_lines]
+	int *Line_intersection_pt_idx; // [SO->nb_lines * SO->nb_lines]
+
+
+	int *gradient;
+
+	long int *singular_pts;
+	int nb_singular_pts;
+	int nb_non_singular_pts;
+
+	long int *tangent_plane_rank_global; // [SO->nb_pts]
+	long int *tangent_plane_rank_dual; // [nb_non_singular_pts]
+#endif
+
+	file_io Fio;
+	char str[1000];
+
+	sprintf(str, "_q%d", q);
+
+	string fname;
+	fname.assign("table_of_cubic_surfaces");
+	fname.append(str);
+	fname.append("_info.csv");
+
+	//Fio.lint_matrix_write_csv(fname, Table, nb_quartic_curves, nb_cols);
+
+	{
+		ofstream f(fname);
+		int i, j;
+
+		f << "Row,OCN,CollStabOrder,ProjStabOrder,nbPts,nbLines,"
+				"nbE,nbDouble,nbSingle,nbPtsNotOn,nbHesse,nbAxes,"
+				"nbOrbE,nbOrbDouble,nbOrbPtsNotOn,nbOrbLines,nbOrbSingleSix,nbOrbTriPlanes,nbOrbHesse,nbOrbTrihedralPairs,nbOrbTritangentPlanes,"
+				"Eqn20,Equation,Lines";
+
+
+
+		f << endl;
+		for (i = 0; i < nb_cubic_surfaces; i++) {
+			f << i;
+			for (j = 0; j < nb_cols; j++) {
+				f << "," << Table[i * nb_cols + j];
+			}
+			{
+				string str;
+				f << ",";
+				Orbiter->Int_vec.create_string_with_quotes(str, SC[i]->SO->eqn, 20);
+				f << str;
+			}
+
+#if 1
+			{
+				stringstream sstr;
+				string str;
+				SC[i]->Surf->print_equation_maple(sstr, SC[i]->SO->eqn);
+				str.assign(sstr.str());
+				f << ",";
+				f << "\"$";
+				f << str;
+				f << "$\"";
+			}
+			{
+				string str;
+				f << ",";
+				Orbiter->Lint_vec.create_string_with_quotes(str, SC[i]->SO->Lines, SC[i]->SO->nb_lines);
+				f << str;
+			}
+#endif
+
+#if 0
+			{
+				string str;
+				f << ",";
+				Orbiter->Int_vec.create_string_with_quotes(str, SC[i]->SO->eqn15, 15);
+				f << str;
+			}
+
+
+			{
+				string str;
+				f << ",";
+				Orbiter->Lint_vec.create_string_with_quotes(str, SC[i]->SO->Pts, SC[i]->SO->nb_pts);
+				f << str;
+			}
+			{
+				string str;
+				f << ",";
+				Orbiter->Lint_vec.create_string_with_quotes(str, SC[i]->SO->bitangents28, 28);
+				f << str;
+			}
+#endif
+			f << endl;
+		}
+		f << "END" << endl;
+	}
+
+
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+	if (f_v) {
+		cout << "surface_with_action::table_of_cubic_surfaces done" << endl;
+	}
+
+}
+
+
 
 }}
 

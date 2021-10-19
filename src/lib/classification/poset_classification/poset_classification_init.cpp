@@ -302,7 +302,13 @@ void poset_classification::init_internal(
 				"after Poo->init" << endl;
 	}
 
-
+	if (f_v) {
+		cout << "poset_classification::init_internal before Control->prepare" << endl;
+	}
+	Control->prepare(this, verbose_level);
+	if (f_v) {
+		cout << "poset_classification::init_internal after Control->prepare" << endl;
+	}
 
 	nb_times_image_of_called0 = Poset->A->ptr->nb_times_image_of_called;
 	nb_times_mult_called0 = Poset->A->ptr->nb_times_mult_called;

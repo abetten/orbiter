@@ -164,6 +164,8 @@ public:
 		long int *M, int m, int n, const char **column_label);
 	void int_matrix_read_csv(std::string &fname, int *&M,
 		int &m, int &n, int verbose_level);
+	void int_matrix_read_csv_no_border(std::string &fname,
+		int *&M, int &m, int &n, int verbose_level);
 	void lint_matrix_read_csv(std::string &fname,
 		long int *&M, int &m, int &n, int verbose_level);
 	void double_matrix_read_csv(std::string &fname, double *&M,
@@ -281,6 +283,8 @@ public:
 			std::string &fname, int verbose_level);
 	void save_cumulative_data(std::vector<std::vector<int> > &Cumulative_data,
 			std::string &fname, int verbose_level);
+	void write_characteristic_matrix(std::string &fname,
+			long int *data, int nb_rows, int data_sz, int nb_cols, int verbose_level);
 
 };
 

@@ -112,6 +112,8 @@ public:
 	int f_load_from_file;
 	std::string fname;
 
+	int f_load_from_file_csv_no_border;
+
 	int f_edge_list;
 	int n;
 	std::string edge_list_text;
@@ -171,6 +173,7 @@ public:
 	int f_disjoint_sets_graph;
 	std::string disjoint_sets_graph_fname;
 
+	std::vector<graph_modification_description> Modifications;
 
 	create_graph_description();
 	int read_arguments(
@@ -225,6 +228,7 @@ public:
 			int epsilon, int d, int q, int verbose_level);
 
 };
+
 
 // #############################################################################
 // graph_classification_activity_description.cpp
@@ -396,6 +400,34 @@ void graph_classify_print_set(std::ostream &ost,
 
 
 // #############################################################################
+// graph_modification_description.cpp
+// #############################################################################
+
+//! unary modification of graphs and tournaments
+
+
+class graph_modification_description {
+
+public:
+
+	int f_complement;
+
+
+	graph_modification_description();
+	~graph_modification_description();
+	int check_and_parse_argument(
+		int argc, int &i, std::string *argv,
+		int verbose_level);
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+	void apply(colored_graph *&CG, int verbose_level);
+
+};
+
+
+// #############################################################################
 // graph_theoretic_activity_description.cpp
 // #############################################################################
 
@@ -446,13 +478,13 @@ class graph_theoretic_activity {
 public:
 
 	graph_theoretic_activity_description *Descr;
-	create_graph *Gr;
+	colored_graph *CG;
 
 
 	graph_theoretic_activity();
 	~graph_theoretic_activity();
 	void init(graph_theoretic_activity_description *Descr,
-			create_graph *Gr,
+			colored_graph *CG,
 			int verbose_level);
 	void perform_activity(int verbose_level);
 

@@ -70,8 +70,38 @@ void create_graph::init(
 			cout << "create_graph::init number of vertices = " << N << endl;
 		}
 		label.assign(description->fname);
+		if (f_v) {
+			cout << "create_graph::init label = " << label << endl;
+		}
+
+		string_tools String;
+		String.chop_off_extension(label);
+
 		label_tex.assign("File\\_");
-		label_tex.append(description->fname);
+		label_tex.append(label);
+
+	}
+	else if (description->f_load_from_file_csv_no_border) {
+		if (f_v) {
+			cout << "create_graph::init f_load_from_file_csv_no_border" << endl;
+		}
+
+		file_io Fio;
+		int *M;
+		int m, n;
+
+		Fio.int_matrix_read_csv_no_border(description->fname, M, m, n, verbose_level);
+		N = n;
+		Adj = M;
+
+		label.assign(description->fname);
+
+		string_tools String;
+		String.chop_off_extension(label);
+
+
+		label_tex.assign("File\\_");
+		label_tex.append(label);
 	}
 	else if (description->f_edge_list) {
 
@@ -333,7 +363,8 @@ void create_graph::init(
 			cout << "create_graph::init the graph has a subset" << endl;
 		}
 		CG = NEW_OBJECT(colored_graph);
-		CG->init_adjacency_no_colors(N, Adj, verbose_level);
+		CG->init_adjacency_no_colors(N, Adj, description->subset_label, description->subset_label_tex,
+				verbose_level);
 
 		int *subset;
 		int sz;
@@ -341,7 +372,8 @@ void create_graph::init(
 		Orbiter->Int_vec.scan(description->subset_text, subset, sz);
 
 		CG->init_adjacency_two_colors(N,
-				Adj, subset, sz, verbose_level);
+				Adj, subset, sz, description->subset_label, description->subset_label_tex,
+				verbose_level);
 
 		f_has_CG = TRUE;
 
@@ -357,8 +389,10 @@ void create_graph::init(
 	else {
 
 		if (!f_has_CG) {
+
 			CG = NEW_OBJECT(colored_graph);
-			CG->init_adjacency_no_colors(N, Adj, verbose_level);
+			CG->init_adjacency_no_colors(N, Adj, label, label_tex,
+					verbose_level);
 
 			f_has_CG = TRUE;
 
@@ -369,7 +403,18 @@ void create_graph::init(
 
 	}
 
+	int i;
+
+	for (i = 0; i < description->Modifications.size(); i++) {
+		description->Modifications[i].apply(CG, verbose_level);
+	}
+
+	CG->label.assign(label);
+	CG->label_tex.assign(label_tex);
+
+
 	if (f_v) {
+		cout << "create_graph::init label = " << label << endl;
 		cout << "create_graph::init done" << endl;
 	}
 }

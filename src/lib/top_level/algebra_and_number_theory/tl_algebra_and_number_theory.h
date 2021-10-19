@@ -188,6 +188,7 @@ public:
 			layered_graph_draw_options *O,
 			int f_sylow, int f_group_table, int f_classes,
 			int verbose_level);
+	void do_export_orbiter(int verbose_level);
 	void do_export_gap(int verbose_level);
 	void do_export_magma(int verbose_level);
 	void create_group_table(int verbose_level);
@@ -346,6 +347,7 @@ public:
 	std::string raise_to_the_power_a_text;
 	std::string raise_to_the_power_exponent_text;
 
+	int f_export_orbiter;
 
 	int f_export_gap;
 

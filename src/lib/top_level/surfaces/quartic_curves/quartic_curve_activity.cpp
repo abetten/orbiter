@@ -99,11 +99,11 @@ void quartic_curve_activity::perform_activity(int verbose_level)
 		int eqn20[20];
 
 		if (f_v) {
-			cout << "quartic_curve_activity::perform_activity before QC->QO->create_surface" << endl;
+			cout << "quartic_curve_activity::perform_activity before QC->QCDA->Dom->create_surface" << endl;
 		}
-		QC->QO->create_surface(eqn20, verbose_level);
+		QC->QCDA->Dom->create_surface(QC->QO, eqn20, verbose_level);
 		if (f_v) {
-			cout << "quartic_curve_activity::perform_activity after QC->QO->create_surface" << endl;
+			cout << "quartic_curve_activity::perform_activity after QC->QCDA->Dom->create_surface" << endl;
 		}
 
 		if (f_v) {

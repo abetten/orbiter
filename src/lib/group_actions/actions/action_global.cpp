@@ -1128,6 +1128,104 @@ action *action_global::init_direct_product_group(
 
 
 
+void action_global::compute_decomposition_based_on_orbits(projective_space *P,
+		schreier *Sch1, schreier *Sch2,
+		incidence_structure *&Inc, partitionstack *&Stack, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::compute_decomposition_based_on_orbits" << endl;
+	}
+
+	partitionstack *S1;
+	partitionstack *S2;
+
+
+	S1 = NEW_OBJECT(partitionstack);
+	S2 = NEW_OBJECT(partitionstack);
+
+	if (f_v) {
+		cout << "action_global::compute_decomposition_based_on_orbits "
+				"before S1->allocate" << endl;
+	}
+	S1->allocate(P->N_points, 0 /* verbose_level */);
+	S2->allocate(P->N_lines, 0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "action_global::compute_decomposition_based_on_orbits "
+				"before Sch1->get_orbit_partition" << endl;
+	}
+	Sch1->get_orbit_partition(*S1, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "action_global::compute_decomposition_based_on_orbits "
+				"before Sch2->get_orbit_partition" << endl;
+	}
+	Sch2->get_orbit_partition(*S2, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "action_global::compute_decomposition_based_on_orbits "
+				"after Sch2->get_orbit_partition" << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "action_global::compute_decomposition_based_on_orbits "
+				"before P->compute_decomposition" << endl;
+	}
+	P->compute_decomposition(S1, S2, Inc, Stack, verbose_level);
+
+	FREE_OBJECT(S1);
+	FREE_OBJECT(S2);
+
+	if (f_v) {
+		cout << "action_global::compute_decomposition_based_on_orbits done" << endl;
+	}
+}
+
+
+void action_global::compute_decomposition_based_on_orbit_length(projective_space *P,
+		schreier *Sch1, schreier *Sch2,
+		incidence_structure *&Inc, partitionstack *&Stack, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action_global::compute_decomposition_based_on_orbit_length" << endl;
+	}
+
+	int *L1, *L2;
+
+	Sch1->get_orbit_length(L1, 0 /* verbose_level */);
+	Sch2->get_orbit_length(L2, 0 /* verbose_level */);
+
+	tally T1, T2;
+
+	T1.init(L1, Sch1->A->degree, FALSE, 0);
+
+	T2.init(L2, Sch2->A->degree, FALSE, 0);
+
+
+
+	if (f_v) {
+		cout << "action_global::compute_decomposition_based_on_orbit_length "
+				"before P->compute_decomposition" << endl;
+	}
+	P->compute_decomposition_based_on_tally(&T1, &T2, Inc, Stack, verbose_level);
+
+
+	FREE_int(L1);
+	FREE_int(L2);
+
+	if (f_v) {
+		cout << "action_global::compute_decomposition_based_on_orbit_length done" << endl;
+	}
+}
+
+
+
+
 
 void callback_choose_random_generator_orthogonal(int iteration,
 	int *Elt, void *data, int verbose_level)

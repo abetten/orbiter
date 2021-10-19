@@ -66,6 +66,8 @@ void bitvector::m_i(long int i, int a)
 	bit = i & 7;
 	mask = ((uchar) 1) << bit;
 	uchar &x = data[ii];
+
+	//cout << "before: x = " << (int) x << endl;
 	if (a == 0) {
 		uchar not_mask = ~mask;
 		x &= not_mask;
@@ -73,6 +75,7 @@ void bitvector::m_i(long int i, int a)
 	else {
 		x |= mask;
 	}
+	//cout << "after: x = " << (int) x << endl;
 }
 
 void bitvector::set_bit(long int i)
@@ -129,5 +132,16 @@ uint32_t bitvector::compute_hash()
 	return h;
 }
 
+void bitvector::print()
+{
+	long int i;
+	int a;
+
+	for (i = 0; i < length; i++) {
+		a = s_i(i);
+		cout << a;
+	}
+	cout << endl;
+}
 }}
 

@@ -84,6 +84,33 @@ void packing_was_activity::perform_activity(int verbose_level)
 		}
 
 	}
+	else if (Descr->f_create_graph_on_mixed_orbits) {
+
+
+		if (f_v) {
+			cout << "packing_was_activity::perform_activity f_create_graph_on_mixed_orbits" << endl;
+		}
+
+		if (f_v) {
+			cout << "packing_was_activity::perform_activity before PW->create_graph_on_mixed_orbits_and_save_to_file" << endl;
+		}
+
+		PW->create_graph_on_mixed_orbits_and_save_to_file(
+				Descr->create_graph_on_mixed_orbits_orbit_lengths,
+				FALSE  /* f_has_user_data */, NULL /* long int *user_data */, 0 /* int user_data_size */,
+				verbose_level);
+
+		if (f_v) {
+			cout << "packing_was_activity::perform_activity after PW->create_graph_on_mixed_orbits_and_save_to_file" << endl;
+		}
+
+
+		if (f_v) {
+			cout << "packing_was_activity::perform_activity f_create_graph_on_mixed_orbits done" << endl;
+		}
+
+	}
+
 
 
 

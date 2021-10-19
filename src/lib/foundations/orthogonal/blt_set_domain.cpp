@@ -992,10 +992,21 @@ int blt_set_domain::create_graph(
 
 	CG = NEW_OBJECT(colored_graph);
 
-	CG->init(nb_candidates /* nb_points */, nb_colors, 1 /* nb_colors_per_vertex */,
-		point_color, Bitvec, TRUE, verbose_level - 2);
-		// Bitvec becomes part of the colored_graph object
+	{
+		char str[1000];
+		string label, label_tex;
 
+		sprintf(str, "BLT_%d", case_number);
+		label.assign(str);
+		sprintf(str, "BLT\\_%d", case_number);
+		label_tex.assign(str);
+
+		CG->init(nb_candidates /* nb_points */, nb_colors, 1 /* nb_colors_per_vertex */,
+			point_color, Bitvec, TRUE,
+			label, label_tex,
+			verbose_level - 2);
+			// Bitvec becomes part of the colored_graph object
+	}
 	int i;
 	for (i = 0; i < nb_candidates; i++) {
 		CG->points[i] = candidates[i];

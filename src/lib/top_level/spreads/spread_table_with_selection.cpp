@@ -289,12 +289,22 @@ void spread_table_with_selection::compute_spread_table_from_scratch(int verbose_
 	int *original_position;
 	int *original_position_inv;
 
+	if (f_v) {
+		cout << "spread_table_with_selection::compute_spread_table_from_scratch "
+				"before NEW_int(total_nb_of_spreads)" << endl;
+	}
+
+
 	original_position = NEW_int(total_nb_of_spreads);
 	original_position_inv = NEW_int(total_nb_of_spreads);
 	for (i = 0; i < total_nb_of_spreads; i++) {
 		original_position[i] = i;
 	}
 
+	if (f_v) {
+		cout << "spread_table_with_selection::compute_spread_table_from_scratch "
+				"before Sorting.Heapsort_general_with_log" << endl;
+	}
 	Sorting.Heapsort_general_with_log(Sets, original_position, total_nb_of_spreads,
 			spread_table_with_selection_compare_func,
 			spread_table_with_selection_swap_func,
@@ -313,33 +323,69 @@ void spread_table_with_selection::compute_spread_table_from_scratch(int verbose_
 		Orbiter->Lint_vec.copy(Sets[i], Spread_table + i * spread_size, spread_size);
 	}
 
+	if (f_v) {
+		cout << "spread_table_with_selection::compute_spread_table_from_scratch "
+				"before Spread_tables->init" << endl;
+	}
 
 	Spread_tables->init(T->PA->P, FALSE, nb_iso_types_of_spreads,
 			path_to_spread_tables,
 			verbose_level);
 
+	if (f_v) {
+		cout << "spread_table_with_selection::compute_spread_table_from_scratch "
+				"after Spread_tables->init" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "spread_table_with_selection::compute_spread_table_from_scratch "
+				"before Spread_tables->init_spread_table" << endl;
+	}
 
 	Spread_tables->init_spread_table(nb_spreads,
 			Spread_table, isomorphism_type_of_spread,
 			verbose_level);
 
+	if (f_v) {
+		cout << "spread_table_with_selection::compute_spread_table_from_scratch "
+				"after Spread_tables->init_spread_table" << endl;
+	}
+
 	long int *Dual_spread_idx;
 	long int *self_dual_spread_idx;
 	int nb_self_dual_spreads;
 
+	if (f_v) {
+		cout << "spread_table_with_selection::compute_spread_table_from_scratch "
+				"before Spread_tables->compute_dual_spreads" << endl;
+	}
 	Spread_tables->compute_dual_spreads(Sets,
 				Dual_spread_idx,
 				self_dual_spread_idx,
 				nb_self_dual_spreads,
 				verbose_level);
+	if (f_v) {
+		cout << "spread_table_with_selection::compute_spread_table_from_scratch "
+				"after Spread_tables->compute_dual_spreads" << endl;
+	}
 
 
+	if (f_v) {
+		cout << "spread_table_with_selection::compute_spread_table_from_scratch "
+				"before Spread_tables->init_tables" << endl;
+	}
 
 	Spread_tables->init_tables(nb_spreads,
 			Spread_table, isomorphism_type_of_spread,
 			Dual_spread_idx,
 			self_dual_spread_idx, nb_self_dual_spreads,
 			verbose_level);
+
+	if (f_v) {
+		cout << "spread_table_with_selection::compute_spread_table_from_scratch "
+				"after Spread_tables->init_tables" << endl;
+	}
 
 
 	if (f_v) {
@@ -362,6 +408,10 @@ void spread_table_with_selection::compute_spread_table_from_scratch(int verbose_
 	FREE_int(Len);
 
 
+	if (f_v) {
+		cout << "spread_table_with_selection::compute_spread_table_from_scratch "
+				"before Spread_tables->init_schreier_table" << endl;
+	}
 	Spread_tables->init_schreier_table(schreier_table, verbose_level);
 
 	if (f_v) {

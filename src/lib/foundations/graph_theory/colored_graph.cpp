@@ -281,7 +281,9 @@ colored_graph *colored_graph::sort_by_color_classes(int verbose_level)
 
 	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency(nb_points, nb_colors, 1 /* nb_colors_per_vertex */,
-		Color, A, 0 /* verbose_level */);
+		Color, A,
+		label, label_tex,
+		0 /* verbose_level */);
 	CG->init_user_data(user_data, user_data_size,
 			0 /* verbose_level */);
 	Orbiter->Lint_vec.copy(Pts, CG->points, nb_points);
@@ -366,7 +368,9 @@ colored_graph *colored_graph::subgraph_by_color_classes(
 
 	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency(l /* nb_points */, 1 /*nb_colors */, 1 /* nb_colors_per_vertex*/,
-		Color, A, 0 /* verbose_level */);
+		Color, A,
+		label, label_tex,
+		0 /* verbose_level */);
 	CG->init_user_data(user_data, user_data_size,
 			0 /* verbose_level */);
 	Orbiter->Lint_vec.copy(Pts, CG->points, l);
@@ -465,7 +469,9 @@ colored_graph *colored_graph::subgraph_by_color_classes_with_condition(
 
 	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency(nb_pts /* nb_points */, nb_colors, 1 /* nb_colors_per_vertex */,
-		Color, A, 0 /* verbose_level */);
+		Color, A,
+		label, label_tex,
+		0 /* verbose_level */);
 	CG->init_user_data(user_data, user_data_size,
 			0 /* verbose_level */);
 	Orbiter->Lint_vec.copy(Pts, CG->points, nb_pts);
@@ -630,6 +636,7 @@ void colored_graph::print_adjacency_list()
 void colored_graph::init_with_point_labels(int nb_points, int nb_colors, int nb_colors_per_vertex,
 	int *colors, bitvector *Bitvec, int f_ownership_of_bitvec,
 	long int *point_labels,
+	std::string &label, std::string &label_tex,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -643,6 +650,7 @@ void colored_graph::init_with_point_labels(int nb_points, int nb_colors, int nb_
 	init(nb_points, nb_colors, nb_colors_per_vertex,
 		colors,
 		Bitvec, f_ownership_of_bitvec,
+		label, label_tex,
 		verbose_level);
 	Orbiter->Lint_vec.copy(point_labels, points, nb_points);
 	if (f_v) {
@@ -652,6 +660,7 @@ void colored_graph::init_with_point_labels(int nb_points, int nb_colors, int nb_
 
 void colored_graph::init(int nb_points, int nb_colors, int nb_colors_per_vertex,
 	int *colors, bitvector *Bitvec, int f_ownership_of_bitvec,
+	std::string &label, std::string &label_tex,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -666,7 +675,9 @@ void colored_graph::init(int nb_points, int nb_colors, int nb_colors_per_vertex,
 	colored_graph::nb_points = nb_points;
 	colored_graph::nb_colors = nb_colors;
 	colored_graph::nb_colors_per_vertex = nb_colors_per_vertex;
-	
+	colored_graph::label.assign(label);
+	colored_graph::label_tex.assign(label_tex);
+
 
 	L = ((long int) nb_points * (long int) (nb_points - 1)) >> 1;
 
@@ -696,7 +707,8 @@ void colored_graph::init(int nb_points, int nb_colors, int nb_colors_per_vertex,
 
 void colored_graph::init_no_colors(int nb_points,
 		bitvector *Bitvec, int f_ownership_of_bitvec,
-	int verbose_level)
+		std::string &label, std::string &label_tex,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *vertex_colors;
@@ -709,7 +721,9 @@ void colored_graph::init_no_colors(int nb_points,
 	Orbiter->Int_vec.zero(vertex_colors, nb_points);
 
 	init(nb_points, 1 /* nb_colors */, 1 /* nb_colors_per_vertex */,
-		vertex_colors, Bitvec, f_ownership_of_bitvec, verbose_level);
+		vertex_colors, Bitvec, f_ownership_of_bitvec,
+		label, label_tex,
+		verbose_level);
 
 	FREE_int(vertex_colors);
 	if (f_v) {
@@ -719,7 +733,9 @@ void colored_graph::init_no_colors(int nb_points,
 
 void colored_graph::init_adjacency(int nb_points,
 		int nb_colors, int nb_colors_per_vertex,
-		int *colors, int *Adj, int verbose_level)
+		int *colors, int *Adj,
+		std::string &label, std::string &label_tex,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int i, j, k;
@@ -747,6 +763,7 @@ void colored_graph::init_adjacency(int nb_points,
 	}
 	init(nb_points, nb_colors, nb_colors_per_vertex,
 		colors, Bitvec, TRUE /* f_ownership_of_bitvec */,
+		label, label_tex,
 		verbose_level);
 
 	// do not free bitvec here
@@ -758,7 +775,9 @@ void colored_graph::init_adjacency(int nb_points,
 
 void colored_graph::init_adjacency_upper_triangle(
 	int nb_points, int nb_colors, int nb_colors_per_vertex,
-	int *colors, int *Adj, int verbose_level)
+	int *colors, int *Adj,
+	std::string &label, std::string &label_tex,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	long int i, j, k;
@@ -797,6 +816,7 @@ void colored_graph::init_adjacency_upper_triangle(
 	}
 	init(nb_points, nb_colors, nb_colors_per_vertex,
 		colors, Bitvec, TRUE /* f_ownership_of_bitvec */,
+		label, label_tex,
 		verbose_level);
 
 	// do not free Bitvec here
@@ -808,7 +828,9 @@ void colored_graph::init_adjacency_upper_triangle(
 }
 
 void colored_graph::init_adjacency_no_colors(int nb_points,
-	int *Adj, int verbose_level)
+	int *Adj,
+	std::string &label, std::string &label_tex,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *vertex_colors;
@@ -822,7 +844,9 @@ void colored_graph::init_adjacency_no_colors(int nb_points,
 
 	init_adjacency(nb_points,
 			1 /* nb_colors */, 1 /* nb_colors_per_vertex */,
-			vertex_colors, Adj, verbose_level);
+			vertex_colors, Adj,
+			label, label_tex,
+			verbose_level);
 
 	FREE_int(vertex_colors);
 	if (f_v) {
@@ -831,7 +855,9 @@ void colored_graph::init_adjacency_no_colors(int nb_points,
 }
 
 void colored_graph::init_adjacency_two_colors(int nb_points,
-	int *Adj, int *subset, int sz, int verbose_level)
+	int *Adj, int *subset, int sz,
+	std::string &label, std::string &label_tex,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *vertex_colors;
@@ -852,7 +878,9 @@ void colored_graph::init_adjacency_two_colors(int nb_points,
 
 	init_adjacency(nb_points,
 			2 /* nb_colors */, 1 /* nb_colors_per_vertex */,
-			vertex_colors, Adj, verbose_level);
+			vertex_colors, Adj,
+			label, label_tex,
+			verbose_level);
 
 	FREE_int(vertex_colors);
 	if (f_v) {
@@ -1454,6 +1482,7 @@ colored_graph *colored_graph::compute_neighborhood_subgraph(
 			color_subset->k, nb_colors_per_vertex,
 			color_in_subgraph,
 			Bitvec, TRUE,
+			label, label_tex,
 			verbose_level);
 
 
@@ -2655,7 +2684,7 @@ void colored_graph::create_Levi_graph_from_incidence_matrix(
 
 void colored_graph::all_cliques(
 		clique_finder_control *Control,
-		std::string &fname_graph, int verbose_level)
+		std::string &graph_label, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2669,8 +2698,13 @@ void colored_graph::all_cliques(
 		fname_sol.assign(Control->output_file);
 	}
 	else {
-		fname_sol.assign(fname_graph);
-		ST.replace_extension_with(fname_sol, "_sol.txt");
+		fname_sol.assign(graph_label);
+		fname_sol.append("_sol.txt");
+		//ST.replace_extension_with(fname_sol, "_sol.txt");
+	}
+	if (f_v) {
+		cout << "colored_graph::all_cliques graph_label=" << graph_label << endl;
+		cout << "colored_graph::all_cliques fname_sol=" << fname_sol << endl;
 	}
 
 
@@ -2689,6 +2723,9 @@ void colored_graph::all_cliques(
 		if (Control->f_rainbow) {
 
 			if (f_v) {
+				cout << "colored_graph::all_cliques f_rainbow" << endl;
+			}
+			if (f_v) {
 				cout << "colored_graph::all_cliques before all_cliques_rainbow" << endl;
 			}
 			all_cliques_rainbow(
@@ -2698,6 +2735,32 @@ void colored_graph::all_cliques(
 					verbose_level);
 			if (f_v) {
 				cout << "colored_graph::all_cliques after all_cliques_rainbow" << endl;
+			}
+			if (f_v) {
+				cout << "colored_graph::all_cliques f_rainbow done" << endl;
+			}
+
+		}
+		else if (Control->f_weighted) {
+
+			if (f_v) {
+				cout << "colored_graph::all_cliques weighted cliques" << endl;
+			}
+
+
+
+			if (f_v) {
+				cout << "colored_graph::all_cliques before all_cliques_weighted_with_two_colors" << endl;
+			}
+			all_cliques_weighted_with_two_colors(Control, verbose_level);
+			if (f_v) {
+				cout << "colored_graph::all_cliques after all_cliques_weighted_with_two_colors" << endl;
+			}
+
+
+
+			if (f_v) {
+				cout << "colored_graph::all_cliques weighted cliques done" << endl;
 			}
 
 		}
@@ -2742,22 +2805,7 @@ void colored_graph::all_cliques_rainbow(
 		cout << "colored_graph::all_cliques_rainbow" << endl;
 	}
 
-	if (Control->f_weighted) {
-
-		if (f_v) {
-			cout << "colored_graph::all_cliques_rainbow "
-					"weighted cliques" << endl;
-		}
-
-
-
-		all_cliques_weighted_with_two_colors(Control, verbose_level);
-
-
-
-
-	}
-	else if (Control->f_Sajeeb) {
+	if (Control->f_Sajeeb) {
 		if (f_v) {
 			cout << "colored_graph::all_cliques_rainbow before do_Sajeeb" << endl;
 		}
@@ -3290,7 +3338,42 @@ void colored_graph::all_rainbow_cliques(
 }
 
 
+void colored_graph::complement(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
 
+
+	if (f_v) {
+		cout << "colored_graph::complement" << endl;
+		//cout << "nb_points=" << nb_points << endl;
+		//print_adjacency_list();
+		//Bitvec->print();
+	}
+
+
+	for (i = 0; i < nb_points; i++) {
+		for (j = i + 1; j < nb_points; j++) {
+			if (is_adjacent(i, j)) {
+				if (FALSE) {
+					cout << "set_adjacency(" << i << "," << j << ",0)" << endl;
+				}
+				set_adjacency(i, j, 0);
+			}
+			else {
+				if (FALSE) {
+					cout << "set_adjacency(" << i << "," << j << ",1)" << endl;
+				}
+				set_adjacency(i, j, 1);
+			}
+		}
+	}
+	if (f_v) {
+		//Bitvec->print();
+		//print_adjacency_list();
+		cout << "colored_graph::complement done" << endl;
+	}
+}
 
 // #############################################################################
 // global functions:

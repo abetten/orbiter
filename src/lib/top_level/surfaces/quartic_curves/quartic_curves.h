@@ -271,49 +271,55 @@ public:
 	surface_object_with_action *SOA;
 
 	int pt_orbit;
-	int equation_nice[20];
-	int *transporter;
-	int v[4];
-	int pt_A, pt_B;
+	int equation_nice[20]; // equation after transformation
+	int *transporter; // the transformation that maps the point off the lines to (1,0,0,0)
 
-	long int *Lines_nice;
+	int v[4]; // = (1,0,0,0)
+	int pt_A; // = SOA->SO->SOP->Pts_not_on_lines[i];
+	int pt_B; // = SOA->Surf->rank_point(v);
+
+	long int *Lines_nice; // lines after transformation
 	int nb_lines;
 
 	long int *Bitangents;
 	int nb_bitangents; // = nb_lines + 1
 
 
-	int *f1;
-	int *f2;
-	int *f3;
+	// computed by split_nice_equation starting from the equation of the cubic surface:
+	int *f1; // terms involving X0^2, with X0^2 removed (linear)
+	int *f2; // terms involving X0, with X0 removed (quadratic)
+	int *f3; // terms free of X0 (cubic)
 
-	long int *Pts_on_surface;
+	long int *Pts_on_surface; // points on the transformed surface
 	int nb_pts_on_surface;
 
-	int *curve;
-	int *poly1;
-	int *poly2;
-	int two, four, mfour;
+	// the equation of the quartic curve:
+	int *curve; // poly1 + poly2 = f2^2 - 4 * f1 * f3
+	int *poly1; // f2 * f2
+	int *poly2; // -4 * f1 * f3
+	int two, four, mfour; // 2, 4, -4 in F
 
-	int *tangent_quadric;
-	long int *Pts_on_tangent_quadric;
+	int *tangent_quadric; // = 2 * x_0 * f_1 + f_2
+	long int *Pts_on_tangent_quadric; // = SOA->Surf->Poly2_4->enumerate_points(tangent_quadric)
 	int nb_pts_on_tangent_quadric;
 
 	//int *line_type;
 	//int *type_collected;
 
-	int *Class_pts;
-	int nb_class_pts;
-	long int *Pts_intersection;
-	int nb_pts_intersection;
+	//int *Class_pts;
+	//int nb_class_pts;
+	//long int *Pts_intersection;
+	//int nb_pts_intersection;
 
-	long int *Pts_on_curve;
+	long int *Pts_on_curve; // = SOA->Surf->Poly4_x123->enumerate_points(curve)
 	int sz_curve;
 
+#if 0
 	strong_generators *gens_copy;
 	set_and_stabilizer *moved_surface;
 	//strong_generators *stab_gens_moved_surface;
 	strong_generators *stab_gens_P0;
+#endif
 
 	strong_generators *Stab_gens_quartic;
 

@@ -4433,7 +4433,12 @@ void diophant::make_clique_graph(colored_graph *&CG, int verbose_level)
 
 	CG = NEW_OBJECT(colored_graph);
 
-	CG->init_no_colors(n, Adj, TRUE, verbose_level - 1);
+	string label, label_tex;
+
+	label.assign("clique_graph");
+	label_tex.assign("clique\\_graph");
+
+	CG->init_no_colors(n, Adj, TRUE, label, label_tex, verbose_level - 1);
 	
 	
 	if (f_v) {

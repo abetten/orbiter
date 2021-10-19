@@ -257,7 +257,10 @@ public:
 
 
 	std::string fname_base;
-	
+
+	std::string label;
+	std::string label_tex;
+
 	int nb_points;
 	int nb_colors;
 	int nb_colors_per_vertex; // = 1 by default
@@ -302,22 +305,32 @@ public:
 	void print_adjacency_list();
 	void init(int nb_points, int nb_colors, int nb_colors_per_vertex,
 		int *colors, bitvector *Bitvec, int f_ownership_of_bitvec,
+		std::string &label, std::string &label_tex,
 		int verbose_level);
 	void init_with_point_labels(int nb_points, int nb_colors, int nb_colors_per_vertex,
 		int *colors, bitvector *Bitvec, int f_ownership_of_bitvec,
 		long int *point_labels,
+		std::string &label, std::string &label_tex,
 		int verbose_level);
 	void init_no_colors(int nb_points, bitvector *Bitvec,
 		int f_ownership_of_bitvec, 
+		std::string &label, std::string &label_tex,
 		int verbose_level);
 	void init_adjacency(int nb_points, int nb_colors, int nb_colors_per_vertex,
-		int *colors, int *Adj, int verbose_level);
+		int *colors, int *Adj,
+		std::string &label, std::string &label_tex,
+		int verbose_level);
 	void init_adjacency_upper_triangle(int nb_points, int nb_colors, int nb_colors_per_vertex,
-		int *colors, int *Adj, int verbose_level);
+		int *colors, int *Adj,
+		std::string &label, std::string &label_tex,
+		int verbose_level);
 	void init_adjacency_no_colors(int nb_points, int *Adj, 
+			std::string &label, std::string &label_tex,
 		int verbose_level);
 	void init_adjacency_two_colors(int nb_points,
-		int *Adj, int *subset, int sz, int verbose_level);
+		int *Adj, int *subset, int sz,
+		std::string &label, std::string &label_tex,
+		int verbose_level);
 	void init_user_data(long int *data, int data_size, int verbose_level);
 	void save(std::string &fname, int verbose_level);
 	void load(std::string &fname, int verbose_level);
@@ -383,7 +396,7 @@ public:
 		double scale, double line_width, int verbose_level);
 	void all_cliques(
 			clique_finder_control *Control,
-			std::string &fname_graph, int verbose_level);
+			std::string &graph_label, int verbose_level);
 	void all_cliques_rainbow(
 			clique_finder_control *Control,
 			std::ostream &ost_txt,
@@ -410,6 +423,7 @@ public:
 			clique_finder_control *Control,
 			std::ostream &fp,
 			int verbose_level);
+	void complement(int verbose_level);
 
 };
 
