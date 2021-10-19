@@ -165,7 +165,7 @@ void permutation_group_create::init_subgroup_by_generators(
 
 	f_has_strong_generators = TRUE;
 
-	//A2 = A_initial;
+	A2 = A_initial;
 
 	stringstream str;
 	latex_interface L;

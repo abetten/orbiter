@@ -371,6 +371,7 @@ class knarr;
 class object_in_projective_space;
 class point_line;
 class points_and_lines;
+class polarity;
 class projective_space;
 class quartic_curve_domain;
 class quartic_curve_object_properties;

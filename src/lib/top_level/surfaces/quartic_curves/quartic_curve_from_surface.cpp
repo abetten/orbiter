@@ -48,18 +48,20 @@ quartic_curve_from_surface::quartic_curve_from_surface()
 	//line_type = NULL;
 	//type_collected = NULL;
 
-	Class_pts = NULL;
-	nb_class_pts = 0;
+	//Class_pts = NULL;
+	//nb_class_pts = 0;
 
-	Pts_intersection = NULL;
-	nb_pts_intersection = 0;
+	//Pts_intersection = NULL;
+	//nb_pts_intersection = 0;
 
 	Pts_on_curve = NULL;
 	sz_curve = 0;
 
+#if 0
 	gens_copy = NULL;
 	moved_surface = NULL;
 	stab_gens_P0 = NULL;
+#endif
 
 	Stab_gens_quartic = NULL;
 }
@@ -105,12 +107,13 @@ quartic_curve_from_surface::~quartic_curve_from_surface()
 	if (Pts_on_tangent_quadric) {
 		FREE_lint(Pts_on_tangent_quadric);
 	}
-	if (Pts_intersection) {
-		FREE_lint(Pts_intersection);
-	}
+	//if (Pts_intersection) {
+	//	FREE_lint(Pts_intersection);
+	//}
 	if (Pts_on_curve) {
 		FREE_lint(Pts_on_curve);
 	}
+#if 0
 	if (gens_copy) {
 		FREE_OBJECT(gens_copy);
 	}
@@ -120,6 +123,7 @@ quartic_curve_from_surface::~quartic_curve_from_surface()
 	if (stab_gens_P0) {
 		FREE_OBJECT(stab_gens_P0);
 	}
+#endif
 	if (Stab_gens_quartic) {
 		FREE_OBJECT(Stab_gens_quartic);
 	}
@@ -810,8 +814,8 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 
 
 
-	ost << "The tangent quadric intersects the cubic surface in "
-			<< nb_pts_intersection << " points." << endl;
+	//ost << "The tangent quadric intersects the cubic surface in "
+	//		<< nb_pts_intersection << " points." << endl;
 
 
 #if 0

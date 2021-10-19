@@ -1476,6 +1476,45 @@ void file_io::int_matrix_read_csv(std::string &fname,
 	}
 }
 
+void file_io::int_matrix_read_csv_no_border(std::string &fname,
+	int *&M, int &m, int &n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, a;
+
+	if (f_v) {
+		cout << "file_io::int_matrix_read_csv_no_border reading file " << fname << endl;
+	}
+	if (file_size(fname) <= 0) {
+		cout << "file_io::int_matrix_read_csv_no_border file " << fname
+			<< " does not exist or is empty" << endl;
+		cout << "file_size(fname)=" << file_size(fname) << endl;
+		exit(1);
+	}
+	{
+		spreadsheet S;
+
+		S.read_spreadsheet(fname, 0/*verbose_level - 1*/);
+
+		m = S.nb_rows;
+		n = S.nb_cols;
+		cout << "The spreadsheet has " << S.nb_cols << " columns" << endl;
+		M = NEW_int(m * n);
+		for (i = 0; i < m; i++) {
+			for (j = 0; j < n; j++) {
+				char *p;
+				p = S.get_string(i, j);
+				a = my_atoi(p);
+				FREE_char(p);
+				M[i * n + j] = a;
+			}
+		}
+	}
+	if (f_v) {
+		cout << "file_io::int_matrix_read_csv_no_border done" << endl;
+	}
+}
+
 void file_io::lint_matrix_read_csv(std::string &fname,
 	long int *&M, int &m, int &n, int verbose_level)
 {
@@ -3736,8 +3775,14 @@ void file_io::do_csv_file_select_rows_and_cols(std::string &fname,
 	string_tools ST;
 
 	Orbiter->Int_vec.scan(rows_text, Rows, nb_rows);
+	cout << "Rows: ";
+	Orbiter->Int_vec.print(cout, Rows, nb_rows);
+	cout << endl;
 
 	Orbiter->Int_vec.scan(cols_text, Cols, nb_cols);
+	cout << "Cols: ";
+	Orbiter->Int_vec.print(cout, Cols, nb_cols);
+	cout << endl;
 
 	spreadsheet S;
 
@@ -4348,6 +4393,36 @@ void file_io::save_cumulative_data(std::vector<std::vector<int> > &Cumulative_da
 	FREE_lint(M);
 
 }
+
+void file_io::write_characteristic_matrix(std::string &fname,
+		long int *data, int nb_rows, int data_sz, int nb_cols, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *T;
+	int i, j, h;
+
+	T = NEW_int(nb_rows * nb_cols);
+
+	Orbiter->Int_vec.zero(T, nb_rows * nb_cols);
+	for (i = 0; i < nb_rows; i++) {
+		for (h = 0; h < data_sz; h++) {
+			j = data[i * data_sz + h];
+			T[i * nb_cols + j] = 1;
+		}
+
+	}
+	int_matrix_write_csv(fname, T,
+			nb_rows,
+			nb_cols);
+
+	if (f_v) {
+		cout << "file_io::write_characteristic_matrix Written file " << fname << " of size " << file_size(fname) << endl;
+	}
+	FREE_int(T);
+
+
+}
+
 
 }}
 

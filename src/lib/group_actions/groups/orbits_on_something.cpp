@@ -956,6 +956,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_after_filte
 			point_color,
 			Bitvec, TRUE /* f_ownership_of_bitvec */,
 			filtered_set_of_orbits /*Orbits_classified->Sets[type_idx]*/ /* point_labels */,
+			fname, fname,
 			verbose_level - 2);
 
 		// the adjacency becomes part of the colored_graph object
@@ -1156,6 +1157,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length(
 		point_color,
 		Bitvec, TRUE /* f_ownership_of_bitvec */,
 		Orbits_classified->Sets[type_idx] /* point_labels */,
+		fname, fname,
 		verbose_level - 2);
 
 		// the adjacency becomes part of the colored_graph object
@@ -1411,6 +1413,7 @@ void orbits_on_something::create_graph_on_orbits_of_a_certain_length_override_or
 			NULL /*point_color*/,
 			Bitvec, TRUE /* f_ownership_of_bitvec */,
 			my_orbits_classified->Sets[type_idx],
+			fname, fname,
 			verbose_level - 2);
 			// the adjacency becomes part of the colored_graph object
 
@@ -1533,12 +1536,19 @@ void orbits_on_something::create_weighted_graph_on_orbits(
 	for (I = 0; I < nb_orbit_lengths; I++) {
 		fst = Pts_fst[I];
 		t = Type_idx[I];
+		if (f_v) {
+			cout << "orbits_on_something::create_weighted_graph_on_orbits I=" << I << " fst=" << fst << " len=" << Pts_len[I] << " t=" << t << endl;
+		}
 		for (i = 0; i < Pts_len[I]; i++) {
 			Pt_labels[fst + i] = my_orbits_classified->Sets[t][fst + i];
 			Pt_color[fst + i] = I;
 		}
 	}
 
+
+	if (f_v) {
+		cout << "orbits_on_something::create_weighted_graph_on_orbits allocating orbit1, orbit2" << endl;
+	}
 
 	orbit1 = NEW_lint(max_orbit_length);
 	orbit2 = NEW_lint(max_orbit_length);
@@ -1555,6 +1565,9 @@ void orbits_on_something::create_weighted_graph_on_orbits(
 	Bitvec = NEW_OBJECT(bitvector);
 	Bitvec->allocate(L);
 
+	if (f_v) {
+		cout << "orbits_on_something::create_weighted_graph_on_orbits creating adjacency bitvector" << endl;
+	}
 	t0 = Os.os_ticks();
 	k = 0;
 	for (I = 0; I < nb_orbit_lengths; I++) {
@@ -1635,6 +1648,7 @@ void orbits_on_something::create_weighted_graph_on_orbits(
 			Pt_color /* point_color */,
 			Bitvec, TRUE /* f_ownership_of_bitvec */,
 			Pt_labels,
+			fname, fname,
 			verbose_level - 2);
 			// the adjacency becomes part of the colored_graph object
 

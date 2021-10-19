@@ -28,6 +28,8 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	//std::string raise_to_the_power_a_text;
 	//std::string raise_to_the_power_exponent_text;
 
+	f_export_orbiter = FALSE;
+
 	f_export_gap = FALSE;
 
 	f_export_magma = FALSE;
@@ -230,6 +232,12 @@ int group_theoretic_activity_description::read_arguments(
 			}
 		}
 
+		else if (stringcmp(argv[i], "-export_orbiter") == 0) {
+			f_export_orbiter = TRUE;
+			if (f_v) {
+				cout << "-export_orbiter " << endl;
+			}
+		}
 		else if (stringcmp(argv[i], "-export_gap") == 0) {
 			f_export_gap = TRUE;
 			if (f_v) {
@@ -751,6 +759,9 @@ void group_theoretic_activity_description::print()
 					<< " " << raise_to_the_power_exponent_text << endl;
 	}
 
+	if (f_export_orbiter) {
+		cout << "-export_orbiter " << endl;
+	}
 	if (f_export_gap) {
 		cout << "-export_gap " << endl;
 	}

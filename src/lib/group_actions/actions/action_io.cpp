@@ -947,5 +947,121 @@ void action::print_vector_as_permutation(vector_ge &v)
 }
 
 
+void action::write_set_of_elements_latex_file(std::string &fname, std::string &title, int *Elt, int nb_elts)
+{
+	{
+		ofstream ost(fname);
+		number_theory_domain NT;
+
+		char c_title[1000];
+		char author[1000];
+
+		snprintf(c_title, 1000, "%s", title.c_str());
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		latex_interface L;
+
+		L.head(ost,
+				FALSE /* f_book*/,
+				TRUE /* f_title */,
+				c_title, author,
+				FALSE /* f_toc */,
+				FALSE /* f_landscape */,
+				TRUE /* f_12pt */,
+				TRUE /* f_enlarged_page */,
+				TRUE /* f_pagenumbers */,
+				NULL /* extra_praeamble */);
+
+
+		//Nth->report(ost, verbose_level);
+
+		int i;
+
+		for (i = 0; i < nb_elts; i++) {
+			ost << "$$" << endl;
+			element_print_latex(Elt + i * elt_size_in_int, ost);
+			ost << "$$" << endl;
+		}
+
+		L.foot(ost);
+
+
+	}
+
+	file_io Fio;
+
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+}
+
+void action::export_to_orbiter(
+		std::string &fname, std::string &label, strong_generators *SG, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+	long int a;
+	file_io Fio;
+	longinteger_object go;
+
+	if (f_v) {
+		cout << "action::export_to_orbiter" << endl;
+	}
+
+	SG->group_order(go);
+	if (f_v) {
+		cout << "action::export_to_orbiter go = " << go << endl;
+		cout << "action::export_to_orbiter number of generators = " << SG->gens->len << endl;
+		cout << "action::export_to_orbiter degree = " << degree << endl;
+	}
+	{
+		ofstream fp(fname);
+
+		fp << "GENERATORS_" << label << " = \\" << endl;
+		for (i = 0; i < SG->gens->len; i++) {
+			fp << "\t\"";
+			for (j = 0; j < degree; j++) {
+				if (FALSE) {
+					cout << "action::export_to_orbiter computing image of " << j << " under generator " << i << endl;
+				}
+				a = element_image_of(j, SG->gens->ith(i), 0 /* verbose_level*/);
+				fp << a;
+				if (j < degree - 1 || i < SG->gens->len - 1) {
+					fp << ",";
+				}
+			}
+			fp << "\"";
+			if (i < SG->gens->len - 1) {
+				fp << "\\" << endl;
+			}
+			else {
+				fp << endl;
+			}
+		}
+
+		fp << endl;
+		fp << label << ":" << endl;
+		fp << "\t$(ORBITER_PATH)orbiter.out -v 2 \\" << endl;
+		fp << "\t-define G -permutation_group -symmetric_group " << degree << " \\" << endl;
+		fp << "\t-subgroup_by_generators " << label << " " << go << " " << SG->gens->len << " $(GENERATORS_" << label << ") -end \\" << endl;
+
+		//		$(ORBITER_PATH)orbiter.out -v 10
+		//			-define G -permutation_group -symmetric_group 13
+		//				-subgroup_by_generators H5 5 1 $(GENERATORS_H5) -end
+		// with backslashes at the end of the line
+
+	}
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
+	if (f_v) {
+		cout << "action::export_to_orbiter" << endl;
+	}
+}
+
+
+
+
 
 }}

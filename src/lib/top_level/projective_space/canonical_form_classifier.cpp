@@ -44,6 +44,10 @@ canonical_form_classifier::canonical_form_classifier()
 
 	Classification_of_quartic_curves = NULL;
 
+	transversal = NULL;
+	frequency = NULL;
+	nb_types = 0;
+
 }
 
 canonical_form_classifier::~canonical_form_classifier()
@@ -208,7 +212,18 @@ void canonical_form_classifier::classify(canonical_form_classifier_description *
 
 	Classification_of_quartic_curves->init(Canonical_forms, nb_objects_to_test, Poly_ring->get_nb_monomials(), verbose_level);
 
+
+	Classification_of_quartic_curves->get_transversal(
+			transversal, frequency, nb_types, verbose_level);
+
+
 	cout << "Classification of curves:" << endl;
+
+
+	cout << "transversal:" << endl;
+	Orbiter->Int_vec.print(cout, transversal, nb_types);
+	cout << endl;
+
 	//Classification_of_quartic_curves->print();
 
 	for (i = 0; i < Classification_of_quartic_curves->nb_types; i++) {
@@ -320,8 +335,10 @@ void canonical_form_classifier::classify_with_substructure(int verbose_level)
 			verbose_level - 3);
 
 	if (f_v) {
-		cout << "canonical_form_classifier::classify_with_substructure after SubC->classify_substructures" << endl;
-		cout << "canonical_form_classifier::classify_with_substructure We found " << SubC->nb_orbits
+		cout << "canonical_form_classifier::classify_with_substructure "
+				"after SubC->classify_substructures" << endl;
+		cout << "canonical_form_classifier::classify_with_substructure "
+				"We found " << SubC->nb_orbits
 				<< " orbits at level " << Descr->substructure_size << ":" << endl;
 	}
 
@@ -444,6 +461,12 @@ void canonical_form_classifier::main_loop(int verbose_level)
 				Orbiter->Lint_vec.print(cout, bitangents, nb_bitangents);
 				cout << endl;
 			}
+
+
+			//quartic_curve_object::init_equation_and_bitangents(quartic_curve_domain *Dom,
+			//		int *eqn15, long int *bitangents28,
+			//		int verbose_level)
+
 
 			if (Descr->f_algorithm_nauty) {
 				if (f_v) {
@@ -1434,9 +1457,10 @@ void canonical_form_classifier::report2(std::ostream &ost, std::string &fname_ba
 		cout << "i=" << i << endl;
 
 
+		S.set_entry_lint(j, 0, i);
+
 		if (CFS_table[i]) {
 
-			S.set_entry_lint(j, 0, i);
 			S.set_entry_lint(j, 1, CFS_table[i]->cnt);
 			S.set_entry_lint(j, 2, CFS_table[i]->row);
 			S.set_entry_lint(j, 3, CFS_table[i]->nb_pts);
@@ -1501,6 +1525,17 @@ void canonical_form_classifier::report2(std::ostream &ost, std::string &fname_ba
 		else {
 			//Orbiter->Lint_vec.zero(Table + i * nb_cols, nb_cols);
 			//Table[i * nb_cols + 0] = i;
+			S.set_entry_lint(j, 1, 0);
+			S.set_entry_lint(j, 2, 0);
+			S.set_entry_lint(j, 3, 0);
+			S.set_entry_lint(j, 4, 0);
+			S.fill_entry_with_text(j, 5, "");
+
+			int h;
+
+			for (h = 6; h <= 20; h++) {
+				S.set_entry_lint(j, h, 0);
+			}
 		}
 
 	}
@@ -1508,6 +1543,7 @@ void canonical_form_classifier::report2(std::ostream &ost, std::string &fname_ba
 		cout << "canonical_form_classifier::report2 finished collecting Table" << endl;
 	}
 
+#if 1
 	file_io Fio;
 
 	S.save(fname, 0 /* verbose_level*/);
@@ -1516,6 +1552,7 @@ void canonical_form_classifier::report2(std::ostream &ost, std::string &fname_ba
 
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
+#endif
 
 	if (f_v) {
 		cout << "canonical_form_classifier::report2 done" << endl;

@@ -758,11 +758,21 @@ void ovoid_classify::create_graph(orbiter_data_file *ODF,
 		nb_colors_used = nb_colors;
 	}
 
+	char str[1000];
+
+	sprintf(str, "graph_ovoid_%d_%d_%d",
+			LG->F->q, starter_size, orbit_idx);
+
+	string label, label_tex;
+	label.assign(str);
+	label_tex.assign(str);
+
 	CG = NEW_OBJECT(colored_graph);
 
 	CG->init(nb_points, nb_colors_used, 1,
 		point_color,
 		Bitvec, TRUE /* f_ownership_of_bitvec */,
+		label, label_tex,
 		verbose_level - 2);
 		// the adjacency becomes part of the colored_graph object
 
@@ -770,11 +780,7 @@ void ovoid_classify::create_graph(orbiter_data_file *ODF,
 	CG->init_user_data(ODF->sets[orbit_idx],
 			starter_size, verbose_level - 2);
 
-	char str[1000];
-
-	sprintf(str, "graph_ovoid_%d_%d_%d",
-			LG->F->q, starter_size, orbit_idx);
-	CG->fname_base.assign(str);
+	CG->fname_base.assign(label);
 
 	FREE_int(Pts);
 	FREE_int(point_color);

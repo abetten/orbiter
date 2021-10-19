@@ -85,7 +85,7 @@ void group_theoretic_activity::init_permutation_group(group_theoretic_activity_d
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "group_theoretic_activity::init_linear_group" << endl;
+		cout << "group_theoretic_activity::init_permutation_group" << endl;
 	}
 
 	group_theoretic_activity::Descr = Descr;
@@ -107,13 +107,13 @@ void group_theoretic_activity::init_permutation_group(group_theoretic_activity_d
 	//A2 = LG->A2;
 
 	if (f_v) {
-		cout << "group_theoretic_activity::init_linear_group group = " << A1->label << endl;
-		cout << "group_theoretic_activity::init_linear_group action = " << A2->label << endl;
+		cout << "group_theoretic_activity::init_permutation_group group = " << A1->label << endl;
+		cout << "group_theoretic_activity::init_permutation_group action = " << A2->label << endl;
 	}
 	//cout << "created group " << LG->prefix << endl;
 
 	if (f_v) {
-		cout << "group_theoretic_activity::init_linear_group done" << endl;
+		cout << "group_theoretic_activity::init_permutation_group done" << endl;
 	}
 }
 
@@ -137,6 +137,10 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 	if (Descr->f_raise_to_the_power) {
 		raise_to_the_power(verbose_level);
+	}
+
+	if (Descr->f_export_orbiter) {
+		AG->do_export_orbiter(verbose_level);
 	}
 
 	if (Descr->f_export_gap) {

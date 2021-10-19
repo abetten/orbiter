@@ -21,6 +21,8 @@ create_graph_description::create_graph_description()
 	f_load_from_file = FALSE;
 	//fname = NULL;
 
+	f_load_from_file_csv_no_border = FALSE;
+
 	f_edge_list = FALSE;
 	n = 0;
 	//edge_list_text;
@@ -95,6 +97,8 @@ int create_graph_description::read_arguments(
 	}
 	for (i = 0; i < argc; i++) {
 
+		graph_modification_description M;
+
 		if (stringcmp(argv[i], "-load_from_file") == 0) {
 			f_load_from_file = TRUE;
 			fname.assign(argv[++i]);
@@ -102,6 +106,15 @@ int create_graph_description::read_arguments(
 				cout << "-load_from_file " << fname << endl;
 			}
 		}
+
+		else if (stringcmp(argv[i], "-load_from_file_csv_no_border") == 0) {
+			f_load_from_file_csv_no_border = TRUE;
+			fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-load_from_file_csv_no_border " << fname << endl;
+			}
+		}
+
 		else if (stringcmp(argv[i], "-edge_list") == 0) {
 			f_edge_list = TRUE;
 			n = strtoi(argv[++i]);
@@ -230,7 +243,13 @@ int create_graph_description::read_arguments(
 			}
 		}
 
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (M.check_and_parse_argument(
+				argc, i, argv,
+				verbose_level)) {
+			Modifications.push_back(M);
+		}
+
+		if (stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
 			}
@@ -251,6 +270,9 @@ void create_graph_description::print()
 {
 	if (f_load_from_file) {
 		cout << "-load_from_file " << fname << endl;
+	}
+	if (f_load_from_file_csv_no_border) {
+		cout << "-load_from_file_csv_no_border " << fname << endl;
 	}
 	if (f_edge_list) {
 		cout << "-edge_list " << n << " " << edge_list_text << endl;
@@ -299,6 +321,12 @@ void create_graph_description::print()
 	}
 	if (f_subset) {
 		cout << "-subset " << subset_label << " " << subset_label_tex << " " << subset_text << endl;
+	}
+
+	int i;
+
+	for (i = 0; i < Modifications.size(); i++) {
+		Modifications[i].print();
 	}
 }
 

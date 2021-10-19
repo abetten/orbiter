@@ -116,9 +116,16 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		Orbiter->Int_vec.print(cout, eqn, sz);
 		cout << " pts=";
 		Orbiter->Lint_vec.print(cout, pts, nb_pts);
+		cout << endl;
+
+		Canonical_form_classifier->Poly_ring->print_equation_tex(cout, eqn);
+		cout << endl;
+
+		Canonical_form_classifier->Poly_ring->get_P()->print_set_of_points(cout, pts, nb_pts);
+
+
 		//cout << " bitangents=";
 		//Orbiter->Lint_vec.print(cout, bitangents, nb_bitangents);
-		cout << endl;
 	}
 
 
@@ -311,11 +318,7 @@ void canonical_form_substructure::handle_orbit(
 	}
 	CS->init(
 			SubSt,
-			//pts, nb_pts,
 			canonical_pts,
-			//PC, A, A2,
-			//intermediate_subset_size, selected_orbit,
-			//nb_interesting_subsets, interesting_subsets,
 			verbose_level);
 	if (f_v) {
 		cout << "canonical_form_substructure::handle_orbit after CS->init" << endl;

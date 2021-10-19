@@ -282,6 +282,9 @@ public:
 	int f_preferred_choice;
 	std::vector<std::vector<int> > preferred_choice;
 
+	int f_clique_test;
+	std::string clique_test_graph;
+	colored_graph *clique_test_CG;
 
 	poset_classification_control();
 	~poset_classification_control();
@@ -289,12 +292,22 @@ public:
 		int argc, std::string *argv,
 		int verbose_level);
 	void print();
+	void prepare(poset_classification *PC, int verbose_level);
+	void early_test_func_for_clique_search(
+		long int *S, int len,
+		long int *candidates, int nb_candidates,
+		long int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
 
 };
 
 
 void poset_classification_control_preferred_choice_function(int pt, int &pt_pref,
 		schreier *Sch, void *data, int data2, int verbose_level);
+void poset_classification_control_early_test_function_cliques(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
 
 
 

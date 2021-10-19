@@ -8,8 +8,6 @@
 
 
 
-
-
 #include "orbiter.h"
 
 using namespace std;
@@ -21,7 +19,7 @@ namespace top_level {
 graph_theoretic_activity::graph_theoretic_activity()
 {
 	Descr = NULL;
-	Gr = NULL;
+	CG = NULL;
 }
 
 graph_theoretic_activity::~graph_theoretic_activity()
@@ -30,7 +28,7 @@ graph_theoretic_activity::~graph_theoretic_activity()
 
 
 void graph_theoretic_activity::init(graph_theoretic_activity_description *Descr,
-		create_graph *Gr,
+		colored_graph *CG,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -40,7 +38,11 @@ void graph_theoretic_activity::init(graph_theoretic_activity_description *Descr,
 	}
 
 	graph_theoretic_activity::Descr = Descr;
-	graph_theoretic_activity::Gr = Gr;
+	graph_theoretic_activity::CG = CG;
+
+	if (f_v) {
+		cout << "graph_theoretic_activity::init, label = " << graph_theoretic_activity::CG->label << endl;
+	}
 
 
 	if (f_v) {
@@ -53,7 +55,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "graph_theoretic_activity::perform_activity" << endl;
+		cout << "graph_theoretic_activity::perform_activity, CG->label=" << CG->label << endl;
 	}
 	string_tools ST;
 
@@ -62,22 +64,12 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 			cout << "graph_theoretic_activity::perform_activity f_find_cliques" << endl;
 		}
 
-		colored_graph *CG;
-
-		if (Gr->f_has_CG) {
-			CG = Gr->CG;
-		}
-		else {
-			CG = NEW_OBJECT(colored_graph);
-			CG->init_adjacency_no_colors(Gr->N, Gr->Adj, verbose_level);
-		}
-
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity before CG->all_cliques" << endl;
 		}
 		CG->all_cliques(
 				Descr->Clique_finder_control,
-				Gr->label, verbose_level);
+				CG->label, verbose_level);
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity after CG->all_cliques" << endl;
 		}
@@ -86,11 +78,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 
 
 		if (f_v) {
-			cout << "graph_theoretic_activity::perform_activity Gr->label=" << Gr->label << " nb_sol = " << Descr->Clique_finder_control->nb_sol << endl;
-		}
-
-		if (!Gr->f_has_CG) {
-			FREE_OBJECT(CG);
+			cout << "graph_theoretic_activity::perform_activity Gr->label=" << CG->label << " nb_sol = " << Descr->Clique_finder_control->nb_sol << endl;
 		}
 
 	}
@@ -99,24 +87,12 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 			cout << "graph_theoretic_activity::perform_activity f_export_magma" << endl;
 		}
 
-		colored_graph *CG;
-
-		if (Gr->f_has_CG) {
-			CG = Gr->CG;
-		}
-		else {
-			CG = NEW_OBJECT(colored_graph);
-			CG->init_adjacency_no_colors(Gr->N, Gr->Adj, verbose_level);
-		}
-
-
-
 		string fname_magma;
 		string fname_text;
 
-		fname_magma.assign(Gr->label);
+		fname_magma.assign(CG->label);
 
-		fname_text.assign(Gr->label);
+		fname_text.assign(CG->label);
 
 
 		ST.replace_extension_with(fname_magma, ".magma");
@@ -134,10 +110,6 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 		if (f_v) {
 			cout << "export_magma done" << endl;
 		}
-		if (!Gr->f_has_CG) {
-			FREE_OBJECT(CG);
-		}
-
 	}
 	else if (Descr->f_export_maple) {
 		if (f_v) {
@@ -145,20 +117,9 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 		}
 
 
-		colored_graph *CG;
-
-		if (Gr->f_has_CG) {
-			CG = Gr->CG;
-		}
-		else {
-			CG = NEW_OBJECT(colored_graph);
-			CG->init_adjacency_no_colors(Gr->N, Gr->Adj, verbose_level);
-		}
-
-
 		string fname_maple;
 
-		fname_maple.assign(Gr->label);
+		fname_maple.assign(CG->label);
 
 
 		ST.replace_extension_with(fname_maple, ".maple");
@@ -174,30 +135,16 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 			cout << "export_maple done" << endl;
 		}
 
-		if (!Gr->f_has_CG) {
-			FREE_OBJECT(CG);
-		}
-
 	}
 	else if (Descr->f_export_csv) {
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity f_export_csv" << endl;
 		}
 
-		colored_graph *CG;
-
-		if (Gr->f_has_CG) {
-			CG = Gr->CG;
-		}
-		else {
-			CG = NEW_OBJECT(colored_graph);
-			CG->init_adjacency_no_colors(Gr->N, Gr->Adj, verbose_level);
-		}
-
 
 		string fname_csv;
 
-		fname_csv.assign(Gr->label);
+		fname_csv.assign(CG->label);
 
 
 		ST.replace_extension_with(fname_csv, ".csv");
@@ -207,10 +154,6 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 
 		CG->export_to_csv(fname_csv, verbose_level);
 
-		if (!Gr->f_has_CG) {
-			FREE_OBJECT(CG);
-		}
-
 	}
 
 	else if (Descr->f_export_graphviz) {
@@ -218,20 +161,10 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 			cout << "graph_theoretic_activity::perform_activity f_export_graphviz" << endl;
 		}
 
-		colored_graph *CG;
-
-		if (Gr->f_has_CG) {
-			CG = Gr->CG;
-		}
-		else {
-			CG = NEW_OBJECT(colored_graph);
-			CG->init_adjacency_no_colors(Gr->N, Gr->Adj, verbose_level);
-		}
-
 
 		string fname_csv;
 
-		fname_csv.assign(Gr->label);
+		fname_csv.assign(CG->label);
 
 
 		ST.replace_extension_with(fname_csv, ".gv");
@@ -241,57 +174,28 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 
 		CG->export_to_graphviz(fname_csv, verbose_level);
 
-		if (!Gr->f_has_CG) {
-			FREE_OBJECT(CG);
-		}
-
 	}
 
 	else if (Descr->f_print) {
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity f_print" << endl;
 		}
-		colored_graph *CG;
-
-		if (Gr->f_has_CG) {
-			CG = Gr->CG;
-		}
-		else {
-			CG = NEW_OBJECT(colored_graph);
-			CG->init_adjacency_no_colors(Gr->N, Gr->Adj, verbose_level);
-		}
 		CG->print();
-		if (!Gr->f_has_CG) {
-			FREE_OBJECT(CG);
-		}
 
 	}
 	else if (Descr->f_sort_by_colors) {
 		if (f_v) {
 			cout << "graph_theoretic_activity::perform_activity f_sort_by_colors" << endl;
 		}
-		colored_graph *CG;
-
-		if (Gr->f_has_CG) {
-			CG = Gr->CG;
-		}
-		else {
-			CG = NEW_OBJECT(colored_graph);
-			CG->init_adjacency_no_colors(Gr->N, Gr->Adj, verbose_level);
-		}
-
 		colored_graph *CG2;
 		string fname2;
 
-		fname2.assign(Gr->label);
+		fname2.assign(CG->label);
 		//strcpy(fname2, fname_graph);
 		ST.replace_extension_with(fname2, "_sorted.bin");
 		CG2 = CG->sort_by_color_classes(verbose_level);
 		CG2->save(fname2, verbose_level);
 		FREE_OBJECT(CG2);
-		if (!Gr->f_has_CG) {
-			FREE_OBJECT(CG);
-		}
 
 	}
 
@@ -302,16 +206,6 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 		int m, n;
 		int a, c;
 		string_tools ST;
-
-		colored_graph *CG;
-
-		if (Gr->f_has_CG) {
-			CG = Gr->CG;
-		}
-		else {
-			CG = NEW_OBJECT(colored_graph);
-			CG->init_adjacency_no_colors(Gr->N, Gr->Adj, verbose_level);
-		}
 
 
 		Fio.lint_matrix_read_csv(Descr->split_by_file, Split, m, n, verbose_level - 2);
@@ -345,29 +239,15 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_save) {
 
-		colored_graph *CG;
-
-		if (Gr->f_has_CG) {
-			CG = Gr->CG;
-		}
-		else {
-			CG = NEW_OBJECT(colored_graph);
-			CG->init_adjacency_no_colors(Gr->N, Gr->Adj, verbose_level);
-		}
-
 		file_io Fio;
 		string fname;
 
-		fname.assign(Gr->label);
+		fname.assign(CG->label);
 		fname.append(".colored_graph");
 
 		cout << "before save fname_graph=" << fname << endl;
 		CG->save(fname, verbose_level);
 		cout << "after save" << endl;
-
-		if (!Gr->f_has_CG) {
-			FREE_OBJECT(CG);
-		}
 
 
 #if 0
@@ -389,20 +269,10 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 			cout << "graph_theoretic_activity::perform_activity f_automorphism_group" << endl;
 		}
 
-		colored_graph *CG;
-
-		if (Gr->f_has_CG) {
-			CG = Gr->CG;
-		}
-		else {
-			CG = NEW_OBJECT(colored_graph);
-			CG->init_adjacency_no_colors(Gr->N, Gr->Adj, verbose_level);
-		}
-
 		file_io Fio;
 		string fname;
 
-		fname.assign(Gr->label);
+		fname.assign(CG->label);
 		fname.append(".colored_graph");
 
 
@@ -419,7 +289,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 
 		string fname_report;
 
-		fname_report.assign(Gr->label);
+		fname_report.assign(CG->label);
 		fname_report.append("_report.tex");
 
 
@@ -427,7 +297,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 			char title[1000];
 			char author[1000];
 
-			snprintf(title, 1000, "Automorphism group of %s", Gr->label_tex.c_str());
+			snprintf(title, 1000, "Automorphism group of %s", CG->label_tex.c_str());
 			//strcpy(author, "");
 			author[0] = 0;
 
@@ -452,7 +322,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 
 				Aut->Strong_gens->group_order(go);
 
-				ost << "\\noindent The automorphism group of $" << Gr->label_tex << "$ "
+				ost << "\\noindent The automorphism group of $" << CG->label_tex << "$ "
 						"has order " << go << " and is generated by:\\\\" << endl;
 				Aut->Strong_gens->print_generators_tex(ost);
 
@@ -471,12 +341,27 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 					<< Fio.file_size(fname_report) << endl;
 		}
 
+		string fname_group;
 
+		fname_group.assign(CG->label);
+		fname_group.append("_group.makefile");
 
-
-		if (!Gr->f_has_CG) {
-			FREE_OBJECT(CG);
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity before Aut->export_to_orbiter label = " << CG->label << endl;
 		}
+		Aut->degree--;
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity before Aut->export_to_orbiter degree = " << Aut->degree << endl;
+		}
+		Aut->export_to_orbiter(fname_group, CG->label, Aut->Strong_gens, verbose_level);
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity after Aut->export_to_orbiter" << endl;
+		}
+		//file_io Fio;
+
+		cout << "written file " << fname_group << " of size "
+				<< Fio.file_size(fname_group) << endl;
+
 	}
 
 

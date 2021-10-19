@@ -902,7 +902,7 @@ void symbol_definition::definition_of_projective_space(int verbose_level)
 	PA->init(Projective_space_with_action_description->F, Projective_space_with_action_description->n,
 		f_semilinear,
 		TRUE /*f_init_incidence_structure*/,
-		0 /* verbose_level */);
+		verbose_level - 2);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_projective_space after PA->init" << endl;
 	}
@@ -1244,7 +1244,7 @@ void symbol_definition::definition_of_graph(int verbose_level)
 
 
 	orbiter_symbol_table_entry Symb;
-	Symb.init_graph(define_label, Gr, verbose_level);
+	Symb.init_graph(define_label, Gr->CG, verbose_level);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_graph before add_symbol_table_entry" << endl;
 	}

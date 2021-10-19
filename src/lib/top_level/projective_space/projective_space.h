@@ -44,6 +44,10 @@ public:
 
 	projective_space_with_action *PA;
 
+	canonical_form_classifier *Canon_substructure;
+
+
+
 	canonical_form_classifier_description();
 	~canonical_form_classifier_description();
 };
@@ -99,6 +103,12 @@ public:
 	long int *Goi; // [nb_objects_to_test]
 
 	tally_vector_data *Classification_of_quartic_curves;
+		// based on Canonical_forms, nb_objects_to_test
+
+	// transversal of the isomorphism types:
+	int *transversal;
+	int *frequency;
+	int nb_types; // number of isomorphism types
 
 
 	canonical_form_classifier();
@@ -349,6 +359,11 @@ public:
 	std::string decomposition_by_element_data;
 	std::string decomposition_by_element_fname;
 
+	int f_decomposition_by_subgroup;
+	std::string decomposition_by_subgroup_label;
+	linear_group_description * decomposition_by_subgroup_Descr;
+
+
 	int f_define_object;
 	std::string define_object_label;
 	combinatorial_object_description *Object_Descr;
@@ -482,6 +497,10 @@ public:
 	std::string latex_homogeneous_equation_symbol_tex;
 	std::string latex_homogeneous_equation_text;
 
+	int f_lines_on_point_but_within_a_plane;
+	long int lines_on_point_but_within_a_plane_point_rk;
+	long int lines_on_point_but_within_a_plane_plane_rk;
+
 	projective_space_activity_description();
 	~projective_space_activity_description();
 	int read_arguments(
@@ -511,14 +530,18 @@ public:
 	projective_space_activity();
 	~projective_space_activity();
 	void perform_activity(int verbose_level);
-	void do_spread_table_init(
-			projective_space_with_action *PA,
-			int dimension_of_spread_elements,
-			std::string &spread_selection_text,
-			std::string &spread_tables_prefix,
-			int starter_size,
-			packing_classify *&P,
-			int verbose_level);
+
+};
+
+// #############################################################################
+// projective_space_global.cpp
+// #############################################################################
+
+//! collection of worker functions for projective space
+
+
+class projective_space_global {
+public:
 	void map(
 			projective_space_with_action *PA,
 			std::string &label,
@@ -574,11 +597,13 @@ public:
 			projective_space_with_action *PA,
 			std::string &fname_mask, int nb,
 			std::string &fname_classification,
+			canonical_form_classifier *&Classifier,
 			int verbose_level);
 	void classify_quartic_curves_with_substructure(
 			projective_space_with_action *PA,
 			std::string &fname_mask, int nb, int substructure_size, int degree,
 			std::string &fname_classification,
+			canonical_form_classifier *&Classifier,
 			int verbose_level);
 	void set_stabilizer(
 			projective_space_with_action *PA,
@@ -837,6 +862,9 @@ public:
 	action *A; // linear group PGGL(d,q) in the action on points
 	action *A_on_lines; // linear group PGGL(d,q) acting on lines
 
+	int f_has_action_on_planes;
+	action *A_on_planes; // linear group PGGL(d,q) acting on planes
+
 
 	int *Elt1;
 
@@ -872,28 +900,6 @@ public:
 		strong_generators *&SG,
 		long int *canonical_labeling,
 		int verbose_level);
-#if 0
-	void merge_packings(
-			std::string *fnames, int nb_files,
-			std::string &file_of_spreads,
-			classify_bitvectors *&CB,
-			int verbose_level);
-	void select_packings(
-			std::string &fname,
-			std::string &file_of_spreads_original,
-			spread_tables *Spread_tables,
-			int f_self_dual,
-			int f_ago, int select_ago,
-			classify_bitvectors *&CB,
-			int verbose_level);
-	void select_packings_self_dual(
-			std::string &fname,
-			std::string &file_of_spreads_original,
-			int f_split, int split_r, int split_m,
-			spread_tables *Spread_tables,
-			classify_bitvectors *&CB,
-			int verbose_level);
-#endif
 	object_in_projective_space *create_object_from_string(
 		int type, std::string &input_fname, int input_idx,
 		std::string &set_as_string, int verbose_level);
@@ -913,6 +919,8 @@ public:
 			int decomposition_by_element_power,
 			std::string &decomposition_by_element_data, std::string &fname_base,
 			int verbose_level);
+	void do_cheat_sheet_for_decomposition_by_subgroup(std::string &label,
+			linear_group_description * subgroup_Descr, int verbose_level);
 	void report(
 		std::ostream &ost,
 		layered_graph_draw_options *O,
@@ -939,6 +947,9 @@ public:
 	void setup_surface_with_action(
 			surface_with_action *&Surf_A,
 			int verbose_level);
+	void report_decomposition_by_group(
+		strong_generators *SG, std::ostream &ost, std::string &fname_base,
+		int verbose_level);
 
 };
 

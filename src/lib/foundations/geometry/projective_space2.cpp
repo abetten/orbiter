@@ -1548,7 +1548,24 @@ void projective_space::cheat_sheet_points(
 	f << "\\end{multicols}" << endl;
 	f << "\\clearpage" << endl << endl;
 
+
+	cheat_polarity(f, verbose_level);
+
+
 	FREE_int(v);
+}
+
+void projective_space::cheat_polarity(std::ostream &f, int verbose_level)
+{
+
+	f << "Standard polarity point $\\leftrightarrow$ hyperplane:\\\\" << endl;
+
+	Standard_polarity->report(f);
+
+	f << "Reversal polarity point $\\leftrightarrow$ hyperplane:\\\\" << endl;
+
+	Reversal_polarity->report(f);
+
 }
 
 void projective_space::cheat_sheet_point_table(
@@ -3924,9 +3941,9 @@ void projective_space::arc_with_given_set_of_s_lines_diophant(
 
 
 	if (f_dualize) {
-		if (Polarity_point_to_hyperplane == NULL) {
+		if (Standard_polarity == NULL) {
 			cout << "projective_space::arc_with_given_set_of_s_lines_diophant "
-					"Polarity_point_to_hyperplane == NULL" << endl;
+					"Standard_polarity == NULL" << endl;
 			exit(1);
 		}
 	}
@@ -3944,7 +3961,7 @@ void projective_space::arc_with_given_set_of_s_lines_diophant(
 	h = 0;
 	for (i = 0; i < nb_s_lines; i++) {
 		if (f_dualize) {
-			line = Polarity_point_to_hyperplane[s_lines[i]];
+			line = Standard_polarity->Point_to_hyperplane[s_lines[i]];
 		}
 		else {
 			line = s_lines[i];
@@ -3964,7 +3981,7 @@ void projective_space::arc_with_given_set_of_s_lines_diophant(
 	}
 	for (i = 0; i < nb_other_lines; i++) {
 		if (f_dualize) {
-			line = Polarity_point_to_hyperplane[other_lines[i]];
+			line = Standard_polarity->Point_to_hyperplane[other_lines[i]];
 		}
 		else {
 			line = other_lines[i];
@@ -4057,9 +4074,9 @@ void projective_space::arc_with_two_given_line_sets_diophant(
 
 
 	if (f_dualize) {
-		if (Polarity_point_to_hyperplane == NULL) {
+		if (Standard_polarity == NULL) {
 			cout << "projective_space::arc_with_two_given_line_sets_diophant "
-					"Polarity_point_to_hyperplane == NULL" << endl;
+					"Standard_polarity == NULL" << endl;
 			exit(1);
 		}
 	}
@@ -4077,7 +4094,7 @@ void projective_space::arc_with_two_given_line_sets_diophant(
 	h = 0;
 	for (i = 0; i < nb_s_lines; i++) {
 		if (f_dualize) {
-			line = Polarity_point_to_hyperplane[s_lines[i]];
+			line = Standard_polarity->Point_to_hyperplane[s_lines[i]];
 		}
 		else {
 			line = s_lines[i];
@@ -4097,7 +4114,7 @@ void projective_space::arc_with_two_given_line_sets_diophant(
 	}
 	for (i = 0; i < nb_t_lines; i++) {
 		if (f_dualize) {
-			line = Polarity_point_to_hyperplane[t_lines[i]];
+			line = Standard_polarity->Point_to_hyperplane[t_lines[i]];
 		}
 		else {
 			line = t_lines[i];
@@ -4120,7 +4137,7 @@ void projective_space::arc_with_two_given_line_sets_diophant(
 
 		l = other_lines[nb_s_lines + nb_t_lines + i];
 		if (f_dualize) {
-			line = Polarity_point_to_hyperplane[l];
+			line = Standard_polarity->Point_to_hyperplane[l];
 		}
 		else {
 			line = l;
@@ -4214,7 +4231,7 @@ void projective_space::arc_with_three_given_line_sets_diophant(
 
 
 	if (f_dualize) {
-		if (Polarity_point_to_hyperplane == NULL) {
+		if (Standard_polarity->Point_to_hyperplane == NULL) {
 			cout << "projective_space::arc_with_three_given_line_sets_diophant "
 					"Polarity_point_to_hyperplane == NULL" << endl;
 			exit(1);
@@ -4234,7 +4251,7 @@ void projective_space::arc_with_three_given_line_sets_diophant(
 	h = 0;
 	for (i = 0; i < nb_s_lines; i++) {
 		if (f_dualize) {
-			line = Polarity_point_to_hyperplane[s_lines[i]];
+			line = Standard_polarity->Point_to_hyperplane[s_lines[i]];
 		}
 		else {
 			line = s_lines[i];
@@ -4254,7 +4271,7 @@ void projective_space::arc_with_three_given_line_sets_diophant(
 	}
 	for (i = 0; i < nb_t_lines; i++) {
 		if (f_dualize) {
-			line = Polarity_point_to_hyperplane[t_lines[i]];
+			line = Standard_polarity->Point_to_hyperplane[t_lines[i]];
 		}
 		else {
 			line = t_lines[i];
@@ -4274,7 +4291,7 @@ void projective_space::arc_with_three_given_line_sets_diophant(
 	}
 	for (i = 0; i < nb_u_lines; i++) {
 		if (f_dualize) {
-			line = Polarity_point_to_hyperplane[u_lines[i]];
+			line = Standard_polarity->Point_to_hyperplane[u_lines[i]];
 		}
 		else {
 			line = u_lines[i];
@@ -4297,7 +4314,7 @@ void projective_space::arc_with_three_given_line_sets_diophant(
 
 		l = other_lines[nb_s_lines + nb_t_lines + nb_u_lines + i];
 		if (f_dualize) {
-			line = Polarity_point_to_hyperplane[l];
+			line = Standard_polarity->Point_to_hyperplane[l];
 		}
 		else {
 			line = l;

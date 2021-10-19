@@ -3181,7 +3181,7 @@ void finite_field::do_blocking_set_family_3(int n,
 
 	for (i = 0; i < sz; i++) {
 		j = S->set[i];
-		the_set_out[i] = P->Polarity_hyperplane_to_point[j];
+		the_set_out[i] = P->Standard_polarity->Hyperplane_to_point[j];
 	}
 
 

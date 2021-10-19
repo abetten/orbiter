@@ -824,6 +824,9 @@ public:
 	void print_group_order_long(std::ostream &ost);
 	void print_vector(vector_ge &v);
 	void print_vector_as_permutation(vector_ge &v);
+	void write_set_of_elements_latex_file(std::string &fname, std::string &title, int *Elt, int nb_elts);
+	void export_to_orbiter(
+			std::string &fname, std::string &label, strong_generators *SG, int verbose_level);
 
 	// action_cb.cpp
 	int image_of(void *elt, int a);
@@ -1009,6 +1012,12 @@ public:
 	action *init_direct_product_group(
 			matrix_group *M1, matrix_group *M2,
 			int verbose_level);
+	void compute_decomposition_based_on_orbits(projective_space *P,
+			schreier *Sch1, schreier *Sch2,
+			incidence_structure *&Inc, partitionstack *&Stack, int verbose_level);
+	void compute_decomposition_based_on_orbit_length(projective_space *P,
+			schreier *Sch1, schreier *Sch2,
+			incidence_structure *&Inc, partitionstack *&Stack, int verbose_level);
 
 };
 

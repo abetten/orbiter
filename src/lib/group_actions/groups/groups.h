@@ -1002,6 +1002,7 @@ public:
 	int find_shortest_orbit_if_unique(int &idx);
 	void elements_in_orbit_of(int pt, int *orb, int &nb, 
 		int verbose_level);
+	void get_orbit_length(int *&orbit_length, int verbose_level);
 	void get_orbit_lengths_once_each(int *&orbit_lengths, 
 		int &nb_orbit_lengths);
 	int orbit_number(int pt);
@@ -1034,6 +1035,7 @@ public:
 	void latex(std::string &fname);
 	void print_orbit_lengths(std::ostream &ost);
 	void print_orbit_lengths_tex(std::ostream &ost);
+	void print_fixed_points_tex(std::ostream &ost);
 	void print_orbit_length_distribution(std::ostream &ost);
 	void print_orbit_reps(std::ostream &ost);
 	void print(std::ostream &ost);

@@ -136,6 +136,52 @@ void any_group::create_latex_report(
 	}
 }
 
+void any_group::do_export_orbiter(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::do_export_orbiter" << endl;
+	}
+
+	string fname;
+	file_io Fio;
+
+	if (f_v) {
+		cout << "any_group::do_export_orbiter label=" << label << endl;
+	}
+	fname.assign(label);
+	fname.append(".makefile");
+	{
+		ofstream fp(fname);
+
+		if (Subgroup_gens) {
+			if (f_v) {
+				cout << "any_group::do_export_orbiter using Subgroup_gens" << endl;
+			}
+			A_base->export_to_orbiter(fname, label, Subgroup_gens, verbose_level);
+		}
+		else if (A->f_has_strong_generators) {
+			if (f_v) {
+				cout << "any_group::do_export_orbiter using A_base->Strong_gens" << endl;
+			}
+			A_base->export_to_orbiter(fname, label, A_base->Strong_gens, verbose_level);
+		}
+		else {
+			cout << "any_group::do_export_orbiter no generators to export" << endl;
+			exit(1);
+		}
+
+	}
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+	if (f_v) {
+		cout << "any_group::do_export_orbiter done" << endl;
+	}
+}
+
+
 
 void any_group::do_export_gap(int verbose_level)
 {
@@ -654,7 +700,8 @@ void any_group::save_elements_csv(std::string &fname, int verbose_level)
 	}
 }
 
-void any_group::multiply_elements_csv(std::string &fname1, std::string &fname2, std::string &fname3,
+void any_group::multiply_elements_csv(std::string &fname1,
+		std::string &fname2, std::string &fname3,
 		int f_column_major_ordering, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1259,7 +1306,7 @@ void any_group::orbits_on_subsets(poset_classification_control *Control, int sub
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "any_group::orbits_on_subsets" << endl;
+		cout << "any_group::orbits_on_subsets subset_size=" << subset_size << endl;
 	}
 	poset_classification *PC;
 	poset_with_group_action *Poset;
@@ -1277,13 +1324,37 @@ void any_group::orbits_on_subsets(poset_classification_control *Control, int sub
 	}
 #endif
 	if (f_v) {
-		cout << "group_theoretic_activity::orbits_on_subsets control=" << endl;
+		cout << "any_group::orbits_on_subsets control=" << endl;
 		Control->print();
+	}
+	if (f_v) {
+		cout << "any_group::orbits_on_subsets label=" << label << endl;
+	}
+	if (f_v) {
+		cout << "any_group::orbits_on_subsets A_base=" << endl;
+		A_base->print_info();
+	}
+	if (f_v) {
+		cout << "any_group::orbits_on_subsets A=" << endl;
+		A->print_info();
+	}
+	if (f_v) {
+		cout << "any_group::orbits_on_subsets group order" << endl;
+
+		longinteger_object go;
+
+		Subgroup_gens->group_order(go);
+
+		cout << go << endl;
 	}
 
 
-	Poset->init_subset_lattice(A, A,
-			LG->Strong_gens,
+	if (f_v) {
+		cout << "any_group::orbits_on_subsets "
+				"before Poset->init_subset_lattice" << endl;
+	}
+	Poset->init_subset_lattice(A_base, A,
+			Subgroup_gens,
 			verbose_level);
 
 	if (f_v) {
@@ -1306,6 +1377,10 @@ void any_group::orbits_on_subsets(poset_classification_control *Control, int sub
 	orbits_on_poset_post_processing(
 			PC, subset_size,
 			verbose_level);
+	if (f_v) {
+		cout << "any_group::orbits_on_subsets "
+				"after orbits_on_poset_post_processing" << endl;
+	}
 
 
 	if (f_v) {

@@ -199,7 +199,7 @@ void graph_theory_domain::save_as_colored_graph_easy(std::string &fname_base,
 	colored_graph *CG;
 
 	CG = NEW_OBJECT(colored_graph);
-	CG->init_adjacency_no_colors(n, Adj, 0 /*verbose_level*/);
+	CG->init_adjacency_no_colors(n, Adj, fname_base, fname_base, 0 /*verbose_level*/);
 
 	CG->save(fname, verbose_level);
 
@@ -1505,7 +1505,9 @@ void graph_theory_domain::compute_adjacency_matrix(
 
 		CG->init(nb_sets, 1 /* nb_colors */, 1 /* nb_colors_per_vertex */,
 				color, B,
-				FALSE, verbose_level);
+				FALSE,
+				prefix_for_graph, prefix_for_graph,
+				verbose_level);
 
 		fname.assign(prefix_for_graph);
 		fname.append("_disjointness.colored_graph");

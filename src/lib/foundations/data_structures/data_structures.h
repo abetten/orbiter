@@ -73,6 +73,7 @@ public:
 	void save(std::ofstream &fp);
 	void load(std::ifstream &fp);
 	uint32_t compute_hash();
+	void print();
 
 };
 

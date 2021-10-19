@@ -112,7 +112,8 @@ public:
 	int data_set_sz;
 	int data_length;
 
-	int *data;
+	int *data; // [data_length * data_set_sz]
+
 	int *rep_idx; // [data_length], rep_idx[i] is the index into Rep of data[i * data_set_sz]
 	int *Reps; // [data_length * data_set_sz], used [nb_types * data_set_sz]
 	int *Frequency; // [data_length], used [nb_types]
@@ -148,6 +149,10 @@ public:
 			int &idx, uint32_t &h, int verbose_level);
 	void print();
 	void save_classes_individually(std::string &fname, int verbose_level);
+	void get_transversal(
+			int *&transversal, int *&frequency, int &nb_types, int verbose_level);
+	void print_classes_bigger_than_one(int verbose_level);
+
 };
 
 

@@ -115,6 +115,49 @@ void schreier::print_orbit_lengths_tex(std::ostream &ost)
 
 }
 
+void schreier::print_fixed_points_tex(std::ostream &ost)
+{
+	int i, f, l, m, idx, h, fst, j, a;
+	int *orbit_len_sorted;
+	int *sorting_perm;
+	int *sorting_perm_inv;
+	int nb_types;
+	int *type_first;
+	int *type_len;
+	sorting Sorting;
+
+	Sorting.int_vec_classify(nb_orbits, orbit_len, orbit_len_sorted,
+		sorting_perm, sorting_perm_inv,
+		nb_types, type_first, type_len);
+
+	idx = -1;
+	for (i = 0; i < nb_types; i++) {
+		fst = type_first[i];
+		m = orbit_len_sorted[fst];
+		if (m == 1) {
+			idx = i;
+		}
+	}
+	if (idx >= 0) {
+		fst = type_first[idx];
+		l = type_len[idx];
+		ost << "There are " << l << " fixed elements, they are:\\\\";
+		for (h = 0; h < l; h++) {
+			j = sorting_perm_inv[fst + h];
+			f = orbit_first[j];
+			a = orbit[f];
+			ost << a << "\\\\" << endl;
+		}
+	}
+	FREE_int(orbit_len_sorted);
+	FREE_int(sorting_perm);
+	FREE_int(sorting_perm_inv);
+	FREE_int(type_first);
+	FREE_int(type_len);
+
+}
+
+
 void schreier::print_orbit_length_distribution(std::ostream &ost)
 {
 	int *val, *mult, len;

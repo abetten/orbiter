@@ -22,6 +22,8 @@ void algebra_global_with_action::orbits_under_conjugation(
 		strong_generators *SG,
 		vector_ge *Transporter,
 		int verbose_level)
+// this is related to Betten, Topalova, Zhelezova 2021,
+// packings in PG(3,4) invariant under an elementary group of order 4
 {
 	int f_v = (verbose_level >= 1);
 
@@ -98,6 +100,8 @@ void algebra_global_with_action::create_subgroups(
 		schreier *Classes,
 		vector_ge *Transporter,
 		int verbose_level)
+// this is related to Betten, Topalova, Zhelezova 2021,
+// packings in PG(3,4) invariant under an elementary group of order 4
 {
 	int f_v = (verbose_level >= 1);
 
@@ -150,6 +154,7 @@ void algebra_global_with_action::create_subgroups(
 	strong_generators **Flag_stab;
 	int *SO;
 	int *SOL;
+	int nb_reject;
 
 	Elt0 = NEW_int(S->A->elt_size_in_int);
 	Elt1 = NEW_int(S->A->elt_size_in_int);
@@ -171,6 +176,8 @@ void algebra_global_with_action::create_subgroups(
 	Flag_stab = new pstrong_generators [Classes->nb_orbits];
 	SO = NEW_int(Classes->nb_orbits);
 	SOL = NEW_int(Classes->nb_orbits);
+
+	nb_reject = 0;
 
 	for (j = 1; j < Classes->nb_orbits; j++) {
 
@@ -211,11 +218,15 @@ void algebra_global_with_action::create_subgroups(
 
 			nb_flag_orbits++;
 		}
+		else {
+			cout << "Class " << j << " is rejected because the third element does not belong to the same class." << endl;
+			nb_reject++;
+		}
 
 	}
 
 	if (f_v) {
-		cout << "We found " << nb_flag_orbits << " flag orbits" << endl;
+		cout << "We found " << nb_flag_orbits << " flag orbits, with " << nb_reject << " may rejected" << endl;
 
 		int h;
 
@@ -456,7 +467,7 @@ void algebra_global_with_action::create_subgroups(
 			if (f_v) {
 				cout << "algebra_global_with_action::create_subgroups before report" << endl;
 			}
-#if 0
+#if 1
 			int h;
 			ost << "There are " << nb_flag_orbits << " flag orbits:\\\\" << endl;
 			for (h = 0; h < nb_flag_orbits; h++) {

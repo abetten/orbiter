@@ -26,6 +26,7 @@ MODULES = \
 	object_in_projective_space.o \
 	point_line.o \
 	points_and_lines.o \
+	polarity.o \
 	projective_space.o \
 	projective_space2.o \
 	quartic_curve_domain.o \

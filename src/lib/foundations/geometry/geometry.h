@@ -1534,6 +1534,33 @@ public:
 };
 
 
+// #############################################################################
+// polarity.cpp
+// #############################################################################
+
+//! a polarity between points and hyperplanes in PG(n,q)
+
+
+class polarity {
+
+public:
+
+	projective_space *P;
+
+	int *Point_to_hyperplane; // [P->N_points]
+	int *Hyperplane_to_point; // [P->N_points]
+
+
+	polarity();
+	~polarity();
+	void init_standard_polarity(projective_space *P, int verbose_level);
+	void init_general_polarity(projective_space *P, int *Mtx, int verbose_level);
+	void init_reversal_polarity(projective_space *P, int verbose_level);
+	void report(std::ostream &f);
+
+};
+
+
 
 // #############################################################################
 // projective_space.cpp
@@ -1547,7 +1574,8 @@ class projective_space {
 public:
 
 	grassmann *Grass_lines;
-	grassmann *Grass_planes; // if N > 2
+	grassmann *Grass_planes; // if n > 2
+	grassmann *Grass_hyperplanes; // if n > 2 (for n=3, planes and hyperplanes are the same thing)
 	finite_field *F;
 	longinteger_object *Go;
 
@@ -1572,8 +1600,12 @@ public:
 	int *Line_intersection;	// [N_lines * N_lines]
 
 	// only if n = 2:
-	int *Polarity_point_to_hyperplane; // [N_points]
-	int *Polarity_hyperplane_to_point; // [N_points]
+	//int *Polarity_point_to_hyperplane; // [N_points]
+	//int *Polarity_hyperplane_to_point; // [N_points]
+
+	polarity *Standard_polarity;
+	polarity *Reversal_polarity;
+
 
 	int *v; // [n + 1]
 	int *w; // [n + 1]
@@ -1588,6 +1620,7 @@ public:
 		int f_init_incidence_structure, 
 		int verbose_level);
 	void init_incidence_structure(int verbose_level);
+	void init_polarity(int verbose_level);
 	void intersect_with_line(long int *set, int set_sz,
 			int line_rk, long int *intersection, int &sz, int verbose_level);
 	void create_points_on_line(long int line_rk, long int *line,
@@ -1595,6 +1628,9 @@ public:
 		// needs line[k]
 	void create_lines_on_point(
 		long int point_rk, long int *line_pencil, int verbose_level);
+	void create_lines_on_point_but_inside_a_plane(
+		long int point_rk, long int plane_rk,
+		long int *line_pencil, int verbose_level);
 	int create_point_on_line(
 		long int line_rk, int pt_rk, int verbose_level);
 	// pt_rk is between 0 and q-1.
@@ -1759,6 +1795,10 @@ public:
 			layered_graph_draw_options *O,
 			int verbose_level);
 	void create_latex_report_for_Grassmannian(int k, int verbose_level);
+	void compute_decomposition(partitionstack *S1, partitionstack *S2,
+			incidence_structure *&Inc, partitionstack *&Stack, int verbose_level);
+	void compute_decomposition_based_on_tally(tally *T1, tally *T2,
+			incidence_structure *&Inc, partitionstack *&Stack, int verbose_level);
 
 	// projective_space2.cpp:
 	void print_set_numerical(std::ostream &ost, long int *set, int set_size);
@@ -1828,6 +1868,7 @@ public:
 	void klein_correspondence_special_model(projective_space *P5, 
 		int *table, int verbose_level);
 	void cheat_sheet_points(std::ostream &f, int verbose_level);
+	void cheat_polarity(std::ostream &f, int verbose_level);
 	void cheat_sheet_point_table(std::ostream &f, int verbose_level);
 	void cheat_sheet_points_on_lines(std::ostream &f, int verbose_level);
 	void cheat_sheet_lines_on_points(std::ostream &f, int verbose_level);
@@ -2022,6 +2063,17 @@ public:
 		int verbose_level);
 	void assemble_cubic_surface(int *f1, int *f2, int *f3, int *eqn20,
 		int verbose_level);
+	void create_surface(quartic_curve_object *Q, int *eqn20, int verbose_level);
+	// Given a quartic Q in X1,X2,X3, compute an associated cubic surface
+	// whose projection from (1,0,0,0) gives back the quartic Q.
+	// Pick 4 bitangents L0,L1,L2,L3 so that the 8 points of tangency lie on a conic C.
+	// Then, create the cubic surface with equation
+	// (- lambda * mu) / 4 * X0^2 * L0 (the equation of the first of the four bitangents)
+	// + X0 * lambda * C (the conic equation)
+	// + L1 * L2 * L3 (the product of the equations of the last three bitangents)
+	// Here 1, lambda, mu are the coefficients of a linear dependency between
+	// Q (the quartic), C^2, L0*L1*L2*L3, so
+	// Q + lambda * C^2 + mu * L0*L1*L2*L3 = 0.
 
 };
 
@@ -2107,8 +2159,8 @@ public:
 	int nb_pts;
 
 
-	long int *Lines;
-	int nb_lines;
+	//long int *Lines;
+	//int nb_lines;
 
 	int eqn15[15];
 
@@ -2138,7 +2190,6 @@ public:
 	void identify_lines(long int *lines, int nb_lines, int *line_idx,
 		int verbose_level);
 	int find_point(long int P, int &idx);
-	void create_surface(int *eqn20, int verbose_level);
 
 };
 

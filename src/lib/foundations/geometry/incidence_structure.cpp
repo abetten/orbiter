@@ -956,7 +956,7 @@ int incidence_structure::compute_TDO_step(
 	}
 	if (f_is_row_class) {
 		if (f_vv) {
-			cout << "incidence_structure::compute_TDO before "
+			cout << "incidence_structure::compute_TDO_step before "
 					"refine_column_partition ht0=" << ht0
 					<< " ht1=" << ht1 << endl;
 		}
@@ -964,7 +964,7 @@ int incidence_structure::compute_TDO_step(
 		//cout << "h1=" << h1 << endl;
 		h2 = hashing(h1, h2);
 		if (f_v) {
-			cout << "incidence_structure::compute_TDO after "
+			cout << "incidence_structure::compute_TDO_step after "
 					"refine_column_partition ht=" << PStack.ht << endl;
 		}
 		if (f_vv) {
@@ -978,7 +978,7 @@ int incidence_structure::compute_TDO_step(
 	}
 	else {
 		if (f_vv) {
-			cout << "incidence_structure::compute_TDO before "
+			cout << "incidence_structure::compute_TDO_step before "
 					"refine_column_partition ht0=" << ht0
 					<< " ht1=" << ht1 << endl;
 		}
@@ -987,7 +987,7 @@ int incidence_structure::compute_TDO_step(
 		h2 = hashing(h1, h2);
 		//cout << "h2=" << h2 << endl;
 		if (f_v) {
-			cout << "incidence_structure::compute_TDO after "
+			cout << "incidence_structure::compute_TDO_step after "
 					"refine_row_partition ht=" << PStack.ht << endl;
 		}
 		if (f_vv) {

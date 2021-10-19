@@ -282,6 +282,60 @@ void tally_vector_data::save_classes_individually(std::string &fname, int verbos
 	}
 }
 
+void tally_vector_data::get_transversal(
+		int *&transversal, int *&frequency, int &nb_types, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, f, l;
+
+	if (f_v) {
+		cout << "tally_vector_data::get_transversal" << endl;
+		}
+
+	nb_types = tally_vector_data::nb_types;
+	transversal = NEW_int(nb_types);
+	frequency = NEW_int(nb_types);
+	for (i = 0; i < nb_types; i++) {
+		f = type_first[i];
+		l = Frequency[i];
+		transversal[i] = sorting_perm_inv[f + 0];
+		frequency[i] = l;
+	}
+
+	if (f_v) {
+		cout << "tally_vector_data::get_transversal done" << endl;
+	}
+}
+
+void tally_vector_data::print_classes_bigger_than_one(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, a, f, l;
+
+	if (f_v) {
+		cout << "tally_vector_data::print_classes_bigger_than_one" << endl;
+		}
+
+	for (i = 0; i < nb_types; i++) {
+		f = type_first[i];
+		l = Frequency[i];
+		if (l > 1) {
+			cout << "class " << i << " has size " << l << " : ";
+			for (j = 0; j < l; j++) {
+				a = sorting_perm_inv[f + j];
+				cout << a;
+				if (j < l - 1) {
+					cout << ", ";
+				}
+			}
+			cout << endl;
+		}
+	}
+
+	if (f_v) {
+		cout << "tally_vector_data::print_classes_bigger_than_one done" << endl;
+	}
+}
 
 
 static int classify_int_vec_compare_function(void *a, void *b, void *data)

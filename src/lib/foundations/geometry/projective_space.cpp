@@ -24,6 +24,7 @@ projective_space::projective_space()
 {
 	Grass_lines = NULL;
 	Grass_planes = NULL;
+	Grass_hyperplanes = NULL;
 	F = NULL;
 	Go = NULL;
 	Nb_subspaces = NULL;
@@ -33,8 +34,12 @@ projective_space::projective_space()
 	Line_intersection = NULL;
 	Lines = NULL;
 	Lines_on_point = NULL;
-	Polarity_point_to_hyperplane = NULL;
-	Polarity_hyperplane_to_point = NULL;
+	//Polarity_point_to_hyperplane = NULL;
+	//Polarity_hyperplane_to_point = NULL;
+
+	Standard_polarity = NULL;
+	Reversal_polarity = NULL;
+
 	v = NULL;
 	w = NULL;
 	Mtx = NULL;
@@ -116,12 +121,20 @@ void projective_space::freeself()
 		}
 		FREE_int(Lines_on_point);
 	}
+	if (Standard_polarity) {
+		FREE_OBJECT(Standard_polarity);
+	}
+	if (Reversal_polarity) {
+		FREE_OBJECT(Reversal_polarity);
+	}
+#if 0
 	if (Polarity_point_to_hyperplane) {
 		FREE_int(Polarity_point_to_hyperplane);
 	}
 	if (Polarity_hyperplane_to_point) {
 		FREE_int(Polarity_hyperplane_to_point);
 	}
+#endif
 	null();
 	if (f_v) {
 		cout << "projective_space::freeself done" << endl;
@@ -159,6 +172,10 @@ void projective_space::init(int n, finite_field *F,
 	if (n > 2) {
 		Grass_planes = NEW_OBJECT(grassmann);
 		Grass_planes->init(n + 1, 3, F, verbose_level - 2);
+	}
+	if (n >= 2) {
+		Grass_hyperplanes = NEW_OBJECT(grassmann);
+		Grass_hyperplanes->init(n + 1, n, F, verbose_level - 2);
 	}
 
 	if (f_v) {
@@ -482,48 +499,16 @@ void projective_space::init_incidence_structure(int verbose_level)
 		}
 	}
 
-	if (n == 2) {
+	if (n >= 2) {
 		if (f_v) {
-			cout << "projective_space::init_incidence_structure "
-				"computing polarity information..." << endl;
+			cout << "projective_space::init_incidence_structure before init_polarity" << endl;
 		}
-		Polarity_point_to_hyperplane = NEW_int(N_points);
-		Polarity_hyperplane_to_point = NEW_int(N_points);
-		for (i = 0; i < N_lines; i++) {
-			int *A, a;
-			A = NEW_int((n + 1) * (n + 1));
-			Grass_lines->unrank_lint(i, 0 /*verbose_level - 4*/);
-			for (j = 0; j < 2 * (n + 1); j++) {
-				A[j] = Grass_lines->M[j];
-			}
-			if (FALSE) {
-				Orbiter->Int_vec.print_integer_matrix_width(cout,
-					A, 2, n + 1, n + 1, 
-					F->log10_of_q + 1);
-			}
-			F->perp_standard(n + 1, 2, A, 0);
-			if (FALSE) {
-				Orbiter->Int_vec.print_integer_matrix_width(cout,
-					A, n + 1, n + 1, n + 1, 
-					F->log10_of_q + 1);
-			}
-			F->PG_element_rank_modified(A + 2 * (n + 1), 1, n + 1, a);
-			if (f_vv) {
-				cout << "line " << i << " is ";
-				Orbiter->Int_vec.print(cout, A + 2 * (n + 1), n + 1);
-				cout << "^\\perp = " << a << "^\\perp" << endl;
-			}
-			FREE_int(A);
-			Polarity_point_to_hyperplane[a] = i;
-			Polarity_hyperplane_to_point[i] = a;
-		}
-		if (FALSE /* f_vv */) {
-			cout << "i : pt_to_hyperplane[i] : hyperplane_to_pt[i]" << endl;
-			for (i = 0; i < N_lines; i++) {
-				cout << setw(4) << i << " " 
-					<< setw(4) << Polarity_point_to_hyperplane[i] << " " 
-					<< setw(4) << Polarity_hyperplane_to_point[i] << endl;
-			}
+
+		init_polarity(verbose_level);
+
+
+		if (f_v) {
+			cout << "projective_space::init_incidence_structure after init_polarity" << endl;
 		}
 	}
 	
@@ -649,6 +634,44 @@ void projective_space::init_incidence_structure(int verbose_level)
 	}
 }
 
+void projective_space::init_polarity(int verbose_level)
+// uses Grass_hyperplanes
+{
+	int f_v = (verbose_level >= 1);
+	//int i, j;
+	//int *A;
+	//int a;
+
+	if (f_v) {
+		cout << "projective_space::init_polarity" << endl;
+	}
+	Standard_polarity = NEW_OBJECT(polarity);
+
+	if (f_v) {
+		cout << "projective_space::init_polarity before Standard_polarity->init_standard_polarity" << endl;
+	}
+	Standard_polarity->init_standard_polarity(this, verbose_level);
+	if (f_v) {
+		cout << "projective_space::init_polarity after Standard_polarity->init_standard_polarity" << endl;
+	}
+
+	Reversal_polarity = NEW_OBJECT(polarity);
+
+	if (f_v) {
+		cout << "projective_space::init_polarity before Standard_polarity->init_reversal_polarity" << endl;
+	}
+	Reversal_polarity->init_reversal_polarity(this, verbose_level);
+	if (f_v) {
+		cout << "projective_space::init_polarity after Standard_polarity->init_reversal_polarity" << endl;
+	}
+
+
+
+	if (f_v) {
+		cout << "projective_space::init_polarity done" << endl;
+	}
+
+}
 void projective_space::intersect_with_line(long int *set, int set_sz,
 		int line_rk, long int *intersection, int &sz, int verbose_level)
 {
@@ -727,7 +750,82 @@ void projective_space::create_lines_on_point(
 		b = Grass_lines->rank_lint_here(Basis, 0 /*verbose_level*/);
 		line_pencil[a] = b;
 	}
+	FREE_int(v);
+	FREE_int(w);
+	FREE_int(Basis);
 }
+
+void projective_space::create_lines_on_point_but_inside_a_plane(
+	long int point_rk, long int plane_rk,
+	long int *line_pencil, int verbose_level)
+// assumes that line_pencil[q + 1] has been allocated
+{
+	int f_v = (verbose_level >= 1);
+	int a, b, idx, d, rk, i;
+	int *v;
+	int *w;
+	int *Basis;
+	int *Plane;
+	int *M;
+
+	if (f_v) {
+		cout << "projective_space::create_lines_on_point_but_inside_a_plane" << endl;
+	}
+	if (n < 3) {
+		cout << "projective_space::create_lines_on_point_but_inside_a_plane n < 3" << endl;
+		exit(1);
+	}
+	d = n + 1;
+	v = NEW_int(d);
+	w = NEW_int(n);
+	Basis = NEW_int(2 * d);
+	Plane = NEW_int(3 * d);
+	M = NEW_int(4 * d);
+
+	Grass_planes->unrank_lint_here(Plane, plane_rk, 0 /*verbose_level*/);
+
+	F->PG_element_unrank_modified(v, 1, d, point_rk);
+	for (idx = 0; idx < n + 1; idx++) {
+		if (v[idx]) {
+			break;
+		}
+	}
+	if (idx == n + 1) {
+		cout << "projective_space::create_lines_on_point_but_inside_a_plane zero vector" << endl;
+		exit(1);
+	}
+	i = 0;
+	for (a = 0; a < r; a++) {
+		F->PG_element_unrank_modified(w, 1, n, a);
+		Orbiter->Int_vec.copy(v, Basis, d);
+		Orbiter->Int_vec.copy(w, Basis + d, idx);
+		Basis[d + idx] = 0;
+		Orbiter->Int_vec.copy(w + idx, Basis + d + idx + 1, n - idx);
+
+
+		Orbiter->Int_vec.copy(Plane, M, 3 * d);
+		Orbiter->Int_vec.copy(Basis + d, M + 3 * d, d);
+		rk = F->rank_of_rectangular_matrix(M, 4, d, 0 /* verbose_level*/);
+		if (rk == 3) {
+			b = Grass_lines->rank_lint_here(Basis, 0 /*verbose_level*/);
+			line_pencil[i++] = b;
+		}
+
+	}
+	if (i != q + 1) {
+		cout << "projective_space::create_lines_on_point_but_inside_a_plane  i != q + 1" << endl;
+		exit(1);
+	}
+	FREE_int(v);
+	FREE_int(w);
+	FREE_int(Basis);
+	FREE_int(Plane);
+	FREE_int(M);
+	if (f_v) {
+		cout << "projective_space::create_lines_on_point_but_inside_a_plane done" << endl;
+	}
+}
+
 
 int projective_space::create_point_on_line(
 		long int line_rk, int pt_rk, int verbose_level)
@@ -904,21 +1002,21 @@ void projective_space::make_incidence_structure_and_partition(
 
 	
 	if (f_v) {
-		cout << "projective_space::make_incidence_structure_and_"
-				"partition allocating M of size "
+		cout << "projective_space::make_incidence_structure_and_partition "
+				"allocating M of size "
 				<< N_points * N_lines << endl;
 	}
 	M = NEW_int(N_points * N_lines);
 	if (f_v) {
-		cout << "projective_space::make_incidence_structure_and_"
-				"partition after allocating M of size "
+		cout << "projective_space::make_incidence_structure_and_partition "
+				"after allocating M of size "
 				<< N_points * N_lines << endl;
 	}
 	Orbiter->Int_vec.zero(M, N_points * N_lines);
 
 	if (Lines_on_point == NULL) {
-		cout << "projective_space::make_incidence_structure_and_"
-				"partition Lines_on_point == NULL" << endl;
+		cout << "projective_space::make_incidence_structure_and_partition "
+				"Lines_on_point == NULL" << endl;
 		exit(1);
 	}
 	for (i = 0; i < N_points; i++) {
@@ -928,13 +1026,13 @@ void projective_space::make_incidence_structure_and_partition(
 		}
 	}
 	if (f_v) {
-		cout << "projective_space::make_incidence_structure_and_"
-				"partition before Inc->init_by_matrix" << endl;
+		cout << "projective_space::make_incidence_structure_and_partition "
+				"before Inc->init_by_matrix" << endl;
 	}
 	Inc->init_by_matrix(N_points, N_lines, M, verbose_level - 1);
 	if (f_v) {
-		cout << "projective_space::make_incidence_structure_and_"
-				"partition after Inc->init_by_matrix" << endl;
+		cout << "projective_space::make_incidence_structure_and_partition "
+				"after Inc->init_by_matrix" << endl;
 	}
 	FREE_int(M);
 
@@ -1083,6 +1181,7 @@ void projective_space::incidence_and_stack_for_type_ij(
 		cout << "projective_space::incidence_and_stack_for_type_ij done" << endl;
 	}
 }
+
 long int projective_space::nb_rk_k_subspaces_as_lint(int k)
 {
 	//longinteger_domain D;
@@ -1450,6 +1549,7 @@ int projective_space::nonconical_six_arc_get_nb_Eckardt_points(
 	FREE_OBJECT(E);
 	return nb_E;
 }
+
 int projective_space::test_nb_Eckardt_points(surface_domain *Surf,
 		long int *S, int len, int pt, int nb_E, int verbose_level)
 {
@@ -1645,6 +1745,9 @@ int projective_space::determine_conic_in_plane(
 	}
 	FREE_int(coords);
 	FREE_int(system);
+	if (f_v) {
+		cout << "projective_space::determine_conic_in_plane done" << endl;
+	}
 	return TRUE;
 }
 
@@ -1721,6 +1824,9 @@ int projective_space::determine_cubic_in_plane(
 	FREE_int(Pt_coord);
 	FREE_int(System);
 	FREE_int(base_cols);
+	if (f_v) {
+		cout << "projective_space::determine_cubic_in_plane done" << endl;
+	}
 	return r;
 }
 
@@ -1806,6 +1912,9 @@ void projective_space::determine_quadric_in_solid(
 	for (i = 0; i < 10; i++) {
 		ten_coeffs[i] = kernel[i];
 	}
+	if (f_v) {
+		cout << "projective_space::determine_quadric_in_solid done" << endl;
+	}
 }
 
 void projective_space::conic_points_brute_force(
@@ -1846,6 +1955,9 @@ void projective_space::conic_points_brute_force(
 		cout << "They are : ";
 		Orbiter->Lint_vec.print(cout, points, nb_points);
 		cout << endl;
+	}
+	if (f_v) {
+		cout << "projective_space::conic_points_brute_force done" << endl;
 	}
 }
 
@@ -1888,6 +2000,9 @@ void projective_space::quadric_points_brute_force(
 		cout << "They are : ";
 		Orbiter->Lint_vec.print(cout, points, nb_points);
 		cout << endl;
+	}
+	if (f_v) {
+		cout << "projective_space::quadric_points_brute_force done" << endl;
 	}
 }
 
@@ -2035,6 +2150,9 @@ void projective_space::conic_points(
 		Orbiter->Lint_vec.print(cout, points, nb_points);
 		cout << endl;
 	}
+	if (f_v) {
+		cout << "projective_space::conic_points done" << endl;
+	}
 }
 
 void projective_space::find_tangent_lines_to_conic(
@@ -2077,6 +2195,9 @@ void projective_space::find_tangent_lines_to_conic(
 			cout << "tangent at point " << i << " is "
 					<< tangents[i] << endl;
 		}
+	}
+	if (f_v) {
+		cout << "projective_space::find_tangent_lines_to_conic done" << endl;
 	}
 }
 
@@ -2183,6 +2304,7 @@ eckardt_point_info *projective_space::compute_eckardt_point_info(
 void projective_space::PG_2_8_create_conic_plus_nucleus_arc_1(
 		long int *the_arc, int &size, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int frame_data[] = {1,0,0, 0,1,0,  0,0,1,  1,1,1 };
 	int frame[4];
 	int i, j, b, h, idx;
@@ -2191,28 +2313,32 @@ void projective_space::PG_2_8_create_conic_plus_nucleus_arc_1(
 	sorting Sorting;
 
 	if (n != 2) {
-		cout << "projective_space::PG_2_8_create_conic_"
-				"plus_nucleus_arc_1 n != 2" << endl;
+		cout << "projective_space::PG_2_8_create_conic_plus_nucleus_arc_1 "
+				"n != 2" << endl;
 		exit(1);
 	}
 	if (q != 8) {
-		cout << "projective_space::PG_2_8_create_conic_"
-				"plus_nucleus_arc_1 q != 8" << endl;
+		cout << "projective_space::PG_2_8_create_conic_plus_nucleus_arc_1 "
+				"q != 8" << endl;
 		exit(1);
 	}
 	for (i = 0; i < 4; i++) {
 		frame[i] = rank_point(frame_data + i * 3);
 	}
 
-	cout << "frame: ";
-	Orbiter->Int_vec.print(cout, frame, 4);
-	cout << endl;
+	if (f_v) {
+		cout << "frame: ";
+		Orbiter->Int_vec.print(cout, frame, 4);
+		cout << endl;
+	}
 	
 	L[0] = Line_through_two_points[frame[0] * N_points + frame[1]];
 	L[1] = Line_through_two_points[frame[1] * N_points + frame[2]];
 	L[2] = Line_through_two_points[frame[2] * N_points + frame[0]];
 	
-	cout << "l1=" << L[0] << " l2=" << L[1] << " l3=" << L[2] << endl;
+	if (f_v) {
+		cout << "l1=" << L[0] << " l2=" << L[1] << " l3=" << L[2] << endl;
+	}
 
 	size = 0;	
 	for (h = 0; h < 3; h++) {
@@ -2228,9 +2354,11 @@ void projective_space::PG_2_8_create_conic_plus_nucleus_arc_1(
 			size++;
 		}
 	}
-	cout << "there are " << size << " points on the three lines: ";
-	Orbiter->Lint_vec.print(cout, the_arc, size);
-	cout << endl;
+	if (f_v) {
+		cout << "there are " << size << " points on the three lines: ";
+		Orbiter->Lint_vec.print(cout, the_arc, size);
+		cout << endl;
+	}
 
 
 	for (i = 1; i < q; i++) {
@@ -2249,16 +2377,18 @@ void projective_space::PG_2_8_create_conic_plus_nucleus_arc_1(
 		
 	}
 
-	cout << "projective_space::PG_2_8_create_conic_"
-			"plus_nucleus_arc_1: after adding the rest of the "
-			"conic, there are " << size << " points on the arc: ";
-	Orbiter->Lint_vec.print(cout, the_arc, size);
-	cout << endl;
+	if (f_v) {
+		cout << "projective_space::PG_2_8_create_conic_plus_nucleus_arc_1: after adding the rest of the "
+				"conic, there are " << size << " points on the arc: ";
+		Orbiter->Lint_vec.print(cout, the_arc, size);
+		cout << endl;
+	}
 }
 
 void projective_space::PG_2_8_create_conic_plus_nucleus_arc_2(
 		long int *the_arc, int &size, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int frame_data[] = {1,0,0, 0,1,0,  0,0,1,  1,1,1 };
 	int frame[4];
 	int i, j, b, h, idx;
@@ -2280,15 +2410,19 @@ void projective_space::PG_2_8_create_conic_plus_nucleus_arc_2(
 		frame[i] = rank_point(frame_data + i * 3);
 	}
 
-	cout << "frame: ";
-	Orbiter->Int_vec.print(cout, frame, 4);
-	cout << endl;
+	if (f_v) {
+		cout << "frame: ";
+		Orbiter->Int_vec.print(cout, frame, 4);
+		cout << endl;
+	}
 	
 	L[0] = Line_through_two_points[frame[0] * N_points + frame[2]];
 	L[1] = Line_through_two_points[frame[2] * N_points + frame[3]];
 	L[2] = Line_through_two_points[frame[3] * N_points + frame[0]];
 	
-	cout << "l1=" << L[0] << " l2=" << L[1] << " l3=" << L[2] << endl;
+	if (f_v) {
+		cout << "l1=" << L[0] << " l2=" << L[1] << " l3=" << L[2] << endl;
+	}
 
 	size = 0;	
 	for (h = 0; h < 3; h++) {
@@ -2304,9 +2438,11 @@ void projective_space::PG_2_8_create_conic_plus_nucleus_arc_2(
 			size++;
 		}
 	}
-	cout << "there are " << size << " points on the three lines: ";
-	Orbiter->Lint_vec.print(cout, the_arc, size);
-	cout << endl;
+	if (f_v) {
+		cout << "there are " << size << " points on the three lines: ";
+		Orbiter->Lint_vec.print(cout, the_arc, size);
+		cout << endl;
+	}
 
 
 	for (i = 0; i < q; i++) {
@@ -2332,11 +2468,13 @@ void projective_space::PG_2_8_create_conic_plus_nucleus_arc_2(
 		
 	}
 
-	cout << "projective_space::PG_2_8_create_conic_plus_"
-			"nucleus_arc_2: after adding the rest of the conic, "
-			"there are " << size << " points on the arc: ";
-	Orbiter->Lint_vec.print(cout, the_arc, size);
-	cout << endl;
+	if (f_v) {
+		cout << "projective_space::PG_2_8_create_conic_plus_"
+				"nucleus_arc_2: after adding the rest of the conic, "
+				"there are " << size << " points on the arc: ";
+		Orbiter->Lint_vec.print(cout, the_arc, size);
+		cout << endl;
+	}
 }
 
 void projective_space::create_Maruta_Hamada_arc(
@@ -2390,17 +2528,19 @@ void projective_space::create_Maruta_Hamada_arc(
 		cout << endl;
 	}
 
-	for (h = 0; h < 4; h++) {
-		cout << "h=" << h << " : L[h]=" << L[h] << " : " << endl;
-		for (i = 0; i < r; i++) {
-			b = Lines[L[h] * r + i];
-			cout << "point " << b << " = ";
-			unrank_point(v, b);
-			F->PG_element_normalize_from_front(v, 1, 3);
-			Orbiter->Int_vec.print(cout, v, 3);
+	if (f_v) {
+		for (h = 0; h < 4; h++) {
+			cout << "h=" << h << " : L[h]=" << L[h] << " : " << endl;
+			for (i = 0; i < r; i++) {
+				b = Lines[L[h] * r + i];
+					cout << "point " << b << " = ";
+				unrank_point(v, b);
+				F->PG_element_normalize_from_front(v, 1, 3);
+				Orbiter->Int_vec.print(cout, v, 3);
+				cout << endl;
+			}
 			cout << endl;
 		}
-		cout << endl;
 	}
 	size = 0;	
 	for (h = 0; h < 4; h++) {
@@ -2426,8 +2566,10 @@ void projective_space::create_Maruta_Hamada_arc(
 
 	// remove the first 16 points:
 	for (i = 0; i < 16; i++) {
-		cout << "removing point " << i << " : "
+		if (f_v) {
+			cout << "removing point " << i << " : "
 				<< points[i] << endl;
+		}
 		if (!Sorting.lint_vec_search(the_arc, size, points[i], idx, 0)) {
 			cout << "error, cannot find point to be removed" << endl;
 			exit(1);
@@ -2496,7 +2638,7 @@ void projective_space::create_Maruta_Hamada_arc2(
 		cout << endl;
 	}
 	for (i = 0; i < 9; i++) {
-		L[i] = Polarity_point_to_hyperplane[points[i]];
+		L[i] = Standard_polarity->Point_to_hyperplane[points[i]];
 	}
 	size = 0;
 	for (i = 0; i < 9; i++) {
@@ -3142,8 +3284,8 @@ void projective_space::line_intersection_type_through_hyperplane(
 	sorting Sorting;
 
 	if (f_v) {
-		cout << "projective_space::line_intersection_type_through_"
-				"hyperplane set_size=" << set_size << endl;
+		cout << "projective_space::line_intersection_type_through_hyperplane "
+				"set_size=" << set_size << endl;
 	}
 	d = n + 1;
 	M = NEW_int(3 * d);
@@ -3170,8 +3312,8 @@ void projective_space::line_intersection_type_through_hyperplane(
 	Sorting.lint_vec_heapsort(set1, sz1);
 	
 	if (f_vv) {
-		cout << "projective_space::line_intersection_type_through_"
-				"hyperplane sz1=" << sz1 << " sz2=" << sz2 << endl;
+		cout << "projective_space::line_intersection_type_through_hyperplane "
+				"sz1=" << sz1 << " sz2=" << sz2 << endl;
 	}
 	
 
@@ -3179,8 +3321,8 @@ void projective_space::line_intersection_type_through_hyperplane(
 	line_intersection_type_basic(set1, sz1, type, verbose_level);
 	nb_pts_in_hyperplane = Gg.nb_PG_elements(n - 1, q);
 	if (f_vv) {
-		cout << "projective_space::line_intersection_type_through_"
-				"hyperplane nb_pts_in_hyperplane="
+		cout << "projective_space::line_intersection_type_through_hyperplane "
+				"nb_pts_in_hyperplane="
 				<< nb_pts_in_hyperplane << endl;
 	}
 
@@ -3208,8 +3350,8 @@ void projective_space::line_intersection_type_through_hyperplane(
 	f_taken = NEW_int(sz2);
 	for (i = 0; i < nb_pts_in_hyperplane; i++) {
 		if (f_vv) {
-			cout << "projective_space::line_intersection_type_through_"
-					"hyperplane checking lines through point " << i
+			cout << "projective_space::line_intersection_type_through_hyperplane "
+					"checking lines through point " << i
 					<< " / " << nb_pts_in_hyperplane << ":" << endl;
 		}
 		Orbiter->Int_vec.zero(f_taken, sz2);
@@ -3218,8 +3360,8 @@ void projective_space::line_intersection_type_through_hyperplane(
 				continue;
 			}
 			if (f_vv) {
-				cout << "projective_space::line_intersection_type_through_"
-						"hyperplane j=" << j << " / " << sz2 << ":" << endl;
+				cout << "projective_space::line_intersection_type_through_hyperplane "
+						"j=" << j << " / " << sz2 << ":" << endl;
 			}
 			Orbiter->Int_vec.copy(Pts1 + i * d, M, d);
 			Orbiter->Int_vec.copy(Pts2 + j * d, M + d, d);
@@ -3229,8 +3371,8 @@ void projective_space::line_intersection_type_through_hyperplane(
 			}
 			rk = Grass_lines->rank_lint_here(M, 0 /* verbose_level */);
 			if (f_vv) {
-				cout << "projective_space::line_intersection_type_through_"
-						"hyperplane line rk=" << rk << " cnt1="
+				cout << "projective_space::line_intersection_type_through_hyperplane "
+						"line rk=" << rk << " cnt1="
 						<< cnt1[rk] << ":" << endl;
 			}
 			cnt = 1 + cnt1[i];
@@ -3256,8 +3398,8 @@ void projective_space::line_intersection_type_through_hyperplane(
 	FREE_int(cnt1);
 
 	if (f_v) {
-		cout << "projective_space::line_intersection_type_through_"
-				"hyperplane done" << endl;
+		cout << "projective_space::line_intersection_type_through_hyperplane "
+				"done" << endl;
 	}
 }
 
@@ -4564,6 +4706,116 @@ void projective_space::create_latex_report_for_Grassmannian(int k, int verbose_l
 	}
 }
 
+void projective_space::compute_decomposition(partitionstack *S1, partitionstack *S2,
+		incidence_structure *&Inc, partitionstack *&Stack, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space::compute_decomposition" << endl;
+	}
+	if (f_v) {
+		cout << "projective_space::compute_decomposition "
+				"before incidence_and_stack_for_type_ij" << endl;
+	}
+	incidence_and_stack_for_type_ij(
+		1 /* row_type */, 2 /* col_type */,
+		Inc,
+		Stack,
+		0 /*verbose_level*/);
+	if (f_v) {
+		cout << "projective_space::compute_decomposition "
+				"after incidence_and_stack_for_type_ij" << endl;
+	}
+
+	int i, j, sz;
+
+	for (i = 1; i < S1->ht; i++) {
+		if (f_v) {
+			cout << "projective_space::compute_decomposition "
+					"before Stack->split_cell (S1) i=" << i << endl;
+		}
+		Stack->split_cell(
+				S1->pointList + S1->startCell[i],
+				S1->cellSize[i], verbose_level);
+	}
+	int *set;
+	set = NEW_int(Inc->nb_rows + Inc->nb_cols);
+	for (i = 1; i < S2->ht; i++) {
+		sz = S2->cellSize[i];
+		Orbiter->Int_vec.copy(S2->pointList + S2->startCell[i], set, sz);
+		for (j = 0; j < sz; j++) {
+			set[j] += Inc->nb_rows;
+		}
+		if (f_v) {
+			cout << "projective_space::compute_decomposition "
+					"before Stack->split_cell (S2) i=" << i << endl;
+		}
+		Stack->split_cell(set, sz, 0 /*verbose_level*/);
+	}
+	FREE_int(set);
+	if (f_v) {
+		cout << "projective_space::compute_decomposition done" << endl;
+	}
+
+}
+
+void projective_space::compute_decomposition_based_on_tally(tally *T1, tally *T2,
+		incidence_structure *&Inc, partitionstack *&Stack, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space::compute_decomposition_based_on_tally" << endl;
+	}
+	if (f_v) {
+		cout << "projective_space::compute_decomposition_based_on_tally "
+				"before incidence_and_stack_for_type_ij" << endl;
+	}
+	incidence_and_stack_for_type_ij(
+		1 /* row_type */, 2 /* col_type */,
+		Inc,
+		Stack,
+		0 /*verbose_level*/);
+	if (f_v) {
+		cout << "projective_space::compute_decomposition_based_on_tally "
+				"after incidence_and_stack_for_type_ij" << endl;
+	}
+
+	int i, j, sz;
+
+	for (i = T1->nb_types - 1; i >= 1; i--) {
+		if (f_v) {
+			cout << "projective_space::compute_decomposition_based_on_tally "
+					"before Stack->split_cell (S1) i=" << i << endl;
+		}
+		Stack->split_cell(
+				T1->sorting_perm_inv + T1->type_first[i],
+				T1->type_len[i], verbose_level);
+	}
+	int *set;
+	set = NEW_int(Inc->nb_rows + Inc->nb_cols);
+	for (i = T2->nb_types - 1; i >= 1; i--) {
+		sz = T2->type_len[i];
+		Orbiter->Int_vec.copy(T2->sorting_perm_inv + T2->type_first[i], set, sz);
+		for (j = 0; j < sz; j++) {
+			set[j] += Inc->nb_rows;
+		}
+		if (f_v) {
+			cout << "projective_space::compute_decomposition_based_on_tally "
+					"before Stack->split_cell (S2) i=" << i << endl;
+		}
+		Stack->split_cell(set, sz, 0 /*verbose_level*/);
+	}
+
+
+
+	FREE_int(set);
+	if (f_v) {
+		cout << "projective_space::compute_decomposition_based_on_tally done" << endl;
+	}
+
+}
 
 
 }}

@@ -1037,6 +1037,12 @@ void spread_classify::lifting_prepare_function_new(
 
 	CG = NEW_OBJECT(colored_graph);
 
+	char str[1000];
+	string label, label_tex;
+	sprintf(str, "graph_%d", starter_case);
+	label.assign(str);
+	label_tex.assign(str);
+
 	if (f_v) {
 		cout << "spread_classify::lifting_prepare_function_new "
 				"before CG->init_with_point_labels" << endl;
@@ -1045,6 +1051,7 @@ void spread_classify::lifting_prepare_function_new(
 		col_color,
 		Adj, TRUE /* f_ownership_of_bitvec */,
 		SL->col_labels /* point_labels */, 
+		label, label_tex,
 		verbose_level);
 	if (f_v) {
 		cout << "spread_classify::lifting_prepare_function_new "
@@ -1052,12 +1059,12 @@ void spread_classify::lifting_prepare_function_new(
 	}
 	
 	string fname_clique_graph;
-	char str[1000];
 	file_io Fio;
 
 	fname_clique_graph.assign(E->output_prefix);
-	sprintf(str, "graph_%d.bin", starter_case);
 	fname_clique_graph.append(str);
+	fname_clique_graph.append(".graph");
+
 	CG->save(fname_clique_graph, verbose_level - 1);
 	if (f_v) {
 		cout << "Written file " << fname_clique_graph
