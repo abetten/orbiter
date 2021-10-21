@@ -419,7 +419,7 @@ void action::induced_action_on_factor_space(action *A_old,
 	if (f_v) {
 		cout << "action::induced_action_on_factor_space "
 				"f_induce_action=" << f_induce_action << endl;
-		}
+	}
 	A = A_old;
 
 	char str1[1000];
@@ -437,14 +437,16 @@ void action::induced_action_on_factor_space(action *A_old,
 		cout << "the old_action " << A->label
 				<< " has base_length = " << A->base_len()
 			<< " and degree " << A->degree << endl;
-		}
+	}
 	f_has_subaction = TRUE;
 	subaction = A;
 	if (!A->f_is_linear) {
 		cout << "action::induced_action_on_factor_space "
 				"action not of linear type" << endl;
+		cout << "the old action is:" << endl;
+		A->print_info();
 		exit(1);
-		}
+	}
 
 	type_G = action_on_factor_space_t;
 	G.AF = AF;
@@ -468,14 +470,14 @@ void action::induced_action_on_factor_space(action *A_old,
 	
 	if (f_induce_action) {
 		induced_action_override_sims(*A, old_G, verbose_level - 2);
-		}
+	}
 
 	if (f_v) {
 		cout << "action::induced_action_on_factor_space "
 				"finished, created action " << label << endl;
 		cout << "degree=" << A->degree << endl;
 		print_info();
-		}
+	}
 }
 
 action *action::induced_action_on_grassmannian(int k, int verbose_level)

@@ -246,7 +246,8 @@ public:
 			int order_ab,
 			int verbose_level);
 	void isomorphism_Klein_quadric(std::string &fname, int verbose_level);
-	void orbits_on_subspaces(poset_classification_control *Control, int depth, int verbose_level);
+	void do_orbits_on_subspaces(group_theoretic_activity *GTA,
+			poset_classification_control *Control, int depth, int verbose_level);
 	void do_tensor_classify(poset_classification_control *Control, int depth, int verbose_level);
 	void do_tensor_permutations(int verbose_level);
 	void do_linear_codes(poset_classification_control *Control,
@@ -261,13 +262,6 @@ public:
 
 
 };
-
-long int orbits_on_subspaces_rank_point_func(int *v, void *data);
-void orbits_on_subspaces_unrank_point_func(int *v, long int rk, void *data);
-void orbits_on_subspaces_early_test_func(long int *S, int len,
-	long int *candidates, int nb_candidates,
-	long int *good_candidates, int &nb_good_candidates,
-	void *data, int verbose_level);
 
 
 // #############################################################################
@@ -606,6 +600,43 @@ public:
 
 };
 
+
+
+// #############################################################################
+// orbits_on_subspaces.cpp
+// #############################################################################
+
+
+//! orbits of a group on subspaces of a vector space
+
+class orbits_on_subspaces {
+public:
+	group_theoretic_activity *GTA;
+
+	// local data for orbits on subspaces:
+	poset_with_group_action *orbits_on_subspaces_Poset;
+	poset_classification *orbits_on_subspaces_PC;
+	vector_space *orbits_on_subspaces_VS;
+	int *orbits_on_subspaces_M;
+	int *orbits_on_subspaces_base_cols;
+
+
+	orbits_on_subspaces();
+	~orbits_on_subspaces();
+	void init(group_theoretic_activity *GTA,
+			poset_classification_control *Control, int depth,
+			int verbose_level);
+
+
+};
+
+
+long int orbits_on_subspaces_rank_point_func(int *v, void *data);
+void orbits_on_subspaces_unrank_point_func(int *v, long int rk, void *data);
+void orbits_on_subspaces_early_test_func(long int *S, int len,
+	long int *candidates, int nb_candidates,
+	long int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);
 
 
 

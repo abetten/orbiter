@@ -101,7 +101,7 @@ void algebra_global_with_action::create_subgroups(
 		vector_ge *Transporter,
 		int verbose_level)
 // this is related to Betten, Topalova, Zhelezova 2021,
-// packings in PG(3,4) invariant under an elementary group of order 4
+// packings in PG(3,4) invariant under an elementary abelian group of order 4
 {
 	int f_v = (verbose_level >= 1);
 

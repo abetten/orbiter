@@ -593,18 +593,6 @@ public:
 			projective_space_with_action *PA,
 			layered_graph_draw_options *O,
 			int verbose_level);
-	void classify_quartic_curves_nauty(
-			projective_space_with_action *PA,
-			std::string &fname_mask, int nb,
-			std::string &fname_classification,
-			canonical_form_classifier *&Classifier,
-			int verbose_level);
-	void classify_quartic_curves_with_substructure(
-			projective_space_with_action *PA,
-			std::string &fname_mask, int nb, int substructure_size, int degree,
-			std::string &fname_classification,
-			canonical_form_classifier *&Classifier,
-			int verbose_level);
 	void set_stabilizer(
 			projective_space_with_action *PA,
 			int intermediate_subset_size,
@@ -630,6 +618,26 @@ public:
 	void do_classify_cubic_curves(
 			projective_space_with_action *PA,
 			arc_generator_description *Arc_generator_description,
+			int verbose_level);
+	void classify_quartic_curves_nauty(
+			projective_space_with_action *PA,
+			std::string &fname_mask, int nb,
+			std::string &fname_classification,
+			canonical_form_classifier *&Classifier,
+			int verbose_level);
+	void classify_quartic_curves_with_substructure(
+			projective_space_with_action *PA,
+			std::string &fname_mask, int nb, int substructure_size, int degree,
+			std::string &fname_classification,
+			canonical_form_classifier *&Classifier,
+			int verbose_level);
+	void classify_quartic_curves(
+			projective_space_with_action *PA,
+			std::string &fname_mask,
+			int nb,
+			int size,
+			int degree,
+			std::string &fname_classification,
 			int verbose_level);
 
 };
@@ -900,12 +908,6 @@ public:
 		strong_generators *&SG,
 		long int *canonical_labeling,
 		int verbose_level);
-	object_in_projective_space *create_object_from_string(
-		int type, std::string &input_fname, int input_idx,
-		std::string &set_as_string, int verbose_level);
-	object_in_projective_space *create_object_from_int_vec(
-		int type, std::string &input_fname, int input_idx,
-		long int *the_set, int set_sz, int verbose_level);
 	void compute_group_of_set(long int *set, int set_sz,
 			strong_generators *&Sg,
 			int verbose_level);

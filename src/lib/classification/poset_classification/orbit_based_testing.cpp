@@ -123,11 +123,19 @@ void orbit_based_testing::early_test_func(
 		cout << "orbit_based_testing::early_test_func" << endl;
 	}
 	if (nb_callback) {
+		if (f_v) {
+			cout << "orbit_based_testing::early_test_func before early_test_func_by_using_group" << endl;
+		}
+
 		early_test_func_by_using_group(
 			S, len,
 			candidates, nb_candidates,
 			good_candidates, nb_good_candidates,
 			verbose_level);
+
+		if (f_v) {
+			cout << "orbit_based_testing::early_test_func after early_test_func_by_using_group" << endl;
+		}
 	}
 	else if (nb_callback_no_group) {
 		if (nb_callback_no_group > 1) {
@@ -135,11 +143,25 @@ void orbit_based_testing::early_test_func(
 					"nb_callback_no_group > 1" << endl;
 			exit(1);
 		}
+		if (f_v) {
+			cout << "orbit_based_testing::early_test_func nb_callback_no_group = " << nb_callback_no_group << endl;
+		}
+		if (f_v) {
+			cout << "orbit_based_testing::early_test_func before (*callback_testing_no_group[0])" << endl;
+		}
 		(*callback_testing_no_group[0])(
 					S, len,
 					candidates, nb_candidates,
 					good_candidates, nb_good_candidates,
 					callback_data_no_group[0], verbose_level);
+		if (f_v) {
+			cout << "orbit_based_testing::early_test_func after (*callback_testing_no_group[0])" << endl;
+		}
+	}
+	else {
+		if (f_v) {
+			cout << "orbit_based_testing::early_test_func no test function" << endl;
+		}
 	}
 	if (f_v) {
 		cout << "orbit_based_testing::early_test_func done" << endl;
@@ -208,14 +230,17 @@ void orbit_based_testing::early_test_func_by_using_group(
 	}
 #endif
 
+	if (f_v) {
+		cout << "orbit_based_testing::early_test_func_by_using_group "
+				"before Schreier.compute_all_orbits_on_invariant_subset" << endl;
+	}
 	Schreier.orbits_on_invariant_subset_fast_lint(
 		nb_candidates, candidates,
 		0/*verbose_level*/);
 
 	if (f_v) {
-		cout << "orbit_based_testing::early_test_func_by_"
-				"using_group after Schreier.compute_all_orbits_"
-				"on_invariant_subset, we found "
+		cout << "orbit_based_testing::early_test_func_by_using_group "
+				"after Schreier.compute_all_orbits_on_invariant_subset, we found "
 		<< Schreier.nb_orbits << " orbits" << endl;
 	}
 	nb_good_candidates = 0;
@@ -226,7 +251,16 @@ void orbit_based_testing::early_test_func_by_using_group(
 		pt = Schreier.orbit[f];
 		local_S[len] = pt;
 		f_orbit_is_good = TRUE;
+		if (f_v) {
+			cout << "orbit_based_testing::early_test_func_by_using_group "
+					"testing orbit " << i << " / " << Schreier.nb_orbits << " of length " << l << endl;
+		}
 		for (j = 0; j < nb_callback; j++) {
+			if (f_v) {
+				cout << "orbit_based_testing::early_test_func_by_using_group "
+						"testing orbit " << i << " / " << Schreier.nb_orbits << " of length " << l
+						<< " calling test function " << j << " / " << nb_callback << endl;
+			}
 			if (!(*callback_testing[j])(this,
 					local_S, len + 1, callback_data[j], verbose_level - 1)) {
 				f_orbit_is_good = FALSE;

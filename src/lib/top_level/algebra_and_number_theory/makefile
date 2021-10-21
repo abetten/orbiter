@@ -13,6 +13,7 @@ MODULES = \
 	group_theoretic_activity_description.o \
 	group_theoretic_activity.o \
 	orbits_on_polynomials.o \
+	orbits_on_subspaces.o \
 	young.o 
 
 

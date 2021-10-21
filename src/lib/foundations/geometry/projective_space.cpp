@@ -4817,6 +4817,62 @@ void projective_space::compute_decomposition_based_on_tally(tally *T1, tally *T2
 
 }
 
+object_in_projective_space *projective_space::create_object_from_string(
+		int type, std::string &input_fname, int input_idx,
+		std::string &set_as_string, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space::create_object_from_string" << endl;
+		cout << "type=" << type << endl;
+	}
+
+
+	object_in_projective_space *OiP;
+
+	OiP = NEW_OBJECT(object_in_projective_space);
+
+	OiP->init_object_from_string(this,
+			type, input_fname, input_idx,
+			set_as_string, verbose_level);
+
+
+	if (f_v) {
+		cout << "projective_space::create_object_from_string"
+				" done" << endl;
+	}
+	return OiP;
+}
+
+object_in_projective_space * projective_space::create_object_from_int_vec(
+		int type, std::string &input_fname, int input_idx,
+		long int *the_set, int set_sz, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space::create_object_from_int_vec" << endl;
+		cout << "type=" << type << endl;
+	}
+
+
+	object_in_projective_space *OiP;
+
+	OiP = NEW_OBJECT(object_in_projective_space);
+
+	OiP->init_object_from_int_vec(this,
+			type, input_fname, input_idx,
+			the_set, set_sz, verbose_level);
+
+
+	if (f_v) {
+		cout << "projective_space::create_object_from_int_vec"
+				" done" << endl;
+	}
+	return OiP;
+}
+
 
 }}
 

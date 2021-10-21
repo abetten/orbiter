@@ -282,8 +282,7 @@ void poset_with_group_action::add_testing_without_group(
 	}
 	if (f_v) {
 		cout << "poset_with_group_action::add_testing_without_group "
-				"adding callback for testing the "
-				"independence condition" << endl;
+				"adding callback" << endl;
 	}
 	Orbit_based_testing->add_callback_no_group(
 			func,

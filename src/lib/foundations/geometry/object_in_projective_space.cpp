@@ -1690,6 +1690,105 @@ void object_in_projective_space::run_nauty(
 }
 
 
+void object_in_projective_space::canonical_labeling(
+	int *canonical_labeling,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+
+	encoded_combinatorial_object *Enc;
+	int N, i;
+	nauty_interface Nau;
+
+
+	if (f_v) {
+		cout << "object_in_projective_space::canonical_labeling"
+				<< endl;
+		cout << "verbose_level = " << verbose_level << endl;
+	}
+
+	if (f_v) {
+		cout << "object_in_projective_space::canonical_labeling "
+				"before encode_incma" << endl;
+	}
+	encode_incma(Enc, verbose_level - 1);
+	if (f_v) {
+		cout << "object_in_projective_space::canonical_labeling "
+				"after encode_incma" << endl;
+	}
+	if (verbose_level > 5) {
+		cout << "object_in_projective_space::canonical_labeling "
+				"Incma:" << endl;
+		Enc->print_incma();
+	}
+
+	//canonical_labeling = NEW_int(nb_rows + nb_cols);
+	for (i = 0; i < Enc->nb_rows + Enc->nb_cols; i++) {
+		canonical_labeling[i] = i;
+	}
+
+
+	N = Enc->nb_rows + Enc->nb_cols;
+	//L = nb_rows * nb_cols;
+
+	if (f_vv) {
+		cout << "object_in_projective_space::canonical_labeling "
+				"initializing Aut, Base, "
+				"Transversal_length" << endl;
+	}
+
+	nauty_output *NO;
+
+	NO = NEW_OBJECT(nauty_output);
+	NO->allocate(N, verbose_level);
+
+	if (f_v) {
+		cout << "object_in_projective_space::canonical_labeling "
+				"calling nauty_interface_matrix_int" << endl;
+	}
+
+
+	int t0, t1, dt;
+	double delta_t_in_sec;
+	os_interface Os;
+
+	t0 = Os.os_ticks();
+
+	Nau.nauty_interface_matrix_int(
+			Enc,
+			canonical_labeling,
+			NO,
+			verbose_level - 3);
+
+	t1 = Os.os_ticks();
+	dt = t1 - t0;
+	delta_t_in_sec = (double) t1 / (double) dt;
+
+	if (f_v) {
+		cout << "object_in_projective_space::canonical_labeling "
+				"done with nauty_interface_matrix_int, "
+				"Ago=" << NO->Ago << " dt=" << dt
+				<< " delta_t_in_sec=" << delta_t_in_sec << endl;
+	}
+
+
+	if (f_v) {
+		cout << "object_in_projective_space::canonical_labeling "
+				"done with nauty_interface_matrix_int, "
+				"Ago=" << NO->Ago << endl;
+	}
+	FREE_OBJECT(Enc);
+	FREE_OBJECT(NO);
+	if (f_v) {
+		cout << "object_in_projective_space::canonical_labeling done"
+				<< endl;
+	}
+}
+
+
+
+
 
 }}
 

@@ -53,7 +53,7 @@ void group_theoretic_activity::init_linear_group(group_theoretic_activity_descri
 	group_theoretic_activity::Descr = Descr;
 	group_theoretic_activity::F = F;
 
-	any_group *AG;
+	//any_group *AG;
 
 	AG = NEW_OBJECT(any_group);
 	AG->init_linear_group(LG, verbose_level);
@@ -61,7 +61,7 @@ void group_theoretic_activity::init_linear_group(group_theoretic_activity_descri
 	//f_linear_group = TRUE;
 	//group_theoretic_activity::LG = LG;
 
-	group_theoretic_activity::AG = AG;
+	//group_theoretic_activity::AG = AG;
 
 
 	A1 = LG->A_linear;
@@ -91,7 +91,7 @@ void group_theoretic_activity::init_permutation_group(group_theoretic_activity_d
 	group_theoretic_activity::Descr = Descr;
 	group_theoretic_activity::F = NULL;
 
-	any_group *AG;
+	//any_group *AG;
 
 	AG = NEW_OBJECT(any_group);
 	AG->init_permutation_group(PGC, verbose_level);
@@ -99,7 +99,7 @@ void group_theoretic_activity::init_permutation_group(group_theoretic_activity_d
 	//f_linear_group = TRUE;
 	//group_theoretic_activity::LG = LG;
 
-	group_theoretic_activity::AG = AG;
+	//group_theoretic_activity::AG = AG;
 
 
 	A1 = PGC->A_initial;
@@ -355,7 +355,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 			exit(1);
 		}
 
-		AG->orbits_on_subspaces(Descr->Control, Descr->orbits_on_subspaces_depth, verbose_level);
+		AG->do_orbits_on_subspaces(this, Descr->Control, Descr->orbits_on_subspaces_depth, verbose_level);
 	}
 	else if (Descr->f_reverse_isomorphism_exterior_square) {
 		AG->do_reverse_isomorphism_exterior_square(verbose_level);
