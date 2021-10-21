@@ -629,6 +629,44 @@ public:
 			long int *points, int nb_points,
 			long int *lines, int nb_lines,
 			int verbose_level);
+	void arc_lifting1(
+			projective_space *P,
+			int arc_size,
+			int arc_d,
+			int arc_d_low,
+			int arc_s,
+			std::string arc_input_set,
+			std::string arc_label,
+			int verbose_level);
+	void arc_lifting2(
+			projective_space *P,
+			int arc_size,
+			int arc_d,
+			int arc_d_low,
+			int arc_s,
+			std::string arc_input_set,
+			std::string arc_label,
+			int arc_t,
+			std::string t_lines_string,
+			int verbose_level);
+	void arc_lifting3(
+			projective_space *P,
+			int arc_size,
+			int arc_d,
+			int arc_d_low,
+			int arc_s,
+			std::string arc_input_set,
+			std::string arc_label,
+			int arc_t,
+			std::string t_lines_string,
+			int arc_u,
+			std::string u_lines_string,
+			int verbose_level);
+	void latex_homogeneous_equation(finite_field *F, int degree, int nb_vars,
+			std::string &equation_text,
+			std::string &symbol_txt,
+			std::string &symbol_tex,
+			int verbose_level);
 
 };
 
@@ -1236,6 +1274,7 @@ public:
 class object_in_projective_space {
 public:
 	projective_space *P;
+
 	object_in_projective_space_type type;
 		// t_PTS = a multiset of points
 		// t_LNS = a set of lines 
@@ -1359,6 +1398,9 @@ public:
 			long int *canonical_labeling, int &canonical_labeling_len,
 			nauty_output *&NO,
 			int verbose_level);
+	void canonical_labeling(
+		int *canonical_labeling,
+		int verbose_level);
 
 };
 
@@ -1799,6 +1841,12 @@ public:
 			incidence_structure *&Inc, partitionstack *&Stack, int verbose_level);
 	void compute_decomposition_based_on_tally(tally *T1, tally *T2,
 			incidence_structure *&Inc, partitionstack *&Stack, int verbose_level);
+	object_in_projective_space *create_object_from_string(
+			int type, std::string &input_fname, int input_idx,
+			std::string &set_as_string, int verbose_level);
+	object_in_projective_space *create_object_from_int_vec(
+			int type, std::string &input_fname, int input_idx,
+			long int *the_set, int set_sz, int verbose_level);
 
 	// projective_space2.cpp:
 	void print_set_numerical(std::ostream &ost, long int *set, int set_size);

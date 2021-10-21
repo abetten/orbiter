@@ -37,6 +37,7 @@ class character_table_burnside;
 class group_theoretic_activity_description;
 class group_theoretic_activity;
 class orbits_on_polynomials;
+class orbits_on_subspaces;
 class young;
 
 

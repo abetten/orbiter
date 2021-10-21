@@ -64,7 +64,7 @@ void any_group::init_linear_group(linear_group *LG, int verbose_level)
 	if (f_v) {
 		cout << "any_group::init_linear_group before Subgroup_gens->create_sims" << endl;
 	}
-	Subgroup_sims = Subgroup_gens->create_sims(verbose_level);
+	Subgroup_sims = Subgroup_gens->create_sims(0/*verbose_level*/);
 	if (f_v) {
 		cout << "any_group::init_linear_group after Subgroup_gens->create_sims" << endl;
 	}
@@ -101,7 +101,7 @@ void any_group::init_permutation_group(permutation_group_create *PGC, int verbos
 		cout << "any_group::init_permutation_group before Subgroup_gens->create_sims_in_different_action" << endl;
 	}
 	Subgroup_sims = Subgroup_gens->create_sims_in_different_action(
-			A_base, verbose_level);
+			A_base, 0 /*verbose_level*/);
 	//Subgroup_sims = Subgroup_gens->create_sims(verbose_level);
 	if (f_v) {
 		cout << "any_group::init_permutation_group after Subgroup_gens->create_sims_in_different_action" << endl;

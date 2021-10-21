@@ -77,7 +77,7 @@ void polarity::init_standard_polarity(projective_space *P, int verbose_level)
 		P->F->PG_element_rank_modified(A + n * d, 1, d, a);
 		if (f_v) {
 			cout << "hyperplane " << i << " is perp of point ";
-			Orbiter->Int_vec.print(cout, A + 2 * d, d);
+			Orbiter->Int_vec.print(cout, A + n * d, d);
 			cout << " = " << a << endl;
 		}
 		Point_to_hyperplane[a] = i;

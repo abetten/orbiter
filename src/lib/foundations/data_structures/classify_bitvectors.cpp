@@ -47,30 +47,30 @@ void classify_bitvectors::freeself()
 	if (Type_data) {
 		for (i = 0; i < nb_types; i++) {
 			FREE_uchar(Type_data[i]);
-			}
-		FREE_puchar(Type_data);
 		}
+		FREE_puchar(Type_data);
+	}
 	if (Type_extra_data) {
 		for (i = 0; i < nb_types; i++) {
 			//FREE_uchar(Type_data[i]);
-			}
-		FREE_pvoid(Type_extra_data);
 		}
+		FREE_pvoid(Type_extra_data);
+	}
 	if (Type_rep) {
 		FREE_int(Type_rep);
-		}
+	}
 	if (Type_mult) {
 		FREE_int(Type_mult);
-		}
+	}
 	if (type_of) {
 		FREE_int(type_of);
-		}
+	}
 	if (C_type_of) {
 		FREE_OBJECT(C_type_of);
-		}
+	}
 	if (perm) {
 		FREE_int(perm);
-		}
+	}
 	null();
 }
 
@@ -82,7 +82,7 @@ void classify_bitvectors::init(int N, int rep_len, int verbose_level)
 	
 	if (f_v) {
 		cout << "classify_bitvectors::init" << endl;
-		}
+	}
 	classify_bitvectors::N = N;
 	classify_bitvectors::rep_len = rep_len;
 	Type_data = NEW_puchar(N);
@@ -92,7 +92,7 @@ void classify_bitvectors::init(int N, int rep_len, int verbose_level)
 	type_of = NEW_int(N);
 	for (i = 0; i < N; i++) {
 		type_of[i] = -1;
-		}
+	}
 	nb_types = 0;
 	n = 0;
 	C_type_of = NULL;
@@ -100,7 +100,7 @@ void classify_bitvectors::init(int N, int rep_len, int verbose_level)
 	
 	if (f_v) {
 		cout << "classify_bitvectors::init done" << endl;
-		}
+	}
 }
 
 int classify_bitvectors::search(uchar *data,
@@ -112,7 +112,7 @@ int classify_bitvectors::search(uchar *data,
 
 	if (f_v) {
 		cout << "classify_bitvectors::search" << endl;
-		}
+	}
 	if (Sorting.vec_search((void **) Type_data,
 			compare_func_for_bitvectors, (void *) this,
 		nb_types, data, idx, 0 /*verbose_level - 1*/)) {
@@ -123,7 +123,7 @@ int classify_bitvectors::search(uchar *data,
 	}
 	if (f_v) {
 		cout << "classify_bitvectors::search done ret=" << ret << endl;
-		}
+	}
 	return ret;
 }
 
@@ -221,7 +221,7 @@ void classify_bitvectors::finalize(int verbose_level)
 
 	if (f_v) {
 		cout << "classify_bitvectors::finalize" << endl;
-		}
+	}
 	C_type_of = NEW_OBJECT(tally);
 
 	C_type_of->init(type_of, N, FALSE, 0);
@@ -235,14 +235,14 @@ void classify_bitvectors::finalize(int verbose_level)
 	for (i = 0; i < nb_types; i++) {
 		perm[i] = i;
 		v[i] = Type_rep[i];
-		}
+	}
 	Sorting.int_vec_heapsort_with_log(v, perm, nb_types);
 
 	FREE_int(v);
 	
 	if (f_v) {
 		cout << "classify_bitvectors::finalize done" << endl;
-		}
+	}
 }
 
 void classify_bitvectors::print_reps()
@@ -263,7 +263,7 @@ void classify_bitvectors::print_reps()
 			}
 #endif
 		cout << endl;
-		}
+	}
 }
 
 void classify_bitvectors::print_table()
@@ -279,10 +279,10 @@ void classify_bitvectors::print_table()
 			cout << (int) Type_data[i][j];
 			if (j < rep_len - 1) {
 				cout << ", ";
-				}
 			}
-		cout << endl;
 		}
+		cout << endl;
+	}
 }
 
 void classify_bitvectors::save(
@@ -301,7 +301,7 @@ void classify_bitvectors::save(
 	
 	if (f_v) {
 		cout << "classify_bitvectors::save" << endl;
-		}
+	}
 
 	fname_txt.assign(prefix);
 	fname_txt.append("_iso.txt");
@@ -312,7 +312,7 @@ void classify_bitvectors::save(
 	if (perm == NULL) {
 		cout << "classify_bitvectors::save perm == NULL" << endl;
 		exit(1);
-		}
+	}
 	long int *Reps = NULL; // [nb_types * sz]
 	int sz = 0;
 
@@ -320,7 +320,7 @@ void classify_bitvectors::save(
 	if (f_v) {
 		cout << "classify_bitvectors::save writing file "
 				<< fname_txt << endl;
-		}
+	}
 	{
 		ofstream fp(fname_txt);
 		int h;
@@ -335,41 +335,40 @@ void classify_bitvectors::save(
 				cout << "classify_bitvectors::save " << i << " / "
 						<< nb_types << " j=" << j
 						<< " before encode_function" << endl;
-				}
+			}
 			(*encode_function)(Type_extra_data[j],
 					encoding, encoding_sz, global_data);
 			if (f_v) {
 				cout << "classify_bitvectors::save " << i
 						<< " / " << nb_types
 						<< " encoding_sz=" << encoding_sz << endl;
-				}
+			}
 			fp << encoding_sz;
 			for (h = 0; h < encoding_sz; h++) {
 				fp << " " << encoding[h];
-				}
+			}
 			if (get_group_order_or_NULL) {
 				longinteger_object go;
 
-				(*get_group_order_or_NULL)(Type_extra_data[j],
-						go, global_data);
+				(*get_group_order_or_NULL)(Type_extra_data[j], go, global_data);
 				fp << " ";
 				go.print_not_scientific(fp);
-				}
+			}
 			fp << endl;
 			if (i == 0) {
 				sz = encoding_sz;
 				Reps = NEW_lint(nb_types * sz);
 				Orbiter->Lint_vec.copy(encoding, Reps, sz);
-				}
+			}
 			else {
 				if (encoding_sz != sz) {
 					cout << "encoding_sz != sz" << endl;
 					exit(1);
-					}
-				Orbiter->Lint_vec.copy(encoding, Reps + i * sz, sz);
 				}
-			FREE_lint(encoding);
+				Orbiter->Lint_vec.copy(encoding, Reps + i * sz, sz);
 			}
+			FREE_lint(encoding);
+		}
 		fp << "-1 " << nb_types << " " << N << endl;
 	}
 	file_io Fio;
@@ -381,12 +380,12 @@ void classify_bitvectors::save(
 			<< " with " << nb_types
 			<< " orbit representatives obtained from "
 			<< N << " candidates, encoding size = " << sz << endl;
-		}
+	}
 
 	if (f_v) {
 		cout << "classify_bitvectors::save writing "
 				"file " << fname_csv << endl;
-		}
+	}
 	Fio.lint_matrix_write_csv(fname_csv, Reps, nb_types, sz);
 
 	if (f_v) {
@@ -396,15 +395,15 @@ void classify_bitvectors::save(
 			<< " with " << nb_types
 			<< " orbit representatives obtained from "
 			<< N << " candidates, encoding size = " << sz << endl;
-		}
+	}
 
 	if (Reps) {
 		FREE_lint(Reps);
-		}
+	}
 	
 	if (f_v) {
 		cout << "classify_bitvectors::save done" << endl;
-		}
+	}
 }
 
 int compare_func_for_bitvectors(void *a, void *b, void *data)

@@ -1012,6 +1012,14 @@ public:
 			int intermediate_subset_size,
 			std::string &fname_mask, int nb, std::string &column_label,
 			int verbose_level);
+	void report_decomposition_by_group(
+			projective_space_with_action *PA,
+			strong_generators *SG, std::ostream &ost, std::string &fname_base,
+			int verbose_level);
+	void report_decomposition_by_single_automorphism(
+			projective_space_with_action *PA,
+			int *Elt, std::ostream &ost, std::string &fname_base,
+			int verbose_level);
 
 };
 

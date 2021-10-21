@@ -934,7 +934,7 @@ void projective_space_object_classifier::process_set_of_points(
 	strong_generators *SG;
 
 	dummy.assign("command_line");
-	OiP = PA->create_object_from_string(t_PTS,
+	OiP = PA->P->create_object_from_string(t_PTS,
 			dummy, CB->n,
 			input_data, verbose_level);
 
@@ -1028,7 +1028,7 @@ void projective_space_object_classifier::process_set_of_points_from_file(
 
 	Fio.read_set_from_file(input_data, the_set, set_size, verbose_level);
 
-	OiP = PA->create_object_from_int_vec(t_PTS,
+	OiP = PA->P->create_object_from_int_vec(t_PTS,
 			input_data, CB->n,
 			the_set, set_size, verbose_level);
 
@@ -1042,9 +1042,7 @@ void projective_space_object_classifier::process_set_of_points_from_file(
 	int idx;
 	long int ago;
 
-	OiP->encoding_size(
-			nb_rows, nb_cols,
-			verbose_level);
+	OiP->encoding_size(nb_rows, nb_cols, verbose_level);
 	canonical_labeling = NEW_lint(nb_rows + nb_cols);
 
 	if (f_v) {
@@ -1116,16 +1114,15 @@ void projective_space_object_classifier::process_set_of_lines_from_file(
 	string dummy;
 
 	dummy.assign("command_line");
-	OiP = PA->create_object_from_string(t_LNS,
+	OiP = PA->P->create_object_from_string(t_LNS,
 			dummy, CB->n,
 			input_data, verbose_level);
 
 	int nb_rows, nb_cols;
 	long int *canonical_labeling;
 
-	OiP->encoding_size(
-			nb_rows, nb_cols,
-			verbose_level);
+	OiP->encoding_size(nb_rows, nb_cols, verbose_level);
+
 	canonical_labeling = NEW_lint(nb_rows + nb_cols);
 	int canonical_labeling_len;
 	int idx;
@@ -1189,7 +1186,7 @@ void projective_space_object_classifier::process_set_of_packing(
 	string dummy;
 
 	dummy.assign("command_line");
-	OiP = PA->create_object_from_string(t_PAC,
+	OiP = PA->P->create_object_from_string(t_PAC,
 			dummy, CB->n,
 			input_data, verbose_level);
 
