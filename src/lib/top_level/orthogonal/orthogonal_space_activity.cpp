@@ -340,6 +340,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 				Descr->set_stabilizer_fname_mask,
 				Descr->set_stabilizer_nb,
 				Descr->set_stabilizer_column_label,
+				Descr->set_stabilizer_fname_out,
 				verbose_level);
 	}
 
@@ -357,6 +358,7 @@ void orthogonal_space_activity::set_stabilizer(
 		orthogonal_space_with_action *OA,
 		int intermediate_subset_size,
 		std::string &fname_mask, int nb, std::string &column_label,
+		std::string &fname_out,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -373,6 +375,7 @@ void orthogonal_space_activity::set_stabilizer(
 			OA->A, OA->A, OA->A->Strong_gens,
 			intermediate_subset_size,
 			fname_mask, nb, column_label,
+			fname_out,
 			verbose_level);
 
 

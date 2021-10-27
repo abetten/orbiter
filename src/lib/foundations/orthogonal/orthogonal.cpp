@@ -1762,7 +1762,8 @@ void orthogonal::make_initial_partition(
 		}
 	if (f_vv) {
 		cout << "the initial partition of points and lines is:" << endl;
-		cout << S << endl;
+		S.print(cout);
+		cout << endl;
 		}
 	if (f_v) {
 		cout << "orthogonal::make_initial_partition done" << endl;

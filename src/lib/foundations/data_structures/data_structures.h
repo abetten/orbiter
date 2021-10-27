@@ -649,8 +649,6 @@ void test_page_storage(int verbose_level);
 // #############################################################################
 
 
-std::ostream& operator<<(std::ostream& ost, partitionstack& p);
-
 
 //! partitionstack for set partitions following Jeffrey Leon
 
@@ -660,7 +658,7 @@ class partitionstack {
 
 	// data structure for the partition stack,
 	// following Leon:
-		int n;
+		int n; // size of the set that is partitioned
 		int ht;
 		int ht0;
 
@@ -690,8 +688,9 @@ class partitionstack {
 
 	partitionstack();
 	~partitionstack();
-	void allocate(int n, int verbose_level);
 	void free();
+	void allocate(int n, int verbose_level);
+	void allocate_with_two_classes(int n, int v, int b, int verbose_level);
 	int parent_at_height(int h, int cell);
 	int is_discrete();
 	int smallest_non_discrete_cell();
@@ -715,6 +714,10 @@ class partitionstack {
 	void print_cell(int i);
 	void print_cell_latex(std::ostream &ost, int i);
 	void print_subset();
+	void get_cell(int i, int *&cell, int &cell_sz, int verbose_level);
+	void get_cell_lint(int i, long int *&cell, int &cell_sz, int verbose_level);
+	void get_row_classes(set_of_sets *&Sos, int verbose_level);
+	void get_column_classes(set_of_sets *&Sos, int verbose_level);
 	void write_cell_to_file(int i,
 			std::string &fname, int verbose_level);
 	void write_cell_to_file_points_or_lines(int i, 
@@ -757,7 +760,7 @@ class partitionstack {
 	int is_descendant_of(int cell, int ancestor_cell, 
 		int verbose_level);
 	int is_descendant_of_at_level(int cell, int ancestor_cell, 
-	int level, int verbose_level);
+			int level, int verbose_level);
 	int cellSizeAtLevel(int cell, int level);
 
 	void print_decomposition_tex(std::ostream &ost,
@@ -840,8 +843,8 @@ public:
 	int f_set_builder;
 	set_builder_description *Descr;
 
-	int f_index_set;
-	std::string index_set_text;
+	int f_here;
+	std::string here_text;
 
 	set_builder_description();
 	~set_builder_description();
@@ -1384,6 +1387,7 @@ public:
 	void get_extension_if_present_and_chop_off(char *p, char *ext);
 	void string_fix_escape_characters(std::string &str);
 	void remove_specific_character(std::string &str, char c);
+	void create_comma_separated_list(std::string &output, long int *input, int input_sz);
 
 
 };

@@ -358,6 +358,10 @@ public:
 	std::string extract_solutions_by_index_fname_solutions_in;
 	std::string extract_solutions_by_index_fname_solutions_out;
 
+	int f_export_inc;
+	int f_export_blocks;
+	int f_row_sums;
+	int f_tactical_decomposition;
 
 	design_activity_description();
 	~design_activity_description();
@@ -412,6 +416,18 @@ public:
 			int verbose_level);
 	void do_canonical_form(projective_space_object_classifier_description *Canonical_form_Descr,
 			int verbose_level);
+	void do_export_inc(
+			design_create *DC,
+			int verbose_level);
+	void do_export_blocks(
+			design_create *DC,
+			int verbose_level);
+	void do_row_sums(
+			design_create *DC,
+			int verbose_level);
+	void do_tactical_decomposition(
+			design_create *DC,
+			int verbose_level);
 
 };
 
@@ -439,6 +455,9 @@ public:
 	int list_of_blocks_v;
 	int list_of_blocks_k;
 	std::string list_of_blocks_text;
+
+	int f_list_of_blocks_from_file;
+	std::string list_of_blocks_from_file_fname;
 
 
 

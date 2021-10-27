@@ -96,6 +96,8 @@ symbol_definition::symbol_definition()
 	large_set_was_descr = NULL;
 
 
+	f_set = FALSE;
+	Set_builder_description = FALSE;
 
 }
 
@@ -526,6 +528,30 @@ void symbol_definition::read_definition(
 					<< endl;
 		}
 	}
+	else if (stringcmp(argv[i], "-set") == 0) {
+		f_set = TRUE;
+
+
+		Set_builder_description = NEW_OBJECT(set_builder_description);
+		if (f_v) {
+			cout << "reading -set" << endl;
+		}
+		i += Set_builder_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-set" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-set ";
+			Set_builder_description->print();
+		}
+	}
 
 	else {
 		cout << "unrecognized command after -define" << endl;
@@ -709,6 +735,15 @@ void symbol_definition::perform_definition(int verbose_level)
 			cout << "symbol_definition::perform_definition after definition_of_packing_was" << endl;
 		}
 	}
+	else if (f_set) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition before definition_of_set" << endl;
+		}
+		definition_of_set(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition after definition_of_set" << endl;
+		}
+	}
 	else {
 		if (f_v) {
 			cout << "symbol_definition::perform_definition no definition" << endl;
@@ -802,6 +837,10 @@ void symbol_definition::print()
 	if (f_large_set_was) {
 		cout << "-large_set_was " << large_set_was_label_design_table << endl;
 		large_set_was_descr->print();
+	}
+	else if (f_set) {
+		cout << "-set ";
+		Set_builder_description->print();
 	}
 }
 
@@ -1777,6 +1816,46 @@ void symbol_definition::definition_of_large_set_was(int verbose_level)
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_large_set_was done" << endl;
+	}
+}
+
+void symbol_definition::definition_of_set(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_set" << endl;
+	}
+
+
+	set_builder *SB;
+
+	SB = NEW_OBJECT(set_builder);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_set before SB->init" << endl;
+	}
+
+	SB->init(Set_builder_description, verbose_level);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_set after SB->init" << endl;
+	}
+
+
+	orbiter_symbol_table_entry Symb;
+
+	Symb.init_set(define_label, SB, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_set before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, &Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_set done" << endl;
 	}
 }
 

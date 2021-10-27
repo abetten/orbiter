@@ -235,6 +235,32 @@ void any_group::do_export_magma(int verbose_level)
 	}
 }
 
+void any_group::do_canonical_image_GAP(std::string &input_set_text, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::do_canonical_image_GAP" << endl;
+	}
+
+	string fname;
+	file_io Fio;
+
+	fname.assign(label);
+	fname.append("_canonical_image.gap");
+	{
+		ofstream ost(fname);
+		LG->Strong_gens->canonical_image_GAP(input_set_text, ost);
+	}
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+
+	if (f_v) {
+		cout << "any_group::do_canonical_image_GAP done" << endl;
+	}
+}
 
 void any_group::create_group_table(int verbose_level)
 {

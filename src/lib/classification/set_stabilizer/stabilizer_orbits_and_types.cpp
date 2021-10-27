@@ -138,6 +138,7 @@ void stabilizer_orbits_and_types::init(compute_stabilizer *CS, int verbose_level
 
 	if (f_v) {
 		cout << "stabilizer_orbits_and_types::init" << endl;
+		cout << "fname = " << CS->SubSt->fname_case_out << endl;
 	}
 
 	stabilizer_orbits_and_types::CS = CS;
@@ -299,6 +300,17 @@ void stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pat
 
 	}
 
+	if (f_v) {
+		cout << "stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pattern "
+				"before save_interesting_subsets_reduced" << endl;
+	}
+	save_interesting_subsets_reduced(verbose_level);
+	if (f_v) {
+		cout << "stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pattern "
+				"after save_interesting_subsets_reduced" << endl;
+	}
+
+
 #if 1
 	if (f_v) {
 		print_minimal_orbit_pattern();
@@ -307,6 +319,34 @@ void stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pat
 
 	if (f_v) {
 		cout << "stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pattern done" << endl;
+	}
+}
+
+void stabilizer_orbits_and_types::save_interesting_subsets_reduced(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "stabilizer_orbits_and_types::save_interesting_subsets_reduced" << endl;
+	}
+	//int nb_interesting_subsets_reduced;
+	//long int *interesting_subsets_reduced;
+
+	string fname;
+
+	fname.assign(CS->SubSt->fname_case_out);
+	fname.append("int_subs_red.csv");
+	file_io Fio;
+
+	Fio.lint_vec_write_csv(interesting_subsets_reduced, nb_interesting_subsets_reduced,
+			fname, "interesting_subsets_reduced");
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "stabilizer_orbits_and_types::save_interesting_subsets_reduced done" << endl;
 	}
 }
 

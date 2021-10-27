@@ -184,6 +184,7 @@ public:
 	void init(compute_stabilizer *CS, int verbose_level);
 	void compute_stabilizer_orbits_and_find_minimal_pattern(int verbose_level);
 	// uses selected_set_stab_gens to compute orbits on points in action A2
+	void save_interesting_subsets_reduced(int verbose_level);
 	void find_orbit_pattern(int cnt, int *transp, int verbose_level);
 	// computes transporter to transp
 	void find_interesting_orbits(int verbose_level);
@@ -214,6 +215,7 @@ class substructure_classifier {
 public:
 
 
+	std::string fname_base_out;
 	int substructure_size;
 
 	poset_classification *PC;
@@ -227,6 +229,7 @@ public:
 	substructure_classifier();
 	~substructure_classifier();
 	void classify_substructures(
+			std::string &fname_base_out,
 			action *A,
 			action *A2,
 			strong_generators *gens,
@@ -236,8 +239,10 @@ public:
 			action *A, action *A2, strong_generators *Strong_gens,
 			int intermediate_subset_size,
 			std::string &fname_mask, int nb, std::string &column_label,
+			std::string &fname_out,
 			int verbose_level);
 	void set_stabilizer_of_set(
+			std::string &fname_out,
 			int cnt, int nb, int row,
 			long int *pts,
 			int nb_pts,
@@ -270,6 +275,8 @@ public:
 
 class substructure_stats_and_selection {
 public:
+
+	std::string fname_case_out;
 
 	substructure_classifier *SubC;
 
@@ -306,6 +313,7 @@ public:
 	substructure_stats_and_selection();
 	~substructure_stats_and_selection();
 	void init(
+			std::string &fname_case_out,
 			substructure_classifier *SubC,
 			long int *Pts,
 			int nb_pts,

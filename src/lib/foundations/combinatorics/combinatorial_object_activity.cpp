@@ -71,6 +71,7 @@ void combinatorial_object_activity::perform_activity(int verbose_level)
 		int **Conic_eqn;
 		int *nb_pts_on_conic;
 		int len;
+		int i;
 
 		P->conic_type(
 				COC->Pts, COC->nb_pts,
@@ -78,6 +79,11 @@ void combinatorial_object_activity::perform_activity(int verbose_level)
 				Pts_on_conic, Conic_eqn, nb_pts_on_conic, len,
 				verbose_level);
 
+
+		cout << "We found " << len << " conics" << endl;
+		for (i = 0; i < len; i++) {
+			cout << i << " : " << nb_pts_on_conic << endl;
+		}
 		//
 
 	}

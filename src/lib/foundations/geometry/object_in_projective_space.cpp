@@ -147,7 +147,17 @@ void object_in_projective_space::init_object_from_string(
 	long int *the_set_in;
 	int set_size_in;
 
-	Orbiter->Lint_vec.scan(set_as_string.c_str(), the_set_in, set_size_in);
+
+	if (f_v) {
+		cout << "object_in_projective_space::init_object_from_string "
+				"before Orbiter->get_lint_vec" << endl;
+	}
+	Orbiter->get_lint_vec(set_as_string,
+			the_set_in, set_size_in, verbose_level);
+	if (f_v) {
+		cout << "object_in_projective_space::init_object_from_string "
+				"after Orbiter->get_lint_vec" << endl;
+	}
 
 
 	if (f_v) {

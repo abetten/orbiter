@@ -21,12 +21,8 @@ namespace foundations {
 combinatorial_object_create::combinatorial_object_create()
 {
 	Descr = NULL;
-	//F = NULL;
-	//A = NULL;
-	//f_has_group = FALSE;
-	//Sg = NULL;
 
-	//char fname[1000];
+	//std::string fname;
 	nb_pts = 0;
 	Pts = NULL;
 
@@ -35,11 +31,6 @@ combinatorial_object_create::combinatorial_object_create()
 
 combinatorial_object_create::~combinatorial_object_create()
 {
-#if 0
-	if (F) {
-		delete F;
-		}
-#endif
 	if (Pts) {
 		FREE_lint(Pts);
 	}
@@ -56,20 +47,6 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 	}
 	Descr->P = P;
 	combinatorial_object_create::Descr = Descr;
-
-#if 0
-	if (!Descr->f_q) {
-		cout << "combinatorial_object_create::init !Descr->f_q" << endl;
-		exit(1);
-		}
-	q = Descr->q;
-	if (f_v) {
-		cout << "combinatorial_object_create::init q = " << q << endl;
-		}
-	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(q, 0);
-#endif
-
 
 	finite_field *F;
 
@@ -385,6 +362,9 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 
 	if (f_v) {
 		cout << "combinatorial_object_create::init created a set of size " << nb_pts << endl;
+		Orbiter->Lint_vec.print_fully(cout, Pts, nb_pts);
+		cout << endl;
+
 		//lint_vec_print(cout, Pts, nb_pts);
 		//cout << endl;
 	}

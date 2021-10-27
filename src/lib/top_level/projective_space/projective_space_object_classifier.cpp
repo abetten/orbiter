@@ -155,7 +155,7 @@ void projective_space_object_classifier::do_the_work(
 			cout << "please use option -classification_prefix <prefix> to set the "
 					"prefix for the output file" << endl;
 			exit(1);
-			}
+		}
 
 		string fname;
 
@@ -171,7 +171,7 @@ void projective_space_object_classifier::do_the_work(
 				verbose_level);
 
 
-	}// f_report
+	} // f_report
 
 	if (f_v) {
 		cout << "projective_space_object_classifier::do_the_work done" << endl;
@@ -416,9 +416,11 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 	file_io Fio;
 	os_interface Os;
 
-	cout << "projective_space_object_classifier::process_multiple_objects_from_file "
-			"input from file " << input_data
-		<< ":" << endl;
+	if (f_v) {
+		cout << "projective_space_object_classifier::process_multiple_objects_from_file "
+				"input from file " << input_data
+			<< ":" << endl;
+	}
 
 	t0 = Os.os_ticks();
 
@@ -434,12 +436,16 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 	else {
 		underlying_set_size = 0;
 	}
-	cout << "projective_space_object_classifier::process_multiple_objects_from_file "
-			"Reading the file " << input_data << endl;
+	if (f_v) {
+		cout << "projective_space_object_classifier::process_multiple_objects_from_file "
+				"Reading the file " << input_data << endl;
+	}
 	SoS->init_from_file(
 			underlying_set_size,
 			input_data, verbose_level);
-	cout << "Read the file " << input_data << ", underlying_set_size=" << underlying_set_size << endl;
+	if (f_v) {
+		cout << "Read the file " << input_data << ", underlying_set_size=" << underlying_set_size << endl;
+	}
 
 	int h;
 
@@ -451,20 +457,26 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 
 	if (file_type ==
 			INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
-		cout << "projective_space_object_classifier::process_multiple_objects_from_file "
-				"Reading spread table from file "
-			<< input_data2 << endl;
+		if (f_v) {
+			cout << "projective_space_object_classifier::process_multiple_objects_from_file "
+					"Reading spread table from file "
+				<< input_data2 << endl;
+		}
 		Fio.lint_matrix_read_csv(input_data2,
 				Spread_table, nb_spreads, spread_size,
 				0 /* verbose_level */);
-		cout << "Reading spread table from file "
-				<< input_data2 << " done" << endl;
-		cout << "The spread table contains " << nb_spreads
-				<< " spreads" << endl;
+		if (f_v) {
+			cout << "Reading spread table from file "
+					<< input_data2 << " done" << endl;
+			cout << "The spread table contains " << nb_spreads
+					<< " spreads" << endl;
 		}
+	}
 
-	cout << "projective_space_object_classifier::process_multiple_objects_from_file "
+	if (f_v) {
+		cout << "projective_space_object_classifier::process_multiple_objects_from_file "
 			"processing " << SoS->nb_sets << " objects" << endl;
+	}
 
 	{
 		vector<long int> Ago;
@@ -941,7 +953,7 @@ void projective_space_object_classifier::process_set_of_points(
 	if (f_v) {
 		cout << "projective_space_object_classifier::classify_objects_using_nauty "
 				"before process_object" << endl;
-		}
+	}
 	int nb_rows, nb_cols;
 	long int *canonical_labeling;
 	int canonical_labeling_len;
@@ -963,7 +975,7 @@ void projective_space_object_classifier::process_set_of_points(
 	if (f_v) {
 		cout << "projective_space_object_classifier::classify_objects_using_nauty "
 				"after process_object INPUT_TYPE_SET_OF_POINTS, f_found=" << f_found << endl;
-		}
+	}
 
 
 	if (f_found) {
@@ -975,7 +987,7 @@ void projective_space_object_classifier::process_set_of_points(
 		//FREE_int(canonical_labeling);
 		//cout << "after FREE_OBJECT(canonical_labeling)" << endl;
 		FREE_lint(canonical_labeling);
-		}
+	}
 	else {
 		if (f_v) {
 			cout << "projective_space_object_classifier::classify_objects_using_nauty "
@@ -996,7 +1008,7 @@ void projective_space_object_classifier::process_set_of_points(
 
 		//compute_and_print_ago_distribution(cout,
 		//		CB, verbose_level);
-		}
+	}
 	if (f_v) {
 		cout << "projective_space_object_classifier::process_set_of_points done" << endl;
 	}
@@ -1035,7 +1047,7 @@ void projective_space_object_classifier::process_set_of_points_from_file(
 	if (f_v) {
 		cout << "projective_space_object_classifier::process_set_of_points_from_file "
 				"before encoding_size" << endl;
-		}
+	}
 	int nb_rows, nb_cols;
 	long int *canonical_labeling;
 	int canonical_labeling_len;
@@ -1048,7 +1060,7 @@ void projective_space_object_classifier::process_set_of_points_from_file(
 	if (f_v) {
 		cout << "projective_space_object_classifier::process_set_of_points_from_file "
 				"before process_object" << endl;
-		}
+	}
 	f_found = process_object(OiP,
 			SG, ago,
 			canonical_labeling, canonical_labeling_len,
@@ -1059,7 +1071,7 @@ void projective_space_object_classifier::process_set_of_points_from_file(
 	if (f_v) {
 		cout << "projective_space_object_classifier::process_set_of_points_from_file "
 				"f_found=" << f_found << endl;
-		}
+	}
 
 
 	if (f_found) {
@@ -1067,7 +1079,7 @@ void projective_space_object_classifier::process_set_of_points_from_file(
 		FREE_OBJECT(OiP);
 		//FREE_int(canonical_labeling);
 		FREE_lint(canonical_labeling);
-		}
+	}
 	else {
 		if (f_v) {
 			cout << "projective_space_object_classifier::process_set_of_points_from_file "
@@ -1088,7 +1100,7 @@ void projective_space_object_classifier::process_set_of_points_from_file(
 
 		//compute_and_print_ago_distribution(cout,
 		//		CB, verbose_level);
-		}
+	}
 	if (f_v) {
 		cout << "projective_space_object_classifier::process_set_of_points_from_file done" << endl;
 	}
@@ -1138,7 +1150,7 @@ void projective_space_object_classifier::process_set_of_lines_from_file(
 		FREE_OBJECT(SG);
 		FREE_OBJECT(OiP);
 		FREE_lint(canonical_labeling);
-		}
+	}
 	else {
 		if (f_v) {
 			cout << "projective_space_object_classifier::process_set_of_lines_from_file "
@@ -1159,7 +1171,7 @@ void projective_space_object_classifier::process_set_of_lines_from_file(
 
 		//compute_and_print_ago_distribution(cout,
 		//	CB, verbose_level);
-		}
+	}
 	if (f_v) {
 		cout << "projective_space_object_classifier::process_set_of_lines_from_file done" << endl;
 	}
@@ -1210,7 +1222,7 @@ void projective_space_object_classifier::process_set_of_packing(
 		FREE_OBJECT(SG);
 		FREE_OBJECT(OiP);
 		FREE_lint(canonical_labeling);
-		}
+	}
 	else {
 		if (f_v) {
 			cout << "projective_space_object_classifier::process_set_of_packing "
@@ -1231,7 +1243,7 @@ void projective_space_object_classifier::process_set_of_packing(
 
 		//compute_and_print_ago_distribution(cout,
 		//		CB, verbose_level);
-		}
+	}
 	if (f_v) {
 		cout << "projective_space_object_classifier::process_set_of_packing done" << endl;
 	}
@@ -1390,7 +1402,7 @@ int projective_space_object_classifier::process_object_with_known_canonical_labe
 	if (f_v) {
 		cout << "projective_space_object_classifier::process_object_with_known_canonical_labeling "
 				"before OiP->canonical_form_given_canonical_labeling" << endl;
-		}
+	}
 
 	bitvector *Bitvec_canonical_form;
 
@@ -1403,7 +1415,7 @@ int projective_space_object_classifier::process_object_with_known_canonical_labe
 	if (f_v) {
 		cout << "projective_space_object_classifier::process_object_with_known_canonical_labeling "
 				"after OiP->canonical_form_given_canonical_labeling" << endl;
-		}
+	}
 #endif
 
 
@@ -1988,8 +2000,10 @@ void projective_space_object_classifier::latex_report(
 		L.foot(fp);
 	}
 
-	cout << "Written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
+	if (f_v) {
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
 	//FREE_int(perm);
 	//FREE_int(v);
 	if (f_v) {

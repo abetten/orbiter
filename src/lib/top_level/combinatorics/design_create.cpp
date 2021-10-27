@@ -171,6 +171,54 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 		Sg = NULL;
 
 	}
+	else if (Descr->f_list_of_blocks_from_file) {
+
+		if (f_v) {
+			cout << "design_create::init "
+					"list of blocks from file " << Descr->list_of_blocks_from_file_fname << endl;
+		}
+
+		degree = Descr->list_of_blocks_v;
+		k = Descr->list_of_blocks_k;
+
+		file_io Fio;
+		int m, n;
+
+		Fio.lint_matrix_read_csv(Descr->list_of_blocks_from_file_fname,
+				set, m, n, verbose_level);
+
+
+		if (n != 1) {
+			cout << "design_create::init f_list_of_blocks_from_file n != 1" << endl;
+			exit(1);
+		}
+		sz = m;
+
+		//Orbiter->Lint_vec.scan(Descr->list_of_blocks_text, set, sz);
+
+		char str[1000];
+
+		sprintf(str, "blocks_v%d_k%d", degree, k);
+		prefix.assign(str);
+
+		sprintf(str, "blocks_v%d_k%d", degree, k);
+		label_txt.assign(str);
+
+		sprintf(str, "blocks\\_v%d\\_k%d", degree, k);
+		label_tex.assign(str);
+
+		A = NEW_OBJECT(action);
+		A->init_symmetric_group(degree, verbose_level);
+
+		A2 = NEW_OBJECT(action);
+		A2->induced_action_on_k_subsets(*A, k, verbose_level);
+
+		Aut = NULL;
+		Aut_on_lines = NULL;
+		f_has_group = FALSE;
+		Sg = NULL;
+
+	}
 	else {
 		cout << "design_create::init no design created" << endl;
 		sz = 0;

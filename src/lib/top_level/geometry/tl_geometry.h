@@ -1011,6 +1011,7 @@ public:
 			projective_space_with_action *PA,
 			int intermediate_subset_size,
 			std::string &fname_mask, int nb, std::string &column_label,
+			std::string &fname_out,
 			int verbose_level);
 	void report_decomposition_by_group(
 			projective_space_with_action *PA,

@@ -1157,18 +1157,18 @@ void projective_space_with_action::canonical_form_of_code(
 	projective_space_object_classifier_description Descr;
 	data_input_stream Data;
 	string points_as_string;
-	char str[1000];
 
-	sprintf(str, "%ld", set[0]);
-	points_as_string.assign(str);
-	for (i = 1; i < n; i++) {
-		points_as_string.append(",");
-		sprintf(str, "%ld", set[i]);
-		points_as_string.append(str);
-	}
+	string_tools ST;
+
+	ST.create_comma_separated_list(points_as_string, set, n);
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_form_of_code points_as_string=" << points_as_string << endl;
 	}
+	Data.nb_inputs = 0;
+	Data.input_type[Data.nb_inputs] = INPUT_TYPE_SET_OF_POINTS;
+	Data.input_string[Data.nb_inputs] = points_as_string;
+	Data.nb_inputs++;
+
 
 	Descr.f_input = TRUE;
 	Descr.Data = &Data;
@@ -1184,10 +1184,6 @@ void projective_space_with_action::canonical_form_of_code(
 	Descr.classification_prefix.assign("classify_code_");
 	Descr.classification_prefix.append(label);
 
-	Data.nb_inputs = 0;
-	Data.input_type[Data.nb_inputs] = INPUT_TYPE_SET_OF_POINTS;
-	Data.input_string[Data.nb_inputs] = points_as_string;
-	Data.nb_inputs++;
 
 
 	if (f_v) {

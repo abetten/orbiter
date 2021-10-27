@@ -20,6 +20,8 @@ namespace top_level {
 canonical_form_substructure::canonical_form_substructure()
 {
 
+	//std::string fname_case_out;
+
 	Canonical_form_classifier = NULL;
 
 	cnt = 0;
@@ -68,6 +70,7 @@ canonical_form_substructure::~canonical_form_substructure()
 void canonical_form_substructure::classify_curve_with_substructure(
 		canonical_form_classifier *Canonical_form_classifier,
 		int counter, int cnt, int row,
+		std::string &fname_case_out,
 		int *eqn,
 		int sz,
 		long int *pts,
@@ -85,6 +88,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		cout << "canonical_form_substructure::classify_curve_with_substructure verbose_level=" << verbose_level << endl;
 	}
 
+	canonical_form_substructure::fname_case_out.assign(fname_case_out);
 	canonical_form_substructure::Canonical_form_classifier = Canonical_form_classifier;
 	canonical_form_substructure::counter = counter;
 	canonical_form_substructure::cnt = cnt;
@@ -112,6 +116,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 
 
 	if (f_v) {
+		cout << "fname_case_out = " << fname_case_out << endl;
 		cout << "row = " << row << " eqn=";
 		Orbiter->Int_vec.print(cout, eqn, sz);
 		cout << " pts=";
@@ -138,6 +143,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 		cout << "canonical_form_substructure::classify_curve_with_substructure before SubSt->init" << endl;
 	}
 	SubSt->init(
+			fname_case_out,
 			Canonical_form_classifier->SubC,
 			pts, nb_pts,
 			verbose_level);
@@ -301,6 +307,7 @@ void canonical_form_substructure::handle_orbit(
 
 	if (f_v) {
 		cout << "canonical_form_substructure::handle_orbit" << endl;
+		cout << "fname = " << fname_case_out << endl;
 		cout << "selected_orbit = " << SubSt->selected_orbit << endl;
 	}
 

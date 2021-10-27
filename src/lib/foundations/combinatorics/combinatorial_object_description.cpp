@@ -23,19 +23,6 @@ namespace foundations {
 
 combinatorial_object_description::combinatorial_object_description()
 {
-#if 0
-	f_q = FALSE;
-	q = 0;
-	f_n = FALSE;
-	n = 0;
-	f_poly = FALSE;
-	//poly = NULL;
-	f_Q = FALSE;
-	Q = 0;
-	f_poly_Q = FALSE;
-	//poly_Q = NULL;
-#endif
-
 	P = NULL;
 
 	f_subiaco_oval = FALSE;
@@ -144,34 +131,6 @@ int combinatorial_object_description::read_arguments(int argc, std::string *argv
 
 	cout << "combinatorial_object_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
-
-#if 0
-		if (stringcmp(argv[i], "-q") == 0) {
-			f_q = TRUE;
-			q = strtoi(argv[++i]);
-			cout << "-q " << q << endl;
-		}
-		else if (stringcmp(argv[i], "-Q") == 0) {
-			f_Q = TRUE;
-			Q = strtoi(argv[++i]);
-			cout << "-Q " << Q << endl;
-		}
-		else if (stringcmp(argv[i], "-n") == 0) {
-			f_n = TRUE;
-			n = strtoi(argv[++i]);
-			cout << "-n " << n << endl;
-		}
-		else if (stringcmp(argv[i], "-poly") == 0) {
-			f_poly = TRUE;
-			poly.assign(argv[++i]);
-			cout << "-poly " << poly << endl;
-		}
-		else if (stringcmp(argv[i], "-poly_Q") == 0) {
-			f_poly_Q = TRUE;
-			poly_Q.assign(argv[++i]);
-			cout << "-poly_Q " << poly_Q << endl;
-		}
-#endif
 
 		if (stringcmp(argv[i], "-hyperoval") == 0) {
 			f_hyperoval = TRUE;

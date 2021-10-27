@@ -395,6 +395,8 @@ public:
 	void print_symbol_table();
 	void add_symbol_table_entry(std::string &label,
 			orbiter_symbol_table_entry *Symb, int verbose_level);
+	void get_lint_vec(std::string &label,
+			long int *&the_set, int &set_size, int verbose_level);
 
 };
 
@@ -473,6 +475,8 @@ public:
 			void *DT, int verbose_level);
 	void init_large_set_was(std::string &label,
 			void *LSW, int verbose_level);
+	void init_set(std::string &label,
+			void *SB, int verbose_level);
 	void print();
 };
 

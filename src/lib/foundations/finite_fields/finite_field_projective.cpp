@@ -323,7 +323,7 @@ void finite_field::create_projective_variety(
 
 	int *coeff;
 
-	coeff = HPD->read_from_string_coefficient_pairs(variety_coeffs, verbose_level - 2);
+	coeff = HPD->read_from_string_coefficient_vector(variety_coeffs, verbose_level - 2);
 
 	if (f_v) {
 		cout << "finite_field::create_projective_variety coeff:";

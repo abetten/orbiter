@@ -424,6 +424,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 				Descr->set_stabilizer_fname_mask,
 				Descr->set_stabilizer_nb,
 				Descr->set_stabilizer_column_label,
+				Descr->set_stabilizer_fname_out,
 				verbose_level);
 	}
 

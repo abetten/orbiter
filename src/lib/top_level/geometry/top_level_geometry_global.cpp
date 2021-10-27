@@ -30,6 +30,7 @@ void top_level_geometry_global::set_stabilizer_projective_space(
 		projective_space_with_action *PA,
 		int intermediate_subset_size,
 		std::string &fname_mask, int nb, std::string &column_label,
+		std::string &fname_out,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -47,6 +48,7 @@ void top_level_geometry_global::set_stabilizer_projective_space(
 			PA->A, PA->A, PA->A->Strong_gens,
 			intermediate_subset_size,
 			fname_mask, nb, column_label,
+			fname_out,
 			verbose_level);
 
 

@@ -334,6 +334,60 @@ void orbiter_session::add_symbol_table_entry(std::string &label,
 	Orbiter_symbol_table->add_symbol_table_entry(label, Symb, verbose_level);
 }
 
+void orbiter_session::get_lint_vec(std::string &label,
+		long int *&the_set, int &set_size, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_session::get_lint_vec" << endl;
+	}
+	if (isalpha(label.c_str()[0])) {
+		int idx;
+
+		if (f_v) {
+			cout << "orbiter_session::get_lint_vec" << endl;
+			cout << "object label " << label << endl;
+		}
+
+
+		idx = Orbiter->Orbiter_symbol_table->find_symbol(label);
+		if (f_v) {
+			cout << "orbiter_session::get_lint_vec" << endl;
+			cout << "idx = " << idx << endl;
+		}
+		if (idx == -1) {
+			cout << "orbiter_session::get_lint_vec cannot find symbol " << label << endl;
+			exit(1);
+		}
+		if (Orbiter->Orbiter_symbol_table->get_object_type(idx) != t_set) {
+			cout << "orbiter_session::get_lint_vec object not of type set" << endl;
+			exit(1);
+		}
+		set_builder *SB;
+
+		SB = (set_builder *) Orbiter->Orbiter_symbol_table->get_object(idx);
+
+		set_size = SB->sz;
+		the_set = NEW_lint(SB->sz);
+		Orbiter->Lint_vec.copy(SB->set, the_set, set_size);
+
+		if (f_v) {
+			cout << "orbiter_session::get_lint_vec" << endl;
+			cout << "set : ";
+			Orbiter->Lint_vec.print(cout, the_set, set_size);
+			cout << endl;
+		}
+
+	}
+	else {
+		Orbiter->Lint_vec.scan(label.c_str(), the_set, set_size);
+	}
+	if (f_v) {
+		cout << "orbiter_session::get_lint_vec done" << endl;
+	}
+
+}
 
 
 }}

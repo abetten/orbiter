@@ -118,14 +118,14 @@ void set_builder::init(set_builder_description *Descr,
 
 		FREE_OBJECT(S);
 	}
-	else if (Descr->f_index_set) {
+	else if (Descr->f_here) {
 		if (f_v) {
-			cout << "set_builder::init using the given index set" << endl;
+			cout << "set_builder::init -here" << endl;
 		}
 		long int *Index_set;
 		int Index_set_sz;
 
-		Orbiter->Lint_vec.scan(Descr->index_set_text, Index_set, Index_set_sz);
+		Orbiter->Lint_vec.scan(Descr->here_text, Index_set, Index_set_sz);
 
 		int i, cnt;
 		long int x, y;

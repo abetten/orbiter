@@ -38,6 +38,7 @@ polarity::~polarity()
 void polarity::init_standard_polarity(projective_space *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 1);
 	int i, j;
 	int *A;
 	int a;
@@ -62,7 +63,7 @@ void polarity::init_standard_polarity(projective_space *P, int verbose_level)
 		for (j = 0; j < n * d; j++) {
 			A[j] = P->Grass_hyperplanes->M[j];
 		}
-		if (f_v) {
+		if (f_vv) {
 			cout << "hyperplane " << i << ":" << endl;
 			Orbiter->Int_vec.print_integer_matrix_width(cout,
 				A, n, d, d,
@@ -75,7 +76,7 @@ void polarity::init_standard_polarity(projective_space *P, int verbose_level)
 				P->F->log10_of_q + 1);
 		}
 		P->F->PG_element_rank_modified(A + n * d, 1, d, a);
-		if (f_v) {
+		if (f_vv) {
 			cout << "hyperplane " << i << " is perp of point ";
 			Orbiter->Int_vec.print(cout, A + n * d, d);
 			cout << " = " << a << endl;
@@ -100,6 +101,7 @@ void polarity::init_standard_polarity(projective_space *P, int verbose_level)
 void polarity::init_general_polarity(projective_space *P, int *Mtx, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 1);
 	int i;
 	int *v;
 	int *A;
@@ -130,7 +132,7 @@ void polarity::init_general_polarity(projective_space *P, int *Mtx, int verbose_
 				A, 1, d, d, 0 /* verbose_level*/);
 
 
-		if (f_v) {
+		if (f_vv) {
 			cout << "point " << i << " * Mtx = " << endl;
 			Orbiter->Int_vec.print_integer_matrix_width(cout,
 				A, 1, d, d,
@@ -143,7 +145,7 @@ void polarity::init_general_polarity(projective_space *P, int *Mtx, int verbose_
 				P->F->log10_of_q + 1);
 		}
 		a = P->Grass_hyperplanes->rank_lint_here(A + d, 0 /*verbose_level - 4*/);
-		if (f_v) {
+		if (f_vv) {
 			cout << "hyperplane " << i << " is perp of point ";
 			Orbiter->Int_vec.print(cout, A + 2 * d, d);
 			cout << " = " << a << endl;
@@ -210,7 +212,7 @@ void polarity::report(std::ostream &f)
 	//f << "Polarity point $\\leftrightarrow$ hyperplane:\\\\" << endl;
 	f << "\\begin{multicols}{4}" << endl;
 	for (i = 0; i < P->N_points; i++) {
-		f << "$" << i << " \\leftrightarrow " << Point_to_hyperplane[i] << "$\\\\";
+		f << "$" << i << " \\leftrightarrow " << Point_to_hyperplane[i] << "$\\\\" << endl;
 	}
 	f << "\\end{multicols}" << endl;
 	f << "\\clearpage" << endl << endl;

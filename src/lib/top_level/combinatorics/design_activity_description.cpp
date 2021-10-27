@@ -38,6 +38,10 @@ design_activity_description::design_activity_description()
 	//std::string extract_solutions_by_index_fname_solutions_in;
 	//std::string extract_solutions_by_index_fname_solutions_out;
 
+	f_export_inc = FALSE;
+	f_export_blocks = FALSE;
+	f_row_sums = FALSE;
+	f_tactical_decomposition = FALSE;
 }
 
 design_activity_description::~design_activity_description()
@@ -124,6 +128,30 @@ int design_activity_description::read_arguments(int argc, std::string *argv,
 						<< endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-export_inc") == 0) {
+			f_export_inc = TRUE;
+			if (f_v) {
+				cout << "-export_inc " << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-export_blocks") == 0) {
+			f_export_blocks = TRUE;
+			if (f_v) {
+				cout << "-export_blocks " << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-row_sums") == 0) {
+			f_row_sums = TRUE;
+			if (f_v) {
+				cout << "-row_sums " << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-tactical_decomposition") == 0) {
+			f_tactical_decomposition = TRUE;
+			if (f_v) {
+				cout << "-tactical_decomposition " << endl;
+			}
+		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {
 			break;
@@ -164,6 +192,18 @@ void design_activity_description::print()
 				<< extract_solutions_by_index_fname_solutions_in << " "
 				<< extract_solutions_by_index_fname_solutions_out << " "
 				<< endl;
+	}
+	if (f_export_inc) {
+		cout << "-export_inc " << endl;
+	}
+	if (f_export_blocks) {
+		cout << "-export_blocks " << endl;
+	}
+	if (f_row_sums) {
+		cout << "-row_sums " << endl;
+	}
+	if (f_tactical_decomposition) {
+		cout << "-tactical_decomposition " << endl;
 	}
 }
 

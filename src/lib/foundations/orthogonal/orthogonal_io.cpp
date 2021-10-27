@@ -388,36 +388,13 @@ void orthogonal::report_schemes(std::ostream &ost, int verbose_level)
 		}
 
 		if (f_v) {
-			cout << "orthogonal::report_schemes before Stack->allocate" << endl;
+			cout << "orthogonal::report_schemes before Stack->allocate_with_two_classes" << endl;
 		}
 
-		Stack->allocate(nb_points + nb_lines, verbose_level);
-		if (f_v) {
-			cout << "orthogonal::report_schemes after Stack->allocate" << endl;
-		}
+		Stack->allocate_with_two_classes(nb_points + nb_lines, nb_points, nb_lines, 0 /* verbose_level */);
 
 		if (f_v) {
-			cout << "orthogonal::report_schemes before Stack->subset_continguous" << endl;
-		}
-
-		Stack->subset_continguous(nb_points, nb_lines);
-		if (f_v) {
-			cout << "orthogonal::report_schemes after Stack->subset_continguous" << endl;
-		}
-
-
-		if (f_v) {
-			cout << "orthogonal::report_schemes before Stack->split_cell" << endl;
-		}
-
-		Stack->split_cell(0 /* verbose_level */);
-
-		if (f_v) {
-			cout << "orthogonal::report_schemes before Stack->sort_cells" << endl;
-		}
-		Stack->sort_cells();
-		if (f_v) {
-			cout << "orthogonal::report_schemes after Stack->sort_cells" << endl;
+			cout << "orthogonal::report_schemes after Stack->allocate_with_two_classes" << endl;
 		}
 	#if 0
 		row_classes = NEW_int(nb_point_classes);
