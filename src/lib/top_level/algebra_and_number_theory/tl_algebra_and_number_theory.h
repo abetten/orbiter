@@ -191,6 +191,7 @@ public:
 	void do_export_orbiter(int verbose_level);
 	void do_export_gap(int verbose_level);
 	void do_export_magma(int verbose_level);
+	void do_canonical_image_GAP(std::string &input_set, int verbose_level);
 	void create_group_table(int verbose_level);
 	void normalizer(int verbose_level);
 	void centralizer(
@@ -346,6 +347,9 @@ public:
 	int f_export_gap;
 
 	int f_export_magma;
+
+	int f_canonical_image;
+	std::string canonical_image_input_set;
 
 	int f_search_element_of_order;
 	int search_element_order;

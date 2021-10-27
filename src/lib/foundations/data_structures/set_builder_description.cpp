@@ -34,8 +34,8 @@ set_builder_description::set_builder_description()
 	f_set_builder = FALSE;
 	Descr = NULL;
 
-	f_index_set = FALSE;
-	//std::string index_set;
+	f_here = FALSE;
+	//std::string here_text;
 
 }
 
@@ -92,10 +92,10 @@ int set_builder_description::read_arguments(
 			cout << "-set_builder " << endl;
 			Descr->print();
 		}
-		else if (stringcmp(argv[i], "-index_set") == 0) {
-			f_index_set = TRUE;
-			index_set_text.assign(argv[++i]);
-			cout << "-index_set " << index_set_text << endl;
+		else if (stringcmp(argv[i], "-here") == 0) {
+			f_here = TRUE;
+			here_text.assign(argv[++i]);
+			cout << "-here " << here_text << endl;
 		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {
@@ -129,8 +129,8 @@ void set_builder_description::print()
 		Descr->print();
 		cout << "-end" << endl;
 	}
-	if (f_index_set) {
-		cout << "-index_set" << index_set_text << endl;
+	if (f_here) {
+		cout << "-here" << here_text << endl;
 	}
 }
 

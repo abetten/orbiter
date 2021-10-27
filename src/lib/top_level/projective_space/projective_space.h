@@ -208,6 +208,8 @@ class canonical_form_substructure {
 
 public:
 
+	std::string fname_case_out;
+
 	canonical_form_classifier *Canonical_form_classifier;
 		// has substructure_classifier *SubC
 
@@ -259,6 +261,7 @@ public:
 	void classify_curve_with_substructure(
 			canonical_form_classifier *Canonical_form_classifier,
 			int counter, int cnt, int row,
+			std::string &fname_case_out,
 			int *eqn,
 			int sz,
 			long int *pts,
@@ -323,9 +326,6 @@ public:
 
 class projective_space_activity_description {
 public:
-
-	//int f_input;
-	//data_input_stream *Data;
 
 
 	int f_canonical_form_PG;
@@ -455,6 +455,7 @@ public:
 	std::string set_stabilizer_fname_mask;
 	int set_stabilizer_nb;
 	std::string set_stabilizer_column_label;
+	std::string set_stabilizer_fname_out;
 
 	int f_conic_type;
 	int conic_type_threshold;
@@ -597,6 +598,7 @@ public:
 			projective_space_with_action *PA,
 			int intermediate_subset_size,
 			std::string &fname_mask, int nb, std::string &column_label,
+			std::string &fname_out,
 			int verbose_level);
 	void conic_type(
 			projective_space_with_action *PA,

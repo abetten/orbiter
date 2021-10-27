@@ -3407,6 +3407,55 @@ void combinatorics_domain::create_random_permutation(int deg,
 	}
 }
 
+void combinatorics_domain::compute_incidence_matrix(int v, int b, int k, long int *Blocks_coded,
+		int *&M, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorics_domain::compute_incidence_matrix" << endl;
+	}
+	//int N = k * b;
+	int i, j, h;
+	int *B;
+
+	M = NEW_int(v * b);
+	B = NEW_int(v);
+	Orbiter->Int_vec.zero(M, v * b);
+	for (j = 0; j < b; j++) {
+		unrank_k_subset(Blocks_coded[j], B, v, k);
+		for (h = 0; h < k; h++) {
+			i = B[h];
+			M[i * b + j] = 1;
+		}
+	}
+	FREE_int(B);
+
+	if (f_v) {
+		cout << "combinatorics_domain::compute_incidence_matrix done" << endl;
+	}
+}
+
+void combinatorics_domain::compute_blocks(int v, int b, int k, long int *Blocks_coded,
+		int *&Blocks, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorics_domain::compute_blocks" << endl;
+	}
+	int j;
+
+	Blocks = NEW_int(b * k);
+	Orbiter->Int_vec.zero(Blocks, b * k);
+	for (j = 0; j < b; j++) {
+		unrank_k_subset(Blocks_coded[j], Blocks + j * k, v, k);
+	}
+
+	if (f_v) {
+		cout << "combinatorics_domain::compute_blocks done" << endl;
+	}
+}
 
 
 //##############################################################################

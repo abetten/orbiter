@@ -20,6 +20,7 @@ namespace classification {
 
 substructure_stats_and_selection::substructure_stats_and_selection()
 {
+	//std::string fname_case_out;
 	SubC = NULL;
 	Pts = NULL;
 	nb_pts = 0;
@@ -73,6 +74,7 @@ substructure_stats_and_selection::~substructure_stats_and_selection()
 
 
 void substructure_stats_and_selection::init(
+		std::string &fname_case_out,
 		substructure_classifier *SubC,
 		long int *Pts,
 		int nb_pts,
@@ -82,8 +84,10 @@ void substructure_stats_and_selection::init(
 
 
 	if (f_v) {
-		cout << "substructure_stats_and_selection::init, nb_pts=" << nb_pts << endl;
+		cout << "substructure_stats_and_selection::init, fname_case_out=" << fname_case_out << " nb_pts=" << nb_pts << endl;
 	}
+
+	substructure_stats_and_selection::fname_case_out.assign(fname_case_out);
 
 	substructure_stats_and_selection::SubC = SubC;
 	substructure_stats_and_selection::Pts = Pts;

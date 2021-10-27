@@ -151,6 +151,10 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 		AG->do_export_magma(verbose_level);
 	}
 
+	if (Descr->f_canonical_image) {
+		AG->do_canonical_image_GAP(Descr->canonical_image_input_set, verbose_level);
+	}
+
 	if (Descr->f_classes_based_on_normal_form) {
 		AG->classes_based_on_normal_form(verbose_level);
 	}

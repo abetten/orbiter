@@ -1480,7 +1480,7 @@ void projective_space::cheat_sheet_points(
 		f << "\\begin{multicols}{4}" << endl;
 		for (i = 0; i < N_points; i++) {
 			F->PG_element_unrank_modified(v, 1, d, i);
-			f << "$P_{" << i << "}=";
+			f << "$P_{" << i << "}=\\bP";
 			Orbiter->Int_vec.print(f, v, d);
 			f << "$\\\\" << endl;
 		}
@@ -1490,7 +1490,7 @@ void projective_space::cheat_sheet_points(
 		f << "\\begin{multicols}{2}" << endl;
 		for (i = 0; i < N_points; i++) {
 			F->PG_element_unrank_modified(v, 1, d, i);
-			f << "$P_{" << i << "}=";
+			f << "$P_{" << i << "}=\\bP";
 			Orbiter->Int_vec.print(f, v, d);
 			f << "=";
 			F->int_vec_print_elements_exponential(f, v, d, symbol_for_print);
@@ -1501,7 +1501,7 @@ void projective_space::cheat_sheet_points(
 		f << "\\begin{multicols}{2}" << endl;
 		for (i = 0; i < N_points; i++) {
 			F->PG_element_unrank_modified(v, 1, d, i);
-			f << "$P_{" << i << "}=";
+			f << "$P_{" << i << "}=\\bP";
 			Orbiter->Int_vec.print(f, v, d);
 			//f << "=";
 			//F->int_vec_print_elements_exponential(f, v, d, symbol_for_print);
@@ -1525,7 +1525,7 @@ void projective_space::cheat_sheet_points(
 			}
 			if (j == d) {
 				cnt++;
-				f << "$P_{" << i << "}=";
+				f << "$P_{" << i << "}=\\bP";
 				Orbiter->Int_vec.print(f, v, d);
 				f << "$\\\\" << endl;
 			}
@@ -1541,7 +1541,7 @@ void projective_space::cheat_sheet_points(
 	for (i = 0; i < N_points; i++) {
 		F->PG_element_unrank_modified(v, 1, d, i);
 		F->PG_element_normalize_from_front(v, 1, d);
-		f << "$P_{" << i << "}=";
+		f << "$P_{" << i << "}=\\bP";
 		Orbiter->Int_vec.print(f, v, d);
 		f << "$\\\\" << endl;
 		}
@@ -1750,7 +1750,7 @@ void projective_space::cheat_sheet_subspaces(
 		f << "%\\begin{multicols}{2}" << endl;
 		for (u = 0; u < nb_k_subspaces; u++) {
 			Gr->unrank_lint(u, 0 /* verbose_level*/);
-			f << "$L_{" << u << "}=";
+			f << "$L_{" << u << "}=\\bL";
 			f << "\\left[" << endl;
 			f << "\\begin{array}{c}" << endl;
 			for (i = 0; i < k1; i++) {

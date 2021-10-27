@@ -1604,6 +1604,45 @@ void strong_generators::export_magma(action *A, std::ostream &ost, int verbose_l
 //>                               [0,1,0,0, 1,0,0,0, 0,0,1,0, 0,0,1,1 ] >;
 
 
+void strong_generators::canonical_image_GAP(std::string &input_set_text, std::ostream &ost)
+{
+	int i;
+
+	//ost << "Generators in GAP format are:" << endl;
+	ost << "G := Group([";
+	for (i = 0; i < gens->len; i++) {
+		A->element_print_as_permutation_with_offset(
+				gens->ith(i), ost,
+				1 /*offset*/,
+				TRUE /* f_do_it_anyway_even_for_big_degree */,
+				FALSE /* f_print_cycles_of_length_one */,
+				0 /* verbose_level*/);
+		if (i < gens->len - 1) {
+			ost << ", " << endl;
+		}
+	}
+	ost << "]);" << endl;
+
+	long int *set;
+	int sz;
+	string_tools ST;
+	std::string output;
+
+
+	Orbiter->Lint_vec.scan(input_set_text, set, sz);
+
+	// add one because GAP is 1-based:
+	for (i = 0; i < sz; i++) {
+		set[i]++;
+	}
+
+	ST.create_comma_separated_list(output, set, sz);
+
+	ost << "LoadPackage(\"images\");" << endl;
+	ost << "MinimalImage(G, [" << output << "], OnSets);" << endl;
+}
+
+
 void strong_generators::print_generators_tex()
 {
 	print_generators_tex(cout);

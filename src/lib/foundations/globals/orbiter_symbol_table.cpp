@@ -55,7 +55,7 @@ void orbiter_symbol_table::add_symbol_table_entry(std::string &str,
 
 	if (idx >= 0) {
 		cout << "orbiter_symbol_table::add_symbol_table_entry Overriding "
-				"symbol " << str << " in sybol table at position " << idx << endl;
+				"symbol " << str << " in symbol table at position " << idx << endl;
 		Table[idx].freeself();
 		Table[idx] = *Symb;
 	}

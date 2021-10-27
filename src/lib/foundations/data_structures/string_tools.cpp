@@ -945,5 +945,19 @@ void string_tools::remove_specific_character(std::string &str, char c)
 
 }
 
+void string_tools::create_comma_separated_list(std::string &output, long int *input, int input_sz)
+{
+	char str[1000];
+	int i;
+
+	sprintf(str, "%ld", input[0]);
+	output.assign(str);
+	for (i = 1; i < input_sz; i++) {
+		output.append(",");
+		sprintf(str, "%ld", input[i]);
+		output.append(str);
+	}
+
+}
 
 }}

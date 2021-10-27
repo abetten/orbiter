@@ -1592,7 +1592,9 @@ int tdo_scheme_synthetic::refine_rows(int verbose_level,
 		}
 		get_column_split_partition(0 /*verbose_level*/, P);
 		if (f_vv) {
-			cout << "column split partition: " << P << endl;
+			cout << "column split partition: " << endl;
+			P.print(cout);
+			cout << endl;
 		}
 		if (P.ht != l1) {
 			cout << "P.ht != l1" << endl;
@@ -2923,7 +2925,9 @@ int tdo_scheme_synthetic::refine_columns(int verbose_level,
 	get_row_split_partition(0 /*verbose_level*/, P);
 	if (f_vv) {
 		cout << "tdo_scheme_synthetic::refine_columns "
-				"row split partition: " << P << endl;
+				"row split partition: " << endl;
+		P.print(cout);
+		cout << endl;
 	}
 	if (P.ht != l1) {
 		cout << "P.ht != l1" << endl;

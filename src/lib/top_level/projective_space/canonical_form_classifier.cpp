@@ -328,6 +328,7 @@ void canonical_form_classifier::classify_with_substructure(int verbose_level)
 	}
 
 	SubC->classify_substructures(
+			Descr->fname_base_out,
 			Descr->PA->A,
 			Descr->PA->A,
 			Descr->PA->A->Strong_gens,
@@ -377,7 +378,7 @@ void canonical_form_classifier::main_loop(int verbose_level)
 		cout << "canonical_form_classifier::main_loop" << endl;
 	}
 
-
+	string fname_case_out;
 
 
 	counter = 0;
@@ -407,6 +408,11 @@ void canonical_form_classifier::main_loop(int verbose_level)
 			if (f_v) {
 				cout << "cnt = " << cnt << " / " << Descr->nb_files << " row = " << row << " / " << S.nb_rows - 1 << endl;
 			}
+
+			sprintf(str, "_cnt%d", counter);
+
+			fname_case_out.assign(Descr->fname_base_out);
+			fname_case_out.append(str);
 
 			int j, t;
 			string eqn_txt;
@@ -522,6 +528,7 @@ void canonical_form_classifier::main_loop(int verbose_level)
 					CFS->classify_curve_with_substructure(
 							this,
 							counter, cnt, row,
+							fname_case_out,
 							eqn,
 							sz,
 							pts,

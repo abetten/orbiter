@@ -339,10 +339,10 @@ void packings_global::select_packings(
 		classify_bitvectors *&CB,
 		int verbose_level)
 {
+#if 0
 	int f_v = (verbose_level >= 1);
 
 
-#if 0
 	int nb_accept = 0;
 	file_io Fio;
 

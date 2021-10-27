@@ -948,6 +948,9 @@ public:
 	std::string  large_set_was_label_design_table;
 	large_set_was_description *large_set_was_descr;
 
+	int f_set;
+	set_builder_description *Set_builder_description;
+
 	symbol_definition();
 	~symbol_definition();
 	void read_definition(
@@ -976,6 +979,7 @@ public:
 	void definition_of_design(int verbose_level);
 	void definition_of_design_table(int verbose_level);
 	void definition_of_large_set_was(int verbose_level);
+	void definition_of_set(int verbose_level);
 
 };
 

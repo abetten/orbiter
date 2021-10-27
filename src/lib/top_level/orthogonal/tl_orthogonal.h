@@ -276,6 +276,7 @@ public:
 	std::string set_stabilizer_fname_mask;
 	int set_stabilizer_nb;
 	std::string set_stabilizer_column_label;
+	std::string set_stabilizer_fname_out;
 
 
 
@@ -315,6 +316,7 @@ public:
 			orthogonal_space_with_action *OA,
 			int intermediate_subset_size,
 			std::string &fname_mask, int nb, std::string &column_label,
+			std::string &fname_out,
 			int verbose_level);
 
 

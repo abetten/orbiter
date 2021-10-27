@@ -138,6 +138,7 @@ void compute_stabilizer::init(
 
 	if (f_v) {
 		cout << "compute_stabilizer::init" << endl;
+		cout << "fname_out = " << SubSt->fname_case_out << endl;
 		cout << "SubSt->selected_orbit = " << SubSt->selected_orbit << endl;
 		cout << "nb_interesting_subsets = " << SubSt->nb_interesting_subsets << endl;
 	}

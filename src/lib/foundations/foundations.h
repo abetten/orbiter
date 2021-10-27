@@ -611,6 +611,7 @@ enum symbol_table_object_type {
 	t_design,
 	t_design_table,
 	t_large_set_was,
+	t_set,
 	t_action,
 	t_poset,
 	t_poset_classification,

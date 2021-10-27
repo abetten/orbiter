@@ -1769,6 +1769,7 @@ public:
 	void print_generators_even_odd();
 	void print_generators_MAGMA(action *A, std::ostream &ost);
 	void export_magma(action *A, std::ostream &ost, int verbose_level);
+	void canonical_image_GAP(std::string &input_set_text, std::ostream &ost);
 	void print_generators_gap(std::ostream &ost);
 	void print_generators_gap_in_different_action(std::ostream &ost, action *A2);
 	void print_generators_compact(std::ostream &ost);

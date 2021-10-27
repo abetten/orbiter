@@ -20,7 +20,7 @@ namespace classification {
 
 substructure_classifier::substructure_classifier()
 {
-	//PA = NULL;
+	//std::string &fname_base_out;
 	substructure_size = 0;
 	PC = NULL;
 	Control = NULL;
@@ -38,6 +38,7 @@ substructure_classifier::~substructure_classifier()
 
 
 void substructure_classifier::classify_substructures(
+		std::string &fname_base_out,
 		action *A,
 		action *A2,
 		strong_generators *gens,
@@ -49,6 +50,7 @@ void substructure_classifier::classify_substructures(
 
 	if (f_v) {
 		cout << "substructure_classifier::classify_substructures, substructure_size=" << substructure_size << endl;
+		cout << "substructure_classifier::classify_substructures, fname_base_out=" << fname_base_out << endl;
 		cout << "substructure_classifier::classify_substructures, action A=";
 		A->print_info();
 		cout << endl;
@@ -59,7 +61,7 @@ void substructure_classifier::classify_substructures(
 		gens->print_generators_tex(cout);
 	}
 
-	//substructure_classifier::PA = PA;
+	substructure_classifier::fname_base_out.assign(fname_base_out);
 	substructure_classifier::A = A;
 	substructure_classifier::A2 = A2;
 	substructure_classifier::substructure_size = substructure_size;
@@ -136,6 +138,7 @@ void substructure_classifier::set_stabilizer_in_any_space(
 		action *A, action *A2, strong_generators *Strong_gens,
 		int intermediate_subset_size,
 		std::string &fname_mask, int nb, std::string &column_label,
+		std::string &fname_out,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -154,7 +157,9 @@ void substructure_classifier::set_stabilizer_in_any_space(
 				"before SubC->classify_substructures" << endl;
 	}
 
-	classify_substructures(A, A,
+	classify_substructures(
+			fname_base_out,
+			A, A,
 			Strong_gens,
 			intermediate_subset_size, verbose_level - 5);
 
@@ -203,6 +208,9 @@ void substructure_classifier::set_stabilizer_in_any_space(
 	}
 
 
+	int counter;
+
+	counter = 0;
 
 	for (cnt = 0; cnt < nb; cnt++) {
 
@@ -226,7 +234,7 @@ void substructure_classifier::set_stabilizer_in_any_space(
 		col_idx = S.find_column(column_label);
 
 
-		for (row = 0; row < S.nb_rows - 1; row++) {
+		for (row = 0; row < S.nb_rows - 1; row++, counter++) {
 
 			int j, t;
 			string pts_txt;
@@ -262,11 +270,22 @@ void substructure_classifier::set_stabilizer_in_any_space(
 				cout << endl;
 			}
 
+
+
+			std::string fname;
+			char str[1000];
+
+			sprintf(str, "_cnt%d", counter);
+			fname.assign(fname_out);
+			fname.append(str);
+
+
 			if (f_v) {
 				cout << "substructure_classifier::set_stabilizer_in_any_space "
 						"before set_stabilizer_of_set" << endl;
 			}
 			set_stabilizer_of_set(
+						fname,
 						cnt, nb, row,
 						pts,
 						nb_pts,
@@ -293,6 +312,7 @@ void substructure_classifier::set_stabilizer_in_any_space(
 
 
 void substructure_classifier::set_stabilizer_of_set(
+		std::string &fname_out,
 		int cnt, int nb, int row,
 		long int *pts,
 		int nb_pts,
@@ -314,6 +334,7 @@ void substructure_classifier::set_stabilizer_of_set(
 		cout << "substructure_classifier::set_stabilizer_of_set before SubSt->init" << endl;
 	}
 	SubSt->init(
+			fname_out,
 			this,
 			pts,
 			nb_pts,

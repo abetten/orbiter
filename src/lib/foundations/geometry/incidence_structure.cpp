@@ -1261,7 +1261,8 @@ int incidence_structure::refine_column_partition(
 			cout << "row_cell=" << row_cell << endl;
 			cout << "ht0=" << ht0 << endl;
 			cout << "ht1=" << ht1 << endl;
-			cout << PStack << endl;
+			PStack.print(cout);
+			cout << endl;
 			exit(1);
 		}
 	
@@ -1321,7 +1322,8 @@ int incidence_structure::refine_column_partition(
 		cout << "incidence_structure::refine_column_partition "
 				"after sorting, with " << PStack.ht - ht0
 				<< " n e w classes" << endl;
-		cout << PStack << endl;
+		PStack.print(cout);
+		cout << endl;
 	}
 
 	if (f_vvv) {
@@ -1382,7 +1384,8 @@ int incidence_structure::refine_row_partition(
 			cout << "col_cell is not a col cell" << endl;
 			cout << "ht0=" << ht0 << endl;
 			cout << "ht1=" << ht1 << endl;
-			cout << PStack << endl;
+			PStack.print(cout);
+			cout << endl;
 			exit(1);
 		}
 	
@@ -1437,7 +1440,8 @@ int incidence_structure::refine_row_partition(
 		cout << "incidence_structure::refine_row_partition "
 				"after sorting, with " << PStack.ht - ht0
 				<< " n e w classes" << endl;
-		cout << PStack << endl;
+		PStack.print(cout);
+		cout << endl;
 	}
 
 	if (f_vv) {
@@ -1822,6 +1826,9 @@ void incidence_structure::get_row_decomposition_scheme(
 	FREE_int(neighbors);
 	FREE_int(data0);
 	FREE_int(data1);
+	if (f_v) {
+		cout << "incidence_structure::get_row_decomposition_scheme done" << endl;
+	}
 }
 
 void incidence_structure::get_row_decomposition_scheme_if_possible(
@@ -1849,12 +1856,14 @@ void incidence_structure::get_row_decomposition_scheme_if_possible(
 		c1 = row_classes[I];
 		f1 = PStack.startCell[c1];
 		l1 = PStack.cellSize[c1];
-		for (j = 0; j < nb_col_classes; j++) 
+		for (j = 0; j < nb_col_classes; j++) {
 			data0[j] = 0;
+		}
 		for (i = 0; i < l1; i++) {
 			x = PStack.pointList[f1 + i];
-			for (J = 0; J < nb_col_classes; J++) 
+			for (J = 0; J < nb_col_classes; J++) {
 				data1[J] = 0;
+			}
 			nb = get_lines_on_point(neighbors, x, verbose_level - 2);
 			//O.lines_on_point_by_line_rank(x, neighbors,
 			//verbose_level - 2);
@@ -2291,7 +2300,7 @@ void incidence_structure::get_and_print_row_tactical_decomposition_scheme_tex(
 	if (f_v) {
 		cout << "incidence_structure::get_and_print_row_tactical_"
 				"decomposition_scheme_tex computing row scheme" << endl;
-		}
+	}
 	PStack.allocate_and_get_decomposition(
 		row_classes, row_class_inv, nb_row_classes,
 		col_classes, col_class_inv, nb_col_classes, 
@@ -2304,7 +2313,7 @@ void incidence_structure::get_and_print_row_tactical_decomposition_scheme_tex(
 		cout << "incidence_structure::get_and_print_row_tactical_"
 				"decomposition_scheme_tex before get_row_"
 				"decomposition_scheme" << endl;
-		}
+	}
 	get_row_decomposition_scheme(PStack, 
 		row_classes, row_class_inv, nb_row_classes,
 		col_classes, col_class_inv, nb_col_classes, 
@@ -2315,7 +2324,7 @@ void incidence_structure::get_and_print_row_tactical_decomposition_scheme_tex(
 		cout << "incidence_structure::get_and_print_row_tactical_"
 				"decomposition_scheme_tex before PStack.print_row_"
 				"tactical_decomposition_scheme_tex" << endl;
-		}
+	}
 	PStack.print_row_tactical_decomposition_scheme_tex(ost, f_enter_math, 
 		row_classes, nb_row_classes,
 		col_classes, nb_col_classes, 
@@ -2943,7 +2952,8 @@ void incidence_structure::compute_tdo(partitionstack &S,
 	if (f_v) {
 		cout << "incidence_structure_compute_tdo "
 				"initial partition:" << endl;
-		cout << S << endl;
+		S.print(cout);
+		cout << endl;
 	}
 	N = nb_points() + nb_lines();
 
