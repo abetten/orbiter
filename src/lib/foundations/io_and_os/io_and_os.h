@@ -170,6 +170,8 @@ public:
 		long int *&M, int &m, int &n, int verbose_level);
 	void double_matrix_read_csv(std::string &fname, double *&M,
 		int &m, int &n, int verbose_level);
+	void read_column_and_parse(std::string &fname, std::string &col_label,
+		set_of_sets *&SoS, int verbose_level);
 	void int_matrix_write_cas_friendly(std::string &fname, int *M, int m, int n);
 	void int_matrix_write_text(std::string &fname,
 		int *M, int m, int n);

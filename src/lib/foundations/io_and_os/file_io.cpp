@@ -1596,6 +1596,67 @@ void file_io::double_matrix_read_csv(std::string &fname,
 	}
 }
 
+
+void file_io::read_column_and_parse(std::string &fname, std::string &col_label,
+	set_of_sets *&SoS, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "file_io::read_column_and_parse reading file " << fname << endl;
+	}
+	if (file_size(fname) <= 0) {
+		cout << "file_io::read_column_and_parse file " << fname
+			<< " does not exist or is empty" << endl;
+		cout << "file_size(fname)=" << file_size(fname) << endl;
+		exit(1);
+	}
+	{
+		spreadsheet S;
+		int idx;
+		int nb_sets;
+		int i;
+
+		S.read_spreadsheet(fname, 0/*verbose_level - 1*/);
+
+		idx = S.find_column(col_label);
+		if (idx == -1) {
+			cout << "file_io::read_column_and_parse cannot find column " << col_label << endl;
+			exit(1);
+		}
+		nb_sets = S.nb_rows - 1;
+
+		int underlying_set_size = INT_MAX;
+
+		SoS = NEW_OBJECT(set_of_sets);
+
+		SoS->init_simple(underlying_set_size,
+				nb_sets, verbose_level);
+
+		for (i = 0; i < nb_sets; i++) {
+
+			char *p;
+			long int *set;
+			int sz;
+
+			p = S.get_string(i + 1, idx);
+
+			Orbiter->Lint_vec.scan(p, set, sz);
+
+			SoS->Sets[i] = set;
+			SoS->Set_size[i] = sz;
+
+			FREE_char(p);
+		}
+	}
+	if (f_v) {
+		cout << "file_io::read_column_and_parse done" << endl;
+	}
+
+}
+
+
+
 void file_io::int_matrix_write_cas_friendly(std::string &fname, int *M, int m, int n)
 {
 	int i, j;

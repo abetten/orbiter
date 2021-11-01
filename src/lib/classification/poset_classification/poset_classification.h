@@ -839,6 +839,7 @@ public:
 	void wedge_product_export_magma(
 			int n, int q, int vector_space_dimension,
 			int level, int verbose_level);
+	void write_reps_csv(int lvl, int verbose_level);
 
 	// poset_classification_export_source_code.cpp:
 	void generate_source_code(int level, int verbose_level);
@@ -1089,6 +1090,7 @@ public:
 	void log_nodes_for_treefile(
 			int cur, int depth,
 			std::ostream &f, int f_recurse, int verbose_level);
+	void save_representatives_at_level_to_csv(std::string &fname, int lvl, int verbose_level);
 
 };
 

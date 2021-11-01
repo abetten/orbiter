@@ -1495,7 +1495,7 @@ int number_theory_domain::ny_p(long int n, long int p)
 	if (n == 0) {
 		cout << "number_theory_domain::ny_p n == 0" << endl;
 		exit(1);
-		}
+	}
 	if (n < 0) {
 		n = -n;
 	}
@@ -1535,11 +1535,13 @@ void number_theory_domain::print_factorization(int nb_primes, int *primes, int *
 	
 	for (i = 0; i < nb_primes; i++) {
 		cout << primes[i];
-		if (exponents[i] > 1)
+		if (exponents[i] > 1) {
 			cout << "^" << exponents[i];
-		if (i < nb_primes - 1)
+		}
+		if (i < nb_primes - 1) {
 			cout << " * ";
 		}
+	}
 }
 
 void number_theory_domain::print_longfactorization(int nb_primes,
@@ -1549,11 +1551,13 @@ void number_theory_domain::print_longfactorization(int nb_primes,
 	
 	for (i = 0; i < nb_primes; i++) {
 		cout << primes[i];
-		if (exponents[i] > 1)
+		if (exponents[i] > 1) {
 			cout << "^" << exponents[i];
-		if (i < nb_primes - 1)
+		}
+		if (i < nb_primes - 1) {
 			cout << " * ";
 		}
+	}
 }
 
 long int number_theory_domain::euler_function(long int n)
@@ -1831,7 +1835,7 @@ void number_theory_domain::do_babystep_giantstep(
 	for (i = 1; i < n; i++) {
 		Table1[i] = NT.mult_mod(Table1[i - 1], g, p);
 		Table2[i] = NT.mult_mod(Table2[i - 1], gmn, p);
-		}
+	}
 	Orbiter->Lint_vec.copy(Table1, data, n);
 	Orbiter->Lint_vec.copy(Table2, data + n, n);
 	Sorting.lint_vec_heapsort(data, 2 * n);
@@ -1942,7 +1946,7 @@ void number_theory_domain::sieve_primes(std::vector<int> &v,
 		}
 		if (nb_primes(x) != 1) {
 			cout << "error: " << x << " is not prime!" << endl;
-			}
+		}
 		v.push_back(x);
 		if (f_v) {
 			cout << v.size() << " " << x << endl;
@@ -1964,8 +1968,9 @@ int number_theory_domain::nb_primes(int n)
 	int i = 0;
 	int d;
 
-	if (n < 0)
+	if (n < 0) {
 		n = -n;
+	}
 	while (n != 1) {
 		d = smallest_primedivisor(n);
 		i++;
@@ -1974,7 +1979,8 @@ int number_theory_domain::nb_primes(int n)
 	return i;
 }
 
-void number_theory_domain::cyclotomic_set(std::vector<int> &cyclotomic_set, int a, int q, int n, int verbose_level)
+void number_theory_domain::cyclotomic_set(std::vector<int> &cyclotomic_set,
+		int a, int q, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int b, c;

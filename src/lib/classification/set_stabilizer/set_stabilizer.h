@@ -184,7 +184,7 @@ public:
 	void init(compute_stabilizer *CS, int verbose_level);
 	void compute_stabilizer_orbits_and_find_minimal_pattern(int verbose_level);
 	// uses selected_set_stab_gens to compute orbits on points in action A2
-	void save_interesting_subsets_reduced(int verbose_level);
+	void save_interesting_subsets_reduced(int stage, int verbose_level);
 	void find_orbit_pattern(int cnt, int *transp, int verbose_level);
 	// computes transporter to transp
 	void find_interesting_orbits(int verbose_level);

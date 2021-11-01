@@ -30,6 +30,11 @@ graph_theoretic_activity_description::graph_theoretic_activity_description()
 	f_split = FALSE;
 	//std::string split_input_fname;
 	//std::string split_by_file = NULL;
+
+	f_split_by_starters = FALSE;
+	//std::string split_by_starters_fname_reps;
+	//std::string split_by_starters_col_label;
+
 	f_save = FALSE;
 	f_automorphism_group = FALSE;
 }
@@ -108,6 +113,14 @@ int graph_theoretic_activity_description::read_arguments(
 				cout << "-split " << split_input_fname << " " << split_by_file << endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-split_by_starters") == 0) {
+			f_split_by_starters = TRUE;
+			split_by_starters_fname_reps.assign(argv[++i]);
+			split_by_starters_col_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-split_by_starters " << split_by_starters_fname_reps << " " << split_by_starters_col_label << endl;
+			}
+		}
 		else if (stringcmp(argv[i], "-save") == 0) {
 			f_save = TRUE;
 			if (f_v) {
@@ -164,6 +177,9 @@ void graph_theoretic_activity_description::print()
 	}
 	if (f_split) {
 		cout << "-split " << split_input_fname << " " << split_by_file << endl;
+	}
+	if (f_split_by_starters) {
+		cout << "-split_by_starters " << split_by_starters_fname_reps << " " << split_by_starters_col_label << endl;
 	}
 	if (f_save) {
 		cout << "-save " << endl;

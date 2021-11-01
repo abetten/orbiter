@@ -369,6 +369,10 @@ public:
 		int pt,
 		fancy_set *&vertex_subset, fancy_set *&color_subset,
 		int verbose_level);
+	colored_graph *compute_neighborhood_subgraph_based_on_subset(
+		long int *subset, int subset_sz,
+		fancy_set *&vertex_subset, fancy_set *&color_subset,
+		int verbose_level);
 	void export_to_magma(std::string &fname, int verbose_level);
 	void export_to_maple(std::string &fname, int verbose_level);
 	void export_to_file(std::string &fname, int verbose_level);

@@ -40,6 +40,7 @@ public:
 	void make_gilbert_varshamov_code_recursion(
 			projective_space *P, int n, int d,
 			long int *set, int *f_forbidden, int level, int verbose_level);
+
 	int gilbert_varshamov_lower_bound_for_d(int n, int k, int q, int verbose_level);
 	int singleton_bound_for_d(int n, int k, int q, int verbose_level);
 	int hamming_bound_for_d(int n, int k, int q, int verbose_level);

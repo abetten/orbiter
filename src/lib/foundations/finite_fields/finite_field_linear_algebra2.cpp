@@ -669,6 +669,7 @@ void finite_field::random_invertible_matrix(int *M,
 
 void finite_field::adjust_basis(int *V, int *U,
 		int n, int k, int d, int verbose_level)
+// V[k * n], U[d * n] and d <= k.
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, ii, b;
@@ -680,9 +681,13 @@ void finite_field::adjust_basis(int *V, int *U,
 		cout << "finite_field::adjust_basis" << endl;
 	}
 	base_cols = NEW_int(n);
-	M = NEW_int(k * n);
+	M = NEW_int((k + d) * n);
 
 	Orbiter->Int_vec.copy(U, M, d * n);
+	if (f_v) {
+		cout << "finite_field::adjust_basis before Gauss step, U=" << endl;
+		Orbiter->Int_vec.matrix_print(M, d, n);
+	}
 
 	if (Gauss_simple(M, d, n, base_cols,
 			0 /* verbose_level */) != d) {
@@ -690,22 +695,63 @@ void finite_field::adjust_basis(int *V, int *U,
 				"of matrix is not d" << endl;
 		exit(1);
 	}
+	if (f_v) {
+		cout << "finite_field::adjust_basis after Gauss step, M=" << endl;
+		Orbiter->Int_vec.matrix_print(M, d, n);
+	}
+
 	ii = 0;
 	for (i = 0; i < k; i++) {
+
+		// take the i-th vector of V:
 		Orbiter->Int_vec.copy(V + i * n, M + (d + ii) * n, n);
+
+
+		// and reduce it modulo the basis of the d-dimensional subspace U:
+
 		for (j = 0; j < d; j++) {
 			b = base_cols[j];
-			Gauss_step(M + b * n, M + (d + ii) * n,
+			if (f_v) {
+				cout << "finite_field::adjust_basis before Gauss step:" << endl;
+				Orbiter->Int_vec.matrix_print(M, d + ii + 1, n);
+			}
+			Gauss_step(M + j * n, M + (d + ii) * n,
 					n, b, 0 /* verbose_level */);
+
+			// corrected a mistake! A Betten 11/1/2021,
+			// the first argument was M + b * n but should be M + j * n
+			if (f_v) {
+				cout << "finite_field::adjust_basis after Gauss step:" << endl;
+				Orbiter->Int_vec.matrix_print(M, d + ii + 1, n);
+			}
 		}
 		if (Sorting.int_vec_is_zero(M + (d + ii) * n, n)) {
+			// the vector lies in the subspace. Skip
 		}
 		else {
+
+			// the vector is not in the subspace, keep:
+
 			ii++;
+		}
+
+		// stop when we have reached a basis for V:
+
+		if (d + ii == k) {
+			break;
 		}
 	}
 	if (d + ii != k) {
 		cout << "finite_field::adjust_basis d + ii != k" << endl;
+		cout << "finite_field::adjust_basis d = " << d << endl;
+		cout << "finite_field::adjust_basis ii = " << ii << endl;
+		cout << "finite_field::adjust_basis k = " << k << endl;
+		cout << "V=" << endl;
+		Orbiter->Int_vec.matrix_print(V, k, n);
+		cout << endl;
+		cout << "U=" << endl;
+		Orbiter->Int_vec.matrix_print(V, d, n);
+		cout << endl;
 		exit(1);
 	}
 	Orbiter->Int_vec.copy(M, V, k * n);

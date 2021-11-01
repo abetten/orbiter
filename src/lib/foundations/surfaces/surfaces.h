@@ -981,7 +981,7 @@ public:
 	int *Line_intersection_pt_idx; // [SO->nb_lines * SO->nb_lines]
 
 
-	int *gradient;
+	int *gradient; // [4 * SO->Surf->Poly2_4->get_nb_monomials()]
 
 	long int *singular_pts;
 	int nb_singular_pts;

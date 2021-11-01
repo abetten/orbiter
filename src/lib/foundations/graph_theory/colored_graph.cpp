@@ -1520,6 +1520,150 @@ colored_graph *colored_graph::compute_neighborhood_subgraph(
 	return S;
 }
 
+
+colored_graph *colored_graph::compute_neighborhood_subgraph_based_on_subset(
+	long int *subset, int subset_sz,
+	fancy_set *&vertex_subset, fancy_set *&color_subset,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	colored_graph *S;
+	int *color_in_graph;
+	int *color_in_subgraph;
+	long int i, j, l, ii, jj;
+	long int *point_labels;
+	int c, idx;
+	int nb_points_subgraph;
+	bitvector *Bitvec;
+	sorting Sorting;
+	long int *subgraph_user_data;
+
+	if (f_v) {
+		cout << "colored_graph::compute_neighborhood_subgraph "
+				"of set ";
+		Orbiter->Lint_vec.print(cout, subset, subset_sz);
+		cout << endl;
+	}
+	if (f_v) {
+		cout << "The graph has " << nb_points << " vertices and "
+				<< nb_colors << " colors" << endl;
+	}
+	S = NEW_OBJECT(colored_graph);
+	vertex_subset = NEW_OBJECT(fancy_set);
+	color_subset = NEW_OBJECT(fancy_set);
+	point_labels = NEW_lint(nb_points);
+
+	// new user data = old user data plus the label of the point pt:
+	subgraph_user_data = NEW_lint(user_data_size + subset_sz);
+	Orbiter->Lint_vec.copy(user_data, subgraph_user_data, user_data_size);
+	Orbiter->Lint_vec.copy(subset, subgraph_user_data + user_data_size, subset_sz);
+
+	color_in_graph = NEW_int(nb_points * nb_colors_per_vertex);
+	color_in_subgraph = NEW_int(nb_points * nb_colors_per_vertex);
+
+	vertex_subset->init(nb_points, 0 /* verbose_level */);
+	color_subset->init(nb_colors, 0 /* verbose_level */);
+
+	for (i = 0; i < nb_points; i++) {
+		for (j = 0; j < subset_sz; j++) {
+			if (i == subset[j]) {
+				break;
+			}
+		}
+		if (j < subset_sz) {
+			continue;
+		}
+		for (j = 0; j < subset_sz; j++) {
+			if (!is_adjacent(i, subset[j])) {
+				break;
+			}
+		}
+		if (j < subset_sz) {
+			continue;
+		}
+		for (j = 0; j < nb_colors_per_vertex; j++) {
+			c = point_color[i * nb_colors_per_vertex + j];
+			color_in_graph[vertex_subset->k * nb_colors_per_vertex + j] = c;
+			color_subset->add_element(c);
+		}
+		point_labels[vertex_subset->k] = points[i];
+		vertex_subset->add_element(i);
+	}
+
+
+	nb_points_subgraph = vertex_subset->k;
+
+	color_subset->sort();
+
+	if (f_v) {
+		cout << "The subgraph has " << nb_points_subgraph
+				<< " vertices and " << color_subset->k
+				<< " colors" << endl;
+	}
+
+	for (i = 0; i < nb_points_subgraph; i++) {
+		for (j = 0; j < nb_colors_per_vertex; j++) {
+			c = color_in_graph[i * nb_colors_per_vertex + j];
+			if (!Sorting.lint_vec_search(
+				color_subset->set, color_subset->k, c, idx, 0)) {
+				cout << "error, did not find color" << endl;
+				exit(1);
+			}
+			color_in_subgraph[i * nb_colors_per_vertex + j] = idx;
+		}
+	}
+
+	Bitvec = NEW_OBJECT(bitvector);
+
+	l = ((long int) nb_points_subgraph * (long int) (nb_points_subgraph - 1)) >> 1;
+
+
+	Bitvec->allocate(l);
+
+	S->init(nb_points_subgraph,
+			color_subset->k, nb_colors_per_vertex,
+			color_in_subgraph,
+			Bitvec, TRUE,
+			label, label_tex,
+			0 /*verbose_level*/);
+
+
+
+
+	// set the vertex labels:
+	Orbiter->Lint_vec.copy(point_labels, S->points, nb_points_subgraph);
+
+	S->init_user_data(subgraph_user_data, user_data_size + subset_sz, verbose_level);
+
+	if (f_v) {
+		cout << "colored_graph::compute_neighborhood_subgraph "
+				"computing adjacency matrix of subgraph" << endl;
+	}
+	long int k;
+
+	k = 0;
+	for (i = 0; i < nb_points_subgraph; i++) {
+		ii = vertex_subset->set[i];
+		for (j = i + 1; j < nb_points_subgraph; j++, k++) {
+			jj = vertex_subset->set[j];
+			if (is_adjacent(ii, jj)) {
+				S->set_adjacency_k(k, 1);
+				//S->set_adjacency(j, i, 1);
+			}
+		}
+	}
+	FREE_lint(subgraph_user_data);
+	FREE_lint(point_labels);
+	FREE_int(color_in_graph);
+	FREE_int(color_in_subgraph);
+	if (f_v) {
+		cout << "colored_graph::compute_neighborhood_subgraph done" << endl;
+	}
+	return S;
+}
+
+
+
 #if 0
 colored_graph
 *colored_graph::compute_neighborhood_subgraph_with_additional_test_function(

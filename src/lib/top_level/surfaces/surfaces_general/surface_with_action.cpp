@@ -2567,7 +2567,7 @@ void surface_with_action::table_of_cubic_surfaces(int verbose_level)
 	surface_create **SC;
 	int *nb_E;
 	long int *Table;
-	int nb_cols = 20;
+	int nb_cols = 19;
 
 
 	poset_classification_control Control_six_arcs;
@@ -2676,7 +2676,7 @@ void surface_with_action::table_of_cubic_surfaces(int verbose_level)
 		Table[h * nb_cols + 16] = SoA->Orbits_on_tritangent_planes->nb_orbits;
 		Table[h * nb_cols + 17] = SoA->Orbits_on_Hesse_planes->nb_orbits;
 		Table[h * nb_cols + 18] = SoA->Orbits_on_trihedral_pairs->nb_orbits;
-		Table[h * nb_cols + 19] = SoA->Orbits_on_tritangent_planes->nb_orbits;
+		//Table[h * nb_cols + 19] = SoA->Orbits_on_tritangent_planes->nb_orbits;
 
 
 		FREE_OBJECT(SoA);
@@ -2803,7 +2803,7 @@ void surface_with_action::table_of_cubic_surfaces(int verbose_level)
 
 		f << "Row,OCN,CollStabOrder,ProjStabOrder,nbPts,nbLines,"
 				"nbE,nbDouble,nbSingle,nbPtsNotOn,nbHesse,nbAxes,"
-				"nbOrbE,nbOrbDouble,nbOrbPtsNotOn,nbOrbLines,nbOrbSingleSix,nbOrbTriPlanes,nbOrbHesse,nbOrbTrihedralPairs,nbOrbTritangentPlanes,"
+				"nbOrbE,nbOrbDouble,nbOrbPtsNotOn,nbOrbLines,nbOrbSingleSix,nbOrbTriPlanes,nbOrbHesse,nbOrbTrihedralPairs,"
 				"Eqn20,Equation,Lines";
 
 
@@ -2840,28 +2840,6 @@ void surface_with_action::table_of_cubic_surfaces(int verbose_level)
 			}
 #endif
 
-#if 0
-			{
-				string str;
-				f << ",";
-				Orbiter->Int_vec.create_string_with_quotes(str, SC[i]->SO->eqn15, 15);
-				f << str;
-			}
-
-
-			{
-				string str;
-				f << ",";
-				Orbiter->Lint_vec.create_string_with_quotes(str, SC[i]->SO->Pts, SC[i]->SO->nb_pts);
-				f << str;
-			}
-			{
-				string str;
-				f << ",";
-				Orbiter->Lint_vec.create_string_with_quotes(str, SC[i]->SO->bitangents28, 28);
-				f << str;
-			}
-#endif
 			f << endl;
 		}
 		f << "END" << endl;

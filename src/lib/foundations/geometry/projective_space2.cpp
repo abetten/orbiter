@@ -2547,7 +2547,7 @@ void projective_space::determine_nonconical_six_subsets(
 void projective_space::conic_type(
 	long int *set, int set_size,
 	int threshold,
-	long int **&Pts_on_conic, int **&Conic_eqn, int *&nb_pts_on_conic, int &len,
+	long int **&Pts_on_conic, int **&Conic_eqn, int *&nb_pts_on_conic, int &nb_conics,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2561,6 +2561,7 @@ void projective_space::conic_type(
 
 	int subset[5];
 	longinteger_object conic_rk, aa;
+	int *coords;
 	long int *pts_on_conic;
 	int allocation_length;
 	geometry_global Gg;
@@ -2591,6 +2592,17 @@ void projective_space::conic_type(
 		cout << "N=number of 5-subsets of the set=" << N << endl;
 	}
 
+
+	coords = NEW_int(set_size * 3);
+	for (i = 0; i < set_size; i++) {
+		unrank_point(coords + i * 3, set[i]);
+	}
+	if (f_v) {
+		cout << "projective_space::conic_type coords:" << endl;
+		Orbiter->Int_vec.print_integer_matrix(cout, coords, set_size, 3);
+	}
+
+
 	// allocate data that is returned:
 	allocation_length = 1024;
 	Pts_on_conic = NEW_plint(allocation_length);
@@ -2598,17 +2610,17 @@ void projective_space::conic_type(
 	nb_pts_on_conic = NEW_int(allocation_length);
 
 
-	len = 0;
+	nb_conics = 0;
 	for (rk = 0; rk < N; rk++) {
 
 		Combi.unrank_k_subset(rk, subset, set_size, 5);
-		if (f_v) {
+		if (FALSE) {
 			cout << "projective_space::conic_type rk=" << rk << " / " << N << " : ";
 			Orbiter->Int_vec.print(cout, subset, 5);
 			cout << endl;
 		}
 
-		for (i = 0; i < len; i++) {
+		for (i = 0; i < nb_conics; i++) {
 			if (Sorting.lint_vec_is_subset_of(subset, 5,
 					Pts_on_conic[i], nb_pts_on_conic[i], 0)) {
 
@@ -2624,32 +2636,44 @@ void projective_space::conic_type(
 				break;
 			}
 		}
-		if (i < len) {
+		if (i < nb_conics) {
 			continue;
 		}
 		for (j = 0; j < 5; j++) {
 			a = subset[j];
 			input_pts[j] = set[a];
 		}
-		if (f_v) {
+		if (FALSE) {
 			cout << "subset: ";
 			Orbiter->Int_vec.print(cout, subset, 5);
+			cout << endl;
 			cout << "input_pts: ";
 			Orbiter->Lint_vec.print(cout, input_pts, 5);
+			cout << endl;
 		}
 
 		if (!determine_conic_in_plane(input_pts, 5,
 				six_coeffs, verbose_level - 2)) {
-			if (f_v) {
+			if (FALSE) {
 				cout << "determine_conic_in_plane returns FALSE" << endl;
 			}
 			continue;
 		}
+		if (f_v) {
+			cout << "projective_space::conic_type rk=" << rk << " / " << N << " : ";
+			Orbiter->Int_vec.print(cout, subset, 5);
+			cout << " has not yet been considered and a conic exists" << endl;
+		}
+		if (f_v) {
+			cout << "determine_conic_in_plane the conic exists" << endl;
+			cout << "conic: ";
+			Orbiter->Int_vec.print(cout, six_coeffs, 6);
+			cout << endl;
+		}
 
 
 		F->PG_element_normalize(six_coeffs, 1, 6);
-		Gg.AG_element_rank_longinteger(F->q,
-				six_coeffs, 1, 6, conic_rk);
+		Gg.AG_element_rank_longinteger(F->q, six_coeffs, 1, 6, conic_rk);
 		if (FALSE /* f_vv */) {
 			cout << rk << "-th subset ";
 			Orbiter->Int_vec.print(cout, subset, 5);
@@ -2676,25 +2700,26 @@ void projective_space::conic_type(
 
 		}
 		else {
-			if (f_v3) {
-				cout << "conic_rk=" << conic_rk
-						<< " was not found" << endl;
+			if (f_v) {
+				cout << "considering conic of rank conic_rk=" << conic_rk << ":" << endl;
 			}
 			pts_on_conic = NEW_lint(set_size);
 			l = 0;
 			for (h = 0; h < set_size; h++) {
-				if (FALSE && f_v3) {
-					cout << "testing point " << h << ":" << endl;
-					cout << "conic_rk=" << conic_rk << endl;
-				}
 
-				unrank_point(vec, set[h]);
+				//unrank_point(vec, set[h]);
+				Orbiter->Int_vec.copy(coords + h * 3, vec, 3);
+				if (f_v) {
+					cout << "testing point " << h << ":" << endl;
+					Orbiter->Int_vec.print(cout, vec, 3);
+					cout << endl;
+				}
 				a = F->evaluate_conic_form(six_coeffs, vec);
 
 
 				if (a == 0) {
 					pts_on_conic[l++] = h;
-					if (f_v3) {
+					if (FALSE) {
 						cout << "point " << h
 								<< " is on the conic" << endl;
 					}
@@ -2706,7 +2731,7 @@ void projective_space::conic_type(
 					}
 				}
 			}
-			if (FALSE /*f_v*/) {
+			if (f_v) {
 				cout << "We found an " << l << "-conic, "
 						"its rank is " << conic_rk << endl;
 
@@ -2720,7 +2745,7 @@ void projective_space::conic_type(
 					cout << "We found an " << l << "-conic, "
 							"its rank is " << conic_rk << endl;
 					cout << "The " << l << " points on the "
-							<< len << "th conic are: ";
+							<< nb_conics << "th conic are: ";
 					Orbiter->Lint_vec.print(cout, pts_on_conic, l);
 					cout << endl;
 				}
@@ -2738,24 +2763,24 @@ void projective_space::conic_type(
 #else
 
 				//conic_rk.assign_to(R[len]);
-				Pts_on_conic[len] = pts_on_conic;
-				Conic_eqn[len] = NEW_int(6);
-				Orbiter->Int_vec.copy(six_coeffs, Conic_eqn[len], 6);
-				nb_pts_on_conic[len] = l;
+				Pts_on_conic[nb_conics] = pts_on_conic;
+				Conic_eqn[nb_conics] = NEW_int(6);
+				Orbiter->Int_vec.copy(six_coeffs, Conic_eqn[nb_conics], 6);
+				nb_pts_on_conic[nb_conics] = l;
 
 #endif
 
 
-				len++;
+				nb_conics++;
 				if (f_v) {
-					cout << "We now have found " << len
+					cout << "We now have found " << nb_conics
 							<< " conics" << endl;
 
 
 					tally C;
 					int f_second = FALSE;
 
-					C.init(nb_pts_on_conic, len, f_second, 0);
+					C.init(nb_pts_on_conic, nb_conics, f_second, 0);
 
 					if (f_v) {
 						cout << "The conic intersection type is (";
@@ -2767,7 +2792,7 @@ void projective_space::conic_type(
 
 				}
 
-				if (len == allocation_length) {
+				if (nb_conics == allocation_length) {
 					int new_allocation_length = allocation_length + 1024;
 
 
@@ -2778,7 +2803,7 @@ void projective_space::conic_type(
 					Pts_on_conic1 = NEW_plint(new_allocation_length);
 					Conic_eqn1 = NEW_pint(new_allocation_length);
 					nb_pts_on_conic1 = NEW_int(new_allocation_length);
-					for (i = 0; i < len; i++) {
+					for (i = 0; i < nb_conics; i++) {
 						//R1[i] = R[i];
 						Pts_on_conic1[i] = Pts_on_conic[i];
 						Conic_eqn1[i] = Conic_eqn[i];
@@ -2799,11 +2824,21 @@ void projective_space::conic_type(
 			}
 			else {
 				// we skip this conic:
-
+				if (f_v) {
+					cout << "projective_space::conic_type we skip this conic" << endl;
+				}
 				FREE_lint(pts_on_conic);
 			}
 		} // else
 	} // next rk
+
+	FREE_int(coords);
+
+	if (f_v) {
+		cout << "projective_space::conic_type we found " << nb_conics
+				<< " conics intersecting in at least "
+				<< threshold << " many points" << endl;
+	}
 
 	if (f_v) {
 		cout << "projective_space::conic_type done" << endl;
@@ -3602,6 +3637,56 @@ void projective_space::plane_intersection_matrix_in_three_space(
 		cout << "projective_space::plane_intersection_matrix_in_three_space done" << endl;
 	}
 }
+
+long int projective_space::line_rank_using_dual_coordinates_in_plane(
+	int *eqn3, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int Basis[3 * 3];
+	int rk;
+	long int line_rk;
+
+	if (f_v) {
+		cout << "projective_space::line_rank_using_dual_coordinates_in_plane" << endl;
+	}
+	Orbiter->Int_vec.copy(eqn3, Basis, 3);
+	rk = F->RREF_and_kernel(3, 1, Basis, 0 /* verbose_level*/);
+	if (rk != 1) {
+		cout << "projective_space::line_rank_using_dual_coordinates_in_plane rk != 1" << endl;
+		exit(1);
+	}
+	line_rk = rank_line(Basis + 1 * 3);
+	if (f_v) {
+		cout << "projective_space::line_rank_using_dual_coordinates_in_plane" << endl;
+	}
+	return line_rk;
+}
+
+long int projective_space::dual_rank_of_line_in_plane(
+	long int line_rank, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int Basis[3 * 3];
+	int rk;
+	long int dual_rk;
+
+	if (f_v) {
+		cout << "projective_space::dual_rank_of_line_in_plane" << endl;
+	}
+	unrank_line(Basis, line_rank);
+	rk = F->RREF_and_kernel(3, 2, Basis, 0 /* verbose_level*/);
+	if (rk != 2) {
+		cout << "projective_space::dual_rank_of_line_in_plane rk != 2" << endl;
+		exit(1);
+	}
+	dual_rk = rank_point(Basis + 2 * 3);
+	if (f_v) {
+		cout << "projective_space::dual_rank_of_line_in_plane done" << endl;
+	}
+	return dual_rk;
+}
+
+
 
 long int projective_space::plane_rank_using_dual_coordinates_in_three_space(
 	int *eqn4, int verbose_level)

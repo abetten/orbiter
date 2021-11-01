@@ -101,12 +101,25 @@ void quartic_curve_object::init_equation_but_no_bitangents(quartic_curve_domain 
 
 
 	if (f_v) {
-		cout << "quartic_curve_object::init_equation_but_no_bitangents before enumerate_points" << endl;
+		cout << "quartic_curve_object::init_equation_but_no_bitangents "
+				"before enumerate_points" << endl;
 	}
-	enumerate_points(0/*verbose_level - 1*/);
+	enumerate_points(verbose_level - 1);
 	if (f_v) {
-		cout << "quartic_curve_object::init_equation_but_no_bitangents after enumerate_points" << endl;
+		cout << "quartic_curve_object::init_equation_but_no_bitangents "
+				"after enumerate_points" << endl;
 	}
+
+	if (f_v) {
+		cout << "quartic_curve_object::init_equation_but_no_bitangents "
+				"before compute_properties" << endl;
+	}
+	compute_properties(verbose_level - 2);
+	if (f_v) {
+		cout << "quartic_curve_object::init_equation_but_no_bitangents "
+				"after compute_properties" << endl;
+	}
+
 
 	if (f_v) {
 		cout << "quartic_curve_object::init_equation_but_no_bitangents done" << endl;
@@ -140,11 +153,13 @@ void quartic_curve_object::init_equation_and_bitangents(quartic_curve_domain *Do
 
 
 	if (f_v) {
-		cout << "quartic_curve_object::init_equation_and_bitangents before enumerate_points" << endl;
+		cout << "quartic_curve_object::init_equation_and_bitangents "
+				"before enumerate_points" << endl;
 	}
 	enumerate_points(0/*verbose_level - 1*/);
 	if (f_v) {
-		cout << "quartic_curve_object::init_equation_and_bitangents after enumerate_points" << endl;
+		cout << "quartic_curve_object::init_equation_and_bitangents "
+				"after enumerate_points" << endl;
 	}
 
 	if (f_v) {
@@ -153,7 +168,8 @@ void quartic_curve_object::init_equation_and_bitangents(quartic_curve_domain *Do
 }
 
 
-void quartic_curve_object::init_equation_and_bitangents_and_compute_properties(quartic_curve_domain *Dom,
+void quartic_curve_object::init_equation_and_bitangents_and_compute_properties(
+		quartic_curve_domain *Dom,
 		int *eqn15, long int *bitangents28,
 		int verbose_level)
 {
@@ -164,28 +180,29 @@ void quartic_curve_object::init_equation_and_bitangents_and_compute_properties(q
 	}
 
 	if (f_v) {
-		cout << "quartic_curve_object::init_equation_and_bitangents_and_compute_properties before init_equation_and_bitangents" << endl;
+		cout << "quartic_curve_object::init_equation_and_bitangents_and_compute_properties "
+				"before init_equation_and_bitangents" << endl;
 	}
 	init_equation_and_bitangents(Dom, eqn15, bitangents28, verbose_level);
 	if (f_v) {
-		cout << "quartic_curve_object::init_equation_and_bitangents_and_compute_properties after init_equation_and_bitangents" << endl;
+		cout << "quartic_curve_object::init_equation_and_bitangents_and_compute_properties "
+				"after init_equation_and_bitangents" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "quartic_curve_object::init_equation_and_bitangents_and_compute_properties before "
-				"compute_properties" << endl;
+		cout << "quartic_curve_object::init_equation_and_bitangents_and_compute_properties "
+				"before compute_properties" << endl;
 	}
 	compute_properties(verbose_level - 2);
 	if (f_v) {
-		cout << "quartic_curve_object::init_equation_and_bitangents_and_compute_properties after "
-				"compute_properties" << endl;
+		cout << "quartic_curve_object::init_equation_and_bitangents_and_compute_properties "
+				"after compute_properties" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "quartic_curve_object::init_equation_and_bitangents_and_compute_properties after "
-				"enumerate_points" << endl;
+		cout << "quartic_curve_object::init_equation_and_bitangents_and_compute_properties done" << endl;
 	}
 }
 
@@ -199,28 +216,19 @@ void quartic_curve_object::enumerate_points(int verbose_level)
 		cout << "quartic_curve_object::enumerate_points" << endl;
 	}
 
-	vector<long int> Points;
-
 	if (f_v) {
 		cout << "quartic_curve_object::enumerate_points before "
-				"Surf->enumerate_points" << endl;
+				"Dom->Poly4_3->enumerate_points" << endl;
 	}
-	Dom->Poly4_3->enumerate_points(eqn15, Points, 0 /*verbose_level - 1*/);
+	Dom->Poly4_3->enumerate_points_lint(eqn15, Pts, nb_pts, 0/*verbose_level - 1*/);
 
 	if (f_v) {
 		cout << "quartic_curve_object::enumerate_points after "
-				"Surf->enumerate_points" << endl;
+				"Dom->Poly4_3->enumerate_points" << endl;
 	}
 	if (f_v) {
-		cout << "quartic_curve_object::enumerate_points The surface "
-				"has " << Points.size() << " points" << endl;
-	}
-	int i;
-
-	nb_pts = Points.size();
-	Pts = NEW_lint(nb_pts);
-	for (i = 0; i < nb_pts; i++) {
-		Pts[i] = Points[i];
+		cout << "quartic_curve_object::enumerate_points The curve "
+				"has " << nb_pts << " points" << endl;
 	}
 
 

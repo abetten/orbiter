@@ -1238,7 +1238,6 @@ public:
 	int *Basis_Pperp;
 	longinteger_object six_choose_three_q;
 	int six_choose_three_q_int;
-	longinteger_domain D;
 	int f_show;
 	int dim_intersection;
 	int *Basis_intersection;
@@ -1942,7 +1941,7 @@ public:
 	void conic_type(
 		long int *set, int set_size,
 		int threshold,
-		long int **&Pts_on_conic, int **&Conic_eqn, int *&nb_pts_on_conic, int &len,
+		long int **&Pts_on_conic, int **&Conic_eqn, int *&nb_pts_on_conic, int &nb_conics,
 		int verbose_level);
 	void find_nucleus(int *set, int set_size, int &nucleus, 
 		int verbose_level);
@@ -1978,6 +1977,10 @@ public:
 		long int *Planes,
 		int nb_planes, int *&Intersection_matrix,
 		int verbose_level);
+	long int line_rank_using_dual_coordinates_in_plane(
+		int *eqn3, int verbose_level);
+	long int dual_rank_of_line_in_plane(
+		long int line_rank, int verbose_level);
 	long int plane_rank_using_dual_coordinates_in_three_space(
 		int *eqn4, int verbose_level);
 	long int dual_rank_of_plane_in_three_space(long int plane_rank,
@@ -2084,6 +2087,7 @@ public:
 	void init_polynomial_domains(int verbose_level);
 	void print_equation_maple(std::stringstream &ost, int *coeffs);
 	void print_equation_with_line_breaks_tex(std::ostream &ost, int *coeffs);
+	void print_gradient_with_line_breaks_tex(std::ostream &ost, int *coeffs);
 	void unrank_point(int *v, long int rk);
 	long int rank_point(int *v);
 	void unrank_line_in_dual_coordinates(int *v, long int rk);
@@ -2122,6 +2126,7 @@ public:
 	// Here 1, lambda, mu are the coefficients of a linear dependency between
 	// Q (the quartic), C^2, L0*L1*L2*L3, so
 	// Q + lambda * C^2 + mu * L0*L1*L2*L3 = 0.
+	void compute_gradient(int *equation15, int *&gradient, int verbose_level);
 
 };
 
@@ -2168,6 +2173,15 @@ public:
 	tally *Point_off_type;
 
 
+	int *gradient;
+
+	long int *singular_pts;
+	int nb_singular_pts;
+	int nb_non_singular_pts;
+
+	long int *tangent_line_rank_global; // [QO->nb_pts]
+	long int *tangent_line_rank_dual; // [nb_non_singular_pts]
+
 
 
 	quartic_curve_object_properties();
@@ -2177,13 +2191,20 @@ public:
 			std::string &surface_label, std::string &col_postfix, int verbose_level);
 	void report_properties_simple(std::ostream &ost, int verbose_level);
 	void print_equation(std::ostream &ost);
+	void print_gradient(std::ostream &ost);
 	void print_general(std::ostream &ost);
 	void print_points(std::ostream &ost);
 	void print_all_points(std::ostream &ost);
 	void print_bitangents(std::ostream &ost);
-	void print_bitangents_with_points_on_them(std::ostream &ost);
+	void print_lines_with_points_on_them(std::ostream &ost,
+			long int *Lines, int nb_lines, set_of_sets *SoS);
+	//void print_bitangents_with_points_on_them(std::ostream &ost);
 	void points_on_curve_on_lines(int verbose_level);
 	void report_bitangent_line_type(std::ostream &ost);
+	void compute_gradient(int verbose_level);
+	void compute_singular_points_and_tangent_lines(int verbose_level);
+	// a singular point is a point where all partials vanish
+	// We compute the set of singular points into Pts[nb_pts]
 
 };
 

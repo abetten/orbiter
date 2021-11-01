@@ -199,7 +199,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 
 	}
 
-	if (Descr->f_split) {
+	else if (Descr->f_split) {
 		cout << "splitting by file " << Descr->split_by_file << endl;
 		file_io Fio;
 		long int *Split;
@@ -227,6 +227,50 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 
 			fname_out.assign(Descr->split_input_fname);
 			ST.chop_off_extension(fname_out);
+
+			char str[1000];
+			sprintf(str, "_case_%03d.bin", c);
+			fname_out.append(str);
+
+
+			Subgraph->save(fname_out, verbose_level - 2);
+		}
+	}
+
+	else if (Descr->f_split_by_starters) {
+		cout << "splitting by file " << Descr->split_by_starters_fname_reps
+				<< " column " << Descr->split_by_starters_col_label << endl;
+		file_io Fio;
+		set_of_sets *Reps;
+		//string_tools ST;
+		int c;
+
+
+		Fio.read_column_and_parse(Descr->split_by_starters_fname_reps,
+				Descr->split_by_starters_col_label,
+				Reps, verbose_level);
+
+
+		cout << "We found " << Reps->nb_sets << " cases for splitting" << endl;
+
+		for (c = 0; c < Reps->nb_sets; c++) {
+
+			cout << "splitting case " << c << " / " << Reps->nb_sets << ":" << endl;
+
+			colored_graph *Subgraph;
+			fancy_set *color_subset;
+			fancy_set *vertex_subset;
+
+
+			Subgraph = CG->compute_neighborhood_subgraph_based_on_subset(
+					Reps->Sets[c], Reps->Set_size[c],
+					vertex_subset, color_subset,
+					verbose_level);
+
+			string fname_out;
+
+			fname_out.assign(CG->label);
+			//ST.chop_off_extension(fname_out);
 
 			char str[1000];
 			sprintf(str, "_case_%03d.bin", c);

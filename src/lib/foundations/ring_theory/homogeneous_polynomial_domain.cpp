@@ -1124,7 +1124,7 @@ void homogeneous_polynomial_domain::enumerate_points(int *coeff,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
+	int f_vv = FALSE; //(verbose_level >= 2);
 	long int rk;
 	int a;
 
@@ -1133,6 +1133,9 @@ void homogeneous_polynomial_domain::enumerate_points(int *coeff,
 	}
 	if (f_vv) {
 		cout << "homogeneous_polynomial_domain::enumerate_points P->N_points=" << P->N_points << endl;
+		cout << "homogeneous_polynomial_domain::enumerate_points coeff=" << endl;
+		Orbiter->Int_vec.print(cout, coeff, nb_monomials);
+		cout << endl;
 #if 0
 		print_equation_with_line_breaks_tex(cout,
 				coeff, 8 /* nb_terms_per_line*/,
@@ -1144,6 +1147,11 @@ void homogeneous_polynomial_domain::enumerate_points(int *coeff,
 	for (rk = 0; rk < P->N_points; rk++) {
 		unrank_point(v, rk);
 		a = evaluate_at_a_point(coeff, v);
+		if (f_vv) {
+			cout << "homogeneous_polynomial_domain::enumerate_points point " << rk << " / " << P->N_points << " :";
+			Orbiter->Int_vec.print(cout, v, nb_variables);
+			cout << " evaluates to " << a << endl;
+		}
 		if (a == 0) {
 			Pts.push_back(rk);
 		}
@@ -1154,6 +1162,46 @@ void homogeneous_polynomial_domain::enumerate_points(int *coeff,
 				"done" << endl;
 	}
 }
+
+void homogeneous_polynomial_domain::enumerate_points_lint(int *coeff,
+		long int *&Pts, int &nb_pts, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::enumerate_points_lint" << endl;
+	}
+
+	vector<long int> Points;
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::enumerate_points_lint before "
+				"enumerate_points" << endl;
+	}
+	enumerate_points(coeff, Points, verbose_level - 1);
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::enumerate_points_lint after "
+				"enumerate_points" << endl;
+	}
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::enumerate_points_lint The object "
+				"has " << Points.size() << " points" << endl;
+	}
+	int i;
+
+	nb_pts = Points.size();
+	Pts = NEW_lint(nb_pts);
+	for (i = 0; i < nb_pts; i++) {
+		Pts[i] = Points[i];
+	}
+
+
+	if (f_v) {
+		cout << "homogeneous_polynomial_domain::enumerate_points_lint done" << endl;
+	}
+}
+
 
 void homogeneous_polynomial_domain::enumerate_points_zariski_open_set(int *coeff,
 		std::vector<long int> &Pts,

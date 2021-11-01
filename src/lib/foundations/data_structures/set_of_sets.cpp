@@ -1627,6 +1627,21 @@ void set_of_sets::evaluate_function_and_store(set_of_sets *&Function_values,
 	}
 }
 
+int set_of_sets::find_smallest_class()
+{
+	int i;
+	int idx = 0;
+	int sz = Set_size[idx];
+
+	for (i = 1; i < nb_sets; i++) {
+		if (Set_size[i] < sz) {
+			idx = i;
+			sz = Set_size[i];
+		}
+	}
+	return idx;
+}
+
 // #############################################################################
 // global functions:
 // #############################################################################

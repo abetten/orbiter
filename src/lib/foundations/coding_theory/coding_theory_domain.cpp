@@ -678,7 +678,6 @@ void coding_theory_domain::make_Hamming_graph_and_write_file(int n, int q,
 	int *v;
 	int *w;
 	int *Table;
-	//int *Adj = NULL;
 	geometry_global Gg;
 	finite_field *F = NULL;
 
@@ -967,8 +966,9 @@ void coding_theory_domain::code_weight_enumerator(finite_field *F,
 			if (f_vv) {
 				cout << "so far, the weight enumerator is:" << endl;
 				for (i = 0; i <= n; i++) {
-					if (weight_enumerator[i] == 0)
+					if (weight_enumerator[i] == 0) {
 						continue;
+					}
 					cout << setw(5) << i << " : " << setw(10)
 							<< weight_enumerator[i] << endl;
 				}
@@ -1041,8 +1041,9 @@ void coding_theory_domain::code_weight_enumerator_fast(finite_field *F,
 			if (f_vv) {
 				cout << "so far, the weight enumerator is:" << endl;
 				for (i = 0; i <= n; i++) {
-					if (weight_enumerator[i] == 0)
+					if (weight_enumerator[i] == 0) {
 						continue;
+					}
 					cout << setw(5) << i << " : " << setw(10)
 							<< (F->q - 1) * weight_enumerator[i] << endl;
 				}

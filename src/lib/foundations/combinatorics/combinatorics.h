@@ -125,6 +125,8 @@ public:
 
 	int f_save;
 
+	int f_line_type;
+
 	int f_conic_type;
 	int conic_type_threshold;
 
@@ -486,6 +488,10 @@ public:
 			int *&M, int verbose_level);
 	void compute_blocks(int v, int b, int k, long int *Blocks_coded,
 			int *&Blocks, int verbose_level);
+	void refine_the_partition(
+			int v, int k, int b, long int *Blocks_coded,
+			int &b_reduced,
+			int verbose_level);
 
 };
 

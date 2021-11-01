@@ -21,6 +21,8 @@ combinatorial_object_activity_description::combinatorial_object_activity_descrip
 {
 	f_save = FALSE;
 
+	f_line_type = FALSE;
+
 	f_conic_type = FALSE;
 	conic_type_threshold = 0;
 
@@ -48,24 +50,40 @@ int combinatorial_object_activity_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 		if (stringcmp(argv[i], "-save") == 0) {
 			f_save = TRUE;
-			cout << "-save " << endl;
+			if (f_v) {
+				cout << "-save " << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-line_type") == 0) {
+			f_line_type = TRUE;
+			if (f_v) {
+				cout << "-line_type " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-conic_type") == 0) {
 			f_conic_type = TRUE;
 			conic_type_threshold = strtoi(argv[++i]);
-			cout << "-conic_type " << conic_type_threshold << endl;
+			if (f_v) {
+				cout << "-conic_type " << conic_type_threshold << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-non_conical_type") == 0) {
 			f_non_conical_type = TRUE;
-			cout << "-non_conical_type " << endl;
+			if (f_v) {
+				cout << "-non_conical_type " << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-ideal") == 0) {
 			f_ideal = TRUE;
 			ideal_degree = strtoi(argv[++i]);
-			cout << "-ideal " << ideal_degree << endl;
+			if (f_v) {
+				cout << "-ideal " << ideal_degree << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-end") == 0) {
-			cout << "-end" << endl;
+			if (f_v) {
+				cout << "-end" << endl;
+			}
 			break;
 		}
 		else {
@@ -83,6 +101,9 @@ void combinatorial_object_activity_description::print()
 {
 	if (f_save) {
 		cout << "-save " << endl;
+	}
+	if (f_line_type) {
+		cout << "-line_type " << endl;
 	}
 	if (f_conic_type) {
 		cout << "-conic_type " << conic_type_threshold << endl;

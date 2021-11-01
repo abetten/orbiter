@@ -42,13 +42,13 @@ void matrix_block_data::freeself()
 {
 	if (K) {
 		FREE_OBJECTS(K);
-		}
+	}
 	if (dual_part) {
 		FREE_int(dual_part);
-		}
+	}
 	if (part) {
 		FREE_int(part);
-		}
+	}
 	null();
 }
 
