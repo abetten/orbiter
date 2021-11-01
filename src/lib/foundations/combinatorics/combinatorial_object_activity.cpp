@@ -57,6 +57,39 @@ void combinatorial_object_activity::perform_activity(int verbose_level)
 	}
 
 
+	if (Descr->f_line_type) {
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity f_line_type" << endl;
+		}
+
+		projective_space *P;
+
+		P = COC->Descr->P;
+
+		int *type;
+
+		type = NEW_int(P->N_lines);
+
+
+		P->line_intersection_type(
+				COC->Pts, COC->nb_pts, type, 0 /* verbose_level */);
+			// type[N_lines]
+
+
+		tally T;
+
+		T.init(type, P->N_lines, FALSE, 0);
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity line type:" << endl;
+			T.print(TRUE /* f_backwards*/);
+			cout << endl;
+		}
+
+
+	}
+
 	if (Descr->f_conic_type) {
 
 		if (f_v) {

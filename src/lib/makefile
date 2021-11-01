@@ -8,24 +8,16 @@ MODULES= \
 		foundations/algebra_and_number_theory/a_domain.o \
 		foundations/algebra_and_number_theory/algebra_global.o \
 		foundations/algebra_and_number_theory/cyclotomic_sets.o \
-		foundations/algebra_and_number_theory/finite_ring.o \
 		foundations/algebra_and_number_theory/generators_symplectic_group.o \
 		foundations/algebra_and_number_theory/gl_class_rep.o \
 		foundations/algebra_and_number_theory/gl_classes.o \
 		foundations/algebra_and_number_theory/group_generators_domain.o \
 		foundations/algebra_and_number_theory/heisenberg.o \
-		foundations/algebra_and_number_theory/homogeneous_polynomial_domain.o \
-		foundations/algebra_and_number_theory/longinteger_domain.o \
-		foundations/algebra_and_number_theory/longinteger_object.o \
 		foundations/algebra_and_number_theory/matrix_block_data.o \
 		foundations/algebra_and_number_theory/null_polarity_generator.o \
 		foundations/algebra_and_number_theory/number_theoretic_transform.o \
 		foundations/algebra_and_number_theory/number_theory_domain.o \
-		foundations/algebra_and_number_theory/partial_derivative.o \
 		foundations/algebra_and_number_theory/rank_checker.o \
-		foundations/algebra_and_number_theory/table_of_irreducible_polynomials.o \
-		foundations/algebra_and_number_theory/unipoly_domain.o \
-		foundations/algebra_and_number_theory/unipoly_domain2.o \
 		foundations/algebra_and_number_theory/vector_space.o \
 		foundations/coding_theory/coding_theory_domain.o \
 		foundations/coding_theory/cyclic_codes.o \
@@ -207,6 +199,14 @@ MODULES= \
 		foundations/orthogonal/orthogonal_rank_unrank.o \
 		foundations/orthogonal/orthogonal.o \
 		foundations/orthogonal/unusual_model.o \
+		foundations/ring_theory/finite_ring.o \
+		foundations/ring_theory/homogeneous_polynomial_domain.o \
+		foundations/ring_theory/longinteger_domain.o \
+		foundations/ring_theory/longinteger_object.o \
+		foundations/ring_theory/partial_derivative.o \
+		foundations/ring_theory/table_of_irreducible_polynomials.o \
+		foundations/ring_theory/unipoly_domain.o \
+		foundations/ring_theory/unipoly_domain2.o \
 		foundations/solvers/diophant_activity_description.o \
 		foundations/solvers/diophant_activity.o \
 		foundations/solvers/diophant_create.o \

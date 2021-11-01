@@ -37,28 +37,33 @@ void group_generators_domain::generators_symmetric_group(int deg,
 	int i;
 	combinatorics_domain Combi;
 	
+	if (f_v) {
+		cout << "group_generators_domain::generators_symmetric_group" << endl;
+	}
 	if (deg <= 1) {
 		nb_perms = 0;
 		perms = NULL;
 		return;
-		}
+	}
 	nb_perms = deg - 1;
 	perms = NEW_int(nb_perms * deg);
 	for (i = 0; i < nb_perms; i++) {
 		Combi.perm_identity(perms + i * deg, deg);
 		perms[i * deg + i] = i + 1;
 		perms[i * deg + i + 1] = i;
-		}
+	}
 	if (f_v) {
-		cout << "generators for symmetric group of degree "
-				<< deg << " created" << endl;
-		}
+		cout << "group_generators_domain::generators_symmetric_group generators are:" << endl;
+	}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
 			Combi.perm_print(cout, perms + i * deg, deg);
 			cout << endl;
-			}
 		}
+	}
+	if (f_v) {
+		cout << "group_generators_domain::generators_symmetric_group done" << endl;
+	}
 }
 
 void group_generators_domain::generators_cyclic_group(int deg,
@@ -69,27 +74,32 @@ void group_generators_domain::generators_cyclic_group(int deg,
 	int i = 0, j;
 	combinatorics_domain Combi;
 	
+	if (f_v) {
+		cout << "group_generators_domain::generators_cyclic_group" << endl;
+	}
 	if (deg <= 1) {
 		nb_perms = 0;
 		perms = NULL;
 		return;
-		}
+	}
 	nb_perms = 1;
 	perms = NEW_int(nb_perms * deg);
 	for (j = 0; j < deg; j++) {
 		perms[i * deg + j] = j + 1;
-		}
+	}
 	perms[i * deg + i + deg - 1] = 0;
 	if (f_v) {
-		cout << "generators for cyclic group of degree "
-				<< deg << " created" << endl;
-		}
+		cout << "group_generators_domain::generators_cyclic_group generators are:" << endl;
+	}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
 			Combi.perm_print(cout, perms + i * deg, deg);
 			cout << endl;
-			}
 		}
+	}
+	if (f_v) {
+		cout << "group_generators_domain::generators_cyclic_group done" << endl;
+	}
 }
 
 void group_generators_domain::generators_dihedral_group(int deg,
@@ -100,33 +110,40 @@ void group_generators_domain::generators_dihedral_group(int deg,
 	int i = 0, j, d2;
 	combinatorics_domain Combi;
 	
+	if (f_v) {
+		cout << "group_generators_domain::generators_dihedral_group" << endl;
+	}
 	if (deg <= 1) {
 		nb_perms = 0;
 		perms = NULL;
 		return;
-		}
+	}
 	d2 = deg >> 1;
 	nb_perms = 2;
 	perms = NEW_int(nb_perms * deg);
 	for (j = 0; j < deg; j++) {
 		perms[i * deg + j] = j + 1;
-		}
+	}
 	perms[i * deg + i + deg - 1] = 0;
 	i++;
 	for (j = 0; j <= d2; j++) {
 		perms[i * deg + j] = deg - 1 - j;
 		perms[i * deg + deg - 1 - j] = j;
-		}
+	}
 	if (f_v) {
-		cout << "generators for dihedral group of degree "
+		cout << "group_generators_domain::generators_dihedral_group "
+				"generators for dihedral group of degree "
 				<< deg << " created" << endl;
-		}
+	}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
 			Combi.perm_print(cout, perms + i * deg, deg);
 			cout << endl;
-			}
 		}
+	}
+	if (f_v) {
+		cout << "group_generators_domain::generators_dihedral_group one" << endl;
+	}
 }
 
 void group_generators_domain::generators_dihedral_involution(int deg,
@@ -137,11 +154,14 @@ void group_generators_domain::generators_dihedral_involution(int deg,
 	int i = 0, j, d2;
 	combinatorics_domain Combi;
 	
+	if (f_v) {
+		cout << "group_generators_domain::generators_dihedral_involution" << endl;
+	}
 	if (deg <= 1) {
 		nb_perms = 0;
 		perms = NULL;
 		return;
-		}
+	}
 	d2 = deg >> 1;
 	nb_perms = 1;
 	perms = NEW_int(nb_perms * deg);
@@ -149,17 +169,21 @@ void group_generators_domain::generators_dihedral_involution(int deg,
 	for (j = 0; j <= d2; j++) {
 		perms[i * deg + j] = deg - 1 - j;
 		perms[i * deg + deg - 1 - j] = j;
-		}
+	}
 	if (f_v) {
-		cout << "generators for dihedral involution of degree "
+		cout << "group_generators_domain::generators_dihedral_involution "
+				"generators for dihedral involution of degree "
 				<< deg << " created" << endl;
-		}
+	}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
 			Combi.perm_print(cout, perms + i * deg, deg);
 			cout << endl;
-			}
 		}
+	}
+	if (f_v) {
+		cout << "group_generators_domain::generators_dihedral_involution done" << endl;
+	}
 }
 
 void group_generators_domain::generators_identity_group(int deg,
@@ -170,26 +194,33 @@ void group_generators_domain::generators_identity_group(int deg,
 	int i = 0, j;
 	combinatorics_domain Combi;
 	
+	if (f_v) {
+		cout << "group_generators_domain::generators_identity_group" << endl;
+	}
 	if (deg <= 1) {
 		nb_perms = 0;
 		perms = NULL;
 		return;
-		}
+	}
 	nb_perms = 1;
 	perms = NEW_int(nb_perms * deg);
 	for (j = 0; j < deg; j++) {
 		perms[j] = j;
-		}
+	}
 	if (f_v) {
-		cout << "generators for identity group of degree "
+		cout << "group_generators_domain::generators_identity_group "
+				"generators for identity group of degree "
 				<< deg << " created" << endl;
-		}
+	}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
 			Combi.perm_print(cout, perms + i * deg, deg);
 			cout << endl;
-			}
 		}
+	}
+	if (f_v) {
+		cout << "group_generators_domain::generators_identity_group done" << endl;
+	}
 }
 
 void group_generators_domain::generators_Hall_reflection(
@@ -203,8 +234,7 @@ void group_generators_domain::generators_Hall_reflection(
 	combinatorics_domain Combi;
 
 	if (f_v) {
-		cout << "group_generators_domain::generators_"
-				"Hall_reflection" << endl;
+		cout << "group_generators_domain::generators_Hall_reflection" << endl;
 	}
 	degree = nb_pairs * 2;
 	nb_perms = 1;
@@ -215,21 +245,19 @@ void group_generators_domain::generators_Hall_reflection(
 		perms[2 * i + 1] = 2 * i;
 	}
 	if (f_v) {
-		cout << "group_generators_domain::generators_"
-				"Hall_reflection "
+		cout << "group_generators_domain::generators_Hall_reflection "
 				"generators for the Hall reflection group "
 				"of degree "
 				<< degree << " created" << endl;
-		}
+	}
 	if (f_vv) {
 		for (i = 0; i < 1; i++) {
 			Combi.perm_print(cout, perms + i * degree, degree);
 			cout << endl;
-			}
 		}
+	}
 	if (f_v) {
-		cout << "group_generators_domain::generators_"
-				"Hall_reflection done" << endl;
+		cout << "group_generators_domain::generators_Hall_reflection done" << endl;
 	}
 }
 
@@ -244,8 +272,7 @@ void group_generators_domain::generators_Hall_reflection_normalizer_group(
 	combinatorics_domain Combi;
 
 	if (f_v) {
-		cout << "group_generators_domain::generators_Hall_"
-				"reflection_normalizer_group" << endl;
+		cout << "group_generators_domain::generators_Hall_reflection_normalizer_group" << endl;
 	}
 	degree = nb_pairs * 2;
 	nb_perms = nb_pairs + (nb_pairs - 1);
@@ -262,16 +289,14 @@ void group_generators_domain::generators_Hall_reflection_normalizer_group(
 		perms[h * degree + 2 * i + 1] = 2 * (i + 1) + 1;
 		perms[h * degree + 2 * (i + 1)] = 2 * i;
 		perms[h * degree + 2 * (i + 1) + 1] = 2 * i + 1;
-		}
+	}
 	if (h != nb_perms) {
-		cout << "group_generators_domain::generators_Hall_"
-				"reflection_normalizer_group "
+		cout << "group_generators_domain::generators_Hall_reflection_normalizer_group "
 				"h != nb_perms" << endl;
 		exit(1);
 	}
 	if (f_v) {
-		cout << "group_generators_domain::generators_Hall_"
-				"reflection_normalizer_group "
+		cout << "group_generators_domain::generators_Hall_reflection_normalizer_group "
 				"generators for normalizer of the Hall reflection group "
 				"of degree "
 				<< degree << " created" << endl;
@@ -280,11 +305,10 @@ void group_generators_domain::generators_Hall_reflection_normalizer_group(
 		for (i = 0; i < nb_perms; i++) {
 			Combi.perm_print(cout, perms + i * degree, degree);
 			cout << endl;
-			}
 		}
+	}
 	if (f_v) {
-		cout << "group_generators_domain::generators_Hall_"
-				"reflection_normalizer_group done" << endl;
+		cout << "group_generators_domain::generators_Hall_reflection_normalizer_group done" << endl;
 	}
 }
 
@@ -293,23 +317,26 @@ void group_generators_domain::order_Hall_reflection_normalizer_factorized(
 		int *&factors, int &nb_factors)
 {
 	int i, j, nb_perms;
+	int f_v = FALSE;
 
+	if (f_v) {
+		cout << "group_generators_domain::order_Hall_reflection_normalizer_factorized" << endl;
+	}
 	nb_perms = nb_pairs + nb_pairs - 1;
 	nb_factors = nb_perms;
 	factors = NEW_int(nb_perms);
 	j = 0;
 	for (i = 0; i < nb_pairs; i++, j++) {
 		factors[j] = 2;
-		}
+	}
 	for (i = 0; i < nb_pairs - 1; i++, j++) {
 		factors[j] = nb_pairs - i;
-		}
+	}
 	if (j != nb_factors) {
-		cout << "group_generators_domain:order_Hall_"
-				"reflection_normalizer_factorized "
+		cout << "group_generators_domain:order_Hall_reflection_normalizer_factorized "
 				"j != nb_perms" << endl;
 		exit(1);
-		}
+	}
 }
 
 void group_generators_domain::order_Bn_group_factorized(
@@ -322,15 +349,15 @@ void group_generators_domain::order_Bn_group_factorized(
 	j = 0;
 	for (i = 0; i < n - 1; i++, j++) {
 		factors[j] = n - i;
-		}
+	}
 	for (i = 0; i < n; i++, j++) {
 		factors[j] = 2;
-		}
+	}
 	if (j != nb_factors) {
 		cout << "group_generators_domain::order_Bn_group_factorized "
 				"j != nb_factors" << endl;
 		exit(1);
-		}
+	}
 }
 
 void group_generators_domain::generators_Bn_group(
@@ -344,7 +371,7 @@ void group_generators_domain::generators_Bn_group(
 	
 	if (f_v) {
 		cout << "group_generators_domain::generators_Bn_group" << endl;
-		}
+	}
 	deg = 2 * n;
 	nb_perms = n - 1 + n;
 	perms = NEW_int(nb_perms * deg);
@@ -355,29 +382,29 @@ void group_generators_domain::generators_Bn_group(
 		perms[j * deg + 2 * i + 1] = 2 * (i + 1) + 1;
 		perms[j * deg + 2 * (i + 1)] = 2 * i;
 		perms[j * deg + 2 * (i + 1) + 1] = 2 * i + 1;
-		}
+	}
 	for (i = 0; i < n; i++, j++) {
 		Combi.perm_identity(perms + j * deg, deg);
 		perms[j * deg + 2 * i] = 2 * i + 1;
 		perms[j * deg + 2 * i + 1] = 2 * i;
-		}
+	}
 	if (f_v) {
 		cout << "generators for Bn group of order n = " << n
 				<< " and degree " << deg << " created" << endl;
-		}
+	}
 	if (j != nb_perms) {
 		cout << "generators_Bn_group j != nb_perms" << endl;
 		exit(1);
-		}
+	}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
 			Combi.perm_print(cout, perms + i * deg, deg);
 			cout << endl;
-			}
 		}
+	}
 	if (f_v) {
 		cout << "group_generators_domain::generators_Bn_group done" << endl;
-		}
+	}
 }
 
 void group_generators_domain::generators_direct_product(
@@ -392,6 +419,9 @@ void group_generators_domain::generators_direct_product(
 	int *id1, *id2;
 	combinatorics_domain Combi;
 	
+	if (f_v) {
+		cout << "group_generators_domain::generators_direct_product" << endl;
+	}
 	deg3 = deg1 * deg2;
 	nb_perms3 = nb_perms1 + nb_perms2;
 	perms3 = NEW_int(nb_perms3 * deg3);
@@ -404,23 +434,23 @@ void group_generators_domain::generators_direct_product(
 		Combi.perm_direct_product(deg1, deg2,
 				perms1 + i * deg1, id2, perms3 + k * deg3);
 		k++;
-		}
+	}
 	for (i = 0; i < nb_perms2; i++) {
 		Combi.perm_direct_product(deg1, deg2, id1,
 				perms2 + i * deg2, perms3 + k * deg3);
 		k++;
-		}
+	}
 	FREE_int(id1);
 	FREE_int(id2);
-	if (f_v) {
-		cout << "generators for direct product created" << endl;
-		}
 	if (f_vv) {
 		for (i = 0; i < nb_perms3; i++) {
 			Combi.perm_print(cout, perms3 + i * deg3, deg3);
 			cout << endl;
-			}
 		}
+	}
+	if (f_v) {
+		cout << "group_generators_domain::generators_direct_product done" << endl;
+	}
 }
 
 void group_generators_domain::generators_concatenate(
@@ -434,11 +464,14 @@ void group_generators_domain::generators_concatenate(
 	int i, k = 0;
 	combinatorics_domain Combi;
 	
+	if (f_v) {
+		cout << "group_generators_domain::generators_concatenate" << endl;
+	}
 	if (deg1 != deg2) {
-		cout << "group_generators_domain::generators_concatenate:"
+		cout << "group_generators_domain::generators_concatenate"
 				" deg1 != deg2" << endl;
 		exit(1);
-		}
+	}
 	deg3 = deg1;
 	nb_perms3 = nb_perms1 + nb_perms2;
 	perms3 = NEW_int(nb_perms3 * deg3);
@@ -447,20 +480,23 @@ void group_generators_domain::generators_concatenate(
 	for (i = 0; i < nb_perms1; i++) {
 		Combi.perm_move(perms1 + i * deg1, perms3 + k * deg3, deg3);
 		k++;
-		}
+	}
 	for (i = 0; i < nb_perms2; i++) {
 		Combi.perm_move(perms2 + i * deg1, perms3 + k * deg3, deg3);
 		k++;
-		}
+	}
 	if (f_v) {
 		cout << "generators concatenated" << endl;
-		}
+	}
 	if (f_vv) {
 		for (i = 0; i < nb_perms3; i++) {
 			Combi.perm_print(cout, perms3 + i * deg3, deg3);
 			cout << endl;
-			}
 		}
+	}
+	if (f_v) {
+		cout << "group_generators_domain::generators_concatenate done" << endl;
+	}
 }
 
 
@@ -471,19 +507,25 @@ int group_generators_domain::matrix_group_base_len_projective_group(
 	int f_v = (verbose_level >= 1);
 	int base_len;
 
+	if (f_v) {
+		cout << "group_generators_domain::matrix_group_base_len_projective_group" << endl;
+	}
 	base_len = n;
 	if (q > 2) {
 		base_len++;
-		}
+	}
 	if (f_semilinear) {
 		base_len++;
-		}
+	}
 	if (f_v) {
 		cout << "group_generators_domain::matrix_group_base_len_projective_group: "
 				"n=" << n << " q=" << q
 				<< " f_semilinear=" << f_semilinear
 				<< " base_len = " << base_len << endl;
-		}
+	}
+	if (f_v) {
+		cout << "group_generators_domain::matrix_group_base_len_projective_group done" << endl;
+	}
 	return base_len;
 }
 
@@ -498,14 +540,13 @@ int group_generators_domain::matrix_group_base_len_affine_group(
 	base_len += n;
 	if (f_semilinear) {
 		base_len++;
-		}
+	}
 	if (f_v) {
-		cout << "group_generators_domain::matrix_group_"
-				"base_len_affine_group: "
+		cout << "group_generators_domain::matrix_group_base_len_affine_group: "
 				"n=" << n << " q=" << q
 				<< " f_semilinear=" << f_semilinear
 				<< " base_len = " << base_len << endl;
-		}
+	}
 	return base_len;
 }
 
@@ -520,14 +561,13 @@ int group_generators_domain::matrix_group_base_len_general_linear_group(
 	base_len += n;
 	if (f_semilinear) {
 		base_len++;
-		}
+	}
 	if (f_v) {
-		cout << "group_generators_domain::matrix_group_"
-				"base_len_general_linear_group: "
+		cout << "group_generators_domain::matrix_group_base_len_general_linear_group: "
 				"n=" << n << " q=" << q
 				<< " f_semilinear=" << f_semilinear
 				<< " base_len = " << base_len << endl;
-		}
+	}
 	return base_len;
 }
 
@@ -552,7 +592,8 @@ void group_generators_domain::order_POmega_epsilon(
 	}
 	order_Pomega(epsilon, m, q, go, verbose_level);
 	if (f_v) {
-		cout << "order_POmega_epsilon  epsilon=" << epsilon
+		cout << "group_generators_domain::order_POmega_epsilon "
+				"done  epsilon=" << epsilon
 				<< " k=" << k << " q=" << q << " order=" << go << endl;
 	}
 
@@ -589,7 +630,7 @@ void group_generators_domain::order_PO_epsilon(
 	geometry_global Gg;
 
 	if (f_v) {
-		cout << "order_PO_epsilon" << endl;
+		cout << "group_generators_domain::order_PO_epsilon" << endl;
 	}
 	m = Gg.Witt_index(epsilon, k);
 	if (f_v) {
@@ -604,7 +645,8 @@ void group_generators_domain::order_PO_epsilon(
 		D.mult_integer_in_place(go, e);
 	}
 	if (f_v) {
-		cout << "order_PO_epsilon  f_semilinear=" << f_semilinear
+		cout << "order_Pgroup_generators_domain::order_PO_epsilon done "
+				"f_semilinear=" << f_semilinear
 				<< " epsilon=" << epsilon << " k=" << k
 				<< " q=" << q << " order=" << go << endl;
 	}
@@ -617,7 +659,7 @@ void group_generators_domain::order_PO(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "order_PO epsilon = " << epsilon
+		cout << "group_generators_domain::order_PO epsilon = " << epsilon
 				<< " m=" << m << " q=" << q << endl;
 	}
 
@@ -631,7 +673,7 @@ void group_generators_domain::order_PO(
 		order_PO_minus(m, q, o, verbose_level);
 	}
 	else {
-		cout << "order_PO fatal: epsilon = " << epsilon << endl;
+		cout << "group_generators_domain::order_PO fatal: epsilon = " << epsilon << endl;
 		exit(1);
 	}
 }
@@ -1088,30 +1130,30 @@ void group_generators_domain::diagonal_orbit_perm(int n, finite_field *F,
 	for (i = 0; i < l; i++) {
 		orbit[i] = i;
 		orbit_inv[i] = i;
-		}
+	}
 	for (i = 0; i < ll; i++) {
 		v[0] = 1;
 		Gg.AG_element_unrank(F->q - 1, v + 1, 1, n - 1, i);
 		for (j = 1; j < n; j++) {
 			v[j]++;
-			}
+		}
 		if (f_vv) {
 			cout << i << " : ";
 			for (j = 0; j < n; j++) {
 				cout << v[j] << " ";
-				}
 			}
+		}
 		F->PG_element_rank_modified_lint(v, 1, n, a);
 		if (f_vv) {
 			cout << " : " << a << endl;
-			}
+		}
 		b = orbit_inv[a];
 		c = orbit[i];
 		orbit[i] = a;
 		orbit[b] = c;
 		orbit_inv[a] = i;
 		orbit_inv[c] = b;
-		}
+	}
 	FREE_int(v);
 	if (f_v) {
 		cout << "group_generators_domain::diagonal_orbit_perm done" << endl;
@@ -1139,36 +1181,36 @@ void group_generators_domain::frobenius_orbit_perm(int n, finite_field *F,
 	ll = F->e;
 	if (f_v) {
 		cout << "group_generators_domain::frobenius_orbit_perm l=" << l << endl;
-		}
+	}
 	if (F->e == 1) {
 		cout << "group_generators_domain::frobenius_orbit_perm GFq.e == 1" << endl;
 		exit(1);
-		}
+	}
 	//cout << "l = " << l << endl;
 	for (i = 0; i < l; i++) {
 		orbit[i] = i;
 		orbit_inv[i] = i;
-		}
+	}
 	if (f_v) {
 		cout << "before PG_element_unrank_modified("
 				<< n + F->p << ")" << endl;
-		}
+	}
 	F->PG_element_unrank_modified(v, 1, n, n + F->p);
 	if (f_v) {
 		cout << "after PG_element_unrank_modified("
 				<< n + F->p << ")" << endl;
-		}
+	}
 	for (i = 0; i < ll; i++) {
 		if (f_vv) {
 			cout << i << " : ";
 			for (j = 0; j < n; j++) {
 				cout << v[j] << " ";
-				}
 			}
+		}
 		F->PG_element_rank_modified_lint(v, 1, n, a);
 		if (f_vv) {
 			cout << " : " << a << endl;
-			}
+		}
 		b = orbit_inv[a];
 		c = orbit[i];
 		orbit[i] = a;
@@ -1176,11 +1218,11 @@ void group_generators_domain::frobenius_orbit_perm(int n, finite_field *F,
 		orbit_inv[a] = i;
 		orbit_inv[c] = b;
 		F->PG_element_apply_frobenius(n, v, 1);
-		}
+	}
 	FREE_int(v);
 	if (f_v) {
 		cout << "group_generators_domain::frobenius_orbit_perm done" << endl;
-		}
+	}
 }
 
 void group_generators_domain::projective_matrix_group_base_and_orbits(int n, finite_field *F,
@@ -1227,81 +1269,82 @@ void group_generators_domain::projective_matrix_group_base_and_orbits(int n, fin
 			cout << "group_generators_domain::projective_matrix_group_base_and_orbits "
 					"transversal " << i << " of length "
 					<< transversal_length[i] << endl;
-			}
+		}
 		if (f_vv) {
 			cout << "group_generators_domain::projective_matrix_group_base_and_orbits "
 					"before PG_element_modified_not_in_subspace_perm" << endl;
-			}
+		}
 		F->PG_element_modified_not_in_subspace_perm(n - 1, i - 1,
 			orbit[i], orbit_inv[i], 0);
 
 		if (f_vv) {
 			cout << "group_generators_domain::projective_matrix_group_base_and_orbits "
 					"after PG_element_modified_not_in_subspace_perm" << endl;
-			}
+		}
 
 		if (FALSE) {
 			print_set_lint(cout, degree, orbit[i]);
 			cout << endl;
 			print_set_lint(cout, degree, orbit_inv[i]);
 			cout << endl;
-			}
 		}
+	}
 	if (F->q > 2) {
 		transversal_length[i] = Gg.nb_AG_elements(n - 1, F->q - 1);
 		if (f_vv) {
 			cout << "group_generators_domain::projective_matrix_group_base_and_orbits: "
 					"diagonal transversal " << i << " of length "
 					<< transversal_length[i] << endl;
-			}
+		}
 		if (f_vv) {
 			cout << "finite_field::projective_matrix_group_base_and_orbits "
 					"before diagonal_orbit_perm" << endl;
-			}
+		}
 		diagonal_orbit_perm(n, F, orbit[i], orbit_inv[i], 0);
 
 		if (f_vv) {
 			cout << "projective_matrix_group_base_and_orbits "
 					"after diagonal_orbit_perm" << endl;
-			}
+		}
 
 		if (FALSE) {
 			print_set_lint(cout, degree, orbit[i]);
 			cout << endl;
 			print_set_lint(cout, degree, orbit_inv[i]);
 			cout << endl;
-			}
-		i++;
 		}
+		i++;
+	}
 	if (f_semilinear) {
 		transversal_length[i] = F->e;
 		if (f_vv) {
 			cout << "group_generators_domain::projective_matrix_group_base_and_orbits: "
 					"frobenius transversal " << i << " of length "
 					<< transversal_length[i] << endl;
-			}
+		}
 		if (f_vv) {
 			cout << "finite_field::projective_matrix_group_base_and_orbits "
 					"before frobenius_orbit_perm" << endl;
-			}
+		}
 		frobenius_orbit_perm(n, F,
 				orbit[i], orbit_inv[i], verbose_level - 2);
 
 		if (f_vv) {
 			cout << "group_generators_domain::projective_matrix_group_base_and_orbits "
 					"after frobenius_orbit_perm" << endl;
-			}
+		}
 
 		if (FALSE) {
 			print_set_lint(cout, degree, orbit[i]);
 			cout << endl;
 			print_set_lint(cout, degree, orbit_inv[i]);
 			cout << endl;
-			}
-		i++;
 		}
+		i++;
+	}
 	if (i != base_len) {
-		cout << "group_generators_domain::projective_matrix_group_base_and_orbits i != base_len" << endl;
+		cout << "group_generators_domain::projective_matrix_group_base_and_orbits "
+				"i != base_len" << endl;
 		cout << "i=" << i << endl;
 		cout << "base_len=" << base_len << endl;
 		exit(1);
@@ -1314,10 +1357,10 @@ void group_generators_domain::projective_matrix_group_base_and_orbits(int n, fin
 				"transversal_length: ";
 		Orbiter->Int_vec.print(cout, transversal_length, base_len);
 		cout << endl;
-		}
+	}
 	if (f_v) {
 		cout << "group_generators_domain::projective_matrix_group_base_and_orbits done" << endl;
-		}
+	}
 }
 
 void group_generators_domain::projective_matrix_group_base_and_transversal_length(int n, finite_field *F,

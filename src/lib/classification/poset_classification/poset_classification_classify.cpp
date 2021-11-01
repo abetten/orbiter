@@ -298,15 +298,38 @@ int poset_classification::compute_orbits(int from_level, int to_level,
 		f_write_files = (Control->f_W || (Control->f_w && level == to_level - 1));
 
 
+		if (f_write_files) {
+
+			if (f_v) {
+				cout << "poset_classification::compute_orbits before write_reps_csv" << endl;
+			}
+			write_reps_csv(level + 1, verbose_level - 1);
+			if (f_v) {
+				cout << "poset_classification::compute_orbits after write_reps_csv" << endl;
+			}
+		}
 
 		if (Control->f_write_data_files) {
+			if (f_v) {
+				cout << "poset_classification::compute_orbits before housekeeping f_write_files = TRUE" << endl;
+			}
 			housekeeping(level + 1, f_write_files,
 					Os.os_ticks(), verbose_level - 1);
+			if (f_v) {
+				cout << "poset_classification::compute_orbits after housekeeping" << endl;
+			}
 		}
 		else {
+			if (f_v) {
+				cout << "poset_classification::compute_orbits before housekeeping_no_data_file" << endl;
+			}
 			housekeeping_no_data_file(level + 1,
 					Os.os_ticks(), verbose_level - 1);
+			if (f_v) {
+				cout << "poset_classification::compute_orbits after housekeeping_no_data_file" << endl;
+			}
 		}
+
 
 		int nb_nodes;
 		nb_nodes = nb_orbits_at_level(level + 1);
@@ -324,7 +347,8 @@ int poset_classification::compute_orbits(int from_level, int to_level,
 
 	if (f_v) {
 		cout << "poset_classification::compute_orbits from "
-				<< from_level << " to " << to_level << " done, last level with nodes is " << level << endl;
+				<< from_level << " to " << to_level << " done, "
+						"last level with nodes is " << level << endl;
 	}
 	return level;
 }

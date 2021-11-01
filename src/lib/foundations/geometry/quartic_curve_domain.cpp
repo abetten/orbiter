@@ -191,6 +191,13 @@ void quartic_curve_domain::print_equation_with_line_breaks_tex(std::ostream &ost
 			"\\\\\n" /* const char *new_line_text*/);
 }
 
+void quartic_curve_domain::print_gradient_with_line_breaks_tex(std::ostream &ost, int *coeffs)
+{
+	Poly3_3->print_equation_with_line_breaks_tex(
+			ost, coeffs, 8 /* nb_terms_per_line*/,
+			"\\\\\n" /* const char *new_line_text*/);
+}
+
 void quartic_curve_domain::unrank_point(int *v, long int rk)
 {
 	P->unrank_point(v, rk);
@@ -260,6 +267,7 @@ void quartic_curve_domain::print_lines_tex(std::ostream &ost, long int *Lines, i
 	ost << "\\\\" << endl;
 
 }
+
 
 
 void quartic_curve_domain::compute_points_on_lines(
@@ -803,6 +811,55 @@ void quartic_curve_domain::create_surface(quartic_curve_object *Q, int *eqn20, i
 		cout << "quartic_curve_domain::create_surface done" << endl;
 	}
 }
+
+void quartic_curve_domain::compute_gradient(int *equation15, int *&gradient, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "quartic_curve_domain::compute_gradient" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "quartic_curve_domain::compute_gradient Poly3_3->get_nb_monomials() = " << Poly3_3->get_nb_monomials() << endl;
+	}
+
+	gradient = NEW_int(3 * Poly3_3->get_nb_monomials());
+
+	for (i = 0; i < 3; i++) {
+		if (f_v) {
+			cout << "quartic_curve_domain::compute_gradient i=" << i << endl;
+		}
+		if (f_v) {
+			cout << "quartic_curve_domain::compute_gradient eqn_in=";
+			Orbiter->Int_vec.print(cout, equation15, 15);
+			cout << " = " << endl;
+			Poly4_3->print_equation(cout, equation15);
+			cout << endl;
+		}
+		Partials[i].apply(equation15,
+				gradient + i * Poly3_3->get_nb_monomials(),
+				verbose_level - 2);
+		if (f_v) {
+			cout << "quartic_curve_domain::compute_gradient "
+					"partial=";
+			Orbiter->Int_vec.print(cout, gradient + i * Poly3_3->get_nb_monomials(),
+					Poly3_3->get_nb_monomials());
+			cout << " = ";
+			Poly3_3->print_equation(cout,
+					gradient + i * Poly3_3->get_nb_monomials());
+			cout << endl;
+		}
+	}
+
+
+	if (f_v) {
+		cout << "quartic_curve_domain::compute_gradient done" << endl;
+	}
+}
+
 
 
 }}

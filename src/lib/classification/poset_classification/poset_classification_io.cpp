@@ -687,7 +687,22 @@ void poset_classification::housekeeping(int i,
 			cout << "poset_classification_housekeeping "
 					"writing files" << endl;
 		}
+
+
+
+
 #if 1
+
+		string fname_reps_csv;
+		char str[1000];
+
+		fname_reps_csv.assign(problem_label_with_path);
+		sprintf(str, "_reps_lvl_%d", i);
+		fname_reps_csv.append(str);
+		fname_reps_csv.append(".csv");
+
+		Poo->save_representatives_at_level_to_csv(fname_reps_csv, i, verbose_level);
+
 
 		my_fname_base.assign(problem_label_with_path);
 		my_fname_base.append("a");
@@ -811,7 +826,6 @@ void poset_classification::housekeeping(int i,
 		cout << "poset_classification::housekeeping done" << endl;
 	}
 }
-
 
 void poset_classification::housekeeping_no_data_file(int i,
 		int t0, int verbose_level)
@@ -1769,6 +1783,28 @@ void poset_classification::wedge_product_export_magma(
 		cout << "poset_classification::wedge_product_export_magma "
 				"done" << endl;
 	}
+}
+
+void poset_classification::write_reps_csv(int lvl, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	string fname_reps_csv;
+	char str[1000];
+
+	if (f_v) {
+		cout << "poset_classification::write_reps_csv" << endl;
+	}
+	fname_reps_csv.assign(problem_label_with_path);
+	sprintf(str, "_reps_lvl_%d", lvl);
+	fname_reps_csv.append(str);
+	fname_reps_csv.append(".csv");
+
+	Poo->save_representatives_at_level_to_csv(fname_reps_csv, lvl, verbose_level);
+
+	if (f_v) {
+		cout << "poset_classification::write_reps_csv done" << endl;
+	}
+
 }
 
 

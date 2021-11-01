@@ -1427,6 +1427,10 @@ int projective_space::arc_test(long int *input_pts, int nb_pts,
 	for (i = 0; i < nb_pts; i++) {
 		unrank_point(Pts + i * 3, input_pts[i]);
 	}
+	if (f_v) {
+		cout << "projective_space::arc_test Pts=" << endl;
+		Orbiter->Int_vec.matrix_print(Pts, nb_pts, 3);
+	}
 	N = Combi.int_n_choose_k(nb_pts, 3);
 	for (h = 0; h < N; h++) {
 		Combi.unrank_k_subset(h, set, nb_pts, 3);

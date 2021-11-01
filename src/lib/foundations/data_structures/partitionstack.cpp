@@ -722,14 +722,14 @@ void partitionstack::get_row_classes(set_of_sets *&Sos, int verbose_level)
 			nb_row_classes,
 			col_classes,
 			nb_col_classes,
-			verbose_level);
+			0 /* verbose_level*/);
 
 	Sos = NEW_OBJECT(set_of_sets);
 
 	int first_column_element = startCell[1];
 
 	Sos->init_simple(first_column_element /* underlying_set_size */,
-			nb_row_classes, verbose_level);
+			nb_row_classes, 0 /* verbose_level*/);
 
 	for (i = 0; i < nb_row_classes; i++) {
 
@@ -738,7 +738,7 @@ void partitionstack::get_row_classes(set_of_sets *&Sos, int verbose_level)
 
 		get_cell_lint(row_classes[i],
 				cell, cell_sz,
-				verbose_level);
+				0 /* verbose_level*/);
 		Sos->Sets[i] = cell;
 		Sos->Set_size[i] = cell_sz;
 	}
@@ -775,14 +775,14 @@ void partitionstack::get_column_classes(set_of_sets *&Sos, int verbose_level)
 			nb_row_classes,
 			col_classes,
 			nb_col_classes,
-			verbose_level);
+			0 /* verbose_level*/);
 
 	Sos = NEW_OBJECT(set_of_sets);
 
 	int first_column_element = startCell[1];
 
 	Sos->init_simple(n - first_column_element /* underlying_set_size */,
-			nb_col_classes, verbose_level);
+			nb_col_classes, 0 /* verbose_level*/);
 
 	for (i = 0; i < nb_col_classes; i++) {
 
@@ -791,7 +791,7 @@ void partitionstack::get_column_classes(set_of_sets *&Sos, int verbose_level)
 
 		get_cell_lint(col_classes[i],
 				cell, cell_sz,
-				verbose_level);
+				0 /* verbose_level*/);
 		for (j = 0; j < cell_sz; j++) {
 			cell[j] -= first_column_element;
 		}

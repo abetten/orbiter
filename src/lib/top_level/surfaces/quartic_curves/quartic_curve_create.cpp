@@ -328,10 +328,11 @@ void quartic_curve_create::create_quartic_curve_by_coefficients(std::string &coe
 	}
 
 	int coeffs15[15];
-	int *coeff_list, nb_coeff_list, nb_terms;
-	int i, a, b;
+	int *coeff_list, nb_coeff_list;
+	int i;
 
 	Orbiter->Int_vec.scan(coefficients_text, coeff_list, nb_coeff_list);
+#if 0
 	if (ODD(nb_coeff_list)) {
 		cout << "quartic_curve_create::create_quartic_curve_by_coefficients number of "
 				"terms given must be even" << endl;
@@ -361,6 +362,16 @@ void quartic_curve_create::create_quartic_curve_by_coefficients(std::string &coe
 		}
 		coeffs15[b] = a;
 	}
+#else
+	if (nb_coeff_list != 15) {
+		cout << "quartic_curve_create::create_quartic_curve_by_coefficients number of "
+				"terms must be 15" << endl;
+		exit(1);
+	}
+	for (i = 0; i < nb_coeff_list; i++) {
+		coeffs15[i] = coeff_list[i];
+	}
+#endif
 	FREE_int(coeff_list);
 
 

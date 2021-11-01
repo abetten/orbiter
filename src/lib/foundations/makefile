@@ -22,6 +22,7 @@ all: algebra_and_number_theory \
 	io_and_os \
 	knowledge_base \
 	orthogonal \
+	ring_theory \
 	solvers \
 	statistics \
 	surfaces \
@@ -46,6 +47,7 @@ graphics : graphics2
 io_and_os : io_and_os2  
 knowledge_base : knowledge_base2  
 orthogonal : orthogonal2  
+ring_theory : ring_theory2  
 solvers : solvers2 
 statistics : statistics2
 surfaces : surfaces2
@@ -67,6 +69,7 @@ graphics2 : ; cd graphics; $(MAKE)
 io_and_os2 : ; cd io_and_os; $(MAKE)
 knowledge_base2 : ; cd knowledge_base; $(MAKE)
 orthogonal2 : ; cd orthogonal; $(MAKE)
+ring_theory2 : ; cd ring_theory; $(MAKE)
 solvers2 : ; cd solvers; $(MAKE)
 statistics2 : ; cd statistics; $(MAKE)
 surfaces2 : ; cd surfaces; $(MAKE)
@@ -89,6 +92,7 @@ clean:
 	cd io_and_os; $(MAKE) clean
 	cd knowledge_base; $(MAKE) clean
 	cd orthogonal; $(MAKE) clean
+	cd ring_theory; $(MAKE) clean
 	cd solvers; $(MAKE) clean
 	cd statistics; $(MAKE) clean
 	cd surfaces; $(MAKE) clean

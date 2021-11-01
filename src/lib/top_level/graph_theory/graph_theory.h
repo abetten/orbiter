@@ -449,6 +449,12 @@ public:
 	int f_split;
 	std::string split_input_fname;
 	std::string split_by_file;
+
+	int f_split_by_starters;
+	std::string split_by_starters_fname_reps;
+	std::string split_by_starters_col_label;
+
+
 	int f_save;
 	int f_automorphism_group;
 

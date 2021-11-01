@@ -1478,6 +1478,60 @@ void poset_of_orbits::log_nodes_for_treefile(
 	}
 }
 
+void poset_of_orbits::save_representatives_at_level_to_csv(std::string &fname, int lvl, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, l;
+	long int *set;
+	long int ago;
+
+	if (f_v) {
+		cout << "poset_classification::save_representatives_at_level_to_csv" << endl;
+	}
+	{
+		ofstream ost(fname);
+
+		set = NEW_lint(lvl);
+
+
+		l = PC->nb_orbits_at_level(lvl);
+		//cout << "The " << l << " representatives at level " << lvl << " are:" << endl;
+		ost << "ROW,REP,AGO" << endl;
+		for (i = 0; i < l; i++) {
+			get_node_ij(lvl, i)->store_set_to(PC, lvl - 1, set /*gen->S0*/);
+			//Orbiter->Lint_vec.print(cout, set /*gen->S0*/, lvl);
+
+			ost << i;
+			{
+				string str;
+				ost << ",";
+				Orbiter->Lint_vec.create_string_with_quotes(str, set, lvl);
+				ost << str;
+			}
+
+			ago = get_node_ij(lvl, i)->get_stabilizer_order_lint(PC);
+			ost << "," << ago << endl;
+
+		}
+
+		ost << "END" << endl;
+
+
+		FREE_lint(set);
+	}
+	file_io Fio;
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+	if (f_v) {
+		cout << "poset_classification::save_representatives_at_level_to_csv done" << endl;
+	}
+}
+
+
+
 
 }}
 

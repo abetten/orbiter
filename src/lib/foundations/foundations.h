@@ -256,25 +256,20 @@ namespace foundations {
 class a_domain;
 class algebra_global;
 class cyclotomic_sets;
-class finite_ring;
 class generators_symplectic_group;
 class gl_class_rep;
 class gl_classes;
 class group_generators_domain;
 class heisenberg;
-class homogeneous_polynomial_domain;
-class longinteger_domain;
-class longinteger_object;
 class matrix_block_data;
 class norm_tables;
 class null_polarity_generator;
 class number_theoretic_transform;
 class number_theory_domain;
-class partial_derivative;
 class rank_checker;
-class table_of_irreducible_polynomials;
-class unipoly_domain;
 class vector_space;
+
+
 
 
 
@@ -470,6 +465,15 @@ class blt_set_domain;
 class blt_set_invariants;
 class orthogonal;
 class unusual_model;
+
+// ring_theory:
+class finite_ring;
+class homogeneous_polynomial_domain;
+class longinteger_domain;
+class longinteger_object;
+class partial_derivative;
+class table_of_irreducible_polynomials;
+class unipoly_domain;
 
 // solvers
 class diophant_activity_description;
@@ -786,6 +790,7 @@ std::ostream& operator<<(std::ostream& ost, longinteger_object& p);
 #include "./io_and_os/io_and_os.h"
 #include "./knowledge_base/knowledge_base.h"
 #include "./orthogonal/orthogonal.h"
+#include "./ring_theory/ring_theory.h"
 #include "./solvers/solvers.h"
 #include "./statistics/statistics.h"
 #include "./surfaces/surfaces.h"

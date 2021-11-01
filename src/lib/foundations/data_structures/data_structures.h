@@ -1017,6 +1017,7 @@ public:
 			int (*evaluate_function)(int a, int i, int j, void *evaluate_data, int verbose_level),
 			void *evaluate_data,
 			int verbose_level);
+	int find_smallest_class();
 };
 
 int set_of_sets_compare_func(void *data, int i, int j, void *extra_data);

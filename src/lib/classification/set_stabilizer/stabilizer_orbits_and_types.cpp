@@ -302,13 +302,47 @@ void stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pat
 
 	if (f_v) {
 		cout << "stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pattern "
-				"before save_interesting_subsets_reduced" << endl;
+				"before save_interesting_subsets_reduced (1)" << endl;
 	}
-	save_interesting_subsets_reduced(verbose_level);
+	save_interesting_subsets_reduced(1, verbose_level);
 	if (f_v) {
 		cout << "stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pattern "
-				"after save_interesting_subsets_reduced" << endl;
+				"after save_interesting_subsets_reduced (1)" << endl;
 	}
+
+#if 1
+	combinatorics_domain Combi;
+
+	int v, k, b_reduced;
+
+	v = CS->SubSt->nb_pts;
+	k = CS->SubSt->SubC->substructure_size;
+
+	Combi.refine_the_partition(
+			v, k,
+			nb_interesting_subsets_reduced /* b */,
+			interesting_subsets_reduced,
+			b_reduced,
+			verbose_level);
+
+	if (b_reduced < nb_interesting_subsets_reduced) {
+		if (f_v) {
+			cout << "stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pattern "
+					"reduced from " << nb_interesting_subsets_reduced << " down to " << b_reduced << endl;
+		}
+		nb_interesting_subsets_reduced = b_reduced;
+	}
+
+	if (f_v) {
+		cout << "stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pattern "
+				"before save_interesting_subsets_reduced (2)" << endl;
+	}
+	save_interesting_subsets_reduced(2, verbose_level);
+	if (f_v) {
+		cout << "stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pattern "
+				"after save_interesting_subsets_reduced (2)" << endl;
+	}
+#endif
 
 
 #if 1
@@ -322,7 +356,7 @@ void stabilizer_orbits_and_types::compute_stabilizer_orbits_and_find_minimal_pat
 	}
 }
 
-void stabilizer_orbits_and_types::save_interesting_subsets_reduced(int verbose_level)
+void stabilizer_orbits_and_types::save_interesting_subsets_reduced(int stage, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -333,9 +367,12 @@ void stabilizer_orbits_and_types::save_interesting_subsets_reduced(int verbose_l
 	//long int *interesting_subsets_reduced;
 
 	string fname;
+	char str[1000];
+
+	sprintf(str, "_stage_%d.csv", stage);
 
 	fname.assign(CS->SubSt->fname_case_out);
-	fname.append("int_subs_red.csv");
+	fname.append(str);
 	file_io Fio;
 
 	Fio.lint_vec_write_csv(interesting_subsets_reduced, nb_interesting_subsets_reduced,
