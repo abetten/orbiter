@@ -1402,6 +1402,78 @@ public:
 uint32_t SuperFastHash (const char * data, int len);
 
 
+
+// #############################################################################
+// vector_builder_description.cpp
+// #############################################################################
+
+
+
+//! to define a vector of field elements
+
+
+class vector_builder_description {
+public:
+
+	int f_field;
+	std::string field_label;
+
+	int f_here;
+	std::string here_text;
+
+	int f_dense;
+	std::string dense_text;
+
+	int f_format;
+	int format_k;
+
+	int f_file;
+	std::string file_name;
+
+	int f_sparse;
+	int sparse_len;
+	std::string sparse_pairs;
+
+
+	vector_builder_description();
+	~vector_builder_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+};
+
+
+
+// #############################################################################
+// vector_builder.cpp
+// #############################################################################
+
+
+
+//! to create a vector of field elements from class vector_builder_description
+
+
+class vector_builder {
+public:
+
+	vector_builder_description *Descr;
+
+	finite_field *F;
+
+	int *v;
+	int len;
+
+	int f_has_k;
+	int k;
+
+	vector_builder();
+	~vector_builder();
+	void init(vector_builder_description *Descr, finite_field *F, int verbose_level);
+};
+
+
+
 // #############################################################################
 // vector_hashing.cpp
 // #############################################################################

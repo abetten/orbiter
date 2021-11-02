@@ -1310,7 +1310,6 @@ public:
 
 	object_in_projective_space();
 	~object_in_projective_space();
-	void null();
 	void freeself();
 	void print(std::ostream &ost);
 	void print_tex(std::ostream &ost);
@@ -1604,6 +1603,37 @@ public:
 
 
 // #############################################################################
+// projective_space_implementation.cpp
+// #############################################################################
+
+//! internal representation of a projective space PG(n,q)
+
+
+class projective_space_implementation {
+
+public:
+
+	projective_space *P;
+
+	bitmatrix *Bitmatrix;
+
+	int *Lines; // [N_lines * k]
+	int *Lines_on_point; // [N_points * r]
+	int *Line_through_two_points; // [N_points * N_points]
+	int *Line_intersection;	// [N_lines * N_lines]
+
+	int *v; // [n + 1]
+	int *w; // [n + 1]
+
+
+	projective_space_implementation();
+	~projective_space_implementation();
+	void init(projective_space *P, int verbose_level);
+
+};
+
+
+// #############################################################################
 // projective_space.cpp
 // #############################################################################
 
@@ -1624,25 +1654,15 @@ public:
 	int q;
 	long int N_points, N_lines;
 	long int *Nb_subspaces;  // [n + 1]
-	 // Nb_subspaces[i] = generalized_binomial(n + 1, i + 1, q);
+		// Nb_subspaces[i] = generalized_binomial(n + 1, i + 1, q);
 		// N_points = Nb_subspaces[0]
 		// N_lines = Nb_subspaces[1];
 
 	int r; // number of lines on a point
 	int k; // number of points on a line
 
+	projective_space_implementation *Implementation;
 
-	bitmatrix *Bitmatrix;
-	//uchar *incidence_bitvec; // N_points * N_lines bits
-
-	int *Lines; // [N_lines * k]
-	int *Lines_on_point; // [N_points * r]
-	int *Line_through_two_points; // [N_points * N_points]
-	int *Line_intersection;	// [N_lines * N_lines]
-
-	// only if n = 2:
-	//int *Polarity_point_to_hyperplane; // [N_points]
-	//int *Polarity_hyperplane_to_point; // [N_points]
 
 	polarity *Standard_polarity;
 	polarity *Reversal_polarity;
@@ -1655,7 +1675,6 @@ public:
 
 	projective_space();
 	~projective_space();
-	void null();
 	void freeself();
 	void init(int n, finite_field *F, 
 		int f_init_incidence_structure, 

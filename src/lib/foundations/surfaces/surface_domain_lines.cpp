@@ -186,9 +186,9 @@ void surface_domain::create_system(int len, long int *S,
 	for (i = 0; i < len; i++) {
 		a = S[i];
 
-		if (P->Lines) {
+		if (P->Implementation->Lines) {
 			for (j = 0; j < P->k; j++) {
-				Pts.push_back(P->Lines[a * P->k + j]);
+				Pts.push_back(P->Implementation->Lines[a * P->k + j]);
 				//pt_list[nb_pts++] = P->Lines[a * P->k + j];
 			}
 		}

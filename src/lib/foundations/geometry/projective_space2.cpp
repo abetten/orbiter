@@ -1631,7 +1631,7 @@ void projective_space::cheat_sheet_points_on_lines(
 
 	f << "PG$(" << n << ", " << q << ")$ has " << N_lines
 			<< " lines, each with " << k << " points:\\\\" << endl;
-	if (Lines == NULL) {
+	if (Implementation->Lines == NULL) {
 		f << "Don't have Lines table\\\\" << endl;
 	}
 	else {
@@ -1653,7 +1653,7 @@ void projective_space::cheat_sheet_points_on_lines(
 			//f << "i=" << i << " nb=" << nb << "\\\\" << endl;
 			f << "$$" << endl;
 			L.print_integer_matrix_with_labels(f,
-					Lines + i * k, nb, k, row_labels + i,
+					Implementation->Lines + i * k, nb, k, row_labels + i,
 					col_labels, TRUE /* f_tex */);
 			f << "$$" << endl;
 		}
@@ -1669,7 +1669,7 @@ void projective_space::cheat_sheet_lines_on_points(
 
 	f << "PG$(" << n << ", " << q << ")$ has " << N_points
 			<< " points, each with " << r << " lines:\\\\" << endl;
-	if (Lines_on_point == NULL) {
+	if (Implementation->Lines_on_point == NULL) {
 		f << "Don't have Lines\\_on\\_point table\\\\" << endl;
 	}
 	else {
@@ -1690,7 +1690,7 @@ void projective_space::cheat_sheet_lines_on_points(
 			//f << "i=" << i << " nb=" << nb << "\\\\" << endl;
 			f << "$$" << endl;
 			L.print_integer_matrix_with_labels(f,
-				Lines_on_point + i * r, nb, r,
+					Implementation->Lines_on_point + i * r, nb, r,
 				row_labels + i, col_labels, TRUE /* f_tex */);
 			f << "$$" << endl;
 		}
@@ -1940,7 +1940,7 @@ void projective_space::cheat_sheet_line_intersection(
 	for (i = 0; i < N_points; i++) {
 		f << i;
 		for (j = 0; j < N_points; j++) {
-			a = Line_intersection[i * N_lines + j];
+			a = Implementation->Line_intersection[i * N_lines + j];
 			f << " & ";
 			if (i != j) {
 				f << a;
@@ -1976,7 +1976,7 @@ void projective_space::cheat_sheet_line_through_pairs_of_points(
 		f << i;
 		for (j = 0; j < N_points; j++) {
 
-			a = Line_through_two_points[i * N_points + j];
+			a = Implementation->Line_through_two_points[i * N_points + j];
 			f << " & ";
 			if (i != j) {
 				f << a;
@@ -2868,14 +2868,14 @@ void projective_space::find_nucleus(
 		exit(1);
 	}
 
-	if (Lines_on_point == NULL) {
+	if (Implementation->Lines_on_point == NULL) {
 		init_incidence_structure(verbose_level);
 	}
 
 	Lines = NEW_int(r);
 	a = set[0];
 	for (i = 0; i < r; i++) {
-		Lines[i] = Lines_on_point[a * r + i];
+		Lines[i] = Implementation->Lines_on_point[a * r + i];
 	}
 	sz = r;
 	Sorting.int_vec_heapsort(Lines, r);
@@ -2906,7 +2906,7 @@ void projective_space::find_nucleus(
 
 	a = set[1];
 	for (i = 0; i < r; i++) {
-		Lines[i] = Lines_on_point[a * r + i];
+		Lines[i] = Implementation->Lines_on_point[a * r + i];
 	}
 	sz = r;
 	Sorting.int_vec_heapsort(Lines, r);

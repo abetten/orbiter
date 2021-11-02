@@ -3000,7 +3000,7 @@ void algebra_global_with_action::report_tactical_decomposition_by_automorphism_g
 
 	for (j = 0; j < P->N_lines; j++) {
 		for (h = 0; h < P->k; h++) {
-			i = P->Lines[j * P->k + h];
+			i = P->Implementation->Lines[j * P->k + h];
 			Mtx[i * P->N_lines + j] = 1;
 		}
 	}

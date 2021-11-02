@@ -892,7 +892,7 @@ void packing_classify::report_extra_stuff(
 			ost << "\\right]" << endl;
 			ost << " = \\{" << endl;
 			for (i = 0; i < P3->k; i++) {
-				ost << P3->Lines[u * P3->k + i];
+				ost << P3->Implementation->Lines[u * P3->k + i];
 				if (i < P3->k - 1) {
 					ost << ", ";
 				}

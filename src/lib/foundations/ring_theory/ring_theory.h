@@ -590,7 +590,8 @@ public:
 	//unipoly_domain2.cpp:
 	void mult_easy(unipoly_object a, unipoly_object b, unipoly_object &c);
 	void print_coeffs_top_down_assuming_one_character_per_digit(unipoly_object a, std::ostream &ost);
-	void print_coeffs_top_down_assuming_one_character_per_digit_with_degree_given(unipoly_object a, int m, std::ostream &ost);
+	void print_coeffs_top_down_assuming_one_character_per_digit_with_degree_given(
+			unipoly_object a, int m, std::ostream &ost);
 	void mult_easy_with_report(long int rk_a, long int rk_b, long int &rk_c,
 			std::ostream &ost, int verbose_level);
 	void division_with_remainder_from_file_with_report(std::string &input_fname, long int rk_b,

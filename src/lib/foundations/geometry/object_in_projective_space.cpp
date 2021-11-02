@@ -21,17 +21,8 @@ namespace foundations {
 
 object_in_projective_space::object_in_projective_space()
 {
-	null();
-}
-
-object_in_projective_space::~object_in_projective_space()
-{
-	freeself();
-}
-
-void object_in_projective_space::null()
-{
 	P = NULL;
+	type = t_PTS;
 	//input_fname = NULL;
 	input_idx = 0;
 	f_has_known_ago = FALSE;
@@ -47,6 +38,11 @@ void object_in_projective_space::null()
 	C = NULL;
 }
 
+object_in_projective_space::~object_in_projective_space()
+{
+	freeself();
+}
+
 void object_in_projective_space::freeself()
 {
 	if (set) {
@@ -58,7 +54,6 @@ void object_in_projective_space::freeself()
 	if (C) {
 		FREE_OBJECT(C);
 	}
-	null();
 }
 
 void object_in_projective_space::print(ostream &ost)

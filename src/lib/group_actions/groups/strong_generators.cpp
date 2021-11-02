@@ -1041,10 +1041,28 @@ void strong_generators::init_subgroup_by_generators(action *A,
 	nice_gens->allocate(nb_subgroup_gens, verbose_level - 2);
 	for (int h = 0; h < nb_subgroup_gens; h++) {
 		if (f_v) {
-			cout << "strong_generators::init_subgroup_by_generators generator " << h << " / " << nb_subgroup_gens << endl;
+			cout << "strong_generators::init_subgroup_by_generators "
+					"generator " << h << " / " << nb_subgroup_gens << endl;
 		}
-		A->make_element_from_string(nice_gens->ith(h),
+		if (isalpha(subgroup_gens[h][0])) {
+			if (f_v) {
+				cout << "strong_generators::init_subgroup_by_generators "
+						"searching label " << subgroup_gens[h] << endl;
+			}
+			int idx;
+			vector_builder *VB;
+
+			idx = Orbiter->find_symbol(subgroup_gens[h]);
+			VB = (vector_builder *) Orbiter->get_object(idx);
+
+			A->make_element(nice_gens->ith(h),
+				VB->v, verbose_level);
+
+		}
+		else {
+			A->make_element_from_string(nice_gens->ith(h),
 				subgroup_gens[h], verbose_level);
+		}
 	}
 
 

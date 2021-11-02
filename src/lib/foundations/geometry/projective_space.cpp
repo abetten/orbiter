@@ -27,15 +27,19 @@ projective_space::projective_space()
 	Grass_hyperplanes = NULL;
 	F = NULL;
 	Go = NULL;
+	n = 0;
+	q = 0;
+
+	N_points = 0;
+	N_lines = 0;
+
 	Nb_subspaces = NULL;
-	Bitmatrix = NULL;
-	//incidence_bitvec = NULL;
-	Line_through_two_points = NULL;
-	Line_intersection = NULL;
-	Lines = NULL;
-	Lines_on_point = NULL;
-	//Polarity_point_to_hyperplane = NULL;
-	//Polarity_hyperplane_to_point = NULL;
+
+	r = 0;
+	k = 0;
+
+
+	Implementation = NULL;
 
 	Standard_polarity = NULL;
 	Reversal_polarity = NULL;
@@ -44,17 +48,15 @@ projective_space::projective_space()
 	w = NULL;
 	Mtx = NULL;
 	Mtx2 = NULL;
-	null();
-};
+}
+
+
 
 projective_space::~projective_space()
 {
 	freeself();
 }
 
-void projective_space::null()
-{
-}
 
 void projective_space::freeself()
 {
@@ -102,40 +104,17 @@ void projective_space::freeself()
 		}
 		FREE_OBJECT(Grass_planes);
 	}
-	if (Bitmatrix) {
-		FREE_OBJECT(Bitmatrix);
+
+	if (Implementation) {
+		FREE_OBJECT(Implementation);
 	}
-	if (Line_through_two_points) {
-		FREE_int(Line_through_two_points);
-	}
-	if (Line_intersection) {
-		FREE_int(Line_intersection);
-	}
-	if (Lines) {
-		FREE_int(Lines);
-	}
-	if (Lines_on_point) {
-		if (f_v) {
-			cout << "projective_space::freeself "
-					"deleting Lines_on_point" << endl;
-		}
-		FREE_int(Lines_on_point);
-	}
+
 	if (Standard_polarity) {
 		FREE_OBJECT(Standard_polarity);
 	}
 	if (Reversal_polarity) {
 		FREE_OBJECT(Reversal_polarity);
 	}
-#if 0
-	if (Polarity_point_to_hyperplane) {
-		FREE_int(Polarity_point_to_hyperplane);
-	}
-	if (Polarity_hyperplane_to_point) {
-		FREE_int(Polarity_hyperplane_to_point);
-	}
-#endif
-	null();
 	if (f_v) {
 		cout << "projective_space::freeself done" << endl;
 	}
@@ -148,7 +127,6 @@ void projective_space::init(int n, finite_field *F,
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	//longinteger_domain D;
 	combinatorics_domain C;
 	longinteger_object a;
 
@@ -258,377 +236,40 @@ void projective_space::init(int n, finite_field *F,
 void projective_space::init_incidence_structure(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int f_vv = FALSE; //(verbose_level >= 2);
-	//int f_vvv = (verbose_level >= 3);
 
-	int i, j, a, b, i1, i2, j1, j2;
-	
 	if (f_v) {
 		cout << "projective_space::init_incidence_structure" << endl;
 	}
 
-
-	if (N_lines < MAX_NUMBER_OF_LINES_FOR_INCIDENCE_MATRIX) {
-		if (f_v) {
-			cout << "projective_space::init_incidence_structure "
-					"allocating Incidence (bitvector)" << endl;
-		}
-		Bitmatrix = NEW_OBJECT(bitmatrix);
-		Bitmatrix->init(N_points, N_lines, verbose_level);
-	}
-	else {
-		if (f_v) {
-			cout << "projective_space::init_incidence_structure: "
-				"N_lines too big, we do not initialize the "
-				"incidence matrix" << endl;
-		}
-		Bitmatrix = NULL;
-	}
+	Implementation = NEW_OBJECT(projective_space_implementation);
 
 
-
-
-	if (N_lines < MAX_NUMBER_OF_LINES_FOR_LINE_TABLE) {
-		if (f_v) {
-			cout << "projective_space::init_incidence_structure "
-					"allocating Lines" << endl;
-		}
-		Lines = NEW_int(N_lines * k);
-	}
-	else {
-		if (f_v) {
-			cout << "projective_space::init_incidence_structure: "
-				"N_lines too big, we do not initialize "
-				"the line table" << endl;
-		}
-		Lines = NULL;
-	}
-
-
-
-
-	if (N_points < MAX_NUMBER_OF_POINTS_FOR_POINT_TABLE &&
-			N_lines < MAX_NUMBER_OF_LINES_FOR_LINE_TABLE)  {
-		if (f_v) {
-			cout << "projective_space::init_incidence_structure "
-					"allocating Lines_on_point" << endl;
-			cout << "projective_space::init_incidence_structure "
-					"allocating N_points=" << N_points << endl;
-			cout << "projective_space::init_incidence_structure "
-					"allocating r=" << r << endl;
-		}
-		Lines_on_point = NEW_int(N_points * r);
-	}
-	else {
-		if (f_v) {
-			cout << "projective_space::init_incidence_structure: "
-				"N_points too big, we do not initialize the "
-				"Lines_on_point table" << endl;
-		}
-		Lines_on_point = NULL;
-	}
-
-
-
-
-	if ((long int) N_points < MAX_NB_POINTS_FOR_LINE_THROUGH_TWO_POINTS_TABLE) {
-
-		if (f_v) {
-			cout << "projective_space::init_incidence_structure "
-					"allocating Line_through_two_points" << endl;
-		}
-		Line_through_two_points = NEW_int((long int) N_points * (long int) N_points);
-	}
-	else {
-		if (f_v) {
-			cout << "projective_space::init_incidence_structure: "
-				"we do not initialize "
-				"Line_through_two_points" << endl;
-		}
-		Line_through_two_points = NULL;
-	}
-
-	if ((long int) N_lines < MAX_NB_POINTS_FOR_LINE_INTERSECTION_TABLE) {
-		if (f_v) {
-			cout << "projective_space::init_incidence_structure "
-					"allocating Line_intersection" << endl;
-		}
-		Line_intersection = NEW_int((long int) N_lines * (long int) N_lines);
-		Orbiter->Int_vec.zero(Line_through_two_points, (long int) N_points * (long int) N_points);
-		for (i = 0; i < (long int) N_lines * (long int) N_lines; i++) {
-			Line_intersection[i] = -1;
-		}
-	}
-	else {
-		if (f_v) {
-			cout << "projective_space::init_incidence_structure: "
-				"we do not initialize "
-				"Line_intersection" << endl;
-		}
-		Line_intersection = NULL;
-	}
-
-	
 	if (f_v) {
 		cout << "projective_space::init_incidence_structure "
-				"number of points = " << N_points << endl;
+				"before projective_space_implementation->init" << endl;
 	}
-	if (FALSE) {
-		for (i = 0; i < N_points; i++) {
-			F->PG_element_unrank_modified(v, 1, n + 1, i);
-			cout << "point " << i << " : ";
-			Orbiter->Int_vec.print(cout, v, n + 1);
-			cout << " = ";
-			F->int_vec_print_field_elements(cout, v, n + 1);
-
-			F->PG_element_normalize_from_front(v, 1, n + 1);
-			cout << " = ";
-			Orbiter->Int_vec.print(cout, v, n + 1);
-
-		
-			cout << " = ";
-			F->int_vec_print_field_elements(cout, v, n + 1);
-
-			
-			cout << endl;
-		}
-	}
+	Implementation->init(this, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "projective_space::init_incidence_structure "
-				"number of lines = " << N_lines << endl;
+				"after projective_space_implementation->init" << endl;
 	}
 
-
-
-	if (Lines || Bitmatrix || Lines_on_point) {
-
-
-		if (f_v) {
-			cout << "projective_space::init_incidence_structure "
-					"computing lines..." << endl;
-			if (Lines) {
-				cout << "Lines is allocated" << endl;
-			}
-			if (Bitmatrix) {
-				cout << "Bitmatrix is allocated" << endl;
-			}
-			if (Lines_on_point) {
-				cout << "Lines_on_point is allocated" << endl;
-			}
-		}
-
-
-
-		int *R;
-
-		R = NEW_int(N_points);
-		Orbiter->Int_vec.zero(R, N_points);
-	
-		for (i = 0; i < N_lines; i++) {
-#if 0
-			if ((i % 1000000) == 0) {
-				cout << "projective_space::init_incidence_structure "
-						"Line " << i << " / " << N_lines << ":" << endl;
-			}
-#endif
-			Grass_lines->unrank_lint(i, 0/*verbose_level - 4*/);
-			if (FALSE) {
-				Orbiter->Int_vec.print_integer_matrix_width(cout,
-						Grass_lines->M, 2, n + 1, n + 1,
-						F->log10_of_q + 1);
-			}
-
-
-#if 0
-			// testing of grassmann:
-			
-			j = Grass_lines->rank_int(0/*verbose_level - 4*/);
-			if (j != i) {
-				cout << "projective_space::init_incidence_structure "
-						"rank yields " << j << " != " << i << endl;
-				exit(1);
-			}
-#endif
-
-
-
-			for (a = 0; a < k; a++) {
-				F->PG_element_unrank_modified(v, 1, 2, a);
-				F->mult_matrix_matrix(v, Grass_lines->M, w, 1, 2, n + 1,
-						0 /* verbose_level */);
-				F->PG_element_rank_modified(w, 1, n + 1, b);
-				if (Bitmatrix) {
-					Bitmatrix->m_ij(b, i, 1);
-				}
-
-				if (Lines) {
-					Lines[i * k + a] = b;
-				}
-				if (Lines_on_point) {
-					Lines_on_point[b * r + R[b]] = i;
-				}
-				R[b]++;
-			}
-			if (f_vv) {
-				cout << "line " << i << ":" << endl;
-				Orbiter->Int_vec.print_integer_matrix_width(cout,
-					Grass_lines->M, 2, n + 1, n + 1, 
-					F->log10_of_q + 1);
-
-				if (Lines) {
-					cout << "points on line " << i << " : ";
-					Orbiter->Int_vec.print(cout, Lines + i * k, k);
-					cout << endl;
-				}
-			}
-		
-		}
-		for (i = 0; i < N_points; i++) {
-			if (R[i] != r) {
-				cout << "R[i] != r" << endl;
-				exit(1);
-			}
-		}
-
-		FREE_int(R);
-	}
-	else {
-		if (f_v) {
-			cout << "projective_space::init_incidence_structure "
-					"computing lines skipped" << endl;
-		}
-	}
 
 	if (n >= 2) {
 		if (f_v) {
-			cout << "projective_space::init_incidence_structure before init_polarity" << endl;
+			cout << "projective_space_implementation::init before init_polarity" << endl;
 		}
 
 		init_polarity(verbose_level);
 
 
 		if (f_v) {
-			cout << "projective_space::init_incidence_structure after init_polarity" << endl;
+			cout << "projective_space_implementation::init after init_polarity" << endl;
 		}
 	}
+
+
 	
-
-
-#if 0
-	if (f_v) {
-		cout << "computing Lines_on_point..." << endl;
-	}
-	for (i = 0; i < N_points; i++) {
-		if ((i % 1000) == 0) {
-			cout << "point " << i << " / " << N_points << ":" << endl;
-		}
-		a = 0;
-		for (j = 0; j < N_lines; j++) {	
-			if (is_incident(i, j)) {
-				Lines_on_point[i * r + a] = j;
-				a++;
-			}
-		}
-		if (FALSE /*f_vv */) {
-			cout << "lines on point " << i << " = ";
-			PG_element_unrank_modified(*F, w, 1, n + 1, i);
-			int_vec_print(cout, w, n + 1);
-			cout << " : ";
-			int_vec_print(cout, Lines_on_point + i * r, r);
-			cout << endl;
-		}
-	}
-	if (f_v) {
-		cout << "computing Lines_on_point done" << endl;
-	}
-#endif
-
-	if (FALSE) {
-		//cout << "incidence matrix:" << endl;
-		//print_integer_matrix_width(cout, Incidence, N_points, N_lines, N_lines, 1);
-		cout << "projective_space::init_incidence_structure Lines:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Lines, N_lines, k, k, 3);
-		cout << "projective_space::init_incidence_structure Lines_on_point:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Lines_on_point, N_points, r, r, 3);
-	}
-	
-
-	if (Line_through_two_points && Lines && Lines_on_point) {
-		if (f_v) {
-			cout << "projective_space::init_incidence_structure "
-					"computing Line_through_two_points..." << endl;
-		}
-		for (i1 = 0; i1 < N_points; i1++) {
-			for (a = 0; a < r; a++) {
-				j = Lines_on_point[i1 * r + a];
-				for (b = 0; b < k; b++) {
-					i2 = Lines[j * k + b];
-					if (i2 == i1) {
-						continue;
-					}
-					Line_through_two_points[i1 * N_points + i2] = j;
-					Line_through_two_points[i2 * N_points + i1] = j;
-				}
-			}
-		}
-		if (FALSE) {
-			cout << "line through points i,j is" << endl;
-			for (i = 0; i < N_points; i++) {
-				for (j = i + 1; j < N_points; j++) {
-					cout << i << " , " << j << " : "
-						<< Line_through_two_points[i * N_points + j] << endl;
-				}
-			}
-			//cout << "Line_through_two_points:" << endl;
-			//print_integer_matrix_width(cout,
-			//Line_through_two_points, N_points, N_points, N_points, 2);
-		}
-	}
-	else {
-		if (f_v) {
-			cout << "projective_space::init_incidence_structure "
-				"computing Line_through_two_points skipped" << endl;
-		}
-	}
-
-	if (Line_intersection && Lines && Lines_on_point) {
-		if (f_v) {
-			cout << "projective_space::init_incidence_structure "
-				"computing Line_intersection..." << endl;
-		}
-		for (j1 = 0; j1 < N_lines; j1++) {
-			for (a = 0; a < k; a++) {
-				i = Lines[j1 * k + a];
-				for (b = 0; b < r; b++) {
-					j2 = Lines_on_point[i * r + b];
-					if (j2 == j1) {
-						continue;
-					}
-					Line_intersection[j1 * N_lines + j2] = i;
-					Line_intersection[j2 * N_lines + j1] = i;
-				}
-			}
-		}
-		if (FALSE) {
-			cout << "projective_space::init_incidence_structure "
-					"point of intersection of lines i,j is" << endl;
-			for (i = 0; i < N_lines; i++) {
-				for (j = i + 1; j < N_lines; j++) {
-					cout << i << " , " << j << " : "
-						<< Line_intersection[i * N_lines + j] << endl;
-				}
-			}
-			//cout << "Line_intersection:" << endl;
-			//print_integer_matrix_width(cout,
-			// Line_intersection, N_lines, N_lines, N_lines, 2);
-		}
-	}
-	else {
-		if (f_v) {
-			cout << "projective_space::init_incidence_structure "
-				"computing Line_intersection skipped" << endl;
-		}
-	}
 	if (f_v) {
 		cout << "projective_space::init_incidence_structure done" << endl;
 	}
@@ -638,9 +279,6 @@ void projective_space::init_polarity(int verbose_level)
 // uses Grass_hyperplanes
 {
 	int f_v = (verbose_level >= 1);
-	//int i, j;
-	//int *A;
-	//int a;
 
 	if (f_v) {
 		cout << "projective_space::init_polarity" << endl;
@@ -684,7 +322,7 @@ void projective_space::intersect_with_line(long int *set, int set_sz,
 	if (f_v) {
 		cout << "projective_space::intersect_with_line" << endl;
 	}
-	L = Lines + line_rk * k;
+	L = Implementation->Lines + line_rk * k;
 	sz = 0;
 	for (i = 0; i < set_sz; i++) {
 		a = set[i];
@@ -883,7 +521,7 @@ void projective_space::make_incidence_matrix(
 	Orbiter->Int_vec.zero(Inc, m * n);
 	for (i = 0; i < N_points; i++) {
 		for (h = 0; h < r; h++) {
-			j = Lines_on_point[i * r + h];
+			j = Implementation->Lines_on_point[i * r + h];
 			Inc[i * n + j] = 1;
 		}
 	}
@@ -965,7 +603,7 @@ int projective_space::is_incident(int pt, int line)
 	else {
 		//a = (long int) pt * (long int) N_lines + (long int) line;
 		//return bitvector_s_i(incidence_bitvec, a);
-		return Bitmatrix->s_ij(pt, line);
+		return Implementation->Bitmatrix->s_ij(pt, line);
 	}
 }
 
@@ -973,7 +611,7 @@ void projective_space::incidence_m_ii(int pt, int line, int a)
 {
 	//long int b;
 
-	if (Bitmatrix == NULL) {
+	if (Implementation->Bitmatrix == NULL) {
 		cout << "projective_space::incidence_m_ii "
 				"Bitmatrix == NULL" << endl;
 		exit(1);
@@ -981,7 +619,7 @@ void projective_space::incidence_m_ii(int pt, int line, int a)
 	//b = (long int) pt * (long int) N_lines + (long int) line;
 	//bitvector_m_ii(incidence_bitvec, b, a);
 
-	Bitmatrix->m_ij(pt, N_lines, a);
+	Implementation->Bitmatrix->m_ij(pt, N_lines, a);
 }
 
 void projective_space::make_incidence_structure_and_partition(
@@ -1014,14 +652,14 @@ void projective_space::make_incidence_structure_and_partition(
 	}
 	Orbiter->Int_vec.zero(M, N_points * N_lines);
 
-	if (Lines_on_point == NULL) {
+	if (Implementation->Lines_on_point == NULL) {
 		cout << "projective_space::make_incidence_structure_and_partition "
 				"Lines_on_point == NULL" << endl;
 		exit(1);
 	}
 	for (i = 0; i < N_points; i++) {
 		for (h = 0; h < r; h++) {
-			j = Lines_on_point[i * r + h];
+			j = Implementation->Lines_on_point[i * r + h];
 			M[i * N_lines + j] = 1;
 		}
 	}
@@ -1184,7 +822,6 @@ void projective_space::incidence_and_stack_for_type_ij(
 
 long int projective_space::nb_rk_k_subspaces_as_lint(int k)
 {
-	//longinteger_domain D;
 	combinatorics_domain C;
 	longinteger_object aa;
 	long int N;
@@ -1335,9 +972,9 @@ int projective_space::test_if_lines_are_disjoint(
 {
 	sorting Sorting;
 
-	if (Lines) {
+	if (Implementation->Lines) {
 		return Sorting.test_if_sets_are_disjoint_assuming_sorted(
-				Lines + l1 * k, Lines + l2 * k, k, k);
+				Implementation->Lines + l1 * k, Implementation->Lines + l2 * k, k, k);
 	}
 	else {
 		return test_if_lines_are_disjoint_from_scratch(l1, l2);
@@ -1514,7 +1151,7 @@ int projective_space::determine_line_in_plane(
 	if (rk != 2) {
 		if (f_v) {
 			cout << "projective_space::determine_line_in_plane "
-					"system underdetermined" << endl;
+					"system undetermined" << endl;
 		}
 		return FALSE;
 	}
@@ -1732,7 +1369,7 @@ int projective_space::determine_conic_in_plane(
 	if (rk != 5) {
 		if (f_v) {
 			cout << "projective_space::determine_conic_in_plane "
-					"system underdetermined" << endl;
+					"system undetermined" << endl;
 		}
 		return FALSE;
 	}
@@ -2336,9 +1973,9 @@ void projective_space::PG_2_8_create_conic_plus_nucleus_arc_1(
 		cout << endl;
 	}
 	
-	L[0] = Line_through_two_points[frame[0] * N_points + frame[1]];
-	L[1] = Line_through_two_points[frame[1] * N_points + frame[2]];
-	L[2] = Line_through_two_points[frame[2] * N_points + frame[0]];
+	L[0] = Implementation->Line_through_two_points[frame[0] * N_points + frame[1]];
+	L[1] = Implementation->Line_through_two_points[frame[1] * N_points + frame[2]];
+	L[2] = Implementation->Line_through_two_points[frame[2] * N_points + frame[0]];
 	
 	if (f_v) {
 		cout << "l1=" << L[0] << " l2=" << L[1] << " l3=" << L[2] << endl;
@@ -2347,7 +1984,7 @@ void projective_space::PG_2_8_create_conic_plus_nucleus_arc_1(
 	size = 0;	
 	for (h = 0; h < 3; h++) {
 		for (i = 0; i < r; i++) {
-			b = Lines[L[h] * r + i];
+			b = Implementation->Lines[L[h] * r + i];
 			if (Sorting.lint_vec_search(the_arc, size, b, idx, 0)) {
 				continue;
 			}
@@ -2420,9 +2057,9 @@ void projective_space::PG_2_8_create_conic_plus_nucleus_arc_2(
 		cout << endl;
 	}
 	
-	L[0] = Line_through_two_points[frame[0] * N_points + frame[2]];
-	L[1] = Line_through_two_points[frame[2] * N_points + frame[3]];
-	L[2] = Line_through_two_points[frame[3] * N_points + frame[0]];
+	L[0] = Implementation->Line_through_two_points[frame[0] * N_points + frame[2]];
+	L[1] = Implementation->Line_through_two_points[frame[2] * N_points + frame[3]];
+	L[2] = Implementation->Line_through_two_points[frame[3] * N_points + frame[0]];
 	
 	if (f_v) {
 		cout << "l1=" << L[0] << " l2=" << L[1] << " l3=" << L[2] << endl;
@@ -2431,7 +2068,7 @@ void projective_space::PG_2_8_create_conic_plus_nucleus_arc_2(
 	size = 0;	
 	for (h = 0; h < 3; h++) {
 		for (i = 0; i < r; i++) {
-			b = Lines[L[h] * r + i];
+			b = Implementation->Lines[L[h] * r + i];
 			if (Sorting.lint_vec_search(the_arc, size, b, idx, 0)) {
 				continue;
 			}
@@ -2521,10 +2158,10 @@ void projective_space::create_Maruta_Hamada_arc(
 		cout << endl;
 	}
 	
-	L[0] = Line_through_two_points[1 * N_points + 2];
-	L[1] = Line_through_two_points[0 * N_points + 2];
-	L[2] = Line_through_two_points[0 * N_points + 1];
-	L[3] = Line_through_two_points[points[20] * N_points + points[21]];
+	L[0] = Implementation->Line_through_two_points[1 * N_points + 2];
+	L[1] = Implementation->Line_through_two_points[0 * N_points + 2];
+	L[2] = Implementation->Line_through_two_points[0 * N_points + 1];
+	L[3] = Implementation->Line_through_two_points[points[20] * N_points + points[21]];
 	
 	if (f_v) {
 		cout << "L:";
@@ -2536,7 +2173,7 @@ void projective_space::create_Maruta_Hamada_arc(
 		for (h = 0; h < 4; h++) {
 			cout << "h=" << h << " : L[h]=" << L[h] << " : " << endl;
 			for (i = 0; i < r; i++) {
-				b = Lines[L[h] * r + i];
+				b = Implementation->Lines[L[h] * r + i];
 					cout << "point " << b << " = ";
 				unrank_point(v, b);
 				F->PG_element_normalize_from_front(v, 1, 3);
@@ -2549,7 +2186,7 @@ void projective_space::create_Maruta_Hamada_arc(
 	size = 0;	
 	for (h = 0; h < 4; h++) {
 		for (i = 0; i < r; i++) {
-			b = Lines[L[h] * r + i];
+			b = Implementation->Lines[L[h] * r + i];
 			if (Sorting.lint_vec_search(the_arc, size, b, idx, 0)) {
 				continue;
 			}
@@ -2695,10 +2332,10 @@ void projective_space::create_pasch_arc(
 		cout << endl;
 	}
 	
-	L[0] = Line_through_two_points[points[0] * N_points + points[1]];
-	L[1] = Line_through_two_points[points[0] * N_points + points[3]];
-	L[2] = Line_through_two_points[points[2] * N_points + points[3]];
-	L[3] = Line_through_two_points[points[1] * N_points + points[4]];
+	L[0] = Implementation->Line_through_two_points[points[0] * N_points + points[1]];
+	L[1] = Implementation->Line_through_two_points[points[0] * N_points + points[3]];
+	L[2] = Implementation->Line_through_two_points[points[2] * N_points + points[3]];
+	L[3] = Implementation->Line_through_two_points[points[1] * N_points + points[4]];
 	
 	if (f_v) {
 		cout << "L:";
@@ -2709,7 +2346,7 @@ void projective_space::create_pasch_arc(
 	size = 0;	
 	for (h = 0; h < 4; h++) {
 		for (i = 0; i < r; i++) {
-			b = Lines[L[h] * r + i];
+			b = Implementation->Lines[L[h] * r + i];
 			if (Sorting.lint_vec_search(the_arc, size, b, idx, 0)) {
 				continue;
 			}
@@ -2788,9 +2425,9 @@ void projective_space::create_Cheon_arc(
 		cout << endl;
 	}
 	
-	L[0] = Line_through_two_points[points[0] * N_points + points[1]];
-	L[1] = Line_through_two_points[points[1] * N_points + points[2]];
-	L[2] = Line_through_two_points[points[2] * N_points + points[0]];
+	L[0] = Implementation->Line_through_two_points[points[0] * N_points + points[1]];
+	L[1] = Implementation->Line_through_two_points[points[1] * N_points + points[2]];
+	L[2] = Implementation->Line_through_two_points[points[2] * N_points + points[0]];
 	
 	if (f_v) {
 		cout << "L:";
@@ -2801,7 +2438,7 @@ void projective_space::create_Cheon_arc(
 	size = 0;	
 	for (h = 0; h < 3; h++) {
 		for (i = 0; i < r; i++) {
-			b = Lines[L[h] * r + i];
+			b = Implementation->Lines[L[h] * r + i];
 			if (Sorting.lint_vec_search(the_arc, size, b, idx, 0)) {
 				continue;
 			}
@@ -2830,7 +2467,7 @@ void projective_space::create_Cheon_arc(
 		}
 
 		for (i = 0; i < r; i++) {
-			pencil[i] = Lines_on_point[points[h] * r + i];
+			pencil[i] = Implementation->Lines_on_point[points[h] * r + i];
 		}
 
 
@@ -2860,7 +2497,7 @@ void projective_space::create_Cheon_arc(
 				cout << "i=" << i << " a=" << a << " j="
 						<< j << " b=" << b << endl;
 			}
-			c = Line_intersection[a * N_lines + b];
+			c = Implementation->Line_intersection[a * N_lines + b];
 			if (f_v) {
 				cout << "c=" << c << endl;
 			}
@@ -3217,7 +2854,7 @@ void projective_space::line_intersection_type(
 	if (f_v) {
 		cout << "projective_space::line_intersection_type" << endl;
 	}
-	if (Lines_on_point == NULL) {
+	if (Implementation->Lines_on_point == NULL) {
 		line_intersection_type_basic(set, set_size, type, verbose_level);
 	}
 	else {
@@ -3227,7 +2864,7 @@ void projective_space::line_intersection_type(
 		for (i = 0; i < set_size; i++) {
 			a = set[i];
 			for (j = 0; j < r; j++) {
-				b = Lines_on_point[a * r + j];
+				b = Implementation->Lines_on_point[a * r + j];
 				type[b]++;
 			}
 		}
@@ -3456,9 +3093,7 @@ void projective_space::find_secant_lines(
 void projective_space::find_lines_which_are_contained(
 		std::vector<long int> &Points,
 		std::vector<long int> &Lines,
-	//long int *set, int set_size,
-	//long int *lines, int &nb_lines, int max_lines,
-	int verbose_level)
+		int verbose_level)
 // finds all lines which are completely contained in the set of points
 // First, finds all lines in the set which lie
 // in the hyperplane x_d = 0.
@@ -3597,7 +3232,8 @@ void projective_space::find_lines_which_are_contained(
 			// found a line on the surface in the hyperplane.
 			//lines[nb_lines++] = rk;
 			if (f_vv) {
-				cout << "secant " << i << " / " << nb_secants << " of rank " << rk << " is contained, adding" << endl;
+				cout << "secant " << i << " / " << nb_secants
+						<< " of rank " << rk << " is contained, adding" << endl;
 			}
 			Lines.push_back(rk);
 		}
@@ -3994,7 +3630,7 @@ void projective_space::point_types_of_line_set(
 	for (i = 0; i < set_size; i++) {
 		a = set_of_lines[i];
 		for (j = 0; j < k; j++) {
-			b = Lines[a * k + j];
+			b = Implementation->Lines[a * k + j];
 			type[b]++;
 		}
 	}
@@ -4012,7 +3648,7 @@ void projective_space::point_types_of_line_set_int(
 	for (i = 0; i < set_size; i++) {
 		a = set_of_lines[i];
 		for (j = 0; j < k; j++) {
-			b = Lines[a * k + j];
+			b = Implementation->Lines[a * k + j];
 			type[b]++;
 		}
 	}
@@ -4512,7 +4148,8 @@ void projective_space::report(ostream &ost,
 	Poly3 = NEW_OBJECT(homogeneous_polynomial_domain);
 	Poly4 = NEW_OBJECT(homogeneous_polynomial_domain);
 
-	ost << "\\subsection*{The polynomial rings associated with ${\\rm \\PG}(" << n << "," << F->q << ")$}" << endl;
+	ost << "\\subsection*{The polynomial rings associated "
+			"with ${\\rm \\PG}(" << n << "," << F->q << ")$}" << endl;
 	Poly1->init(F,
 			n + 1 /* nb_vars */, 1 /* degree */,
 			FALSE /* f_init_incidence_structure */,
@@ -4688,11 +4325,13 @@ void projective_space::create_latex_report_for_Grassmannian(int k, int verbose_l
 
 
 			if (f_v) {
-				cout << "projective_space::create_latex_report_for_Grassmannian before cheat_sheet_subspaces, k=" << k << endl;
+				cout << "projective_space::create_latex_report_for_Grassmannian "
+						"before cheat_sheet_subspaces, k=" << k << endl;
 			}
 			cheat_sheet_subspaces(ost, k - 1, verbose_level);
 			if (f_v) {
-				cout << "projective_space::create_latex_report_for_Grassmannian after cheat_sheet_subspaces, k=" << k << endl;
+				cout << "projective_space::create_latex_report_for_Grassmannian "
+						"after cheat_sheet_subspaces, k=" << k << endl;
 			}
 
 
@@ -4811,9 +4450,6 @@ void projective_space::compute_decomposition_based_on_tally(tally *T1, tally *T2
 		}
 		Stack->split_cell(set, sz, 0 /*verbose_level*/);
 	}
-
-
-
 	FREE_int(set);
 	if (f_v) {
 		cout << "projective_space::compute_decomposition_based_on_tally done" << endl;

@@ -5,20 +5,17 @@ LFLAGS = -lm
 
 
 MODULES= \
-		foundations/algebra_and_number_theory/a_domain.o \
-		foundations/algebra_and_number_theory/algebra_global.o \
-		foundations/algebra_and_number_theory/cyclotomic_sets.o \
-		foundations/algebra_and_number_theory/generators_symplectic_group.o \
-		foundations/algebra_and_number_theory/gl_class_rep.o \
-		foundations/algebra_and_number_theory/gl_classes.o \
-		foundations/algebra_and_number_theory/group_generators_domain.o \
-		foundations/algebra_and_number_theory/heisenberg.o \
-		foundations/algebra_and_number_theory/matrix_block_data.o \
-		foundations/algebra_and_number_theory/null_polarity_generator.o \
-		foundations/algebra_and_number_theory/number_theoretic_transform.o \
-		foundations/algebra_and_number_theory/number_theory_domain.o \
-		foundations/algebra_and_number_theory/rank_checker.o \
-		foundations/algebra_and_number_theory/vector_space.o \
+		foundations/algebra/a_domain.o \
+		foundations/algebra/algebra_global.o \
+		foundations/algebra/generators_symplectic_group.o \
+		foundations/algebra/gl_class_rep.o \
+		foundations/algebra/gl_classes.o \
+		foundations/algebra/group_generators_domain.o \
+		foundations/algebra/heisenberg.o \
+		foundations/algebra/matrix_block_data.o \
+		foundations/algebra/null_polarity_generator.o \
+		foundations/algebra/rank_checker.o \
+		foundations/algebra/vector_space.o \
 		foundations/coding_theory/coding_theory_domain.o \
 		foundations/coding_theory/cyclic_codes.o \
 		foundations/coding_theory/tensor_codes.o \
@@ -61,6 +58,8 @@ MODULES= \
 		foundations/data_structures/spreadsheet.o \
 		foundations/data_structures/string_tools.o \
 		foundations/data_structures/super_fast_hash.o \
+		foundations/data_structures/vector_builder_description.o \
+		foundations/data_structures/vector_builder.o \
 		foundations/data_structures/vector_hashing.o \
 		foundations/expression_parser/expression_parser_domain.o \
 		foundations/expression_parser/expression_parser.o \
@@ -108,6 +107,7 @@ MODULES= \
 		foundations/geometry/point_line.o \
 		foundations/geometry/points_and_lines.o \
 		foundations/geometry/polarity.o \
+		foundations/geometry/projective_space_implementation.o \
 		foundations/geometry/projective_space.o \
 		foundations/geometry/projective_space2.o \
 		foundations/geometry/quartic_curve_domain.o \
@@ -189,6 +189,9 @@ MODULES= \
 		foundations/io_and_os/prepare_frames.o \
 		foundations/io_and_os/util.o \
 		foundations/knowledge_base/knowledge_base.o \
+		foundations/number_theory/cyclotomic_sets.o \
+		foundations/number_theory/number_theoretic_transform.o \
+		foundations/number_theory/number_theory_domain.o \
 		foundations/orthogonal/blt_set_domain.o \
 		foundations/orthogonal/blt_set_invariants.o \
 		foundations/orthogonal/orthogonal_blt.o \
