@@ -452,6 +452,23 @@ void orbiter_symbol_table_entry::init_set(std::string &label,
 	}
 }
 
+void orbiter_symbol_table_entry::init_vector(std::string &label,
+		void *VB, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_set" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_vector;
+	ptr = VB;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_set done" << endl;
+	}
+}
+
 
 void orbiter_symbol_table_entry::print()
 {
@@ -539,6 +556,9 @@ void orbiter_symbol_table_entry::print()
 		}
 		else if (object_type == t_set) {
 			cout << "set" << endl;
+		}
+		else if (object_type == t_vector) {
+			cout << "vector" << endl;
 		}
 
 

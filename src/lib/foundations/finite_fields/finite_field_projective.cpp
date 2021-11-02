@@ -3130,7 +3130,7 @@ void finite_field::do_blocking_set_family_3(int n,
 	for (i = 4; i < set_size; i++) {
 		pt = set_in[idx[i]];
 		for (j = 0; j < P->r; j++) {
-			h = P->Lines_on_point[pt * P->r + j];
+			h = P->Implementation->Lines_on_point[pt * P->r + j];
 			if (!S->is_contained(h)) {
 				S->add_element(h);
 			}

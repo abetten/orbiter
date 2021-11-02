@@ -252,10 +252,9 @@ namespace foundations {
 
 
 
-// algebra_and_number_theory
+// algebra:
 class a_domain;
 class algebra_global;
-class cyclotomic_sets;
 class generators_symplectic_group;
 class gl_class_rep;
 class gl_classes;
@@ -264,8 +263,6 @@ class heisenberg;
 class matrix_block_data;
 class norm_tables;
 class null_polarity_generator;
-class number_theoretic_transform;
-class number_theory_domain;
 class rank_checker;
 class vector_space;
 
@@ -367,6 +364,7 @@ class object_in_projective_space;
 class point_line;
 class points_and_lines;
 class polarity;
+class projective_space_implementation;
 class projective_space;
 class quartic_curve_domain;
 class quartic_curve_object_properties;
@@ -380,21 +378,19 @@ class cperm;
 class gen_geo_conf;
 class gen_geo;
 class geo_frame;
+class geometry_builder_description;
 class geometry_builder;
 class grid;
 class inc_encoding;
 class incidence;
-class tactical_decomposition;
 class iso_grid;
 class iso_info;
 class iso_type;
+class tactical_decomposition;
 class tdo_gradient;
 class tdo_scheme;
 typedef tdo_scheme *ptdo_scheme;
 
-
-// geometry_builder:
-class geometry_builder_description;
 
 
 // globals:
@@ -458,6 +454,12 @@ class prepare_frames;
 
 // knowledge_base:
 class knowledge_base;
+
+
+// number_theory:
+class cyclotomic_sets;
+class number_theoretic_transform;
+class number_theory_domain;
 
 
 // orthogonal:
@@ -616,6 +618,7 @@ enum symbol_table_object_type {
 	t_design_table,
 	t_large_set_was,
 	t_set,
+	t_vector,
 	t_action,
 	t_poset,
 	t_poset_classification,
@@ -774,7 +777,7 @@ std::ostream& operator<<(std::ostream& ost, longinteger_object& p);
 }}
 
 
-#include "./algebra_and_number_theory/algebra_and_number_theory.h"
+#include "./algebra/algebra.h"
 #include "./coding_theory/coding_theory.h"
 #include "./combinatorics/combinatorics.h"
 #include "./cryptography/cryptography.h"
@@ -789,6 +792,7 @@ std::ostream& operator<<(std::ostream& ost, longinteger_object& p);
 #include "./graphics/graphics.h"
 #include "./io_and_os/io_and_os.h"
 #include "./knowledge_base/knowledge_base.h"
+#include "./number_theory/number_theory.h"
 #include "./orthogonal/orthogonal.h"
 #include "./ring_theory/ring_theory.h"
 #include "./solvers/solvers.h"

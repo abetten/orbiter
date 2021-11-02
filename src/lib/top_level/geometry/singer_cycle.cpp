@@ -256,13 +256,13 @@ void singer_cycle::init_lines(int verbose_level)
 	if (f_v) {
 		cout << "Lines on point P_0:" << endl;
 		for (i = 0; i < P->r; i++) {
-			a = P->Lines_on_point[0 * P->r + i];
+			a = P->Implementation->Lines_on_point[0 * P->r + i];
 			cout << "Line " <<  i << " has rank " << a << ":" << endl;
 			P->Grass_lines->unrank_lint(a, 0);
 			Orbiter->Int_vec.matrix_print(P->Grass_lines->M, 2, n);
 			h = 0;
 			for (j = 0; j < P->k; j++) {
-				b = P->Lines[a * P->k + j];
+				b = P->Implementation->Lines[a * P->k + j];
 				c = singer_point_list_inv[b];
 				if (c != 0) {
 					line[h++] = c;
@@ -354,7 +354,7 @@ void singer_cycle::init_lines(int verbose_level)
 
 	Inc = NEW_OBJECT(incidence_structure);
 
-	Inc->init_by_matrix_as_bitmatrix(P->N_points, P->N_lines, P->Bitmatrix, 0);
+	Inc->init_by_matrix_as_bitmatrix(P->N_points, P->N_lines, P->Implementation->Bitmatrix, 0);
 
 	T = NEW_OBJECT(tactical_decomposition);
 	T->init(P->N_points, P->N_lines,

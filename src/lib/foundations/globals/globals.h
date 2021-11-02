@@ -477,6 +477,8 @@ public:
 			void *LSW, int verbose_level);
 	void init_set(std::string &label,
 			void *SB, int verbose_level);
+	void init_vector(std::string &label,
+			void *VB, int verbose_level);
 	void print();
 };
 

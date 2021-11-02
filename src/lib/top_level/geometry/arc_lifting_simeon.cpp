@@ -337,7 +337,7 @@ void arc_lifting_simeon::do_covering_problem(set_and_stabilizer *SaS)
 		a = external_lines[i];
 		cnt = 0;
 		for (j = 0; j < q + 1; j++) {
-			pt = P->Lines[a * (q + 1) + j];
+			pt = P->Implementation->Lines[a * (q + 1) + j];
 			if (Sorting.int_vec_search(c2_points, h, pt, idx)) {
 				cnt++;
 				}

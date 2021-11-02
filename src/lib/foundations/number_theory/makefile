@@ -6,20 +6,9 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-	a_domain.o \
-	algebra_global.o \
 	cyclotomic_sets.o \
-	generators_symplectic_group.o \
-	gl_class_rep.o \
-	gl_classes.o \
-	group_generators_domain.o \
-	heisenberg.o \
-	matrix_block_data.o \
-	null_polarity_generator.o \
 	number_theoretic_transform.o \
-	number_theory_domain.o \
-	rank_checker.o \
-	vector_space.o
+	number_theory_domain.o 
 
 
 all : $(MODULES)

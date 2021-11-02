@@ -284,7 +284,7 @@ void design_create::create_design_PG_2_q(finite_field *F,
 	sz = P->N_lines;
 	set = NEW_lint(sz);
 	for (j = 0; j < sz; j++) {
-		Orbiter->Int_vec.copy(P->Lines + j * k, block, k);
+		Orbiter->Int_vec.copy(P->Implementation->Lines + j * k, block, k);
 		Sorting.int_vec_heapsort(block, k);
 		set[j] = Combi.rank_k_subset(block, P->N_points, k);
 		if (f_v) {

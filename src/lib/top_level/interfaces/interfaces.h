@@ -951,6 +951,9 @@ public:
 	int f_set;
 	set_builder_description *Set_builder_description;
 
+	int f_vector;
+	vector_builder_description *Vector_builder_description;
+
 	symbol_definition();
 	~symbol_definition();
 	void read_definition(
@@ -980,6 +983,7 @@ public:
 	void definition_of_design_table(int verbose_level);
 	void definition_of_large_set_was(int verbose_level);
 	void definition_of_set(int verbose_level);
+	void definition_of_vector(int verbose_level);
 
 };
 

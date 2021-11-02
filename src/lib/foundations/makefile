@@ -6,7 +6,7 @@ LIB =
 LFLAGS = -lm
 
 
-all: algebra_and_number_theory \
+all: algebra \
 	coding_theory \
 	combinatorics \
 	cryptography \
@@ -21,6 +21,7 @@ all: algebra_and_number_theory \
 	graphics \
 	io_and_os \
 	knowledge_base \
+	number_theory \
 	orthogonal \
 	ring_theory \
 	solvers \
@@ -31,7 +32,7 @@ all: algebra_and_number_theory \
 
 
 
-algebra_and_number_theory : algebra_and_number_theory2 
+algebra : algebra2 
 coding_theory : coding_theory2 
 combinatorics : combinatorics2  
 cryptography : cryptography2
@@ -46,6 +47,7 @@ graph_theory_nauty : graph_theory_nauty2
 graphics : graphics2 
 io_and_os : io_and_os2  
 knowledge_base : knowledge_base2  
+number_theory : number_theory2  
 orthogonal : orthogonal2  
 ring_theory : ring_theory2  
 solvers : solvers2 
@@ -53,7 +55,7 @@ statistics : statistics2
 surfaces : surfaces2
 BitSet	:	BitSet2
 
-algebra_and_number_theory2 : ; cd algebra_and_number_theory; $(MAKE)
+algebra2 : ; cd algebra; $(MAKE)
 coding_theory2 : ; cd coding_theory; $(MAKE)
 combinatorics2 : ; cd combinatorics; $(MAKE)
 cryptography2 : ; cd cryptography; $(MAKE)
@@ -68,6 +70,7 @@ graph_theory_nauty2 : ; cd graph_theory_nauty; $(MAKE)
 graphics2 : ; cd graphics; $(MAKE)
 io_and_os2 : ; cd io_and_os; $(MAKE)
 knowledge_base2 : ; cd knowledge_base; $(MAKE)
+number_theory2 : ; cd number_theory; $(MAKE)
 orthogonal2 : ; cd orthogonal; $(MAKE)
 ring_theory2 : ; cd ring_theory; $(MAKE)
 solvers2 : ; cd solvers; $(MAKE)
@@ -76,7 +79,7 @@ surfaces2 : ; cd surfaces; $(MAKE)
 BitSet2: ; cd BitSet; $(MAKE)
 
 clean:
-	cd algebra_and_number_theory; $(MAKE) clean
+	cd algebra; $(MAKE) clean
 	cd coding_theory; $(MAKE) clean
 	cd combinatorics; $(MAKE) clean
 	cd cryptography; $(MAKE) clean
@@ -91,6 +94,7 @@ clean:
 	cd graphics; $(MAKE) clean
 	cd io_and_os; $(MAKE) clean
 	cd knowledge_base; $(MAKE) clean
+	cd number_theory; $(MAKE) clean
 	cd orthogonal; $(MAKE) clean
 	cd ring_theory; $(MAKE) clean
 	cd solvers; $(MAKE) clean

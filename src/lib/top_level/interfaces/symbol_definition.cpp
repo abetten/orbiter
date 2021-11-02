@@ -99,6 +99,9 @@ symbol_definition::symbol_definition()
 	f_set = FALSE;
 	Set_builder_description = FALSE;
 
+	f_vector = FALSE;
+	Vector_builder_description = FALSE;
+
 }
 
 
@@ -552,6 +555,30 @@ void symbol_definition::read_definition(
 			Set_builder_description->print();
 		}
 	}
+	else if (stringcmp(argv[i], "-vector") == 0) {
+		f_vector = TRUE;
+
+
+		Vector_builder_description = NEW_OBJECT(vector_builder_description);
+		if (f_v) {
+			cout << "reading -vector" << endl;
+		}
+		i += Vector_builder_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-vector" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-vector ";
+			Vector_builder_description->print();
+		}
+	}
 
 	else {
 		cout << "unrecognized command after -define" << endl;
@@ -744,6 +771,15 @@ void symbol_definition::perform_definition(int verbose_level)
 			cout << "symbol_definition::perform_definition after definition_of_set" << endl;
 		}
 	}
+	else if (f_vector) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition before definition_of_vector" << endl;
+		}
+		definition_of_vector(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition after definition_of_vector" << endl;
+		}
+	}
 	else {
 		if (f_v) {
 			cout << "symbol_definition::perform_definition no definition" << endl;
@@ -841,6 +877,10 @@ void symbol_definition::print()
 	else if (f_set) {
 		cout << "-set ";
 		Set_builder_description->print();
+	}
+	else if (f_vector) {
+		cout << "-vector ";
+		Vector_builder_description->print();
 	}
 }
 
@@ -1856,6 +1896,59 @@ void symbol_definition::definition_of_set(int verbose_level)
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_set done" << endl;
+	}
+}
+
+void symbol_definition::definition_of_vector(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_vector" << endl;
+	}
+
+
+	int idx;
+	finite_field *F;
+
+	if (!Vector_builder_description->f_field) {
+		cout << "please specify the field using -field <label_of_field>" << endl;
+		exit(1);
+	}
+	idx = Sym->Orbiter_top_level_session->find_symbol(Vector_builder_description->field_label);
+	F = (finite_field *) Sym->Orbiter_top_level_session->get_object(idx);
+
+
+
+
+	vector_builder *VB;
+
+	VB = NEW_OBJECT(vector_builder);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_vector before VB->init" << endl;
+	}
+
+	VB->init(Vector_builder_description, F, verbose_level);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_vector after VB->init" << endl;
+	}
+
+
+	orbiter_symbol_table_entry Symb;
+
+	Symb.init_vector(define_label, VB, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_vector before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, &Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_vector done" << endl;
 	}
 }
 
