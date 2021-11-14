@@ -48,7 +48,6 @@ Sept 26, 2021
 
 Tree structure:
 ===============
-
 .
 ├── build_number
 ├── count.sh
