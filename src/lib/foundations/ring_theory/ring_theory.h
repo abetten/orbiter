@@ -361,6 +361,77 @@ public:
 
 void longinteger_print_digits(char *rep, int len);
 
+
+
+
+// #############################################################################
+// longinteger_object.cpp:
+// #############################################################################
+
+extern int longinteger_f_print_scientific;
+
+//! a class to represent arbitrary precision integers
+
+
+class longinteger_object {
+
+private:
+	char sgn; // TRUE if negative
+	int l;
+	char *r;
+
+public:
+	longinteger_object();
+	~longinteger_object();
+	void freeself();
+
+	char &ith(int i) { return r[i]; };
+	char &sign() { return sgn; };
+	int &len() { return l; };
+	char *&rep() { return r; };
+	void create(long int i, const char *file, int line);
+	void create_product(int nb_factors, int *factors);
+	void create_power(int a, int e);
+		// creates a^e
+	void create_power_minus_one(int a, int e);
+		// creates a^e  - 1
+	void create_from_base_b_representation(int b, int *rep, int len);
+	void create_from_base_10_string(const char *str, int verbose_level);
+	void create_from_base_10_string(const char *str);
+	void create_from_base_10_string(std::string &str);
+	int as_int();
+	long int as_lint();
+	void as_longinteger(longinteger_object &a);
+	void assign_to(longinteger_object &b);
+	void swap_with(longinteger_object &b);
+	std::ostream& print(std::ostream& ost);
+	std::ostream& print_not_scientific(std::ostream& ost);
+	int log10();
+	int output_width();
+	void print_width(std::ostream& ost, int width);
+	void print_to_string(char *str);
+	void normalize();
+	void negate();
+	int is_zero();
+	void zero();
+	int is_one();
+	int is_mone();
+	int is_one_or_minus_one();
+	void one();
+	void increment();
+	void decrement();
+	void add_int(int a);
+	void create_i_power_j(int i, int j);
+	int compare_with_int(int a);
+};
+
+std::ostream& operator<<(std::ostream& ost, longinteger_object& p);
+
+
+
+
+
+
 // #############################################################################
 // partial_derivative.cpp
 // #############################################################################
@@ -481,6 +552,8 @@ public:
 	int degree(unipoly_object p);
 	void print_object(unipoly_object p, std::ostream &ost);
 	void print_object_tight(unipoly_object p, std::ostream &ost);
+	void print_object_sparse(unipoly_object p, std::ostream &ost);
+	void print_object_dense(unipoly_object p, std::ostream &ost);
 	void assign(unipoly_object a, unipoly_object &b, int verbose_level);
 	void one(unipoly_object p);
 	void m_one(unipoly_object p);

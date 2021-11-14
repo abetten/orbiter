@@ -56,9 +56,12 @@ int main(int argc, const char **argv)
 	std::string *Argv;
 	string_tools ST;
 
+	cout << "argc=" << argc << endl;
+
 	ST.convert_arguments(argc, argv, Argv);
 		// argc has changed!
 
+	cout << "argc=" << argc << endl;
 
 	i = Top_level_session.startup_and_read_arguments(argc, Argv, 1);
 
@@ -68,11 +71,13 @@ int main(int argc, const char **argv)
 
 	verbose_level = Top_level_session.Orbiter_session->verbose_level;
 
-	//int f_v = (verbose_level > 1);
+	int f_v = (verbose_level > 1);
 
-	if (FALSE) {
+	if (f_v) {
 		cout << "main, before Top_level_session.handle_everything" << endl;
+		cout << "argc=" << argc << endl;
 	}
+
 
 	Top_level_session.handle_everything(argc, Argv, i, verbose_level);
 

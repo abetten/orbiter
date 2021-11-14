@@ -109,7 +109,7 @@ void spread_tables::init(projective_space *P,
 	q = F->q;
 	d = 4;
 
-	nb_lines = Gr->nCkq.as_int();
+	nb_lines = Gr->nCkq->as_int();
 	spread_size = q * q + 1;
 	spread_tables::nb_iso_types_of_spreads = nb_iso_types_of_spreads;
 
@@ -269,7 +269,7 @@ void spread_tables::init_reduced(
 	create_file_names(verbose_level);
 
 
-	nb_lines = Gr->nCkq.as_int();
+	nb_lines = Gr->nCkq->as_int();
 	spread_size = old_spread_table->spread_size;
 	nb_iso_types_of_spreads = old_spread_table->nb_iso_types_of_spreads;
 

@@ -95,7 +95,7 @@ void classify_using_canonical_forms::add_object(object_in_projective_space *OiP,
 		idx = B.size();
 		B.push_back(Canonical_form);
 		Objects.push_back(OiP);
-		Ago.push_back(NO->Ago.as_lint());
+		Ago.push_back(NO->Ago->as_lint());
 		Hashing.insert(pair<uint32_t, int>(h, idx));
 		input_index.push_back(nb_input_objects);
 	}

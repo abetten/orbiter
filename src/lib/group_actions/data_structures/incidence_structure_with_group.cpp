@@ -236,7 +236,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 	}
 
 	A_perm->init_permutation_group_from_generators(N,
-		TRUE, NO->Ago,
+		TRUE, *NO->Ago,
 		NO->Aut_counter, NO->Aut,
 		NO->Base_length, NO->Base_lint,
 		verbose_level);

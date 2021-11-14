@@ -379,14 +379,14 @@ void finite_field::polynomial_division(
 		cout << "finite_field::polynomial_division" << endl;
 	}
 
-	//int q = F->q;
-
 	int *data_A;
 	int *data_B;
 	int sz_A, sz_B;
 
-	Orbiter->Int_vec.scan(A_coeffs, data_A, sz_A);
-	Orbiter->Int_vec.scan(B_coeffs, data_B, sz_B);
+
+	Orbiter->get_vector_from_label(A_coeffs, data_A, sz_A, verbose_level);
+	Orbiter->get_vector_from_label(B_coeffs, data_B, sz_B, verbose_level);
+
 
 
 
@@ -457,6 +457,9 @@ void finite_field::polynomial_division(
 		cout << endl;
 	}
 
+	FREE_int(data_A);
+	FREE_int(data_B);
+
 	if (f_v) {
 		cout << "finite_field::polynomial_division done" << endl;
 	}
@@ -477,8 +480,10 @@ void finite_field::extended_gcd_for_polynomials(
 	int *data_B;
 	int sz_A, sz_B;
 
-	Orbiter->Int_vec.scan(A_coeffs, data_A, sz_A);
-	Orbiter->Int_vec.scan(B_coeffs, data_B, sz_B);
+
+	Orbiter->get_vector_from_label(A_coeffs, data_A, sz_A, verbose_level);
+	Orbiter->get_vector_from_label(B_coeffs, data_B, sz_B, verbose_level);
+
 
 	number_theory_domain NT;
 
@@ -629,9 +634,10 @@ void finite_field::polynomial_mult_mod(
 	int *data_M;
 	int sz_A, sz_B, sz_M;
 
-	Orbiter->Int_vec.scan(A_coeffs, data_A, sz_A);
-	Orbiter->Int_vec.scan(B_coeffs, data_B, sz_B);
-	Orbiter->Int_vec.scan(M_coeffs, data_M, sz_M);
+
+	Orbiter->get_vector_from_label(A_coeffs, data_A, sz_A, verbose_level);
+	Orbiter->get_vector_from_label(B_coeffs, data_B, sz_B, verbose_level);
+	Orbiter->get_vector_from_label(M_coeffs, data_M, sz_M, verbose_level);
 
 	number_theory_domain NT;
 
@@ -731,7 +737,9 @@ void finite_field::Berlekamp_matrix(
 	int *data_A;
 	int sz_A;
 
-	Orbiter->Int_vec.scan(Berlekamp_matrix_coeffs, data_A, sz_A);
+
+	Orbiter->get_vector_from_label(Berlekamp_matrix_coeffs, data_A, sz_A, verbose_level);
+
 
 	number_theory_domain NT;
 

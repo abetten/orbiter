@@ -149,7 +149,7 @@ void activity_description::read_arguments(
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-group_theoretic_activities") == 0) {
+	else if (stringcmp(argv[i], "-group_theoretic_activity") == 0) {
 		f_group_theoretic_activity = TRUE;
 		Group_theoretic_activity_description =
 				NEW_OBJECT(group_theoretic_activity_description);
@@ -421,6 +421,11 @@ void activity_description::read_arguments(
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
+	}
+	else if (stringcmp(argv[i], "-group_theoretic_activities") == 0) {
+		cout << "-group_theoretic_activities is outdated." << endl;
+		cout << "please use -group_theoretic_activity instead." << endl;
+		exit(1);
 	}
 
 	else {

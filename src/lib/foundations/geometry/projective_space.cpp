@@ -344,6 +344,11 @@ void projective_space::create_points_on_line(
 	long int line_rk, long int *line, int verbose_level)
 // needs line[k]
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space::create_points_on_line" << endl;
+	}
 	int a, b;
 	
 	Grass_lines->unrank_lint(line_rk, 0/*verbose_level - 4*/);
@@ -354,16 +359,23 @@ void projective_space::create_points_on_line(
 		F->PG_element_rank_modified(w, 1, n + 1, b);
 		line[a] = b;
 	}
+	if (f_v) {
+		cout << "projective_space::create_points_on_line done" << endl;
+	}
 }
 
 void projective_space::create_lines_on_point(
 	long int point_rk, long int *line_pencil, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
 	int a, b, i, d;
 	int *v;
 	int *w;
 	int *Basis;
 
+	if (f_v) {
+		cout << "projective_space::create_lines_on_point" << endl;
+	}
 	d = n + 1;
 	v = NEW_int(d);
 	w = NEW_int(n);
@@ -391,6 +403,9 @@ void projective_space::create_lines_on_point(
 	FREE_int(v);
 	FREE_int(w);
 	FREE_int(Basis);
+	if (f_v) {
+		cout << "projective_space::create_lines_on_point done" << endl;
+	}
 }
 
 void projective_space::create_lines_on_point_but_inside_a_plane(
@@ -2869,6 +2884,9 @@ void projective_space::line_intersection_type(
 			}
 		}
 	}
+	if (f_v) {
+		cout << "projective_space::line_intersection_type done" << endl;
+	}
 }
 
 void projective_space::line_intersection_type_basic(
@@ -2901,6 +2919,9 @@ void projective_space::line_intersection_type_basic(
 		} // next h
 	} // next rk
 	FREE_int(M);
+	if (f_v) {
+		cout << "projective_space::line_intersection_type_basic done" << endl;
+	}
 }
 
 void projective_space::line_intersection_type_through_hyperplane(

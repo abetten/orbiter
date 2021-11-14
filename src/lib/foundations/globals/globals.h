@@ -391,6 +391,7 @@ public:
 	void *get_object(int idx);
 	symbol_table_object_type get_object_type(int idx);
 	int find_symbol(std::string &label);
+	void get_vector_from_label(std::string &label, int *&v, int &sz, int verbose_level);
 	void find_symbols(std::vector<std::string> &Labels, int *&Idx);
 	void print_symbol_table();
 	void add_symbol_table_entry(std::string &label,

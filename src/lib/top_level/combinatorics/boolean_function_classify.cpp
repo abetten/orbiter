@@ -181,7 +181,7 @@ void boolean_function_classify::search_for_bent_functions(int verbose_level)
 	poly = NEW_int(BF->Poly[BF->n].get_nb_monomials());
 
 	a.create(0, __FILE__, __LINE__);
-	while (D.is_less_than(a, BF->NN)) {
+	while (D.is_less_than(a, *BF->NN)) {
 
 		Gg.AG_element_unrank_longinteger(2, BF->f, 1, BF->Q, a);
 		//Gg.AG_element_unrank(2, f, 1, Q, a);

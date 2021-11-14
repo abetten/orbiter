@@ -671,7 +671,8 @@ void string_tools::convert_arguments(int &argc, const char **argv, std::string *
 	vector<string> Arg_vec;
 
 	for (i = 0; i < argc; i++) {
-		if (strcmp(argv[i], "-repeat") == 0) {
+
+		if (FALSE /*strcmp(argv[i], "-repeat") == 0*/) {
 			string variable_name;
 			int loop_from;
 			int loop_upper_bound;
@@ -808,8 +809,15 @@ void string_tools::chop_off_extension(char *p)
 	}
 }
 
+void string_tools::chop_off_extension_and_path(std::string &p)
+{
+	chop_off_path(p);
+	chop_off_extension(p);
+}
+
 void string_tools::chop_off_extension(std::string &p)
 {
+#if 0
 	int l;
 	int i;
 	string q;
@@ -829,7 +837,36 @@ void string_tools::chop_off_extension(std::string &p)
 		q = p;
 	}
 	p = q;
+#else
+
+	std::string ext;
+	std::string q;
+
+	get_extension(p, ext);
+	q = p.substr(0, p.length() - ext.length());
+	p = q;
+#endif
 }
+
+void string_tools::chop_off_path(std::string &p)
+{
+	int l;
+	int i;
+	string q;
+
+	l = p.length();
+	for (i = l - 1; i >= 0; i--) {
+		if (p[i] == '/') {
+			q = p.substr(i + 1, l - i - 1);
+			break;
+		}
+	}
+	if (i == -1) {
+		q = p;
+	}
+	p = q;
+}
+
 
 void string_tools::chop_off_extension_if_present(std::string &p, const char *ext)
 {
@@ -871,6 +908,25 @@ void string_tools::get_fname_base(const char *p, char *fname_base)
 		}
 	}
 }
+
+void string_tools::get_extension(std::string &p, std::string &ext)
+{
+	int i, l = p.length();
+
+	//cout << "string_tools::get_extension " << p << " l=" << l << endl;
+	for (i = l - 1; i >= 0; i--) {
+		if (p[i] == '.') {
+			//cout << "p[" << i << "] is dot" << endl;
+			ext = p.substr(i, l - i);
+			return;
+		}
+		if (p[i] == '/') {
+			break;
+		}
+	}
+	ext.assign("");
+}
+
 
 void string_tools::get_extension_if_present(const char *p, char *ext)
 {

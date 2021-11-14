@@ -425,7 +425,7 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 		string fname;
 
 		fname.assign(fname_base);
-		fname.append("_incma_transitive.csv");
+		fname.append("_incma_cyclic.csv");
 
 		PA->P->make_incidence_matrix(Orb1, Orb2, Inc, verbose_level);
 

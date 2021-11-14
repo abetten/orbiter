@@ -54,22 +54,26 @@ namespace foundations {
 
 knarr::knarr()
 {
-	null();
-}
+	q = 0;
+	BLT_no = 0;
+	W = NULL;
+	P5 = NULL;
+	G63 = NULL;
+	F = NULL;
 
-knarr::~knarr()
-{
-	freeself();
-}
-
-void knarr::null()
-{
-	f_show = FALSE;
+	BLT = NULL;
 	BLT_line_idx = NULL;
 	Basis = NULL;
 	Basis2 = NULL;
 	subspace_basis = NULL;
 	Basis_Pperp = NULL;
+
+	six_choose_three_q = NULL;
+	six_choose_three_q_int = 0;
+
+	f_show = FALSE;
+	dim_intersection = 0;
+
 	Basis_intersection = NULL;
 	type_i_points = NULL;
 	type_ii_points = NULL;
@@ -77,9 +81,19 @@ void knarr::null()
 	type_a_lines = NULL;
 	type_b_lines = NULL;
 	type_a_line_BLT_idx = NULL;
-	W = NULL;
-	P5 = NULL;
-	G63 = NULL;
+	q2 = 0;
+	q5 = 0;
+	//int v5[5];
+	//int v6[6];
+
+}
+
+
+
+
+knarr::~knarr()
+{
+	freeself();
 }
 
 void knarr::freeself()
@@ -99,6 +113,9 @@ void knarr::freeself()
 	if (Basis_Pperp) {
 		FREE_int(Basis_Pperp);
 		}
+	if (six_choose_three_q) {
+		FREE_OBJECT(six_choose_three_q);
+	}
 	if (Basis_intersection) {
 		FREE_int(Basis_intersection);
 		}
@@ -123,7 +140,6 @@ void knarr::freeself()
 		FREE_OBJECT(P5);
 		FREE_OBJECT(G63);
 		}
-	null();
 }
 
 void knarr::init(finite_field *F, int BLT_no, int verbose_level)
@@ -164,8 +180,12 @@ void knarr::init(finite_field *F, int BLT_no, int verbose_level)
 	G63 = NEW_OBJECT(grassmann);
 	G63->init(6, 3, F, verbose_level - 2);
 
-	C.q_binomial(six_choose_three_q, 6, 3, q, 0);
-	six_choose_three_q_int = six_choose_three_q.as_int();
+
+	six_choose_three_q = NEW_OBJECT(longinteger_object);
+
+
+	C.q_binomial(*six_choose_three_q, 6, 3, q, 0);
+	six_choose_three_q_int = six_choose_three_q->as_int();
 	if (f_v) {
 		cout << "Number of planes in P5 = " << six_choose_three_q_int << endl;
 		}

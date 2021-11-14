@@ -1044,6 +1044,17 @@ void strong_generators::init_subgroup_by_generators(action *A,
 			cout << "strong_generators::init_subgroup_by_generators "
 					"generator " << h << " / " << nb_subgroup_gens << endl;
 		}
+
+		int *v;
+		int sz;
+
+		Orbiter->get_vector_from_label(subgroup_gens[h], v, sz, verbose_level);
+
+		A->make_element(nice_gens->ith(h), v, verbose_level);
+
+		FREE_int(v);
+
+#if 0
 		if (isalpha(subgroup_gens[h][0])) {
 			if (f_v) {
 				cout << "strong_generators::init_subgroup_by_generators "
@@ -1063,6 +1074,8 @@ void strong_generators::init_subgroup_by_generators(action *A,
 			A->make_element_from_string(nice_gens->ith(h),
 				subgroup_gens[h], verbose_level);
 		}
+#endif
+
 	}
 
 
@@ -2244,7 +2257,7 @@ schreier *strong_generators::orbits_on_points_schreier(
 		cout << "strong_generators::orbits_on_points_schreier "
 				"before Sch->compute_all_point_orbits" << endl;
 	}
-	Sch->compute_all_point_orbits(verbose_level);
+	Sch->compute_all_point_orbits(0 /*verbose_level*/);
 	if (f_v) {
 		cout << "strong_generators::orbits_on_points_schreier "
 				"after Sch->compute_all_point_orbits" << endl;

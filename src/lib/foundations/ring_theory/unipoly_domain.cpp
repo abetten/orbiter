@@ -587,6 +587,49 @@ void unipoly_domain::print_object_tight(unipoly_object p, std::ostream &ost)
 	}
 }
 
+void unipoly_domain::print_object_sparse(unipoly_object p, std::ostream &ost)
+{
+	int i, a;
+	int *rep = (int *) p;
+	int d = rep[0]; // degree
+	int *coeff = rep + 1;
+	int f_first = TRUE;
+
+
+	for (i = 0; i <= d; i++) {
+		a = coeff[i];
+
+		if (a) {
+			if (f_first) {
+				f_first = FALSE;
+			}
+			else {
+				cout << ",";
+			}
+			ost << a << "," << i;
+		}
+	}
+}
+
+void unipoly_domain::print_object_dense(unipoly_object p, std::ostream &ost)
+{
+	int i, a;
+	int *rep = (int *) p;
+	int d = rep[0]; // degree
+	int *coeff = rep + 1;
+
+
+	for (i = 0; i <= d; i++) {
+		a = coeff[i];
+
+		ost << a;
+		if (i < d) {
+			ost << ",";
+		}
+	}
+}
+
+
 
 void unipoly_domain::assign(unipoly_object a, unipoly_object &b, int verbose_level)
 {

@@ -75,6 +75,16 @@ void object_in_projective_space::print(ostream &ost)
 		SoS->print_table_tex(ost);
 		ost << endl;
 	}
+	else if (type == t_INC) {
+		ost << "incidence structure:" << endl;
+		//SoS->print_table_tex(ost);
+		//ost << endl;
+	}
+	else if (type == t_LS) {
+		ost << "large set:" << endl;
+		//SoS->print_table_tex(ost);
+		//ost << endl;
+	}
 }
 
 void object_in_projective_space::print_tex(ostream &ost)
@@ -95,6 +105,16 @@ void object_in_projective_space::print_tex(ostream &ost)
 		ost << "packing: \\\\" << endl;
 		SoS->print_table_tex(ost);
 		ost << endl;
+	}
+	else if (type == t_INC) {
+		ost << "incidence structure: \\\\" << endl;
+		//SoS->print_table_tex(ost);
+		//ost << endl;
+	}
+	else if (type == t_LS) {
+		ost << "large set: \\\\" << endl;
+		//SoS->print_table_tex(ost);
+		//ost << endl;
 	}
 }
 
@@ -235,13 +255,15 @@ void object_in_projective_space::init_object_from_int_vec(
 				the_set_in, the_set_sz, verbose_level - 1);
 	}
 	else if (type == t_INC) {
-		int v = 0, b = 0, nb_flags = 0;
+		//int v = 0, b = 0, nb_flags = 0;
 
 		cout << "object_in_projective_space::init_object_from_int_vec missing info on v and b" << endl;
 		exit(1);
+#if 0
 		init_incidence_geometry(
 				the_set_in, the_set_sz, v, b, nb_flags,
 				verbose_level);
+#endif
 	}
 	else {
 		cout << "object_in_projective_space::init_object_from_int_vec "

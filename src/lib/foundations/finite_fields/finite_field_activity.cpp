@@ -539,7 +539,18 @@ void finite_field_activity::perform_activity(int verbose_level)
 					Nth, P,
 					verbose_level);
 
-		cout << "generator polynomial is ";
+		cout << "generator polynomial is:" << endl;
+
+		cout << "-dense \"";
+		Nth->FX->print_object_dense(P, cout);
+		cout << "\"" << endl;
+		cout << endl;
+
+		cout << "-sparse \"";
+		Nth->FX->print_object_sparse(P, cout);
+		cout << "\"" << endl;
+		cout << endl;
+
 		Nth->FX->print_object(P, cout);
 		cout << endl;
 

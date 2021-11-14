@@ -23,6 +23,7 @@ grassmann::grassmann()
 	n = 0;
 	k = 0;
 	q = 0;
+	nCkq = NULL;
 	F = NULL;
 	base_cols = NULL;
 	coset = NULL;
@@ -36,6 +37,9 @@ grassmann::grassmann()
 grassmann::~grassmann()
 {
 	//cout << "grassmann::~grassmann 1" << endl;
+	if (nCkq) {
+		FREE_OBJECT(nCkq);
+	}
 	if (base_cols) {
 		FREE_int(base_cols);
 	}
@@ -79,9 +83,11 @@ void grassmann::init(int n, int k, finite_field *F, int verbose_level)
 
 	combinatorics_domain D;
 
-	D.q_binomial(nCkq, n, k, q, 0 /* verbose_level */);
+	nCkq = NEW_OBJECT(longinteger_object);
+
+	D.q_binomial(*nCkq, n, k, q, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "grassmann::init nCkq=" << nCkq << endl;
+		cout << "grassmann::init nCkq=" << *nCkq << endl;
 	}
 	
 
@@ -1098,7 +1104,7 @@ void grassmann::compute_dual_line_idx(int *&dual_line_idx,
 		cout << "grassmann::compute_dual_line_idx need 2 * k == n" << endl;
 		exit(1);
 	}
-	nb_lines = nCkq.as_int();
+	nb_lines = nCkq->as_int();
 	Basis = NEW_int(n * n);
 	dual_line_idx = NEW_int(nb_lines);
 	self_dual_lines = NEW_int(nb_lines);

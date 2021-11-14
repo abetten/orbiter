@@ -18,7 +18,9 @@ namespace foundations {
 
 boolean_function_domain::boolean_function_domain()
 {
-	n = n2 = Q = bent = near_bent = N = 0;
+	n = n2 = Q = bent = near_bent = 0;
+	NN = NULL;
+	N = 0;
 	Fq = NULL;
 	//FQ = NULL;
 	Poly = NULL;
@@ -34,6 +36,9 @@ boolean_function_domain::~boolean_function_domain()
 {
 	int degree;
 
+	if (NN) {
+		FREE_OBJECT(NN);
+	}
 	if (Fq) {
 		FREE_OBJECT(Fq);
 	}
@@ -116,8 +121,9 @@ void boolean_function_domain::init(int n, int verbose_level)
 	bent = 1 << (n2);
 	near_bent = 1 << ((n + 1) >> 1);
 	//NN = 1 << Q;
-	NN.create(2, __FILE__, __LINE__);
-	D.power_int(NN, Q - 1);
+	NN = NEW_OBJECT(longinteger_object);
+	NN->create(2, __FILE__, __LINE__);
+	D.power_int(*NN, Q - 1);
 	N = Gg.nb_PG_elements(n, 2);
 	if (f_v) {
 		cout << "boolean_function_domain::init n=" << n << endl;
@@ -125,7 +131,7 @@ void boolean_function_domain::init(int n, int verbose_level)
 		cout << "boolean_function_domain::init Q=" << Q << endl;
 		cout << "boolean_function_domain::init bent=" << bent << endl;
 		cout << "boolean_function_domain::init near_bent=" << near_bent << endl;
-		cout << "boolean_function_domain::init NN=" << NN << endl;
+		cout << "boolean_function_domain::init NN=" << *NN << endl;
 		cout << "boolean_function_domain::init N=" << N << endl;
 	}
 

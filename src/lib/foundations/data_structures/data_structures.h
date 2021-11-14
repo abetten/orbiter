@@ -299,39 +299,6 @@ public:
 
 
 // #############################################################################
-// encoded_combinatorial_object.cpp
-// #############################################################################
-
-//! encoding of combinatorial object for use with nauty
-
-
-class encoded_combinatorial_object {
-
-public:
-
-	int *Incma;
-	int nb_rows;
-	int nb_cols;
-	int *partition;
-	int canonical_labeling_len; // = nb_rows + nb_cols
-
-	encoded_combinatorial_object();
-	~encoded_combinatorial_object();
-	void init(int nb_rows, int nb_cols, int verbose_level);
-	void print_incma();
-	void print_partition();
-	void compute_canonical_incma(long int *canonical_labeling,
-			int *&Incma_out, int verbose_level);
-	void compute_canonical_form(bitvector *&Canonical_form,
-			long int *canonical_labeling, int verbose_level);
-	void incidence_matrix_projective_space_top_left(projective_space *P, int verbose_level);
-	void canonical_form_given_canonical_labeling(long int *canonical_labeling,
-			bitvector *&B,
-			int verbose_level);
-
-};
-
-// #############################################################################
 // fancy_set.cpp
 // #############################################################################
 
@@ -579,7 +546,7 @@ public:
 	int Base_length;
 	long int *Base_lint;
 	int *Transversal_length;
-	longinteger_object Ago;
+	longinteger_object *Ago;
 
 	nauty_output();
 	~nauty_output();
@@ -1380,10 +1347,13 @@ public:
 	void replace_extension_with(char *p, const char *new_ext);
 	void replace_extension_with(std::string &p, const char *new_ext);
 	void chop_off_extension(char *p);
+	void chop_off_extension_and_path(std::string &p);
 	void chop_off_extension(std::string &p);
+	void chop_off_path(std::string &p);
 	void chop_off_extension_if_present(std::string &p, const char *ext);
 	void chop_off_extension_if_present(char *p, const char *ext);
 	void get_fname_base(const char *p, char *fname_base);
+	void get_extension(std::string &p, std::string &ext);
 	void get_extension_if_present(const char *p, char *ext);
 	void get_extension_if_present_and_chop_off(char *p, char *ext);
 	void string_fix_escape_characters(std::string &str);
@@ -1418,11 +1388,15 @@ public:
 	int f_field;
 	std::string field_label;
 
-	int f_here;
-	std::string here_text;
-
 	int f_dense;
 	std::string dense_text;
+
+	int f_compact;
+	std::string compact_text;
+
+	int f_repeat;
+	std::string repeat_text;
+	int repeat_length;
 
 	int f_format;
 	int format_k;

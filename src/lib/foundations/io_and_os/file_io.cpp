@@ -1738,6 +1738,58 @@ void file_io::int_matrix_read_text(std::string &fname, int *&M, int &m, int &n)
 	}
 }
 
+void file_io::read_dimacs_graph_format(std::string &fname,
+		int &nb_V, std::vector<std::vector<int>> &Edges, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, a, b;
+
+	if (f_v) {
+		cout << "file_io::read_dimacs_graph_format fname = " << fname << endl;
+	}
+	if (file_size(fname) <= 0) {
+		cout << "file_io::read_dimacs_graph_format The file "
+			<< fname << " does not exist" << endl;
+		exit(1);
+	}
+
+	char *buf;
+	int nb_E;
+
+	buf = NEW_char(MY_OWN_BUFSIZE);
+
+	{
+		ifstream f(fname);
+
+		f.getline(buf, MY_OWN_BUFSIZE, '\n');
+		sscanf(buf, "p edge %d %d", &nb_V, &nb_E);
+		if (f_v) {
+			cout << "file_io::read_dimacs_graph_format a graph on "
+					<< nb_V << " vertices with " << nb_E << " edges" << endl;
+		}
+
+		for (i = 0; i < nb_E; i++) {
+
+			f.getline(buf, MY_OWN_BUFSIZE, '\n');
+
+			sscanf(buf, "e %d %d", &a, &b);
+
+			vector<int> v;
+
+			v.push_back(a - 1);
+			v.push_back(b - 1);
+
+			Edges.push_back(v);
+		}
+	}
+
+	FREE_char(buf);
+	if (f_v) {
+		cout << "file_io::read_dimacs_graph_format done" << endl;
+	}
+}
+
+
 void file_io::parse_sets(int nb_cases, char **data, int f_casenumbers,
 	int *&Set_sizes, long int **&Sets,
 	char **&Ago_ascii, char **&Aut_ascii,

@@ -22,6 +22,7 @@ create_graph_description::create_graph_description()
 	//fname = NULL;
 
 	f_load_from_file_csv_no_border = FALSE;
+	f_load_from_file_dimacs = FALSE;
 
 	f_edge_list = FALSE;
 	n = 0;
@@ -112,6 +113,14 @@ int create_graph_description::read_arguments(
 			fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "-load_from_file_csv_no_border " << fname << endl;
+			}
+		}
+
+		else if (stringcmp(argv[i], "-load_from_file_dimacs") == 0) {
+			f_load_from_file_dimacs = TRUE;
+			fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-load_from_file_dimacs " << fname << endl;
 			}
 		}
 
@@ -273,6 +282,9 @@ void create_graph_description::print()
 	}
 	if (f_load_from_file_csv_no_border) {
 		cout << "-load_from_file_csv_no_border " << fname << endl;
+	}
+	if (f_load_from_file_dimacs) {
+		cout << "-load_from_file_dimacs " << fname << endl;
 	}
 	if (f_edge_list) {
 		cout << "-edge_list " << n << " " << edge_list_text << endl;

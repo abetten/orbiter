@@ -1323,7 +1323,7 @@ int projective_space_object_classifier::process_object(
 						verbose_level);
 
 
-		NO->Ago.assign_to(go);
+		NO->Ago->assign_to(go);
 		if (f_v) {
 			cout << "projective_space_object_classifier::process_object "
 					"after OiP->run_nauty" << endl;

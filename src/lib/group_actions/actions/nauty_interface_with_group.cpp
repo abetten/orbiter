@@ -1299,7 +1299,7 @@ void nauty_interface_with_group::automorphism_group_as_permutation_group(
 		cout << "nauty_interface_with_group::automorphism_group_as_permutation_group "
 				"before init_permutation_group_from_generators" << endl;
 		}
-	NO->Ago.assign_to(ago);
+	NO->Ago->assign_to(ago);
 	//ago.create(Ago, __FILE__, __LINE__);
 	A_perm->init_permutation_group_from_generators(NO->N,
 		TRUE, ago,
@@ -1469,7 +1469,7 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 		}
 
 	S = A_linear->create_sims_from_generators_with_target_group_order(
-		gens1, NO->Ago, 0 /*verbose_level*/);
+		gens1, *NO->Ago, 0 /*verbose_level*/);
 
 	if (f_vv) {
 		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
@@ -1496,7 +1496,7 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 
 	longinteger_domain D;
 
-	if (D.compare_unsigned(NO->Ago, go)) {
+	if (D.compare_unsigned(*NO->Ago, go)) {
 		cout << "nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_group "
 				"the group order does not match" << endl;
 		cout << "ago = " << NO->Ago << endl;

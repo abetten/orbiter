@@ -717,12 +717,22 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 		cout << "graphical_output::draw_bitmap drawing matrix of size " << C->m << " x " << C->n << endl;
 	}
 
+	int *Row_parts = NULL;
+	int nb_row_parts = 0;
+	int *Col_parts = NULL;
+	int nb_col_parts = 0;
+
+
 	if (C->f_partition) {
+
+		Orbiter->get_vector_from_label(C->part_row, Row_parts, nb_row_parts, 0 /* verbose_level*/);
+		Orbiter->get_vector_from_label(C->part_col, Col_parts, nb_col_parts, 0 /* verbose_level*/);
+
 		cout << "row_part: ";
-		Orbiter->Int_vec.print(cout, C->Row_parts, C->nb_row_parts);
+		Orbiter->Int_vec.print(cout, Row_parts, nb_row_parts);
 		cout << endl;
 		cout << "col_part: ";
-		Orbiter->Int_vec.print(cout, C->Col_parts, C->nb_col_parts);
+		Orbiter->Int_vec.print(cout, Col_parts, nb_col_parts);
 		cout << endl;
 	}
 	int i;
@@ -836,12 +846,12 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 
 		// row partition:
 		i0 = 0;
-		for (h = 0; h <= C->nb_row_parts; h++) {
+		for (h = 0; h <= nb_row_parts; h++) {
 			for (t = 0; t < C->part_width; t++) {
 				if (C->f_box_width) {
 					for (j = 0; j < width * C->box_width; j++) {
 						I = i0 * C->box_width;
-						if (h == C->nb_row_parts) {
+						if (h == nb_row_parts) {
 							fillBitmap(image, j, I - 1 - t, color);
 						}
 						else {
@@ -850,19 +860,19 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 					}
 				}
 			}
-			if (h < C->nb_row_parts) {
-				i0 += C->Row_parts[h];
+			if (h < nb_row_parts) {
+				i0 += Row_parts[h];
 			}
 		}
 
 		// col partition:
 		j0 = 0;
-		for (h = 0; h <= C->nb_col_parts; h++) {
+		for (h = 0; h <= nb_col_parts; h++) {
 			for (t = 0; t < C->part_width; t++) {
 				if (C->f_box_width) {
 					for (i = 0; i < height * C->box_width; i++) {
 						J = j0 * C->box_width;
-						if (h == C->nb_col_parts) {
+						if (h == nb_col_parts) {
 							fillBitmap(image, J - 1 - t, i, color);
 						}
 						else {
@@ -871,8 +881,8 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 					}
 				}
 			}
-			if (h < C->nb_col_parts) {
-				j0 += C->Col_parts[h];
+			if (h < nb_col_parts) {
+				j0 += Col_parts[h];
 			}
 		}
 	}

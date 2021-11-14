@@ -19,9 +19,6 @@ symbol_definition::symbol_definition()
 {
 	Sym = NULL;
 
-	//f_define = FALSE;
-	//define_label
-
 	f_finite_field = FALSE;
 	Finite_field_description = NULL;
 
@@ -117,7 +114,7 @@ void symbol_definition::read_definition(
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "symbol_definition::read_definition" << endl;
+		cout << "symbol_definition::read_definition i=" << i << " argc=" << argc << endl;
 	}
 
 	symbol_definition::Sym = Sym;
@@ -1908,17 +1905,26 @@ void symbol_definition::definition_of_vector(int verbose_level)
 	}
 
 
-	int idx;
-	finite_field *F;
+	finite_field *F = NULL;
 
-	if (!Vector_builder_description->f_field) {
-		cout << "please specify the field using -field <label_of_field>" << endl;
-		exit(1);
+	if (Vector_builder_description->f_field) {
+
+		int idx;
+
+		idx = Sym->Orbiter_top_level_session->find_symbol(Vector_builder_description->field_label);
+		F = (finite_field *) Sym->Orbiter_top_level_session->get_object(idx);
+		if (f_v) {
+			cout << "symbol_definition::definition_of_vector over a field" << endl;
+		}
+
+
 	}
-	idx = Sym->Orbiter_top_level_session->find_symbol(Vector_builder_description->field_label);
-	F = (finite_field *) Sym->Orbiter_top_level_session->get_object(idx);
+	else {
+		if (f_v) {
+			cout << "symbol_definition::definition_of_vector not over a field" << endl;
+		}
 
-
+	}
 
 
 	vector_builder *VB;

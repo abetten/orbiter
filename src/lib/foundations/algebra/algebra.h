@@ -342,8 +342,8 @@ public:
 class gl_class_rep {
 public:
 	int_matrix type_coding;
-	longinteger_object centralizer_order;
-	longinteger_object class_length;
+	longinteger_object *centralizer_order;
+	longinteger_object *class_length;
 
 	gl_class_rep();
 	~gl_class_rep();

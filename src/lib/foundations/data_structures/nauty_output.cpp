@@ -25,7 +25,7 @@ nauty_output::nauty_output()
 	Base_length = 0;
 	Base_lint = NULL;
 	Transversal_length = NULL;
-	//longinteger_object Ago;
+	Ago = NULL;
 }
 
 nauty_output::~nauty_output()
@@ -42,6 +42,9 @@ nauty_output::~nauty_output()
 	if (Transversal_length) {
 		FREE_int(Transversal_length);
 	}
+	if (Ago) {
+		FREE_OBJECT(Ago);
+	}
 }
 
 void nauty_output::allocate(int N, int verbose_level)
@@ -57,6 +60,7 @@ void nauty_output::allocate(int N, int verbose_level)
 	Base = NEW_int(N);
 	Base_lint = NEW_lint(N);
 	Transversal_length = NEW_int(N);
+	Ago = NEW_OBJECT(longinteger_object);
 }
 
 

@@ -156,12 +156,14 @@ public:
 	int n;
 	int f_partition;
 	int part_width;
-	int nb_row_parts;
 	std::string part_row;
 	std::string part_col;
+#if 0
 	int *Row_parts;
-	int nb_col_parts;
+	int nb_row_parts;
 	int *Col_parts;
+	int nb_col_parts;
+#endif
 	int f_box_width;
 	int box_width;
 	int f_invert_colors;

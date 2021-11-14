@@ -47,11 +47,11 @@ void vector_builder::init(vector_builder_description *Descr,
 	vector_builder::Descr = Descr;
 	vector_builder::F = F;
 
-	if (Descr->f_here) {
+	if (Descr->f_dense) {
 		if (f_v) {
-			cout << "vector_builder::init -here" << endl;
+			cout << "vector_builder::init -dense" << endl;
 		}
-		Orbiter->Int_vec.scan(Descr->here_text, v, len);
+		Orbiter->Int_vec.scan(Descr->dense_text, v, len);
 
 		if (Descr->f_format) {
 			f_has_k = TRUE;
@@ -59,22 +59,50 @@ void vector_builder::init(vector_builder_description *Descr,
 		}
 
 	}
-	else if (Descr->f_dense) {
+	else if (Descr->f_compact) {
 		if (f_v) {
-			cout << "vector_builder::init -dense" << endl;
+			cout << "vector_builder::init -compact" << endl;
 		}
 		int i, j;
 		char c;
 
-		len = Descr->dense_text.length();
+		len = Descr->compact_text.length();
 		v = NEW_int(len);
 		j = 0;
 		for (i = 0; i < len; i++) {
-			c = Descr->dense_text[i];
+			c = Descr->compact_text[i];
 			if (c == ' ' || c == ',') {
 				continue;
 			}
 			v[j++] = c - '0';
+		}
+
+		if (Descr->f_format) {
+			f_has_k = TRUE;
+			k = Descr->format_k;
+		}
+
+	}
+	else if (Descr->f_repeat) {
+		if (f_v) {
+			cout << "vector_builder::init -repeat" << endl;
+		}
+		int *w;
+		int sz;
+		int i;
+
+		Orbiter->Int_vec.scan(Descr->repeat_text, w, sz);
+		if (f_v) {
+			cout << "vector_builder::init repeat pattern: ";
+			Orbiter->Int_vec.print(cout, w, sz);
+			cout << endl;
+		}
+
+		v = NEW_int(Descr->repeat_length);
+		len = Descr->repeat_length;
+
+		for (i = 0; i < Descr->repeat_length; i++) {
+			v[i] = w[i % sz];
 		}
 
 		if (Descr->f_format) {
@@ -134,20 +162,21 @@ void vector_builder::init(vector_builder_description *Descr,
 		exit(1);
 	}
 
-	int i, a;
+	if (Descr->f_field) {
+		int i, a;
 
-	for (i = 0; i < len; i++) {
-		a = v[i];
-		if (a < 0) {
-			cout << "vector_builder::init entry is out of range: value = " << a << endl;
-			exit(1);
-		}
-		if (a >= F->q) {
-			cout << "vector_builder::init entry is out of range: value = " << a << endl;
-			exit(1);
+		for (i = 0; i < len; i++) {
+			a = v[i];
+			if (a < 0) {
+				cout << "vector_builder::init entry is out of range: value = " << a << endl;
+				exit(1);
+			}
+			if (a >= F->q) {
+				cout << "vector_builder::init entry is out of range: value = " << a << endl;
+				exit(1);
+			}
 		}
 	}
-
 
 	if (f_v) {
 		cout << "vector_builder::init created vector of length " << len << endl;
