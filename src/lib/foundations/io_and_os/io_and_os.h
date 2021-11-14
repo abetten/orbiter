@@ -178,6 +178,8 @@ public:
 	void lint_matrix_write_text(std::string &fname, long int *M, int m, int n);
 	void int_matrix_read_text(std::string &fname,
 		int *&M, int &m, int &n);
+	void read_dimacs_graph_format(std::string &fname,
+			int &nb_V, std::vector<std::vector<int> > &Edges, int verbose_level);
 	void parse_sets(int nb_cases, char **data, int f_casenumbers,
 		int *&Set_sizes, long int **&Sets, char **&Ago_ascii, char **&Aut_ascii,
 		int *&Casenumbers,

@@ -27,6 +27,7 @@ MODULES= \
 		foundations/combinatorics/combinatorial_object_create.o \
 		foundations/combinatorics/combinatorial_object_description.o \
 		foundations/combinatorics/combinatorics_domain.o \
+		foundations/combinatorics/encoded_combinatorial_object.o \
 		foundations/combinatorics/geo_parameter.o \
 		foundations/combinatorics/pentomino_puzzle.o \
 		foundations/combinatorics/tdo_data.o \
@@ -41,7 +42,6 @@ MODULES= \
 		foundations/data_structures/data_file.o \
 		foundations/data_structures/data_input_stream.o \
 		foundations/data_structures/data_structures_global.o \
-		foundations/data_structures/encoded_combinatorial_object.o \
 		foundations/data_structures/fancy_set.o \
 		foundations/data_structures/int_matrix.o \
 		foundations/data_structures/int_vec.o \

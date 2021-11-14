@@ -143,8 +143,7 @@ int projective_space::determine_hermitian_form_in_plane(
 	number_theory_domain NT;
 
 	if (f_v) {
-		cout << "projective_space::determine_hermitian_"
-				"form_in_plane" << endl;
+		cout << "projective_space::determine_hermitian_form_in_plane" << endl;
 	}
 	coords = NEW_int(nb_pts * 3);
 	system = NEW_int(nb_pts * 9);
@@ -232,8 +231,8 @@ int projective_space::determine_hermitian_form_in_plane(
 	six_coeffs[4] = kernel[5 * kernel_n + 0];
 	six_coeffs[5] = kernel[7 * kernel_n + 0];
 	if (f_v) {
-		cout << "projective_space::determine_hermitian_form_"
-				"in_plane six_coeffs:" << endl;
+		cout << "projective_space::determine_hermitian_form_in_plane "
+				"six_coeffs:" << endl;
 		Orbiter->Int_vec.print(cout, six_coeffs, 6);
 		cout << endl;
 	}
@@ -397,6 +396,12 @@ void projective_space::intersection_of_subspace_with_point_set(
 	long int *&intersection_set, int &intersection_set_size,
 	int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space::intersection_of_subspace_with_point_set" << endl;
+	}
+
 	int h;
 	int d = n + 1;
 	int k = G->k;
@@ -418,6 +423,9 @@ void projective_space::intersection_of_subspace_with_point_set(
 	} // next h
 
 	FREE_int(M);
+	if (f_v) {
+		cout << "projective_space::intersection_of_subspace_with_point_set done" << endl;
+	}
 }
 
 void projective_space::intersection_of_subspace_with_point_set_rank_is_longinteger(
@@ -426,6 +434,11 @@ void projective_space::intersection_of_subspace_with_point_set_rank_is_longinteg
 	long int *&intersection_set, int &intersection_set_size,
 	int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space::intersection_of_subspace_with_point_set_rank_is_longinteger" << endl;
+	}
 	int h;
 	int d = n + 1;
 	int k = G->k;
@@ -447,6 +460,9 @@ void projective_space::intersection_of_subspace_with_point_set_rank_is_longinteg
 	} // next h
 
 	FREE_int(M);
+	if (f_v) {
+		cout << "projective_space::intersection_of_subspace_with_point_set_rank_is_longinteger done" << endl;
+	}
 }
 
 void projective_space::plane_intersection_invariant(
@@ -467,10 +483,16 @@ void projective_space::plane_intersection_invariant(
 	if (f_v) {
 		cout << "projective_space::plane_intersection_invariant" << endl;
 	}
+	if (f_v) {
+		cout << "projective_space::plane_intersection_invariant before plane_intersection_type_fast" << endl;
+	}
 	plane_intersection_type_fast(G,
 		set, set_size,
 		R, Pts_on_plane, nb_pts_on_plane, nb_planes_total,
 		verbose_level - 1);
+	if (f_v) {
+		cout << "projective_space::plane_intersection_invariant after plane_intersection_type_fast" << endl;
+	}
 
 	tally C;
 	int f_second = FALSE;
@@ -572,6 +594,9 @@ void projective_space::plane_intersection_invariant(
 	FREE_plint(Pts_on_plane);
 	FREE_int(nb_pts_on_plane);
 	FREE_OBJECTS(R);
+	if (f_v) {
+		cout << "projective_space::plane_intersection_invariant done" << endl;
+	}
 }
 
 void projective_space::plane_intersection_type(
@@ -590,10 +615,16 @@ void projective_space::plane_intersection_type(
 	if (f_v) {
 		cout << "projective_space::plane_intersection_type" << endl;
 	}
+	if (f_v) {
+		cout << "projective_space::plane_intersection_type before plane_intersection_type_fast" << endl;
+	}
 	plane_intersection_type_fast(G,
 		set, set_size,
 		R, Pts_on_plane, nb_pts_on_plane, nb_planes,
 		verbose_level - 1);
+	if (f_v) {
+		cout << "projective_space::plane_intersection_type after plane_intersection_type_fast" << endl;
+	}
 
 	tally C;
 	int f_second = FALSE;
@@ -628,6 +659,9 @@ void projective_space::plane_intersection_type(
 	FREE_plint(Pts_on_plane);
 	FREE_int(nb_pts_on_plane);
 	FREE_OBJECTS(R);
+	if (f_v) {
+		cout << "projective_space::plane_intersection_type done" << endl;
+	}
 
 }
 
@@ -646,10 +680,16 @@ void projective_space::plane_intersections(
 	if (f_v) {
 		cout << "projective_space::plane_intersections" << endl;
 	}
+	if (f_v) {
+		cout << "projective_space::plane_intersections before plane_intersection_type_fast" << endl;
+	}
 	plane_intersection_type_fast(G,
 		set, set_size,
 		R, Pts_on_plane, nb_pts_on_plane, nb_planes,
 		verbose_level - 1);
+	if (f_v) {
+		cout << "projective_space::plane_intersections after plane_intersection_type_fast" << endl;
+	}
 	if (f_v) {
 		cout << "projective_space::plane_intersections "
 				"before Sos.init" << endl;
@@ -1032,6 +1072,9 @@ void projective_space::plane_intersection_type_fast(
 	FREE_int(f_subset_done);
 	FREE_int(rank_idx);
 	FREE_int(Coords);
+	if (f_v) {
+		cout << "projective_space::plane_intersection_type_fast done" << endl;
+	}
 }
 
 void projective_space::find_planes_which_intersect_in_at_least_s_points(
@@ -1465,6 +1508,11 @@ void projective_space::klein_correspondence_special_model(
 void projective_space::cheat_sheet_points(
 		std::ostream &f, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space::cheat_sheet_points" << endl;
+	}
 	int i, d;
 	int *v;
 	string symbol_for_print;
@@ -1553,10 +1601,18 @@ void projective_space::cheat_sheet_points(
 
 
 	FREE_int(v);
+	if (f_v) {
+		cout << "projective_space::cheat_sheet_points done" << endl;
+	}
 }
 
 void projective_space::cheat_polarity(std::ostream &f, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space::cheat_polarity" << endl;
+	}
 
 	f << "Standard polarity point $\\leftrightarrow$ hyperplane:\\\\" << endl;
 
@@ -1566,11 +1622,19 @@ void projective_space::cheat_polarity(std::ostream &f, int verbose_level)
 
 	Reversal_polarity->report(f);
 
+	if (f_v) {
+		cout << "projective_space::cheat_polarity done" << endl;
+	}
 }
 
 void projective_space::cheat_sheet_point_table(
 		std::ostream &f, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space::cheat_sheet_point_table" << endl;
+	}
 	int I, i, j, a, d, nb_rows, nb_cols = 5;
 	int nb_rows_per_page = 40, nb_tables;
 	int nb_r;
@@ -1620,12 +1684,20 @@ void projective_space::cheat_sheet_point_table(
 		}
 
 	FREE_int(v);
+	if (f_v) {
+		cout << "projective_space::cheat_sheet_point_table done" << endl;
+	}
 }
 
 
 void projective_space::cheat_sheet_points_on_lines(
 	std::ostream &f, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space::cheat_sheet_points_on_lines" << endl;
+	}
 	latex_interface L;
 
 
@@ -1660,11 +1732,19 @@ void projective_space::cheat_sheet_points_on_lines(
 		FREE_int(row_labels);
 		FREE_int(col_labels);
 	}
+	if (f_v) {
+		cout << "projective_space::cheat_sheet_points_on_lines done" << endl;
+	}
 }
 
 void projective_space::cheat_sheet_lines_on_points(
 	std::ostream &f, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space::cheat_sheet_lines_on_points" << endl;
+	}
 	latex_interface L;
 
 	f << "PG$(" << n << ", " << q << ")$ has " << N_points
@@ -1702,6 +1782,9 @@ void projective_space::cheat_sheet_lines_on_points(
 		int_matrix_print_tex(f, Lines_on_point, N_points, r);
 		f << "$$" << endl;
 #endif
+	}
+	if (f_v) {
+		cout << "projective_space::cheat_sheet_lines_on_points done" << endl;
 	}
 }
 
@@ -1851,6 +1934,9 @@ void projective_space::do_pluecker_reverse(ostream &ost, grassmann *Gr, int k, i
 	int *Pos;
 	sorting Sorting;
 
+	if (f_v) {
+		cout << "projective_space::do_pluecker_reverse" << endl;
+	}
 	T = NEW_int(nb_k_subspaces);
 	Pos = NEW_int(nb_k_subspaces);
 	for (i = 0; i < nb_k_subspaces; i++) {
@@ -1920,11 +2006,19 @@ void projective_space::do_pluecker_reverse(ostream &ost, grassmann *Gr, int k, i
 
 	FREE_int(T);
 	FREE_int(Pos);
+	if (f_v) {
+		cout << "projective_space::do_pluecker_reverse done" << endl;
+	}
 }
 
 void projective_space::cheat_sheet_line_intersection(
 		std::ostream &f, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space::cheat_sheet_line_intersection" << endl;
+	}
 	int i, j, a;
 
 
@@ -1953,12 +2047,20 @@ void projective_space::cheat_sheet_line_intersection(
 	f << "$$" << endl;
 	f << "\\clearpage" << endl;
 
+	if (f_v) {
+		cout << "projective_space::cheat_sheet_line_intersection done" << endl;
+	}
 
 }
 
 void projective_space::cheat_sheet_line_through_pairs_of_points(
 		std::ostream &f, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space::cheat_sheet_line_through_pairs_of_points" << endl;
+	}
 	int i, j, a;
 
 
@@ -1989,6 +2091,9 @@ void projective_space::cheat_sheet_line_through_pairs_of_points(
 	f << "$$" << endl;
 	f << "\\clearpage" << endl;
 
+	if (f_v) {
+		cout << "projective_space::cheat_sheet_line_through_pairs_of_points done" << endl;
+	}
 
 }
 
@@ -1998,6 +2103,10 @@ void projective_space::conic_type_randomized(int nb_times,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space::conic_type_randomized" << endl;
+	}
 	int f_vv = (verbose_level >= 2);
 	int f_v3 = (verbose_level >= 3);
 	int rk, h, i, j, a, /*d,*/ N, l, cnt;
@@ -2242,7 +2351,9 @@ void projective_space::conic_type_randomized(int nb_times,
 			}
 		} // else
 	} // next rk
-
+	if (f_v) {
+		cout << "projective_space::conic_type_randomized done" << endl;
+	}
 }
 
 void projective_space::conic_intersection_type(
@@ -2335,6 +2446,9 @@ void projective_space::conic_intersection_type(
 	FREE_plint(Pts_on_conic);
 	FREE_pint(Conic_eqn);
 	FREE_int(nb_pts_on_conic);
+	if (f_v) {
+		cout << "projective_space::conic_intersection_type done" << endl;
+	}
 
 }
 
@@ -3018,8 +3132,7 @@ void projective_space::elliptic_curve_addition_table(
 	sorting Sorting;
 
 	if (f_v) {
-		cout << "projective_space::elliptic_curve_"
-				"addition_table" << endl;
+		cout << "projective_space::elliptic_curve_addition_table" << endl;
 	}
 	Table = NEW_int(nb_pts * nb_pts);
 	for (i = 0; i < nb_pts; i++) {
@@ -3042,8 +3155,7 @@ void projective_space::elliptic_curve_addition_table(
 		}
 	}
 	if (f_v) {
-		cout << "projective_space::elliptic_curve_"
-				"addition_table done" << endl;
+		cout << "projective_space::elliptic_curve_addition_table done" << endl;
 	}
 }
 
@@ -3366,6 +3478,9 @@ void projective_space::line_plane_incidence_matrix_restricted(
 	FREE_int(Work);
 	FREE_int(Basis);
 	FREE_int(the_lines);
+	if (f_v) {
+		cout << "projective_space::line_plane_incidence_matrix_restricted done" << endl;
+	}
 }
 
 int projective_space::test_if_lines_are_skew(
@@ -3400,6 +3515,11 @@ int projective_space::test_if_lines_are_skew(
 	}
 	F->intersect_subspaces(4, 2, Basis1, 2, Basis2,
 		rk, M, 0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "projective_space::test_if_lines_are_skew done" << endl;
+	}
+
 	if (rk == 0) {
 		return TRUE;
 	}
@@ -3568,6 +3688,9 @@ long int projective_space::line_of_intersection_of_two_planes_in_three_space_usi
 	Orbiter->Int_vec.copy(Plane2, Basis + 4, 4);
 	F->RREF_and_kernel(4, 2, Basis, 0 /* verbose_level */);
 	rk = Grass_lines->rank_lint_here(Basis + 8, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "projective_space::line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates done" << endl;
+	}
 	return rk;
 }
 

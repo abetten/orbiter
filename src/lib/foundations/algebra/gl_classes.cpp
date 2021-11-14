@@ -675,9 +675,10 @@ loop1:
 		}
 
 
-
-		co.assign_to(R[cnt].centralizer_order);
-		cl.assign_to(R[cnt].class_length);
+		R[cnt].centralizer_order = NEW_OBJECT(longinteger_object);
+		R[cnt].class_length = NEW_OBJECT(longinteger_object);
+		co.assign_to(*R[cnt].centralizer_order);
+		cl.assign_to(*R[cnt].class_length);
 
 		cnt++;
 loop2:

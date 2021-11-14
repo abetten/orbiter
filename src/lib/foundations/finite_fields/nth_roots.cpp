@@ -33,7 +33,9 @@ nth_roots::nth_roots()
 	m = 0;
 	r = 0;
 	field_degree = 0;
-	//longinteger_object Qm1, Index;
+	Qm1 = NULL;
+	Index = NULL;
+	Subfield_Index = NULL;
 	Cyc = NULL;
 	generator = NULL;
 	generator_Fq = NULL;
@@ -43,6 +45,15 @@ nth_roots::nth_roots()
 
 nth_roots::~nth_roots()
 {
+	if (Qm1) {
+		FREE_OBJECT(Qm1);
+	}
+	if (Index) {
+		FREE_OBJECT(Index);
+	}
+	if (Subfield_Index) {
+		FREE_OBJECT(Subfield_Index);
+	}
 }
 
 
@@ -68,17 +79,20 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 	if (f_v) {
 		cout << "nth_roots::init order of q mod n is m=" << m << endl;
 	}
-	D.create_qnm1(Qm1, F->q, m);
+	Qm1 = NEW_OBJECT(longinteger_object);
+	Index = NEW_OBJECT(longinteger_object);
+	Subfield_Index = NEW_OBJECT(longinteger_object);
+	D.create_qnm1(*Qm1, F->q, m);
 
 	field_degree = F->e * m;
 
 	// q = i_power_j(p, e);
 	// GF(q)=GF(p^e) has n-th roots of unity
-	D.integral_division_by_int(Qm1, n, Index, r);
+	D.integral_division_by_int(*Qm1, n, *Index, r);
 	if (f_v) {
 		cout << "nth_roots::init Index = " << Index << endl;
 	}
-	D.integral_division_by_int(Qm1, F->q - 1, Subfield_Index, r);
+	D.integral_division_by_int(*Qm1, F->q - 1, *Subfield_Index, r);
 
 	Fp = NEW_OBJECT(finite_field);
 

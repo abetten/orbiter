@@ -67,11 +67,15 @@ void orbits_on_polynomials::init(
 
 	n = A->matrix_group_dimension();
 
-	cout << "n = " << n << endl;
+	if (f_v) {
+		cout << "n = " << n << endl;
+	}
 
-	cout << "strong generators:" << endl;
-	//A->Strong_gens->print_generators();
-	A->Strong_gens->print_generators_tex();
+	if (f_v) {
+		cout << "strong generators:" << endl;
+		//A->Strong_gens->print_generators();
+		A->Strong_gens->print_generators_tex();
+	}
 
 	HPD = NEW_OBJECT(homogeneous_polynomial_domain);
 
@@ -82,16 +86,18 @@ void orbits_on_polynomials::init(
 	HPD->init(F, n /* nb_var */, degree_of_poly,
 			TRUE /* f_init_incidence_structure */,
 			Monomial_ordering_type,
-			verbose_level);
+			verbose_level - 2);
 
 	A2 = NEW_OBJECT(action);
 	A2->induced_action_on_homogeneous_polynomials(A,
 		HPD,
 		FALSE /* f_induce_action */, NULL,
-		verbose_level);
+		verbose_level - 2);
 
-	cout << "created action A2" << endl;
-	A2->print_info();
+	if (f_v) {
+		cout << "created action A2" << endl;
+		A2->print_info();
+	}
 
 
 	Elt1 = NEW_int(A->elt_size_in_int);
@@ -117,7 +123,7 @@ void orbits_on_polynomials::init(
 	}
 
 
-	Sch = A->Strong_gens->orbits_on_points_schreier(A2, verbose_level);
+	Sch = A->Strong_gens->orbits_on_points_schreier(A2, verbose_level - 2);
 
 	if (f_v) {
 		cout << "orbits_on_polynomials::init "

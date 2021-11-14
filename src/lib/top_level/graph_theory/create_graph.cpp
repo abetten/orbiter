@@ -103,6 +103,54 @@ void create_graph::init(
 		label_tex.assign("File\\_");
 		label_tex.append(label);
 	}
+	else if (description->f_load_from_file_dimacs) {
+		if (f_v) {
+			cout << "create_graph::init f_load_from_file_dimacs" << endl;
+		}
+
+		file_io Fio;
+		int nb_V;
+		int i, j, h;
+		std::vector<std::vector<int>> Edges;
+
+		if (f_v) {
+			cout << "create_graph::init before Fio.read_dimacs_graph_format" << endl;
+		}
+		Fio.read_dimacs_graph_format(description->fname,
+				nb_V, Edges, verbose_level);
+		if (f_v) {
+			cout << "create_graph::init after Fio.read_dimacs_graph_format" << endl;
+		}
+
+		N = nb_V;
+		if (f_v) {
+			cout << "create_graph::init N=" << N << endl;
+		}
+		if (f_v) {
+			cout << "create_graph::init nb_E=" << Edges.size() << endl;
+		}
+		Adj = NEW_int(nb_V * nb_V);
+		Orbiter->Int_vec.zero(Adj, nb_V * nb_V);
+
+		for (h = 0; h < Edges.size(); h++) {
+			i = Edges[h][0];
+			j = Edges[h][1];
+			if (FALSE) {
+				cout << "create_graph::init edge " << h << " is " << i << " to " << j << endl;
+			}
+			Adj[i * nb_V + j] = 1;
+			Adj[j * nb_V + i] = 1;
+		}
+
+		label.assign(description->fname);
+
+		string_tools String;
+		String.chop_off_extension_and_path(label);
+
+
+		label_tex.assign("File\\_");
+		label_tex.append(label);
+	}
 	else if (description->f_edge_list) {
 
 		combinatorics_domain Combi;

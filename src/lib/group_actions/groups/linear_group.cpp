@@ -34,7 +34,7 @@ linear_group::linear_group()
 	q = 0;
 	f_has_nice_gens = FALSE;
 	nice_gens = NULL;
-	null();
+	//null();
 }
 
 
@@ -357,6 +357,7 @@ void linear_group::linear_group_init(
 		A2->f_is_linear = TRUE;
 		A2->dimension = W->dimension_of_tensor_action;
 		f_OK = TRUE;
+		f_has_strong_generators = TRUE;
 		Strong_gens = initial_strong_gens;
 		if (f_v) {
 			cout << "action::init_wreath_product_group_and_restrict "
@@ -393,6 +394,7 @@ void linear_group::linear_group_init(
 		A2->f_is_linear = TRUE;
 		A2->dimension = W->dimension_of_tensor_action;
 		f_OK = TRUE;
+		f_has_strong_generators = TRUE;
 		Strong_gens = initial_strong_gens;
 		if (f_v) {
 			cout << "linear_group::linear_group_init "
@@ -459,6 +461,7 @@ void linear_group::linear_group_init(
 
 
 		A2->f_is_linear = TRUE;
+		f_has_strong_generators = TRUE;
 		Strong_gens = initial_strong_gens;
 	
 		if (f_v) {
@@ -637,7 +640,7 @@ void linear_group::init_wedge_action(int verbose_level)
 	vector_space_dimension = A2->G.AW->wedge_dimension;
 	q = input_q;
 	Strong_gens = initial_strong_gens; //A_linear->Strong_gens;
-	f_has_strong_generators = FALSE;
+	f_has_strong_generators = TRUE;
 
 	if (f_v) {
 		cout << "linear_group::init_wedge_action "
@@ -678,7 +681,7 @@ void linear_group::init_wedge_action_detached(int verbose_level)
 
 
 	strong_generators *secondary_strong_gens;
-	strong_generators *exterior_square_strong_gens;
+	//strong_generators *exterior_square_strong_gens;
 	vector_ge *secondary_nice_gens;
 	int n2;
 
@@ -687,7 +690,7 @@ void linear_group::init_wedge_action_detached(int verbose_level)
 	n2 = Combi.binomial2(n);
 
 	secondary_strong_gens = NEW_OBJECT(strong_generators);
-	exterior_square_strong_gens = NEW_OBJECT(strong_generators);
+	//exterior_square_strong_gens = NEW_OBJECT(strong_generators);
 
 	if (f_v) {
 		cout << "linear_group::init_wedge_action_detached before "
@@ -708,6 +711,8 @@ void linear_group::init_wedge_action_detached(int verbose_level)
 
 
 
+	q = F->q;
+
 	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->init(A2, verbose_level);
 	Strong_gens->exterior_square(
@@ -715,7 +720,9 @@ void linear_group::init_wedge_action_detached(int verbose_level)
 				A_linear->Strong_gens,
 				nice_gens,
 				verbose_level);
+	f_has_strong_generators = TRUE;
 
+	A_linear = A2; // override the original action!
 
 	f_has_nice_gens = TRUE;
 

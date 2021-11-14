@@ -113,6 +113,7 @@ public:
 	std::string fname;
 
 	int f_load_from_file_csv_no_border;
+	int f_load_from_file_dimacs;
 
 	int f_edge_list;
 	int n;

@@ -65,7 +65,7 @@ void del_pezzo_surface_of_degree_two_domain::init(
 	Gr = NEW_OBJECT(grassmann);
 	Gr->init(4 /*n*/, 2, F, 0 /* verbose_level */);
 
-	nb_lines_PG_3 = Gr->nCkq.as_lint();
+	nb_lines_PG_3 = Gr->nCkq->as_lint();
 
 	if (f_v) {
 		cout << "del_pezzo_surface_of_degree_two_domain::init nb_lines_PG_3 = " << nb_lines_PG_3 << endl;

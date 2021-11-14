@@ -22,11 +22,15 @@ vector_builder_description::vector_builder_description()
 	f_field = FALSE;
 	//std::string field_label;
 
-	f_here = FALSE;
-	//std::string here_text;
-
 	f_dense = FALSE;
 	//std::string dense_text;
+
+	f_compact = FALSE;
+	//std::string compact_text;
+
+	f_repeat = FALSE;
+	//std::string repeat_text;
+	repeat_length = 0;
 
 	f_format = FALSE;
 	format_k = 0;
@@ -49,52 +53,82 @@ int vector_builder_description::read_arguments(
 	int argc, std::string *argv,
 	int verbose_level)
 {
-	int i;
+	int f_v = (verbose_level >= 1);
+	int i = 0;
 
-	cout << "vector_builder_description::read_arguments" << endl;
+	if (f_v) {
+		cout << "vector_builder_description::read_arguments" << endl;
+		cout << "vector_builder_description::read_arguments i = " << i << endl;
+		cout << "vector_builder_description::read_arguments argc = " << argc << endl;
+	}
 	for (i = 0; i < argc; i++) {
 		if (stringcmp(argv[i], "-field") == 0) {
 			f_field = TRUE;
 			field_label.assign(argv[++i]);
-			cout << "-field " << field_label << endl;
-		}
-		else if (stringcmp(argv[i], "-here") == 0) {
-			f_here = TRUE;
-			here_text.assign(argv[++i]);
-			cout << "-here " << here_text << endl;
+			if (f_v) {
+				cout << "-field " << field_label << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-dense") == 0) {
 			f_dense = TRUE;
 			dense_text.assign(argv[++i]);
-			cout << "-dense " << dense_text << endl;
+			if (f_v) {
+				cout << "-dense " << dense_text << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-compact") == 0) {
+			f_compact = TRUE;
+			compact_text.assign(argv[++i]);
+			if (f_v) {
+				cout << "-compact " << compact_text << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-repeat") == 0) {
+			f_repeat = TRUE;
+			repeat_text.assign(argv[++i]);
+			repeat_length = strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-repeat " << repeat_text << " " << repeat_length << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-format") == 0) {
 			f_format = TRUE;
 			format_k = strtoi(argv[++i]);
-			cout << "-format " << format_k << endl;
+			if (f_v) {
+				cout << "-format " << format_k << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-file") == 0) {
 			f_file = TRUE;
 			file_name.assign(argv[++i]);
-			cout << "-file " << file_name << endl;
+			if (f_v) {
+				cout << "-file " << file_name << endl;
+			}
 		}
 		else if (stringcmp(argv[i], "-sparse") == 0) {
 			f_sparse = TRUE;
 			sparse_len = strtoi(argv[++i]);
 			sparse_pairs.assign(argv[++i]);
-			cout << "-file " << sparse_len << " " << sparse_pairs << endl;
+			if (f_v) {
+				cout << "-sparse " << sparse_len << " " << sparse_pairs << endl;
+			}
 		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {
-			cout << "-end" << endl;
+			if (f_v) {
+				cout << "-end" << endl;
+			}
 			break;
 		}
 		else {
 			cout << "vector_builder_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 	} // next i
-	cout << "vector_builder_description::read_arguments done" << endl;
+	if (f_v) {
+		cout << "vector_builder_description::read_arguments done" << endl;
+	}
 	return i + 1;
 }
 
@@ -104,11 +138,14 @@ void vector_builder_description::print()
 	if (f_field) {
 		cout << "-field " << field_label << endl;
 	}
-	if (f_here) {
-		cout << "-here " << here_text << endl;
-	}
 	if (f_dense) {
 		cout << "-dense " << dense_text << endl;
+	}
+	if (f_compact) {
+		cout << "-compact " << compact_text << endl;
+	}
+	if (f_repeat) {
+		cout << "-repeat " << repeat_text << " " << repeat_length << endl;
 	}
 	if (f_format) {
 		cout << "-format " << format_k << endl;

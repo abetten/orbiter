@@ -135,7 +135,7 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 	if (f_vv) {
 		cout << "orbiter_top_level_session::parse_and_execute before parse" << endl;
 	}
-	parse(argc, Argv, i, program, 0 /* verbose_level */);
+	parse(argc, Argv, i, program, verbose_level);
 	if (f_vv) {
 		cout << "orbiter_top_level_session::parse_and_execute after parse" << endl;
 	}
@@ -223,7 +223,7 @@ void orbiter_top_level_session::parse(int argc, std::string *Argv, int &i, std::
 		if (f_vv) {
 			cout << "orbiter_top_level_session::parse before OC->parse" << endl;
 		}
-		OC->parse(this, argc, Argv, i, 0 /*verbose_level*/);
+		OC->parse(this, argc, Argv, i, verbose_level);
 		if (f_vv) {
 			cout << "orbiter_top_level_session::parse after OC->parse" << endl;
 		}

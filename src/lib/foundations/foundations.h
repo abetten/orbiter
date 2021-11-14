@@ -282,6 +282,7 @@ class combinatorial_object_activity;
 class combinatorial_object_create;
 class combinatorial_object_description;
 class combinatorics_domain;
+class encoded_combinatorial_object;
 class geo_parameter;
 class pentomino_puzzle;
 class tdo_data;
@@ -303,7 +304,6 @@ class classify_using_canonical_forms;
 class data_file;
 class data_input_stream;
 class data_structures_global;
-class encoded_combinatorial_object;
 class fancy_set;
 class int_matrix;
 class int_vec;
@@ -451,6 +451,7 @@ class orbiter_data_file;
 class os_interface;
 class override_double;
 class prepare_frames;
+
 
 // knowledge_base:
 class knowledge_base;
@@ -674,7 +675,7 @@ enum syntax_tree_node_operation_type
 };
 
 
-// we cannot move the following two declarations into their appropriate places,
+// we cannot move the following declaration into its appropriate place,
 // for otherwise we would create incomplete type compile errors:
 
 // #############################################################################
@@ -707,70 +708,6 @@ public:
 
 };
 
-
-
-// #############################################################################
-// longinteger_object.cpp:
-// #############################################################################
-
-extern int longinteger_f_print_scientific;
-
-//! a class to represent aritrary precision integers
-
-
-class longinteger_object {
-
-private:
-	char sgn; // TRUE if negative
-	int l;
-	char *r;
-	
-public:
-	longinteger_object();
-	~longinteger_object();
-	void freeself();
-	
-	char &ith(int i) { return r[i]; };
-	char &sign() { return sgn; };
-	int &len() { return l; };
-	char *&rep() { return r; };
-	void create(long int i, const char *file, int line);
-	void create_product(int nb_factors, int *factors);
-	void create_power(int a, int e);
-		// creates a^e
-	void create_power_minus_one(int a, int e);
-		// creates a^e  - 1
-	void create_from_base_b_representation(int b, int *rep, int len);
-	void create_from_base_10_string(const char *str, int verbose_level);
-	void create_from_base_10_string(const char *str);
-	void create_from_base_10_string(std::string &str);
-	int as_int();
-	long int as_lint();
-	void as_longinteger(longinteger_object &a);
-	void assign_to(longinteger_object &b);
-	void swap_with(longinteger_object &b);
-	std::ostream& print(std::ostream& ost);
-	std::ostream& print_not_scientific(std::ostream& ost);
-	int log10();
-	int output_width();
-	void print_width(std::ostream& ost, int width);
-	void print_to_string(char *str);
-	void normalize();
-	void negate();
-	int is_zero();
-	void zero();
-	int is_one();
-	int is_mone();
-	int is_one_or_minus_one();
-	void one();
-	void increment();
-	void decrement();
-	void add_int(int a);
-	void create_i_power_j(int i, int j);
-	int compare_with_int(int a);
-};
-
-std::ostream& operator<<(std::ostream& ost, longinteger_object& p);
 
 
 

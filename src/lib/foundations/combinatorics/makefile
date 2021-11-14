@@ -13,6 +13,7 @@ MODULES = \
 		combinatorial_object_create.o \
 		combinatorial_object_description.o \
 		combinatorics_domain.o \
+		encoded_combinatorial_object.o \
 		geo_parameter.o \
 		pentomino_puzzle.o \
 		tdo_data.o \

@@ -778,9 +778,9 @@ void semifield_level_two::downstep(int verbose_level)
 			// R_i+I belongs to the conjugacy class of R_i:
 			idx = flag_orbit_classes[nb_flag_orbits * 2 + 0];
 			flag_orbit_number_of_matrices[nb_flag_orbits] =
-					R[idx].class_length.as_int();
+					R[idx].class_length->as_int();
 			flag_orbit_length[nb_flag_orbits] =
-					R[idx].class_length.as_int() >> 1;
+					R[idx].class_length->as_int() >> 1;
 		}
 		else {
 			// R_i+I belongs to a different conjugacy class than R_i:
@@ -788,11 +788,11 @@ void semifield_level_two::downstep(int verbose_level)
 			for (j = 0; j < 2; j++) {
 				idx = flag_orbit_classes[nb_flag_orbits * 2 + j];
 				flag_orbit_number_of_matrices[nb_flag_orbits] +=
-						R[idx].class_length.as_int();
+						R[idx].class_length->as_int();
 			}
 			idx = flag_orbit_classes[nb_flag_orbits * 2 + 0];
 			flag_orbit_length[nb_flag_orbits] =
-					R[idx].class_length.as_int();
+					R[idx].class_length->as_int();
 		}
 		nb_flag_orbits++;
 	}

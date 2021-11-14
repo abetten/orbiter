@@ -651,7 +651,7 @@ void nauty_interface::nauty_interface_matrix_int(
 	//Ago = ago;
 	longinteger_domain Dom;
 
-	Dom.multiply_up(NO->Ago, transversal_length, base_length, 0 /* verbose_level*/);
+	Dom.multiply_up(*NO->Ago, transversal_length, base_length, 0 /* verbose_level*/);
 	NO->Base_length = base_length;
 	for (i = base_length - 1; i >= 0; i--) {
 		NO->Base[base_length - 1 - i] = base[i];

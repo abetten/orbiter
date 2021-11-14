@@ -60,7 +60,7 @@ void surface_study::init(finite_field *F, int nb, int verbose_level)
 		cout << "surface_study::init initializing surface done" << endl;
 		}
 
-	nb_lines_PG_3 = Surf->Gr->nCkq.as_int();
+	nb_lines_PG_3 = Surf->Gr->nCkq->as_int();
 	cout << "surface_study::init nb_lines_PG_3 = " << nb_lines_PG_3 << endl;
 
 

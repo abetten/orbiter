@@ -2842,8 +2842,10 @@ void colored_graph::all_cliques(
 		fname_sol.assign(Control->output_file);
 	}
 	else {
+
 		fname_sol.assign(graph_label);
-		fname_sol.append("_sol.txt");
+		ST.chop_off_extension(fname_sol);
+		fname_sol.append("_sol");
 		//ST.replace_extension_with(fname_sol, "_sol.txt");
 	}
 	if (f_v) {
@@ -2855,12 +2857,17 @@ void colored_graph::all_cliques(
 
 	{
 		string fname_sol_csv;
+		string fname_sol_txt;
 		string_tools ST;
 
 
 		fname_sol_csv.assign(fname_sol);
-		ST.replace_extension_with(fname_sol_csv, ".csv");
-		ofstream fp(fname_sol);
+		fname_sol_txt.assign(fname_sol);
+
+		fname_sol_csv.append(".csv");
+		fname_sol_txt.append(".txt");
+
+		ofstream fp(fname_sol_txt);
 		ofstream fp_csv(fname_sol_csv);
 
 

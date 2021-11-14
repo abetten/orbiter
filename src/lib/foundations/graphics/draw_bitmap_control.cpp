@@ -28,10 +28,14 @@ draw_bitmap_control::draw_bitmap_control()
 	part_width = 4;
 	//std::string part_row;
 	//std::string part_col;
+
+#if 0
 	nb_row_parts = 0;
 	Row_parts = NULL;
 	nb_col_parts = 0;
 	Col_parts = NULL;
+#endif
+
 	f_box_width = FALSE;
 	box_width = 10;
 	f_invert_colors = FALSE;
@@ -69,8 +73,8 @@ int draw_bitmap_control::read_arguments(
 			part_width = strtoi(argv[++i]);
 			part_row.assign(argv[++i]);
 			part_col.assign(argv[++i]);
-			Orbiter->Int_vec.scan(part_row, Row_parts, nb_row_parts);
-			Orbiter->Int_vec.scan(part_col, Col_parts, nb_col_parts);
+			//Orbiter->Int_vec.scan(part_row, Row_parts, nb_row_parts);
+			//Orbiter->Int_vec.scan(part_col, Col_parts, nb_col_parts);
 			if (f_v) {
 				cout << "-partition " << part_width << " " << part_row << " " << part_col << endl;
 			}

@@ -68,8 +68,8 @@ void group_theoretic_activity::init_linear_group(group_theoretic_activity_descri
 	A2 = LG->A2;
 
 	if (f_v) {
-		cout << "group_theoretic_activity::init_linear_group group = " << A1->label << endl;
-		cout << "group_theoretic_activity::init_linear_group action = " << A2->label << endl;
+		cout << "group_theoretic_activity::init_linear_group A1 = " << A1->label << endl;
+		cout << "group_theoretic_activity::init_linear_group A2 = " << A2->label << endl;
 	}
 	//cout << "created group " << LG->prefix << endl;
 

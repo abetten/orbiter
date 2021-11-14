@@ -681,7 +681,7 @@ public:
 class grassmann {
 public:
 	int n, k, q;
-	longinteger_object nCkq; // n choose k q-analog
+	longinteger_object *nCkq; // n choose k q-analog
 	finite_field *F;
 	int *base_cols;
 	int *coset;
@@ -1236,7 +1236,7 @@ public:
 	int *Basis2;
 	int *subspace_basis;
 	int *Basis_Pperp;
-	longinteger_object six_choose_three_q;
+	longinteger_object *six_choose_three_q;
 	int six_choose_three_q_int;
 	int f_show;
 	int dim_intersection;
@@ -1251,7 +1251,6 @@ public:
 
 	knarr();
 	~knarr();
-	void null();
 	void freeself();
 	void init(finite_field *F, int BLT_no, int verbose_level);
 	void points_and_lines(int verbose_level);

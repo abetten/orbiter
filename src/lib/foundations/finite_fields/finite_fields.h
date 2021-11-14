@@ -1548,7 +1548,7 @@ public:
 	unipoly_domain *FX;
 
 	int m, r, field_degree;
-	longinteger_object Qm1, Index, Subfield_Index;
+	longinteger_object *Qm1, *Index, *Subfield_Index;
 	cyclotomic_sets *Cyc;
 	unipoly_object **generator;
 

@@ -307,6 +307,39 @@ int orbiter_session::find_symbol(std::string &label)
 	return Orbiter_symbol_table->find_symbol(label);
 }
 
+void orbiter_session::get_vector_from_label(std::string &label, int *&v, int &sz, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_session::get_vector_from_label" << endl;
+	}
+	if (isalpha(label[0])) {
+		if (f_v) {
+			cout << "orbiter_session::get_vector_from_label "
+					"searching label " << label << endl;
+		}
+		int idx;
+		vector_builder *VB;
+
+		idx = Orbiter->find_symbol(label);
+		VB = (vector_builder *) Orbiter->get_object(idx);
+
+		sz = VB->len;
+		v = NEW_int(sz);
+		Orbiter->Int_vec.copy(VB->v, v, sz);
+
+	}
+	else {
+
+		Orbiter->Int_vec.scan(label, v, sz);
+	}
+
+	if (f_v) {
+		cout << "orbiter_session::get_vector_from_label done" << endl;
+	}
+}
+
 void orbiter_session::find_symbols(std::vector<std::string> &Labels, int *&Idx)
 {
 	int i, idx;

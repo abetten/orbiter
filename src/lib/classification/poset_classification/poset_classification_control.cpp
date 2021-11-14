@@ -443,7 +443,7 @@ int poset_classification_control::read_arguments(
 		}
 		else {
 			cout << "poset_classification_control::read_arguments "
-					"unrecognized option " << argv[i] << endl;
+					"unrecognized option '" << argv[i] << "'" << endl;
 			exit(1);
 		}
 
