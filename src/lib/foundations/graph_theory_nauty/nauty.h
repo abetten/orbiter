@@ -1210,6 +1210,13 @@ extern void nauty(graph*,int*,int*,set*,int*,optionblk*,
 				  extern long int ago;
 				  extern void store_perm(permutation*,int);
 				  /* Done Abdullah 2019 */
+				  /* Anton 2021 */
+				  extern long int nb_firstpathnode;
+				  extern long int nb_othernode;
+				  extern long int nb_processnode;
+				  extern long int nb_firstterminal;
+				  extern FILE *fp_nauty;
+
 
 extern void maketargetcell(graph*,int*,int*,int,set*,int*,int*,int,boolean,
            int,int (*)(graph*,int*,int*,int,int,boolean,int,int,int),int,int);

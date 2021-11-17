@@ -70,15 +70,42 @@ strong_generators *action::set_stabilizer_in_projective_space(
 
 
 	strong_generators *SG;
+	nauty_output *NO;
 
 
+	if (f_v) {
+		cout << "action::set_stabilizer_in_projective_space before Nau.set_stabilizer_of_object" << endl;
+	}
 	SG = Nau.set_stabilizer_of_object(
 		OiP,
 		this /* A_linear */,
 		FALSE /* f_compute_canonical_form */, Canonical_form,
 		canonical_labeling, canonical_labeling_len,
-		verbose_level);
+		NO,
+		verbose_level - 2);
+	if (f_v) {
+		cout << "action::set_stabilizer_in_projective_space after Nau.set_stabilizer_of_object" << endl;
+	}
 
+	long int nb_backtrack1, nb_backtrack2;
+
+	nb_backtrack1 = NO->nb_firstpathnode;
+	nb_backtrack2 = NO->nb_processnode;
+
+	if (f_v) {
+		cout << "canonical_form_nauty::quartic_curve "
+				"go = " << *NO->Ago << endl;
+
+		cout << "canonical_form_nauty::quartic_curve "
+				"nb_backtrack1 = " << nb_backtrack1 << endl;
+		cout << "canonical_form_nauty::quartic_curve "
+				"nb_backtrack2 = " << nb_backtrack2 << endl;
+
+
+	}
+
+
+	FREE_OBJECT(NO);
 
 #if 0
 

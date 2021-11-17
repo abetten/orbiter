@@ -378,12 +378,6 @@ void create_graph::init(
 	}
 	else if (description->f_disjoint_sets_graph) {
 
-		char str[1000];
-
-
-
-
-
 		graph_theory_domain GT;
 
 
@@ -395,13 +389,20 @@ void create_graph::init(
 			cout << "create_graph::init after GT.make_disjoint_sets_graph" << endl;
 		}
 
+		string L;
+		string_tools String;
 
+		L.assign(description->disjoint_sets_graph_fname);
+		String.chop_off_extension(L);
+		L.append("_disjoint_sets");
 
-		sprintf(str, "disjoint_sets_graph_%s", description->disjoint_sets_graph_fname.c_str());
-		label.assign(str);
-		sprintf(str, "disjoint\\_sets\\_graph\\_%s", description->disjoint_sets_graph_fname.c_str());
-		label_tex.assign(str);
+		label.assign(L);
 
+		L.assign(description->disjoint_sets_graph_fname);
+		String.chop_off_extension(L);
+		L.append("\\_disjoint\\_sets");
+
+		label_tex.assign(L);
 	}
 
 

@@ -130,6 +130,7 @@ void action::init_linear_group(
 		//S = SG->create_sims(0 /* verbose_level */);
 		FREE_OBJECT(SG);
 	}
+
 #if 0
 	else {
 		if (f_v) {
@@ -658,7 +659,7 @@ void action::init_permutation_group(int degree, int verbose_level)
 	
 	if (f_v) {
 		cout << "action::init_permutation_group, degree=" << degree << endl;
-		}
+	}
 	sprintf(str, "Perm%d", degree);
 
 
@@ -672,13 +673,13 @@ void action::init_permutation_group(int degree, int verbose_level)
 	
 	if (f_v) {
 		cout << "action::init_permutation_group before P->init" << endl;
-		}
+	}
 
 	P->init(degree, page_length_log, verbose_level);
 
 	if (f_v) {
 		cout << "action::init_permutation_group after P->init" << endl;
-		}
+	}
 	
 	ptr = NEW_OBJECT(action_pointer_table);
 	ptr->init_function_pointers_permutation_group();
@@ -689,7 +690,7 @@ void action::init_permutation_group(int degree, int verbose_level)
 	if (f_vv) {
 		cout << "elt_size_in_int = " << elt_size_in_int << endl;
 		cout << "coded_elt_size_in_char = " << coded_elt_size_in_char << endl;
-		}
+	}
 	allocate_element_data();
 	action::degree = degree;
 	make_element_size = degree;
@@ -700,7 +701,7 @@ void action::init_permutation_group(int degree, int verbose_level)
 	if (f_vv) {
 		cout << "action::init_permutation_group "
 				"calling allocate_base_data" << endl;
-		}
+	}
 	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
 	Stabilizer_chain->allocate_base_data(this, degree, verbose_level);
 
@@ -708,7 +709,7 @@ void action::init_permutation_group(int degree, int verbose_level)
 	int i;
 	for (i = 0; i < base_len(); i++) {
 		base_i(i) = i;
-		}
+	}
 
 	// ToDo
 
@@ -722,12 +723,41 @@ void action::init_permutation_group(int degree, int verbose_level)
 		print_group_order(cout);
 		cout << endl;
 		print_info();
-		}
+	}
 	if (f_v) {
 		cout << "action::init_permutation_group done" << endl;
-		}
+	}
 	
 }
+
+void action::init_permutation_group_from_nauty_output(nauty_output *NO,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "action::init_permutation_group_from_nauty_output" << endl;
+	}
+
+	if (f_v) {
+		cout << "action::init_permutation_group_from_nauty_output "
+				"before init_permutation_group_from_generators" << endl;
+	}
+	init_permutation_group_from_generators(NO->N,
+		TRUE, *NO->Ago,
+		NO->Aut_counter, NO->Aut,
+		NO->Base_length, NO->Base_lint,
+		0 /*verbose_level - 2*/);
+	if (f_v) {
+		cout << "action::init_permutation_group_from_nauty_output "
+				"after init_permutation_group_from_generators" << endl;
+	}
+
+	if (f_v) {
+		cout << "action::init_permutation_group_from_nauty_output done" << endl;
+	}
+}
+
 
 void action::init_permutation_group_from_generators(int degree, 
 	int f_target_go, longinteger_object &target_go, 
@@ -852,13 +882,13 @@ void action::init_permutation_group_from_generators(int degree,
 	
 	if (f_vv) {
 		cout << "action::init_permutation_group_from_generators "
-				"before init_sims" << endl;
+				"before init_sims_only" << endl;
 	}
 	init_sims_only(G, verbose_level - 10);
 
 	if (f_vv) {
 		cout << "action::init_permutation_group_from_generators "
-				"after init_sims" << endl;
+				"after init_sims_only" << endl;
 	}
 
 
@@ -1865,16 +1895,19 @@ void action::init_group_from_strong_generators(
 	}
 
 	if (f_vv) {
-		cout << "action::init_group_from_strong_generators before init_sims" << endl;
+		cout << "action::init_group_from_strong_generators before init_sims_only" << endl;
 	}
 	init_sims_only(G, 0/*verbose_level - 1*/);
 	if (f_vv) {
-		cout << "action::init_group_from_strong_generators after init_sims" << endl;
+		cout << "action::init_group_from_strong_generators after init_sims_only" << endl;
 	}
 	compute_strong_generators_from_sims(0/*verbose_level - 2*/);
 
 	if (f_v) {
 		print_info();
+	}
+	if (f_v) {
+		cout << "action::init_group_from_strong_generators done" << endl;
 	}
 }
 
@@ -2002,7 +2035,7 @@ sims *action::create_sims_from_generators_randomized(
 
 	if (f_target_go) {
 		ss->init_target_group_order(target_go, verbose_level - 1);
-		}
+	}
 
 	if (f_v) {
 		cout << "action::create_sims_from_generators_randomized "

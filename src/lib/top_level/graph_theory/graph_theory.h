@@ -455,6 +455,9 @@ public:
 	std::string split_by_starters_fname_reps;
 	std::string split_by_starters_col_label;
 
+	int f_split_by_clique;
+	std::string split_by_clique_label;
+	std::string split_by_clique_set;
 
 	int f_save;
 	int f_automorphism_group;

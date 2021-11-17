@@ -280,6 +280,39 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 			Subgraph->save(fname_out, verbose_level - 2);
 		}
 	}
+	else if (Descr->f_split_by_clique) {
+		cout << "splitting by clique " << Descr->split_by_clique_label
+				<< " clique " << Descr->split_by_clique_set << endl;
+
+		long int *set;
+		int sz;
+
+		Orbiter->Lint_vec.scan(Descr->split_by_clique_set, set, sz);
+
+		colored_graph *Subgraph;
+		fancy_set *color_subset;
+		fancy_set *vertex_subset;
+
+
+		Subgraph = CG->compute_neighborhood_subgraph_based_on_subset(
+				set, sz,
+				vertex_subset, color_subset,
+				verbose_level);
+
+		string fname_out;
+
+		fname_out.assign(CG->label);
+
+		fname_out.append("_");
+		fname_out.append(Descr->split_by_clique_label);
+		fname_out.append(".graph");
+
+
+		Subgraph->save(fname_out, verbose_level - 2);
+
+		FREE_OBJECT(Subgraph);
+
+	}
 
 	else if (Descr->f_save) {
 

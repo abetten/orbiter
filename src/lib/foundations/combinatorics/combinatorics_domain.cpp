@@ -3605,6 +3605,44 @@ void combinatorics_domain::refine_the_partition(
 
 }
 
+
+void combinatorics_domain::create_incidence_matrix_of_graph(int *Adj, int n,
+		int *&M, int &nb_rows, int &nb_cols,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, u;
+
+	if (f_v) {
+		cout << "combinatorics_domain::create_incidence_matrix_of_graph" << endl;
+	}
+	nb_rows = n;
+	nb_cols = 0;
+	for (i = 0; i < n; i++) {
+		for (j = i + 1; j < n; j++) {
+			if (Adj[i * n + j]) {
+				nb_cols++;
+			}
+		}
+	}
+	M = NEW_int(n * nb_cols);
+	Orbiter->Int_vec.zero(M, n * nb_cols);
+	u = 0;
+	for (i = 0; i < n; i++) {
+		for (j = i + 1; j < n; j++) {
+			if (Adj[i * n + j]) {
+				M[i * nb_cols + u] = 1;
+				M[j * nb_cols + u] = 1;
+				u++;
+			}
+		}
+	}
+	if (f_v) {
+		cout << "combinatorics_domain::create_incidence_matrix_of_graph done" << endl;
+	}
+}
+
+
 //##############################################################################
 // global functions, for instance for nauty_interface.cpp:
 //##############################################################################

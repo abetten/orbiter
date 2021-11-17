@@ -1271,6 +1271,8 @@ int projective_space_object_classifier::process_object(
 
 
 
+	nauty_output *NO;
+
 	if (f_projective_space) {
 		if (f_v) {
 			cout << "projective_space_object_classifier::process_object "
@@ -1284,6 +1286,7 @@ int projective_space_object_classifier::process_object(
 			PA->A,
 			TRUE /* f_compute_canonical_form */, Canonical_form,
 			canonical_labeling, canonical_labeling_len,
+			NO,
 			verbose_level - 2);
 		if (f_v) {
 			cout << "projective_space_object_classifier::process_object "
@@ -1300,7 +1303,6 @@ int projective_space_object_classifier::process_object(
 			cout << "projective_space_object_classifier::process_object "
 					"not in projective space" << endl;
 		}
-		nauty_output *NO;
 
 		if (f_v) {
 			cout << "projective_space_object_classifier::process_object "
@@ -1322,19 +1324,32 @@ int projective_space_object_classifier::process_object(
 						A_perm,
 						verbose_level);
 
-
-		NO->Ago->assign_to(go);
 		if (f_v) {
 			cout << "projective_space_object_classifier::process_object "
 					"after OiP->run_nauty" << endl;
-			cout << "projective_space_object_classifier::process_object "
-					"strong generators are:" << endl;
+
 			A_perm->Strong_gens->print_generators_in_latex_individually(cout);
 			A_perm->Strong_gens->print_generators_in_source_code();
 			A_perm->print_base();
-
 		}
+
 	}
+
+
+
+	NO->Ago->assign_to(go);
+
+	if (f_v) {
+		cout << "projective_space_object_classifier::process_object "
+				"go = " << go << endl;
+
+		NO->print_stats();
+
+
+	}
+
+	FREE_OBJECT(NO);
+
 
 
 	ago = go.as_lint();
@@ -1676,6 +1691,7 @@ void projective_space_object_classifier::latex_report(
 			}
 
 			nauty_interface_with_group Nau;
+			nauty_output *NO;
 
 			SG = Nau.set_stabilizer_of_object(
 				OiP,
@@ -1684,12 +1700,15 @@ void projective_space_object_classifier::latex_report(
 				TRUE /* f_compute_canonical_form */, Canonical_form,
 				//canonical_form, canonical_form_len,
 				canonical_labeling, canonical_labeling_len,
+				NO,
 				verbose_level - 2);
+
 			if (f_v) {
 				cout << "projective_space_object_classifier::latex_report after Nau.set_stabilizer_of_object" << endl;
 			}
 
 			FREE_lint(canonical_labeling);
+			FREE_OBJECT(NO);
 
 			SG->group_order(go);
 #endif

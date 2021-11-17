@@ -608,6 +608,7 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 	}
 
 	nauty_interface_with_group Nau;
+	nauty_output *NO;
 
 
 	SG_pt_stab = Nau.set_stabilizer_of_object(
@@ -615,6 +616,7 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 		Surf_A->PA->PA2->A,
 		f_compute_canonical_form, Canonical_form,
 		canonical_labeling, canonical_labeling_len,
+		NO,
 		verbose_level);
 
 	if (f_v) {
@@ -622,6 +624,24 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 				"after Nau.set_stabilizer_of_object" << endl;
 	}
 
+	long int nb_backtrack1, nb_backtrack2;
+
+	nb_backtrack1 = NO->nb_firstpathnode;
+	nb_backtrack2 = NO->nb_processnode;
+
+	if (f_v) {
+		cout << "quartic_curve_from_surface::compute_stabilizer "
+				"go = " << *NO->Ago << endl;
+
+		cout << "quartic_curve_from_surface::compute_stabilizer "
+				"nb_backtrack1 = " << nb_backtrack1 << endl;
+		cout << "quartic_curve_from_surface::compute_stabilizer "
+				"nb_backtrack2 = " << nb_backtrack2 << endl;
+
+
+	}
+
+	FREE_OBJECT(NO);
 
 	SG_pt_stab->group_order(pt_stab_order);
 	if (f_v) {

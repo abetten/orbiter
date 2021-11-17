@@ -81,25 +81,9 @@ void arc_generator::freeself()
 		}
 	}
 	
-#if 0
-	if (Grass) {
-		FREE_OBJECT(Grass);
-	}
-	if (A) {
-		FREE_OBJECT(A);
-	}
-	if (A_on_lines) {
-		FREE_OBJECT(A_on_lines);
-	}
-#endif
 	if (Poset) {
 		FREE_OBJECT(Poset);
 	}
-#if 0
-	if (P) {
-		FREE_OBJECT(P);
-	}
-#endif
 	if (line_type) {
 		FREE_int(line_type);
 	}
@@ -130,81 +114,10 @@ void arc_generator::main(int verbose_level)
 
 
 
-#if 0
-	if (GTA->Descr->ECA) {
-		if (GTA->Descr->ECA->f_lift) {
-
-			if (f_v) {
-				cout << "arc_generator::main before lift" << endl;
-			}
-
-			GTA->Descr->ECA->target_size = Descr->target_size;
-			GTA->Descr->ECA->user_data = (void *) this;
-			GTA->Descr->ECA->A = A;
-			GTA->Descr->ECA->A2 = A;
-			GTA->Descr->ECA->prepare_function_new =
-					arc_generator_lifting_prepare_function_new;
-			GTA->Descr->ECA->early_test_function =
-					arc_generator_early_test_function;
-			GTA->Descr->ECA->early_test_function_data = (void *) this;
-
-			GTA->Descr->ECA->compute_lifts(verbose_level);
-
-			if (f_v) {
-				cout << "arc_generator::main "
-						"after lift" << endl;
-			}
-	
-		}
-	}
-
-
-	if (GTA->Descr->IA) {
-		if (f_v) {
-			cout << "arc_generator::main before IA->execute" << endl;
-		}
-
-		GTA->Descr->IA->execute(verbose_level);
-
-		if (f_v) {
-			cout << "arc_generator::main after IA->execute" << endl;
-		}
-	}
-	else {
-		if (f_v) {
-			cout << "arc_generator::main no IA" << endl;
-		}
-
-	}
-#endif
-
-
-
 	if (f_v) {
 		cout << "arc_generator::main done" << endl;
 		}
 }
-
-#if 0
-void arc_generator::init_from_description(
-	arc_generator_description *Descr,
-	projective_space_with_action *PA,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "arc_generator::init_from_description" << endl;
-	}
-
-	//init(Descr, Descr->LG->A2, Descr->LG->Strong_gens, verbose_level);
-	init(Descr, PA, Descr->SG, verbose_level);
-
-	if (f_v) {
-		cout << "arc_generator::init_from_description done" << endl;
-	}
-}
-#endif
 
 void arc_generator::init(
 	arc_generator_description *Descr,
@@ -222,27 +135,9 @@ void arc_generator::init(
 	arc_generator::Descr = Descr;
 	arc_generator::PA = PA;
 
-	
-#if 0
-	if (!Descr->f_q) {
-		cout << "arc_generator::init please use option -q <q>" << endl;
-		exit(1);
-	}
-	if (!Descr->f_target_size) {
-		cout << "arc_generator::init please use option -target_size <target_size>" << endl;
-		exit(1);
-	}
-#endif
 
-	//arc_generator::A = A;
 	arc_generator::SG = SG;
-	//f_semilinear = A->is_semilinear_matrix_group();
 
-#if 0
-	A_on_lines = NEW_OBJECT(action);
-	AG = NEW_OBJECT(action_on_grassmannian);
-#endif
-	
 
 	
 	if (f_v) {
@@ -264,70 +159,6 @@ void arc_generator::init(
 	}
 
 
-#if 0
-	if (f_v) {
-		cout << "arc_generator::init "
-				"creating action on lines" << endl;
-	}
-	Grass = NEW_OBJECT(grassmann);
-
-	if (f_v) {
-		cout << "arc_generator::init "
-				"before Grass->init" << endl;
-	}
-	Grass->init(Descr->n /*n*/, 2 /*k*/, Descr->F, 0 /*verbose_level - 2*/);
-	if (f_v) {
-		cout << "arc_generator::init "
-				"after Grass->init" << endl;
-	}
-	if (f_v) {
-		cout << "arc_generator::init "
-				"before AG->init" << endl;
-	}
-	AG->init(*A, Grass, 0/*verbose_level - 2*/);
-	if (f_v) {
-		cout << "arc_generator::init "
-				"after AG->init" << endl;
-	}
-	
-	if (f_v) {
-		cout << "arc_generator::init "
-				"before A_on_lines->induced_action_on_grassmannian" << endl;
-	}
-	A_on_lines->induced_action_on_grassmannian(A, AG, 
-		FALSE /*f_induce_action*/, NULL /*sims *old_G */, 
-		verbose_level - 2);
-	if (f_v) {
-		cout << "arc_generator::init "
-				"after A_on_lines->induced_action_on_grassmannian" << endl;
-	}
-	
-	if (f_v) {
-		cout << "arc_generator::init "
-				"action A_on_lines created, printing information: ";
-		A_on_lines->print_info();
-	}
-
-
-	if (f_v) {
-		cout << "arc_generator::init "
-				"creating projective plane" << endl;
-	}
-
-
-	P = NEW_OBJECT(projective_space);
-
-	if (f_v) {
-		cout << "arc_generator::init before P->init" << endl;
-	}
-	P->init(Descr->n - 1, Descr->F,
-		TRUE /* f_init_incidence_structure */, 
-		0 /*verbose_level - 2*/);
-	if (f_v) {
-		cout << "arc_generator::init after P->init" << endl;
-	}
-
-#endif
 
 
 	if (Descr->f_has_forbidden_point_set) {
@@ -370,28 +201,6 @@ void arc_generator::init(
 	}
 
 
-#if 0
-	if (GTA->Descr->IA) {
-		if (f_v) {
-			cout << "arc_generator::init before GTA->Descr->IA->init" << endl;
-		}
-
-		GTA->Descr->IA->init(A, A, gen,
-			Descr->target_size, Descr->Control, GTA->Descr->ECA,
-			arc_generator_report,
-			NULL /* callback_subset_orbits */,
-			this,
-			verbose_level);
-		if (f_v) {
-			cout << "arc_generator::init after GTA->Descr->IA->init" << endl;
-		}
-	}
-	else {
-		if (f_v) {
-			cout << "arc_generator::init no GTA->Descr->IA" << endl;
-		}
-	}
-#endif
 
 	if (f_v) {
 		cout << "arc_generator::init done" << endl;
@@ -488,12 +297,6 @@ void arc_generator::compute_starter(int verbose_level)
 	if (f_v) {
 		cout << "arc_generator::compute_starter" << endl;
 	}
-
-#if 0
-	gen->f_print_function = TRUE;
-	gen->print_function = callback_arc_print;
-	gen->print_function_data = this;
-#endif
 
 	int schreier_depth = 1000;
 	int f_use_invariant_subset_if_available = TRUE;
