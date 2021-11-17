@@ -115,6 +115,7 @@ void canonical_form_nauty::quartic_curve(
 	canonical_labeling = NEW_lint(nb_rows + nb_cols);
 
 	nauty_interface_with_group Nau;
+	nauty_output *NO;
 
 
 	if (f_v) {
@@ -125,11 +126,24 @@ void canonical_form_nauty::quartic_curve(
 		PA->A,
 		f_compute_canonical_form, Canonical_form,
 		canonical_labeling, canonical_labeling_len,
+		NO,
 		0 /*verbose_level*/);
 	if (f_v) {
 		cout << "canonical_form_nauty::quartic_curve after Nau.set_stabilizer_of_object" << endl;
 	}
 
+
+	if (f_v) {
+		cout << "canonical_form_nauty::quartic_curve "
+				"go = " << *NO->Ago << endl;
+
+		NO->print_stats();
+
+
+
+	}
+
+	FREE_OBJECT(NO);
 
 	SG_pt_stab->group_order(pt_stab_order);
 	if (f_v) {

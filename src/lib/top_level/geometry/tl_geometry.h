@@ -52,6 +52,8 @@ public:
 	int f_has_forbidden_point_set;
 	std::string forbidden_point_set_string;
 
+	int f_override_group;
+	std::string override_group_label;
 
 	arc_generator_description();
 	~arc_generator_description();

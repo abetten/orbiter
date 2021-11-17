@@ -507,6 +507,8 @@ public:
 		vector_ge *&nice_gens,
 		int verbose_level);
 	void init_permutation_group(int degree, int verbose_level);
+	void init_permutation_group_from_nauty_output(nauty_output *NO,
+		int verbose_level);
 	void init_permutation_group_from_generators(int degree, 
 		int f_target_go, longinteger_object &target_go, 
 		int nb_gens, int *gens, 
@@ -1128,8 +1130,6 @@ public:
 		int nb_parts, int *parts,
 		int *labeling,
 		int verbose_level);
-	void create_incidence_matrix_of_graph(int *Adj, int n,
-		int *&M, int &nb_rows, int &nb_cols, int verbose_level);
 	action *create_automorphism_group_of_graph(int *Adj,
 		int n, int verbose_level);
 	action *create_automorphism_group_and_canonical_labeling_of_graph(
@@ -1185,6 +1185,7 @@ public:
 		action *A_linear,
 		int f_compute_canonical_form, bitvector *&Canonical_form,
 		long int *canonical_labeling, int &canonical_labeling_len,
+		nauty_output *&NO,
 		int verbose_level);
 
 };

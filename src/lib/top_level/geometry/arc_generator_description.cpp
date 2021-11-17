@@ -17,31 +17,28 @@ namespace top_level {
 
 arc_generator_description::arc_generator_description()
 {
-#if 0
-	f_q = FALSE;
-	LG = NULL;
-	F = NULL;
-	q = 0;
-#endif
 
 	f_poset_classification_control = FALSE;
 	Control = NULL;
 	f_d = FALSE;
 	d = 0;
-#if 0
-	f_n = FALSE;
-	n = 0;
-#endif
+
 	f_target_size = FALSE;
 	target_size = 0;
+
 	f_conic_test = FALSE;
+
 	f_test_nb_Eckardt_points = FALSE;
 	nb_E = 0;
 	Surf = NULL;
 	f_affine = FALSE;
 	f_no_arc_testing = FALSE;
+
 	f_has_forbidden_point_set = FALSE;
 	//forbidden_point_set_string = NULL;
+
+	f_override_group = FALSE;
+	//std::string override_group_label;
 
 }
 
@@ -61,15 +58,6 @@ int arc_generator_description::read_arguments(int argc, std::string *argv,
 	}
 	for (i = 0; i < argc; i++) {
 
-#if 0
-		if (stringcmp(argv[i], "-q") == 0) {
-			f_q = TRUE;
-			q = strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-q " << q << endl;
-			}
-		}
-#endif
 		if (stringcmp(argv[i], "-poset_classification_control") == 0) {
 			f_poset_classification_control = TRUE;
 			Control = NEW_OBJECT(poset_classification_control);
@@ -95,15 +83,6 @@ int arc_generator_description::read_arguments(int argc, std::string *argv,
 				cout << "-d " << d << endl;
 			}
 		}
-#if 0
-		else if (stringcmp(argv[i], "-n") == 0) {
-			f_n = TRUE;
-			n = strtoi(argv[++i]);
-			if (f_v) {
-				cout << "-n " << n << endl;
-			}
-		}
-#endif
 		else if (stringcmp(argv[i], "-target_size") == 0) {
 			f_target_size = TRUE;
 			target_size = strtoi(argv[++i]);
@@ -148,6 +127,13 @@ int arc_generator_description::read_arguments(int argc, std::string *argv,
 				cout << "-f_has_forbidden_point_set " << forbidden_point_set_string << endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-override_group") == 0) {
+			f_override_group = TRUE;
+			override_group_label.assign(argv[++i]);
+			if (f_v) {
+				cout << "-override_group " << override_group_label << endl;
+			}
+		}
 		else if (stringcmp(argv[i], "-end") == 0) {
 			break;
 		}
@@ -166,22 +152,12 @@ int arc_generator_description::read_arguments(int argc, std::string *argv,
 
 void arc_generator_description::print()
 {
-#if 0
-	if (f_q) {
-		cout << "-q " << q << endl;
-	}
-#endif
 	if (f_poset_classification_control) {
 		Control->print();
 	}
 	if (f_d) {
 		cout << "-d " << d << endl;
 	}
-#if 0
-	if (f_n) {
-		cout << "-n " << n << endl;
-	}
-#endif
 	if (f_target_size) {
 		cout << "-target_size " << target_size << endl;
 	}
@@ -199,6 +175,9 @@ void arc_generator_description::print()
 	}
 	if (f_has_forbidden_point_set) {
 		cout << "-f_has_forbidden_point_set " << forbidden_point_set_string << endl;
+	}
+	if (f_override_group) {
+		cout << "-override_group " << override_group_label << endl;
 	}
 }
 

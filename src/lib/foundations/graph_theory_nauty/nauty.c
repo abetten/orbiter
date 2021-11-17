@@ -255,6 +255,14 @@ int base_length;
 long int ago;
 int *transversal_length;
 /* Abdullah 2019 */
+/* Anton 2021 */
+long int nb_firstpathnode;
+long int nb_othernode;
+long int nb_processnode;
+long int nb_firstterminal;
+FILE *fp_nauty;
+static void save_state(int type, int *lab, int *ptn, int level, int numcells);
+static void save_state_4(int *lab, int level);
 
 
 void
@@ -569,6 +577,41 @@ nauty(graph *g_arg, int *lab, int *ptn, set *active_arg,
 *                                                                            *
 *****************************************************************************/
 
+static void save_state(int type, int *lab, int *ptn, int level, int numcells)
+{
+	if (fp_nauty == NULL) {
+		return;
+	}
+    fprintf(fp_nauty, "%d,%d,%d,%d,%d", nb_firstpathnode + nb_othernode + nb_processnode + nb_firstterminal, type, n, level, numcells);
+    for (int i = 0; i < n; i++) {
+    	fprintf(fp_nauty, ",%d", lab[i]);
+    }
+    for (int i = 0; i < n; i++) {
+    	fprintf(fp_nauty, ",%d", ptn[i]);
+    }
+    fprintf(fp_nauty, "\n");
+
+}
+
+static void save_state_4(int *lab, int level)
+{
+	if (fp_nauty == NULL) {
+		return;
+	}
+    fprintf(fp_nauty, "%d,%d,%d,%d,%d",
+    		nb_firstpathnode + nb_othernode + nb_processnode + nb_firstterminal,
+			4, n, level, n);
+    for (int i = 0; i < n; i++) {
+    	fprintf(fp_nauty, ",%d", lab[i]);
+    }
+    for (int i = 0; i < n; i++) {
+    	fprintf(fp_nauty, ",%d", 0);
+    }
+    fprintf(fp_nauty, "\n");
+
+}
+
+
 static int
 #if !MAXN
 firstpathnode0(int *lab, int *ptn, int level, int numcells,
@@ -582,6 +625,9 @@ firstpathnode(int *lab, int *ptn, int level, int numcells)
 #if !MAXN
     set *tcell;
     tcnode *tcnode_this;
+
+    nb_firstpathnode++;
+    save_state(1, lab, ptn, level, numcells);
 
     tcnode_this = tcnode_parent->next;
     if (tcnode_this == NULL)
@@ -743,6 +789,9 @@ othernode(int *lab, int *ptn, int level, int numcells)
     set *tcell;
     tcnode *tcnode_this;
 
+    nb_othernode++;
+    save_state(2, lab, ptn, level, numcells);
+
     tcnode_this = tcnode_parent->next;
     if (tcnode_this == NULL)
     {
@@ -881,6 +930,10 @@ firstterminal(int *lab, int level)
 {
     int i;
 
+    nb_firstterminal++;
+    save_state_4(lab, level);
+
+
     stats->maxlevel = level;
     gca_first = allsamelevel = eqlev_first = level;
     firstcode[level+1] = 077777;
@@ -938,6 +991,13 @@ processnode(int *lab, int *ptn, int level, int numcells)
     int i,code,save,newlevel;
     boolean ispruneok;
     int sr;
+
+    nb_processnode++;
+    save_state(3, lab, ptn, level, numcells);
+
+    if ((nb_processnode % 1024) == 0) {
+    	printf("processnode nb_processnode = %ld\n", nb_processnode);
+    }
 
     code = 0;
     if (eqlev_first != level && (!getcanon || comp_canon < 0))

@@ -32,14 +32,18 @@ public:
 
 	void nauty_interface_graph_bitvec(int v, bitvector *Bitvec,
 		int *labeling, int *partition,
-		int *Aut, int &Aut_counter,
-		int *Base, int &Base_length,
-		int *Transversal_length, longinteger_object &Ago, int verbose_level);
+		nauty_output *NO,
+		//int *Aut, int &Aut_counter,
+		//int *Base, int &Base_length,
+		//int *Transversal_length, longinteger_object &Ago,
+		int verbose_level);
 	void nauty_interface_graph_int(int v, int *Adj,
 		int *labeling, int *partition,
-		int *Aut, int &Aut_counter,
-		int *Base, int &Base_length,
-		int *Transversal_length, longinteger_object &Ago, int verbose_level);
+		nauty_output *NO,
+		//int *Aut, int &Aut_counter,
+		//int *Base, int &Base_length,
+		//int *Transversal_length, longinteger_object &Ago,
+		int verbose_level);
 #if 0
 	void nauty_interface_int(int v, int b, int *X, int nb_inc,
 		int *labeling, int *partition,

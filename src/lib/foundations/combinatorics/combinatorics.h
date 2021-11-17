@@ -492,6 +492,9 @@ public:
 			int v, int k, int b, long int *Blocks_coded,
 			int &b_reduced,
 			int verbose_level);
+	void create_incidence_matrix_of_graph(int *Adj, int n,
+			int *&M, int &nb_rows, int &nb_cols,
+			int verbose_level);
 
 };
 

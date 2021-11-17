@@ -26,6 +26,10 @@ nauty_output::nauty_output()
 	Base_lint = NULL;
 	Transversal_length = NULL;
 	Ago = NULL;
+
+	nb_firstpathnode = 0;
+	nb_othernode = 0;
+	nb_processnode = 0;
 }
 
 nauty_output::~nauty_output()
@@ -61,6 +65,15 @@ void nauty_output::allocate(int N, int verbose_level)
 	Base_lint = NEW_lint(N);
 	Transversal_length = NEW_int(N);
 	Ago = NEW_OBJECT(longinteger_object);
+}
+
+void nauty_output::print_stats()
+{
+	cout << "nb_backtrack1 = " << nb_firstpathnode << endl;
+	cout << "nb_backtrack2 = " << nb_othernode << endl;
+	cout << "nb_backtrack3 = " << nb_processnode << endl;
+	cout << "nb_backtrack4 = " << nb_firstterminal << endl;
+
 }
 
 

@@ -836,6 +836,37 @@ void projective_space_global::do_classify_arcs(
 	}
 #endif
 
+
+	strong_generators *gens;
+
+	if (Arc_generator_description->f_override_group) {
+		if (f_v) {
+			cout << "projective_space_global::do_classify_arcs "
+					"f_override_group label = " << Arc_generator_description->override_group_label << endl;
+		}
+		int idx;
+		linear_group *LG;
+
+		idx = Orbiter->find_symbol(Arc_generator_description->override_group_label);
+		if (Orbiter->get_object_type(idx) != t_linear_group) {
+			cout << "projective_space_global::do_classify_arcs The object given must be a linear group" << endl;
+			exit(1);
+		}
+		LG = (linear_group *) Orbiter->get_object(idx);
+
+		if (!LG->f_has_strong_generators) {
+			cout << "projective_space_global::do_classify_arcs the group must have strong generators" << endl;
+			exit(1);
+		}
+
+		gens = LG->Strong_gens;
+
+
+	}
+	else {
+		gens = PA->A->Strong_gens;
+	}
+
 	{
 		arc_generator *Gen;
 
@@ -849,7 +880,7 @@ void projective_space_global::do_classify_arcs(
 		Gen->init(
 				Arc_generator_description,
 				PA,
-				PA->A->Strong_gens,
+				gens,
 				verbose_level);
 
 		if (f_v) {

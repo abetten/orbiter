@@ -548,9 +548,15 @@ public:
 	int *Transversal_length;
 	longinteger_object *Ago;
 
+	long int nb_firstpathnode;
+	long int nb_othernode;
+	long int nb_processnode;
+	long int nb_firstterminal;
+
 	nauty_output();
 	~nauty_output();
 	void allocate(int N, int verbose_level);
+	void print_stats();
 
 };
 
