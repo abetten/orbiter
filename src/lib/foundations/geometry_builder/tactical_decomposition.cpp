@@ -686,6 +686,8 @@ void tactical_decomposition::dd_work(int v, int f_points,
 		cout << "tactical_decomposition::dd_work" << endl;
 	}
 
+	combinatorics_domain Combi;
+
 	tdo_scheme *tdos;
 	grid *G_l = NULL;
 	grid *G_c = NULL;
@@ -828,7 +830,7 @@ void tactical_decomposition::dd_work(int v, int f_points,
 						cout << "tactical_decomposition::dd_work after get_tdos" << endl;
 					}
 
-					k = ij2k(i1, j1, n);
+					k = Combi.ij2k(i1, j1, n);
 
 					tdog->add_tdos(tdos, k, verbose_level);
 
@@ -948,7 +950,8 @@ void tactical_decomposition::refine(int v,
 		len = G1->len[i];
 
 		if (f_v) {
-			cout << "tactical_decomposition::refine class " << i << " / " << G1->G_max << " of size " << len << endl;
+			cout << "tactical_decomposition::refine "
+					"class " << i << " / " << G1->G_max << " of size " << len << endl;
 		}
 
 
@@ -965,7 +968,8 @@ void tactical_decomposition::refine(int v,
 		for (j = 0; j < len; j++) {
 
 			if (f_v) {
-				cout << "tactical_decomposition::refine class " << i << " / " << G1->G_max << " j=" << j << " / " << len << endl;
+				cout << "tactical_decomposition::refine "
+						"class " << i << " / " << G1->G_max << " j=" << j << " / " << len << endl;
 			}
 
 			P->move_to(&p);
@@ -1017,7 +1021,8 @@ void tactical_decomposition::refine(int v,
 
 
 		if (f_v) {
-			cout << "tactical_decomposition::refine computing refinement in class i=" << i << endl;
+			cout << "tactical_decomposition::refine computing refinement "
+					"in class i=" << i << endl;
 		}
 		/* Verfeinerung des Bereichs (first, len)
 		 * nach Typen der Ableitungen

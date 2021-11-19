@@ -380,6 +380,7 @@ class gen_geo;
 class geo_frame;
 class geometry_builder_description;
 class geometry_builder;
+class girth_test;
 class grid;
 class inc_encoding;
 class incidence;

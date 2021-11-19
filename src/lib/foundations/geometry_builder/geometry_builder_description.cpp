@@ -30,6 +30,16 @@ geometry_builder_description::geometry_builder_description()
 	f_fuse = FALSE;
 	//std::string fuse_text;
 
+	f_girth_test = FALSE;
+	girth = 0;
+
+	f_lambda = FALSE;
+	lambda = 0;
+
+	f_find_square = TRUE; /* JS 120100 */
+
+	f_simple = FALSE; /* JS 180100 */
+
 	//std::vector<std::string> test_lines;
 	//std::vector<std::string> test_flags;
 	//std::vector<std::string> test2_lines;
@@ -82,6 +92,32 @@ int geometry_builder_description::read_arguments(
 			fuse_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-fuse " << fuse_text << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-girth") == 0) {
+			f_girth_test = TRUE;
+			girth = strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-girth_test " << girth << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-lambda") == 0) {
+			f_lambda = TRUE;
+			lambda = strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-lambda " << lambda << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-no_square_test") == 0) {
+			f_find_square = FALSE;
+			if (f_v) {
+				cout << "-no_square_test " << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-simple") == 0) {
+			f_simple = TRUE;
+			if (f_v) {
+				cout << "-simple " << endl;
 			}
 		}
 		else if (stringcmp(argv[i], "-test") == 0) {
@@ -147,6 +183,18 @@ void geometry_builder_description::print()
 	}
 	if (f_fuse) {
 		cout << "-fuse " << fuse_text << endl;
+	}
+	if (f_girth_test) {
+		cout << "-girth " << girth << endl;
+	}
+	if (f_lambda) {
+		cout << "-lambda " << lambda << endl;
+	}
+	if (f_find_square == FALSE) {
+		cout << "-no_square_test " << endl;
+	}
+	if (f_simple) {
+		cout << "-simple " << endl;
 	}
 	if (test_lines.size()) {
 		int i;

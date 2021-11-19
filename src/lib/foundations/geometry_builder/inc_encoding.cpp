@@ -78,14 +78,16 @@ int inc_encoding::find_square(int m, int n)
 	for (l = 0; l < n; l++) {
 		u = theX[m * dim_n + l];
 		for (i = 0; i < m; i++) {
-			/* fuer alle Vorgaengerzeilen: */
+			// loop over all previous rows
 
-			/* u suchen: */
+			// search for u:
+
 			f_found_u = FALSE;
 			for (j = 0; j < R[i] - 1; j++) {
-				/* < R[i] - 1,
-				 * da das letzte Kreuzchen fuer
-				 * v bleiben muss */
+
+				// < R[i] - 1,
+				// since one incidence is reserved for v
+
 				if (theX[i * dim_n + j] == u) {
 					f_found_u = TRUE;
 					break;
@@ -95,14 +97,13 @@ int inc_encoding::find_square(int m, int n)
 				continue; /* next i */
 			}
 
-			/* v suchen: */
+			// look for v
 			for (j++; j < R[i]; j++) {
 				if (theX[i * dim_n + j] == v) {
 					return TRUE;
 				}
 			}
-			/* v nicht gefunden,
-			 * kein Quadrat */
+			// v is not found, square test is negative
 
 		} // next i
 	} // next l

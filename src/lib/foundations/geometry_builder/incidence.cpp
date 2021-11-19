@@ -16,14 +16,13 @@ incidence::incidence()
 	gg = NULL;
 	Encoding = NULL;
 
-	//int theY[MAX_V * MAX_R];
-	//int pairs[MAX_V][MAX_V];
-	f_lambda = FALSE;
-	lambda = 0;
-	f_find_square = FALSE; /* JS 120100 */
-	f_simple = FALSE; /* JS 180100 */
+	K = NULL;
 
-	/* initiale vbars / hbars: */
+
+	theY = NULL;
+	//int pairs[MAX_V][MAX_V];
+
+	// initial vbar / hbar
 	nb_i_vbar = 0;
 	i_vbar = NULL;
 	nb_i_hbar = 0;
@@ -31,11 +30,7 @@ incidence::incidence()
 
 	gl_nb_GEN = 0;
 
-	int i;
-
-	for (i = 0; i < MAX_V; i++) {
-		iso_type_at_line[i] = NULL;
-	}
+	iso_type_at_line = NULL;
 	iso_type_no_vhbars = NULL;
 
 	back_to_line = 0;
@@ -44,6 +39,17 @@ incidence::incidence()
 
 incidence::~incidence()
 {
+	if (K) {
+		FREE_int(K);
+	}
+	if (theY) {
+		int i;
+
+		for (i = 0; i < gg->GB->B; i++) {
+			FREE_int(theY[i]);
+		}
+		FREE_pint(theY);
+	}
 	if (Encoding) {
 		FREE_OBJECT(Encoding);
 	}
@@ -53,6 +59,22 @@ incidence::~incidence()
 	if (i_hbar) {
 		FREE_int(i_hbar);
 	}
+
+	if (iso_type_at_line) {
+		int i;
+
+		for (i = 0; i < gg->GB->V; i++) {
+			if (iso_type_at_line[i]) {
+				FREE_OBJECT(iso_type_at_line[i]);
+			}
+		}
+		FREE_pvoid((void **) iso_type_at_line);
+	}
+
+	if (iso_type_no_vhbars) {
+		FREE_OBJECT(iso_type_no_vhbars);
+	}
+
 }
 
 void incidence::init(gen_geo *gg, int v, int b, int *R, int verbose_level)
@@ -63,7 +85,7 @@ void incidence::init(gen_geo *gg, int v, int b, int *R, int verbose_level)
 		cout << "incidence::init" << endl;
 	}
 
-	int i;
+	int i, j;
 
 	incidence::gg = gg;
 	Encoding = NEW_OBJECT(inc_encoding);
@@ -77,6 +99,23 @@ void incidence::init(gen_geo *gg, int v, int b, int *R, int verbose_level)
 	}
 
 
+	K = NEW_int(gg->GB->B);
+	for (j = 0; j < gg->GB->B; j++) {
+		K[j] = 0;
+	}
+
+	theY = NEW_pint(gg->GB->B);
+	for (j = 0; j < gg->GB->B; j++) {
+		theY[j] = NEW_int(gg->GB->V);
+	}
+
+
+	iso_type_at_line = (iso_type **) NEW_pvoid(gg->GB->V);
+	for (i = 0; i < gg->GB->V; i++) {
+		iso_type_at_line[i] = NULL;
+	}
+	iso_type_no_vhbars = NULL;
+
 	if (f_v) {
 		cout << "incidence::init before init_pairs" << endl;
 	}
@@ -85,15 +124,8 @@ void incidence::init(gen_geo *gg, int v, int b, int *R, int verbose_level)
 		cout << "incidence::init after init_pairs" << endl;
 	}
 
-	f_find_square = TRUE;
 
-	f_lambda = FALSE;
-	lambda = 0;
 	back_to_line = -1;
-	for (i = 0; i < MAX_V; i++) {
-		iso_type_at_line[i] = NULL;
-	}
-	iso_type_no_vhbars = NULL;
 
 	gl_nb_GEN = 0;
 

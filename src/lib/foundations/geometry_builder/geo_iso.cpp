@@ -897,6 +897,7 @@ static void iso2_calc_grid(
 	int begin_d, begin_dd, d1;
 	/* TDOSS *tdoss; */
 	int first, tdo_n, Bj;
+	combinatorics_domain Combi;
 	
 	G->m = iso->b_t;
 	G->n = iso->G_max;
@@ -955,7 +956,7 @@ static void iso2_calc_grid(
 				if (j == i) {
 					continue;
 				}
-				l = ij2k(i, j, G->m);
+				l = Combi.ij2k(i, j, G->m);
 				d1 = dd[l];
 				i1 = G->q.data[i];
 				j1 = G->q.data[j];
