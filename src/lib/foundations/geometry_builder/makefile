@@ -13,6 +13,7 @@ MODULES = \
 		geo_iso.o \
 		geometry_builder_description.o \
 		geometry_builder.o \
+		girth_test.o \
 		globals.o \
 		grid.o \
 		inc_encoding.o \
@@ -20,7 +21,6 @@ MODULES = \
 		iso_grid.o \
 		iso_info.o \
 		iso_type.o \
-		os.o \
 		tactical_decomposition.o \
 		tdo_gradient.o \
 		tdo_scheme.o

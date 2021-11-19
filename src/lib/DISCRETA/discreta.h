@@ -183,7 +183,7 @@ class discreta_matrix;			// derived from base
 class Vector;			// derived from base
 	// self is a pointer obtained from 
 	// calloc_nobjects_plus_length().
-	// this means that we have an array of n + 1 objacts, 
+	// this means that we have an array of n + 1 objects,
 	// self points to the n array of user entries 
 	// and at offset [-1] we have the length l (as an integer object), 
 	// vector access (via s_i or via operator[]) 

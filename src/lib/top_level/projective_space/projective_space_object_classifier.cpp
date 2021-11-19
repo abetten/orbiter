@@ -937,7 +937,7 @@ void projective_space_object_classifier::process_set_of_points(
 	string dummy;
 
 	if (f_v) {
-		cout << "projective_space_object_classifier::classify_objects_using_nauty "
+		cout << "projective_space_object_classifier::process_set_of_points "
 				"input set of points "
 			<< input_data << ":" << endl;
 	}
@@ -951,7 +951,7 @@ void projective_space_object_classifier::process_set_of_points(
 			input_data, verbose_level);
 
 	if (f_v) {
-		cout << "projective_space_object_classifier::classify_objects_using_nauty "
+		cout << "projective_space_object_classifier::process_set_of_points "
 				"before process_object" << endl;
 	}
 	int nb_rows, nb_cols;
@@ -973,7 +973,7 @@ void projective_space_object_classifier::process_set_of_points(
 
 
 	if (f_v) {
-		cout << "projective_space_object_classifier::classify_objects_using_nauty "
+		cout << "projective_space_object_classifier::process_set_of_points "
 				"after process_object INPUT_TYPE_SET_OF_POINTS, f_found=" << f_found << endl;
 	}
 
@@ -990,7 +990,7 @@ void projective_space_object_classifier::process_set_of_points(
 	}
 	else {
 		if (f_v) {
-			cout << "projective_space_object_classifier::classify_objects_using_nauty "
+			cout << "projective_space_object_classifier::process_set_of_points "
 					"New isomorphism type! The current number of "
 				"isomorphism types is " << CB->nb_types << endl;
 		}
@@ -1823,10 +1823,10 @@ void projective_space_object_classifier::latex_report(
 					Base_group, FALSE /* f_ownership */,
 					verbose_level);
 
-				fp << "Generators in conjugation action action on the group itself:\\\\" << endl;
+				fp << "Generators in conjugation action on the group itself:\\\\" << endl;
 				SG->print_with_given_action(fp, A_conj);
 
-				fp << "Elements in conjugation action action on the group itself:\\\\" << endl;
+				fp << "Elements in conjugation action on the group itself:\\\\" << endl;
 				SG->print_elements_with_given_action(fp, A_conj);
 
 				string fname_gap;

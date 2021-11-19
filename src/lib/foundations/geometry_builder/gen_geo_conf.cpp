@@ -42,7 +42,8 @@ gen_geo_conf::~gen_geo_conf()
 
 void gen_geo_conf::print(std::ostream &ost)
 {
-	ost << "v=" << v << " b=" << b << " r=" << r << " r0=" << r0 << " i0=" << i0 << " j0=" << j0 << endl;
+	ost << "v=" << v << " b=" << b << " r=" << r
+			<< " r0=" << r0 << " i0=" << i0 << " j0=" << j0 << endl;
 }
 
 }}

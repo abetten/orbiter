@@ -20,7 +20,6 @@ namespace foundations {
 #define MAX_V 300
 #define MAX_B 300
 #define MAX_VB 100   /* MAX(MAX_V, MAX_B) */
-#define MAX_B2 6400    /* B ueber 2 */
 #define MAX_R 80
 
 #define MAX_GRID 100
@@ -120,19 +119,18 @@ public:
 	geometry_builder *GB;
 
 	int nb_fuse;
-	int *Fuse_first;
-	int *Fuse_len;
-	int *K0;
-	int *KK;
-	int *K1;
-	int *F_last_k_in_col;
+	int *Fuse_first; // [nb_fuse]
+	int *Fuse_len; // [nb_fuse]
+
+	int *K0; // [GB->v_len * GB->b_len]
+	int *KK; // [GB->v_len * GB->b_len]
+	int *K1; // [GB->v_len * GB->b_len]
+	int *F_last_k_in_col; // [GB->v_len * GB->b_len]
 
 
-	gen_geo_conf *Conf; //[GB->v_len * GB->b_len];
+	gen_geo_conf *Conf; //[GB->v_len * GB->b_len]
 
 	incidence *inc;
-
-	int *K; //[GB->B];
 
 	int *f_vbar; // [GB->V * inc->Encoding->dim_n]
 	int *vbar; // [GB->V]
@@ -146,6 +144,7 @@ public:
 
 	std::string inc_file_name;
 
+	girth_test *Girth_test;
 
 	gen_geo();
 	~gen_geo();
@@ -176,16 +175,23 @@ public:
 	int geo_back_test(int I, int verbose_level);
 	int GeoLineFst0(int I, int m, int verbose_level);
 	int GeoLineNxt0(int I, int m, int verbose_level);
-	int GeoLineFst(int I, int m);
-	int GeoLineNxt(int I, int m);
+	int GeoLineFst(int I, int m, int verbose_level);
+	int GeoLineNxt(int I, int m, int verbose_level);
 	void GeoLineClear(int I, int m);
-	int GeoConfFst(int I, int m, int J);
-	int GeoConfNxt(int I, int m, int J);
+	int GeoConfFst(int I, int m, int J, int verbose_level);
+	int GeoConfNxt(int I, int m, int J, int verbose_level);
 	void GeoConfClear(int I, int m, int J);
-	int GeoXFst(int I, int m, int J, int n);
-	int GeoXNxt(int I, int m, int J, int n);
+	int GeoXFst(int I, int m, int J, int n, int verbose_level);
+	int GeoXNxt(int I, int m, int J, int n, int verbose_level);
 	void GeoXClear(int I, int m, int J, int n);
-	int X_Fst(int I, int m, int J, int n, int j);
+	int X_Fst(int I, int m, int J, int n, int j, int verbose_level);
+	int apply_tests(int I, int m, int J, int n, int j, int verbose_level);
+	void increment_pairs_point(int i1, int col, int k);
+	void decrement_pairs_point(int i1, int col, int k);
+	void girth_test_add_incidence(int i, int j_idx, int j);
+	void girth_test_delete_incidence(int i, int j_idx, int j);
+	void girth_Floyd(int i, int verbose_level);
+	int check_girth_condition(int i, int j_idx, int j, int verbose_level);
 
 };
 
@@ -229,6 +235,17 @@ public:
 	std::string TDO_text;
 	int f_fuse;
 	std::string fuse_text;
+
+	int f_girth_test;
+	int girth;
+
+	// f_lambda and f_find_square are mutually exclusive!
+
+	int f_lambda;
+	int lambda;
+
+	int f_find_square;
+	int f_simple;
 
 	std::vector<std::string> test_lines;
 	std::vector<std::string> test_flags;
@@ -322,6 +339,41 @@ public:
 
 
 
+// #############################################################################
+// girth_test.cpp
+// #############################################################################
+
+//! classification of geometries
+
+
+
+
+
+class girth_test {
+
+public:
+
+	gen_geo *gg;
+
+	int girth;
+	int V; // = gg->GB->V
+
+	int **S; // [V][V * V]
+	int **D; // [V][V * V]
+
+	girth_test();
+	~girth_test();
+	void init(gen_geo *gg, int girth, int verbose_level);
+	void Floyd(int row, int verbose_level);
+	void add_incidence(int i, int j_idx, int j);
+	void delete_incidence(int i, int j_idx, int j);
+	int check_girth_condition(int i, int j_idx, int j, int verbose_level);
+	void print_Si(int i);
+	void print_Di(int i);
+
+};
+
+
 
 // globals.cpp:
 void inc_transpose(int *R,
@@ -390,7 +442,8 @@ public:
 	int dim_n;
 	int v;
 	int b;
-	int *R;
+	int *R; // [v]
+		// R[i] is the number of incidences in row i
 
 	inc_encoding();
 	~inc_encoding();
@@ -429,12 +482,17 @@ public:
 	gen_geo *gg;
 	inc_encoding *Encoding;
 
-	int theY[MAX_V * MAX_R];
+	int *K; //[GB->B]
+		// K[j] is the current sum of incidences in column j
+
+	int **theY; //[gg->GB->B][gg->GB->V];
 	int pairs[MAX_V][MAX_V];
-	int f_lambda;
-	int lambda;
-	int f_find_square;
-	int f_simple;
+		// pairs[i][i1]
+		// is the number of times that {i1,i} is contained in a block
+		// where 0 \le i1 < i.
+
+
+
 
 	// initial vertical and horizontal bars:
 	int nb_i_vbar;
@@ -444,7 +502,7 @@ public:
 
 	int gl_nb_GEN;
 
-	iso_type *iso_type_at_line[MAX_V];
+	iso_type **iso_type_at_line; // [gg->GB->V]
 	iso_type *iso_type_no_vhbars;
 
 	int back_to_line;
@@ -537,7 +595,7 @@ public:
 	int b;
 	int max_r;
 
-	int *R; /* [MAX_V] */
+	int *R; // [MAX_V]
 
 	int tdo_m;
 	int tdo_V[MAX_V];
@@ -585,7 +643,7 @@ void init_ISO2(void);
 // iso_type.cpp
 // #############################################################################
 
-//! classification of geometries based on using the TDO invariant
+//! classification of geometries based on canonical forms
 
 class iso_type {
 
@@ -601,12 +659,9 @@ public:
 	int f_ddp;          // third flag
 	int f_ddb;          // fourth flag
 
-	/* test of the first
-	 * or the second kind:
-	 * (second kind means
-	 * check completely realizable
-	 * geometries only)
-	 */
+	// test of the first or the second kind:
+	// (second kind means we only check those geometries
+	// that are completely realizable
 	int f_generate_first;
 	int f_beginning_checked;
 
@@ -643,16 +698,10 @@ public:
 	~iso_type();
 	void init(int v, incidence *inc, int tdo_flags, int verbose_level);
 	void init2();
-#if 0
-	int find_geometry(
-		inc_encoding *Encoding,
-		int v, incidence *inc,
-		int verbose_level);
-#endif
 	void add_geometry(
 		inc_encoding *Encoding,
 		int v, incidence *inc,
-		int *already_there,
+		int &f_already_there,
 		int verbose_level);
 	void recalc_autgroup(
 		int v, incidence *inc,
@@ -706,20 +755,6 @@ public:
 
 };
 
-
-
-// os.cpp:
-
-
-int os_ticks();
-int os_ticks_system();
-int os_ticks_per_second();
-void os_ticks_to_hms(int ticks, int *h, int *m, int *s);
-void print_delta_time(int l, char *str);
-char *Eostr(char *s);
-char *eostr(char *s);
-int ij2k(int i, int j, int n);
-void k2ij(int k, int *i, int *j, int n);
 
 
 

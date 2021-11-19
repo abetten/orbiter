@@ -174,7 +174,7 @@ void arc_generator_description::print()
 		cout << "-no_arc_testing " << endl;
 	}
 	if (f_has_forbidden_point_set) {
-		cout << "-f_has_forbidden_point_set " << forbidden_point_set_string << endl;
+		cout << "-has_forbidden_point_set " << forbidden_point_set_string << endl;
 	}
 	if (f_override_group) {
 		cout << "-override_group " << override_group_label << endl;

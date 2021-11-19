@@ -223,7 +223,7 @@ int iso_type::find_geometry(
 void iso_type::add_geometry(
 	inc_encoding *Encoding,
 	int v, incidence *inc,
-	int *already_there,
+	int &f_already_there,
 	int verbose_level)
 {
 
@@ -410,10 +410,10 @@ l_exit:
 	}
 
 	if (f_new_object) {
-		*already_there = FALSE;
+		f_already_there = FALSE;
 	}
 	else {
-		*already_there = TRUE;
+		f_already_there = TRUE;
 	}
 
 #endif

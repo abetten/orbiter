@@ -2930,6 +2930,16 @@ Op_6_2_with_group:
 #stabilizer_chain_base_data::allocate_base_data degree is too large
 
 
+Op_8_2:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 1 8 F -without_group -end \
+		-with O -do -orthogonal_space_activity \
+			-cheat_sheet_orthogonal -end
+	pdflatex O_1_8_2_report.tex 
+	open O_1_8_2_report.pdf
+
+
 Op_6_64:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 64 -end \
@@ -2975,6 +2985,19 @@ H_2_4:
 			-cheat_sheet_hermitian 2 -end
 	pdflatex H_2_4.tex 
 	open H_2_4.pdf
+
+
+H_2_9:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 9 -end \
+		-with F -do -finite_field_activity \
+			-cheat_sheet_hermitian 2 -end
+	pdflatex H_2_9.tex 
+	open H_2_9.pdf
+
+
+# 28 points: 6, 11, 9, 7, 14, 19, 17, 15, 80, 75, 78, 74, 35, 30, 33, 29, 62, 57, 60, 56, 26, 21, 24, 3, 37, 82, 64, 46 
+
 
 H_3_4:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -4356,7 +4379,7 @@ PG_2_2_subsets:
 
 
 
-PG_3_2_subsets:
+PG_3_2_subsets_again:
 	$(ORBITER_PATH)orbiter.out -v 3 \
 		-orbiter_path $(ORBITER_PATH) \
 		-define F -finite_field -q 2 -end \
@@ -10668,6 +10691,18 @@ SECTION_CODING_THEORY_BCH_CODES:
 
 
 
+F2_BCH_code_n21:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 2 -end \
+		-with F -do -finite_field_activity -make_BCH_code 21 3 -end
+
+
+F7_RS_code_n6:
+	$(ORBITER_PATH)orbiter.out -v 30 \
+		-define F -finite_field -q 7 -end \
+		-with F -do -finite_field_activity -make_BCH_code 6 3 -end
+
+
 BCH_255_5_evaluate_elementary_symmetric_functions_1:
 	$(ORBITER_PATH)orbiter.out -v 3 -define F -finite_field -q 256 -end \
 		-define e1 -formula "e1" "e1" "" $(ELEMENTARY_SYMMETRIC_8_1)    \
@@ -11618,6 +11653,14 @@ linsp30_pt_distribution:
 ####
 # geometry builder:
 ####
+
+geo_petersen:
+	$(ORBITER_PATH)orbiter.out -v 8 \
+		-geometry_builder \
+			-V 10 -B 15 -TDO 3 -fuse 1 \
+			-fname_GEO petersen -girth 5 \
+			-test 3,4,5,6,7,8,9,10 FFFF \
+		-end
 
 geo_7_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -13153,6 +13196,8 @@ load_graph_pp16_1:
 		-graph_theoretic_activity -automorphism_group -end \
 
 # go=34217164800
+#nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack1 = 6
+#nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack2 = 134
 
 load_graph_pp16_2:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -13163,6 +13208,7 @@ load_graph_pp16_2:
 		-with Gamma -do \
 		-graph_theoretic_activity -automorphism_group -end \
 
+# does not finish
 
 load_graph_pp16_9:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -13183,6 +13229,11 @@ load_graph_grid_3_3:
 		-with Gamma -do \
 		-graph_theoretic_activity -automorphism_group -end \
 
+
+#nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack1 = 4
+#nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack2 = 9
+
+
 load_graph_sts_13:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Gamma -graph -load_from_file_dimacs \
@@ -13193,6 +13244,14 @@ load_graph_sts_13:
 		-with Gamma -do \
 		-graph_theoretic_activity -automorphism_group -end
 	make ORBITER_PATH=$(ORBITER_PATH) -f sts-13_group.makefile  sts-13
+
+
+#nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack1 = 3
+#nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack2 = 24
+
+
+
+
 
 ############################################################################################################
 # Section 11.2: Graph Theory: Classification
