@@ -465,9 +465,11 @@ static void nauty_interface_fill_nauty_output(int n,
 	NO->nb_othernode = nb_othernode;
 	NO->nb_processnode = nb_processnode;
 	NO->nb_firstterminal = nb_firstterminal;
-	fprintf(fp_nauty, "-1\n");
-	fclose(fp_nauty);
-	fp_nauty = NULL;
+	if (fp_nauty) {
+		fprintf(fp_nauty, "-1\n");
+		fclose(fp_nauty);
+		fp_nauty = NULL;
+	}
 
 	if (f_v) {
 		cout << "nauty_interface_fill_nauty_output done" << endl;
