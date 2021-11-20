@@ -11795,7 +11795,10 @@ geo_14_3:
 
 geo_15_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-geometry_builder -V 15 -B 15 -TDO 3 -fuse 1 -fname_GEO 15_3 -test 4,5,6,7,8,9,10,11,12,13,14,15 FFFF \
+		-geometry_builder \
+			-V 15 -B 15 -TDO 3 \
+			-fuse 1 -fname_GEO 15_3 \
+			-test 4,5,6,7,8,9,10,11,12,13,14,15 FFFF \
 		-end
 
 # 245342 geos, 8064, 720, 192^2, 128, 72, 48^6, 32, 30^2, 24^2, 20^2, 18, 16^10, 15^2, 12^11, 10^3, 8^34, 6^59, 5^5, 4^180, 3^69, 2^3709, 1^241240
@@ -11814,6 +11817,18 @@ geo_15_3_c:
 
 # 3 min 6 sec
 
+geo_15_3_g4:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-geometry_builder \
+			-V 15 -B 15 -TDO 3 \
+			-fuse 1 -fname_GEO 15_3_g4 \
+			-girth 4 \
+			-test 4,5,6,7,8,9,10,11,12,13,14,15 FFFF \
+		-end
+
+# The unique Cremona Richmond configuration with group of order 720
+
+
 
 geo_15_4:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -11824,7 +11839,80 @@ geo_15_4:
 
 
 
+geo_16_4_g4:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-geometry_builder \
+			-V 16 -B 16 -TDO 4 \
+			-fuse 1 -fname_GEO 16_4_g4 \
+			-girth 4 \
+			-test 4,5,6,7,8,9,10,11,12,13,14,15,16 FFFF \
+		-end
 
+# none
+
+geo_17_4_g4:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-geometry_builder \
+			-V 17 -B 17 -TDO 4 \
+			-fuse 1 -fname_GEO 17_4_g4 \
+			-girth 4 \
+			-test 4,5,6,7,8,9,10,11,12,13,14,15,16,17 FFFF \
+		-end
+
+# none
+
+geo_18_4_g4:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-geometry_builder \
+			-V 18 -B 18 -TDO 4 \
+			-fuse 1 -fname_GEO 18_4_g4 \
+			-girth 4 \
+			-test 4,5,6,7,8,9,10,11,12,13,14,15,16,17,18 FFFF \
+		-end
+
+# none
+
+geo_19_4_g4:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-geometry_builder \
+			-V 19 -B 19 -TDO 4 \
+			-fuse 1 -fname_GEO 19_4_g4 \
+			-girth 4 \
+			-test 4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19 FFFF \
+		-end
+
+# none
+
+geo_20_4_g4:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-geometry_builder \
+			-V 20 -B 20 -TDO 4 \
+			-fuse 1 -fname_GEO 20_4_g4 \
+			-girth 4 \
+			-test 4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20 FFFF \
+		-end
+
+# none
+
+geo_21_4_g4:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-geometry_builder \
+			-V 21 -B 21 -TDO 4 \
+			-fuse 1 -fname_GEO 21_4_g4 \
+			-girth 4 \
+			-test 4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21 FFFF \
+		-end
+
+geo_40_4_g4:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-geometry_builder \
+			-V 40 -B 40 -TDO 4 \
+			-fuse 1 -fname_GEO 40_4_g4 \
+			-girth 4 \
+			-test 4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40 FFFF \
+		-end
+
+# 2 geos, ago=51840^2
 
 #############################################################################################################
 # Section 10.4: Design Theory

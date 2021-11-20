@@ -32,12 +32,14 @@ girth_test::~girth_test()
 {
 	int i;
 
-	for (i = 0; i < V; i++) {
-		FREE_int(S[i]);
-		FREE_int(D[i]);
+	if (S) {
+		for (i = 0; i < V; i++) {
+			FREE_int(S[i]);
+			FREE_int(D[i]);
+		}
+		FREE_pint(S);
+		FREE_pint(D);
 	}
-	FREE_pint(S);
-	FREE_pint(D);
 }
 
 void girth_test::init(gen_geo *gg, int girth, int verbose_level)
@@ -125,41 +127,23 @@ void girth_test::add_incidence(int i, int j_idx, int j)
 {
 	int h, a;
 
-#if 0
-	dim_n = gg->inc->Encoding->dim_n;
-	for (h = 0; h < j_idx; h++) {
-		a = gg->inc->Encoding->theX[i * dim_n + h];
-		D[i][a * V + j] = 1;
-		D[i][j * V + a] = 1;
-	}
-#else
 	for (h = 0; h < gg->inc->K[j]; h++) {
 		a = gg->inc->theY[j][h];
 		//cout << "girth_test::add_incidence a=" << a << " i=" << i << endl;
 		D[i][a * V + i] = 1;
 		D[i][i * V + a] = 1;
 	}
-#endif
 }
 
 void girth_test::delete_incidence(int i, int j_idx, int j)
 {
 	int h, a;
 
-#if 0
-	dim_n = gg->inc->Encoding->dim_n;
-	for (h = 0; h < j_idx; h++) {
-		a = gg->inc->Encoding->theX[i * dim_n + h];
-		D[i][a * V + j] = 0;
-		D[i][j * V + a] = 0;
-	}
-#else
 	for (h = 0; h < gg->inc->K[j]; h++) {
 		a = gg->inc->theY[j][h];
 		D[i][a * V + i] = 0;
 		D[i][i * V + a] = 0;
 	}
-#endif
 }
 
 int girth_test::check_girth_condition(int i, int j_idx, int j, int verbose_level)
@@ -187,7 +171,7 @@ int girth_test::check_girth_condition(int i, int j_idx, int j, int verbose_level
 					continue;
 				}
 				if (S[i][a1 * V + a2] + 2 < girth) {
-					if (TRUE) {
+					if (f_v) {
 						cout << "girth_test::check_girth_condition reject:" << endl;
 						cout << "a1 = " << a1 << ", a2 = " << a2 << ", and nb_completed_rows = " << i << endl;
 						cout << "path from a1 to a2 = " << S[i][a1 * V + a2] << ", and girth = " << girth << endl;

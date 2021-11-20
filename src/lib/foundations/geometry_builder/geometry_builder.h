@@ -43,8 +43,7 @@ class cperm {
 public:
 	int l;
 	int *data;
-		/* a permutation of
-		 * { 0, 1 ... l - 1 } */
+		// a permutation of { 0, 1 ... l - 1 }
 
 	cperm();
 	~cperm();
@@ -155,12 +154,13 @@ public:
 		int gen_print_intervall,
 		int verbose_level);
 	void TDO_init(int *v, int *b, int *theTDO, int verbose_level);
-	void init_tdo_line(int fuse_idx, int tdo_line, int v, int *b, int *r, int verbose_level);
+	void init_tdo_line(int fuse_idx,
+			int tdo_line, int v, int *b, int *r, int verbose_level);
 	void print_conf();
 	void init_bars(int verbose_level);
 	void init_fuse(int verbose_level);
-	void init_k();
-	void conf_init_last_non_zero_flag();
+	void init_k(int verbose_level);
+	void conf_init_last_non_zero_flag(int verbose_level);
 	void print_pairs(int line);
 	void main2(int &nb_GEN, int &nb_GEO, int &ticks, int &tps, int verbose_level);
 	void generate_all(int verbose_level);
@@ -482,10 +482,11 @@ public:
 	gen_geo *gg;
 	inc_encoding *Encoding;
 
-	int *K; //[GB->B]
+	int *K; //[gg->GB->B]
 		// K[j] is the current sum of incidences in column j
 
 	int **theY; //[gg->GB->B][gg->GB->V];
+
 	int pairs[MAX_V][MAX_V];
 		// pairs[i][i1]
 		// is the number of times that {i1,i} is contained in a block
