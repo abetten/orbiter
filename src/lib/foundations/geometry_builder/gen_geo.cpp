@@ -199,7 +199,7 @@ void gen_geo::TDO_init(int *v, int *b, int *theTDO, int verbose_level)
 			init_tdo_line(fuse_idx,
 					I /* tdo_line */, v[I] /* v */, b,
 					theTDO + I * GB->b_len /* r */,
-					verbose_level);
+					verbose_level - 1);
 		}
 	}
 	if (f_v) {
@@ -216,14 +216,14 @@ void gen_geo::TDO_init(int *v, int *b, int *theTDO, int verbose_level)
 	if (f_v) {
 		cout << "gen_geo::TDO_init before init_k" << endl;
 	}
-	init_k();
+	init_k(verbose_level - 1);
 	if (f_v) {
 		cout << "gen_geo::TDO_init after init_k" << endl;
 	}
 	if (f_v) {
 		cout << "gen_geo::TDO_init before conf_init_last_non_zero_flag" << endl;
 	}
-	conf_init_last_non_zero_flag();
+	conf_init_last_non_zero_flag(verbose_level - 1);
 	if (f_v) {
 		cout << "gen_geo::TDO_init after conf_init_last_non_zero_flag" << endl;
 	}
@@ -397,8 +397,13 @@ void gen_geo::init_fuse(int verbose_level)
 
 }
 
-void gen_geo::init_k()
+void gen_geo::init_k(int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "gen_geo::init_k" << endl;
+	}
 	int I, J, fuse_idx, f, l, k, s, b;
 
 
@@ -446,40 +451,50 @@ void gen_geo::init_k()
 			}
 		}
 	}
-	cout << "KK:" << endl;
-	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-		for (J = 0; J < GB->b_len; J++) {
-			cout << setw(3) << KK[fuse_idx * GB->b_len + J] << " ";
+	if (f_v) {
+		cout << "KK:" << endl;
+		for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
+			for (J = 0; J < GB->b_len; J++) {
+				cout << setw(3) << KK[fuse_idx * GB->b_len + J] << " ";
+			}
+			cout << endl;
 		}
-		cout << endl;
-	}
-	cout << "K0:" << endl;
-	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-		for (J = 0; J < GB->b_len; J++) {
-			cout << setw(3) << K0[fuse_idx * GB->b_len + J] << " ";
+		cout << "K0:" << endl;
+		for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
+			for (J = 0; J < GB->b_len; J++) {
+				cout << setw(3) << K0[fuse_idx * GB->b_len + J] << " ";
+			}
+			cout << endl;
 		}
-		cout << endl;
-	}
 
-	cout << "K1:" << endl;
-	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-		for (J = 0; J < GB->b_len; J++) {
-			cout << setw(3) << K1[fuse_idx * GB->b_len + J] << " ";
+		cout << "K1:" << endl;
+		for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
+			for (J = 0; J < GB->b_len; J++) {
+				cout << setw(3) << K1[fuse_idx * GB->b_len + J] << " ";
+			}
+			cout << endl;
 		}
-		cout << endl;
-	}
 
-	cout << "F_last_k_in_col:" << endl;
-	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-		for (J = 0; J < GB->b_len; J++) {
-			cout << setw(3) << F_last_k_in_col[fuse_idx * GB->b_len + J] << " ";
+		cout << "F_last_k_in_col:" << endl;
+		for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
+			for (J = 0; J < GB->b_len; J++) {
+				cout << setw(3) << F_last_k_in_col[fuse_idx * GB->b_len + J] << " ";
+			}
+			cout << endl;
 		}
-		cout << endl;
+	}
+	if (f_v) {
+		cout << "gen_geo::init_k done" << endl;
 	}
 }
 
-void gen_geo::conf_init_last_non_zero_flag()
+void gen_geo::conf_init_last_non_zero_flag(int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "gen_geo::conf_init_last_non_zero_flag" << endl;
+	}
 	int fuse_idx, ff, fl, i, I, r;
 
 	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
@@ -499,12 +514,17 @@ void gen_geo::conf_init_last_non_zero_flag()
 		}
 	}
 
-	cout << "f_last_non_zero_in_fuse:" << endl;
-	for (I = 0; I < GB->v_len; I++) {
-		i = Conf[I * GB->b_len + 0].f_last_non_zero_in_fuse;
-		cout << setw(3) << i << " ";
+	if (f_v) {
+		cout << "f_last_non_zero_in_fuse:" << endl;
+		for (I = 0; I < GB->v_len; I++) {
+			i = Conf[I * GB->b_len + 0].f_last_non_zero_in_fuse;
+			cout << setw(3) << i << " ";
+		}
+		cout << endl;
 	}
-	cout << endl;
+	if (f_v) {
+		cout << "gen_geo::conf_init_last_non_zero_flag" << endl;
+	}
 }
 
 
@@ -705,7 +725,7 @@ void gen_geo::generate_all(int verbose_level)
 				//inc->print(cout, inc->Encoding->v);
 			}
 		}
-		/* printf("*** do_geo *** geometry no. %d\n", gg->inc.gl_nb_GEN); */
+		//cout << "*** do_geo *** geometry no. " << gg->inc.gl_nb_GEN << endl;
 #if 0
 		if (incidence_back_test(&gg->inc,
 			TRUE /* f_verbose */,
@@ -831,7 +851,7 @@ int gen_geo::GeoNxt(int verbose_level)
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "GeoNxt" << endl;
+		cout << "gen_geo::GeoNxt" << endl;
 	}
 	int I;
 
@@ -867,7 +887,7 @@ int gen_geo::GeoRowFst(int I, int verbose_level)
 	gen_geo_conf *C = Conf + I * GB->b_len;
 
 	if (f_v) {
-		cout << "GeoRowFst I=" << I << endl;
+		cout << "gen_geo::GeoRowFst I=" << I << endl;
 	}
 
 	int m;
@@ -904,7 +924,7 @@ int gen_geo::GeoRowNxt(int I, int verbose_level)
 	gen_geo_conf *C = Conf + I * GB->b_len;
 
 	if (f_v) {
-		cout << "GeoRowNxt I=" << I << endl;
+		cout << "gen_geo::GeoRowNxt I=" << I << endl;
 	}
 
 	int m;
@@ -942,7 +962,7 @@ int gen_geo::GeoLineFstRange(int I, int m, int verbose_level)
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "GeoLineFstRange I=" << I << " m=" << m << endl;
+		cout << "gen_geo::GeoLineFstRange I=" << I << " m=" << m << endl;
 	}
 
 #ifdef GEO_LINE_RANGE
@@ -966,13 +986,13 @@ int gen_geo::GeoLineFstRange(int I, int m, int verbose_level)
 	if (it && it->f_range) {
 		if (it->nb_GEO < it->range_first) {
 			while (it->nb_GEO < it->range_first) {
-				cout << "GeoLineFstRange: line " << i1 + 1 << " case " << it->nb_GEO << endl;
+				cout << "gen_geo::GeoLineFstRange: line " << i1 + 1 << " case " << it->nb_GEO << endl;
 				if (!GeoLineNxt0(I, m, verbose_level)) {
 					return FALSE;
 				}
 			}
 		}
-		cout << "GeoLineFstRange: line " << i1 + 1 << " case " << it->nb_GEO << endl;
+		cout << "gen_geo::GeoLineFstRange: line " << i1 + 1 << " case " << it->nb_GEO << endl;
 	}
 	return TRUE;
 #else
@@ -985,7 +1005,7 @@ int gen_geo::GeoLineNxtRange(int I, int m, int verbose_level)
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "GeoLineNxtRange I=" << I << " m=" << m << endl;
+		cout << "gen_geo::GeoLineNxtRange I=" << I << " m=" << m << endl;
 	}
 #ifdef GEO_LINE_RANGE
 	iso_type *it;
@@ -996,7 +1016,11 @@ int gen_geo::GeoLineNxtRange(int I, int m, int verbose_level)
 	it = inc->iso_type_at_line[i1];
 	if (it && it->f_range) {
 		if (it->nb_GEO == it->range_first + it->range_len - 1) {
-			cout << "GeoLineNxtRange: line " << i1 + 1 << " case end at " << it->range_first + it->range_len <<  " reached" << endl;
+			if (f_v) {
+				cout << "gen_geo::GeoLineNxtRange: line " << i1 + 1
+						<< " case end at " << it->range_first + it->range_len
+						<<  " reached" << endl;
+			}
 			return FALSE;
 		}
 		if (it->nb_GEO > it->range_first + it->range_len - 1) {
@@ -1008,14 +1032,17 @@ int gen_geo::GeoLineNxtRange(int I, int m, int verbose_level)
 	}
 	if (it && it->f_range) {
 		while (it->nb_GEO < it->range_first) {
-			cout << "GeoLineNxtRange: line " << i1 + 1 << " case " << it->nb_GEO << endl;
+			if (f_v) {
+				cout << "gen_geo::GeoLineNxtRange: line " << i1 + 1 << " case " << it->nb_GEO << endl;
+			}
 			if (!GeoLineNxt0(I, m, verbose_level)) {
 				return FALSE;
 			}
 		}
-		printf("\nGeoLineNxtRange(): "
-			"line %d case %d:\n",
-			i1 + 1, it->nb_GEO);
+		if (f_v) {
+			cout << "gen_geo::GeoLineNxtRange: "
+					"line " << i1 + 1 << " case " << it->nb_GEO << ":" << endl;
+		}
 	}
 	return TRUE;
 #else
@@ -1028,7 +1055,7 @@ int gen_geo::geo_back_test(int I, int verbose_level)
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "geo_back_test I=" << I << endl;
+		cout << "gen_geo::geo_back_test I=" << I << endl;
 	}
 	gen_geo_conf *C = Conf + I * GB->b_len;
 	int i0, i1, m, f_already_there, control_line;
@@ -1040,22 +1067,6 @@ int gen_geo::geo_back_test(int I, int verbose_level)
 		i1 = i0 + m;
 		it = inc->iso_type_at_line[i1];
 		if (it && it->f_generate_first && !it->f_beginning_checked) {
-			/* Der Stand der i1-ten Zeile
-			 * ist realisierbar
-			 * (bis control line),
-			 * wir haben jetzt eine Realisierung
-			 * vor uns. */
-			/* Nur falls ein Ansatz realisierbar
-			 * ist, soll getestet werden,
-			 * ob dieser Anfang bereits
-			 * einmal da war (Stuetze 2-ter Art);
-			 * dies geschieht nun: */
-			/* nb_GEO[i1] == nb_GEO
-			 * zeigt an, dass die i1-te
-			 * Zeile noch nicht
-			 * getestet worden ist: */
-			/* printf("geo_back_test "
-			"for line %d:\n", (i1 + 1)); */
 
 			it->add_geometry(inc->Encoding,
 					i1 + 1, inc,
@@ -1063,12 +1074,6 @@ int gen_geo::geo_back_test(int I, int verbose_level)
 					0 /*verbose_level*/);
 
 			if (!f_already_there) {
-				/* wir sind in einem neuen Zweig */
-				/* setze nb_GEO auf unmoeglichen Wert,
-				 * um anzuzeigen, dass das
-				 * Anfangsstueck jetzt nicht
-				 * mehr getestet werden muss: */
-				/* gg->inc.nb_GEO[i1] = -1; */
 				it->f_beginning_checked = TRUE;
 				continue;
 			}
@@ -1085,7 +1090,7 @@ int gen_geo::GeoLineFst0(int I, int m, int verbose_level)
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "GeoLineFst0 I=" << I << " m=" << m << endl;
+		cout << "gen_geo::GeoLineFst0 I=" << I << " m=" << m << endl;
 	}
 	gen_geo_conf *C = Conf + I * GB->b_len;
 	int f_already_there, i1, control_line;
@@ -1098,16 +1103,6 @@ int gen_geo::GeoLineFst0(int I, int m, int verbose_level)
 	control_line = C->i0 + C->v - 1;
 	it = inc->iso_type_at_line[i1];
 	if (i1 != control_line && it && it->f_generate_first) {
-		/* Stuetze 2-ter Art:
-		 * es wird jetzt NICHT geprueft,
-		 * ob der Ansatz bereits einmal da war,
-		 * sondern erst in der control line,
-		 * wenn der Ansatz bis dahin
-		 * realisierbar ist. Setze jetzt
-		 * nb_GEO[i1] auf nb_GEO der control line,
-		 * um anzuzeigen, dass dieses
-		 * Anfangsstueck noch nicht
-		 * getestet wurde: */
 		it->f_beginning_checked = FALSE;
 		return TRUE;
 	}
@@ -1116,17 +1111,11 @@ int gen_geo::GeoLineFst0(int I, int m, int verbose_level)
 			if (!GeoLineNxt(I, m, verbose_level)) {
 				return FALSE;
 			}
-			/* Fehler: wenn back_test
-			 * FALSE ist, so muss
-			 * zurueckgegangen werden
-			 * (back_to_line ist gesetzt).
-			 * In diesem Falle muss
-			 * GeoLineNxt() FALSE geben. */
-			cout << "GeoLineFst0(): back_to_line && f_new_situation == TRUE" << endl;
+			cout << "gen_geo::GeoLineFst0 back_to_line && f_new_situation == TRUE" << endl;
 			exit(1);
 		}
-		/* back test ueberstanden,
-		 * jetzt noch einen Test erster Art: */
+		// survived the back test,
+		// and now one test of the first kind:
 	}
 	if (i1 == inc->Encoding->v - 1) {
 		// a new geometry is completed
@@ -1137,7 +1126,7 @@ int gen_geo::GeoLineFst0(int I, int m, int verbose_level)
 		// test of the first kind
 		while (TRUE) {
 			if (f_v) {
-				cout << "GeoLineFst0 I=" << I << " m=" << m << " before isot_add" << endl;
+				cout << "gen_geo::GeoLineFst0 I=" << I << " m=" << m << " before isot_add" << endl;
 				inc->print(cout, i1 + 1, i1 + 1);
 			}
 
@@ -1146,7 +1135,7 @@ int gen_geo::GeoLineFst0(int I, int m, int verbose_level)
 					0 /*verbose_level*/);
 
 			if (f_v) {
-				cout << "GeoLineFst0 I=" << I << " m=" << m << " after isot_add" << endl;
+				cout << "gen_geo::GeoLineFst0 I=" << I << " m=" << m << " after isot_add" << endl;
 			}
 			if (it->f_print_mod) {
 				if ((it->nb_GEN % it->print_mod) == 0) {
@@ -1172,7 +1161,7 @@ int gen_geo::GeoLineNxt0(int I, int m, int verbose_level)
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "GeoLineNxt0 I=" << I << " m=" << m << endl;
+		cout << "gen_geo::GeoLineNxt0 I=" << I << " m=" << m << endl;
 	}
 	gen_geo_conf *C = Conf + I * GB->b_len;
 	int f_already_there, i1, control_line;
@@ -1185,8 +1174,6 @@ int gen_geo::GeoLineNxt0(int I, int m, int verbose_level)
 	control_line = C->i0 + C->v - 1;
 	it = inc->iso_type_at_line[i1];
 	if (i1 != control_line && it && it->f_generate_first) {
-		/* Anfangsstueck muss noch geprueft
-		 * werden, falls realisierbar: */
 		it->f_beginning_checked = FALSE;
 #if 0
 		gg->inc.nb_GEO[i1] = ((ISO_TYPE *)
@@ -1199,17 +1186,11 @@ int gen_geo::GeoLineNxt0(int I, int m, int verbose_level)
 			if (!GeoLineNxt(I, m, verbose_level)) {
 				return FALSE;
 			}
-			/* Fehler: wenn back_test
-			 * FALSE ist, so muss
-			 * zurueckgegangen werden
-			 * (back_to_line ist gesetzt).
-			 * In diesem Falle muss
-			 * GeoLineNxt() FALSE geben. */
-			cout << "GeoLineNxt0 back_to_line && f_new_situation == TRUE" << endl;
+			cout << "gen_geo::GeoLineNxt0 back_to_line && f_new_situation == TRUE" << endl;
 			exit(1);
 		}
-		/* back test ueberstanden,
-		 * jetzt noch einen Test erster Art: */
+		// survived the back test,
+		// and now one test of the first kind:
 	}
 	if (i1 == inc->Encoding->v - 1) {
 		// a new geometry is completed
@@ -1253,7 +1234,7 @@ int gen_geo::GeoLineFst(int I, int m, int verbose_level)
 	i1 = C->i0 + m;
 
 	if (f_v) {
-		cout << "GeoLineFst I=" << I << " m=" << m << " i1=" << i1 << endl;
+		cout << "gen_geo::GeoLineFst I=" << I << " m=" << m << " i1=" << i1 << endl;
 	}
 
 	girth_Floyd(i1, verbose_level);
@@ -1462,12 +1443,9 @@ int gen_geo::GeoXFst(int I, int m, int J, int n, int verbose_level)
 	r = C->r0 + n; // current incidence index
 	j0 = C->j0;
 	if (hbar[i1] <= J) {
-		/* hbar existiert,
-		 * der Anfang der Zeile ist
-		 * anders als der der letzten Zeile. */
-		/* versuche linksbuendig zu setzen: */
-		/* rechts vom Vorgaengerkreuz: */
-		/* (j ist lokale Koordinate) */
+		// hbar exists, which means that the left part of the row differs from the row above.
+		// The next incidence must be tried starting from the leftmost position.
+		// We cannot copy over from the previous row.
 		if (n == 0) {
 			// first incidence inside the block?
 			j = 0;
@@ -1484,7 +1462,7 @@ int gen_geo::GeoXFst(int I, int m, int J, int n, int verbose_level)
 			cout << "gen_geo::GeoXFst hbar[i1] > J && m == 0" << endl;
 			exit(1);
 		}
-		// no hbar means that the upper parts agree.
+		// no hbar means that the left parts agree.
 
 		// pick the incidence according to the previous row:
 		j = inc->Encoding->theX[(i1 - 1) * inc->Encoding->dim_n + r] - j0;
@@ -1574,12 +1552,6 @@ int gen_geo::GeoXNxt(int I, int m, int J, int n, int verbose_level)
 				cout << "gen_geo::GeoXNxt I=" << I << " m=" << m << " J=" << J << " n=" << n << " j=" << j << " skipped because of vbar" << endl;
 			}
 			continue;
-			/* weil die Spalte
-			 * sich bislang noch nicht
-			 * von ihrer linken
-			 * Nachbarspalte unterscheidet,
-			 * setzen wir OE alle
-			 * Kreuzchen linksbuendig. */
 		}
 
 		inc->Encoding->theX[i1 * inc->Encoding->dim_n + r] = j0 + j;
@@ -1591,7 +1563,7 @@ int gen_geo::GeoXNxt(int I, int m, int J, int n, int verbose_level)
 		inc->theY[j0 + j][k] = i1;
 		j1 = j0 + j;
 
-		if (!apply_tests(I, m, J, n, j, verbose_level)) {
+		if (!apply_tests(I, m, J, n, j, verbose_level - 2)) {
 			if (f_v) {
 				cout << "gen_geo::GeoXNxt I=" << I << " m=" << m << " J=" << J << " n=" << n << " j=" << j << " skipped because of test" << endl;
 			}
@@ -1617,11 +1589,6 @@ int gen_geo::GeoXNxt(int I, int m, int J, int n, int verbose_level)
 		}
 
 		if (hbar[i1] > J) {
-			/* hbar erzeugen ? */
-			/* bislang noch kein hbar,
-			 * also stimmt der Anfang der Zeile
-			 * mit dem der
-			 * Vorgaengerzeile ueberein. */
 			if (m == 0) {
 				cout << "gen_geo::GeoXNxt no hbar && m == 0" << endl;
 				exit(1);
@@ -1728,12 +1695,6 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j, int verbose_level)
 			}
 			continue;
 		}
-		/* vbar[j0 + j] < i1:
-		 *    die Spalte muss verwendet werden,
-		 *    da sie sich in den oberen Eintraegen
-		 *    von ihrer linken
-		 *    Nachbarspalte unterscheidet
-		 *  ==  i1: Anbau an linke Nachbarkreuze. */
 
 		inc->Encoding->theX[i1 * inc->Encoding->dim_n + r] = j0 + j;
 		// incidence must be recorded before we call find_square
@@ -1747,7 +1708,7 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j, int verbose_level)
 
 		// and now come the tests:
 
-		if (!apply_tests(I, m, J, n, j, verbose_level)) {
+		if (!apply_tests(I, m, J, n, j, verbose_level - 2)) {
 			if (f_v) {
 				cout << "gen_geo::X_Fst I=" << I << " m=" << m << " J=" << J << " n=" << n << " j=" << j << " skipped because of test" << endl;
 			}
@@ -1765,25 +1726,18 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j, int verbose_level)
 		// manage vbar:
 
 		if (vbar[j0 + j] == i1) {
-			/* ein vbar, der durch das
-			 * linke Nachbarkreuz
-			 * erzeugt wurde; austragen: */
 			if (n == 0) {
-				/* vom TDO Schema
-				 * herruehrende vbars
-				 * haben die Kennung -1
-				 * (und nicht i1). */
-				cout << "X_Fst(): n == 0" << endl;
+				cout << "gen_geo::X_Fst n == 0" << endl;
 				exit(1);
 			}
 			if (inc->Encoding->theX[i1 * inc->Encoding->dim_n + r - 1] != j0 + j - 1) {
 
 				// previous incidence:
-				cout << "X_Fst theX[i1 * inc.max_r + r - 1] != j0 + j - 1" << endl;
+				cout << "gen_geo::X_Fst theX[i1 * inc.max_r + r - 1] != j0 + j - 1" << endl;
 				exit(1);
 			}
 			if (!f_vbar[i1 * inc->Encoding->dim_n + r - 1]) {
-				cout << "X_Fst !f_vbar[i1 * inc->Encoding->dim_n + r - 1]" << endl;
+				cout << "gen_geo::X_Fst !f_vbar[i1 * inc->Encoding->dim_n + r - 1]" << endl;
 				exit(1);
 			}
 			f_vbar[i1 * inc->Encoding->dim_n + r - 1] = FALSE;
@@ -1794,29 +1748,17 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j, int verbose_level)
 		// create new vbar to the right:
 
 		if (vbar[j0 + j + 1] == i1) {
-			cout << "X_Fst vbar[j0 + j + 1] == i1" << endl;
+			cout << "gen_geo::X_Fst vbar[j0 + j + 1] == i1" << endl;
 			exit(1);
 		}
 		if (vbar[j0 + j + 1] > i1) {
-			/* noch kein vbar rechts ? */
-			/* es war bislang noch kein vbar da,
-			 * wir legen einen an: */
-			/* Beachte: vbars werden
-			 * immer in der rechten Nachbarspalte
-			 * angelegt, da sie sich
-			 * auf die linke Seite
-			 * einer Spalte beziehen. */
 			f_vbar[i1 * inc->Encoding->dim_n + r] = TRUE;
 			vbar[j0 + j + 1] = i1;
 		}
 
 		if (hbar[i1] > J) {
-			/* hbar erzeugen ? */
-			/* bislang noch kein hbar,
-			 * also stimmt der Anfang der Zeile
-			 * mit dem der Vorgaengerzeile ueberein. */
 			if (m == 0) {
-				cout << "X_Fst no hbar && m == 0" << endl;
+				cout << "gen_geo::X_Fst no hbar && m == 0" << endl;
 				exit(1);
 			}
 			if (j0 + j != inc->Encoding->theX[(i1 - 1) * inc->Encoding->dim_n + r]) {
@@ -1860,7 +1802,9 @@ int gen_geo::apply_tests(int I, int m, int J, int n, int j, int verbose_level)
 		// we check that there are no repeated columns !
 
 		if (GB->Descr->f_simple) { /* JS 180100 */
-			if (F_last_k_in_col[fuse_idx * GB->b_len + J] && k == K1[fuse_idx * GB->b_len + J] - 1) {
+
+			if (F_last_k_in_col[fuse_idx * GB->b_len + J] &&
+					k == K1[fuse_idx * GB->b_len + J] - 1) {
 				int ii;
 				for (ii = 0; ii <= k; ii++) {
 					if (inc->theY[j1 - 1][ii] != inc->theY[j1][ii]) {
@@ -2010,9 +1954,11 @@ void gen_geo::girth_Floyd(int i, int verbose_level)
 int gen_geo::check_girth_condition(int i, int j_idx, int j, int verbose_level)
 {
 	if (Girth_test) {
+#if 0
 		inc->print(cout, i + 1, GB->V);
 		Girth_test->print_Si(i);
 		Girth_test->print_Di(i);
+#endif
 		return Girth_test->check_girth_condition(i, j_idx, j, verbose_level);
 	}
 	else {
