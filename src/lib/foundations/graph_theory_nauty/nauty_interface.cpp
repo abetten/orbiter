@@ -403,7 +403,7 @@ static void nauty_interface_allocate_data(int n)
 	nb_processnode = 0;
 	nb_firstterminal = 0;
 
-#if 0
+#if 1
 	fp_nauty = NULL;
 #else
 	fp_nauty = fopen("nauty_log.txt", "w");
