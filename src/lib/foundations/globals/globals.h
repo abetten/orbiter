@@ -374,6 +374,8 @@ public:
 
 	orbiter_symbol_table *Orbiter_symbol_table;
 
+	long int nb_calls_to_densenauty;
+
 	int_vec Int_vec;
 	lint_vec Lint_vec;
 

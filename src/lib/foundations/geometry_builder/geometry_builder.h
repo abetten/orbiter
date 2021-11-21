@@ -489,7 +489,7 @@ public:
 
 	int pairs[MAX_V][MAX_V];
 		// pairs[i][i1]
-		// is the number of times that {i1,i} is contained in a block
+		// is the number of blocks containing {i1,i}
 		// where 0 \le i1 < i.
 
 

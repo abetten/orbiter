@@ -11656,15 +11656,19 @@ linsp30_pt_distribution:
 
 geo_petersen:
 	$(ORBITER_PATH)orbiter.out -v 8 \
+		-define Test_lines -set -loop 3 11 1 -end \
 		-geometry_builder \
 			-V 10 -B 15 -TDO 3 -fuse 1 \
 			-fname_GEO petersen -girth 5 \
-			-test 3,4,5,6,7,8,9,10 FFFF \
+			-test Test_lines FFFF \
 		-end
 
 geo_7_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-geometry_builder -V 7 -B 7 -TDO 3 -fuse 1 -fname_GEO 7_3 -test 3,4,5,6,7 FFFF \
+		-define Test_lines -set -loop 3 8 1 -end \
+		-geometry_builder -V 7 -B 7 -TDO 3 \
+			-fuse 1 -fname_GEO 7_3 \
+			-test Test_lines FFFF \
 		-end
 
 
@@ -11680,7 +11684,10 @@ geo_7_3_c:
 
 geo_8_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-geometry_builder -V 8 -B 8 -TDO 3 -fuse 1 -fname_GEO 8_3 -test 3,4,5,6,7,8 FFFF  \
+		-define Test_lines -set -loop 3 9 1 -end \
+		-geometry_builder -V 8 -B 8 -TDO 3 \
+			-fuse 1 -fname_GEO 8_3 \
+			-test Test_lines FFFF  \
 		-end
 
 #-print_at_line 4
@@ -11703,30 +11710,26 @@ geo_8_3_c:
 
 geo_9_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-geometry_builder -V 9 -B 9 -TDO 3 -fuse 1 -fname_GEO 9_3 -test 3,4,5,6,7,8,9 FFFF  \
+		-define Test_lines -set -loop 3 10 1 -end \
+		-geometry_builder -V 9 -B 9 -TDO 3 \
+			-fuse 1 -fname_GEO 9_3 \
+			-test Test_lines FFFF  \
 		-end
 
 
 
 geo_10_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Test_lines -set -loop 4 11 1 -end \
 		-geometry_builder -V 10 -B 10 -TDO 3 -fuse 1 \
 			-fname_GEO 10_3 \
-			-test 4,5,6,7,8,9,10 FFFF \
+			-test Test_lines FFFF \
 		-end
 
 
 # 10 geos
 # 8/26/2021: 0 sec on Mac
 
-
-
-geo_10_3b:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-geometry_builder -V 10 -B 10 -TDO 3 -fuse 1 -fname_GEO 10_3 \
-			-test 4,5,6,7,8,9 FFFF \
-			-test 10 FTFF \
-		-end
 
 
 geo_10_3_c:
@@ -11743,7 +11746,10 @@ geo_10_3_c:
 
 geo_11_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-geometry_builder -V 11 -B 11 -TDO 3 -fuse 1 -fname_GEO 11_3 -test 4,5,6,7,8,9,10,11 FFFF \
+		-define Test_lines -set -loop 4 12 1 -end \
+		-geometry_builder -V 11 -B 11 -TDO 3 \
+			-fuse 1 -fname_GEO 11_3 \
+			-test Test_lines FFFF \
 		-end
 
 # 31 geos
@@ -11751,17 +11757,16 @@ geo_11_3:
 
 geo_12_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-geometry_builder -V 12 -B 12 -TDO 3 -fuse 1 -fname_GEO 12_3 -test 4,5,6,7,8,9,10,11,12 FFFF \
+		-define Test_lines -set -loop 4 13 1 -end \
+		-geometry_builder -V 12 -B 12 -TDO 3 \
+			-fuse 1 -fname_GEO 12_3 \
+			-test Test_lines FFFF \
 		-end
 
 # 229 geos
 # 8/26/2021: 41 sec on Mac
 
 
-geo_12_3_b:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-geometry_builder -V 12 -B 12 -TDO 3 -fuse 1 -fname_GEO 12_3 -test 4,5,6,7,12 FFFF -test2 8,9,10,11 FFFF \
-		-end
 
 
 geo_12_3_c:
@@ -11777,28 +11782,37 @@ geo_12_3_c:
 
 geo_13_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-geometry_builder -V 13 -B 13 -TDO 3 -fuse 1 -fname_GEO 13_3 -test 4,5,6,7,8,9,10,11,12,13 FFFF \
+		-define Test_lines -set -loop 4 14 1 -end \
+		-geometry_builder -V 13 -B 13 -TDO 3 \
+			-fuse 1 -fname_GEO 13_3 \
+			-test Test_lines FFFF \
 		-end
 
 # 2036 geos, 96, 39, 13, 12^4, 8^3, 6^16, 4^30, 3^20, 2^190, 1^1770
-# 16 sec with new version
+#User time: 0:4
+#nb_calls_to_densenauty=216777
 
 
 geo_14_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-geometry_builder -V 14 -B 14 -TDO 3 -fuse 1 -fname_GEO 14_3 -test 4,5,6,7,8,9,10,11,12,13,14 FFFF \
+		-define Test_lines -set -loop 4 15 1 -end \
+		-geometry_builder -V 14 -B 14 -TDO 3 \
+			-fuse 1 -fname_GEO 14_3 \
+			-test Test_lines FFFF \
 		-end
 
 # 21399 geos, 56448, 128, 24^2, 16^3, 14^3, 12^7, 8^15, 7, 6^12, 4^91, 3^19, 2^916, 1^20328
-# 57 sec on Mac
+#User time: 0:55
+#nb_calls_to_densenauty=2089344
 
 
 geo_15_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Test_lines -set -loop 4 16 1 -end \
 		-geometry_builder \
 			-V 15 -B 15 -TDO 3 \
 			-fuse 1 -fname_GEO 15_3 \
-			-test 4,5,6,7,8,9,10,11,12,13,14,15 FFFF \
+			-test Test_lines FFFF \
 		-end
 
 # 245342 geos, 8064, 720, 192^2, 128, 72, 48^6, 32, 30^2, 24^2, 20^2, 18, 16^10, 15^2, 12^11, 10^3, 8^34, 6^59, 5^5, 4^180, 3^69, 2^3709, 1^241240
@@ -11819,100 +11833,75 @@ geo_15_3_c:
 
 geo_15_3_g4:
 	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Test_lines -set -loop 4 16 1 -end \
 		-geometry_builder \
 			-V 15 -B 15 -TDO 3 \
 			-fuse 1 -fname_GEO 15_3_g4 \
 			-girth 4 \
-			-test 4,5,6,7,8,9,10,11,12,13,14,15 FFFF \
+			-test Test_lines FFFF \
 		-end
 
 # The unique Cremona Richmond configuration with group of order 720
+#User time: 0 of a second, dt=0 tps = 100
+#nb_calls_to_densenauty=23
 
 
 
 geo_15_4:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-geometry_builder -V 15 -B 15 -TDO 4 -fuse 1 -fname_GEO 15_4 -test 4,5,6,7,8,9,10,11,12,13,14,15 FFFF \
+		-define Test_lines -set -loop 4 16 1 -end \
+		-geometry_builder \
+			-V 15 -B 15 -TDO 4 \
+			-fuse 1 -fname_GEO 15_4 \
+			-test Test_lines FFFF \
 		-end
 
 # 4 objects
+# ago=360, 30, 24, 15
+#User time: 0.15 of a second, dt=15 tps = 100
+#nb_calls_to_densenauty=6767
 
 
 
 geo_16_4_g4:
 	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Test_lines -set -loop 4 17 1 -end \
 		-geometry_builder \
 			-V 16 -B 16 -TDO 4 \
 			-fuse 1 -fname_GEO 16_4_g4 \
 			-girth 4 \
-			-test 4,5,6,7,8,9,10,11,12,13,14,15,16 FFFF \
+			-test Test_lines FFFF \
 		-end
 
 # none
 
-geo_17_4_g4:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-geometry_builder \
-			-V 17 -B 17 -TDO 4 \
-			-fuse 1 -fname_GEO 17_4_g4 \
-			-girth 4 \
-			-test 4,5,6,7,8,9,10,11,12,13,14,15,16,17 FFFF \
-		-end
-
-# none
-
-geo_18_4_g4:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-geometry_builder \
-			-V 18 -B 18 -TDO 4 \
-			-fuse 1 -fname_GEO 18_4_g4 \
-			-girth 4 \
-			-test 4,5,6,7,8,9,10,11,12,13,14,15,16,17,18 FFFF \
-		-end
-
-# none
-
-geo_19_4_g4:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-geometry_builder \
-			-V 19 -B 19 -TDO 4 \
-			-fuse 1 -fname_GEO 19_4_g4 \
-			-girth 4 \
-			-test 4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19 FFFF \
-		-end
-
-# none
-
-geo_20_4_g4:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-geometry_builder \
-			-V 20 -B 20 -TDO 4 \
-			-fuse 1 -fname_GEO 20_4_g4 \
-			-girth 4 \
-			-test 4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20 FFFF \
-		-end
-
-# none
-
-geo_21_4_g4:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-geometry_builder \
-			-V 21 -B 21 -TDO 4 \
-			-fuse 1 -fname_GEO 21_4_g4 \
-			-girth 4 \
-			-test 4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21 FFFF \
-		-end
 
 geo_40_4_g4:
 	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Test_lines -set -loop 4 41 1 -end \
 		-geometry_builder \
 			-V 40 -B 40 -TDO 4 \
 			-fuse 1 -fname_GEO 40_4_g4 \
 			-girth 4 \
-			-test 4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40 FFFF \
+			-test Test_lines FFFF \
 		-end
 
+
 # 2 geos, ago=51840^2
+#User time: 0.18 of a second, dt=18 tps = 100
+#nb_calls_to_densenauty=1065
+
+
+geo_63_3_g6:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Test_lines -set -loop 4 64 1 -end \
+		-geometry_builder \
+			-V 63 -B 63 -TDO 3 \
+			-fuse 1 -fname_GEO 63_3_g6 \
+			-girth 6 \
+			-test Test_lines FFFF \
+		-end
+
 
 #############################################################################################################
 # Section 10.4: Design Theory

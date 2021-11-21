@@ -64,12 +64,17 @@ orbiter_session::orbiter_session()
 	fork_step = 0;
 
 	Orbiter_symbol_table = NULL;
+
+	nb_calls_to_densenauty = 0;
 }
 
 
 orbiter_session::~orbiter_session()
 {
 	Orbiter = NULL;
+
+	cout << "nb_calls_to_densenauty=" << nb_calls_to_densenauty << endl;
+
 	if (Orbiter_symbol_table) {
 		FREE_OBJECT(Orbiter_symbol_table);
 	}
@@ -320,15 +325,29 @@ void orbiter_session::get_vector_from_label(std::string &label, int *&v, int &sz
 					"searching label " << label << endl;
 		}
 		int idx;
-		vector_builder *VB;
 
 		idx = Orbiter->find_symbol(label);
-		VB = (vector_builder *) Orbiter->get_object(idx);
 
-		sz = VB->len;
-		v = NEW_int(sz);
-		Orbiter->Int_vec.copy(VB->v, v, sz);
+		if (Orbiter->get_object_type(idx) == t_vector) {
 
+			vector_builder *VB;
+
+			VB = (vector_builder *) Orbiter->get_object(idx);
+
+			sz = VB->len;
+			v = NEW_int(sz);
+			Orbiter->Int_vec.copy(VB->v, v, sz);
+		}
+		else if (Orbiter->get_object_type(idx) == t_set) {
+
+			set_builder *SB;
+
+			SB = (set_builder *) Orbiter->get_object(idx);
+
+			sz = SB->sz;
+			v = NEW_int(sz);
+			Orbiter->Lint_vec.copy_to_int(SB->set, v, sz);
+		}
 	}
 	else {
 

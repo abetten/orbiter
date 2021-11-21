@@ -262,7 +262,10 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 		int a, j, flags;
 
 		//cout << "-test " << Descr->test_lines[i] << " " << Descr->test_flags[i] << endl;
-		Orbiter->Int_vec.scan(Descr->test_lines[i], lines, lines_len);
+
+		Orbiter->get_vector_from_label(Descr->test_lines[i], lines, lines_len, 0 /* verbose_level*/);
+		//Orbiter->Int_vec.scan(Descr->test_lines[i], lines, lines_len);
+
 		flags = true_false_string_numeric(Descr->test_flags[i].c_str());
 		for (j = 0; j < lines_len; j++) {
 			a = lines[j];
