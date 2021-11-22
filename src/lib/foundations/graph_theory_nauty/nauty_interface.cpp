@@ -59,9 +59,6 @@ using namespace std;
 
 typedef unsigned char uchar;
 
-//int bitvector_s_i(uchar *bitvec, long int i);
-//long int callback_ij2k(long int i, long int j, int n);
-
 static void nauty_interface_allocate_data(int n);
 static void nauty_interface_free_data();
 static void nauty_interface_fill_nauty_output(int n,
@@ -75,12 +72,10 @@ typedef unsigned char uchar;
 
 
 void nauty_interface::nauty_interface_graph_bitvec(int v, bitvector *Bitvec,
-	int *labeling, int *partition, 
-	nauty_output *NO,
-	//int *Aut, int &Aut_counter,
-	//int *Base, int &Base_length,
-	//int *Transversal_length, longinteger_object &Ago,
-	int verbose_level)
+		//int *labeling,
+		int *partition,
+		nauty_output *NO,
+		int verbose_level)
 {
 #if HAS_NAUTY
 	int f_v = (verbose_level >= 1);
@@ -105,12 +100,12 @@ void nauty_interface::nauty_interface_graph_bitvec(int v, bitvector *Bitvec,
 	if (n >= MAXN) {
 		cout << "nauty_interface::nauty_interface_graph_bitvec n >= MAXN" << endl;
 		exit(1);
-		}
+	}
 	//cout << "nauty_interface_graph_bitvec n = " << n << " m=" << m << endl;
 	for (i = 0; i < n; i++) {
 		row = GRAPHROW(g, i, m);
 		EMPTYSET(row, m);
-		}
+	}
 	
 	for (i = 0; i < v; i++) {
 		for (j = i + 1; j < v; j++) {
@@ -120,14 +115,14 @@ void nauty_interface::nauty_interface_graph_bitvec(int v, bitvector *Bitvec,
 				ADDELEMENT(row, j);
 				row = GRAPHROW(g, j, m);
 				ADDELEMENT(row, i);
-				}
 			}
 		}
+	}
 
 	for (i = 0; i < n; i++) {
 		lab[i] = i;
 		ptn[i] = partition[i];
-		}
+	}
 	//ptn[v - 1] = 0;
 	//cout << "calling nauty..." << endl;
 	if (f_v) {
@@ -147,14 +142,17 @@ void nauty_interface::nauty_interface_graph_bitvec(int v, bitvector *Bitvec,
 			cout << transversal_length[i];
 			if (i < base_length - 1) {
 				cout << ", ";
-				}
 			}
-		cout << endl;
 		}
+		cout << endl;
+	}
 	//cout << "numnodes=" << stats.numnodes << endl;
+#if 0
 	for (i = 0; i < n; i++) {
 		labeling[i] = lab[i];
-		}
+	}
+#endif
+
 #if 1
 
 	nauty_interface_fill_nauty_output(n, NO, verbose_level);
@@ -168,13 +166,13 @@ void nauty_interface::nauty_interface_graph_bitvec(int v, bitvector *Bitvec,
 	for (i = base_length - 1; i >= 0; i--) {
 		Base[base_length - 1 - i] = base[i];
 		Transversal_length[base_length - 1 - i] = transversal_length[i];
-		}
+	}
 
 	for (i = 0; i < aut_counter; i++) {
 		for (j = 0; j < n; j++) {
 			Aut[i * n + j] = aut[i * n + j];
-			}
 		}
+	}
 	Aut_counter = aut_counter;
 #endif
 
@@ -188,7 +186,8 @@ void nauty_interface::nauty_interface_graph_bitvec(int v, bitvector *Bitvec,
 
 
 void nauty_interface::nauty_interface_graph_int(int v, int *Adj,
-	int *labeling, int *partition, 
+	//int *labeling,
+	int *partition,
 	nauty_output *NO,
 	int verbose_level)
 {
@@ -201,7 +200,7 @@ void nauty_interface::nauty_interface_graph_int(int v, int *Adj,
 
 	if (f_v) {
 		cout << "nauty_interface::nauty_interface_graph_int" << endl;
-		}
+	}
 	options.getcanon = TRUE;
 	options.defaultptn = FALSE;
 //	options.writeautoms = TRUE;
@@ -215,12 +214,12 @@ void nauty_interface::nauty_interface_graph_int(int v, int *Adj,
 	if (n >= MAXN) {
 		cout << "nauty_interface::nauty_interface_graph_int n >= MAXN" << endl;
 		exit(1);
-		}
+	}
 	//cout << "nauty_interface_graph_int n = " << n << " m=" << m << endl;
 	for (i = 0; i < n; i++) {
 		row = GRAPHROW(g, i, m);
 		EMPTYSET(row, m);
-		}
+	}
 	
 	for (i = 0; i < v; i++) {
 		for (j = i + 1; j < v; j++) {
@@ -229,14 +228,14 @@ void nauty_interface::nauty_interface_graph_int(int v, int *Adj,
 				ADDELEMENT(row, j);
 				row = GRAPHROW(g, j, m);
 				ADDELEMENT(row, i);
-				}
 			}
 		}
+	}
 
 	for (i = 0; i < n; i++) {
 		lab[i] = i;
 		ptn[i] = partition[i];
-		}
+	}
 	//ptn[v - 1] = 0;
 	//cout << "calling nauty..." << endl;
 	if (f_v) {
@@ -249,11 +248,14 @@ void nauty_interface::nauty_interface_graph_int(int v, int *Adj,
 
 	if (f_v) {
 		cout << "nauty_interface::nauty_interface_graph_int after nauty" << endl;
-		}
+	}
 	//cout << "numnodes=" << stats.numnodes << endl;
+#if 0
 	for (i = 0; i < n; i++) {
 		labeling[i] = lab[i];
-		}
+	}
+#endif
+
 #if 1
 
 	nauty_interface_fill_nauty_output(n, NO, verbose_level);
@@ -267,13 +269,13 @@ void nauty_interface::nauty_interface_graph_int(int v, int *Adj,
 	for (i = base_length - 1; i >= 0; i--) {
 		Base[base_length - 1 - i] = base[i];
 		Transversal_length[base_length - 1 - i] = transversal_length[i];
-		}
+	}
 
 	for (i = 0; i < aut_counter; i++) {
 		for (j = 0; j < n; j++) {
 			Aut[i * n + j] = aut[i * n + j];
-			}
 		}
+	}
 	Aut_counter = aut_counter;
 #endif
 
@@ -281,14 +283,14 @@ void nauty_interface::nauty_interface_graph_int(int v, int *Adj,
 	nauty_interface_free_data();
 	if (f_v) {
 		cout << "nauty_interface::nauty_interface_graph_int done" << endl;
-		}
+	}
 #endif
 }
 
 
 void nauty_interface::nauty_interface_matrix_int(
 	encoded_combinatorial_object *Enc,
-	int *labeling,
+	//int *labeling,
 	nauty_output *NO,
 	int verbose_level)
 {
@@ -381,9 +383,6 @@ void nauty_interface::nauty_interface_matrix_int(
 		cout << "nauty_interface::nauty_interface_matrix_int, ago=" << ago << endl;
 		cout << "nauty_interface::nauty_interface_matrix_int, numnodes=" << stats.numnodes << endl;
 	}
-	for (i = 0; i < n; i++) {
-		labeling[i] = lab[i];
-	}
 #if 1
 
 	nauty_interface_fill_nauty_output(n, NO, verbose_level);
@@ -467,6 +466,10 @@ static void nauty_interface_fill_nauty_output(int n,
 		for (j = 0; j < n; j++) {
 			NO->Aut[i * n + j] = aut[i * n + j];
 		}
+	}
+
+	for (i = 0; i < n; i++) {
+		NO->canonical_labeling[i] = lab[i];
 	}
 
 	NO->Aut_counter = aut_counter;

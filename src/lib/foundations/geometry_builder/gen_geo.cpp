@@ -670,6 +670,7 @@ void gen_geo::main2(int &nb_GEN, int &nb_GEO, int &ticks, int &tps, int verbose_
 void gen_geo::generate_all(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 3);
 
 	if (f_v) {
 		cout << "gen_geo::generate_all, verbose_level = " << verbose_level << endl;
@@ -681,8 +682,6 @@ void gen_geo::generate_all(int verbose_level)
 	iso_type *it0, *it1;
 
 	if (f_v) {
-		cout << "gen_geo::generate_all this = " << this << endl;
-		cout << "gen_geo::generate_all inc = " << inc << endl;
 		if (GB->Descr->f_lambda) {
 			cout << "lambda = " << GB->Descr->lambda << endl;
 		}
@@ -752,7 +751,7 @@ void gen_geo::generate_all(int verbose_level)
 			cout << "gen_geo::generate_all after isot_add for it0" << endl;
 		}
 
-		if (it0->Canonical_forms->B.size() % 1 == 0) {
+		if (f_vv && it0->Canonical_forms->B.size() % 1 == 0) {
 			cout << it0->Canonical_forms->B.size() << endl;
 			inc->print(cout, inc->Encoding->v, inc->Encoding->v);
 		}

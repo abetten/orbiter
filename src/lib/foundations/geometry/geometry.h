@@ -1276,6 +1276,7 @@ public:
 	object_in_projective_space_type type;
 		// t_PTS = a multiset of points
 		// t_LNS = a set of lines 
+		// t_PNL = a set of points and a set of lines
 		// t_PAC = a packing (i.e. q^2+q+1 sets of lines of size q^2+1)
 		// t_INC = incidence geometry
 		// t_LS = large set
@@ -1290,6 +1291,10 @@ public:
 	long int *set;
 	int sz;
 		// set[sz] is used by t_PTS, t_LNS, t_INC
+
+	// for t_PNL:
+	long int *set2;
+	int sz2;
 
 
 		// if t_INC or t_LS
@@ -1318,15 +1323,24 @@ public:
 		projective_space *P,
 		int type,
 		std::string &input_fname, int input_idx,
-		std::string &set_as_string, int verbose_level);
+		std::string &set_as_string,
+		std::string &set2_as_string,
+		int verbose_level);
 	void init_object_from_int_vec(
 		projective_space *P,
 		int type,
 		std::string &input_fname, int input_idx,
-		long int *the_set_in, int the_set_sz, int verbose_level);
+		long int *the_set_in, int the_set_sz,
+		long int *the_set2_in, int the_set2_sz,
+		int verbose_level);
 	void init_point_set(projective_space *P, long int *set, int sz,
 		int verbose_level);
 	void init_line_set(projective_space *P, long int *set, int sz,
+		int verbose_level);
+	void init_points_and_lines(
+		projective_space *P,
+		long int *set, int sz,
+		long int *set2, int sz2,
 		int verbose_level);
 	void init_packing_from_set(projective_space *P,
 		long int *packing, int sz,
@@ -1351,6 +1365,9 @@ public:
 	void encoding_size_line_set(
 			int &nb_rows, int &nb_cols,
 			int verbose_level);
+	void encoding_size_points_and_lines(
+			int &nb_rows, int &nb_cols,
+			int verbose_level);
 	void encoding_size_packing(
 			int &nb_rows, int &nb_cols,
 			int verbose_level);
@@ -1361,12 +1378,15 @@ public:
 			int &nb_rows, int &nb_cols,
 			int verbose_level);
 	void canonical_form_given_canonical_labeling(
-			long int *canonical_labeling,
+			int *canonical_labeling,
 			bitvector *&B,
 			int verbose_level);
 	void encode_incma(encoded_combinatorial_object *&Enc, int verbose_level);
 	void encode_point_set(encoded_combinatorial_object *&Enc, int verbose_level);
 	void encode_line_set(encoded_combinatorial_object *&Enc, int verbose_level);
+	void encode_points_and_lines(
+			encoded_combinatorial_object *&Enc,
+			int verbose_level);
 	void encode_packing(encoded_combinatorial_object *&Enc, int verbose_level);
 	void encode_large_set(
 			encoded_combinatorial_object *&Enc,
@@ -1383,6 +1403,8 @@ public:
 		int verbose_level);
 	void encode_object_lines(long int *&encoding, int &encoding_sz,
 		int verbose_level);
+	void encode_object_points_and_lines(
+			long int *&encoding, int &encoding_sz, int verbose_level);
 	void encode_object_packing(long int *&encoding, int &encoding_sz,
 		int verbose_level);
 	void encode_object_incidence_geometry(
@@ -1392,12 +1414,13 @@ public:
 	void klein(int verbose_level);
 	void run_nauty(
 			int f_compute_canonical_form, bitvector *&Canonical_form,
-			long int *canonical_labeling, int &canonical_labeling_len,
+			//long int *canonical_labeling, int &canonical_labeling_len,
 			nauty_output *&NO,
 			int verbose_level);
 	void canonical_labeling(
-		int *canonical_labeling,
-		int verbose_level);
+			//int *canonical_labeling,
+			nauty_output *NO,
+			int verbose_level);
 
 };
 
@@ -1646,6 +1669,9 @@ public:
 	grassmann *Grass_lines;
 	grassmann *Grass_planes; // if n > 2
 	grassmann *Grass_hyperplanes; // if n > 2 (for n=3, planes and hyperplanes are the same thing)
+
+	grassmann **Grass_stack; // [n + 1]
+
 	finite_field *F;
 	longinteger_object *Go;
 
@@ -1860,10 +1886,16 @@ public:
 			incidence_structure *&Inc, partitionstack *&Stack, int verbose_level);
 	object_in_projective_space *create_object_from_string(
 			int type, std::string &input_fname, int input_idx,
-			std::string &set_as_string, int verbose_level);
+			std::string &set_as_string,
+			std::string &set2_as_string,
+			int verbose_level);
 	object_in_projective_space *create_object_from_int_vec(
 			int type, std::string &input_fname, int input_idx,
-			long int *the_set, int set_sz, int verbose_level);
+			long int *the_set, int set_sz,
+			long int *the_set2, int set2_sz,
+			int verbose_level);
+	void polarity_rank_k_subspace(int k,
+			long int rk_in, long int &rk_out, int verbose_level);
 
 	// projective_space2.cpp:
 	void print_set_numerical(std::ostream &ost, long int *set, int set_size);

@@ -285,16 +285,23 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph_with_part
 					"before nauty_interface_graph_bitvec" << endl;
 		}
 		Nau.nauty_interface_graph_bitvec(n, Bitvec,
-			labeling, partitions,
+			//labeling,
+			partitions,
 			NO,
 			verbose_level);
 	}
 	else {
 		Nau.nauty_interface_graph_int(n, Adj,
-			labeling, partitions,
+			//labeling,
+			partitions,
 			NO,
 			verbose_level);
 	}
+
+	for (i = 0; i < n; i++) {
+		labeling[i] = NO->canonical_labeling[i];
+	}
+
 
 	if (f_v) {
 		if (TRUE /*(input_no % 500) == 0*/) {
@@ -415,13 +422,19 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph(
 				"before Nau.nauty_interface_graph_int" << endl;
 	}
 	Nau.nauty_interface_graph_int(n, Adj,
-		labeling, partition,
+		//labeling,
+		partition,
 		NO,
 		verbose_level);
 	if (f_v) {
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph "
 				"after Nau.nauty_interface_graph_int Ago=" << *NO->Ago << endl;
 	}
+
+	for (i = 0; i < n; i++) {
+		labeling[i] = NO->canonical_labeling[i];
+	}
+
 
 	action *A;
 
@@ -508,12 +521,18 @@ action *nauty_interface_with_group::create_automorphism_group_and_canonical_labe
 				"before Nau.nauty_interface_graph_int" << endl;
 	}
 	Nau.nauty_interface_graph_int(n, Adj,
-		labeling, partition,
+		//labeling,
+		partition,
 		NO,
 		verbose_level);
 	if (f_v) {
 		cout << "nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_graph "
 				"after Nau.nauty_interface_graph_int" << endl;
+	}
+
+
+	for (i = 0; i < n; i++) {
+		labeling[i] = NO->canonical_labeling[i];
 	}
 
 
@@ -1476,7 +1495,7 @@ strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 	object_in_projective_space *OiP,
 	action *A_linear,
 	int f_compute_canonical_form, bitvector *&Canonical_form,
-	long int *canonical_labeling, int &canonical_labeling_len,
+	//long int *canonical_labeling, int &canonical_labeling_len,
 	nauty_output *&NO,
 	int verbose_level)
 // canonical_labeling[nb_rows + nb_cols] contains the canonical labeling
@@ -1493,7 +1512,6 @@ strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 
 
 
-	//nauty_output *NO;
 
 	if (f_v) {
 		cout << "nauty_interface_with_group::set_stabilizer_of_object before OiP->run_nauty" << endl;
@@ -1502,7 +1520,7 @@ strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 
 	OiP->run_nauty(
 			f_compute_canonical_form, Canonical_form,
-			canonical_labeling, canonical_labeling_len,
+			//canonical_labeling, canonical_labeling_len,
 			NO,
 			verbose_level);
 

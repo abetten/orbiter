@@ -237,14 +237,22 @@ void projective_space_object_classifier::classify_objects_using_nauty(
 					Descr->Data->input_string[input_idx],
 					verbose_level);
 
-			}
+		}
 		else if (Descr->Data->input_type[input_idx] == INPUT_TYPE_SET_OF_LINES) {
 
-			process_set_of_lines_from_file(
+			process_set_of_lines(
 					Descr->Data->input_string[input_idx],
 					verbose_level);
 
-			}
+		}
+		else if (Descr->Data->input_type[input_idx] == INPUT_TYPE_SET_OF_POINTS_AND_LINES) {
+
+			process_set_of_points_and_lines(
+					Descr->Data->input_string[input_idx],
+					Descr->Data->input_string2[input_idx],
+					verbose_level);
+
+		}
 		else if (Descr->Data->input_type[input_idx] == INPUT_TYPE_SET_OF_PACKING) {
 
 
@@ -393,7 +401,7 @@ void projective_space_object_classifier::classify_objects_using_nauty(
 
 	if (f_v) {
 		cout << "projective_space_object_classifier::classify_objects_using_nauty done" << endl;
-		}
+	}
 }
 
 void projective_space_object_classifier::process_multiple_objects_from_file(
@@ -484,7 +492,7 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 		int canonical_labeling_len;
 
 		long int *Known_ago = NULL;
-		long int *Known_canonical_labeling = NULL;
+		int *Known_canonical_labeling = NULL;
 		int m = 0;
 
 		if (Descr->f_load_canonical_labeling) {
@@ -498,7 +506,7 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 			ST.replace_extension_with(load_canonical_labeling_fname, "_can_lab.csv");
 
 
-			Fio.lint_matrix_read_csv(load_canonical_labeling_fname,
+			Fio.int_matrix_read_csv(load_canonical_labeling_fname,
 					Known_canonical_labeling, m, canonical_labeling_len, verbose_level);
 
 			if (m != SoS->nb_sets) {
@@ -612,7 +620,7 @@ void projective_space_object_classifier::process_multiple_objects_from_file(
 		}
 
 		if (Descr->f_load_canonical_labeling) {
-			FREE_lint(Known_canonical_labeling);
+			FREE_int(Known_canonical_labeling);
 		}
 
 		if (Descr->f_load_ago) {
@@ -648,7 +656,7 @@ void projective_space_object_classifier::process_individual_object(
 		vector<long int> &Ago,
 		vector<vector<int> > &The_canonical_labeling,
 		int &canonical_labeling_len,
-		long int *Known_ago, long int *Known_canonical_labeling,
+		long int *Known_ago, int *Known_canonical_labeling,
 		int t0,
 		int verbose_level)
 {
@@ -683,21 +691,29 @@ void projective_space_object_classifier::process_individual_object(
 	OiP = NEW_OBJECT(object_in_projective_space);
 
 	if (file_type == INPUT_TYPE_FILE_OF_POINTS) {
+
 		OiP->init_point_set(PA->P, the_set_in, set_size_in,
 				0 /* verbose_level*/);
+
 	}
 	else if (file_type == INPUT_TYPE_FILE_OF_LINES) {
+
 		OiP->init_line_set(PA->P, the_set_in, set_size_in,
 				0 /* verbose_level*/);
+
 	}
 	else if (file_type == INPUT_TYPE_FILE_OF_PACKINGS) {
+
 		OiP->init_packing_from_set(PA->P,
 				the_set_in, set_size_in, 0 /*verbose_level*/);
+
 	}
 	else if (file_type == INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
+
 		OiP->init_packing_from_spread_table(PA->P, the_set_in,
 			Spread_table, nb_spreads, spread_size,
 			0 /*verbose_level*/);
+
 	}
 	else if (file_type == INPUT_TYPE_FILE_OF_DESIGNS) {
 
@@ -755,7 +771,7 @@ void projective_space_object_classifier::process_individual_object(
 
 
 	int nb_rows, nb_cols;
-	long int *canonical_labeling;
+	//long int *canonical_labeling;
 	int ret, u, idx;
 	long int go;
 
@@ -768,7 +784,12 @@ void projective_space_object_classifier::process_individual_object(
 		cout << "projective_space_object_classifier::process_individual_object nb_rows=" << nb_rows << endl;
 		cout << "projective_space_object_classifier::process_individual_object nb_cols=" << nb_cols << endl;
 	}
-	canonical_labeling = NEW_lint(nb_rows + nb_cols);
+	//canonical_labeling = NEW_lint(nb_rows + nb_cols);
+
+	nauty_output *NO;
+
+	NO = NEW_OBJECT(nauty_output);
+	NO->allocate(nb_rows + nb_cols, verbose_level);
 
 	strong_generators *SG;
 
@@ -779,12 +800,13 @@ void projective_space_object_classifier::process_individual_object(
 			OiP,
 			Known_canonical_labeling + h * canonical_labeling_len, canonical_labeling_len,
 			idx,
+			NO,
 			verbose_level - 3);
 		// we don't have strong generators !
 		//SG = NULL;
 
-		Orbiter->Lint_vec.copy(Known_canonical_labeling + h * canonical_labeling_len,
-				canonical_labeling, canonical_labeling_len);
+		Orbiter->Int_vec.copy(Known_canonical_labeling + h * canonical_labeling_len,
+				NO->canonical_labeling, canonical_labeling_len);
 
 		if (Descr->f_load_ago) {
 			Ago.push_back(Known_ago[h]);
@@ -800,8 +822,9 @@ void projective_space_object_classifier::process_individual_object(
 		}
 		ret = process_object(OiP,
 				SG, go,
-				canonical_labeling, canonical_labeling_len,
+				//canonical_labeling, canonical_labeling_len,
 				idx,
+				NO,
 				verbose_level);
 		if (f_v) {
 			cout << "projective_space_object_classifier::process_individual_object after process_object" << endl;
@@ -817,7 +840,7 @@ void projective_space_object_classifier::process_individual_object(
 	}
 	vector<int> the_canonical_labeling;
 	for (u = 0; u < canonical_labeling_len; u++) {
-		the_canonical_labeling.push_back(canonical_labeling[u]);
+		the_canonical_labeling.push_back(NO->canonical_labeling[u]);
 	}
 
 	The_canonical_labeling.push_back(the_canonical_labeling);
@@ -834,7 +857,7 @@ void projective_space_object_classifier::process_individual_object(
 		if (SG) {
 			FREE_OBJECT(SG);
 		}
-		FREE_lint(canonical_labeling);
+		//FREE_lint(canonical_labeling);
 		Fibration[idx].push_back(make_pair(file_idx, h));
 	}
 	else {
@@ -903,13 +926,15 @@ void projective_space_object_classifier::process_individual_object(
 
 		//cout << "before OiPA->init" << endl;
 		OiPA->init(OiP, Ago[h], SG, nb_rows, nb_cols,
-				canonical_labeling, 0/*verbose_level*/);
+				NO->canonical_labeling, 0/*verbose_level*/);
 		//cout << "after OiPA->init" << endl;
 		idx = CB->type_of[CB->n - 1];
 		CB->Type_extra_data[idx] = OiPA;
 
-
+		NO->canonical_labeling = NULL;
 	}
+
+	FREE_OBJECT(NO);
 
 	if (f_vv) {
 		cout << "projective_space_object_classifier::process_individual_object "
@@ -935,6 +960,7 @@ void projective_space_object_classifier::process_set_of_points(
 	}
 	int f_found;
 	string dummy;
+	string zero;
 
 	if (f_v) {
 		cout << "projective_space_object_classifier::process_set_of_points "
@@ -948,27 +974,36 @@ void projective_space_object_classifier::process_set_of_points(
 	dummy.assign("command_line");
 	OiP = PA->P->create_object_from_string(t_PTS,
 			dummy, CB->n,
-			input_data, verbose_level);
+			input_data,
+			zero,
+			verbose_level);
 
 	if (f_v) {
 		cout << "projective_space_object_classifier::process_set_of_points "
 				"before process_object" << endl;
 	}
 	int nb_rows, nb_cols;
-	long int *canonical_labeling;
-	int canonical_labeling_len;
+	//long int *canonical_labeling;
+	//int canonical_labeling_len;
 	int idx;
 	long int ago;
 
 	OiP->encoding_size(
 			nb_rows, nb_cols,
 			verbose_level);
-	canonical_labeling = NEW_lint(nb_rows + nb_cols);
+	//canonical_labeling = NEW_lint(nb_rows + nb_cols);
+
+	nauty_output *NO;
+
+	NO = NEW_OBJECT(nauty_output);
+	NO->allocate(nb_rows + nb_cols, verbose_level);
+
 
 	f_found = process_object(OiP,
 			SG, ago,
-			canonical_labeling, canonical_labeling_len,
+			//canonical_labeling, canonical_labeling_len,
 			idx,
+			NO,
 			verbose_level);
 
 
@@ -986,7 +1021,7 @@ void projective_space_object_classifier::process_set_of_points(
 		//cout << "before FREE_OBJECT(canonical_labeling)" << endl;
 		//FREE_int(canonical_labeling);
 		//cout << "after FREE_OBJECT(canonical_labeling)" << endl;
-		FREE_lint(canonical_labeling);
+		//FREE_lint(canonical_labeling);
 	}
 	else {
 		if (f_v) {
@@ -1001,14 +1036,19 @@ void projective_space_object_classifier::process_set_of_points(
 		OiPA = NEW_OBJECT(object_in_projective_space_with_action);
 
 		OiPA->init(OiP, SG->group_order_as_lint(), SG, nb_rows, nb_cols,
-				canonical_labeling, verbose_level);
+				NO->canonical_labeling, verbose_level);
 		//FREE_OBJECT(SG);
 		idx = CB->type_of[CB->n - 1];
 		CB->Type_extra_data[idx] = OiPA;
 
+		NO->canonical_labeling = NULL;
+
 		//compute_and_print_ago_distribution(cout,
 		//		CB, verbose_level);
 	}
+
+	FREE_OBJECT(NO);
+
 	if (f_v) {
 		cout << "projective_space_object_classifier::process_set_of_points done" << endl;
 	}
@@ -1042,20 +1082,28 @@ void projective_space_object_classifier::process_set_of_points_from_file(
 
 	OiP = PA->P->create_object_from_int_vec(t_PTS,
 			input_data, CB->n,
-			the_set, set_size, verbose_level);
+			the_set, set_size,
+			NULL, 0,
+			verbose_level);
 
 	if (f_v) {
 		cout << "projective_space_object_classifier::process_set_of_points_from_file "
 				"before encoding_size" << endl;
 	}
 	int nb_rows, nb_cols;
-	long int *canonical_labeling;
-	int canonical_labeling_len;
+	//long int *canonical_labeling;
+	//int canonical_labeling_len;
 	int idx;
 	long int ago;
 
 	OiP->encoding_size(nb_rows, nb_cols, verbose_level);
-	canonical_labeling = NEW_lint(nb_rows + nb_cols);
+	//canonical_labeling = NEW_lint(nb_rows + nb_cols);
+
+	nauty_output *NO;
+
+	NO = NEW_OBJECT(nauty_output);
+	NO->allocate(nb_rows + nb_cols, verbose_level);
+
 
 	if (f_v) {
 		cout << "projective_space_object_classifier::process_set_of_points_from_file "
@@ -1063,8 +1111,9 @@ void projective_space_object_classifier::process_set_of_points_from_file(
 	}
 	f_found = process_object(OiP,
 			SG, ago,
-			canonical_labeling, canonical_labeling_len,
+			//canonical_labeling, canonical_labeling_len,
 			idx,
+			NO,
 			verbose_level);
 
 
@@ -1078,7 +1127,7 @@ void projective_space_object_classifier::process_set_of_points_from_file(
 		FREE_OBJECT(SG);
 		FREE_OBJECT(OiP);
 		//FREE_int(canonical_labeling);
-		FREE_lint(canonical_labeling);
+		//FREE_lint(canonical_labeling);
 	}
 	else {
 		if (f_v) {
@@ -1093,30 +1142,35 @@ void projective_space_object_classifier::process_set_of_points_from_file(
 		OiPA = NEW_OBJECT(object_in_projective_space_with_action);
 
 		OiPA->init(OiP, SG->group_order_as_lint(), SG, nb_rows, nb_cols,
-				canonical_labeling, verbose_level);
+				NO->canonical_labeling, verbose_level);
 		//FREE_OBJECT(SG);
 		idx = CB->type_of[CB->n - 1];
 		CB->Type_extra_data[idx] = OiPA;
 
+		NO->canonical_labeling = NULL;
+
 		//compute_and_print_ago_distribution(cout,
 		//		CB, verbose_level);
 	}
+
+	FREE_OBJECT(NO);
+
 	if (f_v) {
 		cout << "projective_space_object_classifier::process_set_of_points_from_file done" << endl;
 	}
 }
 
-void projective_space_object_classifier::process_set_of_lines_from_file(
+void projective_space_object_classifier::process_set_of_lines(
 		std::string &input_data,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "projective_space_object_classifier::process_set_of_lines_from_file" << endl;
+		cout << "projective_space_object_classifier::process_set_of_lines" << endl;
 	}
 	if (f_v) {
-		cout << "projective_space_with_action::process_set_of_lines_from_file "
+		cout << "projective_space_with_action::process_set_of_lines "
 				"input set of lines " << input_data
 			<< ":" << endl;
 	}
@@ -1124,36 +1178,47 @@ void projective_space_object_classifier::process_set_of_lines_from_file(
 	object_in_projective_space *OiP;
 	strong_generators *SG;
 	string dummy;
+	string zero;
 
 	dummy.assign("command_line");
 	OiP = PA->P->create_object_from_string(t_LNS,
 			dummy, CB->n,
-			input_data, verbose_level);
+			input_data,
+			zero,
+			verbose_level);
 
 	int nb_rows, nb_cols;
-	long int *canonical_labeling;
+	//long int *canonical_labeling;
 
 	OiP->encoding_size(nb_rows, nb_cols, verbose_level);
 
-	canonical_labeling = NEW_lint(nb_rows + nb_cols);
-	int canonical_labeling_len;
+	nauty_output *NO;
+
+	NO = NEW_OBJECT(nauty_output);
+	NO->allocate(nb_rows + nb_cols, verbose_level);
+
+
+
+	//canonical_labeling = NEW_lint(nb_rows + nb_cols);
+	//int canonical_labeling_len;
 	int idx;
 	long int ago;
 
 
 	if (process_object(OiP,
 		SG, ago,
-		canonical_labeling, canonical_labeling_len,
+		//canonical_labeling, canonical_labeling_len,
 		idx,
+		NO,
 		verbose_level)) {
 
 		FREE_OBJECT(SG);
 		FREE_OBJECT(OiP);
-		FREE_lint(canonical_labeling);
+		//FREE_lint(canonical_labeling);
 	}
 	else {
 		if (f_v) {
-			cout << "projective_space_object_classifier::process_set_of_lines_from_file "
+			cout << "projective_space_object_classifier::process_set_of_lines "
 					"New isomorphism type! The current number of "
 					"isomorphism types is " << CB->nb_types << endl;
 		}
@@ -1164,18 +1229,110 @@ void projective_space_object_classifier::process_set_of_lines_from_file(
 		OiPA = NEW_OBJECT(object_in_projective_space_with_action);
 
 		OiPA->init(OiP, SG->group_order_as_lint(), SG, nb_rows, nb_cols,
-				canonical_labeling, verbose_level);
+				NO->canonical_labeling, verbose_level);
 		//FREE_OBJECT(SG);
 		idx = CB->type_of[CB->n - 1];
 		CB->Type_extra_data[idx] = OiPA;
 
+		NO->canonical_labeling = NULL;
+
 		//compute_and_print_ago_distribution(cout,
 		//	CB, verbose_level);
 	}
+
+	FREE_OBJECT(NO);
+
 	if (f_v) {
-		cout << "projective_space_object_classifier::process_set_of_lines_from_file done" << endl;
+		cout << "projective_space_object_classifier::process_set_of_lines done" << endl;
 	}
 }
+
+void projective_space_object_classifier::process_set_of_points_and_lines(
+		std::string &input_data,
+		std::string &input_data2,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_object_classifier::process_set_of_points_and_lines" << endl;
+	}
+	if (f_v) {
+		cout << "projective_space_with_action::process_set_of_points_and_lines "
+				"input set of lines " << input_data
+			<< ":" << endl;
+	}
+
+	object_in_projective_space *OiP;
+	strong_generators *SG;
+	string dummy;
+
+	dummy.assign("command_line");
+	OiP = PA->P->create_object_from_string(t_PNL,
+			dummy, CB->n,
+			input_data,
+			input_data2,
+			verbose_level);
+
+	int nb_rows, nb_cols;
+	//long int *canonical_labeling;
+
+	OiP->encoding_size(nb_rows, nb_cols, verbose_level);
+
+	nauty_output *NO;
+
+	NO = NEW_OBJECT(nauty_output);
+	NO->allocate(nb_rows + nb_cols, verbose_level);
+
+
+	//canonical_labeling = NEW_lint(nb_rows + nb_cols);
+	//int canonical_labeling_len;
+	int idx;
+	long int ago;
+
+
+	if (process_object(OiP,
+		SG, ago,
+		//canonical_labeling, canonical_labeling_len,
+		idx,
+		NO,
+		verbose_level)) {
+
+		FREE_OBJECT(SG);
+		FREE_OBJECT(OiP);
+		//FREE_lint(canonical_labeling);
+	}
+	else {
+		if (f_v) {
+			cout << "projective_space_object_classifier::process_set_of_points_and_lines "
+					"New isomorphism type! The current number of "
+					"isomorphism types is " << CB->nb_types << endl;
+		}
+		int idx;
+
+		object_in_projective_space_with_action *OiPA;
+
+		OiPA = NEW_OBJECT(object_in_projective_space_with_action);
+
+		OiPA->init(OiP, SG->group_order_as_lint(), SG, nb_rows, nb_cols,
+				NO->canonical_labeling, verbose_level);
+		//FREE_OBJECT(SG);
+		idx = CB->type_of[CB->n - 1];
+		CB->Type_extra_data[idx] = OiPA;
+
+		NO->canonical_labeling = NULL;
+
+		//compute_and_print_ago_distribution(cout,
+		//	CB, verbose_level);
+	}
+
+	FREE_OBJECT(NO);
+
+	if (f_v) {
+		cout << "projective_space_object_classifier::process_set_of_points_and_lines done" << endl;
+	}
+}
+
 
 void projective_space_object_classifier::process_set_of_packing(
 		std::string &input_data,
@@ -1196,32 +1353,43 @@ void projective_space_object_classifier::process_set_of_packing(
 	object_in_projective_space *OiP;
 	strong_generators *SG;
 	string dummy;
+	string zero;
 
 	dummy.assign("command_line");
 	OiP = PA->P->create_object_from_string(t_PAC,
 			dummy, CB->n,
-			input_data, verbose_level);
+			input_data,
+			zero,
+			verbose_level);
 
 	int nb_rows, nb_cols;
-	long int *canonical_labeling;
+	//long int *canonical_labeling;
 
 	OiP->encoding_size(
 			nb_rows, nb_cols,
 			verbose_level);
-	canonical_labeling = NEW_lint(nb_rows + nb_cols);
-	int canonical_labeling_len;
+	//canonical_labeling = NEW_lint(nb_rows + nb_cols);
+	//int canonical_labeling_len;
+
+	nauty_output *NO;
+
+	NO = NEW_OBJECT(nauty_output);
+	NO->allocate(nb_rows + nb_cols, verbose_level);
+
+
 	int idx;
 	long int ago;
 
 	if (process_object(OiP,
 		SG, ago,
-		canonical_labeling, canonical_labeling_len,
+		//canonical_labeling, canonical_labeling_len,
 		idx,
+		NO,
 		verbose_level)) {
 
 		FREE_OBJECT(SG);
 		FREE_OBJECT(OiP);
-		FREE_lint(canonical_labeling);
+		//FREE_lint(canonical_labeling);
 	}
 	else {
 		if (f_v) {
@@ -1236,14 +1404,19 @@ void projective_space_object_classifier::process_set_of_packing(
 		OiPA = NEW_OBJECT(object_in_projective_space_with_action);
 
 		OiPA->init(OiP, SG->group_order_as_lint(), SG, nb_rows, nb_cols,
-				canonical_labeling, verbose_level);
+				NO->canonical_labeling, verbose_level);
 		//FREE_OBJECT(SG);
 		idx = CB->type_of[CB->n - 1];
 		CB->Type_extra_data[idx] = OiPA;
 
+		NO->canonical_labeling = NULL;
+
 		//compute_and_print_ago_distribution(cout,
 		//		CB, verbose_level);
 	}
+
+	FREE_OBJECT(NO);
+
 	if (f_v) {
 		cout << "projective_space_object_classifier::process_set_of_packing done" << endl;
 	}
@@ -1253,8 +1426,9 @@ void projective_space_object_classifier::process_set_of_packing(
 int projective_space_object_classifier::process_object(
 	object_in_projective_space *OiP,
 	strong_generators *&SG, long int &ago,
-	long int *canonical_labeling, int &canonical_labeling_len,
+	//long int *canonical_labeling, int &canonical_labeling_len,
 	int &idx,
+	nauty_output *NO,
 	int verbose_level)
 // returns f_found, which is TRUE if the object is rejected
 {
@@ -1271,7 +1445,6 @@ int projective_space_object_classifier::process_object(
 
 
 
-	nauty_output *NO;
 
 	if (f_projective_space) {
 		if (f_v) {
@@ -1285,7 +1458,7 @@ int projective_space_object_classifier::process_object(
 			OiP,
 			PA->A,
 			TRUE /* f_compute_canonical_form */, Canonical_form,
-			canonical_labeling, canonical_labeling_len,
+			//canonical_labeling, canonical_labeling_len,
 			NO,
 			verbose_level - 2);
 		if (f_v) {
@@ -1310,7 +1483,7 @@ int projective_space_object_classifier::process_object(
 		}
 		OiP->run_nauty(
 				TRUE /* f_compute_canonical_form */, Canonical_form,
-				canonical_labeling, canonical_labeling_len,
+				//canonical_labeling, canonical_labeling_len,
 				NO,
 				verbose_level);
 
@@ -1348,7 +1521,7 @@ int projective_space_object_classifier::process_object(
 
 	}
 
-	FREE_OBJECT(NO);
+	//FREE_OBJECT(NO);
 
 
 
@@ -1372,8 +1545,9 @@ int projective_space_object_classifier::process_object(
 
 int projective_space_object_classifier::process_object_with_known_canonical_labeling(
 	object_in_projective_space *OiP,
-	long int *canonical_labeling, int canonical_labeling_len,
+	int *canonical_labeling, int canonical_labeling_len,
 	int &idx,
+	nauty_output *NO,
 	int verbose_level)
 // returns f_found, which is TRUE if the object is rejected
 {
@@ -1432,6 +1606,12 @@ int projective_space_object_classifier::process_object_with_known_canonical_labe
 				"after OiP->canonical_form_given_canonical_labeling" << endl;
 	}
 #endif
+
+	int i;
+
+	for (i = 0; i < NO->N; i++) {
+		NO->canonical_labeling[i] = canonical_labeling[i];
+	}
 
 
 	//SG->group_order(go);
@@ -1673,17 +1853,16 @@ void projective_space_object_classifier::latex_report(
 
 
 			bitvector *Canonical_form;
-			//uchar *canonical_form;
-			//int canonical_form_len;
 
 			int nb_r, nb_c;
-			long int *canonical_labeling;
-			int canonical_labeling_len;
+			//long int *canonical_labeling;
+			//int canonical_labeling_len;
 
 			OiP->encoding_size(
 					nb_r, nb_c,
 					verbose_level);
-			canonical_labeling = NEW_lint(nb_r + nb_c);
+
+			//canonical_labeling = NEW_lint(nb_r + nb_c);
 
 #if 1
 			if (f_v) {
@@ -1693,13 +1872,14 @@ void projective_space_object_classifier::latex_report(
 			nauty_interface_with_group Nau;
 			nauty_output *NO;
 
+			NO = NEW_OBJECT(nauty_output);
+			NO->allocate(nb_r + nb_c, verbose_level);
+
 			SG = Nau.set_stabilizer_of_object(
 				OiP,
 				PA->A,
-				//Descr->f_save_incma_in_and_out, Descr->save_incma_in_and_out_prefix,
 				TRUE /* f_compute_canonical_form */, Canonical_form,
-				//canonical_form, canonical_form_len,
-				canonical_labeling, canonical_labeling_len,
+				//canonical_labeling, canonical_labeling_len,
 				NO,
 				verbose_level - 2);
 
@@ -1707,7 +1887,7 @@ void projective_space_object_classifier::latex_report(
 				cout << "projective_space_object_classifier::latex_report after Nau.set_stabilizer_of_object" << endl;
 			}
 
-			FREE_lint(canonical_labeling);
+			//FREE_lint(canonical_labeling);
 			FREE_OBJECT(NO);
 
 			SG->group_order(go);
@@ -1856,9 +2036,6 @@ void projective_space_object_classifier::latex_report(
 
 
 			encoded_combinatorial_object *Enc;
-			//int *Incma;
-			//int nb_rows, nb_cols;
-			//int *partition;
 			incidence_structure *Inc;
 			partitionstack *Stack;
 
@@ -1869,8 +2046,6 @@ void projective_space_object_classifier::latex_report(
 				Stack,
 				verbose_level);
 			FREE_OBJECT(Enc);
-			//FREE_int(Incma);
-			//FREE_int(partition);
 		#if 0
 			cout << "set ";
 			int_vec_print(cout, OiP->set, OiP->sz);

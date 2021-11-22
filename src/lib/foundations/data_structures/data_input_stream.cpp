@@ -62,42 +62,49 @@ int data_input_stream::read_arguments(
 			input_string2[nb_inputs].assign("");
 			cout << "-set_of_points " << input_string[nb_inputs] << endl;
 			nb_inputs++;
-			}
+		}
 		else if (stringcmp(argv[i], "-set_of_lines") == 0) {
 			input_type[nb_inputs] = INPUT_TYPE_SET_OF_LINES;
 			input_string[nb_inputs].assign(argv[++i]);
 			input_string2[nb_inputs].assign("");
 			cout << "-set_of_lines " << input_string[nb_inputs] << endl;
 			nb_inputs++;
-			}
+		}
+		else if (stringcmp(argv[i], "-set_of_points_and_lines") == 0) {
+			input_type[nb_inputs] = INPUT_TYPE_SET_OF_POINTS_AND_LINES;
+			input_string[nb_inputs].assign(argv[++i]);
+			input_string2[nb_inputs].assign(argv[++i]);
+			cout << "-set_of_points_and_lines " << input_string[nb_inputs] << " " << input_string2[nb_inputs] << endl;
+			nb_inputs++;
+		}
 		else if (stringcmp(argv[i], "-set_of_packing") == 0) {
 			input_type[nb_inputs] = INPUT_TYPE_SET_OF_PACKING;
 			input_string[nb_inputs].assign(argv[++i]);
 			input_string2[nb_inputs].assign("");
 			cout << "-set_of_packing " << input_string[nb_inputs] << endl;
 			nb_inputs++;
-			}
+		}
 		else if (stringcmp(argv[i], "-file_of_points") == 0) {
 			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_POINTS;
 			input_string[nb_inputs].assign(argv[++i]);
 			input_string2[nb_inputs].assign("");
 			cout << "-file_of_points " << input_string[nb_inputs] << endl;
 			nb_inputs++;
-			}
+		}
 		else if (stringcmp(argv[i], "-file_of_lines") == 0) {
 			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_LINES;
 			input_string[nb_inputs].assign(argv[++i]);
 			input_string2[nb_inputs].assign("");
 			cout << "-file_of_lines " << input_string[nb_inputs] << endl;
 			nb_inputs++;
-			}
+		}
 		else if (stringcmp(argv[i], "-file_of_packings") == 0) {
 			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_PACKINGS;
 			input_string[nb_inputs].assign(argv[++i]);
 			input_string2[nb_inputs].assign("");
 			cout << "-file_of_packings " << input_string[nb_inputs] << endl;
 			nb_inputs++;
-			}
+		}
 		else if (stringcmp(argv[i],
 				"-file_of_packings_through_spread_table") == 0) {
 			input_type[nb_inputs] =
@@ -108,14 +115,14 @@ int data_input_stream::read_arguments(
 				<< input_string[nb_inputs] << " "
 				<< input_string2[nb_inputs] << endl;
 			nb_inputs++;
-			}
+		}
 		else if (stringcmp(argv[i], "-file_of_point_set") == 0) {
 			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_POINT_SET;
 			input_string[nb_inputs].assign(argv[++i]);
 			input_string2[nb_inputs].assign("");
 			cout << "-file_of_point_set " << input_string[nb_inputs] << endl;
 			nb_inputs++;
-			}
+		}
 		else if (stringcmp(argv[i], "-file_of_designs") == 0) {
 			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_DESIGNS;
 			input_string[nb_inputs].assign(argv[++i]);
@@ -131,7 +138,7 @@ int data_input_stream::read_arguments(
 					<< " " << input_data4[nb_inputs]
 					<< endl;
 			nb_inputs++;
-			}
+		}
 		else if (stringcmp(argv[i], "-file_of_incidence_geometries") == 0) {
 			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_INCIDENCE_GEOMETRIES;
 			input_string[nb_inputs].assign(argv[++i]);
@@ -144,11 +151,11 @@ int data_input_stream::read_arguments(
 				<< " " << input_data3[nb_inputs]
 				<< endl;
 			nb_inputs++;
-			}
+		}
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
-			}
+		}
 		else {
 			cout << "data_input_stream::read_arguments unrecognized option " << argv[i] << endl;
 			exit(1);
@@ -174,6 +181,9 @@ void data_input_stream::print_item(int i)
 	}
 	else if (input_type[i] == INPUT_TYPE_SET_OF_LINES) {
 		cout << "-set_of_lines " << input_string[i] << endl;
+	}
+	else if (input_type[nb_inputs] == INPUT_TYPE_SET_OF_POINTS_AND_LINES) {
+		cout << "-set_of_points_and_lines " << input_string[nb_inputs] << " " << input_string2[nb_inputs] << endl;
 	}
 	else if (input_type[i] == INPUT_TYPE_SET_OF_PACKING) {
 		cout << "-set_of_packing " << input_string[i] << " " << input_string2[i] << endl;
@@ -232,71 +242,81 @@ int data_input_stream::count_number_of_objects_to_test(
 			if (f_v) {
 				cout << "input set of points "
 						<< input_string[input_idx] << ":" << endl;
-				}
+			}
 
 			nb_objects_to_test++;
 
-			}
+		}
 		else if (input_type[input_idx] == INPUT_TYPE_SET_OF_LINES) {
 			if (f_v) {
 				cout << "input set of lines "
 						<< input_string[input_idx] << ":" << endl;
-				}
+			}
 
 			nb_objects_to_test++;
 
+		}
+		else if (input_type[input_idx] == INPUT_TYPE_SET_OF_POINTS_AND_LINES) {
+			if (f_v) {
+				cout << "input set of points and lines "
+						<< input_string[input_idx] << " "
+						<< input_string2[input_idx] << ":" << endl;
 			}
+
+			nb_objects_to_test++;
+
+		}
 		else if (input_type[input_idx] == INPUT_TYPE_SET_OF_PACKING) {
 			if (f_v) {
 				cout << "input set of packing "
 						<< input_string[input_idx] << ":" << endl;
-				}
+			}
 
 			nb_objects_to_test++;
 
-			}
+		}
 		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POINTS) {
 			if (f_v) {
 				cout << "input sets of points from file "
 						<< input_string[input_idx] << ":" << endl;
-				}
+			}
 			nb_obj = Fio.count_number_of_orbits_in_file(
 					input_string[input_idx], 0 /* verbose_level*/);
 			if (f_v) {
 				cout << "The file " << input_string[input_idx]
 					<< " has " << nb_obj << " objects" << endl;
-				}
+			}
 
 			nb_objects_to_test += nb_obj;
-			}
+		}
 		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_LINES) {
 			if (f_v) {
 				cout << "input sets of lines from file "
 					<< input_string[input_idx] << ":" << endl;
-				}
+			}
 			nb_obj = Fio.count_number_of_orbits_in_file(
 				input_string[input_idx], 0 /* verbose_level*/);
 			if (f_v) {
 				cout << "The file " << input_string[input_idx]
 					<< " has " << nb_obj << " objects" << endl;
-				}
+			}
 
 			nb_objects_to_test += nb_obj;
-			}
+		}
 		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS) {
 			if (f_v) {
 				cout << "input sets of packings from file "
 					<< input_string[input_idx] << ":" << endl;
-				}
+			}
 			nb_obj = Fio.count_number_of_orbits_in_file(
 				input_string[input_idx], 0 /* verbose_level*/);
 			if (f_v) {
 				cout << "The file " << input_string[input_idx]
 					<< " has " << nb_obj << " objects" << endl;
-				}
+			}
 
 			nb_objects_to_test += nb_obj;
-			}
+		}
 		else if (input_type[input_idx] ==
 				INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
 			if (f_v) {
@@ -304,58 +324,58 @@ int data_input_stream::count_number_of_objects_to_test(
 					<< input_string[input_idx] << endl;
 				cout << "through spread table "
 					<< input_string2[input_idx] << " :" << endl;
-				}
+			}
 			nb_obj = Fio.count_number_of_orbits_in_file(
 				input_string[input_idx], 0 /* verbose_level*/);
 			if (f_v) {
 				cout << "The file " << input_string[input_idx]
 					<< " has " << nb_obj << " objects" << endl;
-				}
+			}
 
 			nb_objects_to_test += nb_obj;
-			}
+		}
 		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POINT_SET) {
 			if (f_v) {
 				cout << "input set of points from file "
 						<< input_string[input_idx] << ":" << endl;
-				}
+			}
 			nb_obj = 1;
 			if (f_v) {
 				cout << "The file " << input_string[input_idx]
 					<< " has " << nb_obj << " objects" << endl;
-				}
+			}
 
 			nb_objects_to_test += nb_obj;
-			}
+		}
 		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_DESIGNS) {
 			if (f_v) {
 				cout << "input designs from file "
 						<< input_string[input_idx] << ":" << endl;
 			}
 			{
-			set_of_sets *SoS;
-			int nck;
-			combinatorics_domain Combi;
+				set_of_sets *SoS;
+				int nck;
+				combinatorics_domain Combi;
 
-			nck = Combi.int_n_choose_k(input_data1[input_idx], input_data3[input_idx]);
-			SoS = NEW_OBJECT(set_of_sets);
+				nck = Combi.int_n_choose_k(input_data1[input_idx], input_data3[input_idx]);
+				SoS = NEW_OBJECT(set_of_sets);
 
-			cout << "classify_objects_using_nauty Reading the file " << input_string[input_idx]
-				<<  " which contains designs on " << input_data1[input_idx] << " points, nck=" << nck << endl;
-			SoS->init_from_file(
-					nck /* underlying_set_size */,
-					input_string[input_idx], verbose_level);
-			cout << "Read the file " << input_string[input_idx] << endl;
-			nb_obj = SoS->nb_sets;
-			FREE_OBJECT(SoS);
+				cout << "classify_objects_using_nauty Reading the file " << input_string[input_idx]
+					<<  " which contains designs on " << input_data1[input_idx] << " points, nck=" << nck << endl;
+				SoS->init_from_file(
+						nck /* underlying_set_size */,
+						input_string[input_idx], verbose_level);
+				cout << "Read the file " << input_string[input_idx] << endl;
+				nb_obj = SoS->nb_sets;
+				FREE_OBJECT(SoS);
 			}
 			if (f_v) {
 				cout << "The file " << input_string[input_idx]
 					<< " has " << nb_obj << " objects" << endl;
-				}
+			}
 
 			nb_objects_to_test += nb_obj;
-			}
+		}
 		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_INCIDENCE_GEOMETRIES) {
 			if (f_v) {
 				cout << "input incidence geometries from file "
@@ -388,12 +408,12 @@ int data_input_stream::count_number_of_objects_to_test(
 		else {
 			cout << "unknown input type" << endl;
 			exit(1);
-			}
 		}
+	}
 
 	if (f_v) {
 		cout << "count_number_of_objects_to_test done" << endl;
-		}
+	}
 	return nb_objects_to_test;
 }
 

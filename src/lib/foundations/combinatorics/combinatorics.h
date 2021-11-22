@@ -528,12 +528,12 @@ public:
 	void init(int nb_rows, int nb_cols, int verbose_level);
 	void print_incma();
 	void print_partition();
-	void compute_canonical_incma(long int *canonical_labeling,
+	void compute_canonical_incma(int *canonical_labeling,
 			int *&Incma_out, int verbose_level);
 	void compute_canonical_form(bitvector *&Canonical_form,
-			long int *canonical_labeling, int verbose_level);
+			int *canonical_labeling, int verbose_level);
 	void incidence_matrix_projective_space_top_left(projective_space *P, int verbose_level);
-	void canonical_form_given_canonical_labeling(long int *canonical_labeling,
+	void canonical_form_given_canonical_labeling(int *canonical_labeling,
 			bitvector *&B,
 			int verbose_level);
 

@@ -270,12 +270,31 @@ void projective_space_with_action::canonical_labeling(
 				"before OiP->canonical_labeling" << endl;
 	}
 
-	OiP->canonical_labeling(canonical_labeling, verbose_level);
+	int nb_rows, nb_cols;
 
+	OiP->encoding_size(
+			nb_rows, nb_cols,
+			0 /* verbose_level */);
+
+	nauty_output *NO;
+
+	NO = NEW_OBJECT(nauty_output);
+	NO->allocate(nb_rows + nb_cols, 0 /* verbose_level */);
+
+
+	OiP->canonical_labeling(NO, verbose_level);
+
+	int i;
+
+	for (i = 0; i < NO->N; i++) {
+		canonical_labeling[i] = NO->canonical_labeling[i];
+	}
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_labeling "
 				"after OiP->canonical_labeling" << endl;
 	}
+
+	FREE_OBJECT(NO);
 
 
 	if (f_v) {

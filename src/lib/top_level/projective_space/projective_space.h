@@ -300,7 +300,7 @@ public:
 		// generators for the automorphism group
 	long int ago;
 	int nb_rows, nb_cols;
-	long int *canonical_labeling;
+	int *canonical_labeling;
 
 
 	object_in_projective_space_with_action();
@@ -311,7 +311,7 @@ public:
 			long int ago,
 			strong_generators *Aut_gens,
 			int nb_rows, int nb_cols,
-			long int *canonical_labeling,
+			int *canonical_labeling,
 			int verbose_level);
 };
 
@@ -486,6 +486,9 @@ public:
 	int f_dualize_hyperplanes_to_points;
 	int f_dualize_points_to_hyperplanes;
 	std::string dualize_input_set;
+
+	int f_dualize_rank_k_subspaces;
+	int dualize_rank_k_subspaces_k;
 
 	int f_classify_arcs;
 	arc_generator_description *Arc_generator_description;
@@ -768,7 +771,7 @@ public:
 			std::vector<long int> &Ago,
 			std::vector<std::vector<int> > &The_canonical_labeling,
 			int &canonical_labeling_len,
-			long int *Known_ago, long int *Known_canonical_labeling,
+			long int *Known_ago, int *Known_canonical_labeling,
 			int t0,
 			int verbose_level);
 	void process_set_of_points(
@@ -777,8 +780,12 @@ public:
 	void process_set_of_points_from_file(
 			std::string &input_data,
 			int verbose_level);
-	void process_set_of_lines_from_file(
+	void process_set_of_lines(
 			std::string &input_data,
+			int verbose_level);
+	void process_set_of_points_and_lines(
+			std::string &input_data,
+			std::string &input_data2,
 			int verbose_level);
 	void process_set_of_packing(
 			std::string &input_data,
@@ -786,14 +793,16 @@ public:
 	int process_object(
 		object_in_projective_space *OiP,
 		strong_generators *&SG, long int &ago,
-		long int *canonical_labeling, int &canonical_labeling_len,
+		//long int *canonical_labeling, int &canonical_labeling_len,
 		int &idx,
+		nauty_output *NO,
 		int verbose_level);
 	// returns f_found, which is TRUE if the object is already in the list
 	int process_object_with_known_canonical_labeling(
 		object_in_projective_space *OiP,
-		long int *canonical_labeling, int canonical_labeling_len,
+		int *canonical_labeling, int canonical_labeling_len,
 		int &idx,
+		nauty_output *NO,
 		int verbose_level);
 	void save(
 			std::string &output_prefix,

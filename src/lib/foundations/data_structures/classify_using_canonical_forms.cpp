@@ -38,8 +38,8 @@ void classify_using_canonical_forms::add_object(object_in_projective_space *OiP,
 
 
 	int nb_rows, nb_cols;
-	int canonical_labeling_len;
-	long int *canonical_labeling;
+	//int canonical_labeling_len;
+	//long int *canonical_labeling;
 
 
 	if (f_v) {
@@ -51,11 +51,14 @@ void classify_using_canonical_forms::add_object(object_in_projective_space *OiP,
 		cout << "classify_using_canonical_forms::add_object nb_rows=" << nb_rows << endl;
 		cout << "classify_using_canonical_forms::add_object nb_cols=" << nb_cols << endl;
 	}
-	canonical_labeling_len = nb_rows + nb_cols;
-	canonical_labeling = NEW_lint(canonical_labeling_len);
+	//canonical_labeling_len = nb_rows + nb_cols;
+	//canonical_labeling = NEW_lint(canonical_labeling_len);
 
 	nauty_output *NO;
 	bitvector *Canonical_form;
+
+	NO = NEW_OBJECT(nauty_output);
+	NO->allocate(nb_rows + nb_cols, verbose_level);
 
 	if (f_v) {
 		cout << "classify_using_canonical_forms::add_object "
@@ -63,7 +66,7 @@ void classify_using_canonical_forms::add_object(object_in_projective_space *OiP,
 	}
 	OiP->run_nauty(
 			TRUE /* f_compute_canonical_form */, Canonical_form,
-			canonical_labeling, canonical_labeling_len,
+			//canonical_labeling, canonical_labeling_len,
 			NO,
 			verbose_level);
 	if (f_v) {
@@ -106,19 +109,8 @@ void classify_using_canonical_forms::add_object(object_in_projective_space *OiP,
 	}
 
 	FREE_OBJECT(NO);
-	FREE_lint(canonical_labeling);
+	//FREE_lint(canonical_labeling);
 	nb_input_objects++;
-
-#if 0
-	int nb_input_objects;
-
-
-	std::vector<bitvector *> B;
-	std::vector<void *> Objects;
-	std::vector<int> input_index;
-
-	std::multimap<uint32_t, int> Hashing;
-#endif
 
 	if (f_v) {
 		cout << "classify_using_canonical_forms::add_object done" << endl;
