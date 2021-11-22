@@ -80,14 +80,10 @@ void canonical_form_nauty::quartic_curve(
 		cout << endl;
 	}
 
-	//strong_generators *SG_pt_stab = NULL;
 	longinteger_object pt_stab_order;
 	object_in_projective_space *OiP = NULL;
 
 	int f_compute_canonical_form = TRUE;
-	//bitvector *Canonical_form;
-	//long int *canonical_labeling = NULL;
-	//int canonical_labeling_len;
 
 
 	OiP = NEW_OBJECT(object_in_projective_space);
@@ -112,10 +108,13 @@ void canonical_form_nauty::quartic_curve(
 		cout << "canonical_form_nauty::quartic_curve nb_cols = " << nb_cols << endl;
 	}
 
-	canonical_labeling = NEW_lint(nb_rows + nb_cols);
+	//canonical_labeling = NEW_lint(nb_rows + nb_cols);
 
 	nauty_interface_with_group Nau;
 	nauty_output *NO;
+
+	NO = NEW_OBJECT(nauty_output);
+	NO->allocate(nb_rows + nb_cols, verbose_level);
 
 
 	if (f_v) {
@@ -125,7 +124,7 @@ void canonical_form_nauty::quartic_curve(
 		OiP,
 		PA->A,
 		f_compute_canonical_form, Canonical_form,
-		canonical_labeling, canonical_labeling_len,
+		//canonical_labeling, canonical_labeling_len,
 		NO,
 		0 /*verbose_level*/);
 	if (f_v) {

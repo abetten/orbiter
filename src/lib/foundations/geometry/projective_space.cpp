@@ -25,6 +25,9 @@ projective_space::projective_space()
 	Grass_lines = NULL;
 	Grass_planes = NULL;
 	Grass_hyperplanes = NULL;
+
+	Grass_stack = NULL;
+
 	F = NULL;
 	Go = NULL;
 	n = 0;
@@ -65,6 +68,37 @@ void projective_space::freeself()
 	if (f_v) {
 		cout << "projective_space::freeself" << endl;
 	}
+	if (Grass_lines) {
+		if (f_v) {
+			cout << "projective_space::freeself "
+					"deleting Grass_lines" << endl;
+		}
+		FREE_OBJECT(Grass_lines);
+	}
+	if (Grass_planes) {
+		if (f_v) {
+			cout << "projective_space::freeself "
+					"deleting Grass_planes" << endl;
+		}
+		FREE_OBJECT(Grass_planes);
+	}
+	if (Grass_hyperplanes) {
+		if (f_v) {
+			cout << "projective_space::freeself "
+					"deleting Grass_hyperplanes" << endl;
+		}
+		FREE_OBJECT(Grass_hyperplanes);
+	}
+	if (Grass_stack) {
+		int i;
+
+		for (i = 1; i < n + 1; i++) {
+			FREE_OBJECT(Grass_stack[i]);
+		}
+		FREE_pvoid((void **) Grass_stack);
+	}
+
+
 	if (Go) {
 		if (f_v) {
 			cout << "projective_space::freeself deleting Go" << endl;
@@ -90,21 +124,6 @@ void projective_space::freeself()
 		FREE_int(Mtx2);
 	}
 
-	if (Grass_lines) {
-		if (f_v) {
-			cout << "projective_space::freeself "
-					"deleting Grass_lines" << endl;
-		}
-		FREE_OBJECT(Grass_lines);
-	}
-	if (Grass_planes) {
-		if (f_v) {
-			cout << "projective_space::freeself "
-					"deleting Grass_planes" << endl;
-		}
-		FREE_OBJECT(Grass_planes);
-	}
-
 	if (Implementation) {
 		FREE_OBJECT(Implementation);
 	}
@@ -115,6 +134,7 @@ void projective_space::freeself()
 	if (Reversal_polarity) {
 		FREE_OBJECT(Reversal_polarity);
 	}
+
 	if (f_v) {
 		cout << "projective_space::freeself done" << endl;
 	}
@@ -154,6 +174,16 @@ void projective_space::init(int n, finite_field *F,
 	if (n >= 2) {
 		Grass_hyperplanes = NEW_OBJECT(grassmann);
 		Grass_hyperplanes->init(n + 1, n, F, verbose_level - 2);
+	}
+
+	Grass_stack = (grassmann **) NEW_pvoid(n + 1);
+	Grass_stack[0] = NULL;
+	for (i = 1; i < n + 1; i++) {
+		Grass_stack[i] = NEW_OBJECT(grassmann);
+		if (f_v) {
+			cout << "projective_space::init before Grass_stack[i]->init i=" << i << endl;
+		}
+		Grass_stack[i]->init(n + 1, i, F, verbose_level - 2);
 	}
 
 	if (f_v) {
@@ -4480,7 +4510,9 @@ void projective_space::compute_decomposition_based_on_tally(tally *T1, tally *T2
 
 object_in_projective_space *projective_space::create_object_from_string(
 		int type, std::string &input_fname, int input_idx,
-		std::string &set_as_string, int verbose_level)
+		std::string &set_as_string,
+		std::string &set2_as_string,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4496,7 +4528,9 @@ object_in_projective_space *projective_space::create_object_from_string(
 
 	OiP->init_object_from_string(this,
 			type, input_fname, input_idx,
-			set_as_string, verbose_level);
+			set_as_string,
+			set2_as_string,
+			verbose_level);
 
 
 	if (f_v) {
@@ -4508,7 +4542,9 @@ object_in_projective_space *projective_space::create_object_from_string(
 
 object_in_projective_space * projective_space::create_object_from_int_vec(
 		int type, std::string &input_fname, int input_idx,
-		long int *the_set, int set_sz, int verbose_level)
+		long int *the_set, int set_sz,
+		long int *the_set2, int set2_sz,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -4524,7 +4560,9 @@ object_in_projective_space * projective_space::create_object_from_int_vec(
 
 	OiP->init_object_from_int_vec(this,
 			type, input_fname, input_idx,
-			the_set, set_sz, verbose_level);
+			the_set, set_sz,
+			the_set2, set2_sz,
+			verbose_level);
 
 
 	if (f_v) {
@@ -4532,6 +4570,52 @@ object_in_projective_space * projective_space::create_object_from_int_vec(
 				" done" << endl;
 	}
 	return OiP;
+}
+
+void projective_space::polarity_rank_k_subspace(int k,
+		long int rk_in, long int &rk_out, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *A;
+	int d;
+	grassmann *Gr_k;
+	grassmann *Gr_dmk;
+
+	if (f_v) {
+		cout << "projective_space::polarity_rank_k_subspace, k=" << k << endl;
+	}
+	d = n + 1;
+	Gr_k = Grass_stack[k];
+	Gr_dmk = Grass_stack[d - k];
+
+	A = NEW_int(d * d);
+
+	Gr_k->unrank_lint_here(A, rk_in, 0 /*verbose_level - 4*/);
+	if (f_vv) {
+		cout << "projective_space::polarity_rank_k_subspace subspace " << rk_in << ":" << endl;
+		Orbiter->Int_vec.print_integer_matrix_width(cout,
+			A, k, d, d,
+			F->log10_of_q + 1);
+	}
+	F->perp_standard(d, k, A, 0);
+	if (FALSE) {
+		cout << "projective_space::polarity_rank_k_subspace after F->perp_standard:" << endl;
+		Orbiter->Int_vec.print_integer_matrix_width(cout,
+			A, d, d, d,
+			F->log10_of_q + 1);
+	}
+	rk_out = Gr_dmk->rank_lint_here(A + k *d, 0 /*verbose_level - 4*/);
+	if (f_vv) {
+		cout << "projective_space::polarity_rank_k_subspace perp is " << endl;
+		Orbiter->Int_vec.print_integer_matrix_width(cout, A + k * d, d - k, d, d, F->log10_of_q + 1);
+		cout << "which has rank " << rk_out << endl;
+	}
+
+	FREE_int(A);
+	if (f_v) {
+		cout << "projective_space::polarity_rank_k_subspace done" << endl;
+	}
 }
 
 

@@ -148,13 +148,13 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 	}
 
 
-	int *can_labeling;
+	//int *can_labeling;
 	nauty_interface Nau;
 	int N;
 
 	N = Inc->nb_rows + Inc->nb_cols;
 
-	can_labeling = NEW_int(N);
+	//can_labeling = NEW_int(N);
 
 	encoded_combinatorial_object Enc;
 #if 0
@@ -176,17 +176,18 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 
 	Nau.nauty_interface_matrix_int(
 		&Enc,
-		can_labeling,
+		//can_labeling,
 		NO,
 		verbose_level - 3);
 
 	Enc.Incma = NULL;
 	Enc.partition = NULL;
 
+
 	for (i = 0; i < N; i++) {
-		canonical_labeling[i] = can_labeling[i];
+		canonical_labeling[i] = NO->canonical_labeling[i];
 	}
-	FREE_int(can_labeling);
+	//FREE_int(can_labeling);
 
 	Orbiter->Int_vec.copy_to_lint(NO->Base, NO->Base_lint, NO->Base_length);
 

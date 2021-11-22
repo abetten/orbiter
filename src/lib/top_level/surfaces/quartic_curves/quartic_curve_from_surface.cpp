@@ -487,7 +487,8 @@ void quartic_curve_from_surface::compute_quartic(int pt_orbit,
 
 		SOA->Surf_A->PA->P->Grass_lines->unrank_lint_here(Basis8, Lines_nice[i], 0);
 		if (f_v) {
-			cout << "quartic_curve_from_surface::compute_quartic Basis8=" << endl;
+			cout << "quartic_curve_from_surface::compute_quartic "
+					"Basis8=" << endl;
 			Orbiter->Int_vec.matrix_print(Basis8, 2, 4);
 		}
 
@@ -495,32 +496,38 @@ void quartic_curve_from_surface::compute_quartic(int pt_orbit,
 			Orbiter->Int_vec.copy(Basis8 + j * 4 + 1, Basis6 + j * 3, 3);
 		}
 		if (f_v) {
-			cout << "quartic_curve_from_surface::compute_quartic Basis6=" << endl;
+			cout << "quartic_curve_from_surface::compute_quartic "
+					"Basis6=" << endl;
 			Orbiter->Int_vec.matrix_print(Basis6, 2, 3);
 		}
 		Bitangents[i] = SOA->Surf_A->PA->PA2->P->Grass_lines->rank_lint_here(Basis6, 0);
 		if (f_v) {
-			cout << "quartic_curve_from_surface::compute_quartic Bitangents[" << i << "] = " << Bitangents[i] << endl;
+			cout << "quartic_curve_from_surface::compute_quartic "
+					"Bitangents[" << i << "] = " << Bitangents[i] << endl;
 		}
 	}
 	if (f_v) {
-		cout << "quartic_curve_from_surface::compute_quartic after mapping the lines" << endl;
+		cout << "quartic_curve_from_surface::compute_quartic "
+				"after mapping the lines" << endl;
 	}
 
 	long int plane_rk;
 
 	if (f_v) {
-		cout << "quartic_curve_from_surface::compute_quartic before SOA->SO->Surf->compute_tangent_plane" << endl;
+		cout << "quartic_curve_from_surface::compute_quartic "
+				"before SOA->SO->Surf->compute_tangent_plane" << endl;
 	}
 
 	plane_rk = SOA->SO->Surf->compute_tangent_plane(v, equation_nice, verbose_level);
 
 
 	if (f_v) {
-		cout << "quartic_curve_from_surface::compute_quartic after SOA->SO->Surf->compute_tangent_plane" << endl;
+		cout << "quartic_curve_from_surface::compute_quartic "
+				"after SOA->SO->Surf->compute_tangent_plane" << endl;
 	}
 	if (f_v) {
-		cout << "quartic_curve_from_surface::compute_quartic plane_rk = " << plane_rk << endl;
+		cout << "quartic_curve_from_surface::compute_quartic "
+				"plane_rk = " << plane_rk << endl;
 	}
 	int Basis12[12];
 
@@ -537,7 +544,8 @@ void quartic_curve_from_surface::compute_quartic(int pt_orbit,
 	}
 	Bitangents[nb_lines] = SOA->Surf_A->PA->PA2->P->Grass_lines->rank_lint_here(Basis6, 0);
 	if (f_v) {
-		cout << "quartic_curve_from_surface::compute_quartic Bitangents[nb_lines] = " << Bitangents[nb_lines] << endl;
+		cout << "quartic_curve_from_surface::compute_quartic "
+				"Bitangents[nb_lines] = " << Bitangents[nb_lines] << endl;
 	}
 
 
@@ -574,20 +582,22 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 
 	int f_compute_canonical_form = FALSE;
 	bitvector *Canonical_form;
-	long int *canonical_labeling = NULL;
-	int canonical_labeling_len;
+	//long int *canonical_labeling = NULL;
+	//int canonical_labeling_len;
 
 
 	OiP = NEW_OBJECT(object_in_projective_space);
 
 	if (f_v) {
-		cout << "quartic_curve_from_surface::compute_stabilizer before OiP->init_point_set" << endl;
+		cout << "quartic_curve_from_surface::compute_stabilizer "
+				"before OiP->init_point_set" << endl;
 	}
 	OiP->init_point_set(Surf_A->PA->PA2->P,
 			Pts_on_curve, sz_curve,
 			verbose_level - 1);
 	if (f_v) {
-		cout << "quartic_curve_from_surface::compute_stabilizer after OiP->init_point_set" << endl;
+		cout << "quartic_curve_from_surface::compute_stabilizer "
+				"after OiP->init_point_set" << endl;
 	}
 
 	int nb_rows, nb_cols;
@@ -600,7 +610,7 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 		cout << "quartic_curve_from_surface::compute_stabilizer nb_cols = " << nb_cols << endl;
 	}
 
-	canonical_labeling = NEW_lint(nb_rows + nb_cols);
+	//canonical_labeling = NEW_lint(nb_rows + nb_cols);
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_stabilizer "
@@ -610,12 +620,16 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 	nauty_interface_with_group Nau;
 	nauty_output *NO;
 
+	NO = NEW_OBJECT(nauty_output);
+
+	NO->allocate(nb_rows + nb_cols, 0 /* verbose_level */);
+
 
 	SG_pt_stab = Nau.set_stabilizer_of_object(
 		OiP,
 		Surf_A->PA->PA2->A,
 		f_compute_canonical_form, Canonical_form,
-		canonical_labeling, canonical_labeling_len,
+		//canonical_labeling, canonical_labeling_len,
 		NO,
 		verbose_level);
 
@@ -650,7 +664,7 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 	}
 
 	FREE_OBJECT(OiP);
-	FREE_lint(canonical_labeling);
+	//FREE_lint(canonical_labeling);
 
 	action_on_homogeneous_polynomials *AonHPD;
 

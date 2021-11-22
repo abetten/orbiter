@@ -59,19 +59,22 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	OiP->init_point_set(P, set, set_size, verbose_level);
 
 	int nb_rows, nb_cols;
-	long int *canonical_labeling;
-	int canonical_labeling_len;
+	//long int *canonical_labeling;
+	//int canonical_labeling_len;
 	bitvector *Canonical_form = NULL;
 
 	OiP->encoding_size(
 			nb_rows, nb_cols,
 			verbose_level);
-	canonical_labeling = NEW_lint(nb_rows + nb_cols);
+	//canonical_labeling = NEW_lint(nb_rows + nb_cols);
 
 
 	strong_generators *SG;
 	nauty_output *NO;
 
+
+	NO = NEW_OBJECT(nauty_output);
+	NO->allocate(nb_rows + nb_cols, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "action::set_stabilizer_in_projective_space before Nau.set_stabilizer_of_object" << endl;
@@ -80,7 +83,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 		OiP,
 		this /* A_linear */,
 		FALSE /* f_compute_canonical_form */, Canonical_form,
-		canonical_labeling, canonical_labeling_len,
+		//canonical_labeling, canonical_labeling_len,
 		NO,
 		verbose_level - 2);
 	if (f_v) {
@@ -507,7 +510,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	}
 #endif
 
-	FREE_lint(canonical_labeling);
+	//FREE_lint(canonical_labeling);
 	FREE_OBJECT(OiP);
 
 	return SG;

@@ -28,8 +28,13 @@ object_in_projective_space::object_in_projective_space()
 	f_has_known_ago = FALSE;
 	known_ago = 0;
 	//set_as_string = NULL;
+
 	set = NULL;
 	sz = 0;
+
+	set2 = NULL;
+	sz2 = 0;
+
 	v = 0;
 	b = 0;
 	design_k = 0;
@@ -47,6 +52,9 @@ void object_in_projective_space::freeself()
 {
 	if (set) {
 		FREE_lint(set);
+	}
+	if (set2) {
+		FREE_lint(set2);
 	}
 	if (SoS) {
 		FREE_OBJECT(SoS);
@@ -68,6 +76,14 @@ void object_in_projective_space::print(ostream &ost)
 	else if (type == t_LNS) {
 		ost << "set of lines of size " << sz << ": ";
 		Orbiter->Lint_vec.print(ost, set, sz);
+		ost << endl;
+	}
+	else if (type == t_PNL) {
+		ost << "set of points of size " << sz
+				<< " and a set of lines of size " << sz2 << ": ";
+		Orbiter->Lint_vec.print(ost, set, sz);
+		ost << ", ";
+		Orbiter->Lint_vec.print(ost, set2, sz2);
 		ost << endl;
 	}
 	else if (type == t_PAC) {
@@ -99,6 +115,14 @@ void object_in_projective_space::print_tex(ostream &ost)
 	else if (type == t_LNS) {
 		ost << "set of lines of size " << sz << ": $\\{";
 		Orbiter->Lint_vec.print(ost, set, sz);
+		ost << "\\}$" << endl;
+	}
+	else if (type == t_PNL) {
+		ost << "set of points of size " << sz << ": $\\{";
+		Orbiter->Lint_vec.print(ost, set, sz);
+		ost << "\\}$\\\\" << endl;
+		ost << "and a set of lines of size " << sz2 << ": $\\{";
+		Orbiter->Lint_vec.print(ost, set2, sz2);
 		ost << "\\}$" << endl;
 	}
 	else if (type == t_PAC) {
@@ -144,7 +168,9 @@ void object_in_projective_space::init_object_from_string(
 	projective_space *P,
 	int type,
 	std::string &input_fname, int input_idx,
-	std::string &set_as_string, int verbose_level)
+	std::string &set_as_string,
+	std::string &set2_as_string,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -161,6 +187,8 @@ void object_in_projective_space::init_object_from_string(
 
 	long int *the_set_in;
 	int set_size_in;
+	long int *the_set2_in;
+	int set2_size_in;
 
 
 	if (f_v) {
@@ -168,27 +196,41 @@ void object_in_projective_space::init_object_from_string(
 				"before Orbiter->get_lint_vec" << endl;
 	}
 	Orbiter->get_lint_vec(set_as_string,
-			the_set_in, set_size_in, verbose_level);
+			the_set_in, set_size_in,
+			verbose_level);
+	if (f_v) {
+		cout << "object_in_projective_space::init_object_from_string "
+				"after Orbiter->get_lint_vec" << endl;
+	}
+
+	if (f_v) {
+		cout << "object_in_projective_space::init_object_from_string "
+				"before Orbiter->get_lint_vec" << endl;
+	}
+	Orbiter->get_lint_vec(set2_as_string,
+			the_set2_in, set2_size_in,
+			verbose_level);
 	if (f_v) {
 		cout << "object_in_projective_space::init_object_from_string "
 				"after Orbiter->get_lint_vec" << endl;
 	}
 
 
+
 	if (f_v) {
 		cout << "object_in_projective_space::init_object_from_string "
-				"before object_in_projective_space::init_object_from_"
-				"int_vec" << endl;
+				"before object_in_projective_space::init_object_from_int_vec" << endl;
 	}
 	init_object_from_int_vec(
 		P,
 		type,
 		input_fname, input_idx,
-		the_set_in, set_size_in, verbose_level);
+		the_set_in, set_size_in,
+		the_set2_in, set2_size_in,
+		verbose_level);
 	if (f_v) {
 		cout << "object_in_projective_space::init_object_from_string "
-				"after object_in_projective_space::init_object_from_"
-				"int_vec" << endl;
+				"after object_in_projective_space::init_object_from_int_vec" << endl;
 	}
 
 
@@ -204,7 +246,9 @@ void object_in_projective_space::init_object_from_int_vec(
 	projective_space *P,
 	int type,
 	std::string &input_fname, int input_idx,
-	long int *the_set_in, int the_set_sz, int verbose_level)
+	long int *the_set_in, int the_set_sz,
+	long int *the_set2_in, int the_set2_sz,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -229,6 +273,9 @@ void object_in_projective_space::init_object_from_int_vec(
 		else if (type == t_LNS) {
 			cout << "t_LNS" << endl;
 		}
+		else if (type == t_PNL) {
+			cout << "t_PNL" << endl;
+		}
 		else if (type == t_PAC) {
 			cout << "t_PAC" << endl;
 		}
@@ -249,6 +296,12 @@ void object_in_projective_space::init_object_from_int_vec(
 	else if (type == t_LNS) {
 		init_line_set(P,
 				the_set_in, the_set_sz, verbose_level - 1);
+	}
+	else if (type == t_PNL) {
+		init_points_and_lines(P,
+				the_set_in, the_set_sz,
+				the_set2_in, the_set2_sz,
+				verbose_level - 1);
 	}
 	else if (type == t_PAC) {
 		init_packing_from_set(P,
@@ -312,6 +365,33 @@ void object_in_projective_space::init_line_set(
 	object_in_projective_space::sz = sz;
 	if (f_v) {
 		cout << "object_in_projective_space::init_line_set done" << endl;
+	}
+}
+
+void object_in_projective_space::init_points_and_lines(
+	projective_space *P,
+	long int *set, int sz,
+	long int *set2, int sz2,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_in_projective_space::init_points_and_lines" << endl;
+	}
+	object_in_projective_space::P = P;
+	type = t_PNL;
+
+	object_in_projective_space::set = NEW_lint(sz);
+	Orbiter->Lint_vec.copy(set, object_in_projective_space::set, sz);
+	object_in_projective_space::sz = sz;
+
+	object_in_projective_space::set2 = NEW_lint(sz2);
+	Orbiter->Lint_vec.copy(set2, object_in_projective_space::set2, sz2);
+	object_in_projective_space::sz2 = sz2;
+
+	if (f_v) {
+		cout << "object_in_projective_space::init_points_and_lines done" << endl;
 	}
 }
 
@@ -522,6 +602,16 @@ void object_in_projective_space::encoding_size(
 				nb_rows, nb_cols, verbose_level);
 
 	}
+	else if (type == t_PNL) {
+
+		if (f_v) {
+			cout << "object_in_projective_space::encoding_size "
+					"before encoding_size_points_and_lines" << endl;
+		}
+		encoding_size_points_and_lines(
+				nb_rows, nb_cols, verbose_level);
+
+	}
 	else if (type == t_PAC) {
 
 		if (f_v) {
@@ -628,6 +718,22 @@ void object_in_projective_space::encoding_size_line_set(
 
 }
 
+void object_in_projective_space::encoding_size_points_and_lines(
+		int &nb_rows, int &nb_cols,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_in_projective_space::encoding_size_points_and_lines" << endl;
+	}
+
+
+	nb_rows = P->N_points + 1;
+	nb_cols = P->N_lines + 1;
+
+}
+
 void object_in_projective_space::encoding_size_packing(
 		int &nb_rows, int &nb_cols,
 		int verbose_level)
@@ -682,7 +788,7 @@ void object_in_projective_space::encoding_size_incidence_geometry(
 }
 
 void object_in_projective_space::canonical_form_given_canonical_labeling(
-		long int *canonical_labeling,
+		int *canonical_labeling,
 		bitvector *&B,
 		int verbose_level)
 {
@@ -730,6 +836,11 @@ void object_in_projective_space::encode_incma(
 	else if (type == t_LNS) {
 		
 		encode_line_set(Enc, verbose_level);
+
+	}
+	else if (type == t_PNL) {
+
+		encode_points_and_lines(Enc, verbose_level);
 
 	}
 	else if (type == t_PAC) {
@@ -953,6 +1064,70 @@ void object_in_projective_space::encode_line_set(
 	}
 }
 
+void object_in_projective_space::encode_points_and_lines(
+		encoded_combinatorial_object *&Enc,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_in_projective_space::encode_points_and_lines" << endl;
+	}
+	int i, j;
+	int f_vvv = (verbose_level >= 3);
+
+	int nb_rows, nb_cols;
+	nb_rows = P->N_points + 1;
+	nb_cols = P->N_lines + 1;
+
+	int N, L;
+
+	N = nb_rows + nb_cols;
+	L = nb_rows * nb_cols;
+
+	Enc = NEW_OBJECT(encoded_combinatorial_object);
+	Enc->init(nb_rows, nb_cols, verbose_level);
+
+	Enc->incidence_matrix_projective_space_top_left(P, verbose_level);
+
+	// lines go in the last row:
+	for (i = 0; i < 1; i++) {
+		int h;
+
+		for (h = 0; h < sz2; h++) {
+			j = set2[h];
+			Enc->Incma[(P->N_points + i) * nb_cols + j] = 1;
+		}
+	}
+
+	// points go in the last column:
+	int h;
+
+	for (h = 0; h < sz; h++) {
+		i = set[h];
+		Enc->Incma[i * nb_cols + P->N_lines] = 1;
+	}
+
+	// bottom right entry:
+	for (i = 0; i < 1; i++) {
+		Enc->Incma[(P->N_points + i) * nb_cols + P->N_lines] = 1;
+	}
+
+	Enc->partition[P->N_points - 1] = 0;
+	Enc->partition[nb_rows - 1] = 0;
+	Enc->partition[nb_rows + P->N_lines - 1] = 0;
+	Enc->partition[nb_rows + P->N_lines + 1 - 1] = 0;
+	if (f_vvv) {
+		cout << "object_in_projective_space::encode_points_and_lines "
+				"partition:" << endl;
+		Enc->print_partition();
+	}
+	if (f_v) {
+		cout << "object_in_projective_space::encode_points_and_lines "
+				"done" << endl;
+	}
+}
+
 
 void object_in_projective_space::encode_packing(
 		encoded_combinatorial_object *&Enc,
@@ -1156,6 +1331,11 @@ void object_in_projective_space::encode_incma_and_make_decomposition(
 		encode_line_set(Enc, verbose_level);
 
 	}
+	else if (type == t_PNL) {
+
+		encode_points_and_lines(Enc, verbose_level);
+
+	}
 	else if (type == t_PAC) {
 		
 		encode_packing(Enc, verbose_level);
@@ -1221,6 +1401,21 @@ void object_in_projective_space::encode_incma_and_make_decomposition(
 		Stack->split_cell(0);
 
 	}
+
+	else if (type == t_PNL) {
+
+		if (f_v) {
+			cout << "object_in_projective_space::encode_incma_and_make_decomposition t_PNL" << endl;
+		}
+		Stack->subset_continguous(P->N_points, 1);
+		Stack->split_cell(0);
+		Stack->subset_continguous(
+				Inc->nb_points() + P->N_lines,
+				Enc->nb_cols - P->N_lines);
+		Stack->split_cell(0);
+
+	}
+
 	else if (type == t_PAC) {
 		
 		if (f_v) {
@@ -1285,6 +1480,11 @@ void object_in_projective_space::encode_object(
 		encode_object_lines(encoding, encoding_sz, verbose_level);
 
 	}
+	else if (type == t_PNL) {
+
+		encode_object_points_and_lines(encoding, encoding_sz, verbose_level);
+
+	}
 	else if (type == t_PAC) {
 		
 		encode_object_packing(encoding, encoding_sz, verbose_level);
@@ -1335,6 +1535,19 @@ void object_in_projective_space::encode_object_lines(
 
 	if (f_v) {
 		cout << "object_in_projective_space::encode_object_lines" << endl;
+	}
+	encoding_sz = sz;
+	encoding = NEW_lint(sz);
+	Orbiter->Lint_vec.copy(set, encoding, sz);
+}
+
+void object_in_projective_space::encode_object_points_and_lines(
+		long int *&encoding, int &encoding_sz, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_in_projective_space::encode_object_points_and_lines" << endl;
 	}
 	encoding_sz = sz;
 	encoding = NEW_lint(sz);
@@ -1513,7 +1726,7 @@ void object_in_projective_space::klein(int verbose_level)
 
 void object_in_projective_space::run_nauty(
 		int f_compute_canonical_form, bitvector *&Canonical_form,
-		long int *canonical_labeling, int &canonical_labeling_len,
+		//long int *canonical_labeling, int &canonical_labeling_len,
 		nauty_output *&NO,
 		int verbose_level)
 {
@@ -1522,7 +1735,7 @@ void object_in_projective_space::run_nauty(
 	if (f_v) {
 		cout << "object_in_projective_space::run_nauty" << endl;
 	}
-	int i, L;
+	int L;
 	combinatorics_domain Combi;
 	file_io Fio;
 	nauty_interface Nau;
@@ -1550,10 +1763,6 @@ void object_in_projective_space::run_nauty(
 
 	//canonical_labeling = NEW_int(nb_rows + nb_cols);
 
-	canonical_labeling_len = Enc->canonical_labeling_len;
-	for (i = 0; i < Enc->canonical_labeling_len; i++) {
-		canonical_labeling[i] = i;
-	}
 
 #if 0
 	if (f_save_incma_in_and_out) {
@@ -1569,7 +1778,7 @@ void object_in_projective_space::run_nauty(
 
 	NO = NEW_OBJECT(nauty_output);
 
-	NO->N = canonical_labeling_len;
+
 	L = Enc->nb_rows * Enc->nb_cols;
 
 	if (verbose_level > 5) {
@@ -1577,7 +1786,7 @@ void object_in_projective_space::run_nauty(
 				"initializing Aut, Base, Transversal_length" << endl;
 	}
 
-	NO->allocate(canonical_labeling_len, verbose_level - 2);
+	NO->allocate(Enc->canonical_labeling_len, verbose_level - 2);
 
 	if (f_v) {
 		cout << "object_in_projective_space::run_nauty "
@@ -1590,20 +1799,22 @@ void object_in_projective_space::run_nauty(
 	tps = Os.os_ticks_per_second();
 	t0 = Os.os_ticks();
 
-	int *can_labeling;
+	//int *can_labeling;
 
-	can_labeling = NEW_int(canonical_labeling_len);
+	//can_labeling = NEW_int(canonical_labeling_len);
 
 	Nau.nauty_interface_matrix_int(
 		Enc,
-		can_labeling,
+		//can_labeling,
 		NO,
 		verbose_level - 3);
 
+#if 0
 	for (i = 0; i < canonical_labeling_len; i++) {
 		canonical_labeling[i] = can_labeling[i];
 	}
 	FREE_int(can_labeling);
+#endif
 
 	Orbiter->Int_vec.copy_to_lint(NO->Base, NO->Base_lint, NO->Base_length);
 
@@ -1614,7 +1825,7 @@ void object_in_projective_space::run_nauty(
 	if (f_v) {
 		cout << "object_in_projective_space::run_nauty "
 				"done with Nau.nauty_interface_matrix_int, "
-				"Ago=" << NO->Ago << " dt=" << dt
+				"Ago=" << *NO->Ago << " dt=" << dt
 				<< " delta_t_in_sec=" << delta_t_in_sec << endl;
 	}
 	if (verbose_level > 5) {
@@ -1669,26 +1880,7 @@ void object_in_projective_space::run_nauty(
 
 
 		Enc->compute_canonical_form(Canonical_form,
-				canonical_labeling, verbose_level);
-
-#if 0
-		int *Incma_out;
-
-
-
-		Enc->compute_canonical_incma(canonical_labeling, Incma_out, verbose_level);
-		Canonical_form = NEW_OBJECT(bitvector);
-		Canonical_form->allocate(L);
-		for (i = 0; i < Enc->nb_rows; i++) {
-			for (j = 0; j < Enc->nb_cols; j++) {
-				if (Incma_out[i * Enc->nb_cols + j]) {
-					a = i * Enc->nb_cols + j;
-					Canonical_form->m_i(a, 1);
-				}
-			}
-		}
-		FREE_int(Incma_out);
-#endif
+				NO->canonical_labeling, verbose_level);
 
 	}
 
@@ -1718,14 +1910,15 @@ void object_in_projective_space::run_nauty(
 
 
 void object_in_projective_space::canonical_labeling(
-	int *canonical_labeling,
-	int verbose_level)
+		//int *canonical_labeling,
+		nauty_output *NO,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 
 	encoded_combinatorial_object *Enc;
-	int N, i;
+	//int N, i;
 	nauty_interface Nau;
 
 
@@ -1750,13 +1943,15 @@ void object_in_projective_space::canonical_labeling(
 		Enc->print_incma();
 	}
 
+#if 0
 	//canonical_labeling = NEW_int(nb_rows + nb_cols);
 	for (i = 0; i < Enc->nb_rows + Enc->nb_cols; i++) {
 		canonical_labeling[i] = i;
 	}
+#endif
 
 
-	N = Enc->nb_rows + Enc->nb_cols;
+	//N = Enc->nb_rows + Enc->nb_cols;
 	//L = nb_rows * nb_cols;
 
 	if (f_vv) {
@@ -1765,10 +1960,10 @@ void object_in_projective_space::canonical_labeling(
 				"Transversal_length" << endl;
 	}
 
-	nauty_output *NO;
 
-	NO = NEW_OBJECT(nauty_output);
-	NO->allocate(N, verbose_level);
+
+	//NO = NEW_OBJECT(nauty_output);
+	//NO->allocate(N, verbose_level);
 
 	if (f_v) {
 		cout << "object_in_projective_space::canonical_labeling "
@@ -1784,7 +1979,7 @@ void object_in_projective_space::canonical_labeling(
 
 	Nau.nauty_interface_matrix_int(
 			Enc,
-			canonical_labeling,
+			//canonical_labeling,
 			NO,
 			verbose_level - 3);
 
@@ -1806,7 +2001,7 @@ void object_in_projective_space::canonical_labeling(
 				"Ago=" << NO->Ago << endl;
 	}
 	FREE_OBJECT(Enc);
-	FREE_OBJECT(NO);
+	//FREE_OBJECT(NO);
 	if (f_v) {
 		cout << "object_in_projective_space::canonical_labeling done"
 				<< endl;

@@ -82,7 +82,7 @@ void encoded_combinatorial_object::print_partition()
 
 }
 
-void encoded_combinatorial_object::compute_canonical_incma(long int *canonical_labeling,
+void encoded_combinatorial_object::compute_canonical_incma(int *canonical_labeling,
 		int *&Incma_out, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -109,7 +109,7 @@ void encoded_combinatorial_object::compute_canonical_incma(long int *canonical_l
 }
 
 void encoded_combinatorial_object::compute_canonical_form(bitvector *&Canonical_form,
-		long int *canonical_labeling, int verbose_level)
+		int *canonical_labeling, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -162,7 +162,7 @@ void encoded_combinatorial_object::incidence_matrix_projective_space_top_left(pr
 	}
 }
 
-void encoded_combinatorial_object::canonical_form_given_canonical_labeling(long int *canonical_labeling,
+void encoded_combinatorial_object::canonical_form_given_canonical_labeling(int *canonical_labeling,
 		bitvector *&B,
 		int verbose_level)
 {

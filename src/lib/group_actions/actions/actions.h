@@ -1184,7 +1184,7 @@ public:
 		object_in_projective_space *OiP,
 		action *A_linear,
 		int f_compute_canonical_form, bitvector *&Canonical_form,
-		long int *canonical_labeling, int &canonical_labeling_len,
+		//long int *canonical_labeling, int &canonical_labeling_len,
 		nauty_output *&NO,
 		int verbose_level);
 

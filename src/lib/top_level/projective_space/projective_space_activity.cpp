@@ -534,6 +534,10 @@ void projective_space_activity::perform_activity(int verbose_level)
 			the_set_out[i] = PA->P->Standard_polarity->Hyperplane_to_point[a];
 		}
 
+		cout << "output set:" << endl;
+		Orbiter->Lint_vec.print(cout, the_set_out, set_size_in);
+		cout << endl;
+
 		// only if n = 2:
 		//int *Polarity_point_to_hyperplane; // [N_points]
 		//int *Polarity_hyperplane_to_point; // [N_points]
@@ -562,6 +566,42 @@ void projective_space_activity::perform_activity(int verbose_level)
 			a = the_set_in[i];
 			the_set_out[i] = PA->P->Standard_polarity->Point_to_hyperplane[a];
 		}
+
+		cout << "output set:" << endl;
+		Orbiter->Lint_vec.print(cout, the_set_out, set_size_in);
+		cout << endl;
+
+		FREE_lint(the_set_in);
+		FREE_lint(the_set_out);
+
+	}
+	else if (Descr->f_dualize_rank_k_subspaces) {
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity f_dualize_rank_k_subspaces" << endl;
+		}
+		long int *the_set_in;
+		int set_size_in;
+		long int *the_set_out;
+		int set_size_out;
+
+		Orbiter->Lint_vec.scan(Descr->dualize_input_set, the_set_in, set_size_in);
+
+		int i;
+		long int a;
+
+		set_size_out = set_size_in;
+		the_set_out = NEW_lint(set_size_in);
+		for (i = 0; i < set_size_in; i++) {
+			a = the_set_in[i];
+			cout << "i=" << i << " in=" << a << endl;
+			PA->P->polarity_rank_k_subspace(Descr->dualize_rank_k_subspaces_k,
+					a, the_set_out[i], verbose_level);
+			cout << "i=" << i << " in=" << a << " out=" << the_set_out[i] << endl;
+		}
+
+		cout << "output set:" << endl;
+		Orbiter->Lint_vec.print(cout, the_set_out, set_size_in);
+		cout << endl;
 
 		FREE_lint(the_set_in);
 		FREE_lint(the_set_out);

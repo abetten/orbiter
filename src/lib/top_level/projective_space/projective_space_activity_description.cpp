@@ -183,6 +183,9 @@ projective_space_activity_description::projective_space_activity_description()
 	f_dualize_points_to_hyperplanes = FALSE;
 	//std::string dualize_input_set;
 
+	f_dualize_rank_k_subspaces = FALSE;
+	dualize_rank_k_subspaces_k = 0;
+
 	f_classify_arcs = FALSE;
 	Arc_generator_description = NULL;
 
@@ -847,6 +850,15 @@ int projective_space_activity_description::read_arguments(
 				cout << "-dualize_points_to_hyperplanes " << dualize_input_set << endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-dualize_rank_k_subspaces") == 0) {
+			f_dualize_rank_k_subspaces = TRUE;
+			dualize_rank_k_subspaces_k = strtoi(argv[++i]);
+			dualize_input_set.assign(argv[++i]);
+			if (f_v) {
+				cout << "-dualize_rank_k_subspaces " << dualize_rank_k_subspaces_k << " " << dualize_input_set << endl;
+			}
+		}
+
 		else if (stringcmp(argv[i], "-classify_arcs") == 0) {
 			f_classify_arcs = TRUE;
 			Arc_generator_description = NEW_OBJECT(arc_generator_description);
@@ -1153,6 +1165,9 @@ void projective_space_activity_description::print()
 	}
 	if (f_dualize_points_to_hyperplanes) {
 		cout << "-dualize_points_to_hyperplanes" << " " << dualize_input_set << endl;
+	}
+	if (f_dualize_rank_k_subspaces) {
+		cout << "-dualize_rank_k_subspaces " << dualize_rank_k_subspaces_k << " " << dualize_input_set << endl;
 	}
 	if (f_classify_arcs) {
 		cout << "-classify_arcs " << endl;

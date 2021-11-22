@@ -27,9 +27,12 @@ nauty_output::nauty_output()
 	Transversal_length = NULL;
 	Ago = NULL;
 
+	canonical_labeling = NULL;
+
 	nb_firstpathnode = 0;
 	nb_othernode = 0;
 	nb_processnode = 0;
+	nb_firstterminal = 0;
 }
 
 nauty_output::~nauty_output()
@@ -49,6 +52,9 @@ nauty_output::~nauty_output()
 	if (Ago) {
 		FREE_OBJECT(Ago);
 	}
+	if (canonical_labeling) {
+		FREE_int(canonical_labeling);
+	}
 }
 
 void nauty_output::allocate(int N, int verbose_level)
@@ -65,6 +71,13 @@ void nauty_output::allocate(int N, int verbose_level)
 	Base_lint = NEW_lint(N);
 	Transversal_length = NEW_int(N);
 	Ago = NEW_OBJECT(longinteger_object);
+	canonical_labeling = NEW_int(N);
+
+	int i;
+
+	for (i = 0; i < N; i++) {
+		canonical_labeling[i] = i;
+	}
 }
 
 void nauty_output::print_stats()
