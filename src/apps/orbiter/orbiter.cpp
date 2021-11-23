@@ -33,7 +33,7 @@ int main(int argc, const char **argv)
 	// setup:
 
 
-	cout << "Welcome to Orbiter!  Your build number is " << build_number << "." << endl;
+	cout << "Welcome to Orbiter! Your build number is " << build_number + 1 << "." << endl;
 	cout << "A user's guide is available here: " << endl;
 	cout << "https://www.math.colostate.edu/~betten/orbiter/users_guide.pdf" << endl;
 	cout << "The sources are available here: " << endl;
