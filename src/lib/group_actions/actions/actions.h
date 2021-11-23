@@ -820,6 +820,7 @@ public:
 	void print_info();
 	void report_basic_orbits(std::ostream &ost);
 	void print_base();
+	void print_bare_base(std::ofstream &ost);
 	void latex_all_points(std::ostream &ost);
 	void latex_point_set(std::ostream &ost, long int *set, int sz, int verbose_level);
 	void print_group_order(std::ostream &ost);
@@ -829,6 +830,9 @@ public:
 	void write_set_of_elements_latex_file(std::string &fname, std::string &title, int *Elt, int nb_elts);
 	void export_to_orbiter(
 			std::string &fname, std::string &label, strong_generators *SG, int verbose_level);
+	void export_to_orbiter_as_bsgs(
+			std::string &fname, std::string &label, std::string &label_tex,
+			strong_generators *SG, int verbose_level);
 
 	// action_cb.cpp
 	int image_of(void *elt, int a);
@@ -1184,7 +1188,6 @@ public:
 		object_in_projective_space *OiP,
 		action *A_linear,
 		int f_compute_canonical_form, bitvector *&Canonical_form,
-		//long int *canonical_labeling, int &canonical_labeling_len,
 		nauty_output *&NO,
 		int verbose_level);
 

@@ -168,6 +168,7 @@ enum shallow_schreier_tree_strategy {
 enum permutation_group_type {
 	unknown_permutation_group_t,
 	symmetric_group_t,
+	bsgs_t,
 };
 
 

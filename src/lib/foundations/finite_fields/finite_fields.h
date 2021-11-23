@@ -462,7 +462,7 @@ private:
 
 public:
 	int f_has_table;
-		// if TRUE, T is available, otherwise Two is available.
+		// if TRUE, T is available, otherwise Iwo is available.
 
 	std::string label;
 	std::string label_tex;
@@ -1485,7 +1485,7 @@ public:
 
 };
 
-extern int nb_calls_to_finite_field_init;
+//extern int nb_calls_to_finite_field_init;
 
 
 

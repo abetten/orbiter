@@ -3032,6 +3032,27 @@ GEN_C13="1,2,3,4,5,6,7,8,9,10,11,12,0"
 
 C13:
 	$(ORBITER_PATH)orbiter.out -v 10 \
+		-define G -permutation_group \
+			-bsgs C13 C_{13} 13 13 0 1 \
+				$(GEN_C13) \
+			-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-export_orbiter \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-save_elements_csv "C13_elts.csv" \
+		-end
+
+
+
+C13_as_subgroup:
+	$(ORBITER_PATH)orbiter.out -v 10 \
 		-define G -permutation_group -symmetric_group 13 \
 			-subgroup_by_generators C13 13 1 $(GEN_C13) -end \
 		-with G -do \
@@ -11034,10 +11055,15 @@ F256_BCH_code_d16:
 
 
 
-POLY_Q256_DEG30_SPARSE="1,0,26,1,210,2,24,3,138,4,148,5,160,6,58,7,108,8,199,9,95,10,56,11,9,12,205,13,194,14,193,15,3,16,248,17,110,18,150,19,24,20,169,21,192,22,212,23,112,24,144,25,97,26,109,27,174,28,253,29,1,30"
+POLY_Q256_DEG30_SPARSE="1,0,26,1,210,2,24,3,\
+138,4,148,5,160,6,58,7,108,8,199,9,95,10,56,\
+11,9,12,205,13,194,14,193,15,3,16,248,17,110,\
+18,150,19,24,20,169,21,192,22,212,23,112,24,\
+144,25,97,26,109,27,174,28,253,29,1,30"
 
-POLY_Q256_DEG30_DENSE="1,26,210,24,138,148,160,58,108,199,95,56,9,\
-205,194,193,3,248,110,150,24,169,192,212,112,144,97,109,174,253,1"
+POLY_Q256_DEG30_DENSE="1,26,210,24,138,148,\
+160,58,108,199,95,56,9,205,194,193,3,248,110,\
+150,24,169,192,212,112,144,97,109,174,253,1"
 
 
 F256_BCH_code_d16_division:
@@ -11764,7 +11790,8 @@ geo_12_3:
 		-end
 
 # 229 geos
-# 8/26/2021: 41 sec on Mac
+#User time: 0.45 of a second, dt=45 tps = 100
+#nb_calls_to_densenauty=24586
 
 
 
@@ -11817,6 +11844,7 @@ geo_15_3:
 
 # 245342 geos, 8064, 720, 192^2, 128, 72, 48^6, 32, 30^2, 24^2, 20^2, 18, 16^10, 15^2, 12^11, 10^3, 8^34, 6^59, 5^5, 4^180, 3^69, 2^3709, 1^241240
 # 8 min 11 sec on Mac 
+# running out of memory
 
 geo_15_3_c:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -13153,7 +13181,7 @@ Paley_13:
 
 
 	
-trihedal_pair_graph:
+trihedral_pair_graph:
 	$(ORBITER_PATH)orbiter.out -v 2 -define Gamma \
 		-graph -trihedral_pair_disjointness_graph  -end \
 		-with Gamma -do \
@@ -13309,6 +13337,9 @@ load_graph_grid_3_3:
 
 #nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack1 = 4
 #nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack2 = 9
+#Written file grid-w-3-3_group.makefile of size 579
+#User time: 0 of a second, dt=0 tps = 100
+#nb_calls_to_densenauty=1
 
 
 load_graph_sts_13:
@@ -13453,6 +13484,8 @@ Paley_13_aut:
 		-end 
 
 # writes Paley_13_group.makefile
+#User time: 0 of a second, dt=0 tps = 100
+#nb_calls_to_densenauty=1
 
 
 # BEGIN Paley_13_group.makefile
@@ -13486,6 +13519,7 @@ Paley_13_cliques_classify:
 			-report \
 		-end
 
+#User time: 0.01 of a second, dt=1 tps = 100
 
 
 Paley_13_cliques:
@@ -13533,6 +13567,9 @@ Paley_29c_cliques_classify:
 			-orbits_on_subsets 5 \
 			-report \
 		-end
+
+
+#User time: 0.03 of a second, dt=3 tps = 100
 
 
 #############################################################################################################
@@ -13652,7 +13689,8 @@ cube:
 "texture{ Polished_Chrome pigment{quick_color White} }" \
 			-group_of_things_as_interval 0 6 \
 			-prisms 1 0.05 \
-"texture{ pigment{ color Yellow transmit 0.7 } finish {diffuse 0.9 phong 0.6} }" \
+"texture{ pigment{ color Yellow transmit 0.7 } \
+finish {diffuse 0.9 phong 0.6} }" \
 			-group_of_things_as_interval 0 12 \
 			-cylinders 2 0.15 \
 "texture{ pigment{ color Red  } finish {diffuse 0.9 phong 0.6} }" \
@@ -13680,7 +13718,8 @@ monkey:
 			-group_of_things "0" \
 			-group_of_things "0" \
 			-cubics 0 "texture{ pigment{ Gold } finish \
-{ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+{ambient 0.4 diffuse 0.5 roughness 0.001 \
+reflection 0.1 specular .8} }" \
 			-planes 1 "texture{ pigment{ color Blue \
 transmit 0.5 } finish { diffuse 0.9 phong 0.2}}" \
 		-scene_objects_end \
@@ -13708,7 +13747,8 @@ Eckardt:
 			-Hilbert_Cohn_Vossen_surface \
 			-group_of_things "0" \
 			-cubics 0 "texture{ pigment{ White*0.5 transmit 0.5 } \
-finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+finish {ambient 0.4 diffuse 0.5 roughness 0.001 \
+reflection 0.1 specular .8} }" \
 			-group_of_things_as_interval 0 6 \
 			-group_of_things_as_interval 6 6 \
 			-group_of_things_as_interval_with_exceptions 12 15 \
@@ -13785,7 +13825,8 @@ Eckardt_deform:
 				"0, -5, 0, -5, -5, 10, -1, 0, 10, 4, 10, 5, 3, -5, 1, -6, 0, -5, -4, 1" \
 			-group_of_things_as_interval 0 93 \
 			-group_is_animated 1 \
-			-cubics 1 "texture{ pigment{ White*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+			-cubics 1 "texture{ pigment{ White*0.5 transmit 0.5 } \
+finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
 		-scene_objects_end \
 		-povray_end
 	- rm -rf POV
@@ -13816,11 +13857,14 @@ Eckardt_deform_2:
 			--group_of_things_as_interval 0 93 \
 			--group_is_animated 1 \
 			-group_of_things "0" \
-			-cubics 1 "texture{ pigment{ White*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+			-cubics 1 "texture{ pigment{ White*0.5 transmit 0.5 } \
+finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
 			-group_of_things "24" \
-			-cubics 2 "texture{ pigment{ Red*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+			-cubics 2 "texture{ pigment{ Red*0.5 transmit 0.5 } \
+finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
 			-group_of_things "70" \
-			-cubics 3 "texture{ pigment{ Blue*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+			-cubics 3 "texture{ pigment{ Blue*0.5 transmit 0.5 } \
+finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
 		-scene_objects_end \
 		-povray_end
 	- rm -rf POV
@@ -13847,15 +13891,21 @@ Clebsch:
 		-scene_objects \
 			-Clebsch_surface \
 			-group_of_things "0" \
-			-cubics 0 "texture{ pigment{ White*0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+			-cubics 0 "texture{ pigment{ White*0.5 } finish \
+{ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
 			-group_of_things_as_interval 0 6 \
 			-group_of_things_as_interval 6 6 \
 			-group_of_things_as_interval 12 15  \
-			-lines 1 0.02 "texture{ pigment{ color Red } finish { diffuse 0.9 phong 1}}" \
-			-lines 2 0.02 "texture{ pigment{ color Blue } finish { diffuse 0.9 phong 1}}" \
-			-lines 3 0.02 "texture{ pigment{ color Yellow } finish { diffuse 0.9 phong 1}}" \
+			-lines 1 0.02 "texture{ pigment{ color Red } \
+finish { diffuse 0.9 phong 1}}" \
+			-lines 2 0.02 "texture{ pigment{ color Blue } \
+finish { diffuse 0.9 phong 1}}" \
+			-lines 3 0.02 "texture{ pigment{ color Yellow } \
+finish { diffuse 0.9 phong 1}}" \
 			-group_of_things_as_interval 0 12 \
-			-spheres 4 0.08 "texture{ pigment{Cyan*1.3} finish {ambient 0.4 diffuse 0.6 roughness 0.001 reflection 0 specular .8}  }" \
+			-spheres 4 0.08 "texture{ pigment{Cyan*1.3} \
+finish {ambient 0.4 diffuse 0.6 roughness 0.001 \
+reflection 0 specular .8}  }" \
 		-scene_objects_end \
 		-povray_end
 	- rm -rf POV
@@ -14032,9 +14082,16 @@ Beauville_surface:
 		-camera 0 "1,1,1" "-3,1,3" "0.12,0.12,0.12"  \
 		-end \
 		-scene_objects \
-			-quintic_lex_56 "-44, 228, 400, 315, -396, -852, -512, -553, -1050, -354, 284, 504, -62, -707, -1390, -1010, 281, -167, -1644, -1024, -72, -196, 192, 373, 322, 78, 150, 966, 1540, 348, -475, -492, 1063, 1550, 390, 0, 96, 3, -337, -426, -66, 425, 673, -156, -216, -223, -60, 1543, 1998, 618, 263, -250, -919, 557, 1800, 741" \
+			-quintic_lex_56 "-44, 228, 400, 315, -396, -852, \
+-512, -553, -1050, -354, 284, 504, -62, -707, -1390, -1010, \
+281, -167, -1644, -1024, -72, -196, 192, 373, 322, 78, 150, \
+966, 1540, 348, -475, -492, 1063, 1550, 390, 0, 96, 3, -337, \
+-426, -66, 425, 673, -156, -216, -223, -60, 1543, 1998, 618, \
+263, -250, -919, 557, 1800, 741" \
 			-group_of_things "0" \
-			-quintics 0 "texture{ pigment{ White*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+			-quintics 0 "texture{ pigment{ White*0.5 transmit 0.5 } \
+finish {ambient 0.4 diffuse 0.5 roughness 0.001 \
+reflection 0.1 specular .8} }" \
 		-scene_objects_end \
 		-povray_end
 	- rm -rf POV
@@ -14281,12 +14338,19 @@ Clebsch_surface:
 		-camera 0 "1,1,1" "-3,1,3" "0.12,0.12,0.12"  \
 		-end \
 		-scene_objects \
-			-cubic_orbiter "0,0,0,0,0,-4.236067972,0,0,4.236067972,4.236067972,17.94427188,- 17.94427188,0,0,- 9.472135941,0,0,5.236067971,8.472135938,- 27.41640782" \
+			-cubic_orbiter "0,0,0,0,0,-4.236067972,\
+0,0,4.236067972,4.236067972,17.94427188,\
+-17.94427188,0,0,- 9.472135941,0,0,5.236067971,\
+8.472135938,- 27.41640782" \
 			-group_of_things "0" \
-			-cubics 0 "texture{ pigment{ White*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
-			-point_list_from_csv_file function_Clebsch_map_of_circle_N1000_points.csv \
+			-cubics 0 "texture{ pigment{ White*0.5 transmit 0.5 } \
+finish {ambient 0.4 diffuse 0.5 roughness 0.001 \
+reflection 0.1 specular .8} }" \
+			-point_list_from_csv_file \
+			function_Clebsch_map_of_circle_N1000_points.csv \
 			-group_of_things_as_interval 0 954 \
-			-spheres 1 0.07 "texture{ pigment{ color Red } finish { diffuse 0.9 phong 1}}" \
+			-spheres 1 0.07 "texture{ pigment{ color Red } \
+finish { diffuse 0.9 phong 1}}" \
 		-scene_objects_end \
 		-povray_end
 	- rm -rf POV
@@ -14308,7 +14372,8 @@ Clebsch_surface_defining_equation:
 		-scene_objects \
 			-cubic_orbiter "0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2" \
 			-group_of_things "0" \
-			-cubics 0 "texture{ pigment{ White*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+			-cubics 0 "texture{ pigment{ White*0.5 transmit 0.5 } \
+finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
 		-scene_objects_end \
 		-povray_end
 	- rm -rf POV
@@ -14331,13 +14396,18 @@ Clebsch_surface_defining_equation_and_curves:
 		-scene_objects \
 			-cubic_orbiter "0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2" \
 			-group_of_things "0" \
-			-cubics 0 "texture{ pigment{ White*0.5 transmit 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
-			-point_list_from_csv_file function_Clebsch_map_of_circle_to_defininig_eqn_N1000_points.csv \
+			-cubics 0 "texture{ pigment{ White*0.5 transmit 0.5 } \
+finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+			-point_list_from_csv_file \
+			function_Clebsch_map_of_circle_to_defininig_eqn_N1000_points.csv \
 			-group_of_things_as_interval 0 656 \
-			-spheres 1 0.07 "texture{ pigment{ color Red } finish { diffuse 0.9 phong 1}}" \
-			-point_list_from_csv_file function_Clebsch_map_of_circle_to_defininig_eqn_r2_N1000_points.csv \
+			-spheres 1 0.07 "texture{ pigment{ color Red } \
+finish { diffuse 0.9 phong 1}}" \
+			-point_list_from_csv_file \
+			function_Clebsch_map_of_circle_to_defininig_eqn_r2_N1000_points.csv \
 			-group_of_things_as_interval 656 1042 \
-			-spheres 2 0.07 "texture{ pigment{ color Blue } finish { diffuse 0.9 phong 1}}" \
+			-spheres 2 0.07 "texture{ pigment{ color Blue } \
+finish { diffuse 0.9 phong 1}}" \
 		-scene_objects_end \
 		-povray_end
 	- rm -rf POV
@@ -14419,9 +14489,12 @@ McKean_povray:
 		-camera 0 "1,1,1"  "-4.5,3.5,6" "0,0,0"  \
 		-end \
 		-scene_objects \
-			-cubic_lex "0, 0, 1, 0, 0, -1, -2, 1, 2, 0, 0, 1, 1,-1, -1, -1, 0, 0, 0, 0" \
+			-cubic_lex "0, 0, 1, 0, 0, -1, -2, 1, \
+2, 0, 0, 1, 1,-1, -1, -1, 0, 0, 0, 0" \
 			-group_of_things "0" \
-			-cubics 0 "texture{ pigment{ White*0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 reflection 0.1 specular .8} }" \
+			-cubics 0 "texture{ pigment{ White*0.5 } \
+finish {ambient 0.4 diffuse 0.5 roughness 0.001 \
+reflection 0.1 specular .8} }" \
 		-scene_objects_end \
 		-povray_end
 	- rm -rf POV
@@ -14478,7 +14551,8 @@ lissajous_plot:
 		-rotate_about_z_axis \
 		-end \
 		-scene_objects \
-			-line_through_two_points_recentered_from_csv_file coordinate_grid.csv \
+			-line_through_two_points_recentered_from_csv_file \
+			coordinate_grid.csv \
 			-group_of_things "0" \
 			-group_of_things "1" \
 			-group_of_things "2" \
@@ -14487,12 +14561,15 @@ lissajous_plot:
 			-lines 2 0.09 "texture{ pigment{ color Yellow } }" \
 			-group_of_things_as_interval 3 39 \
 			-lines 3 0.02 "texture{ pigment{ color Black } }" \
-			-point_list_from_csv_file function_lissajous_N2000_points.csv \
+			-point_list_from_csv_file \
+			function_lissajous_N2000_points.csv \
 			-group_of_things_as_interval 0 6524\
-			-spheres 4 0.1 "texture{ pigment{ color Red } finish { diffuse 0.9 phong 1}}" \
+			-spheres 4 0.1 "texture{ pigment{ color Red } \
+finish { diffuse 0.9 phong 1}}" \
 			-plane_by_dual_coordinates "0,0,1,0" \
 			-group_of_things "0" \
-			-planes 5 "texture{ pigment{ color Blue*0.5 transmit 0.5 } }" \
+			-planes 5 "texture{ pigment{ color Blue*0.5 \
+transmit 0.5 } }" \
 		-scene_objects_end \
 		-povray_end
 	- rm -rf POV
@@ -14524,7 +14601,8 @@ lissajous_3d_plot:
 		-rotate_about_z_axis \
 		-end \
 		-scene_objects \
-			-line_through_two_points_recentered_from_csv_file coordinate_grid.csv \
+			-line_through_two_points_recentered_from_csv_file \
+			coordinate_grid.csv \
 			-group_of_things "0" \
 			-group_of_things "1" \
 			-group_of_things "2" \
@@ -14533,9 +14611,11 @@ lissajous_3d_plot:
 			-lines 2 0.09 "texture{ pigment{ color Yellow } }" \
 			-group_of_things_as_interval 3 39 \
 			-lines 3 0.02 "texture{ pigment{ color Black } }" \
-			-point_list_from_csv_file function_lissajous_3d_N2000_points.csv \
+			-point_list_from_csv_file \
+			function_lissajous_3d_N2000_points.csv \
 			-group_of_things_as_interval 0 6538\
-			-spheres 4 0.1 "texture{ pigment{ color Red } finish { diffuse 0.9 phong 1}}" \
+			-spheres 4 0.1 "texture{ pigment{ color Red } \
+finish { diffuse 0.9 phong 1}}" \
 			-plane_by_dual_coordinates "0,0,1,0" \
 			-group_of_things "0" \
 		-scene_objects_end \

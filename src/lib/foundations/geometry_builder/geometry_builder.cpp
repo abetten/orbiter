@@ -229,7 +229,7 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 	}
 
 	int *s_type = NULL, *s_flag = NULL;
-	int *r_type = NULL, *r_from = NULL, *r_len = NULL;
+	//int *r_type = NULL, *r_from = NULL, *r_len = NULL;
 	int *f_flush = NULL;
 
 	s_type = new int[V + 1];
@@ -241,6 +241,7 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 	//s_type[V] = 1;
 	//s_flag[V] = flag_numeric;
 
+#if 0
 	r_type = new int [V + 1];
 	r_from = new int [V + 1];
 	r_len = new int [V + 1];
@@ -251,6 +252,8 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 		r_len[i] = 0;
 		f_flush[i] = 0;
 	}
+#endif
+
 
 	if (f_v) {
 		cout << "geometry_builder::init_description reading test_lines" << endl;
@@ -312,6 +315,7 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 
 	}
 
+#if 0
 	if (f_v) {
 		cout << "geometry_builder::init_description range" << endl;
 	}
@@ -326,6 +330,7 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 			it->print_mod = 1;
 		}
 	}
+#endif
 
 	if (f_v) {
 		cout << "geometry_builder::init_description set_flush_line" << endl;
@@ -335,6 +340,16 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 		if (f_flush[i]) {
 			gg->inc->set_flush_line(i);
 		}
+	}
+
+	if (Descr->f_split) {
+		if (f_v) {
+			cout << "geometry_builder::init_description installing split on line " << Descr->split_line << endl;
+			cout << "geometry_builder::init_description remainder " << Descr->split_remainder << endl;
+			cout << "geometry_builder::init_description modulo " << Descr->split_modulo << endl;
+		}
+		gg->inc->set_split(Descr->split_line, Descr->split_remainder, Descr->split_modulo);
+
 	}
 
 	if (f_v) {
@@ -421,7 +436,8 @@ void geometry_builder::print_tdo()
 void geometry_builder::isot(int line,
 	int tdo_flags, int verbose_level)
 {
-	gg->inc->stuetze_nach_zeile(line, tdo_flags, verbose_level);
+	gg->inc->install_isomorphism_test_after_a_given_row(
+			line, tdo_flags, verbose_level);
 }
 
 void geometry_builder::isot_no_vhbars(int tdo_flags, int verbose_level)
@@ -432,12 +448,20 @@ void geometry_builder::isot_no_vhbars(int tdo_flags, int verbose_level)
 
 void geometry_builder::isot2(int line, int tdo_flags, int verbose_level)
 {
-	gg->inc->stuetze2_nach_zeile(line, tdo_flags, verbose_level);
+	gg->inc->install_isomorphism_test_of_second_kind_after_a_given_row(
+			line, tdo_flags, verbose_level);
 }
 
+#if 0
 void geometry_builder::range(int line, int first, int len)
 {
 	gg->inc->set_range(line, first, len);
+}
+#endif
+
+void geometry_builder::set_split(int line, int remainder, int modulo)
+{
+	gg->inc->set_split(line, remainder, modulo);
 }
 
 void geometry_builder::flush_line(int line)

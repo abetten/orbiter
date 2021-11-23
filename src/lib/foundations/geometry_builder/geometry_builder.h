@@ -170,8 +170,8 @@ public:
 	int GeoNxt(int verbose_level);
 	int GeoRowFst(int I, int verbose_level);
 	int GeoRowNxt(int I, int verbose_level);
-	int GeoLineFstRange(int I, int m, int verbose_level);
-	int GeoLineNxtRange(int I, int m, int verbose_level);
+	int GeoLineFstSplit(int I, int m, int verbose_level);
+	int GeoLineNxtSplit(int I, int m, int verbose_level);
 	int geo_back_test(int I, int verbose_level);
 	int GeoLineFst0(int I, int m, int verbose_level);
 	int GeoLineNxt0(int I, int m, int verbose_level);
@@ -253,6 +253,11 @@ public:
 	std::vector<std::string> test2_lines;
 	std::vector<std::string> test2_flags;
 
+	int f_split;
+	int split_line;
+	int split_remainder;
+	int split_modulo;
+
 	std::vector<int> print_at_line;
 
 	int f_fname_GEO;
@@ -330,7 +335,8 @@ public:
 	void isot(int line, int tdo_flags, int verbose_level);
 	void isot_no_vhbars(int tdo_flags, int verbose_level);
 	void isot2(int line, int tdo_flags, int verbose_level);
-	void range(int line, int first, int len);
+	//void range(int line, int first, int len);
+	void set_split(int line, int remainder, int modulo);
 	void flush_line(int line);
 
 };
@@ -520,11 +526,12 @@ public:
 	void print_R(int v, cperm *p, cperm *q);
 	void print(std::ostream &ost, int v, int v_cut);
 	void print_override_theX(std::ostream &ost, int *theX, int v, int v_cut);
-	void stuetze_nach_zeile(int i, int tdo_flags, int verbose_level);
-	void stuetze2_nach_zeile(int i, int tdo_flags, int verbose_level);
-	void set_range(int i, int first, int len);
-	void set_flush_to_inc_file(int i, std::string &fname);
-	void set_flush_line(int i);
+	void install_isomorphism_test_after_a_given_row(int i, int tdo_flags, int verbose_level);
+	void install_isomorphism_test_of_second_kind_after_a_given_row(int i, int tdo_flags, int verbose_level);
+	//void set_range(int row, int first, int len);
+	void set_split(int row, int remainder, int modulo);
+	void set_flush_to_inc_file(int row, std::string &fname);
+	void set_flush_line(int row);
 	void print_geo(std::ostream &ost, int v, int *theGEO);
 	void print_inc(std::ostream &ost, int v, long int *theInc);
 	void print_blocks(std::ostream &ost, int v, long int *theInc);
@@ -666,9 +673,15 @@ public:
 	int f_generate_first;
 	int f_beginning_checked;
 
+#if 0
 	int f_range;
 	int range_first;
 	int range_len;
+#endif
+
+	int f_split;
+	int split_remainder;
+	int split_modulo;
 
 	int f_flush_line;
 
@@ -734,7 +747,8 @@ public:
 		int f_print_isot_small, int f_print_isot, int verbose_level);
 	void scan_tdo_flags(int tdo_flags);
 	void second();
-	void set_range(int first, int len);
+	//void set_range(int first, int len);
+	void set_split(int remainder, int modulo);
 	void set_flush_line();
 	void flush();
 	void TDO_realloc();
@@ -829,7 +843,7 @@ public:
 // tdo_gradient.cpp
 // #############################################################################
 
-//! compute a more refined geometric invariant called second TDO
+//! a more refined geometric invariant called second TDO
 
 class tdo_gradient {
 

@@ -83,6 +83,58 @@ void permutation_group_create::permutation_group_init(
 		}
 	}
 
+	else if (Descr->type == bsgs_t) {
+
+		A_initial = NEW_OBJECT(action);
+
+		longinteger_object target_go;
+		long int *given_base;
+		int given_base_length;
+
+		int *gens;
+		int *gens_i;
+		int sz;
+		int h;
+
+		gens = NEW_int(Descr->bsgs_nb_generators * Descr->degree);
+		for (h = 0; h < Descr->bsgs_nb_generators; h++) {
+
+			Orbiter->Int_vec.scan(Descr->bsgs_generators[h], gens_i, sz);
+			if (sz != Descr->degree) {
+				cout << "permutation_group_create::permutation_group_init generator "
+						<< h << " does not have the right length" << endl;
+				exit(1);
+			}
+			Orbiter->Int_vec.copy(gens_i, gens + h * Descr->degree, Descr->degree);
+
+			FREE_int(gens_i);
+
+		}
+
+		target_go.create_from_base_10_string(Descr->bsgs_order_text);
+
+		Orbiter->Lint_vec.scan(Descr->bsgs_base, given_base, given_base_length);
+
+
+		A_initial->init_permutation_group_from_generators(Descr->degree,
+			TRUE /* f_target_go */, target_go,
+			Descr->bsgs_nb_generators, gens,
+			given_base_length, given_base,
+			verbose_level);
+
+		A_initial->Strong_gens->print_generators_in_latex_individually(cout);
+		A_initial->Strong_gens->print_generators_in_source_code();
+		A_initial->print_base();
+		A_initial->print_info();
+
+		label.assign(Descr->bsgs_label);
+		label_tex.assign(Descr->bsgs_label_tex);
+
+		FREE_int(gens);
+
+	}
+
+
 	if (Descr->f_subgroup_by_generators) {
 		if (f_v) {
 			cout << "permutation_group_create::permutation_group_init "

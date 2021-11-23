@@ -424,15 +424,15 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 		fname_group.append("_group.makefile");
 
 		if (f_v) {
-			cout << "graph_theoretic_activity::perform_activity before Aut->export_to_orbiter label = " << CG->label << endl;
+			cout << "graph_theoretic_activity::perform_activity before Aut->export_to_orbiter_as_bsgs label = " << CG->label << endl;
 		}
 		Aut->degree--;
 		if (f_v) {
-			cout << "graph_theoretic_activity::perform_activity before Aut->export_to_orbiter degree = " << Aut->degree << endl;
+			cout << "graph_theoretic_activity::perform_activity before Aut->export_to_orbiter_as_bsgs degree = " << Aut->degree << endl;
 		}
-		Aut->export_to_orbiter(fname_group, CG->label, Aut->Strong_gens, verbose_level);
+		Aut->export_to_orbiter_as_bsgs(fname_group, CG->label, CG->label_tex, Aut->Strong_gens, verbose_level);
 		if (f_v) {
-			cout << "graph_theoretic_activity::perform_activity after Aut->export_to_orbiter" << endl;
+			cout << "graph_theoretic_activity::perform_activity after Aut->export_to_orbiter_as_bsgs" << endl;
 		}
 		//file_io Fio;
 

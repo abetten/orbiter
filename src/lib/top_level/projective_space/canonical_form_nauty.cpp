@@ -108,7 +108,6 @@ void canonical_form_nauty::quartic_curve(
 		cout << "canonical_form_nauty::quartic_curve nb_cols = " << nb_cols << endl;
 	}
 
-	//canonical_labeling = NEW_lint(nb_rows + nb_cols);
 
 	nauty_interface_with_group Nau;
 	nauty_output *NO;
@@ -124,7 +123,6 @@ void canonical_form_nauty::quartic_curve(
 		OiP,
 		PA->A,
 		f_compute_canonical_form, Canonical_form,
-		//canonical_labeling, canonical_labeling_len,
 		NO,
 		0 /*verbose_level*/);
 	if (f_v) {
@@ -151,7 +149,6 @@ void canonical_form_nauty::quartic_curve(
 	}
 
 	FREE_OBJECT(OiP);
-	//FREE_lint(canonical_labeling);
 
 
 

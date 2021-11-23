@@ -45,6 +45,12 @@ geometry_builder_description::geometry_builder_description()
 	//std::vector<std::string> test2_lines;
 	//std::vector<std::string> test2_flags;
 
+
+	f_split = FALSE;
+	split_line = 0;
+	split_remainder = 0;
+	split_modulo = 1;
+
 	//std::vector<int> print_at_line;
 
 	f_fname_GEO = FALSE;
@@ -140,6 +146,15 @@ int geometry_builder_description::read_arguments(
 				cout << "-test2 " << lines << " " << flags << endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-split") == 0) {
+			f_split = TRUE;
+			split_line = strtoi(argv[++i]);
+			split_remainder = strtoi(argv[++i]);
+			split_modulo = strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-split " << split_line << " " << split_remainder << " " << split_modulo << endl;
+			}
+		}
 		else if (stringcmp(argv[i], "-print_at_line") == 0) {
 			int a;
 			a = strtoi(argv[++i]);
@@ -209,6 +224,9 @@ void geometry_builder_description::print()
 		for (i = 0; i < test2_lines.size(); i++) {
 			cout << "-test2 " << test2_lines[i] << " " << test2_flags[i] << endl;
 		}
+	}
+	if (f_split) {
+		cout << "-split " << split_line << " " << split_remainder << " " << split_modulo << endl;
 	}
 	if (print_at_line.size()) {
 		int i;
