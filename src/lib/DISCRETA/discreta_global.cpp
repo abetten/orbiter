@@ -33,8 +33,8 @@ void the_end(int t0)
 
 	if (f_v) {
 		cout << "***************** The End **********************" << endl;
-		cout << "nb_calls_to_finite_field_init="
-				<< nb_calls_to_finite_field_init << endl;
+		//cout << "nb_calls_to_finite_field_init="
+		//		<< nb_calls_to_finite_field_init << endl;
 	}
 	free_global_data();
 	if (f_v) {

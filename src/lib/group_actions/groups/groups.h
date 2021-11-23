@@ -668,6 +668,15 @@ public:
 	int degree;
 	permutation_group_type type;
 
+	int f_bsgs;
+	std::string bsgs_label;
+	std::string bsgs_label_tex;
+	std::string bsgs_order_text;
+	std::string bsgs_base;
+	int bsgs_nb_generators;
+	std::string *bsgs_generators;
+
+
 	int f_subgroup_by_generators;
 	std::string subgroup_label;
 	std::string subgroup_order_text;

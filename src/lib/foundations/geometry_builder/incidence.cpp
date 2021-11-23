@@ -269,77 +269,93 @@ void incidence::print_override_theX(std::ostream &ost, int *theX, int v, int v_c
 }
 
 
-void incidence::stuetze_nach_zeile(int i, int tdo_flags, int verbose_level)
-/* stuetze in letzter Zeile erlaubt */
+void incidence::install_isomorphism_test_after_a_given_row(int row,
+		int tdo_flags, int verbose_level)
+// last row is ok
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "incidence::stuetze_nach_zeile line = " << i << endl;
+		cout << "incidence::install_isomorphism_test_after_a_given_row line = " << row << endl;
 	}
-	if (i > 0 && i <= Encoding->v) {
-		iso_type_at_line[i - 1] = NEW_OBJECT(iso_type);
-		iso_type_at_line[i - 1]->init(i, this, tdo_flags, verbose_level);
+	if (row > 0 && row <= Encoding->v) {
+		iso_type_at_line[row - 1] = NEW_OBJECT(iso_type);
+		iso_type_at_line[row - 1]->init(row, this, tdo_flags, verbose_level);
 	}
 	else {
-		cout << "incidence::stuetze_nach_zeile "
-				"out of range: i = " << i << ", v = " << Encoding->v << endl;
+		cout << "incidence::install_isomorphism_test_after_a_given_row "
+				"out of range: i = " << row << ", v = " << Encoding->v << endl;
 		exit(1);
 	}
 }
 
-void incidence::stuetze2_nach_zeile(int i, int tdo_flags, int verbose_level)
-/* stuetze 2 in letzter Zeile nicht erlaubt */
+void incidence::install_isomorphism_test_of_second_kind_after_a_given_row(int row,
+		int tdo_flags, int verbose_level)
+// last row is not allowed
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "incidence::stuetze2_nach_zeile line = " << i << endl;
+		cout << "incidence::install_isomorphism_test_of_second_kind_after_a_given_row line = " << row << endl;
 	}
-	if (i > 0 && i < Encoding->v) {
-		iso_type_at_line[i - 1] = NEW_OBJECT(iso_type);
-		iso_type_at_line[i - 1]->init(i, this, tdo_flags, verbose_level);
-		iso_type_at_line[i - 1]->second();
+	if (row > 0 && row < Encoding->v) {
+		iso_type_at_line[row - 1] = NEW_OBJECT(iso_type);
+		iso_type_at_line[row - 1]->init(row, this, tdo_flags, verbose_level);
+		iso_type_at_line[row - 1]->second();
 	}
 	else {
-		cout << "incidence::stuetze2_nach_zeile "
-				"out of range: i = " << i << ", v = " << Encoding->v << endl;
+		cout << "incidence::install_isomorphism_test_of_second_kind_after_a_given_row "
+				"out of range: row = " << row << ", v = " << Encoding->v << endl;
 		exit(1);
 	}
 }
 
-void incidence::set_range(int i, int first, int len)
+#if 0
+void incidence::set_range(int row, int first, int len)
 {
-	if (i > 0 && i < Encoding->v) {
-		iso_type_at_line[i - 1]->set_range(first, len);
+	if (row > 0 && row < Encoding->v) {
+		iso_type_at_line[row - 1]->set_range(first, len);
 	}
 	else {
 		cout << "incidence::set_range "
-				"out of range: i = " << i << ", v = " << Encoding->v << endl;
+				"out of range: row = " << row << ", v = " << Encoding->v << endl;
+		exit(1);
+	}
+}
+#endif
+
+void incidence::set_split(int row, int remainder, int modulo)
+{
+	if (row > 0 && row < Encoding->v) {
+		iso_type_at_line[row - 1]->set_split(remainder, modulo);
+	}
+	else {
+		cout << "incidence::set_range "
+				"out of range: row = " << row << ", v = " << Encoding->v << endl;
 		exit(1);
 	}
 }
 
-void incidence::set_flush_to_inc_file(int i, std::string &fname)
+void incidence::set_flush_to_inc_file(int row, std::string &fname)
 // opens the geo_file and stores the file pointer is it->fp
 {
-	if (i > 0 && i <= Encoding->v) {
+	if (row > 0 && row <= Encoding->v) {
 		//iso_type_at_line[i - 1]->open_inc_file(fname);
 	}
 
 }
 
 
-void incidence::set_flush_line(int i)
+void incidence::set_flush_line(int row)
 {
 	iso_type *it;
 
-	if (i > 0 && i < Encoding->v) {
-		it = iso_type_at_line[i - 1];
+	if (row > 0 && row < Encoding->v) {
+		it = iso_type_at_line[row - 1];
 		it->set_flush_line();
 	}
 	else {
-		cout << "incidence::incidence_set_flush_line out of range: i = " << i << ", v = " << Encoding->v << endl;
+		cout << "incidence::incidence_set_flush_line out of range: row = " << row << ", v = " << Encoding->v << endl;
 		exit(1);
 	}
 }

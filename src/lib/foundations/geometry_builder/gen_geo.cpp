@@ -897,7 +897,7 @@ int gen_geo::GeoRowFst(int I, int verbose_level)
 			if (m >= C->v) {
 				return TRUE;
 			}
-			if (!GeoLineFstRange(I, m, verbose_level)) {
+			if (!GeoLineFstSplit(I, m, verbose_level)) {
 				break;
 			}
 			m++;
@@ -908,7 +908,7 @@ int gen_geo::GeoRowFst(int I, int verbose_level)
 				return FALSE;
 			}
 			m--;
-			if (GeoLineNxtRange(I, m, verbose_level)) {
+			if (GeoLineNxtSplit(I, m, verbose_level)) {
 				break;
 			}
 		}
@@ -931,7 +931,7 @@ int gen_geo::GeoRowNxt(int I, int verbose_level)
 	m = C->v - 1;
 	while (TRUE) {
 		while (TRUE) {
-			if (GeoLineNxtRange(I, m, verbose_level)) {
+			if (GeoLineNxtSplit(I, m, verbose_level)) {
 				break;
 			}
 			if (m == 0) {
@@ -945,7 +945,7 @@ int gen_geo::GeoRowNxt(int I, int verbose_level)
 				return TRUE;
 			}
 			m++;
-			if (!GeoLineFstRange(I, m, verbose_level)) {
+			if (!GeoLineFstSplit(I, m, verbose_level)) {
 				break;
 			}
 		}
@@ -954,44 +954,30 @@ int gen_geo::GeoRowNxt(int I, int verbose_level)
 	}
 }
 
-#define GEO_LINE_RANGE
+#define GEO_LINE_SPLIT
 
-int gen_geo::GeoLineFstRange(int I, int m, int verbose_level)
+int gen_geo::GeoLineFstSplit(int I, int m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "gen_geo::GeoLineFstRange I=" << I << " m=" << m << endl;
+		cout << "gen_geo::GeoLineFstSplit I=" << I << " m=" << m << endl;
 	}
 
-#ifdef GEO_LINE_RANGE
+#ifdef GEO_LINE_SPLIT
 	iso_type *it;
 	gen_geo_conf *C = Conf + I * GB->b_len;
 	int i1;
 
 	i1 = C->i0 + m;
 	it = inc->iso_type_at_line[i1];
-	if (it && it->f_range) {
-		if (it->nb_GEO == it->range_first + it->range_len - 1) {
-			return FALSE;
-		}
-		if (it->nb_GEO > it->range_first + it->range_len - 1) {
+	if (it && it->f_split) {
+		if ((it->nb_GEO % it->split_modulo) != it->split_remainder) {
 			return FALSE;
 		}
 	}
 	if (!GeoLineFst0(I, m, verbose_level)) {
 		return FALSE;
-	}
-	if (it && it->f_range) {
-		if (it->nb_GEO < it->range_first) {
-			while (it->nb_GEO < it->range_first) {
-				cout << "gen_geo::GeoLineFstRange: line " << i1 + 1 << " case " << it->nb_GEO << endl;
-				if (!GeoLineNxt0(I, m, verbose_level)) {
-					return FALSE;
-				}
-			}
-		}
-		cout << "gen_geo::GeoLineFstRange: line " << i1 + 1 << " case " << it->nb_GEO << endl;
 	}
 	return TRUE;
 #else
@@ -999,49 +985,27 @@ int gen_geo::GeoLineFstRange(int I, int m, int verbose_level)
 #endif
 }
 
-int gen_geo::GeoLineNxtRange(int I, int m, int verbose_level)
+int gen_geo::GeoLineNxtSplit(int I, int m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "gen_geo::GeoLineNxtRange I=" << I << " m=" << m << endl;
+		cout << "gen_geo::GeoLineNxtSplit I=" << I << " m=" << m << endl;
 	}
-#ifdef GEO_LINE_RANGE
+#ifdef GEO_LINE_SPLIT
 	iso_type *it;
 	gen_geo_conf *C = Conf + I * GB->b_len;
 	int i1;
 
 	i1 = C->i0 + m;
 	it = inc->iso_type_at_line[i1];
-	if (it && it->f_range) {
-		if (it->nb_GEO == it->range_first + it->range_len - 1) {
-			if (f_v) {
-				cout << "gen_geo::GeoLineNxtRange: line " << i1 + 1
-						<< " case end at " << it->range_first + it->range_len
-						<<  " reached" << endl;
-			}
-			return FALSE;
-		}
-		if (it->nb_GEO > it->range_first + it->range_len - 1) {
+	if (it && it->f_split) {
+		if ((it->nb_GEO % it->split_modulo) != it->split_remainder) {
 			return FALSE;
 		}
 	}
 	if (!GeoLineNxt0(I, m, verbose_level)) {
 		return FALSE;
-	}
-	if (it && it->f_range) {
-		while (it->nb_GEO < it->range_first) {
-			if (f_v) {
-				cout << "gen_geo::GeoLineNxtRange: line " << i1 + 1 << " case " << it->nb_GEO << endl;
-			}
-			if (!GeoLineNxt0(I, m, verbose_level)) {
-				return FALSE;
-			}
-		}
-		if (f_v) {
-			cout << "gen_geo::GeoLineNxtRange: "
-					"line " << i1 + 1 << " case " << it->nb_GEO << ":" << endl;
-		}
 	}
 	return TRUE;
 #else

@@ -758,6 +758,17 @@ void action::print_base()
 	}
 }
 
+void action::print_bare_base(std::ofstream &ost)
+{
+	if (Stabilizer_chain) {
+		Orbiter->Lint_vec.print_bare_fully(ost, get_base(), base_len());
+	}
+	else {
+		cout << "action " << label << " does not have a base" << endl;
+		exit(1);
+	}
+}
+
 void action::latex_all_points(std::ostream &ost)
 {
 	int i;
@@ -1060,6 +1071,80 @@ void action::export_to_orbiter(
 	}
 }
 
+
+void action::export_to_orbiter_as_bsgs(
+		std::string &fname, std::string &label, std::string &label_tex,
+		strong_generators *SG, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+	long int a;
+	file_io Fio;
+	longinteger_object go;
+
+	if (f_v) {
+		cout << "action::export_to_orbiter_as_bsgs" << endl;
+	}
+
+	SG->group_order(go);
+	if (f_v) {
+		cout << "action::export_to_orbiter_as_bsgs go = " << go << endl;
+		cout << "action::export_to_orbiter_as_bsgs number of generators = " << SG->gens->len << endl;
+		cout << "action::export_to_orbiter_as_bsgs degree = " << degree << endl;
+	}
+	{
+		ofstream fp(fname);
+
+		for (i = 0; i < SG->gens->len; i++) {
+			fp << "GENERATOR_" << label << "_" << i << " = \\" << endl;
+			fp << "\t\"";
+			for (j = 0; j < degree; j++) {
+				if (FALSE) {
+					cout << "action::export_to_orbiter_as_bsgs computing image of " << j << " under generator " << i << endl;
+				}
+				a = element_image_of(j, SG->gens->ith(i), 0 /* verbose_level*/);
+				fp << a;
+				if (j < degree - 1) {
+					fp << ",";
+				}
+			}
+			fp << "\"";
+			fp << endl;
+		}
+
+		fp << endl;
+		fp << label << ":" << endl;
+		fp << "\t$(ORBITER_PATH)orbiter.out -v 2 \\" << endl;
+		fp << "\t\t-define G -permutation_group \\" << endl;
+		fp << "\t\t-bsgs " << label << " " << label_tex << " "
+				<< degree << " " << go << " ";
+		fp << "\"";
+		SG->A->print_bare_base(fp);
+		fp << "\"";
+		fp << " ";
+		fp << SG->gens->len;
+		fp << " \\" << endl;
+		for (i = 0; i < SG->gens->len; i++) {
+			fp << "\t\t\t" << "$(GENERATOR_" << label << "_" << i << ") \\" << endl;
+		}
+		fp << "\t\t-end" << endl;
+
+		//$(ORBITER_PATH)orbiter.out -v 10 \
+		//	-define G -permutation_group \
+		//		-bsgs C13 C_{13} 13 13 0 1 \
+		//			$(GEN_C13) \
+		//		-end \
+
+		// with backslashes at the end of the line
+
+	}
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
+	if (f_v) {
+		cout << "action::export_to_orbiter_as_bsgs" << endl;
+	}
+}
 
 
 

@@ -23,6 +23,14 @@ permutation_group_description::permutation_group_description()
 	degree = 0;
 	type = unknown_permutation_group_t;
 
+	f_bsgs = FALSE;
+	//std::string bsgs_label;
+	//std::string bsgs_label_tex;
+	//std::string bsgs_order_text;
+	//std::string bsgs_base;
+	bsgs_nb_generators = 0;
+	bsgs_generators = NULL;
+
 	f_subgroup_by_generators = FALSE;
 	//std::string subgroup_label;
 	//std::string subgroup_order_text;
@@ -55,6 +63,40 @@ int permutation_group_description::read_arguments(
 			type = symmetric_group_t;
 			if (f_v) {
 				cout << "-symmetric_group " << degree << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-bsgs") == 0) {
+			f_bsgs = TRUE;
+			bsgs_label.assign(argv[++i]);
+			bsgs_label_tex.assign(argv[++i]);
+			degree = strtoi(argv[++i]);
+			bsgs_order_text.assign(argv[++i]);
+			bsgs_base.assign(argv[++i]);
+			bsgs_nb_generators = strtoi(argv[++i]);
+			bsgs_generators = new std::string [bsgs_nb_generators];
+			type = bsgs_t;
+
+			os_interface Os;
+
+			i++;
+			for (int h = 0; h < bsgs_nb_generators; h++) {
+
+				Os.get_string_from_command_line(bsgs_generators[h], argc, argv, i, verbose_level);
+			}
+			i--;
+
+			if (f_v) {
+				cout << "-bsgs"
+						<< " " << bsgs_label
+						<< " " << bsgs_label_tex
+						<< " " << degree
+						<< " " << bsgs_order_text
+						<< " " << bsgs_base
+						<< " " << bsgs_nb_generators;
+				for (int h = 0; h < bsgs_nb_generators; h++) {
+					cout << " " << bsgs_generators[h] << endl;
+				}
+				cout << endl;
 			}
 		}
 		else if (stringcmp(argv[i], "-subgroup_by_generators") == 0) {
@@ -103,6 +145,19 @@ void permutation_group_description::print()
 {
 	if (type == symmetric_group_t) {
 		cout << "-symmetric_group " << degree << endl;
+	}
+	if (f_bsgs) {
+		cout << "-bsgs"
+				<< " " << bsgs_label
+				<< " " << bsgs_label_tex
+				<< " " << degree
+				<< " " << bsgs_order_text
+				<< " " << bsgs_base
+				<< " " << bsgs_nb_generators;
+		for (int h = 0; h < bsgs_nb_generators; h++) {
+			cout << " " << bsgs_generators[h] << endl;
+		}
+		cout << endl;
 	}
 	if (f_subgroup_by_generators) {
 		cout << "-subgroup_by_generators \""

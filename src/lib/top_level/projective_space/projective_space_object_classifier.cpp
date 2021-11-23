@@ -771,7 +771,6 @@ void projective_space_object_classifier::process_individual_object(
 
 
 	int nb_rows, nb_cols;
-	//long int *canonical_labeling;
 	int ret, u, idx;
 	long int go;
 
@@ -784,7 +783,6 @@ void projective_space_object_classifier::process_individual_object(
 		cout << "projective_space_object_classifier::process_individual_object nb_rows=" << nb_rows << endl;
 		cout << "projective_space_object_classifier::process_individual_object nb_cols=" << nb_cols << endl;
 	}
-	//canonical_labeling = NEW_lint(nb_rows + nb_cols);
 
 	nauty_output *NO;
 
@@ -822,7 +820,6 @@ void projective_space_object_classifier::process_individual_object(
 		}
 		ret = process_object(OiP,
 				SG, go,
-				//canonical_labeling, canonical_labeling_len,
 				idx,
 				NO,
 				verbose_level);
@@ -857,7 +854,6 @@ void projective_space_object_classifier::process_individual_object(
 		if (SG) {
 			FREE_OBJECT(SG);
 		}
-		//FREE_lint(canonical_labeling);
 		Fibration[idx].push_back(make_pair(file_idx, h));
 	}
 	else {
@@ -983,15 +979,12 @@ void projective_space_object_classifier::process_set_of_points(
 				"before process_object" << endl;
 	}
 	int nb_rows, nb_cols;
-	//long int *canonical_labeling;
-	//int canonical_labeling_len;
 	int idx;
 	long int ago;
 
 	OiP->encoding_size(
 			nb_rows, nb_cols,
 			verbose_level);
-	//canonical_labeling = NEW_lint(nb_rows + nb_cols);
 
 	nauty_output *NO;
 
@@ -1001,7 +994,6 @@ void projective_space_object_classifier::process_set_of_points(
 
 	f_found = process_object(OiP,
 			SG, ago,
-			//canonical_labeling, canonical_labeling_len,
 			idx,
 			NO,
 			verbose_level);
@@ -1018,10 +1010,6 @@ void projective_space_object_classifier::process_set_of_points(
 		FREE_OBJECT(SG);
 		cout << "before FREE_OBJECT(OiP)" << endl;
 		FREE_OBJECT(OiP);
-		//cout << "before FREE_OBJECT(canonical_labeling)" << endl;
-		//FREE_int(canonical_labeling);
-		//cout << "after FREE_OBJECT(canonical_labeling)" << endl;
-		//FREE_lint(canonical_labeling);
 	}
 	else {
 		if (f_v) {
@@ -1091,13 +1079,10 @@ void projective_space_object_classifier::process_set_of_points_from_file(
 				"before encoding_size" << endl;
 	}
 	int nb_rows, nb_cols;
-	//long int *canonical_labeling;
-	//int canonical_labeling_len;
 	int idx;
 	long int ago;
 
 	OiP->encoding_size(nb_rows, nb_cols, verbose_level);
-	//canonical_labeling = NEW_lint(nb_rows + nb_cols);
 
 	nauty_output *NO;
 
@@ -1111,7 +1096,6 @@ void projective_space_object_classifier::process_set_of_points_from_file(
 	}
 	f_found = process_object(OiP,
 			SG, ago,
-			//canonical_labeling, canonical_labeling_len,
 			idx,
 			NO,
 			verbose_level);
@@ -1126,8 +1110,6 @@ void projective_space_object_classifier::process_set_of_points_from_file(
 	if (f_found) {
 		FREE_OBJECT(SG);
 		FREE_OBJECT(OiP);
-		//FREE_int(canonical_labeling);
-		//FREE_lint(canonical_labeling);
 	}
 	else {
 		if (f_v) {
@@ -1188,7 +1170,6 @@ void projective_space_object_classifier::process_set_of_lines(
 			verbose_level);
 
 	int nb_rows, nb_cols;
-	//long int *canonical_labeling;
 
 	OiP->encoding_size(nb_rows, nb_cols, verbose_level);
 
@@ -1199,22 +1180,18 @@ void projective_space_object_classifier::process_set_of_lines(
 
 
 
-	//canonical_labeling = NEW_lint(nb_rows + nb_cols);
-	//int canonical_labeling_len;
 	int idx;
 	long int ago;
 
 
 	if (process_object(OiP,
 		SG, ago,
-		//canonical_labeling, canonical_labeling_len,
 		idx,
 		NO,
 		verbose_level)) {
 
 		FREE_OBJECT(SG);
 		FREE_OBJECT(OiP);
-		//FREE_lint(canonical_labeling);
 	}
 	else {
 		if (f_v) {
@@ -1275,7 +1252,6 @@ void projective_space_object_classifier::process_set_of_points_and_lines(
 			verbose_level);
 
 	int nb_rows, nb_cols;
-	//long int *canonical_labeling;
 
 	OiP->encoding_size(nb_rows, nb_cols, verbose_level);
 
@@ -1285,22 +1261,18 @@ void projective_space_object_classifier::process_set_of_points_and_lines(
 	NO->allocate(nb_rows + nb_cols, verbose_level);
 
 
-	//canonical_labeling = NEW_lint(nb_rows + nb_cols);
-	//int canonical_labeling_len;
 	int idx;
 	long int ago;
 
 
 	if (process_object(OiP,
 		SG, ago,
-		//canonical_labeling, canonical_labeling_len,
 		idx,
 		NO,
 		verbose_level)) {
 
 		FREE_OBJECT(SG);
 		FREE_OBJECT(OiP);
-		//FREE_lint(canonical_labeling);
 	}
 	else {
 		if (f_v) {
@@ -1363,13 +1335,10 @@ void projective_space_object_classifier::process_set_of_packing(
 			verbose_level);
 
 	int nb_rows, nb_cols;
-	//long int *canonical_labeling;
 
 	OiP->encoding_size(
 			nb_rows, nb_cols,
 			verbose_level);
-	//canonical_labeling = NEW_lint(nb_rows + nb_cols);
-	//int canonical_labeling_len;
 
 	nauty_output *NO;
 
@@ -1382,14 +1351,12 @@ void projective_space_object_classifier::process_set_of_packing(
 
 	if (process_object(OiP,
 		SG, ago,
-		//canonical_labeling, canonical_labeling_len,
 		idx,
 		NO,
 		verbose_level)) {
 
 		FREE_OBJECT(SG);
 		FREE_OBJECT(OiP);
-		//FREE_lint(canonical_labeling);
 	}
 	else {
 		if (f_v) {
@@ -1426,7 +1393,6 @@ void projective_space_object_classifier::process_set_of_packing(
 int projective_space_object_classifier::process_object(
 	object_in_projective_space *OiP,
 	strong_generators *&SG, long int &ago,
-	//long int *canonical_labeling, int &canonical_labeling_len,
 	int &idx,
 	nauty_output *NO,
 	int verbose_level)
@@ -1458,7 +1424,6 @@ int projective_space_object_classifier::process_object(
 			OiP,
 			PA->A,
 			TRUE /* f_compute_canonical_form */, Canonical_form,
-			//canonical_labeling, canonical_labeling_len,
 			NO,
 			verbose_level - 2);
 		if (f_v) {
@@ -1483,7 +1448,6 @@ int projective_space_object_classifier::process_object(
 		}
 		OiP->run_nauty(
 				TRUE /* f_compute_canonical_form */, Canonical_form,
-				//canonical_labeling, canonical_labeling_len,
 				NO,
 				verbose_level);
 
@@ -1520,8 +1484,6 @@ int projective_space_object_classifier::process_object(
 
 
 	}
-
-	//FREE_OBJECT(NO);
 
 
 
@@ -1843,9 +1805,6 @@ void projective_space_object_classifier::latex_report(
 				OiP->print(cout);
 			}
 
-			//OiP->init_point_set(PA->P, (int *)CB->Type_extra_data[j],
-			//sz, 0 /* verbose_level*/);
-
 
 
 			strong_generators *SG;
@@ -1855,14 +1814,10 @@ void projective_space_object_classifier::latex_report(
 			bitvector *Canonical_form;
 
 			int nb_r, nb_c;
-			//long int *canonical_labeling;
-			//int canonical_labeling_len;
 
 			OiP->encoding_size(
 					nb_r, nb_c,
 					verbose_level);
-
-			//canonical_labeling = NEW_lint(nb_r + nb_c);
 
 #if 1
 			if (f_v) {
@@ -1879,7 +1834,6 @@ void projective_space_object_classifier::latex_report(
 				OiP,
 				PA->A,
 				TRUE /* f_compute_canonical_form */, Canonical_form,
-				//canonical_labeling, canonical_labeling_len,
 				NO,
 				verbose_level - 2);
 
@@ -1887,7 +1841,6 @@ void projective_space_object_classifier::latex_report(
 				cout << "projective_space_object_classifier::latex_report after Nau.set_stabilizer_of_object" << endl;
 			}
 
-			//FREE_lint(canonical_labeling);
 			FREE_OBJECT(NO);
 
 			SG->group_order(go);

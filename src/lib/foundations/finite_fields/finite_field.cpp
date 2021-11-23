@@ -17,10 +17,11 @@ namespace orbiter {
 namespace foundations {
 
 
-int nb_calls_to_finite_field_init = 0;
+//int nb_calls_to_finite_field_init = 0;
 
 finite_field::finite_field()
 {
+	Orbiter->nb_times_finite_field_created++;
 	f_has_table = FALSE;
 	T = NULL;
 	Iwo = NULL;
@@ -135,7 +136,7 @@ void finite_field::finite_field_init(int q, int f_without_tables, int verbose_le
 	if (f_v) {
 		cout << "finite_field::finite_field_init q=" << q << " verbose_level = " << verbose_level << endl;
 	}
-	nb_calls_to_finite_field_init++;
+	//nb_calls_to_finite_field_init++;
 	finite_field::q = q;
 	NT.factor_prime_power(q, p, e);
 	set_default_symbol_for_print();

@@ -159,13 +159,13 @@ void any_group::do_export_orbiter(int verbose_level)
 			if (f_v) {
 				cout << "any_group::do_export_orbiter using Subgroup_gens" << endl;
 			}
-			A_base->export_to_orbiter(fname, label, Subgroup_gens, verbose_level);
+			A_base->export_to_orbiter_as_bsgs(fname, label, label_tex, Subgroup_gens, verbose_level);
 		}
 		else if (A->f_has_strong_generators) {
 			if (f_v) {
 				cout << "any_group::do_export_orbiter using A_base->Strong_gens" << endl;
 			}
-			A_base->export_to_orbiter(fname, label, A_base->Strong_gens, verbose_level);
+			A_base->export_to_orbiter_as_bsgs(fname, label, label_tex, A_base->Strong_gens, verbose_level);
 		}
 		else {
 			cout << "any_group::do_export_orbiter no generators to export" << endl;

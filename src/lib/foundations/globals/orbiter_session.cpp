@@ -65,6 +65,7 @@ orbiter_session::orbiter_session()
 
 	Orbiter_symbol_table = NULL;
 
+	nb_times_finite_field_created = 0;
 	nb_calls_to_densenauty = 0;
 }
 
@@ -73,6 +74,7 @@ orbiter_session::~orbiter_session()
 {
 	Orbiter = NULL;
 
+	cout << "nb_times_finite_field_created=" << nb_times_finite_field_created << endl;
 	cout << "nb_calls_to_densenauty=" << nb_calls_to_densenauty << endl;
 
 	if (Orbiter_symbol_table) {

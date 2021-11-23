@@ -311,6 +311,20 @@ void lint_vec::print_as_table(std::ostream &ost, long int *v, int len, int width
 	ost << endl;
 }
 
+void lint_vec::print_bare_fully(std::ostream &ost, long int *v, int len)
+{
+	int i;
+
+	//ost << "( ";
+	for (i = 0; i < len; i++) {
+		ost << v[i];
+		if (i < len - 1) {
+			ost << ",";
+		}
+	}
+	//ost << " )";
+}
+
 void lint_vec::print_fully(std::ostream &ost, long int *v, int len)
 {
 	int i;

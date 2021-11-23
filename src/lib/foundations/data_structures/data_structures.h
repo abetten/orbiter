@@ -512,6 +512,7 @@ public:
 	void print(std::ostream &ost, long int *v, int len);
 	void print(std::ostream &ost, std::vector<long int> &v);
 	void print_as_table(std::ostream &ost, long int *v, int len, int width);
+	void print_bare_fully(std::ostream &ost, long int *v, int len);
 	void print_fully(std::ostream &ost, long int *v, int len);
 	void print_fully(std::ostream &ost, std::vector<long int> &v);
 	int matrix_max_log_of_entries(long int *p, int m, int n);

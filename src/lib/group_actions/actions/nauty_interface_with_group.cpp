@@ -387,7 +387,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph(
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph n=" << n << endl;
 	}
 
-	int *labeling;
+	//int *labeling;
 	int *partition;
 	int i;
 	nauty_interface Nau;
@@ -407,7 +407,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph(
 
 
 	partition = NEW_int(n);
-	labeling = NEW_int(n);
+	//labeling = NEW_int(n);
 
 	if (f_v) {
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph" << endl;
@@ -431,10 +431,11 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph(
 				"after Nau.nauty_interface_graph_int Ago=" << *NO->Ago << endl;
 	}
 
+#if 0
 	for (i = 0; i < n; i++) {
 		labeling[i] = NO->canonical_labeling[i];
 	}
-
+#endif
 
 	action *A;
 
@@ -461,7 +462,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph(
 	FREE_OBJECT(NO);
 
 	FREE_int(partition);
-	FREE_int(labeling);
+	//FREE_int(labeling);
 	if (f_v) {
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph done" << endl;
 	}
@@ -1495,11 +1496,8 @@ strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 	object_in_projective_space *OiP,
 	action *A_linear,
 	int f_compute_canonical_form, bitvector *&Canonical_form,
-	//long int *canonical_labeling, int &canonical_labeling_len,
 	nauty_output *&NO,
 	int verbose_level)
-// canonical_labeling[nb_rows + nb_cols] contains the canonical labeling
-// where nb_rows and nb_cols is the encoding size.
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1520,7 +1518,6 @@ strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 
 	OiP->run_nauty(
 			f_compute_canonical_form, Canonical_form,
-			//canonical_labeling, canonical_labeling_len,
 			NO,
 			verbose_level);
 
@@ -1530,15 +1527,9 @@ strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 	}
 
 	long int ago;
-	long int nb_backtrack1;
-	long int nb_backtrack2;
-	long int nb_backtrack3;
 
 
 	ago = NO->Ago->as_lint();
-	nb_backtrack1 = NO->nb_firstpathnode;
-	nb_backtrack2 = NO->nb_othernode;
-	nb_backtrack3 = NO->nb_processnode;
 
 	if (f_v) {
 		cout << "nauty_interface_with_group::set_stabilizer_of_object "
@@ -1547,12 +1538,7 @@ strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 		cout << "nauty_interface_with_group::set_stabilizer_of_object "
 				"go = " << ago << endl;
 
-		cout << "nauty_interface_with_group::set_stabilizer_of_object "
-				"nb_backtrack1 = " << nb_backtrack1 << endl;
-		cout << "nauty_interface_with_group::set_stabilizer_of_object "
-				"nb_backtrack2 = " << nb_backtrack2 << endl;
-		cout << "nauty_interface_with_group::set_stabilizer_of_object "
-				"nb_backtrack3 = " << nb_backtrack3 << endl;
+		NO->print_stats();
 	}
 
 

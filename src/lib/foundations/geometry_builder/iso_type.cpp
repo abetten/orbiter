@@ -37,9 +37,16 @@ iso_type::iso_type()
 	f_generate_first = FALSE;
 	f_beginning_checked = FALSE;
 
+#if 0
 	f_range = FALSE;
 	range_first = 0;
 	range_len = 0;
+#endif
+
+	f_split = FALSE;
+	split_remainder = 0;
+	split_modulo = 1;
+
 
 	f_flush_line = FALSE;
 
@@ -825,11 +832,20 @@ void iso_type::second()
 	f_beginning_checked = FALSE;
 }
 
+#if 0
 void iso_type::set_range(int first, int len)
 {
 	f_range = TRUE;
 	range_first = first;
 	range_len = len;
+}
+#endif
+
+void iso_type::set_split(int remainder, int modulo)
+{
+	f_split = TRUE;
+	split_remainder = remainder;
+	split_modulo = modulo;
 }
 
 void iso_type::set_flush_line()
@@ -1344,8 +1360,13 @@ void iso_type::print_flags(std::ostream &ost)
 	else
 		ost << "F";
 	ost << " ";
+#if 0
 	if (f_range) {
 		ost << " range[" << range_first << "-" << range_first + range_len - 1 << "]";
+	}
+#endif
+	if (f_split) {
+		ost << " split[" << split_remainder << " % " << split_modulo << "]";
 	}
 }
 
