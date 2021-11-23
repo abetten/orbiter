@@ -13490,23 +13490,33 @@ Paley_13_aut:
 
 # BEGIN Paley_13_group.makefile
 
-GENERATORS_Paley_13 = \
-	"0,3,6,9,12,2,5,8,11,1,4,7,10,"\
-	"0,10,7,4,1,11,8,5,2,12,9,6,3,"\
+GENERATOR_Paley_13_0 = \
+	"0,3,6,9,12,2,5,8,11,1,4,7,10"
+GENERATOR_Paley_13_1 = \
+	"0,12,11,10,9,8,7,6,5,4,3,2,1"
+GENERATOR_Paley_13_2 = \
 	"1,0,12,11,10,9,8,7,6,5,4,3,2"
 
-Paley_13_group:
+Paley_13:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-	-define G -permutation_group -symmetric_group 13 \
-	-subgroup_by_generators Paley_13 78 3 $(GENERATORS_Paley_13) -end \
+		-define G -permutation_group \
+		-bsgs Paley_13 Paley\_13 13 78 "0,1" 3 \
+			$(GENERATOR_Paley_13_0) \
+			$(GENERATOR_Paley_13_1) \
+			$(GENERATOR_Paley_13_2) \
+		-end
 
 # END Paley_13_group.makefile
 
 Paley_13_cliques_classify:
 	$(ORBITER_PATH)orbiter.out -v 4 \
 		-define Gamma -graph -Paley 13 -end \
-		-define G -permutation_group -symmetric_group 13 \
-		-subgroup_by_generators Paley_13 78 3 $(GENERATORS_Paley_13) -end \
+		-define G -permutation_group \
+		-bsgs Paley_13 Paley\_13 13 78 "0,1" 3 \
+			$(GENERATOR_Paley_13_0) \
+			$(GENERATOR_Paley_13_1) \
+			$(GENERATOR_Paley_13_2) \
+		-end \
 		-with G -do \
 		-group_theoretic_activity \
 			-poset_classification_control \
