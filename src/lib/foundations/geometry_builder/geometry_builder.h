@@ -143,6 +143,9 @@ public:
 
 	std::string inc_file_name;
 
+	std::string fname_search_tree;
+	std::ofstream *ost_search_tree;
+
 	girth_test *Girth_test;
 
 	gen_geo();
@@ -175,6 +178,7 @@ public:
 	int geo_back_test(int I, int verbose_level);
 	int GeoLineFst0(int I, int m, int verbose_level);
 	int GeoLineNxt0(int I, int m, int verbose_level);
+	void record_tree(int i1);
 	int GeoLineFst(int I, int m, int verbose_level);
 	int GeoLineNxt(int I, int m, int verbose_level);
 	void GeoLineClear(int I, int m);
@@ -246,6 +250,8 @@ public:
 
 	int f_find_square;
 	int f_simple;
+
+	int f_search_tree;
 
 	std::vector<std::string> test_lines;
 	std::vector<std::string> test_flags;
@@ -454,6 +460,7 @@ public:
 	inc_encoding();
 	~inc_encoding();
 	void init(int v, int b, int *R, int verbose_level);
+	long int rank_row(int row);
 	int find_square(int m, int n);
 	void print_horizontal_bar(
 		std::ostream &ost, incidence *inc, int f_print_isot, iso_type *it);

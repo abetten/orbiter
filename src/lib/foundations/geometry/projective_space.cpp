@@ -22,6 +22,8 @@ namespace foundations {
 
 projective_space::projective_space()
 {
+	Orbiter->nb_times_projective_space_created++;
+
 	Grass_lines = NULL;
 	Grass_planes = NULL;
 	Grass_hyperplanes = NULL;
@@ -4508,7 +4510,7 @@ void projective_space::compute_decomposition_based_on_tally(tally *T1, tally *T2
 
 }
 
-object_in_projective_space *projective_space::create_object_from_string(
+object_with_canonical_form *projective_space::create_object_from_string(
 		int type, std::string &input_fname, int input_idx,
 		std::string &set_as_string,
 		std::string &set2_as_string,
@@ -4522,9 +4524,9 @@ object_in_projective_space *projective_space::create_object_from_string(
 	}
 
 
-	object_in_projective_space *OiP;
+	object_with_canonical_form *OiP;
 
-	OiP = NEW_OBJECT(object_in_projective_space);
+	OiP = NEW_OBJECT(object_with_canonical_form);
 
 	OiP->init_object_from_string(this,
 			type, input_fname, input_idx,
@@ -4540,7 +4542,7 @@ object_in_projective_space *projective_space::create_object_from_string(
 	return OiP;
 }
 
-object_in_projective_space * projective_space::create_object_from_int_vec(
+object_with_canonical_form * projective_space::create_object_from_int_vec(
 		int type, std::string &input_fname, int input_idx,
 		long int *the_set, int set_sz,
 		long int *the_set2, int set2_sz,
@@ -4554,9 +4556,9 @@ object_in_projective_space * projective_space::create_object_from_int_vec(
 	}
 
 
-	object_in_projective_space *OiP;
+	object_with_canonical_form *OiP;
 
-	OiP = NEW_OBJECT(object_in_projective_space);
+	OiP = NEW_OBJECT(object_with_canonical_form);
 
 	OiP->init_object_from_int_vec(this,
 			type, input_fname, input_idx,

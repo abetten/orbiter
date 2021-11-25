@@ -1261,19 +1261,19 @@ public:
 
 
 // #############################################################################
-// object_in_projective_space.cpp
+// object_with_canonical_form.cpp
 // #############################################################################
 
 
-//! a geometric object in projective space (points, lines or packings)
+//! a combinatorial object for which a canonical form can be computed using Nauty
 
 
 
-class object_in_projective_space {
+class object_with_canonical_form {
 public:
 	projective_space *P;
 
-	object_in_projective_space_type type;
+	object_with_canonical_form_type type;
 		// t_PTS = a multiset of points
 		// t_LNS = a set of lines 
 		// t_PNL = a set of points and a set of lines
@@ -1312,8 +1312,8 @@ public:
 	tally *C;
 		// used to determine multiplicities in the set of points
 
-	object_in_projective_space();
-	~object_in_projective_space();
+	object_with_canonical_form();
+	~object_with_canonical_form();
 	void freeself();
 	void print(std::ostream &ost);
 	void print_tex(std::ostream &ost);
@@ -1414,11 +1414,9 @@ public:
 	void klein(int verbose_level);
 	void run_nauty(
 			int f_compute_canonical_form, bitvector *&Canonical_form,
-			//long int *canonical_labeling, int &canonical_labeling_len,
 			nauty_output *&NO,
 			int verbose_level);
 	void canonical_labeling(
-			//int *canonical_labeling,
 			nauty_output *NO,
 			int verbose_level);
 
@@ -1884,12 +1882,12 @@ public:
 			incidence_structure *&Inc, partitionstack *&Stack, int verbose_level);
 	void compute_decomposition_based_on_tally(tally *T1, tally *T2,
 			incidence_structure *&Inc, partitionstack *&Stack, int verbose_level);
-	object_in_projective_space *create_object_from_string(
+	object_with_canonical_form *create_object_from_string(
 			int type, std::string &input_fname, int input_idx,
 			std::string &set_as_string,
 			std::string &set2_as_string,
 			int verbose_level);
-	object_in_projective_space *create_object_from_int_vec(
+	object_with_canonical_form *create_object_from_int_vec(
 			int type, std::string &input_fname, int input_idx,
 			long int *the_set, int set_sz,
 			long int *the_set2, int set2_sz,

@@ -1061,7 +1061,7 @@ void symbol_definition::definition_of_orthogonal_space(int verbose_level)
 		cout << "symbol_definition::definition_of_orthogonal_space before OA->init" << endl;
 	}
 	OA->init(Orthogonal_space_with_action_description,
-		verbose_level - 2);
+		verbose_level - 1);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_orthogonal_space after OA->init" << endl;
 	}

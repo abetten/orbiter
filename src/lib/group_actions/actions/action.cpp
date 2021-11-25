@@ -17,6 +17,8 @@ namespace group_actions {
 
 action::action()
 {
+	Orbiter->nb_times_action_created++;
+
 	null();
 }
 

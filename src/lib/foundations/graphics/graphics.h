@@ -367,6 +367,7 @@ public:
 		int f_transition, int transition_step, int transition_nb_steps,
 		int f_title_page, int title_page_step,
 		int f_trailer_page, int trailer_page_step);
+	void tree_draw(std::string &fname, int verbose_level);
 
 };
 
@@ -1305,15 +1306,17 @@ public:
 	void init(std::string &fname,
 			int xmax, int ymax, int verbose_level);
 	void draw(std::string &fname,
-		int xmax_in, int ymax_in, int xmax, int ymax,
-		int rad, 
-		int f_circle, int f_circletext, int f_i, int f_edge_labels, 
+		//int xmax_in, int ymax_in, int xmax, int ymax,
+		//int rad,
+		//int f_circle, int f_circletext, int f_i, int f_edge_labels,
+			layered_graph_draw_options *Opt,
 		int f_has_draw_vertex_callback, 
 		void (*draw_vertex_callback)(tree *T, mp_graphics *G, 
 			int *v, int layer, tree_node *N, 
 			int x, int y, int dx, int dy), 
-		int f_embedded, int f_sideways, int f_on_circle, 
-		double tikz_global_scale, double tikz_global_line_width, int verbose_level);
+		//int f_embedded, int f_sideways, int f_on_circle,
+		//double tikz_global_scale, double tikz_global_line_width,
+			int verbose_level);
 	void circle_center_and_radii(int xmax, int ymax, int max_depth, 
 		int &x0, int &y0, int *&rad);
 	void compute_DFS_ranks(int &nb_nodes, int verbose_level);
@@ -1364,24 +1367,20 @@ public:
 		int verbose_level);
 	int find_child(int val);
 	void get_values(int *v);
-	void draw_edges(mp_graphics &G, int rad, int f_circle, 
-		int f_circletext, int f_i, 
-		int f_has_parent, int parent_x, int parent_y, 
-		int max_depth, int f_edge_labels, 
+	void draw_edges(mp_graphics &G,
+			layered_graph_draw_options *Opt,
+			int f_i,
+		int f_has_parent, int parent_x, int parent_y, int max_depth,
 		int f_has_draw_vertex_callback, 
-		void (*draw_vertex_callback)(tree *T, mp_graphics *G, int *v, 
-			int layer, tree_node *N, int x, int y, int dx, int dy),
-		tree *T
-		);
-	void draw_vertices(mp_graphics &G, int rad, int f_circle, 
-		int f_circletext, int f_i, 
-		int f_has_parent, int parent_x, int parent_y, int max_depth, 
-		int f_edge_labels, 
+		void (*draw_vertex_callback)(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy),
+		tree *T);
+	void draw_vertices(mp_graphics &G,
+			layered_graph_draw_options *Opt,
+			int f_i,
+		int f_has_parent, int parent_x, int parent_y, int max_depth,
 		int f_has_draw_vertex_callback, 
-		void (*draw_vertex_callback)(tree *T, mp_graphics *G, int *v, 
-			int layer, tree_node *N, int x, int y, int dx, int dy),
-		tree *T
-		);
+		void (*draw_vertex_callback)(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy),
+		tree *T);
 	void draw_sideways(mp_graphics &G, int f_circletext, int f_i, 
 		int f_has_parent, int parent_x, int parent_y, 
 		int max_depth, int f_edge_labels);

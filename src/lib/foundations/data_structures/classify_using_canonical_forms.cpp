@@ -27,7 +27,7 @@ classify_using_canonical_forms::~classify_using_canonical_forms()
 {
 }
 
-void classify_using_canonical_forms::add_object(object_in_projective_space *OiP,
+void classify_using_canonical_forms::add_object(object_with_canonical_form *OwCF,
 		int &f_new_object, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -38,21 +38,17 @@ void classify_using_canonical_forms::add_object(object_in_projective_space *OiP,
 
 
 	int nb_rows, nb_cols;
-	//int canonical_labeling_len;
-	//long int *canonical_labeling;
 
 
 	if (f_v) {
 		cout << "classify_using_canonical_forms::add_object before OiP->encoding_size" << endl;
 	}
-	OiP->encoding_size(nb_rows, nb_cols, 0 /*verbose_level*/);
+	OwCF->encoding_size(nb_rows, nb_cols, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "classify_using_canonical_forms::add_object after OiP->encoding_size" << endl;
 		cout << "classify_using_canonical_forms::add_object nb_rows=" << nb_rows << endl;
 		cout << "classify_using_canonical_forms::add_object nb_cols=" << nb_cols << endl;
 	}
-	//canonical_labeling_len = nb_rows + nb_cols;
-	//canonical_labeling = NEW_lint(canonical_labeling_len);
 
 	nauty_output *NO;
 	bitvector *Canonical_form;
@@ -64,9 +60,8 @@ void classify_using_canonical_forms::add_object(object_in_projective_space *OiP,
 		cout << "classify_using_canonical_forms::add_object "
 				"before OiP->run_nauty" << endl;
 	}
-	OiP->run_nauty(
+	OwCF->run_nauty(
 			TRUE /* f_compute_canonical_form */, Canonical_form,
-			//canonical_labeling, canonical_labeling_len,
 			NO,
 			verbose_level);
 	if (f_v) {
@@ -97,7 +92,7 @@ void classify_using_canonical_forms::add_object(object_in_projective_space *OiP,
 		f_new_object = TRUE;
 		idx = B.size();
 		B.push_back(Canonical_form);
-		Objects.push_back(OiP);
+		Objects.push_back(OwCF);
 		Ago.push_back(NO->Ago->as_lint());
 		Hashing.insert(pair<uint32_t, int>(h, idx));
 		input_index.push_back(nb_input_objects);
@@ -105,11 +100,10 @@ void classify_using_canonical_forms::add_object(object_in_projective_space *OiP,
 	else {
 		f_new_object = FALSE;
 		FREE_OBJECT(Canonical_form);
-		FREE_OBJECT(OiP);
+		FREE_OBJECT(OwCF);
 	}
 
 	FREE_OBJECT(NO);
-	//FREE_lint(canonical_labeling);
 	nb_input_objects++;
 
 	if (f_v) {

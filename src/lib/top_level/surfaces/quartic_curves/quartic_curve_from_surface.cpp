@@ -578,7 +578,7 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 
 	strong_generators *SG_pt_stab = NULL;
 	longinteger_object pt_stab_order;
-	object_in_projective_space *OiP = NULL;
+	object_with_canonical_form *OiP = NULL;
 
 	int f_compute_canonical_form = FALSE;
 	bitvector *Canonical_form;
@@ -586,7 +586,7 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 	//int canonical_labeling_len;
 
 
-	OiP = NEW_OBJECT(object_in_projective_space);
+	OiP = NEW_OBJECT(object_with_canonical_form);
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_stabilizer "

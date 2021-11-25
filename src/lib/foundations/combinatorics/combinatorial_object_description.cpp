@@ -430,27 +430,6 @@ int combinatorial_object_description::read_arguments(int argc, std::string *argv
 
 void combinatorial_object_description::print()
 {
-#if 0
-	if (f_q) {
-		cout << "-q " << q << endl;
-	}
-	if (f_Q) {
-		cout << "-Q " << Q << endl;
-	}
-	if (f_n) {
-		cout << "-n " << n << endl;
-	}
-	if (stringcmp(argv[i], "-poly") == 0) {
-		f_poly = TRUE;
-		poly.assign(argv[++i]);
-		cout << "-poly " << poly << endl;
-	}
-	if (stringcmp(argv[i], "-poly_Q") == 0) {
-		f_poly_Q = TRUE;
-		poly_Q.assign(argv[++i]);
-		cout << "-poly_Q " << poly_Q << endl;
-	}
-#endif
 	if (f_hyperoval) {
 		cout << "-hyperoval " << endl;
 	}

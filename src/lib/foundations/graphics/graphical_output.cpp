@@ -606,6 +606,8 @@ void graphical_output::do_smooth_curve(std::string &curve_label,
 }
 
 
+//
+
 static int do_create_points_on_quartic_compute_point_function(double t,
 		double *pt, void *extra_data, int verbose_level)
 {
@@ -1808,6 +1810,80 @@ void fillBitmap(BMP &image, int i, int j, std::vector<int> color)
 	image(i, j)->Green = color[1];
 	image(i, j)->Blue = color[2];
 };
+
+void graphical_output::tree_draw(std::string &fname, int verbose_level)
+{
+	tree T;
+	file_io Fio;
+	std::string fname2;
+	//int xmax = 1000000;
+	//int ymax = 1000000;
+
+	cout << "Trying to read file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
+	if (Fio.file_size(fname) <= 0) {
+		cout << "treedraw.out the input file " << fname
+				<< " does not exist" << endl;
+		exit(1);
+	}
+
+	T.init(fname, Orbiter->draw_options->xin, Orbiter->draw_options->yin, verbose_level);
+
+#if 0
+	if (/* T.nb_nodes > 200 ||*/ f_no_circletext) {
+		f_circletext = FALSE;
+		}
+	if (f_on_circle) {
+		T.root->place_on_circle(xmax, ymax, T.max_depth);
+		}
+
+	if (f_count_leaves) {
+		T.f_count_leaves = TRUE;
+		}
+#endif
+
+	int f_has_draw_vertex_callback = FALSE;
+	string_tools ST;
+
+	fname2.assign(fname);
+	ST.chop_off_extension(fname2);
+	fname2.append("_draw");
+
+	T.draw(fname2,
+			Orbiter->draw_options,
+			f_has_draw_vertex_callback,
+			NULL /* void (*draw_vertex_callback)(tree *T,
+				mp_graphics *G, int *v, int layer, tree_node *N,
+			int x, int y, int dx, int dy)*/,
+			verbose_level);
+
+#if 0
+	if (f_graph) {
+		cout << "treedraw.out drawing as graph" << endl;
+		T.draw(fname_out,
+			xmax, ymax, xmax_out, ymax_out, rad, f_circle, f_circletext,
+			f_i, f_e, TRUE, draw_vertex_callback,
+			f_embedded, f_sideways, f_on_circle,
+			scale, line_width, verbose_level - 1);
+		}
+	else if (f_placeholder_labels) {
+		T.draw(fname_out,
+			xmax, ymax, xmax_out, ymax_out, rad, f_circle, f_circletext,
+			f_i, f_e, TRUE, draw_vertex_callback_placeholders,
+			f_embedded, f_sideways, f_on_circle,
+			scale, line_width, verbose_level - 1);
+		}
+	else {
+		T.draw(fname_out,
+			xmax, ymax, xmax_out, ymax_out, rad, f_circle, f_circletext,
+			f_i, f_e, TRUE, draw_vertex_callback_standard,
+			f_embedded, f_sideways, f_on_circle,
+			scale, line_width, verbose_level - 1);
+		}
+#endif
+
+}
 
 
 }}

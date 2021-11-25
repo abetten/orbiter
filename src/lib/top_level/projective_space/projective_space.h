@@ -294,7 +294,7 @@ class object_in_projective_space_with_action {
 
 public:
 
-	object_in_projective_space *OiP;
+	object_with_canonical_form *OwCF;
 		// do not free
 	strong_generators *Aut_gens;
 		// generators for the automorphism group
@@ -307,7 +307,7 @@ public:
 	~object_in_projective_space_with_action();
 	void null();
 	void freeself();
-	void init(object_in_projective_space *OiP,
+	void init(object_with_canonical_form *OwCF,
 			long int ago,
 			strong_generators *Aut_gens,
 			int nb_rows, int nb_cols,
@@ -791,15 +791,14 @@ public:
 			std::string &input_data,
 			int verbose_level);
 	int process_object(
-		object_in_projective_space *OiP,
+		object_with_canonical_form *OwCF,
 		strong_generators *&SG, long int &ago,
-		//long int *canonical_labeling, int &canonical_labeling_len,
 		int &idx,
 		nauty_output *NO,
 		int verbose_level);
 	// returns f_found, which is TRUE if the object is already in the list
 	int process_object_with_known_canonical_labeling(
-		object_in_projective_space *OiP,
+		object_with_canonical_form *OiP,
 		int *canonical_labeling, int canonical_labeling_len,
 		int &idx,
 		nauty_output *NO,
@@ -899,7 +898,7 @@ public:
 			projective_space_object_classifier_description *Canonical_form_PG_Descr,
 			int verbose_level);
 	void canonical_labeling(
-		object_in_projective_space *OiP,
+		object_with_canonical_form *OiP,
 		int *canonical_labeling,
 		int verbose_level);
 	void report_fixed_points_lines_and_planes(
@@ -913,7 +912,7 @@ public:
 		int verbose_level);
 	int process_object(
 		classify_bitvectors *CB,
-		object_in_projective_space *OiP,
+		object_with_canonical_form *OiP,
 		int f_save_incma_in_and_out, std::string &prefix,
 		int nb_objects_to_test,
 		strong_generators *&SG,

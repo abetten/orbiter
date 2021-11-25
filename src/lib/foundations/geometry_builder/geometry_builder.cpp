@@ -230,7 +230,7 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 
 	int *s_type = NULL, *s_flag = NULL;
 	//int *r_type = NULL, *r_from = NULL, *r_len = NULL;
-	int *f_flush = NULL;
+	//int *f_flush = NULL;
 
 	s_type = new int[V + 1];
 	s_flag = new int[V + 1];
@@ -332,6 +332,8 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 	}
 #endif
 
+
+#if 0
 	if (f_v) {
 		cout << "geometry_builder::init_description set_flush_line" << endl;
 	}
@@ -341,6 +343,7 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 			gg->inc->set_flush_line(i);
 		}
 	}
+#endif
 
 	if (Descr->f_split) {
 		if (f_v) {

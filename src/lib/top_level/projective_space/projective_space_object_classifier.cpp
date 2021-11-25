@@ -92,7 +92,7 @@ void projective_space_object_classifier::do_the_work(
 	for (i = 0; i < CB->nb_types; i++) {
 
 		object_in_projective_space_with_action *OiPA;
-		object_in_projective_space *OiP;
+		object_with_canonical_form *OiP;
 
 		cout << i << " / " << CB->nb_types << " is "
 			<< CB->Type_rep[i] << " : " << CB->Type_mult[i] << " : ";
@@ -669,7 +669,7 @@ void projective_space_object_classifier::process_individual_object(
 	}
 	long int *the_set_in;
 	int set_size_in;
-	object_in_projective_space *OiP;
+	object_with_canonical_form *OiP;
 
 
 	set_size_in = SoS->Set_size[h];
@@ -688,7 +688,7 @@ void projective_space_object_classifier::process_individual_object(
 		cout << endl;
 	}
 
-	OiP = NEW_OBJECT(object_in_projective_space);
+	OiP = NEW_OBJECT(object_with_canonical_form);
 
 	if (file_type == INPUT_TYPE_FILE_OF_POINTS) {
 
@@ -964,7 +964,7 @@ void projective_space_object_classifier::process_set_of_points(
 			<< input_data << ":" << endl;
 	}
 
-	object_in_projective_space *OiP;
+	object_with_canonical_form *OiP;
 	strong_generators *SG;
 
 	dummy.assign("command_line");
@@ -1061,7 +1061,7 @@ void projective_space_object_classifier::process_set_of_points_from_file(
 				<< input_data << ":" << endl;
 	}
 
-	object_in_projective_space *OiP;
+	object_with_canonical_form *OiP;
 	strong_generators *SG;
 	long int *the_set;
 	int set_size;
@@ -1157,7 +1157,7 @@ void projective_space_object_classifier::process_set_of_lines(
 			<< ":" << endl;
 	}
 
-	object_in_projective_space *OiP;
+	object_with_canonical_form *OiP;
 	strong_generators *SG;
 	string dummy;
 	string zero;
@@ -1240,7 +1240,7 @@ void projective_space_object_classifier::process_set_of_points_and_lines(
 			<< ":" << endl;
 	}
 
-	object_in_projective_space *OiP;
+	object_with_canonical_form *OiP;
 	strong_generators *SG;
 	string dummy;
 
@@ -1322,7 +1322,7 @@ void projective_space_object_classifier::process_set_of_packing(
 			<< input_data << ":" << endl;
 	}
 
-	object_in_projective_space *OiP;
+	object_with_canonical_form *OiP;
 	strong_generators *SG;
 	string dummy;
 	string zero;
@@ -1391,7 +1391,7 @@ void projective_space_object_classifier::process_set_of_packing(
 
 
 int projective_space_object_classifier::process_object(
-	object_in_projective_space *OiP,
+	object_with_canonical_form *OwCF,
 	strong_generators *&SG, long int &ago,
 	int &idx,
 	nauty_output *NO,
@@ -1421,7 +1421,7 @@ int projective_space_object_classifier::process_object(
 		nauty_interface_with_group Nau;
 
 		SG = Nau.set_stabilizer_of_object(
-			OiP,
+				OwCF,
 			PA->A,
 			TRUE /* f_compute_canonical_form */, Canonical_form,
 			NO,
@@ -1446,7 +1446,7 @@ int projective_space_object_classifier::process_object(
 			cout << "projective_space_object_classifier::process_object "
 					"before OiP->run_nauty" << endl;
 		}
-		OiP->run_nauty(
+		OwCF->run_nauty(
 				TRUE /* f_compute_canonical_form */, Canonical_form,
 				NO,
 				verbose_level);
@@ -1494,7 +1494,7 @@ int projective_space_object_classifier::process_object(
 	}
 	int f_found;
 
-	CB->search_and_add_if_new(Canonical_form->get_data(), OiP, f_found, idx, verbose_level);
+	CB->search_and_add_if_new(Canonical_form->get_data(), OwCF, f_found, idx, verbose_level);
 
 
 	//delete SG;
@@ -1506,7 +1506,7 @@ int projective_space_object_classifier::process_object(
 }
 
 int projective_space_object_classifier::process_object_with_known_canonical_labeling(
-	object_in_projective_space *OiP,
+	object_with_canonical_form *OiP,
 	int *canonical_labeling, int canonical_labeling_len,
 	int &idx,
 	nauty_output *NO,
@@ -1624,17 +1624,17 @@ void projective_space_object_classifier::save(
 		for (i = 0; i < CB->nb_types; i++) {
 
 			object_in_projective_space_with_action *OiPA;
-			object_in_projective_space *OiP;
+			object_with_canonical_form *OwCF;
 
 			//cout << i << " / " << CB->nb_types << " is "
 			//	<< CB->Type_rep[i] << " : " << CB->Type_mult[i] << " : ";
 			OiPA = (object_in_projective_space_with_action *) CB->Type_extra_data[i];
-			OiP = OiPA->OiP;
-			if (OiP == NULL) {
+			OwCF = OiPA->OwCF;
+			if (OwCF == NULL) {
 				cout << "OiP == NULL" << endl;
 				exit(1);
 			}
-			if (OiP->type != t_PAC) {
+			if (OwCF->type != t_PAC) {
 				//OiP->print(cout);
 				}
 			//OiP->print(cout);
@@ -1651,16 +1651,16 @@ void projective_space_object_classifier::save(
 
 			int ago;
 
-			if (OiP->f_has_known_ago) {
-				ago = OiP->known_ago;
+			if (OwCF->f_has_known_ago) {
+				ago = OwCF->known_ago;
 			}
 			else {
 				ago = 0; //OiPA->Aut_gens->group_order_as_lint();
 			}
 			fp << i << "," << ago
-					<< "," << OiP->input_fname
-					<< "," << OiP->input_idx
-					<< ",\"" << OiP->set_as_string << "\",";
+					<< "," << OwCF->input_fname
+					<< "," << OwCF->input_idx
+					<< ",\"" << OwCF->set_as_string << "\",";
 			//cout << "before writing OiPA->nb_rows:" << endl;
 			fp << OiPA->nb_rows << "," << OiPA->nb_cols<< ",";
 
@@ -1772,7 +1772,7 @@ void projective_space_object_classifier::latex_report(
 
 			j = CB->perm[i];
 			object_in_projective_space_with_action *OiPA;
-			object_in_projective_space *OiP;
+			object_with_canonical_form *OwCF;
 
 			cout << "###################################################"
 					"#############################" << endl;
@@ -1800,9 +1800,9 @@ void projective_space_object_classifier::latex_report(
 			}
 
 			OiPA = (object_in_projective_space_with_action *) CB->Type_extra_data[j];
-			OiP = OiPA->OiP;
-			if (OiP->type != t_PAC) {
-				OiP->print(cout);
+			OwCF = OiPA->OwCF;
+			if (OwCF->type != t_PAC) {
+				OwCF->print(cout);
 			}
 
 
@@ -1815,7 +1815,7 @@ void projective_space_object_classifier::latex_report(
 
 			int nb_r, nb_c;
 
-			OiP->encoding_size(
+			OwCF->encoding_size(
 					nb_r, nb_c,
 					verbose_level);
 
@@ -1831,7 +1831,7 @@ void projective_space_object_classifier::latex_report(
 			NO->allocate(nb_r + nb_c, verbose_level);
 
 			SG = Nau.set_stabilizer_of_object(
-				OiP,
+					OwCF,
 				PA->A,
 				TRUE /* f_compute_canonical_form */, Canonical_form,
 				NO,
@@ -1853,20 +1853,20 @@ void projective_space_object_classifier::latex_report(
 				<< CB->Type_rep[j] << " and appears "
 				<< CB->Type_mult[j] << " times: \\\\" << endl;
 			//if (OiP->type != t_PAC) {
-				OiP->print_tex(fp);
+			OwCF->print_tex(fp);
 				fp << endl;
 				fp << "\\bigskip" << endl;
 				fp << endl;
 			//	}
 
-			if (OiP->type == t_PAC) {
+			if (OwCF->type == t_PAC) {
 				long int *Sets;
 				int nb_sets;
 				int set_size;
 				action *A_on_spreads;
 				schreier *Sch;
 
-				OiP->get_packing_as_set_system(Sets, nb_sets, set_size, verbose_level);
+				OwCF->get_packing_as_set_system(Sets, nb_sets, set_size, verbose_level);
 
 
 				A_on_spreads = PA->A_on_lines->create_induced_action_on_sets(nb_sets,
@@ -1993,7 +1993,7 @@ void projective_space_object_classifier::latex_report(
 			partitionstack *Stack;
 
 
-			OiP->encode_incma_and_make_decomposition(
+			OwCF->encode_incma_and_make_decomposition(
 				Enc,
 				Inc,
 				Stack,
@@ -2103,7 +2103,7 @@ void projective_space_object_classifier::latex_report(
 
 
 
-			OiP->klein(verbose_level);
+			OwCF->klein(verbose_level);
 
 #if 1
 			sims *Stab;

@@ -653,7 +653,7 @@ void iso_type::find_and_add_geo(
 	}
 
 
-	object_in_projective_space *OiP;
+	object_with_canonical_form *OiP;
 	long int *theInc;
 	int nb_flags;
 
@@ -663,7 +663,7 @@ void iso_type::find_and_add_geo(
 
 	inc->geo_to_inc(v, theY, theInc, nb_flags);
 
-	OiP = NEW_OBJECT(object_in_projective_space);
+	OiP = NEW_OBJECT(object_with_canonical_form);
 
 	OiP->init_incidence_geometry(
 		theInc, nb_flags, v, inc->Encoding->b, nb_flags,
@@ -1037,9 +1037,9 @@ void iso_type::print_geos(int verbose_level)
 			inc->print_geo(cout, v, theGEO1[h]);
 			cout << endl;
 #else
-			object_in_projective_space *OiP;
+			object_with_canonical_form *OiP;
 
-			OiP = (object_in_projective_space *) Canonical_forms->Objects[h];
+			OiP = (object_with_canonical_form *) Canonical_forms->Objects[h];
 
 
 			inc->print_inc(cout, v, OiP->set);
@@ -1092,9 +1092,9 @@ void iso_type::write_inc_file(std::string &fname, int verbose_level)
 
 			//inc->print_geo(ost, v, theGEO1[h]);
 
-			object_in_projective_space *OiP;
+			object_with_canonical_form *OiP;
 
-			OiP = (object_in_projective_space *) Canonical_forms->Objects[h];
+			OiP = (object_with_canonical_form *) Canonical_forms->Objects[h];
 			inc->print_inc(ost, v, OiP->set);
 
 			ost << endl;
@@ -1136,9 +1136,9 @@ void iso_type::write_blocks_file(std::string &fname, int verbose_level)
 
 
 		if (nb_geo) {
-			object_in_projective_space *OiP;
+			object_with_canonical_form *OiP;
 
-			OiP = (object_in_projective_space *) Canonical_forms->Objects[0];
+			OiP = (object_with_canonical_form *) Canonical_forms->Objects[0];
 
 			k = inc->compute_k(v, OiP->set);
 
@@ -1150,9 +1150,9 @@ void iso_type::write_blocks_file(std::string &fname, int verbose_level)
 
 				//inc->print_geo(ost, v, theGEO1[h]);
 
-				object_in_projective_space *OiP;
+				object_with_canonical_form *OiP;
 
-				OiP = (object_in_projective_space *) Canonical_forms->Objects[h];
+				OiP = (object_with_canonical_form *) Canonical_forms->Objects[h];
 				inc->print_blocks(ost, v, OiP->set);
 
 				ost << endl;
@@ -1215,9 +1215,9 @@ void iso_type::write_blocks_file_long(std::string &fname, int verbose_level)
 				int *K;
 				int i, j, a;
 
-				object_in_projective_space *OiP;
+				object_with_canonical_form *OiP;
 
-				OiP = (object_in_projective_space *) Canonical_forms->Objects[0];
+				OiP = (object_with_canonical_form *) Canonical_forms->Objects[0];
 
 				theInc = OiP->set;
 

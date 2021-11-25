@@ -40,6 +40,8 @@ geometry_builder_description::geometry_builder_description()
 
 	f_simple = FALSE; /* JS 180100 */
 
+	f_search_tree = FALSE;
+
 	//std::vector<std::string> test_lines;
 	//std::vector<std::string> test_flags;
 	//std::vector<std::string> test2_lines;
@@ -126,6 +128,12 @@ int geometry_builder_description::read_arguments(
 				cout << "-simple " << endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-search_tree") == 0) {
+			f_search_tree = TRUE;
+			if (f_v) {
+				cout << "-search_tree " << endl;
+			}
+		}
 		else if (stringcmp(argv[i], "-test") == 0) {
 			string lines, flags;
 			lines.assign(argv[++i]);
@@ -210,6 +218,9 @@ void geometry_builder_description::print()
 	}
 	if (f_simple) {
 		cout << "-simple " << endl;
+	}
+	if (f_search_tree) {
+		cout << "-search_tree " << endl;
 	}
 	if (test_lines.size()) {
 		int i;

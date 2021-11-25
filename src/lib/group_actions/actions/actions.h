@@ -1185,7 +1185,7 @@ public:
 			nauty_output *NO,
 			int verbose_level);
 	strong_generators *set_stabilizer_of_object(
-		object_in_projective_space *OiP,
+		object_with_canonical_form *OwCF,
 		action *A_linear,
 		int f_compute_canonical_form, bitvector *&Canonical_form,
 		nauty_output *&NO,

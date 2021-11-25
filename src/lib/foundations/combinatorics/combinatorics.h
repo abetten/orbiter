@@ -592,9 +592,6 @@ public:
 	int entries_nb_alloc;
 
 
-	//vector<int> part;
-	//vector<int> entries;
-
 	int lambda_level;
 	int row_level, col_level;
 	int extra_row_level, extra_col_level;

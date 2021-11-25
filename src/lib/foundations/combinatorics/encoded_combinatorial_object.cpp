@@ -42,7 +42,8 @@ void encoded_combinatorial_object::init(int nb_rows, int nb_cols, int verbose_le
 
 	if (f_v) {
 		cout << "encoded_combinatorial_object::init" << endl;
-		cout << "encoded_combinatorial_object::init nb_rows=" << nb_rows << " nb_cols=" << nb_cols << endl;
+		cout << "encoded_combinatorial_object::init "
+				"nb_rows=" << nb_rows << " nb_cols=" << nb_cols << endl;
 	}
 	int i, L;
 
