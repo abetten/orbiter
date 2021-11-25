@@ -62,6 +62,27 @@ void inc_encoding::init(int v, int b, int *R, int verbose_level)
 	}
 }
 
+long int inc_encoding::rank_row(int row)
+{
+	int *S;
+	int k, i;
+	long int rk;
+	combinatorics_domain Combi;
+
+	S = NEW_int(dim_n);
+
+	k = R[row];
+	for (i = 0; i < k; i++) {
+		S[i] = theX[row * dim_n + i];
+	}
+
+	rk = Combi.rank_k_subset(S, b, k);
+
+	FREE_int(S);
+
+	return rk;
+}
+
 int inc_encoding::find_square(int m, int n)
 {
 	int i, j, l, u, v;

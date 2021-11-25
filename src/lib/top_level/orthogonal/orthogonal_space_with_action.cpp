@@ -91,12 +91,22 @@ void orthogonal_space_with_action::init(
 		cout << "orthogonal_space_with_action::init after O->init" << endl;
 	}
 
-	if (f_v) {
-		cout << "orthogonal_space_with_action::init before init_group" << endl;
+
+	if (!Descr->f_without_group) {
+
+		if (f_v) {
+			cout << "orthogonal_space_with_action::init before init_group" << endl;
+		}
+		init_group(verbose_level);
+		if (f_v) {
+			cout << "orthogonal_space_with_action::init after init_group" << endl;
+		}
 	}
-	init_group(verbose_level);
-	if (f_v) {
-		cout << "orthogonal_space_with_action::init after init_group" << endl;
+	else {
+		if (f_v) {
+			cout << "orthogonal_space_with_action::init without group" << endl;
+		}
+
 	}
 
 
@@ -221,20 +231,26 @@ void orthogonal_space_with_action::report2(std::ostream &ost,
 		cout << "orthogonal_space_with_action::report2" << endl;
 	}
 
-	if (f_v) {
-		cout << "orthogonal_space_with_action::report2 "
-				"before A>report" << endl;
+
+	if (!Descr->f_without_group) {
+		if (f_v) {
+			cout << "orthogonal_space_with_action::report2 "
+					"before A>report" << endl;
+		}
+
+		A->report(ost,
+				FALSE /* f_sims */, NULL,
+				FALSE /* f_strong_gens */, NULL,
+				LG_Draw_options,
+				verbose_level - 1);
+
+		if (f_v) {
+			cout << "orthogonal_space_with_action::report2 "
+					"after A->report" << endl;
+		}
 	}
-
-	A->report(ost,
-			FALSE /* f_sims */, NULL,
-			FALSE /* f_strong_gens */, NULL,
-			LG_Draw_options,
-			verbose_level - 1);
-
-	if (f_v) {
-		cout << "orthogonal_space_with_action::report2 "
-				"after A->report" << endl;
+	else {
+		ost << "The group is not available.\\\\" << endl;
 	}
 
 	if (f_v) {

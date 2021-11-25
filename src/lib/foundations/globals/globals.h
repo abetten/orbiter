@@ -375,6 +375,8 @@ public:
 	orbiter_symbol_table *Orbiter_symbol_table;
 
 	long int nb_times_finite_field_created;
+	long int nb_times_projective_space_created;
+	long int nb_times_action_created;
 	long int nb_calls_to_densenauty;
 
 	int_vec Int_vec;

@@ -47,6 +47,10 @@ gen_geo::gen_geo()
 
 	//std::string inc_file_name;
 
+
+	//std::string fname_search_tree;
+	ost_search_tree = NULL;
+
 	Girth_test = NULL;
 }
 
@@ -599,9 +603,9 @@ void gen_geo::main2(int &nb_GEN, int &nb_GEO, int &ticks, int &tps, int verbose_
 
 		}
 
-		object_in_projective_space *OiP;
+		object_with_canonical_form *OiP;
 
-		OiP = (object_in_projective_space *) it->Canonical_forms->Objects[0];
+		OiP = (object_with_canonical_form *) it->Canonical_forms->Objects[0];
 
 		if (inc->is_block_tactical(V, OiP->set)) {
 
@@ -687,6 +691,23 @@ void gen_geo::generate_all(int verbose_level)
 		}
 	}
 
+
+	if (GB->Descr->f_search_tree) {
+		fname_search_tree.assign(inc_file_name);
+		fname_search_tree.append("_tree.txt");
+
+		if (f_v) {
+			cout << "gen_geo::generate_all, opening file " << fname_search_tree << endl;
+		}
+
+		ost_search_tree = new ofstream;
+		ost_search_tree->open (fname_search_tree, std::ofstream::out);
+
+	}
+	else {
+		ost_search_tree = NULL;
+	}
+
 	if (f_v) {
 		cout << "gen_geo::generate_all before it0 = ..." << endl;
 	}
@@ -715,7 +736,11 @@ void gen_geo::generate_all(int verbose_level)
 		ret = TRUE;
 		goto l_exit;
 	}
+
+
 	while (TRUE) {
+
+		record_tree(inc->Encoding->v);
 
 		inc->gl_nb_GEN++;
 		if (FALSE) {
@@ -790,6 +815,13 @@ void gen_geo::generate_all(int verbose_level)
 			break;
 		}
 	}
+
+	if (GB->Descr->f_search_tree) {
+		*ost_search_tree << "-1" << endl;
+		ost_search_tree->close();
+	}
+
+
 l_exit:
 	if (f_v) {
 		cout << "gen_geo::generate_all done" << endl;
@@ -1188,6 +1220,22 @@ int gen_geo::GeoLineNxt0(int I, int m, int verbose_level)
 	return TRUE;
 }
 
+void gen_geo::record_tree(int i1)
+{
+	if (ost_search_tree) {
+		int row;
+		long int rk;
+
+		*ost_search_tree << i1;
+		for (row = 0; row < i1; row++) {
+			rk = inc->Encoding->rank_row(row);
+			*ost_search_tree << " " << rk;
+		}
+		*ost_search_tree << endl;
+	}
+
+}
+
 int gen_geo::GeoLineFst(int I, int m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1201,6 +1249,7 @@ int gen_geo::GeoLineFst(int I, int m, int verbose_level)
 	}
 
 	girth_Floyd(i1, verbose_level);
+	record_tree(i1);
 
 	J = 0;
 	while (TRUE) {

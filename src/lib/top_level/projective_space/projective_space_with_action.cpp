@@ -254,7 +254,7 @@ void projective_space_with_action::canonical_form(
 }
 
 void projective_space_with_action::canonical_labeling(
-	object_in_projective_space *OiP,
+	object_with_canonical_form *OiP,
 	int *canonical_labeling,
 	int verbose_level)
 {
@@ -1794,12 +1794,12 @@ void OiPA_encode(void *extra_data,
 {
 	//cout << "OiPA_encode" << endl;
 	object_in_projective_space_with_action *OiPA;
-	object_in_projective_space *OiP;
+	object_with_canonical_form *OwCF;
 
 	OiPA = (object_in_projective_space_with_action *) extra_data;
-	OiP = OiPA->OiP;
+	OwCF = OiPA->OwCF;
 	//OiP->print(cout);
-	OiP->encode_object(encoding, encoding_sz, 1 /* verbose_level*/);
+	OwCF->encode_object(encoding, encoding_sz, 1 /* verbose_level*/);
 	//cout << "OiPA_encode done" << endl;
 
 }

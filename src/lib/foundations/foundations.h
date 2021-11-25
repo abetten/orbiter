@@ -360,7 +360,7 @@ class hjelmslev;
 class incidence_structure;
 class klein_correspondence;
 class knarr;
-class object_in_projective_space;
+class object_with_canonical_form;
 class point_line;
 class points_and_lines;
 class polarity;
@@ -581,7 +581,7 @@ enum monomial_ordering_type {
 };
 
 
-enum object_in_projective_space_type {
+enum object_with_canonical_form_type {
 	t_PTS, // points
 	t_LNS, // lines
 	t_PNL, // points and lines

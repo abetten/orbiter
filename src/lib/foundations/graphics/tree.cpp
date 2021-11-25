@@ -156,18 +156,16 @@ void tree::init(std::string &fname,
 }
 
 void tree::draw(std::string &fname,
-	int xmax_in, int ymax_in, int xmax, int ymax, int rad,
-	int f_circle, int f_circletext, int f_i, int f_edge_labels, 
-	int f_has_draw_vertex_callback, 
-	void (*draw_vertex_callback)(tree *T,
+		layered_graph_draw_options *Opt,
+		int f_has_draw_vertex_callback,
+		void (*draw_vertex_callback)(tree *T,
 			mp_graphics *G, int *v, int layer, tree_node *N,
 		int x, int y, int dx, int dy), 
-	int f_embedded, int f_sideways, int f_on_circle, 
-	double tikz_global_scale, double tikz_global_line_width, int verbose_level)
+		int verbose_level)
 {
-	int x_min = 0, x_max = xmax_in;
-	int y_min = 0, y_max = ymax_in;
-	int factor_1000 = 1000;
+	//int x_min = 0, x_max = xmax_in;
+	//int y_min = 0, y_max = ymax_in;
+	//int factor_1000 = 1000;
 	string fname_full;
 	
 	fname_full.assign(fname);
@@ -181,18 +179,24 @@ void tree::draw(std::string &fname,
 
 
 	{
-	mp_graphics G(fname_full,
-			x_min, y_min, x_max, y_max, f_embedded, f_sideways, verbose_level - 1);
-	G.out_xmin() = 0;
-	G.out_ymin() = 0;
-	G.out_xmax() = xmax;
-	G.out_ymax() = ymax;
-	cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
-	
-	G.tikz_global_scale = tikz_global_scale;
-	G.tikz_global_line_width = tikz_global_line_width;
-	G.header();
-	G.begin_figure(factor_1000);
+		int x_min = 0;
+		int y_min = 0;
+		int factor_1000 = 1000;
+
+		mp_graphics G(fname_full, x_min, y_min,
+				Opt->xin, Opt->yin,
+				Opt->f_embedded, Opt->f_sideways, verbose_level - 1);
+		G.out_xmin() = 0;
+		G.out_ymin() = 0;
+		G.out_xmax() = Opt->xout;
+		G.out_ymax() = Opt->yout;
+		//cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
+
+		G.tikz_global_scale = Opt->scale;
+		G.tikz_global_line_width = Opt->line_width;
+
+		G.header();
+		G.begin_figure(factor_1000);
 	
 	
 	//G.frame(0.05);
@@ -212,9 +216,10 @@ void tree::draw(std::string &fname,
 	//root->draw_sideways(G, f_circletext, f_i,
 	//FALSE, 10000 - 0, 10000 - 0, max_depth, f_edge_labels);
 
+
+#if 0
 	int *radii = NULL;
 	int x0, y0;
-	
 	if (f_on_circle) {
 		int l;
 
@@ -227,6 +232,7 @@ void tree::draw(std::string &fname,
 			}
 #endif
 		}
+#endif
 
 
 	G.sl_thickness(30); // 100 is normal
@@ -235,24 +241,28 @@ void tree::draw(std::string &fname,
 
 	leaf_count = 0;
 
+	int f_circletext = TRUE;
+	int f_i = TRUE;
 
-	root->draw_edges(G, rad, f_circle, f_circletext, f_i, FALSE, 0, 0,
-			max_depth, f_edge_labels,
+
+	root->draw_edges(G, Opt, f_i, FALSE, 0, 0,
+			max_depth,
 			f_has_draw_vertex_callback, draw_vertex_callback,
 			this);
-
 
 	G.sl_thickness(10); // 100 is normal
 
 
-	root->draw_vertices(G, rad, f_circle, f_circletext, f_i, FALSE, 0, 0,
-			max_depth, f_edge_labels,
+	root->draw_vertices(G, Opt, f_i, FALSE, 0, 0,
+			max_depth,
 			f_has_draw_vertex_callback, draw_vertex_callback,
 			this);
 
+#if 0
 	if (f_on_circle) {
 		FREE_int(radii);
 		}
+#endif
 
 
 	G.end_figure();

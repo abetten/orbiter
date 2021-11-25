@@ -192,7 +192,7 @@ public:
 
 	classify_using_canonical_forms();
 	~classify_using_canonical_forms();
-	void add_object(object_in_projective_space *OiP, int &f_new_object, int verbose_level);
+	void add_object(object_with_canonical_form *OwCF, int &f_new_object, int verbose_level);
 
 };
 

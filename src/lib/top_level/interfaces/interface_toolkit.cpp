@@ -96,6 +96,8 @@ interface_toolkit::interface_toolkit()
 	f_draw_projective_curve = FALSE;
 	Draw_projective_curve_description = NULL;
 
+	f_tree_draw = FALSE;
+	//std::string tree_draw_fname;
 }
 
 
@@ -154,6 +156,9 @@ void interface_toolkit::print_help(int argc,
 	else if (stringcmp(argv[i], "-draw_projective_curve") == 0) {
 		cout << "-draw_projective_curve ..." << endl;
 	}
+	else if (stringcmp(argv[i], "-tree_draw") == 0) {
+		cout << "-tree_draw <string : fname>" << endl;
+	}
 }
 
 int interface_toolkit::recognize_keyword(int argc,
@@ -211,6 +216,9 @@ int interface_toolkit::recognize_keyword(int argc,
 		return true;
 	}
 	else if (stringcmp(argv[i], "-draw_projective_curve") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-tree_draw") == 0) {
 		return true;
 	}
 	return false;
@@ -448,6 +456,13 @@ void interface_toolkit::read_arguments(int argc,
 			Draw_projective_curve_description->print();
 		}
 	}
+	else if (stringcmp(argv[i], "-tree_draw") == 0) {
+		f_tree_draw = TRUE;
+		tree_draw_fname.assign(argv[++i]);
+		if (f_v) {
+			cout << "-tree_draw " << tree_draw_fname << endl;
+		}
+	}
 
 
 
@@ -541,6 +556,9 @@ void interface_toolkit::print()
 	if (f_draw_projective_curve) {
 		cout << "-draw_projective_curve " << endl;
 		Draw_projective_curve_description->print();
+	}
+	if (f_tree_draw) {
+		cout << "-tree_draw " << tree_draw_fname << endl;
 	}
 }
 
@@ -785,6 +803,12 @@ void interface_toolkit::worker(int verbose_level)
 
 		GO.draw_projective_curve(Draw_projective_curve_description,
 				Orbiter->draw_options, verbose_level);
+
+	}
+	else if (f_tree_draw) {
+		graphical_output GO;
+
+		GO.tree_draw(tree_draw_fname, verbose_level);
 
 	}
 

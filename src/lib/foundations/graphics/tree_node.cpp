@@ -281,12 +281,13 @@ void tree_node::get_values(int *v)
 		}
 }
 
-void tree_node::draw_edges(mp_graphics &G, int rad, int f_circle, int f_circletext, int f_i, 
-	int f_has_parent, int parent_x, int parent_y, int max_depth, int f_edge_labels, 
+void tree_node::draw_edges(mp_graphics &G,
+		layered_graph_draw_options *Opt,
+		int f_i,
+	int f_has_parent, int parent_x, int parent_y, int max_depth,
 	int f_has_draw_vertex_callback, 
 	void (*draw_vertex_callback)(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy),
-	tree *T
-	)
+	tree *T)
 {
 	//int rad = 20;
 	//int dx = rad; // / sqrt(2);
@@ -294,6 +295,14 @@ void tree_node::draw_edges(mp_graphics &G, int rad, int f_circle, int f_circlete
 	int x, y, i;
 	int Px[3], Py[3];
 	
+
+	int f_circle_text = TRUE;
+
+	if (Opt->f_nodes_empty) {
+		f_circle_text = FALSE;
+	}
+
+
 #if DONT_DRAW_ROOT_NODE
 	if (!f_has_parent) {
 		x = placement_x;
@@ -325,35 +334,40 @@ void tree_node::draw_edges(mp_graphics &G, int rad, int f_circle, int f_circlete
 		Px[0] = parent_x;
 		Py[0] = parent_y;
 		G.polygon2(Px, Py, 0, 1);
-		
-		if (f_edge_labels && char_data) {
+
+#if 0
+		if (Opt->f_edge_labels && char_data) {
 			Px[2] = (x + parent_x) >> 1;
 			Py[2] = (y + parent_y) >> 1;
 			G.aligned_text(Px[2], Py[2], "" /*"tl"*/, char_data);
 			}
+#endif
 		}
 	
+
 	for (i = 0; i < nb_children; i++) {
-		children[i]->draw_edges(G, rad, f_circle, f_circletext, f_i, TRUE, x, y, max_depth, f_edge_labels, 
+		children[i]->draw_edges(G, Opt, f_i, TRUE, x, y, max_depth,
 			f_has_draw_vertex_callback, draw_vertex_callback, T);
 		}
 }
 
-void tree_node::draw_vertices(mp_graphics &G, int rad, int f_circle, int f_circletext, int f_i, 
-	int f_has_parent, int parent_x, int parent_y, int max_depth, int f_edge_labels, 
+void tree_node::draw_vertices(mp_graphics &G,
+		layered_graph_draw_options *Opt,
+		int f_i,
+	int f_has_parent, int parent_x, int parent_y, int max_depth,
 	int f_has_draw_vertex_callback, 
 	void (*draw_vertex_callback)(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy),
-	tree *T
-	)
+	tree *T)
 {
 	//int rad = 20;
-	int dx = rad; // / sqrt(2);
+	int dx = Opt->rad; // / sqrt(2);
 	int dy = dx;
 	int x, y, i;
 	int Px[3], Py[3];
 	char str[1000];
 	int *v;
 	
+
 #if DONT_DRAW_ROOT_NODE
 	if (!f_has_parent) {
 		x = placement_x;
@@ -373,16 +387,16 @@ void tree_node::draw_vertices(mp_graphics &G, int rad, int f_circle, int f_circl
 	get_values(v);
 
 
-	if (rad > 0) {
-		if (f_circle) {
+	if (Opt->rad > 0) {
+		if (Opt->f_circle) {
 			if (depth == 0) {
-				G.nice_circle(x, y, (int) (rad * 1.2));
+				G.nice_circle(x, y, (int) (Opt->rad * 1.2));
 				}
-			if (depth == 18) { // clearly something specific, here hyperval in PG(2,16)
-				G.nice_circle(x, y, (int) (rad * 3));
+			if (FALSE) { // clearly something specific, here hyperoval in PG(2,16)
+				G.nice_circle(x, y, (int) (Opt->rad * 3));
 				}
 			else {
-				G.nice_circle(x, y, rad);
+				G.nice_circle(x, y, Opt->rad);
 				}
 			}
 		}
@@ -434,7 +448,7 @@ void tree_node::draw_vertices(mp_graphics &G, int rad, int f_circle, int f_circl
 		}
 
 	for (i = 0; i < nb_children; i++) {
-		children[i]->draw_vertices(G, rad, f_circle, f_circletext, f_i, TRUE, x, y, max_depth, f_edge_labels, 
+		children[i]->draw_vertices(G, Opt, f_i, TRUE, x, y, max_depth,
 			f_has_draw_vertex_callback, draw_vertex_callback, T);
 		}
 	if (f_value) {
@@ -443,14 +457,16 @@ void tree_node::draw_vertices(mp_graphics &G, int rad, int f_circle, int f_circl
 	else {
 		snprintf(str, 1000, " ");
 		}
-	if (f_circletext) {
+
+
+	if (!Opt->f_nodes_empty) {
 		//G.circle_text(x, y, str);
 		G.aligned_text(x, y, "", str);
 		}
 	else {
 		//G.aligned_text(x, y, 1, "tl", str);
 		}
-	if (f_i && f_circletext && f_int_data) {
+	if (f_i && !Opt->f_nodes_empty && f_int_data) {
 		snprintf(str, 1000, "%d", int_data);
 		G.aligned_text(Px[1], Py[1], "tl", str);
 		}

@@ -103,7 +103,7 @@ MODULES= \
 		foundations/geometry/incidence_structure.o \
 		foundations/geometry/klein_correspondence.o \
 		foundations/geometry/knarr.o \
-		foundations/geometry/object_in_projective_space.o \
+		foundations/geometry/object_with_canonical_form.o \
 		foundations/geometry/point_line.o \
 		foundations/geometry/points_and_lines.o \
 		foundations/geometry/polarity.o \

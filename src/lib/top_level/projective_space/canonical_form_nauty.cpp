@@ -81,26 +81,26 @@ void canonical_form_nauty::quartic_curve(
 	}
 
 	longinteger_object pt_stab_order;
-	object_in_projective_space *OiP = NULL;
+	object_with_canonical_form *OwCF = NULL;
 
 	int f_compute_canonical_form = TRUE;
 
 
-	OiP = NEW_OBJECT(object_in_projective_space);
+	OwCF = NEW_OBJECT(object_with_canonical_form);
 
 	if (f_v) {
-		cout << "canonical_form_nauty::quartic_curve before OiP->init_point_set" << endl;
+		cout << "canonical_form_nauty::quartic_curve before OwCF->init_point_set" << endl;
 	}
-	OiP->init_point_set(PA->P,
+	OwCF->init_point_set(PA->P,
 			Pts_on_curve, sz_curve,
 			verbose_level - 1);
 	if (f_v) {
-		cout << "canonical_form_nauty::quartic_curve after OiP->init_point_set" << endl;
+		cout << "canonical_form_nauty::quartic_curve after OwCF->init_point_set" << endl;
 	}
 
 	int nb_rows, nb_cols;
 
-	OiP->encoding_size(
+	OwCF->encoding_size(
 				nb_rows, nb_cols,
 				verbose_level);
 	if (f_v) {
@@ -120,7 +120,7 @@ void canonical_form_nauty::quartic_curve(
 		cout << "canonical_form_nauty::quartic_curve before Nau.set_stabilizer_of_object" << endl;
 	}
 	SG_pt_stab = Nau.set_stabilizer_of_object(
-		OiP,
+			OwCF,
 		PA->A,
 		f_compute_canonical_form, Canonical_form,
 		NO,
@@ -148,7 +148,7 @@ void canonical_form_nauty::quartic_curve(
 				"pt_stab_order = " << pt_stab_order << endl;
 	}
 
-	FREE_OBJECT(OiP);
+	FREE_OBJECT(OwCF);
 
 
 

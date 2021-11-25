@@ -1074,10 +1074,11 @@ SECTION_PRIME_FIELDS:
 	
 
 F_2:
-	$(ORBITER_PATH)orbiter.out -v 3 -define F -finite_field -q 2 -end  \
+	$(ORBITER_PATH)orbiter.out -v 3 -list_arguments \
+		-define F -finite_field -q 2 -end  \
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
-	pdflatex GF_2.tex
-	open GF_2.pdf
+	#pdflatex GF_2.tex
+	#open GF_2.pdf
 
 
 F_3:
@@ -2645,7 +2646,7 @@ PG_2_8:
 PG_2_16:
 	$(ORBITER_PATH)orbiter.out \
 		-draw_options -xin 20000 -yin 20000 \
-			-radius 200 -line_width 0.3 -nodes_empty -end \
+		-radius 200 -line_width 0.3 -nodes_empty -end \
 		-define F -finite_field -q 16 -end \
 		-with F -do -finite_field_activity \
 			-cheat_sheet_PG 2 -end
@@ -2950,15 +2951,38 @@ Op_6_64:
 	open O_1_6_64_report.pdf
 
 
-# problem:
+# problem, because we are trying to create PGL(6,64):
 
 Op_6_64_line_rank:
-	$(ORBITER_PATH)orbiter.out -v 2 \
+	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define F -finite_field -q 64 -end \
+		-define O -orthogonal_space 1 6 F  -end \
+		-with O -do -orthogonal_space_activity \
+			-unrank_line_through_two_points 15447347 15225451 \
+		-end
+
+# use option -without_group to skip the group. This will work:
+
+Op_6_64_line_rank:
+	$(ORBITER_PATH)orbiter.out -v 4 \
 		-define F -finite_field -q 64 -end \
 		-define O -orthogonal_space 1 6 F -without_group -end \
 		-with O -do -orthogonal_space_activity \
 			-unrank_line_through_two_points 15447347 15225451 \
 		-end
+
+# this will create a basic report without the group:
+
+Op_6_64_report:
+	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define F -finite_field -q 64 -end \
+		-define O -orthogonal_space 1 6 F -without_group -end \
+		-with O -do -orthogonal_space_activity \
+			-cheat_sheet_orthogonal \
+		-end
+	pdflatex O_1_6_64_report.tex
+	open O_1_6_64_report.pdf
+
 
 Op_6_8_2:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -11749,9 +11773,16 @@ geo_10_3:
 		-define Test_lines -set -loop 4 11 1 -end \
 		-geometry_builder -V 10 -B 10 -TDO 3 -fuse 1 \
 			-fname_GEO 10_3 \
+			-search_tree \
 			-test Test_lines FFFF \
 		-end
-
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-draw_options -embedded -sideways -radius 50 \
+			-nodes_empty \
+			-scale 0.5 -line_width 0.3 -end \
+		-tree_draw 10_3_tree.txt
+	pdflatex 10_3_tree_draw.tex
+	open 10_3_tree_draw.pdf
 
 # 10 geos
 # 8/26/2021: 0 sec on Mac
@@ -11866,13 +11897,22 @@ geo_15_3_g4:
 			-V 15 -B 15 -TDO 3 \
 			-fuse 1 -fname_GEO 15_3_g4 \
 			-girth 4 \
+			-search_tree \
 			-test Test_lines FFFF \
 		-end
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-draw_options -embedded -radius 50 \
+			-nodes_empty \
+			-scale 0.5 -line_width 0.3 -end \
+		-tree_draw 15_3_g4_tree.txt
+	pdflatex 15_3_g4_tree_draw.tex
+	open 15_3_g4_tree_draw.pdf
 
 # The unique Cremona Richmond configuration with group of order 720
 #User time: 0 of a second, dt=0 tps = 100
 #nb_calls_to_densenauty=23
 
+#-sideways 
 
 
 geo_15_4:
@@ -11881,8 +11921,16 @@ geo_15_4:
 		-geometry_builder \
 			-V 15 -B 15 -TDO 4 \
 			-fuse 1 -fname_GEO 15_4 \
+			-search_tree \
 			-test Test_lines FFFF \
 		-end
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-draw_options -embedded -radius 50 \
+			-nodes_empty \
+			-scale 0.5 -line_width 0.3 -end \
+		-tree_draw 15_4_tree.txt
+	pdflatex 15_4_tree_draw.tex
+	open 15_4_tree_draw.pdf
 
 # 4 objects
 # ago=360, 30, 24, 15
@@ -11911,8 +11959,16 @@ geo_40_4_g4:
 			-V 40 -B 40 -TDO 4 \
 			-fuse 1 -fname_GEO 40_4_g4 \
 			-girth 4 \
+			-search_tree \
 			-test Test_lines FFFF \
 		-end
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-draw_options -embedded -radius 50 \
+			-nodes_empty \
+			-scale 0.5 -line_width 0.3 -end \
+		-tree_draw 40_4_g4_tree.txt
+	pdflatex 40_4_g4_tree_draw.tex
+	open 40_4_g4_tree_draw.pdf
 
 
 # 2 geos, ago=51840^2

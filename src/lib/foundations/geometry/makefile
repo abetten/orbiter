@@ -23,7 +23,7 @@ MODULES = \
 	incidence_structure.o \
 	klein_correspondence.o \
 	knarr.o \
-	object_in_projective_space.o \
+	object_with_canonical_form.o \
 	point_line.o \
 	points_and_lines.o \
 	polarity.o \

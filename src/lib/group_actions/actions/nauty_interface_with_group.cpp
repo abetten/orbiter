@@ -1493,7 +1493,7 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 
 
 strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
-	object_in_projective_space *OiP,
+	object_with_canonical_form *OwCF,
 	action *A_linear,
 	int f_compute_canonical_form, bitvector *&Canonical_form,
 	nauty_output *&NO,
@@ -1516,7 +1516,7 @@ strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 
 	}
 
-	OiP->run_nauty(
+	OwCF->run_nauty(
 			f_compute_canonical_form, Canonical_form,
 			NO,
 			verbose_level);
@@ -1551,7 +1551,7 @@ strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 		}
 	reverse_engineer_linear_group_from_permutation_group(
 			A_linear,
-			OiP->P,
+			OwCF->P,
 			SG,
 			A_perm,
 			NO,
@@ -1563,7 +1563,6 @@ strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 
 
 	FREE_OBJECT(A_perm);
-	//FREE_OBJECT(NO);
 
 	if (f_v) {
 		cout << "nauty_interface_with_group::set_stabilizer_of_object done" << endl;
