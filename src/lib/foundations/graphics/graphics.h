@@ -1336,12 +1336,15 @@ class tree_node {
 public:
 	tree_node *parent;
 	int depth;
+
 	int f_value;
 	int value;
 	
-	int f_int_data;
-	int int_data;
-	char *char_data;
+	int f_has_color;
+	int color;
+
+	std::string label;
+
 	int nb_children;
 	tree_node **children;
 
@@ -1355,7 +1358,8 @@ public:
 	tree_node();
 	~tree_node();
 	void init(int depth, tree_node *parent, int f_value, int value, 
-		int f_i_data, int i_data, char *c_data, int verbose_level);
+		int f_has_color, int color, std::string &label,
+		int verbose_level);
 	void print_path();
 	void print_depth_first();
 	void compute_DFS_rank(int &rk);
@@ -1364,20 +1368,18 @@ public:
 	void calc_weight();
 	void place_xy(int left, int right, int ymax, int max_depth);
 	void place_on_circle(int xmax, int ymax, int max_depth);
-	void add_node(int l, int depth, int *path, int i_data, char *c_data, 
+	void add_node(int l, int depth, int *path, int color, std::string &label,
 		int verbose_level);
 	int find_child(int val);
 	void get_values(int *v);
 	void draw_edges(mp_graphics &G,
 			layered_graph_draw_options *Opt,
-			int f_i,
 		int f_has_parent, int parent_x, int parent_y, int max_depth,
 		int f_has_draw_vertex_callback, 
 		void (*draw_vertex_callback)(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy),
 		tree *T);
 	void draw_vertices(mp_graphics &G,
 			layered_graph_draw_options *Opt,
-			int f_i,
 		int f_has_parent, int parent_x, int parent_y, int max_depth,
 		int f_has_draw_vertex_callback, 
 		void (*draw_vertex_callback)(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy),

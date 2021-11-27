@@ -135,12 +135,6 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 		}
 	}
 
-#if 0
-	for (i = 0; i < MAX_V; i++) {
-		GV[i] = 0;
-	}
-#endif
-
 	f_transpose_it = FALSE;
 	f_save_file = FALSE;
 
@@ -162,10 +156,10 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 		cout << "geometry_builder::init_description before gg->init" << endl;
 	}
 	gg->init(this,
-		TRUE /* f_do_iso_test */,
-		TRUE /* f_do_aut_group */,
-		TRUE /* f_do_aut_group_in_iso_type_without_vhbars */,
-		1 /* gen_print_intervall*/,
+		//TRUE /* f_do_iso_test */,
+		//TRUE /* f_do_aut_group */,
+		//TRUE /* f_do_aut_group_in_iso_type_without_vhbars */,
+		//1 /* gen_print_intervall*/,
 		verbose_level);
 	if (f_v) {
 		cout << "geometry_builder::init_description after gg->init" << endl;
@@ -183,24 +177,6 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 	}
 
 
-
-#if 0
-	if (f_v) {
-		cout << "geometry_builder::init_description before TDO_init" << endl;
-	}
-	TDO_init(verbose_level);
-	if (f_v) {
-		cout << "geometry_builder::init_description after TDO_init" << endl;
-	}
-
-	if (f_v) {
-		cout << "geometry_builder::init_description before gg->inc->init" << endl;
-	}
-	gg->inc->init(V, B, gg->R, verbose_level);
-	if (f_v) {
-		cout << "geometry_builder::init_description after gg->inc->init" << endl;
-	}
-#endif
 
 	gg->print_conf();
 
@@ -229,8 +205,6 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 	}
 
 	int *s_type = NULL, *s_flag = NULL;
-	//int *r_type = NULL, *r_from = NULL, *r_len = NULL;
-	//int *f_flush = NULL;
 
 	s_type = new int[V + 1];
 	s_flag = new int[V + 1];
@@ -238,21 +212,6 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 		s_type[i] = 0;
 		s_flag[i] = 0;
 		}
-	//s_type[V] = 1;
-	//s_flag[V] = flag_numeric;
-
-#if 0
-	r_type = new int [V + 1];
-	r_from = new int [V + 1];
-	r_len = new int [V + 1];
-	f_flush = new int [V + 1];
-	for (i = 0; i <= V; i++) {
-		r_type[i] = 0;
-		r_from[i] = 0;
-		r_len[i] = 0;
-		f_flush[i] = 0;
-	}
-#endif
 
 
 	if (f_v) {
@@ -315,35 +274,6 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 
 	}
 
-#if 0
-	if (f_v) {
-		cout << "geometry_builder::init_description range" << endl;
-	}
-
-	iso_type *it;
-
-	for (i = 1; i <= V; i++) {
-		if (r_type[i] == 1) {
-			range(i, r_from[i], r_len[i]);
-			it = gg->inc->iso_type_at_line[i - 1];
-			it->f_print_mod = TRUE;
-			it->print_mod = 1;
-		}
-	}
-#endif
-
-
-#if 0
-	if (f_v) {
-		cout << "geometry_builder::init_description set_flush_line" << endl;
-	}
-
-	for (i = 1; i <= V; i++) {
-		if (f_flush[i]) {
-			gg->inc->set_flush_line(i);
-		}
-	}
-#endif
 
 	if (Descr->f_split) {
 		if (f_v) {

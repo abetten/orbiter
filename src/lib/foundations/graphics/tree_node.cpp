@@ -26,9 +26,11 @@ tree_node::tree_node()
 	f_value = FALSE;
 	value = 0;
 
-	f_int_data = FALSE;
-	int_data = 0;
-	char_data = NULL;
+	f_has_color = FALSE;
+	color = 0;
+
+	//label;
+
 	nb_children = 0;
 	children = NULL;
 
@@ -46,7 +48,8 @@ tree_node::~tree_node()
 }
 
 void tree_node::init(int depth, tree_node *parent, int f_value, int value, 
-	int f_i_data, int i_data, char *c_data, int verbose_level)
+	int f_has_color, int color, std::string &label,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -60,15 +63,11 @@ void tree_node::init(int depth, tree_node *parent, int f_value, int value,
 	tree_node::f_value = f_value;
 	tree_node::value = value;
 	
-	f_int_data = f_i_data;
-	int_data = i_data;
-	if (c_data) {
-		char_data = NEW_char(strlen(c_data) + 1);
-		strcpy(char_data, c_data);
-		}
-	else 
-		char_data = NULL;
+	tree_node::f_has_color = f_has_color;
+	tree_node::color = color;
 	
+	tree_node::label.assign(label);
+
 	nb_children = 0;
 	children = NULL;
 }
@@ -98,12 +97,11 @@ void tree_node::print_depth_first()
 	cout << " : (";
 	cout << placement_x << "," << placement_y << "," << width << ")";
 	cout << " : ";
-	if (f_int_data) {
-		cout << int_data;
+	if (f_has_color) {
+		cout << color;
 		}
 	cout << " : ";
-	if (char_data)
-		cout << char_data;
+	cout << label;
 	cout << endl;
 	for (i = 0; i < nb_children; i++) {
 		children[i]->print_depth_first();
@@ -203,62 +201,68 @@ void tree_node::place_on_circle(int xmax, int ymax, int max_depth)
 		}
 }
 
-void tree_node::add_node(int l, int depth, int *path, int i_data, char *c_data, 
-	int verbose_level)
+void tree_node::add_node(int l,
+		int depth, int *path, int color, std::string &label,
+		int verbose_level)
 {
 	int i, idx;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
-		cout << "tree_node::add_node: depth=" << depth << " : ";
+		cout << "tree_node::add_node depth=" << depth << " : ";
 		Orbiter->Int_vec.print(cout, path, l);
 		cout << endl;
-		}
+	}
 	if (l == 0) {
 		if (f_vv) {
-			cout << "add_node(): node of length 0" << endl;
-			}
-		init(0, NULL, TRUE, -1, TRUE, i_data, c_data, verbose_level);
+			cout << "tree_node::add_node node of length 0" << endl;
+		}
+		init(0, NULL, TRUE, -1, TRUE, color, label, verbose_level);
 		return;
 		}
 	idx = find_child(path[depth]);
 	if (f_vv) {
-		cout << "add_node(): find_child for " << path[depth] << " returns " << idx << endl;
+		cout << "tree_node::add_node find_child for " << path[depth] << " returns " << idx << endl;
 		}
 	if (idx == -1) {
 		tree_node **new_children = new ptree_node[nb_children + 1];
 		for (i = 0; i < nb_children; i++) {
 			new_children[i] = children[i];
-			}
+		}
 		new_children[nb_children] = new tree_node;
-		if (nb_children)
+		if (nb_children) {
 			delete [] children;
+		}
 		children = new_children;
 		nb_children++;
 		if (f_vv) {
-			cout << "nb_children increased to " << nb_children << endl;
-			}
+			cout << "tree_node::add_node nb_children increased to " << nb_children << endl;
+		}
 		
 		if (l == depth + 1) {
 			if (f_vv) {
-				cout << "initializing terminal node" << endl;
-				}
-			children[nb_children - 1]->init(depth + 1, this, TRUE, path[depth], TRUE, i_data, c_data, verbose_level);
-			return;
+				cout << "tree_node::add_node initializing terminal node" << endl;
 			}
+			children[nb_children - 1]->init(depth + 1, this,
+					TRUE, path[depth], TRUE, color, label,
+					verbose_level);
+			return;
+		}
 		else {
 			if (f_vv) {
 				cout << "initializing intermediate node" << endl;
-				}
-			children[nb_children - 1]->init(depth + 1, this, TRUE, path[depth], FALSE, 0, NULL, verbose_level);
-			idx = nb_children - 1;
 			}
+			children[nb_children - 1]->init(depth + 1, this,
+					TRUE, path[depth], FALSE, 0, label,
+					verbose_level);
+			idx = nb_children - 1;
 		}
+	}
 	if (f_vv) {
 		cout << "searching deeper" << endl;
-		}
-	children[idx]->add_node(l, depth + 1, path, i_data, c_data, verbose_level);
+	}
+	children[idx]->add_node(l, depth + 1, path, color, label, verbose_level);
 }
 
 int tree_node::find_child(int val)
@@ -266,9 +270,10 @@ int tree_node::find_child(int val)
 	int i;
 	
 	for (i = 0; i < nb_children; i++) {
-		if (children[i]->value == val)
+		if (children[i]->value == val) {
 			return i;
 		}
+	}
 	return -1;
 }
 
@@ -278,12 +283,11 @@ void tree_node::get_values(int *v)
 	if (depth) {
 		v[depth - 1] = value;
 		parent->get_values(v);
-		}
+	}
 }
 
 void tree_node::draw_edges(mp_graphics &G,
 		layered_graph_draw_options *Opt,
-		int f_i,
 	int f_has_parent, int parent_x, int parent_y, int max_depth,
 	int f_has_draw_vertex_callback, 
 	void (*draw_vertex_callback)(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy),
@@ -308,7 +312,7 @@ void tree_node::draw_edges(mp_graphics &G,
 		x = placement_x;
 		y = placement_y;
 		for (i = 0; i < nb_children; i++) {
-			children[i]->draw_edges(G, rad, f_circletext, f_i, TRUE, x, y, max_depth, f_edge_labels, 
+			children[i]->draw_edges(G, rad, f_circletext, TRUE, x, y, max_depth, f_edge_labels,
 				f_has_draw_vertex_callback, draw_vertex_callback, T);
 			}
 		return;
@@ -346,21 +350,19 @@ void tree_node::draw_edges(mp_graphics &G,
 	
 
 	for (i = 0; i < nb_children; i++) {
-		children[i]->draw_edges(G, Opt, f_i, TRUE, x, y, max_depth,
+		children[i]->draw_edges(G, Opt, TRUE, x, y, max_depth,
 			f_has_draw_vertex_callback, draw_vertex_callback, T);
 		}
 }
 
 void tree_node::draw_vertices(mp_graphics &G,
 		layered_graph_draw_options *Opt,
-		int f_i,
 	int f_has_parent, int parent_x, int parent_y, int max_depth,
 	int f_has_draw_vertex_callback, 
 	void (*draw_vertex_callback)(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy),
 	tree *T)
 {
-	//int rad = 20;
-	int dx = Opt->rad; // / sqrt(2);
+	int dx = Opt->rad;
 	int dy = dx;
 	int x, y, i;
 	int Px[3], Py[3];
@@ -386,26 +388,41 @@ void tree_node::draw_vertices(mp_graphics &G,
 	v = NEW_int(depth + 1);
 	get_values(v);
 
-
+#if 0
 	if (Opt->rad > 0) {
 		if (Opt->f_circle) {
 			if (depth == 0) {
 				G.nice_circle(x, y, (int) (Opt->rad * 1.2));
-				}
-			if (FALSE) { // clearly something specific, here hyperoval in PG(2,16)
-				G.nice_circle(x, y, (int) (Opt->rad * 3));
-				}
-			else {
-				G.nice_circle(x, y, Opt->rad);
-				}
 			}
+			G.nice_circle(x, y, Opt->rad);
 		}
+	}
+#endif
 	
+	if (f_has_color) {
+		if (Opt->f_nodes_empty) {
+			G.sf_color(color);
+			//G.sf_interior(color /* fill_interior*/);
+			G.nice_circle(x, y, Opt->rad);
+		}
+		else {
+			sprintf(str, "%d", value);
+			G.aligned_text(x, y, "", str);
+		}
+		//snprintf(str, 1000, "%d", color);
+		//G.aligned_text(Px[1], Py[1], "tl", str);
+	}
+	else {
+		sprintf(str, "%d", value);
+		G.aligned_text(x, y, "", str);
+	}
+
+
 
 	if (f_has_draw_vertex_callback) {
 		cout << "calling draw_vertex_callback" << endl;
 		(*draw_vertex_callback)(T, &G, v, depth, this, x, y, dx, dy);
-		}
+	}
 	FREE_int(v);
 
 
@@ -448,16 +465,17 @@ void tree_node::draw_vertices(mp_graphics &G,
 		}
 
 	for (i = 0; i < nb_children; i++) {
-		children[i]->draw_vertices(G, Opt, f_i, TRUE, x, y, max_depth,
+		children[i]->draw_vertices(G, Opt, TRUE, x, y, max_depth,
 			f_has_draw_vertex_callback, draw_vertex_callback, T);
 		}
+
+#if 0
 	if (f_value) {
 		snprintf(str, 1000, "%d", value);
 		}
 	else {
 		snprintf(str, 1000, " ");
 		}
-
 
 	if (!Opt->f_nodes_empty) {
 		//G.circle_text(x, y, str);
@@ -466,10 +484,9 @@ void tree_node::draw_vertices(mp_graphics &G,
 	else {
 		//G.aligned_text(x, y, 1, "tl", str);
 		}
-	if (f_i && !Opt->f_nodes_empty && f_int_data) {
-		snprintf(str, 1000, "%d", int_data);
-		G.aligned_text(Px[1], Py[1], "tl", str);
-		}
+#endif
+
+
 }
 
 void tree_node::draw_sideways(mp_graphics &G, int f_circletext, int f_i, 
@@ -516,10 +533,10 @@ void tree_node::draw_sideways(mp_graphics &G, int f_circletext, int f_i,
 		Py[0] = parent_y;
 		G.polygon2(Px, Py, 0, 1);
 		
-		if (f_edge_labels && char_data) {
+		if (f_edge_labels && label.length()) {
 			Px[2] = (xx + parent_x) >> 1;
 			Py[2] = (yy + parent_y) >> 1;
-			G.aligned_text(Px[2], Py[2], "" /*"tl"*/, char_data);
+			G.aligned_text(Px[2], Py[2], "" /*"tl"*/, label.c_str());
 			}
 		}
 	
@@ -547,8 +564,8 @@ void tree_node::draw_sideways(mp_graphics &G, int f_circletext, int f_i,
 	else {
 		//G.aligned_text(xx, yy, 1, "tl", str);
 		}
-	if (f_i && f_circletext && f_int_data) {
-		snprintf(str, 1000, "%d", int_data);
+	if (f_i && f_circletext && f_has_color) {
+		snprintf(str, 1000, "%d", color);
 		G.aligned_text(Px[1], Py[1], "tl", str);
 		}
 }

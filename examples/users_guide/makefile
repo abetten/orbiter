@@ -11710,6 +11710,7 @@ geo_petersen:
 		-geometry_builder \
 			-V 10 -B 15 -TDO 3 -fuse 1 \
 			-fname_GEO petersen -girth 5 \
+			-search_tree \
 			-test Test_lines FFFF \
 		-end
 
@@ -11773,20 +11774,32 @@ geo_10_3:
 		-define Test_lines -set -loop 4 11 1 -end \
 		-geometry_builder -V 10 -B 10 -TDO 3 -fuse 1 \
 			-fname_GEO 10_3 \
+			-test Test_lines FFFF \
+		-end
+
+# 10 geos
+# 8/26/2021: 0 sec on Mac
+
+
+geo_10_3_tree:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Test_lines -set -loop 0 11 1 -end \
+		-geometry_builder -V 10 -B 10 -TDO 3 -fuse 1 \
+			-fname_GEO 10_3 \
 			-search_tree \
 			-test Test_lines FFFF \
 		-end
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-draw_options -embedded -sideways -radius 50 \
+		-draw_options -embedded -radius 50 \
+			-xin 10000 -yin 10000 \
+			-xout 1000000 -yout 500000 \
 			-nodes_empty \
 			-scale 0.5 -line_width 0.3 -end \
 		-tree_draw 10_3_tree.txt
 	pdflatex 10_3_tree_draw.tex
 	open 10_3_tree_draw.pdf
 
-# 10 geos
-# 8/26/2021: 0 sec on Mac
-
+#-sideways 
 
 
 geo_10_3_c:
