@@ -1150,29 +1150,6 @@ public:
 		// check if it satisfies x_0^2 + x_1x_2 + x_3x_4:
 		// b^2/4 + (-c)*a + -(b^2/4-ac)
 		// = b^2/4 -ac -b^2/4 + ac = 0
-	void Segre_hyperoval(
-			long int *&Pts, int &nb_pts, int verbose_level);
-	void GlynnI_hyperoval(
-			long int *&Pts, int &nb_pts, int verbose_level);
-	void GlynnII_hyperoval(
-			long int *&Pts, int &nb_pts, int verbose_level);
-	void Subiaco_oval(
-			long int *&Pts, int &nb_pts, int f_short, int verbose_level);
-		// following Payne, Penttila, Pinneri:
-		// Isomorphisms Between Subiaco q-Clan Geometries,
-		// Bull. Belg. Math. Soc. 2 (1995) 197-222.
-		// formula (53)
-	void Subiaco_hyperoval(
-			long int *&Pts, int &nb_pts, int verbose_level);
-	int OKeefe_Penttila_32(int t);
-	int Subiaco64_1(int t);
-	int Subiaco64_2(int t);
-	int Adelaide64(int t);
-	void LunelliSce(int *pts18, int verbose_level);
-	int LunelliSce_evaluate_cubic1(int *v);
-		// computes X^3 + Y^3 + Z^3 + \eta^3 XYZ
-	int LunelliSce_evaluate_cubic2(int *v);
-		// computes X^3 + Y^3 + Z^3 + \eta^{12} XYZ
 	void O4_isomorphism_4to2(
 		int *At, int *As, int &f_switch, int *B,
 		int verbose_level);
@@ -1205,18 +1182,6 @@ public:
 	void do_blocking_set_family_3(int n,
 		long int *set_in, int set_size,
 		long int *&the_set_out, int &set_size_out,
-		int verbose_level);
-	void create_hyperoval(
-		int f_translation, int translation_exponent,
-		int f_Segre, int f_Payne, int f_Cherowitzo, int f_OKeefe_Penttila,
-		std::string &fname, int &nb_pts, long int *&Pts,
-		int verbose_level);
-	void create_subiaco_oval(
-		int f_short,
-		std::string &fname, int &nb_pts, long int *&Pts,
-		int verbose_level);
-	void create_subiaco_hyperoval(
-			std::string &fname, int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_ovoid(
 			std::string &fname, int &nb_pts, long int *&Pts,

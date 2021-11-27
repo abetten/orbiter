@@ -82,7 +82,7 @@ void diophant_create::init(
 				TRUE /* f_init_incidence_structure */,
 				verbose_level);
 
-		P->maximal_arc_by_diophant(
+		P->Arc_in_projective_space->maximal_arc_by_diophant(
 				Descr->maximal_arc_sz, Descr->maximal_arc_d,
 				Descr->maximal_arc_secants_text,
 				Descr->external_lines_as_subset_of_secants_text,

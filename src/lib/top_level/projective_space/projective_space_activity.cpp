@@ -459,10 +459,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity f_arc_with_given_set_as_i_lines_after_dualizing" << endl;
 		}
-		geometry_global Geo;
 
-		Geo.arc_lifting1(
-				PA->P,
+		PA->P->Arc_in_projective_space->arc_lifting1(
 				Descr->arc_size,
 				Descr->arc_d,
 				Descr->arc_d_low,
@@ -476,10 +474,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity f_arc_with_two_given_sets_of_lines_after_dualizing" << endl;
 		}
-		geometry_global Geo;
 
-		Geo.arc_lifting2(
-				PA->P,
+		PA->P->Arc_in_projective_space->arc_lifting2(
 				Descr->arc_size,
 				Descr->arc_d,
 				Descr->arc_d_low,
@@ -496,10 +492,8 @@ void projective_space_activity::perform_activity(int verbose_level)
 		if (f_v) {
 			cout << "projective_space_activity::perform_activity f_arc_with_three_given_sets_of_lines_after_dualizing" << endl;
 		}
-		geometry_global Geo;
 
-		Geo.arc_lifting3(
-				PA->P,
+		PA->P->Arc_in_projective_space->arc_lifting3(
 				Descr->arc_size,
 				Descr->arc_d,
 				Descr->arc_d_low,

@@ -1061,6 +1061,9 @@ void surface_object_properties::compute_planes_and_dual_point_ranks(int verbose_
 	}
 }
 
+
+
+
 void surface_object_properties::print_everything(ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1185,107 +1188,6 @@ void surface_object_properties::print_everything(ostream &ost, int verbose_level
 }
 
 
-void surface_object_properties::create_summary_file(std::string &fname,
-		std::string &surface_label, std::string &col_postfix, int verbose_level)
-{
-	string col_lab_surface_label;
-	string col_lab_nb_lines;
-	string col_lab_nb_points;
-	string col_lab_nb_singular_points;
-	string col_lab_nb_Eckardt_points;
-	string col_lab_nb_double_points;
-	string col_lab_nb_Single_points;
-	string col_lab_nb_pts_not_on_lines;
-	string col_lab_nb_Hesse_planes;
-	string col_lab_nb_axes;
-
-
-	col_lab_surface_label.assign("Surface");
-
-
-	col_lab_nb_lines.assign("#L");
-	col_lab_nb_lines.append(col_postfix);
-
-	col_lab_nb_points.assign("#P");
-	col_lab_nb_points.append(col_postfix);
-
-	col_lab_nb_singular_points.assign("#S");
-	col_lab_nb_singular_points.append(col_postfix);
-
-	col_lab_nb_Eckardt_points.assign("#E");
-	col_lab_nb_Eckardt_points.append(col_postfix);
-
-	col_lab_nb_double_points.assign("#D");
-	col_lab_nb_double_points.append(col_postfix);
-
-	col_lab_nb_Single_points.assign("#U");
-	col_lab_nb_Single_points.append(col_postfix);
-
-	col_lab_nb_pts_not_on_lines.assign("#OFF");
-	col_lab_nb_pts_not_on_lines.append(col_postfix);
-
-	col_lab_nb_Hesse_planes.assign("#H");
-	col_lab_nb_Hesse_planes.append(col_postfix);
-
-	col_lab_nb_axes.assign("#AX");
-	col_lab_nb_axes.append(col_postfix);
-
-#if 0
-	SO->nb_lines;
-
-	SO->nb_pts;
-
-	nb_singular_pts;
-
-	nb_Eckardt_points;
-
-	nb_Double_points;
-
-	nb_Single_points;
-
-	nb_pts_not_on_lines;
-
-	nb_Hesse_planes;
-
-	nb_axes;
-#endif
-
-
-	file_io Fio;
-
-	{
-		ofstream f(fname);
-
-		f << col_lab_surface_label << ",";
-		f << col_lab_nb_lines << ",";
-		f << col_lab_nb_points << ",";
-		f << col_lab_nb_singular_points << ",";
-		f << col_lab_nb_Eckardt_points << ",";
-		f << col_lab_nb_double_points << ",";
-		f << col_lab_nb_Single_points << ",";
-		f << col_lab_nb_pts_not_on_lines << ",";
-		f << col_lab_nb_Hesse_planes << ",";
-		f << col_lab_nb_axes << ",";
-		f << endl;
-
-		f << surface_label << ",";
-		f << SO->nb_lines << ",";
-		f << SO->nb_pts << ",";
-		f << nb_singular_pts << ",";
-		f << nb_Eckardt_points << ",";
-		f << nb_Double_points << ",";
-		f << nb_Single_points << ",";
-		f << nb_pts_not_on_lines << ",";
-		f << nb_Hesse_planes << ",";
-		f << nb_axes << ",";
-		f << endl;
-
-		f << "END" << endl;
-	}
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
-
-
-}
 
 void surface_object_properties::report_properties(std::ostream &ost, int verbose_level)
 {
@@ -1405,14 +1307,23 @@ void surface_object_properties::report_properties_simple(std::ostream &ost, int 
 	print_points_on_surface_but_not_on_a_line(ost);
 
 
+	if (f_v) {
+		cout << "surface_object_properties::report_properties_simple print_Hesse_planes" << endl;
+	}
+	print_Hesse_planes(ost);
+
+	if (f_v) {
+		cout << "surface_object_properties::report_properties_simple print_axes" << endl;
+	}
+	print_axes(ost);
 
 
-#if 0
 	if (f_v) {
 		cout << "surface_object_properties::report_properties_simple print_tritangent_planes" << endl;
 	}
 	print_tritangent_planes(ost);
 
+#if 0
 	if (f_v) {
 		cout << "surface_object_properties::report_properties_simple "
 				"before print_Steiner_and_Eckardt" << endl;
@@ -2240,9 +2151,14 @@ void surface_object_properties::print_Hesse_planes(std::ostream &ost)
 	SO->Surf->Gr3->print_set_tex(ost, Hesse_planes, nb_Hesse_planes);
 
 
+	ost << endl;
+	ost << "\\clearpage" << endl;
+	ost << endl;
+
 
 	cout << "Hesse plane : rank : Incident Eckardt points\\\\" << endl;
 
+	ost << "\\noindent" << endl;
 	for (j = 0; j < nb_Hesse_planes; j++) {
 
 
@@ -2252,7 +2168,7 @@ void surface_object_properties::print_Hesse_planes(std::ostream &ost)
 		for (i = 0; i < nb_Eckardt_points; i++) {
 			if (Eckardt_point_Hesse_plane_incidence[i * nb_Hesse_planes + j]) {
 				if (cnt == 9) {
-					cout << "too many points per Hesse plane" << endl;
+					cout << "too many points on the Hesse plane" << endl;
 					exit(1);
 				}
 				H[cnt++] = i;
@@ -2273,6 +2189,46 @@ void surface_object_properties::print_Hesse_planes(std::ostream &ost)
 		}
 		ost << "\\\\" << endl;
 	}
+
+
+	ost << endl;
+	ost << "\\clearpage" << endl;
+	ost << endl;
+
+
+	cout << "Hesse plane : rank : Incident Eckardt points\\\\" << endl;
+	ost << "\\noindent" << endl;
+	for (j = 0; j < nb_Hesse_planes; j++) {
+
+
+		int H[9], cnt, h;
+
+		cnt = 0;
+		for (i = 0; i < nb_Eckardt_points; i++) {
+			if (Eckardt_point_Hesse_plane_incidence[i * nb_Hesse_planes + j]) {
+				if (cnt == 9) {
+					cout << "too many points on the Hesse plane" << endl;
+					exit(1);
+				}
+				H[cnt++] = i;
+			}
+		}
+		if (cnt != 9) {
+			cout << "cnt != 9" << endl;
+			exit(1);
+		}
+		ost << j << " : " << Hesse_planes[j] << " : ";
+
+		for (h = 0; h < 9; h++) {
+			i = H[h];
+			ost << Eckardt_points_schlaefli_labels[i];
+			if (h < 9 - 1) {
+				ost << ", ";
+			}
+		}
+		ost << "\\\\" << endl;
+	}
+
 }
 
 void surface_object_properties::print_axes(std::ostream &ost)
@@ -3390,6 +3346,107 @@ int surface_object_properties::test_full_del_pezzo(int P_idx, int *f_deleted, in
 }
 
 
+void surface_object_properties::create_summary_file(std::string &fname,
+		std::string &surface_label, std::string &col_postfix, int verbose_level)
+{
+	string col_lab_surface_label;
+	string col_lab_nb_lines;
+	string col_lab_nb_points;
+	string col_lab_nb_singular_points;
+	string col_lab_nb_Eckardt_points;
+	string col_lab_nb_double_points;
+	string col_lab_nb_Single_points;
+	string col_lab_nb_pts_not_on_lines;
+	string col_lab_nb_Hesse_planes;
+	string col_lab_nb_axes;
+
+
+	col_lab_surface_label.assign("Surface");
+
+
+	col_lab_nb_lines.assign("#L");
+	col_lab_nb_lines.append(col_postfix);
+
+	col_lab_nb_points.assign("#P");
+	col_lab_nb_points.append(col_postfix);
+
+	col_lab_nb_singular_points.assign("#S");
+	col_lab_nb_singular_points.append(col_postfix);
+
+	col_lab_nb_Eckardt_points.assign("#E");
+	col_lab_nb_Eckardt_points.append(col_postfix);
+
+	col_lab_nb_double_points.assign("#D");
+	col_lab_nb_double_points.append(col_postfix);
+
+	col_lab_nb_Single_points.assign("#U");
+	col_lab_nb_Single_points.append(col_postfix);
+
+	col_lab_nb_pts_not_on_lines.assign("#OFF");
+	col_lab_nb_pts_not_on_lines.append(col_postfix);
+
+	col_lab_nb_Hesse_planes.assign("#H");
+	col_lab_nb_Hesse_planes.append(col_postfix);
+
+	col_lab_nb_axes.assign("#AX");
+	col_lab_nb_axes.append(col_postfix);
+
+#if 0
+	SO->nb_lines;
+
+	SO->nb_pts;
+
+	nb_singular_pts;
+
+	nb_Eckardt_points;
+
+	nb_Double_points;
+
+	nb_Single_points;
+
+	nb_pts_not_on_lines;
+
+	nb_Hesse_planes;
+
+	nb_axes;
+#endif
+
+
+	file_io Fio;
+
+	{
+		ofstream f(fname);
+
+		f << col_lab_surface_label << ",";
+		f << col_lab_nb_lines << ",";
+		f << col_lab_nb_points << ",";
+		f << col_lab_nb_singular_points << ",";
+		f << col_lab_nb_Eckardt_points << ",";
+		f << col_lab_nb_double_points << ",";
+		f << col_lab_nb_Single_points << ",";
+		f << col_lab_nb_pts_not_on_lines << ",";
+		f << col_lab_nb_Hesse_planes << ",";
+		f << col_lab_nb_axes << ",";
+		f << endl;
+
+		f << surface_label << ",";
+		f << SO->nb_lines << ",";
+		f << SO->nb_pts << ",";
+		f << nb_singular_pts << ",";
+		f << nb_Eckardt_points << ",";
+		f << nb_Double_points << ",";
+		f << nb_Single_points << ",";
+		f << nb_pts_not_on_lines << ",";
+		f << nb_Hesse_planes << ",";
+		f << nb_axes << ",";
+		f << endl;
+
+		f << "END" << endl;
+	}
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+}
 
 
 }}

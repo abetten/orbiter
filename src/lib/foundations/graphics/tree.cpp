@@ -241,7 +241,7 @@ void tree::draw(std::string &fname,
 
 	leaf_count = 0;
 
-	int f_circletext = TRUE;
+	//int f_circletext = TRUE;
 	int f_i = TRUE;
 
 
