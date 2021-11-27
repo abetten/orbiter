@@ -39,11 +39,11 @@ gen_geo::gen_geo()
 	vbar = NULL;
 	hbar = NULL;
 
-	f_do_iso_test = FALSE;
-	f_do_aut_group = FALSE;
-	f_do_aut_group_in_iso_type_without_vhbars = FALSE;
+	//f_do_iso_test = FALSE;
+	//f_do_aut_group = FALSE;
+	//f_do_aut_group_in_iso_type_without_vhbars = FALSE;
 	forget_ivhbar_in_last_isot = FALSE;
-	gen_print_intervall = FALSE;
+	//gen_print_intervall = FALSE;
 
 	//std::string inc_file_name;
 
@@ -99,10 +99,10 @@ gen_geo::~gen_geo()
 }
 
 void gen_geo::init(geometry_builder *GB,
-	int f_do_iso_test,
-	int f_do_aut_group,
-	int f_do_aut_group_in_iso_type_without_vhbars,
-	int gen_print_intervall,
+	//int f_do_iso_test,
+	//int f_do_aut_group,
+	//int f_do_aut_group_in_iso_type_without_vhbars,
+	//int gen_print_intervall,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -111,10 +111,10 @@ void gen_geo::init(geometry_builder *GB,
 		cout << "gen_geo::init" << endl;
 	}
 	gen_geo::GB = GB;
-	gen_geo::f_do_iso_test = f_do_iso_test;
-	gen_geo::f_do_aut_group = f_do_aut_group;
-	gen_geo::f_do_aut_group_in_iso_type_without_vhbars = f_do_aut_group_in_iso_type_without_vhbars;
-	gen_geo::gen_print_intervall = gen_print_intervall;
+	//gen_geo::f_do_iso_test = f_do_iso_test;
+	//gen_geo::f_do_aut_group = f_do_aut_group;
+	//gen_geo::f_do_aut_group_in_iso_type_without_vhbars = f_do_aut_group_in_iso_type_without_vhbars;
+	//gen_geo::gen_print_intervall = gen_print_intervall;
 
 	inc = NEW_OBJECT(incidence);
 
@@ -740,14 +740,16 @@ void gen_geo::generate_all(int verbose_level)
 
 	while (TRUE) {
 
-		record_tree(inc->Encoding->v);
 
 		inc->gl_nb_GEN++;
 		if (FALSE) {
 			cout << "gen_geo::generate_all nb_GEN=" << inc->gl_nb_GEN << endl;
+
+#if 0
 			if ((inc->gl_nb_GEN % gen_print_intervall) == 0) {
 				//inc->print(cout, inc->Encoding->v);
 			}
+#endif
 		}
 		//cout << "*** do_geo *** geometry no. " << gg->inc.gl_nb_GEN << endl;
 #if 0
@@ -771,6 +773,11 @@ void gen_geo::generate_all(int verbose_level)
 			inc->Encoding->v, inc,
 			f_already_there,
 			0 /*verbose_level*/);
+
+
+
+		record_tree(inc->Encoding->v, f_already_there);
+
 
 		if (FALSE) {
 			cout << "gen_geo::generate_all after isot_add for it0" << endl;
@@ -798,6 +805,8 @@ void gen_geo::generate_all(int verbose_level)
 					inc->Encoding->v, inc,
 					f_already_there,
 					0 /*verbose_level*/);
+
+			//record_tree(inc->Encoding->v, f_already_there);
 
 			if (FALSE) {
 				cout << "gen_geo::generate_all after isot_add for it1" << endl;
@@ -1068,6 +1077,11 @@ int gen_geo::geo_back_test(int I, int verbose_level)
 					f_already_there,
 					0 /*verbose_level*/);
 
+
+
+			record_tree(i1 + 1, f_already_there);
+
+
 			if (!f_already_there) {
 				it->f_beginning_checked = TRUE;
 				continue;
@@ -1128,6 +1142,8 @@ int gen_geo::GeoLineFst0(int I, int m, int verbose_level)
 			it->add_geometry(inc->Encoding,
 					i1 + 1, inc, f_already_there,
 					0 /*verbose_level*/);
+
+			record_tree(i1 + 1, f_already_there);
 
 			if (f_v) {
 				cout << "gen_geo::GeoLineFst0 I=" << I << " m=" << m << " after isot_add" << endl;
@@ -1198,6 +1214,8 @@ int gen_geo::GeoLineNxt0(int I, int m, int verbose_level)
 				i1 + 1, inc, f_already_there,
 				0 /*verbose_level*/);
 
+			record_tree(i1 + 1, f_already_there);
+
 #if 0
 			if (it->f_print_mod) {
 				if ((it->nb_GEN % it->print_mod) == 0) {
@@ -1220,17 +1238,27 @@ int gen_geo::GeoLineNxt0(int I, int m, int verbose_level)
 	return TRUE;
 }
 
-void gen_geo::record_tree(int i1)
+void gen_geo::record_tree(int i1, int f_already_there)
 {
 	if (ost_search_tree) {
 		int row;
 		long int rk;
+
+		int color;
+
+		if (f_already_there) {
+			color = COLOR_RED;
+		}
+		else {
+			color = COLOR_GREEN;
+		}
 
 		*ost_search_tree << i1;
 		for (row = 0; row < i1; row++) {
 			rk = inc->Encoding->rank_row(row);
 			*ost_search_tree << " " << rk;
 		}
+		*ost_search_tree << " " << color;
 		*ost_search_tree << endl;
 	}
 
@@ -1249,7 +1277,8 @@ int gen_geo::GeoLineFst(int I, int m, int verbose_level)
 	}
 
 	girth_Floyd(i1, verbose_level);
-	record_tree(i1);
+	//record_tree(i1);
+
 
 	J = 0;
 	while (TRUE) {

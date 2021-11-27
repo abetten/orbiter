@@ -1829,7 +1829,8 @@ void graphical_output::tree_draw(std::string &fname, int verbose_level)
 		exit(1);
 	}
 
-	T.init(fname, Orbiter->draw_options->xin, Orbiter->draw_options->yin, verbose_level);
+	T.init(fname, Orbiter->draw_options->xin, Orbiter->draw_options->yin,
+			verbose_level);
 
 #if 0
 	if (/* T.nb_nodes > 200 ||*/ f_no_circletext) {

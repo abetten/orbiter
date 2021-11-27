@@ -13,9 +13,68 @@ namespace orbiter {
 namespace foundations {
 
 
+#define COLOR_RED 2
+#define COLOR_GREEN 3
 
+// pick color codes from the list below:
+// the list is taken from void mp_graphics::color_tikz(ofstream &fp, int color)
+// line 2600
 
-
+#if 0
+if (color == 0)
+	fp << "white";
+else if (color == 1)
+	fp << "black";
+else if (color == 2)
+	fp << "red";
+else if (color == 3)
+	fp << "green";
+else if (color == 4)
+	fp << "blue";
+else if (color == 5)
+	fp << "cyan";
+else if (color == 6)
+	fp << "magenta";
+else if (color == 7)
+	fp << "pink";
+else if (color == 8)
+	fp << "orange";
+else if (color == 9)
+	fp << "lightgray";
+else if (color == 10)
+	fp << "brown";
+else if (color == 11)
+	fp << "lime";
+else if (color == 12)
+	fp << "olive";
+else if (color == 13)
+	fp << "gray";
+else if (color == 14)
+	fp << "purple";
+else if (color == 15)
+	fp << "teal";
+else if (color == 16)
+	fp << "violet";
+else if (color == 17)
+	fp << "darkgray";
+else if (color == 18)
+	fp << "lightgray";
+else if (color == 19)
+	fp << "yellow";
+else if (color == 20)
+	fp << "green!50!red";
+else if (color == 21)
+	fp << "violet!50!red";
+else if (color == 22)
+	fp << "cyan!50!red";
+else if (color == 23)
+	fp << "green!50!blue";
+else if (color == 24)
+	fp << "brown!50!red";
+else if (color == 25)
+	fp << "purple!50!red";
+else {
+#endif
 
 #define MAX_V 300
 #define MAX_B 300
@@ -135,11 +194,11 @@ public:
 	int *vbar; // [GB->V]
 	int *hbar; // [GB->B]
 
-	int f_do_iso_test;
-	int f_do_aut_group;
-	int f_do_aut_group_in_iso_type_without_vhbars;
+	//int f_do_iso_test;
+	//int f_do_aut_group;
+	//int f_do_aut_group_in_iso_type_without_vhbars;
 	int forget_ivhbar_in_last_isot;
-	int gen_print_intervall;
+	//int gen_print_intervall;
 
 	std::string inc_file_name;
 
@@ -151,10 +210,10 @@ public:
 	gen_geo();
 	~gen_geo();
 	void init(geometry_builder *GB,
-		int f_do_iso_test,
-		int f_do_aut_group,
-		int f_do_aut_group_in_iso_type_without_vhbars,
-		int gen_print_intervall,
+		//int f_do_iso_test,
+		//int f_do_aut_group,
+		//int f_do_aut_group_in_iso_type_without_vhbars,
+		//int gen_print_intervall,
 		int verbose_level);
 	void TDO_init(int *v, int *b, int *theTDO, int verbose_level);
 	void init_tdo_line(int fuse_idx,
@@ -178,7 +237,7 @@ public:
 	int geo_back_test(int I, int verbose_level);
 	int GeoLineFst0(int I, int m, int verbose_level);
 	int GeoLineNxt0(int I, int m, int verbose_level);
-	void record_tree(int i1);
+	void record_tree(int i1, int f_already_there);
 	int GeoLineFst(int I, int m, int verbose_level);
 	int GeoLineNxt(int I, int m, int verbose_level);
 	void GeoLineClear(int I, int m);
