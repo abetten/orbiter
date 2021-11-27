@@ -127,6 +127,167 @@ public:
 };
 
 
+// #############################################################################
+// arc_basic.cpp
+// #############################################################################
+
+//! arcs, ovals, hyperovals etc. in projective planes
+
+
+class arc_basic {
+public:
+
+	finite_field *F;
+
+	arc_basic();
+	~arc_basic();
+	void init(finite_field *F, int verbose_level);
+
+	void Segre_hyperoval(
+			long int *&Pts, int &nb_pts, int verbose_level);
+	void GlynnI_hyperoval(
+			long int *&Pts, int &nb_pts, int verbose_level);
+	void GlynnII_hyperoval(
+			long int *&Pts, int &nb_pts, int verbose_level);
+	void Subiaco_oval(
+			long int *&Pts, int &nb_pts, int f_short, int verbose_level);
+		// following Payne, Penttila, Pinneri:
+		// Isomorphisms Between Subiaco q-Clan Geometries,
+		// Bull. Belg. Math. Soc. 2 (1995) 197-222.
+		// formula (53)
+	void Subiaco_hyperoval(
+			long int *&Pts, int &nb_pts, int verbose_level);
+	int OKeefe_Penttila_32(int t);
+	int Subiaco64_1(int t);
+	int Subiaco64_2(int t);
+	int Adelaide64(int t);
+	void LunelliSce(int *pts18, int verbose_level);
+	int LunelliSce_evaluate_cubic1(int *v);
+		// computes X^3 + Y^3 + Z^3 + \eta^3 XYZ
+	int LunelliSce_evaluate_cubic2(int *v);
+		// computes X^3 + Y^3 + Z^3 + \eta^{12} XYZ
+
+};
+
+
+
+// #############################################################################
+// arc_in_projective_space.cpp
+// #############################################################################
+
+//! arcs, ovals, hyperovals etc. in projective planes
+
+
+class arc_in_projective_space {
+public:
+
+	projective_space *P;
+
+	arc_in_projective_space();
+	~arc_in_projective_space();
+	void init(projective_space *P, int verbose_level);
+
+	void PG_2_8_create_conic_plus_nucleus_arc_1(long int *the_arc, int &size,
+		int verbose_level);
+	void PG_2_8_create_conic_plus_nucleus_arc_2(long int *the_arc, int &size,
+		int verbose_level);
+	void create_Maruta_Hamada_arc(long int *the_arc, int &size,
+		int verbose_level);
+	void create_Maruta_Hamada_arc2(long int *the_arc, int &size,
+		int verbose_level);
+	void create_pasch_arc(long int *the_arc, int &size, int verbose_level);
+	void create_Cheon_arc(long int *the_arc, int &size, int verbose_level);
+	void create_regular_hyperoval(long int *the_arc, int &size,
+		int verbose_level);
+	void create_translation_hyperoval(long int *the_arc, int &size,
+		int exponent, int verbose_level);
+	void create_Segre_hyperoval(long int *the_arc, int &size,
+		int verbose_level);
+	void create_Payne_hyperoval(long int *the_arc, int &size,
+		int verbose_level);
+	void create_Cherowitzo_hyperoval(long int *the_arc, int &size,
+		int verbose_level);
+	void create_OKeefe_Penttila_hyperoval_32(long int *the_arc, int &size,
+		int verbose_level);
+
+	void arc_lifting_diophant(
+		long int *arc, int arc_sz,
+		int target_sz, int target_d,
+		diophant *&D,
+		int verbose_level);
+	void arc_with_given_set_of_s_lines_diophant(
+			long int *s_lines, int nb_s_lines,
+			int target_sz, int arc_d, int arc_d_low, int arc_s,
+			int f_dualize,
+			diophant *&D,
+			int verbose_level);
+	void arc_with_two_given_line_sets_diophant(
+			long int *s_lines, int nb_s_lines, int arc_s,
+			long int *t_lines, int nb_t_lines, int arc_t,
+			int target_sz, int arc_d, int arc_d_low,
+			int f_dualize,
+			diophant *&D,
+			int verbose_level);
+	void arc_with_three_given_line_sets_diophant(
+			long int *s_lines, int nb_s_lines, int arc_s,
+			long int *t_lines, int nb_t_lines, int arc_t,
+			long int *u_lines, int nb_u_lines, int arc_u,
+			int target_sz, int arc_d, int arc_d_low,
+			int f_dualize,
+			diophant *&D,
+			int verbose_level);
+	void maximal_arc_by_diophant(
+			int arc_sz, int arc_d,
+			std::string &secant_lines_text,
+			std::string &external_lines_as_subset_of_secants_text,
+			diophant *&D,
+			int verbose_level);
+	void arc_lifting1(
+			int arc_size,
+			int arc_d,
+			int arc_d_low,
+			int arc_s,
+			std::string arc_input_set,
+			std::string arc_label,
+			int verbose_level);
+	void arc_lifting2(
+			int arc_size,
+			int arc_d,
+			int arc_d_low,
+			int arc_s,
+			std::string arc_input_set,
+			std::string arc_label,
+			int arc_t,
+			std::string t_lines_string,
+			int verbose_level);
+	void arc_lifting3(
+			int arc_size,
+			int arc_d,
+			int arc_d_low,
+			int arc_s,
+			std::string arc_input_set,
+			std::string arc_label,
+			int arc_t,
+			std::string t_lines_string,
+			int arc_u,
+			std::string u_lines_string,
+			int verbose_level);
+	void create_hyperoval(
+		int f_translation, int translation_exponent,
+		int f_Segre, int f_Payne, int f_Cherowitzo, int f_OKeefe_Penttila,
+		std::string &fname, int &nb_pts, long int *&Pts,
+		int verbose_level);
+	void create_subiaco_oval(
+		int f_short,
+		std::string &fname, int &nb_pts, long int *&Pts,
+		int verbose_level);
+	void create_subiaco_hyperoval(
+			std::string &fname, int &nb_pts, long int *&Pts,
+		int verbose_level);
+
+
+};
+
 
 // #############################################################################
 // buekenhout_metz.cpp
@@ -472,7 +633,7 @@ public:
 
 
 	int *M; // [K * n]
-	int *M_Gauss; // [K * n] the echeolon form (RREF)
+	int *M_Gauss; // [K * n] the echelon form (RREF)
 	int *transform; // [K * K] the transformation matrix, used as s2 * s2
 	int *base_cols; // [n] base_cols for the matrix M_Gauss
 	int *M1; // [n * n]
@@ -628,39 +789,6 @@ public:
 			projective_space *P,
 			long int *points, int nb_points,
 			long int *lines, int nb_lines,
-			int verbose_level);
-	void arc_lifting1(
-			projective_space *P,
-			int arc_size,
-			int arc_d,
-			int arc_d_low,
-			int arc_s,
-			std::string arc_input_set,
-			std::string arc_label,
-			int verbose_level);
-	void arc_lifting2(
-			projective_space *P,
-			int arc_size,
-			int arc_d,
-			int arc_d_low,
-			int arc_s,
-			std::string arc_input_set,
-			std::string arc_label,
-			int arc_t,
-			std::string t_lines_string,
-			int verbose_level);
-	void arc_lifting3(
-			projective_space *P,
-			int arc_size,
-			int arc_d,
-			int arc_d_low,
-			int arc_s,
-			std::string arc_input_set,
-			std::string arc_label,
-			int arc_t,
-			std::string t_lines_string,
-			int arc_u,
-			std::string u_lines_string,
 			int verbose_level);
 	void latex_homogeneous_equation(finite_field *F, int degree, int nb_vars,
 			std::string &equation_text,
@@ -1690,6 +1818,7 @@ public:
 	polarity *Standard_polarity;
 	polarity *Reversal_polarity;
 
+	arc_in_projective_space *Arc_in_projective_space;
 
 	int *v; // [n + 1]
 	int *w; // [n + 1]
@@ -1793,28 +1922,9 @@ public:
 	eckardt_point_info *compute_eckardt_point_info(
 			surface_domain *Surf, long int *arc6,
 			int verbose_level);
-	void PG_2_8_create_conic_plus_nucleus_arc_1(long int *the_arc, int &size,
-		int verbose_level);
-	void PG_2_8_create_conic_plus_nucleus_arc_2(long int *the_arc, int &size,
-		int verbose_level);
-	void create_Maruta_Hamada_arc(long int *the_arc, int &size,
-		int verbose_level);
-	void create_Maruta_Hamada_arc2(long int *the_arc, int &size,
-		int verbose_level);
-	void create_pasch_arc(long int *the_arc, int &size, int verbose_level);
-	void create_Cheon_arc(long int *the_arc, int &size, int verbose_level);
-	void create_regular_hyperoval(long int *the_arc, int &size,
-		int verbose_level);
-	void create_translation_hyperoval(long int *the_arc, int &size,
-		int exponent, int verbose_level);
-	void create_Segre_hyperoval(long int *the_arc, int &size,
-		int verbose_level);
-	void create_Payne_hyperoval(long int *the_arc, int &size,
-		int verbose_level);
-	void create_Cherowitzo_hyperoval(long int *the_arc, int &size,
-		int verbose_level);
-	void create_OKeefe_Penttila_hyperoval_32(long int *the_arc, int &size,
-		int verbose_level);
+
+
+
 	void line_intersection_type(long int *set, int set_size, int *type,
 		int verbose_level);
 	void line_intersection_type_basic(long int *set, int set_size, int *type,
@@ -1968,7 +2078,8 @@ public:
 	void cheat_sheet_points_on_lines(std::ostream &f, int verbose_level);
 	void cheat_sheet_lines_on_points(std::ostream &f, int verbose_level);
 	void cheat_sheet_subspaces(std::ostream &f, int k, int verbose_level);
-	void do_pluecker_reverse(std::ostream &ost, grassmann *Gr, int k, int nb_k_subspaces, int verbose_level);
+	void do_pluecker_reverse(std::ostream &ost, grassmann *Gr,
+			int k, int nb_k_subspaces, int verbose_level);
 	void cheat_sheet_line_intersection(std::ostream &f, int verbose_level);
 	void cheat_sheet_line_through_pairs_of_points(std::ostream &f,
 		int verbose_level);
@@ -2040,38 +2151,8 @@ public:
 		incidence_structure *&Inc, 
 		partitionstack *&Stack, 
 		int verbose_level);
-	void arc_lifting_diophant(
-		long int *arc, int arc_sz,
-		int target_sz, int target_d,
-		diophant *&D,
-		int verbose_level);
-	void arc_with_given_set_of_s_lines_diophant(
-			long int *s_lines, int nb_s_lines,
-			int target_sz, int arc_d, int arc_d_low, int arc_s,
-			int f_dualize,
-			diophant *&D,
-			int verbose_level);
-	void arc_with_two_given_line_sets_diophant(
-			long int *s_lines, int nb_s_lines, int arc_s,
-			long int *t_lines, int nb_t_lines, int arc_t,
-			int target_sz, int arc_d, int arc_d_low,
-			int f_dualize,
-			diophant *&D,
-			int verbose_level);
-	void arc_with_three_given_line_sets_diophant(
-			long int *s_lines, int nb_s_lines, int arc_s,
-			long int *t_lines, int nb_t_lines, int arc_t,
-			long int *u_lines, int nb_u_lines, int arc_u,
-			int target_sz, int arc_d, int arc_d_low,
-			int f_dualize,
-			diophant *&D,
-			int verbose_level);
-	void maximal_arc_by_diophant(
-			int arc_sz, int arc_d,
-			std::string &secant_lines_text,
-			std::string &external_lines_as_subset_of_secants_text,
-			diophant *&D,
-			int verbose_level);
+
+
 	void rearrange_arc_for_lifting(long int *Arc6,
 			long int P1, long int P2, int partition_rk, long int *arc,
 			int verbose_level);
@@ -2097,6 +2178,7 @@ public:
 	int reverse_engineer_semilinear_map(
 		int *Elt, int *Mtx, int &frobenius,
 		int verbose_level);
+
 
 };
 

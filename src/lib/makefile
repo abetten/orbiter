@@ -89,6 +89,8 @@ MODULES= \
 		foundations/geometry/andre_construction.o \
 		foundations/geometry/andre_construction_line_element.o \
 		foundations/geometry/andre_construction_point_element.o \
+		foundations/geometry/arc_basic.o \
+		foundations/geometry/arc_in_projective_space.o \
 		foundations/geometry/buekenhout_metz.o \
 		foundations/geometry/cubic_curve.o \
 		foundations/geometry/decomposition.o \

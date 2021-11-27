@@ -363,7 +363,8 @@ public:
 	void draw_bitmap(draw_bitmap_control *C, int verbose_level);
 	void draw_projective_curve(draw_projective_curve_description *Descr,
 			layered_graph_draw_options *Opt, int verbose_level);
-	void draw_projective(mp_graphics &G, int number, int animate_step, int animate_nb_of_steps,
+	void draw_projective(mp_graphics &G,
+			int number, int animate_step, int animate_nb_of_steps,
 		int f_transition, int transition_step, int transition_nb_steps,
 		int f_title_page, int title_page_step,
 		int f_trailer_page, int trailer_page_step);

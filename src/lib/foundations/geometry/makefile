@@ -9,6 +9,8 @@ MODULES = \
 	andre_construction.o \
 	andre_construction_line_element.o \
 	andre_construction_point_element.o \
+	arc_basic.o \
+	arc_in_projective_space.o \
 	buekenhout_metz.o \
 	cubic_curve.o \
 	decomposition.o \

@@ -54,7 +54,7 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 
 
 	if (Descr->f_hyperoval) {
-		F->create_hyperoval(
+		P->Arc_in_projective_space->create_hyperoval(
 				Descr->f_translation, Descr->translation_exponent,
 				Descr->f_Segre, Descr->f_Payne, Descr->f_Cherowitzo, Descr->f_OKeefe_Penttila,
 				fname, nb_pts, Pts,
@@ -65,7 +65,7 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 
 	}
 	else if (Descr->f_subiaco_oval) {
-		F->create_subiaco_oval(
+		P->Arc_in_projective_space->create_subiaco_oval(
 				Descr->f_short,
 			fname, nb_pts, Pts,
 			verbose_level);
@@ -77,7 +77,7 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 
 	}
 	else if (Descr->f_subiaco_hyperoval) {
-		F->create_subiaco_hyperoval(
+		P->Arc_in_projective_space->create_subiaco_hyperoval(
 			fname, nb_pts, Pts,
 			verbose_level);
 

@@ -346,6 +346,8 @@ class subfield_structure;
 class andre_construction_line_element;
 class andre_construction_point_element;
 class andre_construction;
+class arc_basic;
+class arc_in_projective_space;
 class buekenhout_metz;
 class cubic_curve;
 class decomposition;

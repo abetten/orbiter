@@ -767,7 +767,7 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 
 
 	if (max_value > 10000) {
-		cout << "draw_bitmap max_value > 10000" << endl;
+		cout << "graphical_output::draw_bitmap max_value > 10000" << endl;
 		exit(1);
 	}
 	if (max_value == 0) {
@@ -1102,7 +1102,8 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 
 
 
-void graphical_output::draw_projective(mp_graphics &G, int number, int animate_step, int animate_nb_of_steps,
+void graphical_output::draw_projective(mp_graphics &G,
+		int number, int animate_step, int animate_nb_of_steps,
 	int f_transition, int transition_step, int transition_nb_steps,
 	int f_title_page, int title_page_step,
 	int f_trailer_page, int trailer_page_step)

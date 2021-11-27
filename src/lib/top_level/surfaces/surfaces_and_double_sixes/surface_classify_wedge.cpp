@@ -2306,11 +2306,21 @@ void surface_classify_wedge::report_surface(
 	}
 	SaS->Strong_gens->print_generators_tex(ost);
 
+	ost << endl;
+	ost << "\\clearpage" << endl;
+	ost << endl;
+
+
 	if (f_v) {
 		cout << "surface_classify_wedge::report_surface "
 				"before SO->print_general" << endl;
 	}
 	SO->SOP->print_general(ost);
+
+	ost << endl;
+	ost << "\\clearpage" << endl;
+	ost << endl;
+
 
 
 	if (f_v) {
@@ -2319,6 +2329,12 @@ void surface_classify_wedge::report_surface(
 	}
 	SO->SOP->print_lines(ost);
 
+	ost << endl;
+	ost << "\\clearpage" << endl;
+	ost << endl;
+
+
+
 	if (f_v) {
 		cout << "surface_classify_wedge::report_surface "
 				"before SO->print_points" << endl;
@@ -2326,11 +2342,37 @@ void surface_classify_wedge::report_surface(
 	SO->SOP->print_points(ost);
 
 
+	ost << endl;
+	ost << "\\clearpage" << endl;
+	ost << endl;
+
+	if (f_v) {
+		cout << "surface_classify_wedge::report_surface "
+				"before SO->print_Hesse_planes" << endl;
+	}
+	SO->SOP->print_Hesse_planes(ost);
+
+	ost << endl;
+	ost << "\\clearpage" << endl;
+	ost << endl;
+
+
 	if (f_v) {
 		cout << "surface_classify_wedge::report_surface "
 				"before SO->print_tritangent_planes" << endl;
 	}
 	SO->SOP->print_tritangent_planes(ost);
+
+	ost << endl;
+	ost << "\\clearpage" << endl;
+	ost << endl;
+
+
+	if (f_v) {
+		cout << "surface_classify_wedge::report_surface "
+				"before SO->print_axes" << endl;
+	}
+	SO->SOP->print_axes(ost);
 
 
 	//New_clebsch->SO->print_planes_in_trihedral_pairs(fp);
