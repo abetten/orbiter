@@ -350,9 +350,6 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 
 		Orbiter->Lint_vec.scan(Descr->set_text, Pts, nb_pts);
 
-
-
-
 	}
 	else {
 		cout << "combinatorial_object_create::init nothing to create" << endl;

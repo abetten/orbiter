@@ -1428,6 +1428,8 @@ public:
 		// if t_INC or t_LS
 	int v;
 	int b;
+	int f_partition;
+	int *partition; // [v + b], do not free !
 
 		// if t_LS
 		int design_k;
@@ -1448,41 +1450,69 @@ public:
 	void get_packing_as_set_system(long int *&Sets,
 			int &nb_sets, int &set_size, int verbose_level);
 	void init_object_from_string(
-		projective_space *P,
+		//projective_space *P,
 		int type,
 		std::string &input_fname, int input_idx,
 		std::string &set_as_string,
 		std::string &set2_as_string,
 		int verbose_level);
 	void init_object_from_int_vec(
-		projective_space *P,
+		//projective_space *P,
 		int type,
 		std::string &input_fname, int input_idx,
 		long int *the_set_in, int the_set_sz,
 		long int *the_set2_in, int the_set2_sz,
 		int verbose_level);
-	void init_point_set(projective_space *P, long int *set, int sz,
+	void init_point_set(//projective_space *P,
+			long int *set, int sz,
 		int verbose_level);
-	void init_line_set(projective_space *P, long int *set, int sz,
+	void init_point_set_from_string(
+			std::string &set_text,
+			int verbose_level);
+	void init_line_set(//projective_space *P,
+			long int *set, int sz,
 		int verbose_level);
+	void init_line_set_from_string(
+			std::string &set_text,
+			int verbose_level);
 	void init_points_and_lines(
-		projective_space *P,
+		//projective_space *P,
 		long int *set, int sz,
 		long int *set2, int sz2,
 		int verbose_level);
-	void init_packing_from_set(projective_space *P,
+	void init_points_and_lines_from_string(
+		std::string &set_text,
+		std::string &set2_text,
+		int verbose_level);
+	void init_packing_from_set(//projective_space *P,
 		long int *packing, int sz,
 		int verbose_level);
-	void init_packing_from_set_of_sets(projective_space *P, 
+	void init_packing_from_string(
+			std::string &packing_text,
+			int q,
+			int verbose_level);
+	void init_packing_from_set_of_sets(//projective_space *P,
 		set_of_sets *SoS, int verbose_level);
-	void init_packing_from_spread_table(projective_space *P, 
-		long int *data, long int *Spread_table, int nb_spreads,
-		int spread_size, int verbose_level);
+	void init_packing_from_spread_table(//projective_space *P,
+		long int *data,
+		long int *Spread_table, int nb_spreads, int spread_size,
+		int q,
+		int verbose_level);
 	void init_incidence_geometry(
 		long int *data, int data_sz, int v, int b, int nb_flags,
 		int verbose_level);
+	void init_incidence_geometry_from_vector(
+		std::vector<int> &Flags, int v, int b, int nb_flags,
+		int verbose_level);
+	void init_incidence_geometry_from_string(
+		std::string &data,
+		int v, int b, int nb_flags,
+		int verbose_level);
 	void init_large_set(
-		long int *data, int data_sz, int v, int k, int design_sz,
+		long int *data, int data_sz, int v, int b, int k, int design_sz,
+		int verbose_level);
+	void init_large_set_from_string(
+		std::string &data_text, int v, int k, int design_sz,
 		int verbose_level);
 	void encoding_size(
 			int &nb_rows, int &nb_cols,
@@ -1547,6 +1577,7 @@ public:
 	void canonical_labeling(
 			nauty_output *NO,
 			int verbose_level);
+	void run_nauty_basic(nauty_output *&NO, int verbose_level);
 
 };
 

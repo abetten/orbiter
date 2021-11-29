@@ -42,6 +42,8 @@ geometry_builder_description::geometry_builder_description()
 
 	f_search_tree = FALSE;
 
+	f_orderly = FALSE;
+
 	//std::vector<std::string> test_lines;
 	//std::vector<std::string> test_flags;
 	//std::vector<std::string> test2_lines;
@@ -134,6 +136,12 @@ int geometry_builder_description::read_arguments(
 				cout << "-search_tree " << endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-orderly") == 0) {
+			f_orderly = TRUE;
+			if (f_v) {
+				cout << "-orderly " << endl;
+			}
+		}
 		else if (stringcmp(argv[i], "-test") == 0) {
 			string lines, flags;
 			lines.assign(argv[++i]);
@@ -221,6 +229,9 @@ void geometry_builder_description::print()
 	}
 	if (f_search_tree) {
 		cout << "-search_tree " << endl;
+	}
+	if (f_orderly) {
+		cout << "-orderly " << endl;
 	}
 	if (test_lines.size()) {
 		int i;

@@ -1110,7 +1110,7 @@ void quartic_curve_create::compute_group(projective_space_with_action *PA,
 	Classifier = NEW_OBJECT(projective_space_object_classifier);
 
 	Descr->f_input = TRUE;
-	Descr->Data = NEW_OBJECT(data_input_stream);
+	Descr->Data = NEW_OBJECT(data_input_stream_description);
 	Descr->Data->input_type[Descr->Data->nb_inputs] = INPUT_TYPE_SET_OF_POINTS;
 	Descr->Data->input_string[Descr->Data->nb_inputs].assign("");
 	for (i = 0; i < QO->nb_pts; i++) {
@@ -1128,11 +1128,14 @@ void quartic_curve_create::compute_group(projective_space_with_action *PA,
 		cout << "quartic_curve_create::compute_group before Classifier->do_the_work" << endl;
 	}
 
+#if 0
 	Classifier->do_the_work(
 			Descr,
 			TRUE,
 			PA,
 			verbose_level);
+#endif
+
 
 	if (f_v) {
 		cout << "quartic_curve_create::compute_group after Classifier->do_the_work" << endl;

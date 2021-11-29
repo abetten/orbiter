@@ -397,6 +397,7 @@ public:
 	symbol_table_object_type get_object_type(int idx);
 	int find_symbol(std::string &label);
 	void get_vector_from_label(std::string &label, int *&v, int &sz, int verbose_level);
+	void get_lint_vector_from_label(std::string &label, long int *&v, int &sz, int verbose_level);
 	void find_symbols(std::vector<std::string> &Labels, int *&Idx);
 	void print_symbol_table();
 	void add_symbol_table_entry(std::string &label,
@@ -485,6 +486,8 @@ public:
 			void *SB, int verbose_level);
 	void init_vector(std::string &label,
 			void *VB, int verbose_level);
+	void init_combinatorial_objects(std::string &label,
+			data_input_stream *IS, int verbose_level);
 	void print();
 };
 

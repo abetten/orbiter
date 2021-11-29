@@ -1042,24 +1042,50 @@ void activity_description::do_combinatorial_object_activity(int verbose_level)
 		exit(1);
 	}
 
-	combinatorial_object_create *COC;
+	symbol_table_object_type t;
 
-	COC = (combinatorial_object_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
-	{
-		combinatorial_object_activity Activity;
+	t = Sym->Orbiter_top_level_session->get_object_type(Idx[0]);
+	if (t == t_combinatorial_object) {
+		combinatorial_object_create *COC;
 
-		Activity.init(Combinatorial_object_activity_description, COC, verbose_level);
+		COC = (combinatorial_object_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+		{
+			combinatorial_object_activity Activity;
 
-		if (f_v) {
-			cout << "activity_description::do_combinatorial_object_activity "
-					"before Activity.perform_activity" << endl;
+			Activity.init(Combinatorial_object_activity_description, COC, verbose_level);
+
+			if (f_v) {
+				cout << "activity_description::do_combinatorial_object_activity "
+						"before Activity.perform_activity" << endl;
+			}
+			Activity.perform_activity(verbose_level);
+			if (f_v) {
+				cout << "activity_description::do_combinatorial_object_activity "
+						"after Activity.perform_activity" << endl;
+			}
+
 		}
-		Activity.perform_activity(verbose_level);
-		if (f_v) {
-			cout << "activity_description::do_combinatorial_object_activity "
-					"after Activity.perform_activity" << endl;
-		}
+	}
+	else if (t == t_combinatorial_objects) {
+		data_input_stream *IS;
 
+		IS = (data_input_stream *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+		{
+			combinatorial_object_activity Activity;
+
+			Activity.init_input_stream(Combinatorial_object_activity_description, IS, verbose_level);
+
+			if (f_v) {
+				cout << "activity_description::do_combinatorial_object_activity "
+						"before Activity.perform_activity" << endl;
+			}
+			Activity.perform_activity(verbose_level);
+			if (f_v) {
+				cout << "activity_description::do_combinatorial_object_activity "
+						"after Activity.perform_activity" << endl;
+			}
+
+		}
 	}
 
 	FREE_int(Idx);

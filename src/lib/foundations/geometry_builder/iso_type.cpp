@@ -29,6 +29,8 @@ iso_type::iso_type()
 	sum_R = 0;
 	inc = NULL;
 
+	f_orderly = FALSE;
+
 	f_transpose_it = FALSE;
 	f_snd_TDO = FALSE;
 	f_ddp = FALSE;
@@ -94,7 +96,7 @@ iso_type::~iso_type()
 	}
 }
 
-void iso_type::init(int v, incidence *inc, int tdo_flags, int verbose_level)
+void iso_type::init(int v, incidence *inc, int tdo_flags, int f_orderly, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -107,6 +109,7 @@ void iso_type::init(int v, incidence *inc, int tdo_flags, int verbose_level)
 
 	iso_type::v = v;
 	iso_type::inc = inc;
+	iso_type::f_orderly = f_orderly;
 
 	sum_R = 0;
 	for (i = 0; i < v; i++) {
@@ -411,7 +414,7 @@ l_exit:
 	}
 	find_and_add_geo(
 		v, inc,
-		inc->Encoding->theX, f_new_object, verbose_level);
+		inc->Encoding->theX, f_new_object, verbose_level - 1);
 	if (f_v) {
 		cout << "iso_type::add_geometry v=" << v << " after find_and_add_geo" << endl;
 	}
@@ -645,15 +648,19 @@ void iso_type::find_and_add_geo(
 	int v, incidence *inc,
 	int *theY, int &f_new_object, int verbose_level)
 {
+
+	//verbose_level = 5;
+
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout<< "iso_type::find_and_add_geo" << endl;
 		inc->print_geo(cout, v, theY);
+		cout << endl;
 	}
 
 
-	object_with_canonical_form *OiP;
+	object_with_canonical_form *OwCF;
 	long int *theInc;
 	int nb_flags;
 
@@ -663,27 +670,47 @@ void iso_type::find_and_add_geo(
 
 	inc->geo_to_inc(v, theY, theInc, nb_flags);
 
-	OiP = NEW_OBJECT(object_with_canonical_form);
+	OwCF = NEW_OBJECT(object_with_canonical_form);
 
-	OiP->init_incidence_geometry(
+	OwCF->init_incidence_geometry(
 		theInc, nb_flags, v, inc->Encoding->b, nb_flags,
-		verbose_level);
+		verbose_level - 2);
 
 	if (f_v) {
-		cout << "iso_type::find_and_add_geo "
-				"before Canonical_forms->add_object" << endl;
-	}
-	Canonical_forms->add_object(OiP,
-			f_new_object, verbose_level);
-
-	if (f_v) {
-		cout << "iso_type::find_and_add_geo "
-				"before OiP->run_nauty" << endl;
+		cout<< "iso_type::find_and_add_geo setting partition" << endl;
 	}
 
-	if (f_v) {
-		cout << "iso_type::find_and_add_geo "
-				"after Canonical_forms->add_object" << endl;
+	OwCF->f_partition = TRUE;
+	OwCF->partition = inc->Partition[v];
+
+
+	if (f_orderly) {
+		if (f_v) {
+			cout << "iso_type::find_and_add_geo "
+					"before Canonical_forms->orderly_test" << endl;
+		}
+		Canonical_forms->orderly_test(OwCF,
+				f_new_object, verbose_level - 2);
+
+		if (f_v) {
+			cout << "iso_type::find_and_add_geo "
+					"after Canonical_forms->orderly_test" << endl;
+		}
+
+	}
+	else {
+		if (f_v) {
+			cout << "iso_type::find_and_add_geo "
+					"before Canonical_forms->add_object" << endl;
+		}
+		Canonical_forms->add_object(OwCF,
+				f_new_object, verbose_level);
+
+		if (f_v) {
+			cout << "iso_type::find_and_add_geo "
+					"after Canonical_forms->add_object" << endl;
+		}
+
 	}
 
 	if (f_v) {

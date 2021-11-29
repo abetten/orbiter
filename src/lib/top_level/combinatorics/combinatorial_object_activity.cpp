@@ -8,19 +8,24 @@
 
 
 
-#include "foundations.h"
+#include "orbiter.h"
 
 using namespace std;
 
-
 namespace orbiter {
-namespace foundations {
+namespace top_level {
+
 
 
 combinatorial_object_activity::combinatorial_object_activity()
 {
 	Descr = NULL;
+
+	f_has_COC = FALSE;
 	COC = NULL;
+
+	f_has_IS = FALSE;
+	IS = NULL;
 
 }
 
@@ -40,11 +45,33 @@ void combinatorial_object_activity::init(combinatorial_object_activity_descripti
 	}
 
 	combinatorial_object_activity::Descr = Descr;
+	f_has_COC = TRUE;
 	combinatorial_object_activity::COC = COC;
-
 
 	if (f_v) {
 		cout << "combinatorial_object_activity::init done" << endl;
+	}
+}
+
+
+
+void combinatorial_object_activity::init_input_stream(combinatorial_object_activity_description *Descr,
+		data_input_stream *IS,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object_activity::init_input_stream" << endl;
+	}
+
+	combinatorial_object_activity::Descr = Descr;
+	f_has_IS = TRUE;
+	combinatorial_object_activity::IS = IS;
+
+
+	if (f_v) {
+		cout << "combinatorial_object_activity::init_input_stream done" << endl;
 	}
 }
 
@@ -55,12 +82,30 @@ void combinatorial_object_activity::perform_activity(int verbose_level)
 	if (f_v) {
 		cout << "combinatorial_object_activity::perform_activity" << endl;
 	}
+	if (f_has_COC) {
+		perform_activity_COC(verbose_level);
+	}
+	else if (f_has_IS) {
+		perform_activity_IS(verbose_level);
+	}
+	if (f_v) {
+		cout << "combinatorial_object_activity::perform_activity done" << endl;
+	}
+}
 
+
+void combinatorial_object_activity::perform_activity_COC(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object_activity::perform_activity_COC" << endl;
+	}
 
 	if (Descr->f_line_type) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity f_line_type" << endl;
+			cout << "combinatorial_object_activity::perform_activity_COC f_line_type" << endl;
 		}
 
 		projective_space *P;
@@ -82,7 +127,7 @@ void combinatorial_object_activity::perform_activity(int verbose_level)
 		T.init(type, P->N_lines, FALSE, 0);
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity line type:" << endl;
+			cout << "combinatorial_object_activity::perform_activity_COC line type:" << endl;
 			T.print(TRUE /* f_backwards*/);
 			cout << endl;
 		}
@@ -93,7 +138,7 @@ void combinatorial_object_activity::perform_activity(int verbose_level)
 	if (Descr->f_conic_type) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity f_conic_type" << endl;
+			cout << "combinatorial_object_activity::perform_activity_COC f_conic_type" << endl;
 		}
 
 		projective_space *P;
@@ -124,7 +169,7 @@ void combinatorial_object_activity::perform_activity(int verbose_level)
 	if (Descr->f_non_conical_type) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity f_conic_type" << endl;
+			cout << "combinatorial_object_activity::perform_activity_COC f_conic_type" << endl;
 		}
 
 		projective_space *P;
@@ -146,7 +191,7 @@ void combinatorial_object_activity::perform_activity(int verbose_level)
 	if (Descr->f_ideal) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity f_ideal" << endl;
+			cout << "combinatorial_object_activity::perform_activity_COC f_ideal" << endl;
 		}
 
 		projective_space *P;
@@ -157,14 +202,14 @@ void combinatorial_object_activity::perform_activity(int verbose_level)
 		HPD = NEW_OBJECT(homogeneous_polynomial_domain);
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity before HPD->init" << endl;
+			cout << "combinatorial_object_activity::perform_activity_COC before HPD->init" << endl;
 		}
 		HPD->init(P->F, P->n + 1, Descr->ideal_degree,
 			FALSE /* f_init_incidence_structure */,
 			t_PART /*Monomial_ordering_type*/,
 			verbose_level - 2);
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity after HPD->init" << endl;
+			cout << "combinatorial_object_activity::perform_activity_COC after HPD->init" << endl;
 		}
 
 		int *Kernel;
@@ -177,18 +222,18 @@ void combinatorial_object_activity::perform_activity(int verbose_level)
 
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity the input set is:" << endl;
+			cout << "combinatorial_object_activity::perform_activity_COC the input set is:" << endl;
 			HPD->get_P()->print_set_numerical(cout, COC->Pts, COC->nb_pts);
 		}
 
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity before HPD->vanishing_ideal" << endl;
+			cout << "combinatorial_object_activity::perform_activity_COC before HPD->vanishing_ideal" << endl;
 		}
 		HPD->vanishing_ideal(COC->Pts, COC->nb_pts,
 				r, Kernel, verbose_level - 1);
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity after HPD->vanishing_ideal" << endl;
+			cout << "combinatorial_object_activity::perform_activity_COC after HPD->vanishing_ideal" << endl;
 		}
 
 		int h, ns;
@@ -259,10 +304,74 @@ void combinatorial_object_activity::perform_activity(int verbose_level)
 	}
 
 	if (f_v) {
-		cout << "combinatorial_object_activity::perform_activity done" << endl;
+		cout << "combinatorial_object_activity::perform_activity_COC done" << endl;
 	}
 }
 
+
+void combinatorial_object_activity::perform_activity_IS(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object_activity::perform_activity_IS" << endl;
+	}
+
+	if (Descr->f_canonical_form_PG) {
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_IS f_canonical_form_PG" << endl;
+		}
+
+
+		int idx;
+
+		idx = Orbiter->find_symbol(Descr->canonical_form_PG_PG_label);
+
+		symbol_table_object_type t;
+
+		t = Orbiter->get_object_type(idx);
+		if (t != t_projective_space) {
+			cout << "combinatorial_object_activity::perform_activity_IS "
+				<< Descr->canonical_form_PG_PG_label << " is not of type projective_space" << endl;
+			exit(1);
+		}
+
+		projective_space_with_action *PA;
+
+		PA = (projective_space_with_action *) Orbiter->get_object(idx);
+
+
+		projective_space_object_classifier *OC;
+
+		OC = NEW_OBJECT(projective_space_object_classifier);
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_IS before OC->do_the_work" << endl;
+		}
+		OC->do_the_work(
+				Descr->Canonical_form_PG_Descr,
+				TRUE,
+				PA,
+				IS,
+				verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_IS after OC->do_the_work" << endl;
+		}
+
+		FREE_OBJECT(OC);
+
+
+
+	}
+
+}
+
+
+
+
 }}
+
+
 
 

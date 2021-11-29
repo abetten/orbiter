@@ -277,8 +277,6 @@ class coding_theory_domain;
 // combinatorics:
 class boolean_function_domain;
 class brick_domain;
-class combinatorial_object_activity_description;
-class combinatorial_object_activity;
 class combinatorial_object_create;
 class combinatorial_object_description;
 class combinatorics_domain;
@@ -302,6 +300,7 @@ class bitvector;
 class classify_bitvectors;
 class classify_using_canonical_forms;
 class data_file;
+class data_input_stream_description;
 class data_input_stream;
 class data_structures_global;
 class fancy_set;
@@ -624,6 +623,7 @@ enum symbol_table_object_type {
 	t_large_set_was,
 	t_set,
 	t_vector,
+	t_combinatorial_objects,
 	t_action,
 	t_poset,
 	t_poset_classification,

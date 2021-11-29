@@ -81,7 +81,7 @@ void classify_bitvectors::init(int N, int rep_len, int verbose_level)
 	int i;
 	
 	if (f_v) {
-		cout << "classify_bitvectors::init" << endl;
+		cout << "classify_bitvectors::init, N=" << N << endl;
 	}
 	classify_bitvectors::N = N;
 	classify_bitvectors::rep_len = rep_len;
