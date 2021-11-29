@@ -37,6 +37,10 @@ object_with_canonical_form::object_with_canonical_form()
 
 	v = 0;
 	b = 0;
+
+	f_partition = FALSE;
+	partition = NULL;
+
 	design_k = 0;
 	design_sz = 0;
 	SoS = NULL;
@@ -56,6 +60,11 @@ void object_with_canonical_form::freeself()
 	if (set2) {
 		FREE_lint(set2);
 	}
+#if 0
+	if (partition) {
+		FREE_int(partition);
+	}
+#endif
 	if (SoS) {
 		FREE_OBJECT(SoS);
 	}
@@ -165,7 +174,7 @@ void object_with_canonical_form::get_packing_as_set_system(long int *&Sets,
 }
 
 void object_with_canonical_form::init_object_from_string(
-	projective_space *P,
+	//projective_space *P,
 	int type,
 	std::string &input_fname, int input_idx,
 	std::string &set_as_string,
@@ -222,7 +231,7 @@ void object_with_canonical_form::init_object_from_string(
 				"before object_in_projective_space::init_object_from_int_vec" << endl;
 	}
 	init_object_from_int_vec(
-		P,
+		//P,
 		type,
 		input_fname, input_idx,
 		the_set_in, set_size_in,
@@ -243,7 +252,7 @@ void object_with_canonical_form::init_object_from_string(
 }
 
 void object_with_canonical_form::init_object_from_int_vec(
-	projective_space *P,
+	//projective_space *P,
 	int type,
 	std::string &input_fname, int input_idx,
 	long int *the_set_in, int the_set_sz,
@@ -290,21 +299,21 @@ void object_with_canonical_form::init_object_from_int_vec(
 
 
 	if (type == t_PTS) {
-		init_point_set(P,
+		init_point_set(//P,
 				the_set_in, the_set_sz, verbose_level - 1);
 	}
 	else if (type == t_LNS) {
-		init_line_set(P,
+		init_line_set(//P,
 				the_set_in, the_set_sz, verbose_level - 1);
 	}
 	else if (type == t_PNL) {
-		init_points_and_lines(P,
+		init_points_and_lines(//P,
 				the_set_in, the_set_sz,
 				the_set2_in, the_set2_sz,
 				verbose_level - 1);
 	}
 	else if (type == t_PAC) {
-		init_packing_from_set(P,
+		init_packing_from_set(//P,
 				the_set_in, the_set_sz, verbose_level - 1);
 	}
 	else if (type == t_INC) {
@@ -331,7 +340,7 @@ void object_with_canonical_form::init_object_from_int_vec(
 }
 
 void object_with_canonical_form::init_point_set(
-		projective_space *P, long int *set, int sz,
+		long int *set, int sz,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -339,7 +348,7 @@ void object_with_canonical_form::init_point_set(
 	if (f_v) {
 		cout << "object_with_canonical_form::init_point_set" << endl;
 	}
-	object_with_canonical_form::P = P;
+	//object_with_canonical_form::P = P;
 	type = t_PTS;
 	object_with_canonical_form::set = NEW_lint(sz);
 	Orbiter->Lint_vec.copy(set, object_with_canonical_form::set, sz);
@@ -349,16 +358,36 @@ void object_with_canonical_form::init_point_set(
 	}
 }
 
+void object_with_canonical_form::init_point_set_from_string(
+		std::string &set_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_point_set_from_string" << endl;
+	}
+
+	type = t_PTS;
+
+	Orbiter->get_lint_vector_from_label(set_text, set, sz, verbose_level);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_point_set_from_string done" << endl;
+	}
+}
+
+
 void object_with_canonical_form::init_line_set(
-	projective_space *P, long int *set, int sz,
-	int verbose_level)
+		long int *set, int sz,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "object_with_canonical_form::init_line_set" << endl;
 	}
-	object_with_canonical_form::P = P;
+	//object_with_canonical_form::P = P;
 	type = t_LNS;
 	object_with_canonical_form::set = NEW_lint(sz);
 	Orbiter->Lint_vec.copy(set, object_with_canonical_form::set, sz);
@@ -368,8 +397,27 @@ void object_with_canonical_form::init_line_set(
 	}
 }
 
+void object_with_canonical_form::init_line_set_from_string(
+		std::string &set_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_line_set_from_string" << endl;
+	}
+
+	type = t_LNS;
+
+	Orbiter->Lint_vec.scan(set_text, set, sz);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_line_set_from_string done" << endl;
+	}
+}
+
 void object_with_canonical_form::init_points_and_lines(
-	projective_space *P,
+	//projective_space *P,
 	long int *set, int sz,
 	long int *set2, int sz2,
 	int verbose_level)
@@ -379,7 +427,7 @@ void object_with_canonical_form::init_points_and_lines(
 	if (f_v) {
 		cout << "object_with_canonical_form::init_points_and_lines" << endl;
 	}
-	object_with_canonical_form::P = P;
+	//object_with_canonical_form::P = P;
 	type = t_PNL;
 
 	object_with_canonical_form::set = NEW_lint(sz);
@@ -395,8 +443,30 @@ void object_with_canonical_form::init_points_and_lines(
 	}
 }
 
+void object_with_canonical_form::init_points_and_lines_from_string(
+	std::string &set_text,
+	std::string &set2_text,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_points_and_lines_from_string" << endl;
+	}
+
+	type = t_PNL;
+
+	Orbiter->Lint_vec.scan(set_text, set, sz);
+
+	Orbiter->Lint_vec.scan(set2_text, set2, sz2);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_points_and_lines_from_string done" << endl;
+	}
+}
+
 void object_with_canonical_form::init_packing_from_set(
-	projective_space *P, long int *packing, int sz,
+		long int *packing, int sz,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -405,7 +475,7 @@ void object_with_canonical_form::init_packing_from_set(
 	if (f_v) {
 		cout << "object_with_canonical_form::init_packing_from_set" << endl;
 	}
-	object_with_canonical_form::P = P;
+	//object_with_canonical_form::P = P;
 	type = t_PAC;
 	q = P->q;
 	size_of_spread = q * q + 1;
@@ -439,15 +509,71 @@ void object_with_canonical_form::init_packing_from_set(
 	}
 }
 
+
+void object_with_canonical_form::init_packing_from_string(
+		std::string &packing_text,
+		int q,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, size_of_spread, size_of_packing;
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_packing_from_string" << endl;
+	}
+	type = t_PAC;
+
+	long int *packing;
+	int sz;
+	int N_lines;
+
+
+
+	Orbiter->Lint_vec.scan(packing_text, packing, sz);
+
+	size_of_spread = q * q + 1;
+	size_of_packing = q * q + q + 1;
+	N_lines = size_of_spread * size_of_packing;
+	if (sz != N_lines) {
+		cout << "object_with_canonical_form::init_packing_from_string "
+			"sz != N_lines" << endl;
+		exit(1);
+	}
+	SoS = NEW_OBJECT(set_of_sets);
+
+	SoS->init_basic_constant_size(N_lines,
+		size_of_packing /* nb_sets */,
+		size_of_spread /* constant_size */,
+		0 /* verbose_level */);
+
+	for (i = 0; i < size_of_packing; i++) {
+		Orbiter->Lint_vec.copy(packing + i * size_of_spread,
+				SoS->Sets[i], size_of_spread);
+	}
+#if 0
+	if (f_v) {
+		cout << "object_with_canonical_form::init_packing_from_string it is" << endl;
+		SoS->print_table();
+	}
+#endif
+
+
+	FREE_lint(packing);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_packing_from_string done" << endl;
+	}
+}
+
 void object_with_canonical_form::init_packing_from_set_of_sets(
-	projective_space *P, set_of_sets *SoS, int verbose_level)
+		set_of_sets *SoS, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "object_with_canonical_form::init_packing_from_set_of_sets" << endl;
 	}
-	object_with_canonical_form::P = P;
+	//object_with_canonical_form::P = P;
 	type = t_PAC;
 	//object_in_projective_space::set = NEW_int(sz);
 	//int_vec_copy(set, object_in_projective_space::set, sz);
@@ -462,20 +588,21 @@ void object_with_canonical_form::init_packing_from_set_of_sets(
 
 
 void object_with_canonical_form::init_packing_from_spread_table(
-	projective_space *P,
 	long int *data,
 	long int *Spread_table, int nb_spreads, int spread_size,
+	int q,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int a, i, q, size_of_spread, size_of_packing;
+	int a, i, size_of_spread, size_of_packing;
+	int N_lines;
 
 	if (f_v) {
 		cout << "object_with_canonical_form::init_packing_from_spread_table" << endl;
 		}
-	object_with_canonical_form::P = P;
+	//object_with_canonical_form::P = P;
 	type = t_PAC;
-	q = P->q;
+	//q = P->q;
 	size_of_spread = q * q + 1;
 	size_of_packing = q * q + q + 1;
 	if (spread_size != size_of_spread) {
@@ -483,9 +610,11 @@ void object_with_canonical_form::init_packing_from_spread_table(
 				"spread_size != size_of_spread" << endl;
 		exit(1);
 	}
+	N_lines = size_of_spread * size_of_packing;
+
 	SoS = NEW_OBJECT(set_of_sets);
 
-	SoS->init_basic_constant_size(P->N_lines,
+	SoS->init_basic_constant_size(N_lines,
 		size_of_packing /* nb_sets */,
 		size_of_spread /* constant_size */,
 		0 /* verbose_level */);
@@ -549,14 +678,84 @@ void object_with_canonical_form::init_incidence_geometry(
 	}
 }
 
+void object_with_canonical_form::init_incidence_geometry_from_vector(
+	std::vector<int> &Flags, int v, int b, int nb_flags,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_incidence_geometry" << endl;
+	}
+	if (nb_flags != Flags.size()) {
+		cout << "object_with_canonical_form::init_incidence_geometry nb_flags != Flags.size()" << endl;
+	}
+
+	object_with_canonical_form::P = NULL;
+
+	type = t_INC;
+
+	object_with_canonical_form::set = NEW_lint(Flags.size());
+
+	int i;
+
+	for (i = 0; i < Flags.size(); i++) {
+		set[i] = Flags[i];
+	}
+	object_with_canonical_form::sz = Flags.size();
+	object_with_canonical_form::v = v;
+	object_with_canonical_form::b = b;
+	if (f_v) {
+		cout << "object_with_canonical_form::init_incidence_geometry done" << endl;
+	}
+}
+
+void object_with_canonical_form::init_incidence_geometry_from_string(
+	std::string &data,
+	int v, int b, int nb_flags,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_incidence_geometry_from_string" << endl;
+	}
+	long int *flags;
+	int data_sz;
+
+	Orbiter->Lint_vec.scan(data, flags, data_sz);
+
+	if (nb_flags != data_sz) {
+		cout << "object_with_canonical_form::init_incidence_geometry_from_string nb_flags != data_sz" << endl;
+	}
+	object_with_canonical_form::P = NULL;
+	type = t_INC;
+	object_with_canonical_form::set = NEW_lint(data_sz);
+	Orbiter->Lint_vec.copy(flags, object_with_canonical_form::set, data_sz);
+	object_with_canonical_form::sz = data_sz;
+	object_with_canonical_form::v = v;
+	object_with_canonical_form::b = b;
+
+	FREE_lint(flags);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_incidence_geometry_from_string done" << endl;
+	}
+}
+
 void object_with_canonical_form::init_large_set(
-	long int *data, int data_sz, int v, int k, int design_sz,
+	long int *data, int data_sz, int v, int b, int k, int design_sz,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "object_with_canonical_form::init_large_set" << endl;
+	}
+
+	if (data_sz != b) {
+		cout << "object_with_canonical_form::init_large_set data_sz != b" << endl;
+		exit(1);
 	}
 	object_with_canonical_form::P = NULL;
 	type = t_LS;
@@ -569,6 +768,30 @@ void object_with_canonical_form::init_large_set(
 	object_with_canonical_form::design_sz = design_sz;
 	if (f_v) {
 		cout << "object_with_canonical_form::init_large_set done" << endl;
+	}
+}
+
+void object_with_canonical_form::init_large_set_from_string(
+	std::string &data_text, int v, int k, int design_sz,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_large_set_from_string" << endl;
+	}
+	object_with_canonical_form::P = NULL;
+
+	type = t_LS;
+
+	Orbiter->Lint_vec.scan(data_text, set, sz);
+
+	object_with_canonical_form::v = v;
+	object_with_canonical_form::b = sz;
+	object_with_canonical_form::design_k = k;
+	object_with_canonical_form::design_sz = design_sz;
+	if (f_v) {
+		cout << "object_with_canonical_form::init_large_set_from_string done" << endl;
 	}
 }
 
@@ -1270,8 +1493,14 @@ void object_with_canonical_form::encode_incidence_geometry(
 	}
 
 
-	Enc->partition[nb_rows - 1] = 0;
-	Enc->partition[N - 1] = 0;
+	if (f_partition) {
+		Orbiter->Int_vec.copy(partition, Enc->partition, N);
+	}
+	else {
+		Enc->partition[nb_rows - 1] = 0;
+		Enc->partition[N - 1] = 0;
+	}
+
 	if (f_vvv) {
 		cout << "object_with_canonical_form::encode_incidence_geometry "
 				"partition:" << endl;
@@ -1949,7 +2178,50 @@ void object_with_canonical_form::canonical_labeling(
 	}
 }
 
+void object_with_canonical_form::run_nauty_basic(nauty_output *&NO, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+
+	if (f_v) {
+		cout << "object_with_canonical_form::run_nauty_basic"
+				<< endl;
+		cout << "verbose_level = " << verbose_level << endl;
+	}
+
+	int nb_rows, nb_cols;
+
+
+	if (f_v) {
+		cout << "object_with_canonical_form::run_nauty_basic before OiP->encoding_size" << endl;
+	}
+	encoding_size(nb_rows, nb_cols, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "object_with_canonical_form::run_nauty_basic after OiP->encoding_size" << endl;
+		cout << "object_with_canonical_form::run_nauty_basic nb_rows=" << nb_rows << endl;
+		cout << "object_with_canonical_form::run_nauty_basic nb_cols=" << nb_cols << endl;
+	}
+
+	bitvector *Canonical_form;
+
+
+	if (f_v) {
+		cout << "object_with_canonical_form::run_nauty_basic "
+				"before OwCF->run_nauty" << endl;
+	}
+	run_nauty(
+			FALSE /* f_compute_canonical_form */, Canonical_form,
+			NO,
+			verbose_level);
+	if (f_v) {
+		cout << "object_with_canonical_form::run_nauty_basic "
+				"after OwCF->run_nauty" << endl;
+	}
+
+	if (f_v) {
+		cout << "object_with_canonical_form::run_nauty_basic done" << endl;
+	}
+}
 
 
 

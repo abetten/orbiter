@@ -192,6 +192,8 @@ public:
 
 	classify_using_canonical_forms();
 	~classify_using_canonical_forms();
+	void orderly_test(object_with_canonical_form *OwCF,
+			int &f_accept, int verbose_level);
 	void add_object(object_with_canonical_form *OwCF, int &f_new_object, int verbose_level);
 
 };
@@ -228,7 +230,7 @@ class data_file {
 };
 
 // #############################################################################
-// data_input_stream.cpp:
+// data_input_stream_description.cpp:
 // #############################################################################
 
 
@@ -243,13 +245,14 @@ class data_file {
 #define INPUT_TYPE_FILE_OF_POINT_SET 9
 #define INPUT_TYPE_FILE_OF_DESIGNS 10
 #define INPUT_TYPE_FILE_OF_INCIDENCE_GEOMETRIES 11
+#define INPUT_TYPE_INCIDENCE_GEOMETRY 12
 
 
 
 //! description of input data for classification of geometric objects from the command line
 
 
-class data_input_stream {
+class data_input_stream_description {
 public:
 	int nb_inputs;
 	int input_type[1000];
@@ -262,16 +265,40 @@ public:
 	int input_data3[1000]; // k = block size
 	int input_data4[1000]; // partition class size
 
-	data_input_stream();
-	~data_input_stream();
-	void null();
-	void freeself();
+	data_input_stream_description();
+	~data_input_stream_description();
 	int read_arguments(int argc, std::string *argv,
 		int verbose_level);
 	void print();
 	void print_item(int i);
+};
+
+
+// #############################################################################
+// data_input_stream.cpp:
+// #############################################################################
+
+
+//! input data for classification of geometric objects from the command line
+
+
+class data_input_stream {
+public:
+
+	data_input_stream_description *Descr;
+
+	int nb_objects_to_test;
+
+	std::vector<void *> Objects;
+
+	data_input_stream();
+	~data_input_stream();
+	void init(data_input_stream_description *Descr, int verbose_level);
 	int count_number_of_objects_to_test(
 		int verbose_level);
+	void read_objects(int verbose_level);
+
+
 };
 
 
@@ -561,6 +588,7 @@ public:
 	~nauty_output();
 	void allocate(int N, int verbose_level);
 	void print_stats();
+	int belong_to_the_same_orbit(int a, int b, int verbose_level);
 
 };
 

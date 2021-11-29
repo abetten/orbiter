@@ -27,6 +27,73 @@ classify_using_canonical_forms::~classify_using_canonical_forms()
 {
 }
 
+void classify_using_canonical_forms::orderly_test(object_with_canonical_form *OwCF,
+		int &f_accept, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "classify_using_canonical_forms::orderly_test" << endl;
+	}
+
+	nauty_output *NO;
+
+
+	if (f_v) {
+		cout << "classify_using_canonical_forms::orderly_test "
+				"before OwCF->run_nauty_basic" << endl;
+	}
+	OwCF->run_nauty_basic(
+			NO,
+			verbose_level);
+	if (f_v) {
+		cout << "classify_using_canonical_forms::orderly_test "
+				"after OwCF->run_nauty_basic" << endl;
+	}
+
+	int nb_rows, nb_cols;
+
+	OwCF->encoding_size(
+				nb_rows, nb_cols,
+				verbose_level);
+
+	int last_row, last_pt;
+
+	last_row = nb_rows - 1;
+
+	last_pt = NO->canonical_labeling[last_row];
+
+	if (f_v) {
+		cout << "classify_using_canonical_forms::orderly_test "
+				"last_row=" << last_row << " last_pt=" << last_pt
+				<< endl;
+	}
+
+	if (f_v) {
+		cout << "classify_using_canonical_forms::orderly_test "
+				"before NO->belong_to_the_same_orbit" << endl;
+	}
+	if (NO->belong_to_the_same_orbit(last_row, last_pt, 0 /* verbose_level*/)) {
+		f_accept = TRUE;
+	}
+	else {
+		f_accept = FALSE;
+	}
+	if (f_v) {
+		cout << "classify_using_canonical_forms::orderly_test "
+				"after NO->belong_to_the_same_orbit f_accept = " << f_accept << endl;
+	}
+
+	//cout << "before FREE_OBJECT(NO);" << endl;
+	FREE_OBJECT(NO);
+	//cout << "after FREE_OBJECT(NO);" << endl;
+
+	if (f_v) {
+		cout << "classify_using_canonical_forms::orderly_test" << endl;
+	}
+}
+
+
 void classify_using_canonical_forms::add_object(object_with_canonical_form *OwCF,
 		int &f_new_object, int verbose_level)
 {
@@ -36,29 +103,13 @@ void classify_using_canonical_forms::add_object(object_with_canonical_form *OwCF
 		cout << "classify_using_canonical_forms::add_object" << endl;
 	}
 
-
-	int nb_rows, nb_cols;
-
-
-	if (f_v) {
-		cout << "classify_using_canonical_forms::add_object before OiP->encoding_size" << endl;
-	}
-	OwCF->encoding_size(nb_rows, nb_cols, 0 /*verbose_level*/);
-	if (f_v) {
-		cout << "classify_using_canonical_forms::add_object after OiP->encoding_size" << endl;
-		cout << "classify_using_canonical_forms::add_object nb_rows=" << nb_rows << endl;
-		cout << "classify_using_canonical_forms::add_object nb_cols=" << nb_cols << endl;
-	}
-
 	nauty_output *NO;
 	bitvector *Canonical_form;
 
-	NO = NEW_OBJECT(nauty_output);
-	NO->allocate(nb_rows + nb_cols, verbose_level);
 
 	if (f_v) {
 		cout << "classify_using_canonical_forms::add_object "
-				"before OiP->run_nauty" << endl;
+				"before OwCF->run_nauty" << endl;
 	}
 	OwCF->run_nauty(
 			TRUE /* f_compute_canonical_form */, Canonical_form,
@@ -66,7 +117,7 @@ void classify_using_canonical_forms::add_object(object_with_canonical_form *OwCF
 			verbose_level);
 	if (f_v) {
 		cout << "classify_using_canonical_forms::add_object "
-				"after OiP->run_nauty" << endl;
+				"after OwCF->run_nauty" << endl;
 	}
 
 	uint32_t h;

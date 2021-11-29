@@ -36,47 +36,6 @@ void surface_domain_high_level::do_sweep_4(
 		cout << "surface_domain_high_level::do_sweep_4 verbose_level=" << verbose_level << endl;
 	}
 
-#if 0
-	int q;
-	finite_field *F;
-	surface_domain *Surf;
-	surface_with_action *Surf_A;
-
-	if (f_v) {
-		cout << "surface_domain_high_level::do_sweep_4 before Surface_Descr->get_q" << endl;
-	}
-	q = Surface_Descr->get_q();
-	if (f_v) {
-		cout << "surface_domain_high_level::do_sweep_4 q = " << q << endl;
-	}
-
-
-	F = PA->F;
-	if (F->q != q) {
-		cout << "F->q != q" << endl;
-		exit(1);
-	}
-
-
-	if (f_v) {
-		cout << "surface_domain_high_level::do_sweep_4 before Surf->init" << endl;
-	}
-	Surf = NEW_OBJECT(surface_domain);
-	Surf->init(F, 0 /*verbose_level - 1*/);
-	if (f_v) {
-		cout << "surface_domain_high_level::do_sweep_4 after Surf->init" << endl;
-	}
-
-	Surf_A = NEW_OBJECT(surface_with_action);
-
-	if (f_v) {
-		cout << "surface_domain_high_level::do_sweep_4 before Surf_A->init" << endl;
-	}
-	Surf_A->init(Surf, PA, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
-	if (f_v) {
-		cout << "surface_domain_high_level::do_sweep_4 after Surf_A->init" << endl;
-	}
-#else
 
 	surface_with_action *Surf_A;
 
@@ -85,7 +44,6 @@ void surface_domain_high_level::do_sweep_4(
 			verbose_level);
 
 
-#endif
 
 
 	if (f_v) {

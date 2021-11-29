@@ -91,12 +91,13 @@ void canonical_form_nauty::quartic_curve(
 	if (f_v) {
 		cout << "canonical_form_nauty::quartic_curve before OwCF->init_point_set" << endl;
 	}
-	OwCF->init_point_set(PA->P,
+	OwCF->init_point_set(
 			Pts_on_curve, sz_curve,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "canonical_form_nauty::quartic_curve after OwCF->init_point_set" << endl;
 	}
+	OwCF->P = PA->P;
 
 	int nb_rows, nb_cols;
 

@@ -80,7 +80,7 @@ int orthogonal_space_activity_description::read_arguments(
 
 		if (stringcmp(argv[i], "-input") == 0) {
 			f_input = TRUE;
-			Data = NEW_OBJECT(data_input_stream);
+			Data = NEW_OBJECT(data_input_stream_description);
 			if (f_v) {
 				cout << "-input" << endl;
 			}

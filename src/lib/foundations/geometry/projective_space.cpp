@@ -3634,7 +3634,7 @@ object_with_canonical_form *projective_space::create_object_from_string(
 
 	OiP = NEW_OBJECT(object_with_canonical_form);
 
-	OiP->init_object_from_string(this,
+	OiP->init_object_from_string(
 			type, input_fname, input_idx,
 			set_as_string,
 			set2_as_string,
@@ -3666,7 +3666,7 @@ object_with_canonical_form * projective_space::create_object_from_int_vec(
 
 	OiP = NEW_OBJECT(object_with_canonical_form);
 
-	OiP->init_object_from_int_vec(this,
+	OiP->init_object_from_int_vec(
 			type, input_fname, input_idx,
 			the_set, set_sz,
 			the_set2, set2_sz,

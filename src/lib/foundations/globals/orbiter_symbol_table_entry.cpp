@@ -469,6 +469,23 @@ void orbiter_symbol_table_entry::init_vector(std::string &label,
 	}
 }
 
+void orbiter_symbol_table_entry::init_combinatorial_objects(std::string &label,
+		data_input_stream *IS, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_combinatorial_objects" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_combinatorial_objects;
+	ptr = IS;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_combinatorial_objects done" << endl;
+	}
+}
+
 
 void orbiter_symbol_table_entry::print()
 {

@@ -194,11 +194,7 @@ public:
 	int *vbar; // [GB->V]
 	int *hbar; // [GB->B]
 
-	//int f_do_iso_test;
-	//int f_do_aut_group;
-	//int f_do_aut_group_in_iso_type_without_vhbars;
 	int forget_ivhbar_in_last_isot;
-	//int gen_print_intervall;
 
 	std::string inc_file_name;
 
@@ -209,17 +205,12 @@ public:
 
 	gen_geo();
 	~gen_geo();
-	void init(geometry_builder *GB,
-		//int f_do_iso_test,
-		//int f_do_aut_group,
-		//int f_do_aut_group_in_iso_type_without_vhbars,
-		//int gen_print_intervall,
-		int verbose_level);
+	void init(geometry_builder *GB, int verbose_level);
 	void TDO_init(int *v, int *b, int *theTDO, int verbose_level);
 	void init_tdo_line(int fuse_idx,
 			int tdo_line, int v, int *b, int *r, int verbose_level);
 	void print_conf();
-	void init_bars(int verbose_level);
+	void init_bars_and_partition(int verbose_level);
 	void init_fuse(int verbose_level);
 	void init_k(int verbose_level);
 	void conf_init_last_non_zero_flag(int verbose_level);
@@ -312,6 +303,8 @@ public:
 
 	int f_search_tree;
 
+	int f_orderly;
+
 	std::vector<std::string> test_lines;
 	std::vector<std::string> test_flags;
 
@@ -400,7 +393,6 @@ public:
 	void isot(int line, int tdo_flags, int verbose_level);
 	void isot_no_vhbars(int tdo_flags, int verbose_level);
 	void isot2(int line, int tdo_flags, int verbose_level);
-	//void range(int line, int first, int len);
 	void set_split(int line, int remainder, int modulo);
 	void flush_line(int line);
 
@@ -559,7 +551,7 @@ public:
 
 	int **theY; //[gg->GB->B][gg->GB->V];
 
-	int pairs[MAX_V][MAX_V];
+	int **pairs; //[gg->GB->V][];
 		// pairs[i][i1]
 		// is the number of blocks containing {i1,i}
 		// where 0 \le i1 < i.
@@ -573,6 +565,11 @@ public:
 	int nb_i_hbar;
 	int *i_hbar;
 
+	// partition for Nauty:
+	int *row_partition;
+	int *col_partition;
+	int **Partition; // [gg->GB->V + 1]
+
 	int gl_nb_GEN;
 
 	iso_type **iso_type_at_line; // [gg->GB->V]
@@ -585,15 +582,19 @@ public:
 	~incidence();
 	void init(gen_geo *gg, int v, int b, int *R, int verbose_level);
 	void init_bars(int verbose_level);
+	void init_partition(int verbose_level);
 	void init_pairs(int verbose_level);
+	void print_pairs(int v);
 	int find_square(int m, int n);
 	void print_param();
 	void free_isot();
 	void print_R(int v, cperm *p, cperm *q);
 	void print(std::ostream &ost, int v, int v_cut);
 	void print_override_theX(std::ostream &ost, int *theX, int v, int v_cut);
-	void install_isomorphism_test_after_a_given_row(int i, int tdo_flags, int verbose_level);
-	void install_isomorphism_test_of_second_kind_after_a_given_row(int i, int tdo_flags, int verbose_level);
+	void install_isomorphism_test_after_a_given_row(int i,
+			int tdo_flags, int f_orderly, int verbose_level);
+	void install_isomorphism_test_of_second_kind_after_a_given_row(int i,
+			int tdo_flags, int f_orderly, int verbose_level);
 	//void set_range(int row, int first, int len);
 	void set_split(int row, int remainder, int modulo);
 	void set_flush_to_inc_file(int row, std::string &fname);
@@ -727,6 +728,8 @@ public:
 	int sum_R;
 	incidence *inc;
 
+	int f_orderly;
+
 	// flags for the type of TDO used:
 	int f_transpose_it; // first flag
 	int f_snd_TDO;      // second flag
@@ -776,7 +779,7 @@ public:
 
 	iso_type();
 	~iso_type();
-	void init(int v, incidence *inc, int tdo_flags, int verbose_level);
+	void init(int v, incidence *inc, int tdo_flags, int f_orderly, int verbose_level);
 	void init2();
 	void add_geometry(
 		inc_encoding *Encoding,

@@ -665,7 +665,7 @@ class projective_space_object_classifier_description {
 public:
 
 	int f_input;
-	data_input_stream *Data;
+	data_input_stream_description *Data;
 
 
 	int f_save_classification;
@@ -734,7 +734,8 @@ public:
 	int f_projective_space;
 	projective_space_with_action *PA;
 
-	int nb_objects_to_test;
+	data_input_stream *IS;
+
 
 	classify_bitvectors *CB;
 
@@ -746,9 +747,13 @@ public:
 	void do_the_work(projective_space_object_classifier_description *Descr,
 			int f_projective_space,
 			projective_space_with_action *PA,
+			data_input_stream *IS,
 			int verbose_level);
 	void classify_objects_using_nauty(
 		int verbose_level);
+	void process_any_object(object_with_canonical_form *OwCF,
+			int input_idx, long int &ago, int &f_reject, int verbose_level);
+#if 0
 	void process_multiple_objects_from_file(
 			int file_type, int file_idx,
 			std::string &input_data,
@@ -790,6 +795,7 @@ public:
 	void process_set_of_packing(
 			std::string &input_data,
 			int verbose_level);
+#endif
 	int process_object(
 		object_with_canonical_form *OwCF,
 		strong_generators *&SG, long int &ago,

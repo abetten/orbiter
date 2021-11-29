@@ -74,7 +74,7 @@ int projective_space_object_classifier_description::read_arguments(
 		if (stringcmp(argv[i], "-input") == 0) {
 			f_input = TRUE;
 			cout << "-input" << endl;
-			Data = NEW_OBJECT(data_input_stream);
+			Data = NEW_OBJECT(data_input_stream_description);
 			i += Data->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 			cout << "done reading -input" << endl;

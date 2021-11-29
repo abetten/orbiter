@@ -20,13 +20,18 @@ incidence::incidence()
 
 
 	theY = NULL;
-	//int pairs[MAX_V][MAX_V];
+
+	pairs = NULL;
 
 	// initial vbar / hbar
 	nb_i_vbar = 0;
 	i_vbar = NULL;
 	nb_i_hbar = 0;
 	i_hbar = NULL;
+
+	row_partition = NULL;
+	col_partition = NULL;
+	Partition = NULL;
 
 	gl_nb_GEN = 0;
 
@@ -50,6 +55,14 @@ incidence::~incidence()
 		}
 		FREE_pint(theY);
 	}
+	if (pairs) {
+		int i;
+
+		for (i = 1; i < gg->GB->V; i++) {
+			FREE_int(pairs[i]);
+		}
+		FREE_pint(pairs);
+	}
 	if (Encoding) {
 		FREE_OBJECT(Encoding);
 	}
@@ -59,7 +72,20 @@ incidence::~incidence()
 	if (i_hbar) {
 		FREE_int(i_hbar);
 	}
+	if (row_partition) {
+		FREE_int(row_partition);
+	}
+	if (col_partition) {
+		FREE_int(col_partition);
+	}
+	if (Partition) {
+		int i;
 
+		for (i = 0; i <= gg->GB->V; i++) {
+			FREE_int(Partition[i]);
+		}
+		FREE_pint(Partition);
+	}
 	if (iso_type_at_line) {
 		int i;
 
@@ -148,8 +174,6 @@ void incidence::init_bars(int verbose_level)
 	i_vbar = NEW_int(gg->GB->b_len + 1);
 	i_hbar = NEW_int(gg->GB->v_len + 1);
 
-	nb_i_hbar = 0;
-	i_hbar[nb_i_hbar++] = 0;
 
 
 	nb_i_vbar = 0;
@@ -163,11 +187,110 @@ void incidence::init_bars(int verbose_level)
 		i_vbar[nb_i_vbar++] = gg->Conf[0 * gg->GB->b_len + j].j0;
 
 	}
+
+	if (gg->GB->Descr->f_orderly) {
+		int i;
+
+		// set all hbars because we are doing orderly generation:
+		for (i = 0; i <= gg->GB->V; i++) {
+			gg->hbar[i] = -1;
+		}
+#if 0
+		nb_i_hbar = 0;
+		for (i = 0; i <= gg->GB->V; i++) {
+			i_hbar[nb_i_hbar++] = i;
+		}
+#endif
+	}
+	else {
+		nb_i_hbar = 0;
+		i_hbar[nb_i_hbar++] = 0;
+	}
+
 	if (f_v) {
 		cout << "incidence::init_bars done" << endl;
 	}
 
 }
+
+void incidence::init_partition(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, I, J;
+
+	if (f_v) {
+		cout << "incidence::init_partition" << endl;
+	}
+	row_partition = NEW_int(gg->GB->V);
+	col_partition = NEW_int(gg->GB->B);
+
+	for (i = 0; i < gg->GB->V; i++) {
+		row_partition[i] = 1;
+	}
+	for (j = 0; j < gg->GB->B; j++) {
+		col_partition[j] = 1;
+	}
+
+
+	for (I = 0; I < gg->GB->v_len; I++) {
+
+		i = gg->Conf[I * gg->GB->b_len + 0].i0 + gg->Conf[I * gg->GB->b_len + 0].v - 1;
+
+		if (f_v) {
+			cout << "I=" << I << " i=" << i << endl;
+		}
+
+		row_partition[i] = 0;
+
+	}
+
+
+	for (J = 0; J < gg->GB->b_len; J++) {
+
+		j = gg->Conf[0 * gg->GB->b_len + J].j0 + gg->Conf[0 * gg->GB->b_len + J].b - 1;
+
+		if (f_v) {
+			cout << "J=" << J << " j=" << j << endl;
+		}
+
+		col_partition[j] = 0;
+
+	}
+
+	if (f_v) {
+		cout << "row_partition: ";
+		Orbiter->Int_vec.print(cout, row_partition, gg->GB->V);
+		cout << endl;
+
+		cout << "col_partition: ";
+		Orbiter->Int_vec.print(cout, col_partition, gg->GB->B);
+		cout << endl;
+	}
+
+	Partition = NEW_pint(gg->GB->V + 1);
+
+	for (i = 0; i <= gg->GB->V; i++) {
+		Partition[i] = NEW_int(i + gg->GB->B);
+		Orbiter->Int_vec.copy(row_partition, Partition[i], i);
+		if (i) {
+			Partition[i][i - 1] = 0;
+		}
+		Orbiter->Int_vec.copy(col_partition, Partition[i] + i, gg->GB->B);
+
+		if (f_v) {
+			cout << "Partition[" << i << "]: ";
+			Orbiter->Int_vec.print(cout, Partition[i], i + gg->GB->B);
+			cout << endl;
+		}
+	}
+
+
+	if (f_v) {
+		cout << "incidence::init_partition done" << endl;
+	}
+
+}
+
 
 void incidence::init_pairs(int verbose_level)
 {
@@ -177,14 +300,43 @@ void incidence::init_pairs(int verbose_level)
 	if (f_v) {
 		cout << "incidence::init_pairs" << endl;
 	}
-	for (i1 = 0; i1 < MAX_V; i1++) {
-		for (i2 = 0; i2 < MAX_V; i2++) {
+
+	pairs = NEW_pint(gg->GB->V);
+
+	for (i1 = 1; i1 <= gg->GB->V; i1++) {
+		pairs[i1] = NEW_int(i1 - 1);
+		for (i2 = 0; i2 < i1 - 1; i2++) {
 			pairs[i1][i2] = 0;
 		}
 	}
 	if (f_v) {
 		cout << "incidence::init_pairs done" << endl;
 	}
+}
+
+void incidence::print_pairs(int v)
+{
+	int i1, i2, a;
+	int *M;
+
+	M = NEW_int(v * v);
+	for (i1 = 0; i1 < v; i1++) {
+		//cout << i1 << " : ";
+		for (i2 = 0; i2 < v; i2++) {
+			if (i2 == i1) {
+				a = 0;
+			}
+			else if (i2 < i1) {
+				a = pairs[i1][i2];
+			}
+			else {
+				a = pairs[i2][i1];
+			}
+			M[i1 * v + i2] = a;
+		}
+	}
+	Orbiter->Int_vec.matrix_print(M, v, v);
+	FREE_int(M);
 }
 
 
@@ -270,7 +422,7 @@ void incidence::print_override_theX(std::ostream &ost, int *theX, int v, int v_c
 
 
 void incidence::install_isomorphism_test_after_a_given_row(int row,
-		int tdo_flags, int verbose_level)
+		int tdo_flags, int f_orderly, int verbose_level)
 // last row is ok
 {
 	int f_v = (verbose_level >= 1);
@@ -280,7 +432,7 @@ void incidence::install_isomorphism_test_after_a_given_row(int row,
 	}
 	if (row > 0 && row <= Encoding->v) {
 		iso_type_at_line[row - 1] = NEW_OBJECT(iso_type);
-		iso_type_at_line[row - 1]->init(row, this, tdo_flags, verbose_level);
+		iso_type_at_line[row - 1]->init(row, this, tdo_flags, f_orderly, verbose_level);
 	}
 	else {
 		cout << "incidence::install_isomorphism_test_after_a_given_row "
@@ -290,7 +442,7 @@ void incidence::install_isomorphism_test_after_a_given_row(int row,
 }
 
 void incidence::install_isomorphism_test_of_second_kind_after_a_given_row(int row,
-		int tdo_flags, int verbose_level)
+		int tdo_flags, int f_orderly, int verbose_level)
 // last row is not allowed
 {
 	int f_v = (verbose_level >= 1);
@@ -300,7 +452,7 @@ void incidence::install_isomorphism_test_of_second_kind_after_a_given_row(int ro
 	}
 	if (row > 0 && row < Encoding->v) {
 		iso_type_at_line[row - 1] = NEW_OBJECT(iso_type);
-		iso_type_at_line[row - 1]->init(row, this, tdo_flags, verbose_level);
+		iso_type_at_line[row - 1]->init(row, this, tdo_flags, f_orderly, verbose_level);
 		iso_type_at_line[row - 1]->second();
 	}
 	else {

@@ -51,6 +51,85 @@ void boolean_function_classify_print_function(int *poly, int sz, void *data);
 void boolean_function_classify_reduction_function(int *poly, void *data);
 
 
+
+// #############################################################################
+// combinatorial_object_activity_description.cpp
+// #############################################################################
+
+
+//! description of an activity for a combinatorial object
+
+class combinatorial_object_activity_description {
+public:
+
+
+	// options that apply to COC = combinatorial_object_create
+
+	int f_save;
+
+	int f_line_type;
+
+	int f_conic_type;
+	int conic_type_threshold;
+
+	int f_non_conical_type;
+
+	int f_ideal;
+	int ideal_degree;
+
+
+	// options that apply to IS = data_input_stream
+
+	int f_canonical_form_PG;
+	std::string canonical_form_PG_PG_label;
+	projective_space_object_classifier_description *Canonical_form_PG_Descr;
+
+
+	combinatorial_object_activity_description();
+	~combinatorial_object_activity_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+// #############################################################################
+// combinatorial_object_activity.cpp
+// #############################################################################
+
+
+//! perform an activity for a combinatorial object
+
+class combinatorial_object_activity {
+public:
+	combinatorial_object_activity_description *Descr;
+
+	int f_has_COC;
+	combinatorial_object_create *COC;
+
+	int f_has_IS;
+	data_input_stream *IS;
+
+
+	combinatorial_object_activity();
+	~combinatorial_object_activity();
+	void init(combinatorial_object_activity_description *Descr,
+			combinatorial_object_create *COC,
+			int verbose_level);
+	void init_input_stream(combinatorial_object_activity_description *Descr,
+			data_input_stream *IS,
+			int verbose_level);
+	void perform_activity(int verbose_level);
+	void perform_activity_COC(int verbose_level);
+	void perform_activity_IS(int verbose_level);
+
+};
+
+
+
+
+
 // #############################################################################
 // combinatorics_global.cpp
 // #############################################################################
@@ -81,7 +160,7 @@ public:
 		int verbose_level);
 	void append_orbit_and_adjust_size(schreier *Orb, int idx, int *set, int &sz);
 	void classify_objects_using_nauty(
-		data_input_stream *Data,
+		data_input_stream_description *Data,
 		classify_bitvectors *CB,
 		std::string &output_fname,
 		int verbose_level);

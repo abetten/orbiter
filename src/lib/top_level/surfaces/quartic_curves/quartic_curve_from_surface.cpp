@@ -582,8 +582,6 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 
 	int f_compute_canonical_form = FALSE;
 	bitvector *Canonical_form;
-	//long int *canonical_labeling = NULL;
-	//int canonical_labeling_len;
 
 
 	OiP = NEW_OBJECT(object_with_canonical_form);
@@ -592,13 +590,14 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 		cout << "quartic_curve_from_surface::compute_stabilizer "
 				"before OiP->init_point_set" << endl;
 	}
-	OiP->init_point_set(Surf_A->PA->PA2->P,
+	OiP->init_point_set(
 			Pts_on_curve, sz_curve,
 			verbose_level - 1);
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_stabilizer "
 				"after OiP->init_point_set" << endl;
 	}
+	OiP->P = Surf_A->PA->PA2->P;
 
 	int nb_rows, nb_cols;
 
@@ -610,7 +609,6 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 		cout << "quartic_curve_from_surface::compute_stabilizer nb_cols = " << nb_cols << endl;
 	}
 
-	//canonical_labeling = NEW_lint(nb_rows + nb_cols);
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_stabilizer "
@@ -629,7 +627,6 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 		OiP,
 		Surf_A->PA->PA2->A,
 		f_compute_canonical_form, Canonical_form,
-		//canonical_labeling, canonical_labeling_len,
 		NO,
 		verbose_level);
 
@@ -638,21 +635,8 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 				"after Nau.set_stabilizer_of_object" << endl;
 	}
 
-	long int nb_backtrack1, nb_backtrack2;
-
-	nb_backtrack1 = NO->nb_firstpathnode;
-	nb_backtrack2 = NO->nb_processnode;
-
 	if (f_v) {
-		cout << "quartic_curve_from_surface::compute_stabilizer "
-				"go = " << *NO->Ago << endl;
-
-		cout << "quartic_curve_from_surface::compute_stabilizer "
-				"nb_backtrack1 = " << nb_backtrack1 << endl;
-		cout << "quartic_curve_from_surface::compute_stabilizer "
-				"nb_backtrack2 = " << nb_backtrack2 << endl;
-
-
+		NO->print_stats();
 	}
 
 	FREE_OBJECT(NO);
@@ -664,7 +648,6 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 	}
 
 	FREE_OBJECT(OiP);
-	//FREE_lint(canonical_labeling);
 
 	action_on_homogeneous_polynomials *AonHPD;
 

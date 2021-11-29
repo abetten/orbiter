@@ -22,8 +22,6 @@ MODULES= \
 		foundations/coding_theory/mindist.o \
 		foundations/combinatorics/boolean_function_domain.o \
 		foundations/combinatorics/brick_domain.o \
-		foundations/combinatorics/combinatorial_object_activity_description.o \
-		foundations/combinatorics/combinatorial_object_activity.o \
 		foundations/combinatorics/combinatorial_object_create.o \
 		foundations/combinatorics/combinatorial_object_description.o \
 		foundations/combinatorics/combinatorics_domain.o \
@@ -40,6 +38,7 @@ MODULES= \
 		foundations/data_structures/classify_bitvectors.o \
 		foundations/data_structures/classify_using_canonical_forms.o \
 		foundations/data_structures/data_file.o \
+		foundations/data_structures/data_input_stream_description.o \
 		foundations/data_structures/data_input_stream.o \
 		foundations/data_structures/data_structures_global.o \
 		foundations/data_structures/fancy_set.o \
@@ -385,6 +384,8 @@ MODULES= \
 		top_level/algebra_and_number_theory/orbits_on_subspaces.o \
 		top_level/algebra_and_number_theory/young.o \
 		top_level/combinatorics/boolean_function_classify.o \
+		top_level/combinatorics/combinatorial_object_activity_description.o \
+		top_level/combinatorics/combinatorial_object_activity.o \
 		top_level/combinatorics/combinatorics_global.o \
 		top_level/combinatorics/delandtsheer_doyen_description.o \
 		top_level/combinatorics/delandtsheer_doyen.o \

@@ -365,6 +365,53 @@ void orbiter_session::get_vector_from_label(std::string &label, int *&v, int &sz
 	}
 }
 
+void orbiter_session::get_lint_vector_from_label(std::string &label, long int *&v, int &sz, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_session::get_lint_vector_from_label" << endl;
+	}
+	if (isalpha(label[0])) {
+		if (f_v) {
+			cout << "orbiter_session::get_lint_vector_from_label "
+					"searching label " << label << endl;
+		}
+		int idx;
+
+		idx = Orbiter->find_symbol(label);
+
+		if (Orbiter->get_object_type(idx) == t_vector) {
+
+			vector_builder *VB;
+
+			VB = (vector_builder *) Orbiter->get_object(idx);
+
+			sz = VB->len;
+			v = NEW_lint(sz);
+			Orbiter->Int_vec.copy_to_lint(VB->v, v, sz);
+		}
+		else if (Orbiter->get_object_type(idx) == t_set) {
+
+			set_builder *SB;
+
+			SB = (set_builder *) Orbiter->get_object(idx);
+
+			sz = SB->sz;
+			v = NEW_lint(sz);
+			Orbiter->Lint_vec.copy(SB->set, v, sz);
+		}
+	}
+	else {
+
+		Orbiter->Lint_vec.scan(label, v, sz);
+	}
+
+	if (f_v) {
+		cout << "orbiter_session::get_lint_vector_from_label done" << endl;
+	}
+}
+
 void orbiter_session::find_symbols(std::vector<std::string> &Labels, int *&Idx)
 {
 	int i, idx;

@@ -99,6 +99,9 @@ symbol_definition::symbol_definition()
 	f_vector = FALSE;
 	Vector_builder_description = FALSE;
 
+	f_combinatorial_objects = FALSE;
+	Data_input_stream_description = FALSE;
+
 }
 
 
@@ -576,6 +579,30 @@ void symbol_definition::read_definition(
 			Vector_builder_description->print();
 		}
 	}
+	else if (stringcmp(argv[i], "-combinatorial_objects") == 0) {
+		f_combinatorial_objects = TRUE;
+
+
+		Data_input_stream_description = NEW_OBJECT(data_input_stream_description);
+		if (f_v) {
+			cout << "reading -combinatorial_objects" << endl;
+		}
+		i += Data_input_stream_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-vector" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-combinatorial_objects ";
+			Data_input_stream_description->print();
+		}
+	}
 
 	else {
 		cout << "unrecognized command after -define" << endl;
@@ -777,6 +804,15 @@ void symbol_definition::perform_definition(int verbose_level)
 			cout << "symbol_definition::perform_definition after definition_of_vector" << endl;
 		}
 	}
+	else if (f_combinatorial_objects) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition before definition_of_combinatorial_object" << endl;
+		}
+		definition_of_combinatorial_object(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition after definition_of_combinatorial_object" << endl;
+		}
+	}
 	else {
 		if (f_v) {
 			cout << "symbol_definition::perform_definition no definition" << endl;
@@ -878,6 +914,10 @@ void symbol_definition::print()
 	else if (f_vector) {
 		cout << "-vector ";
 		Vector_builder_description->print();
+	}
+	else if (f_combinatorial_objects) {
+		cout << "-combinatorial_objects ";
+		Data_input_stream_description->print();
 	}
 }
 
@@ -1955,6 +1995,45 @@ void symbol_definition::definition_of_vector(int verbose_level)
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_vector done" << endl;
+	}
+}
+
+void symbol_definition::definition_of_combinatorial_object(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_combinatorial_object" << endl;
+	}
+
+	data_input_stream *IS;
+
+	IS = NEW_OBJECT(data_input_stream);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_combinatorial_object before IS->init" << endl;
+	}
+
+	IS->init(Data_input_stream_description, verbose_level);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_combinatorial_object after IS->init" << endl;
+	}
+
+
+	orbiter_symbol_table_entry Symb;
+
+	Symb.init_combinatorial_objects(define_label, IS, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_combinatorial_object before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, &Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_combinatorial_object done" << endl;
 	}
 }
 

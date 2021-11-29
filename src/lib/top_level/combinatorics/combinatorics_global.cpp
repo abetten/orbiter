@@ -840,7 +840,7 @@ void combinatorics_global::append_orbit_and_adjust_size(schreier *Orb,
 
 
 void combinatorics_global::classify_objects_using_nauty(
-	data_input_stream *Data,
+	data_input_stream_description *Data,
 	classify_bitvectors *CB,
 	std::string &output_fname,
 	int verbose_level)
@@ -859,7 +859,7 @@ void combinatorics_global::classify_objects_using_nauty(
 		cout << "combinatorics_global::classify_objects_using_nauty" << endl;
 	}
 
-
+#if 0
 	if (f_v) {
 		cout << "combinatorics_global::classify_objects_using_nauty "
 				"before count_number_of_objects_to_test" << endl;
@@ -1005,6 +1005,9 @@ void combinatorics_global::classify_objects_using_nauty(
 	}
 
 	//CB->finalize(verbose_level); // computes C_type_of and perm
+#endif
+
+
 #endif
 
 	if (f_v) {

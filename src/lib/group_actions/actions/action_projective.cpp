@@ -39,7 +39,9 @@ strong_generators *action::set_stabilizer_in_projective_space(
 
 	OwCF = NEW_OBJECT(object_with_canonical_form);
 
-	OwCF->init_point_set(P, set, set_size, verbose_level);
+	OwCF->init_point_set(set, set_size, verbose_level);
+
+	OwCF->P = P;
 
 	int nb_rows, nb_cols;
 	bitvector *Canonical_form = NULL;
@@ -47,6 +49,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	OwCF->encoding_size(
 			nb_rows, nb_cols,
 			verbose_level);
+
 
 
 	strong_generators *SG;

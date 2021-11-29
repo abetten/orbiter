@@ -387,7 +387,6 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph(
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph n=" << n << endl;
 	}
 
-	//int *labeling;
 	int *partition;
 	int i;
 	nauty_interface Nau;
@@ -407,7 +406,6 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph(
 
 
 	partition = NEW_int(n);
-	//labeling = NEW_int(n);
 
 	if (f_v) {
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph" << endl;
@@ -422,7 +420,6 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph(
 				"before Nau.nauty_interface_graph_int" << endl;
 	}
 	Nau.nauty_interface_graph_int(n, Adj,
-		//labeling,
 		partition,
 		NO,
 		verbose_level);
@@ -430,12 +427,6 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph(
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph "
 				"after Nau.nauty_interface_graph_int Ago=" << *NO->Ago << endl;
 	}
-
-#if 0
-	for (i = 0; i < n; i++) {
-		labeling[i] = NO->canonical_labeling[i];
-	}
-#endif
 
 	action *A;
 
@@ -462,7 +453,6 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph(
 	FREE_OBJECT(NO);
 
 	FREE_int(partition);
-	//FREE_int(labeling);
 	if (f_v) {
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph done" << endl;
 	}
@@ -522,7 +512,6 @@ action *nauty_interface_with_group::create_automorphism_group_and_canonical_labe
 				"before Nau.nauty_interface_graph_int" << endl;
 	}
 	Nau.nauty_interface_graph_int(n, Adj,
-		//labeling,
 		partition,
 		NO,
 		verbose_level);

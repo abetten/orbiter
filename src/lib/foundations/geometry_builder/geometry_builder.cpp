@@ -69,10 +69,10 @@ geometry_builder::~geometry_builder()
 		FREE_int(TDO);
 	}
 	if (R) {
-		delete R;
+		FREE_int(R);
 	}
 	if (gg) {
-		delete gg;
+		FREE_OBJECT(gg);
 	}
 }
 
@@ -155,12 +155,7 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 	if (f_v) {
 		cout << "geometry_builder::init_description before gg->init" << endl;
 	}
-	gg->init(this,
-		//TRUE /* f_do_iso_test */,
-		//TRUE /* f_do_aut_group */,
-		//TRUE /* f_do_aut_group_in_iso_type_without_vhbars */,
-		//1 /* gen_print_intervall*/,
-		verbose_level);
+	gg->init(this, verbose_level);
 	if (f_v) {
 		cout << "geometry_builder::init_description after gg->init" << endl;
 	}
@@ -204,14 +199,16 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 		cout << "geometry_builder::init_description allocating arrays" << endl;
 	}
 
-	int *s_type = NULL, *s_flag = NULL;
+	int *s_type = NULL;
+	int *s_flag = NULL;
 
-	s_type = new int[V + 1];
-	s_flag = new int[V + 1];
+	s_type = NEW_int(V + 1);
+	s_flag = NEW_int(V + 1);
+
 	for (i = 0; i <= V; i++) {
 		s_type[i] = 0;
 		s_flag[i] = 0;
-		}
+	}
 
 
 	if (f_v) {
@@ -285,10 +282,6 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 
 	}
 
-	if (f_v) {
-		cout << "geometry_builder::init_description gg=" << gg << endl;
-	}
-
 
 
 
@@ -307,8 +300,6 @@ void geometry_builder::compute_VBR(int verbose_level)
 	if (f_v) {
 		cout << "geometry_builder::compute_VBR v_len = " << v_len << " b_len = " << b_len << endl;
 	}
-	//geometry_builder::II = II;
-	//geometry_builder::JJ = JJ;
 	B = 0;
 	for (j = 0; j < b_len; j++) {
 		B += b[j];
@@ -317,14 +308,8 @@ void geometry_builder::compute_VBR(int verbose_level)
 	for (i = 0; i < v_len; i++) {
 		V += v[i];
 	}
-#if 0
-	for (i = 0; i < v_len; i++) {
-		for (j = 0; j < b_len; j++) {
-			theTDO[i][j] = the_tdo[i * b_len + j];
-		}
-	}
-#endif
-	R = new int[V];
+
+	R = NEW_int(V);
 	row = 0;
 	for (i = 0; i < v_len; i++) {
 		for (h = 0; h < v[i]; h++, row++) {
@@ -346,23 +331,22 @@ void geometry_builder::print_tdo()
 {
 	int i, j;
 
-	printf("   | ");
+	cout << "   | ";
 	for (j = 0; j < b_len; j++) {
-		printf("%2d ", b[j]);
+		cout << setw(2) << b[j] << " ";
 	}
-	printf("\n");
-	printf("---| ");
+	cout << endl;
+	cout << "---| ";
 	for (j = 0; j < b_len; j++) {
-		printf("---");
+		cout << "---";
 	}
-	printf("\n");
+	cout << endl;
 	for (i = 0; i < v_len; i++) {
-		printf("%2d | ", v[i]);
+		cout << setw(2) << v[i] << " ";
 		for (j = 0; j < b_len; j++) {
-			printf("%2d ",
-			TDO[i * b_len + j]);
+			cout << setw(2) << TDO[i * b_len + j] << " ";
 		}
-		printf("\n");
+		cout << endl;
 	}
 }
 
@@ -370,27 +354,20 @@ void geometry_builder::isot(int line,
 	int tdo_flags, int verbose_level)
 {
 	gg->inc->install_isomorphism_test_after_a_given_row(
-			line, tdo_flags, verbose_level);
+			line, tdo_flags, Descr->f_orderly, verbose_level);
 }
 
 void geometry_builder::isot_no_vhbars(int tdo_flags, int verbose_level)
 {
 	gg->inc->iso_type_no_vhbars = new iso_type;
-	gg->inc->iso_type_no_vhbars->init(V, gg->inc, tdo_flags, verbose_level);
+	gg->inc->iso_type_no_vhbars->init(V, gg->inc, tdo_flags, Descr->f_orderly, verbose_level);
 }
 
 void geometry_builder::isot2(int line, int tdo_flags, int verbose_level)
 {
 	gg->inc->install_isomorphism_test_of_second_kind_after_a_given_row(
-			line, tdo_flags, verbose_level);
+			line, tdo_flags, Descr->f_orderly, verbose_level);
 }
-
-#if 0
-void geometry_builder::range(int line, int first, int len)
-{
-	gg->inc->set_range(line, first, len);
-}
-#endif
 
 void geometry_builder::set_split(int line, int remainder, int modulo)
 {

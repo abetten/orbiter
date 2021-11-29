@@ -714,6 +714,16 @@ public:
 			std::string &sweep_fname,
 			int verbose_level);
 	void table_of_cubic_surfaces(int verbose_level);
+	void table_of_cubic_surfaces_export_csv(long int *Table,
+			int nb_cols,
+			int q, int nb_cubic_surfaces,
+			surface_create **SC,
+			int verbose_level);
+	void table_of_cubic_surfaces_export_sql(long int *Table,
+			int nb_cols,
+			int q, int nb_cubic_surfaces,
+			surface_create **SC,
+			int verbose_level);
 
 };
 

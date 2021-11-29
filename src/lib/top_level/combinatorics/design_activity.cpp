@@ -364,7 +364,10 @@ void design_activity::do_canonical_form(projective_space_object_classifier_descr
 		cout << "design_activity::do_canonical_form" << endl;
 	}
 
+
 	projective_space_object_classifier *OC;
+
+#if 0
 
 	if (f_v) {
 		cout << "design_activity::do_canonical_form" << endl;
@@ -387,6 +390,7 @@ void design_activity::do_canonical_form(projective_space_object_classifier_descr
 	FREE_OBJECT(OC);
 
 
+#endif
 
 	if (f_v) {
 		cout << "design_activity::do_canonical_form done" << endl;

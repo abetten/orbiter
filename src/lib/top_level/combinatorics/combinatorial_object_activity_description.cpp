@@ -8,13 +8,13 @@
 
 
 
-#include "foundations.h"
+#include "orbiter.h"
 
 using namespace std;
 
-
 namespace orbiter {
-namespace foundations {
+namespace top_level {
+
 
 
 combinatorial_object_activity_description::combinatorial_object_activity_description()
@@ -30,6 +30,12 @@ combinatorial_object_activity_description::combinatorial_object_activity_descrip
 
 	f_ideal = FALSE;
 	ideal_degree = 0;
+
+
+	f_canonical_form_PG = FALSE;
+	//std::string &canonical_form_PG_PG_label;
+	Canonical_form_PG_Descr = NULL;
+
 }
 
 combinatorial_object_activity_description::~combinatorial_object_activity_description()
@@ -48,6 +54,10 @@ int combinatorial_object_activity_description::read_arguments(
 		cout << "combinatorial_object_activity_description::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
+
+		// activities for COC:
+
+
 		if (stringcmp(argv[i], "-save") == 0) {
 			f_save = TRUE;
 			if (f_v) {
@@ -80,6 +90,31 @@ int combinatorial_object_activity_description::read_arguments(
 				cout << "-ideal " << ideal_degree << endl;
 			}
 		}
+
+		// activities for IS:
+
+		else if (stringcmp(argv[i], "-canonical_form_PG") == 0) {
+			f_canonical_form_PG = TRUE;
+			if (f_v) {
+				cout << "-canonical_form_PG, reading extra arguments" << endl;
+			}
+
+			canonical_form_PG_PG_label.assign(argv[++i]);
+
+			Canonical_form_PG_Descr = NEW_OBJECT(projective_space_object_classifier_description);
+
+			i += Canonical_form_PG_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
+			if (f_v) {
+				cout << "done reading -canonical_form_PG " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+			}
+		}
+
+
 		else if (stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -113,6 +148,10 @@ void combinatorial_object_activity_description::print()
 	}
 	if (f_ideal) {
 		cout << "-ideal " << ideal_degree << endl;
+	}
+	if (f_canonical_form_PG) {
+		cout << "-canonical_form_PG " << canonical_form_PG_PG_label << endl;
+		Canonical_form_PG_Descr->print();
 	}
 }
 

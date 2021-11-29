@@ -2023,21 +2023,21 @@ void surface_with_action::sweep_4(
 
 		for (alpha = 0; alpha < F->q; alpha++) {
 
-#if 0
+#if 1
 			if (alpha == 0) {
 				continue;
 			}
-#endif
 
 			if (alpha == 1) {
 				continue;
 			}
+#endif
 
 			cout << "alpha=" << alpha << endl;
 
 			for (beta = 0; beta < F->q; beta++) {
 
-#if 0
+#if 1
 				if (beta == 0) {
 					continue;
 				}
@@ -2047,54 +2047,57 @@ void surface_with_action::sweep_4(
 				}
 #endif
 
-			cout << "alpha=" << alpha << " beta=" << beta << endl;
+				cout << "alpha=" << alpha << " beta=" << beta << endl;
 
-			for (delta = 0; delta < F->q; delta++) {
+				for (gamma = 0; gamma < F->q; gamma++) {
 
-
-#if 0
-					if (delta == 0) {
+#if 1
+					if (gamma == 0) {
 						continue;
 					}
 
-					if (delta == F->negate(1)) {
+					if (gamma == F->negate(1)) {
 						continue;
 					}
 #endif
 
-					if (delta == beta) {
-						continue;
-					}
+					cout << "alpha=" << alpha << " beta=" << beta << " gamma=" << gamma << endl;
 
-					cout << "alpha=" << alpha << " beta=" << beta << " delta=" << delta << endl;
 
-	#if 0
-					if (delta == F->mult(F->mult(alpha, beta),F->inverse(F->add(alpha,F->negate(1))))) {
-						continue;
-					}
-	#endif
-					for (gamma = 0; gamma < F->q; gamma++) {
+					for (delta = 0; delta < F->q; delta++) {
 
-#if 0
-						if (gamma == 0) {
+
+#if 1
+						if (delta == 0) {
+							continue;
+						}
+
+						if (delta == F->negate(1)) {
+							continue;
+						}
+
+						if (delta == beta) {
 							continue;
 						}
 #endif
-
-						if (gamma == F->negate(1)) {
-							continue;
-						}
 
 						cout << "alpha=" << alpha << " beta=" << beta
 								<< " delta=" << delta << " gamma=" << gamma << endl;
 
+#if 0
+						if (delta == F->mult(F->mult(alpha, beta),F->inverse(F->add(alpha,F->negate(1))))) {
+							continue;
+						}
+#endif
 
-	# if 0
+
+
+#if 0
 						if (gamma == F->mult((F->add3(1,F->mult(F->negate(1),alpha),F->negate(F->mult(alpha,beta)))),
 								F->inverse(F->add3(F->mult(alpha,beta),F->negate(F->mult(alpha,delta)),delta)))) {
 							continue;
 						}
-	#endif
+#endif
 
 
 
@@ -2127,7 +2130,7 @@ void surface_with_action::sweep_4(
 
 
 
-	#if 0
+#if 0
 						if (f_v) {
 							cout << "surface_with_action::create_surface_sweep "
 									"before SC->apply_transformations" << endl;
@@ -2140,13 +2143,13 @@ void surface_with_action::sweep_4(
 							cout << "surface_with_action::create_surface_sweep "
 									"after SC->apply_transformations" << endl;
 						}
-	#endif
+#endif
 
 						cout << "the number of lines is " << SC->SO->nb_lines << endl;
 
 						SC->SO->SOP->print_everything(cout, verbose_level);
 
-	#if 0
+#if 1
 						if (SC->SO->nb_lines != 15) {
 							cout << "the number of lines is " << SC->SO->nb_lines << " skipping" << endl;
 							continue;
@@ -2155,7 +2158,7 @@ void surface_with_action::sweep_4(
 							cout << "the number of singular points is " << SC->SO->SOP->nb_singular_pts << " skipping" << endl;
 							continue;
 						}
-	#endif
+#endif
 
 
 						vector<long int> Props;
@@ -2229,9 +2232,9 @@ void surface_with_action::sweep_4(
 
 						FREE_OBJECT(SC);
 
-					} // gamma
+					} // delta
 
-				} // delta
+				} // gamma
 
 			} // beta
 
@@ -2785,6 +2788,55 @@ void surface_with_action::table_of_cubic_surfaces(int verbose_level)
 	long int *tangent_plane_rank_dual; // [nb_non_singular_pts]
 #endif
 
+
+	if (f_v) {
+		cout << "surface_with_action::table_of_cubic_surfaces before table_of_cubic_surfaces_export_csv" << endl;
+	}
+
+	table_of_cubic_surfaces_export_csv(Table,
+				nb_cols,
+				q, nb_cubic_surfaces,
+				SC,
+				verbose_level);
+
+	if (f_v) {
+		cout << "surface_with_action::table_of_cubic_surfaces after table_of_cubic_surfaces_export_csv" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "surface_with_action::table_of_cubic_surfaces before table_of_cubic_surfaces_export_sql" << endl;
+	}
+
+	table_of_cubic_surfaces_export_sql(Table,
+				nb_cols,
+				q, nb_cubic_surfaces,
+				SC,
+				verbose_level);
+
+	if (f_v) {
+		cout << "surface_with_action::table_of_cubic_surfaces after table_of_cubic_surfaces_export_sql" << endl;
+	}
+
+	if (f_v) {
+		cout << "surface_with_action::table_of_cubic_surfaces done" << endl;
+	}
+
+}
+
+
+void surface_with_action::table_of_cubic_surfaces_export_csv(long int *Table,
+		int nb_cols,
+		int q, int nb_cubic_surfaces,
+		surface_create **SC,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_with_action::table_of_cubic_surfaces_export_csv" << endl;
+	}
+
 	file_io Fio;
 	char str[1000];
 
@@ -2849,11 +2901,97 @@ void surface_with_action::table_of_cubic_surfaces(int verbose_level)
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 	if (f_v) {
-		cout << "surface_with_action::table_of_cubic_surfaces done" << endl;
+		cout << "surface_with_action::table_of_cubic_surfaces_export_csv done" << endl;
 	}
-
 }
 
+void surface_with_action::table_of_cubic_surfaces_export_sql(long int *Table,
+		int nb_cols,
+		int q, int nb_cubic_surfaces,
+		surface_create **SC,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "surface_with_action::table_of_cubic_surfaces_export_sql" << endl;
+	}
+
+	file_io Fio;
+	char str[1000];
+
+	sprintf(str, "_q%d", q);
+
+	string fname;
+	fname.assign("table_of_cubic_surfaces");
+	fname.append(str);
+	fname.append("_data.sql");
+
+	//Fio.lint_matrix_write_csv(fname, Table, nb_quartic_curves, nb_cols);
+
+	{
+		ofstream f(fname);
+		int i;
+
+		for (i = 0; i < nb_cubic_surfaces; i++) {
+
+			f << "UPDATE `cubicvt`.`surface` SET ";
+			f << "`CollStabOrder` = '" << Table[i * nb_cols + 1] << "', ";
+			f << "`ProjStabOrder` = '" << Table[i * nb_cols + 2] << "', ";
+			f << "`nbPts` = '" << Table[i * nb_cols + 3] << "', ";
+			f << "`nbLines` = '" << Table[i * nb_cols + 4] << "', ";
+			f << "`nbE` = '" << Table[i * nb_cols + 5] << "', ";
+			f << "`nbDouble` = '" << Table[i * nb_cols + 6] << "', ";
+			f << "`nbSingle` = '" << Table[i * nb_cols + 7] << "', ";
+			f << "`nbPtsNotOn` = '" << Table[i * nb_cols + 8] << "',";
+			f << "`nbHesse` = '" << Table[i * nb_cols + 9] << "', ";
+			f << "`nbAxes` = '" << Table[i * nb_cols + 10] << "', ";
+			f << "`nbOrbE` = '" << Table[i * nb_cols + 11] << "', ";
+			f << "`nbOrbDouble` = '" << Table[i * nb_cols + 12] << "', ";
+			f << "`nbOrbPtsNotOn` = '" << Table[i * nb_cols + 13] << "', ";
+			f << "`nbOrbLines` = '" << Table[i * nb_cols + 14] << "', ";
+			f << "`nbOrbSingleSix` = '" << Table[i * nb_cols + 15] << "', ";
+			f << "`nbOrbTriPlanes` = '" << Table[i * nb_cols + 16] << "', ";
+			f << "`nbOrbHesse` = '" << Table[i * nb_cols + 17] << "', ";
+			f << "`nbOrbTrihedralPairs` = '" << Table[i * nb_cols + 18] << "', ";
+			{
+				string str;
+				Orbiter->Int_vec.create_string_with_quotes(str, SC[i]->SO->eqn, 20);
+				f << "`Eqn20` = '" << str << "', ";
+			}
+			{
+				stringstream sstr;
+				string str;
+				SC[i]->Surf->print_equation_maple(sstr, SC[i]->SO->eqn);
+				str.assign(sstr.str());
+				//f << ",";
+				//f << "\"$";
+				//f << str;
+				//f << "$\"";
+				f << "`Equation` = '$" << str << "$', ";
+			}
+			{
+				string str;
+				Orbiter->Lint_vec.create_string_with_quotes(str, SC[i]->SO->Lines, SC[i]->SO->nb_lines);
+				f << "`Lines` = '" << str << "' ";
+			}
+			f << "WHERE `Q` = '" << q << "' AND `OCN` = '" << Table[i * nb_cols + 0] << "';" << endl;
+		}
+
+	}
+
+
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+	if (f_v) {
+		cout << "surface_with_action::table_of_cubic_surfaces_export_sql done" << endl;
+	}
+}
+
+
+// from Oznur Oztunc, 11/28/2021:
+// oznr83@gmail.com
+//UPDATE `cubicvt`.`surface` SET `CollStabOrder` = '12', `ProjStabOrder` = '12', `nbPts` = '691', `nbLines` = '27', `nbE` = '4', `nbDouble` = '123', `nbSingle` = '390', `nbPtsNotOn` = '174',`nbHesse` = '0', `nbAxes` = '1', `nbOrbE` = '2', `nbOrbDouble` = '16', `nbOrbPtsNotOn` = '16', `nbOrbLines` = '5', `nbOrbSingleSix` = '10', `nbOrbTriPlanes` = '10', `nbOrbHesse` = '0', `nbOrbTrihedralPairs` = '19', `nbOrbTritangentPlanes` = '10',`Eqn20` = '0,0,0,0,0,0,8,0,10,0,0,18,0,2,0,0,18,10,2,1', `Equation` = '$8X_0^2*X_3+10X_1^2*X_2+18X_1*X_2^2+2X_0*X_3^2+18X_0*X_1*X_2+10X_0*X_1*X_3+2X_0*X_2*X_3+X_1*X_2*X_3$', `Lines` = '529,292560,1083,4965,290982,88471,169033,6600,8548,576,293089,0,3824,9119,1698,242212,12168,59424,229610,292854,242075,120504,179157,279048,30397,181283,12150' WHERE `Q` = '23' AND `OCN` = '1';
 
 
 }}
