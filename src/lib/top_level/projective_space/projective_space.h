@@ -313,6 +313,8 @@ public:
 			int nb_rows, int nb_cols,
 			int *canonical_labeling,
 			int verbose_level);
+	void print();
+
 };
 
 
@@ -664,9 +666,12 @@ class projective_space_object_classifier_description {
 
 public:
 
+#if 0
 	int f_input;
 	data_input_stream_description *Data;
-
+#endif
+	int f_label;
+	std::string label;
 
 	int f_save_classification;
 	std::string save_prefix;
@@ -739,6 +744,14 @@ public:
 
 	classify_bitvectors *CB;
 
+	long int *Ago;
+	int *F_reject;
+
+	int nb_orbits;
+	int *Idx_transversal;
+	long int *Ago_transversal;
+
+	tally *T_Ago;
 
 
 
@@ -972,12 +985,15 @@ public:
 };
 
 //globals:
+#if 0
 void OiPA_encode(void *extra_data,
 	long int *&encoding, int &encoding_sz, void *global_data);
 void OiPA_group_order(void *extra_data,
 	longinteger_object &go, void *global_data);
+#endif
 void print_summary_table_entry(int *Table,
 	int m, int n, int i, int j, int val, std::string &output, void *data);
+#if 0
 void compute_ago_distribution(
 	classify_bitvectors *CB, tally *&C_ago, int verbose_level);
 void compute_ago_distribution_permuted(
@@ -987,6 +1003,7 @@ void compute_and_print_ago_distribution(std::ostream &ost,
 void compute_and_print_ago_distribution_with_classes(
 		std::ostream &ost,
 	classify_bitvectors *CB, int verbose_level);
+#endif
 int table_of_sets_compare_func(void *data, int i,
 		void *search_object,
 		void *extra_data);

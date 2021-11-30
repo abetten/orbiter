@@ -162,7 +162,18 @@ D47="1,5,1,10,1,6,1,13,1,8,1,11,1,9,1,14,1,16,1,17,1,18,1,19 "
 
 
 
-F_ALPHA_BETA_GAMMA_DELTA="beta*(gamma + 1)*x0*x0*x2 + (alpha*delta - beta*gamma + alpha - beta - delta - 1)*x0*x1*x2 -1*(alpha*beta -alpha*delta + delta)*(gamma + 1)*x0*x1*x3 + (0-alpha*delta + alpha*gamma -beta*gamma -beta + delta -gamma)*x0*x2*x2 -(alpha*delta +beta -delta)*(gamma +1)*x0*x2*x3 -(delta + 1)*(alpha - 1)*x1*x1*x2 - (delta + 1)*(alpha - 1)*x1*x1*x3 + (alpha*delta - alpha*gamma + beta*gamma + beta - delta + gamma)*x1*x2*x2 + (alpha*beta*gamma + alpha*beta + alpha*delta - alpha*gamma + beta*gamma + beta - delta + gamma)*x1*x2*x3 + alpha*beta*(gamma + 1)*x1*x3*x3"
+F_ALPHA_BETA_GAMMA_DELTA="beta*(gamma + 1)*x0*x0*x2 \
++ (alpha*delta - beta*gamma + alpha - beta - delta - 1)*x0*x1*x2 \
+-1*(alpha*beta -alpha*delta + delta)*(gamma + 1)*x0*x1*x3 \
++ (0-alpha*delta + alpha*gamma -beta*gamma -beta + delta -gamma)*x0*x2*x2 \
+-(alpha*delta +beta -delta)*(gamma +1)*x0*x2*x3 \
+-(delta + 1)*(alpha - 1)*x1*x1*x2 \
+- (delta + 1)*(alpha - 1)*x1*x1*x3 \
++ (alpha*delta - alpha*gamma + beta*gamma + beta - delta + gamma)*x1*x2*x2 \
++ (alpha*beta*gamma + alpha*beta + alpha*delta \
+- alpha*gamma + beta*gamma + beta - delta + gamma)*x1*x2*x3 \
++ alpha*beta*(gamma + 1)*x1*x3*x3"
+
 
 F_abcd_eqn = "-(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(b - d)*X0*X0*X2 \
 + (a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(a + b - c - d)*X0*X1*X2 \
@@ -4910,24 +4921,24 @@ SECTION_CANONICAL_FORMS:
 
 
 EC_canon: elliptic_curve_b1_c3_q11.txt
-	$(ORBITER_PATH)orbiter.out -v 2 \
+	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define C -combinatorial_objects \
+			-file_of_points elliptic_curve_b1_c3_q11.txt \
+		-end \
 		-define F -finite_field -q 11 -end \
 		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-			-input \
-				-file_of_points elliptic_curve_b1_c3_q11.txt \
-			-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
 			-classification_prefix EC \
-			-report \
-		-end \
+			-save_ago \
 		-end
-	pdflatex EC_classification.tex
-	open EC_classification.pdf
+	#pdflatex EC_classification.tex
+	#open EC_classification.pdf
 
 
 
+# ToDo:
 
 
 arcs_4_2_classify: arcs_4_2_lift.solutions
@@ -4950,16 +4961,22 @@ arcs_4_2_classify: arcs_4_2_lift.solutions
 
 
 
-Hirschfeld4c: Hirschfeld_surface_q4.txt
-	$(ORBITER_PATH)orbiter.out -v 10 \
+
+
+Hirschfeld_q4_c: Hirschfeld_surface_q4.txt
+	$(ORBITER_PATH)orbiter.out -v 40 \
+		-define C -combinatorial_objects \
+			-file_of_points Hirschfeld_surface_q4.txt \
+		-end \
 		-define F -finite_field -q 4 -end \
 		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-canonical_form_PG \
-				-input -file_of_points Hirschfeld_surface_q4.txt -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
 				-classification_prefix Hirschfeld_surface_q4 \
-				-report \
+				-save_ago \
+				-report -end \
+				-max_TDO_depth 10 \
 			-end \
 		-end
 	pdflatex Hirschfeld_surface_q4_classification.tex
@@ -4972,79 +4989,69 @@ HIRSCHFELD_SURFACE_Q4_SET_OF_POINTS="0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,23,\
 26,27,30,31,34,35,38,39,42,47,48,51,52,53,54,59,60,61,62,67,68,69,70,75,76,\
 79,80,81,82"
 
-Hirschfeld4c_set:
-	$(ORBITER_PATH)orbiter.out -v 3 \
+Hirschfeld_q4_set_c:
+	$(ORBITER_PATH)orbiter.out -v 4 \
 		-define H -set -here $(HIRSCHFELD_SURFACE_Q4_SET_OF_POINTS) -end \
+		-define C -combinatorial_objects \
+			-set_of_points H \
+		-end \
 		-define F -finite_field -q 4 -end \
 		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-canonical_form_PG \
-				-input \
-					-set_of_points H \
-				-end \
-				-classification_prefix \
-					Hirschfeld_surface_q4 \
-				-save_canonical_labeling \
-				-save_ago \
-				-save_cumulative_canonical_labeling \
-					Hirschfeld_surface_q4_can_lab.csv \
-				-save_cumulative_data \
-					Hirschfeld_surface_q4_data.csv \
-				-report \
-			-end \
-		-end 
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+			-classification_prefix Hirschfeld_surface_q4 \
+			-save_ago \
+		-end
 	pdflatex Hirschfeld_surface_q4_classification.tex
 	open Hirschfeld_surface_q4_classification.pdf
 
 
 
-Dickson_set_stabilizer:
+Dickson_sets_stabilizer:
 	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define C -combinatorial_objects \
+			-set_of_points "0,1,2,5,6" \
+			-set_of_points "0,1,2,3,6" \
+			-set_of_points "0,1,2,3,4" \
+			-set_of_points "0,1,2,3,8" \
+			-set_of_points "0,1,2,5,6,7,8" \
+			-set_of_points "0,1,2,3,5,6,7" \
+			-set_of_points "0,1,2,3,5,6,9" \
+			-set_of_points "0,1,2,3,5,6,10" \
+			-set_of_points "0,1,2,3,5,6,4" \
+			-set_of_points "0,1,2,3,8,11,13" \
+			-set_of_points "3,6,9,7,10,12,8,11,13,14,4" \
+			-set_of_points "3,5,6,9,7,10,12,11,13,14,4" \
+			-set_of_points "0,1,2,3,5,6,9,7,10,12,4" \
+		-end \
 		-define F -finite_field -q 2 -end \
 		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-canonical_form_PG \
-				-input \
-					-set_of_points "0,1,2,5,6" \
-					-set_of_points "0,1,2,3,6" \
-					-set_of_points "0,1,2,3,4" \
-					-set_of_points "0,1,2,3,8" \
-					-set_of_points "0,1,2,5,6,7,8" \
-					-set_of_points "0,1,2,3,5,6,7" \
-					-set_of_points "0,1,2,3,5,6,9" \
-					-set_of_points "0,1,2,3,5,6,10" \
-					-set_of_points "0,1,2,3,5,6,4" \
-					-set_of_points "0,1,2,3,8,11,13" \
-					-set_of_points "3,6,9,7,10,12,8,11,13,14,4" \
-					-set_of_points "3,5,6,9,7,10,12,11,13,14,4" \
-					-set_of_points "0,1,2,3,5,6,9,7,10,12,4" \
-				-end \
-				-classification_prefix Dickson_set \
-				-save_canonical_labeling \
-				-save_ago \
-				-save_cumulative_canonical_labeling Dickson_sets_can_lab.csv \
-				-save_cumulative_data Dickson_sets_data.csv \
-				-report \
-			-end \
-		-end 
-	pdflatex Dickson_set_classification.tex
-	open Dickson_set_classification.pdf
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+			-classification_prefix Dickson_sets \
+			-save_ago \
+			-report -end \
+		-end
+	pdflatex Dickson_sets_classification.tex
+	open Dickson_sets_classification.pdf
 
 
 
 Endrass_7c: Endrass_F7.txt
 	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define C -combinatorial_objects \
+			-file_of_points Endrass_F7.txt  \
+		-end \
 		-define F -finite_field -q 7 -end \
 		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-		-input -file_of_points Endrass_F7.txt -end \
-		-classification_prefix Endrass_F7 \
-		-report \
-		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+			-classification_prefix Endrass_F7 \
+			-save_ago \
+			-report -end \
 		-end
 	pdflatex Endrass_F7_classification.tex
 	open Endrass_F7_classification.pdf
@@ -5052,72 +5059,6 @@ Endrass_7c: Endrass_F7.txt
 
 # group order is 32
 
-
-Hirschfeld16c: Hirschfeld_surface_q16.txt
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 16 -end \
-		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-		-input -file_of_points \
-			Hirschfeld_surface_q16.txt -end \
-		-classification_prefix Hirschfeld_surface_q16 \
-		-report \
-		-end \
-		-end
-	pdflatex Hirschfeld_surface_q16_classification.tex
-	open Hirschfeld_surface_q16_classification.pdf
-
-# nauty_interface_matrix_int n >= MAXN
-# nauty_interface_matrix_int n = 74532
-# nauty_interface_matrix_int MAXN = 22000
-
-
-
-cuspidal_cubic_q16_subsets_canonical: cuspidal_cubic_16_subsets_6.txt
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 16 -end \
-		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-		-input -file_of_points cuspidal_cubic_16_subsets_6.txt \
-		-end \
-		-classification_prefix cuspidal_cubic_q16 \
-		-report \
-		-end \
-		-end
-	pdflatex cuspidal_cubic_q16_classification.tex
-	open cuspidal_cubic_q16_classification.pdf
-
-
-
-
-del_Pezzo_13_group: del_Pezzo_F13a_points.txt
-	$(ORBITER_PATH)orbiter.out -v 4 \
-		-define F -finite_field -q 13 -end \
-		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-		-input \
-		-file_of_points del_Pezzo_F13a_points.txt \
-		-file_of_points del_Pezzo_F13b_points.txt \
-		-end \
-		-classification_prefix del_Pezzo_F13 \
-		-report \
-		-end
-	pdflatex del_Pezzo_F13_classification.tex
-	open del_Pezzo_F13_classification.pdf
-
-# 12 minutes on Macintosh
-# both have the same group of order 8, 
-# generated by -1s on the diagonals for the first three variables.
-
-#nauty_interface::nauty_interface_matrix_int n >= MAXN
-#nauty_interface::nauty_interface_matrix_int n = 33492
-#nauty_interface::nauty_interface_matrix_int MAXN = 22000
 
 
 
@@ -5422,27 +5363,29 @@ hyperoval_16_stab_0_disjoint_sets_graph:
 # 0 is missing is the chosen point
 
 
-hyperoval_16c:
+
+hyperoval_16_c:
 	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define C -combinatorial_objects \
+			-set_of_points $(HYPEROVAL_16_16320) \
+			-set_of_points $(HYPEROVAL_16_144) \
+		-end \
 		-define F -finite_field -q 16 -end \
 		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-		-input \
-			-set_of_points $(HYPEROVAL_16_16320) \
-		-end \
-		-classification_prefix hyperoval_q16 \
-		-report \
-		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+				-classification_prefix hyperoval_q16 \
+				-save_ago \
+				-report -end \
+				-max_TDO_depth 10 \
+			-end \
 		-end
 	pdflatex hyperoval_q16_classification.tex
 	open hyperoval_q16_classification.pdf
 
 #			-set_of_points $(HYPEROVAL_16_144) \
 
-
-# June 3 2020: 1 sec on Mac
  
 
 
@@ -5502,59 +5445,6 @@ nc_arcs_32_E13:
 #User time: 0:00
 
 
-
-nc_arcs_32_canon: 
-	$(ORBITER_PATH)orbiter.out -v 4 \
-		-define F -finite_field -q 32 -end \
-		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-canonical_form_PG \
-				-input \
-					-set_of_points "0,1,2,3,100,131" \
-					-set_of_points "0,1,2,3,100,628" \
-					-set_of_points "0,1,2,3,100,989" \
-				-end \
-				-classification_prefix nc_arcs_32 \
-				-report \
-			-end \
-		-end
-	pdflatex nc_arcs_32_classification.tex
-	open nc_arcs_32_classification.pdf
-
-
-
-nc_arcs_64_E13:
-	$(ORBITER_PATH)orbiter.out -v 4 \
-		-define F -finite_field -q 64 -end \
-		-define P -projective_space 2 F -use_projectivity_subgroup -end \
-		-with P -do \
-		-projective_space_activity \
-			-classify_arcs \
-				-poset_classification_control \
-					-problem_label nc_arcs_q64_d2 -W -depth 6 \
-					-recognize "0,1,2,3,326,389" \
-					-recognize "0,1,2,3,1106,1169" \
-					-recognize "0,1,2,3,2599,2536" \
-					-recognize "0,1,2,3,2796,2859" \
-					-recognize "0,1,2,3,1756,1819" \
-					-recognize "0,1,2,3,2469,2406" \
-					-recognize "0,1,2,3,3056,3119" \
-					-recognize "0,1,2,3,2339,2276" \
-					-recognize "0,1,2,3,3836,3899" \
-					-recognize "0,1,2,3,3966,4029" \
-					-recognize "0,1,2,3,2666,2729" \
-					-recognize "0,1,2,3,2016,2079" \
-					-report  -end \
-				-end \
-				-target_size 6 \
-				-test_nb_Eckardt_points 13 \
-				-d 2 \
-				-conic_test \
-			-end \
-		-end
-	#pdflatex nc_arcs_q64_d2_poset.tex
-	#open nc_arcs_q64_d2_poset.pdf
 
 
 F64_work:
@@ -5847,18 +5737,24 @@ cubic_curves_PG_2_8_draw:
 
 #cc_8_poset_lvl_9.layered_graph
 #cc_8_poset_detailed_lvl_9.layered_graph
-	
+
+
+
 cubic_curves_PG_2_8_canon:
 	$(ORBITER_PATH)orbiter.out -v 6 \
+		-define C -combinatorial_objects \
+			-set_of_points "2,3,28,46,51,61,40,71" \
+		-end \
 		-define F -finite_field -q 8 -end \
 		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-		-input -set_of_points "2,3,28,46,51,61,40,71" -end \
-		-classification_prefix cc_8 \
-		-report \
-		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+				-classification_prefix cc_8 \
+				-save_ago \
+				-report -end \
+				-max_TDO_depth 10 \
+			-end \
 		-end
 	pdflatex cc_8_classification.tex
 	open cc_8_classification.pdf
@@ -6385,65 +6281,12 @@ F_abcd_sweep_4_27_q7:
 		-end \
 
 
-F_abcd_sweep_4_27_q7_classify:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 7 -end \
-		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-		-input \
-			-file_of_points F_abcd_q7_points.txt \
-		-end \
-		-classification_prefix F_abcd_q7 \
-		-report \
-		-end \
-		-end
 
 
 
 
 
-F_alpha_beta_gamma_delta_q7:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 7 -end \
-		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-control_six_arcs -end \
-		-define_surface -q 7 -by_equation "F_alpha_beta_gamma_delta" \
-			"\DF_{\alpha,\beta,\gamma,\delta}\D" "x0,x1,x2,x3" \
-			$(F_ALPHA_BETA_GAMMA_DELTA) \
-			"alpha=2,beta=3,gamma=4,delta=5" \
-			"\D\alpha=2,\beta=3,\gamma=4,\delta=5\D" \
-		-end \
-		-end 
-	pdflatex surface_equation_F_alpha_beta_gamma_delta_q7_report.tex
-	open surface_equation_F_alpha_beta_gamma_delta_q7_report.pdf
 
-
-
-
-surface_F7_15_lines_stab:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 7 -end \
-		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-		-input \
-			-set_of_points "$(SURFACE_F7_15LINES_POINTS)" \
-		-end \
-		-classification_prefix surface_15_lines_q7 \
-		-report \
-		-end \
-		-end
-	pdflatex surface_15_lines_q7_classification.tex
-	open surface_15_lines_q7_classification.pdf
-
-
-# group has order 6, 2 generators:
-#1,5,0,0,3,6,0,0,1,1,3,0,5,5,0,3, 1,0,2,5,0,1,6,1,0,0,3,5,0,0,4,4,
 
 
 F_alpha_beta_gamma_delta_q7_override_group:
@@ -6473,6 +6316,8 @@ F_alpha_beta_gamma_delta_q7_override_group:
 	pdflatex surface_equation_F_alpha_beta_gamma_delta_q7_with_group.tex
 	open surface_equation_F_alpha_beta_gamma_delta_q7_with_group.pdf
 
+# cubic surfaces with 15 lines:
+
 
 F_alpha_beta_gamma_delta_sweep_4_q3:
 	$(ORBITER_PATH)orbiter.out -v 3 \
@@ -6489,6 +6334,10 @@ F_alpha_beta_gamma_delta_sweep_4_q3:
 		-end 
 
 
+# cubic surfaces with 15 lines:
+
+
+
 
 F_alpha_beta_gamma_delta_sweep_4_q7:
 	$(ORBITER_PATH)orbiter.out -v 3 \
@@ -6501,50 +6350,34 @@ F_alpha_beta_gamma_delta_sweep_4_q7:
 			$(F_ALPHA_BETA_GAMMA_DELTA) \
 			"alpha=2,beta=3,gamma=4,delta=5" \
 			"\D\alpha=2,\beta=3,\gamma=4,\delta=5\D" \
-		-end \
-		-end 
+		-end
 
 
-# creates F_alpha_beta_gamma_delta_q7_sweep4_15_data.csv
+#User time: 0:30
+# 348 parameter sets
 
 
-F_alpha_beta_gamma_delta_sweep_4_q7_split:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-csv_file_split_rows_modulo  F_alpha_beta_gamma_delta_q7_sweep4_15_data.csv 10
-
-#F_alpha_beta_gamma_delta_q7_sweep4_15_data_split_0_mod_10.csv
-
-
-F_alpha_beta_gamma_delta_sweep_4_q7_classify:
-	$(ORBITER_PATH)orbiter.out -v 4 \
-		-list_arguments \
-		-define F -finite_field -q 7 -end \
-		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-classify_quartic_curves_with_substructure \
-				F_alpha_beta_gamma_delta_q7_sweep4_15_data.csv \
-				1 4 3 F_alpha_beta_gamma_delta_sweep_4_q7_classify \
-		-end \
-		-print_symbols
-
-
-F_alpha_beta_gamma_delta_sweep_4_classify_q7_nauty:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 7 -end \
-		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-		-input \
+F_alpha_beta_gamma_delta_classify_q7_nauty:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define C -combinatorial_objects \
 			-file_of_points F_alpha_beta_gamma_delta_q7_points.txt \
 		-end \
-		-classification_prefix surface_15_lines_q7 \
-		-report \
-		-end \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space 3 F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+			-classification_prefix surface_15_lines_q7 \
+			-save_ago \
 		-end
-	pdflatex surface_15_lines_q7_classification.tex
-	open surface_15_lines_q7_classification.pdf
+	#pdflatex surface_15_lines_q7_classification.tex
+	#open surface_15_lines_q7_classification.pdf
+
+
+#User time: 4:12 on Mac
+# 6 orbits
+
+
 
 
 F_alpha_beta_gamma_delta_q7_recognize:
@@ -6882,7 +6715,7 @@ quartic_curves_q13_classify:
 #1 : 48
 
 
-
+# ToDo:
 
 quartic_curves_13_classify_nauty: 
 	$(ORBITER_PATH)orbiter.out -v 3 \
@@ -7025,50 +6858,6 @@ quartic_curves_q19_set_stabilizer:
 
 
 
-# needs work!!!
-
-quartic_curves_17_classify_old: 
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 17 -end \
-		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-		-input \
-			-file_of_points surface_catalogue_q17_iso0_quartics.txt \
-			-file_of_points surface_catalogue_q17_iso1_quartics.txt \
-			-file_of_points surface_catalogue_q17_iso2_quartics.txt \
-			-file_of_points surface_catalogue_q17_iso3_quartics.txt \
-			-file_of_points surface_catalogue_q17_iso4_quartics.txt \
-			-file_of_points surface_catalogue_q17_iso5_quartics.txt \
-			-file_of_points surface_catalogue_q17_iso6_quartics.txt \
-		-end \
-		-classification_prefix quartic_q17 \
-		-report \
-		-end \
-		-end
-	pdflatex quartic_q17_classification.tex
-	open quartic_q17_classification.pdf
-
-
-
-
-quartic_curve_13_0_canonical: 
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 13 -end \
-		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-		-input -set_of_points "34,74,87,89,95,99,146,175" -end \
-		-classification_prefix quartic_q13_0 \
-		-report \
-		-end \
-		-end
-	pdflatex quartic_q13_0_classification.tex
-	open quartic_q13_0_classification.pdf
-
-# group order 24
 
 surface_13_0_quartics:
 	$(ORBITER_PATH)orbiter.out -v 3 \
@@ -7162,20 +6951,6 @@ Knecht_13_1:
 		-print_symbols
 
 
-quartic_curve_Knecht_1_canonical: 
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 13 -end \
-		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-		-input -file_of_points Knecht_1.txt -end \
-		-classification_prefix quartic_Knecht_1 \
-		-report \
-		-end \
-		-end
-	pdflatex quartic_Knecht_1_classification.tex
-	open quartic_Knecht_1_classification.pdf
 
 
 
@@ -7194,50 +6969,6 @@ Knecht_13_2:
 		-combinatorial_object_activity \
 			-save \
 		-end
-
-
-quartic_curve_Knecht_2_canonical: 
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 13 -end \
-		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-		-input \
-		-file_of_points Knecht_2.txt -end \
-		-classification_prefix quartic_Knecht_2 \
-		-report \
-		-end \
-		-end
-	pdflatex quartic_Knecht_2_classification.tex
-	open quartic_Knecht_2_classification.pdf
-
-# group of order 24
-
-quartic_curve_13_canonical: 
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 13 -end \
-		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-		-input \
-		-file_of_points Knecht_1.txt \
-		-file_of_points Knecht_2.txt \
-		-set_of_points "34,74,87,89,95,99,146,175" \
-		-set_of_points "29,86,97,154"  \
-		-set_of_points "17,18,47,72,113,134,162,163"  \
-		-end \
-		-classification_prefix quartic_Knecht_2 \
-		-report \
-		-end \
-		-end
-	pdflatex quartic_Knecht_2_classification.tex
-	open quartic_Knecht_2_classification.pdf
-
-
-
-
 
 
 Nathan_19_1:
@@ -7274,7 +7005,7 @@ surface_25_0:
 	open surface_catalogue_q25_iso0_quartics.pdf
 
 
-
+# ToDo:
 
 quartic_curve_25_0_0_canonical: 
 	$(ORBITER_PATH)orbiter.out -v 3 \
@@ -8029,22 +7760,6 @@ D3_q4:
 #surface_by_coefficients_q4_points.txt
 
 
-D3_q4_canonical: surface_by_coefficients_q4_points.txt
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-		-input -file_of_points surface_by_coefficients_q4_points.txt -end \
-		-classification_prefix surface_by_coefficients_q4_points \
-		-report \
-		-end \
-		-end
-	pdflatex surface_by_coefficients_q4_points_classification.tex
-	open surface_by_coefficients_q4_points_classification.pdf
-
-# group order 24
 
 
 
@@ -8089,24 +7804,6 @@ D6_q4:
 
 
 
-D6_q4_canonical: surface_by_coefficients_q4_D6_points.txt
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-		-input -file_of_points surface_by_coefficients_q4_D6_points.txt -end \
-		-classification_prefix surface_by_coefficients_q4_points \
-		-report \
-		-end \
-		-end
-	pdflatex surface_by_coefficients_q4_points_classification.tex
-	open surface_by_coefficients_q4_points_classification.pdf
-
-
-# group order 384 = 192 * 2
-
 
 
 D8_q4:
@@ -8126,25 +7823,6 @@ D8_q4:
 	mv surface_by_coefficients_q4_points.txt surface_by_coefficients_q4_D8_points.txt
 
 
-D3_D8_q4_canonical:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-		-input \
-			-file_of_points surface_by_coefficients_q4_D3_points.txt \
-			-file_of_points surface_by_coefficients_q4_D8_points.txt \
-		-end \
-		-classification_prefix surface_by_coefficients_q4_points \
-		-report \
-		-end \
-		-end
-	pdflatex surface_by_coefficients_q4_points_classification.tex
-	open surface_by_coefficients_q4_points_classification.pdf
-
-# D3 and D8 are isomorphic over GF(4)
 
 
 D1_q8:
@@ -8164,23 +7842,6 @@ D1_q8:
 
 #surface_by_coefficients_q8_points.txt
 
-
-D1_q8_canonical:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 8 -end \
-		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-		-input -file_of_points surface_by_coefficients_q8_points.txt -end \
-		-classification_prefix surface_by_coefficients_q8_points \
-		-report \
-		-end \
-		-end
-	pdflatex surface_by_coefficients_q8_points_classification.tex
-	open surface_by_coefficients_q8_points_classification.pdf
-
-# group order 2160
 
 ## cleaning D1 with 15 lines over F2 and 27 lines over F4:
 
@@ -8251,39 +7912,6 @@ D1_q4_with_select_double_six_c:
 	pdflatex D1_q4.tex
 	open D1_q4.pdf
 
-
-
-#############################################################################################################
-# 
-
-DICKSON:
-
-
-#
-
-# Dickson nonsingular:
-
-Dickson_q4_aut:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-canonical_form_PG \
-				-input \
-					-file_of_points D1_points.txt \
-					-file_of_points D16_points.txt \
-				-end \
-				-classification_prefix D \
-				-save_canonical_labeling \
-				-save_ago \
-				-save_cumulative_canonical_labeling D_can_lab.csv \
-				-save_cumulative_data D_data.csv  \
-				-report \
-			-end \
-		-end 
-	pdflatex D_classification.tex
-	open D_classification.pdf
 
 
 
@@ -8427,29 +8055,6 @@ Dickson_q16_analyze: poly_orbits_d3_n3_q2_F16.csv
 	pdflatex poly_orbits_d3_n3_q2_F16_report.tex
 	open poly_orbits_d3_n3_q2_F16_report.pdf
 
-
-
-Dickson_q8_surface_canonical:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 8 -end \
-		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-canonical_form_PG \
-				-input \
-					-set_of_points "1,2,3,19,27,35,43,51,59,67,82,90,98,106,114,122,130,138,146,153,161,169,177,185,193,201,209,217,225,233,241,249,257,265,273,281,289,297,305,313,321,329,337,345,353,361,369,377,385,393,401,409,417,425,433,441,449,457,465,473,481,489,497,505,513,521,529,537,545,553,561,569,577" \
-				-end \
-				-classification_prefix design \
-				-save_canonical_labeling \
-				-save_ago \
-				-save_cumulative_canonical_labeling D_can_lab.csv \
-				-save_cumulative_data D_data.csv \
-				-report \
-			-end \
-		-end 
-
-
-# problem because the group order is too large for int
 
 
 #############################################################################################################
@@ -8910,17 +8515,20 @@ FILE_24_3_TFC_INC="24 24 72\
 \n-1 3"
 
 
-
 design_test:
 	echo $(FILE_24_3_TFC_INC) >24_3_TFC.inc
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define D -design  -end \
-		-with D -do \
-		-design_activity \
+	$(ORBITER_PATH)orbiter.out -v 6 \
+		-define C -combinatorial_objects \
+			-file_of_incidence_geometries 24_3_TFC.inc 24 24 72 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-canonical_form \
-			-input -file_of_incidence_geometries 24_3_TFC.inc 24 24 72 -end \
+			-classification_prefix 24_3_TFC \
 			-save_ago \
 		-end
+
+
 
 
 
@@ -11700,6 +11308,11 @@ linsp30_pt_distribution:
 		-end
 
 
+
+
+########################################################################################################
+# Section 10.3: Combinatorial Linear Spaces
+
 ####
 # geometry builder:
 ####
@@ -11781,8 +11394,17 @@ geo_10_3:
 # 8/26/2021: 0 sec on Mac
 
 
+geo_10_3_callgrind:
+	valgrind --tool=callgrind  $(ORBITER_PATH)orbiter.out -v 2 \
+		-define Test_lines -set -loop 4 11 1 -end \
+		-geometry_builder -V 10 -B 10 -TDO 3 -fuse 1 \
+			-fname_GEO 10_3 \
+			-test Test_lines FFFF \
+		-end
+
+
 geo_10_3_tree:
-	$(ORBITER_PATH)orbiter.out -v 2 \
+	$(ORBITER_PATH)orbiter.out -v 20 \
 		-define Test_lines -set -loop 0 11 1 -end \
 		-geometry_builder -V 10 -B 10 -TDO 3 -fuse 1 \
 			-fname_GEO 10_3 \
@@ -11804,6 +11426,25 @@ geo_10_3_tree:
 
 geo_10_3_c:
 	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define C -combinatorial_objects \
+			-file_of_incidence_geometries 10_3.inc 10 10 30 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+			-classification_prefix 10_3 \
+			-label 10_3 \
+			-save_ago \
+		-end
+
+
+
+#0 1 2 10 13 14 20 25 26 31 33 35 41 44 46 52 53 56 62 67 68 74 77 79 85 88 89 
+
+
+
+geo_10_3_c_old:
+	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define D -design  -end \
 		-with D -do \
 		-design_activity \
@@ -11811,6 +11452,8 @@ geo_10_3_c:
 			-input -file_of_incidence_geometries 10_3.inc 10 10 30 -end \
 			-save_ago \
 		-end
+
+
 
 
 
@@ -11965,9 +11608,9 @@ geo_16_4_g4:
 # none
 
 
-geo_40_4_g4:
+geo_40_4_g4_tree:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define Test_lines -set -loop 4 41 1 -end \
+		-define Test_lines -set -loop 0 41 1 -end \
 		-geometry_builder \
 			-V 40 -B 40 -TDO 4 \
 			-fuse 1 -fname_GEO 40_4_g4 \
@@ -11977,6 +11620,8 @@ geo_40_4_g4:
 		-end
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-draw_options -embedded -radius 50 \
+			-xin 10000 -yin 10000 \
+			-xout 1000000 -yout 1000000 \
 			-nodes_empty \
 			-scale 0.5 -line_width 0.3 -end \
 		-tree_draw 40_4_g4_tree.txt
@@ -12251,14 +11896,17 @@ geo_9_4_12_3:
 
 geo_9_4_12_3_c:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define D -design  -end \
-		-with D -do \
-		-design_activity \
+		-define C -combinatorial_objects \
+			-file_of_incidence_geometries \
+			AG_2_3.inc 9 12 36 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-canonical_form \
-			-input -file_of_incidence_geometries \
-				AG_2_3.inc 9 12 36 -end \
+			-classification_prefix AG_2_3 \
 			-save_ago \
 		-end
+
 
 
 #AG_2_3.blocks_long
@@ -12301,8 +11949,8 @@ LS_AG_2_3_disjoint_sets_graph_and_cliques:
 
 
 #User time: 0.66 of a second, dt=66 tps = 100
-#disjoint_sets_graph_AG_2_3_design_table_sol.txt
-#disjoint_sets_graph_AG_2_3_design_table_sol.csv
+#AG_2_3_design_table_disjoint_sets_sol.txt
+#AG_2_3_design_table_disjoint_sets_sol.csv
 
 #15360 solutions
 
@@ -12316,7 +11964,7 @@ LS_AG_2_3_export_solutions:
 		-design_activity \
 			-extract_solutions_by_index "AG_2_3" \
 				$(ORDER_SYM_9) $(GENERATORS_SYM_9) \
-				disjoint_sets_graph_AG_2_3_design_table_sol.csv \
+				AG_2_3_design_table_disjoint_sets_sol.csv \
 				solutions.csv \
 		-end
 
@@ -12327,12 +11975,13 @@ LS_AG_2_3_export_solutions:
 
 LS_AG_2_3_solutions_classify:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define D -design  -end \
-		-with D -do \
-		-design_activity \
+		-define C -combinatorial_objects \
+			-file_of_designs \
+			solutions.csv 9 84 3 12 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-canonical_form \
-			-input -file_of_designs \
-				solutions.csv 9 840 3 12 -end \
 			-save_ago \
 			-save_classification large_sets_of_AG_2_3 \
 			-classification_prefix large_sets_of_AG_2_3 \
@@ -12340,6 +11989,9 @@ LS_AG_2_3_solutions_classify:
 			-save_fibration "fiber_" \
 		-end
 
+#iso type : input object : ago
+#  0 :   0 :    42
+#  1 :   3 :    54
 
 
 
@@ -12446,16 +12098,16 @@ PG_2_27_special:
 
 design_27c:
 	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define C -combinatorial_objects \
+			-set_of_points "2,56,30,112,253,90,440,508" \
+		-end \
 		-define F -finite_field -q 27 -override_polynomial 46  -end \
 		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-		-input \
-		-set_of_points "2,56,30,112,253,90,440,508" \
-		-end \
-		-classification_prefix design \
-		-report \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+			-classification_prefix design \
+			-report -end \
 		-end
 	pdflatex design_classification.tex
 	open design_classification.pdf
@@ -12831,22 +12483,28 @@ PG_3_5_assume_31_read:
 # writes H31_packings.csv
 
 
+
 PG_3_5_assume_31_classify:
 	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define C -combinatorial_objects \
+			-file_of_packings_through_spread_table \
+				H31_packings.csv \
+				SPREAD_TABLES_5_REG/spread_25_spreads.csv \
+				5 \
+		-end \
 		-define F -finite_field -q 5 -end \
 		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-canonical_form_PG \
-				-input -file_of_packings_through_spread_table \
-					H31_packings.csv \
-					SPREAD_TABLES_5_REG/spread_25_spreads.csv \
-				-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
 			-classification_prefix H31_packings \
-			-report H31_packings \
+			-report -end \
 			-end
 	pdflatex H31_packings_classification.tex
 	open H31_packings_classification.pdf
+
+
+
 
 # the two packings (ignore the first number)
 #0,444,43313,154402,46682,108254,75363,27729,32139,5244,60442,142811,111115,94209,120678,89533,13798,103994,129953,82168,136838,19253,23017,145985,134996,54705,36267,55066,117542,96699,69154,72460
@@ -12910,7 +12568,8 @@ PG_3_5_assume_3B_fpc0_lo_cliques:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define G -graph -load_from_file H3B_ME_fpc0_lo.graph -end \
 		-with G -do \
-			-graph_theoretic_activity -find_cliques -target_size 10 -end -end \
+			-graph_theoretic_activity -find_cliques \
+			-target_size 10 -end -end \
 		-print_symbols
 
 # 768 solutions 
@@ -12942,6 +12601,7 @@ PG_3_5_assume_3B_long_read:
 #written file H3B_ME_packings.csv of size 150540
 
 
+# ToDo:
 
 PG_3_5_assume_3B_classify:
 	$(ORBITER_PATH)orbiter.out -v 2 \

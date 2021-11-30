@@ -17,8 +17,13 @@ namespace top_level {
 
 projective_space_object_classifier_description::projective_space_object_classifier_description()
 {
+#if 0
 	f_input = FALSE;
 	Data = NULL;
+#endif
+
+	f_label = FALSE;
+	//std::string label;
 
 	f_save_classification = FALSE;
 	//std::string save_prefix;
@@ -71,6 +76,7 @@ int projective_space_object_classifier_description::read_arguments(
 
 		cout << "projective_space_object_classifier_description::read_arguments, next argument is " << argv[i] << endl;
 
+#if 0
 		if (stringcmp(argv[i], "-input") == 0) {
 			f_input = TRUE;
 			cout << "-input" << endl;
@@ -84,7 +90,13 @@ int projective_space_object_classifier_description::read_arguments(
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
+#endif
 
+		if (stringcmp(argv[i], "-label") == 0) {
+			f_label = TRUE;
+			label.assign(argv[++i]);
+			cout << "-label" << label << endl;
+		}
 
 		else if (stringcmp(argv[i], "-save_classification") == 0) {
 			f_save_classification = TRUE;
@@ -198,12 +210,17 @@ int projective_space_object_classifier_description::read_arguments(
 
 void projective_space_object_classifier_description::print()
 {
+
+#if 0
 	if (f_input) {
 		cout << "-input" << endl;
 		Data->print();
 	}
+#endif
 
-
+	if (f_label) {
+		cout << "-label" << label << endl;
+	}
 	if (f_save_classification) {
 		cout << "-save_classification" << save_prefix << endl;
 	}

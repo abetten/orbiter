@@ -36,6 +36,9 @@ combinatorial_object_activity_description::combinatorial_object_activity_descrip
 	//std::string &canonical_form_PG_PG_label;
 	Canonical_form_PG_Descr = NULL;
 
+	f_canonical_form = FALSE;
+	Canonical_form_Descr = NULL;
+
 }
 
 combinatorial_object_activity_description::~combinatorial_object_activity_description()
@@ -114,6 +117,26 @@ int combinatorial_object_activity_description::read_arguments(
 			}
 		}
 
+		else if (stringcmp(argv[i], "-canonical_form") == 0) {
+			f_canonical_form = TRUE;
+			if (f_v) {
+				cout << "-canonical_form, reading extra arguments" << endl;
+			}
+
+			Canonical_form_Descr = NEW_OBJECT(projective_space_object_classifier_description);
+
+			i += Canonical_form_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
+			if (f_v) {
+				cout << "done reading -canonical_form " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+			}
+		}
+
+
 
 		else if (stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -152,6 +175,10 @@ void combinatorial_object_activity_description::print()
 	if (f_canonical_form_PG) {
 		cout << "-canonical_form_PG " << canonical_form_PG_PG_label << endl;
 		Canonical_form_PG_Descr->print();
+	}
+	if (f_canonical_form) {
+		cout << "-canonical_form " << endl;
+		Canonical_form_Descr->print();
 	}
 }
 

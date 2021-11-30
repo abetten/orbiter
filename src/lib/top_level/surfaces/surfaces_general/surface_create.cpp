@@ -2460,6 +2460,7 @@ void surface_create::compute_group(projective_space_with_action *PA,
 		cout << "surface_create::compute_group" << endl;
 	}
 
+#if 0
 	A = Surf_A->A;
 
 	projective_space_object_classifier_description *Descr;
@@ -2553,6 +2554,7 @@ void surface_create::compute_group(projective_space_with_action *PA,
 	if (f_v) {
 		cout << "surface_create::compute_group ago = " << ago << endl;
 	}
+#endif
 
 
 

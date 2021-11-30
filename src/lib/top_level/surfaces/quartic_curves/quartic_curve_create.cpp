@@ -1101,6 +1101,7 @@ void quartic_curve_create::compute_group(projective_space_with_action *PA,
 		cout << "quartic_curve_create::compute_group" << endl;
 	}
 
+#if 0
 	A = PA->A;
 
 	projective_space_object_classifier_description *Descr;
@@ -1199,7 +1200,7 @@ void quartic_curve_create::compute_group(projective_space_with_action *PA,
 		cout << "quartic_curve_create::compute_group ago = " << ago << endl;
 	}
 
-
+#endif
 
 	if (f_v) {
 		cout << "quartic_curve_create::compute_group done" << endl;

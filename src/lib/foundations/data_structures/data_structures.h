@@ -90,25 +90,25 @@ public:
 		// the number of isomorphism types
 
 	int rep_len;
-		// the number of uchar we need to store the canonical form of
+		// the number of char we need to store the canonical form of
 		// one object
 
 
 	uchar **Type_data;
-		// Type_data[N][rep_len]
+		// Type_data[nb_types][rep_len]
 		// the canonical form of the i-th representative is
 		// Type_data[i][rep_len]
 	int *Type_rep;
-		// Type_rep[N]
+		// Type_rep[nb_types]
 		// Type_rep[i] is the index of the candidate which
 		// has been chosen as representative
 		// for the i-th isomorphism type
 	int *Type_mult;
-		// Type_mult[N]
-		// Type_mult[i] gives the number of candidates so far which
+		// Type_mult[nb_types]
+		// Type_mult[i] gives the number of candidates which
 		// are isomorphic to the i-th isomorphism class representative
 	void **Type_extra_data;
-		// Type_extra_data[N]
+		// Type_extra_data[nb_types]
 		// Type_extra_data[i] is a pointer that is stored with the
 		// i-th isomorphism class representative
 
@@ -118,11 +118,11 @@ public:
 		// number of candidates that we have already tested
 
 	int *type_of;
-		// type_of[N]
+		// type_of[nb_types]
 		// type_of[i] is the isomorphism type of the i-th candidate
 
 	tally *C_type_of;
-		// the classification of type_of[N]
+		// the classification of type_of[nb_types]
 		// this will be computed in finalize()
 
 	int *perm;
