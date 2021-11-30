@@ -163,8 +163,31 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 				cout << "through spread table "
 					<< Descr->input_string2[input_idx] << " :" << endl;
 			}
-			nb_obj = Fio.count_number_of_orbits_in_file(
-					Descr->input_string[input_idx], 0 /* verbose_level*/);
+			//nb_obj = Fio.count_number_of_orbits_in_file(
+			//		Descr->input_string[input_idx], 0 /* verbose_level*/);
+
+			set_of_sets *SoS;
+
+			SoS = NEW_OBJECT(set_of_sets);
+
+			int underlying_set_size = 0;
+
+			if (f_v) {
+				cout << "data_input_stream::count_number_of_objects_to_test "
+						"Reading the file " << Descr->input_string[input_idx] << endl;
+			}
+			SoS->init_from_file(
+					underlying_set_size,
+					Descr->input_string[input_idx], verbose_level);
+			if (f_v) {
+				cout << "Read the file " << Descr->input_string[input_idx] << ", underlying_set_size=" << underlying_set_size << endl;
+			}
+
+			nb_obj = SoS->nb_sets;
+
+			FREE_OBJECT(SoS);
+
+
 			if (f_v) {
 				cout << "The file " << Descr->input_string[input_idx]
 					<< " has " << nb_obj << " objects" << endl;
@@ -509,7 +532,7 @@ void data_input_stream::read_objects(int verbose_level)
 			int underlying_set_size = 0;
 
 			if (f_v) {
-				cout << "projective_space_object_classifier::process_multiple_objects_from_file "
+				cout << "data_input_stream::read_objects "
 						"Reading the file " << Descr->input_string[input_idx] << endl;
 			}
 			SoS->init_from_file(
@@ -552,7 +575,7 @@ void data_input_stream::read_objects(int verbose_level)
 			int underlying_set_size = 0;
 
 			if (f_v) {
-				cout << "projective_space_object_classifier::process_multiple_objects_from_file "
+				cout << "data_input_stream::read_objects "
 						"Reading the file " << Descr->input_string[input_idx] << endl;
 			}
 			SoS->init_from_file(
@@ -594,7 +617,7 @@ void data_input_stream::read_objects(int verbose_level)
 			int underlying_set_size = 0;
 
 			if (f_v) {
-				cout << "projective_space_object_classifier::process_multiple_objects_from_file "
+				cout << "data_input_stream::read_objects "
 						"Reading the file " << Descr->input_string[input_idx] << endl;
 			}
 			SoS->init_from_file(

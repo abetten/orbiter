@@ -224,8 +224,17 @@ void classify_bitvectors::finalize(int verbose_level)
 	}
 	C_type_of = NEW_OBJECT(tally);
 
+	if (f_v) {
+		cout << "classify_bitvectors::finalize type_of=";
+		Orbiter->Int_vec.print(cout, type_of, N);
+		cout << endl;
+	}
 	C_type_of->init(type_of, N, FALSE, 0);
-
+	if (f_v) {
+		cout << "classify_bitvectors::finalize classification:" << endl;
+		C_type_of->print(TRUE /* f_backwards*/);
+		cout << endl;
+	}
 
 	int *v;
 	int i;

@@ -84,6 +84,9 @@ public:
 	std::string canonical_form_PG_PG_label;
 	projective_space_object_classifier_description *Canonical_form_PG_Descr;
 
+	int f_canonical_form;
+	projective_space_object_classifier_description *Canonical_form_Descr;
+
 
 	combinatorial_object_activity_description();
 	~combinatorial_object_activity_description();

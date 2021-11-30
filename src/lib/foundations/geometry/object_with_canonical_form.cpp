@@ -115,24 +115,24 @@ void object_with_canonical_form::print(ostream &ost)
 void object_with_canonical_form::print_tex(ostream &ost)
 {
 	if (type == t_PTS) {
-		ost << "set of points of size " << sz << ": $\\{";
+		ost << "set of points of size " << sz << ": ";
 		Orbiter->Lint_vec.print(ost, set, sz);
-		ost << "\\}$\\\\" << endl;
+		ost << "\\\\" << endl;
 		//P->print_set_numerical(ost, set, sz);
 		P->print_set_of_points(ost, set, sz);
 	}
 	else if (type == t_LNS) {
-		ost << "set of lines of size " << sz << ": $\\{";
+		ost << "set of lines of size " << sz << ": ";
 		Orbiter->Lint_vec.print(ost, set, sz);
-		ost << "\\}$" << endl;
+		ost << "\\\\" << endl;
 	}
 	else if (type == t_PNL) {
-		ost << "set of points of size " << sz << ": $\\{";
+		ost << "set of points of size " << sz << ": ";
 		Orbiter->Lint_vec.print(ost, set, sz);
-		ost << "\\}$\\\\" << endl;
-		ost << "and a set of lines of size " << sz2 << ": $\\{";
+		ost << "\\\\" << endl;
+		ost << "and a set of lines of size " << sz2 << ": ";
 		Orbiter->Lint_vec.print(ost, set2, sz2);
-		ost << "\\}$" << endl;
+		ost << "\\\\" << endl;
 	}
 	else if (type == t_PAC) {
 		ost << "packing: \\\\" << endl;

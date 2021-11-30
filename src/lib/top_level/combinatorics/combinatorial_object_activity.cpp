@@ -351,8 +351,36 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 		}
 		OC->do_the_work(
 				Descr->Canonical_form_PG_Descr,
-				TRUE,
-				PA,
+				TRUE /* f_projective_space */, PA,
+				IS,
+				verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_IS after OC->do_the_work" << endl;
+		}
+
+		FREE_OBJECT(OC);
+
+
+
+	}
+	else if (Descr->f_canonical_form) {
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_IS f_canonical_form" << endl;
+		}
+
+
+
+		projective_space_object_classifier *OC;
+
+		OC = NEW_OBJECT(projective_space_object_classifier);
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_IS before OC->do_the_work" << endl;
+		}
+		OC->do_the_work(
+				Descr->Canonical_form_Descr,
+				FALSE /* f_projective_space */, NULL /* PA */,
 				IS,
 				verbose_level);
 		if (f_v) {

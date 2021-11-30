@@ -966,6 +966,7 @@ void interface_combinatorics::worker(int verbose_level)
 				verbose_level);
 
 	}
+#if 0
 	else if (f_canonical_form_nauty) {
 
 		combinatorics_global Combi;
@@ -988,6 +989,7 @@ void interface_combinatorics::worker(int verbose_level)
 				verbose_level);
 
 	}
+#endif
 
 	else if (f_rank_k_subset) {
 

@@ -566,6 +566,7 @@ void projective_space_with_action::compute_group_of_set(long int *set, int set_s
 		cout << "projective_space_with_action::compute_group_of_set" << endl;
 	}
 
+#if 0
 	projective_space_object_classifier_description *Descr;
 	projective_space_object_classifier *Classifier;
 
@@ -592,13 +593,11 @@ void projective_space_with_action::compute_group_of_set(long int *set, int set_s
 				"before Classifier->do_the_work" << endl;
 	}
 
-#if 0
 	Classifier->do_the_work(
 			Descr,
 			TRUE,
 			this,
 			verbose_level);
-#endif
 
 	if (f_v) {
 		cout << "projective_space_with_action::compute_group_of_set "
@@ -627,6 +626,7 @@ void projective_space_with_action::compute_group_of_set(long int *set, int set_s
 		cout << "projective_space_with_action::compute_group_of_set ago = " << ago << endl;
 	}
 
+#endif
 
 
 	if (f_v) {
@@ -1137,6 +1137,7 @@ void projective_space_with_action::canonical_form_of_code(
 	int *v;
 	long int *set;
 
+#if 0
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_form_of_code before int_vec_scan" << endl;
 	}
@@ -1222,6 +1223,7 @@ void projective_space_with_action::canonical_form_of_code(
 
 	FREE_int(v);
 	FREE_lint(set);
+#endif
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_form_of_code done" << endl;
 	}
@@ -1792,6 +1794,7 @@ void projective_space_with_action::report_decomposition_by_group(
 // #############################################################################
 
 
+#if 0
 
 void OiPA_encode(void *extra_data,
 		long int *&encoding, int &encoding_sz, void *global_data)
@@ -1822,10 +1825,13 @@ void OiPA_group_order(void *extra_data,
 	//cout << "OiPA_group_order done" << endl;
 
 }
+#endif
+
 
 void print_summary_table_entry(int *Table,
 		int m, int n, int i, int j, int val, std::string &output, void *data)
 {
+	int f_v = FALSE;
 	classify_bitvectors *CB;
 	object_in_projective_space_with_action *OiPA;
 	void *extra_data;
@@ -1834,6 +1840,9 @@ void print_summary_table_entry(int *Table,
 	sorting Sorting;
 	char str[1000];
 
+	if (f_v) {
+		cout << "print_summary_table_entry i=" << i << " j=" << j << endl;
+	}
 	CB = (classify_bitvectors *) data;
 
 	str[0] = 0;
@@ -1861,9 +1870,26 @@ void print_summary_table_entry(int *Table,
 			sprintf(str, "%d", i);
 		}
 		else if (j == 2) {
-			extra_data = CB->Type_extra_data[CB->perm[i]];
+
+
+			if (f_v) {
+				cout << "print_summary_table_entry getting extra_data" << endl;
+			}
+
+			//extra_data = CB->Type_extra_data[CB->perm[i]];
+			extra_data = CB->Type_extra_data[i];
+
+			if (f_v) {
+				cout << "print_summary_table_entry after getting extra_data" << endl;
+			}
 
 			OiPA = (object_in_projective_space_with_action *) extra_data;
+
+
+			if (f_v) {
+				cout << "print_summary_table_entry getting extra_data OiPA=" << endl;
+				OiPA->print();
+			}
 			go.create(OiPA->ago, __FILE__, __LINE__);
 			//OiPA->Aut_gens->group_order(go);
 			go.print_to_string(str);
@@ -1873,8 +1899,14 @@ void print_summary_table_entry(int *Table,
 
 			int *Input_objects;
 			int nb_input_objects;
+			if (f_v) {
+				cout << "print_summary_table_entry before CB->C_type_of->get_class_by_value" << endl;
+			}
 			CB->C_type_of->get_class_by_value(Input_objects,
-				nb_input_objects, CB->perm[i], 0 /*verbose_level */);
+				nb_input_objects, i /*CB->perm[i]*/, 0 /*verbose_level */);
+			if (f_v) {
+				cout << "print_summary_table_entry after CB->C_type_of->get_class_by_value" << endl;
+			}
 			Sorting.int_vec_heapsort(Input_objects, nb_input_objects);
 
 			output[0] = 0;
@@ -1899,6 +1931,7 @@ void print_summary_table_entry(int *Table,
 }
 
 
+#if 0
 void compute_ago_distribution(
 	classify_bitvectors *CB, tally *&C_ago, int verbose_level)
 {
@@ -2013,6 +2046,7 @@ void compute_and_print_ago_distribution_with_classes(ostream &ost,
 	FREE_OBJECT(SoS);
 	FREE_OBJECT(C_ago);
 }
+#endif
 
 
 int table_of_sets_compare_func(void *data, int i,

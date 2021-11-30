@@ -72,7 +72,13 @@ void object_in_projective_space_with_action::init(
 	 }
 }
 
-
+void object_in_projective_space_with_action::print()
+{
+	cout << "object_in_projective_space_with_action" << endl;
+	cout << "nb_rows=" << nb_rows << endl;
+	cout << "nb_cols=" << nb_cols << endl;
+	cout << "ago=" << ago << endl;
+}
 
 
 }}
