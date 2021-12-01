@@ -101,6 +101,7 @@ public:
 			int verbose_level);
 };
 
+
 // #############################################################################
 // exceptional_isomorphism_O4.cpp
 // #############################################################################
@@ -141,6 +142,9 @@ public:
 		int verbose_level);
 	void print_as_2x2(int *mtx4x4);
 };
+
+
+
 
 // #############################################################################
 // linear_group_description.cpp
@@ -207,7 +211,7 @@ public:
 	int f_subgroup_by_generators;
 	std::string subgroup_order_text;
 	int nb_subgroup_generators;
-	std::string *subgroup_generators_as_string;
+	std::string subgroup_generators_label;
 
 	int f_Janko1;
 
@@ -286,7 +290,7 @@ public:
 			std::string &subgroup_label,
 			std::string &subgroup_order_text,
 			int nb_subgroup_generators,
-			std::string *subgroup_generators_as_string,
+			int *subgroup_generators_data,
 			int verbose_level);
 	void init_subgroup_Janko1(int verbose_level);
 	void report(std::ostream &fp, int f_sylow, int f_group_table,
@@ -473,6 +477,9 @@ public:
 	int has_shape_of_singer_cycle(int *Elt);
 };
 
+
+
+
 // #############################################################################
 // orbits_on_something.cpp
 // #############################################################################
@@ -508,6 +515,7 @@ public:
 			int f_load_save,
 			std::string &prefix,
 			int verbose_level);
+	void stabilizer_of(int orbit_idx, int verbose_level);
 	void idx_of_points_in_orbits_of_length_l(
 			long int *set, int set_sz, int go, int l,
 			std::vector<int> &Idx,
@@ -649,7 +657,7 @@ public:
 			std::string &subgroup_label,
 			std::string &subgroup_order_text,
 			int nb_subgroup_generators,
-			std::string *subgroup_generators_as_string,
+			std::string &subgroup_generators_label,
 			int verbose_level);
 
 
@@ -674,14 +682,14 @@ public:
 	std::string bsgs_order_text;
 	std::string bsgs_base;
 	int bsgs_nb_generators;
-	std::string *bsgs_generators;
+	std::string bsgs_generators;
 
 
 	int f_subgroup_by_generators;
 	std::string subgroup_label;
 	std::string subgroup_order_text;
 	int nb_subgroup_generators;
-	std::string *subgroup_generators_as_string;
+	std::string subgroup_generators_label;
 
 	permutation_group_description();
 	~permutation_group_description();
@@ -1758,7 +1766,7 @@ public:
 		int verbose_level);
 	void init_subgroup_by_generators(action *A,
 		int nb_subgroup_gens,
-		std::string *subgroup_gens,
+		int *subgroup_gens,
 		std::string &subgroup_order_text,
 		vector_ge *&nice_gens,
 		int verbose_level);
@@ -1873,6 +1881,10 @@ public:
 	void reverse_isomorphism_exterior_square(int verbose_level);
 	void get_gens_data(int *&data, int &sz, int verbose_level);
 	void get_gens_data_as_string_with_quotes(std::string &str, int verbose_level);
+	void export_to_orbiter_as_bsgs(
+			action *A2,
+			std::string &fname, std::string &label, std::string &label_tex,
+			int verbose_level);
 
 
 	// strong_generators_groups.cpp

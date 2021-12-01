@@ -34,8 +34,10 @@ namespace top_level {
 class algebra_global_with_action;
 class any_group;
 class character_table_burnside;
+class group_modification_description;
 class group_theoretic_activity_description;
 class group_theoretic_activity;
+class modified_group_create;
 class orbits_on_polynomials;
 class orbits_on_subspaces;
 class young;

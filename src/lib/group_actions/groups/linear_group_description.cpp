@@ -65,7 +65,7 @@ linear_group_description::linear_group_description()
 	f_subgroup_by_generators = FALSE;
 	//subgroup_order_text;
 	nb_subgroup_generators = 0;
-	subgroup_generators_as_string = NULL;
+	//subgroup_generators_label;
 
 	f_Janko1 = FALSE;
 
@@ -478,23 +478,13 @@ int linear_group_description::read_arguments(
 			subgroup_label.assign(argv[++i]);
 			subgroup_order_text.assign(argv[++i]);
 			nb_subgroup_generators = strtoi(argv[++i]);
-			subgroup_generators_as_string = new std::string [nb_subgroup_generators];
+			subgroup_generators_label.assign(argv[++i]);
 
-			os_interface Os;
-
-			i++;
-			for (int h = 0; h < nb_subgroup_generators; h++) {
-
-				Os.get_string_from_command_line(subgroup_generators_as_string[h], argc, argv, i, verbose_level);
-			}
-			i--;
 			if (f_v) {
 				cout << "-subgroup_by_generators " << subgroup_label
-						<< " " << nb_subgroup_generators << endl;
-				for (int h = 0; h < nb_subgroup_generators; h++) {
-					cout << " " << subgroup_generators_as_string[h] << endl;
-				}
-				cout << endl;
+						<< " " << nb_subgroup_generators
+						<< " " << subgroup_generators_label
+						<< endl;
 			}
 		}
 		else if (stringcmp(argv[i], "-Janko1") == 0) {
@@ -678,14 +668,10 @@ void linear_group_description::print()
 		cout << "-O-" << endl;
 	}
 	if (f_subgroup_by_generators) {
-			cout << "-subgroup_by_generators \""
-					<< subgroup_label << "\" \""
-					<< subgroup_order_text << "\" "
-					<< nb_subgroup_generators << endl;
-			for (int h = 0; h < nb_subgroup_generators; h++) {
-				cout << " \"" << subgroup_generators_as_string[h] << "\"" << endl;
-			}
-			cout << endl;
+		cout << "-subgroup_by_generators " << subgroup_label
+				<< " " << nb_subgroup_generators
+				<< " " << subgroup_generators_label
+				<< endl;
 	}
 	if (f_Janko1) {
 		cout << "-Janko1" << endl;

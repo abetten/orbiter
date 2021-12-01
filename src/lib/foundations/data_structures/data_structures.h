@@ -365,6 +365,7 @@ class fancy_set {
 	void complement(fancy_set *compl_set);
 	int is_subset(fancy_set *set2);
 	int is_equal(fancy_set *set2);
+	void save(std::string &fname, int verbose_level);
 
 };
 

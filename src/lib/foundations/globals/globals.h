@@ -404,6 +404,7 @@ public:
 			orbiter_symbol_table_entry *Symb, int verbose_level);
 	void get_lint_vec(std::string &label,
 			long int *&the_set, int &set_size, int verbose_level);
+	void print_type(symbol_table_object_type t);
 
 };
 
@@ -441,9 +442,13 @@ public:
 	void init(std::string &str_label);
 	void init_finite_field(std::string &label,
 			finite_field *F, int verbose_level);
+	void init_any_group(std::string &label,
+			void *p, int verbose_level);
 	void init_linear_group(std::string &label,
 			void *p, int verbose_level);
 	void init_permutation_group(std::string &label,
+			void *p, int verbose_level);
+	void init_modified_group(std::string &label,
 			void *p, int verbose_level);
 	void init_projective_space(std::string &label,
 			void *p, int verbose_level);
@@ -514,6 +519,7 @@ public:
 	void print_symbol_table();
 	void *get_object(int idx);
 	symbol_table_object_type get_object_type(int idx);
+	void print_type(symbol_table_object_type t);
 
 };
 

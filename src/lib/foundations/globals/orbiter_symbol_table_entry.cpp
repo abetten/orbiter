@@ -67,6 +67,23 @@ void orbiter_symbol_table_entry::init_finite_field(std::string &label,
 	}
 }
 
+void orbiter_symbol_table_entry::init_any_group(std::string &label,
+		void *p, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_any_group" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_any_group;
+	ptr = p;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_any_group done" << endl;
+	}
+}
+
 void orbiter_symbol_table_entry::init_linear_group(std::string &label,
 		void *p, int verbose_level)
 {
@@ -98,6 +115,23 @@ void orbiter_symbol_table_entry::init_permutation_group(std::string &label,
 	ptr = p;
 	if (f_v) {
 		cout << "orbiter_symbol_table_entry::init_permutation_group done" << endl;
+	}
+}
+
+void orbiter_symbol_table_entry::init_modified_group(std::string &label,
+		void *p, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_modified_group" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_modified_group;
+	ptr = p;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_modified_group done" << endl;
 	}
 }
 

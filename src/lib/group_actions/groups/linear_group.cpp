@@ -305,18 +305,37 @@ void linear_group::linear_group_init(
 	if (description->f_subgroup_by_generators) {
 		if (f_v) {
 			cout << "linear_group::linear_group_init "
+					"f_subgroup_by_generators" << endl;
+		}
+
+		int *gens;
+		int sz;
+
+		Orbiter->get_vector_from_label(description->subgroup_generators_label, gens, sz, verbose_level);
+
+		if (f_v) {
+			cout << "linear_group::linear_group_init "
+					"gens of size " << sz << ":" << endl;
+			Orbiter->Int_vec.print(cout, gens, sz);
+			cout << endl;
+		}
+
+
+		if (f_v) {
+			cout << "linear_group::linear_group_init "
 					"before init_subgroup_by_generators" << endl;
 		}
 		init_subgroup_by_generators(
 			description->subgroup_label,
 			description->subgroup_order_text,
 			description->nb_subgroup_generators,
-			description->subgroup_generators_as_string,
+			gens,
 			verbose_level - 2);
 		if (f_v) {
 			cout << "linear_group::linear_group_init "
 					"after init_subgroup_by_generators" << endl;
 		}
+		FREE_int(gens);
 		f_OK = TRUE;
 	}
 	if (description->f_Janko1) {
@@ -1191,7 +1210,7 @@ void linear_group::init_subgroup_by_generators(
 		std::string &subgroup_label,
 		std::string &subgroup_order_text,
 		int nb_subgroup_generators,
-		std::string *subgroup_generators_as_string,
+		int *subgroup_generators_data,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1209,7 +1228,7 @@ void linear_group::init_subgroup_by_generators(
 	}
 
 	Strong_gens->init_subgroup_by_generators(A_linear,
-			nb_subgroup_generators, subgroup_generators_as_string,
+			nb_subgroup_generators, subgroup_generators_data,
 			subgroup_order_text,
 			nice_gens,
 			verbose_level - 3);

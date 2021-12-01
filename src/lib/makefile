@@ -378,8 +378,10 @@ MODULES= \
 		top_level/algebra_and_number_theory/any_group_linear.o \
 		top_level/algebra_and_number_theory/any_group.o \
 		top_level/algebra_and_number_theory/character_table_burnside.o \
+		top_level/algebra_and_number_theory/group_modification_description.o \
 		top_level/algebra_and_number_theory/group_theoretic_activity_description.o \
 		top_level/algebra_and_number_theory/group_theoretic_activity.o \
+		top_level/algebra_and_number_theory/modified_group_create.o \
 		top_level/algebra_and_number_theory/orbits_on_polynomials.o \
 		top_level/algebra_and_number_theory/orbits_on_subspaces.o \
 		top_level/algebra_and_number_theory/young.o \

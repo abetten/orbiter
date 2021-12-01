@@ -21,7 +21,7 @@ namespace top_level {
 group_theoretic_activity::group_theoretic_activity()
 {
 	Descr = NULL;
-	F = NULL;
+	//F = NULL;
 	//f_linear_group = FALSE;
 	//LG = NULL;
 
@@ -39,7 +39,36 @@ group_theoretic_activity::~group_theoretic_activity()
 }
 
 
+void group_theoretic_activity::init_group(group_theoretic_activity_description *Descr,
+		any_group *AG,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "group_theoretic_activity::init_group" << endl;
+	}
+
+	group_theoretic_activity::Descr = Descr;
+	//group_theoretic_activity::F = F;
+	group_theoretic_activity::AG = AG;
+
+
+	A1 = AG->A_base;
+	A2 = AG->A;
+
+	if (f_v) {
+		cout << "group_theoretic_activity::init_group A1 = " << A1->label << endl;
+		cout << "group_theoretic_activity::init_group A2 = " << A2->label << endl;
+	}
+
+	if (f_v) {
+		cout << "group_theoretic_activity::init_group done" << endl;
+	}
+}
+
+
+#if 0
 void group_theoretic_activity::init_linear_group(group_theoretic_activity_description *Descr,
 		finite_field *F, linear_group *LG,
 		int verbose_level)
@@ -116,6 +145,7 @@ void group_theoretic_activity::init_permutation_group(group_theoretic_activity_d
 		cout << "group_theoretic_activity::init_permutation_group done" << endl;
 	}
 }
+#endif
 
 
 void group_theoretic_activity::perform_activity(int verbose_level)
@@ -140,7 +170,7 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	}
 
 	if (Descr->f_export_orbiter) {
-		AG->do_export_orbiter(verbose_level);
+		AG->do_export_orbiter(A2, verbose_level);
 	}
 
 	if (Descr->f_export_gap) {
@@ -322,10 +352,36 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_orbits_on_points) {
 
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity f_orbits_on_points" << endl;
+		}
+
+
 		orbits_on_something *Orb;
 
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity before AG->orbits_on_points" << endl;
+		}
 
 		AG->orbits_on_points(Orb, verbose_level);
+
+		if (f_v) {
+			cout << "group_theoretic_activity::perform_activity after AG->orbits_on_points" << endl;
+		}
+
+
+		if (Descr->f_stabilizer) {
+
+			int orbit_idx = 0;
+
+			if (f_v) {
+				cout << "group_theoretic_activity::perform_activity before Orb->stabilizer_of" << endl;
+			}
+			Orb->stabilizer_of(orbit_idx, verbose_level);
+			if (f_v) {
+				cout << "group_theoretic_activity::perform_activity after Orb->stabilizer_of" << endl;
+			}
+		}
 
 		if (Descr->f_report) {
 
@@ -611,6 +667,7 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(int spread_no,
 	vector_ge *gens;
 	translation_plane_via_andre_model *Andre;
 	matrix_group *M; // do not free
+	finite_field *F;
 
 	int f_semilinear = FALSE;
 	int n, k, q;

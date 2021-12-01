@@ -10,8 +10,10 @@ MODULES = \
 	any_group_linear.o \
 	any_group.o \
 	character_table_burnside.o \
+	group_modification_description.o \
 	group_theoretic_activity_description.o \
 	group_theoretic_activity.o \
+	modified_group_create.o \
 	orbits_on_polynomials.o \
 	orbits_on_subspaces.o \
 	young.o 

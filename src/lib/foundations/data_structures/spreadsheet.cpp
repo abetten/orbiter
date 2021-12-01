@@ -367,7 +367,10 @@ void spreadsheet::read_spreadsheet(std::string &fname, int verbose_level)
 	
 
 	
-	tokenize(fname, tokens, nb_tokens, 0 /*verbose_level*/ /* - 2*/);
+	if (f_v) {
+		cout << "spreadsheet::read_spreadsheet before tokenize" << endl;
+	}
+	tokenize(fname, tokens, nb_tokens, 0 /*verbose_level*/);
 
 	if (f_v) {
 		cout << "spreadsheet::read_spreadsheet read file with "
@@ -382,6 +385,9 @@ void spreadsheet::read_spreadsheet(std::string &fname, int verbose_level)
 
 
 
+	if (f_v) {
+		cout << "spreadsheet::read_spreadsheet before find_rows" << endl;
+	}
 	find_rows(0 /*verbose_level - 2*/);
 
 	if (f_v) {
@@ -864,16 +870,24 @@ void spreadsheet::tokenize(std::string &fname,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	char buf[BUFSIZE];
+	char *buf;
 	const char *p_buf;
-	char str[BUFSIZE];
+	char *str;
+	int sz;
 	int i; //, r;
+	file_io Fio;
 
 	if (f_v) {
 		cout << "spreadsheet::tokenize file=" << fname << endl;
 		cout << "spreadsheet::tokenize verbose_level="
 				<< verbose_level << endl;
 		}
+
+	sz = Fio.file_size(fname);
+
+	buf = NEW_char(sz + 1);
+	str = NEW_char(sz + 1);
+
 	{
 		string_tools ST;
 		ifstream fp(fname);
@@ -882,7 +896,7 @@ void spreadsheet::tokenize(std::string &fname,
 			if (fp.eof()) {
 				break;
 				}
-			fp.getline(buf, BUFSIZE, '\n');
+			fp.getline(buf, sz, '\n');
 			if (f_vv) {
 				cout << "Line read :'" << buf << "'" << endl;
 				}
@@ -944,7 +958,7 @@ void spreadsheet::tokenize(std::string &fname,
 				if (fp.eof()) {
 					break;
 					}
-				fp.getline(buf, BUFSIZE, '\n');
+				fp.getline(buf, sz, '\n');
 				p_buf = buf;
 				if (strncmp(buf, "END", 3) == 0) {
 					break;
@@ -991,7 +1005,7 @@ void spreadsheet::tokenize(std::string &fname,
 					}
 
 			#if 1
-				snprintf(str, BUFSIZE, "END_OF_LINE");
+				snprintf(str, sz, "END_OF_LINE");
 				tokens[i] = NEW_char(strlen(str) + 1);
 				strcpy(tokens[i], str);
 				if (f_vv) {
@@ -1003,6 +1017,8 @@ void spreadsheet::tokenize(std::string &fname,
 
 		}
 	}
+	FREE_char(buf);
+	FREE_char(str);
 }
 
 void spreadsheet::remove_quotes(int verbose_level)

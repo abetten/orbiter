@@ -834,7 +834,12 @@ void activity_description::do_group_theoretic_activity(int verbose_level)
 
 	type = Sym->Orbiter_top_level_session->get_object_type(Idx[0]);
 
+	if (type != t_any_group) {
+		cout << "activity_description::do_group_theoretic_activity type is not t_any_group" << endl;
+		exit(1);
+	}
 
+#if 0
 	if (type == t_linear_group) {
 		linear_group *LG;
 
@@ -912,6 +917,27 @@ void activity_description::do_group_theoretic_activity(int verbose_level)
 		cout << "activity_description::do_group_theoretic_activity the type is neither linear nor permutation" << endl;
 		exit(1);
 	}
+#else
+	any_group *AG;
+
+	AG = (any_group *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+	{
+		group_theoretic_activity Activity;
+
+		Activity.init_group(Group_theoretic_activity_description, AG, verbose_level);
+
+		if (f_v) {
+			cout << "activity_description::do_group_theoretic_activity "
+					"before Activity.perform_activity" << endl;
+		}
+		Activity.perform_activity(verbose_level);
+		if (f_v) {
+			cout << "activity_description::do_group_theoretic_activity "
+					"after Activity.perform_activity" << endl;
+		}
+
+	}
+#endif
 
 	FREE_int(Idx);
 

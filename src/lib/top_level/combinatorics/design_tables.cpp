@@ -74,76 +74,7 @@ void design_tables::init(action *A, action *A2,
 		design_tables::Strong_generators = Strong_generators;
 
 
-		fname_design_table.assign(label);
-		fname_design_table.append("_design_table.csv");
-
-		orbit_of_sets *SetOrb;
-
-		SetOrb = NEW_OBJECT(orbit_of_sets);
-
-		cout << "design_tables::init computing orbit:" << endl;
-		SetOrb->init(A, A2,
-				initial_set, design_size, Strong_generators->gens,
-				verbose_level);
-		cout << "design_tables::init computing orbit done" << endl;
-
-		long int **Sets;
-		int i;
-		sorting Sorting;
-		combinatorics_domain Combi;
-
-		if (f_v) {
-			cout << "design_tables::init" << endl;
-		}
-
-		nb_designs = SetOrb->used_length;
-		Sets = NEW_plint(nb_designs);
-		for (i = 0; i < nb_designs; i++) {
-
-			Sets[i] = NEW_lint(design_size);
-			Orbiter->Lint_vec.copy(SetOrb->Sets[i], Sets[i], design_size);
-		}
-
-		if (f_v) {
-			cout << "design_tables::init before "
-					"sorting design table of size " << nb_designs << endl;
-		}
-
-		Sorting.Heapsort_general(Sets, nb_designs,
-				design_tables_compare_func,
-				design_tables_swap_func,
-				this);
-
-		if (f_v) {
-			cout << "design_tables::init after "
-					"sorting design table of size " << nb_designs << endl;
-		}
-
-		the_table = NEW_lint(nb_designs * design_size);
-		for (i = 0; i < nb_designs; i++) {
-			Orbiter->Lint_vec.copy(Sets[i], the_table + i * design_size, design_size);
-		}
-
-		if (f_v) {
-			cout << "design_tables::init "
-					"nb_designs = " << nb_designs << endl;
-		}
-		if (nb_designs < 100) {
-			for (i = 0; i < nb_designs; i++) {
-				cout << i << " : ";
-				Orbiter->Lint_vec.print(cout, the_table + i * design_size, design_size);
-				cout << endl;
-			}
-		}
-		else {
-			cout << "too many to print" << endl;
-		}
-
-		for (i = 0; i < nb_designs; i++) {
-			FREE_lint(Sets[i]);
-		}
-		FREE_plint(Sets);
-		FREE_OBJECT(SetOrb);
+		create_table(verbose_level);
 
 		if (f_v) {
 			cout << "design_tables::init before save" << endl;
@@ -153,11 +84,162 @@ void design_tables::init(action *A, action *A2,
 			cout << "design_tables::init after save" << endl;
 		}
 
+		action *A_on_designs;
+
+		if (f_v) {
+			cout << "design_tables::init before create_action" << endl;
+		}
+		create_action(A_on_designs, verbose_level);
+		if (f_v) {
+			cout << "design_tables::init after create_action" << endl;
+		}
 
 	}
 
 	if (f_v) {
 		cout << "design_tables::init done" << endl;
+	}
+}
+
+void design_tables::create_table(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "design_tables::create_table" << endl;
+	}
+
+
+	fname_design_table.assign(label);
+	fname_design_table.append("_design_table.csv");
+
+	orbit_of_sets *SetOrb;
+
+	SetOrb = NEW_OBJECT(orbit_of_sets);
+
+	cout << "design_tables::init computing orbit:" << endl;
+	SetOrb->init(A, A2,
+			initial_set, design_size, Strong_generators->gens,
+			verbose_level);
+	cout << "design_tables::init computing orbit done" << endl;
+
+	long int **Sets;
+	int i;
+	sorting Sorting;
+	combinatorics_domain Combi;
+
+	if (f_v) {
+		cout << "design_tables::init" << endl;
+	}
+
+	nb_designs = SetOrb->used_length;
+	Sets = NEW_plint(nb_designs);
+	for (i = 0; i < nb_designs; i++) {
+
+		Sets[i] = NEW_lint(design_size);
+		Orbiter->Lint_vec.copy(SetOrb->Sets[i], Sets[i], design_size);
+	}
+
+	if (f_v) {
+		cout << "design_tables::init before "
+				"sorting design table of size " << nb_designs << endl;
+	}
+
+	Sorting.Heapsort_general(Sets, nb_designs,
+			design_tables_compare_func,
+			design_tables_swap_func,
+			this);
+
+	if (f_v) {
+		cout << "design_tables::init after "
+				"sorting design table of size " << nb_designs << endl;
+	}
+
+	the_table = NEW_lint(nb_designs * design_size);
+	for (i = 0; i < nb_designs; i++) {
+		Orbiter->Lint_vec.copy(Sets[i], the_table + i * design_size, design_size);
+	}
+
+	if (f_v) {
+		cout << "design_tables::init "
+				"nb_designs = " << nb_designs << endl;
+	}
+	if (nb_designs < 100) {
+		for (i = 0; i < nb_designs; i++) {
+			cout << i << " : ";
+			Orbiter->Lint_vec.print(cout, the_table + i * design_size, design_size);
+			cout << endl;
+		}
+	}
+	else {
+		cout << "too many to print" << endl;
+	}
+
+
+
+
+	for (i = 0; i < nb_designs; i++) {
+		FREE_lint(Sets[i]);
+	}
+	FREE_plint(Sets);
+	FREE_OBJECT(SetOrb);
+
+	if (f_v) {
+		cout << "design_tables::create_table done" << endl;
+	}
+}
+
+void design_tables::create_action(action *&A_on_designs, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "design_tables::create_action" << endl;
+	}
+
+	A_on_designs = NEW_OBJECT(action);
+
+	if (f_v) {
+		cout << "design_tables::create_action "
+				"creating action A_on_designs" << endl;
+	}
+	A_on_designs = A2->create_induced_action_on_sets(
+			nb_designs, design_size,
+			the_table,
+			0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "design_tables::create_action "
+				"A_on_designs->degree=" << A_on_designs->degree << endl;
+	}
+
+	string fname_group;
+
+	fname_group.assign(label);
+	fname_group.append("_on_design_table.makefile");
+
+	if (f_v) {
+		cout << "design_tables::create_action "
+				"fname_group = " << fname_group << endl;
+	}
+
+
+	if (f_v) {
+		cout << "design_tables::create_action "
+				"before A_on_designs->export_to_orbiter_as_bsgs" << endl;
+	}
+
+	A_on_designs->export_to_orbiter_as_bsgs(
+			fname_group, label, label,
+			Strong_generators, verbose_level);
+
+	if (f_v) {
+		cout << "design_tables::create_action "
+				"after A_on_designs->export_to_orbiter_as_bsgs" << endl;
+	}
+
+	if (f_v) {
+		cout << "design_tables::create_action" << endl;
 	}
 }
 
@@ -294,9 +376,15 @@ int design_tables::test_if_table_exists(
 	file_io Fio;
 
 	if (Fio.file_size(fname_design_table) > 0) {
+		if (f_v) {
+			cout << "design_tables::test_if_table_exists design table " << fname_design_table << " exists" << endl;
+		}
 		return TRUE;
 	}
 	else {
+		if (f_v) {
+			cout << "design_tables::test_if_table_exists design table " << fname_design_table << " does not exist" << endl;
+		}
 		return FALSE;
 	}
 }
