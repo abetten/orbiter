@@ -91,6 +91,7 @@ void permutation_group_create::permutation_group_init(
 		long int *given_base;
 		int given_base_length;
 
+#if 0
 		int *gens;
 		int *gens_i;
 		int sz;
@@ -110,6 +111,12 @@ void permutation_group_create::permutation_group_init(
 			FREE_int(gens_i);
 
 		}
+#else
+		int *gens;
+		int sz;
+
+		Orbiter->get_vector_from_label(Descr->bsgs_generators, gens, sz, verbose_level);
+#endif
 
 		target_go.create_from_base_10_string(Descr->bsgs_order_text);
 
@@ -144,7 +151,7 @@ void permutation_group_create::permutation_group_init(
 			description->subgroup_label,
 			description->subgroup_order_text,
 			description->nb_subgroup_generators,
-			description->subgroup_generators_as_string,
+			description->subgroup_generators_label,
 			verbose_level);
 		if (f_v) {
 			cout << "permutation_group_create::permutation_group_init "
@@ -181,7 +188,7 @@ void permutation_group_create::init_subgroup_by_generators(
 		std::string &subgroup_label,
 		std::string &subgroup_order_text,
 		int nb_subgroup_generators,
-		std::string *subgroup_generators_as_string,
+		std::string &subgroup_generators_label,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -193,13 +200,23 @@ void permutation_group_create::init_subgroup_by_generators(
 	}
 
 	Strong_gens = NEW_OBJECT(strong_generators);
+
+	int *gens;
+	int sz;
+
+	Orbiter->get_vector_from_label(subgroup_generators_label, gens, sz, verbose_level);
+
+	if (sz != nb_subgroup_generators * A_initial->degree) {
+		cout << "permutation_group_create::init_subgroup_by_generators "
+				"sz != nb_subgroup_generators * A_initial->degree" << endl;
+		exit(1);
+	}
 	if (f_v) {
 		cout << "permutation_group_create::init_subgroup_by_generators before "
 				"Strong_gens->init_subgroup_by_generators" << endl;
 	}
-
 	Strong_gens->init_subgroup_by_generators(A_initial,
-			nb_subgroup_generators, subgroup_generators_as_string,
+			nb_subgroup_generators, gens,
 			subgroup_order_text,
 			nice_gens,
 			verbose_level - 1);

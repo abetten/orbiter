@@ -893,6 +893,9 @@ public:
 	int f_permutation_group;
 	permutation_group_description *Permutation_group_description;
 
+	int f_group_modification;
+	group_modification_description *Group_modification_description;
+
 	int f_formula;
 	formula *F;
 	std::string label;
@@ -972,6 +975,7 @@ public:
 	void definition_of_orthogonal_space(int verbose_level);
 	void definition_of_linear_group(int verbose_level);
 	void definition_of_permutation_group(int verbose_level);
+	void definition_of_modified_group(int verbose_level);
 	void definition_of_formula(formula *F,
 			int verbose_level);
 	void definition_of_collection(std::string &list_of_objects,

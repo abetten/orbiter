@@ -1077,15 +1077,24 @@ void action::export_to_orbiter_as_bsgs(
 		strong_generators *SG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+#if 0
 	int i, j;
 	long int a;
 	file_io Fio;
 	longinteger_object go;
+#endif
 
 	if (f_v) {
 		cout << "action::export_to_orbiter_as_bsgs" << endl;
 	}
 
+
+	SG->export_to_orbiter_as_bsgs(
+			this,
+			fname, label, label_tex,
+			verbose_level);
+
+#if 0
 	SG->group_order(go);
 	if (f_v) {
 		cout << "action::export_to_orbiter_as_bsgs go = " << go << endl;
@@ -1140,6 +1149,7 @@ void action::export_to_orbiter_as_bsgs(
 	}
 	cout << "Written file " << fname << " of size "
 			<< Fio.file_size(fname) << endl;
+#endif
 
 	if (f_v) {
 		cout << "action::export_to_orbiter_as_bsgs" << endl;

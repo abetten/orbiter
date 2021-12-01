@@ -299,16 +299,25 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 				vertex_subset, color_subset,
 				verbose_level);
 
-		string fname_out;
 
-		fname_out.assign(CG->label);
 
-		fname_out.append("_");
-		fname_out.append(Descr->split_by_clique_label);
+		string fname_base, fname_out, fname_subset;
+
+		fname_base.assign(CG->label);
+
+		fname_base.append("_");
+		fname_base.append(Descr->split_by_clique_label);
+
+		fname_out.assign(fname_base);
 		fname_out.append(".graph");
 
 
 		Subgraph->save(fname_out, verbose_level - 2);
+
+		fname_subset.assign(fname_base);
+		fname_subset.append("_subset.txt");
+
+		vertex_subset->save(fname_subset, verbose_level);
 
 		FREE_OBJECT(Subgraph);
 

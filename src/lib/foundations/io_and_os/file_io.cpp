@@ -1444,7 +1444,7 @@ void file_io::int_matrix_read_csv(std::string &fname,
 	int i, j, a;
 
 	if (f_v) {
-		cout << "int_matrix_read_csv reading file " << fname << endl;
+		cout << "file_io::int_matrix_read_csv reading file " << fname << endl;
 	}
 	if (file_size(fname) <= 0) {
 		cout << "int_matrix_read_csv file " << fname
@@ -1455,11 +1455,19 @@ void file_io::int_matrix_read_csv(std::string &fname,
 	{
 		spreadsheet S;
 
-		S.read_spreadsheet(fname, 0/*verbose_level - 1*/);
+		if (f_v) {
+			cout << "file_io::int_matrix_read_csv before S.read_spreadsheet" << endl;
+		}
+		S.read_spreadsheet(fname, verbose_level - 1);
+		if (f_v) {
+			cout << "file_io::int_matrix_read_csv after S.read_spreadsheet" << endl;
+		}
 
 		m = S.nb_rows - 1;
 		n = S.nb_cols - 1;
-		cout << "The spreadsheet has " << S.nb_cols << " columns" << endl;
+		if (f_v) {
+			cout << "The spreadsheet has " << S.nb_cols << " columns" << endl;
+		}
 		M = NEW_int(m * n);
 		for (i = 0; i < m; i++) {
 			for (j = 0; j < n; j++) {

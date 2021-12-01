@@ -20,7 +20,12 @@ any_group::any_group()
 {
 	f_linear_group = FALSE;
 	LG = NULL;
+
+	f_permutation_group = FALSE;
 	PGC = NULL;
+
+	f_modified_group = FALSE;
+	MGC = NULL;
 
 	A_base = NULL;
 	A = NULL;
@@ -82,7 +87,7 @@ void any_group::init_permutation_group(permutation_group_create *PGC, int verbos
 		cout << "any_group::init_linear_group" << endl;
 	}
 
-	f_linear_group = FALSE;
+	f_permutation_group = TRUE;
 	any_group::PGC = PGC;
 
 	A_base = PGC->A_initial;
@@ -112,6 +117,36 @@ void any_group::init_permutation_group(permutation_group_create *PGC, int verbos
 	}
 }
 
+void any_group::init_modified_group(modified_group_create *MGC, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::init_modified_group" << endl;
+	}
+
+	f_modified_group = FALSE;
+	any_group::MGC = MGC;
+
+	A_base = MGC->A_base;
+	A = MGC->A_modified;
+
+	if (!MGC->f_has_strong_generators) {
+		cout << "any_group::init_linear_group !PGC->f_has_strong_generators" << endl;
+		exit(1);
+	}
+	Subgroup_gens = MGC->Strong_gens;
+
+	label.assign(A->label);
+	label_tex.assign(A->label_tex);
+
+	if (f_v) {
+		cout << "any_group::init_modified_group done" << endl;
+	}
+}
+
+
+
 void any_group::create_latex_report(
 		layered_graph_draw_options *O,
 		int f_sylow, int f_group_table, int f_classes,
@@ -136,7 +171,7 @@ void any_group::create_latex_report(
 	}
 }
 
-void any_group::do_export_orbiter(int verbose_level)
+void any_group::do_export_orbiter(action *A2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -159,7 +194,7 @@ void any_group::do_export_orbiter(int verbose_level)
 			if (f_v) {
 				cout << "any_group::do_export_orbiter using Subgroup_gens" << endl;
 			}
-			A_base->export_to_orbiter_as_bsgs(fname, label, label_tex, Subgroup_gens, verbose_level);
+			Subgroup_gens->export_to_orbiter_as_bsgs(A2, fname, label, label_tex, verbose_level);
 		}
 		else if (A->f_has_strong_generators) {
 			if (f_v) {
@@ -1311,15 +1346,21 @@ void any_group::orbits_on_points(orbits_on_something *&Orb, int verbose_level)
 	int f_load_save = TRUE;
 	string prefix;
 
-	prefix.assign(LG->label);
+	prefix.assign(label);
 
+	if (f_v) {
+		cout << "any_group::orbits_on_points before Algebra.orbits_on_points" << endl;
+	}
 	Algebra.orbits_on_points(
-			LG,
 			A,
+			Subgroup_gens,
 			f_load_save,
 			prefix,
 			Orb,
 			verbose_level);
+	if (f_v) {
+		cout << "any_group::orbits_on_points after Algebra.orbits_on_points" << endl;
+	}
 
 
 	if (f_v) {

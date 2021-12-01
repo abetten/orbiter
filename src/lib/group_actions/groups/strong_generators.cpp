@@ -1019,7 +1019,7 @@ void strong_generators::init_subgroup(action *A,
 
 void strong_generators::init_subgroup_by_generators(action *A,
 	int nb_subgroup_gens,
-	std::string *subgroup_gens,
+	int *subgroup_gens,
 	std::string &subgroup_order_text,
 	vector_ge *&nice_gens,
 	int verbose_level)
@@ -1044,38 +1044,7 @@ void strong_generators::init_subgroup_by_generators(action *A,
 			cout << "strong_generators::init_subgroup_by_generators "
 					"generator " << h << " / " << nb_subgroup_gens << endl;
 		}
-
-		int *v;
-		int sz;
-
-		Orbiter->get_vector_from_label(subgroup_gens[h], v, sz, verbose_level);
-
-		A->make_element(nice_gens->ith(h), v, verbose_level);
-
-		FREE_int(v);
-
-#if 0
-		if (isalpha(subgroup_gens[h][0])) {
-			if (f_v) {
-				cout << "strong_generators::init_subgroup_by_generators "
-						"searching label " << subgroup_gens[h] << endl;
-			}
-			int idx;
-			vector_builder *VB;
-
-			idx = Orbiter->find_symbol(subgroup_gens[h]);
-			VB = (vector_builder *) Orbiter->get_object(idx);
-
-			A->make_element(nice_gens->ith(h),
-				VB->v, verbose_level);
-
-		}
-		else {
-			A->make_element_from_string(nice_gens->ith(h),
-				subgroup_gens[h], verbose_level);
-		}
-#endif
-
+		A->make_element(nice_gens->ith(h), subgroup_gens + h * A->make_element_size, verbose_level);
 	}
 
 
@@ -3541,6 +3510,111 @@ void strong_generators::get_gens_data_as_string_with_quotes(std::string &str, in
 		cout << "strong_generators::get_gens_data_as_string_with_quotes done" << endl;
 	}
 }
+
+void strong_generators::export_to_orbiter_as_bsgs(
+		action *A2,
+		std::string &fname, std::string &label, std::string &label_tex,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j;
+	long int a;
+	file_io Fio;
+	longinteger_object go;
+
+	if (f_v) {
+		cout << "strong_generators::export_to_orbiter_as_bsgs" << endl;
+	}
+
+	group_order(go);
+	if (f_v) {
+		cout << "strong_generators::export_to_orbiter_as_bsgs go = " << go << endl;
+		cout << "strong_generators::export_to_orbiter_as_bsgs number of generators = " << gens->len << endl;
+		cout << "strong_generators::export_to_orbiter_as_bsgs degree = " << A2->degree << endl;
+	}
+	{
+		ofstream fp(fname);
+
+		string fname_generators;
+
+		fname_generators.assign(label);
+		fname_generators.append("_gens.csv");
+
+
+#if 0
+		for (i = 0; i < gens->len; i++) {
+			fp << "GENERATOR_" << label << "_" << i << " = \\" << endl;
+			fp << "\t\"";
+			for (j = 0; j < A2->degree; j++) {
+				if (FALSE) {
+					cout << "strong_generators::export_to_orbiter_as_bsgs computing image of " << j << " under generator " << i << endl;
+				}
+				a = A2->element_image_of(j, gens->ith(i), 0 /* verbose_level*/);
+				fp << a;
+				if (j < A2->degree - 1) {
+					fp << ",";
+				}
+			}
+			fp << "\"";
+			fp << endl;
+		}
+#else
+		{
+			long int *Data;
+
+			Data = NEW_lint(gens->len * A2->degree);
+			for (i = 0; i < gens->len; i++) {
+				for (j = 0; j < A2->degree; j++) {
+					a = A2->element_image_of(j, gens->ith(i), 0 /* verbose_level*/);
+					Data[i * A2->degree + j] = a;
+				}
+			}
+
+
+			Fio.lint_matrix_write_csv(fname_generators, Data, gens->len, A2->degree);
+
+
+			FREE_lint(Data);
+		}
+#endif
+
+		fp << endl;
+		fp << label << ":" << endl;
+		fp << "\t$(ORBITER_PATH)orbiter.out -v 2 \\" << endl;
+		fp << "\t\t-define gens -vector -file " << fname_generators << " -end \\" << endl;
+		fp << "\t\t-define G -permutation_group \\" << endl;
+		fp << "\t\t-bsgs " << label << " \"" << label_tex << "\" "
+				<< A2->degree << " " << go << " ";
+		fp << "\"";
+		A->print_bare_base(fp);
+		fp << "\"";
+		fp << " ";
+		fp << gens->len;
+		fp << " gens -end \\" << endl;
+#if 0
+		for (i = 0; i < gens->len; i++) {
+			fp << "\t\t\t" << "$(GENERATOR_" << label << "_" << i << ") \\" << endl;
+		}
+		fp << "\t\t-end" << endl;
+#endif
+
+		//$(ORBITER_PATH)orbiter.out -v 10 \
+		//	-define G -permutation_group \
+		//		-bsgs C13 C_{13} 13 13 0 1 \
+		//			$(GEN_C13) \
+		//		-end \
+
+		// with backslashes at the end of the line
+
+	}
+	cout << "Written file " << fname << " of size "
+			<< Fio.file_size(fname) << endl;
+
+	if (f_v) {
+		cout << "strong_generators::export_to_orbiter_as_bsgs" << endl;
+	}
+}
+
 
 
 

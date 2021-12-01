@@ -766,49 +766,6 @@ public:
 		int verbose_level);
 	void process_any_object(object_with_canonical_form *OwCF,
 			int input_idx, long int &ago, int &f_reject, int verbose_level);
-#if 0
-	void process_multiple_objects_from_file(
-			int file_type, int file_idx,
-			std::string &input_data,
-			std::string &input_data2,
-			std::vector<std::vector<int> > &Cumulative_data,
-			std::vector<long int> &Cumulative_Ago,
-			std::vector<std::vector<int> > &Cumulative_canonical_labeling,
-			std::vector<std::vector<std::pair<int, int> > > &Fibration,
-			int verbose_level);
-	void process_individual_object(
-			int file_type, int file_idx,
-			std::string &input_data,
-			std::string &input_data2,
-			std::vector<std::vector<int> > &Cumulative_data,
-			std::vector<long int> &Cumulative_Ago,
-			std::vector<std::vector<int> > &Cumulative_canonical_labeling,
-			std::vector<std::vector<std::pair<int, int> > > &Fibration,
-			set_of_sets *SoS, int h,
-			long int *Spread_table, int nb_spreads, int spread_size,
-			std::vector<long int> &Ago,
-			std::vector<std::vector<int> > &The_canonical_labeling,
-			int &canonical_labeling_len,
-			long int *Known_ago, int *Known_canonical_labeling,
-			int t0,
-			int verbose_level);
-	void process_set_of_points(
-			std::string &input_data,
-			int verbose_level);
-	void process_set_of_points_from_file(
-			std::string &input_data,
-			int verbose_level);
-	void process_set_of_lines(
-			std::string &input_data,
-			int verbose_level);
-	void process_set_of_points_and_lines(
-			std::string &input_data,
-			std::string &input_data2,
-			int verbose_level);
-	void process_set_of_packing(
-			std::string &input_data,
-			int verbose_level);
-#endif
 	int process_object(
 		object_with_canonical_form *OwCF,
 		strong_generators *&SG, long int &ago,

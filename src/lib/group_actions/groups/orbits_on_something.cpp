@@ -152,6 +152,9 @@ void orbits_on_something::init(
 		}
 
 
+
+
+
 		{
 		ofstream fp(fname);
 		if (f_v) {
@@ -193,6 +196,64 @@ void orbits_on_something::init(
 	if (f_v) {
 		cout << "orbits_on_something::init done" << endl;
 	}
+}
+
+void orbits_on_something::stabilizer_of(int orbit_idx, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_on_something::stabilizer_of" << endl;
+	}
+
+	strong_generators *Stab;
+	longinteger_object full_group_order;
+
+	SG->group_order(full_group_order);
+
+
+	if (f_v) {
+		cout << "orbits_on_something::init "
+				"computing stabilizer of first orbit rep" << endl;
+	}
+	Stab = Sch->stabilizer_orbit_rep(
+		SG->A,
+		full_group_order,
+		orbit_idx, verbose_level);
+	if (f_v) {
+		cout << "orbits_on_something::init "
+				"after Sch->stabilizer_orbit_rep" << endl;
+	}
+
+	string fname_stab;
+	string label_stab;
+	char str[1000];
+
+	sprintf(str, "_stab_orb_%d", orbit_idx);
+
+	fname_stab.assign(prefix);
+	fname_stab.append(str);
+	fname_stab.append(".makefile");
+
+	label_stab.assign(prefix);
+	label_stab.append(str);
+
+
+	if (f_v) {
+		cout << "orbits_on_something::init "
+				"exporting stabilizer of first orbit rep to " << fname_stab << endl;
+	}
+	Stab->export_to_orbiter_as_bsgs(
+			A,
+			fname_stab, label_stab, label_stab,
+			verbose_level);
+
+	FREE_OBJECT(Stab);
+
+	if (f_v) {
+		cout << "orbits_on_something::stabilizer_of done" << endl;
+	}
+
 }
 
 void orbits_on_something::idx_of_points_in_orbits_of_length_l(

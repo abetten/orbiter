@@ -29,13 +29,13 @@ permutation_group_description::permutation_group_description()
 	//std::string bsgs_order_text;
 	//std::string bsgs_base;
 	bsgs_nb_generators = 0;
-	bsgs_generators = NULL;
+	//std::string bsgs_generators;
 
 	f_subgroup_by_generators = FALSE;
 	//std::string subgroup_label;
 	//std::string subgroup_order_text;
 	nb_subgroup_generators = 0;
-	subgroup_generators_as_string = NULL;
+	//std::string subgroup_generators_label;
 
 }
 
@@ -73,17 +73,8 @@ int permutation_group_description::read_arguments(
 			bsgs_order_text.assign(argv[++i]);
 			bsgs_base.assign(argv[++i]);
 			bsgs_nb_generators = strtoi(argv[++i]);
-			bsgs_generators = new std::string [bsgs_nb_generators];
+			bsgs_generators.assign(argv[++i]);
 			type = bsgs_t;
-
-			os_interface Os;
-
-			i++;
-			for (int h = 0; h < bsgs_nb_generators; h++) {
-
-				Os.get_string_from_command_line(bsgs_generators[h], argc, argv, i, verbose_level);
-			}
-			i--;
 
 			if (f_v) {
 				cout << "-bsgs"
@@ -92,11 +83,9 @@ int permutation_group_description::read_arguments(
 						<< " " << degree
 						<< " " << bsgs_order_text
 						<< " " << bsgs_base
-						<< " " << bsgs_nb_generators;
-				for (int h = 0; h < bsgs_nb_generators; h++) {
-					cout << " " << bsgs_generators[h] << endl;
-				}
-				cout << endl;
+						<< " " << bsgs_nb_generators
+						<< " " << bsgs_generators
+						<< endl;
 			}
 		}
 		else if (stringcmp(argv[i], "-subgroup_by_generators") == 0) {
@@ -104,23 +93,13 @@ int permutation_group_description::read_arguments(
 			subgroup_label.assign(argv[++i]);
 			subgroup_order_text.assign(argv[++i]);
 			nb_subgroup_generators = strtoi(argv[++i]);
-			subgroup_generators_as_string = new std::string [nb_subgroup_generators];
+			subgroup_generators_label.assign(argv[++i]);
 
-			os_interface Os;
-
-			i++;
-			for (int h = 0; h < nb_subgroup_generators; h++) {
-
-				Os.get_string_from_command_line(subgroup_generators_as_string[h], argc, argv, i, verbose_level);
-			}
-			i--;
 			if (f_v) {
 				cout << "-subgroup_by_generators " << subgroup_label
-						<< " " << nb_subgroup_generators << endl;
-				for (int h = 0; h < nb_subgroup_generators; h++) {
-					cout << " " << subgroup_generators_as_string[h] << endl;
-				}
-				cout << endl;
+						<< " " << nb_subgroup_generators
+						<< " " << subgroup_generators_label
+						<< endl;
 			}
 		}
 		else if (stringcmp(argv[i], "-end") == 0) {
@@ -153,21 +132,15 @@ void permutation_group_description::print()
 				<< " " << degree
 				<< " " << bsgs_order_text
 				<< " " << bsgs_base
-				<< " " << bsgs_nb_generators;
-		for (int h = 0; h < bsgs_nb_generators; h++) {
-			cout << " " << bsgs_generators[h] << endl;
-		}
-		cout << endl;
+				<< " " << bsgs_nb_generators
+				<< " " << bsgs_generators
+				<< endl;
 	}
 	if (f_subgroup_by_generators) {
-		cout << "-subgroup_by_generators \""
-				<< subgroup_label << "\" \""
-				<< subgroup_order_text << "\" "
-				<< nb_subgroup_generators << endl;
-		for (int h = 0; h < nb_subgroup_generators; h++) {
-			cout << " \"" << subgroup_generators_as_string[h] << "\"" << endl;
-		}
-		cout << endl;
+		cout << "-subgroup_by_generators " << subgroup_label
+				<< " " << nb_subgroup_generators
+				<< " " << subgroup_generators_label
+				<< endl;
 	}
 }
 

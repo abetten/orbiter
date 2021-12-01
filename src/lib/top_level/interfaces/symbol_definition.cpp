@@ -34,6 +34,9 @@ symbol_definition::symbol_definition()
 	f_permutation_group = FALSE;
 	Permutation_group_description = NULL;
 
+	f_group_modification = FALSE;
+	Group_modification_description = NULL;
+
 	f_formula = FALSE;
 	F = NULL;
 	//std::string label;
@@ -225,6 +228,27 @@ void symbol_definition::read_definition(
 
 		if (f_v) {
 			cout << "-permutation_group" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+		}
+	}
+
+	else if (stringcmp(argv[i], "-modified_group") == 0) {
+		f_group_modification = TRUE;
+		Group_modification_description = NEW_OBJECT(group_modification_description);
+		if (f_v) {
+			cout << "reading -modified_group" << endl;
+		}
+		i += Group_modification_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-modified_group" << endl;
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -667,6 +691,17 @@ void symbol_definition::perform_definition(int verbose_level)
 			cout << "symbol_definition::perform_definition after definition_of_permutation_group" << endl;
 		}
 	}
+	else if (f_group_modification) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition before definition_of_modified_group" << endl;
+		}
+		definition_of_modified_group(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition after definition_of_modified_group" << endl;
+		}
+	}
+
+
 	else if (f_formula) {
 		if (f_v) {
 			cout << "symbol_definition::perform_definition before definition_of_formula" << endl;
@@ -845,6 +880,10 @@ void symbol_definition::print()
 		cout << "-permutation_group ";
 		Permutation_group_description->print();
 	}
+	if (f_group_modification) {
+		cout << "-modified_group ";
+		Group_modification_description->print();
+	}
 	if (f_formula) {
 		cout << "-formula " << label << " " << label_tex << " " << managed_variables << " " << formula_text;
 		//formula *F;
@@ -907,15 +946,15 @@ void symbol_definition::print()
 		cout << "-large_set_was " << large_set_was_label_design_table << endl;
 		large_set_was_descr->print();
 	}
-	else if (f_set) {
+	if (f_set) {
 		cout << "-set ";
 		Set_builder_description->print();
 	}
-	else if (f_vector) {
+	if (f_vector) {
 		cout << "-vector ";
 		Vector_builder_description->print();
 	}
-	else if (f_combinatorial_objects) {
+	if (f_combinatorial_objects) {
 		cout << "-combinatorial_objects ";
 		Data_input_stream_description->print();
 	}
@@ -1169,8 +1208,20 @@ void symbol_definition::definition_of_linear_group(int verbose_level)
 
 	LG->linear_group_init(Linear_group_description, verbose_level - 2);
 
+
+	// create any_group object from linear_group:
+
+
+	any_group *AG;
+
+	AG = NEW_OBJECT(any_group);
+	AG->init_linear_group(LG, verbose_level);
+
+
+
+
 	orbiter_symbol_table_entry Symb;
-	Symb.init_linear_group(define_label, LG, verbose_level);
+	Symb.init_any_group(define_label, AG, verbose_level);
 	if (f_v) {
 		cout << "symbol_definition::definition before add_symbol_table_entry" << endl;
 	}
@@ -1204,8 +1255,19 @@ void symbol_definition::definition_of_permutation_group(int verbose_level)
 				"after PGC->permutation_group_init" << endl;
 	}
 
+
+	// create any_group object from permutation_group_create:
+
+
+	any_group *AG;
+
+	AG = NEW_OBJECT(any_group);
+	AG->init_permutation_group(PGC, verbose_level);
+
+
+
 	orbiter_symbol_table_entry Symb;
-	Symb.init_permutation_group(define_label, PGC, verbose_level);
+	Symb.init_any_group(define_label, AG, verbose_level);
 	if (f_v) {
 		cout << "symbol_definition::definition_of_permutation_group before add_symbol_table_entry" << endl;
 	}
@@ -1215,6 +1277,51 @@ void symbol_definition::definition_of_permutation_group(int verbose_level)
 		cout << "symbol_definition::definition_of_permutation_group done" << endl;
 	}
 }
+
+
+void symbol_definition::definition_of_modified_group(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::definition_of_modified_group" << endl;
+	}
+
+
+	modified_group_create *MGC;
+
+	MGC = NEW_OBJECT(modified_group_create);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_modified_group before PGC->permutation_group_init, "
+				"before PGC->permutation_group_init" << endl;
+	}
+
+	MGC->modified_group_init(Group_modification_description, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_modified_group before PGC->permutation_group_init, "
+				"after PGC->permutation_group_init" << endl;
+	}
+
+	any_group *AG;
+
+	AG = NEW_OBJECT(any_group);
+	AG->init_modified_group(MGC, verbose_level);
+
+	orbiter_symbol_table_entry Symb;
+	Symb.init_any_group(define_label, AG, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_modified_group before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, &Symb, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::definition_of_modified_group done" << endl;
+	}
+}
+
+
+
+
 
 void symbol_definition::definition_of_formula(formula *F,
 		int verbose_level)

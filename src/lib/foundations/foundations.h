@@ -601,8 +601,10 @@ enum diophant_equation_type {
 enum symbol_table_object_type {
 	t_nothing_object,
 	t_finite_field,
+	t_any_group,
 	t_linear_group,
 	t_permutation_group,
+	t_modified_group,
 	t_projective_space,
 	t_orthogonal_space,
 	t_formula,

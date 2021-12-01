@@ -647,6 +647,8 @@ public:
 	void init(action *A, action *A2, long int *initial_set, int design_size,
 			std::string &label,
 			strong_generators *Strong_generators, int verbose_level);
+	void create_table(int verbose_level);
+	void create_action(action *&A_on_designs, int verbose_level);
 	void extract_solutions_by_index(
 			int nb_sol, int Index_width, int *Index,
 			std::string &ouput_fname_csv,

@@ -494,6 +494,11 @@ void orbiter_session::get_lint_vec(std::string &label,
 
 }
 
+void orbiter_session::print_type(symbol_table_object_type t)
+{
+	Orbiter_symbol_table->print_type(t);
+}
+
 
 }}
 

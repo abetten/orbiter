@@ -3807,8 +3807,8 @@ void algebra_global_with_action::do_eigenstuff_from_file(
 
 
 void algebra_global_with_action::orbits_on_points(
-		linear_group *LG,
 		action *A2,
+		strong_generators *Strong_gens,
 		int f_load_save,
 		std::string &prefix,
 		orbits_on_something *&Orb,
@@ -3831,7 +3831,7 @@ void algebra_global_with_action::orbits_on_points(
 	}
 	Orb->init(
 			A2,
-			LG->Strong_gens,
+			Strong_gens,
 			f_load_save,
 			prefix,
 			verbose_level);

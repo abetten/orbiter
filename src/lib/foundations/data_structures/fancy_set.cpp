@@ -302,6 +302,22 @@ int fancy_set::is_equal(fancy_set *set2)
 	return FALSE;
 }
 
+void fancy_set::save(std::string &fname, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "fancy_set::save" << endl;
+	}
+	file_io Fio;
+
+	Fio.write_set_to_file_lint(fname,
+			set, k, verbose_level);
+	if (f_v) {
+		cout << "fancy_set::save done" << endl;
+	}
+}
+
 }
 }
 

@@ -447,6 +447,7 @@ public:
 	int f_export_graphviz;
 	int f_print;
 	int f_sort_by_colors;
+
 	int f_split;
 	std::string split_input_fname;
 	std::string split_by_file;

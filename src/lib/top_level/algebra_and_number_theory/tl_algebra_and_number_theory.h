@@ -131,8 +131,9 @@ public:
 			finite_field *F, int n, std::string &fname, int verbose_level);
 
 	void orbits_on_points(
-			linear_group *LG,
+			//linear_group *LG,
 			action *A2,
+			strong_generators *Strong_gens,
 			int f_load_save,
 			std::string &prefix,
 			orbits_on_something *&Orb,
@@ -169,7 +170,12 @@ public:
 
 	int f_linear_group;
 	linear_group *LG;
+
+	int f_permutation_group;
 	permutation_group_create *PGC;
+
+	int f_modified_group;
+	modified_group_create *MGC;
 
 	action *A_base;
 	action *A;
@@ -184,11 +190,12 @@ public:
 	~any_group();
 	void init_linear_group(linear_group *LG, int verbose_level);
 	void init_permutation_group(permutation_group_create *PGC, int verbose_level);
+	void init_modified_group(modified_group_create *MGC, int verbose_level);
 	void create_latex_report(
 			layered_graph_draw_options *O,
 			int f_sylow, int f_group_table, int f_classes,
 			int verbose_level);
-	void do_export_orbiter(int verbose_level);
+	void do_export_orbiter(action *A2, int verbose_level);
 	void do_export_gap(int verbose_level);
 	void do_export_magma(int verbose_level);
 	void do_canonical_image_GAP(std::string &input_set, int verbose_level);
@@ -318,6 +325,31 @@ public:
 };
 
 
+// #############################################################################
+// group_modification_description.cpp
+// #############################################################################
+
+//! create a new group or group action from an old
+
+class group_modification_description {
+
+public:
+
+	int f_restricted_action;
+	std::string restricted_action_set_text;
+
+	std::vector<std::string> from;
+
+	group_modification_description();
+	~group_modification_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+
+};
+
 
 
 
@@ -376,7 +408,12 @@ public:
 
 	int f_orbits_on_points;
 	int f_export_trees;
+
 	int f_stabilizer;
+		// compute stabilizer of orbit 0,
+		// must be given with -orbits_on_points
+
+
 	int f_orbits_on_subsets;
 	int orbits_on_subsets_size;
 	int f_classes_based_on_normal_form;
@@ -422,6 +459,7 @@ public:
 
 	int f_print_elements;
 	int f_print_elements_tex;
+
 	int f_save_elements_csv;
 	std::string save_elements_csv_fname;
 
@@ -519,9 +557,7 @@ public:
 class group_theoretic_activity {
 public:
 	group_theoretic_activity_description *Descr;
-	finite_field *F;
-	//int f_linear_group;
-	//linear_group *LG;
+	//finite_field *F;
 
 	any_group *AG;
 
@@ -532,12 +568,17 @@ public:
 
 	group_theoretic_activity();
 	~group_theoretic_activity();
+	void init_group(group_theoretic_activity_description *Descr,
+			any_group *AG,
+			int verbose_level);
+#if 0
 	void init_linear_group(group_theoretic_activity_description *Descr,
 			finite_field *F, linear_group *LG,
 			int verbose_level);
 	void init_permutation_group(group_theoretic_activity_description *Descr,
 			permutation_group_create *PGC,
 			int verbose_level);
+#endif
 	void perform_activity(int verbose_level);
 	void multiply(int verbose_level);
 	void inverse(int verbose_level);
@@ -549,6 +590,41 @@ public:
 
 
 };
+
+
+// #############################################################################
+// modified_group_create.cpp
+// #############################################################################
+
+//! to create a new group or group action from old ones, using class group_modification_description
+
+class modified_group_create {
+
+public:
+	group_modification_description *Descr;
+
+	std::string label;
+	std::string label_tex;
+
+	//strong_generators *initial_strong_gens;
+
+	action *A_base;
+	action *A_previous;
+	action *A_modified;
+
+	int f_has_strong_generators;
+	strong_generators *Strong_gens;
+
+
+	modified_group_create();
+	~modified_group_create();
+	void modified_group_init(
+			group_modification_description *description,
+			int verbose_level);
+
+};
+
+
 
 
 // #############################################################################
