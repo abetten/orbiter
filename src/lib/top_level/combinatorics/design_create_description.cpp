@@ -33,6 +33,7 @@ design_create_description::design_create_description()
 	f_list_of_blocks_from_file = FALSE;
 	//std::string list_of_blocks_from_file_fname;
 
+	f_no_group = FALSE;
 }
 
 design_create_description::~design_create_description()
@@ -103,6 +104,12 @@ int design_create_description::read_arguments(int argc, std::string *argv,
 						<< endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-no_group") == 0) {
+			f_no_group = TRUE;
+			if (f_v) {
+				cout << "-no_group " << endl;
+			}
+		}
 		else if (stringcmp(argv[i], "-end") == 0) {
 			break;
 		}
@@ -144,6 +151,9 @@ void design_create_description::print()
 				<< " " << list_of_blocks_k
 				<< " " << list_of_blocks_from_file_fname
 				<< endl;
+	}
+	if (f_no_group) {
+		cout << "-no_group " << endl;
 	}
 }
 

@@ -1084,7 +1084,6 @@ void poset_classification::make_fname_lvl_file_candidates(std::string &fname,
 	sprintf(str, "_lvl_%d_candidates.txt", lvl);
 	fname.append(str);
 
-	//snprintf(fname1000, 1000, "%s_lvl_%d_candidates.txt", fname_base, lvl);
 }
 
 void poset_classification::make_fname_lvl_file(std::string &fname,
@@ -1096,7 +1095,17 @@ void poset_classification::make_fname_lvl_file(std::string &fname,
 	sprintf(str, "_lvl_%d", lvl);
 	fname.append(str);
 
-	//snprintf(fname1000, 1000, "%s_lvl_%d", fname_base, lvl);
+}
+
+void poset_classification::make_fname_lvl_reps_file(std::string &fname,
+		std::string &fname_base, int lvl)
+{
+	char str[1000];
+
+	fname.assign(fname_base);
+	sprintf(str, "_lvl_%d_reps", lvl);
+	fname.append(str);
+
 }
 
 

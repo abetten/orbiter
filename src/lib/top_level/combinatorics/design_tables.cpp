@@ -74,7 +74,13 @@ void design_tables::init(action *A, action *A2,
 		design_tables::Strong_generators = Strong_generators;
 
 
+		if (f_v) {
+			cout << "design_tables::init before create_table" << endl;
+		}
 		create_table(verbose_level);
+		if (f_v) {
+			cout << "design_tables::init after create_table" << endl;
+		}
 
 		if (f_v) {
 			cout << "design_tables::init before save" << endl;

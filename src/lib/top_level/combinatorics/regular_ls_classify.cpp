@@ -166,7 +166,9 @@ void regular_ls_classify::init_group(int verbose_level)
 				"creating symmetric group of degree " << Descr->m << endl;
 	}
 	A = NEW_OBJECT(action);
-	A->init_symmetric_group(Descr->m /* degree */, 0 /* verbose_level - 2*/);
+	int f_no_base = FALSE;
+
+	A->init_symmetric_group(Descr->m /* degree */, f_no_base, 0 /* verbose_level - 2*/);
 	
 
 	if (f_v) {

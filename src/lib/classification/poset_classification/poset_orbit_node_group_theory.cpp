@@ -68,6 +68,9 @@ void poset_orbit_node::get_stabilizer_order(poset_classification *PC, longintege
 }
 #endif
 
+
+
+
 long int poset_orbit_node::get_stabilizer_order_lint(poset_classification *PC)
 {
 	longinteger_object go;

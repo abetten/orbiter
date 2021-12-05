@@ -67,8 +67,9 @@ void permutation_group_create::permutation_group_init(
 		}
 
 		A_initial = NEW_OBJECT(action);
+		int f_no_base = FALSE;
 
-		A_initial->init_symmetric_group(Descr->degree, verbose_level);
+		A_initial->init_symmetric_group(Descr->degree, f_no_base, verbose_level);
 
 		A_initial->Strong_gens->print_generators_in_latex_individually(cout);
 		A_initial->Strong_gens->print_generators_in_source_code();
@@ -118,6 +119,8 @@ void permutation_group_create::permutation_group_init(
 		Orbiter->get_vector_from_label(Descr->bsgs_generators, gens, sz, verbose_level);
 #endif
 
+		int f_no_base = FALSE;
+
 		target_go.create_from_base_10_string(Descr->bsgs_order_text);
 
 		Orbiter->Lint_vec.scan(Descr->bsgs_base, given_base, given_base_length);
@@ -127,6 +130,7 @@ void permutation_group_create::permutation_group_init(
 			TRUE /* f_target_go */, target_go,
 			Descr->bsgs_nb_generators, gens,
 			given_base_length, given_base,
+			f_no_base,
 			verbose_level);
 
 		A_initial->Strong_gens->print_generators_in_latex_individually(cout);

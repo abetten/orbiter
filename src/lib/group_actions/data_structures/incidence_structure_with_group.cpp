@@ -236,11 +236,19 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 				"before init_permutation_group_from_generators" << endl;
 	}
 
+#if 1
+	A_perm->init_permutation_group_from_nauty_output(NO,
+		verbose_level);
+
+#else
+	int f_no_base = FALSE;
 	A_perm->init_permutation_group_from_generators(N,
 		TRUE, *NO->Ago,
 		NO->Aut_counter, NO->Aut,
 		NO->Base_length, NO->Base_lint,
+		f_no_base,
 		verbose_level);
+#endif
 
 	if (f_vv) {
 		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form created action ";

@@ -39,6 +39,7 @@ int main()
 
 	target_go.create(target_go_lint, __FILE__, __LINE__);
 	action *A;
+	int f_no_base = FALSE;
 
 	A = NEW_OBJECT(action);
 
@@ -46,6 +47,7 @@ int main()
 			TRUE /*  f_target_go */, target_go,
 			nb_gens, generators,
 			base_len, given_base,
+			f_no_base,
 			verbose_level);
 
 	A->Strong_gens->print_generators_in_latex_individually(cout);

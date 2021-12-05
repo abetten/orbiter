@@ -27,6 +27,8 @@ projective_space_activity_description::projective_space_activity_description()
 	//canonical_form_PG_n = 0;
 	Canonical_form_PG_Descr = NULL;
 
+	f_export_point_line_incidence_matrix = FALSE;
+
 	f_table_of_cubic_surfaces_compute_properties = FALSE;
 	//std::string _table_of_cubic_surfaces_compute_fname_csv;
 	table_of_cubic_surfaces_compute_defining_q = 0;
@@ -256,6 +258,13 @@ int projective_space_activity_description::read_arguments(
 				if (i < argc) {
 					cout << "next argument is " << argv[i] << endl;
 				}
+			}
+		}
+
+		else if (stringcmp(argv[i], "-export_point_line_incidence_matrix") == 0) {
+			f_export_point_line_incidence_matrix = TRUE;
+			if (f_v) {
+				cout << "-export_point_line_incidence_matrix " << endl;
 			}
 		}
 

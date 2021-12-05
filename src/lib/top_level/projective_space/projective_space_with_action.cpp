@@ -903,8 +903,13 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_P
 		author[0] = 0;
 
 
+		string fname_tex;
+
+		fname_tex.assign(fname_base);
+		fname_tex.append(".tex");
+
 		{
-			ofstream ost(fname_base);
+			ofstream ost(fname_tex);
 			latex_interface L;
 
 			L.head(ost,
@@ -948,8 +953,8 @@ void projective_space_with_action::do_cheat_sheet_for_decomposition_by_element_P
 		file_io Fio;
 
 		if (f_v) {
-			cout << "written file " << fname_base << " of size "
-					<< Fio.file_size(fname_base) << endl;
+			cout << "written file " << fname_tex << " of size "
+					<< Fio.file_size(fname_tex) << endl;
 		}
 	}
 

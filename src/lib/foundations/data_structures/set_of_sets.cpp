@@ -355,8 +355,11 @@ void set_of_sets::init_from_orbiter_file(int underlying_set_size,
 	Orbiter->Lint_vec.zero(Set_size, nb_sets);
 
 	char *buf, *p_buf;
+	int sz;
 
-	buf = NEW_char(MY_BUFSIZE);
+	sz = Fio.file_size(fname);
+
+	buf = NEW_char(sz + 1);
 
 	{
 	ifstream fp(fname);
@@ -372,7 +375,7 @@ void set_of_sets::init_from_orbiter_file(int underlying_set_size,
 		
 		//cout << "set_of_sets::init_from_orbiter_file "
 		//"reading line, nb_sol = " << nb_sol << endl;
-		fp.getline(buf, MY_BUFSIZE, '\n');
+		fp.getline(buf, sz + 1, '\n');
 		if (strlen(buf) == 0) {
 			cout << "set_of_sets::init_from_orbiter_file "
 					"reading an empty line" << endl;

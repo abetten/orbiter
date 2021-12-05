@@ -229,7 +229,10 @@ public:
 	void orbits_on_set_from_file(std::string &fname_csv, int verbose_level);
 	void orbit_of(int point_idx, int verbose_level);
 	void orbits_on_points(orbits_on_something *&Orb, int verbose_level);
-	void orbits_on_subsets(poset_classification_control *Control, int subset_size, int verbose_level);
+	void orbits_on_subsets(poset_classification_control *Control,
+			poset_classification *&PC,
+			int subset_size,
+			int verbose_level);
 	void orbits_on_poset_post_processing(
 			poset_classification *PC,
 			int depth,

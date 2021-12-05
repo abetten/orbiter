@@ -345,7 +345,12 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 			//Control = NEW_OBJECT(poset_classification_control);
 		}
 
-		AG->orbits_on_subsets(Control, Descr->orbits_on_subsets_size, verbose_level);
+		poset_classification *PC;
+
+		AG->orbits_on_subsets(Control, PC,
+				Descr->orbits_on_subsets_size, verbose_level);
+
+		FREE_OBJECT(PC);
 	}
 
 	// generic orbits on points or subspaces:

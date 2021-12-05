@@ -18,11 +18,11 @@ namespace top_level {
 
 create_graph_description::create_graph_description()
 {
-	f_load_from_file = FALSE;
+	f_load = FALSE;
 	//fname = NULL;
 
-	f_load_from_file_csv_no_border = FALSE;
-	f_load_from_file_dimacs = FALSE;
+	f_load_csv_no_border = FALSE;
+	f_load_dimacs = FALSE;
 
 	f_edge_list = FALSE;
 	n = 0;
@@ -83,6 +83,10 @@ create_graph_description::create_graph_description()
 	f_disjoint_sets_graph = FALSE;
 	//std::string disjoint_sets_graph_fname;
 
+	f_orbital_graph = FALSE;
+	//std::string orbital_graph_group;
+	orbital_graph_orbit_idx = 0;
+
 }
 
 
@@ -100,27 +104,27 @@ int create_graph_description::read_arguments(
 
 		graph_modification_description M;
 
-		if (stringcmp(argv[i], "-load_from_file") == 0) {
-			f_load_from_file = TRUE;
+		if (stringcmp(argv[i], "-load") == 0) {
+			f_load = TRUE;
 			fname.assign(argv[++i]);
 			if (f_v) {
-				cout << "-load_from_file " << fname << endl;
+				cout << "-load " << fname << endl;
 			}
 		}
 
-		else if (stringcmp(argv[i], "-load_from_file_csv_no_border") == 0) {
-			f_load_from_file_csv_no_border = TRUE;
+		else if (stringcmp(argv[i], "-load_csv_no_border") == 0) {
+			f_load_csv_no_border = TRUE;
 			fname.assign(argv[++i]);
 			if (f_v) {
-				cout << "-load_from_file_csv_no_border " << fname << endl;
+				cout << "-load_csv_no_border " << fname << endl;
 			}
 		}
 
-		else if (stringcmp(argv[i], "-load_from_file_dimacs") == 0) {
-			f_load_from_file_dimacs = TRUE;
+		else if (stringcmp(argv[i], "-load_dimacs") == 0) {
+			f_load_dimacs = TRUE;
 			fname.assign(argv[++i]);
 			if (f_v) {
-				cout << "-load_from_file_dimacs " << fname << endl;
+				cout << "-load_dimacs " << fname << endl;
 			}
 		}
 
@@ -251,6 +255,14 @@ int create_graph_description::read_arguments(
 				cout << "-disjoint_sets_graph " << disjoint_sets_graph_fname << endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-orbital_graph") == 0) {
+			f_orbital_graph = TRUE;
+			orbital_graph_group.assign(argv[++i]);
+			orbital_graph_orbit_idx = strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-orbital_graph " << orbital_graph_group << " " << orbital_graph_orbit_idx << endl;
+			}
+		}
 
 		else if (M.check_and_parse_argument(
 				argc, i, argv,
@@ -277,14 +289,14 @@ int create_graph_description::read_arguments(
 
 void create_graph_description::print()
 {
-	if (f_load_from_file) {
-		cout << "-load_from_file " << fname << endl;
+	if (f_load) {
+		cout << "-load " << fname << endl;
 	}
-	if (f_load_from_file_csv_no_border) {
-		cout << "-load_from_file_csv_no_border " << fname << endl;
+	if (f_load_csv_no_border) {
+		cout << "-load_csv_no_border " << fname << endl;
 	}
-	if (f_load_from_file_dimacs) {
-		cout << "-load_from_file_dimacs " << fname << endl;
+	if (f_load_dimacs) {
+		cout << "-load_dimacs " << fname << endl;
 	}
 	if (f_edge_list) {
 		cout << "-edge_list " << n << " " << edge_list_text << endl;
@@ -333,6 +345,9 @@ void create_graph_description::print()
 	}
 	if (f_subset) {
 		cout << "-subset " << subset_label << " " << subset_label_tex << " " << subset_text << endl;
+	}
+	if (f_orbital_graph) {
+		cout << "-orbital_graph " << orbital_graph_group << " " << orbital_graph_orbit_idx << endl;
 	}
 
 	int i;

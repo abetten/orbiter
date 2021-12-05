@@ -50,9 +50,9 @@ void create_graph::init(
 
 	f_has_CG = FALSE;
 
-	if (description->f_load_from_file) {
+	if (description->f_load) {
 		if (f_v) {
-			cout << "create_graph::init f_load_from_file" << endl;
+			cout << "create_graph::init f_load" << endl;
 		}
 
 		f_has_CG = TRUE;
@@ -81,7 +81,7 @@ void create_graph::init(
 		label_tex.append(label);
 
 	}
-	else if (description->f_load_from_file_csv_no_border) {
+	else if (description->f_load_csv_no_border) {
 		if (f_v) {
 			cout << "create_graph::init f_load_from_file_csv_no_border" << endl;
 		}
@@ -103,7 +103,7 @@ void create_graph::init(
 		label_tex.assign("File\\_");
 		label_tex.append(label);
 	}
-	else if (description->f_load_from_file_dimacs) {
+	else if (description->f_load_dimacs) {
 		if (f_v) {
 			cout << "create_graph::init f_load_from_file_dimacs" << endl;
 		}
@@ -178,7 +178,7 @@ void create_graph::init(
 		label.assign(str);
 		sprintf(str, "Graph\\_%d\\_%d", description->n, sz);
 		label_tex.assign(str);
-		}
+	}
 	else if (description->f_edges_as_pairs) {
 		int h, i, j;
 		int *Idx;
@@ -204,7 +204,7 @@ void create_graph::init(
 		label.assign(str);
 		sprintf(str, "Graph\\_%d\\_%d", description->n, sz2);
 		label_tex.assign(str);
-		}
+	}
 	else if (description->f_cycle) {
 
 		if (f_v) {
@@ -404,6 +404,45 @@ void create_graph::init(
 
 		label_tex.assign(L);
 	}
+	else if (description->f_orbital_graph) {
+
+		graph_theory_domain GT;
+
+		int idx;
+		any_group *AG;
+
+		idx = Orbiter->find_symbol(description->orbital_graph_group);
+
+		symbol_table_object_type t;
+
+		t = Orbiter->get_object_type(idx);
+
+		if (t != t_any_group) {
+			cout << "object must be of type group, but is ";
+			Orbiter->print_type(t);
+			cout << endl;
+			exit(1);
+		}
+		AG = (any_group *) Orbiter->get_object(idx);
+
+
+
+		if (f_v) {
+			cout << "create_graph::init before GT.make_orbital_graph" << endl;
+		}
+		make_orbital_graph(N, Adj,
+				AG, description->orbital_graph_orbit_idx,
+				verbose_level);
+		if (f_v) {
+			cout << "create_graph::init after GT.make_orbital_graph" << endl;
+		}
+		if (f_v) {
+			cout << "create_graph::init label = " << label << endl;
+			cout << "create_graph::init label_tex = " << label_tex << endl;
+			cout << "create_graph::init done" << endl;
+		}
+
+	}
 
 
 
@@ -440,8 +479,14 @@ void create_graph::init(
 		if (!f_has_CG) {
 
 			CG = NEW_OBJECT(colored_graph);
+			if (f_v) {
+				cout << "create_graph::init before CG->init_adjacency_no_colors" << endl;
+			}
 			CG->init_adjacency_no_colors(N, Adj, label, label_tex,
 					verbose_level);
+			if (f_v) {
+				cout << "create_graph::init after CG->init_adjacency_no_colors" << endl;
+			}
 
 			f_has_CG = TRUE;
 
@@ -971,9 +1016,10 @@ void create_graph::create_Shrikhande(int &N, int *&Adj, int verbose_level)
 	int i, j;
 	int nb_G, nb_S;
 	long int goi;
+	int f_no_base = FALSE;
 
 	A = NEW_OBJECT(action);
-	A->init_symmetric_group(n, verbose_level);
+	A->init_symmetric_group(n, f_no_base, verbose_level);
 	goi = A->group_order_lint();
 
 	if (f_v) {
@@ -1231,7 +1277,92 @@ void create_graph::create_coll_orthogonal(int &N, int *&Adj,
 	}
 }
 
+void create_graph::make_orbital_graph(int &N, int *&Adj,
+		any_group *AG, int orbit_idx, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "create_graph::make_orbital_graph" << endl;
+	}
+
+	poset_classification_control *Control;
+
+	Control = NEW_OBJECT(poset_classification_control);
+
+	poset_classification *PC;
+
+	if (f_v) {
+		cout << "create_graph::make_orbital_graph before AG->orbits_on_subsets" << endl;
+	}
+	AG->orbits_on_subsets(Control, PC, 2, verbose_level);
+	if (f_v) {
+		cout << "create_graph::make_orbital_graph after AG->orbits_on_subsets" << endl;
+	}
+
+	long int set[2];
+	int size;
+
+	PC->get_Poo()->get_set(2 /* level */, orbit_idx, set, size);
+
+	if (f_v) {
+		cout << "create_graph::make_orbital_graph set: ";
+		Orbiter->Lint_vec.print(cout, set, 2);
+		cout << endl;
+	}
+
+	orbit_of_sets *Orb;
+
+	Orb = NEW_OBJECT(orbit_of_sets);
+
+	if (f_v) {
+		cout << "create_graph::make_orbital_graph before Orb->init" << endl;
+	}
+	Orb->init(AG->A_base, AG->A,
+			set, 2, AG->Subgroup_gens->gens, verbose_level);
+	if (f_v) {
+		cout << "create_graph::make_orbital_graph after Orb->init" << endl;
+	}
+
+	int *M;
+	int nb_points;
+	int i, j, h;
+
+	nb_points = AG->A->degree;
+
+	M = NEW_int(nb_points * nb_points);
+	Orbiter->Int_vec.zero(M, nb_points * nb_points);
+	for (h = 0; h < Orb->used_length; h++) {
+		i = Orb->Sets[h][0];
+		j = Orb->Sets[h][1];
+		M[i * nb_points + j] = 1;
+		M[j * nb_points + i] = 1;
+	}
+
+	FREE_OBJECT(Orb);
+	N = nb_points;
+	Adj = M;
+
+	char str[1000];
+
+	if (f_v) {
+		cout << "create_graph::make_orbital_graph AG->A->label = " << AG->A->label << endl;
+		cout << "create_graph::make_orbital_graph AG->A->label_tex = " << AG->A->label_tex << endl;
+	}
+
+	sprintf(str, "_Orbital_%d", orbit_idx);
+	label.assign("Group_");
+	label.append(AG->A->label);
+	label.append(str);
+	sprintf(str, "Orbital\\_%d", orbit_idx);
+	label_tex.assign("Group\\_");
+	label_tex.append(AG->A->label_tex);
+	label_tex.append(str);
+
+	if (f_v) {
+		cout << "create_graph::make_orbital_graph done" << endl;
+	}
+}
 
 
 

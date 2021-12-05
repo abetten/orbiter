@@ -20,6 +20,8 @@ namespace top_level {
 graph_modification_description::graph_modification_description()
 {
 	f_complement = FALSE;
+
+	f_distance_2 = FALSE;
 }
 
 graph_modification_description::~graph_modification_description()
@@ -41,6 +43,14 @@ int graph_modification_description::check_and_parse_argument(
 		i++;
 		if (f_v) {
 			cout << "-complement " << endl;
+		}
+		return TRUE;
+	}
+	else if (stringcmp(argv[i], "-distance_2") == 0) {
+		f_distance_2 = TRUE;
+		i++;
+		if (f_v) {
+			cout << "-distance_2 " << endl;
 		}
 		return TRUE;
 	}
@@ -69,6 +79,13 @@ int graph_modification_description::read_arguments(
 			}
 		}
 
+		else if (stringcmp(argv[i], "-distance_2") == 0) {
+			f_distance_2 = TRUE;
+			if (f_v) {
+				cout << "-distance_2 " << endl;
+			}
+		}
+
 		else if (stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -91,6 +108,9 @@ void graph_modification_description::print()
 	if (f_complement) {
 		cout << "-complement " << endl;
 	}
+	if (f_distance_2) {
+		cout << "-distance_2 " << endl;
+	}
 }
 
 void graph_modification_description::apply(colored_graph *&CG, int verbose_level)
@@ -102,6 +122,9 @@ void graph_modification_description::apply(colored_graph *&CG, int verbose_level
 	}
 	if (f_complement) {
 		CG->complement(verbose_level);
+	}
+	if (f_distance_2) {
+		CG->distance_2(verbose_level);
 	}
 	if (f_v) {
 		cout << "graph_modification_description::apply done" << endl;

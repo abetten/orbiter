@@ -41,6 +41,7 @@ graph_theoretic_activity_description::graph_theoretic_activity_description()
 
 	f_save = FALSE;
 	f_automorphism_group = FALSE;
+	f_properties = FALSE;
 }
 
 graph_theoretic_activity_description::~graph_theoretic_activity_description()
@@ -145,6 +146,12 @@ int graph_theoretic_activity_description::read_arguments(
 				cout << "-automorphism_group " << endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-properties") == 0) {
+			f_properties = TRUE;
+			if (f_v) {
+				cout << "-properties " << endl;
+			}
+		}
 		else if (stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
@@ -201,6 +208,9 @@ void graph_theoretic_activity_description::print()
 	}
 	if (f_automorphism_group) {
 		cout << "-automorphism_group " << endl;
+	}
+	if (f_properties) {
+		cout << "-properties " << endl;
 	}
 }
 

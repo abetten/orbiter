@@ -1374,6 +1374,79 @@ void poset_of_orbits::write_lvl_file_with_candidates(
 	}
 }
 
+void poset_of_orbits::get_orbit_reps_at_level(
+		int lvl, long int *&Data, int &nb_reps, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_orbit_reps_at_level" << endl;
+	}
+	int i, fst;
+
+	fst = first_node_at_level(lvl);
+	nb_reps = nb_orbits_at_level(lvl);
+
+	Data = NEW_lint(nb_reps * lvl);
+
+	for (i = 0; i < nb_reps; i++) {
+		root[fst + i].store_set_to(PC, Data + i * lvl);
+	}
+
+	if (f_v) {
+		cout << "poset_of_orbits::get_orbit_reps_at_level done" << endl;
+	}
+}
+
+void poset_of_orbits::write_orbit_reps_at_level(
+		std::string &fname_base,
+		int lvl,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	string fname1;
+	file_io Fio;
+
+	if (f_v) {
+		cout << "poset_of_orbits::write_orbit_reps_at_level" << endl;
+	}
+	PC->make_fname_lvl_reps_file(fname1, fname_base, lvl);
+
+	long int *Data;
+	int nb_reps;
+
+	get_orbit_reps_at_level(
+			lvl, Data, nb_reps, verbose_level);
+
+
+	{
+		ofstream f(fname1);
+		int i;
+
+
+		f << "Row,REP" << endl;
+		for (i = 0; i < nb_reps; i++) {
+			f << i;
+
+			string S;
+
+			Orbiter->Lint_vec.create_string_with_quotes(S, Data + i * lvl, lvl);
+			f << "," << S << endl;
+		}
+		f << "END" << endl;
+
+	}
+	if (f_v) {
+		cout << "poset_of_orbits::write_orbit_reps_at_level Written file "
+				<< fname1 << " of size " << Fio.file_size(fname1) << endl;
+
+	}
+	FREE_lint(Data);
+	if (f_v) {
+		cout << "poset_of_orbits::write_orbit_reps_at_level done" << endl;
+	}
+}
+
 
 void poset_of_orbits::write_lvl_file(
 		std::string &fname_base,
@@ -1496,7 +1569,7 @@ void poset_of_orbits::save_representatives_at_level_to_csv(std::string &fname, i
 
 		l = PC->nb_orbits_at_level(lvl);
 		//cout << "The " << l << " representatives at level " << lvl << " are:" << endl;
-		ost << "ROW,REP,AGO" << endl;
+		ost << "ROW,REP,AGO,OL" << endl;
 		for (i = 0; i < l; i++) {
 			get_node_ij(lvl, i)->store_set_to(PC, lvl - 1, set /*gen->S0*/);
 			//Orbiter->Lint_vec.print(cout, set /*gen->S0*/, lvl);
@@ -1510,7 +1583,16 @@ void poset_of_orbits::save_representatives_at_level_to_csv(std::string &fname, i
 			}
 
 			ago = get_node_ij(lvl, i)->get_stabilizer_order_lint(PC);
-			ost << "," << ago << endl;
+			ost << "," << ago;
+
+			longinteger_object len;
+
+			PC->orbit_length(i, lvl, len);
+
+			ost << "," << len;
+
+
+			ost << endl;
 
 		}
 

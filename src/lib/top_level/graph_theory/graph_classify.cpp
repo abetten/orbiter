@@ -130,8 +130,9 @@ void graph_classify::init(graph_classify_description *Descr, int verbose_level)
 		}
 
 	S1 = NEW_lint(n2);
+	int f_no_base = FALSE;
 
-	A_base->init_symmetric_group(Descr->n, verbose_level - 3);
+	A_base->init_symmetric_group(Descr->n, f_no_base, verbose_level - 3);
 	if (f_v) {
 		cout << "A_base->init_symmetric_group done" << endl;
 		}

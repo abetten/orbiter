@@ -60,13 +60,13 @@ void design_create::freeself()
 {
 	if (F) {
 		FREE_OBJECT(F);
-		}
+	}
 	if (set) {
 		FREE_lint(set);
-		}
+	}
 	if (Sg) {
 		FREE_OBJECT(Sg);
-		}
+	}
 	if (PA) {
 		FREE_OBJECT(PA);
 	}
@@ -160,7 +160,13 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 		label_tex.assign(str);
 
 		A = NEW_OBJECT(action);
-		A->init_symmetric_group(degree, verbose_level);
+
+		int f_no_base = FALSE;
+
+		if (Descr->f_no_group) {
+			f_no_base = TRUE;
+		}
+		A->init_symmetric_group(degree, f_no_base, verbose_level);
 
 		A2 = NEW_OBJECT(action);
 		A2->induced_action_on_k_subsets(*A, k, verbose_level);
@@ -208,7 +214,14 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 		label_tex.assign(str);
 
 		A = NEW_OBJECT(action);
-		A->init_symmetric_group(degree, verbose_level);
+
+		int f_no_base = FALSE;
+
+		if (Descr->f_no_group) {
+			f_no_base = TRUE;
+		}
+
+		A->init_symmetric_group(degree, f_no_base, verbose_level);
 
 		A2 = NEW_OBJECT(action);
 		A2->induced_action_on_k_subsets(*A, k, verbose_level);
@@ -304,7 +317,10 @@ void design_create::create_design_PG_2_q(finite_field *F,
 		cout << "design_create::create_design_PG_2_q creating actions" << endl;
 	}
 	A = NEW_OBJECT(action);
-	A->init_symmetric_group(degree, verbose_level);
+
+	int f_no_base = FALSE;
+
+	A->init_symmetric_group(degree, f_no_base, verbose_level);
 
 	A2 = NEW_OBJECT(action);
 	A2->induced_action_on_k_subsets(*A, k, verbose_level);

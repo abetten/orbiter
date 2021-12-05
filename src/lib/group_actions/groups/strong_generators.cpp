@@ -356,10 +356,16 @@ void strong_generators::init_from_data_with_target_go_ascii(
 	}
 	strong_generators::A = A;
 	target_go.create_from_base_10_string(ascii_target_go);
+	if (f_v) {
+		cout << "strong_generators::init_from_data_with_target_go_ascii before init_from_data_with_target_go" << endl;
+	}
 	init_from_data_with_target_go(A, data, 
 		elt_size, nb_elements, target_go,
 		nice_gens,
 		verbose_level);
+	if (f_v) {
+		cout << "strong_generators::init_from_data_with_target_go_ascii after init_from_data_with_target_go" << endl;
+	}
 	if (f_v) {
 		cout << "strong_generators::init_from_data_with_target_go_ascii done" << endl;
 	}
@@ -406,10 +412,16 @@ void strong_generators::init_from_data_with_target_go(
 
 	SG = NEW_OBJECT(strong_generators);
 	
+	if (f_v) {
+		cout << "strong_generators::init_from_data_with_target_go before A->generators_to_strong_generators" << endl;
+	}
 	A->generators_to_strong_generators(
 		TRUE /* f_target_go */, target_go, 
 		nice_gens, SG,
-		0 /*verbose_level*/);
+		verbose_level - 1);
+	if (f_v) {
+		cout << "strong_generators::init_from_data_with_target_go after A->generators_to_strong_generators" << endl;
+	}
 
 	if (f_v) {
 		cout << "strong_generators::init_from_data_with_target_go "
