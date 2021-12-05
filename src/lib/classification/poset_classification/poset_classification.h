@@ -822,6 +822,8 @@ public:
 			std::string &fname_base, int lvl);
 	void make_fname_lvl_file(std::string &fname,
 			std::string &fname_base, int lvl);
+	void make_fname_lvl_reps_file(std::string &fname,
+			std::string &fname_base, int lvl);
 	void log_current_node(std::ostream &f, int size);
 	void make_spreadsheet_of_orbit_reps(spreadsheet *&Sp, 
 		int max_depth);
@@ -1077,6 +1079,12 @@ public:
 			std::string &fname, int verbose_level);
 	void write_lvl_file_with_candidates(
 			std::string &fname_base, int lvl, int t0,
+			int verbose_level);
+	void get_orbit_reps_at_level(
+			int lvl, long int *&Data, int &nb_reps, int verbose_level);
+	void write_orbit_reps_at_level(
+			std::string &fname_base,
+			int lvl,
 			int verbose_level);
 	void write_lvl_file(
 			std::string &fname_base,

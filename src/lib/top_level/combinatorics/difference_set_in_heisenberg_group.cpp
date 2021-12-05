@@ -240,12 +240,14 @@ void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 
 	N = NEW_OBJECT(action);
 	longinteger_object n_go;
+	int f_no_base = FALSE;
 
 	n_go.create(N_go, __FILE__, __LINE__);
 	N->init_permutation_group_from_generators(H->group_order /* degree */,
 		TRUE, n_go,
 		N_nb_gens, N_gens,
 		given_base_length, given_base,
+		f_no_base,
 		0 /*verbose_level*/);
 	N->group_order(N_order);
 

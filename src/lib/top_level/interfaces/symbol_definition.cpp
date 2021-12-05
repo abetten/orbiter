@@ -87,8 +87,7 @@ symbol_definition::symbol_definition()
 	f_design_table = FALSE;
 	//std::string design_table_label_design;
 	//std::string design_table_label;
-	//std::string design_table_go_text;
-	//std::string design_table_generators_data;
+	//std::string design_table_group;
 
 
 	f_large_set_was = FALSE;
@@ -513,8 +512,7 @@ void symbol_definition::read_definition(
 
 		design_table_label_design.assign(argv[++i]);
 		design_table_label.assign(argv[++i]);
-		design_table_go_text.assign(argv[++i]);
-		design_table_generators_data.assign(argv[++i]);
+		design_table_group.assign(argv[++i]);
 
 
 		i++;
@@ -525,8 +523,7 @@ void symbol_definition::read_definition(
 			}
 			cout << "-design_table " << design_table_label_design
 					<< " " << design_table_label
-					<< " " << design_table_go_text
-					<< " " << design_table_generators_data
+					<< " " << design_table_group
 					<< endl;
 		}
 	}
@@ -940,7 +937,10 @@ void symbol_definition::print()
 		Design_create_description->print();
 	}
 	if (f_design_table) {
-		cout << "-design_table " << design_table_label_design << " " << design_table_label << " " << design_table_go_text << " " << design_table_generators_data;
+		cout << "-design_table "
+				<< design_table_label_design
+				<< " " << design_table_label
+				<< " " << design_table_group;
 	}
 	if (f_large_set_was) {
 		cout << "-large_set_was " << large_set_was_label_design_table << endl;
@@ -1886,7 +1886,7 @@ void symbol_definition::definition_of_design_table(int verbose_level)
 
 
 
-
+#if 0
 	strong_generators *Gens;
 	Gens = NEW_OBJECT(strong_generators);
 
@@ -1900,6 +1900,24 @@ void symbol_definition::definition_of_design_table(int verbose_level)
 	if (f_v) {
 		cout << "symbol_definition::definition_of_design_table after Gens->init_from_data_with_go" << endl;
 	}
+#endif
+
+	any_group *AG;
+
+	idx = Orbiter->find_symbol(design_table_group);
+
+	symbol_table_object_type t;
+
+	t = Orbiter->get_object_type(idx);
+
+	if (t != t_any_group) {
+		cout << "object must be of type group, but is ";
+		Orbiter->print_type(t);
+		cout << endl;
+		exit(1);
+	}
+	AG = (any_group *) Orbiter->get_object(idx);
+
 
 
 	combinatorics_global Combi;
@@ -1913,7 +1931,7 @@ void symbol_definition::definition_of_design_table(int verbose_level)
 	Combi.create_design_table(DC,
 			design_table_label,
 			T,
-			Gens,
+			AG->Subgroup_gens,
 			verbose_level);
 
 	if (f_v) {

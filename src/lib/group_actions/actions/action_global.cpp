@@ -786,8 +786,9 @@ void action_global::perm_print_cycles_sorted_by_length_offset(ostream &ost,
 		f_big = TRUE;
 	}
 	A = NEW_OBJECT(action);
+	int f_no_base = FALSE;
 	
-	A->init_permutation_group(degree, 0/*verbose_level*/);
+	A->init_permutation_group(degree, f_no_base, 0/*verbose_level*/);
 	Gens.init(A, verbose_level - 2);
 	Gens.allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {

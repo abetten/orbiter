@@ -649,7 +649,7 @@ void action::init_matrix_group_strong_generators_builtin(
 		}
 }
 
-void action::init_permutation_group(int degree, int verbose_level)
+void action::init_permutation_group(int degree, int f_no_base, int verbose_level)
 {
 	int page_length_log = PAGE_LENGTH_LOG;
 	int f_v = (verbose_level >= 1);
@@ -698,17 +698,26 @@ void action::init_permutation_group(int degree, int verbose_level)
 
 	// ToDo
 
-	if (f_vv) {
-		cout << "action::init_permutation_group "
-				"calling allocate_base_data" << endl;
-	}
-	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	Stabilizer_chain->allocate_base_data(this, degree, verbose_level);
 
-	// init trivial base:
-	int i;
-	for (i = 0; i < base_len(); i++) {
-		base_i(i) = i;
+	if (f_no_base) {
+		if (f_vv) {
+			cout << "action::init_permutation_group "
+					"no base" << endl;
+		}
+	}
+	else {
+		if (f_vv) {
+			cout << "action::init_permutation_group "
+					"calling allocate_base_data" << endl;
+		}
+		Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+		Stabilizer_chain->allocate_base_data(this, degree, verbose_level);
+
+		// init trivial base:
+		int i;
+		for (i = 0; i < base_len(); i++) {
+			base_i(i) = i;
+		}
 	}
 
 	// ToDo
@@ -747,6 +756,7 @@ void action::init_permutation_group_from_nauty_output(nauty_output *NO,
 		TRUE, *NO->Ago,
 		NO->Aut_counter, NO->Aut,
 		NO->Base_length, NO->Base_lint,
+		FALSE /* f_no_base */,
 		0 /*verbose_level - 2*/);
 	if (f_v) {
 		cout << "action::init_permutation_group_from_nauty_output "
@@ -763,6 +773,7 @@ void action::init_permutation_group_from_generators(int degree,
 	int f_target_go, longinteger_object &target_go, 
 	int nb_gens, int *gens, 
 	int given_base_length, long int *given_base,
+	int f_no_base,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -809,7 +820,7 @@ void action::init_permutation_group_from_generators(int degree,
 		cout << "action::init_permutation_group_from_generators "
 				"calling init_permutation_group" << endl;
 	}
-	init_permutation_group(degree, verbose_level - 10);
+	init_permutation_group(degree, f_no_base, verbose_level - 10);
 	if (f_vv) {
 		cout << "action::init_permutation_group_from_generators "
 				"after init_permutation_group" << endl;
@@ -817,95 +828,106 @@ void action::init_permutation_group_from_generators(int degree,
 
 	if (Stabilizer_chain) {
 		FREE_OBJECT(Stabilizer_chain);
+		Stabilizer_chain = NULL;
 	}
 
-	if (f_vv) {
-		cout << "action::init_permutation_group_from_generators "
-				"calling allocate_base_data" << endl;
-		cout << "given_base:";
-		Orbiter->Lint_vec.print(cout, given_base, given_base_length);
-		cout << " of length " << given_base_length << endl;
+
+	if (f_no_base) {
+		if (f_vv) {
+			cout << "action::init_permutation_group_from_generators "
+					"no base" << endl;
+		}
 	}
-	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
-	Stabilizer_chain->allocate_base_data(this, given_base_length, verbose_level - 10);
+	else {
+		if (f_vv) {
+			cout << "action::init_permutation_group_from_generators "
+					"calling allocate_base_data" << endl;
+			cout << "given_base:";
+			Orbiter->Lint_vec.print(cout, given_base, given_base_length);
+			cout << " of length " << given_base_length << endl;
+		}
+		Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
+		Stabilizer_chain->allocate_base_data(this, given_base_length, verbose_level - 10);
+
+		// init base:
+		for (i = 0; i < base_len(); i++) {
+			base_i(i) = given_base[i];
+		}
+
+
+
+		if (f_vv) {
+			cout << "action::init_permutation_group_from_generators, "
+					"now trying to set up the group from the given generators"
+					<< endl;
+		}
+
+		vector_ge *generators;
+		strong_generators *Strong_gens;
+
+		generators = NEW_OBJECT(vector_ge);
+		generators->init(this, verbose_level - 2);
+		generators->allocate(nb_gens, verbose_level - 2);
+		for (i = 0; i < nb_gens; i++) {
+			make_element(generators->ith(i), gens + i * degree,
+				0 /*verbose_level*/);
+		}
+
+
+		if (f_vv) {
+			cout << "action::init_permutation_group_from_generators "
+					"before generators_to_strong_generators" << endl;
+		}
+		generators_to_strong_generators(
+			f_target_go, target_go,
+			generators, Strong_gens,
+			verbose_level - 5);
+		if (f_vv) {
+			cout << "action::init_permutation_group_from_generators "
+					"after generators_to_strong_generators" << endl;
+		}
+
+		sims *G;
 	
-	// init base:
-	for (i = 0; i < base_len(); i++) {
-		base_i(i) = given_base[i];
-	}
-
-
-
-	if (f_vv) {
-		cout << "action::init_permutation_group_from_generators, "
-				"now trying to set up the group from the given generators"
-				<< endl;
-	}
-	
-	vector_ge *generators;
-	strong_generators *Strong_gens;
-
-	generators = NEW_OBJECT(vector_ge);
-	generators->init(this, verbose_level - 2);
-	generators->allocate(nb_gens, verbose_level - 2);
-	for (i = 0; i < nb_gens; i++) {
-		make_element(generators->ith(i), gens + i * degree,
-			0 /*verbose_level*/);
-	}
+		if (f_vv) {
+			cout << "action::init_permutation_group_from_generators "
+					"before Strong_gens->create_sims" << endl;
+		}
+		G = Strong_gens->create_sims(verbose_level - 10);
+		if (f_vv) {
+			cout << "action::init_permutation_group_from_generators "
+					"after Strong_gens->create_sims" << endl;
+		}
 	
 
-	if (f_vv) {
-		cout << "action::init_permutation_group_from_generators "
-				"before generators_to_strong_generators" << endl;
-	}
-	generators_to_strong_generators(
-		f_target_go, target_go, 
-		generators, Strong_gens, 
-		verbose_level - 5);
-	if (f_vv) {
-		cout << "action::init_permutation_group_from_generators "
-				"after generators_to_strong_generators" << endl;
-	}
+		if (f_vv) {
+			cout << "action::init_permutation_group_from_generators "
+					"before init_sims_only" << endl;
+		}
+		init_sims_only(G, verbose_level - 10);
+		FREE_OBJECT(generators);
+		FREE_OBJECT(Strong_gens);
+	
 
-	sims *G;
+		if (f_vv) {
+			cout << "action::init_permutation_group_from_generators "
+					"after init_sims_only" << endl;
+		}
 
-	if (f_vv) {
-		cout << "action::init_permutation_group_from_generators "
-				"before Strong_gens->create_sims" << endl;
-	}
-	G = Strong_gens->create_sims(verbose_level - 10);
-	if (f_vv) {
-		cout << "action::init_permutation_group_from_generators "
-				"after Strong_gens->create_sims" << endl;
-	}
 
 	
-	if (f_vv) {
-		cout << "action::init_permutation_group_from_generators "
-				"before init_sims_only" << endl;
-	}
-	init_sims_only(G, verbose_level - 10);
-
-	if (f_vv) {
-		cout << "action::init_permutation_group_from_generators "
-				"after init_sims_only" << endl;
-	}
-
-
-
-	if (f_vv) {
-		cout << "action::init_permutation_group_from_generators "
-				"before compute_strong_generators_from_sims" << endl;
-	}
-	compute_strong_generators_from_sims(verbose_level - 10);
-	if (f_vv) {
-		cout << "action::init_permutation_group_from_generators "
-				"after_strong_generators_from_sims" << endl;
+		if (f_vv) {
+			cout << "action::init_permutation_group_from_generators "
+					"before compute_strong_generators_from_sims" << endl;
+		}
+		compute_strong_generators_from_sims(verbose_level - 10);
+		if (f_vv) {
+			cout << "action::init_permutation_group_from_generators "
+					"after_strong_generators_from_sims" << endl;
+		}
 	}
 
 
-	FREE_OBJECT(generators);
-	FREE_OBJECT(Strong_gens);
 
 	if (f_v) {
 		print_info();
@@ -957,6 +979,7 @@ void action::init_affine_group(int n, int q,
 		FALSE, go, 
 		nb_gens, gens, 
 		given_base_length, given_base,
+		FALSE /* f_no_base */,
 		verbose_level);
 
 	FREE_int(gens);
@@ -967,7 +990,7 @@ void action::init_affine_group(int n, int q,
 }
 
 
-void action::init_symmetric_group(int degree, int verbose_level)
+void action::init_symmetric_group(int degree, int f_no_base, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int nb_gens, *gens;
@@ -980,7 +1003,7 @@ void action::init_symmetric_group(int degree, int verbose_level)
 	char str2[1000];
 	
 	if (f_v) {
-		cout << "action::init_symmetric_group" << endl;
+		cout << "action::init_symmetric_group f_no_base=" << f_no_base << endl;
 	}
 	sprintf(str1, "Sym_%d", degree);
 	sprintf(str2, "Sym(%d)", degree);
@@ -1008,11 +1031,18 @@ void action::init_symmetric_group(int degree, int verbose_level)
 	for (i = 0; i < given_base_length; i++) {
 		given_base[i] = i;
 	}
+	if (f_v) {
+		cout << "action::init_symmetric_group before init_permutation_group_from_generators" << endl;
+	}
 	init_permutation_group_from_generators(degree, 
 		TRUE, go,
 		nb_gens, gens, 
 		given_base_length, given_base,
+		f_no_base,
 		verbose_level);
+	if (f_v) {
+		cout << "action::init_symmetric_group after init_permutation_group_from_generators" << endl;
+	}
 	FREE_int(gens);
 	FREE_lint(given_base);
 	if (f_v) {
@@ -2364,6 +2394,7 @@ void action::init_automorphism_group_from_group_table(
 		TRUE, go,
 		N_nb_gens, N_gens,
 		nb_gens /* given_base_length */, gens1 /* given_base */,
+		FALSE /* f_no_base */,
 		verbose_level);
 	{
 		longinteger_object go;

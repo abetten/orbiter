@@ -2013,7 +2013,7 @@ public:
 	void report(std::ostream &ost,
 			layered_graph_draw_options *O,
 			int verbose_level);
-	void incidence_matrix_save_csv();
+	void export_incidence_matrix_to_csv(int verbose_level);
 	void make_fname_incidence_matrix_csv(std::string &fname);
 	void create_latex_report(
 			layered_graph_draw_options *O,

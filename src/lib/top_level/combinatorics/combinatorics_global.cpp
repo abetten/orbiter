@@ -38,7 +38,6 @@ void combinatorics_global::create_design_table(design_create *DC,
 	}
 	latex_interface L;
 	action *A;
-	//int *Elt1;
 	int *Elt2;
 
 	A = DC->A;
@@ -46,25 +45,6 @@ void combinatorics_global::create_design_table(design_create *DC,
 	Elt2 = NEW_int(A->elt_size_in_int);
 
 
-
-#if 0
-	if (DC->f_has_group) {
-		for (i = 0; i < BC->Sg->gens->len; i++) {
-			cout << "Testing generator " << i << " / "
-					<< BC->Sg->gens->len << endl;
-			A->element_invert(BC->Sg->gens->ith(i),
-					Elt2, 0 /*verbose_level*/);
-
-
-			cout << "Generator " << i << " / " << SC->Sg->gens->len
-					<< " is good" << endl;
-			}
-		}
-	else {
-		cout << "We do not have information about the "
-				"automorphism group" << endl;
-		}
-#endif
 
 
 	if (f_v) {

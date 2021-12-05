@@ -322,9 +322,17 @@ void finite_field::create_projective_variety(
 	fname.append(".txt");
 
 	int *coeff;
+	int sz;
 
-	coeff = HPD->read_from_string_coefficient_vector(variety_coeffs, verbose_level - 2);
+	Orbiter->get_vector_from_label(variety_coeffs, coeff, sz, verbose_level);
+	//coeff = HPD->read_from_string_coefficient_vector(variety_coeffs, verbose_level - 2);
 
+	if (sz != HPD->get_nb_monomials()) {
+		cout << "finite_field::create_projective_variety "
+				"the number of coefficients should be " << HPD->get_nb_monomials()
+				<< " but is " << sz << endl;
+		exit(1);
+	}
 	if (f_v) {
 		cout << "finite_field::create_projective_variety coeff:";
 		Orbiter->Int_vec.print(cout, coeff, HPD->get_nb_monomials());

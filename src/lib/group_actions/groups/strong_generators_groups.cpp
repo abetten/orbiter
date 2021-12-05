@@ -3419,7 +3419,9 @@ void strong_generators::Hall_reflection(
 				"before A->init_permutation_group" << endl;
 	}
 	A = NEW_OBJECT(action);
-	A->init_permutation_group(degree, verbose_level);
+	int f_no_base = FALSE;
+
+	A->init_permutation_group(degree, f_no_base, verbose_level);
 
 	strong_generators *SG;
 
@@ -3520,7 +3522,9 @@ void strong_generators::normalizer_of_a_Hall_reflection(
 				"before A->init_permutation_group" << endl;
 	}
 	A = NEW_OBJECT(action);
-	A->init_symmetric_group(degree, verbose_level);
+	int f_no_base = FALSE;
+
+	A->init_symmetric_group(degree, f_no_base, verbose_level);
 	//A->init_permutation_group(degree, verbose_level);
 
 	strong_generators *SG;

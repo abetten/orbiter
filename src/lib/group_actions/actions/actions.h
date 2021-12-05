@@ -506,13 +506,14 @@ public:
 	void init_matrix_group_strong_generators_builtin(matrix_group *M, 
 		vector_ge *&nice_gens,
 		int verbose_level);
-	void init_permutation_group(int degree, int verbose_level);
+	void init_permutation_group(int degree, int f_no_base, int verbose_level);
 	void init_permutation_group_from_nauty_output(nauty_output *NO,
 		int verbose_level);
 	void init_permutation_group_from_generators(int degree, 
 		int f_target_go, longinteger_object &target_go, 
 		int nb_gens, int *gens, 
 		int given_base_length, long int *given_base,
+		int f_no_base,
 		int verbose_level);
 
 	/** Create the affine group AGL(n,q) as abstract permutation group,
@@ -525,7 +526,7 @@ public:
 
 	/** Create the symmetric group
 	 * as abstract permutation group */
-	void init_symmetric_group(int degree, int verbose_level);
+	void init_symmetric_group(int degree, int f_no_base, int verbose_level);
 
 
 	void create_sims(int verbose_level);

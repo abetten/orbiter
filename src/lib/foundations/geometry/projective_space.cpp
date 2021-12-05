@@ -3346,8 +3346,14 @@ void projective_space::report(ostream &ost,
 
 }
 
-void projective_space::incidence_matrix_save_csv()
+void projective_space::export_incidence_matrix_to_csv(int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space::export_incidence_matrix_to_csv" << endl;
+	}
+
 	int i, j, k;
 	int *T;
 	file_io Fio;
@@ -3367,9 +3373,17 @@ void projective_space::incidence_matrix_save_csv()
 	string fname;
 
 	make_fname_incidence_matrix_csv(fname);
+
 	Fio.int_matrix_write_csv(fname, T, N_points, N_lines);
-	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
 	FREE_int(T);
+	if (f_v) {
+		cout << "projective_space::export_incidence_matrix_to_csv done" << endl;
+	}
 }
 
 void projective_space::make_fname_incidence_matrix_csv(std::string &fname)

@@ -1487,7 +1487,9 @@ void isomorph::induced_action_on_set(
 				"before init_permutation_group" << endl;
 		}
 
-	AA_perm->init_permutation_group(size, 0/*verbose_level*/);
+	int f_no_base = FALSE;
+
+	AA_perm->init_permutation_group(size, f_no_base, 0/*verbose_level*/);
 	if (f_v) {
 		cout << "AA_perm:" << endl;
 		AA_perm->print_info();

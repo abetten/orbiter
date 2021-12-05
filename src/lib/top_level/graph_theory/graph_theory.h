@@ -109,11 +109,11 @@ public:
 class create_graph_description {
 public:
 
-	int f_load_from_file;
+	int f_load;
 	std::string fname;
 
-	int f_load_from_file_csv_no_border;
-	int f_load_from_file_dimacs;
+	int f_load_csv_no_border;
+	int f_load_dimacs;
 
 	int f_edge_list;
 	int n;
@@ -174,6 +174,10 @@ public:
 	int f_disjoint_sets_graph;
 	std::string disjoint_sets_graph_fname;
 
+	int f_orbital_graph;
+	std::string orbital_graph_group;
+	int orbital_graph_orbit_idx;
+
 	std::vector<graph_modification_description> Modifications;
 
 	create_graph_description();
@@ -227,6 +231,8 @@ public:
 			int n, int k, int q, int r, int verbose_level);
 	void create_coll_orthogonal(int &N, int *&Adj,
 			int epsilon, int d, int q, int verbose_level);
+	void make_orbital_graph(int &N, int *&Adj,
+			any_group *AG, int orbit_idx, int verbose_level);
 
 };
 
@@ -413,6 +419,8 @@ public:
 
 	int f_complement;
 
+	int f_distance_2;
+
 
 	graph_modification_description();
 	~graph_modification_description();
@@ -462,6 +470,8 @@ public:
 
 	int f_save;
 	int f_automorphism_group;
+
+	int f_properties;
 
 
 	graph_theoretic_activity_description();

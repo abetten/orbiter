@@ -2109,8 +2109,8 @@ void action::induced_action_on_k_subsets(
 	if (f_v) {
 		cout << "action::induced_action_on_k_subsets" << endl;
 		cout << "the old_action " << old_action.label
-				<< " has base_length = " << old_action.base_len()
-			<< " and degree " << old_action.degree << endl;
+				//<< " has base_length = " << old_action.base_len()
+			<< " has degree " << old_action.degree << endl;
 	}
 	char str1[1000];
 	char str2[1000];

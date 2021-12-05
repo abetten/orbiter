@@ -944,8 +944,7 @@ public:
 	int f_design_table;
 	std::string design_table_label_design;
 	std::string design_table_label;
-	std::string design_table_go_text;
-	std::string design_table_generators_data;
+	std::string design_table_group;
 
 
 	int f_large_set_was;

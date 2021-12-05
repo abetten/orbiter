@@ -1368,28 +1368,21 @@ void any_group::orbits_on_points(orbits_on_something *&Orb, int verbose_level)
 	}
 }
 
-void any_group::orbits_on_subsets(poset_classification_control *Control, int subset_size, int verbose_level)
+void any_group::orbits_on_subsets(poset_classification_control *Control,
+		poset_classification *&PC,
+		int subset_size,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "any_group::orbits_on_subsets subset_size=" << subset_size << endl;
 	}
-	poset_classification *PC;
+	//poset_classification *PC;
 	poset_with_group_action *Poset;
 
 	Poset = NEW_OBJECT(poset_with_group_action);
 
-#if 0
-	if (Descr->f_poset_classification_control) {
-		Control = Descr->Control;
-	}
-	else {
-		cout << "please use option -poset_classification_control" << endl;
-		exit(1);
-		//Control = NEW_OBJECT(poset_classification_control);
-	}
-#endif
 	if (f_v) {
 		cout << "any_group::orbits_on_subsets control=" << endl;
 		Control->print();

@@ -157,9 +157,11 @@ void young::init(int n, int verbose_level)
 	if (f_v) {
 		cout << "young::init" << endl;
 		}
+	int f_no_base = FALSE;
+
 	young::n = n;
 	A = NEW_OBJECT(action);
-	A->init_symmetric_group(n, verbose_level);
+	A->init_symmetric_group(n, f_no_base, verbose_level);
 	A->group_order(go);
 
 	goi = go.as_int();

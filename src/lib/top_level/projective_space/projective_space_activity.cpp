@@ -42,6 +42,12 @@ void projective_space_activity::perform_activity(int verbose_level)
 				verbose_level);
 	}
 
+	if (Descr->f_export_point_line_incidence_matrix) {
+
+		PA->P->export_incidence_matrix_to_csv(verbose_level);
+	}
+
+
 	else if (Descr->f_table_of_cubic_surfaces_compute_properties) {
 
 		surface_domain_high_level SH;

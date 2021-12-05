@@ -677,6 +677,10 @@ void colored_graph::init(int nb_points, int nb_colors, int nb_colors_per_vertex,
 	colored_graph::nb_colors_per_vertex = nb_colors_per_vertex;
 	colored_graph::label.assign(label);
 	colored_graph::label_tex.assign(label_tex);
+	if (f_v) {
+		cout << "colored_graph::init colored_graph::label = " << label << endl;
+		cout << "colored_graph::init colored_graph::label_tex = " << label_tex << endl;
+	}
 
 
 	L = ((long int) nb_points * (long int) (nb_points - 1)) >> 1;
@@ -3523,6 +3527,108 @@ void colored_graph::complement(int verbose_level)
 		//Bitvec->print();
 		//print_adjacency_list();
 		cout << "colored_graph::complement done" << endl;
+	}
+}
+
+void colored_graph::distance_2(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, k;
+	int *M;
+
+
+	if (f_v) {
+		cout << "colored_graph::distance_2" << endl;
+		//cout << "nb_points=" << nb_points << endl;
+		//print_adjacency_list();
+		//Bitvec->print();
+	}
+
+
+	M = NEW_int(nb_points * nb_points);
+	Orbiter->Int_vec.zero(M, nb_points * nb_points);
+
+	for (i = 0; i < nb_points; i++) {
+		for (j = i + 1; j < nb_points; j++) {
+			if (is_adjacent(i, j)) {
+				continue;
+			}
+			for (k = 0; k < nb_points; k++) {
+				if (k == i) {
+					continue;
+				}
+				if (k == j) {
+					continue;
+				}
+				if (is_adjacent(i, k) && is_adjacent(k, j)) {
+					if (FALSE) {
+						cout << "set_adjacency(" << i << "," << j << ",0)" << endl;
+					}
+					M[i * nb_points + j] = 1;
+					M[j * nb_points + i] = 1;
+					break;
+				}
+			}
+		}
+	}
+	for (i = 0; i < nb_points; i++) {
+		for (j = i + 1; j < nb_points; j++) {
+			if (M[i * nb_points + j]) {
+				if (FALSE) {
+					cout << "set_adjacency(" << i << "," << j << ",0)" << endl;
+				}
+				set_adjacency(i, j, 1);
+			}
+			else {
+				if (FALSE) {
+					cout << "set_adjacency(" << i << "," << j << ",1)" << endl;
+				}
+				set_adjacency(i, j, 0);
+			}
+		}
+	}
+
+	FREE_int(M);
+
+	if (f_v) {
+		//Bitvec->print();
+		//print_adjacency_list();
+		cout << "colored_graph::distance_2 done" << endl;
+	}
+}
+
+void colored_graph::properties(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "colored_graph::properties" << endl;
+	}
+
+	int *Degree;
+	int i, j;
+
+	Degree = NEW_int(nb_points);
+	Orbiter->Int_vec.zero(Degree, nb_points);
+
+	for (i = 0; i < nb_points; i++) {
+		for (j = i + 1; j < nb_points; j++) {
+			if (is_adjacent(i, j)) {
+				Degree[i]++;
+				Degree[j]++;
+			}
+		}
+	}
+	tally T;
+
+	T.init(Degree, nb_points, FALSE, 0);
+	cout << "Degree type: ";
+	T.print_first_tex(TRUE /* f_backwards */);
+	cout << endl;
+
+	if (f_v) {
+		cout << "colored_graph::properties done" << endl;
 	}
 }
 

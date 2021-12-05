@@ -428,6 +428,8 @@ public:
 			std::ostream &fp,
 			int verbose_level);
 	void complement(int verbose_level);
+	void distance_2(int verbose_level);
+	void properties(int verbose_level);
 
 };
 

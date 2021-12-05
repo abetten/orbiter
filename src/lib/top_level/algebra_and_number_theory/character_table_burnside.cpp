@@ -38,9 +38,10 @@ void character_table_burnside::do_it(int n, int verbose_level)
 	int goi;
 	int *Elt;
 	int i, j;
+	int f_no_base = FALSE;
 
 	A = NEW_OBJECT(action);
-	A->init_symmetric_group(n, verbose_level);
+	A->init_symmetric_group(n, f_no_base, verbose_level);
 	A->group_order(go);
 
 	goi = go.as_int();

@@ -286,7 +286,10 @@ void cayley_graph_search::init_group_level_3(int verbose_level)
 
 
 	A = NEW_OBJECT(action);
-	A->init_permutation_group(degree, verbose_level);
+
+	int f_no_base = FALSE;
+
+	A->init_permutation_group(degree, f_no_base, verbose_level);
 
 
 	Elt1 = NEW_int(A->elt_size_in_int);
@@ -362,7 +365,8 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 
 
 	if (degree) {
-		A->init_permutation_group(degree, verbose_level);
+		int f_no_base = FALSE;
+		A->init_permutation_group(degree, f_no_base, verbose_level);
 		}
 	else if (group == 4) {
 		int q = 2;

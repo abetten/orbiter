@@ -449,6 +449,15 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 				<< Fio.file_size(fname_group) << endl;
 
 	}
+	else if (Descr->f_properties) {
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity f_properties" << endl;
+		}
+
+		CG->properties(verbose_level);
+	}
+
 
 
 

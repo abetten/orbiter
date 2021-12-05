@@ -422,10 +422,12 @@ public:
 
 	int f_create_table;
 	std::string create_table_label;
-	std::string create_table_group_order;
-	std::string create_table_gens;
+	std::string create_table_group;
 
 	int f_load_table;
+	std::string load_table_group_order;
+	std::string load_table_gens;
+
 
 	std::string load_table_H_label;
 	std::string load_table_H_group_order;
@@ -436,9 +438,11 @@ public:
 	int f_canonical_form;
 	projective_space_object_classifier_description *Canonical_form_Descr;
 
-	int f_extract_solutions_by_index;
+	int f_extract_solutions_by_index_csv;
+	int f_extract_solutions_by_index_txt;
 	std::string extract_solutions_by_index_fname_solutions_in;
 	std::string extract_solutions_by_index_fname_solutions_out;
+	std::string extract_solutions_by_index_prefix;
 
 	int f_export_inc;
 	int f_export_blocks;
@@ -479,12 +483,13 @@ public:
 			std::string &generators_data,
 			std::string &fname_in,
 			std::string &fname_out,
+			std::string &prefix_text,
+			int f_csv_format,
 			int verbose_level);
 	void do_create_table(
 			design_create *DC,
 			std::string &label,
-			std::string &go_text,
-			std::string &generators_data,
+			std::string &group_label,
 			int verbose_level);
 	void do_load_table(
 			design_create *DC,
@@ -541,6 +546,7 @@ public:
 	int f_list_of_blocks_from_file;
 	std::string list_of_blocks_from_file_fname;
 
+	int f_no_group;
 
 
 	design_create_description();
