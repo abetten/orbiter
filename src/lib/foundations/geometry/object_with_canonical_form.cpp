@@ -112,6 +112,29 @@ void object_with_canonical_form::print(ostream &ost)
 	}
 }
 
+void object_with_canonical_form::print_tex_detailed(std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::print_tex_detailed" << endl;
+	}
+
+	print_tex(ost);
+
+	encoded_combinatorial_object *Enc;
+
+	encode_incma(Enc, verbose_level);
+
+	Enc->latex_incma(ost, verbose_level);
+
+	FREE_OBJECT(Enc);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::print_tex_detailed done" << endl;
+	}
+}
+
 void object_with_canonical_form::print_tex(ostream &ost)
 {
 	if (type == t_PTS) {
@@ -143,11 +166,38 @@ void object_with_canonical_form::print_tex(ostream &ost)
 		ost << "incidence structure: \\\\" << endl;
 		//SoS->print_table_tex(ost);
 		//ost << endl;
+		Orbiter->Lint_vec.print(ost, set, sz);
+		ost << "\\\\" << endl;
+#if 0
+		object_with_canonical_form::set = NEW_lint(data_sz);
+		Orbiter->Lint_vec.copy(data, object_with_canonical_form::set, data_sz);
+		object_with_canonical_form::sz = data_sz;
+		object_with_canonical_form::v = v;
+		object_with_canonical_form::b = b;
+#endif
 	}
 	else if (type == t_LS) {
 		ost << "large set: \\\\" << endl;
 		//SoS->print_table_tex(ost);
 		//ost << endl;
+
+		int nb_designs = b / design_sz;
+		int i;
+
+		for (i = 0; i < nb_designs; i++) {
+			Orbiter->Lint_vec.print(ost, set + i * design_sz, design_sz);
+			ost << "\\\\" << endl;
+		}
+#if 0
+		object_with_canonical_form::set = NEW_lint(data_sz);
+		Orbiter->Lint_vec.copy(data, object_with_canonical_form::set, data_sz);
+		object_with_canonical_form::sz = data_sz;
+		object_with_canonical_form::v = v;
+		object_with_canonical_form::b = data_sz;
+		object_with_canonical_form::design_k = k;
+		object_with_canonical_form::design_sz = design_sz;
+#endif
+
 	}
 }
 
@@ -174,7 +224,6 @@ void object_with_canonical_form::get_packing_as_set_system(long int *&Sets,
 }
 
 void object_with_canonical_form::init_object_from_string(
-	//projective_space *P,
 	int type,
 	std::string &input_fname, int input_idx,
 	std::string &set_as_string,
@@ -252,7 +301,6 @@ void object_with_canonical_form::init_object_from_string(
 }
 
 void object_with_canonical_form::init_object_from_int_vec(
-	//projective_space *P,
 	int type,
 	std::string &input_fname, int input_idx,
 	long int *the_set_in, int the_set_sz,

@@ -18,13 +18,15 @@ namespace top_level {
 
 design_activity_description::design_activity_description()
 {
+#if 0
 	f_create_table = FALSE;
 	//std::string create_table_label;
 	//std::string create_table_group;
+#endif
 
 	f_load_table = FALSE;
-	//std::string load_table_group_order;
-	//std::string load_table_gens;
+	//std::string load_table_label;
+	//std::string load_table_group;
 
 	//std::string load_table_H_label;
 	//std::string load_table_H_group_order;
@@ -37,6 +39,8 @@ design_activity_description::design_activity_description()
 
 	f_extract_solutions_by_index_csv = FALSE;
 	f_extract_solutions_by_index_txt = FALSE;
+	//std::string extract_solutions_by_index_label;
+	//std::string extract_solutions_by_index_group;
 	//std::string extract_solutions_by_index_fname_solutions_in;
 	//std::string extract_solutions_by_index_fname_solutions_out;
 	//std::string extract_solutions_by_index_prefix;
@@ -64,6 +68,7 @@ int design_activity_description::read_arguments(int argc, std::string *argv,
 	}
 	for (i = 0; i < argc; i++) {
 
+#if 0
 		if (stringcmp(argv[i], "-create_table") == 0) {
 			f_create_table = TRUE;
 			create_table_label.assign(argv[++i]);
@@ -74,19 +79,18 @@ int design_activity_description::read_arguments(int argc, std::string *argv,
 						<< endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-load_table") == 0) {
+#endif
+		if (stringcmp(argv[i], "-load_table") == 0) {
 			f_load_table = TRUE;
-			create_table_label.assign(argv[++i]);
-			load_table_group_order.assign(argv[++i]);
-			load_table_gens.assign(argv[++i]);
+			load_table_label.assign(argv[++i]);
+			load_table_group.assign(argv[++i]);
 			load_table_H_label.assign(argv[++i]);
 			load_table_H_group_order.assign(argv[++i]);
 			load_table_H_gens.assign(argv[++i]);
 			load_table_selected_orbit_length = strtoi(argv[++i]);
 			if (f_v) {
-				cout << "-load_table " << create_table_label
-						<< " " << load_table_group_order
-						<< " " << load_table_gens
+				cout << "-load_table " << load_table_label
+						<< " " << load_table_group
 						<< " " << load_table_H_label
 						<< " " << load_table_H_group_order
 						<< " " << load_table_H_gens
@@ -114,17 +118,15 @@ int design_activity_description::read_arguments(int argc, std::string *argv,
 		}
 		else if (stringcmp(argv[i], "-extract_solutions_by_index_csv") == 0) {
 			f_extract_solutions_by_index_csv = TRUE;
-			create_table_label.assign(argv[++i]);
-			load_table_group_order.assign(argv[++i]);
-			load_table_gens.assign(argv[++i]);
+			extract_solutions_by_index_label.assign(argv[++i]);
+			extract_solutions_by_index_group.assign(argv[++i]);
 			extract_solutions_by_index_fname_solutions_in.assign(argv[++i]);
 			extract_solutions_by_index_fname_solutions_out.assign(argv[++i]);
 			extract_solutions_by_index_prefix.assign(argv[++i]);
 			if (f_v) {
 				cout << "-extract_solutions_by_index_csv "
-						<< create_table_label << " "
-						<< load_table_group_order << " "
-						<< load_table_gens << " "
+						<< extract_solutions_by_index_label << " "
+						<< extract_solutions_by_index_group << " "
 						<< extract_solutions_by_index_fname_solutions_in << " "
 						<< extract_solutions_by_index_fname_solutions_out << " "
 						<< extract_solutions_by_index_prefix << " "
@@ -133,17 +135,15 @@ int design_activity_description::read_arguments(int argc, std::string *argv,
 		}
 		else if (stringcmp(argv[i], "-extract_solutions_by_index_txt") == 0) {
 			f_extract_solutions_by_index_txt = TRUE;
-			create_table_label.assign(argv[++i]);
-			load_table_group_order.assign(argv[++i]);
-			load_table_gens.assign(argv[++i]);
+			extract_solutions_by_index_label.assign(argv[++i]);
+			extract_solutions_by_index_group.assign(argv[++i]);
 			extract_solutions_by_index_fname_solutions_in.assign(argv[++i]);
 			extract_solutions_by_index_fname_solutions_out.assign(argv[++i]);
 			extract_solutions_by_index_prefix.assign(argv[++i]);
 			if (f_v) {
 				cout << "-extract_solutions_by_index_txt "
-						<< create_table_label << " "
-						<< load_table_group_order << " "
-						<< load_table_gens << " "
+						<< extract_solutions_by_index_label << " "
+						<< extract_solutions_by_index_group << " "
 						<< extract_solutions_by_index_fname_solutions_in << " "
 						<< extract_solutions_by_index_fname_solutions_out << " "
 						<< extract_solutions_by_index_prefix << " "
@@ -189,15 +189,16 @@ void design_activity_description::print()
 		cout << "-canonical_form " << endl;
 		Canonical_form_Descr->print();
 	}
+#if 0
 	if (f_create_table) {
 		cout << "-create_table " << create_table_label
 				<< " " << create_table_group
 				<< endl;
 	}
+#endif
 	if (f_load_table) {
-		cout << "-load_table " << create_table_label
-				<< " " << load_table_group_order
-				<< " " << load_table_gens
+		cout << "-load_table " << load_table_label
+				<< " " << load_table_group
 				<< " " << load_table_H_label
 				<< " " << load_table_H_group_order
 				<< " " << load_table_H_gens
@@ -206,9 +207,8 @@ void design_activity_description::print()
 	}
 	if (f_extract_solutions_by_index_csv) {
 		cout << "-extract_solutions_by_index_csv "
-				<< create_table_label << " "
-				<< load_table_group_order << " "
-				<< load_table_gens << " "
+				<< extract_solutions_by_index_label << " "
+				<< extract_solutions_by_index_group << " "
 				<< extract_solutions_by_index_fname_solutions_in << " "
 				<< extract_solutions_by_index_fname_solutions_out << " "
 				<< extract_solutions_by_index_prefix << " "
@@ -216,9 +216,8 @@ void design_activity_description::print()
 	}
 	if (f_extract_solutions_by_index_txt) {
 		cout << "-extract_solutions_by_index_txt "
-				<< create_table_label << " "
-				<< load_table_group_order << " "
-				<< load_table_gens << " "
+				<< extract_solutions_by_index_label << " "
+				<< extract_solutions_by_index_group << " "
 				<< extract_solutions_by_index_fname_solutions_in << " "
 				<< extract_solutions_by_index_fname_solutions_out << " "
 				<< extract_solutions_by_index_prefix << " "

@@ -1174,7 +1174,7 @@ public:
 		int verbose_level);
 #endif
 	void automorphism_group_as_permutation_group(
-			strong_generators *&SG,
+			//strong_generators *&SG,
 			nauty_output *NO,
 			action *&A_perm,
 			int verbose_level);

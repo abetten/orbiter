@@ -37,6 +37,8 @@ orbiter_session::orbiter_session()
 	f_draw_options = TRUE;
 	draw_options = NEW_OBJECT(layered_graph_draw_options);
 
+	f_draw_incidence_structure_description = TRUE;
+	Draw_incidence_structure_description = NEW_OBJECT(draw_incidence_structure_description);
 
 	f_list_arguments = FALSE;
 
@@ -96,6 +98,9 @@ void orbiter_session::print_help(int argc,
 	else if (stringcmp(argv[i], "-draw_options") == 0) {
 		cout << "-draw_options ... -end" << endl;
 	}
+	else if (stringcmp(argv[i], "-draw_incidence_structure_description") == 0) {
+		cout << "-draw_incidence_structure_description ... -end" << endl;
+	}
 	else if (stringcmp(argv[i], "-list_arguments") == 0) {
 		cout << "-list_arguments" << endl;
 	}
@@ -126,6 +131,9 @@ int orbiter_session::recognize_keyword(int argc,
 		return true;
 	}
 	else if (stringcmp(argv[i], "-draw_options") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-draw_incidence_structure_description") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-list_arguments") == 0) {
@@ -188,6 +196,26 @@ int orbiter_session::read_arguments(int argc,
 			cout << "-f_draw_options " << endl;
 #endif
 		}
+		else if (stringcmp(argv[i], "-draw_incidence_structure_description") == 0) {
+			f_draw_incidence_structure_description = TRUE;
+
+			Draw_incidence_structure_description = NEW_OBJECT(draw_incidence_structure_description);
+			//cout << "-draw_incidence_structure_description " << endl;
+			i += Draw_incidence_structure_description->read_arguments(argc - (i + 1),
+				argv + i + 1, 0 /*verbose_level*/);
+
+#if 0
+			cout << "done reading -draw_incidence_structure_description " << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-draw_incidence_structure_description " << endl;
+#endif
+		}
+
+
 		else if (stringcmp(argv[i], "-list_arguments") == 0) {
 			f_list_arguments = TRUE;
 			//cout << "-list_arguments " << endl;

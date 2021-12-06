@@ -1836,11 +1836,10 @@ void OiPA_group_order(void *extra_data,
 void print_summary_table_entry(int *Table,
 		int m, int n, int i, int j, int val, std::string &output, void *data)
 {
-	int f_v = FALSE;
+	int f_v = TRUE;
 	classify_bitvectors *CB;
 	object_in_projective_space_with_action *OiPA;
 	void *extra_data;
-	longinteger_object go;
 	int h;
 	sorting Sorting;
 	char str[1000];
@@ -1848,7 +1847,12 @@ void print_summary_table_entry(int *Table,
 	if (f_v) {
 		cout << "print_summary_table_entry i=" << i << " j=" << j << endl;
 	}
-	CB = (classify_bitvectors *) data;
+
+	projective_space_object_classifier *PC;
+
+	PC = (projective_space_object_classifier *) data;
+	//CB = (classify_bitvectors *) data;
+	CB = PC->CB;
 
 	str[0] = 0;
 
@@ -1881,6 +1885,8 @@ void print_summary_table_entry(int *Table,
 				cout << "print_summary_table_entry getting extra_data" << endl;
 			}
 
+#if 0
+			longinteger_object go;
 			//extra_data = CB->Type_extra_data[CB->perm[i]];
 			extra_data = CB->Type_extra_data[i];
 
@@ -1898,6 +1904,12 @@ void print_summary_table_entry(int *Table,
 			go.create(OiPA->ago, __FILE__, __LINE__);
 			//OiPA->Aut_gens->group_order(go);
 			go.print_to_string(str);
+#else
+			longinteger_object go;
+			go.create(PC->Ago_transversal[i], __FILE__, __LINE__);
+			//OiPA->Aut_gens->group_order(go);
+			go.print_to_string(str);
+#endif
 		}
 		else if (j == 3) {
 

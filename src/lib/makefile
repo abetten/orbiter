@@ -162,6 +162,7 @@ MODULES= \
 		foundations/graph_theory_nauty/schreier.o \
 		foundations/graphics/animate.o \
 		foundations/graphics/draw_bitmap_control.o \
+		foundations/graphics/draw_incidence_structure_description.o \
 		foundations/graphics/draw_mod_n_description.o \
 		foundations/graphics/draw_projective_curve_description.o \
 		foundations/graphics/drawable_set_of_objects.o \

@@ -314,6 +314,8 @@ public:
 			int *canonical_labeling,
 			int verbose_level);
 	void print();
+	void report(std::ostream &fp,
+			projective_space_with_action *PA, int max_TDO_depth, int verbose_level);
 
 };
 
@@ -752,6 +754,7 @@ public:
 	int nb_orbits;
 	int *Idx_transversal;
 	long int *Ago_transversal;
+	object_with_canonical_form **OWCF;
 
 	tally *T_Ago;
 
@@ -770,7 +773,7 @@ public:
 			int input_idx, long int &ago, int &f_reject, int verbose_level);
 	int process_object(
 		object_with_canonical_form *OwCF,
-		strong_generators *&SG, long int &ago,
+		strong_generators *&SG, action *&A_perm, long int &ago,
 		int &idx,
 		nauty_output *NO,
 		int verbose_level);
@@ -790,6 +793,8 @@ public:
 			int *fixed_structure_order_list,
 			int max_TDO_depth,
 			int verbose_level);
+	void report_isomorphism_type(
+			std::ostream &fp, int i, int max_TDO_depth, int verbose_level);
 
 
 };

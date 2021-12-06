@@ -483,6 +483,7 @@ public:
 	void canonical_form_given_canonical_labeling(int *canonical_labeling,
 			bitvector *&B,
 			int verbose_level);
+	void latex_incma(std::ostream &ost, int verbose_level);
 
 };
 

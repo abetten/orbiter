@@ -179,6 +179,71 @@ public:
 };
 
 
+// #############################################################################
+// draw_incidence_structure_description.cpp
+// #############################################################################
+
+
+//! options for drawing an incidence structure
+
+
+class draw_incidence_structure_description {
+public:
+	int f_width;
+	int width;
+
+	int f_width_10;
+	int width_10;
+
+	// width for one box in 0.1mm
+	// width_10 is 1 10th of width
+	// example: width = 40, width_10 = 4 */
+
+	int f_outline_thin;
+
+	int f_unit_length;
+	std::string unit_length;
+
+	int f_thick_lines;
+	std::string thick_lines;
+
+	int f_thin_lines;
+	std::string thin_lines;
+
+	int f_geo_line_width;
+	std::string geo_line_width;
+
+	int v;
+	int b;
+	int V;
+	int B;
+	int *Vi;
+	int *Bj;
+
+#if 0
+	int *R;
+	int *X;
+	int dim_X;
+#endif
+
+	int f_labelling_points;
+	std::string *point_labels;
+
+	int f_labelling_blocks;
+	std::string *block_labels;
+
+// width for one box in 0.1mm
+// width_10 is 1 10th of width
+// example: width = 40, width_10 = 4
+
+	draw_incidence_structure_description();
+	~draw_incidence_structure_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
 
 // #############################################################################
 // draw_mod_n_description.cpp

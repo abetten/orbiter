@@ -11615,6 +11615,8 @@ geo_10_3_tree:
 
 geo_10_3_c:
 	$(ORBITER_PATH)orbiter.out -v 2 \
+		-draw_incidence_structure_description \
+			-width 50 -with_10 5 -end \
 		-define C -combinatorial_objects \
 			-file_of_incidence_geometries 10_3.inc 10 10 30 \
 		-end \
@@ -11626,6 +11628,8 @@ geo_10_3_c:
 			-save_ago \
 			-report -end \
 		-end
+	pdflatex 10_3_classification.tex
+	open 10_3_classification.pdf
 
 
 
@@ -12251,10 +12255,10 @@ LS_AG_2_3_export_solutions:
 		-define T -design_table D "AG_2_3" Sym9 \
 		-with D -do \
 		-design_activity \
-			-extract_solutions_by_index "AG_2_3" \
-				$(ORDER_SYM_9) $(GENERATORS_SYM_9) \
+			-extract_solutions_by_index "AG_2_3" Sym9 \
 				AG_2_3_design_table_disjoint_sets_sol.csv \
 				solutions.csv \
+				"" \
 		-end
 
 
@@ -12264,6 +12268,8 @@ LS_AG_2_3_export_solutions:
 
 LS_AG_2_3_solutions_classify:
 	$(ORBITER_PATH)orbiter.out -v 2 \
+		-draw_incidence_structure_description \
+			-width 30 -with_10 3 -end \
 		-define C -combinatorial_objects \
 			-file_of_designs \
 			solutions.csv 9 84 3 12 \
@@ -12275,6 +12281,8 @@ LS_AG_2_3_solutions_classify:
 			-classification_prefix large_sets_of_AG_2_3 \
 			-report "classification_" \
 		-end
+	pdflatex large_sets_of_AG_2_3_classification.tex
+	open large_sets_of_AG_2_3_classification.pdf
 
 #iso type : input object : ago
 #  0 :   0 :    42
