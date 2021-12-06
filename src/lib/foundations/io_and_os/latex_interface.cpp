@@ -548,41 +548,61 @@ void latex_interface::foot(std::ostream& ost)
 // adapted to use ostream instead of FILE pointer
 
 void latex_interface::incma_latex_picture(std::ostream &fp,
-	int width, int width_10,
-	int f_outline_thin, const char *unit_length,
-	const char *thick_lines,
-	const char *thin_lines,
-	const char *geo_line_width,
+		draw_incidence_structure_description *Descr,
 	int v, int b,
 	int V, int B, int *Vi, int *Bj,
-	int *R, int *X, int dim_X,
-	int f_labelling_points, const char **point_labels,
-	int f_labelling_blocks, const char **block_labels)
+	int *incma,
+	int f_labelling_points, std::string *point_labels,
+	int f_labelling_blocks, std::string *block_labels,
+	int verbose_level)
 // width for one box in 0.1mm
 // width_10 is 1 10th of width
 // example: width = 40, width_10 = 4
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "latex_interface::incma_latex_picture" << endl;
+	}
 	int w, h, w1, h1;
-	int i, j, k, r, a;
+	int i, j, k, a;
 	int x0, y0, x1, y1;
 	int X0, Y0, X1, Y1;
 	int width_8, width_5;
-	const char *tdo_line_width = thick_lines; // "0.7mm";
-	const char *line_width = thin_lines; // "0.15mm";
+
+
+	string tdo_line_width;
+	string line_width;
+
+
+	tdo_line_width.assign(Descr->thick_lines);
+
+	line_width.assign(Descr->thin_lines);
 	// char *geo_line_width = "0.25mm";
 
-	width_8 = width - 2 * width_10;
-	width_5 = width >> 1;
-	fp << "\\unitlength" << unit_length << endl;
-	w = b * width;
-	h = v * width;
+#if 0
+	if (!Descr->f_width) {
+		cout << "latex_interface::incma_latex_picture please give -width <width>" << endl;
+		exit(1);
+	}
+	if (!Descr->f_width_10) {
+		cout << "latex_interface::incma_latex_picture please give -width_10 <width_10>" << endl;
+		exit(1);
+	}
+#endif
+
+	width_8 = Descr->width - 2 * Descr->width_10;
+	width_5 = Descr->width >> 1;
+	fp << "\\unitlength" << Descr->unit_length << endl;
+	w = b * Descr->width;
+	h = v * Descr->width;
 	w1 = w;
 	h1 = h;
 	if (f_labelling_points) {
-		w1 += 2 * width;
+		w1 += 2 * Descr->width;
 		}
 	if (f_labelling_blocks) {
-		h1 += 2 * width;
+		h1 += 2 * Descr->width;
 		}
 	fp << "\\begin{picture}(" << w1 << "," << h1 << ")" << endl;
 
@@ -594,12 +614,12 @@ void latex_interface::incma_latex_picture(std::ostream &fp,
 			a = Bj[i];
 			k += a;
 			}
-		if (f_outline_thin) {
+		if (Descr->f_outline_thin) {
 			if (i == -1 || i == B - 1) {
 				continue;
 				}
 			}
-		fp << "\\put(" << k * width << ",0){\\line(0,1){"
+		fp << "\\put(" << k * Descr->width << ",0){\\line(0,1){"
 				<< h << "}}" << endl;
 		}
 	if (k != b) {
@@ -612,12 +632,12 @@ void latex_interface::incma_latex_picture(std::ostream &fp,
 			a = Vi[i];
 			k += a;
 			}
-		if (f_outline_thin) {
+		if (Descr->f_outline_thin) {
 			if (i == -1 || i == V - 1) {
 				continue;
 				}
 			}
-		fp << "\\put(0," << h - k * width << "){\\line(1,0){"
+		fp << "\\put(0," << h - k * Descr->width << "){\\line(1,0){"
 				<< w << "}}" << endl;
 		}
 	if (k != v) {
@@ -628,14 +648,14 @@ void latex_interface::incma_latex_picture(std::ostream &fp,
 	// labeling of points:
 	if (f_labelling_points) {
 		for (i = 0; i < v; i++) {
-			fp << "\\put(0," << h - i * width - width_5
+			fp << "\\put(0," << h - i * Descr->width - width_5
 				<< "){\\makebox(0,0)[r]{"
 				<< point_labels[i] << "$\\,$}}" << endl;
 			}
 		}
 	else {
 		for (i = 0; i < v; i++) {
-			fp << "\\put(0," << h - i * width - width_5
+			fp << "\\put(0," << h - i * Descr->width - width_5
 				<< "){\\makebox(0,0)[r]{}}" << endl;
 			}
 		}
@@ -643,40 +663,42 @@ void latex_interface::incma_latex_picture(std::ostream &fp,
 	// labeling of blocks:
 	if (f_labelling_blocks) {
 		for (i = 0; i < b; i++) {
-			fp << "\\put(" << i * width + width_5 << "," << h + width_5
+			fp << "\\put(" << i * Descr->width + width_5 << "," << h + width_5
 				<< "){\\makebox(0,0)[b]{"
 				<< block_labels[i] << "}}" << endl;
 			}
 		}
 	else {
 		for (i = 0; i < b; i++) {
-			fp << "\\put(" << i * width + width_5 << "," << h + width_5
+			fp << "\\put(" << i * Descr->width + width_5 << "," << h + width_5
 				<< "){\\makebox(0,0)[b]{}}" << endl;
 			}
 		}
 
 	// the grid:
 	fp << "\\linethickness{" << line_width << "}" << endl;
-	fp << "\\multiput(0,0)(" << width << ",0){" << b + 1
+	fp << "\\multiput(0,0)(" << Descr->width << ",0){" << b + 1
 			<< "}{\\line(0,1){" << h
 		<< "}}" << endl;
-	fp << "\\multiput(0,0)(0," << width << "){" << v + 1
+	fp << "\\multiput(0,0)(0," << Descr->width << "){" << v + 1
 			<< "}{\\line(1,0){" << w << "}}" << endl;
 
 	// the incidence matrix itself:
-	fp << "\\linethickness{" << geo_line_width << "}" << endl;
+	fp << "\\linethickness{" << Descr->geo_line_width << "}" << endl;
 	for (i = 0; i < v; i++) {
-		y0 = h - i * width;
-		y1 = h - (i + 1) * width;
-		Y0 = y0 - width_10;
-		Y1 = y1 + width_10;
-		for (r = 0; r < R[i]; r++) {
-			j = X[i * dim_X + r];
+		y0 = h - i * Descr->width;
+		y1 = h - (i + 1) * Descr->width;
+		Y0 = y0 - Descr->width_10;
+		Y1 = y1 + Descr->width_10;
+		for (j = 0; j < b; j++) {
+			if (incma[i * b + j] == 0) {
+				continue;
+			}
 			// printf("%d ", j);
-			x0 = j * width;
-			x1 = (j + 1) * width;
-			X0 = x0 + width_10;
-			X1 = x1 - width_10;
+			x0 = j * Descr->width;
+			x1 = (j + 1) * Descr->width;
+			X0 = x0 + Descr->width_10;
+			X1 = x1 - Descr->width_10;
 			// hor. lines:
 			fp << "\\put(" << X0 << "," << Y0 << "){\\line(1,0){"
 					<< width_8 << "}}" << endl;
@@ -697,51 +719,40 @@ void latex_interface::incma_latex_picture(std::ostream &fp,
 }
 
 
-static int incma_latex_unit_length_nb = 0;
-static const char *incma_latex_unit_length[100];
-
 
 
 void latex_interface::incma_latex(std::ostream &fp,
 	int v, int b,
 	int V, int B, int *Vi, int *Bj,
-	int *R, int *X, int dim_X)
+	int *incma,
+	int verbose_level)
+// used in incidence_structure::latex_it
 {
-	const char *unit_length;
+	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "latex_interface::incma_latex" << endl;
+	}
+	draw_incidence_structure_description *Descr;
 
-	if (incma_latex_unit_length_nb == 0) {
-		unit_length = "0.065mm";
-		}
-	else {
-		unit_length = incma_latex_unit_length[incma_latex_unit_length_nb - 1];
-		}
+	Descr = Orbiter->Draw_incidence_structure_description;
 
-
+	if (f_v) {
+		cout << "latex_interface::incma_latex before incma_latex_picture" << endl;
+	}
 	incma_latex_picture(fp,
-		40 /* width */,
-		10 /* width_10 */,
-		FALSE /* f_outline_thin */,
-		unit_length /* unit_length */,
-		"0.5mm" /* thick_lines */ ,
-		"0.15mm" /* thin_lines */ ,
-		"0.25mm" /* geo_line_width */ ,
-		v, b, V, B, Vi, Bj, R, X, dim_X,
+			Descr,
+		v, b, V, B, Vi, Bj, incma,
 		FALSE /* f_labelling_points */, NULL,
-		FALSE /* f_labelling_blocks */, NULL);
-}
+		FALSE /* f_labelling_blocks */, NULL,
+		verbose_level);
+	if (f_v) {
+		cout << "latex_interface::incma_latex after incma_latex_picture" << endl;
+	}
 
-
-void latex_interface::incma_latex_override_unit_length(
-		const char *override_unit_length)
-{
-	incma_latex_unit_length[incma_latex_unit_length_nb++] =
-			override_unit_length;
-}
-
-void latex_interface::incma_latex_override_unit_length_drop()
-{
-	incma_latex_unit_length_nb--;
+	if (f_v) {
+		cout << "latex_interface::incma_latex done" << endl;
+	}
 }
 
 void latex_interface::print_01_matrix_tex(std::ostream &ost,

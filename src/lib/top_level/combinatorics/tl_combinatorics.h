@@ -420,13 +420,15 @@ class design_activity_description {
 
 public:
 
+#if 0
 	int f_create_table;
 	std::string create_table_label;
 	std::string create_table_group;
+#endif
 
 	int f_load_table;
-	std::string load_table_group_order;
-	std::string load_table_gens;
+	std::string load_table_label;
+	std::string load_table_group;
 
 
 	std::string load_table_H_label;
@@ -440,6 +442,8 @@ public:
 
 	int f_extract_solutions_by_index_csv;
 	int f_extract_solutions_by_index_txt;
+	std::string extract_solutions_by_index_label;
+	std::string extract_solutions_by_index_group;
 	std::string extract_solutions_by_index_fname_solutions_in;
 	std::string extract_solutions_by_index_fname_solutions_out;
 	std::string extract_solutions_by_index_prefix;
@@ -479,8 +483,7 @@ public:
 	void do_extract_solutions_by_index(
 			design_create *DC,
 			std::string &label,
-			std::string &go_text,
-			std::string &generators_data,
+			std::string &group_label,
 			std::string &fname_in,
 			std::string &fname_out,
 			std::string &prefix_text,
@@ -494,8 +497,7 @@ public:
 	void do_load_table(
 			design_create *DC,
 			std::string &label,
-			std::string &go_text,
-			std::string &generators_data,
+			std::string &group_label,
 			std::string &H_label,
 			std::string &H_go_text,
 			std::string &H_generators_data,

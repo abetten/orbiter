@@ -8,6 +8,7 @@ LFLAGS = -lm
 MODULES = \
 	animate.o \
 	draw_bitmap_control.o \
+	draw_incidence_structure_description.o \
 	draw_mod_n_description.o \
 	draw_projective_curve_description.o \
 	drawable_set_of_objects.o \

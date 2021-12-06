@@ -2651,6 +2651,12 @@ void incidence_structure::line_intersection_graph(
 
 void incidence_structure::latex_it(ostream &ost, partitionstack &P)
 {
+
+	cout << "incidence_structure::latex_it" << endl;
+	cout << "currently disabled" << endl;
+	exit(1);
+
+#if 0
 	int nb_V, nb_B;
 	int *Vi, *Bj;
 	int *R;
@@ -2658,9 +2664,6 @@ void incidence_structure::latex_it(ostream &ost, partitionstack &P)
 	int f_v = TRUE;
 	latex_interface L;
 
-	if (f_v) {
-		cout << "latex_it" << endl;
-	}
 	rearrange(Vi, nb_V, Bj, nb_B, R, X, P);
 
 	L.incma_latex(ost,
@@ -2672,6 +2675,7 @@ void incidence_structure::latex_it(ostream &ost, partitionstack &P)
 	FREE_int(Bj);
 	FREE_int(R);
 	FREE_int(X);
+#endif
 
 
 }

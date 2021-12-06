@@ -346,24 +346,18 @@ public:
 	// two functions from DISCRETA1:
 
 	void incma_latex_picture(std::ostream &fp,
-		int width, int width_10,
-		int f_outline_thin, const char *unit_length,
-		const char *thick_lines, const char *thin_lines,
-		const char *geo_line_width,
+			draw_incidence_structure_description *Descr,
 		int v, int b,
 		int V, int B, int *Vi, int *Bj,
-		int *R, int *X, int dim_X,
-		int f_labelling_points, const char **point_labels,
-		int f_labelling_blocks, const char **block_labels);
-	// width for one box in 0.1mm
-	// width_10 is 1 10th of width
-	// example: width = 40, width_10 = 4 */
+		int *incma,
+		int f_labelling_points, std::string *point_labels,
+		int f_labelling_blocks, std::string *block_labels,
+		int verbose_level);
 	void incma_latex(std::ostream &fp,
 		int v, int b,
 		int V, int B, int *Vi, int *Bj,
-		int *R, int *X, int dim_X);
-	void incma_latex_override_unit_length(const char *override_unit_length);
-	void incma_latex_override_unit_length_drop();
+		int *incma,
+		int verbose_level);
 	void print_01_matrix_tex(std::ostream &ost, int *p, int m, int n);
 	void print_integer_matrix_tex(std::ostream &ost, int *p, int m, int n);
 	void print_lint_matrix_tex(std::ostream &ost,

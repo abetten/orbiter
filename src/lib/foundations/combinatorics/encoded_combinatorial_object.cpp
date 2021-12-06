@@ -198,6 +198,76 @@ void encoded_combinatorial_object::canonical_form_given_canonical_labeling(int *
 	}
 }
 
+void encoded_combinatorial_object::latex_incma(std::ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "encoded_combinatorial_object::latex_incma" << endl;
+	}
+
+	latex_interface L;
+
+	int *Vi;
+	int *Bj;
+	int V, B;
+	int i, j, i0, j0;
+
+	V = 0;
+	B = 0;
+	Vi = NEW_int(nb_rows);
+	Bj = NEW_int(nb_cols);
+
+	i0 = 0;
+	for (i = 0; i < nb_rows; i++) {
+		if (partition[i] == 0) {
+			Vi[V++] = i - i0 + 1;
+			i0 = i + 1;
+		}
+	}
+	if (f_v) {
+		cout << "encoded_combinatorial_object::latex_incma Vi=";
+		Orbiter->Int_vec.print(cout, Vi, V);
+		cout << endl;
+	}
+	j0 = 0;
+	for (j = 0; j < nb_cols; j++) {
+		if (partition[nb_rows + j] == 0) {
+			Bj[B++] = j - j0 + 1;
+			j0 = j + 1;
+		}
+	}
+	if (f_v) {
+		cout << "encoded_combinatorial_object::latex_incma Bj=";
+		Orbiter->Int_vec.print(cout, Bj, B);
+		cout << endl;
+	}
+
+	if (f_v) {
+		cout << "encoded_combinatorial_object::latex_incma before L.incma_latex" << endl;
+	}
+	L.incma_latex(ost,
+		nb_rows /*v */,
+		nb_cols /*b */,
+		V, B, Vi, Bj,
+		Incma,
+		verbose_level - 1);
+	if (f_v) {
+		cout << "encoded_combinatorial_object::latex_incma after L.incma_latex" << endl;
+	}
+
+	ost << "\\\\" << endl;
+
+	FREE_int(Vi);
+	FREE_int(Bj);
+
+	if (f_v) {
+		cout << "encoded_combinatorial_object::latex_incma done" << endl;
+	}
+}
+
+
 
 
 #if 0

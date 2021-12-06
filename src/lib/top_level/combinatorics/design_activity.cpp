@@ -36,6 +36,7 @@ void design_activity::perform_activity(design_activity_description *Descr,
 
 	design_activity::Descr = Descr;
 
+#if 0
 	if (Descr->f_create_table) {
 
 
@@ -49,12 +50,12 @@ void design_activity::perform_activity(design_activity_description *Descr,
 
 
 	}
-	else if (Descr->f_load_table) {
+#endif
+	if (Descr->f_load_table) {
 		do_load_table(
 				DC,
-				Descr->create_table_label,
-				Descr->load_table_group_order,
-				Descr->load_table_gens,
+				Descr->load_table_label,
+				Descr->load_table_group,
 				Descr->load_table_H_label,
 				Descr->load_table_H_group_order,
 				Descr->load_table_H_gens,
@@ -73,9 +74,8 @@ void design_activity::perform_activity(design_activity_description *Descr,
 
 		do_extract_solutions_by_index(
 				DC,
-				Descr->create_table_label,
-				Descr->load_table_group_order,
-				Descr->load_table_gens,
+				Descr->extract_solutions_by_index_label,
+				Descr->extract_solutions_by_index_group,
 				Descr->extract_solutions_by_index_fname_solutions_in,
 				Descr->extract_solutions_by_index_fname_solutions_out,
 				Descr->extract_solutions_by_index_prefix,
@@ -94,9 +94,8 @@ void design_activity::perform_activity(design_activity_description *Descr,
 
 		do_extract_solutions_by_index(
 				DC,
-				Descr->create_table_label,
-				Descr->load_table_group_order,
-				Descr->load_table_gens,
+				Descr->extract_solutions_by_index_label,
+				Descr->extract_solutions_by_index_group,
 				Descr->extract_solutions_by_index_fname_solutions_in,
 				Descr->extract_solutions_by_index_fname_solutions_out,
 				Descr->extract_solutions_by_index_prefix,
@@ -151,8 +150,7 @@ void design_activity::perform_activity(design_activity_description *Descr,
 void design_activity::do_extract_solutions_by_index(
 		design_create *DC,
 		std::string &label,
-		std::string &go_text,
-		std::string &generators_data,
+		std::string &group_label,
 		std::string &fname_in,
 		std::string &fname_out,
 		std::string &prefix_text,
@@ -168,26 +166,28 @@ void design_activity::do_extract_solutions_by_index(
 	combinatorics_global Combi;
 	design_tables *T;
 
+	int idx;
+	any_group *AG;
 
-	strong_generators *Gens;
-	Gens = NEW_OBJECT(strong_generators);
+	idx = Orbiter->find_symbol(group_label);
 
-	if (f_v) {
-		cout << "design_activity::do_extract_solutions_by_index before Gens->init_from_data_with_go" << endl;
+	symbol_table_object_type t;
+
+	t = Orbiter->get_object_type(idx);
+
+	if (t != t_any_group) {
+		cout << "object must be of type group, but is ";
+		Orbiter->print_type(t);
+		cout << endl;
+		exit(1);
 	}
-	Gens->init_from_data_with_go(
-			DC->A, generators_data,
-			go_text,
-			verbose_level);
-	if (f_v) {
-		cout << "design_activity::do_extract_solutions_by_index after Gens->init_from_data_with_go" << endl;
-	}
+	AG = (any_group *) Orbiter->get_object(idx);
 
 
 	Combi.load_design_table(DC,
 			label,
 			T,
-			Gens,
+			AG->Subgroup_gens,
 			verbose_level);
 
 	if (f_v) {
@@ -281,8 +281,6 @@ void design_activity::do_create_table(
 		design_create *DC,
 		std::string &label,
 		std::string &group_label,
-		//std::string &go_text,
-		//std::string &generators_data,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -294,22 +292,6 @@ void design_activity::do_create_table(
 	combinatorics_global Combi;
 	design_tables *T;
 
-
-#if 0
-	strong_generators *Gens;
-	Gens = NEW_OBJECT(strong_generators);
-
-	if (f_v) {
-		cout << "design_activity::do_load_table before Gens->init_from_data_with_go" << endl;
-	}
-	Gens->init_from_data_with_go(
-			DC->A, generators_data,
-			go_text,
-			verbose_level);
-	if (f_v) {
-		cout << "design_activity::do_load_table after Gens->init_from_data_with_go" << endl;
-	}
-#endif
 
 	int idx;
 	any_group *AG;
@@ -351,8 +333,7 @@ void design_activity::do_create_table(
 void design_activity::do_load_table(
 		design_create *DC,
 		std::string &label,
-		std::string &go_text,
-		std::string &generators_data,
+		std::string &group_label,
 		std::string &H_label,
 		std::string &H_go_text,
 		std::string &H_generators_data,
@@ -367,22 +348,22 @@ void design_activity::do_load_table(
 
 
 
+	int idx;
+	any_group *AG;
 
-	strong_generators *Gens;
+	idx = Orbiter->find_symbol(group_label);
 
-	Gens = NEW_OBJECT(strong_generators);
+	symbol_table_object_type t;
 
-	if (f_v) {
-		cout << "design_activity::do_load_table before Gens->init_from_data_with_go" << endl;
+	t = Orbiter->get_object_type(idx);
+
+	if (t != t_any_group) {
+		cout << "object must be of type group, but is ";
+		Orbiter->print_type(t);
+		cout << endl;
+		exit(1);
 	}
-	Gens->init_from_data_with_go(
-			DC->A, generators_data,
-			go_text,
-			verbose_level);
-	if (f_v) {
-		cout << "design_activity::do_load_table after Gens->init_from_data_with_go" << endl;
-	}
-
+	AG = (any_group *) Orbiter->get_object(idx);
 
 	if (f_v) {
 		cout << "design_activity::do_create_table before Combi.load_design_table" << endl;
@@ -394,7 +375,7 @@ void design_activity::do_load_table(
 	Combi.load_design_table(DC,
 			label,
 			T,
-			Gens,
+			AG->Subgroup_gens,
 			verbose_level);
 
 	if (f_v) {

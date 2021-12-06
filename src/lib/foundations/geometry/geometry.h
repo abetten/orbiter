@@ -1446,37 +1446,35 @@ public:
 	~object_with_canonical_form();
 	void freeself();
 	void print(std::ostream &ost);
+	void print_tex_detailed(std::ostream &ost, int verbose_level);
 	void print_tex(std::ostream &ost);
 	void get_packing_as_set_system(long int *&Sets,
 			int &nb_sets, int &set_size, int verbose_level);
 	void init_object_from_string(
-		//projective_space *P,
 		int type,
 		std::string &input_fname, int input_idx,
 		std::string &set_as_string,
 		std::string &set2_as_string,
 		int verbose_level);
 	void init_object_from_int_vec(
-		//projective_space *P,
 		int type,
 		std::string &input_fname, int input_idx,
 		long int *the_set_in, int the_set_sz,
 		long int *the_set2_in, int the_set2_sz,
 		int verbose_level);
-	void init_point_set(//projective_space *P,
+	void init_point_set(
 			long int *set, int sz,
 		int verbose_level);
 	void init_point_set_from_string(
 			std::string &set_text,
 			int verbose_level);
-	void init_line_set(//projective_space *P,
+	void init_line_set(
 			long int *set, int sz,
 		int verbose_level);
 	void init_line_set_from_string(
 			std::string &set_text,
 			int verbose_level);
 	void init_points_and_lines(
-		//projective_space *P,
 		long int *set, int sz,
 		long int *set2, int sz2,
 		int verbose_level);
@@ -1484,16 +1482,16 @@ public:
 		std::string &set_text,
 		std::string &set2_text,
 		int verbose_level);
-	void init_packing_from_set(//projective_space *P,
+	void init_packing_from_set(
 		long int *packing, int sz,
 		int verbose_level);
 	void init_packing_from_string(
 			std::string &packing_text,
 			int q,
 			int verbose_level);
-	void init_packing_from_set_of_sets(//projective_space *P,
+	void init_packing_from_set_of_sets(
 		set_of_sets *SoS, int verbose_level);
-	void init_packing_from_spread_table(//projective_space *P,
+	void init_packing_from_spread_table(
 		long int *data,
 		long int *Spread_table, int nb_spreads, int spread_size,
 		int q,

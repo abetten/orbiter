@@ -3336,5 +3336,116 @@ void schreier::compute_orbit_invariant(int *&orbit_invariant,
 	}
 }
 
+void schreier::print_TDA(std::ostream &ost, object_with_canonical_form *OwCF, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "schreier::print_TDA" << endl;
+	}
+
+	//print_tex(ost);
+
+	encoded_combinatorial_object *Enc;
+
+	OwCF->encode_incma(Enc, verbose_level);
+
+	latex_TDA(ost, Enc, verbose_level);
+
+	FREE_OBJECT(Enc);
+
+	if (f_v) {
+		cout << "schreier::print_TDA done" << endl;
+	}
+}
+
+void schreier::latex_TDA(std::ostream &ost, encoded_combinatorial_object *Enc,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "schreier::latex_TDA" << endl;
+	}
+
+	latex_interface L;
+
+	int *Vi;
+	int *Bj;
+	int V, B;
+	int i, j;
+	int fst, len;
+
+	V = 0;
+	B = 0;
+	Vi = NEW_int(Enc->nb_rows);
+	Bj = NEW_int(Enc->nb_cols);
+
+	for (i = 0; i < nb_orbits; i++) {
+		fst = orbit_first[i];
+		if (fst == Enc->nb_rows) {
+			break;
+		}
+		len = orbit_len[i];
+		Vi[V++] = len;
+	}
+	for (; i < nb_orbits; i++) {
+		fst = orbit_first[i];
+		len = orbit_len[i];
+		Bj[B++] = len;
+	}
+
+
+	if (f_v) {
+		cout << "schreier::latex_TDA Vi=";
+		Orbiter->Int_vec.print(cout, Vi, V);
+		cout << endl;
+	}
+	if (f_v) {
+		cout << "schreier::latex_TDA Bj=";
+		Orbiter->Int_vec.print(cout, Bj, B);
+		cout << endl;
+	}
+
+	int *Inc2;
+	int i0, j0;
+
+	Inc2 = NEW_int(Enc->nb_rows * Enc->nb_cols);
+	Orbiter->Int_vec.zero(Inc2, Enc->nb_rows * Enc->nb_cols);
+
+	for (i = 0; i < Enc->nb_rows; i++) {
+		i0 = orbit[i];
+		for (j = 0; j < Enc->nb_cols; j++) {
+			j0 = orbit[Enc->nb_rows + j] - Enc->nb_rows;
+			if (Enc->Incma[i0 * Enc->nb_cols + j0]) {
+				Inc2[i * Enc->nb_cols + j] = 1;
+			}
+		}
+	}
+
+	if (f_v) {
+		cout << "schreier::latex_TDA before L.incma_latex" << endl;
+	}
+	L.incma_latex(ost,
+			Enc->nb_rows /*v */,
+			Enc->nb_cols /*b */,
+			V, B, Vi, Bj,
+			Inc2,
+			verbose_level - 1);
+	if (f_v) {
+		cout << "schreier::latex_TDA after L.incma_latex" << endl;
+	}
+
+	ost << "\\\\" << endl;
+
+	FREE_int(Inc2);
+	FREE_int(Vi);
+	FREE_int(Bj);
+
+	if (f_v) {
+		cout << "schreier::latex_TDA done" << endl;
+	}
+}
+
 
 }}

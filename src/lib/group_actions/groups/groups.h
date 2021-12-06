@@ -1047,6 +1047,9 @@ public:
 					int orbit_idx, void *data, int verbose_level),
 			void *compute_orbit_invariant_data,
 			int verbose_level);
+	void print_TDA(std::ostream &ost, object_with_canonical_form *OwCF, int verbose_level);
+	void latex_TDA(std::ostream &ost, encoded_combinatorial_object *Enc,
+			int verbose_level);
 
 	// schreier_io.cpp:
 	void latex(std::string &fname);

@@ -1207,7 +1207,7 @@ void nauty_interface_with_group::add_configuration_graph(ofstream &g,
 
 
 void nauty_interface_with_group::automorphism_group_as_permutation_group(
-		strong_generators *&SG,
+		//strong_generators *&SG,
 		nauty_output *NO,
 		action *&A_perm,
 		int verbose_level)
@@ -1276,7 +1276,7 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 	}
 
 	automorphism_group_as_permutation_group(
-				SG,
+				//SG,
 				NO,
 				A_perm,
 				verbose_level);

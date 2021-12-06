@@ -347,6 +347,9 @@ public:
 	layered_graph_draw_options *draw_options;
 
 
+	int f_draw_incidence_structure_description;
+	draw_incidence_structure_description *Draw_incidence_structure_description;
+
 	int f_list_arguments;
 
 	int f_seed;

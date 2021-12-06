@@ -37,6 +37,7 @@ projective_space_object_classifier::projective_space_object_classifier()
 	nb_orbits = 0;
 	Idx_transversal = NULL;
 	Ago_transversal = NULL;
+	OWCF = NULL;
 
 	T_Ago = NULL;
 
@@ -58,6 +59,16 @@ projective_space_object_classifier::~projective_space_object_classifier()
 	}
 	if (T_Ago) {
 		FREE_OBJECT(T_Ago);
+	}
+	if (OWCF) {
+#if 0
+		int i;
+
+		for (i = 0; i < nb_orbits; i++) {
+			FREE_OBJECT(OWCF[i]);
+		}
+#endif
+		FREE_pvoid((void **) OWCF);
 	}
 }
 
@@ -216,6 +227,7 @@ void projective_space_object_classifier::classify_objects_using_nauty(
 
 	Ago = NEW_lint(IS->Objects.size());
 	F_reject = NEW_int(IS->Objects.size());
+	OWCF = (object_with_canonical_form **) NEW_pvoid(IS->Objects.size());
 
 	for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
 
@@ -271,6 +283,7 @@ void projective_space_object_classifier::classify_objects_using_nauty(
 		}
 		Idx_transversal[j] = input_idx;
 		Ago_transversal[j] = Ago[input_idx];
+		OWCF[j] = (object_with_canonical_form *) IS->Objects[input_idx];
 		j++;
 	}
 	if (j != nb_orbits) {
@@ -371,7 +384,8 @@ void projective_space_object_classifier::process_any_object(object_with_canonica
 		cout << "projective_space_object_classifier::process_any_object "
 				"input_idx=" << input_idx << " / " << IS->nb_objects_to_test << endl;
 	}
-	strong_generators *SG;
+	strong_generators *SG; // if f_projective
+	action *A_perm;  // otherwise
 
 	if (f_v) {
 		cout << "projective_space_object_classifier::process_any_object "
@@ -391,7 +405,7 @@ void projective_space_object_classifier::process_any_object(object_with_canonica
 
 
 	f_reject = process_object(OwCF,
-			SG, ago,
+			SG, A_perm, ago,
 			idx,
 			NO,
 			verbose_level);
@@ -405,7 +419,12 @@ void projective_space_object_classifier::process_any_object(object_with_canonica
 
 	if (f_reject) {
 		//cout << "before FREE_OBJECT(SG)" << endl;
-		FREE_OBJECT(SG);
+		if (f_projective_space) {
+			FREE_OBJECT(SG);
+		}
+		else {
+			FREE_OBJECT(A_perm);
+		}
 	}
 	else {
 		if (f_v) {
@@ -432,7 +451,7 @@ void projective_space_object_classifier::process_any_object(object_with_canonica
 		}
 		else {
 			idx = CB->type_of[CB->n - 1];
-			CB->Type_extra_data[idx] = SG;
+			CB->Type_extra_data[idx] = A_perm;
 
 		}
 
@@ -450,7 +469,7 @@ void projective_space_object_classifier::process_any_object(object_with_canonica
 
 int projective_space_object_classifier::process_object(
 	object_with_canonical_form *OwCF,
-	strong_generators *&SG, long int &ago,
+	strong_generators *&SG, action *&A_perm, long int &ago,
 	int &idx,
 	nauty_output *NO,
 	int verbose_level)
@@ -511,10 +530,9 @@ int projective_space_object_classifier::process_object(
 
 
 		nauty_interface_with_group Nau;
-		action *A_perm;
 
 		Nau.automorphism_group_as_permutation_group(
-						SG,
+						//SG,
 						NO,
 						A_perm,
 						verbose_level);
@@ -774,7 +792,6 @@ void projective_space_object_classifier::latex_report(
 {
 	int i, j;
 	int f_v = (verbose_level >= 1);
-	sorting Sorting;
 	file_io Fio;
 	latex_interface L;
 
@@ -848,7 +865,7 @@ void projective_space_object_classifier::latex_report(
 			row_part_first, row_part_len, nb_row_parts,
 			col_part_first, col_part_len, nb_col_parts,
 			print_summary_table_entry,
-			CB /*void *data*/,
+			this /*void *data*/,
 			TRUE /* f_tex */);
 		fp << "$$" << endl;
 
@@ -867,138 +884,19 @@ void projective_space_object_classifier::latex_report(
 
 		for (i = 0; i < CB->nb_types; i++) {
 
-			//j = CB->perm[i];
-			j = i;
-			object_in_projective_space_with_action *OiPA;
-			object_with_canonical_form *OwCF;
-
-			cout << "###################################################"
-					"#############################" << endl;
-			cout << "Orbit " << i << " / " << CB->nb_types
-					<< " is canonical form no " << j
-					<< ", original object no " << CB->Type_rep[j]
-					<< ", frequency " << CB->Type_mult[j]
-					<< " : " << endl;
-
-
-			{
-				int *Input_objects;
-				int nb_input_objects;
-				CB->C_type_of->get_class_by_value(Input_objects,
-					nb_input_objects, j, 0 /*verbose_level */);
-
-				cout << "This isomorphism type appears " << nb_input_objects
-						<< " times, namely for the following "
-								"input objects:" << endl;
-				L.int_vec_print_as_matrix(cout, Input_objects,
-						nb_input_objects, 10 /* width */,
-						FALSE /* f_tex */);
-
-				FREE_int(Input_objects);
-			}
-
-			OiPA = (object_in_projective_space_with_action *) CB->Type_extra_data[j];
-			OwCF = OiPA->OwCF;
-
-			if (f_v) {
-				cout << "OwCF:" << endl;
-				OwCF->print(cout);
-			}
-			if (OwCF->type != t_PAC) {
-				OwCF->print(cout);
-			}
-
-
-
-			strong_generators *SG;
-			longinteger_object go;
-
-
-			bitvector *Canonical_form;
-
-			int nb_r, nb_c;
-
-			OwCF->encoding_size(
-					nb_r, nb_c,
-					verbose_level);
-
-#if 1
-			if (f_v) {
-				cout << "projective_space_object_classifier::latex_report before Nau.set_stabilizer_of_object" << endl;
-			}
-
-			nauty_interface_with_group Nau;
-			nauty_output *NO;
-
-			NO = NEW_OBJECT(nauty_output);
-			NO->allocate(nb_r + nb_c, verbose_level);
-
-			SG = Nau.set_stabilizer_of_object(
-					OwCF,
-				PA->A,
-				TRUE /* f_compute_canonical_form */, Canonical_form,
-				NO,
-				verbose_level - 2);
-
-			if (f_v) {
-				cout << "projective_space_object_classifier::latex_report after Nau.set_stabilizer_of_object" << endl;
-			}
-
-			FREE_OBJECT(NO);
-
-			SG->group_order(go);
-#endif
-
 			fp << "\\section*{Isomorphism type " << i << " / " << CB->nb_types << "}" << endl;
 			fp << "Isomorphism type " << i << " / " << CB->nb_types
 				//<<  " stored at " << j
 				<< " is original object "
-				<< CB->Type_rep[j] << " and appears "
-				<< CB->Type_mult[j] << " times: \\\\" << endl;
-			//if (OiP->type != t_PAC) {
-
-			OwCF->print_tex(fp);
-				fp << endl;
-				fp << "\\bigskip" << endl;
-				fp << endl;
-			//	}
-
-			if (OwCF->type == t_PAC) {
-				long int *Sets;
-				int nb_sets;
-				int set_size;
-				action *A_on_spreads;
-				schreier *Sch;
-
-				OwCF->get_packing_as_set_system(Sets, nb_sets, set_size, verbose_level);
-
-
-				A_on_spreads = PA->A_on_lines->create_induced_action_on_sets(nb_sets,
-						set_size, Sets,
-						verbose_level);
-
-
-				Sch = SG->orbits_on_points_schreier(A_on_spreads, verbose_level);
-
-				fp << "Orbits on spreads:\\\\" << endl;
-				Sch->print_and_list_orbits_tex(fp);
-
-
-				FREE_OBJECT(Sch);
-				FREE_OBJECT(A_on_spreads);
-				FREE_lint(Sets);
-			}
-			//int_vec_print(fp, OiP->set, OiP->sz);
-			fp << "Group order " << go << "\\\\" << endl;
-
-			//fp << "Stabilizer:" << endl;
-			//SG->print_generators_tex(fp);
+				<< CB->Type_rep[i] << " and appears "
+				<< CB->Type_mult[i] << " times: \\\\" << endl;
 
 			{
+				sorting Sorting;
 				int *Input_objects;
 				int nb_input_objects;
 				CB->C_type_of->get_class_by_value(Input_objects,
-						nb_input_objects, j, 0 /*verbose_level */);
+						nb_input_objects, i, 0 /*verbose_level */);
 				Sorting.int_vec_heapsort(Input_objects, nb_input_objects);
 
 				fp << "This isomorphism type appears " << nb_input_objects
@@ -1010,242 +908,28 @@ void projective_space_object_classifier::latex_report(
 					fp << "$\\\\" << endl;
 				}
 				else {
+					fp << "Too big to print. \\\\" << endl;
+		#if 0
 					fp << "$$" << endl;
 					L.int_vec_print_as_matrix(fp, Input_objects,
 						nb_input_objects, 10 /* width */, TRUE /* f_tex */);
 					fp << "$$" << endl;
+		#endif
 				}
 
 				FREE_int(Input_objects);
 			}
 
-
-
-#if 0
-			if (OiP->type == t_PTS) {
-				//long int *set;
-				//int sz;
-
-				OiP->print_tex(fp);
-
-
-				cout << "printing generators in restricted action:" << endl;
-				action *A_restricted;
-
-				A_restricted = SG->A->restricted_action(OiP->set, OiP->sz,
-						verbose_level);
-				SG->print_with_given_action(
-						fp, A_restricted);
-				FREE_OBJECT(A_restricted);
+			if (f_v) {
+				cout << "projective_space_object_classifier::latex_report before report_isomorphism_type" << endl;
 			}
-#endif
-
-
-			fp << "Stabilizer:\\\\" << endl;
-			SG->print_generators_tex(fp);
-
-
-#if 0
-			//fp << "Stabilizer, all elements:\\\\" << endl;
-			//SG->print_elements_ost(fp);
-			//SG->print_elements_with_special_orthogonal_action_ost(fp);
-
-			{
-				action *A_conj;
-				sims *Base_group;
-
-				Base_group = SG->create_sims(verbose_level);
-
-				A_conj = PA->A->create_induced_action_by_conjugation(
-					Base_group, FALSE /* f_ownership */,
-					verbose_level);
-
-				fp << "Generators in conjugation action on the group itself:\\\\" << endl;
-				SG->print_with_given_action(fp, A_conj);
-
-				fp << "Elements in conjugation action on the group itself:\\\\" << endl;
-				SG->print_elements_with_given_action(fp, A_conj);
-
-				string fname_gap;
-				char str[1000];
-
-				fname_gap.assign("class_");
-
-				sprintf(str, "%d", i);
-
-				fname_gap.append(str);
-				fname_gap.append(".gap");
-
-				SG->export_permutation_group_to_GAP(fname_gap.c_str(), verbose_level);
-				schreier *Sch;
-
-				Sch = SG->orbits_on_points_schreier(A_conj, verbose_level);
-
-				fp << "Orbits on itself by conjugation:\\\\" << endl;
-				Sch->print_and_list_orbits_tex(fp);
-
-
-				FREE_OBJECT(Sch);
-				FREE_OBJECT(A_conj);
-				FREE_OBJECT(Base_group);
-			}
-#endif
-
-
-			encoded_combinatorial_object *Enc;
-			incidence_structure *Inc;
-			partitionstack *Stack;
-
-
-			OwCF->encode_incma_and_make_decomposition(
-				Enc,
-				Inc,
-				Stack,
-				verbose_level);
-			FREE_OBJECT(Enc);
-		#if 0
-			cout << "set ";
-			int_vec_print(cout, OiP->set, OiP->sz);
-			cout << " go=" << go << endl;
-
-
-
-			incidence_structure *Inc;
-			partitionstack *Stack;
-
-			int Sz[1];
-			int *Subsets[1];
-
-			Sz[0] = OiP->sz;
-			Subsets[0] = OiP->set;
-
-			cout << "computing decomposition:" << endl;
-			PA->P->decomposition(1 /* nb_subsets */, Sz, Subsets,
-				Inc,
-				Stack,
-				verbose_level);
-
-		#if 0
-			cout << "the decomposition is:" << endl;
-			Inc->get_and_print_decomposition_schemes(*Stack);
-			Stack->print_classes(cout);
-		#endif
-
-
-
-
-		#if 0
-			fp << "canonical form: ";
-			for (i = 0; i < canonical_form_len; i++) {
-				fp << (int)canonical_form[i];
-				if (i < canonical_form_len - 1) {
-					fp << ", ";
-					}
-				}
-			fp << "\\\\" << endl;
-		#endif
-		#endif
-
-
-			Inc->get_and_print_row_tactical_decomposition_scheme_tex(
-				fp, TRUE /* f_enter_math */,
-				TRUE /* f_print_subscripts */, *Stack);
-
-		#if 0
-			Inc->get_and_print_tactical_decomposition_scheme_tex(
-				fp, TRUE /* f_enter_math */,
-				*Stack);
-		#endif
-
-
-
-			int f_refine_prev, f_refine, h;
-			int f_print_subscripts = TRUE;
-
-			f_refine_prev = TRUE;
-			for (h = 0; h < max_TDO_depth; h++) {
-				if (EVEN(h)) {
-					f_refine = Inc->refine_column_partition_safe(
-							*Stack, verbose_level - 3);
-				}
-				else {
-					f_refine = Inc->refine_row_partition_safe(
-							*Stack, verbose_level - 3);
-				}
-
-				if (f_v) {
-					cout << "incidence_structure::compute_TDO_safe "
-							"h=" << h << " after refine" << endl;
-				}
-				if (EVEN(h)) {
-					//int f_list_incidences = FALSE;
-					Inc->get_and_print_column_tactical_decomposition_scheme_tex(
-						fp, TRUE /* f_enter_math */,
-						f_print_subscripts, *Stack);
-					//get_and_print_col_decomposition_scheme(
-					//PStack, f_list_incidences, FALSE);
-					//PStack.print_classes_points_and_lines(cout);
-				}
-				else {
-					//int f_list_incidences = FALSE;
-					Inc->get_and_print_row_tactical_decomposition_scheme_tex(
-						fp, TRUE /* f_enter_math */,
-						f_print_subscripts, *Stack);
-					//get_and_print_row_decomposition_scheme(
-					//PStack, f_list_incidences, FALSE);
-					//PStack.print_classes_points_and_lines(cout);
-				}
-
-				if (!f_refine_prev && !f_refine) {
-					break;
-				}
-				f_refine_prev = f_refine;
+			report_isomorphism_type(fp, i, max_TDO_depth, verbose_level);
+			if (f_v) {
+				cout << "projective_space_object_classifier::latex_report after report_isomorphism_type" << endl;
 			}
 
-			cout << "Classes of the partition:\\\\" << endl;
-			Stack->print_classes_tex(fp);
 
-
-
-			OwCF->klein(verbose_level);
-
-#if 1
-			sims *Stab;
-			int *Elt;
-			int nb_trials;
-			int max_trials = 100;
-
-			Stab = SG->create_sims(verbose_level);
-			Elt = NEW_int(PA->A->elt_size_in_int);
-
-			for (h = 0; h < fixed_structure_order_list_sz; h++) {
-				if (Stab->find_element_of_given_order_int(Elt,
-						fixed_structure_order_list[h], nb_trials, max_trials,
-						verbose_level)) {
-					fp << "We found an element of order "
-							<< fixed_structure_order_list[h] << ", which is:" << endl;
-					fp << "$$" << endl;
-					PA->A->element_print_latex(Elt, fp);
-					fp << "$$" << endl;
-					PA->report_fixed_points_lines_and_planes(
-						Elt, fp,
-						verbose_level);
-				}
-				else {
-					fp << "We could not find an element of order "
-						<< fixed_structure_order_list[h] << "\\\\" << endl;
-				}
-			}
-
-			FREE_int(Elt);
-#endif
-
-			FREE_OBJECT(SG);
-
-			FREE_OBJECT(Stack);
-			FREE_OBJECT(Inc);
-
-		}
+		} // next i
 
 
 		L.foot(fp);
@@ -1263,6 +947,103 @@ void projective_space_object_classifier::latex_report(
 }
 
 
+void projective_space_object_classifier::report_isomorphism_type(
+		std::ostream &fp, int i, int max_TDO_depth, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_object_classifier::report_isomorphism_type i=" << i << endl;
+	}
+	int j;
+	latex_interface L;
+
+	//j = CB->perm[i];
+	//j = CB->Type_rep[i];
+	j = i;
+
+	cout << "###################################################"
+			"#############################" << endl;
+	cout << "Orbit " << i << " / " << CB->nb_types
+			<< " is canonical form no " << j
+			<< ", original object no " << CB->Type_rep[i]
+			<< ", frequency " << CB->Type_mult[i]
+			<< " : " << endl;
+
+
+	{
+		int *Input_objects;
+		int nb_input_objects;
+		CB->C_type_of->get_class_by_value(Input_objects,
+			nb_input_objects, j, 0 /*verbose_level */);
+
+		cout << "This isomorphism type appears " << nb_input_objects
+				<< " times, namely for the following "
+						"input objects:" << endl;
+		if (nb_input_objects < 10) {
+			L.int_vec_print_as_matrix(cout, Input_objects,
+					nb_input_objects, 10 /* width */,
+					FALSE /* f_tex */);
+		}
+		else {
+			cout << "too many to print" << endl;
+		}
+
+		FREE_int(Input_objects);
+	}
+
+	object_with_canonical_form *OwCF;
+
+	OwCF = OWCF[i];
+
+	OwCF->print_tex_detailed(fp, verbose_level);
+
+
+	if (f_projective_space) {
+		object_in_projective_space_with_action *OiPA;
+
+		OiPA = (object_in_projective_space_with_action *) CB->Type_extra_data[j];
+
+		OiPA->report(fp, PA, max_TDO_depth, verbose_level);
+	}
+	else {
+		action *A_perm;
+
+		A_perm = (action *) CB->Type_extra_data[j];
+
+
+		fp << "Generators for the automorphism group: \\\\" << endl;
+		A_perm->Strong_gens->print_generators_in_latex_individually(fp);
+
+		schreier *Sch;
+
+
+		if (f_v) {
+			cout << "projective_space_object_classifier::report_isomorphism_type before orbits_on_points_schreier" << endl;
+		}
+		Sch = A_perm->Strong_gens->orbits_on_points_schreier(A_perm,
+				verbose_level);
+		if (f_v) {
+			cout << "projective_space_object_classifier::report_isomorphism_type after orbits_on_points_schreier" << endl;
+		}
+
+
+		fp << "Decomposition by automorphism group:\\\\" << endl;
+		if (f_v) {
+			cout << "projective_space_object_classifier::report_isomorphism_type before Sch->print_TDA" << endl;
+		}
+		Sch->print_TDA(fp, OwCF, verbose_level);
+		if (f_v) {
+			cout << "projective_space_object_classifier::report_isomorphism_type after Sch->print_TDA" << endl;
+		}
+
+	}
+
+
+	if (f_v) {
+		cout << "projective_space_object_classifier::report_isomorphism_type i=" << i << " done" << endl;
+	}
+}
 
 }}
 

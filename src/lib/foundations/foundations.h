@@ -427,6 +427,7 @@ class nauty_interface;
 // graphics:
 class animate;
 class draw_bitmap_control;
+class draw_incidence_structure_description;
 class draw_mod_n_description;
 class draw_projective_curve_description;
 class drawable_set_of_objects;
