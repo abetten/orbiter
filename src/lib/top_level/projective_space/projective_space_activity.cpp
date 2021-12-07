@@ -35,12 +35,14 @@ void projective_space_activity::perform_activity(int verbose_level)
 		cout << "projective_space_activity::perform_activity" << endl;
 	}
 
+#if 0
 	if (Descr->f_canonical_form_PG) {
 
 		PA->canonical_form(
 				Descr->Canonical_form_PG_Descr,
 				verbose_level);
 	}
+#endif
 
 	if (Descr->f_export_point_line_incidence_matrix) {
 

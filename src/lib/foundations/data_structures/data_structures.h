@@ -246,6 +246,7 @@ class data_file {
 #define INPUT_TYPE_FILE_OF_DESIGNS 10
 #define INPUT_TYPE_FILE_OF_INCIDENCE_GEOMETRIES 11
 #define INPUT_TYPE_INCIDENCE_GEOMETRY 12
+#define INPUT_TYPE_FROM_PARALLEL_SEARCH 13
 
 
 
@@ -271,6 +272,26 @@ public:
 		int verbose_level);
 	void print();
 	void print_item(int i);
+	void add_set_of_points(std::string &a);
+	void add_set_of_lines(std::string &a);
+	void add_set_of_points_and_lines(std::string &a, std::string &b);
+	void add_packing(std::string &a, int q);
+	void add_file_of_points(std::string &a);
+	void add_file_of_lines(std::string &a);
+	void add_file_of_packings(std::string &a);
+	void add_file_of_packings_through_spread_table(
+			std::string &a, std::string &b, int q);
+	void add_file_of_point_set(std::string &a);
+	void add_file_of_designs(std::string &a,
+				int N_points, int b, int k, int partition_class_size);
+	void add_file_of_incidence_geometries(std::string &a,
+				int v, int b, int f);
+	void add_incidence_geometry(std::string &a,
+				int v, int b, int f);
+	void add_from_parallel_search(std::string &fname_mask,
+			int nb_cases, std::string &cases_fname);
+
+
 };
 
 
@@ -851,6 +872,9 @@ public:
 
 	int f_here;
 	std::string here_text;
+
+	int f_file;
+	std::string file_name;
 
 	set_builder_description();
 	~set_builder_description();

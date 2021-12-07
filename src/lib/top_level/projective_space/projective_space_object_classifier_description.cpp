@@ -17,10 +17,6 @@ namespace top_level {
 
 projective_space_object_classifier_description::projective_space_object_classifier_description()
 {
-#if 0
-	f_input = FALSE;
-	Data = NULL;
-#endif
 
 	f_label = FALSE;
 	//std::string label;
@@ -46,6 +42,8 @@ projective_space_object_classifier_description::projective_space_object_classifi
 	f_save_canonical_labeling = FALSE;
 
 	f_save_ago = FALSE;
+
+	f_save_transversal = FALSE;
 
 	f_load_canonical_labeling = FALSE;
 
@@ -75,22 +73,6 @@ int projective_space_object_classifier_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 		cout << "projective_space_object_classifier_description::read_arguments, next argument is " << argv[i] << endl;
-
-#if 0
-		if (stringcmp(argv[i], "-input") == 0) {
-			f_input = TRUE;
-			cout << "-input" << endl;
-			Data = NEW_OBJECT(data_input_stream_description);
-			i += Data->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-			cout << "done reading -input" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
-#endif
 
 		if (stringcmp(argv[i], "-label") == 0) {
 			f_label = TRUE;
@@ -156,6 +138,11 @@ int projective_space_object_classifier_description::read_arguments(
 			cout << "-save_ago " << endl;
 		}
 
+		else if (stringcmp(argv[i], "-save_transversal") == 0) {
+			f_save_transversal = TRUE;
+			cout << "-save_transversal " << endl;
+		}
+
 		else if (stringcmp(argv[i], "-load_canonical_labeling") == 0) {
 			f_load_canonical_labeling = TRUE;
 			//load_canonical_labeling_fname.assign(argv[++i]);
@@ -211,13 +198,6 @@ int projective_space_object_classifier_description::read_arguments(
 void projective_space_object_classifier_description::print()
 {
 
-#if 0
-	if (f_input) {
-		cout << "-input" << endl;
-		Data->print();
-	}
-#endif
-
 	if (f_label) {
 		cout << "-label" << label << endl;
 	}
@@ -254,6 +234,10 @@ void projective_space_object_classifier_description::print()
 		cout << "-save_ago " << endl;
 	}
 
+	if (f_save_transversal) {
+		cout << "-save_transversal " << endl;
+	}
+
 	if (f_load_canonical_labeling) {
 		cout << "-load_canonical_labeling " << endl;
 	}
@@ -263,7 +247,8 @@ void projective_space_object_classifier_description::print()
 	}
 
 	if (f_save_cumulative_canonical_labeling) {
-		cout << "-save_cumulative_canonical_labeling " << cumulative_canonical_labeling_fname << endl;
+		cout << "-save_cumulative_canonical_labeling "
+				<< cumulative_canonical_labeling_fname << endl;
 	}
 
 	if (f_save_cumulative_ago) {

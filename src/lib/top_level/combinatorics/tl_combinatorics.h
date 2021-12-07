@@ -67,6 +67,13 @@ public:
 
 	int f_save;
 
+	int f_save_as;
+	std::string save_as_fname;
+
+	int f_extract_subset;
+	std::string extract_subset_set;
+	std::string extract_subset_fname;
+
 	int f_line_type;
 
 	int f_conic_type;
@@ -126,6 +133,9 @@ public:
 	void perform_activity(int verbose_level);
 	void perform_activity_COC(int verbose_level);
 	void perform_activity_IS(int verbose_level);
+	void do_save(std::string &save_as_fname,
+			int f_extract, long int *extract_idx_set, int extract_size,
+			int verbose_level);
 
 };
 

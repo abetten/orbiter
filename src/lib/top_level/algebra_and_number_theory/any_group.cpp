@@ -125,7 +125,7 @@ void any_group::init_modified_group(modified_group_create *MGC, int verbose_leve
 		cout << "any_group::init_modified_group" << endl;
 	}
 
-	f_modified_group = FALSE;
+	f_modified_group = TRUE;
 	any_group::MGC = MGC;
 
 	A_base = MGC->A_base;
@@ -160,14 +160,33 @@ void any_group::create_latex_report(
 	}
 
 	if (f_linear_group) {
+		if (f_v) {
+			cout << "any_group::create_latex_report linear group" << endl;
+		}
 		LG->create_latex_report(O,
 				f_sylow, f_group_table, f_classes,
 				verbose_level);
 	}
-	else {
-		create_latex_report_work(
+	else if (f_permutation_group) {
+		if (f_v) {
+			cout << "any_group::create_latex_report permutation group" << endl;
+		}
+		create_latex_report_for_permutation_group(
 					O,
 					verbose_level);
+	}
+	else if (f_modified_group) {
+		if (f_v) {
+			cout << "any_group::create_latex_report modified group" << endl;
+		}
+		create_latex_report_for_modified_group(
+					O,
+					verbose_level);
+
+	}
+	else {
+		cout << "any_group::create_latex_report unknown type of group" << endl;
+		exit(1);
 	}
 }
 
@@ -1897,7 +1916,7 @@ void any_group::do_orbits_on_group_elements_under_conjugation(
 	}
 }
 
-void any_group::create_latex_report_work(
+void any_group::create_latex_report_for_permutation_group(
 		layered_graph_draw_options *O,
 		int verbose_level)
 {
@@ -1905,7 +1924,7 @@ void any_group::create_latex_report_work(
 
 
 	if (f_v) {
-		cout << "any_group::create_latex_report_work" << endl;
+		cout << "any_group::create_latex_report_for_permutation_group" << endl;
 	}
 
 	{
@@ -1940,27 +1959,40 @@ void any_group::create_latex_report_work(
 
 #if 0
 			if (f_v) {
-				cout << "any_group::create_latex_report_work before A->report" << endl;
+				cout << "any_group::create_latex_report_for_permutation_group before A->report" << endl;
 			}
 			A->report(ost, A->f_has_sims, A->Sims,
 					A->f_has_strong_generators, A->Strong_gens,
 					O,
 					verbose_level);
 			if (f_v) {
-				cout << "any_group::create_latex_report_work after A->report" << endl;
+				cout << "any_group::create_latex_report_for_permutation_group after A->report" << endl;
 			}
 #endif
 
+
 			if (f_v) {
-				cout << "any_group::create_latex_report_work before Subgroup_sims->report" << endl;
+				cout << "any_group::create_latex_report_for_permutation_group before Subgroup_gens->print_generators_in_latex_individually" << endl;
+			}
+			Subgroup_gens->print_generators_in_latex_individually(ost);
+			if (f_v) {
+				cout << "any_group::create_latex_report_for_permutation_group after Subgroup_gens->print_generators_in_latex_individually" << endl;
+			}
+			//A_initial->print_base();
+			//A_initial->print_info();
+
+#if 0
+			if (f_v) {
+				cout << "any_group::create_latex_report_for_permutation_group before Subgroup_sims->report" << endl;
 			}
 			Subgroup_sims->report(ost,
 					label,
 					O,
 					verbose_level);
 			if (f_v) {
-				cout << "any_group::create_latex_report_work after Subgroup_sims->report" << endl;
+				cout << "any_group::create_latex_report_for_permutation_group after Subgroup_sims->report" << endl;
 			}
+#endif
 
 			L.foot(ost);
 
@@ -1975,7 +2007,102 @@ void any_group::create_latex_report_work(
 
 
 	if (f_v) {
-		cout << "any_group::create_latex_report_work done" << endl;
+		cout << "any_group::create_latex_report_for_permutation_group done" << endl;
+	}
+}
+
+void any_group::create_latex_report_for_modified_group(
+		layered_graph_draw_options *O,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "any_group::create_latex_report_for_modified_group" << endl;
+	}
+
+	{
+		string fname;
+		string title;
+		string author;
+
+		fname.assign(label);
+		fname.append("_report.tex");
+		title.assign("The group $");
+		title.append(label_tex);
+		title.append("$");
+
+		author.assign("");
+
+
+		{
+			ofstream ost(fname);
+			latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title.c_str(), author.c_str(),
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+#if 0
+			if (f_v) {
+				cout << "any_group::create_latex_report_for_modified_group before A->report" << endl;
+			}
+			A->report(ost, A->f_has_sims, A->Sims,
+					A->f_has_strong_generators, A->Strong_gens,
+					O,
+					verbose_level);
+			if (f_v) {
+				cout << "any_group::create_latex_report_for_modified_group after A->report" << endl;
+			}
+#endif
+
+
+			if (f_v) {
+				cout << "any_group::create_latex_report_for_modified_group before Subgroup_gens->print_generators_in_latex_individually" << endl;
+			}
+			Subgroup_gens->print_generators_in_latex_individually(ost);
+			if (f_v) {
+				cout << "any_group::create_latex_report_for_modified_group after Subgroup_gens->print_generators_in_latex_individually" << endl;
+			}
+			//A_initial->print_base();
+			//A_initial->print_info();
+
+#if 0
+			if (f_v) {
+				cout << "any_group::create_latex_report_for_modified_group before Subgroup_sims->report" << endl;
+			}
+			Subgroup_sims->report(ost,
+					label,
+					O,
+					verbose_level);
+			if (f_v) {
+				cout << "any_group::create_latex_report_for_modified_group after Subgroup_sims->report" << endl;
+			}
+#endif
+
+			L.foot(ost);
+
+		}
+		file_io Fio;
+
+		cout << "written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+
+
+	if (f_v) {
+		cout << "any_group::create_latex_report_for_modified_group done" << endl;
 	}
 }
 

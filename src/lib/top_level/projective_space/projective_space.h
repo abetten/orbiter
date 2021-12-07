@@ -331,9 +331,10 @@ public:
 class projective_space_activity_description {
 public:
 
-
+#if 0
 	int f_canonical_form_PG;
 	projective_space_object_classifier_description *Canonical_form_PG_Descr;
+#endif
 
 	int f_export_point_line_incidence_matrix;
 
@@ -603,12 +604,6 @@ public:
 			projective_space_with_action *PA,
 			layered_graph_draw_options *O,
 			int verbose_level);
-	void set_stabilizer(
-			projective_space_with_action *PA,
-			int intermediate_subset_size,
-			std::string &fname_mask, int nb, std::string &column_label,
-			std::string &fname_out,
-			int verbose_level);
 	void conic_type(
 			projective_space_with_action *PA,
 			int threshold,
@@ -650,6 +645,12 @@ public:
 			int degree,
 			std::string &fname_classification,
 			int verbose_level);
+	void set_stabilizer(
+			projective_space_with_action *PA,
+			int intermediate_subset_size,
+			std::string &fname_mask, int nb, std::string &column_label,
+			std::string &fname_out,
+			int verbose_level);
 
 };
 
@@ -670,10 +671,6 @@ class projective_space_object_classifier_description {
 
 public:
 
-#if 0
-	int f_input;
-	data_input_stream_description *Data;
-#endif
 	int f_label;
 	std::string label;
 
@@ -695,6 +692,8 @@ public:
 	int f_save_canonical_labeling;
 
 	int f_save_ago;
+
+	int f_save_transversal;
 
 	int f_load_canonical_labeling;
 
@@ -769,6 +768,8 @@ public:
 			int verbose_level);
 	void classify_objects_using_nauty(
 		int verbose_level);
+	void save_automorphism_group_order(int verbose_level);
+	void save_transversal(int verbose_level);
 	void process_any_object(object_with_canonical_form *OwCF,
 			int input_idx, long int &ago, int &f_reject, int verbose_level);
 	int process_object(

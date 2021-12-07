@@ -39,6 +39,8 @@ public:
 
 	int f_export_all_quartic_curves;
 
+	int f_export_tritangent_planes;
+
 	cubic_surface_activity_description();
 	~cubic_surface_activity_description();
 	int read_arguments(

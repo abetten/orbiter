@@ -245,6 +245,32 @@ void cubic_surface_activity::perform_activity(int verbose_level)
 		FREE_OBJECT(SoA);
 
 	}
+	else if (Descr->f_export_tritangent_planes) {
+
+		surface_object_with_action *SoA;
+
+		if (!SC->f_has_group) {
+			cout << "-all_quartic_curves: The automorphism group of the surface is missing" << endl;
+			exit(1);
+		}
+
+		surface_object *SO;
+		surface_object_properties *SOP;
+
+		SO = SC->SO;
+		SOP = SO->SOP;
+
+		file_io Fio;
+		string fname;
+
+		fname.assign(SC->label_txt);
+		fname.append("_tritangent_planes.csv");
+
+		Fio.lint_matrix_write_csv(fname, SOP->Tritangent_plane_rk, SOP->nb_tritangent_planes, 1);
+
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+	}
 
 
 	if (f_v) {

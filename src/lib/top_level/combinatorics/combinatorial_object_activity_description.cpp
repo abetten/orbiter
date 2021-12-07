@@ -21,6 +21,13 @@ combinatorial_object_activity_description::combinatorial_object_activity_descrip
 {
 	f_save = FALSE;
 
+	f_save_as = FALSE;
+	//std::string save_as_fname;
+
+	f_extract_subset = FALSE;
+	//std::string extract_subset_set;
+	//std::string extract_subset_fname;
+
 	f_line_type = FALSE;
 
 	f_conic_type = FALSE;
@@ -67,6 +74,22 @@ int combinatorial_object_activity_description::read_arguments(
 				cout << "-save " << endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-save_as") == 0) {
+			f_save_as = TRUE;
+			save_as_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-save_as " << save_as_fname << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-extract_subset") == 0) {
+			f_extract_subset = TRUE;
+			extract_subset_set.assign(argv[++i]);
+			extract_subset_fname.assign(argv[++i]);
+			if (f_v) {
+				cout << "-extract_subset " << extract_subset_set << " " << extract_subset_fname << endl;
+			}
+		}
+
 		else if (stringcmp(argv[i], "-line_type") == 0) {
 			f_line_type = TRUE;
 			if (f_v) {
@@ -159,6 +182,12 @@ void combinatorial_object_activity_description::print()
 {
 	if (f_save) {
 		cout << "-save " << endl;
+	}
+	if (f_save_as) {
+		cout << "-save_as " << save_as_fname << endl;
+	}
+	if (f_extract_subset) {
+		cout << "-extract_subset " << extract_subset_set << " " << extract_subset_fname << endl;
 	}
 	if (f_line_type) {
 		cout << "-line_type " << endl;

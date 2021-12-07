@@ -330,7 +330,7 @@ void linear_group::linear_group_init(
 			description->subgroup_order_text,
 			description->nb_subgroup_generators,
 			gens,
-			verbose_level - 2);
+			verbose_level - 1);
 		if (f_v) {
 			cout << "linear_group::linear_group_init "
 					"after init_subgroup_by_generators" << endl;
@@ -480,8 +480,9 @@ void linear_group::linear_group_init(
 
 
 		A2->f_is_linear = TRUE;
-		f_has_strong_generators = TRUE;
-		Strong_gens = initial_strong_gens;
+
+		//f_has_strong_generators = TRUE;
+		//Strong_gens = initial_strong_gens;
 	
 		if (f_v) {
 			cout << "linear_group::linear_group_init action A2 created: ";
@@ -1231,7 +1232,7 @@ void linear_group::init_subgroup_by_generators(
 			nb_subgroup_generators, subgroup_generators_data,
 			subgroup_order_text,
 			nice_gens,
-			verbose_level - 3);
+			verbose_level - 1);
 
 	f_has_nice_gens = TRUE;
 
@@ -1240,7 +1241,18 @@ void linear_group::init_subgroup_by_generators(
 				"Strong_gens->init_subgroup_by_generators" << endl;
 	}
 
+	longinteger_object go;
+
+
 	f_has_strong_generators = TRUE;
+
+	Strong_gens->group_order(go);
+
+	if (f_v) {
+		cout << "linear_group::init_subgroup_by_generators go = " << go << endl;
+	}
+
+
 
 	A2 = A_linear;
 
