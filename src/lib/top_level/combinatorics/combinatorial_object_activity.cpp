@@ -392,10 +392,133 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 
 
 	}
+	else if (Descr->f_save_as) {
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_IS "
+					"f_save_as " << Descr->save_as_fname << endl;
+		}
+
+		do_save(Descr->save_as_fname,
+				FALSE, NULL, 0,
+				verbose_level);
+
+
+	}
+	else if (Descr->f_extract_subset) {
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_IS "
+					"f_extract_subset " << Descr->extract_subset_fname << endl;
+		}
+		long int *extract_idx_set;
+		int extract_size;
+
+		Orbiter->get_lint_vector_from_label(Descr->extract_subset_set,
+				extract_idx_set, extract_size, 0 /* verbose_level */);
+		do_save(Descr->extract_subset_fname,
+				TRUE /* f_extract */, extract_idx_set, extract_size,
+				verbose_level);
+
+
+	}
 
 }
 
 
+void combinatorial_object_activity::do_save(std::string &save_as_fname,
+		int f_extract, long int *extract_idx_set, int extract_size,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "combinatorial_object_activity::do_save" << endl;
+	}
+	int input_idx;
+	int sz;
+	int N;
+
+	N = IS->Objects.size();
+
+	object_with_canonical_form *OwCF;
+
+	OwCF = (object_with_canonical_form *) IS->Objects[0];
+
+	//OwCF->set;
+	sz = OwCF->sz;
+
+	for (input_idx = 0; input_idx < N; input_idx++) {
+
+		if (FALSE) {
+			cout << "combinatorial_object_activity::perform_activity_IS "
+					"input_idx = " << input_idx << " / " << IS->Objects.size() << endl;
+		}
+
+		object_with_canonical_form *OwCF;
+
+		OwCF = (object_with_canonical_form *) IS->Objects[input_idx];
+
+		//OwCF->set;
+		if (OwCF->sz != sz) {
+			cout << "the objects have different sizes, cannot save" << endl;
+			exit(1);
+		}
+
+
+	}
+
+	long int *Sets;
+
+	Sets = NEW_lint(N * sz);
+
+	for (input_idx = 0; input_idx < N; input_idx++) {
+		object_with_canonical_form *OwCF;
+
+		OwCF = (object_with_canonical_form *) IS->Objects[input_idx];
+
+		Orbiter->Lint_vec.copy(OwCF->set, Sets + input_idx * sz, sz);
+	}
+
+	cout << "The combined number of objects is " << N << endl;
+
+
+	if (f_extract) {
+		if (f_v) {
+			cout << "extracting subset of size " << extract_size << endl;
+		}
+		long int *Sets2;
+		int h, i;
+
+		Sets2 = NEW_lint(extract_size * sz);
+		for (h = 0; h < extract_size; h++) {
+			i = extract_idx_set[h];
+			Orbiter->Lint_vec.copy(Sets + i * sz, Sets2 + h * sz, sz);
+		}
+		FREE_lint(Sets);
+		Sets = Sets2;
+		if (f_v) {
+			cout << "number of sets is reduced from " << N << " to " << extract_size << endl;
+		}
+		N = extract_size;
+	}
+	else {
+
+	}
+	file_io Fio;
+
+	string fname_out;
+
+	fname_out.assign(save_as_fname);
+
+	Fio.lint_matrix_write_csv(fname_out, Sets, N, sz);
+
+	cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
+
+	if (f_v) {
+		cout << "combinatorial_object_activity::do_save done" << endl;
+	}
+}
 
 
 }}

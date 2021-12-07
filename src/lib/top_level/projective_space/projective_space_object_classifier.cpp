@@ -231,7 +231,7 @@ void projective_space_object_classifier::classify_objects_using_nauty(
 
 	for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
 
-		if (f_v) {
+		if (f_v && (input_idx % 1000) == 0) {
 			cout << "projective_space_object_classifier::classify_objects_using_nauty "
 					"input_idx = " << input_idx << " / " << IS->Objects.size() << endl;
 		}
@@ -239,7 +239,7 @@ void projective_space_object_classifier::classify_objects_using_nauty(
 		object_with_canonical_form *OwCF;
 
 		OwCF = (object_with_canonical_form *) IS->Objects[input_idx];
-		if (f_v) {
+		if (FALSE) {
 			cout << "projective_space_object_classifier::classify_objects_using_nauty "
 					"OwCF:" << endl;
 			OwCF->print(cout);
@@ -253,7 +253,7 @@ void projective_space_object_classifier::classify_objects_using_nauty(
 			OwCF->P = NULL;
 		}
 
-		if (f_v) {
+		if (FALSE) {
 			cout << "projective_space_object_classifier::classify_objects_using_nauty "
 					"before process_any_object" << endl;
 		}
@@ -261,7 +261,7 @@ void projective_space_object_classifier::classify_objects_using_nauty(
 
 		process_any_object(OwCF, input_idx, Ago[input_idx], F_reject[input_idx], verbose_level - 1);
 
-		if (f_v) {
+		if (FALSE) {
 			cout << "projective_space_object_classifier::classify_objects_using_nauty "
 					"after process_any_object" << endl;
 		}
@@ -335,23 +335,18 @@ void projective_space_object_classifier::classify_objects_using_nauty(
 			cout << "projective_space_object_classifier::process_multiple_objects_from_file "
 					"f_save_ago is TRUE" << endl;
 		}
-		string ago_fname;
-		file_io Fio;
-		string_tools ST;
 
-		if (Descr->f_label) {
-			ago_fname.assign(Descr->label);
-		}
-		else {
-			ago_fname.assign("classification");
+		save_automorphism_group_order(verbose_level);
 
-		}
-		ST.replace_extension_with(ago_fname, "_ago.csv");
+	}
 
-		Fio.lint_vec_write_csv(Ago_transversal, nb_orbits, ago_fname, "Ago");
+	if (Descr->f_save_transversal) {
 		if (f_v) {
-			cout << "Written file " << ago_fname << " of size " << Fio.file_size(ago_fname) << endl;
+			cout << "projective_space_object_classifier::process_multiple_objects_from_file "
+					"f_save_transversal is TRUE" << endl;
 		}
+
+		save_transversal(verbose_level);
 
 	}
 
@@ -371,6 +366,63 @@ void projective_space_object_classifier::classify_objects_using_nauty(
 	}
 }
 
+void projective_space_object_classifier::save_automorphism_group_order(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_object_classifier::save_automorphism_group_order " << endl;
+	}
+	string ago_fname;
+	file_io Fio;
+	string_tools ST;
+
+	if (Descr->f_label) {
+		ago_fname.assign(Descr->label);
+	}
+	else {
+		ago_fname.assign("classification");
+
+	}
+	ST.replace_extension_with(ago_fname, "_ago.csv");
+
+	Fio.lint_vec_write_csv(Ago_transversal, nb_orbits, ago_fname, "Ago");
+	if (f_v) {
+		cout << "Written file " << ago_fname << " of size " << Fio.file_size(ago_fname) << endl;
+	}
+	if (f_v) {
+		cout << "projective_space_object_classifier::save_automorphism_group_order done" << endl;
+	}
+}
+
+void projective_space_object_classifier::save_transversal(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "projective_space_object_classifier::save_transversal " << endl;
+	}
+	string fname;
+	file_io Fio;
+	string_tools ST;
+
+	if (Descr->f_label) {
+		fname.assign(Descr->label);
+	}
+	else {
+		fname.assign("classification");
+
+	}
+	ST.replace_extension_with(fname, "_transversal.csv");
+
+	Fio.int_vec_write_csv(Idx_transversal, nb_orbits, fname, "Transversal");
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+	if (f_v) {
+		cout << "projective_space_object_classifier::save_transversal done" << endl;
+	}
+}
 
 void projective_space_object_classifier::process_any_object(object_with_canonical_form *OwCF,
 		int input_idx, long int &ago, int &f_reject, int verbose_level)
@@ -408,7 +460,7 @@ void projective_space_object_classifier::process_any_object(object_with_canonica
 			SG, A_perm, ago,
 			idx,
 			NO,
-			verbose_level);
+			verbose_level - 1);
 
 
 	if (f_v) {
@@ -532,7 +584,6 @@ int projective_space_object_classifier::process_object(
 		nauty_interface_with_group Nau;
 
 		Nau.automorphism_group_as_permutation_group(
-						//SG,
 						NO,
 						A_perm,
 						verbose_level);

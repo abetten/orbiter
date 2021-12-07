@@ -452,47 +452,6 @@ void projective_space_global::do_cheat_sheet_PG(
 
 
 
-void projective_space_global::set_stabilizer(
-		projective_space_with_action *PA,
-		int intermediate_subset_size,
-		std::string &fname_mask, int nb, std::string &column_label,
-		std::string &fname_out,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-
-	if (f_v) {
-		cout << "projective_space_global::set_stabilizer" << endl;
-	}
-
-#if 0
-	top_level_geometry_global T;
-
-	T.set_stabilizer_projective_space(
-				PA,
-				intermediate_subset_size,
-				fname_mask, nb, column_label,
-				verbose_level);
-#endif
-	substructure_classifier *SubC;
-
-	SubC = NEW_OBJECT(substructure_classifier);
-
-	SubC->set_stabilizer_in_any_space(
-			PA->A, PA->A, PA->A->Strong_gens,
-			intermediate_subset_size,
-			fname_mask, nb, column_label,
-			fname_out,
-			verbose_level);
-	FREE_OBJECT(SubC);
-
-	if (f_v) {
-		cout << "projective_space_global::set_stabilizer done" << endl;
-	}
-
-}
-
 
 
 void projective_space_global::conic_type(
@@ -1693,6 +1652,47 @@ void projective_space_global::classify_quartic_curves(
 
 	if (f_v) {
 		cout << "projective_space_global::classify_quartic_curves done" << endl;
+	}
+
+}
+
+void projective_space_global::set_stabilizer(
+		projective_space_with_action *PA,
+		int intermediate_subset_size,
+		std::string &fname_mask, int nb, std::string &column_label,
+		std::string &fname_out,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "projective_space_global::set_stabilizer" << endl;
+	}
+
+#if 0
+	top_level_geometry_global T;
+
+	T.set_stabilizer_projective_space(
+				PA,
+				intermediate_subset_size,
+				fname_mask, nb, column_label,
+				verbose_level);
+#endif
+	substructure_classifier *SubC;
+
+	SubC = NEW_OBJECT(substructure_classifier);
+
+	SubC->set_stabilizer_in_any_space(
+			PA->A, PA->A, PA->A->Strong_gens,
+			intermediate_subset_size,
+			fname_mask, nb, column_label,
+			fname_out,
+			verbose_level);
+	FREE_OBJECT(SubC);
+
+	if (f_v) {
+		cout << "projective_space_global::set_stabilizer done" << endl;
 	}
 
 }

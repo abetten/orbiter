@@ -243,7 +243,10 @@ public:
 			std::string &fname_group_elements_coded,
 			std::string &fname_transporter,
 			int verbose_level);
-	void create_latex_report_work(
+	void create_latex_report_for_permutation_group(
+			layered_graph_draw_options *O,
+			int verbose_level);
+	void create_latex_report_for_modified_group(
 			layered_graph_draw_options *O,
 			int verbose_level);
 

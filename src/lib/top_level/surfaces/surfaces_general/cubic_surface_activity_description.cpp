@@ -32,6 +32,8 @@ cubic_surface_activity_description::cubic_surface_activity_description()
 
 	f_export_all_quartic_curves = FALSE;
 
+	f_export_tritangent_planes = FALSE;
+
 }
 
 cubic_surface_activity_description::~cubic_surface_activity_description()
@@ -94,6 +96,12 @@ int cubic_surface_activity_description::read_arguments(
 				cout << "-export_all_quartic_curves " << endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-export_tritangent_planes") == 0) {
+			f_export_tritangent_planes = TRUE;
+			if (f_v) {
+				cout << "-export_tritangent_planes " << endl;
+			}
+		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -139,6 +147,9 @@ void cubic_surface_activity_description::print()
 	}
 	if (f_export_all_quartic_curves) {
 		cout << "-export_all_quartic_curves " << endl;
+	}
+	if (f_export_tritangent_planes) {
+		cout << "-export_tritangent_planes " << endl;
 	}
 }
 

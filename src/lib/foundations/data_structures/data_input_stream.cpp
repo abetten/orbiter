@@ -273,6 +273,54 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 			}
 			nb_objects_to_test++;
 		}
+		else if (Descr->input_type[input_idx] == INPUT_TYPE_FROM_PARALLEL_SEARCH) {
+			if (f_v) {
+				cout << "input from parallel search" << endl;
+			}
+
+			int nb_cases = Descr->input_data1[input_idx];
+			string mask;
+			string cases_fname;
+
+			mask.assign(Descr->input_string[input_idx]);
+			cases_fname.assign(Descr->input_string2[input_idx]);
+
+			if (f_v) {
+				cout << "input from parallel search, mask=" << mask << endl;
+				cout << "input from parallel search, nb_cases=" << nb_cases << endl;
+				cout << "input from parallel search, cases_fname=" << cases_fname << endl;
+			}
+
+			file_io Fio;
+			int i;
+
+
+			for (i = 0; i < nb_cases; i++) {
+
+
+				char str[1000];
+				string fname;
+
+
+				sprintf(str, mask.c_str(), i);
+				fname.assign(str);
+
+				set_of_sets *SoS;
+				int underlying_set_size = 0;
+				int nb_sol;
+
+				SoS = NEW_OBJECT(set_of_sets);
+				SoS->init_from_orbiter_file(underlying_set_size,
+						fname, 0 /*verbose_level*/);
+				nb_sol = SoS->nb_sets;
+				if (f_v) {
+					cout << "objects from file " << i << " / " << nb_cases <<
+							" the file contains " << nb_sol << " sets" << endl;
+				}
+				nb_objects_to_test += nb_sol;
+				FREE_OBJECT(SoS);
+			}
+		}
 		else {
 			cout << "unknown input type" << endl;
 			exit(1);
@@ -480,6 +528,9 @@ void data_input_stream::read_objects(int verbose_level)
 
 			for (h = 0; h < SoS->nb_sets; h++) {
 
+				if ((h % 1000) == 0) {
+					cout << "data_input_stream::read_objects " << h << " / " << SoS->nb_sets << endl;
+				}
 
 				object_with_canonical_form *OwCF;
 
@@ -488,7 +539,7 @@ void data_input_stream::read_objects(int verbose_level)
 
 				OwCF->init_large_set(
 						SoS->Sets[h], SoS->Set_size[h], v, b, k, design_sz,
-						verbose_level);
+						0 /*verbose_level*/);
 
 				Objects.push_back(OwCF);
 			}
@@ -689,6 +740,111 @@ void data_input_stream::read_objects(int verbose_level)
 
 			FREE_OBJECT(SoS);
 
+		}
+		else if (Descr->input_type[input_idx] == INPUT_TYPE_FROM_PARALLEL_SEARCH) {
+			if (f_v) {
+				cout << "input from parallel search" << endl;
+			}
+
+			int nb_cases = Descr->input_data1[input_idx];
+			string mask;
+			string cases_fname;
+
+			mask.assign(Descr->input_string[input_idx]);
+			cases_fname.assign(Descr->input_string2[input_idx]);
+
+			if (f_v) {
+				cout << "input from parallel search, mask=" << mask << endl;
+				cout << "input from parallel search, nb_cases=" << nb_cases << endl;
+				cout << "input from parallel search, cases_fname=" << cases_fname << endl;
+			}
+
+			file_io Fio;
+			int c;
+
+			set_of_sets *Reps;
+			string col_label;
+			int prefix_sz;
+
+			col_label.assign("REP");
+
+
+			Fio.read_column_and_parse(cases_fname,
+					col_label,
+					Reps, verbose_level);
+			if (!Reps->has_constant_size_property()) {
+				cout << "data_input_stream::read_objects the sets have different sizes" << endl;
+				exit(1);
+			}
+			prefix_sz = Reps->Set_size[0];
+
+			for (c = 0; c < nb_cases; c++) {
+
+
+				if (f_v) {
+					cout << "case " << c << " / " << nb_cases << " prefix=";
+					Orbiter->Lint_vec.print(cout, Reps->Sets[c], prefix_sz);
+				}
+
+				char str[1000];
+				string fname;
+
+
+				sprintf(str, mask.c_str(), c);
+				fname.assign(str);
+
+				set_of_sets *SoS;
+				int underlying_set_size = 0;
+				int nb_sol;
+				int sol_width;
+
+				SoS = NEW_OBJECT(set_of_sets);
+				SoS->init_from_orbiter_file(underlying_set_size,
+						fname, 0 /*verbose_level*/);
+				nb_sol = SoS->nb_sets;
+				if (f_v) {
+					cout << "objects from file " << c << " / " << nb_cases <<
+							" the file contains " << nb_sol << " sets" << endl;
+				}
+				if (nb_sol) {
+					if (!SoS->has_constant_size_property()) {
+						cout << "data_input_stream::read_objects the sets have different sizes" << endl;
+						exit(1);
+					}
+					sol_width = SoS->Set_size[0];
+					long int *Sol_idx;
+					int i, j;
+					long int *set;
+
+					Sol_idx = NEW_lint(nb_sol * sol_width);
+					set = NEW_lint(prefix_sz + sol_width);
+					for (i = 0; i < nb_sol; i++) {
+						for (j = 0; j < sol_width; j++) {
+							Sol_idx[i * sol_width + j] = SoS->Sets[i][j];
+						}
+					}
+
+					for (i = 0; i < nb_sol; i++) {
+						object_with_canonical_form *OwCF;
+
+
+						Orbiter->Lint_vec.copy(Reps->Sets[c], set, prefix_sz);
+						Orbiter->Lint_vec.copy(Sol_idx + i * sol_width, set + prefix_sz, sol_width);
+
+						OwCF = NEW_OBJECT(object_with_canonical_form);
+
+						OwCF->init_point_set(
+								set, prefix_sz + sol_width,
+								0 /*verbose_level*/);
+
+						Objects.push_back(OwCF);
+					}
+					FREE_lint(Sol_idx);
+					FREE_lint(set);
+				}
+				//nb_objects_to_test += nb_sol;
+				FREE_OBJECT(SoS);
+			}
 		}
 
 		else {

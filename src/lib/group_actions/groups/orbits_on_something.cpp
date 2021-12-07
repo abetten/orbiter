@@ -225,6 +225,19 @@ void orbits_on_something::stabilizer_of(int orbit_idx, int verbose_level)
 				"after Sch->stabilizer_orbit_rep" << endl;
 	}
 
+
+	std::string gens_str;
+	longinteger_object stab_go;
+
+
+	Stab->get_gens_data_as_string_with_quotes(gens_str, verbose_level);
+	Stab->group_order(stab_go);
+	cout << "The stabilizer has order " << stab_go << endl;
+	cout << "Number of generators " << Stab->gens->len << endl;
+	cout << "Generators for the stabilizer in coded form: " << endl;
+	cout << gens_str << endl;
+
+
 	string fname_stab;
 	string label_stab;
 	char str[1000];

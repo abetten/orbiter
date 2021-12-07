@@ -152,9 +152,22 @@ void set_builder::init(set_builder_description *Descr,
 		sz = cnt;
 
 	}
+	else if (Descr->f_file) {
+		if (f_v) {
+			cout << "set_builder::init -file " << Descr->file_name << endl;
+		}
+		file_io Fio;
+		int m, n;
+
+		Fio.lint_matrix_read_csv(Descr->file_name, set, m, n, verbose_level);
+		if (f_v) {
+			cout << "set_builder::init read a csv file of size " << m << " x " << n << endl;
+		}
+		sz = m * n;
+
+	}
 	else {
-		cout << "set_builder::init please use either -index_set "
-				"or -set_builder to create the set" << endl;
+		cout << "set_builder::init unrecognized command to create the set" << endl;
 		exit(1);
 	}
 	if (f_v) {

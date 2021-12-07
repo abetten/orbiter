@@ -221,6 +221,7 @@ void projective_space_with_action::init_group(
 }
 
 
+#if 0
 void projective_space_with_action::canonical_form(
 		projective_space_object_classifier_description *Canonical_form_PG_Descr,
 		int verbose_level)
@@ -232,8 +233,20 @@ void projective_space_with_action::canonical_form(
 		cout << "projective_space_with_action::canonical_form" << endl;
 	}
 
-#if 0
+#if 1
 	OC = NEW_OBJECT(projective_space_object_classifier);
+
+	data_input_stream_description *IS_Descr;
+
+	IS_Descr = NEW_OBJECT(data_input_stream_description);
+
+	IS_Descr->add_set_of_points(a);
+
+	data_input_stream *IS;
+
+
+	IS = NEW_OBJECT(data_input_stream);
+
 
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_form before OC->do_the_work" << endl;
@@ -242,6 +255,7 @@ void projective_space_with_action::canonical_form(
 			Canonical_form_PG_Descr,
 			TRUE,
 			this,
+			IS,
 			verbose_level);
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_form after OC->do_the_work" << endl;
@@ -254,6 +268,7 @@ void projective_space_with_action::canonical_form(
 		cout << "projective_space_with_action::canonical_form done" << endl;
 	}
 }
+#endif
 
 void projective_space_with_action::canonical_labeling(
 	object_with_canonical_form *OiP,

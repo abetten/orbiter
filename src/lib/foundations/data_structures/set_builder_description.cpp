@@ -37,6 +37,9 @@ set_builder_description::set_builder_description()
 	f_here = FALSE;
 	//std::string here_text;
 
+	f_file = FALSE;
+	//std::string file_name;
+
 }
 
 set_builder_description::~set_builder_description()
@@ -97,6 +100,11 @@ int set_builder_description::read_arguments(
 			here_text.assign(argv[++i]);
 			cout << "-here " << here_text << endl;
 		}
+		else if (stringcmp(argv[i], "-file") == 0) {
+			f_file = TRUE;
+			file_name.assign(argv[++i]);
+			cout << "-file " << file_name << endl;
+		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
@@ -131,6 +139,9 @@ void set_builder_description::print()
 	}
 	if (f_here) {
 		cout << "-here" << here_text << endl;
+	}
+	if (f_file) {
+		cout << "-file " << file_name << endl;
 	}
 }
 

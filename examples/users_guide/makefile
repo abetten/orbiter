@@ -11533,15 +11533,6 @@ geo_7_3:
 		-end
 
 
-geo_7_3_c:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define D -design  -end \
-		-with D -do \
-		-design_activity \
-			-canonical_form \
-			-input -file_of_incidence_geometries 7_3.inc 7 7 21 -end \
-			-save_ago \
-		-end
 
 geo_8_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -11554,16 +11545,6 @@ geo_8_3:
 #-print_at_line 4
 # 1 geo: 0 11 18 29 30 38 44 54 
 # ago=48
-
-geo_8_3_c:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define D -design  -end \
-		-with D -do \
-		-design_activity \
-			-canonical_form \
-			-input -file_of_incidence_geometries 8_3.inc 8 8 24 -end \
-			-save_ago \
-		-end
 
 
 
@@ -11626,6 +11607,7 @@ geo_10_3_c:
 			-classification_prefix 10_3 \
 			-label 10_3 \
 			-save_ago \
+			-save_transversal \
 			-report -end \
 		-end
 	pdflatex 10_3_classification.tex
@@ -11634,18 +11616,6 @@ geo_10_3_c:
 
 
 #0 1 2 10 13 14 20 25 26 31 33 35 41 44 46 52 53 56 62 67 68 74 77 79 85 88 89 
-
-
-
-geo_10_3_c_old:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define D -design  -end \
-		-with D -do \
-		-design_activity \
-			-canonical_form \
-			-input -file_of_incidence_geometries 10_3.inc 10 10 30 -end \
-			-save_ago \
-		-end
 
 
 
@@ -11677,16 +11647,6 @@ geo_12_3:
 
 
 
-geo_12_3_c:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define D -design  -end \
-		-with D -do \
-		-design_activity \
-			-canonical_form \
-			-input -file_of_incidence_geometries 12_3.inc 12 12 36 -end \
-			-save_ago \
-		-end
-
 
 geo_13_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -11714,6 +11674,7 @@ geo_14_3:
 #nb_calls_to_densenauty=2089344
 
 
+
 geo_15_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Test_lines -set -loop 4 16 1 -end \
@@ -11729,13 +11690,21 @@ geo_15_3:
 
 geo_15_3_c:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define D -design  -end \
-		-with D -do \
-		-design_activity \
+		-draw_incidence_structure_description \
+			-width 50 -with_10 5 -end \
+		-define C -combinatorial_objects \
+			-file_of_incidence_geometries 15_3.inc 15 15 45 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
 			-canonical_form \
-			-input -file_of_incidence_geometries 15_3.inc 15 15 45 -end \
+			-classification_prefix 10_3 \
+			-label 10_3 \
 			-save_ago \
 		-end
+	pdflatex 10_3_classification.tex
+	open 10_3_classification.pdf
+
 
 
 # 3 min 6 sec
@@ -11826,6 +11795,25 @@ geo_40_4_g4_tree:
 # 2 geos, ago=51840^2
 #User time: 0.18 of a second, dt=18 tps = 100
 #nb_calls_to_densenauty=1065
+
+geo_40_4_g4_c:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-draw_incidence_structure_description \
+			-width 50 -with_10 5 -end \
+		-define C -combinatorial_objects \
+			-file_of_incidence_geometries 40_4_g4.inc 40 40 160 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+			-classification_prefix 40_4_g4 \
+			-label 40_4_g4 \
+			-save_ago \
+			-report -end \
+		-end
+	pdflatex 40_4_g4_classification.tex
+	open 40_4_g4_classification.pdf
+
 
 
 geo_63_3_g6:
