@@ -1501,7 +1501,8 @@ strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 
 
 	if (f_v) {
-		cout << "nauty_interface_with_group::set_stabilizer_of_object before OiP->run_nauty" << endl;
+		cout << "nauty_interface_with_group::set_stabilizer_of_object "
+				"before OiP->run_nauty" << endl;
 
 	}
 
@@ -1511,7 +1512,8 @@ strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 			verbose_level);
 
 	if (f_v) {
-		cout << "nauty_interface_with_group::set_stabilizer_of_object after OiP->run_nauty" << endl;
+		cout << "nauty_interface_with_group::set_stabilizer_of_object "
+				"after OiP->run_nauty" << endl;
 
 	}
 

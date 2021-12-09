@@ -577,14 +577,6 @@ public:
 	void init_group(group_theoretic_activity_description *Descr,
 			any_group *AG,
 			int verbose_level);
-#if 0
-	void init_linear_group(group_theoretic_activity_description *Descr,
-			finite_field *F, linear_group *LG,
-			int verbose_level);
-	void init_permutation_group(group_theoretic_activity_description *Descr,
-			permutation_group_create *PGC,
-			int verbose_level);
-#endif
 	void perform_activity(int verbose_level);
 	void multiply(int verbose_level);
 	void inverse(int verbose_level);

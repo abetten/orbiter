@@ -114,6 +114,173 @@ void brick_test(int q, int verbose_level);
 
 
 
+// #############################################################################
+// classification_of_objects_description.cpp
+// #############################################################################
+
+
+
+
+//! description of a classification of objects using class classification_of_objects
+
+
+
+class classification_of_objects_description {
+
+public:
+
+	int f_label;
+	std::string label;
+
+	int f_save_classification;
+	std::string save_prefix;
+
+	//int f_report;
+	//std::string report_prefix;
+
+	int fixed_structure_order_list_sz;
+	int fixed_structure_order_list[1000];
+
+	int f_max_TDO_depth;
+	int max_TDO_depth;
+
+	int f_classification_prefix;
+	std::string classification_prefix;
+
+	int f_save_canonical_labeling;
+
+	int f_save_ago;
+
+	int f_save_transversal;
+
+	int f_load_canonical_labeling;
+
+	int f_load_ago;
+
+	int f_save_cumulative_canonical_labeling;
+	std::string cumulative_canonical_labeling_fname;
+
+	int f_save_cumulative_ago;
+	std::string cumulative_ago_fname;
+
+	int f_save_cumulative_data;
+	std::string cumulative_data_fname;
+
+	int f_save_fibration;
+	std::string fibration_fname;
+
+
+	classification_of_objects_description();
+	~classification_of_objects_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+
+// #############################################################################
+// classification_of_objects.cpp
+// #############################################################################
+
+
+
+
+//! classification of combinatorial objects using a graph-theoretic approach
+
+
+
+class classification_of_objects {
+
+public:
+
+	classification_of_objects_description *Descr;
+
+	int f_projective_space;
+	//projective_space_with_action *PA;
+	projective_space *P;
+
+	data_input_stream *IS;
+
+
+	classify_bitvectors *CB;
+
+	long int *Ago; // [IS->nb_objects_to_test]
+	int *F_reject; // [IS->nb_objects_to_test]
+
+
+	// the classification:
+
+	int nb_orbits; // number of isomorphism types
+
+	int *Idx_transversal; // [nb_orbits]
+
+	long int *Ago_transversal; // [nb_orbits]
+
+	object_with_canonical_form **OWCF_transversal; // [nb_orbits]
+
+	nauty_output **NO_transversal; // [nb_orbits]
+
+
+	tally *T_Ago;
+
+
+
+	classification_of_objects();
+	~classification_of_objects();
+	void do_the_work(classification_of_objects_description *Descr,
+			int f_projective_space,
+			projective_space *P,
+			data_input_stream *IS,
+			int verbose_level);
+	void classify_objects_using_nauty(
+		int verbose_level);
+	void save_automorphism_group_order(int verbose_level);
+	void save_transversal(int verbose_level);
+	void process_any_object(object_with_canonical_form *OwCF,
+			int input_idx, long int &ago, int &f_reject, nauty_output *&NO,
+			int verbose_level);
+	int process_object(
+		object_with_canonical_form *OwCF,
+		long int &ago,
+		int &iso_idx_if_found,
+		nauty_output *&NO,
+		int verbose_level);
+	// returns f_found, which is TRUE if the object is already in the list
+	int process_object_with_known_canonical_labeling(
+		object_with_canonical_form *OiP,
+		int *canonical_labeling, int canonical_labeling_len,
+		int &idx,
+		nauty_output *NO,
+		int verbose_level);
+	void save(
+			std::string &output_prefix,
+			int verbose_level);
+	void latex_report(std::string &fname,
+			std::string &prefix,
+			int fixed_structure_order_list_sz,
+			int *fixed_structure_order_list,
+			int max_TDO_depth,
+			int verbose_level);
+	void report_summary_of_orbits(
+			std::ostream &fp, int verbose_level);
+	void report_all_isomorphism_types(
+			std::ostream &fp, int max_TDO_depth, int verbose_level);
+	void report_isomorphism_type(
+			std::ostream &fp, int i, int max_TDO_depth, int verbose_level);
+	void report_object(std::ostream &fp,
+			object_with_canonical_form *OwCF,
+			int object_idx,
+			int max_TDO_depth,
+			int verbose_level);
+
+
+};
+
+
+void print_summary_table_entry(int *Table,
+		int m, int n, int i, int j, int val, std::string &output, void *data);
 
 
 
@@ -484,6 +651,20 @@ public:
 			bitvector *&B,
 			int verbose_level);
 	void latex_incma(std::ostream &ost, int verbose_level);
+	void latex_TDA(std::ostream &ost,
+			int nb_orbits, int *orbit_first, int *orbit_len, int *orbit,
+			int verbose_level);
+	void latex_TDA_with_labels(std::ostream &ost,
+			int nb_orbits, int *orbit_first, int *orbit_len, int *orbit,
+			int verbose_level);
+	void latex_canonical_form(std::ostream &ost,
+			nauty_output *NO,
+			int verbose_level);
+	void latex_canonical_form_with_labels(std::ostream &ost,
+			nauty_output *NO,
+			std::string *row_labels,
+			std::string *col_labels,
+			int verbose_level);
 
 };
 

@@ -2273,6 +2273,7 @@ void object_with_canonical_form::run_nauty_basic(nauty_output *&NO, int verbose_
 
 
 
+
 }}
 
 

@@ -22,6 +22,8 @@ MODULES= \
 		foundations/coding_theory/mindist.o \
 		foundations/combinatorics/boolean_function_domain.o \
 		foundations/combinatorics/brick_domain.o \
+		foundations/combinatorics/classification_of_objects_description.o \
+		foundations/combinatorics/classification_of_objects.o \
 		foundations/combinatorics/combinatorial_object_create.o \
 		foundations/combinatorics/combinatorial_object_description.o \
 		foundations/combinatorics/combinatorics_domain.o \
@@ -407,6 +409,7 @@ MODULES= \
 		top_level/combinatorics/large_set_was_activity.o \
 		top_level/combinatorics/large_set_was_description.o \
 		top_level/combinatorics/large_set_was.o \
+		top_level/combinatorics/object_with_properties.o \
 		top_level/combinatorics/regular_linear_space_description.o \
 		top_level/combinatorics/regular_ls_classify.o \
 		top_level/combinatorics/tactical_decomposition.o \
@@ -489,8 +492,6 @@ MODULES= \
 		top_level/projective_space/projective_space_activity_description.o \
 		top_level/projective_space/projective_space_activity.o \
 		top_level/projective_space/projective_space_global.o \
-		top_level/projective_space/projective_space_object_classifier_description.o \
-		top_level/projective_space/projective_space_object_classifier.o \
 		top_level/projective_space/projective_space_with_action_description.o \
 		top_level/projective_space/projective_space_with_action.o \
 		top_level/semifields/semifield_classify_description.o \

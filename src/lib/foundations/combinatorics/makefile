@@ -8,6 +8,8 @@ LFLAGS = -lm
 MODULES = \
 		boolean_function_domain.o \
 		brick_domain.o \
+		classification_of_objects_description.o \
+		classification_of_objects.o \
 		combinatorial_object_create.o \
 		combinatorial_object_description.o \
 		combinatorics_domain.o \

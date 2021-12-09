@@ -757,7 +757,7 @@ void action::init_permutation_group_from_nauty_output(nauty_output *NO,
 		NO->Aut_counter, NO->Aut,
 		NO->Base_length, NO->Base_lint,
 		FALSE /* f_no_base */,
-		0 /*verbose_level - 2*/);
+		verbose_level - 2);
 	if (f_v) {
 		cout << "action::init_permutation_group_from_nauty_output "
 				"after init_permutation_group_from_generators" << endl;

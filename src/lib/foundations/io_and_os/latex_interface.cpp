@@ -547,7 +547,7 @@ void latex_interface::foot(std::ostream& ost)
 // two functions from DISCRETA1:
 // adapted to use ostream instead of FILE pointer
 
-void latex_interface::incma_latex_picture(std::ostream &fp,
+void latex_interface::incma_latex_with_text_labels(std::ostream &fp,
 		draw_incidence_structure_description *Descr,
 	int v, int b,
 	int V, int B, int *Vi, int *Bj,
@@ -562,7 +562,7 @@ void latex_interface::incma_latex_picture(std::ostream &fp,
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "latex_interface::incma_latex_picture" << endl;
+		cout << "latex_interface::incma_latex_with_text_labels" << endl;
 	}
 	int w, h, w1, h1;
 	int i, j, k, a;
@@ -582,11 +582,11 @@ void latex_interface::incma_latex_picture(std::ostream &fp,
 
 #if 0
 	if (!Descr->f_width) {
-		cout << "latex_interface::incma_latex_picture please give -width <width>" << endl;
+		cout << "latex_interface::incma_latex_with_text_labels please give -width <width>" << endl;
 		exit(1);
 	}
 	if (!Descr->f_width_10) {
-		cout << "latex_interface::incma_latex_picture please give -width_10 <width_10>" << endl;
+		cout << "latex_interface::incma_latex_with_text_labels please give -width_10 <width_10>" << endl;
 		exit(1);
 	}
 #endif
@@ -716,6 +716,9 @@ void latex_interface::incma_latex_picture(std::ostream &fp,
 		}
 
 	fp << "\\end{picture}" << endl;
+	if (f_v) {
+		cout << "latex_interface::incma_latex_with_text_labels done" << endl;
+	}
 }
 
 
@@ -738,22 +741,84 @@ void latex_interface::incma_latex(std::ostream &fp,
 	Descr = Orbiter->Draw_incidence_structure_description;
 
 	if (f_v) {
-		cout << "latex_interface::incma_latex before incma_latex_picture" << endl;
+		cout << "latex_interface::incma_latex before incma_latex_with_text_labels" << endl;
 	}
-	incma_latex_picture(fp,
+	incma_latex_with_text_labels(fp,
 			Descr,
 		v, b, V, B, Vi, Bj, incma,
 		FALSE /* f_labelling_points */, NULL,
 		FALSE /* f_labelling_blocks */, NULL,
 		verbose_level);
 	if (f_v) {
-		cout << "latex_interface::incma_latex after incma_latex_picture" << endl;
+		cout << "latex_interface::incma_latex after incma_latex_with_text_labels" << endl;
 	}
 
 	if (f_v) {
 		cout << "latex_interface::incma_latex done" << endl;
 	}
 }
+
+void latex_interface::incma_latex_with_labels(std::ostream &fp,
+	int v, int b,
+	int V, int B, int *Vi, int *Bj,
+	int *row_labels_int,
+	int *col_labels_int,
+	int *incma,
+	int verbose_level)
+// used in incidence_structure::latex_it
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "latex_interface::incma_latex" << endl;
+	}
+	draw_incidence_structure_description *Descr;
+
+	Descr = Orbiter->Draw_incidence_structure_description;
+
+	std::string *point_labels;
+	std::string *block_labels;
+
+
+	point_labels = new string [v];
+	block_labels = new string [b];
+
+	int i, j;
+
+	char str[1000];
+
+
+	for (i = 0; i < v; i++) {
+		sprintf(str, "%d", row_labels_int[i]);
+		point_labels[i].assign(str);
+	}
+	for (j = 0; j < b; j++) {
+		sprintf(str, "%d", col_labels_int[j]);
+		block_labels[j].assign(str);
+	}
+
+	if (f_v) {
+		cout << "latex_interface::incma_latex before incma_latex_with_text_labels" << endl;
+	}
+	incma_latex_with_text_labels(fp,
+			Descr,
+		v, b, V, B, Vi, Bj, incma,
+		TRUE /* f_labelling_points */, point_labels,
+		TRUE /* f_labelling_blocks */, block_labels,
+		verbose_level);
+	if (f_v) {
+		cout << "latex_interface::incma_latex after incma_latex_with_text_labels" << endl;
+	}
+
+	delete [] point_labels;
+	delete [] block_labels;
+
+	if (f_v) {
+		cout << "latex_interface::incma_latex done" << endl;
+	}
+}
+
+
 
 void latex_interface::print_01_matrix_tex(std::ostream &ost,
 	int *p, int m, int n)

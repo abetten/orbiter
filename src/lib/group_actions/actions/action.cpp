@@ -597,6 +597,27 @@ int action::find_fixed_points(void *elt,
 	return n;
 }
 
+int action::count_fixed_points(void *elt, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i, j, cnt = 0;
+
+	if (f_v) {
+		cout << "action::count_fixed_points counting fixed points in action "
+				<< label << " of degree " << degree << endl;
+	}
+	for (i = 0; i < degree; i++) {
+		j = element_image_of(i, elt, 0);
+		if (j == i) {
+			cnt++;
+		}
+	}
+	if (f_v) {
+		cout << "action::count_fixed_points done, found " << cnt << " fixed points" << endl;
+	}
+	return cnt;
+}
+
 int action::test_if_set_stabilizes(int *Elt,
 		int size, long int *set, int verbose_level)
 {
