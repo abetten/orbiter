@@ -3368,79 +3368,16 @@ void schreier::latex_TDA(std::ostream &ost, encoded_combinatorial_object *Enc,
 		cout << "schreier::latex_TDA" << endl;
 	}
 
-	latex_interface L;
-
-	int *Vi;
-	int *Bj;
-	int V, B;
-	int i, j;
-	int fst, len;
-
-	V = 0;
-	B = 0;
-	Vi = NEW_int(Enc->nb_rows);
-	Bj = NEW_int(Enc->nb_cols);
-
-	for (i = 0; i < nb_orbits; i++) {
-		fst = orbit_first[i];
-		if (fst == Enc->nb_rows) {
-			break;
-		}
-		len = orbit_len[i];
-		Vi[V++] = len;
-	}
-	for (; i < nb_orbits; i++) {
-		fst = orbit_first[i];
-		len = orbit_len[i];
-		Bj[B++] = len;
-	}
-
-
 	if (f_v) {
-		cout << "schreier::latex_TDA Vi=";
-		Orbiter->Int_vec.print(cout, Vi, V);
-		cout << endl;
+		cout << "schreier::latex_TDA before Enc->latex_TDA" << endl;
 	}
+	Enc->latex_TDA_with_labels(ost,
+			nb_orbits, orbit_first, orbit_len, orbit,
+			verbose_level);
 	if (f_v) {
-		cout << "schreier::latex_TDA Bj=";
-		Orbiter->Int_vec.print(cout, Bj, B);
-		cout << endl;
+		cout << "schreier::latex_TDA after Enc->latex_TDA" << endl;
 	}
 
-	int *Inc2;
-	int i0, j0;
-
-	Inc2 = NEW_int(Enc->nb_rows * Enc->nb_cols);
-	Orbiter->Int_vec.zero(Inc2, Enc->nb_rows * Enc->nb_cols);
-
-	for (i = 0; i < Enc->nb_rows; i++) {
-		i0 = orbit[i];
-		for (j = 0; j < Enc->nb_cols; j++) {
-			j0 = orbit[Enc->nb_rows + j] - Enc->nb_rows;
-			if (Enc->Incma[i0 * Enc->nb_cols + j0]) {
-				Inc2[i * Enc->nb_cols + j] = 1;
-			}
-		}
-	}
-
-	if (f_v) {
-		cout << "schreier::latex_TDA before L.incma_latex" << endl;
-	}
-	L.incma_latex(ost,
-			Enc->nb_rows /*v */,
-			Enc->nb_cols /*b */,
-			V, B, Vi, Bj,
-			Inc2,
-			verbose_level - 1);
-	if (f_v) {
-		cout << "schreier::latex_TDA after L.incma_latex" << endl;
-	}
-
-	ost << "\\\\" << endl;
-
-	FREE_int(Inc2);
-	FREE_int(Vi);
-	FREE_int(Bj);
 
 	if (f_v) {
 		cout << "schreier::latex_TDA done" << endl;

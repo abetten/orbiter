@@ -88,6 +88,12 @@ void nauty_output::allocate(int N, int verbose_level)
 	}
 }
 
+void nauty_output::print()
+{
+		cout << "nauty_output::print" << endl;
+		cout << "N=" << N << endl;
+}
+
 void nauty_output::print_stats()
 {
 	cout << "nb_backtrack1 = " << nb_firstpathnode << endl;

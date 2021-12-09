@@ -609,6 +609,7 @@ public:
 	nauty_output();
 	~nauty_output();
 	void allocate(int N, int verbose_level);
+	void print();
 	void print_stats();
 	int belong_to_the_same_orbit(int a, int b, int verbose_level);
 

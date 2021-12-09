@@ -364,7 +364,7 @@ class interface_combinatorics {
 	int Dedekind_q_max;
 
 	int f_canonical_form_nauty;
-	projective_space_object_classifier_description *Canonical_form_nauty_Descr;
+	classification_of_objects_description *Canonical_form_nauty_Descr;
 
 	int f_rank_k_subset;
 	int rank_k_subset_n;

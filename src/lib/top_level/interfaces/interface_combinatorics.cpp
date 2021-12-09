@@ -640,7 +640,7 @@ void interface_combinatorics::read_arguments(int argc,
 			cout << "-canonical_form_nauty, reading extra arguments" << endl;
 		}
 
-		Canonical_form_nauty_Descr = NEW_OBJECT(projective_space_object_classifier_description);
+		Canonical_form_nauty_Descr = NEW_OBJECT(classification_of_objects_description);
 
 		if (f_v) {
 			i += Canonical_form_nauty_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);

@@ -277,6 +277,8 @@ class coding_theory_domain;
 // combinatorics:
 class boolean_function_domain;
 class brick_domain;
+class classification_of_objects_description;
+class classification_of_objects;
 class combinatorial_object_create;
 class combinatorial_object_description;
 class combinatorics_domain;

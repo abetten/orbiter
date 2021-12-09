@@ -46,6 +46,9 @@ combinatorial_object_activity_description::combinatorial_object_activity_descrip
 	f_canonical_form = FALSE;
 	Canonical_form_Descr = NULL;
 
+	f_report = FALSE;
+	//report_prefix
+
 }
 
 combinatorial_object_activity_description::~combinatorial_object_activity_description()
@@ -127,7 +130,7 @@ int combinatorial_object_activity_description::read_arguments(
 
 			canonical_form_PG_PG_label.assign(argv[++i]);
 
-			Canonical_form_PG_Descr = NEW_OBJECT(projective_space_object_classifier_description);
+			Canonical_form_PG_Descr = NEW_OBJECT(classification_of_objects_description);
 
 			i += Canonical_form_PG_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 			if (f_v) {
@@ -146,7 +149,7 @@ int combinatorial_object_activity_description::read_arguments(
 				cout << "-canonical_form, reading extra arguments" << endl;
 			}
 
-			Canonical_form_Descr = NEW_OBJECT(projective_space_object_classifier_description);
+			Canonical_form_Descr = NEW_OBJECT(classification_of_objects_description);
 
 			i += Canonical_form_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 			if (f_v) {
@@ -157,6 +160,11 @@ int combinatorial_object_activity_description::read_arguments(
 					cout << "next argument is " << argv[i] << endl;
 				}
 			}
+		}
+		else if (stringcmp(argv[i], "-report") == 0) {
+			f_report = TRUE;
+			report_prefix.assign(argv[++i]);
+			cout << "-report " << report_prefix << endl;
 		}
 
 
@@ -208,6 +216,9 @@ void combinatorial_object_activity_description::print()
 	if (f_canonical_form) {
 		cout << "-canonical_form " << endl;
 		Canonical_form_Descr->print();
+	}
+	if (f_report) {
+		cout << "-report " << report_prefix << endl;
 	}
 }
 

@@ -438,7 +438,7 @@ void design_activity::do_load_table(
 	}
 }
 
-void design_activity::do_canonical_form(projective_space_object_classifier_description *Canonical_form_Descr,
+void design_activity::do_canonical_form(classification_of_objects_description *Canonical_form_Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -448,7 +448,7 @@ void design_activity::do_canonical_form(projective_space_object_classifier_descr
 	}
 
 
-	projective_space_object_classifier *OC;
+	classification_of_objects *OC;
 
 #if 0
 
@@ -456,7 +456,7 @@ void design_activity::do_canonical_form(projective_space_object_classifier_descr
 		cout << "design_activity::do_canonical_form" << endl;
 	}
 
-	OC = NEW_OBJECT(projective_space_object_classifier);
+	OC = NEW_OBJECT(classification_of_objects);
 
 	if (f_v) {
 		cout << "design_activity::do_canonical_form before OC->do_the_work" << endl;

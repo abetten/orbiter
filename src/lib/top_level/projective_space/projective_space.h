@@ -310,7 +310,7 @@ public:
 	void init(object_with_canonical_form *OwCF,
 			long int ago,
 			strong_generators *Aut_gens,
-			int nb_rows, int nb_cols,
+			//int nb_rows, int nb_cols,
 			int *canonical_labeling,
 			int verbose_level);
 	void print();
@@ -656,150 +656,6 @@ public:
 
 
 
-// #############################################################################
-// projective_space_object_classifier_description.cpp
-// #############################################################################
-
-
-
-
-//! description of a classification of objects using class projective_space_object_classifier
-
-
-
-class projective_space_object_classifier_description {
-
-public:
-
-	int f_label;
-	std::string label;
-
-	int f_save_classification;
-	std::string save_prefix;
-
-	int f_report;
-	std::string report_prefix;
-
-	int fixed_structure_order_list_sz;
-	int fixed_structure_order_list[1000];
-
-	int f_max_TDO_depth;
-	int max_TDO_depth;
-
-	int f_classification_prefix;
-	std::string classification_prefix;
-
-	int f_save_canonical_labeling;
-
-	int f_save_ago;
-
-	int f_save_transversal;
-
-	int f_load_canonical_labeling;
-
-	int f_load_ago;
-
-	int f_save_cumulative_canonical_labeling;
-	std::string cumulative_canonical_labeling_fname;
-
-	int f_save_cumulative_ago;
-	std::string cumulative_ago_fname;
-
-	int f_save_cumulative_data;
-	std::string cumulative_data_fname;
-
-	int f_save_fibration;
-	std::string fibration_fname;
-
-
-	projective_space_object_classifier_description();
-	~projective_space_object_classifier_description();
-	int read_arguments(
-		int argc, std::string *argv,
-		int verbose_level);
-	void print();
-
-};
-
-
-// #############################################################################
-// projective_space_object_classifier.cpp
-// #############################################################################
-
-
-
-
-//! classification of objects in projective space PG(n,q) using a graph-theoretic approach
-
-
-
-class projective_space_object_classifier {
-
-public:
-
-	projective_space_object_classifier_description *Descr;
-
-	int f_projective_space;
-	projective_space_with_action *PA;
-
-	data_input_stream *IS;
-
-
-	classify_bitvectors *CB;
-
-	long int *Ago;
-	int *F_reject;
-
-	int nb_orbits;
-	int *Idx_transversal;
-	long int *Ago_transversal;
-	object_with_canonical_form **OWCF;
-
-	tally *T_Ago;
-
-
-
-	projective_space_object_classifier();
-	~projective_space_object_classifier();
-	void do_the_work(projective_space_object_classifier_description *Descr,
-			int f_projective_space,
-			projective_space_with_action *PA,
-			data_input_stream *IS,
-			int verbose_level);
-	void classify_objects_using_nauty(
-		int verbose_level);
-	void save_automorphism_group_order(int verbose_level);
-	void save_transversal(int verbose_level);
-	void process_any_object(object_with_canonical_form *OwCF,
-			int input_idx, long int &ago, int &f_reject, int verbose_level);
-	int process_object(
-		object_with_canonical_form *OwCF,
-		strong_generators *&SG, action *&A_perm, long int &ago,
-		int &idx,
-		nauty_output *NO,
-		int verbose_level);
-	// returns f_found, which is TRUE if the object is already in the list
-	int process_object_with_known_canonical_labeling(
-		object_with_canonical_form *OiP,
-		int *canonical_labeling, int canonical_labeling_len,
-		int &idx,
-		nauty_output *NO,
-		int verbose_level);
-	void save(
-			std::string &output_prefix,
-			int verbose_level);
-	void latex_report(std::string &fname,
-			std::string &prefix,
-			int fixed_structure_order_list_sz,
-			int *fixed_structure_order_list,
-			int max_TDO_depth,
-			int verbose_level);
-	void report_isomorphism_type(
-			std::ostream &fp, int i, int max_TDO_depth, int verbose_level);
-
-
-};
-
 
 // #############################################################################
 // projective_space_with_action_description.cpp
@@ -879,7 +735,7 @@ public:
 		int f_init_incidence_structure, int verbose_level);
 	void init_group(int f_semilinear, int verbose_level);
 	void canonical_form(
-			projective_space_object_classifier_description *Canonical_form_PG_Descr,
+			classification_of_objects_description *Canonical_form_PG_Descr,
 			int verbose_level);
 	void canonical_labeling(
 		object_with_canonical_form *OiP,
@@ -955,10 +811,6 @@ void OiPA_encode(void *extra_data,
 	long int *&encoding, int &encoding_sz, void *global_data);
 void OiPA_group_order(void *extra_data,
 	longinteger_object &go, void *global_data);
-#endif
-void print_summary_table_entry(int *Table,
-	int m, int n, int i, int j, int val, std::string &output, void *data);
-#if 0
 void compute_ago_distribution(
 	classify_bitvectors *CB, tally *&C_ago, int verbose_level);
 void compute_ago_distribution_permuted(

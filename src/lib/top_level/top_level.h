@@ -65,6 +65,7 @@ class large_set_was_activity_description;
 class large_set_was_activity;
 class large_set_was_description;
 class large_set_was;
+class object_with_properties;
 class regular_linear_space_description;
 class regular_ls_classify;
 class tactical_decomposition;
@@ -169,8 +170,6 @@ class object_in_projective_space_with_action;
 class projective_space_activity_description;
 class projective_space_activity;
 class projective_space_globals;
-class projective_space_object_classifier_description;
-class projective_space_object_classifier;
 class projective_space_with_action_description;
 class projective_space_with_action;
 

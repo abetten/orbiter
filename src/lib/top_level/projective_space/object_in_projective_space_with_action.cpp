@@ -49,7 +49,7 @@ void object_in_projective_space_with_action::init(
 	object_with_canonical_form *OwCF,
 	long int ago,
 	strong_generators *Aut_gens,
-	int nb_rows, int nb_cols,
+	//int nb_rows, int nb_cols,
 	int *canonical_labeling,
 	int verbose_level)
 {
@@ -58,6 +58,13 @@ void object_in_projective_space_with_action::init(
 	if (f_v) {
 		cout << "object_in_projective_space_with_action::init" << endl;
 	}
+
+	int nb_rows, nb_cols;
+
+	OwCF->encoding_size(
+			nb_rows, nb_cols,
+			verbose_level);
+
 
 	object_in_projective_space_with_action::OwCF = OwCF;
 	object_in_projective_space_with_action::Aut_gens = Aut_gens;
@@ -69,7 +76,7 @@ void object_in_projective_space_with_action::init(
 	OwCF->known_ago = ago; //Aut_gens->group_order_as_lint();
 	if (f_v) {
 		cout << "object_in_projective_space_with_action::init done" << endl;
-	 }
+	}
 }
 
 void object_in_projective_space_with_action::print()

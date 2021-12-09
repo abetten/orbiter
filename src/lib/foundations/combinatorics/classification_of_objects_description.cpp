@@ -1,21 +1,22 @@
 /*
- * projective_space_object_classifier_description.cpp
+ * classification_of_objects_description.cpp
  *
  *  Created on: Sep 13, 2020
  *      Author: betten
  */
 
 
-#include "orbiter.h"
+#include "foundations.h"
 
 using namespace std;
 
+
 namespace orbiter {
-namespace top_level {
+namespace foundations {
 
 
 
-projective_space_object_classifier_description::projective_space_object_classifier_description()
+classification_of_objects_description::classification_of_objects_description()
 {
 
 	f_label = FALSE;
@@ -24,8 +25,8 @@ projective_space_object_classifier_description::projective_space_object_classifi
 	f_save_classification = FALSE;
 	//std::string save_prefix;
 
-	f_report = FALSE;
-	//std::string report_prefix;
+	//f_report = FALSE;
+	////std::string report_prefix;
 
 	fixed_structure_order_list_sz = 0;
 	//fixed_structure_order_list;
@@ -58,21 +59,21 @@ projective_space_object_classifier_description::projective_space_object_classifi
 	f_save_fibration = FALSE;
 }
 
-projective_space_object_classifier_description::~projective_space_object_classifier_description()
+classification_of_objects_description::~classification_of_objects_description()
 {
 
 }
 
-int projective_space_object_classifier_description::read_arguments(
+int classification_of_objects_description::read_arguments(
 	int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;
 
-	cout << "projective_space_object_classifier_description::read_arguments" << endl;
+	cout << "classification_of_objects_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
-		cout << "projective_space_object_classifier_description::read_arguments, next argument is " << argv[i] << endl;
+		cout << "classification_of_objects_description::read_arguments, next argument is " << argv[i] << endl;
 
 		if (stringcmp(argv[i], "-label") == 0) {
 			f_label = TRUE;
@@ -101,11 +102,6 @@ int projective_space_object_classifier_description::read_arguments(
 			cout << "-fixed_structure_of_element_of_order "
 					<< fixed_structure_order_list[fixed_structure_order_list_sz] << endl;
 			fixed_structure_order_list_sz++;
-		}
-		else if (stringcmp(argv[i], "-report") == 0) {
-			f_report = TRUE;
-			report_prefix.assign(argv[++i]);
-			cout << "-report " << report_prefix << endl;
 		}
 
 		else if (stringcmp(argv[i], "-max_TDO_depth") == 0) {
@@ -185,17 +181,17 @@ int projective_space_object_classifier_description::read_arguments(
 		}
 
 		else {
-			cout << "projective_space_object_classifier_description::read_arguments "
+			cout << "classification_of_objects_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
 			exit(1);
 		}
-		cout << "projective_space_object_classifier_description::read_arguments looping, i=" << i << endl;
+		cout << "classification_of_objects_description::read_arguments looping, i=" << i << endl;
 	} // next i
-	cout << "projective_space_object_classifier_description::read_arguments done" << endl;
+	cout << "classification_of_objects_description::read_arguments done" << endl;
 	return i + 1;
 }
 
-void projective_space_object_classifier_description::print()
+void classification_of_objects_description::print()
 {
 
 	if (f_label) {
@@ -212,10 +208,10 @@ void projective_space_object_classifier_description::print()
 				<< fixed_structure_order_list[fixed_structure_order_list_sz] << endl;
 		fixed_structure_order_list_sz++;
 	}
-#endif
 	if (f_report) {
 		cout << "-report " << report_prefix << endl;
 	}
+#endif
 
 	if (f_max_TDO_depth) {
 		cout << "-max_TDO_depth " << max_TDO_depth << endl;

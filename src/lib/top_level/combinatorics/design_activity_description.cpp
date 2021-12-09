@@ -104,7 +104,7 @@ int design_activity_description::read_arguments(int argc, std::string *argv,
 				cout << "-canonical_form, reading extra arguments" << endl;
 			}
 
-			Canonical_form_Descr = NEW_OBJECT(projective_space_object_classifier_description);
+			Canonical_form_Descr = NEW_OBJECT(classification_of_objects_description);
 
 			i += Canonical_form_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 			if (f_v) {

@@ -52,6 +52,9 @@ void boolean_function_classify_reduction_function(int *poly, void *data);
 
 
 
+
+
+
 // #############################################################################
 // combinatorial_object_activity_description.cpp
 // #############################################################################
@@ -89,10 +92,13 @@ public:
 
 	int f_canonical_form_PG;
 	std::string canonical_form_PG_PG_label;
-	projective_space_object_classifier_description *Canonical_form_PG_Descr;
+	classification_of_objects_description *Canonical_form_PG_Descr;
 
 	int f_canonical_form;
-	projective_space_object_classifier_description *Canonical_form_Descr;
+	classification_of_objects_description *Canonical_form_Descr;
+
+	int f_report;
+	std::string report_prefix;
 
 
 	combinatorial_object_activity_description();
@@ -135,6 +141,36 @@ public:
 	void perform_activity_IS(int verbose_level);
 	void do_save(std::string &save_as_fname,
 			int f_extract, long int *extract_idx_set, int extract_size,
+			int verbose_level);
+	void post_process_classification(
+			classification_of_objects *CO,
+			object_with_properties *&OwP,
+			int verbose_level);
+	void classification_report(classification_of_objects *CO,
+			object_with_properties *OwP, int verbose_level);
+	void latex_report(
+			std::string &fname,
+			classification_of_objects *CO,
+			object_with_properties *OwP,
+			//std::string &prefix,
+			//int fixed_structure_order_list_sz,
+			//int *fixed_structure_order_list,
+			//int max_TDO_depth,
+			int verbose_level);
+	void report_all_isomorphism_types(
+			std::ostream &fp,
+			classification_of_objects *CO,
+			object_with_properties *OwP,
+			int verbose_level);
+	void report_isomorphism_type(
+			std::ostream &fp,
+			classification_of_objects *CO,
+			object_with_properties *OwP,
+			int i, int verbose_level);
+	void report_object(std::ostream &fp,
+			classification_of_objects *CO,
+			object_with_properties *OwP,
+			int object_idx,
 			int verbose_level);
 
 };
@@ -448,7 +484,7 @@ public:
 
 
 	int f_canonical_form;
-	projective_space_object_classifier_description *Canonical_form_Descr;
+	classification_of_objects_description *Canonical_form_Descr;
 
 	int f_extract_solutions_by_index_csv;
 	int f_extract_solutions_by_index_txt;
@@ -513,7 +549,7 @@ public:
 			std::string &H_generators_data,
 			int selected_orbit_length,
 			int verbose_level);
-	void do_canonical_form(projective_space_object_classifier_description *Canonical_form_Descr,
+	void do_canonical_form(classification_of_objects_description *Canonical_form_Descr,
 			int verbose_level);
 	void do_export_inc(
 			design_create *DC,
@@ -1289,6 +1325,42 @@ int large_set_was_design_test_orbit(long int *orbit, int orbit_length,
 		void *extra_data);
 int large_set_was_classify_test_pair_of_orbits(long int *orbit1, int orbit_length1,
 		long int *orbit2, int orbit_length2, void *extra_data);
+
+
+
+// #############################################################################
+// object_with_properties.cpp
+// #############################################################################
+
+//! object properties which are derived from nauty canonical form
+
+
+class object_with_properties {
+public:
+
+	object_with_canonical_form *OwCF;
+
+	nauty_output *NO;
+
+	strong_generators *SG;
+	action *A_perm;
+
+
+	object_with_properties();
+	~object_with_properties();
+	void init(object_with_canonical_form *OwCF,
+			nauty_output *NO, int verbose_level);
+	void init_object_in_projective_space(
+			object_with_canonical_form *OwCF,
+			nauty_output *NO,
+			projective_space_with_action *PA,
+			int verbose_level);
+	void latex_report(std::ostream &ost, int verbose_level);
+
+};
+
+
+
 
 
 // #############################################################################

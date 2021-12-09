@@ -366,7 +366,7 @@ void action::element_print_latex(
 	(*ptr->ptr_element_print_latex)(*this, elt, ost);
 }
 
-void action::element_print_latex_with_extras(void *elt, std::string &label, ostream &ost)
+void action::element_print_latex_with_extras(void *elt, std::string &label, std::ostream &ost)
 {
 	int *fp, n, ord;
 
@@ -382,6 +382,7 @@ void action::element_print_latex_with_extras(void *elt, std::string &label, ostr
 	ost << "$$" << endl << "of order $" << ord << "$ and with "
 			<< n << " fixed points." << endl;
 }
+
 
 void action::element_print_latex_with_print_point_function(
 	void *elt, std::ostream &ost,

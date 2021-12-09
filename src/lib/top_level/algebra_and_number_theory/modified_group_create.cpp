@@ -94,7 +94,8 @@ void modified_group_create::modified_group_init(
 		int nb_points;
 
 
-		Orbiter->get_lint_vector_from_label(Descr->restricted_action_set_text, points, nb_points, verbose_level);
+		Orbiter->get_lint_vector_from_label(Descr->restricted_action_set_text,
+				points, nb_points, verbose_level);
 
 		//Orbiter->Lint_vec.scan(Descr->restricted_action_set_text, points, nb_points);
 
