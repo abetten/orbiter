@@ -279,6 +279,11 @@ void poset_classification::init_internal(
 	Elt5 = Elt_memory + 4 * Poset->A->elt_size_in_int;
 	Elt6 = Elt_memory + 5 * Poset->A->elt_size_in_int;
 	
+
+	if (sz == 0) {
+		cout << "poset_classification::init_internal sz == 0" << endl;
+		exit(1);
+	}
 	transporter = NEW_OBJECT(vector_ge);
 	transporter->init(Poset->A, verbose_level - 2);
 	transporter->allocate(sz + 1, verbose_level - 2);

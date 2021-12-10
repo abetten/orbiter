@@ -328,7 +328,7 @@ void arc_generator::compute_starter(int verbose_level)
 	//else {
 		if (f_v) {
 			cout << "arc_generator::compute_starter "
-					"before generator_main" << endl;
+					"before gen->main" << endl;
 			cout << "arc_generator::compute_starter "
 					"problem_label_with_path=" << gen->get_problem_label_with_path() << endl;
 		}
@@ -336,7 +336,7 @@ void arc_generator::compute_starter(int verbose_level)
 			schreier_depth,
 			f_use_invariant_subset_if_available,
 			f_debug,
-			verbose_level - 2);
+			verbose_level);
 		if (f_v) {
 			cout << "arc_generator::compute_starter "
 					"after gen->main" << endl;
