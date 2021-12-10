@@ -343,6 +343,10 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 				Descr->set_stabilizer_fname_out,
 				verbose_level);
 	}
+	if (Descr->f_export_point_line_incidence_matrix) {
+
+		OA->O->export_incidence_matrix_to_csv(verbose_level);
+	}
 
 
 

@@ -57,6 +57,8 @@ orthogonal_space_activity_description::orthogonal_space_activity_description()
 	//std::string set_stabilizer_fname_out;
 
 
+	f_export_point_line_incidence_matrix = FALSE;
+
 
 }
 
@@ -196,6 +198,12 @@ int orthogonal_space_activity_description::read_arguments(
 						<< endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-export_point_line_incidence_matrix") == 0) {
+			f_export_point_line_incidence_matrix = TRUE;
+			if (f_v) {
+				cout << "-export_point_line_incidence_matrix " << endl;
+			}
+		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -262,6 +270,9 @@ void orthogonal_space_activity_description::print()
 				<< set_stabilizer_column_label << " "
 				<< set_stabilizer_fname_out << " "
 				<< endl;
+	}
+	if (f_export_point_line_incidence_matrix) {
+		cout << "-export_point_line_incidence_matrix " << endl;
 	}
 }
 

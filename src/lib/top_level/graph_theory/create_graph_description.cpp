@@ -87,6 +87,9 @@ create_graph_description::create_graph_description()
 	//std::string orbital_graph_group;
 	orbital_graph_orbit_idx = 0;
 
+	f_collinearity_graph = FALSE;
+	//std::string collinearity_graph_matrix;
+
 }
 
 
@@ -263,6 +266,16 @@ int create_graph_description::read_arguments(
 				cout << "-orbital_graph " << orbital_graph_group << " " << orbital_graph_orbit_idx << endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-collinearity_graph") == 0) {
+			f_collinearity_graph = TRUE;
+			collinearity_graph_matrix.assign(argv[++i]);
+			if (f_v) {
+				cout << "-collinearity_graph "
+						<< collinearity_graph_matrix << endl;
+			}
+		}
+
+
 
 		else if (M.check_and_parse_argument(
 				argc, i, argv,
@@ -348,6 +361,10 @@ void create_graph_description::print()
 	}
 	if (f_orbital_graph) {
 		cout << "-orbital_graph " << orbital_graph_group << " " << orbital_graph_orbit_idx << endl;
+	}
+	if (f_collinearity_graph) {
+		cout << "-collinearity_graph "
+				<< collinearity_graph_matrix << endl;
 	}
 
 	int i;

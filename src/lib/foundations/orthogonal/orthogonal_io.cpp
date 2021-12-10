@@ -603,6 +603,64 @@ void orthogonal::create_latex_report(int verbose_level)
 	}
 }
 
+void orthogonal::export_incidence_matrix_to_csv(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orthogonal::export_incidence_matrix_to_csv" << endl;
+	}
+
+
+	int N_points = nb_points;
+	int N_lines = nb_lines;
+
+	long int *line;
+
+	long int i, line_rk, h;
+	int *T;
+	file_io Fio;
+
+	line = NEW_lint(q + 1);
+	T = NEW_int(N_points * N_lines);
+	Orbiter->Int_vec.zero(T, N_points * N_lines);
+
+	for (line_rk = 0; line_rk < N_lines; line_rk++) {
+
+
+		points_on_line_by_line_rank(line_rk,
+				line, verbose_level);
+
+		for (h = 0; h < q + 1; h++) {
+			i = line[h];
+			T[i * N_lines + line_rk] = 1;
+		}
+	}
+	string fname;
+
+	make_fname_incidence_matrix_csv(fname);
+
+	Fio.int_matrix_write_csv(fname, T, N_points, N_lines);
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+	}
+
+	FREE_int(T);
+	FREE_lint(line);
+
+	if (f_v) {
+		cout << "orthogonal::export_incidence_matrix_to_csv done" << endl;
+	}
+}
+
+void orthogonal::make_fname_incidence_matrix_csv(std::string &fname)
+{
+	fname.assign(label_txt);
+	fname.append("_incidence_matrix.csv");
+}
+
+
 
 }}
 

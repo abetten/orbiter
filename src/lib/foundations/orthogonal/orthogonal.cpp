@@ -24,6 +24,9 @@ orthogonal::orthogonal()
 	f_even = FALSE;
 	form_c1 = form_c2 = form_c3 = 0;
 
+	//std::string label_txt;
+	//std::string label_tex;
+
 	Poly = NULL;
 	the_quadratic_form = NULL;
 	the_monomial = NULL;
@@ -320,11 +323,40 @@ void orthogonal::init(int epsilon, int n,
 	q = F->q;
 	m = Gg.Witt_index(epsilon, n - 1);
 
+	char str[1000];
+
+	if (epsilon == 1) {
+		sprintf(str, "Op_%d_%d", n, q);
+	}
+	else if (epsilon == -1) {
+		sprintf(str, "Om_%d_%d", n, q);
+	}
+	else if (epsilon == 0) {
+		sprintf(str, "O_%d_%d", n, q);
+	}
+
+	label_txt.assign(str);
+
+	if (epsilon == 1) {
+		sprintf(str, "O^+(%d,%d)", n, q);
+	}
+	else if (epsilon == -1) {
+		sprintf(str, "O^-(%d,%d)", n, q);
+	}
+	else if (epsilon == 0) {
+		sprintf(str, "O(%d,%d)", n, q);
+	}
+
+
+	label_tex.assign(str);
+
 	if (f_v) {
 		cout << "orthogonal::init: epsilon=" << epsilon
 			<< " n=" << n << " (= vector space dimension)"
 			<< " m=" << m << " (= Witt index)"
 			<< " q=" << q
+			<< " label_txt=" << label_txt
+			<< " label_tex=" << label_tex
 			<< " verbose_level=" << verbose_level
 			<< endl;
 	}

@@ -430,6 +430,8 @@ public:
 	void complement(int verbose_level);
 	void distance_2(int verbose_level);
 	void properties(int verbose_level);
+	int test_distinguishing_property(long int *set, int sz,
+			int verbose_level);
 
 };
 

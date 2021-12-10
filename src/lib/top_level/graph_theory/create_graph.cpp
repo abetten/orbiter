@@ -443,7 +443,34 @@ void create_graph::init(
 		}
 
 	}
+	else if (description->f_collinearity_graph) {
 
+
+
+		int idx;
+		vector_builder *VB;
+
+		idx = Orbiter->find_symbol(description->collinearity_graph_matrix);
+
+		symbol_table_object_type t;
+
+		t = Orbiter->get_object_type(idx);
+
+		if (t != t_vector) {
+			cout << "object must be of type vector, but is ";
+			Orbiter->print_type(t);
+			cout << endl;
+			exit(1);
+		}
+		VB = (vector_builder *) Orbiter->get_object(idx);
+
+		make_collinearity_graph(N, Adj,
+				VB->v, VB->k, VB->len / VB->k, verbose_level);
+			vector_builder_description *Descr;
+
+
+
+	}
 
 
 	if (description->f_subset) {
@@ -1361,6 +1388,45 @@ void create_graph::make_orbital_graph(int &N, int *&Adj,
 
 	if (f_v) {
 		cout << "create_graph::make_orbital_graph done" << endl;
+	}
+}
+
+void create_graph::make_collinearity_graph(int &N, int *&Adj,
+		int *Inc, int nb_rows, int nb_cols, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_graph::make_collinearity_graph" << endl;
+	}
+
+	N = nb_rows;
+	Adj = NEW_int(N * N);
+	Adj = NEW_int(N * N);
+	Orbiter->Int_vec.zero(Adj, N * N);
+
+	int j, i1, i2;
+
+	for (j = 0; j < nb_cols; j++) {
+		for (i1 = 0; i1 < nb_rows; i1++) {
+			if (Inc[i1 * nb_cols + j] == 0) {
+				continue;
+			}
+			for (i2 = i1 + 1; i2 < nb_rows; i2++) {
+				if (Inc[i2 * nb_cols + j] == 0) {
+					continue;
+				}
+				Adj[i1 * N + i2] = 1;
+				Adj[i2 * N + i1] = 1;
+			}
+		}
+	}
+
+	label.assign("collinearity_graph");
+	label_tex.assign("collinearity\\_graph");
+
+	if (f_v) {
+		cout << "create_graph::make_collinearity_graph done" << endl;
 	}
 }
 

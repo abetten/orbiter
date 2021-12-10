@@ -1444,6 +1444,7 @@ void symbol_definition::definition_of_graph(int verbose_level)
 	if (f_v) {
 		cout << "Gr->N=" << Gr->N << endl;
 		cout << "Gr->label=" << Gr->label << endl;
+		cout << "Gr->f_has_CG=" << Gr->f_has_CG << endl;
 		//cout << "Adj:" << endl;
 		//int_matrix_print(Gr->Adj, Gr->N, Gr->N);
 	}

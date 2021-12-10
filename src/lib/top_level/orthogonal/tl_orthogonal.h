@@ -278,6 +278,8 @@ public:
 	std::string set_stabilizer_column_label;
 	std::string set_stabilizer_fname_out;
 
+	int f_export_point_line_incidence_matrix;
+
 
 
 	orthogonal_space_activity_description();
