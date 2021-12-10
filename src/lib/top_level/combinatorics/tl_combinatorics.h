@@ -100,6 +100,9 @@ public:
 	int f_report;
 	std::string report_prefix;
 
+	int f_test_distinguishing_property;
+	std::string test_distinguishing_property_graph;
+
 
 	combinatorial_object_activity_description();
 	~combinatorial_object_activity_description();

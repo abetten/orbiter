@@ -49,6 +49,9 @@ combinatorial_object_activity_description::combinatorial_object_activity_descrip
 	f_report = FALSE;
 	//report_prefix
 
+	f_test_distinguishing_property = FALSE;
+	//test_distinguishing_property_graph
+
 }
 
 combinatorial_object_activity_description::~combinatorial_object_activity_description()
@@ -166,7 +169,11 @@ int combinatorial_object_activity_description::read_arguments(
 			report_prefix.assign(argv[++i]);
 			cout << "-report " << report_prefix << endl;
 		}
-
+		else if (stringcmp(argv[i], "-test_distinguishing_property") == 0) {
+			f_test_distinguishing_property = TRUE;
+			test_distinguishing_property_graph.assign(argv[++i]);
+			cout << "-test_distinguishing_property " << test_distinguishing_property_graph << endl;
+		}
 
 
 		else if (stringcmp(argv[i], "-end") == 0) {
@@ -219,6 +226,9 @@ void combinatorial_object_activity_description::print()
 	}
 	if (f_report) {
 		cout << "-report " << report_prefix << endl;
+	}
+	if (f_test_distinguishing_property) {
+		cout << "-test_distinguishing_property " << test_distinguishing_property_graph << endl;
 	}
 }
 

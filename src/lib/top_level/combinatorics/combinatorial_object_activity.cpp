@@ -421,6 +421,86 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 
 
 	}
+	else if (Descr->f_test_distinguishing_property) {
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_IS f_test_distinguishing_property" << endl;
+		}
+
+		int idx;
+
+		idx = Orbiter->find_symbol(Descr->test_distinguishing_property_graph);
+
+		symbol_table_object_type t;
+
+		t = Orbiter->get_object_type(idx);
+		if (t != t_graph) {
+			cout << "combinatorial_object_activity::perform_activity_IS "
+				<< Descr->test_distinguishing_property_graph << " is not of type graph" << endl;
+			exit(1);
+		}
+
+		//create_graph *Gr;
+		colored_graph *CG;
+
+		//Gr = (create_graph *) Orbiter->get_object(idx);
+		CG = (colored_graph *) Orbiter->get_object(idx);
+
+#if 0
+		if (!Gr->f_has_CG) {
+			cout << "combinatorial_object_activity::perform_activity_IS !Gr->f_has_CG" << endl;
+			exit(1);
+		}
+#endif
+		int input_idx;
+		int *F_distinguishing;
+
+		F_distinguishing = NEW_int(IS->Objects.size());
+
+
+		for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
+
+			object_with_canonical_form *OwCF;
+
+			OwCF = (object_with_canonical_form *) IS->Objects[input_idx];
+
+			F_distinguishing[input_idx] = CG->test_distinguishing_property(OwCF->set, OwCF->sz, verbose_level);
+		}
+
+		tally T;
+
+		T.init(F_distinguishing, IS->Objects.size(), FALSE, 0);
+		cout << "classification : ";
+		T.print_first(TRUE /* f_backwards*/);
+		cout << endl;
+
+		cout << "distinguishing sets are:";
+		for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
+			if (F_distinguishing[input_idx]) {
+				cout << input_idx << ", ";
+			}
+		}
+		cout << endl;
+
+		cout << "distinguishing sets are:";
+		for (input_idx = 0; input_idx < IS->Objects.size(); input_idx++) {
+			if (!F_distinguishing[input_idx]) {
+				continue;
+			}
+
+			object_with_canonical_form *OwCF;
+
+			OwCF = (object_with_canonical_form *) IS->Objects[input_idx];
+
+			OwCF->print(cout);
+
+		}
+		cout << endl;
+
+
+		FREE_int(F_distinguishing);
+
+	}
 	else if (Descr->f_save_as) {
 
 		if (f_v) {

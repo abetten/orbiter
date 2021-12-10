@@ -178,6 +178,9 @@ public:
 	std::string orbital_graph_group;
 	int orbital_graph_orbit_idx;
 
+	int f_collinearity_graph;
+	std::string collinearity_graph_matrix;
+
 	std::vector<graph_modification_description> Modifications;
 
 	create_graph_description();
@@ -233,6 +236,8 @@ public:
 			int epsilon, int d, int q, int verbose_level);
 	void make_orbital_graph(int &N, int *&Adj,
 			any_group *AG, int orbit_idx, int verbose_level);
+	void make_collinearity_graph(int &N, int *&Adj,
+			int *Inc, int nb_rows, int nb_cols, int verbose_level);
 
 };
 

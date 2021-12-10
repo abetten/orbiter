@@ -149,6 +149,9 @@ public:
 	int f_even;
 	int form_c1, form_c2, form_c3;
 
+	std::string label_txt;
+	std::string label_tex;
+
 	homogeneous_polynomial_domain *Poly;
 	int *the_quadratic_form;
 	int *the_monomial;
@@ -455,7 +458,8 @@ public:
 	void report_schemes(std::ostream &ost, int verbose_level);
 	void report_schemes_easy(std::ostream &ost);
 	void create_latex_report(int verbose_level);
-
+	void export_incidence_matrix_to_csv(int verbose_level);
+	void make_fname_incidence_matrix_csv(std::string &fname);
 
 	// orthogonal_parabolic.cpp:
 	int parabolic_type_and_index_to_point_rk(int type,

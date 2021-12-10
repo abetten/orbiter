@@ -3632,6 +3632,51 @@ void colored_graph::properties(int verbose_level)
 	}
 }
 
+int colored_graph::test_distinguishing_property(long int *set, int sz,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_distinguishing = FALSE;
+	int *neighbor_set;
+
+	if (f_v) {
+		cout << "colored_graph::test_distinguishing_property" << endl;
+	}
+
+	int N;
+	int i, j, n, h;
+
+	N = 1 << sz;
+
+	neighbor_set = NEW_int(N);
+	Orbiter->Int_vec.zero(neighbor_set, N);
+	for (i = 0; i < nb_points; i++) {
+		n = 0;
+		for (h = 0; h < sz; h++) {
+			n <<= 1;
+			j = set[h];
+			if (is_adjacent(i, j)) {
+				n++;
+			}
+		}
+		if (n == 0) {
+			FREE_int(neighbor_set);
+			return FALSE;
+		}
+		if (neighbor_set[n]) {
+			FREE_int(neighbor_set);
+			return FALSE;
+		}
+		neighbor_set[n] = TRUE;
+	}
+	f_distinguishing = TRUE;
+
+	if (f_v) {
+		cout << "colored_graph::test_distinguishing_property done" << endl;
+	}
+	return f_distinguishing;
+}
+
 // #############################################################################
 // global functions:
 // #############################################################################

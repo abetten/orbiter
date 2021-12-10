@@ -42,6 +42,7 @@ graph_theoretic_activity_description::graph_theoretic_activity_description()
 	f_save = FALSE;
 	f_automorphism_group = FALSE;
 	f_properties = FALSE;
+
 }
 
 graph_theoretic_activity_description::~graph_theoretic_activity_description()
