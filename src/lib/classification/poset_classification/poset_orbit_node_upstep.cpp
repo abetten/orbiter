@@ -329,7 +329,26 @@ int poset_orbit_node::trace_next_point_wrapper(
 	
 	if (f_v) {
 		cout << "poset_orbit_node::trace_next_point_wrapper" << endl;
+		cout << "poset_orbit_node::trace_next_point_wrapper current_node = " << current_node << endl;
+		cout << "poset_orbit_node::trace_next_point_wrapper len = " << len << endl;
+		cout << "poset_orbit_node::trace_next_point_wrapper lvl = " << lvl << endl;
+		cout << "poset_orbit_node::trace_next_point_wrapper gen->get_transporter()->len = " << gen->get_transporter()->len << endl;
+	}
+
+	int *transporter_lvl;
+	if (f_v) {
+		cout << "poset_orbit_node::trace_next_point_wrapper setting transporter_lvl" << endl;
+	}
+	transporter_lvl = gen->get_transporter()->ith(lvl);
+
+	int *transporter_lvlp1;
+
+	if (f_v) {
+		cout << "poset_orbit_node::trace_next_point_wrapper "
+				"before trace_next_point setting transporter_lvlp1" << endl;
 		}
+	transporter_lvlp1 = gen->get_transporter()->ith(lvl + 1);
+
 	if (f_v) {
 		cout << "poset_orbit_node::trace_next_point_wrapper "
 				"before trace_next_point" << endl;
@@ -340,8 +359,8 @@ int poset_orbit_node::trace_next_point_wrapper(
 		len + 1,
 		gen->get_set_i(lvl),
 		gen->get_set_i(lvl + 1),
-		gen->get_transporter()->ith(lvl),
-		gen->get_transporter()->ith(lvl + 1),
+		transporter_lvl,
+		transporter_lvlp1,
 		f_implicit_fusion,
 		f_failure_to_find_point,
 		verbose_level);

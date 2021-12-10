@@ -5176,9 +5176,9 @@ Hirschfeld_q4_c: Hirschfeld_surface_q4.txt
 			-canonical_form_PG P \
 				-classification_prefix Hirschfeld_surface_q4 \
 				-save_ago \
-				-report -end \
 				-max_TDO_depth 10 \
 			-end \
+			-report \
 		-end
 	pdflatex Hirschfeld_surface_q4_classification.tex
 	open Hirschfeld_surface_q4_classification.pdf
@@ -5235,7 +5235,8 @@ Dickson_sets_stabilizer:
 			-canonical_form_PG P \
 			-classification_prefix Dickson_sets \
 			-save_ago \
-			-report -end \
+			-end \
+			-report \
 		-end
 	pdflatex Dickson_sets_classification.tex
 	open Dickson_sets_classification.pdf
@@ -5254,7 +5255,8 @@ Endrass_7c: Endrass_F7.txt
 			-canonical_form_PG P \
 			-classification_prefix Endrass_F7 \
 			-save_ago \
-			-report -end \
+			-end \
+			-report \
 		-end
 	pdflatex Endrass_F7_classification.tex
 	open Endrass_F7_classification.pdf
@@ -5556,9 +5558,9 @@ hyperoval_16_c:
 			-canonical_form_PG P \
 				-classification_prefix hyperoval_q16 \
 				-save_ago \
-				-report -end \
 				-max_TDO_depth 10 \
 			-end \
+			-report \
 		-end
 	pdflatex hyperoval_q16_classification.tex
 	open hyperoval_q16_classification.pdf
@@ -5938,9 +5940,9 @@ cubic_curves_PG_2_8_canon:
 			-canonical_form_PG P \
 				-classification_prefix cc_8 \
 				-save_ago \
-				-report -end \
 				-max_TDO_depth 10 \
 			-end \
+			-report \
 		-end
 	pdflatex cc_8_classification.tex
 	open cc_8_classification.pdf
@@ -6912,32 +6914,6 @@ quartic_curves_q13_classify:
 #0 : 24
 #1 : 48
 
-
-# ToDo:
-
-quartic_curves_13_classify_nauty: 
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-csv_file_extract_column_to_txt \
-		surface_catalogue_q13_iso0_quartics.csv "pts" 
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-csv_file_extract_column_to_txt \
-		surface_catalogue_q13_iso1_quartics.csv "pts" 
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 13 -end \
-		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-		-input \
-			-file_of_points surface_catalogue_q13_iso0_quartics_pts.txt \
-			-file_of_points surface_catalogue_q13_iso1_quartics_pts.txt \
-		-end \
-		-classification_prefix quartic_q13 \
-		-report \
-		-end \
-		-end
-	pdflatex quartic_q13_classification.tex
-	open quartic_q13_classification.pdf
 
 
 NB_CUBIC_SURFACES_Q17=7
@@ -11595,20 +11571,21 @@ geo_10_3_tree:
 
 
 geo_10_3_c:
-	$(ORBITER_PATH)orbiter.out -v 2 \
+	$(ORBITER_PATH)orbiter.out -v 20 \
 		-draw_incidence_structure_description \
-			-width 50 -with_10 5 -end \
+			-width 60 -with_10 6 -end \
 		-define C -combinatorial_objects \
 			-file_of_incidence_geometries 10_3.inc 10 10 30 \
 		-end \
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form \
-			-classification_prefix 10_3 \
-			-label 10_3 \
-			-save_ago \
-			-save_transversal \
-			-report -end \
+				-classification_prefix 10_3 \
+				-label 10_3 \
+				-save_ago \
+				-save_transversal \
+			-end \
+			-report \
 		-end
 	pdflatex 10_3_classification.tex
 	open 10_3_classification.pdf
@@ -11806,10 +11783,11 @@ geo_40_4_g4_c:
 		-with C -do \
 		-combinatorial_object_activity \
 			-canonical_form \
-			-classification_prefix 40_4_g4 \
-			-label 40_4_g4 \
-			-save_ago \
-			-report -end \
+				-classification_prefix 40_4_g4 \
+				-label 40_4_g4 \
+				-save_ago \
+			-end \
+			-report \
 		-end
 	pdflatex 40_4_g4_classification.tex
 	open 40_4_g4_classification.pdf
@@ -12267,6 +12245,7 @@ LS_AG_2_3_solutions_classify:
 			-canonical_form \
 			-save_ago \
 			-classification_prefix large_sets_of_AG_2_3 \
+			-end \
 			-report "classification_" \
 		-end
 	pdflatex large_sets_of_AG_2_3_classification.tex
@@ -12390,7 +12369,8 @@ design_27c:
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
 			-classification_prefix design \
-			-report -end \
+			-end \
+			-report \
 		-end
 	pdflatex design_classification.tex
 	open design_classification.pdf
@@ -12781,7 +12761,8 @@ PG_3_5_assume_31_classify:
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
 			-classification_prefix H31_packings \
-			-report -end \
+			-end \
+			-report \
 			-end
 	pdflatex H31_packings_classification.tex
 	open H31_packings_classification.pdf

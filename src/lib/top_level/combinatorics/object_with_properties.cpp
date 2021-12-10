@@ -138,23 +138,23 @@ void object_with_properties::latex_report(std::ostream &ost, int verbose_level)
 
 
 	if (f_v) {
-		cout << "combinatorial_object_activity::report_isomorphism_type before orbits_on_points_schreier" << endl;
+		cout << "object_with_properties::latex_report before orbits_on_points_schreier" << endl;
 	}
 	Sch = A_perm->Strong_gens->orbits_on_points_schreier(A_perm,
 			verbose_level);
 	if (f_v) {
-		cout << "combinatorial_object_activity::report_isomorphism_type after orbits_on_points_schreier" << endl;
+		cout << "object_with_properties::latex_report after orbits_on_points_schreier" << endl;
 	}
 
 
 	ost << "Decomposition by automorphism group:\\\\" << endl;
 
 	if (f_v) {
-		cout << "combinatorial_object_activity::report_isomorphism_type before Sch->print_TDA" << endl;
+		cout << "object_with_properties::latex_report before Sch->print_TDA" << endl;
 	}
 	Sch->print_TDA(ost, OwCF, verbose_level);
 	if (f_v) {
-		cout << "combinatorial_object_activity::report_isomorphism_type after Sch->print_TDA" << endl;
+		cout << "object_with_properties::latex_report after Sch->print_TDA" << endl;
 	}
 
 	ost << "Canonical labeling:\\\\" << endl;
@@ -214,6 +214,10 @@ void object_with_properties::latex_report(std::ostream &ost, int verbose_level)
 	delete [] block_labels;
 
 	FREE_OBJECT(Enc);
+
+	if (f_v) {
+		cout << "object_with_properties::latex_report done" << endl;
+	}
 
 }
 
