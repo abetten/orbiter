@@ -239,9 +239,9 @@ static void print_matrix(MINDIST *MD, int **G)
 
 
 static int min_weight(MINDIST *MD)
-//calculate minimum-weight of code created by generatormatrix G.
-//Main routine, loop with the two bounds (upper and lower) 
-//for the minimum distance. 
+// Calculate the minimum-weight of the code which is created by the generator matrix G.
+// Main routine, loop with the two bounds (upper and lower)
+// for the minimum distance.
 {
 	int n = MD->n;
 	int k = MD->k;
@@ -500,8 +500,9 @@ static void create_systematic_generator_matrices(MINDIST *MD)
 				}
 			}
 		if (P + K >= n || K == 0) {
-			if (K == 0)
+			if (K == 0) {
 				MD->ZC = n - P; /* number of zero columns in G */
+			}
 			break;
 			}
 		else {
@@ -511,9 +512,11 @@ static void create_systematic_generator_matrices(MINDIST *MD)
 		M++;
 		/*        find first column P+1      */ 
 		MD->S[M] = (int **)calloc(k+2,sizeof(int *));
-			for (i = 1; i <= k; i++) {
-				MD->S[M][i] = (int *)calloc(n+2,sizeof(int));
-			}
+
+		for (i = 1; i <= k; i++) {
+			MD->S[M][i] = (int *)calloc(n+2,sizeof(int));
+		}
+
 		/*   S[M] :=  S[M-1] */
 		for (i = 1; i <= k; i++) {
 			for (j = 1; j <= n; j++) {
@@ -521,6 +524,7 @@ static void create_systematic_generator_matrices(MINDIST *MD)
 			}
 		}
 	} /* infinite loop */
+
 	if (MD->f_v) {
 		//printf("M = %d\n", M);
 		//printf("ZC = %d\n", MD->ZC);

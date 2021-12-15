@@ -18,357 +18,6 @@ namespace foundations {
 
 
 
-void finite_field::make_all_irreducible_polynomials_of_degree_d(
-		int d, std::vector<std::vector<int> > &Table,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int i;
-	int cnt;
-	number_theory_domain NT;
-
-	if (f_v) {
-		cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
-				"d=" << d << " q=" << q << endl;
-		cout << "verbose_level=" << verbose_level << endl;
-	}
-
-#if 0
-	cnt = count_all_irreducible_polynomials_of_degree_d(F, d, verbose_level - 2);
-
-	if (f_v) {
-		cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
-				"cnt = " << cnt << endl;
-	}
-
-	nb = cnt;
-
-	Table = NEW_int(nb * (d + 1));
-#endif
-
-	//NT.factor_prime_power(F->q, p, e);
-
-	if (f_v) {
-		cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
-				" q=" << q << " p=" << p << " e=" << e << endl;
-	}
-
-	unipoly_domain FX(this);
-
-	const char *poly;
-	algebra_global Algebra;
-
-	poly = Algebra.get_primitive_polynomial(q, d, 0 /* verbose_level */);
-
-	if (f_v) {
-		cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
-				"chosen irreducible polynomial is " << poly << endl;
-	}
-
-	unipoly_object m;
-	unipoly_object g;
-	unipoly_object minpol;
-	combinatorics_domain Combi;
-
-
-	FX.create_object_by_rank_string(m, poly, 0 /* verbose_level */);
-
-	if (f_v) {
-		cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
-				"chosen irreducible polynomial m = ";
-		FX.print_object(m, cout);
-		cout << endl;
-	}
-
-	FX.create_object_by_rank(g, 0, __FILE__, __LINE__, 0 /* verbose_level */);
-	FX.create_object_by_rank(minpol, 0, __FILE__, __LINE__, 0 /* verbose_level */);
-
-	int *Frobenius;
-	int *Normal_basis;
-	int *v;
-	int *w;
-
-	//Frobenius = NEW_int(d * d);
-	Normal_basis = NEW_int(d * d);
-	v = NEW_int(d);
-	w = NEW_int(d);
-
-	if (f_v) {
-		cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
-				"before FX.Frobenius_matrix" << endl;
-	}
-	FX.Frobenius_matrix(Frobenius, m, verbose_level - 2);
-	if (f_v) {
-		cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
-				"Frobenius_matrix = " << endl;
-		Orbiter->Int_vec.matrix_print(Frobenius, d, d);
-		cout << endl;
-	}
-
-	if (f_v) {
-		cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
-				"before compute_normal_basis" << endl;
-	}
-	FX.compute_normal_basis(d, Normal_basis, Frobenius, verbose_level - 1);
-
-	if (f_v) {
-		cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
-				"Normal_basis = " << endl;
-		Orbiter->Int_vec.matrix_print(Normal_basis, d, d);
-		cout << endl;
-	}
-
-	cnt = 0;
-
-	Combi.int_vec_first_regular_word(v, d, q);
-	while (TRUE) {
-		if (f_vv) {
-			cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
-					"regular word " << cnt << " : v = ";
-			Orbiter->Int_vec.print(cout, v, d);
-			cout << endl;
-		}
-
-		mult_vector_from_the_right(Normal_basis, v, w, d, d);
-		if (f_vv) {
-			cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
-					"regular word " << cnt << " : w = ";
-			Orbiter->Int_vec.print(cout, w, d);
-			cout << endl;
-		}
-
-		FX.delete_object(g);
-		FX.create_object_of_degree(g, d - 1);
-		for (i = 0; i < d; i++) {
-			((int *) g)[1 + i] = w[i];
-		}
-
-		FX.minimum_polynomial_extension_field(g, m, minpol, d, Frobenius,
-				verbose_level - 3);
-		if (f_vv) {
-			cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
-					"regular word " << cnt << " : v = ";
-			Orbiter->Int_vec.print(cout, v, d);
-			cout << " irreducible polynomial = ";
-			FX.print_object(minpol, cout);
-			cout << endl;
-		}
-
-
-
-		std::vector<int> T;
-
-		for (i = 0; i <= d; i++) {
-			T.push_back(((int *)minpol)[1 + i]);
-			//Table[cnt * (d + 1) + i] = ((int *)minpol)[1 + i];
-		}
-		Table.push_back(T);
-
-
-		cnt++;
-
-
-		if (!Combi.int_vec_next_regular_word(v, d, q)) {
-			break;
-		}
-
-	}
-
-	if (f_v) {
-		cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
-				"there are " << cnt
-				<< " irreducible polynomials "
-				"of degree " << d << " over " << "F_" << q << endl;
-	}
-
-	FREE_int(Frobenius);
-	FREE_int(Normal_basis);
-	FREE_int(v);
-	FREE_int(w);
-	FX.delete_object(m);
-	FX.delete_object(g);
-	FX.delete_object(minpol);
-
-
-	if (f_v) {
-		cout << "finite_field::make_all_irreducible_polynomials_of_degree_d "
-				"d=" << d << " q=" << q << " done" << endl;
-	}
-}
-
-int finite_field::count_all_irreducible_polynomials_of_degree_d(int d, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int i;
-	int cnt;
-	number_theory_domain NT;
-	combinatorics_domain Combi;
-
-	if (f_v) {
-		cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
-				"d=" << d << " q=" << q << endl;
-	}
-
-
-	if (f_v) {
-		cout << "finite_field::count_all_irreducible_polynomials_of_degree_d " << endl;
-	}
-
-	if (f_v) {
-		cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
-				"p=" << p << " e=" << e << endl;
-	}
-	if (e > 1) {
-		cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
-				"e=" << e << " is greater than one" << endl;
-	}
-
-	unipoly_domain FX(this);
-
-	const char *poly;
-	algebra_global Algebra;
-
-	poly = Algebra.get_primitive_polynomial(q, d, 0 /* verbose_level */);
-
-	unipoly_object m;
-	unipoly_object g;
-	unipoly_object minpol;
-
-
-	FX.create_object_by_rank_string(m, poly, 0 /* verbose_level */);
-
-	if (f_v) {
-		cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
-				"chosen irreducible polynomial m = ";
-		FX.print_object(m, cout);
-		cout << endl;
-	}
-
-	FX.create_object_by_rank(g, 0, __FILE__, __LINE__, 0 /* verbose_level */);
-	FX.create_object_by_rank(minpol, 0, __FILE__, __LINE__, 0 /* verbose_level */);
-
-	int *Frobenius;
-	//int *F2;
-	int *Normal_basis;
-	int *v;
-	int *w;
-
-	//Frobenius = NEW_int(d * d);
-	//F2 = NEW_int(d * d);
-	Normal_basis = NEW_int(d * d);
-	v = NEW_int(d);
-	w = NEW_int(d);
-
-	FX.Frobenius_matrix(Frobenius, m, verbose_level - 3);
-	if (f_v) {
-		cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
-				"Frobenius_matrix = " << endl;
-		Orbiter->Int_vec.matrix_print(Frobenius, d, d);
-		cout << endl;
-	}
-
-#if 0
-	F->mult_matrix_matrix(Frobenius, Frobenius, F2, d, d, d,
-			0 /* verbose_level */);
-	if (f_v) {
-		cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
-				"Frobenius^2 = " << endl;
-		int_matrix_print(F2, d, d);
-		cout << endl;
-	}
-#endif
-
-	FX.compute_normal_basis(d, Normal_basis, Frobenius, verbose_level - 3);
-
-	if (f_v) {
-		cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
-				"Normal_basis = " << endl;
-		Orbiter->Int_vec.matrix_print(Normal_basis, d, d);
-		cout << endl;
-	}
-
-	cnt = 0;
-	Combi.int_vec_first_regular_word(v, d, q);
-	while (TRUE) {
-		if (f_vv) {
-			cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
-					"regular word " << cnt << " : v = ";
-			Orbiter->Int_vec.print(cout, v, d);
-			cout << endl;
-		}
-
-		mult_vector_from_the_right(Normal_basis, v, w, d, d);
-		if (f_vv) {
-			cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
-					"regular word " << cnt << " : w = ";
-			Orbiter->Int_vec.print(cout, w, d);
-			cout << endl;
-		}
-
-		FX.delete_object(g);
-		FX.create_object_of_degree(g, d - 1);
-		for (i = 0; i < d; i++) {
-			((int *) g)[1 + i] = w[i];
-		}
-
-		FX.minimum_polynomial_extension_field(g, m, minpol, d,
-				Frobenius, verbose_level - 3);
-		if (f_vv) {
-			cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
-					"regular word " << cnt << " : v = ";
-			Orbiter->Int_vec.print(cout, v, d);
-			cout << " irreducible polynomial = ";
-			FX.print_object(minpol, cout);
-			cout << endl;
-		}
-		if (FX.degree(minpol) != d) {
-			cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
-					"The polynomial does not have degree d"
-					<< endl;
-			FX.print_object(minpol, cout);
-			cout << endl;
-			exit(1);
-		}
-		if (!FX.is_irreducible(minpol, verbose_level)) {
-			cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
-					"The polynomial is not irreducible" << endl;
-			FX.print_object(minpol, cout);
-			cout << endl;
-			exit(1);
-		}
-
-
-		cnt++;
-
-		if (!Combi.int_vec_next_regular_word(v, d, q)) {
-			break;
-		}
-
-	}
-
-	if (f_v) {
-		cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "
-				"there are " << cnt << " irreducible polynomials "
-				"of degree " << d << " over " << "F_" << q << endl;
-	}
-
-	FREE_int(Frobenius);
-	//FREE_int(F2);
-	FREE_int(Normal_basis);
-	FREE_int(v);
-	FREE_int(w);
-	FX.delete_object(m);
-	FX.delete_object(g);
-	FX.delete_object(minpol);
-
-	if (f_v) {
-		cout << "finite_field::count_all_irreducible_polynomials_of_degree_d done" << endl;
-	}
-	return cnt;
-}
-
 void finite_field::polynomial_division(
 		std::string &A_coeffs, std::string &B_coeffs,
 		int verbose_level)
@@ -535,7 +184,8 @@ void finite_field::extended_gcd_for_polynomials(
 
 
 	if (f_v) {
-		cout << "finite_field::extended_gcd_for_polynomials before FX.extended_gcd" << endl;
+		cout << "finite_field::extended_gcd_for_polynomials "
+				"before FX.extended_gcd" << endl;
 	}
 
 	{
@@ -545,7 +195,8 @@ void finite_field::extended_gcd_for_polynomials(
 	}
 
 	if (f_v) {
-		cout << "finite_field::extended_gcd_for_polynomials after FX.extended_gcd" << endl;
+		cout << "finite_field::extended_gcd_for_polynomials "
+				"after FX.extended_gcd" << endl;
 	}
 
 	if (f_v) {
@@ -891,15 +542,14 @@ void finite_field::compute_normal_basis(int d, int verbose_level)
 
 
 void finite_field::do_nullspace(
-		int m, int n, std::string &text,
+		int *M, int m, int n,
 		int f_normalize_from_the_left, int f_normalize_from_the_right,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int *M;
 	int *A;
 	int *base_cols;
-	int len, rk, i, rk1;
+	int rk, i, rk1;
 
 	latex_interface Li;
 
@@ -907,18 +557,6 @@ void finite_field::do_nullspace(
 		cout << "finite_field::do_nullspace" << endl;
 	}
 
-
-	Orbiter->Int_vec.scan(text, M, len);
-	if (len != m * n) {
-		cout << "number of coordinates received differs from m * n" << endl;
-		cout << "received " << len << endl;
-		exit(1);
-	}
-
-	if (m > n) {
-		cout << "nullspace needs m < n" << endl;
-		exit(1);
-	}
 
 	A = NEW_int(n * n);
 	base_cols = NEW_int(n);
@@ -1079,7 +717,6 @@ void finite_field::do_nullspace(
 
 
 
-	FREE_int(M);
 	FREE_int(A);
 	FREE_int(base_cols);
 
@@ -1089,29 +726,20 @@ void finite_field::do_nullspace(
 }
 
 void finite_field::do_RREF(
-		int m, int n, std::string &text,
+		int *M, int m, int n,
 		int f_normalize_from_the_left, int f_normalize_from_the_right,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int *M;
 	int *A;
 	int *base_cols;
-	int len, rk, i;
+	int rk, i;
 	latex_interface Li;
 
 	if (f_v) {
-		cout << "do_RREF" << endl;
+		cout << "finite_field::do_RREF" << endl;
 	}
 
-
-	Orbiter->Int_vec.scan(text, M, len);
-	if (len != m * n) {
-		cout << "finite_field::do_RREF "
-				"number of coordinates received differs from m * n" << endl;
-		cout << "received " << len << endl;
-		exit(1);
-	}
 
 
 	A = NEW_int(n * n);
@@ -1125,7 +753,7 @@ void finite_field::do_RREF(
 
 
 	if (f_v) {
-		cout << "after RREF:" << endl;
+		cout << "finite_field::do_RREF after RREF:" << endl;
 		Orbiter->Int_vec.matrix_print(A, rk, n);
 		cout << "rk=" << rk << endl;
 
@@ -1179,7 +807,6 @@ void finite_field::do_RREF(
 
 
 
-	FREE_int(M);
 	FREE_int(A);
 	FREE_int(base_cols);
 
@@ -1188,263 +815,6 @@ void finite_field::do_RREF(
 	}
 }
 
-void finite_field::apply_Walsh_Hadamard_transform(
-		std::string &fname_csv_in, int n, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "finite_field::apply_Walsh_Hadamard_transform" << endl;
-	}
-
-
-	boolean_function_domain *BF;
-
-	BF = NEW_OBJECT(boolean_function_domain);
-
-	BF->init(n, verbose_level);
-
-
-	file_io Fio;
-	int *M;
-	int m, nb_cols;
-	int len;
-	string fname_csv_out;
-	string_tools ST;
-
-	fname_csv_out.assign(fname_csv_in);
-	ST.chop_off_extension(fname_csv_out);
-	fname_csv_out.append("_transformed.csv");
-
-	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
-	len = m * nb_cols;
-	if (len != BF->Q) {
-		cout << "finite_field::apply_Walsh_Hadamard_transform len != BF->Q" << endl;
-		exit(1);
-	}
-	BF->raise(M, BF->F);
-
-	BF->apply_Walsh_transform(BF->F, BF->T);
-
-	cout << " : ";
-	Orbiter->Int_vec.print(cout, BF->T, BF->Q);
-	cout << endl;
-
-	if (EVEN(n)) {
-		if (BF->is_bent(BF->T)) {
-			cout << "is bent" << endl;
-		}
-		else {
-			cout << "is not bent" << endl;
-		}
-	}
-	else {
-		if (BF->is_near_bent(BF->T)) {
-			cout << "is near bent" << endl;
-		}
-		else {
-			cout << "is not near bent" << endl;
-		}
-
-	}
-	Fio.int_matrix_write_csv(fname_csv_out, BF->T, m, nb_cols);
-	cout << "written file " << fname_csv_out << " of size "
-			<< Fio.file_size(fname_csv_out) << endl;
-
-	FREE_int(M);
-	FREE_OBJECT(BF);
-
-	if (f_v) {
-		cout << "finite_field::apply_Walsh_Hadamard_transform done" << endl;
-	}
-}
-
-void finite_field::algebraic_normal_form(
-		std::string &fname_csv_in, int n, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "finite_field::algebraic_normal_form" << endl;
-	}
-
-
-	boolean_function_domain *BF;
-
-	BF = NEW_OBJECT(boolean_function_domain);
-
-	if (f_v) {
-		cout << "finite_field::algebraic_normal_form before BF->init" << endl;
-	}
-	BF->init(n, verbose_level);
-	if (f_v) {
-		cout << "finite_field::algebraic_normal_form after BF->init" << endl;
-	}
-
-
-	file_io Fio;
-	int *M;
-	int m, nb_cols;
-	int len;
-	string fname_csv_out;
-	string_tools ST;
-
-	fname_csv_out.assign(fname_csv_in);
-	ST.chop_off_extension(fname_csv_out);
-	fname_csv_out.append("_alg_normal_form.csv");
-
-	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
-	len = m * nb_cols;
-	if (len != BF->Q) {
-		cout << "finite_field::algebraic_normal_form len != BF->Q" << endl;
-		exit(1);
-	}
-
-	int *coeff;
-	int nb_coeff;
-
-	nb_coeff = BF->Poly[n].get_nb_monomials();
-
-	coeff = NEW_int(nb_coeff);
-
-	if (f_v) {
-		cout << "finite_field::algebraic_normal_form before BF->compute_polynomial_representation" << endl;
-	}
-	BF->compute_polynomial_representation(M, coeff, verbose_level);
-	if (f_v) {
-		cout << "finite_field::algebraic_normal_form after BF->compute_polynomial_representation" << endl;
-	}
-
-	cout << "algebraic normal form:" << endl;
-	BF->Poly[n].print_equation(cout, coeff);
-	cout << endl;
-
-	cout << "algebraic normal form in tex:" << endl;
-	BF->Poly[n].print_equation_tex(cout, coeff);
-	cout << endl;
-
-	cout << "algebraic normal form in numerical form:" << endl;
-	BF->Poly[n].print_equation_numerical(cout, coeff);
-	cout << endl;
-
-
-
-	Fio.int_matrix_write_csv(fname_csv_out, coeff, 1, nb_coeff);
-	cout << "written file " << fname_csv_out << " of size "
-			<< Fio.file_size(fname_csv_out) << endl;
-
-	FREE_int(M);
-	FREE_OBJECT(BF);
-
-	if (f_v) {
-		cout << "finite_field::algebraic_normal_form done" << endl;
-	}
-}
-
-void finite_field::apply_trace_function(
-		std::string &fname_csv_in, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "finite_field::apply_trace_function" << endl;
-	}
-
-
-	file_io Fio;
-	int *M;
-	int m, nb_cols;
-	int len, i;
-	string fname_csv_out;
-	string_tools ST;
-
-	fname_csv_out.assign(fname_csv_in);
-	ST.chop_off_extension(fname_csv_out);
-	fname_csv_out.append("_trace.csv");
-
-	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
-	len = m * nb_cols;
-	for (i = 0; i < len; i++) {
-		M[i] = absolute_trace(M[i]);
-	}
-	Fio.int_matrix_write_csv(fname_csv_out, M, m, nb_cols);
-
-	FREE_int(M);
-
-	if (f_v) {
-		cout << "finite_field::apply_trace_function done" << endl;
-	}
-}
-
-void finite_field::apply_power_function(
-		std::string &fname_csv_in, long int d, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "finite_field::apply_power_function" << endl;
-	}
-
-
-	file_io Fio;
-	int *M;
-	int m, nb_cols;
-	int len, i;
-	string fname_csv_out;
-	string_tools ST;
-
-	fname_csv_out.assign(fname_csv_in);
-	ST.chop_off_extension(fname_csv_out);
-
-	char str[1000];
-
-	sprintf(str, "_power_%ld.csv", d);
-	fname_csv_out.append(str);
-
-	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
-	len = m * nb_cols;
-	for (i = 0; i < len; i++) {
-		M[i] = power(M[i], d);
-	}
-	Fio.int_matrix_write_csv(fname_csv_out, M, m, nb_cols);
-	cout << "written file " << fname_csv_out << " of size "
-			<< Fio.file_size(fname_csv_out) << endl;
-
-	FREE_int(M);
-
-	if (f_v) {
-		cout << "finite_field::apply_power_function done" << endl;
-	}
-}
-
-void finite_field::identity_function(
-		std::string &fname_csv_out, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "finite_field::identity_function" << endl;
-	}
-
-
-	file_io Fio;
-	int *M;
-	int i;
-
-	M = NEW_int(q);
-	for (i = 0; i < q; i++) {
-		M[i] = i;
-	}
-	Fio.int_matrix_write_csv(fname_csv_out, M, 1, q);
-	cout << "written file " << fname_csv_out << " of size "
-			<< Fio.file_size(fname_csv_out) << endl;
-
-	FREE_int(M);
-
-	if (f_v) {
-		cout << "finite_field::identity_function done" << endl;
-	}
-}
 
 void finite_field::do_trace(int verbose_level)
 {
@@ -1670,123 +1040,6 @@ void finite_field::do_cheat_sheet_GF(int verbose_level)
 }
 
 
-void finite_field::do_make_table_of_irreducible_polynomials(int deg, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "finite_field::do_make_table_of_irreducible_polynomials" << endl;
-		cout << "deg=" << deg << endl;
-		cout << "q=" << q << endl;
-	}
-
-	int nb;
-	std::vector<std::vector<int>> Table;
-
-	make_all_irreducible_polynomials_of_degree_d(deg,
-			Table, verbose_level);
-
-	nb = Table.size();
-
-	cout << "The " << nb << " irreducible polynomials of "
-			"degree " << deg << " over F_" << q << " are:" << endl;
-
-	Orbiter->Int_vec.vec_print(Table);
-
-
-	int *T;
-	int i, j;
-
-	T = NEW_int(Table.size() * (deg + 1));
-	for (i = 0; i < Table.size(); i++) {
-		for (j = 0; j < deg + 1; j++) {
-			T[i * (deg + 1) + j] = Table[i][j];
-		}
-	}
-
-
-
-	{
-		char str[1000];
-		string fname;
-		char title[1000];
-		char author[1000];
-
-		snprintf(str, 1000, "Irred_q%d_d%d.tex", q, deg);
-		fname.assign(str);
-		snprintf(title, 1000, "Irreducible Polynomials of Degree %d over F%d", deg, q);
-		//strcpy(author, "");
-		author[0] = 0;
-
-
-		{
-			ofstream ost(fname);
-			latex_interface L;
-			geometry_global GG;
-			long int rk;
-
-			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
-					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
-
-
-			if (f_v) {
-				cout << "finite_field::do_make_table_of_irreducible_polynomials before report" << endl;
-			}
-			//report(ost, verbose_level);
-
-			ost << "There are " << Table.size() << " irreducible polynomials of "
-					"degree " << deg << " over the field F" << q << ":\\\\" << endl;
-			ost << "The coefficients in increasing order are:\\\\" << endl;
-			ost << endl;
-			ost << "\\bigskip" << endl;
-			ost << endl;
-			//ost << "\\begin{multicols}{2}" << endl;
-			ost << "\\noindent" << endl;
-			for (i = 0; i < Table.size(); i++) {
-				ost << i << " : $";
-				for (j = 0; j <= deg; j++) {
-					ost << T[i * (deg + 1) + j];
-				}
-				ost << " : ";
-				rk = GG.AG_element_rank(q, T + i * (deg + 1), 1, deg + 1);
-				ost << rk;
-				ost << "$\\\\" << endl;
-			}
-			//ost << "\\end{multicols}" << endl;
-
-
-			if (f_v) {
-				cout << "finite_field::do_make_table_of_irreducible_polynomials after report" << endl;
-			}
-
-
-			L.foot(ost);
-
-		}
-		file_io Fio;
-
-		cout << "finite_field::do_make_table_of_irreducible_polynomials written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
-	}
-
-	FREE_int(T);
-
-	//int_matrix_print(Table, nb, deg + 1);
-
-	//FREE_int(Table);
-
-	if (f_v) {
-		cout << "finite_field::do_make_table_of_irreducible_polynomials done" << endl;
-	}
-}
 
 void finite_field::polynomial_find_roots(
 		std::string &A_coeffs,
@@ -1907,7 +1160,7 @@ void finite_field::sift_polynomials(long int rk0, long int rk1, int verbose_leve
 		ZZ.factor_into_longintegers(Qm1, nb_primes,
 				primes, exponents, verbose_level - 2);
 		if (f_v) {
-			cout << "finite_field::get_a_primitive_polynomial after factoring "
+			cout << "finite_field::sift_polynomials after factoring "
 					<< Qm1 << " nb_primes=" << nb_primes << endl;
 			cout << "primes:" << endl;
 			for (i = 0; i < nb_primes; i++) {
@@ -2027,169 +1280,6 @@ void finite_field::mult_polynomials(long int rk0, long int rk1, int verbose_leve
 
 }
 
-void finite_field::polynomial_division_from_file_with_report(
-		std::string &input_file, long int rk1, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "finite_field::polynomial_division_from_file_with_report" << endl;
-	}
-	unipoly_domain D(this);
-	{
-		char str[1000];
-		string fname;
-		char title[1000];
-		char author[1000];
-
-		snprintf(str, 1000, "polynomial_division_file_%ld.tex", rk1);
-		fname.assign(str);
-		snprintf(title, 1000, "Polynomial Division");
-		//strcpy(author, "");
-		author[0] = 0;
-
-
-		{
-			ofstream ost(fname);
-			latex_interface L;
-
-			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
-					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
-
-
-			if (f_v) {
-				cout << "finite_field::polynomial_division_from_file_with_report before division_with_remainder_numerically_with_report" << endl;
-			}
-			//report(ost, verbose_level);
-
-			long int rk_q, rk_r;
-
-			D.division_with_remainder_from_file_with_report(input_file, rk1,
-					rk_q, rk_r, ost, verbose_level);
-
-			ost << "$ / " << rk1 << " = " << rk_q << "$ Remainder $" << rk_r << "$\\\\" << endl;
-
-
-			if (f_v) {
-				cout << "finite_field::polynomial_division_from_file_with_report after division_with_remainder_numerically_with_report" << endl;
-			}
-
-
-			L.foot(ost);
-
-		}
-		file_io Fio;
-
-		cout << "finite_field::polynomial_division_from_file_with_report written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
-	}
-
-
-	if (f_v) {
-		cout << "finite_field::polynomial_division_from_file_with_report done" << endl;
-	}
-
-}
-
-void finite_field::polynomial_division_from_file_all_k_error_patterns_with_report(
-		std::string &input_file, long int rk1, int k, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "finite_field::polynomial_division_from_file_all_k_error_patterns_with_report" << endl;
-	}
-	unipoly_domain D(this);
-	{
-		char str[1000];
-		string fname;
-		char title[1000];
-		char author[1000];
-
-		snprintf(str, 1000, "polynomial_division_file_all_%d_error_patterns_%ld.tex", k, rk1);
-		fname.assign(str);
-		snprintf(title, 1000, "Polynomial Division");
-		//strcpy(author, "");
-		author[0] = 0;
-
-
-		{
-			ofstream ost(fname);
-			latex_interface L;
-
-			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
-					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
-
-
-			if (f_v) {
-				cout << "finite_field::polynomial_division_from_file_all_k_error_patterns_with_report before division_with_remainder_numerically_with_report" << endl;
-			}
-			//report(ost, verbose_level);
-
-			long int *rk_q, *rk_r;
-			int N, n, h;
-			combinatorics_domain Combi;
-
-			int *set;
-
-			set = NEW_int(k);
-
-
-
-			D.division_with_remainder_from_file_all_k_bit_error_patterns(input_file,
-					rk1, k,
-					rk_q, rk_r, n, N, ost, verbose_level);
-
-			ost << "$" << input_file << " / " << rk1 << "$\\\\" << endl;
-
-			for (h = 0; h < N; h++) {
-				Combi.unrank_k_subset(h, set, n, k);
-				ost << h << " : ";
-				Orbiter->Int_vec.print(ost, set, k);
-				ost << " : ";
-				ost << rk_r[h] << "\\\\" << endl;
-			}
-
-			FREE_lint(rk_q);
-			FREE_lint(rk_r);
-
-			if (f_v) {
-				cout << "finite_field::polynomial_division_from_file_all_k_error_patterns_with_report after division_with_remainder_numerically_with_report" << endl;
-			}
-
-			FREE_int(set);
-
-			L.foot(ost);
-
-		}
-		file_io Fio;
-
-		cout << "finite_field::polynomial_division_from_file_all_k_error_patterns_with_report written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
-	}
-
-
-	if (f_v) {
-		cout << "finite_field::polynomial_division_from_file_with_report done" << endl;
-	}
-
-}
 
 void finite_field::polynomial_division_with_report(long int rk0, long int rk1, int verbose_level)
 {
@@ -2488,6 +1578,436 @@ void finite_field::gl_random_matrix(int k, int verbose_level)
 	}
 	FREE_int(M);
 	FREE_int(M2);
+
+}
+
+
+
+
+void finite_field::apply_Walsh_Hadamard_transform(
+		std::string &fname_csv_in, int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::apply_Walsh_Hadamard_transform" << endl;
+	}
+
+
+	boolean_function_domain *BF;
+
+	BF = NEW_OBJECT(boolean_function_domain);
+
+	BF->init(n, verbose_level);
+
+
+	file_io Fio;
+	int *M;
+	int m, nb_cols;
+	int len;
+	string fname_csv_out;
+	string_tools ST;
+
+	fname_csv_out.assign(fname_csv_in);
+	ST.chop_off_extension(fname_csv_out);
+	fname_csv_out.append("_transformed.csv");
+
+	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
+	len = m * nb_cols;
+	if (len != BF->Q) {
+		cout << "finite_field::apply_Walsh_Hadamard_transform len != BF->Q" << endl;
+		exit(1);
+	}
+	BF->raise(M, BF->F);
+
+	BF->apply_Walsh_transform(BF->F, BF->T);
+
+	cout << " : ";
+	Orbiter->Int_vec.print(cout, BF->T, BF->Q);
+	cout << endl;
+
+	if (EVEN(n)) {
+		if (BF->is_bent(BF->T)) {
+			cout << "is bent" << endl;
+		}
+		else {
+			cout << "is not bent" << endl;
+		}
+	}
+	else {
+		if (BF->is_near_bent(BF->T)) {
+			cout << "is near bent" << endl;
+		}
+		else {
+			cout << "is not near bent" << endl;
+		}
+
+	}
+	Fio.int_matrix_write_csv(fname_csv_out, BF->T, m, nb_cols);
+	cout << "written file " << fname_csv_out << " of size "
+			<< Fio.file_size(fname_csv_out) << endl;
+
+	FREE_int(M);
+	FREE_OBJECT(BF);
+
+	if (f_v) {
+		cout << "finite_field::apply_Walsh_Hadamard_transform done" << endl;
+	}
+}
+
+void finite_field::algebraic_normal_form(
+		std::string &fname_csv_in, int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::algebraic_normal_form" << endl;
+	}
+
+
+	boolean_function_domain *BF;
+
+	BF = NEW_OBJECT(boolean_function_domain);
+
+	if (f_v) {
+		cout << "finite_field::algebraic_normal_form before BF->init" << endl;
+	}
+	BF->init(n, verbose_level);
+	if (f_v) {
+		cout << "finite_field::algebraic_normal_form after BF->init" << endl;
+	}
+
+
+	file_io Fio;
+	int *M;
+	int m, nb_cols;
+	int len;
+	string fname_csv_out;
+	string_tools ST;
+
+	fname_csv_out.assign(fname_csv_in);
+	ST.chop_off_extension(fname_csv_out);
+	fname_csv_out.append("_alg_normal_form.csv");
+
+	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
+	len = m * nb_cols;
+	if (len != BF->Q) {
+		cout << "finite_field::algebraic_normal_form len != BF->Q" << endl;
+		exit(1);
+	}
+
+	int *coeff;
+	int nb_coeff;
+
+	nb_coeff = BF->Poly[n].get_nb_monomials();
+
+	coeff = NEW_int(nb_coeff);
+
+	if (f_v) {
+		cout << "finite_field::algebraic_normal_form before BF->compute_polynomial_representation" << endl;
+	}
+	BF->compute_polynomial_representation(M, coeff, verbose_level);
+	if (f_v) {
+		cout << "finite_field::algebraic_normal_form after BF->compute_polynomial_representation" << endl;
+	}
+
+	cout << "algebraic normal form:" << endl;
+	BF->Poly[n].print_equation(cout, coeff);
+	cout << endl;
+
+	cout << "algebraic normal form in tex:" << endl;
+	BF->Poly[n].print_equation_tex(cout, coeff);
+	cout << endl;
+
+	cout << "algebraic normal form in numerical form:" << endl;
+	BF->Poly[n].print_equation_numerical(cout, coeff);
+	cout << endl;
+
+
+
+	Fio.int_matrix_write_csv(fname_csv_out, coeff, 1, nb_coeff);
+	cout << "written file " << fname_csv_out << " of size "
+			<< Fio.file_size(fname_csv_out) << endl;
+
+	FREE_int(M);
+	FREE_OBJECT(BF);
+
+	if (f_v) {
+		cout << "finite_field::algebraic_normal_form done" << endl;
+	}
+}
+
+void finite_field::apply_trace_function(
+		std::string &fname_csv_in, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::apply_trace_function" << endl;
+	}
+
+
+	file_io Fio;
+	int *M;
+	int m, nb_cols;
+	int len, i;
+	string fname_csv_out;
+	string_tools ST;
+
+	fname_csv_out.assign(fname_csv_in);
+	ST.chop_off_extension(fname_csv_out);
+	fname_csv_out.append("_trace.csv");
+
+	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
+	len = m * nb_cols;
+	for (i = 0; i < len; i++) {
+		M[i] = absolute_trace(M[i]);
+	}
+	Fio.int_matrix_write_csv(fname_csv_out, M, m, nb_cols);
+
+	FREE_int(M);
+
+	if (f_v) {
+		cout << "finite_field::apply_trace_function done" << endl;
+	}
+}
+
+void finite_field::apply_power_function(
+		std::string &fname_csv_in, long int d, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::apply_power_function" << endl;
+	}
+
+
+	file_io Fio;
+	int *M;
+	int m, nb_cols;
+	int len, i;
+	string fname_csv_out;
+	string_tools ST;
+
+	fname_csv_out.assign(fname_csv_in);
+	ST.chop_off_extension(fname_csv_out);
+
+	char str[1000];
+
+	sprintf(str, "_power_%ld.csv", d);
+	fname_csv_out.append(str);
+
+	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
+	len = m * nb_cols;
+	for (i = 0; i < len; i++) {
+		M[i] = power(M[i], d);
+	}
+	Fio.int_matrix_write_csv(fname_csv_out, M, m, nb_cols);
+	cout << "written file " << fname_csv_out << " of size "
+			<< Fio.file_size(fname_csv_out) << endl;
+
+	FREE_int(M);
+
+	if (f_v) {
+		cout << "finite_field::apply_power_function done" << endl;
+	}
+}
+
+void finite_field::identity_function(
+		std::string &fname_csv_out, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::identity_function" << endl;
+	}
+
+
+	file_io Fio;
+	int *M;
+	int i;
+
+	M = NEW_int(q);
+	for (i = 0; i < q; i++) {
+		M[i] = i;
+	}
+	Fio.int_matrix_write_csv(fname_csv_out, M, 1, q);
+	cout << "written file " << fname_csv_out << " of size "
+			<< Fio.file_size(fname_csv_out) << endl;
+
+	FREE_int(M);
+
+	if (f_v) {
+		cout << "finite_field::identity_function done" << endl;
+	}
+}
+
+
+
+void finite_field::polynomial_division_from_file_with_report(
+		std::string &input_file, long int rk1, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::polynomial_division_from_file_with_report" << endl;
+	}
+	unipoly_domain D(this);
+	{
+		char str[1000];
+		string fname;
+		char title[1000];
+		char author[1000];
+
+		snprintf(str, 1000, "polynomial_division_file_%ld.tex", rk1);
+		fname.assign(str);
+		snprintf(title, 1000, "Polynomial Division");
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		{
+			ofstream ost(fname);
+			latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "finite_field::polynomial_division_from_file_with_report "
+						"before division_with_remainder_numerically_with_report" << endl;
+			}
+			//report(ost, verbose_level);
+
+			long int rk_q, rk_r;
+
+			D.division_with_remainder_from_file_with_report(input_file, rk1,
+					rk_q, rk_r, ost, verbose_level);
+
+			ost << "$ / " << rk1 << " = " << rk_q << "$ Remainder $"
+					<< rk_r << "$\\\\" << endl;
+
+
+			if (f_v) {
+				cout << "finite_field::polynomial_division_from_file_with_report "
+						"after division_with_remainder_numerically_with_report" << endl;
+			}
+
+
+			L.foot(ost);
+
+		}
+		file_io Fio;
+
+		cout << "finite_field::polynomial_division_from_file_with_report written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+	if (f_v) {
+		cout << "finite_field::polynomial_division_from_file_with_report done" << endl;
+	}
+
+}
+
+void finite_field::polynomial_division_from_file_all_k_error_patterns_with_report(
+		std::string &input_file, long int rk1, int k, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::polynomial_division_from_file_all_k_error_patterns_with_report" << endl;
+	}
+	unipoly_domain D(this);
+	{
+		char str[1000];
+		string fname;
+		char title[1000];
+		char author[1000];
+
+		snprintf(str, 1000, "polynomial_division_file_all_%d_error_patterns_%ld.tex", k, rk1);
+		fname.assign(str);
+		snprintf(title, 1000, "Polynomial Division");
+		//strcpy(author, "");
+		author[0] = 0;
+
+
+		{
+			ofstream ost(fname);
+			latex_interface L;
+
+			L.head(ost,
+					FALSE /* f_book*/,
+					TRUE /* f_title */,
+					title, author,
+					FALSE /* f_toc */,
+					FALSE /* f_landscape */,
+					TRUE /* f_12pt */,
+					TRUE /* f_enlarged_page */,
+					TRUE /* f_pagenumbers */,
+					NULL /* extra_praeamble */);
+
+
+			if (f_v) {
+				cout << "finite_field::polynomial_division_from_file_all_k_error_patterns_with_report before division_with_remainder_numerically_with_report" << endl;
+			}
+			//report(ost, verbose_level);
+
+			long int *rk_q, *rk_r;
+			int N, n, h;
+			combinatorics_domain Combi;
+
+			int *set;
+
+			set = NEW_int(k);
+
+
+
+			D.division_with_remainder_from_file_all_k_bit_error_patterns(input_file,
+					rk1, k,
+					rk_q, rk_r, n, N, ost, verbose_level);
+
+			ost << "$" << input_file << " / " << rk1 << "$\\\\" << endl;
+
+			for (h = 0; h < N; h++) {
+				Combi.unrank_k_subset(h, set, n, k);
+				ost << h << " : ";
+				Orbiter->Int_vec.print(ost, set, k);
+				ost << " : ";
+				ost << rk_r[h] << "\\\\" << endl;
+			}
+
+			FREE_lint(rk_q);
+			FREE_lint(rk_r);
+
+			if (f_v) {
+				cout << "finite_field::polynomial_division_from_file_all_k_error_patterns_with_report after division_with_remainder_numerically_with_report" << endl;
+			}
+
+			FREE_int(set);
+
+			L.foot(ost);
+
+		}
+		file_io Fio;
+
+		cout << "finite_field::polynomial_division_from_file_all_k_error_patterns_with_report written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+
+
+	if (f_v) {
+		cout << "finite_field::polynomial_division_from_file_with_report done" << endl;
+	}
 
 }
 

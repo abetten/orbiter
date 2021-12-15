@@ -36,7 +36,6 @@ finite_field_description::~finite_field_description()
 {
 }
 
-
 int finite_field_description::read_arguments(
 	int argc, std::string *argv,
 	int verbose_level)

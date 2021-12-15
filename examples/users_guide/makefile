@@ -92,6 +92,94 @@ CONWAY_GEN2="0101000010111010111111\
 0000001101111000101110\
 1101101010101110000101"\
 
+HIRSCHFELD_SURFACE_EQUATION="0,0,0,0,0,0,1,0,1,0, 0,1,0,1,0,0,0,0,0,0"
+
+ENDRASS_SPARSE="\
+6,0,4,4,2,7,5,9,6,20,6,23,1,25,3,30,1,32,3,34,4,56,6,59,1,61,6,66, \
+2,68,6,70,3,77,2,79,6,83,6,120,2,123,5,125,3,130,1,132,3,134,3,141, \
+2,143,6,147,3,156"
+
+
+EC_11_EQUATION="1,0,3,0,0,0,10,1,0,0"
+
+
+EDGE_CURVE_Q23_AS_POINTS="4, 25, 26, 47, 48, 71, 92, 95, 114, 119, 136, 143, 158, 167, 180, 191, 202, 215, 224, 239, 246, 263, 268, 287, 290, 311, 312, 334, 335, 356, 359, 378, 383, 400, 407, 422, 431, 444, 455, 466, 479, 488, 503, 510, 527, 530, 532, 551"
+
+
+GEN_C13="1,2,3,4,5,6,7,8,9,10,11,12,0"
+# (0,1,2,3,4,5,6,7,8,9,10,11,12)
+
+
+
+GENERATORS_HESSE_GROUP="\
+3,0,0,0,3,0,0,0,3,0, \
+2,0,0,0,2,0,1,2,3,0, \
+1,0,0,0,1,0,0,1,1,1, \
+1,0,0,0,2,2,0,2,0,0, \
+1,0,0,2,3,1,2,0,1,0, \
+0,3,3,1,0,0,3,2,1,1, \
+2,2,0,0,0,1,1,3,3,1"
+
+
+GENERATORS_WEYL_GROUP_E8="\
+-1,-1,-1,-1,0,0,0,0, \
+0,0,0,1,0,0,0,0, \
+1,0,0,0,0,0,0,0, \
+0,0,1,0,0,0,0,0, \
+0,1,0,1,1,0,0,0, \
+0,0,0,0,0,1,0,0, \
+0,0,0,0,0,0,1,0, \
+0,0,0,0,0,0,0,1, \
+-1,0,-1,-1,-1,-1,-1,-1, \
+0,1,0,1,1,1,1,1, \
+1,0,0,0,0,0,0,0, \
+0,0,1,0,0,0,0,0, \
+0,0,0,1,0,0,0,0, \
+0,0,0,0,1,0,0,0, \
+0,0,0,0,0,1,0,0, \
+0,0,0,0,0,0,1,0"
+
+Ree_gen1="21,5,1,6,17,1,1, 3,13,5,21,6,6,18, 21,3,21,21,22,6,14, \
+14,18,1,5,13,6,7, 3,3,2,1,24,16,3, 17,3,22,10,16,24,26, \
+21,21,6,18,20,2,5"
+Ree_gen2="16,3,11,5,16,22,20, 24,6,18,24,7,1,26, 9,23,17,18,23,20,13, \
+9,7,2,15,17,5,11, 3,3,6,21,4,24,16, 25,8,6,24,21,12,7, \
+24,15,2,13,11,14,24"
+
+
+HIRSCHFELD_SURFACE_Q4_SET_OF_POINTS="0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,23,\
+26,27,30,31,34,35,38,39,42,47,48,51,52,53,54,59,60,61,62,67,68,69,70,75,76,\
+79,80,81,82"
+
+
+HYPEROVAL_16_144="0, 1, 2, 3, 52, 67, 89, 106, 126, 141, 159, 176, 184, 199, 220, 235, 245, 262"
+HYPEROVAL_16_16320="0, 1, 2, 3, 52, 70, 83, 109, 127, 139, 156, 174, 186, 199, 217, 229, 256, 264"
+
+FILE_24_3_TFC_INC="24 24 72\
+\n0 1 2 24 27 28 48 53 54 73 79 80 97 105 106 122 131 132 146 157 158 171 175 183 \
+195 203 208 220 225 233 244 258 259 269 272 282 293 300 308 318 325 333 342 352 \
+358 367 379 381 392 398 400 417 428 429 442 443 450 466 471 479 492 497 502 517 \
+519 521 542 548 551 571 574 575              48\
+\n0 1 2 24 27 28 48 53 54 73 79 80 97 105 106 122 131 132 146 157 158 171 175 183 \
+195 203 208 220 225 233 244 258 259 269 272 281 293 301 308 318 324 327 342 354 \
+357 367 373 378 392 400 403 417 419 430 442 446 447 466 472 479 492 500 503 518 \
+525 526 545 549 551 571 572 574              48\
+\n0 1 2 24 27 28 48 53 54 73 79 80 97 105 106 122 131 132 146 157 158 171 175 179 \
+195 201 207 220 226 232 244 257 258 269 274 277 293 300 307 318 323 329 342 352 \
+356 367 374 381 392 397 406 416 423 431 441 450 454 468 476 477 494 499 503 519 \
+521 525 544 547 550 570 572 575             144\
+\n-1 3"
+
+
+ELEMENTARY_SYMMETRIC_3_1="x0 + x1 + x2"
+ELEMENTARY_SYMMETRIC_3_2="x0*x1 + x0*x2 + x1*x2"
+ELEMENTARY_SYMMETRIC_3_3="x0*x1*x2"
+
+
+ELEMENTARY_SYMMETRIC_4_1="x0 + x1 + x2 + x3"
+ELEMENTARY_SYMMETRIC_4_2="x0*x1 + x0*x2 + x0*x3 + x1*x2 + x1*x3 + x2*x3"
+ELEMENTARY_SYMMETRIC_4_3="x0*x1*x2 + x0*x1*x3 + x0*x2*x3 + x1*x2*x3"
+ELEMENTARY_SYMMETRIC_4_4="x0*x1*x2*x3"
 
 
 CODE_5_2_3_CODEWORDS="0,7,25,30"
@@ -190,20 +278,41 @@ F_abcd_eqn = "-(a*b*c - a*b*d - a*c*d + b*c*d + a*d - b*c)*(b - d)*X0*X0*X2 \
 - (1+1+1+1)*a*b*c*d - a*c*c*d + a*c*d*d + b*b*c*c)*X1*X2*X3 \
 + c*a*(a*d - b*c - a + b + c - d)*(b - d)*X1*X3*X3"
 
+
+
+
+KNECHT_13_1_AS_PAIRS="1,0,1,1,1,2,12,9"
+KNECHT_13_1_AS_VECTOR="1,1,1,0,0, 0,0,0,0,12, 0,0,0,0,0"
+KNECHT_13_2_AS_PAIRS="1,0,1,1,1,2,8,9,8,10,8,11"
+KNECHT_13_2_AS_VECTOR="1,1,1,0,0, 0,0,0,0,8, 0,8,0,0,0"
+
+
+
+
+
 GOLAY_23_COLUMN_RANKS_PROJECTIVELY="0, 1, 2, 3, 4, 5, 6, 7, \
 8, 9, 10, 11, 132, 913, 1460, 1750, 1898, 2518, 2787, 2874, \
 3320, 3357, 3662" 
 
-HAMMING_CODE_CODEWORDS="0, 67, 37, 102, 22, 85, 51, 112, 15, 76, 42, 105, 25, 90, 60, 127"
+#[23,12,8]
+#0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 132, 913, 1460, 1750, 1898, 2518, 2787, 2874, 3320, 3357, 3662
+
+#[24,12,8]
+#0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 132, 913, 1460, 1750, 1898, 2518, 2787, 2874, 3320, 3357, 3662, 4004
 
 
-CODE_RM_3_1_GENMA="1,1,1,1,1,1,1,1, 0,1,0,1,0,1,0,1, \
-0,0,1,1,0,0,1,1, 0,0,0,0,1,1,1,1"
+CODE_RM_3_1_GENMA="1,1,1,1,1,1,1,1, \
+0,1,0,1,0,1,0,1, \
+0,0,1,1,0,0,1,1, \
+0,0,0,0,1,1,1,1"
 
 CODE_RM_4_1_GENMA="1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1"
 
-CODE_RS_8="5,6,1,0,0,0,0, 0,5,6,1,0,0,0, \
-0,0,5,6,1,0,0, 0,0,0,5,6,1,0, 0,0,0,0,5,6,1"	
+CODE_RS_8="5,6,1,0,0,0,0, \
+0,5,6,1,0,0,0, \
+0,0,5,6,1,0,0, \
+0,0,0,5,6,1,0, \
+0,0,0,0,5,6,1"	
 
 CODE_RS_11_RREF="1,0,0,0,0,0,0,0,7,2,\
 0,1,0,0,0,0,0,0,8,3,\
@@ -265,6 +374,27 @@ CODE_15_6_6_D="1,1,1,1,1,1,1,1,1,1,0,0,0,0,0, 1,1,1,1,1,0,0,0,0,0,1,0,0,0,0, 1,1
 
 #ago=360
 CODE_15_6_6_E="1,1,1,1,1,1,1,1,1,1,0,0,0,0,0, 1,1,1,1,1,0,0,0,0,0,1,0,0,0,0, 1,1,1,0,0,1,1,0,0,0,0,1,0,0,0, 1,0,0,1,1,1,0,1,0,0,0,0,1,0,0, 0,1,0,1,0,1,1,1,0,0,0,0,0,1,0, 0,1,0,1,1,0,1,0,1,0,0,0,0,0,1"
+
+
+
+BCH_21_15_PROJ=" 0, 1, 19, 37, 113, 420, 1651, 6577, 26284, 105115, 420442, 1681753, 6727000, 26907991, 107631958, 27874647, 111498582, 43341143, 173364566, 156587350, 14 "
+
+
+BCH_21_15_GENERATOR_MATRIX="1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1"
+
+BCH_21_6_GENERATOR_MATRIX=" 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1 "
+
+POLY_Q256_DEG30_SPARSE="1,0,26,1,210,2,24,3,\
+138,4,148,5,160,6,58,7,108,8,199,9,95,10,56,\
+11,9,12,205,13,194,14,193,15,3,16,248,17,110,\
+18,150,19,24,20,169,21,192,22,212,23,112,24,\
+144,25,97,26,109,27,174,28,253,29,1,30"
+
+POLY_Q256_DEG30_DENSE="1,26,210,24,138,148,\
+160,58,108,199,95,56,9,205,194,193,3,248,110,\
+150,24,169,192,212,112,144,97,109,174,253,1"
+
+
 
 
 # created in the combinatorics section:
@@ -703,7 +833,19 @@ PGL_4_5_SUBGROUP_31_NORMALIZER=-PGL 4 5 \
 #Michael
 
 
-CODE_HAMMING="1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1"
+HAMMING_CODE_CODEWORDS="0, 67, 37, 102, 22, 85, 51, 112, 15, 76, 42, 105, 25, 90, 60, 127"
+
+SIMPLEX_CODE_GENERATOR="1,0,1,0,1,0,1, 0,1,1,0,0,1,1, 0,0,0,1,1,1,1"
+
+
+
+HAMMING_CODE_GENERATOR="1,0,0,0,0,1,1, \
+0,1,0,0,1,0,1, 0,0,1,0,1,1,0, 0,0,0,1,1,1,1"
+
+HAMMING_CODE_ROWS_IN_BINARY_RANKS="67,37,22,15"
+
+SIMPLEX_CODE_GENMA_CYCLIC="1,0,0,1,1,1,0, 0,1,0,0,1,1,1, 0,0,1,1,1,0,1"
+
 
 CODE_GV_N15_K6="1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,\
 1,1,0,0,0,0,0,1,0,0,0,0,1,1,1,0,0,1,1,0,0,0,0,1,0,0,\
@@ -711,6 +853,44 @@ CODE_GV_N15_K6="1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,\
 0,0,0,1,0,1,0,1,1,0,1,0,0,1,0,0,0,0,0,1"
 
 CODE_GV_N15_K6_CHECK="1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1"
+
+
+
+
+REED_MULLER_3_1_CODEWORDS="0,255,170,85,204,51,102,153,240,15,90,165,60,195,150,105"
+REED_MULLER_3_1_BASIS_IN_BINARY="255,170,204,240"
+REED_MULLER_4_1_COLUMNS_OF_PARTITY_CHECK="1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31"
+#-nearest_codeword "8,16,32,24,40,48,56,1,2,4,3,5,6,7,9,18,36,27,45,54,63,33,42,20,11,53,62,31"
+
+RM_6_GENERATOR_1="0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,\
+22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,\
+46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63"
+RM_6_GENERATOR_2="1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,\
+41,43,45,47,49,51,53,55,57,59,61,63"
+RM_6_GENERATOR_3="2,3,6,7,18,19,22,23,10,11,14,15,26,27,30,31,34,35,38,\
+39,42,43,46,47,50,51,54,55,58,59,62,63"
+RM_6_GENERATOR_4="4,6,12,14,36,38,52,54,5,7,13,15,37,39,53,55,20,22,28,\
+30,44,46,60,62,21,23,29,31,45,47,61,63"
+RM_6_GENERATOR_5="8,9,12,13,24,25,28,29,10,11,14,15,26,27,30,31,40,41,\
+44,45,56,57,60,61,42,43,46,47,58,59,62,63"
+RM_6_GENERATOR_6="16,18,24,26,48,50,56,58,17,19,25,27,49,51,57,59,20,22,\
+28,30,52,54,60,62,21,23,29,31,53,55,61,63"
+RM_6_GENERATOR_7="32,34,48,50,33,35,49,51,36,38,52,54,37,39,53,55,40,42,\
+56,58,41,43,57,59,44,46,60,62,45,47,61,63"
+
+
+
+AG_2_3_BLOCKS="0,13,22,27,35,41,47,53,55,59,71,76"
+LARGE_SET_AG_2_3_NEIGHBOR_SET="129,130,133,134,136,139,141,142,153,154,156,160,165,166,178,179,183,184,185,190,192,194,197,203,204,206,218,221,222,225,227,231,248,251,252,255,256,259,261,262,272,277,279,283,285,287,299,301,303,305,306,309,313,315,319,320,323,325,341,342,343,344,345,349,368,371,375,378,381,383,392,393,397,402,403,405,416,419,421,422,425,426,429,430,440,443,447,449,453,454,464,467,468,473,474,479,490,493,494,497,500,503,513,517,518,520,523,527,536,539,541,542,544,547,548,551,563,566,567,571,572,573,585,589,590,593,595,596,600,601,603,611,614,615,625,629,631,635,637,638,657,659,661,667,668,671,681,683,686,689,691,693,705,706,709,710,712,715,717,718,720,723,724,729,733,735,747,748,750,752,754,757,777,780,781,784,790,791,802,804,807,808,811,814,824,827,828,831,832,835,837,838"
+
+
+PP4 = -d1 1 -q1 3 -d2 1 -q2 7 -K 5 -search_control -W -end -problem_label PP4
+PP4_GROUP1=-subgroup "1,1,1,1, " "21" -group_label "cyclic21"
+PP4_MASK1=\
+	-nb_orbits_on_blocks 1 \
+	-depth 5 \
+	-mask_label "no_mask"
+
 
 
 DELANDTSHEER_DOYEN_PROBLEM_COLBOURN_COLBOURN_7_13 = -d1 1 -q1 7 -d2 1 -q2 13 -K 6 -search_control -W  -end -problem_label DD_CC_7_13
@@ -737,6 +917,49 @@ DELANDTSHEER_DOYEN_PROBLEM_27_53_MASK1=\
 DELANDTSHEER_DOYEN_PROBLEM_3_7 = -d1 1 -q1 3 -d2 1 -q2 7 -K 5 -DDx 3 -DDy 1 -search_control -W -end 
 DELANDTSHEER_DOYEN_PROBLEM_3_7_GROUP1=-subgroup "1,1,1,0, 1,0,1,1 " "21" -group_label "group_cyclic"
 DELANDTSHEER_DOYEN_PROBLEM_3_7_MASK1= -mask_label "mask1" -depth 5
+
+
+
+
+PENTTILA_WILLIAMS_PRINCE_REG_PACKING_0="444,43313,154402,46682,108254,75363,27729,32139,5244,60442,142811,111115,94209,120678,89533,13798,103994,129953,82168,136838,19253,23017,145985,134996,54705,36267,55066,117542,96699,69154,72460"
+PENTTILA_WILLIAMS_PRINCE_REG_PACKING_1="616,42728,152655,48576,105431,79607,28634,32817,9799,62356,141176,110085,92557,122136,86312,13975,101942,126869,81478,139352,18028,24325,147284,130370,52074,36843,55602,118454,95973,69642,74036"
+
+PENTTILA_WILLIAMS_PRINCE_REG_PACKING_0_DUAL="3938, 66740, 56555, 93538, 107785, 64917, 47567, 54483, 141012, 138602, 18308, 6880, 131351, 88788, 125484, 102075, 21234, 99392, 119149, 80640, 124839, 148843, 71862, 11468, 35950, 27050, 75338, 113337, 40002, 154102, 30567"
+PG_3_5_PACKING_0_WITH_AGO3="0,5201,60427,86602,11453,121452,46663,19716,32921,108680,23456,91963,68386,26921,74601,57067,36188,42312,78780,53117,118488,114700,83960,99669,104791,126662,130960,145179,137230,150626,140216"
+
+
+PG_3_5_PACKING_0_WITH_AGO3_FIXP444="444,5001,12957,18194,23485,26817,34667,38299,41249,47472,50450,56601,62638,68986,71833,75369,80805,87025,92577,95676,104509,109718,114948,116333,124391,127498,133240,137711,144777,148059,150175"
+
+
+
+
+MONKEY_SADDLE_CUBIC="1,0,0,0,-3,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0"
+
+ECKARDT_CUBIC_DEFORM1_LEX="0, 10, 0, -8, 10, 25, 2, 0, -20, -8, -20, -10, -24, 10, -2, 12, 0, -8, 8, 16" 
+ECKARDT_CUBIC_DEFORM2_LEX="0, -5, 0, -5, -5, 10, -1, 0, 10, 4, 10, 5, 3, -5, 1, -6, 0, -5, -4, 1"
+
+KUMMER_QUARTIC_LEX_35="-2,0,0,0,2,0,0,2,0,2,0,0,\
+0,0,0,0,0,0,0,0,-2,0,0,2,0,2,0,0,0,0,-2,0,2,0,-2"
+
+BEAUVILLE_QUINTIC_LEX_56="-44, 228, 400, 315, -396, -852, \
+-512, -553, -1050, -354, 284, 504, -62, -707, -1390, -1010, \
+281, -167, -1644, -1024, -72, -196, 192, 373, 322, 78, 150, \
+966, 1540, 348, -475, -492, 1063, 1550, 390, 0, 96, 3, -337, \
+-426, -66, 425, 673, -156, -216, -223, -60, 1543, 1998, 618, \
+263, -250, -919, 557, 1800, 741"
+
+ENDRASS_OCTIC_LEX_165="-93.2548,0,0,0,-309.019,0,0,527.529,0,395.647,\
+0,0,0,0,0,0,0,0,0,0,-687.529,0,0,1582.59,0,1186.94,0,0,0,0,-1055.06,0,\
+-1582.59,0,-593.47,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-309.019,\
+0,0,1582.59,0,1186.94,0,0,0,0,-2110.12,0,-3165.17,0,-1186.94,0,0,0,0,0,\
+0,874.039,0,1560.63,0,1677.92,0,343.362,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,\
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-93.2548,0,0,527.529,0,395.647,\
+0,0,0,0,-1055.06,0,-1582.59,0,-593.47,0,0,0,0,0,0,874.039,0,1560.63,0,\
+1677.92,0,343.362,0,0,0,0,0,0,0,0,-256,0,-468.077,0,-789.019,0,\
+-525.726,0,0.941125"
+
+
+
 
 
 
@@ -883,13 +1106,22 @@ vector_example_sparse:
 		-define v -vector -field F -format 4 -sparse 20 "1,0,1,19" -end \
 		-print_symbols
 
+vector_example_repeat:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define v -vector -repeat "0,1,2,3" 11 -end \
+		-print_symbols
 
-HAMMING_CODE="1,0,0,0,0,1,1, 0,1,0,0,1,0,1, 0,0,1,0,1,1,0, 0,0,0,1,1,1,1"
+
+vector_example_all_one_11:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define v -vector -repeat 1 11 -end \
+		-print_symbols
+
 
 matrix_example1:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
-		-define v -vector -field F -format 4 -dense $(HAMMING_CODE) -end \
+		-define v -vector -field F -format 4 -dense $(HAMMING_CODE_GENERATOR) -end \
 		-print_symbols
 
 
@@ -1162,17 +1394,6 @@ F_127:
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
 
 
-Walsh_matrix_4:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 2 -end \
-		-with F -do -finite_field_activity \
-			-Walsh_matrix 4 -end
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
-		-input_csv_file Walsh_01_4.csv \
-		-box_width 10 -bit_depth 24 -partition 3 16 16 -end
-	#pdflatex GF_2.tex
-	#open GF_2.pdf
-
 
 #############################################################################################################
 # Section 3.3: Polynomials over Finite Fields
@@ -1443,16 +1664,6 @@ irred_3_4:
 # 20 polys
 
 
-Dedekind_10_10:
-	$(ORBITER_PATH)orbiter.out -v 3 -Dedekind_numbers 2 10 2 10
-
-
-Dedekind_30_2:
-	$(ORBITER_PATH)orbiter.out -v 3 -Dedekind_numbers 2 30 2 2
-
-
-Dedekind_100_2:
-	$(ORBITER_PATH)orbiter.out -v 3 -Dedekind_numbers 2 100 2 2
 
 
 order_of_2_mod_n:
@@ -1705,6 +1916,16 @@ F8_arithmetic:
 			-evaluate e1 "a=2,b=3" -end \
 		-with F -do -finite_field_activity \
 			-evaluate e1 "a=3,b=3" -end \
+
+
+F_16_7_power_5:
+	$(ORBITER_PATH)orbiter.out -v 3 -define F -finite_field -q 16 -end \
+		-with F -do -finite_field_activity \
+			-parse_and_evaluate "test" "" "(a*a)*(a*a)*a"  "a=7" -end
+	dot -Tpng test.gv >test.png
+
+
+# the answer is 11.
 
 
 
@@ -2058,12 +2279,14 @@ F_64_over_F_8_field_reduction:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 64 -end \
 		-with F -do \
-		-finite_field_activity -field_reduction "F64_over_F8" 8 8 8 "0,1,2,3,4,5,6,7, 8,9,10,11,12,13,14,15, 16,17,18,19,20,21,22,23, 24,25,26,27,28,29,30,31, 32,33,34,35,36,37,38,39, 40,41,42,43,44,45,46,47, 48,49,50,51,52,53,54,55, 56,57,58,59,60,61,62,63" -end
+		-finite_field_activity -field_reduction "F64_over_F8" 8 8 8 \
+			"0,1,2,3,4,5,6,7, 8,9,10,11,12,13,14,15, 16,17,18,19,20,21,22,23, 24,25,26,27,28,29,30,31, 32,33,34,35,36,37,38,39, 40,41,42,43,44,45,46,47, 48,49,50,51,52,53,54,55, 56,57,58,59,60,61,62,63" -end
 	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
 		-input_csv_file F64_over_F8.csv \
 		-box_width 40 -bit_depth 24  -partition 4 "2,2,2,2,2,2,2,2" "2,2,2,2,2,2,2,2" -end
 	pdflatex field_reduction_Q64_q8_8_8.tex
 	open field_reduction_Q64_q8_8_8.pdf
+
 
 F_64_over_F_4_field_reduction:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -2077,6 +2300,7 @@ F_64_over_F_4_field_reduction:
 		-partition 4 "3,3,3,3,3,3,3,3" "3,3,3,3,3,3,3,3" -end
 	pdflatex field_reduction_Q64_q4_8_8.tex
 	open field_reduction_Q64_q4_8_8.pdf
+
 
 F64_over_F2_field_reduction:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -2257,8 +2481,11 @@ SECTION_LINEAR_ALGEBRA:
 RREF:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
+		-define v -vector -field F -format 2 \
+			-dense "1,1,1,1,0,1,1,0,0,1" \
+		-end \
 		-with F -do -finite_field_activity \
-		-RREF 2 5 "1,1,1,1,0,1,1,0,0,1" -normalize_from_the_right \
+		-RREF v -normalize_from_the_right \
 		-end
 
 	
@@ -2267,9 +2494,13 @@ RREF:
 nullspace:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F2 -finite_field -q 2 -end \
-		-with F2 -do -finite_field_activity  \
-		-nullspace 2 5 "1,1,1,1,0,1,1,0,0,1" \
-		-normalize_from_the_right \
+		-define v -vector -field F2 -format 2 \
+			-dense "1,1,1,1,0,1,1,0,0,1" \
+		-end \
+		-with F2 -do \
+		-finite_field_activity  \
+			-nullspace v \
+			-normalize_from_the_right \
 		-end
 
 
@@ -2343,8 +2574,11 @@ RREF_demo_4_8_q8:
 RREF_RS_6_4_7:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 7 -end \
+		-define v -vector -field F -format 4 \
+			-dense $(CODE_RS_6_4_7) \
+		-end \
 		-with F -do \
-		-finite_field_activity -RREF 4 6 $(CODE_RS_6_4_7) -end
+		-finite_field_activity -RREF v -end
 	pdflatex RREF_example_q7_4_6.tex
 	gs -sDEVICE=png16 -dFIXEDMEDIA -dDEVICEWIDTHPOINTS=500 -dDEVICEHEIGHTPOINTS=450 \
 		-r240 -oRREF_example_q7_4_6_page%02d.png \
@@ -2410,7 +2644,8 @@ PG_2_8:
 	$(ORBITER_PATH)orbiter.out \
 		-define F -finite_field -q 8 -end \
 		-with F -do -finite_field_activity \
-			-cheat_sheet_PG 2 -end
+			-cheat_sheet_PG 2 \
+		-end
 	pdflatex PG_2_8.tex 
 	open PG_2_8.pdf
 
@@ -2760,7 +2995,6 @@ SECTION_ALGEBRAIC_SETS:
 
 
 
-EC_11_EQUATION="1,0,3,0,0,0,10,1,0,0"
 
 EC_11.txt:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -2791,7 +3025,6 @@ conic_ideal_q13:
 			-ideal 2 \
 		-end
 
-HIRSCHFELD_SURFACE_EQUATION="0,0,0,0,0,0,1,0,1,0, 0,1,0,1,0,0,0,0,0,0"
 
 Hirschfeld_surface_q4.txt:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -2829,10 +3062,6 @@ Hirschfeld_surface_q16.txt:
 # the coefficient vector is given as a list of pairs. 
 # 165 = binomial(11,3)
 
-ENDRASS_SPARSE="\
-6,0,4,4,2,7,5,9,6,20,6,23,1,25,3,30,1,32,3,34,4,56,6,59,1,61,6,66, \
-2,68,6,70,3,77,2,79,6,83,6,120,2,123,5,125,3,130,1,132,3,134,3,141, \
-2,143,6,147,3,156"
 
 
 Endrass_F7.txt:
@@ -2909,6 +3138,27 @@ Op_4_2:
 	open O_1_4_2_report.pdf
 
 
+O_5_2_incidence_matrix.csv:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 0 5 F -without_group -end \
+		-with O -do -orthogonal_space_activity \
+			-export_point_line_incidence_matrix \
+		-end
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define all_one_r -vector -repeat 1 15 -end \
+		-define all_one_c -vector -repeat 1 15 -end \
+		-draw_matrix \
+			-input_csv_file O_5_2_incidence_matrix.csv \
+			-box_width 20 -bit_depth 8 \
+			-partition 2 \
+				all_one_r all_one_c \
+		-end
+	open O_5_2_incidence_matrix_draw.bmp
+
+
+
+
 Op_6_2:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
@@ -2917,6 +3167,26 @@ Op_6_2:
 			-cheat_sheet_orthogonal -end
 	pdflatex O_1_6_2_report.tex 
 	open O_1_6_2_report.pdf
+
+
+Op_6_2_incidence_matrix.csv:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define O -orthogonal_space 1 6 F -without_group -end \
+		-with O -do -orthogonal_space_activity \
+			-export_point_line_incidence_matrix \
+		-end
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define all_one_r -vector -repeat 1 35 -end \
+		-define all_one_c -vector -repeat 1 105 -end \
+		-draw_matrix \
+			-input_csv_file Op_6_2_incidence_matrix.csv \
+			-box_width 20 -bit_depth 8 \
+			-partition 2 \
+				all_one_r all_one_c \
+		-end
+	open Op_6_2_incidence_matrix_draw.bmp
+
 
 Op_6_2_with_group:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -3041,16 +3311,6 @@ H_3_4:
 
 
 SECTION_PROJECTIVE_SPACE_ADVANCED_TOPICS:
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -3180,7 +3440,6 @@ del_Pezzo_169:
 	open del_Pezzo_F169b_report.pdf
 
 
-EDGE_CURVE_Q23_AS_POINTS="4, 25, 26, 47, 48, 71, 92, 95, 114, 119, 136, 143, 158, 167, 180, 191, 202, 215, 224, 239, 246, 263, 268, 287, 290, 311, 312, 334, 335, 356, 359, 378, 383, 400, 407, 422, 431, 444, 455, 466, 479, 488, 503, 510, 527, 530, 532, 551"
 
 Edge_curve_conic_type:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -3216,10 +3475,6 @@ Edge_curve_conic_type:
 SECTION_PERMUTATION_GROUPS:
 
 
-
-
-GEN_C13="1,2,3,4,5,6,7,8,9,10,11,12,0"
-# (0,1,2,3,4,5,6,7,8,9,10,11,12)
 
 
 C13:
@@ -3629,19 +3884,11 @@ tetra_group:
 	open GL_3_3_Subgroup_tetra_12_elements.pdf
 
 
-GENERATORS_HESSE_GROUP="\
-3,0,0,0,3,0,0,0,3,0, \
-2,0,0,0,2,0,1,2,3,0, \
-1,0,0,0,1,0,0,1,1,1, \
-1,0,0,0,2,2,0,2,0,0, \
-1,0,0,2,3,1,2,0,1,0, \
-0,3,3,1,0,0,3,2,1,1, \
-2,2,0,0,0,1,1,3,3,1"
 
 Hesse_group:
 	$(ORBITER_PATH)orbiter.out -v 3 \
 		-define gens -vector -dense \
-		  $(GENERATORS_HESSE_GROUP) \
+			$(GENERATORS_HESSE_GROUP) \
 		-end \
 		-define G -linear_group -PGGL 3 4 \
 		-subgroup_by_generators "Hesse" "432" 7 gens \
@@ -3664,28 +3911,11 @@ Hesse_group:
 #1,1,0,0,0,0,3,0,3,2,2,0,1,2,3,3,1,
 
 
-GENERATORS_WEYL_GROUP_E8="\
--1,-1,-1,-1,0,0,0,0, \
-0,0,0,1,0,0,0,0, \
-1,0,0,0,0,0,0,0, \
-0,0,1,0,0,0,0,0, \
-0,1,0,1,1,0,0,0, \
-0,0,0,0,0,1,0,0, \
-0,0,0,0,0,0,1,0, \
-0,0,0,0,0,0,0,1, \
--1,0,-1,-1,-1,-1,-1,-1, \
-0,1,0,1,1,1,1,1, \
-1,0,0,0,0,0,0,0, \
-0,0,1,0,0,0,0,0, \
-0,0,0,1,0,0,0,0, \
-0,0,0,0,1,0,0,0, \
-0,0,0,0,0,1,0,0, \
-0,0,0,0,0,0,1,0"
 
 Weyl_E8:
 	$(ORBITER_PATH)orbiter.out -v 3 \
 		-define gens -vector -dense \
-		  $(GENERATORS_WEYL_GROUP_E8) \
+			$(GENERATORS_WEYL_GROUP_E8) \
 		-end \
 		-define G -linear_group -GL 8 3 \
 		-subgroup_by_generators \
@@ -3779,12 +4009,6 @@ Co3:
 	open PGL_22_2_Subgroup_Co3_495766656000_report.pdf
 
 
-Ree_gen1="21,5,1,6,17,1,1, 3,13,5,21,6,6,18, 21,3,21,21,22,6,14, \
-14,18,1,5,13,6,7, 3,3,2,1,24,16,3, 17,3,22,10,16,24,26, \
-21,21,6,18,20,2,5"
-Ree_gen2="16,3,11,5,16,22,20, 24,6,18,24,7,1,26, 9,23,17,18,23,20,13, \
-9,7,2,15,17,5,11, 3,3,6,21,4,24,16, 25,8,6,24,21,12,7, \
-24,15,2,13,11,14,24"
 
 
 # ToDo:
@@ -4937,6 +5161,30 @@ PG_3_7_lines:
 	open 7_lines_poset.pdf
 
 
+
+PGO_5_2_on_subsets:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-orbiter_path $(ORBITER_PATH) \
+		-define F -finite_field -q 2 -end \
+		-define G -linear_group -PGO 5 F -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-poset_classification_control \
+				-problem_label PGO_5_2 \
+				-depth 15 \
+				-report -end \
+				-draw_poset \
+				-w \
+			-end \
+			-orbits_on_subsets 15 \
+			-report \
+		-end
+	pdflatex PGO_5_2_poset.tex
+	open PGO_5_2_poset.pdf
+
+
+
+
 #############################################################################################################
 # Section 6.4: Orbits on Subspaces
 
@@ -5138,138 +5386,9 @@ PGO_7_2_on_subspaces:
 
 
 
-#############################################################################################################
-# Section 6.5: Canonical Forms of Objects in Finite Projective Spaces
-
-
-SECTION_CANONICAL_FORMS:
-
-
-EC_canon: elliptic_curve_b1_c3_q11.txt
-	$(ORBITER_PATH)orbiter.out -v 4 \
-		-define C -combinatorial_objects \
-			-file_of_points elliptic_curve_b1_c3_q11.txt \
-		-end \
-		-define F -finite_field -q 11 -end \
-		-define P -projective_space 2 F -end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form_PG P \
-			-classification_prefix EC \
-			-save_ago \
-		-end
-	#pdflatex EC_classification.tex
-	#open EC_classification.pdf
-
-
-
-
-Hirschfeld_q4_c: Hirschfeld_surface_q4.txt
-	$(ORBITER_PATH)orbiter.out -v 40 \
-		-define C -combinatorial_objects \
-			-file_of_points Hirschfeld_surface_q4.txt \
-		-end \
-		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form_PG P \
-				-classification_prefix Hirschfeld_surface_q4 \
-				-save_ago \
-				-max_TDO_depth 10 \
-			-end \
-			-report \
-		-end
-	pdflatex Hirschfeld_surface_q4_classification.tex
-	open Hirschfeld_surface_q4_classification.pdf
-
-
-# group order is 51840
-
-HIRSCHFELD_SURFACE_Q4_SET_OF_POINTS="0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,23,\
-26,27,30,31,34,35,38,39,42,47,48,51,52,53,54,59,60,61,62,67,68,69,70,75,76,\
-79,80,81,82"
-
-Hirschfeld_q4_set_c:
-	$(ORBITER_PATH)orbiter.out -v 4 \
-		-define H -set -here \
-			$(HIRSCHFELD_SURFACE_Q4_SET_OF_POINTS) \
-		-end \
-		-define C -combinatorial_objects \
-			-set_of_points H \
-		-end \
-		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form_PG P \
-			-classification_prefix Hirschfeld_surface_q4 \
-			-save_ago \
-		-end
-	pdflatex Hirschfeld_surface_q4_classification.tex
-	open Hirschfeld_surface_q4_classification.pdf
-
-
-
-Dickson_sets_stabilizer:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define C -combinatorial_objects \
-			-set_of_points "0,1,2,5,6" \
-			-set_of_points "0,1,2,3,6" \
-			-set_of_points "0,1,2,3,4" \
-			-set_of_points "0,1,2,3,8" \
-			-set_of_points "0,1,2,5,6,7,8" \
-			-set_of_points "0,1,2,3,5,6,7" \
-			-set_of_points "0,1,2,3,5,6,9" \
-			-set_of_points "0,1,2,3,5,6,10" \
-			-set_of_points "0,1,2,3,5,6,4" \
-			-set_of_points "0,1,2,3,8,11,13" \
-			-set_of_points "3,6,9,7,10,12,8,11,13,14,4" \
-			-set_of_points "3,5,6,9,7,10,12,11,13,14,4" \
-			-set_of_points "0,1,2,3,5,6,9,7,10,12,4" \
-		-end \
-		-define F -finite_field -q 2 -end \
-		-define P -projective_space 3 F -end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form_PG P \
-			-classification_prefix Dickson_sets \
-			-save_ago \
-			-end \
-			-report \
-		-end
-	pdflatex Dickson_sets_classification.tex
-	open Dickson_sets_classification.pdf
-
-
-
-Endrass_7c: Endrass_F7.txt
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define C -combinatorial_objects \
-			-file_of_points Endrass_F7.txt  \
-		-end \
-		-define F -finite_field -q 7 -end \
-		-define P -projective_space 3 F -end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form_PG P \
-			-classification_prefix Endrass_F7 \
-			-save_ago \
-			-end \
-			-report \
-		-end
-	pdflatex Endrass_F7_classification.tex
-	open Endrass_F7_classification.pdf
-
-
-# group order is 32
-
-
-
-
 
 #############################################################################################################
-# Section 6.6: Arcs and Caps in Projective Spaces
+# Section 6.5: Arcs and Caps in Projective Spaces
 
 
 SECTION_ARCS_AND_CAPS_IN_PROJECTIVE_SPACES:
@@ -5413,8 +5532,6 @@ hyperoval_16_classify:
 
 #					-draw_poset -draw_options -end \
 
-HYPEROVAL_16_144="0, 1, 2, 3, 52, 67, 89, 106, 126, 141, 159, 176, 184, 199, 220, 235, 245, 262"
-HYPEROVAL_16_16320="0, 1, 2, 3, 52, 70, 83, 109, 127, 139, 156, 174, 186, 199, 217, 229, 256, 264"
 
 
 hyperoval_16_1_conic_type:
@@ -5849,7 +5966,7 @@ five_arcs_q13:
 
 
 #############################################################################################################
-# Section 6.7: Cubic Curves
+# Section 6.6: Cubic Curves
 
 SECTION_CUBIC_CURVES:
 
@@ -5951,18 +6068,149 @@ cubic_curves_PG_2_8_canon:
 
 
 
+#############################################################################################################
+# Chapter 7 - Combinatorial Objects 
+#############################################################################################################
+
+
+#############################################################################################################
+# Section 7.1: Canonical Forms via Nauty
+
+
+SECTION_CANONICAL_FORMS:
+
+
+EC_canon: elliptic_curve_b1_c3_q11.txt
+	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define C -combinatorial_objects \
+			-file_of_points elliptic_curve_b1_c3_q11.txt \
+		-end \
+		-define F -finite_field -q 11 -end \
+		-define P -projective_space 2 F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+				-classification_prefix EC \
+				-save_ago \
+			-end \
+			-report EC \
+		-end
+	pdflatex EC_classification.tex
+	open EC_classification.pdf
+
+
+
+
+Hirschfeld_q4_c: Hirschfeld_surface_q4.txt
+	$(ORBITER_PATH)orbiter.out -v 40 \
+		-define C -combinatorial_objects \
+			-file_of_points Hirschfeld_surface_q4.txt \
+		-end \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space 3 F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+				-classification_prefix Hirschfeld_surface_q4 \
+				-save_ago \
+				-max_TDO_depth 10 \
+			-end \
+			-report \
+		-end
+	pdflatex Hirschfeld_surface_q4_classification.tex
+	open Hirschfeld_surface_q4_classification.pdf
+
+
+# group order is 51840
+
+
+Hirschfeld_q4_set_c:
+	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define H -set -here \
+			$(HIRSCHFELD_SURFACE_Q4_SET_OF_POINTS) \
+		-end \
+		-define C -combinatorial_objects \
+			-set_of_points H \
+		-end \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space 3 F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+			-classification_prefix Hirschfeld_surface_q4 \
+			-save_ago \
+		-end
+	pdflatex Hirschfeld_surface_q4_classification.tex
+	open Hirschfeld_surface_q4_classification.pdf
+
+
+
+Dickson_sets_stabilizer:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define C -combinatorial_objects \
+			-set_of_points "0,1,2,5,6" \
+			-set_of_points "0,1,2,3,6" \
+			-set_of_points "0,1,2,3,4" \
+			-set_of_points "0,1,2,3,8" \
+			-set_of_points "0,1,2,5,6,7,8" \
+			-set_of_points "0,1,2,3,5,6,7" \
+			-set_of_points "0,1,2,3,5,6,9" \
+			-set_of_points "0,1,2,3,5,6,10" \
+			-set_of_points "0,1,2,3,5,6,4" \
+			-set_of_points "0,1,2,3,8,11,13" \
+			-set_of_points "3,6,9,7,10,12,8,11,13,14,4" \
+			-set_of_points "3,5,6,9,7,10,12,11,13,14,4" \
+			-set_of_points "0,1,2,3,5,6,9,7,10,12,4" \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space 3 F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+			-classification_prefix Dickson_sets \
+			-save_ago \
+			-end \
+			-report \
+		-end
+	pdflatex Dickson_sets_classification.tex
+	open Dickson_sets_classification.pdf
+
+
+
+Endrass_7c: Endrass_F7.txt
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define C -combinatorial_objects \
+			-file_of_points Endrass_F7.txt  \
+		-end \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space 3 F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+			-classification_prefix Endrass_F7 \
+			-save_ago \
+			-end \
+			-report \
+		-end
+	pdflatex Endrass_F7_classification.tex
+	open Endrass_F7_classification.pdf
+
+
+# group order is 32
+
+
 
 
 
 
 #############################################################################################################
-# Chapter 7 - Cubic Surfaces
+# Chapter 8 - Cubic Surfaces
 #############################################################################################################
 
 
 
 #############################################################################################################
-# Section 7.1: Cubic Surfaces Creation
+# Section 8.1: Cubic Surfaces Creation
 
 
 SECTION_CUBIC_SURFACES_CREATION:
@@ -6737,7 +6985,7 @@ F_alpha_beta_gamma_delta_points.txt:
 
 
 #############################################################################################################
-# Section 7.2: Cubic Surfaces and Quartic Curves 
+# Section 8.2: Cubic Surfaces and Quartic Curves 
 
 
 SECTION_CUBIC_SURFACES_AND_QUARTIC_CURVES:
@@ -7098,10 +7346,6 @@ quartic_curve_13_2_group:
 
 
 
-KNECHT_13_1_AS_PAIRS="1,0,1,1,1,2,12,9"
-KNECHT_13_1_AS_VECTOR="1,1,1,0,0, 0,0,0,0,12, 0,0,0,0,0"
-KNECHT_13_2_AS_PAIRS="1,0,1,1,1,2,8,9,8,10,8,11"
-KNECHT_13_2_AS_VECTOR="1,1,1,0,0, 0,0,0,0,8, 0,8,0,0,0"
 
 Knecht_13_1:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -7697,7 +7941,7 @@ quartic_curve_13_0_surface_create:
 #			-report_with_group \
 
 #############################################################################################################
-# Section 7.3: Cubic Surfaces Classification 
+# Section 8.3: Cubic Surfaces Classification 
 
 
 SECTION_CUBIC_SURFACES_CLASSIFICATION:
@@ -7767,13 +8011,10 @@ surface_classify_q13:
 		-define P -projective_space 3 F -end \
 		-with P -do \
 		-projective_space_activity \
-			-classify_surfaces_with_\
-double_sixes C -W -end \
+			-classify_surfaces_with_double_sixes C -W -end \
 		-end \
 		-with C -do \
-		-classification_of_cubic_\
-surfaces_with_double_sixes_\
-activity \
+		-classification_of_cubic_surfaces_with_double_sixes_activity \
 			-report -end \
 		-end \
 		-print_symbols
@@ -7783,7 +8024,7 @@ activity \
 
 
 #############################################################################################################
-# Section 7.4: Cubic Surfaces - Isomorphism Testing and Recognition
+# Section 8.4: Cubic Surfaces - Isomorphism Testing and Recognition
 
 
 SECTION_CUBIC_SURFACES_ISOMORPHISM_TESTING_AND_RECOGNITION:
@@ -7889,7 +8130,7 @@ surface_sweep_Cayley_13:
 
 
 #############################################################################################################
-# Section 7.5: Cubic Surfaces of Dickson type
+# Section 8.5: Cubic Surfaces of Dickson type
 
 
 SECTION_CUBIC_SURFACES_DICKSON:
@@ -8232,7 +8473,7 @@ Dickson_q16_analyze: poly_orbits_d3_n3_q2_F16.csv
 
 
 #############################################################################################################
-# Section 7.6:  Cubic Surfaces - ATLAS and Tables
+# Section 8.6:  Cubic Surfaces - ATLAS and Tables
 
 
 SECTION_CUBIC_SURFACES_ATLAS_AND_TABLES:
@@ -8597,12 +8838,12 @@ quartic_curve_tables_latex:
 
 
 #############################################################################################################
-# Chapter 8 - Applications
+# Chapter 9 - Applications
 #############################################################################################################
 
 
 #############################################################################################################
-# Section 8.1:  Number Theory
+# Section 9.1:  Number Theory
 
 
 SECTION_NUMBER_THEORY:
@@ -8647,7 +8888,7 @@ equivalence_class_of_fractions:
 
 
 #############################################################################################################
-# Section 8.2:  Combinatorics
+# Section 9.2:  Combinatorics
 
 
 SECTION_COMBINATORICS:
@@ -8665,6 +8906,32 @@ Char_Sym_6:
 	$(ORBITER_PATH)orbiter.out -v 2 -character_table_symmetric_group 6
 	
 
+
+Walsh_matrix_4:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 2 -end \
+		-with F -do -finite_field_activity \
+			-Walsh_matrix 4 -end
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file Walsh_01_4.csv \
+		-box_width 10 -bit_depth 24 -partition 3 16 16 -end
+	#pdflatex GF_2.tex
+	#open GF_2.pdf
+
+
+Dedekind_10_10:
+	$(ORBITER_PATH)orbiter.out -v 3 -Dedekind_numbers 2 10 2 10
+
+
+Dedekind_30_2:
+	$(ORBITER_PATH)orbiter.out -v 3 -Dedekind_numbers 2 30 2 2
+
+
+Dedekind_100_2:
+	$(ORBITER_PATH)orbiter.out -v 3 -Dedekind_numbers 2 100 2 2
+
+
+
 elementary_symmetric_functions_4:
 	$(ORBITER_PATH)orbiter.out -make_elementary_symmetric_functions 4 4
 
@@ -8673,23 +8940,9 @@ elementary_symmetric_functions_8:
 
 
 
-FILE_24_3_TFC_INC="24 24 72\
-\n0 1 2 24 27 28 48 53 54 73 79 80 97 105 106 122 131 132 146 157 158 171 175 183 \
-195 203 208 220 225 233 244 258 259 269 272 282 293 300 308 318 325 333 342 352 \
-358 367 379 381 392 398 400 417 428 429 442 443 450 466 471 479 492 497 502 517 \
-519 521 542 548 551 571 574 575              48\
-\n0 1 2 24 27 28 48 53 54 73 79 80 97 105 106 122 131 132 146 157 158 171 175 183 \
-195 203 208 220 225 233 244 258 259 269 272 281 293 301 308 318 324 327 342 354 \
-357 367 373 378 392 400 403 417 419 430 442 446 447 466 472 479 492 500 503 518 \
-525 526 545 549 551 571 572 574              48\
-\n0 1 2 24 27 28 48 53 54 73 79 80 97 105 106 122 131 132 146 157 158 171 175 179 \
-195 201 207 220 226 232 244 257 258 269 274 277 293 300 307 318 323 329 342 352 \
-356 367 374 381 392 397 406 416 423 431 441 450 454 468 476 477 494 499 503 519 \
-521 525 544 547 550 570 572 575             144\
-\n-1 3"
 
 
-design_test:
+TFC_24_3_c:
 	echo $(FILE_24_3_TFC_INC) >24_3_TFC.inc
 	$(ORBITER_PATH)orbiter.out -v 6 \
 		-define C -combinatorial_objects \
@@ -8699,9 +8952,18 @@ design_test:
 		-combinatorial_object_activity \
 			-canonical_form \
 			-classification_prefix 24_3_TFC \
+			-label 24_3_TFC \
 			-save_ago \
+			-end \
+			-report 24_3_TFC \
 		-end
-
+	pdflatex 24_3_TFC_classification.tex
+	open 24_3_TFC_classification.pdf
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file 24_3_TFC_object2_TDA_flag_orbits.csv \
+		-box_width 20 -bit_depth 24 \
+		-end
+	open 24_3_TFC_object2_TDA_flag_orbits_draw.bmp
 
 
 
@@ -8838,7 +9100,7 @@ Large_set_mult_C13xSxH5_apply:
 
 
 #############################################################################################################
-# Section 8.3: Representation Theory
+# Section 9.3: Representation Theory
 
 SECTION_REPRESENTATION_THEORY:
 
@@ -8880,7 +9142,7 @@ representation_tetrahedral_group_on_polynomials_of_degree_3:
 
 
 #############################################################################################################
-# Section 8.4: Cryptography 
+# Section 9.4: Cryptography 
 
 
 SECTION_CRYPTOGRAPHY:
@@ -9467,20 +9729,20 @@ power_mod_3_31:
 
 
 #############################################################################################################
-# Chapter 9 - Coding Theory
+# Chapter 10 - Coding Theory
 #############################################################################################################
 
 
 
 #############################################################################################################
-# Section 9.1: Coding Theory
+# Section 10.1: Coding Theory
 
 SECTION_CODING_THEORY_INTRODUCTION:
 
 
 
-Hamming_4_2:
-	$(ORBITER_PATH)orbiter.out -Hamming_graph 4 2
+Hamming_space_4_2_distance_matrix:
+	$(ORBITER_PATH)orbiter.out -Hamming_space_distance_matrix 4 2
 	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
 		-input_csv_file Hamming_n4_q2.csv \
 		-box_width 20 -bit_depth 24  -partition 4 16 16 -end
@@ -9563,69 +9825,34 @@ code_6:
 # 110010
 # 101001
 
-H_6_diagram:
-	$(ORBITER_PATH)orbiter.out -v 2 -code_diagram "H6" \
-		"" 6 
 
 
 
 
 
 
-F_16_7_power_5:
-	$(ORBITER_PATH)orbiter.out -v 3 -define F -finite_field -q 16 -end \
-		-with F -do -finite_field_activity \
-			-parse_and_evaluate "test" "" "(a*a)*(a*a)*a"  "a=7" -end
-	dot -Tpng test.gv >test.png
-
-
-# the answer is 11.
 
 
 
-
-
-Queens_graph:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define G -graph -non_attacking_queens_graph 8 -end \
-		-with G -do \
-		-graph_theoretic_activity -export_csv -end \
-		-with G -do \
-		-graph_theoretic_activity -export_graphviz -end \
-		-with G -do \
-		-graph_theoretic_activity -save -end \
-		-with G -do \
-		-graph_theoretic_activity -automorphism_group -end \
-		-with G -do \
-		-graph_theoretic_activity -find_cliques \
-			-target_size 8 -output_file 8queens -end \
-		-end 
-
-
-
-	#$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix  -input_csv_file non_attacking_queens_graph_8.csv \
-	#	-box_width 8 -bit_depth 24 -partition 4 64 64 -end
-	#twopi -Tpng non_attacking_queens_graph_8.gv >non_attacking_queens_graph_8.png
-	pdflatex non_attacking_queens_graph_8_report.tex
-	open non_attacking_queens_graph_8_report.pdf
 
 
 
 #############################################################################################################
-# Section 9.2: Hamming codes
+# Section 10.2: Hamming codes
 
 SECTION_CODING_THEORY_HAMMING_CODES:
-
 
 
 
 Hamming_generator:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
+		-define v -vector -field F -format 3 \
+			-dense $(SIMPLEX_CODE_GENERATOR) \
+		-end \
 		-with F -do \
 		-finite_field_activity  \
-		-nullspace 3 7 \
-"1,0,1,0,1,0,1, 0,1,1,0,0,1,1, 0,0,0,1,1,1,1" \
+		-nullspace v \
 		-end
 	pdflatex nullspace_3_7.tex
 	open nullspace_3_7.pdf
@@ -9635,24 +9862,26 @@ Hamming_generator:
 #-normalize_from_the_right \
 
 
-HAMMING_GENERATOR="1,0,0,0,0,1,1, \
-0,1,0,0,1,0,1, 0,0,1,0,1,1,0, 0,0,0,1,1,1,1"
-
-Hamming_weight_enumerator:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
-		-with F -do \
-		-finite_field_activity \
-			-weight_enumerator 4 7 $(HAMMING_GENERATOR) -end
-
 
 
 
 Hamming_code_words:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-linear_code_through_basis 7 "67,37,22,15" 
+		-define v -vector -dense $(HAMMING_CODE_ROWS_IN_BINARY_RANKS)  -end \
+		-linear_code_through_basis 7 v
 	pdflatex code_n7_k4_q2.tex
 	open code_n7_k4_q2.pdf
+
+Hamming_weight_enumerator:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end \
+		-define v -vector -field F -format 4 \
+			-dense $(HAMMING_CODE_GENERATOR) \
+		-end \
+		-with F -do \
+		-finite_field_activity \
+			-weight_enumerator v -end
+
 
 
 Hamming_code_diagram:
@@ -9690,7 +9919,8 @@ Hamming_code_diagram:
 	
 code_Hamming_systematic:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-linear_code_through_basis 7  "67,37,22,15" 
+		-define v -vector -dense $(HAMMING_CODE_ROWS_IN_BINARY_RANKS) -end \
+		-linear_code_through_basis 7 v
 	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
 		-input_csv_file code_matrix_16_8.csv \
 		-box_width 25 -bit_depth 8  -partition 2 16 8 -end
@@ -9711,9 +9941,12 @@ code_Hamming_systematic:
 Hamming_RREF:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
+		-define v -vector -format 4 -field F \
+			-dense $(HAMMING_CODE_GENERATOR) \
+		-end \
 		-with F -do \
 		-finite_field_activity \
-			-RREF 4 7 $(CODE_HAMMING) -end
+			-RREF v -end
 	pdflatex RREF_example_q2_4_7.tex
 	gs -sDEVICE=png16 -dFIXEDMEDIA -dDEVICEWIDTHPOINTS=500 -dDEVICEHEIGHTPOINTS=450 \
 		-r240 -oHamming_dual_page%02d.png \
@@ -9724,8 +9957,12 @@ Hamming_RREF:
 Hamming_nullspace:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F2 -finite_field -q 2 -end \
-		-with F2 -do -finite_field_activity  \
-		-nullspace 4 7 $(CODE_HAMMING) \
+		-define v -vector -format 4 -field F2 \
+			-dense $(HAMMING_CODE_GENERATOR) \
+		-end \
+		-with F2 -do \
+		-finite_field_activity  \
+		-nullspace v \
 		-normalize_from_the_right \
 		-end
 	pdflatex nullspace_4_7.tex
@@ -9741,11 +9978,6 @@ Hamming_nullspace:
 #0110011
 #0001111
 
-#[23,12,8]
-#0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 132, 913, 1460, 1750, 1898, 2518, 2787, 2874, 3320, 3357, 3662
-
-#[24,12,8]
-#0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 132, 913, 1460, 1750, 1898, 2518, 2787, 2874, 3320, 3357, 3662, 4004
 
 
 
@@ -9793,9 +10025,11 @@ Hamming_singer:
 Hamming_cyclic_generator:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
+		-define v -vector -format 3 -field F \
+			-dense $(SIMPLEX_CODE_GENMA_CYCLIC) \
+		-end \
 		-with F -do -finite_field_activity  \
-		-nullspace 3 7 \
-"1,0,0,1,1,1,0, 0,1,0,0,1,1,1, 0,0,1,1,1,0,1" \
+		-nullspace v \
 		-end
 	pdflatex nullspace_3_7.tex
 	open nullspace_3_7.pdf
@@ -9812,8 +10046,11 @@ Hamming_cyclic_long:
 		-end_loop
 
 
+
 Hamming_cyclic:
-	$(ORBITER_PATH)orbiter.out -v 2 -linear_code_through_basis 7  "69,39,22,11"
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define v -vector -dense "69,39,22,11"  -end \
+		-linear_code_through_basis 7 v
 	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
 		-input_csv_file code_matrix_16_8.csv \
 		-box_width 25 -bit_depth 8  -partition 2 16 8 -end
@@ -9821,19 +10058,25 @@ Hamming_cyclic:
 	pdflatex code_7_16.tex
 	open code_7_16.pdf
 
+
 Hamming_cyclic_clean_ns:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
+		-define v -vector -format 3 -field F \
+			-dense $(SIMPLEX_CODE_GENMA_CYCLIC) \
+		-end \
 		-with F -do -finite_field_activity  \
-		-nullspace 4 7 "1,0,1,1,0,0,0, 0,1,0,1,1,0,0, 0,0,1,0,1,1,0, 0,0,0,1,0,1,1" \
+		-nullspace v \
 		-normalize_from_the_right \
 		-end
 	pdflatex nullspace_4_7.tex
 	open nullspace_4_7.pdf
 
+
 Hamming_cyclic_clean:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-linear_code_through_basis 7  "88,44,22,11"
+		-define v -vector -dense "88,44,22,11"  -end \
+		-linear_code_through_basis 7 v
 	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
 		-input_csv_file code_matrix_16_8.csv \
 		-box_width 25 -bit_depth 8  -partition 2 16 8 -end
@@ -9863,7 +10106,7 @@ Hamming_cyclic_clean_long:
 
 
 #############################################################################################################
-# Section 9.3: Coding Theory - Golay codes
+# Section 10.3: Coding Theory - Golay codes
 
 SECTION_CODING_THEORY_GOLAY_CODES:
 
@@ -9871,8 +10114,8 @@ SECTION_CODING_THEORY_GOLAY_CODES:
 
 Golay23_code_words:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-linear_code_through_columns_of_parity_check_projectively 12 \
-		$(GOLAY_23_COLUMN_RANKS_PROJECTIVELY)
+		-define v -vector -dense $(GOLAY_23_COLUMN_RANKS_PROJECTIVELY) -end \
+		-linear_code_through_columns_of_parity_check_projectively 12 v
 	pdflatex code_n23_k12_q2.tex
 	open code_n23_k12_q2.pdf
 
@@ -9887,16 +10130,19 @@ Golay23_code_diagram:
 
 
 Golay23_code_diagram_draw:
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
-		-input_csv_file Golay_23_diagram_01_23_4096.csv \
-		-box_width 4 -bit_depth 8  -partition 20 4096 2048 -end
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-draw_matrix \
+			-input_csv_file Golay_23_diagram_01_23_4096.csv \
+			-box_width 4 -bit_depth 8 \
+			-partition 20 4096 2048 \
+		-end
 
 
 
 
 
 #############################################################################################################
-# Section 9.4: Coding Theory - CRC codes
+# Section 10.4: Coding Theory - CRC codes
 
 SECTION_CODING_THEORY_CRC_CODES:
 
@@ -10130,7 +10376,7 @@ CRC_poly_3_128_10:
 
 
 #############################################################################################################
-# Section 9.5: Coding Theory - Reed-Muller codes
+# Section 10.5: Coding Theory - Reed-Muller codes
 
 SECTION_CODING_THEORY_REED_MULLER_CODES:
 
@@ -10141,10 +10387,10 @@ SECTION_CODING_THEORY_REED_MULLER_CODES:
 
 
 
-
 RM_3_1_code_words:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-linear_code_through_basis 8 "255,170,204,240" 
+		-define v -vector -dense $(REED_MULLER_3_1_BASIS_IN_BINARY) -end \
+		-linear_code_through_basis 8 v
 	pdflatex code_n8_k4_q2.tex
 	open code_n8_k4_q2.pdf
 
@@ -10163,9 +10409,10 @@ RM_3_group:
 
 # group order 1344
 
+
 RM_3_1_diagram:
 	$(ORBITER_PATH)orbiter.out -v 2 -code_diagram "RM_3_1" \
-		"0,255,170,85,204,51,102,153,240,15,90,165,60,195,150,105" 8 \
+		$(REED_MULLER_3_1_CODEWORDS) 8 \
 		-metric_balls 1
 	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
 		-input_csv_file RM_3_1_diagram_01_8_16.csv \
@@ -10213,10 +10460,11 @@ RM_3_1_hole2:
 
 # E_2 + E_3 + E_4
 
+
 RM_4_1:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-linear_code_through_columns_of_parity_check 5 \
-		"1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31" 
+		$(REED_MULLER_4_1_COLUMNS_OF_PARTITY_CHECK)
 	pdflatex code_n16_k5_q2.tex
 	open code_n16_k5_q2.pdf
 
@@ -10305,23 +10553,6 @@ Reed_Muller_6:
 
 
 
-#-nearest_codeword "8,16,32,24,40,48,56,1,2,4,3,5,6,7,9,18,36,27,45,54,63,33,42,20,11,53,62,31"
-
-RM_6_GENERATOR_1="0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,\
-22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,\
-46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63"
-RM_6_GENERATOR_2="1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,\
-41,43,45,47,49,51,53,55,57,59,61,63"
-RM_6_GENERATOR_3="2,3,6,7,18,19,22,23,10,11,14,15,26,27,30,31,34,35,38,\
-39,42,43,46,47,50,51,54,55,58,59,62,63"
-RM_6_GENERATOR_4="4,6,12,14,36,38,52,54,5,7,13,15,37,39,53,55,20,22,28,\
-30,44,46,60,62,21,23,29,31,45,47,61,63"
-RM_6_GENERATOR_5="8,9,12,13,24,25,28,29,10,11,14,15,26,27,30,31,40,41,\
-44,45,56,57,60,61,42,43,46,47,58,59,62,63"
-RM_6_GENERATOR_6="16,18,24,26,48,50,56,58,17,19,25,27,49,51,57,59,20,22,\
-28,30,52,54,60,62,21,23,29,31,53,55,61,63"
-RM_6_GENERATOR_7="32,34,48,50,33,35,49,51,36,38,52,54,37,39,53,55,40,42,\
-56,58,41,43,57,59,44,46,60,62,45,47,61,63"
 
 RM_6:
 	$(ORBITER_PATH)orbiter.out -v 2 -long_code 64 7 \
@@ -10511,7 +10742,7 @@ RM_6_poster:
 
 
 #############################################################################################################
-# Section 9.6: Coding Theory - BCH Codes
+# Section 10.6: Coding Theory - BCH Codes
 
 SECTION_CODING_THEORY_BCH_CODES:
 
@@ -10527,6 +10758,16 @@ F7_RS_code_n6:
 	$(ORBITER_PATH)orbiter.out -v 30 \
 		-define F -finite_field -q 7 -end \
 		-with F -do -finite_field_activity -make_BCH_code 6 3 -end
+
+
+F_64_again:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 64 -end \
+		-with F -do -finite_field_activity \
+			-cheat_sheet_GF \
+		-end
+	pdflatex GF_64.tex
+	open GF_64.pdf
 
 
 BCH_255_5_evaluate_elementary_symmetric_functions_1:
@@ -10684,16 +10925,6 @@ BCH_elementary_symmetric_functions_3:
 	$(ORBITER_PATH)orbiter.out -make_elementary_symmetric_functions 3 3
 
 
-ELEMENTARY_SYMMETRIC_3_1="x0 + x1 + x2"
-ELEMENTARY_SYMMETRIC_3_2="x0*x1 + x0*x2 + x1*x2"
-ELEMENTARY_SYMMETRIC_3_3="x0*x1*x2"
-
-
-ELEMENTARY_SYMMETRIC_4_1="x0 + x1 + x2 + x3"
-ELEMENTARY_SYMMETRIC_4_2="x0*x1 + x0*x2 + x0*x3 + x1*x2 + x1*x3 + x2*x3"
-ELEMENTARY_SYMMETRIC_4_3="x0*x1*x2 + x0*x1*x3 + x0*x2*x3 + x1*x2*x3"
-ELEMENTARY_SYMMETRIC_4_4="x0*x1*x2*x3"
-
 BCH_63_4_evaluate_elementary_symmetric_functions_1:
 	$(ORBITER_PATH)orbiter.out -v 3 -define F -finite_field -q 64 -end \
 		-define e1 -formula "e1" "e1" "" $(ELEMENTARY_SYMMETRIC_3_1)    \
@@ -10773,36 +11004,38 @@ BCH_21_generator_matrix:
 		-generator_matrix_cyclic_code 21 "1,0,1,0,1,1,1" -end
 
 
-BCH_21_15_PROJ=" 0, 1, 19, 37, 113, 420, 1651, 6577, 26284, 105115, 420442, 1681753, 6727000, 26907991, 107631958, 27874647, 111498582, 43341143, 173364566, 156587350, 14 "
-
-
-BCH_21_15="1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1"
 
 
 BCH_21_15_weight_enumerator:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 4 -end \
+		-define v -vector -field F -format 15 \
+			-dense $(BCH_21_15_GENERATOR_MATRIX) \
+		-end \
 		-with F -do \
-		-finite_field_activity -weight_enumerator 15 21 $(BCH_21_15) -end
+		-finite_field_activity -weight_enumerator v -end
 
 # too slow!
 
 BCH_21_15_dual:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 4 -end \
+		-define v -vector -field F -format 15 \
+			-dense $(BCH_21_15_GENERATOR_MATRIX) -end \
 		-with F -do -finite_field_activity  \
-		-nullspace 15 21 $(BCH_21_15)  \
+			-nullspace v \
 		-normalize_from_the_right \
 		-end
 
 
-BCH_21_6=" 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1 "
-
 BCH_21_6_weight_enumerator:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 4 -end \
+		-define v -vector -format 6 -field F \
+			-dense $(BCH_21_6_GENERATOR_MATRIX) \
+		-end \
 		-with F -do \
-		-finite_field_activity -weight_enumerator 6 21 $(BCH_21_6) -end
+		-finite_field_activity -weight_enumerator v -end
 
 # 1y^{21} + 63x^8y^{13} + 294x^{12}y^9 + 756x^{14}y^7 + 1890x^{16}y^5 + 1092x^{18}y^3
 
@@ -10860,15 +11093,6 @@ F256_BCH_code_d16:
 
 
 
-POLY_Q256_DEG30_SPARSE="1,0,26,1,210,2,24,3,\
-138,4,148,5,160,6,58,7,108,8,199,9,95,10,56,\
-11,9,12,205,13,194,14,193,15,3,16,248,17,110,\
-18,150,19,24,20,169,21,192,22,212,23,112,24,\
-144,25,97,26,109,27,174,28,253,29,1,30"
-
-POLY_Q256_DEG30_DENSE="1,26,210,24,138,148,\
-160,58,108,199,95,56,9,205,194,193,3,248,110,\
-150,24,169,192,212,112,144,97,109,174,253,1"
 
 
 F256_BCH_code_d16_division:
@@ -10893,7 +11117,7 @@ F256_BCH_code_d16_error:
 
 
 #############################################################################################################
-# Section 9.7: Coding Theory - Reed Solomon codes
+# Section 10.7: Coding Theory - Reed Solomon codes
 
 SECTION_CODING_THEORY_REED_SOLOMON_CODES:
 
@@ -10901,9 +11125,12 @@ SECTION_CODING_THEORY_REED_SOLOMON_CODES:
 RREF_RS_6_4_7_weight_enumerator:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 7 -end \
+		-define v -vector -format 4 -field F \
+			-dense $(CODE_RS_6_4_7) \
+		-end \
 		-with F -do \
 		-finite_field_activity \
-		-weight_enumerator 4 6 $(CODE_RS_6_4_7) \
+		-weight_enumerator v \
 		-end
 
 
@@ -10931,8 +11158,11 @@ RS_6_4_7_group:
 Code_RS_11:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 11 -end \
+		-define v -vector -format 8 -field F \
+			-dense $(CODE_RS_10_8_11) \
+		-end \
 		-with F -do \
-		-finite_field_activity -RREF 8 10 $(CODE_RS_10_8_11) -end
+		-finite_field_activity -RREF v -end
 	pdflatex RREF_example_q11_8_10.tex
 	#gs -sDEVICE=png16 -dFIXEDMEDIA -dDEVICEWIDTHPOINTS=500 -dDEVICEHEIGHTPOINTS=450 \
 	#	-r240 -oRREF_example_q11_8_10_page%02d.png \
@@ -10943,9 +11173,12 @@ Code_RS_11:
 Code_RS_11_weight_enumerator:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 11 -end \
+		-define v -vector -format 8 -field F \
+			-dense $(CODE_RS_11_RREF) \
+		-end \
 		-with F -do \
 		-finite_field_activity \
-			-weight_enumerator 8 10 $(CODE_RS_11_RREF) \
+			-weight_enumerator v \
 		-end
 
 
@@ -10955,9 +11188,12 @@ Code_RS_11_weight_enumerator:
 RREF_RS_8_weight_enumerator:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 8 -end \
+		-define v -vector -format 5 -field F \
+			-dense $(CODE_RS_8) \
+		-end \
 		-with F -do \
 		-finite_field_activity \
-			-weight_enumerator 5 7 $(CODE_RS_8) \
+			-weight_enumerator v \
 		-end
 
 
@@ -10996,10 +11232,12 @@ RS_8_field_reduction:
 RREF_RS_8_reduced_weight_enumerator:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
+		-define v -vector -format 15 -field F \
+			-dense $(RS_8_reduced) \
+		-end \
 		-with F -do \
 		-finite_field_activity \
-		-weight_enumerator 15 21 \
-			$(RS_8_reduced) \
+		-weight_enumerator v \
 		-end
 
 
@@ -11017,10 +11255,12 @@ CODE_21_15_4_store:
 CODE_21_15_4_weight_enumerator:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
+		-define v -vector -format 15 -field F \
+			-dense $(CODE_21_15_4) \
+		-end \
 		-with F -do \
 		-finite_field_activity \
-		-weight_enumerator \
-			15 21 $(CODE_21_15_4) \
+		-weight_enumerator v \
 		-end
 
 
@@ -11037,7 +11277,7 @@ Reed_solomon_F8_work:
 
 
 #############################################################################################################
-# Section 9.8: Coding Theory - Bounds
+# Section 10.8: Coding Theory - Bounds
 
 SECTION_CODING_THEORY_BOUNDS:
 
@@ -11087,8 +11327,13 @@ bounds_for_d_given_n12_k4_q13:
 GV_n15_k6_d5_weight_enumerator:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
+		-define v -vector -format 6 -field F \
+			-dense $(CODE_GV_N15_K6) \
+		-end \
 		-with F -do \
-		-finite_field_activity -weight_enumerator 6 15 $(CODE_GV_N15_K6) -end
+		-finite_field_activity \
+			-weight_enumerator v \
+		-end
 
 #1y^{15} + 27x^6y^9 + 24x^8y^7 + 9x^{10}y^5 + 3x^{12}y^3
 # surprise: d = 6
@@ -11122,16 +11367,22 @@ code_n15_k6_d6_a_group:
 code_n15_k6_d6_a_we:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
+		-define v -vector -format 6 -field F \
+			-dense $(CODE_15_6_6_A) \
+		-end \
 		-with F -do \
-		-finite_field_activity -weight_enumerator 6 15 $(CODE_15_6_6_A) -end
+		-finite_field_activity -weight_enumerator v -end
 
 #1y^{15} + 27x^6y^9 + 24x^8y^7 + 9x^{10}y^5 + 3x^{12}y^3
 
 code_n15_k6_d6_b_we:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
+		-define v -vector -format 6 -field F \
+			-dense $(CODE_15_6_6_B) \
+		-end \
 		-with F -do \
-		-finite_field_activity -weight_enumerator 6 15 $(CODE_15_6_6_B) -end
+		-finite_field_activity -weight_enumerator v -end
 
 #1y^{15} + 28x^6y^9 + 21x^8y^7 + 12x^{10}y^5 + 2x^{12}y^3
 
@@ -11139,8 +11390,11 @@ code_n15_k6_d6_b_we:
 code_n15_k6_d6_RREF:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
+		-define v -vector -format 6 -field F \
+			-dense $(CODE_GV_N15_K6) \
+		-end \
 		-with F -do -finite_field_activity \
-		-RREF 6 15 $(CODE_GV_N15_K6)  -normalize_from_the_right \
+		-RREF v -normalize_from_the_right \
 		-end
 	pdflatex RREF_example_q2_6_15.tex
 	open RREF_example_q2_6_15.pdf
@@ -11148,8 +11402,11 @@ code_n15_k6_d6_RREF:
 code_n15_k6_d6_check_RREF:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
+		-define v -vector -format 9 -field F \
+			-dense $(CODE_GV_N15_K6_CHECK) \
+		-end \
 		-with F -do -finite_field_activity \
-		-RREF 9 15 $(CODE_GV_N15_K6_CHECK)  -normalize_from_the_right \
+		-RREF v -normalize_from_the_right \
 		-end
 	pdflatex RREF_example_q2_9_15.tex
 	open RREF_example_q2_9_15.pdf
@@ -11159,7 +11416,7 @@ code_n15_k6_d6_check_RREF:
 
 
 #############################################################################################################
-# Section 9.9: Coding Theory - Classification
+# Section 10.9: Coding Theory - Classification
 
 SECTION_CODING_THEORY_CLASSIFICATION:
 
@@ -11368,13 +11625,13 @@ codes_q13_12_4:
 
 
 #############################################################################################################
-# Chapter 10 - Incidence Geometry
+# Chapter 11 - Incidence Geometry
 #############################################################################################################
 
 
 
 ########################################################################################################
-# Section 10.1: Diophantine Systems
+# Section 11.1: Diophantine Systems
 
 SECTION_DIOPHANT:
 
@@ -11416,7 +11673,7 @@ octic_monomials:
 
 
 ########################################################################################################
-# Section 10.2: Combinatorial Linear Spaces
+# Section 11.2: Combinatorial Linear Spaces
 
 SECTION_COMBINATORIAL_LINEAR_SPACES:
 	
@@ -11484,7 +11741,7 @@ linsp30_pt_distribution:
 
 
 ########################################################################################################
-# Section 10.3: Combinatorial Linear Spaces
+# Section 11.3: Combinatorial Linear Spaces
 
 ####
 # geometry builder:
@@ -11571,7 +11828,7 @@ geo_10_3_tree:
 
 
 geo_10_3_c:
-	$(ORBITER_PATH)orbiter.out -v 20 \
+	$(ORBITER_PATH)orbiter.out -v 10 \
 		-draw_incidence_structure_description \
 			-width 60 -with_10 6 -end \
 		-define C -combinatorial_objects \
@@ -11587,10 +11844,14 @@ geo_10_3_c:
 			-end \
 			-report \
 		-end
-	pdflatex 10_3_classification.tex
-	open 10_3_classification.pdf
+	#pdflatex 10_3_classification.tex
+	#open 10_3_classification.pdf
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file 10_3_object7_TDA_flag_orbits.csv \
+		-box_width 20 -bit_depth 24 \
+		-end
 
-
+#10_3_object7_TDA_flag_orbits.csv
 
 #0 1 2 10 13 14 20 25 26 31 33 35 41 44 46 52 53 56 62 67 68 74 77 79 85 88 89 
 
@@ -11806,7 +12067,7 @@ geo_63_3_g6:
 
 
 #############################################################################################################
-# Section 10.4: Design Theory
+# Section 11.4: Design Theory
 
 SECTION_DESIGN_THEORY:
 
@@ -11822,20 +12083,6 @@ design_PG_2_4:
 
 
 
-ORDER_SYM_13="6227020800"
-GENERATORS_SYM_13="\
-1,0,2,3,4,5,6,7,8,9,10,11,12, \
-0,2,1,3,4,5,6,7,8,9,10,11,12, \
-0,1,3,2,4,5,6,7,8,9,10,11,12, \
-0,1,2,4,3,5,6,7,8,9,10,11,12, \
-0,1,2,3,5,4,6,7,8,9,10,11,12, \
-0,1,2,3,4,6,5,7,8,9,10,11,12, \
-0,1,2,3,4,5,7,6,8,9,10,11,12, \
-0,1,2,3,4,5,6,8,7,9,10,11,12, \
-0,1,2,3,4,5,6,7,9,8,10,11,12, \
-0,1,2,3,4,5,6,7,8,10,9,11,12, \
-0,1,2,3,4,5,6,7,8,9,11,10,12, \
-0,1,2,3,4,5,6,7,8,9,10,12,11"
 GENERATORS_H5="1,2,3,4,0,6,7,8,9,5,10,11,12"
 GENERATORS_N5="\
 0,1,2,3,4,9,5,6,7,8,10,11,12, \
@@ -11848,26 +12095,12 @@ GENERATORS_N5="\
 
 
 
-design_PG_2_3_table_create_old:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define D -design -q 3 -family PG_2_q  -end \
-		-with D -do \
-		-design_activity \
-			-create_table "PG_2_13" $(ORDER_SYM_13) \
-				$(GENERATORS_SYM_13) 
-				 
-	
-# written file PG_2_13_design_table.csv
-# 1108800 designs
-#User time: 7:30
-
 
 design_PG_2_3_table_create:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define D -design -q 3 -family PG_2_q  -end \
-		-define T -design_table D "PG_2_13" \
-			$(ORDER_SYM_13) \
-			$(GENERATORS_SYM_13) 
+		-define Sym13 -permutation_group -symmetric_group 13 -end \
+		-define T -design_table D "PG_2_13" Sym13 -end 
 
 # written file PG_2_13_design_table.csv
 # 1108800 designs
@@ -11876,8 +12109,7 @@ design_PG_2_3_table_create:
 design_PG_2_3_group_5:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define D -design -q 3 -family PG_2_q  -end \
-		-define T -design_table D "PG_2_13" \
-			$(ORDER_SYM_13) $(GENERATORS_SYM_13) \
+		-define T -design_table D "PG_2_13" Sym13 -end \
 		-define LSW -large_set_with_symmetry_assumption T \
 				-H "5" $(GENERATORS_H5) \
 				-N "1200" $(GENERATORS_N5) \
@@ -11897,7 +12129,7 @@ design_PG_2_3_group_5:
 design_PG_2_3_group_5_sol_0:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define D -design -q 3 -family PG_2_q  -end \
-		-define T -design_table D "PG_2_13" $(ORDER_SYM_13) $(GENERATORS_SYM_13) \
+		-define T -design_table D "PG_2_13" Sym13 -end \
 		-define LSW -large_set_with_symmetry_assumption T \
 				-H "5" $(GENERATORS_H5) \
 				-N "1200" $(GENERATORS_N5) \
@@ -11908,6 +12140,10 @@ design_PG_2_3_group_5_sol_0:
 			-large_set_with_symmetry_assumption_activity \
 				-read_solution_file 5 case_0_sol.txt \
 			-end
+
+
+
+
 
 
 # to create simple 7-designs on 33 points with block size 8 and lambda = 10 invariant under PGGL(2,32):
@@ -12035,33 +12271,12 @@ design_large_set_rank_k_subsets_c:
 design_large_set_rank_k_subsets_d:
 	$(ORBITER_PATH)orbiter.out -v 2 -rank_k_subset 13 4 $(PLANE_4)
 
-design_test_old:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define D -design  -end \
-		-with D -do \
-		-design_activity \
-			-canonical_form \
-			-input -file_of_incidence_geometries 24_3_TFC.inc 24 24 72 -end \
-			-save_ago \
-		-end
 
 #############################################################################################################
-# Section 10.5: Design Theory - Large Sets
+# Section 11.5: Design Theory - Large Sets
 
 SECTION_DESIGN_THEORY_LARGE_SETS:
 
-
-
-ORDER_SYM_9="362880"
-GENERATORS_SYM_9="\
-1,0,2,3,4,5,6,7,8, \
-0,2,1,3,4,5,6,7,8, \
-0,1,3,2,4,5,6,7,8, \
-0,1,2,4,3,5,6,7,8, \
-0,1,2,3,5,4,6,7,8, \
-0,1,2,3,4,6,5,7,8, \
-0,1,2,3,4,5,7,6,8, \
-0,1,2,3,4,5,6,8,7"
 
 
 
@@ -12102,7 +12317,6 @@ geo_9_4_12_3_c:
 # ago=432
 
 
-AG_2_3_BLOCKS="0,13,22,27,35,41,47,53,55,59,71,76"
 
 
 LS_AG_2_3_design_table_create:
@@ -12141,7 +12355,6 @@ AG_2_3_on_designs:
 
 # the stabilizer of the first design:
 
-LARGE_SET_AG_2_3_NEIGHBOR_SET="129,130,133,134,136,139,141,142,153,154,156,160,165,166,178,179,183,184,185,190,192,194,197,203,204,206,218,221,222,225,227,231,248,251,252,255,256,259,261,262,272,277,279,283,285,287,299,301,303,305,306,309,313,315,319,320,323,325,341,342,343,344,345,349,368,371,375,378,381,383,392,393,397,402,403,405,416,419,421,422,425,426,429,430,440,443,447,449,453,454,464,467,468,473,474,479,490,493,494,497,500,503,513,517,518,520,523,527,536,539,541,542,544,547,548,551,563,566,567,571,572,573,585,589,590,593,595,596,600,601,603,611,614,615,625,629,631,635,637,638,657,659,661,667,668,671,681,683,686,689,691,693,705,706,709,710,712,715,717,718,720,723,724,729,733,735,747,748,750,752,754,757,777,780,781,784,790,791,802,804,807,808,811,814,824,827,828,831,832,835,837,838"
 
 AG_2_3_stab_orb_0:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -12258,16 +12471,10 @@ LS_AG_2_3_solutions_classify:
 
 
 #############################################################################################################
-# Section 10.6: Design Theory - Delandtsheer Doyen
+# Section 11.6: Design Theory - Delandtsheer Doyen
 
 SECTION_DESIGN_THEORY_DELANDTHSHEER_DOYEN:
 
-PP4 = -d1 1 -q1 3 -d2 1 -q2 7 -K 5 -search_control -W -end -problem_label PP4
-PP4_GROUP1=-subgroup "1,1,1,1, " "21" -group_label "cyclic21"
-PP4_MASK1=\
-	-nb_orbits_on_blocks 1 \
-	-depth 5 \
-	-mask_label "no_mask"
 
 DD_PP4:
 	$(ORBITER_PATH)orbiter.out -v 6  \
@@ -12383,7 +12590,7 @@ design_27c:
 
 
 #############################################################################################################
-# Section 10.7: Tactical Decompositions
+# Section 11.7: Tactical Decompositions
 
 SECTION_TACTICAL_DECOMPOSITIONS:
 
@@ -12404,7 +12611,7 @@ max_arc_16_4r_print:
 
 
 #############################################################################################################
-# Section 10.8: Spreads
+# Section 11.8: Spreads
 
 SECTION_SPREADS:
 	
@@ -12490,7 +12697,7 @@ spreads16_4:
 
 
 #############################################################################################################
-# Section 10.9: Translation planes
+# Section 11.9: Translation planes
 
 
 SECTION_TRANSLATION_PLANES:
@@ -12574,7 +12781,7 @@ TP_16_2:
 
 
 #############################################################################################################
-# Section 10.10: Packings
+# Section 11.10: Packings
 
 
 SECTION_PACKINGS:
@@ -12774,10 +12981,6 @@ PG_3_5_assume_31_classify:
 #0,444,43313,154402,46682,108254,75363,27729,32139,5244,60442,142811,111115,94209,120678,89533,13798,103994,129953,82168,136838,19253,23017,145985,134996,54705,36267,55066,117542,96699,69154,72460
 #1,616,42728,152655,48576,105431,79607,28634,32817,9799,62356,141176,110085,92557,122136,86312,13975,101942,126869,81478,139352,18028,24325,147284,130370,52074,36843,55602,118454,95973,69642,74036
 
-PENTTILA_WILLIAMS_PRINCE_REG_PACKING_0="444,43313,154402,46682,108254,75363,27729,32139,5244,60442,142811,111115,94209,120678,89533,13798,103994,129953,82168,136838,19253,23017,145985,134996,54705,36267,55066,117542,96699,69154,72460"
-PENTTILA_WILLIAMS_PRINCE_REG_PACKING_1="616,42728,152655,48576,105431,79607,28634,32817,9799,62356,141176,110085,92557,122136,86312,13975,101942,126869,81478,139352,18028,24325,147284,130370,52074,36843,55602,118454,95973,69642,74036"
-
-PENTTILA_WILLIAMS_PRINCE_REG_PACKING_0_DUAL="3938, 66740, 56555, 93538, 107785, 64917, 47567, 54483, 141012, 138602, 18308, 6880, 131351, 88788, 125484, 102075, 21234, 99392, 119149, 80640, 124839, 148843, 71862, 11468, 35950, 27050, 75338, 113337, 40002, 154102, 30567"
 
 PG_3_5_packing_0_dualize:
 	$(ORBITER_PATH)orbiter.out -v 5 \
@@ -12891,10 +13094,6 @@ PG_3_5_assume_3B_classify:
 	pdflatex H3B_packings_classification.tex
 	open H3B_packings_classification.pdf
 
-PG_3_5_PACKING_0_WITH_AGO3="0,5201,60427,86602,11453,121452,46663,19716,32921,108680,23456,91963,68386,26921,74601,57067,36188,42312,78780,53117,118488,114700,83960,99669,104791,126662,130960,145179,137230,150626,140216"
-
-
-PG_3_5_PACKING_0_WITH_AGO3_FIXP444="444,5001,12957,18194,23485,26817,34667,38299,41249,47472,50450,56601,62638,68986,71833,75369,80805,87025,92577,95676,104509,109718,114948,116333,124391,127498,133240,137711,144777,148059,150175"
 
 
 PG_3_5_packing0_print:
@@ -12982,7 +13181,7 @@ PG_3_5_packings_sort_each_row:
 
 
 #############################################################################################################
-# Section 10.11: BLT-sets
+# Section 11.11: BLT-sets
 
 SECTION_BLT_SETS:
 
@@ -13117,13 +13316,13 @@ BLT_13_cliques:
 
 
 #############################################################################################################
-# Chapter 11 - Graph Theory
+# Chapter 12 - Graph Theory
 #############################################################################################################
 
 
 
 ############################################################################################################
-# Section 11.1: Creating Graphs
+# Section 12.1: Creating Graphs
 
 
 SECTION_CREATING_GRAPHS:
@@ -13328,16 +13527,25 @@ HJ_d2_c5:
 		-end
 
 
+PGO_5_2_collinearity_graph: O_5_2_incidence_matrix.csv 
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define Inc -vector -file O_5_2_incidence_matrix.csv -end \
+		-define Gamma -graph -collinearity_graph Inc -end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-properties \
+		-end
 
 
 ############################################################################################################
-# Section 11.2: Graphs Isomorphism and Automorphism
+# Section 12.2: Graphs Isomorphism and Automorphism
 
 
 SECTION_GRAPH_ISOMORPHISM_AND_AUTOMORPHISM:
 
 Cycle_13_aut:
-	$(ORBITER_PATH)orbiter.out -v 2 -define Gamma -graph -cycle 13 -end \
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Gamma -graph -cycle 13 -end \
 		-with Gamma -do \
 		-graph_theoretic_activity -automorphism_group -end \
 
@@ -13347,7 +13555,8 @@ Cycle_13_aut:
 
 load_graph_pp16_1:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define Gamma -graph -load_dimacs  ../JUNTILLA_KASKI/benchmarks/pp/pp16-1 \
+		-define Gamma -graph -load_dimacs \
+		../JUNTILLA_KASKI/benchmarks/pp/pp16-1 \
 		-end \
 		-with Gamma -do \
 		-graph_theoretic_activity -save -end \
@@ -13360,7 +13569,8 @@ load_graph_pp16_1:
 
 load_graph_pp16_2:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define Gamma -graph -load_dimacs  ../JUNTILLA_KASKI/benchmarks/pp/pp16-2 \
+		-define Gamma -graph -load_dimacs \
+		../JUNTILLA_KASKI/benchmarks/pp/pp16-2 \
 		-end \
 		-with Gamma -do \
 		-graph_theoretic_activity -save -end \
@@ -13371,7 +13581,8 @@ load_graph_pp16_2:
 
 load_graph_pp16_9:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define Gamma -graph -load_dimacs  ../JUNTILLA_KASKI/benchmarks/pp/pp16-9 \
+		-define Gamma -graph -load_dimacs \
+		../JUNTILLA_KASKI/benchmarks/pp/pp16-9 \
 		-end \
 		-with Gamma -do \
 		-graph_theoretic_activity -save -end \
@@ -13381,7 +13592,8 @@ load_graph_pp16_9:
 
 load_graph_grid_3_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define Gamma -graph -load_dimacs  ../JUNTILLA_KASKI/benchmarks/grid/grid-w-3-3 \
+		-define Gamma -graph -load_dimacs \
+		../JUNTILLA_KASKI/benchmarks/grid/grid-w-3-3 \
 		-end \
 		-with Gamma -do \
 		-graph_theoretic_activity -save -end \
@@ -13497,9 +13709,19 @@ Hamming_graph_7_with_Hamming_code:
 # group of order 2688 = 16 * 168
 
 
+PGO_5_2_graph_group: O_5_2_incidence_matrix.csv 
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define Inc -vector -file O_5_2_incidence_matrix.csv -end \
+		-define Gamma -graph -collinearity_graph Inc -end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-automorphism_group \
+		-end
+
+
 
 ############################################################################################################
-# Section 11.3: Graph Theory: Classification
+# Section 12.3: Graph Theory: Classification
 
 
 SECTION_GRAPH_THEORY_CLASSIFICATION:
@@ -13591,7 +13813,7 @@ graph_classify_8_r3:
 
 
 ############################################################################################################
-# Section 11.4: Graph Theory: Clique finding
+# Section 12.4: Graph Theory: Clique finding
 
 
 SECTION_GRAPH_THEORY_CLIQUE_FINDING:
@@ -13713,8 +13935,17 @@ Paley_29c_cliques_classify:
 #User time: 0.03 of a second, dt=3 tps = 100
 
 
+PGO_5_2_cliques: O_5_2_incidence_matrix.csv 
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define Inc -vector -file O_5_2_incidence_matrix.csv -end \
+		-define Gamma -graph -collinearity_graph Inc -end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-find_cliques -target_size 3 -end \
+		-end
 
-HJ_d2_c5:
+
+HJ_d2_c5_second:
 	$(ORBITER_PATH)orbiter.out -v 6 \
 		-define G -graph \
 			-load_csv_no_border \
@@ -13779,12 +14010,12 @@ HJ64_cliques5_classify:
 
 
 #############################################################################################################
-# Chapter 12 - Interfaces
+# Chapter 13 - Interfaces
 #############################################################################################################
 
 
 #############################################################################################################
-# Section 12.1: Graphical Output
+# Section 13.1: Graphical Output
 
 SECTION_GRAPHICAL_OUTPUT:
 	
@@ -13858,10 +14089,33 @@ schreier_tree_graphical_output:
 	open poly_orbits_d3_n3_q2.pdf
 
 
+Queens_graph:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define G -graph -non_attacking_queens_graph 8 -end \
+		-with G -do \
+		-graph_theoretic_activity -export_csv -end \
+		-with G -do \
+		-graph_theoretic_activity -export_graphviz -end \
+		-with G -do \
+		-graph_theoretic_activity -save -end \
+		-with G -do \
+		-graph_theoretic_activity -automorphism_group -end \
+		-with G -do \
+		-graph_theoretic_activity -find_cliques \
+			-target_size 8 -output_file 8queens -end \
+		-end 
+
+
+
+	#$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix  -input_csv_file non_attacking_queens_graph_8.csv \
+	#	-box_width 8 -bit_depth 24 -partition 4 64 64 -end
+	#twopi -Tpng non_attacking_queens_graph_8.gv >non_attacking_queens_graph_8.png
+	pdflatex non_attacking_queens_graph_8_report.tex
+	open non_attacking_queens_graph_8_report.pdf
 
 
 #############################################################################################################
-# Section 12.2: The Povray Interface
+# Section 13.2: The Povray Interface
 
 
 SECTION_POVRAY:
@@ -13906,7 +14160,10 @@ finish {diffuse 0.9 phong 0.6} }" \
 	mkdir POV
 	mv cube_0_*.pov POV
 	mv makefile_animation POV
-	
+
+
+
+
 monkey:
 	$(ORBITER_PATH)orbiter.out -v 2 -povray \
 		-round 0 -nb_frames_default 30 \
@@ -13919,7 +14176,7 @@ monkey:
 		-rotate_about_z_axis \
 		-end \
 		-scene_objects \
-			-cubic_lex "1,0,0,0,-3,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0" \
+			-cubic_lex $(MONKEY_SADDLE_CUBIC) \
 			-plane_by_dual_coordinates "0,0,1,0" \
 			-group_of_things "0" \
 			-group_of_things "0" \
@@ -14013,6 +14270,8 @@ finish { diffuse 0.9 phong 1}}" \
 #-W 4096 -H 3072 
 
 
+
+
 Eckardt_deform:
 	$(ORBITER_PATH)orbiter.out -v 2 -povray \
 		-round 0 -nb_frames_default 93 \
@@ -14027,8 +14286,8 @@ Eckardt_deform:
 			-Hilbert_Cohn_Vossen_surface \
 			-group_of_things "0" \
 			-deformation_of_cubic_lex 93 1.107148718 1.570796327 0 \
-				"0, 10, 0, -8, 10, 25, 2, 0, -20, -8, -20, -10, -24, 10, -2, 12, 0, -8, 8, 16" \
-				"0, -5, 0, -5, -5, 10, -1, 0, 10, 4, 10, 5, 3, -5, 1, -6, 0, -5, -4, 1" \
+				$(ECKARDT_CUBIC_DEFORM1_LEX) \
+				$(ECKARDT_CUBIC_DEFORM2_LEX) \
 			-group_of_things_as_interval 0 93 \
 			-group_is_animated 1 \
 			-cubics 1 "texture{ pigment{ White*0.5 transmit 0.5 } \
@@ -14058,8 +14317,8 @@ Eckardt_deform_2:
 			-Hilbert_Cohn_Vossen_surface \
 			-group_of_things "0" \
 			-deformation_of_cubic_lex 93 1.107148718 1.570796327 0 \
-				"0, 10, 0, -8, 10, 25, 2, 0, -20, -8, -20, -10, -24, 10, -2, 12, 0, -8, 8, 16" \
-				"0, -5, 0, -5, -5, 10, -1, 0, 10, 4, 10, 5, 3, -5, 1, -6, 0, -5, -4, 1" \
+				$(ECKARDT_CUBIC_DEFORM1_LEX) \
+				$(ECKARDT_CUBIC_DEFORM2_LEX) \
 			--group_of_things_as_interval 0 93 \
 			--group_is_animated 1 \
 			-group_of_things "0" \
@@ -14121,7 +14380,6 @@ reflection 0 specular .8}  }" \
 
 
 
-
 endrass8:
 	$(ORBITER_PATH)orbiter.out -v 2 -povray \
 		-round 0 -nb_frames_default 30 \
@@ -14149,15 +14407,7 @@ finish { diffuse 0.9 phong 1}}" \
 finish { diffuse 0.9 phong 1}}" \
 			-lines 3 0.05 "texture{ pigment{ color Black } \
 finish { diffuse 0.9 phong 1}}" \
-			-octic_lex_165 "-93.2548,0,0,0,-309.019,0,0,527.529,0,395.647,\
-0,0,0,0,0,0,0,0,0,0,-687.529,0,0,1582.59,0,1186.94,0,0,0,0,-1055.06,0,\
--1582.59,0,-593.47,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-309.019,\
-0,0,1582.59,0,1186.94,0,0,0,0,-2110.12,0,-3165.17,0,-1186.94,0,0,0,0,0,\
-0,874.039,0,1560.63,0,1677.92,0,343.362,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,\
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-93.2548,0,0,527.529,0,395.647,\
-0,0,0,0,-1055.06,0,-1582.59,0,-593.47,0,0,0,0,0,0,874.039,0,1560.63,0,\
-1677.92,0,343.362,0,0,0,0,0,0,0,0,-256,0,-468.077,0,-789.019,0,\
--525.726,0,0.941125" \
+			-octic_lex_165 $(ENDRASS_OCTIC_LEX_165) \
 			-plane_by_dual_coordinates "0,0,1,0" \
 			-group_of_things "0" \
 			-group_of_things "0" \
@@ -14178,7 +14428,7 @@ finish { diffuse 0.9 phong 1}}" \
 
 
 #############################################################################################################
-# Section 12.3: Creating Animations
+# Section 13.3: Creating Animations
 
 SECTION_ANIMATIONS:
 
@@ -14234,6 +14484,8 @@ specular .8} }" \
 	mv Eckardt_0_*.pov POV
 	mv makefile_animation POV
 
+
+
 Kummer_surface:
 	$(ORBITER_PATH)orbiter.out -v 2 -povray \
 		-round 0 -nb_frames_default 30 \
@@ -14245,8 +14497,7 @@ Kummer_surface:
 		-camera 0 "1,1,1" "-3,1,3" "0.12,0.12,0.12"  \
 		-end \
 		-scene_objects \
-			-quartic_lex_35 "-2,0,0,0,2,0,0,2,0,2,0,0,\
-0,0,0,0,0,0,0,0,-2,0,0,2,0,2,0,0,0,0,-2,0,2,0,-2" \
+			-quartic_lex_35 $(KUMMER_QUARTIC_LEX_35) \
 			-group_of_things "0" \
 			-quartics 0 "texture{ pigment{ White*0.5 transmit \
 0.5 } finish {ambient 0.4 diffuse 0.5 roughness 0.001 \
@@ -14277,6 +14528,7 @@ Kummer_video:
 		-f mp4 -q:v 0 -vcodec mpeg4  Kummer.mp4
 
 
+
 Beauville_surface:
 	$(ORBITER_PATH)orbiter.out -v 2 -povray \
 		-round 0 -nb_frames_default 30 \
@@ -14288,12 +14540,7 @@ Beauville_surface:
 		-camera 0 "1,1,1" "-3,1,3" "0.12,0.12,0.12"  \
 		-end \
 		-scene_objects \
-			-quintic_lex_56 "-44, 228, 400, 315, -396, -852, \
--512, -553, -1050, -354, 284, 504, -62, -707, -1390, -1010, \
-281, -167, -1644, -1024, -72, -196, 192, 373, 322, 78, 150, \
-966, 1540, 348, -475, -492, 1063, 1550, 390, 0, 96, 3, -337, \
--426, -66, 425, 673, -156, -216, -223, -60, 1543, 1998, 618, \
-263, -250, -919, 557, 1800, 741" \
+			-quintic_lex_56 $(BEAUVILLE_QUINTIC_LEX_56) \
 			-group_of_things "0" \
 			-quintics 0 "texture{ pigment{ White*0.5 transmit 0.5 } \
 finish {ambient 0.4 diffuse 0.5 roughness 0.001 \
@@ -14306,7 +14553,6 @@ reflection 0.1 specular .8} }" \
 	mv makefile_animation POV
 
 
-#-44, 228, 400, 315, -396, -852, -512, -553, -1050, -354, 284, 504, -62, -707, -1390, -1010, 281, -167, -1644, -1024, -72, -196, 192, 373, 322, 78, 150, 966, 1540, 348, -475, -492, 1063, 1550, 390, 0, 96, 3, -337, -426, -66, 425, 673, -156, -216, -223, -60, 1543, 1998, 618, 263, -250, -919, 557, 1800, 741
 
 
 
@@ -14725,7 +14971,7 @@ McKean_video:
 
 
 #############################################################################################################
-# Section 12.4: Continuous Function Plotter
+# Section 13.4: Continuous Function Plotter
 
 
 
@@ -14837,12 +15083,12 @@ finish { diffuse 0.9 phong 1}}" \
 
 
 #############################################################################################################
-# Chapter 13 - Miscellaneous
+# Chapter 14 - Miscellaneous
 #############################################################################################################
 
 
 #############################################################################################################
-# Section 13.1: Miscellaneous
+# Section 14.1: Miscellaneous
 
 SECTION_MISCELLANEOUS:
 
@@ -14870,7 +15116,7 @@ misc_join:
 
 
 #############################################################################################################
-# Section 13.2: Limitations
+# Section 14.2: Limitations
 
 SECTION_LIMITATIONS:
 

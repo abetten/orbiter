@@ -1064,7 +1064,7 @@ void activity_description::do_combinatorial_object_activity(int verbose_level)
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "-group_theoretic_activity requires at least one input" << endl;
+		cout << "-combinatorial_object_activity requires at least one input" << endl;
 		exit(1);
 	}
 

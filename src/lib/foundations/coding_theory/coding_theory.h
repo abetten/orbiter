@@ -80,7 +80,8 @@ public:
 		int verbose_level);
 	void mac_williams_equations(longinteger_object *&M, int n, int k, int q);
 	void determine_weight_enumerator();
-	void do_weight_enumerator(finite_field *F, int m, int n, std::string &text,
+	void do_weight_enumerator(finite_field *F,
+			int *M, int m, int n,
 			int f_normalize_from_the_left, int f_normalize_from_the_right,
 			int verbose_level);
 
@@ -123,7 +124,8 @@ public:
 			int nb_words, int n, int f_metric_balls, int radius_of_metric_ball,
 			int f_enhance, int radius,
 			int verbose_level);
-	void investigate_code(long int *Words, int nb_words, int n, int f_embellish, int verbose_level);
+	void investigate_code(long int *Words,
+			int nb_words, int n, int f_embellish, int verbose_level);
 	void embellish(int *M, int nb_rows, int nb_cols, int i0, int j0, int a, int rad);
 	void place_entry(int *M, int nb_rows, int nb_cols, int i, int j, int a);
 	void do_it(int n, int r, int a, int c, int seed, int verbose_level);
@@ -138,11 +140,13 @@ public:
 			std::string &label,
 			int m, int n, std::string &genma_text,
 			int verbose_level);
-	void CRC_encode_text(nth_roots *Nth, unipoly_object CRC_poly,
+	void CRC_encode_text(nth_roots *Nth, unipoly_object &CRC_poly,
 		std::string &text, std::string &fname,
 		int verbose_level);
-	void encode_text_5bits(std::string &text, std::string &fname, int verbose_level);
-	void field_induction(std::string &fname_in, std::string &fname_out, int nb_bits, int verbose_level);
+	void encode_text_5bits(std::string &text,
+			std::string &fname, int verbose_level);
+	void field_induction(std::string &fname_in,
+			std::string &fname_out, int nb_bits, int verbose_level);
 	int Hamming_distance(int *v1, int *v2, int n);
 	int Hamming_distance_binary(int a, int b, int n);
 	void generator_matrix_cyclic_code(finite_field *F,

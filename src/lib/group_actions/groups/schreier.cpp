@@ -3336,7 +3336,8 @@ void schreier::compute_orbit_invariant(int *&orbit_invariant,
 	}
 }
 
-void schreier::print_TDA(std::ostream &ost, object_with_canonical_form *OwCF, int verbose_level)
+void schreier::print_TDA(std::ostream &ost, object_with_canonical_form *OwCF,
+		int f_show_incma, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3346,13 +3347,15 @@ void schreier::print_TDA(std::ostream &ost, object_with_canonical_form *OwCF, in
 
 	//print_tex(ost);
 
-	encoded_combinatorial_object *Enc;
+	if (f_show_incma) {
+		encoded_combinatorial_object *Enc;
 
-	OwCF->encode_incma(Enc, verbose_level);
+		OwCF->encode_incma(Enc, verbose_level);
 
-	latex_TDA(ost, Enc, verbose_level);
+		latex_TDA(ost, Enc, verbose_level);
 
-	FREE_OBJECT(Enc);
+		FREE_OBJECT(Enc);
+	}
 
 	if (f_v) {
 		cout << "schreier::print_TDA done" << endl;

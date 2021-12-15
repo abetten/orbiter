@@ -2217,7 +2217,6 @@ schreier *strong_generators::orbits_on_points_schreier(
 {
 	int f_v = (verbose_level >= 1);
 	schreier *Sch;
-	longinteger_object go;
 
 	if (f_v) {
 		cout << "strong_generators::orbits_on_points_schreier "
@@ -2225,12 +2224,16 @@ schreier *strong_generators::orbits_on_points_schreier(
 		cout << "A_given=";
 		A_given->print_info();
 	}
+
+	longinteger_object go;
 	group_order(go);
 
 	if (f_v) {
 		cout << "strong_generators::orbits_on_points_schreier "
 				"go = " << go << endl;
 	}
+
+
 	if (f_v) {
 		cout << "strong_generators::orbits_on_points_schreier "
 				"generators:" << endl;

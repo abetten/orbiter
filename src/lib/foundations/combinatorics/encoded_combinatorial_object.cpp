@@ -754,7 +754,7 @@ void encoded_combinatorial_object::latex_canonical_form_with_labels(std::ostream
 	for (i = 0; i < nb_rows; i++) {
 		for (j = 0; j < nb_cols; j++) {
 			if (Inc2[i * nb_cols + j]) {
-				ost << i * nb_cols + j << ",";
+				ost << i * nb_cols + j << ", ";
 			}
 		}
 	}

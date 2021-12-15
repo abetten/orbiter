@@ -400,6 +400,7 @@ MODULES= \
 		top_level/combinatorics/design_create.o \
 		top_level/combinatorics/design_tables.o \
 		top_level/combinatorics/difference_set_in_heisenberg_group.o \
+		top_level/combinatorics/flag_orbits_incidence_structure.o \
 		top_level/combinatorics/hadamard_classify.o \
 		top_level/combinatorics/hall_system_classify.o \
 		top_level/combinatorics/large_set_activity_description.o \

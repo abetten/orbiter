@@ -123,6 +123,7 @@ class interface_algebra {
 
 	int f_character_table_symmetric_group;
 	int deg;
+
 	int f_make_A5_in_PSL_2_q;
 	int q;
 
@@ -156,17 +157,6 @@ class interface_algebra {
 	std::string eigenstuff_coeffs;
 	std::string eigenstuff_fname;
 
-#if 0
-	int f_study_surface;
-	int study_surface_nb;
-
-	int f_decomposition_by_element;
-	int decomposition_by_element_n;
-	int decomposition_by_element_power;
-	std::string decomposition_by_element_data;
-	std::string decomposition_by_element_fname_base;
-#endif
-
 
 public:
 	interface_algebra();
@@ -176,13 +166,7 @@ public:
 			std::string *argv, int &i, int verbose_level);
 	void print();
 	void worker(int verbose_level);
-	void do_linear_group(
-			linear_group_description *Descr, int verbose_level);
-	void perform_group_theoretic_activity(finite_field *F, linear_group *LG,
-			group_theoretic_activity_description *Group_theoretic_activity_description,
-			int verbose_level);
 	void do_character_table_symmetric_group(int deg, int verbose_level);
-	void do_make_A5_in_PSL_2_q(int q, int verbose_level);
 
 };
 
@@ -213,7 +197,7 @@ class interface_coding_theory {
 	int BCH_t;
 	//int BCH_b;
 
-	int f_Hamming_graph;
+	int f_Hamming_space_distance_matrix;
 
 	int f_NTT;
 	std::string ntt_fname_code;
@@ -243,6 +227,7 @@ class interface_coding_theory {
 
 	int f_linear_code_through_columns_of_parity_check_projectively;
 	int f_linear_code_through_columns_of_parity_check;
+
 	int linear_code_through_columns_of_parity_check_k;
 	std::string linear_code_through_columns_of_parity_check_text;
 

@@ -100,6 +100,7 @@ public:
 	int f_report;
 	std::string report_prefix;
 
+
 	int f_test_distinguishing_property;
 	std::string test_distinguishing_property_graph;
 
@@ -148,6 +149,8 @@ public:
 	void post_process_classification(
 			classification_of_objects *CO,
 			object_with_properties *&OwP,
+			int f_projective_space, projective_space_with_action *PA,
+			std::string &prefix,
 			int verbose_level);
 	void classification_report(classification_of_objects *CO,
 			object_with_properties *OwP, int verbose_level);
@@ -837,6 +840,42 @@ void difference_set_in_heisenberg_group_early_test_func(
 		void *data, int verbose_level);
 
 
+// #############################################################################
+// flag_orbits_incidence_structure.cpp
+// #############################################################################
+
+//! classification of flag orbits of an incidence structure
+
+
+
+
+class flag_orbits_incidence_structure {
+
+public:
+
+	object_with_properties *OwP;
+
+	int nb_rows;
+	int nb_cols;
+
+	int nb_flags;
+	int *Flags; // [nb_flags]
+	long int *Flag_table; // [nb_flags * 2]
+
+	action *A_on_flags;
+
+	orbits_on_something *Orb;
+
+	flag_orbits_incidence_structure();
+	~flag_orbits_incidence_structure();
+	void init(object_with_properties *OwP, int f_anti_flags, action *A_perm,
+			strong_generators *SG, int verbose_level);
+	int find_flag(int i, int j);
+	void report(std::ostream &ost, int verbose_level);
+
+};
+
+
 
 
 // #############################################################################
@@ -1343,22 +1382,36 @@ public:
 
 	object_with_canonical_form *OwCF;
 
+	std::string label;
+
 	nauty_output *NO;
 
-	strong_generators *SG;
+	int f_projective_space;
+	projective_space_with_action *PA;
+	strong_generators *SG; // only used if f_projective_space
+
 	action *A_perm;
 
+	flag_orbits_incidence_structure *Flags; // if !f_projective_space
+	flag_orbits_incidence_structure *Anti_Flags; // if !f_projective_space
 
 	object_with_properties();
 	~object_with_properties();
 	void init(object_with_canonical_form *OwCF,
-			nauty_output *NO, int verbose_level);
+			nauty_output *NO,
+			int f_projective_space, projective_space_with_action *PA,
+			std::string &label,
+			int verbose_level);
 	void init_object_in_projective_space(
 			object_with_canonical_form *OwCF,
 			nauty_output *NO,
 			projective_space_with_action *PA,
+			std::string &label,
 			int verbose_level);
-	void latex_report(std::ostream &ost, int verbose_level);
+	void latex_report(std::ostream &ost, int f_show_incma, int verbose_level);
+	void export_TDA_with_flag_orbits(std::ostream &ost,
+			schreier *Sch,
+			int verbose_level);
 
 };
 

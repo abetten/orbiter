@@ -64,13 +64,6 @@ public:
 		long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
 	int pair_test(int a, int x, int y, int verbose_level);
-		// We assume that a is an element of a set S
-		// of size at least two such that
-		// S \cup \{ x \} is BLT and
-		// S \cup \{ y \} is BLT.
-		// In order to test of S \cup \{ x, y \}
-		// is BLT, we only need to test
-		// the triple \{ x,y,a\}
 	int check_conditions(int len, long int *S, int verbose_level);
 	int collinearity_test(long int *S, int len, int verbose_level);
 	void print(std::ostream &ost, long int *S, int len);

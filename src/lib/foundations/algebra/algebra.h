@@ -128,6 +128,13 @@ public:
 
 class algebra_global {
 public:
+	void make_all_irreducible_polynomials_of_degree_d(finite_field *F,
+			int d, std::vector<std::vector<int> > &Table,
+			int verbose_level);
+	int count_all_irreducible_polynomials_of_degree_d(finite_field *F,
+			int d, int verbose_level);
+	void do_make_table_of_irreducible_polynomials(finite_field *F,
+			int deg, int verbose_level);
 	void do_search_for_primitive_polynomial_in_range(
 			int p_min, int p_max,
 			int deg_min, int deg_max,

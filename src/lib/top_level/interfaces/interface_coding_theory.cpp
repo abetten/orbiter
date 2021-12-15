@@ -35,7 +35,8 @@ interface_coding_theory::interface_coding_theory()
 	BCH_t = 0;
 	//BCH_b = 0;
 
-	f_Hamming_graph = FALSE;
+	f_Hamming_space_distance_matrix = FALSE;
+
 	f_NTT = FALSE;
 	//ntt_fname_code = NULL;
 
@@ -100,8 +101,8 @@ void interface_coding_theory::print_help(int argc,
 	else if (stringcmp(argv[i], "-BCH_dual") == 0) {
 		cout << "-BCH_dual <int : n> <int : q> <int t>" << endl;
 	}
-	else if (stringcmp(argv[i], "-Hamming_graph") == 0) {
-		cout << "-Hamming_graph <int : n> <int : q>" << endl;
+	else if (stringcmp(argv[i], "-Hamming_space_distance_matrix") == 0) {
+		cout << "-Hamming_space_distance_matrix <int : n> <int : q>" << endl;
 	}
 	else if (stringcmp(argv[i], "-NTT") == 0) {
 		cout << "-NTT <int : n> <int : q> <string : fname_code> " << endl;
@@ -167,7 +168,7 @@ int interface_coding_theory::recognize_keyword(int argc,
 	else if (stringcmp(argv[i], "-BCH_dual") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-Hamming_graph") == 0) {
+	else if (stringcmp(argv[i], "-Hamming_space_distance_matrix") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-NTT") == 0) {
@@ -274,12 +275,12 @@ void interface_coding_theory::read_arguments(int argc,
 			cout << "-BCH " << n << " " << q << " " << BCH_t << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-Hamming_graph") == 0) {
-		f_Hamming_graph = TRUE;
+	else if (stringcmp(argv[i], "-Hamming_space_distance_matrix") == 0) {
+		f_Hamming_space_distance_matrix = TRUE;
 		n = strtoi(argv[++i]);
 		q = strtoi(argv[++i]);
 		if (f_v) {
-			cout << "-Hamming_graph " << n << " " << q << endl;
+			cout << "-Hamming_space_distance_matrix " << n << " " << q << endl;
 		}
 	}
 	else if (stringcmp(argv[i], "-NTT") == 0) {
@@ -478,8 +479,8 @@ void interface_coding_theory::print()
 	if (f_BCH_dual) {
 		cout << "-BCH " << n << " " << q << " " << BCH_t << endl;
 	}
-	if (f_Hamming_graph) {
-		cout << "-Hamming_graph " << n << " " << q << endl;
+	if (f_Hamming_space_distance_matrix) {
+		cout << "-Hamming_space_distance_matrix " << n << " " << q << endl;
 	}
 	if (f_NTT) {
 		cout << "-NTT " << n << " " << q << " " << ntt_fname_code << endl;
@@ -599,7 +600,7 @@ void interface_coding_theory::worker(int verbose_level)
 
 		Coding.make_BCH_codes(n, q, BCH_t, 1, TRUE, verbose_level);
 	}
-	else if (f_Hamming_graph) {
+	else if (f_Hamming_space_distance_matrix) {
 
 		coding_theory_domain Coding;
 
@@ -693,7 +694,8 @@ void interface_coding_theory::worker(int verbose_level)
 			coding_theory_domain Codes;
 
 
-			Orbiter->Lint_vec.scan(linear_code_through_basis_text, set, sz);
+			//Orbiter->Lint_vec.scan(linear_code_through_basis_text, set, sz);
+			Orbiter->get_lint_vector_from_label(linear_code_through_basis_text, set, sz, verbose_level);
 
 			Codes.do_linear_code_through_basis(
 					linear_code_through_basis_n,
@@ -712,7 +714,8 @@ void interface_coding_theory::worker(int verbose_level)
 			coding_theory_domain Codes;
 
 
-			Orbiter->Lint_vec.scan(linear_code_through_columns_of_parity_check_text, set, n);
+			//Orbiter->Lint_vec.scan(linear_code_through_columns_of_parity_check_text, set, n);
+			Orbiter->get_lint_vector_from_label(linear_code_through_columns_of_parity_check_text, set, n, verbose_level);
 
 			Codes.do_linear_code_through_columns_of_parity_check_projectively(
 					n,
@@ -731,7 +734,8 @@ void interface_coding_theory::worker(int verbose_level)
 			coding_theory_domain Codes;
 
 
-			Orbiter->Lint_vec.scan(linear_code_through_columns_of_parity_check_text, set, n);
+			//Orbiter->Lint_vec.scan(linear_code_through_columns_of_parity_check_text, set, n);
+			Orbiter->get_lint_vector_from_label(linear_code_through_columns_of_parity_check_text, set, n, verbose_level);
 
 			Codes.do_linear_code_through_columns_of_parity_check(
 					n,

@@ -223,7 +223,8 @@ void create_graph::init(
 		if (f_v) {
 			cout << "create_graph::init before create_Hamming" << endl;
 		}
-		create_Hamming(N, Adj, description->Hamming_n,
+		create_Hamming(N, Adj,
+				description->Hamming_n,
 				description->Hamming_q,
 				verbose_level);
 
@@ -237,7 +238,8 @@ void create_graph::init(
 		if (f_v) {
 			cout << "create_graph::init before create_Johnson" << endl;
 		}
-		create_Johnson(N, Adj, description->Johnson_n,
+		create_Johnson(N, Adj,
+				description->Johnson_n,
 				description->Johnson_k, description->Johnson_s,
 				verbose_level);
 
@@ -251,7 +253,8 @@ void create_graph::init(
 		if (f_v) {
 			cout << "create_graph::init before create_Paley" << endl;
 		}
-		create_Paley(N, Adj, description->Paley_q,
+		create_Paley(N, Adj,
+				description->Paley_q,
 				verbose_level);
 
 
@@ -264,7 +267,9 @@ void create_graph::init(
 		if (f_v) {
 			cout << "create_graph::init before create_Sarnak" << endl;
 		}
-		create_Sarnak(N, Adj, description->Sarnak_p, description->Sarnak_q,
+		create_Sarnak(N, Adj,
+				description->Sarnak_p,
+				description->Sarnak_q,
 				verbose_level);
 
 
@@ -277,7 +282,8 @@ void create_graph::init(
 		if (f_v) {
 			cout << "create_graph::init before create_Schlaefli" << endl;
 		}
-		create_Schlaefli(N, Adj, description->Schlaefli_q,
+		create_Schlaefli(N, Adj,
+				description->Schlaefli_q,
 				verbose_level);
 		if (f_v) {
 			cout << "create_graph::init after create_Schlaefli" << endl;
@@ -299,7 +305,10 @@ void create_graph::init(
 		if (f_v) {
 			cout << "create_graph::init before create_Winnie_Li" << endl;
 		}
-		create_Winnie_Li(N, Adj, description->Winnie_Li_q, description->Winnie_Li_index, verbose_level);
+		create_Winnie_Li(N, Adj,
+				description->Winnie_Li_q,
+				description->Winnie_Li_index,
+				verbose_level);
 
 		if (f_v) {
 			cout << "create_graph::init after create_Winnie_Li" << endl;
@@ -310,8 +319,12 @@ void create_graph::init(
 		if (f_v) {
 			cout << "create_graph::init before create_Grassmann" << endl;
 		}
-		create_Grassmann(N, Adj, description->Grassmann_n, description->Grassmann_k,
-				description->Grassmann_q, description->Grassmann_r, verbose_level);
+		create_Grassmann(N, Adj,
+				description->Grassmann_n,
+				description->Grassmann_k,
+				description->Grassmann_q,
+				description->Grassmann_r,
+				verbose_level);
 
 		if (f_v) {
 			cout << "create_graph::init after create_Grassmann" << endl;
@@ -322,7 +335,8 @@ void create_graph::init(
 		if (f_v) {
 			cout << "create_graph::init before create_coll_orthogonal" << endl;
 		}
-		create_coll_orthogonal(N, Adj, description->coll_orthogonal_epsilon,
+		create_coll_orthogonal(N, Adj,
+				description->coll_orthogonal_epsilon,
 				description->coll_orthogonal_d,
 				description->coll_orthogonal_q, verbose_level);
 
@@ -384,7 +398,9 @@ void create_graph::init(
 		if (f_v) {
 			cout << "create_graph::init before GT.make_disjoint_sets_graph" << endl;
 		}
-		GT.make_disjoint_sets_graph(Adj, N, description->disjoint_sets_graph_fname, verbose_level);
+		GT.make_disjoint_sets_graph(Adj, N,
+				description->disjoint_sets_graph_fname,
+				verbose_level);
 		if (f_v) {
 			cout << "create_graph::init after GT.make_disjoint_sets_graph" << endl;
 		}
@@ -465,8 +481,8 @@ void create_graph::init(
 		VB = (vector_builder *) Orbiter->get_object(idx);
 
 		make_collinearity_graph(N, Adj,
-				VB->v, VB->k, VB->len / VB->k, verbose_level);
-			vector_builder_description *Descr;
+				VB->v, VB->k, VB->len / VB->k,
+				verbose_level);
 
 
 
@@ -478,7 +494,9 @@ void create_graph::init(
 			cout << "create_graph::init the graph has a subset" << endl;
 		}
 		CG = NEW_OBJECT(colored_graph);
-		CG->init_adjacency_no_colors(N, Adj, description->subset_label, description->subset_label_tex,
+		CG->init_adjacency_no_colors(N, Adj,
+				description->subset_label,
+				description->subset_label_tex,
 				verbose_level);
 
 		int *subset;
@@ -487,7 +505,9 @@ void create_graph::init(
 		Orbiter->Int_vec.scan(description->subset_text, subset, sz);
 
 		CG->init_adjacency_two_colors(N,
-				Adj, subset, sz, description->subset_label, description->subset_label_tex,
+				Adj, subset, sz,
+				description->subset_label,
+				description->subset_label_tex,
 				verbose_level);
 
 		f_has_CG = TRUE;
@@ -709,7 +729,8 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 		f_special = TRUE;
 
 		if (f_v) {
-			cout << "create_graph::create_Sarnak Creating projective special linear group:" << endl;
+			cout << "create_graph::create_Sarnak "
+					"Creating projective special linear group:" << endl;
 		}
 		A->init_projective_special_group(2, F,
 			f_semilinear,
@@ -720,7 +741,8 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 		vector_ge *nice_gens;
 
 		if (f_v) {
-			cout << "create_graph::create_Sarnak Creating projective linear group:" << endl;
+			cout << "create_graph::create_Sarnak "
+					"Creating projective linear group:" << endl;
 		}
 		A->init_projective_group(2, F,
 			f_semilinear,
@@ -743,7 +765,8 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 	goi = Sims->group_order_lint();
 
 	if (f_v) {
-		cout << "create_graph::create_Sarnak found a group of order " << goi << endl;
+		cout << "create_graph::create_Sarnak "
+				"found a group of order " << goi << endl;
 	}
 
 
@@ -844,7 +867,9 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 		exit(1);
 	}
 
-	Orbiter->Int_vec.matrix_print(A4, nb_A4, 4);
+	if (f_v) {
+		Orbiter->Int_vec.matrix_print(A4, nb_A4, 4);
+	}
 
 	vector_ge *gens;
 	int *Elt1;
@@ -955,7 +980,8 @@ void create_graph::create_Sarnak(int &N, int *&Adj,
 
 
 	if (f_v) {
-		cout << "create_graph::create_Sarnak The adjacency matrix of a graph with " << goi
+		cout << "create_graph::create_Sarnak "
+				"The adjacency matrix of a graph with " << goi
 				<< " vertices has been computed" << endl;
 		//int_matrix_print(Adj, goi, goi);
 	}
@@ -1168,17 +1194,20 @@ void create_graph::create_Shrikhande(int &N, int *&Adj, int verbose_level)
 
 
 	if (f_v) {
-		cout << "create_graph::create_Shrikhande before G->Cayley_graph" << endl;
+		cout << "create_graph::create_Shrikhande "
+				"before G->Cayley_graph" << endl;
 	}
 	G->Cayley_graph(Adj, N, gens_S, verbose_level);
 	if (f_v) {
-		cout << "create_graph::create_Shrikhande after G->Cayley_graph" << endl;
+		cout << "create_graph::create_Shrikhande "
+				"after G->Cayley_graph" << endl;
 	}
 
 
 
 	if (f_v) {
-		cout << "create_graph::create_Shrikhande The adjacency matrix of a graph with " <<
+		cout << "create_graph::create_Shrikhande "
+				"The adjacency matrix of a graph with " <<
 				goi << " vertices has been computed" << endl;
 		//int_matrix_print(Adj, goi, goi);
 	}
@@ -1214,11 +1243,13 @@ void create_graph::create_Winnie_Li(int &N, int *&Adj,
 
 
 	if (f_v) {
-		cout << "create_graph::create_Winnie_Li before Combi.make_Winnie_Li_graph" << endl;
+		cout << "create_graph::create_Winnie_Li "
+				"before Combi.make_Winnie_Li_graph" << endl;
 	}
 	GT.make_Winnie_Li_graph(Adj, N, q, index, verbose_level);
 	if (f_v) {
-		cout << "create_graph::create_Winnie_Li after Combi.make_Winnie_Li_graph" << endl;
+		cout << "create_graph::create_Winnie_Li "
+				"after Combi.make_Winnie_Li_graph" << endl;
 	}
 
 
@@ -1249,11 +1280,13 @@ void create_graph::create_Grassmann(int &N, int *&Adj,
 
 
 	if (f_v) {
-		cout << "create_graph::create_Grassmann before GT.make_Grassmann_graph" << endl;
+		cout << "create_graph::create_Grassmann "
+				"before GT.make_Grassmann_graph" << endl;
 	}
 	GT.make_Grassmann_graph(Adj, N, n, k, q, r, verbose_level);
 	if (f_v) {
-		cout << "create_graph::create_Grassmann after GT.make_Grassmann_graph" << endl;
+		cout << "create_graph::create_Grassmann "
+				"after GT.make_Grassmann_graph" << endl;
 	}
 
 
@@ -1320,11 +1353,13 @@ void create_graph::make_orbital_graph(int &N, int *&Adj,
 	poset_classification *PC;
 
 	if (f_v) {
-		cout << "create_graph::make_orbital_graph before AG->orbits_on_subsets" << endl;
+		cout << "create_graph::make_orbital_graph "
+				"before AG->orbits_on_subsets" << endl;
 	}
 	AG->orbits_on_subsets(Control, PC, 2, verbose_level);
 	if (f_v) {
-		cout << "create_graph::make_orbital_graph after AG->orbits_on_subsets" << endl;
+		cout << "create_graph::make_orbital_graph "
+				"after AG->orbits_on_subsets" << endl;
 	}
 
 	long int set[2];
