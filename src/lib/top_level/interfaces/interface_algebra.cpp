@@ -69,18 +69,6 @@ interface_algebra::interface_algebra()
 	//eigenstuff_coeffs = NULL;
 	//eigenstuff_fname = NULL;
 
-#if 0
-	//
-	f_study_surface = FALSE;
-	study_surface_nb = 0;
-
-	f_decomposition_by_element = FALSE;
-	decomposition_by_element_n = 0;
-	decomposition_by_element_power = 1;
-	//std::string decomposition_by_element_data
-	//decomposition_by_element_fname_base
-#endif
-
 
 }
 
@@ -309,28 +297,6 @@ void interface_algebra::read_arguments(int argc,
 				<< " " << eigenstuff_fname << endl;
 		}
 	}
-#if 0
-	else if (stringcmp(argv[i], "-study_surface") == 0) {
-		f_study_surface = TRUE;
-		study_surface_nb = strtoi(argv[++i]);
-		if (f_v) {
-			cout << "-study_surface" << study_surface_nb << endl;
-		}
-	}
-	else if (stringcmp(argv[i], "-decomposition_by_element") == 0) {
-		f_decomposition_by_element = TRUE;
-		decomposition_by_element_n = strtoi(argv[++i]);
-		decomposition_by_element_power = strtoi(argv[++i]);
-		decomposition_by_element_data.assign(argv[++i]);
-		decomposition_by_element_fname_base.assign(argv[++i]);
-		if (f_v) {
-			cout << "-decomposition_by_element " <<  decomposition_by_element_power
-				<< " " << decomposition_by_element_data
-				<< " " << decomposition_by_element_fname_base << endl;
-		}
-	}
-#endif
-
 
 }
 
@@ -411,7 +377,11 @@ void interface_algebra::worker(int verbose_level)
 	}
 
 	else if (f_make_A5_in_PSL_2_q) {
-		do_make_A5_in_PSL_2_q(q, verbose_level);
+
+		algebra_global_with_action A;
+
+		A.A5_in_PSL_(q, verbose_level);
+
 	}
 
 	else if (f_count_subprimitive) {
@@ -426,7 +396,8 @@ void interface_algebra::worker(int verbose_level)
 
 		algebra_global Algebra;
 
-		Algebra.do_equivalence_class_of_fractions(equivalence_class_of_fractions_N, verbose_level);
+		Algebra.do_equivalence_class_of_fractions(equivalence_class_of_fractions_N,
+				verbose_level);
 	}
 
 	else if (f_search_for_primitive_polynomial_in_range) {
@@ -573,24 +544,6 @@ void interface_algebra::do_character_table_symmetric_group(int deg, int verbose_
 
 	if (f_v) {
 		cout << "interface_algebra::do_character_table_symmetric_group done" << endl;
-	}
-}
-
-void interface_algebra::do_make_A5_in_PSL_2_q(int q, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_algebra::do_make_A5_in_PSL_2_q" << endl;
-		cout << "q=" << q << endl;
-	}
-
-	algebra_global_with_action A;
-
-	A.A5_in_PSL_(q, verbose_level);
-
-	if (f_v) {
-		cout << "interface_algebra::do_make_A5_in_PSL_2_q done" << endl;
 	}
 }
 

@@ -881,7 +881,7 @@ void action::init_permutation_group_from_generators(int degree,
 		generators_to_strong_generators(
 			f_target_go, target_go,
 			generators, Strong_gens,
-			verbose_level - 5);
+			0 /*verbose_level - 5*/);
 		if (f_vv) {
 			cout << "action::init_permutation_group_from_generators "
 					"after generators_to_strong_generators" << endl;

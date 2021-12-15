@@ -46,18 +46,16 @@ finite_field_activity_description::finite_field_activity_description()
 
 
 	f_nullspace = FALSE;
-	nullspace_m = 0;
-	nullspace_n = 0;
-	//nullspace_text = NULL;
+	//nullspace_input_matrix = NULL;
 
 	f_RREF = FALSE;
-	RREF_m = 0;
-	RREF_n = 0;
+	//RREF_input_matrix
 
 	//cout << "finite_field_activity_description::finite_field_activity_description 3" << endl;
 	//RREF_text = NULL;
 
 	f_weight_enumerator = FALSE;
+	//std::string weight_enumerator_input_matrix;
 
 	f_Walsh_Hadamard_transform = FALSE;
 	//std::string Walsh_Hadamard_transform_fname_csv_in;
@@ -317,12 +315,9 @@ int finite_field_activity_description::read_arguments(
 		}
 		else if (stringcmp(argv[i], "-nullspace") == 0) {
 			f_nullspace = TRUE;
-			nullspace_m = strtoi(argv[++i]);
-			nullspace_n = strtoi(argv[++i]);
-			nullspace_text.assign(argv[++i]);
+			nullspace_input_matrix.assign(argv[++i]);
 			if (f_v) {
-				cout << "-nullspace " << nullspace_m << " "
-						<< nullspace_n << " " << nullspace_text << endl;
+				cout << "-nullspace " << nullspace_input_matrix << endl;
 			}
 		}
 		else if (stringcmp(argv[i], "-polynomial_find_roots") == 0) {
@@ -334,22 +329,16 @@ int finite_field_activity_description::read_arguments(
 		}
 		else if (stringcmp(argv[i], "-RREF") == 0) {
 			f_RREF = TRUE;
-			RREF_m = strtoi(argv[++i]);
-			RREF_n = strtoi(argv[++i]);
-			RREF_text.assign(argv[++i]);
+			RREF_input_matrix.assign(argv[++i]);
 			if (f_v) {
-				cout << "-RREF " << RREF_m << " " << RREF_n
-					<< " " << RREF_text << endl;
+				cout << "-RREF " << RREF_input_matrix << endl;
 			}
 		}
 		else if (stringcmp(argv[i], "-weight_enumerator") == 0) {
 			f_weight_enumerator = TRUE;
-			RREF_m = strtoi(argv[++i]);
-			RREF_n = strtoi(argv[++i]);
-			RREF_text.assign(argv[++i]);
+			weight_enumerator_input_matrix.assign(argv[++i]);
 			if (f_v) {
-				cout << "-weight_enumerator " << RREF_m << " " << RREF_n
-					<< " " << RREF_text << endl;
+				cout << "-weight_enumerator " << weight_enumerator_input_matrix << endl;
 			}
 		}
 
@@ -893,19 +882,16 @@ void finite_field_activity_description::print()
 		cout << "-normalize_from_the_left " << endl;
 	}
 	if (f_nullspace) {
-		cout << "-nullspace " << nullspace_m << " "
-				<< nullspace_n << " " << nullspace_text << endl;
+		cout << "-nullspace " << nullspace_input_matrix << endl;
 	}
 	if (f_polynomial_find_roots) {
 		cout << "-polynomial_find_roots " << polynomial_find_roots_A << endl;
 	}
 	if (f_RREF) {
-		cout << "-RREF " << RREF_m << " " << RREF_n
-				<< " " << RREF_text << endl;
+		cout << "-RREF " << RREF_input_matrix << endl;
 	}
 	if (f_weight_enumerator) {
-		cout << "-weight_enumerator " << RREF_m << " " << RREF_n
-				<< " " << RREF_text << endl;
+		cout << "-weight_enumerator " << weight_enumerator_input_matrix << endl;
 	}
 
 	if (f_Walsh_Hadamard_transform) {

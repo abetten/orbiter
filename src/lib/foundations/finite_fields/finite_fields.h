@@ -50,17 +50,13 @@ public:
 	int f_normalize_from_the_left;
 
 	int f_nullspace;
-	int nullspace_m;
-	int nullspace_n;
-	std::string nullspace_text;
+	std::string nullspace_input_matrix;
 
 	int f_RREF;
-	int RREF_m;
-	int RREF_n;
-	std::string RREF_text;
+	std::string RREF_input_matrix;
 
 	int f_weight_enumerator;
-		//RREF_m, RREF_n, RREF_text
+	std::string weight_enumerator_input_matrix;
 
 	int f_Walsh_Hadamard_transform;
 	std::string Walsh_Hadamard_transform_fname_csv_in;
@@ -585,10 +581,6 @@ public:
 	// #########################################################################
 
 
-	void make_all_irreducible_polynomials_of_degree_d(
-			int d, std::vector<std::vector<int> > &Table,
-			int verbose_level);
-	int count_all_irreducible_polynomials_of_degree_d(int d, int verbose_level);
 	void polynomial_division(
 			std::string &A_coeffs, std::string &B_coeffs, int verbose_level);
 	void extended_gcd_for_polynomials(
@@ -600,39 +592,37 @@ public:
 			std::string &Berlekamp_matrix_coeffs,
 			int verbose_level);
 	void compute_normal_basis(int d, int verbose_level);
-	void do_nullspace(int m, int n, std::string &text,
+	void do_nullspace(
+			int *M, int m, int n,
 			int f_normalize_from_the_left, int f_normalize_from_the_right,
 			int verbose_level);
-	void do_RREF(int m, int n, std::string &text,
+	void do_RREF(
+			int *M, int m, int n,
 			int f_normalize_from_the_left, int f_normalize_from_the_right,
 			int verbose_level);
-	void apply_Walsh_Hadamard_transform(
-			std::string &fname_csv_in, int n, int verbose_level);
-	void algebraic_normal_form(
-			std::string &fname_csv_in, int n, int verbose_level);
-	void apply_trace_function(
-			std::string &fname_csv_in, int verbose_level);
-	void apply_power_function(
-			std::string &fname_csv_in, long int d, int verbose_level);
-	void identity_function(
-			std::string &fname_csv_out, int verbose_level);
 	void do_trace(int verbose_level);
 	void do_norm(int verbose_level);
 	void do_cheat_sheet_GF(int verbose_level);
-	void do_make_table_of_irreducible_polynomials(int deg, int verbose_level);
 	void polynomial_find_roots(
 			std::string &A_coeffs,
 			int verbose_level);
 	void sift_polynomials(long int rk0, long int rk1, int verbose_level);
 	void mult_polynomials(long int rk0, long int rk1, int verbose_level);
-	void polynomial_division_from_file_with_report(
-			std::string &input_file, long int rk1, int verbose_level);
-	void polynomial_division_from_file_all_k_error_patterns_with_report(
-			std::string &input_file, long int rk1, int k, int verbose_level);
 	void polynomial_division_with_report(long int rk0, long int rk1, int verbose_level);
 	void RREF_demo(int *A, int m, int n, int verbose_level);
 	void RREF_demo2(std::ostream &ost, int *A, int m, int n, int verbose_level);
 	void gl_random_matrix(int k, int verbose_level);
+
+	// functions with file based input:
+	void apply_Walsh_Hadamard_transform(std::string &fname_csv_in, int n, int verbose_level);
+	void algebraic_normal_form(std::string &fname_csv_in, int n, int verbose_level);
+	void apply_trace_function(std::string &fname_csv_in, int verbose_level);
+	void apply_power_function(std::string &fname_csv_in, long int d, int verbose_level);
+	void identity_function(std::string &fname_csv_out, int verbose_level);
+	void polynomial_division_from_file_with_report(
+			std::string &input_file, long int rk1, int verbose_level);
+	void polynomial_division_from_file_all_k_error_patterns_with_report(
+			std::string &input_file, long int rk1, int k, int verbose_level);
 
 
 

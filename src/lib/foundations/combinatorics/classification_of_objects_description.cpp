@@ -46,6 +46,7 @@ classification_of_objects_description::classification_of_objects_description()
 
 	f_save_transversal = FALSE;
 
+#if 0
 	f_load_canonical_labeling = FALSE;
 
 	f_load_ago = FALSE;
@@ -57,6 +58,7 @@ classification_of_objects_description::classification_of_objects_description()
 	f_save_cumulative_data = FALSE;
 
 	f_save_fibration = FALSE;
+#endif
 }
 
 classification_of_objects_description::~classification_of_objects_description()
@@ -139,6 +141,7 @@ int classification_of_objects_description::read_arguments(
 			cout << "-save_transversal " << endl;
 		}
 
+#if 0
 		else if (stringcmp(argv[i], "-load_canonical_labeling") == 0) {
 			f_load_canonical_labeling = TRUE;
 			//load_canonical_labeling_fname.assign(argv[++i]);
@@ -174,6 +177,7 @@ int classification_of_objects_description::read_arguments(
 			fibration_fname.assign(argv[++i]);
 			cout << "-save_fibration " << fibration_fname << endl;
 		}
+#endif
 
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "projective_space_object_classifier_description::read_arguments -end" << endl;
@@ -234,6 +238,7 @@ void classification_of_objects_description::print()
 		cout << "-save_transversal " << endl;
 	}
 
+#if 0
 	if (f_load_canonical_labeling) {
 		cout << "-load_canonical_labeling " << endl;
 	}
@@ -258,6 +263,8 @@ void classification_of_objects_description::print()
 	if (f_save_fibration) {
 		cout << "-save_fibration " << fibration_fname << endl;
 	}
+#endif
+
 }
 
 

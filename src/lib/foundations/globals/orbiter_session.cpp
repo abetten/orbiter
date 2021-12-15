@@ -440,6 +440,63 @@ void orbiter_session::get_lint_vector_from_label(std::string &label, long int *&
 	}
 }
 
+void orbiter_session::get_matrix_from_label(std::string &label,
+		int *&v, int &m, int &n)
+{
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_session::get_matrix_from_label" << endl;
+	}
+	if (isalpha(label[0])) {
+		if (f_v) {
+			cout << "orbiter_session::get_matrix_from_label "
+					"searching label " << label << endl;
+		}
+		int idx;
+
+		idx = Orbiter->find_symbol(label);
+
+		if (Orbiter->get_object_type(idx) == t_vector) {
+
+			vector_builder *VB;
+
+			VB = (vector_builder *) Orbiter->get_object(idx);
+
+			int sz;
+
+			sz = VB->len;
+			v = NEW_int(sz);
+			Orbiter->Int_vec.copy(VB->v, v, sz);
+
+			if (!VB->f_has_k) {
+				cout << "orbiter_session::get_matrix_from_label "
+						"the vector does not have matrix formatting information" << endl;
+				exit(1);
+			}
+			m = VB->k;
+			n = (VB->len + m - 1) / m;
+		}
+		else if (Orbiter->get_object_type(idx) == t_set) {
+			cout << "orbiter_session::get_matrix_from_label "
+						"the object must be of type vector" << endl;
+			exit(1);
+		}
+	}
+	else {
+
+		cout << "orbiter_session::get_matrix_from_label "
+					"an object label must be given, starting with a letter" << endl;
+		exit(1);
+	}
+
+	if (f_v) {
+		cout << "orbiter_session::get_matrix_from_label done" << endl;
+	}
+}
+
+
 void orbiter_session::find_symbols(std::vector<std::string> &Labels, int *&Idx)
 {
 	int i, idx;

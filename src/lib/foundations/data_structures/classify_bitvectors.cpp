@@ -146,7 +146,7 @@ void classify_bitvectors::search_and_add_if_new(uchar *data,
 	if (Sorting.vec_search((void **) Type_data,
 			compare_func_for_bitvectors, (void *) this,
 			nb_types, data, idx,
-			verbose_level - 2)) {
+			0 /*verbose_level - 2*/)) {
 		if (f_v) {
 			cout << "classify_bitvectors::add vec_search returns TRUE, idx=" << idx << endl;
 		}

@@ -360,6 +360,34 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 
 
 
+		object_with_properties *OwP;
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_IS before post_process_classification" << endl;
+		}
+		post_process_classification(
+					CO,
+					OwP,
+					TRUE /* f_projective_space */, PA,
+					CO->Descr->label,
+					verbose_level);
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_IS after post_process_classification" << endl;
+		}
+
+		if (Descr->f_report) {
+			if (f_v) {
+				cout << "combinatorial_object_activity::perform_activity_IS before classification_report" << endl;
+			}
+			classification_report(
+					CO,
+					OwP, verbose_level);
+			if (f_v) {
+				cout << "combinatorial_object_activity::perform_activity_IS after classification_report" << endl;
+			}
+		}
+
+		FREE_OBJECTS(OwP);
 		FREE_OBJECT(CO);
 
 
@@ -398,6 +426,8 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 		post_process_classification(
 					CO,
 					OwP,
+					FALSE /* f_projective_space */, NULL,
+					CO->Descr->label,
 					verbose_level);
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_IS after post_process_classification" << endl;
@@ -632,6 +662,8 @@ void combinatorial_object_activity::do_save(std::string &save_as_fname,
 void combinatorial_object_activity::post_process_classification(
 		classification_of_objects *CO,
 		object_with_properties *&OwP,
+		int f_projective_space, projective_space_with_action *PA,
+		std::string &prefix,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -652,10 +684,21 @@ void combinatorial_object_activity::post_process_classification(
 		cout << "NO=" << endl;
 		CO->NO_transversal[iso_type]->print();
 
+		std::string label;
+		char str[1000];
+
+		sprintf(str, "_object%d", iso_type);
+		label.assign(prefix);
+		label.append(str);
+
 		OwP[iso_type].init(
 				CO->OWCF_transversal[iso_type],
 				CO->NO_transversal[iso_type],
+				f_projective_space, PA,
+				label,
 				verbose_level);
+
+
 	}
 
 	if (f_v) {
@@ -902,9 +945,19 @@ void combinatorial_object_activity::report_object(std::ostream &fp,
 		cout << "combinatorial_object_activity::report_object" << endl;
 	}
 
+	int f_show_incma;
+
+
+	if (CO->f_projective_space) {
+		f_show_incma = FALSE;
+	}
+	else {
+		f_show_incma = TRUE;
+	}
+
 	object_with_canonical_form *OwCF = CO->OWCF_transversal[object_idx];
 
-	OwCF->print_tex_detailed(fp, verbose_level);
+	OwCF->print_tex_detailed(fp, f_show_incma, verbose_level);
 
 	if (CO->f_projective_space) {
 
@@ -919,7 +972,7 @@ void combinatorial_object_activity::report_object(std::ostream &fp,
 
 	}
 	else {
-		OwP[object_idx].latex_report(fp, verbose_level);
+		OwP[object_idx].latex_report(fp, f_show_incma, verbose_level);
 	}
 
 

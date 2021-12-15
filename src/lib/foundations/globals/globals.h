@@ -401,6 +401,8 @@ public:
 	int find_symbol(std::string &label);
 	void get_vector_from_label(std::string &label, int *&v, int &sz, int verbose_level);
 	void get_lint_vector_from_label(std::string &label, long int *&v, int &sz, int verbose_level);
+	void get_matrix_from_label(std::string &label,
+			int *&v, int &m, int &n);
 	void find_symbols(std::vector<std::string> &Labels, int *&Idx);
 	void print_symbol_table();
 	void add_symbol_table_entry(std::string &label,

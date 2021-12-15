@@ -101,10 +101,10 @@ void orbits_on_something::init(
 	fname_csv.assign(prefix);
 	fname_csv.append("_orbits.csv");
 
-	//sprintf(fname, "%s_orbits.bin", prefix);
 
 
-	if (Fio.file_size(fname.c_str()) > 0) {
+
+	if (f_load_save && Fio.file_size(fname.c_str()) > 0) {
 
 
 		if (f_v) {
@@ -142,7 +142,7 @@ void orbits_on_something::init(
 		}
 
 		Sch = SG->orbits_on_points_schreier(
-				A, 0 /*verbose_level*/);
+				A, verbose_level);
 
 		if (f_v) {
 			cout << "orbits_on_something::init "
@@ -2045,6 +2045,55 @@ void orbits_on_something::report(std::ostream &ost, int verbose_level)
 		cout << "orbits_on_something::report done" << endl;
 	}
 }
+
+void orbits_on_something::report_quick(std::ostream &ost, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbits_on_something::report_quick" << endl;
+	}
+
+
+	longinteger_object go;
+
+
+
+	SG->group_order(go);
+
+	int i;
+
+	long int *Table;
+
+	Table = NEW_lint(Orbits_classified->nb_sets * 2);
+
+	ost << "orbit length : number of orbits of that length:\\\\" << endl;
+#if 0
+	for (i = 0; i < Orbits_classified->nb_sets; i++) {
+		ost << Orbits_classified_length[i] << " : "
+				<< Orbits_classified->Set_size[i] << "\\\\" << endl;
+	}
+
+#endif
+
+	for (i = 0; i < Orbits_classified->nb_sets; i++) {
+		Table[2 * i + 0] = Orbits_classified_length[i];
+		Table[2 * i + 1] = Orbits_classified->Set_size[i];
+	}
+
+	latex_interface L;
+
+	ost << "$$" << endl;
+	L.print_lint_matrix_tex(ost,
+			Table, Orbits_classified->nb_sets, 2);
+	ost << "$$" << endl;
+
+	FREE_lint(Table);
+
+
+
+}
+
 
 
 }}

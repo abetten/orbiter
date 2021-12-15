@@ -1446,22 +1446,10 @@ public:
 	~object_with_canonical_form();
 	void freeself();
 	void print(std::ostream &ost);
-	void print_tex_detailed(std::ostream &ost, int verbose_level);
+	void print_tex_detailed(std::ostream &ost, int f_show_incma, int verbose_level);
 	void print_tex(std::ostream &ost);
 	void get_packing_as_set_system(long int *&Sets,
 			int &nb_sets, int &set_size, int verbose_level);
-	void init_object_from_string(
-		int type,
-		std::string &input_fname, int input_idx,
-		std::string &set_as_string,
-		std::string &set2_as_string,
-		int verbose_level);
-	void init_object_from_int_vec(
-		int type,
-		std::string &input_fname, int input_idx,
-		long int *the_set_in, int the_set_sz,
-		long int *the_set2_in, int the_set2_sz,
-		int verbose_level);
 	void init_point_set(
 			long int *set, int sz,
 		int verbose_level);
@@ -2021,16 +2009,6 @@ public:
 			incidence_structure *&Inc, partitionstack *&Stack, int verbose_level);
 	void compute_decomposition_based_on_tally(tally *T1, tally *T2,
 			incidence_structure *&Inc, partitionstack *&Stack, int verbose_level);
-	object_with_canonical_form *create_object_from_string(
-			int type, std::string &input_fname, int input_idx,
-			std::string &set_as_string,
-			std::string &set2_as_string,
-			int verbose_level);
-	object_with_canonical_form *create_object_from_int_vec(
-			int type, std::string &input_fname, int input_idx,
-			long int *the_set, int set_sz,
-			long int *the_set2, int set2_sz,
-			int verbose_level);
 	void polarity_rank_k_subspace(int k,
 			long int rk_in, long int &rk_out, int verbose_level);
 

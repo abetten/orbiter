@@ -619,6 +619,7 @@ public:
 	void get_orbit_number_and_position(long int a, int &orbit_idx, int &orbit_pos, int verbose_level);
 	void create_latex_report(int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
+	void report_quick(std::ostream &ost, int verbose_level);
 
 };
 
@@ -1047,7 +1048,8 @@ public:
 					int orbit_idx, void *data, int verbose_level),
 			void *compute_orbit_invariant_data,
 			int verbose_level);
-	void print_TDA(std::ostream &ost, object_with_canonical_form *OwCF, int verbose_level);
+	void print_TDA(std::ostream &ost, object_with_canonical_form *OwCF,
+			int f_show_incma, int verbose_level);
 	void latex_TDA(std::ostream &ost, encoded_combinatorial_object *Enc,
 			int verbose_level);
 

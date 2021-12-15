@@ -125,80 +125,6 @@ void classification_of_objects::do_the_work(
 
 
 
-	if (Descr->f_save_classification) {
-
-		if (TRUE) {
-			cout << "classification_of_objects::do_the_work "
-					"Saving the classification with "
-					"save_prefix " << Descr->save_prefix << endl;
-		}
-
-#if 0
-		save(Descr->save_prefix, verbose_level);
-
-		CB->save(Descr->save_prefix,
-			OiPA_encode, OiPA_group_order,
-			NULL /* void *global_data */,
-			verbose_level);
-#endif
-
-#if 0
-		void save(const char *prefix,
-			void (*encode_function)(void *extra_data,
-				int *&encoding, int &encoding_sz, void *global_data),
-			void (*get_group_order_or_NULL)(void *extra_data,
-				longinteger_object &go, void *global_data),
-			void *global_data,
-			int verbose_level);
-#endif
-	}
-	else {
-		cout << "classification_of_objects::do_the_work no save" << endl;
-	}
-
-
-
-#if 0
-	if (Descr->f_report) {
-
-		if (TRUE) {
-			cout << "classification_of_objects::do_the_work Producing a latex report:" << endl;
-		}
-
-
-		if (Descr->f_classification_prefix == FALSE) {
-			cout << "please use option -classification_prefix <prefix> to set the "
-					"prefix for the output file" << endl;
-			exit(1);
-		}
-
-		string fname;
-
-		fname.assign(Descr->classification_prefix);
-		fname.append("_classification.tex");
-
-		if (f_v) {
-			cout << "classification_of_objects::do_the_work before latex_report" << endl;
-		}
-
-		latex_report(fname,
-				Descr->report_prefix,
-				Descr->fixed_structure_order_list_sz,
-				Descr->fixed_structure_order_list,
-				Descr->max_TDO_depth,
-				verbose_level);
-
-		if (f_v) {
-			cout << "classification_of_objects::do_the_work after latex_report" << endl;
-		}
-
-
-	} // f_report
-	else {
-		cout << "classification_of_objects::do_the_work no report" << endl;
-	}
-#endif
-
 	if (f_v) {
 		cout << "classification_of_objects::do_the_work done" << endl;
 	}
@@ -213,9 +139,7 @@ void classification_of_objects::classify_objects_using_nauty(
 	int f_v = (verbose_level >= 1);
 	int input_idx;
 	int t0, t1, dt;
-	//file_io Fio;
 	os_interface Os;
-	//string_tools ST;
 
 	if (f_v) {
 		cout << "classification_of_objects::classify_objects_using_nauty" << endl;
@@ -832,6 +756,7 @@ int classification_of_objects::process_object_with_known_canonical_labeling(
 }
 #endif
 
+#if 0
 void classification_of_objects::save(
 		std::string &output_prefix,
 		int verbose_level)
@@ -921,8 +846,10 @@ void classification_of_objects::save(
 		cout << "classification_of_objects::save done" << endl;
 	}
 }
+#endif
 
 
+#if 0
 void classification_of_objects::latex_report(
 		std::string &fname,
 		std::string &prefix,
@@ -975,6 +902,7 @@ void classification_of_objects::latex_report(
 		cout << "classification_of_objects::latex_report done" << endl;
 	}
 }
+#endif
 
 void classification_of_objects::report_summary_of_orbits(
 		std::ostream &fp, int verbose_level)
@@ -1066,7 +994,9 @@ void classification_of_objects::report_summary_of_orbits(
 }
 
 void classification_of_objects::report_all_isomorphism_types(
-		std::ostream &fp, int max_TDO_depth, int verbose_level)
+		std::ostream &fp, int max_TDO_depth,
+		int f_show_incma,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1118,7 +1048,7 @@ void classification_of_objects::report_all_isomorphism_types(
 		if (f_v) {
 			cout << "classification_of_objects::latex_report before report_isomorphism_type" << endl;
 		}
-		report_isomorphism_type(fp, i, max_TDO_depth, verbose_level);
+		report_isomorphism_type(fp, i, max_TDO_depth, f_show_incma, verbose_level);
 		if (f_v) {
 			cout << "classification_of_objects::latex_report after report_isomorphism_type" << endl;
 		}
@@ -1133,7 +1063,9 @@ void classification_of_objects::report_all_isomorphism_types(
 
 
 void classification_of_objects::report_isomorphism_type(
-		std::ostream &fp, int i, int max_TDO_depth, int verbose_level)
+		std::ostream &fp, int i, int max_TDO_depth,
+		int f_show_incma,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1186,6 +1118,7 @@ void classification_of_objects::report_isomorphism_type(
 			OwCF,
 			i /* object_idx */,
 			max_TDO_depth,
+			f_show_incma,
 			verbose_level);
 
 
@@ -1201,6 +1134,7 @@ void classification_of_objects::report_object(std::ostream &fp,
 		object_with_canonical_form *OwCF,
 		int object_idx,
 		int max_TDO_depth,
+		int f_show_incma,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1209,7 +1143,7 @@ void classification_of_objects::report_object(std::ostream &fp,
 		cout << "classification_of_objects::report_object" << endl;
 	}
 
-	OwCF->print_tex_detailed(fp, verbose_level);
+	OwCF->print_tex_detailed(fp, f_show_incma, verbose_level);
 
 #if 0
 	if (f_projective_space) {

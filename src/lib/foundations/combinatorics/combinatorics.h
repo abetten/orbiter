@@ -153,6 +153,7 @@ public:
 
 	int f_save_transversal;
 
+#if 0
 	int f_load_canonical_labeling;
 
 	int f_load_ago;
@@ -168,6 +169,7 @@ public:
 
 	int f_save_fibration;
 	std::string fibration_fname;
+#endif
 
 
 	classification_of_objects_description();
@@ -254,6 +256,7 @@ public:
 		int &idx,
 		nauty_output *NO,
 		int verbose_level);
+#if 0
 	void save(
 			std::string &output_prefix,
 			int verbose_level);
@@ -263,16 +266,22 @@ public:
 			int *fixed_structure_order_list,
 			int max_TDO_depth,
 			int verbose_level);
+#endif
 	void report_summary_of_orbits(
 			std::ostream &fp, int verbose_level);
 	void report_all_isomorphism_types(
-			std::ostream &fp, int max_TDO_depth, int verbose_level);
+			std::ostream &fp, int max_TDO_depth,
+			int f_show_incma,
+			int verbose_level);
 	void report_isomorphism_type(
-			std::ostream &fp, int i, int max_TDO_depth, int verbose_level);
+			std::ostream &fp, int i, int max_TDO_depth,
+			int f_show_incma,
+			int verbose_level);
 	void report_object(std::ostream &fp,
 			object_with_canonical_form *OwCF,
 			int object_idx,
 			int max_TDO_depth,
+			int f_show_incma,
 			int verbose_level);
 
 

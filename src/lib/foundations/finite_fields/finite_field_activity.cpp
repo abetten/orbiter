@@ -100,28 +100,50 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_nullspace) {
 
-		F->do_nullspace(Descr->nullspace_m, Descr->nullspace_n,
-				Descr->nullspace_text,
+		int *v;
+		int m, n;
+
+		Orbiter->get_matrix_from_label(Descr->RREF_input_matrix, v, m, n);
+
+		F->do_nullspace(v, m, n,
 				Descr->f_normalize_from_the_left,
 				Descr->f_normalize_from_the_right, verbose_level);
+
+		FREE_int(v);
+
 	}
 	else if (Descr->f_RREF) {
 
-		F->do_RREF(Descr->RREF_m, Descr->RREF_n, Descr->RREF_text,
+		int *v;
+		int m, n;
+
+		Orbiter->get_matrix_from_label(Descr->RREF_input_matrix, v, m, n);
+
+		F->do_RREF(v, m, n,
 				Descr->f_normalize_from_the_left,
 				Descr->f_normalize_from_the_right,
 				verbose_level);
+
+		FREE_int(v);
 
 	}
 	else if (Descr->f_weight_enumerator) {
 
 		coding_theory_domain Codes;
 
+		int *v;
+		int m, n;
+
+		Orbiter->get_matrix_from_label(Descr->weight_enumerator_input_matrix, v, m, n);
+
+
 		Codes.do_weight_enumerator(F,
-				Descr->RREF_m, Descr->RREF_n, Descr->RREF_text,
+				v, m, n,
 				Descr->f_normalize_from_the_left,
 				Descr->f_normalize_from_the_right,
 				verbose_level);
+
+		FREE_int(v);
 	}
 
 	else if (Descr->f_Walsh_Hadamard_transform) {
@@ -183,7 +205,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 	else if (Descr->f_make_table_of_irreducible_polynomials) {
 
 
-		F->do_make_table_of_irreducible_polynomials(
+		algebra_global Algebra;
+
+		Algebra.do_make_table_of_irreducible_polynomials(F,
 				Descr->make_table_of_irreducible_polynomials_degree,
 				verbose_level);
 
@@ -464,10 +488,12 @@ void finite_field_activity::perform_activity(int verbose_level)
 		finite_field *Fq;
 
 		Fq = NEW_OBJECT(finite_field);
-		Fq->finite_field_init(Descr->field_reduction_q, FALSE /* f_without_tables */, verbose_level);
+		Fq->finite_field_init(Descr->field_reduction_q,
+				FALSE /* f_without_tables */, verbose_level);
 		Coding.field_reduction(F, Fq,
 				Descr->field_reduction_label,
-				Descr->field_reduction_m, Descr->field_reduction_n, Descr->field_reduction_text,
+				Descr->field_reduction_m, Descr->field_reduction_n,
+				Descr->field_reduction_text,
 				verbose_level);
 
 		FREE_OBJECT(Fq);
@@ -649,6 +675,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 		int i;
 
 		n = Descr->make_BCH_code_n;
+
 		Codes.make_BCH_code(n, F, Descr->make_BCH_code_d,
 					Nth, P,
 					verbose_level);

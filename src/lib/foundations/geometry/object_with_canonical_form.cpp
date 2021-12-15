@@ -112,7 +112,7 @@ void object_with_canonical_form::print(ostream &ost)
 	}
 }
 
-void object_with_canonical_form::print_tex_detailed(std::ostream &ost, int verbose_level)
+void object_with_canonical_form::print_tex_detailed(std::ostream &ost, int f_show_incma, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -122,13 +122,16 @@ void object_with_canonical_form::print_tex_detailed(std::ostream &ost, int verbo
 
 	print_tex(ost);
 
-	encoded_combinatorial_object *Enc;
+	if (f_show_incma) {
 
-	encode_incma(Enc, verbose_level);
+		encoded_combinatorial_object *Enc;
 
-	Enc->latex_incma(ost, verbose_level);
+		encode_incma(Enc, verbose_level);
 
-	FREE_OBJECT(Enc);
+		Enc->latex_incma(ost, verbose_level);
+
+		FREE_OBJECT(Enc);
+	}
 
 	if (f_v) {
 		cout << "object_with_canonical_form::print_tex_detailed done" << endl;
@@ -223,169 +226,6 @@ void object_with_canonical_form::get_packing_as_set_system(long int *&Sets,
 	}
 }
 
-void object_with_canonical_form::init_object_from_string(
-	int type,
-	std::string &input_fname, int input_idx,
-	std::string &set_as_string,
-	std::string &set2_as_string,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "object_with_canonical_form::init_object_from_string" << endl;
-		cout << "type=" << type << endl;
-	}
-
-	object_with_canonical_form::input_fname.assign(input_fname);
-	object_with_canonical_form::input_idx = input_idx;
-
-
-	object_with_canonical_form::set_as_string.assign(set_as_string);
-
-	long int *the_set_in;
-	int set_size_in;
-	long int *the_set2_in;
-	int set2_size_in;
-
-
-	if (f_v) {
-		cout << "object_with_canonical_form::init_object_from_string "
-				"before Orbiter->get_lint_vec" << endl;
-	}
-	Orbiter->get_lint_vec(set_as_string,
-			the_set_in, set_size_in,
-			verbose_level);
-	if (f_v) {
-		cout << "object_with_canonical_form::init_object_from_string "
-				"after Orbiter->get_lint_vec" << endl;
-	}
-
-	if (f_v) {
-		cout << "object_with_canonical_form::init_object_from_string "
-				"before Orbiter->get_lint_vec" << endl;
-	}
-	Orbiter->get_lint_vec(set2_as_string,
-			the_set2_in, set2_size_in,
-			verbose_level);
-	if (f_v) {
-		cout << "object_with_canonical_form::init_object_from_string "
-				"after Orbiter->get_lint_vec" << endl;
-	}
-
-
-
-	if (f_v) {
-		cout << "object_with_canonical_form::init_object_from_string "
-				"before object_in_projective_space::init_object_from_int_vec" << endl;
-	}
-	init_object_from_int_vec(
-		//P,
-		type,
-		input_fname, input_idx,
-		the_set_in, set_size_in,
-		the_set2_in, set2_size_in,
-		verbose_level);
-	if (f_v) {
-		cout << "object_with_canonical_form::init_object_from_string "
-				"after object_in_projective_space::init_object_from_int_vec" << endl;
-	}
-
-
-	FREE_lint(the_set_in);
-
-	if (f_v) {
-		cout << "object_with_canonical_form::init_object_from_string"
-				" done" << endl;
-	}
-}
-
-void object_with_canonical_form::init_object_from_int_vec(
-	int type,
-	std::string &input_fname, int input_idx,
-	long int *the_set_in, int the_set_sz,
-	long int *the_set2_in, int the_set2_sz,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "object_with_canonical_form::init_object_from_int_vec" << endl;
-		cout << "type=" << type << endl;
-	}
-
-	object_with_canonical_form::input_fname = input_fname;
-	object_with_canonical_form::input_idx = input_idx;
-
-
-	if (f_v) {
-		cout << "The input set has size " << the_set_sz << ":" << endl;
-		cout << "The input set is:" << endl;
-		Orbiter->Lint_vec.print(cout, the_set_in, the_set_sz);
-		cout << endl;
-		cout << "The type is: ";
-		if (type == t_PTS) {
-			cout << "t_PTS" << endl;
-		}
-		else if (type == t_LNS) {
-			cout << "t_LNS" << endl;
-		}
-		else if (type == t_PNL) {
-			cout << "t_PNL" << endl;
-		}
-		else if (type == t_PAC) {
-			cout << "t_PAC" << endl;
-		}
-		else if (type == t_INC) {
-			cout << "t_INC" << endl;
-		}
-		else {
-			cout << "object_with_canonical_form::init_object_from_int_vec unknown type" << endl;
-			exit(1);
-		}
-	}
-
-
-	if (type == t_PTS) {
-		init_point_set(//P,
-				the_set_in, the_set_sz, verbose_level - 1);
-	}
-	else if (type == t_LNS) {
-		init_line_set(//P,
-				the_set_in, the_set_sz, verbose_level - 1);
-	}
-	else if (type == t_PNL) {
-		init_points_and_lines(//P,
-				the_set_in, the_set_sz,
-				the_set2_in, the_set2_sz,
-				verbose_level - 1);
-	}
-	else if (type == t_PAC) {
-		init_packing_from_set(//P,
-				the_set_in, the_set_sz, verbose_level - 1);
-	}
-	else if (type == t_INC) {
-		//int v = 0, b = 0, nb_flags = 0;
-
-		cout << "object_with_canonical_form::init_object_from_int_vec missing info on v and b" << endl;
-		exit(1);
-#if 0
-		init_incidence_geometry(
-				the_set_in, the_set_sz, v, b, nb_flags,
-				verbose_level);
-#endif
-	}
-	else {
-		cout << "object_with_canonical_form::init_object_from_int_vec "
-				"unknown type" << endl;
-		exit(1);
-	}
-
-	if (f_v) {
-		cout << "object_with_canonical_form::init_object_from_int_vec"
-				" done" << endl;
-	}
-}
 
 void object_with_canonical_form::init_point_set(
 		long int *set, int sz,

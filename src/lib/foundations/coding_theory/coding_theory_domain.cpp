@@ -803,6 +803,7 @@ int coding_theory_domain::code_minimum_distance(finite_field *F, int n, int k,
 	}
 	weight_enumerator = NEW_int(n + 1);
 	Orbiter->Int_vec.zero(weight_enumerator, n + 1);
+
 	code_weight_enumerator_fast(F, n, k,
 		code, // [k * n]
 		weight_enumerator, // [n + 1]
@@ -1197,30 +1198,20 @@ void coding_theory_domain::determine_weight_enumerator()
 
 
 void coding_theory_domain::do_weight_enumerator(finite_field *F,
-		int m, int n, std::string &text,
+		int *M, int m, int n,
 		int f_normalize_from_the_left, int f_normalize_from_the_right,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int *M;
 	int *A;
 	int *base_cols;
 	int *weight_enumerator;
-	int len, rk, i;
+	int rk, i;
 	latex_interface Li;
 
 	if (f_v) {
 		cout << "coding_theory_domain::do_weight_enumerator" << endl;
 	}
-
-	Orbiter->Int_vec.scan(text, M, len);
-	if (len != m * n) {
-		cout << "coding_theory_domain::do_weight_enumerator "
-				"number of coordinates received differs from m * n" << endl;
-		cout << "received " << len << endl;
-		exit(1);
-	}
-
 
 	A = NEW_int(n * n);
 	base_cols = NEW_int(n);
@@ -1406,7 +1397,6 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 	}
 
 
-	FREE_int(M);
 	FREE_int(A);
 	FREE_int(base_cols);
 	FREE_int(weight_enumerator);
@@ -3107,7 +3097,7 @@ void coding_theory_domain::field_reduction(finite_field *FQ, finite_field *Fq,
 	}
 }
 
-void coding_theory_domain::CRC_encode_text(nth_roots *Nth, unipoly_object CRC_poly,
+void coding_theory_domain::CRC_encode_text(nth_roots *Nth, unipoly_object &CRC_poly,
 	std::string &text, std::string &fname,
 	int verbose_level)
 {
@@ -3344,7 +3334,8 @@ void coding_theory_domain::CRC_encode_text(nth_roots *Nth, unipoly_object CRC_po
 	}
 }
 
-void coding_theory_domain::encode_text_5bits(std::string &text, std::string &fname, int verbose_level)
+void coding_theory_domain::encode_text_5bits(std::string &text,
+		std::string &fname, int verbose_level)
 {
 	int l, i, j, h, a;
 	char c;
