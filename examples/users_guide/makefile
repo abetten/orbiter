@@ -46,7 +46,8 @@ MAGMA_PATH=/usr/local/magma
 #Co3 from the paper by Suleiman and Wilson 1997
 
 
-CONWAY_GEN1="1101110001000001010000\
+CONWAY_GEN1="\
+1101110001000001010000\
 1111010111110100001011\
 0000001000000100010101\
 1111100110110001001110\
@@ -69,7 +70,8 @@ CONWAY_GEN1="1101110001000001010000\
 0000000000000100010111\
 0000000000000100010001"
 
-CONWAY_GEN2="0101000010111010111111\
+CONWAY_GEN2="\
+0101000010111010111111\
 0110010100011110110000\
 0011010000111111010111\
 0001101110001011010011\
@@ -193,10 +195,23 @@ SURFACE_F7_15LINES_MCKEAN_POINTS="0,1,2,3,4,5,6,7,8,9,10,16,17,28,35,36,59,60,61
 SURFACE_MCKEAN_15_LINES="1,5,-1,16,-2,17,1,10,2,18,1,8,1,9,-1,11,-1,19,-1,14"
 
 
-CODE_RS_6_4_7="6,2,1,0,0,0, 0,6,2,1,0,0, \
-0,0,6,2,1,0, 0,0,0,6,2,1"
+CODE_RS_6_4_7="\
+621000 \
+062100 \
+006210 \
+000621"
 
-CODE_RS_10_8_11="7,2,1,0,0,0,0,0,0,0, 0,7,2,1,0,0,0,0,0,0, 0,0,7,2,1,0,0,0,0,0, 0,0,0,7,2,1,0,0,0,0, 0,0,0,0,7,2,1,0,0,0, 0,0,0,0,0,7,2,1,0,0, 0,0,0,0,0,0,7,2,1,0, 0,0,0,0,0,0,0,7,2,1 "
+
+
+CODE_RS_10_8_11="\
+7,2,1,0,0,0,0,0,0,0, \
+0,7,2,1,0,0,0,0,0,0, \
+0,0,7,2,1,0,0,0,0,0, \
+0,0,0,7,2,1,0,0,0,0, \
+0,0,0,0,7,2,1,0,0,0, \
+0,0,0,0,0,7,2,1,0,0, \
+0,0,0,0,0,0,7,2,1,0, \
+0,0,0,0,0,0,0,7,2,1 "
 
 
 # Dickson:
@@ -301,20 +316,28 @@ GOLAY_23_COLUMN_RANKS_PROJECTIVELY="0, 1, 2, 3, 4, 5, 6, 7, \
 #0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 132, 913, 1460, 1750, 1898, 2518, 2787, 2874, 3320, 3357, 3662, 4004
 
 
-CODE_RM_3_1_GENMA="1,1,1,1,1,1,1,1, \
-0,1,0,1,0,1,0,1, \
-0,0,1,1,0,0,1,1, \
-0,0,0,0,1,1,1,1"
+CODE_RM_3_1_GENMA="\
+11111111\
+01010101\
+00110011\
+00001111"
 
-CODE_RM_4_1_GENMA="1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1"
+CODE_RM_4_1_GENMA="\
+1111111111111111\
+0101010101010101\
+0011001100110011\
+0000111100001111\
+0000000011111111"
 
-CODE_RS_8="5,6,1,0,0,0,0, \
-0,5,6,1,0,0,0, \
-0,0,5,6,1,0,0, \
-0,0,0,5,6,1,0, \
-0,0,0,0,5,6,1"	
+CODE_RS_8="\
+5610000 \
+0561000 \
+0056100 \
+0005610 \
+0000561"
 
-CODE_RS_11_RREF="1,0,0,0,0,0,0,0,7,2,\
+CODE_RS_11_RREF="\
+1,0,0,0,0,0,0,0,7,2,\
 0,1,0,0,0,0,0,0,8,3,\
 0,0,1,0,0,0,0,0,1,2,\
 0,0,0,1,0,0,0,0,8,8,\
@@ -324,56 +347,88 @@ CODE_RS_11_RREF="1,0,0,0,0,0,0,0,7,2,\
 0,0,0,0,0,0,0,1,5,8"
 
 
-RS_8_reduced="0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,\
-0,0,1,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,\
-1,1,0,0,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,\
-0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,\
-0,0,0,0,0,1,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,\
-0,0,0,1,1,0,0,1,1,0,0,1,0,0,0,0,0,0,0,0,0,\
-0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,0,0,0,\
-0,0,0,0,0,0,0,0,1,1,1,0,0,1,0,0,0,0,0,0,0,\
-0,0,0,0,0,0,1,1,0,0,1,1,0,0,1,0,0,0,0,0,0,\
-0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,0,0,0,\
-0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,1,0,0,0,0,\
-0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0,1,0,0,0,\
-0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0,\
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,1,0,\
-0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0,1"
+RS_8_reduced="\
+010001100000000000000\
+001110010000000000000\
+110011001000000000000\
+000010001100000000000\
+000001110010000000000\
+000110011001000000000\
+000000010001100000000\
+000000001110010000000\
+000000110011001000000\
+000000000010001100000\
+000000000001110010000\
+000000000110011001000\
+000000000000010001100\
+000000000000001110010\
+000000000000110011001"
 
 
-CODE_21_15_4="1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0, \
-1,1,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0, \
-1,0,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0, \
-0,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0, \
-1,1,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0, \
-1,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0, \
-0,1,1,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0, \
-1,0,0,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0, \
-0,1,0,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0, \
-0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0, \
-1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0, \
-1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0, \
-1,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0, \
-0,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0, \
-1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1"
+CODE_21_15_4="\
+111000100000000000000 \
+110100010000000000000 \
+101100001000000000000 \
+011100000100000000000 \
+110010000010000000000 \
+101010000001000000000 \
+011010000000100000000 \
+100110000000010000000 \
+010110000000001000000 \
+001110000000000100000 \
+111110000000000010000 \
+110001000000000001000 \
+101001000000000000100 \
+011001000000000000010 \
+100101000000000000001"
 
 
 # there are 5 [15,6,6]
 
 # ago=12
-CODE_15_6_6_A="1,1,1,1,1,1,1,1,1,1,0,0,0,0,0, 1,1,1,1,1,0,0,0,0,0,1,0,0,0,0, 1,1,1,0,0,1,1,0,0,0,0,1,0,0,0, 1,1,0,1,0,1,0,1,0,0,0,0,1,0,0, 1,0,1,0,1,0,1,1,0,0,0,0,0,1,0, 1,0,1,1,0,1,0,0,1,0,0,0,0,0,1"
+CODE_15_6_6_A="\
+111111111100000 \
+111110000010000 \
+111001100001000 \
+110101010000100 \
+101010110000010 \
+101101001000001"
 
 # ago=12
-CODE_15_6_6_B="1,1,1,1,1,1,1,1,1,1,0,0,0,0,0, 1,1,1,1,1,0,0,0,0,0,1,0,0,0,0, 1,1,1,0,0,1,1,0,0,0,0,1,0,0,0, 1,1,0,1,0,1,0,1,0,0,0,0,1,0,0, 1,0,1,0,1,0,1,1,0,0,0,0,0,1,0, 0,1,1,0,1,1,0,0,1,0,0,0,0,0,1"
+CODE_15_6_6_B="\
+111111111100000 \
+111110000010000 \
+111001100001000 \
+110101010000100 \
+101010110000010 \
+011011001000001"
 
 #ago=720:
-CODE_15_6_6_C="1,1,1,1,1,1,1,1,1,1,0,0,0,0,0, 1,1,1,1,1,0,0,0,0,0,1,0,0,0,0, 1,1,1,0,0,1,1,0,0,0,0,1,0,0,0, 1,1,0,1,0,1,0,1,0,0,0,0,1,0,0, 1,0,1,1,0,1,0,0,1,0,0,0,0,1,0, 1,0,0,0,1,0,1,1,1,0,0,0,0,0,1"
+CODE_15_6_6_C="\
+111111111100000 \
+111110000010000 \
+111001100001000 \
+110101010000100 \
+101101001000010 \
+100010111000001"
 
 #ago=96:
-CODE_15_6_6_D="1,1,1,1,1,1,1,1,1,1,0,0,0,0,0, 1,1,1,1,1,0,0,0,0,0,1,0,0,0,0, 1,1,1,0,0,1,1,0,0,0,0,1,0,0,0, 1,1,0,1,0,1,0,1,0,0,0,0,1,0,0, 1,0,1,0,1,1,0,0,1,0,0,0,0,1,0, 0,1,1,0,0,1,0,1,1,0,0,0,0,0,1"
+CODE_15_6_6_D="\
+111111111100000 \
+111110000010000 \
+111001100001000 \
+110101010000100 \
+101011001000010 \
+011001011000001"
 
 #ago=360
-CODE_15_6_6_E="1,1,1,1,1,1,1,1,1,1,0,0,0,0,0, 1,1,1,1,1,0,0,0,0,0,1,0,0,0,0, 1,1,1,0,0,1,1,0,0,0,0,1,0,0,0, 1,0,0,1,1,1,0,1,0,0,0,0,1,0,0, 0,1,0,1,0,1,1,1,0,0,0,0,0,1,0, 0,1,0,1,1,0,1,0,1,0,0,0,0,0,1"
+CODE_15_6_6_E="\
+111111111100000 \
+111110000010000 \
+111001100001000 \
+100111010000100 \
+010101110000010 \
+010110101000001"
 
 
 
@@ -847,19 +902,37 @@ HAMMING_CODE_ROWS_IN_BINARY_RANKS="67,37,22,15"
 SIMPLEX_CODE_GENMA_CYCLIC="1,0,0,1,1,1,0, 0,1,0,0,1,1,1, 0,0,1,1,1,0,1"
 
 
-CODE_GV_N15_K6="1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,\
-1,1,0,0,0,0,0,1,0,0,0,0,1,1,1,0,0,1,1,0,0,0,0,1,0,0,\
-0,1,1,0,1,0,1,0,1,0,0,0,0,1,0,0,1,0,1,0,1,0,1,1,0,0,\
-0,0,0,1,0,1,0,1,1,0,1,0,0,1,0,0,0,0,0,1"
+CODE_GV_N15_K6="\
+111111111100000\
+111110000010000\
+111001100001000\
+110101010000100\
+101010110000010\
+101101001000001"
 
-CODE_GV_N15_K6_CHECK="1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1"
+
+CODE_GV_N15_K6_CHECK="\
+100000000111111\
+010000000111100\
+001000000111011\
+000100000110101\
+000010000110010\
+000001000101101\
+000000100101010\
+000000010100110\
+000000001100001"
 
 
 
 
-REED_MULLER_3_1_CODEWORDS="0,255,170,85,204,51,102,153,240,15,90,165,60,195,150,105"
+REED_MULLER_3_1_CODEWORDS="0,255,170,85,204,51,102,\
+153,240,15,90,165,60,195,150,105"
+
 REED_MULLER_3_1_BASIS_IN_BINARY="255,170,204,240"
-REED_MULLER_4_1_COLUMNS_OF_PARTITY_CHECK="1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31"
+
+REED_MULLER_4_1_COLUMNS_OF_PARTITY_CHECK="1,3,5,7,9,11,13,\
+15,17,19,21,23,25,27,29,31"
+
 #-nearest_codeword "8,16,32,24,40,48,56,1,2,4,3,5,6,7,9,18,36,27,45,54,63,33,42,20,11,53,62,31"
 
 RM_6_GENERATOR_1="0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,\
@@ -3526,7 +3599,7 @@ Symmetric_4_stab:
 		-with G -do \
 		-group_theoretic_activity \
 			-orbits_on_points \
-			-stabilizer \
+			-stabilizer_of_orbit_rep 0 \
 		-end
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define gens -vector -file Perm4_stab_orb_0_gens.csv -end \
@@ -5674,16 +5747,34 @@ hyperoval_16_c:
 		-combinatorial_object_activity \
 			-canonical_form_PG P \
 				-classification_prefix hyperoval_q16 \
+				-label hyperoval_q16 \
 				-save_ago \
 				-max_TDO_depth 10 \
-			-end \
+				-end \
 			-report \
+				-prefix hyperoval_q16 \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_incidence_matrices \
+			-end \
 		-end
 	pdflatex hyperoval_q16_classification.tex
 	open hyperoval_q16_classification.pdf
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file hyperoval_q16_object0_TDA_flag_orbits.csv \
+		-secondary_input_csv_file hyperoval_q16_object0_TDA.csv \
+		-box_width 4 -bit_depth 24 \
+		-end
+	open hyperoval_q16_object0_TDA_flag_orbits_draw.bmp
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file hyperoval_q16_object1_TDA_flag_orbits.csv \
+		-secondary_input_csv_file hyperoval_q16_object1_TDA.csv \
+		-box_width 4 -bit_depth 24 \
+		-end
+	open hyperoval_q16_object1_TDA_flag_orbits_draw.bmp
 
 
- 
+
 
 
 
@@ -6093,7 +6184,7 @@ EC_canon: elliptic_curve_b1_c3_q11.txt
 				-classification_prefix EC \
 				-save_ago \
 			-end \
-			-report EC \
+			-report -end \
 		-end
 	pdflatex EC_classification.tex
 	open EC_classification.pdf
@@ -6116,6 +6207,8 @@ Hirschfeld_q4_c: Hirschfeld_surface_q4.txt
 				-max_TDO_depth 10 \
 			-end \
 			-report \
+				-show_TDO \
+			-end \
 		-end
 	pdflatex Hirschfeld_surface_q4_classification.tex
 	open Hirschfeld_surface_q4_classification.pdf
@@ -8955,12 +9048,18 @@ TFC_24_3_c:
 			-label 24_3_TFC \
 			-save_ago \
 			-end \
-			-report 24_3_TFC \
+			-report \
+				-prefix 24_3_TFC \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_incidence_matrices \
+			-end \
 		-end
 	pdflatex 24_3_TFC_classification.tex
 	open 24_3_TFC_classification.pdf
 	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
 		-input_csv_file 24_3_TFC_object2_TDA_flag_orbits.csv \
+		-secondary_input_csv_file 24_3_TFC_object2_TDA.csv \
 		-box_width 20 -bit_depth 24 \
 		-end
 	open 24_3_TFC_object2_TDA_flag_orbits_draw.bmp
@@ -9793,20 +9892,63 @@ Hamming_5_2_with_5_2_3_code:
 # group has order 32
 
 
+# consider the binary code with generator matrix:
+# 1 0 1
+# 0 1 1
+CODE_N3_K2_Q2_GENMA="1,0,1, 0,1,1"
 
 code_3_2_aut:
-	$(ORBITER_PATH)orbiter.out -v 2 \
+	$(ORBITER_PATH)orbiter.out -v 20 \
 		-define F -finite_field -q 2 -end  \
+		-define genma -vector -field F -format 2 \
+			-dense $(CODE_N3_K2_Q2_GENMA) \
+		-end \
 		-define P -projective_space 1 F -end \
 		-with P -do \
-		-projective_space_activity -canonical_form_of_code \
-			"3_2" 2 3 "1,0,1, 0,1,1"  -end
-	pdflatex classify_code_3_2_classification.tex
-	open classify_code_3_2_classification.pdf
+		-projective_space_activity \
+			-canonical_form_of_code \
+				"3_2" genma -save_ago -label "3_2" \
+				-classification_prefix "3_2" -end \
+			-end
+	pdflatex 3_2_classification.tex
+	open 3_2_classification.pdf
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file 3_2_object0_TDA_flag_orbits.csv \
+		-secondary_input_csv_file 3_2_object0_TDA.csv \
+		-box_width 16 -bit_depth 24 \
+		-end
+	open 3_2_object0_TDA_flag_orbits_draw.bmp
 
 
 
+CODE_N6_K3_Q2_GENMA="\
+111100\
+110010\
+101001"
 
+code_6_3_aut:
+	$(ORBITER_PATH)orbiter.out -v 20 \
+		-define F -finite_field -q 2 -end  \
+		-define genma -vector -field F -format 3 \
+			-compact $(CODE_N6_K3_Q2_GENMA) \
+		-end \
+		-define P -projective_space 2 F -end \
+		-with P -do \
+		-projective_space_activity \
+			-canonical_form_of_code \
+				"6_3" genma -save_ago -label "6_3" \
+				-classification_prefix "6_3" -end \
+			-end
+	pdflatex 6_3_classification.tex
+	open 6_3_classification.pdf
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file 6_3_object0_TDA_flag_orbits.csv \
+		-secondary_input_csv_file 6_3_object0_TDA.csv \
+		-box_width 16 -bit_depth 24 \
+		-end
+	open 6_3_object0_TDA_flag_orbits_draw.bmp
+
+# group of order 24
 
 code_6:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -9824,16 +9966,6 @@ code_6:
 # 111100
 # 110010
 # 101001
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -10397,20 +10529,55 @@ RM_3_1_code_words:
 #Codewords: (0,255,170,85,204,51,102,153,240,15,90,165,60,195,150,105)
 	
 
-RM_3_group:
+RM_3_1_group:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end  \
+		-define genma -vector -field F -format 4 \
+			-compact $(CODE_RM_3_1_GENMA) \
+		-end \
 		-define P -projective_space 3 F -end \
 		-with P -do \
 		-projective_space_activity \
-		-canonical_form_of_code "RM_3_1" 4 8 $(CODE_RM_3_1_GENMA)  -end
-	pdflatex classify_code_RM_3_1_classification.tex
-	open classify_code_RM_3_1_classification.pdf
+			-canonical_form_of_code \
+				"RM_3_1" genma -save_ago -label "RM_3_1" \
+				-classification_prefix "RM_3_1" -end \
+			-end
+	pdflatex RM_3_1_classification.tex
+	open RM_3_1_classification.pdf
 
 # group order 1344
+#RM_3_1_object0_INP_flag_orbits.csv
+
+RM_3_1_group_and_diagram:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end  \
+		-define genma -vector -field F -format 4 \
+			-compact $(CODE_RM_3_1_GENMA) \
+		-end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
+			-canonical_form_of_code \
+				"RM_3_1" genma -save_ago -label "RM_3_1" \
+				-classification_prefix "RM_3_1" -end \
+			-end
+	pdflatex RM_3_1_classification.tex
+	open RM_3_1_classification.pdf
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file RM_3_1_object0_INP_flag_orbits.csv \
+		-secondary_input_csv_file RM_3_1_object0_INP.csv \
+		-box_width 16 -bit_depth 24 \
+		-end
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file RM_3_1_object0_TDA_flag_orbits.csv \
+		-secondary_input_csv_file RM_3_1_object0_TDA.csv \
+		-box_width 16 -bit_depth 24 \
+		-end
+	open RM_3_1_object0_INP_flag_orbits_draw.bmp
+	open RM_3_1_object0_TDA_flag_orbits_draw.bmp
 
 
-RM_3_1_diagram:
+RM_3_1_Hamming_space_diagram:
 	$(ORBITER_PATH)orbiter.out -v 2 -code_diagram "RM_3_1" \
 		$(REED_MULLER_3_1_CODEWORDS) 8 \
 		-metric_balls 1
@@ -10420,7 +10587,7 @@ RM_3_1_diagram:
 	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
 		-input_csv_file RM_3_1_diagram_8_16.csv \
 		-box_width 25 -bit_depth 8  -partition 4 16 16 -end
-	#- $(ORBITER_PATH)orbiter.out -v 2 -code_diagram "Hamming_7_4_word_0" "0" 7 -metric_balls 1
+	open RM_3_1_diagram_8_16_draw.bmp
 
 
 RM_3_1_split:
@@ -10428,9 +10595,11 @@ RM_3_1_split:
 
 RM_3_1_holes_draw:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-loop L 0 3 1 -draw_matrix \
-		-input_csv_file RM_3_1_holes_8_16_value%L.csv \
-		-box_width 25 -bit_depth 8  -partition 5 16 16 -end \
+		-loop L 0 3 1 \
+			-draw_matrix \
+				-input_csv_file RM_3_1_holes_8_16_value%L.csv \
+				-box_width 25 -bit_depth 8  -partition 5 16 16 \
+			-end \
 		-end_loop
 
 RM_3_1_hole0:
@@ -10471,16 +10640,33 @@ RM_4_1:
 
 # codewords_n16_k5_q2.csv
 
-RM_4_group:
+RM_4_1_group:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end  \
+		-define genma -vector -field F -format 5 \
+			-compact $(CODE_RM_4_1_GENMA) \
+		-end \
 		-define P -projective_space 4 F -end \
 		-with P -do \
 		-projective_space_activity \
-			-canonical_form_of_code "RM_4_1" \
-			5 16 $(CODE_RM_4_1_GENMA)  -end
-	pdflatex classify_code_RM_4_1_classification.tex
-	open classify_code_RM_4_1_classification.pdf
+			-canonical_form_of_code \
+				"RM_4_1" genma -save_ago -label "RM_4_1" \
+				-classification_prefix "RM_4_1" -end \
+			-end
+	pdflatex RM_4_1_classification.tex
+	open RM_4_1_classification.pdf
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file RM_4_1_object0_INP_flag_orbits.csv \
+		-secondary_input_csv_file RM_4_1_object0_INP.csv \
+		-box_width 16 -bit_depth 24 \
+		-end
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file RM_4_1_object0_TDA_flag_orbits.csv \
+		-secondary_input_csv_file RM_4_1_object0_TDA.csv \
+		-box_width 16 -bit_depth 24 \
+		-end
+	open RM_4_1_object0_INP_flag_orbits_draw.bmp
+	open RM_4_1_object0_TDA_flag_orbits_draw.bmp
 
 
 # group order 322560 = 24*30*28*16
@@ -11126,7 +11312,7 @@ RREF_RS_6_4_7_weight_enumerator:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 7 -end \
 		-define v -vector -format 4 -field F \
-			-dense $(CODE_RS_6_4_7) \
+			-compact $(CODE_RS_6_4_7) \
 		-end \
 		-with F -do \
 		-finite_field_activity \
@@ -11136,17 +11322,25 @@ RREF_RS_6_4_7_weight_enumerator:
 
 
 RS_6_4_7_group:
-	$(ORBITER_PATH)orbiter.out -v 2 \
+	$(ORBITER_PATH)orbiter.out -v 20 \
 		-define F -finite_field -q 7 -end  \
+		-define genma -vector -field F -format 4 \
+			-compact $(CODE_RS_6_4_7) \
+		-end \
 		-define P -projective_space 3 F -end \
 		-with P -do \
 		-projective_space_activity \
 			-canonical_form_of_code \
-			"RS_6" 4 6 $(CODE_RS_6_4_7) \
-		-end
-	pdflatex classify_code_RS_6_classification.tex
-	open classify_code_RS_6_classification.pdf
-	
+				"RS_6" genma -save_ago -label "RS_6" \
+				-classification_prefix "RS_6" -end \
+			-end
+	#pdflatex RS_6_classification.tex
+	#open RS_6_classification.pdf
+	#$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+	#	-input_csv_file RS_6_object0_TDA.csv \
+	#	-box_width 2 -bit_depth 24 \
+	#	-end
+
 #group of order 12
 #set of points:  0, 9, 51, 344, 253, 3
 #1,0,0,0,2,0,0,1,5,0,6,0,5,1,0,0, 0,0,0,1,6,0,0,2,0,6,0,5,0,0,6,5,
@@ -11159,7 +11353,7 @@ Code_RS_11:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 11 -end \
 		-define v -vector -format 8 -field F \
-			-dense $(CODE_RS_10_8_11) \
+			-compact $(CODE_RS_10_8_11) \
 		-end \
 		-with F -do \
 		-finite_field_activity -RREF v -end
@@ -11174,7 +11368,7 @@ Code_RS_11_weight_enumerator:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 11 -end \
 		-define v -vector -format 8 -field F \
-			-dense $(CODE_RS_11_RREF) \
+			-compact $(CODE_RS_11_RREF) \
 		-end \
 		-with F -do \
 		-finite_field_activity \
@@ -11189,7 +11383,7 @@ RREF_RS_8_weight_enumerator:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 8 -end \
 		-define v -vector -format 5 -field F \
-			-dense $(CODE_RS_8) \
+			-compact $(CODE_RS_8) \
 		-end \
 		-with F -do \
 		-finite_field_activity \
@@ -11197,21 +11391,7 @@ RREF_RS_8_weight_enumerator:
 		-end
 
 
-RS_8_group:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 8 -end  \
-		-define P -projective_space 4 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-canonical_form_of_code "RS_8" \
-			5 7 $(CODE_RS_8) \
-		-end
-	pdflatex code__classification.tex
-	open code__classification.pdf
-
-#set=( 0, 10, 59, 451, 3593, 1609, 4 )
-# too big
-
+# the group cannot be computed
 
 RS_8_field_reduction:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -11233,7 +11413,7 @@ RREF_RS_8_reduced_weight_enumerator:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
 		-define v -vector -format 15 -field F \
-			-dense $(RS_8_reduced) \
+			-compact $(RS_8_reduced) \
 		-end \
 		-with F -do \
 		-finite_field_activity \
@@ -11256,7 +11436,7 @@ CODE_21_15_4_weight_enumerator:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
 		-define v -vector -format 15 -field F \
-			-dense $(CODE_21_15_4) \
+			-compact $(CODE_21_15_4) \
 		-end \
 		-with F -do \
 		-finite_field_activity \
@@ -11305,7 +11485,7 @@ coding_theory_bounds_q2:
 coding_theory_bounds_q8:
 	$(ORBITER_PATH)orbiter.out -v 2 -table_of_bounds 20 8
 
-make_GV_n15_k6_d5:
+GV_n15_k6_d5:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end  \
 		-define P -projective_space 8 F -end \
@@ -11328,7 +11508,7 @@ GV_n15_k6_d5_weight_enumerator:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
 		-define v -vector -format 6 -field F \
-			-dense $(CODE_GV_N15_K6) \
+			-compact $(CODE_GV_N15_K6) \
 		-end \
 		-with F -do \
 		-finite_field_activity \
@@ -11339,51 +11519,70 @@ GV_n15_k6_d5_weight_enumerator:
 # surprise: d = 6
 
 GV_n15_k6_d5_group:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
+	$(ORBITER_PATH)orbiter.out -v 20 \
+		-define F -finite_field -q 2 -end  \
+		-define genma -vector -field F -format 6 \
+			-compact $(CODE_GV_N15_K6) \
+		-end \
 		-define P -projective_space 5 F -end \
 		-with P -do \
 		-projective_space_activity \
-			-canonical_form_of_code "GV_n15_k6_d5" 6 15 $(CODE_GV_N15_K6) \
-		-end
-	pdflatex classify_code_GV_n15_k6_d5_classification.tex
-	open classify_code_GV_n15_k6_d5_classification.pdf
+			-canonical_form_of_code \
+				"GV_n15_k6_d5" genma -save_ago -label "GV_n15_k6_d5" \
+				-classification_prefix "GV_n15_k6_d5" -end \
+			-end
+	pdflatex GV_n15_k6_d5_classification.tex
+	open GV_n15_k6_d5_classification.pdf
 
 #ago=12
 
 
 
 code_n15_k6_d6_a_group:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
+	$(ORBITER_PATH)orbiter.out -v 20 \
+		-define F -finite_field -q 2 -end  \
+		-define genma -vector -field F -format 6 \
+			-compact $(CODE_15_6_6_A) \
+		-end \
 		-define P -projective_space 5 F -end \
 		-with P -do \
 		-projective_space_activity \
-			-canonical_form_of_code "n15_k6_d6_a" 6 15 $(CODE_15_6_6_A) \
-		-end
-	pdflatex classify_code_n15_k6_d6_a_classification.tex
-	open classify_code_n15_k6_d6_a_classification.pdf
+			-canonical_form_of_code \
+				"n15_k6_d6_a" genma -save_ago -label "n15_k6_d6_a" \
+				-classification_prefix "n15_k6_d6_a" -end \
+			-end
+	pdflatex n15_k6_d6_a_classification.tex
+	open n15_k6_d6_a_classification.pdf
 
 code_n15_k6_d6_a_we:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
 		-define v -vector -format 6 -field F \
-			-dense $(CODE_15_6_6_A) \
+			-compact $(CODE_15_6_6_A) \
 		-end \
 		-with F -do \
 		-finite_field_activity -weight_enumerator v -end
 
 #1y^{15} + 27x^6y^9 + 24x^8y^7 + 9x^{10}y^5 + 3x^{12}y^3
 
-code_n15_k6_d6_b_we:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end \
-		-define v -vector -format 6 -field F \
-			-dense $(CODE_15_6_6_B) \
+code_n15_k6_d6_b_group:
+	$(ORBITER_PATH)orbiter.out -v 20 \
+		-define F -finite_field -q 2 -end  \
+		-define genma -vector -field F -format 6 \
+			-compact $(CODE_15_6_6_B) \
 		-end \
-		-with F -do \
-		-finite_field_activity -weight_enumerator v -end
+		-define P -projective_space 5 F -end \
+		-with P -do \
+		-projective_space_activity \
+			-canonical_form_of_code \
+				"n15_k6_d6_b" genma -save_ago -label "n15_k6_d6_b" \
+				-classification_prefix "n15_k6_d6_b" -end \
+			-end
+	pdflatex n15_k6_d6_b_classification.tex
+	open n15_k6_d6_b_classification.pdf
 
+
+# weight enumerator
 #1y^{15} + 28x^6y^9 + 21x^8y^7 + 12x^{10}y^5 + 2x^{12}y^3
 
 
@@ -11391,7 +11590,7 @@ code_n15_k6_d6_RREF:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
 		-define v -vector -format 6 -field F \
-			-dense $(CODE_GV_N15_K6) \
+			-compact $(CODE_GV_N15_K6) \
 		-end \
 		-with F -do -finite_field_activity \
 		-RREF v -normalize_from_the_right \
@@ -11403,7 +11602,7 @@ code_n15_k6_d6_check_RREF:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 2 -end \
 		-define v -vector -format 9 -field F \
-			-dense $(CODE_GV_N15_K6_CHECK) \
+			-compact $(CODE_GV_N15_K6_CHECK) \
 		-end \
 		-with F -do -finite_field_activity \
 		-RREF v -normalize_from_the_right \
@@ -11843,12 +12042,23 @@ geo_10_3_c:
 				-save_transversal \
 			-end \
 			-report \
+				-prefix 10_3 \
+				-export_flag_orbits \
+				-show_incidence_matrices \
+				-export_group \
+			-end \
 		-end
 	#pdflatex 10_3_classification.tex
 	#open 10_3_classification.pdf
 	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
 		-input_csv_file 10_3_object7_TDA_flag_orbits.csv \
-		-box_width 20 -bit_depth 24 \
+		-secondary_input_csv_file 10_3_object7_TDA.csv \
+		-box_width 16 -bit_depth 24 \
+		-end
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file 10_3_object7_INP_flag_orbits.csv \
+		-secondary_input_csv_file 10_3_object7_INP.csv \
+		-box_width 16 -bit_depth 24 \
 		-end
 
 #10_3_object7_TDA_flag_orbits.csv
@@ -12347,7 +12557,7 @@ AG_2_3_on_designs:
 		-with G -do \
 		-group_theoretic_activity \
 			-orbits_on_points \
-			-stabilizer \
+			-stabilizer_of_orbit_rep 0 \
 		-end
 
 #Written file AG_2_3_stab_orb_0.makefile of size 239
@@ -13350,6 +13560,13 @@ Cycle_13_draw:
 	#open Cycle_13_report.pdf
 
 
+Cycle_9_eigenvalues:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Gamma -graph \
+			-cycle 9 \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity -eigenvalues -end
 
 
 Paley_13_graph:

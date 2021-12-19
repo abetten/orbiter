@@ -252,7 +252,24 @@ void any_group::do_export_gap(int verbose_level)
 	fname.append("_generators.gap");
 	{
 		ofstream fp(fname);
-		LG->Strong_gens->print_generators_gap(fp);
+
+		if (Subgroup_gens) {
+			if (f_v) {
+				cout << "any_group::do_export_gap using Subgroup_gens" << endl;
+			}
+			Subgroup_gens->print_generators_gap(fp);
+		}
+		else if (A->f_has_strong_generators) {
+			if (f_v) {
+				cout << "any_group::do_export_gap using A_base->Strong_gens" << endl;
+			}
+			A->Strong_gens->print_generators_gap_in_different_action(fp, A);
+		}
+		else {
+			cout << "any_group::do_export_gap no generators to export" << endl;
+			exit(1);
+		}
+
 	}
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
@@ -277,7 +294,10 @@ void any_group::do_export_magma(int verbose_level)
 	fname.append("_generators.magma");
 	{
 		ofstream fp(fname);
-		LG->Strong_gens->export_magma(LG->A_linear, fp, verbose_level);
+		strong_generators *SG;
+
+		SG = get_strong_generators();
+		SG->export_magma(LG->A_linear, fp, verbose_level);
 	}
 	if (f_v) {
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -304,7 +324,10 @@ void any_group::do_canonical_image_GAP(std::string &input_set_text, int verbose_
 	fname.append("_canonical_image.gap");
 	{
 		ofstream ost(fname);
-		LG->Strong_gens->canonical_image_GAP(input_set_text, ost);
+		strong_generators *SG;
+
+		SG = get_strong_generators();
+		SG->canonical_image_GAP(input_set_text, ost);
 	}
 	if (f_v) {
 		cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -486,8 +509,11 @@ void any_group::centralizer(
 
 	algebra_global_with_action Algebra;
 	sims *S;
+	strong_generators *SG;
 
-	S = LG->Strong_gens->create_sims(verbose_level);
+	SG = get_strong_generators();
+
+	S = SG->create_sims(verbose_level);
 
 	if (f_v) {
 		cout << "any_group::centralizer "
@@ -522,8 +548,10 @@ void any_group::normalizer_of_cyclic_subgroup(
 
 	algebra_global_with_action Algebra;
 	sims *S;
+	strong_generators *SG;
 
-	S = LG->Strong_gens->create_sims(verbose_level);
+	SG = get_strong_generators();
+	S = SG->create_sims(verbose_level);
 
 	if (f_v) {
 		cout << "any_group::normalizer_of_cyclic_subgroup "
@@ -558,13 +586,16 @@ void any_group::do_find_subgroups(
 
 	algebra_global_with_action Algebra;
 	sims *S;
+	strong_generators *SG;
+
+	SG = get_strong_generators();
 
 	int nb_subgroups;
 	strong_generators *H_gens;
 	strong_generators *N_gens;
 
 
-	S = LG->Strong_gens->create_sims(verbose_level);
+	S = SG->create_sims(verbose_level);
 
 	Algebra.find_subgroups(
 			LG->A2, S,
@@ -637,10 +668,16 @@ void any_group::print_elements(int verbose_level)
 	if (f_v) {
 		cout << "any_group::print_elements" << endl;
 	}
+
+	strong_generators *SG;
+
+	SG = get_strong_generators();
+
+
 	sims *H;
 
 	//G = LG->initial_strong_gens->create_sims(verbose_level);
-	H = LG->Strong_gens->create_sims(verbose_level);
+	H = SG->create_sims(verbose_level);
 
 	//cout << "group order G = " << G->group_order_int() << endl;
 	cout << "group order H = " << H->group_order_lint() << endl;
@@ -674,7 +711,6 @@ void any_group::print_elements(int verbose_level)
 }
 
 void any_group::print_elements_tex(
-		int f_order_of_products, std::string &Elements,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -682,10 +718,16 @@ void any_group::print_elements_tex(
 	if (f_v) {
 		cout << "any_group::print_elements_tex" << endl;
 	}
+
+	strong_generators *SG;
+
+
+	SG = get_strong_generators();
+
 	sims *H;
 
 	//G = LG->initial_strong_gens->create_sims(verbose_level);
-	H = LG->Strong_gens->create_sims(verbose_level);
+	H = SG->create_sims(verbose_level);
 
 	//cout << "group order G = " << G->group_order_int() << endl;
 	cout << "group order H = " << H->group_order_lint() << endl;
@@ -698,7 +740,7 @@ void any_group::print_elements_tex(
 
 	string fname;
 
-	fname.assign(LG->label);
+	fname.assign(label);
 	fname.append("_elements.tex");
 
 
@@ -712,48 +754,6 @@ void any_group::print_elements_tex(
 
 		//Schreier.print_and_list_orbits_tex(fp);
 
-		if (f_order_of_products) {
-			int *elements;
-			int nb_elements;
-			int *order_table;
-			int i;
-
-			Orbiter->Int_vec.scan(Elements, elements, nb_elements);
-
-			int j;
-			int *Elt1, *Elt2, *Elt3;
-
-			Elt1 = NEW_int(A->elt_size_in_int);
-			Elt2 = NEW_int(A->elt_size_in_int);
-			Elt3 = NEW_int(A->elt_size_in_int);
-
-			order_table = NEW_int(nb_elements * nb_elements);
-			for (i = 0; i < nb_elements; i++) {
-
-				H->element_unrank_lint(elements[i], Elt1);
-
-
-				for (j = 0; j < nb_elements; j++) {
-
-					H->element_unrank_lint(elements[j], Elt2);
-
-					A->element_mult(Elt1, Elt2, Elt3, 0);
-
-					order_table[i * nb_elements + j] = A->element_order(Elt3);
-
-				}
-			}
-			FREE_int(Elt1);
-			FREE_int(Elt2);
-			FREE_int(Elt3);
-
-			latex_interface L;
-
-			fp << "$$" << endl;
-			L.print_integer_matrix_with_labels(fp, order_table,
-					nb_elements, nb_elements, elements, elements, TRUE /* f_tex */);
-			fp << "$$" << endl;
-		}
 
 		L.foot(fp);
 	}
@@ -761,6 +761,103 @@ void any_group::print_elements_tex(
 	FREE_int(Elt);
 	if (f_v) {
 		cout << "any_group::print_elements_tex done" << endl;
+	}
+}
+
+void any_group::order_of_products_of_elements(
+		std::string &Elements_text,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "any_group::order_of_products_of_elements" << endl;
+	}
+
+	strong_generators *SG;
+
+
+	SG = get_strong_generators();
+
+	sims *H;
+
+	H = SG->create_sims(verbose_level);
+
+	//cout << "group order G = " << G->group_order_int() << endl;
+	cout << "group order H = " << H->group_order_lint() << endl;
+
+	int *Elt;
+	longinteger_object go;
+
+	Elt = NEW_int(A->elt_size_in_int);
+	H->group_order(go);
+
+	int *elements;
+	int nb_elements;
+
+	Orbiter->Int_vec.scan(Elements_text, elements, nb_elements);
+
+
+	string fname;
+
+	fname.assign(label);
+	fname.append("_elements.tex");
+
+
+	{
+		ofstream fp(fname);
+		latex_interface L;
+		L.head_easy(fp);
+
+		H->print_all_group_elements_tex(fp);
+		//H->print_all_group_elements_with_permutations_tex(fp);
+
+		//Schreier.print_and_list_orbits_tex(fp);
+
+		int *order_table;
+		int i;
+
+
+		int j;
+		int *Elt1, *Elt2, *Elt3;
+
+		Elt1 = NEW_int(A->elt_size_in_int);
+		Elt2 = NEW_int(A->elt_size_in_int);
+		Elt3 = NEW_int(A->elt_size_in_int);
+
+		order_table = NEW_int(nb_elements * nb_elements);
+		for (i = 0; i < nb_elements; i++) {
+
+			H->element_unrank_lint(elements[i], Elt1);
+
+
+			for (j = 0; j < nb_elements; j++) {
+
+				H->element_unrank_lint(elements[j], Elt2);
+
+				A->element_mult(Elt1, Elt2, Elt3, 0);
+
+				order_table[i * nb_elements + j] = A->element_order(Elt3);
+
+			}
+		}
+		FREE_int(Elt1);
+		FREE_int(Elt2);
+		FREE_int(Elt3);
+
+		//latex_interface L;
+
+		fp << "$$" << endl;
+		L.print_integer_matrix_with_labels(fp, order_table,
+				nb_elements, nb_elements, elements, elements, TRUE /* f_tex */);
+		fp << "$$" << endl;
+
+		L.foot(fp);
+	}
+
+	FREE_int(Elt);
+	if (f_v) {
+		cout << "any_group::order_of_products_of_elements done" << endl;
 	}
 }
 
@@ -803,7 +900,8 @@ void any_group::multiply_elements_csv(std::string &fname1,
 	n3 = n1 * n2;
 
 	if (f_v) {
-		cout << "any_group::multiply_elements_csv n1=" << V1.len << " n2=" << V2.len << " n3=" << n3 << endl;
+		cout << "any_group::multiply_elements_csv "
+				"n1=" << V1.len << " n2=" << V2.len << " n3=" << n3 << endl;
 	}
 
 	V3.init(A, 0 /* vl */);
@@ -866,7 +964,8 @@ void any_group::apply_elements_to_set_csv(std::string &fname1, std::string &fnam
 	Rk = NEW_int(n1);
 
 	if (f_v) {
-		cout << "any_group::apply_elements_to_set_csv n1=" << V1.len << endl;
+		cout << "any_group::apply_elements_to_set_csv "
+				"n1=" << V1.len << endl;
 	}
 
 	for (i = 0; i < n1; i++) {
@@ -921,11 +1020,50 @@ void any_group::element_rank(std::string &elt_data, int verbose_level)
 	if (f_v) {
 		cout << "any_group::element_rank" << endl;
 	}
-	algebra_global_with_action Algebra;
 
-	Algebra.element_rank(LG,
-			A,
-			elt_data, verbose_level);
+	action *A1;
+
+	A1 = A;
+
+	sims *H;
+
+	//G = LG->initial_strong_gens->create_sims(verbose_level);
+	strong_generators *SG;
+
+	SG = get_strong_generators();
+	H = SG->create_sims(verbose_level);
+
+	if (f_v) {
+		//cout << "group order G = " << G->group_order_int() << endl;
+		cout << "group order H = " << H->group_order_lint() << endl;
+	}
+
+	if (f_v) {
+		cout << "creating element " << elt_data << endl;
+	}
+	int *Elt;
+
+	Elt = NEW_int(A1->elt_size_in_int);
+	A1->make_element_from_string(Elt, elt_data, 0);
+
+	if (f_v) {
+		cout << "Element :" << endl;
+		A1->element_print(Elt, cout);
+		cout << endl;
+	}
+
+	longinteger_object a;
+	H->element_rank(a, Elt);
+
+	if (f_v) {
+		cout << "The rank of the element is " << a << endl;
+	}
+
+
+	FREE_int(Elt);
+	FREE_OBJECT(H);
+
+
 
 	if (f_v) {
 		cout << "any_group::element_rank done" << endl;
@@ -939,16 +1077,55 @@ void any_group::element_unrank(std::string &rank_string, int verbose_level)
 	if (f_v) {
 		cout << "any_group::element_unrank" << endl;
 	}
-	algebra_global_with_action Algebra;
 
-	Algebra.element_unrank(LG,
-			A,
-			rank_string, verbose_level);
+	action *A1;
+
+	A1 = A;
+
+	sims *H;
+	strong_generators *SG;
+
+	SG = get_strong_generators();
+
+	//G = LG->initial_strong_gens->create_sims(verbose_level);
+	H = SG->create_sims(verbose_level);
+
+	//cout << "group order G = " << G->group_order_int() << endl;
+	if (f_v) {
+		cout << "group order H = " << H->group_order_lint() << endl;
+	}
+
+	int *Elt;
+
+	Elt = NEW_int(A1->elt_size_in_int);
+
+
+	longinteger_object a;
+
+	a.create_from_base_10_string(rank_string.c_str(), 0 /*verbose_level*/);
+
+	if (f_v) {
+		cout << "Creating element of rank " << a << endl;
+	}
+
+	H->element_unrank(a, Elt);
+
+	if (f_v) {
+		cout << "Element :" << endl;
+		A1->element_print(Elt, cout);
+		cout << endl;
+	}
+
+
+	FREE_int(Elt);
+	FREE_OBJECT(H);
 
 	if (f_v) {
 		cout << "any_group::element_unrank done" << endl;
 	}
 }
+
+
 
 void any_group::conjugacy_class_of(std::string &elt_data, int verbose_level)
 {
@@ -1069,7 +1246,6 @@ void any_group::conjugacy_class_of(std::string &elt_data, int verbose_level)
 
 	FREE_OBJECT(A_conj);
 	//FREE_OBJECT(H);
-
 
 
 
@@ -2106,8 +2282,29 @@ void any_group::create_latex_report_for_modified_group(
 	}
 }
 
+strong_generators *any_group::get_strong_generators()
+{
+	int f_v = FALSE;
+	strong_generators *SG;
 
-
+	if (Subgroup_gens) {
+		if (f_v) {
+			cout << "any_group::get_strong_generators using Subgroup_gens" << endl;
+		}
+		SG = Subgroup_gens;
+	}
+	else if (A->f_has_strong_generators) {
+		if (f_v) {
+			cout << "any_group::get_strong_generators using A_base->Strong_gens" << endl;
+		}
+		SG = A->Strong_gens;
+	}
+	else {
+		cout << "any_group::get_strong_generators no generators to export" << endl;
+		exit(1);
+	}
+	return SG;
+}
 
 
 

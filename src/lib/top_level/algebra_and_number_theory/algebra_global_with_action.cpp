@@ -1806,7 +1806,8 @@ void algebra_global_with_action::compute_regular_representation(
 
 void algebra_global_with_action::presentation(
 		action *A, sims *S, int goi,
-		vector_ge *gens, int *primes, int verbose_level)
+		vector_ge *gens, int *primes,
+		int verbose_level)
 {
 	int *Elt1, *Elt2, *Elt3, *Elt4;
 	int i, j, jj, k, l, a, b;
@@ -1941,7 +1942,8 @@ void algebra_global_with_action::presentation(
 }
 
 
-void algebra_global_with_action::do_eigenstuff(finite_field *F, int size, int *Data, int verbose_level)
+void algebra_global_with_action::do_eigenstuff(finite_field *F,
+		int size, int *Data, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	discreta_matrix M;
@@ -3110,7 +3112,8 @@ void algebra_global_with_action::report_tactical_decomposition_by_automorphism_g
 }
 
 void algebra_global_with_action::linear_codes_with_bounded_minimum_distance(
-		poset_classification_control *Control, linear_group *LG,
+		poset_classification_control *Control,
+		linear_group *LG,
 		int d, int target_depth, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3294,12 +3297,14 @@ void algebra_global_with_action::centralizer_of_element(
 
 
 			if (f_v) {
-				cout << "algebra_global_with_action::centralizer_of_element before report" << endl;
+				cout << "algebra_global_with_action::centralizer_of_element "
+						"before report" << endl;
 			}
 			gens->print_generators_tex(ost);
 
 			if (f_v) {
-				cout << "algebra_global_with_action::centralizer_of_element after report" << endl;
+				cout << "algebra_global_with_action::centralizer_of_element "
+						"after report" << endl;
 			}
 
 
@@ -3847,7 +3852,7 @@ void algebra_global_with_action::orbits_on_points(
 	}
 }
 
-void algebra_global_with_action::find_singer_cycle(linear_group *LG,
+void algebra_global_with_action::find_singer_cycle(any_group *Any_group,
 		action *A1, action *A2,
 		int verbose_level)
 {
@@ -3857,9 +3862,12 @@ void algebra_global_with_action::find_singer_cycle(linear_group *LG,
 		cout << "algebra_global_with_action::find_singer_cycle" << endl;
 	}
 	sims *H;
+	strong_generators *SG;
+
+	SG = Any_group->get_strong_generators();
 
 	//G = LG->initial_strong_gens->create_sims(verbose_level);
-	H = LG->Strong_gens->create_sims(verbose_level);
+	H = SG->create_sims(verbose_level);
 
 	if (f_v) {
 		//cout << "group order G = " << G->group_order_int() << endl;
@@ -3937,7 +3945,7 @@ void algebra_global_with_action::find_singer_cycle(linear_group *LG,
 	}
 }
 
-void algebra_global_with_action::search_element_of_order(linear_group *LG,
+void algebra_global_with_action::search_element_of_order(any_group *Any_group,
 		action *A1, action *A2,
 		int order, int verbose_level)
 {
@@ -3947,9 +3955,12 @@ void algebra_global_with_action::search_element_of_order(linear_group *LG,
 		cout << "algebra_global_with_action::search_element_of_order" << endl;
 	}
 	sims *H;
+	strong_generators *SG;
+
+	SG = Any_group->get_strong_generators();
 
 	//G = LG->initial_strong_gens->create_sims(verbose_level);
-	H = LG->Strong_gens->create_sims(verbose_level);
+	H = SG->create_sims(verbose_level);
 
 	//cout << "group order G = " << G->group_order_int() << endl;
 	cout << "group order H = " << H->group_order_lint() << endl;
@@ -4000,7 +4011,7 @@ void algebra_global_with_action::search_element_of_order(linear_group *LG,
 	}
 }
 
-void algebra_global_with_action::find_standard_generators(linear_group *LG,
+void algebra_global_with_action::find_standard_generators(any_group *Any_group,
 		action *A1, action *A2,
 		int order_a, int order_b, int order_ab, int verbose_level)
 {
@@ -4010,8 +4021,11 @@ void algebra_global_with_action::find_standard_generators(linear_group *LG,
 		cout << "algebra_global_with_action::find_standard_generators" << endl;
 	}
 	sims *H;
+	strong_generators *SG;
 
-	H = LG->Strong_gens->create_sims(verbose_level);
+	SG = Any_group->get_strong_generators();
+
+	H = SG->create_sims(verbose_level);
 
 	cout << "group order H = " << H->group_order_lint() << endl;
 
@@ -4099,103 +4113,6 @@ void algebra_global_with_action::find_standard_generators(linear_group *LG,
 }
 
 
-void algebra_global_with_action::element_rank(linear_group *LG,
-		action *A1,
-		std::string &elt_data, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "algebra_global_with_action::element_rank" << endl;
-	}
-	sims *H;
-
-	//G = LG->initial_strong_gens->create_sims(verbose_level);
-	H = LG->Strong_gens->create_sims(verbose_level);
-
-	if (f_v) {
-		//cout << "group order G = " << G->group_order_int() << endl;
-		cout << "group order H = " << H->group_order_lint() << endl;
-	}
-
-	if (f_v) {
-		cout << "creating element " << elt_data << endl;
-	}
-	int *Elt;
-
-	Elt = NEW_int(A1->elt_size_in_int);
-	A1->make_element_from_string(Elt, elt_data, 0);
-
-	if (f_v) {
-		cout << "Element :" << endl;
-		A1->element_print(Elt, cout);
-		cout << endl;
-	}
-
-	longinteger_object a;
-	H->element_rank(a, Elt);
-
-	if (f_v) {
-		cout << "The rank of the element is " << a << endl;
-	}
-
-
-	FREE_int(Elt);
-	FREE_OBJECT(H);
-
-	if (f_v) {
-		cout << "algebra_global_with_action::element_rank done" << endl;
-	}
-}
-
-void algebra_global_with_action::element_unrank(linear_group *LG,
-		action *A1,
-		std::string &rank_string, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "group_theoretic_activity::element_unrank" << endl;
-	}
-	sims *H;
-
-	//G = LG->initial_strong_gens->create_sims(verbose_level);
-	H = LG->Strong_gens->create_sims(verbose_level);
-
-	//cout << "group order G = " << G->group_order_int() << endl;
-	if (f_v) {
-		cout << "group order H = " << H->group_order_lint() << endl;
-	}
-
-	int *Elt;
-
-	Elt = NEW_int(A1->elt_size_in_int);
-
-
-	longinteger_object a;
-
-	a.create_from_base_10_string(rank_string.c_str(), 0 /*verbose_level*/);
-
-	if (f_v) {
-		cout << "Creating element of rank " << a << endl;
-	}
-
-	H->element_unrank(a, Elt);
-
-	if (f_v) {
-		cout << "Element :" << endl;
-		A1->element_print(Elt, cout);
-		cout << endl;
-	}
-
-
-	FREE_int(Elt);
-	FREE_OBJECT(H);
-
-	if (f_v) {
-		cout << "algebra_global_with_action::element_unrank done" << endl;
-	}
-}
 
 
 

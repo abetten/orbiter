@@ -1142,8 +1142,9 @@ void projective_space_with_action::create_quartic_curve(
 }
 
 void projective_space_with_action::canonical_form_of_code(
-		std::string &label, int m, int n,
-		std::string &data,
+		std::string &label,
+		int *genma, int m, int n,
+		classification_of_objects_description *Canonical_form_codes_Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1151,28 +1152,13 @@ void projective_space_with_action::canonical_form_of_code(
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_form_of_code" << endl;
 	}
-	int *genma;
-	int sz;
 	int i, j;
 	int *v;
 	long int *set;
 
-#if 0
 	if (f_v) {
-		cout << "projective_space_with_action::canonical_form_of_code before int_vec_scan" << endl;
-	}
-	Orbiter->Int_vec.scan(data, genma, sz);
-	if (f_v) {
-		cout << "projective_space_with_action::canonical_form_of_code after int_vec_scan, sz=" << sz << endl;
-	}
-
-	if (sz != m * n) {
-		cout << "projective_space_with_action::canonical_form_of_code sz != m * n" << endl;
-		exit(1);
-	}
-	if (f_v) {
-		cout << "genma: " << endl;
-		Orbiter->Int_vec.print(cout, genma, sz);
+		cout << "Generator matrix: " << endl;
+		Orbiter->Int_vec.matrix_print(genma, m, n);
 		cout << endl;
 	}
 	v = NEW_int(m);
@@ -1182,7 +1168,8 @@ void projective_space_with_action::canonical_form_of_code(
 			v[i] = genma[i * n + j];
 		}
 		if (f_v) {
-			cout << "projective_space_with_action::canonical_form_of_code before PA->P->rank_point" << endl;
+			cout << "projective_space_with_action::canonical_form_of_code "
+					"before PA->P->rank_point" << endl;
 			Orbiter->Int_vec.print(cout, v, m);
 			cout << endl;
 		}
@@ -1198,43 +1185,90 @@ void projective_space_with_action::canonical_form_of_code(
 		cout << endl;
 	}
 
-	projective_space_object_classifier_description Descr;
-	data_input_stream_description Data;
-	string points_as_string;
-
 	string_tools ST;
+	string points_as_string;
 
 	ST.create_comma_separated_list(points_as_string, set, n);
 	if (f_v) {
-		cout << "projective_space_with_action::canonical_form_of_code points_as_string=" << points_as_string << endl;
-	}
-	Data.nb_inputs = 0;
-	Data.input_type[Data.nb_inputs] = INPUT_TYPE_SET_OF_POINTS;
-	Data.input_string[Data.nb_inputs] = points_as_string;
-	Data.nb_inputs++;
-
-
-	Descr.f_input = TRUE;
-	Descr.Data = &Data;
-
-	Descr.f_save_classification = TRUE;
-	Descr.save_prefix.assign("code_");
-
-	Descr.f_report = TRUE;
-	Descr.report_prefix.assign("code_");
-	Descr.report_prefix.append(label);
-
-	Descr.f_classification_prefix = TRUE;
-	Descr.classification_prefix.assign("classify_code_");
-	Descr.classification_prefix.append(label);
-
-
-
-	if (f_v) {
-		cout << "projective_space_with_action::canonical_form_of_code before PA->canonical_form" << endl;
+		cout << "projective_space_with_action::canonical_form_of_code "
+				"points_as_string=" << points_as_string << endl;
 	}
 
-	canonical_form(&Descr, verbose_level);
+	data_input_stream_description ISD;
+
+	ISD.add_set_of_points(points_as_string);
+	ISD.nb_inputs++;
+
+	data_input_stream IS;
+
+	IS.init(&ISD, verbose_level);
+
+
+
+	combinatorial_object_activity_description COAD;
+
+#if 0
+	int f_save;
+
+	int f_save_as;
+	std::string save_as_fname;
+
+	int f_extract_subset;
+	std::string extract_subset_set;
+	std::string extract_subset_fname;
+
+	int f_line_type;
+
+	int f_conic_type;
+	int conic_type_threshold;
+
+	int f_non_conical_type;
+
+	int f_ideal;
+	int ideal_degree;
+
+
+	// options that apply to IS = data_input_stream
+
+	int f_canonical_form_PG;
+	std::string canonical_form_PG_PG_label;
+	classification_of_objects_description *Canonical_form_PG_Descr;
+
+	int f_canonical_form;
+	classification_of_objects_description *Canonical_form_Descr;
+
+	int f_report;
+	classification_of_objects_report_options *Classification_of_objects_report_options;
+
+#endif
+
+	COAD.f_canonical_form_PG = TRUE;
+	COAD.f_canonical_form_PG_has_PA = TRUE;
+	COAD.Canonical_form_PG_PA = this;
+	COAD.Canonical_form_PG_Descr = Canonical_form_codes_Descr;
+
+	COAD.f_report = TRUE;
+	COAD.Classification_of_objects_report_options = NEW_OBJECT(classification_of_objects_report_options);
+	COAD.Classification_of_objects_report_options->f_prefix = TRUE;
+	COAD.Classification_of_objects_report_options->prefix.assign(COAD.Canonical_form_PG_Descr->label);
+	COAD.Classification_of_objects_report_options->f_export_flag_orbits = TRUE;
+	COAD.Classification_of_objects_report_options->f_show_incidence_matrices = TRUE;
+	COAD.Classification_of_objects_report_options->f_show_TDO = TRUE;
+	COAD.Classification_of_objects_report_options->f_show_TDA = TRUE;
+	COAD.Classification_of_objects_report_options->f_export_group = TRUE;
+
+
+
+	combinatorial_object_activity COA;
+
+	COA.init_input_stream(&COAD,
+			&IS,
+			verbose_level);
+
+
+	COA.perform_activity(verbose_level);
+
+
 
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_form_of_code after PA->canonical_form" << endl;
@@ -1243,7 +1277,6 @@ void projective_space_with_action::canonical_form_of_code(
 
 	FREE_int(v);
 	FREE_lint(set);
-#endif
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_form_of_code done" << endl;
 	}

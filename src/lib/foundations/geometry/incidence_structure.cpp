@@ -658,7 +658,8 @@ int incidence_structure::get_points_on_line(int *data, int j, int verbose_level)
 		exit(1);
 	}
 	if (f_v) {
-		cout << "incidence_structure::get_points_on_line line = " << j << " : ";
+		cout << "incidence_structure::get_points_on_line "
+				"line = " << j << " : ";
 		Orbiter->Int_vec.print(cout, data, k);
 		cout << endl;
 		cout << "incidence_structure::get_points_on_line done" << endl;
@@ -837,8 +838,7 @@ void incidence_structure::compute_TDO_safe(partitionstack &PStack,
 			if (f_v) {
 				cout << "incidence_structure::compute_TDO_safe before refine_column_partition_safe" << endl;
 			}
-			f_refine = refine_column_partition_safe(
-					PStack, verbose_level);
+			f_refine = refine_column_partition_safe(PStack, verbose_level);
 			if (f_v) {
 				cout << "incidence_structure::compute_TDO_safe after refine_column_partition_safe" << endl;
 			}
@@ -847,8 +847,7 @@ void incidence_structure::compute_TDO_safe(partitionstack &PStack,
 			if (f_v) {
 				cout << "incidence_structure::compute_TDO_safe before refine_row_partition_safe" << endl;
 			}
-			f_refine = refine_row_partition_safe(
-					PStack, verbose_level);
+			f_refine = refine_row_partition_safe(PStack, verbose_level);
 			if (f_v) {
 				cout << "incidence_structure::compute_TDO_safe after refine_row_partition_safe" << endl;
 			}
@@ -873,7 +872,8 @@ void incidence_structure::compute_TDO_safe(partitionstack &PStack,
 		
 		if (!f_refine_prev && !f_refine) {
 			if (f_v) {
-				cout << "incidence_structure::compute_TDO_safe no refinement, we are done" << endl;
+				cout << "incidence_structure::compute_TDO_safe "
+						"no refinement, we are done" << endl;
 			}
 			goto done;
 		}
@@ -1045,20 +1045,32 @@ int incidence_structure::refine_column_partition_safe(
 	if (f_v) {
 		cout << "incidence_structure::refine_column_partition_safe" << endl;
 	}
+	if (f_v) {
+		cout << "incidence_structure::refine_column_partition_safe PStack.ht" << PStack.ht << endl;
+	}
 	row_classes = NEW_int(PStack.ht);
 	col_classes = NEW_int(PStack.ht);
 	row_class_idx = NEW_int(PStack.ht);
 	col_class_idx = NEW_int(PStack.ht);
 
+	if (f_v) {
+		cout << "incidence_structure::refine_column_partition_safe "
+				"before get_partition" << endl;
+	}
 	get_partition(PStack,
 			row_classes, row_class_idx, nb_row_classes,
 			col_classes, col_class_idx, nb_col_classes);
+	if (f_v) {
+		cout << "incidence_structure::refine_column_partition_safe "
+				"after get_partition" << endl;
+	}
 	
 	N = nb_points() + nb_lines();
-	data = NEW_int(N * nb_row_classes);
-	for (i = 0; i < N * nb_row_classes; i++) {
-		data[i] = 0;
+	if (f_v) {
+		cout << "incidence_structure::refine_column_partition_safe nb_row_classes= " << nb_row_classes << endl;
 	}
+	data = NEW_int(N * nb_row_classes);
+	Orbiter->Int_vec.zero(data, N * nb_row_classes);
 	
 	neighbors = NEW_int(max_k);
 
@@ -1069,16 +1081,16 @@ int incidence_structure::refine_column_partition_safe(
 			c = PStack.cellNumber[PStack.invPointList[i]];
 			I = row_class_idx[c];
 			if (I == -1) {
-				cout << "incidence_structure::refine_column_"
-						"partition_safe I == -1" << endl;
+				cout << "incidence_structure::refine_column_partition_safe "
+						"I == -1" << endl;
 				exit(1);
 			}
 			data[(nb_points() + j) * nb_row_classes + I]++;
 		}
 	}
 	if (f_vv) {
-		cout << "incidence_structure::refine_column_"
-				"partition_safe data:" << endl;
+		cout << "incidence_structure::refine_column_partition_safe "
+				"data:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout,
 			data + nb_points() * nb_row_classes,
 			nb_lines(), nb_row_classes, nb_row_classes, 3);
@@ -1145,14 +1157,22 @@ int incidence_structure::refine_row_partition_safe(
 	row_class_idx = NEW_int(PStack.ht);
 	col_class_idx = NEW_int(PStack.ht);
 
+	if (f_v) {
+		cout << "incidence_structure::refine_row_partition_safe before get_partition" << endl;
+	}
 	get_partition(PStack,
 			row_classes, row_class_idx, nb_row_classes,
 			col_classes, col_class_idx, nb_col_classes);
+	if (f_v) {
+		cout << "incidence_structure::refine_row_partition_safe after get_partition" << endl;
+	}
+	if (f_v) {
+		cout << "incidence_structure::refine_row_partition_safe nb_col_classes=" << nb_col_classes << endl;
+	}
 	
 	data = NEW_int(nb_points() * nb_col_classes);
-	for (i = 0; i < nb_points() * nb_col_classes; i++) {
-		data[i] = 0;
-	}
+	Orbiter->Int_vec.zero(data, nb_points() * nb_col_classes);
+
 	
 	neighbors = NEW_int(max_r);
 
@@ -1163,8 +1183,7 @@ int incidence_structure::refine_row_partition_safe(
 			c = PStack.cellNumber[PStack.invPointList[j]];
 			J = col_class_idx[c];
 			if (J == -1) {
-				cout << "incidence_structure::refine_row_"
-						"partition_safe J == -1" << endl;
+				cout << "incidence_structure::refine_row_partition_safe J == -1" << endl;
 				exit(1);
 			}
 			data[i * nb_col_classes + J]++;
@@ -1235,9 +1254,7 @@ int incidence_structure::refine_column_partition(
 		cout << "max_r=" << max_r << endl;		
 	}
 	data = NEW_int(N * depth);
-	for (i = 0; i < N * depth; i++) {
-		data[i] = 0;
-	}
+	Orbiter->Int_vec.zero(data, N * depth);
 	
 	neighbors = NEW_int(max_r);
 	for (y = 0; y < nb_lines(); y++) {
@@ -1357,8 +1374,7 @@ int incidence_structure::refine_row_partition(
 				<< " depth=" << depth << endl;
 	}
 	data = NEW_int(N * depth);
-	for (i = 0; i < N * depth; i++) 
-		data[i] = 0;
+	Orbiter->Int_vec.zero(data, N * depth);
 	
 	nb_neighbors = max_k;
 	neighbors = NEW_int(nb_neighbors);

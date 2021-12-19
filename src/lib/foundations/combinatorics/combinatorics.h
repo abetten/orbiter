@@ -135,12 +135,6 @@ public:
 	int f_save_classification;
 	std::string save_prefix;
 
-	//int f_report;
-	//std::string report_prefix;
-
-	int fixed_structure_order_list_sz;
-	int fixed_structure_order_list[1000];
-
 	int f_max_TDO_depth;
 	int max_TDO_depth;
 
@@ -153,27 +147,46 @@ public:
 
 	int f_save_transversal;
 
-#if 0
-	int f_load_canonical_labeling;
-
-	int f_load_ago;
-
-	int f_save_cumulative_canonical_labeling;
-	std::string cumulative_canonical_labeling_fname;
-
-	int f_save_cumulative_ago;
-	std::string cumulative_ago_fname;
-
-	int f_save_cumulative_data;
-	std::string cumulative_data_fname;
-
-	int f_save_fibration;
-	std::string fibration_fname;
-#endif
-
 
 	classification_of_objects_description();
 	~classification_of_objects_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+// #############################################################################
+// classification_of_objects_report_options.cpp
+// #############################################################################
+
+
+
+
+//! options for the report for a classification of combinatorial objects
+
+
+
+class classification_of_objects_report_options {
+
+public:
+
+	int f_prefix;
+	std::string prefix;
+
+	int f_export_flag_orbits;
+
+	int f_show_incidence_matrices;
+
+	int f_show_TDO;
+
+	int f_show_TDA;
+
+	int f_export_group;
+
+	classification_of_objects_report_options();
+	~classification_of_objects_report_options();
 	int read_arguments(
 		int argc, std::string *argv,
 		int verbose_level);
@@ -1007,9 +1020,33 @@ void distribution_reverse_sorting(int f_increasing,
 	int *distributions, int nb_distributions);
 
 
+// #############################################################################
+// tdo_scheme_compute.cpp
+// #############################################################################
+
+//! tactical decomposition of an incidence structure obtained by refinement
+
+class tdo_scheme_compute {
+
+public:
+
+	encoded_combinatorial_object *Enc;
+	decomposition *Decomp;
+
+
+
+	tdo_scheme_compute();
+	~tdo_scheme_compute();
+	void init(encoded_combinatorial_object *Enc,
+			int max_depth,
+			int verbose_level);
+	void print_schemes(std::ostream &ost);
+
+};
+
 
 // #############################################################################
-// tdo_scheme.cpp
+// tdo_scheme_synthetic.cpp
 // #############################################################################
 
 

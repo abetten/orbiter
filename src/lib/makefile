@@ -23,6 +23,7 @@ MODULES= \
 		foundations/combinatorics/boolean_function_domain.o \
 		foundations/combinatorics/brick_domain.o \
 		foundations/combinatorics/classification_of_objects_description.o \
+		foundations/combinatorics/classification_of_objects_report_options.o \
 		foundations/combinatorics/classification_of_objects.o \
 		foundations/combinatorics/combinatorial_object_create.o \
 		foundations/combinatorics/combinatorial_object_description.o \
@@ -33,6 +34,7 @@ MODULES= \
 		foundations/combinatorics/tdo_data.o \
 		foundations/combinatorics/tdo_refinement_description.o \
 		foundations/combinatorics/tdo_refinement.o \
+		foundations/combinatorics/tdo_scheme_compute.o \
 		foundations/combinatorics/tdo_scheme_synthetic.o \
 		foundations/cryptography/cryptography_domain.o \
 		foundations/data_structures/bitmatrix.o \
@@ -62,6 +64,7 @@ MODULES= \
 		foundations/data_structures/vector_builder_description.o \
 		foundations/data_structures/vector_builder.o \
 		foundations/data_structures/vector_hashing.o \
+		foundations/Eigen_interface/eigen_interface.o \
 		foundations/expression_parser/expression_parser_domain.o \
 		foundations/expression_parser/expression_parser.o \
 		foundations/expression_parser/formula.o \

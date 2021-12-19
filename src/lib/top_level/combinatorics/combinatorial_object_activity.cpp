@@ -55,7 +55,8 @@ void combinatorial_object_activity::init(combinatorial_object_activity_descripti
 
 
 
-void combinatorial_object_activity::init_input_stream(combinatorial_object_activity_description *Descr,
+void combinatorial_object_activity::init_input_stream(
+		combinatorial_object_activity_description *Descr,
 		data_input_stream *IS,
 		int verbose_level)
 {
@@ -323,24 +324,29 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 			cout << "combinatorial_object_activity::perform_activity_IS f_canonical_form_PG" << endl;
 		}
 
-
-		int idx;
-
-		idx = Orbiter->find_symbol(Descr->canonical_form_PG_PG_label);
-
-		symbol_table_object_type t;
-
-		t = Orbiter->get_object_type(idx);
-		if (t != t_projective_space) {
-			cout << "combinatorial_object_activity::perform_activity_IS "
-				<< Descr->canonical_form_PG_PG_label << " is not of type projective_space" << endl;
-			exit(1);
-		}
-
 		projective_space_with_action *PA;
 
-		PA = (projective_space_with_action *) Orbiter->get_object(idx);
+		if (Descr->f_canonical_form_PG_has_PA) {
+			PA = Descr->Canonical_form_PG_PA;
+		}
+		else {
 
+			int idx;
+
+			idx = Orbiter->find_symbol(Descr->canonical_form_PG_PG_label);
+
+			symbol_table_object_type t;
+
+			t = Orbiter->get_object_type(idx);
+			if (t != t_projective_space) {
+				cout << "combinatorial_object_activity::perform_activity_IS "
+					<< Descr->canonical_form_PG_PG_label << " is not of type projective_space" << endl;
+				exit(1);
+			}
+
+
+			PA = (projective_space_with_action *) Orbiter->get_object(idx);
+		}
 
 		classification_of_objects *CO;
 
@@ -695,6 +701,7 @@ void combinatorial_object_activity::post_process_classification(
 				CO->OWCF_transversal[iso_type],
 				CO->NO_transversal[iso_type],
 				f_projective_space, PA,
+				CO->Descr->max_TDO_depth,
 				label,
 				verbose_level);
 
@@ -717,7 +724,7 @@ void combinatorial_object_activity::classification_report(
 		cout << "combinatorial_object_activity::classification_report" << endl;
 	}
 
-
+	classification_of_objects_report_options *Report_options;
 
 	if (CO->Descr->f_classification_prefix == FALSE) {
 		cout << "please use option -classification_prefix <prefix> to set the "
@@ -725,16 +732,12 @@ void combinatorial_object_activity::classification_report(
 		exit(1);
 	}
 
-	string fname;
-
-	fname.assign(CO->Descr->classification_prefix);
-	fname.append("_classification.tex");
+	Report_options = Descr->Classification_of_objects_report_options;
 
 	if (f_v) {
 		cout << "combinatorial_object_activity::classification_report before latex_report" << endl;
 	}
-
-	latex_report(fname,
+	latex_report(Report_options,
 			CO,
 			OwP,
 			verbose_level);
@@ -746,7 +749,7 @@ void combinatorial_object_activity::classification_report(
 }
 
 void combinatorial_object_activity::latex_report(
-		std::string &fname,
+		classification_of_objects_report_options *Report_options,
 		classification_of_objects *CO,
 		object_with_properties *OwP,
 		int verbose_level)
@@ -758,6 +761,20 @@ void combinatorial_object_activity::latex_report(
 	if (f_v) {
 		cout << "combinatorial_object_activity::latex_report" << endl;
 	}
+
+
+
+	string fname;
+
+	fname.assign(Report_options->prefix);
+	fname.append("_classification.tex");
+
+	if (f_v) {
+		cout << "combinatorial_object_activity::classification_report before latex_report" << endl;
+	}
+
+
+
 	if (f_v) {
 		cout << "combinatorial_object_activity::latex_report, CB->nb_types=" << CO->CB->nb_types << endl;
 	}
@@ -780,7 +797,7 @@ void combinatorial_object_activity::latex_report(
 		}
 
 
-		report_all_isomorphism_types(fp, CO, OwP,
+		report_all_isomorphism_types(fp, Report_options, CO, OwP,
 				verbose_level);
 
 		L.foot(fp);
@@ -799,6 +816,7 @@ void combinatorial_object_activity::latex_report(
 
 void combinatorial_object_activity::report_all_isomorphism_types(
 		std::ostream &fp,
+		classification_of_objects_report_options *Report_options,
 		classification_of_objects *CO,
 		object_with_properties *OwP,
 		int verbose_level)
@@ -853,7 +871,7 @@ void combinatorial_object_activity::report_all_isomorphism_types(
 		if (f_v) {
 			cout << "combinatorial_object_activity::report_all_isomorphism_types before report_isomorphism_type" << endl;
 		}
-		report_isomorphism_type(fp, CO, OwP, i, verbose_level);
+		report_isomorphism_type(fp, Report_options, CO, OwP, i, verbose_level);
 		if (f_v) {
 			cout << "combinatorial_object_activity::report_all_isomorphism_types after report_isomorphism_type" << endl;
 		}
@@ -869,6 +887,7 @@ void combinatorial_object_activity::report_all_isomorphism_types(
 
 void combinatorial_object_activity::report_isomorphism_type(
 		std::ostream &fp,
+		classification_of_objects_report_options *Report_options,
 		classification_of_objects *CO,
 		object_with_properties *OwP,
 		int i, int verbose_level)
@@ -920,6 +939,7 @@ void combinatorial_object_activity::report_isomorphism_type(
 
 
 	report_object(fp,
+			Report_options,
 			CO,
 			OwP,
 			i /* object_idx */,
@@ -934,6 +954,7 @@ void combinatorial_object_activity::report_isomorphism_type(
 }
 
 void combinatorial_object_activity::report_object(std::ostream &fp,
+		classification_of_objects_report_options *Report_options,
 		classification_of_objects *CO,
 		object_with_properties *OwP,
 		int object_idx,
@@ -945,21 +966,12 @@ void combinatorial_object_activity::report_object(std::ostream &fp,
 		cout << "combinatorial_object_activity::report_object" << endl;
 	}
 
-	int f_show_incma;
-
-
-	if (CO->f_projective_space) {
-		f_show_incma = FALSE;
-	}
-	else {
-		f_show_incma = TRUE;
-	}
 
 	object_with_canonical_form *OwCF = CO->OWCF_transversal[object_idx];
 
-	OwCF->print_tex_detailed(fp, f_show_incma, verbose_level);
+	OwCF->print_tex_detailed(fp, Report_options->f_show_incidence_matrices, verbose_level);
 
-	if (CO->f_projective_space) {
+	if (FALSE /*CO->f_projective_space*/) {
 
 #if 0
 		object_in_projective_space_with_action *OiPA;
@@ -972,7 +984,7 @@ void combinatorial_object_activity::report_object(std::ostream &fp,
 
 	}
 	else {
-		OwP[object_idx].latex_report(fp, f_show_incma, verbose_level);
+		OwP[object_idx].latex_report(fp, Report_options, verbose_level);
 	}
 
 

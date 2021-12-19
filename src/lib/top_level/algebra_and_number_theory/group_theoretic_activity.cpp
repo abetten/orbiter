@@ -174,7 +174,12 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 	if (Descr->f_print_elements_tex) {
 
 		AG->print_elements_tex(
-				Descr->f_order_of_products,
+				verbose_level);
+	}
+
+	if (Descr->f_order_of_products) {
+
+		AG->order_of_products_of_elements(
 				Descr->order_of_products_elements,
 				verbose_level);
 	}
@@ -308,6 +313,20 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 				cout << "group_theoretic_activity::perform_activity after Orb->stabilizer_of" << endl;
 			}
 		}
+
+		if (Descr->f_stabilizer_of_orbit_rep) {
+
+			int orbit_idx = Descr->stabilizer_of_orbit_rep_orbit_idx;
+
+			if (f_v) {
+				cout << "group_theoretic_activity::perform_activity before Orb->stabilizer_of" << endl;
+			}
+			Orb->stabilizer_of(orbit_idx, verbose_level);
+			if (f_v) {
+				cout << "group_theoretic_activity::perform_activity after Orb->stabilizer_of" << endl;
+			}
+		}
+
 
 		if (Descr->f_report) {
 
@@ -452,15 +471,6 @@ void group_theoretic_activity::perform_activity(int verbose_level)
 					Descr->Andre_Bruck_Bose_construction_label,
 					verbose_level);
 	}
-
-#if 0
-	else if (Descr->f_BLT_starter) {
-		do_BLT_starter(
-					LG,
-					Descr->BLT_starter_size,
-					verbose_level);
-	}
-#endif
 
 
 	if (f_v) {

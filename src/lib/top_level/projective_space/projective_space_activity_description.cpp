@@ -42,9 +42,8 @@ projective_space_activity_description::projective_space_activity_description()
 
 	f_canonical_form_of_code = FALSE;
 	//canonical_form_of_code_label;
-	canonical_form_of_code_m = 0;
-	canonical_form_of_code_n = 0;
-	//canonical_form_of_code_text;
+	//canonical_form_of_code_generator_matrix;
+	Canonical_form_codes_Descr = NULL;
 
 	f_map = FALSE;
 	//std::string map_label;
@@ -302,16 +301,27 @@ int projective_space_activity_description::read_arguments(
 		else if (stringcmp(argv[i], "-canonical_form_of_code") == 0) {
 			f_canonical_form_of_code = TRUE;
 			canonical_form_of_code_label.assign(argv[++i]);
-			canonical_form_of_code_m = strtoi(argv[++i]);
-			canonical_form_of_code_n = strtoi(argv[++i]);
-			canonical_form_of_code_text.assign(argv[++i]);
+			canonical_form_of_code_generator_matrix.assign(argv[++i]);
+
+			Canonical_form_codes_Descr = NEW_OBJECT(classification_of_objects_description);
+
+			i += Canonical_form_codes_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
+			if (f_v) {
+				cout << "done reading -canonical_form_of_code " << endl;
+				cout << "i = " << i << endl;
+				cout << "argc = " << argc << endl;
+				if (i < argc) {
+					cout << "next argument is " << argv[i] << endl;
+				}
+			}
+
+
 			if (f_v) {
 				cout << "-canonical_form_of_code "
 						<< canonical_form_of_code_label << " "
-						<< canonical_form_of_code_m << " "
-						<< canonical_form_of_code_n << " "
-						<< canonical_form_of_code_text << " "
+						<< canonical_form_of_code_generator_matrix << " "
 						<< endl;
+				Canonical_form_codes_Descr->print();
 			}
 		}
 
@@ -963,16 +973,6 @@ int projective_space_activity_description::read_arguments(
 
 void projective_space_activity_description::print()
 {
-#if 0
-	if (f_input) {
-		cout << "-input" << endl;
-		Data->print();
-	}
-	if (f_canonical_form_PG) {
-		cout << "-canonical_form_PG " << endl;
-		Canonical_form_PG_Descr->print();
-	}
-#endif
 	if (f_table_of_cubic_surfaces_compute_properties) {
 		cout << "-table_of_cubic_surfaces_compute_properties "
 				<< table_of_cubic_surfaces_compute_fname_csv << " "
@@ -987,11 +987,11 @@ void projective_space_activity_description::print()
 	if (f_canonical_form_of_code) {
 		cout << "-canonical_form_of_code "
 				<< canonical_form_of_code_label << " "
-				<< canonical_form_of_code_m << " "
-				<< canonical_form_of_code_n << " "
-				<< canonical_form_of_code_text << " "
+				<< canonical_form_of_code_generator_matrix << " "
 				<< endl;
+		Canonical_form_codes_Descr->print();
 	}
+
 	if (f_map) {
 		cout << "-map "
 				<< map_label << " "
@@ -1056,11 +1056,6 @@ void projective_space_activity_description::print()
 	if (f_classify_surfaces_through_arcs_and_trihedral_pairs) {
 		cout << "-classify_surfaces_through_arcs_and_trihedral_pairs " << endl;
 	}
-#if 0
-	if (f_create_surface) {
-		cout << "-create_surface" << endl;
-	}
-#endif
 
 	if (f_sweep) {
 		cout << "-sweep " << sweep_fname << endl;

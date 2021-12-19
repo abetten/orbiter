@@ -1285,12 +1285,20 @@ void strong_generators::print_group_order(std::ostream &ost)
 
 void strong_generators::print_generators_gap(std::ostream &ost)
 {
+	int verbose_level = 1;
+	int f_v = (verbose_level >= 1);
 	int i;
 
+	if (f_v) {
+		cout << "strong_generators::print_generators_gap" << endl;
+	}
 	ost << "Generators in GAP format are:" << endl;
 	if (A->degree < 200) {
 		ost << "G := Group([";
 		for (i = 0; i < gens->len; i++) {
+			if (f_v) {
+				cout << "strong_generators::print_generators_gap i=" << i << " / " << gens->len << endl;
+			}
 			A->element_print_as_permutation_with_offset(
 					gens->ith(i), ost,
 					1 /*offset*/,
@@ -1305,6 +1313,9 @@ void strong_generators::print_generators_gap(std::ostream &ost)
 	}
 	else {
 		ost << "too big to print" << endl;
+	}
+	if (f_v) {
+		cout << "strong_generators::print_generators_gap done" << endl;
 	}
 }
 

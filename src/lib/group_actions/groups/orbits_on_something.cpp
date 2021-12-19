@@ -257,7 +257,7 @@ void orbits_on_something::stabilizer_of(int orbit_idx, int verbose_level)
 				"exporting stabilizer of first orbit rep to " << fname_stab << endl;
 	}
 	Stab->export_to_orbiter_as_bsgs(
-			A,
+			SG->A,
 			fname_stab, label_stab, label_stab,
 			verbose_level);
 

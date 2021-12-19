@@ -457,6 +457,14 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 
 		CG->properties(verbose_level);
 	}
+	else if (Descr->f_eigenvalues) {
+
+		if (f_v) {
+			cout << "graph_theoretic_activity::perform_activity f_properties" << endl;
+		}
+
+		CG->eigenvalues(verbose_level);
+	}
 
 
 

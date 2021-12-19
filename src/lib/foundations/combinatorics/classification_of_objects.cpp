@@ -492,17 +492,6 @@ int classification_of_objects::process_object(
 
 	bitvector *Canonical_form;
 
-#if 0
-	int nb_rows, nb_cols;
-
-	OwCF->encoding_size(
-			nb_rows, nb_cols,
-			verbose_level);
-
-
-	//NO = NEW_OBJECT(nauty_output);
-	//NO->allocate(nb_rows + nb_cols, verbose_level);
-#endif
 
 	if (f_projective_space) {
 		OwCF->P = P;
@@ -511,66 +500,6 @@ int classification_of_objects::process_object(
 		OwCF->P = NULL;
 	}
 
-#if 0
-	if (f_projective_space) {
-		if (f_v) {
-			cout << "classification_of_objects::process_object "
-					"before Nau.set_stabilizer_of_object" << endl;
-		}
-
-		nauty_interface_with_group Nau;
-
-		SG = Nau.set_stabilizer_of_object(
-				OwCF,
-				PA->A,
-				TRUE /* f_compute_canonical_form */, Canonical_form,
-				NO,
-				verbose_level - 2);
-		if (f_v) {
-			cout << "classification_of_objects::process_object "
-					"after Nau.set_stabilizer_of_object" << endl;
-		}
-
-
-		SG->group_order(go);
-
-
-	}
-	else {
-		if (f_v) {
-			cout << "classification_of_objects::process_object "
-					"not in projective space" << endl;
-		}
-
-		if (f_v) {
-			cout << "classification_of_objects::process_object "
-					"before OiP->run_nauty" << endl;
-		}
-
-		OwCF->run_nauty(
-				TRUE /* f_compute_canonical_form */, Canonical_form,
-				NO,
-				verbose_level);
-
-
-		nauty_interface_with_group Nau;
-
-		Nau.automorphism_group_as_permutation_group(
-						NO,
-						A_perm,
-						verbose_level);
-
-		if (f_v) {
-			cout << "classification_of_objects::process_object "
-					"after OiP->run_nauty" << endl;
-
-			A_perm->Strong_gens->print_generators_in_latex_individually(cout);
-			A_perm->Strong_gens->print_generators_in_source_code();
-			A_perm->print_base();
-		}
-
-	}
-#else
 
 
 	if (f_v) {
@@ -588,8 +517,6 @@ int classification_of_objects::process_object(
 				"after OwCF->run_nauty" << endl;
 	}
 
-
-#endif
 
 
 	longinteger_object go;
@@ -849,60 +776,6 @@ void classification_of_objects::save(
 #endif
 
 
-#if 0
-void classification_of_objects::latex_report(
-		std::string &fname,
-		std::string &prefix,
-		int fixed_structure_order_list_sz,
-		int *fixed_structure_order_list,
-		int max_TDO_depth,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	file_io Fio;
-	latex_interface L;
-
-	if (f_v) {
-		cout << "classification_of_objects::latex_report" << endl;
-	}
-	if (f_v) {
-		cout << "classification_of_objects::latex_report, CB->nb_types=" << CB->nb_types << endl;
-	}
-	{
-		ofstream fp(fname);
-		latex_interface L;
-
-		L.head_easy(fp);
-
-
-		report_summary_of_orbits(fp, verbose_level);
-
-
-		fp << "Ago :";
-		T_Ago->print_file_tex(fp, FALSE /* f_backwards*/);
-		fp << "\\\\" << endl;
-
-		if (f_v) {
-			cout << "classification_of_objects::latex_report before loop" << endl;
-		}
-
-
-		report_all_isomorphism_types(fp, max_TDO_depth, verbose_level);
-
-		L.foot(fp);
-	}
-
-	if (f_v) {
-		cout << "Written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
-	}
-	//FREE_int(perm);
-	//FREE_int(v);
-	if (f_v) {
-		cout << "classification_of_objects::latex_report done" << endl;
-	}
-}
-#endif
 
 void classification_of_objects::report_summary_of_orbits(
 		std::ostream &fp, int verbose_level)
@@ -1144,51 +1017,6 @@ void classification_of_objects::report_object(std::ostream &fp,
 	}
 
 	OwCF->print_tex_detailed(fp, f_show_incma, verbose_level);
-
-#if 0
-	if (f_projective_space) {
-		object_in_projective_space_with_action *OiPA;
-
-		OiPA = (object_in_projective_space_with_action *)
-				CB->Type_extra_data[object_idx];
-
-		OiPA->report(fp, PA, max_TDO_depth, verbose_level);
-	}
-	else {
-		action *A_perm;
-
-		A_perm = (action *) CB->Type_extra_data[object_idx];
-
-
-		fp << "Generators for the automorphism group: \\\\" << endl;
-		A_perm->Strong_gens->print_generators_in_latex_individually(fp);
-
-		schreier *Sch;
-
-
-		if (f_v) {
-			cout << "classification_of_objects::report_isomorphism_type before orbits_on_points_schreier" << endl;
-		}
-		Sch = A_perm->Strong_gens->orbits_on_points_schreier(A_perm,
-				verbose_level);
-		if (f_v) {
-			cout << "classification_of_objects::report_isomorphism_type after orbits_on_points_schreier" << endl;
-		}
-
-
-		fp << "Decomposition by automorphism group:\\\\" << endl;
-
-		if (f_v) {
-			cout << "classification_of_objects::report_isomorphism_type before Sch->print_TDA" << endl;
-		}
-		Sch->print_TDA(fp, OwCF, verbose_level);
-		if (f_v) {
-			cout << "classification_of_objects::report_isomorphism_type after Sch->print_TDA" << endl;
-		}
-
-	}
-#endif
-
 
 }
 

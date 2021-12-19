@@ -701,14 +701,33 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 	if (f_v) {
 		cout << "graphical_output::draw_bitmap" << endl;
 	}
+	file_io Fio;
+
 
 	if (C->f_input_csv_file) {
-
-		file_io Fio;
 
 		Fio.int_matrix_read_csv(C->input_csv_file_name,
 				C->M, C->m, C->n,
 				verbose_level);
+
+		if (C->f_secondary_input_csv_file) {
+
+
+			int m, n;
+
+
+			Fio.int_matrix_read_csv(C->secondary_input_csv_file_name,
+					C->M2, m, n,
+					verbose_level);
+			if (m != C->m) {
+				cout << "secondary matrix must have the same size as the primary input matrix" << endl;
+				exit(1);
+			}
+			if (n != C->n) {
+				cout << "secondary matrix must have the same size as the primary input matrix" << endl;
+				exit(1);
+			}
+		}
 
 	}
 	else {
@@ -800,6 +819,7 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 
 	int j, d;
 	int N, N100, cnt;
+	int indent = 0;
 
 	N = height * width;
 	N100 = N / 100 + 1;
@@ -807,6 +827,15 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 	cout << "N100=" << N100 << endl;
 
 	cnt = 0;
+
+	if (C->f_secondary_input_csv_file) {
+		indent = C->box_width >> 2;
+	}
+
+
+	std::vector<int> color_white = get_color(C->bit_depth, max_value, 0, C->f_invert_colors, 0);
+
+
 	for (i = 0; i < height; i++) {
 
 
@@ -827,9 +856,33 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 
 				I = i * C->box_width;
 				J = j * C->box_width;
-				for (u = 0; u < C->box_width; u++) {
-					for (v = 0; v < C->box_width; v++) {
-						fillBitmap(image, J + v, I + u, color);
+
+				if (C->f_secondary_input_csv_file) {
+					if (C->M2[i * width + j] == 0) {
+						for (u = 0; u < C->box_width; u++) {
+							for (v = 0; v < C->box_width; v++) {
+								if (u < indent || u >= C->box_width - indent || v < indent || v >= C->box_width - indent) {
+									fillBitmap(image, J + v, I + u, color_white);
+								}
+								else {
+									fillBitmap(image, J + v, I + u, color);
+								}
+							}
+						}
+					}
+					else {
+						for (u = 0; u < C->box_width; u++) {
+							for (v = 0; v < C->box_width; v++) {
+								fillBitmap(image, J + v, I + u, color);
+							}
+						}
+					}
+				}
+				else {
+					for (u = 0; u < C->box_width; u++) {
+						for (v = 0; v < C->box_width; v++) {
+							fillBitmap(image, J + v, I + u, color);
+						}
 					}
 				}
 

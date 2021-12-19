@@ -477,6 +477,7 @@ public:
 	int f_automorphism_group;
 
 	int f_properties;
+	int f_eigenvalues;
 
 
 	graph_theoretic_activity_description();

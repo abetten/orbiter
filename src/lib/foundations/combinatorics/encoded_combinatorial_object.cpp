@@ -751,13 +751,24 @@ void encoded_combinatorial_object::latex_canonical_form_with_labels(std::ostream
 
 	ost << "Flags : ";
 
+	int *Flags;
+	int nb_flags = 0;
+
+	Flags = NEW_int(nb_rows * nb_cols);
 	for (i = 0; i < nb_rows; i++) {
 		for (j = 0; j < nb_cols; j++) {
 			if (Inc2[i * nb_cols + j]) {
-				ost << i * nb_cols + j << ", ";
+				Flags[nb_flags++] = i * nb_cols + j;
 			}
 		}
 	}
+	if (nb_flags < 100) {
+		Orbiter->Int_vec.print(ost, Flags, nb_flags);
+	}
+	else {
+		ost << "too many to print." << endl;
+	}
+	FREE_int(Flags);
 	ost << "\\\\" << endl;
 
 

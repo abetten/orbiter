@@ -41,13 +41,15 @@ combinatorial_object_activity_description::combinatorial_object_activity_descrip
 
 	f_canonical_form_PG = FALSE;
 	//std::string &canonical_form_PG_PG_label;
+	f_canonical_form_PG_has_PA = FALSE;
+	Canonical_form_PG_PA = NULL;
 	Canonical_form_PG_Descr = NULL;
 
 	f_canonical_form = FALSE;
 	Canonical_form_Descr = NULL;
 
 	f_report = FALSE;
-	//report_prefix
+	Classification_of_objects_report_options = NULL;
 
 	f_test_distinguishing_property = FALSE;
 	//test_distinguishing_property_graph
@@ -166,8 +168,9 @@ int combinatorial_object_activity_description::read_arguments(
 		}
 		else if (stringcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
-			report_prefix.assign(argv[++i]);
-			cout << "-report " << report_prefix << endl;
+
+			Classification_of_objects_report_options = NEW_OBJECT(classification_of_objects_report_options);
+			i += Classification_of_objects_report_options->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 		}
 		else if (stringcmp(argv[i], "-test_distinguishing_property") == 0) {
 			f_test_distinguishing_property = TRUE;
@@ -225,7 +228,8 @@ void combinatorial_object_activity_description::print()
 		Canonical_form_Descr->print();
 	}
 	if (f_report) {
-		cout << "-report " << report_prefix << endl;
+		cout << "-report " << endl;
+		Classification_of_objects_report_options->print();
 	}
 	if (f_test_distinguishing_property) {
 		cout << "-test_distinguishing_property " << test_distinguishing_property_graph << endl;

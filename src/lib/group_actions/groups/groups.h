@@ -1049,7 +1049,8 @@ public:
 			void *compute_orbit_invariant_data,
 			int verbose_level);
 	void print_TDA(std::ostream &ost, object_with_canonical_form *OwCF,
-			int f_show_incma, int verbose_level);
+			classification_of_objects_report_options *Report_options,
+			int verbose_level);
 	void latex_TDA(std::ostream &ost, encoded_combinatorial_object *Enc,
 			int verbose_level);
 
