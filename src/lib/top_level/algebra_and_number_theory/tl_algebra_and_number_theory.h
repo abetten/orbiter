@@ -131,28 +131,21 @@ public:
 			finite_field *F, int n, std::string &fname, int verbose_level);
 
 	void orbits_on_points(
-			//linear_group *LG,
 			action *A2,
 			strong_generators *Strong_gens,
 			int f_load_save,
 			std::string &prefix,
 			orbits_on_something *&Orb,
 			int verbose_level);
-	void find_singer_cycle(linear_group *LG,
+	void find_singer_cycle(any_group *Any_group,
 			action *A1, action *A2,
 			int verbose_level);
-	void search_element_of_order(linear_group *LG,
+	void search_element_of_order(any_group *Any_group,
 			action *A1, action *A2,
 			int order, int verbose_level);
-	void find_standard_generators(linear_group *LG,
+	void find_standard_generators(any_group *Any_group,
 			action *A1, action *A2,
 			int order_a, int order_b, int order_ab, int verbose_level);
-	void element_rank(linear_group *LG,
-			action *A1,
-			std::string &elt_data, int verbose_level);
-	void element_unrank(linear_group *LG,
-			action *A1,
-			std::string &rank_string, int verbose_level);
 
 };
 
@@ -213,7 +206,10 @@ public:
 			int order_of_subgroup,
 			int verbose_level);
 	void print_elements(int verbose_level);
-	void print_elements_tex(int f_order_of_products, std::string &elements, int verbose_level);
+	void print_elements_tex(/*int f_order_of_products, std::string &elements,*/ int verbose_level);
+	void order_of_products_of_elements(
+			std::string &Elements_text,
+			int verbose_level);
 	void save_elements_csv(std::string &fname, int verbose_level);
 	void multiply_elements_csv(std::string &fname1, std::string &fname2, std::string &fname3,
 			int f_column_major_ordering, int verbose_level);
@@ -249,6 +245,7 @@ public:
 	void create_latex_report_for_modified_group(
 			layered_graph_draw_options *O,
 			int verbose_level);
+	strong_generators *get_strong_generators();
 
 	// any_group_linear.cpp:
 	void classes_based_on_normal_form(int verbose_level);
@@ -407,21 +404,31 @@ public:
 
 
 
-
+	// options for poset classification:
 	int f_poset_classification_control;
 	poset_classification_control *Control;
 
 
+	// orbits on points using Schreier trees:
 	int f_orbits_on_points;
-	int f_export_trees;
 
-	int f_stabilizer;
-		// compute stabilizer of orbit 0,
-		// must be given with -orbits_on_points
+		// additional options for computing orbits on points:
+		int f_export_trees;
+
+		int f_stabilizer;
+			// compute stabilizer of orbit 0,
+			// must be given with -orbits_on_points
+
+		int f_stabilizer_of_orbit_rep;
+		int stabilizer_of_orbit_rep_orbit_idx;
 
 
+	// poset classification
 	int f_orbits_on_subsets;
 	int orbits_on_subsets_size;
+
+
+
 	int f_classes_based_on_normal_form;
 	int f_classes;
 	int f_group_table;
@@ -491,7 +498,7 @@ public:
 
 	int f_reverse_isomorphism_exterior_square;
 
-	// classification of optimal linear codes:
+	// classification of optimal linear codes using poset classification
 	int f_linear_codes;
 	int linear_codes_minimum_distance;
 	int linear_codes_target_size;
@@ -505,38 +512,41 @@ public:
 
 
 
-		// subspace orbits:
-		int f_orbits_on_subspaces;
-		int orbits_on_subspaces_depth;
+	// subspace orbits:
+	int f_orbits_on_subspaces;
+	int orbits_on_subspaces_depth;
+
+		// additional options for computing orbits on subspaces
 		int f_mindist;
 		int mindist;
 		int f_self_orthogonal;
 		int f_doubly_even;
 
-		int f_tensor_classify;
-		int tensor_classify_depth;
-		int f_tensor_permutations;
 
-		int f_classify_ovoids;
-		ovoid_classify_description *Ovoid_classify_description;
+	int f_tensor_classify;
+	int tensor_classify_depth;
+	int f_tensor_permutations;
 
-		int f_classify_cubic_curves;
+	int f_classify_ovoids;
+	ovoid_classify_description *Ovoid_classify_description;
 
-		int f_orbits_on_polynomials;
-		int orbits_on_polynomials_degree;
-		int f_recognize_orbits_on_polynomials;
-		std::string recognize_orbits_on_polynomials_text;
+	int f_classify_cubic_curves;
 
-		int f_orbits_on_polynomials_draw_tree;
-		int orbits_on_polynomials_draw_tree_idx;
+	int f_orbits_on_polynomials;
+	int orbits_on_polynomials_degree;
+	int f_recognize_orbits_on_polynomials;
+	std::string recognize_orbits_on_polynomials_text;
+
+	int f_orbits_on_polynomials_draw_tree;
+	int orbits_on_polynomials_draw_tree_idx;
 
 
-		int f_representation_on_polynomials;
-		int representation_on_polynomials_degree;
+	int f_representation_on_polynomials;
+	int representation_on_polynomials_degree;
 
-		int f_Andre_Bruck_Bose_construction;
-		int Andre_Bruck_Bose_construction_spread_no;
-		std::string Andre_Bruck_Bose_construction_label;
+	int f_Andre_Bruck_Bose_construction;
+	int Andre_Bruck_Bose_construction_spread_no;
+	std::string Andre_Bruck_Bose_construction_label;
 
 
 

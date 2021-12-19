@@ -76,11 +76,16 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 		projective_space_global G;
 
+		int *v;
+		int m, n;
+
+		Orbiter->get_matrix_from_label(Descr->canonical_form_of_code_generator_matrix, v, m, n);
+
 		G.canonical_form_of_code(
 				PA,
 				Descr->canonical_form_of_code_label,
-				Descr->canonical_form_of_code_m, Descr->canonical_form_of_code_n,
-				Descr->canonical_form_of_code_text,
+				v, m, n,
+				Descr->Canonical_form_codes_Descr,
 				verbose_level);
 
 	}

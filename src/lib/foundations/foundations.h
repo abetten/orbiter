@@ -278,6 +278,7 @@ class coding_theory_domain;
 class boolean_function_domain;
 class brick_domain;
 class classification_of_objects_description;
+class classification_of_objects_report_options;
 class classification_of_objects;
 class combinatorial_object_create;
 class combinatorial_object_description;
@@ -288,6 +289,7 @@ class pentomino_puzzle;
 class tdo_data;
 class tdo_refinement_description;
 class tdo_refinement;
+class tdo_scheme_compute;
 class tdo_scheme_synthetic;
 struct solution_file_data;
 
@@ -746,6 +748,8 @@ public:
 #include "./surfaces/surfaces.h"
 
 
+// Eigen_interface:
+void orbiter_eigenvalues(int *Adj, int nb_points, double *E, int verbose_level);
 
 
 

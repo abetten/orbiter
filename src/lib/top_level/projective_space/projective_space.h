@@ -331,10 +331,6 @@ public:
 class projective_space_activity_description {
 public:
 
-#if 0
-	int f_canonical_form_PG;
-	projective_space_object_classifier_description *Canonical_form_PG_Descr;
-#endif
 
 	int f_export_point_line_incidence_matrix;
 
@@ -349,9 +345,8 @@ public:
 
 	int f_canonical_form_of_code;
 	std::string canonical_form_of_code_label;
-	int canonical_form_of_code_m;
-	int canonical_form_of_code_n;
-	std::string canonical_form_of_code_text;
+	std::string canonical_form_of_code_generator_matrix;
+	classification_of_objects_description *Canonical_form_codes_Descr;
 
 	int f_map;
 	std::string map_label;
@@ -406,11 +401,6 @@ public:
 		poset_classification_control *Trihedra2_control;
 		int f_control_six_arcs;
 		poset_classification_control *Control_six_arcs;
-
-#if 0
-		int f_create_surface;
-		surface_create_description *surface_description;
-#endif
 
 	int f_sweep;
 	std::string sweep_fname;
@@ -570,8 +560,9 @@ public:
 			int verbose_level);
 	void canonical_form_of_code(
 			projective_space_with_action *PA,
-			std::string &label, int m, int n,
-			std::string &data,
+			std::string &label,
+			int *genma, int k, int n,
+			classification_of_objects_description *Canonical_form_codes_Descr,
 			int verbose_level);
 	void do_create_surface(
 			projective_space_with_action *PA,
@@ -782,8 +773,9 @@ public:
 			quartic_curve_create *&QC,
 			int verbose_level);
 	void canonical_form_of_code(
-			std::string &label, int m, int n,
-			std::string &data,
+			std::string &label,
+			int *genma, int m, int n,
+			classification_of_objects_description *Canonical_form_codes_Descr,
 			int verbose_level);
 	void table_of_quartic_curves(int verbose_level);
 	void table_of_cubic_surfaces(int verbose_level);

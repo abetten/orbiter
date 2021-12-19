@@ -150,14 +150,21 @@ public:
 
 	int f_input_csv_file;
 	std::string input_csv_file_name;
+
+	int f_secondary_input_csv_file;
+	std::string secondary_input_csv_file_name;
+
 	int f_input_matrix;
 	int *M;
+	int *M2;
+
 	int m;
 	int n;
 	int f_partition;
 	int part_width;
 	std::string part_row;
 	std::string part_col;
+
 #if 0
 	int *Row_parts;
 	int nb_row_parts;

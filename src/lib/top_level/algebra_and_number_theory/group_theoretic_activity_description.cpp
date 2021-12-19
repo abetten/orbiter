@@ -67,6 +67,10 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	f_stabilizer = FALSE;
 
+	f_stabilizer_of_orbit_rep = FALSE;
+	stabilizer_of_orbit_rep_orbit_idx = 0;
+
+
 	f_orbits_on_subsets = FALSE;
 	orbits_on_subsets_size = 0;
 
@@ -358,6 +362,15 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-stabilizer" << endl;
 			}
 		}
+
+		else if (stringcmp(argv[i], "-stabilizer_of_orbit_rep") == 0) {
+			f_stabilizer_of_orbit_rep = TRUE;
+			stabilizer_of_orbit_rep_orbit_idx = strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-stabilizer_of_orbit_rep" << stabilizer_of_orbit_rep_orbit_idx << endl;
+			}
+		}
+
 		else if (stringcmp(argv[i], "-test_if_geometric") == 0) {
 			f_test_if_geometric = TRUE;
 			test_if_geometric_depth = strtoi(argv[++i]);

@@ -195,25 +195,25 @@ void projective_space_global::analyze_del_Pezzo_surface_formula_given(
 
 void projective_space_global::canonical_form_of_code(
 		projective_space_with_action *PA,
-		std::string &label, int m, int n,
-		std::string &data,
+		std::string &label,
+		int *genma, int k, int n,
+		classification_of_objects_description *Canonical_form_codes_Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "projective_space_global::canonical_form_of_code" << endl;
-		cout << "m=" << m << endl;
-		cout << "n=" << n << endl;
-		cout << "data=" << data << endl;
 	}
 
 	if (f_v) {
 		cout << "projective_space_global::canonical_form_of_code before PA->canonical_form_of_code" << endl;
 	}
+
 	PA->canonical_form_of_code(
-				label, m, n,
-				data,
+				label,
+				genma, k, n,
+				Canonical_form_codes_Descr,
 				verbose_level);
 	if (f_v) {
 		cout << "projective_space_global::canonical_form_of_code after PA->canonical_form_of_code" << endl;

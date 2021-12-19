@@ -9,6 +9,7 @@ MODULES = \
 		boolean_function_domain.o \
 		brick_domain.o \
 		classification_of_objects_description.o \
+		classification_of_objects_report_options.o \
 		classification_of_objects.o \
 		combinatorial_object_create.o \
 		combinatorial_object_description.o \
@@ -19,6 +20,7 @@ MODULES = \
 		tdo_data.o \
 		tdo_refinement_description.o \
 		tdo_refinement.o \
+		tdo_scheme_compute.o \
 		tdo_scheme_synthetic.o 
 
 

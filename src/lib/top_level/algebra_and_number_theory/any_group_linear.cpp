@@ -93,7 +93,7 @@ void any_group::find_singer_cycle(int verbose_level)
 
 	algebra_global_with_action Algebra;
 
-	Algebra.find_singer_cycle(LG,
+	Algebra.find_singer_cycle(this,
 			A, A,
 			verbose_level);
 	if (f_v) {
@@ -114,7 +114,7 @@ void any_group::search_element_of_order(int order, int verbose_level)
 	}
 	algebra_global_with_action Algebra;
 
-	Algebra.search_element_of_order(LG,
+	Algebra.search_element_of_order(this,
 			A, A,
 			order, verbose_level);
 
@@ -139,7 +139,7 @@ void any_group::find_standard_generators(int order_a,
 	}
 	algebra_global_with_action Algebra;
 
-	Algebra.find_standard_generators(LG,
+	Algebra.find_standard_generators(this,
 			A, A,
 			order_a, order_b, order_ab, verbose_level);
 

@@ -3336,8 +3336,10 @@ void schreier::compute_orbit_invariant(int *&orbit_invariant,
 	}
 }
 
-void schreier::print_TDA(std::ostream &ost, object_with_canonical_form *OwCF,
-		int f_show_incma, int verbose_level)
+void schreier::print_TDA(std::ostream &ost,
+		object_with_canonical_form *OwCF,
+		classification_of_objects_report_options *Report_options,
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3347,7 +3349,7 @@ void schreier::print_TDA(std::ostream &ost, object_with_canonical_form *OwCF,
 
 	//print_tex(ost);
 
-	if (f_show_incma) {
+	if (Report_options->f_show_incidence_matrices) {
 		encoded_combinatorial_object *Enc;
 
 		OwCF->encode_incma(Enc, verbose_level);

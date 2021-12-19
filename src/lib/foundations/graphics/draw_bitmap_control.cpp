@@ -20,21 +20,21 @@ draw_bitmap_control::draw_bitmap_control()
 {
 	f_input_csv_file = FALSE;
 	//std::string input_csv_file_name;
+
+	f_secondary_input_csv_file = FALSE;
+	//std::string secondary_input_csv_file_name;
+
+
 	f_input_matrix = FALSE;
 	M = NULL;
+	M2 = NULL;
 	m = 0;
 	n = 0;
+
 	f_partition = FALSE;
 	part_width = 4;
 	//std::string part_row;
 	//std::string part_col;
-
-#if 0
-	nb_row_parts = 0;
-	Row_parts = NULL;
-	nb_col_parts = 0;
-	Col_parts = NULL;
-#endif
 
 	f_box_width = FALSE;
 	box_width = 10;
@@ -66,6 +66,13 @@ int draw_bitmap_control::read_arguments(
 			input_csv_file_name.assign(argv[++i]);
 			if (f_v) {
 				cout << "-input_csv_file " << input_csv_file_name << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-secondary_input_csv_file") == 0) {
+			f_secondary_input_csv_file = TRUE;
+			secondary_input_csv_file_name.assign(argv[++i]);
+			if (f_v) {
+				cout << "-secondary_input_csv_file " << secondary_input_csv_file_name << endl;
 			}
 		}
 		else if (stringcmp(argv[i], "-partition") == 0) {
@@ -120,6 +127,9 @@ void draw_bitmap_control::print()
 {
 	if (f_input_csv_file) {
 		cout << "-input_csv_file " << input_csv_file_name << endl;
+	}
+	if (f_secondary_input_csv_file) {
+		cout << "-secondary_input_csv_file " << secondary_input_csv_file_name << endl;
 	}
 	if (f_partition) {
 		cout << "-partition " << part_width << " " << part_row << " " << part_col << endl;

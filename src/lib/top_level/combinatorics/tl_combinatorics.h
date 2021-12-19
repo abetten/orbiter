@@ -92,13 +92,15 @@ public:
 
 	int f_canonical_form_PG;
 	std::string canonical_form_PG_PG_label;
+	int f_canonical_form_PG_has_PA;
+	projective_space_with_action *Canonical_form_PG_PA;
 	classification_of_objects_description *Canonical_form_PG_Descr;
 
 	int f_canonical_form;
 	classification_of_objects_description *Canonical_form_Descr;
 
 	int f_report;
-	std::string report_prefix;
+	classification_of_objects_report_options *Classification_of_objects_report_options;
 
 
 	int f_test_distinguishing_property;
@@ -155,25 +157,24 @@ public:
 	void classification_report(classification_of_objects *CO,
 			object_with_properties *OwP, int verbose_level);
 	void latex_report(
-			std::string &fname,
+			classification_of_objects_report_options *Report_options,
 			classification_of_objects *CO,
 			object_with_properties *OwP,
-			//std::string &prefix,
-			//int fixed_structure_order_list_sz,
-			//int *fixed_structure_order_list,
-			//int max_TDO_depth,
 			int verbose_level);
 	void report_all_isomorphism_types(
 			std::ostream &fp,
+			classification_of_objects_report_options *Report_options,
 			classification_of_objects *CO,
 			object_with_properties *OwP,
 			int verbose_level);
 	void report_isomorphism_type(
 			std::ostream &fp,
+			classification_of_objects_report_options *Report_options,
 			classification_of_objects *CO,
 			object_with_properties *OwP,
 			int i, int verbose_level);
 	void report_object(std::ostream &fp,
+			classification_of_objects_report_options *Report_options,
 			classification_of_objects *CO,
 			object_with_properties *OwP,
 			int object_idx,
@@ -1392,6 +1393,8 @@ public:
 
 	action *A_perm;
 
+	tdo_scheme_compute *TDO;
+
 	flag_orbits_incidence_structure *Flags; // if !f_projective_space
 	flag_orbits_incidence_structure *Anti_Flags; // if !f_projective_space
 
@@ -1400,16 +1403,27 @@ public:
 	void init(object_with_canonical_form *OwCF,
 			nauty_output *NO,
 			int f_projective_space, projective_space_with_action *PA,
+			int max_TDO_depth,
 			std::string &label,
 			int verbose_level);
+	void compute_flag_orbits(int verbose_level);
+	void lift_generators_to_matrix_group(int verbose_level);
 	void init_object_in_projective_space(
 			object_with_canonical_form *OwCF,
 			nauty_output *NO,
 			projective_space_with_action *PA,
 			std::string &label,
 			int verbose_level);
-	void latex_report(std::ostream &ost, int f_show_incma, int verbose_level);
+	void latex_report(std::ostream &ost,
+			classification_of_objects_report_options *Report_options,
+			int verbose_level);
+	void compute_TDO(int max_TDO_depth, int verbose_level);
+	void print_TDO(std::ostream &ost,
+			classification_of_objects_report_options *Report_options);
 	void export_TDA_with_flag_orbits(std::ostream &ost,
+			schreier *Sch,
+			int verbose_level);
+	void export_INP_with_flag_orbits(std::ostream &ost,
 			schreier *Sch,
 			int verbose_level);
 

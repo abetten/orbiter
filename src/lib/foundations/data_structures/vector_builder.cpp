@@ -66,12 +66,20 @@ void vector_builder::init(vector_builder_description *Descr,
 		int i, j;
 		char c;
 
-		len = Descr->compact_text.length();
+		//len = Descr->compact_text.length();
+		len = 0;
+		for (i = 0; i < Descr->compact_text.length(); i++) {
+			c = Descr->compact_text[i];
+			if (c == ' ' || c == ',' || c == '\n') {
+				continue;
+			}
+			len++;
+		}
 		v = NEW_int(len);
 		j = 0;
-		for (i = 0; i < len; i++) {
+		for (i = 0; i < Descr->compact_text.length(); i++) {
 			c = Descr->compact_text[i];
-			if (c == ' ' || c == ',') {
+			if (c == ' ' || c == ',' || c == '\n') {
 				continue;
 			}
 			v[j++] = c - '0';

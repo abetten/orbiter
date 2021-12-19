@@ -1,0 +1,124 @@
+/*
+ * classification_of_objects_report_options.cpp
+ *
+ *  Created on: Dec 16, 2021
+ *      Author: betten
+ */
+
+
+
+
+#include "foundations.h"
+
+using namespace std;
+
+
+namespace orbiter {
+namespace foundations {
+
+
+
+classification_of_objects_report_options::classification_of_objects_report_options()
+{
+	f_prefix = FALSE;
+	//std::string prefix;
+
+	f_export_flag_orbits = FALSE;
+
+	f_show_incidence_matrices = FALSE;
+
+	f_show_TDO = FALSE;
+
+	f_show_TDA = FALSE;
+
+	f_export_group = FALSE;
+
+}
+
+classification_of_objects_report_options::~classification_of_objects_report_options()
+{
+
+}
+
+int classification_of_objects_report_options::read_arguments(
+	int argc, std::string *argv,
+	int verbose_level)
+{
+	int i;
+
+	cout << "classification_of_objects_report_options::read_arguments" << endl;
+	for (i = 0; i < argc; i++) {
+
+		cout << "classification_of_objects_report_options::read_arguments, next argument is " << argv[i] << endl;
+
+		if (stringcmp(argv[i], "-prefix") == 0) {
+			f_prefix = TRUE;
+			prefix.assign(argv[++i]);
+			cout << "-prefix" << prefix << endl;
+		}
+		else if (stringcmp(argv[i], "-export_flag_orbits") == 0) {
+			f_export_flag_orbits = TRUE;
+			cout << "-export_flag_orbits" << endl;
+		}
+		else if (stringcmp(argv[i], "-show_incidence_matrices") == 0) {
+			f_show_incidence_matrices = TRUE;
+			cout << "-show_incidence_matrices" << endl;
+		}
+		else if (stringcmp(argv[i], "-show_TDA") == 0) {
+			f_show_TDA = TRUE;
+			cout << "-show_TDA" << endl;
+		}
+		else if (stringcmp(argv[i], "-show_TDO") == 0) {
+			f_show_TDO = TRUE;
+			cout << "-show_TDO" << endl;
+		}
+		else if (stringcmp(argv[i], "-export_group") == 0) {
+			f_export_group = TRUE;
+			cout << "-export_group" << endl;
+		}
+
+
+		else if (stringcmp(argv[i], "-end") == 0) {
+			cout << "classification_of_objects_report_options::read_arguments -end" << endl;
+			break;
+		}
+
+		else {
+			cout << "classification_of_objects_report_options::read_arguments "
+					"unrecognized option " << argv[i] << endl;
+			exit(1);
+		}
+		cout << "classification_of_objects_report_options::read_arguments looping, i=" << i << endl;
+	} // next i
+	cout << "classification_of_objects_report_options::read_arguments done" << endl;
+	return i + 1;
+}
+
+void classification_of_objects_report_options::print()
+{
+	if (f_prefix) {
+		cout << "-prefix" << prefix << endl;
+	}
+	if (f_export_flag_orbits) {
+		cout << "-export_flag_orbits" << endl;
+	}
+	if (f_show_incidence_matrices) {
+		cout << "-show_incidence_matrices" << endl;
+	}
+	if (f_show_TDO) {
+		cout << "-show_TDO" << endl;
+	}
+	if (f_show_TDA) {
+		cout << "-show_TDA" << endl;
+	}
+	if (f_export_group) {
+		cout << "-export_group" << endl;
+	}
+
+}
+
+
+}}
+
+
+
