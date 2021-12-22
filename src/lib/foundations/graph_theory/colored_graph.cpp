@@ -3677,7 +3677,7 @@ int colored_graph::test_distinguishing_property(long int *set, int sz,
 	return f_distinguishing;
 }
 
-void colored_graph::eigenvalues(int verbose_level)
+void colored_graph::eigenvalues(double *&E, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -3699,24 +3699,14 @@ void colored_graph::eigenvalues(int verbose_level)
 		}
 	}
 
-	double *E;
 
 	E = new double[nb_points];
 
-	orbiter_eigenvalues(Adj, nb_points, E, verbose_level);
+	orbiter_eigenvalues(Adj, nb_points, E, verbose_level - 2);
 
-	cout << "The eigenvalues are:" << endl;
-	for (i = 0; i < nb_points; i++) {
-		cout << i << " : " << E[i] << endl;
-	}
+	FREE_int(Adj);
 
-	double energy = 0;
-	for (i = 0; i < nb_points; i++) {
-		energy += ABS(E[i]);
-	}
-	cout << "The energy is " << energy << endl;
-
-	delete [] E;
+	//delete [] E;
 
 	if (f_v) {
 		cout << "colored_graph::eigenvalues done" << endl;

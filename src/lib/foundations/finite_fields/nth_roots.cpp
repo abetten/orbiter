@@ -123,6 +123,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 	Fq->init_factorring(Fp, M, verbose_level);
 	//unipoly_domain Fq(Fp, M, verbose_level);
 		// Fq = Fp[X] modulo factor polynomial M
+
 	if (f_v) {
 		cout << "nth_roots::init extension field created" << endl;
 	}
@@ -147,7 +148,9 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 	}
 
 
-	F->compute_nth_roots_as_polynomials(FpX, Fq, Fq_Elements, n, F->q - 1, 0 /*verbose_level*/);
+	F->compute_nth_roots_as_polynomials(FpX,
+			Fq, Fq_Elements, n, F->q - 1,
+			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "nth_roots::init the (q-1)-th roots are:" << endl;
 		for (i = 0; i < F->q - 1; i++) {

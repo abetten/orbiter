@@ -305,7 +305,6 @@ void object_with_canonical_form::init_line_set_from_string(
 }
 
 void object_with_canonical_form::init_points_and_lines(
-	//projective_space *P,
 	long int *set, int sz,
 	long int *set2, int sz2,
 	int verbose_level)

@@ -49,7 +49,8 @@ flag_orbits_incidence_structure::~flag_orbits_incidence_structure()
 	}
 }
 
-void flag_orbits_incidence_structure::init(object_with_properties *OwP, int f_anti_flags, action *A_perm,
+void flag_orbits_incidence_structure::init(object_with_properties *OwP,
+		int f_anti_flags, action *A_perm,
 		strong_generators *SG, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -67,7 +68,7 @@ void flag_orbits_incidence_structure::init(object_with_properties *OwP, int f_an
 		cout << "flag_orbits_incidence_structure::init "
 				"before encode_incma" << endl;
 	}
-	OwP->OwCF->encode_incma(Enc, verbose_level - 1);
+	OwP->OwCF->encode_incma(Enc, verbose_level - 2);
 
 	nb_rows = Enc->nb_rows;
 	nb_cols = Enc->nb_cols;
@@ -110,7 +111,7 @@ void flag_orbits_incidence_structure::init(object_with_properties *OwP, int f_an
 	}
 	A_on_flags = A_perm->create_induced_action_on_sets(nb_flags,
 			2 /* set_size */, Flag_table,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "flag_orbits_incidence_structure::init "
 				"after A_on_flags" << endl;
@@ -129,7 +130,7 @@ void flag_orbits_incidence_structure::init(object_with_properties *OwP, int f_an
 			SG,
 			FALSE /* f_load_save */,
 			prefix,
-			verbose_level);
+			verbose_level - 2);
 	if (f_v) {
 		cout << "flag_orbits_incidence_structure::init "
 				"after Orb->init" << endl;

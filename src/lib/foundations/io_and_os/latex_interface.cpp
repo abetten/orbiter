@@ -1500,6 +1500,19 @@ void latex_interface::lint_set_print_tex(std::ostream &ost, long int *v, int len
 	ost << " \\}";
 }
 
+void latex_interface::lint_set_print_tex_text_mode(std::ostream &ost, long int *v, int len)
+{
+	int i;
+
+	ost << "$\\{$ ";
+	for (i = 0; i < len; i++) {
+		ost << v[i];
+		if (i < len - 1)
+			ost << ", ";
+		}
+	ost << " $\\}$";
+}
+
 void latex_interface::print_type_vector_tex(std::ostream &ost, int *v, int len)
 // v[len + 1]
 {

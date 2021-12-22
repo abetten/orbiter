@@ -432,7 +432,7 @@ public:
 	void properties(int verbose_level);
 	int test_distinguishing_property(long int *set, int sz,
 			int verbose_level);
-	void eigenvalues(int verbose_level);
+	void eigenvalues(double *&E, int verbose_level);
 
 };
 

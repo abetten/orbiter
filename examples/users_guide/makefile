@@ -114,13 +114,13 @@ GEN_C13="1,2,3,4,5,6,7,8,9,10,11,12,0"
 
 
 GENERATORS_HESSE_GROUP="\
-3,0,0,0,3,0,0,0,3,0, \
-2,0,0,0,2,0,1,2,3,0, \
-1,0,0,0,1,0,0,1,1,1, \
-1,0,0,0,2,2,0,2,0,0, \
-1,0,0,2,3,1,2,0,1,0, \
-0,3,3,1,0,0,3,2,1,1, \
-2,2,0,0,0,1,1,3,3,1"
+3000300030 \
+2000201230 \
+1000100111 \
+1000220200 \
+1002312010 \
+0331003211 \
+2200011331"
 
 
 GENERATORS_WEYL_GROUP_E8="\
@@ -890,16 +890,25 @@ PGL_4_5_SUBGROUP_31_NORMALIZER=-PGL 4 5 \
 
 HAMMING_CODE_CODEWORDS="0, 67, 37, 102, 22, 85, 51, 112, 15, 76, 42, 105, 25, 90, 60, 127"
 
-SIMPLEX_CODE_GENERATOR="1,0,1,0,1,0,1, 0,1,1,0,0,1,1, 0,0,0,1,1,1,1"
+SIMPLEX_CODE_GENERATOR="\
+1,0,1,0,1,0,1, \
+0,1,1,0,0,1,1, \
+0,0,0,1,1,1,1"
 
 
 
-HAMMING_CODE_GENERATOR="1,0,0,0,0,1,1, \
-0,1,0,0,1,0,1, 0,0,1,0,1,1,0, 0,0,0,1,1,1,1"
+HAMMING_CODE_GENERATOR="\
+1,0,0,0,0,1,1, \
+0,1,0,0,1,0,1, \
+0,0,1,0,1,1,0, \
+0,0,0,1,1,1,1"
 
 HAMMING_CODE_ROWS_IN_BINARY_RANKS="67,37,22,15"
 
-SIMPLEX_CODE_GENMA_CYCLIC="1,0,0,1,1,1,0, 0,1,0,0,1,1,1, 0,0,1,1,1,0,1"
+SIMPLEX_CODE_GENMA_CYCLIC="\
+1,0,0,1,1,1,0, \
+0,1,0,0,1,1,1, \
+0,0,1,1,1,0,1"
 
 
 CODE_GV_N15_K6="\
@@ -1002,6 +1011,88 @@ PG_3_5_PACKING_0_WITH_AGO3="0,5201,60427,86602,11453,121452,46663,19716,32921,10
 
 
 PG_3_5_PACKING_0_WITH_AGO3_FIXP444="444,5001,12957,18194,23485,26817,34667,38299,41249,47472,50450,56601,62638,68986,71833,75369,80805,87025,92577,95676,104509,109718,114948,116333,124391,127498,133240,137711,144777,148059,150175"
+
+
+
+
+
+# consider the binary code with generator matrix:
+# 1 0 1
+# 0 1 1
+CODE_N3_K2_Q2_GENMA="1,0,1, 0,1,1"
+
+CODE_N6_K3_Q2_GENMA="\
+111100\
+110010\
+101001"
+
+# q=17:
+# 3 is p.e. mod 17.
+# so we pick f=3.
+# then, 2f^2=18=1
+# 4f = 12
+
+# X^4 -Y^4 -Z^4 +2f^2Y^2Z^2 +4fX^2YZ 
+
+#(1,-1,-1,0,0,0,0,0,0,0,0,2f^2,4f,0,0)
+
+EDGE_CURVE_Q17_EQUATION="1,16,16,0,0,0,0,0,0,0,0,1,12,0,0"
+EDGE_CURVE_Q17_AS_POINTS="4, 7, 16, 19, 20, 23, 32, 35, 89, 100, 244, 251"
+
+
+FILE_Q17="orbit,curve,pts_on_curve,bitangents,go\
+\n0,\"$(EDGE_CURVE_Q17_EQUATION)\",\"$(EDGE_CURVE_Q17_AS_POINTS)\",\"\",-1\
+\nEND"
+
+
+EDGE_CURVE_Q23_EQUATION="1,22,22,0,0,0,0,0,0,0,0,2,4,0,0"
+EDGE_CURVE_Q23_AS_POINTS="4, 25, 26, 47, 48, 71, 92, 95, 114, 119, 136, 143, 158, 167, 180, 191, 202, 215, 224, 239, 246, 263, 268, 287, 290, 311, 312, 334, 335, 356, 359, 378, 383, 400, 407, 422, 431, 444, 455, 466, 479, 488, 503, 510, 527, 530, 532, 551"
+
+
+
+
+FILE_Q23="orbit,curve,pts_on_curve,bitangents,go\
+\n0,\"$(EDGE_CURVE_Q23_EQUATION)\",\"$(EDGE_CURVE_Q23_AS_POINTS)\",\"\",-1\
+\nEND"
+
+
+# q=25
+# 5 is p.e. mod 25.
+# so we pick f=5.
+# then, 2f^2=2*23=16
+# 4f = 20
+
+# X^4 -Y^4 -Z^4 +2f^2Y^2Z^2 +4fX^2YZ 
+
+#(1,-1,-1,0,0,0,0,0,0,0,0,2f^2,4f,0,0)
+EDGE_CURVE_Q25_EQUATION="1,4,4,0,0,0,0,0,0,0,0,16,20,0,0"
+EDGE_CURVE_Q25_AS_POINTS="4, 5, 6, 7, 28, 29, 30, 31, 190, 192, 209, 223, 256, 271, 284, 298, 412, 420, 561, 566, 612, 620, 633, 649"
+FILE_Q25="orbit,curve,pts_on_curve,bitangents,go\
+\n0,\"$(EDGE_CURVE_Q25_EQUATION)\",\"$(EDGE_CURVE_Q25_AS_POINTS)\",\"\",-1\
+\nEND"
+OCN12_PTS_Q25="0,1,2,3,4,5,28,37,87,147,213,217,220,269,303,335,356,377,412,468,558,562,565,629"
+OCN41_PTS_Q25="0,1,2,3,4,5,76,137,182,201,247,265,292,303,358,360,373,382,420,472,505,547,564,607"
+
+EDGE_CURVE_Q29_EQUATION="1,28,28,0,0,0,0,0,0,0,0,2,4,0,0"
+EDGE_CURVE_Q29_AS_POINTS="4, 15, 20, 31, 32, 43, 48, 59, 60, 64, 83, 89, 95, 110, 116, 119, 127, 136, 144, 148, 149, 172, 173, 179, 189, 190, 200, 207, 209, 228, 230, 239, 242, 253, 256, 269, 270, 283, 284, 295, 299, 312, 316, 329, 333, 336, 340, 350, 359, 368, 377, 389, 396, 413, 419, 424, 430, 442, 449, 452, 459, 476, 479, 480, 483, 495, 508, 509, 522, 536, 539, 556, 564, 569, 577, 589, 592, 599, 602, 619, 620, 629, 630, 642, 648, 659, 665, 676, 682, 683, 689, 699, 704, 719, 724, 732, 736, 745, 749, 760, 762, 777, 779, 788, 789, 808, 809, 816, 825, 830, 839, 842, 844, 869"
+FILE_Q29="orbit,curve,pts_on_curve,bitangents,go\
+\n0,\"$(EDGE_CURVE_Q29_EQUATION)\",\"$(EDGE_CURVE_Q29_AS_POINTS)\",\"\",-1\
+\nEND"
+
+EDGE_CURVE_Q41_EQUATION="1,40,40,0,0,0,0,0,0,0,0,2,4,0,0"
+EDGE_CURVE_Q41_AS_POINTS="4, 12, 35, 43, 44, 52, 75, 83, 84, 101, 106, 125, 138, 151, 164, 167, 170, 201, 204, 209, 210, 243, 244, 251, 260, 275, 284, 293, 307, 310, 324, 335, 339, 360, 364, 371, 377, 404, 410, 419, 444, 461, 469, 476, 484, 503, 508, 519, 524, 540, 545, 564, 569, 578, 587, 604, 613, 628, 629, 644, 645, 671, 677, 678, 684, 709, 713, 724, 728, 741, 755, 764, 778, 787, 797, 804, 814, 837, 839, 844, 846, 878, 881, 884, 887, 910, 923, 924, 937, 946, 964, 965, 983, 996, 1004, 1007, 1015, 1044, 1046, 1047, 1049, 1079, 1084, 1091, 1096, 1111, 1124, 1133, 1146, 1155, 1164, 1175, 1184, 1204, 1205, 1216, 1217, 1244, 1248, 1255, 1259, 1280, 1284, 1301, 1305, 1314, 1324, 1343, 1353, 1364, 1385, 1404, 1414, 1417, 1427, 1444, 1449, 1464, 1469, 1481, 1484, 1511, 1514, 1523, 1524, 1553, 1554, 1564, 1573, 1586, 1595, 1604, 1618, 1623, 1637, 1644, 1650, 1673, 1679, 1682, 1684, 1721"
+FILE_Q41="orbit,curve,pts_on_curve,bitangents,go\
+\n0,\"$(EDGE_CURVE_Q41_EQUATION)\",\"$(EDGE_CURVE_Q41_AS_POINTS)\",\"\",-1\
+\nEND"
+
+EDGE_CURVE_Q61_EQUATION="1,60,60,0,0,0,0,0,0,0,0,2,4,0,0"
+EDGE_CURVE_Q61_AS_POINTS="4, 14, 53, 63, 64, 74, 113, 123, 124, 145, 162, 185, 212, 217, 244, 247, 262, 289, 304, 309, 312, 361, 364, 371, 372, 423, 424, 433, 444, 473, 484, 495, 516, 523, 544, 557, 573, 588, 604, 619, 623, 660, 664, 673, 681, 724, 732, 743, 784, 805, 815, 834, 844, 867, 884, 887, 904, 929, 934, 959, 964, 984, 991, 1024, 1031, 1042, 1053, 1084, 1095, 1114, 1115, 1144, 1145, 1177, 1186, 1195, 1204, 1239, 1245, 1258, 1264, 1295, 1301, 1324, 1330, 1345, 1363, 1384, 1402, 1413, 1425, 1444, 1456, 1485, 1487, 1504, 1506, 1549, 1556, 1557, 1564, 1606, 1611, 1624, 1629, 1656, 1673, 1684, 1701, 1712, 1735, 1744, 1767, 1784, 1797, 1804, 1817, 1856, 1859, 1864, 1867, 1917, 1921, 1924, 1928, 1967, 1983, 1984, 2000, 2017, 2044, 2045, 2072, 2083, 2104, 2107, 2128, 2155, 2164, 2169, 2178, 2224, 2227, 2228, 2231, 2278, 2284, 2293, 2299, 2328, 2344, 2355, 2371, 2382, 2404, 2417, 2439, 2454, 2464, 2479, 2489, 2524, 2526, 2539, 2541, 2584, 2589, 2598, 2603, 2639, 2644, 2665, 2670, 2689, 2704, 2727, 2742, 2753, 2764, 2789, 2800, 2824, 2825, 2850, 2851, 2884, 2897, 2900, 2913, 2944, 2950, 2969, 2975, 3000, 3004, 3037, 3041, 3052, 3064, 3099, 3111, 3124, 3161, 3184, 3196, 3211, 3223, 3244, 3261, 3268, 3285, 3304, 3311, 3340, 3347, 3361, 3364, 3409, 3412, 3423, 3424, 3471, 3472, 3484, 3495, 3522, 3533, 3544, 3567, 3572, 3595, 3604, 3622, 3639, 3657, 3664, 3672, 3711, 3719, 3722, 3724, 3781"
+FILE_Q61="orbit,curve,pts_on_curve,bitangents,go\
+\n0,\"$(EDGE_CURVE_Q61_EQUATION)\",\"$(EDGE_CURVE_Q61_AS_POINTS)\",\"\",-1\
+\nEND"
+
+EDGE_CURVE_Q81_EQUATION="1,2,2,0,0,0,0,0,0,0,0,2,1,0,0"
+EDGE_CURVE_Q81_AS_POINTS="4, 5, 50, 67, 84, 85, 130, 147, 164, 210, 227, 244, 245, 246, 330, 332, 364, 403, 409, 412, 423, 428, 491, 495, 521, 546, 572, 576, 585, 590, 652, 655, 688, 727, 735, 737, 764, 789, 822, 823, 830, 835, 901, 910, 924, 953, 983, 993, 1017, 1049, 1068, 1079, 1091, 1128, 1147, 1159, 1162, 1189, 1226, 1229, 1236, 1242, 1314, 1319, 1346, 1368, 1383, 1385, 1393, 1399, 1475, 1482, 1510, 1525, 1550, 1560, 1572, 1601, 1630, 1633, 1639, 1645, 1713, 1721, 1746, 1778, 1788, 1790, 1799, 1806, 1879, 1885, 1913, 1935, 1962, 1967, 1996, 2011, 2039, 2052, 2053, 2080, 2119, 2131, 2144, 2181, 2198, 2202, 2208, 2213, 2298, 2300, 2324, 2331, 2377, 2392, 2404, 2425, 2445, 2456, 2459, 2487, 2540, 2544, 2568, 2573, 2604, 2612, 2623, 2653, 2705, 2710, 2736, 2746, 2758, 2761, 2790, 2813, 2869, 2889, 2893, 2903, 2951, 2967, 2976, 2987, 3011, 3024, 3036, 3071, 3115, 3122, 3151, 3156, 3190, 3197, 3220, 3234, 3282, 3289, 3310, 3320, 3361, 3374, 3390, 3400, 3407, 3411, 3443, 3483, 3522, 3528, 3557, 3560, 3574, 3583, 3607, 3640, 3675, 3689, 3701, 3723, 3772, 3774, 3790, 3791, 3809, 3810, 3853, 3871, 3935, 3954, 3986, 3993, 4020, 4040, 4084, 4099, 4108, 4120, 4172, 4181, 4203, 4212, 4254, 4266, 4280, 4292, 4329, 4345, 4352, 4360, 4390, 4396, 4427, 4443, 4484, 4498, 4512, 4531, 4564, 4568, 4591, 4599, 4632, 4643, 4647, 4673, 4733, 4752, 4758, 4766, 4783, 4786, 4813, 4837, 4896, 4911, 4919, 4931, 4953, 4961, 4973, 5004, 5051, 5053, 5079, 5083, 5136, 5140, 5165, 5176, 5186, 5187, 5231, 5250, 5311, 5329, 5393, 5394, 5411, 5412, 5463, 5480, 5486, 5496, 5550, 5560, 5575, 5588, 5605, 5611, 5643, 5657, 5704, 5720, 5728, 5742, 5768, 5775, 5800, 5821, 5873, 5883, 5903, 5913, 5951, 5957, 5988, 5991, 6008, 6021, 6031, 6067, 6106, 6114, 6136, 6149, 6166, 6175, 6200, 6234, 6276, 6280, 6311, 6313, 6348, 6363, 6374, 6395, 6440, 6452, 6468, 6480, 6520, 6529, 6550, 6559, 6566, 6570, 6603, 6641"
 
 
 
@@ -3960,7 +4051,7 @@ tetra_group:
 
 Hesse_group:
 	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define gens -vector -dense \
+		-define gens -vector -compact \
 			$(GENERATORS_HESSE_GROUP) \
 		-end \
 		-define G -linear_group -PGGL 3 4 \
@@ -5735,45 +5826,6 @@ hyperoval_16_stab_0_disjoint_sets_graph:
 
 
 
-hyperoval_16_c:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define C -combinatorial_objects \
-			-set_of_points $(HYPEROVAL_16_16320) \
-			-set_of_points $(HYPEROVAL_16_144) \
-		-end \
-		-define F -finite_field -q 16 -end \
-		-define P -projective_space 2 F -end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form_PG P \
-				-classification_prefix hyperoval_q16 \
-				-label hyperoval_q16 \
-				-save_ago \
-				-max_TDO_depth 10 \
-				-end \
-			-report \
-				-prefix hyperoval_q16 \
-				-export_flag_orbits \
-				-show_TDO \
-				-show_incidence_matrices \
-			-end \
-		-end
-	pdflatex hyperoval_q16_classification.tex
-	open hyperoval_q16_classification.pdf
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
-		-input_csv_file hyperoval_q16_object0_TDA_flag_orbits.csv \
-		-secondary_input_csv_file hyperoval_q16_object0_TDA.csv \
-		-box_width 4 -bit_depth 24 \
-		-end
-	open hyperoval_q16_object0_TDA_flag_orbits_draw.bmp
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
-		-input_csv_file hyperoval_q16_object1_TDA_flag_orbits.csv \
-		-secondary_input_csv_file hyperoval_q16_object1_TDA.csv \
-		-box_width 4 -bit_depth 24 \
-		-end
-	open hyperoval_q16_object1_TDA_flag_orbits_draw.bmp
-
-
 
 
 
@@ -6136,174 +6188,18 @@ cubic_curves_PG_2_8_draw:
 
 
 
-cubic_curves_PG_2_8_canon:
-	$(ORBITER_PATH)orbiter.out -v 6 \
-		-define C -combinatorial_objects \
-			-set_of_points "2,3,28,46,51,61,40,71" \
-		-end \
-		-define F -finite_field -q 8 -end \
-		-define P -projective_space 2 F -end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form_PG P \
-				-classification_prefix cc_8 \
-				-save_ago \
-				-max_TDO_depth 10 \
-			-end \
-			-report \
-		-end
-	pdflatex cc_8_classification.tex
-	open cc_8_classification.pdf
-
 	
 
 
 
 #############################################################################################################
-# Chapter 7 - Combinatorial Objects 
-#############################################################################################################
-
-
-#############################################################################################################
-# Section 7.1: Canonical Forms via Nauty
-
-
-SECTION_CANONICAL_FORMS:
-
-
-EC_canon: elliptic_curve_b1_c3_q11.txt
-	$(ORBITER_PATH)orbiter.out -v 4 \
-		-define C -combinatorial_objects \
-			-file_of_points elliptic_curve_b1_c3_q11.txt \
-		-end \
-		-define F -finite_field -q 11 -end \
-		-define P -projective_space 2 F -end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form_PG P \
-				-classification_prefix EC \
-				-save_ago \
-			-end \
-			-report -end \
-		-end
-	pdflatex EC_classification.tex
-	open EC_classification.pdf
-
-
-
-
-Hirschfeld_q4_c: Hirschfeld_surface_q4.txt
-	$(ORBITER_PATH)orbiter.out -v 40 \
-		-define C -combinatorial_objects \
-			-file_of_points Hirschfeld_surface_q4.txt \
-		-end \
-		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form_PG P \
-				-classification_prefix Hirschfeld_surface_q4 \
-				-save_ago \
-				-max_TDO_depth 10 \
-			-end \
-			-report \
-				-show_TDO \
-			-end \
-		-end
-	pdflatex Hirschfeld_surface_q4_classification.tex
-	open Hirschfeld_surface_q4_classification.pdf
-
-
-# group order is 51840
-
-
-Hirschfeld_q4_set_c:
-	$(ORBITER_PATH)orbiter.out -v 4 \
-		-define H -set -here \
-			$(HIRSCHFELD_SURFACE_Q4_SET_OF_POINTS) \
-		-end \
-		-define C -combinatorial_objects \
-			-set_of_points H \
-		-end \
-		-define F -finite_field -q 4 -end \
-		-define P -projective_space 3 F -end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form_PG P \
-			-classification_prefix Hirschfeld_surface_q4 \
-			-save_ago \
-		-end
-	pdflatex Hirschfeld_surface_q4_classification.tex
-	open Hirschfeld_surface_q4_classification.pdf
-
-
-
-Dickson_sets_stabilizer:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define C -combinatorial_objects \
-			-set_of_points "0,1,2,5,6" \
-			-set_of_points "0,1,2,3,6" \
-			-set_of_points "0,1,2,3,4" \
-			-set_of_points "0,1,2,3,8" \
-			-set_of_points "0,1,2,5,6,7,8" \
-			-set_of_points "0,1,2,3,5,6,7" \
-			-set_of_points "0,1,2,3,5,6,9" \
-			-set_of_points "0,1,2,3,5,6,10" \
-			-set_of_points "0,1,2,3,5,6,4" \
-			-set_of_points "0,1,2,3,8,11,13" \
-			-set_of_points "3,6,9,7,10,12,8,11,13,14,4" \
-			-set_of_points "3,5,6,9,7,10,12,11,13,14,4" \
-			-set_of_points "0,1,2,3,5,6,9,7,10,12,4" \
-		-end \
-		-define F -finite_field -q 2 -end \
-		-define P -projective_space 3 F -end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form_PG P \
-			-classification_prefix Dickson_sets \
-			-save_ago \
-			-end \
-			-report \
-		-end
-	pdflatex Dickson_sets_classification.tex
-	open Dickson_sets_classification.pdf
-
-
-
-Endrass_7c: Endrass_F7.txt
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define C -combinatorial_objects \
-			-file_of_points Endrass_F7.txt  \
-		-end \
-		-define F -finite_field -q 7 -end \
-		-define P -projective_space 3 F -end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form_PG P \
-			-classification_prefix Endrass_F7 \
-			-save_ago \
-			-end \
-			-report \
-		-end
-	pdflatex Endrass_F7_classification.tex
-	open Endrass_F7_classification.pdf
-
-
-# group order is 32
-
-
-
-
-
-
-#############################################################################################################
-# Chapter 8 - Cubic Surfaces
+# Chapter 7 - Cubic Surfaces
 #############################################################################################################
 
 
 
 #############################################################################################################
-# Section 8.1: Cubic Surfaces Creation
+# Section 7.1: Cubic Surfaces Creation
 
 
 SECTION_CUBIC_SURFACES_CREATION:
@@ -6893,28 +6789,6 @@ F_alpha_beta_gamma_delta_sweep_4_q7:
 # 348 parameter sets
 
 
-F_alpha_beta_gamma_delta_classify_q7_nauty:
-	$(ORBITER_PATH)/orbiter.out -v 2 \
-		-define C -combinatorial_objects \
-			-file_of_points \
-			F_alpha_beta_gamma_delta_q7_points.txt \
-		-end \
-		-define F -finite_field -q 7 -end \
-		-define P -projective_space 3 F -end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form_PG P \
-			-classification_prefix surface_15_lines_q7 \
-			-save_ago \
-		-end
-	#pdflatex surface_15_lines_q7_classification.tex
-	#open surface_15_lines_q7_classification.pdf
-
-
-#User time: 4:12 on Mac
-# 6 orbits
-
-
 
 
 F_alpha_beta_gamma_delta_q7_recognize:
@@ -7078,7 +6952,7 @@ F_alpha_beta_gamma_delta_points.txt:
 
 
 #############################################################################################################
-# Section 8.2: Cubic Surfaces and Quartic Curves 
+# Section 7.2: Cubic Surfaces and Quartic Curves 
 
 
 SECTION_CUBIC_SURFACES_AND_QUARTIC_CURVES:
@@ -7515,29 +7389,6 @@ surface_25_0:
 	pdflatex surface_catalogue_q25_iso0_quartics.tex
 	open surface_catalogue_q25_iso0_quartics.pdf
 
-
-# ToDo:
-
-quartic_curve_25_0_0_canonical: 
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 25 -end \
-		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-		-canonical_form_PG \
-		-input \
-		-set_of_points "10,11,59,63,124,135,136,170,206,257,275,284,285,367,378,393,433,619,641,644"  \
-		-set_of_points "9, 24, 62, 67, 77, 84, 87, 89, 125, 130, 158, 172, 197, 219, 266, 271, 325, 356, 391, 392, 400, 429, 454, 458, 470, 503, 531, 553, 605, 625, 627, 646"  \
-		-set_of_points "9, 24, 55, 75, 79, 88, 93, 94, 112, 142, 186, 213, 230, 249, 316, 329, 337, 371, 381, 383, 392, 405, 417, 439, 464, 466, 470, 524, 530, 567, 583, 594"  \
-		-set_of_points "10, 23, 34, 51, 65, 83, 117, 126, 144, 146, 147, 159, 172, 181, 185, 197, 198, 207, 240, 281, 283, 293, 300, 301, 305, 346, 357, 384, 409, 419, 444, 459, 463, 465, 468, 514, 533, 543, 547, 549, 586, 615, 618, 628"  \
-		-set_of_points "2, 12, 48, 65, 87, 120, 189, 246, 305, 323, 354, 375, 434, 435, 455, 482, 496, 557, 586, 595"  \
-		-end \
-		-classification_prefix quartic_25_0_0 \
-		-report \
-		-end \
-		-end
-	pdflatex quartic_25_0_0_classification.tex
-	open quartic_25_0_0_classification.pdf
 
 
 
@@ -8034,7 +7885,7 @@ quartic_curve_13_0_surface_create:
 #			-report_with_group \
 
 #############################################################################################################
-# Section 8.3: Cubic Surfaces Classification 
+# Section 7.3: Cubic Surfaces Classification 
 
 
 SECTION_CUBIC_SURFACES_CLASSIFICATION:
@@ -8117,7 +7968,7 @@ surface_classify_q13:
 
 
 #############################################################################################################
-# Section 8.4: Cubic Surfaces - Isomorphism Testing and Recognition
+# Section 7.4: Cubic Surfaces - Isomorphism Testing and Recognition
 
 
 SECTION_CUBIC_SURFACES_ISOMORPHISM_TESTING_AND_RECOGNITION:
@@ -8223,7 +8074,7 @@ surface_sweep_Cayley_13:
 
 
 #############################################################################################################
-# Section 8.5: Cubic Surfaces of Dickson type
+# Section 7.5: Cubic Surfaces of Dickson type
 
 
 SECTION_CUBIC_SURFACES_DICKSON:
@@ -8566,7 +8417,7 @@ Dickson_q16_analyze: poly_orbits_d3_n3_q2_F16.csv
 
 
 #############################################################################################################
-# Section 8.6:  Cubic Surfaces - ATLAS and Tables
+# Section 7.6:  Cubic Surfaces - ATLAS and Tables
 
 
 SECTION_CUBIC_SURFACES_ATLAS_AND_TABLES:
@@ -8931,12 +8782,12 @@ quartic_curve_tables_latex:
 
 
 #############################################################################################################
-# Chapter 9 - Applications
+# Chapter 8 - Applications
 #############################################################################################################
 
 
 #############################################################################################################
-# Section 9.1:  Number Theory
+# Section 8.1:  Number Theory
 
 
 SECTION_NUMBER_THEORY:
@@ -8970,18 +8821,13 @@ sqrt_mod_7817:
 		$(ORBITER_PATH)orbiter.out -v 2 -square_root_mod 2221 7817
 
 
-equivalence_class_of_fractions:
-		$(ORBITER_PATH)orbiter.out -v 2 -equivalence_class_of_fractions 10
-
-#equivalence_class_of_fractions_draw:
-#	$(ORBITER_PATH)orbiter.out -draw_matrix table_fractions_N10.csv 20 8
 
 
 
 
 
 #############################################################################################################
-# Section 9.2:  Combinatorics
+# Section 8.2:  Combinatorics
 
 
 SECTION_COMBINATORICS:
@@ -9034,35 +8880,6 @@ elementary_symmetric_functions_8:
 
 
 
-
-TFC_24_3_c:
-	echo $(FILE_24_3_TFC_INC) >24_3_TFC.inc
-	$(ORBITER_PATH)orbiter.out -v 6 \
-		-define C -combinatorial_objects \
-			-file_of_incidence_geometries 24_3_TFC.inc 24 24 72 \
-		-end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form \
-			-classification_prefix 24_3_TFC \
-			-label 24_3_TFC \
-			-save_ago \
-			-end \
-			-report \
-				-prefix 24_3_TFC \
-				-export_flag_orbits \
-				-show_TDO \
-				-show_incidence_matrices \
-			-end \
-		-end
-	pdflatex 24_3_TFC_classification.tex
-	open 24_3_TFC_classification.pdf
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
-		-input_csv_file 24_3_TFC_object2_TDA_flag_orbits.csv \
-		-secondary_input_csv_file 24_3_TFC_object2_TDA.csv \
-		-box_width 20 -bit_depth 24 \
-		-end
-	open 24_3_TFC_object2_TDA_flag_orbits_draw.bmp
 
 
 
@@ -9199,7 +9016,7 @@ Large_set_mult_C13xSxH5_apply:
 
 
 #############################################################################################################
-# Section 9.3: Representation Theory
+# Section 8.3: Representation Theory
 
 SECTION_REPRESENTATION_THEORY:
 
@@ -9241,7 +9058,7 @@ representation_tetrahedral_group_on_polynomials_of_degree_3:
 
 
 #############################################################################################################
-# Section 9.4: Cryptography 
+# Section 8.4: Cryptography 
 
 
 SECTION_CRYPTOGRAPHY:
@@ -9828,13 +9645,13 @@ power_mod_3_31:
 
 
 #############################################################################################################
-# Chapter 10 - Coding Theory
+# Chapter 9 - Coding Theory
 #############################################################################################################
 
 
 
 #############################################################################################################
-# Section 10.1: Coding Theory
+# Section 9.1: Coding Theory
 
 SECTION_CODING_THEORY_INTRODUCTION:
 
@@ -9892,63 +9709,9 @@ Hamming_5_2_with_5_2_3_code:
 # group has order 32
 
 
-# consider the binary code with generator matrix:
-# 1 0 1
-# 0 1 1
-CODE_N3_K2_Q2_GENMA="1,0,1, 0,1,1"
-
-code_3_2_aut:
-	$(ORBITER_PATH)orbiter.out -v 20 \
-		-define F -finite_field -q 2 -end  \
-		-define genma -vector -field F -format 2 \
-			-dense $(CODE_N3_K2_Q2_GENMA) \
-		-end \
-		-define P -projective_space 1 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-canonical_form_of_code \
-				"3_2" genma -save_ago -label "3_2" \
-				-classification_prefix "3_2" -end \
-			-end
-	pdflatex 3_2_classification.tex
-	open 3_2_classification.pdf
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
-		-input_csv_file 3_2_object0_TDA_flag_orbits.csv \
-		-secondary_input_csv_file 3_2_object0_TDA.csv \
-		-box_width 16 -bit_depth 24 \
-		-end
-	open 3_2_object0_TDA_flag_orbits_draw.bmp
 
 
 
-CODE_N6_K3_Q2_GENMA="\
-111100\
-110010\
-101001"
-
-code_6_3_aut:
-	$(ORBITER_PATH)orbiter.out -v 20 \
-		-define F -finite_field -q 2 -end  \
-		-define genma -vector -field F -format 3 \
-			-compact $(CODE_N6_K3_Q2_GENMA) \
-		-end \
-		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-canonical_form_of_code \
-				"6_3" genma -save_ago -label "6_3" \
-				-classification_prefix "6_3" -end \
-			-end
-	pdflatex 6_3_classification.tex
-	open 6_3_classification.pdf
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
-		-input_csv_file 6_3_object0_TDA_flag_orbits.csv \
-		-secondary_input_csv_file 6_3_object0_TDA.csv \
-		-box_width 16 -bit_depth 24 \
-		-end
-	open 6_3_object0_TDA_flag_orbits_draw.bmp
-
-# group of order 24
 
 code_6:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -9970,7 +9733,7 @@ code_6:
 
 
 #############################################################################################################
-# Section 10.2: Hamming codes
+# Section 9.2: Hamming codes
 
 SECTION_CODING_THEORY_HAMMING_CODES:
 
@@ -10238,7 +10001,7 @@ Hamming_cyclic_clean_long:
 
 
 #############################################################################################################
-# Section 10.3: Coding Theory - Golay codes
+# Section 9.3: Coding Theory - Golay codes
 
 SECTION_CODING_THEORY_GOLAY_CODES:
 
@@ -10274,7 +10037,7 @@ Golay23_code_diagram_draw:
 
 
 #############################################################################################################
-# Section 10.4: Coding Theory - CRC codes
+# Section 9.4: Coding Theory - CRC codes
 
 SECTION_CODING_THEORY_CRC_CODES:
 
@@ -10508,7 +10271,7 @@ CRC_poly_3_128_10:
 
 
 #############################################################################################################
-# Section 10.5: Coding Theory - Reed-Muller codes
+# Section 9.5: Coding Theory - Reed-Muller codes
 
 SECTION_CODING_THEORY_REED_MULLER_CODES:
 
@@ -10529,52 +10292,6 @@ RM_3_1_code_words:
 #Codewords: (0,255,170,85,204,51,102,153,240,15,90,165,60,195,150,105)
 	
 
-RM_3_1_group:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end  \
-		-define genma -vector -field F -format 4 \
-			-compact $(CODE_RM_3_1_GENMA) \
-		-end \
-		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-canonical_form_of_code \
-				"RM_3_1" genma -save_ago -label "RM_3_1" \
-				-classification_prefix "RM_3_1" -end \
-			-end
-	pdflatex RM_3_1_classification.tex
-	open RM_3_1_classification.pdf
-
-# group order 1344
-#RM_3_1_object0_INP_flag_orbits.csv
-
-RM_3_1_group_and_diagram:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end  \
-		-define genma -vector -field F -format 4 \
-			-compact $(CODE_RM_3_1_GENMA) \
-		-end \
-		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-canonical_form_of_code \
-				"RM_3_1" genma -save_ago -label "RM_3_1" \
-				-classification_prefix "RM_3_1" -end \
-			-end
-	pdflatex RM_3_1_classification.tex
-	open RM_3_1_classification.pdf
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
-		-input_csv_file RM_3_1_object0_INP_flag_orbits.csv \
-		-secondary_input_csv_file RM_3_1_object0_INP.csv \
-		-box_width 16 -bit_depth 24 \
-		-end
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
-		-input_csv_file RM_3_1_object0_TDA_flag_orbits.csv \
-		-secondary_input_csv_file RM_3_1_object0_TDA.csv \
-		-box_width 16 -bit_depth 24 \
-		-end
-	open RM_3_1_object0_INP_flag_orbits_draw.bmp
-	open RM_3_1_object0_TDA_flag_orbits_draw.bmp
 
 
 RM_3_1_Hamming_space_diagram:
@@ -10640,36 +10357,6 @@ RM_4_1:
 
 # codewords_n16_k5_q2.csv
 
-RM_4_1_group:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 2 -end  \
-		-define genma -vector -field F -format 5 \
-			-compact $(CODE_RM_4_1_GENMA) \
-		-end \
-		-define P -projective_space 4 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-canonical_form_of_code \
-				"RM_4_1" genma -save_ago -label "RM_4_1" \
-				-classification_prefix "RM_4_1" -end \
-			-end
-	pdflatex RM_4_1_classification.tex
-	open RM_4_1_classification.pdf
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
-		-input_csv_file RM_4_1_object0_INP_flag_orbits.csv \
-		-secondary_input_csv_file RM_4_1_object0_INP.csv \
-		-box_width 16 -bit_depth 24 \
-		-end
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
-		-input_csv_file RM_4_1_object0_TDA_flag_orbits.csv \
-		-secondary_input_csv_file RM_4_1_object0_TDA.csv \
-		-box_width 16 -bit_depth 24 \
-		-end
-	open RM_4_1_object0_INP_flag_orbits_draw.bmp
-	open RM_4_1_object0_TDA_flag_orbits_draw.bmp
-
-
-# group order 322560 = 24*30*28*16
 
 
 RM_4_1_diagram:
@@ -10928,7 +10615,7 @@ RM_6_poster:
 
 
 #############################################################################################################
-# Section 10.6: Coding Theory - BCH Codes
+# Section 9.6: Coding Theory - BCH Codes
 
 SECTION_CODING_THEORY_BCH_CODES:
 
@@ -11290,6 +10977,17 @@ F256_BCH_code_d16_division:
 		-finite_field_activity \
 		-polynomial_division A B -end
 
+F256_BCH_write_code_for_division_d16:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 256 -end \
+		-define A -vector -field F -sparse 772 "1,771,1,0" -end \
+		-define B -vector -field F -dense $(POLY_Q256_DEG30_DENSE) -end \
+		-with F -do \
+		-finite_field_activity \
+		-write_code_for_division check_q256_n771_r30.cpp A B -end
+	g++ check_q256_n771_r30.cpp -o check_q256_n771_r30.out
+	./check_q256_n771_r30.out
+
 
 F256_BCH_code_d16_error:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -11303,7 +11001,7 @@ F256_BCH_code_d16_error:
 
 
 #############################################################################################################
-# Section 10.7: Coding Theory - Reed Solomon codes
+# Section 19.7: Coding Theory - Reed Solomon codes
 
 SECTION_CODING_THEORY_REED_SOLOMON_CODES:
 
@@ -11320,30 +11018,6 @@ RREF_RS_6_4_7_weight_enumerator:
 		-end
 
 
-
-RS_6_4_7_group:
-	$(ORBITER_PATH)orbiter.out -v 20 \
-		-define F -finite_field -q 7 -end  \
-		-define genma -vector -field F -format 4 \
-			-compact $(CODE_RS_6_4_7) \
-		-end \
-		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-canonical_form_of_code \
-				"RS_6" genma -save_ago -label "RS_6" \
-				-classification_prefix "RS_6" -end \
-			-end
-	#pdflatex RS_6_classification.tex
-	#open RS_6_classification.pdf
-	#$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
-	#	-input_csv_file RS_6_object0_TDA.csv \
-	#	-box_width 2 -bit_depth 24 \
-	#	-end
-
-#group of order 12
-#set of points:  0, 9, 51, 344, 253, 3
-#1,0,0,0,2,0,0,1,5,0,6,0,5,1,0,0, 0,0,0,1,6,0,0,2,0,6,0,5,0,0,6,5,
 
 
 
@@ -11445,9 +11119,6 @@ CODE_21_15_4_weight_enumerator:
 
 
 
-
-
-	
 Reed_solomon_F8_work:
 	$(ORBITER_PATH)orbiter.out -v 3 -define F -finite_field -q 8 -end \
 		-with F -do -finite_field_activity \
@@ -11455,9 +11126,8 @@ Reed_solomon_F8_work:
 
 
 
-
 #############################################################################################################
-# Section 10.8: Coding Theory - Bounds
+# Section 9.8: Coding Theory - Bounds
 
 SECTION_CODING_THEORY_BOUNDS:
 
@@ -11518,41 +11188,6 @@ GV_n15_k6_d5_weight_enumerator:
 #1y^{15} + 27x^6y^9 + 24x^8y^7 + 9x^{10}y^5 + 3x^{12}y^3
 # surprise: d = 6
 
-GV_n15_k6_d5_group:
-	$(ORBITER_PATH)orbiter.out -v 20 \
-		-define F -finite_field -q 2 -end  \
-		-define genma -vector -field F -format 6 \
-			-compact $(CODE_GV_N15_K6) \
-		-end \
-		-define P -projective_space 5 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-canonical_form_of_code \
-				"GV_n15_k6_d5" genma -save_ago -label "GV_n15_k6_d5" \
-				-classification_prefix "GV_n15_k6_d5" -end \
-			-end
-	pdflatex GV_n15_k6_d5_classification.tex
-	open GV_n15_k6_d5_classification.pdf
-
-#ago=12
-
-
-
-code_n15_k6_d6_a_group:
-	$(ORBITER_PATH)orbiter.out -v 20 \
-		-define F -finite_field -q 2 -end  \
-		-define genma -vector -field F -format 6 \
-			-compact $(CODE_15_6_6_A) \
-		-end \
-		-define P -projective_space 5 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-canonical_form_of_code \
-				"n15_k6_d6_a" genma -save_ago -label "n15_k6_d6_a" \
-				-classification_prefix "n15_k6_d6_a" -end \
-			-end
-	pdflatex n15_k6_d6_a_classification.tex
-	open n15_k6_d6_a_classification.pdf
 
 code_n15_k6_d6_a_we:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -11565,21 +11200,6 @@ code_n15_k6_d6_a_we:
 
 #1y^{15} + 27x^6y^9 + 24x^8y^7 + 9x^{10}y^5 + 3x^{12}y^3
 
-code_n15_k6_d6_b_group:
-	$(ORBITER_PATH)orbiter.out -v 20 \
-		-define F -finite_field -q 2 -end  \
-		-define genma -vector -field F -format 6 \
-			-compact $(CODE_15_6_6_B) \
-		-end \
-		-define P -projective_space 5 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-canonical_form_of_code \
-				"n15_k6_d6_b" genma -save_ago -label "n15_k6_d6_b" \
-				-classification_prefix "n15_k6_d6_b" -end \
-			-end
-	pdflatex n15_k6_d6_b_classification.tex
-	open n15_k6_d6_b_classification.pdf
 
 
 # weight enumerator
@@ -11615,7 +11235,7 @@ code_n15_k6_d6_check_RREF:
 
 
 #############################################################################################################
-# Section 10.9: Coding Theory - Classification
+# Section 9.9: Coding Theory - Classification
 
 SECTION_CODING_THEORY_CLASSIFICATION:
 
@@ -11824,13 +11444,13 @@ codes_q13_12_4:
 
 
 #############################################################################################################
-# Chapter 11 - Incidence Geometry
+# Chapter 10 - Incidence Geometry
 #############################################################################################################
 
 
 
 ########################################################################################################
-# Section 11.1: Diophantine Systems
+# Section 10.1: Diophantine Systems
 
 SECTION_DIOPHANT:
 
@@ -11872,7 +11492,7 @@ octic_monomials:
 
 
 ########################################################################################################
-# Section 11.2: Combinatorial Linear Spaces
+# Section 10.2: Combinatorial Linear Spaces
 
 SECTION_COMBINATORIAL_LINEAR_SPACES:
 	
@@ -11940,7 +11560,7 @@ linsp30_pt_distribution:
 
 
 ########################################################################################################
-# Section 11.3: Combinatorial Linear Spaces
+# Section 10.3: Combinatorial Linear Spaces
 
 ####
 # geometry builder:
@@ -12026,45 +11646,6 @@ geo_10_3_tree:
 #-sideways 
 
 
-geo_10_3_c:
-	$(ORBITER_PATH)orbiter.out -v 10 \
-		-draw_incidence_structure_description \
-			-width 60 -with_10 6 -end \
-		-define C -combinatorial_objects \
-			-file_of_incidence_geometries 10_3.inc 10 10 30 \
-		-end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form \
-				-classification_prefix 10_3 \
-				-label 10_3 \
-				-save_ago \
-				-save_transversal \
-			-end \
-			-report \
-				-prefix 10_3 \
-				-export_flag_orbits \
-				-show_incidence_matrices \
-				-export_group \
-			-end \
-		-end
-	#pdflatex 10_3_classification.tex
-	#open 10_3_classification.pdf
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
-		-input_csv_file 10_3_object7_TDA_flag_orbits.csv \
-		-secondary_input_csv_file 10_3_object7_TDA.csv \
-		-box_width 16 -bit_depth 24 \
-		-end
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
-		-input_csv_file 10_3_object7_INP_flag_orbits.csv \
-		-secondary_input_csv_file 10_3_object7_INP.csv \
-		-box_width 16 -bit_depth 24 \
-		-end
-
-#10_3_object7_TDA_flag_orbits.csv
-
-#0 1 2 10 13 14 20 25 26 31 33 35 41 44 46 52 53 56 62 67 68 74 77 79 85 88 89 
-
 
 
 
@@ -12123,7 +11704,7 @@ geo_14_3:
 
 
 
-geo_15_3:
+15_3.inc:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Test_lines -set -loop 4 16 1 -end \
 		-geometry_builder \
@@ -12136,26 +11717,6 @@ geo_15_3:
 # 8 min 11 sec on Mac 
 # running out of memory
 
-geo_15_3_c:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-draw_incidence_structure_description \
-			-width 50 -with_10 5 -end \
-		-define C -combinatorial_objects \
-			-file_of_incidence_geometries 15_3.inc 15 15 45 \
-		-end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form \
-			-classification_prefix 10_3 \
-			-label 10_3 \
-			-save_ago \
-		-end
-	pdflatex 10_3_classification.tex
-	open 10_3_classification.pdf
-
-
-
-# 3 min 6 sec
 
 geo_15_3_g4:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -12219,7 +11780,7 @@ geo_16_4_g4:
 # none
 
 
-geo_40_4_g4_tree:
+40_4_g4.inc:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Test_lines -set -loop 0 41 1 -end \
 		-geometry_builder \
@@ -12244,26 +11805,6 @@ geo_40_4_g4_tree:
 #User time: 0.18 of a second, dt=18 tps = 100
 #nb_calls_to_densenauty=1065
 
-geo_40_4_g4_c:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-draw_incidence_structure_description \
-			-width 50 -with_10 5 -end \
-		-define C -combinatorial_objects \
-			-file_of_incidence_geometries 40_4_g4.inc 40 40 160 \
-		-end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form \
-				-classification_prefix 40_4_g4 \
-				-label 40_4_g4 \
-				-save_ago \
-			-end \
-			-report \
-		-end
-	pdflatex 40_4_g4_classification.tex
-	open 40_4_g4_classification.pdf
-
-
 
 geo_63_3_g6:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -12277,7 +11818,7 @@ geo_63_3_g6:
 
 
 #############################################################################################################
-# Section 11.4: Design Theory
+# Section 10.4: Design Theory
 
 SECTION_DESIGN_THEORY:
 
@@ -12422,33 +11963,6 @@ KM_PSL_3_5:
 
 
 
-
-
-conf_10_3:
-	$(ORBITER_PATH)orbiter.out -v 2 -regular_linear_space_classify \
-		-m 10 -n 10 -r 3 -k 3 -target_size 10  \
-		-control -problem_label 10_3 -W -end
-
-conf_11_3:
-	$(ORBITER_PATH)orbiter.out -v 2 -regular_linear_space_classify \
-		-m 11 -n 11 -r 3 -k 3 -target_size 11  \
-		-control -problem_label 11_3 -w -end
-
-conf_12_3:
-	$(ORBITER_PATH)orbiter.out -v 2 -regular_linear_space_classify \
-		-m 12 -n 12 -r 3 -k 3 -target_size 12  \
-		-control -problem_label 12_3 -w -end
-
-conf_18_3:
-	$(ORBITER_PATH)orbiter.out -v 2 -regular_linear_space_classify \
-		-m 18 -n 18 -r 3 -k 3 -target_size 18  \
-		-control -problem_label 18_3 -W -depth 8 -end
-
-
-STS13:
-	$(ORBITER_PATH)orbiter.out -v 2 -regular_linear_space_classify \
-		-m 13 -n 26 -r 6 -k 3 -target_size 26  \
-		-control -problem_label STS13 -w -depth 7 -end
 	
 PLANE_1="0,3,6,8,0,4,5,10,3,7,10,12,2,5,7,8,1,8,9,10,0,7,9,11,1,3,5,11,5,6,9,12,4,8,11,12,1,4,6,7,0,1,2,12,2,6,10,11,2,3,4,9"
 PLANE_2="1,5,7,12,2,4,5,11,3,6,7,11,0,3,5,9,5,6,8,10,1,3,4,10,1,2,6,9,9,10,11,12,0,1,8,11,0,2,7,10,0,4,6,12,4,7,8,9,2,3,8,12"
@@ -12483,14 +11997,14 @@ design_large_set_rank_k_subsets_d:
 
 
 #############################################################################################################
-# Section 11.5: Design Theory - Large Sets
+# Section 10.5: Design Theory - Large Sets
 
 SECTION_DESIGN_THEORY_LARGE_SETS:
 
 
 
 
-geo_9_4_12_3:
+AG_2_3.inc:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-geometry_builder \
 			-V 9 -B 12 \
@@ -12505,26 +12019,6 @@ geo_9_4_12_3:
 #432
 
 
-
-geo_9_4_12_3_c:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define C -combinatorial_objects \
-			-file_of_incidence_geometries \
-			AG_2_3.inc 9 12 36 \
-		-end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form \
-			-classification_prefix AG_2_3 \
-			-save_ago \
-		-end
-
-
-
-#AG_2_3.blocks_long
-#AG_2_3.blocks
-#AG_2_3_ago.csv
-# ago=432
 
 
 
@@ -12655,33 +12149,10 @@ LS_AG_2_3_export_solutions:
 # solutions.csv
 
 
-LS_AG_2_3_solutions_classify:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-draw_incidence_structure_description \
-			-width 30 -with_10 3 -end \
-		-define C -combinatorial_objects \
-			-file_of_designs \
-			solutions.csv 9 84 3 12 \
-		-end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form \
-			-save_ago \
-			-classification_prefix large_sets_of_AG_2_3 \
-			-end \
-			-report "classification_" \
-		-end
-	pdflatex large_sets_of_AG_2_3_classification.tex
-	open large_sets_of_AG_2_3_classification.pdf
-
-#iso type : input object : ago
-#  0 :   0 :    42
-#  1 :   3 :    54
-
 
 
 #############################################################################################################
-# Section 11.6: Design Theory - Delandtsheer Doyen
+# Section 10.6: Design Theory - Delandtsheer Doyen
 
 SECTION_DESIGN_THEORY_DELANDTHSHEER_DOYEN:
 
@@ -12775,32 +12246,13 @@ PG_2_27_special:
 
 
 
-design_27c:
-	$(ORBITER_PATH)orbiter.out -v 4 \
-		-define C -combinatorial_objects \
-			-set_of_points "2,56,30,112,253,90,440,508" \
-		-end \
-		-define F -finite_field -q 27 -override_polynomial 46  -end \
-		-define P -projective_space 2 F -end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form_PG P \
-			-classification_prefix design \
-			-end \
-			-report \
-		-end
-	pdflatex design_classification.tex
-	open design_classification.pdf
-
-
-
 
 
 
 
 
 #############################################################################################################
-# Section 11.7: Tactical Decompositions
+# Section 10.7: Tactical Decompositions
 
 SECTION_TACTICAL_DECOMPOSITIONS:
 
@@ -12821,7 +12273,7 @@ max_arc_16_4r_print:
 
 
 #############################################################################################################
-# Section 11.8: Spreads
+# Section 10.8: Spreads
 
 SECTION_SPREADS:
 	
@@ -12907,7 +12359,7 @@ spreads16_4:
 
 
 #############################################################################################################
-# Section 11.9: Translation planes
+# Section 10.9: Translation planes
 
 
 SECTION_TRANSLATION_PLANES:
@@ -12991,7 +12443,7 @@ TP_16_2:
 
 
 #############################################################################################################
-# Section 11.10: Packings
+# Section 10.10: Packings
 
 
 SECTION_PACKINGS:
@@ -13164,27 +12616,6 @@ PG_3_5_assume_31_read:
 
 
 
-PG_3_5_assume_31_classify:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define C -combinatorial_objects \
-			-file_of_packings_through_spread_table \
-				H31_packings.csv \
-				SPREAD_TABLES_5_REG/spread_25_spreads.csv \
-				5 \
-		-end \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space 3 F -end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form_PG P \
-			-classification_prefix H31_packings \
-			-end \
-			-report \
-			-end
-	pdflatex H31_packings_classification.tex
-	open H31_packings_classification.pdf
-
-
 
 
 # the two packings (ignore the first number)
@@ -13278,32 +12709,6 @@ PG_3_5_assume_3B_long_read:
 #written file H3B_ME_packings.csv of size 150540
 
 
-# ToDo:
-
-PG_3_5_assume_3B_classify:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 5 -end \
-		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-canonical_form_PG \
-				-input -file_of_packings_through_spread_table \
-					H3B_ME_packings.csv \
-					SPREAD_TABLES_5_REG/spread_25_spreads.csv \
-				-end \
-				-classification_prefix H3B_packings \
-				-save_classification cl_class \
-				-save_canonical_labeling \
-				-save_ago \
-				-save_cumulative_canonical_labeling cl_cl \
-				-save_cumulative_ago cl_ago \
-				-save_cumulative_data cl_data \
-				-save_fibration cl_fib \
-				-report H3B_packings \
-			-end
-	pdflatex H3B_packings_classification.tex
-	open H3B_packings_classification.pdf
-
 
 
 PG_3_5_packing0_print:
@@ -13390,8 +12795,59 @@ PG_3_5_packings_sort_each_row:
 
 
 
+
+PG_3_5_assume_31_classify:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define C -combinatorial_objects \
+			-file_of_packings_through_spread_table \
+				H31_packings.csv \
+				SPREAD_TABLES_5_REG/spread_25_spreads.csv \
+				5 \
+		-end \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space 3 F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+			-classification_prefix H31_packings \
+			-end \
+			-report \
+			-end
+	pdflatex H31_packings_classification.tex
+	open H31_packings_classification.pdf
+
+# ToDo:
+
+PG_3_5_assume_3B_classify:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 5 -end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
+			-canonical_form_PG \
+				-input -file_of_packings_through_spread_table \
+					H3B_ME_packings.csv \
+					SPREAD_TABLES_5_REG/spread_25_spreads.csv \
+				-end \
+				-classification_prefix H3B_packings \
+				-save_classification cl_class \
+				-save_canonical_labeling \
+				-save_ago \
+				-save_cumulative_canonical_labeling cl_cl \
+				-save_cumulative_ago cl_ago \
+				-save_cumulative_data cl_data \
+				-save_fibration cl_fib \
+				-report H3B_packings \
+			-end
+	pdflatex H3B_packings_classification.tex
+	open H3B_packings_classification.pdf
+
+
+
+
+
 #############################################################################################################
-# Section 11.11: BLT-sets
+# Section 10.11: BLT-sets
 
 SECTION_BLT_SETS:
 
@@ -13526,13 +12982,13 @@ BLT_13_cliques:
 
 
 #############################################################################################################
-# Chapter 12 - Graph Theory
+# Chapter 11 - Graph Theory
 #############################################################################################################
 
 
 
 ############################################################################################################
-# Section 12.1: Creating Graphs
+# Section 11.1: Creating Graphs
 
 
 SECTION_CREATING_GRAPHS:
@@ -13543,6 +12999,25 @@ Cycle_13:
 			-cycle 13 \
 		-end
 
+triangle_graph:
+	$(ORBITER_PATH)orbiter.out -v 6 \
+		-define G -graph \
+			-load_csv_no_border \
+			triangle_graph.csv \
+		-end
+
+
+
+
+triangle_graph_properties:
+	$(ORBITER_PATH)orbiter.out -v 6 \
+		-define G -graph \
+			-load_csv_no_border \
+			triangle_graph.csv \
+		-end \
+		-with G -do \
+			-graph_theoretic_activity -properties \
+		-end
 
 Cycle_13_draw:
 	$(ORBITER_PATH)orbiter.out -v 2 -define Gamma -graph -cycle 13 -end \
@@ -13567,6 +13042,8 @@ Cycle_9_eigenvalues:
 		-end \
 		-with Gamma -do \
 		-graph_theoretic_activity -eigenvalues -end
+	pdflatex Cycle_9_eigenvalues.tex
+	open Cycle_9_eigenvalues.pdf
 
 
 Paley_13_graph:
@@ -13582,10 +13059,18 @@ Paley_13_graph:
 	open Paley_13_draw.bmp
 
 
+Paley_13_eigenvalues:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Gamma -graph \
+			-Paley 13 \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity -eigenvalues -end
+	pdflatex Paley_13_eigenvalues.tex
+	open Paley_13_eigenvalues.pdf
 
 
 
-	
 trihedral_pair_graph:
 	$(ORBITER_PATH)orbiter.out -v 2 -define Gamma \
 		-graph -trihedral_pair_disjointness_graph  -end \
@@ -13632,6 +13117,8 @@ petersen:
 		-box_width 40 -bit_depth 24 -partition 4 "10" "10" -end
 	dot -Tpng Johnson_5_2_0.gv >Johnson_5_2_0.png
 
+
+
 Johnson_6_2_0:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define G -graph -Johnson 6 2 0 -end \
@@ -13677,25 +13164,6 @@ Hamming_graph_7:
 	dot -Tpng Hamming_7_2.gv >Hamming_7_2.png
 
 
-triangle_graph:
-	$(ORBITER_PATH)orbiter.out -v 6 \
-		-define G -graph \
-			-load_csv_no_border \
-			triangle_graph.csv \
-		-end
-
-
-
-
-triangle_graph_properties:
-	$(ORBITER_PATH)orbiter.out -v 6 \
-		-define G -graph \
-			-load_csv_no_border \
-			triangle_graph.csv \
-		-end \
-		-with G -do \
-			-graph_theoretic_activity -properties \
-		-end
 
 
 
@@ -13755,7 +13223,7 @@ PGO_5_2_collinearity_graph: O_5_2_incidence_matrix.csv
 
 
 ############################################################################################################
-# Section 12.2: Graphs Isomorphism and Automorphism
+# Section 11.2: Graphs Isomorphism and Automorphism
 
 
 SECTION_GRAPH_ISOMORPHISM_AND_AUTOMORPHISM:
@@ -13773,7 +13241,7 @@ Cycle_13_aut:
 load_graph_pp16_1:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Gamma -graph -load_dimacs \
-		../JUNTILLA_KASKI/benchmarks/pp/pp16-1 \
+		../JUNTTILA_KASKI/benchmarks/pp/pp16-1 \
 		-end \
 		-with Gamma -do \
 		-graph_theoretic_activity -save -end \
@@ -13787,7 +13255,7 @@ load_graph_pp16_1:
 load_graph_pp16_2:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Gamma -graph -load_dimacs \
-		../JUNTILLA_KASKI/benchmarks/pp/pp16-2 \
+		../JUNTTILA_KASKI/benchmarks/pp/pp16-2 \
 		-end \
 		-with Gamma -do \
 		-graph_theoretic_activity -save -end \
@@ -13799,7 +13267,7 @@ load_graph_pp16_2:
 load_graph_pp16_9:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Gamma -graph -load_dimacs \
-		../JUNTILLA_KASKI/benchmarks/pp/pp16-9 \
+		../JUNTTILA_KASKI/benchmarks/pp/pp16-9 \
 		-end \
 		-with Gamma -do \
 		-graph_theoretic_activity -save -end \
@@ -13810,7 +13278,7 @@ load_graph_pp16_9:
 load_graph_grid_3_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Gamma -graph -load_dimacs \
-		../JUNTILLA_KASKI/benchmarks/grid/grid-w-3-3 \
+		../JUNTTILA_KASKI/benchmarks/grid/grid-w-3-3 \
 		-end \
 		-with Gamma -do \
 		-graph_theoretic_activity -save -end \
@@ -13828,7 +13296,7 @@ load_graph_grid_3_3:
 load_graph_sts_13:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Gamma -graph -load_dimacs \
-			../JUNTILLA_KASKI/benchmarks/srg/sts-13 \
+			../JUNTTILA_KASKI/benchmarks/srg/sts-13 \
 		-end \
 		-with Gamma -do \
 		-graph_theoretic_activity -save -end \
@@ -13933,12 +13401,18 @@ PGO_5_2_graph_group: O_5_2_incidence_matrix.csv
 		-with Gamma -do \
 		-graph_theoretic_activity \
 			-automorphism_group \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-eigenvalues \
 		-end
+	pdflatex collinearity_graph_eigenvalues.tex
+	open collinearity_graph_eigenvalues.pdf
 
 
 
 ############################################################################################################
-# Section 12.3: Graph Theory: Classification
+# Section 11.3: Graph Theory: Classification
 
 
 SECTION_GRAPH_THEORY_CLASSIFICATION:
@@ -14030,7 +13504,7 @@ graph_classify_8_r3:
 
 
 ############################################################################################################
-# Section 12.4: Graph Theory: Clique finding
+# Section 11.4: Graph Theory: Clique finding
 
 
 SECTION_GRAPH_THEORY_CLIQUE_FINDING:
@@ -14102,54 +13576,6 @@ Paley_13_cliques:
 
 
 
-Paley_29_aut:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define Gamma -graph -Paley 29 -end \
-		-with Gamma -do \
-		-graph_theoretic_activity -automorphism_group \
-		-end 
-
-
-
-GENERATORS_Paley_29 = \
-	"0,4,8,12,16,20,24,28,3,7,11,15,19,23,27,2,6,10,14,18,22,26,1,5,9,13,17,21,25, \
-	1,0,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2"
-
-Paley_29:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define gens -vector -dense $(GENERATORS_Paley_29) -end \
-		-define G -permutation_group \
-			-bsgs Paley_29 "Paley\_{29}" 29 406 "0,1" 2 \
-				$(GENERATORS_Paley_29) \
-			-end \
-		-with G -do \
-		-group_theoretic_activity \
-			-report \
-		-end
-		pdflatex Paley_29_report.tex
-		open Paley_29_report.pdf
-
-
-
-Paley_29c_cliques_classify:
-	$(ORBITER_PATH)orbiter.out -v 4 \
-		-define Gamma -graph -Paley 29 -complement -end \
-		-define G -permutation_group -symmetric_group 29 \
-		-subgroup_by_generators Paley_29 406 2 $(GENERATORS_Paley_29) -end \
-		-with G -do \
-		-group_theoretic_activity \
-			-poset_classification_control \
-				-W \
-				-problem_label Paley29_cliques \
-				-clique_test Gamma \
-				-depth 5 \
-			-end \
-			-orbits_on_subsets 5 \
-			-report \
-		-end
-
-
-#User time: 0.03 of a second, dt=3 tps = 100
 
 
 PGO_5_2_cliques: O_5_2_incidence_matrix.csv 
@@ -14223,6 +13649,1317 @@ HJ64_cliques5_classify:
 #ROW,REP,AGO,OL
 #0,"0,8,31,110,283",1200,1008
 #END
+
+
+
+
+
+
+
+
+#############################################################################################################
+# Chapter 12 - Canonical Forms with Nauty 
+#############################################################################################################
+
+
+#############################################################################################################
+# Section 12.1: Overview of Canonical Forms
+
+
+SECTION_OVERVIEW_CANONICAL_FORMS:
+
+
+#############################################################################################################
+# Section 12.2: Objects in projective Space
+
+
+SECTION_OBJECTS_IN_PROJECTIVE_SPACE:
+
+
+EC_canon: elliptic_curve_b1_c3_q11.txt
+	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define C -combinatorial_objects \
+			-file_of_points elliptic_curve_b1_c3_q11.txt \
+		-end \
+		-define F -finite_field -q 11 -end \
+		-define P -projective_space 2 F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+				-classification_prefix EC \
+				-label EC \
+				-save_ago \
+				-max_TDO_depth 4 \
+			-end \
+			-report \
+				-prefix EC \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-dont_show_incidence_matrices \
+				-export_group \
+			-end \
+		-end
+	pdflatex EC_classification.tex
+	open EC_classification.pdf
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file EC_object0_TDA_flag_orbits.csv \
+		-secondary_input_csv_file EC_object0_TDA.csv \
+		-box_width 20 -bit_depth 24 \
+		-end
+	open EC_object0_TDA_flag_orbits_draw.bmp
+
+
+
+
+Hirschfeld_q4_c: Hirschfeld_surface_q4.txt
+	$(ORBITER_PATH)orbiter.out -v 40 \
+		-define C -combinatorial_objects \
+			-file_of_points Hirschfeld_surface_q4.txt \
+		-end \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space 3 F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+				-classification_prefix Hirschfeld_surface_q4 \
+				-save_ago \
+				-max_TDO_depth 10 \
+			-end \
+			-report \
+				-show_TDO \
+			-end \
+		-end
+	pdflatex Hirschfeld_surface_q4_classification.tex
+	open Hirschfeld_surface_q4_classification.pdf
+
+
+# group order is 51840
+
+
+Hirschfeld_q4_set_c:
+	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define H -set -here \
+			$(HIRSCHFELD_SURFACE_Q4_SET_OF_POINTS) \
+		-end \
+		-define C -combinatorial_objects \
+			-set_of_points H \
+		-end \
+		-define F -finite_field -q 4 -end \
+		-define P -projective_space 3 F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+			-classification_prefix Hirschfeld_surface_q4 \
+			-save_ago \
+		-end
+	pdflatex Hirschfeld_surface_q4_classification.tex
+	open Hirschfeld_surface_q4_classification.pdf
+
+
+
+Dickson_sets_stabilizer:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define C -combinatorial_objects \
+			-set_of_points "0,1,2,5,6" \
+			-set_of_points "0,1,2,3,6" \
+			-set_of_points "0,1,2,3,4" \
+			-set_of_points "0,1,2,3,8" \
+			-set_of_points "0,1,2,5,6,7,8" \
+			-set_of_points "0,1,2,3,5,6,7" \
+			-set_of_points "0,1,2,3,5,6,9" \
+			-set_of_points "0,1,2,3,5,6,10" \
+			-set_of_points "0,1,2,3,5,6,4" \
+			-set_of_points "0,1,2,3,8,11,13" \
+			-set_of_points "3,6,9,7,10,12,8,11,13,14,4" \
+			-set_of_points "3,5,6,9,7,10,12,11,13,14,4" \
+			-set_of_points "0,1,2,3,5,6,9,7,10,12,4" \
+		-end \
+		-define F -finite_field -q 2 -end \
+		-define P -projective_space 3 F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+			-classification_prefix Dickson_sets \
+			-save_ago \
+			-end \
+			-report \
+		-end
+	pdflatex Dickson_sets_classification.tex
+	open Dickson_sets_classification.pdf
+
+
+
+Endrass_7c: Endrass_F7.txt
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define C -combinatorial_objects \
+			-file_of_points Endrass_F7.txt  \
+		-end \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space 3 F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+			-classification_prefix Endrass_F7 \
+			-save_ago \
+			-end \
+			-report \
+		-end
+	pdflatex Endrass_F7_classification.tex
+	open Endrass_F7_classification.pdf
+
+
+# group order is 32
+
+
+hyperoval_16_c:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define C -combinatorial_objects \
+			-set_of_points $(HYPEROVAL_16_16320) \
+			-set_of_points $(HYPEROVAL_16_144) \
+		-end \
+		-define F -finite_field -q 16 -end \
+		-define P -projective_space 2 F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+				-classification_prefix hyperoval_q16 \
+				-label hyperoval_q16 \
+				-save_ago \
+				-save_transversal \
+				-max_TDO_depth 10 \
+				-end \
+			-report \
+				-prefix hyperoval_q16 \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-dont_show_incidence_matrices \
+				-export_group \
+			-end \
+		-end
+	pdflatex hyperoval_q16_classification.tex
+	open hyperoval_q16_classification.pdf
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file hyperoval_q16_object0_TDA_flag_orbits.csv \
+		-secondary_input_csv_file hyperoval_q16_object0_TDA.csv \
+		-box_width 4 -bit_depth 24 \
+		-end
+	open hyperoval_q16_object0_TDA_flag_orbits_draw.bmp
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file hyperoval_q16_object1_TDA_flag_orbits.csv \
+		-secondary_input_csv_file hyperoval_q16_object1_TDA.csv \
+		-box_width 4 -bit_depth 24 \
+		-end
+	open hyperoval_q16_object1_TDA_flag_orbits_draw.bmp
+
+
+
+
+
+cubic_curves_PG_2_8_canon:
+	$(ORBITER_PATH)orbiter.out -v 6 \
+		-define C -combinatorial_objects \
+			-set_of_points "2,3,28,46,51,61,40,71" \
+		-end \
+		-define F -finite_field -q 8 -end \
+		-define P -projective_space 2 F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+				-classification_prefix cc_8 \
+				-save_ago \
+				-max_TDO_depth 10 \
+			-end \
+			-report \
+		-end
+	pdflatex cc_8_classification.tex
+	open cc_8_classification.pdf
+
+
+F_alpha_beta_gamma_delta_classify_q7_nauty:
+	$(ORBITER_PATH)/orbiter.out -v 2 \
+		-define C -combinatorial_objects \
+			-file_of_points \
+			F_alpha_beta_gamma_delta_q7_points.txt \
+		-end \
+		-define F -finite_field -q 7 -end \
+		-define P -projective_space 3 F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+			-classification_prefix surface_15_lines_q7 \
+			-save_ago \
+		-end
+	#pdflatex surface_15_lines_q7_classification.tex
+	#open surface_15_lines_q7_classification.pdf
+
+
+#User time: 4:12 on Mac
+# 6 orbits
+
+
+
+
+
+
+
+#############################################################################################################
+# Section 12.3: Incidence Geometries
+
+
+SECTION_INCIDENCE_GEOMETRIES:
+
+
+AG_2_3_c: AG_2_3.inc
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define C -combinatorial_objects \
+			-file_of_incidence_geometries \
+			AG_2_3.inc 9 12 36 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-classification_prefix AG_2_3 \
+				-label AG_2_3 \
+				-save_ago \
+				-max_TDO_depth 10 \
+			-end \
+			-report \
+				-prefix AG_2_3 \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-show_incidence_matrices \
+			-end \
+		-end
+	pdflatex AG_2_3_classification.tex
+	open AG_2_3_classification.pdf
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file AG_2_3_object0_INP_flag_orbits.csv \
+		-secondary_input_csv_file AG_2_3_object0_INP.csv \
+		-box_width 40 -bit_depth 24 \
+		-end
+	open AG_2_3_object0_INP_flag_orbits_draw.bmp
+
+
+
+geo_10_3_c:
+	$(ORBITER_PATH)orbiter.out -v 10 \
+		-draw_incidence_structure_description \
+			-width 60 -with_10 6 -end \
+		-define C -combinatorial_objects \
+			-file_of_incidence_geometries 10_3.inc 10 10 30 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-classification_prefix 10_3 \
+				-label 10_3 \
+				-save_ago \
+				-save_transversal \
+			-end \
+			-report \
+				-prefix 10_3 \
+				-export_flag_orbits \
+				-show_incidence_matrices \
+				-export_group \
+			-end \
+		-end
+	#pdflatex 10_3_classification.tex
+	#open 10_3_classification.pdf
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file 10_3_object7_TDA_flag_orbits.csv \
+		-secondary_input_csv_file 10_3_object7_TDA.csv \
+		-box_width 16 -bit_depth 24 \
+		-end
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file 10_3_object7_INP_flag_orbits.csv \
+		-secondary_input_csv_file 10_3_object7_INP.csv \
+		-box_width 16 -bit_depth 24 \
+		-end
+
+#10_3_object7_TDA_flag_orbits.csv
+
+#0 1 2 10 13 14 20 25 26 31 33 35 41 44 46 52 53 56 62 67 68 74 77 79 85 88 89 
+
+
+geo_15_3_c:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-draw_incidence_structure_description \
+			-width 50 -with_10 5 -end \
+		-define C -combinatorial_objects \
+			-file_of_incidence_geometries 15_3.inc 15 15 45 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+			-classification_prefix 10_3 \
+			-label 10_3 \
+			-save_ago \
+		-end
+	pdflatex 15_3_classification.tex
+	open 15_3_classification.pdf
+
+TFC_24_3_c:
+	echo $(FILE_24_3_TFC_INC) >24_3_TFC.inc
+	$(ORBITER_PATH)orbiter.out -v 6 \
+		-define C -combinatorial_objects \
+			-file_of_incidence_geometries 24_3_TFC.inc 24 24 72 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+			-classification_prefix 24_3_TFC \
+			-label 24_3_TFC \
+			-save_ago \
+			-end \
+			-report \
+				-prefix 24_3_TFC \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_incidence_matrices \
+			-end \
+		-end
+	pdflatex 24_3_TFC_classification.tex
+	open 24_3_TFC_classification.pdf
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file 24_3_TFC_object2_TDA_flag_orbits.csv \
+		-secondary_input_csv_file 24_3_TFC_object2_TDA.csv \
+		-box_width 40 -bit_depth 24 \
+		-end
+	open 24_3_TFC_object2_TDA_flag_orbits_draw.bmp
+
+
+geo_40_4_g4_c:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-draw_incidence_structure_description \
+			-width 50 -with_10 5 -end \
+		-define C -combinatorial_objects \
+			-file_of_incidence_geometries 40_4_g4.inc 40 40 160 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-classification_prefix 40_4_g4 \
+				-label 40_4_g4 \
+				-save_ago \
+			-end \
+			-report \
+		-end
+	pdflatex 40_4_g4_classification.tex
+	open 40_4_g4_classification.pdf
+
+
+
+# ToDo:
+
+quartic_curve_25_0_0_canonical: 
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 25 -end \
+		-define P -projective_space 2 F -end \
+		-with P -do \
+		-projective_space_activity \
+		-canonical_form_PG \
+		-input \
+		-set_of_points "10,11,59,63,124,135,136,170,206,257,275,284,285,367,378,393,433,619,641,644"  \
+		-set_of_points "9, 24, 62, 67, 77, 84, 87, 89, 125, 130, 158, 172, 197, 219, 266, 271, 325, 356, 391, 392, 400, 429, 454, 458, 470, 503, 531, 553, 605, 625, 627, 646"  \
+		-set_of_points "9, 24, 55, 75, 79, 88, 93, 94, 112, 142, 186, 213, 230, 249, 316, 329, 337, 371, 381, 383, 392, 405, 417, 439, 464, 466, 470, 524, 530, 567, 583, 594"  \
+		-set_of_points "10, 23, 34, 51, 65, 83, 117, 126, 144, 146, 147, 159, 172, 181, 185, 197, 198, 207, 240, 281, 283, 293, 300, 301, 305, 346, 357, 384, 409, 419, 444, 459, 463, 465, 468, 514, 533, 543, 547, 549, 586, 615, 618, 628"  \
+		-set_of_points "2, 12, 48, 65, 87, 120, 189, 246, 305, 323, 354, 375, 434, 435, 455, 482, 496, 557, 586, 595"  \
+		-end \
+		-classification_prefix quartic_25_0_0 \
+		-report \
+		-end \
+		-end
+	pdflatex quartic_25_0_0_classification.tex
+	open quartic_25_0_0_classification.pdf
+
+
+
+
+
+#############################################################################################################
+# Section 12.4: Objects from Design Theory
+
+
+SECTION_OBJECTS_FROM_DESIGN_THEORY:
+
+
+
+LS_AG_2_3_solutions_classify:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-draw_incidence_structure_description \
+			-width 20 -width_10 2 -end \
+		-define C -combinatorial_objects \
+			-file_of_designs \
+			solutions.csv 9 84 3 12 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-save_ago \
+				-save_transversal \
+				-classification_prefix LS_AG_2_3 \
+				-label LS_AG_2_3 \
+				-max_TDO_depth 10 \
+			-end \
+			-report \
+				-prefix LS_AG_2_3 \
+				-export_flag_orbits \
+				-show_TDO \
+			-end \
+		-end
+	pdflatex LS_AG_2_3_classification.tex
+	open LS_AG_2_3_classification.pdf
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file LS_AG_2_3_object0_INP_flag_orbits.csv \
+		-secondary_input_csv_file LS_AG_2_3_object0_INP.csv \
+		-box_width 12 -bit_depth 24 \
+		-end
+	open LS_AG_2_3_object0_INP_flag_orbits_draw.bmp
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file LS_AG_2_3_object1_INP_flag_orbits.csv \
+		-secondary_input_csv_file LS_AG_2_3_object1_INP.csv \
+		-box_width 12 -bit_depth 24 \
+		-end
+	open LS_AG_2_3_object1_INP_flag_orbits_draw.bmp
+
+
+
+#				-show_incidence_matrices \
+#iso type : input object : ago
+#  0 :   0 :    42
+#  1 :   3 :    54
+
+
+
+
+
+
+design_27c:
+	$(ORBITER_PATH)orbiter.out -v 4 \
+		-define C -combinatorial_objects \
+			-set_of_points "2,56,30,112,253,90,440,508" \
+		-end \
+		-define F -finite_field -q 27 -override_polynomial 46  -end \
+		-define P -projective_space 2 F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+			-classification_prefix design \
+			-end \
+			-report \
+		-end
+	pdflatex design_classification.tex
+	open design_classification.pdf
+
+
+
+
+
+
+
+#############################################################################################################
+# Section 12.5: Linear Codes
+
+
+SECTION_CANONICAL_FORMS_OF_LINEAR_CODES:
+
+
+
+code_3_2_aut:
+	$(ORBITER_PATH)orbiter.out -v 20 \
+		-define F -finite_field -q 2 -end  \
+		-define genma -vector -field F -format 2 \
+			-dense $(CODE_N3_K2_Q2_GENMA) \
+		-end \
+		-define P -projective_space 1 F -end \
+		-with P -do \
+		-projective_space_activity \
+			-canonical_form_of_code \
+				"3_2" genma -save_ago -label "3_2" \
+				-classification_prefix "3_2" -end \
+			-end
+	pdflatex 3_2_classification.tex
+	open 3_2_classification.pdf
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file 3_2_object0_TDA_flag_orbits.csv \
+		-secondary_input_csv_file 3_2_object0_TDA.csv \
+		-box_width 16 -bit_depth 24 \
+		-end
+	open 3_2_object0_TDA_flag_orbits_draw.bmp
+
+
+
+
+code_6_3_aut:
+	$(ORBITER_PATH)orbiter.out -v 20 \
+		-define F -finite_field -q 2 -end  \
+		-define genma -vector -field F -format 3 \
+			-compact $(CODE_N6_K3_Q2_GENMA) \
+		-end \
+		-define P -projective_space 2 F -end \
+		-with P -do \
+		-projective_space_activity \
+			-canonical_form_of_code \
+				"6_3" genma -save_ago -label "6_3" \
+				-classification_prefix "6_3" -end \
+			-end
+	pdflatex 6_3_classification.tex
+	open 6_3_classification.pdf
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file 6_3_object0_TDA_flag_orbits.csv \
+		-secondary_input_csv_file 6_3_object0_TDA.csv \
+		-box_width 16 -bit_depth 24 \
+		-end
+	open 6_3_object0_TDA_flag_orbits_draw.bmp
+
+# group of order 24
+
+
+RM_3_1_group:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end  \
+		-define genma -vector -field F -format 4 \
+			-compact $(CODE_RM_3_1_GENMA) \
+		-end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
+			-canonical_form_of_code \
+				"RM_3_1" genma -save_ago -label "RM_3_1" \
+				-classification_prefix "RM_3_1" -end \
+			-end
+	pdflatex RM_3_1_classification.tex
+	open RM_3_1_classification.pdf
+
+# group order 1344
+#RM_3_1_object0_INP_flag_orbits.csv
+
+RM_3_1_group_and_diagram:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end  \
+		-define genma -vector -field F -format 4 \
+			-compact $(CODE_RM_3_1_GENMA) \
+		-end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
+			-canonical_form_of_code \
+				"RM_3_1" genma -save_ago -label "RM_3_1" \
+				-classification_prefix "RM_3_1" -end \
+			-end
+	pdflatex RM_3_1_classification.tex
+	open RM_3_1_classification.pdf
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file RM_3_1_object0_INP_flag_orbits.csv \
+		-secondary_input_csv_file RM_3_1_object0_INP.csv \
+		-box_width 16 -bit_depth 24 \
+		-end
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file RM_3_1_object0_TDA_flag_orbits.csv \
+		-secondary_input_csv_file RM_3_1_object0_TDA.csv \
+		-box_width 16 -bit_depth 24 \
+		-end
+	open RM_3_1_object0_INP_flag_orbits_draw.bmp
+	open RM_3_1_object0_TDA_flag_orbits_draw.bmp
+
+
+
+RM_4_1_group:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 2 -end  \
+		-define genma -vector -field F -format 5 \
+			-compact $(CODE_RM_4_1_GENMA) \
+		-end \
+		-define P -projective_space 4 F -end \
+		-with P -do \
+		-projective_space_activity \
+			-canonical_form_of_code \
+				"RM_4_1" genma -save_ago -label "RM_4_1" \
+				-classification_prefix "RM_4_1" -end \
+			-end
+	pdflatex RM_4_1_classification.tex
+	open RM_4_1_classification.pdf
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file RM_4_1_object0_INP_flag_orbits.csv \
+		-secondary_input_csv_file RM_4_1_object0_INP.csv \
+		-box_width 16 -bit_depth 24 \
+		-end
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file RM_4_1_object0_TDA_flag_orbits.csv \
+		-secondary_input_csv_file RM_4_1_object0_TDA.csv \
+		-box_width 16 -bit_depth 24 \
+		-end
+	open RM_4_1_object0_INP_flag_orbits_draw.bmp
+	open RM_4_1_object0_TDA_flag_orbits_draw.bmp
+
+
+# group order 322560 = 24*30*28*16
+
+
+RS_6_4_7_group:
+	$(ORBITER_PATH)orbiter.out -v 20 \
+		-define F -finite_field -q 7 -end  \
+		-define genma -vector -field F -format 4 \
+			-compact $(CODE_RS_6_4_7) \
+		-end \
+		-define P -projective_space 3 F -end \
+		-with P -do \
+		-projective_space_activity \
+			-canonical_form_of_code \
+				"RS_6" genma -save_ago -label "RS_6" \
+				-classification_prefix "RS_6" -end \
+			-end
+	#pdflatex RS_6_classification.tex
+	#open RS_6_classification.pdf
+	#$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+	#	-input_csv_file RS_6_object0_TDA.csv \
+	#	-box_width 2 -bit_depth 24 \
+	#	-end
+
+#group of order 12
+#set of points:  0, 9, 51, 344, 253, 3
+#1,0,0,0,2,0,0,1,5,0,6,0,5,1,0,0, 0,0,0,1,6,0,0,2,0,6,0,5,0,0,6,5,
+
+GV_n15_k6_d5_group:
+	$(ORBITER_PATH)orbiter.out -v 20 \
+		-define F -finite_field -q 2 -end  \
+		-define genma -vector -field F -format 6 \
+			-compact $(CODE_GV_N15_K6) \
+		-end \
+		-define P -projective_space 5 F -end \
+		-with P -do \
+		-projective_space_activity \
+			-canonical_form_of_code \
+				"GV_n15_k6_d5" genma -save_ago -label "GV_n15_k6_d5" \
+				-classification_prefix "GV_n15_k6_d5" -end \
+			-end
+	pdflatex GV_n15_k6_d5_classification.tex
+	open GV_n15_k6_d5_classification.pdf
+
+#ago=12
+
+
+
+code_n15_k6_d6_a_group:
+	$(ORBITER_PATH)orbiter.out -v 20 \
+		-define F -finite_field -q 2 -end  \
+		-define genma -vector -field F -format 6 \
+			-compact $(CODE_15_6_6_A) \
+		-end \
+		-define P -projective_space 5 F -end \
+		-with P -do \
+		-projective_space_activity \
+			-canonical_form_of_code \
+				"n15_k6_d6_a" genma -save_ago -label "n15_k6_d6_a" \
+				-classification_prefix "n15_k6_d6_a" -end \
+			-end
+	pdflatex n15_k6_d6_a_classification.tex
+	open n15_k6_d6_a_classification.pdf
+
+
+code_n15_k6_d6_b_group:
+	$(ORBITER_PATH)orbiter.out -v 20 \
+		-define F -finite_field -q 2 -end  \
+		-define genma -vector -field F -format 6 \
+			-compact $(CODE_15_6_6_B) \
+		-end \
+		-define P -projective_space 5 F -end \
+		-with P -do \
+		-projective_space_activity \
+			-canonical_form_of_code \
+				"n15_k6_d6_b" genma -save_ago -label "n15_k6_d6_b" \
+				-classification_prefix "n15_k6_d6_b" -end \
+			-end
+	pdflatex n15_k6_d6_b_classification.tex
+	open n15_k6_d6_b_classification.pdf
+
+
+
+
+#############################################################################################################
+# Section 12.6: General Codes
+
+
+SECTION_CANONICAL_FORMS_OF_GENERAL_CODES:
+
+
+#############################################################################################################
+# Section 12.7: Graphs
+
+
+SECTION_CANONICAL_FORMS_OF_GRAPHS:
+
+
+
+
+
+
+#############################################################################################################
+# Section 12.7: Quartic Curves
+
+
+SECTION_CANONICAL_FORMS_OF_QUARTIC_CURVES:
+
+
+
+#############################################################################################################
+
+
+F_17_edge:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 17 -end \
+		-with F -do -finite_field_activity \
+			-cheat_sheet_GF -end
+	pdflatex GF_17.tex
+	open GF_17.pdf
+
+
+
+
+
+
+
+Edge_curve_17:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 17 -end \
+		-define P -projective_space 2 F -end \
+		-with P -do \
+		-projective_space_activity \
+			-define_object Edge -projective_variety \
+			Edge 4 $(EDGE_CURVE_Q17_EQUATION) \
+			-end \
+		-end
+
+#combinatorial_object_create::init created a set of size 12
+#( 4, 7, 16, 19, 20, 23, 32, 35, 89, 100, 244, 251 )
+
+
+
+
+Edge_17_report: 
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 17 -end \
+		-define P -projective_space 2 F -end \
+		-with P -do \
+			-projective_space_activity \
+				-define_quartic_curve C -q 17 \
+				-label_txt Edge -label_tex Edge \
+				-by_coefficients $(EDGE_CURVE_Q17_EQUATION) -end \
+			-end \
+		-with C -do \
+			-quartic_curve_activity \
+				-report \
+			-end
+	pdflatex by_coefficients_q17.tex
+	open by_coefficients_q17.pdf
+
+
+
+
+Edge_curve_17_line_type:
+	echo $(FILE_Q17) >edge_q17.csv
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 17 -end \
+		-define P -projective_space 2 F -end \
+		-with P -do \
+		-projective_space_activity \
+			-define_object E \
+				-set $(EDGE_CURVE_Q17_AS_POINTS) \
+			-end \
+		-end \
+		-with E -do \
+		-combinatorial_object_activity \
+			-save \
+		-end \
+		-with E -do \
+		-combinatorial_object_activity \
+			-line_type \
+		-end \
+		-print_symbols
+
+#( 4^6, 2^30, 1^132, 0^139 )
+
+
+
+
+Edge_curve_17_nauty: 
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define C -combinatorial_objects \
+			-set_of_points $(EDGE_CURVE_Q17_AS_POINTS) \
+		-end \
+		-define F -finite_field -q 17 -end \
+		-define P -projective_space 2 F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+				-classification_prefix Edge_curve_q17 \
+				-label Edge_curve_q17 \
+				-save_ago \
+				-save_transversal \
+				-max_TDO_depth 10 \
+				-end \
+			-report \
+				-prefix Edge_curve_q17 \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-dont_show_incidence_matrices \
+				-export_group \
+			-end \
+		-end
+	pdflatex Edge_curve_q17_classification.tex
+	open Edge_curve_q17_classification.pdf
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file Edge_curve_q17_object0_TDA_flag_orbits.csv \
+		-secondary_input_csv_file Edge_curve_q17_object0_TDA.csv \
+		-box_width 4 -bit_depth 24 \
+		-end
+	open Edge_curve_q17_object0_TDA_flag_orbits_draw.bmp
+
+# 9 backtrack nodes total
+
+
+# aut = 24
+# User time: 0.04 of a second, dt=4 tps = 100
+
+
+# generators for a group of order 24:
+#1,0,0,0,13,0,0,0,4, 
+#1,0,0,0,0,16,0,16,0, 
+#0,1,16,2,4,4,15,4,4,
+
+
+Edge_curve_17_group:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define G -linear_group -PGL 3 17 \
+		-subgroup_by_generators "Stab_Edge" "24" 3 \
+			"1,0,0,0,13,0,0,0,4" \
+			"1,0,0,0,0,16,0,16,0" \
+			"0,1,16,2,4,4,15,4,4" \
+		-end \
+		-with G -do \
+		-group_theoretic_activities \
+		-print_elements_tex \
+		-group_table \
+		-report \
+		-end
+	pdflatex PGL_3_17_Subgroup_Stab_Edge_24_report.tex
+	open PGL_3_17_Subgroup_Stab_Edge_24_report.pdf
+
+
+# the last element is 
+#  0  1  1
+# 15  1 16
+# 15 16  1
+
+
+
+
+#############################################################################################################
+
+
+
+
+Edge_curve_23:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 23 -end \
+		-define P -projective_space 2 F -end \
+		-with P -do -projective_space_activity \
+			-define_object Edge -projective_variety \
+				Edge 4 $(EDGE_CURVE_Q23_EQUATION) \
+			-end \
+		-end
+
+
+#combinatorial_object_create::init created a set of size 48
+#( 4, 25, 26, 47, 48, 71, 92, 95, 114, 119, 136, 143, 158, 167, 180, 191, 202, 215, 224, 239, 246, 263, 268, 287, 290, 311, 312, 334, 335, 356, 359, 378, 383, 400, 407, 422, 431, 444, 455, 466, 479, 488, 503, 510, 527, 530, 532, 551 )
+
+
+
+Edge_curve_23_nauty: 
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define C -combinatorial_objects \
+			-set_of_points $(EDGE_CURVE_Q23_AS_POINTS) \
+		-end \
+		-define F -finite_field -q 23 -end \
+		-define P -projective_space 2 F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+				-classification_prefix Edge_curve_q23 \
+				-label Edge_curve_q23 \
+				-save_ago \
+				-save_transversal \
+				-max_TDO_depth 4 \
+				-end \
+			-report \
+				-prefix Edge_curve_q23 \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-dont_show_incidence_matrices \
+				-export_group \
+			-end \
+		-end
+	pdflatex Edge_curve_q23_classification.tex
+	open Edge_curve_q23_classification.pdf
+
+# 76 backtrack nodes total
+
+#User time: 0.41 of a second, dt=41 tps = 100
+# group order 1012=4*11*23
+
+
+#############################################################################################################
+
+
+
+
+F_25_edge:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 25 -end \
+		-with F -do -finite_field_activity \
+			-cheat_sheet_GF -end
+	pdflatex GF_25.tex
+	open GF_25.pdf
+
+
+
+
+
+
+Edge_curve_25:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 25 -end \
+		-define P -projective_space 2 F -end \
+		-with P -do -projective_space_activity \
+			-define_object Edge -projective_variety \
+			Edge 4 $(EDGE_CURVE_Q25_EQUATION) \
+			-end \
+		-end
+
+
+#combinatorial_object_create::init created a set of size 24
+#( 4, 5, 6, 7, 28, 29, 30, 31, 190, 192, 209, 223, 256, 271, 284, 298, 412, 420, 561, 566, 612, 620, 633, 649 )
+
+
+
+
+
+
+
+Edge_curve_25_line_type:
+	echo $(FILE_Q25) >edge_q25.csv
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 25 -end \
+		-define P -projective_space 2 F -end \
+		-with P -do \
+		-projective_space_activity \
+			-define_object E \
+				-set $(EDGE_CURVE_Q25_AS_POINTS) \
+			-end \
+		-end \
+		-with E -do \
+		-combinatorial_object_activity \
+			-save \
+		-end \
+		-with E -do \
+		-combinatorial_object_activity \
+			-line_type \
+		-end \
+		-print_symbols
+
+#( 4^14, 3^8, 2^168, 1^208, 0^253 )
+
+Edge_curve_25_nauty: 
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define C -combinatorial_objects \
+			-set_of_points $(EDGE_CURVE_Q25_AS_POINTS) \
+		-end \
+		-define F -finite_field -q 25 -end \
+		-define P -projective_space 2 F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+				-classification_prefix Edge_curve_q25 \
+				-label Edge_curve_q25 \
+				-save_ago \
+				-save_transversal \
+				-max_TDO_depth 4 \
+				-end \
+			-report \
+				-prefix Edge_curve_q25 \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-dont_show_incidence_matrices \
+				-export_group \
+			-end \
+		-end
+	pdflatex Edge_curve_q25_classification.tex
+	open Edge_curve_q25_classification.pdf
+
+# 7 backtrack nodes total
+# group order 8
+
+
+#Classification of curves:
+#transversal:
+#( 0 )
+#0 : 1 x ( 0, 0, 0, 3, 15, 4, 3, 22, 3, 5, 21, 15, 22, 6, 1 ) : 8 : ( 0 )
+
+#User time: 0:4
+
+
+# OCN=12 and OCN=41 both have ago=8 and nb_pts=24
+
+#OCN12: 0,0,0,19,19,8,24,13,21,8,3,20,12,7,1
+#OCN41: 0,0,0,6,10,12,11,12,6,12,23,15,0,7,1
+
+
+Edge_curve_25_nauty_again: 
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define C -combinatorial_objects \
+			-set_of_points $(EDGE_CURVE_Q25_AS_POINTS) \
+			-set_of_points $(OCN12_PTS_Q25) \
+			-set_of_points $(OCN41_PTS_Q25) \
+		-end \
+		-define F -finite_field -q 25 -end \
+		-define P -projective_space 2 F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+				-classification_prefix Edge_curve_q25 \
+				-label Edge_curve_q25 \
+				-save_ago \
+				-save_transversal \
+				-max_TDO_depth 4 \
+				-end \
+			-report \
+				-prefix Edge_curve_q25 \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-dont_show_incidence_matrices \
+				-export_group \
+			-end \
+		-end
+	pdflatex Edge_curve_q25_classification.tex
+	open Edge_curve_q25_classification.pdf
+
+
+# all three are non-isomorphic
+
+
+
+
+#############################################################################################################
+
+
+
+
+Edge_curve_29:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 29 -end \
+		-define P -projective_space 2 F -end \
+		-with P -do -projective_space_activity -define_object Edge -projective_variety Edge 4 $(EDGE_CURVE_Q29_EQUATION)  -end -end
+
+
+
+#combinatorial_object_create::init created a set of size 114
+#( 4, 15, 20, 31, 32, 43, 48, 59, 60, 64, 83, 89, 95, 110, 116, 119, 127, 136, 144, 148, 149, 172, 173, 179, 189, 190, 200, 207, 209, 228, 230, 239, 242, 253, 256, 269, 270, 283, 284, 295, 299, 312, 316, 329, 333, 336, 340, 350, 359, 368, 377, 389, 396, 413, 419, 424, 430, 442, 449, 452, 459, 476, 479, 480, 483, 495, 508, 509, 522, 536, 539, 556, 564, 569, 577, 589, 592, 599, 602, 619, 620, 629, 630, 642, 648, 659, 665, 676, 682, 683, 689, 699, 704, 719, 724, 732, 736, 745, 749, 760, 762, 777, 779, 788, 789, 808, 809, 816, 825, 830, 839, 842, 844, 869 )
+
+
+
+
+
+
+
+
+
+Edge_curve_29_nauty: 
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define C -combinatorial_objects \
+			-set_of_points $(EDGE_CURVE_Q29_AS_POINTS) \
+		-end \
+		-define F -finite_field -q 29 -end \
+		-define P -projective_space 2 F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+				-classification_prefix Edge_curve_q29 \
+				-label Edge_curve_q29 \
+				-save_ago \
+				-save_transversal \
+				-max_TDO_depth 4 \
+				-end \
+			-report \
+				-prefix Edge_curve_q29 \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-dont_show_incidence_matrices \
+				-export_group \
+			-end \
+		-end
+	pdflatex Edge_curve_q29_classification.tex
+	open Edge_curve_q29_classification.pdf
+
+# 9 backtrack nodes total
+#User time: 0.93 of a second, dt=93 tps = 100
+
+#############################################################################################################
+
+
+
+
+
+Edge_curve_41:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 41 -end \
+		-define P -projective_space 2 F -end \
+		-with P -do -projective_space_activity -define_object Edge -projective_variety Edge 4 $(EDGE_CURVE_Q41_EQUATION)  -end -end
+
+
+#combinatorial_object_create::init created a set of size 162
+#( 4, 12, 35, 43, 44, 52, 75, 83, 84, 101, 106, 125, 138, 151, 164, 167, 170, 201, 204, 209, 210, 243, 244, 251, 260, 275, 284, 293, 307, 310, 324, 335, 339, 360, 364, 371, 377, 404, 410, 419, 444, 461, 469, 476, 484, 503, 508, 519, 524, 540, 545, 564, 569, 578, 587, 604, 613, 628, 629, 644, 645, 671, 677, 678, 684, 709, 713, 724, 728, 741, 755, 764, 778, 787, 797, 804, 814, 837, 839, 844, 846, 878, 881, 884, 887, 910, 923, 924, 937, 946, 964, 965, 983, 996, 1004, 1007, 1015, 1044, 1046, 1047, 1049, 1079, 1084, 1091, 1096, 1111, 1124, 1133, 1146, 1155, 1164, 1175, 1184, 1204, 1205, 1216, 1217, 1244, 1248, 1255, 1259, 1280, 1284, 1301, 1305, 1314, 1324, 1343, 1353, 1364, 1385, 1404, 1414, 1417, 1427, 1444, 1449, 1464, 1469, 1481, 1484, 1511, 1514, 1523, 1524, 1553, 1554, 1564, 1573, 1586, 1595, 1604, 1618, 1623, 1637, 1644, 1650, 1673, 1679, 1682, 1684, 1721 )
+
+
+
+
+
+
+
+Edge_curve_41_nauty: 
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define C -combinatorial_objects \
+			-set_of_points $(EDGE_CURVE_Q41_AS_POINTS) \
+		-end \
+		-define F -finite_field -q 41 -end \
+		-define P -projective_space 2 F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+				-classification_prefix Edge_curve_q41 \
+				-label Edge_curve_q41 \
+				-save_ago \
+				-save_transversal \
+				-max_TDO_depth 4 \
+				-end \
+			-report \
+				-prefix Edge_curve_q41 \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-dont_show_incidence_matrices \
+				-export_group \
+			-end \
+		-end
+	pdflatex Edge_curve_q41_classification.tex
+	open Edge_curve_q41_classification.pdf
+
+# 9 backtrack nodes total
+#User time: 0:4
+
+#############################################################################################################
+
+
+
+
+
+Edge_curve_61:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 61 -end \
+		-define P -projective_space 2 F -end \
+		-with P -do -projective_space_activity -define_object Edge -projective_variety Edge 4 $(EDGE_CURVE_Q61_EQUATION)  -end -end
+
+
+
+#combinatorial_object_create::init created a set of size 242
+#( 4, 14, 53, 63, 64, 74, 113, 123, 124, 145, 162, 185, 212, 217, 244, 247, 262, 289, 304, 309, 312, 361, 364, 371, 372, 423, 424, 433, 444, 473, 484, 495, 516, 523, 544, 557, 573, 588, 604, 619, 623, 660, 664, 673, 681, 724, 732, 743, 784, 805, 815, 834, 844, 867, 884, 887, 904, 929, 934, 959, 964, 984, 991, 1024, 1031, 1042, 1053, 1084, 1095, 1114, 1115, 1144, 1145, 1177, 1186, 1195, 1204, 1239, 1245, 1258, 1264, 1295, 1301, 1324, 1330, 1345, 1363, 1384, 1402, 1413, 1425, 1444, 1456, 1485, 1487, 1504, 1506, 1549, 1556, 1557, 1564, 1606, 1611, 1624, 1629, 1656, 1673, 1684, 1701, 1712, 1735, 1744, 1767, 1784, 1797, 1804, 1817, 1856, 1859, 1864, 1867, 1917, 1921, 1924, 1928, 1967, 1983, 1984, 2000, 2017, 2044, 2045, 2072, 2083, 2104, 2107, 2128, 2155, 2164, 2169, 2178, 2224, 2227, 2228, 2231, 2278, 2284, 2293, 2299, 2328, 2344, 2355, 2371, 2382, 2404, 2417, 2439, 2454, 2464, 2479, 2489, 2524, 2526, 2539, 2541, 2584, 2589, 2598, 2603, 2639, 2644, 2665, 2670, 2689, 2704, 2727, 2742, 2753, 2764, 2789, 2800, 2824, 2825, 2850, 2851, 2884, 2897, 2900, 2913, 2944, 2950, 2969, 2975, 3000, 3004, 3037, 3041, 3052, 3064, 3099, 3111, 3124, 3161, 3184, 3196, 3211, 3223, 3244, 3261, 3268, 3285, 3304, 3311, 3340, 3347, 3361, 3364, 3409, 3412, 3423, 3424, 3471, 3472, 3484, 3495, 3522, 3533, 3544, 3567, 3572, 3595, 3604, 3622, 3639, 3657, 3664, 3672, 3711, 3719, 3722, 3724, 3781 )
+
+
+
+
+
+
+
+
+
+Edge_curve_61_nauty: 
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define C -combinatorial_objects \
+			-set_of_points $(EDGE_CURVE_Q61_AS_POINTS) \
+		-end \
+		-define F -finite_field -q 61 -end \
+		-define P -projective_space 2 F -end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form_PG P \
+				-classification_prefix Edge_curve_q61 \
+				-label Edge_curve_q61 \
+				-save_ago \
+				-save_transversal \
+				-max_TDO_depth 4 \
+				-end \
+			-report \
+				-prefix Edge_curve_q61 \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-dont_show_incidence_matrices \
+				-export_group \
+			-end \
+		-end
+	pdflatex Edge_curve_q61_classification.tex
+	open Edge_curve_q61_classification.pdf
+
+
+# 9 backtrack nodes total
+#ago=24
+#User time: 0:7
+
+
+
+
+
+
+
+
+#############################################################################################################
+
+
+
+Edge_curve_81:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define F -finite_field -q 81 -end \
+		-define P -projective_space 2 F -end \
+		-with P -do -projective_space_activity -define_object Edge -projective_variety Edge 4 $(EDGE_CURVE_Q81_EQUATION)  -end -end
+
+
+
+
+#combinatorial_object_create::init created a set of size 322
+#( 4, 5, 50, 67, 84, 85, 130, 147, 164, 210, 227, 244, 245, 246, 330, 332, 364, 403, 409, 412, 423, 428, 491, 495, 521, 546, 572, 576, 585, 590, 652, 655, 688, 727, 735, 737, 764, 789, 822, 823, 830, 835, 901, 910, 924, 953, 983, 993, 1017, 1049, 1068, 1079, 1091, 1128, 1147, 1159, 1162, 1189, 1226, 1229, 1236, 1242, 1314, 1319, 1346, 1368, 1383, 1385, 1393, 1399, 1475, 1482, 1510, 1525, 1550, 1560, 1572, 1601, 1630, 1633, 1639, 1645, 1713, 1721, 1746, 1778, 1788, 1790, 1799, 1806, 1879, 1885, 1913, 1935, 1962, 1967, 1996, 2011, 2039, 2052, 2053, 2080, 2119, 2131, 2144, 2181, 2198, 2202, 2208, 2213, 2298, 2300, 2324, 2331, 2377, 2392, 2404, 2425, 2445, 2456, 2459, 2487, 2540, 2544, 2568, 2573, 2604, 2612, 2623, 2653, 2705, 2710, 2736, 2746, 2758, 2761, 2790, 2813, 2869, 2889, 2893, 2903, 2951, 2967, 2976, 2987, 3011, 3024, 3036, 3071, 3115, 3122, 3151, 3156, 3190, 3197, 3220, 3234, 3282, 3289, 3310, 3320, 3361, 3374, 3390, 3400, 3407, 3411, 3443, 3483, 3522, 3528, 3557, 3560, 3574, 3583, 3607, 3640, 3675, 3689, 3701, 3723, 3772, 3774, 3790, 3791, 3809, 3810, 3853, 3871, 3935, 3954, 3986, 3993, 4020, 4040, 4084, 4099, 4108, 4120, 4172, 4181, 4203, 4212, 4254, 4266, 4280, 4292, 4329, 4345, 4352, 4360, 4390, 4396, 4427, 4443, 4484, 4498, 4512, 4531, 4564, 4568, 4591, 4599, 4632, 4643, 4647, 4673, 4733, 4752, 4758, 4766, 4783, 4786, 4813, 4837, 4896, 4911, 4919, 4931, 4953, 4961, 4973, 5004, 5051, 5053, 5079, 5083, 5136, 5140, 5165, 5176, 5186, 5187, 5231, 5250, 5311, 5329, 5393, 5394, 5411, 5412, 5463, 5480, 5486, 5496, 5550, 5560, 5575, 5588, 5605, 5611, 5643, 5657, 5704, 5720, 5728, 5742, 5768, 5775, 5800, 5821, 5873, 5883, 5903, 5913, 5951, 5957, 5988, 5991, 6008, 6021, 6031, 6067, 6106, 6114, 6136, 6149, 6166, 6175, 6200, 6234, 6276, 6280, 6311, 6313, 6348, 6363, 6374, 6395, 6440, 6452, 6468, 6480, 6520, 6529, 6550, 6559, 6566, 6570, 6603, 6641 )
+
+
+
+
+
+
+# 142 backtrack nodes total
+#User time: 1:34
+# go = 96
+
+
+
+
+
+
+
 
 
 
@@ -14327,8 +15064,8 @@ Queens_graph:
 	#$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix  -input_csv_file non_attacking_queens_graph_8.csv \
 	#	-box_width 8 -bit_depth 24 -partition 4 64 64 -end
 	#twopi -Tpng non_attacking_queens_graph_8.gv >non_attacking_queens_graph_8.png
-	pdflatex non_attacking_queens_graph_8_report.tex
-	open non_attacking_queens_graph_8_report.pdf
+	#pdflatex non_attacking_queens_graph_8_report.tex
+	#open non_attacking_queens_graph_8_report.pdf
 
 
 #############################################################################################################

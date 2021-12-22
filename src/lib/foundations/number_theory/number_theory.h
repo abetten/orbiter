@@ -38,6 +38,7 @@ public:
 	~cyclotomic_sets();
 	void init(finite_field *F, int n, int verbose_level);
 	void print();
+	void print_latex(std::ostream &ost);
 };
 
 

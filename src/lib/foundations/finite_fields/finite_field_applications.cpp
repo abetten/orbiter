@@ -17,6 +17,280 @@ namespace orbiter {
 namespace foundations {
 
 
+void finite_field::write_code_for_division(
+		std::string &fname_code,
+		std::string &A_coeffs, std::string &B_coeffs,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::write_code_for_division" << endl;
+	}
+
+
+	{
+		std::ofstream ost(fname_code);
+
+
+		string str;
+		os_interface Os;
+
+		Os.get_date(str);
+
+		ost << "/*" << endl;
+		ost << " * " << fname_code << endl;
+		ost << " *" << endl;
+		ost << " *  Created on: " << str << endl;
+		ost << " *      Author: Orbiter" << endl;
+		ost << " */" << endl;
+		ost << endl;
+		//ost << "#include \"orbiter.h\"" << endl;
+		ost << "#include <iostream>" << endl;
+		ost << endl;
+		ost << "using namespace std;" << endl;
+		//ost << "using namespace orbiter;" << endl;
+		ost << endl;
+		ost << "void divide(const unsigned char *A, unsigned char *R);" << endl;
+		ost << endl;
+		ost << "int main(int argc, char **argv)" << endl;
+		ost << "{" << endl;
+		ost << "\t" << endl;
+
+
+		int *data_A;
+		int *data_B;
+		int sz_A, sz_B;
+
+
+		Orbiter->get_vector_from_label(A_coeffs, data_A, sz_A, verbose_level);
+		Orbiter->get_vector_from_label(B_coeffs, data_B, sz_B, verbose_level);
+
+
+		int w;
+
+		w = log10_of_q;
+
+		unipoly_domain FX(this);
+		unipoly_object poly_A, poly_B, poly_Q, poly_R;
+
+
+		int da = sz_A - 1;
+		int db = sz_B - 1;
+		int i;
+
+		FX.create_object_of_degree(poly_A, da);
+
+		for (i = 0; i <= da; i++) {
+			FX.s_i(poly_A, i) = data_A[i];
+		}
+
+		FX.create_object_of_degree(poly_B, da);
+
+		for (i = 0; i <= db; i++) {
+			FX.s_i(poly_B, i) = data_B[i];
+		}
+
+
+		FREE_int(data_A);
+		FREE_int(data_B);
+
+
+
+		if (f_v) {
+			cout << "A(X)=";
+			FX.print_object(poly_A, cout);
+			cout << endl;
+		}
+
+
+		if (f_v) {
+			cout << "B(X)=";
+			FX.print_object(poly_B, cout);
+			cout << endl;
+			}
+
+		FX.create_object_of_degree(poly_Q, da);
+
+		FX.create_object_of_degree(poly_R, da);
+
+		//FX.division_with_remainder(
+		//	poly_A, poly_B,
+		//	poly_Q, poly_R,
+		//	verbose_level);
+
+
+		int *ra = (int *) poly_A;
+		int *rb = (int *) poly_B;
+		int *A = ra + 1;
+		int *B = rb + 1;
+
+		//int da, db;
+
+		if (f_v) {
+			cout << "unipoly_domain::write_code_for_division" << endl;
+		}
+		if (da != FX.degree(poly_A)) {
+			cout << "unipoly_domain::write_code_for_division da != FX.degree(poly_A)" << endl;
+			exit(1);
+		}
+		if (db != FX.degree(poly_B)) {
+			cout << "unipoly_domain::write_code_for_division db != FX.degree(poly_B)" << endl;
+			exit(1);
+		}
+
+		int dq = da - db;
+
+
+		int j;
+		int a, b;
+
+
+		ost << "\tconst unsigned char A[] = {" << endl;
+
+
+		ost << "\t\t";
+		for (i = 0; i <= da; i++) {
+			a = A[i];
+			ost << a << ",";
+			if (((i + 1) % 25) == 0) {
+				ost << endl;
+				ost << "\t\t";
+			}
+		}
+		ost << endl;
+
+		ost << "\t};" << endl;
+
+		ost << endl;
+
+		ost << "\tunsigned char R[" << db + 1 << "] = {" << endl;
+		ost << "\t\t";
+		for (i = 0; i <= db; i++) {
+			ost << "0";
+			if (i < db) {
+				ost << ",";
+			}
+		}
+		ost << "};" << endl;
+
+		ost << endl;
+
+		ost << "\t" << endl;
+		ost << "\tdivide(A, R);" << endl;
+
+		ost << endl;
+
+
+		ost << "\tint i;" << endl;
+		ost << "\tfor (i = 0; i <= " << db << "; i++) {" << endl;
+		ost << "\t\tcout << (int) R[i] << \",\";" << endl;
+		ost << "\t}" << endl;
+		ost << "\tcout << endl;" << endl;
+
+		ost << endl;
+
+		ost << "}" << endl;
+		ost << endl;
+
+
+
+		ost << "\t// the size of the array B is  " << q - 1 << " x " << db + 1 << endl;
+		ost << "const unsigned char B[] = {" << endl;
+
+
+		for (i = 1; i < q; i++) {
+			ost << "\t";
+			for (j = 0; j <= db; j++) {
+				a = B[j];
+				b = mult(a, i);
+				ost << setw(w) << b << ",";
+			}
+			ost << endl;
+		}
+
+		ost << "};" << endl;
+		ost << endl;
+
+
+		ost << "void divide(const unsigned char *in, unsigned char *out)" << endl;
+		ost << "{" << endl;
+
+
+		ost << "\tunsigned char R[" << da + 1 << "];" << endl;
+		ost << "\tint i, j, ii, jj;" << endl;
+		ost << "\tint x;" << endl;
+
+		// copy input over to R[]:
+
+		ost << "\tfor (i = 0; i < " << da + 1 << "; i++) {" << endl;
+		ost << "\t\tR[i] = in[i];" << endl;
+		ost << "\t}" << endl;
+
+
+		//Orbiter->Int_vec.zero(Q, dq + 1);
+
+		ost << endl;
+
+
+
+		ost << "\tfor (i = " << da << ", j = " << dq << "; i >= " << db << "; i--, j--) {" << endl;
+		ost << "\t\tx = R[i];" << endl;
+		ost << "\t\tif (x == 0) {" << endl;
+		ost << "\t\t\tcontinue;" << endl;
+		ost << "\t\t}" << endl;
+		ost << "\t\t//cout << \"i=\" << i << \" x=\" << x << endl;" << endl;
+		ost << "\t\tx--;" << endl;
+		ost << "\t\tfor (ii = i, jj = " << db << "; jj >= 0; ii--, jj--) {" << endl;
+		ost << "\t\t\tR[ii] ^= B[x * " << db + 1 << " + jj];" << endl;
+		ost << "\t\t}" << endl;
+		ost << "\t}" << endl;
+
+#if 0
+		for (i = da, j = dq; i >= db; i--, j--) {
+			x = R[i];
+			c = F->mult(x, pivot_inv);
+			Q[j] = c;
+			c = F->negate(c);
+			//cout << "i=" << i << " c=" << c << endl;
+			for (ii = i, jj = db; jj >= 0; ii--, jj--) {
+				d = B[jj];
+				d = F->mult(c, d);
+				R[ii] = F->add(d, R[ii]);
+			}
+			if (R[i] != 0) {
+				cout << "unipoly::write_code_for_division: R[i] != 0" << endl;
+				exit(1);
+			}
+			//cout << "i=" << i << endl;
+			//cout << "q="; print_object((unipoly_object)
+			// rq, cout); cout << endl;
+			//cout << "r="; print_object(r, cout); cout << endl;
+		}
+#endif
+
+
+		// copy output over from R[] to out:
+
+		ost << endl;
+
+		ost << "\tfor (i = " << db << "; i >= 0; i--) {" << endl;
+		ost << "\t\tout[i] = R[i];" << endl;
+		ost << "\t}" << endl;
+
+		ost << "}" << endl;
+
+	}
+
+	file_io Fio;
+
+	cout << "Written file " << fname_code << " of size " << Fio.file_size(fname_code) << endl;
+
+	if (f_v) {
+		cout << "finite_field::write_code_for_division done" << endl;
+	}
+}
+
 
 void finite_field::polynomial_division(
 		std::string &A_coeffs, std::string &B_coeffs,

@@ -463,7 +463,91 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 			cout << "graph_theoretic_activity::perform_activity f_properties" << endl;
 		}
 
-		CG->eigenvalues(verbose_level);
+		double *E;
+		int i;
+
+		CG->eigenvalues(E, verbose_level - 2);
+
+		cout << "The eigenvalues are:" << endl;
+		for (i = 0; i < CG->nb_points; i++) {
+			cout << i << " : " << E[i] << endl;
+		}
+
+		double energy = 0;
+		for (i = 0; i < CG->nb_points; i++) {
+			energy += ABS(E[i]);
+		}
+		cout << "The energy is " << energy << endl;
+
+		{
+			string fname;
+			char title[1000];
+			char author[1000];
+
+			snprintf(title, 1000, "Eigenvalues of %s", CG->label_tex.c_str());
+			//strcpy(author, "");
+			author[0] = 0;
+
+			fname.assign(CG->label);
+			fname.append("_eigenvalues.tex");
+
+			{
+				ofstream ost(fname);
+				latex_interface L;
+
+				L.head(ost,
+						FALSE /* f_book*/,
+						TRUE /* f_title */,
+						title, author,
+						FALSE /* f_toc */,
+						FALSE /* f_landscape */,
+						TRUE /* f_12pt */,
+						TRUE /* f_enlarged_page */,
+						TRUE /* f_pagenumbers */,
+						NULL /* extra_praeamble */);
+
+
+				if (f_v) {
+					cout << "graph_theoretic_activity::perform_activity before report" << endl;
+				}
+				//report(ost, verbose_level);
+
+				ost << "$$" << endl;
+				ost << "\\begin{array}{|r|r|}" << endl;
+				ost << "\\hline" << endl;
+				ost << " i  & \\lambda_i \\\\" << endl;
+				ost << "\\hline" << endl;
+				ost << "\\hline" << endl;
+				for (i = 0; i < CG->nb_points; i++) {
+					ost << i;
+					ost << " & ";
+					ost << E[CG->nb_points - 1 - i];
+					ost << "\\\\" << endl;
+					ost << "\\hline" << endl;
+				}
+				ost << "\\end{array}" << endl;
+				ost << "$$" << endl;
+
+				ost << "The energy is " << energy << "\\\\" << endl;
+
+				if (f_v) {
+					cout << "graph_theoretic_activity::perform_activity after report" << endl;
+				}
+
+
+				L.foot(ost);
+
+			}
+			file_io Fio;
+
+			cout << "graph_theoretic_activity::perform_activity written file " << fname << " of size "
+					<< Fio.file_size(fname) << endl;
+		}
+
+
+
+		delete [] E;
+
 	}
 
 

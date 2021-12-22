@@ -230,7 +230,7 @@ void set_of_sets::init_basic_constant_size(
 		}
 }
 
-#define MY_BUFSIZE ONE_MILLION
+//#define MY_BUFSIZE ONE_MILLION
 
 void set_of_sets::init_from_file(int &underlying_set_size,
 		std::string &fname, int verbose_level)
@@ -597,7 +597,7 @@ void set_of_sets::init_cycle_structure(int *perm,
 			l1 = next;
 			len++;
 			}
-		//cout << "set_of_sets::init_cycle_structure cyle starting
+		//cout << "set_of_sets::init_cycle_structure cycle starting
 		//with " << first << " has length " << len << endl;
 		//cout << "nb_orbits=" << nb_orbits << endl;
 		orbit_length2[nb_orbits2] = len;
@@ -690,7 +690,7 @@ void set_of_sets::print_table()
 	cout << "end set of sets" << endl;
 }
 
-void set_of_sets::print_table_tex(ostream &ost)
+void set_of_sets::print_table_tex(std::ostream &ost)
 {
 	latex_interface L;
 	int i;
@@ -699,6 +699,21 @@ void set_of_sets::print_table_tex(ostream &ost)
 	for (i = 0; i < nb_sets; i++) {
 		ost << "Set " << i << " has size " << Set_size[i] << " : ";
 		L.lint_set_print_tex(ost, Sets[i], Set_size[i]);
+		ost << "\\\\" << endl;
+		}
+	//cout << "end set of sets" << endl;
+}
+
+void set_of_sets::print_table_latex_simple(std::ostream &ost)
+{
+	latex_interface L;
+	int i;
+
+	//cout << "set of sets with " << nb_sets << " sets :" << endl;
+	for (i = 0; i < nb_sets; i++) {
+		//ost << "Set " << i << " has size " << Set_size[i] << " : ";
+		L.lint_set_print_tex_text_mode(ost, Sets[i], Set_size[i]);
+		//L.lint_set_print_tex(ost, Sets[i], Set_size[i]);
 		ost << "\\\\" << endl;
 		}
 	//cout << "end set of sets" << endl;
@@ -938,7 +953,7 @@ void set_of_sets::compute_incidence_matrix(
 }
 
 void set_of_sets::compute_and_print_tdo_row_scheme(
-		ofstream &file, int verbose_level)
+		std::ostream &file, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Inc;
@@ -994,7 +1009,7 @@ void set_of_sets::compute_and_print_tdo_row_scheme(
 }
 
 void set_of_sets::compute_and_print_tdo_col_scheme(
-		ofstream &file, int verbose_level)
+		std::ostream &file, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Inc;
