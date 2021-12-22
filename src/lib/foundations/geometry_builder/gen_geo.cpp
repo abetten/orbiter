@@ -50,6 +50,8 @@ gen_geo::gen_geo()
 
 	//std::string fname_search_tree;
 	ost_search_tree = NULL;
+	//std::string fname_search_tree_flags;
+	ost_search_tree_flags = NULL;
 
 	Girth_test = NULL;
 }
@@ -695,21 +697,7 @@ void gen_geo::generate_all(int verbose_level)
 	}
 
 
-	if (GB->Descr->f_search_tree) {
-		fname_search_tree.assign(inc_file_name);
-		fname_search_tree.append("_tree.txt");
-
-		if (f_v) {
-			cout << "gen_geo::generate_all, opening file " << fname_search_tree << endl;
-		}
-
-		ost_search_tree = new ofstream;
-		ost_search_tree->open (fname_search_tree, std::ofstream::out);
-
-	}
-	else {
-		ost_search_tree = NULL;
-	}
+	setup_output_files(verbose_level);
 
 	if (f_v) {
 		cout << "gen_geo::generate_all before it0 = ..." << endl;
@@ -840,10 +828,8 @@ void gen_geo::generate_all(int verbose_level)
 		}
 	}
 
-	if (GB->Descr->f_search_tree) {
-		*ost_search_tree << "-1" << endl;
-		ost_search_tree->close();
-	}
+
+	close_output_files(verbose_level);
 
 
 l_exit:
@@ -851,6 +837,94 @@ l_exit:
 		cout << "gen_geo::generate_all done" << endl;
 	}
 }
+
+void gen_geo::setup_output_files(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+
+	if (GB->Descr->f_search_tree) {
+		fname_search_tree.assign(inc_file_name);
+		fname_search_tree.append("_tree.txt");
+
+		if (f_v) {
+			cout << "gen_geo::setup_output_files, opening file " << fname_search_tree << endl;
+		}
+
+		ost_search_tree = new ofstream;
+		ost_search_tree->open (fname_search_tree, std::ofstream::out);
+
+
+		fname_search_tree_flags.assign(inc_file_name);
+		fname_search_tree_flags.append("_tree_flags.txt");
+
+		if (f_v) {
+			cout << "gen_geo::setup_output_files, opening file " << fname_search_tree << endl;
+		}
+
+		ost_search_tree_flags = new ofstream;
+		ost_search_tree_flags->open (fname_search_tree_flags, std::ofstream::out);
+
+
+	}
+	else {
+		ost_search_tree = NULL;
+		ost_search_tree_flags = NULL;
+	}
+
+}
+
+void gen_geo::close_output_files(int verbose_level)
+{
+	//int f_v = (verbose_level >= 1);
+
+	if (GB->Descr->f_search_tree) {
+		*ost_search_tree << "-1" << endl;
+		ost_search_tree->close();
+		*ost_search_tree_flags << "-1" << endl;
+		ost_search_tree_flags->close();
+	}
+
+}
+
+void gen_geo::record_tree(int i1, int f_already_there)
+{
+	if (ost_search_tree) {
+		int row, h;
+		long int rk;
+
+		int color;
+
+		if (f_already_there) {
+			color = COLOR_RED;
+		}
+		else {
+			color = COLOR_GREEN;
+		}
+
+		*ost_search_tree << i1;
+		for (row = 0; row < i1; row++) {
+			rk = inc->Encoding->rank_row(row);
+			*ost_search_tree << " " << rk;
+		}
+		*ost_search_tree << " " << color;
+		*ost_search_tree << endl;
+
+		std::vector<int> flags;
+
+		inc->Encoding->get_flags(row, flags);
+		*ost_search_tree_flags << flags.size();
+		for (h = 0; h < flags.size(); h++) {
+			*ost_search_tree_flags << " " << flags[h];
+
+		}
+		*ost_search_tree_flags << " " << color;
+		*ost_search_tree_flags << endl;
+
+	}
+
+}
+
 
 void gen_geo::print_I_m(int I, int m)
 {
@@ -1253,31 +1327,6 @@ int gen_geo::GeoLineNxt0(int I, int m, int verbose_level)
 	return TRUE;
 }
 
-void gen_geo::record_tree(int i1, int f_already_there)
-{
-	if (ost_search_tree) {
-		int row;
-		long int rk;
-
-		int color;
-
-		if (f_already_there) {
-			color = COLOR_RED;
-		}
-		else {
-			color = COLOR_GREEN;
-		}
-
-		*ost_search_tree << i1;
-		for (row = 0; row < i1; row++) {
-			rk = inc->Encoding->rank_row(row);
-			*ost_search_tree << " " << rk;
-		}
-		*ost_search_tree << " " << color;
-		*ost_search_tree << endl;
-	}
-
-}
 
 int gen_geo::GeoLineFst(int I, int m, int verbose_level)
 {

@@ -631,7 +631,7 @@ void number_theoretic_transform::write_code(std::string &fname_code,
 
 }
 
-void number_theoretic_transform::write_code2(ostream &ost,
+void number_theoretic_transform::write_code2(std::ostream &ost,
 		int f_forward,
 		int &nb_add, int &nb_negate, int &nb_mult,
 		int verbose_level)
@@ -897,7 +897,7 @@ void number_theoretic_transform::write_code2(ostream &ost,
 }
 
 
-void number_theoretic_transform::write_code_header(ostream &ost, std::string &fname_code, int verbose_level)
+void number_theoretic_transform::write_code_header(std::ostream &ost, std::string &fname_code, int verbose_level)
 {
 	string str;
 	os_interface Os;

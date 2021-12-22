@@ -25,6 +25,12 @@ public:
 
 	int f_cheat_sheet_GF;
 
+	int f_write_code_for_division;
+	std::string write_code_for_division_fname;
+	std::string write_code_for_division_A;
+	std::string write_code_for_division_B;
+
+
 	int f_polynomial_division;
 	std::string polynomial_division_A;
 	std::string polynomial_division_B;
@@ -581,6 +587,10 @@ public:
 	// #########################################################################
 
 
+	void write_code_for_division(
+			std::string &fname_code,
+			std::string &A_coeffs, std::string &B_coeffs,
+			int verbose_level);
 	void polynomial_division(
 			std::string &A_coeffs, std::string &B_coeffs, int verbose_level);
 	void extended_gcd_for_polynomials(

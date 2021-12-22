@@ -22,6 +22,11 @@ finite_field_activity_description::finite_field_activity_description()
 
 	f_cheat_sheet_GF = FALSE;
 
+	f_write_code_for_division = FALSE;
+	//std::string write_code_for_division_fname;
+	//std::string write_code_for_division_A;
+	//std::string write_code_for_division_B;
+
 	f_polynomial_division = FALSE;
 	//polynomial_division_A;
 	//polynomial_division_B;
@@ -255,6 +260,19 @@ int finite_field_activity_description::read_arguments(
 			f_cheat_sheet_GF = TRUE;
 			if (f_v) {
 				cout << "-cheat_sheet_GF " << endl;
+			}
+		}
+
+		else if (stringcmp(argv[i], "-write_code_for_division") == 0) {
+			f_write_code_for_division = TRUE;
+			write_code_for_division_fname.assign(argv[++i]);
+			write_code_for_division_A.assign(argv[++i]);
+			write_code_for_division_B.assign(argv[++i]);
+			if (f_v) {
+				cout << "-write_code_for_division "
+						<< write_code_for_division_fname << " "
+						<< write_code_for_division_A << " "
+						<< write_code_for_division_B << endl;
 			}
 		}
 		else if (stringcmp(argv[i], "-polynomial_division") == 0) {
@@ -854,6 +872,12 @@ void finite_field_activity_description::print()
 {
 	if (f_cheat_sheet_GF) {
 		cout << "-cheat_sheet_GF " << endl;
+	}
+	else if (f_write_code_for_division) {
+		cout << "-write_code_for_division "
+				<< write_code_for_division_fname << " "
+				<< write_code_for_division_A << " "
+				<< write_code_for_division_B << endl;
 	}
 	if (f_polynomial_division) {
 		cout << "-polynomial_division " << polynomial_division_A << " "

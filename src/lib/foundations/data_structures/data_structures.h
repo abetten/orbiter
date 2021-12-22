@@ -998,6 +998,7 @@ public:
 	void print();
 	void print_table();
 	void print_table_tex(std::ostream &ost);
+	void print_table_latex_simple(std::ostream &ost);
 	void dualize(set_of_sets *&S, int verbose_level);
 	void remove_sets_of_given_size(int k, 
 		set_of_sets &S, int *&Idx, 
@@ -1010,9 +1011,9 @@ public:
 		int verbose_level);
 	void compute_incidence_matrix(int *&Inc, int &m, int &n, 
 		int verbose_level);
-	void compute_and_print_tdo_row_scheme(std::ofstream &file,
+	void compute_and_print_tdo_row_scheme(std::ostream &file,
 		int verbose_level);
-	void compute_and_print_tdo_col_scheme(std::ofstream &file,
+	void compute_and_print_tdo_col_scheme(std::ostream &file,
 		int verbose_level);
 	void init_decomposition(decomposition *&D, int verbose_level);
 	void compute_tdo_decomposition(decomposition &D, 

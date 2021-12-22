@@ -80,7 +80,7 @@ void object_with_properties::init(object_with_canonical_form *OwCF,
 	Nau.automorphism_group_as_permutation_group(
 					NO,
 					A_perm,
-					verbose_level);
+					verbose_level - 2);
 
 	if (f_v) {
 		cout << "object_with_properties::init after Nau.automorphism_group_as_permutation_group" << endl;
@@ -101,7 +101,7 @@ void object_with_properties::init(object_with_canonical_form *OwCF,
 					"before lift_generators_to_matrix_group" << endl;
 		}
 
-		lift_generators_to_matrix_group(verbose_level);
+		lift_generators_to_matrix_group(verbose_level - 2);
 
 		if (f_v) {
 			cout << "object_with_properties::init "
@@ -113,7 +113,7 @@ void object_with_properties::init(object_with_canonical_form *OwCF,
 		cout << "object_with_properties::init "
 				"before compute_flag_orbits" << endl;
 	}
-	compute_flag_orbits(verbose_level);
+	compute_flag_orbits(verbose_level - 2);
 	if (f_v) {
 		cout << "object_with_properties::init "
 				"after compute_flag_orbits" << endl;
@@ -123,7 +123,7 @@ void object_with_properties::init(object_with_canonical_form *OwCF,
 		cout << "object_with_properties::init "
 				"before compute_TDO" << endl;
 	}
-	compute_TDO(max_TDO_depth, verbose_level);
+	compute_TDO(max_TDO_depth, verbose_level - 2);
 	if (f_v) {
 		cout << "object_with_properties::init "
 				"after compute_TDO" << endl;
@@ -149,7 +149,7 @@ void object_with_properties::compute_flag_orbits(int verbose_level)
 		cout << "object_with_properties::compute_flag_orbits "
 				"before Flags->init" << endl;
 	}
-	Flags->init(this, FALSE, A_perm, A_perm->Strong_gens, verbose_level);
+	Flags->init(this, FALSE, A_perm, A_perm->Strong_gens, verbose_level - 2);
 	if (f_v) {
 		cout << "object_with_properties::compute_flag_orbits "
 				"after Flags->init" << endl;
@@ -159,7 +159,7 @@ void object_with_properties::compute_flag_orbits(int verbose_level)
 		cout << "object_with_properties::compute_flag_orbits "
 				"before Anti_Flags->init" << endl;
 	}
-	Anti_Flags->init(this, TRUE, A_perm, A_perm->Strong_gens, verbose_level);
+	Anti_Flags->init(this, TRUE, A_perm, A_perm->Strong_gens, verbose_level - 2);
 	if (f_v) {
 		cout << "object_with_properties::compute_flag_orbits "
 				"after Anti_Flags->init" << endl;

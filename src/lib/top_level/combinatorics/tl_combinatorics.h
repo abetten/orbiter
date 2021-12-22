@@ -869,7 +869,8 @@ public:
 
 	flag_orbits_incidence_structure();
 	~flag_orbits_incidence_structure();
-	void init(object_with_properties *OwP, int f_anti_flags, action *A_perm,
+	void init(object_with_properties *OwP,
+			int f_anti_flags, action *A_perm,
 			strong_generators *SG, int verbose_level);
 	int find_flag(int i, int j);
 	void report(std::ostream &ost, int verbose_level);

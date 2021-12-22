@@ -61,6 +61,14 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 		F->do_cheat_sheet_GF(verbose_level);
 	}
+	else if (Descr->f_write_code_for_division) {
+
+		F->write_code_for_division(
+				Descr->write_code_for_division_fname,
+				Descr->write_code_for_division_A,
+				Descr->write_code_for_division_B,
+				verbose_level);
+	}
 	else if (Descr->f_polynomial_division) {
 
 		F->polynomial_division(

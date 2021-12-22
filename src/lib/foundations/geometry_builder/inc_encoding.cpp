@@ -83,6 +83,21 @@ long int inc_encoding::rank_row(int row)
 	return rk;
 }
 
+void inc_encoding::get_flags(int row, std::vector<int> &flags)
+{
+	int i, h, r, a;
+
+
+	for (i = 0; i < row; i++) {
+		r = R[i];
+		for (h = 0; h < r; h++) {
+			a = i * b + theX[i * dim_n + h];
+			flags.push_back(a);
+		}
+	}
+}
+
+
 int inc_encoding::find_square(int m, int n)
 {
 	int i, j, l, u, v;

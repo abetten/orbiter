@@ -426,6 +426,7 @@ public:
 			void *point_label_data);
 	void int_set_print_tex(std::ostream &ost, int *v, int len);
 	void lint_set_print_tex(std::ostream &ost, long int *v, int len);
+	void lint_set_print_tex_text_mode(std::ostream &ost, long int *v, int len);
 	void print_type_vector_tex(std::ostream &ost, int *v, int len);
 	void int_set_print_masked_tex(std::ostream &ost,
 		int *v, int len, const char *mask_begin, const char *mask_end);
