@@ -76,15 +76,6 @@ else if (color == 25)
 else {
 #endif
 
-#define MAX_V 300
-#define MAX_B 300
-#define MAX_VB 100   /* MAX(MAX_V, MAX_B) */
-#define MAX_R 80
-
-#define MAX_GRID 100
-#define MAX_TYPE 200
-	/* at least 2 * MAX_VB + 1 */
-
 
 
 
@@ -167,7 +158,7 @@ public:
 // gen_geo.cpp
 // #############################################################################
 
-//! classification of geometries given a row-tactical decomposition
+//! classification of geometries with a given row-tactical decomposition
 
 
 class gen_geo {
@@ -190,20 +181,25 @@ public:
 
 	incidence *inc;
 
+#if 0
 	int *f_vbar; // [GB->V * inc->Encoding->dim_n]
 	int *vbar; // [GB->V]
 	int *hbar; // [GB->B]
+#endif
 
 	int forget_ivhbar_in_last_isot;
 
 	std::string inc_file_name;
 
+	// record the search tree in text files for later processing:
 	std::string fname_search_tree;
 	std::ofstream *ost_search_tree;
 	std::string fname_search_tree_flags;
 	std::ofstream *ost_search_tree_flags;
 
 	girth_test *Girth_test;
+
+	test_semicanonical *Test_semicanonical;
 
 	gen_geo();
 	~gen_geo();
@@ -250,26 +246,6 @@ public:
 	void girth_test_delete_incidence(int i, int j_idx, int j);
 	void girth_Floyd(int i, int verbose_level);
 	int check_girth_condition(int i, int j_idx, int j, int verbose_level);
-
-};
-
-
-// #############################################################################
-// geo_frame.cpp
-// #############################################################################
-
-//! partition of a geometry
-
-
-class geo_frame {
-public:
-	int G_max;
-	int first[MAX_GRID + 1];
-	int len[MAX_GRID];
-	int grid_entry[MAX_GRID];
-
-	geo_frame();
-	~geo_frame();
 
 };
 
@@ -443,10 +419,12 @@ public:
 
 
 // globals.cpp:
+#if 0
 void inc_transpose(int *R,
 	int *theX, int f_full, int max_r,
 	int v, int b,
 	int **theY, int *theYdim_n, int **R_new);
+#endif
 int tuple_cmp(int *a, int *b, int l);
 void print_theX(int *theX, int dim_n, int v, int b, int *R);
 void print_theX_pq(
@@ -454,45 +432,13 @@ void print_theX_pq(
 
 void cperm_test(void);
 
+#if 0
 void frame2grid(geo_frame *frame, grid *grid);
 int tdos_cmp(tdo_scheme *t1, tdo_scheme *t2, int verbose_level);
+#endif
+
 int true_false_string_numeric(const char *p);
 
-
-// #############################################################################
-// grid.cpp
-// #############################################################################
-
-//! holds invariants during the TDO process
-
-
-class grid {
-
-public:
-	int f_points;
-	int m;
-	// # of objects
-	// = v if f_point, = b otherwise
-	int n;
-	// # of structure constants per object
-	int G_max;
-	int first[MAX_GRID + 1];
-	int len[MAX_GRID];
-	int type_idx[MAX_GRID];
-	int grid_entry[MAX_GRID];
-	// the index into first[] / len[] of the object
-	int type[MAX_GRID][MAX_GRID];
-	// the structure constants
-
-	grid();
-	~grid();
-	void print();
-	void init_derived_i_first(grid *G_old, int derive_at_i);
-	void init_derived_ij_first(grid *G_old, int I, int J);
-	void copy_frame_to(grid *G_to);
-	int insert_idx(int f, int l, int radix, int search_this, int *idx);
-
-};
 
 
 
@@ -505,10 +451,10 @@ public:
 class inc_encoding {
 
 public:
-	int *theX;
+	int *theX; // [v * dim_n]
 	int dim_n;
-	int v;
-	int b;
+	int v; // # of rows
+	int b; // # of columns
 	int *R; // [v]
 		// R[i] is the number of incidences in row i
 
@@ -525,8 +471,10 @@ public:
 	void print_partitioned_override_theX(
 			std::ostream &ost, int v_cur, int v_cut, incidence *inc, int *the_X, int f_print_isot);
 	void print_permuted(cperm *pv, cperm *qv);
+#if 0
 	tactical_decomposition *calc_tdo_without_vhbar(
 		int f_second_tactical_decomposition, int verbose_level);
+#endif
 	void apply_permutation(incidence *inc, int v,
 		int *theY, cperm *p, cperm *q, int verbose_level);
 
@@ -556,24 +504,37 @@ public:
 
 	int **theY; //[gg->GB->B][gg->GB->V];
 
-	int **pairs; //[gg->GB->V][];
+	int **pairs;
+		//[gg->GB->V][];
 		// pairs[i][i1]
 		// is the number of blocks containing {i1,i}
 		// where 0 \le i1 < i.
 
 
 
-
-	// initial vertical and horizontal bars:
+#if 0
+	// initial vertical and horizontal bars
+	// to create semi-canonical partial geometries
 	int nb_i_vbar;
 	int *i_vbar;
 	int nb_i_hbar;
 	int *i_hbar;
+#endif
 
 	// partition for Nauty:
 	int *row_partition;
+		// row partition: 1111011110...
+		// where the 0's indicate the end of a block
+		// The blocks are defined by the initial TDO decomposition.
 	int *col_partition;
-	int **Partition; // [gg->GB->V + 1]
+		// likewise, but for columns
+		// The blocks are defined by the initial TDO decomposition.
+	int **Partition;
+		// [gg->GB->V + 1]
+		// combination of row and column partition,
+		// but with only i rows, so that it can be used
+		// for computing the canonical form of the partial geometry
+		// consisting of the first i rows only
 
 	int gl_nb_GEN;
 
@@ -586,7 +547,7 @@ public:
 	incidence();
 	~incidence();
 	void init(gen_geo *gg, int v, int b, int *R, int verbose_level);
-	void init_bars(int verbose_level);
+	//void init_bars(int verbose_level);
 	void init_partition(int verbose_level);
 	void init_pairs(int verbose_level);
 	void print_pairs(int v);
@@ -600,7 +561,6 @@ public:
 			int tdo_flags, int f_orderly, int verbose_level);
 	void install_isomorphism_test_of_second_kind_after_a_given_row(int i,
 			int tdo_flags, int f_orderly, int verbose_level);
-	//void set_range(int row, int first, int len);
 	void set_split(int row, int remainder, int modulo);
 	void set_flush_to_inc_file(int row, std::string &fname);
 	void set_flush_line(int row);
@@ -617,104 +577,6 @@ public:
 
 };
 
-
-
-// #############################################################################
-// iso_grid.cpp
-// #############################################################################
-
-//! decomposition of an incidence geometry
-
-class iso_grid {
-
-public:
-	int m; // = iso->b_t
-	int n; // = type_len
-
-
-	cperm q;
-		// column permutation
-	cperm qv; // q^-1
-
-
-	int type[MAX_VB][MAX_TYPE];
-	int G_max;
-	int first[MAX_GRID];
-	int len[MAX_GRID];
-	int type_idx[MAX_GRID];
-	int grid_entry[MAX_GRID];
-
-
-	iso_grid();
-	~iso_grid();
-	void print();
-
-};
-
-
-// #############################################################################
-// iso_info.cpp
-// #############################################################################
-
-//! input for the geometric isomorphism tester
-
-
-
-class iso_info {
-
-public:
-	int *AtheX;
-	/* v x max_r;
-	 * dimension v x max_r or
-	 * v x MAX_R */
-	int *BtheX;
-	int Af_full;
-	int Bf_full;
-
-	int v;
-	int b;
-	int max_r;
-
-	int *R; // [MAX_V]
-
-	int tdo_m;
-	int tdo_V[MAX_V];
-	int tdo_n;
-	int tdo_B[MAX_B];
-
-	int nb_isomorphisms;
-	int f_break_after_fst;
-	int f_verbose;
-	int f_very_verbose;
-	int f_use_d;
-	int f_use_ddp;
-	int f_use_ddb;
-	int f_transpose_it;
-
-	// optionally:
-	int *Ar; // [v]
-	int *Br;
-	int *Ad; // [v]
-	int *Bd;
-	short *Addp; // [v \atop 2]
-	short *Bddp;
-	short *Addb; // [b \atop 2]
-	short *Bddb;
-
-	iso_info();
-	~iso_info();
-
-	void init_A_int(int *theA, int f_full);
-	void init_B_int(int *theB, int f_full);
-	void init_ddp(int f_ddp, short *Addp, short *Bddp);
-	void init_ddb(int f_ddb, short *Addb, short *Bddb);
-	void init_tdo(tdo_scheme *tdos);
-	void init_tdo_V_B(int V, int B, int *Vi, int *Bj);
-	void iso_test(int verbose_level);
-
-};
-
-void init_ISO2(void);
 
 
 
@@ -747,12 +609,6 @@ public:
 	int f_generate_first;
 	int f_beginning_checked;
 
-#if 0
-	int f_range;
-	int range_first;
-	int range_len;
-#endif
-
 	int f_split;
 	int split_remainder;
 	int split_modulo;
@@ -775,7 +631,7 @@ public:
 	int **theGEO1; // [dim_GEO]
 	int **theGEO2; // [dim_GEO]
 	int *GEO_TDO_idx; // [dim_GEO]
-	tdo_scheme **theTDO; // [dim_TDO]
+	//tdo_scheme **theTDO; // [dim_TDO]
 
 	classify_using_canonical_forms *Canonical_forms;
 
@@ -791,6 +647,7 @@ public:
 		int v, incidence *inc,
 		int &f_already_there,
 		int verbose_level);
+#if 0
 	void recalc_autgroup(
 		int v, incidence *inc,
 		int tdo_idx, int geo_idx,
@@ -809,9 +666,11 @@ public:
 	int find_geo(
 		int v, incidence *inc, tdo_scheme *tdos,
 		int *theY, int tdo_idx, int verbose_level);
+#endif
 	void find_and_add_geo(
 		int v, incidence *inc,
 		int *theY, int &f_new_object, int verbose_level);
+#if 0
 	int isomorphic(
 		int v, incidence *inc, tdo_scheme *tdos,
 		int *pcA, int *pcB, int verbose_level);
@@ -819,24 +678,26 @@ public:
 		int v, incidence *inc, tdo_scheme *tdos,
 		int *pc, int *aut_group_order,
 		int f_print_isot_small, int f_print_isot, int verbose_level);
+#endif
 	void scan_tdo_flags(int tdo_flags);
 	void second();
-	//void set_range(int first, int len);
 	void set_split(int remainder, int modulo);
 	void set_flush_line();
 	void flush();
 	void TDO_realloc();
+#if 0
 	void find_tdos(tdo_scheme *tdos, int *tdo_idx, int *f_found);
 	void add_tdos_and_geo(tdo_scheme *tdos, int tdo_idx,
 			int *theX, int *theY, int verbose_level);
 	void add_geo(int tdo_idx, int *theX, int *theY);
+#endif
 	int *get_theX(int *theGEO);
 	void geo_free(int *theGEO);
 	void print_geos(int verbose_level);
 	void write_inc_file(std::string &fname, int verbose_level);
 	void write_blocks_file(std::string &fname, int verbose_level);
 	void write_blocks_file_long(std::string &fname, int verbose_level);
-	void print(std::ostream &ost, int f_with_TDO, int v, incidence *inc);
+	//void print(std::ostream &ost, int f_with_TDO, int v, incidence *inc);
 	void print_GEO(int *pc, int v, incidence *inc);
 	void print_status(std::ostream &ost, int f_with_flags);
 	void print_flags(std::ostream &ost);
@@ -849,126 +710,57 @@ public:
 
 
 // #############################################################################
-// tactical_decomposition.cpp
+// test_semicanonical.cpp
 // #############################################################################
 
-//! compute a geometric invariant called TDO
+//! classification of geometries
 
-class tactical_decomposition {
+
+
+
+
+class test_semicanonical {
 
 public:
 
-	inc_encoding *Encoding;
+	gen_geo *gg;
 
-	int f_TDO_multiple;
-	int f_TDO_d_multiple;
-	cperm p;
-		// row permutation of degree tdo->v
-	cperm q;
-		// column permutation of degree tdo->inc->B
-	cperm pv; // p^-1
-	cperm qv; // q^-1
-		// given theX, applying p to the rows,
-		// q to the columns, the matrix of the TDO is obtained
-	grid *G_last;
-	grid *G_current;
-	grid *G_next;
-	tdo_scheme *tdos;
-	tdo_scheme *tdos2;
+	int MAX_V;
 
-	tactical_decomposition();
-	~tactical_decomposition();
-	void init(inc_encoding *Encoding, int verbose_level);
-	void tdo_calc(inc_encoding *Encoding, incidence *inc, int v,
-		int f_second_tactical_decomposition, int verbose_level);
-	void make_point_and_block_partition(grid *Gpoints, grid *Gblocks);
-	void init_partition(grid *Gpoints, grid *Gblocks,
-		incidence *inc, int v, int verbose_level);
+	// initial vertical and horizontal bars
+	// to create semi-canonical partial geometries
+	int nb_i_vbar;
+	int *i_vbar;
+	int nb_i_hbar;
+	int *i_hbar;
+
+
+	int *f_vbar; // [gg->GB->V * gg->inc->Encoding->dim_n]
+	int *vbar; // [gg->GB->V]
+	int *hbar; // [gg->GB->B]
+
+	test_semicanonical();
+	~test_semicanonical();
+	void init(gen_geo *gg, int MAX_V, int verbose_level);
+	void init_bars(int verbose_level);
 	void print();
-	void radix_sort(grid *G, int radix, int first, int last);
-	void refine_types(grid *Gm1, grid *G1, int verbose_level);
-	void recollect_types(int v, grid *G0, grid *G1, int verbose_level);
-	void collect_types(int v, grid *G0, grid *G1, int verbose_level);
-	void next(int v, int verbose_level);
-	void calc2(int v, int verbose_level);
-	tdo_scheme *get_tdos(grid *G0, grid *G1, int f_derived, int verbose_level);
-	void dd_work(int v, int f_points,
-		short *&dd, int &N, short *&dd_mult, int verbose_level);
-	void tdo_dd(int v, int f_points, int f_blocks,
-		short *&ddp, int &Np, short *&ddp_mult,
-		short *&ddb, int &Nb, short *&ddb_mult, int verbose_level);
-	void refine(int v,
-			grid *G, grid *G_next,
-		int f_points, geo_frame *frame,
-		cperm *P, cperm *Pv, cperm *Q, cperm *Qv, int verbose_level);
-	void second_order_tdo(int v, int verbose_level);
+	void markers_test_and_update(int I, int m, int J, int n, int j,
+			int i1, int j0, int r,
+			int verbose_level);
+	void marker_move_on(int I, int m, int J, int n, int j,
+			int i1, int j0, int r,
+			int verbose_level);
+	int row_starter(int I, int m, int J, int n, int j,
+			int i1, int j0, int r,
+			int verbose_level);
+	void row_init(int I, int m, int J,
+			int i1,
+			int verbose_level);
+	int col_marker_test(int j0, int j, int i1);
+	void col_marker_remove(int I, int m, int J, int n,
+			int i1, int j0, int r, int old_x);
+	void row_test_continue(int I, int m, int J, int i1);
 
-
-};
-
-
-
-
-
-
-
-
-// #############################################################################
-// tdo_gradient.cpp
-// #############################################################################
-
-//! a more refined geometric invariant called second TDO
-
-class tdo_gradient {
-
-public:
-
-	int N;
-	int nb_tdos;
-
-	tdo_scheme **tdos; // [N]
-	int *mult; // [N]
-	int *type; // [N]
-
-
-	tdo_gradient();
-	~tdo_gradient();
-	void allocate(int N);
-	void add_tdos(tdo_scheme *tdos, int i, int verbose_level);
-};
-
-
-
-
-// #############################################################################
-// tdo_scheme.cpp
-// #############################################################################
-
-//! a geometric invariant called TDO
-
-class tdo_scheme {
-
-public:
-	int m, n;
-	int *a;
-
-	// nb_rows x nb_cols is the dimension of the  TDO matrix;
-	// we add one column on the left and
-	// one row on top for V[i] and B[j], respectively.
-	// the very first entry is the size of the array,
-	// which is (nb_rows + 1) * (nb_cols + 1)
-	// m = nb_rows
-	// n = nb_cols
-
-	tdo_scheme();
-	~tdo_scheme();
-	void allocate(int nb_rows, int nb_cols);
-	int &nb_rows();
-	int &nb_cols();
-	int &Vi(int i);
-	int &Bj(int j);
-	int &aij(int i, int j);
-	void print();
 };
 
 

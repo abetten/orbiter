@@ -194,7 +194,15 @@ public:
 	~classify_using_canonical_forms();
 	void orderly_test(object_with_canonical_form *OwCF,
 			int &f_accept, int verbose_level);
-	void add_object(object_with_canonical_form *OwCF, int &f_new_object, int verbose_level);
+	void find_object(object_with_canonical_form *OwCF,
+			int &f_found, int &idx,
+			nauty_output *&NO,
+			bitvector *&Canonical_form,
+			int verbose_level);
+		// if f_found is TRUE, B[idx] agrees with the given object
+	void add_object(object_with_canonical_form *OwCF,
+			int &f_new_object,
+			int verbose_level);
 
 };
 

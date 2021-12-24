@@ -23,11 +23,13 @@ incidence::incidence()
 
 	pairs = NULL;
 
+#if 0
 	// initial vbar / hbar
 	nb_i_vbar = 0;
 	i_vbar = NULL;
 	nb_i_hbar = 0;
 	i_hbar = NULL;
+#endif
 
 	row_partition = NULL;
 	col_partition = NULL;
@@ -66,12 +68,15 @@ incidence::~incidence()
 	if (Encoding) {
 		FREE_OBJECT(Encoding);
 	}
+#if 0
 	if (i_vbar) {
 		FREE_int(i_vbar);
 	}
 	if (i_hbar) {
 		FREE_int(i_hbar);
 	}
+#endif
+
 	if (row_partition) {
 		FREE_int(row_partition);
 	}
@@ -160,6 +165,7 @@ void incidence::init(gen_geo *gg, int v, int b, int *R, int verbose_level)
 	}
 }
 
+#if 0
 void incidence::init_bars(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -212,6 +218,7 @@ void incidence::init_bars(int verbose_level)
 	}
 
 }
+#endif
 
 void incidence::init_partition(int verbose_level)
 {
@@ -351,6 +358,7 @@ void incidence::print_param()
 
 	cout << "V = " << Encoding->v << ", B = " << Encoding->b << endl;
 
+#if 0
 	cout << "vbar: ";
 	for (i = 0; i < nb_i_vbar; i++) {
 		cout << i_vbar[i];
@@ -368,6 +376,7 @@ void incidence::print_param()
 		}
 	}
 	cout << endl;
+#endif
 
 }
 
@@ -411,18 +420,22 @@ void incidence::print_R(int v, cperm *p, cperm *q)
 
 void incidence::print(std::ostream &ost, int v, int v_cut)
 {
-	Encoding->print_partitioned(ost, v, v_cut, this, TRUE /* f_print_isot */);
+	Encoding->print_partitioned(ost,
+			v, v_cut, this, TRUE /* f_print_isot */);
 }
 
 
 void incidence::print_override_theX(std::ostream &ost, int *theX, int v, int v_cut)
 {
-	Encoding->print_partitioned_override_theX(ost, v, v_cut, this, theX, TRUE /* f_print_isot */);
+	Encoding->print_partitioned_override_theX(ost,
+			v, v_cut, this, theX, TRUE /* f_print_isot */);
 }
 
 
-void incidence::install_isomorphism_test_after_a_given_row(int row,
-		int tdo_flags, int f_orderly, int verbose_level)
+void incidence::install_isomorphism_test_after_a_given_row(
+		int row,
+		int tdo_flags, int f_orderly,
+		int verbose_level)
 // last row is ok
 {
 	int f_v = (verbose_level >= 1);
@@ -441,14 +454,17 @@ void incidence::install_isomorphism_test_after_a_given_row(int row,
 	}
 }
 
-void incidence::install_isomorphism_test_of_second_kind_after_a_given_row(int row,
-		int tdo_flags, int f_orderly, int verbose_level)
+void incidence::install_isomorphism_test_of_second_kind_after_a_given_row(
+		int row,
+		int tdo_flags, int f_orderly,
+		int verbose_level)
 // last row is not allowed
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "incidence::install_isomorphism_test_of_second_kind_after_a_given_row line = " << row << endl;
+		cout << "incidence::install_isomorphism_test_of_second_kind_after_a_given_row "
+				"line = " << row << endl;
 	}
 	if (row > 0 && row < Encoding->v) {
 		iso_type_at_line[row - 1] = NEW_OBJECT(iso_type);
@@ -461,20 +477,6 @@ void incidence::install_isomorphism_test_of_second_kind_after_a_given_row(int ro
 		exit(1);
 	}
 }
-
-#if 0
-void incidence::set_range(int row, int first, int len)
-{
-	if (row > 0 && row < Encoding->v) {
-		iso_type_at_line[row - 1]->set_range(first, len);
-	}
-	else {
-		cout << "incidence::set_range "
-				"out of range: row = " << row << ", v = " << Encoding->v << endl;
-		exit(1);
-	}
-}
-#endif
 
 void incidence::set_split(int row, int remainder, int modulo)
 {
@@ -507,7 +509,8 @@ void incidence::set_flush_line(int row)
 		it->set_flush_line();
 	}
 	else {
-		cout << "incidence::incidence_set_flush_line out of range: row = " << row << ", v = " << Encoding->v << endl;
+		cout << "incidence::incidence_set_flush_line out of range: "
+				"row = " << row << ", v = " << Encoding->v << endl;
 		exit(1);
 	}
 }

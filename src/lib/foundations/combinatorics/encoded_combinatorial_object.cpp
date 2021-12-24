@@ -198,6 +198,74 @@ void encoded_combinatorial_object::canonical_form_given_canonical_labeling(int *
 	}
 }
 
+void encoded_combinatorial_object::latex_set_system_by_columns(std::ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "encoded_combinatorial_object::latex_set_system_by_columns" << endl;
+	}
+
+	latex_interface L;
+	int i, j;
+	int *B;
+	int sz;
+
+	B = NEW_int(nb_rows);
+
+	ost << "Column sets of the encoded object:\\\\" << endl;
+	for (j = 0; j < nb_cols; j++) {
+		sz = 0;
+		for (i = 0; i < nb_rows; i++) {
+			if (Incma[i * nb_cols + j]) {
+				B[sz++] = i;
+			}
+		}
+		L.int_set_print_tex(ost, B, sz);
+		ost << "\\\\" << endl;
+	}
+
+	FREE_int(B);
+
+}
+
+void encoded_combinatorial_object::latex_set_system_by_rows(std::ostream &ost,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "encoded_combinatorial_object::latex_set_system_by_rows" << endl;
+	}
+
+	latex_interface L;
+	int i, j;
+	int *B;
+	int sz;
+	long int rk;
+	combinatorics_domain Combi;
+
+	B = NEW_int(nb_cols);
+
+	ost << "Row sets of the encoded object:\\\\" << endl;
+	for (i = 0; i < nb_rows; i++) {
+		sz = 0;
+		for (j = 0; j < nb_cols; j++) {
+			if (Incma[i * nb_cols + j]) {
+				B[sz++] = j;
+			}
+		}
+		rk = Combi.rank_k_subset(B, nb_cols, sz);
+		L.int_set_print_tex(ost, B, sz);
+		ost << " = " << rk;
+		ost << "\\\\" << endl;
+	}
+
+	FREE_int(B);
+
+}
+
 void encoded_combinatorial_object::latex_incma(std::ostream &ost,
 		int verbose_level)
 {

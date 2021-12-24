@@ -181,6 +181,10 @@ public:
 	int f_collinearity_graph;
 	std::string collinearity_graph_matrix;
 
+	int f_chain_graph;
+	std::string chain_graph_partition_1;
+	std::string chain_graph_partition_2;
+
 	std::vector<graph_modification_description> Modifications;
 
 	create_graph_description();
@@ -238,6 +242,10 @@ public:
 			any_group *AG, int orbit_idx, int verbose_level);
 	void make_collinearity_graph(int &N, int *&Adj,
 			int *Inc, int nb_rows, int nb_cols, int verbose_level);
+	void make_chain_graph(int &N, int *&Adj,
+			int *part1, int sz1,
+			int *part2, int sz2,
+			int verbose_level);
 
 };
 

@@ -945,6 +945,9 @@ public:
 	int f_combinatorial_objects;
 	data_input_stream_description *Data_input_stream_description;
 
+	int f_geometry_builder;
+	geometry_builder_description *Geometry_builder_description;
+
 
 	symbol_definition();
 	~symbol_definition();
@@ -978,6 +981,7 @@ public:
 	void definition_of_set(int verbose_level);
 	void definition_of_vector(int verbose_level);
 	void definition_of_combinatorial_object(int verbose_level);
+	void do_geometry_builder(int verbose_level);
 
 };
 

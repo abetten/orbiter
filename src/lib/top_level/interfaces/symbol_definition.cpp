@@ -104,6 +104,9 @@ symbol_definition::symbol_definition()
 	f_combinatorial_objects = FALSE;
 	Data_input_stream_description = FALSE;
 
+	f_geometry_builder = FALSE;
+	Geometry_builder_description = NULL;
+
 }
 
 
@@ -624,6 +627,30 @@ void symbol_definition::read_definition(
 			Data_input_stream_description->print();
 		}
 	}
+	else if (stringcmp(argv[i], "-geometry_builder") == 0) {
+		f_geometry_builder = TRUE;
+
+
+		Geometry_builder_description = NEW_OBJECT(geometry_builder_description);
+		if (f_v) {
+			cout << "reading -geometry_builder" << endl;
+		}
+		i += Geometry_builder_description->read_arguments(argc - (i + 1),
+			argv + i + 1, verbose_level);
+
+		i++;
+
+		if (f_v) {
+			cout << "-vector" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+			cout << "-geometry_builder ";
+			Geometry_builder_description->print();
+		}
+	}
 
 	else {
 		cout << "unrecognized command after -define" << endl;
@@ -845,6 +872,18 @@ void symbol_definition::perform_definition(int verbose_level)
 			cout << "symbol_definition::perform_definition after definition_of_combinatorial_object" << endl;
 		}
 	}
+	else if (f_geometry_builder) {
+		if (f_v) {
+			cout << "symbol_definition::perform_definition before do_geometry_builder" << endl;
+		}
+		do_geometry_builder(verbose_level);
+		if (f_v) {
+			cout << "symbol_definition::perform_definition after do_geometry_builder" << endl;
+		}
+	}
+
+
+
 	else {
 		if (f_v) {
 			cout << "symbol_definition::perform_definition no definition" << endl;
@@ -2162,6 +2201,45 @@ void symbol_definition::definition_of_combinatorial_object(int verbose_level)
 		cout << "symbol_definition::definition_of_combinatorial_object done" << endl;
 	}
 }
+
+void symbol_definition::do_geometry_builder(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "symbol_definition::do_geometry_builder" << endl;
+	}
+
+	geometry_builder *GB;
+
+	GB = NEW_OBJECT(geometry_builder);
+
+	GB->init_description(Geometry_builder_description, verbose_level);
+
+	int nb_GEN, nb_GEO, ticks, tps;
+	GB->gg->main2(nb_GEN, nb_GEO, ticks, tps, verbose_level);
+
+
+	orbiter_symbol_table_entry Symb;
+
+	Symb.init_geometry_builder_object(define_label, GB, verbose_level);
+	if (f_v) {
+		cout << "symbol_definition::do_geometry_builder before add_symbol_table_entry" << endl;
+	}
+	Sym->Orbiter_top_level_session->add_symbol_table_entry(
+			define_label, &Symb, verbose_level);
+
+
+
+	if (f_v) {
+		cout << "symbol_definition::do_geometry_builder done" << endl;
+	}
+}
+
+
+
+
+
 
 
 }}

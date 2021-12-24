@@ -39,12 +39,6 @@ iso_type::iso_type()
 	f_generate_first = FALSE;
 	f_beginning_checked = FALSE;
 
-#if 0
-	f_range = FALSE;
-	range_first = 0;
-	range_len = 0;
-#endif
-
 	f_split = FALSE;
 	split_remainder = 0;
 	split_modulo = 1;
@@ -65,7 +59,7 @@ iso_type::iso_type()
 	theGEO1 = NULL;
 	theGEO2 = NULL;
 	GEO_TDO_idx = NULL;
-	theTDO = NULL;
+	//theTDO = NULL;
 
 	Canonical_forms = NULL;
 
@@ -78,6 +72,7 @@ iso_type::~iso_type()
 {
 	int i;
 
+#if 0
 	if (dim_TDO) {
 		for (i = 0; i < nb_TDO; i++) {
 			delete theTDO[i];
@@ -85,6 +80,7 @@ iso_type::~iso_type()
 		delete [] theTDO;
 		theTDO = NULL;
 	}
+#endif
 	if (dim_GEO) {
 		delete [] GEO_TDO_idx;
 		for (i = 0; i < nb_GEO; i++) {
@@ -154,16 +150,18 @@ void iso_type::init2()
 	theGEO2 = new pint[dim_GEO];
 	GEO_TDO_idx = new int[dim_GEO];
 
-	theTDO = new ptdo_scheme [dim_TDO];
+	//theTDO = new ptdo_scheme [dim_TDO];
 
 	for (i = 0; i < dim_GEO; i++) {
 		theGEO1[i] = NULL;
 		theGEO2[i] = NULL;
 		GEO_TDO_idx[i] = -1;
 	}
+#if 0
 	for (i = 0; i < dim_TDO; i++) {
 		theTDO[i] = NULL;
 	}
+#endif
 }
 
 #if 0
@@ -432,7 +430,7 @@ l_exit:
 	}
 }
 
-
+#if 0
 void iso_type::recalc_autgroup(
 	int v, incidence *inc,
 	int tdo_idx, int geo_idx,
@@ -642,6 +640,7 @@ int iso_type::find_geo(
 	}
 	return ret;
 }
+#endif
 
 
 void iso_type::find_and_add_geo(
@@ -718,6 +717,7 @@ void iso_type::find_and_add_geo(
 	}
 }
 
+#if 0
 int iso_type::isomorphic(
 	int v, incidence *inc, tdo_scheme *tdos,
 	int *pcA, int *pcB, int verbose_level)
@@ -832,6 +832,7 @@ void iso_type::do_aut_group(
 		cout << "iso_type::do_aut_group done" << endl;
 	}
 }
+#endif
 
 void iso_type::scan_tdo_flags(int tdo_flags)
 {
@@ -859,15 +860,6 @@ void iso_type::second()
 	f_beginning_checked = FALSE;
 }
 
-#if 0
-void iso_type::set_range(int first, int len)
-{
-	f_range = TRUE;
-	range_first = first;
-	range_len = len;
-}
-#endif
-
 void iso_type::set_split(int remainder, int modulo)
 {
 	f_split = TRUE;
@@ -889,6 +881,7 @@ void iso_type::flush()
 	}
 }
 
+#if 0
 void iso_type::TDO_realloc()
 {
 	tdo_scheme **tmp;
@@ -1013,6 +1006,7 @@ void iso_type::add_geo(int tdo_idx, int *theX, int *theY)
 
 	nb_GEO++;
 }
+#endif
 
 
 
@@ -1303,6 +1297,7 @@ void iso_type::write_blocks_file_long(std::string &fname, int verbose_level)
 
 
 
+#if 0
 void iso_type::print(std::ostream &ost, int f_with_TDO, int v, incidence *inc)
 {
 	int i, tdo_idx;
@@ -1325,6 +1320,7 @@ void iso_type::print(std::ostream &ost, int f_with_TDO, int v, incidence *inc)
 	print_status(ost, FALSE);
 	ost << endl;
 }
+#endif
 
 void iso_type::print_GEO(int *theY, int v, incidence *inc)
 {

@@ -185,6 +185,9 @@ public:
 
 	int f_export_group;
 
+	int f_lex_least;
+	std::string lex_least_geometry_builder;
+
 	classification_of_objects_report_options();
 	~classification_of_objects_report_options();
 	int read_arguments(
@@ -671,6 +674,10 @@ public:
 	void incidence_matrix_projective_space_top_left(projective_space *P, int verbose_level);
 	void canonical_form_given_canonical_labeling(int *canonical_labeling,
 			bitvector *&B,
+			int verbose_level);
+	void latex_set_system_by_columns(std::ostream &ost,
+			int verbose_level);
+	void latex_set_system_by_rows(std::ostream &ost,
 			int verbose_level);
 	void latex_incma(std::ostream &ost, int verbose_level);
 	void latex_TDA(std::ostream &ost,

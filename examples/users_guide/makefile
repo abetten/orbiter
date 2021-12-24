@@ -11569,7 +11569,7 @@ linsp30_pt_distribution:
 geo_petersen:
 	$(ORBITER_PATH)orbiter.out -v 8 \
 		-define Test_lines -set -loop 3 11 1 -end \
-		-geometry_builder \
+		-define Geo -geometry_builder \
 			-V 10 -B 15 -TDO 3 -fuse 1 \
 			-fname_GEO petersen -girth 5 \
 			-search_tree \
@@ -11579,7 +11579,8 @@ geo_petersen:
 geo_7_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Test_lines -set -loop 3 8 1 -end \
-		-geometry_builder -V 7 -B 7 -TDO 3 \
+		-define Geo -geometry_builder \
+			-V 7 -B 7 -TDO 3 \
 			-fuse 1 -fname_GEO 7_3 \
 			-test Test_lines FFFF \
 		-end
@@ -11589,7 +11590,8 @@ geo_7_3:
 geo_8_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Test_lines -set -loop 3 9 1 -end \
-		-geometry_builder -V 8 -B 8 -TDO 3 \
+		-define Geo -geometry_builder \
+			-V 8 -B 8 -TDO 3 \
 			-fuse 1 -fname_GEO 8_3 \
 			-test Test_lines FFFF  \
 		-end
@@ -11605,20 +11607,24 @@ geo_8_3:
 geo_9_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Test_lines -set -loop 3 10 1 -end \
-		-geometry_builder -V 9 -B 9 -TDO 3 \
+		-define Geo -geometry_builder \
+			-V 9 -B 9 -TDO 3 \
 			-fuse 1 -fname_GEO 9_3 \
 			-test Test_lines FFFF  \
 		-end
 
 
-
 geo_10_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Test_lines -set -loop 4 11 1 -end \
-		-geometry_builder -V 10 -B 10 -TDO 3 -fuse 1 \
+		-define Geo -geometry_builder \
+			-V 10 -B 10 -TDO 3 -fuse 1 \
 			-fname_GEO 10_3 \
 			-test Test_lines FFFF \
+			-f_orderly \
 		-end
+
+
 
 # 10 geos
 # 8/26/2021: 0 sec on Mac
@@ -11627,7 +11633,8 @@ geo_10_3:
 geo_10_3_tree:
 	$(ORBITER_PATH)orbiter.out -v 20 \
 		-define Test_lines -set -loop 0 11 1 -end \
-		-geometry_builder -V 10 -B 10 -TDO 3 -fuse 1 \
+		-define Geo -geometry_builder \
+			-V 10 -B 10 -TDO 3 -fuse 1 \
 			-fname_GEO 10_3 \
 			-search_tree \
 			-test Test_lines FFFF \
@@ -11653,7 +11660,8 @@ geo_10_3_tree:
 geo_11_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Test_lines -set -loop 4 12 1 -end \
-		-geometry_builder -V 11 -B 11 -TDO 3 \
+		-define Geo -geometry_builder \
+			-V 11 -B 11 -TDO 3 \
 			-fuse 1 -fname_GEO 11_3 \
 			-test Test_lines FFFF \
 		-end
@@ -11664,7 +11672,8 @@ geo_11_3:
 geo_12_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Test_lines -set -loop 4 13 1 -end \
-		-geometry_builder -V 12 -B 12 -TDO 3 \
+		-define Geo -geometry_builder \
+			-V 12 -B 12 -TDO 3 \
 			-fuse 1 -fname_GEO 12_3 \
 			-test Test_lines FFFF \
 		-end
@@ -11680,7 +11689,8 @@ geo_12_3:
 geo_13_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Test_lines -set -loop 4 14 1 -end \
-		-geometry_builder -V 13 -B 13 -TDO 3 \
+		-define Geo -geometry_builder \
+			-V 13 -B 13 -TDO 3 \
 			-fuse 1 -fname_GEO 13_3 \
 			-test Test_lines FFFF \
 		-end
@@ -11693,7 +11703,8 @@ geo_13_3:
 geo_14_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Test_lines -set -loop 4 15 1 -end \
-		-geometry_builder -V 14 -B 14 -TDO 3 \
+		-define Geo -geometry_builder \
+			-V 14 -B 14 -TDO 3 \
 			-fuse 1 -fname_GEO 14_3 \
 			-test Test_lines FFFF \
 		-end
@@ -11707,7 +11718,7 @@ geo_14_3:
 15_3.inc:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Test_lines -set -loop 4 16 1 -end \
-		-geometry_builder \
+		-define Geo -geometry_builder \
 			-V 15 -B 15 -TDO 3 \
 			-fuse 1 -fname_GEO 15_3 \
 			-test Test_lines FFFF \
@@ -11721,7 +11732,7 @@ geo_14_3:
 geo_15_3_g4:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Test_lines -set -loop 4 16 1 -end \
-		-geometry_builder \
+		-define Geo -geometry_builder \
 			-V 15 -B 15 -TDO 3 \
 			-fuse 1 -fname_GEO 15_3_g4 \
 			-girth 4 \
@@ -11746,7 +11757,7 @@ geo_15_3_g4:
 geo_15_4:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Test_lines -set -loop 4 16 1 -end \
-		-geometry_builder \
+		-define Geo -geometry_builder \
 			-V 15 -B 15 -TDO 4 \
 			-fuse 1 -fname_GEO 15_4 \
 			-search_tree \
@@ -11770,7 +11781,7 @@ geo_15_4:
 geo_16_4_g4:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Test_lines -set -loop 4 17 1 -end \
-		-geometry_builder \
+		-define Geo -geometry_builder \
 			-V 16 -B 16 -TDO 4 \
 			-fuse 1 -fname_GEO 16_4_g4 \
 			-girth 4 \
@@ -11783,7 +11794,7 @@ geo_16_4_g4:
 40_4_g4.inc:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Test_lines -set -loop 0 41 1 -end \
-		-geometry_builder \
+		-define Geo -geometry_builder \
 			-V 40 -B 40 -TDO 4 \
 			-fuse 1 -fname_GEO 40_4_g4 \
 			-girth 4 \
@@ -11809,7 +11820,7 @@ geo_16_4_g4:
 geo_63_3_g6:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Test_lines -set -loop 4 64 1 -end \
-		-geometry_builder \
+		-define Geo -geometry_builder \
 			-V 63 -B 63 -TDO 3 \
 			-fuse 1 -fname_GEO 63_3_g6 \
 			-girth 6 \
@@ -12006,7 +12017,7 @@ SECTION_DESIGN_THEORY_LARGE_SETS:
 
 AG_2_3.inc:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-geometry_builder \
+		-define Geo -geometry_builder \
 			-V 9 -B 12 \
 			-TDO 4 -fuse 1 \
 			-fname_GEO AG_2_3 \
@@ -13008,6 +13019,21 @@ triangle_graph:
 
 
 
+Chain_232:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define P1 -vector -dense 2,3,2 -end \
+		-define P2 -vector -dense 2,3,2 -end \
+		-define Gamma -graph \
+			-chain_graph P1 P2 \
+		-end \
+		-with Gamma -do \
+			-graph_theoretic_activity -export_csv \
+		-end \
+		-with Gamma -do \
+			-graph_theoretic_activity -properties \
+		-end
+
+
 
 triangle_graph_properties:
 	$(ORBITER_PATH)orbiter.out -v 6 \
@@ -13020,7 +13046,8 @@ triangle_graph_properties:
 		-end
 
 Cycle_13_draw:
-	$(ORBITER_PATH)orbiter.out -v 2 -define Gamma -graph -cycle 13 -end \
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Gamma -graph -cycle 13 -end \
 		-with Gamma -do \
 		-graph_theoretic_activity -export_csv  -end \
 		-with Gamma -do \
@@ -13223,192 +13250,24 @@ PGO_5_2_collinearity_graph: O_5_2_incidence_matrix.csv
 
 
 ############################################################################################################
-# Section 11.2: Graphs Isomorphism and Automorphism
+# Section 11.2: Graphs Theoretic Activities
 
 
-SECTION_GRAPH_ISOMORPHISM_AND_AUTOMORPHISM:
+SECTION_GRAPH_THEORETIC_ACTIVITIES:
 
-Cycle_13_aut:
+Chain_232_eigen:
 	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define Gamma -graph -cycle 13 -end \
-		-with Gamma -do \
-		-graph_theoretic_activity -automorphism_group -end \
-
-
-
-
-
-load_graph_pp16_1:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define Gamma -graph -load_dimacs \
-		../JUNTTILA_KASKI/benchmarks/pp/pp16-1 \
-		-end \
-		-with Gamma -do \
-		-graph_theoretic_activity -save -end \
-		-with Gamma -do \
-		-graph_theoretic_activity -automorphism_group -end \
-
-# go=34217164800
-#nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack1 = 6
-#nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack2 = 134
-
-load_graph_pp16_2:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define Gamma -graph -load_dimacs \
-		../JUNTTILA_KASKI/benchmarks/pp/pp16-2 \
-		-end \
-		-with Gamma -do \
-		-graph_theoretic_activity -save -end \
-		-with Gamma -do \
-		-graph_theoretic_activity -automorphism_group -end \
-
-# does not finish
-
-load_graph_pp16_9:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define Gamma -graph -load_dimacs \
-		../JUNTTILA_KASKI/benchmarks/pp/pp16-9 \
-		-end \
-		-with Gamma -do \
-		-graph_theoretic_activity -save -end \
-		-with Gamma -do \
-		-graph_theoretic_activity -automorphism_group -end \
-
-
-load_graph_grid_3_3:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define Gamma -graph -load_dimacs \
-		../JUNTTILA_KASKI/benchmarks/grid/grid-w-3-3 \
-		-end \
-		-with Gamma -do \
-		-graph_theoretic_activity -save -end \
-		-with Gamma -do \
-		-graph_theoretic_activity -automorphism_group -end \
-
-
-#nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack1 = 4
-#nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack2 = 9
-#Written file grid-w-3-3_group.makefile of size 579
-#User time: 0 of a second, dt=0 tps = 100
-#nb_calls_to_densenauty=1
-
-
-load_graph_sts_13:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define Gamma -graph -load_dimacs \
-			../JUNTTILA_KASKI/benchmarks/srg/sts-13 \
-		-end \
-		-with Gamma -do \
-		-graph_theoretic_activity -save -end \
-		-with Gamma -do \
-		-graph_theoretic_activity -automorphism_group -end
-	make ORBITER_PATH=$(ORBITER_PATH) -f sts-13_group.makefile  sts-13
-
-
-#nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack1 = 3
-#nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack2 = 24
-
-
-HJ_aut:
-	$(ORBITER_PATH)orbiter.out -v 6 \
-		-define G -graph \
-			-load_csv_no_border \
-			halljanko315.csv \
-		-end \
-		-with G -do \
-			-graph_theoretic_activity -automorphism_group \
-		-end \
-		-with G -do \
-			-graph_theoretic_activity -properties \
-		-end
-
-
-
-HJ_group_and_orbits:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define gens -vector -file \
-			halljanko315_gens.csv -end \
-		-define G -permutation_group \
-			-bsgs halljanko315 "File\_halljanko315" \
-			315 1209600 "0,1,2" 6 gens \
-		-end \
-		-with G -do \
-		-group_theoretic_activity \
-			-poset_classification_control \
-				-W \
-				-problem_label HJ_orbits \
-				-depth 2 \
-			-end \
-			-orbits_on_subsets 2 \
-			-report \
-		-end
-
-#ROW,REP,AGO,OL
-#0,"0,1",96,12600
-#1,"0,2",48,25200
-#2,"0,4",768,1575
-#3,"0,8",120,10080
-#END
-
-HJ_orbital_graph_3:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define gens -vector -file \
-			halljanko315_gens.csv -end \
-		-define G -permutation_group \
-			-bsgs halljanko315 "File\_halljanko315" \
-			315 1209600 "0,1,2" 6 gens \
-		-end \
+		-define P1 -vector -dense 2,3,2 -end \
+		-define P2 -vector -dense 2,3,2 -end \
 		-define Gamma -graph \
-			-orbital_graph G 3 \
+			-chain_graph P1 P2 \
 		-end \
 		-with Gamma -do \
 			-graph_theoretic_activity \
-			-properties \
-		-end \
-		-with Gamma -do \
-			-graph_theoretic_activity \
-			-save \
-		-end
-
-#Group_Perm315_Orbital_3.colored_graph
-#Degree type: (64^{315} )
-
-
-
-Hamming_graph_7_with_Hamming_code:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define G -graph -Hamming 7 2 \
-			-subset "_Hamming_code" "\\_with\\_Hamming\\_code" \
-			$(HAMMING_CODE_CODEWORDS) -end \
-		-with G -do \
-		-graph_theoretic_activity -export_csv -end \
-		-with G -do \
-		-graph_theoretic_activity -export_graphviz -end \
-		-with G -do \
-		-graph_theoretic_activity -save -end \
-		-with G -do \
-		-graph_theoretic_activity -automorphism_group -end
-	pdflatex Hamming_7_2_Hamming_code_report.tex
-	open Hamming_7_2_Hamming_code_report.pdf
-
-# group of order 2688 = 16 * 168
-
-
-PGO_5_2_graph_group: O_5_2_incidence_matrix.csv 
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define Inc -vector -file O_5_2_incidence_matrix.csv -end \
-		-define Gamma -graph -collinearity_graph Inc -end \
-		-with Gamma -do \
-		-graph_theoretic_activity \
-			-automorphism_group \
-		-end \
-		-with Gamma -do \
-		-graph_theoretic_activity \
 			-eigenvalues \
 		-end
-	pdflatex collinearity_graph_eigenvalues.tex
-	open collinearity_graph_eigenvalues.pdf
-
+	pdflatex chain_graph_eigenvalues.tex
+	open chain_graph_eigenvalues.pdf
 
 
 ############################################################################################################
@@ -13944,10 +13803,54 @@ AG_2_3_c: AG_2_3.inc
 
 
 
+geo_7_3_c:
+	$(ORBITER_PATH)orbiter.out -v 10 \
+		-draw_incidence_structure_description \
+			-width 60 -with_10 6 -end \
+		-define C -combinatorial_objects \
+			-file_of_incidence_geometries 7_3.inc 7 7 21 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-classification_prefix 7_3 \
+				-label 7_3 \
+				-save_ago \
+				-save_transversal \
+			-end \
+			-report \
+				-prefix 7_3 \
+				-export_flag_orbits \
+				-show_incidence_matrices \
+				-export_group \
+			-end \
+		-end
+	pdflatex 7_3_classification.tex
+	open 7_3_classification.pdf
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file 7_3_object0_TDA_flag_orbits.csv \
+		-secondary_input_csv_file 7_3_object0_TDA.csv \
+		-box_width 32 -bit_depth 24 \
+		-end
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file 7_3_object0_INP_flag_orbits.csv \
+		-secondary_input_csv_file 7_3_object0_INP.csv \
+		-box_width 32 -bit_depth 24 \
+		-end
+	open 7_3_object0_INP_flag_orbits_draw.bmp
+
+
+
 geo_10_3_c:
 	$(ORBITER_PATH)orbiter.out -v 10 \
 		-draw_incidence_structure_description \
 			-width 60 -with_10 6 -end \
+		-define Test_lines -set -loop 4 11 1 -end \
+		-define Geo -geometry_builder \
+			-V 10 -B 10 -TDO 3 -fuse 1 \
+			-fname_GEO 10_3 \
+			-test Test_lines FFFF \
+		-end \
 		-define C -combinatorial_objects \
 			-file_of_incidence_geometries 10_3.inc 10 10 30 \
 		-end \
@@ -13964,10 +13867,11 @@ geo_10_3_c:
 				-export_flag_orbits \
 				-show_incidence_matrices \
 				-export_group \
+				-lex_least Geo \
 			-end \
 		-end
-	#pdflatex 10_3_classification.tex
-	#open 10_3_classification.pdf
+	pdflatex 10_3_classification.tex
+	open 10_3_classification.pdf
 	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
 		-input_csv_file 10_3_object7_TDA_flag_orbits.csv \
 		-secondary_input_csv_file 10_3_object7_TDA.csv \
@@ -14393,6 +14297,201 @@ SECTION_CANONICAL_FORMS_OF_GENERAL_CODES:
 SECTION_CANONICAL_FORMS_OF_GRAPHS:
 
 
+
+Cycle_13_aut:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Gamma -graph -cycle 13 -end \
+		-with Gamma -do \
+			-graph_theoretic_activity -automorphism_group \
+		-end \
+
+
+
+Chain_232_aut:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define P1 -vector -dense 2,3,2 -end \
+		-define P2 -vector -dense 2,3,2 -end \
+		-define Gamma -graph \
+			-chain_graph P1 P2 \
+		-end \
+		-with Gamma -do \
+			-graph_theoretic_activity -automorphism_group \
+		-end
+	pdflatex chain_graph_report.tex
+	open chain_graph_report.pdf
+
+
+
+load_graph_pp16_1:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Gamma -graph -load_dimacs \
+		../JUNTTILA_KASKI/benchmarks/pp/pp16-1 \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity -save -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -automorphism_group -end \
+
+# go=34217164800
+#nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack1 = 6
+#nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack2 = 134
+
+load_graph_pp16_2:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Gamma -graph -load_dimacs \
+		../JUNTTILA_KASKI/benchmarks/pp/pp16-2 \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity -save -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -automorphism_group -end \
+
+# does not finish
+
+load_graph_pp16_9:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Gamma -graph -load_dimacs \
+		../JUNTTILA_KASKI/benchmarks/pp/pp16-9 \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity -save -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -automorphism_group -end \
+
+
+load_graph_grid_3_3:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Gamma -graph -load_dimacs \
+		../JUNTTILA_KASKI/benchmarks/grid/grid-w-3-3 \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity -save -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -automorphism_group -end \
+
+
+#nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack1 = 4
+#nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack2 = 9
+#Written file grid-w-3-3_group.makefile of size 579
+#User time: 0 of a second, dt=0 tps = 100
+#nb_calls_to_densenauty=1
+
+
+load_graph_sts_13:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Gamma -graph -load_dimacs \
+			../JUNTTILA_KASKI/benchmarks/srg/sts-13 \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity -save -end \
+		-with Gamma -do \
+		-graph_theoretic_activity -automorphism_group -end
+	make ORBITER_PATH=$(ORBITER_PATH) -f sts-13_group.makefile  sts-13
+
+
+#nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack1 = 3
+#nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack2 = 24
+
+
+HJ_aut:
+	$(ORBITER_PATH)orbiter.out -v 6 \
+		-define G -graph \
+			-load_csv_no_border \
+			halljanko315.csv \
+		-end \
+		-with G -do \
+			-graph_theoretic_activity -automorphism_group \
+		-end \
+		-with G -do \
+			-graph_theoretic_activity -properties \
+		-end
+
+
+
+HJ_group_and_orbits:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define gens -vector -file \
+			halljanko315_gens.csv -end \
+		-define G -permutation_group \
+			-bsgs halljanko315 "File\_halljanko315" \
+			315 1209600 "0,1,2" 6 gens \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-poset_classification_control \
+				-W \
+				-problem_label HJ_orbits \
+				-depth 2 \
+			-end \
+			-orbits_on_subsets 2 \
+			-report \
+		-end
+
+#ROW,REP,AGO,OL
+#0,"0,1",96,12600
+#1,"0,2",48,25200
+#2,"0,4",768,1575
+#3,"0,8",120,10080
+#END
+
+HJ_orbital_graph_3:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define gens -vector -file \
+			halljanko315_gens.csv -end \
+		-define G -permutation_group \
+			-bsgs halljanko315 "File\_halljanko315" \
+			315 1209600 "0,1,2" 6 gens \
+		-end \
+		-define Gamma -graph \
+			-orbital_graph G 3 \
+		-end \
+		-with Gamma -do \
+			-graph_theoretic_activity \
+			-properties \
+		-end \
+		-with Gamma -do \
+			-graph_theoretic_activity \
+			-save \
+		-end
+
+#Group_Perm315_Orbital_3.colored_graph
+#Degree type: (64^{315} )
+
+
+
+Hamming_graph_7_with_Hamming_code:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define G -graph -Hamming 7 2 \
+			-subset "_Hamming_code" "\\_with\\_Hamming\\_code" \
+			$(HAMMING_CODE_CODEWORDS) -end \
+		-with G -do \
+		-graph_theoretic_activity -export_csv -end \
+		-with G -do \
+		-graph_theoretic_activity -export_graphviz -end \
+		-with G -do \
+		-graph_theoretic_activity -save -end \
+		-with G -do \
+		-graph_theoretic_activity -automorphism_group -end
+	pdflatex Hamming_7_2_Hamming_code_report.tex
+	open Hamming_7_2_Hamming_code_report.pdf
+
+# group of order 2688 = 16 * 168
+
+
+PGO_5_2_graph_group: O_5_2_incidence_matrix.csv 
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define Inc -vector -file O_5_2_incidence_matrix.csv -end \
+		-define Gamma -graph -collinearity_graph Inc -end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-automorphism_group \
+		-end \
+		-with Gamma -do \
+		-graph_theoretic_activity \
+			-eigenvalues \
+		-end
+	pdflatex collinearity_graph_eigenvalues.tex
+	open collinearity_graph_eigenvalues.pdf
 
 
 

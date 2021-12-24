@@ -14,7 +14,7 @@ using namespace std;
 namespace orbiter {
 namespace foundations {
 
-
+#if 0
 void inc_transpose(int *R,
 	int *theX, int f_full, int max_r,
 	int v, int b,
@@ -75,6 +75,7 @@ void inc_transpose(int *R,
 	*R_new = R1;
 }
 
+#endif
 
 
 int tuple_cmp(int *a, int *b, int l)
@@ -157,6 +158,8 @@ void cperm_test(void)
 #endif
 }
 
+
+#if 0
 void frame2grid(geo_frame *frame, grid *G)
 /* kopiert alles ausser type_idx[],
  * type[][], f_points, m, n. */
@@ -216,6 +219,7 @@ int tdos_cmp(tdo_scheme *t1, tdo_scheme *t2, int verbose_level)
 	}
 	return 0;
 }
+#endif
 
 int true_false_string_numeric(const char *p)
 {
