@@ -487,6 +487,48 @@ void create_graph::init(
 
 
 	}
+	else if (description->f_chain_graph) {
+
+
+
+		int idx1;
+		vector_builder *VB1;
+		int idx2;
+		vector_builder *VB2;
+
+		idx1 = Orbiter->find_symbol(description->chain_graph_partition_1);
+		idx2 = Orbiter->find_symbol(description->chain_graph_partition_2);
+
+		symbol_table_object_type t;
+
+		t = Orbiter->get_object_type(idx1);
+
+		if (t != t_vector) {
+			cout << "first partition must be of type vector, but is ";
+			Orbiter->print_type(t);
+			cout << endl;
+			exit(1);
+		}
+		t = Orbiter->get_object_type(idx2);
+
+		if (t != t_vector) {
+			cout << "second partition must be of type vector, but is ";
+			Orbiter->print_type(t);
+			cout << endl;
+			exit(1);
+		}
+		VB1 = (vector_builder *) Orbiter->get_object(idx1);
+		VB2 = (vector_builder *) Orbiter->get_object(idx2);
+
+		make_chain_graph(N, Adj,
+				VB1->v, VB1->len,
+				VB2->v, VB2->len,
+				verbose_level);
+
+
+
+	}
+
 
 
 	if (description->f_subset) {
@@ -1437,7 +1479,6 @@ void create_graph::make_collinearity_graph(int &N, int *&Adj,
 
 	N = nb_rows;
 	Adj = NEW_int(N * N);
-	Adj = NEW_int(N * N);
 	Orbiter->Int_vec.zero(Adj, N * N);
 
 	int j, i1, i2;
@@ -1465,6 +1506,67 @@ void create_graph::make_collinearity_graph(int &N, int *&Adj,
 	}
 }
 
+void create_graph::make_chain_graph(int &N, int *&Adj,
+		int *part1, int sz1,
+		int *part2, int sz2,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "create_graph::make_chain_graph" << endl;
+	}
+	if (sz1 != sz2) {
+		cout << "create_graph::make_chain_graph sz1 != sz2" << endl;
+	}
+
+	int i, j;
+	int N1, N2;
+	int *first1;
+	int *first2;
+
+	first1 = NEW_int(sz1 + 1);
+	first2 = NEW_int(sz1 + 1);
+
+	N1 = 0;
+	first1[0] = 0;
+	for (i = 0; i < sz1; i++) {
+		N1 += part1[i];
+		first1[i + 1] = first1[i] + part1[i];
+	}
+	N2 = 0;
+	first2[0] = N1;
+	for (i = 0; i < sz2; i++) {
+		N2 += part2[i];
+		first2[i + 1] = first2[i] + part2[i];
+	}
+	N = N1 + N2;
+
+	Adj = NEW_int(N * N);
+	Orbiter->Int_vec.zero(Adj, N * N);
+
+	int I, J, ii, jj;
+
+	for (I = 0; I < sz1; I++) {
+		for (i = 0; i < part1[I]; i++) {
+			ii = first1[I] + i;
+			for (J = I; J < sz2; J++) {
+				for (j = 0; j < part2[J]; j++) {
+					jj = first2[J] + j;
+					Adj[ii * N + jj] = 1;
+					Adj[jj * N + ii] = 1;
+				}
+			}
+		}
+	}
+
+	label.assign("chain_graph");
+	label_tex.assign("chain\\_graph");
+
+	if (f_v) {
+		cout << "create_graph::make_chain_graph done" << endl;
+	}
+}
 
 
 }}

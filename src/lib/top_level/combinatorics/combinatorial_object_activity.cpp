@@ -788,7 +788,7 @@ void combinatorial_object_activity::latex_report(
 		CO->report_summary_of_orbits(fp, verbose_level);
 
 
-		fp << "Ago :";
+		fp << "Ago : ";
 		CO->T_Ago->print_file_tex(fp, FALSE /* f_backwards*/);
 		fp << "\\\\" << endl;
 

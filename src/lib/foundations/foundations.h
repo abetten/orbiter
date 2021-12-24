@@ -382,21 +382,13 @@ class W3q;
 class cperm;
 class gen_geo_conf;
 class gen_geo;
-class geo_frame;
 class geometry_builder_description;
 class geometry_builder;
 class girth_test;
-class grid;
 class inc_encoding;
 class incidence;
-class iso_grid;
-class iso_info;
 class iso_type;
-class tactical_decomposition;
-class tdo_gradient;
-class tdo_scheme;
-typedef tdo_scheme *ptdo_scheme;
-
+class test_semicanonical;
 
 
 // globals:
@@ -631,6 +623,7 @@ enum symbol_table_object_type {
 	t_set,
 	t_vector,
 	t_combinatorial_objects,
+	t_geometry_builder,
 	t_action,
 	t_poset,
 	t_poset_classification,

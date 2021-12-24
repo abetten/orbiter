@@ -124,21 +124,14 @@ MODULES= \
 		foundations/geometry_builder/cperm.o \
 		foundations/geometry_builder/gen_geo_conf.o \
 		foundations/geometry_builder/gen_geo.o \
-		foundations/geometry_builder/geo_frame.o \
-		foundations/geometry_builder/geo_iso.o \
 		foundations/geometry_builder/geometry_builder_description.o \
 		foundations/geometry_builder/geometry_builder.o \
 		foundations/geometry_builder/girth_test.o \
 		foundations/geometry_builder/globals.o \
-		foundations/geometry_builder/grid.o \
 		foundations/geometry_builder/inc_encoding.o \
 		foundations/geometry_builder/incidence.o \
-		foundations/geometry_builder/iso_grid.o \
-		foundations/geometry_builder/iso_info.o \
 		foundations/geometry_builder/iso_type.o \
-		foundations/geometry_builder/tactical_decomposition.o \
-		foundations/geometry_builder/tdo_gradient.o \
-		foundations/geometry_builder/tdo_scheme.o \
+		foundations/geometry_builder/test_semicanonical.o \
 		foundations/globals/function_command.o \
 		foundations/globals/function_polish_description.o \
 		foundations/globals/function_polish.o \

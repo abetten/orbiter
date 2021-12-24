@@ -153,7 +153,9 @@ void inc_encoding::print_horizontal_bar(
 
 	J = 0;
 	for (j = 0; j <= b; j++) {
-		if ((j == b) || (J < inc->nb_i_vbar && j == inc->i_vbar[J])) {
+		if ((j == b) ||
+				(J < inc->gg->Test_semicanonical->nb_i_vbar &&
+						j == inc->gg->Test_semicanonical->i_vbar[J])) {
 			ost << "+";
 			J++;
 		}
@@ -180,7 +182,8 @@ void inc_encoding::print_partitioned(
 
 
 void inc_encoding::print_partitioned_override_theX(
-		std::ostream &ost, int v_cur, int v_cut, incidence *inc, int *the_X, int f_print_isot)
+		std::ostream &ost, int v_cur, int v_cut,
+		incidence *inc, int *the_X, int f_print_isot)
 {
 	int i, j, r, I, J, f_kreuz;
 	iso_type *it;
@@ -190,7 +193,9 @@ void inc_encoding::print_partitioned_override_theX(
 	I = 0;
 	for (i = 0; i <= v; i++) {
 
-		if ((i == v) || (I < inc->nb_i_hbar && i == inc->i_hbar[I])) {
+		if ((i == v) ||
+				(I < inc->gg->Test_semicanonical->nb_i_hbar &&
+						i == inc->gg->Test_semicanonical->i_hbar[I])) {
 			print_horizontal_bar(ost, inc, FALSE /* f_print_isot */, NULL);
 			I++;
 		}
@@ -207,7 +212,9 @@ void inc_encoding::print_partitioned_override_theX(
 		J = 0;
 		r = 0;
 		for (j = 0; j <= b; j++) {
-			if ((j == b) || (J < inc->nb_i_vbar && j == inc->i_vbar[J])) {
+			if ((j == b) ||
+					(J < inc->gg->Test_semicanonical->nb_i_vbar &&
+					j == inc->gg->Test_semicanonical->i_vbar[J])) {
 				ost << "|";
 				J++;
 			}
@@ -287,7 +294,7 @@ void inc_encoding::print_permuted(cperm *pv, cperm *qv)
 	cout << endl;
 }
 
-
+#if 0
 tactical_decomposition *inc_encoding::calc_tdo_without_vhbar(
 	int f_second_tactical_decomposition, int verbose_level)
 {
@@ -323,6 +330,7 @@ tactical_decomposition *inc_encoding::calc_tdo_without_vhbar(
 	}
 	return tdo;
 }
+#endif
 
 void inc_encoding::apply_permutation(incidence *inc, int v,
 	int *theY, cperm *p, cperm *q, int verbose_level)

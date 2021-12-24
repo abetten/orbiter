@@ -409,7 +409,6 @@ void object_with_properties::latex_report(std::ostream &ost,
 		FREE_OBJECT(Enc);
 	}
 
-
 	ost << "Flag orbits:\\\\" << endl;
 	Flags->report(ost, verbose_level);
 
@@ -417,6 +416,80 @@ void object_with_properties::latex_report(std::ostream &ost,
 	Anti_Flags->report(ost, verbose_level);
 
 
+	if (Report_options->f_lex_least) {
+
+		if (f_v) {
+			cout << "object_with_properties::latex_report f_lex_least" << endl;
+		}
+		int idx;
+
+		idx = Orbiter->find_symbol(Report_options->lex_least_geometry_builder);
+
+		symbol_table_object_type t;
+
+		t = Orbiter->get_object_type(idx);
+		if (t != t_geometry_builder) {
+			cout << "object_with_properties::latex_report "
+				<< Report_options->lex_least_geometry_builder
+				<< " is not of type geometry_builder" << endl;
+			exit(1);
+		}
+
+		geometry_builder *GB;
+		int f_found;
+		nauty_output *NO;
+		bitvector *Canonical_form;
+
+		GB = (geometry_builder *) Orbiter->get_object(idx);
+
+
+		if (f_v) {
+			cout << "object_with_properties::latex_report before find_object, "
+					"OwCF->v=" << OwCF->v << endl;
+		}
+
+		GB->gg->inc->iso_type_at_line[OwCF->v - 1]->Canonical_forms->find_object(
+				OwCF,
+				f_found, idx,
+				NO,
+				Canonical_form,
+				verbose_level);
+
+		if (f_v) {
+			cout << "object_with_properties::latex_report after find_object" << endl;
+		}
+
+		// if f_found is TRUE, B[idx] agrees with the given object
+
+
+		if (!f_found) {
+			cout << "object_with_properties::latex_report "
+					"cannot find object in geometry_builder" << endl;
+			exit(1);
+		}
+
+		object_with_canonical_form *OwCF2 = (object_with_canonical_form *)
+				GB->gg->inc->iso_type_at_line[OwCF->v - 1]->Canonical_forms->Objects[idx];
+
+		if (f_v) {
+			cout << "object_with_properties::latex_report before FREE_OBJECT(NO)" << endl;
+		}
+		FREE_OBJECT(NO);
+		if (f_v) {
+			cout << "object_with_properties::latex_report after FREE_OBJECT(NO)" << endl;
+		}
+		FREE_OBJECT(Canonical_form);
+		if (f_v) {
+			cout << "object_with_properties::latex_report after FREE_OBJECT(Canonical_form)" << endl;
+		}
+
+		ost << "Is isomorphic to object " << idx << " in the list:\\\\" << endl;
+		ost << "Lex-least form is:\\\\" << endl;
+
+		OwCF2->print_tex_detailed(ost,
+				Report_options->f_show_incidence_matrices,
+				verbose_level);
+	}
 
 
 	if (f_v) {

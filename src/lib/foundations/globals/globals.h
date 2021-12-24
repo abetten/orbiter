@@ -498,6 +498,8 @@ public:
 			void *VB, int verbose_level);
 	void init_combinatorial_objects(std::string &label,
 			data_input_stream *IS, int verbose_level);
+	void init_geometry_builder_object(std::string &label,
+			geometry_builder *GB, int verbose_level);
 	void print();
 };
 

@@ -9,21 +9,14 @@ MODULES = \
 		cperm.o \
 		gen_geo_conf.o \
 		gen_geo.o \
-		geo_frame.o \
-		geo_iso.o \
 		geometry_builder_description.o \
 		geometry_builder.o \
 		girth_test.o \
 		globals.o \
-		grid.o \
 		inc_encoding.o \
 		incidence.o \
-		iso_grid.o \
-		iso_info.o \
-		iso_type.o \
-		tactical_decomposition.o \
-		tdo_gradient.o \
-		tdo_scheme.o
+		test_semicanonical.o \
+		iso_type.o
 
 
 

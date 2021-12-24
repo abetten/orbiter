@@ -18,6 +18,11 @@ namespace orbiter {
 namespace foundations {
 
 
+
+#define MAX_V 300
+
+
+
 gen_geo::gen_geo()
 {
 	GB = NULL;
@@ -35,9 +40,11 @@ gen_geo::gen_geo()
 
 	inc = NULL;
 
+#if 0
 	f_vbar = NULL;
 	vbar = NULL;
 	hbar = NULL;
+#endif
 
 	//f_do_iso_test = FALSE;
 	//f_do_aut_group = FALSE;
@@ -54,6 +61,8 @@ gen_geo::gen_geo()
 	ost_search_tree_flags = NULL;
 
 	Girth_test = NULL;
+
+	Test_semicanonical = NULL;
 }
 
 gen_geo::~gen_geo()
@@ -81,6 +90,7 @@ gen_geo::~gen_geo()
 		FREE_OBJECTS(Conf);
 	}
 
+#if 0
 	if (f_vbar) {
 		FREE_int(f_vbar);
 	}
@@ -90,6 +100,7 @@ gen_geo::~gen_geo()
 	if (hbar) {
 		FREE_int(hbar);
 	}
+#endif
 
 	if (inc) {
 		FREE_OBJECT(inc);
@@ -97,6 +108,9 @@ gen_geo::~gen_geo()
 
 	if (Girth_test) {
 		FREE_OBJECT(Girth_test);
+	}
+	if (Test_semicanonical) {
+		FREE_OBJECT(Test_semicanonical);
 	}
 }
 
@@ -190,11 +204,13 @@ void gen_geo::TDO_init(int *v, int *b, int *theTDO, int verbose_level)
 		f = Fuse_first[fuse_idx];
 		l = Fuse_len[fuse_idx];
 		if (f_v) {
-			cout << "gen_geo::TDO_init fuse_idx=" << fuse_idx << " f=" << f << " l=" << l << endl;
+			cout << "gen_geo::TDO_init fuse_idx=" << fuse_idx
+					<< " f=" << f << " l=" << l << endl;
 		}
 		for (I = f; I < f + l; I++) {
 			if (f_v) {
-				cout << "gen_geo::TDO_init fuse_idx=" << fuse_idx << " f=" << f << " l=" << l
+				cout << "gen_geo::TDO_init fuse_idx=" << fuse_idx
+						<< " f=" << f << " l=" << l
 						<< " I=" << I << " v[I]=" << v[I] << endl;
 			}
 			init_tdo_line(fuse_idx,
@@ -293,10 +309,12 @@ void gen_geo::init_tdo_line(int fuse_idx, int tdo_line,
 
 		if (j == GB->b_len - 1) {
 			rr = Conf[tdo_line * GB->b_len + j].r0 + Conf[tdo_line * GB->b_len + j].r;
+#if 0
 			if (rr >= MAX_R) {
 				cout << "geo_tdo_init rr >= MAX_R" << endl;
 				exit(1);
 			}
+#endif
 			//max_r = MAXIMUM(max_r, rr);
 		}
 #if 0
@@ -344,6 +362,7 @@ void gen_geo::init_bars_and_partition(int verbose_level)
 	if (f_v) {
 		cout << "gen_geo::init_bars_and_partition" << endl;
 	}
+#if 0
 	f_vbar = NEW_int(GB->V * inc->Encoding->dim_n);
 
 	for (i = 0; i < GB->V * inc->Encoding->dim_n; i++) {
@@ -366,6 +385,16 @@ void gen_geo::init_bars_and_partition(int verbose_level)
 	inc->init_bars(verbose_level);
 	if (f_v) {
 		cout << "gen_geo::init_bars_and_partition after inc->init_bars" << endl;
+	}
+#endif
+	Test_semicanonical = NEW_OBJECT(test_semicanonical);
+
+	if (f_v) {
+		cout << "gen_geo::init_bars_and_partition before Test_semicanonical->init" << endl;
+	}
+	Test_semicanonical->init(this, MAX_V, verbose_level);
+	if (f_v) {
+		cout << "gen_geo::init_bars_and_partition after Test_semicanonical->init" << endl;
 	}
 
 	if (f_v) {
@@ -757,12 +786,16 @@ void gen_geo::generate_all(int verbose_level)
 			}
 #endif
 
+
+
+#if 0
 		if (forget_ivhbar_in_last_isot) {
 			s_nb_i_vbar = inc->nb_i_vbar;
 			s_nb_i_hbar = inc->nb_i_hbar;
 			inc->nb_i_vbar = 1;
 			inc->nb_i_hbar = 1;
 		}
+#endif
 		if (FALSE) {
 			cout << "gen_geo::generate_all before isot_add for it0" << endl;
 		}
@@ -1430,6 +1463,13 @@ int gen_geo::GeoConfFst(int I, int m, int J, int verbose_level)
 
 	if (J == 0) {
 		i1 = C->i0 + m;
+
+		// ToDo: row_test_init:
+
+		Test_semicanonical->row_init(I, m, J,
+					i1,
+					verbose_level);
+#if 0
 		if (m == 0) {
 			hbar[i1] = -1;
 			// initial hbar
@@ -1438,6 +1478,8 @@ int gen_geo::GeoConfFst(int I, int m, int J, int verbose_level)
 			hbar[i1] = GB->b_len;
 			// no hbar
 		}
+#endif
+
 	}
 	n = 0;
 	while (TRUE) {
@@ -1482,9 +1524,19 @@ int gen_geo::GeoConfNxt(int I, int m, int J, int verbose_level)
 	int n, i1;
 
 	i1 = C->i0 + m;
+
+
+	// ToDo: row_test_continue:
+
+	Test_semicanonical->row_test_continue(I, m, J, i1);
+
+#if 0
 	if (hbar[i1] > J) {
 		hbar[i1] = J;
 	}
+#endif
+
+
 	if (C->r == 0) {
 		return FALSE;
 	}
@@ -1547,6 +1599,14 @@ int gen_geo::GeoXFst(int I, int m, int J, int n, int verbose_level)
 	i1 = C->i0 + m; // current row
 	r = C->r0 + n; // current incidence index
 	j0 = C->j0;
+
+	// ToDo: row_starter:
+
+	j = Test_semicanonical->row_starter(I, m, J, n, j,
+			i1, j0, r,
+			verbose_level);
+
+#if 0
 	if (hbar[i1] <= J) {
 		// hbar exists, which means that the left part of the row differs from the row above.
 		// The next incidence must be tried starting from the leftmost position.
@@ -1572,6 +1632,9 @@ int gen_geo::GeoXFst(int I, int m, int J, int n, int verbose_level)
 		// pick the incidence according to the previous row:
 		j = inc->Encoding->theX[(i1 - 1) * inc->Encoding->dim_n + r] - j0;
 	}
+#endif
+
+
 	int ret;
 
 	ret = X_Fst(I, m, J, n, j, verbose_level);
@@ -1613,6 +1676,12 @@ int gen_geo::GeoXNxt(int I, int m, int J, int n, int verbose_level)
 
 	}
 
+	// ToDo: col_marker_remove:
+
+	Test_semicanonical->col_marker_remove(I, m, J, n,
+				i1, j0, r, old_x);
+
+#if 0
 	// remove vbar:
 	if (f_vbar[i1 * inc->Encoding->dim_n + r]) {
 		vbar[old_x + 1] = MAX_V;
@@ -1627,6 +1696,8 @@ int gen_geo::GeoXNxt(int I, int m, int J, int n, int verbose_level)
 			f_vbar[i1 * inc->Encoding->dim_n + r - 1] = TRUE;
 		}
 	}
+#endif
+
 
 #if 0
 	// diese Stelle ist gefaehrlich!
@@ -1652,12 +1723,18 @@ int gen_geo::GeoXNxt(int I, int m, int J, int n, int verbose_level)
 			continue;
 		}
 
+		// ToDo: col_marker_test:
+		if (Test_semicanonical->col_marker_test(j0, j, i1)) {
+			continue;
+		}
+#if 0
 		if (vbar[j0 + j] > i1) {
 			if (f_v) {
 				cout << "gen_geo::GeoXNxt I=" << I << " m=" << m << " J=" << J << " n=" << n << " j=" << j << " skipped because of vbar" << endl;
 			}
 			continue;
 		}
+#endif
 
 		inc->Encoding->theX[i1 * inc->Encoding->dim_n + r] = j0 + j;
 			// must be set before calling find_square
@@ -1683,6 +1760,13 @@ int gen_geo::GeoXNxt(int I, int m, int J, int n, int verbose_level)
 		inc->K[j0 + j]++;
 
 
+		// ToDo: col_marker_move_on:
+
+		Test_semicanonical->marker_move_on(I, m, J, n, j,
+				i1, j0, r,
+				verbose_level);
+
+#if 0
 		// generate new vbar to the left of this incidence:
 		if (vbar[j0 + j + 1] == i1) {
 			cout << "gen_geo::GeoXNxt vbar[j0 + j + 1] == i1" << endl;
@@ -1703,6 +1787,8 @@ int gen_geo::GeoXNxt(int I, int m, int J, int n, int verbose_level)
 				hbar[i1] = J;
 			}
 		}
+#endif
+
 
 		if (f_v) {
 			cout << "gen_geo::GeoXNxt I=" << I << " m=" << m << " J=" << J << " n=" << n << " returns TRUE" << endl;
@@ -1733,6 +1819,9 @@ void gen_geo::GeoXClear(int I, int m, int J, int n)
 	girth_test_delete_incidence(i1, r, old_x);
 
 
+	// ToDo: col_marker_remove:
+
+#if 0
 	// remove old vbar:
 	if (f_vbar[i1 * inc->Encoding->dim_n + r]) {
 		vbar[old_x + 1] = MAX_V;
@@ -1746,6 +1835,14 @@ void gen_geo::GeoXClear(int I, int m, int J, int n)
 			f_vbar[i1 * inc->Encoding->dim_n + r - 1] = TRUE;
 		}
 	}
+#endif
+
+
+	Test_semicanonical->col_marker_remove(I, m, J, n,
+				i1, j0, r, old_x);
+
+
+
 	inc->Encoding->theX[i1 * inc->Encoding->dim_n + r] = -1;
 	if (GB->Descr->f_lambda) {
 		k = inc->K[old_x];
@@ -1774,6 +1871,7 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j, int verbose_level)
 
 	j0 = C->j0;
 
+#if 0
 	// f_vbar must be off:
 	if (f_vbar[i1 * inc->Encoding->dim_n + r]) {
 		cout << "I = " << I << " m = " << m << ", J = " << J
@@ -1782,6 +1880,7 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j, int verbose_level)
 		cout << "X_Fst f_vbar[i1][r]" << endl;
 		exit(1);
 	}
+#endif
 
 	for (; j < C->b; j++) {
 
@@ -1793,6 +1892,12 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j, int verbose_level)
 			continue;
 		}
 
+		// ToDo: col_marker_test:
+
+		if (Test_semicanonical->col_marker_test(j0, j, i1)) {
+			continue;
+		}
+#if 0
 		if (vbar[j0 + j] > i1) {
 			// no vbar, skip
 			if (f_v) {
@@ -1800,6 +1905,7 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j, int verbose_level)
 			}
 			continue;
 		}
+#endif
 
 		inc->Encoding->theX[i1 * inc->Encoding->dim_n + r] = j0 + j;
 		// incidence must be recorded before we call find_square
@@ -1828,6 +1934,14 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j, int verbose_level)
 		inc->K[j0 + j]++;
 
 
+		// ToDo: col_marker_test_and_update:
+
+
+		Test_semicanonical->markers_test_and_update(I, m, J, n, j,
+				i1, j0, r,
+				verbose_level);
+
+#if 0
 		// manage vbar:
 
 		if (vbar[j0 + j] == i1) {
@@ -1861,6 +1975,8 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j, int verbose_level)
 			vbar[j0 + j + 1] = i1;
 		}
 
+
+		// ToDo: row_marker_test_and_update:
 		if (hbar[i1] > J) {
 			if (m == 0) {
 				cout << "gen_geo::X_Fst no hbar && m == 0" << endl;
@@ -1871,6 +1987,7 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j, int verbose_level)
 				hbar[i1] = J;
 			}
 		}
+#endif
 
 		return TRUE;
 

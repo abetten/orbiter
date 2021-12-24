@@ -33,6 +33,9 @@ classification_of_objects_report_options::classification_of_objects_report_optio
 
 	f_export_group = FALSE;
 
+	f_lex_least = FALSE;
+	//std::string lex_least_geometry_builder;
+
 }
 
 classification_of_objects_report_options::~classification_of_objects_report_options()
@@ -96,7 +99,11 @@ int classification_of_objects_report_options::read_arguments(
 			f_export_group = FALSE;
 			cout << "-dont_export_group" << endl;
 		}
-
+		else if (stringcmp(argv[i], "-lex_least") == 0) {
+			f_lex_least = TRUE;
+			lex_least_geometry_builder.assign(argv[++i]);
+			cout << "-lex_least" << lex_least_geometry_builder << endl;
+		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {
 			cout << "classification_of_objects_report_options::read_arguments -end" << endl;
@@ -133,6 +140,9 @@ void classification_of_objects_report_options::print()
 	}
 	if (f_export_group) {
 		cout << "-export_group" << endl;
+	}
+	if (f_lex_least) {
+		cout << "-lex_least" << lex_least_geometry_builder << endl;
 	}
 
 }

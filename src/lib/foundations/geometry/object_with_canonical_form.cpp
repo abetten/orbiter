@@ -128,6 +128,10 @@ void object_with_canonical_form::print_tex_detailed(std::ostream &ost, int f_sho
 
 		encode_incma(Enc, verbose_level);
 
+		Enc->latex_set_system_by_columns(ost, verbose_level);
+
+		Enc->latex_set_system_by_rows(ost, verbose_level);
+
 		Enc->latex_incma(ost, verbose_level);
 
 		FREE_OBJECT(Enc);

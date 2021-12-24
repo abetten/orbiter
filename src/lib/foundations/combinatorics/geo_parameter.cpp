@@ -328,7 +328,7 @@ void geo_parameter::convert_single_to_stack(int verbose_level)
 
 
 	if (fuse_type == FUSE_TYPE_SIMPLE) {
-		tdo_scheme G;
+		//tdo_scheme G;
 		
 		
 		if (decomposition_type == POINTTACTICAL) {
@@ -344,7 +344,7 @@ void geo_parameter::convert_single_to_stack(int verbose_level)
 		}
 	}
 	else if (fuse_type == FUSE_TYPE_DOUBLE) {
-		tdo_scheme G;
+		//tdo_scheme G;
 		
 		
 		if (decomposition_type == POINTTACTICAL) {

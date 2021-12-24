@@ -520,6 +520,25 @@ void orbiter_symbol_table_entry::init_combinatorial_objects(std::string &label,
 	}
 }
 
+void orbiter_symbol_table_entry::init_geometry_builder_object(std::string &label,
+		geometry_builder *GB, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_geometry_builder_object" << endl;
+	}
+	orbiter_symbol_table_entry::label.assign(label);
+	type = t_object;
+	object_type = t_geometry_builder;
+	ptr = GB;
+	if (f_v) {
+		cout << "orbiter_symbol_table_entry::init_geometry_builder_object done" << endl;
+	}
+}
+
+
+
 
 void orbiter_symbol_table_entry::print()
 {
@@ -611,6 +630,14 @@ void orbiter_symbol_table_entry::print()
 		else if (object_type == t_vector) {
 			cout << "vector" << endl;
 		}
+		else if (object_type == t_combinatorial_objects) {
+			cout << "combinatorial_objects" << endl;
+		}
+		else if (object_type == t_geometry_builder) {
+			cout << "geometry_builder" << endl;
+		}
+
+
 
 
 #if 0

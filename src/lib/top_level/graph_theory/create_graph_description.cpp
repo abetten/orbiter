@@ -90,6 +90,10 @@ create_graph_description::create_graph_description()
 	f_collinearity_graph = FALSE;
 	//std::string collinearity_graph_matrix;
 
+	f_chain_graph = FALSE;
+	//std::string chain_graph_partition_1;
+	//std::string chain_graph_partition_2;
+
 }
 
 
@@ -274,8 +278,17 @@ int create_graph_description::read_arguments(
 						<< collinearity_graph_matrix << endl;
 			}
 		}
-
-
+		else if (stringcmp(argv[i], "-chain_graph") == 0) {
+			f_chain_graph = TRUE;
+			chain_graph_partition_1.assign(argv[++i]);
+			chain_graph_partition_2.assign(argv[++i]);
+			if (f_v) {
+				cout << "-chain_graph "
+						<< " " << chain_graph_partition_1
+						<< " " << chain_graph_partition_2
+						<< endl;
+			}
+		}
 
 		else if (M.check_and_parse_argument(
 				argc, i, argv,
@@ -365,6 +378,12 @@ void create_graph_description::print()
 	if (f_collinearity_graph) {
 		cout << "-collinearity_graph "
 				<< collinearity_graph_matrix << endl;
+	}
+	if (f_chain_graph) {
+		cout << "-chain_graph "
+				<< " " << chain_graph_partition_1
+				<< " " << chain_graph_partition_2
+				<< endl;
 	}
 
 	int i;
