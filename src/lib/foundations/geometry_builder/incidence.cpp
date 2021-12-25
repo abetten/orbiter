@@ -23,14 +23,6 @@ incidence::incidence()
 
 	pairs = NULL;
 
-#if 0
-	// initial vbar / hbar
-	nb_i_vbar = 0;
-	i_vbar = NULL;
-	nb_i_hbar = 0;
-	i_hbar = NULL;
-#endif
-
 	row_partition = NULL;
 	col_partition = NULL;
 	Partition = NULL;
@@ -68,14 +60,6 @@ incidence::~incidence()
 	if (Encoding) {
 		FREE_OBJECT(Encoding);
 	}
-#if 0
-	if (i_vbar) {
-		FREE_int(i_vbar);
-	}
-	if (i_hbar) {
-		FREE_int(i_hbar);
-	}
-#endif
 
 	if (row_partition) {
 		FREE_int(row_partition);
@@ -91,6 +75,7 @@ incidence::~incidence()
 		}
 		FREE_pint(Partition);
 	}
+
 	if (iso_type_at_line) {
 		int i;
 
@@ -354,7 +339,7 @@ int incidence::find_square(int m, int n)
 
 void incidence::print_param()
 {
-	int i;
+	//int i;
 
 	cout << "V = " << Encoding->v << ", B = " << Encoding->b << endl;
 
