@@ -419,23 +419,12 @@ public:
 
 
 // globals.cpp:
-#if 0
-void inc_transpose(int *R,
-	int *theX, int f_full, int max_r,
-	int v, int b,
-	int **theY, int *theYdim_n, int **R_new);
-#endif
 int tuple_cmp(int *a, int *b, int l);
 void print_theX(int *theX, int dim_n, int v, int b, int *R);
 void print_theX_pq(
 	int *theX, int dim_n, int v, int b, int *R, cperm *pv, cperm *qv);
 
 void cperm_test(void);
-
-#if 0
-void frame2grid(geo_frame *frame, grid *grid);
-int tdos_cmp(tdo_scheme *t1, tdo_scheme *t2, int verbose_level);
-#endif
 
 int true_false_string_numeric(const char *p);
 
@@ -744,13 +733,13 @@ public:
 	void init(gen_geo *gg, int MAX_V, int verbose_level);
 	void init_bars(int verbose_level);
 	void print();
-	void markers_test_and_update(int I, int m, int J, int n, int j,
+	void markers_update(int I, int m, int J, int n, int j,
 			int i1, int j0, int r,
 			int verbose_level);
 	void marker_move_on(int I, int m, int J, int n, int j,
 			int i1, int j0, int r,
 			int verbose_level);
-	int row_starter(int I, int m, int J, int n, int j,
+	int row_starter(int I, int m, int J, int n,
 			int i1, int j0, int r,
 			int verbose_level);
 	void row_init(int I, int m, int J,

@@ -269,9 +269,6 @@ void gen_geo::init_tdo_line(int fuse_idx, int tdo_line,
 
 
 
-	//int V, B;
-
-	//V = 0;
 	for (j = 0; j < GB->b_len; j++) {
 
 		if (f_v) {
@@ -309,33 +306,9 @@ void gen_geo::init_tdo_line(int fuse_idx, int tdo_line,
 
 		if (j == GB->b_len - 1) {
 			rr = Conf[tdo_line * GB->b_len + j].r0 + Conf[tdo_line * GB->b_len + j].r;
-#if 0
-			if (rr >= MAX_R) {
-				cout << "geo_tdo_init rr >= MAX_R" << endl;
-				exit(1);
-			}
-#endif
-			//max_r = MAXIMUM(max_r, rr);
 		}
-#if 0
-		for (i = i0; i < i0 + v; i++) {
-			//inc->R[i] = rr;
-			R[i] = rr;
-		}
-#endif
-		//V += v;
 	}
 
-#if 0
-	if (f_v) {
-		cout << "gen_geo::init_tdo_line computing B" << endl;
-	}
-	inc->Encoding->b = 0;
-	for (j = 0; j < GB->b_len; j++) {
-		inc->Encoding->b += b[j];
-	}
-	B = inc->Encoding->b;
-#endif
 
 	if (f_v) {
 		cout << "gen_geo::init_tdo_line done" << endl;
@@ -357,36 +330,11 @@ void gen_geo::print_conf()
 void gen_geo::init_bars_and_partition(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int i;
 
 	if (f_v) {
 		cout << "gen_geo::init_bars_and_partition" << endl;
 	}
-#if 0
-	f_vbar = NEW_int(GB->V * inc->Encoding->dim_n);
 
-	for (i = 0; i < GB->V * inc->Encoding->dim_n; i++) {
-		f_vbar[i] = FALSE;
-	}
-
-	hbar = NEW_int(GB->V + 1);
-	for (i = 0; i <= GB->V; i++) {
-		hbar[i] = INT_MAX;
-	}
-
-	vbar = NEW_int(GB->B + 1);
-	for (i = 0; i <= GB->B; i++) {
-		vbar[i] = INT_MAX;
-	}
-
-	if (f_v) {
-		cout << "gen_geo::init_bars_and_partition before inc->init_bars" << endl;
-	}
-	inc->init_bars(verbose_level);
-	if (f_v) {
-		cout << "gen_geo::init_bars_and_partition after inc->init_bars" << endl;
-	}
-#endif
 	Test_semicanonical = NEW_OBJECT(test_semicanonical);
 
 	if (f_v) {
@@ -580,7 +528,8 @@ void gen_geo::print_pairs(int line)
 	}
 }
 
-void gen_geo::main2(int &nb_GEN, int &nb_GEO, int &ticks, int &tps, int verbose_level)
+void gen_geo::main2(int &nb_GEN, int &nb_GEO,
+		int &ticks, int &tps, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	os_interface Os;
@@ -716,7 +665,7 @@ void gen_geo::generate_all(int verbose_level)
 
 	int ret = FALSE;
 	int f_already_there;
-	int s_nb_i_vbar, s_nb_i_hbar;
+	//int s_nb_i_vbar, s_nb_i_hbar;
 	iso_type *it0, *it1;
 
 	if (f_v) {
@@ -767,8 +716,8 @@ void gen_geo::generate_all(int verbose_level)
 		if (f_v) {
 			cout << "gen_geo::generate_all nb_GEN=" << inc->gl_nb_GEN << endl;
 			inc->print(cout, inc->Encoding->v, inc->Encoding->v);
-			cout << "pairs:" << endl;
-			inc->print_pairs(inc->Encoding->v);
+			//cout << "pairs:" << endl;
+			//inc->print_pairs(inc->Encoding->v);
 
 #if 0
 			if ((inc->gl_nb_GEN % gen_print_intervall) == 0) {
@@ -1602,7 +1551,7 @@ int gen_geo::GeoXFst(int I, int m, int J, int n, int verbose_level)
 
 	// ToDo: row_starter:
 
-	j = Test_semicanonical->row_starter(I, m, J, n, j,
+	j = Test_semicanonical->row_starter(I, m, J, n,
 			i1, j0, r,
 			verbose_level);
 
@@ -1934,10 +1883,10 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j, int verbose_level)
 		inc->K[j0 + j]++;
 
 
-		// ToDo: col_marker_test_and_update:
+		// ToDo: col_markers_update:
 
 
-		Test_semicanonical->markers_test_and_update(I, m, J, n, j,
+		Test_semicanonical->markers_update(I, m, J, n, j,
 				i1, j0, r,
 				verbose_level);
 

@@ -14,69 +14,6 @@ using namespace std;
 namespace orbiter {
 namespace foundations {
 
-#if 0
-void inc_transpose(int *R,
-	int *theX, int f_full, int max_r,
-	int v, int b,
-	int **theY, int *theYdim_n, int **R_new)
-/* theX vom format v x inc->max_r
- * bzw. v x MAX_R falls f_full;
- * theY wird allociert auf b x theYdim_n.
- * R[] bestimmt die Ausmasse von theX.
- * R_new wird allociert b.
- * theYdim_n wird auf die max. vorkommende
- * Anzahl Kreuze pro Spalte gesetzt. */
-{
-	int dim_n;
-	int *theY1, *R1, i, r, j;
-
-	*theY = NULL;
-	*R_new = NULL;
-	if (f_full)
-		dim_n = MAX_R;
-	else
-		dim_n = max_r;
-	R1 = new int [b];
-
-	for (i = 0; i < b; i++) {
-		R1[i] = 0;
-	}
-	*theYdim_n = 0;
-	for (i = 0; i < v; i++) {
-		if (R[i] >= MAX_R) {
-			cout << "inc_transpose R[i] >= MAX_R" << endl;
-			exit(1);
-		}
-		for (r = 0; r < R[i]; r++) {
-			j = theX[i * dim_n + r];
-			R1[j]++;
-			if (R1[j] >= MAX_R) {
-				cout << "inc_transpose R1[j] >= MAX_R" << endl;
-				exit(1);
-			}
-			*theYdim_n = MAX(*theYdim_n, R1[j]);
-		}
-	}
-	for (i = 0; i < b; i++) {
-		R1[i] = 0;
-	}
-
-	theY1 = new int [b * *theYdim_n];
-
-	for (i = 0; i < v; i++) {
-		for (r = 0; r < R[i]; r++) {
-			j = theX[i * dim_n + r];
-			theY1[j * *theYdim_n + R1[j] ] = i;
-			R1[j]++;
-		}
-	}
-
-	*theY = theY1;
-	*R_new = R1;
-}
-
-#endif
-
 
 int tuple_cmp(int *a, int *b, int l)
 {
@@ -158,68 +95,6 @@ void cperm_test(void)
 #endif
 }
 
-
-#if 0
-void frame2grid(geo_frame *frame, grid *G)
-/* kopiert alles ausser type_idx[],
- * type[][], f_points, m, n. */
-{
-	int i, j, first, len;
-
-	G->G_max = frame->G_max;
-	for (i = 0; i < frame->G_max; i++) {
-		first = frame->first[i];
-		len = frame->len[i];
-		G->first[i] = first;
-		G->len[i] = len;
-		for (j = 0; j < len; j++) {
-			G->grid_entry[first + j] = i;
-		}
-	}
-	G->first[i] = frame->first[i];
-}
-
-int tdos_cmp(tdo_scheme *t1, tdo_scheme *t2, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "tdos_cmp" << endl;
-		cout << "tdos_cmp t1=" << endl;
-		t1->print();
-		cout << "tdos_cmp t2=" << endl;
-		t2->print();
-	}
-	int m, n, i, l;
-
-	if (t1->m < t2->m) {
-		return -1;
-	}
-	if (t1->m > t2->m) {
-		return 1;
-	}
-	if (t1->n < t2->n) {
-		return -1;
-	}
-	if (t1->n > t2->n) {
-		return 1;
-	}
-
-	m = t1->m + 1;
-	n = t1->n + 1;
-
-	l = m * n;
-	for (i = 0; i < l; i++) {
-		if (t1->a[i] < t2->a[i]) {
-			return -1;
-		}
-		if (t1->a[i] > t2->a[i]) {
-			return +1;
-		}
-	}
-	return 0;
-}
-#endif
 
 int true_false_string_numeric(const char *p)
 {

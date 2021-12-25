@@ -11621,13 +11621,24 @@ geo_10_3:
 			-V 10 -B 10 -TDO 3 -fuse 1 \
 			-fname_GEO 10_3 \
 			-test Test_lines FFFF \
-			-f_orderly \
 		-end
 
 
 
 # 10 geos
 # 8/26/2021: 0 sec on Mac
+
+
+geo_10_3_orderly:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Test_lines -set -loop 4 11 1 -end \
+		-define Geo -geometry_builder \
+			-V 10 -B 10 -TDO 3 -fuse 1 \
+			-fname_GEO 10_3 \
+			-test Test_lines FFFF \
+			-f_orderly \
+		-end
+
 
 
 geo_10_3_tree:
@@ -11683,6 +11694,15 @@ geo_12_3:
 #nb_calls_to_densenauty=24586
 
 
+geo_12_3_orderly:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Test_lines -set -loop 4 13 1 -end \
+		-define Geo -geometry_builder \
+			-V 12 -B 12 -TDO 3 \
+			-fuse 1 -fname_GEO 12_3 \
+			-test Test_lines FFFF \
+			-f_orderly \
+		-end
 
 
 
@@ -11699,6 +11719,15 @@ geo_13_3:
 #User time: 0:4
 #nb_calls_to_densenauty=216777
 
+geo_13_3_orderly:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Test_lines -set -loop 4 14 1 -end \
+		-define Geo -geometry_builder \
+			-V 13 -B 13 -TDO 3 \
+			-fuse 1 -fname_GEO 13_3 \
+			-test Test_lines FFFF \
+			-f_orderly \
+		-end
 
 geo_14_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -11713,6 +11742,18 @@ geo_14_3:
 #User time: 0:55
 #nb_calls_to_densenauty=2089344
 
+
+geo_14_3_orderly:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Test_lines -set -loop 4 15 1 -end \
+		-define Geo -geometry_builder \
+			-V 14 -B 14 -TDO 3 \
+			-fuse 1 -fname_GEO 14_3 \
+			-test Test_lines FFFF \
+			-f_orderly \
+		-end
+
+#User time: 0:50
 
 
 15_3.inc:
@@ -13770,36 +13811,6 @@ F_alpha_beta_gamma_delta_classify_q7_nauty:
 SECTION_INCIDENCE_GEOMETRIES:
 
 
-AG_2_3_c: AG_2_3.inc
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define C -combinatorial_objects \
-			-file_of_incidence_geometries \
-			AG_2_3.inc 9 12 36 \
-		-end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form \
-				-classification_prefix AG_2_3 \
-				-label AG_2_3 \
-				-save_ago \
-				-max_TDO_depth 10 \
-			-end \
-			-report \
-				-prefix AG_2_3 \
-				-export_flag_orbits \
-				-show_TDO \
-				-show_TDA \
-				-show_incidence_matrices \
-			-end \
-		-end
-	pdflatex AG_2_3_classification.tex
-	open AG_2_3_classification.pdf
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
-		-input_csv_file AG_2_3_object0_INP_flag_orbits.csv \
-		-secondary_input_csv_file AG_2_3_object0_INP.csv \
-		-box_width 40 -bit_depth 24 \
-		-end
-	open AG_2_3_object0_INP_flag_orbits_draw.bmp
 
 
 
@@ -13956,6 +13967,39 @@ geo_40_4_g4_c:
 
 
 
+AG_2_3_c: AG_2_3.inc
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define C -combinatorial_objects \
+			-file_of_incidence_geometries \
+			AG_2_3.inc 9 12 36 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-classification_prefix AG_2_3 \
+				-label AG_2_3 \
+				-save_ago \
+				-max_TDO_depth 10 \
+			-end \
+			-report \
+				-prefix AG_2_3 \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-show_incidence_matrices \
+			-end \
+		-end
+	pdflatex AG_2_3_classification.tex
+	open AG_2_3_classification.pdf
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file AG_2_3_object0_INP_flag_orbits.csv \
+		-secondary_input_csv_file AG_2_3_object0_INP.csv \
+		-box_width 40 -bit_depth 24 \
+		-end
+	open AG_2_3_object0_INP_flag_orbits_draw.bmp
+
+
+
 # ToDo:
 
 quartic_curve_25_0_0_canonical: 
@@ -14083,8 +14127,9 @@ code_3_2_aut:
 		-projective_space_activity \
 			-canonical_form_of_code \
 				"3_2" genma -save_ago -label "3_2" \
-				-classification_prefix "3_2" -end \
-			-end
+				-classification_prefix "3_2" \
+			-end \
+		-end
 	pdflatex 3_2_classification.tex
 	open 3_2_classification.pdf
 	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
@@ -14108,8 +14153,9 @@ code_6_3_aut:
 		-projective_space_activity \
 			-canonical_form_of_code \
 				"6_3" genma -save_ago -label "6_3" \
-				-classification_prefix "6_3" -end \
-			-end
+				-classification_prefix "6_3" \
+			-end \
+		-end
 	pdflatex 6_3_classification.tex
 	open 6_3_classification.pdf
 	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
@@ -14133,8 +14179,9 @@ RM_3_1_group:
 		-projective_space_activity \
 			-canonical_form_of_code \
 				"RM_3_1" genma -save_ago -label "RM_3_1" \
-				-classification_prefix "RM_3_1" -end \
-			-end
+				-classification_prefix "RM_3_1" \
+			-end \
+		-end
 	pdflatex RM_3_1_classification.tex
 	open RM_3_1_classification.pdf
 
@@ -14152,8 +14199,9 @@ RM_3_1_group_and_diagram:
 		-projective_space_activity \
 			-canonical_form_of_code \
 				"RM_3_1" genma -save_ago -label "RM_3_1" \
-				-classification_prefix "RM_3_1" -end \
-			-end
+				-classification_prefix "RM_3_1" \
+			-end \
+		-end
 	pdflatex RM_3_1_classification.tex
 	open RM_3_1_classification.pdf
 	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
@@ -14182,8 +14230,9 @@ RM_4_1_group:
 		-projective_space_activity \
 			-canonical_form_of_code \
 				"RM_4_1" genma -save_ago -label "RM_4_1" \
-				-classification_prefix "RM_4_1" -end \
-			-end
+				-classification_prefix "RM_4_1" \
+			-end \
+		-end
 	pdflatex RM_4_1_classification.tex
 	open RM_4_1_classification.pdf
 	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
@@ -14214,8 +14263,9 @@ RS_6_4_7_group:
 		-projective_space_activity \
 			-canonical_form_of_code \
 				"RS_6" genma -save_ago -label "RS_6" \
-				-classification_prefix "RS_6" -end \
-			-end
+				-classification_prefix "RS_6" \
+			-end \
+		-end
 	#pdflatex RS_6_classification.tex
 	#open RS_6_classification.pdf
 	#$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
@@ -14238,8 +14288,9 @@ GV_n15_k6_d5_group:
 		-projective_space_activity \
 			-canonical_form_of_code \
 				"GV_n15_k6_d5" genma -save_ago -label "GV_n15_k6_d5" \
-				-classification_prefix "GV_n15_k6_d5" -end \
-			-end
+				-classification_prefix "GV_n15_k6_d5" \
+			-end \
+		-end
 	pdflatex GV_n15_k6_d5_classification.tex
 	open GV_n15_k6_d5_classification.pdf
 
@@ -14258,8 +14309,9 @@ code_n15_k6_d6_a_group:
 		-projective_space_activity \
 			-canonical_form_of_code \
 				"n15_k6_d6_a" genma -save_ago -label "n15_k6_d6_a" \
-				-classification_prefix "n15_k6_d6_a" -end \
-			-end
+				-classification_prefix "n15_k6_d6_a" \
+			-end \
+		-end
 	pdflatex n15_k6_d6_a_classification.tex
 	open n15_k6_d6_a_classification.pdf
 
@@ -14275,8 +14327,9 @@ code_n15_k6_d6_b_group:
 		-projective_space_activity \
 			-canonical_form_of_code \
 				"n15_k6_d6_b" genma -save_ago -label "n15_k6_d6_b" \
-				-classification_prefix "n15_k6_d6_b" -end \
-			-end
+				-classification_prefix "n15_k6_d6_b" \
+			-end \
+		-end
 	pdflatex n15_k6_d6_b_classification.tex
 	open n15_k6_d6_b_classification.pdf
 
@@ -14288,6 +14341,28 @@ code_n15_k6_d6_b_group:
 
 
 SECTION_CANONICAL_FORMS_OF_GENERAL_CODES:
+
+
+
+Hamming_graph_7_with_Hamming_code:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define G -graph -Hamming 7 2 \
+			-subset "_Hamming_code" "\\_with\\_Hamming\\_code" \
+			$(HAMMING_CODE_CODEWORDS) -end \
+		-with G -do \
+		-graph_theoretic_activity -export_csv -end \
+		-with G -do \
+		-graph_theoretic_activity -export_graphviz -end \
+		-with G -do \
+		-graph_theoretic_activity -save -end \
+		-with G -do \
+		-graph_theoretic_activity -automorphism_group -end
+	pdflatex Hamming_7_2_Hamming_code_report.tex
+	open Hamming_7_2_Hamming_code_report.pdf
+
+# group of order 2688 = 16 * 168
+
+
 
 
 #############################################################################################################
@@ -14322,7 +14397,7 @@ Chain_232_aut:
 
 
 
-load_graph_pp16_1:
+JK_graph_pp16_1:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Gamma -graph -load_dimacs \
 		../JUNTTILA_KASKI/benchmarks/pp/pp16-1 \
@@ -14336,7 +14411,7 @@ load_graph_pp16_1:
 #nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack1 = 6
 #nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: nb_backtrack2 = 134
 
-load_graph_pp16_2:
+JK_graph_pp16_2:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Gamma -graph -load_dimacs \
 		../JUNTTILA_KASKI/benchmarks/pp/pp16-2 \
@@ -14348,7 +14423,7 @@ load_graph_pp16_2:
 
 # does not finish
 
-load_graph_pp16_9:
+JK_graph_pp16_9:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Gamma -graph -load_dimacs \
 		../JUNTTILA_KASKI/benchmarks/pp/pp16-9 \
@@ -14359,7 +14434,7 @@ load_graph_pp16_9:
 		-graph_theoretic_activity -automorphism_group -end \
 
 
-load_graph_grid_3_3:
+JK_graph_grid_3_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Gamma -graph -load_dimacs \
 		../JUNTTILA_KASKI/benchmarks/grid/grid-w-3-3 \
@@ -14377,7 +14452,7 @@ load_graph_grid_3_3:
 #nb_calls_to_densenauty=1
 
 
-load_graph_sts_13:
+JK_graph_sts_13:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Gamma -graph -load_dimacs \
 			../JUNTTILA_KASKI/benchmarks/srg/sts-13 \
@@ -14459,23 +14534,6 @@ HJ_orbital_graph_3:
 
 
 
-Hamming_graph_7_with_Hamming_code:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define G -graph -Hamming 7 2 \
-			-subset "_Hamming_code" "\\_with\\_Hamming\\_code" \
-			$(HAMMING_CODE_CODEWORDS) -end \
-		-with G -do \
-		-graph_theoretic_activity -export_csv -end \
-		-with G -do \
-		-graph_theoretic_activity -export_graphviz -end \
-		-with G -do \
-		-graph_theoretic_activity -save -end \
-		-with G -do \
-		-graph_theoretic_activity -automorphism_group -end
-	pdflatex Hamming_7_2_Hamming_code_report.tex
-	open Hamming_7_2_Hamming_code_report.pdf
-
-# group of order 2688 = 16 * 168
 
 
 PGO_5_2_graph_group: O_5_2_incidence_matrix.csv 
