@@ -49,11 +49,6 @@ object_with_canonical_form::object_with_canonical_form()
 
 object_with_canonical_form::~object_with_canonical_form()
 {
-	freeself();
-}
-
-void object_with_canonical_form::freeself()
-{
 	if (set) {
 		FREE_lint(set);
 	}

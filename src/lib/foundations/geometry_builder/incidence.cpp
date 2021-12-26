@@ -23,10 +23,6 @@ incidence::incidence()
 
 	pairs = NULL;
 
-	row_partition = NULL;
-	col_partition = NULL;
-	Partition = NULL;
-
 	gl_nb_GEN = 0;
 
 	iso_type_at_line = NULL;
@@ -61,20 +57,6 @@ incidence::~incidence()
 		FREE_OBJECT(Encoding);
 	}
 
-	if (row_partition) {
-		FREE_int(row_partition);
-	}
-	if (col_partition) {
-		FREE_int(col_partition);
-	}
-	if (Partition) {
-		int i;
-
-		for (i = 0; i <= gg->GB->V; i++) {
-			FREE_int(Partition[i]);
-		}
-		FREE_pint(Partition);
-	}
 
 	if (iso_type_at_line) {
 		int i;
@@ -150,138 +132,7 @@ void incidence::init(gen_geo *gg, int v, int b, int *R, int verbose_level)
 	}
 }
 
-#if 0
-void incidence::init_bars(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int j;
 
-	if (f_v) {
-		cout << "incidence::init_bars" << endl;
-	}
-	if (f_v) {
-		cout << "incidence::init_bars before i_hbar" << endl;
-	}
-	i_vbar = NEW_int(gg->GB->b_len + 1);
-	i_hbar = NEW_int(gg->GB->v_len + 1);
-
-
-
-	nb_i_vbar = 0;
-
-	for (j = 0; j < gg->GB->b_len; j++) {
-		if (f_v) {
-			cout << "j=" << j << endl;
-		}
-		gg->vbar[gg->Conf[0 * gg->GB->b_len + j].j0] = -1;
-
-		i_vbar[nb_i_vbar++] = gg->Conf[0 * gg->GB->b_len + j].j0;
-
-	}
-
-	if (gg->GB->Descr->f_orderly) {
-		int i;
-
-		// set all hbars because we are doing orderly generation:
-		for (i = 0; i <= gg->GB->V; i++) {
-			gg->hbar[i] = -1;
-		}
-#if 0
-		nb_i_hbar = 0;
-		for (i = 0; i <= gg->GB->V; i++) {
-			i_hbar[nb_i_hbar++] = i;
-		}
-#endif
-	}
-	else {
-		nb_i_hbar = 0;
-		i_hbar[nb_i_hbar++] = 0;
-	}
-
-	if (f_v) {
-		cout << "incidence::init_bars done" << endl;
-	}
-
-}
-#endif
-
-void incidence::init_partition(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i, j, I, J;
-
-	if (f_v) {
-		cout << "incidence::init_partition" << endl;
-	}
-	row_partition = NEW_int(gg->GB->V);
-	col_partition = NEW_int(gg->GB->B);
-
-	for (i = 0; i < gg->GB->V; i++) {
-		row_partition[i] = 1;
-	}
-	for (j = 0; j < gg->GB->B; j++) {
-		col_partition[j] = 1;
-	}
-
-
-	for (I = 0; I < gg->GB->v_len; I++) {
-
-		i = gg->Conf[I * gg->GB->b_len + 0].i0 + gg->Conf[I * gg->GB->b_len + 0].v - 1;
-
-		if (f_v) {
-			cout << "I=" << I << " i=" << i << endl;
-		}
-
-		row_partition[i] = 0;
-
-	}
-
-
-	for (J = 0; J < gg->GB->b_len; J++) {
-
-		j = gg->Conf[0 * gg->GB->b_len + J].j0 + gg->Conf[0 * gg->GB->b_len + J].b - 1;
-
-		if (f_v) {
-			cout << "J=" << J << " j=" << j << endl;
-		}
-
-		col_partition[j] = 0;
-
-	}
-
-	if (f_v) {
-		cout << "row_partition: ";
-		Orbiter->Int_vec.print(cout, row_partition, gg->GB->V);
-		cout << endl;
-
-		cout << "col_partition: ";
-		Orbiter->Int_vec.print(cout, col_partition, gg->GB->B);
-		cout << endl;
-	}
-
-	Partition = NEW_pint(gg->GB->V + 1);
-
-	for (i = 0; i <= gg->GB->V; i++) {
-		Partition[i] = NEW_int(i + gg->GB->B);
-		Orbiter->Int_vec.copy(row_partition, Partition[i], i);
-		if (i) {
-			Partition[i][i - 1] = 0;
-		}
-		Orbiter->Int_vec.copy(col_partition, Partition[i] + i, gg->GB->B);
-
-		if (f_v) {
-			cout << "Partition[" << i << "]: ";
-			Orbiter->Int_vec.print(cout, Partition[i], i + gg->GB->B);
-			cout << endl;
-		}
-	}
-
-
-	if (f_v) {
-		cout << "incidence::init_partition done" << endl;
-	}
-
-}
 
 
 void incidence::init_pairs(int verbose_level)
@@ -430,7 +281,7 @@ void incidence::install_isomorphism_test_after_a_given_row(
 	}
 	if (row > 0 && row <= Encoding->v) {
 		iso_type_at_line[row - 1] = NEW_OBJECT(iso_type);
-		iso_type_at_line[row - 1]->init(row, this, tdo_flags, f_orderly, verbose_level);
+		iso_type_at_line[row - 1]->init(gg, row, this, tdo_flags, f_orderly, verbose_level);
 	}
 	else {
 		cout << "incidence::install_isomorphism_test_after_a_given_row "
@@ -453,7 +304,7 @@ void incidence::install_isomorphism_test_of_second_kind_after_a_given_row(
 	}
 	if (row > 0 && row < Encoding->v) {
 		iso_type_at_line[row - 1] = NEW_OBJECT(iso_type);
-		iso_type_at_line[row - 1]->init(row, this, tdo_flags, f_orderly, verbose_level);
+		iso_type_at_line[row - 1]->init(gg, row, this, tdo_flags, f_orderly, verbose_level);
 		iso_type_at_line[row - 1]->second();
 	}
 	else {
@@ -475,30 +326,6 @@ void incidence::set_split(int row, int remainder, int modulo)
 	}
 }
 
-void incidence::set_flush_to_inc_file(int row, std::string &fname)
-// opens the geo_file and stores the file pointer is it->fp
-{
-	if (row > 0 && row <= Encoding->v) {
-		//iso_type_at_line[i - 1]->open_inc_file(fname);
-	}
-
-}
-
-
-void incidence::set_flush_line(int row)
-{
-	iso_type *it;
-
-	if (row > 0 && row < Encoding->v) {
-		it = iso_type_at_line[row - 1];
-		it->set_flush_line();
-	}
-	else {
-		cout << "incidence::incidence_set_flush_line out of range: "
-				"row = " << row << ", v = " << Encoding->v << endl;
-		exit(1);
-	}
-}
 
 
 void incidence::print_geo(std::ostream &ost, int v, int *theGEO)

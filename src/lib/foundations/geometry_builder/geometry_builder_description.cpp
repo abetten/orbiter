@@ -41,6 +41,7 @@ geometry_builder_description::geometry_builder_description()
 	f_simple = FALSE; /* JS 180100 */
 
 	f_search_tree = FALSE;
+	f_search_tree_flags = FALSE;
 
 	f_orderly = FALSE;
 
@@ -136,6 +137,12 @@ int geometry_builder_description::read_arguments(
 				cout << "-search_tree " << endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-search_tree_flags") == 0) {
+			f_search_tree_flags = TRUE;
+			if (f_v) {
+				cout << "-search_tree_flags " << endl;
+			}
+		}
 		else if (stringcmp(argv[i], "-orderly") == 0) {
 			f_orderly = TRUE;
 			if (f_v) {
@@ -168,7 +175,8 @@ int geometry_builder_description::read_arguments(
 			split_remainder = strtoi(argv[++i]);
 			split_modulo = strtoi(argv[++i]);
 			if (f_v) {
-				cout << "-split " << split_line << " " << split_remainder << " " << split_modulo << endl;
+				cout << "-split " << split_line << " "
+						<< split_remainder << " " << split_modulo << endl;
 			}
 		}
 		else if (stringcmp(argv[i], "-print_at_line") == 0) {
@@ -229,6 +237,9 @@ void geometry_builder_description::print()
 	}
 	if (f_search_tree) {
 		cout << "-search_tree " << endl;
+	}
+	if (f_search_tree_flags) {
+		cout << "-search_tree_flags " << endl;
 	}
 	if (f_orderly) {
 		cout << "-orderly " << endl;

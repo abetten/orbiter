@@ -167,13 +167,8 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 		cout << "geometry_builder::init_description set_flush_to_inc_file" << endl;
 	}
 
-	if (gg->inc_file_name.length()) {
-		gg->inc->set_flush_to_inc_file(V, gg->inc_file_name);
-	}
 
-
-
-	gg->print_conf();
+	//gg->print_conf();
 
 
 
@@ -360,7 +355,7 @@ void geometry_builder::isot(int line,
 void geometry_builder::isot_no_vhbars(int tdo_flags, int verbose_level)
 {
 	gg->inc->iso_type_no_vhbars = new iso_type;
-	gg->inc->iso_type_no_vhbars->init(V, gg->inc, tdo_flags, Descr->f_orderly, verbose_level);
+	gg->inc->iso_type_no_vhbars->init(gg, V, gg->inc, tdo_flags, Descr->f_orderly, verbose_level);
 }
 
 void geometry_builder::isot2(int line, int tdo_flags, int verbose_level)
@@ -372,11 +367,6 @@ void geometry_builder::isot2(int line, int tdo_flags, int verbose_level)
 void geometry_builder::set_split(int line, int remainder, int modulo)
 {
 	gg->inc->set_split(line, remainder, modulo);
-}
-
-void geometry_builder::flush_line(int line)
-{
-	gg->inc->set_flush_line(line);
 }
 
 

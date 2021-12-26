@@ -125,9 +125,11 @@ void test_semicanonical::init_bars(int verbose_level)
 		if (f_v) {
 			cout << "j=" << j << endl;
 		}
-		vbar[gg->Conf[0 * gg->GB->b_len + j].j0] = -1;
+		gen_geo_conf *C = gg->Decomposition_with_fuse->get_conf_IJ(0, j);
 
-		i_vbar[nb_i_vbar++] = gg->Conf[0 * gg->GB->b_len + j].j0;
+		vbar[C->j0] = -1;
+
+		i_vbar[nb_i_vbar++] = C->j0;
 
 	}
 

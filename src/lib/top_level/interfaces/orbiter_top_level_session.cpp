@@ -101,6 +101,9 @@ void orbiter_top_level_session::handle_everything(int argc, std::string *Argv, i
 			srand(Orbiter_session->the_seed);
 			Os.random_integer(1000);
 		}
+		if (Orbiter_session->f_memory_debug) {
+			::f_memory_debug = TRUE;
+		}
 
 		// main dispatch:
 
@@ -109,8 +112,18 @@ void orbiter_top_level_session::handle_everything(int argc, std::string *Argv, i
 
 		// finish:
 
-		if (f_memory_debug) {
+		if (Orbiter_session->f_memory_debug) {
+			if (f_v) {
+				cout << "orbiter_top_level_session::handle_everything memory_debug "
+						"before global_mem_object_registry.dump" << endl;
+			}
 			global_mem_object_registry.dump();
+			global_mem_object_registry.dump_to_csv_file("orbiter_memory_dump.cvs");
+			global_mem_object_registry.sort_by_location_and_get_frequency(verbose_level);
+			if (f_v) {
+				cout << "orbiter_top_level_session::handle_everything memory_debug "
+						"after global_mem_object_registry.dump" << endl;
+			}
 		}
 	}
 	if (f_v) {

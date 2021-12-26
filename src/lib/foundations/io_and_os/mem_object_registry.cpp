@@ -968,8 +968,7 @@ void mem_object_registry::sort_by_location_and_get_frequency(
 	sorting Sorting;
 
 	if (f_v) {
-		cout << "mem_object_registry::sort_by_location_"
-				"and_get_frequency" << endl;
+		cout << "mem_object_registry::sort_by_location_and_get_frequency" << endl;
 	}
 
 	sort_by_location(verbose_level - 1);
@@ -1049,8 +1048,7 @@ void mem_object_registry::sort_by_location_and_get_frequency(
 	delete [] frequency;
 
 	if (f_v) {
-		cout << "mem_object_registry::sort_by_location_"
-				"and_get_frequency" << endl;
+		cout << "mem_object_registry::sort_by_location_and_get_frequency" << endl;
 	}
 }
 
@@ -1067,9 +1065,11 @@ void mem_object_registry::sort_by_type(int verbose_level)
 		cout << "mem_object_registry::sort_by_type "
 				"before Heapsort" << endl;
 	}
+
 	Sorting.Heapsort(entries, nb_entries_used,
 		sizeof(mem_object_registry_entry),
 		registry_key_pair_compare_by_type);
+
 	if (f_v) {
 		cout << "mem_object_registry::sort_by_type "
 				"after Heapsort" << endl;
@@ -1095,6 +1095,7 @@ void mem_object_registry::sort_by_location(int verbose_level)
 		cout << "mem_object_registry::sort_by_location "
 				"before Heapsort" << endl;
 	}
+
 	Sorting.Heapsort(entries, nb_entries_used,
 		sizeof(mem_object_registry_entry),
 		registry_key_pair_compare_by_location);

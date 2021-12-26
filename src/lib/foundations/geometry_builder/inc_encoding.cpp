@@ -172,7 +172,8 @@ void inc_encoding::print_horizontal_bar(
 }
 
 void inc_encoding::print_partitioned(
-		std::ostream &ost, int v_cur, int v_cut, incidence *inc, int f_print_isot)
+		std::ostream &ost, int v_cur, int v_cut,
+		incidence *inc, int f_print_isot)
 {
 	int *the_X;
 
@@ -241,6 +242,28 @@ void inc_encoding::print_partitioned_override_theX(
 			}
 
 		}
+
+		{
+			combinatorics_domain Combi;
+			int *S;
+			int row, k, ii;
+			long int rk;
+
+			S = NEW_int(dim_n);
+
+			row = i;
+			k = R[row];
+			for (ii = 0; ii < k; ii++) {
+				S[ii] = theX[row * dim_n + ii];
+			}
+
+			rk = Combi.rank_k_subset(S, b, k);
+			ost << setw(3) << i << " : ";
+			ost << setw(4) << rk << " : ";
+
+			FREE_int(S);
+		}
+
 		if (inc->iso_type_at_line[i] && f_print_isot) {
 
 			it = inc->iso_type_at_line[i];
