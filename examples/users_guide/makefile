@@ -11585,7 +11585,40 @@ geo_7_3:
 			-test Test_lines FFFF \
 		-end
 
+geo_7_3_orderly:
+	$(ORBITER_PATH)orbiter.out -v 20 \
+		-define Test_lines -set -loop 3 8 1 -end \
+		-define Geo -geometry_builder \
+			-V 7 -B 7 -TDO 3 \
+			-fuse 1 -fname_GEO 7_3 \
+			-test Test_lines FFFF \
+			-search_tree \
+			-orderly \
+		-end
 
+geo_7_3_orderly_draw:
+	$(ORBITER_PATH)orbiter.out -v 20 \
+		-draw_options -embedded -radius 50 \
+			-xin 10000 -yin 10000 \
+			-xout 1000000 -yout 500000 \
+			-nodes_empty \
+			-scale 0.5 -line_width 0.3 \
+		-end \
+		-tree_draw 7_3_tree.txt
+	pdflatex 7_3_tree_draw.tex
+	open 7_3_tree_draw.pdf
+
+geo_7_3_orderly_mem_debug:
+	$(ORBITER_PATH)orbiter.out -v 20 \
+		-memory_debug  2 \
+		-define Test_lines -set -loop 3 8 1 -end \
+		-define Geo -geometry_builder \
+			-V 7 -B 7 -TDO 3 \
+			-fuse 1 -fname_GEO 7_3 \
+			-test Test_lines FFFF \
+			-search_tree \
+			-orderly \
+		-end
 
 geo_8_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -11639,6 +11672,16 @@ geo_10_3_orderly:
 			-f_orderly \
 		-end
 
+geo_10_3_orderly_mem_debug:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-memory_debug  2 \
+		-define Test_lines -set -loop 4 11 1 -end \
+		-define Geo -geometry_builder \
+			-V 10 -B 10 -TDO 3 -fuse 1 \
+			-fname_GEO 10_3 \
+			-test Test_lines FFFF \
+			-orderly \
+		-end
 
 
 geo_10_3_tree:
@@ -11729,6 +11772,8 @@ geo_13_3_orderly:
 			-f_orderly \
 		-end
 
+
+
 geo_14_3:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Test_lines -set -loop 4 15 1 -end \
@@ -11793,6 +11838,71 @@ geo_15_3_g4:
 #nb_calls_to_densenauty=23
 
 #-sideways 
+
+
+
+
+geo_17_3_g4_orderly:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-memory_debug  2 \
+		-define Test_lines -set -loop 4 18 1 -end \
+		-define Geo -geometry_builder \
+			-V 17 -B 17 -TDO 3 \
+			-fuse 1 -fname_GEO 17_3_g4 \
+			-girth 4 \
+			-test Test_lines FFFF \
+			-orderly \
+		-end
+
+# 1 sol
+
+geo_18_3_g4:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Test_lines -set -loop 4 19 1 -end \
+		-define Geo -geometry_builder \
+			-V 18 -B 18 -TDO 3 \
+			-fuse 1 -fname_GEO 18_3_g4 \
+			-girth 4 \
+			-search_tree \
+			-test Test_lines FFFF \
+		-end
+
+# 4 sol, 1 sec
+
+
+geo_19_3_g4:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Test_lines -set -loop 4 20 1 -end \
+		-define Geo -geometry_builder \
+			-V 19 -B 19 -TDO 3 \
+			-fuse 1 -fname_GEO 19_3_g4 \
+			-girth 4 \
+			-test Test_lines FFFF \
+		-end
+
+# 14 sol, 10 sec on Mac
+
+geo_20_3_g4:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Test_lines -set -loop 4 21 1 -end \
+		-define Geo -geometry_builder \
+			-V 20 -B 20 -TDO 3 \
+			-fuse 1 -fname_GEO 20_3_g4 \
+			-girth 4 \
+			-test Test_lines FFFF \
+		-end
+
+# 162 sol, User time: 2:5 on Mac
+
+geo_21_3_g4:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Test_lines -set -loop 4 22 1 -end \
+		-define Geo -geometry_builder \
+			-V 21 -B 21 -TDO 3 \
+			-fuse 1 -fname_GEO 21_3_g4 \
+			-girth 4 \
+			-test Test_lines FFFF \
+		-end
 
 
 geo_15_4:
@@ -13853,6 +13963,46 @@ geo_7_3_c:
 
 
 geo_10_3_c:
+	$(ORBITER_PATH)orbiter.out -v 10 \
+		-draw_incidence_structure_description \
+			-width 60 -with_10 6 -end \
+		-define Test_lines -set -loop 4 11 1 -end \
+		-define C -combinatorial_objects \
+			-file_of_incidence_geometries 10_3.inc 10 10 30 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-classification_prefix 10_3 \
+				-label 10_3 \
+				-save_ago \
+				-save_transversal \
+			-end \
+			-report \
+				-prefix 10_3 \
+				-export_flag_orbits \
+				-show_incidence_matrices \
+				-export_group \
+			-end \
+		-end
+	pdflatex 10_3_classification.tex
+	open 10_3_classification.pdf
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file 10_3_object7_TDA_flag_orbits.csv \
+		-secondary_input_csv_file 10_3_object7_TDA.csv \
+		-box_width 16 -bit_depth 24 \
+		-end
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file 10_3_object7_INP_flag_orbits.csv \
+		-secondary_input_csv_file 10_3_object7_INP.csv \
+		-box_width 16 -bit_depth 24 \
+		-end
+
+
+
+
+
+geo_10_3_c_lex_least:
 	$(ORBITER_PATH)orbiter.out -v 10 \
 		-draw_incidence_structure_description \
 			-width 60 -with_10 6 -end \

@@ -380,6 +380,7 @@ class W3q;
 
 // geometry_builder:
 class cperm;
+class decomposition_with_fuse;
 class gen_geo_conf;
 class gen_geo;
 class geometry_builder_description;

@@ -7,6 +7,7 @@ LFLAGS = -lm
 
 MODULES = \
 		cperm.o \
+		decomposition_with_fuse.o \
 		gen_geo_conf.o \
 		gen_geo.o \
 		geometry_builder_description.o \

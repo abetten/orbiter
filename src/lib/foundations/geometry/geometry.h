@@ -1444,7 +1444,6 @@ public:
 
 	object_with_canonical_form();
 	~object_with_canonical_form();
-	void freeself();
 	void print(std::ostream &ost);
 	void print_tex_detailed(std::ostream &ost, int f_show_incma, int verbose_level);
 	void print_tex(std::ostream &ost);

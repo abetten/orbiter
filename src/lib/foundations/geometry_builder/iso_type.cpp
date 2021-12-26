@@ -18,13 +18,11 @@ namespace orbiter {
 namespace foundations {
 
 
-#define MAX_GEO 100
-#define MAX_TDO 16
-
 
 
 iso_type::iso_type()
 {
+	gg = NULL;
 	v = 0;
 	sum_R = 0;
 	inc = NULL;
@@ -44,7 +42,6 @@ iso_type::iso_type()
 	split_modulo = 1;
 
 
-	f_flush_line = FALSE;
 
 	//std::string fname;
 
@@ -54,12 +51,7 @@ iso_type::iso_type()
 	nb_GEN = 0;
 	nb_GEO = 0;
 	nb_TDO = 0;
-	dim_GEO = 0;
-	dim_TDO = 0;
-	theGEO1 = NULL;
-	theGEO2 = NULL;
-	GEO_TDO_idx = NULL;
-	//theTDO = NULL;
+
 
 	Canonical_forms = NULL;
 
@@ -70,20 +62,10 @@ iso_type::iso_type()
 
 iso_type::~iso_type()
 {
-	int i;
-
-	if (dim_GEO) {
-		delete [] GEO_TDO_idx;
-		for (i = 0; i < nb_GEO; i++) {
-			FREE_int(theGEO1[i]);
-			FREE_int(theGEO2[i]);
-		}
-		delete [] theGEO1;
-		delete [] theGEO2;
-	}
 }
 
-void iso_type::init(int v, incidence *inc, int tdo_flags, int f_orderly, int verbose_level)
+void iso_type::init(gen_geo *gg,
+		int v, incidence *inc, int tdo_flags, int f_orderly, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -94,6 +76,7 @@ void iso_type::init(int v, incidence *inc, int tdo_flags, int f_orderly, int ver
 
 	scan_tdo_flags(tdo_flags);
 
+	iso_type::gg = gg;
 	iso_type::v = v;
 	iso_type::inc = inc;
 	iso_type::f_orderly = f_orderly;
@@ -112,41 +95,11 @@ void iso_type::init(int v, incidence *inc, int tdo_flags, int f_orderly, int ver
 	nb_GEN = 0;
 	nb_GEO = 0;
 	nb_TDO = 0;
-	if (f_v) {
-		cout << "iso_type::init v=" << v << " before init2" << endl;
-	}
-	init2();
-	if (f_v) {
-		cout << "iso_type::init v=" << v << " after init2" << endl;
-	}
 
 	Canonical_forms = NEW_OBJECT(classify_using_canonical_forms);
 
 	if (f_v) {
 		cout << "iso_type::init done" << endl;
-	}
-}
-
-void iso_type::init2()
-{
-	int i;
-
-	nb_GEN = 0;
-	nb_GEO = 0;
-	nb_TDO = 0;
-	dim_GEO = MAX_GEO;
-	dim_TDO = MAX_TDO;
-
-	theGEO1 = new pint[dim_GEO];
-	theGEO2 = new pint[dim_GEO];
-	GEO_TDO_idx = new int[dim_GEO];
-
-	//theTDO = new ptdo_scheme [dim_TDO];
-
-	for (i = 0; i < dim_GEO; i++) {
-		theGEO1[i] = NULL;
-		theGEO2[i] = NULL;
-		GEO_TDO_idx[i] = -1;
 	}
 }
 
@@ -228,27 +181,31 @@ void iso_type::find_and_add_geo(
 
 
 	object_with_canonical_form *OwCF;
-	long int *theInc;
 	int nb_flags;
 
 	nb_flags = sum_R;
 
-	theInc = NEW_lint(nb_flags);
+	{
+		long int *theInc;
+		theInc = NEW_lint(nb_flags);
 
-	inc->geo_to_inc(v, theY, theInc, nb_flags);
+		inc->geo_to_inc(v, theY, theInc, nb_flags);
 
-	OwCF = NEW_OBJECT(object_with_canonical_form);
+		OwCF = NEW_OBJECT(object_with_canonical_form);
 
-	OwCF->init_incidence_geometry(
-		theInc, nb_flags, v, inc->Encoding->b, nb_flags,
-		verbose_level - 2);
+		OwCF->init_incidence_geometry(
+			theInc, nb_flags, v, inc->Encoding->b, nb_flags,
+			verbose_level - 2);
+
+		FREE_lint(theInc);
+	}
 
 	if (f_v) {
 		cout<< "iso_type::find_and_add_geo setting partition" << endl;
 	}
 
 	OwCF->f_partition = TRUE;
-	OwCF->partition = inc->Partition[v];
+	OwCF->partition = gg->Decomposition_with_fuse->Partition[v];
 
 
 	if (f_orderly) {
@@ -263,6 +220,8 @@ void iso_type::find_and_add_geo(
 			cout << "iso_type::find_and_add_geo "
 					"after Canonical_forms->orderly_test" << endl;
 		}
+
+		FREE_OBJECT(OwCF);
 
 	}
 	else {
@@ -318,21 +277,6 @@ void iso_type::set_split(int remainder, int modulo)
 	split_remainder = remainder;
 	split_modulo = modulo;
 }
-
-void iso_type::set_flush_line()
-{
-	f_flush_line = TRUE;
-}
-
-void iso_type::flush()
-{
-	if (nb_GEO) {
-		sum_nb_GEN += nb_GEN;
-		sum_nb_GEO += nb_GEO;
-		sum_nb_TDO += nb_TDO;
-	}
-}
-
 
 
 int *iso_type::get_theX(int *theGEO)
@@ -609,7 +553,7 @@ void iso_type::print_GEO(int *theY, int v, incidence *inc)
 void iso_type::print_status(std::ostream &ost, int f_with_flags)
 {
 #if 1
-	ost << setw(3) << v << " : " << setw(7) << Canonical_forms->B.size();
+	ost << setw(7) << Canonical_forms->B.size();
 
 #else
 

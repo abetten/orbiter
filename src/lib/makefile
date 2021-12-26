@@ -122,6 +122,7 @@ MODULES= \
 		foundations/geometry/spread_tables.o \
 		foundations/geometry/w3q.o \
 		foundations/geometry_builder/cperm.o \
+		foundations/geometry_builder/decomposition_with_fuse.o \
 		foundations/geometry_builder/gen_geo_conf.o \
 		foundations/geometry_builder/gen_geo.o \
 		foundations/geometry_builder/geometry_builder_description.o \

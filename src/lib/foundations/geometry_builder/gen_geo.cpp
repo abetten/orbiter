@@ -27,24 +27,9 @@ gen_geo::gen_geo()
 {
 	GB = NULL;
 
-	nb_fuse = 0;
-	Fuse_first = NULL;
-	Fuse_len = NULL;
-	K0 = NULL;
-	KK = NULL;
-	K1 = NULL;
-	F_last_k_in_col = NULL;
-
-
-	Conf = NULL;
+	Decomposition_with_fuse = NULL;
 
 	inc = NULL;
-
-#if 0
-	f_vbar = NULL;
-	vbar = NULL;
-	hbar = NULL;
-#endif
 
 	//f_do_iso_test = FALSE;
 	//f_do_aut_group = FALSE;
@@ -67,40 +52,9 @@ gen_geo::gen_geo()
 
 gen_geo::~gen_geo()
 {
-	if (Fuse_first) {
-		FREE_int(Fuse_first);
+	if (Decomposition_with_fuse) {
+		FREE_OBJECT(Decomposition_with_fuse);
 	}
-	if (Fuse_len) {
-		FREE_int(Fuse_len);
-	}
-	if (K0) {
-		FREE_int(K0);
-	}
-	if (KK) {
-		FREE_int(KK);
-	}
-	if (K1) {
-		FREE_int(K1);
-	}
-	if (F_last_k_in_col) {
-		FREE_int(F_last_k_in_col);
-	}
-
-	if (Conf) {
-		FREE_OBJECTS(Conf);
-	}
-
-#if 0
-	if (f_vbar) {
-		FREE_int(f_vbar);
-	}
-	if (vbar) {
-		FREE_int(vbar);
-	}
-	if (hbar) {
-		FREE_int(hbar);
-	}
-#endif
 
 	if (inc) {
 		FREE_OBJECT(inc);
@@ -122,10 +76,6 @@ void gen_geo::init(geometry_builder *GB, int verbose_level)
 		cout << "gen_geo::init" << endl;
 	}
 	gen_geo::GB = GB;
-	//gen_geo::f_do_iso_test = f_do_iso_test;
-	//gen_geo::f_do_aut_group = f_do_aut_group;
-	//gen_geo::f_do_aut_group_in_iso_type_without_vhbars = f_do_aut_group_in_iso_type_without_vhbars;
-	//gen_geo::gen_print_intervall = gen_print_intervall;
 
 	inc = NEW_OBJECT(incidence);
 
@@ -140,36 +90,25 @@ void gen_geo::init(geometry_builder *GB, int verbose_level)
 	forget_ivhbar_in_last_isot = FALSE;
 
 
-
-
-	if (f_v) {
-		cout << "gen_geo::init before init_fuse" << endl;
-	}
-	init_fuse(verbose_level);
-	if (f_v) {
-		cout << "gen_geo::init after init_fuse" << endl;
-	}
+	Decomposition_with_fuse = NEW_OBJECT(decomposition_with_fuse);
 
 	if (f_v) {
-		cout << "gen_geo::init before TDO_init" << endl;
+		cout << "gen_geo::init before Decomposition_with_fuse->init" << endl;
 	}
-	TDO_init(GB->v, GB->b, GB->TDO, verbose_level);
+	Decomposition_with_fuse->init(this, verbose_level);
 	if (f_v) {
-		cout << "gen_geo::init after TDO_init" << endl;
+		cout << "gen_geo::init after Decomposition_with_fuse->init" << endl;
 	}
 
 
 	if (f_v) {
-		cout << "gen_geo::init before init_bars_and_partition" << endl;
+		cout << "gen_geo::init before init_semicanonical" << endl;
 	}
-	init_bars_and_partition(verbose_level);
+	init_semicanonical(verbose_level);
 	if (f_v) {
-		cout << "gen_geo::init before init_bars_and_partition done" << endl;
+		cout << "gen_geo::init before init_semicanonical done" << endl;
 	}
 
-
-	// init_ISO();
-	// init_ISO2();
 
 	if (GB->Descr->f_girth_test) {
 
@@ -185,331 +124,27 @@ void gen_geo::init(geometry_builder *GB, int verbose_level)
 
 }
 
-void gen_geo::TDO_init(int *v, int *b, int *theTDO, int verbose_level)
+
+void gen_geo::init_semicanonical(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "gen_geo::TDO_init" << endl;
-	}
-	int I, fuse_idx, f, l;
-
-	Conf = NEW_OBJECTS(gen_geo_conf, GB->v_len * GB->b_len);
-
-
-	if (f_v) {
-		cout << "gen_geo::TDO_init before loops" << endl;
-	}
-	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-		f = Fuse_first[fuse_idx];
-		l = Fuse_len[fuse_idx];
-		if (f_v) {
-			cout << "gen_geo::TDO_init fuse_idx=" << fuse_idx
-					<< " f=" << f << " l=" << l << endl;
-		}
-		for (I = f; I < f + l; I++) {
-			if (f_v) {
-				cout << "gen_geo::TDO_init fuse_idx=" << fuse_idx
-						<< " f=" << f << " l=" << l
-						<< " I=" << I << " v[I]=" << v[I] << endl;
-			}
-			init_tdo_line(fuse_idx,
-					I /* tdo_line */, v[I] /* v */, b,
-					theTDO + I * GB->b_len /* r */,
-					verbose_level - 1);
-		}
-	}
-	if (f_v) {
-		cout << "gen_geo::TDO_init after loops" << endl;
-	}
-
-
-	print_conf();
-
-	inc->print_param();
-
-
-
-	if (f_v) {
-		cout << "gen_geo::TDO_init before init_k" << endl;
-	}
-	init_k(verbose_level - 1);
-	if (f_v) {
-		cout << "gen_geo::TDO_init after init_k" << endl;
-	}
-	if (f_v) {
-		cout << "gen_geo::TDO_init before conf_init_last_non_zero_flag" << endl;
-	}
-	conf_init_last_non_zero_flag(verbose_level - 1);
-	if (f_v) {
-		cout << "gen_geo::TDO_init after conf_init_last_non_zero_flag" << endl;
-	}
-	if (f_v) {
-		cout << "gen_geo::TDO_init done" << endl;
-	}
-}
-
-
-void gen_geo::init_tdo_line(int fuse_idx, int tdo_line,
-		int v, int *b, int *r, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int i0, j, rr;
-
-	if (f_v) {
-		cout << "gen_geo::init_tdo_line tdo_line=" << tdo_line << endl;
-		cout << "r=";
-		Orbiter->Int_vec.print(cout, r, GB->b_len);
-		cout << endl;
-	}
-	if (tdo_line >= GB->v_len) {
-		cout << "gen_geo::init_tdo_line tdo_line >= GB->v_len" << endl;
-		exit(1);
-	}
-
-
-
-	for (j = 0; j < GB->b_len; j++) {
-
-		if (f_v) {
-			cout << "gen_geo::init_tdo_line tdo_line=" << tdo_line << " j=" << j << endl;
-		}
-
-		Conf[tdo_line * GB->b_len + j].fuse_idx = fuse_idx;
-
-		Conf[tdo_line * GB->b_len + j].v = v;
-		Conf[tdo_line * GB->b_len + j].b = b[j];
-		Conf[tdo_line * GB->b_len + j].r = r[j];
-
-		if (j == 0) {
-			Conf[tdo_line * GB->b_len + j].j0 = 0;
-			Conf[tdo_line * GB->b_len + j].r0 = 0;
-		}
-		else {
-			Conf[tdo_line * GB->b_len + j].j0 =
-					Conf[tdo_line * GB->b_len + j - 1].j0 +
-					Conf[tdo_line * GB->b_len + j - 1].b;
-			Conf[tdo_line * GB->b_len + j].r0 =
-					Conf[tdo_line * GB->b_len + j - 1].r0 +
-					Conf[tdo_line * GB->b_len + j - 1].r;
-		}
-
-		if (tdo_line == 0) {
-			Conf[tdo_line * GB->b_len + j].i0 = 0;
-		}
-		else {
-			Conf[tdo_line * GB->b_len + j].i0 =
-					Conf[(tdo_line - 1) * GB->b_len + j].i0 +
-					Conf[(tdo_line - 1) * GB->b_len + j].v;
-		}
-		i0 = Conf[tdo_line * GB->b_len + j].i0;
-
-		if (j == GB->b_len - 1) {
-			rr = Conf[tdo_line * GB->b_len + j].r0 + Conf[tdo_line * GB->b_len + j].r;
-		}
-	}
-
-
-	if (f_v) {
-		cout << "gen_geo::init_tdo_line done" << endl;
-	}
-}
-
-void gen_geo::print_conf()
-{
-	int I, J;
-
-	for (I = 0; I < GB->v_len; I++) {
-		for (J = 0; J < GB->b_len; J++) {
-			cout << "I=" << I << " J=" << J << ":" << endl;
-			Conf[I * GB->b_len + J].print(cout);
-		}
-	}
-}
-
-void gen_geo::init_bars_and_partition(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "gen_geo::init_bars_and_partition" << endl;
+		cout << "gen_geo::init_semicanonical" << endl;
 	}
 
 	Test_semicanonical = NEW_OBJECT(test_semicanonical);
 
 	if (f_v) {
-		cout << "gen_geo::init_bars_and_partition before Test_semicanonical->init" << endl;
+		cout << "gen_geo::init_semicanonical before Test_semicanonical->init" << endl;
 	}
 	Test_semicanonical->init(this, MAX_V, verbose_level);
 	if (f_v) {
-		cout << "gen_geo::init_bars_and_partition after Test_semicanonical->init" << endl;
+		cout << "gen_geo::init_semicanonical after Test_semicanonical->init" << endl;
 	}
 
 	if (f_v) {
-		cout << "gen_geo::init_bars_and_partition before inc->init_partition" << endl;
-	}
-	inc->init_partition(verbose_level);
-	if (f_v) {
-		cout << "gen_geo::init_bars_and_partition after inc->init_partition" << endl;
-	}
-
-	if (f_v) {
-		cout << "gen_geo::init_bars_and_partition done" << endl;
-	}
-}
-
-void gen_geo::init_fuse(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "gen_geo::init_fuse" << endl;
-	}
-	Fuse_first = NEW_int(GB->v_len);
-	Fuse_len = NEW_int(GB->v_len);
-	int f, i;
-
-	nb_fuse = GB->fuse_len;
-	f = 0;
-	for (i = 0; i < GB->fuse_len; i++) {
-		Fuse_first[i] = f;
-		Fuse_len[i] = GB->fuse[i];
-		f += GB->fuse[i];
-	}
-
-	if (f_v) {
-		cout << "gen_geo::init_fuse done" << endl;
-	}
-
-}
-
-void gen_geo::init_k(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "gen_geo::init_k" << endl;
-	}
-	int I, J, fuse_idx, f, l, k, s, b;
-
-
-	K0 = NEW_int(GB->v_len * GB->b_len);
-	KK = NEW_int(GB->v_len * GB->b_len);
-	K1 = NEW_int(GB->v_len * GB->b_len);
-	F_last_k_in_col = NEW_int(GB->v_len * GB->b_len);
-
-	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-		for (J = 0; J < GB->b_len; J++) {
-			if (fuse_idx == 0) {
-				K0[fuse_idx * GB->b_len + J] = 0;
-			}
-			F_last_k_in_col[fuse_idx * GB->b_len + J] = FALSE;
-		}
-	}
-	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-		f = Fuse_first[fuse_idx];
-		l = Fuse_len[fuse_idx];
-		s = 0;
-		for (J = 0; J < GB->b_len; J++) {
-			if (fuse_idx) {
-				K0[fuse_idx * GB->b_len + J] = K1[(fuse_idx - 1) * GB->b_len + J];
-			}
-			s = 0;
-			for (I = f; I < f + l; I++) {
-				s += Conf[I * GB->b_len + J].v * Conf[I * GB->b_len + J].r;
-				b = Conf[I * GB->b_len + J].b;
-			}
-			k = s / b;
-			if (k * b != s) {
-				cout << "geo_init_k b does not divide s ! fuse_idx = " << fuse_idx << " J = " << J << " s = " << s << " b = " << b << endl;
-				exit(1);
-			}
-			KK[fuse_idx * GB->b_len + J] = k;
-			K1[fuse_idx * GB->b_len + J] = K0[fuse_idx * GB->b_len + J] + k;
-		}
-	}
-	for (J = 0; J < GB->b_len; J++) {
-		for (fuse_idx = nb_fuse - 1; fuse_idx >= 0; fuse_idx--) {
-			k = KK[fuse_idx * GB->b_len + J];
-			if (k) {
-				F_last_k_in_col[fuse_idx * GB->b_len + J] = TRUE;
-				break;
-			}
-		}
-	}
-	if (f_v) {
-		cout << "KK:" << endl;
-		for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-			for (J = 0; J < GB->b_len; J++) {
-				cout << setw(3) << KK[fuse_idx * GB->b_len + J] << " ";
-			}
-			cout << endl;
-		}
-		cout << "K0:" << endl;
-		for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-			for (J = 0; J < GB->b_len; J++) {
-				cout << setw(3) << K0[fuse_idx * GB->b_len + J] << " ";
-			}
-			cout << endl;
-		}
-
-		cout << "K1:" << endl;
-		for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-			for (J = 0; J < GB->b_len; J++) {
-				cout << setw(3) << K1[fuse_idx * GB->b_len + J] << " ";
-			}
-			cout << endl;
-		}
-
-		cout << "F_last_k_in_col:" << endl;
-		for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-			for (J = 0; J < GB->b_len; J++) {
-				cout << setw(3) << F_last_k_in_col[fuse_idx * GB->b_len + J] << " ";
-			}
-			cout << endl;
-		}
-	}
-	if (f_v) {
-		cout << "gen_geo::init_k done" << endl;
-	}
-}
-
-void gen_geo::conf_init_last_non_zero_flag(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "gen_geo::conf_init_last_non_zero_flag" << endl;
-	}
-	int fuse_idx, ff, fl, i, I, r;
-
-	for (fuse_idx = 0; fuse_idx < nb_fuse; fuse_idx++) {
-		ff = Fuse_first[fuse_idx];
-		fl = Fuse_len[fuse_idx];
-		for (i = fl - 1; i >= 0; i--) {
-			I = ff + i;
-			Conf[I * GB->b_len + 0].f_last_non_zero_in_fuse = FALSE;
-		}
-		for (i = fl - 1; i >= 0; i--) {
-			I = ff + i;
-			r = Conf[I * GB->b_len + 0].r;
-			if (r > 0) {
-				Conf[I * GB->b_len + 0].f_last_non_zero_in_fuse = TRUE;
-				break;
-			}
-		}
-	}
-
-	if (f_v) {
-		cout << "f_last_non_zero_in_fuse:" << endl;
-		for (I = 0; I < GB->v_len; I++) {
-			i = Conf[I * GB->b_len + 0].f_last_non_zero_in_fuse;
-			cout << setw(3) << i << " ";
-		}
-		cout << endl;
-	}
-	if (f_v) {
-		cout << "gen_geo::conf_init_last_non_zero_flag" << endl;
+		cout << "gen_geo::init_semicanonical done" << endl;
 	}
 }
 
@@ -835,8 +470,12 @@ void gen_geo::setup_output_files(int verbose_level)
 
 		ost_search_tree = new ofstream;
 		ost_search_tree->open (fname_search_tree, std::ofstream::out);
+	}
+	else {
+		ost_search_tree = NULL;
+	}
 
-
+	if (GB->Descr->f_search_tree_flags) {
 		fname_search_tree_flags.assign(inc_file_name);
 		fname_search_tree_flags.append("_tree_flags.txt");
 
@@ -846,11 +485,8 @@ void gen_geo::setup_output_files(int verbose_level)
 
 		ost_search_tree_flags = new ofstream;
 		ost_search_tree_flags->open (fname_search_tree_flags, std::ofstream::out);
-
-
 	}
 	else {
-		ost_search_tree = NULL;
 		ost_search_tree_flags = NULL;
 	}
 
@@ -863,6 +499,9 @@ void gen_geo::close_output_files(int verbose_level)
 	if (GB->Descr->f_search_tree) {
 		*ost_search_tree << "-1" << endl;
 		ost_search_tree->close();
+	}
+
+	if (GB->Descr->f_search_tree_flags) {
 		*ost_search_tree_flags << "-1" << endl;
 		ost_search_tree_flags->close();
 	}
@@ -871,18 +510,20 @@ void gen_geo::close_output_files(int verbose_level)
 
 void gen_geo::record_tree(int i1, int f_already_there)
 {
+	int color;
+
+	if (f_already_there) {
+		color = COLOR_RED;
+	}
+	else {
+		color = COLOR_GREEN;
+	}
+
+
 	if (ost_search_tree) {
-		int row, h;
+
+		int row;
 		long int rk;
-
-		int color;
-
-		if (f_already_there) {
-			color = COLOR_RED;
-		}
-		else {
-			color = COLOR_GREEN;
-		}
 
 		*ost_search_tree << i1;
 		for (row = 0; row < i1; row++) {
@@ -891,11 +532,17 @@ void gen_geo::record_tree(int i1, int f_already_there)
 		}
 		*ost_search_tree << " " << color;
 		*ost_search_tree << endl;
+	}
+
+	if (GB->Descr->f_search_tree_flags) {
 
 		std::vector<int> flags;
+		int h;
 
-		inc->Encoding->get_flags(row, flags);
+		inc->Encoding->get_flags(i1, flags);
+
 		*ost_search_tree_flags << flags.size();
+
 		for (h = 0; h < flags.size(); h++) {
 			*ost_search_tree_flags << " " << flags[h];
 
@@ -910,7 +557,7 @@ void gen_geo::record_tree(int i1, int f_already_there)
 
 void gen_geo::print_I_m(int I, int m)
 {
-	gen_geo_conf *C = Conf + I * GB->b_len;
+	gen_geo_conf *C = Decomposition_with_fuse->get_conf_IJ(I, 0);
 	int i1;
 
 	i1 = C->i0 + m;
@@ -995,7 +642,7 @@ int gen_geo::GeoNxt(int verbose_level)
 int gen_geo::GeoRowFst(int I, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	gen_geo_conf *C = Conf + I * GB->b_len;
+	gen_geo_conf *C = Decomposition_with_fuse->get_conf_IJ(I, 0);
 
 	if (f_v) {
 		cout << "gen_geo::GeoRowFst I=" << I << endl;
@@ -1032,7 +679,7 @@ int gen_geo::GeoRowFst(int I, int verbose_level)
 int gen_geo::GeoRowNxt(int I, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	gen_geo_conf *C = Conf + I * GB->b_len;
+	gen_geo_conf *C = Decomposition_with_fuse->get_conf_IJ(I, 0);
 
 	if (f_v) {
 		cout << "gen_geo::GeoRowNxt I=" << I << endl;
@@ -1078,7 +725,7 @@ int gen_geo::GeoLineFstSplit(int I, int m, int verbose_level)
 
 #ifdef GEO_LINE_SPLIT
 	iso_type *it;
-	gen_geo_conf *C = Conf + I * GB->b_len;
+	gen_geo_conf *C = Decomposition_with_fuse->get_conf_IJ(I, 0);
 	int i1;
 
 	i1 = C->i0 + m;
@@ -1106,7 +753,7 @@ int gen_geo::GeoLineNxtSplit(int I, int m, int verbose_level)
 	}
 #ifdef GEO_LINE_SPLIT
 	iso_type *it;
-	gen_geo_conf *C = Conf + I * GB->b_len;
+	gen_geo_conf *C = Decomposition_with_fuse->get_conf_IJ(I, 0);
 	int i1;
 
 	i1 = C->i0 + m;
@@ -1132,7 +779,7 @@ int gen_geo::geo_back_test(int I, int verbose_level)
 	if (f_v) {
 		cout << "gen_geo::geo_back_test I=" << I << endl;
 	}
-	gen_geo_conf *C = Conf + I * GB->b_len;
+	gen_geo_conf *C = Decomposition_with_fuse->get_conf_IJ(I, 0);
 	int i0, i1, m, f_already_there, control_line;
 	iso_type *it;
 
@@ -1172,7 +819,8 @@ int gen_geo::GeoLineFst0(int I, int m, int verbose_level)
 	if (f_v) {
 		cout << "gen_geo::GeoLineFst0 I=" << I << " m=" << m << endl;
 	}
-	gen_geo_conf *C = Conf + I * GB->b_len;
+	gen_geo_conf *C = Decomposition_with_fuse->get_conf_IJ(I, 0);
+
 	int f_already_there, i1, control_line;
 	iso_type *it;
 
@@ -1245,7 +893,8 @@ int gen_geo::GeoLineNxt0(int I, int m, int verbose_level)
 	if (f_v) {
 		cout << "gen_geo::GeoLineNxt0 I=" << I << " m=" << m << endl;
 	}
-	gen_geo_conf *C = Conf + I * GB->b_len;
+	gen_geo_conf *C = Decomposition_with_fuse->get_conf_IJ(I, 0);
+
 	int f_already_there, i1, control_line;
 	iso_type *it;
 
@@ -1313,7 +962,7 @@ int gen_geo::GeoLineNxt0(int I, int m, int verbose_level)
 int gen_geo::GeoLineFst(int I, int m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	gen_geo_conf *C = Conf + I * GB->b_len;
+	gen_geo_conf *C = Decomposition_with_fuse->get_conf_IJ(I, 0);
 	int J, i1;
 
 	i1 = C->i0 + m;
@@ -1323,13 +972,16 @@ int gen_geo::GeoLineFst(int I, int m, int verbose_level)
 	}
 
 	girth_Floyd(i1, verbose_level);
-	//record_tree(i1);
 
 
 	J = 0;
 	while (TRUE) {
 		while (TRUE) {
 			if (J >= GB->b_len) {
+				if (f_v) {
+					cout << "gen_geo::GeoLineFst" << endl;
+					inc->print(cout, i1 + 1, inc->Encoding->v);
+				}
 				return TRUE;
 			}
 			if (!GeoConfFst(I, m, J, verbose_level)) {
@@ -1354,7 +1006,8 @@ int gen_geo::GeoLineFst(int I, int m, int verbose_level)
 
 int gen_geo::GeoLineNxt(int I, int m, int verbose_level)
 {
-	gen_geo_conf *C = Conf + I * GB->b_len;
+	int f_v = (verbose_level >= 1);
+	gen_geo_conf *C = Decomposition_with_fuse->get_conf_IJ(I, 0);
 	int J, i1;
 
 	i1 = C->i0 + m;
@@ -1379,6 +1032,10 @@ int gen_geo::GeoLineNxt(int I, int m, int verbose_level)
 		// J-th element has been incremented. Initialize elements after it:
 		while (TRUE) {
 			if (J >= GB->b_len - 1) {
+				if (f_v) {
+					cout << "gen_geo::GeoLineNxt" << endl;
+					inc->print(cout, i1 + 1, inc->Encoding->v);
+				}
 				return TRUE;
 			}
 			J++;
@@ -1405,29 +1062,18 @@ int gen_geo::GeoConfFst(int I, int m, int J, int verbose_level)
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "gen_geo::GeoConfFst I=" << I << " m=" << m << " J=" << J << endl;
+		cout << "gen_geo::GeoConfFst I=" << I << " m=" << m
+				<< " J=" << J << endl;
 	}
-	gen_geo_conf *C = Conf + I * GB->b_len + J;
+	gen_geo_conf *C = Decomposition_with_fuse->get_conf_IJ(I, J);
 	int n, i1;
 
 	if (J == 0) {
 		i1 = C->i0 + m;
 
-		// ToDo: row_test_init:
-
 		Test_semicanonical->row_init(I, m, J,
 					i1,
 					verbose_level);
-#if 0
-		if (m == 0) {
-			hbar[i1] = -1;
-			// initial hbar
-		}
-		else {
-			hbar[i1] = GB->b_len;
-			// no hbar
-		}
-#endif
 
 	}
 	n = 0;
@@ -1435,7 +1081,8 @@ int gen_geo::GeoConfFst(int I, int m, int J, int verbose_level)
 		while (TRUE) {
 			if (n >= C->r) {
 				if (f_v) {
-					cout << "gen_geo::GeoConfFst I=" << I << " m=" << m << " J=" << J << " returns TRUE" << endl;
+					cout << "gen_geo::GeoConfFst I=" << I << " m=" << m
+							<< " J=" << J << " returns TRUE" << endl;
 				}
 				return TRUE;
 			}
@@ -1448,7 +1095,8 @@ int gen_geo::GeoConfFst(int I, int m, int J, int verbose_level)
 		while (TRUE) {
 			if (n == 0) {
 				if (f_v) {
-					cout << "gen_geo::GeoConfFst I=" << I << " m=" << m << " J=" << J << " returns FALSE" << endl;
+					cout << "gen_geo::GeoConfFst I=" << I << " m=" << m
+							<< " J=" << J << " returns FALSE" << endl;
 				}
 				return FALSE;
 			}
@@ -1469,21 +1117,13 @@ int gen_geo::GeoConfNxt(int I, int m, int J, int verbose_level)
 	if (f_v) {
 		cout << "gen_geo::GeoConfNxt I=" << I << " m=" << m << " J=" << J << endl;
 	}
-	gen_geo_conf *C = Conf + I * GB->b_len + J;
+	gen_geo_conf *C = Decomposition_with_fuse->get_conf_IJ(I, J);
 	int n, i1;
 
 	i1 = C->i0 + m;
 
 
-	// ToDo: row_test_continue:
-
 	Test_semicanonical->row_test_continue(I, m, J, i1);
-
-#if 0
-	if (hbar[i1] > J) {
-		hbar[i1] = J;
-	}
-#endif
 
 
 	if (C->r == 0) {
@@ -1498,7 +1138,8 @@ int gen_geo::GeoConfNxt(int I, int m, int J, int verbose_level)
 			if (n == 0) {
 				return FALSE;
 				if (f_v) {
-					cout << "gen_geo::GeoConfNxt I=" << I << " m=" << m << " J=" << J << " returns FALSE" << endl;
+					cout << "gen_geo::GeoConfNxt I=" << I << " m=" << m
+							<< " J=" << J << " returns FALSE" << endl;
 				}
 			}
 			n--;
@@ -1507,7 +1148,8 @@ int gen_geo::GeoConfNxt(int I, int m, int J, int verbose_level)
 		while (TRUE) {
 			if (n >= C->r - 1) {
 				if (f_v) {
-					cout << "gen_geo::GeoConfNxt I=" << I << " m=" << m << " J=" << J << " returns TRUE" << endl;
+					cout << "gen_geo::GeoConfNxt I=" << I << " m=" << m
+							<< " J=" << J << " returns TRUE" << endl;
 				}
 				return TRUE;
 			}
@@ -1523,7 +1165,7 @@ int gen_geo::GeoConfNxt(int I, int m, int J, int verbose_level)
 
 void gen_geo::GeoConfClear(int I, int m, int J)
 {
-	gen_geo_conf *C = Conf + I * GB->b_len + J;
+	gen_geo_conf *C = Decomposition_with_fuse->get_conf_IJ(I, J);
 	int n;
 
 	if (C->r == 0) {
@@ -1540,48 +1182,20 @@ int gen_geo::GeoXFst(int I, int m, int J, int n, int verbose_level)
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "gen_geo::GeoXFst I=" << I << " m=" << m << " J=" << J << " n=" << n << endl;
+		cout << "gen_geo::GeoXFst I=" << I << " m=" << m << " J=" << J
+				<< " n=" << n << endl;
 	}
-	gen_geo_conf *C = Conf + I * GB->b_len + J;
+	gen_geo_conf *C = Decomposition_with_fuse->get_conf_IJ(I, J);
 	int i1, j0, r, j;
 
 	i1 = C->i0 + m; // current row
 	r = C->r0 + n; // current incidence index
 	j0 = C->j0;
 
-	// ToDo: row_starter:
 
 	j = Test_semicanonical->row_starter(I, m, J, n,
 			i1, j0, r,
 			verbose_level);
-
-#if 0
-	if (hbar[i1] <= J) {
-		// hbar exists, which means that the left part of the row differs from the row above.
-		// The next incidence must be tried starting from the leftmost position.
-		// We cannot copy over from the previous row.
-		if (n == 0) {
-			// first incidence inside the block?
-			j = 0;
-		}
-		else {
-
-			// start out one to the right of the previous incidence:
-
-			j = inc->Encoding->theX[i1 * inc->Encoding->dim_n + r - 1] - j0 + 1;
-		}
-	}
-	else {
-		if (m == 0) {
-			cout << "gen_geo::GeoXFst hbar[i1] > J && m == 0" << endl;
-			exit(1);
-		}
-		// no hbar means that the left parts agree.
-
-		// pick the incidence according to the previous row:
-		j = inc->Encoding->theX[(i1 - 1) * inc->Encoding->dim_n + r] - j0;
-	}
-#endif
 
 
 	int ret;
@@ -1589,7 +1203,8 @@ int gen_geo::GeoXFst(int I, int m, int J, int n, int verbose_level)
 	ret = X_Fst(I, m, J, n, j, verbose_level);
 
 	if (f_v) {
-		cout << "gen_geo::GeoXFst I=" << I << " m=" << m << " J=" << J << " n=" << n << " returns " << ret << endl;
+		cout << "gen_geo::GeoXFst I=" << I << " m=" << m << " J=" << J
+				<< " n=" << n << " returns " << ret << endl;
 	}
 
 	return ret;
@@ -1603,7 +1218,7 @@ int gen_geo::GeoXNxt(int I, int m, int J, int n, int verbose_level)
 	if (f_v) {
 		cout << "gen_geo::GeoXNxt I=" << I << " m=" << m << " J=" << J << " n=" << n << endl;
 	}
-	gen_geo_conf *C = Conf + I * GB->b_len + J;
+	gen_geo_conf *C = Decomposition_with_fuse->get_conf_IJ(I, J);
 	int old_x;
 	int fuse_idx, i1, j0, j1, r, j, k;
 
@@ -1625,27 +1240,10 @@ int gen_geo::GeoXNxt(int I, int m, int J, int n, int verbose_level)
 
 	}
 
-	// ToDo: col_marker_remove:
 
 	Test_semicanonical->col_marker_remove(I, m, J, n,
 				i1, j0, r, old_x);
 
-#if 0
-	// remove vbar:
-	if (f_vbar[i1 * inc->Encoding->dim_n + r]) {
-		vbar[old_x + 1] = MAX_V;
-		f_vbar[i1 * inc->Encoding->dim_n + r] = FALSE;
-	}
-
-	// possibly create new vbar on the left:
-	if (n > 0) {
-		if (vbar[old_x] > i1 &&
-			inc->Encoding->theX[i1 * inc->Encoding->dim_n + r - 1] == old_x - 1) {
-			vbar[old_x] = i1;
-			f_vbar[i1 * inc->Encoding->dim_n + r - 1] = TRUE;
-		}
-	}
-#endif
 
 
 #if 0
@@ -1664,39 +1262,33 @@ int gen_geo::GeoXNxt(int I, int m, int J, int n, int verbose_level)
 
 	for (j = old_x - j0 + 1; j < C->b; j++) {
 
-		if (inc->K[j0 + j] >= K1[fuse_idx * GB->b_len + J]) {
+		j1 = j0 + j;
+		if (inc->K[j1] >= Decomposition_with_fuse->K1[fuse_idx * GB->b_len + J]) {
 			// this column is already full. We cannot put the incidence here.
 			if (f_v) {
-				cout << "gen_geo::GeoXNxt I=" << I << " m=" << m << " J=" << J << " n=" << n << " j=" << j << " skipped because of column sum wrt fuse partition" << endl;
+				cout << "gen_geo::GeoXNxt I=" << I << " m=" << m << " J=" << J
+						<< " n=" << n << " j=" << j << " skipped "
+								"because of column sum wrt fuse partition" << endl;
 			}
 			continue;
 		}
 
-		// ToDo: col_marker_test:
 		if (Test_semicanonical->col_marker_test(j0, j, i1)) {
 			continue;
 		}
-#if 0
-		if (vbar[j0 + j] > i1) {
-			if (f_v) {
-				cout << "gen_geo::GeoXNxt I=" << I << " m=" << m << " J=" << J << " n=" << n << " j=" << j << " skipped because of vbar" << endl;
-			}
-			continue;
-		}
-#endif
 
-		inc->Encoding->theX[i1 * inc->Encoding->dim_n + r] = j0 + j;
+		inc->Encoding->theX[i1 * inc->Encoding->dim_n + r] = j1;
 			// must be set before calling find_square
 
 
 
-		k = inc->K[j0 + j];
-		inc->theY[j0 + j][k] = i1;
-		j1 = j0 + j;
+		k = inc->K[j1];
+		inc->theY[j1][k] = i1;
 
 		if (!apply_tests(I, m, J, n, j, verbose_level - 2)) {
 			if (f_v) {
-				cout << "gen_geo::GeoXNxt I=" << I << " m=" << m << " J=" << J << " n=" << n << " j=" << j << " skipped because of test" << endl;
+				cout << "gen_geo::GeoXNxt I=" << I << " m=" << m << " J=" << J
+						<< " n=" << n << " j=" << j << " skipped because of test" << endl;
 			}
 			continue;
 		}
@@ -1706,53 +1298,32 @@ int gen_geo::GeoXNxt(int I, int m, int J, int n, int verbose_level)
 
 
 		// increase column sum
-		inc->K[j0 + j]++;
+		inc->K[j1]++;
 
 
-		// ToDo: col_marker_move_on:
 
 		Test_semicanonical->marker_move_on(I, m, J, n, j,
 				i1, j0, r,
 				verbose_level);
 
-#if 0
-		// generate new vbar to the left of this incidence:
-		if (vbar[j0 + j + 1] == i1) {
-			cout << "gen_geo::GeoXNxt vbar[j0 + j + 1] == i1" << endl;
-			exit(1);
-		}
-		if (vbar[j0 + j + 1] > i1) {
-			f_vbar[i1 * inc->Encoding->dim_n + r] = TRUE;
-			vbar[j0 + j + 1] = i1;
-		}
-
-		if (hbar[i1] > J) {
-			if (m == 0) {
-				cout << "gen_geo::GeoXNxt no hbar && m == 0" << endl;
-				exit(1);
-			}
-			if (j0 + j != inc->Encoding->theX[(i1 - 1) * inc->Encoding->dim_n + r]) {
-				// generate new hbar:
-				hbar[i1] = J;
-			}
-		}
-#endif
 
 
 		if (f_v) {
-			cout << "gen_geo::GeoXNxt I=" << I << " m=" << m << " J=" << J << " n=" << n << " returns TRUE" << endl;
+			cout << "gen_geo::GeoXNxt I=" << I << " m=" << m << " J=" << J
+					<< " n=" << n << " returns TRUE" << endl;
 		}
 		return TRUE;
 	}
 	if (f_v) {
-		cout << "gen_geo::GeoXNxt I=" << I << " m=" << m << " J=" << J << " n=" << n << " returns FALSE" << endl;
+		cout << "gen_geo::GeoXNxt I=" << I << " m=" << m << " J=" << J
+				<< " n=" << n << " returns FALSE" << endl;
 	}
 	return FALSE;
 }
 
 void gen_geo::GeoXClear(int I, int m, int J, int n)
 {
-	gen_geo_conf *C = Conf + I * GB->b_len + J;
+	gen_geo_conf *C = Decomposition_with_fuse->get_conf_IJ(I, J);
 	int old_x;
 	int i1, j0, r, k;
 
@@ -1767,24 +1338,6 @@ void gen_geo::GeoXClear(int I, int m, int J, int n)
 
 	girth_test_delete_incidence(i1, r, old_x);
 
-
-	// ToDo: col_marker_remove:
-
-#if 0
-	// remove old vbar:
-	if (f_vbar[i1 * inc->Encoding->dim_n + r]) {
-		vbar[old_x + 1] = MAX_V;
-		f_vbar[i1 * inc->Encoding->dim_n + r] = FALSE;
-	}
-	// recover vbar to the left if necessary:
-	if (n > 0) {
-		if (vbar[old_x] > i1 &&
-			inc->Encoding->theX[i1 * inc->Encoding->dim_n + r - 1] == old_x - 1) {
-			vbar[old_x] = i1;
-			f_vbar[i1 * inc->Encoding->dim_n + r - 1] = TRUE;
-		}
-	}
-#endif
 
 
 	Test_semicanonical->col_marker_remove(I, m, J, n,
@@ -1808,7 +1361,7 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j, int verbose_level)
 // maintains hbar[], vbar[], f_vbar[][], theX[][], K[]
 {
 	int f_v = (verbose_level >= 1);
-	gen_geo_conf *C = Conf + I * GB->b_len + J;
+	gen_geo_conf *C = Decomposition_with_fuse->get_conf_IJ(I, J);
 	int fuse_idx, i1, j0, j1, r, k;
 
 	fuse_idx = C->fuse_idx;
@@ -1816,7 +1369,7 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j, int verbose_level)
 		// current row
 
 	r = C->r0 + n;
-		// current incidence index within the row
+		// index of current incidence within the row
 
 	j0 = C->j0;
 
@@ -1833,28 +1386,23 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j, int verbose_level)
 
 	for (; j < C->b; j++) {
 
-		if (inc->K[j0 + j] >= K1[fuse_idx * GB->b_len + J]) {
-			// this column is full
+		j1 = j0 + j;
+
+		if (inc->K[j1] >= Decomposition_with_fuse->K1[fuse_idx * GB->b_len + J]) {
+
+			// column j1 is full, move on
+
 			if (f_v) {
-				cout << "gen_geo::X_Fst I=" << I << " m=" << m << " J=" << J << " n=" << n << " j=" << j << " skipped because of column sum" << endl;
+				cout << "gen_geo::X_Fst I=" << I << " m=" << m << " J=" << J
+						<< " n=" << n << " j=" << j << " skipped because of column sum" << endl;
 			}
 			continue;
 		}
 
-		// ToDo: col_marker_test:
 
 		if (Test_semicanonical->col_marker_test(j0, j, i1)) {
 			continue;
 		}
-#if 0
-		if (vbar[j0 + j] > i1) {
-			// no vbar, skip
-			if (f_v) {
-				cout << "gen_geo::X_Fst I=" << I << " m=" << m << " J=" << J << " n=" << n << " j=" << j << " skipped because of vbar" << endl;
-			}
-			continue;
-		}
-#endif
 
 		inc->Encoding->theX[i1 * inc->Encoding->dim_n + r] = j0 + j;
 		// incidence must be recorded before we call find_square
@@ -1862,15 +1410,15 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j, int verbose_level)
 
 
 
-		j1 = j0 + j;
-		k = inc->K[j0 + j];
-		inc->theY[j0 + j][k] = i1;
+		k = inc->K[j1];
+		inc->theY[j1][k] = i1;
 
 		// and now come the tests:
 
 		if (!apply_tests(I, m, J, n, j, verbose_level - 2)) {
 			if (f_v) {
-				cout << "gen_geo::X_Fst I=" << I << " m=" << m << " J=" << J << " n=" << n << " j=" << j << " skipped because of test" << endl;
+				cout << "gen_geo::X_Fst I=" << I << " m=" << m << " J=" << J
+						<< " n=" << n << " j=" << j << " skipped because of test" << endl;
 			}
 			continue;
 		}
@@ -1880,7 +1428,7 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j, int verbose_level)
 
 		// increase column sum:
 
-		inc->K[j0 + j]++;
+		inc->K[j1]++;
 
 
 		// ToDo: col_markers_update:
@@ -1890,53 +1438,6 @@ int gen_geo::X_Fst(int I, int m, int J, int n, int j, int verbose_level)
 				i1, j0, r,
 				verbose_level);
 
-#if 0
-		// manage vbar:
-
-		if (vbar[j0 + j] == i1) {
-			if (n == 0) {
-				cout << "gen_geo::X_Fst n == 0" << endl;
-				exit(1);
-			}
-			if (inc->Encoding->theX[i1 * inc->Encoding->dim_n + r - 1] != j0 + j - 1) {
-
-				// previous incidence:
-				cout << "gen_geo::X_Fst theX[i1 * inc.max_r + r - 1] != j0 + j - 1" << endl;
-				exit(1);
-			}
-			if (!f_vbar[i1 * inc->Encoding->dim_n + r - 1]) {
-				cout << "gen_geo::X_Fst !f_vbar[i1 * inc->Encoding->dim_n + r - 1]" << endl;
-				exit(1);
-			}
-			f_vbar[i1 * inc->Encoding->dim_n + r - 1] = FALSE;
-			vbar[j0 + j] = MAX_V;
-			// the value MAX_V indicates that there is no vbar
-		}
-
-		// create new vbar to the right:
-
-		if (vbar[j0 + j + 1] == i1) {
-			cout << "gen_geo::X_Fst vbar[j0 + j + 1] == i1" << endl;
-			exit(1);
-		}
-		if (vbar[j0 + j + 1] > i1) {
-			f_vbar[i1 * inc->Encoding->dim_n + r] = TRUE;
-			vbar[j0 + j + 1] = i1;
-		}
-
-
-		// ToDo: row_marker_test_and_update:
-		if (hbar[i1] > J) {
-			if (m == 0) {
-				cout << "gen_geo::X_Fst no hbar && m == 0" << endl;
-				exit(1);
-			}
-			if (j0 + j != inc->Encoding->theX[(i1 - 1) * inc->Encoding->dim_n + r]) {
-				// create new hbar:
-				hbar[i1] = J;
-			}
-		}
-#endif
 
 		return TRUE;
 
@@ -1952,42 +1453,66 @@ int gen_geo::apply_tests(int I, int m, int J, int n, int j, int verbose_level)
 	int i1, r, k, j0, j1;
 
 	if (f_v) {
-		cout << "gen_geo::apply_tests I=" << I << " m=" << m << " J=" << J << " n=" << n << " j=" << j << endl;
+		cout << "gen_geo::apply_tests I=" << I << " m=" << m
+				<< " J=" << J << " n=" << n << " j=" << j << endl;
 	}
-	gen_geo_conf *C = Conf + I * GB->b_len + J;
+	gen_geo_conf *C = Decomposition_with_fuse->get_conf_IJ(I, J);
 	fuse_idx = C->fuse_idx;
 	i1 = C->i0 + m;
 		// current row
 
 	r = C->r0 + n;
-		// current incidence index within the row
+		// index of current incidence within the row
 
 	j0 = C->j0;
 
 	j1 = j0 + j;
-	k = inc->K[j0 + j];
+
+	k = inc->K[j1];
+
+	// We want to place an incidence in (i1,j1).
 
 	if (GB->Descr->f_lambda) {
 
-		// another test if this was the last incidence in this column:
-		// we check that there are no repeated columns !
+		// We check that there are no repeated columns
+		// in the incidence matrix of the design that we create.
+
+
+		// If this was the last incidence in column j1,
+		// make sure the column is different from the previous column.
+		// Do this test based on theY[], which lists the incidences in the column.
+
+		// JS = Jochim Selzer
+
 
 		if (GB->Descr->f_simple) { /* JS 180100 */
 
-			if (F_last_k_in_col[fuse_idx * GB->b_len + J] &&
-					k == K1[fuse_idx * GB->b_len + J] - 1) {
+			// Note that K[j1] does not take into account
+			// the incidence that we want to place in column j1.
+
+			if (Decomposition_with_fuse->F_last_k_in_col[fuse_idx * GB->b_len + J] &&
+					k == Decomposition_with_fuse->K1[fuse_idx * GB->b_len + J] - 1) {
 				int ii;
+
+				// check whether the column is
+				// different from the previous column:
+
 				for (ii = 0; ii <= k; ii++) {
 					if (inc->theY[j1 - 1][ii] != inc->theY[j1][ii]) {
-						break; // is OK, columns differ !
+						break; // yes, columns differ !
 					}
 				}
 				if (ii > k) {
-					// not OK !
+
+					// not OK, columns are equal.
+					// The design is not simple.
+
 					inc->Encoding->theX[i1 * inc->Encoding->dim_n + r] = -1;
-					inc->theY[j0 + j][k] = -1;
+					inc->theY[j1][k] = -1;
 					if (f_v) {
-						cout << "gen_geo::apply_tests I=" << I << " m=" << m << " J=" << J << " n=" << n << " j=" << j << " rejected because not simple" << endl;
+						cout << "gen_geo::apply_tests I=" << I << " m=" << m
+								<< " J=" << J << " n=" << n << " j=" << j
+								<< " rejected because not simple" << endl;
 					}
 					return FALSE;
 				}
@@ -1995,19 +1520,25 @@ int gen_geo::apply_tests(int I, int m, int J, int n, int j, int verbose_level)
 		} // JS
 
 
-		// check whether all scalar products
-		// for previous rows with a one in column j0 + j
-		// are less than to \lambda:
-		// this is so that there is space for one more pair
-		// created by the present incidence in row i1 and column j0 + j
+		// check whether there is enough capacity in the lambda array.
+		// This means, check if all scalar products
+		// for previous rows with a one in column j1
+		// are strictly less than \lambda:
+		// This means that there is room for one more pair
+		// created by the present incidence in row i1 and column j1
 
 		int ii, ii1;
 
 		for (ii = 0; ii < k; ii++) {
-			ii1 = inc->theY[j0 + j][ii];
+
+			ii1 = inc->theY[j1][ii];
+
 			if (inc->pairs[i1][ii1] >= GB->Descr->lambda) {
+
+				// no, fail
+
 				inc->Encoding->theX[i1 * inc->Encoding->dim_n + r] = -1;
-				inc->theY[j0 + j][k] = -1;
+				inc->theY[j1][k] = -1;
 				break;
 			}
 		}
@@ -2015,10 +1546,13 @@ int gen_geo::apply_tests(int I, int m, int J, int n, int j, int verbose_level)
 
 		if (ii < k) {
 
-			// there is not enough space. So, we cannot put the incidence here:
+			// There is not enough capacity in the lambda array.
+			// So, we cannot put the incidence at (i1,j1):
 
 			if (f_v) {
-				cout << "gen_geo::apply_tests I=" << I << " m=" << m << " J=" << J << " n=" << n << " j=" << j << " rejected because of column sum" << endl;
+				cout << "gen_geo::apply_tests I=" << I << " m=" << m << " J=" << J
+						<< " n=" << n << " j=" << j
+						<< " rejected because of pair test" << endl;
 			}
 
 			return FALSE;
@@ -2026,52 +1560,74 @@ int gen_geo::apply_tests(int I, int m, int J, int n, int j, int verbose_level)
 
 		// increment the pairs counter:
 
-		increment_pairs_point(i1, j0 + j, k);
+		increment_pairs_point(i1, j1, k);
 
-		// check all scalar products for previous rows:
+		// additional test that applies if the row is complete:
+
+		// In this case, all scalar products with previous rows must be equal to lambda:
+
 		if (J == GB->b_len - 1 && n == C->r - 1) {
 			for (ii = 0; ii < i1; ii++) {
 				if (inc->pairs[i1][ii] != GB->Descr->lambda) {
+					// no, fail
 					break;
 				}
 			}
 			if (ii < i1) {
 
-				decrement_pairs_point(i1, j0 + j, k);
+				// reject this incidence:
+
+				decrement_pairs_point(i1, j1, k);
 
 				if (f_v) {
-					cout << "gen_geo::apply_tests I=" << I << " m=" << m << " J=" << J << " n=" << n << " j=" << j << " rejected because at least one pair is not covered lambda times" << endl;
+					cout << "gen_geo::apply_tests I=" << I << " m=" << m << " J=" << J
+							<< " n=" << n << " j=" << j << " rejected because at least "
+									"one pair is not covered lambda times" << endl;
 				}
 				return FALSE;
 			}
 		}
 	}
 	else {
+
 		if (GB->Descr->f_find_square) { /* JS 120100 */
+
+			// Test the square condition.
+			// The square condition tests whether there is
+			// a pair of points that is contained in two different blocks
+			// (corresponding to a square in the incidence matrix, hence the name).
+			// We need only consider the pairs of points that include i1.
+
 			if (inc->find_square(i1, r)) {
-				// cannot be placed here
+
+				// fail, cannot place incidence here
+
 				inc->Encoding->theX[i1 * inc->Encoding->dim_n + r] = -1;
 				if (f_v) {
-					cout << "gen_geo::apply_tests I=" << I << " m=" << m << " J=" << J << " n=" << n << " j=" << j << " rejected because of square condition" << endl;
+					cout << "gen_geo::apply_tests I=" << I << " m=" << m << " J=" << J
+							<< " n=" << n << " j=" << j << " rejected because "
+									"of square condition" << endl;
 				}
 				return FALSE;
 			}
 		}
 	}
 
-	girth_test_add_incidence(i1, r, j0 + j);
+	girth_test_add_incidence(i1, r, j1);
 
-	if (!check_girth_condition(i1, r, j0 + j, 0 /*verbose_level*/)) {
+	if (!check_girth_condition(i1, r, j1, 0 /*verbose_level*/)) {
 
-		girth_test_delete_incidence(i1, r, j0 + j);
+		girth_test_delete_incidence(i1, r, j1);
 
 		if (GB->Descr->f_lambda) {
 
-			decrement_pairs_point(i1, j0 + j, k);
+			decrement_pairs_point(i1, j1, k);
 
 		}
 		if (f_v) {
-			cout << "gen_geo::apply_tests I=" << I << " m=" << m << " J=" << J << " n=" << n << " j=" << j << " rejected because of girth condition" << endl;
+			cout << "gen_geo::apply_tests I=" << I << " m=" << m << " J=" << J
+					<< " n=" << n << " j=" << j << " rejected because "
+							"of girth condition" << endl;
 		}
 		return FALSE;
 	}

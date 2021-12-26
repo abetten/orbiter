@@ -122,6 +122,60 @@ public:
 
 
 
+// #############################################################################
+// decomposition_with_fuse.cpp
+// #############################################################################
+
+//! a row-tactical decomposition with fuse, to be used by the geometry_builder
+
+class decomposition_with_fuse {
+
+public:
+
+	gen_geo *gg;
+
+	int nb_fuse;
+	int *Fuse_first; // [nb_fuse]
+	int *Fuse_len; // [nb_fuse]
+
+	int *K0; // [gg->GB->v_len * gg->GB->b_len]
+	int *KK; // [gg->GB->v_len * gg->GB->b_len]
+	int *K1; // [gg->GB->v_len * gg->GB->b_len]
+	int *F_last_k_in_col; // [gg->GB->v_len * gg->GB->b_len]
+
+
+	gen_geo_conf *Conf; //[gg->GB->v_len * gg->GB->b_len]
+
+	// partition for Nauty:
+	int *row_partition;
+		// row partition: 1111011110...
+		// where the 0's indicate the end of a block
+		// The blocks are defined by the initial TDO decomposition.
+	int *col_partition;
+		// likewise, but for columns
+		// The blocks are defined by the initial TDO decomposition.
+	int **Partition;
+		// [gg->GB->V + 1]
+		// combination of row and column partition,
+		// but with only i rows, so that it can be used
+		// for computing the canonical form of the partial geometry
+		// consisting of the first i rows only
+
+	decomposition_with_fuse();
+	~decomposition_with_fuse();
+	gen_geo_conf *get_conf_IJ(int I, int J);
+	void init(gen_geo *gg, int verbose_level);
+	void TDO_init(int *v, int *b, int *theTDO, int verbose_level);
+	void init_tdo_line(int fuse_idx,
+			int tdo_line, int v, int *b, int *r, int verbose_level);
+	void print_conf();
+	void init_fuse(int verbose_level);
+	void init_k(int verbose_level);
+	void conf_init_last_non_zero_flag(int verbose_level);
+	void init_partition(int verbose_level);
+
+
+};
 
 
 
@@ -167,25 +221,10 @@ public:
 
 	geometry_builder *GB;
 
-	int nb_fuse;
-	int *Fuse_first; // [nb_fuse]
-	int *Fuse_len; // [nb_fuse]
-
-	int *K0; // [GB->v_len * GB->b_len]
-	int *KK; // [GB->v_len * GB->b_len]
-	int *K1; // [GB->v_len * GB->b_len]
-	int *F_last_k_in_col; // [GB->v_len * GB->b_len]
-
-
-	gen_geo_conf *Conf; //[GB->v_len * GB->b_len]
+	decomposition_with_fuse *Decomposition_with_fuse;
 
 	incidence *inc;
 
-#if 0
-	int *f_vbar; // [GB->V * inc->Encoding->dim_n]
-	int *vbar; // [GB->V]
-	int *hbar; // [GB->B]
-#endif
 
 	int forget_ivhbar_in_last_isot;
 
@@ -204,14 +243,7 @@ public:
 	gen_geo();
 	~gen_geo();
 	void init(geometry_builder *GB, int verbose_level);
-	void TDO_init(int *v, int *b, int *theTDO, int verbose_level);
-	void init_tdo_line(int fuse_idx,
-			int tdo_line, int v, int *b, int *r, int verbose_level);
-	void print_conf();
-	void init_bars_and_partition(int verbose_level);
-	void init_fuse(int verbose_level);
-	void init_k(int verbose_level);
-	void conf_init_last_non_zero_flag(int verbose_level);
+	void init_semicanonical(int verbose_level);
 	void print_pairs(int line);
 	void main2(int &nb_GEN, int &nb_GEO, int &ticks, int &tps, int verbose_level);
 	void generate_all(int verbose_level);
@@ -282,6 +314,7 @@ public:
 	int f_simple;
 
 	int f_search_tree;
+	int f_search_tree_flags;
 
 	int f_orderly;
 
@@ -374,7 +407,6 @@ public:
 	void isot_no_vhbars(int tdo_flags, int verbose_level);
 	void isot2(int line, int tdo_flags, int verbose_level);
 	void set_split(int line, int remainder, int modulo);
-	void flush_line(int line);
 
 };
 
@@ -456,14 +488,12 @@ public:
 	void print_horizontal_bar(
 		std::ostream &ost, incidence *inc, int f_print_isot, iso_type *it);
 	void print_partitioned(
-			std::ostream &ost, int v_cur, int v_cut, incidence *inc, int f_print_isot);
+			std::ostream &ost, int v_cur, int v_cut,
+			incidence *inc, int f_print_isot);
 	void print_partitioned_override_theX(
-			std::ostream &ost, int v_cur, int v_cut, incidence *inc, int *the_X, int f_print_isot);
+			std::ostream &ost, int v_cur, int v_cut,
+			incidence *inc, int *the_X, int f_print_isot);
 	void print_permuted(cperm *pv, cperm *qv);
-#if 0
-	tactical_decomposition *calc_tdo_without_vhbar(
-		int f_second_tactical_decomposition, int verbose_level);
-#endif
 	void apply_permutation(incidence *inc, int v,
 		int *theY, cperm *p, cperm *q, int verbose_level);
 
@@ -501,30 +531,6 @@ public:
 
 
 
-#if 0
-	// initial vertical and horizontal bars
-	// to create semi-canonical partial geometries
-	int nb_i_vbar;
-	int *i_vbar;
-	int nb_i_hbar;
-	int *i_hbar;
-#endif
-
-	// partition for Nauty:
-	int *row_partition;
-		// row partition: 1111011110...
-		// where the 0's indicate the end of a block
-		// The blocks are defined by the initial TDO decomposition.
-	int *col_partition;
-		// likewise, but for columns
-		// The blocks are defined by the initial TDO decomposition.
-	int **Partition;
-		// [gg->GB->V + 1]
-		// combination of row and column partition,
-		// but with only i rows, so that it can be used
-		// for computing the canonical form of the partial geometry
-		// consisting of the first i rows only
-
 	int gl_nb_GEN;
 
 	iso_type **iso_type_at_line; // [gg->GB->V]
@@ -536,8 +542,6 @@ public:
 	incidence();
 	~incidence();
 	void init(gen_geo *gg, int v, int b, int *R, int verbose_level);
-	//void init_bars(int verbose_level);
-	void init_partition(int verbose_level);
 	void init_pairs(int verbose_level);
 	void print_pairs(int v);
 	int find_square(int m, int n);
@@ -551,8 +555,6 @@ public:
 	void install_isomorphism_test_of_second_kind_after_a_given_row(int i,
 			int tdo_flags, int f_orderly, int verbose_level);
 	void set_split(int row, int remainder, int modulo);
-	void set_flush_to_inc_file(int row, std::string &fname);
-	void set_flush_line(int row);
 	void print_geo(std::ostream &ost, int v, int *theGEO);
 	void print_inc(std::ostream &ost, int v, long int *theInc);
 	void print_blocks(std::ostream &ost, int v, long int *theInc);
@@ -580,6 +582,8 @@ class iso_type {
 
 public:
 
+	gen_geo *gg;
+
 	int v;
 	int sum_R;
 	incidence *inc;
@@ -602,7 +606,6 @@ public:
 	int split_remainder;
 	int split_modulo;
 
-	int f_flush_line;
 
 	std::string fname;
 
@@ -614,14 +617,6 @@ public:
 	int nb_GEO;
 	int nb_TDO;
 
-	int dim_GEO;
-	int dim_TDO;
-
-	int **theGEO1; // [dim_GEO]
-	int **theGEO2; // [dim_GEO]
-	int *GEO_TDO_idx; // [dim_GEO]
-	//tdo_scheme **theTDO; // [dim_TDO]
-
 	classify_using_canonical_forms *Canonical_forms;
 
 	int f_print_mod;
@@ -629,64 +624,25 @@ public:
 
 	iso_type();
 	~iso_type();
-	void init(int v, incidence *inc, int tdo_flags, int f_orderly, int verbose_level);
-	void init2();
+	void init(gen_geo *gg, int v, incidence *inc, int tdo_flags, int f_orderly, int verbose_level);
 	void add_geometry(
 		inc_encoding *Encoding,
 		int v, incidence *inc,
 		int &f_already_there,
 		int verbose_level);
-#if 0
-	void recalc_autgroup(
-		int v, incidence *inc,
-		int tdo_idx, int geo_idx,
-		int f_print_isot_small,
-		int f_print_isot, int verbose_level);
-	void calc_theY_and_tdos_override_v(
-		inc_encoding *Encoding, incidence *inc, int v,
-		int *&theY, tdo_scheme *&tdos, int verbose_level);
-	tdo_scheme *geo_calc_tdos(
-		inc_encoding *Encoding,
-		incidence *inc,
-		int v,
-		short *&ddp, short *&ddb,
-		cperm *tdo_p, cperm *tdo_q,
-		int verbose_level);
-	int find_geo(
-		int v, incidence *inc, tdo_scheme *tdos,
-		int *theY, int tdo_idx, int verbose_level);
-#endif
 	void find_and_add_geo(
 		int v, incidence *inc,
 		int *theY, int &f_new_object, int verbose_level);
-#if 0
-	int isomorphic(
-		int v, incidence *inc, tdo_scheme *tdos,
-		int *pcA, int *pcB, int verbose_level);
-	void do_aut_group(
-		int v, incidence *inc, tdo_scheme *tdos,
-		int *pc, int *aut_group_order,
-		int f_print_isot_small, int f_print_isot, int verbose_level);
-#endif
 	void scan_tdo_flags(int tdo_flags);
 	void second();
 	void set_split(int remainder, int modulo);
-	void set_flush_line();
-	void flush();
 	void TDO_realloc();
-#if 0
-	void find_tdos(tdo_scheme *tdos, int *tdo_idx, int *f_found);
-	void add_tdos_and_geo(tdo_scheme *tdos, int tdo_idx,
-			int *theX, int *theY, int verbose_level);
-	void add_geo(int tdo_idx, int *theX, int *theY);
-#endif
 	int *get_theX(int *theGEO);
 	void geo_free(int *theGEO);
 	void print_geos(int verbose_level);
 	void write_inc_file(std::string &fname, int verbose_level);
 	void write_blocks_file(std::string &fname, int verbose_level);
 	void write_blocks_file_long(std::string &fname, int verbose_level);
-	//void print(std::ostream &ost, int f_with_TDO, int v, incidence *inc);
 	void print_GEO(int *pc, int v, incidence *inc);
 	void print_status(std::ostream &ost, int f_with_flags);
 	void print_flags(std::ostream &ost);
