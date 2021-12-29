@@ -33,6 +33,11 @@ inc_encoding::~inc_encoding()
 	}
 }
 
+int &inc_encoding::theX_ir(int i, int r)
+{
+	return theX[i * dim_n + r];
+}
+
 void inc_encoding::init(int v, int b, int *R, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

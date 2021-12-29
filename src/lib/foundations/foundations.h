@@ -383,6 +383,7 @@ class cperm;
 class decomposition_with_fuse;
 class gen_geo_conf;
 class gen_geo;
+class geometric_backtrack_search;
 class geometry_builder_description;
 class geometry_builder;
 class girth_test;

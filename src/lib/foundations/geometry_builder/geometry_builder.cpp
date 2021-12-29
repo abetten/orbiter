@@ -185,7 +185,7 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 	if (f_v) {
 		cout << "geometry_builder::init_description setting up tests:" << endl;
 		for (i = 0; i < Descr->test_lines.size(); i++) {
-			cout << "-test " << Descr->test_lines[i] << " " << Descr->test_flags[i] << endl;
+			cout << "-test " << Descr->test_lines[i] << endl;
 		}
 	}
 
@@ -213,18 +213,16 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 	for (i = 0; i < Descr->test_lines.size(); i++) {
 		int *lines;
 		int lines_len;
-		int a, j, flags;
+		int a, j;
 
 		//cout << "-test " << Descr->test_lines[i] << " " << Descr->test_flags[i] << endl;
 
 		Orbiter->get_vector_from_label(Descr->test_lines[i], lines, lines_len, 0 /* verbose_level*/);
 		//Orbiter->Int_vec.scan(Descr->test_lines[i], lines, lines_len);
 
-		flags = true_false_string_numeric(Descr->test_flags[i].c_str());
 		for (j = 0; j < lines_len; j++) {
 			a = lines[j];
 			s_type[a] = 1;
-			s_flag[a] = flags;
 		}
 	}
 
@@ -236,15 +234,13 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 	for (i = 0; i < Descr->test2_lines.size(); i++) {
 		int *lines;
 		int lines_len;
-		int a, j, flags;
+		int a, j;
 
 		//cout << "-test " << Descr->test_lines[i] << " " << Descr->test_flags[i] << endl;
 		Orbiter->Int_vec.scan(Descr->test2_lines[i], lines, lines_len);
-		flags = true_false_string_numeric(Descr->test_flags[i].c_str());
+		//flags = true_false_string_numeric(Descr->test_flags[i].c_str());
 		for (j = 0; j < lines_len; j++) {
 			a = lines[j];
-			s_type[a] = 2;
-			s_flag[a] = flags;
 		}
 	}
 
@@ -258,10 +254,10 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 		}
 
 		if (s_type[i] == 1) {
-			isot(i, s_flag[i], verbose_level);
+			isot(i, verbose_level);
 		}
 		else if (s_type[i] == 2) {
-			isot2(i, s_flag[i], verbose_level);
+			isot2(i, verbose_level);
 		}
 
 	}
@@ -345,23 +341,22 @@ void geometry_builder::print_tdo()
 	}
 }
 
-void geometry_builder::isot(int line,
-	int tdo_flags, int verbose_level)
+void geometry_builder::isot(int line, int verbose_level)
 {
 	gg->inc->install_isomorphism_test_after_a_given_row(
-			line, tdo_flags, Descr->f_orderly, verbose_level);
+			line, Descr->f_orderly, verbose_level);
 }
 
-void geometry_builder::isot_no_vhbars(int tdo_flags, int verbose_level)
+void geometry_builder::isot_no_vhbars(int verbose_level)
 {
 	gg->inc->iso_type_no_vhbars = new iso_type;
-	gg->inc->iso_type_no_vhbars->init(gg, V, gg->inc, tdo_flags, Descr->f_orderly, verbose_level);
+	gg->inc->iso_type_no_vhbars->init(gg, V, gg->inc, Descr->f_orderly, verbose_level);
 }
 
-void geometry_builder::isot2(int line, int tdo_flags, int verbose_level)
+void geometry_builder::isot2(int line, int verbose_level)
 {
 	gg->inc->install_isomorphism_test_of_second_kind_after_a_given_row(
-			line, tdo_flags, Descr->f_orderly, verbose_level);
+			line, Descr->f_orderly, verbose_level);
 }
 
 void geometry_builder::set_split(int line, int remainder, int modulo)

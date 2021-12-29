@@ -160,6 +160,8 @@ public:
 		// but with only i rows, so that it can be used
 		// for computing the canonical form of the partial geometry
 		// consisting of the first i rows only
+	int **Partition_fixing_last;
+
 
 	decomposition_with_fuse();
 	~decomposition_with_fuse();
@@ -240,44 +242,71 @@ public:
 
 	test_semicanonical *Test_semicanonical;
 
+	geometric_backtrack_search *Geometric_backtrack_search;
+
 	gen_geo();
 	~gen_geo();
 	void init(geometry_builder *GB, int verbose_level);
 	void init_semicanonical(int verbose_level);
 	void print_pairs(int line);
-	void main2(int &nb_GEN, int &nb_GEO, int &ticks, int &tps, int verbose_level);
+	void main2(int verbose_level);
 	void generate_all(int verbose_level);
 	void setup_output_files(int verbose_level);
 	void close_output_files(int verbose_level);
 	void record_tree(int i1, int f_already_there);
 	void print_I_m(int I, int m);
 	void print(int v);
-	int GeoFst(int verbose_level);
-	int GeoNxt(int verbose_level);
-	int GeoRowFst(int I, int verbose_level);
-	int GeoRowNxt(int I, int verbose_level);
-	int GeoLineFstSplit(int I, int m, int verbose_level);
-	int GeoLineNxtSplit(int I, int m, int verbose_level);
-	int geo_back_test(int I, int verbose_level);
-	int GeoLineFst0(int I, int m, int verbose_level);
-	int GeoLineNxt0(int I, int m, int verbose_level);
-	int GeoLineFst(int I, int m, int verbose_level);
-	int GeoLineNxt(int I, int m, int verbose_level);
-	void GeoLineClear(int I, int m);
-	int GeoConfFst(int I, int m, int J, int verbose_level);
-	int GeoConfNxt(int I, int m, int J, int verbose_level);
-	void GeoConfClear(int I, int m, int J);
-	int GeoXFst(int I, int m, int J, int n, int verbose_level);
-	int GeoXNxt(int I, int m, int J, int n, int verbose_level);
-	void GeoXClear(int I, int m, int J, int n);
-	int X_Fst(int I, int m, int J, int n, int j, int verbose_level);
-	int apply_tests(int I, int m, int J, int n, int j, int verbose_level);
 	void increment_pairs_point(int i1, int col, int k);
 	void decrement_pairs_point(int i1, int col, int k);
 	void girth_test_add_incidence(int i, int j_idx, int j);
 	void girth_test_delete_incidence(int i, int j_idx, int j);
 	void girth_Floyd(int i, int verbose_level);
 	int check_girth_condition(int i, int j_idx, int j, int verbose_level);
+	int apply_tests(int I, int m, int J, int n, int j, int verbose_level);
+
+};
+
+// #############################################################################
+// geometric_backtrack_search.cpp
+// #############################################################################
+
+//! classification of geometries with a given row-tactical decomposition
+
+
+class geometric_backtrack_search {
+
+public:
+
+	gen_geo *gg;
+
+	geometric_backtrack_search();
+	~geometric_backtrack_search();
+	void init(gen_geo *gg, int verbose_level);
+
+	int First(int verbose_level);
+	int Next(int verbose_level);
+	int BlockFirst(int I, int verbose_level);
+	int BlockNext(int I, int verbose_level);
+	int RowFirstSplit(int I, int m, int verbose_level);
+	int RowNextSplit(int I, int m, int verbose_level);
+	int geo_back_test(int I, int verbose_level);
+	int RowFirst0(int I, int m, int verbose_level);
+	int RowNext0(int I, int m, int verbose_level);
+	int RowFirst(int I, int m, int verbose_level);
+	int RowNext(int I, int m, int verbose_level);
+	int RowFirstLexLeast(int I, int m, int verbose_level);
+	int RowNextLexLeast(int I, int m, int verbose_level);
+	int RowFirstOrderly(int I, int m, int verbose_level);
+	int RowNextOrderly(int I, int m, int verbose_level);
+	void RowClear(int I, int m);
+	int ConfFirst(int I, int m, int J, int verbose_level);
+	int ConfNext(int I, int m, int J, int verbose_level);
+	void ConfClear(int I, int m, int J);
+	int XFirst(int I, int m, int J, int n, int verbose_level);
+	int XNext(int I, int m, int J, int n, int verbose_level);
+	void XClear(int I, int m, int J, int n);
+	int X_First(int I, int m, int J, int n, int j, int verbose_level);
+	int TryToPlace(int I, int m, int J, int n, int j, int verbose_level);
 
 };
 
@@ -319,10 +348,8 @@ public:
 	int f_orderly;
 
 	std::vector<std::string> test_lines;
-	std::vector<std::string> test_flags;
 
 	std::vector<std::string> test2_lines;
-	std::vector<std::string> test2_flags;
 
 	int f_split;
 	int split_line;
@@ -403,9 +430,9 @@ public:
 			int verbose_level);
 	void compute_VBR(int verbose_level);
 	void print_tdo();
-	void isot(int line, int tdo_flags, int verbose_level);
-	void isot_no_vhbars(int tdo_flags, int verbose_level);
-	void isot2(int line, int tdo_flags, int verbose_level);
+	void isot(int line, int verbose_level);
+	void isot_no_vhbars(int verbose_level);
+	void isot2(int line, int verbose_level);
 	void set_split(int line, int remainder, int modulo);
 
 };
@@ -454,11 +481,9 @@ public:
 int tuple_cmp(int *a, int *b, int l);
 void print_theX(int *theX, int dim_n, int v, int b, int *R);
 void print_theX_pq(
-	int *theX, int dim_n, int v, int b, int *R, cperm *pv, cperm *qv);
-
+	int *theX, int dim_n, int v, int b, int *R,
+	cperm *pv, cperm *qv);
 void cperm_test(void);
-
-int true_false_string_numeric(const char *p);
 
 
 
@@ -481,6 +506,7 @@ public:
 
 	inc_encoding();
 	~inc_encoding();
+	int &theX_ir(int i, int r);
 	void init(int v, int b, int *R, int verbose_level);
 	long int rank_row(int row);
 	void get_flags(int row, std::vector<int> &flags);
@@ -551,9 +577,9 @@ public:
 	void print(std::ostream &ost, int v, int v_cut);
 	void print_override_theX(std::ostream &ost, int *theX, int v, int v_cut);
 	void install_isomorphism_test_after_a_given_row(int i,
-			int tdo_flags, int f_orderly, int verbose_level);
+			int f_orderly, int verbose_level);
 	void install_isomorphism_test_of_second_kind_after_a_given_row(int i,
-			int tdo_flags, int f_orderly, int verbose_level);
+			int f_orderly, int verbose_level);
 	void set_split(int row, int remainder, int modulo);
 	void print_geo(std::ostream &ost, int v, int *theGEO);
 	void print_inc(std::ostream &ost, int v, long int *theInc);
@@ -590,12 +616,6 @@ public:
 
 	int f_orderly;
 
-	// flags for the type of TDO used:
-	int f_transpose_it; // first flag
-	int f_snd_TDO;      // second flag
-	int f_ddp;          // third flag
-	int f_ddb;          // fourth flag
-
 	// test of the first or the second kind:
 	// (second kind means we only check those geometries
 	// that are completely realizable
@@ -609,14 +629,6 @@ public:
 
 	std::string fname;
 
-	int sum_nb_GEN;
-	int sum_nb_GEO;
-	int sum_nb_TDO;
-
-	int nb_GEN;
-	int nb_GEO;
-	int nb_TDO;
-
 	classify_using_canonical_forms *Canonical_forms;
 
 	int f_print_mod;
@@ -624,7 +636,8 @@ public:
 
 	iso_type();
 	~iso_type();
-	void init(gen_geo *gg, int v, incidence *inc, int tdo_flags, int f_orderly, int verbose_level);
+	void init(gen_geo *gg, int v, incidence *inc,
+			int f_orderly, int verbose_level);
 	void add_geometry(
 		inc_encoding *Encoding,
 		int v, incidence *inc,
@@ -633,12 +646,8 @@ public:
 	void find_and_add_geo(
 		int v, incidence *inc,
 		int *theY, int &f_new_object, int verbose_level);
-	void scan_tdo_flags(int tdo_flags);
 	void second();
 	void set_split(int remainder, int modulo);
-	void TDO_realloc();
-	int *get_theX(int *theGEO);
-	void geo_free(int *theGEO);
 	void print_geos(int verbose_level);
 	void write_inc_file(std::string &fname, int verbose_level);
 	void write_blocks_file(std::string &fname, int verbose_level);

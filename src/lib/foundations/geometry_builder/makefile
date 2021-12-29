@@ -10,6 +10,7 @@ MODULES = \
 		decomposition_with_fuse.o \
 		gen_geo_conf.o \
 		gen_geo.o \
+		geometric_backtrack_search.o \
 		geometry_builder_description.o \
 		geometry_builder.o \
 		girth_test.o \

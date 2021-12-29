@@ -29,11 +29,6 @@ iso_type::iso_type()
 
 	f_orderly = FALSE;
 
-	f_transpose_it = FALSE;
-	f_snd_TDO = FALSE;
-	f_ddp = FALSE;
-	f_ddb = FALSE;
-
 	f_generate_first = FALSE;
 	f_beginning_checked = FALSE;
 
@@ -44,14 +39,6 @@ iso_type::iso_type()
 
 
 	//std::string fname;
-
-	sum_nb_GEN = 0;
-	sum_nb_GEO = 0;
-	sum_nb_TDO = 0;
-	nb_GEN = 0;
-	nb_GEO = 0;
-	nb_TDO = 0;
-
 
 	Canonical_forms = NULL;
 
@@ -65,16 +52,15 @@ iso_type::~iso_type()
 }
 
 void iso_type::init(gen_geo *gg,
-		int v, incidence *inc, int tdo_flags, int f_orderly, int verbose_level)
+		int v, incidence *inc, int f_orderly, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "iso_type::init v=" << v << " tdo_flags=" << tdo_flags << endl;
+		cout << "iso_type::init v=" << v << endl;
 	}
-	int i;
 
-	scan_tdo_flags(tdo_flags);
+	int i;
 
 	iso_type::gg = gg;
 	iso_type::v = v;
@@ -89,12 +75,6 @@ void iso_type::init(gen_geo *gg,
 	if (f_v) {
 		cout << "iso_type::init v=" << v << " sum_R=" << sum_R << endl;
 	}
-	sum_nb_GEN = 0;
-	sum_nb_GEO = 0;
-	sum_nb_TDO = 0;
-	nb_GEN = 0;
-	nb_GEO = 0;
-	nb_TDO = 0;
 
 	Canonical_forms = NEW_OBJECT(classify_using_canonical_forms);
 
@@ -245,26 +225,6 @@ void iso_type::find_and_add_geo(
 }
 
 
-void iso_type::scan_tdo_flags(int tdo_flags)
-{
-	if (tdo_flags & 8)
-		f_transpose_it = TRUE;
-	else
-		f_transpose_it = FALSE;
-	if (tdo_flags & 4)
-		f_snd_TDO = TRUE;
-	else
-		f_snd_TDO = FALSE;
-	if (tdo_flags & 2)
-		f_ddp = TRUE;
-	else
-		f_ddp = FALSE;
-	if (tdo_flags & 1)
-		f_ddb = TRUE;
-	else
-		f_ddb = FALSE;
-}
-
 void iso_type::second()
 {
 	f_generate_first = TRUE;
@@ -278,18 +238,6 @@ void iso_type::set_split(int remainder, int modulo)
 	split_modulo = modulo;
 }
 
-
-int *iso_type::get_theX(int *theGEO)
-{
-	return theGEO /*+ 3*/;
-}
-
-void iso_type::geo_free(int *theGEO)
-{
-	delete theGEO;
-	//my_free(theGEO, "isot_geo_free");
-	//MEM_free(theGEO);
-}
 
 void iso_type::print_geos(int verbose_level)
 {
@@ -309,14 +257,14 @@ void iso_type::print_geos(int verbose_level)
 
 			cout << h << " / " << nb_geo << ":" << endl;
 
-			object_with_canonical_form *OiP;
+			object_with_canonical_form *OwCF;
 
-			OiP = (object_with_canonical_form *) Canonical_forms->Objects[h];
+			OwCF = (object_with_canonical_form *) Canonical_forms->Objects[h];
 
 
-			inc->print_inc(cout, v, OiP->set);
+			inc->print_inc(cout, v, OwCF->set);
 
-			inc->inc_to_geo(v, OiP->set, inc->Encoding->theX, sum_R);
+			inc->inc_to_geo(v, OwCF->set, inc->Encoding->theX, sum_R);
 
 
 			inc->print(cout, inc->Encoding->v, v);
@@ -331,7 +279,7 @@ void iso_type::print_geos(int verbose_level)
 		long int *Ago;
 
 		Ago = NEW_lint(nb_geo);
-		for (h = 0; h < nb_geo /*nb_GEO*/; h++) {
+		for (h = 0; h < nb_geo; h++) {
 			Ago[h] = Canonical_forms->Ago[h];
 		}
 
@@ -360,7 +308,7 @@ void iso_type::write_inc_file(std::string &fname, int verbose_level)
 		nb_geo = Canonical_forms->B.size();
 
 		ost << v << " " << inc->Encoding->b << " " << sum_R << endl;
-		for (h = 0; h < nb_geo /*nb_GEO*/; h++) {
+		for (h = 0; h < nb_geo; h++) {
 
 			//inc->print_geo(ost, v, theGEO1[h]);
 
@@ -377,7 +325,7 @@ void iso_type::write_inc_file(std::string &fname, int verbose_level)
 		long int *Ago;
 
 		Ago = NEW_lint(nb_geo);
-		for (h = 0; h < nb_geo /*nb_GEO*/; h++) {
+		for (h = 0; h < nb_geo; h++) {
 			Ago[h] = Canonical_forms->Ago[h];
 		}
 
@@ -408,24 +356,23 @@ void iso_type::write_blocks_file(std::string &fname, int verbose_level)
 
 
 		if (nb_geo) {
-			object_with_canonical_form *OiP;
+			object_with_canonical_form *OwCF;
 
-			OiP = (object_with_canonical_form *) Canonical_forms->Objects[0];
+			OwCF = (object_with_canonical_form *) Canonical_forms->Objects[0];
 
-			k = inc->compute_k(v, OiP->set);
+			k = inc->compute_k(v, OwCF->set);
 
 
 
 
 			ost << v << " " << inc->Encoding->b << " " << k << endl;
-			for (h = 0; h < nb_geo /*nb_GEO*/; h++) {
+			for (h = 0; h < nb_geo; h++) {
 
 				//inc->print_geo(ost, v, theGEO1[h]);
 
-				object_with_canonical_form *OiP;
 
-				OiP = (object_with_canonical_form *) Canonical_forms->Objects[h];
-				inc->print_blocks(ost, v, OiP->set);
+				OwCF = (object_with_canonical_form *) Canonical_forms->Objects[h];
+				inc->print_blocks(ost, v, OwCF->set);
 
 				ost << endl;
 			}
@@ -436,7 +383,7 @@ void iso_type::write_blocks_file(std::string &fname, int verbose_level)
 		long int *Ago;
 
 		Ago = NEW_lint(nb_geo);
-		for (h = 0; h < nb_geo /*nb_GEO*/; h++) {
+		for (h = 0; h < nb_geo; h++) {
 			Ago[h] = Canonical_forms->Ago[h];
 		}
 
@@ -475,16 +422,16 @@ void iso_type::write_blocks_file_long(std::string &fname, int verbose_level)
 			b = inc->Encoding->b;
 
 			ost << v << " " << b << endl;
-			for (h = 0; h < nb_geo /*nb_GEO*/; h++) {
+			for (h = 0; h < nb_geo; h++) {
 
 				int *K;
 				int i, j, a;
 
-				object_with_canonical_form *OiP;
+				object_with_canonical_form *OwCF;
 
-				OiP = (object_with_canonical_form *) Canonical_forms->Objects[0];
+				OwCF = (object_with_canonical_form *) Canonical_forms->Objects[0];
 
-				theInc = OiP->set;
+				theInc = OwCF->set;
 
 				inc->compute_blocks(Blocks, K, v, theInc);
 
@@ -526,7 +473,7 @@ void iso_type::write_blocks_file_long(std::string &fname, int verbose_level)
 		long int *Ago;
 
 		Ago = NEW_lint(nb_geo);
-		for (h = 0; h < nb_geo /*nb_GEO*/; h++) {
+		for (h = 0; h < nb_geo; h++) {
 			Ago[h] = Canonical_forms->Ago[h];
 		}
 
@@ -585,22 +532,6 @@ void iso_type::print_status(std::ostream &ost, int f_with_flags)
 
 void iso_type::print_flags(std::ostream &ost)
 {
-	if (f_transpose_it)
-		ost << "T";
-	else
-		ost << "F";
-	if (f_snd_TDO)
-		ost << "T";
-	else
-		ost << "F";
-	if (f_ddp)
-		ost << "T";
-	else
-		ost << "F";
-	if (f_ddb)
-		ost << "T";
-	else
-		ost << "F";
 	ost << " ";
 	if (f_split) {
 		ost << " split[" << split_remainder << " % " << split_modulo << "]";

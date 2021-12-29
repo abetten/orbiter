@@ -2216,8 +2216,7 @@ void symbol_definition::do_geometry_builder(int verbose_level)
 
 	GB->init_description(Geometry_builder_description, verbose_level);
 
-	int nb_GEN, nb_GEO, ticks, tps;
-	GB->gg->main2(nb_GEN, nb_GEO, ticks, tps, verbose_level);
+	GB->gg->main2(verbose_level);
 
 
 	orbiter_symbol_table_entry Symb;

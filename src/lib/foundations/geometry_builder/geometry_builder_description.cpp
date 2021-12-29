@@ -46,9 +46,7 @@ geometry_builder_description::geometry_builder_description()
 	f_orderly = FALSE;
 
 	//std::vector<std::string> test_lines;
-	//std::vector<std::string> test_flags;
 	//std::vector<std::string> test2_lines;
-	//std::vector<std::string> test2_flags;
 
 
 	f_split = FALSE;
@@ -154,7 +152,6 @@ int geometry_builder_description::read_arguments(
 			lines.assign(argv[++i]);
 			flags.assign(argv[++i]);
 			test_lines.push_back(lines);
-			test_flags.push_back(flags);
 			if (f_v) {
 				cout << "-test " << lines << " " << flags << endl;
 			}
@@ -164,7 +161,6 @@ int geometry_builder_description::read_arguments(
 			lines.assign(argv[++i]);
 			flags.assign(argv[++i]);
 			test2_lines.push_back(lines);
-			test2_flags.push_back(flags);
 			if (f_v) {
 				cout << "-test2 " << lines << " " << flags << endl;
 			}
@@ -248,14 +244,14 @@ void geometry_builder_description::print()
 		int i;
 
 		for (i = 0; i < test_lines.size(); i++) {
-			cout << "-test " << test_lines[i] << " " << test_flags[i] << endl;
+			cout << "-test " << test_lines[i] << " " << endl;
 		}
 	}
 	if (test2_lines.size()) {
 		int i;
 
 		for (i = 0; i < test2_lines.size(); i++) {
-			cout << "-test2 " << test2_lines[i] << " " << test2_flags[i] << endl;
+			cout << "-test2 " << test2_lines[i] << " " << endl;
 		}
 	}
 	if (f_split) {

@@ -36,6 +36,7 @@ decomposition_with_fuse::decomposition_with_fuse()
 	row_partition = NULL;
 	col_partition = NULL;
 	Partition = NULL;
+	Partition_fixing_last = NULL;
 
 
 }
@@ -78,6 +79,14 @@ decomposition_with_fuse::~decomposition_with_fuse()
 			FREE_int(Partition[i]);
 		}
 		FREE_pint(Partition);
+	}
+	if (Partition_fixing_last) {
+		int i;
+
+		for (i = 0; i <= gg->GB->V; i++) {
+			FREE_int(Partition_fixing_last[i]);
+		}
+		FREE_pint(Partition_fixing_last);
 	}
 
 }
@@ -498,6 +507,26 @@ void decomposition_with_fuse::init_partition(int verbose_level)
 		if (f_v) {
 			cout << "Partition[" << i << "]: ";
 			Orbiter->Int_vec.print(cout, Partition[i], i + gg->GB->B);
+			cout << endl;
+		}
+	}
+
+	Partition_fixing_last = NEW_pint(gg->GB->V + 1);
+
+	for (i = 0; i <= gg->GB->V; i++) {
+		Partition_fixing_last[i] = NEW_int(i + gg->GB->B);
+		Orbiter->Int_vec.copy(row_partition, Partition_fixing_last[i], i);
+		if (i) {
+			Partition_fixing_last[i][i - 1] = 0;
+		}
+		if (i >= 2) {
+			Partition_fixing_last[i][i - 2] = 0;
+		}
+		Orbiter->Int_vec.copy(col_partition, Partition_fixing_last[i] + i, gg->GB->B);
+
+		if (f_v) {
+			cout << "Partition_fixing_last[" << i << "]: ";
+			Orbiter->Int_vec.print(cout, Partition_fixing_last[i], i + gg->GB->B);
 			cout << endl;
 		}
 	}
