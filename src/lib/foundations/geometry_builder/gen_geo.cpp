@@ -256,7 +256,7 @@ void gen_geo::main2(int verbose_level)
 	}
 
 
-	inc->print(cout, V, V);
+	print(cout, V, V);
 
 	int i, a;
 
@@ -334,7 +334,7 @@ void gen_geo::generate_all(int verbose_level)
 		inc->gl_nb_GEN++;
 		if (f_v) {
 			cout << "gen_geo::generate_all nb_GEN=" << inc->gl_nb_GEN << endl;
-			inc->print(cout, inc->Encoding->v, inc->Encoding->v);
+			print(cout, inc->Encoding->v, inc->Encoding->v);
 			//cout << "pairs:" << endl;
 			//inc->print_pairs(inc->Encoding->v);
 
@@ -364,15 +364,18 @@ void gen_geo::generate_all(int verbose_level)
 			inc->nb_i_hbar = 1;
 		}
 #endif
-		if (FALSE) {
+		if (f_v) {
 			cout << "gen_geo::generate_all before isot_add for it0" << endl;
 		}
 
 		it0->add_geometry(inc->Encoding,
-			inc->Encoding->v, inc,
-			f_already_there,
-			verbose_level - 2);
+				FALSE /* f_partition_fixing_last */,
+				f_already_there,
+				verbose_level - 2);
 
+		if (f_v) {
+			cout << "gen_geo::generate_all after isot_add for it0, f_already_there=" << f_already_there << endl;
+		}
 
 
 		record_tree(inc->Encoding->v, f_already_there);
@@ -384,7 +387,7 @@ void gen_geo::generate_all(int verbose_level)
 
 		if (f_vv && it0->Canonical_forms->B.size() % 1 == 0) {
 			cout << it0->Canonical_forms->B.size() << endl;
-			inc->print(cout, inc->Encoding->v, inc->Encoding->v);
+			print(cout, inc->Encoding->v, inc->Encoding->v);
 		}
 
 #if 0
@@ -546,12 +549,12 @@ void gen_geo::print_I_m(int I, int m)
 	int i1;
 
 	i1 = C->i0 + m;
-	inc->print(cout, i1 + 1, i1 + 1);
+	print(cout, i1 + 1, i1 + 1);
 }
 
 void gen_geo::print(int v)
 {
-	inc->print(cout, v, v);
+	print(cout, v, v);
 }
 
 
@@ -808,6 +811,21 @@ int gen_geo::apply_tests(int I, int m, int J, int n, int j, int verbose_level)
 
 	return TRUE;
 }
+
+void gen_geo::print(std::ostream &ost, int v, int v_cut)
+{
+	inc->Encoding->print_partitioned(ost,
+			v, v_cut, this, TRUE /* f_print_isot */);
+}
+
+
+void gen_geo::print_override_theX(std::ostream &ost, int *theX, int v, int v_cut)
+{
+	inc->Encoding->print_partitioned_override_theX(ost,
+			v, v_cut, this, theX, TRUE /* f_print_isot */);
+}
+
+
 
 
 }}

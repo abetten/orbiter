@@ -21,20 +21,35 @@ namespace foundations {
 geometric_backtrack_search::geometric_backtrack_search()
 {
 	gg = NULL;
+	Row_stabilizer_orbits = NULL;
+	Row_stabilizer_orbit_idx = NULL;
 }
 
 geometric_backtrack_search::~geometric_backtrack_search()
 {
+	if (Row_stabilizer_orbit_idx) {
+		FREE_int(Row_stabilizer_orbit_idx);
+	}
 }
 
 void geometric_backtrack_search::init(gen_geo *gg, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	int i;
 
 	if (f_v) {
 		cout << "geometric_backtrack_search::init" << endl;
 	}
 	geometric_backtrack_search::gg = gg;
+
+	Row_stabilizer_orbits = (iso_type **) NEW_pvoid(gg->GB->V);
+	for (i = 0; i < gg->GB->V; i++) {
+		Row_stabilizer_orbits[i] = NULL;
+	}
+	Row_stabilizer_orbit_idx = NEW_int(gg->GB->V);
+	Orbiter->Int_vec.zero(Row_stabilizer_orbit_idx, gg->GB->V);
+
+
 	if (f_v) {
 		cout << "geometric_backtrack_search::done" << endl;
 	}
@@ -267,7 +282,7 @@ int geometric_backtrack_search::geo_back_test(int I, int verbose_level)
 		if (it && it->f_generate_first && !it->f_beginning_checked) {
 
 			it->add_geometry(gg->inc->Encoding,
-					i1 + 1, gg->inc,
+					FALSE /* f_partition_fixing_last */,
 					f_already_there,
 					verbose_level - 2);
 
@@ -338,11 +353,12 @@ int geometric_backtrack_search::RowFirst0(int I, int m, int verbose_level)
 				cout << "geometric_backtrack_search::RowFirst0 "
 						"I=" << I << " m=" << m
 						<< " before isot_add" << endl;
-				gg->inc->print(cout, i1 + 1, i1 + 1);
+				gg->print(cout, i1 + 1, i1 + 1);
 			}
 
 			it->add_geometry(gg->inc->Encoding,
-					i1 + 1, gg->inc, f_already_there,
+					FALSE /* f_partition_fixing_last */,
+					f_already_there,
 					verbose_level - 2);
 
 			gg->record_tree(i1 + 1, f_already_there);
@@ -412,7 +428,8 @@ int geometric_backtrack_search::RowNext0(int I, int m, int verbose_level)
 	if (it) {
 		while (TRUE) {
 			it->add_geometry(gg->inc->Encoding,
-				i1 + 1, gg->inc, f_already_there,
+					FALSE /* f_partition_fixing_last */,
+				f_already_there,
 				verbose_level - 2);
 
 			gg->record_tree(i1 + 1, f_already_there);
@@ -502,6 +519,10 @@ int geometric_backtrack_search::RowNext(int I, int m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
+	if (f_v) {
+		cout << "geometric_backtrack_search::RowNext "
+				"I=" << I << " m=" << m << endl;
+	}
 	gen_geo_conf *C = gg->Decomposition_with_fuse->get_conf_IJ(I, 0);
 	int i1;
 	int ret;
@@ -582,7 +603,7 @@ int geometric_backtrack_search::RowFirstLexLeast(int I, int m, int verbose_level
 			if (J >= gg->GB->b_len) {
 				if (f_v) {
 					cout << "geometric_backtrack_search::RowFirstLexLeast" << endl;
-					gg->inc->print(cout, i1 + 1, gg->inc->Encoding->v);
+					gg->print(cout, i1 + 1, gg->inc->Encoding->v);
 				}
 				return TRUE;
 			}
@@ -614,6 +635,12 @@ int geometric_backtrack_search::RowNextLexLeast(int I, int m, int verbose_level)
 	int J, i1;
 
 	i1 = C->i0 + m;
+
+	if (f_v) {
+		cout << "geometric_backtrack_search::RowNextLexLeast "
+				"I=" << I << " m=" << m << " i1=" << i1 << endl;
+	}
+
 	J = gg->GB->b_len - 1;
 	while (TRUE) {
 		while (TRUE) {
@@ -630,7 +657,7 @@ int geometric_backtrack_search::RowNextLexLeast(int I, int m, int verbose_level)
 			if (J >= gg->GB->b_len - 1) {
 				if (f_v) {
 					cout << "geometric_backtrack_search::RowNextLexLeast" << endl;
-					gg->inc->print(cout, i1 + 1, gg->inc->Encoding->v);
+					gg->print(cout, i1 + 1, gg->inc->Encoding->v);
 				}
 				return TRUE;
 			}
@@ -662,9 +689,11 @@ int geometric_backtrack_search::RowFirstOrderly(int I, int m, int verbose_level)
 
 	iso_type *It;
 
-	It = NEW_OBJECT(iso_type);
+	Row_stabilizer_orbits[i1] = NEW_OBJECT(iso_type);
 
-	It->init(gg, i1 + 1, gg->inc,
+	It = Row_stabilizer_orbits[i1];
+
+	It->init(gg, i1 + 1,
 			FALSE /* f_orderly */,
 			verbose_level);
 
@@ -672,35 +701,162 @@ int geometric_backtrack_search::RowFirstOrderly(int I, int m, int verbose_level)
 	}
 	else {
 
-		It->add_geometry(gg->inc->Encoding,
-				gg->inc->Encoding->v, gg->inc,
-				f_already_there,
-				verbose_level - 2);
+		while (TRUE) {
+			It->add_geometry(gg->inc->Encoding,
+					TRUE /* f_partition_fixing_last */,
+					f_already_there,
+					0 /*verbose_level - 2*/);
 
-		if (!RowNextLexLeast(I, m, verbose_level - 5)) {
+			if (!RowNextLexLeast(I, m, verbose_level - 5)) {
+				break;
+			}
 		}
-
 	}
 
+	if (f_v) {
+		cout << "geometric_backtrack_search::RowFirstOrderly "
+				"I=" << I << " m=" << m << " i1=" << i1
+				<< " number of possible rows: " << It->Canonical_forms->B.size() << endl;
+	}
+
+	if (It->Canonical_forms->B.size()) {
 
 
+		place_row(I, m, 0 /* idx */, verbose_level);
 
+		ret = TRUE;
+		Row_stabilizer_orbit_idx[i1] = 0;
 
+	}
+	else {
+		FREE_OBJECT(It);
+		Row_stabilizer_orbits[i1] = NULL;
+		Row_stabilizer_orbit_idx[i1] = -1;
+		ret = FALSE;
+	}
 
 	return ret;
 }
 
+void geometric_backtrack_search::place_row(int I, int m, int idx, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "geometric_backtrack_search::place_row "
+				"I=" << I << " m=" << m << " idx=" << idx << endl;
+	}
+
+	gen_geo_conf *C = gg->Decomposition_with_fuse->get_conf_IJ(I, 0);
+	int i1;
+
+	i1 = C->i0 + m;
+
+	if (f_v) {
+		cout << "geometric_backtrack_search::place_row "
+				"I=" << I << " m=" << m << " i1=" << i1 << endl;
+	}
+
+	iso_type *It;
+	It = Row_stabilizer_orbits[i1];
+
+	object_with_canonical_form *OwCF;
+	int J, r, j, n, j0;
+
+	OwCF = (object_with_canonical_form *) It->Canonical_forms->Objects[idx];
+
+
+	r = 0;
+	for (J = 0; J < gg->GB->b_len; J++) {
+		gen_geo_conf *C = gg->Decomposition_with_fuse->get_conf_IJ(I, J);
+
+		j0 = C->j0;
+
+		for (n = 0; n < C->r; n++, r++) {
+
+			j = OwCF->set[It->sum_R_before + r] - i1 * gg->inc->Encoding->b - j0;
+
+			if (f_v) {
+				cout << "geometric_backtrack_search::place_row "
+						"I=" << I << " m=" << m << " J=" << J
+						<< " n=" << n << " j=" << j << " before TryToPlace" << endl;
+			}
+
+			if (!TryToPlace(I, m, J, n, j, verbose_level)) {
+				cout << "geometric_backtrack_search::place_row !TryToPlace" << endl;
+				exit(1);
+			}
+
+			if (f_v) {
+				cout << "geometric_backtrack_search::place_row "
+						"I=" << I << " m=" << m << " J=" << J
+						<< " n=" << n << " j=" << j << " after TryToPlace" << endl;
+			}
+
+			gg->Test_semicanonical->markers_update(I, m, J, n, j,
+					i1, j0, r,
+					verbose_level);
+
+		}
+	}
+
+	if (f_v) {
+		cout << "geometric_backtrack_search::place_row "
+				"I=" << I << " m=" << m << " idx=" << idx << " done" << endl;
+	}
+}
 
 int geometric_backtrack_search::RowNextOrderly(int I, int m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "geometric_backtrack_search::RowNextOrderly "
+				"I=" << I << " m=" << m << endl;
+	}
 
 	gen_geo_conf *C = gg->Decomposition_with_fuse->get_conf_IJ(I, 0);
 	int i1;
 	int ret = FALSE;
 
 	i1 = C->i0 + m;
-	//J = gg->GB->b_len - 1;
+
+	if (f_v) {
+		cout << "geometric_backtrack_search::RowNextOrderly "
+				"I=" << I << " m=" << m << " i1=" << i1 << endl;
+	}
+	RowClear(I, m);
+
+	iso_type *It;
+	It = Row_stabilizer_orbits[i1];
+
+
+	if (Row_stabilizer_orbit_idx[i1] == It->Canonical_forms->B.size() - 1) {
+
+		FREE_OBJECT(Row_stabilizer_orbits[i1]);
+		Row_stabilizer_orbits[i1] = NULL;
+		Row_stabilizer_orbit_idx[i1] = -1;
+		if (f_v) {
+			cout << "geometric_backtrack_search::RowNextOrderly "
+					"I=" << I << " m=" << m << " i1=" << i1 << " finished" << endl;
+		}
+		ret = FALSE;
+	}
+	else {
+
+		Row_stabilizer_orbit_idx[i1]++;
+		place_row(I, m, Row_stabilizer_orbit_idx[i1] /* idx */, verbose_level);
+		if (f_v) {
+			cout << "geometric_backtrack_search::RowNextOrderly "
+					"I=" << I << " m=" << m << " i1=" << i1
+					<< " moved on to the next sibling" << endl;
+			gg->print(cout, i1 + 1, gg->inc->Encoding->v);
+		}
+
+		ret = TRUE;
+
+	}
+
 	return ret;
 }
 

@@ -997,6 +997,10 @@ void symbol_definition::print()
 		cout << "-combinatorial_objects ";
 		Data_input_stream_description->print();
 	}
+	if (f_geometry_builder) {
+		cout << "-geometry_builder ";
+		Geometry_builder_description->print();
+	}
 }
 
 

@@ -133,24 +133,10 @@ void test_semicanonical::init_bars(int verbose_level)
 
 	}
 
-	if (gg->GB->Descr->f_orderly) {
-		int i;
 
-		// set all hbars because we are doing orderly generation:
-		for (i = 0; i <= gg->GB->V; i++) {
-			hbar[i] = -1;
-		}
-#if 0
-		nb_i_hbar = 0;
-		for (i = 0; i <= gg->GB->V; i++) {
-			i_hbar[nb_i_hbar++] = i;
-		}
-#endif
-	}
-	else {
-		nb_i_hbar = 0;
-		i_hbar[nb_i_hbar++] = 0;
-	}
+	nb_i_hbar = 0;
+	i_hbar[nb_i_hbar++] = 0;
+
 
 	if (f_v) {
 		cout << "test_semicanonical::init_bars done" << endl;
@@ -315,9 +301,11 @@ void test_semicanonical::row_init(int I, int m, int J,
 
 int test_semicanonical::col_marker_test(int j0, int j, int i1)
 {
+#if 0
 	if (gg->GB->Descr->f_orderly) {
 		return FALSE;
 	}
+#endif
 	if (vbar[j0 + j] > i1) {
 		// no vbar, skip
 		if (FALSE) {

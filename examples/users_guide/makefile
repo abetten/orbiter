@@ -11573,7 +11573,7 @@ geo_petersen:
 			-V 10 -B 15 -TDO 3 -fuse 1 \
 			-fname_GEO petersen -girth 5 \
 			-search_tree \
-			-test Test_lines FFFF \
+			-test Test_lines \
 		-end
 
 geo_7_3:
@@ -11582,16 +11582,16 @@ geo_7_3:
 		-define Geo -geometry_builder \
 			-V 7 -B 7 -TDO 3 \
 			-fuse 1 -fname_GEO 7_3 \
-			-test Test_lines FFFF \
+			-test Test_lines \
 		-end
 
 geo_7_3_orderly:
-	$(ORBITER_PATH)orbiter.out -v 20 \
+	$(ORBITER_PATH)orbiter.out -v 200 \
 		-define Test_lines -set -loop 3 8 1 -end \
 		-define Geo -geometry_builder \
 			-V 7 -B 7 -TDO 3 \
 			-fuse 1 -fname_GEO 7_3 \
-			-test Test_lines FFFF \
+			-test Test_lines \
 			-search_tree \
 			-orderly \
 		-end
@@ -11615,7 +11615,7 @@ geo_7_3_orderly_mem_debug:
 		-define Geo -geometry_builder \
 			-V 7 -B 7 -TDO 3 \
 			-fuse 1 -fname_GEO 7_3 \
-			-test Test_lines FFFF \
+			-test Test_lines \
 			-search_tree \
 			-orderly \
 		-end
@@ -11626,7 +11626,7 @@ geo_8_3:
 		-define Geo -geometry_builder \
 			-V 8 -B 8 -TDO 3 \
 			-fuse 1 -fname_GEO 8_3 \
-			-test Test_lines FFFF  \
+			-test Test_lines  \
 		-end
 
 #-print_at_line 4
@@ -11643,7 +11643,7 @@ geo_9_3:
 		-define Geo -geometry_builder \
 			-V 9 -B 9 -TDO 3 \
 			-fuse 1 -fname_GEO 9_3 \
-			-test Test_lines FFFF  \
+			-test Test_lines  \
 		-end
 
 
@@ -11653,7 +11653,7 @@ geo_10_3:
 		-define Geo -geometry_builder \
 			-V 10 -B 10 -TDO 3 -fuse 1 \
 			-fname_GEO 10_3 \
-			-test Test_lines FFFF \
+			-test Test_lines \
 		-end
 
 
@@ -11663,13 +11663,13 @@ geo_10_3:
 
 
 geo_10_3_orderly:
-	$(ORBITER_PATH)orbiter.out -v 2 \
+	$(ORBITER_PATH)orbiter.out -v 20 \
 		-define Test_lines -set -loop 4 11 1 -end \
 		-define Geo -geometry_builder \
 			-V 10 -B 10 -TDO 3 -fuse 1 \
 			-fname_GEO 10_3 \
-			-test Test_lines FFFF \
-			-f_orderly \
+			-test Test_lines \
+			-orderly \
 		-end
 
 geo_10_3_orderly_mem_debug:
@@ -11679,7 +11679,7 @@ geo_10_3_orderly_mem_debug:
 		-define Geo -geometry_builder \
 			-V 10 -B 10 -TDO 3 -fuse 1 \
 			-fname_GEO 10_3 \
-			-test Test_lines FFFF \
+			-test Test_lines \
 			-orderly \
 		-end
 
@@ -11691,7 +11691,7 @@ geo_10_3_tree:
 			-V 10 -B 10 -TDO 3 -fuse 1 \
 			-fname_GEO 10_3 \
 			-search_tree \
-			-test Test_lines FFFF \
+			-test Test_lines \
 		-end
 	$(ORBITER_PATH)orbiter.out -v 20 \
 		-draw_options -embedded -radius 50 \
@@ -11717,7 +11717,7 @@ geo_11_3:
 		-define Geo -geometry_builder \
 			-V 11 -B 11 -TDO 3 \
 			-fuse 1 -fname_GEO 11_3 \
-			-test Test_lines FFFF \
+			-test Test_lines \
 		-end
 
 # 31 geos
@@ -11729,7 +11729,7 @@ geo_12_3:
 		-define Geo -geometry_builder \
 			-V 12 -B 12 -TDO 3 \
 			-fuse 1 -fname_GEO 12_3 \
-			-test Test_lines FFFF \
+			-test Test_lines \
 		-end
 
 # 229 geos
@@ -11743,7 +11743,7 @@ geo_12_3_orderly:
 		-define Geo -geometry_builder \
 			-V 12 -B 12 -TDO 3 \
 			-fuse 1 -fname_GEO 12_3 \
-			-test Test_lines FFFF \
+			-test Test_lines \
 			-f_orderly \
 		-end
 
@@ -11755,7 +11755,7 @@ geo_13_3:
 		-define Geo -geometry_builder \
 			-V 13 -B 13 -TDO 3 \
 			-fuse 1 -fname_GEO 13_3 \
-			-test Test_lines FFFF \
+			-test Test_lines \
 		-end
 
 # 2036 geos, 96, 39, 13, 12^4, 8^3, 6^16, 4^30, 3^20, 2^190, 1^1770
@@ -11768,7 +11768,7 @@ geo_13_3_orderly:
 		-define Geo -geometry_builder \
 			-V 13 -B 13 -TDO 3 \
 			-fuse 1 -fname_GEO 13_3 \
-			-test Test_lines FFFF \
+			-test Test_lines \
 			-f_orderly \
 		-end
 
@@ -11780,7 +11780,7 @@ geo_14_3:
 		-define Geo -geometry_builder \
 			-V 14 -B 14 -TDO 3 \
 			-fuse 1 -fname_GEO 14_3 \
-			-test Test_lines FFFF \
+			-test Test_lines \
 		-end
 
 # 21399 geos, 56448, 128, 24^2, 16^3, 14^3, 12^7, 8^15, 7, 6^12, 4^91, 3^19, 2^916, 1^20328
@@ -11794,7 +11794,7 @@ geo_14_3_orderly:
 		-define Geo -geometry_builder \
 			-V 14 -B 14 -TDO 3 \
 			-fuse 1 -fname_GEO 14_3 \
-			-test Test_lines FFFF \
+			-test Test_lines \
 			-f_orderly \
 		-end
 
@@ -11807,7 +11807,7 @@ geo_14_3_orderly:
 		-define Geo -geometry_builder \
 			-V 15 -B 15 -TDO 3 \
 			-fuse 1 -fname_GEO 15_3 \
-			-test Test_lines FFFF \
+			-test Test_lines \
 		-end
 
 # 245342 geos, 8064, 720, 192^2, 128, 72, 48^6, 32, 30^2, 24^2, 20^2, 18, 16^10, 15^2, 12^11, 10^3, 8^34, 6^59, 5^5, 4^180, 3^69, 2^3709, 1^241240
@@ -11823,7 +11823,7 @@ geo_15_3_g4:
 			-fuse 1 -fname_GEO 15_3_g4 \
 			-girth 4 \
 			-search_tree \
-			-test Test_lines FFFF \
+			-test Test_lines \
 		-end
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-draw_options -embedded -radius 50 \
@@ -11850,7 +11850,7 @@ geo_17_3_g4_orderly:
 			-V 17 -B 17 -TDO 3 \
 			-fuse 1 -fname_GEO 17_3_g4 \
 			-girth 4 \
-			-test Test_lines FFFF \
+			-test Test_lines \
 			-orderly \
 		-end
 
@@ -11864,7 +11864,7 @@ geo_18_3_g4:
 			-fuse 1 -fname_GEO 18_3_g4 \
 			-girth 4 \
 			-search_tree \
-			-test Test_lines FFFF \
+			-test Test_lines \
 		-end
 
 # 4 sol, 1 sec
@@ -11877,7 +11877,7 @@ geo_19_3_g4:
 			-V 19 -B 19 -TDO 3 \
 			-fuse 1 -fname_GEO 19_3_g4 \
 			-girth 4 \
-			-test Test_lines FFFF \
+			-test Test_lines \
 		-end
 
 # 14 sol, 10 sec on Mac
@@ -11889,7 +11889,7 @@ geo_20_3_g4:
 			-V 20 -B 20 -TDO 3 \
 			-fuse 1 -fname_GEO 20_3_g4 \
 			-girth 4 \
-			-test Test_lines FFFF \
+			-test Test_lines \
 		-end
 
 # 162 sol, User time: 2:5 on Mac
@@ -11901,7 +11901,7 @@ geo_21_3_g4:
 			-V 21 -B 21 -TDO 3 \
 			-fuse 1 -fname_GEO 21_3_g4 \
 			-girth 4 \
-			-test Test_lines FFFF \
+			-test Test_lines \
 		-end
 
 
@@ -11912,7 +11912,7 @@ geo_15_4:
 			-V 15 -B 15 -TDO 4 \
 			-fuse 1 -fname_GEO 15_4 \
 			-search_tree \
-			-test Test_lines FFFF \
+			-test Test_lines \
 		-end
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-draw_options -embedded -radius 50 \
@@ -11936,7 +11936,7 @@ geo_16_4_g4:
 			-V 16 -B 16 -TDO 4 \
 			-fuse 1 -fname_GEO 16_4_g4 \
 			-girth 4 \
-			-test Test_lines FFFF \
+			-test Test_lines \
 		-end
 
 # none
@@ -11950,7 +11950,7 @@ geo_16_4_g4:
 			-fuse 1 -fname_GEO 40_4_g4 \
 			-girth 4 \
 			-search_tree \
-			-test Test_lines FFFF \
+			-test Test_lines \
 		-end
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-draw_options -embedded -radius 50 \
@@ -11975,7 +11975,7 @@ geo_63_3_g6:
 			-V 63 -B 63 -TDO 3 \
 			-fuse 1 -fname_GEO 63_3_g6 \
 			-girth 6 \
-			-test Test_lines FFFF \
+			-test Test_lines \
 		-end
 
 
@@ -12172,7 +12172,7 @@ AG_2_3.inc:
 			-V 9 -B 12 \
 			-TDO 4 -fuse 1 \
 			-fname_GEO AG_2_3 \
-			-test 3,4,5,6,7,8,9 FFFF  \
+			-test 3,4,5,6,7,8,9  \
 		-end
 
 #9 12 3
@@ -14010,7 +14010,7 @@ geo_10_3_c_lex_least:
 		-define Geo -geometry_builder \
 			-V 10 -B 10 -TDO 3 -fuse 1 \
 			-fname_GEO 10_3 \
-			-test Test_lines FFFF \
+			-test Test_lines \
 		-end \
 		-define C -combinatorial_objects \
 			-file_of_incidence_geometries 10_3.inc 10 10 30 \
@@ -14028,6 +14028,8 @@ geo_10_3_c_lex_least:
 				-export_flag_orbits \
 				-show_incidence_matrices \
 				-export_group \
+				-show_TDO \
+				-show_TDA \
 				-lex_least Geo \
 			-end \
 		-end
@@ -14083,6 +14085,7 @@ TFC_24_3_c:
 				-prefix 24_3_TFC \
 				-export_flag_orbits \
 				-show_TDO \
+				-show_TDA \
 				-show_incidence_matrices \
 			-end \
 		-end
@@ -14111,10 +14114,40 @@ geo_40_4_g4_c:
 				-save_ago \
 			-end \
 			-report \
+				-prefix 40_4_g4 \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-show_incidence_matrices \
+			-end \
 		-end
 	pdflatex 40_4_g4_classification.tex
 	open 40_4_g4_classification.pdf
 
+geo_17_3_g4_c:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-draw_incidence_structure_description \
+			-width 50 -with_10 5 -end \
+		-define C -combinatorial_objects \
+			-file_of_incidence_geometries 17_3_g4.inc 17 17 51 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-canonical_form \
+				-classification_prefix 17_3_g4 \
+				-label 17_3_g4 \
+				-save_ago \
+			-end \
+			-report \
+				-prefix 17_3_g4 \
+				-export_flag_orbits \
+				-show_TDO \
+				-show_TDA \
+				-show_incidence_matrices \
+			-end \
+		-end
+	pdflatex 17_3_g4_classification.tex
+	open 17_3_g4_classification.pdf
 
 
 AG_2_3_c: AG_2_3.inc

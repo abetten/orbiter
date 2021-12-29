@@ -148,21 +148,19 @@ int geometry_builder_description::read_arguments(
 			}
 		}
 		else if (stringcmp(argv[i], "-test") == 0) {
-			string lines, flags;
+			string lines;
 			lines.assign(argv[++i]);
-			flags.assign(argv[++i]);
 			test_lines.push_back(lines);
 			if (f_v) {
-				cout << "-test " << lines << " " << flags << endl;
+				cout << "-test " << lines << endl;
 			}
 		}
 		else if (stringcmp(argv[i], "-test2") == 0) {
-			string lines, flags;
+			string lines;
 			lines.assign(argv[++i]);
-			flags.assign(argv[++i]);
 			test2_lines.push_back(lines);
 			if (f_v) {
-				cout << "-test2 " << lines << " " << flags << endl;
+				cout << "-test2 " << lines << endl;
 			}
 		}
 		else if (stringcmp(argv[i], "-split") == 0) {
