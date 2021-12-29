@@ -263,6 +263,8 @@ public:
 	void girth_Floyd(int i, int verbose_level);
 	int check_girth_condition(int i, int j_idx, int j, int verbose_level);
 	int apply_tests(int I, int m, int J, int n, int j, int verbose_level);
+	void print(std::ostream &ost, int v, int v_cut);
+	void print_override_theX(std::ostream &ost, int *theX, int v, int v_cut);
 
 };
 
@@ -278,6 +280,9 @@ class geometric_backtrack_search {
 public:
 
 	gen_geo *gg;
+
+	iso_type **Row_stabilizer_orbits;
+	int *Row_stabilizer_orbit_idx;
 
 	geometric_backtrack_search();
 	~geometric_backtrack_search();
@@ -297,6 +302,7 @@ public:
 	int RowFirstLexLeast(int I, int m, int verbose_level);
 	int RowNextLexLeast(int I, int m, int verbose_level);
 	int RowFirstOrderly(int I, int m, int verbose_level);
+	void place_row(int I, int m, int idx, int verbose_level);
 	int RowNextOrderly(int I, int m, int verbose_level);
 	void RowClear(int I, int m);
 	int ConfFirst(int I, int m, int J, int verbose_level);
@@ -512,13 +518,13 @@ public:
 	void get_flags(int row, std::vector<int> &flags);
 	int find_square(int m, int n);
 	void print_horizontal_bar(
-		std::ostream &ost, incidence *inc, int f_print_isot, iso_type *it);
+		std::ostream &ost, gen_geo *gg, int f_print_isot, iso_type *it);
 	void print_partitioned(
 			std::ostream &ost, int v_cur, int v_cut,
-			incidence *inc, int f_print_isot);
+			gen_geo *gg, int f_print_isot);
 	void print_partitioned_override_theX(
 			std::ostream &ost, int v_cur, int v_cut,
-			incidence *inc, int *the_X, int f_print_isot);
+			gen_geo *gg, int *the_X, int f_print_isot);
 	void print_permuted(cperm *pv, cperm *qv);
 	void apply_permutation(incidence *inc, int v,
 		int *theY, cperm *p, cperm *q, int verbose_level);
@@ -574,8 +580,6 @@ public:
 	void print_param();
 	void free_isot();
 	void print_R(int v, cperm *p, cperm *q);
-	void print(std::ostream &ost, int v, int v_cut);
-	void print_override_theX(std::ostream &ost, int *theX, int v, int v_cut);
 	void install_isomorphism_test_after_a_given_row(int i,
 			int f_orderly, int verbose_level);
 	void install_isomorphism_test_of_second_kind_after_a_given_row(int i,
@@ -612,7 +616,7 @@ public:
 
 	int v;
 	int sum_R;
-	incidence *inc;
+	int sum_R_before;
 
 	int f_orderly;
 
@@ -636,16 +640,17 @@ public:
 
 	iso_type();
 	~iso_type();
-	void init(gen_geo *gg, int v, incidence *inc,
+	void init(gen_geo *gg, int v,
 			int f_orderly, int verbose_level);
 	void add_geometry(
 		inc_encoding *Encoding,
-		int v, incidence *inc,
+		int f_partition_fixing_last,
 		int &f_already_there,
 		int verbose_level);
 	void find_and_add_geo(
-		int v, incidence *inc,
-		int *theY, int &f_new_object, int verbose_level);
+		int *theY,
+		int f_partition_fixing_last,
+		int &f_new_object, int verbose_level);
 	void second();
 	void set_split(int remainder, int modulo);
 	void print_geos(int verbose_level);

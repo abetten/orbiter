@@ -350,7 +350,7 @@ void geometry_builder::isot(int line, int verbose_level)
 void geometry_builder::isot_no_vhbars(int verbose_level)
 {
 	gg->inc->iso_type_no_vhbars = new iso_type;
-	gg->inc->iso_type_no_vhbars->init(gg, V, gg->inc, Descr->f_orderly, verbose_level);
+	gg->inc->iso_type_no_vhbars->init(gg, V, Descr->f_orderly, verbose_level);
 }
 
 void geometry_builder::isot2(int line, int verbose_level)

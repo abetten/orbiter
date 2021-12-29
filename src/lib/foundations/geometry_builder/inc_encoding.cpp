@@ -152,15 +152,16 @@ int inc_encoding::find_square(int m, int n)
 }
 
 void inc_encoding::print_horizontal_bar(
-	std::ostream &ost, incidence *inc, int f_print_isot, iso_type *it)
+	std::ostream &ost, gen_geo *gg, int f_print_isot, iso_type *it)
 {
 	int J, j;
 
+	//cout << "inc_encoding::print_horizontal_bar" << endl;
 	J = 0;
 	for (j = 0; j <= b; j++) {
 		if ((j == b) ||
-				(J < inc->gg->Test_semicanonical->nb_i_vbar &&
-						j == inc->gg->Test_semicanonical->i_vbar[J])) {
+				(J < gg->Test_semicanonical->nb_i_vbar &&
+						j == gg->Test_semicanonical->i_vbar[J])) {
 			ost << "+";
 			J++;
 		}
@@ -169,7 +170,7 @@ void inc_encoding::print_horizontal_bar(
 		}
 		ost << "-";
 	}
-	if (f_print_isot) {
+	if (f_print_isot && it) {
 		it->print_status(ost, TRUE /* f_with_flags */);
 	}
 	ost << endl;
@@ -178,18 +179,18 @@ void inc_encoding::print_horizontal_bar(
 
 void inc_encoding::print_partitioned(
 		std::ostream &ost, int v_cur, int v_cut,
-		incidence *inc, int f_print_isot)
+		gen_geo *gg, int f_print_isot)
 {
 	int *the_X;
 
 	the_X = theX;
-	print_partitioned_override_theX(ost, v_cur, v_cut, inc, the_X, f_print_isot);
+	print_partitioned_override_theX(ost, v_cur, v_cut, gg, the_X, f_print_isot);
 }
 
 
 void inc_encoding::print_partitioned_override_theX(
 		std::ostream &ost, int v_cur, int v_cut,
-		incidence *inc, int *the_X, int f_print_isot)
+		gen_geo *gg, int *the_X, int f_print_isot)
 {
 	int i, j, r, I, J, f_kreuz;
 	iso_type *it;
@@ -199,10 +200,12 @@ void inc_encoding::print_partitioned_override_theX(
 	I = 0;
 	for (i = 0; i <= v; i++) {
 
+		//cout << "inc_encoding::print_partitioned_override_theX i=" << i << endl;
+
 		if ((i == v) ||
-				(I < inc->gg->Test_semicanonical->nb_i_hbar &&
-						i == inc->gg->Test_semicanonical->i_hbar[I])) {
-			print_horizontal_bar(ost, inc, FALSE /* f_print_isot */, NULL);
+				(I < gg->Test_semicanonical->nb_i_hbar &&
+						i == gg->Test_semicanonical->i_hbar[I])) {
+			print_horizontal_bar(ost, gg, FALSE /* f_print_isot */, NULL);
 			I++;
 		}
 
@@ -219,8 +222,8 @@ void inc_encoding::print_partitioned_override_theX(
 		r = 0;
 		for (j = 0; j <= b; j++) {
 			if ((j == b) ||
-					(J < inc->gg->Test_semicanonical->nb_i_vbar &&
-					j == inc->gg->Test_semicanonical->i_vbar[J])) {
+					(J < gg->Test_semicanonical->nb_i_vbar &&
+					j == gg->Test_semicanonical->i_vbar[J])) {
 				ost << "|";
 				J++;
 			}
@@ -269,11 +272,23 @@ void inc_encoding::print_partitioned_override_theX(
 			FREE_int(S);
 		}
 
-		if (inc->iso_type_at_line[i] && f_print_isot) {
+		if (gg->GB->Descr->f_orderly) {
+			iso_type *It;
 
-			it = inc->iso_type_at_line[i];
+			It = gg->Geometric_backtrack_search->Row_stabilizer_orbits[i];
 
-			it->print_status(ost, TRUE /* f_with_flags */);
+			if (It) {
+				ost << gg->Geometric_backtrack_search->Row_stabilizer_orbit_idx[i]
+					<< " / " << It->Canonical_forms->B.size();
+			}
+		}
+		else {
+			if (gg->inc->iso_type_at_line[i] && f_print_isot) {
+
+				it = gg->inc->iso_type_at_line[i];
+
+				it->print_status(ost, TRUE /* f_with_flags */);
+			}
 		}
 		ost << endl;
 
@@ -281,8 +296,8 @@ void inc_encoding::print_partitioned_override_theX(
 
 	} // next i
 
-	if (i == v && inc->iso_type_no_vhbars && f_print_isot) {
-		print_horizontal_bar(ost, inc, TRUE /* f_print_isot */, inc->iso_type_no_vhbars);
+	if (i == v && gg->inc->iso_type_no_vhbars && f_print_isot) {
+		print_horizontal_bar(ost, gg, TRUE /* f_print_isot */, gg->inc->iso_type_no_vhbars);
 
 		ost << endl;
 	}
