@@ -270,7 +270,7 @@ void incidence::print_override_theX(std::ostream &ost, int *theX, int v, int v_c
 
 void incidence::install_isomorphism_test_after_a_given_row(
 		int row,
-		int tdo_flags, int f_orderly,
+		int f_orderly,
 		int verbose_level)
 // last row is ok
 {
@@ -281,7 +281,7 @@ void incidence::install_isomorphism_test_after_a_given_row(
 	}
 	if (row > 0 && row <= Encoding->v) {
 		iso_type_at_line[row - 1] = NEW_OBJECT(iso_type);
-		iso_type_at_line[row - 1]->init(gg, row, this, tdo_flags, f_orderly, verbose_level);
+		iso_type_at_line[row - 1]->init(gg, row, this, f_orderly, verbose_level);
 	}
 	else {
 		cout << "incidence::install_isomorphism_test_after_a_given_row "
@@ -292,7 +292,7 @@ void incidence::install_isomorphism_test_after_a_given_row(
 
 void incidence::install_isomorphism_test_of_second_kind_after_a_given_row(
 		int row,
-		int tdo_flags, int f_orderly,
+		int f_orderly,
 		int verbose_level)
 // last row is not allowed
 {
@@ -304,7 +304,7 @@ void incidence::install_isomorphism_test_of_second_kind_after_a_given_row(
 	}
 	if (row > 0 && row < Encoding->v) {
 		iso_type_at_line[row - 1] = NEW_OBJECT(iso_type);
-		iso_type_at_line[row - 1]->init(gg, row, this, tdo_flags, f_orderly, verbose_level);
+		iso_type_at_line[row - 1]->init(gg, row, this, f_orderly, verbose_level);
 		iso_type_at_line[row - 1]->second();
 	}
 	else {

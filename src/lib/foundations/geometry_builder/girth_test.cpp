@@ -156,7 +156,7 @@ int girth_test::check_girth_condition(int i, int j_idx, int j, int verbose_level
 	}
 	dim_n = gg->inc->Encoding->dim_n;
 	for (h = 0; h < j_idx; h++) {
-		j1 = gg->inc->Encoding->theX[i * dim_n + h];
+		j1 = gg->inc->Encoding->theX_ir(i, h);
 		for (u1 = 0; u1 < gg->inc->K[j1]; u1++) {
 			a1 = gg->inc->theY[j1][u1];
 			if (a1 == i) {

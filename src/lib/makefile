@@ -125,6 +125,7 @@ MODULES= \
 		foundations/geometry_builder/decomposition_with_fuse.o \
 		foundations/geometry_builder/gen_geo_conf.o \
 		foundations/geometry_builder/gen_geo.o \
+		foundations/geometry_builder/geometric_backtrack_search.o \
 		foundations/geometry_builder/geometry_builder_description.o \
 		foundations/geometry_builder/geometry_builder.o \
 		foundations/geometry_builder/girth_test.o \

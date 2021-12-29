@@ -96,21 +96,5 @@ void cperm_test(void)
 }
 
 
-int true_false_string_numeric(const char *p)
-{
-	int zweipot = 8, j;
-	int flag_numeric;
-
-	flag_numeric = 0;
-	// Die Schleife wandelt den True-False-String in eine Zahl JS 120100 */
-	for (j = 0; j < strlen(p); j++) {
-		if (p[j] == 'T') {
-			flag_numeric += zweipot;
-		}
-		zweipot /= 2;
-	}
-	return flag_numeric;
-}
-
 }}
 
