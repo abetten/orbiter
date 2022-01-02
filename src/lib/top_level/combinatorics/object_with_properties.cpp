@@ -352,8 +352,16 @@ void object_with_properties::latex_report(std::ostream &ost,
 
 	ost << "Canonical labeling:\\\\" << endl;
 	encoded_combinatorial_object *Enc;
+	encoded_combinatorial_object *Enc2;
 
 	OwCF->encode_incma(Enc, verbose_level);
+
+
+	Enc2 = NEW_OBJECT(encoded_combinatorial_object);
+
+	Enc2->init_canonical_form(Enc, NO, verbose_level);
+
+
 
 	int canonical_row;
 	int canonical_orbit;
@@ -365,6 +373,9 @@ void object_with_properties::latex_report(std::ostream &ost,
 	ost << "canonical row = " << canonical_row << "\\\\" << endl;
 	ost << "canonical orbit number = " << canonical_orbit << "\\\\" << endl;
 
+	Enc2->latex_set_system_by_rows(ost, verbose_level);
+
+	FREE_OBJECT(Enc2);
 
 	if (Report_options->f_show_incidence_matrices) {
 

@@ -422,14 +422,9 @@ void activity_description::read_arguments(
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-group_theoretic_activities") == 0) {
-		cout << "-group_theoretic_activities is outdated." << endl;
-		cout << "please use -group_theoretic_activity instead." << endl;
-		exit(1);
-	}
 
 	else {
-		cout << "expecting activity after -do but seeing " << argv[i] << endl;
+		cout << "unrecognized activity after -do : " << argv[i] << endl;
 		exit(1);
 	}
 
@@ -839,85 +834,6 @@ void activity_description::do_group_theoretic_activity(int verbose_level)
 		exit(1);
 	}
 
-#if 0
-	if (type == t_linear_group) {
-		linear_group *LG;
-
-		if (f_v) {
-			cout << "activity_description::do_group_theoretic_activity type linear group" << endl;
-		}
-
-		LG = (linear_group *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
-		{
-			group_theoretic_activity Activity;
-
-			if (f_v) {
-				cout << "activity_description::do_group_theoretic_activity before Activity.init_linear_group" << endl;
-			}
-			Activity.init_linear_group(Group_theoretic_activity_description, LG->F, LG, verbose_level);
-			if (f_v) {
-				cout << "activity_description::do_group_theoretic_activity after Activity.init_linear_group" << endl;
-			}
-
-			if (Sym->with_labels.size() == 2) {
-				cout << "-group_theoretic_activity has two inputs" << endl;
-				linear_group *LG2;
-				LG2 = (linear_group *) Sym->Orbiter_top_level_session->get_object(Idx[1]);
-
-				Activity.A2 = LG2->A_linear;
-			}
-
-			if (f_v) {
-				cout << "activity_description::do_group_theoretic_activity "
-						"before Activity.perform_activity" << endl;
-			}
-			Activity.perform_activity(verbose_level);
-			if (f_v) {
-				cout << "activity_description::do_group_theoretic_activity "
-						"after Activity.perform_activity" << endl;
-			}
-
-		}
-	}
-	else if (type == t_permutation_group) {
-		permutation_group_create *PGC;
-
-		if (f_v) {
-			cout << "activity_description::do_group_theoretic_activity type permutation group" << endl;
-		}
-
-		PGC = (permutation_group_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
-		{
-			group_theoretic_activity Activity;
-
-			Activity.init_permutation_group(Group_theoretic_activity_description, PGC, verbose_level);
-#if 0
-			if (Sym->with_labels.size() == 2) {
-				cout << "-group_theoretic_activity has two inputs" << endl;
-				linear_group *LG2;
-				LG2 = (linear_group *) Sym->Orbiter_top_level_session->get_object(Idx[1]);
-
-				Activity.A2 = LG2->A_linear;
-			}
-#endif
-			if (f_v) {
-				cout << "activity_description::do_group_theoretic_activity "
-						"before Activity.perform_activity" << endl;
-			}
-			Activity.perform_activity(verbose_level);
-			if (f_v) {
-				cout << "activity_description::do_group_theoretic_activity "
-						"after Activity.perform_activity" << endl;
-			}
-
-		}
-
-	}
-	else {
-		cout << "activity_description::do_group_theoretic_activity the type is neither linear nor permutation" << endl;
-		exit(1);
-	}
-#else
 	any_group *AG;
 
 	AG = (any_group *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
@@ -937,7 +853,6 @@ void activity_description::do_group_theoretic_activity(int verbose_level)
 		}
 
 	}
-#endif
 
 	FREE_int(Idx);
 
@@ -1139,7 +1054,7 @@ void activity_description::do_graph_theoretic_activity(int verbose_level)
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "-graph_theoretic_activity requires at least one input" << endl;
+		cout << "activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -1193,7 +1108,7 @@ void activity_description::do_classification_of_cubic_surfaces_with_double_sixes
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "-classification_of_cubic_surfaces_with_double_sixes_activity requires at least one input" << endl;
+		cout << "activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -1242,7 +1157,7 @@ void activity_description::do_spread_table_activity(int verbose_level)
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "-do_spread_table_activity requires at least one input" << endl;
+		cout << "activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -1291,7 +1206,7 @@ void activity_description::do_packing_was_activity(int verbose_level)
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "-do_spread_table_activity requires at least one input" << endl;
+		cout << "activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -1342,7 +1257,7 @@ void activity_description::do_packing_fixed_points_activity(int verbose_level)
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "-do_spread_table_activity requires at least one input" << endl;
+		cout << "activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -1392,7 +1307,7 @@ void activity_description::do_graph_classification_activity(int verbose_level)
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "-do_spread_table_activity requires at least one input" << endl;
+		cout << "activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -1441,7 +1356,7 @@ void activity_description::do_diophant_activity(int verbose_level)
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "-do_spread_table_activity requires at least one input" << endl;
+		cout << "activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -1489,7 +1404,7 @@ void activity_description::do_design_activity(int verbose_level)
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "-do_spread_table_activity requires at least one input" << endl;
+		cout << "activity requires at least one input" << endl;
 		exit(1);
 	}
 
@@ -1537,7 +1452,7 @@ void activity_description::do_large_set_was_activity(int verbose_level)
 	Sym->Orbiter_top_level_session->find_symbols(Sym->with_labels, Idx);
 
 	if (Sym->with_labels.size() < 1) {
-		cout << "-do_large_set_was_activity requires at least one input" << endl;
+		cout << "activity requires at least one input" << endl;
 		exit(1);
 	}
 

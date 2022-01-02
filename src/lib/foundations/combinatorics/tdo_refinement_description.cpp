@@ -162,6 +162,70 @@ int tdo_refinement_description::read_arguments(int argc, std::string *argv, int 
 	return i + 1;
 }
 
+void tdo_refinement_description::print()
+{
+	if (f_lambda3) {
+		cout << "-lambda3 " << lambda3 << " " << block_size << endl;
+	}
+	if (f_scale) {
+		cout << "-scale " << scaling << endl;
+	}
+#if 0
+	if (stringcmp(argv[i], "-solution") == 0) {
+		//f_solution = TRUE;
+		Sol->system_no.push_back(strtoi(argv[++i]));
+		string s;
+
+		s.assign(argv[++i]);
+		Sol->solution_file.push_back(s);
+
+		cout << "-solution " << Sol->system_no[Sol->system_no.size() - 1]
+			<< " " << Sol->solution_file[Sol->solution_file.size() - 1] << endl;
+		Sol->nb_solution_files++;
+	}
+#endif
+	if (f_range) {
+		cout << "-range " << range_first << " " << range_len << endl;
+	}
+	if (f_select) {
+		cout << "-select " << select_label << endl;
+	}
+	if (f_omit1) {
+		cout << "-o1 " << omit1 << endl;
+	}
+	if (f_omit2) {
+		cout << "-o2 " << omit2 << endl;
+	}
+	if (f_D1_upper_bound_x0) {
+		cout << "-D1_upper_bound_x0 " << D1_upper_bound_x0 << endl;
+	}
+	if (f_reverse) {
+		cout << "-reverse" << endl;
+	}
+	if (f_reverse_inverse) {
+		cout << "-reverse_inverse" << endl;
+	}
+	if (!f_use_packing_numbers) {
+		cout << "-nopacking" << endl;
+	}
+	if (f_dual_is_linear_space) {
+		cout << "-dual_is_linear_space" << endl;
+	}
+	if (f_do_the_geometric_test) {
+		cout << "-geometric_test" << endl;
+	}
+	if (f_once) {
+		cout << "-once" << endl;
+	}
+	if (f_use_mckay_solver) {
+		cout << "-mckay" << endl;
+	}
+	if (f_input_file) {
+		cout << "-input_file" << fname_in << endl;
+	}
+
+}
+
 
 
 }}

@@ -122,10 +122,10 @@ class interface_algebra {
 	int equivalence_class_of_fractions_N;
 
 	int f_character_table_symmetric_group;
-	int deg;
+	int character_table_symmetric_group_n;
 
 	int f_make_A5_in_PSL_2_q;
-	int q;
+	int make_A5_in_PSL_2_q_q;
 
 	int f_search_for_primitive_polynomial_in_range;
 	int p_min, p_max, deg_min, deg_max;
@@ -182,24 +182,33 @@ public:
 class interface_coding_theory {
 
 	int f_make_macwilliams_system;
-	int q;
-	int n;
-	int k;
+	int make_macwilliams_system_q;
+	int make_macwilliams_system_n;
+	int make_macwilliams_system_k;
 
 	int f_table_of_bounds;
 	int table_of_bounds_n_max;
 	int table_of_bounds_q;
 
 	int f_make_bounds_for_d_given_n_and_k_and_q;
+	int make_bounds_n;
+	int make_bounds_k;
+	int make_bounds_q;
 
 	int f_BCH;
 	int f_BCH_dual;
+	int BCH_n;
+	int BCH_q;
 	int BCH_t;
 	//int BCH_b;
 
 	int f_Hamming_space_distance_matrix;
+	int Hamming_space_n;
+	int Hamming_space_q;
 
 	int f_NTT;
+	int NTT_n;
+	int NTT_q;
 	std::string ntt_fname_code;
 
 	int f_general_code_binary;
@@ -218,7 +227,7 @@ class interface_coding_theory {
 	int enhance_radius;
 
 	int f_metric_balls;
-	int radius_of_metric_ball;
+	int metric_ball_radius;
 
 
 	int f_linear_code_through_basis;
@@ -266,17 +275,11 @@ public:
 
 class interface_combinatorics {
 
-	//int f_create_combinatorial_object;
-	//combinatorial_object_description *Combinatorial_object_description;
-
 	int f_diophant;
 	diophant_description *Diophant_description;
 
 	int f_diophant_activity;
 	diophant_activity_description *Diophant_activity_description;
-
-	//int f_process_combinatorial_objects;
-	//projective_space_job_description *Job_description;
 
 	int f_bent;
 	int bent_n;
@@ -289,16 +292,17 @@ class interface_combinatorics {
 	std::string read_poset_file_fname;
 
 	int f_grouping;
-	double x_stretch;
+	double grouping_x_stretch;
 
 	int f_list_parameters_of_SRG;
-	int v_max;
+	int list_parameters_of_SRG_v_max;
 
 	int f_conjugacy_classes_Sym_n;
-	int n;
+	int conjugacy_classes_Sym_n_n;
 
 	int f_tree_of_all_k_subsets;
-	int tree_n, tree_k;
+	int tree_of_all_k_subsets_n;
+	int tree_of_all_k_subsets_k;
 
 	int f_Delandtsheer_Doyen;
 	delandtsheer_doyen_description *Delandtsheer_Doyen_description;
@@ -309,9 +313,6 @@ class interface_combinatorics {
 	int f_tdo_print;
 	std::string tdo_print_fname;
 
-	int f_create_design;
-	design_create_description *Design_create_description;
-
 	int f_convert_stack_to_tdo;
 	std::string stack_fname;
 
@@ -321,14 +322,10 @@ class interface_combinatorics {
 	int f_arc_parameters;
 	int arc_parameters_q, arc_parameters_s, arc_parameters_r;
 
-
 	int f_pentomino_puzzle;
 
 	int f_regular_linear_space_classify;
 	regular_linear_space_description *Rls_descr;
-
-	int f_create_files;
-	create_file_description *Create_file_description;
 
 	int f_draw_layered_graph;
 	std::string draw_layered_graph_fname;
@@ -348,9 +345,6 @@ class interface_combinatorics {
 	int Dedekind_q_min;
 	int Dedekind_q_max;
 
-	int f_canonical_form_nauty;
-	classification_of_objects_description *Canonical_form_nauty_Descr;
-
 	int f_rank_k_subset;
 	int rank_k_subset_n;
 	int rank_k_subset_k;
@@ -368,13 +362,11 @@ public:
 			std::string *argv, int &i, int verbose_level);
 	void print();
 	void worker(int verbose_level);
-	//void do_create_combinatorial_object(int verbose_level);
 	void do_diophant(diophant_description *Descr, int verbose_level);
 	void do_diophant_activity(diophant_activity_description *Descr, int verbose_level);
 	void do_bent(int n, int verbose_level);
 	void do_conjugacy_classes_Sym_n(int n, int verbose_level);
 	void do_Delandtsheer_Doyen(delandtsheer_doyen_description *Descr, int verbose_level);
-	void do_create_design(design_create_description *Descr, int verbose_level);
 
 };
 
@@ -417,13 +409,17 @@ class interface_cryptography {
 
 	int f_smallest_primitive_root;
 	int smallest_primitive_root_p;
+
 	int f_smallest_primitive_root_interval;
 	int smallest_primitive_root_interval_min;
 	int smallest_primitive_root_interval_max;
+
 	int f_number_of_primitive_roots_interval;
+
 	int f_inverse_mod;
 	int inverse_mod_a;
 	int inverse_mod_n;
+
 	int f_extended_gcd;
 	int extended_gcd_a;
 	int extended_gcd_b;
@@ -437,19 +433,24 @@ class interface_cryptography {
 	long int discrete_log_y;
 	long int discrete_log_a;
 	long int discrete_log_m;
+
 	int f_RSA_setup;
 	int RSA_setup_nb_bits;
 	int RSA_setup_nb_tests_solovay_strassen;
 	int RSA_setup_f_miller_rabin_test;
+
 	int f_RSA_encrypt_text;
 	int RSA_block_size;
 	std::string RSA_encrypt_text;
+
 	int f_sift_smooth;
 	int sift_smooth_from;
 	int sift_smooth_len;
 	std::string sift_smooth_factor_base;
+
 	int f_square_root;
 	std::string square_root_number;
+
 	int f_square_root_mod;
 	std::string square_root_mod_a;
 	std::string square_root_mod_m;
@@ -462,32 +463,42 @@ class interface_cryptography {
 	int quadratic_sieve_n;
 	int quadratic_sieve_factorbase;
 	int quadratic_sieve_x0;
+
 	int f_jacobi;
 	int jacobi_top;
 	int jacobi_bottom;
+
 	int f_solovay_strassen;
 	int solovay_strassen_p;
 	int solovay_strassen_a;
+
 	int f_miller_rabin;
 	int miller_rabin_p;
 	int miller_rabin_nb_times;
+
 	int f_fermat_test;
 	int fermat_test_p;
 	int fermat_test_nb_times;
+
 	int f_find_pseudoprime;
 	int find_pseudoprime_nb_digits;
 	int find_pseudoprime_nb_fermat;
 	int find_pseudoprime_nb_miller_rabin;
 	int find_pseudoprime_nb_solovay_strassen;
+
 	int f_find_strong_pseudoprime;
+
 	int f_miller_rabin_text;
 	int miller_rabin_text_nb_times;
 	std::string miller_rabin_number_text;
+
 	int f_random;
 	int random_nb;
 	std::string random_fname_csv;
+
 	int f_random_last;
 	int random_last_nb;
+
 	int f_affine_sequence;
 	int affine_sequence_a;
 	int affine_sequence_c;
@@ -514,19 +525,7 @@ public:
 class interface_povray {
 
 	int f_povray;
-	int f_output_mask;
-	std::string output_mask;
-	int f_nb_frames_default;
-	int nb_frames_default;
-	int f_round;
-	int round;
-	int f_rounds;
-	std::string rounds_as_string;
-	video_draw_options *Opt;
-
-	// for povray_worker:
-	scene *S;
-	animate *A;
+	povray_job_description *Povray_job_description;
 
 	int f_prepare_frames;
 	prepare_frames *Prepare_frames;
@@ -540,11 +539,6 @@ public:
 	void worker(int verbose_level);
 };
 
-void interface_povray_draw_frame(
-	animate *Anim, int h, int nb_frames, int round,
-	double clipping_radius,
-	std::ostream &fp,
-	int verbose_level);
 
 
 
@@ -604,16 +598,7 @@ public:
 			std::string *argv, int &i, int verbose_level);
 	void print();
 	void worker(int verbose_level);
-	void do_cheat_sheet_PG(orbiter_session *Session,
-			int n, int q,
-			int f_decomposition_by_element, int decomposition_by_element_power,
-			std::string &decomposition_by_element_data, std::string &fname_base,
-			int verbose_level);
-	void do_canonical_form_PG(orbiter_session *Session,
-			int n, int q, int verbose_level);
-	void do_create_BLT_set(BLT_set_create_description *Descr, int verbose_level);
 	void do_create_spread(spread_create_description *Descr, int verbose_level);
-	void do_create_surface(surface_create_description *Descr, int verbose_level);
 
 };
 
@@ -672,6 +657,9 @@ public:
 
 
 class interface_toolkit {
+
+	int f_create_files;
+	create_file_description *Create_file_description;
 
 	int f_csv_file_select_rows;
 	std::string csv_file_select_rows_fname;
@@ -770,7 +758,7 @@ public:
 
 
 
-//! a command unit
+//! a single command in the Orbiter dash code language
 
 
 class orbiter_command {

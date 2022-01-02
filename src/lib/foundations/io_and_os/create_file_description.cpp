@@ -145,6 +145,57 @@ int create_file_description::read_arguments(
 	return i + 1;
 }
 
+void create_file_description::print()
+{
+	if (f_file_mask) {
+		cout << "-file_mask " << file_mask << endl;
+	}
+	if (f_N) {
+		cout << "-N " << N << endl;
+	}
+	if (f_read_cases) {
+		cout << "-read_cases " << read_cases_fname << endl;
+	}
+	if (f_read_cases_text) {
+		cout << "-read_cases_text " << read_cases_fname << " "
+				<< read_cases_column_of_case << " "
+				<< read_cases_column_of_fname << endl;
+	}
+	if (nb_lines) {
+		int i;
+		for (i = 0; i < nb_lines; i++) {
+			if (f_line_numeric[nb_lines]) {
+				cout << "-line_numeric " << lines[i] << endl;
+			}
+			else {
+				cout << "-line " << lines[i] << endl;
+			}
+		}
+	}
+	if (nb_final_lines) {
+		int i;
+		for (i = 0; i < nb_final_lines; i++) {
+			cout << "-final_line " << final_lines[i] << endl;
+		}
+
+	}
+	if (f_command) {
+		cout << "-command " << command << endl;
+	}
+	if (f_repeat) {
+		cout << "-repeat " << repeat_N
+				<< " " << repeat_start
+				<< " " << repeat_increment
+				<< " " << repeat_mask
+				<< endl;
+	}
+	if (f_split) {
+		cout << "-split " << split_m << endl;
+	}
+	if (f_tasks) {
+		cout << "-tasks " << nb_tasks << " " << tasks_line << endl;
+	}
+}
 
 
 }}

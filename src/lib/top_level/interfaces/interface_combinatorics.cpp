@@ -22,17 +22,11 @@ namespace top_level {
 
 interface_combinatorics::interface_combinatorics()
 {
-	//f_create_combinatorial_object = FALSE;
-	//Combinatorial_object_description = NULL;
-
 	f_diophant = FALSE;
 	Diophant_description = NULL;
 
 	f_diophant_activity = FALSE;
 	Diophant_activity_description = NULL;
-
-	//f_process_combinatorial_objects = FALSE;
-	//Job_description = NULL;
 
 	f_bent = FALSE;
 	bent_n = 0;
@@ -45,17 +39,17 @@ interface_combinatorics::interface_combinatorics()
 	//read_poset_file_fname;
 
 	f_grouping = FALSE;
-	x_stretch = 0.7;
+	grouping_x_stretch = 0.7;
 
 	f_list_parameters_of_SRG = FALSE;
-	v_max = 0;
+	list_parameters_of_SRG_v_max = 0;
 
 	f_conjugacy_classes_Sym_n = FALSE;
-	n = 0;
+	conjugacy_classes_Sym_n_n = 0;
 
 	f_tree_of_all_k_subsets = FALSE;
-	tree_n = 0;
-	tree_k = 0;
+	tree_of_all_k_subsets_n = 0;
+	tree_of_all_k_subsets_k = 0;
 
 	f_Delandtsheer_Doyen = FALSE;
 	Delandtsheer_Doyen_description = NULL;
@@ -66,9 +60,6 @@ interface_combinatorics::interface_combinatorics()
 
 	f_tdo_print = FALSE;
 	//tdo_print_fname;
-
-	f_create_design = FALSE;
-	Design_create_description = NULL;
 
 	f_convert_stack_to_tdo = FALSE;
 	//stack_fname;
@@ -85,9 +76,6 @@ interface_combinatorics::interface_combinatorics()
 
 	f_regular_linear_space_classify = FALSE;
 	Rls_descr = NULL;
-
-	f_create_files = FALSE;
-	Create_file_description = NULL;
 
 	f_draw_layered_graph = FALSE;
 	//draw_layered_graph_fname;
@@ -108,9 +96,6 @@ interface_combinatorics::interface_combinatorics()
 	Dedekind_q_min = 0;
 	Dedekind_q_max = 0;
 
-	f_canonical_form_nauty = FALSE;
-	Canonical_form_nauty_Descr = NULL;
-
 	f_rank_k_subset = FALSE;
 	rank_k_subset_n = 0;
 	rank_k_subset_k = 0;
@@ -125,22 +110,12 @@ interface_combinatorics::interface_combinatorics()
 void interface_combinatorics::print_help(int argc,
 		std::string *argv, int i, int verbose_level)
 {
-#if 0
-	if (stringcmp(argv[i], "-create_combinatorial_object") == 0) {
-		cout << "-create_combinatorial_object " << endl;
-	}
-#endif
 	if (stringcmp(argv[i], "-diophant") == 0) {
 		cout << "-diophant <description> " << endl;
 	}
 	else if (stringcmp(argv[i], "-diophant_activity") == 0) {
 		cout << "-diophant_activity <description> " << endl;
 	}
-#if 0
-	else if (stringcmp(argv[i], "-process_combinatorial_objects") == 0) {
-		cout << "-process_combinatorial_objects " << endl;
-	}
-#endif
 	else if (stringcmp(argv[i], "-bent") == 0) {
 		cout << "-bent <int : n>" << endl;
 	}
@@ -171,9 +146,6 @@ void interface_combinatorics::print_help(int argc,
 	else if (stringcmp(argv[i], "-tdo_print") == 0) {
 		cout << "-tdo_print <string : tdo-fname>" << endl;
 	}
-	else if (stringcmp(argv[i], "-create_design") == 0) {
-		cout << "-create_design <options>" << endl;
-	}
 	else if (stringcmp(argv[i], "-convert_stack_to_tdo") == 0) {
 		cout << "-convert_stack_to_tdo <string : stack_fname>" << endl;
 	}
@@ -189,9 +161,6 @@ void interface_combinatorics::print_help(int argc,
 	else if (stringcmp(argv[i], "-regular_linear_space_classify") == 0) {
 		cout << "-regular_linear_space_classify <description>" << endl;
 	}
-	else if (stringcmp(argv[i], "-create_files") == 0) {
-		cout << "-create_files <description>" << endl;
-	}
 	else if (stringcmp(argv[i], "-draw_layered_graph") == 0) {
 		cout << "-draw_layered_graph <string : fname> <layered_graph_options>" << endl;
 	}
@@ -203,9 +172,6 @@ void interface_combinatorics::print_help(int argc,
 	}
 	else if (stringcmp(argv[i], "-Dedekind_numbers") == 0) {
 		cout << "-Dedekind_numbers <int : n_min> <int : n_max> <int : q_min> <int : q_max>  " << endl;
-	}
-	else if (stringcmp(argv[i], "-canonical_form_nauty") == 0) {
-		cout << "-canonical_form_nauty <description>  " << endl;
 	}
 	else if (stringcmp(argv[i], "-rank_k_subset") == 0) {
 		cout << "-rank_k_subset <int : n> <int : k> <string : text>  " << endl;
@@ -221,22 +187,12 @@ int interface_combinatorics::recognize_keyword(int argc,
 	if (i >= argc) {
 		return false;
 	}
-#if 0
-	if (stringcmp(argv[i], "-create_combinatorial_object") == 0) {
-		return true;
-	}
-#endif
 	if (stringcmp(argv[i], "-diophant") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-diophant_activity") == 0) {
 		return true;
 	}
-#if 0
-	else if (stringcmp(argv[i], "-process_combinatorial_objects") == 0) {
-		return true;
-	}
-#endif
 	else if (stringcmp(argv[i], "-bent") == 0) {
 		return true;
 	}
@@ -267,9 +223,6 @@ int interface_combinatorics::recognize_keyword(int argc,
 	else if (stringcmp(argv[i], "-tdo_print") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-create_design") == 0) {
-		return true;
-	}
 	else if (stringcmp(argv[i], "-convert_stack_to_tdo") == 0) {
 		return true;
 	}
@@ -285,9 +238,6 @@ int interface_combinatorics::recognize_keyword(int argc,
 	else if (stringcmp(argv[i], "-regular_linear_space_classify") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-create_files") == 0) {
-		return true;
-	}
 	else if (stringcmp(argv[i], "-draw_layered_graph") == 0) {
 		return true;
 	}
@@ -298,9 +248,6 @@ int interface_combinatorics::recognize_keyword(int argc,
 		return true;
 	}
 	else if (stringcmp(argv[i], "-Dedekind_numbers") == 0) {
-		return true;
-	}
-	else if (stringcmp(argv[i], "-canonical_form_nauty") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-rank_k_subset") == 0) {
@@ -326,22 +273,6 @@ void interface_combinatorics::read_arguments(int argc,
 		cout << "interface_combinatorics::read_arguments the next argument is " << argv[i] << endl;
 	}
 
-#if 0
-	if (stringcmp(argv[i], "-create_combinatorial_object") == 0) {
-		f_create_combinatorial_object = TRUE;
-		cout << "-create_combinatorial_object " << endl;
-		Combinatorial_object_description = NEW_OBJECT(combinatorial_object_description);
-		i += Combinatorial_object_description->read_arguments(argc - i - 1,
-				argv + i + 1, verbose_level);
-		cout << "interface_combinatorics::read_arguments finished "
-				"reading -create_combinatorial_object" << endl;
-		cout << "i = " << i << endl;
-		cout << "argc = " << argc << endl;
-		if (i < argc) {
-			cout << "next argument is " << argv[i] << endl;
-		}
-	}
-#endif
 	if (stringcmp(argv[i], "-diophant") == 0) {
 		f_diophant = TRUE;
 		if (f_v) {
@@ -380,28 +311,6 @@ void interface_combinatorics::read_arguments(int argc,
 			}
 		}
 	}
-#if 0
-	else if (stringcmp(argv[i], "-process_combinatorial_objects") == 0) {
-		f_process_combinatorial_objects = TRUE;
-
-		if (f_v) {
-			cout << "-process_combinatorial_objects " << endl;
-		}
-
-		Job_description = NEW_OBJECT(projective_space_job_description);
-		i += Job_description->read_arguments(argc - i - 1,
-			argv + i + 1, verbose_level);
-		if (f_v) {
-			cout << "interface_combinatorics::read_arguments finished "
-					"reading -process_combinatorial_objects" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
-	}
-#endif
 	else if (stringcmp(argv[i], "-bent") == 0) {
 		f_bent = TRUE;
 		bent_n = strtoi(argv[++i]);
@@ -429,32 +338,32 @@ void interface_combinatorics::read_arguments(int argc,
 		f_read_poset_file = TRUE;
 		f_grouping = TRUE;
 		read_poset_file_fname.assign(argv[++i]);
-		x_stretch = strtof(argv[++i]);
+		grouping_x_stretch = strtof(argv[++i]);
 		if (f_v) {
 			cout << "-read_poset_file_with_grouping "
-					<< read_poset_file_fname << " " << x_stretch << endl;
+					<< read_poset_file_fname << " " << grouping_x_stretch << endl;
 		}
 	}
 	else if (stringcmp(argv[i], "-list_parameters_of_SRG") == 0) {
 		f_list_parameters_of_SRG = TRUE;
-		v_max = strtoi(argv[++i]);
+		list_parameters_of_SRG_v_max = strtoi(argv[++i]);
 		if (f_v) {
-			cout << "-list_parameters_of_SRG " << v_max << endl;
+			cout << "-list_parameters_of_SRG " << list_parameters_of_SRG_v_max << endl;
 		}
 	}
 	else if (stringcmp(argv[i], "-conjugacy_classes_Sym_n") == 0) {
 		f_conjugacy_classes_Sym_n = TRUE;
-		n = strtoi(argv[++i]);
+		conjugacy_classes_Sym_n_n = strtoi(argv[++i]);
 		if (f_v) {
-			cout << "-conjugacy_classes_Sym_n " << n << endl;
+			cout << "-conjugacy_classes_Sym_n " << conjugacy_classes_Sym_n_n << endl;
 		}
 	}
 	else if (stringcmp(argv[i], "-tree_of_all_k_subsets") == 0) {
 		f_tree_of_all_k_subsets = TRUE;
-		tree_n = strtoi(argv[++i]);
-		tree_k = strtoi(argv[++i]);
+		tree_of_all_k_subsets_n = strtoi(argv[++i]);
+		tree_of_all_k_subsets_k = strtoi(argv[++i]);
 		if (f_v) {
-			cout << "-tree_of_all_k_subsets " << tree_n << " " << tree_k << endl;
+			cout << "-tree_of_all_k_subsets " << tree_of_all_k_subsets_n << " " << tree_of_all_k_subsets_k << endl;
 		}
 	}
 	else if (stringcmp(argv[i], "-Delandtsheer_Doyen") == 0) {
@@ -490,19 +399,6 @@ void interface_combinatorics::read_arguments(int argc,
 		tdo_print_fname.assign(argv[++i]);
 		if (f_v) {
 			cout << "-tdo_print " << tdo_print_fname << endl;
-		}
-	}
-	else if (stringcmp(argv[i], "-create_design") == 0) {
-		f_create_design = TRUE;
-		Design_create_description = NEW_OBJECT(design_create_description);
-		i += Design_create_description->read_arguments(argc - (i + 1),
-				argv + i + 1, verbose_level);
-
-		if (f_v) {
-			cout << "-create_design" << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
 		}
 	}
 	else if (stringcmp(argv[i], "-convert_stack_to_tdo") == 0) {
@@ -561,28 +457,6 @@ void interface_combinatorics::read_arguments(int argc,
 			cout << "-regular_linear_space_classify " <<endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-create_files") == 0) {
-		f_create_files = TRUE;
-
-		if (f_v) {
-			cout << "-create_files " << endl;
-		}
-
-		Create_file_description = NEW_OBJECT(create_file_description);
-		i += Create_file_description->read_arguments(argc - i - 1,
-			argv + i + 1, verbose_level);
-		if (f_v) {
-			cout << "interface_combinatorics::read_arguments finished "
-					"reading -create_files" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-
-			cout << "-create_files " <<endl;
-		}
-	}
 	else if (stringcmp(argv[i], "-draw_layered_graph") == 0) {
 		f_draw_layered_graph = TRUE;
 		draw_layered_graph_fname.assign(argv[++i]);
@@ -593,7 +467,8 @@ void interface_combinatorics::read_arguments(int argc,
 		i += Layered_graph_draw_options->read_arguments(argc - i - 1,
 				argv + i + 1, verbose_level);
 		if (f_v) {
-			cout << "interface_combinatorics::read_arguments finished reading -draw_layered_graph" << endl;
+			cout << "interface_combinatorics::read_arguments "
+					"finished reading -draw_layered_graph" << endl;
 			cout << "i = " << i << endl;
 			cout << "argc = " << argc << endl;
 			if (i < argc) {
@@ -632,24 +507,6 @@ void interface_combinatorics::read_arguments(int argc,
 				<< " " << Dedekind_q_min
 				<< " " << Dedekind_q_max
 				<< " " << endl;
-		}
-	}
-	else if (stringcmp(argv[i], "-canonical_form_nauty") == 0) {
-		f_canonical_form_nauty = TRUE;
-		if (f_v) {
-			cout << "-canonical_form_nauty, reading extra arguments" << endl;
-		}
-
-		Canonical_form_nauty_Descr = NEW_OBJECT(classification_of_objects_description);
-
-		if (f_v) {
-			i += Canonical_form_nauty_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
-			cout << "done reading -canonical_form_nauty " << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
 		}
 	}
 	else if (stringcmp(argv[i], "-rank_k_subset") == 0) {
@@ -692,12 +549,6 @@ void interface_combinatorics::read_arguments(int argc,
 
 void interface_combinatorics::print()
 {
-#if 0
-	if (f_create_combinatorial_object) {
-		cout << "-create_combinatorial_object " << endl;
-		Combinatorial_object_description->print();
-	}
-#endif
 	if (f_diophant) {
 		cout << "-diophant " << endl;
 		Diophant_description->print();
@@ -706,12 +557,6 @@ void interface_combinatorics::print()
 		cout << "-diophant_activity " << endl;
 		Diophant_activity_description->print();
 	}
-#if 0
-	if (f_process_combinatorial_objects) {
-		cout << "-process_combinatorial_objects " << endl;
-		Job_description->print();
-	}
-#endif
 	if (f_bent) {
 		cout << "-bent " << bent_n << endl;
 	}
@@ -723,16 +568,16 @@ void interface_combinatorics::print()
 	}
 	if (f_read_poset_file) {
 		cout << "-read_poset_file_with_grouping "
-				<< read_poset_file_fname << " " << x_stretch << endl;
+				<< read_poset_file_fname << " " << grouping_x_stretch << endl;
 	}
 	if (f_list_parameters_of_SRG) {
-		cout << "-list_parameters_of_SRG " << v_max << endl;
+		cout << "-list_parameters_of_SRG " << list_parameters_of_SRG_v_max << endl;
 	}
 	if (f_conjugacy_classes_Sym_n) {
-		cout << "-conjugacy_classes_Sym_n " << n << endl;
+		cout << "-conjugacy_classes_Sym_n " << conjugacy_classes_Sym_n_n << endl;
 	}
 	if (f_tree_of_all_k_subsets) {
-		cout << "-tree_of_all_k_subsets " << tree_n << " " << tree_k << endl;
+		cout << "-tree_of_all_k_subsets " << tree_of_all_k_subsets_n << " " << tree_of_all_k_subsets_k << endl;
 	}
 	if (f_Delandtsheer_Doyen) {
 		cout << "-Delandtsheer_Doyen" << endl;
@@ -740,14 +585,10 @@ void interface_combinatorics::print()
 	}
 	if (f_tdo_refinement) {
 		cout << "-tdo_refinement " << endl;
-		//Tdo_refinement_descr->print();
+		Tdo_refinement_descr->print();
 	}
 	if (f_tdo_print) {
 		cout << "-tdo_print " << tdo_print_fname << endl;
-	}
-	if (f_create_design) {
-		cout << "-create_design" << endl;
-		Design_create_description->print();
 	}
 	if (f_convert_stack_to_tdo) {
 		cout << "-convert_stack_to_tdo " << stack_fname << endl;
@@ -769,10 +610,6 @@ void interface_combinatorics::print()
 		cout << "-regular_linear_space_classify " << endl;
 		//Rls_descr->print();
 	}
-	if (f_create_files) {
-		cout << "-create_files " << endl;
-		//Create_file_description->print();
-	}
 	if (f_draw_layered_graph) {
 		cout << "-draw_layered_graph " << endl;
 	}
@@ -782,8 +619,10 @@ void interface_combinatorics::print()
 	}
 
 	if (f_make_elementary_symmetric_functions) {
-		cout << "-make_elementary_symmetric_functions " << make_elementary_symmetric_functions_n
-				<< " " << make_elementary_symmetric_functions_k_max << endl;
+		cout << "-make_elementary_symmetric_functions "
+				<< make_elementary_symmetric_functions_n
+				<< " " << make_elementary_symmetric_functions_k_max
+				<< endl;
 	}
 	if (f_Dedekind_numbers) {
 		cout << "-Dedekind_numbers " << Dedekind_n_min
@@ -791,9 +630,6 @@ void interface_combinatorics::print()
 				<< " " << Dedekind_q_min
 				<< " " << Dedekind_q_max
 				<< " " << endl;
-	}
-	if (f_canonical_form_nauty) {
-		cout << "-canonical_form_nauty" << endl;
 	}
 	if (f_rank_k_subset) {
 		cout << "-rank_k_subset " << rank_k_subset_n
@@ -814,22 +650,12 @@ void interface_combinatorics::worker(int verbose_level)
 	if (f_v) {
 		cout << "interface_combinatorics::worker" << endl;
 	}
-#if 0
-	if (f_create_combinatorial_object) {
-		do_create_combinatorial_object(verbose_level);
-	}
-#endif
 	if (f_diophant) {
 		do_diophant(Diophant_description, verbose_level);
 	}
 	else if (f_diophant_activity) {
 		do_diophant_activity(Diophant_activity_description, verbose_level);
 	}
-#if 0
-	else if (f_process_combinatorial_objects) {
-		do_process_combinatorial_object(verbose_level);
-	}
-#endif
 	else if (f_bent) {
 		do_bent(bent_n, verbose_level);
 	}
@@ -844,23 +670,25 @@ void interface_combinatorics::worker(int verbose_level)
 
 		combinatorics_domain Combi;
 
-		Combi.do_read_poset_file(read_poset_file_fname, f_grouping, x_stretch, verbose_level);
+		Combi.do_read_poset_file(read_poset_file_fname,
+				f_grouping, grouping_x_stretch,
+				verbose_level);
 	}
 	else if (f_list_parameters_of_SRG) {
 
 		graph_theory_domain G;
 
-		G.list_parameters_of_SRG(v_max, verbose_level);
+		G.list_parameters_of_SRG(list_parameters_of_SRG_v_max, verbose_level);
 	}
 	else if (f_conjugacy_classes_Sym_n) {
 
-		do_conjugacy_classes_Sym_n(n, verbose_level);
+		do_conjugacy_classes_Sym_n(conjugacy_classes_Sym_n_n, verbose_level);
 	}
 	else if (f_tree_of_all_k_subsets) {
 
 		combinatorics_domain Combi;
 
-		Combi.do_make_tree_of_all_k_subsets(tree_n, tree_k, verbose_level);
+		Combi.do_make_tree_of_all_k_subsets(tree_of_all_k_subsets_n, tree_of_all_k_subsets_k, verbose_level);
 	}
 	else if (f_Delandtsheer_Doyen) {
 
@@ -878,10 +706,6 @@ void interface_combinatorics::worker(int verbose_level)
 
 		Combi.do_tdo_print(tdo_print_fname, verbose_level);
 	}
-	else if (f_create_design) {
-
-		do_create_design(Design_create_description, verbose_level);
-	}
 	else if (f_convert_stack_to_tdo) {
 
 		combinatorics_domain Combi;
@@ -892,13 +716,15 @@ void interface_combinatorics::worker(int verbose_level)
 
 		combinatorics_domain Combi;
 
-		Combi.do_parameters_maximal_arc(maximal_arc_parameters_q, maximal_arc_parameters_r, verbose_level);
+		Combi.do_parameters_maximal_arc(maximal_arc_parameters_q,
+				maximal_arc_parameters_r, verbose_level);
 	}
 	else if (f_arc_parameters) {
 
 		combinatorics_domain Combi;
 
-		Combi.do_parameters_arc(arc_parameters_q, arc_parameters_s, arc_parameters_r, verbose_level);
+		Combi.do_parameters_arc(arc_parameters_q,
+				arc_parameters_s, arc_parameters_r, verbose_level);
 	}
 	else if (f_pentomino_puzzle) {
 		cout << "pentomino_puzzle " <<endl;
@@ -927,11 +753,6 @@ void interface_combinatorics::worker(int verbose_level)
 		}
 		FREE_OBJECT(Rls);
 
-	}
-	else if (f_create_files) {
-		file_io Fio;
-
-		Fio.create_file(Create_file_description, verbose_level);
 	}
 	else if (f_draw_layered_graph) {
 		graphical_output GO;
@@ -966,30 +787,6 @@ void interface_combinatorics::worker(int verbose_level)
 				verbose_level);
 
 	}
-#if 0
-	else if (f_canonical_form_nauty) {
-
-		combinatorics_global Combi;
-
-
-		if (!Canonical_form_nauty_Descr->f_save_classification) {
-			cout << "please use option -save_classification <save_prefix>" << endl;
-			exit(1);
-		}
-
-		classify_bitvectors *CB;
-
-		CB = NEW_OBJECT(classify_bitvectors);
-
-
-		Combi.classify_objects_using_nauty(
-				Canonical_form_nauty_Descr->Data,
-				CB,
-				Canonical_form_nauty_Descr->save_prefix,
-				verbose_level);
-
-	}
-#endif
 
 	else if (f_rank_k_subset) {
 
@@ -1053,75 +850,6 @@ void interface_combinatorics::worker(int verbose_level)
 
 }
 
-#if 0
-void interface_combinatorics::do_create_combinatorial_object(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	//int i;
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_create_combinatorial_object" << endl;
-	}
-
-	combinatorial_object_create *COC;
-
-	COC = NEW_OBJECT(combinatorial_object_create);
-
-	if (f_v) {
-		cout << "before COC->init" << endl;
-	}
-	COC->init(Combinatorial_object_description, verbose_level);
-	if (f_v) {
-		cout << "after COC->init" << endl;
-	}
-
-
-
-	if (f_v) {
-		cout << "we created a set of " << COC->nb_pts
-				<< " points, called " << COC->fname << endl;
-
-#if 0
-		cout << "list of points:" << endl;
-
-		cout << COC->nb_pts << endl;
-		for (i = 0; i < COC->nb_pts; i++) {
-			cout << COC->Pts[i] << " ";
-			}
-		cout << endl;
-#endif
-	}
-
-
-
-
-#if 0
-	if (f_save) {
-		file_io Fio;
-		string fname;
-
-		fname.assign(fname_prefix);
-		fname.append(COC->fname);
-
-		if (f_v) {
-			cout << "We will write to the file " << fname << endl;
-		}
-		Fio.write_set_to_file(fname, COC->Pts, COC->nb_pts, verbose_level);
-		if (f_v) {
-			cout << "Written file " << fname << " of size "
-					<< Fio.file_size(fname) << endl;
-		}
-	}
-#endif
-
-	FREE_OBJECT(COC);
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_create_combinatorial_object done" << endl;
-	}
-}
-#endif
-
 
 void interface_combinatorics::do_diophant(diophant_description *Descr, int verbose_level)
 {
@@ -1164,42 +892,6 @@ void interface_combinatorics::do_diophant_activity(
 		cout << "interface_combinatorics::do_diophant_activity done" << endl;
 	}
 }
-
-#if 0
-void interface_combinatorics::do_process_combinatorial_object(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_process_combinatorial_object" << endl;
-	}
-
-#if 0
-	if (!Job_description->f_q) {
-		cout << "please use option -q <q> within the job description" << endl;
-		exit(1);
-	}
-	if (!Job_description->f_n) {
-		cout << "please use option -n <n> to specify the projective "
-				"dimension within the job description" << endl;
-		exit(1);
-	}
-#endif
-	if (!Job_description->f_fname_base_out) {
-		cout << "please use option -fname_base_out <fname_base_out> "
-				"within the job description" << endl;
-		exit(1);
-	}
-
-	projective_space_job J;
-
-	J.perform_job(Job_description, verbose_level);
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_process_combinatorial_object done" << endl;
-	}
-}
-#endif
 
 void interface_combinatorics::do_bent(int n, int verbose_level)
 {
@@ -1324,138 +1016,6 @@ void interface_combinatorics::do_Delandtsheer_Doyen(delandtsheer_doyen_descripti
 	if (f_v) {
 		cout << "interface_combinatorics::do_Delandtsheer_Doyen done" << endl;
 	}
-}
-
-void interface_combinatorics::do_create_design(design_create_description *Descr, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_create_design" << endl;
-	}
-
-	design_create *DC;
-	latex_interface L;
-
-	DC = NEW_OBJECT(design_create);
-
-	if (f_v) {
-		cout << "before DC->init" << endl;
-	}
-	DC->init(Descr, verbose_level);
-	if (f_v) {
-		cout << "after DC->init" << endl;
-	}
-
-
-
-
-	if (f_v) {
-		cout << "We have created the following design:" << endl;
-		cout << "$$" << endl;
-		L.lint_set_print_tex(cout, DC->set, DC->sz);
-		cout << endl;
-		cout << "$$" << endl;
-	}
-
-	if (DC->f_has_group) {
-		if (f_v) {
-			cout << "The stabilizer is generated by:" << endl;
-			DC->Sg->print_generators_tex(cout);
-		}
-	}
-
-
-	{
-		int nb_pts = DC->P->N_points;
-		int nb_blocks = DC->sz;
-		int *Incma;
-		int h, i, j;
-		int pts_per_element = DC->k;
-
-
-		Incma = NEW_int(nb_pts * nb_blocks);
-		Orbiter->Int_vec.zero(Incma, nb_pts * nb_blocks);
-
-		for (j = 0; j < nb_blocks; j++) {
-			//cout << "j=" << j << " / " << set_size
-			//<< " the_set[j]=" << the_set[j] << endl;
-			//Grass->unrank_int(the_set[j], 0/*verbose_level - 4*/);
-
-			//a = DC->set[j];
-			DC->unrank_block_in_PG_2_q(DC->block,
-					DC->set[j], 0 /* verbose_level*/);
-			for (h = 0; h < pts_per_element; h++) {
-				//PG_element_unrank_modified(*F, v, 1, k, h);
-				//F->mult_vector_from_the_left(v, Grass->M, w, k, n);
-				//PG_element_rank_modified(*F, w, 1, n, i);
-				i = DC->block[h];
-				Incma[i * nb_blocks + j] = 1;
-				}
-			}
-
-		if (f_v) {
-			cout << "Computing incidence matrix done" << endl;
-		}
-
-
-
-		incidence_structure *Inc;
-		partitionstack *Stack;
-
-
-		if (f_v) {
-			cout << "Opening incidence data structure:" << endl;
-		}
-
-		Inc = NEW_OBJECT(incidence_structure);
-		Inc->init_by_matrix(nb_pts, nb_blocks, Incma, 0 /* verbose_level */);
-		Stack = NEW_OBJECT(partitionstack);
-		Stack->allocate(nb_pts + nb_blocks, 0 /* verbose_level */);
-		Stack->subset_continguous(nb_pts, nb_blocks);
-		Stack->split_cell(0 /* verbose_level */);
-		Stack->sort_cells();
-
-
-		if (f_v) {
-			cout << "Initial scheme:" << endl;
-			Inc->get_and_print_row_tactical_decomposition_scheme_tex(
-				cout, FALSE /* f_enter_math */, TRUE /* f_print_subscripts */, *Stack);
-			Stack->print_classes_points_and_lines(cout);
-			//print_decomposition(Grass, Stack, the_set);
-		}
-		Inc->refine_row_partition_safe(*Stack, 0/*verbose_level - 3*/);
-		if (f_v) {
-			cout << "Row-scheme:" << endl;
-			Inc->get_and_print_row_tactical_decomposition_scheme_tex(
-				cout, FALSE /* f_enter_math */, TRUE /* f_print_subscripts */, *Stack);
-			Stack->print_classes_points_and_lines(cout);
-			//print_decomposition(Grass, Stack, the_set);
-		}
-		Inc->refine_column_partition_safe(*Stack, 0/*verbose_level - 3*/);
-		if (f_v) {
-			cout << "Column-scheme:" << endl;
-			Inc->get_and_print_column_tactical_decomposition_scheme_tex(
-				cout, FALSE /* f_enter_math */, TRUE /* f_print_subscripts */, *Stack);
-			Stack->print_classes_points_and_lines(cout);
-			//print_decomposition(Grass, Stack, the_set);
-		}
-		Inc->refine_row_partition_safe(*Stack, 0/*verbose_level - 3*/);
-		if (f_v) {
-			cout << "Row-scheme:" << endl;
-			Inc->get_and_print_row_tactical_decomposition_scheme_tex(
-				cout, FALSE /* f_enter_math */, TRUE /* f_print_subscripts */, *Stack);
-			Stack->print_classes_points_and_lines(cout);
-			//print_decomposition(Grass, Stack, the_set);
-		}
-	}
-
-
-
-	if (f_v) {
-		cout << "interface_combinatorics::do_create_design done" << endl;
-	}
-
 }
 
 

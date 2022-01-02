@@ -20,6 +20,7 @@ namespace foundations {
 
 animate::animate()
 {
+	Povray_job_description = NULL;
 	S = NULL;
 	//output_mask;
 	fname_makefile[0] = 0;
@@ -37,10 +38,8 @@ animate::~animate()
 
 }
 
-void animate::init(scene *S,
-		std::string &output_mask,
-		int nb_frames,
-		video_draw_options *Opt,
+void animate::init(
+		povray_job_description *Povray_job_description,
 		void *extra_data,
 		int verbose_level)
 {
@@ -49,10 +48,15 @@ void animate::init(scene *S,
 	if (f_v) {
 		cout << "animate::init" << endl;
 	}
-	animate::S = S;
-	animate::output_mask.assign(output_mask);
-	animate::nb_frames = nb_frames;
-	animate::Opt = Opt;
+	if (Povray_job_description->S == NULL) {
+		cout << "animate::init S == NULL" << endl;
+		exit(1);
+	}
+	animate::Povray_job_description = Povray_job_description;
+	animate::S = Povray_job_description->S;
+	animate::output_mask.assign(Povray_job_description->output_mask);
+	animate::nb_frames = Povray_job_description->nb_frames_default;
+	animate::Opt = Povray_job_description->Video_draw_options;
 	animate::extra_data = extra_data;
 	Pov = NEW_OBJECT(povray_interface);
 	sprintf(fname_makefile, "makefile_animation");

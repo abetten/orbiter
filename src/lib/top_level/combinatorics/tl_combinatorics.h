@@ -102,6 +102,8 @@ public:
 	int f_report;
 	classification_of_objects_report_options *Classification_of_objects_report_options;
 
+	int f_draw_incidence_matrices;
+	std::string draw_incidence_matrices_prefix;
 
 	int f_test_distinguishing_property;
 	std::string test_distinguishing_property_graph;
@@ -178,6 +180,10 @@ public:
 			classification_of_objects *CO,
 			object_with_properties *OwP,
 			int object_idx,
+			int verbose_level);
+	void draw_incidence_matrices(
+			std::string &prefix,
+			data_input_stream *IS,
 			int verbose_level);
 
 };

@@ -1141,39 +1141,6 @@ public:
 	action *create_automorphism_group_and_canonical_labeling_of_graph(
 		int *Adj, int n, int *labeling, int verbose_level);
 	// labeling[n]
-#if 0
-	action *create_automorphism_group_of_block_system(
-		int nb_points, int nb_blocks, int block_size, long int *Blocks,
-		int verbose_level);
-	action *create_automorphism_group_of_collection_of_two_block_systems(
-		int nb_points,
-		int nb_blocks1, int block_size1, long int *Blocks1,
-		int nb_blocks2, int block_size2, long int *Blocks2,
-		int verbose_level);
-	action *create_automorphism_group_of_incidence_matrix(
-		int m, int n, int *Mtx,
-		int verbose_level);
-	action *create_automorphism_group_of_incidence_structure(
-		incidence_structure *Inc,
-		int verbose_level);
-	action *create_automorphism_group_of_incidence_structure_low_level(
-		int m, int n, int nb_inc, int *X,
-		int verbose_level);
-	action *create_automorphism_group_of_incidence_structure_with_partition(
-		int m, int n, int nb_inc, int *X, int *partition,
-		int verbose_level);
-	void test_self_dual_self_polar(int input_no,
-		int m, int n, int nb_inc, int *X,
-		int &f_self_dual, int &f_self_polar,
-		int verbose_level);
-	void do_self_dual_self_polar(int input_no,
-		int m, int n, int nb_inc, int *X,
-		int &f_self_dual, int &f_self_polar,
-		int verbose_level);
-	void add_configuration_graph(std::ofstream &g,
-		int m, int n, int nb_inc, int *X, int f_first,
-		int verbose_level);
-#endif
 	void automorphism_group_as_permutation_group(
 			//strong_generators *&SG,
 			nauty_output *NO,

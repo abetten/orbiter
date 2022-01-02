@@ -238,24 +238,52 @@ class data_file {
 };
 
 // #############################################################################
-// data_input_stream_description.cpp:
+// data_input_stream_description_element.cpp:
 // #############################################################################
 
 
-#define INPUT_TYPE_SET_OF_POINTS 1
-#define INPUT_TYPE_SET_OF_LINES 2
-#define INPUT_TYPE_SET_OF_POINTS_AND_LINES 3
-#define INPUT_TYPE_SET_OF_PACKING 4
-#define INPUT_TYPE_FILE_OF_POINTS 5
-#define INPUT_TYPE_FILE_OF_LINES 6
-#define INPUT_TYPE_FILE_OF_PACKINGS 7
-#define INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE 8
-#define INPUT_TYPE_FILE_OF_POINT_SET 9
-#define INPUT_TYPE_FILE_OF_DESIGNS 10
-#define INPUT_TYPE_FILE_OF_INCIDENCE_GEOMETRIES 11
-#define INPUT_TYPE_INCIDENCE_GEOMETRY 12
-#define INPUT_TYPE_FROM_PARALLEL_SEARCH 13
+class data_input_stream_description_element {
+public:
+	enum data_input_stream_type input_type;
+	std::string input_string;
+	std::string input_string2;
 
+	// for t_data_input_stream_file_of_designs:
+	int input_data1; // N_points
+	int input_data2; // b = number of blocks
+	int input_data3; // k = block size
+	int input_data4; // partition class size
+
+	data_input_stream_description_element();
+	~data_input_stream_description_element();
+	void print();
+	void init_set_of_points(std::string &a);
+	void init_set_of_lines(std::string &a);
+	void init_set_of_points_and_lines(std::string &a, std::string &b);
+	void init_packing(std::string &a, int q);
+	void init_file_of_points(std::string &a);
+	void init_file_of_lines(std::string &a);
+	void init_file_of_packings(std::string &a);
+	void init_file_of_packings_through_spread_table(
+			std::string &a, std::string &b, int q);
+	void init_file_of_point_set(std::string &a);
+	void init_file_of_designs(std::string &a,
+				int N_points, int b, int k, int partition_class_size);
+	void init_file_of_incidence_geometries(std::string &a,
+				int v, int b, int f);
+	void init_incidence_geometry(std::string &a,
+				int v, int b, int f);
+	void init_incidence_geometry_by_row_ranks(std::string &a,
+				int v, int b, int r);
+	void init_from_parallel_search(std::string &fname_mask,
+			int nb_cases, std::string &cases_fname);
+
+};
+
+
+// #############################################################################
+// data_input_stream_description.cpp:
+// #############################################################################
 
 
 //! description of input data for classification of geometric objects from the command line
@@ -263,16 +291,11 @@ class data_file {
 
 class data_input_stream_description {
 public:
-	int nb_inputs;
-	int input_type[1000];
-	std::string input_string[1000];
-	std::string input_string2[1000];
 
-	// for INPUT_TYPE_FILE_OF_DESIGNS:
-	int input_data1[1000]; // N_points
-	int input_data2[1000]; // b = number of blocks
-	int input_data3[1000]; // k = block size
-	int input_data4[1000]; // partition class size
+
+	int nb_inputs;
+
+	std::vector<data_input_stream_description_element> Input;
 
 	data_input_stream_description();
 	~data_input_stream_description();
@@ -280,24 +303,6 @@ public:
 		int verbose_level);
 	void print();
 	void print_item(int i);
-	void add_set_of_points(std::string &a);
-	void add_set_of_lines(std::string &a);
-	void add_set_of_points_and_lines(std::string &a, std::string &b);
-	void add_packing(std::string &a, int q);
-	void add_file_of_points(std::string &a);
-	void add_file_of_lines(std::string &a);
-	void add_file_of_packings(std::string &a);
-	void add_file_of_packings_through_spread_table(
-			std::string &a, std::string &b, int q);
-	void add_file_of_point_set(std::string &a);
-	void add_file_of_designs(std::string &a,
-				int N_points, int b, int k, int partition_class_size);
-	void add_file_of_incidence_geometries(std::string &a,
-				int v, int b, int f);
-	void add_incidence_geometry(std::string &a,
-				int v, int b, int f);
-	void add_from_parallel_search(std::string &fname_mask,
-			int nb_cases, std::string &cases_fname);
 
 
 };
@@ -397,6 +402,35 @@ class fancy_set {
 	void save(std::string &fname, int verbose_level);
 
 };
+
+// #############################################################################
+// int_matrix.cpp:
+// #############################################################################
+
+
+//! matrices over int
+
+
+class int_matrix {
+public:
+
+	int *M;
+	int m;
+	int n;
+
+	int_matrix();
+	~int_matrix();
+	void null();
+	void freeself();
+	void allocate(int m, int n);
+	void allocate_and_init(int m, int n, int *Mtx);
+	int &s_ij(int i, int j);
+	int &s_m();
+	int &s_n();
+	void print();
+
+};
+
 
 // #############################################################################
 // int_vec.cpp:

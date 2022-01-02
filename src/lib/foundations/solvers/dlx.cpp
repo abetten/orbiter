@@ -46,8 +46,8 @@ struct dlx_node {
     dlx_node * Up;
     dlx_node * Down;
     
-    int  row; // row index
-    int  col; // col index
+    int row; // row index
+    int col; // col index
 };
 
 static int DLX_f_write_tree = FALSE;

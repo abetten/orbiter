@@ -19,6 +19,7 @@ MODULES = \
 	parametric_curve.o \
 	plot_tools.o \
 	povray_interface.o \
+	povray_job_description.o \
 	scene.o \
 	scene2.o \
 	tree.o \

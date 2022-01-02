@@ -3702,6 +3702,11 @@ void colored_graph::eigenvalues(double *&E, int verbose_level)
 
 	E = new double[nb_points];
 
+	if (f_v) {
+		cout << "colored_graph::eigenvalue Adj=" << endl;
+		Orbiter->Int_vec.matrix_print(Adj, nb_points, nb_points);
+	}
+
 	orbiter_eigenvalues(Adj, nb_points, E, verbose_level - 2);
 
 	FREE_int(Adj);
@@ -3710,6 +3715,55 @@ void colored_graph::eigenvalues(double *&E, int verbose_level)
 
 	if (f_v) {
 		cout << "colored_graph::eigenvalues done" << endl;
+	}
+}
+
+void colored_graph::Laplace_eigenvalues(double *&E, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "colored_graph::Laplace_eigenvalues" << endl;
+	}
+
+	int *Adj;
+	int *D;
+	int i, j;
+
+	Adj = NEW_int(nb_points * nb_points);
+	D = NEW_int(nb_points);
+	Orbiter->Int_vec.zero(Adj, nb_points * nb_points);
+	Orbiter->Int_vec.zero(D, nb_points);
+	for (i = 0; i < nb_points; i++) {
+		for (j = i + 1; j < nb_points; j++) {
+			if (is_adjacent(i, j)) {
+				D[i]++;
+				D[j]++;
+				Adj[i * nb_points + j] = -1;
+				Adj[j * nb_points + i] = -1;
+			}
+		}
+	}
+	for (i = 0; i < nb_points; i++) {
+		Adj[i * nb_points + i] = D[i];
+	}
+
+	if (f_v) {
+		cout << "colored_graph::Laplace_eigenvalue Adj=" << endl;
+		Orbiter->Int_vec.matrix_print(Adj, nb_points, nb_points);
+	}
+
+	E = new double[nb_points];
+
+	orbiter_eigenvalues(Adj, nb_points, E, verbose_level - 2);
+
+	FREE_int(Adj);
+	FREE_int(D);
+
+	//delete [] E;
+
+	if (f_v) {
+		cout << "colored_graph::Laplace_eigenvalues done" << endl;
 	}
 }
 

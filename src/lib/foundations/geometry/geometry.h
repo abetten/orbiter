@@ -1445,6 +1445,8 @@ public:
 	object_with_canonical_form();
 	~object_with_canonical_form();
 	void print(std::ostream &ost);
+	void print_rows(std::ostream &ost,
+			int f_show_incma, int verbose_level);
 	void print_tex_detailed(std::ostream &ost, int f_show_incma, int verbose_level);
 	void print_tex(std::ostream &ost);
 	void get_packing_as_set_system(long int *&Sets,
@@ -1492,6 +1494,10 @@ public:
 	void init_incidence_geometry_from_string(
 		std::string &data,
 		int v, int b, int nb_flags,
+		int verbose_level);
+	void init_incidence_geometry_from_string_of_row_ranks(
+		std::string &data,
+		int v, int b, int r,
 		int verbose_level);
 	void init_large_set(
 		long int *data, int data_sz, int v, int b, int k, int design_sz,

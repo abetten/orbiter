@@ -1195,8 +1195,10 @@ void projective_space_with_action::canonical_form_of_code(
 	}
 
 	data_input_stream_description ISD;
+	data_input_stream_description_element E;
 
-	ISD.add_set_of_points(points_as_string);
+	E.init_set_of_points(points_as_string);
+	ISD.Input.push_back(E);
 	ISD.nb_inputs++;
 
 	data_input_stream IS;

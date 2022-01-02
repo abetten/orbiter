@@ -73,11 +73,13 @@ void orbiter_command::parse(orbiter_top_level_session *Orbiter_top_level_session
 
 		if (Interface_symbol_table->recognize_keyword(argc, Argv, i, verbose_level)) {
 			if (f_v) {
-				cout << "orbiter_command::parse recognizing keyword from Interface_symbol_table" << endl;
+				cout << "orbiter_command::parse recognizing "
+						"keyword from Interface_symbol_table" << endl;
 			}
 			Interface_symbol_table->read_arguments(argc, Argv, i, verbose_level);
 			if (f_v) {
-				cout << "orbiter_command::parse after Interface_symbol_table.read_arguments, i=" << i << endl;
+				cout << "orbiter_command::parse after "
+						"Interface_symbol_table.read_arguments, i=" << i << endl;
 			}
 			//Interface_symbol_table.worker(verbose_level);
 
@@ -92,7 +94,8 @@ void orbiter_command::parse(orbiter_top_level_session *Orbiter_top_level_session
 
 
 	if (f_v) {
-		cout << "orbiter_command::parse before Interface_algebra, i = " << i << " " << Argv[i] << endl;
+		cout << "orbiter_command::parse before Interface_algebra, "
+				"i = " << i << " " << Argv[i] << endl;
 	}
 	{
 
@@ -100,7 +103,8 @@ void orbiter_command::parse(orbiter_top_level_session *Orbiter_top_level_session
 		Interface_algebra = NEW_OBJECT(interface_algebra);
 		if (Interface_algebra->recognize_keyword(argc, Argv, i, verbose_level)) {
 			if (f_v) {
-				cout << "orbiter_command::parse recognizing keyword from Interface_algebra" << endl;
+				cout << "orbiter_command::parse recognizing "
+						"keyword from Interface_algebra" << endl;
 			}
 			Interface_algebra->read_arguments(argc, Argv, i, verbose_level);
 			i++;
@@ -115,7 +119,8 @@ void orbiter_command::parse(orbiter_top_level_session *Orbiter_top_level_session
 	}
 
 	if (f_v) {
-		cout << "orbiter_command::parse before Interface_cryptography, i = " << i << " " << Argv[i] << endl;
+		cout << "orbiter_command::parse before Interface_cryptography, "
+				"i = " << i << " " << Argv[i] << endl;
 	}
 	{
 
@@ -123,7 +128,8 @@ void orbiter_command::parse(orbiter_top_level_session *Orbiter_top_level_session
 		Interface_cryptography = NEW_OBJECT(interface_cryptography);
 		if (Interface_cryptography->recognize_keyword(argc, Argv, i, verbose_level)) {
 			if (f_v) {
-				cout << "orbiter_command::parse recognizing keyword from Interface_cryptography" << endl;
+				cout << "orbiter_command::parse recognizing keyword "
+						"from Interface_cryptography" << endl;
 			}
 			Interface_cryptography->read_arguments(argc, Argv, i, verbose_level);
 			i++;
@@ -138,7 +144,8 @@ void orbiter_command::parse(orbiter_top_level_session *Orbiter_top_level_session
 	}
 
 	if (f_v) {
-		cout << "orbiter_command::parse before Interface_combinatorics, i = " << i << " " << Argv[i] << endl;
+		cout << "orbiter_command::parse before Interface_combinatorics, "
+				"i = " << i << " " << Argv[i] << endl;
 	}
 	{
 
@@ -146,7 +153,8 @@ void orbiter_command::parse(orbiter_top_level_session *Orbiter_top_level_session
 		Interface_combinatorics = NEW_OBJECT(interface_combinatorics);
 		if (Interface_combinatorics->recognize_keyword(argc, Argv, i, verbose_level)) {
 			if (f_v) {
-				cout << "orbiter_command::parse recognizing keyword from Interface_combinatorics" << endl;
+				cout << "orbiter_command::parse recognizing keyword "
+						"from Interface_combinatorics" << endl;
 			}
 			Interface_combinatorics->read_arguments(argc, Argv, i, verbose_level);
 			i++;
@@ -161,7 +169,8 @@ void orbiter_command::parse(orbiter_top_level_session *Orbiter_top_level_session
 	}
 
 	if (f_v) {
-		cout << "orbiter_command::parse before Interface_coding_theory, i = " << i << " " << Argv[i] << endl;
+		cout << "orbiter_command::parse before Interface_coding_theory, "
+				"i = " << i << " " << Argv[i] << endl;
 	}
 	{
 
@@ -169,7 +178,8 @@ void orbiter_command::parse(orbiter_top_level_session *Orbiter_top_level_session
 		Interface_coding_theory = NEW_OBJECT(interface_coding_theory);
 		if (Interface_coding_theory->recognize_keyword(argc, Argv, i, verbose_level)) {
 			if (f_v) {
-				cout << "orbiter_command::parse recognizing keyword from Interface_coding_theory" << endl;
+				cout << "orbiter_command::parse recognizing keyword "
+						"from Interface_coding_theory" << endl;
 			}
 			Interface_coding_theory->read_arguments(argc, Argv, i, verbose_level);
 			i++;
@@ -184,7 +194,8 @@ void orbiter_command::parse(orbiter_top_level_session *Orbiter_top_level_session
 	}
 
 	if (f_v) {
-		cout << "orbiter_command::parse before Interface_povray, i = " << i << " " << Argv[i] << endl;
+		cout << "orbiter_command::parse before Interface_povray, "
+				"i = " << i << " " << Argv[i] << endl;
 	}
 	{
 
@@ -192,7 +203,8 @@ void orbiter_command::parse(orbiter_top_level_session *Orbiter_top_level_session
 		Interface_povray = NEW_OBJECT(interface_povray);
 		if (Interface_povray->recognize_keyword(argc, Argv, i, verbose_level)) {
 			if (f_v) {
-				cout << "orbiter_command::parse recognizing keyword from Interface_povray" << endl;
+				cout << "orbiter_command::parse recognizing "
+						"keyword from Interface_povray" << endl;
 			}
 			Interface_povray->read_arguments(argc, Argv, i, verbose_level);
 			i++;
@@ -207,7 +219,8 @@ void orbiter_command::parse(orbiter_top_level_session *Orbiter_top_level_session
 	}
 
 	if (f_v) {
-		cout << "orbiter_command::parse before Interface_projective, i = " << i << " " << Argv[i] << endl;
+		cout << "orbiter_command::parse before Interface_projective, "
+				"i = " << i << " " << Argv[i] << endl;
 	}
 	{
 
@@ -227,7 +240,8 @@ void orbiter_command::parse(orbiter_top_level_session *Orbiter_top_level_session
 	}
 
 	if (f_v) {
-		cout << "orbiter_command::parse before Interface_toolkit, i = " << i << endl;
+		cout << "orbiter_command::parse before Interface_toolkit, "
+				"i = " << i << endl;
 	}
 	{
 
@@ -245,7 +259,8 @@ void orbiter_command::parse(orbiter_top_level_session *Orbiter_top_level_session
 			FREE_OBJECT(Interface_toolkit);
 		}
 	}
-	cout << "orbiter_command::parse command " << Argv[i] << " at position " << i << " is unrecognized" << endl;
+	cout << "orbiter_command::parse command " << Argv[i] << " at position "
+			<< i << " is unrecognized" << endl;
 
 #if 0
 	for (int j = 0; j <= i; j++) {

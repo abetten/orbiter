@@ -2236,8 +2236,8 @@ sims *action::create_sims_for_centralizer_of_matrix(
 	if (f_v) {
 		cout << "The type of the matrix under "
 				"consideration is:" << endl;
-		Orbiter->Int_vec.matrix_print(R1->type_coding.M,
-				R1->type_coding.m, R1->type_coding.n);
+		Orbiter->Int_vec.matrix_print(R1->type_coding->M,
+				R1->type_coding->m, R1->type_coding->n);
 	}
 
 

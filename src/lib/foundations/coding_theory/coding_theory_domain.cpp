@@ -80,7 +80,8 @@ void coding_theory_domain::make_mac_williams_equations(longinteger_object *&M,
 
 
 			if (f_v) {
-				cout << "coding_theory_domain::make_mac_williams_equations before print_longinteger_matrix_tex" << endl;
+				cout << "coding_theory_domain::make_mac_williams_equations "
+						"before print_longinteger_matrix_tex" << endl;
 			}
 
 			latex_interface Li;
@@ -92,7 +93,8 @@ void coding_theory_domain::make_mac_williams_equations(longinteger_object *&M,
 			ost << "$$" << endl;
 
 			if (f_v) {
-				cout << "coding_theory_domain::make_mac_williams_equations after print_longinteger_matrix_tex" << endl;
+				cout << "coding_theory_domain::make_mac_williams_equations "
+						"after print_longinteger_matrix_tex" << endl;
 			}
 
 
@@ -215,7 +217,8 @@ void coding_theory_domain::make_gilbert_varshamov_code(
 
 
 
-	cout << "coding_theory_domain::make_gilbert_varshamov_code found the following parity check matrix as projective set: ";
+	cout << "coding_theory_domain::make_gilbert_varshamov_code found "
+			"the following parity check matrix as projective set: ";
 	Orbiter->Lint_vec.print(cout, set, n);
 	cout << endl;
 
@@ -287,12 +290,14 @@ void coding_theory_domain::make_gilbert_varshamov_code_recursion(
 	}
 
 	if (a == P->N_points) {
-		cout << "coding_theory_domain::make_gilbert_varshamov_code_recursion failure to construct the code" << endl;
+		cout << "coding_theory_domain::make_gilbert_varshamov_code_recursion "
+				"failure to construct the code" << endl;
 		exit(1);
 	}
 
 	if (f_v) {
-		cout << "coding_theory_domain::make_gilbert_varshamov_code_recursion picking a=" << a << endl;
+		cout << "coding_theory_domain::make_gilbert_varshamov_code_recursion "
+				"picking a=" << a << endl;
 	}
 
 
@@ -331,7 +336,8 @@ void coding_theory_domain::make_gilbert_varshamov_code_recursion(
 		for (i = 1; i <= s; i++) {
 			N = Combi.binomial_lint(level, i);
 			if (f_v) {
-				cout << "coding_theory_domain::make_gilbert_varshamov_code N_" << i << " = " << N << endl;
+				cout << "coding_theory_domain::make_gilbert_varshamov_code "
+						"N_" << i << " = " << N << endl;
 				cout << "set = ";
 				Orbiter->Lint_vec.print(cout, set, level + 1);
 				cout << endl;
@@ -380,11 +386,13 @@ void coding_theory_domain::make_gilbert_varshamov_code_recursion(
 		FREE_int(v3);
 	}
 	if (f_v) {
-		cout << "coding_theory_domain::make_gilbert_varshamov_code level = " << level << " : cnt = " << cnt << " calling the recursion:" << endl;
+		cout << "coding_theory_domain::make_gilbert_varshamov_code "
+				"level = " << level << " : cnt = " << cnt << " calling the recursion:" << endl;
 	}
 	make_gilbert_varshamov_code_recursion(P, n, d, set, f_forbidden, level + 1, verbose_level);
 	if (f_v) {
-		cout << "coding_theory_domain::make_gilbert_varshamov_code level = " << level << " : cnt = " << cnt << " done with the recursion:" << endl;
+		cout << "coding_theory_domain::make_gilbert_varshamov_code "
+				"level = " << level << " : cnt = " << cnt << " done with the recursion:" << endl;
 	}
 
 	for (i = 0; i < add_set.size(); i++) {
@@ -2520,7 +2528,8 @@ void coding_theory_domain::do_long_code(
 		int sz;
 
 
-		Orbiter->Lint_vec.scan(long_code_generators_text[i], set, sz);
+		//Orbiter->Lint_vec.scan(long_code_generators_text[i], set, sz);
+		Orbiter->get_lint_vector_from_label(long_code_generators_text[i], set, sz, verbose_level);
 
 		for (j = 0; j < sz; j++) {
 			genma[i * n + set[j]] = 1;
@@ -2777,7 +2786,7 @@ void coding_theory_domain::embellish(int *M, int nb_rows, int nb_cols, int i0, i
 		2,-1,
 		2,0,
 		2,1,
-		2,2,
+		2,2,s
 		};
 #endif
 	for (u = -rad; u <= rad; u++) {

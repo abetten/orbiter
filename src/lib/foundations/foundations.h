@@ -435,6 +435,7 @@ class parametric_curve_point;
 class parametric_curve;
 class plot_tools;
 class povray_interface;
+class povray_job_description;
 class scene;
 class tree;
 class tree_node;
@@ -639,37 +640,37 @@ typedef enum symbol_table_object_type symbol_table_object_type;
 
 
 enum TokenType
-    {
-    NONE,
-    NAME,
-    NUMBER,
-    END,
-    PLUS='+',
-    MINUS='-',
-    MULTIPLY='*',
-    DIVIDE='/',
-    ASSIGN='=',
-    LHPAREN='(',
-    RHPAREN=')',
-    COMMA=',',
-    NOT='!',
+{
+	NONE,
+	NAME,
+	NUMBER,
+	END,
+	PLUS='+',
+	MINUS='-',
+	MULTIPLY='*',
+	DIVIDE='/',
+	ASSIGN='=',
+	LHPAREN='(',
+	RHPAREN=')',
+	COMMA=',',
+	NOT='!',
 
-    // comparisons
-    LT='<',
-    GT='>',
-    LE,     // <=
-    GE,     // >=
-    EQ,     // ==
-    NE,     // !=
-    AND,    // &&
-    OR,      // ||
+	// comparisons
+	LT='<',
+	GT='>',
+	LE,     // <=
+	GE,     // >=
+	EQ,     // ==
+	NE,     // !=
+	AND,    // &&
+	OR,      // ||
 
-    // special assignments
+	// special assignments
 
-    ASSIGN_ADD,  //  +=
-    ASSIGN_SUB,  //  +-
-    ASSIGN_MUL,  //  +*
-    ASSIGN_DIV   //  +/
+	ASSIGN_ADD,  //  +=
+	ASSIGN_SUB,  //  +-
+	ASSIGN_MUL,  //  +*
+	ASSIGN_DIV   //  +/
 
 };
 
@@ -681,36 +682,22 @@ enum syntax_tree_node_operation_type
 };
 
 
-// we cannot move the following declaration into its appropriate place,
-// for otherwise we would create incomplete type compile errors:
-
-// #############################################################################
-// int_matrix.cpp:
-// #############################################################################
-
-
-//! matrices over int
-
-
-class int_matrix {
-public:
-
-	int *M;
-	int m;
-	int n;
-
-	int_matrix();
-	~int_matrix();
-	void null();
-	void freeself();
-	void allocate(int m, int n);
-	void allocate_and_init(int m, int n, int *Mtx);
-	int &s_ij(int i, int j);
-	int &s_m();
-	int &s_n();
-	void print();
-
-	
+enum data_input_stream_type {
+	t_data_input_stream_unknown,
+	t_data_input_stream_set_of_points,
+	t_data_input_stream_set_of_lines,
+	t_data_input_stream_set_of_points_and_lines,
+	t_data_input_stream_set_of_packing,
+	t_data_input_stream_file_of_points,
+	t_data_input_stream_file_of_lines,
+	t_data_input_stream_file_of_packings,
+	t_data_input_stream_file_of_packings_through_spread_table,
+	t_data_input_stream_file_of_point_set,
+	t_data_input_stream_file_of_designs,
+	t_data_input_stream_file_of_incidence_geometries,
+	t_data_input_stream_incidence_geometry,
+	t_data_input_stream_incidence_geometry_by_row_ranks,
+	t_data_input_stream_from_parallel_search,
 
 };
 
@@ -744,7 +731,7 @@ public:
 
 
 // Eigen_interface:
-void orbiter_eigenvalues(int *Adj, int nb_points, double *E, int verbose_level);
+void orbiter_eigenvalues(int *Mtx, int nb_points, double *E, int verbose_level);
 
 
 

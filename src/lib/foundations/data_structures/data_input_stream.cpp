@@ -76,92 +76,92 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 		cout << "input " << input_idx << " / " << Descr->nb_inputs
 			<< " is:" << endl;
 
-		if (Descr->input_type[input_idx] == INPUT_TYPE_SET_OF_POINTS) {
+		if (Descr->Input[input_idx].input_type == t_data_input_stream_set_of_points) {
 			if (f_v) {
 				cout << "input set of points "
-						<< Descr->input_string[input_idx] << ":" << endl;
+						<< Descr->Input[input_idx].input_string << ":" << endl;
 			}
 
 			nb_objects_to_test++;
 
 		}
-		else if (Descr->input_type[input_idx] == INPUT_TYPE_SET_OF_LINES) {
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_set_of_lines) {
 			if (f_v) {
 				cout << "input set of lines "
-						<< Descr->input_string[input_idx] << ":" << endl;
+						<< Descr->Input[input_idx].input_string << ":" << endl;
 			}
 
 			nb_objects_to_test++;
 
 		}
-		else if (Descr->input_type[input_idx] == INPUT_TYPE_SET_OF_POINTS_AND_LINES) {
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_set_of_points_and_lines) {
 			if (f_v) {
 				cout << "input set of points and lines "
-						<< Descr->input_string[input_idx] << " "
-						<< Descr->input_string2[input_idx] << ":" << endl;
+						<< Descr->Input[input_idx].input_string << " "
+						<< Descr->Input[input_idx].input_string2 << ":" << endl;
 			}
 
 			nb_objects_to_test++;
 
 		}
-		else if (Descr->input_type[input_idx] == INPUT_TYPE_SET_OF_PACKING) {
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_set_of_packing) {
 			if (f_v) {
 				cout << "input set of packing "
-						<< Descr->input_string[input_idx] << ":" << endl;
+						<< Descr->Input[input_idx].input_string << ":" << endl;
 			}
 
 			nb_objects_to_test++;
 
 		}
-		else if (Descr->input_type[input_idx] == INPUT_TYPE_FILE_OF_POINTS) {
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_points) {
 			if (f_v) {
 				cout << "input sets of points from file "
-						<< Descr->input_string[input_idx] << ":" << endl;
+						<< Descr->Input[input_idx].input_string << ":" << endl;
 			}
 			nb_obj = Fio.count_number_of_orbits_in_file(
-					Descr->input_string[input_idx], 0 /* verbose_level*/);
+					Descr->Input[input_idx].input_string, 0 /* verbose_level*/);
 			if (f_v) {
-				cout << "The file " << Descr->input_string[input_idx]
+				cout << "The file " << Descr->Input[input_idx].input_string
 					<< " has " << nb_obj << " objects" << endl;
 			}
 
 			nb_objects_to_test += nb_obj;
 		}
-		else if (Descr->input_type[input_idx] == INPUT_TYPE_FILE_OF_LINES) {
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_lines) {
 			if (f_v) {
 				cout << "input sets of lines from file "
-					<< Descr->input_string[input_idx] << ":" << endl;
+					<< Descr->Input[input_idx].input_string << ":" << endl;
 			}
 			nb_obj = Fio.count_number_of_orbits_in_file(
-					Descr->input_string[input_idx], 0 /* verbose_level*/);
+					Descr->Input[input_idx].input_string, 0 /* verbose_level*/);
 			if (f_v) {
-				cout << "The file " << Descr->input_string[input_idx]
+				cout << "The file " << Descr->Input[input_idx].input_string
 					<< " has " << nb_obj << " objects" << endl;
 			}
 
 			nb_objects_to_test += nb_obj;
 		}
-		else if (Descr->input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS) {
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_packings) {
 			if (f_v) {
 				cout << "input sets of packings from file "
-					<< Descr->input_string[input_idx] << ":" << endl;
+					<< Descr->Input[input_idx].input_string << ":" << endl;
 			}
 			nb_obj = Fio.count_number_of_orbits_in_file(
-					Descr->input_string[input_idx], 0 /* verbose_level*/);
+					Descr->Input[input_idx].input_string, 0 /* verbose_level*/);
 			if (f_v) {
-				cout << "The file " << Descr->input_string[input_idx]
+				cout << "The file " << Descr->Input[input_idx].input_string
 					<< " has " << nb_obj << " objects" << endl;
 			}
 
 			nb_objects_to_test += nb_obj;
 		}
-		else if (Descr->input_type[input_idx] ==
-				INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
+		else if (Descr->Input[input_idx].input_type ==
+				t_data_input_stream_file_of_packings_through_spread_table) {
 			if (f_v) {
 				cout << "input sets of packings from file "
-					<< Descr->input_string[input_idx] << endl;
+					<< Descr->Input[input_idx].input_string << endl;
 				cout << "through spread table "
-					<< Descr->input_string2[input_idx] << " :" << endl;
+					<< Descr->Input[input_idx].input_string2 << " :" << endl;
 			}
 			//nb_obj = Fio.count_number_of_orbits_in_file(
 			//		Descr->input_string[input_idx], 0 /* verbose_level*/);
@@ -174,13 +174,13 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 
 			if (f_v) {
 				cout << "data_input_stream::count_number_of_objects_to_test "
-						"Reading the file " << Descr->input_string[input_idx] << endl;
+						"Reading the file " << Descr->Input[input_idx].input_string << endl;
 			}
 			SoS->init_from_file(
 					underlying_set_size,
-					Descr->input_string[input_idx], verbose_level);
+					Descr->Input[input_idx].input_string, verbose_level);
 			if (f_v) {
-				cout << "Read the file " << Descr->input_string[input_idx] << ", underlying_set_size=" << underlying_set_size << endl;
+				cout << "Read the file " << Descr->Input[input_idx].input_string << ", underlying_set_size=" << underlying_set_size << endl;
 			}
 
 			nb_obj = SoS->nb_sets;
@@ -189,101 +189,108 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 
 
 			if (f_v) {
-				cout << "The file " << Descr->input_string[input_idx]
+				cout << "The file " << Descr->Input[input_idx].input_string
 					<< " has " << nb_obj << " objects" << endl;
 			}
 
 			nb_objects_to_test += nb_obj;
 		}
-		else if (Descr->input_type[input_idx] == INPUT_TYPE_FILE_OF_POINT_SET) {
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_point_set) {
 			if (f_v) {
 				cout << "input set of points from file "
-						<< Descr->input_string[input_idx] << ":" << endl;
+						<< Descr->Input[input_idx].input_string << ":" << endl;
 			}
 			nb_obj = 1;
 			if (f_v) {
-				cout << "The file " << Descr->input_string[input_idx]
+				cout << "The file " << Descr->Input[input_idx].input_string
 					<< " has " << nb_obj << " objects" << endl;
 			}
 
 			nb_objects_to_test += nb_obj;
 		}
-		else if (Descr->input_type[input_idx] == INPUT_TYPE_FILE_OF_DESIGNS) {
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_designs) {
 			if (f_v) {
 				cout << "input designs from file "
-						<< Descr->input_string[input_idx] << ":" << endl;
+						<< Descr->Input[input_idx].input_string << ":" << endl;
 			}
 			{
 				set_of_sets *SoS;
 				int nck;
 				combinatorics_domain Combi;
 
-				nck = Combi.int_n_choose_k(Descr->input_data1[input_idx], Descr->input_data3[input_idx]);
+				nck = Combi.int_n_choose_k(Descr->Input[input_idx].input_data1, Descr->Input[input_idx].input_data3);
 				SoS = NEW_OBJECT(set_of_sets);
 
-				cout << "classify_objects_using_nauty Reading the file " << Descr->input_string[input_idx]
-					<<  " which contains designs on " << Descr->input_data1[input_idx] << " points, nck=" << nck << endl;
+				cout << "classify_objects_using_nauty Reading the file " << Descr->Input[input_idx].input_string
+					<<  " which contains designs on " << Descr->Input[input_idx].input_data1 << " points, nck=" << nck << endl;
 				SoS->init_from_file(
 						nck /* underlying_set_size */,
-						Descr->input_string[input_idx], verbose_level);
-				cout << "Read the file " << Descr->input_string[input_idx] << endl;
+						Descr->Input[input_idx].input_string, verbose_level);
+				cout << "Read the file " << Descr->Input[input_idx].input_string << endl;
 				nb_obj = SoS->nb_sets;
 				FREE_OBJECT(SoS);
 			}
 			if (f_v) {
-				cout << "The file " << Descr->input_string[input_idx]
+				cout << "The file " << Descr->Input[input_idx].input_string
 					<< " has " << nb_obj << " objects" << endl;
 			}
 
 			nb_objects_to_test += nb_obj;
 		}
-		else if (Descr->input_type[input_idx] == INPUT_TYPE_FILE_OF_INCIDENCE_GEOMETRIES) {
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_incidence_geometries) {
 			if (f_v) {
 				cout << "input incidence geometries from file "
-						<< Descr->input_string[input_idx] << ":" << endl;
+						<< Descr->Input[input_idx].input_string << ":" << endl;
 			}
 			file_io Fio;
 			int m, n, nb_flags;
 
 			std::vector<std::vector<int> > Geos;
 
-			Fio.read_incidence_file(Geos, m, n, nb_flags, Descr->input_string[input_idx], verbose_level);
+			Fio.read_incidence_file(Geos, m, n, nb_flags, Descr->Input[input_idx].input_string, verbose_level);
 			if (f_v) {
 				cout << "input incidence geometries from file "
 						"the file contains " << Geos.size() << "incidence geometries" << endl;
 			}
 			nb_objects_to_test += Geos.size();
-			if (Descr->input_data1[input_idx] != m) {
+			if (Descr->Input[input_idx].input_data1 != m) {
 				cout << "v does not match" << endl;
 				exit(1);
 			}
-			if (Descr->input_data2[input_idx] != n) {
+			if (Descr->Input[input_idx].input_data2 != n) {
 				cout << "b does not match" << endl;
 				exit(1);
 			}
-			if (Descr->input_data3[input_idx] != nb_flags) {
+			if (Descr->Input[input_idx].input_data3 != nb_flags) {
 				cout << "nb_flags does not match" << endl;
 				exit(1);
 			}
 		}
-		else if (Descr->input_type[input_idx] == INPUT_TYPE_INCIDENCE_GEOMETRY) {
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_incidence_geometry) {
 			if (f_v) {
 				cout << "input incidence geometry directly "
-						<< Descr->input_string[input_idx] << ":" << endl;
+						<< Descr->Input[input_idx].input_string << ":" << endl;
 			}
 			nb_objects_to_test++;
 		}
-		else if (Descr->input_type[input_idx] == INPUT_TYPE_FROM_PARALLEL_SEARCH) {
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_incidence_geometry_by_row_ranks) {
+			if (f_v) {
+				cout << "input incidence geometry directly "
+						<< Descr->Input[input_idx].input_string << ":" << endl;
+			}
+			nb_objects_to_test++;
+		}
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_from_parallel_search) {
 			if (f_v) {
 				cout << "input from parallel search" << endl;
 			}
 
-			int nb_cases = Descr->input_data1[input_idx];
+			int nb_cases = Descr->Input[input_idx].input_data1;
 			string mask;
 			string cases_fname;
 
-			mask.assign(Descr->input_string[input_idx]);
-			cases_fname.assign(Descr->input_string2[input_idx]);
+			mask.assign(Descr->Input[input_idx].input_string);
+			cases_fname.assign(Descr->Input[input_idx].input_string2);
 
 			if (f_v) {
 				cout << "input from parallel search, mask=" << mask << endl;
@@ -350,12 +357,12 @@ void data_input_stream::read_objects(int verbose_level)
 					<< " is:" << endl;
 		}
 
-		if (Descr->input_type[input_idx] == INPUT_TYPE_SET_OF_POINTS) {
+		if (Descr->Input[input_idx].input_type == t_data_input_stream_set_of_points) {
 
 			if (f_v) {
 				cout << "data_input_stream::read_objects "
 						"input set of points "
-					<< Descr->input_string[input_idx] << ":" << endl;
+					<< Descr->Input[input_idx].input_string << ":" << endl;
 			}
 
 			object_with_canonical_form *OwCF;
@@ -364,20 +371,20 @@ void data_input_stream::read_objects(int verbose_level)
 			OwCF = NEW_OBJECT(object_with_canonical_form);
 
 			OwCF->init_point_set_from_string(
-					Descr->input_string[input_idx] /*set_text*/,
+					Descr->Input[input_idx].input_string /*set_text*/,
 					verbose_level);
 
 			Objects.push_back(OwCF);
 
 		}
-		else if (Descr->input_type[input_idx] == INPUT_TYPE_FILE_OF_POINT_SET) {
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_point_set) {
 
 			file_io Fio;
 			long int *the_set;
 			int set_size;
 			object_with_canonical_form *OwCF;
 
-			Fio.read_set_from_file(Descr->input_string[input_idx], the_set, set_size, verbose_level);
+			Fio.read_set_from_file(Descr->Input[input_idx].input_string, the_set, set_size, verbose_level);
 
 			OwCF = NEW_OBJECT(object_with_canonical_form);
 
@@ -388,20 +395,20 @@ void data_input_stream::read_objects(int verbose_level)
 			Objects.push_back(OwCF);
 
 		}
-		else if (Descr->input_type[input_idx] == INPUT_TYPE_SET_OF_LINES) {
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_set_of_lines) {
 
 			object_with_canonical_form *OwCF;
 
 			OwCF = NEW_OBJECT(object_with_canonical_form);
 
 			OwCF->init_line_set_from_string(
-					Descr->input_string[input_idx] /*set_text*/,
+					Descr->Input[input_idx].input_string /*set_text*/,
 					verbose_level);
 
 			Objects.push_back(OwCF);
 
 		}
-		else if (Descr->input_type[input_idx] == INPUT_TYPE_SET_OF_POINTS_AND_LINES) {
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_set_of_points_and_lines) {
 
 			object_with_canonical_form *OwCF;
 
@@ -409,32 +416,32 @@ void data_input_stream::read_objects(int verbose_level)
 			OwCF = NEW_OBJECT(object_with_canonical_form);
 
 			OwCF->init_points_and_lines_from_string(
-					Descr->input_string[input_idx] /*set_text*/,
-					Descr->input_string2[input_idx] /*set2_text*/,
+					Descr->Input[input_idx].input_string /*set_text*/,
+					Descr->Input[input_idx].input_string2 /*set2_text*/,
 					verbose_level);
 
 			Objects.push_back(OwCF);
 
 		}
-		else if (Descr->input_type[input_idx] == INPUT_TYPE_SET_OF_PACKING) {
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_set_of_packing) {
 
 			object_with_canonical_form *OwCF;
 			int q;
 
-			q = Descr->input_data1[input_idx];
+			q = Descr->Input[input_idx].input_data1;
 
 
 			OwCF = NEW_OBJECT(object_with_canonical_form);
 
 			OwCF->init_packing_from_string(
-					Descr->input_string[input_idx] /*packing_text*/,
+					Descr->Input[input_idx].input_string /*packing_text*/,
 					q,
 					verbose_level);
 
 			Objects.push_back(OwCF);
 
 		}
-		else if (Descr->input_type[input_idx] == INPUT_TYPE_INCIDENCE_GEOMETRY) {
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_incidence_geometry) {
 
 			object_with_canonical_form *OwCF;
 
@@ -442,41 +449,58 @@ void data_input_stream::read_objects(int verbose_level)
 			OwCF = NEW_OBJECT(object_with_canonical_form);
 
 			OwCF->init_incidence_geometry_from_string(
-					Descr->input_string[input_idx],
-					Descr->input_data1[input_idx] /*v*/,
-					Descr->input_data2[input_idx] /*b*/,
-					Descr->input_data3[input_idx] /*nb_flags*/,
+					Descr->Input[input_idx].input_string,
+					Descr->Input[input_idx].input_data1 /*v*/,
+					Descr->Input[input_idx].input_data2 /*b*/,
+					Descr->Input[input_idx].input_data3 /*nb_flags*/,
 					verbose_level);
 
 			Objects.push_back(OwCF);
 
 		}
-		else if (Descr->input_type[input_idx] == INPUT_TYPE_FILE_OF_INCIDENCE_GEOMETRIES) {
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_incidence_geometry_by_row_ranks) {
+
+			object_with_canonical_form *OwCF;
+
+
+			OwCF = NEW_OBJECT(object_with_canonical_form);
+
+			OwCF->init_incidence_geometry_from_string_of_row_ranks(
+					Descr->Input[input_idx].input_string,
+					Descr->Input[input_idx].input_data1 /*v*/,
+					Descr->Input[input_idx].input_data2 /*b*/,
+					Descr->Input[input_idx].input_data3 /*r*/,
+					verbose_level);
+
+			Objects.push_back(OwCF);
+
+		}
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_incidence_geometries) {
 			if (f_v) {
 				cout << "input incidence geometries from file "
-						<< Descr->input_string[input_idx] << ":" << endl;
+						<< Descr->Input[input_idx].input_string << ":" << endl;
 			}
 			file_io Fio;
 			int m, n, nb_flags;
 
 			std::vector<std::vector<int> > Geos;
 
-			Fio.read_incidence_file(Geos, m, n, nb_flags, Descr->input_string[input_idx], verbose_level);
+			Fio.read_incidence_file(Geos, m, n, nb_flags, Descr->Input[input_idx].input_string, verbose_level);
 			if (f_v) {
 				cout << "input incidence geometries from file "
 						"the file contains " << Geos.size() << "incidence geometries" << endl;
 			}
 			int h;
 
-			if (Descr->input_data1[input_idx] != m) {
+			if (Descr->Input[input_idx].input_data1 != m) {
 				cout << "v does not match" << endl;
 				exit(1);
 			}
-			if (Descr->input_data2[input_idx] != n) {
+			if (Descr->Input[input_idx].input_data2 != n) {
 				cout << "b does not match" << endl;
 				exit(1);
 			}
-			if (Descr->input_data3[input_idx] != nb_flags) {
+			if (Descr->Input[input_idx].input_data3 != nb_flags) {
 				cout << "f does not match" << endl;
 				exit(1);
 			}
@@ -489,23 +513,23 @@ void data_input_stream::read_objects(int verbose_level)
 
 				OwCF->init_incidence_geometry_from_vector(
 						Geos[h],
-						Descr->input_data1[input_idx] /*v*/,
-						Descr->input_data2[input_idx] /*b*/,
-						Descr->input_data3[input_idx] /*nb_flags*/,
+						Descr->Input[input_idx].input_data1 /*v*/,
+						Descr->Input[input_idx].input_data2 /*b*/,
+						Descr->Input[input_idx].input_data3 /*nb_flags*/,
 						verbose_level);
 
 				Objects.push_back(OwCF);
 
 			}
 		}
-		else if (Descr->input_type[input_idx] == INPUT_TYPE_FILE_OF_DESIGNS) {
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_designs) {
 
 			int v, b, k, design_sz;
 
-			v = Descr->input_data1[input_idx];
-			b = Descr->input_data2[input_idx];
-			k = Descr->input_data3[input_idx];
-			design_sz = Descr->input_data4[input_idx];
+			v = Descr->Input[input_idx].input_data1;
+			b = Descr->Input[input_idx].input_data2;
+			k = Descr->Input[input_idx].input_data3;
+			design_sz = Descr->Input[input_idx].input_data4;
 
 			set_of_sets *SoS;
 
@@ -515,13 +539,13 @@ void data_input_stream::read_objects(int verbose_level)
 
 			if (f_v) {
 				cout << "data_input_stream::read_objects "
-						"Reading the file " << Descr->input_string[input_idx] << endl;
+						"Reading the file " << Descr->Input[input_idx].input_string << endl;
 			}
 			SoS->init_from_file(
 					underlying_set_size,
-					Descr->input_string[input_idx], verbose_level);
+					Descr->Input[input_idx].input_string, verbose_level);
 			if (f_v) {
-				cout << "Read the file " << Descr->input_string[input_idx] << ", underlying_set_size=" << underlying_set_size << endl;
+				cout << "Read the file " << Descr->Input[input_idx].input_string << ", underlying_set_size=" << underlying_set_size << endl;
 			}
 
 			int h;
@@ -547,11 +571,11 @@ void data_input_stream::read_objects(int verbose_level)
 			FREE_OBJECT(SoS);
 		}
 
-		else if (Descr->input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_packings_through_spread_table) {
 
 			int q;
 
-			q = Descr->input_data1[input_idx];
+			q = Descr->Input[input_idx].input_data1;
 
 			file_io Fio;
 			long int *Spread_table;
@@ -561,16 +585,16 @@ void data_input_stream::read_objects(int verbose_level)
 			if (f_v) {
 				cout << "data_input_stream::read_objects "
 						"Reading spread table from file "
-					<< Descr->input_string2[input_idx] << endl;
+					<< Descr->Input[input_idx].input_string2 << endl;
 			}
 
-			Fio.lint_matrix_read_csv(Descr->input_string2[input_idx],
+			Fio.lint_matrix_read_csv(Descr->Input[input_idx].input_string2,
 					Spread_table, nb_spreads, spread_size,
 					0 /* verbose_level */);
 
 			if (f_v) {
 				cout << "Reading spread table from file "
-						<< Descr->input_string2[input_idx] << " done" << endl;
+						<< Descr->Input[input_idx].input_string2 << " done" << endl;
 				cout << "The spread table contains " << nb_spreads
 						<< " spreads" << endl;
 			}
@@ -584,13 +608,13 @@ void data_input_stream::read_objects(int verbose_level)
 
 			if (f_v) {
 				cout << "data_input_stream::read_objects "
-						"Reading the file " << Descr->input_string[input_idx] << endl;
+						"Reading the file " << Descr->Input[input_idx].input_string << endl;
 			}
 			SoS->init_from_file(
 					underlying_set_size,
-					Descr->input_string[input_idx], verbose_level);
+					Descr->Input[input_idx].input_string, verbose_level);
 			if (f_v) {
-				cout << "Read the file " << Descr->input_string[input_idx] << ", underlying_set_size=" << underlying_set_size << endl;
+				cout << "Read the file " << Descr->Input[input_idx].input_string << ", underlying_set_size=" << underlying_set_size << endl;
 			}
 
 			int h;
@@ -617,7 +641,8 @@ void data_input_stream::read_objects(int verbose_level)
 
 		}
 
-		else if (Descr->input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS) {
+
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_packings) {
 
 			set_of_sets *SoS;
 
@@ -627,13 +652,13 @@ void data_input_stream::read_objects(int verbose_level)
 
 			if (f_v) {
 				cout << "data_input_stream::read_objects "
-						"Reading the file " << Descr->input_string[input_idx] << endl;
+						"Reading the file " << Descr->Input[input_idx].input_string << endl;
 			}
 			SoS->init_from_file(
 					underlying_set_size,
-					Descr->input_string[input_idx], verbose_level);
+					Descr->Input[input_idx].input_string, verbose_level);
 			if (f_v) {
-				cout << "Read the file " << Descr->input_string[input_idx] << ", underlying_set_size=" << underlying_set_size << endl;
+				cout << "Read the file " << Descr->Input[input_idx].input_string << ", underlying_set_size=" << underlying_set_size << endl;
 			}
 
 
@@ -659,7 +684,7 @@ void data_input_stream::read_objects(int verbose_level)
 		}
 
 
-		else if (Descr->input_type[input_idx] == INPUT_TYPE_FILE_OF_LINES) {
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_lines) {
 
 			set_of_sets *SoS;
 
@@ -669,13 +694,13 @@ void data_input_stream::read_objects(int verbose_level)
 
 			if (f_v) {
 				cout << "data_input_stream::read_objects "
-						"Reading the file " << Descr->input_string[input_idx] << endl;
+						"Reading the file " << Descr->Input[input_idx].input_string << endl;
 			}
 			SoS->init_from_file(
 					underlying_set_size,
-					Descr->input_string[input_idx], verbose_level);
+					Descr->Input[input_idx].input_string, verbose_level);
 			if (f_v) {
-				cout << "Read the file " << Descr->input_string[input_idx] << ", underlying_set_size=" << underlying_set_size << endl;
+				cout << "Read the file " << Descr->Input[input_idx].input_string << ", underlying_set_size=" << underlying_set_size << endl;
 			}
 
 
@@ -701,7 +726,7 @@ void data_input_stream::read_objects(int verbose_level)
 		}
 
 
-		else if (Descr->input_type[input_idx] == INPUT_TYPE_FILE_OF_POINTS) {
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_points) {
 
 			set_of_sets *SoS;
 
@@ -711,13 +736,13 @@ void data_input_stream::read_objects(int verbose_level)
 
 			if (f_v) {
 				cout << "projective_space_object_classifier::process_multiple_objects_from_file "
-						"Reading the file " << Descr->input_string[input_idx] << endl;
+						"Reading the file " << Descr->Input[input_idx].input_string << endl;
 			}
 			SoS->init_from_file(
 					underlying_set_size,
-					Descr->input_string[input_idx], verbose_level);
+					Descr->Input[input_idx].input_string, verbose_level);
 			if (f_v) {
-				cout << "Read the file " << Descr->input_string[input_idx] << ", underlying_set_size=" << underlying_set_size << endl;
+				cout << "Read the file " << Descr->Input[input_idx].input_string << ", underlying_set_size=" << underlying_set_size << endl;
 			}
 
 
@@ -741,17 +766,18 @@ void data_input_stream::read_objects(int verbose_level)
 			FREE_OBJECT(SoS);
 
 		}
-		else if (Descr->input_type[input_idx] == INPUT_TYPE_FROM_PARALLEL_SEARCH) {
+
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_from_parallel_search) {
 			if (f_v) {
 				cout << "input from parallel search" << endl;
 			}
 
-			int nb_cases = Descr->input_data1[input_idx];
+			int nb_cases = Descr->Input[input_idx].input_data1;
 			string mask;
 			string cases_fname;
 
-			mask.assign(Descr->input_string[input_idx]);
-			cases_fname.assign(Descr->input_string2[input_idx]);
+			mask.assign(Descr->Input[input_idx].input_string);
+			cases_fname.assign(Descr->Input[input_idx].input_string2);
 
 			if (f_v) {
 				cout << "input from parallel search, mask=" << mask << endl;
@@ -849,7 +875,7 @@ void data_input_stream::read_objects(int verbose_level)
 
 		else {
 			cout << "data_input_stream::read_objects "
-					"unknown input type " << Descr->input_type[input_idx] << endl;
+					"unknown input type " << Descr->Input[input_idx].input_type << endl;
 			exit(1);
 		}
 	}

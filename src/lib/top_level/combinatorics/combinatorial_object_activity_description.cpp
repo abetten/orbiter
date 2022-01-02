@@ -51,6 +51,9 @@ combinatorial_object_activity_description::combinatorial_object_activity_descrip
 	f_report = FALSE;
 	Classification_of_objects_report_options = NULL;
 
+	f_draw_incidence_matrices = FALSE;
+	//std::string draw_incidence_matrices_prefix;
+
 	f_test_distinguishing_property = FALSE;
 	//test_distinguishing_property_graph
 
@@ -172,6 +175,11 @@ int combinatorial_object_activity_description::read_arguments(
 			Classification_of_objects_report_options = NEW_OBJECT(classification_of_objects_report_options);
 			i += Classification_of_objects_report_options->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 		}
+		else if (stringcmp(argv[i], "-draw_incidence_matrices") == 0) {
+			f_draw_incidence_matrices = TRUE;
+			draw_incidence_matrices_prefix.assign(argv[++i]);
+
+		}
 		else if (stringcmp(argv[i], "-test_distinguishing_property") == 0) {
 			f_test_distinguishing_property = TRUE;
 			test_distinguishing_property_graph.assign(argv[++i]);
@@ -230,6 +238,9 @@ void combinatorial_object_activity_description::print()
 	if (f_report) {
 		cout << "-report " << endl;
 		Classification_of_objects_report_options->print();
+	}
+	if (f_draw_incidence_matrices) {
+		cout << "-draw_incidence_matrices " << draw_incidence_matrices_prefix << endl;
 	}
 	if (f_test_distinguishing_property) {
 		cout << "-test_distinguishing_property " << test_distinguishing_property_graph << endl;

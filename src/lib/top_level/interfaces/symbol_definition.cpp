@@ -130,7 +130,8 @@ void symbol_definition::read_definition(
 	//f_define = TRUE;
 	define_label.assign(argv[++i]);
 	if (f_v) {
-		cout << "symbol_definition::read_definition define_label=" << define_label << endl;
+		cout << "symbol_definition::read_definition "
+				"define_label=" << define_label << endl;
 	}
 	i++;
 	if (f_v) {
@@ -289,29 +290,6 @@ void symbol_definition::read_definition(
 		i++;
 
 	}
-#if 0
-	else if (stringcmp(argv[i], "-combinatorial_object") == 0) {
-
-		f_combinatorial_object = TRUE;
-		Combinatorial_object_description = NEW_OBJECT(combinatorial_object_description);
-		if (f_v) {
-			cout << "reading -combinatorial_object" << endl;
-		}
-		i += Combinatorial_object_description->read_arguments(argc - (i + 1),
-			argv + i + 1, verbose_level);
-
-		i++;
-
-		if (f_v) {
-			cout << "-combinatorial_object" << endl;
-			cout << "i = " << i << endl;
-			cout << "argc = " << argc << endl;
-			if (i < argc) {
-				cout << "next argument is " << argv[i] << endl;
-			}
-		}
-	}
-#endif
 	else if (stringcmp(argv[i], "-graph") == 0) {
 
 		f_graph = TRUE;
@@ -744,17 +722,6 @@ void symbol_definition::perform_definition(int verbose_level)
 			cout << "symbol_definition::perform_definition after definition_of_collection" << endl;
 		}
 	}
-#if 0
-	else if (f_combinatorial_object) {
-		if (f_v) {
-			cout << "symbol_definition::perform_definition before definition_of_combinatorial_object" << endl;
-		}
-		definition_of_combinatorial_object(verbose_level);
-		if (f_v) {
-			cout << "symbol_definition::perform_definition after definition_of_combinatorial_object" << endl;
-		}
-	}
-#endif
 	else if (f_graph) {
 		if (f_v) {
 			cout << "symbol_definition::perform_definition before definition_of_graph" << endl;
@@ -932,12 +899,6 @@ void symbol_definition::print()
 		cout << "-collection ";
 		//cout << list_of_objects << endl;
 	}
-#if 0
-	if (f_combinatorial_object) {
-		cout << "-combinatorial_object ";
-		Combinatorial_object_description->print();
-	}
-#endif
 	if (f_graph) {
 		cout << "-graph ";
 		Create_graph_description->print();
@@ -1410,61 +1371,6 @@ void symbol_definition::definition_of_collection(std::string &list_of_objects,
 	}
 }
 
-#if 0
-void symbol_definition::definition_of_combinatorial_object(int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "symbol_definition::definition_of_combinatorial_object" << endl;
-	}
-
-	combinatorial_object_create *COC;
-
-	COC = NEW_OBJECT(combinatorial_object_create);
-
-	if (f_v) {
-		cout << "symbol_definition::definition_of_combinatorial_object before COC->init" << endl;
-	}
-	COC->init(Combinatorial_object_description, verbose_level);
-	if (f_v) {
-		cout << "symbol_definition::definition_of_combinatorial_object after COC->init" << endl;
-	}
-
-
-
-	if (f_v) {
-		cout << "symbol_definition::definition_of_combinatorial_object we created a set of " << COC->nb_pts
-				<< " points, called " << COC->fname << endl;
-
-#if 0
-		cout << "list of points:" << endl;
-
-		cout << COC->nb_pts << endl;
-		for (i = 0; i < COC->nb_pts; i++) {
-			cout << COC->Pts[i] << " ";
-			}
-		cout << endl;
-#endif
-	}
-
-
-	orbiter_symbol_table_entry Symb;
-	Symb.init_combinatorial_object(define_label, COC, verbose_level);
-	if (f_v) {
-		cout << "symbol_definition::definition_of_combinatorial_object before add_symbol_table_entry" << endl;
-	}
-	Sym->Orbiter_top_level_session->add_symbol_table_entry(
-			define_label, &Symb, verbose_level);
-
-
-
-	if (f_v) {
-		cout << "symbol_definition::definition_of_combinatorial_object done" << endl;
-	}
-}
-#endif
-
 void symbol_definition::definition_of_graph(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1928,23 +1834,6 @@ void symbol_definition::definition_of_design_table(int verbose_level)
 
 
 
-
-
-#if 0
-	strong_generators *Gens;
-	Gens = NEW_OBJECT(strong_generators);
-
-	if (f_v) {
-		cout << "symbol_definition::definition_of_design_table before Gens->init_from_data_with_go" << endl;
-	}
-	Gens->init_from_data_with_go(
-			DC->A, design_table_generators_data,
-			design_table_go_text,
-			verbose_level);
-	if (f_v) {
-		cout << "symbol_definition::definition_of_design_table after Gens->init_from_data_with_go" << endl;
-	}
-#endif
 
 	any_group *AG;
 

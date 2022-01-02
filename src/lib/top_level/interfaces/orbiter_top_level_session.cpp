@@ -139,7 +139,8 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 	int f_vv = FALSE;
 
 	if (FALSE) {
-		cout << "orbiter_top_level_session::parse_and_execute, parsing the orbiter dash code" << endl;
+		cout << "orbiter_top_level_session::parse_and_execute, "
+				"parsing the orbiter dash code" << endl;
 	}
 
 
@@ -154,7 +155,8 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 	}
 
 	if (f_v) {
-		cout << "orbiter_top_level_session::parse_and_execute, we parsed the following orbiter dash code program:" << endl;
+		cout << "orbiter_top_level_session::parse_and_execute, "
+				"we have parsed the following orbiter dash code program:" << endl;
 	}
 	for (i = 0; i < program.size(); i++) {
 
@@ -200,7 +202,8 @@ void orbiter_top_level_session::parse_and_execute(int argc, std::string *Argv, i
 	}
 }
 
-void orbiter_top_level_session::parse(int argc, std::string *Argv, int &i, std::vector<void *> &program, int verbose_level)
+void orbiter_top_level_session::parse(int argc, std::string *Argv,
+		int &i, std::vector<void *> &program, int verbose_level)
 {
 	int cnt = 0;
 	int f_v = (verbose_level >= 1);
@@ -217,7 +220,8 @@ void orbiter_top_level_session::parse(int argc, std::string *Argv, int &i, std::
 					"cnt = " << cnt << ", i = " << i << endl;
 			if (i < argc) {
 				if (f_vv) {
-					cout << "orbiter_top_level_session::parse i=" << i << ", next argument is " << Argv[i] << endl;
+					cout << "orbiter_top_level_session::parse i=" << i
+							<< ", next argument is " << Argv[i] << endl;
 				}
 			}
 		}

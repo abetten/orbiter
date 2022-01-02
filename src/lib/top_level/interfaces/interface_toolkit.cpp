@@ -22,6 +22,10 @@ namespace top_level {
 
 interface_toolkit::interface_toolkit()
 {
+	f_create_files = FALSE;
+	Create_file_description = NULL;
+
+
 	f_csv_file_select_rows = FALSE;
 	//std::string csv_file_select_rows_fname;
 	//std::string csv_file_select_rows_text;
@@ -104,7 +108,10 @@ interface_toolkit::interface_toolkit()
 void interface_toolkit::print_help(int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	if (stringcmp(argv[i], "-csv_file_select_rows") == 0) {
+	if (stringcmp(argv[i], "-create_files") == 0) {
+		cout << "-create_files <description>" << endl;
+	}
+	else if (stringcmp(argv[i], "-csv_file_select_rows") == 0) {
 		cout << "-cvs_file_select_rows <string : csv_file_name> <string : list of rows>" << endl;
 	}
 	else if (stringcmp(argv[i], "-csv_file_split_rows_modulo") == 0) {
@@ -167,7 +174,10 @@ int interface_toolkit::recognize_keyword(int argc,
 	if (i >= argc) {
 		return false;
 	}
-	if (stringcmp(argv[i], "-csv_file_select_rows") == 0) {
+	if (stringcmp(argv[i], "-create_files") == 0) {
+		return true;
+	}
+	else if (stringcmp(argv[i], "-csv_file_select_rows") == 0) {
 		return true;
 	}
 	else if (stringcmp(argv[i], "-csv_file_split_rows_modulo") == 0) {
@@ -236,7 +246,29 @@ void interface_toolkit::read_arguments(int argc,
 	if (f_v) {
 		cout << "interface_toolkit::read_arguments the next argument is " << argv[i] << endl;
 	}
-	if (stringcmp(argv[i], "-csv_file_select_rows") == 0) {
+	if (stringcmp(argv[i], "-create_files") == 0) {
+		f_create_files = TRUE;
+
+		if (f_v) {
+			cout << "-create_files " << endl;
+		}
+
+		Create_file_description = NEW_OBJECT(create_file_description);
+		i += Create_file_description->read_arguments(argc - i - 1,
+			argv + i + 1, verbose_level);
+		if (f_v) {
+			cout << "interface_combinatorics::read_arguments finished "
+					"reading -create_files" << endl;
+			cout << "i = " << i << endl;
+			cout << "argc = " << argc << endl;
+			if (i < argc) {
+				cout << "next argument is " << argv[i] << endl;
+			}
+
+			cout << "-create_files " <<endl;
+		}
+	}
+	else if (stringcmp(argv[i], "-csv_file_select_rows") == 0) {
 		f_csv_file_select_rows = TRUE;
 		csv_file_select_rows_fname.assign(argv[++i]);
 		csv_file_select_rows_text.assign(argv[++i]);
@@ -475,6 +507,10 @@ void interface_toolkit::print()
 {
 	int j;
 
+	if (f_create_files) {
+		cout << "-create_files " << endl;
+		Create_file_description->print();
+	}
 	if (f_csv_file_select_rows) {
 		cout << "-csv_file_select_rows " << csv_file_select_rows_fname
 				<< " " << csv_file_select_rows_text << endl;
@@ -570,7 +606,12 @@ void interface_toolkit::worker(int verbose_level)
 		cout << "interface_toolkit::worker" << endl;
 	}
 
-	if (f_csv_file_select_rows) {
+	if (f_create_files) {
+		file_io Fio;
+
+		Fio.create_file(Create_file_description, verbose_level);
+	}
+	else if (f_csv_file_select_rows) {
 
 		file_io Fio;
 

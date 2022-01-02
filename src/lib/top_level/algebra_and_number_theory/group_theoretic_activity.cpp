@@ -30,7 +30,6 @@ group_theoretic_activity::group_theoretic_activity()
 	A1 = NULL;
 	A2 = NULL;
 
-
 }
 
 group_theoretic_activity::~group_theoretic_activity()

@@ -27,10 +27,10 @@ interface_algebra::interface_algebra()
 
 
 	f_character_table_symmetric_group = FALSE;
-	deg = 0;
+	character_table_symmetric_group_n = 0;
 
 	f_make_A5_in_PSL_2_q = FALSE;
-	q = 0;
+	make_A5_in_PSL_2_q_q = 0;
 
 
 	f_search_for_primitive_polynomial_in_range = FALSE;
@@ -206,13 +206,13 @@ void interface_algebra::read_arguments(int argc,
 	}
 	else if (stringcmp(argv[i], "-character_table_symmetric_group") == 0) {
 		f_character_table_symmetric_group = TRUE;
-		deg = strtoi(argv[++i]);
-		cout << "-character_table_symmetric_group " << deg << endl;
+		character_table_symmetric_group_n = strtoi(argv[++i]);
+		cout << "-character_table_symmetric_group " << character_table_symmetric_group_n << endl;
 	}
 	else if (stringcmp(argv[i], "-make_A5_in_PSL_2_q") == 0) {
 		f_make_A5_in_PSL_2_q = TRUE;
-		q = strtoi(argv[++i]);
-		cout << "-make_A5_in_PSL_2_q " << q << endl;
+		make_A5_in_PSL_2_q_q = strtoi(argv[++i]);
+		cout << "-make_A5_in_PSL_2_q " << make_A5_in_PSL_2_q_q << endl;
 	}
 	else if (stringcmp(argv[i], "-search_for_primitive_polynomial_in_range") == 0) {
 		f_search_for_primitive_polynomial_in_range = TRUE;
@@ -267,14 +267,18 @@ void interface_algebra::read_arguments(int argc,
 		f_power_mod_n = TRUE;
 		power_mod_n_a = strtoi(argv[++i]);
 		power_mod_n_n = strtoi(argv[++i]);
-		cout << "-power_mod_n " << " " << power_mod_n_a << " " << power_mod_n_n << endl;
+		cout << "-power_mod_n " << " "
+				<< power_mod_n_a << " "
+				<< power_mod_n_n << endl;
 	}
 	else if (stringcmp(argv[i], "-all_rational_normal_forms") == 0) {
 		f_all_rational_normal_forms = TRUE;
 		all_rational_normal_forms_finite_field_label.assign(argv[++i]);
 		all_rational_normal_forms_d = strtoi(argv[++i]);
 		if (f_v) {
-			cout << "-f_all_rational_normal_forms " << all_rational_normal_forms_finite_field_label << " " << all_rational_normal_forms_d << endl;
+			cout << "-f_all_rational_normal_forms "
+				<< all_rational_normal_forms_finite_field_label
+				<< " " << all_rational_normal_forms_d << endl;
 		}
 	}
 	else if (stringcmp(argv[i], "-eigenstuff") == 0) {
@@ -283,7 +287,9 @@ void interface_algebra::read_arguments(int argc,
 		eigenstuff_n = strtoi(argv[++i]);
 		eigenstuff_coeffs.assign(argv[++i]);
 		if (f_v) {
-			cout << "-eigenstuff " << eigenstuff_finite_field_label << " " << eigenstuff_n
+			cout << "-eigenstuff "
+				<< eigenstuff_finite_field_label
+				<< " " << eigenstuff_n
 				<< " " << eigenstuff_coeffs << endl;
 		}
 	}
@@ -293,8 +299,10 @@ void interface_algebra::read_arguments(int argc,
 		eigenstuff_n = strtoi(argv[++i]);
 		eigenstuff_fname.assign(argv[++i]);
 		if (f_v) {
-			cout << "-eigenstuff_from_file " << eigenstuff_finite_field_label << " " << eigenstuff_n
-				<< " " << eigenstuff_fname << endl;
+			cout << "-eigenstuff_from_file "
+					<< eigenstuff_finite_field_label
+					<< " " << eigenstuff_n
+					<< " " << eigenstuff_fname << endl;
 		}
 	}
 
@@ -310,14 +318,15 @@ void interface_algebra::print()
 				<< endl;
 	}
 	if (f_equivalence_class_of_fractions) {
-		cout << "-equivalence_class_of_fractions " << equivalence_class_of_fractions_N
+		cout << "-equivalence_class_of_fractions "
+				<< equivalence_class_of_fractions_N
 				<< endl;
 	}
 	if (f_character_table_symmetric_group) {
-		cout << "-character_table_symmetric_group " << deg << endl;
+		cout << "-character_table_symmetric_group " << character_table_symmetric_group_n << endl;
 	}
 	if (f_make_A5_in_PSL_2_q) {
-		cout << "-make_A5_in_PSL_2_q " << q << endl;
+		cout << "-make_A5_in_PSL_2_q " << make_A5_in_PSL_2_q_q << endl;
 	}
 	if (f_search_for_primitive_polynomial_in_range) {
 		cout << "-search_for_primitive_polynomial_in_range " << p_min
@@ -348,12 +357,15 @@ void interface_algebra::print()
 	}
 
 	if (f_all_rational_normal_forms) {
-		cout << "-all_rational_normal_forms " << all_rational_normal_forms_finite_field_label
+		cout << "-all_rational_normal_forms "
+				<< all_rational_normal_forms_finite_field_label
 				<< " " << all_rational_normal_forms_d << endl;
 	}
 	if (f_eigenstuff) {
 		cout << "-eigenstuff "
-			<< eigenstuff_finite_field_label << " " << eigenstuff_n << " " << eigenstuff_coeffs << endl;
+			<< eigenstuff_finite_field_label << " "
+			<< eigenstuff_n << " "
+			<< eigenstuff_coeffs << endl;
 	}
 	if (f_eigenstuff_from_file) {
 		cout << "-eigenstuff_from_file "
@@ -373,14 +385,14 @@ void interface_algebra::worker(int verbose_level)
 	}
 
 	if (f_character_table_symmetric_group) {
-		do_character_table_symmetric_group(deg, verbose_level);
+		do_character_table_symmetric_group(character_table_symmetric_group_n, verbose_level);
 	}
 
 	else if (f_make_A5_in_PSL_2_q) {
 
 		algebra_global_with_action A;
 
-		A.A5_in_PSL_(q, verbose_level);
+		A.A5_in_PSL_(make_A5_in_PSL_2_q_q, verbose_level);
 
 	}
 

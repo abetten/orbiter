@@ -42,6 +42,7 @@ MODULES= \
 		foundations/data_structures/classify_bitvectors.o \
 		foundations/data_structures/classify_using_canonical_forms.o \
 		foundations/data_structures/data_file.o \
+		foundations/data_structures/data_input_stream_description_element.o \
 		foundations/data_structures/data_input_stream_description.o \
 		foundations/data_structures/data_input_stream.o \
 		foundations/data_structures/data_structures_global.o \
@@ -173,6 +174,7 @@ MODULES= \
 		foundations/graphics/parametric_curve.o \
 		foundations/graphics/plot_tools.o \
 		foundations/graphics/povray_interface.o \
+		foundations/graphics/povray_job_description.o \
 		foundations/graphics/scene.o \
 		foundations/graphics/scene2.o \
 		foundations/graphics/tree.o \
