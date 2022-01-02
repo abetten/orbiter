@@ -185,7 +185,7 @@ public:
 // gen_geo_conf.cpp
 // #############################################################################
 
-//! description of a configuration which is part of the description of the geometry for class gen_geo
+//! description of a configuration which is part of class decomposition_with_fuse
 
 
 class gen_geo_conf {
@@ -226,7 +226,6 @@ public:
 	decomposition_with_fuse *Decomposition_with_fuse;
 
 	incidence *inc;
-
 
 	int forget_ivhbar_in_last_isot;
 

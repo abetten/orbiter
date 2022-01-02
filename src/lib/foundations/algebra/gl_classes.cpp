@@ -216,10 +216,10 @@ void gl_classes::make_matrix_from_class_rep(int *Mtx,
 	Orbiter->Int_vec.zero(Select, Table_of_polynomials->nb_irred);
 	Orbiter->Int_vec.zero(Select_Partition, Table_of_polynomials->nb_irred);
 
-	for (i = 0; i < R->type_coding.m; i++) {
-		a = R->type_coding.s_ij(i, 0);
-		m = R->type_coding.s_ij(i, 1);
-		p = R->type_coding.s_ij(i, 2);
+	for (i = 0; i < R->type_coding->m; i++) {
+		a = R->type_coding->s_ij(i, 0);
+		m = R->type_coding->s_ij(i, 1);
+		p = R->type_coding->s_ij(i, 2);
 		Select[a] = m;
 		Select_Partition[a] = p;
 	}
@@ -1901,13 +1901,13 @@ int gl_classes::find_class_rep(gl_class_rep *Reps,
 	if (f_v) {
 		cout << "gl_classes::find_class_rep" << endl;
 		}
-	m = R->type_coding.m;
+	m = R->type_coding->m;
 	for (i = 0; i < nb_reps; i++) {
-		if (Reps[i].type_coding.m != m) {
+		if (Reps[i].type_coding->m != m) {
 			continue;
 			}
-		if (int_vec_compare(Reps[i].type_coding.M,
-				R->type_coding.M, m * 3) == 0) {
+		if (int_vec_compare(Reps[i].type_coding->M,
+				R->type_coding->M, m * 3) == 0) {
 			break;
 			}
 		}
@@ -2012,10 +2012,10 @@ void gl_classes::print_matrix_and_centralizer_order_latex(
 	Orbiter->Int_vec.zero(Select_polynomial, Table_of_polynomials->nb_irred);
 	Orbiter->Int_vec.zero(Select_Partition, Table_of_polynomials->nb_irred);
 
-	for (i = 0; i < R->type_coding.m; i++) {
-		a = R->type_coding.s_ij(i, 0);
-		m = R->type_coding.s_ij(i, 1);
-		p = R->type_coding.s_ij(i, 2);
+	for (i = 0; i < R->type_coding->m; i++) {
+		a = R->type_coding->s_ij(i, 0);
+		m = R->type_coding->s_ij(i, 1);
+		p = R->type_coding->s_ij(i, 2);
 		Select_polynomial[a] = m;
 		Select_Partition[a] = p;
 		}
@@ -2041,12 +2041,12 @@ void gl_classes::print_matrix_and_centralizer_order_latex(
 
 
 	ost << "$";
-	for (i = 0; i < R->type_coding.m; i++) {
-		a = R->type_coding.s_ij(i, 0);
-		m = R->type_coding.s_ij(i, 1);
-		p = R->type_coding.s_ij(i, 2);
+	for (i = 0; i < R->type_coding->m; i++) {
+		a = R->type_coding->s_ij(i, 0);
+		m = R->type_coding->s_ij(i, 1);
+		p = R->type_coding->s_ij(i, 2);
 		ost << a << "," << m << "," << p;
-		if (i < R->type_coding.m - 1) {
+		if (i < R->type_coding->m - 1) {
 			ost << ";";
 			}
 		}

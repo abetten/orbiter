@@ -1941,5 +1941,160 @@ void graphical_output::tree_draw(std::string &fname, int verbose_level)
 }
 
 
+
+
+
+void graphical_output::animate_povray(
+		povray_job_description *Povray_job_description,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graphical_output::animate_povray" << endl;
+	}
+	animate *A;
+
+	A = NEW_OBJECT(animate);
+
+	A->init(Povray_job_description,
+			NULL /* extra_data */,
+			verbose_level);
+
+
+	A->draw_frame_callback = interface_povray_draw_frame;
+
+
+
+
+
+
+
+	//char fname_makefile[1000];
+
+
+	//sprintf(fname_makefile, "makefile_animation");
+
+	{
+		ofstream fpm(A->fname_makefile);
+
+		A->fpm = &fpm;
+
+		fpm << "all:" << endl;
+
+		if (Povray_job_description->f_rounds) {
+
+			int *rounds;
+			int nb_rounds;
+
+			Orbiter->Int_vec.scan(Povray_job_description->rounds_as_string, rounds, nb_rounds);
+
+			cout << "Doing the following " << nb_rounds << " rounds: ";
+			Orbiter->Int_vec.print(cout, rounds, nb_rounds);
+			cout << endl;
+
+			int r, this_round;
+
+			for (r = 0; r < nb_rounds; r++) {
+
+
+				this_round = rounds[r];
+
+				cout << "round " << r << " / " << nb_rounds
+						<< " is " << this_round << endl;
+
+				//round = first_round + r;
+
+				A->animate_one_round(
+						this_round,
+						verbose_level);
+
+			}
+		}
+		else {
+			cout << "round " << Povray_job_description->round << endl;
+
+
+			A->animate_one_round(
+					Povray_job_description->round,
+					verbose_level);
+
+		}
+
+		fpm << endl;
+	}
+	file_io Fio;
+
+	cout << "Written file " << A->fname_makefile << " of size "
+			<< Fio.file_size(A->fname_makefile) << endl;
+
+
+
+	FREE_OBJECT(A);
+	A = NULL;
+
+}
+
+
+void interface_povray_draw_frame(
+	animate *Anim, int h, int nb_frames, int round,
+	double clipping_radius,
+	ostream &fp,
+	int verbose_level)
+{
+	int i, j;
+
+
+
+	Anim->Pov->union_start(fp);
+
+
+	if (round == 0) {
+
+
+		for (i = 0; i < (int) Anim->S->Drawables.size(); i++) {
+			drawable_set_of_objects D;
+			int f_group_is_animated = FALSE;
+
+			if (FALSE) {
+				cout << "drawable " << i << ":" << endl;
+			}
+			D = Anim->S->Drawables[i];
+
+			for (j = 0; j < Anim->S->animated_groups.size(); j++) {
+				if (Anim->S->animated_groups[j] == i) {
+					break;
+				}
+			}
+			if (j < Anim->S->animated_groups.size()) {
+				f_group_is_animated = TRUE;
+			}
+			if (FALSE) {
+				if (f_group_is_animated) {
+					cout << "is animated" << endl;
+				}
+				else {
+					cout << "is not animated" << endl;
+				}
+			}
+			D.draw(Anim, fp, f_group_is_animated, h, verbose_level);
+		}
+
+
+	}
+
+	//Anim->S->clipping_by_cylinder(0, 1.7 /* r */, fp);
+
+	Anim->rotation(h, nb_frames, round, fp);
+	Anim->union_end(
+			h, nb_frames, round,
+			clipping_radius,
+			fp);
+
+}
+
+
+
+
 }}
 

@@ -50,30 +50,30 @@ void tree::init(std::string &fname,
 	nb_nodes = 0;
 	buf = NEW_char(BUFSIZE_TREE);
 	{
-	ifstream f(fname);
-	//f.getline(buf, BUFSIZE_TREE);
-	while (TRUE) {
-		if (f.eof()) {
-			cout << "premature end of file" << endl;
-			exit(1);
-		}
-		f.getline(buf, BUFSIZE_TREE);
+		ifstream f(fname);
+		//f.getline(buf, BUFSIZE_TREE);
+		while (TRUE) {
+			if (f.eof()) {
+				cout << "premature end of file" << endl;
+				exit(1);
+			}
+			f.getline(buf, BUFSIZE_TREE);
 
-		if (f_vv) {
-			cout << "read line '" << buf << "'" << endl;
-		}
+			if (f_vv) {
+				cout << "read line '" << buf << "'" << endl;
+			}
 
-		p_buf = buf;
-		if (buf[0] == '#') {
-			continue;
-		}
-		ST.s_scan_int(&p_buf, &a);
-		if (a == -1) {
-			break;
-		}
-		nb_nodes++;
-		}
-	//s_scan_int(&p_buf, &nb_nodes);
+			p_buf = buf;
+			if (buf[0] == '#') {
+				continue;
+			}
+			ST.s_scan_int(&p_buf, &a);
+			if (a == -1) {
+				break;
+			}
+			nb_nodes++;
+			}
+		//s_scan_int(&p_buf, &nb_nodes);
 	}
 	if (f_v) {
 		cout << "found " << nb_nodes << " nodes in file " << fname << endl;
@@ -179,9 +179,6 @@ void tree::draw(std::string &fname,
 		int x, int y, int dx, int dy), 
 		int verbose_level)
 {
-	//int x_min = 0, x_max = xmax_in;
-	//int y_min = 0, y_max = ymax_in;
-	//int factor_1000 = 1000;
 	string fname_full;
 	
 	fname_full.assign(fname);

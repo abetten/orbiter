@@ -464,9 +464,11 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 		}
 
 		double *E;
+		double *L;
 		int i;
 
 		CG->eigenvalues(E, verbose_level - 2);
+		CG->Laplace_eigenvalues(L, verbose_level - 2);
 
 		cout << "The eigenvalues are:" << endl;
 		for (i = 0; i < CG->nb_points; i++) {
@@ -478,6 +480,12 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 			energy += ABS(E[i]);
 		}
 		cout << "The energy is " << energy << endl;
+
+		cout << "The Laplace eigenvalues are:" << endl;
+		for (i = 0; i < CG->nb_points; i++) {
+			cout << i << " : " << L[i] << endl;
+		}
+
 
 		{
 			string fname;
@@ -493,9 +501,9 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 
 			{
 				ofstream ost(fname);
-				latex_interface L;
+				latex_interface Li;
 
-				L.head(ost,
+				Li.head(ost,
 						FALSE /* f_book*/,
 						TRUE /* f_title */,
 						title, author,
@@ -513,15 +521,17 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 				//report(ost, verbose_level);
 
 				ost << "$$" << endl;
-				ost << "\\begin{array}{|r|r|}" << endl;
+				ost << "\\begin{array}{|r|r|r|}" << endl;
 				ost << "\\hline" << endl;
-				ost << " i  & \\lambda_i \\\\" << endl;
+				ost << " i  & \\lambda_i & \\theta_i \\\\" << endl;
 				ost << "\\hline" << endl;
 				ost << "\\hline" << endl;
 				for (i = 0; i < CG->nb_points; i++) {
 					ost << i;
 					ost << " & ";
 					ost << E[CG->nb_points - 1 - i];
+					ost << " & ";
+					ost << L[CG->nb_points - 1 - i];
 					ost << "\\\\" << endl;
 					ost << "\\hline" << endl;
 				}
@@ -529,13 +539,15 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 				ost << "$$" << endl;
 
 				ost << "The energy is " << energy << "\\\\" << endl;
+				ost << "Eigenvalues: $\\lambda_i$\\\\" << endl;
+				ost << "Laplace eigenvalues: $\\theta_i$\\\\" << endl;
 
 				if (f_v) {
 					cout << "graph_theoretic_activity::perform_activity after report" << endl;
 				}
 
 
-				L.foot(ost);
+				Li.foot(ost);
 
 			}
 			file_io Fio;

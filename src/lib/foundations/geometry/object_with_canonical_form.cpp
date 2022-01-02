@@ -107,7 +107,39 @@ void object_with_canonical_form::print(ostream &ost)
 	}
 }
 
-void object_with_canonical_form::print_tex_detailed(std::ostream &ost, int f_show_incma, int verbose_level)
+void object_with_canonical_form::print_rows(std::ostream &ost,
+		int f_show_incma, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::print_rows" << endl;
+	}
+
+	//print_tex(ost);
+
+	if (f_show_incma) {
+
+		encoded_combinatorial_object *Enc;
+
+		encode_incma(Enc, verbose_level);
+
+		//Enc->latex_set_system_by_columns(ost, verbose_level);
+
+		Enc->latex_set_system_by_rows(ost, verbose_level);
+
+		//Enc->latex_incma(ost, verbose_level);
+
+		FREE_OBJECT(Enc);
+	}
+
+	if (f_v) {
+		cout << "object_with_canonical_form::print_rows done" << endl;
+	}
+}
+
+void object_with_canonical_form::print_tex_detailed(std::ostream &ost,
+		int f_show_incma, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -128,6 +160,7 @@ void object_with_canonical_form::print_tex_detailed(std::ostream &ost, int f_sho
 		Enc->latex_set_system_by_rows(ost, verbose_level);
 
 		Enc->latex_incma(ost, verbose_level);
+		ost << "\\\\" << endl;
 
 		FREE_OBJECT(Enc);
 	}
@@ -628,6 +661,60 @@ void object_with_canonical_form::init_incidence_geometry_from_string(
 		cout << "object_with_canonical_form::init_incidence_geometry_from_string done" << endl;
 	}
 }
+
+void object_with_canonical_form::init_incidence_geometry_from_string_of_row_ranks(
+	std::string &data,
+	int v, int b, int r,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_incidence_geometry_from_string" << endl;
+	}
+	long int *row_ranks;
+	long int *flags;
+	int *row_set;
+	int data_sz;
+	int nb_flags;
+	int i, h, a;
+	combinatorics_domain Combi;
+
+	Orbiter->Lint_vec.scan(data, row_ranks, data_sz);
+
+	if (v != data_sz) {
+		cout << "object_with_canonical_form::init_incidence_geometry_from_string v != data_sz" << endl;
+	}
+
+	flags = NEW_lint(v * r);
+	row_set = NEW_int(r);
+	nb_flags = 0;
+	for (i = 0; i < v; i++) {
+		Combi.unrank_k_subset(row_ranks[i], row_set, b, r);
+		for (h = 0; h < r; h++) {
+			a = i * b + row_set[h];
+			flags[nb_flags++] = a;
+		}
+
+	}
+
+	object_with_canonical_form::P = NULL;
+	type = t_INC;
+	object_with_canonical_form::set = NEW_lint(nb_flags);
+	Orbiter->Lint_vec.copy(flags, object_with_canonical_form::set, nb_flags);
+	object_with_canonical_form::sz = nb_flags;
+	object_with_canonical_form::v = v;
+	object_with_canonical_form::b = b;
+
+	FREE_int(row_set);
+	FREE_lint(row_ranks);
+	FREE_lint(flags);
+
+	if (f_v) {
+		cout << "object_with_canonical_form::init_incidence_geometry_from_string done" << endl;
+	}
+}
+
 
 void object_with_canonical_form::init_large_set(
 	long int *data, int data_sz, int v, int b, int k, int design_sz,

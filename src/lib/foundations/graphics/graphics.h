@@ -27,6 +27,7 @@ namespace foundations {
 
 class animate {
 public:
+	povray_job_description *Povray_job_description;
 	scene *S;
 	std::string output_mask;
 	char fname_makefile[1000];
@@ -43,10 +44,8 @@ public:
 
 	animate();
 	~animate();
-	void init(scene *S,
-			std::string &output_mask,
-			int nb_frames,
-			video_draw_options *Opt,
+	void init(
+			povray_job_description *Povray_job_description,
 			void *extra_data,
 			int verbose_level);
 	void animate_one_round(
@@ -441,8 +440,17 @@ public:
 		int f_title_page, int title_page_step,
 		int f_trailer_page, int trailer_page_step);
 	void tree_draw(std::string &fname, int verbose_level);
+	void animate_povray(
+			povray_job_description *Povray_job_description,
+			int verbose_level);
 
 };
+
+void interface_povray_draw_frame(
+	animate *Anim, int h, int nb_frames, int round,
+	double clipping_radius,
+	std::ostream &fp,
+	int verbose_level);
 
 
 // #############################################################################
@@ -954,6 +962,8 @@ public:
 
 };
 
+
+
 // #############################################################################
 // povray_interface.cpp
 // #############################################################################
@@ -1020,6 +1030,40 @@ public:
 	void ini(std::ostream &ost, const char *fname_pov, int first_frame,
 		int last_frame);
 };
+
+// #############################################################################
+// povray_job_description.cpp
+// #############################################################################
+
+//! description of a povray job
+
+
+
+class povray_job_description {
+public:
+
+	int f_output_mask;
+	std::string output_mask;
+	int f_nb_frames_default;
+	int nb_frames_default;
+	int f_round;
+	int round;
+	int f_rounds;
+	std::string rounds_as_string;
+	video_draw_options *Video_draw_options;
+
+	// for povray_worker:
+	scene *S;
+
+	povray_job_description();
+	~povray_job_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
 
 
 // #############################################################################
@@ -1379,16 +1423,11 @@ public:
 	void init(std::string &fname,
 			int xmax, int ymax, int verbose_level);
 	void draw(std::string &fname,
-		//int xmax_in, int ymax_in, int xmax, int ymax,
-		//int rad,
-		//int f_circle, int f_circletext, int f_i, int f_edge_labels,
 			layered_graph_draw_options *Opt,
 		int f_has_draw_vertex_callback, 
 		void (*draw_vertex_callback)(tree *T, mp_graphics *G, 
 			int *v, int layer, tree_node *N, 
 			int x, int y, int dx, int dy), 
-		//int f_embedded, int f_sideways, int f_on_circle,
-		//double tikz_global_scale, double tikz_global_line_width,
 			int verbose_level);
 	void circle_center_and_radii(int xmax, int ymax, int max_depth, 
 		int &x0, int &y0, int *&rad);

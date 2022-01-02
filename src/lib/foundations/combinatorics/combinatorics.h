@@ -665,6 +665,8 @@ public:
 	encoded_combinatorial_object();
 	~encoded_combinatorial_object();
 	void init(int nb_rows, int nb_cols, int verbose_level);
+	void init_canonical_form(encoded_combinatorial_object *Enc,
+			nauty_output *NO, int verbose_level);
 	void print_incma();
 	void print_partition();
 	void compute_canonical_incma(int *canonical_labeling,
@@ -689,6 +691,11 @@ public:
 	void latex_canonical_form(std::ostream &ost,
 			nauty_output *NO,
 			int verbose_level);
+	void apply_canonical_labling(int *&Inc2,
+			nauty_output *NO);
+	void apply_canonical_labling_and_get_flags(int *&Inc2,
+			int *&Flags, int &nb_flags,
+			nauty_output *NO);
 	void latex_canonical_form_with_labels(std::ostream &ost,
 			nauty_output *NO,
 			std::string *row_labels,
@@ -950,6 +957,7 @@ class tdo_refinement_description {
 	tdo_refinement_description();
 	~tdo_refinement_description();
 	int read_arguments(int argc, std::string *argv, int verbose_level);
+	void print();
 
 };
 

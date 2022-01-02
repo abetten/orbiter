@@ -19,13 +19,16 @@ namespace foundations {
 
 gl_class_rep::gl_class_rep()
 {
-	//int_matrix type_coding;
+	type_coding = NULL;
 	centralizer_order = NULL;
 	class_length = NULL;
 }
 
 gl_class_rep::~gl_class_rep()
 {
+	if (type_coding) {
+		FREE_OBJECT(type_coding);
+	}
 	if (centralizer_order) {
 		FREE_OBJECT(centralizer_order);
 	}
@@ -49,13 +52,15 @@ void gl_class_rep::init(int nb_irred, int *Select_polynomial,
 			l++;
 		}
 	}
-	type_coding.allocate(l, 3);
+	type_coding = NEW_OBJECT(int_matrix);
+
+	type_coding->allocate(l, 3);
 	l = 0;
 	for (i = 0; i < nb_irred; i++) {
 		if (Select_polynomial[i]) {
-			type_coding.s_ij(l, 0) = i;
-			type_coding.s_ij(l, 1) = Select_polynomial[i];
-			type_coding.s_ij(l, 2) = Select_partition[i];
+			type_coding->s_ij(l, 0) = i;
+			type_coding->s_ij(l, 1) = Select_polynomial[i];
+			type_coding->s_ij(l, 2) = Select_partition[i];
 			l++;
 		}
 	}
@@ -73,9 +78,9 @@ void gl_class_rep::print(int nb_irred,  int *Select_polynomial,
 	l = 0;
 	for (i = 0; i < nb_irred; i++) {
 		if (Select_polynomial[i]) {
-			cout << "puly " << i << " (" << type_coding.s_ij(l, 0)
-					<< ", " << type_coding.s_ij(l, 1)
-					<< ", " << type_coding.s_ij(l, 2) << ")" << endl;
+			cout << "poly " << i << " (" << type_coding->s_ij(l, 0)
+					<< ", " << type_coding->s_ij(l, 1)
+					<< ", " << type_coding->s_ij(l, 2) << ")" << endl;
 			l++;
 		}
 	}
@@ -93,7 +98,7 @@ void gl_class_rep::compute_vector_coding(gl_classes *C,
 	if (f_v) {
 		cout << "gl_class_rep::compute_vector_coding" << endl;
 	}
-	nb_irred = type_coding.s_m();
+	nb_irred = type_coding->s_m();
 	if (f_v) {
 		cout << "gl_class_rep::compute_vector_coding "
 				"nb_irred=" << nb_irred << endl;
@@ -102,9 +107,9 @@ void gl_class_rep::compute_vector_coding(gl_classes *C,
 	Poly_mult = NEW_int(nb_irred);
 	Partition_idx = NEW_int(nb_irred);
 	for (i = 0; i < nb_irred; i++) {
-		Poly_degree[i] = C->Table_of_polynomials->Degree[type_coding.s_ij(i, 0)];
-		Poly_mult[i] = type_coding.s_ij(i, 1);
-		Partition_idx[i] = type_coding.s_ij(i, 2);
+		Poly_degree[i] = C->Table_of_polynomials->Degree[type_coding->s_ij(i, 0)];
+		Poly_mult[i] = type_coding->s_ij(i, 1);
+		Partition_idx[i] = type_coding->s_ij(i, 2);
 	}
 	if (f_v) {
 		cout << "gl_class_rep::compute_vector_coding done" << endl;

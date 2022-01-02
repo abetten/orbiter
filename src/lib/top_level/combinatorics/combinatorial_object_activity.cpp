@@ -457,6 +457,16 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 
 
 	}
+	else if (Descr->f_draw_incidence_matrices) {
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_IS f_draw_incidence_matrices" << endl;
+		}
+		draw_incidence_matrices(
+				Descr->draw_incidence_matrices_prefix,
+				IS,
+				verbose_level);
+
+	}
 	else if (Descr->f_test_distinguishing_property) {
 
 		if (f_v) {
@@ -991,6 +1001,87 @@ void combinatorial_object_activity::report_object(std::ostream &fp,
 
 }
 
+void combinatorial_object_activity::draw_incidence_matrices(
+		std::string &prefix,
+		data_input_stream *IS,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	file_io Fio;
+	latex_interface L;
+
+	if (f_v) {
+		cout << "combinatorial_object_activity::draw_incidence_matrices" << endl;
+	}
+
+
+
+	string fname;
+
+	fname.assign(prefix);
+	fname.append("_incma.tex");
+
+	if (f_v) {
+		cout << "combinatorial_object_activity::draw_incidence_matrices before latex_report" << endl;
+	}
+
+
+	{
+		ofstream ost(fname);
+		latex_interface L;
+
+		L.head_easy(ost);
+
+
+		int N;
+
+		N = IS->Objects.size();
+
+
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::draw_incidence_matrices before loop" << endl;
+		}
+
+		int i;
+
+		ost << "\\noindent" << endl;
+
+		for (i = 0; i < N; i++) {
+
+			object_with_canonical_form *OwCF;
+
+			OwCF = (object_with_canonical_form *) IS->Objects[i];
+
+
+			encoded_combinatorial_object *Enc;
+
+			OwCF->encode_incma(Enc, verbose_level);
+
+			//Enc->latex_set_system_by_columns(ost, verbose_level);
+
+			//Enc->latex_set_system_by_rows(ost, verbose_level);
+
+			Enc->latex_incma(ost, verbose_level);
+
+			FREE_OBJECT(Enc);
+
+
+		}
+
+
+
+		L.foot(ost);
+	}
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+	if (f_v) {
+		cout << "combinatorial_object_activity::draw_incidence_matrices done" << endl;
+	}
+}
 
 
 

@@ -175,6 +175,9 @@ void test_semicanonical::markers_update(int I, int m, int J, int n, int j,
 		int verbose_level)
 {
 
+	if (gg->GB->Descr->f_orderly) {
+		return;
+	}
 
 	// manage vbar:
 
@@ -228,6 +231,11 @@ void test_semicanonical::marker_move_on(int I, int m, int J, int n, int j,
 		int i1, int j0, int r,
 		int verbose_level)
 {
+
+	if (gg->GB->Descr->f_orderly) {
+		return;
+	}
+
 	// generate new vbar to the left of this incidence:
 	if (vbar[j0 + j + 1] == i1) {
 		cout << "test_semicanonical::marker_move_on vbar[j0 + j + 1] == i1" << endl;
@@ -256,10 +264,7 @@ int test_semicanonical::row_starter(int I, int m, int J, int n,
 {
 	int j;
 
-	if (hbar[i1] <= J) {
-		// hbar exists, which means that the left part of the row differs from the row above.
-		// The next incidence must be tried starting from the leftmost position.
-		// We cannot copy over from the previous row.
+	if (gg->GB->Descr->f_orderly) {
 		if (n == 0) {
 			// first incidence inside the block?
 			j = 0;
@@ -272,14 +277,31 @@ int test_semicanonical::row_starter(int I, int m, int J, int n,
 		}
 	}
 	else {
-		if (m == 0) {
-			cout << "gen_geo::GeoXFst hbar[i1] > J && m == 0" << endl;
-			exit(1);
-		}
-		// no hbar means that the left parts agree.
+		if (hbar[i1] <= J) {
+			// hbar exists, which means that the left part of the row differs from the row above.
+			// The next incidence must be tried starting from the leftmost position.
+			// We cannot copy over from the previous row.
+			if (n == 0) {
+				// first incidence inside the block?
+				j = 0;
+			}
+			else {
 
-		// pick the incidence according to the previous row:
-		j = gg->inc->Encoding->theX[(i1 - 1) * gg->inc->Encoding->dim_n + r] - j0;
+				// start out one to the right of the previous incidence:
+
+				j = gg->inc->Encoding->theX[i1 * gg->inc->Encoding->dim_n + r - 1] - j0 + 1;
+			}
+		}
+		else {
+			if (m == 0) {
+				cout << "gen_geo::GeoXFst hbar[i1] > J && m == 0" << endl;
+				exit(1);
+			}
+			// no hbar means that the left parts agree.
+
+			// pick the incidence according to the previous row:
+			j = gg->inc->Encoding->theX[(i1 - 1) * gg->inc->Encoding->dim_n + r] - j0;
+		}
 	}
 	return j;
 }
@@ -288,6 +310,10 @@ void test_semicanonical::row_init(int I, int m, int J,
 		int i1,
 		int verbose_level)
 {
+	if (gg->GB->Descr->f_orderly) {
+		return;
+	}
+
 	if (m == 0) {
 		hbar[i1] = -1;
 		// initial hbar
@@ -301,11 +327,10 @@ void test_semicanonical::row_init(int I, int m, int J,
 
 int test_semicanonical::col_marker_test(int j0, int j, int i1)
 {
-#if 0
 	if (gg->GB->Descr->f_orderly) {
 		return FALSE;
 	}
-#endif
+
 	if (vbar[j0 + j] > i1) {
 		// no vbar, skip
 		if (FALSE) {
@@ -320,6 +345,11 @@ int test_semicanonical::col_marker_test(int j0, int j, int i1)
 void test_semicanonical::col_marker_remove(int I, int m, int J, int n,
 		int i1, int j0, int r, int old_x)
 {
+	if (gg->GB->Descr->f_orderly) {
+		return;
+	}
+
+
 	// remove vbar:
 	if (f_vbar[i1 * gg->inc->Encoding->dim_n + r]) {
 		vbar[old_x + 1] = MAX_V;
@@ -339,6 +369,11 @@ void test_semicanonical::col_marker_remove(int I, int m, int J, int n,
 
 void test_semicanonical::row_test_continue(int I, int m, int J, int i1)
 {
+	if (gg->GB->Descr->f_orderly) {
+		return;
+	}
+
+
 	if (hbar[i1] > J) {
 		hbar[i1] = J;
 	}

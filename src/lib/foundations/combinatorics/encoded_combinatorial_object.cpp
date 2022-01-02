@@ -65,6 +65,32 @@ void encoded_combinatorial_object::init(int nb_rows, int nb_cols, int verbose_le
 	}
 }
 
+
+void encoded_combinatorial_object::init_canonical_form(encoded_combinatorial_object *Enc,
+		nauty_output *NO, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int L;
+
+	if (f_v) {
+		cout << "encoded_combinatorial_object::init_canonical_form" << endl;
+	}
+
+	encoded_combinatorial_object::nb_rows = Enc->nb_rows;
+	encoded_combinatorial_object::nb_cols = Enc->nb_cols;
+	//L = Enc->nb_rows * Enc->nb_cols;
+
+	Enc->apply_canonical_labling(Incma, NO);
+
+	canonical_labeling_len = nb_rows + nb_cols;
+	partition = NEW_int(canonical_labeling_len);
+	Orbiter->Int_vec.copy(Enc->partition, partition, canonical_labeling_len);
+
+	if (f_v) {
+		cout << "encoded_combinatorial_object::init_canonical_form done" << endl;
+	}
+}
+
 void encoded_combinatorial_object::print_incma()
 {
 	Orbiter->Int_vec.matrix_print_tight(Incma, nb_rows, nb_cols);
@@ -325,7 +351,6 @@ void encoded_combinatorial_object::latex_incma(std::ostream &ost,
 		cout << "encoded_combinatorial_object::latex_incma after L.incma_latex" << endl;
 	}
 
-	ost << "\\\\" << endl;
 
 	FREE_int(Vi);
 	FREE_int(Bj);
@@ -480,7 +505,6 @@ void encoded_combinatorial_object::latex_TDA(std::ostream &ost,
 				"after L.incma_latex" << endl;
 	}
 
-	ost << "\\\\" << endl;
 
 	FREE_int(Inc2);
 	FREE_int(Vi);
@@ -605,7 +629,6 @@ void encoded_combinatorial_object::latex_TDA_with_labels(std::ostream &ost,
 				"after L.incma_latex_with_text_labels" << endl;
 	}
 
-	ost << "\\\\" << endl;
 
 	delete [] point_labels;
 	delete [] block_labels;
@@ -746,6 +769,44 @@ void encoded_combinatorial_object::latex_canonical_form(std::ostream &ost,
 	}
 }
 
+void encoded_combinatorial_object::apply_canonical_labling(int *&Inc2,
+		nauty_output *NO)
+{
+	int i, j, i0, j0;
+
+	Inc2 = NEW_int(nb_rows * nb_cols);
+	Orbiter->Int_vec.zero(Inc2, nb_rows * nb_cols);
+
+	for (i = 0; i < nb_rows; i++) {
+		i0 = NO->canonical_labeling[i];
+		for (j = 0; j < nb_cols; j++) {
+			j0 =  NO->canonical_labeling[nb_rows + j] - nb_rows;
+			if (Incma[i0 * nb_cols + j0]) {
+				Inc2[i * nb_cols + j] = 1;
+			}
+		}
+	}
+
+}
+
+void encoded_combinatorial_object::apply_canonical_labling_and_get_flags(int *&Inc2,
+		int *&Flags, int &nb_flags,
+		nauty_output *NO)
+{
+	int i, j;
+
+	apply_canonical_labling(Inc2, NO);
+
+	Flags = NEW_int(nb_rows * nb_cols);
+	nb_flags = 0;
+	for (i = 0; i < nb_rows; i++) {
+		for (j = 0; j < nb_cols; j++) {
+			if (Inc2[i * nb_cols + j]) {
+				Flags[nb_flags++] = i * nb_cols + j;
+			}
+		}
+	}
+}
 
 void encoded_combinatorial_object::latex_canonical_form_with_labels(std::ostream &ost,
 		nauty_output *NO,

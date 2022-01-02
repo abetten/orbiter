@@ -3355,6 +3355,7 @@ void schreier::print_TDA(std::ostream &ost,
 		OwCF->encode_incma(Enc, verbose_level);
 
 		latex_TDA(ost, Enc, verbose_level);
+		ost << "\\\\" << endl;
 
 		FREE_OBJECT(Enc);
 	}
@@ -3379,6 +3380,7 @@ void schreier::latex_TDA(std::ostream &ost, encoded_combinatorial_object *Enc,
 	Enc->latex_TDA_with_labels(ost,
 			nb_orbits, orbit_first, orbit_len, orbit,
 			verbose_level);
+	ost << "\\\\" << endl;
 	if (f_v) {
 		cout << "schreier::latex_TDA after Enc->latex_TDA" << endl;
 	}

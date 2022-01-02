@@ -1,6 +1,6 @@
 
 #MY_PATH=../orbiter
-MY_PATH=~/DEV.21/GITHUB/orbiter
+MY_PATH=~/DEV.22/orbiter
 #MY_PATH=/scratch/betten/COMPILE/orbiter
 
 
@@ -1025,6 +1025,12 @@ CODE_N6_K3_Q2_GENMA="\
 111100\
 110010\
 101001"
+
+
+
+TRIANGLE_GRAPH="0,1,1\n1,0,1\n1,1,0\n"
+
+
 
 # q=17:
 # 3 is p.e. mod 17.
@@ -8826,197 +8832,9 @@ sqrt_mod_7817:
 
 
 
-#############################################################################################################
-# Section 8.2:  Combinatorics
-
-
-SECTION_COMBINATORICS:
-	
-
-
-
-Char_Sym_4:
-	$(ORBITER_PATH)orbiter.out -v 2 -character_table_symmetric_group 4
-
-Char_Sym_5:
-	$(ORBITER_PATH)orbiter.out -v 2 -character_table_symmetric_group 5
-
-Char_Sym_6:
-	$(ORBITER_PATH)orbiter.out -v 2 -character_table_symmetric_group 6
-	
-
-
-Walsh_matrix_4:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 2 -end \
-		-with F -do -finite_field_activity \
-			-Walsh_matrix 4 -end
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
-		-input_csv_file Walsh_01_4.csv \
-		-box_width 10 -bit_depth 24 -partition 3 16 16 -end
-	#pdflatex GF_2.tex
-	#open GF_2.pdf
-
-
-Dedekind_10_10:
-	$(ORBITER_PATH)orbiter.out -v 3 -Dedekind_numbers 2 10 2 10
-
-
-Dedekind_30_2:
-	$(ORBITER_PATH)orbiter.out -v 3 -Dedekind_numbers 2 30 2 2
-
-
-Dedekind_100_2:
-	$(ORBITER_PATH)orbiter.out -v 3 -Dedekind_numbers 2 100 2 2
-
-
-
-elementary_symmetric_functions_4:
-	$(ORBITER_PATH)orbiter.out -make_elementary_symmetric_functions 4 4
-
-elementary_symmetric_functions_8:
-	$(ORBITER_PATH)orbiter.out -make_elementary_symmetric_functions 8 8
-
-
-
-
-
-
-
-
-# large sets:
-
-GENERATORS_H5="1,2,3,4,0,6,7,8,9,5,10,11,12"
-# (0, 1, 2, 3, 4)(5, 6, 7, 8, 9)
-
-GENERATORS_C13="11, 0, 10, 12, 5, 3, 7, 4, 2, 8, 6, 9, 1"
-# (0,11,9,8,2,10,6,7,4,5,3,12,1)
-
-
-
-LARGE_SET_S0="0,1,2,3,4,5,6,7,8,9,10,11,12"
-# identity
-
-LARGE_SET_S1="6,8,9,2,7,10,1,11,0,3,5,4,12"
-
-#    (0, 6, 1, 8)(2, 9, 3)(4, 7, 11)(5, 10),&\ 
-
-
-
-LARGE_SET_S2="2,0,1,6,3,4,11,5,7,8,10,9,12"
-#    (0, 2, 1)(3, 6, 11, 9, 8, 7, 5, 4),\\
-
-
-LARGE_SET_S3="12,5,6,11,3,7,10,8,9,1,4,2,0"
-#    (0, 12)(1, 5, 7, 8, 9)(2, 6, 10, 4, 3, 11),&\ 
-
-LARGE_SET_S4="5,8,10,3,11,0,2,1,12,4,6,7,9"
-#    (0, 5)(1, 8, 12, 9, 4, 11, 7)(2, 10, 6),\\
-
-
-
-LARGE_SET_S5="10,11,0,7,12,2,3,1,4,5,8,6,9"
-#    (0, 10, 8, 4, 12, 9, 5, 2)(1, 11, 6, 3, 7),&\ 
-
-
-LARGE_SET_S6="3,4,1,9,5,6,8,2,7,11,12,10,0"
-#    (0, 3, 9, 11, 10, 12)(1, 4, 5, 6, 8, 7, 2),\\
-
-
-LARGE_SET_S7="9,11,0,6,1,3,5,4,2,12,8,7,10"
-#    (0, 9, 12, 10, 8, 2)(1, 11, 7, 4)(3, 6, 5),&\ 
-
-
-LARGE_SET_S8="10,2,12,8,0,3,4,1,5,6,9,7,11"
-#    (0, 10, 9, 6, 4)(1, 2, 12, 11, 7)(3, 8, 5),\\
-
-LARGE_SET_S9="1,3,4,10,5,6,9,7,8,11,0,12,2"
-#    (0, 1, 3, 10)(2, 4, 5, 6, 9, 11, 12),&\ 
-
-
-LARGE_SET_S10="7,12,1,6,0,4,5,2,3,10,9,8,11"
-#    (0, 7, 2, 1, 12, 11, 8, 3, 6, 5, 4)(9, 10).
-
-
-file_S:
-	echo ROW,C0"\n"0,\"$(LARGE_SET_S0)\""\n"1,\"$(LARGE_SET_S1)\""\n"2,\"$(LARGE_SET_S2)\""\n"3,\"$(LARGE_SET_S3)\""\n"4,\"$(LARGE_SET_S4)\""\n"5,\"$(LARGE_SET_S5)\""\n"6,\"$(LARGE_SET_S6)\""\n"7,\"$(LARGE_SET_S7)\""\n"8,\"$(LARGE_SET_S8)\""\n"9,\"$(LARGE_SET_S9)\""\n"10,\"$(LARGE_SET_S10)\""\n"END"\n" >S.csv
-
-Large_set_H5:
-	$(ORBITER_PATH)orbiter.out -v 10 \
-		-define G -permutation_group -symmetric_group 13 \
-			-subgroup_by_generators H5 5 1 $(GENERATORS_H5) -end \
-		-with G -do \
-		-group_theoretic_activity \
-			-report \
-		-end \
-		-with G -do \
-		-group_theoretic_activity \
-			-save_elements_csv "H5_elts.csv" \
-		-end
-	pdflatex Perm13_Subgroup_H5_5_report.tex
-	open Perm13_Subgroup_H5_5_report.pdf
-
-Large_set_C13:
-	$(ORBITER_PATH)orbiter.out -v 10 \
-		-define G -permutation_group -symmetric_group 13 \
-			-subgroup_by_generators C13 13 1 $(GENERATORS_C13) -end \
-		-with G -do \
-		-group_theoretic_activity \
-			-export_orbiter \
-		-end \
-		-with G -do \
-		-group_theoretic_activity \
-			-report \
-		-end \
-		-with G -do \
-		-group_theoretic_activity \
-			-save_elements_csv "C13_elts.csv" \
-		-end
-	pdflatex Perm13_Subgroup_C13_13_report.tex
-	open Perm13_Subgroup_C13_13_report.pdf
-
-
-## the following lines were created using -export_orbiter:
-
-GENERATORS_Perm13_Subgroup_C13_13 = \
-	"11,0,10,12,5,3,7,4,2,8,6,9,1"
-
-Perm13_Subgroup_C13_13:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-	-define G -permutation_group -symmetric_group 13 \
-	-subgroup_by_generators Perm13_Subgroup_C13_13 13 1 $(GENERATORS_Perm13_Subgroup_C13_13) -end
-
-###
-
-
-Large_set_mult_C13xS:
-	$(ORBITER_PATH)orbiter.out -v 10 \
-		-define G -permutation_group -symmetric_group 13 -end \
-		-with G -do \
-		-group_theoretic_activity \
-			-multiply_elements_csv_column_major_ordering C13_elts.csv S.csv C13xS.csv\
-		-end 
-
-Large_set_mult_C13xSxH5:
-	$(ORBITER_PATH)orbiter.out -v 10 \
-		-define G -permutation_group -symmetric_group 13 -end \
-		-with G -do \
-		-group_theoretic_activity \
-			-multiply_elements_csv_column_major_ordering C13xS.csv H5_elts.csv C13xSxH5.csv\
-		-end 
-
-Large_set_mult_C13xSxH5_apply:
-	$(ORBITER_PATH)orbiter.out -v 10 \
-		-define G -permutation_group -symmetric_group 13 -end \
-		-with G -do \
-		-group_theoretic_activity \
-			-apply_elements_csv_to_set C13xSxH5.csv C13xSxH5_images.csv "0,1,2,3" \
-		-end 
-
-
 
 #############################################################################################################
-# Section 8.3: Representation Theory
+# Section 8.2: Representation Theory
 
 SECTION_REPRESENTATION_THEORY:
 
@@ -9058,7 +8876,7 @@ representation_tetrahedral_group_on_polynomials_of_degree_3:
 
 
 #############################################################################################################
-# Section 8.4: Cryptography 
+# Section 8.3: Cryptography 
 
 
 SECTION_CRYPTOGRAPHY:
@@ -10950,6 +10768,20 @@ BCH_21_poly_division_c:
 		-polynomial_division "1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1" "1,0,1,0,1,0,0,0,1,0,0,0,1" -end
 
 
+F16_roots_5:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 2 -end \
+		-with F -do -finite_field_activity -nth_roots 5 -end
+
+
+
+F64_roots_21:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 2 -end \
+		-with F -do -finite_field_activity -nth_roots 21 -end
+
+
+
 F256_roots_771:
 	$(ORBITER_PATH)orbiter.out -v 3 \
 		-define F -finite_field -q 256 -end \
@@ -11001,7 +10833,7 @@ F256_BCH_code_d16_error:
 
 
 #############################################################################################################
-# Section 19.7: Coding Theory - Reed Solomon codes
+# Section 9.7: Coding Theory - Reed Solomon codes
 
 SECTION_CODING_THEORY_REED_SOLOMON_CODES:
 
@@ -11444,13 +11276,209 @@ codes_q13_12_4:
 
 
 #############################################################################################################
-# Chapter 10 - Incidence Geometry
+# Chapter 10 - Combinatorics
 #############################################################################################################
+
+
+#############################################################################################################
+# Section 10.1:  Combinatorics
+
+
+SECTION_COMBINATORICS:
+	
+
+
+
+Char_Sym_4:
+	$(ORBITER_PATH)orbiter.out -v 2 -character_table_symmetric_group 4
+
+Char_Sym_5:
+	$(ORBITER_PATH)orbiter.out -v 2 -character_table_symmetric_group 5
+
+Char_Sym_6:
+	$(ORBITER_PATH)orbiter.out -v 2 -character_table_symmetric_group 6
+
+all_subsets_10_3:
+	$(ORBITER_PATH)orbiter.out -v 2 -tree_of_all_k_subsets 10 3
+
+
+rank_k_subsets_test:
+	$(ORBITER_PATH)orbiter.out -v 2 -rank_k_subset 10 3 0,1,2,0,3,4,1,3,5,2,4,5,3,6,7,1,6,8,0,6,9
+
+
+Walsh_matrix_4:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 2 -end \
+		-with F -do -finite_field_activity \
+			-Walsh_matrix 4 -end
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file Walsh_01_4.csv \
+		-box_width 10 -bit_depth 24 -partition 3 16 16 -end
+	#pdflatex GF_2.tex
+	#open GF_2.pdf
+
+
+Dedekind_10_10:
+	$(ORBITER_PATH)orbiter.out -v 3 -Dedekind_numbers 2 10 2 10
+
+
+Dedekind_30_2:
+	$(ORBITER_PATH)orbiter.out -v 3 -Dedekind_numbers 2 30 2 2
+
+
+Dedekind_100_2:
+	$(ORBITER_PATH)orbiter.out -v 3 -Dedekind_numbers 2 100 2 2
+
+
+
+elementary_symmetric_functions_4:
+	$(ORBITER_PATH)orbiter.out -make_elementary_symmetric_functions 4 4
+
+elementary_symmetric_functions_8:
+	$(ORBITER_PATH)orbiter.out -make_elementary_symmetric_functions 8 8
+
+
+
+
+
+
+
+
+# large sets:
+
+GENERATORS_H5="1,2,3,4,0,6,7,8,9,5,10,11,12"
+# (0, 1, 2, 3, 4)(5, 6, 7, 8, 9)
+
+GENERATORS_C13="11, 0, 10, 12, 5, 3, 7, 4, 2, 8, 6, 9, 1"
+# (0,11,9,8,2,10,6,7,4,5,3,12,1)
+
+
+
+LARGE_SET_S0="0,1,2,3,4,5,6,7,8,9,10,11,12"
+# identity
+
+LARGE_SET_S1="6,8,9,2,7,10,1,11,0,3,5,4,12"
+
+#    (0, 6, 1, 8)(2, 9, 3)(4, 7, 11)(5, 10),&\ 
+
+
+
+LARGE_SET_S2="2,0,1,6,3,4,11,5,7,8,10,9,12"
+#    (0, 2, 1)(3, 6, 11, 9, 8, 7, 5, 4),\\
+
+
+LARGE_SET_S3="12,5,6,11,3,7,10,8,9,1,4,2,0"
+#    (0, 12)(1, 5, 7, 8, 9)(2, 6, 10, 4, 3, 11),&\ 
+
+LARGE_SET_S4="5,8,10,3,11,0,2,1,12,4,6,7,9"
+#    (0, 5)(1, 8, 12, 9, 4, 11, 7)(2, 10, 6),\\
+
+
+
+LARGE_SET_S5="10,11,0,7,12,2,3,1,4,5,8,6,9"
+#    (0, 10, 8, 4, 12, 9, 5, 2)(1, 11, 6, 3, 7),&\ 
+
+
+LARGE_SET_S6="3,4,1,9,5,6,8,2,7,11,12,10,0"
+#    (0, 3, 9, 11, 10, 12)(1, 4, 5, 6, 8, 7, 2),\\
+
+
+LARGE_SET_S7="9,11,0,6,1,3,5,4,2,12,8,7,10"
+#    (0, 9, 12, 10, 8, 2)(1, 11, 7, 4)(3, 6, 5),&\ 
+
+
+LARGE_SET_S8="10,2,12,8,0,3,4,1,5,6,9,7,11"
+#    (0, 10, 9, 6, 4)(1, 2, 12, 11, 7)(3, 8, 5),\\
+
+LARGE_SET_S9="1,3,4,10,5,6,9,7,8,11,0,12,2"
+#    (0, 1, 3, 10)(2, 4, 5, 6, 9, 11, 12),&\ 
+
+
+LARGE_SET_S10="7,12,1,6,0,4,5,2,3,10,9,8,11"
+#    (0, 7, 2, 1, 12, 11, 8, 3, 6, 5, 4)(9, 10).
+
+
+file_S:
+	echo ROW,C0"\n"0,\"$(LARGE_SET_S0)\""\n"1,\"$(LARGE_SET_S1)\""\n"2,\"$(LARGE_SET_S2)\""\n"3,\"$(LARGE_SET_S3)\""\n"4,\"$(LARGE_SET_S4)\""\n"5,\"$(LARGE_SET_S5)\""\n"6,\"$(LARGE_SET_S6)\""\n"7,\"$(LARGE_SET_S7)\""\n"8,\"$(LARGE_SET_S8)\""\n"9,\"$(LARGE_SET_S9)\""\n"10,\"$(LARGE_SET_S10)\""\n"END"\n" >S.csv
+
+Large_set_H5:
+	$(ORBITER_PATH)orbiter.out -v 10 \
+		-define G -permutation_group -symmetric_group 13 \
+			-subgroup_by_generators H5 5 1 $(GENERATORS_H5) -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-save_elements_csv "H5_elts.csv" \
+		-end
+	pdflatex Perm13_Subgroup_H5_5_report.tex
+	open Perm13_Subgroup_H5_5_report.pdf
+
+Large_set_C13:
+	$(ORBITER_PATH)orbiter.out -v 10 \
+		-define G -permutation_group -symmetric_group 13 \
+			-subgroup_by_generators C13 13 1 $(GENERATORS_C13) -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-export_orbiter \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-report \
+		-end \
+		-with G -do \
+		-group_theoretic_activity \
+			-save_elements_csv "C13_elts.csv" \
+		-end
+	pdflatex Perm13_Subgroup_C13_13_report.tex
+	open Perm13_Subgroup_C13_13_report.pdf
+
+
+## the following lines were created using -export_orbiter:
+
+GENERATORS_Perm13_Subgroup_C13_13 = \
+	"11,0,10,12,5,3,7,4,2,8,6,9,1"
+
+Perm13_Subgroup_C13_13:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+	-define G -permutation_group -symmetric_group 13 \
+	-subgroup_by_generators Perm13_Subgroup_C13_13 13 1 $(GENERATORS_Perm13_Subgroup_C13_13) -end
+
+###
+
+
+Large_set_mult_C13xS:
+	$(ORBITER_PATH)orbiter.out -v 10 \
+		-define G -permutation_group -symmetric_group 13 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-multiply_elements_csv_column_major_ordering C13_elts.csv S.csv C13xS.csv\
+		-end 
+
+Large_set_mult_C13xSxH5:
+	$(ORBITER_PATH)orbiter.out -v 10 \
+		-define G -permutation_group -symmetric_group 13 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-multiply_elements_csv_column_major_ordering C13xS.csv H5_elts.csv C13xSxH5.csv\
+		-end 
+
+Large_set_mult_C13xSxH5_apply:
+	$(ORBITER_PATH)orbiter.out -v 10 \
+		-define G -permutation_group -symmetric_group 13 -end \
+		-with G -do \
+		-group_theoretic_activity \
+			-apply_elements_csv_to_set C13xSxH5.csv C13xSxH5_images.csv "0,1,2,3" \
+		-end 
+
+
 
 
 
 ########################################################################################################
-# Section 10.1: Diophantine Systems
+# Section 10.2: Diophantine Systems
 
 SECTION_DIOPHANT:
 
@@ -11492,7 +11520,7 @@ octic_monomials:
 
 
 ########################################################################################################
-# Section 10.2: Combinatorial Linear Spaces
+# Section 10.3: Combinatorial Linear Spaces
 
 SECTION_COMBINATORIAL_LINEAR_SPACES:
 	
@@ -11560,7 +11588,7 @@ linsp30_pt_distribution:
 
 
 ########################################################################################################
-# Section 10.3: Combinatorial Linear Spaces
+# Section 10.4: Combinatorial Linear Spaces
 
 ####
 # geometry builder:
@@ -11584,6 +11612,33 @@ geo_7_3:
 			-fuse 1 -fname_GEO 7_3 \
 			-test Test_lines \
 		-end
+
+geo_7_3_no_square_test:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Test_lines -set -loop 3 8 1 -end \
+		-define Geo -geometry_builder \
+			-V 7 -B 7 -TDO 3 \
+			-fuse 1 -fname_GEO 7_3_nst \
+			-test Test_lines \
+			-no_square_test \
+		-end
+
+geo_7_3_no_square_test_draw:
+	$(ORBITER_PATH)orbiter.out -v 10 \
+		-draw_incidence_structure_description \
+			-width 60 -with_10 6 -end \
+		-define C -combinatorial_objects \
+			-file_of_incidence_geometries 7_3_nst.inc 7 7 21 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-draw_incidence_matrices \
+			7_3_nst \
+		-end
+	pdflatex 7_3_nst_incma.tex
+	open 7_3_nst_incma.pdf
+
+
 
 geo_7_3_orderly:
 	$(ORBITER_PATH)orbiter.out -v 200 \
@@ -11980,7 +12035,7 @@ geo_63_3_g6:
 
 
 #############################################################################################################
-# Section 10.4: Design Theory
+# Section 10.5: Design Theory
 
 SECTION_DESIGN_THEORY:
 
@@ -12159,7 +12214,7 @@ design_large_set_rank_k_subsets_d:
 
 
 #############################################################################################################
-# Section 10.5: Design Theory - Large Sets
+# Section 10.6: Design Theory - Large Sets
 
 SECTION_DESIGN_THEORY_LARGE_SETS:
 
@@ -12314,7 +12369,7 @@ LS_AG_2_3_export_solutions:
 
 
 #############################################################################################################
-# Section 10.6: Design Theory - Delandtsheer Doyen
+# Section 10.7: Design Theory - Delandtsheer Doyen
 
 SECTION_DESIGN_THEORY_DELANDTHSHEER_DOYEN:
 
@@ -12414,7 +12469,7 @@ PG_2_27_special:
 
 
 #############################################################################################################
-# Section 10.7: Tactical Decompositions
+# Section 10.8: Tactical Decompositions
 
 SECTION_TACTICAL_DECOMPOSITIONS:
 
@@ -12435,7 +12490,14 @@ max_arc_16_4r_print:
 
 
 #############################################################################################################
-# Section 10.8: Spreads
+# Chapter 11 - Finite Geometry
+#############################################################################################################
+
+
+
+
+#############################################################################################################
+# Section 11.1: Spreads
 
 SECTION_SPREADS:
 	
@@ -12521,7 +12583,7 @@ spreads16_4:
 
 
 #############################################################################################################
-# Section 10.9: Translation planes
+# Section 11.2: Translation planes
 
 
 SECTION_TRANSLATION_PLANES:
@@ -12605,7 +12667,7 @@ TP_16_2:
 
 
 #############################################################################################################
-# Section 10.10: Packings
+# Section 11.3: Packings
 
 
 SECTION_PACKINGS:
@@ -13009,7 +13071,7 @@ PG_3_5_assume_3B_classify:
 
 
 #############################################################################################################
-# Section 10.11: BLT-sets
+# Section 11.4: BLT-sets
 
 SECTION_BLT_SETS:
 
@@ -13144,13 +13206,13 @@ BLT_13_cliques:
 
 
 #############################################################################################################
-# Chapter 11 - Graph Theory
+# Chapter 12 - Graph Theory
 #############################################################################################################
 
 
 
 ############################################################################################################
-# Section 11.1: Creating Graphs
+# Section 12.1: Creating Graphs
 
 
 SECTION_CREATING_GRAPHS:
@@ -13161,7 +13223,11 @@ Cycle_13:
 			-cycle 13 \
 		-end
 
+
+
+
 triangle_graph:
+	echo $(TRIANGLE_GRAPH) >triangle_graph.csv
 	$(ORBITER_PATH)orbiter.out -v 6 \
 		-define G -graph \
 			-load_csv_no_border \
@@ -13176,17 +13242,95 @@ Chain_232:
 		-define P2 -vector -dense 2,3,2 -end \
 		-define Gamma -graph \
 			-chain_graph P1 P2 \
-		-end \
-		-with Gamma -do \
-			-graph_theoretic_activity -export_csv \
-		-end \
-		-with Gamma -do \
-			-graph_theoretic_activity -properties \
 		-end
 
 
 
+
+Paley_13_graph:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Gamma -graph -Paley 13 -end \
+
+
+
+
+
+trihedral_pair_graph:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Gamma \
+			-graph -trihedral_pair_disjointness_graph \
+		-end
+
+
+small_graph:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define G -graph -edges_as_pairs 5 "0,1,0,2,0,3,0,4,1,3,1,4,2,4" -end
+
+
+
+
+petersen:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define G -graph -Johnson 5 2 0 -end
+
+
+
+
+Johnson_6_2_0:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define G -graph -Johnson 6 2 0 -end
+
+Hamming_graph_3:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define G -graph -Hamming 3 2 -end
+
+
+Hamming_graph_7:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define G -graph -Hamming 7 2 -end
+
+# needs halljanko315.csv
+# from https://www.win.tue.nl/~aeb/drg/graphs/HJ315.html
+#There is a unique distance-regular graph Gamma with intersection array {10,8,8,2; 1,1,4,5}. It was constructed in Cohen (1981), and uniqueness (given the intersection array) was proved in Cohen & Tits (1985).
+
+
+HJ_graph:
+	$(ORBITER_PATH)orbiter.out -v 6 \
+		-define G -graph \
+			-load_csv_no_border \
+			halljanko315.csv \
+		-end
+
+
+HJ315_orbital_graph_3:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define gens -vector -file \
+			halljanko315_gens.csv -end \
+		-define G -permutation_group \
+			-bsgs halljanko315 "File\_halljanko315" \
+			315 1209600 "0,1,2" 6 gens \
+		-end \
+		-define Gamma -graph \
+			-orbital_graph G 3 \
+		-end \
+
+HJ_d2_graph:
+	$(ORBITER_PATH)orbiter.out -v 6 \
+		-define G -graph \
+			-load_csv_no_border \
+			halljanko315.csv \
+			-distance_2 \
+		-end
+
+############################################################################################################
+# Section 12.2: Graphs Theoretic Activities
+
+
+SECTION_GRAPH_THEORETIC_ACTIVITIES:
+
+
 triangle_graph_properties:
+	echo $(TRIANGLE_GRAPH) >triangle_graph.csv
 	$(ORBITER_PATH)orbiter.out -v 6 \
 		-define G -graph \
 			-load_csv_no_border \
@@ -13195,6 +13339,7 @@ triangle_graph_properties:
 		-with G -do \
 			-graph_theoretic_activity -properties \
 		-end
+
 
 Cycle_13_draw:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -13224,8 +13369,9 @@ Cycle_9_eigenvalues:
 	open Cycle_9_eigenvalues.pdf
 
 
-Paley_13_graph:
-	$(ORBITER_PATH)orbiter.out -v 2 -define Gamma -graph -Paley 13 -end \
+Paley_13_draw:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define Gamma -graph -Paley 13 -end \
 		-with Gamma -do \
 		-graph_theoretic_activity -export_csv  -end \
 		-with Gamma -do \
@@ -13235,7 +13381,6 @@ Paley_13_graph:
 		-box_width 20 -bit_depth 8 -partition 4 13 13 -end
 	dot -Tpng Paley_13.gv >Paley_13.png
 	open Paley_13_draw.bmp
-
 
 Paley_13_eigenvalues:
 	$(ORBITER_PATH)orbiter.out -v 2 \
@@ -13248,22 +13393,7 @@ Paley_13_eigenvalues:
 	open Paley_13_eigenvalues.pdf
 
 
-
-trihedral_pair_graph:
-	$(ORBITER_PATH)orbiter.out -v 2 -define Gamma \
-		-graph -trihedral_pair_disjointness_graph  -end \
-		-with Gamma -do \
-		-graph_theoretic_activity -export_csv  -end
-	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
-		-input_csv_file trihedral_pair_disjointness.csv \
-		-box_width 20 -depth 8  -end
-	open trihedral_pair_disjointness_draw.bmp
-
-
-
-
-
-small_graph:
+small_graph_draw:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define G -graph -edges_as_pairs 5 "0,1,0,2,0,3,0,4,1,3,1,4,2,4" -end \
 		-with G -do \
@@ -13281,7 +13411,7 @@ small_graph:
 # creates graph_v5_e7.colored_graph
 
 
-petersen:
+petersen_draw:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define G -graph -Johnson 5 2 0 -end \
 		-with G -do \
@@ -13296,8 +13426,7 @@ petersen:
 	dot -Tpng Johnson_5_2_0.gv >Johnson_5_2_0.png
 
 
-
-Johnson_6_2_0:
+Johnson_6_2_0_draw:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define G -graph -Johnson 6 2 0 -end \
 		-with G -do \
@@ -13311,7 +13440,9 @@ Johnson_6_2_0:
 		-box_width 40 -bit_depth 24 -partition 4 "10" "10" -end
 	dot -Tpng Johnson_6_2_0.gv >Johnson_6_2_0.png
 
-Hamming_graph_3:
+
+
+Hamming_graph_3_draw:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define G -graph -Hamming 3 2 -end \
 		-with G -do \
@@ -13327,7 +13458,7 @@ Hamming_graph_3:
 	dot -Tpng Hamming_3_2.gv >Hamming_3_2.png
 
 
-Hamming_graph_7:
+Hamming_graph_7_draw:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define G -graph -Hamming 7 2 -end \
 		-with G -do \
@@ -13342,6 +13473,37 @@ Hamming_graph_7:
 	dot -Tpng Hamming_7_2.gv >Hamming_7_2.png
 
 
+
+
+
+
+Chain_232_properties:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define P1 -vector -dense 2,3,2 -end \
+		-define P2 -vector -dense 2,3,2 -end \
+		-define Gamma -graph \
+			-chain_graph P1 P2 \
+		-end \
+		-with Gamma -do \
+			-graph_theoretic_activity -export_csv \
+		-end \
+		-with Gamma -do \
+			-graph_theoretic_activity -properties \
+		-end
+
+Chain_232_eigen:
+	$(ORBITER_PATH)orbiter.out -v 2 \
+		-define P1 -vector -dense 2,3,2 -end \
+		-define P2 -vector -dense 2,3,2 -end \
+		-define Gamma -graph \
+			-chain_graph P1 P2 \
+		-end \
+		-with Gamma -do \
+			-graph_theoretic_activity \
+			-eigenvalues \
+		-end
+	pdflatex chain_graph_eigenvalues.tex
+	open chain_graph_eigenvalues.pdf
 
 
 
@@ -13377,17 +13539,6 @@ HJ_d2_properties:
 #Degree type: (80^{315} )
 
 
-HJ_d2_c5:
-	$(ORBITER_PATH)orbiter.out -v 6 \
-		-define G -graph \
-			-load_csv_no_border \
-			halljanko315.csv \
-			-distance_2 \
-		-end \
-		-with G -do \
-		-graph_theoretic_activity \
-			-find_cliques -target_size 5 -end \
-		-end
 
 
 PGO_5_2_collinearity_graph: O_5_2_incidence_matrix.csv 
@@ -13400,29 +13551,21 @@ PGO_5_2_collinearity_graph: O_5_2_incidence_matrix.csv
 		-end
 
 
-############################################################################################################
-# Section 11.2: Graphs Theoretic Activities
-
-
-SECTION_GRAPH_THEORETIC_ACTIVITIES:
-
-Chain_232_eigen:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define P1 -vector -dense 2,3,2 -end \
-		-define P2 -vector -dense 2,3,2 -end \
-		-define Gamma -graph \
-			-chain_graph P1 P2 \
-		-end \
+trihedral_pair_graph_draw:
+	$(ORBITER_PATH)orbiter.out -v 2 -define Gamma \
+		-graph -trihedral_pair_disjointness_graph  -end \
 		-with Gamma -do \
-			-graph_theoretic_activity \
-			-eigenvalues \
-		-end
-	pdflatex chain_graph_eigenvalues.tex
-	open chain_graph_eigenvalues.pdf
+		-graph_theoretic_activity -export_csv  -end
+	$(ORBITER_PATH)orbiter.out -v 2 -draw_matrix \
+		-input_csv_file trihedral_pair_disjointness.csv \
+		-box_width 20 -depth 8  -end
+	open trihedral_pair_disjointness_draw.bmp
+
+
 
 
 ############################################################################################################
-# Section 11.3: Graph Theory: Classification
+# Section 12.3: Graph Theory: Classification
 
 
 SECTION_GRAPH_THEORY_CLASSIFICATION:
@@ -13431,7 +13574,7 @@ SECTION_GRAPH_THEORY_CLASSIFICATION:
 graph_classify_4:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define GC -graph_classification \
-			-n 4  \
+			-n 4 \
 			-poset_classification_control \
 				-problem_label graphs_v4  -depth 6 -draw_poset \
 				-draw_options -radius 250 -embedded -end \
@@ -13457,7 +13600,7 @@ tournament_classify_4:
 		-define GC -graph_classification \
 			-n 4 -tournament \
 			-poset_classification_control \
-				-problem_label tournament_4  -depth 6 -draw_poset \
+				-problem_label tournament_4 -depth 6 -draw_poset \
 				-draw_options -radius 250 -embedded -end \
 			-end \
 		-end \
@@ -13514,7 +13657,7 @@ graph_classify_8_r3:
 
 
 ############################################################################################################
-# Section 11.4: Graph Theory: Clique finding
+# Section 12.4: Graph Theory: Clique finding
 
 
 SECTION_GRAPH_THEORY_CLIQUE_FINDING:
@@ -13524,7 +13667,9 @@ small_graph_cliques:
 	$(ORBITER_PATH)orbiter.out -v 10 \
 		-define G -graph -load graph_v5_e7.colored_graph -end \
 		-with G -do \
-		-graph_theoretic_activity -find_cliques -target_size 3 -end
+		-graph_theoretic_activity \
+			-find_cliques -target_size 3 \
+		-end
 
 # nb_sol = 3
 
@@ -13532,7 +13677,9 @@ small_graph_cliques_Sajeeb:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define G -graph -load graph_v5_e7.colored_graph -end \
 		-with G -do \
-		-graph_theoretic_activity -find_cliques -Sajeeb  -target_size 3 -end
+		-graph_theoretic_activity \
+			-find_cliques -Sajeeb -target_size 3 \
+		-end
 
 # nb_sol = 3
 
@@ -13540,7 +13687,8 @@ Paley_13_aut:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define Gamma -graph -Paley 13 -end \
 		-with Gamma -do \
-		-graph_theoretic_activity -automorphism_group \
+		-graph_theoretic_activity \
+			-automorphism_group \
 		-end 
 
 # writes Paley_13_group.makefile
@@ -13581,7 +13729,9 @@ Paley_13_cliques:
 	$(ORBITER_PATH)orbiter.out -v 10 \
 		-define Gamma -graph -Paley 13 -end \
 		-with Gamma -do \
-		-graph_theoretic_activity -find_cliques -target_size 3 -end
+		-graph_theoretic_activity \
+			-find_cliques -target_size 3 \
+		-end
 
 
 
@@ -13598,7 +13748,7 @@ PGO_5_2_cliques: O_5_2_incidence_matrix.csv
 		-end
 
 
-HJ_d2_c5_second:
+HJ_d2_c5:
 	$(ORBITER_PATH)orbiter.out -v 6 \
 		-define G -graph \
 			-load_csv_no_border \
@@ -13609,6 +13759,8 @@ HJ_d2_c5_second:
 		-graph_theoretic_activity \
 			-find_cliques -target_size 5 -end \
 		-end
+
+
 
 #graph_theoretic_activity::perform_activity Gr->label=halljanko315 nb_sol = 262080
 
@@ -13668,19 +13820,19 @@ HJ64_cliques5_classify:
 
 
 #############################################################################################################
-# Chapter 12 - Canonical Forms with Nauty 
+# Chapter 13 - Canonical Forms with Nauty 
 #############################################################################################################
 
 
 #############################################################################################################
-# Section 12.1: Overview of Canonical Forms
+# Section 13.1: Overview of Canonical Forms
 
 
 SECTION_OVERVIEW_CANONICAL_FORMS:
 
 
 #############################################################################################################
-# Section 12.2: Objects in projective Space
+# Section 13.2: Objects in projective Space
 
 
 SECTION_OBJECTS_IN_PROJECTIVE_SPACE:
@@ -13915,7 +14067,7 @@ F_alpha_beta_gamma_delta_classify_q7_nauty:
 
 
 #############################################################################################################
-# Section 12.3: Incidence Geometries
+# Section 13.3: Incidence Geometries
 
 
 SECTION_INCIDENCE_GEOMETRIES:
@@ -14211,7 +14363,7 @@ quartic_curve_25_0_0_canonical:
 
 
 #############################################################################################################
-# Section 12.4: Objects from Design Theory
+# Section 13.4: Objects from Design Theory
 
 
 SECTION_OBJECTS_FROM_DESIGN_THEORY:
@@ -14292,7 +14444,7 @@ design_27c:
 
 
 #############################################################################################################
-# Section 12.5: Linear Codes
+# Section 13.5: Linear Codes
 
 
 SECTION_CANONICAL_FORMS_OF_LINEAR_CODES:
@@ -14520,7 +14672,7 @@ code_n15_k6_d6_b_group:
 
 
 #############################################################################################################
-# Section 12.6: General Codes
+# Section 13.6: General Codes
 
 
 SECTION_CANONICAL_FORMS_OF_GENERAL_CODES:
@@ -14549,7 +14701,7 @@ Hamming_graph_7_with_Hamming_code:
 
 
 #############################################################################################################
-# Section 12.7: Graphs
+# Section 13.7: Graphs
 
 
 SECTION_CANONICAL_FORMS_OF_GRAPHS:
@@ -14738,7 +14890,7 @@ PGO_5_2_graph_group: O_5_2_incidence_matrix.csv
 
 
 #############################################################################################################
-# Section 12.7: Quartic Curves
+# Section 13.8: Quartic Curves
 
 
 SECTION_CANONICAL_FORMS_OF_QUARTIC_CURVES:
@@ -15304,12 +15456,12 @@ Edge_curve_81:
 
 
 #############################################################################################################
-# Chapter 13 - Interfaces
+# Chapter 14 - Interfaces
 #############################################################################################################
 
 
 #############################################################################################################
-# Section 13.1: Graphical Output
+# Section 14.1: Graphical Output
 
 SECTION_GRAPHICAL_OUTPUT:
 	
@@ -15409,7 +15561,7 @@ Queens_graph:
 
 
 #############################################################################################################
-# Section 13.2: The Povray Interface
+# Section 14.2: The Povray Interface
 
 
 SECTION_POVRAY:
@@ -15722,7 +15874,7 @@ finish { diffuse 0.9 phong 1}}" \
 
 
 #############################################################################################################
-# Section 13.3: Creating Animations
+# Section 14.3: Creating Animations
 
 SECTION_ANIMATIONS:
 
@@ -16265,7 +16417,7 @@ McKean_video:
 
 
 #############################################################################################################
-# Section 13.4: Continuous Function Plotter
+# Section 14.4: Continuous Function Plotter
 
 
 
@@ -16377,12 +16529,12 @@ finish { diffuse 0.9 phong 1}}" \
 
 
 #############################################################################################################
-# Chapter 14 - Miscellaneous
+# Chapter 15 - Miscellaneous
 #############################################################################################################
 
 
 #############################################################################################################
-# Section 14.1: Miscellaneous
+# Section 15.1: Miscellaneous
 
 SECTION_MISCELLANEOUS:
 
@@ -16410,7 +16562,7 @@ misc_join:
 
 
 #############################################################################################################
-# Section 14.2: Limitations
+# Section 15.2: Limitations
 
 SECTION_LIMITATIONS:
 

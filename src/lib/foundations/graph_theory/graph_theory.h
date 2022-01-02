@@ -433,6 +433,7 @@ public:
 	int test_distinguishing_property(long int *set, int sz,
 			int verbose_level);
 	void eigenvalues(double *&E, int verbose_level);
+	void Laplace_eigenvalues(double *&E, int verbose_level);
 
 };
 

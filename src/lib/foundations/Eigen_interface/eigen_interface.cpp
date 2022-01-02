@@ -15,7 +15,7 @@ using namespace Eigen;
 using namespace std;
 
 
-void orbiter_eigenvalues(int *Adj, int nb_points, double *E, int verbose_level)
+void orbiter_eigenvalues(int *Mtx, int nb_points, double *E, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -52,15 +52,8 @@ void orbiter_eigenvalues(int *Adj, int nb_points, double *E, int verbose_level)
 		X(i, i) = 0;
 	}
 	for (i = 0; i < nb_points; i++) {
-		for (j = i + 1; j < nb_points; j++) {
-			if (Adj[i * nb_points + j]) {
-				X(i, j) = 1;
-				X(j, i) = 1;
-			}
-			else {
-				X(i, j) = 0;
-				X(j, i) = 0;
-			}
+		for (j = 0; j < nb_points; j++) {
+			X(i, j) = Mtx[i * nb_points + j];
 		}
 	}
 	SelfAdjointEigenSolver<MatrixXd> es(X);
