@@ -1493,8 +1493,8 @@ void schreier::draw_tree2(std::string &fname,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int x_min = 0, x_max = Opt->xin;
-	int y_min = 0, y_max = Opt->yin;
+	//int x_min = 0, x_max = Opt->xin;
+	//int y_min = 0, y_max = Opt->yin;
 	int factor_1000 = 1000;
 	string fname_full;
 
@@ -1508,6 +1508,12 @@ void schreier::draw_tree2(std::string &fname,
 	if (f_v) {
 		cout << "schreier::draw_tree2 before creating G" << endl;
 	}
+
+	mp_graphics G;
+
+	G.init(fname_full, Opt, verbose_level - 1);
+
+#if 0
 	mp_graphics G(fname_full, x_min, y_min, x_max, y_max,
 		Opt->f_embedded, Opt->f_sideways, verbose_level - 1);
 	if (f_v) {
@@ -1518,16 +1524,17 @@ void schreier::draw_tree2(std::string &fname,
 	G.out_xmax() = Opt->xout;
 	G.out_ymax() = Opt->yout;
 	G.set_parameters(Opt->scale, Opt->line_width);
+#endif
 
 	G.header();
 	G.begin_figure(factor_1000);
 
-	int x = x_max / 2;
+	int x = Opt->yin / 2;
 	int y;
 	if (f_v) {
 		cout << "schreier::draw_tree2 before calc_y_coordinate" << endl;
 	}
-	calc_y_coordinate(y, 0, max_depth, y_max);
+	calc_y_coordinate(y, 0, max_depth, Opt->yin);
 	if (f_v) {
 		cout << "schreier::draw_tree2 after calc_y_coordinate" << endl;
 	}
@@ -1539,7 +1546,7 @@ void schreier::draw_tree2(std::string &fname,
 	subtree_draw_lines(G, Opt,
 			x, y, weight,
 			placement_x, max_depth, i, last,
-			y_max,
+			Opt->yin,
 			verbose_level);
 	if (f_v) {
 		cout << "schreier::draw_tree2 after subtree_draw_lines" << endl;
@@ -1552,7 +1559,7 @@ void schreier::draw_tree2(std::string &fname,
 			x, y, weight,
 			placement_x, max_depth, i, last,
 			f_has_point_labels, point_labels,
-			y_max,
+			Opt->yin,
 			verbose_level);
 	if (f_v) {
 		cout << "schreier::draw_tree2 after subtree_draw_vertices" << endl;
@@ -1569,8 +1576,8 @@ void schreier::draw_tree2(std::string &fname,
 	}
 	avg = (double) L / (double)N;
 	// x = 500000;
-	x = x_max / 2;
-	calc_y_coordinate(y, max_depth + 1, max_depth, y_max);
+	x = Opt->xin / 2;
+	calc_y_coordinate(y, max_depth + 1, max_depth, Opt->yin);
 	char str[1000];
 	int nb_gens;
 	double H; // entropy

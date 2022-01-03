@@ -752,7 +752,14 @@ void graph_classify::draw_graphs(int level,
 #endif
 
 		{
+
+			mp_graphics G;
+
+			G.init(fname_full, draw_options, verbose_level - 1);
+
+#if 0
 			mp_graphics G(fname_full, draw_options, verbose_level - 1);
+#endif
 
 			G.header();
 			G.begin_figure(1000 /*factor_1000*/);

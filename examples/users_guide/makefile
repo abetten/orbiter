@@ -3666,6 +3666,8 @@ C13:
 		-group_theoretic_activity \
 			-save_elements_csv "C13_elts.csv" \
 		-end
+	pdflatex C13_report.tex
+	open C13_report.pdf
 
 
 
@@ -11742,18 +11744,20 @@ geo_10_3_orderly_mem_debug:
 geo_10_3_tree:
 	$(ORBITER_PATH)orbiter.out -v 20 \
 		-define Test_lines -set -loop 0 11 1 -end \
-		-define Geo -geometry_builder \
+		-define GEO -geometry_builder \
 			-V 10 -B 10 -TDO 3 -fuse 1 \
 			-fname_GEO 10_3 \
 			-search_tree \
 			-test Test_lines \
 		-end
 	$(ORBITER_PATH)orbiter.out -v 20 \
-		-draw_options -embedded -radius 50 \
+		-draw_options -embedded -radius 20 \
+			-paperheight 220 \
+			-paperwidth 330 \
 			-xin 10000 -yin 10000 \
 			-xout 1000000 -yout 500000 \
 			-nodes_empty \
-			-scale 0.5 -line_width 0.3 \
+			-scale 2 -line_width 0.3 \
 		-end \
 		-tree_draw 10_3_tree.txt
 	pdflatex 10_3_tree_draw.tex

@@ -313,8 +313,8 @@ void layered_graph::draw_with_options(std::string &fname,
 {
 	int f_v = (verbose_level >= 1);
 
-	int x_min = 0; //, x_max = 10000;
-	int y_min = 0; //, y_max = 10000;
+	//int x_min = 0; //, x_max = 10000;
+	//int y_min = 0; //, y_max = 10000;
 	int factor_1000 = 1000;
 	string fname_full;
 	double move_out = 0.01;
@@ -343,6 +343,11 @@ void layered_graph::draw_with_options(std::string &fname,
 			cout << "layered_graph::draw_with_options f_embedded = " << O->f_embedded << endl;
 		}
 
+		mp_graphics G;
+
+		G.init(fname_full, O, verbose_level - 1);
+
+#if 0
 		mp_graphics G(fname_full, x_min, y_min,
 				O->xin, O->yin,
 				O->f_embedded, O->f_sideways, verbose_level - 1);
@@ -354,6 +359,7 @@ void layered_graph::draw_with_options(std::string &fname,
 
 		G.tikz_global_scale = O->scale;
 		G.tikz_global_line_width = O->line_width;
+#endif
 
 		G.header();
 		G.begin_figure(factor_1000);

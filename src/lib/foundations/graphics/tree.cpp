@@ -192,10 +192,13 @@ void tree::draw(std::string &fname,
 
 
 	{
-		int x_min = 0;
-		int y_min = 0;
+		//int x_min = 0;
+		//int y_min = 0;
 		int factor_1000 = 1000;
 
+		mp_graphics G;
+		G.init(fname_full, Opt, verbose_level);
+#if 0
 		mp_graphics G(fname_full, x_min, y_min,
 				Opt->xin, Opt->yin,
 				Opt->f_embedded, Opt->f_sideways,
@@ -208,6 +211,7 @@ void tree::draw(std::string &fname,
 
 		G.tikz_global_scale = Opt->scale;
 		G.tikz_global_line_width = Opt->line_width;
+#endif
 
 		G.header();
 		G.begin_figure(factor_1000);

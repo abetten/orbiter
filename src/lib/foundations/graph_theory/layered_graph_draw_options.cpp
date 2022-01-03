@@ -21,8 +21,14 @@ namespace foundations {
 
 layered_graph_draw_options::layered_graph_draw_options()
 {
-	f_file = FALSE;
+	//f_file = FALSE;
 	//fname = NULL;
+
+	f_paperheight = FALSE;
+	paperheight = 0;
+	f_paperwidth = FALSE;
+	paperwidth = 0;
+
 
 	xin = 10000;
 	yin = 10000;
@@ -85,11 +91,27 @@ int layered_graph_draw_options::read_arguments(
 	}
 	for (i = 0; i < argc; i++) {
 
+#if 0
 		if (stringcmp(argv[i], "-file") == 0) {
 			f_file = TRUE;
 			fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "-file " << fname << endl;
+			}
+		}
+#endif
+		if (stringcmp(argv[i], "-paperheight") == 0) {
+			f_paperheight = TRUE;
+			paperheight = strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-paperheight " << paperheight << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-paperwidth") == 0) {
+			f_paperwidth = TRUE;
+			paperwidth = strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-paperwidth " << paperwidth << endl;
 			}
 		}
 		else if (stringcmp(argv[i], "-xin") == 0) {
@@ -248,11 +270,22 @@ void layered_graph_draw_options::print()
 {
 	//cout << "layered_graph_draw_options::print:" << endl;
 
+#if 0
 	if (f_file) {
 		cout << "file name: " << fname << endl;
 	}
+#endif
+
+	if (f_paperheight) {
+		cout << "-paperheight " << paperheight << endl;
+	}
+	if (f_paperwidth) {
+		cout << "-paperwidth " << paperwidth << endl;
+	}
+
 	cout << "xin, xout, yin, yout=" << xin << ", " << xout << ", " << yin << ", " << yout << endl;
 	cout << "radius=" << rad << endl;
+
 	if (f_spanning_tree) {
 		cout << "f_spanning_tree=" << endl;
 	}

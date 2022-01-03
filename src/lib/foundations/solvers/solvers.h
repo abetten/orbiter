@@ -291,7 +291,7 @@ public:
 	int solve_first(int verbose_level);
 	int solve_next();
 	int solve_first_mckay(int f_once, int verbose_level);
-	void draw_solutions(std::string &fname_base, int verbose_level);
+	//void draw_solutions(std::string &fname_base, int verbose_level);
 	void write_solutions(std::string &fname, int verbose_level);
 	void read_solutions_from_file(std::string &fname_sol,
 		int verbose_level);
@@ -363,12 +363,15 @@ public:
 	void write_gurobi_binary_variables(const char *fname);
 	void draw_as_bitmap(std::string &fname,
 			int f_box_width, int box_width, int bit_depth, int verbose_level);
-	void draw_it(std::string &fname_base,
-			int xmax_in, int ymax_in,
-			int xmax_out, int ymax_out, int verbose_level);
-	void draw_partitioned(std::string &fname_base,
-		int xmax_in, int ymax_in, 
-		int xmax_out, int ymax_out, 
+	void draw_it(
+			std::string &fname_base,
+			layered_graph_draw_options *Draw_options,
+			//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
+			int verbose_level);
+	void draw_partitioned(
+			std::string &fname_base,
+			layered_graph_draw_options *Draw_options,
+		//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 		int f_solution, int *solution, int solution_sz, 
 		int verbose_level);
 	int test_solution(int *sol, int len, int verbose_level);
@@ -397,7 +400,7 @@ void solve_diophant(int *Inc, int nb_rows, int nb_cols, int nb_needed,
 	int f_has_Rhs, int *Rhs, 
 	long int *&Solutions, int &nb_sol, long int &nb_backtrack, int &dt,
 	int f_DLX, 
-	int f_draw_system, std::string &fname_system,
+	//int f_draw_system, std::string &fname_system,
 	int f_write_tree, std::string &fname_tree,
 	int verbose_level);
 // allocates Solutions[nb_sol * target_size]

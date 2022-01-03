@@ -20,9 +20,57 @@ static int compute_dd(int dx);
 
 mp_graphics::mp_graphics()
 {
-	default_values();
+	Draw_options = NULL;
+
+	//std::string fname_mp;
+	//std::string fname_log;
+	//std::string fname_tikz;
+	//std::ofstream fp_mp;
+	//std::ofstream fp_log;
+	//std::ofstream fp_tikz;
+
+
+	f_file_open = FALSE;
+	//int user[4]; // llx/lly/urx/ury
+	//int dev[4]; // llx/lly/urx/ury
+
+	x_min = INT_MAX;
+	x_max = INT_MIN;
+	y_min = INT_MAX;
+	y_max = INT_MIN;
+	f_min_max_set = FALSE;
+
+	txt_halign = 0;
+	txt_valign = 0;
+	txt_boxed = 0;
+	txt_overwrite = 0;
+	txt_rotate = 0;
+	line_beg_style = 0;
+	line_end_style = 0; // if 1, draw an arrow
+	line_dashing = 0; // between 0 and 100  sl_udsty
+	line_thickness = 100; // 100 is the old 1
+	line_color = 1;
+	fill_interior = 0;
+	fill_color = 0;
+	fill_shape = 1;
+	fill_outline = 0;
+	fill_nofill = 0;
+
+	cur_path = 1;
+
+	//f_embedded = FALSE;
+	//f_sideways = FALSE;
+
+	//tikz_global_scale = .45;
+	//tikz_global_line_width = 1.5;
 }
 
+
+
+
+
+
+#if 0
 mp_graphics::mp_graphics(std::string &file_name,
 		layered_graph_draw_options *Opt, int verbose_level)
 {
@@ -39,7 +87,6 @@ mp_graphics::mp_graphics(std::string &file_name,
 
 
 
-
 mp_graphics::mp_graphics(std::string &file_name,
 		int xmin, int ymin, int xmax, int ymax,
 		int f_embedded, int f_sideways, int verbose_level)
@@ -48,6 +95,7 @@ mp_graphics::mp_graphics(std::string &file_name,
 	default_values();
 	init(file_name, xmin, ymin, xmax, ymax, f_embedded, f_sideways, verbose_level);
 }
+#endif
 
 mp_graphics::~mp_graphics()
 {
@@ -55,8 +103,10 @@ mp_graphics::~mp_graphics()
 	exit(cout, 1);
 }
 
+#if 0
 void mp_graphics::default_values()
 {
+	Draw_options = NULL;
 	f_file_open = FALSE;
 	f_min_max_set = FALSE;
 	txt_halign = 0;
@@ -77,25 +127,31 @@ void mp_graphics::default_values()
 	
 	cur_path = 1;
 	
-	f_embedded = FALSE;
-	f_sideways = FALSE;
+	//f_embedded = FALSE;
+	//f_sideways = FALSE;
 
-	tikz_global_scale = .45;
-	tikz_global_line_width = 1.5;
+	//tikz_global_scale = .45;
+	//tikz_global_line_width = 1.5;
 }
+#endif
 
-void mp_graphics::init(std::string &file_name,
-	int xmin, int ymin, int xmax, int ymax,
-	int f_embedded, int f_sideways, int verbose_level)
+void mp_graphics::init(
+		std::string &file_name,
+		layered_graph_draw_options *Draw_options,
+	//int xmin, int ymin, int xmax, int ymax,
+	//int f_embedded, int f_sideways,
+	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	string_tools ST;
 
 	if (f_v) {
+		cout << "mp_graphics::init" << endl;
 		cout << "mp_graphics::init file_name=" << file_name << endl;
 	}
-	mp_graphics::f_embedded = f_embedded;
-	mp_graphics::f_sideways = f_sideways;
+	mp_graphics::Draw_options = Draw_options;
+	//mp_graphics::f_embedded = f_embedded;
+	//mp_graphics::f_sideways = f_sideways;
 	
 	fname_mp.assign(file_name);
 	fname_log.assign(file_name);
@@ -110,17 +166,17 @@ void mp_graphics::init(std::string &file_name,
 	fp_tikz.open(fname_tikz);
 	f_file_open = TRUE;
 	
-	user[0] = xmin;
-	user[1] = ymin;
-	user[2] = xmax;
-	user[3] = ymax;
+	user[0] = 0; //xmin;
+	user[1] = 0; //ymin;
+	user[2] = Draw_options->xin; // xmax;
+	user[3] = Draw_options->yin; // ymax;
 	
 	// the identity transformation:
 	
-	dev[0] = xmin;
-	dev[1] = ymin;
-	dev[2] = xmax;
-	dev[3] = ymax;
+	dev[0] = 0; // xmin;
+	dev[1] = 0; // ymin;
+	dev[2] = Draw_options->xout; // xmax;
+	dev[3] = Draw_options->yout; // ymax;
 	if (f_v) {
 		cout << "mp_graphics::init done" << endl;
 	}
@@ -159,10 +215,13 @@ void mp_graphics::exit(ostream &ost, int verbose_level)
 	}
 }
 
-void mp_graphics::setup(std::string &fname_base,
-	int in_xmin, int in_ymin, int in_xmax, int in_ymax, 
-	int xmax, int ymax, int f_embedded, int f_sideways, 
-	double scale, double line_width, int verbose_level)
+#if 0
+void mp_graphics::setup(
+		//std::string &fname_base,
+	//int in_xmin, int in_ymin, int in_xmax, int in_ymax,
+	//int xmax, int ymax, int f_embedded, int f_sideways,
+	//double scale, double line_width,
+		int verbose_level)
 {
 	//int x_min = 0, x_max = 1000;
 	//int y_min = 0, y_max = 1000;
@@ -192,7 +251,9 @@ void mp_graphics::setup(std::string &fname_base,
 	header();
 	begin_figure(factor_1000);
 }
+#endif
 
+#if 0
 void mp_graphics::set_parameters(double scale, double line_width)
 {
 	tikz_global_scale = scale;
@@ -203,6 +264,7 @@ void mp_graphics::set_scale(double scale)
 {
 	tikz_global_scale = scale;
 }
+#endif
 
 
 void mp_graphics::frame(double move_out)
@@ -2414,34 +2476,43 @@ void mp_graphics::header_tikz(std::string &str_date)
 	fp_tikz << "% UserCoordinates " << user[0] << " " << user[1]
 			<< " " << user[2] << " " << user[3] << endl;
 	
-	if (f_embedded) {
+	if (Draw_options->f_embedded) {
 		fp_tikz << "\\documentclass[12pt]{article}" << endl;
 		fp_tikz << "\\usepackage{amsmath, amssymb, amsthm}" << endl;
 		fp_tikz << "\\usepackage{tikz} " << endl;
-		if (f_sideways) {
+		if (Draw_options->f_sideways) {
 			fp_tikz << "\\usepackage{rotating} " << endl;
 			}
 		fp_tikz << "%\\usepackage{anysize}" << endl;
+
+
+		if (Draw_options->f_paperheight) {
+			fp_tikz << "\\paperheight=" << (double) Draw_options->paperheight * 0.1 << "in" << endl;
+		}
+		if (Draw_options->f_paperwidth) {
+			fp_tikz << "\\paperwidth=" << (double) Draw_options->paperwidth * 0.1 << "in" << endl;
+		}
+
 		fp_tikz << "\\begin{document}" << endl;
 		fp_tikz << "%\\bibliographystyle{plain}" << endl;
 		fp_tikz << "\\pagestyle{empty}" << endl;
-		}
+	}
 
-	if (f_sideways) {
+	if (Draw_options->f_sideways) {
 		fp_tikz << "\\begin{sideways}" << endl;
-		}
-	fp_tikz << "\\begin{tikzpicture}[scale=" << tikz_global_scale
-		<< ",line width = " << tikz_global_line_width << "pt]" << endl;
+	}
+	fp_tikz << "\\begin{tikzpicture}[scale=" << Draw_options->scale
+		<< ",line width = " << Draw_options->line_width << "pt]" << endl;
 	//fp_tikz << "\\begin{tikzpicture}[scale=.05,line width = 0.5pt]" << endl;
 }
 
 void mp_graphics::footer_tikz()
 {
 	fp_tikz << "\\end{tikzpicture}" << endl;
-	if (f_sideways) {
+	if (Draw_options->f_sideways) {
 		fp_tikz << "\\end{sideways}" << endl;
 		}
-	if (f_embedded) {
+	if (Draw_options->f_embedded) {
 		fp_tikz << "\\end{document}" << endl;
 		}
 }
@@ -3155,8 +3226,8 @@ void mp_graphics::draw_bitmatrix2(int f_dots,
 	int f_partition, int nb_row_parts, int *row_part_first,
 	int nb_col_parts, int *col_part_first,
 	int f_row_grid, int f_col_grid,
-	int f_bitmatrix, bitmatrix *Bitmatrix, int *M,
-	int m, int n, int xmax, int ymax,
+	int f_bitmatrix, bitmatrix *Bitmatrix,
+	int *M, int m, int n,
 	int f_has_labels, int *labels)
 {
 	char str[1000];
@@ -3968,7 +4039,7 @@ void mp_graphics::projective_plane_draw_grid2(
 void mp_graphics::draw_matrix_in_color(
 	int f_row_grid, int f_col_grid,
 	int *Table, int nb_colors,
-	int m, int n, int xmax, int ymax,
+	int m, int n, //int xmax, int ymax,
 	int *color_scale, int nb_colors_in_scale,
 	int f_has_labels, int *labels)
 {

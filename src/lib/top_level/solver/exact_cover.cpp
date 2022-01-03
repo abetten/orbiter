@@ -700,17 +700,21 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 
 
 		if (f_draw_system) {
+#if 0
 			int xmax_in = 1000000;
 			int ymax_in = 1000000;
 			int xmax_out = 1000000;
 			int ymax_out = 1000000;
-		
+#endif
+
 			if (f_v) {
 				cout << "exact_cover::compute_liftings_single_case_new "
 						"drawing the system" << endl;
 				}
 			Dio->draw_it(fname_system,
-					xmax_in, ymax_in, xmax_out, ymax_out, verbose_level - 1);
+					Orbiter->draw_options,
+					//xmax_in, ymax_in, xmax_out, ymax_out,
+					verbose_level - 1);
 			if (f_v) {
 				cout << "exact_cover::compute_liftings_single_case_new "
 						"drawing the system done" << endl;

@@ -1482,12 +1482,12 @@ void linear_group::report(std::ostream &ost,
 
 			{
 				string fname2;
-				int x_min = 0, y_min = 0;
-				int xmax = ONE_MILLION;
-				int ymax = ONE_MILLION;
+				//int x_min = 0, y_min = 0;
+				//int xmax = ONE_MILLION;
+				//int ymax = ONE_MILLION;
 
-				int f_embedded = TRUE;
-				int f_sideways = FALSE;
+				//int f_embedded = TRUE;
+				//int f_sideways = FALSE;
 				int *labels;
 
 				char str[1000];
@@ -1515,31 +1515,37 @@ void linear_group::report(std::ostream &ost,
 				fname2.append(str);
 
 				{
-				mp_graphics G(fname2, x_min, y_min, xmax, ymax, f_embedded, f_sideways, verbose_level - 1);
-				//G.setup(fname2, 0, 0, ONE_MILLION, ONE_MILLION, xmax, ymax, f_embedded, scale, line_width);
-				G.out_xmin() = 0;
-				G.out_ymin() = 0;
-				G.out_xmax() = xmax;
-				G.out_ymax() = ymax;
-				//cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
+					mp_graphics G;
 
-				G.tikz_global_scale = LG_Draw_options->scale;
-				G.tikz_global_line_width = LG_Draw_options->line_width;
+					G.init(fname2, LG_Draw_options, verbose_level);
 
-				G.header();
-				G.begin_figure(1000 /* factor_1000*/);
+#if 0
+					mp_graphics G(fname2, x_min, y_min, xmax, ymax, f_embedded, f_sideways, verbose_level - 1);
+					//G.setup(fname2, 0, 0, ONE_MILLION, ONE_MILLION, xmax, ymax, f_embedded, scale, line_width);
+					G.out_xmin() = 0;
+					G.out_ymin() = 0;
+					G.out_xmax() = xmax;
+					G.out_ymax() = ymax;
+					//cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
 
-				int color_scale[] = {8,5,6,4,3,2,18,19, 7,9,10,11,12,13,14,15,16,17,20,21,22,23,24,25,1};
-				int nb_colors = sizeof(color_scale) / sizeof(int);
+					//G.tikz_global_scale = LG_Draw_options->scale;
+					//G.tikz_global_line_width = LG_Draw_options->line_width;
+#endif
 
-				G.draw_matrix_in_color(
-					FALSE /* f_row_grid */, FALSE /* f_col_grid */,
-					Table  /* Table */, n /* nb_colors */,
-					n, n, xmax, ymax,
-					color_scale, nb_colors,
-					TRUE /* f_has_labels */, labels);
+					G.header();
+					G.begin_figure(1000 /* factor_1000*/);
 
-				G.finish(cout, TRUE);
+					int color_scale[] = {8,5,6,4,3,2,18,19, 7,9,10,11,12,13,14,15,16,17,20,21,22,23,24,25,1};
+					int nb_colors = sizeof(color_scale) / sizeof(int);
+
+					G.draw_matrix_in_color(
+						FALSE /* f_row_grid */, FALSE /* f_col_grid */,
+						Table  /* Table */, n /* nb_colors */,
+						n, n, //xmax, ymax,
+						color_scale, nb_colors,
+						TRUE /* f_has_labels */, labels);
+
+					G.finish(cout, TRUE);
 				}
 				FREE_int(labels);
 

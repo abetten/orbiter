@@ -150,17 +150,21 @@ void diophant_activity::perform_activity(diophant_activity_description *Descr, d
 	}
 	else if (Descr->f_draw) {
 		string fname_base;
+#if 0
 		int xmax_in = ONE_MILLION;
 		int ymax_in = ONE_MILLION;
 		int xmax_out = ONE_MILLION;
 		int ymax_out = ONE_MILLION;
+#endif
 
 		fname_base.assign(Descr->input_file);
 		//sprintf(fname_base, "%s", Descr->input_file);
 		ST.replace_extension_with(fname_base, "_drawing");
 		//Dio->draw_it(fname_base, xmax_in, ymax_in, xmax_out, ymax_out);
+
 		Dio->draw_partitioned(fname_base,
-			xmax_in, ymax_in, xmax_out, ymax_out,
+				Orbiter->draw_options,
+			//xmax_in, ymax_in, xmax_out, ymax_out,
 			FALSE, 0, 0,
 			verbose_level);
 	}

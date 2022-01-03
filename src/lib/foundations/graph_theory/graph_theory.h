@@ -334,36 +334,51 @@ public:
 	void init_user_data(long int *data, int data_size, int verbose_level);
 	void save(std::string &fname, int verbose_level);
 	void load(std::string &fname, int verbose_level);
-	void draw_on_circle(std::string &fname,
-		int xmax_in, int ymax_in, int xmax_out, int ymax_out,
-		int f_radius, double radius, 
-		int f_labels, int f_embedded, int f_sideways, 
-		double tikz_global_scale, double tikz_global_line_width,
+	void draw_on_circle(
+			std::string &fname,
+			layered_graph_draw_options *Draw_options,
+			//std::string &fname,
+		//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
+		//int f_radius, double radius,
+		//int f_labels, int f_embedded, int f_sideways,
+		//double tikz_global_scale, double tikz_global_line_width,
 		int verbose_level);
-	void draw_on_circle_2(mp_graphics &G, int f_labels, 
-		int f_radius, double radius);
+	void draw_on_circle_2(
+		mp_graphics &G,
+		layered_graph_draw_options *Draw_options);
 	void create_bitmatrix(bitmatrix *&Bitmatrix,
 		int verbose_level);
-	void draw(std::string &fname,
-		int xmax_in, int ymax_in, int xmax_out, int ymax_out,
-		double scale, double line_width, 
+	void draw(
+			std::string &fname,
+			layered_graph_draw_options *Draw_options,
+			//std::string &fname,
+		//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
+		//double scale, double line_width,
 		int verbose_level);
-	void draw_Levi(std::string &fname,
-		int xmax_in, int ymax_in, int xmax_out, int ymax_out,
+	void draw_Levi(
+			std::string &fname,
+			layered_graph_draw_options *Draw_options,
+			//std::string &fname,
+		//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 		int f_partition, int nb_row_parts, int *row_part_first, 
 		int nb_col_parts, int *col_part_first, 
 		int m, int n, int f_draw_labels, 
-		double scale, double line_width, 
+		//double scale, double line_width,
 		int verbose_level);
-	void draw_with_a_given_partition(std::string &fname,
-		int xmax_in, int ymax_in, int xmax_out, int ymax_out,
-		int *parts, int nb_parts, 
-		double scale, double line_width, 
-		int verbose_level);
-	void draw_partitioned(std::string &fname,
-		int xmax_in, int ymax_in, int xmax_out, int ymax_out,
-		int f_labels, 
-		double scale, double line_width, 
+	void draw_with_a_given_partition(
+			std::string &fname,
+			layered_graph_draw_options *Draw_options,
+			//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
+			int *parts, int nb_parts,
+			//double scale, double line_width,
+			int verbose_level);
+	void draw_partitioned(
+			std::string &fname,
+			layered_graph_draw_options *Draw_options,
+		//std::string &fname,
+		//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
+		int f_labels,
+		//double scale, double line_width,
 		int verbose_level);
 	colored_graph *compute_neighborhood_subgraph(
 		int pt,
@@ -395,9 +410,11 @@ public:
 			long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
 	int is_cycle(int nb_e, long int *edges, int verbose_level);
+#if 0
 	void draw_it(std::string &fname_base,
 		int xmax_in, int ymax_in, int xmax_out, int ymax_out, 
 		double scale, double line_width, int verbose_level);
+#endif
 	void all_cliques(
 			clique_finder_control *Control,
 			std::string &graph_label, int verbose_level);
@@ -556,10 +573,14 @@ public:
 	graph_theory_domain();
 	~graph_theory_domain();
 
-	void colored_graph_draw(std::string &fname,
-		int xmax_in, int ymax_in, int xmax_out, int ymax_out,
-		double scale, double line_width,
-		int verbose_level);
+	void colored_graph_draw(
+			std::string &fname,
+			layered_graph_draw_options *Draw_options,
+			//int xmax_in,
+			//int ymax_in, int xmax_out, int ymax_out, double scale,
+			//double line_width,
+			int f_labels,
+			int verbose_level);
 	void colored_graph_all_cliques(
 			clique_finder_control *Control,
 			std::string &fname,
@@ -595,14 +616,14 @@ public:
 		int *first, int *len, int nb_parts, int *&R, int verbose_level);
 	void draw_bitmatrix(
 			std::string &fname_base,
+			layered_graph_draw_options *Draw_options,
 			int f_dots,
 			int f_partition, int nb_row_parts, int *row_part_first,
-			int nb_col_parts, int *col_part_first,
-			int f_row_grid, int f_col_grid,
+			int nb_col_parts, int *col_part_first, int f_row_grid, int f_col_grid,
 			int f_bitmatrix, bitmatrix *Bitmatrix,
 			int *M, int m, int n,
-			int xmax_in, int ymax_in, int xmax, int ymax,
-			double scale, double line_width,
+			//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
+			//double scale, double line_width,
 			int f_has_labels, int *labels,
 			int verbose_level);
 	void list_parameters_of_SRG(int v_max, int verbose_level);
@@ -730,8 +751,13 @@ public:
 class layered_graph_draw_options {
 public:
 
-	int f_file;
-	std::string fname;
+	//int f_file;
+	//std::string fname;
+
+	int f_paperheight;
+	int paperheight;
+	int f_paperwidth;
+	int paperwidth;
 
 	int xin;
 	int yin;
@@ -753,10 +779,13 @@ public:
 	double x_stretch;
 	int f_y_stretch;
 	double y_stretch;
+
 	int f_scale;
 	double scale;
+
 	int f_line_width;
 	double line_width;
+
 	int f_rotated;
 
 	

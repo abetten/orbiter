@@ -588,9 +588,11 @@ public:
 		int x2, int y2, int z2,
 		int &x3, int &y3, int &z3, int verbose_level);
 	void save_incidence_matrix(std::string &fname, int verbose_level);
-	void draw_grid(std::string &fname,
-			double tikz_global_scale, double tikz_global_line_width,
-			int xmax, int ymax,
+	void draw_grid(
+			std::string &fname,
+			layered_graph_draw_options *Draw_options,
+			//double tikz_global_scale, double tikz_global_line_width,
+			//int xmax, int ymax,
 			int f_with_grid, int f_with_points, int point_density,
 			int f_path, int start_idx, int nb_steps,
 			int verbose_level);

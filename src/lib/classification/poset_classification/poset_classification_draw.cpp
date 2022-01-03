@@ -182,7 +182,9 @@ int poset_classification::write_treefile(std::string &fname_base,
 	}
 }
 
-void poset_classification::draw_tree(std::string &fname_base, int lvl,
+void poset_classification::draw_tree(
+		std::string &fname_base, int lvl,
+		layered_graph_draw_options *Draw_options,
 	int xmax, int ymax, int rad, int f_embedded,
 	int f_sideways, int verbose_level)
 {
@@ -292,7 +294,8 @@ void poset_classification::draw_tree(std::string &fname_base, int lvl,
 			cout << "poset_classification::draw_tree "
 					"before draw_tree_low_level" << endl;
 		}
-		draw_tree_low_level(fname, nb_nodes, 
+		draw_tree_low_level(fname, Draw_options,
+				nb_nodes,
 			coord_xyw, perm_inv, perm, 
 			f_draw_points, f_draw_extension_points,
 			f_draw_aut_group_order,
@@ -309,7 +312,10 @@ void poset_classification::draw_tree(std::string &fname_base, int lvl,
 	}
 }
 
-void poset_classification::draw_tree_low_level(std::string &fname, int nb_nodes,
+void poset_classification::draw_tree_low_level(
+		std::string &fname,
+		layered_graph_draw_options *Draw_options,
+		int nb_nodes,
 	int *coord_xyw, int *perm, int *perm_inv, 
 	int f_draw_points, int f_draw_extension_points,
 	int f_draw_aut_group_order,
@@ -318,12 +324,12 @@ void poset_classification::draw_tree_low_level(std::string &fname, int nb_nodes,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	int x_min = 0, x_max = 10000;
-	int y_min = 0, y_max = 10000;
-	//int factor_1000 = 1000;
+	//int x_min = 0, x_max = 10000;
+	//int y_min = 0, y_max = 10000;
+	int factor_1000 = 1000;
 	string fname_full;
-	double scale = 0.3;
-	double line_width = 1.0;
+	//double scale = 0.3;
+	//double line_width = 1.0;
 	file_io Fio;
 	
 	if (xmax == -1)
@@ -354,16 +360,21 @@ void poset_classification::draw_tree_low_level(std::string &fname, int nb_nodes,
 		//cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
 #endif
 		mp_graphics G;
+
+		G.init(fname, Draw_options, verbose_level - 1);
+#if 0
 		G.setup(fname,
 				x_min, y_min, x_max, y_max, xmax, ymax,
 				f_embedded, f_sideways, scale, line_width,
 				verbose_level - 1);
 		//G.frame(0.05);
+#endif
 
-		//G.header();
-		//G.begin_figure(factor_1000);
+		G.header();
+		G.begin_figure(factor_1000);
 
-		draw_tree_low_level1(G, nb_nodes, coord_xyw, perm, perm_inv,
+		draw_tree_low_level1(G,
+				nb_nodes, coord_xyw, perm, perm_inv,
 			f_draw_points, f_draw_extension_points,
 			f_draw_aut_group_order, rad, 0 /*verbose_level - 1*/);
 

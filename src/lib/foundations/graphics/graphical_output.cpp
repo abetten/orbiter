@@ -973,8 +973,8 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 
 	os_interface Os;
 	int t0 = Os.os_ticks();
-	int xmax = Opt->xin; //1500;
-	int ymax = Opt->yin; //1500;
+	//int xmax = Opt->xin; //1500;
+	//int ymax = Opt->yin; //1500;
 	int i;
 
 
@@ -994,8 +994,9 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 			sprintf(str, "%s_%d_%d", Descr->fname.c_str(), Descr->number, i);
 			fname.assign(str);
 
-			G.setup(fname, 0, 0, ONE_MILLION, ONE_MILLION,
-					xmax, ymax, Opt->f_embedded, Opt->f_sideways, Opt->scale, Opt->line_width, verbose_level - 1);
+			G.init(fname, Opt, verbose_level);
+			//G.setup(fname, 0, 0, ONE_MILLION, ONE_MILLION,
+			//		xmax, ymax, Opt->f_embedded, Opt->f_sideways, Opt->scale, Opt->line_width, verbose_level - 1);
 			//G.setup(fname2, 0, 0, ONE_MILLION, ONE_MILLION, xmax, ymax);
 
 
@@ -1023,9 +1024,10 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 				sprintf(str, "%s_%d_%d", Descr->fname.c_str(), Descr->number, frame);
 				fname.assign(str);
 
-				G.setup(fname, 0, 0, ONE_MILLION, ONE_MILLION,
-						xmax, ymax, Opt->f_embedded, Opt->f_sideways, Opt->scale, Opt->line_width,
-						verbose_level - 1);
+				G.init(fname, Opt, verbose_level);
+				//G.setup(fname, 0, 0, ONE_MILLION, ONE_MILLION,
+				//		xmax, ymax, Opt->f_embedded, Opt->f_sideways, Opt->scale, Opt->line_width,
+				//		verbose_level - 1);
 
 				draw_projective(G, Descr->number, 0, Descr->animate_nb_of_steps, TRUE, i, Descr->animate_transition_nb_of_steps, TRUE, i, FALSE, 0);
 
@@ -1049,9 +1051,10 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 			sprintf(str, "%s_%d_%d", Descr->fname.c_str(), Descr->number, frame);
 			fname.assign(str);
 
-			G.setup(fname, 0, 0, ONE_MILLION, ONE_MILLION,
-					xmax, ymax, Opt->f_embedded, Opt->f_sideways, Opt->scale, Opt->line_width,
-					verbose_level - 1);
+			G.init(fname, Opt, verbose_level);
+			//G.setup(fname, 0, 0, ONE_MILLION, ONE_MILLION,
+			//		xmax, ymax, Opt->f_embedded, Opt->f_sideways, Opt->scale, Opt->line_width,
+			//		verbose_level - 1);
 			//G.setup(fname2, 0, 0, ONE_MILLION, ONE_MILLION, xmax, ymax);
 
 			//G.frame(0.05);
@@ -1076,9 +1079,10 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 			sprintf(str, "%s_%d_%d", Descr->fname.c_str(), Descr->number, frame);
 			fname.assign(str);
 
-			G.setup(fname, 0, 0, ONE_MILLION, ONE_MILLION,
-					xmax, ymax, Opt->f_embedded, Opt->f_sideways, Opt->scale, Opt->line_width,
-					verbose_level - 1);
+			G.init(fname, Opt, verbose_level);
+			//G.setup(fname, 0, 0, ONE_MILLION, ONE_MILLION,
+			//		xmax, ymax, Opt->f_embedded, Opt->f_sideways, Opt->scale, Opt->line_width,
+			//		verbose_level - 1);
 			//G.setup(fname2, 0, 0, ONE_MILLION, ONE_MILLION, xmax, ymax);
 
 			//G.frame(0.05);
@@ -1102,9 +1106,10 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 			sprintf(str, "%s_%d_%d", Descr->fname.c_str(), Descr->number, frame);
 			fname.assign(str);
 
-			G.setup(fname, 0, 0, ONE_MILLION, ONE_MILLION,
-					xmax, ymax, Opt->f_embedded, Opt->f_sideways, Opt->scale, Opt->line_width,
-					verbose_level - 1);
+			G.init(fname, Opt, verbose_level);
+			//G.setup(fname, 0, 0, ONE_MILLION, ONE_MILLION,
+			//		xmax, ymax, Opt->f_embedded, Opt->f_sideways, Opt->scale, Opt->line_width,
+			//		verbose_level - 1);
 			//G.setup(fname2, 0, 0, ONE_MILLION, ONE_MILLION, xmax, ymax);
 
 			//G.frame(0.05);
@@ -1128,9 +1133,10 @@ void graphical_output::draw_projective_curve(draw_projective_curve_description *
 				sprintf(str, "%s_%d_%d", Descr->fname.c_str(), Descr->number, frame);
 				fname.assign(str);
 
-				G.setup(fname, 0, 0, ONE_MILLION, ONE_MILLION,
-						xmax, ymax, Opt->f_embedded, Opt->f_sideways, Opt->scale, Opt->line_width,
-						verbose_level - 1);
+				G.init(fname, Opt, verbose_level);
+				//G.setup(fname, 0, 0, ONE_MILLION, ONE_MILLION,
+				//		xmax, ymax, Opt->f_embedded, Opt->f_sideways, Opt->scale, Opt->line_width,
+				//		verbose_level - 1);
 
 				draw_projective(G, Descr->number, 0,
 						Descr->animate_nb_of_steps, TRUE, i, Descr->animate_transition_nb_of_steps,
