@@ -2972,7 +2972,7 @@ void mp_graphics::draw_graph(int x, int y,
 	for (i = 0; i < nb_V; i++) {
 		X[i] = cos(i * phi) * w;
 		Y[i] = sin(i * phi) * h;
-		}
+	}
 	for (i = 0; i < nb_E; i++) {
 		e = Edges[i];
 		Combi.k2ij(e, u, v, nb_V);
@@ -2981,12 +2981,12 @@ void mp_graphics::draw_graph(int x, int y,
 		Px[1] = x + (int) X[v];
 		Py[1] = y + (int) Y[v];
 		polygon2(Px, Py, 0, 1);
-		}
+	}
 	for (i = 0; i < nb_V; i++) {
 		Px[0] = x + (int) X[i];
 		Py[0] = y + (int) Y[i];
 		nice_circle(Px[0], Py[0], rad);
-		}
+	}
 	delete X;
 	delete Y;
 	if (f_v) {
@@ -4039,7 +4039,7 @@ void mp_graphics::projective_plane_draw_grid2(
 void mp_graphics::draw_matrix_in_color(
 	int f_row_grid, int f_col_grid,
 	int *Table, int nb_colors,
-	int m, int n, //int xmax, int ymax,
+	int m, int n,
 	int *color_scale, int nb_colors_in_scale,
 	int f_has_labels, int *labels)
 {

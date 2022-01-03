@@ -230,6 +230,9 @@ public:
 	void read_incidence_file(std::vector<std::vector<int> > &Geos,
 			int &m, int &n, int &nb_flags,
 			std::string &inc_file_name, int verbose_level);
+	void read_incidence_by_row_ranks_file(std::vector<std::vector<int> > &Geos,
+			int &m, int &n, int &r,
+			std::string &inc_file_name, int verbose_level);
 	int inc_file_get_number_of_geometries(
 		char *inc_file_name, int verbose_level);
 	long int file_size(std::string &fname);

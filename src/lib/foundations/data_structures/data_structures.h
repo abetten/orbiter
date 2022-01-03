@@ -271,6 +271,9 @@ public:
 				int N_points, int b, int k, int partition_class_size);
 	void init_file_of_incidence_geometries(std::string &a,
 				int v, int b, int f);
+	void init_file_of_incidence_geometries_by_row_ranks(
+			std::string &a,
+				int v, int b, int r);
 	void init_incidence_geometry(std::string &a,
 				int v, int b, int f);
 	void init_incidence_geometry_by_row_ranks(std::string &a,

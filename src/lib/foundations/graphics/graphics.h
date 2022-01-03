@@ -439,7 +439,7 @@ public:
 		int f_transition, int transition_step, int transition_nb_steps,
 		int f_title_page, int title_page_step,
 		int f_trailer_page, int trailer_page_step);
-	void tree_draw(std::string &fname, int verbose_level);
+	void tree_draw(tree_draw_options *Tree_draw_options, int verbose_level);
 	void animate_povray(
 			povray_job_description *Povray_job_description,
 			int verbose_level);
@@ -834,7 +834,7 @@ public:
 	void draw_matrix_in_color(
 		int f_row_grid, int f_col_grid,
 		int *Table, int nb_colors,
-		int m, int n, //int xmax, int ymax,
+		int m, int n,
 		int *color_scale, int nb_colors_in_scale,
 		int f_has_labels, int *labels);
 	void domino_draw1(int M,
@@ -1427,6 +1427,7 @@ public:
 	
 	int nb_nodes;
 	int max_depth;
+	int *f_node_select;
 	
 	int *path;
 
@@ -1435,19 +1436,57 @@ public:
 
 	tree();
 	~tree();
-	void init(std::string &fname,
+	void init(tree_draw_options *Tree_draw_options,
 			int xmax, int ymax, int verbose_level);
 	void draw(std::string &fname,
+			tree_draw_options *Tree_draw_options,
 			layered_graph_draw_options *Opt,
-		int f_has_draw_vertex_callback, 
-		void (*draw_vertex_callback)(tree *T, mp_graphics *G, 
-			int *v, int layer, tree_node *N, 
-			int x, int y, int dx, int dy), 
+			int verbose_level);
+	void draw_preprocess(std::string &fname,
+			tree_draw_options *Tree_draw_options,
+			layered_graph_draw_options *Opt,
 			int verbose_level);
 	void circle_center_and_radii(int xmax, int ymax, int max_depth, 
 		int &x0, int &y0, int *&rad);
 	void compute_DFS_ranks(int &nb_nodes, int verbose_level);
 };
+
+// #############################################################################
+// tree_draw_options.cpp
+// #############################################################################
+
+
+//! options for drawing a tree
+
+
+class tree_draw_options {
+
+public:
+
+	int f_file;
+	std::string file_name;
+
+	int f_restrict;
+	int restrict_excluded_color;
+
+	int f_select_path;
+	std::string select_path_text;
+
+	int f_has_draw_vertex_callback;
+	void (*draw_vertex_callback)(tree *T,
+		mp_graphics *G, int *v, int layer, tree_node *N,
+		int x, int y, int dx, int dy);
+
+
+	tree_draw_options();
+	~tree_draw_options();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
 
 // #############################################################################
 // tree_node.cpp
@@ -1489,6 +1528,8 @@ public:
 	void print_path();
 	void print_depth_first();
 	void compute_DFS_rank(int &rk);
+	int find_node(int &DFS_rk, int *path, int sz, int verbose_level);
+	int find_node_and_path(std::vector<int> &Rk, int *path, int sz, int verbose_level);
 	void get_coordinates(int &idx, int *coord_xy);
 	void get_coordinates_and_width(int &idx, int *coord_xyw);
 	void calc_weight();
@@ -1497,19 +1538,17 @@ public:
 	void add_node(int l, int depth, int *path, int color, std::string &label,
 		int verbose_level);
 	int find_child(int val);
-	void get_values(int *v);
+	void get_values(int *v, int verbose_level);
 	void draw_edges(mp_graphics &G,
+			tree_draw_options *Tree_draw_options,
 			layered_graph_draw_options *Opt,
 		int f_has_parent, int parent_x, int parent_y, int max_depth,
-		int f_has_draw_vertex_callback, 
-		void (*draw_vertex_callback)(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy),
-		tree *T);
+		tree *T, int verbose_level);
 	void draw_vertices(mp_graphics &G,
+			tree_draw_options *Tree_draw_options,
 			layered_graph_draw_options *Opt,
 		int f_has_parent, int parent_x, int parent_y, int max_depth,
-		int f_has_draw_vertex_callback, 
-		void (*draw_vertex_callback)(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy),
-		tree *T);
+		tree *T, int verbose_level);
 	void draw_sideways(mp_graphics &G, int f_circletext, int f_i, 
 		int f_has_parent, int parent_x, int parent_y, 
 		int max_depth, int f_edge_labels);

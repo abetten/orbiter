@@ -737,7 +737,7 @@ class interface_toolkit {
 	draw_projective_curve_description *Draw_projective_curve_description;
 
 	int f_tree_draw;
-	std::string tree_draw_fname;
+	tree_draw_options *Tree_draw_options;
 
 public:
 

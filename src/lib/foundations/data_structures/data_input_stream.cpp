@@ -266,6 +266,35 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 				exit(1);
 			}
 		}
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_incidence_geometries_by_row_ranks) {
+			if (f_v) {
+				cout << "input incidence geometries by row ranks from file "
+						<< Descr->Input[input_idx].input_string << ":" << endl;
+			}
+			file_io Fio;
+			int m, n, r;
+
+			std::vector<std::vector<int> > Geos;
+
+			Fio.read_incidence_by_row_ranks_file(Geos, m, n, r, Descr->Input[input_idx].input_string, verbose_level);
+			if (f_v) {
+				cout << "input incidence geometries from file "
+						"the file contains " << Geos.size() << "incidence geometries" << endl;
+			}
+			nb_objects_to_test += Geos.size();
+			if (Descr->Input[input_idx].input_data1 != m) {
+				cout << "v does not match" << endl;
+				exit(1);
+			}
+			if (Descr->Input[input_idx].input_data2 != n) {
+				cout << "b does not match" << endl;
+				exit(1);
+			}
+			if (Descr->Input[input_idx].input_data3 != r) {
+				cout << "r does not match" << endl;
+				exit(1);
+			}
+		}
 		else if (Descr->Input[input_idx].input_type == t_data_input_stream_incidence_geometry) {
 			if (f_v) {
 				cout << "input incidence geometry directly "
@@ -516,6 +545,53 @@ void data_input_stream::read_objects(int verbose_level)
 						Descr->Input[input_idx].input_data1 /*v*/,
 						Descr->Input[input_idx].input_data2 /*b*/,
 						Descr->Input[input_idx].input_data3 /*nb_flags*/,
+						verbose_level);
+
+				Objects.push_back(OwCF);
+
+			}
+		}
+		else if (Descr->Input[input_idx].input_type == t_data_input_stream_file_of_incidence_geometries_by_row_ranks) {
+			if (f_v) {
+				cout << "input incidence geometries from file "
+						<< Descr->Input[input_idx].input_string << " by row ranks:" << endl;
+			}
+			file_io Fio;
+			int m, n, r;
+
+			std::vector<std::vector<int> > Geos;
+
+			Fio.read_incidence_by_row_ranks_file(Geos, m, n, r, Descr->Input[input_idx].input_string, verbose_level);
+			if (f_v) {
+				cout << "input incidence geometries from file "
+						"the file contains " << Geos.size() << "incidence geometries" << endl;
+			}
+			int h;
+
+			if (Descr->Input[input_idx].input_data1 != m) {
+				cout << "v does not match" << endl;
+				exit(1);
+			}
+			if (Descr->Input[input_idx].input_data2 != n) {
+				cout << "b does not match" << endl;
+				exit(1);
+			}
+			if (Descr->Input[input_idx].input_data3 != r) {
+				cout << "r does not match" << endl;
+				exit(1);
+			}
+
+			for (h = 0; h < Geos.size(); h++) {
+				object_with_canonical_form *OwCF;
+
+
+				OwCF = NEW_OBJECT(object_with_canonical_form);
+
+				OwCF->init_incidence_geometry_from_vector(
+						Geos[h],
+						Descr->Input[input_idx].input_data1 /*v*/,
+						Descr->Input[input_idx].input_data2 /*b*/,
+						Geos[h].size() /*nb_flags*/,
 						verbose_level);
 
 				Objects.push_back(OwCF);
