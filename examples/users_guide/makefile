@@ -11756,16 +11756,36 @@ geo_10_3_tree:
 			-paperwidth 330 \
 			-xin 10000 -yin 10000 \
 			-xout 1000000 -yout 500000 \
-			-nodes_empty \
 			-scale 2 -line_width 0.3 \
 		-end \
-		-tree_draw 10_3_tree.txt
+		-tree_draw \
+			-restrict 2 \
+			-file 10_3_tree.txt \
+			-select_path "0,0,15,26,46,56,72,80,93,106,119" \
+		-end
 	pdflatex 10_3_tree_draw.tex
 	open 10_3_tree_draw.pdf
 
+#			-nodes_empty \
 #-sideways 
 
+DESARGUES_PATH_LEX_LEAST="10 10 3\n0\n1 0\n2 0 15\n3 0 15 26\n4 0 15 26 46\n5 0 15 26 46 56\n6 0 15 26 46 56 72\n7 0 15 26 46 56 72 80\n8 0 15 26 46 56 72 80 93\n9 0 15 26 46 56 72 80 93 106\n10 0 15 26 46 56 72 80 93 106 119\n-1\n"
 
+Desargues_path_lex_least_draw:
+	echo $(DESARGUES_PATH_LEX_LEAST) >Desargues_path_lex_least.inc
+	$(ORBITER_PATH)orbiter.out -v 10 \
+		-draw_incidence_structure_description \
+			-width 60 -with_10 6 -end \
+		-define C -combinatorial_objects \
+			-file_of_incidence_geometries_by_row_ranks Desargues_path_lex_least.inc 10 10 3 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-draw_incidence_matrices \
+			Desargues_path_lex_least \
+		-end
+	pdflatex Desargues_path_lex_least_incma.tex
+	open Desargues_path_lex_least_incma.pdf
 
 
 

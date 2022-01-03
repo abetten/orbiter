@@ -708,11 +708,13 @@ public:
 		int verbose_level);
 	void draw_tree(
 			std::string &fname_base, int lvl,
+			tree_draw_options *Tree_draw_options,
 			layered_graph_draw_options *Draw_options,
 		int xmax, int ymax, int rad, int f_embedded,
 		int f_sideways, int verbose_level);
 	void draw_tree_low_level(
 			std::string &fname,
+			tree_draw_options *Tree_draw_options,
 			layered_graph_draw_options *Draw_options,
 			int nb_nodes,
 		int *coord_xyw, int *perm, int *perm_inv, 

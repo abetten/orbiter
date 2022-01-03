@@ -1871,25 +1871,40 @@ void fillBitmap(BMP &image, int i, int j, std::vector<int> color)
 	image(i, j)->Blue = color[2];
 };
 
-void graphical_output::tree_draw(std::string &fname, int verbose_level)
+void graphical_output::tree_draw(tree_draw_options *Tree_draw_options, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graphical_output::tree_draw" << endl;
+	}
+
+	if (!Tree_draw_options->f_file) {
+		cout << "graphical_output::tree_draw please use -file <fname>" << endl;
+		exit(1);
+	}
 	tree T;
 	file_io Fio;
 	std::string fname2;
-	//int xmax = 1000000;
-	//int ymax = 1000000;
 
-	cout << "Trying to read file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
+	cout << "Trying to read file " << Tree_draw_options->file_name << " of size "
+			<< Fio.file_size(Tree_draw_options->file_name) << endl;
 
-	if (Fio.file_size(fname) <= 0) {
-		cout << "treedraw.out the input file " << fname
+	if (Fio.file_size(Tree_draw_options->file_name) <= 0) {
+		cout << "treedraw.out the input file " << Tree_draw_options->file_name
 				<< " does not exist" << endl;
 		exit(1);
 	}
 
-	T.init(fname, Orbiter->draw_options->xin, Orbiter->draw_options->yin,
+	if (f_v) {
+		cout << "graphical_output::tree_draw reading input file " << Tree_draw_options->file_name << endl;
+	}
+	T.init(Tree_draw_options,
+			Orbiter->draw_options->xin, Orbiter->draw_options->yin,
 			verbose_level);
+	if (f_v) {
+		cout << "graphical_output::tree_draw reading input file " << Tree_draw_options->file_name << " finished" << endl;
+	}
 
 #if 0
 	if (/* T.nb_nodes > 200 ||*/ f_no_circletext) {
@@ -1904,20 +1919,22 @@ void graphical_output::tree_draw(std::string &fname, int verbose_level)
 		}
 #endif
 
-	int f_has_draw_vertex_callback = FALSE;
 	string_tools ST;
 
-	fname2.assign(fname);
+	fname2.assign(Tree_draw_options->file_name);
 	ST.chop_off_extension(fname2);
 	fname2.append("_draw");
 
+	if (f_v) {
+		cout << "graphical_output::tree_draw before T.draw" << endl;
+	}
 	T.draw(fname2,
+			Tree_draw_options,
 			Orbiter->draw_options,
-			f_has_draw_vertex_callback,
-			NULL /* void (*draw_vertex_callback)(tree *T,
-				mp_graphics *G, int *v, int layer, tree_node *N,
-			int x, int y, int dx, int dy)*/,
 			verbose_level);
+	if (f_v) {
+		cout << "graphical_output::tree_draw after T.draw" << endl;
+	}
 
 #if 0
 	if (f_graph) {
@@ -1943,6 +1960,9 @@ void graphical_output::tree_draw(std::string &fname, int verbose_level)
 			scale, line_width, verbose_level - 1);
 		}
 #endif
+	if (f_v) {
+		cout << "graphical_output::tree_draw done" << endl;
+	}
 
 }
 

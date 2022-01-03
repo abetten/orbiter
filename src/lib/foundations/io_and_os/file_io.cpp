@@ -2961,6 +2961,100 @@ void file_io::read_incidence_file(std::vector<std::vector<int> > &Geos,
 }
 
 
+void file_io::read_incidence_by_row_ranks_file(std::vector<std::vector<int> > &Geos,
+		int &m, int &n, int &r,
+		std::string &inc_file_name, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int a, h, cnt;
+	char buf[READ_INCIDENCE_BUFSIZE];
+	char *p_buf;
+	int *X = NULL;
+	string_tools ST;
+
+
+	if (f_v) {
+		cout << "file_io::read_incidence_by_row_ranks_file " << inc_file_name << endl;
+	}
+	{
+		ifstream f(inc_file_name);
+
+		if (f.eof()) {
+			exit(1);
+		}
+		f.getline(buf, READ_INCIDENCE_BUFSIZE, '\n');
+		if (strlen(buf) == 0) {
+			exit(1);
+		}
+		sscanf(buf, "%d %d %d", &m, &n, &r);
+		if (f_vv) {
+			cout << "m=" << m;
+			cout << " n=" << n;
+			cout << " r=" << r << endl;
+		}
+		X = NEW_int(m);
+		int *Row;
+		combinatorics_domain Combi;
+		int sz;
+
+		Row = NEW_int(m);
+		cnt = 0;
+		while (TRUE) {
+			if (f.eof()) {
+				break;
+			}
+			f.getline(buf, READ_INCIDENCE_BUFSIZE, '\n');
+			if (strlen(buf) == 0) {
+				continue;
+			}
+
+			// check for comment line:
+			if (buf[0] == '#') {
+				continue;
+			}
+
+			p_buf = buf;
+
+			ST.s_scan_int(&p_buf, &a);
+			if (f_vv) {
+				//cout << cnt << " : " << a << " ";
+			}
+			if (a == -1) {
+				cout << "file_io::read_incidence_file: "
+						"found a complete file with "
+					<< cnt << " solutions" << endl;
+				break;
+			}
+			sz = a;
+
+			//cout << "reading " << nb_inc << " incidences" << endl;
+			for (h = 0; h < sz; h++) {
+				ST.s_scan_int(&p_buf, &a);
+				X[h] = a;
+				//M[a] = 1;
+			}
+			//f >> a; // skip aut group order
+
+			vector<int> v;
+			int u;
+
+			for (h = 0; h < sz; h++) {
+				Combi.unrank_k_subset(X[h], Row, n, r);
+				for (u = 0; u < r; u++) {
+					v.push_back(h * n + Row[u]);
+				}
+			}
+			Geos.push_back(v);
+			cnt++;
+		}
+		FREE_int(Row);
+		FREE_int(X);
+	}
+}
+
+
+
 int file_io::inc_file_get_number_of_geometries(
 	char *inc_file_name, int verbose_level)
 {

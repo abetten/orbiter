@@ -177,8 +177,9 @@ MODULES= \
 		foundations/graphics/povray_job_description.o \
 		foundations/graphics/scene.o \
 		foundations/graphics/scene2.o \
-		foundations/graphics/tree.o \
+		foundations/graphics/tree_draw_options.o \
 		foundations/graphics/tree_node.o \
+		foundations/graphics/tree.o \
 		foundations/graphics/video_draw_options.o \
 		foundations/io_and_os/create_file_description.o \
 		foundations/io_and_os/file_io.o \

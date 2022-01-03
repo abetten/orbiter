@@ -204,6 +204,24 @@ int data_input_stream_description::read_arguments(
 
 			nb_inputs++;
 		}
+		else if (stringcmp(argv[i], "-file_of_incidence_geometries_by_row_ranks") == 0) {
+
+			data_input_stream_description_element E;
+			std::string a;
+			int v, b, r;
+
+			a.assign(argv[++i]);
+			v = strtoi(argv[++i]);
+			b = strtoi(argv[++i]);
+			r = strtoi(argv[++i]);
+
+			E.init_file_of_incidence_geometries_by_row_ranks(a, v, b, r);
+			Input.push_back(E);
+
+			E.print();
+
+			nb_inputs++;
+		}
 		else if (stringcmp(argv[i], "-incidence_geometry") == 0) {
 
 			data_input_stream_description_element E;

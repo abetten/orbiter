@@ -437,6 +437,7 @@ class plot_tools;
 class povray_interface;
 class povray_job_description;
 class scene;
+class tree_draw_options;
 class tree;
 class tree_node;
 class video_draw_options;
@@ -695,6 +696,7 @@ enum data_input_stream_type {
 	t_data_input_stream_file_of_point_set,
 	t_data_input_stream_file_of_designs,
 	t_data_input_stream_file_of_incidence_geometries,
+	t_data_input_stream_file_of_incidence_geometries_by_row_ranks,
 	t_data_input_stream_incidence_geometry,
 	t_data_input_stream_incidence_geometry_by_row_ranks,
 	t_data_input_stream_from_parallel_search,

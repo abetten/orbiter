@@ -210,6 +210,19 @@ void data_input_stream_description_element::init_file_of_incidence_geometries(st
 
 }
 
+void data_input_stream_description_element::init_file_of_incidence_geometries_by_row_ranks(
+		std::string &a,
+			int v, int b, int r)
+{
+	input_type = t_data_input_stream_file_of_incidence_geometries_by_row_ranks;
+
+	input_string.assign(a);
+	input_data1 = v;
+	input_data2 = b;
+	input_data3 = r;
+
+}
+
 void data_input_stream_description_element::init_incidence_geometry(std::string &a,
 			int v, int b, int f)
 {

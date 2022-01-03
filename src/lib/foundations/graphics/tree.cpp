@@ -15,8 +15,11 @@ namespace foundations {
 tree::tree()
 {
 	root = NULL;
+
 	nb_nodes = 0;
 	max_depth = 0;
+	f_node_select = NULL;
+
 	path = NULL;
 	f_count_leaves = FALSE;
 	leaf_count = 0;
@@ -24,15 +27,22 @@ tree::tree()
 
 tree::~tree()
 {
+	if (f_node_select) {
+		FREE_int(f_node_select);
+	}
 }
 
 #define TREEPATHLEN 10000
 #define BUFSIZE_TREE 100000
 
-void tree::init(std::string &fname,
+void tree::init(tree_draw_options *Tree_draw_options,
 		int xmax, int ymax, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "tree::init reading tree from file " << Tree_draw_options->file_name << endl;
+	}
 	int f_vv = (verbose_level >= 1);
 	char *buf;
 	char *p_buf;
@@ -44,23 +54,20 @@ void tree::init(std::string &fname,
 	string label;
 	string_tools ST;
 	
-	if (f_v) {
-		cout << "reading tree from file " << fname << endl;
-	}
 	nb_nodes = 0;
 	buf = NEW_char(BUFSIZE_TREE);
 	{
-		ifstream f(fname);
+		ifstream f(Tree_draw_options->file_name);
 		//f.getline(buf, BUFSIZE_TREE);
 		while (TRUE) {
 			if (f.eof()) {
-				cout << "premature end of file" << endl;
+				cout << "tree::init premature end of file" << endl;
 				exit(1);
 			}
 			f.getline(buf, BUFSIZE_TREE);
 
 			if (f_vv) {
-				cout << "read line '" << buf << "'" << endl;
+				cout << "tree::init read line '" << buf << "'" << endl;
 			}
 
 			p_buf = buf;
@@ -71,16 +78,23 @@ void tree::init(std::string &fname,
 			if (a == -1) {
 				break;
 			}
+
+			if (Tree_draw_options->f_restrict) {
+				if (a == Tree_draw_options->restrict_excluded_color) {
+					continue;
+				}
+			}
 			nb_nodes++;
 			}
 		//s_scan_int(&p_buf, &nb_nodes);
 	}
 	if (f_v) {
-		cout << "found " << nb_nodes << " nodes in file " << fname << endl;
+		cout << "tree::init found " << nb_nodes
+				<< " nodes in file " << Tree_draw_options->file_name << endl;
 	}
 	
 	if (f_v) {
-		cout << "calling root->init" << endl;
+		cout << "tree::init calling root->init" << endl;
 	}
 	root = NEW_OBJECT(tree_node);
 	root->init(0 /* depth */,
@@ -88,10 +102,10 @@ void tree::init(std::string &fname,
 			verbose_level - 1);
 	
 	if (f_v) {
-		cout << "reading the file again" << endl;
+		cout << "tree::init reading the file again" << endl;
 	}
 	{
-		ifstream f(fname);
+		ifstream f(Tree_draw_options->file_name);
 		//f.getline(buf, BUFSIZE_TREE);
 		while (TRUE) {
 			if (f.eof()) {
@@ -137,8 +151,16 @@ void tree::init(std::string &fname,
 				}
 			}
 			label.assign(c_data);
+
+			if (Tree_draw_options->f_restrict) {
+				if (color == Tree_draw_options->restrict_excluded_color) {
+					continue;
+				}
+			}
+
+
 			if (f_vv) {
-				cout << "trying to add node: " << buf << endl;
+				cout << "tree::init trying to add node: " << buf << endl;
 			}
 			root->add_node(l, 0, path, color, label, 0/*verbose_level - 1*/);
 			if (f_vv) {
@@ -149,8 +171,8 @@ void tree::init(std::string &fname,
 		}
 	}
 	if (f_v) {
-		cout << "finished adding nodes, max_depth = " << max_depth << endl;
-		cout << "tree::nb_nodes=" << tree::nb_nodes << endl;
+		cout << "tree::init finished adding nodes, max_depth = " << max_depth << endl;
+		cout << "tree::init nb_nodes=" << tree::nb_nodes << endl;
 	}
 	
 	if (f_vv) {
@@ -160,25 +182,54 @@ void tree::init(std::string &fname,
 
 	int my_nb_nodes;
 	
+	if (f_v) {
+		cout << "tree::init before compute_DFS_ranks" << endl;
+	}
 	compute_DFS_ranks(my_nb_nodes, verbose_level);
+	if (f_v) {
+		cout << "tree::init after compute_DFS_ranks" << endl;
+	}
 	
+	if (f_v) {
+		cout << "tree::init before root->calc_weight" << endl;
+	}
 	root->calc_weight();
+	if (f_v) {
+		cout << "tree::init after root->calc_weight" << endl;
+	}
+	if (f_v) {
+		cout << "tree::init before root->place_xy" << endl;
+	}
 	root->place_xy(0, xmax, ymax, max_depth);
 	if (f_v) {
+		cout << "tree::init after root->place_xy" << endl;
+	}
+	if (f_v) {
+		cout << "tree::init before print_depth_first" << endl;
 		root->print_depth_first();
+		cout << "tree::init after print_depth_first" << endl;
 	}
 	FREE_char(buf);
+
+
+
+
+	if (f_v) {
+		cout << "tree::init done" << endl;
+	}
 
 }
 
 void tree::draw(std::string &fname,
+		tree_draw_options *Tree_draw_options,
 		layered_graph_draw_options *Opt,
-		int f_has_draw_vertex_callback,
-		void (*draw_vertex_callback)(tree *T,
-			mp_graphics *G, int *v, int layer, tree_node *N,
-		int x, int y, int dx, int dy), 
 		int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "tree::draw" << endl;
+	}
 	string fname_full;
 	
 	fname_full.assign(fname);
@@ -190,28 +241,22 @@ void tree::draw(std::string &fname,
 	}
 #endif
 
+	if (f_v) {
+		cout << "tree::draw before draw_preprocess" << endl;
+	}
+	draw_preprocess(fname,
+			Tree_draw_options,
+			Opt,
+			verbose_level);
+	if (f_v) {
+		cout << "tree::draw after draw_preprocess" << endl;
+	}
 
 	{
-		//int x_min = 0;
-		//int y_min = 0;
 		int factor_1000 = 1000;
 
 		mp_graphics G;
 		G.init(fname_full, Opt, verbose_level);
-#if 0
-		mp_graphics G(fname_full, x_min, y_min,
-				Opt->xin, Opt->yin,
-				Opt->f_embedded, Opt->f_sideways,
-				verbose_level - 1);
-		G.out_xmin() = 0;
-		G.out_ymin() = 0;
-		G.out_xmax() = Opt->xout;
-		G.out_ymax() = Opt->yout;
-		//cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
-
-		G.tikz_global_scale = Opt->scale;
-		G.tikz_global_line_width = Opt->line_width;
-#endif
 
 		G.header();
 		G.begin_figure(factor_1000);
@@ -263,20 +308,31 @@ void tree::draw(std::string &fname,
 		//int f_i = TRUE;
 
 
-		root->draw_edges(G, Opt,
+		if (f_v) {
+			cout << "tree::draw before root->draw_edges" << endl;
+		}
+		root->draw_edges(
+				G, Tree_draw_options, Opt,
 				FALSE, 0, 0,
 				max_depth,
-				f_has_draw_vertex_callback, draw_vertex_callback,
-				this);
+				this, verbose_level);
+		if (f_v) {
+			cout << "tree::draw after root->draw_edges" << endl;
+		}
 
 		G.sl_thickness(10); // 100 is normal
 
 	
-		root->draw_vertices(G, Opt,
+		if (f_v) {
+			cout << "tree::draw before root->draw_vertices" << endl;
+		}
+		root->draw_vertices(G, Tree_draw_options, Opt,
 				FALSE, 0, 0,
 				max_depth,
-				f_has_draw_vertex_callback, draw_vertex_callback,
-				this);
+				this, verbose_level);
+		if (f_v) {
+			cout << "tree::draw after root->draw_vertices" << endl;
+		}
 	
 #if 0
 		if (f_on_circle) {
@@ -292,8 +348,73 @@ void tree::draw(std::string &fname,
 
 	cout << "written file " << fname_full << " of size "
 			<< Fio.file_size(fname_full) << endl;
+	if (f_v) {
+		cout << "tree::draw done" << endl;
+	}
 	
 }
+
+void tree::draw_preprocess(std::string &fname,
+		tree_draw_options *Tree_draw_options,
+		layered_graph_draw_options *Opt,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "tree::draw_preprocess" << endl;
+	}
+	if (Tree_draw_options->f_select_path) {
+		int rk;
+		int *my_path;
+		int sz;
+
+		rk = 0;
+
+		if (f_v) {
+			cout << "tree::draw_preprocess before root->compute_DFS_rank" << endl;
+		}
+		root->compute_DFS_rank(rk);
+		nb_nodes = rk;
+
+		f_node_select = NEW_int(nb_nodes);
+
+		Orbiter->Int_vec.zero(f_node_select, nb_nodes);
+		Orbiter->Int_vec.scan(Tree_draw_options->select_path_text, my_path, sz);
+
+		if (f_v) {
+			cout << "tree::draw_preprocess my_path = ";
+			Orbiter->Int_vec.print(cout, my_path, sz);
+			cout << endl;
+		}
+
+		if (FALSE) {
+			int DFS_rk;
+			root->find_node(DFS_rk, my_path, sz, verbose_level);
+			if (f_v) {
+				cout << "tree::draw_preprocess my_path = ";
+				Orbiter->Int_vec.print(cout, my_path, sz);
+				cout << " rk=" << DFS_rk << endl;
+			}
+			f_node_select[DFS_rk] = TRUE;
+		}
+		else {
+			int i, a;
+			std::vector<int> Rk;
+			root->find_node_and_path(Rk, my_path, sz, verbose_level);
+			for (i = 0; i < Rk.size(); i++) {
+				a = Rk[i];
+				f_node_select[a] = TRUE;
+			}
+		}
+
+
+	}
+	if (f_v) {
+		cout << "tree::draw_preprocess done" << endl;
+	}
+}
+
 
 void tree::circle_center_and_radii(int xmax, int ymax,
 		int max_depth, int &x0, int &y0, int *&rad)

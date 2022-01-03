@@ -22,8 +22,9 @@ MODULES = \
 	povray_job_description.o \
 	scene.o \
 	scene2.o \
-	tree.o \
+	tree_draw_options.o \
 	tree_node.o \
+	tree.o \
 	video_draw_options.o 
 
 
