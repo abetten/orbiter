@@ -899,6 +899,7 @@ int diophant::solve_first_mckay(int f_once, int verbose_level)
 	return TRUE;
 }
 
+#if 0
 void diophant::draw_solutions(std::string &fname_base, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -929,12 +930,15 @@ void diophant::draw_solutions(std::string &fname_base, int verbose_level)
 		sprintf(str, "_sol_%d", i);
 		fname_base2.append(str);
 		
+#if 0
 		int xmax_in = ONE_MILLION;
 		int ymax_in = ONE_MILLION;
 		int xmax_out = ONE_MILLION;
 		int ymax_out = ONE_MILLION;
+#endif
 
-		draw_partitioned(fname_base2, xmax_in, ymax_in, xmax_out, ymax_out, 
+		draw_partitioned(fname_base2,
+				//xmax_in, ymax_in, xmax_out, ymax_out,
 			TRUE /*f_solution*/, solution, solution_sz, 
 			verbose_level);
 		_results.pop_front();
@@ -945,6 +949,7 @@ void diophant::draw_solutions(std::string &fname_base, int verbose_level)
 		cout << "diophant::draw_solutions done" << endl;
 	}
 }
+#endif
 
 void diophant::write_solutions(std::string &fname, int verbose_level)
 {
@@ -3986,8 +3991,10 @@ void diophant::draw_as_bitmap(std::string &fname,
 
 }
 
-void diophant::draw_it(std::string &fname_base,
-		int xmax_in, int ymax_in, int xmax_out, int ymax_out,
+void diophant::draw_it(
+		std::string &fname_base,
+		layered_graph_draw_options *Draw_options,
+		//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 		int verbose_level)
 {
 	int f_dots = FALSE;
@@ -3995,31 +4002,38 @@ void diophant::draw_it(std::string &fname_base,
 	int f_bitmatrix = FALSE;
 	int f_row_grid = FALSE;
 	int f_col_grid = FALSE;
-	double scale = 0.5;
-	double line_width = 0.5;
+	//double scale = 0.5;
+	//double line_width = 0.5;
 	graph_theory_domain Graph;
 
 
-	Graph.draw_bitmatrix(fname_base, f_dots,
+	Graph.draw_bitmatrix(
+			fname_base,
+			Draw_options,
+			//fname_base,
+			f_dots,
 		f_partition, 0, NULL, 0, NULL, 
 		f_row_grid, f_col_grid, 
 		f_bitmatrix, NULL, A, 
-		m, n, xmax_in, ymax_in, xmax_out, ymax_out, 
-		scale, line_width, 
+		m, n,
+		//xmax_in, ymax_in, xmax_out, ymax_out,
+		//scale, line_width,
 		FALSE, NULL,
 		verbose_level);
 }
 
-void diophant::draw_partitioned(std::string &fname_base,
-	int xmax_in, int ymax_in, int xmax_out, int ymax_out, 
+void diophant::draw_partitioned(
+		std::string &fname_base,
+		layered_graph_draw_options *Draw_options,
+	//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 	int f_solution, int *solution, int solution_sz, 
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_dots = FALSE;
 	int f_bitmatrix = FALSE;
-	double scale = 0.5;
-	double line_width = 0.5;
+	//double scale = 0.5;
+	//double line_width = 0.5;
 	int i, ii, j, jj;
 	combinatorics_domain Combi;
 	graph_theory_domain Graph;
@@ -4135,13 +4149,17 @@ void diophant::draw_partitioned(std::string &fname_base,
 	int f_col_grid = FALSE;
 
 
-	Graph.draw_bitmatrix(fname_base, f_dots,
+	Graph.draw_bitmatrix(
+			fname_base,
+			Draw_options,
+			//fname_base,
+			f_dots,
 		TRUE /* f_partition */, C.nb_types, part, col_part_size, part_col, 
 		f_row_grid, f_col_grid, 
 		f_bitmatrix, NULL,
 		A2, m, n,
-		xmax_in, ymax_in, xmax_out, ymax_out,
-		scale, line_width, 
+		//xmax_in, ymax_in, xmax_out, ymax_out,
+		//scale, line_width,
 		FALSE, NULL, verbose_level - 1);
 
 
@@ -4605,7 +4623,7 @@ void solve_diophant(int *Inc,
 	int f_has_Rhs, int *Rhs, 
 	long int *&Solutions, int &nb_sol, long int &nb_backtrack, int &dt,
 	int f_DLX, 
-	int f_draw_system, std::string &fname_system,
+	//int f_draw_system, std::string &fname_system,
 	int f_write_tree, std::string &fname_tree,
 	int verbose_level)
 // allocates Solutions[nb_sol * nb_needed]
@@ -4639,6 +4657,7 @@ void solve_diophant(int *Inc,
 			0 /* verbose_level */);
 	}
 
+#if 0
 	if (f_draw_system) {
 		int xmax_in = 1000000;
 		int ymax_in = 1000000;
@@ -4653,6 +4672,7 @@ void solve_diophant(int *Inc,
 			cout << "solve_diophant drawing the system done" << endl;
 		}
 	}
+#endif
 
 	if (FALSE /*f_v4*/) {
 		Dio->print();

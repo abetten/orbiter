@@ -25,28 +25,31 @@ plot_tools::~plot_tools()
 
 
 
-void plot_tools::draw_density(char *prefix, int *the_set, int set_size,
+void plot_tools::draw_density(
+		layered_graph_draw_options *Draw_options,
+		char *prefix, int *the_set, int set_size,
 	int f_title, const char *title, int out_of, 
 	const char *label_x, 
 	int f_circle, int circle_at, int circle_rad, 
 	int f_mu, int f_sigma, int nb_standard_deviations, 
 	int f_v_grid, int v_grid, int f_h_grid, int h_grid, 
-	int xmax, int ymax, int offset_x,
+	//int xmax, int ymax,
+	int offset_x,
 	int f_switch_x, int no, int f_embedded,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int *set;
-	int x_min = 0, x_max = 1000;
-	int y_min = 0, y_max = 1000;
+	//int x_min = 0, x_max = 1000;
+	//int y_min = 0, y_max = 1000;
 	int factor_1000 = 1000;
 	string fname_full;
 	int i, prev;
 	int *outline_value;
 	int *outline_number;
 	int outline_sz = 0;
-	int f_sideways = FALSE;
+	//int f_sideways = FALSE;
 	sorting Sorting;
 	
 
@@ -105,31 +108,37 @@ void plot_tools::draw_density(char *prefix, int *the_set, int set_size,
 	fname_full.append(str);
 	
 	{
-	mp_graphics G(fname_full,
-			x_min, y_min, x_max, y_max, f_embedded, f_sideways, verbose_level - 1);
-	G.out_xmin() = 0;
-	G.out_ymin() = 0;
-	G.out_xmax() = xmax;
-	G.out_ymax() = ymax;
-	if (f_vv) {
-		cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
-		}
-	
-	G.header();
-	G.begin_figure(factor_1000);
-	
-	G.draw_density2(no,
-		outline_value, outline_number, outline_sz, 
-		0, out_of, offset_x, f_switch_x, 
-		f_title, title, 
-		label_x, 
-		f_circle, circle_at, circle_rad, 
-		f_mu, f_sigma, nb_standard_deviations, 
-		f_v_grid, v_grid, f_h_grid, h_grid);
 
+		mp_graphics G;
 
-	G.end_figure();
-	G.footer();
+		G.init(fname_full, Draw_options, verbose_level - 1);
+#if 0
+		mp_graphics G(fname_full,
+				x_min, y_min, x_max, y_max, f_embedded, f_sideways, verbose_level - 1);
+		G.out_xmin() = 0;
+		G.out_ymin() = 0;
+		G.out_xmax() = xmax;
+		G.out_ymax() = ymax;
+		if (f_vv) {
+			cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
+			}
+#endif
+
+		G.header();
+		G.begin_figure(factor_1000);
+
+		G.draw_density2(no,
+			outline_value, outline_number, outline_sz,
+			0, out_of, offset_x, f_switch_x,
+			f_title, title,
+			label_x,
+			f_circle, circle_at, circle_rad,
+			f_mu, f_sigma, nb_standard_deviations,
+			f_v_grid, v_grid, f_h_grid, h_grid);
+	
+	
+		G.end_figure();
+		G.footer();
 	}
 	file_io Fio;
 
@@ -141,20 +150,23 @@ void plot_tools::draw_density(char *prefix, int *the_set, int set_size,
 	
 }
 
-void plot_tools::draw_density_multiple_curves(std::string &prefix,
+void plot_tools::draw_density_multiple_curves(
+		layered_graph_draw_options *Draw_options,
+		std::string &prefix,
 	int **Data, int *Data_size, int nb_data_sets, 
 	int f_title, const char *title, int out_of, 
 	const char *label_x, 
 	int f_v_grid, int v_grid, int f_h_grid, int h_grid, 
-	int xmax, int ymax, int offset_x, int f_switch_x, 
+	//int xmax, int ymax,
+	int offset_x, int f_switch_x,
 	int f_v_logarithmic, double log_base, int no, int f_embedded, 
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_v5 = (verbose_level >= 5);
 	int **Data2;
-	int x_min = 0, x_max = 1000;
-	int y_min = 0, y_max = 1000;
+	//int x_min = 0, x_max = 1000;
+	//int y_min = 0, y_max = 1000;
 	int factor_1000 = 1000;
 	string fname_full;
 	int i, prev;
@@ -162,7 +174,7 @@ void plot_tools::draw_density_multiple_curves(std::string &prefix,
 	int **outline_number;
 	int *outline_sz;
 	int curve;
-	int f_sideways = FALSE;
+	//int f_sideways = FALSE;
 	sorting Sorting;
 	
 
@@ -230,31 +242,37 @@ void plot_tools::draw_density_multiple_curves(std::string &prefix,
 	
 
 	{
-	mp_graphics G(fname_full,
-			x_min, y_min, x_max, y_max, f_embedded, f_sideways, verbose_level - 1);
-	G.out_xmin() = 0;
-	G.out_ymin() = 0;
-	G.out_xmax() = xmax;
-	G.out_ymax() = ymax;
-	if (f_v5) {
-		cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
-		}
-	
-	G.header();
-	G.begin_figure(factor_1000);
-	
-	G.draw_density2_multiple_curves(no,
-		outline_value, outline_number, outline_sz, nb_data_sets, 
-		0, max_x - 1, 0, out_of, 
-		offset_x, f_switch_x, 
-		f_title, title, 
-		label_x, 
-		f_v_grid, v_grid, f_h_grid, h_grid, 
-		f_v_logarithmic, log_base);
+		mp_graphics G;
 
+		G.init(fname_full, Draw_options, verbose_level - 1);
 
-	G.end_figure();
-	G.footer();
+#if 0
+		mp_graphics G(fname_full,
+				x_min, y_min, x_max, y_max, f_embedded, f_sideways, verbose_level - 1);
+		G.out_xmin() = 0;
+		G.out_ymin() = 0;
+		G.out_xmax() = xmax;
+		G.out_ymax() = ymax;
+		if (f_v5) {
+			cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
+			}
+#endif
+
+		G.header();
+		G.begin_figure(factor_1000);
+
+		G.draw_density2_multiple_curves(no,
+			outline_value, outline_number, outline_sz, nb_data_sets,
+			0, max_x - 1, 0, out_of,
+			offset_x, f_switch_x,
+			f_title, title,
+			label_x,
+			f_v_grid, v_grid, f_h_grid, h_grid,
+			f_v_logarithmic, log_base);
+	
+	
+		G.end_figure();
+		G.footer();
 	}
 	file_io Fio;
 
@@ -361,6 +379,11 @@ void plot_tools::projective_plane_draw_grid(std::string &fname,
 
 
 	{
+		mp_graphics G;
+
+		G.init(fname_full, O, verbose_level - 1);
+
+#if 0
 		mp_graphics G(fname_full,
 				0, 0,
 				O->xin, O->yin,
@@ -372,6 +395,7 @@ void plot_tools::projective_plane_draw_grid(std::string &fname,
 		if (f_v) {
 			cout << "plot_tools::projective_plane_draw_grid" << endl;
 			}
+#endif
 
 		G.header();
 		G.begin_figure(factor_1000);
@@ -429,6 +453,10 @@ void plot_tools::draw_mod_n(draw_mod_n_description *Descr,
 
 
 	{
+		mp_graphics G;
+
+		G.init(fname_full, O, verbose_level);
+#if 0
 		mp_graphics G(fname_full,
 				0, 0,
 				O->xin, O->yin,
@@ -441,6 +469,7 @@ void plot_tools::draw_mod_n(draw_mod_n_description *Descr,
 
 		G.tikz_global_scale = O->scale;
 		G.tikz_global_line_width = O->line_width;
+#endif
 
 		G.header();
 		G.begin_figure(factor_1000);

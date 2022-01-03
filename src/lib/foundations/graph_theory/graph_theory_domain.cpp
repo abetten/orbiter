@@ -20,29 +20,43 @@ graph_theory_domain::~graph_theory_domain() {
 
 }
 
-void graph_theory_domain::colored_graph_draw(std::string &fname, int xmax_in,
-		int ymax_in, int xmax_out, int ymax_out, double scale,
-		double line_width, int verbose_level) {
+void graph_theory_domain::colored_graph_draw(
+		std::string &fname_graph,
+		layered_graph_draw_options *Draw_options,
+		//int xmax_in,
+		//int ymax_in, int xmax_out, int ymax_out, double scale,
+		//double line_width,
+		int f_labels,
+		int verbose_level)
+{
 	int f_v = (verbose_level >= 1);
 	std::string fname_draw;
 	colored_graph CG;
 
 	if (f_v) {
-		cout << "colored_graph_draw" << endl;
+		cout << "graph_theory_domain::colored_graph_draw" << endl;
 	}
-	CG.load(fname, verbose_level - 1);
+
+	CG.load(fname_graph, verbose_level - 1);
+
 	fname_draw.assign(CG.fname_base);
 	fname_draw.append("_graph");
+
 	if (f_v) {
-		cout << "colored_graph_draw before CG.draw_partitioned" << endl;
+		cout << "graph_theory_domain::colored_graph_draw before CG.draw_partitioned" << endl;
 	}
-	CG.draw_partitioned(fname_draw, xmax_in, ymax_in, xmax_out, ymax_out,
-			FALSE /* f_labels */, scale, line_width, verbose_level);
+	CG.draw_partitioned(
+			fname_draw,
+			Draw_options,
+			//fname_draw, xmax_in, ymax_in, xmax_out, ymax_out,
+			//FALSE /* f_labels */, scale, line_width,
+			f_labels,
+			verbose_level);
 	if (f_v) {
-		cout << "colored_graph_draw after CG.draw_partitioned" << endl;
+		cout << "graph_theory_domain::colored_graph_draw after CG.draw_partitioned" << endl;
 	}
 	if (f_v) {
-		cout << "colored_graph_draw done" << endl;
+		cout << "graph_theory_domain::colored_graph_draw done" << endl;
 	}
 }
 
@@ -683,41 +697,52 @@ void graph_theory_domain::compute_decomposition_of_graph_wrt_partition(
 
 void graph_theory_domain::draw_bitmatrix(
 		std::string &fname_base,
+		layered_graph_draw_options *Draw_options,
 		int f_dots,
 		int f_partition, int nb_row_parts, int *row_part_first,
 		int nb_col_parts, int *col_part_first, int f_row_grid, int f_col_grid,
 		int f_bitmatrix, bitmatrix *Bitmatrix,
-		int *M, int m, int n, int xmax_in,
-		int ymax_in, int xmax_out, int ymax_out, double scale,
-		double line_width, int f_has_labels, int *labels,
+		int *M, int m, int n,
+		//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
+		//double scale, double line_width,
+		int f_has_labels, int *labels,
 		int verbose_level)
 {
-	mp_graphics G;
-	std::string fname_base2;
-	std::string fname;
-	int f_embedded = TRUE;
-	int f_sideways = FALSE;
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "graph_theory_domain::draw_bitmatrix" << endl;
+	}
+	//std::string fname_base2;
+	//std::string fname;
+	//int f_embedded = TRUE;
+	//int f_sideways = FALSE;
 	file_io Fio;
 
-	fname_base2.assign(fname_base);
-	fname.assign(fname_base2);
-	fname.append(".mp");
+	//fname_base2.assign(fname_base);
+	//fname.assign(fname_base2);
+	//fname.append(".mp");
 	{
-		G.setup(fname_base2, 0, 0, xmax_in /* ONE_MILLION */,
-				ymax_in /* ONE_MILLION */, xmax_out, ymax_out, f_embedded,
-				f_sideways, scale, line_width, verbose_level - 1);
+		mp_graphics G;
+
+		G.init(fname_base, Draw_options, verbose_level - 1);
+
+		//G.setup(fname_base2, 0, 0, xmax_in /* ONE_MILLION */,
+		//		ymax_in /* ONE_MILLION */, xmax_out, ymax_out, f_embedded,
+		//		f_sideways, scale, line_width, verbose_level - 1);
 
 		//G.frame(0.05);
 
 		G.draw_bitmatrix2(f_dots, f_partition, nb_row_parts, row_part_first,
 				nb_col_parts, col_part_first, f_row_grid, f_col_grid,
-				f_bitmatrix, Bitmatrix, M, m, n, xmax_in, ymax_in, f_has_labels,
-				labels);
+				f_bitmatrix, Bitmatrix, M, m, n, //xmax_in, ymax_in,
+				f_has_labels, labels);
 
 		G.finish(cout, TRUE);
 	}
-	cout << "draw_it written file " << fname << " of size "
-			<< Fio.file_size(fname) << endl;
+	if (f_v) {
+		cout << "graph_theory_domain::draw_bitmatrix done" << endl;
+	}
 }
 
 

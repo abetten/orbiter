@@ -964,13 +964,21 @@ void colored_graph::load(std::string &fname, int verbose_level)
 	}
 }
 
-void colored_graph::draw_on_circle(std::string &fname,
-	int xmax_in, int ymax_in, int xmax_out, int ymax_out,
-	int f_radius, double radius, 
-	int f_labels, int f_embedded, int f_sideways, 
-	double tikz_global_scale, double tikz_global_line_width,
+void colored_graph::draw_on_circle(
+		std::string &fname,
+		layered_graph_draw_options *Draw_options,
+		//std::string &fname,
+	//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
+	//int f_radius, double radius,
+	//int f_labels, int f_embedded, int f_sideways,
+	//double tikz_global_scale, double tikz_global_line_width,
 	int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "colored_graph::draw_on_circle" << endl;
+	}
 	string fname_full;
 	file_io Fio;
 	
@@ -979,6 +987,9 @@ void colored_graph::draw_on_circle(std::string &fname,
 
 	{
 	mp_graphics G;
+
+	G.init(fname, Draw_options, verbose_level - 1);
+#if 0
 	G.setup(fname, 0, 0, 
 		xmax_in /* ONE_MILLION */, ymax_in /* ONE_MILLION */, 
 		xmax_out, ymax_out, 
@@ -989,20 +1000,21 @@ void colored_graph::draw_on_circle(std::string &fname,
 
 	//G.header();
 	//G.begin_figure(1000 /* factor_1000 */);
+#endif
 	
-	draw_on_circle_2(G, f_labels, f_radius, radius);
+	draw_on_circle_2(G, Draw_options);
 
 
 	G.finish(cout, TRUE);
 	}
-	cout << "written file " << fname_full << " of size "
-			<< Fio.file_size(fname_full) << endl;
-	
+	if (f_v) {
+		cout << "colored_graph::draw_on_circle done" << endl;
+	}
 }
 
 void colored_graph::draw_on_circle_2(
-	mp_graphics &G, int f_labels,
-	int f_radius, double radius)
+	mp_graphics &G,
+	layered_graph_draw_options *Draw_options)
 {
 	int n = nb_points;
 	int i, j;
@@ -1018,8 +1030,8 @@ void colored_graph::draw_on_circle_2(
 	Px1 = NEW_int(n);
 	Py1 = NEW_int(n);
 	
-	if (f_radius) {
-		rad2 = radius;
+	if (TRUE) {
+		rad2 = Draw_options->rad;
 	}
 	for (i = 0; i < n; i++) {
 		Num.on_circle_int(Px, Py, i,
@@ -1028,7 +1040,7 @@ void colored_graph::draw_on_circle_2(
 		// << " Py=" << Py[i] << endl;
 	}
 
-	if (f_labels) {
+	if (!Draw_options->f_nodes_empty) {
 		int rad_big;
 
 		rad_big = (int)((double)rad1 * 1.1);
@@ -1072,7 +1084,7 @@ void colored_graph::draw_on_circle_2(
 		//G.sf_color(0);
 		G.circle(Px[i], Py[i], rad2);
 	}
-	if (f_labels) {
+	if (!Draw_options->f_nodes_empty) {
 		char str[1000];
 		for (i = 0; i < n; i++) {
 			snprintf(str, 1000, "%d", i);
@@ -1115,12 +1127,19 @@ void colored_graph::create_bitmatrix(bitmatrix *&Bitmatrix,
 }
 
 
-void colored_graph::draw(std::string &fname,
-	int xmax_in, int ymax_in, int xmax_out, int ymax_out,
-	double scale, double line_width, 
+void colored_graph::draw(
+		std::string &fname,
+		layered_graph_draw_options *Draw_options,
+		//std::string &fname,
+	//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
+	//double scale, double line_width,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "colored_graph::draw" << endl;
+	}
 	int f_dots = FALSE;
 	bitmatrix *Bitmatrix;
 	//uchar *D = NULL;
@@ -1129,9 +1148,6 @@ void colored_graph::draw(std::string &fname,
 	combinatorics_domain Combi;
 	graph_theory_domain Graph;
 	
-	if (f_v) {
-		cout << "colored_graph::draw" << endl;
-	}
 
 
 	create_bitmatrix(Bitmatrix, verbose_level);
@@ -1139,13 +1155,17 @@ void colored_graph::draw(std::string &fname,
 	int f_row_grid = FALSE;
 	int f_col_grid = FALSE;
 	
-	Graph.draw_bitmatrix(fname, f_dots,
+	Graph.draw_bitmatrix(
+			fname,
+			Draw_options,
+			//fname,
+			f_dots,
 		FALSE, 0, NULL, 0, NULL, 
 		f_row_grid, f_col_grid, 
 		TRUE /* f_bitmatrix */, Bitmatrix, NULL,
 		nb_points, nb_points,
-		xmax_in, ymax_in, xmax_out, ymax_out, 
-		scale, line_width, 
+		//xmax_in, ymax_in, xmax_out, ymax_out,
+		//scale, line_width,
 		FALSE, NULL, verbose_level - 1);
 	
 
@@ -1157,12 +1177,15 @@ void colored_graph::draw(std::string &fname,
 	}
 }
 
-void colored_graph::draw_Levi(std::string &fname,
-	int xmax_in, int ymax_in, int xmax_out, int ymax_out,
+void colored_graph::draw_Levi(
+		std::string &fname,
+		layered_graph_draw_options *Draw_options,
+		//std::string &fname,
+	//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 	int f_partition, int nb_row_parts, int *row_part_first, 
 	int nb_col_parts, int *col_part_first, 
 	int m, int n, int f_draw_labels, 
-	double scale, double line_width, 
+	//double scale, double line_width,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1232,16 +1255,21 @@ void colored_graph::draw_Levi(std::string &fname,
 		cout << endl;
 	}
 	
-	Graph.draw_bitmatrix(fname, f_dots,
+	Graph.draw_bitmatrix(
+			fname,
+			Draw_options,
+			//fname,
+			f_dots,
 		//FALSE, 0, NULL, 0, NULL, 
 		f_partition, nb_row_parts, row_part_first,
 			nb_col_parts, col_part_first,
 		f_row_grid, f_col_grid, 
 		TRUE /* f_bitmatrix */, Bitmatrix, NULL,
 		m, n, 
-		xmax_in, ymax_in, xmax_out, ymax_out, 
-		scale, line_width, 
-		f_draw_labels, labels, verbose_level - 1);
+		//xmax_in, ymax_in, xmax_out, ymax_out,
+		//scale, line_width,
+		f_draw_labels, labels,
+		verbose_level - 1);
 	
 
 	//FREE_uchar(D);
@@ -1258,9 +1286,10 @@ void colored_graph::draw_Levi(std::string &fname,
 
 void colored_graph::draw_with_a_given_partition(
 		std::string &fname,
-		int xmax_in, int ymax_in, int xmax_out, int ymax_out,
+		layered_graph_draw_options *Draw_options,
+		//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 		int *parts, int nb_parts,
-		double scale, double line_width,
+		//double scale, double line_width,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1289,14 +1318,18 @@ void colored_graph::draw_with_a_given_partition(
 	
 	create_bitmatrix(Bitmatrix, verbose_level);
 
-	Graph.draw_bitmatrix(fname, f_dots,
+	Graph.draw_bitmatrix(
+			fname,
+			Draw_options,
+			f_dots,
 		TRUE, nb_parts, P, nb_parts, P, 
 		f_row_grid, f_col_grid, 
 		TRUE /* f_bitmatrix */, Bitmatrix, NULL,
 		nb_points, nb_points, 
-		xmax_in, ymax_in, xmax_out, ymax_out, 
-		scale, line_width, 
-		FALSE /*f_has_labels*/, NULL /*labels*/, verbose_level - 1);
+		//xmax_in, ymax_in, xmax_out, ymax_out,
+		//scale, line_width,
+		FALSE /*f_has_labels*/, NULL /*labels*/,
+		verbose_level - 1);
 
 
 	//FREE_uchar(D);
@@ -1309,10 +1342,13 @@ void colored_graph::draw_with_a_given_partition(
 
 }
 
-void colored_graph::draw_partitioned(std::string &fname,
-	int xmax_in, int ymax_in, int xmax_out, int ymax_out,
-	int f_labels, 
-	double scale, double line_width, 
+void colored_graph::draw_partitioned(
+		std::string &fname,
+		layered_graph_draw_options *Draw_options,
+	//std::string &fname,
+	//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
+	int f_labels,
+	//double scale, double line_width,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1375,14 +1411,19 @@ void colored_graph::draw_partitioned(std::string &fname,
 	int f_row_grid = FALSE;
 	int f_col_grid = FALSE;
 
-	Graph.draw_bitmatrix(fname, f_dots,
+	Graph.draw_bitmatrix(
+			fname,
+			Draw_options,
+			f_dots,
 		TRUE, C.nb_types, part, C.nb_types, part, 
 		f_row_grid, f_col_grid, 
 		TRUE /* f_bitmatrix */, Bitmatrix, NULL,
 		nb_points, nb_points,
-		xmax_in, ymax_in, xmax_out, ymax_out, 
-		scale, line_width, 
-		f_labels /*f_has_labels*/, C.sorting_perm_inv /*labels*/, verbose_level - 1);
+		//xmax_in, ymax_in, //xmax_out, ymax_out,
+		//scale, line_width,
+		f_labels /*f_has_labels*/,
+		C.sorting_perm_inv /*labels*/,
+		verbose_level - 1);
 
 
 	//FREE_uchar(D);
@@ -2373,7 +2414,7 @@ int colored_graph::is_cycle(int nb_e, long int *edges,
 	return TRUE;
 }
 
-
+#if 0
 void colored_graph::draw_it(std::string &fname_base,
 	int xmax_in, int ymax_in, int xmax_out, int ymax_out, 
 	double scale, double line_width, int verbose_level)
@@ -2402,6 +2443,7 @@ void colored_graph::draw_it(std::string &fname_base,
 	FREE_OBJECT(Bitmatrix);
 	
 }
+#endif
 
 
 

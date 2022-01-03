@@ -466,38 +466,6 @@ int geometric_backtrack_search::RowFirst(int I, int m, int verbose_level)
 
 	gg->girth_Floyd(i1, verbose_level);
 
-#if 0
-	int J;
-
-	J = 0;
-	while (TRUE) {
-		while (TRUE) {
-			if (J >= gg->GB->b_len) {
-				if (f_v) {
-					cout << "geometric_backtrack_search::RowFirst" << endl;
-					gg->inc->print(cout, i1 + 1, gg->inc->Encoding->v);
-				}
-				return TRUE;
-			}
-			if (!ConfFirst(I, m, J, verbose_level)) {
-				break;
-			}
-			J++;
-		}
-		// J-th element could not initialize, move on
-		while (TRUE) {
-			if (J == 0) {
-				return FALSE;
-			}
-			J--;
-			if (ConfNext(I, m, J, verbose_level)) {
-				break;
-			}
-		}
-		// J-th element has been incremented. Initialize elements after it:
-		J++;
-	}
-#else
 
 	if (gg->GB->Descr->f_orderly) {
 
@@ -509,7 +477,6 @@ int geometric_backtrack_search::RowFirst(int I, int m, int verbose_level)
 		ret = RowFirstLexLeast(I, m, verbose_level);
 	}
 
-#endif
 
 	return ret;
 
@@ -535,38 +502,6 @@ int geometric_backtrack_search::RowNext(int I, int m, int verbose_level)
 	if (gg->inc->back_to_line != -1 && gg->inc->back_to_line == i1) {
 		gg->inc->back_to_line = -1;
 	}
-#if 0
-	int J;
-	J = gg->GB->b_len - 1;
-	while (TRUE) {
-		while (TRUE) {
-			if (ConfNext(I, m, J, verbose_level)) {
-				break;
-			}
-			if (J == 0) {
-				return FALSE;
-			}
-			J--;
-		}
-		// J-th element has been incremented. Initialize elements after it:
-		while (TRUE) {
-			if (J >= gg->GB->b_len - 1) {
-				if (f_v) {
-					cout << "geometric_backtrack_search::RowNext" << endl;
-					gg->inc->print(cout, i1 + 1, gg->inc->Encoding->v);
-				}
-				return TRUE;
-			}
-			J++;
-			if (!ConfFirst(I, m, J, verbose_level)) {
-				break;
-			}
-		}
-		// J-th element could not initialize, move on
-		J--;
-	}
-#else
-
 
 	if (gg->GB->Descr->f_orderly) {
 
@@ -577,7 +512,7 @@ int geometric_backtrack_search::RowNext(int I, int m, int verbose_level)
 		ret = RowNextLexLeast(I, m, verbose_level);
 	}
 
-#endif
+
 	return ret;
 }
 
@@ -594,7 +529,6 @@ int geometric_backtrack_search::RowFirstLexLeast(int I, int m, int verbose_level
 		cout << "geometric_backtrack_search::RowFirstLexLeast "
 				"I=" << I << " m=" << m << " i1=" << i1 << endl;
 	}
-
 
 
 	J = 0;
@@ -720,7 +654,6 @@ int geometric_backtrack_search::RowFirstOrderly(int I, int m, int verbose_level)
 	}
 
 	if (It->Canonical_forms->B.size()) {
-
 
 		place_row(I, m, 0 /* idx */, verbose_level);
 
@@ -1070,7 +1003,7 @@ int geometric_backtrack_search::XNext(int I, int m, int J, int n, int verbose_le
 
 
 
-
+#if 0
 	if (!gg->GB->Descr->f_orderly) {
 
 		if (J == 0 && n == 0) {
@@ -1080,6 +1013,7 @@ int geometric_backtrack_search::XNext(int I, int m, int J, int n, int verbose_le
 		}
 
 	}
+#endif
 
 	for (j = old_x - j0 + 1; j < C->b; j++) {
 

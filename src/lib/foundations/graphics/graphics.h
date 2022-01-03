@@ -475,6 +475,8 @@ struct grid_frame {
 
 class mp_graphics {
 
+	layered_graph_draw_options *Draw_options;
+
 	//std::string fname_base;
 	std::string fname_mp;
 	std::string fname_log;
@@ -526,35 +528,42 @@ class mp_graphics {
 	
 	int cur_path;
 
-	int f_embedded;
+	//int f_embedded;
 		// have a header so that the file 
 		// can be compiled standalone (for tikz)
-	int f_sideways;
+	//int f_sideways;
 
 public:
 	// for tikz:
-	double tikz_global_scale; // .45 works
-	double tikz_global_line_width; // 1.5 works
+	//double tikz_global_scale; // .45 works
+	//double tikz_global_line_width; // 1.5 works
 
 
 	mp_graphics();
+#if 0
 	mp_graphics(std::string &file_name,
 			layered_graph_draw_options *Opt, int verbose_level);
 	mp_graphics(std::string &file_name,
 		int xmin, int ymin, int xmax, int ymax, 
 		int f_embedded, int f_sideways, int verbose_level);
+#endif
 	~mp_graphics();
-	void default_values();
-	void init(std::string &file_name,
-		int xmin, int ymin, int xmax, int ymax, 
-		int f_embedded, int f_sideways, int verbose_level);
+	//void default_values();
+	void init(
+			std::string &file_name,
+			layered_graph_draw_options *Draw_options,
+		//int xmin, int ymin, int xmax, int ymax,
+		//int f_embedded, int f_sideways,
+		int verbose_level);
 	void exit(std::ostream &ost, int verbose_level);
+#if 0
 	void setup(std::string &fname_base,
 		int in_xmin, int in_ymin, int in_xmax, int in_ymax, 
 		int xmax, int ymax, int f_embedded, int f_sideways, 
 		double scale, double line_width, int verbose_level);
 	void set_parameters(double scale, double line_width);
 	void set_scale(double scale);
+#endif
 	void frame(double move_out);
 	void frame_constant_aspect_ratio(double move_out);
 	void finish(std::ostream &ost, int verbose_level);
@@ -797,7 +806,7 @@ public:
 		int nb_col_parts, int *col_part_first,
 		int f_row_grid, int f_col_grid,
 		int f_bitmatrix, bitmatrix *Bitmatrix, int *M,
-		int m, int n, int xmax, int ymax,
+		int m, int n,
 		int f_has_labels, int *labels);
 
 	void draw_density2(int no,
@@ -825,7 +834,7 @@ public:
 	void draw_matrix_in_color(
 		int f_row_grid, int f_col_grid,
 		int *Table, int nb_colors,
-		int m, int n, int xmax, int ymax,
+		int m, int n, //int xmax, int ymax,
 		int *color_scale, int nb_colors_in_scale,
 		int f_has_labels, int *labels);
 	void domino_draw1(int M,
@@ -923,21 +932,27 @@ public:
 	plot_tools();
 	~plot_tools();
 
-	void draw_density(char *prefix, int *the_set, int set_size,
+	void draw_density(
+			layered_graph_draw_options *Draw_options,
+			char *prefix, int *the_set, int set_size,
 		int f_title, const char *title, int out_of,
 		const char *label_x,
 		int f_circle, int circle_at, int circle_rad,
 		int f_mu, int f_sigma, int nb_standard_deviations,
 		int f_v_grid, int v_grid, int f_h_grid, int h_grid,
-		int xmax, int ymax, int offset_x,
+		//int xmax, int ymax,
+		int offset_x,
 		int f_switch_x, int no, int f_embedded,
 		int verbose_level);
-	void draw_density_multiple_curves(std::string &prefix,
+	void draw_density_multiple_curves(
+			layered_graph_draw_options *Draw_options,
+			std::string &prefix,
 		int **Data, int *Data_size, int nb_data_sets,
 		int f_title, const char *title, int out_of,
 		const char *label_x,
 		int f_v_grid, int v_grid, int f_h_grid, int h_grid,
-		int xmax, int ymax, int offset_x, int f_switch_x,
+		//int xmax, int ymax,
+		int offset_x, int f_switch_x,
 		int f_v_logarithmic, double log_base, int no, int f_embedded,
 		int verbose_level);
 	void get_coord(int *Px, int *Py, int idx, int x, int y,

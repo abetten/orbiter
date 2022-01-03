@@ -261,12 +261,12 @@ void hadamard_classify::init(int n, int f_draw,
 			}
 
 		char str[1000];
-		int xmax_in = ONE_MILLION;
-		int ymax_in = ONE_MILLION;
-		int xmax_out = 500000;
-		int ymax_out = 500000;
-		double scale = 0.4;
-		double line_width = 0.5;
+		//int xmax_in = ONE_MILLION;
+		//int ymax_in = ONE_MILLION;
+		//int xmax_out = 500000;
+		//int ymax_out = 500000;
+		//double scale = 0.4;
+		//double line_width = 0.5;
 		string fname_base;
 
 		sprintf(str, "Hadamard_graph_%d", n);
@@ -275,8 +275,11 @@ void hadamard_classify::init(int n, int f_draw,
 
 		//CG->draw_partitioned(fname_base,
 		//xmax_in, ymax_in, xmax_out, ymax_out, verbose_level);
-		CG->draw(fname_base, xmax_in, ymax_in, xmax_out, ymax_out,
-			scale, line_width, verbose_level);
+		CG->draw(fname_base,
+				Orbiter->draw_options,
+				//xmax_in, ymax_in, xmax_out, ymax_out,
+				//scale, line_width,
+				verbose_level);
 
 		if (f_v) {
 			cout << "drawing adjacency matrix done" << endl;

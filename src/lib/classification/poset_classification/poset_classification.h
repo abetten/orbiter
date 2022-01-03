@@ -706,15 +706,21 @@ public:
 		int verbose_level);
 	int write_treefile(std::string &fname_base, int lvl,
 		int verbose_level);
-	void draw_tree(std::string &fname_base, int lvl,
-		int xmax, int ymax, int rad, int f_embedded, 
+	void draw_tree(
+			std::string &fname_base, int lvl,
+			layered_graph_draw_options *Draw_options,
+		int xmax, int ymax, int rad, int f_embedded,
 		int f_sideways, int verbose_level);
-	void draw_tree_low_level(std::string &fname, int nb_nodes,
+	void draw_tree_low_level(
+			std::string &fname,
+			layered_graph_draw_options *Draw_options,
+			int nb_nodes,
 		int *coord_xyw, int *perm, int *perm_inv, 
-		int f_draw_points, int f_draw_extension_points, 
-		int f_draw_aut_group_order, 
-		int xmax, int ymax, int rad, int f_embedded, 
-		int f_sideways, int verbose_level);
+		int f_draw_points, int f_draw_extension_points,
+		int f_draw_aut_group_order,
+		int xmax, int ymax, int rad, int f_embedded,
+		int f_sideways,
+		int verbose_level);
 	void draw_tree_low_level1(mp_graphics &G, int nb_nodes, 
 		int *coords, int *perm, int *perm_inv, 
 		int f_draw_points, int f_draw_extension_points, 
