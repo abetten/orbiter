@@ -58,44 +58,8 @@ mp_graphics::mp_graphics()
 
 	cur_path = 1;
 
-	//f_embedded = FALSE;
-	//f_sideways = FALSE;
-
-	//tikz_global_scale = .45;
-	//tikz_global_line_width = 1.5;
 }
 
-
-
-
-
-
-#if 0
-mp_graphics::mp_graphics(std::string &file_name,
-		layered_graph_draw_options *Opt, int verbose_level)
-{
-
-	default_values();
-	init(file_name, 0 /*xmin*/, 0 /*ymin*/, Opt->xin /*xmax*/, Opt->yin /*ymax*/,
-			Opt->f_embedded, Opt->f_sideways, verbose_level);
-	dev[0] = 0;
-	dev[1] = 0;
-	dev[2] = Opt->xout;
-	dev[3] = Opt->yout;
-	set_parameters(Opt->scale, Opt->line_width);
-}
-
-
-
-mp_graphics::mp_graphics(std::string &file_name,
-		int xmin, int ymin, int xmax, int ymax,
-		int f_embedded, int f_sideways, int verbose_level)
-{
-	
-	default_values();
-	init(file_name, xmin, ymin, xmax, ymax, f_embedded, f_sideways, verbose_level);
-}
-#endif
 
 mp_graphics::~mp_graphics()
 {
@@ -103,44 +67,10 @@ mp_graphics::~mp_graphics()
 	exit(cout, 1);
 }
 
-#if 0
-void mp_graphics::default_values()
-{
-	Draw_options = NULL;
-	f_file_open = FALSE;
-	f_min_max_set = FALSE;
-	txt_halign = 0;
-	txt_valign = 0;
-	txt_boxed = 0;
-	txt_overwrite = 0;
-	txt_rotate = 0;
-	line_beg_style = 0;
-	line_end_style = 0; // if 1, draw an arrow
-	line_dashing = 0; // between 0 and 100  sl_udsty
-	line_thickness = 100; // 100 is the old 1
-	line_color = 1;
-	fill_interior = 0;
-	fill_color = 0;
-	fill_shape = 1;
-	fill_outline = 0;
-	fill_nofill = 0;
-	
-	cur_path = 1;
-	
-	//f_embedded = FALSE;
-	//f_sideways = FALSE;
-
-	//tikz_global_scale = .45;
-	//tikz_global_line_width = 1.5;
-}
-#endif
-
 void mp_graphics::init(
 		std::string &file_name,
 		layered_graph_draw_options *Draw_options,
-	//int xmin, int ymin, int xmax, int ymax,
-	//int f_embedded, int f_sideways,
-	int verbose_level)
+		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	string_tools ST;
@@ -150,9 +80,7 @@ void mp_graphics::init(
 		cout << "mp_graphics::init file_name=" << file_name << endl;
 	}
 	mp_graphics::Draw_options = Draw_options;
-	//mp_graphics::f_embedded = f_embedded;
-	//mp_graphics::f_sideways = f_sideways;
-	
+
 	fname_mp.assign(file_name);
 	fname_log.assign(file_name);
 	fname_tikz.assign(file_name);
@@ -214,58 +142,6 @@ void mp_graphics::exit(ostream &ost, int verbose_level)
 		cout << "mp_graphics::exit done" << endl;
 	}
 }
-
-#if 0
-void mp_graphics::setup(
-		//std::string &fname_base,
-	//int in_xmin, int in_ymin, int in_xmax, int in_ymax,
-	//int xmax, int ymax, int f_embedded, int f_sideways,
-	//double scale, double line_width,
-		int verbose_level)
-{
-	//int x_min = 0, x_max = 1000;
-	//int y_min = 0, y_max = 1000;
-	int factor_1000 = 1000;
-	string fname_full;
-	
-	fname_full.assign(fname_base);
-	fname_full.append(".mp");
-
-	init(fname_full, in_xmin, in_ymin,
-			in_xmax, in_ymax, f_embedded, f_sideways, verbose_level);
-#if 0
-	out_xmin() = -(xmax >> 1);
-	out_ymin() = -(ymax >> 1);
-	out_xmax() = xmax >> 1;
-	out_ymax() = ymax >> 1;
-#else
-	out_xmin() = 0;
-	out_ymin() = 0;
-	out_xmax() = xmax;
-	out_ymax() = ymax;
-#endif
-	//cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
-	
-	tikz_global_scale = scale;
-	tikz_global_line_width = line_width;
-	header();
-	begin_figure(factor_1000);
-}
-#endif
-
-#if 0
-void mp_graphics::set_parameters(double scale, double line_width)
-{
-	tikz_global_scale = scale;
-	tikz_global_line_width = line_width;
-}
-
-void mp_graphics::set_scale(double scale)
-{
-	tikz_global_scale = scale;
-}
-#endif
-
 
 void mp_graphics::frame(double move_out)
 {

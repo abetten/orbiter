@@ -11787,6 +11787,23 @@ Desargues_path_lex_least_draw:
 	pdflatex Desargues_path_lex_least_incma.tex
 	open Desargues_path_lex_least_incma.pdf
 
+DESARGUES_PATH_CANONICAL_ANCESTOR="10 10 3\n0\n1 0\n2 112 119\n3 89 112 119\n4 114 118 89 82\n5 106 114 69 107 111\n6 85 105 112 99 83 61\n7 94 105 113 85 35 83 60\n8 26 119 55 105 92 79 74 48\n9 119 93 106 15 26 79 55 73 47\n10 0 119 93 106 15 26 79 55 73 47\n-1\n"
+
+Desargues_path_can_anc_draw:
+	echo $(DESARGUES_PATH_CANONICAL_ANCESTOR) >Desargues_path_can_anc.inc
+	$(ORBITER_PATH)orbiter.out -v 10 \
+		-draw_incidence_structure_description \
+			-width 60 -with_10 6 -end \
+		-define C -combinatorial_objects \
+			-file_of_incidence_geometries_by_row_ranks Desargues_path_can_anc.inc 10 10 3 \
+		-end \
+		-with C -do \
+		-combinatorial_object_activity \
+			-draw_incidence_matrices \
+			Desargues_path_can_anc \
+		-end
+	pdflatex Desargues_path_can_anc_incma.tex
+	open Desargues_path_can_anc_incma.pdf
 
 
 

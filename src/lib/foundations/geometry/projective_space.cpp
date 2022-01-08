@@ -2032,7 +2032,7 @@ void projective_space::line_intersection_type_basic(
 // type[N_lines]
 {
 	int f_v = (verbose_level >= 1);
-	long int rk, h, i, j, d;
+	long int rk, h, d;
 	int *M;
 
 	if (f_v) {
@@ -2044,11 +2044,7 @@ void projective_space::line_intersection_type_basic(
 		type[rk] = 0;
 		Grass_lines->unrank_lint(rk, 0 /* verbose_level */);
 		for (h = 0; h < set_size; h++) {
-			for (i = 0; i < 2; i++) {
-				for (j = 0; j < d; j++) {
-					M[i * d + j] = Grass_lines->M[i * d + j];
-				}
-			}
+			Orbiter->Int_vec.copy(Grass_lines->M, M, 2 * d);
 			unrank_point(M + 2 * d, set[h]);
 			if (F->rank_of_rectangular_matrix(M,
 					3, d, 0 /*verbose_level*/) == 2) {
@@ -2061,6 +2057,40 @@ void projective_space::line_intersection_type_basic(
 		cout << "projective_space::line_intersection_type_basic done" << endl;
 	}
 }
+
+void projective_space::line_intersection_type_basic_given_a_set_of_lines(
+		long int *lines_by_rank, int nb_lines,
+	long int *set, int set_size, int *type, int verbose_level)
+// type[nb_lines]
+{
+	int f_v = (verbose_level >= 1);
+	long int rk, h, d, u;
+	int *M;
+
+	if (f_v) {
+		cout << "projective_space::line_intersection_type_basic_given_a_set_of_lines" << endl;
+	}
+	d = n + 1;
+	M = NEW_int(3 * d);
+	for (u = 0; u < nb_lines; u++) {
+		rk = lines_by_rank[u];
+		type[u] = 0;
+		Grass_lines->unrank_lint(rk, 0 /* verbose_level */);
+		for (h = 0; h < set_size; h++) {
+			Orbiter->Int_vec.copy(Grass_lines->M, M, 2 * d);
+			unrank_point(M + 2 * d, set[h]);
+			if (F->rank_of_rectangular_matrix(M,
+					3, d, 0 /*verbose_level*/) == 2) {
+				type[u]++;
+			}
+		} // next h
+	} // next rk
+	FREE_int(M);
+	if (f_v) {
+		cout << "projective_space::line_intersection_type_basic_given_a_set_of_lines done" << endl;
+	}
+}
+
 
 void projective_space::line_intersection_type_through_hyperplane(
 	long int *set, int set_size, int *type, int verbose_level)

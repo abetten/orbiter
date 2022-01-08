@@ -577,6 +577,44 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 
 
 	}
+	else if (Descr->f_unpack_from_restricted_action) {
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_IS "
+					"unpack_from_restricted_action "
+					<< Descr->unpack_from_restricted_action_prefix
+					<< " " << Descr->unpack_from_restricted_action_group_label << endl;
+		}
+
+		unpack_from_restricted_action(
+				Descr->unpack_from_restricted_action_prefix,
+				Descr->unpack_from_restricted_action_group_label,
+				IS,
+				verbose_level);
+
+	}
+
+	else if (Descr->f_line_covering_type) {
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::perform_activity_IS "
+					"line_covering_type "
+					<< Descr->line_covering_type_prefix
+					<< " " << Descr->line_covering_type_projective_space
+					<< " " << Descr->line_covering_type_lines
+					<< endl;
+		}
+
+		line_covering_type(
+				Descr->line_covering_type_prefix,
+				Descr->line_covering_type_projective_space,
+				Descr->line_covering_type_lines,
+				IS,
+				verbose_level);
+
+	}
+
+
 
 }
 
@@ -1080,6 +1118,207 @@ void combinatorial_object_activity::draw_incidence_matrices(
 	}
 	if (f_v) {
 		cout << "combinatorial_object_activity::draw_incidence_matrices done" << endl;
+	}
+}
+
+void combinatorial_object_activity::unpack_from_restricted_action(
+		std::string &prefix,
+		std::string &group_label,
+		data_input_stream *IS,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	file_io Fio;
+	latex_interface L;
+
+	if (f_v) {
+		cout << "combinatorial_object_activity::unpack_from_restricted_action" << endl;
+	}
+
+
+	any_group *G;
+
+	G = The_Orbiter_top_level_session->get_object_of_type_any_group(group_label);
+	linear_group *LG;
+
+	LG = G->LG;
+
+
+	if (!G->f_linear_group) {
+		cout << "combinatorial_object_activity::unpack_from_restricted_action must be a linear group" << endl;
+		exit(1);
+	}
+
+	if (LG->A2->type_G != action_by_restriction_t) {
+		cout << "combinatorial_object_activity::unpack_from_restricted_action must be a restricted action" << endl;
+		exit(1);
+	}
+	action_by_restriction *ABR;
+	ABR = LG->A2->G.ABR;
+
+
+	string fname;
+
+	fname.assign(prefix);
+	fname.append("_unpacked.txt");
+
+	if (f_v) {
+		cout << "combinatorial_object_activity::unpack_from_restricted_action before latex_report" << endl;
+	}
+
+
+	{
+
+		ofstream ost(fname);
+
+		int N;
+
+		N = IS->Objects.size();
+
+
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::unpack_from_restricted_action before loop" << endl;
+		}
+
+		int i, h;
+		long int a, b;
+
+
+		for (i = 0; i < N; i++) {
+
+			object_with_canonical_form *OwCF;
+
+			OwCF = (object_with_canonical_form *) IS->Objects[i];
+
+
+			//encoded_combinatorial_object *Enc;
+
+			//OwCF->encode_incma(Enc, verbose_level);
+
+			for (h = 0; h < OwCF->sz; h++) {
+
+				a = OwCF->set[h];
+				b = ABR->original_point(a);
+				OwCF->set[h] = b;
+			}
+
+			//Enc->latex_incma(ost, verbose_level);
+
+			//FREE_OBJECT(Enc);
+
+			ost << OwCF->sz;
+			for (h = 0; h < OwCF->sz; h++) {
+				ost << " " << OwCF->set[h];
+			}
+			ost << endl;
+
+		}
+
+		ost << -1 << endl;
+
+
+	}
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+	if (f_v) {
+		cout << "combinatorial_object_activity::unpack_from_restricted_action done" << endl;
+	}
+}
+
+
+void combinatorial_object_activity::line_covering_type(
+		std::string &prefix,
+		std::string &projective_space_label,
+		std::string &lines,
+		data_input_stream *IS,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	file_io Fio;
+	latex_interface L;
+
+	if (f_v) {
+		cout << "combinatorial_object_activity::line_covering_type" << endl;
+	}
+
+	projective_space_with_action *PA;
+
+	PA = The_Orbiter_top_level_session->get_object_of_type_projective_space(projective_space_label);
+
+	projective_space *P;
+
+	P = PA->P;
+
+	long int *the_lines;
+	int nb_lines;
+
+	Orbiter->get_lint_vector_from_label(lines, the_lines, nb_lines, verbose_level);
+
+	string fname;
+
+	fname.assign(prefix);
+	fname.append("_line_covering_type.txt");
+
+	if (f_v) {
+		cout << "combinatorial_object_activity::line_covering_type before latex_report" << endl;
+	}
+
+
+	{
+
+		ofstream ost(fname);
+
+		int N;
+
+		N = IS->Objects.size();
+
+
+
+		if (f_v) {
+			cout << "combinatorial_object_activity::line_covering_type before loop" << endl;
+		}
+
+		int i, h;
+
+		int *type;
+
+		type = NEW_int(nb_lines);
+
+
+		for (i = 0; i < N; i++) {
+
+			object_with_canonical_form *OwCF;
+
+			OwCF = (object_with_canonical_form *) IS->Objects[i];
+
+
+			P->line_intersection_type_basic_given_a_set_of_lines(
+					the_lines, nb_lines,
+					OwCF->set, OwCF->sz, type, 0 /*verbose_level */);
+
+			ost << OwCF->sz;
+			for (h = 0; h < nb_lines; h++) {
+				ost << " " << type[h];
+			}
+			ost << endl;
+
+		}
+
+		ost << -1 << endl;
+
+
+	}
+
+	if (f_v) {
+		cout << "Written file " << fname << " of size "
+				<< Fio.file_size(fname) << endl;
+	}
+	if (f_v) {
+		cout << "combinatorial_object_activity::line_covering_type done" << endl;
 	}
 }
 

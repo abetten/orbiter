@@ -516,7 +516,15 @@ void linear_group::linear_group_init(
 		int nb_points;
 		action *A3;
 
-		Orbiter->Lint_vec.scan(description->restricted_action_text, points, nb_points);
+		//Orbiter->Lint_vec.scan(description->restricted_action_text, points, nb_points);
+		Orbiter->get_lint_vector_from_label(description->restricted_action_text, points, nb_points, verbose_level);
+		if (f_v) {
+			cout << "linear_group::linear_group_init "
+					"computing restricted action on set of size " << nb_points << endl;
+			Orbiter->Lint_vec.print(cout, points, nb_points);
+			cout << endl;
+		}
+
 		A3 = A2->restricted_action(points, nb_points,
 				verbose_level);
 		A3->f_is_linear = TRUE;

@@ -57,6 +57,16 @@ combinatorial_object_activity_description::combinatorial_object_activity_descrip
 	f_test_distinguishing_property = FALSE;
 	//test_distinguishing_property_graph
 
+	f_unpack_from_restricted_action = FALSE;
+	//std::string unpack_from_restricted_action_prefix;
+	//std::string unpack_from_restricted_action_group_label;
+
+	f_line_covering_type = FALSE;
+	//std::string line_covering_type_prefix;
+	//std::string line_covering_type_projective_space;
+	//std::string line_covering_type_lines;
+
+
 }
 
 combinatorial_object_activity_description::~combinatorial_object_activity_description()
@@ -185,7 +195,23 @@ int combinatorial_object_activity_description::read_arguments(
 			test_distinguishing_property_graph.assign(argv[++i]);
 			cout << "-test_distinguishing_property " << test_distinguishing_property_graph << endl;
 		}
-
+		else if (stringcmp(argv[i], "-unpack_from_restricted_action") == 0) {
+			f_unpack_from_restricted_action = TRUE;
+			unpack_from_restricted_action_prefix.assign(argv[++i]);
+			unpack_from_restricted_action_group_label.assign(argv[++i]);
+			cout << "-unpack_from_restricted_action " << unpack_from_restricted_action_prefix
+					<< " " << unpack_from_restricted_action_group_label << endl;
+		}
+		else if (stringcmp(argv[i], "-line_covering_type") == 0) {
+			f_line_covering_type = TRUE;
+			line_covering_type_prefix.assign(argv[++i]);
+			line_covering_type_projective_space.assign(argv[++i]);
+			line_covering_type_lines.assign(argv[++i]);
+			cout << "-line_covering_type " << line_covering_type_prefix
+					<< " " << line_covering_type_projective_space
+					<< " " << line_covering_type_lines
+					<< endl;
+		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -244,6 +270,16 @@ void combinatorial_object_activity_description::print()
 	}
 	if (f_test_distinguishing_property) {
 		cout << "-test_distinguishing_property " << test_distinguishing_property_graph << endl;
+	}
+	if (f_unpack_from_restricted_action) {
+		cout << "-unpack_from_restricted_action " << unpack_from_restricted_action_prefix
+				<< " " << unpack_from_restricted_action_group_label << endl;
+	}
+	if (f_line_covering_type) {
+		cout << "-line_covering_type " << line_covering_type_prefix
+				<< " " << line_covering_type_projective_space
+				<< " " << line_covering_type_lines
+				<< endl;
 	}
 }
 

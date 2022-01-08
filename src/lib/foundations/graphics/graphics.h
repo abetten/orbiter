@@ -528,42 +528,16 @@ class mp_graphics {
 	
 	int cur_path;
 
-	//int f_embedded;
-		// have a header so that the file 
-		// can be compiled standalone (for tikz)
-	//int f_sideways;
 
 public:
-	// for tikz:
-	//double tikz_global_scale; // .45 works
-	//double tikz_global_line_width; // 1.5 works
-
 
 	mp_graphics();
-#if 0
-	mp_graphics(std::string &file_name,
-			layered_graph_draw_options *Opt, int verbose_level);
-	mp_graphics(std::string &file_name,
-		int xmin, int ymin, int xmax, int ymax, 
-		int f_embedded, int f_sideways, int verbose_level);
-#endif
 	~mp_graphics();
-	//void default_values();
 	void init(
 			std::string &file_name,
 			layered_graph_draw_options *Draw_options,
-		//int xmin, int ymin, int xmax, int ymax,
-		//int f_embedded, int f_sideways,
 		int verbose_level);
 	void exit(std::ostream &ost, int verbose_level);
-#if 0
-	void setup(std::string &fname_base,
-		int in_xmin, int in_ymin, int in_xmax, int in_ymax, 
-		int xmax, int ymax, int f_embedded, int f_sideways, 
-		double scale, double line_width, int verbose_level);
-	void set_parameters(double scale, double line_width);
-	void set_scale(double scale);
-#endif
 	void frame(double move_out);
 	void frame_constant_aspect_ratio(double move_out);
 	void finish(std::ostream &ost, int verbose_level);
