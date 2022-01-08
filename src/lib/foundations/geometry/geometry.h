@@ -1954,6 +1954,10 @@ public:
 	void line_intersection_type_basic(long int *set, int set_size, int *type,
 		int verbose_level);
 		// type[N_lines]
+	void line_intersection_type_basic_given_a_set_of_lines(
+			long int *lines_by_rank, int nb_lines,
+		long int *set, int set_size, int *type, int verbose_level);
+	// type[nb_lines]
 	void line_intersection_type_through_hyperplane(
 		long int *set, int set_size,
 		int *type, int verbose_level);

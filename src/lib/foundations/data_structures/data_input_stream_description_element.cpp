@@ -36,7 +36,10 @@ data_input_stream_description_element::~data_input_stream_description_element()
 
 void data_input_stream_description_element::print()
 {
-	if (input_type == t_data_input_stream_set_of_points) {
+	if (input_type == t_data_input_stream_unknown) {
+		cout << "unknown type " << endl;
+	}
+	else if (input_type == t_data_input_stream_set_of_points) {
 		cout << "-set_of_points " << input_string << endl;
 	}
 	else if (input_type == t_data_input_stream_set_of_lines) {
@@ -78,7 +81,14 @@ void data_input_stream_description_element::print()
 				<< endl;
 	}
 	else if (input_type == t_data_input_stream_file_of_incidence_geometries) {
-		cout << "-file_of_designs " << input_string
+		cout << "-file_of_incidence_geometries " << input_string
+				<< " " << input_data1
+				<< " " << input_data2
+				<< " " << input_data3
+				<< endl;
+	}
+	else if (input_type == t_data_input_stream_file_of_incidence_geometries_by_row_ranks) {
+		cout << "-file_of_incidence_geometries_by_row_ranks " << input_string
 				<< " " << input_data1
 				<< " " << input_data2
 				<< " " << input_data3
@@ -104,6 +114,10 @@ void data_input_stream_description_element::print()
 				<< " " << input_string2
 				<< " " << input_data1
 			<< endl;
+	}
+	else {
+		cout << "data_input_stream_description_element::print unknown type" << endl;
+		exit(1);
 	}
 }
 

@@ -108,6 +108,15 @@ public:
 	int f_test_distinguishing_property;
 	std::string test_distinguishing_property_graph;
 
+	int f_unpack_from_restricted_action;
+	std::string unpack_from_restricted_action_prefix;
+	std::string unpack_from_restricted_action_group_label;
+
+	int f_line_covering_type;
+	std::string line_covering_type_prefix;
+	std::string line_covering_type_projective_space;
+	std::string line_covering_type_lines;
+
 
 	combinatorial_object_activity_description();
 	~combinatorial_object_activity_description();
@@ -183,6 +192,17 @@ public:
 			int verbose_level);
 	void draw_incidence_matrices(
 			std::string &prefix,
+			data_input_stream *IS,
+			int verbose_level);
+	void unpack_from_restricted_action(
+			std::string &prefix,
+			std::string &group_label,
+			data_input_stream *IS,
+			int verbose_level);
+	void line_covering_type(
+			std::string &prefix,
+			std::string &projective_space_label,
+			std::string &lines,
 			data_input_stream *IS,
 			int verbose_level);
 

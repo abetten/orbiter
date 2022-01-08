@@ -831,6 +831,8 @@ public:
 	void print_symbol_table();
 	void add_symbol_table_entry(std::string &label,
 			orbiter_symbol_table_entry *Symb, int verbose_level);
+	any_group *get_object_of_type_any_group(std::string &label);
+	projective_space_with_action *get_object_of_type_projective_space(std::string &label);
 
 };
 
