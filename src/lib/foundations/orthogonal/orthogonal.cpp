@@ -1587,13 +1587,13 @@ void orthogonal::lines_on_point(long int pt,
 		if (pt != 0) {
 			root2 = find_root(pt, verbose_level);
 			Siegel_Transformation(T2, rk1, pt, root2, verbose_level - 3);
-			F->mult_matrix_matrix(T1, T2, T3, n, n, n,
+			F->Linear_algebra->mult_matrix_matrix(T1, T2, T3, n, n, n,
 					0 /* verbose_level */);
 			}
 		else {
-			F->copy_matrix(T1, T3, n, n);
+			F->Linear_algebra->copy_matrix(T1, T3, n, n);
 			}
-		F->mult_matrix_matrix(lines_on_point_coords1, T3,
+		F->Linear_algebra->mult_matrix_matrix(lines_on_point_coords1, T3,
 				lines_on_point_coords2, alpha, n, n,
 				0 /* verbose_level */);
 		}
@@ -1691,14 +1691,14 @@ void orthogonal::lines_on_point_by_line_rank(long int pt,
 			root2 = find_root(pt, verbose_level - 2);
 			Siegel_Transformation(T1, pt_P, rk1, root1, verbose_level - 2);
 			Siegel_Transformation(T2, rk1, pt, root2, verbose_level - 2);
-			F->mult_matrix_matrix(T1, T2, T3, n, n, n,
+			F->Linear_algebra->mult_matrix_matrix(T1, T2, T3, n, n, n,
 					0 /* verbose_level */);
 		}
 		if (f_v) {
 			cout << "orthogonal::lines_on_point_by_line_rank applying:" << endl;
 			Orbiter->Int_vec.matrix_print(T3, n, n);
 		}
-		F->mult_matrix_matrix(lines_on_point_coords1,
+		F->Linear_algebra->mult_matrix_matrix(lines_on_point_coords1,
 				T3, lines_on_point_coords2, alpha, n, n,
 				0 /* verbose_level */);
 		}

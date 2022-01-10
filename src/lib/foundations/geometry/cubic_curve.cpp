@@ -166,7 +166,7 @@ int cubic_curve::compute_system_in_RREF(
 				"The system:" << endl;
 		Orbiter->Int_vec.matrix_print(System, nb_pts, nb_monomials);
 	}
-	r = F->Gauss_simple(System, nb_pts, nb_monomials,
+	r = F->Linear_algebra->Gauss_simple(System, nb_pts, nb_monomials,
 		base_cols, 0 /* verbose_level */);
 	if (FALSE) {
 		cout << "cubic_curve::compute_system_in_RREF "
@@ -341,7 +341,7 @@ void cubic_curve::compute_inflexion_points(
 						"before F->perp_standard:" << endl;
 				Orbiter->Int_vec.matrix_print(Basis, 1, 3);
 			}
-			F->perp_standard(3, 1, Basis, 0 /*verbose_level*/);
+			F->Linear_algebra->perp_standard(3, 1, Basis, 0 /*verbose_level*/);
 			if (f_v) {
 				cout << "cubic_curve::compute_inflexion_points "
 						"after F->perp_standard:" << endl;
@@ -350,7 +350,7 @@ void cubic_curve::compute_inflexion_points(
 			// test if the first basis vector is a multiple of v:
 			Orbiter->Int_vec.copy(v, Basis2, 3);
 			Orbiter->Int_vec.copy(Basis + 3, Basis2 + 3, 3);
-			if (F->rank_of_rectangular_matrix(Basis2,
+			if (F->Linear_algebra->rank_of_rectangular_matrix(Basis2,
 					2, 3, 0 /*verbose_level*/) == 1) {
 				Orbiter->Int_vec.copy(Basis + 6, w, 3);
 			}
@@ -359,7 +359,7 @@ void cubic_curve::compute_inflexion_points(
 			}
 			Orbiter->Int_vec.copy(v, Basis2, 3);
 			Orbiter->Int_vec.copy(w, Basis2 + 3, 3);
-			if (F->rank_of_rectangular_matrix(Basis,
+			if (F->Linear_algebra->rank_of_rectangular_matrix(Basis,
 					2, 3, 0 /*verbose_level*/) != 2) {
 				cout << "cubic_curve::compute_inflexion_points rank of "
 						"line spanned by v and w is not two" << endl;

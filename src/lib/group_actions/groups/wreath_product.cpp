@@ -469,7 +469,7 @@ long int wreath_product::element_image_of(int *Elt, long int a, int verbose_leve
 							<< " reduced input a=" << a << endl;
 				}
 				Gg.AG_element_unrank(q, u, 1, M->n, a);
-				F->mult_vector_from_the_left(u, Elt + offset_i(f), v,
+				F->Linear_algebra->mult_vector_from_the_left(u, Elt + offset_i(f), v,
 						M->n, M->n);
 				c = Gg.AG_element_rank(q, v, 1, M->n);
 				if (f_v) {
@@ -507,7 +507,7 @@ long int wreath_product::element_image_of(int *Elt, long int a, int verbose_leve
 						dimension_of_tensor_action,
 						dimension_of_tensor_action);
 			}
-			F->mult_vector_from_the_left(u, A3, v,
+			F->Linear_algebra->mult_vector_from_the_left(u, A3, v,
 					dimension_of_tensor_action,
 					dimension_of_tensor_action);
 			if (f_v) {
@@ -568,7 +568,7 @@ void wreath_product::element_image_of_low_level(int *Elt,
 				dimension_of_tensor_action,
 				dimension_of_tensor_action);
 	}
-	F->mult_vector_from_the_left(input, A3, v,
+	F->Linear_algebra->mult_vector_from_the_left(input, A3, v,
 			dimension_of_tensor_action,
 			dimension_of_tensor_action);
 	if (f_v) {
@@ -607,7 +607,7 @@ int wreath_product::element_is_one(int *Elt)
 			return FALSE;
 		}
 		for (f = 0; f < nb_factors; f++) {
-			if (!F->is_identity_matrix(
+			if (!F->Linear_algebra->is_identity_matrix(
 					Elt + offset_i(f), dimension_of_matrix_group)) {
 				return FALSE;
 			}
@@ -779,7 +779,7 @@ void wreath_product::create_matrix(int *Elt, int *A, int verbose_level)
 			N = dimension_of_matrix_group;
 		}
 		else {
-			F->Kronecker_product_square_but_arbitrary(
+			F->Linear_algebra->Kronecker_product_square_but_arbitrary(
 					A1, Elt + offset_i(f),
 					mtx_size[f - 1], dimension_of_matrix_group,
 					A2, N, 0 /* verbose_level */);
@@ -1089,7 +1089,7 @@ void wreath_product::make_strong_generators_data(int *&data,
 							GL_size);
 				}
 				else {
-					F->identity_matrix(
+					F->Linear_algebra->identity_matrix(
 							dat + nb_factors + k * M->elt_size_int_half,
 							dimension_of_matrix_group);
 				}
@@ -1103,7 +1103,7 @@ void wreath_product::make_strong_generators_data(int *&data,
 	for (k = nb_factors - 2; k >= 0; k--) {
 		Combi.perm_elementary_transposition(dat, nb_factors, k);
 		for (f = 0; f < nb_factors; f++) {
-			F->identity_matrix(dat + nb_factors + f * M->elt_size_int_half,
+			F->Linear_algebra->identity_matrix(dat + nb_factors + f * M->elt_size_int_half,
 					dimension_of_matrix_group);
 		}
 		Orbiter->Int_vec.copy(dat, data + h * size, size);
@@ -1189,7 +1189,9 @@ void wreath_product::report_rank_one_tensors(
 			Gg.AG_element_unrank(q, projections + j * dimension_of_matrix_group,
 					1, dimension_of_matrix_group, Proj[j] + 1);
 		}
-		F->transpose_matrix(projections, projections1, nb_factors, dimension_of_matrix_group);
+		F->Linear_algebra->transpose_matrix(
+				projections, projections1, nb_factors,
+				dimension_of_matrix_group);
 
 		ost << " & " << endl;
 		Orbiter->Int_vec.print(ost, Proj, nb_factors);
@@ -2016,7 +2018,7 @@ void wreath_product::compute_permutations_and_write_to_file(
 		}
 		generators_transposed[h] = NEW_int(mtx_n2);
 
-		F->transpose_matrix(
+		F->Linear_algebra->transpose_matrix(
 				generator_stack + h * mtx_n2,
 				generators_transposed[h], mtx_n, mtx_n);
 

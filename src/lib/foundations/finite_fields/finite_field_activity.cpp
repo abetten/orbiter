@@ -520,6 +520,134 @@ void finite_field_activity::perform_activity(int verbose_level)
 				verbose_level);
 
 	}
+
+
+	else if (Descr->f_product_of) {
+
+		int *data;
+		int sz;
+		int i, a, s;
+
+		if (f_v) {
+			cout << "-product_of " << Descr->product_of_elements
+				<< endl;
+		}
+
+		Orbiter->get_vector_from_label(Descr->product_of_elements,
+				data, sz, verbose_level);
+		s = 1;
+		for (i = 0; i < sz; i++) {
+			a = data[i];
+			s = F->mult(s, a);
+		}
+		if (f_v) {
+			cout << "the product is " << s << endl;
+		}
+
+	}
+	else if (Descr->f_sum_of) {
+
+		int *data;
+		int sz;
+		int i, a, s;
+
+		if (f_v) {
+			cout << "-sum_of " << Descr->sum_of_elements
+				<< endl;
+		}
+
+		Orbiter->get_vector_from_label(Descr->sum_of_elements,
+				data, sz, verbose_level);
+		s = 1;
+		for (i = 0; i < sz; i++) {
+			a = data[i];
+			s = F->add(s, a);
+		}
+		if (f_v) {
+			cout << "the sum is " << s << endl;
+		}
+
+	}
+
+	else if (Descr->f_negate) {
+
+		int *data;
+		int sz;
+		int i, a, s;
+
+		if (f_v) {
+			cout << "-negate " << Descr->negate_elements
+				<< endl;
+		}
+
+		Orbiter->get_vector_from_label(Descr->negate_elements,
+				data, sz, verbose_level);
+		for (i = 0; i < sz; i++) {
+			a = data[i];
+			s = F->negate(a);
+			if (f_v) {
+				cout << "the negative of " << a << " is " << s << endl;
+			}
+
+		}
+
+	}
+
+	else if (Descr->f_inverse) {
+
+		int *data;
+		int sz;
+		int i, a, s;
+
+		if (f_v) {
+			cout << "-inverse " << Descr->inverse_elements
+				<< endl;
+		}
+
+		Orbiter->get_vector_from_label(Descr->inverse_elements,
+				data, sz, verbose_level);
+		for (i = 0; i < sz; i++) {
+			a = data[i];
+			s = F->negate(a);
+			if (f_v) {
+				cout << "the inverse of " << a << " is " << s << endl;
+			}
+
+		}
+
+	}
+
+	else if (Descr->f_power_map) {
+
+		int *data;
+		int sz;
+		int i, a, s;
+
+		if (f_v) {
+			cout << "-power_map " << Descr->power_map_elements
+				<< endl;
+		}
+
+		Orbiter->get_vector_from_label(Descr->power_map_elements,
+				data, sz, verbose_level);
+
+		if (f_v) {
+			cout << "a : a^k" << endl;
+		}
+
+		for (i = 0; i < sz; i++) {
+			a = data[i];
+			s = F->power(a, Descr->power_map_k);
+			if (f_v) {
+				cout << a << " : " << s << endl;
+			}
+
+		}
+
+	}
+
+
+
 	else if (Descr->f_evaluate) {
 
 		cout << "before evaluate" << endl;

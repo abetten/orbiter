@@ -618,7 +618,7 @@ void spread_classify::print_elements_and_points()
 		unrank_subspace(M, i);
 		for (a = 0; a < r; a++) {
 			Mtx->GFq->PG_element_unrank_modified(v, 1, k, a);
-			Mtx->GFq->mult_matrix_matrix(v, M, w, 1, k, n,
+			Mtx->GFq->Linear_algebra->mult_matrix_matrix(v, M, w, 1, k, n,
 					0 /* verbose_level */);
 			b = rank_point(w);
 			Line[a] = b;
@@ -767,7 +767,7 @@ void spread_classify::early_test_func(long int *S, int len,
 				Orbiter->Int_vec.print_integer_matrix_width(cout, M,
 						2 * k, n, n, Mtx->GFq->log10_of_q + 1);
 			}
-			rk = Mtx->GFq->rank_of_rectangular_matrix_memory_given(
+			rk = Mtx->GFq->Linear_algebra->rank_of_rectangular_matrix_memory_given(
 					M, 2 * k, n, B, base_cols, 0 /* verbose_level */);
 
 			if (rk < 2 * k) {
@@ -838,7 +838,7 @@ int spread_classify::check_function(int len, long int *S, int verbose_level)
 				Orbiter->Int_vec.print_integer_matrix_width(cout, M,
 						2 * k, n, n, Mtx->GFq->log10_of_q + 1);
 			}
-			rk = Mtx->GFq->rank_of_rectangular_matrix_memory_given(
+			rk = Mtx->GFq->Linear_algebra->rank_of_rectangular_matrix_memory_given(
 					M, 2 * k, n, B, base_cols, 0 /* verbose_level */);
 			if (rk < 2 * k) {
 				if (f_vv) {
@@ -920,7 +920,7 @@ int spread_classify::incremental_check_function(int len, long int *S, int verbos
 			Orbiter->Int_vec.print_integer_matrix_width(cout, M,
 					2 * k, n, n, Mtx->GFq->log10_of_q + 1);
 		}
-		rk = Mtx->GFq->rank_of_rectangular_matrix_memory_given(
+		rk = Mtx->GFq->Linear_algebra->rank_of_rectangular_matrix_memory_given(
 				M, 2 * k, n, B, base_cols, 0 /* verbose_level */);
 		if (rk < 2 * k) {
 			if (f_vv) {

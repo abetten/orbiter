@@ -193,7 +193,7 @@ void action_on_spread_set::subspace_to_matrix(
 		cout << "action_on_spread_set::subspace_to_matrix" << endl;
 		}
 	
-	r = F->Gauss_easy(subspace, k, n);
+	r = F->Linear_algebra->Gauss_easy(subspace, k, n);
 	if (r != k) {
 		cout << "action_on_spread_set::subspace_to_matrix "
 				"r != k" << endl;

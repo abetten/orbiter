@@ -229,7 +229,7 @@ void action_by_subfield_structure::compute_image_int_low_level(
 			}
 		}
 
-	Fq->mult_vector_from_the_left(x, Mtx, xA, m, m);
+	Fq->Linear_algebra->mult_vector_from_the_left(x, Mtx, xA, m, m);
 
 
 	if (f_vv) {

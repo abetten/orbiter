@@ -260,9 +260,9 @@ void quartic_curve_from_surface::quartic(std::string &surface_prefix, int pt_orb
 	two = SOA->F->add(1, 1);
 	four = SOA->F->add(two, two);
 	mfour = SOA->F->negate(four);
-	SOA->F->scalar_multiply_vector_in_place(mfour, poly2,
+	SOA->F->Linear_algebra->scalar_multiply_vector_in_place(mfour, poly2,
 			SOA->Surf->Poly4_x123->get_nb_monomials());
-	SOA->F->add_vector(poly1, poly2, curve, SOA->Surf->Poly4_x123->get_nb_monomials());
+	SOA->F->Linear_algebra->add_vector(poly1, poly2, curve, SOA->Surf->Poly4_x123->get_nb_monomials());
 
 
 	if (f_v) {

@@ -1458,17 +1458,17 @@ void finite_field::Siegel_map_between_singular_points(int *T,
 		cout << "before perp, the matrix B is:" << endl;
 		Orbiter->Int_vec.print_integer_matrix(cout, B, d, d);
 	}
-	perp(d, 2, B, Gram_matrix, 0 /* verbose_level */);
+	Linear_algebra->perp(d, 2, B, Gram_matrix, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "after perp, the matrix B is:" << endl;
 		Orbiter->Int_vec.print_integer_matrix(cout, B, d, d);
 	}
-	invert_matrix(B, Bv, d, 0 /* verbose_level */);
+	Linear_algebra->invert_matrix(B, Bv, d, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the matrix Bv = B^{-1} is:" << endl;
 		Orbiter->Int_vec.print_integer_matrix(cout, B, d, d);
 	}
-	mult_matrix_matrix(w, Bv, z, 1, d, d, 0 /* verbose_level */);
+	Linear_algebra->mult_matrix_matrix(w, Bv, z, 1, d, d, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the coefficient vector z = w * Bv is:" << endl;
 		Orbiter->Int_vec.print(cout, z, d);
@@ -1481,7 +1481,7 @@ void finite_field::Siegel_map_between_singular_points(int *T,
 		Orbiter->Int_vec.print(cout, z, d);
 		cout << endl;
 	}
-	mult_matrix_matrix(z, B, x, 1, d, d, 0 /* verbose_level */);
+	Linear_algebra->mult_matrix_matrix(z, B, x, 1, d, d, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the vector x = z * B is:" << endl;
 		Orbiter->Int_vec.print(cout, x, d);

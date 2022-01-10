@@ -868,7 +868,8 @@ void cryptography_domain::do_EC_Koblitz_encoding(finite_field *F,
 		for (j = 0; j < u; j++) {
 			x = x0 + j;
 			r = EC_evaluate_RHS(F, EC_b, EC_c, x);
-			if (F->square_root(r, y)) {
+			if (F->is_square(r)) {
+				y = F->square_root(r);
 				break;
 			}
 		}
@@ -895,7 +896,7 @@ void cryptography_domain::do_EC_Koblitz_encoding(finite_field *F,
 
 		r = EC_evaluate_RHS(F, EC_b, EC_c, x);
 
-		F->square_root(r, y);
+		y = F->square_root(r);
 
 		cout << (char)('A' + i) << " & " << i + 1 << " & " << J[i] << " & " << x
 				<< " & " << r
@@ -927,6 +928,7 @@ void cryptography_domain::do_EC_Koblitz_encoding(finite_field *F,
 	int msRx, msRy, msRz;
 	int m, k, plain;
 	os_interface Os;
+	number_theory_domain NT;
 
 	Orbiter->Int_vec.scan(pt_text, v, len);
 	if (len != 2) {
@@ -940,7 +942,7 @@ void cryptography_domain::do_EC_Koblitz_encoding(finite_field *F,
 	cout << "G = (" << Gx << "," << Gy << "," << Gz << ")" << endl;
 
 
-	F->elliptic_curve_all_point_multiples(
+	NT.elliptic_curve_all_point_multiples(F,
 			EC_b, EC_c, order,
 			Gx, Gy, Gz,
 			Pts,
@@ -961,7 +963,7 @@ void cryptography_domain::do_EC_Koblitz_encoding(finite_field *F,
 
 	len = EC_message.length();
 
-	F->nb_calls_to_elliptic_curve_addition() = 0;
+	//F->nb_calls_to_elliptic_curve_addition() = 0;
 
 	vector<vector<int>> Ciphertext;
 
@@ -979,7 +981,7 @@ void cryptography_domain::do_EC_Koblitz_encoding(finite_field *F,
 		// R := k * G
 		//cout << "$R=" << k << "*G$\\\\" << endl;
 
-		F->elliptic_curve_point_multiple /*_with_log*/(
+		NT.elliptic_curve_point_multiple /*_with_log*/(F,
 					EC_b, EC_c, k,
 					Gx, Gy, Gz,
 					Rx, Ry, Rz,
@@ -988,7 +990,7 @@ void cryptography_domain::do_EC_Koblitz_encoding(finite_field *F,
 
 		// C := k * A
 		//cout << "$C=" << k << "*A$\\\\" << endl;
-		F->elliptic_curve_point_multiple /*_with_log*/(
+		NT.elliptic_curve_point_multiple /*_with_log*/(F,
 					EC_b, EC_c, k,
 					Ax, Ay, Az,
 					Cx, Cy, Cz,
@@ -996,7 +998,8 @@ void cryptography_domain::do_EC_Koblitz_encoding(finite_field *F,
 		//cout << "$C=" << k << "*A=(" << Cx << "," << Cy << "," << Cz << ")$\\\\" << endl;
 
 		// T := C + M
-		F->elliptic_curve_addition(EC_b, EC_c,
+		NT.elliptic_curve_addition(F,
+				EC_b, EC_c,
 				Cx, Cy, Cz,
 				Mx, My, Mz,
 				Tx, Ty, Tz,
@@ -1037,14 +1040,15 @@ void cryptography_domain::do_EC_Koblitz_encoding(finite_field *F,
 		Ty = Ciphertext[i][3];
 
 		// msR := -s * R
-		F->elliptic_curve_point_multiple(
+		NT.elliptic_curve_point_multiple(F,
 					EC_b, EC_c, minus_s,
 					Rx, Ry, Rz,
 					msRx, msRy, msRz,
 					0 /*verbose_level*/);
 
 		// D := msR + T
-		F->elliptic_curve_addition(EC_b, EC_c,
+		NT.elliptic_curve_addition(F,
+				EC_b, EC_c,
 				msRx, msRy, msRz,
 				Tx, Ty, Tz,
 				Dx, Dy, Dz,
@@ -1061,8 +1065,8 @@ void cryptography_domain::do_EC_Koblitz_encoding(finite_field *F,
 
 	}
 
-	cout << "nb_calls_to_elliptic_curve_addition="
-			<< F->nb_calls_to_elliptic_curve_addition() << endl;
+	//cout << "nb_calls_to_elliptic_curve_addition="
+	//		<< F->nb_calls_to_elliptic_curve_addition() << endl;
 
 
 	if (f_v) {
@@ -1077,7 +1081,7 @@ void cryptography_domain::do_EC_points(finite_field *F, std::string &label,
 	int x, y, r, y1, y2;
 
 	if (f_v) {
-		cout << "do_EC_points" << endl;
+		cout << "cryptography_domain::do_EC_points" << endl;
 	}
 	vector<vector<int>> Pts;
 
@@ -1095,7 +1099,8 @@ void cryptography_domain::do_EC_points(finite_field *F, std::string &label,
 			}
 		}
 		else {
-			if (F->square_root(r, y)) {
+			if (F->is_square(r)) {
+				y = F->square_root(r);
 				y1 = y;
 				y2 = F->negate(y);
 				if (y2 == y1) {
@@ -1209,9 +1214,9 @@ void cryptography_domain::do_EC_points(finite_field *F, std::string &label,
 			{
 			vector<vector<int>> Multiples;
 			int order;
+			number_theory_domain NT;
 
-
-			F->elliptic_curve_all_point_multiples(
+			NT.elliptic_curve_all_point_multiples(F,
 					EC_b, EC_c, order,
 					Pts[i][0], Pts[i][1], 1,
 					Multiples,
@@ -1289,7 +1294,7 @@ void cryptography_domain::do_EC_points(finite_field *F, std::string &label,
 
 
 	if (f_v) {
-		cout << "do_EC_points done" << endl;
+		cout << "cryptography_domain::do_EC_points done" << endl;
 	}
 }
 
@@ -1318,6 +1323,7 @@ void cryptography_domain::do_EC_add(finite_field *F,
 	int x3, y3, z3;
 	int *v;
 	int len;
+	number_theory_domain NT;
 	//sscanf(p1, "(%d,%d,%d)", &x1, &y1, &z1);
 
 	if (f_v) {
@@ -1346,7 +1352,8 @@ void cryptography_domain::do_EC_add(finite_field *F,
 	FREE_int(v);
 
 
-	F->elliptic_curve_addition(EC_b, EC_c,
+	NT.elliptic_curve_addition(F,
+			EC_b, EC_c,
 			x1, y1, z1,
 			x2, y2, z2,
 			x3, y3, z3,
@@ -1359,7 +1366,7 @@ void cryptography_domain::do_EC_add(finite_field *F,
 	cout << endl;
 
 
-	FREE_OBJECT(F);
+	//FREE_OBJECT(F);
 
 	if (f_v) {
 		cout << "do_EC_add done" << endl;
@@ -1373,17 +1380,19 @@ void cryptography_domain::do_EC_cyclic_subgroup(finite_field *F,
 	int x1, y1, z1;
 	int *v;
 	int len, i;
+	number_theory_domain NT;
 	//sscanf(p1, "(%d,%d,%d)", &x1, &y1, &z1);
 
 	if (f_v) {
-		cout << "do_EC_cyclic_subgroup" << endl;
+		cout << "cryptography_domain::do_EC_cyclic_subgroup" << endl;
 	}
 	vector<vector<int>> Pts;
 	int order;
 
 	Orbiter->Int_vec.scan(pt_text, v, len);
 	if (len != 2) {
-		cout << "point should have just two coordinates" << endl;
+		cout << "cryptography_domain::do_EC_cyclic_subgroup "
+				"point should have just two coordinates" << endl;
 		exit(1);
 	}
 	x1 = v[0];
@@ -1392,13 +1401,14 @@ void cryptography_domain::do_EC_cyclic_subgroup(finite_field *F,
 	FREE_int(v);
 
 
-	F->elliptic_curve_all_point_multiples(
+	NT.elliptic_curve_all_point_multiples(F,
 			EC_b, EC_c, order,
 			x1, y1, z1,
 			Pts,
 			verbose_level);
 
-	cout << "we found that the point has order " << order << endl;
+	cout << "cryptography_domain::do_EC_cyclic_subgroup "
+			"we found that the point has order " << order << endl;
 	cout << "The multiples are:" << endl;
 	cout << "i : (" << x1 << "," << y1 << ")" << endl;
 	for (i = 0; i < (int) Pts.size(); i++) {
@@ -1419,7 +1429,7 @@ void cryptography_domain::do_EC_cyclic_subgroup(finite_field *F,
 	}
 
 	if (f_v) {
-		cout << "do_EC_cyclic_subgroup done" << endl;
+		cout << "cryptography_domain::do_EC_cyclic_subgroup done" << endl;
 	}
 }
 
@@ -1431,14 +1441,16 @@ void cryptography_domain::do_EC_multiple_of(finite_field *F,
 	int x3, y3, z3;
 	int *v;
 	int len;
+	number_theory_domain NT;
 
 	if (f_v) {
-		cout << "do_EC_multiple_of" << endl;
+		cout << "cryptography_domain::do_EC_multiple_of" << endl;
 	}
 
 	Orbiter->Int_vec.scan(pt_text, v, len);
 	if (len != 2) {
-		cout << "point should have just two coordinates" << endl;
+		cout << "cryptography_domain::do_EC_multiple_of "
+				"point should have just two coordinates" << endl;
 		exit(1);
 	}
 	x1 = v[0];
@@ -1447,7 +1459,7 @@ void cryptography_domain::do_EC_multiple_of(finite_field *F,
 	FREE_int(v);
 
 
-	F->elliptic_curve_point_multiple(
+	NT.elliptic_curve_point_multiple(F,
 			EC_b, EC_c, n,
 			x1, y1, z1,
 			x3, y3, z3,
@@ -1466,7 +1478,7 @@ void cryptography_domain::do_EC_multiple_of(finite_field *F,
 	}
 
 	if (f_v) {
-		cout << "do_EC_multiple_of done" << endl;
+		cout << "cryptography_domain::do_EC_multiple_of done" << endl;
 	}
 }
 
@@ -1480,9 +1492,10 @@ void cryptography_domain::do_EC_discrete_log(finite_field *F,
 	int *v;
 	int len;
 	int n;
+	number_theory_domain NT;
 
 	if (f_v) {
-		cout << "do_EC_multiple_of" << endl;
+		cout << "cryptography_domain::do_EC_discrete_log" << endl;
 	}
 
 	Orbiter->Int_vec.scan(base_pt_text, v, len);
@@ -1514,7 +1527,7 @@ void cryptography_domain::do_EC_discrete_log(finite_field *F,
 	FREE_int(v);
 
 
-	n = F->elliptic_curve_discrete_log(
+	n = NT.elliptic_curve_discrete_log(F,
 			EC_b, EC_c,
 			x1, y1, z1,
 			x3, y3, z3,
@@ -1526,7 +1539,7 @@ void cryptography_domain::do_EC_discrete_log(finite_field *F,
 			"is " << n << endl;
 
 	if (f_v) {
-		cout << "do_EC_multiple_of done" << endl;
+		cout << "cryptography_domain::do_EC_discrete_log done" << endl;
 	}
 }
 
@@ -1544,9 +1557,10 @@ void cryptography_domain::do_EC_baby_step_giant_step(finite_field *F, int EC_b, 
 	int *v;
 	int len;
 	int n;
+	number_theory_domain NT;
 
 	if (f_v) {
-		cout << "algebra_global::do_EC_baby_step_giant_step" << endl;
+		cout << "cryptography_domain::do_EC_baby_step_giant_step" << endl;
 	}
 
 
@@ -1562,8 +1576,8 @@ void cryptography_domain::do_EC_baby_step_giant_step(finite_field *F, int EC_b, 
 
 	n = (int) sqrt((double) EC_bsgs_N) + 1;
 	if (f_v) {
-		cout << "algebra_global::do_EC_baby_step_giant_step N = " << EC_bsgs_N << endl;
-		cout << "algebra_global::do_EC_baby_step_giant_step n = " << n << endl;
+		cout << "cryptography_domain::do_EC_baby_step_giant_step N = " << EC_bsgs_N << endl;
+		cout << "cryptography_domain::do_EC_baby_step_giant_step n = " << n << endl;
 	}
 
 	Orbiter->Int_vec.scan(EC_bsgs_cipher_text, v, len);
@@ -1572,11 +1586,11 @@ void cryptography_domain::do_EC_baby_step_giant_step(finite_field *F, int EC_b, 
 	int h, i;
 
 	if (f_v) {
-		cout << "algebra_global::do_EC_baby_step_giant_step "
+		cout << "cryptography_domain::do_EC_baby_step_giant_step "
 				"cipher_text_length = " << cipher_text_length << endl;
 	}
 
-	F->elliptic_curve_point_multiple(
+	NT.elliptic_curve_point_multiple(F,
 			EC_b, EC_c, n,
 			Gx, Gy, Gz,
 			nGx, nGy, nGz,
@@ -1595,7 +1609,7 @@ void cryptography_domain::do_EC_baby_step_giant_step(finite_field *F, int EC_b, 
 
 	for (i = 1; i <= n + 1; i++) {
 
-		F->elliptic_curve_point_multiple(
+		NT.elliptic_curve_point_multiple(F,
 				EC_b, EC_c, i,
 				Gx, Gy, Gz,
 				Mx, My, Mz,
@@ -1608,7 +1622,7 @@ void cryptography_domain::do_EC_baby_step_giant_step(finite_field *F, int EC_b, 
 			Cy = v[2 * h + 1];
 			Cz = 1;
 
-			F->elliptic_curve_point_multiple(
+			NT.elliptic_curve_point_multiple(F,
 					EC_b, EC_c, i,
 					nGx, nGy, nGz,
 					Mx, My, Mz,
@@ -1618,7 +1632,8 @@ void cryptography_domain::do_EC_baby_step_giant_step(finite_field *F, int EC_b, 
 
 
 
-			F->elliptic_curve_addition(EC_b, EC_c,
+			NT.elliptic_curve_addition(F,
+					EC_b, EC_c,
 					Cx, Cy, Cz,
 					Mx, My, Mz,
 					Ax, Ay, Az,
@@ -1635,7 +1650,7 @@ void cryptography_domain::do_EC_baby_step_giant_step(finite_field *F, int EC_b, 
 	FREE_int(v);
 
 	if (f_v) {
-		cout << "algebra_global::do_EC_baby_step_giant_step done" << endl;
+		cout << "cryptography_domain::do_EC_baby_step_giant_step done" << endl;
 	}
 }
 
@@ -1656,20 +1671,22 @@ void cryptography_domain::do_EC_baby_step_giant_step_decode(
 	int *keys;
 	int nb_keys;
 	int u, plain;
+	number_theory_domain NT;
 
 	if (f_v) {
-		cout << "algebra_global::do_EC_baby_step_giant_step_decode" << endl;
+		cout << "cryptography_domain::do_EC_baby_step_giant_step_decode" << endl;
 	}
 
 	u = F->q / 27;
 	if (f_v) {
-		cout << "algebra_global::do_EC_baby_step_giant_step_decode u = " << u << endl;
+		cout << "cryptography_domain::do_EC_baby_step_giant_step_decode u = " << u << endl;
 	}
 
 
 	Orbiter->Int_vec.scan(EC_bsgs_A, v, len);
 	if (len != 2) {
-		cout << "point should have just two coordinates" << endl;
+		cout << "cryptography_domain::do_EC_baby_step_giant_step_decode "
+				"point should have just two coordinates" << endl;
 		exit(1);
 	}
 	Ax = v[0];
@@ -1682,8 +1699,8 @@ void cryptography_domain::do_EC_baby_step_giant_step_decode(
 
 	n = (int) sqrt((double) EC_bsgs_N) + 1;
 	if (f_v) {
-		cout << "algebra_global::do_EC_baby_step_giant_step_decode N = " << EC_bsgs_N << endl;
-		cout << "algebra_global::do_EC_baby_step_giant_step_decode n = " << n << endl;
+		cout << "cryptography_domain::do_EC_baby_step_giant_step_decode N = " << EC_bsgs_N << endl;
+		cout << "cryptography_domain::do_EC_baby_step_giant_step_decode n = " << n << endl;
 	}
 
 	Orbiter->Int_vec.scan(EC_bsgs_cipher_text, v, len);
@@ -1692,9 +1709,9 @@ void cryptography_domain::do_EC_baby_step_giant_step_decode(
 	int h;
 
 	if (f_v) {
-		cout << "algebra_global::do_EC_baby_step_giant_step_decode "
+		cout << "cryptography_domain::do_EC_baby_step_giant_step_decode "
 				"cipher_text_length = " << cipher_text_length << endl;
-		cout << "algebra_global::do_EC_baby_step_giant_step_decode "
+		cout << "cryptography_domain::do_EC_baby_step_giant_step_decode "
 				"nb_keys = " << nb_keys << endl;
 	}
 	if (nb_keys != cipher_text_length) {
@@ -1721,7 +1738,7 @@ void cryptography_domain::do_EC_baby_step_giant_step_decode(
 		Tz = 1;
 
 
-		F->elliptic_curve_point_multiple(
+		NT.elliptic_curve_point_multiple(F,
 				EC_b, EC_c, keys[h],
 				Ax, Ay, Az,
 				Cx, Cy, Cz,
@@ -1735,7 +1752,8 @@ void cryptography_domain::do_EC_baby_step_giant_step_decode(
 			<< " & (" << Cx << "," << Cy << ")";
 
 
-		F->elliptic_curve_addition(EC_b, EC_c,
+		NT.elliptic_curve_addition(F,
+				EC_b, EC_c,
 				Tx, Ty, Tz,
 				Cx, Cy, Cz,
 				Mx, My, Mz,
@@ -1753,13 +1771,19 @@ void cryptography_domain::do_EC_baby_step_giant_step_decode(
 	FREE_int(keys);
 
 	if (f_v) {
-		cout << "algebra_global::do_EC_baby_step_giant_step_decode done" << endl;
+		cout << "cryptography_domain::do_EC_baby_step_giant_step_decode done" << endl;
 	}
 }
 
 void cryptography_domain::do_RSA_encrypt_text(long int RSA_d, long int RSA_m,
 		int RSA_block_size, std::string &RSA_encrypt_text, int verbose_level)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "cryptography_domain::do_RSA_encrypt_text" << endl;
+	}
+
 	int i, j, l, nb_blocks;
 	long int a;
 	char c;
@@ -1795,6 +1819,9 @@ void cryptography_domain::do_RSA_encrypt_text(long int RSA_d, long int RSA_m,
 		}
 	}
 	cout << endl;
+	if (f_v) {
+		cout << "cryptography_domain::do_RSA_encrypt_text done" << endl;
+	}
 }
 
 void cryptography_domain::do_RSA(long int RSA_d, long int RSA_m, int RSA_block_size,
@@ -1806,7 +1833,7 @@ void cryptography_domain::do_RSA(long int RSA_d, long int RSA_m, int RSA_block_s
 	int i;
 
 	if (f_v) {
-		cout << "do_RSA RSA_d=" << RSA_d << " RSA_m=" << RSA_m << endl;
+		cout << "cryptography_domain::do_RSA RSA_d=" << RSA_d << " RSA_m=" << RSA_m << endl;
 	}
 	Orbiter->Lint_vec.scan(RSA_text, data, data_sz);
 	if (f_v) {
@@ -2347,106 +2374,106 @@ void cryptography_domain::do_find_pseudoprime(int nb_digits,
 
 
 	{
-	ofstream ost(fname);
+		ofstream ost(fname);
 
 
-	latex_interface L;
+		latex_interface L;
 
 
-	L.head(ost, FALSE /* f_book*/, TRUE /* f_title */,
-		title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
-			TRUE /* f_12pt */,
-			TRUE /* f_enlarged_page */,
-			TRUE /* f_pagenumbers */,
-			NULL /* extra_praeamble */);
+		L.head(ost, FALSE /* f_book*/, TRUE /* f_title */,
+			title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
+				TRUE /* f_12pt */,
+				TRUE /* f_enlarged_page */,
+				TRUE /* f_pagenumbers */,
+				NULL /* extra_praeamble */);
 
 
-	longinteger_domain D;
-	longinteger_object P;
+		longinteger_domain D;
+		longinteger_object P;
 
 
-	int cnt = -1;
+		int cnt = -1;
 
-	//f << "\\begin{multicols}{2}" << endl;
-	ost << "\\begin{enumerate}[(1)]" << endl;
-	while (TRUE) {
+		//f << "\\begin{multicols}{2}" << endl;
+		ost << "\\begin{enumerate}[(1)]" << endl;
+		while (TRUE) {
 
-		cnt++;
+			cnt++;
 
-		D.random_number_with_n_decimals(P, nb_digits, verbose_level);
+			D.random_number_with_n_decimals(P, nb_digits, verbose_level);
 
-		ost << "\\item" << endl;
-		ost << "Trial " << cnt << ", testing random number " << P << endl;
-
-		if (P.ith(0) != 1 && P.ith(0) != 3 && P.ith(0) != 7 && P.ith(0) != 9) {
-			ost << "the number is not prime by looking at the lowest digit." << endl;
-			continue;
-		}
-
-		ost << "\\begin{enumerate}[(a)]" << endl;
-		ost << "\\item" << endl;
-		if (fermat_test_iterated_with_latex_key(ost,
-				P, nb_fermat,
-				verbose_level)) {
-			//f << "Fermat: The number $" << P << "$ is not prime.\\\\" << endl;
-			ost << "\\end{enumerate}" << endl;
-			continue;
-		}
-		else {
-			//f << "Fermat: The number $" << P << "$ is probably prime. Fermat test is inconclusive.\\\\" << endl;
-		}
-
-
-		if (nb_miller_rabin) {
 			ost << "\\item" << endl;
-			if (miller_rabin_test_iterated_with_latex_key(ost,
-					P, nb_miller_rabin,
+			ost << "Trial " << cnt << ", testing random number " << P << endl;
+
+			if (P.ith(0) != 1 && P.ith(0) != 3 && P.ith(0) != 7 && P.ith(0) != 9) {
+				ost << "the number is not prime by looking at the lowest digit." << endl;
+				continue;
+			}
+
+			ost << "\\begin{enumerate}[(a)]" << endl;
+			ost << "\\item" << endl;
+			if (fermat_test_iterated_with_latex_key(ost,
+					P, nb_fermat,
 					verbose_level)) {
-				ost << "Miller Rabin: The number $" << P << "$ is not prime.\\\\" << endl;
+				//f << "Fermat: The number $" << P << "$ is not prime.\\\\" << endl;
 				ost << "\\end{enumerate}" << endl;
 				continue;
 			}
 			else {
-				//ost << "Miller Rabin: The number $" << P << "$ is probably prime. Miller Rabin test is inconclusive.\\\\" << endl;
+				//f << "Fermat: The number $" << P << "$ is probably prime. Fermat test is inconclusive.\\\\" << endl;
 			}
-		}
-		else {
-			ost << "\\end{enumerate}" << endl;
-			break;
-		}
 
-		if (nb_solovay_strassen) {
-			ost << "\\item" << endl;
-			if (solovay_strassen_test_iterated_with_latex_key(ost,
-					P, nb_solovay_strassen,
-					verbose_level)) {
-				//ost << "Solovay-Strassen: The number $" << P << "$ is not prime.\\\\" << endl;
-				ost << "\\end{enumerate}" << endl;
-				continue;
+
+			if (nb_miller_rabin) {
+				ost << "\\item" << endl;
+				if (miller_rabin_test_iterated_with_latex_key(ost,
+						P, nb_miller_rabin,
+						verbose_level)) {
+					ost << "Miller Rabin: The number $" << P << "$ is not prime.\\\\" << endl;
+					ost << "\\end{enumerate}" << endl;
+					continue;
+				}
+				else {
+					//ost << "Miller Rabin: The number $" << P << "$ is probably prime. Miller Rabin test is inconclusive.\\\\" << endl;
+				}
 			}
 			else {
-				//ost << "Solovay-Strassen: The number $" << P << "$ is probably prime. Solovay-Strassen test is inconclusive.\\\\" << endl;
 				ost << "\\end{enumerate}" << endl;
 				break;
 			}
-		}
-		else {
+
+			if (nb_solovay_strassen) {
+				ost << "\\item" << endl;
+				if (solovay_strassen_test_iterated_with_latex_key(ost,
+						P, nb_solovay_strassen,
+						verbose_level)) {
+					//ost << "Solovay-Strassen: The number $" << P << "$ is not prime.\\\\" << endl;
+					ost << "\\end{enumerate}" << endl;
+					continue;
+				}
+				else {
+					//ost << "Solovay-Strassen: The number $" << P << "$ is probably prime. Solovay-Strassen test is inconclusive.\\\\" << endl;
+					ost << "\\end{enumerate}" << endl;
+					break;
+				}
+			}
+			else {
+				ost << "\\end{enumerate}" << endl;
+				break;
+			}
 			ost << "\\end{enumerate}" << endl;
-			break;
+
 		}
 		ost << "\\end{enumerate}" << endl;
+		//ost << "\\end{multicols}" << endl;
 
-	}
-	ost << "\\end{enumerate}" << endl;
-	//ost << "\\end{multicols}" << endl;
+		ost << "\\noindent" << endl;
+		ost << "The number $" << P << "$ is probably prime. \\\\" << endl;
+		ost << "Number of Fermat tests = " << nb_fermat << " \\\\" << endl;
+		ost << "Number of Miller Rabin tests = " << nb_miller_rabin << " \\\\" << endl;
+		ost << "Number of Solovay-Strassen tests = " << nb_solovay_strassen << " \\\\" << endl;
 
-	ost << "\\noindent" << endl;
-	ost << "The number $" << P << "$ is probably prime. \\\\" << endl;
-	ost << "Number of Fermat tests = " << nb_fermat << " \\\\" << endl;
-	ost << "Number of Miller Rabin tests = " << nb_miller_rabin << " \\\\" << endl;
-	ost << "Number of Solovay-Strassen tests = " << nb_solovay_strassen << " \\\\" << endl;
-
-	L.foot(ost);
+		L.foot(ost);
 	}
 
 	file_io Fio;
@@ -2469,82 +2496,82 @@ void cryptography_domain::do_find_strong_pseudoprime(int nb_digits, int nb_ferma
 
 
 	{
-	ofstream f(fname);
+		ofstream f(fname);
 
 
-	latex_interface L;
+		latex_interface L;
 
 
-	L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
-		title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
-			TRUE /* f_12pt */,
-			TRUE /* f_enlarged_page */,
-			TRUE /* f_pagenumbers */,
-			NULL /* extra_praeamble */);
+		L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
+			title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
+				TRUE /* f_12pt */,
+				TRUE /* f_enlarged_page */,
+				TRUE /* f_pagenumbers */,
+				NULL /* extra_praeamble */);
 
 
-	longinteger_domain D;
-	longinteger_object P;
+		longinteger_domain D;
+		longinteger_object P;
 
 
-	int cnt = -1;
+		int cnt = -1;
 
-	f << "\\begin{multicols}{2}" << endl;
-	f << "\\begin{enumerate}[(1)]" << endl;
-	while (TRUE) {
+		f << "\\begin{multicols}{2}" << endl;
+		f << "\\begin{enumerate}[(1)]" << endl;
+		while (TRUE) {
 
-		cnt++;
+			cnt++;
 
-		D.random_number_with_n_decimals(P, nb_digits, verbose_level);
+			D.random_number_with_n_decimals(P, nb_digits, verbose_level);
 
-		f << "\\item" << endl;
-		f << "Trial " << cnt << ", testing random number " << P << endl;
+			f << "\\item" << endl;
+			f << "Trial " << cnt << ", testing random number " << P << endl;
 
-		if (P.ith(0) != 1 && P.ith(0) != 3 && P.ith(0) != 7 && P.ith(0) != 9) {
-			f << "the number is not prime by looking at the lowest digit" << endl;
-			continue;
-		}
+			if (P.ith(0) != 1 && P.ith(0) != 3 && P.ith(0) != 7 && P.ith(0) != 9) {
+				f << "the number is not prime by looking at the lowest digit" << endl;
+				continue;
+			}
 
-		f << "\\begin{enumerate}[(a)]" << endl;
-		f << "\\item" << endl;
-		if (fermat_test_iterated_with_latex_key(f,
-				P, nb_fermat,
-				verbose_level)) {
-			//f << "Fermat: The number $" << P << "$ is not prime.\\\\" << endl;
+			f << "\\begin{enumerate}[(a)]" << endl;
+			f << "\\item" << endl;
+			if (fermat_test_iterated_with_latex_key(f,
+					P, nb_fermat,
+					verbose_level)) {
+				//f << "Fermat: The number $" << P << "$ is not prime.\\\\" << endl;
+				f << "\\end{enumerate}" << endl;
+				continue;
+			}
+			else {
+				//f << "Fermat: The number $" << P << "$ is probably prime. Fermat test is inconclusive.\\\\" << endl;
+			}
+
+			f << "\\item" << endl;
+			if (miller_rabin_test_iterated_with_latex_key(f,
+					P, nb_miller_rabin,
+					verbose_level)) {
+				//f << "Miller Rabin: The number $" << P << "$ is not prime.\\\\" << endl;
+				f << "\\end{enumerate}" << endl;
+				continue;
+			}
+			else {
+				//f << "Miller Rabin: The number $" << P << "$ is probably prime. Miller Rabin test is inconclusive.\\\\" << endl;
+				f << "\\end{enumerate}" << endl;
+				break;
+			}
+
+
 			f << "\\end{enumerate}" << endl;
-			continue;
-		}
-		else {
-			//f << "Fermat: The number $" << P << "$ is probably prime. Fermat test is inconclusive.\\\\" << endl;
-		}
 
-		f << "\\item" << endl;
-		if (miller_rabin_test_iterated_with_latex_key(f,
-				P, nb_miller_rabin,
-				verbose_level)) {
-			//f << "Miller Rabin: The number $" << P << "$ is not prime.\\\\" << endl;
-			f << "\\end{enumerate}" << endl;
-			continue;
 		}
-		else {
-			//f << "Miller Rabin: The number $" << P << "$ is probably prime. Miller Rabin test is inconclusive.\\\\" << endl;
-			f << "\\end{enumerate}" << endl;
-			break;
-		}
-
-
 		f << "\\end{enumerate}" << endl;
+		f << "\\end{multicols}" << endl;
 
-	}
-	f << "\\end{enumerate}" << endl;
-	f << "\\end{multicols}" << endl;
+		f << "\\noindent" << endl;
+		f << "The number $" << P << "$ is probably prime. \\\\" << endl;
+		f << "Number of Fermat tests = " << nb_fermat << " \\\\" << endl;
+		f << "Number of Miller Rabin tests = " << nb_miller_rabin << " \\\\" << endl;
 
-	f << "\\noindent" << endl;
-	f << "The number $" << P << "$ is probably prime. \\\\" << endl;
-	f << "Number of Fermat tests = " << nb_fermat << " \\\\" << endl;
-	f << "Number of Miller Rabin tests = " << nb_miller_rabin << " \\\\" << endl;
-
-	L.foot(f);
+		L.foot(f);
 	}
 
 	file_io Fio;
@@ -2569,51 +2596,51 @@ void cryptography_domain::do_miller_rabin_text(std::string &number_text,
 
 
 	{
-	ofstream f(fname);
+		ofstream f(fname);
 
 
-	latex_interface L;
+		latex_interface L;
 
 
-	L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
-		title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
-			TRUE /* f_12pt */,
-			TRUE /* f_enlarged_page */,
-			TRUE /* f_pagenumbers */,
-			NULL /* extra_praeamble */);
+		L.head(f, FALSE /* f_book*/, TRUE /* f_title */,
+			title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
+				TRUE /* f_12pt */,
+				TRUE /* f_enlarged_page */,
+				TRUE /* f_pagenumbers */,
+				NULL /* extra_praeamble */);
 
 
-	//longinteger_domain D;
-	longinteger_object P;
+		//longinteger_domain D;
+		longinteger_object P;
 
 
-	f << "\\begin{multicols}{2}" << endl;
+		f << "\\begin{multicols}{2}" << endl;
 
-	P.create_from_base_10_string(number_text);
+		P.create_from_base_10_string(number_text);
 
 
-	if (P.ith(0) != 1 && P.ith(0) != 3 && P.ith(0) != 7 && P.ith(0) != 9) {
-		f << "the number is not prime by looking at the lowest digit" << endl;
-	}
-	else {
-
-		if (miller_rabin_test_iterated_with_latex_key(f,
-				P, nb_miller_rabin,
-				verbose_level)) {
-			f << "Miller Rabin: The number $" << P << "$ is not prime.\\\\" << endl;
+		if (P.ith(0) != 1 && P.ith(0) != 3 && P.ith(0) != 7 && P.ith(0) != 9) {
+			f << "the number is not prime by looking at the lowest digit" << endl;
 		}
 		else {
-			f << "The number $" << P << "$ is probably prime. \\\\" << endl;
+
+			if (miller_rabin_test_iterated_with_latex_key(f,
+					P, nb_miller_rabin,
+					verbose_level)) {
+				f << "Miller Rabin: The number $" << P << "$ is not prime.\\\\" << endl;
+			}
+			else {
+				f << "The number $" << P << "$ is probably prime. \\\\" << endl;
+			}
 		}
-	}
 
 
-	f << "\\end{multicols}" << endl;
+		f << "\\end{multicols}" << endl;
 
-	f << "\\noindent" << endl;
-	f << "Number of Miller Rabin tests = " << nb_miller_rabin << " \\\\" << endl;
+		f << "\\noindent" << endl;
+		f << "Number of Miller Rabin tests = " << nb_miller_rabin << " \\\\" << endl;
 
-	L.foot(f);
+		L.foot(f);
 	}
 
 	file_io Fio;

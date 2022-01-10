@@ -191,7 +191,7 @@ void semifield_lifting::report(ostream &ost, int verbose_level)
 		Mtx1 = NEW_int(k2);
 		Mtx2 = NEW_int(k2);
 
-		SC->Mtx->GFq->identity_matrix(Mtx_Id, k);
+		SC->Mtx->GFq->Linear_algebra->identity_matrix(Mtx_Id, k);
 
 
 		if (f_v) {
@@ -1023,7 +1023,7 @@ void semifield_lifting::upstep(
 
 		Flag_orbits[f].upstep_orbit = nb_orbits;
 
-		SC->Mtx->GFq->identity_matrix(Mtx, k);
+		SC->Mtx->GFq->Linear_algebra->identity_matrix(Mtx, k);
 
 		po = Flag_orbits[f].downstep_primary_orbit;
 		so = Flag_orbits[f].downstep_secondary_orbit;
@@ -1242,7 +1242,7 @@ void semifield_lifting::upstep_loop_over_down_set(
 			cout << "semifield_lifting::upstep_loop_over_down_set "
 					"before SC->F->mult_matrix_matrix" << endl;
 		}
-		SC->Mtx->GFq->mult_matrix_matrix(base_change_matrix,
+		SC->Mtx->GFq->Linear_algebra->mult_matrix_matrix(base_change_matrix,
 				Mtx, changed_space, level, level, k2,
 				0 /* verbose_level */);
 		if (f_vvv) {
@@ -1409,7 +1409,7 @@ void semifield_lifting::get_basis(
 				"po3 = " << po3 << endl;
 	}
 
-	SC->Mtx->GFq->identity_matrix(basis, k);
+	SC->Mtx->GFq->Linear_algebra->identity_matrix(basis, k);
 
 	po = Po[po3];
 	so = So[po3];
@@ -1651,7 +1651,7 @@ int semifield_lifting::trace_step_up(
 				"before Gauss_int_with_given_pivots" << endl;
 		Orbiter->Int_vec.matrix_print(changed_basis, basis_sz, k2);
 	}
-	if (!SC->Mtx->GFq->Gauss_int_with_given_pivots(
+	if (!SC->Mtx->GFq->Linear_algebra->Gauss_int_with_given_pivots(
 		changed_basis,
 		FALSE /* f_special */,
 		TRUE /* f_complete */,
@@ -1676,7 +1676,7 @@ int semifield_lifting::trace_step_up(
 		}
 		for (i = 0; i < 3; i++) {
 			for (j = 3; j < basis_sz; j++) {
-				SC->Mtx->GFq->Gauss_step(changed_basis + i * k2,
+				SC->Mtx->GFq->Linear_algebra->Gauss_step(changed_basis + i * k2,
 						changed_basis + j * k2, k2,
 						SC->desired_pivots[i], 0 /*verbose_level*/);
 			}
@@ -1768,7 +1768,7 @@ void semifield_lifting::trace_very_general(
 	}
 	for (i = 0; i < 2; i++) {
 		for (j = 2; j < basis_sz; j++) {
-			F->Gauss_step(input_basis + i * k2,
+			F->Linear_algebra->Gauss_step(input_basis + i * k2,
 					input_basis + j * k2, k2, base_cols[i],
 					0 /*verbose_level*/);
 		}
@@ -1847,7 +1847,7 @@ void semifield_lifting::trace_very_general(
 	}
 	for (i = 0; i < 2; i++) {
 		for (j = 2; j < basis_sz; j++) {
-			F->Gauss_step(input_basis + i * k2,
+			F->Linear_algebra->Gauss_step(input_basis + i * k2,
 					input_basis + j * k2, k2,
 					base_cols[i],
 					0 /*verbose_level*/);
@@ -1949,7 +1949,7 @@ void semifield_lifting::trace_to_level_two(
 				"after transform (1):" << endl;
 		SC->basis_print(input_basis, basis_sz);
 	}
-	if (!F->is_identity_matrix(input_basis, k)) {
+	if (!F->Linear_algebra->is_identity_matrix(input_basis, k)) {
 		cout << "semifield_lifting::trace_very_general "
 				"basis_tmp is not the identity matrix" << endl;
 		exit(1);
@@ -2764,7 +2764,7 @@ void semifield_lifting::level_three_get_a1_a2_a3(
 
 	basis = NEW_int(k2);
 
-	SC->Mtx->GFq->identity_matrix(basis, k);
+	SC->Mtx->GFq->Linear_algebra->identity_matrix(basis, k);
 
 	a1 = SC->matrix_rank(basis);
 

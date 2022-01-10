@@ -138,8 +138,8 @@ class combinatorial_object_activity {
 public:
 	combinatorial_object_activity_description *Descr;
 
-	int f_has_COC;
-	combinatorial_object_create *COC;
+	int f_has_GOC;
+	geometric_object_create *GOC;
 
 	int f_has_IS;
 	data_input_stream *IS;
@@ -148,13 +148,13 @@ public:
 	combinatorial_object_activity();
 	~combinatorial_object_activity();
 	void init(combinatorial_object_activity_description *Descr,
-			combinatorial_object_create *COC,
+			geometric_object_create *GOC,
 			int verbose_level);
 	void init_input_stream(combinatorial_object_activity_description *Descr,
 			data_input_stream *IS,
 			int verbose_level);
 	void perform_activity(int verbose_level);
-	void perform_activity_COC(int verbose_level);
+	void perform_activity_GOC(int verbose_level);
 	void perform_activity_IS(int verbose_level);
 	void do_save(std::string &save_as_fname,
 			int f_extract, long int *extract_idx_set, int extract_size,

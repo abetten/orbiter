@@ -143,8 +143,8 @@ void orbiter_symbol_table::print_type(symbol_table_object_type t)
 	else if (t == t_collection) {
 		cout << "t_collection" << endl;
 	}
-	else if (t == t_combinatorial_object) {
-		cout << "t_combinatorial_object" << endl;
+	else if (t == t_geometric_object) {
+		cout << "t_geometric_object" << endl;
 	}
 	else if (t == t_graph) {
 		cout << "t_graph" << endl;

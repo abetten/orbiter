@@ -29,13 +29,17 @@ void finite_field::PG_element_apply_frobenius(int n,
 
 
 void finite_field::number_of_conditions_satisfied(
-		std::string &variety_label,
+		std::string &variety_label_txt,
+		std::string &variety_label_tex,
 		int variety_nb_vars, int variety_degree,
 		std::vector<std::string> &Variety_coeffs,
 		monomial_ordering_type Monomial_ordering_type,
 		std::string &number_of_conditions_satisfied_fname,
-		std::string &fname, int &nb_pts, long int *&Pts,
+		std::string &label_txt,
+		std::string &label_tex,
+		int &nb_pts, long int *&Pts,
 		int verbose_level)
+// creates homogeneous_polynomial_domain
 {
 	int f_v = (verbose_level >= 1);
 	file_io Fio;
@@ -47,7 +51,7 @@ void finite_field::number_of_conditions_satisfied(
 
 	if (f_v) {
 		cout << "Reading file " << number_of_conditions_satisfied_fname << " of size "
-				<< Fio.file_size(fname) << endl;
+				<< Fio.file_size(number_of_conditions_satisfied_fname) << endl;
 	}
 	Fio.read_set_from_file(number_of_conditions_satisfied_fname, Pts, nb_pts, verbose_level);
 
@@ -75,7 +79,8 @@ void finite_field::number_of_conditions_satisfied(
 	HPD->print_monomial_ordering(cout);
 
 
-	fname.assign(variety_label);
+	label_txt.assign(variety_label_txt);
+	label_tex.assign(variety_label_tex);
 	//fname.append(".txt");
 
 
@@ -137,7 +142,7 @@ void finite_field::number_of_conditions_satisfied(
 		string fname2;
 		char str[10000];
 
-		fname2.assign(fname);
+		fname2.assign(number_of_conditions_satisfied_fname);
 		sprintf(str, "%d", t);
 		fname2.append(str);
 		fname2.append(".csv");
@@ -176,12 +181,16 @@ void finite_field::number_of_conditions_satisfied(
 
 
 void finite_field::create_intersection_of_zariski_open_sets(
-		std::string &variety_label,
+		std::string &variety_label_txt,
+		std::string &variety_label_tex,
 		int variety_nb_vars, int variety_degree,
 		std::vector<std::string> &Variety_coeffs,
 		monomial_ordering_type Monomial_ordering_type,
-		std::string &fname, int &nb_pts, long int *&Pts,
+		std::string &label_txt,
+		std::string &label_tex,
+		int &nb_pts, long int *&Pts,
 		int verbose_level)
+// creates homogeneous_polynomial_domain
 {
 	int f_v = (verbose_level >= 1);
 
@@ -207,8 +216,8 @@ void finite_field::create_intersection_of_zariski_open_sets(
 	HPD->print_monomial_ordering(cout);
 
 
-	fname.assign(variety_label);
-	fname.append(".txt");
+	label_txt.assign(variety_label_txt);
+	label_tex.assign(variety_label_tex);
 
 	for (h = 0; h < Variety_coeffs.size(); h++) {
 
@@ -294,11 +303,15 @@ void finite_field::create_intersection_of_zariski_open_sets(
 
 void finite_field::create_projective_variety(
 		std::string &variety_label,
+		std::string &variety_label_tex,
 		int variety_nb_vars, int variety_degree,
 		std::string &variety_coeffs,
 		monomial_ordering_type Monomial_ordering_type,
-		std::string &fname, int &nb_pts, long int *&Pts,
+		std::string &label_txt,
+		std::string &label_tex,
+		int &nb_pts, long int *&Pts,
 		int verbose_level)
+// creates homogeneous_polynomial_domain
 {
 	int f_v = (verbose_level >= 1);
 
@@ -318,8 +331,8 @@ void finite_field::create_projective_variety(
 
 	HPD->print_monomial_ordering(cout);
 
-	fname.assign(variety_label);
-	fname.append(".txt");
+	label_txt.assign(variety_label);
+	label_tex.append(variety_label_tex);
 
 	int *coeff;
 	int sz;
@@ -372,12 +385,16 @@ void finite_field::create_projective_variety(
 }
 
 void finite_field::create_projective_curve(
-		std::string &variety_label,
+		std::string &variety_label_txt,
+		std::string &variety_label_tex,
 		int curve_nb_vars, int curve_degree,
 		std::string &curve_coeffs,
 		monomial_ordering_type Monomial_ordering_type,
-		std::string &fname, int &nb_pts, long int *&Pts,
+		std::string &label_txt,
+		std::string &label_tex,
+		int &nb_pts, long int *&Pts,
 		int verbose_level)
+// creates homogeneous_polynomial_domain
 {
 	int f_v = (verbose_level >= 1);
 
@@ -400,8 +417,8 @@ void finite_field::create_projective_curve(
 	coeff = NEW_int(HPD->get_nb_monomials());
 	Orbiter->Int_vec.zero(coeff, HPD->get_nb_monomials());
 
-	fname.assign(variety_label);
-	fname.append(".txt");
+	label_txt.assign(variety_label_txt);
+	label_tex.assign(variety_label_tex);
 	int *coeffs;
 	int len, i, j, a, b, c, s, t;
 	int *v;
@@ -1635,8 +1652,8 @@ void finite_field::O4_isomorphism_4to2(
 		Orbiter->Int_vec.print(cout, Q, 4);
 		cout << endl;
 	}
-	mult_vector_from_the_left(P, B, R, 4, 4);
-	mult_vector_from_the_left(Q, B, S, 4, 4);
+	Linear_algebra->mult_vector_from_the_left(P, B, R, 4, 4);
+	Linear_algebra->mult_vector_from_the_left(Q, B, S, 4, 4);
 	O4_grid_coordinates_rank(R[0], R[1], R[2], R[3],
 			Rx, Ry, verbose_level);
 	O4_grid_coordinates_rank(S[0], S[1], S[2], S[3],
@@ -1979,7 +1996,7 @@ void finite_field::O4_find_tangent_plane(
 				C[10] = y3;
 				C[11] = y4;
 
-				rk = Gauss_int(C, f_special, f_complete, base_cols,
+				rk = Linear_algebra->Gauss_int(C, f_special, f_complete, base_cols,
 					f_P, NULL, 3, 4, 4, 0);
 				if (rk < 3) {
 					secants1[nb_secants] = z;
@@ -2074,7 +2091,7 @@ void finite_field::O4_find_tangent_plane(
 	}
 
 
-	rk = Gauss_int(T, f_special, f_complete, base_cols,
+	rk = Linear_algebra->Gauss_int(T, f_special, f_complete, base_cols,
 		f_P, NULL, nb_complement, 4, 4, 0);
 	if (f_v) {
 		cout << "the rank of the tangent space is " << rk << endl;
@@ -2185,7 +2202,7 @@ void finite_field::all_PG_elements_in_subspace(
 			Orbiter->Int_vec.print(cout, message, k);
 			cout << endl;
 		}
-		mult_vector_from_the_left(message, genma, word, k, n);
+		Linear_algebra->mult_vector_from_the_left(message, genma, word, k, n);
 		if (f_vv) {
 			cout << "yields word ";
 			Orbiter->Int_vec.print(cout, word, n);
@@ -2232,7 +2249,7 @@ void finite_field::all_PG_elements_in_subspace_array_is_given(
 			Orbiter->Int_vec.print(cout, message, k);
 			cout << endl;
 		}
-		mult_vector_from_the_left(message, genma, word, k, n);
+		Linear_algebra->mult_vector_from_the_left(message, genma, word, k, n);
 		if (f_vv) {
 			cout << "yields word ";
 			Orbiter->Int_vec.print(cout, word, n);
@@ -2313,17 +2330,19 @@ void finite_field::display_all_AG_elements(int n)
 void finite_field::do_cone_over(int n,
 	long int *set_in, int set_size_in, long int *&set_out, int &set_size_out,
 	int verbose_level)
+// creates projective_space objects for PG(n,q) and PG(n+1,q)
 {
 	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::do_cone_over" << endl;
+	}
 	projective_space *P1;
 	projective_space *P2;
 	int *v;
 	int d = n + 2;
 	int h, u, a, b, cnt;
 
-	if (f_v) {
-		cout << "finite_field::do_cone_over" << endl;
-	}
 	P1 = NEW_OBJECT(projective_space);
 	P2 = NEW_OBJECT(projective_space);
 
@@ -2381,7 +2400,13 @@ void finite_field::do_blocking_set_family_3(int n,
 	long int *set_in, int set_size,
 	long int *&the_set_out, int &set_size_out,
 	int verbose_level)
+// creates projective_space PG(n,q)
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::do_blocking_set_family_3" << endl;
+	}
 	projective_space *P;
 	int h;
 
@@ -2594,81 +2619,18 @@ void finite_field::do_blocking_set_family_3(int n,
 	FREE_OBJECT(P);
 }
 
-
-void finite_field::create_ovoid(
-		std::string &fname, int &nb_pts, long int *&Pts,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	projective_space *P;
-	int n = 3, epsilon = -1;
-	int c1 = 1, c2 = 0, c3 = 0;
-	int i, j, d, h;
-	int *v, *w;
-	geometry_global Gg;
-
-	d = n + 1;
-	P = NEW_OBJECT(projective_space);
-
-
-	P->init(n, this,
-		FALSE /* f_init_incidence_structure */,
-		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
-	nb_pts = Gg.nb_pts_Qepsilon(epsilon, n, q);
-
-	v = NEW_int(n + 1);
-	w = NEW_int(n + 1);
-	Pts = NEW_lint(P->N_points);
-
-	if (f_v) {
-		cout << "i : point : projective rank" << endl;
-	}
-	choose_anisotropic_form(c1, c2, c3, verbose_level);
-	for (i = 0; i < nb_pts; i++) {
-		Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i, 0 /* verbose_level */);
-		for (h = 0; h < d; h++) {
-			w[h] = v[h];
-		}
-		j = P->rank_point(w);
-		Pts[i] = j;
-		if (f_v) {
-			cout << setw(4) << i << " : ";
-			Orbiter->Int_vec.print(cout, v, d);
-			cout << " : " << setw(5) << j << endl;
-		}
-	}
-
-#if 0
-	cout << "list of points on the ovoid:" << endl;
-	cout << nb_pts << endl;
-	for (i = 0; i < nb_pts; i++) {
-		cout << Pts[i] << " ";
-		}
-	cout << endl;
-#endif
-
-	char str[1000];
-
-	sprintf(str, "_q%d.txt", q);
-
-
-	fname.assign("ovoid");
-	fname.append(str);
-
-	//write_set_to_file(fname, L, N, verbose_level);
-
-	FREE_OBJECT(P);
-	FREE_int(v);
-	FREE_int(w);
-	//FREE_int(L);
-}
-
 void finite_field::create_Baer_substructure(int n,
 	finite_field *Fq,
 	std::string &fname, int &nb_pts, long int *&Pts,
 	int verbose_level)
+// creates projective_space PG(n,Q)
 // the big field FQ is given
 {
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::create_Baer_substructure" << endl;
+	}
 	projective_space *P2;
 	int q = Fq->q;
 	int Q = q;
@@ -2741,10 +2703,16 @@ void finite_field::create_Baer_substructure(int n,
 
 void finite_field::create_BLT_from_database(int f_embedded,
 	int BLT_k,
-	std::string &fname, int &nb_pts, long int *&Pts,
+	std::string &label_txt,
+	std::string &label_tex,
+	int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::create_BLT_from_database" << endl;
+	}
 	int i;
 	long int j;
 	int epsilon = 0;
@@ -2793,15 +2761,22 @@ void finite_field::create_BLT_from_database(int f_embedded,
 #endif
 
 	char str[1000];
+	char str2[1000];
 	if (f_embedded) {
-		sprintf(str, "%d_%d_embedded.txt", q, BLT_k);
-		fname.assign("BLT_");
-		fname.append(str);
+		sprintf(str, "%d_%d_embedded", q, BLT_k);
+		sprintf(str2, "%d\\_%d\\_embedded", q, BLT_k);
+		label_txt.assign("BLT_");
+		label_txt.append(str);
+		label_tex.assign("BLT\\_");
+		label_tex.append(str2);
 	}
 	else {
-		sprintf(str, "%d_%d.txt", q, BLT_k);
-		fname.assign("BLT_");
-		fname.append(str);
+		sprintf(str, "%d_%d", q, BLT_k);
+		sprintf(str2, "%d\\_%d", q, BLT_k);
+		label_txt.assign("BLT_");
+		label_txt.append(str);
+		label_tex.assign("BLT\\_");
+		label_tex.append(str2);
 	}
 	//write_set_to_file(fname, L, N, verbose_level);
 
@@ -2814,10 +2789,16 @@ void finite_field::create_BLT_from_database(int f_embedded,
 
 
 void finite_field::create_orthogonal(int epsilon, int n,
-		std::string &fname, int &nb_pts, long int *&Pts,
+		std::string &label_txt,
+		std::string &label_tex,
+		int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::create_orthogonal" << endl;
+	}
 	int c1 = 1, c2 = 0, c3 = 0;
 	int i, j;
 	int d = n + 1;
@@ -2859,11 +2840,14 @@ void finite_field::create_orthogonal(int epsilon, int n,
 #endif
 
 	char str[1000];
+	char str2[1000];
 
 	algebra_global AG;
 
 	sprintf(str, "Q%s_%d_%d.txt", AG.plus_minus_letter(epsilon), n, q);
-	fname.assign(str);
+	sprintf(str2, "Q%s\\_%d\\_%d.txt", AG.plus_minus_letter(epsilon), n, q);
+	label_txt.assign(str);
+	label_tex.assign(str2);
 	//write_set_to_file(fname, L, N, verbose_level);
 
 
@@ -2873,10 +2857,17 @@ void finite_field::create_orthogonal(int epsilon, int n,
 
 
 void finite_field::create_hermitian(int n,
-		std::string &fname, int &nb_pts, long int *&Pts,
+		std::string &label_txt,
+		std::string &label_tex,
+		int &nb_pts, long int *&Pts,
 	int verbose_level)
+// creates hermitian
 {
 	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::create_hermitian" << endl;
+	}
 	int i, j;
 	int d = n + 1;
 	int *v;
@@ -2914,252 +2905,16 @@ void finite_field::create_hermitian(int n,
 #endif
 
 	char str[1000];
+	char str2[1000];
 	sprintf(str, "H_%d_%d.txt", n, q);
-	fname.assign(str);
+	sprintf(str2, "H\\_%d\\_%d.txt", n, q);
+	label_txt.assign(str);
+	label_tex.assign(str2);
 	//write_set_to_file(fname, L, N, verbose_level);
 
 
 	FREE_int(v);
 	FREE_OBJECT(H);
-	//FREE_int(L);
-}
-
-void finite_field::create_cuspidal_cubic(
-		std::string &fname, int &nb_pts, long int *&Pts,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	projective_space *P;
-	int n = 2;
-	long int i, a, d, s, t;
-	int *v;
-	int v2[2];
-
-	d = n + 1;
-	P = NEW_OBJECT(projective_space);
-
-
-	P->init(n, this,
-		FALSE /* f_init_incidence_structure */,
-		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
-	nb_pts = q + 1;
-
-	v = NEW_int(d);
-	Pts = NEW_lint(P->N_points);
-
-	if (f_v) {
-		cout << "i : point : projective rank" << endl;
-	}
-	for (i = 0; i < nb_pts; i++) {
-		PG_element_unrank_modified(v2, 1, 2, i);
-		s = v2[0];
-		t = v2[1];
-		v[0] = mult(power(s, 3), power(t, 0));
-		v[1] = mult(power(s, 2), power(t, 1));
-		v[2] = mult(power(s, 0), power(t, 3));
-#if 0
-		for (j = 0; j < d; j++) {
-			v[j] = mult(power(s, n - j), power(t, j));
-		}
-#endif
-		a = P->rank_point(v);
-		Pts[i] = a;
-		if (f_v) {
-			cout << setw(4) << i << " : ";
-			Orbiter->Int_vec.print(cout, v, d);
-			cout << " : " << setw(5) << a << endl;
-		}
-	}
-
-#if 0
-	cout << "list of points on the cubic:" << endl;
-	cout << N << endl;
-	for (i = 0; i < N; i++) {
-		cout << L[i] << " ";
-		}
-	cout << endl;
-#endif
-
-	char str[1000];
-	sprintf(str, "cuspidal_cubic_%d.txt", q);
-	fname.assign(str);
-	//write_set_to_file(fname, L, N, verbose_level);
-
-
-	long int nCk;
-	combinatorics_domain Combi;
-	int k = 6;
-	int rk;
-	int idx[6];
-	int *subsets;
-
-	nCk = Combi.int_n_choose_k(nb_pts, k);
-	subsets = NEW_int(nCk * k);
-	for (rk = 0; rk < nCk; rk++) {
-		Combi.unrank_k_subset(rk, idx, nb_pts, k);
-		for (i = 0; i < k; i++) {
-			subsets[rk * k + i] = Pts[idx[i]];
-		}
-	}
-
-	string fname2;
-
-	sprintf(str, "cuspidal_cubic_%d_subsets_%d.txt", q, k);
-	fname2.assign(str);
-
-	{
-
-		ofstream fp(fname2);
-
-		for (rk = 0; rk < nCk; rk++) {
-			fp << k;
-			for (i = 0; i < k; i++) {
-				fp << " " << subsets[rk * k + i];
-			}
-			fp << endl;
-		}
-		fp << -1 << endl;
-
-	}
-
-	file_io Fio;
-
-	cout << "Written file " << fname2 << " of size " << Fio.file_size(fname2) << endl;
-
-
-
-
-
-	FREE_OBJECT(P);
-	FREE_int(v);
-	//FREE_int(L);
-}
-
-void finite_field::create_twisted_cubic(
-		std::string &fname, int &nb_pts, long int *&Pts,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	projective_space *P;
-	int n = 3;
-	long int i, j, d, s, t;
-	int *v;
-	int v2[2];
-
-	d = n + 1;
-	P = NEW_OBJECT(projective_space);
-
-
-	P->init(n, this,
-		FALSE /* f_init_incidence_structure */,
-		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
-	nb_pts = q + 1;
-
-	v = NEW_int(n + 1);
-	Pts = NEW_lint(P->N_points);
-
-	if (f_v) {
-		cout << "i : point : projective rank" << endl;
-	}
-	for (i = 0; i < nb_pts; i++) {
-		PG_element_unrank_modified(v2, 1, 2, i);
-		s = v2[0];
-		t = v2[1];
-		v[0] = mult(power(s, 3), power(t, 0));
-		v[1] = mult(power(s, 2), power(t, 1));
-		v[2] = mult(power(s, 1), power(t, 2));
-		v[3] = mult(power(s, 0), power(t, 3));
-		j = P->rank_point(v);
-		Pts[i] = j;
-		if (f_v) {
-			cout << setw(4) << i << " : ";
-			Orbiter->Int_vec.print(cout, v, d);
-			cout << " : " << setw(5) << j << endl;
-		}
-	}
-
-#if 0
-	cout << "list of points on the twisted cubic:" << endl;
-	cout << N << endl;
-	for (i = 0; i < N; i++) {
-		cout << L[i] << " ";
-		}
-	cout << endl;
-#endif
-
-	char str[1000];
-	sprintf(str, "twisted_cubic_%d.txt", q);
-	fname.assign(str);
-	//write_set_to_file(fname, L, N, verbose_level);
-
-	FREE_OBJECT(P);
-	FREE_int(v);
-	//FREE_int(L);
-}
-
-
-void finite_field::create_elliptic_curve(
-	int elliptic_curve_b, int elliptic_curve_c,
-	std::string &fname, int &nb_pts, long int *&Pts,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	projective_space *P;
-	int n = 2;
-	long int i, a, d;
-	int *v;
-	elliptic_curve *E;
-
-	d = n + 1;
-	P = NEW_OBJECT(projective_space);
-
-
-	P->init(n, this,
-		FALSE /* f_init_incidence_structure */,
-		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
-	nb_pts = q + 1;
-
-	E = NEW_OBJECT(elliptic_curve);
-	v = NEW_int(n + 1);
-	Pts = NEW_lint(P->N_points);
-
-	E->init(this, elliptic_curve_b, elliptic_curve_c,
-			verbose_level);
-
-	nb_pts = E->nb;
-
-	if (f_v) {
-		cout << "i : point : projective rank" << endl;
-	}
-	for (i = 0; i < nb_pts; i++) {
-		PG_element_rank_modified_lint(E->T + i * d, 1, d, a);
-		Pts[i] = a;
-		if (f_v) {
-			cout << setw(4) << i << " : ";
-			Orbiter->Int_vec.print(cout, E->T + i * d, d);
-			cout << " : " << setw(5) << a << endl;
-		}
-	}
-
-#if 0
-	cout << "list of points on the elliptic curve:" << endl;
-	cout << N << endl;
-	for (i = 0; i < N; i++) {
-		cout << L[i] << " ";
-		}
-	cout << endl;
-#endif
-
-	char str[1000];
-	sprintf(str, "elliptic_curve_b%d_c%d_q%d.txt",
-			elliptic_curve_b, elliptic_curve_c, q);
-	fname.assign(str);
-	//write_set_to_file(fname, L, N, verbose_level);
-
-
-	FREE_OBJECT(E);
-	FREE_OBJECT(P);
-	FREE_int(v);
 	//FREE_int(L);
 }
 
@@ -3170,6 +2925,10 @@ void finite_field::create_ttp_code(finite_field *Fq,
 // this is FQ
 {
 	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::create_ttp_code" << endl;
+	}
 	projective_space *P;
 	long int i, j, d;
 	int *v;
@@ -3266,142 +3025,21 @@ void finite_field::create_ttp_code(finite_field *Fq,
 }
 
 
-void finite_field::create_unital_XXq_YZq_ZYq(
-		std::string &fname, int &nb_pts, long int *&Pts,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	projective_space *P2;
-	int n = 2;
-	int i, rk, d;
-	int *v;
 
-	d = n + 1;
-	P2 = NEW_OBJECT(projective_space);
-
-
-	P2->init(2, this,
-		FALSE /* f_init_incidence_structure */,
-		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
-
-	v = NEW_int(d);
-	Pts = NEW_lint(P2->N_points);
-
-
-	P2->create_unital_XXq_YZq_ZYq(Pts, nb_pts, verbose_level - 1);
-
-
-	if (f_v) {
-		cout << "i : point : projective rank" << endl;
-	}
-	for (i = 0; i < nb_pts; i++) {
-		rk = Pts[i];
-		P2->unrank_point(v, rk);
-		if (f_v) {
-			cout << setw(4) << i << " : ";
-			Orbiter->Int_vec.print(cout, v, d);
-			cout << " : " << setw(5) << rk << endl;
-		}
-	}
-
-
-	char str[1000];
-	sprintf(str, "unital_XXq_YZq_ZYq_Q%d.txt", q);
-	fname.assign(str);
-
-	FREE_OBJECT(P2);
-	FREE_int(v);
-}
-
-
-void finite_field::create_whole_space(int n,
-		std::string &fname, int &nb_pts, long int *&Pts,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	projective_space *P;
-	int i; //, d;
-
-	if (f_v) {
-		cout << "finite_field::create_whole_space" << endl;
-	}
-	//d = n + 1;
-	P = NEW_OBJECT(projective_space);
-
-
-	P->init(n, this,
-		FALSE /* f_init_incidence_structure */,
-		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
-
-	Pts = NEW_lint(P->N_points);
-	nb_pts = P->N_points;
-	for (i = 0; i < P->N_points; i++) {
-		Pts[i] = i;
-	}
-
-	char str[1000];
-	sprintf(str, "whole_space_PG_%d_%d.txt", n, q);
-	fname.assign(str);
-
-	FREE_OBJECT(P);
-}
-
-
-void finite_field::create_hyperplane(int n,
-	int pt,
-	std::string &fname, int &nb_pts, long int *&Pts,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	projective_space *P;
-	long int i, d, a;
-	int *v1;
-	int *v2;
-
-	if (f_v) {
-		cout << "finite_field::create_hyperplane pt=" << pt << endl;
-	}
-	d = n + 1;
-	P = NEW_OBJECT(projective_space);
-	v1 = NEW_int(d);
-	v2 = NEW_int(d);
-
-	P->init(n, this,
-		FALSE /* f_init_incidence_structure */,
-		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
-
-	P->unrank_point(v1, pt);
-
-	Pts = NEW_lint(P->N_points);
-	nb_pts = 0;
-	for (i = 0; i < P->N_points; i++) {
-		P->unrank_point(v2, i);
-		a = dot_product(d, v1, v2);
-		if (a == 0) {
-			Pts[nb_pts++] = i;
-			if (f_v) {
-				cout << setw(4) << nb_pts - 1 << " : ";
-				Orbiter->Int_vec.print(cout, v2, d);
-				cout << " : " << setw(5) << i << endl;
-			}
-		}
-	}
-
-	char str[1000];
-	sprintf(str, "hyperplane_PG_%d_%d_pt%d.txt", n, q, pt);
-	fname.assign(str);
-
-	FREE_OBJECT(P);
-	FREE_int(v1);
-	FREE_int(v2);
-}
 
 
 void finite_field::create_segre_variety(int a, int b,
-		std::string &fname, int &nb_pts, long int *&Pts,
+		std::string &label_txt,
+		std::string &label_tex,
+		int &nb_pts, long int *&Pts,
 	int verbose_level)
+// creates PG(a,q), PG(b,q) and PG((a+1)*(b+1)-1,q)
 {
 	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "finite_field::create_segre_variety" << endl;
+	}
 	projective_space *P1;
 	projective_space *P2;
 	projective_space *P3;
@@ -3445,7 +3083,7 @@ void finite_field::create_segre_variety(int a, int b,
 		P1->unrank_point(v1, i);
 		for (j = 0; j < N2; j++) {
 			P2->unrank_point(v2, j);
-			mult_matrix_matrix(v1, v2, v3, a + 1, 1, b + 1,
+			Linear_algebra->mult_matrix_matrix(v1, v2, v3, a + 1, 1, b + 1,
 					0 /* verbose_level */);
 			rk = P3->rank_point(v3);
 			Pts[nb_pts++] = rk;
@@ -3458,8 +3096,11 @@ void finite_field::create_segre_variety(int a, int b,
 	}
 
 	char str[1000];
-	sprintf(str, "segre_variety_%d_%d_%d.txt", a, b, q);
-	fname.assign(str);
+	char str2[1000];
+	sprintf(str, "segre_variety_%d_%d_%d", a, b, q);
+	sprintf(str2, "segre\\_variety\\_%d\\_%d\\_%d", a, b, q);
+	label_txt.assign(str);
+	label_tex.assign(str2);
 
 	FREE_OBJECT(P1);
 	FREE_OBJECT(P2);
@@ -3469,43 +3110,14 @@ void finite_field::create_segre_variety(int a, int b,
 	FREE_int(v3);
 }
 
-void finite_field::create_Maruta_Hamada_arc(
-		std::string &fname, int &nb_pts, long int *&Pts,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	projective_space *P;
-	int N;
 
-	if (f_v) {
-		cout << "finite_field::create_Maruta_Hamada_arc" << endl;
-	}
-	P = NEW_OBJECT(projective_space);
-
-	P->init(2, this,
-		FALSE /* f_init_incidence_structure */,
-		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
-
-
-	N = P->N_points;
-	Pts = NEW_lint(N);
-
-	P->Arc_in_projective_space->create_Maruta_Hamada_arc2(Pts, nb_pts, verbose_level);
-
-	char str[1000];
-	sprintf(str, "Maruta_Hamada_arc2_q%d.txt", q);
-	fname.assign(str);
-
-	FREE_OBJECT(P);
-	//FREE_int(Pts);
-}
-
-
+#if 0
 void finite_field::create_desarguesian_line_spread_in_PG_3_q(
 	finite_field *Fq,
 	int f_embedded_in_PG_4_q,
 	std::string &fname, int &nb_lines, long int *&Lines,
 	int verbose_level)
+// creates PG(1,Q) and PG(3,q)
 // this is FQ
 {
 	int f_v = (verbose_level >= 1);
@@ -3689,11 +3301,11 @@ void finite_field::create_desarguesian_line_spread_in_PG_3_q(
 
 
 
-
 void finite_field::do_Klein_correspondence(int n,
 		long int *set_in, int set_size,
 		long int *&the_set_out, int &set_size_out,
 	int verbose_level)
+// creates PG(n,q) and PG(5,q), assuming that n = 3
 {
 	int f_v = (verbose_level >= 1);
 	projective_space *P;
@@ -3729,10 +3341,12 @@ void finite_field::do_Klein_correspondence(int n,
 	FREE_OBJECT(P);
 	FREE_OBJECT(P5);
 }
+#endif
 
 void finite_field::do_m_subspace_type(int n, int m,
 		long int *set, int set_size,
 	int f_show, int verbose_level)
+// creates PG(n,q)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -3882,6 +3496,7 @@ void finite_field::do_m_subspace_type(int n, int m,
 void finite_field::do_m_subspace_type_fast(int n, int m,
 		long int *set, int set_size,
 	int f_show, int verbose_level)
+// creates PG(n,q) and grassmann
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -4113,6 +3728,7 @@ void finite_field::do_m_subspace_type_fast(int n, int m,
 void finite_field::do_line_type(int n,
 		long int *set, int set_size,
 	int f_show, int verbose_level)
+// creates PG(n,q)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -4252,6 +3868,7 @@ void finite_field::do_plane_type(int n,
 		long int *set, int set_size,
 	int *&intersection_type, int &highest_intersection_number,
 	int verbose_level)
+// creates PG(n,q) and grassmann
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -4297,6 +3914,7 @@ void finite_field::do_plane_type(int n,
 void finite_field::do_plane_type_failsafe(int n,
 		long int *set, int set_size,
 	int verbose_level)
+// creates PG(n,q)
 {
 	int f_v = (verbose_level >= 1);
 	projective_space *P;
@@ -4350,6 +3968,7 @@ void finite_field::do_conic_type(int n,
 	int threshold,
 	int *&intersection_type, int &highest_intersection_number,
 	int verbose_level)
+// creates PG(n,q)
 {
 	int f_v = (verbose_level >= 1);
 	projective_space *P;
@@ -4393,6 +4012,7 @@ void finite_field::do_test_diagonal_line(int n,
 		long int *set_in, int set_size,
 	std::string &fname_orbits_on_quadrangles,
 	int verbose_level)
+// creates PG(n,q) and grassmann
 {
 	int f_v = (verbose_level >= 1);
 	projective_space *P;
@@ -4589,6 +4209,7 @@ void finite_field::do_andre(finite_field *Fq,
 		long int *the_set_in, int set_size_in,
 		long int *&the_set_out, int &set_size_out,
 	int verbose_level)
+// creates PG(2,Q) and PG(4,q)
 // this is FQ
 {
 	int f_v = (verbose_level >= 1);
@@ -4796,6 +4417,7 @@ void finite_field::do_andre(finite_field *Fq,
 
 void finite_field::do_print_lines_in_PG(int n,
 		long int *set_in, int set_size)
+// creates PG(n,q)
 {
 	projective_space *P;
 	int d = n + 1;
@@ -4824,6 +4446,7 @@ void finite_field::do_print_lines_in_PG(int n,
 
 void finite_field::do_print_points_in_PG(int n,
 		long int *set_in, int set_size)
+// creates PG(n,q)
 {
 	projective_space *P;
 	int d = n + 1;
@@ -4858,6 +4481,7 @@ void finite_field::do_print_points_in_PG(int n,
 void finite_field::do_print_points_in_orthogonal_space(
 	int epsilon, int n,
 	long int *set_in, int set_size, int verbose_level)
+// creates orthogonal
 {
 	int d = n + 1;
 	long int h, a;
@@ -4894,6 +4518,7 @@ void finite_field::do_print_points_in_orthogonal_space(
 void finite_field::do_print_points_on_grassmannian(
 	int n, int k,
 	long int *set_in, int set_size)
+// creates PG(n,q) and grassmann
 {
 	grassmann *Grass;
 	projective_space *P;
@@ -4933,6 +4558,7 @@ void finite_field::do_embed_orthogonal(
 	int epsilon, int n,
 	long int *set_in, long int *&set_out, int set_size,
 	int verbose_level)
+// creates PG(n,q)
 {
 	int f_v = (verbose_level >= 1);
 	projective_space *P;
@@ -4972,6 +4598,7 @@ void finite_field::do_embed_orthogonal(
 void finite_field::do_embed_points(int n,
 		long int *set_in, long int *&set_out, int set_size,
 	int verbose_level)
+// creates PG(n,q) and PG(n+1,q)
 {
 	int f_v = (verbose_level >= 1);
 	projective_space *P1;
@@ -5015,6 +4642,7 @@ void finite_field::do_draw_points_in_plane(
 		long int *set, int set_size,
 		std::string &fname_base, int f_point_labels,
 		int verbose_level)
+// creates PG(n,q)
 {
 	int f_v = (verbose_level >= 1);
 	projective_space *P;
@@ -5264,401 +4892,6 @@ void finite_field::print_set_in_affine_plane(int len, long int *S)
 	FREE_int(A);
 }
 
-void finite_field::elliptic_curve_addition(int b, int c,
-	int x1, int x2, int x3,
-	int y1, int y2, int y3,
-	int &z1, int &z2, int &z3, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int a, two, three, top, bottom, m;
-
-	if (f_v) {
-		cout << "finite_field::elliptic_curve_addition" << endl;
-	}
-
-	my_nb_calls_to_elliptic_curve_addition++;
-	if (x3 == 0) {
-		z1 = y1;
-		z2 = y2;
-		z3 = y3;
-		goto done;
-	}
-	if (y3 == 0) {
-		z1 = x1;
-		z2 = x2;
-		z3 = x3;
-		goto done;
-	}
-	if (x3 != 1) {
-		a = inverse(x3);
-		x1 = mult(x1, a);
-		x2 = mult(x2, a);
-	}
-	if (y3 != 1) {
-		a = inverse(y3);
-		y1 = mult(y1, a);
-		y2 = mult(y2, a);
-	}
-	if (x1 == y1 && x2 != y2) {
-		if (negate(x2) != y2) {
-			cout << "x1 == y1 && x2 != y2 && negate(x2) != y2" << endl;
-			exit(1);
-		}
-		z1 = 0;
-		z2 = 1;
-		z3 = 0;
-		goto done;
-	}
-	if (x1 == y1 && x2 == 0 && y2 == 0) {
-		z1 = 0;
-		z2 = 1;
-		z3 = 0;
-		goto done;
-	}
-	if (x1 == y1 && x2 == y2) {
-		two = add(1, 1);
-		three = add(two, 1);
-		top = add(mult(three, mult(x1, x1)), b);
-		bottom = mult(two, x2);
-		a = inverse(bottom);
-		m = mult(top, a);
-	}
-	else {
-		top = add(y2, negate(x2));
-		bottom = add(y1, negate(x1));
-		a = inverse(bottom);
-		m = mult(top, a);
-	}
-	z1 = add(add(mult(m, m), negate(x1)), negate(y1));
-	z2 = add(mult(m, add(x1, negate(z1))), negate(x2));
-	z3 = 1;
-done:
-	if (f_v) {
-		cout << "finite_field::elliptic_curve_addition done" << endl;
-	}
-}
-
-void finite_field::elliptic_curve_point_multiple(int b, int c, int n,
-	int x1, int y1, int z1,
-	int &x3, int &y3, int &z3,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int bx, by, bz;
-	int cx, cy, cz;
-	int tx, ty, tz;
-
-	if (f_v) {
-		cout << "finite_field::elliptic_curve_point_multiple" << endl;
-	}
-	bx = x1;
-	by = y1;
-	bz = z1;
-	cx = 0;
-	cy = 1;
-	cz = 0;
-	while (n) {
-		if (n % 2) {
-			//cout << "finite_field::power: mult(" << b << "," << c << ")=";
-
-			elliptic_curve_addition(b, c,
-				bx, by, bz,
-				cx, cy, cz,
-				tx, ty, tz, verbose_level - 1);
-			cx = tx;
-			cy = ty;
-			cz = tz;
-			//c = mult(b, c);
-			//cout << c << endl;
-		}
-		elliptic_curve_addition(b, c,
-			bx, by, bz,
-			bx, by, bz,
-			tx, ty, tz, verbose_level - 1);
-		bx = tx;
-		by = ty;
-		bz = tz;
-		//b = mult(b, b);
-		n >>= 1;
-		//cout << "finite_field::power: " << b << "^" << n << " * " << c << endl;
-	}
-	x3 = cx;
-	y3 = cy;
-	z3 = cz;
-	if (f_v) {
-		cout << "finite_field::elliptic_curve_point_multiple done" << endl;
-	}
-}
-
-void finite_field::elliptic_curve_point_multiple_with_log(int b, int c, int n,
-	int x1, int y1, int z1,
-	int &x3, int &y3, int &z3,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int bx, by, bz;
-	int cx, cy, cz;
-	int tx, ty, tz;
-
-	if (f_v) {
-		cout << "finite_field::elliptic_curve_point_multiple_with_log" << endl;
-	}
-	bx = x1;
-	by = y1;
-	bz = z1;
-	cx = 0;
-	cy = 1;
-	cz = 0;
-	cout << "ECMultiple$\\Big((" << bx << "," << by << "," << bz << "),";
-	cout << "(" << cx << "," << cy << "," << cz << "),"
-			<< n << "," << b << "," << c << "," << p << "\\Big)$\\\\" << endl;
-
-	while (n) {
-		if (n % 2) {
-			//cout << "finite_field::power: mult(" << b << "," << c << ")=";
-
-			elliptic_curve_addition(b, c,
-				bx, by, bz,
-				cx, cy, cz,
-				tx, ty, tz, verbose_level - 1);
-			cx = tx;
-			cy = ty;
-			cz = tz;
-			//c = mult(b, c);
-			//cout << c << endl;
-		}
-		elliptic_curve_addition(b, c,
-			bx, by, bz,
-			bx, by, bz,
-			tx, ty, tz, verbose_level - 1);
-		bx = tx;
-		by = ty;
-		bz = tz;
-		//b = mult(b, b);
-		n >>= 1;
-		cout << "=ECMultiple$\\Big((" << bx << "," << by << "," << bz << "),";
-		cout << "(" << cx << "," << cy << "," << cz << "),"
-				<< n << "," << b << "," << c << "," << p << "\\Big)$\\\\" << endl;
-		//cout << "finite_field::power: " << b << "^" << n << " * " << c << endl;
-	}
-	x3 = cx;
-	y3 = cy;
-	z3 = cz;
-	cout << "$=(" << x3 << "," << y3 << "," << z3 << ")$\\\\" << endl;
-	if (f_v) {
-		cout << "finite_field::elliptic_curve_point_multiple_with_log done" << endl;
-	}
-}
-
-int finite_field::elliptic_curve_evaluate_RHS(int x, int b, int c)
-{
-	int x2, x3, e;
-
-	x2 = mult(x, x);
-	x3 = mult(x2, x);
-	e = add(x3, mult(b, x));
-	e = add(e, c);
-	return e;
-}
-
-void finite_field::elliptic_curve_points(
-		int b, int c, int &nb, int *&T, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	//finite_field F;
-	int x, y, n;
-	int r, l;
-	number_theory_domain NT;
-	longinteger_domain D;
-
-	if (f_v) {
-		cout << "finite_field::elliptic_curve_points" << endl;
-	}
-	nb = 0;
-	//F.init(p, verbose_level);
-	for (x = 0; x < p; x++) {
-		r = elliptic_curve_evaluate_RHS(x, b, c);
-		if (r == 0) {
-			if (f_v) {
-				cout << nb << " : (" << x << "," << 0 << ",1)" << endl;
-			}
-			nb++;
-		}
-		else {
-			if (p != 2) {
-				if (e > 1) {
-					cout << "finite_field::elliptic_curve_points odd characteristic and e > 1" << endl;
-					exit(1);
-				}
-				l = NT.Legendre(r, p, verbose_level - 1);
-				if (l == 1) {
-					//y = sqrt_mod_involved(r, p);
-					y = D.square_root_mod(r, p, 0 /* verbose_level*/);
-					//y = NT.sqrt_mod_simple(r, p);
-					if (f_v) {
-						cout << nb << " : (" << x << "," << y << ",1)" << endl;
-						cout << nb + 1 << " : (" << x << "," << negate(y) << ",1)" << endl;
-					}
-					nb += 2;
-				}
-			}
-			else {
-				y = frobenius_power(r, e - 1);
-				if (f_v) {
-					cout << nb << " : (" << x << "," << y << ",1)" << endl;
-				}
-				nb += 1;
-			}
-		}
-	}
-	if (f_v) {
-		cout << nb << " : (0,1,0)" << endl;
-	}
-	nb++;
-	if (f_v) {
-		cout << "the curve has " << nb << " points" << endl;
-	}
-	T = NEW_int(nb * 3);
-	n = 0;
-	for (x = 0; x < p; x++) {
-		r = elliptic_curve_evaluate_RHS(x, b, c);
-		if (r == 0) {
-			T[n * 3 + 0] = x;
-			T[n * 3 + 1] = 0;
-			T[n * 3 + 2] = 1;
-			n++;
-			//cout << nb++ << " : (" << x << "," << 0 << ",1)" << endl;
-		}
-		else {
-			if (p != 2) {
-				// odd characteristic:
-				l = NT.Legendre(r, p, verbose_level - 1);
-				if (l == 1) {
-					//y = sqrt_mod_involved(r, p);
-					//y = NT.sqrt_mod_simple(r, p);
-					y = D.square_root_mod(r, p, 0 /* verbose_level*/);
-					T[n * 3 + 0] = x;
-					T[n * 3 + 1] = y;
-					T[n * 3 + 2] = 1;
-					n++;
-					T[n * 3 + 0] = x;
-					T[n * 3 + 1] = negate(y);
-					T[n * 3 + 2] = 1;
-					n++;
-					//cout << nb++ << " : (" << x << "," << y << ",1)" << endl;
-					//cout << nb++ << " : (" << x << "," << F.negate(y) << ",1)" << endl;
-				}
-			}
-			else {
-				// even characteristic
-				y = frobenius_power(r, e - 1);
-				T[n * 3 + 0] = x;
-				T[n * 3 + 1] = y;
-				T[n * 3 + 2] = 1;
-				n++;
-				//cout << nb++ << " : (" << x << "," << y << ",1)" << endl;
-			}
-		}
-	}
-	T[n * 3 + 0] = 0;
-	T[n * 3 + 1] = 1;
-	T[n * 3 + 2] = 0;
-	n++;
-	//print_integer_matrix_width(cout, T, nb, 3, 3, log10_of_q);
-	if (f_v) {
-		cout << "finite_field::elliptic_curve_points done" << endl;
-		cout << "the curve has " << nb << " points" << endl;
-	}
-}
-
-void finite_field::elliptic_curve_all_point_multiples(int b, int c, int &order,
-	int x1, int y1, int z1,
-	std::vector<std::vector<int> > &Pts,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int x2, y2, z2;
-	int x3, y3, z3;
-
-	if (f_v) {
-		cout << "finite_field::elliptic_curve_all_point_multiples" << endl;
-	}
-	order = 1;
-
-	x2 = x1;
-	y2 = y1;
-	z2 = z1;
-	while (TRUE) {
-		{
-			vector<int> pts;
-
-			pts.push_back(x2);
-			pts.push_back(y2);
-			pts.push_back(z2);
-
-			Pts.push_back(pts);
-		}
-		if (z2 == 0) {
-			return;
-		}
-
-		elliptic_curve_addition(b, c,
-			x1, y1, z1,
-			x2, y2, z2,
-			x3, y3, z3, 0 /*verbose_level */);
-
-		x2 = x3;
-		y2 = y3;
-		z2 = z3;
-
-		order++;
-	}
-	if (f_v) {
-		cout << "finite_field::elliptic_curve_all_point_multiples done" << endl;
-	}
-}
-
-int finite_field::elliptic_curve_discrete_log(int b, int c,
-	int x1, int y1, int z1,
-	int x3, int y3, int z3,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int x2, y2, z2;
-	int a3, b3, c3;
-	int n;
-
-	if (f_v) {
-		cout << "finite_field::elliptic_curve_discrete_log" << endl;
-	}
-	n = 1;
-
-	x2 = x1;
-	y2 = y1;
-	z2 = z1;
-	while (TRUE) {
-		if (x2 == x3 && y2 == y3 && z2 == z3) {
-			break;
-		}
-
-		elliptic_curve_addition(b, c,
-			x1, y1, z1,
-			x2, y2, z2,
-			a3, b3, c3, 0 /*verbose_level */);
-
-		n++;
-
-		x2 = a3;
-		y2 = b3;
-		z2 = c3;
-
-	}
-	if (f_v) {
-		cout << "finite_field::elliptic_curve_discrete_log done" << endl;
-	}
-	return n;
-}
-
 
 
 void finite_field::simeon(int n, int len, long int *S, int s, int verbose_level)
@@ -5778,7 +5011,7 @@ void finite_field::simeon(int n, int len, long int *S, int s, int verbose_level)
 					}
 				}
 				if (i == k - 2) {
-					d = BallChowdhury_matrix_entry(
+					d = Linear_algebra->BallChowdhury_matrix_entry(
 							Coord, C, U1, k, s /*sz_U */,
 						T, 0 /*verbose_level*/);
 					if (f_vv) {
@@ -5806,7 +5039,7 @@ void finite_field::simeon(int n, int len, long int *S, int s, int verbose_level)
 		cout << "s=" << s << endl;
 	}
 
-	mtx_rank = Gauss_easy(M, nb_rows, nb_cols);
+	mtx_rank = Linear_algebra->Gauss_easy(M, nb_rows, nb_cols);
 	if (f_v) {
 		cout << "mtx_rank=" << mtx_rank << endl;
 		//cout << "simeon, the reduced matrix M is:" << endl;
@@ -5892,12 +5125,12 @@ void finite_field::isomorphism_to_special_orthogonal(int *A4, int *A6, int verbo
 		klein_to_wedge(Basis1 + i * 6, Basis2 + i * 6);
 	}
 
-	matrix_inverse(B, Bv, 6, 0 /* verbose_level */);
+	Linear_algebra->matrix_inverse(B, Bv, 6, 0 /* verbose_level */);
 
 
 
 
-	exterior_square(A4, An2, 4, 0 /*verbose_level*/);
+	Linear_algebra->exterior_square(A4, An2, 4, 0 /*verbose_level*/);
 
 	if (f_vv) {
 		cout << "finite_field::isomorphism_to_special_orthogonal "
@@ -5908,7 +5141,7 @@ void finite_field::isomorphism_to_special_orthogonal(int *A4, int *A6, int verbo
 
 
 	for (j = 0; j < 6; j++) {
-		mult_vector_from_the_left(Basis2 + j * 6, An2, v, 6, 6);
+		Linear_algebra->mult_vector_from_the_left(Basis2 + j * 6, An2, v, 6, 6);
 				// v[m], A[m][n], vA[n]
 		wedge_to_klein(v, w);
 		Orbiter->Int_vec.copy(w, C + j * 6, 6);
@@ -5922,8 +5155,8 @@ void finite_field::isomorphism_to_special_orthogonal(int *A4, int *A6, int verbo
 		cout << endl;
 	}
 
-	mult_matrix_matrix(Bv, C, D, 6, 6, 6, 0 /*verbose_level */);
-	mult_matrix_matrix(D, B, A6, 6, 6, 6, 0 /*verbose_level */);
+	Linear_algebra->mult_matrix_matrix(Bv, C, D, 6, 6, 6, 0 /*verbose_level */);
+	Linear_algebra->mult_matrix_matrix(D, B, A6, 6, 6, 6, 0 /*verbose_level */);
 
 	PG_element_normalize_from_front(A6, 1, 36);
 

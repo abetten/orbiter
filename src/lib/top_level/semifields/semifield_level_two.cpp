@@ -377,7 +377,7 @@ void semifield_level_two::init(semifield_classify *SC,
 	Elt = NEW_int(A_PGLk->elt_size_in_int);
 	Elt2 = NEW_int(A_PGLk->elt_size_in_int);
 
-	F->identity_matrix(Mtx_Id, k);
+	F->Linear_algebra->identity_matrix(Mtx_Id, k);
 
 
 	E1 = NEW_int(A_PGLk->elt_size_in_int);
@@ -684,7 +684,7 @@ void semifield_level_two::downstep(int verbose_level)
 		}
 
 		class_rep_rank[i] = SC->matrix_rank(Mtx);
-		F->add_vector(Mtx, Mtx_Id, Mtx_2, k * k);
+		F->Linear_algebra->add_vector(Mtx, Mtx_Id, Mtx_2, k * k);
 
 
 		class_rep_plus_I_rank[i] = SC->matrix_rank(Mtx_2);
@@ -715,7 +715,7 @@ void semifield_level_two::downstep(int verbose_level)
 					<< R_i_plus_I_class_idx[i] << endl;
 		}
 
-		F->matrix_inverse(class_rep_plus_I_Basis[i],
+		F->Linear_algebra->matrix_inverse(class_rep_plus_I_Basis[i],
 				class_rep_plus_I_Basis_inv[i], k, 0 /*verbose_level */);
 		if (f_vv) {
 			cout << "class_rep_plus_I_Basis_inv[i]" << endl;
@@ -862,7 +862,7 @@ void semifield_level_two::compute_stabilizers_downstep(int verbose_level)
 
 			R2 = NEW_OBJECT(gl_class_rep);
 
-			F->add_vector(Mtx, Mtx_Id, Mtx_2, k * k);
+			F->Linear_algebra->add_vector(Mtx, Mtx_Id, Mtx_2, k * k);
 
 			C->identify_matrix(Mtx_2, R2, Basis, verbose_level - 3);
 
@@ -1241,7 +1241,7 @@ void semifield_level_two::trace(int f, int coset,
 
 	SC->matrix_unrank(a, Mtx1);
 	SC->matrix_unrank(b, Mtx2);
-	F->identity_matrix(Mtx3, k);
+	F->Linear_algebra->identity_matrix(Mtx3, k);
 
 	Orbiter->Int_vec.zero(M1, n * n);
 	for (i = 0; i < k; i++) {
@@ -1270,7 +1270,7 @@ void semifield_level_two::trace(int f, int coset,
 	SC->A_on_S->compute_image_low_level(ELT1, Mtx3, Mtx6, 0 /* verbose_level */);
 	//cout << "transformation matrix Mtx4=" << endl;
 	//int_matrix_print(Mtx4, k, k);
-	if (!F->is_identity_matrix(Mtx4, k)) {
+	if (!F->Linear_algebra->is_identity_matrix(Mtx4, k)) {
 		cout << "semifield_level_two::trace Mtx4 "
 				"is not the identity matrix" << endl;
 		exit(1);
@@ -1510,7 +1510,7 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 	G = A_PGLk->Sims;
 	G->group_order(go_PGL);
 
-	F->identity_matrix(Mtx_stack[0], k);
+	F->Linear_algebra->identity_matrix(Mtx_stack[0], k);
 
 	if (f_v) {
 		cout << "semifield_level_two::compute_candidates_at_level_two_case "
@@ -1583,7 +1583,7 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 					// two entries in the first column
 			}
 			Orbiter->Int_vec.copy(Mtx1, Mtx2, (i + 1) * k);
-			if (F->rank_of_rectangular_matrix_memory_given(
+			if (F->Linear_algebra->rank_of_rectangular_matrix_memory_given(
 					Mtx2, i + 1, k, B, base_cols,
 					0 /* verbose_level */) < i + 1) {
 				continue; // rank is bad
@@ -1607,7 +1607,7 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 				cout << endl;
 				int_matrix_print(Mtx2, i + 1, k);
 #endif
-				if (F->rank_of_rectangular_matrix_memory_given(
+				if (F->Linear_algebra->rank_of_rectangular_matrix_memory_given(
 						Mtx2, i + 1, k, B, base_cols,
 						0 /* verbose_level */) < i + 1) {
 					break; // rank is bad
@@ -2122,7 +2122,7 @@ void semifield_level_two::get_basis_and_pivots(int po,
 				"pivots po=" << po << endl;
 	}
 
-	F->identity_matrix(basis, k);
+	F->Linear_algebra->identity_matrix(basis, k);
 
 #if 0
 	ext = up_orbit_rep[po];
@@ -2168,7 +2168,7 @@ void semifield_level_two::report(
 		Mtx_Id = NEW_int(k2);
 		Mtx = NEW_int(k2);
 
-		F->identity_matrix(Mtx_Id, k);
+		F->Linear_algebra->identity_matrix(Mtx_Id, k);
 
 		if (f_v) {
 			cout << "semifield_level_two::report "

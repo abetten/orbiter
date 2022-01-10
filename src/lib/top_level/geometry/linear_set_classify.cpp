@@ -574,7 +574,7 @@ int linear_set_classify::test_set(int len, long int *S, int verbose_level)
 			len, vector_space_dimension, vector_space_dimension,
 			Fq->log10_of_q);
 	}
-	rk = Fq->Gauss_simple(Basis, len, vector_space_dimension,
+	rk = Fq->Linear_algebra->Gauss_simple(Basis, len, vector_space_dimension,
 			base_cols, 0 /*verbose_level - 2*/);
 	if (f_v) {
 		cout << "the matrix has rank " << rk << endl;
@@ -1175,7 +1175,7 @@ int linear_set_classify::test_set_secondary(int len, long int *S, int verbose_le
 				vector_space_dimension, Fq->log10_of_q);
 	}
 
-	rk = Fq->Gauss_simple(Basis, len,
+	rk = Fq->Linear_algebra->Gauss_simple(Basis, len,
 			vector_space_dimension, base_cols,
 			0 /*verbose_level - 2*/);
 	if (f_v) {
@@ -1198,7 +1198,7 @@ int linear_set_classify::test_set_secondary(int len, long int *S, int verbose_le
 
 		for (i = 0; i < nb; i++) {
 			Fq->PG_element_unrank_modified(v, 1, len, i);
-			Fq->mult_vector_from_the_left(v, Basis, w, len, n);
+			Fq->Linear_algebra->mult_vector_from_the_left(v, Basis, w, len, n);
 			Fq->PG_element_rank_modified(w, 1, n, rk);
 			if (is_allowed[rk] == FALSE) {
 				ret = FALSE;
@@ -1893,7 +1893,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 	Basis_elt = NEW_int(dimW * n2);
 	base_cols = NEW_int(n1);
 	kernel_cols = NEW_int(n1);
-	if (Fq->Gauss_simple(BasisW, dimW, n1, base_cols,
+	if (Fq->Linear_algebra->Gauss_simple(BasisW, dimW, n1, base_cols,
 			0/* verbose_level*/) != dimW) {
 		cout << "BasisW does not have the correct rank" << endl;
 		exit(1);
@@ -1906,7 +1906,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 		cout << endl;
 	}
 
-	Fq->kernel_columns(n1, dimW, base_cols, kernel_cols);
+	Fq->Linear_algebra->kernel_columns(n1, dimW, base_cols, kernel_cols);
 	if (f_vv) {
 		cout << "kernel_cols:";
 		Orbiter->Int_vec.print(cout, kernel_cols, n2);
@@ -1958,7 +1958,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 			for (j = 0; j < s; j++) {
 				v2 = Spread_element_basis + j * n1;
 				if (v2[a]) {
-					Fq->Gauss_step(v1, v2, n1, a, 0 /* verbose_level*/);
+					Fq->Linear_algebra->Gauss_step(v1, v2, n1, a, 0 /* verbose_level*/);
 				}
 			}
 		}
@@ -1979,7 +1979,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 			Orbiter->Int_vec.matrix_print(Basis_elt, s, n2);
 		}
 
-		Fq->Gauss_easy(Basis_elt, s, n2);
+		Fq->Linear_algebra->Gauss_easy(Basis_elt, s, n2);
 
 		if (f_v3) {
 			cout << "Basis element after RREF:" << endl;
@@ -2029,7 +2029,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 	Intersection = NEW_int(n2 * n2);
 	for (h1 = 0; h1 < nb_components; h1++) {
 		for (h2 = h1 + 1; h2 < nb_components; h2++) {
-			Fq->intersect_subspaces(n2, s,
+			Fq->Linear_algebra->intersect_subspaces(n2, s,
 				Components[h1], s, Components[h2],
 				k3, Intersection, 0 /* verbose_level */);
 			if (k3) {
@@ -2055,7 +2055,7 @@ void linear_set_classify::construct_semifield(int orbit_for_W, int verbose_level
 		cout << "The spread_set is:" << endl;
 		Orbiter->Int_vec.matrix_print(Spread_set, linear_set_sz, s * s);
 	}
-	rk = Fq->Gauss_easy(Spread_set, linear_set_sz, s * s);
+	rk = Fq->Linear_algebra->Gauss_easy(Spread_set, linear_set_sz, s * s);
 	if (f_v) {
 		cout << "rank = " << rk << endl;
 	}

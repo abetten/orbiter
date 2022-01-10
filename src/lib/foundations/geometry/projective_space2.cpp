@@ -199,11 +199,11 @@ int projective_space::determine_hermitian_form_in_plane(
 
 
 
-	rk = F->Gauss_simple(system,
+	rk = F->Linear_algebra->Gauss_simple(system,
 			nb_pts, 9, base_cols, verbose_level - 2);
 	if (f_v) {
-		cout << "projective_space::determine_hermitian_form_"
-				"in_plane rk=" << rk << endl;
+		cout << "projective_space::determine_hermitian_form_in_plane "
+				"rk=" << rk << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout,
 				system, rk, 9, 9, F->log10_of_q);
 	}
@@ -216,7 +216,8 @@ int projective_space::determine_hermitian_form_in_plane(
 		return FALSE;
 	}
 #endif
-	F->matrix_get_kernel(system, MINIMUM(nb_pts, 9), 9, base_cols, rk,
+	F->Linear_algebra->matrix_get_kernel(system,
+			MINIMUM(nb_pts, 9), 9, base_cols, rk,
 		kernel_m, kernel_n, kernel, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "projective_space::determine_hermitian_form_"
@@ -322,7 +323,7 @@ void projective_space::circle_type_of_line_subset(
 	}
 }
 
-void projective_space::create_unital_XXq_YZq_ZYq(
+void projective_space::create_unital_XXq_YZq_ZYq_brute_force(
 	long int *U, int &sz, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -416,7 +417,7 @@ void projective_space::intersection_of_subspace_with_point_set(
 	for (h = 0; h < set_size; h++) {
 		Orbiter->Int_vec.copy(G->M, M, k * d);
 		unrank_point(M + k * d, set[h]);
-		if (F->rank_of_rectangular_matrix(M,
+		if (F->Linear_algebra->rank_of_rectangular_matrix(M,
 				k + 1, d, 0 /*verbose_level*/) == k) {
 			intersection_set[intersection_set_size++] = set[h];
 		}
@@ -453,7 +454,7 @@ void projective_space::intersection_of_subspace_with_point_set_rank_is_longinteg
 	for (h = 0; h < set_size; h++) {
 		Orbiter->Int_vec.copy(G->M, M, k * d);
 		unrank_point(M + k * d, set[h]);
-		if (F->rank_of_rectangular_matrix(M,
+		if (F->Linear_algebra->rank_of_rectangular_matrix(M,
 				k + 1, d, 0 /*verbose_level*/) == k) {
 			intersection_set[intersection_set_size++] = set[h];
 		}
@@ -782,7 +783,7 @@ void projective_space::plane_intersection_type_slow(
 		for (u = 0; u < set_size; u++) {
 			Orbiter->Int_vec.copy(Basis_save, Basis, 3 * d);
 			Orbiter->Int_vec.copy(Coords + u * d, Basis + 3 * d, d);
-			r = F->rank_of_rectangular_matrix(Basis,
+			r = F->Linear_algebra->rank_of_rectangular_matrix(Basis,
 					4, d, 0 /* verbose_level */);
 			if (r < 4) {
 				pts_on_plane[nb++] = u;
@@ -904,7 +905,7 @@ void projective_space::plane_intersection_type_fast(
 			cout << " corresponds to Basis:" << endl;
 			Orbiter->Int_vec.matrix_print(Basis, 3, d);
 		}
-		r = F->rank_of_rectangular_matrix(
+		r = F->Linear_algebra->rank_of_rectangular_matrix(
 				Basis, 3, d, 0 /* verbose_level */);
 		if (r < 3) {
 			if (TRUE || f_v) {
@@ -980,7 +981,7 @@ void projective_space::plane_intersection_type_fast(
 					cout << "Basis and point:" << endl;
 					Orbiter->Int_vec.matrix_print(Basis, 4, d);
 				}
-				r = F->rank_of_rectangular_matrix(Basis,
+				r = F->Linear_algebra->rank_of_rectangular_matrix(Basis,
 						4, d, 0 /* verbose_level */);
 				if (r == 3) {
 					pts_on_plane[l++] = h;
@@ -1147,7 +1148,7 @@ void projective_space::find_planes_which_intersect_in_at_least_s_points(
 		for (u = 0; u < set_size; u++) {
 			Orbiter->Int_vec.copy(Basis_save, Basis, 3 * d);
 			Orbiter->Int_vec.copy(Coords + u * d, Basis + 3 * d, d);
-			r = F->rank_of_rectangular_matrix(Basis,
+			r = F->Linear_algebra->rank_of_rectangular_matrix(Basis,
 					4, d, 0 /* verbose_level */);
 			if (r < 4) {
 				nb_pts_on_plane++;
@@ -1216,7 +1217,7 @@ void projective_space::plane_intersection(int plane_rank,
 	for (u = 0; u < set_size; u++) {
 		Orbiter->Int_vec.copy(Basis_save, Basis, 3 * d);
 		Orbiter->Int_vec.copy(Coords + u * d, Basis + 3 * d, d);
-		r = F->rank_of_rectangular_matrix(Basis,
+		r = F->Linear_algebra->rank_of_rectangular_matrix(Basis,
 				4, d, 0 /* verbose_level */);
 		if (r < 4) {
 			nb_pts_on_plane++;
@@ -1225,9 +1226,9 @@ void projective_space::plane_intersection(int plane_rank,
 			Orbiter->Int_vec.copy(Basis_save, Basis, 3 * d);
 			Orbiter->Int_vec.copy(Coords + u * d, Basis + 3 * d, d);
 
-			F->Gauss_simple(Basis, 3, d,
+			F->Linear_algebra->Gauss_simple(Basis, 3, d,
 					base_cols, 0 /*verbose_level */);
-			F->reduce_mod_subspace_and_get_coefficient_vector(
+			F->Linear_algebra->reduce_mod_subspace_and_get_coefficient_vector(
 				3, d, Basis, base_cols,
 				Basis + 3 * d, coefficients, verbose_level);
 			F->PG_element_rank_modified(
@@ -1282,7 +1283,7 @@ void projective_space::line_intersection(int line_rank,
 	for (u = 0; u < set_size; u++) {
 		Orbiter->Int_vec.copy(Basis_save, Basis, 2 * d);
 		Orbiter->Int_vec.copy(Coords + u * d, Basis + 2 * d, d);
-		r = F->rank_of_rectangular_matrix(Basis,
+		r = F->Linear_algebra->rank_of_rectangular_matrix(Basis,
 				3, d, 0 /* verbose_level */);
 		if (r < 3) {
 			point_indices.push_back(u);
@@ -3471,7 +3472,7 @@ void projective_space::line_plane_incidence_matrix_restricted(
 			Orbiter->Int_vec.copy(Basis, Work, 3 * (n + 1));
 			Orbiter->Int_vec.copy(the_lines + i * line_sz,
 					Work + 3 * (n + 1), line_sz);
-			if (F->Gauss_easy(Work, 5, n + 1) == 3) {
+			if (F->Linear_algebra->Gauss_easy(Work, 5, n + 1) == 3) {
 				M[i * nb_planes + j] = 1;
 			}
 		}
@@ -3514,7 +3515,7 @@ int projective_space::test_if_lines_are_skew(
 		cout << "line2:" << endl;
 		Orbiter->Int_vec.matrix_print(Basis2, 2, 4);
 	}
-	F->intersect_subspaces(4, 2, Basis1, 2, Basis2,
+	F->Linear_algebra->intersect_subspaces(4, 2, Basis1, 2, Basis2,
 		rk, M, 0 /* verbose_level */);
 
 	if (f_v) {
@@ -3558,7 +3559,7 @@ int projective_space::point_of_intersection_of_a_line_and_a_line_in_three_space(
 		cout << "line2:" << endl;
 		Orbiter->Int_vec.matrix_print(Basis2, 2, 4);
 	}
-	F->intersect_subspaces(4, 2, Basis1, 2, Basis2,
+	F->Linear_algebra->intersect_subspaces(4, 2, Basis1, 2, Basis2,
 		rk, M, 0 /* verbose_level */);
 	if (rk != 1) {
 		cout << "projective_space::point_of_intersection_of_a_line_and_a_line_in_three_space intersection "
@@ -3613,7 +3614,7 @@ int projective_space::point_of_intersection_of_a_line_and_a_plane_in_three_space
 		cout << "plane:" << endl;
 		Orbiter->Int_vec.matrix_print(Basis2, 3, 4);
 	}
-	F->intersect_subspaces(4, 2, Basis1, 3, Basis2,
+	F->Linear_algebra->intersect_subspaces(4, 2, Basis1, 3, Basis2,
 		rk, M, 0 /* verbose_level */);
 	if (rk != 1) {
 		cout << "projective_space::point_of_intersection_of_a_line_and_a_plane_in_three_space intersection "
@@ -3652,7 +3653,7 @@ long int projective_space::line_of_intersection_of_two_planes_in_three_space(
 	}
 	unrank_plane(Basis1, plane1);
 	unrank_plane(Basis2, plane2);
-	F->intersect_subspaces(4, 3, Basis1, 3, Basis2,
+	F->Linear_algebra->intersect_subspaces(4, 3, Basis1, 3, Basis2,
 		rk, M, 0 /* verbose_level */);
 	if (rk != 2) {
 		cout << "projective_space::line_of_intersection_of_two_planes_in_three_space intersection is not a line" << endl;
@@ -3687,7 +3688,7 @@ long int projective_space::line_of_intersection_of_two_planes_in_three_space_usi
 
 	Orbiter->Int_vec.copy(Plane1, Basis, 4);
 	Orbiter->Int_vec.copy(Plane2, Basis + 4, 4);
-	F->RREF_and_kernel(4, 2, Basis, 0 /* verbose_level */);
+	F->Linear_algebra->RREF_and_kernel(4, 2, Basis, 0 /* verbose_level */);
 	rk = Grass_lines->rank_lint_here(Basis + 8, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "projective_space::line_of_intersection_of_two_planes_in_three_space_using_dual_coordinates done" << endl;
@@ -3716,11 +3717,11 @@ long int projective_space::transversal_to_two_skew_lines_through_a_point(
 	unrank_point(Basis1 + 8, pt);
 	unrank_line(Basis2, line2);
 	unrank_point(Basis2 + 8, pt);
-	F->RREF_and_kernel(4, 3, Basis1, 0 /* verbose_level */);
-	F->RREF_and_kernel(4, 3, Basis2, 0 /* verbose_level */);
+	F->Linear_algebra->RREF_and_kernel(4, 3, Basis1, 0 /* verbose_level */);
+	F->Linear_algebra->RREF_and_kernel(4, 3, Basis2, 0 /* verbose_level */);
 	Orbiter->Int_vec.copy(Basis1 + 12, Basis3, 4);
 	Orbiter->Int_vec.copy(Basis2 + 12, Basis3 + 4, 4);
-	F->RREF_and_kernel(4, 2, Basis3, 0 /* verbose_level */);
+	F->Linear_algebra->RREF_and_kernel(4, 2, Basis3, 0 /* verbose_level */);
 	a = rank_line(Basis3 + 8);
 	if (f_v) {
 		cout << "projective_space::transversal_to_two_skew_lines_through_a_point "
@@ -3774,7 +3775,7 @@ long int projective_space::line_rank_using_dual_coordinates_in_plane(
 		cout << "projective_space::line_rank_using_dual_coordinates_in_plane" << endl;
 	}
 	Orbiter->Int_vec.copy(eqn3, Basis, 3);
-	rk = F->RREF_and_kernel(3, 1, Basis, 0 /* verbose_level*/);
+	rk = F->Linear_algebra->RREF_and_kernel(3, 1, Basis, 0 /* verbose_level*/);
 	if (rk != 1) {
 		cout << "projective_space::line_rank_using_dual_coordinates_in_plane rk != 1" << endl;
 		exit(1);
@@ -3798,7 +3799,7 @@ long int projective_space::dual_rank_of_line_in_plane(
 		cout << "projective_space::dual_rank_of_line_in_plane" << endl;
 	}
 	unrank_line(Basis, line_rank);
-	rk = F->RREF_and_kernel(3, 2, Basis, 0 /* verbose_level*/);
+	rk = F->Linear_algebra->RREF_and_kernel(3, 2, Basis, 0 /* verbose_level*/);
 	if (rk != 2) {
 		cout << "projective_space::dual_rank_of_line_in_plane rk != 2" << endl;
 		exit(1);
@@ -3824,7 +3825,7 @@ long int projective_space::plane_rank_using_dual_coordinates_in_three_space(
 		cout << "projective_space::plane_rank_using_dual_coordinates_in_three_space" << endl;
 	}
 	Orbiter->Int_vec.copy(eqn4, Basis, 4);
-	rk = F->RREF_and_kernel(4, 1, Basis, 0 /* verbose_level*/);
+	rk = F->Linear_algebra->RREF_and_kernel(4, 1, Basis, 0 /* verbose_level*/);
 	if (rk != 1) {
 		cout << "projective_space::plane_rank_using_dual_coordinates_in_three_space rk != 1" << endl;
 		exit(1);
@@ -3848,7 +3849,7 @@ long int projective_space::dual_rank_of_plane_in_three_space(
 		cout << "projective_space::dual_rank_of_plane_in_three_space" << endl;
 	}
 	unrank_plane(Basis, plane_rank);
-	rk = F->RREF_and_kernel(4, 3, Basis, 0 /* verbose_level*/);
+	rk = F->Linear_algebra->RREF_and_kernel(4, 3, Basis, 0 /* verbose_level*/);
 	if (rk != 3) {
 		cout << "projective_space::dual_rank_of_plane_"
 				"in_three_space rk != 3" << endl;
@@ -3872,7 +3873,7 @@ void projective_space::plane_equation_from_three_lines_in_three_space(
 		cout << "projective_space::plane_equation_from_three_lines_in_three_space" << endl;
 	}
 	unrank_lines(Basis, three_lines, 3);
-	rk = F->RREF_and_kernel(4, 6, Basis, 0 /* verbose_level*/);
+	rk = F->Linear_algebra->RREF_and_kernel(4, 6, Basis, 0 /* verbose_level*/);
 	if (rk != 3) {
 		cout << "projective_space::plane_equation_from_three_lines_in_three_space rk != 3" << endl;
 		exit(1);
@@ -4107,7 +4108,7 @@ void projective_space::find_two_lines_for_arc_lifting(
 			continue;
 		}
 		Orbiter->Int_vec.copy(Basis_search, Basis_search_copy, 12);
-		rk = F->Gauss_easy_memory_given(Basis_search_copy, 3, 4, base_cols);
+		rk = F->Linear_algebra->Gauss_easy_memory_given(Basis_search_copy, 3, 4, base_cols);
 		if (rk == 3) {
 			break;
 		}
@@ -4136,7 +4137,7 @@ void projective_space::find_two_lines_for_arc_lifting(
 			continue;
 		}
 		Orbiter->Int_vec.copy(Basis_search, Basis_search_copy, 16);
-		rk = F->Gauss_easy_memory_given(Basis_search_copy, 4, 4, base_cols);
+		rk = F->Linear_algebra->Gauss_easy_memory_given(Basis_search_copy, 4, 4, base_cols);
 		if (rk == 4) {
 			break;
 		}
@@ -4230,12 +4231,12 @@ void projective_space::hyperplane_lifting_with_two_lines_fixed(
 				"input Line2:" << endl;
 		Orbiter->Int_vec.matrix_print(Line2, 2, 4);
 	}
-	F->Gauss_step_make_pivot_one(Line1 + 4, Line1,
+	F->Linear_algebra->Gauss_step_make_pivot_one(Line1 + 4, Line1,
 		4 /* len */, 3 /* idx */, 0 /* verbose_level*/);
 		// afterwards:  v1,v2 span the same space as before
 		// v2[idx] = 0, v1[idx] = 1,
 		// So, now Line1[3] = 0 and Line1[7] = 1
-	F->Gauss_step_make_pivot_one(Line2 + 4, Line2,
+	F->Linear_algebra->Gauss_step_make_pivot_one(Line2 + 4, Line2,
 		4 /* len */, 3 /* idx */, 0 /* verbose_level*/);
 		// afterwards:  v1,v2 span the same space as before
 		// v2[idx] = 0, v1[idx] = 1,
@@ -4268,8 +4269,8 @@ void projective_space::hyperplane_lifting_with_two_lines_fixed(
 		Orbiter->Int_vec.matrix_print(Line2 + 4, 1, 4);
 	}
 	// compute P1 * A3 to figure out if A switches P1 and P2 or not:
-	F->mult_vector_from_the_left(Line1, A3, P1A, 3, 3);
-	F->mult_vector_from_the_left(Line2, A3, P2A, 3, 3);
+	F->Linear_algebra->mult_vector_from_the_left(Line1, A3, P1A, 3, 3);
+	F->Linear_algebra->mult_vector_from_the_left(Line2, A3, P2A, 3, 3);
 	if (f_v) {
 		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
 				"P1 * A = " << endl;
@@ -4283,8 +4284,8 @@ void projective_space::hyperplane_lifting_with_two_lines_fixed(
 			cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
 					"applying frobenius" << endl;
 		}
-		F->vector_frobenius_power_in_place(P1A, 3, frobenius);
-		F->vector_frobenius_power_in_place(P2A, 3, frobenius);
+		F->Linear_algebra->vector_frobenius_power_in_place(P1A, 3, frobenius);
+		F->Linear_algebra->vector_frobenius_power_in_place(P2A, 3, frobenius);
 	}
 	if (f_v) {
 		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
@@ -4342,14 +4343,14 @@ void projective_space::hyperplane_lifting_with_two_lines_fixed(
 		Orbiter->Int_vec.matrix_print(y, 1, 3);
 	}
 
-	F->linear_combination_of_vectors(1, x, m1, y, xmy, 3);
+	F->Linear_algebra->linear_combination_of_vectors(1, x, m1, y, xmy, 3);
 	if (f_v) {
 		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
 				"xmy:" << endl;
 		Orbiter->Int_vec.matrix_print(xmy, 1, 3);
 	}
 
-	F->transpose_matrix(A3, A3t, 3, 3);
+	F->Linear_algebra->transpose_matrix(A3, A3t, 3, 3);
 	if (f_v) {
 		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
 				"A3t:" << endl;
@@ -4357,18 +4358,18 @@ void projective_space::hyperplane_lifting_with_two_lines_fixed(
 	}
 
 
-	F->mult_vector_from_the_right(A3t, xmy, v, 3, 3);
+	F->Linear_algebra->mult_vector_from_the_right(A3t, xmy, v, 3, 3);
 	if (f_semilinear) {
-		F->vector_frobenius_power_in_place(v, 3, frobenius);
+		F->Linear_algebra->vector_frobenius_power_in_place(v, 3, frobenius);
 	}
 	if (f_v) {
 		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
 				"v:" << endl;
 		Orbiter->Int_vec.matrix_print(v, 1, 3);
 	}
-	F->mult_vector_from_the_right(A3t, x, w, 3, 3);
+	F->Linear_algebra->mult_vector_from_the_right(A3t, x, w, 3, 3);
 	if (f_semilinear) {
-		F->vector_frobenius_power_in_place(w, 3, frobenius);
+		F->Linear_algebra->vector_frobenius_power_in_place(w, 3, frobenius);
 	}
 	if (f_v) {
 		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
@@ -4389,8 +4390,8 @@ void projective_space::hyperplane_lifting_with_two_lines_fixed(
 		Orbiter->Int_vec.copy(Line2 + 0, Mt + 12, 4);
 	}
 
-	F->negate_vector_in_place(Mt + 8, 8);
-	F->transpose_matrix(Mt, M, 4, 4);
+	F->Linear_algebra->negate_vector_in_place(Mt + 8, 8);
+	F->Linear_algebra->transpose_matrix(Mt, M, 4, 4);
 	//int_vec_copy(Mt, M, 16);
 	if (f_v) {
 		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
@@ -4398,7 +4399,7 @@ void projective_space::hyperplane_lifting_with_two_lines_fixed(
 		Orbiter->Int_vec.matrix_print(M, 4, 4);
 	}
 
-	F->invert_matrix_memory_given(M, Mv, 4, M_tmp, tmp_basecols, 0 /* verbose_level */);
+	F->Linear_algebra->invert_matrix_memory_given(M, Mv, 4, M_tmp, tmp_basecols, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
 				"Mv:" << endl;
@@ -4407,7 +4408,7 @@ void projective_space::hyperplane_lifting_with_two_lines_fixed(
 
 	v[3] = 0;
 	w[3] = 0;
-	F->mult_vector_from_the_right(Mv, v, lmei, 4, 4);
+	F->Linear_algebra->mult_vector_from_the_right(Mv, v, lmei, 4, 4);
 	if (f_v) {
 		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
 				"lmei:" << endl;
@@ -4419,16 +4420,16 @@ void projective_space::hyperplane_lifting_with_two_lines_fixed(
 	//iota = lmei[3];
 
 	if (f_swap) {
-		F->linear_combination_of_three_vectors(
+		F->Linear_algebra->linear_combination_of_three_vectors(
 				lambda, y, mu, Line2, m1, w, abgd, 3);
 	}
 	else {
-		F->linear_combination_of_three_vectors(
+		F->Linear_algebra->linear_combination_of_three_vectors(
 				lambda, x, mu, Line1, m1, w, abgd, 3);
 	}
 	abgd[3] = lambda;
 	if (f_semilinear) {
-		F->vector_frobenius_power_in_place(abgd, 4, F->e - frobenius);
+		F->Linear_algebra->vector_frobenius_power_in_place(abgd, 4, F->e - frobenius);
 	}
 	if (f_v) {
 		cout << "projective_space::hyperplane_lifting_with_two_lines_fixed "
@@ -4502,12 +4503,12 @@ void projective_space::hyperplane_lifting_with_two_lines_moved(
 				"input Line2_from:" << endl;
 		Orbiter->Int_vec.matrix_print(Line2_from, 2, 4);
 	}
-	F->Gauss_step_make_pivot_one(Line1_from + 4, Line1_from,
+	F->Linear_algebra->Gauss_step_make_pivot_one(Line1_from + 4, Line1_from,
 		4 /* len */, 3 /* idx */, 0 /* verbose_level*/);
 		// afterwards:  v1,v2 span the same space as before
 		// v2[idx] = 0, v1[idx] = 1,
 		// So, now Line1[3] = 0 and Line1[7] = 1
-	F->Gauss_step_make_pivot_one(Line2_from + 4, Line2_from,
+	F->Linear_algebra->Gauss_step_make_pivot_one(Line2_from + 4, Line2_from,
 		4 /* len */, 3 /* idx */, 0 /* verbose_level*/);
 		// afterwards:  v1,v2 span the same space as before
 		// v2[idx] = 0, v1[idx] = 1,
@@ -4555,12 +4556,12 @@ void projective_space::hyperplane_lifting_with_two_lines_moved(
 				"input Line2_to:" << endl;
 		Orbiter->Int_vec.matrix_print(Line2_to, 2, 4);
 	}
-	F->Gauss_step_make_pivot_one(Line1_to + 4, Line1_to,
+	F->Linear_algebra->Gauss_step_make_pivot_one(Line1_to + 4, Line1_to,
 		4 /* len */, 3 /* idx */, 0 /* verbose_level*/);
 		// afterwards:  v1,v2 span the same space as before
 		// v2[idx] = 0, v1[idx] = 1,
 		// So, now Line1[3] = 0 and Line1[7] = 1
-	F->Gauss_step_make_pivot_one(Line2_to + 4, Line2_to,
+	F->Linear_algebra->Gauss_step_make_pivot_one(Line2_to + 4, Line2_to,
 		4 /* len */, 3 /* idx */, 0 /* verbose_level*/);
 		// afterwards:  v1,v2 span the same space as before
 		// v2[idx] = 0, v1[idx] = 1,
@@ -4608,7 +4609,7 @@ void projective_space::hyperplane_lifting_with_two_lines_moved(
 	}
 
 
-	F->linear_combination_of_vectors(1, u, m1, v, umv, 3);
+	F->Linear_algebra->linear_combination_of_vectors(1, u, m1, v, umv, 3);
 	umv[3] = 0;
 	if (f_v) {
 		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
@@ -4621,21 +4622,21 @@ void projective_space::hyperplane_lifting_with_two_lines_moved(
 	Orbiter->Int_vec.copy(y, M + 8, 4);
 	Orbiter->Int_vec.copy(P2, M + 12, 4);
 
-	F->negate_vector_in_place(M + 8, 8);
+	F->Linear_algebra->negate_vector_in_place(M + 8, 8);
 	if (f_v) {
 		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
 				"M:" << endl;
 		Orbiter->Int_vec.matrix_print(M, 4, 4);
 	}
 
-	F->invert_matrix_memory_given(M, Mv, 4, M_tmp, tmp_basecols, 0 /* verbose_level */);
+	F->Linear_algebra->invert_matrix_memory_given(M, Mv, 4, M_tmp, tmp_basecols, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
 				"Mv:" << endl;
 		Orbiter->Int_vec.matrix_print(Mv, 4, 4);
 	}
 
-	F->mult_vector_from_the_left(umv, Mv, lmei, 4, 4);
+	F->Linear_algebra->mult_vector_from_the_left(umv, Mv, lmei, 4, 4);
 	if (f_v) {
 		cout << "projective_space::hyperplane_lifting_with_two_lines_moved "
 				"lmei=" << endl;
@@ -4648,7 +4649,7 @@ void projective_space::hyperplane_lifting_with_two_lines_moved(
 				"lambda=" << lambda << " mu=" << mu << endl;
 	}
 
-	F->linear_combination_of_three_vectors(lambda, x, mu, P1, m1, u, abgd, 3);
+	F->Linear_algebra->linear_combination_of_three_vectors(lambda, x, mu, P1, m1, u, abgd, 3);
 	// abgd = lambda * x + mu * P1 - u, with a lambda in the 4th coordinate.
 
 	abgd[3] = lambda;
@@ -4911,7 +4912,7 @@ void projective_space::planes_through_a_line(
 		Orbiter->Int_vec.matrix_print(M1, 2, d);
 	}
 
-	r = F->base_cols_and_embedding(2, d, M1,
+	r = F->Linear_algebra->base_cols_and_embedding(2, d, M1,
 			base_cols, embedding, 0 /* verbose_level */);
 	if (r != 2) {
 		cout << "projective_space::planes_through_a_line r != 2" << endl;
@@ -4936,7 +4937,7 @@ void projective_space::planes_through_a_line(
 			cout << "projective_space::planes_through_a_line h = " << h << ", M2=" << endl;
 			Orbiter->Int_vec.matrix_print(M2, 3, d);
 		}
-		if (F->rank_of_rectangular_matrix(M2, 3, d, 0 /*verbose_level*/) == 3) {
+		if (F->Linear_algebra->rank_of_rectangular_matrix(M2, 3, d, 0 /*verbose_level*/) == 3) {
 			if (f_v) {
 				cout << "projective_space::planes_through_a_line h = " << h << ", M2=" << endl;
 				Orbiter->Int_vec.matrix_print(M2, 3, d);
@@ -4960,287 +4961,6 @@ void projective_space::planes_through_a_line(
 }
 
 
-int projective_space::reverse_engineer_semilinear_map(
-	int *Elt, int *Mtx, int &frobenius,
-	int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	//finite_field *F;
-	int d = n + 1;
-	int *v1, *v2, *v1_save;
-	int *w1, *w2, *w1_save;
-	int /*q,*/ h, hh, i, j, l, e, frobenius_inv, lambda, rk, c, cv;
-	int *system;
-	int *base_cols;
-	number_theory_domain NT;
-
-
-	if (f_v) {
-		cout << "projective_space::reverse_engineer_semilinear_map" << endl;
-		cout << "verbose_level=" << verbose_level << endl;
-		cout << "d=" << d << endl;
-	}
-	//F = P->F;
-	//q = F->q;
-
-	v1 = NEW_int(d);
-	v2 = NEW_int(d);
-	v1_save = NEW_int(d);
-	w1 = NEW_int(d);
-	w2 = NEW_int(d);
-	w1_save = NEW_int(d);
-
-
-
-	if (f_v) {
-		cout << "projective_space::reverse_engineer_semilinear_map "
-				"mapping unit vectors" << endl;
-	}
-	for (e = 0; e < d; e++) {
-		// map the unit vector e_e
-		// (with a one in position e and zeros elsewhere):
-		for (h = 0; h < d; h++) {
-			if (h == e) {
-				v1[h] = 1;
-			}
-			else {
-				v1[h] = 0;
-			}
-		}
-		Orbiter->Int_vec.copy(v1, v1_save, d);
-		i = rank_point(v1);
-			// Now, the value of i should be equal to e.
-		//j = element_image_of(i, Elt, 0);
-		j = Elt[i];
-		unrank_point(v2, j);
-
-#if 0
-		if (f_vv) {
-			print_from_to(d, i, j, v1_save, v2);
-		}
-#endif
-
-
-		Orbiter->Int_vec.copy(v2, Mtx + e * d, d);
-	}
-
-	if (f_vv) {
-		cout << "Mtx (before scaling):" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Mtx, d, d, d, F->log10_of_q);
-		cout << endl;
-	}
-
-	// map the vector (1,1,...,1):
-	if (f_v) {
-		cout << "projective_space::reverse_engineer_semilinear_map "
-				"mapping the all-one vector"
-				<< endl;
-	}
-	for (h = 0; h < d; h++) {
-		v1[h] = 1;
-	}
-	Orbiter->Int_vec.copy(v1, v1_save, d);
-	i = rank_point(v1);
-	//j = element_image_of(i, Elt, 0);
-	j = Elt[i];
-	unrank_point(v2, j);
-
-#if 0
-	if (f_vv) {
-		print_from_to(d, i, j, v1_save, v2);
-	}
-#endif
-
-	system = NEW_int(d * (d + 1));
-	base_cols = NEW_int(d + 1);
-	// coefficient matrix:
-	for (i = 0; i < d; i++) {
-		for (j = 0; j < d; j++) {
-			system[i * (d + 1) + j] = Mtx[j * d + i];
-		}
-	}
-	// RHS:
-	for (i = 0; i < d; i++) {
-		system[i * (d + 1) + d] = v2[i];
-	}
-	if (f_vv) {
-		cout << "linear system:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, system,
-				d, d + 1, d + 1, F->log10_of_q);
-		cout << endl;
-	}
-	rk = F->Gauss_simple(system, d, d + 1, base_cols, verbose_level - 4);
-	if (rk != d) {
-		cout << "rk != d, fatal" << endl;
-		exit(1);
-	}
-	if (f_vv) {
-		cout << "after Gauss_simple:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, system,
-				d, d + 1, d + 1, F->log10_of_q);
-		cout << endl;
-	}
-	for (i = 0; i < d; i++) {
-		c = system[i * (d + 1) + d];
-		if (c == 0) {
-			cout << "projective_space::reverse_engineer_semilinear_map "
-					"the input matrix does not have full rank" << endl;
-			exit(1);
-		}
-		for (j = 0; j < d; j++) {
-			Mtx[i * d + j] = F->mult(c, Mtx[i * d + j]);
-		}
-	}
-
-	if (f_vv) {
-		cout << "Mtx (after scaling):" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Mtx, d, d, d, F->log10_of_q);
-		cout << endl;
-	}
-
-
-
-	frobenius = 0;
-	if (F->q != F->p) {
-
-		// figure out the frobenius:
-		if (f_v) {
-			cout << "projective_space::reverse_engineer_semilinear_map "
-					"figuring out the frobenius" << endl;
-		}
-
-
-		// create the vector (1,p,0,...,0)
-
-		for (h = 0; h < d; h++) {
-			if (h == 0) {
-				v1[h] = 1;
-			}
-			else if (h == 1) {
-				v1[h] = F->p;
-			}
-			else {
-				v1[h] = 0;
-			}
-		}
-		Orbiter->Int_vec.copy(v1, v1_save, d);
-		i = rank_point(v1);
-		//j = element_image_of(i, Elt, 0);
-		j = Elt[i];
-		unrank_point(v2, j);
-
-
-#if 0
-		if (f_vv) {
-			print_from_to(d, i, j, v1_save, v2);
-		}
-#endif
-
-
-		// coefficient matrix:
-		for (i = 0; i < d; i++) {
-			for (j = 0; j < 2; j++) {
-				system[i * 3 + j] = Mtx[j * d + i];
-			}
-		}
-		// RHS:
-		for (i = 0; i < d; i++) {
-			system[i * 3 + 2] = v2[i];
-		}
-		rk = F->Gauss_simple(system,
-				d, 3, base_cols, verbose_level - 4);
-		if (rk != 2) {
-			cout << "rk != 2, fatal" << endl;
-			exit(1);
-		}
-		if (f_vv) {
-			cout << "after Gauss_simple:" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout,
-					system, 2, 3, 3, F->log10_of_q);
-			cout << endl;
-		}
-
-		c = system[0 * 3 + 2];
-		if (c != 1) {
-			cv = F->inverse(c);
-			for (hh = 0; hh < 2; hh++) {
-				system[hh * 3 + 2] = F->mult(cv, system[hh * 3 + 2]);
-			}
-		}
-		if (f_vv) {
-			cout << "after scaling the last column:" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout,
-					system, 2, 3, 3, F->log10_of_q);
-			cout << endl;
-		}
-		lambda = system[1 * 3 + 2];
-		if (f_vv) {
-			cout << "lambda=" << lambda << endl;
-		}
-
-
-		l = F->log_alpha(lambda);
-		if (f_vv) {
-			cout << "l=" << l << endl;
-		}
-		for (i = 0; i < F->e; i++) {
-			if (NT.i_power_j(F->p, i) == l) {
-				frobenius = i;
-				break;
-			}
-		}
-		if (i == F->e) {
-			cout << "projective_space::reverse_engineer_semilinear_map "
-					"problem figuring out the Frobenius" << endl;
-			exit(1);
-		}
-
-		frobenius_inv = (F->e - frobenius) % F->e;
-		if (f_vv) {
-			cout << "frobenius = " << frobenius << endl;
-			cout << "frobenius_inv = " << frobenius_inv << endl;
-		}
-		for (hh = 0; hh < d * d; hh++) {
-			Mtx[hh] = F->frobenius_power(Mtx[hh], frobenius_inv);
-		}
-
-
-	}
-	else {
-		frobenius = 0;
-		frobenius_inv = 0;
-	}
-
-
-	if (f_v) {
-		cout << "projective_space::reverse_engineer_semilinear_map "
-				"we found the following map" << endl;
-		cout << "Mtx:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout,
-				Mtx, d, d, d, F->log10_of_q);
-		cout << endl;
-		cout << "frobenius = " << frobenius << endl;
-		cout << "frobenius_inv = " << frobenius_inv << endl;
-	}
-
-
-
-	FREE_int(v1);
-	FREE_int(v2);
-	FREE_int(v1_save);
-	FREE_int(w1);
-	FREE_int(w2);
-	FREE_int(w1_save);
-	FREE_int(system);
-	FREE_int(base_cols);
-
-	if (f_v) {
-		cout << "projective_space::reverse_engineer_semilinear_map done" << endl;
-	}
-
-	return TRUE;
-}
 
 
 

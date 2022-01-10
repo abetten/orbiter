@@ -962,7 +962,7 @@ void surface_object_properties::compute_tritangent_planes_by_rank(int verbose_le
 			SO->Surf->Gr->unrank_lint_here(Basis + i * 8,
 					three_lines[i], 0 /* verbose_level */);
 		}
-		r = SO->F->Gauss_simple(Basis, 6, 4,
+		r = SO->F->Linear_algebra->Gauss_simple(Basis, 6, 4,
 			base_cols, 0 /* verbose_level */);
 		if (r != 3) {
 			cout << "surface_object_properties::compute_tritangent_planes_by_rank r != 3" << endl;
@@ -2927,8 +2927,8 @@ void surface_object_properties::make_equation_in_trihedral_form(int t_idx,
 		eqn_G, FALSE /* verbose_level */);
 
 	Orbiter->Int_vec.copy(eqn_G, eqn_G2, 20);
-	SO->F->scalar_multiply_vector_in_place(lambda, eqn_G2, 20);
-	SO->F->add_vector(eqn_F, eqn_G2, equation, 20);
+	SO->F->Linear_algebra->scalar_multiply_vector_in_place(lambda, eqn_G2, 20);
+	SO->F->Linear_algebra->add_vector(eqn_F, eqn_G2, equation, 20);
 	SO->F->PG_element_normalize(equation, 1, 20);
 
 
@@ -3275,7 +3275,7 @@ void surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P
 				cout << endl;
 			}
 
-			SO->F->mult_matrix_matrix(v, Basis_of_PR, w, 1, 2, 4,
+			SO->F->Linear_algebra->mult_matrix_matrix(v, Basis_of_PR, w, 1, 2, 4,
 					0 /* verbose_level */);
 			if (f_vv) {
 				cout << "surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P w=" << endl;
@@ -3333,7 +3333,7 @@ int surface_object_properties::test_full_del_pezzo(int P_idx, int *f_deleted, in
 		}
 		SO->Surf->P->unrank_plane(Basis, rk_tangent_plane);
 		SO->Surf->unrank_point(Basis + 12, R);
-		rk = SO->F->Gauss_easy(Basis, 4, 4);
+		rk = SO->F->Linear_algebra->Gauss_easy(Basis, 4, 4);
 		if (rk != 3) {
 			return FALSE;
 		}

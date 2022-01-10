@@ -527,7 +527,7 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 					M2 + i * n, Elt2, 0/* verbose_level*/);
 			}
 
-		F->Gauss_easy(M2, k, n);
+		F->Linear_algebra->Gauss_easy(M2, k, n);
 		
 		if (f_vv) {
 			cout << "subspace " << c << ":" << endl;
@@ -568,7 +568,7 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 			for (i = 0; i < k * n; i++) {
 				MM[k * n + i] = M[c2][i];
 				}
-			rk = F->rank_of_rectangular_matrix(MM,
+			rk = F->Linear_algebra->rank_of_rectangular_matrix(MM,
 					2 * k, n, 0 /* verbose_level*/);
 			//rk1 = rk - k;
 			//Adj[c1 * index_int + c2] = rk1;
@@ -960,7 +960,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 	if (len >= 2) {
 		for (i = 0; i < nb0; i++) {
 			F->PG_element_unrank_modified(v, 1, len - 1, i);
-			F->mult_vector_from_the_left(v, M, N0 + i * n, len - 1, n);
+			F->Linear_algebra->mult_vector_from_the_left(v, M, N0 + i * n, len - 1, n);
 			}
 		if (f_v) {
 			cout << "the list of points N0:" << endl;
@@ -969,7 +969,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 		}
 	for (i = 0; i < nb; i++) {
 		F->PG_element_unrank_modified(v, 1, len, i);
-		F->mult_vector_from_the_left(v, M, N + i * n, len, n);
+		F->Linear_algebra->mult_vector_from_the_left(v, M, N + i * n, len, n);
 		}
 	if (f_v) {
 		cout << "the list of points N:" << endl;
@@ -1196,7 +1196,7 @@ void polar::list_whole_orbit(int depth,
 		cout << "corresponding to the subspace with basis:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout, M1, k, n, n, F->log10_of_q);
 			
-		F->Gauss_simple(M1, depth, n, base_cols, 0/* verbose_level*/);
+		F->Linear_algebra->Gauss_simple(M1, depth, n, base_cols, 0/* verbose_level*/);
 
 		cout << "basis in echelon form:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout, M1, k, n, n, F->log10_of_q);

@@ -30,6 +30,7 @@ finite_field_activity_description::finite_field_activity_description()
 	f_polynomial_division = FALSE;
 	//polynomial_division_A;
 	//polynomial_division_B;
+
 	f_extended_gcd_for_polynomials = FALSE;
 
 	f_polynomial_mult_mod = FALSE;
@@ -203,6 +204,22 @@ finite_field_activity_description::finite_field_activity_description()
 	//parse_managed_variables
 	//std::string parse_text;
 	//std::string parse_parameters
+
+	f_product_of = FALSE;
+	//std::string product_of_elements;
+
+	f_sum_of = FALSE;
+	//std::string sum_of_elements;
+
+	f_negate = FALSE;
+	//std::string negate_elements;
+
+	f_inverse = FALSE;
+	//std::string inverse_elements;
+
+	f_power_map = FALSE;
+	power_map_k = 0;
+	//std::string power_map_elements;
 
 	f_evaluate = FALSE;
 	//std::string evaluate_formula_label;
@@ -797,6 +814,51 @@ int finite_field_activity_description::read_arguments(
 					<< endl;
 			}
 		}
+
+		else if (stringcmp(argv[i], "-product_of") == 0) {
+			f_product_of = TRUE;
+			product_of_elements.assign(argv[++i]);
+			if (f_v) {
+				cout << "-product_of " << product_of_elements
+					<< endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-sum_of") == 0) {
+			f_sum_of = TRUE;
+			sum_of_elements.assign(argv[++i]);
+			if (f_v) {
+				cout << "-sum_of " << sum_of_elements
+					<< endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-negate") == 0) {
+			f_negate = TRUE;
+			negate_elements.assign(argv[++i]);
+			if (f_v) {
+				cout << "-negate " << negate_elements
+					<< endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-inverse") == 0) {
+			f_inverse = TRUE;
+			inverse_elements.assign(argv[++i]);
+			if (f_v) {
+				cout << "-inverse " << inverse_elements
+					<< endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-power_map") == 0) {
+			f_power_map = TRUE;
+			power_map_k = strtoi(argv[++i]);
+			power_map_elements.assign(argv[++i]);
+			if (f_v) {
+				cout << "-power_map " << power_map_k
+						<< " " << power_map_elements
+					<< endl;
+			}
+		}
+
+
 		else if (stringcmp(argv[i], "-evaluate") == 0) {
 			f_evaluate = TRUE;
 			evaluate_formula_label.assign(argv[++i]);
@@ -1143,6 +1205,29 @@ void finite_field_activity_description::print()
 				<< " " << parse_parameters
 				<< endl;
 	}
+
+	if (f_product_of) {
+			cout << "-product_of " << product_of_elements
+				<< endl;
+	}
+	if (f_sum_of) {
+			cout << "-sum_of " << sum_of_elements
+				<< endl;
+	}
+	if (f_negate) {
+			cout << "-negate " << negate_elements
+				<< endl;
+	}
+	if (f_inverse) {
+			cout << "-inverse " << inverse_elements
+				<< endl;
+	}
+	if (f_power_map) {
+			cout << "-power_map " << power_map_k
+					<< " " << power_map_elements
+				<< endl;
+	}
+
 	if (f_evaluate) {
 		cout << "-evaluate " << evaluate_formula_label
 				<< " " << evaluate_parameters

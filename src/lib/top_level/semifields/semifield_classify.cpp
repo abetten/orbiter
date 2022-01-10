@@ -917,9 +917,9 @@ void semifield_classify::early_test_func(long int *S, int len,
 				Gg.AG_element_unrank(q, v, 1, len, j);
 			}
 			v[len] = 1;
-			Mtx->GFq->mult_matrix_matrix(v, M, w, 1, len + 1, k2,
+			Mtx->GFq->Linear_algebra->mult_matrix_matrix(v, M, w, 1, len + 1, k2,
 					0 /* verbose_level */);
-			r = A_on_S->F->Gauss_easy(w, k, k);
+			r = A_on_S->F->Linear_algebra->Gauss_easy(w, k, k);
 			if (r != k) {
 				break;
 			}
@@ -999,7 +999,7 @@ int semifield_classify::test_candidate(
 			}
 			w[i] = Mtx->GFq->add(c, M[i]);
 		}
-		r = A_on_S->F->Gauss_easy_memory_given(w, k, k, base_cols);
+		r = A_on_S->F->Linear_algebra->Gauss_easy_memory_given(w, k, k, base_cols);
 		if (r != k) {
 			ret = FALSE;
 			break;
@@ -1090,7 +1090,7 @@ int semifield_classify::test_partial_semifield(
 			}
 			w[i] = c;
 		}
-		r = Mtx->GFq->Gauss_easy_memory_given(w, k, k, base_cols);
+		r = Mtx->GFq->Linear_algebra->Gauss_easy_memory_given(w, k, k, base_cols);
 		if (r != k) {
 			ret = FALSE;
 			if (TRUE) {
@@ -1302,7 +1302,7 @@ int semifield_classify::test_if_third_basis_vector_is_ok(int *Basis)
 	for (i = 0; i < k; i++) {
 		v[i] = Basis[2 * k2 + i * k + 0];
 	}
-	if (!Mtx->GFq->is_unit_vector(v, k, k - 1)) {
+	if (!Mtx->GFq->Linear_algebra->is_unit_vector(v, k, k - 1)) {
 		return FALSE;
 	}
 	return TRUE;

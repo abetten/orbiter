@@ -1,5 +1,5 @@
 /*
- * combinatorial_object_description.cpp
+ * geometric_object_description.cpp
  *
  *  Created on: Nov 9, 2019
  *      Author: anton
@@ -21,7 +21,7 @@ namespace foundations {
 
 
 
-combinatorial_object_description::combinatorial_object_description()
+geometric_object_description::geometric_object_description()
 {
 	P = NULL;
 
@@ -94,10 +94,11 @@ combinatorial_object_description::combinatorial_object_description()
 	f_Maruta_Hamada_arc = FALSE;
 
 	f_projective_variety = FALSE;
-	//variety_label = NULL;
+	//variety_label;
+	//variety_label_txt
 	variety_degree = 0;
 	variety_n = 0;
-	//variety_coeffs = NULL;
+	//variety_coeffs;
 	Monomial_ordering_type = t_PART;
 
 	f_intersection_of_zariski_open_sets = FALSE;
@@ -108,7 +109,8 @@ combinatorial_object_description::combinatorial_object_description()
 
 
 	f_projective_curve = FALSE;
-	//curve_label = NULL;
+	//curve_label_txt;
+	//curve_label_tex;
 	curve_nb_vars = 0;
 	curve_degree = 0;
 	//curve_coeffs = NULL;
@@ -118,18 +120,18 @@ combinatorial_object_description::combinatorial_object_description()
 
 }
 
-combinatorial_object_description::~combinatorial_object_description()
+geometric_object_description::~geometric_object_description()
 {
 
 }
 
 
-int combinatorial_object_description::read_arguments(int argc, std::string *argv,
+int geometric_object_description::read_arguments(int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;
 
-	cout << "combinatorial_object_description::read_arguments" << endl;
+	cout << "geometric_object_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
 		if (stringcmp(argv[i], "-hyperoval") == 0) {
@@ -303,7 +305,8 @@ int combinatorial_object_description::read_arguments(int argc, std::string *argv
 		}
 		else if (stringcmp(argv[i], "-projective_variety") == 0) {
 			f_projective_variety = TRUE;
-			variety_label.assign(argv[++i]);
+			variety_label_txt.assign(argv[++i]);
+			variety_label_tex.assign(argv[++i]);
 			variety_degree = strtoi(argv[++i]);
 
 
@@ -314,13 +317,15 @@ int combinatorial_object_description::read_arguments(int argc, std::string *argv
 			i--;
 
 			cout << "-projective_variety "
-					<< variety_label << " "
+					<< variety_label_txt << " "
+					<< variety_label_tex << " "
 					<< variety_degree << " "
 					<< variety_coeffs << endl;
 		}
 		else if (stringcmp(argv[i], "-intersection_of_zariski_open_sets") == 0) {
 			f_intersection_of_zariski_open_sets = TRUE;
-			variety_label.assign(argv[++i]);
+			variety_label_txt.assign(argv[++i]);
+			variety_label_tex.assign(argv[++i]);
 			variety_degree = strtoi(argv[++i]);
 			variety_n = strtoi(argv[++i]);
 
@@ -344,7 +349,8 @@ int combinatorial_object_description::read_arguments(int argc, std::string *argv
 
 
 			cout << "-intersection_of_zariski_open_sets "
-					<< variety_label << " "
+					<< variety_label_txt << " "
+					<< variety_label_tex << " "
 					<< variety_degree << " "
 					<< variety_n << endl;
 			for (j = 0; j < variety_n; j++) {
@@ -355,7 +361,8 @@ int combinatorial_object_description::read_arguments(int argc, std::string *argv
 
 		else if (stringcmp(argv[i], "-number_of_conditions_satisfied") == 0) {
 			f_number_of_conditions_satisfied = TRUE;
-			variety_label.assign(argv[++i]);
+			variety_label_txt.assign(argv[++i]);
+			variety_label_tex.assign(argv[++i]);
 			variety_degree = strtoi(argv[++i]);
 			variety_n = strtoi(argv[++i]);
 
@@ -381,7 +388,8 @@ int combinatorial_object_description::read_arguments(int argc, std::string *argv
 
 
 			cout << "-number_of_conditions_satisfied "
-					<< variety_label << " "
+					<< variety_label_txt << " "
+					<< variety_label_tex << " "
 					<< variety_degree << " "
 					<< variety_n << endl;
 			for (j = 0; j < variety_n; j++) {
@@ -393,12 +401,14 @@ int combinatorial_object_description::read_arguments(int argc, std::string *argv
 
 		else if (stringcmp(argv[i], "-projective_curve") == 0) {
 			f_projective_curve = TRUE;
-			curve_label.assign(argv[++i]);
+			curve_label_txt.assign(argv[++i]);
+			curve_label_tex.assign(argv[++i]);
 			curve_nb_vars = strtoi(argv[++i]);
 			curve_degree = strtoi(argv[++i]);
 			curve_coeffs.assign(argv[++i]);
 			cout << "-projective_curve "
-					<< curve_label << " "
+					<< curve_label_txt << " "
+					<< curve_label_tex << " "
 					<< curve_nb_vars << " "
 					<< curve_degree << " "
 					<< curve_coeffs << endl;
@@ -420,15 +430,15 @@ int combinatorial_object_description::read_arguments(int argc, std::string *argv
 			break;
 		}
 		else {
-			cout << "combinatorial_object_description::read_arguments unknown command " << argv[i] << endl;
+			cout << "geometric_object_description::read_arguments unknown command " << argv[i] << endl;
 			exit(1);
 		}
 	} // next i
-	cout << "combinatorial_object_description::read_arguments done" << endl;
+	cout << "geometric_object_description::read_arguments done" << endl;
 	return i + 1;
 }
 
-void combinatorial_object_description::print()
+void geometric_object_description::print()
 {
 	if (f_hyperoval) {
 		cout << "-hyperoval " << endl;
@@ -531,16 +541,17 @@ void combinatorial_object_description::print()
 	}
 	if (f_projective_variety) {
 		cout << "-projective_variety "
-				<< variety_label << " "
+				<< variety_label_txt << " "
+				<< variety_label_tex << " "
 				<< variety_degree << " "
 				<< variety_coeffs << endl;
 	}
 	if (f_intersection_of_zariski_open_sets) {
 		cout << "-intersection_of_zariski_open_sets "
-				<< variety_label << " "
+				<< variety_label_txt << " "
+				<< variety_label_tex << " "
 				<< variety_degree << " "
-				<< variety_n << " "
-				<< endl;
+				<< variety_n << endl;
 		int j;
 		for (j = 0; j < variety_n; j++) {
 			cout << j << " : " << Variety_coeffs[j] << endl;
@@ -550,10 +561,10 @@ void combinatorial_object_description::print()
 
 	if (f_number_of_conditions_satisfied) {
 		cout << "-number_of_conditions_satisfied "
-				<< variety_label << " "
+				<< variety_label_txt << " "
+				<< variety_label_tex << " "
 				<< variety_degree << " "
-				<< variety_n << " "
-				<< endl;
+				<< variety_n << endl;
 		int j;
 		for (j = 0; j < variety_n; j++) {
 			cout << j << " : " << Variety_coeffs[j] << endl;
@@ -564,7 +575,8 @@ void combinatorial_object_description::print()
 
 	if (f_projective_curve) {
 		cout << "-projective_curve "
-				<< curve_label << " "
+				<< curve_label_txt << " "
+				<< curve_label_tex << " "
 				<< curve_nb_vars << " "
 				<< curve_degree << " "
 				<< curve_coeffs << endl;

@@ -286,7 +286,7 @@ void hermitian::list_all_Sbar(int verbose_level)
 	
 
 			Sbar_unrank(v, k, i, 0 /*verbose_level*/);
-			F->scalar_multiply_vector_in_place(a, v, k);
+			F->Linear_algebra->scalar_multiply_vector_in_place(a, v, k);
 #if 0
 			for (u = 0; u < k; u++) {
 				v[u] = F->mult(a, v[u]);

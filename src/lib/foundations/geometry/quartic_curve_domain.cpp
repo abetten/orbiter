@@ -218,7 +218,7 @@ void quartic_curve_domain::unrank_line_in_dual_coordinates(int *v, long int rk)
 	int r;
 
 	P->unrank_line(basis, rk);
-	r = F->RREF_and_kernel(3, 2, basis,
+	r = F->Linear_algebra->RREF_and_kernel(3, 2, basis,
 			0 /* verbose_level */);
 	Orbiter->Int_vec.copy(basis + 6, v, 3);
 }
@@ -304,7 +304,7 @@ void quartic_curve_domain::compute_points_on_lines(
 		for (j = 0; j < nb_points; j++) {
 			Orbiter->Int_vec.copy(Basis, Mtx, 6);
 			Orbiter->Int_vec.copy(pt_coords + j * 3, Mtx + 6, 3);
-			r = F->Gauss_easy(Mtx, 3, 3);
+			r = F->Linear_algebra->Gauss_easy(Mtx, 3, 3);
 			if (r == 2) {
 				pts_on_lines->add_element(i, j);
 				f_is_on_line[j] = TRUE;
@@ -732,7 +732,7 @@ void quartic_curve_domain::create_surface(quartic_curve_object *Q, int *eqn20, i
 
 	Orbiter->Int_vec.transpose(M1, 3, 15, M2);
 
-	r = F->RREF_and_kernel(3, 15, M2, 0 /* verbose_level*/);
+	r = F->Linear_algebra->RREF_and_kernel(3, 15, M2, 0 /* verbose_level*/);
 
 	if (r != 2) {
 		cout << "quartic_curve_domain::create_surface r != 2" << endl;

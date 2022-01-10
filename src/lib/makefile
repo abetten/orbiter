@@ -25,8 +25,6 @@ MODULES= \
 		foundations/combinatorics/classification_of_objects_description.o \
 		foundations/combinatorics/classification_of_objects_report_options.o \
 		foundations/combinatorics/classification_of_objects.o \
-		foundations/combinatorics/combinatorial_object_create.o \
-		foundations/combinatorics/combinatorial_object_description.o \
 		foundations/combinatorics/combinatorics_domain.o \
 		foundations/combinatorics/encoded_combinatorial_object.o \
 		foundations/combinatorics/geo_parameter.o \
@@ -80,14 +78,14 @@ MODULES= \
 		foundations/finite_fields/finite_field_implementation_by_tables.o \
 		foundations/finite_fields/finite_field_implementation_wo_tables.o \
 		foundations/finite_fields/finite_field_io.o \
-		foundations/finite_fields/finite_field_linear_algebra.o \
-		foundations/finite_fields/finite_field_linear_algebra2.o \
 		foundations/finite_fields/finite_field_orthogonal.o \
 		foundations/finite_fields/finite_field_projective.o \
 		foundations/finite_fields/finite_field_representations.o \
-		foundations/finite_fields/finite_field_RREF.o \
 		foundations/finite_fields/finite_field_tables.o \
 		foundations/finite_fields/finite_field.o \
+		foundations/finite_fields/linear_algebra.o \
+		foundations/finite_fields/linear_algebra2.o \
+		foundations/finite_fields/linear_algebra_RREF.o \
 		foundations/finite_fields/norm_tables.o \
 		foundations/finite_fields/nth_roots.o \
 		foundations/finite_fields/subfield_structure.o \
@@ -102,6 +100,8 @@ MODULES= \
 		foundations/geometry/desarguesian_spread.o \
 		foundations/geometry/elliptic_curve.o \
 		foundations/geometry/flag.o \
+		foundations/geometry/geometric_object_create.o \
+		foundations/geometry/geometric_object_description.o \
 		foundations/geometry/geometry_global.o \
 		foundations/geometry/grassmann.o \
 		foundations/geometry/grassmann_embedded.o \
@@ -117,6 +117,7 @@ MODULES= \
 		foundations/geometry/projective_space_implementation.o \
 		foundations/geometry/projective_space.o \
 		foundations/geometry/projective_space2.o \
+		foundations/geometry/projective_space3.o \
 		foundations/geometry/quartic_curve_domain.o \
 		foundations/geometry/quartic_curve_object_properties.o \
 		foundations/geometry/quartic_curve_object.o \

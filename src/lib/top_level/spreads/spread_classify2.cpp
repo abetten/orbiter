@@ -2444,7 +2444,7 @@ void spread_classify::cooperstein_thas_quotients(isomorph &Iso,
 			Grass->unrank_lint_here(M, a, 0/*verbose_level - 4*/);
 			Orbiter->Int_vec.copy(vec1, vec2, n);
 			for (j = 0; j < k; j++) {
-				Mtx->GFq->Gauss_step(vec2, M + j * n, n, pivot,
+				Mtx->GFq->Linear_algebra->Gauss_step(vec2, M + j * n, n, pivot,
 						0 /* verbose_level*/);
 					// afterwards: v2[idx] = 0 and
 					// v1,v2 span the same space as before

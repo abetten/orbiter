@@ -701,7 +701,7 @@ void classify_trihedral_pairs::identify_three_planes(
 	Surf->P->unrank_point(M1 + 4, p2);
 	Surf->P->unrank_point(M1 + 8, p3);
 	Orbiter->Int_vec.copy(M1, M2, 12);
-	rk = F->rank_of_rectangular_matrix_memory_given(M2, 3, 4,
+	rk = F->Linear_algebra->rank_of_rectangular_matrix_memory_given(M2, 3, 4,
 			M3, base_cols, 0 /* verbose_level */);
 	Combi.set_complement(base_cols, rk, base_cols + rk, size_complement, 4);
 	if (f_v) {
@@ -715,7 +715,7 @@ void classify_trihedral_pairs::identify_three_planes(
 		c4 = base_cols[rk + 1];
 
 		Orbiter->Int_vec.copy(M1, M2, 8);
-		F->rank_of_rectangular_matrix_memory_given(M2, 2, 4, M3,
+		F->Linear_algebra->rank_of_rectangular_matrix_memory_given(M2, 2, 4, M3,
 				base_cols2, 0 /* verbose_level */);
 
 
@@ -735,8 +735,8 @@ void classify_trihedral_pairs::identify_three_planes(
 				F->negate(F->mult(d, c))), det_inv);
 
 		Orbiter->Int_vec.copy(M1, M2, 8);
-		F->scalar_multiply_vector_in_place(lambda, M2, 4);
-		F->scalar_multiply_vector_in_place(mu, M2 + 4, 4);
+		F->Linear_algebra->scalar_multiply_vector_in_place(lambda, M2, 4);
+		F->Linear_algebra->scalar_multiply_vector_in_place(mu, M2 + 4, 4);
 		Orbiter->Int_vec.zero(M2 + 8, 8);
 		M2[2 * 4 + c3] = 1;
 		M2[3 * 4 + c4] = 1;
@@ -758,7 +758,7 @@ void classify_trihedral_pairs::identify_three_planes(
 				"M2=" << endl;
 		Orbiter->Int_vec.matrix_print(M2, 4, 4);
 	}
-	F->matrix_inverse(M2, M3, 4, 0 /* verbose_level */);
+	F->Linear_algebra->matrix_inverse(M2, M3, 4, 0 /* verbose_level */);
 	M3[16] = 0; // if semilinear
 	A->make_element(transporter, M3, 0 /* verbose_level */);
 	

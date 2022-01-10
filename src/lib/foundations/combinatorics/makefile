@@ -11,8 +11,6 @@ MODULES = \
 		classification_of_objects_description.o \
 		classification_of_objects_report_options.o \
 		classification_of_objects.o \
-		combinatorial_object_create.o \
-		combinatorial_object_description.o \
 		combinatorics_domain.o \
 		encoded_combinatorial_object.o \
 		geo_parameter.o \

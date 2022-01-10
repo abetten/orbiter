@@ -119,7 +119,7 @@ void grassmann_embedded::init(int big_n, int n,
 		M_Gauss[i] = M[i];
 	}
 	// we initialize transform as the identity matrix:
-	F->identity_matrix(transform, n);
+	F->Linear_algebra->identity_matrix(transform, n);
 
 
 	if (f_vv) {
@@ -131,7 +131,7 @@ void grassmann_embedded::init(int big_n, int n,
 	}
 	//rk = F->Gauss_simple(M_Gauss, n, big_n,
 	//base_cols, verbose_level - 1);
-	rk = F->Gauss_int(M_Gauss,
+	rk = F->Linear_algebra->Gauss_int(M_Gauss,
 		FALSE /*f_special*/,
 		TRUE/* f_complete*/,
 		base_cols,
@@ -203,7 +203,7 @@ void grassmann_embedded::unrank_embedded_lint(
 		Orbiter->Int_vec.print_integer_matrix_width(cout,
 				M, n, big_n, big_n, F->log10_of_q);
 	}
-	F->mult_matrix_matrix(G->M, M,
+	F->Linear_algebra->mult_matrix_matrix(G->M, M,
 			subspace_basis_with_embedding, n /* not k */, n, big_n,
 			0 /* verbose_level */);
 	if (f_v) {
@@ -259,7 +259,7 @@ void grassmann_embedded::unrank_lint(
 		Orbiter->Int_vec.print_integer_matrix_width(cout,
 			M, n, big_n, big_n, F->log10_of_q);
 	}
-	F->mult_matrix_matrix(G->M, M,
+	F->Linear_algebra->mult_matrix_matrix(G->M, M,
 			subspace_basis, k, n, big_n,
 			0 /* verbose_level */);
 	if (f_v) {
@@ -297,7 +297,7 @@ long int grassmann_embedded::rank_lint(
 		Orbiter->Int_vec.print_integer_matrix_width(cout,
 				tmp_M1, k, n, n, F->log10_of_q);
 	}
-	F->mult_matrix_matrix(tmp_M1, transform, tmp_M2, k, n, n,
+	F->Linear_algebra->mult_matrix_matrix(tmp_M1, transform, tmp_M2, k, n, n,
 			0 /* verbose_level */);
 
 	// now tmp_M2 is k x n
@@ -312,7 +312,7 @@ long int grassmann_embedded::rank_lint(
 	}
 
 	for (i = 0; i < k; i++) {
-		F->mult_vector_from_the_left(tmp_M2 + i * n,
+		F->Linear_algebra->mult_vector_from_the_left(tmp_M2 + i * n,
 				M, Tmp2, n, big_n);
 
 			// recall that M is n x big_n

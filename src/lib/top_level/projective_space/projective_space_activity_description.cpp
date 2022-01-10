@@ -393,7 +393,7 @@ int projective_space_activity_description::read_arguments(
 			}
 
 			define_object_label.assign(argv[++i]);
-			Object_Descr = NEW_OBJECT(combinatorial_object_description);
+			Object_Descr = NEW_OBJECT(geometric_object_description);
 
 			i += Object_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 			if (f_v) {

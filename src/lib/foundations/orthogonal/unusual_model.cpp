@@ -364,10 +364,10 @@ void unusual_model::setup2(
 	if (f_vv) {
 		cout << "unusual_model::setup2 finding hyperbolic pair" << endl;
 	}
-	Fq->find_hyperbolic_pair(4, nb_terms,
+	Fq->Linear_algebra->find_hyperbolic_pair(4, nb_terms,
 		form_i, form_j, form_coeff, Gram, 
 		basis, basis + 4, 0 /*verbose_level - 3*/);
-	Fq->perp(4, 2, basis, Gram, 0 /* verbose_level */);
+	Fq->Linear_algebra->perp(4, 2, basis, Gram, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "basis:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout, basis, 4, 4, 4, 2);
@@ -379,14 +379,14 @@ void unusual_model::setup2(
 	
 	if (f_vvv) {
 		for (i = 0; i < 4; i++) {
-			b = Fq->evaluate_quadratic_form(4,
+			b = Fq->Linear_algebra->evaluate_quadratic_form(4,
 				nb_terms, form_i, form_j, form_coeff,
 				basis + i * 4);
 			cout << "i=" << i << " form value " << b << endl;
 		}
 	}
 	
-	Fq->restrict_quadratic_form_list_coding(4 - 2, 4, basis + 2 * 4,
+	Fq->Linear_algebra->restrict_quadratic_form_list_coding(4 - 2, 4, basis + 2 * 4,
 		nb_terms, form_i, form_j, form_coeff, 
 		r_nb_terms, r_form_i, r_form_j, r_form_coeff, 
 		verbose_level - 2);
@@ -405,14 +405,14 @@ void unusual_model::setup2(
 		Orbiter->Int_vec.print_integer_matrix_width(cout, r_Gram, 2, 2, 2, 2);
 	}
 
-	Fq->find_hyperbolic_pair(2, r_nb_terms,
+	Fq->Linear_algebra->find_hyperbolic_pair(2, r_nb_terms,
 		r_form_i, r_form_j, r_form_coeff, r_Gram, 
 		basis_subspace, basis_subspace + 2, verbose_level - 2);
 	if (f_vv) {
 		cout << "unusual_model::setup2 basis_subspace:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout, basis_subspace, 2, 2, 2, 2);
 	}
-	Fq->mult_matrix_matrix(basis_subspace,
+	Fq->Linear_algebra->mult_matrix_matrix(basis_subspace,
 			basis + 8, hyperbolic_basis + 8, 2, 2, 4,
 			0 /* verbose_level */);
 
@@ -420,7 +420,7 @@ void unusual_model::setup2(
 		cout << "unusual_model::setup2 hyperbolic basis:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout, hyperbolic_basis, 4, 4, 4, 2);
 		for (i = 0; i < 4; i++) {
-			b = Fq->evaluate_quadratic_form(4,
+			b = Fq->Linear_algebra->evaluate_quadratic_form(4,
 				nb_terms, form_i, form_j, form_coeff,
 				hyperbolic_basis + i * 4);
 			cout << "i=" << i << " quadratic form value " << b << endl;
@@ -430,7 +430,7 @@ void unusual_model::setup2(
 	M = NEW_int(4 * 4);
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
-			M[i * 4 + j] = Fq->evaluate_bilinear_form(4,
+			M[i * 4 + j] = Fq->Linear_algebra->evaluate_bilinear_form(4,
 					hyperbolic_basis + i * 4,
 					hyperbolic_basis + j * 4, Gram);
 		}
@@ -441,7 +441,7 @@ void unusual_model::setup2(
 		Orbiter->Int_vec.print_integer_matrix_width(cout, M, 4, 4, 4, 2);
 	}
 
-	Fq->restrict_quadratic_form_list_coding(4, 4,
+	Fq->Linear_algebra->restrict_quadratic_form_list_coding(4, 4,
 		hyperbolic_basis,
 		nb_terms, form_i, form_j, form_coeff, 
 		rr_nb_terms, rr_form_i, rr_form_j, rr_form_coeff, 
@@ -452,7 +452,7 @@ void unusual_model::setup2(
 				rr_form_i, rr_form_j, rr_form_coeff);
 	}
 	
-	Fq->matrix_inverse(hyperbolic_basis,
+	Fq->Linear_algebra->matrix_inverse(hyperbolic_basis,
 			hyperbolic_basis_inverse, 4, verbose_level - 2);
 	if (f_vv) {
 		cout << "unusual_model::setup2 inverse hyperbolic basis:" << endl;
@@ -589,7 +589,7 @@ void unusual_model::convert_to_usual(int n,
 		Orbiter->Int_vec.print_integer_matrix_width(cout, tmp, n, 4, 4, 2);
 	}
 	for (i = 0; i < n; i++) {
-		Fq->mult_matrix_matrix(tmp + i * 4,
+		Fq->Linear_algebra->mult_matrix_matrix(tmp + i * 4,
 			hyperbolic_basis_inverse,
 			usual_coordinates + i * 5 + 1, 1, 4, 4,
 			0 /* verbose_level */);
@@ -622,7 +622,7 @@ void unusual_model::convert_from_usual(int n,
 		exit(1);
 	}
 	for (i = 0; i < n; i++) {
-		Fq->mult_matrix_matrix(usual_coordinates + i * 5 + 1,
+		Fq->Linear_algebra->mult_matrix_matrix(usual_coordinates + i * 5 + 1,
 			hyperbolic_basis, tmp + i * 4, 1, 4, 4,
 			0 /* verbose_level */);
 	}
@@ -1229,10 +1229,10 @@ void unusual_model::transform_matrix_unusual_to_usual(
 		Orbiter->Int_vec.print_integer_matrix_width(cout, M4, 4, 4, 4, 3);
 		}
 
-	Fq->mult_matrix_matrix(hyperbolic_basis,
+	Fq->Linear_algebra->mult_matrix_matrix(hyperbolic_basis,
 			M4, M4_tmp1, 4, 4, 4,
 			0 /* verbose_level */);
-	Fq->mult_matrix_matrix(M4_tmp1,
+	Fq->Linear_algebra->mult_matrix_matrix(M4_tmp1,
 			hyperbolic_basis_inverse, M4_tmp2, 4, 4, 4,
 			0 /* verbose_level */);
 	if (f_vvv) {
@@ -1255,7 +1255,7 @@ void unusual_model::transform_matrix_unusual_to_usual(
 		Orbiter->Int_vec.print_integer_matrix_width(cout, M5, 5, 5, 5, 3);
 		}
 	
-	Fq->transpose_matrix(M5, M5t, 5, 5);
+	Fq->Linear_algebra->transpose_matrix(M5, M5t, 5, 5);
 	
 	if (f_vvv) {
 		cout << "transposed (M5t):" << endl;
@@ -1267,9 +1267,9 @@ void unusual_model::transform_matrix_unusual_to_usual(
 		}
 		
 
-	Fq->mult_matrix_matrix(M5, O->Gram_matrix, M5_tmp1, 5, 5, 5,
+	Fq->Linear_algebra->mult_matrix_matrix(M5, O->Gram_matrix, M5_tmp1, 5, 5, 5,
 			0 /* verbose_level */);
-	Fq->mult_matrix_matrix(M5_tmp1, M5t, M5_tmp2, 5, 5, 5,
+	Fq->Linear_algebra->mult_matrix_matrix(M5_tmp1, M5t, M5_tmp2, 5, 5, 5,
 			0 /* verbose_level */);
 	
 	if (f_vvv) {
@@ -1339,10 +1339,10 @@ void unusual_model::transform_matrix_usual_to_unusual(
 			}
 		}
 
-	Fq->mult_matrix_matrix(hyperbolic_basis_inverse,
+	Fq->Linear_algebra->mult_matrix_matrix(hyperbolic_basis_inverse,
 		M4_tmp2, M4_tmp1, 4, 4, 4,
 		0 /* verbose_level */);
-	Fq->mult_matrix_matrix(M4_tmp1,
+	Fq->Linear_algebra->mult_matrix_matrix(M4_tmp1,
 			hyperbolic_basis, M4, 4, 4, 4,
 			0 /* verbose_level */);
 

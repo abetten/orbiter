@@ -204,7 +204,7 @@ void exceptional_isomorphism_O4::apply_4_to_5(
 	gram[2 * 4 + 3] = 1;
 	gram[3 * 4 + 2] = 1;
 
-	Fq->transpose_matrix(M4, M4t, 4, 4);
+	Fq->Linear_algebra->transpose_matrix(M4, M4t, 4, 4);
 	if (f_v) {
 		cout << "Gram matrix:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout, gram, 4, 4, 4, 3);
@@ -213,9 +213,9 @@ void exceptional_isomorphism_O4::apply_4_to_5(
 		cout << "M4t:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout, M4t, 4, 4, 4, 3);
 		}
-	Fq->mult_matrix_matrix(M4, gram, mtx_tmp1, 4, 4, 4,
+	Fq->Linear_algebra->mult_matrix_matrix(M4, gram, mtx_tmp1, 4, 4, 4,
 			0 /* verbose_level */);
-	Fq->mult_matrix_matrix(mtx_tmp1, M4t, mtx_tmp2, 4, 4, 4,
+	Fq->Linear_algebra->mult_matrix_matrix(mtx_tmp1, M4t, mtx_tmp2, 4, 4, 4,
 			0 /* verbose_level */);
 	if (f_v) {
 		cout << "transformed Gram matrix:" << endl;
@@ -314,7 +314,7 @@ void exceptional_isomorphism_O4::apply_4_to_5(
 		}
 
 
-	Fq->transform_form_matrix(M5, Gram5, Gram5_transformed, 5, 0 /* verbose_level */);
+	Fq->Linear_algebra->transform_form_matrix(M5, Gram5, Gram5_transformed, 5, 0 /* verbose_level */);
 	// computes Gram_transformed = A * Gram * A^\top
 
 

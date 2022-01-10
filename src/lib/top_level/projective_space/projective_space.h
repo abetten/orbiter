@@ -368,7 +368,7 @@ public:
 
 	int f_define_object;
 	std::string define_object_label;
-	combinatorial_object_description *Object_Descr;
+	geometric_object_description *Object_Descr;
 
 
 	int f_define_surface;
@@ -558,42 +558,11 @@ public:
 			formula *F,
 			std::string &evaluate_text,
 			int verbose_level);
-	void canonical_form_of_code(
-			projective_space_with_action *PA,
-			std::string &label,
-			int *genma, int k, int n,
-			classification_of_objects_description *Canonical_form_codes_Descr,
-			int verbose_level);
 	void do_create_surface(
 			projective_space_with_action *PA,
 			surface_create_description *Surface_Descr,
 			surface_with_action *&Surf_A,
 			surface_create *&SC,
-			int verbose_level);
-	void table_of_quartic_curves(
-			projective_space_with_action *PA,
-			int verbose_level);
-	void table_of_cubic_surfaces(
-			projective_space_with_action *PA,
-			int verbose_level);
-	void do_create_quartic_curve(
-			projective_space_with_action *PA,
-			quartic_curve_create_description *Quartic_curve_descr,
-			quartic_curve_create *&QC,
-			int verbose_level);
-	void do_spread_classify(
-			projective_space_with_action *PA,
-			int k,
-			poset_classification_control *Control,
-			int verbose_level);
-	void do_classify_semifields(
-			projective_space_with_action *PA,
-			semifield_classify_description *Semifield_classify_description,
-			poset_classification_control *Control,
-			int verbose_level);
-	void do_cheat_sheet_PG(
-			projective_space_with_action *PA,
-			layered_graph_draw_options *O,
 			int verbose_level);
 	void conic_type(
 			projective_space_with_action *PA,

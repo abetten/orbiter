@@ -273,7 +273,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 				input_vector[h] = FpX->s_i(generator[i][j], h);
 			}
 
-			Fp->get_coefficients_in_linear_combination(
+			Fp->Linear_algebra->get_coefficients_in_linear_combination(
 				subfield_degree, field_degree, subfield_basis,
 				input_vector, coefficients, 0 /*verbose_level*/);
 
@@ -306,7 +306,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 				input_vector[h] = FpX->s_i(generator[i][j], h);
 			}
 
-			Fp->get_coefficients_in_linear_combination(
+			Fp->Linear_algebra->get_coefficients_in_linear_combination(
 				subfield_degree, field_degree, subfield_basis,
 				input_vector, coefficients, 0 /*verbose_level*/);
 
@@ -431,7 +431,7 @@ void nth_roots::compute_subfield(int subfield_degree, int *&field_basis, int ver
 		Orbiter->Int_vec.print_integer_matrix_width(cout, M,
 			e, subfield_degree + 1, subfield_degree + 1, Fp->log10_of_q);
 	}
-	rk = Fp->Gauss_simple(M, e, subfield_degree + 1, base_cols, 0/*verbose_level*/);
+	rk = Fp->Linear_algebra->Gauss_simple(M, e, subfield_degree + 1, base_cols, 0/*verbose_level*/);
 	if (f_v) {
 		cout << "nth_roots::compute_subfield after Gauss=" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout, M,
@@ -444,7 +444,7 @@ void nth_roots::compute_subfield(int subfield_degree, int *&field_basis, int ver
 		exit(1);
 	}
 
-	Fp->matrix_get_kernel(M, e, subfield_degree + 1, base_cols, rk,
+	Fp->Linear_algebra->matrix_get_kernel(M, e, subfield_degree + 1, base_cols, rk,
 		kernel_m, kernel_n, K, 0 /* verbose_level */);
 
 	if (f_v) {

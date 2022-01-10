@@ -143,7 +143,7 @@ void action_on_cosets::init_lint(int nb_points, long int *Points,
 
 void action_on_cosets::reduce_mod_subspace(int *v, int verbose_level)
 {
-	F->reduce_mod_subspace(dimension_of_subspace, n, 
+	F->Linear_algebra->reduce_mod_subspace(dimension_of_subspace, n,
 		subspace_basis, base_cols, v, verbose_level);
 }
 

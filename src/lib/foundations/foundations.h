@@ -261,7 +261,6 @@ class gl_classes;
 class group_generators_domain;
 class heisenberg;
 class matrix_block_data;
-class norm_tables;
 class null_polarity_generator;
 class rank_checker;
 class vector_space;
@@ -280,8 +279,6 @@ class brick_domain;
 class classification_of_objects_description;
 class classification_of_objects_report_options;
 class classification_of_objects;
-class combinatorial_object_create;
-class combinatorial_object_description;
 class combinatorics_domain;
 class encoded_combinatorial_object;
 class geo_parameter;
@@ -342,6 +339,8 @@ class finite_field_description;
 class finite_field;
 class finite_field_implementation_by_tables;
 class finite_field_implementation_wo_tables;
+class linear_algebra;
+class norm_tables;
 class nth_roots;
 class subfield_structure;
 
@@ -357,6 +356,8 @@ class decomposition;
 class desarguesian_spread;
 class elliptic_curve;
 class flag;
+class geometric_object_create;
+class geometric_object_description;
 class geometry_global;
 class grassmann_embedded;
 class grassmann;
@@ -613,7 +614,7 @@ enum symbol_table_object_type {
 	t_quartic_curve,
 	t_classification_of_cubic_surfaces_with_double_sixes,
 	t_collection,
-	t_combinatorial_object,
+	t_geometric_object,
 	t_graph,
 	t_spread_table,
 	t_packing_was,

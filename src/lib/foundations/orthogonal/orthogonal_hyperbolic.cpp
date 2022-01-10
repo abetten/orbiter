@@ -387,7 +387,7 @@ void orthogonal::unrank_line_L1(
 			T1[0] = T1[3] = 0;
 			T1[1] = T1[2] = 1;
 			}
-		F->mult_matrix_matrix(v1, T1, v2, 1, n - 2, n - 2,
+		F->Linear_algebra->mult_matrix_matrix(v1, T1, v2, 1, n - 2, n - 2,
 				0 /* verbose_level */);
 		}
 	else {
@@ -454,8 +454,8 @@ long int orthogonal::rank_line_L1(long int p1, long int p2, int verbose_level)
 			T1[0] = T1[3] = 0;
 			T1[1] = T1[2] = 1;
 		}
-		F->invert_matrix(T1, T2, n - 2, 0 /* verbose_level */);
-		F->mult_matrix_matrix(v2, T2, v1, 1, n - 2, n - 2,
+		F->Linear_algebra->invert_matrix(T1, T2, n - 2, 0 /* verbose_level */);
+		F->Linear_algebra->mult_matrix_matrix(v2, T2, v1, 1, n - 2, n - 2,
 				0 /* verbose_level */);
 	}
 	else {
@@ -630,7 +630,7 @@ void orthogonal::unrank_line_L2(
 			cout << "orthogonal::unrank_line_L2 the Siegel map is" << endl;
 			Orbiter->Int_vec.print_integer_matrix(cout, T1, n - 2, n - 2);
 			}
-		F->mult_matrix_matrix(v1, T1, v2, 1, n - 2, n - 2,
+		F->Linear_algebra->mult_matrix_matrix(v1, T1, v2, 1, n - 2, n - 2,
 				0 /* verbose_level */);
 		}
 	else {
@@ -743,8 +743,8 @@ long int orthogonal::rank_line_L2(long int p1, long int p2, int verbose_level)
 			T1[0] = T1[3] = 0;
 			T1[1] = T1[2] = 1;
 			}
-		F->invert_matrix(T1, T2, n - 2, 0 /* verbose_level */);
-		F->mult_matrix_matrix(v2, T2, v1, 1, n - 2, n - 2,
+		F->Linear_algebra->invert_matrix(T1, T2, n - 2, 0 /* verbose_level */);
+		F->Linear_algebra->mult_matrix_matrix(v2, T2, v1, 1, n - 2, n - 2,
 				0 /* verbose_level */);
 		}
 	else {
@@ -953,7 +953,7 @@ void orthogonal::unrank_line_L3(
 			T1[0] = T1[3] = 0;
 			T1[1] = T1[2] = 1;
 			}
-		F->mult_matrix_matrix(v1, T1, v2, 1, n - 2, n - 2,
+		F->Linear_algebra->mult_matrix_matrix(v1, T1, v2, 1, n - 2, n - 2,
 				0 /* verbose_level */);
 		}
 	else {
@@ -1024,8 +1024,8 @@ long int orthogonal::rank_line_L3(long int p1, long int p2, int verbose_level)
 			T1[0] = T1[3] = 0;
 			T1[1] = T1[2] = 1;
 			}
-		F->invert_matrix(T1, T2, n - 2, 0 /* verbose_level */);
-		F->mult_matrix_matrix(v2, T2, v1, 1, n - 2, n - 2,
+		F->Linear_algebra->invert_matrix(T1, T2, n - 2, 0 /* verbose_level */);
+		F->Linear_algebra->mult_matrix_matrix(v2, T2, v1, 1, n - 2, n - 2,
 				0 /* verbose_level */);
 		v1[n - 2] = v2[n - 2];
 		v1[n - 1] = v2[n - 1];
@@ -1155,7 +1155,7 @@ void orthogonal::unrank_line_L4(
 			T1[0] = T1[3] = 0;
 			T1[1] = T1[2] = 1;
 			}
-		F->mult_matrix_matrix(v1, T1, v2, 1, n - 2, n - 2,
+		F->Linear_algebra->mult_matrix_matrix(v1, T1, v2, 1, n - 2, n - 2,
 				0 /* verbose_level */);
 		}
 	else {
@@ -1223,8 +1223,8 @@ long int orthogonal::rank_line_L4(long int p1, long int p2, int verbose_level)
 			T1[0] = T1[3] = 0;
 			T1[1] = T1[2] = 1;
 			}
-		F->invert_matrix(T1, T2, n - 2, 0 /* verbose_level */);
-		F->mult_matrix_matrix(v2, T2, v1, 1, n - 2, n - 2,
+		F->Linear_algebra->invert_matrix(T1, T2, n - 2, 0 /* verbose_level */);
+		F->Linear_algebra->mult_matrix_matrix(v2, T2, v1, 1, n - 2, n - 2,
 				0 /* verbose_level */);
 		v1[n - 2] = v2[n - 2];
 		v1[n - 1] = v2[n - 1];

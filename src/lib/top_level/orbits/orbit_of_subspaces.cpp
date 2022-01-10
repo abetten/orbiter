@@ -421,7 +421,7 @@ void orbit_of_subspaces::rref(int *subspace, int verbose_level)
 			Orbiter->Int_vec.print(cout, desired_pivots, k);
 			cout << endl;
 			}
-		F->Gauss_int_with_given_pivots(
+		F->Linear_algebra->Gauss_int_with_given_pivots(
 			subspace,
 			FALSE /* f_special */,
 			TRUE /* f_complete */,
@@ -439,7 +439,7 @@ void orbit_of_subspaces::rref(int *subspace, int verbose_level)
 			cout << "orbit_of_subspaces::rref "
 					"before Gauss_easy" << endl;
 			}
-		F->Gauss_easy(subspace, k, n);
+		F->Linear_algebra->Gauss_easy(subspace, k, n);
 		}
 	if (f_v) {
 		cout << "orbit_of_subspaces::rref done" << endl;

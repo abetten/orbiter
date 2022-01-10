@@ -643,7 +643,7 @@ void quartic_curve_object_properties::print_lines_with_points_on_them(std::ostre
 
 			Orbiter->Int_vec.copy(QO->Dom->P->Grass_lines->M, Basis, 6);
 
-			QO->Dom->F->adjust_basis(Basis, w,
+			QO->Dom->F->Linear_algebra->adjust_basis(Basis, w,
 					3 /* n */, 2 /* k */, 1 /* d */, verbose_level);
 
 			QO->Dom->Poly4_3->substitute_line(

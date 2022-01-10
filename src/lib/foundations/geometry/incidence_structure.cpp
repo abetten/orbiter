@@ -539,7 +539,7 @@ int incidence_structure::get_ij(int i, int j)
 		O->unrank_point(v + 1 * O->n, 1, p1, 0);
 		//cout << "before O->unrank_point(v + 2 * O->n, 1, p2);" << endl;
 		O->unrank_point(v + 2 * O->n, 1, p2, 0);
-		rk = O->F->Gauss_simple(v, 3, O->n, base_cols, 0/* verbose_level*/);
+		rk = O->F->Linear_algebra->Gauss_simple(v, 3, O->n, base_cols, 0/* verbose_level*/);
 
 		FREE_int(v);
 		FREE_int(base_cols);

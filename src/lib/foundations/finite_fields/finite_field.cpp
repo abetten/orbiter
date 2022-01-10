@@ -47,7 +47,6 @@ finite_field::finite_field()
 	nb_calls_to_PG_element_rank_modified = 0;
 	nb_calls_to_PG_element_unrank_modified = 0;
 
-	my_nb_calls_to_elliptic_curve_addition = 0;
 	nb_times_mult = 0;
 	nb_times_add = 0;
 }
@@ -83,11 +82,6 @@ void finite_field::print_call_stats(std::ostream &ost)
 			<< nb_calls_to_PG_element_unrank_modified << endl;
 }
 
-int &finite_field::nb_calls_to_elliptic_curve_addition()
-{
-	return my_nb_calls_to_elliptic_curve_addition;
-}
-
 void finite_field::init(finite_field_description *Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -99,6 +93,10 @@ void finite_field::init(finite_field_description *Descr, int verbose_level)
 		cout << "finite_field::init !Descr->f_q" << endl;
 		exit(1);
 	}
+
+	Linear_algebra = NEW_OBJECT(linear_algebra);
+	Linear_algebra->init(this, verbose_level);
+
 	if (Descr->f_override_polynomial) {
 		if (f_v) {
 			cout << "finite_field::init override_polynomial=" << Descr->override_polynomial << endl;
@@ -497,7 +495,7 @@ long int finite_field::compute_subfield_polynomial(int order_subfield,
 		Orbiter->Int_vec.print_integer_matrix_width(cout, M,
 			e, e1 + 1, e1 + 1, GFp.log10_of_q);
 	}
-	rk = GFp.Gauss_simple(M, e, e1 + 1, 
+	rk = GFp.Linear_algebra->Gauss_simple(M, e, e1 + 1,
 		base_cols, 0/*verbose_level*/);
 	if (f_vv) {
 		cout << "finite_field::compute_subfield_polynomial after Gauss=" << endl;
@@ -511,7 +509,7 @@ long int finite_field::compute_subfield_polynomial(int order_subfield,
 		exit(1);
 	}
 
-	GFp.matrix_get_kernel(M, e, e1 + 1, base_cols, rk, 
+	GFp.Linear_algebra->matrix_get_kernel(M, e, e1 + 1, base_cols, rk,
 		kernel_m, kernel_n, K, 0 /* verbose_level */);
 
 	if (f_vv) {
@@ -1263,9 +1261,21 @@ void finite_field::all_square_roots(int a, int &nb_roots, int *roots2)
 	}
 }
 
-int finite_field::square_root(int i, int &root)
+int finite_field::is_square(int i)
 {
 	int r;
+
+	r = log_alpha(i);
+	if (ODD(r)) {
+		return FALSE;
+	}
+	return TRUE;
+}
+
+
+int finite_field::square_root(int i)
+{
+	int r, root;
 
 	r = log_alpha(i);
 	if (ODD(r)) {
@@ -1275,7 +1285,7 @@ int finite_field::square_root(int i, int &root)
 	}
 	r >>= 1;
 	root = alpha_power(r);
-	return TRUE;
+	return root;
 }
 
 int finite_field::primitive_root()

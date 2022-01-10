@@ -719,7 +719,7 @@ void finite_field::Berlekamp_matrix(
 		cout << endl;
 	}
 
-	r = rank_of_matrix(B, da, 0 /* verbose_level */);
+	r = Linear_algebra->rank_of_matrix(B, da, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "The matrix B has rank " << r << endl;
@@ -837,13 +837,13 @@ void finite_field::do_nullspace(
 	Orbiter->Int_vec.copy(M, A, m * n);
 
 	if (f_v) {
-		cout << "finite_field::do_nullspace before F->perp_standard" << endl;
+		cout << "finite_field::do_nullspace before Linear_algebra->perp_standard" << endl;
 	}
 
-	rk = perp_standard(n, m, A, 0 /*verbose_level*/);
+	rk = Linear_algebra->perp_standard(n, m, A, 0 /*verbose_level*/);
 
 	if (f_v) {
-		cout << "finite_field::do_nullspace after F->perp_standard" << endl;
+		cout << "finite_field::do_nullspace after Linear_algebra->perp_standard" << endl;
 	}
 
 
@@ -853,7 +853,7 @@ void finite_field::do_nullspace(
 		cout << "rk=" << rk << endl;
 	}
 
-	rk1 = Gauss_int(A + rk * n,
+	rk1 = Linear_algebra->Gauss_int(A + rk * n,
 		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
 		FALSE /* f_P */, NULL /*P*/, n - rk, n, n,
 		0 /*verbose_level*/);
@@ -1020,7 +1020,7 @@ void finite_field::do_RREF(
 	base_cols = NEW_int(n);
 	Orbiter->Int_vec.copy(M, A, m * n);
 
-	rk = Gauss_int(A,
+	rk = Linear_algebra->Gauss_int(A,
 		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
 		FALSE /* f_P */, NULL /*P*/, m, n, n,
 		0 /*verbose_level*/);
@@ -1724,7 +1724,7 @@ void finite_field::RREF_demo2(std::ostream &ost, int *A, int m, int n, int verbo
 	i = 0;
 	j = 0;
 	while (TRUE) {
-		if (RREF_search_pivot(A, m, n,
+		if (Linear_algebra->RREF_search_pivot(A, m, n,
 			i, j, base_cols, verbose_level)) {
 			ost << "\\noindent  i=" << i << " j=" << j << ", found pivot in column " << base_cols[i] << "\\\\" << endl;
 			ost << "$$" << endl;
@@ -1741,7 +1741,7 @@ void finite_field::RREF_demo2(std::ostream &ost, int *A, int m, int n, int verbo
 			}
 
 
-			RREF_make_pivot_one(A, m, n, i, j, base_cols, verbose_level);
+			Linear_algebra->RREF_make_pivot_one(A, m, n, i, j, base_cols, verbose_level);
 			ost << "\\noindent After making pivot 1:\\\\" << endl;
 			ost << "$$" << endl;
 			ost << "\\left[" << endl;
@@ -1757,7 +1757,7 @@ void finite_field::RREF_demo2(std::ostream &ost, int *A, int m, int n, int verbo
 			}
 
 
-			RREF_elimination_below(A, m, n, i, j, base_cols, verbose_level);
+			Linear_algebra->RREF_elimination_below(A, m, n, i, j, base_cols, verbose_level);
 			ost << "\\noindent After elimination below pivot:\\\\" << endl;
 			ost << "$$" << endl;
 			ost << "\\left[" << endl;
@@ -1780,7 +1780,7 @@ void finite_field::RREF_demo2(std::ostream &ost, int *A, int m, int n, int verbo
 		}
 	}
 	for (i = rk - 1; i >= 0; i--) {
-		RREF_elimination_above(A, m, n, i, base_cols, verbose_level);
+		Linear_algebra->RREF_elimination_above(A, m, n, i, base_cols, verbose_level);
 		ost << "\\noindent After elimination above pivot " << i << ":\\\\" << endl;
 		ost << "$$" << endl;
 		ost << "\\left[" << endl;
@@ -1824,7 +1824,7 @@ void finite_field::gl_random_matrix(int k, int verbose_level)
 	M = NEW_int(k * k);
 	M2 = NEW_int(k * k);
 
-	random_invertible_matrix(M, k, verbose_level - 2);
+	Linear_algebra->random_invertible_matrix(M, k, verbose_level - 2);
 
 	cout << "Random invertible matrix:" << endl;
 	Orbiter->Int_vec.matrix_print(M, k, k);
