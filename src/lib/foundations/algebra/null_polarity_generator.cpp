@@ -324,7 +324,7 @@ void null_polarity_generator::create_next_candidate_set(
 
 int null_polarity_generator::dot_product(int *u1, int *u2)
 {
-	return F->dot_product(n, u1, u2);
+	return F->Linear_algebra->dot_product(n, u1, u2);
 }
 
 }

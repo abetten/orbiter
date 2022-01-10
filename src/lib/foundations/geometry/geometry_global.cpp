@@ -428,7 +428,7 @@ int geometry_global::test_if_arc(finite_field *Fq, int *pt_coords,
 			cout << "matrix:" << endl;
 			Orbiter->Int_vec.print_integer_matrix_width(cout, Mtx, 3, k, k, 1);
 			}
-		rk = Fq->Gauss_easy(Mtx, 3, k);
+		rk = Fq->Linear_algebra->Gauss_easy(Mtx, 3, k);
 		if (rk < 3) {
 			if (f_v) {
 				cout << "not an arc" << endl;
@@ -1614,7 +1614,7 @@ void geometry_global::do_intersection_of_two_lines(finite_field *F,
 
 	// Line 1
 	Orbiter->Int_vec.copy(Line1, A, 8);
-	rk = F->perp_standard(4, 2, A, verbose_level);
+	rk = F->Linear_algebra->perp_standard(4, 2, A, verbose_level);
 	if (rk != 2) {
 		cout << "geometry_global::do_intersection_of_two_lines rk != 2" << endl;
 		cout << "rk= " << rk << endl;
@@ -1623,7 +1623,7 @@ void geometry_global::do_intersection_of_two_lines(finite_field *F,
 
 	// Line 2
 	Orbiter->Int_vec.copy(Line2, B, 8);
-	rk = F->perp_standard(4, 2, B, verbose_level);
+	rk = F->Linear_algebra->perp_standard(4, 2, B, verbose_level);
 	if (rk != 2) {
 		cout << "geometry_global::do_intersection_of_two_lines rk != 2" << endl;
 		cout << "rk= " << rk << endl;
@@ -1633,7 +1633,7 @@ void geometry_global::do_intersection_of_two_lines(finite_field *F,
 
 	Orbiter->Int_vec.copy(A + 8, C, 8);
 	Orbiter->Int_vec.copy(B + 8, C + 8, 8);
-	rk = F->perp_standard(4, 4, C, verbose_level);
+	rk = F->Linear_algebra->perp_standard(4, 4, C, verbose_level);
 	if (rk != 3) {
 		cout << "geometry_global::do_intersection_of_two_lines rk != 3" << endl;
 		cout << "rk= " << rk << endl;
@@ -1722,7 +1722,7 @@ void geometry_global::do_transversal(finite_field *F,
 	// Line 1
 	Orbiter->Int_vec.copy(Line1, A, 8);
 	Orbiter->Int_vec.copy(Pt, A + 8, 4);
-	rk = F->perp_standard(4, 3, A, verbose_level);
+	rk = F->Linear_algebra->perp_standard(4, 3, A, verbose_level);
 	if (rk != 3) {
 		cout << "geometry_global::do_transversal rk != 3" << endl;
 		cout << "rk= " << rk << endl;
@@ -1733,7 +1733,7 @@ void geometry_global::do_transversal(finite_field *F,
 	// Line 2
 	Orbiter->Int_vec.copy(Line2, A, 8);
 	Orbiter->Int_vec.copy(Pt, A + 8, 4);
-	rk = F->perp_standard(4, 3, A, verbose_level);
+	rk = F->Linear_algebra->perp_standard(4, 3, A, verbose_level);
 	if (rk != 3) {
 		cout << "geometry_global::do_transversal rk != 3" << endl;
 		cout << "rk= " << rk << endl;
@@ -1742,7 +1742,7 @@ void geometry_global::do_transversal(finite_field *F,
 	Orbiter->Int_vec.copy(A + 12, B + 4, 4);
 
 	// B
-	rk = F->perp_standard(4, 2, B, verbose_level);
+	rk = F->Linear_algebra->perp_standard(4, 2, B, verbose_level);
 	if (rk != 2) {
 		cout << "geometry_global::do_transversal rk != 2" << endl;
 		cout << "rk= " << rk << endl;
@@ -1912,7 +1912,7 @@ void geometry_global::Walsh_matrix(finite_field *F, int n, int *&W, int verbose_
 		AG_element_unrank(2, v, 1, n, i);
 		for (j = 0; j < Q; j++) {
 			AG_element_unrank(2, w, 1, n, j);
-			a = F->dot_product(n, v, w);
+			a = F->Linear_algebra->dot_product(n, v, w);
 			if (a) {
 				W[i * Q + j] = -1;
 				W01[i * Q + j] = 1;

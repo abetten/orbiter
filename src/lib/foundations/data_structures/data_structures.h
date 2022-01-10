@@ -1518,6 +1518,13 @@ public:
 	int sparse_len;
 	std::string sparse_pairs;
 
+	int f_concatenate;
+	std::vector<std::string> concatenate_list;
+
+	int f_loop;
+	int loop_start;
+	int loop_upper_bound;
+	int loop_increment;
 
 	vector_builder_description();
 	~vector_builder_description();

@@ -21,8 +21,8 @@ combinatorial_object_activity::combinatorial_object_activity()
 {
 	Descr = NULL;
 
-	f_has_COC = FALSE;
-	COC = NULL;
+	f_has_GOC = FALSE;
+	GOC = NULL;
 
 	f_has_IS = FALSE;
 	IS = NULL;
@@ -35,7 +35,7 @@ combinatorial_object_activity::~combinatorial_object_activity()
 
 
 void combinatorial_object_activity::init(combinatorial_object_activity_description *Descr,
-		combinatorial_object_create *COC,
+		geometric_object_create *GOC,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -45,8 +45,8 @@ void combinatorial_object_activity::init(combinatorial_object_activity_descripti
 	}
 
 	combinatorial_object_activity::Descr = Descr;
-	f_has_COC = TRUE;
-	combinatorial_object_activity::COC = COC;
+	f_has_GOC = TRUE;
+	combinatorial_object_activity::GOC = GOC;
 
 	if (f_v) {
 		cout << "combinatorial_object_activity::init done" << endl;
@@ -83,8 +83,8 @@ void combinatorial_object_activity::perform_activity(int verbose_level)
 	if (f_v) {
 		cout << "combinatorial_object_activity::perform_activity" << endl;
 	}
-	if (f_has_COC) {
-		perform_activity_COC(verbose_level);
+	if (f_has_GOC) {
+		perform_activity_GOC(verbose_level);
 	}
 	else if (f_has_IS) {
 		perform_activity_IS(verbose_level);
@@ -95,23 +95,23 @@ void combinatorial_object_activity::perform_activity(int verbose_level)
 }
 
 
-void combinatorial_object_activity::perform_activity_COC(int verbose_level)
+void combinatorial_object_activity::perform_activity_GOC(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "combinatorial_object_activity::perform_activity_COC" << endl;
+		cout << "combinatorial_object_activity::perform_activity_GOC" << endl;
 	}
 
 	if (Descr->f_line_type) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_COC f_line_type" << endl;
+			cout << "combinatorial_object_activity::perform_activity_GOC f_line_type" << endl;
 		}
 
 		projective_space *P;
 
-		P = COC->Descr->P;
+		P = GOC->Descr->P;
 
 		int *type;
 
@@ -119,7 +119,7 @@ void combinatorial_object_activity::perform_activity_COC(int verbose_level)
 
 
 		P->line_intersection_type(
-				COC->Pts, COC->nb_pts, type, 0 /* verbose_level */);
+				GOC->Pts, GOC->nb_pts, type, 0 /* verbose_level */);
 			// type[N_lines]
 
 
@@ -128,7 +128,7 @@ void combinatorial_object_activity::perform_activity_COC(int verbose_level)
 		T.init(type, P->N_lines, FALSE, 0);
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_COC line type:" << endl;
+			cout << "combinatorial_object_activity::perform_activity_GOC line type:" << endl;
 			T.print(TRUE /* f_backwards*/);
 			cout << endl;
 		}
@@ -139,12 +139,12 @@ void combinatorial_object_activity::perform_activity_COC(int verbose_level)
 	if (Descr->f_conic_type) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_COC f_conic_type" << endl;
+			cout << "combinatorial_object_activity::perform_activity_GOC f_conic_type" << endl;
 		}
 
 		projective_space *P;
 
-		P = COC->Descr->P;
+		P = GOC->Descr->P;
 
 		long int **Pts_on_conic;
 		int **Conic_eqn;
@@ -153,7 +153,7 @@ void combinatorial_object_activity::perform_activity_COC(int verbose_level)
 		int i;
 
 		P->conic_type(
-				COC->Pts, COC->nb_pts,
+				GOC->Pts, GOC->nb_pts,
 				Descr->conic_type_threshold,
 				Pts_on_conic, Conic_eqn, nb_pts_on_conic, len,
 				verbose_level);
@@ -170,17 +170,17 @@ void combinatorial_object_activity::perform_activity_COC(int verbose_level)
 	if (Descr->f_non_conical_type) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_COC f_conic_type" << endl;
+			cout << "combinatorial_object_activity::perform_activity_GOC f_conic_type" << endl;
 		}
 
 		projective_space *P;
 
-		P = COC->Descr->P;
+		P = GOC->Descr->P;
 
 		std::vector<int> Rk;
 
 		P->determine_nonconical_six_subsets(
-				COC->Pts, COC->nb_pts,
+				GOC->Pts, GOC->nb_pts,
 				Rk,
 				verbose_level);
 
@@ -192,25 +192,25 @@ void combinatorial_object_activity::perform_activity_COC(int verbose_level)
 	if (Descr->f_ideal) {
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_COC f_ideal" << endl;
+			cout << "combinatorial_object_activity::perform_activity_GOC f_ideal" << endl;
 		}
 
 		projective_space *P;
 		homogeneous_polynomial_domain *HPD;
 
-		P = COC->Descr->P;
+		P = GOC->Descr->P;
 
 		HPD = NEW_OBJECT(homogeneous_polynomial_domain);
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_COC before HPD->init" << endl;
+			cout << "combinatorial_object_activity::perform_activity_GOC before HPD->init" << endl;
 		}
 		HPD->init(P->F, P->n + 1, Descr->ideal_degree,
 			FALSE /* f_init_incidence_structure */,
 			t_PART /*Monomial_ordering_type*/,
 			verbose_level - 2);
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_COC after HPD->init" << endl;
+			cout << "combinatorial_object_activity::perform_activity_GOC after HPD->init" << endl;
 		}
 
 		int *Kernel;
@@ -223,18 +223,18 @@ void combinatorial_object_activity::perform_activity_COC(int verbose_level)
 
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_COC the input set is:" << endl;
-			HPD->get_P()->print_set_numerical(cout, COC->Pts, COC->nb_pts);
+			cout << "combinatorial_object_activity::perform_activity_GOC the input set is:" << endl;
+			HPD->get_P()->print_set_numerical(cout, GOC->Pts, GOC->nb_pts);
 		}
 
 
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_COC before HPD->vanishing_ideal" << endl;
+			cout << "combinatorial_object_activity::perform_activity_GOC before HPD->vanishing_ideal" << endl;
 		}
-		HPD->vanishing_ideal(COC->Pts, COC->nb_pts,
+		HPD->vanishing_ideal(GOC->Pts, GOC->nb_pts,
 				r, Kernel, verbose_level - 1);
 		if (f_v) {
-			cout << "combinatorial_object_activity::perform_activity_COC after HPD->vanishing_ideal" << endl;
+			cout << "combinatorial_object_activity::perform_activity_GOC after HPD->vanishing_ideal" << endl;
 		}
 
 		int h, ns;
@@ -292,12 +292,13 @@ void combinatorial_object_activity::perform_activity_COC(int verbose_level)
 		file_io Fio;
 		string fname;
 
-		fname.assign(COC->fname);
+		fname.assign(GOC->label_txt);
+		fname.append(".txt");
 
 		if (f_v) {
 			cout << "We will write to the file " << fname << endl;
 		}
-		Fio.write_set_to_file(fname, COC->Pts, COC->nb_pts, verbose_level);
+		Fio.write_set_to_file(fname, GOC->Pts, GOC->nb_pts, verbose_level);
 		if (f_v) {
 			cout << "Written file " << fname << " of size "
 					<< Fio.file_size(fname) << endl;
@@ -305,7 +306,7 @@ void combinatorial_object_activity::perform_activity_COC(int verbose_level)
 	}
 
 	if (f_v) {
-		cout << "combinatorial_object_activity::perform_activity_COC done" << endl;
+		cout << "combinatorial_object_activity::perform_activity_GOC done" << endl;
 	}
 }
 

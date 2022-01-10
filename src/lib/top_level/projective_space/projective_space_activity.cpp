@@ -74,19 +74,28 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_canonical_form_of_code) {
 
-		projective_space_global G;
+		//projective_space_global G;
 
-		int *v;
-		int m, n;
+		int *genma;
+		int k, n;
 
-		Orbiter->get_matrix_from_label(Descr->canonical_form_of_code_generator_matrix, v, m, n);
+		Orbiter->get_matrix_from_label(Descr->canonical_form_of_code_generator_matrix, genma, k, n);
 
+#if 0
 		G.canonical_form_of_code(
 				PA,
 				Descr->canonical_form_of_code_label,
 				v, m, n,
 				Descr->Canonical_form_codes_Descr,
 				verbose_level);
+#endif
+
+		PA->canonical_form_of_code(
+				Descr->canonical_form_of_code_label,
+					genma, k, n,
+					Descr->Canonical_form_codes_Descr,
+					verbose_level);
+
 
 	}
 	else if (Descr->f_map) {
@@ -136,21 +145,21 @@ void projective_space_activity::perform_activity(int verbose_level)
 		cout << "-define_object " << Descr->define_object_label << endl;
 		Descr->Object_Descr->print();
 
-		combinatorial_object_create *CombObj;
+		geometric_object_create *GeoObj;
 
-		CombObj = NEW_OBJECT(combinatorial_object_create);
+		GeoObj = NEW_OBJECT(geometric_object_create);
 
-		CombObj->init(Descr->Object_Descr, PA->P, verbose_level);
+		GeoObj->init(Descr->Object_Descr, PA->P, verbose_level);
 
 		orbiter_symbol_table_entry *Symb;
 
 		Symb = NEW_OBJECT(orbiter_symbol_table_entry);
 
-		Symb->init_combinatorial_object(Descr->define_object_label, CombObj, verbose_level);
+		Symb->init_geometric_object(Descr->define_object_label, GeoObj, verbose_level);
 		if (f_v) {
-			cout << "before Orbiter->add_symbol_table_entry " << Descr->define_surface_label << endl;
+			cout << "before Orbiter->add_symbol_table_entry " << Descr->define_object_label << endl;
 		}
-		Orbiter->add_symbol_table_entry(Descr->define_surface_label, Symb, verbose_level);
+		Orbiter->add_symbol_table_entry(Descr->define_object_label, Symb, verbose_level);
 
 	}
 	else if (Descr->f_define_surface) {
@@ -188,18 +197,33 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 		cout << "table_of_quartic_curves" << endl;
 
-		projective_space_global G;
+		//projective_space_global G;
 
-		G.table_of_quartic_curves(PA, verbose_level);
+		//G.table_of_quartic_curves(PA, verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity before PA->table_of_quartic_curves" << endl;
+		}
+		PA->table_of_quartic_curves(verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity after PA->table_of_quartic_curves" << endl;
+		}
+
 	}
 
 	else if (Descr->f_table_of_cubic_surfaces) {
 
 		cout << "table_of_cubic_surfaces" << endl;
 
-		projective_space_global G;
+		//projective_space_global G;
 
-		G.table_of_cubic_surfaces(PA, verbose_level);
+		//G.table_of_cubic_surfaces(PA, verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity before PA->table_of_cubic_surfaces" << endl;
+		}
+		PA->table_of_cubic_surfaces(verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity after PA->table_of_cubic_surfaces" << endl;
+		}
 	}
 
 	else if (Descr->f_define_quartic_curve) {
@@ -208,6 +232,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 		quartic_curve_create *QC;
 
+#if 0
 		projective_space_global G;
 
 		G.do_create_quartic_curve(
@@ -215,6 +240,18 @@ void projective_space_activity::perform_activity(int verbose_level)
 			Descr->Quartic_curve_descr,
 			QC,
 			verbose_level);
+#endif
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity before PA->create_quartic_curve" << endl;
+		}
+		PA->create_quartic_curve(
+				Descr->Quartic_curve_descr,
+				QC,
+				verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity after PA->create_quartic_curve" << endl;
+		}
 
 		orbiter_symbol_table_entry *Symb;
 
@@ -362,15 +399,21 @@ void projective_space_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_spread_classify) {
 
+#if 0
 		projective_space_global G;
 
 		G.do_spread_classify(PA,
 				Descr->spread_classify_k,
 				Descr->spread_classify_Control,
 				verbose_level);
+#endif
+		PA->do_spread_classify(Descr->spread_classify_k,
+				Descr->spread_classify_Control,
+				verbose_level);
 	}
 	else if (Descr->f_classify_semifields) {
 
+#if 0
 		projective_space_global G;
 
 		G.do_classify_semifields(
@@ -378,6 +421,22 @@ void projective_space_activity::perform_activity(int verbose_level)
 				Descr->Semifield_classify_description,
 				Descr->Semifield_classify_Control,
 				verbose_level);
+#endif
+		semifield_classify_with_substructure *S;
+
+		S = NEW_OBJECT(semifield_classify_with_substructure);
+
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity before S->init" << endl;
+		}
+		S->init(
+				Descr->Semifield_classify_description,
+				PA,
+				Descr->Semifield_classify_Control,
+				verbose_level);
+		if (f_v) {
+			cout << "projective_space_activity::perform_activity after S->init" << endl;
+		}
 
 	}
 	else if (Descr->f_cheat_sheet) {
@@ -392,12 +451,16 @@ void projective_space_activity::perform_activity(int verbose_level)
 			exit(1);
 		}
 
+#if 0
 		projective_space_global G;
 
 		G.do_cheat_sheet_PG(
 				PA,
 				O,
 				verbose_level);
+#endif
+		PA->cheat_sheet(O, verbose_level);
+
 	}
 	else if (Descr->f_classify_quartic_curves_nauty) {
 

@@ -593,7 +593,7 @@ void semifield_substructure::do_classify(int verbose_level)
 		for (i = 0; i < SC->k; i++) {
 			v3[i] = Basis1[2 * SC->k2 + i * SC->k + 0];
 		}
-		if (!SC->Mtx->GFq->is_unit_vector(v3, SC->k, SC->k - 1)) {
+		if (!SC->Mtx->GFq->Linear_algebra->is_unit_vector(v3, SC->k, SC->k - 1)) {
 			cout << "flag orbit " << f << " / "
 					<< nb_flag_orbits
 					<< " 1st col of third matrix is = ";
@@ -785,7 +785,7 @@ void semifield_substructure::loop_over_all_subspaces(
 		// adapted to the subspace:
 		// the first three matrices are the generators
 		// for the subspace.
-		F->mult_matrix_matrix(B, Basis1, Basis2, k, k, k2,
+		F->Linear_algebra->mult_matrix_matrix(B, Basis1, Basis2, k, k, k2,
 				0 /* verbose_level */);
 
 
@@ -841,9 +841,9 @@ void semifield_substructure::loop_over_all_subspaces(
 			v3[i] = Basis2[2 * k2 + i * k + 0];
 		}
 		if (f_skip == FALSE) {
-			if (!F->is_unit_vector(v1, k, 0) ||
-					!F->is_unit_vector(v2, k, 1) ||
-					!F->is_unit_vector(v3, k, k - 1)) {
+			if (!F->Linear_algebra->is_unit_vector(v1, k, 0) ||
+					!F->Linear_algebra->is_unit_vector(v2, k, 1) ||
+					!F->Linear_algebra->is_unit_vector(v3, k, k - 1)) {
 				f_skip = TRUE;
 			}
 		}
@@ -858,7 +858,7 @@ void semifield_substructure::loop_over_all_subspaces(
 		}
 		else {
 
-			F->Gauss_int_with_given_pivots(
+			F->Linear_algebra->Gauss_int_with_given_pivots(
 				Basis2 + 3 * k2,
 				FALSE /* f_special */,
 				TRUE /* f_complete */,
@@ -1193,7 +1193,7 @@ void semifield_substructure::all_two_dimensional_subspaces(
 		// adapted to the subspace:
 		// the first three matrices are the generators
 		// for the subspace.
-		F->mult_matrix_matrix(B, Basis1, Basis2, k, k, k2,
+		F->Linear_algebra->mult_matrix_matrix(B, Basis1, Basis2, k, k, k2,
 				0 /* verbose_level */);
 
 
@@ -1282,7 +1282,7 @@ int semifield_substructure::identify(long int *data,
 		// adapted to the subspace:
 		// the first three matrices are the generators
 		// for the subspace.
-		F->mult_matrix_matrix(B, Basis1, Basis2, k, k, k2,
+		F->Linear_algebra->mult_matrix_matrix(B, Basis1, Basis2, k, k, k2,
 				0 /* verbose_level */);
 
 
@@ -1340,9 +1340,9 @@ int semifield_substructure::identify(long int *data,
 			v3[i] = Basis2[2 * k2 + i * k + 0];
 		}
 		if (f_skip == FALSE) {
-			if (!F->is_unit_vector(v1, k, 0) ||
-					!F->is_unit_vector(v2, k, 1) ||
-					!F->is_unit_vector(v3, k, k - 1)) {
+			if (!F->Linear_algebra->is_unit_vector(v1, k, 0) ||
+					!F->Linear_algebra->is_unit_vector(v2, k, 1) ||
+					!F->Linear_algebra->is_unit_vector(v3, k, k - 1)) {
 				f_skip = TRUE;
 			}
 		}
@@ -1357,7 +1357,7 @@ int semifield_substructure::identify(long int *data,
 		}
 		else {
 
-			F->Gauss_int_with_given_pivots(
+			F->Linear_algebra->Gauss_int_with_given_pivots(
 				Basis2 + 3 * k2,
 				FALSE /* f_special */,
 				TRUE /* f_complete */,

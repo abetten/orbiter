@@ -152,7 +152,7 @@ void semifield_trace::trace_very_general(
 				"after transform (1):" << endl;
 		SC->basis_print(input_basis, basis_sz);
 		}
-	if (!F->is_identity_matrix(input_basis, k)) {
+	if (!F->Linear_algebra->is_identity_matrix(input_basis, k)) {
 		cout << "semifield_trace::trace_very_general "
 				"basis_tmp is not the identity matrix" << endl;
 		exit(1);
@@ -340,7 +340,7 @@ void semifield_trace::trace_very_general(
 		}
 	for (i = 0; i < 2; i++) {
 		for (j = 2; j < basis_sz; j++) {
-			F->Gauss_step(input_basis + i * k2,
+			F->Linear_algebra->Gauss_step(input_basis + i * k2,
 					input_basis + j * k2, k2, base_cols[i],
 					0 /*verbose_level*/);
 			}

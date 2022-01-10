@@ -1529,7 +1529,7 @@ void packing_was::report_orbit_invariant(ostream &ost)
 					ost << "$$" << endl;
 					P->F->print_matrix_latex(ost, basis_external_line, 2, 6);
 
-					P->F->mult_matrix_matrix(basis_external_line,
+					P->F->Linear_algebra->mult_matrix_matrix(basis_external_line,
 							B, basis_external_line2,
 							2, 6, 6, 0 /* verbose_level*/);
 					ost << "\\hat{=}" << endl;

@@ -88,7 +88,7 @@ void surface_domain::build_cubic_surface_from_lines(
 	if (f_v) {
 		cout << "surface_domain::build_cubic_surface_from_lines before F->Gauss_simple" << endl;
 	}
-	r = F->Gauss_simple(System, nb_rows, nb_monomials,
+	r = F->Linear_algebra->Gauss_simple(System, nb_rows, nb_monomials,
 		base_cols, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "surface_domain::build_cubic_surface_from_lines after F->Gauss_simple" << endl;
@@ -117,7 +117,7 @@ void surface_domain::build_cubic_surface_from_lines(
 	if (f_v) {
 		cout << "surface_domain::build_cubic_surface_from_lines before F->matrix_get_kernel" << endl;
 	}
-	F->matrix_get_kernel(System, r, nb_monomials, base_cols, r,
+	F->Linear_algebra->matrix_get_kernel(System, r, nb_monomials, base_cols, r,
 		kernel_m, kernel_n, coeff, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "surface_domain::build_cubic_surface_from_lines after F->matrix_get_kernel" << endl;
@@ -148,7 +148,7 @@ int surface_domain::rank_of_system(int len, long int *S,
 
 	int base_cols[20];
 
-	r = F->Gauss_simple(System, nb_rows, nb_monomials,
+	r = F->Linear_algebra->Gauss_simple(System, nb_rows, nb_monomials,
 		base_cols, 0 /* verbose_level */);
 
 
@@ -507,7 +507,7 @@ int surface_domain::rank_of_four_lines_on_Klein_quadric(
 		O->unrank_point(coords + i * 6, 1,
 			o_rank[i], 0 /* verbose_level */);
 	}
-	rk = F->Gauss_easy(coords, 4, 6);
+	rk = F->Linear_algebra->Gauss_easy(coords, 4, 6);
 	FREE_int(coords);
 	if (f_v) {
 		cout << "surface_domain::rank_of_four_lines_on_Klein_quadric done" << endl;
@@ -974,7 +974,7 @@ void surface_domain::create_the_fifteen_other_lines(
 				0/* verbose_level*/);
 		Gr->unrank_lint_here(Basis0 + 8, double_six[j],
 				0/* verbose_level*/);
-		if (F->Gauss_easy(Basis0, 4, 4) != 3) {
+		if (F->Linear_algebra->Gauss_easy(Basis0, 4, 4) != 3) {
 			cout << "the rank is not 3" << endl;
 			exit(1);
 		}
@@ -998,7 +998,7 @@ void surface_domain::create_the_fifteen_other_lines(
 				0/* verbose_level*/);
 		Gr3->unrank_lint_here(Basis2, Planes[j],
 				0/* verbose_level*/);
-		F->intersect_subspaces(4, 3, Basis1, 3, Basis2,
+		F->Linear_algebra->intersect_subspaces(4, 3, Basis1, 3, Basis2,
 			k3, Basis0, 0 /* verbose_level */);
 		if (k3 != 2) {
 			cout << "the rank is not 2" << endl;
@@ -1202,7 +1202,7 @@ void surface_domain::compute_points_on_lines(
 		for (j = 0; j < nb_points_on_surface; j++) {
 			Orbiter->Int_vec.copy(Basis, Mtx, 8);
 			Orbiter->Int_vec.copy(Surf_pt_coords + j * 4, Mtx + 8, 4);
-			r = F->Gauss_easy(Mtx, 3, 4);
+			r = F->Linear_algebra->Gauss_easy(Mtx, 3, 4);
 			if (r == 2) {
 				pts_on_lines->add_element(i, j);
 				f_is_on_line[j] = TRUE;
@@ -1615,7 +1615,7 @@ void surface_domain::create_lines_from_plane_equations(
 			line_idx, plane1, plane2, 0 /* verbose_level */);
 		Orbiter->Int_vec.copy(The_plane_equations + plane1 * 4, Basis, 4);
 		Orbiter->Int_vec.copy(The_plane_equations + plane2 * 4, Basis + 4, 4);
-		F->perp_standard(4, 2, Basis, 0 /* verbose_level */);
+		F->Linear_algebra->perp_standard(4, 2, Basis, 0 /* verbose_level */);
 		Lines27[line_idx] = rank_line(Basis + 8);
 	}
 
@@ -1679,12 +1679,12 @@ long int surface_domain::compute_cij(long int *double_six,
 	Gr->unrank_lint_here(Basis1 + 2 * 4, bj, 0 /* verbose_level */);
 	Gr->unrank_lint_here(Basis2, aj, 0 /* verbose_level */);
 	Gr->unrank_lint_here(Basis2 + 2 * 4, bi, 0 /* verbose_level */);
-	if (F->Gauss_simple(Basis1, 4, 4, base_cols1,
+	if (F->Linear_algebra->Gauss_simple(Basis1, 4, 4, base_cols1,
 			0 /* verbose_level */) != 3) {
 		cout << "The rank of Basis1 is not 3" << endl;
 		exit(1);
 	}
-	if (F->Gauss_simple(Basis2, 4, 4, base_cols2,
+	if (F->Linear_algebra->Gauss_simple(Basis2, 4, 4, base_cols2,
 			0 /* verbose_level */) != 3) {
 		cout << "The rank of Basis2 is not 3" << endl;
 		exit(1);
@@ -1693,7 +1693,7 @@ long int surface_domain::compute_cij(long int *double_six,
 		cout << "surface_domain::compute_cij before matrix_get_"
 				"kernel Basis1" << endl;
 	}
-	F->matrix_get_kernel(Basis1, 3, 4, base_cols1, 3,
+	F->Linear_algebra->matrix_get_kernel(Basis1, 3, 4, base_cols1, 3,
 		kernel_m, kernel_n, K1, 0 /* verbose_level */);
 	if (kernel_m != 4) {
 		cout << "surface_domain::compute_cij kernel_m != 4 "
@@ -1714,7 +1714,7 @@ long int surface_domain::compute_cij(long int *double_six,
 		cout << "surface_domain::compute_cij before matrix_"
 				"get_kernel Basis2" << endl;
 	}
-	F->matrix_get_kernel(Basis2, 3, 4, base_cols2, 3,
+	F->Linear_algebra->matrix_get_kernel(Basis2, 3, 4, base_cols2, 3,
 		kernel_m, kernel_n, K2, 0 /* verbose_level */);
 	if (kernel_m != 4) {
 		cout << "surface_domain::compute_cij kernel_m != 4 "
@@ -1731,7 +1731,7 @@ long int surface_domain::compute_cij(long int *double_six,
 			K[(1 + j) * 4 + i] = K2[i * kernel_n + j];
 		}
 	}
-	if (F->Gauss_simple(K, 2, 4, base_cols1,
+	if (F->Linear_algebra->Gauss_simple(K, 2, 4, base_cols1,
 			0 /* verbose_level */) != 2) {
 		cout << "The rank of K is not 2" << endl;
 		exit(1);
@@ -1740,7 +1740,7 @@ long int surface_domain::compute_cij(long int *double_six,
 		cout << "surface_domain::compute_cij before "
 				"matrix_get_kernel K" << endl;
 	}
-	F->matrix_get_kernel(K, 2, 4, base_cols1, 2,
+	F->Linear_algebra->matrix_get_kernel(K, 2, 4, base_cols1, 2,
 		kernel_m, kernel_n, K1, 0 /* verbose_level */);
 	if (kernel_m != 4) {
 		cout << "surface_domain::compute_cij kernel_m != 4 "

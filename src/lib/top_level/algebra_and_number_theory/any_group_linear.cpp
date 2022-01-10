@@ -257,7 +257,7 @@ void any_group::isomorphism_Klein_quadric(std::string &fname, int verbose_level)
 		F->klein_to_wedge(Basis1 + i * 6, Basis2 + i * 6);
 	}
 
-	F->matrix_inverse(B, Bv, 6, 0 /* verbose_level */);
+	F->Linear_algebra->matrix_inverse(B, Bv, 6, 0 /* verbose_level */);
 
 
 	for (i = 0; i < m; i++) {
@@ -274,7 +274,7 @@ void any_group::isomorphism_Klein_quadric(std::string &fname, int verbose_level)
 			cout << endl;
 		}
 
-		F->exterior_square(Elt, An2, 4, 0 /*verbose_level*/);
+		F->Linear_algebra->exterior_square(Elt, An2, 4, 0 /*verbose_level*/);
 
 		if (f_vv) {
 			cout << "Exterior square:" << endl;
@@ -283,7 +283,7 @@ void any_group::isomorphism_Klein_quadric(std::string &fname, int verbose_level)
 		}
 
 		for (j = 0; j < 6; j++) {
-			F->mult_vector_from_the_left(Basis2 + j * 6, An2, v, 6, 6);
+			F->Linear_algebra->mult_vector_from_the_left(Basis2 + j * 6, An2, v, 6, 6);
 					// v[m], A[m][n], vA[n]
 			F->wedge_to_klein(v /* W */, w /*K*/);
 			Orbiter->Int_vec.copy(w, C + j * 6, 6);
@@ -299,7 +299,7 @@ void any_group::isomorphism_Klein_quadric(std::string &fname, int verbose_level)
 		};
 		int new_Gram[36];
 
-		F->transform_form_matrix(C, Gram,
+		F->Linear_algebra->transform_form_matrix(C, Gram,
 				new_Gram, 6, 0 /* verbose_level*/);
 
 		if (f_vv) {
@@ -315,8 +315,8 @@ void any_group::isomorphism_Klein_quadric(std::string &fname, int verbose_level)
 			cout << endl;
 		}
 
-		F->mult_matrix_matrix(Bv, C, D, 6, 6, 6, 0 /*verbose_level */);
-		F->mult_matrix_matrix(D, B, E, 6, 6, 6, 0 /*verbose_level */);
+		F->Linear_algebra->mult_matrix_matrix(Bv, C, D, 6, 6, 6, 0 /*verbose_level */);
+		F->Linear_algebra->mult_matrix_matrix(D, B, E, 6, 6, 6, 0 /*verbose_level */);
 
 		F->PG_element_normalize_from_front(E, 1, 36);
 
@@ -336,7 +336,7 @@ void any_group::isomorphism_Klein_quadric(std::string &fname, int verbose_level)
 		};
 		int new_special_Gram[36];
 
-		F->transform_form_matrix(E, special_Gram,
+		F->Linear_algebra->transform_form_matrix(E, special_Gram,
 				new_special_Gram, 6, 0 /* verbose_level*/);
 
 		if (f_vv) {
@@ -634,7 +634,7 @@ int any_group::subspace_orbits_test_set(
 				orbits_on_subspaces_M, len, n, n, F->log10_of_q);
 	}
 
-	rk = F->Gauss_simple(orbits_on_subspaces_M, len, n,
+	rk = F->Linear_algebra->Gauss_simple(orbits_on_subspaces_M, len, n,
 			orbits_on_subspaces_base_cols, 0 /*verbose_level - 2*/);
 
 	if (f_v) {

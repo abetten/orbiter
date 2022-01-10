@@ -92,7 +92,7 @@ long int action_on_determinant::compute_image(action *A,
 	else {
 		a = i + 1;
 		}
-	b = M->GFq->matrix_determinant(Elt, M->n, 0);
+	b = M->GFq->Linear_algebra->matrix_determinant(Elt, M->n, 0);
 	c = M->GFq->mult(a, b);
 	if (f_projective) {
 		l = M->GFq->log_alpha(c);

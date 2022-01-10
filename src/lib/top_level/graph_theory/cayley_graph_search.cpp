@@ -185,7 +185,7 @@ void cayley_graph_search::init_group2(int verbose_level)
 						<< go << ":" << endl;
 				A->element_print(Elt1, cout);
 				cout << endl;
-				if (F->is_identity_matrix(Elt1, 4)) {
+				if (F->Linear_algebra->is_identity_matrix(Elt1, 4)) {
 					f_subgroup[i] = TRUE;
 					}
 				else {

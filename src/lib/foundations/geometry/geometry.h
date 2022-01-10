@@ -275,15 +275,21 @@ public:
 	void create_hyperoval(
 		int f_translation, int translation_exponent,
 		int f_Segre, int f_Payne, int f_Cherowitzo, int f_OKeefe_Penttila,
-		std::string &fname, int &nb_pts, long int *&Pts,
+		std::string &label_txt,
+		std::string &label_tex,
+		int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_subiaco_oval(
 		int f_short,
-		std::string &fname, int &nb_pts, long int *&Pts,
+		std::string &label_txt,
+		std::string &label_tex,
+		int &nb_pts, long int *&Pts,
 		int verbose_level);
 	void create_subiaco_hyperoval(
-			std::string &fname, int &nb_pts, long int *&Pts,
-		int verbose_level);
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+			int verbose_level);
 
 
 };
@@ -655,6 +661,159 @@ public:
 	long int rank(int *subspace, int verbose_level);
 	long int rank_recursion(int *subspace, int *big_space, int verbose_level);
 };
+
+
+// #############################################################################
+// geometric_object_create.cpp
+// #############################################################################
+
+
+//! to create a geometric object from a description using class geometric_object_description
+
+
+
+class geometric_object_create {
+
+public:
+	geometric_object_description *Descr;
+
+	//std::string fname;
+	int nb_pts;
+	long int *Pts;
+
+	std::string label_txt;
+	std::string label_tex;
+
+
+	geometric_object_create();
+	~geometric_object_create();
+	void init(geometric_object_description *Descr,
+			projective_space *P, int verbose_level);
+};
+
+
+
+// #############################################################################
+// geometric_object_description.cpp
+// #############################################################################
+
+
+//! to create a geometric object encoded as a set using a description from the command line
+
+
+
+class geometric_object_description {
+
+public:
+
+	projective_space *P;
+
+	int f_subiaco_oval;
+	int f_short;
+	int f_subiaco_hyperoval;
+	int f_adelaide_hyperoval;
+
+	int f_hyperoval;
+	int f_translation;
+	int translation_exponent;
+	int f_Segre;
+	int f_Payne;
+	int f_Cherowitzo;
+	int f_OKeefe_Penttila;
+
+	int f_BLT_database;
+	int BLT_k;
+	int f_BLT_in_PG;
+
+#if 0
+	int f_BLT_Linear;
+	int f_BLT_Fisher;
+	int f_BLT_Mondello;
+	int f_BLT_FTWKB;
+#endif
+
+	int f_ovoid;
+
+	int f_Baer;
+
+	int f_orthogonal;
+	int orthogonal_epsilon;
+
+	int f_hermitian;
+
+	int f_cuspidal_cubic; // twisted cubic in PG(2,q)
+	int f_twisted_cubic; // twisted cubic in PG(3,q)
+
+	int f_elliptic_curve;
+	int elliptic_curve_b;
+	int elliptic_curve_c;
+
+	//int f_Hill_cap_56;
+
+	int f_ttp_code;
+	int f_ttp_construction_A;
+	int f_ttp_hyperoval;
+	int f_ttp_construction_B;
+
+	int f_unital_XXq_YZq_ZYq;
+
+	int f_desarguesian_line_spread_in_PG_3_q;
+	int f_embedded_in_PG_4_q;
+
+	int f_Buekenhout_Metz;
+	int f_classical;
+	int f_Uab;
+	int parameter_a;
+	int parameter_b;
+
+	int f_whole_space;
+	int f_hyperplane;
+	int pt;
+
+	int f_segre_variety;
+	int segre_variety_a;
+	int segre_variety_b;
+
+	int f_Maruta_Hamada_arc;
+
+	int f_projective_variety;
+	std::string variety_label_txt;
+	std::string variety_label_tex;
+	int variety_degree;
+	int variety_n;
+	std::string variety_coeffs;
+	monomial_ordering_type Monomial_ordering_type;
+
+	int f_intersection_of_zariski_open_sets;
+	std::vector<std::string> Variety_coeffs;
+
+	int f_number_of_conditions_satisfied;
+	std::string number_of_conditions_satisfied_fname;
+
+
+	int f_projective_curve;
+	std::string curve_label_txt;
+	std::string curve_label_tex;
+	int curve_nb_vars;
+	int curve_degree;
+	std::string curve_coeffs;
+
+	int f_set;
+	std::string set_text;
+
+
+	geometric_object_description();
+	~geometric_object_description();
+	int read_arguments(int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+
+
+
+
 
 // #############################################################################
 // geometry_global.cpp
@@ -2032,7 +2191,7 @@ public:
 	void circle_type_of_line_subset(int *pts, int nb_pts, 
 		int *circle_type, int verbose_level);
 		// circle_type[nb_pts]
-	void create_unital_XXq_YZq_ZYq(long int *U, int &sz, int verbose_level);
+	void create_unital_XXq_YZq_ZYq_brute_force(long int *U, int &sz, int verbose_level);
 	void intersection_of_subspace_with_point_set(
 		grassmann *G, int rk, long int *set, int set_size,
 		long int *&intersection_set, int &intersection_set_size,
@@ -2193,8 +2352,52 @@ public:
 	void planes_through_a_line(
 		long int line_rk, std::vector<long int> &plane_ranks,
 		int verbose_level);
+
+	// projective_space3.cpp:
 	int reverse_engineer_semilinear_map(
 		int *Elt, int *Mtx, int &frobenius,
+		int verbose_level);
+	void create_ovoid(
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+		int verbose_level);
+	void create_cuspidal_cubic(
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+		int verbose_level);
+	void create_twisted_cubic(
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+		int verbose_level);
+	void create_elliptic_curve(
+		int elliptic_curve_b, int elliptic_curve_c,
+		std::string &label_txt,
+		std::string &label_tex,
+		int &nb_pts, long int *&Pts,
+		int verbose_level);
+	void create_unital_XXq_YZq_ZYq(
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+		int verbose_level);
+	void create_whole_space(
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+			int verbose_level);
+	void create_hyperplane(
+		int pt,
+		std::string &label_txt,
+		std::string &label_tex,
+		int &nb_pts, long int *&Pts,
+		int verbose_level);
+	void create_Maruta_Hamada_arc(
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
 		int verbose_level);
 
 

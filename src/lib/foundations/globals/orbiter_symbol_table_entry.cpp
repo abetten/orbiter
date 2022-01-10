@@ -280,20 +280,20 @@ void orbiter_symbol_table_entry::init_collection(std::string &label,
 	}
 }
 
-void orbiter_symbol_table_entry::init_combinatorial_object(std::string &label,
-		combinatorial_object_create *COC, int verbose_level)
+void orbiter_symbol_table_entry::init_geometric_object(std::string &label,
+		geometric_object_create *COC, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "orbiter_symbol_table_entry::init_combinatorial_object" << endl;
+		cout << "orbiter_symbol_table_entry::init_geometric_object" << endl;
 	}
 	orbiter_symbol_table_entry::label.assign(label);
 	type = t_object;
-	object_type = t_combinatorial_object;
+	object_type = t_geometric_object;
 	ptr = COC;
 	if (f_v) {
-		cout << "orbiter_symbol_table_entry::init_combinatorial_object done" << endl;
+		cout << "orbiter_symbol_table_entry::init_geometric_object done" << endl;
 	}
 }
 
@@ -591,8 +591,8 @@ void orbiter_symbol_table_entry::print()
 				cout << i << " : " << (*the_list)[i] << endl;
 			}
 		}
-		else if (object_type == t_combinatorial_object) {
-			cout << "combinatorial object" << endl;
+		else if (object_type == t_geometric_object) {
+			cout << "geometric object" << endl;
 		}
 		else if (object_type == t_graph) {
 			cout << "graph" << endl;

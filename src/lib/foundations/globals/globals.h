@@ -410,6 +410,7 @@ public:
 	void get_lint_vec(std::string &label,
 			long int *&the_set, int &set_size, int verbose_level);
 	void print_type(symbol_table_object_type t);
+	vector_builder *get_object_of_type_vector(std::string &label);
 
 };
 
@@ -470,8 +471,8 @@ public:
 			void *p, int verbose_level);
 	void init_collection(std::string &label,
 			std::string &list_of_objects, int verbose_level);
-	void init_combinatorial_object(std::string &label,
-			combinatorial_object_create *COC, int verbose_level);
+	void init_geometric_object(std::string &label,
+			geometric_object_create *COC, int verbose_level);
 	void init_graph(std::string &label,
 			void *Gr, int verbose_level);
 	void init_spread_table(std::string &label,

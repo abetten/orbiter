@@ -150,7 +150,7 @@ int vector_space::RREF_and_rank(int *basis, int k)
 {
 	int rk;
 
-	rk = F->Gauss_simple(
+	rk = F->Linear_algebra->Gauss_simple(
 		basis, k, dimension,
 		base_cols, 0 /* verbose_level */);
 	return rk;
@@ -160,7 +160,7 @@ int vector_space::is_contained_in_subspace(int *v, int *basis, int k)
 {
 	int ret;
 
-	ret = F->is_contained_in_subspace(k,
+	ret = F->Linear_algebra->is_contained_in_subspace(k,
 					dimension, basis, base_cols,
 					v, 0 /*verbose_level*/);
 	return ret;
@@ -201,10 +201,10 @@ int vector_space::compare_subspaces_ranked(
 				dimension, dimension,
 				F->log10_of_q);
 		}
-	rk1 = F->Gauss_simple(M1, k,
+	rk1 = F->Linear_algebra->Gauss_simple(M1, k,
 			dimension, base_cols,
 			0/*int verbose_level*/);
-	rk2 = F->Gauss_simple(M2, k,
+	rk2 = F->Linear_algebra->Gauss_simple(M2, k,
 			dimension, base_cols2,
 			0/*int verbose_level*/);
 	if (f_v) {

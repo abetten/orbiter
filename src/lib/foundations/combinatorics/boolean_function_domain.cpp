@@ -224,7 +224,8 @@ void boolean_function_domain::setup_polynomial_rings(int verbose_level)
 	B_poly = NEW_pint(n + 1);
 	for (degree = 1; degree <= n; degree++) {
 		if (f_v) {
-			cout << "boolean_function_domain::setup_polynomial_rings setting up polynomial ring of degree " << degree << endl;
+			cout << "boolean_function_domain::setup_polynomial_rings "
+					"setting up polynomial ring of degree " << degree << endl;
 		}
 		Poly[degree].init(Fq, nb_vars, degree,
 				FALSE /* f_init_incidence_structure */,
@@ -235,12 +236,14 @@ void boolean_function_domain::setup_polynomial_rings(int verbose_level)
 	}
 
 	if (f_v) {
-		cout << "boolean_function_domain::setup_polynomial_rings before Poly[n].affine_evaluation_kernel" << endl;
+		cout << "boolean_function_domain::setup_polynomial_rings "
+				"before Poly[n].affine_evaluation_kernel" << endl;
 	}
 	Poly[n].affine_evaluation_kernel(
 			Kernel, dim_kernel, verbose_level);
 	if (f_v) {
-		cout << "boolean_function_domain::setup_polynomial_rings after Poly[n].affine_evaluation_kernel" << endl;
+		cout << "boolean_function_domain::setup_polynomial_rings "
+				"after Poly[n].affine_evaluation_kernel" << endl;
 	}
 
 	if (FALSE) {
@@ -280,7 +283,8 @@ void boolean_function_domain::compute_polynomial_representation(
 	mon = NEW_int(degree);
 	Orbiter->Int_vec.zero(coeff, Poly[n].get_nb_monomials());
 	if (f_v) {
-		cout << "boolean_function_domain::compute_polynomial_representation looping over all values, N=" << N << endl;
+		cout << "boolean_function_domain::compute_polynomial_representation "
+				"looping over all values, N=" << N << endl;
 	}
 	for (s = 0; s < N; s++) {
 
@@ -288,7 +292,8 @@ void boolean_function_domain::compute_polynomial_representation(
 		// so we are skipping all entries which are zero!
 
 		if (f_v) {
-			cout << "boolean_function_domain::compute_polynomial_representation s=" << s << " / " << N << endl;
+			cout << "boolean_function_domain::compute_polynomial_representation "
+					"s=" << s << " / " << N << endl;
 		}
 
 		if (func[s]) {
@@ -371,7 +376,8 @@ void boolean_function_domain::compute_polynomial_representation(
 		}
 	} // next s
 	if (f_v) {
-		cout << "boolean_function_domain::compute_polynomial_representation looping over all values done" << endl;
+		cout << "boolean_function_domain::compute_polynomial_representation "
+				"looping over all values done" << endl;
 	}
 
 	if (f_v) {

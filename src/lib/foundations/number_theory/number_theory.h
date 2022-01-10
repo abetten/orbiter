@@ -205,6 +205,35 @@ public:
 			int from, int to, int limit, int verbose_level);
 	int nb_primes(int n);
 	void cyclotomic_set(std::vector<int> &cyclotomic_set, int a, int q, int n, int verbose_level);
+	void elliptic_curve_addition(finite_field *F,
+			int b, int c,
+		int x1, int x2, int x3,
+		int y1, int y2, int y3,
+		int &z1, int &z2, int &z3, int verbose_level);
+	void elliptic_curve_point_multiple(finite_field *F,
+			int b, int c, int n,
+		int x1, int y1, int z1,
+		int &x3, int &y3, int &z3,
+		int verbose_level);
+	void elliptic_curve_point_multiple_with_log(finite_field *F,
+			int b, int c, int n,
+		int x1, int y1, int z1,
+		int &x3, int &y3, int &z3,
+		int verbose_level);
+	int elliptic_curve_evaluate_RHS(finite_field *F,
+			int x, int b, int c);
+	void elliptic_curve_points(finite_field *F,
+			int b, int c, int &nb, int *&T, int verbose_level);
+	void elliptic_curve_all_point_multiples(finite_field *F,
+			int b, int c, int &order,
+		int x1, int y1, int z1,
+		std::vector<std::vector<int> > &Pts,
+		int verbose_level);
+	int elliptic_curve_discrete_log(finite_field *F,
+			int b, int c,
+		int x1, int y1, int z1,
+		int x3, int y3, int z3,
+		int verbose_level);
 
 };
 

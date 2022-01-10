@@ -69,7 +69,7 @@ void polarity::init_standard_polarity(projective_space *P, int verbose_level)
 				A, n, d, d,
 				P->F->log10_of_q + 1);
 		}
-		P->F->perp_standard(d, n, A, 0);
+		P->F->Linear_algebra->perp_standard(d, n, A, 0);
 		if (FALSE) {
 			Orbiter->Int_vec.print_integer_matrix_width(cout,
 				A, d, d, d,
@@ -128,7 +128,7 @@ void polarity::init_general_polarity(projective_space *P, int *Mtx, int verbose_
 		P->F->PG_element_unrank_modified(v, 1, d, i);
 
 
-		P->F->mult_matrix_matrix(v, Mtx,
+		P->F->Linear_algebra->mult_matrix_matrix(v, Mtx,
 				A, 1, d, d, 0 /* verbose_level*/);
 
 
@@ -138,7 +138,7 @@ void polarity::init_general_polarity(projective_space *P, int *Mtx, int verbose_
 				A, 1, d, d,
 				P->F->log10_of_q + 1);
 		}
-		P->F->perp_standard(d, 1, A, 0);
+		P->F->Linear_algebra->perp_standard(d, 1, A, 0);
 		if (FALSE) {
 			Orbiter->Int_vec.print_integer_matrix_width(cout,
 				A, d, d, d,

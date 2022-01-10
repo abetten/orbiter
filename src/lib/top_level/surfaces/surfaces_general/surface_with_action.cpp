@@ -334,7 +334,7 @@ long int surface_with_action::apply_polarity(
 
 	Surf->Klein->line_to_Pluecker(a, v, 0 /* verbose_level */);
 
-	Surf->F->mult_matrix_matrix(v, Polarity36,
+	Surf->F->Linear_algebra->mult_matrix_matrix(v, Polarity36,
 			w, 1, 6, 6, 0 /* verbose_level */);
 
 	Surf->Klein->Pluecker_to_line(w, basis_line, verbose_level);
@@ -440,7 +440,7 @@ void surface_with_action::complete_skew_hexagon(
 		for (j = 0; j < 6; j++) {
 			Orbiter->Int_vec.copy(Basis, Mtx, 8);
 			Orbiter->Int_vec.copy(Forbidden_points + j * 4, Mtx + 8, 4);
-			r = F->rank_of_rectangular_matrix(Mtx,
+			r = F->Linear_algebra->rank_of_rectangular_matrix(Mtx,
 					3, 4, 0 /* verbose_level*/);
 			if (r == 2) {
 				break;
@@ -531,7 +531,7 @@ void surface_with_action::complete_skew_hexagon(
 		for (j = 0; j < nb_pts; j++) {
 			v[0] = Pts4[j * 2 + 0];
 			v[1] = Pts4[j * 2 + 1];
-			F->mult_matrix_matrix(v, Basis, w + j * 4, 1, 2, 4, 0 /* verbose_level */);
+			F->Linear_algebra->mult_matrix_matrix(v, Basis, w + j * 4, 1, 2, 4, 0 /* verbose_level */);
 		}
 		if (f_v) {
 			cout << "surface_with_action::complete_skew_hexagon after multiplying" << endl;
@@ -746,7 +746,7 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 		for (j = 0; j < 6; j++) {
 			Orbiter->Int_vec.copy(Basis, Mtx, 8);
 			Orbiter->Int_vec.copy(Forbidden_points + j * 4, Mtx + 8, 4);
-			r = F->rank_of_rectangular_matrix(Mtx,
+			r = F->Linear_algebra->rank_of_rectangular_matrix(Mtx,
 					3, 4, 0 /* verbose_level*/);
 			if (r == 2) {
 				break;
@@ -840,7 +840,7 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 		for (j = 0; j < nb_pts; j++) {
 			v[0] = Pts4[j * 2 + 0];
 			v[1] = Pts4[j * 2 + 1];
-			F->mult_matrix_matrix(v, Basis, w + j * 4, 1, 2, 4, 0 /* verbose_level */);
+			F->Linear_algebra->mult_matrix_matrix(v, Basis, w + j * 4, 1, 2, 4, 0 /* verbose_level */);
 		}
 		if (f_v) {
 			cout << "surface_with_action::complete_skew_hexagon_with_polarity after multiplying" << endl;
@@ -1198,7 +1198,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		}
 
 		// Adjust the basis L of the line ai4image so that Q4 is first:
-		F->adjust_basis(L, Q4, 4, 2, 1, verbose_level - 1);
+		F->Linear_algebra->adjust_basis(L, Q4, 4, 2, 1, verbose_level - 1);
 		if (f_vv) {
 			cout << "after F->adjust_basis" << endl;
 			cout << "L=" << endl;
@@ -1213,7 +1213,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		for (a = 0; a < F->q; a++) {
 			v[0] = a;
 			v[1] = 1;
-			F->mult_matrix_matrix(v, L, w, 1, 2, 4,
+			F->Linear_algebra->mult_matrix_matrix(v, L, w, 1, 2, 4,
 					0 /* verbose_level */);
 			//rk = Surf->rank_point(w);
 
@@ -1242,7 +1242,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		}
 		
 		// test that the line is not a line of the quadric:
-		F->add_vector(L, w, pt_coord, 4);
+		F->Linear_algebra->add_vector(L, w, pt_coord, 4);
 		b = F->evaluate_quadratic_form_x0x3mx1x2(pt_coord);
 		if (b == 0) {
 			if (f_v) {
@@ -1286,7 +1286,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		Orbiter->Int_vec.copy(w, pi2 + 8, 4);
 		
 		// Let line3 be the intersection of pi1 and pi2:
-		F->intersect_subspaces(4, 3, pi1, 3, pi2, 
+		F->Linear_algebra->intersect_subspaces(4, 3, pi1, 3, pi2,
 			d, M, 0 /* verbose_level */);
 		if (d != 2) {
 			if (f_v) {
@@ -1325,7 +1325,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		Surf->Gr->unrank_lint_here(L, image[h], 0 /* verbose_level */);
 		for (a = 0; a < F->q + 1; a++) {
 			F->PG_element_unrank_modified(v, 1, 2, a);
-			F->mult_matrix_matrix(v, L, w, 1, 2, 4,
+			F->Linear_algebra->mult_matrix_matrix(v, L, w, 1, 2, 4,
 					0 /* verbose_level */);
 
 			// Evaluate the equation of the hyperboloid
@@ -1356,7 +1356,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	line3 = -1;
 	for (h = 0; h < 2; h++) {
 		for (k = 0; k < 2; k++) {
-			F->add_vector(pt_coord + h * 4, pt_coord + (2 + k) * 4, w, 4);
+			F->Linear_algebra->add_vector(pt_coord + h * 4, pt_coord + (2 + k) * 4, w, 4);
 			b = F->evaluate_quadratic_form_x0x3mx1x2(w);
 			if (b == 0) {
 				if (f_vv) {

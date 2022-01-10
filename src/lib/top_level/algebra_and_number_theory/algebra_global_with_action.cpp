@@ -1293,7 +1293,7 @@ void algebra_global_with_action::do_random(int q, int d, int f_no_eigenvalue_one
 	Mtx = NEW_int(d * d);
 	Basis = NEW_int(d * d);
 
-	C.F->random_invertible_matrix(Mtx, d, verbose_level - 2);
+	C.F->Linear_algebra->random_invertible_matrix(Mtx, d, verbose_level - 2);
 
 
 	gl_class_rep *R1;
@@ -2090,7 +2090,7 @@ void algebra_global_with_action::do_eigenstuff(finite_field *F,
 				size, size, size, F->log10_of_q);
 
 		cout << "B transposed:" << endl;
-		F->transpose_matrix(B, Bt, size, size);
+		F->Linear_algebra->transpose_matrix(B, Bt, size, size);
 		Orbiter->Int_vec.print_integer_matrix_width(cout, Bt,
 				size, size, size, F->log10_of_q);
 
@@ -2104,13 +2104,13 @@ void algebra_global_with_action::do_eigenstuff(finite_field *F,
 		base_cols = new int[size];
 		kernel = new int[size * size];
 
-		nb_base_cols = F->Gauss_int(Bt,
+		nb_base_cols = F->Linear_algebra->Gauss_int(Bt,
 			f_special, f_complete, base_cols,
 			f_P, NULL, size, size, size,
 			verbose_level - 1);
 		cout << "rank = " << nb_base_cols << endl;
 
-		F->matrix_get_kernel(Bt, size, size, base_cols, nb_base_cols,
+		F->Linear_algebra->matrix_get_kernel(Bt, size, size, base_cols, nb_base_cols,
 			kernel_m, kernel_n, kernel, 0 /* verbose_level */);
 		cout << "kernel = left eigenvectors:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout, kernel,
@@ -2133,7 +2133,7 @@ void algebra_global_with_action::do_eigenstuff(finite_field *F,
 
 		cout << "computing xA" << endl;
 
-		F->mult_vector_from_the_left(vec1, A, vec2, size, size);
+		F->Linear_algebra->mult_vector_from_the_left(vec1, A, vec2, size, size);
 		Orbiter->Int_vec.print(cout, vec2, size);
 		cout << endl;
 		F->PG_element_normalize_from_front(vec2, 1, size);

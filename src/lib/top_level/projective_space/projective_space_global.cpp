@@ -193,39 +193,6 @@ void projective_space_global::analyze_del_Pezzo_surface_formula_given(
 
 
 
-void projective_space_global::canonical_form_of_code(
-		projective_space_with_action *PA,
-		std::string &label,
-		int *genma, int k, int n,
-		classification_of_objects_description *Canonical_form_codes_Descr,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "projective_space_global::canonical_form_of_code" << endl;
-	}
-
-	if (f_v) {
-		cout << "projective_space_global::canonical_form_of_code before PA->canonical_form_of_code" << endl;
-	}
-
-	PA->canonical_form_of_code(
-				label,
-				genma, k, n,
-				Canonical_form_codes_Descr,
-				verbose_level);
-	if (f_v) {
-		cout << "projective_space_global::canonical_form_of_code after PA->canonical_form_of_code" << endl;
-	}
-
-
-	if (f_v) {
-		cout << "projective_space_global::canonical_form_of_code done" << endl;
-	}
-}
-
-
 
 void projective_space_global::do_create_surface(
 		projective_space_with_action *PA,
@@ -299,157 +266,6 @@ void projective_space_global::do_create_surface(
 		cout << "projective_space_global::do_create_surface done" << endl;
 	}
 }
-
-
-void projective_space_global::table_of_quartic_curves(
-		projective_space_with_action *PA,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "projective_space_global::table_of_quartic_curves" << endl;
-	}
-
-	PA->table_of_quartic_curves(verbose_level);
-
-	if (f_v) {
-		cout << "projective_space_global::table_of_quartic_curves done" << endl;
-	}
-}
-
-void projective_space_global::table_of_cubic_surfaces(
-		projective_space_with_action *PA,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "projective_space_global::table_of_cubic_surfaces" << endl;
-	}
-
-	PA->table_of_cubic_surfaces(verbose_level);
-
-	if (f_v) {
-		cout << "projective_space_global::table_of_cubic_surfaces done" << endl;
-	}
-}
-
-void projective_space_global::do_create_quartic_curve(
-		projective_space_with_action *PA,
-		quartic_curve_create_description *Quartic_curve_descr,
-		quartic_curve_create *&QC,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "projective_space_global::do_create_quartic_curve" << endl;
-		cout << "projective_space_global::do_create_quartic_curve verbose_level=" << verbose_level << endl;
-	}
-
-
-	if (f_v) {
-		cout << "projective_space_global::do_create_quartic_curve before PA->create_quartic_curve" << endl;
-	}
-
-	PA->create_quartic_curve(
-				Quartic_curve_descr,
-				QC,
-				verbose_level);
-
-	if (f_v) {
-		cout << "projective_space_global::do_create_quartic_curve after PA->create_quartic_curve" << endl;
-	}
-
-	if (f_v) {
-		cout << "projective_space_global::do_create_quartic_curve done" << endl;
-	}
-}
-
-
-
-void projective_space_global::do_spread_classify(
-		projective_space_with_action *PA,
-		int k,
-		poset_classification_control *Control,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "projective_space_global::do_spread_classify" << endl;
-	}
-
-	PA->do_spread_classify(k,
-			Control,
-			verbose_level);
-
-	if (f_v) {
-		cout << "projective_space_global::do_spread_classify done" << endl;
-	}
-}
-
-
-void projective_space_global::do_classify_semifields(
-		projective_space_with_action *PA,
-		semifield_classify_description *Semifield_classify_description,
-		poset_classification_control *Control,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "projective_space_global::do_classify_semifields" << endl;
-	}
-
-
-	semifield_classify_with_substructure *S;
-
-	S = NEW_OBJECT(semifield_classify_with_substructure);
-
-	if (f_v) {
-		cout << "projective_space_global::do_classify_semifields before S->init" << endl;
-	}
-	S->init(
-			Semifield_classify_description,
-			PA,
-			Control,
-			verbose_level);
-	if (f_v) {
-		cout << "projective_space_global::do_classify_semifields after S->init" << endl;
-	}
-
-	if (f_v) {
-		cout << "projective_space_global::do_classify_semifields done" << endl;
-	}
-}
-
-
-void projective_space_global::do_cheat_sheet_PG(
-		projective_space_with_action *PA,
-		layered_graph_draw_options *O,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-
-	if (f_v) {
-		cout << "projective_space_global::do_cheat_sheet_PG verbose_level="
-				<< verbose_level << endl;
-	}
-
-
-	PA->cheat_sheet(O, verbose_level);
-
-
-	if (f_v) {
-		cout << "projective_space_global::do_cheat_sheet_PG done" << endl;
-	}
-
-}
-
-
 
 
 
@@ -689,7 +505,7 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 
 
 			for (j = 0; j < 3; j++) {
-				Surf->F->mult_matrix_matrix(Pluecker_coords + j * 6, Polarity36,
+				Surf->F->Linear_algebra->mult_matrix_matrix(Pluecker_coords + j * 6, Polarity36,
 						Pluecker_coords + 18 + j * 6, 1, 6, 6, 0 /* verbose_level */);
 			}
 

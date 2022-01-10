@@ -881,8 +881,9 @@ public:
 	int f_collection;
 	std::string list_of_objects;
 
-	//int f_combinatorial_object;
-	//combinatorial_object_description *Combinatorial_object_description;
+	int f_geometric_object;
+	std::string geometric_object_projective_space_label;
+	geometric_object_description *Geometric_object_description;
 
 	int f_graph;
 	create_graph_description *Create_graph_description;
@@ -953,6 +954,7 @@ public:
 	void definition_of_linear_group(int verbose_level);
 	void definition_of_permutation_group(int verbose_level);
 	void definition_of_modified_group(int verbose_level);
+	void definition_of_geometric_object(int verbose_level);
 	void definition_of_formula(formula *F,
 			int verbose_level);
 	void definition_of_collection(std::string &list_of_objects,

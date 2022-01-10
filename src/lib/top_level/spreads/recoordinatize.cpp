@@ -160,12 +160,12 @@ void recoordinatize::do_recoordinatize(
 		Orbiter->Int_vec.print_integer_matrix_width(cout, M, 3 * k, n, n, F->log10_of_q + 1);
 	}
 	Orbiter->Int_vec.copy(M, AA, n * n);
-	F->matrix_inverse(AA, AAv, n, 0 /*verbose_level - 1*/);
+	F->Linear_algebra->matrix_inverse(AA, AAv, n, 0 /*verbose_level - 1*/);
 	if (f_vv) {
 		cout << "AAv:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout, AAv, n, n, n, F->log10_of_q + 1);
 	}
-	F->mult_matrix_matrix(M, AAv, N, 3 * k, n, n,
+	F->Linear_algebra->mult_matrix_matrix(M, AAv, N, 3 * k, n, n,
 			0 /* verbose_level */);
 	if (f_vv) {
 		cout << "N:" << endl;
@@ -181,7 +181,7 @@ void recoordinatize::do_recoordinatize(
 		cout << "TT:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout, TT, k, k, k, F->log10_of_q + 1);
 	}
-	F->matrix_inverse(TT, TTv, k, 0 /*verbose_level - 1*/);
+	F->Linear_algebra->matrix_inverse(TT, TTv, k, 0 /*verbose_level - 1*/);
 	if (f_vv) {
 		cout << "TTv:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout, TTv, k, k, k, F->log10_of_q + 1);
@@ -202,7 +202,7 @@ void recoordinatize::do_recoordinatize(
 		cout << "TT:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout, TT, k, k, k, F->log10_of_q + 1);
 	}
-	F->matrix_inverse(TT, TTv, k, 0 /*verbose_level - 1*/);
+	F->Linear_algebra->matrix_inverse(TT, TTv, k, 0 /*verbose_level - 1*/);
 	if (f_vv) {
 		cout << "TTv:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout, TTv, k, k, k, F->log10_of_q + 1);
@@ -219,13 +219,13 @@ void recoordinatize::do_recoordinatize(
 	}
 
 	
-	F->mult_matrix_matrix(AAv, B, C, n, n, n, 0 /* verbose_level */);
+	F->Linear_algebra->mult_matrix_matrix(AAv, B, C, n, n, n, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "C:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout, C, n, n, n, F->log10_of_q + 1);
 	}
 	
-	F->mult_matrix_matrix(M, C, M1, 3 * k, n, n, 0 /* verbose_level */);
+	F->Linear_algebra->mult_matrix_matrix(M, C, M1, 3 * k, n, n, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "M1:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout,

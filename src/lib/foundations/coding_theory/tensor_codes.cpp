@@ -315,7 +315,7 @@ void coding_theory_domain::create_matrix_M(
 		col_sum = NEW_int(m);
 		for (i = 0; i < n; i++)
 			all_one[i] = 1;
-		F->mult_matrix_matrix(M, all_one, col_sum, m, n, 1,
+		F->Linear_algebra->mult_matrix_matrix(M, all_one, col_sum, m, n, 1,
 				0 /* verbose_level */);
 		cout << "overall col_sum:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout, col_sum, m, 1, 1, 2);
@@ -427,14 +427,14 @@ void coding_theory_domain::create_matrix_H_subfield(
 		}
 
 
-	F->invert_matrix(C, C_inv, m, 0 /* verbose_level */);
+	F->Linear_algebra->invert_matrix(C, C_inv, m, 0 /* verbose_level */);
 
 	if (f_vv) {
 		cout << "C_inv:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout, C_inv, m, m, m, 2);
 		}
 
-	F->mult_matrix_matrix(C, C_inv, AA, m, m, m,
+	F->Linear_algebra->mult_matrix_matrix(C, C_inv, AA, m, m, m,
 			0 /* verbose_level */);
 
 	if (f_vv) {
@@ -443,7 +443,7 @@ void coding_theory_domain::create_matrix_H_subfield(
 		}
 
 
-	F->mult_matrix_matrix(C, M, H, m, m, n,
+	F->Linear_algebra->mult_matrix_matrix(C, M, H, m, m, n,
 			0 /* verbose_level */);
 
 	if (f_v) {
@@ -769,9 +769,10 @@ void coding_theory_domain::make_tensor_code_9_dimensional(int q,
 
 		all_one = NEW_int(n);
 		col_sum = NEW_int(m);
-		for (i = 0; i < n; i++)
+		for (i = 0; i < n; i++) {
 			all_one[i] = 1;
-		F.mult_matrix_matrix(M, all_one, col_sum, m, n, 1,
+		}
+		F.Linear_algebra->mult_matrix_matrix(M, all_one, col_sum, m, n, 1,
 				0 /* verbose_level */);
 		cout << "col_sum:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout, col_sum, m, 1, 1, 2);
@@ -791,22 +792,22 @@ void coding_theory_domain::make_tensor_code_9_dimensional(int q,
 	cout << "C:" << endl;
 	Orbiter->Int_vec.print_integer_matrix_width(cout, C, m, m, m, 2);
 
-	F.invert_matrix(C, C_inv, m, 0 /* verbose_level */);
+	F.Linear_algebra->invert_matrix(C, C_inv, m, 0 /* verbose_level */);
 
 	cout << "C_inv:" << endl;
 	Orbiter->Int_vec.print_integer_matrix_width(cout, C_inv, m, m, m, 2);
 
 	{
-	int *AA;
-	AA = NEW_int(m * m);
-	F.mult_matrix_matrix(C, C_inv, AA, m, m, m,
-			0 /* verbose_level */);
-	cout << "C * C_inv:" << endl;
-	Orbiter->Int_vec.print_integer_matrix_width(cout, AA, m, m, m, 2);
-	FREE_int(AA);
+		int *AA;
+		AA = NEW_int(m * m);
+		F.Linear_algebra->mult_matrix_matrix(C, C_inv, AA, m, m, m,
+				0 /* verbose_level */);
+		cout << "C * C_inv:" << endl;
+		Orbiter->Int_vec.print_integer_matrix_width(cout, AA, m, m, m, 2);
+		FREE_int(AA);
 	}
 
-	F.mult_matrix_matrix(C, M, H, m, m, n,
+	F.Linear_algebra->mult_matrix_matrix(C, M, H, m, m, n,
 			0 /* verbose_level */);
 	cout << "H = C * M:" << endl;
 	Orbiter->Int_vec.print_integer_matrix_width(cout, H, m, n, n, 2);

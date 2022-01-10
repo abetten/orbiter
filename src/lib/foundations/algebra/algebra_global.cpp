@@ -131,7 +131,7 @@ void algebra_global::make_all_irreducible_polynomials_of_degree_d(
 			cout << endl;
 		}
 
-		F->mult_vector_from_the_right(Normal_basis, v, w, d, d);
+		F->Linear_algebra->mult_vector_from_the_right(Normal_basis, v, w, d, d);
 		if (f_vv) {
 			cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
 					"regular word " << cnt << " : w = ";
@@ -300,7 +300,7 @@ int algebra_global::count_all_irreducible_polynomials_of_degree_d(
 			cout << endl;
 		}
 
-		F->mult_vector_from_the_right(Normal_basis, v, w, d, d);
+		F->Linear_algebra->mult_vector_from_the_right(Normal_basis, v, w, d, d);
 		if (f_vv) {
 			cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
 					"regular word " << cnt << " : w = ";

@@ -17,6 +17,8 @@ MODULES = \
 	desarguesian_spread.o \
 	elliptic_curve.o \
 	flag.o \
+	geometric_object_create.o \
+	geometric_object_description.o \
 	geometry_global.o \
 	grassmann.o \
 	grassmann_embedded.o \
@@ -32,6 +34,7 @@ MODULES = \
 	projective_space_implementation.o \
 	projective_space.o \
 	projective_space2.o \
+	projective_space3.o \
 	quartic_curve_domain.o \
 	quartic_curve_object_properties.o \
 	quartic_curve_object.o \

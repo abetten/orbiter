@@ -1,5 +1,5 @@
 /*
- * finite_field_RREF.cpp
+ * linear_algebra_RREF.cpp
  *
  *  Created on: Feb 7, 2021
  *      Author: betten
@@ -16,7 +16,7 @@ namespace orbiter {
 namespace foundations {
 
 
-int finite_field::Gauss_int(int *A,
+int linear_algebra::Gauss_int(int *A,
 	int f_special, int f_complete, int *base_cols,
 	int f_P, int *P, int m, int n, int Pn, int verbose_level)
 // returns the rank which is the number of entries in base_cols
@@ -30,7 +30,7 @@ int finite_field::Gauss_int(int *A,
 	int pivot, pivot_inv = 0, a, b, c, z, f;
 
 	if (f_v) {
-		cout << "finite_field::Gauss_int" << endl;
+		cout << "linear_algebra::Gauss_int" << endl;
 	}
 	if (f_vv) {
 		cout << "Gauss algorithm for matrix:" << endl;
@@ -86,7 +86,7 @@ int finite_field::Gauss_int(int *A,
 			cout << "pivot=" << pivot << endl;
 		}
 		//pivot_inv = inv_table[pivot];
-		pivot_inv = inverse(pivot);
+		pivot_inv = F->inverse(pivot);
 		if (f_vv) {
 			cout << "pivot=" << pivot << " pivot_inv="
 					<< pivot_inv << endl;
@@ -94,11 +94,11 @@ int finite_field::Gauss_int(int *A,
 		if (!f_special) {
 			// make pivot to 1:
 			for (jj = j; jj < n; jj++) {
-				A[i * n + jj] = mult(A[i * n + jj], pivot_inv);
+				A[i * n + jj] = F->mult(A[i * n + jj], pivot_inv);
 			}
 			if (f_P) {
 				for (jj = 0; jj < Pn; jj++) {
-					P[i * Pn + jj] = mult(P[i * Pn + jj], pivot_inv);
+					P[i * Pn + jj] = F->mult(P[i * Pn + jj], pivot_inv);
 				}
 			}
 			if (f_vv) {
@@ -125,12 +125,12 @@ int finite_field::Gauss_int(int *A,
 				continue;
 			}
 			if (f_special) {
-				f = mult(z, pivot_inv);
+				f = F->mult(z, pivot_inv);
 			}
 			else {
 				f = z;
 			}
-			f = negate(f);
+			f = F->negate(f);
 			A[k * n + j] = 0;
 			if (f_vv) {
 				cout << "eliminating row " << k << endl;
@@ -141,8 +141,8 @@ int finite_field::Gauss_int(int *A,
 				// c := b + f * a
 				//    = b - z * a              if !f_special
 				//      b - z * pivot_inv * a  if f_special
-				c = mult(f, a);
-				c = add(c, b);
+				c = F->mult(f, a);
+				c = F->add(c, b);
 				A[k * n + jj] = c;
 				if (f_vv) {
 					cout << A[k * n + jj] << " ";
@@ -153,8 +153,8 @@ int finite_field::Gauss_int(int *A,
 					a = P[i * Pn + jj];
 					b = P[k * Pn + jj];
 					// c := b - z * a
-					c = mult(f, a);
-					c = add(c, b);
+					c = F->mult(f, a);
+					c = F->add(c, b);
 					P[k * Pn + jj] = c;
 				}
 			}
@@ -192,7 +192,7 @@ int finite_field::Gauss_int(int *A,
 			}
 			else {
 				pivot = A[i * n + j];
-				pivot_inv = inverse(pivot);
+				pivot_inv = F->inverse(pivot);
 			}
 			// do the gaussian elimination in the upper part:
 			for (k = i - 1; k >= 0; k--) {
@@ -205,11 +205,11 @@ int finite_field::Gauss_int(int *A,
 					a = A[i * n + jj];
 					b = A[k * n + jj];
 					if (f_special) {
-						a = mult(a, pivot_inv);
+						a = F->mult(a, pivot_inv);
 					}
-					c = mult(z, a);
-					c = negate(c);
-					c = add(c, b);
+					c = F->mult(z, a);
+					c = F->negate(c);
+					c = F->add(c, b);
 					A[k * n + jj] = c;
 				}
 				if (f_P) {
@@ -217,11 +217,11 @@ int finite_field::Gauss_int(int *A,
 						a = P[i * Pn + jj];
 						b = P[k * Pn + jj];
 						if (f_special) {
-							a = mult(a, pivot_inv);
+							a = F->mult(a, pivot_inv);
 						}
-						c = mult(z, a);
-						c = negate(c);
-						c = add(c, b);
+						c = F->mult(z, a);
+						c = F->negate(c);
+						c = F->add(c, b);
 						P[k * Pn + jj] = c;
 					}
 				}
@@ -235,12 +235,12 @@ int finite_field::Gauss_int(int *A,
 		cout << "the rank is " << rank << endl;
 	}
 	if (f_v) {
-		cout << "finite_field::Gauss_int done" << endl;
+		cout << "linear_algebra::Gauss_int done" << endl;
 	}
 	return rank;
 }
 
-int finite_field::Gauss_int_with_pivot_strategy(int *A,
+int linear_algebra::Gauss_int_with_pivot_strategy(int *A,
 	int f_special, int f_complete, int *pivot_perm,
 	int m, int n,
 	int (*find_pivot_function)(int *A, int m, int n, int r,
@@ -257,10 +257,10 @@ int finite_field::Gauss_int_with_pivot_strategy(int *A,
 	int pivot, pivot_inv = 0, a, b, c, z, f, pi;
 
 	if (f_v) {
-		cout << "finite_field::Gauss_int_with_pivot_strategy" << endl;
+		cout << "linear_algebra::Gauss_int_with_pivot_strategy" << endl;
 	}
 	if (f_vv) {
-		cout << "finite_field::Gauss_int_with_pivot_strategy "
+		cout << "linear_algebra::Gauss_int_with_pivot_strategy "
 				"Gauss algorithm for matrix:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, 5);
 		//print_tables();
@@ -289,7 +289,7 @@ int finite_field::Gauss_int_with_pivot_strategy(int *A,
 
 		if (k == m) { // no pivot found
 			if (f_vv) {
-				cout << "finite_field::Gauss_int_with_pivot_strategy "
+				cout << "linear_algebra::Gauss_int_with_pivot_strategy "
 						"no pivot found in column " << j << endl;
 			}
 			exit(1);
@@ -318,14 +318,14 @@ int finite_field::Gauss_int_with_pivot_strategy(int *A,
 		if (f_vv) {
 			cout << "pivot=" << pivot << endl;
 		}
-		pivot_inv = inverse(pivot);
+		pivot_inv = F->inverse(pivot);
 		if (f_vv) {
 			cout << "pivot=" << pivot << " pivot_inv=" << pivot_inv << endl;
 		}
 		if (!f_special) {
 			// make pivot to 1:
 			for (jj = 0; jj < n; jj++) {
-				A[i * n + jj] = mult(A[i * n + jj], pivot_inv);
+				A[i * n + jj] = F->mult(A[i * n + jj], pivot_inv);
 			}
 			if (f_vv) {
 				cout << "pivot=" << pivot << " pivot_inv=" << pivot_inv
@@ -351,12 +351,12 @@ int finite_field::Gauss_int_with_pivot_strategy(int *A,
 				continue;
 			}
 			if (f_special) {
-				f = mult(z, pivot_inv);
+				f = F->mult(z, pivot_inv);
 			}
 			else {
 				f = z;
 			}
-			f = negate(f);
+			f = F->negate(f);
 			//A[k * n + j] = 0;
 			if (f_vv) {
 				cout << "eliminating row " << k << endl;
@@ -367,8 +367,8 @@ int finite_field::Gauss_int_with_pivot_strategy(int *A,
 				// c := b + f * a
 				//    = b - z * a              if !f_special
 				//      b - z * pivot_inv * a  if f_special
-				c = mult(f, a);
-				c = add(c, b);
+				c = F->mult(f, a);
+				c = F->add(c, b);
 				A[k * n + jj] = c;
 				if (f_vv) {
 					cout << A[k * n + jj] << " ";
@@ -398,7 +398,7 @@ int finite_field::Gauss_int_with_pivot_strategy(int *A,
 			}
 			else {
 				pivot = A[i * n + j];
-				pivot_inv = inverse(pivot);
+				pivot_inv = F->inverse(pivot);
 			}
 			// do the gaussian elimination in the upper part:
 			for (k = i - 1; k >= 0; k--) {
@@ -411,11 +411,11 @@ int finite_field::Gauss_int_with_pivot_strategy(int *A,
 					a = A[i * n + jj];
 					b = A[k * n + jj];
 					if (f_special) {
-						a = mult(a, pivot_inv);
+						a = F->mult(a, pivot_inv);
 					}
-					c = mult(z, a);
-					c = negate(c);
-					c = add(c, b);
+					c = F->mult(z, a);
+					c = F->negate(c);
+					c = F->add(c, b);
 					A[k * n + jj] = c;
 				}
 			} // next k
@@ -428,12 +428,12 @@ int finite_field::Gauss_int_with_pivot_strategy(int *A,
 		cout << "the rank is " << rank << endl;
 	}
 	if (f_v) {
-		cout << "finite_field::Gauss_int_with_pivot_strategy done" << endl;
+		cout << "linear_algebra::Gauss_int_with_pivot_strategy done" << endl;
 	}
 	return rank;
 }
 
-int finite_field::Gauss_int_with_given_pivots(int *A,
+int linear_algebra::Gauss_int_with_given_pivots(int *A,
 	int f_special, int f_complete, int *pivots, int nb_pivots,
 	int m, int n,
 	int verbose_level)
@@ -446,10 +446,10 @@ int finite_field::Gauss_int_with_given_pivots(int *A,
 	int pivot, pivot_inv = 0, a, b, c, z, f;
 
 	if (f_v) {
-		cout << "finite_field::Gauss_int_with_given_pivots" << endl;
+		cout << "linear_algebra::Gauss_int_with_given_pivots" << endl;
 	}
 	if (f_vv) {
-		cout << "finite_field::Gauss_int_with_given_pivots "
+		cout << "linear_algebra::Gauss_int_with_given_pivots "
 				"Gauss algorithm for matrix:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, 5);
 		cout << "pivots: ";
@@ -473,7 +473,7 @@ int finite_field::Gauss_int_with_given_pivots(int *A,
 
 		if (k == m) { // no pivot found
 			if (f_v) {
-				cout << "finite_field::Gauss_int_with_given_pivots "
+				cout << "linear_algebra::Gauss_int_with_given_pivots "
 						"no pivot found in column " << j << endl;
 			}
 			return FALSE;
@@ -502,14 +502,14 @@ int finite_field::Gauss_int_with_given_pivots(int *A,
 		if (f_vv) {
 			cout << "pivot=" << pivot << endl;
 		}
-		pivot_inv = inverse(pivot);
+		pivot_inv = F->inverse(pivot);
 		if (f_vv) {
 			cout << "pivot=" << pivot << " pivot_inv=" << pivot_inv << endl;
 		}
 		if (!f_special) {
 			// make pivot to 1:
 			for (jj = 0; jj < n; jj++) {
-				A[i * n + jj] = mult(A[i * n + jj], pivot_inv);
+				A[i * n + jj] = F->mult(A[i * n + jj], pivot_inv);
 			}
 			if (f_vv) {
 				cout << "pivot=" << pivot << " pivot_inv=" << pivot_inv
@@ -535,12 +535,12 @@ int finite_field::Gauss_int_with_given_pivots(int *A,
 				continue;
 			}
 			if (f_special) {
-				f = mult(z, pivot_inv);
+				f = F->mult(z, pivot_inv);
 			}
 			else {
 				f = z;
 			}
-			f = negate(f);
+			f = F->negate(f);
 			//A[k * n + j] = 0;
 			if (f_vv) {
 				cout << "eliminating row " << k << endl;
@@ -551,8 +551,8 @@ int finite_field::Gauss_int_with_given_pivots(int *A,
 				// c := b + f * a
 				//    = b - z * a              if !f_special
 				//      b - z * pivot_inv * a  if f_special
-				c = mult(f, a);
-				c = add(c, b);
+				c = F->mult(f, a);
+				c = F->add(c, b);
 				A[k * n + jj] = c;
 				if (f_vv) {
 					cout << A[k * n + jj] << " ";
@@ -580,7 +580,7 @@ int finite_field::Gauss_int_with_given_pivots(int *A,
 			}
 			else {
 				pivot = A[i * n + j];
-				pivot_inv = inverse(pivot);
+				pivot_inv = F->inverse(pivot);
 			}
 			// do the gaussian elimination in the upper part:
 			for (k = i - 1; k >= 0; k--) {
@@ -593,11 +593,11 @@ int finite_field::Gauss_int_with_given_pivots(int *A,
 					a = A[i * n + jj];
 					b = A[k * n + jj];
 					if (f_special) {
-						a = mult(a, pivot_inv);
+						a = F->mult(a, pivot_inv);
 					}
-					c = mult(z, a);
-					c = negate(c);
-					c = add(c, b);
+					c = F->mult(z, a);
+					c = F->negate(c);
+					c = F->add(c, b);
 					A[k * n + jj] = c;
 				}
 			} // next k
@@ -609,14 +609,14 @@ int finite_field::Gauss_int_with_given_pivots(int *A,
 		//print_integer_matrix(cout, A, rank, n);
 	}
 	if (f_v) {
-		cout << "finite_field::Gauss_int_with_given_pivots done" << endl;
+		cout << "linear_algebra::Gauss_int_with_given_pivots done" << endl;
 	}
 	return TRUE;
 }
 
 
 
-int finite_field::RREF_search_pivot(int *A, int m, int n,
+int linear_algebra::RREF_search_pivot(int *A, int m, int n,
 		int &i, int &j, int *base_cols, int verbose_level)
 // A is a m x n matrix,
 {
@@ -625,10 +625,10 @@ int finite_field::RREF_search_pivot(int *A, int m, int n,
 	int k, jj;
 
 	if (f_v) {
-		cout << "finite_field::RREF_search_pivot" << endl;
+		cout << "linear_algebra::RREF_search_pivot" << endl;
 	}
 	if (f_vv) {
-		cout << "finite_field::RREF_search_pivot matrix:" << endl;
+		cout << "linear_algebra::RREF_search_pivot matrix:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, 5);
 		//print_tables();
 	}
@@ -670,7 +670,7 @@ int finite_field::RREF_search_pivot(int *A, int m, int n,
 	return FALSE;
 }
 
-void finite_field::RREF_make_pivot_one(int *A, int m, int n,
+void linear_algebra::RREF_make_pivot_one(int *A, int m, int n,
 		int &i, int &j, int *base_cols, int verbose_level)
 // A is a m x n matrix,
 {
@@ -680,33 +680,33 @@ void finite_field::RREF_make_pivot_one(int *A, int m, int n,
 	int jj;
 
 	if (f_v) {
-		cout << "finite_field::RREF_make_pivot_one" << endl;
+		cout << "linear_algebra::RREF_make_pivot_one" << endl;
 	}
 	pivot = A[i * n + j];
 	if (f_vv) {
 		cout << "pivot=" << pivot << endl;
 	}
 	//pivot_inv = inv_table[pivot];
-	pivot_inv = inverse(pivot);
+	pivot_inv = F->inverse(pivot);
 	if (f_vv) {
 		cout << "pivot=" << pivot << " pivot_inv="
 				<< pivot_inv << endl;
 	}
 	// make pivot to 1:
 	for (jj = j; jj < n; jj++) {
-		A[i * n + jj] = mult(A[i * n + jj], pivot_inv);
+		A[i * n + jj] = F->mult(A[i * n + jj], pivot_inv);
 	}
 	if (f_vv) {
 		cout << "pivot=" << pivot << " pivot_inv=" << pivot_inv
 			<< " made to one: " << A[i * n + j] << endl;
 	}
 	if (f_v) {
-		cout << "finite_field::RREF_make_pivot_one done" << endl;
+		cout << "linear_algebra::RREF_make_pivot_one done" << endl;
 	}
 }
 
 
-void finite_field::RREF_elimination_below(int *A, int m, int n,
+void linear_algebra::RREF_elimination_below(int *A, int m, int n,
 		int &i, int &j, int *base_cols, int verbose_level)
 // A is a m x n matrix,
 {
@@ -715,7 +715,7 @@ void finite_field::RREF_elimination_below(int *A, int m, int n,
 	int k, jj, z, f, a, b, c;
 
 	if (f_v) {
-		cout << "finite_field::RREF_elimination_below" << endl;
+		cout << "linear_algebra::RREF_elimination_below" << endl;
 	}
 	for (k = i + 1; k < m; k++) {
 		if (f_vv) {
@@ -726,7 +726,7 @@ void finite_field::RREF_elimination_below(int *A, int m, int n,
 			continue;
 		}
 		f = z;
-		f = negate(f);
+		f = F->negate(f);
 		A[k * n + j] = 0;
 		if (f_vv) {
 			cout << "eliminating row " << k << endl;
@@ -737,8 +737,8 @@ void finite_field::RREF_elimination_below(int *A, int m, int n,
 			// c := b + f * a
 			//    = b - z * a              if !f_special
 			//      b - z * pivot_inv * a  if f_special
-			c = mult(f, a);
-			c = add(c, b);
+			c = F->mult(f, a);
+			c = F->add(c, b);
 			A[k * n + jj] = c;
 			if (f_vv) {
 				cout << A[k * n + jj] << " ";
@@ -747,11 +747,11 @@ void finite_field::RREF_elimination_below(int *A, int m, int n,
 	}
 	i++;
 	if (f_v) {
-		cout << "finite_field::RREF_elimination_below done" << endl;
+		cout << "linear_algebra::RREF_elimination_below done" << endl;
 	}
 }
 
-void finite_field::RREF_elimination_above(int *A, int m, int n,
+void linear_algebra::RREF_elimination_above(int *A, int m, int n,
 		int i, int *base_cols, int verbose_level)
 // A is a m x n matrix,
 {
@@ -759,7 +759,7 @@ void finite_field::RREF_elimination_above(int *A, int m, int n,
 	int j, k, jj, z, a, b, c;
 
 	if (f_v) {
-		cout << "finite_field::RREF_elimination_above" << endl;
+		cout << "linear_algebra::RREF_elimination_above" << endl;
 	}
 	j = base_cols[i];
 	a = A[i * n + j];
@@ -773,14 +773,14 @@ void finite_field::RREF_elimination_above(int *A, int m, int n,
 		for (jj = j + 1; jj < n; jj++) {
 			a = A[i * n + jj];
 			b = A[k * n + jj];
-			c = mult(z, a);
-			c = negate(c);
-			c = add(c, b);
+			c = F->mult(z, a);
+			c = F->negate(c);
+			c = F->add(c, b);
 			A[k * n + jj] = c;
 		}
 	} // next k
 	if (f_v) {
-		cout << "finite_field::RREF_elimination_above done" << endl;
+		cout << "linear_algebra::RREF_elimination_above done" << endl;
 	}
 }
 

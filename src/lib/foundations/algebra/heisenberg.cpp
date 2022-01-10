@@ -91,8 +91,8 @@ void heisenberg::element_add(int *Elt1, int *Elt2, int *Elt3, int verbose_level)
 {
 	int a;
 
-	F->add_vector(Elt1, Elt2, Elt3, len);
-	a = F->dot_product(n, Elt1, Elt2 + n);
+	F->Linear_algebra->add_vector(Elt1, Elt2, Elt3, len);
+	a = F->Linear_algebra->dot_product(n, Elt1, Elt2 + n);
 	Elt3[2 * n] = F->add(Elt3[2 * n], a);
 }
 
@@ -100,8 +100,8 @@ void heisenberg::element_negate(int *Elt1, int *Elt2, int verbose_level)
 {
 	int a;
 
-	F->negate_vector(Elt1, Elt2, len);
-	a = F->dot_product(n, Elt1, Elt1 + n);
+	F->Linear_algebra->negate_vector(Elt1, Elt2, len);
+	a = F->Linear_algebra->dot_product(n, Elt1, Elt1 + n);
 	Elt2[2 * n] = F->add(Elt2[2 * n], a);
 }
 

@@ -241,7 +241,7 @@ void coding_theory_domain::make_gilbert_varshamov_code(
 	Orbiter->Int_vec.print_fully(cout, genma, nmk * n);
 	cout << endl;
 
-	P->F->RREF_and_kernel(n, nmk, genma, 0 /* verbose_level */);
+	P->F->Linear_algebra->RREF_and_kernel(n, nmk, genma, 0 /* verbose_level */);
 
 	cout << "coding_theory_domain::make_gilbert_varshamov_code generator matrix:" << endl;
 	Orbiter->Int_vec.matrix_print_ost(cout, genma + nmk * n, k, n);
@@ -853,7 +853,7 @@ void coding_theory_domain::codewords_affine(finite_field *F, int n, int k,
 
 	for (h = 0; h < N; h++) {
 		Gg.AG_element_unrank(F->q, msg, 1, k, h);
-		F->mult_vector_from_the_left(msg, code, word, k, n);
+		F->Linear_algebra->mult_vector_from_the_left(msg, code, word, k, n);
 		rk = Gg.AG_element_rank(F->q, word, 1, n);
 		codewords[h] = rk;
 	}
@@ -911,7 +911,7 @@ void coding_theory_domain::code_projective_weight_enumerator(finite_field *F,
 			}
 		}
 		Gg.AG_element_unrank(F->q, msg, 1, k, h);
-		F->mult_vector_from_the_left(msg, code, word, k, n);
+		F->Linear_algebra->mult_vector_from_the_left(msg, code, word, k, n);
 		wt = 0;
 		for (i = 0; i < n; i++) {
 			if (word[i]) {
@@ -984,7 +984,7 @@ void coding_theory_domain::code_weight_enumerator(finite_field *F,
 			}
 		}
 		Gg.AG_element_unrank(F->q, msg, 1, k, h);
-		F->mult_vector_from_the_left(msg, code, word, k, n);
+		F->Linear_algebra->mult_vector_from_the_left(msg, code, word, k, n);
 		wt = 0;
 		for (i = 0; i < n; i++) {
 			if (word[i]) {
@@ -1060,7 +1060,7 @@ void coding_theory_domain::code_weight_enumerator_fast(finite_field *F,
 		}
 		F->PG_element_unrank_modified(msg, 1, k, h);
 		//AG_element_unrank(q, msg, 1, k, h);
-		F->mult_vector_from_the_left(msg, code, word, k, n);
+		F->Linear_algebra->mult_vector_from_the_left(msg, code, word, k, n);
 		wt = 0;
 		for (i = 0; i < n; i++) {
 			if (word[i]) {
@@ -1134,7 +1134,7 @@ void coding_theory_domain::code_projective_weights(finite_field *F,
 		}
 		F->PG_element_unrank_modified(msg, 1, k, h);
 		//AG_element_unrank(q, msg, 1, k, h);
-		F->mult_vector_from_the_left(msg, code, word, k, n);
+		F->Linear_algebra->mult_vector_from_the_left(msg, code, word, k, n);
 		wt = 0;
 		for (i = 0; i < n; i++) {
 			if (word[i]) {
@@ -1238,7 +1238,7 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 
 	}
 
-	rk = F->Gauss_int(A,
+	rk = F->Linear_algebra->Gauss_int(A,
 		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
 		FALSE /* f_P */, NULL /*P*/, m, n, n,
 		0 /*verbose_level*/);
@@ -1454,7 +1454,7 @@ void coding_theory_domain::do_linear_code_through_basis(
 
 	for (i = 0; i < sz; i++) {
 		Gg.AG_element_unrank(2, word, 1, k, i);
-		F->mult_matrix_matrix(word, genma,
+		F->Linear_algebra->mult_matrix_matrix(word, genma,
 				code_word, 1, k, n, 0 /* verbose_level*/);
 		set[i] = Gg.AG_element_rank(2, code_word, 1, n);
 
@@ -1599,7 +1599,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check_projec
 	set = NEW_lint(N);
 	for (i = 0; i < N; i++) {
 		Gg.AG_element_unrank(2, word, 1, k, i);
-		F->mult_matrix_matrix(word, genma,
+		F->Linear_algebra->mult_matrix_matrix(word, genma,
 				code_word, 1, k, n, 0 /* verbose_level*/);
 		set[i] = Gg.AG_element_rank(2, code_word, 1, n);
 
@@ -1733,7 +1733,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check(
 	set = NEW_lint(N);
 	for (i = 0; i < N; i++) {
 		Gg.AG_element_unrank(2, word, 1, k, i);
-		F->mult_matrix_matrix(word, genma,
+		F->Linear_algebra->mult_matrix_matrix(word, genma,
 				code_word, 1, k, n, 0 /* verbose_level*/);
 		set[i] = Gg.AG_element_rank(2, code_word, 1, n);
 
@@ -1970,7 +1970,7 @@ void coding_theory_domain::do_sylvester_hadamard(int n,
 		cout << "M1=" << endl;
 		Orbiter->Int_vec.matrix_print(M1, sz, sz);
 
-		F->Kronecker_product_square_but_arbitrary(
+		F->Linear_algebra->Kronecker_product_square_but_arbitrary(
 				M1, H2,
 				sz, 2, M2, sz1,
 				verbose_level);
@@ -2586,7 +2586,7 @@ void coding_theory_domain::do_long_code(
 
 	for (i = 0; i < sz; i++) {
 		Gg.AG_element_unrank(2, message, 1, k, i);
-		F->mult_matrix_matrix(message, genma,
+		F->Linear_algebra->mult_matrix_matrix(message, genma,
 				code_word, 1, k, n, 0 /* verbose_level*/);
 
 		Orbiter->Int_vec.zero(M, nb_rows * nb_cols);
@@ -2715,7 +2715,7 @@ void coding_theory_domain::do_long_code(
 		D = NEW_int(sz);
 		for (i = 0; i < sz; i++) {
 			Gg.AG_element_unrank(2, message, 1, k, i);
-			F->mult_matrix_matrix(message, genma,
+			F->Linear_algebra->mult_matrix_matrix(message, genma,
 					code_word, 1, k, n, 0 /* verbose_level*/);
 
 			d = 0;

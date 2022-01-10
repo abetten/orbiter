@@ -147,7 +147,7 @@ void andre_construction::init(finite_field *F,
 	pivot = NEW_int(spread_size * k);
 	non_pivot = NEW_int(spread_size * (n - k));
 	for (i = 0; i < spread_size; i++) {
-		F->Gauss_simple(spread_elements_genma + i * k * n,
+		F->Linear_algebra->Gauss_simple(spread_elements_genma + i * k * n,
 				k, n, pivot + i * k, 0 /*verbose_level*/);
 		Combi.set_complement(pivot + i * k, k, non_pivot + i * (n - k), a, n);
 		if (a != n - k) {

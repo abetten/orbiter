@@ -336,7 +336,7 @@ void knarr::points_and_lines(int verbose_level)
 				}
 			Orbiter->Int_vec.zero(subspace_basis + 2 * 6, 6);
 			subspace_basis[2 * 6 + 0] = 1;
-			rk = F->Gauss_easy(subspace_basis, 3, 6);
+			rk = F->Linear_algebra->Gauss_easy(subspace_basis, 3, 6);
 			if (rk <= 2) {
 				if (f_v4) {
 					cout << "This subspace contains P, "
@@ -398,7 +398,7 @@ void knarr::points_and_lines(int verbose_level)
 
 		// check if P is not contained:
 		P5->unrank_point(Basis2, 0);
-		c = F->is_subspace(6, 1, Basis2, 3, Basis, 0 /*verbose_level*/);
+		c = F->Linear_algebra->is_subspace(6, 1, Basis2, 3, Basis, 0 /*verbose_level*/);
 		if (c) {
 			if (f_v4) {
 				cout << "contains the point P" << endl;
@@ -430,7 +430,7 @@ void knarr::points_and_lines(int verbose_level)
 		//cout << endl;
 
 
-		F->intersect_subspaces(6, 5, Basis_Pperp, 3, Basis, 
+		F->Linear_algebra->intersect_subspaces(6, 5, Basis_Pperp, 3, Basis,
 			dim_intersection, Basis_intersection,
 			0 /* verbose_level */);
 
@@ -642,7 +642,7 @@ void knarr::incidence_matrix(int *&Inc,
 						cout << endl;
 						}
 
-					c = F->is_subspace(6, dim_U,
+					c = F->Linear_algebra->is_subspace(6, dim_U,
 							Basis_U, dim_V, Basis_V, 0 /*verbose_level*/);
 					if (c) {
 						Inc[row * nb_lines + col] = 1;

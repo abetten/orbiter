@@ -274,10 +274,10 @@ void surface_domain::create_equations_for_pencil_of_surfaces_from_trihedral_pair
 		F->PG_element_unrank_modified(v, 1, 2, l);
 
 		Orbiter->Int_vec.copy(eqn_F, eqn_F2, 20);
-		F->scalar_multiply_vector_in_place(v[0], eqn_F2, 20);
+		F->Linear_algebra->scalar_multiply_vector_in_place(v[0], eqn_F2, 20);
 		Orbiter->Int_vec.copy(eqn_G, eqn_G2, 20);
-		F->scalar_multiply_vector_in_place(v[1], eqn_G2, 20);
-		F->add_vector(eqn_F2, eqn_G2, The_surface_equations + l * 20, 20);
+		F->Linear_algebra->scalar_multiply_vector_in_place(v[1], eqn_G2, 20);
+		F->Linear_algebra->add_vector(eqn_F2, eqn_G2, The_surface_equations + l * 20, 20);
 		F->PG_element_normalize(The_surface_equations + l * 20, 1, 20);
 	}
 
@@ -300,7 +300,7 @@ long int surface_domain::plane_from_three_lines(long int *three_lines,
 		cout << "surface_domain::plane_from_three_lines" << endl;
 	}
 	unrank_lines(Basis, three_lines, 3);
-	rk = F->Gauss_easy(Basis, 6, 4);
+	rk = F->Linear_algebra->Gauss_easy(Basis, 6, 4);
 	if (rk != 3) {
 		cout << "surface_domain::plane_from_three_lines rk != 3" << endl;
 		exit(1);
@@ -923,7 +923,7 @@ void surface_domain::compute_nine_lines(int *F_planes, int *G_planes,
 		for (j = 0; j < 3; j++) {
 			Orbiter->Int_vec.copy(F_planes + i * 4, Basis, 4);
 			Orbiter->Int_vec.copy(G_planes + j * 4, Basis + 4, 4);
-			F->RREF_and_kernel(4, 2, Basis, 0 /* verbose_level */);
+			F->Linear_algebra->RREF_and_kernel(4, 2, Basis, 0 /* verbose_level */);
 			nine_lines[i * 3 + j] = Gr->rank_lint_here(
 				Basis + 8, 0 /* verbose_level */);
 		}
@@ -962,7 +962,7 @@ void surface_domain::compute_nine_lines_by_dual_point_ranks(
 		for (j = 0; j < 3; j++) {
 			Orbiter->Int_vec.copy(F_planes + i * 4, Basis, 4);
 			Orbiter->Int_vec.copy(G_planes + j * 4, Basis + 4, 4);
-			F->RREF_and_kernel(4, 2, Basis, 0 /* verbose_level */);
+			F->Linear_algebra->RREF_and_kernel(4, 2, Basis, 0 /* verbose_level */);
 			nine_lines[i * 3 + j] = Gr->rank_lint_here(
 				Basis + 8, 0 /* verbose_level */);
 		}
@@ -1232,7 +1232,7 @@ void surface_domain::compute_local_coordinates_of_arc(
 			Orbiter->Int_vec.print(cout, v, 4);
 			cout << endl;
 		}
-		F->reduce_mod_subspace_and_get_coefficient_vector(
+		F->Linear_algebra->reduce_mod_subspace_and_get_coefficient_vector(
 			3, 4, Basis_of_hyperplane, base_cols,
 			v, coefficients,
 			0 /* verbose_level */);

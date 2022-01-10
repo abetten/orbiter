@@ -2061,10 +2061,10 @@ void fine_tune(finite_field *F, int *mtxD, int verbose_level)
 	mtxGram[2 * 4 + 3] = 1;
 	mtxGram[3 * 4 + 2] = 1;
 	
-	F->transpose_matrix(mtxD, mtxDt, 4, 4);
-	F->mult_matrix_matrix(mtxDt, mtxGram, mtxE, 4, 4, 4,
+	F->Linear_algebra->transpose_matrix(mtxD, mtxDt, 4, 4);
+	F->Linear_algebra->mult_matrix_matrix(mtxDt, mtxGram, mtxE, 4, 4, 4,
 			0 /* verbose_level */);
-	F->mult_matrix_matrix(mtxE, mtxD, mtxF, 4, 4, 4,
+	F->Linear_algebra->mult_matrix_matrix(mtxE, mtxD, mtxF, 4, 4, 4,
 			0 /* verbose_level */);
 
 	if (f_vv) {
@@ -2125,10 +2125,10 @@ void fine_tune(finite_field *F, int *mtxD, int verbose_level)
 
 
 	int mtxGt[16];
-	F->transpose_matrix(mtxG, mtxGt, 4, 4);
-	F->mult_matrix_matrix(mtxGt, mtxGram, mtxE, 4, 4, 4,
+	F->Linear_algebra->transpose_matrix(mtxG, mtxGt, 4, 4);
+	F->Linear_algebra->mult_matrix_matrix(mtxGt, mtxGram, mtxE, 4, 4, 4,
 			0 /* verbose_level */);
-	F->mult_matrix_matrix(mtxE, mtxG, mtxF, 4, 4, 4,
+	F->Linear_algebra->mult_matrix_matrix(mtxE, mtxG, mtxF, 4, 4, 4,
 			0 /* verbose_level */);
 
 	if (f_vv) {

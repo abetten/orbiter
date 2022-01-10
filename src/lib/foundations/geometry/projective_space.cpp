@@ -391,7 +391,7 @@ void projective_space::create_points_on_line(
 	Grass_lines->unrank_lint(line_rk, 0/*verbose_level - 4*/);
 	for (a = 0; a < k; a++) {
 		F->PG_element_unrank_modified(v, 1, 2, a);
-		F->mult_matrix_matrix(v, Grass_lines->M, w, 1, 2, n + 1,
+		F->Linear_algebra->mult_matrix_matrix(v, Grass_lines->M, w, 1, 2, n + 1,
 				0 /* verbose_level */);
 		F->PG_element_rank_modified(w, 1, n + 1, b);
 		line[a] = b;
@@ -495,7 +495,7 @@ void projective_space::create_lines_on_point_but_inside_a_plane(
 
 		Orbiter->Int_vec.copy(Plane, M, 3 * d);
 		Orbiter->Int_vec.copy(Basis + d, M + 3 * d, d);
-		rk = F->rank_of_rectangular_matrix(M, 4, d, 0 /* verbose_level*/);
+		rk = F->Linear_algebra->rank_of_rectangular_matrix(M, 4, d, 0 /* verbose_level*/);
 		if (rk == 3) {
 			b = Grass_lines->rank_lint_here(Basis, 0 /*verbose_level*/);
 			line_pencil[i++] = b;
@@ -541,7 +541,7 @@ int projective_space::create_point_on_line(
 		cout << endl;
 	}
 
-	F->mult_matrix_matrix(v, Grass_lines->M, w, 1, 2, n + 1,
+	F->Linear_algebra->mult_matrix_matrix(v, Grass_lines->M, w, 1, 2, n + 1,
 			0 /* verbose_level */);
 	if (f_v) {
 		cout << "projective_space::create_point_on_line w=" << endl;
@@ -639,7 +639,7 @@ int projective_space::is_incident(int pt, int line)
 			cout << endl;
 		}
 
-		rk = F->rank_of_rectangular_matrix_memory_given(Mtx,
+		rk = F->Linear_algebra->rank_of_rectangular_matrix_memory_given(Mtx,
 				3, n + 1, Mtx2, v /* base_cols */,
 				0 /*verbose_level*/);
 		if (f_v) {
@@ -814,7 +814,7 @@ void projective_space::incma_for_type_ij(
 					<< " not yet implemented" << endl;
 				exit(1);
 			}
-			rk = F->rank_of_rectangular_matrix_memory_given(Basis,
+			rk = F->Linear_algebra->rank_of_rectangular_matrix_memory_given(Basis,
 					row_type + col_type, d, Basis2, base_cols,
 					0 /*verbose_level*/);
 			if (rk == col_type) {
@@ -1043,7 +1043,7 @@ int projective_space::test_if_lines_are_disjoint_from_scratch(
 	Mtx = NEW_int(4 * m);
 	Grass_lines->unrank_lint_here(Mtx, l1, 0/*verbose_level - 4*/);
 	Grass_lines->unrank_lint_here(Mtx + 2 * m, l2, 0/*verbose_level - 4*/);
-	rk = F->Gauss_easy(Mtx, 4, m);
+	rk = F->Linear_algebra->Gauss_easy(Mtx, 4, m);
 	FREE_int(Mtx);
 	if (rk == 4) {
 		return TRUE;
@@ -1068,12 +1068,12 @@ int projective_space::intersection_of_two_lines(long int l1, long int l2)
 	Mtx3 = NEW_int(D * d);
 
 	Grass_lines->unrank_lint_here(Mtx1, l1, 0/*verbose_level - 4*/);
-	F->perp_standard(d, 2, Mtx1, 0);
+	F->Linear_algebra->perp_standard(d, 2, Mtx1, 0);
 	Orbiter->Int_vec.copy(Mtx1 + 2 * d, Mtx3, (d - 2) * d);
 	Grass_lines->unrank_lint_here(Mtx1, l2, 0/*verbose_level - 4*/);
-	F->perp_standard(d, 2, Mtx1, 0);
+	F->Linear_algebra->perp_standard(d, 2, Mtx1, 0);
 	Orbiter->Int_vec.copy(Mtx1 + 2 * d, Mtx3 + (d - 2) * d, (d - 2) * d);
-	r = F->Gauss_easy(Mtx3, 2 * (d - 2), d);
+	r = F->Linear_algebra->Gauss_easy(Mtx3, 2 * (d - 2), d);
 	if (r < d - 1) {
 		cout << "projective_space::intersection_of_two_lines r < d - 1, "
 				"the lines do not intersect" << endl;
@@ -1084,7 +1084,7 @@ int projective_space::intersection_of_two_lines(long int l1, long int l2)
 				"something is wrong" << endl;
 		exit(1);
 	}
-	F->perp_standard(d, d - 1, Mtx3, 0);
+	F->Linear_algebra->perp_standard(d, d - 1, Mtx3, 0);
 	b = rank_point(Mtx3 + (d - 1) * d);
 
 	FREE_int(Mtx1);
@@ -1126,7 +1126,7 @@ int projective_space::arc_test(long int *input_pts, int nb_pts,
 		Orbiter->Int_vec.copy(Pts + set[0] * 3, Mtx, 3);
 		Orbiter->Int_vec.copy(Pts + set[1] * 3, Mtx + 3, 3);
 		Orbiter->Int_vec.copy(Pts + set[2] * 3, Mtx + 6, 3);
-		if (F->rank_of_matrix(Mtx, 3, 0 /* verbose_level */) < 3) {
+		if (F->Linear_algebra->rank_of_matrix(Mtx, 3, 0 /* verbose_level */) < 3) {
 			if (f_v) {
 				cout << "Points P_" << set[0] << ", P_" << set[1]
 					<< " and P_" << set[2] << " are collinear" << endl;
@@ -1198,7 +1198,7 @@ int projective_space::determine_line_in_plane(
 
 
 
-	rk = F->Gauss_simple(system,
+	rk = F->Linear_algebra->Gauss_simple(system,
 			nb_pts, 3, base_cols, verbose_level - 2);
 	if (rk != 2) {
 		if (f_v) {
@@ -1207,7 +1207,7 @@ int projective_space::determine_line_in_plane(
 		}
 		return FALSE;
 	}
-	F->matrix_get_kernel(system, 2, 3, base_cols, rk, 
+	F->Linear_algebra->matrix_get_kernel(system, 2, 3, base_cols, rk,
 		kernel_m, kernel_n, kernel, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "projective_space::determine_line_in_plane line:" << endl;
@@ -1416,7 +1416,7 @@ int projective_space::determine_conic_in_plane(
 
 
 
-	rk = F->Gauss_simple(system, nb_pts,
+	rk = F->Linear_algebra->Gauss_simple(system, nb_pts,
 			6, base_cols, verbose_level - 2);
 	if (rk != 5) {
 		if (f_v) {
@@ -1425,7 +1425,7 @@ int projective_space::determine_conic_in_plane(
 		}
 		return FALSE;
 	}
-	F->matrix_get_kernel(system, 5, 6, base_cols, rk, 
+	F->Linear_algebra->matrix_get_kernel(system, 5, 6, base_cols, rk,
 		kernel_m, kernel_n, kernel, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "projective_space::determine_conic_in_plane "
@@ -1491,7 +1491,7 @@ int projective_space::determine_cubic_in_plane(
 				"The system:" << endl;
 		Orbiter->Int_vec.matrix_print(System, nb_pts, Poly_3_3->get_nb_monomials());
 	}
-	r = F->Gauss_simple(System, nb_pts, Poly_3_3->get_nb_monomials(),
+	r = F->Linear_algebra->Gauss_simple(System, nb_pts, Poly_3_3->get_nb_monomials(),
 		base_cols, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "projective_space::determine_cubic_in_plane "
@@ -1509,7 +1509,7 @@ int projective_space::determine_cubic_in_plane(
 	}
 	int kernel_m, kernel_n;
 
-	F->matrix_get_kernel(System, r, Poly_3_3->get_nb_monomials(),
+	F->Linear_algebra->matrix_get_kernel(System, r, Poly_3_3->get_nb_monomials(),
 		base_cols, r,
 		kernel_m, kernel_n, coeff10, 0 /* verbose_level */);
 
@@ -1586,7 +1586,7 @@ void projective_space::determine_quadric_in_solid(
 
 
 
-	rk = F->Gauss_simple(system,
+	rk = F->Linear_algebra->Gauss_simple(system,
 			nb_pts, 10, base_cols, verbose_level - 2);
 	if (rk != 9) {
 		cout << "projective_space::determine_quadric_in_solid "
@@ -1594,7 +1594,7 @@ void projective_space::determine_quadric_in_solid(
 		cout << "rk=" << rk << endl;
 		exit(1);
 	}
-	F->matrix_get_kernel(system, 9, 10, base_cols, rk, 
+	F->Linear_algebra->matrix_get_kernel(system, 9, 10, base_cols, rk,
 		kernel_m, kernel_n, kernel, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "projective_space::determine_quadric_in_solid "
@@ -1734,7 +1734,7 @@ void projective_space::conic_points(
 	unrank_point(Basis, five_pts[0]);
 	for (i = 1; i < 5; i++) {
 		unrank_point(Basis + 3, five_pts[i]);
-		a = F->evaluate_bilinear_form(3, Basis, Basis + 3, Gram_matrix);
+		a = F->Linear_algebra->evaluate_bilinear_form(3, Basis, Basis + 3, Gram_matrix);
 		if (a) {
 			break;
 		}
@@ -1756,7 +1756,7 @@ void projective_space::conic_points(
 		Orbiter->Int_vec.print_integer_matrix_width(cout,
 				Basis, 2, 3, 3, F->log10_of_q);
 	}
-	F->perp(3, 2, Basis, Gram_matrix, 0 /* verbose_level */);
+	F->Linear_algebra->perp(3, 2, Basis, Gram_matrix, 0 /* verbose_level */);
 	if (f_v) {	
 		cout << "projective_space::conic_points perp:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout,
@@ -1813,7 +1813,7 @@ void projective_space::conic_points(
 	v[1] = 0;
 	v[2] = 0;
 
-	F->mult_vector_from_the_left(v, Basis2, w, 3, 3);
+	F->Linear_algebra->mult_vector_from_the_left(v, Basis2, w, 3, 3);
 	if (f_v) {	
 		cout << "vector corresponding to 100:" << endl;
 		Orbiter->Int_vec.print(cout, w, 3);
@@ -1829,7 +1829,7 @@ void projective_space::conic_points(
 		v[0] = F->mult(t, t);
 		v[1] = t;
 		v[2] = ma;
-		F->mult_vector_from_the_left(v, Basis2, w, 3, 3);
+		F->Linear_algebra->mult_vector_from_the_left(v, Basis2, w, 3, 3);
 		if (f_v) {	
 			cout << "vector corresponding to t=" << t << ":" << endl;
 			Orbiter->Int_vec.print(cout, w, 3);
@@ -1877,7 +1877,7 @@ void projective_space::find_tangent_lines_to_conic(
 	
 	for (i = 0; i < nb_points; i++) {
 		unrank_point(Basis, points[i]);
-		F->perp(3, 1, Basis, Gram_matrix, 0 /* verbose_level */);
+		F->Linear_algebra->perp(3, 1, Basis, Gram_matrix, 0 /* verbose_level */);
 		if (f_vv) {	
 			cout << "perp:" << endl;
 			Orbiter->Int_vec.print_integer_matrix_width(cout,
@@ -2046,7 +2046,7 @@ void projective_space::line_intersection_type_basic(
 		for (h = 0; h < set_size; h++) {
 			Orbiter->Int_vec.copy(Grass_lines->M, M, 2 * d);
 			unrank_point(M + 2 * d, set[h]);
-			if (F->rank_of_rectangular_matrix(M,
+			if (F->Linear_algebra->rank_of_rectangular_matrix(M,
 					3, d, 0 /*verbose_level*/) == 2) {
 				type[rk]++;
 			}
@@ -2079,7 +2079,7 @@ void projective_space::line_intersection_type_basic_given_a_set_of_lines(
 		for (h = 0; h < set_size; h++) {
 			Orbiter->Int_vec.copy(Grass_lines->M, M, 2 * d);
 			unrank_point(M + 2 * d, set[h]);
-			if (F->rank_of_rectangular_matrix(M,
+			if (F->Linear_algebra->rank_of_rectangular_matrix(M,
 					3, d, 0 /*verbose_level*/) == 2) {
 				type[u]++;
 			}
@@ -2209,7 +2209,7 @@ void projective_space::line_intersection_type_through_hyperplane(
 			for (h = j + 1; h < sz2; h++) {
 				Orbiter->Int_vec.copy(M, M2, 2 * d);
 				Orbiter->Int_vec.copy(Pts2 + h * d, M2 + 2 * d, d);
-				if (F->rank_of_rectangular_matrix(M2,
+				if (F->Linear_algebra->rank_of_rectangular_matrix(M2,
 						3, d, 0 /*verbose_level*/) == 2) {
 					cnt++;
 					f_taken[h] = TRUE;
@@ -2601,7 +2601,7 @@ void projective_space::point_plane_incidence_matrix(
 			//unrank_point(M2 + 3 * d, set[h]);
 			Orbiter->Int_vec.copy(Pts + i * d, M2 + 3 * d, d);
 
-			if (F->rank_of_rectangular_matrix(M2,
+			if (F->Linear_algebra->rank_of_rectangular_matrix(M2,
 					4, d, 0 /*verbose_level*/) == 3) {
 				// the point lies in the plane,
 				// increment the intersection count:
@@ -2671,7 +2671,7 @@ void projective_space::plane_intersection_type_basic(
 			//unrank_point(M2 + 3 * d, set[h]);
 			Orbiter->Int_vec.copy(Pts + h * d, M2 + 3 * d, d);
 
-			if (F->rank_of_rectangular_matrix(M2,
+			if (F->Linear_algebra->rank_of_rectangular_matrix(M2,
 					4, d, 0 /*verbose_level*/) == 3) {
 				// the point lies in the plane,
 				// increment the intersection count:
@@ -2729,7 +2729,7 @@ void projective_space::hyperplane_intersection_type_basic(
 			//unrank_point(M + (d - 1) * d, set[h]);
 			Orbiter->Int_vec.copy(Pts + h * d, M + (d - 1) * d, d);
 
-			if (F->rank_of_rectangular_matrix(M,
+			if (F->Linear_algebra->rank_of_rectangular_matrix(M,
 					d, d, 0 /*verbose_level*/) == d - 1) {
 				// the point lies in the hyperplane,
 				// increment the intersection count:
@@ -2787,7 +2787,7 @@ void projective_space::line_intersection_type_collected(
 			Orbiter->Int_vec.copy(Pts + h * d, M + 2 * d, d);
 
 			// test if the point lies on the line:
-			if (F->rank_of_rectangular_matrix(M,
+			if (F->Linear_algebra->rank_of_rectangular_matrix(M,
 					3, d, 0 /*verbose_level*/) == 2) {
 
 				// yes, increment the counter
@@ -2962,7 +2962,7 @@ void projective_space::Baer_subline(long int *pts3,
 		Orbiter->Int_vec.print_integer_matrix_width(cout,
 				M, 3, len, len, F->log10_of_q);
 	}
-	rk = F->Gauss_simple(M,
+	rk = F->Linear_algebra->Gauss_simple(M,
 			3, len, base_cols, verbose_level - 3);
 	if (f_vv) {
 		cout << "projective_space::Baer_subline" << endl;
@@ -3001,7 +3001,7 @@ void projective_space::Baer_subline(long int *pts3,
 		//print_integer_matrix_width(cout,
 		//Basis, rk, 5, 5, P4->F->log10_of_q);
 		
-		F->reduce_mod_subspace_and_get_coefficient_vector(
+		F->Linear_algebra->reduce_mod_subspace_and_get_coefficient_vector(
 			rk, len, Basis, base_cols, 
 			M + j * len, N + j * rk, verbose_level - 3);
 	}
@@ -3032,7 +3032,7 @@ void projective_space::Baer_subline(long int *pts3,
 		Orbiter->Int_vec.print_integer_matrix_width(cout,
 				Frame, 2, 3, 3, F->log10_of_q);
 	}
-	rk2 = F->Gauss_simple(Frame,
+	rk2 = F->Linear_algebra->Gauss_simple(Frame,
 			2, 3, base_cols2, verbose_level - 3);
 	if (rk2 != 2) {
 		cout << "projective_space::Baer_subline: "
@@ -3123,7 +3123,7 @@ void projective_space::Baer_subline(long int *pts3,
 		if (f_vvv) {
 			cout << "t=" << t << endl;
 		}
-		F->mult_vector_from_the_left(N + t * 2, Basis, z, 2, len);
+		F->Linear_algebra->mult_vector_from_the_left(N + t * 2, Basis, z, 2, len);
 		if (f_vvv) {
 			cout << "z=w*Basis";
 			Orbiter->Int_vec.print(cout, z, len);
@@ -3145,7 +3145,7 @@ void projective_space::Baer_subline(long int *pts3,
 			Orbiter->Int_vec.print(cout, w, 2);
 			cout << endl;
 		}
-		F->mult_vector_from_the_left(w, Basis, z, 2, len);
+		F->Linear_algebra->mult_vector_from_the_left(w, Basis, z, 2, len);
 		if (f_vvv) {
 			cout << "z=w*Basis";
 			Orbiter->Int_vec.print(cout, z, len);
@@ -3686,7 +3686,7 @@ void projective_space::polarity_rank_k_subspace(int k,
 			A, k, d, d,
 			F->log10_of_q + 1);
 	}
-	F->perp_standard(d, k, A, 0);
+	F->Linear_algebra->perp_standard(d, k, A, 0);
 	if (FALSE) {
 		cout << "projective_space::polarity_rank_k_subspace after F->perp_standard:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout,

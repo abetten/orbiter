@@ -85,7 +85,7 @@ void arc_lifting_with_two_lines::create_surface(
 	Arc_coords = NEW_int(6 * 4);
 	Surf->P->unrank_points(Arc_coords, Arc6, 6);
 
-	rk = F->Gauss_simple(
+	rk = F->Linear_algebra->Gauss_simple(
 			Arc_coords, 6, 4 /*dimension*/,
 			base_cols, 0 /* verbose_level */);
 	if (rk != 3) {
@@ -135,7 +135,7 @@ void arc_lifting_with_two_lines::create_surface(
 		cout << "line2=" << line2 << ":" << endl;
 		Orbiter->Int_vec.matrix_print(Basis + 8, 2, 4);
 	}
-	rk = F->Gauss_simple(
+	rk = F->Linear_algebra->Gauss_simple(
 			Basis, 4, 4 /*dimension*/,
 			base_cols,
 			0 /* verbose_level */);

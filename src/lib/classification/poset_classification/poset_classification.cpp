@@ -241,14 +241,14 @@ int poset_classification::poset_structure_is_contained(
 				unrank_point(B2 + i * dim, set2[i]);
 			}
 
-			rk1 = Poset->VS->F->Gauss_easy(B1, sz1, dim);
+			rk1 = Poset->VS->F->Linear_algebra->Gauss_easy(B1, sz1, dim);
 			if (rk1 != sz1) {
 				cout << "poset_structure_is_contained "
 						"rk1 != sz1" << endl;
 				exit(1);
 			}
 			
-			rk2 = Poset->VS->F->Gauss_easy(B2, sz2, dim);
+			rk2 = Poset->VS->F->Linear_algebra->Gauss_easy(B2, sz2, dim);
 			if (rk2 != sz2) {
 				cout << "poset_structure_is_contained "
 						"rk2 != sz2" << endl;
@@ -257,7 +257,7 @@ int poset_classification::poset_structure_is_contained(
 			Orbiter->Int_vec.copy(B1,
 					B2 + sz2 * dim,
 					sz1 * dim);
-			rk2 = Poset->VS->F->Gauss_easy(B2, sz1 + sz2, dim);
+			rk2 = Poset->VS->F->Linear_algebra->Gauss_easy(B2, sz1 + sz2, dim);
 			if (rk2 > sz2) {
 				f_contained = FALSE;
 			}

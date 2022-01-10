@@ -474,7 +474,7 @@ void action_on_factor_space::init2(action &A_base,
 				subspace_basis_size,
 				VS->dimension, VS->dimension, VS->F->log10_of_q);
 	}
-	rk = VS->F->Gauss_simple(subspace_basis,
+	rk = VS->F->Linear_algebra->Gauss_simple(subspace_basis,
 			subspace_basis_size, VS->dimension, base_cols,
 			0/*verbose_level - 1*/);
 	if (f_vv) {
@@ -656,7 +656,7 @@ void action_on_factor_space::list_all_elements()
 void action_on_factor_space::reduce_mod_subspace(int *v,
 		int verbose_level)
 {
-	VS->F->reduce_mod_subspace(subspace_basis_size, VS->dimension,
+	VS->F->Linear_algebra->reduce_mod_subspace(subspace_basis_size, VS->dimension,
 		subspace_basis, base_cols, v, verbose_level);
 }
 
@@ -716,10 +716,10 @@ long int action_on_factor_space::lexleast_element_in_coset(long int rk,
 	rk1 = rk;
 	for (i = 0; i < N; i++) {
 		Gg.AG_element_unrank(VS->F->q, w, 1, subspace_basis_size, i);
-		VS->F->mult_matrix_matrix(w, subspace_basis,
+		VS->F->Linear_algebra->mult_matrix_matrix(w, subspace_basis,
 				v1, 1, subspace_basis_size, VS->dimension,
 				0 /* verbose_level */);
-		VS->F->add_vector(v1, Tmp1, v2, VS->dimension);
+		VS->F->Linear_algebra->add_vector(v1, Tmp1, v2, VS->dimension);
 		b = rank_in_large_space(v2);
 		if (b < rk1) {
 			rk1 = b;

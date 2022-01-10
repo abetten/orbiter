@@ -628,7 +628,7 @@ void direct_product::make_strong_generators_data(int *&data,
 	// generators for the second component:
 	for (g = 0; g < GL2_nb_gens; g++) {
 		Orbiter->Int_vec.zero(dat, size);
-		F1->identity_matrix(
+		F1->Linear_algebra->identity_matrix(
 					dat,
 					dimension_of_matrix_group1);
 		Orbiter->Int_vec.copy(GL2_data + g * GL2_size,
@@ -643,7 +643,7 @@ void direct_product::make_strong_generators_data(int *&data,
 		Orbiter->Int_vec.copy(GL1_data + g * GL1_size,
 					dat + 0,
 					GL1_size);
-		F2->identity_matrix(
+		F2->Linear_algebra->identity_matrix(
 					dat + M1->make_element_size,
 					dimension_of_matrix_group2);
 		Orbiter->Int_vec.copy(dat, data + h * size, size);

@@ -227,7 +227,7 @@ void desarguesian_spread::calculate_spread_elements(
 		Spread_elt_basis = Spread_elements + h * spread_element_size;
 		for (i = 0; i < nb_points_per_spread_element; i++) {
 			Fq->PG_element_unrank_modified(v, 1, s, i);
-			Fq->mult_vector_from_the_left(v, Spread_elt_basis, w, s, n);
+			Fq->Linear_algebra->mult_vector_from_the_left(v, Spread_elt_basis, w, s, n);
 			Fq->PG_element_rank_modified(w, 1, n, rk);
 			List_of_points[h * nb_points_per_spread_element + i] = rk;
 			}
@@ -270,7 +270,7 @@ void desarguesian_spread::compute_intersection_type(
 			cout << "desarguesian_spread::compute_intersection_type "
 					<< h << " / " << N << endl;
 			}
-		Fq->intersect_subspaces(n, s,
+		Fq->Linear_algebra->intersect_subspaces(n, s,
 			Spread_elements + h * spread_element_size,
 			k, subspace, 
 			k3, intersection, 

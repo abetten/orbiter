@@ -413,7 +413,7 @@ void unipoly_domain::create_Dickson_polynomial(
 	rep[0] = d;
 	int *coeff = rep + 1;
 	
-	F->Dickson_polynomial(map, coeff);
+	F->Linear_algebra->Dickson_polynomial(map, coeff);
 	rep[0] = d;
 	p = (void *) rep;
 	degree(p);
@@ -1048,7 +1048,7 @@ void unipoly_domain::Frobenius_matrix_by_rows(int *&Frob,
 	}
 	d = degree(factor_polynomial);
 	Frobenius_matrix(Frob, factor_polynomial, verbose_level);
-	F->transpose_matrix_in_place(Frob, d);
+	F->Linear_algebra->transpose_matrix_in_place(Frob, d);
 	if (f_v) {
 		cout << "unipoly_domain::Frobenius_matrix_by_rows done" << endl;
 	}
@@ -1899,7 +1899,7 @@ void unipoly_domain::compute_normal_basis(int d,
 		cout << "unipoly_domain::compute_normal_basis "
 			"before span_cyclic_module" << endl;
 	}
-	F->span_cyclic_module(Normal_basis,
+	F->Linear_algebra->span_cyclic_module(Normal_basis,
 			v, deg, Frobenius, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "unipoly_domain::compute_normal_basis "
@@ -1953,7 +1953,7 @@ void unipoly_domain::order_ideal_generator(
 		cout << "unipoly_domain::order_ideal_generator "
 				"before F->order_ideal_generator" << endl;
 	}
-	F->order_ideal_generator(d, idx, my_mue, mue_deg,
+	F->Linear_algebra->order_ideal_generator(d, idx, my_mue, mue_deg,
 		A, Frobenius, 
 		verbose_level - 1);
 	if (f_v) {
@@ -2050,7 +2050,7 @@ void unipoly_domain::matrix_apply(unipoly_object &p,
 		Orbiter->Int_vec.print(cout, v1, n);
 		cout << endl;
 	}
-	F->mult_vector_from_the_right(Mtx, v1, v2, n, n);
+	F->Linear_algebra->mult_vector_from_the_right(Mtx, v1, v2, n, n);
 	if (f_v) {
 		cout << "unipoly_domain::matrix_apply v2 = ";
 		Orbiter->Int_vec.print(cout, v2, n);
@@ -2107,7 +2107,7 @@ void unipoly_domain::substitute_matrix_in_polynomial(
 			}
 		}
 		if (h) {
-			F->mult_matrix_matrix(M2, Mtx_in, M1, k, k, k,
+			F->Linear_algebra->mult_matrix_matrix(M2, Mtx_in, M1, k, k, k,
 					0 /* verbose_level */);
 		}
 		else {
@@ -2213,7 +2213,7 @@ void unipoly_domain::module_structure_apply(int *v,
 			cout << endl;
 		}
 		
-		F->mult_vector_from_the_right(Mtx, v1, v2, n, n);
+		F->Linear_algebra->mult_vector_from_the_right(Mtx, v1, v2, n, n);
 
 		if (f_vv) {
 			cout << "unipoly_domain::module_structure_apply "
@@ -2357,7 +2357,7 @@ int unipoly_domain::is_irreducible(unipoly_object a,
 	
 	base_cols = NEW_int(factor_polynomial_degree);
 	
-	r = F->Gauss_int(B,
+	r = F->Linear_algebra->Gauss_int(B,
 		FALSE /* f_special */,
 		FALSE /* f_complete */,
 		base_cols,

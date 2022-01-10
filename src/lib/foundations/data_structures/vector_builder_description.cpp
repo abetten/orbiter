@@ -42,6 +42,13 @@ vector_builder_description::vector_builder_description()
 	sparse_len = 0;
 	//std::string sparse_pairs;
 
+	f_concatenate = FALSE;
+	//std::vector<std::string> concatenate_list;
+
+	f_loop = FALSE;
+	loop_start = 0;
+	loop_upper_bound = 0;
+	loop_increment = 0;
 }
 
 vector_builder_description::~vector_builder_description()
@@ -113,6 +120,25 @@ int vector_builder_description::read_arguments(
 				cout << "-sparse " << sparse_len << " " << sparse_pairs << endl;
 			}
 		}
+		else if (stringcmp(argv[i], "-concatenate") == 0) {
+			string label;
+
+			label.assign(argv[++i]);
+			concatenate_list.push_back(label);
+			if (f_v) {
+				cout << "-concatenate " << label << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-loop") == 0) {
+			f_loop = TRUE;
+			loop_start = strtoi(argv[++i]);
+			loop_upper_bound = strtoi(argv[++i]);
+			loop_increment = strtoi(argv[++i]);
+			cout << "-loop "
+					<< loop_start << " "
+					<< loop_upper_bound << " "
+					<< loop_increment << endl;
+		}
 
 		else if (stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
@@ -156,6 +182,19 @@ void vector_builder_description::print()
 	if (f_sparse) {
 		cout << "-file " << sparse_len << " " << sparse_pairs << endl;
 	}
+	if (concatenate_list.size()) {
+		int i;
+		for (i = 0; i < concatenate_list.size(); i++) {
+			cout << "-concatenate " << concatenate_list[i] << endl;
+		}
+	}
+	if (f_loop) {
+		cout << "-loop "
+				<< loop_start << " "
+				<< loop_upper_bound << " "
+				<< loop_increment << endl;
+	}
+
 }
 
 

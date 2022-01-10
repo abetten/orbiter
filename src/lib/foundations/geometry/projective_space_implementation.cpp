@@ -275,7 +275,7 @@ void projective_space_implementation::init(projective_space *P, int verbose_leve
 
 			for (a = 0; a < k; a++) {
 				P->F->PG_element_unrank_modified(v, 1, 2, a);
-				P->F->mult_matrix_matrix(v, P->Grass_lines->M, w, 1, 2, n + 1,
+				P->F->Linear_algebra->mult_matrix_matrix(v, P->Grass_lines->M, w, 1, 2, n + 1,
 						0 /* verbose_level */);
 				P->F->PG_element_rank_modified(w, 1, n + 1, b);
 				if (Bitmatrix) {

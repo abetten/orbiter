@@ -800,7 +800,7 @@ void klein_correspondence::identify_external_lines_and_spreads(
 			Orbiter->Int_vec.matrix_print(basis_elliptic_quadric,
 					T->spread_size, d);
 		}
-		rk = F->Gauss_easy(basis_elliptic_quadric, T->spread_size, d);
+		rk = F->Linear_algebra->Gauss_easy(basis_elliptic_quadric, T->spread_size, d);
 		if (rk != 4) {
 			cout << "klein_correspondence::identify_external_lines_and_spreads "
 					"spread " << i << " the elliptic quadric space "
@@ -808,7 +808,7 @@ void klein_correspondence::identify_external_lines_and_spreads(
 			exit(1);
 		}
 		Orbiter->Int_vec.copy(basis_elliptic_quadric, basis, 4 * d);
-		F->perp(d, 4, basis, Form, 0 /* verbose_level */);
+		F->Linear_algebra->perp(d, 4, basis, Form, 0 /* verbose_level */);
 		Orbiter->Int_vec.copy(
 				basis + 4 * d,
 				basis_external_line,
@@ -938,9 +938,9 @@ void klein_correspondence::reverse_isomorphism(int *A6, int *A4, int verbose_lev
 		Orbiter->Int_vec.matrix_print(Z, 4, 4);
 	}
 
-	F->invert_matrix(X, Xv, 4, 0 /* verbose_level*/);
-	F->invert_matrix(Y, Yv, 4, 0 /* verbose_level*/);
-	F->invert_matrix(Z, Zv, 4, 0 /* verbose_level*/);
+	F->Linear_algebra->invert_matrix(X, Xv, 4, 0 /* verbose_level*/);
+	F->Linear_algebra->invert_matrix(Y, Yv, 4, 0 /* verbose_level*/);
+	F->Linear_algebra->invert_matrix(Z, Zv, 4, 0 /* verbose_level*/);
 	//F->invert_matrix(A, Av, 4, 0 /* verbose_level*/);
 
 	if (f_v) {
@@ -952,14 +952,14 @@ void klein_correspondence::reverse_isomorphism(int *A6, int *A4, int verbose_lev
 		Orbiter->Int_vec.matrix_print(Zv, 4, 4);
 	}
 
-	F->mult_matrix_matrix(X, Yv, XYv, 4, 4, 4, 0 /* verbose_level*/);
+	F->Linear_algebra->mult_matrix_matrix(X, Yv, XYv, 4, 4, 4, 0 /* verbose_level*/);
 
 	if (f_v) {
 		cout << "XYv=" << endl;
 		Orbiter->Int_vec.matrix_print(XYv, 4, 4);
 	}
 
-	F->mult_matrix_matrix(X, Zv, XZv, 4, 4, 4, 0 /* verbose_level*/);
+	F->Linear_algebra->mult_matrix_matrix(X, Zv, XZv, 4, 4, 4, 0 /* verbose_level*/);
 
 	if (f_v) {
 		cout << "XZv=" << endl;
@@ -1017,7 +1017,7 @@ void klein_correspondence::reverse_isomorphism(int *A6, int *A4, int verbose_lev
 	int rk;
 	int base_cols[8];
 
-	rk = F->Gauss_simple(M, 16, 8, base_cols, verbose_level);
+	rk = F->Linear_algebra->Gauss_simple(M, 16, 8, base_cols, verbose_level);
 
 	//rk = F->RREF_and_kernel(16, 8, M, verbose_level);
 
@@ -1035,7 +1035,7 @@ void klein_correspondence::reverse_isomorphism(int *A6, int *A4, int verbose_lev
 	int K[8 * 8];
 	int i, j;
 
-	F->matrix_get_kernel(M, 16, 8, base_cols, rk,
+	F->Linear_algebra->matrix_get_kernel(M, 16, 8, base_cols, rk,
 		kernel_m, kernel_n, K, 0 /* verbose_level */);
 
 
@@ -1086,7 +1086,7 @@ void klein_correspondence::reverse_isomorphism(int *A6, int *A4, int verbose_lev
 		Orbiter->Int_vec.matrix_print(D, 4, 4);
 	}
 
-	F->mult_matrix_matrix(D, X, A4, 4, 4, 4, 0 /* verbose_level*/);
+	F->Linear_algebra->mult_matrix_matrix(D, X, A4, 4, 4, 4, 0 /* verbose_level*/);
 
 	if (f_v) {
 		cout << "A4=" << endl;
@@ -1096,7 +1096,7 @@ void klein_correspondence::reverse_isomorphism(int *A6, int *A4, int verbose_lev
 
 	int A6b[36];
 
-	F->exterior_square(A4, A6b, 4, 0 /* verbose_level*/);
+	F->Linear_algebra->exterior_square(A4, A6b, 4, 0 /* verbose_level*/);
 	//F->lift_to_Klein_quadric(A4, A6b, 0 /* verbose_level*/);
 
 	if (f_v) {

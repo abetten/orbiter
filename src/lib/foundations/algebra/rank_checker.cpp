@@ -113,7 +113,7 @@ int rank_checker::check_rank(int len, long int *S, int verbose_level)
 			Orbiter->Int_vec.print_integer_matrix(cout, M2, m, d1 + 1);
 		}
 		
-		rk = GFq->Gauss_int(M2,
+		rk = GFq->Linear_algebra->Gauss_int(M2,
 			FALSE /* f_special */,
 			FALSE /* f_complete */,
 			base_cols,
@@ -182,7 +182,7 @@ int rank_checker::check_rank_matrix_input(
 			M2[i * (d1 + 1) + d1] = S[i * dim_S + len - 1];
 		}
 		
-		rk = GFq->Gauss_int(M2,
+		rk = GFq->Linear_algebra->Gauss_int(M2,
 			FALSE /* f_special */,
 			FALSE /* f_complete */,
 			base_cols,
@@ -272,7 +272,7 @@ int rank_checker::check_rank_last_two_are_fixed(
 			Orbiter->Int_vec.print_integer_matrix(cout, M2, m, d1 + 2);
 		}
 		
-		rk = GFq->Gauss_int(M2,
+		rk = GFq->Linear_algebra->Gauss_int(M2,
 			FALSE /* f_special */,
 			FALSE /* f_complete */,
 			base_cols,
@@ -331,7 +331,7 @@ int rank_checker::compute_rank_row_vectors(
 	}
 
 		
-	rk = GFq->Gauss_int(M1,
+	rk = GFq->Linear_algebra->Gauss_int(M1,
 		FALSE /* f_special */,
 		FALSE /* f_complete */,
 		base_cols,

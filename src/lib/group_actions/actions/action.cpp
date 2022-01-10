@@ -2814,8 +2814,8 @@ void action::make_element_which_moves_a_line_in_PG3q(
 
 	//int_vec_zero(M, 16);
 	Gr->unrank_lint_here(M, line_rk, 0 /*verbose_level*/);
-	r = Gr->F->Gauss_simple(M, 2, 4, base_cols, 0 /* verbose_level */);
-	Gr->F->kernel_columns(4, r, base_cols, base_cols + r);
+	r = Gr->F->Linear_algebra->Gauss_simple(M, 2, 4, base_cols, 0 /* verbose_level */);
+	Gr->F->Linear_algebra->kernel_columns(4, r, base_cols, base_cols + r);
 	
 	for (i = r; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
@@ -2828,7 +2828,7 @@ void action::make_element_which_moves_a_line_in_PG3q(
 			M[i * 4 + j] = c;
 		}
 	}
-	Gr->F->matrix_inverse(M, N, 4, 0 /* verbose_level */);
+	Gr->F->Linear_algebra->matrix_inverse(M, N, 4, 0 /* verbose_level */);
 	N[4 * 4] = 0;
 	make_element(Elt, N, 0);
 

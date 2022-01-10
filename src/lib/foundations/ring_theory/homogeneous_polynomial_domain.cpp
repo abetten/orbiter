@@ -1788,7 +1788,7 @@ void homogeneous_polynomial_domain::vanishing_ideal(long int *Pts,
 		cout << "homogeneous_polynomial_domain::vanishing_ideal "
 				"before RREF_and_kernel" << endl;
 	}
-	r = F->RREF_and_kernel(nb_monomials,
+	r = F->Linear_algebra->RREF_and_kernel(nb_monomials,
 			nb_pts, System, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::vanishing_ideal "

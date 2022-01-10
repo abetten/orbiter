@@ -117,7 +117,7 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 
 	Surf->P->Grass_planes->unrank_lint_here(
 			Plane, plane_rk_global, 0);
-	F->Gauss_simple(Plane, 3, 4, base_cols,
+	F->Linear_algebra->Gauss_simple(Plane, 3, 4, base_cols,
 			0 /* verbose_level */);
 
 	if (f_v) {
@@ -175,7 +175,7 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 			Orbiter->Int_vec.print(cout, v, 4);
 			cout << endl;
 		}
-		F->reduce_mod_subspace_and_get_coefficient_vector(
+		F->Linear_algebra->reduce_mod_subspace_and_get_coefficient_vector(
 			3, 4, Plane, base_cols,
 			v, coefficients,
 			0 /* verbose_level */);
@@ -270,14 +270,14 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 	}
 	Surf->P->Grass_planes->unrank_lint_here(Plane, plane_rk_global,
 			0 /* verbose_level */);
-	r = F->Gauss_simple(Plane, 3, 4, base_cols,
+	r = F->Linear_algebra->Gauss_simple(Plane, 3, 4, base_cols,
 			0 /* verbose_level */);
 	if (f_v) {
 		cout << "Plane rank " << plane_rk_global << " :" << endl;
 		Orbiter->Int_vec.matrix_print(Plane, 3, 4);
 	}
 
-	F->RREF_and_kernel(4, 3, Plane, 0 /* verbose_level */);
+	F->Linear_algebra->RREF_and_kernel(4, 3, Plane, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "Plane (3 basis vectors and dual coordinates):" << endl;
@@ -299,7 +299,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 		Orbiter->Int_vec.matrix_print(Line_a, 2, 4);
 	}
 	for (i = 0; i < 2; i++) {
-		if (F->dot_product(4, Line_a + i * 4, Plane + 3 * 4)) {
+		if (F->Linear_algebra->dot_product(4, Line_a + i * 4, Plane + 3 * 4)) {
 			break;
 		}
 	}
@@ -318,7 +318,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 		Orbiter->Int_vec.matrix_print(Line_b, 2, 4);
 	}
 	for (i = 0; i < 2; i++) {
-		if (F->dot_product(4, Line_b + i * 4, Plane + 3 * 4)) {
+		if (F->Linear_algebra->dot_product(4, Line_b + i * 4, Plane + 3 * 4)) {
 			break;
 		}
 	}
@@ -346,7 +346,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 		// because the map is undefined there:
 		Orbiter->Int_vec.copy(Line_a, M, 2 * 4);
 		Orbiter->Int_vec.copy(v, M + 2 * 4, 4);
-		if (F->Gauss_easy(M, 3, 4) == 2) {
+		if (F->Linear_algebra->Gauss_easy(M, 3, 4) == 2) {
 			if (f_vv) {
 				cout << "The point is on line_a" << endl;
 			}
@@ -355,7 +355,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 		}
 		Orbiter->Int_vec.copy(Line_b, M, 2 * 4);
 		Orbiter->Int_vec.copy(v, M + 2 * 4, 4);
-		if (F->Gauss_easy(M, 3, 4) == 2) {
+		if (F->Linear_algebra->Gauss_easy(M, 3, 4) == 2) {
 			if (f_vv) {
 				cout << "The point is on line_b" << endl;
 			}
@@ -368,7 +368,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 		// Compute the first plane in dual coordinates:
 		Orbiter->Int_vec.copy(Line_a, M, 2 * 4);
 		Orbiter->Int_vec.copy(v, M + 2 * 4, 4);
-		F->RREF_and_kernel(4, 3, M, 0 /* verbose_level */);
+		F->Linear_algebra->RREF_and_kernel(4, 3, M, 0 /* verbose_level */);
 		Orbiter->Int_vec.copy(M + 3 * 4, Dual_planes, 4);
 		if (f_vv) {
 			cout << "clebsch_map::compute_Clebsch_map_down_worker First plane in dual coordinates: ";
@@ -379,7 +379,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 		// Compute the second plane in dual coordinates:
 		Orbiter->Int_vec.copy(Line_b, M, 2 * 4);
 		Orbiter->Int_vec.copy(v, M + 2 * 4, 4);
-		F->RREF_and_kernel(4, 3, M, 0 /* verbose_level */);
+		F->Linear_algebra->RREF_and_kernel(4, 3, M, 0 /* verbose_level */);
 		Orbiter->Int_vec.copy(M + 3 * 4, Dual_planes + 4, 4);
 		if (f_vv) {
 			cout << "clebsch_map::compute_Clebsch_map_down_worker Second plane in dual coordinates: ";
@@ -397,7 +397,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 			cout << endl;
 		}
 
-		r = F->RREF_and_kernel(4, 3,
+		r = F->Linear_algebra->RREF_and_kernel(4, 3,
 				Dual_planes, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << "clebsch_map::compute_Clebsch_map_down_worker Dual coordinates and perp: " << endl;
@@ -423,7 +423,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 		Orbiter->Int_vec.copy(Dual_planes + 12, Image_coeff + h * 4, 4);
 
 		// compute local coordinates of the image point:
-		F->reduce_mod_subspace_and_get_coefficient_vector(
+		F->Linear_algebra->reduce_mod_subspace_and_get_coefficient_vector(
 			3, 4, Plane, base_cols,
 			Dual_planes + 12, coefficients,
 			0 /* verbose_level */);

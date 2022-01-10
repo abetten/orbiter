@@ -1203,7 +1203,7 @@ void graph_theory_domain::make_Grassmann_graph(int *&Adj, int &N,
 			Orbiter->Int_vec.copy(M1, M, k * n);
 			Orbiter->Int_vec.copy(M2, M + k * n, k * n);
 
-			rr = F->rank_of_rectangular_matrix(M, 2 * k, n, 0 /* verbose_level */);
+			rr = F->Linear_algebra->rank_of_rectangular_matrix(M, 2 * k, n, 0 /* verbose_level */);
 			if (rr == r) {
 				Adj[i * N + j] = 1;
 				Adj[j * N + i] = 1;

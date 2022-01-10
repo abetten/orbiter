@@ -95,7 +95,7 @@ void finite_field::representing_matrix8_R(int *A,
 	A[7 * 8 + 6] = m_term(q, a, c, b);
 	A[7 * 8 + 7] = m_term(q, a, d, a);
 
-	transpose_matrix_in_place(A, 8);
+	Linear_algebra->transpose_matrix_in_place(A, 8);
 }
 
 void finite_field::representing_matrix9_R(int *A,
@@ -200,7 +200,7 @@ void finite_field::representing_matrix9_R(int *A,
 	A[8 * 9 + 6] = twice(term3(a,b,d,2,q,q));
 	A[8 * 9 + 7] = twice(term3(a,b,c,q1,1,q));
 	A[8 * 9 + 8] = add(term2(a,d,q2,q),term3(a,b,c,2,q,q));
-	transpose_matrix_in_place(A, 9);
+	Linear_algebra->transpose_matrix_in_place(A, 9);
 	
 }
 
@@ -407,8 +407,8 @@ void finite_field::representing_matrix8_U(int *A, int a, int b, int c, int d, in
 	B2[2 * 3 + 1] = beta_trinomial(q, beta, 1, 0, 1);
 	B2[2 * 3 + 2] = beta_trinomial(q, beta, 2, 0, 2);
 	
-	mult_matrix_matrix(M1, B1, eta, 2, 3, 3, 0 /* verbose_level */);
-	mult_matrix_matrix(M2, B2, zeta, 2, 3, 3, 0 /* verbose_level */);
+	Linear_algebra->mult_matrix_matrix(M1, B1, eta, 2, 3, 3, 0 /* verbose_level */);
+	Linear_algebra->mult_matrix_matrix(M2, B2, zeta, 2, 3, 3, 0 /* verbose_level */);
 	int eta11, eta12, eta13;
 	int eta21, eta22, eta23;
 	int zeta11, zeta12, zeta13;

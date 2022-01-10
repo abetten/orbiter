@@ -798,11 +798,11 @@ void gl_classes::identify_matrix(int *Mtx,
 
 
 	
-	F->matrix_inverse(Basis, Basis_inv, k, 0 /* verbose_level */);
+	F->Linear_algebra->matrix_inverse(Basis, Basis_inv, k, 0 /* verbose_level */);
 
-	F->mult_matrix_matrix(Basis_inv, Mtx, M2, k, k, k, 0 /* verbose_level */);
+	F->Linear_algebra->mult_matrix_matrix(Basis_inv, Mtx, M2, k, k, k, 0 /* verbose_level */);
 
-	F->mult_matrix_matrix(M2, Basis, M3, k, k, k, 0 /* verbose_level */);
+	F->Linear_algebra->mult_matrix_matrix(M2, Basis, M3, k, k, k, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "gl_classes::identify_matrix B^-1 * A * B = " << endl;
@@ -1056,9 +1056,9 @@ void gl_classes::compute_generalized_kernels(
 			}
 		Orbiter->Int_vec.copy(M3, M4, k * k);
 
-		rank = F->Gauss_simple(M4, k, k, base_cols, 0 /*verbose_level*/);
+		rank = F->Linear_algebra->Gauss_simple(M4, k, k, base_cols, 0 /*verbose_level*/);
 
-		F->matrix_get_kernel_as_int_matrix(M4, k, k,
+		F->Linear_algebra->matrix_get_kernel_as_int_matrix(M4, k, k,
 				base_cols, rank, &Data->K[cnt], 0 /* verbose_level */);
 
 		if (f_vv) {
@@ -1079,7 +1079,7 @@ void gl_classes::compute_generalized_kernels(
 			break;
 			}
 
-		F->mult_matrix_matrix(M3, M2, M4, k, k, k, 0 /* verbose_level */);
+		F->Linear_algebra->mult_matrix_matrix(M3, M2, M4, k, k, k, 0 /* verbose_level */);
 		Orbiter->Int_vec.copy(M4, M3, k * k);
 
 		}
@@ -1252,7 +1252,7 @@ void gl_classes::choose_basis_for_rational_normal_form_block(
 				
 
 			if (f > 1) {
-				F->choose_vector_in_here_but_not_in_here_or_here_column_spaces(
+				F->Linear_algebra->choose_vector_in_here_but_not_in_here_or_here_column_spaces(
 						&Data->K[f], &Data->K[f - 1], Forbidden_subspace,
 						v, verbose_level - 1);
 				}
@@ -1263,7 +1263,7 @@ void gl_classes::choose_basis_for_rational_normal_form_block(
 
 				Dummy_subspace->allocate(k, 0);
 					
-				F->choose_vector_in_here_but_not_in_here_or_here_column_spaces(
+				F->Linear_algebra->choose_vector_in_here_but_not_in_here_or_here_column_spaces(
 						&Data->K[f], Dummy_subspace, Forbidden_subspace, v,
 						verbose_level - 1);
 
@@ -1295,7 +1295,7 @@ void gl_classes::choose_basis_for_rational_normal_form_block(
 						Orbiter->Int_vec.matrix_print(Basis, k, k);
 						}
 					b++;
-					F->mult_vector_from_the_right(Mtx, v, w, k, k);
+					F->Linear_algebra->mult_vector_from_the_right(Mtx, v, w, k, k);
 					if (f_v) {
 						cout << "forced vector w=";
 						Orbiter->Int_vec.print(cout, w, k);
@@ -1308,7 +1308,7 @@ void gl_classes::choose_basis_for_rational_normal_form_block(
 							coeff = Data->poly_coeffs[ii];
 							//coeff = F->negate(Data->poly_coeffs[ii]);
 							// mistake corrected Dec 29, 2016
-							F->vector_add_apply_with_stride(v,
+							F->Linear_algebra->vector_add_apply_with_stride(v,
 									Basis + b0 + ii, k, coeff, k);
 							}
 						}
@@ -1442,9 +1442,9 @@ void gl_classes::generators_for_centralizer(
 		}
 
 	for (i = 0; i < nb_gens; i++) {
-		F->matrix_inverse(Gens[i], Basis_inv, k,
+		F->Linear_algebra->matrix_inverse(Gens[i], Basis_inv, k,
 				0 /* verbose_level */);
-		F->mult_matrix_matrix(Basis, Basis_inv, M2, k, k, k,
+		F->Linear_algebra->mult_matrix_matrix(Basis, Basis_inv, M2, k, k, k,
 				0 /* verbose_level */);
 		Orbiter->Int_vec.copy(M2, Gens[i], k * k);
 		}
@@ -1465,11 +1465,11 @@ void gl_classes::generators_for_centralizer(
 
 
 	
-	F->matrix_inverse(Basis, Basis_inv, k, 0 /* verbose_level */);
+	F->Linear_algebra->matrix_inverse(Basis, Basis_inv, k, 0 /* verbose_level */);
 
-	F->mult_matrix_matrix(Basis_inv, Mtx, M2, k, k, k,
+	F->Linear_algebra->mult_matrix_matrix(Basis_inv, Mtx, M2, k, k, k,
 			0 /* verbose_level */);
-	F->mult_matrix_matrix(M2, Basis, M3, k, k, k,
+	F->Linear_algebra->mult_matrix_matrix(M2, Basis, M3, k, k, k,
 			0 /* verbose_level */);
 
 	if (f_vv) {
@@ -1785,14 +1785,14 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 
 			if (f > 1) {
 				if (f == level1 && e == level2) {
-					if (!F->choose_vector_in_here_but_not_in_here_or_here_column_spaces_coset(
+					if (!F->Linear_algebra->choose_vector_in_here_but_not_in_here_or_here_column_spaces_coset(
 							coset, &Data->K[f], &Data->K[f - 1],
 							Forbidden_subspace, v, verbose_level - 2)) {
 						ret = FALSE;
 						}
 					}
 				else {
-					F->choose_vector_in_here_but_not_in_here_or_here_column_spaces(
+					F->Linear_algebra->choose_vector_in_here_but_not_in_here_or_here_column_spaces(
 							&Data->K[f], &Data->K[f - 1], Forbidden_subspace,
 							v, verbose_level - 2);
 					}
@@ -1807,7 +1807,7 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 				if (f == level1 && e == level2) {
 					//cout << "f = " << f << " == level, calling "
 					//	"choose_vector_in_here_but_not_in_here_or_here_column_spaces_coset" << endl;
-					if (!F->choose_vector_in_here_but_not_in_here_or_here_column_spaces_coset(
+					if (!F->Linear_algebra->choose_vector_in_here_but_not_in_here_or_here_column_spaces_coset(
 							coset, &Data->K[f], Dummy_subspace,
 							Forbidden_subspace, v,
 							verbose_level - 2)) {
@@ -1815,7 +1815,7 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 						}
 					}
 				else {
-					F->choose_vector_in_here_but_not_in_here_or_here_column_spaces(
+					F->Linear_algebra->choose_vector_in_here_but_not_in_here_or_here_column_spaces(
 							&Data->K[f], Dummy_subspace, Forbidden_subspace, v,
 							verbose_level - 2);
 					}
@@ -1853,7 +1853,7 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 						Basis[i * k + b] = v[i];
 						}
 					b++;
-					F->mult_vector_from_the_right(Mtx, v, w, k, k);
+					F->Linear_algebra->mult_vector_from_the_right(Mtx, v, w, k, k);
 					if (f_vv) {
 						cout << "forced vector w=";
 						Orbiter->Int_vec.print(cout, w, k);
@@ -1864,7 +1864,7 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 					if (g == Data->d - 1) {
 						for (ii = 0; ii < Data->d; ii++) {
 							coeff = F->negate(Data->poly_coeffs[ii]);
-							F->vector_add_apply_with_stride(v,
+							F->Linear_algebra->vector_add_apply_with_stride(v,
 									Basis + b0 + ii, k, coeff, k);
 							}
 						}

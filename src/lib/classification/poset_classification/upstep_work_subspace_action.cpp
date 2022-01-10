@@ -292,7 +292,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 					base_change_matrix,
 					k, n, n, F->log10_of_q);
 		}
-		rk = F->base_cols_and_embedding(
+		rk = F->Linear_algebra->base_cols_and_embedding(
 				k, n,
 				base_change_matrix,
 				base_cols,
@@ -331,7 +331,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 
 
 		// now base_change_matrix is invertible
-		rk = F->base_cols_and_embedding(n, n,
+		rk = F->Linear_algebra->base_cols_and_embedding(n, n,
 				base_change_matrix, base_cols, embedding,
 				0/*verbose_level*/);
 		if (rk != n) {
@@ -339,7 +339,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 					"rk != n" << endl;
 			exit(1);
 		}
-		F->mult_matrix_matrix(
+		F->Linear_algebra->mult_matrix_matrix(
 				base_change_matrix,
 				AG->GE->M,
 				changed_space,

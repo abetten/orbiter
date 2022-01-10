@@ -137,19 +137,22 @@ void elliptic_curve::compute_points(int verbose_level)
 		if (r == 0) {
 			add_point_to_table(x, 0, 1);
 			if (nb == bound) {
-				cout << "The number of points exceeds the bound" << endl;
+				cout << "elliptic_curve::compute_points The number of points exceeds the bound" << endl;
 				exit(1);
 			}
 			//cout << nb++ << " : (" << x << "," << 0 << ",1)" << endl;
 		}
 		else {
-			if (F->square_root(r, y)) {
+			if (F->is_square(r)) {
+
+				y = F->square_root(r);
+
 				y1 = y;
 				y2 = F->negate(y);
 				if (y2 == y1) {
 					add_point_to_table(x, y1, 1);
 					if (nb == bound) {
-						cout << "The number of points "
+						cout << "elliptic_curve::compute_points The number of points "
 								"exceeds the bound" << endl;
 						exit(1);
 					}
@@ -161,13 +164,13 @@ void elliptic_curve::compute_points(int verbose_level)
 					}
 					add_point_to_table(x, y1, 1);
 					if (nb == bound) {
-						cout << "The number of points "
+						cout << "elliptic_curve::compute_points The number of points "
 								"exceeds the bound" << endl;
 						exit(1);
 					}
 					add_point_to_table(x, y2, 1);
 					if (nb == bound) {
-						cout << "The number of points "
+						cout << "elliptic_curve::compute_points The number of points "
 								"exceeds the bound" << endl;
 						exit(1);
 					}
@@ -186,7 +189,7 @@ void elliptic_curve::compute_points(int verbose_level)
 						// DISCRETA/global.cpp
 
 					if (F->mult(y, y) != r) {
-						cout << "There is a problem "
+						cout << "elliptic_curve::compute_points There is a problem "
 								"with the square root" << endl;
 						exit(1);
 					}
@@ -198,13 +201,13 @@ void elliptic_curve::compute_points(int verbose_level)
 					}
 					add_point_to_table(x, y1, 1);
 					if (nb == bound) {
-						cout << "The number of points "
+						cout << "elliptic_curve::compute_points The number of points "
 								"exceeds the bound" << endl;
 						exit(1);
 					}
 					add_point_to_table(x, y2, 1);
 					if (nb == bound) {
-						cout << "The number of points "
+						cout << "elliptic_curve::compute_points The number of points "
 								"exceeds the bound" << endl;
 						exit(1);
 					}
@@ -218,7 +221,7 @@ void elliptic_curve::compute_points(int verbose_level)
 				y = F->frobenius_power(r, e - 1);
 				add_point_to_table(x, y, 1);
 				if (nb == bound) {
-					cout << "The number of points exceeds "
+					cout << "elliptic_curve::compute_points The number of points exceeds "
 							"the bound" << endl;
 					exit(1);
 				}
@@ -232,7 +235,7 @@ void elliptic_curve::compute_points(int verbose_level)
 
 
 	if (nb == bound) {
-		cout << "The number of points exceeds the bound" << endl;
+		cout << "elliptic_curve::compute_points The number of points exceeds the bound" << endl;
 		exit(1);
 	}
 
@@ -306,10 +309,14 @@ void elliptic_curve::addition(
 		cout << "(" << x2 << "," << y2 << "," << z2 << ")";
 		cout << endl;
 	}
-	F->elliptic_curve_addition(b, c,
+
+	number_theory_domain NT;
+
+	NT.elliptic_curve_addition(F, b, c,
 			x1, y1, z1,
 			x2, y2, z2,
 			x3, y3, z3, verbose_level);
+
 	if (f_v) {
 		cout << "elliptic_curve::addition done";
 	}
@@ -355,19 +362,13 @@ void elliptic_curve::save_incidence_matrix(std::string &fname,
 void elliptic_curve::draw_grid(
 		std::string &fname,
 		layered_graph_draw_options *Draw_options,
-		//double tikz_global_scale, double tikz_global_line_width,
-		//int xmax, int ymax,
 		int f_with_grid, int f_with_points, int point_density,
 		int f_path, int start_idx, int nb_steps,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	//int x_min = 0, x_max = 1000000;
-	//int y_min = 0, y_max = 1000000;
 	int factor_1000 = 1000;
 	string fname_full;
-	//int f_embedded = TRUE;
-	//int f_sideways = FALSE;
 	
 	if (f_v) {
 		cout << "draw_grid" << endl;
@@ -380,19 +381,6 @@ void elliptic_curve::draw_grid(
 		mp_graphics G;
 
 		G.init(fname_full, Draw_options, verbose_level - 1);
-#if 0
-		mp_graphics G(fname_full,
-				x_min, y_min, x_max, y_max, f_embedded, f_sideways,
-				verbose_level - 1);
-		G.out_xmin() = 0;
-		G.out_ymin() = 0;
-		G.out_xmax() = xmax;
-		G.out_ymax() = ymax;
-		cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
-
-		G.tikz_global_scale = tikz_global_scale; // .45;
-		G.tikz_global_line_width = tikz_global_line_width; // 1.5;
-#endif
 
 		G.header();
 		G.begin_figure(factor_1000);

@@ -2220,7 +2220,7 @@ sims *action::create_sims_for_centralizer_of_matrix(
 	}
 
 	for (i = 0; i < nb_gens; i++) {
-		if (!F->test_if_commute(Mtx, Gens[i], d,
+		if (!F->Linear_algebra->test_if_commute(Mtx, Gens[i], d,
 				0/*verbose_level*/)) {
 			cout << "The matrices do not commute" << endl;
 			cout << "Mtx=" << endl;

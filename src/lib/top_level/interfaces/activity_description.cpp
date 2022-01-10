@@ -986,14 +986,14 @@ void activity_description::do_combinatorial_object_activity(int verbose_level)
 	symbol_table_object_type t;
 
 	t = Sym->Orbiter_top_level_session->get_object_type(Idx[0]);
-	if (t == t_combinatorial_object) {
-		combinatorial_object_create *COC;
+	if (t == t_geometric_object) {
+		geometric_object_create *GOC;
 
-		COC = (combinatorial_object_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+		GOC = (geometric_object_create *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 		{
 			combinatorial_object_activity Activity;
 
-			Activity.init(Combinatorial_object_activity_description, COC, verbose_level);
+			Activity.init(Combinatorial_object_activity_description, GOC, verbose_level);
 
 			if (f_v) {
 				cout << "activity_description::do_combinatorial_object_activity "

@@ -2088,7 +2088,9 @@ void arc_in_projective_space::arc_lifting3(
 void arc_in_projective_space::create_hyperoval(
 	int f_translation, int translation_exponent,
 	int f_Segre, int f_Payne, int f_Cherowitzo, int f_OKeefe_Penttila,
-	std::string &fname, int &nb_pts, long int *&Pts,
+	std::string &label_txt,
+	std::string &label_tex,
+	int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2097,6 +2099,7 @@ void arc_in_projective_space::create_hyperoval(
 	int *v;
 	sorting Sorting;
 	char str[1000];
+	char str2[1000];
 
 	d = n + 1;
 
@@ -2108,39 +2111,52 @@ void arc_in_projective_space::create_hyperoval(
 	v = NEW_int(d);
 	Pts = NEW_lint(P->N_points);
 
-	sprintf(str, "_q%d.txt", P->F->q);
+	sprintf(str, "_q%d", P->F->q);
+	sprintf(str2, "\\_q%d", P->F->q);
 
 	if (f_translation) {
 		P->Arc_in_projective_space->create_translation_hyperoval(Pts, nb_pts,
 				translation_exponent, verbose_level - 0);
-		fname.assign("hyperoval_translation");
-		fname.append(str);
+		label_txt.assign("hyperoval_translation");
+		label_txt.append(str);
+		label_tex.assign("hyperoval\\_translation");
+		label_tex.append(str2);
 	}
 	else if (f_Segre) {
 		P->Arc_in_projective_space->create_Segre_hyperoval(Pts, nb_pts, verbose_level - 2);
-		fname.assign("hyperoval_Segre");
-		fname.append(str);
+		label_txt.assign("hyperoval_Segre");
+		label_txt.append(str);
+		label_tex.assign("hyperoval\\_Segre");
+		label_tex.append(str2);
 	}
 	else if (f_Payne) {
 		P->Arc_in_projective_space->create_Payne_hyperoval(Pts, nb_pts, verbose_level - 2);
-		fname.assign("hyperoval_Payne");
-		fname.append(str);
+		label_txt.assign("hyperoval_Payne");
+		label_txt.append(str);
+		label_tex.assign("hyperoval\\_Payne");
+		label_tex.append(str2);
 	}
 	else if (f_Cherowitzo) {
 		P->Arc_in_projective_space->create_Cherowitzo_hyperoval(Pts, nb_pts, verbose_level - 2);
-		fname.assign("hyperoval_Cherowitzo");
-		fname.append(str);
+		label_txt.assign("hyperoval_Cherowitzo");
+		label_txt.append(str);
+		label_tex.assign("hyperoval\\_Cherowitzo");
+		label_tex.append(str2);
 	}
 	else if (f_OKeefe_Penttila) {
 		P->Arc_in_projective_space->create_OKeefe_Penttila_hyperoval_32(Pts, nb_pts,
 				verbose_level - 2);
-		fname.assign("hyperoval_OKeefe_Penttila");
-		fname.append(str);
+		label_txt.assign("hyperoval_OKeefe_Penttila");
+		label_txt.append(str);
+		label_tex.assign("hyperoval\\_OKeefe\\_Penttila");
+		label_tex.append(str2);
 	}
 	else {
 		P->Arc_in_projective_space->create_regular_hyperoval(Pts, nb_pts, verbose_level - 2);
-		fname.assign("hyperoval_regular");
-		fname.append(str);
+		label_txt.assign("hyperoval_regular");
+		label_txt.append(str);
+		label_tex.assign("hyperoval\\_regular");
+		label_tex.append(str2);
 	}
 
 	if (f_v) {
@@ -2168,18 +2184,22 @@ void arc_in_projective_space::create_hyperoval(
 
 void arc_in_projective_space::create_subiaco_oval(
 	int f_short,
-	std::string &fname, int &nb_pts, long int *&Pts,
+	std::string &label_txt,
+	std::string &label_tex,
+	int &nb_pts, long int *&Pts,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	sorting Sorting;
 	char str[1000];
+	char str2[1000];
 
 	if (f_v) {
 		cout << "arc_in_projective_space::create_subiaco_oval" << endl;
 	}
 
-	sprintf(str, "_q%d.txt", P->F->q);
+	sprintf(str, "_q%d", P->F->q);
+	sprintf(str2, "\\_q%d", P->F->q);
 	{
 		arc_basic A;
 
@@ -2187,12 +2207,16 @@ void arc_in_projective_space::create_subiaco_oval(
 		A.Subiaco_oval(Pts, nb_pts, f_short, verbose_level);
 	}
 	if (f_short) {
-		fname.assign("oval_subiaco_short");
-		fname.append(str);
+		label_txt.assign("oval_subiaco_short");
+		label_txt.append(str);
+		label_tex.assign("oval\\_subiaco\\_short");
+		label_tex.append(str2);
 	}
 	else {
-		fname.assign("oval_subiaco_long");
-		fname.append(str);
+		label_txt.assign("oval_subiaco_long");
+		label_txt.append(str);
+		label_tex.assign("oval\\_subiaco\\_long");
+		label_tex.append(str);
 	}
 
 
@@ -2226,12 +2250,15 @@ void arc_in_projective_space::create_subiaco_oval(
 
 
 void arc_in_projective_space::create_subiaco_hyperoval(
-		std::string &fname, int &nb_pts, long int *&Pts,
+		std::string &label_txt,
+		std::string &label_tex,
+		int &nb_pts, long int *&Pts,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	sorting Sorting;
 	char str[1000];
+	char str2[1000];
 
 	if (f_v) {
 		cout << "arc_in_projective_space::create_subiaco_hyperoval" << endl;
@@ -2244,10 +2271,13 @@ void arc_in_projective_space::create_subiaco_hyperoval(
 		A.Subiaco_hyperoval(Pts, nb_pts, verbose_level);
 	}
 
-	sprintf(str, "_q%d.txt", P->F->q);
+	sprintf(str, "_q%d", P->F->q);
+	sprintf(str2, "\\_q%d", P->F->q);
 
-	fname.assign("subiaco_hyperoval");
-	fname.append(str);
+	label_txt.assign("subiaco_hyperoval");
+	label_txt.append(str);
+	label_tex.assign("subiaco\\_hyperoval");
+	label_tex.append(str2);
 
 
 	if (f_v) {

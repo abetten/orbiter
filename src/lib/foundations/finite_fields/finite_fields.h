@@ -237,6 +237,22 @@ public:
 	std::string parse_text;
 	std::string parse_parameters;
 
+	int f_product_of;
+	std::string product_of_elements;
+
+	int f_sum_of;
+	std::string sum_of_elements;
+
+	int f_negate;
+	std::string negate_elements;
+
+	int f_inverse;
+	std::string inverse_elements;
+
+	int f_power_map;
+	int power_map_k;
+	std::string power_map_elements;
+
 	int f_evaluate;
 	std::string evaluate_formula_label;
 	std::string evaluate_parameters;
@@ -458,7 +474,6 @@ private:
 	std::string symbol_for_print;
 
 
-	int my_nb_calls_to_elliptic_curve_addition;
 	int nb_times_mult;
 	int nb_times_add;
 
@@ -482,10 +497,12 @@ public:
 	long int nb_calls_to_PG_element_rank_modified;
 	long int nb_calls_to_PG_element_unrank_modified;
 
+	linear_algebra *Linear_algebra;
+
+
 	finite_field();
 	~finite_field();
 	void print_call_stats(std::ostream &ost);
-	int &nb_calls_to_elliptic_curve_addition();
 	void init(finite_field_description *Descr, int verbose_level);
 	void finite_field_init(int q, int f_without_tables, int verbose_level);
 	void init_implementation(int f_without_tables, int verbose_level);
@@ -547,7 +564,8 @@ public:
 	int log_alpha(int i);
 	int multiplicative_order(int a);
 	void all_square_roots(int a, int &nb_roots, int *roots2);
-	int square_root(int i, int &root);
+	int is_square(int i);
+	int square_root(int i);
 	int primitive_root();
 	int N2(int a);
 	int N3(int a);
@@ -636,9 +654,520 @@ public:
 
 
 
+
+
 	// #########################################################################
-	// finite_field_linear_algebra.cpp
+	// finite_field_orthogonal.cpp
 	// #########################################################################
+
+	void Q_epsilon_unrank(
+		int *v, int stride, int epsilon, int k,
+		int c1, int c2, int c3, long int a, int verbose_level);
+	long int Q_epsilon_rank(
+		int *v, int stride, int epsilon, int k,
+		int c1, int c2, int c3, int verbose_level);
+	//void init_hash_table_parabolic(int k, int verbose_level);
+	void Q_unrank(int *v, int stride, int k, long int a, int verbose_level);
+	long int Q_rank(int *v, int stride, int k, int verbose_level);
+	void Q_unrank_directly(int *v, int stride, int k, long int a, int verbose_level);
+		// parabolic quadric
+		// k = projective dimension, must be even
+	long int Q_rank_directly(int *v, int stride, int k, int verbose_level);
+	void Qplus_unrank(int *v, int stride, int k, long int a, int verbose_level);
+		// hyperbolic quadric
+		// k = projective dimension, must be odd
+	long int Qplus_rank(int *v, int stride, int k, int verbose_level);
+	void Qminus_unrank(int *v,
+			int stride, int k, long int a,
+			int c1, int c2, int c3, int verbose_level);
+		// elliptic quadric
+		// k = projective dimension, must be odd
+		// the form is
+		// \sum_{i=0}^n x_{2i}x_{2i+1} + c1 x_{2n}^2 +
+		// c2 x_{2n} x_{2n+1} + c3 x_{2n+1}^2
+	long int Qminus_rank(int *v, int stride,
+			int k, int c1, int c2, int c3, int verbose_level);
+	void S_unrank(int *v, int stride, int n, long int a);
+	void S_rank(int *v, int stride, int n, long int &a);
+	void N_unrank(int *v, int stride, int n, long int a);
+	void N_rank(int *v, int stride, int n, long int &a);
+	void N1_unrank(int *v, int stride, int n, long int a);
+	void N1_rank(int *v, int stride, int n, long int &a);
+	void Sbar_unrank(int *v, int stride, int n, long int a, int verbose_level);
+	void Sbar_rank(int *v, int stride, int n, long int &a, int verbose_level);
+	void Nbar_unrank(int *v, int stride, int n, long int a);
+	void Nbar_rank(int *v, int stride, int n, long int &a);
+	void Gram_matrix(int epsilon, int k,
+		int form_c1, int form_c2, int form_c3,
+		int *&Gram, int verbose_level);
+	int evaluate_bilinear_form(
+			int *u, int *v, int d, int *Gram);
+	int evaluate_quadratic_form(int *v, int stride,
+		int epsilon, int k, int form_c1, int form_c2, int form_c3);
+	int evaluate_hyperbolic_quadratic_form(
+			int *v, int stride, int n);
+	int evaluate_hyperbolic_bilinear_form(
+			int *u, int *v, int n);
+	int primitive_element();
+	void Siegel_map_between_singular_points(int *T,
+			long int rk_from, long int rk_to, long int root,
+		int epsilon, int algebraic_dimension,
+		int form_c1, int form_c2, int form_c3, int *Gram_matrix,
+		int verbose_level);
+	// root is not perp to from and to.
+	void Siegel_Transformation(
+		int epsilon, int k,
+		int form_c1, int form_c2, int form_c3,
+		int *M, int *v, int *u, int verbose_level);
+		// if u is singular and v \in \la u \ra^\perp, then
+		// \pho_{u,v}(x) := x + \beta(x,v) u - \beta(x,u) v - Q(v) \beta(x,u) u
+		// is called the Siegel transform (see Taylor p. 148)
+		// Here Q is the quadratic form
+		// and \beta is the corresponding bilinear form
+	long int orthogonal_find_root(int rk2,
+		int epsilon, int algebraic_dimension,
+		int form_c1, int form_c2, int form_c3, int *Gram_matrix,
+		int verbose_level);
+	void choose_anisotropic_form(
+			int &c1, int &c2, int &c3, int verbose_level);
+
+
+	// #########################################################################
+	// finite_field_representations.cpp
+	// #########################################################################
+
+	void representing_matrix8_R(int *A,
+		int q, int a, int b, int c, int d);
+	void representing_matrix9_R(int *A,
+		int q, int a, int b, int c, int d);
+	void representing_matrix9_U(int *A,
+		int a, int b, int c, int d, int beta);
+	void representing_matrix8_U(int *A,
+		int a, int b, int c, int d, int beta);
+	void representing_matrix8_V(int *A, int beta);
+	void representing_matrix9b(int *A, int beta);
+	void representing_matrix8a(int *A,
+		int a, int b, int c, int d, int beta);
+	void representing_matrix8b(int *A, int beta);
+	int Term1(int a1, int e1);
+	int Term2(int a1, int a2, int e1, int e2);
+	int Term3(int a1, int a2, int a3, int e1, int e2, int e3);
+	int Term4(int a1, int a2, int a3, int a4, int e1, int e2, int e3,
+		int e4);
+	int Term5(int a1, int a2, int a3, int a4, int a5, int e1, int e2,
+		int e3, int e4, int e5);
+	int term1(int a1, int e1);
+	int term2(int a1, int a2, int e1, int e2);
+	int term3(int a1, int a2, int a3, int e1, int e2, int e3);
+	int term4(int a1, int a2, int a3, int a4, int e1, int e2, int e3,
+		int e4);
+	int term5(int a1, int a2, int a3, int a4, int a5, int e1, int e2,
+		int e3, int e4, int e5);
+	int m_term(int q, int a1, int a2, int a3);
+	int beta_trinomial(int q, int beta, int a1, int a2, int a3);
+	int T3product2(int a1, int a2);
+
+	// #########################################################################
+	// finite_field_projective.cpp
+	// #########################################################################
+
+	void PG_element_apply_frobenius(int n, int *v, int f);
+	void number_of_conditions_satisfied(
+			std::string &variety_label_txt,
+			std::string &variety_label_tex,
+			int variety_nb_vars, int variety_degree,
+			std::vector<std::string> &Variety_coeffs,
+			monomial_ordering_type Monomial_ordering_type,
+			std::string &number_of_conditions_satisfied_fname,
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+			int verbose_level);
+	// creates homogeneous_polynomial_domain
+	void create_intersection_of_zariski_open_sets(
+			std::string &variety_label_txt,
+			std::string &variety_label_tex,
+			int variety_nb_vars, int variety_degree,
+			std::vector<std::string> &Variety_coeffs,
+			monomial_ordering_type Monomial_ordering_type,
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+			int verbose_level);
+	// creates homogeneous_polynomial_domain
+	void create_projective_variety(
+			std::string &variety_label,
+			std::string &variety_label_tex,
+			int variety_nb_vars, int variety_degree,
+			std::string &variety_coeffs,
+			monomial_ordering_type Monomial_ordering_type,
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+			int verbose_level);
+	// creates homogeneous_polynomial_domain
+	void create_projective_curve(
+			std::string &variety_label_txt,
+			std::string &variety_label_tex,
+			int curve_nb_vars, int curve_degree,
+			std::string &curve_coeffs,
+			monomial_ordering_type Monomial_ordering_type,
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+			int verbose_level);
+	// creates homogeneous_polynomial_domain
+	int test_if_vectors_are_projectively_equal(int *v1, int *v2, int len);
+	void PG_element_normalize(int *v, int stride, int len);
+	// last non-zero element made one
+	void PG_element_normalize_from_front(int *v, int stride, int len);
+	// first non zero element made one
+
+
+	void PG_elements_embed(
+			long int *set_in, long int *set_out, int sz,
+			int old_length, int new_length, int *v);
+	long int PG_element_embed(
+			long int rk, int old_length, int new_length, int *v);
+	void PG_element_unrank_fining(
+			int *v, int len, int a);
+	int PG_element_rank_fining(
+			int *v, int len);
+	void PG_element_unrank_gary_cook(
+			int *v, int len, int a);
+	void PG_element_rank_modified(
+			int *v, int stride, int len, int &a);
+	void PG_element_unrank_modified(
+			int *v, int stride, int len, int a);
+	void PG_element_rank_modified_lint(
+			int *v, int stride, int len, long int &a);
+	void PG_elements_unrank_lint(
+			int *M, int k, int n, long int *rank_vec);
+	void PG_elements_rank_lint(
+			int *M, int k, int n, long int *rank_vec);
+	void PG_element_unrank_modified_lint(
+			int *v, int stride, int len, long int a);
+	void PG_element_rank_modified_not_in_subspace(
+			int *v, int stride, int len, int m, long int &a);
+	void PG_element_unrank_modified_not_in_subspace(
+			int *v, int stride, int len, int m, long int a);
+
+	int evaluate_conic_form(int *six_coeffs, int *v3);
+	int evaluate_quadric_form_in_PG_three(int *ten_coeffs, int *v4);
+	int Pluecker_12(int *x4, int *y4);
+	int Pluecker_21(int *x4, int *y4);
+	int Pluecker_13(int *x4, int *y4);
+	int Pluecker_31(int *x4, int *y4);
+	int Pluecker_14(int *x4, int *y4);
+	int Pluecker_41(int *x4, int *y4);
+	int Pluecker_23(int *x4, int *y4);
+	int Pluecker_32(int *x4, int *y4);
+	int Pluecker_24(int *x4, int *y4);
+	int Pluecker_42(int *x4, int *y4);
+	int Pluecker_34(int *x4, int *y4);
+	int Pluecker_43(int *x4, int *y4);
+	int Pluecker_ij(int i, int j, int *x4, int *y4);
+	int evaluate_symplectic_form(int len, int *x, int *y);
+	int evaluate_symmetric_form(int len, int *x, int *y);
+	int evaluate_quadratic_form_x0x3mx1x2(int *x);
+	void solve_y2py(int a, int *Y2, int &nb_sol);
+	void find_secant_points_wrt_x0x3mx1x2(int *Basis_line, int *Pts4, int &nb_pts, int verbose_level);
+	int is_totally_isotropic_wrt_symplectic_form(int k,
+		int n, int *Basis);
+	int evaluate_monomial(int *monomial, int *variables, int nb_vars);
+	void projective_point_unrank(int n, int *v, int rk);
+	long int projective_point_rank(int n, int *v);
+	void create_BLT_point(
+			int *v5, int a, int b, int c, int verbose_level);
+		// creates the point (-b/2,-c,a,-(b^2/4-ac),1)
+		// check if it satisfies x_0^2 + x_1x_2 + x_3x_4:
+		// b^2/4 + (-c)*a + -(b^2/4-ac)
+		// = b^2/4 -ac -b^2/4 + ac = 0
+	void O4_isomorphism_4to2(
+		int *At, int *As, int &f_switch, int *B,
+		int verbose_level);
+	void O4_isomorphism_2to4(
+		int *At, int *As, int f_switch, int *B);
+	void O4_grid_coordinates_rank(
+		int x1, int x2, int x3, int x4,
+		int &grid_x, int &grid_y, int verbose_level);
+	void O4_grid_coordinates_unrank(
+		int &x1, int &x2, int &x3, int &x4, int grid_x,
+		int grid_y, int verbose_level);
+	void O4_find_tangent_plane(
+		int pt_x1, int pt_x2, int pt_x3, int pt_x4,
+		int *tangent_plane, int verbose_level);
+	void oval_polynomial(
+		int *S, unipoly_domain &D, unipoly_object &poly,
+		int verbose_level);
+	void all_PG_elements_in_subspace(
+			int *genma, int k, int n, long int *&point_list, int &nb_points,
+			int verbose_level);
+	void all_PG_elements_in_subspace_array_is_given(
+			int *genma, int k, int n, long int *point_list, int &nb_points,
+			int verbose_level);
+	void display_all_PG_elements(int n);
+	void display_all_PG_elements_not_in_subspace(int n, int m);
+	void display_all_AG_elements(int n);
+	void do_cone_over(int n,
+		long int *set_in, int set_size_in, long int *&set_out, int &set_size_out,
+		int verbose_level);
+	// creates projective_space objects for PG(n,q) and PG(n+1,q)
+	void do_blocking_set_family_3(int n,
+		long int *set_in, int set_size,
+		long int *&the_set_out, int &set_size_out,
+		int verbose_level);
+	// creates projective_space PG(n,q)
+	void create_Baer_substructure(int n,
+		finite_field *Fq,
+		std::string &fname, int &nb_pts, long int *&Pts,
+		int verbose_level);
+	// creates projective_space PG(n,Q)
+	// the big field FQ is given
+	void create_BLT_from_database(int f_embedded,
+		int BLT_k,
+		std::string &label_txt,
+		std::string &label_tex,
+		int &nb_pts, long int *&Pts,
+		int verbose_level);
+	void create_orthogonal(int epsilon, int n,
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+		int verbose_level);
+	void create_hermitian(int n,
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+		int verbose_level);
+	// creates hermitian
+	void create_ttp_code(finite_field *Fq,
+		int f_construction_A, int f_hyperoval, int f_construction_B,
+		std::string &fname, int &nb_pts, long int *&Pts,
+		int verbose_level);
+		// this is FQ
+	void create_segre_variety(int a, int b,
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+		int verbose_level);
+	// creates PG(a,q), PG(b,q) and PG((a+1)*(b+1)-1,q)
+#if 0
+	void create_desarguesian_line_spread_in_PG_3_q(
+		finite_field *Fq,
+		int f_embedded_in_PG_4_q,
+		std::string &fname, int &nb_lines, long int *&Lines,
+		int verbose_level);
+	// creates PG(1,Q) and PG(3,q)
+	// this is FQ
+	void do_Klein_correspondence(int n,
+			long int *set_in, int set_size,
+			long int *&the_set_out, int &set_size_out,
+			int verbose_level);
+	// creates PG(n,q) and PG(5,q), assuming that n = 3
+#endif
+	void do_m_subspace_type(int n, int m,
+			long int *set, int set_size,
+		int f_show, int verbose_level);
+	// creates PG(n,q)
+	void do_m_subspace_type_fast(int n, int m,
+			long int *set, int set_size,
+			int f_show, int verbose_level);
+	// creates PG(n,q) and grassmann
+	void do_line_type(int n,
+			long int *set, int set_size,
+			int f_show, int verbose_level);
+	// creates PG(n,q)
+	void do_plane_type(int n,
+			long int *set, int set_size,
+			int *&intersection_type, int &highest_intersection_number,
+		int verbose_level);
+	// creates PG(n,q) and grassmann
+	void do_plane_type_failsafe(int n,
+			long int *set, int set_size,
+			int verbose_level);
+	// creates PG(n,q)
+	void do_conic_type(int n,
+			int f_randomized, int nb_times,
+			long int *set, int set_size,
+			int threshold,
+			int *&intersection_type, int &highest_intersection_number,
+			int verbose_level);
+	// creates PG(n,q)
+	void do_test_diagonal_line(int n,
+			long int *set_in, int set_size,
+			std::string &fname_orbits_on_quadrangles,
+		int verbose_level);
+	// creates PG(n,q) and grassmann
+	void do_andre(finite_field *Fq,
+			long int *the_set_in, int set_size_in,
+			long int *&the_set_out, int &set_size_out,
+			int verbose_level);
+	// creates PG(2,Q) and PG(4,q)
+	// this is FQ
+	void do_print_lines_in_PG(int n, long int *set_in, int set_size);
+	// creates PG(n,q)
+	void do_print_points_in_PG(int n, long int *set_in, int set_size);
+	// creates PG(n,q)
+	void do_print_points_in_orthogonal_space(
+		int epsilon, int n,
+		long int *set_in, int set_size, int verbose_level);
+	// creates orthogonal
+	void do_print_points_on_grassmannian(
+		int n, int k,
+		long int *set_in, int set_size);
+	// creates PG(n,q) and grassmann
+	void do_embed_orthogonal(
+		int epsilon, int n,
+		long int *set_in, long int *&set_out, int set_size,
+		int verbose_level);
+	// creates PG(n,q)
+	void do_embed_points(int n,
+			long int *set_in, long int *&set_out, int set_size,
+			int verbose_level);
+	// creates PG(n,q) and PG(n+1,q)
+	void do_draw_points_in_plane(
+			layered_graph_draw_options *O,
+			long int *set, int set_size,
+			std::string &fname_base, int f_point_labels,
+			int verbose_level);
+	// creates PG(n,q)
+	void PG_element_modified_not_in_subspace_perm(int n, int m,
+		long int *orbit, long int *orbit_inv,
+		int verbose_level);
+	void print_set_in_affine_plane(int len, long int *S);
+	void simeon(int n, int len, long int *S, int s, int verbose_level);
+	void wedge_to_klein(int *W, int *K);
+	void klein_to_wedge(int *K, int *W);
+	void isomorphism_to_special_orthogonal(int *A4, int *A6, int verbose_level);
+	void minimal_orbit_rep_under_stabilizer_of_frame_characteristic_two(int x, int y,
+			int &a, int &b, int verbose_level);
+	int evaluate_Fermat_cubic(int *v);
+
+
+
+	// #########################################################################
+	// finite_field_io.cpp
+	// #########################################################################
+
+	void report(std::ostream &ost, int verbose_level);
+	void print_minimum_polynomial(int p, const char *polynomial);
+	void print();
+	void print_detailed(int f_add_mult_table);
+	void print_tables();
+	void display_T2(std::ostream &ost);
+	void display_T3(std::ostream &ost);
+	void display_N2(std::ostream &ost);
+	void display_N3(std::ostream &ost);
+	void print_integer_matrix_zech(std::ostream &ost,
+		int *p, int m, int n);
+	void print_embedding(finite_field &subfield,
+		int *components, int *embedding, int *pair_embedding);
+		// we think of F as two dimensional vector space
+		// over f with basis (1,alpha)
+		// for i,j \in f, with x = i + j * alpha \in F, we have
+		// pair_embedding[i * q + j] = x;
+		// also,
+		// components[x * 2 + 0] = i;
+		// components[x * 2 + 1] = j;
+		// also, for i \in f, embedding[i] is the element
+		// in F that corresponds to i
+		// components[Q * 2]
+		// embedding[q]
+		// pair_embedding[q * q]
+	void print_embedding_tex(finite_field &subfield,
+		int *components, int *embedding, int *pair_embedding);
+	void print_indicator_square_nonsquare(int a);
+	void print_element(std::ostream &ost, int a);
+	void print_element_str(std::stringstream &ost, int a);
+	void print_element_with_symbol(std::ostream &ost,
+		int a, int f_exponential, int width, std::string &symbol);
+	void print_element_with_symbol_str(std::stringstream &ost,
+			int a, int f_exponential, int width, std::string &symbol);
+	void int_vec_print_field_elements(std::ostream &ost, int *v, int len);
+	void int_vec_print_elements_exponential(std::ostream &ost,
+		int *v, int len, std::string &symbol_for_print);
+	void make_fname_addition_table_csv(std::string &fname);
+	void make_fname_multiplication_table_csv(std::string &fname);
+	void make_fname_addition_table_reordered_csv(std::string &fname);
+	void make_fname_multiplication_table_reordered_csv(std::string &fname);
+	void addition_table_save_csv(int verbose_level);
+	void multiplication_table_save_csv(int verbose_level);
+	void addition_table_reordered_save_csv(int verbose_level);
+	void multiplication_table_reordered_save_csv(int verbose_level);
+	void latex_addition_table(std::ostream &f,
+		int f_elements_exponential, std::string &symbol_for_print);
+	void latex_multiplication_table(std::ostream &f,
+		int f_elements_exponential, std::string &symbol_for_print);
+	void latex_matrix(std::ostream &f, int f_elements_exponential,
+			std::string &symbol_for_print, int *M, int m, int n);
+	void power_table(int t, int *power_table, int len);
+	void cheat_sheet(std::ostream &f, int verbose_level);
+	void cheat_sheet_subfields(std::ostream &f, int verbose_level);
+	void report_subfields(std::ostream &f, int verbose_level);
+	void report_subfields_detailed(std::ostream &ost, int verbose_level);
+	void cheat_sheet_addition_table(std::ostream &f, int verbose_level);
+	void cheat_sheet_multiplication_table(std::ostream &f, int verbose_level);
+	void cheat_sheet_power_table(std::ostream &f, int f_with_polynomials, int verbose_level);
+	void cheat_sheet_power_table_top(std::ostream &ost, int f_with_polynomials, int verbose_level);
+	void cheat_sheet_power_table_bottom(std::ostream &ost, int f_with_polynomials, int verbose_level);
+	void cheat_sheet_table_of_elements(std::ostream &ost, int verbose_level);
+	void print_element_as_polynomial(std::ostream &ost, int *v, int verbose_level);
+	void cheat_sheet_main_table(std::ostream &f, int verbose_level);
+	void cheat_sheet_main_table_top(std::ostream &f, int nb_cols);
+	void cheat_sheet_main_table_bottom(std::ostream &f);
+	void display_table_of_projective_points(
+			std::ostream &ost, long int *Pts, int nb_pts, int len);
+	void display_table_of_projective_points2(
+		std::ostream &ost, long int *Pts, int nb_pts, int len);
+	void display_table_of_projective_points_easy(
+		std::ostream &ost, long int *Pts, int nb_pts, int len);
+	void export_magma(int d, long int *Pts, int nb_pts, std::string &fname);
+	void export_gap(int d, long int *Pts, int nb_pts, std::string &fname);
+	void print_matrix_latex(std::ostream &ost, int *A, int m, int n);
+	void print_matrix_numerical_latex(std::ostream &ost, int *A, int m, int n);
+
+
+
+};
+
+
+
+
+// #############################################################################
+// finite_field_orthogonal.cpp
+// #############################################################################
+void orthogonal_points_free_global_data();
+
+// #############################################################################
+// finite_field_tables.cpp
+// #############################################################################
+
+extern int finitefield_primes[];
+extern int finitefield_nb_primes;
+extern int finitefield_largest_degree_irreducible_polynomial[];
+extern const char *finitefield_primitive_polynomial[][100];
+
+
+
+// #############################################################################
+// linear_algebra.cpp:
+// #############################################################################
+
+//! linear algebra over a finite field
+
+class linear_algebra {
+public:
+	finite_field *F;
+
+	// #########################################################################
+	// linear_algebra.cpp
+	// #########################################################################
+
+	linear_algebra();
+	~linear_algebra();
+	void init(finite_field *F, int verbose_level);
+
 
 	void copy_matrix(int *A, int *B, int ma, int na);
 	void reverse_matrix(int *A, int *B, int ma, int na);
@@ -838,8 +1367,9 @@ public:
 	void lift_to_Klein_quadric(int *A4, int *A6, int verbose_level);
 
 
+
 	// #########################################################################
-	// finite_field_linear_algebra2.cpp
+	// linear_algebra2.cpp
 	// #########################################################################
 
 	void get_coefficients_in_linear_combination(
@@ -939,481 +1469,9 @@ public:
 			int omega, int k, int *N, int **A, int **Av,
 			int *Omega, int verbose_level);
 
-	// #########################################################################
-	// finite_field_orthogonal.cpp
-	// #########################################################################
-
-	void Q_epsilon_unrank(
-		int *v, int stride, int epsilon, int k,
-		int c1, int c2, int c3, long int a, int verbose_level);
-	long int Q_epsilon_rank(
-		int *v, int stride, int epsilon, int k,
-		int c1, int c2, int c3, int verbose_level);
-	//void init_hash_table_parabolic(int k, int verbose_level);
-	void Q_unrank(int *v, int stride, int k, long int a, int verbose_level);
-	long int Q_rank(int *v, int stride, int k, int verbose_level);
-	void Q_unrank_directly(int *v, int stride, int k, long int a, int verbose_level);
-		// parabolic quadric
-		// k = projective dimension, must be even
-	long int Q_rank_directly(int *v, int stride, int k, int verbose_level);
-	void Qplus_unrank(int *v, int stride, int k, long int a, int verbose_level);
-		// hyperbolic quadric
-		// k = projective dimension, must be odd
-	long int Qplus_rank(int *v, int stride, int k, int verbose_level);
-	void Qminus_unrank(int *v,
-			int stride, int k, long int a,
-			int c1, int c2, int c3, int verbose_level);
-		// elliptic quadric
-		// k = projective dimension, must be odd
-		// the form is
-		// \sum_{i=0}^n x_{2i}x_{2i+1} + c1 x_{2n}^2 +
-		// c2 x_{2n} x_{2n+1} + c3 x_{2n+1}^2
-	long int Qminus_rank(int *v, int stride,
-			int k, int c1, int c2, int c3, int verbose_level);
-	void S_unrank(int *v, int stride, int n, long int a);
-	void S_rank(int *v, int stride, int n, long int &a);
-	void N_unrank(int *v, int stride, int n, long int a);
-	void N_rank(int *v, int stride, int n, long int &a);
-	void N1_unrank(int *v, int stride, int n, long int a);
-	void N1_rank(int *v, int stride, int n, long int &a);
-	void Sbar_unrank(int *v, int stride, int n, long int a, int verbose_level);
-	void Sbar_rank(int *v, int stride, int n, long int &a, int verbose_level);
-	void Nbar_unrank(int *v, int stride, int n, long int a);
-	void Nbar_rank(int *v, int stride, int n, long int &a);
-	void Gram_matrix(int epsilon, int k,
-		int form_c1, int form_c2, int form_c3,
-		int *&Gram, int verbose_level);
-	int evaluate_bilinear_form(
-			int *u, int *v, int d, int *Gram);
-	int evaluate_quadratic_form(int *v, int stride,
-		int epsilon, int k, int form_c1, int form_c2, int form_c3);
-	int evaluate_hyperbolic_quadratic_form(
-			int *v, int stride, int n);
-	int evaluate_hyperbolic_bilinear_form(
-			int *u, int *v, int n);
-	int primitive_element();
-	void Siegel_map_between_singular_points(int *T,
-			long int rk_from, long int rk_to, long int root,
-		int epsilon, int algebraic_dimension,
-		int form_c1, int form_c2, int form_c3, int *Gram_matrix,
-		int verbose_level);
-	// root is not perp to from and to.
-	void Siegel_Transformation(
-		int epsilon, int k,
-		int form_c1, int form_c2, int form_c3,
-		int *M, int *v, int *u, int verbose_level);
-		// if u is singular and v \in \la u \ra^\perp, then
-		// \pho_{u,v}(x) := x + \beta(x,v) u - \beta(x,u) v - Q(v) \beta(x,u) u
-		// is called the Siegel transform (see Taylor p. 148)
-		// Here Q is the quadratic form
-		// and \beta is the corresponding bilinear form
-	long int orthogonal_find_root(int rk2,
-		int epsilon, int algebraic_dimension,
-		int form_c1, int form_c2, int form_c3, int *Gram_matrix,
-		int verbose_level);
-	void choose_anisotropic_form(
-			int &c1, int &c2, int &c3, int verbose_level);
-
 
 	// #########################################################################
-	// finite_field_representations.cpp
-	// #########################################################################
-
-	void representing_matrix8_R(int *A,
-		int q, int a, int b, int c, int d);
-	void representing_matrix9_R(int *A,
-		int q, int a, int b, int c, int d);
-	void representing_matrix9_U(int *A,
-		int a, int b, int c, int d, int beta);
-	void representing_matrix8_U(int *A,
-		int a, int b, int c, int d, int beta);
-	void representing_matrix8_V(int *A, int beta);
-	void representing_matrix9b(int *A, int beta);
-	void representing_matrix8a(int *A,
-		int a, int b, int c, int d, int beta);
-	void representing_matrix8b(int *A, int beta);
-	int Term1(int a1, int e1);
-	int Term2(int a1, int a2, int e1, int e2);
-	int Term3(int a1, int a2, int a3, int e1, int e2, int e3);
-	int Term4(int a1, int a2, int a3, int a4, int e1, int e2, int e3,
-		int e4);
-	int Term5(int a1, int a2, int a3, int a4, int a5, int e1, int e2,
-		int e3, int e4, int e5);
-	int term1(int a1, int e1);
-	int term2(int a1, int a2, int e1, int e2);
-	int term3(int a1, int a2, int a3, int e1, int e2, int e3);
-	int term4(int a1, int a2, int a3, int a4, int e1, int e2, int e3,
-		int e4);
-	int term5(int a1, int a2, int a3, int a4, int a5, int e1, int e2,
-		int e3, int e4, int e5);
-	int m_term(int q, int a1, int a2, int a3);
-	int beta_trinomial(int q, int beta, int a1, int a2, int a3);
-	int T3product2(int a1, int a2);
-
-	// #########################################################################
-	// finite_field_projective.cpp
-	// #########################################################################
-
-	void PG_element_apply_frobenius(int n, int *v, int f);
-	void number_of_conditions_satisfied(
-			std::string &variety_label,
-			int variety_nb_vars, int variety_degree,
-			std::vector<std::string> &Variety_coeffs,
-			monomial_ordering_type Monomial_ordering_type,
-			std::string &number_of_conditions_satisfied_fname,
-			std::string &fname, int &nb_pts, long int *&Pts,
-			int verbose_level);
-	void create_intersection_of_zariski_open_sets(
-			std::string &variety_label,
-			int variety_nb_vars, int variety_degree,
-			std::vector<std::string> &Variety_coeffs,
-			monomial_ordering_type Monomial_ordering_type,
-			std::string &fname, int &nb_pts, long int *&Pts,
-			int verbose_level);
-	void create_projective_variety(
-			std::string &variety_label,
-			int variety_nb_vars, int variety_degree,
-			std::string &variety_coeffs,
-			monomial_ordering_type Monomial_ordering_type,
-			std::string &fname, int &nb_pts, long int *&Pts,
-			int verbose_level);
-	void create_projective_curve(
-			std::string &variety_label,
-			int curve_nb_vars, int curve_degree,
-			std::string &curve_coeffs,
-			monomial_ordering_type Monomial_ordering_type,
-			std::string &fname, int &nb_pts, long int *&Pts,
-			int verbose_level);
-	int test_if_vectors_are_projectively_equal(int *v1, int *v2, int len);
-	void PG_element_normalize(int *v, int stride, int len);
-	// last non-zero element made one
-	void PG_element_normalize_from_front(int *v, int stride, int len);
-	// first non zero element made one
-
-
-	void PG_elements_embed(
-			long int *set_in, long int *set_out, int sz,
-			int old_length, int new_length, int *v);
-	long int PG_element_embed(
-			long int rk, int old_length, int new_length, int *v);
-	void PG_element_unrank_fining(
-			int *v, int len, int a);
-	int PG_element_rank_fining(
-			int *v, int len);
-	void PG_element_unrank_gary_cook(
-			int *v, int len, int a);
-	void PG_element_rank_modified(
-			int *v, int stride, int len, int &a);
-	void PG_element_unrank_modified(
-			int *v, int stride, int len, int a);
-	void PG_element_rank_modified_lint(
-			int *v, int stride, int len, long int &a);
-	void PG_elements_unrank_lint(
-			int *M, int k, int n, long int *rank_vec);
-	void PG_elements_rank_lint(
-			int *M, int k, int n, long int *rank_vec);
-	void PG_element_unrank_modified_lint(
-			int *v, int stride, int len, long int a);
-	void PG_element_rank_modified_not_in_subspace(
-			int *v, int stride, int len, int m, long int &a);
-	void PG_element_unrank_modified_not_in_subspace(
-			int *v, int stride, int len, int m, long int a);
-
-	int evaluate_conic_form(int *six_coeffs, int *v3);
-	int evaluate_quadric_form_in_PG_three(int *ten_coeffs, int *v4);
-	int Pluecker_12(int *x4, int *y4);
-	int Pluecker_21(int *x4, int *y4);
-	int Pluecker_13(int *x4, int *y4);
-	int Pluecker_31(int *x4, int *y4);
-	int Pluecker_14(int *x4, int *y4);
-	int Pluecker_41(int *x4, int *y4);
-	int Pluecker_23(int *x4, int *y4);
-	int Pluecker_32(int *x4, int *y4);
-	int Pluecker_24(int *x4, int *y4);
-	int Pluecker_42(int *x4, int *y4);
-	int Pluecker_34(int *x4, int *y4);
-	int Pluecker_43(int *x4, int *y4);
-	int Pluecker_ij(int i, int j, int *x4, int *y4);
-	int evaluate_symplectic_form(int len, int *x, int *y);
-	int evaluate_symmetric_form(int len, int *x, int *y);
-	int evaluate_quadratic_form_x0x3mx1x2(int *x);
-	void solve_y2py(int a, int *Y2, int &nb_sol);
-	void find_secant_points_wrt_x0x3mx1x2(int *Basis_line, int *Pts4, int &nb_pts, int verbose_level);
-	int is_totally_isotropic_wrt_symplectic_form(int k,
-		int n, int *Basis);
-	int evaluate_monomial(int *monomial, int *variables, int nb_vars);
-	void projective_point_unrank(int n, int *v, int rk);
-	long int projective_point_rank(int n, int *v);
-	void create_BLT_point(
-			int *v5, int a, int b, int c, int verbose_level);
-		// creates the point (-b/2,-c,a,-(b^2/4-ac),1)
-		// check if it satisfies x_0^2 + x_1x_2 + x_3x_4:
-		// b^2/4 + (-c)*a + -(b^2/4-ac)
-		// = b^2/4 -ac -b^2/4 + ac = 0
-	void O4_isomorphism_4to2(
-		int *At, int *As, int &f_switch, int *B,
-		int verbose_level);
-	void O4_isomorphism_2to4(
-		int *At, int *As, int f_switch, int *B);
-	void O4_grid_coordinates_rank(
-		int x1, int x2, int x3, int x4,
-		int &grid_x, int &grid_y, int verbose_level);
-	void O4_grid_coordinates_unrank(
-		int &x1, int &x2, int &x3, int &x4, int grid_x,
-		int grid_y, int verbose_level);
-	void O4_find_tangent_plane(
-		int pt_x1, int pt_x2, int pt_x3, int pt_x4,
-		int *tangent_plane, int verbose_level);
-	void oval_polynomial(
-		int *S, unipoly_domain &D, unipoly_object &poly,
-		int verbose_level);
-	void all_PG_elements_in_subspace(
-			int *genma, int k, int n, long int *&point_list, int &nb_points,
-			int verbose_level);
-	void all_PG_elements_in_subspace_array_is_given(
-			int *genma, int k, int n, long int *point_list, int &nb_points,
-			int verbose_level);
-	void display_all_PG_elements(int n);
-	void display_all_PG_elements_not_in_subspace(int n, int m);
-	void display_all_AG_elements(int n);
-	void do_cone_over(int n,
-		long int *set_in, int set_size_in, long int *&set_out, int &set_size_out,
-		int verbose_level);
-	void do_blocking_set_family_3(int n,
-		long int *set_in, int set_size,
-		long int *&the_set_out, int &set_size_out,
-		int verbose_level);
-	void create_ovoid(
-			std::string &fname, int &nb_pts, long int *&Pts,
-		int verbose_level);
-	void create_Baer_substructure(int n,
-		finite_field *Fq,
-		std::string &fname, int &nb_pts, long int *&Pts,
-		int verbose_level);
-		// the big field FQ is given
-	void create_BLT_from_database(int f_embedded,
-		int BLT_k,
-		std::string &fname, int &nb_pts, long int *&Pts,
-		int verbose_level);
-	void create_orthogonal(int epsilon, int n,
-			std::string &fname, int &nb_pts, long int *&Pts,
-		int verbose_level);
-	void create_hermitian(int n,
-			std::string &fname, int &nb_pts, long int *&Pts,
-		int verbose_level);
-	void create_cuspidal_cubic(
-			std::string &fname, int &nb_pts, long int *&Pts,
-		int verbose_level);
-	void create_twisted_cubic(
-			std::string &fname, int &nb_pts, long int *&Pts,
-		int verbose_level);
-	void create_elliptic_curve(
-		int elliptic_curve_b, int elliptic_curve_c,
-		std::string &fname, int &nb_pts, long int *&Pts,
-		int verbose_level);
-	void create_ttp_code(finite_field *Fq,
-		int f_construction_A, int f_hyperoval, int f_construction_B,
-		std::string &fname, int &nb_pts, long int *&Pts,
-		int verbose_level);
-		// this is FQ
-	void create_unital_XXq_YZq_ZYq(
-			std::string &fname, int &nb_pts, long int *&Pts,
-		int verbose_level);
-	void create_whole_space(int n,
-			std::string &fname, int &nb_pts, long int *&Pts,
-		int verbose_level);
-	void create_hyperplane(int n,
-		int pt,
-		std::string &fname, int &nb_pts, long int *&Pts,
-		int verbose_level);
-	void create_segre_variety(int a, int b,
-			std::string &fname, int &nb_pts, long int *&Pts,
-		int verbose_level);
-	void create_Maruta_Hamada_arc(
-			std::string &fname, int &nb_pts, long int *&Pts,
-		int verbose_level);
-	void create_desarguesian_line_spread_in_PG_3_q(
-		finite_field *Fq,
-		int f_embedded_in_PG_4_q,
-		std::string &fname, int &nb_lines, long int *&Lines,
-		int verbose_level);
-		// this is FQ
-	void do_Klein_correspondence(int n,
-			long int *set_in, int set_size,
-			long int *&the_set_out, int &set_size_out,
-			int verbose_level);
-	void do_m_subspace_type(int n, int m,
-			long int *set, int set_size,
-		int f_show, int verbose_level);
-	void do_m_subspace_type_fast(int n, int m,
-			long int *set, int set_size,
-			int f_show, int verbose_level);
-	void do_line_type(int n,
-			long int *set, int set_size,
-			int f_show, int verbose_level);
-	void do_plane_type(int n,
-			long int *set, int set_size,
-			int *&intersection_type, int &highest_intersection_number,
-		int verbose_level);
-	void do_plane_type_failsafe(int n,
-			long int *set, int set_size,
-			int verbose_level);
-	void do_conic_type(int n,
-			int f_randomized, int nb_times,
-			long int *set, int set_size,
-			int threshold,
-			int *&intersection_type, int &highest_intersection_number,
-			int verbose_level);
-	void do_test_diagonal_line(int n,
-			long int *set_in, int set_size,
-			std::string &fname_orbits_on_quadrangles,
-		int verbose_level);
-	void do_andre(finite_field *Fq,
-			long int *the_set_in, int set_size_in,
-			long int *&the_set_out, int &set_size_out,
-			int verbose_level);
-		// this is FQ
-	void do_print_lines_in_PG(int n, long int *set_in, int set_size);
-	void do_print_points_in_PG(int n, long int *set_in, int set_size);
-	void do_print_points_in_orthogonal_space(
-		int epsilon, int n,
-		long int *set_in, int set_size, int verbose_level);
-	void do_print_points_on_grassmannian(
-		int n, int k,
-		long int *set_in, int set_size);
-	void do_embed_orthogonal(
-		int epsilon, int n,
-		long int *set_in, long int *&set_out, int set_size,
-		int verbose_level);
-	void do_embed_points(int n,
-			long int *set_in, long int *&set_out, int set_size,
-			int verbose_level);
-	void do_draw_points_in_plane(
-			layered_graph_draw_options *O,
-			long int *set, int set_size,
-			std::string &fname_base, int f_point_labels,
-			int verbose_level);
-	void PG_element_modified_not_in_subspace_perm(int n, int m,
-		long int *orbit, long int *orbit_inv,
-		int verbose_level);
-	void print_set_in_affine_plane(int len, long int *S);
-	void elliptic_curve_addition(int b, int c,
-		int x1, int x2, int x3,
-		int y1, int y2, int y3,
-		int &z1, int &z2, int &z3, int verbose_level);
-	void elliptic_curve_point_multiple(int b, int c, int n,
-		int x1, int y1, int z1,
-		int &x3, int &y3, int &z3,
-		int verbose_level);
-	void elliptic_curve_point_multiple_with_log(int b, int c, int n,
-		int x1, int y1, int z1,
-		int &x3, int &y3, int &z3,
-		int verbose_level);
-	int elliptic_curve_evaluate_RHS(int x, int b, int c);
-	void elliptic_curve_points(
-			int b, int c, int &nb, int *&T, int verbose_level);
-	void elliptic_curve_all_point_multiples(int b, int c, int &order,
-		int x1, int y1, int z1,
-		std::vector<std::vector<int> > &Pts,
-		int verbose_level);
-	int elliptic_curve_discrete_log(int b, int c,
-		int x1, int y1, int z1,
-		int x3, int y3, int z3,
-		int verbose_level);
-	void simeon(int n, int len, long int *S, int s, int verbose_level);
-	void wedge_to_klein(int *W, int *K);
-	void klein_to_wedge(int *K, int *W);
-	void isomorphism_to_special_orthogonal(int *A4, int *A6, int verbose_level);
-	void minimal_orbit_rep_under_stabilizer_of_frame_characteristic_two(int x, int y,
-			int &a, int &b, int verbose_level);
-	int evaluate_Fermat_cubic(int *v);
-
-
-
-	// #########################################################################
-	// finite_field_io.cpp
-	// #########################################################################
-
-	void report(std::ostream &ost, int verbose_level);
-	void print_minimum_polynomial(int p, const char *polynomial);
-	void print();
-	void print_detailed(int f_add_mult_table);
-	void print_tables();
-	void display_T2(std::ostream &ost);
-	void display_T3(std::ostream &ost);
-	void display_N2(std::ostream &ost);
-	void display_N3(std::ostream &ost);
-	void print_integer_matrix_zech(std::ostream &ost,
-		int *p, int m, int n);
-	void print_embedding(finite_field &subfield,
-		int *components, int *embedding, int *pair_embedding);
-		// we think of F as two dimensional vector space
-		// over f with basis (1,alpha)
-		// for i,j \in f, with x = i + j * alpha \in F, we have
-		// pair_embedding[i * q + j] = x;
-		// also,
-		// components[x * 2 + 0] = i;
-		// components[x * 2 + 1] = j;
-		// also, for i \in f, embedding[i] is the element
-		// in F that corresponds to i
-		// components[Q * 2]
-		// embedding[q]
-		// pair_embedding[q * q]
-	void print_embedding_tex(finite_field &subfield,
-		int *components, int *embedding, int *pair_embedding);
-	void print_indicator_square_nonsquare(int a);
-	void print_element(std::ostream &ost, int a);
-	void print_element_str(std::stringstream &ost, int a);
-	void print_element_with_symbol(std::ostream &ost,
-		int a, int f_exponential, int width, std::string &symbol);
-	void print_element_with_symbol_str(std::stringstream &ost,
-			int a, int f_exponential, int width, std::string &symbol);
-	void int_vec_print_field_elements(std::ostream &ost, int *v, int len);
-	void int_vec_print_elements_exponential(std::ostream &ost,
-		int *v, int len, std::string &symbol_for_print);
-	void make_fname_addition_table_csv(std::string &fname);
-	void make_fname_multiplication_table_csv(std::string &fname);
-	void make_fname_addition_table_reordered_csv(std::string &fname);
-	void make_fname_multiplication_table_reordered_csv(std::string &fname);
-	void addition_table_save_csv(int verbose_level);
-	void multiplication_table_save_csv(int verbose_level);
-	void addition_table_reordered_save_csv(int verbose_level);
-	void multiplication_table_reordered_save_csv(int verbose_level);
-	void latex_addition_table(std::ostream &f,
-		int f_elements_exponential, std::string &symbol_for_print);
-	void latex_multiplication_table(std::ostream &f,
-		int f_elements_exponential, std::string &symbol_for_print);
-	void latex_matrix(std::ostream &f, int f_elements_exponential,
-			std::string &symbol_for_print, int *M, int m, int n);
-	void power_table(int t, int *power_table, int len);
-	void cheat_sheet(std::ostream &f, int verbose_level);
-	void cheat_sheet_subfields(std::ostream &f, int verbose_level);
-	void report_subfields(std::ostream &f, int verbose_level);
-	void report_subfields_detailed(std::ostream &ost, int verbose_level);
-	void cheat_sheet_addition_table(std::ostream &f, int verbose_level);
-	void cheat_sheet_multiplication_table(std::ostream &f, int verbose_level);
-	void cheat_sheet_power_table(std::ostream &f, int f_with_polynomials, int verbose_level);
-	void cheat_sheet_power_table_top(std::ostream &ost, int f_with_polynomials, int verbose_level);
-	void cheat_sheet_power_table_bottom(std::ostream &ost, int f_with_polynomials, int verbose_level);
-	void cheat_sheet_table_of_elements(std::ostream &ost, int verbose_level);
-	void print_element_as_polynomial(std::ostream &ost, int *v, int verbose_level);
-	void cheat_sheet_main_table(std::ostream &f, int verbose_level);
-	void cheat_sheet_main_table_top(std::ostream &f, int nb_cols);
-	void cheat_sheet_main_table_bottom(std::ostream &f);
-	void display_table_of_projective_points(
-			std::ostream &ost, long int *Pts, int nb_pts, int len);
-	void display_table_of_projective_points2(
-		std::ostream &ost, long int *Pts, int nb_pts, int len);
-	void display_table_of_projective_points_easy(
-		std::ostream &ost, long int *Pts, int nb_pts, int len);
-	void export_magma(int d, long int *Pts, int nb_pts, std::string &fname);
-	void export_gap(int d, long int *Pts, int nb_pts, std::string &fname);
-	void print_matrix_latex(std::ostream &ost, int *A, int m, int n);
-	void print_matrix_numerical_latex(std::ostream &ost, int *A, int m, int n);
-
-
-	// #########################################################################
-	// finite_field_RREF.cpp
+	// linear_algebra_RREF.cpp
 	// #########################################################################
 
 	int Gauss_int(int *A, int f_special,
@@ -1448,25 +1506,9 @@ public:
 	void RREF_elimination_above(int *A, int m, int n,
 			int i, int *base_cols, int verbose_level);
 
+
 };
 
-//extern int nb_calls_to_finite_field_init;
-
-
-
-// #############################################################################
-// finite_field_orthogonal.cpp
-// #############################################################################
-void orthogonal_points_free_global_data();
-
-// #############################################################################
-// finite_field_tables.cpp
-// #############################################################################
-
-extern int finitefield_primes[];
-extern int finitefield_nb_primes;
-extern int finitefield_largest_degree_irreducible_polynomial[];
-extern const char *finitefield_primitive_polynomial[][100];
 
 
 // #############################################################################

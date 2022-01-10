@@ -499,7 +499,7 @@ void strong_generators::generators_for_the_monomial_group(
 			cout << "strong_generators::generators_for_the_monomial_group "
 					"generator " << h << " / " << nb_gens << ":" << endl;
 		}
-		F->identity_matrix(data, n);
+		F->Linear_algebra->identity_matrix(data, n);
 		if (Mtx->f_affine) {
 			Orbiter->Int_vec.zero(data + n * n, n);
 		}
@@ -670,7 +670,7 @@ void strong_generators::generators_for_the_diagonal_group(action *A,
 	my_gens->allocate(n + 1, verbose_level - 2);
 	for (h = 0; h < n + 1; h++) {
 
-		F->identity_matrix(data, n);
+		F->Linear_algebra->identity_matrix(data, n);
 
 		if (h < n) {
 			data[h * n + h] = F->alpha_power(1);
@@ -1281,7 +1281,7 @@ void strong_generators::init_centralizer_of_matrix_general_linear(
 		A_general_linear->make_element(
 				new_gens->ith(i), data, 0);
 	}
-	M->GFq->diagonal_matrix(data, n, M->GFq->primitive_root());
+	M->GFq->Linear_algebra->diagonal_matrix(data, n, M->GFq->primitive_root());
 	if (M->f_semilinear) {
 		data[n * n] = 0;
 	}
@@ -1868,17 +1868,17 @@ void strong_generators::regulus_stabilizer(action *A_PGL_n_q,
 			}
 
 			if ((h % 2) == 0) {
-				F->Kronecker_product(P, Identity, 2, Q);
+				F->Linear_algebra->Kronecker_product(P, Identity, 2, Q);
 			}
 			else {
-				F->Kronecker_product(Identity, P, 2, Q);
+				F->Linear_algebra->Kronecker_product(Identity, P, 2, Q);
 			}
 			if (Mtx->f_semilinear) {
 				Q[n * n] = P[k * k];
 			}
 		}
 		else {
-			F->identity_matrix(Q, n);
+			F->Linear_algebra->identity_matrix(Q, n);
 			Q[n * n] = 1;
 		}
 		if (f_vv) {
@@ -1976,7 +1976,7 @@ void strong_generators::generators_for_the_borel_subgroup_upper(
 	h = 0;
 	alpha = F->primitive_root();
 	for (i = 0; i < n; i++, h++) {
-		F->identity_matrix(Q, n);
+		F->Linear_algebra->identity_matrix(Q, n);
 		Q[i * n + i] = alpha;
 		if (Mtx->f_semilinear) {
 			Q[n * n] = 0;
@@ -1990,7 +1990,7 @@ void strong_generators::generators_for_the_borel_subgroup_upper(
 	}
 	for (i = 0; i < n; i++) {
 		for (j = i + 1; j < n; j++) {
-			F->identity_matrix(Q, n);
+			F->Linear_algebra->identity_matrix(Q, n);
 			Q[i * n + j] = 1;
 			if (Mtx->f_semilinear) {
 				Q[n * n] = 0;
@@ -2100,7 +2100,7 @@ void strong_generators::generators_for_the_borel_subgroup_lower(
 	h = 0;
 	alpha = F->primitive_root();
 	for (i = 0; i < n; i++, h++) {
-		F->identity_matrix(Q, n);
+		F->Linear_algebra->identity_matrix(Q, n);
 		Q[i * n + i] = alpha;
 		if (Mtx->f_semilinear) {
 			Q[n * n] = 0;
@@ -2114,7 +2114,7 @@ void strong_generators::generators_for_the_borel_subgroup_lower(
 	}
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < i; j++) {
-			F->identity_matrix(Q, n);
+			F->Linear_algebra->identity_matrix(Q, n);
 			Q[i * n + j] = 1;
 			if (Mtx->f_semilinear) {
 				Q[n * n] = 0;
@@ -2223,7 +2223,7 @@ void strong_generators::generators_for_the_identity_subgroup(
 				"for the stabilizer:" << endl;
 	}
 	for (i = 0; i < 1; i++) {
-		F->identity_matrix(Q, n);
+		F->Linear_algebra->identity_matrix(Q, n);
 		if (Mtx->f_semilinear) {
 			Q[n * n] = 0;
 		}
@@ -2814,7 +2814,7 @@ strong_generators::stabilizer_of_Eckardt_surface(
 				"F->cubic_surface_family_24_generators" << endl;
 	}
 
-	F->cubic_surface_family_24_generators(f_with_normalizer, 
+	F->Linear_algebra->cubic_surface_family_24_generators(f_with_normalizer,
 		f_semilinear, 
 		data, nb_gens, data_size, group_order, verbose_level);
 	//cubic_surface_stab_gens(F->q, iso,
@@ -2887,7 +2887,7 @@ void strong_generators::stabilizer_of_G13_surface(
 				"F->cubic_surface_family_G13_generators" << endl;
 	}
 
-	F->cubic_surface_family_G13_generators(a,
+	F->Linear_algebra->cubic_surface_family_G13_generators(a,
 		data, nb_gens, data_size, group_order, verbose_level);
 
 	nice_gens = NEW_OBJECT(vector_ge);
@@ -2955,7 +2955,7 @@ void strong_generators::stabilizer_of_F13_surface(
 				"F->cubic_surface_family_F13_generators" << endl;
 	}
 
-	F->cubic_surface_family_F13_generators(a,
+	F->Linear_algebra->cubic_surface_family_F13_generators(a,
 		data, nb_gens, data_size, group_order, verbose_level);
 
 	nice_gens = NEW_OBJECT(vector_ge);
@@ -3749,7 +3749,7 @@ void strong_generators::exterior_square(
 			}
 
 		Orbiter->Int_vec.zero(An2, n2 * n2 + 1);
-		F->exterior_square(SG_original->gens->ith(i), An2, n, verbose_level - 2);
+		F->Linear_algebra->exterior_square(SG_original->gens->ith(i), An2, n, verbose_level - 2);
 
 		An2[n2 * n2] = frobenius;
 

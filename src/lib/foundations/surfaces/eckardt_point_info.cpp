@@ -282,7 +282,7 @@ void eckardt_point_info::init(surface_domain *Surf, projective_space *P,
 #endif
 
 			P->unrank_point(Basis + 6, deleted_point);
-			rk = P->F->Gauss_easy(Basis, 3, 3);
+			rk = P->F->Linear_algebra->Gauss_easy(Basis, 3, 3);
 			if (rk == 2) {
 				if (i >= j) {
 					i1 = i + 1;

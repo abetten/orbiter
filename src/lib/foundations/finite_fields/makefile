@@ -13,14 +13,14 @@ MODULES = \
 	finite_field_implementation_by_tables.o \
 	finite_field_implementation_wo_tables.o \
 	finite_field_io.o \
-	finite_field_linear_algebra.o \
-	finite_field_linear_algebra2.o \
 	finite_field_orthogonal.o \
 	finite_field_projective.o \
 	finite_field_representations.o \
-	finite_field_RREF.o \
 	finite_field_tables.o \
 	finite_field.o \
+	linear_algebra.o \
+	linear_algebra2.o \
+	linear_algebra_RREF.o \
 	norm_tables.o \
 	nth_roots.o \
 	subfield_structure.o 

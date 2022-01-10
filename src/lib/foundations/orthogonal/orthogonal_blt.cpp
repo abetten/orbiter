@@ -807,7 +807,7 @@ int orthogonal::triple_is_collinear(long int pt1, long int pt2, long int pt3)
 	unrank_point(T1, 1, pt1, verbose_level - 1);
 	unrank_point(T1 + n, 1, pt2, verbose_level - 1);
 	unrank_point(T1 + 2 * n, 1, pt3, verbose_level - 1);
-	rk = F->Gauss_int(T1,
+	rk = F->Linear_algebra->Gauss_int(T1,
 			FALSE /* f_special */,
 			FALSE /* f_complete */,
 			base_cols,
@@ -922,7 +922,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 			cout << " : "; // << endl;
 			}
 		//print_integer_matrix_width(cout, Mtx, level, n, n, 3);
-		rk = F->Gauss_int(Mtx, f_special, f_complete,
+		rk = F->Linear_algebra->Gauss_int(Mtx, f_special, f_complete,
 				base_col, FALSE, NULL, level, n, n, 0);
 		if (f_vvv) {
 			cout << "after Gauss, rank = " << rk << endl;
@@ -1056,7 +1056,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 					Block_size++;
 					}
 				}
-			rk = F->Gauss_int(Mtx, f_special,
+			rk = F->Linear_algebra->Gauss_int(Mtx, f_special,
 					f_complete, base_col, FALSE, NULL, level, n, n, 0);
 			if (f_vvv)  {
 				cout << "after Gauss, rank = " << rk << endl;

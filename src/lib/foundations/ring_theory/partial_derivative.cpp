@@ -112,7 +112,7 @@ void partial_derivative::apply(int *eqn_in,
 		cout << "partial_derivative::apply" << endl;
 		}
 
-	H->get_F()->mult_vector_from_the_left(eqn_in, mapping,
+	H->get_F()->Linear_algebra->mult_vector_from_the_left(eqn_in, mapping,
 			eqn_out, H->get_nb_monomials(), Hd->get_nb_monomials());
 
 	if (f_v) {

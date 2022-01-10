@@ -117,7 +117,7 @@ void number_theoretic_transform::init(std::string &fname_code,
 	Tmp1 = NEW_int(N[k] * N[k]);
 	Tmp2 = NEW_int(N[k] * N[k]);
 
-	F->make_Fourier_matrices(omega, k, N, A, Av, Omega, verbose_level);
+	F->Linear_algebra->make_Fourier_matrices(omega, k, N, A, Av, Omega, verbose_level);
 
 	for (h = k; h >= 1; h--) {
 		char str[1000];
@@ -202,7 +202,7 @@ void number_theoretic_transform::init(std::string &fname_code,
 	nb_m10 = F->nb_times_mult_called();
 	nb_a10 = F->nb_times_add_called();
 
-	F->mult_vector_from_the_right(A[k], X, Y, N[k], N[k]);
+	F->Linear_algebra->mult_vector_from_the_right(A[k], X, Y, N[k], N[k]);
 
 	nb_m11 = F->nb_times_mult_called();
 	nb_a11 = F->nb_times_add_called();
@@ -229,8 +229,8 @@ void number_theoretic_transform::init(std::string &fname_code,
 	}
 
 
-	F->mult_vector_from_the_right(A[k - 1], X1, Y1, N[k - 1], N[k - 1]);
-	F->mult_vector_from_the_right(A[k - 1], X2, Y2, N[k - 1], N[k - 1]);
+	F->Linear_algebra->mult_vector_from_the_right(A[k - 1], X1, Y1, N[k - 1], N[k - 1]);
+	F->Linear_algebra->mult_vector_from_the_right(A[k - 1], X2, Y2, N[k - 1], N[k - 1]);
 
 	gamma = 1;
 	minus_gamma = minus_one;
@@ -366,9 +366,9 @@ void number_theoretic_transform::init(std::string &fname_code,
 
 
 
-	F->mult_matrix_matrix(Gr[k - 1], Dr[k - 1], Tmp1, N[k], N[k], N[k], 0 /* verbose_level*/);
-	F->mult_matrix_matrix(Tmp1, Tr[k - 1], Tmp2, N[k], N[k], N[k], 0 /* verbose_level*/);
-	F->mult_matrix_matrix(Tmp2, Pr[k - 1], Tmp1, N[k], N[k], N[k], 0 /* verbose_level*/);
+	F->Linear_algebra->mult_matrix_matrix(Gr[k - 1], Dr[k - 1], Tmp1, N[k], N[k], N[k], 0 /* verbose_level*/);
+	F->Linear_algebra->mult_matrix_matrix(Tmp1, Tr[k - 1], Tmp2, N[k], N[k], N[k], 0 /* verbose_level*/);
+	F->Linear_algebra->mult_matrix_matrix(Tmp2, Pr[k - 1], Tmp1, N[k], N[k], N[k], 0 /* verbose_level*/);
 
 	for (i = 0; i < N[k] * N[k]; i++) {
 		 if (A[k][i] != Tmp1[i]) {
@@ -1069,9 +1069,9 @@ void number_theoretic_transform::make_level(int s, int verbose_level)
 	cout << "Written file " << fname_P << " of size " << Fio.file_size(fname_P) << endl;
 
 
-	F->mult_matrix_matrix(Gr[s], Dr[s], Tmp1, N[s + 1], N[s + 1], N[s + 1], 0 /* verbose_level*/);
-	F->mult_matrix_matrix(Tmp1, Tr[s], Tmp2, N[s + 1], N[s + 1], N[s + 1], 0 /* verbose_level*/);
-	F->mult_matrix_matrix(Tmp2, Pr[s], Tmp1, N[s + 1], N[s + 1], N[s + 1], 0 /* verbose_level*/);
+	F->Linear_algebra->mult_matrix_matrix(Gr[s], Dr[s], Tmp1, N[s + 1], N[s + 1], N[s + 1], 0 /* verbose_level*/);
+	F->Linear_algebra->mult_matrix_matrix(Tmp1, Tr[s], Tmp2, N[s + 1], N[s + 1], N[s + 1], 0 /* verbose_level*/);
+	F->Linear_algebra->mult_matrix_matrix(Tmp2, Pr[s], Tmp1, N[s + 1], N[s + 1], N[s + 1], 0 /* verbose_level*/);
 
 	for (i = 0; i < N[s + 1] * N[s + 1]; i++) {
 		 if (A[s + 1][i] != Tmp1[i]) {
@@ -1274,7 +1274,7 @@ void number_theoretic_transform::make_T_matrix(int s, int verbose_level)
 
 	Tr[s] = NEW_int(N[s + 1] * N[s + 1]);
 	Orbiter->Int_vec.zero(Tr[s], N[s + 1] * N[s + 1]);
-	F->Kronecker_product_square_but_arbitrary(A[s], Id2,
+	F->Linear_algebra->Kronecker_product_square_but_arbitrary(A[s], Id2,
 			N[s], 2, Tr[s], sz, 0 /*verbose_level */);
 	if (sz != N[s + 1]) {
 		cout << "sz != N[s + 1]" << endl;
@@ -1283,7 +1283,7 @@ void number_theoretic_transform::make_T_matrix(int s, int verbose_level)
 
 	Tvr[s] = NEW_int(N[s + 1] * N[s + 1]);
 	Orbiter->Int_vec.zero(Tvr[s], N[s + 1] * N[s + 1]);
-	F->Kronecker_product_square_but_arbitrary(Av[s], Id2,
+	F->Linear_algebra->Kronecker_product_square_but_arbitrary(Av[s], Id2,
 			N[s], 2, Tvr[s], sz, 0 /*verbose_level */);
 	if (sz != N[s + 1]) {
 		cout << "sz != N[s + 1]" << endl;
@@ -1330,9 +1330,9 @@ void number_theoretic_transform::multiply_matrix_stack(finite_field *F,
 		Orbiter->Int_vec.copy(S[0], Result, sz * sz);
 	}
 	else {
-		F->mult_matrix_matrix(S[0], S[1], Tmp1, sz, sz, sz, 0 /* verbose_level*/);
+		F->Linear_algebra->mult_matrix_matrix(S[0], S[1], Tmp1, sz, sz, sz, 0 /* verbose_level*/);
 		for (i = 2; i < nb; i++) {
-			F->mult_matrix_matrix(Tmp1, S[i], Tmp2, sz, sz, sz, 0 /* verbose_level*/);
+			F->Linear_algebra->mult_matrix_matrix(Tmp1, S[i], Tmp2, sz, sz, sz, 0 /* verbose_level*/);
 			Orbiter->Int_vec.copy(Tmp2, Tmp1, sz * sz);
 		}
 		Orbiter->Int_vec.copy(Tmp1, Result, sz * sz);

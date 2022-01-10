@@ -1564,6 +1564,12 @@ F_127:
 		-with F -do -finite_field_activity -cheat_sheet_GF -end
 
 
+F_11_product_of_all_nonzero_elements:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 11 -end \
+		-define S -vector -field F -loop 1 11 1 -end \
+		-with F -do -finite_field_activity -product_of S -end
+
 
 #############################################################################################################
 # Section 3.3: Polynomials over Finite Fields
@@ -2970,12 +2976,9 @@ PG_2_4_rank_point:
 elliptic_curve_b1_c3_q11.txt:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 11 -end \
-		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_object EC \
-				-elliptic_curve 1 3 \
-			-end \
+		-define P -projective_space 2 F -end \
+		-define EC -geometric_object P \
+			-elliptic_curve 1 3 \
 		-end \
 		-with EC -do -combinatorial_object_activity -save \
 		-end
@@ -3038,22 +3041,6 @@ PG_2_8_incidence_matrix:
 		-end
 	open PG_n2_q8_incidence_matrix_draw.bmp
 
-PG_2_16_incidence_matrix:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 16 -end \
-		-define P -projective_space 2 F -end \
-		-with P -do -projective_space_activity \
-			-export_point_line_incidence_matrix \
-		-end
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define all_one -vector -repeat 1 273 -end \
-		-draw_matrix \
-			-input_csv_file PG_n2_q16_incidence_matrix.csv \
-			-box_width 20 -bit_depth 8 \
-			-partition 3 \
-				all_one all_one \
-		-end
-	open PG_n2_q16_incidence_matrix_draw.bmp
 
 
 
@@ -3170,43 +3157,25 @@ EC_11.txt:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 11 -end \
 		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_object EC \
-				-projective_variety "EC_11" 3 $(EC_11_EQUATION) \
-				-monomial_type_PART \
-			-end \
+		-define EC -geometric_object P \
+			-projective_variety "EC_11" "EC\_11" 3 $(EC_11_EQUATION) \
+			-monomial_type_PART \
 		-end \
 		-with EC -do -combinatorial_object_activity -save \
 		-end
 
 
-conic_ideal_q13:
-	$(ORBITER_PATH)orbiter.out -v 4 \
-		-define F -finite_field -q 13 -end \
-		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_object S \
-				-set "0,1,2,3,43" \
-			-end \
-		-end \
-		-with S -do -combinatorial_object_activity \
-			-ideal 2 \
-		-end
 
 
 Hirschfeld_surface_q4.txt:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 4 -end \
 		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_object H4 \
-				-projective_variety "Hirschfeld_surface_q4" \
+		-define H4 -geometric_object P \
+			-projective_variety "Hirschfeld_surface_q4" \
+				"Hirschfeld\_surface\_q4" \
 				3 $(HIRSCHFELD_SURFACE_EQUATION) \
-				-monomial_type_PART \
-			-end \
+			-monomial_type_PART \
 		-end \
 		-with H4 -do -combinatorial_object_activity -save \
 		-end
@@ -3217,13 +3186,11 @@ Hirschfeld_surface_q16.txt:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 16 -end \
 		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_object H16 \
-				-projective_variety "Hirschfeld_surface_q16" \
-					3 $(HIRSCHFELD_SURFACE_EQUATION) \
-				-monomial_type_PART \
-			-end \
+		-define H16 -geometric_object P \
+			-projective_variety "Hirschfeld_surface_q16" \
+				"Hirschfeld\_surface\_q16" \
+				3 $(HIRSCHFELD_SURFACE_EQUATION) \
+			-monomial_type_PART \
 		-end \
 		-with H16 -do -combinatorial_object_activity -save \
 		-end
@@ -3240,12 +3207,11 @@ Endrass_F7.txt:
 		-define eqn -vector -field F -sparse 165 \
 			$(ENDRASS_SPARSE) -end \
 		-define P -projective_space 3 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_object Endrass_F7 \
-				-projective_variety "Endrass_F7" 8 eqn \
-				-monomial_type_LEX \
-			-end \
+		-define Endrass_F7 -geometric_object P \
+			-projective_variety "Endrass_F7" \
+				"Endrass\_F7" \
+				8 eqn \
+			-monomial_type_PART \
 		-end \
 		-with Endrass_F7 -do -combinatorial_object_activity -save \
 		-end
@@ -3615,11 +3581,8 @@ Edge_curve_conic_type:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 23 -end \
 		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_object E \
-				-set $(EDGE_CURVE_Q23_AS_POINTS) \
-			-end \
+		-define E -geometric_object P \
+			-set $(EDGE_CURVE_Q23_AS_POINTS) \
 		-end \
 		-with E -do \
 		-combinatorial_object_activity \
@@ -4161,17 +4124,15 @@ PG_3_2_again:
 #order = 495766656000
 #Co3 from the paper by Suleiman and Wilson 1997
 
-#ToDo:
 
 Co3:
 	$(ORBITER_PATH)orbiter.out -v 6 \
 		-define F -finite_field -q 2 -end \
-		-define gen1 -vector -field F -format 22 -compact $(CONWAY_GEN1) -end \
-		-define gen2 -vector -field F -format 22 -compact $(CONWAY_GEN2) -end \
+		-define g1 -vector -field F -format 22 -compact $(CONWAY_GEN1) -end \
+		-define g2 -vector -field F -format 22 -compact $(CONWAY_GEN2) -end \
+		-define gens -vector -concatenate g1 -concatenate g2 -end \
 		-define G -linear_group -PGL 22 2 \
-		-subgroup_by_generators "Co3" "495766656000" 2 \
-			"gen1" \
-			"gen2" \
+		-subgroup_by_generators "Co3" "495766656000" 2 gens \
 			-end \
 		-with G -do \
 		-group_theoretic_activity \
@@ -4182,17 +4143,16 @@ Co3:
 
 
 
-
-# ToDo:
+# needs a lot of memory to run!
 
 Ree_27:
 	$(ORBITER_PATH)orbiter.out -v 6 \
 		-define F -finite_field -q 27 -override_polynomial "34" -end \
-		-define Ree_gen1 -vector -field F -format 7 -dense $(Ree_gen1) -end \
-		-define Ree_gen2 -vector -field F -format 7 -dense $(Ree_gen2) -end \
+		-define g1 -vector -field F -format 7 -dense $(Ree_gen1) -end \
+		-define g2 -vector -field F -format 7 -dense $(Ree_gen2) -end \
+		-define gens -vector -concatenate g1 -concatenate g2 -end \
 		-define G -linear_group -PGL 7 F \
-			-subgroup_by_generators "Ree_27" "10073444472" 2 \
-			Ree_gen1 Ree_gen2 \
+			-subgroup_by_generators "Ree_27" "10073444472" 2 gens \
 			-end \
 		-with G -do \
 		-group_theoretic_activity \
@@ -5710,11 +5670,8 @@ hyperoval_16_1_conic_type:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 16 -end \
 		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_object H_16_1 \
-				-set $(HYPEROVAL_16_144) \
-			-end \
+		-define H_16_1 -geometric_object P \
+			-set $(HYPEROVAL_16_144) \
 		-end \
 		-with H_16_1 -do \
 		-combinatorial_object_activity \
@@ -5730,11 +5687,8 @@ hyperoval_16_1_nonconical_type:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 16 -end \
 		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_object H_16_1 \
-				-set $(HYPEROVAL_16_144) \
-			-end \
+		-define H_16_1 -geometric_object P \
+			-set $(HYPEROVAL_16_144) \
 		-end \
 		-with H_16_1 -do \
 		-combinatorial_object_activity \
@@ -5755,11 +5709,8 @@ hyperoval_16_2_nonconical_type:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 16 -end \
 		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_object H_16_2 \
-				-set $(HYPEROVAL_16_16320) \
-			-end \
+		-define H_16_2 -geometric_object P \
+			-set $(HYPEROVAL_16_16320) \
 		-end \
 		-with H_16_2 -do \
 		-combinatorial_object_activity \
@@ -7321,63 +7272,6 @@ quartic_curve_13_2_group:
 
 
 
-
-Knecht_13_1:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 13 -end \
-		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_object Knecht_13_1 \
-				-projective_variety "Knecht_1" 4 $(KNECHT_13_1_AS_VECTOR) \
-				-monomial_type_PART \
-			-end \
-		-end \
-		-with Knecht_13_1 -do \
-		-combinatorial_object_activity \
-			-save \
-		-end \
-		-with Knecht_13_1 -do \
-		-combinatorial_object_activity \
-			-conic_type 6 \
-		-end \
-		-print_symbols
-
-
-
-
-
-Knecht_13_2:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 13 -end \
-		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_object Knecht_13_2 \
-				-projective_variety "Knecht_2" 4 $(KNECHT_13_2_AS_VECTOR) \
-				-monomial_type_PART \
-			-end \
-		-end \
-		-with Knecht_13_2 -do \
-		-combinatorial_object_activity \
-			-save \
-		-end
-
-
-Nathan_19_1:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 19 -end \
-		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_object N19_1 \
-				-projective_variety "Nathan19_1" 4 \
-				"16,0,9,3,10,4,11,9,14,12,9,5,4,14,3,7,16,1,4,6,17,11,17,8,6,2" \
-				-monomial_type_PART \
-			-end \
-		-end \
-		-with N19_1 -do -combinatorial_object_activity -save \
-		-end
 
 
 
@@ -14959,35 +14853,19 @@ Edge_curve_17:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 17 -end \
 		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_object Edge -projective_variety \
-			Edge 4 $(EDGE_CURVE_Q17_EQUATION) \
-			-end \
+		-define C -geometric_object P \
+			-projective_variety "Edge_q17" "Edge\_q17" 4 $(EDGE_CURVE_Q17_EQUATION) \
+			-monomial_type_PART \
+		-end \
+		-with C -do -combinatorial_object_activity -save \
 		-end
 
+#Edge_q17.txt
 #combinatorial_object_create::init created a set of size 12
 #( 4, 7, 16, 19, 20, 23, 32, 35, 89, 100, 244, 251 )
 
 
 
-
-Edge_17_report: 
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 17 -end \
-		-define P -projective_space 2 F -end \
-		-with P -do \
-			-projective_space_activity \
-				-define_quartic_curve C -q 17 \
-				-label_txt Edge -label_tex Edge \
-				-by_coefficients $(EDGE_CURVE_Q17_EQUATION) -end \
-			-end \
-		-with C -do \
-			-quartic_curve_activity \
-				-report \
-			-end
-	pdflatex by_coefficients_q17.tex
-	open by_coefficients_q17.pdf
 
 
 
@@ -14997,17 +14875,11 @@ Edge_curve_17_line_type:
 	$(ORBITER_PATH)orbiter.out -v 2 \
 		-define F -finite_field -q 17 -end \
 		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_object E \
-				-set $(EDGE_CURVE_Q17_AS_POINTS) \
-			-end \
+		-define C -geometric_object P \
+			-projective_variety "Edge_q17" "Edge\_q17" 4 $(EDGE_CURVE_Q17_EQUATION) \
+			-monomial_type_PART \
 		-end \
-		-with E -do \
-		-combinatorial_object_activity \
-			-save \
-		-end \
-		-with E -do \
+		-with C -do \
 		-combinatorial_object_activity \
 			-line_type \
 		-end \
@@ -15021,7 +14893,7 @@ Edge_curve_17_line_type:
 Edge_curve_17_nauty: 
 	$(ORBITER_PATH)orbiter.out -v 3 \
 		-define C -combinatorial_objects \
-			-set_of_points $(EDGE_CURVE_Q17_AS_POINTS) \
+			-file_of_points Edge_q17.txt \
 		-end \
 		-define F -finite_field -q 17 -end \
 		-define P -projective_space 2 F -end \
@@ -15081,415 +14953,6 @@ Edge_curve_17_group:
 		-end
 	pdflatex PGL_3_17_Subgroup_Stab_Edge_24_report.tex
 	open PGL_3_17_Subgroup_Stab_Edge_24_report.pdf
-
-
-# the last element is 
-#  0  1  1
-# 15  1 16
-# 15 16  1
-
-
-
-
-#############################################################################################################
-
-
-
-
-Edge_curve_23:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 23 -end \
-		-define P -projective_space 2 F -end \
-		-with P -do -projective_space_activity \
-			-define_object Edge -projective_variety \
-				Edge 4 $(EDGE_CURVE_Q23_EQUATION) \
-			-end \
-		-end
-
-
-#combinatorial_object_create::init created a set of size 48
-#( 4, 25, 26, 47, 48, 71, 92, 95, 114, 119, 136, 143, 158, 167, 180, 191, 202, 215, 224, 239, 246, 263, 268, 287, 290, 311, 312, 334, 335, 356, 359, 378, 383, 400, 407, 422, 431, 444, 455, 466, 479, 488, 503, 510, 527, 530, 532, 551 )
-
-
-
-Edge_curve_23_nauty: 
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define C -combinatorial_objects \
-			-set_of_points $(EDGE_CURVE_Q23_AS_POINTS) \
-		-end \
-		-define F -finite_field -q 23 -end \
-		-define P -projective_space 2 F -end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form_PG P \
-				-classification_prefix Edge_curve_q23 \
-				-label Edge_curve_q23 \
-				-save_ago \
-				-save_transversal \
-				-max_TDO_depth 4 \
-				-end \
-			-report \
-				-prefix Edge_curve_q23 \
-				-export_flag_orbits \
-				-show_TDO \
-				-show_TDA \
-				-dont_show_incidence_matrices \
-				-export_group \
-			-end \
-		-end
-	pdflatex Edge_curve_q23_classification.tex
-	open Edge_curve_q23_classification.pdf
-
-# 76 backtrack nodes total
-
-#User time: 0.41 of a second, dt=41 tps = 100
-# group order 1012=4*11*23
-
-
-#############################################################################################################
-
-
-
-
-F_25_edge:
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define F -finite_field -q 25 -end \
-		-with F -do -finite_field_activity \
-			-cheat_sheet_GF -end
-	pdflatex GF_25.tex
-	open GF_25.pdf
-
-
-
-
-
-
-Edge_curve_25:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 25 -end \
-		-define P -projective_space 2 F -end \
-		-with P -do -projective_space_activity \
-			-define_object Edge -projective_variety \
-			Edge 4 $(EDGE_CURVE_Q25_EQUATION) \
-			-end \
-		-end
-
-
-#combinatorial_object_create::init created a set of size 24
-#( 4, 5, 6, 7, 28, 29, 30, 31, 190, 192, 209, 223, 256, 271, 284, 298, 412, 420, 561, 566, 612, 620, 633, 649 )
-
-
-
-
-
-
-
-Edge_curve_25_line_type:
-	echo $(FILE_Q25) >edge_q25.csv
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 25 -end \
-		-define P -projective_space 2 F -end \
-		-with P -do \
-		-projective_space_activity \
-			-define_object E \
-				-set $(EDGE_CURVE_Q25_AS_POINTS) \
-			-end \
-		-end \
-		-with E -do \
-		-combinatorial_object_activity \
-			-save \
-		-end \
-		-with E -do \
-		-combinatorial_object_activity \
-			-line_type \
-		-end \
-		-print_symbols
-
-#( 4^14, 3^8, 2^168, 1^208, 0^253 )
-
-Edge_curve_25_nauty: 
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define C -combinatorial_objects \
-			-set_of_points $(EDGE_CURVE_Q25_AS_POINTS) \
-		-end \
-		-define F -finite_field -q 25 -end \
-		-define P -projective_space 2 F -end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form_PG P \
-				-classification_prefix Edge_curve_q25 \
-				-label Edge_curve_q25 \
-				-save_ago \
-				-save_transversal \
-				-max_TDO_depth 4 \
-				-end \
-			-report \
-				-prefix Edge_curve_q25 \
-				-export_flag_orbits \
-				-show_TDO \
-				-show_TDA \
-				-dont_show_incidence_matrices \
-				-export_group \
-			-end \
-		-end
-	pdflatex Edge_curve_q25_classification.tex
-	open Edge_curve_q25_classification.pdf
-
-# 7 backtrack nodes total
-# group order 8
-
-
-#Classification of curves:
-#transversal:
-#( 0 )
-#0 : 1 x ( 0, 0, 0, 3, 15, 4, 3, 22, 3, 5, 21, 15, 22, 6, 1 ) : 8 : ( 0 )
-
-#User time: 0:4
-
-
-# OCN=12 and OCN=41 both have ago=8 and nb_pts=24
-
-#OCN12: 0,0,0,19,19,8,24,13,21,8,3,20,12,7,1
-#OCN41: 0,0,0,6,10,12,11,12,6,12,23,15,0,7,1
-
-
-Edge_curve_25_nauty_again: 
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define C -combinatorial_objects \
-			-set_of_points $(EDGE_CURVE_Q25_AS_POINTS) \
-			-set_of_points $(OCN12_PTS_Q25) \
-			-set_of_points $(OCN41_PTS_Q25) \
-		-end \
-		-define F -finite_field -q 25 -end \
-		-define P -projective_space 2 F -end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form_PG P \
-				-classification_prefix Edge_curve_q25 \
-				-label Edge_curve_q25 \
-				-save_ago \
-				-save_transversal \
-				-max_TDO_depth 4 \
-				-end \
-			-report \
-				-prefix Edge_curve_q25 \
-				-export_flag_orbits \
-				-show_TDO \
-				-show_TDA \
-				-dont_show_incidence_matrices \
-				-export_group \
-			-end \
-		-end
-	pdflatex Edge_curve_q25_classification.tex
-	open Edge_curve_q25_classification.pdf
-
-
-# all three are non-isomorphic
-
-
-
-
-#############################################################################################################
-
-
-
-
-Edge_curve_29:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 29 -end \
-		-define P -projective_space 2 F -end \
-		-with P -do -projective_space_activity -define_object Edge -projective_variety Edge 4 $(EDGE_CURVE_Q29_EQUATION)  -end -end
-
-
-
-#combinatorial_object_create::init created a set of size 114
-#( 4, 15, 20, 31, 32, 43, 48, 59, 60, 64, 83, 89, 95, 110, 116, 119, 127, 136, 144, 148, 149, 172, 173, 179, 189, 190, 200, 207, 209, 228, 230, 239, 242, 253, 256, 269, 270, 283, 284, 295, 299, 312, 316, 329, 333, 336, 340, 350, 359, 368, 377, 389, 396, 413, 419, 424, 430, 442, 449, 452, 459, 476, 479, 480, 483, 495, 508, 509, 522, 536, 539, 556, 564, 569, 577, 589, 592, 599, 602, 619, 620, 629, 630, 642, 648, 659, 665, 676, 682, 683, 689, 699, 704, 719, 724, 732, 736, 745, 749, 760, 762, 777, 779, 788, 789, 808, 809, 816, 825, 830, 839, 842, 844, 869 )
-
-
-
-
-
-
-
-
-
-Edge_curve_29_nauty: 
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define C -combinatorial_objects \
-			-set_of_points $(EDGE_CURVE_Q29_AS_POINTS) \
-		-end \
-		-define F -finite_field -q 29 -end \
-		-define P -projective_space 2 F -end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form_PG P \
-				-classification_prefix Edge_curve_q29 \
-				-label Edge_curve_q29 \
-				-save_ago \
-				-save_transversal \
-				-max_TDO_depth 4 \
-				-end \
-			-report \
-				-prefix Edge_curve_q29 \
-				-export_flag_orbits \
-				-show_TDO \
-				-show_TDA \
-				-dont_show_incidence_matrices \
-				-export_group \
-			-end \
-		-end
-	pdflatex Edge_curve_q29_classification.tex
-	open Edge_curve_q29_classification.pdf
-
-# 9 backtrack nodes total
-#User time: 0.93 of a second, dt=93 tps = 100
-
-#############################################################################################################
-
-
-
-
-
-Edge_curve_41:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 41 -end \
-		-define P -projective_space 2 F -end \
-		-with P -do -projective_space_activity -define_object Edge -projective_variety Edge 4 $(EDGE_CURVE_Q41_EQUATION)  -end -end
-
-
-#combinatorial_object_create::init created a set of size 162
-#( 4, 12, 35, 43, 44, 52, 75, 83, 84, 101, 106, 125, 138, 151, 164, 167, 170, 201, 204, 209, 210, 243, 244, 251, 260, 275, 284, 293, 307, 310, 324, 335, 339, 360, 364, 371, 377, 404, 410, 419, 444, 461, 469, 476, 484, 503, 508, 519, 524, 540, 545, 564, 569, 578, 587, 604, 613, 628, 629, 644, 645, 671, 677, 678, 684, 709, 713, 724, 728, 741, 755, 764, 778, 787, 797, 804, 814, 837, 839, 844, 846, 878, 881, 884, 887, 910, 923, 924, 937, 946, 964, 965, 983, 996, 1004, 1007, 1015, 1044, 1046, 1047, 1049, 1079, 1084, 1091, 1096, 1111, 1124, 1133, 1146, 1155, 1164, 1175, 1184, 1204, 1205, 1216, 1217, 1244, 1248, 1255, 1259, 1280, 1284, 1301, 1305, 1314, 1324, 1343, 1353, 1364, 1385, 1404, 1414, 1417, 1427, 1444, 1449, 1464, 1469, 1481, 1484, 1511, 1514, 1523, 1524, 1553, 1554, 1564, 1573, 1586, 1595, 1604, 1618, 1623, 1637, 1644, 1650, 1673, 1679, 1682, 1684, 1721 )
-
-
-
-
-
-
-
-Edge_curve_41_nauty: 
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define C -combinatorial_objects \
-			-set_of_points $(EDGE_CURVE_Q41_AS_POINTS) \
-		-end \
-		-define F -finite_field -q 41 -end \
-		-define P -projective_space 2 F -end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form_PG P \
-				-classification_prefix Edge_curve_q41 \
-				-label Edge_curve_q41 \
-				-save_ago \
-				-save_transversal \
-				-max_TDO_depth 4 \
-				-end \
-			-report \
-				-prefix Edge_curve_q41 \
-				-export_flag_orbits \
-				-show_TDO \
-				-show_TDA \
-				-dont_show_incidence_matrices \
-				-export_group \
-			-end \
-		-end
-	pdflatex Edge_curve_q41_classification.tex
-	open Edge_curve_q41_classification.pdf
-
-# 9 backtrack nodes total
-#User time: 0:4
-
-#############################################################################################################
-
-
-
-
-
-Edge_curve_61:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 61 -end \
-		-define P -projective_space 2 F -end \
-		-with P -do -projective_space_activity -define_object Edge -projective_variety Edge 4 $(EDGE_CURVE_Q61_EQUATION)  -end -end
-
-
-
-#combinatorial_object_create::init created a set of size 242
-#( 4, 14, 53, 63, 64, 74, 113, 123, 124, 145, 162, 185, 212, 217, 244, 247, 262, 289, 304, 309, 312, 361, 364, 371, 372, 423, 424, 433, 444, 473, 484, 495, 516, 523, 544, 557, 573, 588, 604, 619, 623, 660, 664, 673, 681, 724, 732, 743, 784, 805, 815, 834, 844, 867, 884, 887, 904, 929, 934, 959, 964, 984, 991, 1024, 1031, 1042, 1053, 1084, 1095, 1114, 1115, 1144, 1145, 1177, 1186, 1195, 1204, 1239, 1245, 1258, 1264, 1295, 1301, 1324, 1330, 1345, 1363, 1384, 1402, 1413, 1425, 1444, 1456, 1485, 1487, 1504, 1506, 1549, 1556, 1557, 1564, 1606, 1611, 1624, 1629, 1656, 1673, 1684, 1701, 1712, 1735, 1744, 1767, 1784, 1797, 1804, 1817, 1856, 1859, 1864, 1867, 1917, 1921, 1924, 1928, 1967, 1983, 1984, 2000, 2017, 2044, 2045, 2072, 2083, 2104, 2107, 2128, 2155, 2164, 2169, 2178, 2224, 2227, 2228, 2231, 2278, 2284, 2293, 2299, 2328, 2344, 2355, 2371, 2382, 2404, 2417, 2439, 2454, 2464, 2479, 2489, 2524, 2526, 2539, 2541, 2584, 2589, 2598, 2603, 2639, 2644, 2665, 2670, 2689, 2704, 2727, 2742, 2753, 2764, 2789, 2800, 2824, 2825, 2850, 2851, 2884, 2897, 2900, 2913, 2944, 2950, 2969, 2975, 3000, 3004, 3037, 3041, 3052, 3064, 3099, 3111, 3124, 3161, 3184, 3196, 3211, 3223, 3244, 3261, 3268, 3285, 3304, 3311, 3340, 3347, 3361, 3364, 3409, 3412, 3423, 3424, 3471, 3472, 3484, 3495, 3522, 3533, 3544, 3567, 3572, 3595, 3604, 3622, 3639, 3657, 3664, 3672, 3711, 3719, 3722, 3724, 3781 )
-
-
-
-
-
-
-
-
-
-Edge_curve_61_nauty: 
-	$(ORBITER_PATH)orbiter.out -v 3 \
-		-define C -combinatorial_objects \
-			-set_of_points $(EDGE_CURVE_Q61_AS_POINTS) \
-		-end \
-		-define F -finite_field -q 61 -end \
-		-define P -projective_space 2 F -end \
-		-with C -do \
-		-combinatorial_object_activity \
-			-canonical_form_PG P \
-				-classification_prefix Edge_curve_q61 \
-				-label Edge_curve_q61 \
-				-save_ago \
-				-save_transversal \
-				-max_TDO_depth 4 \
-				-end \
-			-report \
-				-prefix Edge_curve_q61 \
-				-export_flag_orbits \
-				-show_TDO \
-				-show_TDA \
-				-dont_show_incidence_matrices \
-				-export_group \
-			-end \
-		-end
-	pdflatex Edge_curve_q61_classification.tex
-	open Edge_curve_q61_classification.pdf
-
-
-# 9 backtrack nodes total
-#ago=24
-#User time: 0:7
-
-
-
-
-
-
-
-
-#############################################################################################################
-
-
-
-Edge_curve_81:
-	$(ORBITER_PATH)orbiter.out -v 2 \
-		-define F -finite_field -q 81 -end \
-		-define P -projective_space 2 F -end \
-		-with P -do -projective_space_activity -define_object Edge -projective_variety Edge 4 $(EDGE_CURVE_Q81_EQUATION)  -end -end
-
-
-
-
-#combinatorial_object_create::init created a set of size 322
-#( 4, 5, 50, 67, 84, 85, 130, 147, 164, 210, 227, 244, 245, 246, 330, 332, 364, 403, 409, 412, 423, 428, 491, 495, 521, 546, 572, 576, 585, 590, 652, 655, 688, 727, 735, 737, 764, 789, 822, 823, 830, 835, 901, 910, 924, 953, 983, 993, 1017, 1049, 1068, 1079, 1091, 1128, 1147, 1159, 1162, 1189, 1226, 1229, 1236, 1242, 1314, 1319, 1346, 1368, 1383, 1385, 1393, 1399, 1475, 1482, 1510, 1525, 1550, 1560, 1572, 1601, 1630, 1633, 1639, 1645, 1713, 1721, 1746, 1778, 1788, 1790, 1799, 1806, 1879, 1885, 1913, 1935, 1962, 1967, 1996, 2011, 2039, 2052, 2053, 2080, 2119, 2131, 2144, 2181, 2198, 2202, 2208, 2213, 2298, 2300, 2324, 2331, 2377, 2392, 2404, 2425, 2445, 2456, 2459, 2487, 2540, 2544, 2568, 2573, 2604, 2612, 2623, 2653, 2705, 2710, 2736, 2746, 2758, 2761, 2790, 2813, 2869, 2889, 2893, 2903, 2951, 2967, 2976, 2987, 3011, 3024, 3036, 3071, 3115, 3122, 3151, 3156, 3190, 3197, 3220, 3234, 3282, 3289, 3310, 3320, 3361, 3374, 3390, 3400, 3407, 3411, 3443, 3483, 3522, 3528, 3557, 3560, 3574, 3583, 3607, 3640, 3675, 3689, 3701, 3723, 3772, 3774, 3790, 3791, 3809, 3810, 3853, 3871, 3935, 3954, 3986, 3993, 4020, 4040, 4084, 4099, 4108, 4120, 4172, 4181, 4203, 4212, 4254, 4266, 4280, 4292, 4329, 4345, 4352, 4360, 4390, 4396, 4427, 4443, 4484, 4498, 4512, 4531, 4564, 4568, 4591, 4599, 4632, 4643, 4647, 4673, 4733, 4752, 4758, 4766, 4783, 4786, 4813, 4837, 4896, 4911, 4919, 4931, 4953, 4961, 4973, 5004, 5051, 5053, 5079, 5083, 5136, 5140, 5165, 5176, 5186, 5187, 5231, 5250, 5311, 5329, 5393, 5394, 5411, 5412, 5463, 5480, 5486, 5496, 5550, 5560, 5575, 5588, 5605, 5611, 5643, 5657, 5704, 5720, 5728, 5742, 5768, 5775, 5800, 5821, 5873, 5883, 5903, 5913, 5951, 5957, 5988, 5991, 6008, 6021, 6031, 6067, 6106, 6114, 6136, 6149, 6166, 6175, 6200, 6234, 6276, 6280, 6311, 6313, 6348, 6363, 6374, 6395, 6440, 6452, 6468, 6480, 6520, 6529, 6550, 6559, 6566, 6570, 6603, 6641 )
-
-
-
-
-
-
-# 142 backtrack nodes total
-#User time: 1:34
-# go = 96
-
-
-
-
 
 
 

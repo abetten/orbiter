@@ -252,7 +252,7 @@ void web_of_cubic_curves::init(surface_domain *Surf,
 	int Basis[16];
 	for (i = 0; i < 45; i++) {
 		Orbiter->Int_vec.copy(Tritangent_plane_equations + i * 4, Basis, 4);
-		Surf->F->RREF_and_kernel(4, 1, Basis, 0 /* verbose_level */);
+		Surf->F->Linear_algebra->RREF_and_kernel(4, 1, Basis, 0 /* verbose_level */);
 		The_plane_rank[i] = Surf->rank_plane(Basis + 4);
 	}
 	if (f_v) {
@@ -404,7 +404,7 @@ void web_of_cubic_curves::rank_of_foursubsets(
 			a = set[j];
 			Orbiter->Int_vec.copy(Web_of_cubic_curves + a * 10, B + j * 10, 10);
 		}
-		rk[i] = Surf->F->rank_of_rectangular_matrix(B,
+		rk[i] = Surf->F->Linear_algebra->rank_of_rectangular_matrix(B,
 			4, 10, 0 /* verbose_level */);
 	}
 	if (f_v) {
@@ -470,14 +470,14 @@ void web_of_cubic_curves::create_web_and_equations_based_on_four_tritangent_plan
 				Orbiter->Int_vec.matrix_print(curves, 5, 10);
 			}
 
-			Surf->F->transpose_matrix(curves, curves_t, 5, 10);
+			Surf->F->Linear_algebra->transpose_matrix(curves, curves_t, 5, 10);
 
 			if (f_v) {
 				cout << "after transpose:" << endl;
 				Orbiter->Int_vec.matrix_print(curves_t, 10, 5);
 			}
 
-			rk = Surf->F->RREF_and_kernel(5, 10, curves_t,
+			rk = Surf->F->Linear_algebra->RREF_and_kernel(5, 10, curves_t,
 				0 /* verbose_level */);
 			if (rk != 4) {
 				cout << "web_of_cubic_curves::create_web_and_equations_based_on_four_tritangent_planes "

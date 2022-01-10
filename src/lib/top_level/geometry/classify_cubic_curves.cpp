@@ -1520,12 +1520,12 @@ void classify_cubic_curves::report(ostream &ost, int verbose_level)
 			CC->P->unrank_point(Basis, inflexion_Pts[0]);
 			CC->P->unrank_point(Basis + 3, inflexion_Pts[1]);
 
-			CC->P->F->extend_basis(2, 3, Basis,
+			CC->P->F->Linear_algebra->extend_basis(2, 3, Basis,
 				verbose_level);
 
 			//CC->P->unrank_point(Basis + 6, inflexion_Pts[2]);
-			CC->F->transpose_matrix(Basis, Basis_t, 3, 3);
-			CC->F->invert_matrix(Basis, Basis_inv, 3, 0 /* verbose_level */);
+			CC->F->Linear_algebra->transpose_matrix(Basis, Basis_t, 3, 3);
+			CC->F->Linear_algebra->invert_matrix(Basis, Basis_inv, 3, 0 /* verbose_level */);
 			CC->Poly->substitute_linear(eqn, transformed_eqn,
 					Basis /* int *Mtx_inv */, 0 /* verbose_level */);
 

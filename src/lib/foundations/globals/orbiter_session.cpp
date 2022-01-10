@@ -584,6 +584,22 @@ void orbiter_session::print_type(symbol_table_object_type t)
 	Orbiter_symbol_table->print_type(t);
 }
 
+vector_builder *orbiter_session::get_object_of_type_vector(std::string &label)
+{
+	int idx;
 
+	idx = Orbiter_symbol_table->find_symbol(label);
+	if (idx == -1) {
+		cout << "orbiter_session::get_object_of_type_vector cannot find symbol " << label << endl;
+		exit(1);
+	}
+	if (get_object_type(idx) != t_vector) {
+		cout << "orbiter_session::get_object_of_type_vector object type != t_vector" << endl;
+		exit(1);
+	}
+	return (vector_builder *) get_object(idx);
+
+
+}
 }}
 

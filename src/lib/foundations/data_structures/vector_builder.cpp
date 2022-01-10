@@ -165,6 +165,53 @@ void vector_builder::init(vector_builder_description *Descr,
 		}
 
 	}
+	else if (Descr->concatenate_list.size()) {
+
+		int i, j;
+
+		len = 0;
+
+		for (i = 0; i < Descr->concatenate_list.size(); i++) {
+			vector_builder *VB;
+
+			VB = Orbiter->get_object_of_type_vector(Descr->concatenate_list[i]);
+			len += VB->len;
+		}
+		v = NEW_int(len);
+		j = 0;
+		for (i = 0; i < Descr->concatenate_list.size(); i++) {
+			vector_builder *VB;
+
+			VB = Orbiter->get_object_of_type_vector(Descr->concatenate_list[i]);
+			Orbiter->Int_vec.copy(VB->v, v + j, VB->len);
+			j += VB->len;
+		}
+
+	}
+	else if (Descr->f_loop) {
+		if (f_v) {
+			cout << "vector_builder::init using index set through loop, start="
+					<< Descr->loop_start
+					<< " upper_bound=" <<  Descr->loop_upper_bound
+					<< " increment=" << Descr->loop_increment << endl;
+		}
+		int i, cnt;
+
+		len = 0;
+		for (i = Descr->loop_start; i < Descr->loop_upper_bound;
+				i += Descr->loop_increment) {
+			len++;
+		}
+		v = NEW_int(len);
+		cnt = 0;
+		for (i = Descr->loop_start; i < Descr->loop_upper_bound;
+				i += Descr->loop_increment) {
+
+
+			v[cnt++] = i;
+
+		}
+	}
 	else {
 		cout << "vector_builder::init please specify how the vector should be created" << endl;
 		exit(1);

@@ -1,5 +1,5 @@
 /*
- * combinatorial_object_create.cpp
+ * geometric_object_create.cpp
  *
  *  Created on: Nov 9, 2019
  *      Author: anton
@@ -18,7 +18,7 @@ namespace orbiter {
 namespace foundations {
 
 
-combinatorial_object_create::combinatorial_object_create()
+geometric_object_create::geometric_object_create()
 {
 	Descr = NULL;
 
@@ -26,27 +26,31 @@ combinatorial_object_create::combinatorial_object_create()
 	nb_pts = 0;
 	Pts = NULL;
 
+	//std::string label_txt;
+	//std::string label_tex;
+
 	//null();
 }
 
-combinatorial_object_create::~combinatorial_object_create()
+geometric_object_create::~geometric_object_create()
 {
 	if (Pts) {
 		FREE_lint(Pts);
 	}
 }
 
-void combinatorial_object_create::init(combinatorial_object_description *Descr, projective_space *P, int verbose_level)
+void geometric_object_create::init(geometric_object_description *Descr,
+		projective_space *P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	number_theory_domain NT;
 
 
 	if (f_v) {
-		cout << "combinatorial_object_create::init" << endl;
+		cout << "geometric_object_create::init" << endl;
 	}
 	Descr->P = P;
-	combinatorial_object_create::Descr = Descr;
+	geometric_object_create::Descr = Descr;
 
 	finite_field *F;
 
@@ -55,35 +59,45 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 
 	if (Descr->f_hyperoval) {
 		P->Arc_in_projective_space->create_hyperoval(
-				Descr->f_translation, Descr->translation_exponent,
-				Descr->f_Segre, Descr->f_Payne, Descr->f_Cherowitzo, Descr->f_OKeefe_Penttila,
-				fname, nb_pts, Pts,
+				Descr->f_translation,
+				Descr->translation_exponent,
+				Descr->f_Segre,
+				Descr->f_Payne,
+				Descr->f_Cherowitzo,
+				Descr->f_OKeefe_Penttila,
+				label_txt,
+				label_tex,
+				nb_pts, Pts,
 			verbose_level);
 
-		F->export_magma(3, Pts, nb_pts, fname);
-		F->export_gap(3, Pts, nb_pts, fname);
+		//F->export_magma(3, Pts, nb_pts, fname);
+		//F->export_gap(3, Pts, nb_pts, fname);
 
 	}
 	else if (Descr->f_subiaco_oval) {
 		P->Arc_in_projective_space->create_subiaco_oval(
 				Descr->f_short,
-			fname, nb_pts, Pts,
+				label_txt,
+				label_tex,
+			nb_pts, Pts,
 			verbose_level);
 
 
-		F->export_magma(3, Pts, nb_pts, fname);
-		F->export_gap(3, Pts, nb_pts, fname);
+		//F->export_magma(3, Pts, nb_pts, fname);
+		//F->export_gap(3, Pts, nb_pts, fname);
 
 
 	}
 	else if (Descr->f_subiaco_hyperoval) {
 		P->Arc_in_projective_space->create_subiaco_hyperoval(
-			fname, nb_pts, Pts,
+				label_txt,
+				label_tex,
+			nb_pts, Pts,
 			verbose_level);
 
 
-		F->export_magma(3, Pts, nb_pts, fname);
-		F->export_gap(3, Pts, nb_pts, fname);
+		//F->export_magma(3, Pts, nb_pts, fname);
+		//F->export_gap(3, Pts, nb_pts, fname);
 
 	}
 #if 0
@@ -113,7 +127,9 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 #endif
 	else if (Descr->f_BLT_database) {
 		F->create_BLT_from_database(Descr->f_BLT_in_PG /* f_embedded */, Descr->BLT_k,
-			fname, nb_pts, Pts,
+				label_txt,
+				label_tex,
+			nb_pts, Pts,
 			verbose_level);
 	}
 #if 0
@@ -163,9 +179,13 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 	}
 #endif
 	else if (Descr->f_ovoid) {
-		F->create_ovoid(
-			fname, nb_pts, Pts,
+		P->create_ovoid(
+				label_txt,
+				label_tex,
+			nb_pts, Pts,
 			verbose_level);
+
+
 	}
 #if 0
 	else if (Descr->f_Baer) {
@@ -194,28 +214,40 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 #endif
 	else if (Descr->f_orthogonal) {
 		F->create_orthogonal(Descr->orthogonal_epsilon, P->n,
-			fname, nb_pts, Pts,
+				label_txt,
+				label_tex,
+			nb_pts, Pts,
 			verbose_level);
+		// calls choose_anisotropic_form if necessary
 	}
 	else if (Descr->f_hermitian) {
 		F->create_hermitian(P->n,
-			fname, nb_pts, Pts,
+				label_txt,
+				label_tex,
+			nb_pts, Pts,
 			verbose_level);
+		// creates a hermitian
 	}
 	else if (Descr->f_cuspidal_cubic) {
-		F->create_cuspidal_cubic(
-			fname, nb_pts, Pts,
+		P->create_cuspidal_cubic(
+				label_txt,
+				label_tex,
+			nb_pts, Pts,
 			verbose_level);
 	}
 	else if (Descr->f_twisted_cubic) {
-		F->create_twisted_cubic(
-			fname, nb_pts, Pts,
+		P->create_twisted_cubic(
+				label_txt,
+				label_tex,
+			nb_pts, Pts,
 			verbose_level);
 	}
 	else if (Descr->f_elliptic_curve) {
-		F->create_elliptic_curve(
+		P->create_elliptic_curve(
 				Descr->elliptic_curve_b, Descr->elliptic_curve_c,
-			fname, nb_pts, Pts,
+				label_txt,
+				label_tex,
+			nb_pts, Pts,
 			verbose_level);
 	}
 
@@ -240,9 +272,14 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 	}
 #endif
 	else if (Descr->f_unital_XXq_YZq_ZYq) {
-		F->create_unital_XXq_YZq_ZYq(
-			fname, nb_pts, Pts,
+
+
+		P->create_unital_XXq_YZq_ZYq(
+				label_txt,
+				label_tex,
+			nb_pts, Pts,
 			verbose_level);
+
 	}
 #if 0
 	else if (Descr->f_desarguesian_line_spread_in_PG_3_q) {
@@ -285,52 +322,68 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 #endif
 
 	else if (Descr->f_whole_space) {
-		F->create_whole_space(P->n,
-			fname, nb_pts, Pts,
+		P->create_whole_space(
+				label_txt,
+				label_tex,
+			nb_pts, Pts,
 			verbose_level);
 	}
 	else if (Descr->f_hyperplane) {
-		F->create_hyperplane(P->n,
+		P->create_hyperplane(
 				Descr->pt,
-			fname, nb_pts, Pts,
+				label_txt,
+				label_tex,
+			nb_pts, Pts,
 			verbose_level);
 	}
 	else if (Descr->f_segre_variety) {
 		F->create_segre_variety(Descr->segre_variety_a, Descr->segre_variety_b,
-			fname, nb_pts, Pts,
+				label_txt,
+				label_tex,
+			nb_pts, Pts,
 			verbose_level);
 	}
 	else if (Descr->f_Maruta_Hamada_arc) {
-		F->create_Maruta_Hamada_arc(
-			fname, nb_pts, Pts,
+		P->create_Maruta_Hamada_arc(
+				label_txt,
+				label_tex,
+			nb_pts, Pts,
 			verbose_level);
 	}
 	else if (Descr->f_projective_variety) {
 		F->create_projective_variety(
-				Descr->variety_label,
+				Descr->variety_label_txt,
+				Descr->variety_label_tex,
 				P->n + 1, Descr->variety_degree,
 				Descr->variety_coeffs,
 				Descr->Monomial_ordering_type,
-				fname, nb_pts, Pts,
+				label_txt,
+				label_tex,
+				nb_pts, Pts,
 				verbose_level);
 	}
 	else if (Descr->f_intersection_of_zariski_open_sets) {
 		F->create_intersection_of_zariski_open_sets(
-				Descr->variety_label,
+				Descr->variety_label_txt,
+				Descr->variety_label_tex,
 				P->n + 1, Descr->variety_degree,
 				Descr->Variety_coeffs,
 				Descr->Monomial_ordering_type,
-				fname, nb_pts, Pts,
+				label_txt,
+				label_tex,
+				nb_pts, Pts,
 				verbose_level);
 	}
 	else if (Descr->f_number_of_conditions_satisfied) {
 		F->number_of_conditions_satisfied(
-				Descr->variety_label,
+				Descr->variety_label_txt,
+				Descr->variety_label_tex,
 				P->n + 1, Descr->variety_degree,
 				Descr->Variety_coeffs,
 				Descr->Monomial_ordering_type,
 				Descr->number_of_conditions_satisfied_fname,
-				fname,
+				label_txt,
+				label_tex,
 				nb_pts, Pts,
 				verbose_level);
 	}
@@ -339,26 +392,30 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 
 	else if (Descr->f_projective_curve) {
 		F->create_projective_curve(
-				Descr->curve_label,
+				Descr->curve_label_txt,
+				Descr->curve_label_tex,
 				Descr->curve_nb_vars, Descr->curve_degree,
 				Descr->curve_coeffs,
 				Descr->Monomial_ordering_type,
-				fname, nb_pts, Pts,
+				label_txt,
+				label_tex,
+				nb_pts, Pts,
 				verbose_level);
 	}
+
 	else if (Descr->f_set) {
 
 		Orbiter->Lint_vec.scan(Descr->set_text, Pts, nb_pts);
 
 	}
 	else {
-		cout << "combinatorial_object_create::init nothing to create" << endl;
+		cout << "geometric_object_create::init nothing to create" << endl;
 		exit(1);
 	}
 
 
 	if (f_v) {
-		cout << "combinatorial_object_create::init created a set of size " << nb_pts << endl;
+		cout << "geometric_object_create::init created a set of size " << nb_pts << endl;
 		Orbiter->Lint_vec.print_fully(cout, Pts, nb_pts);
 		cout << endl;
 
@@ -369,7 +426,7 @@ void combinatorial_object_create::init(combinatorial_object_description *Descr, 
 
 
 	if (f_v) {
-		cout << "combinatorial_object_create::init done" << endl;
+		cout << "geometric_object_create::init done" << endl;
 	}
 }
 

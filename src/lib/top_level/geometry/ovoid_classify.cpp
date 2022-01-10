@@ -276,7 +276,7 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 			if (i && fxy != 0) {
 				j = K->point_on_quadric_to_line(i, 0 /* verbose_level */);
 				K->P3->Grass_lines->unrank_lint_here(B, j, 0 /* verbose_level */);
-				LG->F->Gauss_int_with_given_pivots(B,
+				LG->F->Linear_algebra->Gauss_int_with_given_pivots(B,
 					FALSE /* f_special */,
 					TRUE /* f_complete */,
 					pivots,
@@ -305,7 +305,7 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 			if (i && fxy != 0) {
 				j = K->point_on_quadric_to_line(i, 0 /* verbose_level */);
 				K->P3->Grass_lines->unrank_lint_here(B, j, 0 /* verbose_level */);
-				LG->F->Gauss_int_with_given_pivots(B,
+				LG->F->Linear_algebra->Gauss_int_with_given_pivots(B,
 					FALSE /* f_special */,
 					TRUE /* f_complete */,
 					pivots,
