@@ -430,9 +430,9 @@ public:
 
 
 	int f_classes_based_on_normal_form;
-	int f_classes;
-	int f_group_table;
+
 	int f_normalizer;
+
 	int f_centralizer_of_element;
 	std::string element_description_text;
 	std::string element_label;
@@ -445,12 +445,21 @@ public:
 	std::string orbits_on_group_elements_under_conjugation_transporter_fname;
 
 	int f_normalizer_of_cyclic_subgroup;
+
 	int f_find_subgroup;
 	int find_subgroup_order;
+
 	int f_report;
-	int f_sylow;
+
+		// flags that apply to report:
+		int f_sylow;
+		int f_group_table;
+		int f_classes;
+
+
 	int f_test_if_geometric;
 	int test_if_geometric_depth;
+
 	int f_draw_tree;
 
 	int f_orbit_of;
@@ -525,6 +534,7 @@ public:
 
 	int f_tensor_classify;
 	int tensor_classify_depth;
+
 	int f_tensor_permutations;
 
 	int f_classify_ovoids;
@@ -534,6 +544,7 @@ public:
 
 	int f_orbits_on_polynomials;
 	int orbits_on_polynomials_degree;
+
 	int f_recognize_orbits_on_polynomials;
 	std::string recognize_orbits_on_polynomials_text;
 

@@ -6,15 +6,12 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-	finite_ring.o \
-	homogeneous_polynomial_domain.o \
-	longinteger_domain.o \
-	longinteger_object.o \
-	partial_derivative.o \
-	ring_theory_global.o \
-	table_of_irreducible_polynomials.o \
-	unipoly_domain.o \
-	unipoly_domain2.o 
+	linear_algebra_global.o \
+	linear_algebra_RREF.o \
+	linear_algebra.o \
+	linear_algebra2.o \
+	linear_algebra3.o \
+	representation_theory_domain.o 
 
 
 all : $(MODULES)

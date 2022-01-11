@@ -100,6 +100,7 @@ void boolean_function_domain::init(int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	geometry_global Gg;
+	algebra_global Algebra;
 	longinteger_domain D;
 
 	if (f_v) {
@@ -179,7 +180,7 @@ void boolean_function_domain::init(int n, int verbose_level)
 		cout << "boolean_function_domain::init before Gg.Walsh_matrix" << endl;
 	}
 	if (n <= 10) {
-		Gg.Walsh_matrix(Fq, n, W, verbose_level);
+		Algebra.Walsh_matrix(Fq, n, W, verbose_level);
 	}
 	else {
 		cout << "Walsh matrix is too big" << endl;

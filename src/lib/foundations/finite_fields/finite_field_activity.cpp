@@ -59,11 +59,15 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	if (Descr->f_cheat_sheet_GF) {
 
-		F->do_cheat_sheet_GF(verbose_level);
+		algebra_global Algebra;
+
+		Algebra.do_cheat_sheet_GF(F, verbose_level);
 	}
 	else if (Descr->f_write_code_for_division) {
 
-		F->write_code_for_division(
+		ring_theory_global R;
+
+		R.write_code_for_division(F,
 				Descr->write_code_for_division_fname,
 				Descr->write_code_for_division_A,
 				Descr->write_code_for_division_B,
@@ -71,49 +75,64 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_polynomial_division) {
 
-		F->polynomial_division(
+		ring_theory_global R;
+
+		R.polynomial_division(F,
 				Descr->polynomial_division_A, Descr->polynomial_division_B,
 				verbose_level);
 	}
 	else if (Descr->f_extended_gcd_for_polynomials) {
 
-		F->extended_gcd_for_polynomials(
+		ring_theory_global R;
+
+		R.extended_gcd_for_polynomials(F,
 				Descr->polynomial_division_A, Descr->polynomial_division_B,
 				verbose_level);
 	}
 
 	else if (Descr->f_polynomial_mult_mod) {
 
-		F->polynomial_mult_mod(
+		ring_theory_global R;
+
+		R.polynomial_mult_mod(F,
 				Descr->polynomial_mult_mod_A, Descr->polynomial_mult_mod_B,
 				Descr->polynomial_mult_mod_M, verbose_level);
 	}
 	else if (Descr->f_Berlekamp_matrix) {
 
-		F->Berlekamp_matrix(
+		linear_algebra_global LA;
+
+		LA.Berlekamp_matrix(F,
 				Descr->Berlekamp_matrix_coeffs, verbose_level);
 
 	}
 	else if (Descr->f_normal_basis) {
 
-		F->compute_normal_basis(Descr->normal_basis_d, verbose_level);
+		linear_algebra_global LA;
+
+		LA.compute_normal_basis(F,
+				Descr->normal_basis_d, verbose_level);
 
 	}
 	else if (Descr->f_polynomial_find_roots) {
 
-		F->polynomial_find_roots(
+		ring_theory_global R;
+
+		R.polynomial_find_roots(F,
 				Descr->polynomial_find_roots_A,
 				verbose_level);
 	}
 
 	else if (Descr->f_nullspace) {
 
+		linear_algebra_global LA;
 		int *v;
 		int m, n;
 
 		Orbiter->get_matrix_from_label(Descr->RREF_input_matrix, v, m, n);
 
-		F->do_nullspace(v, m, n,
+		LA.do_nullspace(F,
+				v, m, n,
 				Descr->f_normalize_from_the_left,
 				Descr->f_normalize_from_the_right, verbose_level);
 
@@ -122,12 +141,14 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_RREF) {
 
+		linear_algebra_global LA;
 		int *v;
 		int m, n;
 
 		Orbiter->get_matrix_from_label(Descr->RREF_input_matrix, v, m, n);
 
-		F->do_RREF(v, m, n,
+		LA.do_RREF(F,
+				v, m, n,
 				Descr->f_normalize_from_the_left,
 				Descr->f_normalize_from_the_right,
 				verbose_level);
@@ -156,7 +177,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_Walsh_Hadamard_transform) {
 
-		F->apply_Walsh_Hadamard_transform(
+		algebra_global Algebra;
+
+		Algebra.apply_Walsh_Hadamard_transform(F,
 				Descr->Walsh_Hadamard_transform_fname_csv_in,
 				Descr->Walsh_Hadamard_transform_n, verbose_level);
 	}
@@ -164,7 +187,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_algebraic_normal_form) {
 
-		F->algebraic_normal_form(
+		algebra_global Algebra;
+
+		Algebra.algebraic_normal_form(F,
 				Descr->algebraic_normal_form_fname_csv_in,
 				Descr->algebraic_normal_form_n, verbose_level);
 	}
@@ -172,13 +197,17 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_apply_trace_function) {
 
-		F->apply_trace_function(
+		algebra_global Algebra;
+
+		Algebra.apply_trace_function(F,
 				Descr->apply_trace_function_fname_csv_in, verbose_level);
 	}
 
 	else if (Descr->f_apply_power_function) {
 
-		F->apply_power_function(
+		algebra_global Algebra;
+
+		Algebra.apply_power_function(F,
 				Descr->apply_power_function_fname_csv_in,
 				Descr->apply_power_function_d,
 				verbose_level);
@@ -186,26 +215,60 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_identity_function) {
 
-		F->identity_function(
+		algebra_global Algebra;
+
+		Algebra.identity_function(F,
 				Descr->identity_function_fname_csv_out, verbose_level);
 	}
 
 
 	else if (Descr->f_trace) {
 
-		F->do_trace(verbose_level);
+		algebra_global Algebra;
+
+		Algebra.do_trace(F, verbose_level);
 	}
 	else if (Descr->f_norm) {
 
-		F->do_norm(verbose_level);
+		algebra_global Algebra;
+
+		Algebra.do_norm(F, verbose_level);
 	}
 	else if (Descr->f_Walsh_matrix) {
 
-		geometry_global GG;
+		algebra_global Algebra;
 		int *W = NULL;
 
-		GG.Walsh_matrix(F, Descr->Walsh_matrix_n, W, verbose_level);
+		Algebra.Walsh_matrix(F, Descr->Walsh_matrix_n, W, verbose_level);
 		FREE_int(W);
+	}
+	else if (Descr->f_Vandermonde_matrix) {
+
+		algebra_global Algebra;
+		int *W = NULL;
+		int *W_inv = NULL;
+
+		Algebra.Vandermonde_matrix(F, W, W_inv, verbose_level);
+
+		if (F->q < 33) {
+			cout << "Vandermonde:" << endl;
+			Orbiter->Int_vec.matrix_print(W, F->q, F->q);
+			cout << "Vandermonde inverse:" << endl;
+			Orbiter->Int_vec.matrix_print(W_inv, F->q, F->q);
+		}
+		else {
+			cout << "too big to print" << endl;
+		}
+
+		FREE_int(W);
+		FREE_int(W_inv);
+	}
+	else if (Descr->f_search_APN_function) {
+
+		algebra_global Algebra;
+
+		Algebra.search_APN(F, verbose_level);
+
 	}
 
 
@@ -213,9 +276,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 	else if (Descr->f_make_table_of_irreducible_polynomials) {
 
 
-		algebra_global Algebra;
+		ring_theory_global R;
 
-		Algebra.do_make_table_of_irreducible_polynomials(F,
+		R.do_make_table_of_irreducible_polynomials(F,
 				Descr->make_table_of_irreducible_polynomials_degree,
 				verbose_level);
 
@@ -346,9 +409,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_find_CRC_polynomials) {
 
-		algebra_global Algebra;
+		coding_theory_domain Coding;
 
-		Algebra.find_CRC_polynomials(F,
+		Coding.find_CRC_polynomials(F,
 				Descr->find_CRC_polynomials_nb_errors,
 				Descr->find_CRC_polynomials_information_bits,
 				Descr->find_CRC_polynomials_check_bits,
@@ -357,7 +420,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_sift_polynomials) {
 
-		F->sift_polynomials(
+		ring_theory_global R;
+
+		R.sift_polynomials(F,
 				Descr->sift_polynomials_r0,
 				Descr->sift_polynomials_r1,
 				verbose_level);
@@ -365,7 +430,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_mult_polynomials) {
 
-		F->mult_polynomials(
+		ring_theory_global R;
+
+		R.mult_polynomials(F,
 				Descr->mult_polynomials_r0,
 				Descr->mult_polynomials_r1,
 				verbose_level);
@@ -373,7 +440,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_polynomial_division_ranked) {
 
-		F->polynomial_division_with_report(
+		ring_theory_global R;
+
+		R.polynomial_division_with_report(F,
 				Descr->polynomial_division_r0,
 				Descr->polynomial_division_r1,
 				verbose_level);
@@ -381,7 +450,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_polynomial_division_from_file) {
 
-		F->polynomial_division_from_file_with_report(
+		ring_theory_global R;
+
+		R.polynomial_division_from_file_with_report(F,
 				Descr->polynomial_division_from_file_fname,
 				Descr->polynomial_division_from_file_r1,
 				verbose_level);
@@ -389,7 +460,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_polynomial_division_from_file_all_k_bit_error_patterns) {
 
-		F->polynomial_division_from_file_all_k_error_patterns_with_report(
+		ring_theory_global R;
+
+		R.polynomial_division_from_file_all_k_error_patterns_with_report(F,
 				Descr->polynomial_division_from_file_all_k_bit_error_patterns_fname,
 				Descr->polynomial_division_from_file_all_k_bit_error_patterns_r1,
 				Descr->polynomial_division_from_file_all_k_bit_error_patterns_k,
@@ -398,6 +471,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_RREF_random_matrix) {
 
+		linear_algebra_global LA;
 		int *A;
 		int m, n;
 		int i;
@@ -412,7 +486,8 @@ void finite_field_activity::perform_activity(int verbose_level)
 			A[i] = Os.random_integer(F->q);
 		}
 
-		F->RREF_demo(A,
+		LA.RREF_demo(F,
+				A,
 				m,
 				n,
 				verbose_level);

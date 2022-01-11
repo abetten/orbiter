@@ -1,9 +1,9 @@
-// finitefield_representations.cpp
-//
-// Anton Betten
-//
-// started:  October 23, 2002
-// pulled out of finitefield:  July 5 2007
+/*
+ * representation_theory_domain.cpp
+ *
+ *  Created on: Jan 10, 2022
+ *      Author: betten
+ */
 
 
 
@@ -13,14 +13,41 @@
 using namespace std;
 
 
+
 namespace orbiter {
 namespace foundations {
 
-void finite_field::representing_matrix8_R(int *A,
+
+
+representation_theory_domain::representation_theory_domain()
+{
+	F = NULL;
+}
+
+representation_theory_domain::~representation_theory_domain()
+{
+
+}
+
+void representation_theory_domain::init(finite_field *F, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "representation_theory_domain::init" << endl;
+	}
+	representation_theory_domain::F = F;
+	if (f_v) {
+		cout << "representation_theory_domain::init done" << endl;
+	}
+
+}
+
+void representation_theory_domain::representing_matrix8_R(int *A,
 		int q, int a, int b, int c, int d)
 {
 	//int i;
-	
+
 	Orbiter->Int_vec.zero(A, 64);
 
 	A[0 * 8 + 0] = m_term(q, d, d, d);
@@ -31,7 +58,7 @@ void finite_field::representing_matrix8_R(int *A,
 	A[0 * 8 + 5] = m_term(q, d, c, c);
 	A[0 * 8 + 6] = m_term(q, c, c, d);
 	A[0 * 8 + 7] = m_term(q, c, d, c);
-	
+
 	A[1 * 8 + 0] = m_term(q, b, b, b);
 	A[1 * 8 + 1] = m_term(q, a, a, a);
 	A[1 * 8 + 2] = m_term(q, b, b, a);
@@ -40,7 +67,7 @@ void finite_field::representing_matrix8_R(int *A,
 	A[1 * 8 + 5] = m_term(q, b, a, a);
 	A[1 * 8 + 6] = m_term(q, a, a, b);
 	A[1 * 8 + 7] = m_term(q, a, b, a);
-	
+
 	A[2 * 8 + 0] = m_term(q, d, d, b);
 	A[2 * 8 + 1] = m_term(q, c, c, a);
 	A[2 * 8 + 2] = m_term(q, d, d, a);
@@ -49,7 +76,7 @@ void finite_field::representing_matrix8_R(int *A,
 	A[2 * 8 + 5] = m_term(q, d, c, a);
 	A[2 * 8 + 6] = m_term(q, c, c, b);
 	A[2 * 8 + 7] = m_term(q, c, d, a);
-	
+
 	A[3 * 8 + 0] = m_term(q, d, b, d);
 	A[3 * 8 + 1] = m_term(q, c, a, c);
 	A[3 * 8 + 2] = m_term(q, d, b, c);
@@ -58,7 +85,7 @@ void finite_field::representing_matrix8_R(int *A,
 	A[3 * 8 + 5] = m_term(q, d, a, c);
 	A[3 * 8 + 6] = m_term(q, c, a, d);
 	A[3 * 8 + 7] = m_term(q, c, b, c);
-	
+
 	A[4 * 8 + 0] = m_term(q, b, d, d);
 	A[4 * 8 + 1] = m_term(q, a, c, c);
 	A[4 * 8 + 2] = m_term(q, b, d, c);
@@ -67,7 +94,7 @@ void finite_field::representing_matrix8_R(int *A,
 	A[4 * 8 + 5] = m_term(q, b, c, c);
 	A[4 * 8 + 6] = m_term(q, a, c, d);
 	A[4 * 8 + 7] = m_term(q, a, d, c);
-	
+
 	A[5 * 8 + 0] = m_term(q, d, b, b);
 	A[5 * 8 + 1] = m_term(q, c, a, a);
 	A[5 * 8 + 2] = m_term(q, d, b, a);
@@ -76,7 +103,7 @@ void finite_field::representing_matrix8_R(int *A,
 	A[5 * 8 + 5] = m_term(q, d, a, a);
 	A[5 * 8 + 6] = m_term(q, c, a, b);
 	A[5 * 8 + 7] = m_term(q, c, b, a);
-	
+
 	A[6 * 8 + 0] = m_term(q, b, b, d);
 	A[6 * 8 + 1] = m_term(q, a, a, c);
 	A[6 * 8 + 2] = m_term(q, b, b, c);
@@ -85,7 +112,7 @@ void finite_field::representing_matrix8_R(int *A,
 	A[6 * 8 + 5] = m_term(q, b, a, c);
 	A[6 * 8 + 6] = m_term(q, a, a, d);
 	A[6 * 8 + 7] = m_term(q, a, b, c);
-	
+
 	A[7 * 8 + 0] = m_term(q, b, d, b);
 	A[7 * 8 + 1] = m_term(q, a, c, a);
 	A[7 * 8 + 2] = m_term(q, b, d, a);
@@ -95,10 +122,10 @@ void finite_field::representing_matrix8_R(int *A,
 	A[7 * 8 + 6] = m_term(q, a, c, b);
 	A[7 * 8 + 7] = m_term(q, a, d, a);
 
-	Linear_algebra->transpose_matrix_in_place(A, 8);
+	F->Linear_algebra->transpose_matrix_in_place(A, 8);
 }
 
-void finite_field::representing_matrix9_R(int *A,
+void representation_theory_domain::representing_matrix9_R(int *A,
 		int q, int a, int b, int c, int d)
 {
 	//int i;
@@ -107,8 +134,8 @@ void finite_field::representing_matrix9_R(int *A,
 	int tq2 = 2 * q + 2;
 	int q1 = q + 1;
 	int q2 = q + 2;
-	
-	
+
+
 	Orbiter->Int_vec.zero(A, 81);
 
 	A[0 * 9 + 0] = term1(d,tq2);
@@ -121,13 +148,13 @@ void finite_field::representing_matrix9_R(int *A,
 	A[0 * 9 + 7] = term2(c,d,tq1,1);
 	A[0 * 9 + 8] = term2(c,d,q2,q);
 
-	A[1 * 9 + 0] = four_times(term2(b,d,q1,q1));
+	A[1 * 9 + 0] = F->four_times(term2(b,d,q1,q1));
 	A[1 * 9 + 1] = add(add(add(term2(a,d,q1,q1),term4(a,b,c,d,q,1,1,q)),term4(a,b,c,d,1,q,q,1)),term2(b,c,q1,q1));
-	A[1 * 9 + 2] = four_times(term2(a,c,q1,q1));
+	A[1 * 9 + 2] = F->four_times(term2(a,c,q1,q1));
 	A[1 * 9 + 3] = twice(add(term3(a,b,d,q,1,q1),term3(b,c,d,q1,q,1)));
 	A[1 * 9 + 4] = twice(add(term3(a,b,d,1,q,q1),term3(b,c,d,q1,1,q)));
-	A[1 * 9 + 5] = four_times(term4(a,b,c,d,q,1,q,1));
-	A[1 * 9 + 6] = four_times(term4(a,b,c,d,1,q,1,q));
+	A[1 * 9 + 5] = F->four_times(term4(a,b,c,d,q,1,q,1));
+	A[1 * 9 + 6] = F->four_times(term4(a,b,c,d,1,q,1,q));
 	A[1 * 9 + 7] = twice(add(term3(a,b,c,q,1,q1),term3(a,c,d,q1,q,1)));
 	A[1 * 9 + 8] = twice(add(term3(a,c,d,q1,1,q),term3(a,b,c,1,q,q1)));
 
@@ -140,7 +167,7 @@ void finite_field::representing_matrix9_R(int *A,
 	A[2 * 9 + 6] = term2(a,b,2,tq);
 	A[2 * 9 + 7] = term2(a,b,tq1,1);
 	A[2 * 9 + 8] = term2(a,b,q2,q);
-	
+
 	A[3 * 9 + 0] = twice(term2(b,d,q,q2));
 	A[3 * 9 + 1] = add(term3(a,c,d,q,1,q1),term3(b,c,d,q,q1,1));
 	A[3 * 9 + 2] = twice(term2(a,c,q,q2));
@@ -150,7 +177,7 @@ void finite_field::representing_matrix9_R(int *A,
 	A[3 * 9 + 6] = twice(term3(b,c,d,q,2,q));
 	A[3 * 9 + 7] = twice(term3(a,c,d,q,q1,1));
 	A[3 * 9 + 8] = add(term3(a,c,d,q,2,q),term2(b,c,q,q2));
-	
+
 	A[4 * 9 + 0] = twice(term2(b,d,1,tq1));
 	A[4 * 9 + 1] = add(term3(a,c,d,1,q,q1),term3(b,c,d,1,q1,q));
 	A[4 * 9 + 2] = twice(term2(a,c,1,tq1));
@@ -160,7 +187,7 @@ void finite_field::representing_matrix9_R(int *A,
 	A[4 * 9 + 6] = twice(term3(a,c,d,1,1,tq));
 	A[4 * 9 + 7] = add(term3(a,c,d,1,tq,1),term2(b,c,1,tq1));
 	A[4 * 9 + 8] = twice(term3(a,c,d,1,q1,q));
-	
+
 	A[5 * 9 + 0] = term2(b,d,tq,2);
 	A[5 * 9 + 1] = term4(a,b,c,d,q,q,1,1);
 	A[5 * 9 + 2] = term2(a,c,tq,2);
@@ -170,7 +197,7 @@ void finite_field::representing_matrix9_R(int *A,
 	A[5 * 9 + 6] = term2(b,c,tq,2);
 	A[5 * 9 + 7] = term3(a,c,d,tq,1,1);
 	A[5 * 9 + 8] = term3(a,b,c,q,q,2);
-	
+
 	A[6 * 9 + 0] = term2(b,d,2,tq);
 	A[6 * 9 + 1] = term4(a,b,c,d,1,1,q,q);
 	A[6 * 9 + 2] = term2(a,c,2,tq);
@@ -180,7 +207,7 @@ void finite_field::representing_matrix9_R(int *A,
 	A[6 * 9 + 6] = term2(a,d,2,tq);
 	A[6 * 9 + 7] = term3(a,b,c,1,1,tq);
 	A[6 * 9 + 8] = term3(a,c,d,2,q,q);
-	
+
 	A[7 * 9 + 0] = twice(term2(b,d,tq1,1));
 	A[7 * 9 + 1] = add(term3(a,b,d,q1,q,1),term3(a,b,c,q,q1,1));
 	A[7 * 9 + 2] = twice(term2(a,c,tq1,1));
@@ -190,7 +217,7 @@ void finite_field::representing_matrix9_R(int *A,
 	A[7 * 9 + 6] = twice(term3(a,b,c,1,tq,1));
 	A[7 * 9 + 7] = add(term2(a,d,tq1,1),term3(a,b,c,tq,1,1));
 	A[7 * 9 + 8] = twice(term3(a,b,c,q1,q,1));
-	
+
 	A[8 * 9 + 0] = twice(term2(b,d,q2,q));
 	A[8 * 9 + 1] = add(term3(a,b,d,q1,1,q),term3(a,b,c,1,q1,q));
 	A[8 * 9 + 2] = twice(term2(a,c,q2,q));
@@ -200,40 +227,40 @@ void finite_field::representing_matrix9_R(int *A,
 	A[8 * 9 + 6] = twice(term3(a,b,d,2,q,q));
 	A[8 * 9 + 7] = twice(term3(a,b,c,q1,1,q));
 	A[8 * 9 + 8] = add(term2(a,d,q2,q),term3(a,b,c,2,q,q));
-	Linear_algebra->transpose_matrix_in_place(A, 9);
-	
+	F->Linear_algebra->transpose_matrix_in_place(A, 9);
+
 }
 
-void finite_field::representing_matrix9_U(int *A,
+void representation_theory_domain::representing_matrix9_U(int *A,
 		int a, int b, int c, int d, int beta)
 {
 	int beta_q, delta, gamma;
 	int r, q, q1,q2,tq, tq1; //, tq2;
 	number_theory_domain NT;
-	
-	if (!f_has_table) {
-		cout << "finite_field::representing_matrix9_U !f_has_table" << endl;
+
+	if (!F->f_has_table) {
+		cout << "representation_theory_domain::representing_matrix9_U !F->f_has_table" << endl;
 		exit(1);
 	}
-	if (!has_quadratic_subfield()) {
-		cout << "finite_field::representing_matrix9_U "
+	if (!F->has_quadratic_subfield()) {
+		cout << "representation_theory_domain::representing_matrix9_U "
 				"field does not have a quadratic subfield" << endl;
 		exit(1);
 	}
-	r = e >> 1;
-	q = NT.i_power_j(p, r);
+	r = F->e >> 1;
+	q = NT.i_power_j(F->p, r);
 	q1 = q + 1;
 	q2 = q + 2;
 	tq = 2 * q;
 	tq1 = tq + 1;
 	//tq2 = tq + 2;
-	beta_q = frobenius_power(beta, r);
+	beta_q = F->frobenius_power(beta, r);
 	delta = inverse(add(beta, negate(beta_q)));
 	gamma = mult(delta, beta);
 
-	A[0 * 9 + 0] = N2(square(d));
-	A[0 * 9 + 1] = four_times(N2(mult(b, d)));
-	A[0 * 9 + 2] = N2(square(b));
+	A[0 * 9 + 0] = N2(F->square(d));
+	A[0 * 9 + 1] = F->four_times(N2(mult(b, d)));
+	A[0 * 9 + 2] = N2(F->square(b));
 	A[0 * 9 + 3] = twice(Term3(b,d,gamma,q,q2,1));
 	A[0 * 9 + 4] = twice(Term3(b,d,delta,1,tq1,1));
 	A[0 * 9 + 5] = Term3(b,d,gamma,tq,2,1);
@@ -250,10 +277,10 @@ void finite_field::representing_matrix9_U(int *A,
 	A[1 * 9 + 6] = Term5(a,b,c,d,delta,1,1,q,q,1);
 	A[1 * 9 + 7] = add(Term4(a,b,d,gamma,q1,q,1,1),Term4(a,b,c,gamma,q,q1,1,1));
 	A[1 * 9 + 8] = add(Term4(a,b,c,delta,1,q1,q,1),Term4(a,b,d,delta,q1,1,q,1));
-	
-	A[2 * 9 + 0] = N2(square(c));
-	A[2 * 9 + 1] = four_times(N2(mult(a,c)));
-	A[2 * 9 + 2] = N2(square(a));
+
+	A[2 * 9 + 0] = N2(F->square(c));
+	A[2 * 9 + 1] = F->four_times(N2(mult(a,c)));
+	A[2 * 9 + 2] = N2(F->square(a));
 	A[2 * 9 + 3] = twice(Term3(a,c,gamma,q,q2,1));
 	A[2 * 9 + 4] = twice(Term3(a,c,delta,1,tq1,1));
 	A[2 * 9 + 5] = Term3(a,c,gamma,tq,2,1);
@@ -270,7 +297,7 @@ void finite_field::representing_matrix9_U(int *A,
 	A[3 * 9 + 6] = add(Term4(b,c,d,delta,2,q,q,1),Term4(a,b,d,delta,1,1,tq,1));
 	A[3 * 9 + 7] = add3(twice(Term4(a,b,d,gamma,q,q1,1,1)),Term4(a,b,d,gamma,1,tq,1,1),Term3(b,c,gamma,tq1,1,1));
 	A[3 * 9 + 8] = add3(twice(Term4(a,b,d,delta,1,q1,q,1)),Term4(a,b,d,delta,q,2,q,1),Term3(b,c,delta,q2,q,1));
-	
+
 	A[4 * 9 + 0] = Term3(c,d,beta,1,tq1,1);
 	A[4 * 9 + 1] = twice(add(Term4(a,b,d,beta,1,q,q1,1),Term4(b,c,d,beta,q1,1,q,1)));
 	A[4 * 9 + 2] = Term3(a,b,beta,1,tq1,1);
@@ -280,9 +307,9 @@ void finite_field::representing_matrix9_U(int *A,
 	A[4 * 9 + 6] = add(Term5(b,c,d,beta,delta,2,q,q,q,1),Term5(a,b,d,beta,delta,1,1,tq,1,1));
 	A[4 * 9 + 7] = add3(twice(Term5(a,b,d,beta,gamma,q,q1,1,q,1)),Term5(a,b,d,beta,gamma,1,tq,1,1,1),Term4(b,c,beta,gamma,tq1,1,1,1));
 	A[4 * 9 + 8] = add3(twice(Term5(a,b,d,beta,delta,1,q1,q,1,1)),Term5(a,b,d,beta,delta,q,2,q,q,1),Term4(b,c,beta,delta,q2,q,q,1));
-	
+
 	A[5 * 9 + 0] = Term2(c,d,2,tq);
-	A[5 * 9 + 1] = four_times(Term4(a,b,c,d,1,q,1,q));
+	A[5 * 9 + 1] = F->four_times(Term4(a,b,c,d,1,q,1,q));
 	A[5 * 9 + 2] = Term2(a,b,2,tq);
 	A[5 * 9 + 3] = twice(add(Term4(a,c,d,gamma,q,q,2,1),Term4(b,c,d,gamma,q,2,q,1)));
 	A[5 * 9 + 4] = twice(add(Term4(b,c,d,delta,1,tq,1,1),Term4(a,c,d,delta,1,1,tq,1)));
@@ -290,9 +317,9 @@ void finite_field::representing_matrix9_U(int *A,
 	A[5 * 9 + 6] = add(Term3(a,d,delta,2,tq,1),Term3(b,c,delta,2,tq,1));
 	A[5 * 9 + 7] = twice(add(Term4(a,b,d,gamma,tq,1,1,1),Term4(a,b,c,gamma,1,tq,1,1)));
 	A[5 * 9 + 8] = twice(add(Term4(a,b,c,delta,q,2,q,1),Term4(a,b,d,delta,2,q,q,1)));
-	
+
 	A[6 * 9 + 0] = Term3(c,d,beta,2,tq,1);
-	A[6 * 9 + 1] = four_times(Term5(a,b,c,d,beta,1,q,1,q,1));
+	A[6 * 9 + 1] = F->four_times(Term5(a,b,c,d,beta,1,q,1,q,1));
 	A[6 * 9 + 2] = Term3(a,b,beta,2,tq,1);
 	A[6 * 9 + 3] = twice(add(Term5(a,c,d,beta,gamma,q,q,2,q,1),Term5(b,c,d,beta,gamma,q,2,q,1,1)));
 	A[6 * 9 + 4] = twice(add(Term5(b,c,d,beta,delta,1,tq,1,q,1),Term5(a,c,d,beta,delta,1,1,tq,1,1)));
@@ -300,7 +327,7 @@ void finite_field::representing_matrix9_U(int *A,
 	A[6 * 9 + 6] = add(Term4(a,d,beta,delta,2,tq,1,1),Term4(b,c,beta,delta,2,tq,q,1));
 	A[6 * 9 + 7] = twice(add(Term5(a,b,d,beta,gamma,tq,1,1,q,1),Term5(a,b,c,beta,gamma,1,tq,1,1,1)));
 	A[6 * 9 + 8] = twice(add(Term5(a,b,c,beta,delta,q,2,q,q,1),Term5(a,b,d,beta,delta,2,q,q,1,1)));
-	
+
 	A[7 * 9 + 0] = Term2(c,d,q2,q);
 	A[7 * 9 + 1] = twice(add(Term3(a,c,d,q1,1,q),Term3(a,b,c,1,q,q1)));
 	A[7 * 9 + 2] = Term2(a,b,q2,q);
@@ -310,7 +337,7 @@ void finite_field::representing_matrix9_U(int *A,
 	A[7 * 9 + 6] = add(Term4(a,b,c,delta,1,1,tq,1),Term4(a,c,d,delta,2,q,q,1));
 	A[7 * 9 + 7] = add3(twice(Term4(a,b,c,gamma,q1,q,1,1)),Term3(a,d,gamma,tq1,1,1),Term4(a,b,c,gamma,tq,1,1,1));
 	A[7 * 9 + 8] = add3(twice(Term4(a,b,c,delta,q1,1,q,1)),Term3(a,d,delta,q2,q,1),Term4(a,b,c,delta,2,q,q,1));
-	
+
 	A[8 * 9 + 0] = Term3(c,d,beta,q2,q,1);
 	A[8 * 9 + 1] = twice(add(Term4(a,c,d,beta,q1,1,q,1),Term4(a,b,c,beta,1,q,q1,1)));
 	A[8 * 9 + 2] = Term3(a,b,beta,q2,q,1);
@@ -320,11 +347,11 @@ void finite_field::representing_matrix9_U(int *A,
 	A[8 * 9 + 6] = add(Term5(a,b,c,beta,delta,1,1,tq,q,1),Term5(a,c,d,beta,delta,2,q,q,1,1));
 	A[8 * 9 + 7] = add3(twice(Term5(a,b,c,beta,gamma,q1,q,1,1,1)),Term4(a,d,beta,gamma,tq1,1,q,1),Term5(a,b,c,beta,gamma,tq,1,1,q,1));
 	A[8 * 9 + 8] = add3(twice(Term5(a,b,c,beta,delta,q1,1,q,q,1)),Term4(a,d,beta,delta,q2,q,1,1),Term5(a,b,c,beta,delta,2,q,q,1,1));
-	
-	
+
+
 }
 
-void finite_field::representing_matrix8_U(int *A, int a, int b, int c, int d, int beta)
+void representation_theory_domain::representing_matrix8_U(int *A, int a, int b, int c, int d, int beta)
 {
 	int delta1, delta2;
 	int r, q, i, j;
@@ -333,18 +360,18 @@ void finite_field::representing_matrix8_U(int *A, int a, int b, int c, int d, in
 	int *eta, *M1, *B1;
 	int *zeta, *M2, *B2;
 	number_theory_domain NT;
-	
-	
-	
-	r = e / 3;
-	if (e != 3 * r) {
-		cout << "finite_field::representing_matrix8_U "
+
+
+
+	r = F->e / 3;
+	if (F->e != 3 * r) {
+		cout << "representation_theory_domain::representing_matrix8_U "
 				"field does not have a cubic subfield" << endl;
 		exit(1);
 	}
 	//cout << "a=" << a << " b=" << b << " c=" << c << " d=" << d << endl;
-	
-	q = NT.i_power_j(p, r);
+
+	q = NT.i_power_j(F->p, r);
 	beta_2 = beta_trinomial(q, beta, 0, 0, 2);
 	beta_11 = beta_trinomial(q, beta, 0, 1, 1);
 	beta_22 = beta_trinomial(q, beta, 0, 2, 2);
@@ -365,28 +392,28 @@ void finite_field::representing_matrix8_U(int *A, int a, int b, int c, int d, in
 	//cout << "gamma8=" << gamma8 << endl;
 	//cout << "beta_trinomial(q, beta, 1, 2, 3)=" << beta_trinomial(q, beta, 1, 2, 3) << endl;
 	//cout << "beta_trinomial(q, beta, 2, 1, 3)=" << beta_trinomial(q, beta, 2, 1, 3) << endl;
-	
+
 	eta = NEW_int(2 * 3);
 	zeta = NEW_int(2 * 3);
 	M1 = NEW_int(2 * 3);
 	M2 = NEW_int(2 * 3);
 	B1 = NEW_int(3 * 3);
 	B2 = NEW_int(3 * 3);
-	
+
 	M1[0 * 3 + 0] = m_term(q, d, b, c);
 	M1[0 * 3 + 1] = m_term(q, d, a, d);
 	M1[0 * 3 + 2] = m_term(q, c, b, d);
 	M1[1 * 3 + 0] = m_term(q, b, b, c);
 	M1[1 * 3 + 1] = m_term(q, b, a, d);
 	M1[1 * 3 + 2] = m_term(q, a, b, d);
-	
+
 	M2[0 * 3 + 0] = m_term(q, d, a, c);
 	M2[0 * 3 + 1] = m_term(q, c, a, d);
 	M2[0 * 3 + 2] = m_term(q, c, b, c);
 	M2[1 * 3 + 0] = m_term(q, b, a, c);
 	M2[1 * 3 + 1] = m_term(q, a, a, d);
 	M2[1 * 3 + 2] = m_term(q, a, b, c);
-	
+
 	B1[0 * 3 + 0] = 1;
 	B1[0 * 3 + 1] = beta_trinomial(q, beta, 0, 0, 1);
 	B1[0 * 3 + 2] = beta_trinomial(q, beta, 0, 0, 2);
@@ -396,7 +423,7 @@ void finite_field::representing_matrix8_U(int *A, int a, int b, int c, int d, in
 	B1[2 * 3 + 0] = 1;
 	B1[2 * 3 + 1] = beta_trinomial(q, beta, 1, 0, 0);
 	B1[2 * 3 + 2] = beta_trinomial(q, beta, 2, 0, 0);
-	
+
 	B2[0 * 3 + 0] = 1;
 	B2[0 * 3 + 1] = beta_trinomial(q, beta, 0, 1, 1);
 	B2[0 * 3 + 2] = beta_trinomial(q, beta, 0, 2, 2);
@@ -406,9 +433,9 @@ void finite_field::representing_matrix8_U(int *A, int a, int b, int c, int d, in
 	B2[2 * 3 + 0] = 1;
 	B2[2 * 3 + 1] = beta_trinomial(q, beta, 1, 0, 1);
 	B2[2 * 3 + 2] = beta_trinomial(q, beta, 2, 0, 2);
-	
-	Linear_algebra->mult_matrix_matrix(M1, B1, eta, 2, 3, 3, 0 /* verbose_level */);
-	Linear_algebra->mult_matrix_matrix(M2, B2, zeta, 2, 3, 3, 0 /* verbose_level */);
+
+	F->Linear_algebra->mult_matrix_matrix(M1, B1, eta, 2, 3, 3, 0 /* verbose_level */);
+	F->Linear_algebra->mult_matrix_matrix(M2, B2, zeta, 2, 3, 3, 0 /* verbose_level */);
 	int eta11, eta12, eta13;
 	int eta21, eta22, eta23;
 	int zeta11, zeta12, zeta13;
@@ -428,7 +455,7 @@ void finite_field::representing_matrix8_U(int *A, int a, int b, int c, int d, in
 
 	//cout << "eta22=" << eta22 << endl;
 	//cout << "eta22 gamma8=" << mult(eta22,gamma8) << endl;
-	
+
 	A[0 * 8 + 0] = N3(d);
 	A[0 * 8 + 1] = N3(b);
 	A[0 * 8 + 2] = T3product2(m_term(q, d, b, d), gamma3);
@@ -446,7 +473,7 @@ void finite_field::representing_matrix8_U(int *A, int a, int b, int c, int d, in
 	A[1 * 8 + 5] = T3product2(m_term(q, a, a, c), gamma6);
 	A[1 * 8 + 6] = T3product2(m_term(q, a, a, c), gamma7);
 	A[1 * 8 + 7] = T3product2(m_term(q, a, a, c), gamma8);
-	
+
 	A[2 * 8 + 0] = T3(m_term(q, d, d, c));
 	A[2 * 8 + 1] = T3(m_term(q, b, b, a));
 	A[2 * 8 + 2] = T3product2(eta11, gamma3);
@@ -455,7 +482,7 @@ void finite_field::representing_matrix8_U(int *A, int a, int b, int c, int d, in
 	A[2 * 8 + 5] = T3product2(eta21, gamma6);
 	A[2 * 8 + 6] = T3product2(eta21, gamma7);
 	A[2 * 8 + 7] = T3product2(eta21, gamma8);
-	
+
 	A[3 * 8 + 0] = T3product2(m_term(q, d, d, c), beta);
 	A[3 * 8 + 1] = T3product2(m_term(q, b, b, a), beta);
 	A[3 * 8 + 2] = T3product2(eta12, gamma3);
@@ -464,7 +491,7 @@ void finite_field::representing_matrix8_U(int *A, int a, int b, int c, int d, in
 	A[3 * 8 + 5] = T3product2(eta22, gamma6);
 	A[3 * 8 + 6] = T3product2(eta22, gamma7);
 	A[3 * 8 + 7] = T3product2(eta22, gamma8);
-	
+
 	A[4 * 8 + 0] = T3product2(m_term(q, d, d, c), beta_2);
 	A[4 * 8 + 1] = T3product2(m_term(q, b, b, a), beta_2);
 	A[4 * 8 + 2] = T3product2(eta13, gamma3);
@@ -473,7 +500,7 @@ void finite_field::representing_matrix8_U(int *A, int a, int b, int c, int d, in
 	A[4 * 8 + 5] = T3product2(eta23, gamma6);
 	A[4 * 8 + 6] = T3product2(eta23, gamma7);
 	A[4 * 8 + 7] = T3product2(eta23, gamma8);
-	
+
 	A[5 * 8 + 0] = T3product2(m_term(q, d, c, c), 1);
 	A[5 * 8 + 1] = T3product2(m_term(q, b, a, a), 1);
 	A[5 * 8 + 2] = T3product2(zeta11, gamma3);
@@ -482,7 +509,7 @@ void finite_field::representing_matrix8_U(int *A, int a, int b, int c, int d, in
 	A[5 * 8 + 5] = T3product2(zeta21, gamma6);
 	A[5 * 8 + 6] = T3product2(zeta21, gamma7);
 	A[5 * 8 + 7] = T3product2(zeta21, gamma8);
-	
+
 	A[6 * 8 + 0] = T3product2(m_term(q, d, c, c), beta_11);
 	A[6 * 8 + 1] = T3product2(m_term(q, b, a, a), beta_11);
 	A[6 * 8 + 2] = T3product2(zeta12, gamma3);
@@ -491,7 +518,7 @@ void finite_field::representing_matrix8_U(int *A, int a, int b, int c, int d, in
 	A[6 * 8 + 5] = T3product2(zeta22, gamma6);
 	A[6 * 8 + 6] = T3product2(zeta22, gamma7);
 	A[6 * 8 + 7] = T3product2(zeta22, gamma8);
-	
+
 	A[7 * 8 + 0] = T3product2(m_term(q, d, c, c), beta_22);
 	A[7 * 8 + 1] = T3product2(m_term(q, b, a, a), beta_22);
 	A[7 * 8 + 2] = T3product2(zeta13, gamma3);
@@ -500,7 +527,7 @@ void finite_field::representing_matrix8_U(int *A, int a, int b, int c, int d, in
 	A[7 * 8 + 5] = T3product2(zeta23, gamma6);
 	A[7 * 8 + 6] = T3product2(zeta23, gamma7);
 	A[7 * 8 + 7] = T3product2(zeta23, gamma8);
-	
+
 	for (j = 2; j <= 4; j++) {
 		for (i = 0; i < 8; i++) {
 			A[i * 8 + j] = mult(A[i * 8 + j], delta1);
@@ -519,24 +546,24 @@ void finite_field::representing_matrix8_U(int *A, int a, int b, int c, int d, in
 	FREE_int(B2);
 }
 
-void finite_field::representing_matrix8_V(int *A, int beta)
+void representation_theory_domain::representing_matrix8_V(int *A, int beta)
 {
 	int delta1, delta2;
 	int beta_21, beta_12, beta_123, beta_132;
 	int r, q, i, j;
 	number_theory_domain NT;
-	
-	
-	
-	r = e / 3;
-	if (e != 3 * r) {
-		cout << "finite_field::representing_matrix8_V "
+
+
+
+	r = F->e / 3;
+	if (F->e != 3 * r) {
+		cout << "representation_theory_domain::representing_matrix8_V "
 				"field does not have a cubic subfield" << endl;
 		exit(1);
 	}
 	//cout << "a=" << a << " b=" << b << " c=" << c << " d=" << d << endl;
-	
-	q = NT.i_power_j(p, r);
+
+	q = NT.i_power_j(F->p, r);
 	beta_21 = beta_trinomial(q, beta, 0, 2, 1);
 	beta_12 = beta_trinomial(q, beta, 0, 1, 2);
 	beta_123 = beta_trinomial(q, beta, 1, 2, 3);
@@ -545,7 +572,7 @@ void finite_field::representing_matrix8_V(int *A, int beta)
 	delta2 = inverse(T3(add(beta_123, negate(beta_132))));
 
 	Orbiter->Int_vec.zero(A, 64);
-	
+
 	A[0 * 8 + 0] = 1;
 	A[1 * 8 + 1] = 1;
 	A[2 * 8 + 2] = T3(add(beta_trinomial(q, beta, 0, 2, 1), negate(beta_trinomial(q, beta, 0, 1, 2))));
@@ -581,20 +608,20 @@ void finite_field::representing_matrix8_V(int *A, int beta)
 }
 
 
-void finite_field::representing_matrix9b(int *A, int beta)
+void representation_theory_domain::representing_matrix9b(int *A, int beta)
 {
 	int r, /*q,*/ beta_q, delta, minus_one; //, i;
 		// gamma, betagamma, i, Tgamma, Tbetagamma, nTgamma;
-	
-	r = e / 2;
-	if (e != 2 * r) {
-		cout << "finite_field::representing_matrix9b field "
+
+	r = F->e / 2;
+	if (F->e != 2 * r) {
+		cout << "representation_theory_domain::representing_matrix9b field "
 				"does not have a quadratic subfield" << endl;
 		exit(1);
 	}
 	//q = i_power_j(p, r);
 	minus_one = negate(1);
-	beta_q = frobenius_power(beta, r);
+	beta_q = F->frobenius_power(beta, r);
 	delta = add(beta_q, beta);
 	//gamma = mult(delta, beta);
 	//betagamma = mult(beta, gamma);
@@ -606,7 +633,7 @@ void finite_field::representing_matrix9b(int *A, int beta)
 	//cout << "Tgamma=" << Tgamma << endl;
 	//cout << "nTgamma=" << nTgamma << endl;
 	//cout << "Tbetagamma=" << Tbetagamma << endl;
-	
+
 	Orbiter->Int_vec.zero(A, 81);
 
 	// changed to n e w base:
@@ -640,7 +667,7 @@ void finite_field::representing_matrix9b(int *A, int beta)
 #endif
 }
 
-void finite_field::representing_matrix8a(int *A,
+void representation_theory_domain::representing_matrix8a(int *A,
 		int a, int b, int c, int d, int beta)
 {
 
@@ -648,15 +675,15 @@ void finite_field::representing_matrix8a(int *A,
 #if 0
 	int delta, omega, gamma, eta, zeta, epsilon, xi, tau;
 	int r, q;
-	
+
 	r = e / 3;
 	if (e != 3 * r) {
-		cout << "finite_field::representing_matrix8a "
+		cout << "representation_theory_domain::representing_matrix8a "
 				"field does not have a cubic subfield" << endl;
 		exit(1);
 		}
 	q = i_power_j(p, r);
-	
+
 	delta = inverse(add(T3(power(beta, 2*q+1)),negate(T3(power(beta,q+2)))));
 	omega = inverse(add(T3(power(beta,q*q+2*q+3)),negate(T3(power(beta,q*q+3*q+2)))));
 	gamma = add(power(beta,2*q),negate(power(beta,2*q*q)));
@@ -665,7 +692,7 @@ void finite_field::representing_matrix8a(int *A,
 	epsilon = add(power(beta,3*q*q+q+2),negate(power(beta,3*q*q+2*q+1)));
 	xi = add(power(beta,2*q*q+2*q),negate(power(beta,2*q*q+2)));
 	tau = add(power(beta,q*q+1),negate(power(beta,q*q+q)));
-	
+
 	//cout << "delta=" << delta << endl;
 	//cout << "omega=" << omega << endl;
 	//cout << "gamma=" << gamma << endl;
@@ -674,7 +701,7 @@ void finite_field::representing_matrix8a(int *A,
 	//cout << "epsilon=" << epsilon << endl;
 	//cout << "xi=" << xi << endl;
 	//cout << "tau=" << tau << endl;
-	
+
 A[0 * 8 + 0] = N3(d);
 A[0 * 8 + 1] = T3(term3(beta,c,d,1,1,q*q+q));
 A[0 * 8 + 2] = T3(term2(c,d,1,q*q+q));
@@ -683,7 +710,7 @@ A[0 * 8 + 4] = T3(term3(beta,c,d,2,1,q*q+q));
 A[0 * 8 + 5] = T3(term3(beta,c,d,q+1,q+1,q*q));
 A[0 * 8 + 6] = T3(term3(beta,c,d,2*q+2,q+1,q*q));
 A[0 * 8 + 7] = N3(c);
-	
+
 A[1*8+0]=mult(delta,T3(term3(gamma,b,d,1,1,q*q+q)));
 A[1*8+1]=mult(delta,T3(mult(beta,add(add(term3(gamma,a,d,1,1,q*q+q),term4(gamma,b,c,d,q,q,1,q*q)),term4(gamma,b,c,d,q*q,q*q,1,q)))));
 A[1*8+2]=mult(delta,T3(mult(gamma,add(add(term2(a,d,1,q*q+q),term3(b,c,d,1,q,q*q)),term3(b,c,d,1,q*q,q)))));
@@ -750,26 +777,26 @@ A[7 * 8 + 7] = N3(a);
 #endif
 }
 
-void finite_field::representing_matrix8b(int *A, int beta)
+void representation_theory_domain::representing_matrix8b(int *A, int beta)
 {
 	int r, q, delta, omega; //, i;
 	number_theory_domain NT;
-	
-	r = e / 3;
-	if (e != 3 * r) {
-		cout << "finite_field::representing_matrix8b "
+
+	r = F->e / 3;
+	if (F->e != 3 * r) {
+		cout << "representation_theory_domain::representing_matrix8b "
 				"field does not have a cubic subfield" << endl;
 		exit(1);
 	}
-	q = NT.i_power_j(p, r);
+	q = NT.i_power_j(F->p, r);
 
 	delta = inverse(add(T3(power(beta, 2*q+1)),negate(T3(power(beta,q+2)))));
 	omega = inverse(add(T3(power(beta,q*q+2*q+3)),negate(T3(power(beta,q*q+3*q+2)))));
 	cout << "delta=" << delta << endl;
 	cout << "omega=" << omega << endl;
-	
+
 	Orbiter->Int_vec.zero(A, 64);
-	
+
 	A[0 * 8 + 0] = 1;
 	A[7 * 8 + 7] = 1;
 #if 1
@@ -814,52 +841,52 @@ void finite_field::representing_matrix8b(int *A, int beta)
 #endif
 }
 
-int finite_field::Term1(int a1, int e1)
+int representation_theory_domain::Term1(int a1, int e1)
 {
 	int x;
-	
+
 	x = term1(a1, e1);
 	return T2(x);
 }
 
-int finite_field::Term2(int a1, int a2, int e1, int e2)
+int representation_theory_domain::Term2(int a1, int a2, int e1, int e2)
 {
 	int x;
-	
+
 	x = term2(a1, a2, e1, e2);
 	return T2(x);
 }
 
-int finite_field::Term3(int a1, int a2, int a3, int e1, int e2, int e3)
+int representation_theory_domain::Term3(int a1, int a2, int a3, int e1, int e2, int e3)
 {
 	int x;
-	
+
 	x = term3(a1, a2, a3, e1, e2, e3);
 	return T2(x);
 }
 
-int finite_field::Term4(int a1, int a2, int a3, int a4,
+int representation_theory_domain::Term4(int a1, int a2, int a3, int a4,
 		int e1, int e2, int e3, int e4)
 {
 	int x;
-	
+
 	x = term4(a1, a2, a3, a4, e1, e2, e3, e4);
 	return T2(x);
 }
 
-int finite_field::Term5(int a1, int a2, int a3, int a4, int a5,
+int representation_theory_domain::Term5(int a1, int a2, int a3, int a4, int a5,
 		int e1, int e2, int e3, int e4, int e5)
 {
 	int x;
-	
+
 	x = term5(a1, a2, a3, a4, a5, e1, e2, e3, e4, e5);
 	return T2(x);
 }
 
-int finite_field::term1(int a1, int e1)
+int representation_theory_domain::term1(int a1, int e1)
 {
 	int x;
-	
+
 	x = 1;
 	if (e1) {
 		x = mult(x, power(a1, e1));
@@ -867,10 +894,10 @@ int finite_field::term1(int a1, int e1)
 	return x;
 }
 
-int finite_field::term2(int a1, int a2, int e1, int e2)
+int representation_theory_domain::term2(int a1, int a2, int e1, int e2)
 {
 	int x;
-	
+
 	x = 1;
 	if (e1) {
 		x = mult(x, power(a1, e1));
@@ -881,10 +908,10 @@ int finite_field::term2(int a1, int a2, int e1, int e2)
 	return x;
 }
 
-int finite_field::term3(int a1, int a2, int a3, int e1, int e2, int e3)
+int representation_theory_domain::term3(int a1, int a2, int a3, int e1, int e2, int e3)
 {
 	int x;
-	
+
 	x = 1;
 	if (e1) {
 		x = mult(x, power(a1, e1));
@@ -898,11 +925,11 @@ int finite_field::term3(int a1, int a2, int a3, int e1, int e2, int e3)
 	return x;
 }
 
-int finite_field::term4(int a1, int a2, int a3, int a4,
+int representation_theory_domain::term4(int a1, int a2, int a3, int a4,
 		int e1, int e2, int e3, int e4)
 {
 	int x;
-	
+
 	x = 1;
 	if (e1) {
 		x = mult(x, power(a1, e1));
@@ -919,11 +946,11 @@ int finite_field::term4(int a1, int a2, int a3, int a4,
 	return x;
 }
 
-int finite_field::term5(int a1, int a2, int a3, int a4, int a5,
+int representation_theory_domain::term5(int a1, int a2, int a3, int a4, int a5,
 		int e1, int e2, int e3, int e4, int e5)
 {
 	int x;
-	
+
 	x = 1;
 	if (e1) {
 		x = mult(x, power(a1, e1));
@@ -943,10 +970,10 @@ int finite_field::term5(int a1, int a2, int a3, int a4, int a5,
 	return x;
 }
 
-int finite_field::m_term(int q, int a1, int a2, int a3)
+int representation_theory_domain::m_term(int q, int a1, int a2, int a3)
 {
 	int x;
-	
+
 	x = 1;
 	x = mult(x, power(a1, q * q));
 	x = mult(x, power(a2, q));
@@ -954,10 +981,10 @@ int finite_field::m_term(int q, int a1, int a2, int a3)
 	return x;
 }
 
-int finite_field::beta_trinomial(int q, int beta, int a1, int a2, int a3)
+int representation_theory_domain::beta_trinomial(int q, int beta, int a1, int a2, int a3)
 {
 	int x;
-	
+
 	x = 1;
 	x = mult(x, power(beta, a1 * q * q));
 	x = mult(x, power(beta, a2 * q));
@@ -965,13 +992,71 @@ int finite_field::beta_trinomial(int q, int beta, int a1, int a2, int a3)
 	return x;
 }
 
-int finite_field::T3product2(int a1, int a2)
+int representation_theory_domain::T3product2(int a1, int a2)
 {
 	int x;
-	
+
 	x = mult(a1, a2);
 	return T3(x);
 }
 
+int representation_theory_domain::add(int a, int b)
+{
+	return F->add(a, b);
 }
+
+int representation_theory_domain::add3(int a, int b, int c)
+{
+	return F->add3(a, b, c);
 }
+
+int representation_theory_domain::negate(int a)
+{
+	return F->negate(a);
+}
+
+int representation_theory_domain::twice(int a)
+{
+	return F->twice(a);
+}
+
+
+
+int representation_theory_domain::mult(int a, int b)
+{
+	return F->mult(a, b);
+}
+
+int representation_theory_domain::inverse(int a)
+{
+	return F->inverse(a);
+}
+
+
+int representation_theory_domain::power(int a, int n)
+{
+	return F->power(a, n);
+}
+
+int representation_theory_domain::T2(int a)
+{
+	return F->T2(a);
+}
+
+int representation_theory_domain::T3(int a)
+{
+	return F->T3(a);
+}
+
+int representation_theory_domain::N2(int a)
+{
+	return F->N2(a);
+}
+
+int representation_theory_domain::N3(int a)
+{
+	return F->N3(a);
+}
+
+}}
+

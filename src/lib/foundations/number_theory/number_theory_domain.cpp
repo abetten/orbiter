@@ -2416,6 +2416,46 @@ int number_theory_domain::elliptic_curve_discrete_log(finite_field *F,
 	return n;
 }
 
+int number_theory_domain::eulers_totient_function(int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int nb_primes, *primes, *exponents;
+	int i, p, e;
+	longinteger_domain D;
+	longinteger_object N, R, A, B, C;
+
+	if (f_v) {
+		cout << "number_theory_domain::eulers_totient_function" << endl;
+	}
+	N.create(n, __FILE__, __LINE__);
+	D.factor(N, nb_primes, primes, exponents, verbose_level);
+	R.create(1, __FILE__, __LINE__);
+	for (i = 0; i < nb_primes; i++) {
+		p = primes[i];
+		e = exponents[i];
+		A.create(p, __FILE__, __LINE__);
+		D.power_int(A, e);
+		if (f_v) {
+			cout << "p^e=" << A << endl;
+		}
+		B.create(p, __FILE__, __LINE__);
+		D.power_int(B, e - 1);
+		if (f_v) {
+			cout << "p^{e-1}=" << A << endl;
+		}
+		B.negate();
+		D.add(A, B, C);
+		if (f_v) {
+			cout << "p^e-p^{e-1}=" << C << endl;
+		}
+		D.mult(R, C, A);
+		A.assign_to(R);
+	}
+	if (f_v) {
+		cout << "number_theory_domain::eulers_totient_function done" << endl;
+	}
+	return R.as_int();
+}
 
 
 }

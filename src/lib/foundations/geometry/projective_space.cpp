@@ -1625,7 +1625,7 @@ void projective_space::conic_points_brute_force(
 	nb_points = 0;
 	for (i = 0; i < N_points; i++) {
 		unrank_point(v, i);
-		a = F->evaluate_conic_form(six_coeffs, v);
+		a = F->Linear_algebra->evaluate_conic_form(six_coeffs, v);
 		if (f_vv) {
 			cout << "point " << i << " = ";
 			Orbiter->Int_vec.print(cout, v, 3);
@@ -1670,7 +1670,7 @@ void projective_space::quadric_points_brute_force(
 	nb_points = 0;
 	for (i = 0; i < N_points; i++) {
 		unrank_point(v, i);
-		a = F->evaluate_quadric_form_in_PG_three(ten_coeffs, v);
+		a = F->Linear_algebra->evaluate_quadric_form_in_PG_three(ten_coeffs, v);
 		if (f_vv) {
 			cout << "point " << i << " = ";
 			Orbiter->Int_vec.print(cout, v, 3);
@@ -1762,7 +1762,7 @@ void projective_space::conic_points(
 		Orbiter->Int_vec.print_integer_matrix_width(cout,
 				Basis, 3, 3, 3, F->log10_of_q);
 	}
-	a = F->evaluate_conic_form(six_coeffs, Basis + 6);
+	a = F->Linear_algebra->evaluate_conic_form(six_coeffs, Basis + 6);
 	if (f_v) {	
 		cout << "projective_space::conic_points "
 				"form value = " << a << endl;
@@ -1781,7 +1781,7 @@ void projective_space::conic_points(
 		for (i = 0; i < 3; i++) {
 			Basis[6 + i] = F->mult(bv, Basis[6 + i]);
 		}
-		a = F->evaluate_conic_form(six_coeffs, Basis + 6);
+		a = F->Linear_algebra->evaluate_conic_form(six_coeffs, Basis + 6);
 		if (f_v) {	
 			cout << "form value = " << a << endl;
 		}

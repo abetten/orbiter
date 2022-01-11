@@ -330,9 +330,9 @@ void projective_space::create_ovoid(
 	if (f_v) {
 		cout << "i : point : projective rank" << endl;
 	}
-	F->choose_anisotropic_form(c1, c2, c3, verbose_level);
+	F->Linear_algebra->choose_anisotropic_form(c1, c2, c3, verbose_level);
 	for (i = 0; i < nb_pts; i++) {
-		F->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i, 0 /* verbose_level */);
+		F->Orthogonal_indexing->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i, 0 /* verbose_level */);
 		for (h = 0; h < d; h++) {
 			w[h] = v[h];
 		}

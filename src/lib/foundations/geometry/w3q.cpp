@@ -185,7 +185,7 @@ void W3q::print_lines()
 
 int W3q::evaluate_symplectic_form(int *x4, int *y4)
 {
-	return F->evaluate_symplectic_form(4, x4, y4);
+	return F->Linear_algebra->evaluate_symplectic_form(4, x4, y4);
 
 	/*F->add4(
 			F->mult(x4[0], y4[1]), 
@@ -197,11 +197,11 @@ int W3q::evaluate_symplectic_form(int *x4, int *y4)
 
 void W3q::isomorphism_Q4q(int *x4, int *y4, int *v)
 {
-	v[0] = F->Pluecker_12(x4, y4);
-	v[1] = F->negate(F->Pluecker_13(x4, y4));
-	v[2] = F->Pluecker_42(x4, y4);
-	v[3] = F->negate(F->Pluecker_14(x4, y4));
-	v[4] = F->Pluecker_23(x4, y4);
+	v[0] = F->Linear_algebra->Pluecker_12(x4, y4);
+	v[1] = F->negate(F->Linear_algebra->Pluecker_13(x4, y4));
+	v[2] = F->Linear_algebra->Pluecker_42(x4, y4);
+	v[3] = F->negate(F->Linear_algebra->Pluecker_14(x4, y4));
+	v[4] = F->Linear_algebra->Pluecker_23(x4, y4);
 }
 
 

@@ -1365,6 +1365,42 @@ void file_io::lint_matrix_write_csv_override_headers(std::string &fname, std::st
 	}
 }
 
+void file_io::vector_matrix_write_csv(std::string &fname, std::vector<std::vector<int> > &V)
+{
+	int i, j;
+	int m, n;
+
+	m = V.size();
+	n = V[0].size();
+	for (i = 0; i < m; i++) {
+		if (V[i].size() != n) {
+			cout << "file_io::int_matrix_write_csv the vectors are of differing lengths" << endl;
+			exit(1);
+		}
+	}
+
+
+	{
+		ofstream f(fname);
+
+		f << "Row";
+		for (j = 0; j < n; j++) {
+			f << ",C" << j;
+		}
+		f << endl;
+		for (i = 0; i < m; i++) {
+			f << i;
+			for (j = 0; j < n; j++) {
+				f << "," << V[i][j];
+			}
+			f << endl;
+		}
+		f << "END" << endl;
+	}
+}
+
+
+
 void file_io::double_matrix_write_csv(
 		std::string &fname, double *M, int m, int n)
 {

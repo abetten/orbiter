@@ -339,7 +339,6 @@ class finite_field_description;
 class finite_field;
 class finite_field_implementation_by_tables;
 class finite_field_implementation_wo_tables;
-class linear_algebra;
 class norm_tables;
 class nth_roots;
 class subfield_structure;
@@ -461,6 +460,10 @@ class prepare_frames;
 class knowledge_base;
 
 
+// linear_algebra:
+class linear_algebra;
+class representation_theory_domain;
+
 // number_theory:
 class cyclotomic_sets;
 class number_theoretic_transform;
@@ -470,6 +473,7 @@ class number_theory_domain;
 // orthogonal:
 class blt_set_domain;
 class blt_set_invariants;
+class orthogonal_indexing;
 class orthogonal;
 class unusual_model;
 
@@ -479,6 +483,7 @@ class homogeneous_polynomial_domain;
 class longinteger_domain;
 class longinteger_object;
 class partial_derivative;
+class ring_theory_global;
 class table_of_irreducible_polynomials;
 class unipoly_domain;
 
@@ -725,6 +730,7 @@ enum data_input_stream_type {
 #include "./graphics/graphics.h"
 #include "./io_and_os/io_and_os.h"
 #include "./knowledge_base/knowledge_base.h"
+#include "./linear_algebra/linear_algebra.h"
 #include "./number_theory/number_theory.h"
 #include "./orthogonal/orthogonal.h"
 #include "./ring_theory/ring_theory.h"

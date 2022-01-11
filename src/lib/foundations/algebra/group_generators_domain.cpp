@@ -1274,7 +1274,7 @@ void group_generators_domain::projective_matrix_group_base_and_orbits(int n, fin
 			cout << "group_generators_domain::projective_matrix_group_base_and_orbits "
 					"before PG_element_modified_not_in_subspace_perm" << endl;
 		}
-		F->PG_element_modified_not_in_subspace_perm(n - 1, i - 1,
+		PG_element_modified_not_in_subspace_perm(F, n - 1, i - 1,
 			orbit[i], orbit_inv[i], 0);
 
 		if (f_vv) {
@@ -2591,6 +2591,61 @@ void group_generators_domain::affine_generators(int n, finite_field *F,
 	}
 	if (f_v) {
 		cout << "group_generators_domain::affine_generators done" << endl;
+	}
+}
+
+void group_generators_domain::PG_element_modified_not_in_subspace_perm(finite_field *F,
+		int n, int m,
+	long int *orbit, long int *orbit_inv,
+	int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *v = NEW_int(n + 1);
+	geometry_global Gg;
+	long int l = Gg.nb_PG_elements(n, F->q);
+	long int ll = Gg.nb_PG_elements_not_in_subspace(n, m, F->q);
+	long int i, j1 = 0, j2 = ll, f_in, j;
+
+	if (f_v) {
+		cout << "group_generators_domain::PG_element_modified_not_in_subspace_perm" << endl;
+	}
+	for (i = 0; i < l; i++) {
+		F->PG_element_unrank_modified_lint(v, 1, n + 1, i);
+		f_in = Gg.PG_element_modified_is_in_subspace(n, m, v);
+		if (f_v) {
+			cout << i << " : ";
+			for (j = 0; j < n + 1; j++) {
+				cout << v[j] << " ";
+				}
+			}
+		if (f_in) {
+			if (f_v) {
+				cout << " is in the subspace" << endl;
+				}
+			orbit[j2] = i;
+			orbit_inv[i] = j2;
+			j2++;
+			}
+		else {
+			if (f_v) {
+				cout << " is not in the subspace" << endl;
+				}
+			orbit[j1] = i;
+			orbit_inv[i] = j1;
+			j1++;
+			}
+		}
+	if (j1 != ll) {
+		cout << "j1 != ll" << endl;
+		exit(1);
+		}
+	if (j2 != l) {
+		cout << "j2 != l" << endl;
+		exit(1);
+		}
+	FREE_int(v);
+	if (f_v) {
+		cout << "group_generators_domain::PG_element_modified_not_in_subspace_perm done" << endl;
 	}
 }
 

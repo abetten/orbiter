@@ -1571,6 +1571,27 @@ F_11_product_of_all_nonzero_elements:
 		-with F -do -finite_field_activity -product_of S -end
 
 
+F_11_vandermonde:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 11 -end \
+		-with F -do -finite_field_activity \
+			-Vandermonde_matrix \
+		-end
+
+F_1024_vandermonde:
+	$(ORBITER_PATH)orbiter.out -v 3 \
+		-define F -finite_field -q 1024 -end \
+		-with F -do -finite_field_activity \
+			-Vandermonde_matrix \
+		-end
+	rm Vandermonde_1024.csv
+	rm Vandermonde_inv_1024.csv
+
+#User time: 0:46
+
+
+
+
 #############################################################################################################
 # Section 3.3: Polynomials over Finite Fields
 

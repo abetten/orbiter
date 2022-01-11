@@ -1270,11 +1270,11 @@ void graph_theory_domain::make_orthogonal_collinearity_graph(int *&Adj, int &N,
 		c1 = 1;
 	}
 	else if (epsilon == -1) {
-		F->choose_anisotropic_form(c1, c2, c3, verbose_level - 2);
+		F->Linear_algebra->choose_anisotropic_form(c1, c2, c3, verbose_level - 2);
 		//cout << "incma.cpp: epsilon == -1, need irreducible polynomial" << endl;
 		//exit(1);
 	}
-	F->Gram_matrix(epsilon, n, c1, c2, c3, Gram, verbose_level - 1);
+	F->Linear_algebra->Gram_matrix(epsilon, n, c1, c2, c3, Gram, verbose_level - 1);
 	if (f_v) {
 		cout << "graph_theory_domain::make_orthogonal_collinearity_graph "
 				"Gram matrix" << endl;
@@ -1307,10 +1307,10 @@ void graph_theory_domain::make_orthogonal_collinearity_graph(int *&Adj, int &N,
 	nb_e = 0;
 	nb_inc = 0;
 	for (i = 0; i < N; i++) {
-		F->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i, 0 /* verbose_level */);
+		F->Orthogonal_indexing->Q_epsilon_unrank(v, 1, epsilon, n, c1, c2, c3, i, 0 /* verbose_level */);
 		for (j = i + 1; j < N; j++) {
-			F->Q_epsilon_unrank(v2, 1, epsilon, n, c1, c2, c3, j, 0 /* verbose_level */);
-			a = F->evaluate_bilinear_form(v, v2, n + 1, Gram);
+			F->Orthogonal_indexing->Q_epsilon_unrank(v2, 1, epsilon, n, c1, c2, c3, j, 0 /* verbose_level */);
+			a = F->Linear_algebra->evaluate_bilinear_form(v, v2, n + 1, Gram);
 			if (a == 0) {
 				nb_e++;
 				Adj[i * N + j] = 1;

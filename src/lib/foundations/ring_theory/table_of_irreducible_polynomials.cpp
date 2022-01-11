@@ -99,14 +99,14 @@ void table_of_irreducible_polynomials::init(int k,
 
 		if (f_v) {
 			cout << "table_of_irreducible_polynomials::init before "
-					"Algebra.make_all_irreducible_polynomials_of_degree_d"
+					"R.make_all_irreducible_polynomials_of_degree_d"
 					<< endl;
 		}
 
 		vector<vector<int>> T;
-		algebra_global Algebra;
+		ring_theory_global R;
 
-		Algebra.make_all_irreducible_polynomials_of_degree_d(F, d,
+		R.make_all_irreducible_polynomials_of_degree_d(F, d,
 				T, verbose_level - 2);
 
 		Nb_irred[d] = T.size();
@@ -121,7 +121,7 @@ void table_of_irreducible_polynomials::init(int k,
 
 		if (f_v) {
 			cout << "table_of_irreducible_polynomials::init after "
-					"Algebra.make_all_irreducible_polynomials_of_degree_d"
+					"R.make_all_irreducible_polynomials_of_degree_d"
 					<< endl;
 		}
 

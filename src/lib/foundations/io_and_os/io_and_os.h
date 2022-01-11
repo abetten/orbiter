@@ -157,6 +157,7 @@ public:
 	void int_matrix_write_csv(std::string &fname, int *M, int m, int n);
 	void lint_matrix_write_csv(std::string &fname, long int *M, int m, int n);
 	void lint_matrix_write_csv_override_headers(std::string &fname, std::string *headers, long int *M, int m, int n);
+	void vector_matrix_write_csv(std::string &fname, std::vector<std::vector<int> > &V);
 	void double_matrix_write_csv(std::string &fname,
 		double *M, int m, int n);
 	void int_matrix_write_csv_with_labels(std::string &fname,

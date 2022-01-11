@@ -21,6 +21,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_multiply = FALSE;
 	//multiply_a = NULL;
 	//multiply_b = NULL;
+
 	f_inverse = FALSE;
 	//inverse_a = NULL;
 
@@ -55,8 +56,6 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 
 
-	//
-
 	f_poset_classification_control = FALSE;
 	Control = NULL;
 
@@ -78,31 +77,44 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	orbits_on_subspaces_depth = 0;
 
 	f_classes_based_on_normal_form = FALSE;
-	f_classes = FALSE;
-	f_group_table = FALSE;
+
+
 	f_normalizer = FALSE;
+
 	f_centralizer_of_element = FALSE;
 	//element_description_text = NULL;
 	//element_label = NULL;
+
 	f_conjugacy_class_of_element = FALSE;
+
 	f_orbits_on_group_elements_under_conjugation = FALSE;
 	//std::string orbits_on_group_elements_under_conjugation_fname;
 	//orbits_on_group_elements_under_conjugation_transporter_fname
 
 	f_normalizer_of_cyclic_subgroup = FALSE;
+
 	f_find_subgroup = FALSE;
 	find_subgroup_order = 0;
+
 	f_report = FALSE;
 	f_sylow = FALSE;
+	f_group_table = FALSE;
+	f_classes = FALSE;
+
+
 	f_test_if_geometric = FALSE;
 	test_if_geometric_depth = 0;
+
 	f_draw_tree = FALSE;
+
 	f_orbit_of = FALSE;
 	orbit_of_point_idx = 0;
+
 	f_orbits_on_set_system_from_file = FALSE;
 	//orbits_on_set_system_from_file_fname = NULL;
 	orbits_on_set_system_first_column = 0;
 	orbits_on_set_system_number_of_columns = 0;
+
 	f_orbit_of_set_from_file = FALSE;
 	//orbit_of_set_from_file_fname = NULL;
 	//f_search_subgroup = FALSE;
@@ -117,6 +129,7 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 	f_linear_codes = FALSE;
 	linear_codes_minimum_distance = 0;
 	linear_codes_target_size = 0;
+
 	f_print_elements = FALSE;
 	f_print_elements_tex = FALSE;
 	f_save_elements_csv = FALSE;
@@ -171,8 +184,10 @@ group_theoretic_activity_description::group_theoretic_activity_description()
 
 	f_orbits_on_polynomials = FALSE;
 	orbits_on_polynomials_degree = 0;
+
 	f_recognize_orbits_on_polynomials = FALSE;
 	//std::string recognize_orbits_on_polynomials_text;
+
 	f_orbits_on_polynomials_draw_tree = FALSE;
 	orbits_on_polynomials_draw_tree_idx = 0;
 
@@ -384,18 +399,6 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-classes_based_on_normal_form" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-classes") == 0) {
-			f_classes = TRUE;
-			if (f_v) {
-				cout << "-classes" << endl;
-			}
-		}
-		else if (stringcmp(argv[i], "-group_table") == 0) {
-			f_group_table = TRUE;
-			if (f_v) {
-				cout << "-group_table" << endl;
-			}
-		}
 		else if (stringcmp(argv[i], "-normalizer") == 0) {
 			f_normalizer = TRUE;
 			if (f_v) {
@@ -459,6 +462,18 @@ int group_theoretic_activity_description::read_arguments(
 			f_sylow = TRUE;
 			if (f_v) {
 				cout << "-sylow" << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-group_table") == 0) {
+			f_group_table = TRUE;
+			if (f_v) {
+				cout << "-group_table" << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-classes") == 0) {
+			f_classes = TRUE;
+			if (f_v) {
+				cout << "-classes" << endl;
 			}
 		}
 		else if (stringcmp(argv[i], "-f_draw_tree") == 0) {
@@ -845,12 +860,6 @@ void group_theoretic_activity_description::print()
 	if (f_classes_based_on_normal_form) {
 		cout << "-classes_based_on_normal_form" << endl;
 	}
-	if (f_classes) {
-		cout << "-classes" << endl;
-	}
-	if (f_group_table) {
-		cout << "-group_table" << endl;
-	}
 	if (f_normalizer) {
 		cout << "-normalizer" << endl;
 	}
@@ -882,6 +891,12 @@ void group_theoretic_activity_description::print()
 	}
 	if (f_sylow) {
 		cout << "-sylow" << endl;
+	}
+	if (f_group_table) {
+		cout << "-group_table" << endl;
+	}
+	if (f_classes) {
+		cout << "-classes" << endl;
 	}
 	if (f_draw_tree) {
 		cout << "-f_draw_tree " << endl;

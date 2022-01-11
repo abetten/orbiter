@@ -462,11 +462,11 @@ void orthogonal::init(int epsilon, int n,
 	}
 	if (FALSE) {
 		for (i = 0; i < T1_m; i++) {
-			F->Q_epsilon_unrank(v1, 1, epsilon, n - 1,
+			F->Orthogonal_indexing->Q_epsilon_unrank(v1, 1, epsilon, n - 1,
 					form_c1, form_c2, form_c3, i, verbose_level);
 			cout << i << " : ";
 			Orbiter->Int_vec.print(cout, v1, n);
-			j = F->Q_epsilon_rank(v1, 1, epsilon, n - 1,
+			j = F->Orthogonal_indexing->Q_epsilon_rank(v1, 1, epsilon, n - 1,
 					form_c1, form_c2, form_c3, verbose_level);
 			cout << " : " << j << endl;
 		}
@@ -563,7 +563,7 @@ void orthogonal::init_form_and_Gram_matrix(int verbose_level)
 	Orbiter->Int_vec.zero(the_monomial, n);
 
 	if (epsilon == -1) {
-		F->choose_anisotropic_form(
+		F->Linear_algebra->choose_anisotropic_form(
 				form_c1, form_c2, form_c3, verbose_level);
 
 		Orbiter->Int_vec.zero(the_monomial, n);
@@ -625,7 +625,7 @@ void orthogonal::init_form_and_Gram_matrix(int verbose_level)
 	if (f_v) {
 		cout << "orthogonal::init_form_and_Gram_matrix computing Gram matrix" << endl;
 	}
-	F->Gram_matrix(
+	F->Linear_algebra->Gram_matrix(
 			epsilon, n - 1,
 			form_c1, form_c2, form_c3, Gram_matrix,
 			verbose_level);
@@ -1437,7 +1437,7 @@ int orthogonal::evaluate_bilinear_form(int *u, int *v, int stride)
 		return evaluate_parabolic_bilinear_form(u, v, stride, m);
 		}
 	else if (epsilon == -1) {
-		return F->evaluate_bilinear_form(
+		return F->Linear_algebra->evaluate_bilinear_form(
 				u, v, n, Gram_matrix);
 		}
 	else {

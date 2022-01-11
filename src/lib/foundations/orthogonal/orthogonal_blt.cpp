@@ -81,6 +81,7 @@ void orthogonal::create_FTWKB_BLT_set(long int *set, int *ABC, int verbose_level
 	int f_vv = (verbose_level >= 2);
 	int v[5];
 	int r, i, a, b, c;
+	geometry_global Gg;
 
 	int q = F->q;
 
@@ -105,7 +106,7 @@ void orthogonal::create_FTWKB_BLT_set(long int *set, int *ABC, int verbose_level
 		ABC[i * 3 + 0] = a;
 		ABC[i * 3 + 1] = b;
 		ABC[i * 3 + 2] = c;
-		F->create_BLT_point(v, a, b, c, verbose_level - 2);
+		Gg.create_BLT_point(F, v, a, b, c, verbose_level - 2);
 		if (f_vv) {
 			cout << "point " << i << " : ";
 			Orbiter->Int_vec.print(cout, v, 5);
@@ -143,6 +144,7 @@ void orthogonal::create_K1_BLT_set(long int *set, int *ABC, int verbose_level)
 	int v[5];
 	int i, m, minus_one, exponent, a, b, c;
 	int q;
+	geometry_global Gg;
 
 	q = F->q;
 	m = F->p; // the primitive element is a nonsquare
@@ -162,7 +164,7 @@ void orthogonal::create_K1_BLT_set(long int *set, int *ABC, int verbose_level)
 			cout << "i=" << i << " a=" << a
 					<< " b=" << b << " c=" << c << endl;
 			}
-		F->create_BLT_point(v, a, b, c, verbose_level - 2);
+		Gg.create_BLT_point(F, v, a, b, c, verbose_level - 2);
 		ABC[i * 3 + 0] = a;
 		ABC[i * 3 + 1] = b;
 		ABC[i * 3 + 2] = c;
@@ -203,6 +205,7 @@ void orthogonal::create_K2_BLT_set(long int *set, int *ABC, int verbose_level)
 	int v[5];
 	int five, r, i, a, b, c;
 	int q;
+	geometry_global Gg;
 
 	q = F->q;
 	if (q <= 5) {
@@ -225,7 +228,7 @@ void orthogonal::create_K2_BLT_set(long int *set, int *ABC, int verbose_level)
 			cout << "i=" << i << " a=" << a
 					<< " b=" << b << " c=" << c << endl;
 			}
-		F->create_BLT_point(v, a, b, c, verbose_level - 2);
+		Gg.create_BLT_point(F, v, a, b, c, verbose_level - 2);
 		ABC[i * 3 + 0] = a;
 		ABC[i * 3 + 1] = b;
 		ABC[i * 3 + 2] = c;
@@ -914,7 +917,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 		cnt++;
 
 		for (i = 0; i < level; i++) {
-			F->Q_unrank(Mtx + i * n, 1, n - 1, set[subset[i]], 0 /* verbose_level */);
+			F->Orthogonal_indexing->Q_unrank(Mtx + i * n, 1, n - 1, set[subset[i]], 0 /* verbose_level */);
 			}
 		if (f_vvv) {
 			cout << "subset " << setw(5) << cnt << " : ";
@@ -1045,7 +1048,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 				cout << " : " << endl;
 				}
 			for (ii = 0; ii < level; ii++) {
-				F->Q_unrank(Mtx + ii * n, 1, n - 1, set[subset[ii]], 0 /* verbose_level */);
+				F->Orthogonal_indexing->Q_unrank(Mtx + ii * n, 1, n - 1, set[subset[ii]], 0 /* verbose_level */);
 				}
 			for (ii = 0; ii < level; ii++) {
 				if (!Sorting.int_vec_search(Block, Block_size, subset[ii], idx)) {
