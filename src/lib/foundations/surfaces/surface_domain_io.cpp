@@ -269,7 +269,7 @@ void surface_domain::print_lines_tex(std::ostream &ost, long int *Lines, int nb_
 
 		Orbiter->Int_vec.copy(v6, vv, 6); // mistake found by Alice Hui
 
-		Rk[i] = F->Qplus_rank(vv, 1, 5, 0 /* verbose_level*/);
+		Rk[i] = F->Orthogonal_indexing->Qplus_rank(vv, 1, 5, 0 /* verbose_level*/);
 
 		ost << "={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
 				<< v6[2] << "," << v6[3] << "," << v6[4]
@@ -307,10 +307,10 @@ void surface_domain::alice(std::ostream &ost, long int *Lines, int nb_lines)
 	P->Pluecker_coordinates(Lines[1], Pa2, 0 /* verbose_level */);
 
 	Orbiter->Int_vec.copy(Pa6, tmp, 6);
-	rk_a6 = F->Qplus_rank(tmp, 1, 5, 0 /* verbose_level*/);
+	rk_a6 = F->Orthogonal_indexing->Qplus_rank(tmp, 1, 5, 0 /* verbose_level*/);
 
 	Orbiter->Int_vec.copy(Pb6, tmp, 6);
-	rk_b6 = F->Qplus_rank(tmp, 1, 5, 0 /* verbose_level*/);
+	rk_b6 = F->Orthogonal_indexing->Qplus_rank(tmp, 1, 5, 0 /* verbose_level*/);
 
 	if (rk_a6 != 1) {
 		return;

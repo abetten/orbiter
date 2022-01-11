@@ -231,7 +231,7 @@ int homogeneous_polynomial_domain::evaluate_monomial(int idx_of_monomial, int *c
 {
 	int r;
 
-	r = F->evaluate_monomial(
+	r = F->Linear_algebra->evaluate_monomial(
 			Monomials + idx_of_monomial * nb_variables,
 			coords, nb_variables);
 	return r;
@@ -1257,7 +1257,7 @@ int homogeneous_polynomial_domain::evaluate_at_a_point(
 		if (coeff[i] == 0) {
 			continue;
 		}
-		b = F->evaluate_monomial(Monomials + i * nb_variables, pt_vec, nb_variables);
+		b = F->Linear_algebra->evaluate_monomial(Monomials + i * nb_variables, pt_vec, nb_variables);
 		c = F->mult(coeff[i], b);
 		a = F->add(a, c);
 	}
@@ -1775,7 +1775,7 @@ void homogeneous_polynomial_domain::vanishing_ideal(long int *Pts,
 		unrank_point(v, Pts[i]);
 		for (j = 0; j < nb_monomials; j++) {
 			System[i * nb_monomials + j] =
-					F->evaluate_monomial(Monomials + j * nb_variables, v, nb_variables);
+					F->Linear_algebra->evaluate_monomial(Monomials + j * nb_variables, v, nb_variables);
 		}
 	}
 	if (f_vv) {

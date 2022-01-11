@@ -516,7 +516,7 @@ void surface_with_action::complete_skew_hexagon(
 			cout << "surface_with_action::complete_skew_hexagon "
 					"before F->find_secant_points_wrt_x0x3mx1x2" << endl;
 		}
-		F->find_secant_points_wrt_x0x3mx1x2(Basis, Pts4, nb_pts, verbose_level);
+		F->Linear_algebra->find_secant_points_wrt_x0x3mx1x2(Basis, Pts4, nb_pts, verbose_level);
 		if (f_v) {
 			cout << "surface_with_action::complete_skew_hexagon "
 					"after F->find_secant_points_wrt_x0x3mx1x2" << endl;
@@ -540,12 +540,12 @@ void surface_with_action::complete_skew_hexagon(
 		}
 
 		// test if the intersection points lie on the quadric:
-		u = F->evaluate_quadratic_form_x0x3mx1x2(w);
+		u = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(w);
 		if (u) {
 			cout << "the first secant point does not lie on the quadric" << endl;
 			exit(1);
 		}
-		u = F->evaluate_quadratic_form_x0x3mx1x2(w + 4);
+		u = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(w + 4);
 		if (u) {
 			cout << "the second secant point does not lie on the quadric" << endl;
 			exit(1);
@@ -825,7 +825,7 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 			cout << "surface_with_action::complete_skew_hexagon_with_polarity "
 					"before F->find_secant_points_wrt_x0x3mx1x2" << endl;
 		}
-		F->find_secant_points_wrt_x0x3mx1x2(Basis, Pts4, nb_pts, verbose_level);
+		F->Linear_algebra->find_secant_points_wrt_x0x3mx1x2(Basis, Pts4, nb_pts, verbose_level);
 		if (f_v) {
 			cout << "surface_with_action::complete_skew_hexagon_with_polarity "
 					"after F->find_secant_points_wrt_x0x3mx1x2" << endl;
@@ -849,12 +849,12 @@ void surface_with_action::complete_skew_hexagon_with_polarity(
 		}
 
 		// test if the intersection points lie on the quadric:
-		u = F->evaluate_quadratic_form_x0x3mx1x2(w);
+		u = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(w);
 		if (u) {
 			cout << "the first secant point does not lie on the quadric" << endl;
 			exit(1);
 		}
-		u = F->evaluate_quadratic_form_x0x3mx1x2(w + 4);
+		u = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(w + 4);
 		if (u) {
 			cout << "the second secant point does not lie on the quadric" << endl;
 			exit(1);
@@ -1180,7 +1180,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		}
 		Surf->unrank_point(Q4, Q);
 
-		b = F->evaluate_quadratic_form_x0x3mx1x2(Q4);
+		b = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(Q4);
 		if (b) {
 			cout << "error: The point Q does not "
 					"lie on the quadric" << endl;
@@ -1220,7 +1220,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 			// Evaluate the equation of the hyperboloid
 			// which is x_0x_3-x_1x_2 = 0,
 			// to see if w lies on it:
-			b = F->evaluate_quadratic_form_x0x3mx1x2(w);
+			b = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(w);
 			if (f_vv) {
 				cout << "a=" << a << " v=";
 				Orbiter->Int_vec.print(cout, v, 2);
@@ -1243,7 +1243,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 		
 		// test that the line is not a line of the quadric:
 		F->Linear_algebra->add_vector(L, w, pt_coord, 4);
-		b = F->evaluate_quadratic_form_x0x3mx1x2(pt_coord);
+		b = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(pt_coord);
 		if (b == 0) {
 			if (f_v) {
 				cout << "The line lies in the quadric, "
@@ -1331,7 +1331,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 			// Evaluate the equation of the hyperboloid
 			// which is x_0x_3-x_1x_2 = 0,
 			// to see if w lies on it:
-			b = F->evaluate_quadratic_form_x0x3mx1x2(w);
+			b = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(w);
 			if (b == 0) {
 				Orbiter->Int_vec.copy(w, pt_coord + nb_pts * 4, 4);
 				nb_pts++;
@@ -1357,7 +1357,7 @@ int surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	for (h = 0; h < 2; h++) {
 		for (k = 0; k < 2; k++) {
 			F->Linear_algebra->add_vector(pt_coord + h * 4, pt_coord + (2 + k) * 4, w, 4);
-			b = F->evaluate_quadratic_form_x0x3mx1x2(w);
+			b = F->Linear_algebra->evaluate_quadratic_form_x0x3mx1x2(w);
 			if (b == 0) {
 				if (f_vv) {
 					cout << "h=" << h << " k=" << k

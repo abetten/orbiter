@@ -73,19 +73,13 @@ MODULES= \
 		foundations/expression_parser/syntax_tree.o \
 		foundations/finite_fields/finite_field_activity_description.o \
 		foundations/finite_fields/finite_field_activity.o \
-		foundations/finite_fields/finite_field_applications.o \
 		foundations/finite_fields/finite_field_description.o \
 		foundations/finite_fields/finite_field_implementation_by_tables.o \
 		foundations/finite_fields/finite_field_implementation_wo_tables.o \
 		foundations/finite_fields/finite_field_io.o \
-		foundations/finite_fields/finite_field_orthogonal.o \
 		foundations/finite_fields/finite_field_projective.o \
-		foundations/finite_fields/finite_field_representations.o \
 		foundations/finite_fields/finite_field_tables.o \
 		foundations/finite_fields/finite_field.o \
-		foundations/finite_fields/linear_algebra.o \
-		foundations/finite_fields/linear_algebra2.o \
-		foundations/finite_fields/linear_algebra_RREF.o \
 		foundations/finite_fields/norm_tables.o \
 		foundations/finite_fields/nth_roots.o \
 		foundations/finite_fields/subfield_structure.o \
@@ -194,6 +188,12 @@ MODULES= \
 		foundations/io_and_os/override_double.o \
 		foundations/io_and_os/prepare_frames.o \
 		foundations/io_and_os/util.o \
+		foundations/linear_algebra/linear_algebra_global.o \
+		foundations/linear_algebra/linear_algebra_RREF.o \
+		foundations/linear_algebra/linear_algebra.o \
+		foundations/linear_algebra/linear_algebra2.o \
+		foundations/linear_algebra/linear_algebra3.o \
+		foundations/linear_algebra/representation_theory_domain.o \
 		foundations/knowledge_base/knowledge_base.o \
 		foundations/number_theory/cyclotomic_sets.o \
 		foundations/number_theory/number_theoretic_transform.o \
@@ -203,6 +203,7 @@ MODULES= \
 		foundations/orthogonal/orthogonal_blt.o \
 		foundations/orthogonal/orthogonal_group.o \
 		foundations/orthogonal/orthogonal_hyperbolic.o \
+		foundations/orthogonal/orthogonal_indexing.o \
 		foundations/orthogonal/orthogonal_io.o \
 		foundations/orthogonal/orthogonal_parabolic.o \
 		foundations/orthogonal/orthogonal_rank_unrank.o \
@@ -213,6 +214,7 @@ MODULES= \
 		foundations/ring_theory/longinteger_domain.o \
 		foundations/ring_theory/longinteger_object.o \
 		foundations/ring_theory/partial_derivative.o \
+		foundations/ring_theory/ring_theory_global.o \
 		foundations/ring_theory/table_of_irreducible_polynomials.o \
 		foundations/ring_theory/unipoly_domain.o \
 		foundations/ring_theory/unipoly_domain2.o \

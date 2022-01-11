@@ -1346,12 +1346,12 @@ void projective_space::klein_correspondence(
 		}
 		x4 = basis8;
 		y4 = basis8 + 4;
-		v6[0] = F->Pluecker_12(x4, y4);
-		v6[1] = F->Pluecker_34(x4, y4);
-		v6[2] = F->Pluecker_13(x4, y4);
-		v6[3] = F->Pluecker_42(x4, y4);
-		v6[4] = F->Pluecker_14(x4, y4);
-		v6[5] = F->Pluecker_23(x4, y4);
+		v6[0] = F->Linear_algebra->Pluecker_12(x4, y4);
+		v6[1] = F->Linear_algebra->Pluecker_34(x4, y4);
+		v6[2] = F->Linear_algebra->Pluecker_13(x4, y4);
+		v6[3] = F->Linear_algebra->Pluecker_42(x4, y4);
+		v6[4] = F->Linear_algebra->Pluecker_14(x4, y4);
+		v6[5] = F->Linear_algebra->Pluecker_23(x4, y4);
 		if (f_vv) {
 			cout << "v6 : ";
 			Orbiter->Int_vec.print(cout, v6, 6);
@@ -1401,12 +1401,12 @@ void projective_space::Pluecker_coordinates(
 	}
 	x4 = basis8;
 	y4 = basis8 + 4;
-	v6[0] = F->Pluecker_12(x4, y4);
-	v6[1] = F->Pluecker_34(x4, y4);
-	v6[2] = F->Pluecker_13(x4, y4);
-	v6[3] = F->Pluecker_42(x4, y4);
-	v6[4] = F->Pluecker_14(x4, y4);
-	v6[5] = F->Pluecker_23(x4, y4);
+	v6[0] = F->Linear_algebra->Pluecker_12(x4, y4);
+	v6[1] = F->Linear_algebra->Pluecker_34(x4, y4);
+	v6[2] = F->Linear_algebra->Pluecker_13(x4, y4);
+	v6[3] = F->Linear_algebra->Pluecker_42(x4, y4);
+	v6[4] = F->Linear_algebra->Pluecker_14(x4, y4);
+	v6[5] = F->Linear_algebra->Pluecker_23(x4, y4);
 	if (f_vv) {
 		cout << "v6 : ";
 		Orbiter->Int_vec.print(cout, v6, 6);
@@ -1459,12 +1459,12 @@ void projective_space::klein_correspondence_special_model(
 		}
 		x4 = basis8;
 		y4 = basis8 + 4;
-		x6[0] = F->Pluecker_12(x4, y4);
-		x6[1] = F->Pluecker_34(x4, y4);
-		x6[2] = F->Pluecker_13(x4, y4);
-		x6[3] = F->Pluecker_42(x4, y4);
-		x6[4] = F->Pluecker_14(x4, y4);
-		x6[5] = F->Pluecker_23(x4, y4);
+		x6[0] = F->Linear_algebra->Pluecker_12(x4, y4);
+		x6[1] = F->Linear_algebra->Pluecker_34(x4, y4);
+		x6[2] = F->Linear_algebra->Pluecker_13(x4, y4);
+		x6[3] = F->Linear_algebra->Pluecker_42(x4, y4);
+		x6[4] = F->Linear_algebra->Pluecker_14(x4, y4);
+		x6[5] = F->Linear_algebra->Pluecker_23(x4, y4);
 		if (f_vv) {
 			cout << "x6 : ";
 			Orbiter->Int_vec.print(cout, x6, 6);
@@ -2243,7 +2243,7 @@ void projective_space::conic_type_randomized(int nb_times,
 				}
 
 				unrank_point(vec, set[h]);
-				a = F->evaluate_conic_form(six_coeffs, vec);
+				a = F->Linear_algebra->evaluate_conic_form(six_coeffs, vec);
 
 
 				if (a == 0) {
@@ -2830,7 +2830,7 @@ void projective_space::conic_type(
 					Orbiter->Int_vec.print(cout, vec, 3);
 					cout << endl;
 				}
-				a = F->evaluate_conic_form(six_coeffs, vec);
+				a = F->Linear_algebra->evaluate_conic_form(six_coeffs, vec);
 
 
 				if (a == 0) {

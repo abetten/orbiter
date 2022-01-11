@@ -21,9 +21,6 @@ namespace top_level {
 group_theoretic_activity::group_theoretic_activity()
 {
 	Descr = NULL;
-	//F = NULL;
-	//f_linear_group = FALSE;
-	//LG = NULL;
 
 	AG = NULL;
 
@@ -49,7 +46,6 @@ void group_theoretic_activity::init_group(group_theoretic_activity_description *
 	}
 
 	group_theoretic_activity::Descr = Descr;
-	//group_theoretic_activity::F = F;
 	group_theoretic_activity::AG = AG;
 
 

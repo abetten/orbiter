@@ -451,12 +451,12 @@ void klein_correspondence::line_to_Pluecker(long int line_rk, int *v6, int verbo
 	P3->unrank_line(basis_line, line_rk);
 	x4 = basis_line;
 	y4 = basis_line + 4;
-	v6[0] = F->Pluecker_12(x4, y4);
-	v6[1] = F->Pluecker_34(x4, y4);
-	v6[2] = F->Pluecker_13(x4, y4);
-	v6[3] = F->Pluecker_42(x4, y4);
-	v6[4] = F->Pluecker_14(x4, y4);
-	v6[5] = F->Pluecker_23(x4, y4);
+	v6[0] = F->Linear_algebra->Pluecker_12(x4, y4);
+	v6[1] = F->Linear_algebra->Pluecker_34(x4, y4);
+	v6[2] = F->Linear_algebra->Pluecker_13(x4, y4);
+	v6[3] = F->Linear_algebra->Pluecker_42(x4, y4);
+	v6[4] = F->Linear_algebra->Pluecker_14(x4, y4);
+	v6[5] = F->Linear_algebra->Pluecker_23(x4, y4);
 	a = F->mult(v6[0], v6[1]);
 	b = F->mult(v6[2], v6[3]);
 	c = F->mult(v6[4], v6[5]);

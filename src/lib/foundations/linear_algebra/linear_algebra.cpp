@@ -3078,6 +3078,7 @@ void linear_algebra::lift_to_Klein_quadric(int *A4, int *A6, int verbose_level)
 }
 
 
+
 }}
 
 

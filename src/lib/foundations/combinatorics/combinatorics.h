@@ -266,23 +266,6 @@ public:
 		nauty_output *&NO,
 		int verbose_level);
 	// returns f_found, which is TRUE if the object is already in the list
-	int process_object_with_known_canonical_labeling(
-		object_with_canonical_form *OiP,
-		int *canonical_labeling, int canonical_labeling_len,
-		int &idx,
-		nauty_output *NO,
-		int verbose_level);
-#if 0
-	void save(
-			std::string &output_prefix,
-			int verbose_level);
-	void latex_report(std::string &fname,
-			std::string &prefix,
-			int fixed_structure_order_list_sz,
-			int *fixed_structure_order_list,
-			int max_TDO_depth,
-			int verbose_level);
-#endif
 	void report_summary_of_orbits(
 			std::ostream &fp, int verbose_level);
 	void report_all_isomorphism_types(
@@ -852,19 +835,24 @@ class tdo_refinement {
 	void init(tdo_refinement_description *Descr, int verbose_level);
 	void main_loop(int verbose_level);
 	void do_it(std::ofstream &g, int verbose_level);
-	void do_row_refinement(std::ofstream &g, tdo_scheme_synthetic &G, partitionstack &P,
+	void do_row_refinement(std::ofstream &g,
+			tdo_scheme_synthetic &G, partitionstack &P,
 			int verbose_level);
-	void do_col_refinement(std::ofstream &g, tdo_scheme_synthetic &G, partitionstack &P,
+	void do_col_refinement(std::ofstream &g,
+			tdo_scheme_synthetic &G, partitionstack &P,
 			int verbose_level);
-	void do_all_row_refinements(std::string &label_in, std::ofstream &g, tdo_scheme_synthetic &G,
+	void do_all_row_refinements(std::string &label_in, std::ofstream &g,
+			tdo_scheme_synthetic &G,
 		int *point_types, int nb_point_types, int point_type_len,
 		int *distributions, int nb_distributions, int &nb_tactical,
 		int verbose_level);
-	void do_all_column_refinements(std::string &label_in, std::ofstream &g, tdo_scheme_synthetic &G,
+	void do_all_column_refinements(
+			std::string &label_in, std::ofstream &g, tdo_scheme_synthetic &G,
 		int *line_types, int nb_line_types, int line_type_len,
 		int *distributions, int nb_distributions, int &nb_tactical,
 		int verbose_level);
-	int do_row_refinement(int t, std::string &label_in, std::ofstream &g, tdo_scheme_synthetic &G,
+	int do_row_refinement(int t,
+			std::string &label_in, std::ofstream &g, tdo_scheme_synthetic &G,
 		int *point_types, int nb_point_types, int point_type_len,
 		int *distributions, int nb_distributions,
 		int verbose_level);

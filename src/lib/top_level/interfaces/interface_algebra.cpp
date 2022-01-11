@@ -414,9 +414,9 @@ void interface_algebra::worker(int verbose_level)
 
 	else if (f_search_for_primitive_polynomial_in_range) {
 
-		algebra_global Algebra;
+		ring_theory_global R;
 
-		Algebra.do_search_for_primitive_polynomial_in_range(
+		R.do_search_for_primitive_polynomial_in_range(
 				p_min, p_max, deg_min, deg_max,
 				verbose_level);
 	}

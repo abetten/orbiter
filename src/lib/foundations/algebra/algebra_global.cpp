@@ -18,788 +18,6 @@ namespace orbiter {
 namespace foundations {
 
 
-void algebra_global::make_all_irreducible_polynomials_of_degree_d(
-		finite_field *F,
-		int d, std::vector<std::vector<int> > &Table,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int i;
-	int cnt;
-	number_theory_domain NT;
-
-	if (f_v) {
-		cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
-				"d=" << d << " q=" << F->q << endl;
-		cout << "verbose_level=" << verbose_level << endl;
-	}
-
-#if 0
-	cnt = count_all_irreducible_polynomials_of_degree_d(F, d, verbose_level - 2);
-
-	if (f_v) {
-		cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
-				"cnt = " << cnt << endl;
-	}
-
-	nb = cnt;
-
-	Table = NEW_int(nb * (d + 1));
-#endif
-
-	//NT.factor_prime_power(F->q, p, e);
-
-	if (f_v) {
-		cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
-				" q=" << F->q << " p=" << F->p << " e=" << F->e << endl;
-	}
-
-	unipoly_domain FX(F);
-
-	const char *poly;
-	algebra_global Algebra;
-
-	poly = Algebra.get_primitive_polynomial(F->q, d, 0 /* verbose_level */);
-
-	if (f_v) {
-		cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
-				"chosen irreducible polynomial is " << poly << endl;
-	}
-
-	unipoly_object m;
-	unipoly_object g;
-	unipoly_object minpol;
-	combinatorics_domain Combi;
-
-
-	FX.create_object_by_rank_string(m, poly, 0 /* verbose_level */);
-
-	if (f_v) {
-		cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
-				"chosen irreducible polynomial m = ";
-		FX.print_object(m, cout);
-		cout << endl;
-	}
-
-	FX.create_object_by_rank(g, 0, __FILE__, __LINE__, 0 /* verbose_level */);
-	FX.create_object_by_rank(minpol, 0, __FILE__, __LINE__, 0 /* verbose_level */);
-
-	int *Frobenius;
-	int *Normal_basis;
-	int *v;
-	int *w;
-
-	//Frobenius = NEW_int(d * d);
-	Normal_basis = NEW_int(d * d);
-	v = NEW_int(d);
-	w = NEW_int(d);
-
-	if (f_v) {
-		cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
-				"before FX.Frobenius_matrix" << endl;
-	}
-	FX.Frobenius_matrix(Frobenius, m, verbose_level - 2);
-	if (f_v) {
-		cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
-				"Frobenius_matrix = " << endl;
-		Orbiter->Int_vec.matrix_print(Frobenius, d, d);
-		cout << endl;
-	}
-
-	if (f_v) {
-		cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
-				"before compute_normal_basis" << endl;
-	}
-	FX.compute_normal_basis(d, Normal_basis, Frobenius, verbose_level - 1);
-
-	if (f_v) {
-		cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
-				"Normal_basis = " << endl;
-		Orbiter->Int_vec.matrix_print(Normal_basis, d, d);
-		cout << endl;
-	}
-
-	cnt = 0;
-
-	Combi.int_vec_first_regular_word(v, d, F->q);
-	while (TRUE) {
-		if (f_vv) {
-			cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
-					"regular word " << cnt << " : v = ";
-			Orbiter->Int_vec.print(cout, v, d);
-			cout << endl;
-		}
-
-		F->Linear_algebra->mult_vector_from_the_right(Normal_basis, v, w, d, d);
-		if (f_vv) {
-			cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
-					"regular word " << cnt << " : w = ";
-			Orbiter->Int_vec.print(cout, w, d);
-			cout << endl;
-		}
-
-		FX.delete_object(g);
-		FX.create_object_of_degree(g, d - 1);
-		for (i = 0; i < d; i++) {
-			((int *) g)[1 + i] = w[i];
-		}
-
-		FX.minimum_polynomial_extension_field(g, m, minpol, d, Frobenius,
-				verbose_level - 3);
-		if (f_vv) {
-			cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
-					"regular word " << cnt << " : v = ";
-			Orbiter->Int_vec.print(cout, v, d);
-			cout << " irreducible polynomial = ";
-			FX.print_object(minpol, cout);
-			cout << endl;
-		}
-
-
-
-		std::vector<int> T;
-
-		for (i = 0; i <= d; i++) {
-			T.push_back(((int *)minpol)[1 + i]);
-		}
-		Table.push_back(T);
-
-
-		cnt++;
-
-
-		if (!Combi.int_vec_next_regular_word(v, d, F->q)) {
-			break;
-		}
-
-	}
-
-	if (f_v) {
-		cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
-				"there are " << cnt
-				<< " irreducible polynomials "
-				"of degree " << d << " over " << "F_" << F->q << endl;
-	}
-
-	FREE_int(Frobenius);
-	FREE_int(Normal_basis);
-	FREE_int(v);
-	FREE_int(w);
-	FX.delete_object(m);
-	FX.delete_object(g);
-	FX.delete_object(minpol);
-
-
-	if (f_v) {
-		cout << "algebra_global::make_all_irreducible_polynomials_of_degree_d "
-				"d=" << d << " q=" << F->q << " done" << endl;
-	}
-}
-
-int algebra_global::count_all_irreducible_polynomials_of_degree_d(
-		finite_field *F, int d, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int f_vv = (verbose_level >= 2);
-	int i;
-	int cnt;
-	number_theory_domain NT;
-	combinatorics_domain Combi;
-
-	if (f_v) {
-		cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
-				"d=" << d << " q=" << F->q << endl;
-	}
-
-
-	if (f_v) {
-		cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d " << endl;
-	}
-
-	if (f_v) {
-		cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
-				"p=" << F->p << " e=" << F->e << endl;
-	}
-	if (F->e > 1) {
-		cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
-				"e=" << F->e << " is greater than one" << endl;
-	}
-
-	unipoly_domain FX(F);
-
-	const char *poly;
-	algebra_global Algebra;
-
-	poly = Algebra.get_primitive_polynomial(F->q, d, 0 /* verbose_level */);
-
-	unipoly_object m;
-	unipoly_object g;
-	unipoly_object minpol;
-
-
-	FX.create_object_by_rank_string(m, poly, 0 /* verbose_level */);
-
-	if (f_v) {
-		cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
-				"chosen irreducible polynomial m = ";
-		FX.print_object(m, cout);
-		cout << endl;
-	}
-
-	FX.create_object_by_rank(g, 0, __FILE__, __LINE__, 0 /* verbose_level */);
-	FX.create_object_by_rank(minpol, 0, __FILE__, __LINE__, 0 /* verbose_level */);
-
-	int *Frobenius;
-	//int *F2;
-	int *Normal_basis;
-	int *v;
-	int *w;
-
-	//Frobenius = NEW_int(d * d);
-	//F2 = NEW_int(d * d);
-	Normal_basis = NEW_int(d * d);
-	v = NEW_int(d);
-	w = NEW_int(d);
-
-	FX.Frobenius_matrix(Frobenius, m, verbose_level - 3);
-	if (f_v) {
-		cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
-				"Frobenius_matrix = " << endl;
-		Orbiter->Int_vec.matrix_print(Frobenius, d, d);
-		cout << endl;
-	}
-
-#if 0
-	F->mult_matrix_matrix(Frobenius, Frobenius, F2, d, d, d,
-			0 /* verbose_level */);
-	if (f_v) {
-		cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
-				"Frobenius^2 = " << endl;
-		int_matrix_print(F2, d, d);
-		cout << endl;
-	}
-#endif
-
-	FX.compute_normal_basis(d, Normal_basis, Frobenius, verbose_level - 3);
-
-	if (f_v) {
-		cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
-				"Normal_basis = " << endl;
-		Orbiter->Int_vec.matrix_print(Normal_basis, d, d);
-		cout << endl;
-	}
-
-	cnt = 0;
-	Combi.int_vec_first_regular_word(v, d, F->q);
-	while (TRUE) {
-		if (f_vv) {
-			cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
-					"regular word " << cnt << " : v = ";
-			Orbiter->Int_vec.print(cout, v, d);
-			cout << endl;
-		}
-
-		F->Linear_algebra->mult_vector_from_the_right(Normal_basis, v, w, d, d);
-		if (f_vv) {
-			cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
-					"regular word " << cnt << " : w = ";
-			Orbiter->Int_vec.print(cout, w, d);
-			cout << endl;
-		}
-
-		FX.delete_object(g);
-		FX.create_object_of_degree(g, d - 1);
-		for (i = 0; i < d; i++) {
-			((int *) g)[1 + i] = w[i];
-		}
-
-		FX.minimum_polynomial_extension_field(g, m, minpol, d,
-				Frobenius, verbose_level - 3);
-		if (f_vv) {
-			cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
-					"regular word " << cnt << " : v = ";
-			Orbiter->Int_vec.print(cout, v, d);
-			cout << " irreducible polynomial = ";
-			FX.print_object(minpol, cout);
-			cout << endl;
-		}
-		if (FX.degree(minpol) != d) {
-			cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
-					"The polynomial does not have degree d"
-					<< endl;
-			FX.print_object(minpol, cout);
-			cout << endl;
-			exit(1);
-		}
-		if (!FX.is_irreducible(minpol, verbose_level)) {
-			cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
-					"The polynomial is not irreducible" << endl;
-			FX.print_object(minpol, cout);
-			cout << endl;
-			exit(1);
-		}
-
-
-		cnt++;
-
-		if (!Combi.int_vec_next_regular_word(v, d, F->q)) {
-			break;
-		}
-
-	}
-
-	if (f_v) {
-		cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d "
-				"there are " << cnt << " irreducible polynomials "
-				"of degree " << d << " over " << "F_" << F->q << endl;
-	}
-
-	FREE_int(Frobenius);
-	//FREE_int(F2);
-	FREE_int(Normal_basis);
-	FREE_int(v);
-	FREE_int(w);
-	FX.delete_object(m);
-	FX.delete_object(g);
-	FX.delete_object(minpol);
-
-	if (f_v) {
-		cout << "algebra_global::count_all_irreducible_polynomials_of_degree_d done" << endl;
-	}
-	return cnt;
-}
-
-void algebra_global::do_make_table_of_irreducible_polynomials(finite_field *F,
-		int deg, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "algebra_global::do_make_table_of_irreducible_polynomials" << endl;
-		cout << "deg=" << deg << endl;
-		cout << "q=" << F->q << endl;
-	}
-
-	int nb;
-	std::vector<std::vector<int>> Table;
-
-	make_all_irreducible_polynomials_of_degree_d(F, deg,
-			Table, verbose_level);
-
-	nb = Table.size();
-
-	cout << "The " << nb << " irreducible polynomials of "
-			"degree " << deg << " over F_" << F->q << " are:" << endl;
-
-	Orbiter->Int_vec.vec_print(Table);
-
-
-	int *T;
-	int i, j;
-
-	T = NEW_int(Table.size() * (deg + 1));
-	for (i = 0; i < Table.size(); i++) {
-		for (j = 0; j < deg + 1; j++) {
-			T[i * (deg + 1) + j] = Table[i][j];
-		}
-	}
-
-
-
-	{
-		char str[1000];
-		string fname;
-		char title[1000];
-		char author[1000];
-
-		snprintf(str, 1000, "Irred_q%d_d%d.tex", F->q, deg);
-		fname.assign(str);
-		snprintf(title, 1000, "Irreducible Polynomials of Degree %d over F%d", deg, F->q);
-		//strcpy(author, "");
-		author[0] = 0;
-
-
-		{
-			ofstream ost(fname);
-			latex_interface L;
-			geometry_global GG;
-			long int rk;
-
-			L.head(ost,
-					FALSE /* f_book*/,
-					TRUE /* f_title */,
-					title, author,
-					FALSE /* f_toc */,
-					FALSE /* f_landscape */,
-					TRUE /* f_12pt */,
-					TRUE /* f_enlarged_page */,
-					TRUE /* f_pagenumbers */,
-					NULL /* extra_praeamble */);
-
-
-			if (f_v) {
-				cout << "algebra_global::do_make_table_of_irreducible_polynomials before report" << endl;
-			}
-			//report(ost, verbose_level);
-
-			ost << "There are " << Table.size() << " irreducible polynomials of "
-					"degree " << deg << " over the field F" << F->q << ":\\\\" << endl;
-			ost << "The coefficients in increasing order are:\\\\" << endl;
-			ost << endl;
-			ost << "\\bigskip" << endl;
-			ost << endl;
-			//ost << "\\begin{multicols}{2}" << endl;
-			ost << "\\noindent" << endl;
-			for (i = 0; i < Table.size(); i++) {
-				ost << i << " : $";
-				for (j = 0; j <= deg; j++) {
-					ost << T[i * (deg + 1) + j];
-				}
-				ost << " : ";
-				rk = GG.AG_element_rank(F->q, T + i * (deg + 1), 1, deg + 1);
-				ost << rk;
-				ost << "$\\\\" << endl;
-			}
-			//ost << "\\end{multicols}" << endl;
-
-
-			if (f_v) {
-				cout << "algebra_global::do_make_table_of_irreducible_polynomials after report" << endl;
-			}
-
-
-			L.foot(ost);
-
-		}
-		file_io Fio;
-
-		cout << "algebra_global::do_make_table_of_irreducible_polynomials written file " << fname << " of size "
-				<< Fio.file_size(fname) << endl;
-	}
-
-	FREE_int(T);
-
-	//int_matrix_print(Table, nb, deg + 1);
-
-	//FREE_int(Table);
-
-	if (f_v) {
-		cout << "algebra_global::do_make_table_of_irreducible_polynomials done" << endl;
-	}
-}
-
-
-
-
-void algebra_global::do_search_for_primitive_polynomial_in_range(
-		int p_min, int p_max,
-		int deg_min, int deg_max,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "algebra_global::do_search_for_primitive_polynomial_in_range" << endl;
-		cout << "p_min=" << p_min << endl;
-		cout << "p_max=" << p_max << endl;
-		cout << "deg_min=" << deg_min << endl;
-		cout << "deg_max=" << deg_max << endl;
-	}
-
-
-	if (deg_min == deg_max && p_min == p_max) {
-		char *poly;
-
-
-
-		poly = search_for_primitive_polynomial_of_given_degree(
-				p_min, deg_min, verbose_level);
-
-		cout << "poly = " << poly << endl;
-
-	}
-	else {
-
-		search_for_primitive_polynomials(p_min, p_max,
-				deg_min, deg_max,
-				verbose_level);
-	}
-
-	if (f_v) {
-		cout << "algebra_global::do_search_for_primitive_polynomial_in_range done" << endl;
-	}
-}
-
-char *algebra_global::search_for_primitive_polynomial_of_given_degree(
-		int p, int degree, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	finite_field Fp;
-
-	if (f_v) {
-		cout << "algebra_global::search_for_primitive_polynomial_of_given_degree" << endl;
-	}
-	Fp.finite_field_init(p, FALSE /* f_without_tables */, 0 /*verbose_level*/);
-	unipoly_domain FX(&Fp);
-
-	unipoly_object m;
-	longinteger_object rk;
-
-	FX.create_object_by_rank(m, 0, __FILE__, __LINE__, verbose_level);
-
-	if (f_v) {
-		cout << "search_for_primitive_polynomial_of_given_degree "
-				"p=" << p << " degree=" << degree << endl;
-	}
-	FX.get_a_primitive_polynomial(m, degree, verbose_level - 1);
-	FX.rank_longinteger(m, rk);
-
-	char *s;
-	int i, j;
-	if (f_v) {
-		cout << "found a primitive polynomial. The rank is " << rk << endl;
-	}
-
-	s = NEW_char(rk.len() + 1);
-	for (i = rk.len() - 1, j = 0; i >= 0; i--, j++) {
-		s[j] = '0' + rk.rep()[i];
-	}
-	s[rk.len()] = 0;
-
-	if (f_v) {
-		cout << "created string " << s << endl;
-	}
-
-	if (f_v) {
-		cout << "algebra_global::search_for_primitive_polynomial_of_given_degree done" << endl;
-	}
-	return s;
-}
-
-
-void algebra_global::search_for_primitive_polynomials(
-		int p_min, int p_max, int n_min, int n_max,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int d, q;
-	number_theory_domain NT;
-
-
-	longinteger_f_print_scientific = FALSE;
-
-
-	if (f_v) {
-		cout << "algebra_global::search_for_primitive_polynomials "
-				"p_min=" << p_min << " p_max=" << p_max
-				<< " n_min=" << n_min << " n_max=" << n_max << endl;
-	}
-	for (q = p_min; q <= p_max; q++) {
-
-
-		if (!NT.is_prime_power(q)) {
-			continue;
-		}
-
-		if (f_v) {
-			cout << "algebra_global::search_for_primitive_polynomials "
-					"considering the coefficient field of order " << q << endl;
-		}
-
-		{
-			finite_field Fq;
-			Fq.finite_field_init(q, FALSE /* f_without_tables */, 0 /*verbose_level*/);
-			unipoly_domain FX(&Fq);
-
-			unipoly_object m;
-			longinteger_object rk;
-
-			FX.create_object_by_rank(m, 0, __FILE__, __LINE__, verbose_level);
-
-			for (d = n_min; d <= n_max; d++) {
-				if (f_v) {
-					cout << "d=" << d << endl;
-				}
-				FX.get_a_primitive_polynomial(m, d, verbose_level);
-				FX.rank_longinteger(m, rk);
-				//cout << d << " : " << rk << " : ";
-				cout << "\"" << rk << "\", // ";
-				FX.print_object(m, cout);
-				cout << endl;
-			}
-			if (f_v) {
-				cout << "algebra_global::search_for_primitive_polynomials "
-						"before FX.delete_object(m)" << endl;
-			}
-			FX.delete_object(m);
-			if (f_v) {
-				cout << "algebra_global::search_for_primitive_polynomials "
-						"after FX.delete_object(m)" << endl;
-			}
-		}
-	}
-	if (f_v) {
-		cout << "algebra_global::search_for_primitive_polynomials done" << endl;
-	}
-}
-
-
-void algebra_global::factor_cyclotomic(int n, int q, int d,
-	int *coeffs, int f_poly, std::string &poly, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int p, e, m, i, j, Q, a, b, c, cv, ccv, t, r1, r2, len;
-	int field_degree, subgroup_index;
-	finite_field FQ;
-	finite_field Fq;
-	number_theory_domain NT;
-
-	NT.factor_prime_power(q, p, e);
-	if (f_v) {
-		cout << "algebra_global::factor_cyclotomic q=" << q << " p=" << q
-			<< " e=" << e << " n=" << n << endl;
-	}
-	m = NT.order_mod_p(q, n);
-	if (f_v) {
-		cout << "algebra_global::factor_cyclotomic order mod q is m=" << m << endl;
-	}
-	field_degree = e * m;
-	Q = NT.i_power_j(p, field_degree);
-
-
-	if (f_poly) {
-		Fq.init_override_polynomial(q, poly, FALSE /* f_without_tables */, verbose_level - 1);
-	}
-	else {
-		Fq.finite_field_init(q, FALSE /* f_without_tables */, verbose_level - 2);
-	}
-	FQ.finite_field_init(Q, FALSE /* f_without_tables */, verbose_level - 2);
-
-	FQ.compute_subfields(verbose_level);
-
-	subgroup_index = (Q - 1) / (q - 1);
-
-	unipoly_domain FQX(&FQ);
-	unipoly_object quo, rem, h, Xma;
-
-	FQX.create_object_of_degree(h, d);
-
-	if (e > 1) {
-		cout << "algebra_global::factor_cyclotomic "
-				"embedding the coefficients into the larger field" << endl;
-		for (i = 0; i <= d; i++) {
-			c = coeffs[i];
-			if (c == 0) {
-				t = 0;
-			}
-			else {
-				a = Fq.log_alpha(c);
-				t = a * subgroup_index;
-				t = FQ.alpha_power(t);
-			}
-			FQX.s_i(h, i) = t;
-		}
-	}
-	else {
-		for (i = 0; i <= d; i++) {
-			FQX.s_i(h, i) = coeffs[i];
-		}
-	}
-
-	if (f_v) {
-		cout << "algebra_global::factor_cyclotomic "
-				"the polynomial is: ";
-		FQX.print_object(h, cout);
-		cout << endl;
-	}
-
-
-	FQX.create_object_of_degree(quo, d);
-	FQX.create_object_of_degree(rem, d);
-
-	int *roots;
-	int *roots2;
-	int nb_roots = 0;
-	int beta = (Q - 1) / n, Beta;
-
-	Beta = FQ.alpha_power(beta);
-
-	if (f_v) {
-		cout << "algebra_global::factor_cyclotomic "
-				"the primitive n-th root of unity we choose "
-				"is beta = alpha^" << beta << " = " << Beta << endl;
-	}
-
-	roots = NEW_int(n);
-	roots2 = NEW_int(n);
-	for (a = 0; a < n; a++) {
-		FQX.create_object_of_degree(Xma, 1);
-		t = FQ.power(Beta, a);
-		FQX.s_i(Xma, 0) = FQ.negate(t);
-		FQX.s_i(Xma, 1) = 1;
-		FQX.division_with_remainder(h, Xma, quo, rem, 0);
-		b = FQX.s_i(rem, 0);
-		if (b == 0) {
-			cout << "algebra_global::factor_cyclotomic "
-					"zero Beta^" << a << " log "
-				<< FQ.log_alpha(t) << endl;
-			roots[nb_roots++] = a;
-		}
-	}
-
-	exit(1);
-
-	longinteger_domain D;
-	longinteger_object C, N, A, B, G, U, V;
-	sorting Sorting;
-
-	for (c = 0; c < n; c++) {
-		if (NT.gcd_lint(c, n) != 1)
-			continue;
-		C.create(c, __FILE__, __LINE__);
-		N.create(n, __FILE__, __LINE__);
-		D.extended_gcd(C, N, G, U, V, FALSE);
-		cv = U.as_int();
-		ccv= c * cv;
-		cout << c << " : " << cv << " : ";
-		if (ccv < 0) {
-			if ((-ccv % n) != n - 1) {
-				cout << "algebra_global::factor_cyclotomic "
-						"error: c=" << c << " cv=" << cv << endl;
-				exit(1);
-			}
-		}
-		else if ((ccv % n) != 1) {
-			cout << "algebra_global::factor_cyclotomic "
-					"error: c=" << c << " cv=" << cv << endl;
-			exit(1);
-		}
-		for (i = 0; i < nb_roots; i++) {
-			roots2[i] = (cv * roots[i]) % n;
-			while (roots2[i] < 0) {
-				roots2[i] += n;
-			}
-		}
-		Sorting.int_vec_quicksort_increasingly(roots2, nb_roots);
-		t = 0;
-		for (i = 0; i < nb_roots; i++) {
-			r1 = roots2[i];
-			for (j = i + 1; j < i + nb_roots; j++) {
-				r2 = roots2[j % nb_roots];
-				if (r2 != r1 + 1) {
-					break;
-				}
-			}
-			len = j - i - 1;
-			t = MAXIMUM(t, len);
-		}
-		for (i = 0; i < nb_roots; i++) {
-			cout << roots2[i] << " ";
-		}
-		cout << " : " << t << endl;
-	}
-}
 
 void algebra_global::count_subprimitive(int Q_max, int H_max)
 {
@@ -823,7 +41,7 @@ void algebra_global::count_subprimitive(int Q_max, int H_max)
 			for (h = 2; h <= H_max; h++) {
 				//r1 = subprimitive(q, h);
 				formula_subprimitive(h, q, r3, g, 1);
-				phi_g = eulers_totient_function(g, 1);
+				phi_g = NT.eulers_totient_function(g, 1);
 				formula(h, q, r2, 1);
 				//cout << "The experiment gives " << r1 << endl;
 				cout << "g= " << g << endl;
@@ -865,46 +83,6 @@ void algebra_global::count_subprimitive(int Q_max, int H_max)
 }
 
 
-int algebra_global::eulers_totient_function(int n, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int nb_primes, *primes, *exponents;
-	int i, p, e;
-	longinteger_domain D;
-	longinteger_object N, R, A, B, C;
-
-	if (f_v) {
-		cout << "algebra_global::eulers_totient_function" << endl;
-	}
-	N.create(n, __FILE__, __LINE__);
-	D.factor(N, nb_primes, primes, exponents, verbose_level);
-	R.create(1, __FILE__, __LINE__);
-	for (i = 0; i < nb_primes; i++) {
-		p = primes[i];
-		e = exponents[i];
-		A.create(p, __FILE__, __LINE__);
-		D.power_int(A, e);
-		if (f_v) {
-			cout << "p^e=" << A << endl;
-		}
-		B.create(p, __FILE__, __LINE__);
-		D.power_int(B, e - 1);
-		if (f_v) {
-			cout << "p^{e-1}=" << A << endl;
-		}
-		B.negate();
-		D.add(A, B, C);
-		if (f_v) {
-			cout << "p^e-p^{e-1}=" << C << endl;
-		}
-		D.mult(R, C, A);
-		A.assign_to(R);
-	}
-	if (f_v) {
-		cout << "algebra_global::eulers_totient_function done" << endl;
-	}
-	return R.as_int();
-}
 
 void algebra_global::formula_subprimitive(int d, int q,
 		longinteger_object &Rdq, int &g, int verbose_level)
@@ -1704,604 +882,6 @@ void algebra_global::do_equivalence_class_of_fractions(int N, int verbose_level)
 
 
 
-/*
- * twocoef.cpp
- *
- *  Created on: Oct 22, 2020
- *      Author: alissabrown
- *
- *	Received a lot of help from Anton and the recursive function in the possibleC function is modeled after code found at
- *	https://www.geeksforgeeks.org/print-all-combinations-of-given-length/
- *
- *
- */
-
-void algebra_global::find_CRC_polynomials(finite_field *F,
-		int t, int da, int dc,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "algebra_global::find_CRC_polynomials t=" << t
-				<< " info=" << da << " check=" << dc << endl;
-	}
-
-	//int dc = 4; //dc is the number of parity bits & degree of g(x)
-	//int da = 4; //da is the degree of the information polynomial
-	int A[da + dc];
-		// we have da information bits, which we can think of
-		// as the coefficients of a polynomial.
-		// After multiplying by x^dc,
-		// A(x) has degree at most ad + dc - 1.
-	long int nb_sol = 0;
-
-
-
-	int C[dc + 1]; //Array C (what we divide by)
-		// C(x) has the leading coefficient of one included,
-		// hence we need one more array element
-
-	int i = 0;
-
-	for (i = 0; i <= dc; i++) {
-		C[i] = 0;
-	}
-
-
-	std::vector<std::vector<int>> Solutions;
-
-	if (F->q == 2) {
-		search_for_CRC_polynomials_binary(t, da, A, dc, C, 0,
-				nb_sol, Solutions, verbose_level - 1);
-	}
-	else {
-		search_for_CRC_polynomials(t, da, A, dc, C, 0, F,
-				nb_sol, Solutions, verbose_level - 1);
-	}
-
-	cout << "algebra_global::find_CRC_polynomials info=" << da
-			<< " check=" << dc << " nb_sol=" << nb_sol << endl;
-
-	for (i = 0; i < Solutions.size(); i++) {
-		cout << i << " : ";
-		for (int j = dc; j >= 0; j--) {
-			cout << Solutions[i][j];
-		}
-		cout << endl;
-	}
-	cout << "algebra_global::find_CRC_polynomials info=" << da
-			<< " check=" << dc << " nb_sol=" << nb_sol << endl;
-
-}
-
-void algebra_global::search_for_CRC_polynomials(int t,
-		int da, int *A, int dc, int *C,
-		int i, finite_field *F,
-		long int &nb_sol,
-		std::vector<std::vector<int> > &Solutions,
-		int verbose_level)
-{
-
-	if (i == dc + 1) {
-
-		int ret;
-
-		if (t >= 2) {
-			ret = test_all_two_bit_patterns(da, A, dc, C, F, verbose_level);
-			if (ret && t >= 3) {
-				ret = test_all_three_bit_patterns(da, A, dc, C, F, verbose_level);
-			}
-		}
-		else {
-			cout << "illegal value for t, t=" << t << endl;
-			exit(1);
-		}
-		if (ret) {
-			cout << "solution " << nb_sol << " is ";
-			for (int j = dc; j >= 0; j--) {
-				cout << C[j];
-			}
-			cout << endl;
-
-			vector<int> sol;
-
-			for (int j = 0; j <= dc; j++) {
-				sol.push_back(C[j]);
-			}
-			Solutions.push_back(sol);
-
-
-			nb_sol++;
-		}
-
-		return;
-	}
-
-	if (i == dc) {
-
-		// C(x) has a leading coefficient of one:
-		C[i] = 1;
-		search_for_CRC_polynomials(t, da, A, dc, C,
-				i + 1, F, nb_sol, Solutions, verbose_level);
-
-
-	}
-	else {
-		int c;
-
-		for (c = 0; c < F->q; c++) {
-
-			C[i] = c;
-
-			search_for_CRC_polynomials(t, da, A, dc, C,
-					i + 1, F, nb_sol, Solutions, verbose_level);
-		}
-	}
-}
-
-void algebra_global::search_for_CRC_polynomials_binary(int t,
-		int da, int *A, int dc, int *C, int i,
-		long int &nb_sol,
-		std::vector<std::vector<int> > &Solutions,
-		int verbose_level)
-{
-
-	if (i == dc + 1) {
-
-		int ret;
-
-		if (t >= 2) {
-			ret = test_all_two_bit_patterns_binary(da, A, dc, C, verbose_level);
-			if (ret && t >= 3) {
-				ret = test_all_three_bit_patterns_binary(da, A, dc, C, verbose_level);
-			}
-		}
-		else {
-			cout << "illegal value for t, t=" << t << endl;
-			exit(1);
-		}
-		if (ret) {
-			cout << "solution " << nb_sol << " is ";
-			for (int j = dc; j >= 0; j--) {
-				cout << C[j];
-			}
-			cout << endl;
-
-			vector<int> sol;
-
-			for (int j = 0; j <= dc; j++) {
-				sol.push_back(C[j]);
-			}
-			Solutions.push_back(sol);
-
-
-			nb_sol++;
-		}
-
-		return;
-	}
-
-	if (i == dc) {
-
-		C[i] = 1;
-		search_for_CRC_polynomials_binary(t, da, A, dc, C,
-				i + 1, nb_sol, Solutions, verbose_level);
-
-
-	}
-	else {
-		int c;
-
-		for (c = 0; c < 2; c++) {
-
-			C[i] = c;
-
-			search_for_CRC_polynomials_binary(t, da, A, dc, C,
-					i + 1, nb_sol, Solutions, verbose_level);
-		}
-	}
-}
-
-
-int algebra_global::test_all_two_bit_patterns(int da, int *A,
-		int dc, int *C,
-		finite_field *F,
-		int verbose_level)
-// returns true if division by C leaves a nonzero remainder for all two bit error patters
-{
-
-	//cout << "choosetwo" << endl;
-
-	int f_v = (verbose_level >= 1);
-
-	int i;
-	int j;
-	int k;
-	int ai, aj;
-	int ret;
-	int B[da + dc];
-
-	if (f_v) {
-		cout << "testing polynomial: ";
-		for (k = dc; k >= 0; k--) {
-			cout << C[k];
-		}
-		cout << endl;
-	}
-
-	for (i = 0; i < da; i++) {
-		A[i] = 0;
-	}
-
-	for (i = 0; i < da; i++) {
-
-		for (ai = 1; ai < F->q; ai++) {
-
-			A[i] = ai;
-
-			for (j = i + 1; j < da; j++) {
-
-				for (aj = 1; aj < F->q; aj++) {
-
-					A[j] = aj;
-
-					for (k = 0; k < dc; k++) {
-						B[k] = 0;
-					}
-					for (k = 0; k < da; k++) {
-						B[dc + k] = A[k];
-					}
-
-					if (f_v) {
-						cout << "testing error pattern: ";
-						for (k = dc + da - 1; k >= 0; k--) {
-							cout << B[k];
-						}
-					}
-
-
-
-					ret = remainder_is_nonzero (da, B, dc, C, F);
-
-					if (f_v) {
-						cout << " : ";
-						for (k = dc - 1; k >= 0; k--) {
-							cout << B[k];
-						}
-						cout << endl;
-					}
-
-					if (!ret) {
-						return false;
-					}
-
-				}
-				A[j] = 0;
-			}
-
-		}
-		A[i] = 0;
-	}
-	return true;
-}
-
-int algebra_global::test_all_three_bit_patterns(int da, int *A,
-		int dc, int *C,
-		finite_field *F,
-		int verbose_level)
-// returns true if division by C leaves a nonzero remainder for all two bit error patters
-{
-
-	//cout << "choosetwo" << endl;
-
-	int f_v = (verbose_level >= 1);
-
-	int i1, i2, i3;
-	int k;
-	int a1, a2, a3;
-	int ret;
-	int B[da + dc];
-
-	if (f_v) {
-		cout << "testing polynomial: ";
-		for (k = dc; k >= 0; k--) {
-			cout << C[k];
-		}
-		cout << endl;
-	}
-
-	for (int h = 0; h < da; h++) {
-		A[h] = 0;
-	}
-
-	for (i1 = 0; i1 < da; i1++) {
-
-		for (a1 = 1; a1 < F->q; a1++) {
-
-			A[i1] = a1;
-
-			for (i2 = i1 + 1; i2 < da; i2++) {
-
-				for (a2 = 1; a2 < F->q; a2++) {
-
-					A[i2] = a2;
-
-					for (i3 = i2 + 1; i3 < da; i3++) {
-
-						for (a3 = 1; a3 < F->q; a3++) {
-
-							A[i3] = a3;
-
-							for (int h = 0; h < dc; h++) {
-								B[h] = 0;
-							}
-							for (int h = 0; h < da; h++) {
-								B[dc + h] = A[h];
-							}
-
-							if (f_v) {
-								cout << "testing error pattern: ";
-								for (int h = dc + da - 1; h >= 0; h--) {
-									cout << B[h];
-								}
-							}
-
-
-
-							ret = remainder_is_nonzero (da, B, dc, C, F);
-
-							if (f_v) {
-								cout << " : ";
-								for (int h = dc - 1; h >= 0; h--) {
-									cout << B[h];
-								}
-								cout << endl;
-							}
-
-							if (!ret) {
-								return false;
-							}
-
-						}
-						A[i3] = 0;
-					}
-				}
-				A[i2] = 0;
-			}
-		}
-		A[i1] = 0;
-	}
-	return true;
-}
-
-int algebra_global::test_all_two_bit_patterns_binary(int da, int *A,
-		int dc, int *C,
-		int verbose_level)
-// returns true if division by C leaves a nonzero remainder for all two bit error patters
-{
-
-	//cout << "choosetwo" << endl;
-
-	int f_v = (verbose_level >= 1);
-
-	int i;
-	int j;
-	int k;
-	int ret;
-	int B[da + dc];
-
-	if (f_v) {
-		cout << "testing polynomial: ";
-		for (k = dc; k >= 0; k--) {
-			cout << C[k];
-		}
-		cout << endl;
-	}
-
-	for (i = 0; i < da; i++) {
-		A[i] = 0;
-	}
-
-	for (i = 0; i < da; i++) {
-
-
-		A[i] = 1;
-
-		for (j = i + 1; j < da; j++) {
-
-
-			A[j] = 1;
-
-			for (k = 0; k < dc; k++) {
-				B[k] = 0;
-			}
-			for (k = 0; k < da; k++) {
-				B[dc + k] = A[k];
-			}
-
-			if (f_v) {
-				cout << "testing error pattern: ";
-				for (k = dc + da - 1; k >= 0; k--) {
-					cout << B[k];
-				}
-			}
-
-
-
-			ret = remainder_is_nonzero_binary(da, B, dc, C);
-
-			if (f_v) {
-				cout << " : ";
-				for (k = dc - 1; k >= 0; k--) {
-					cout << B[k];
-				}
-				cout << endl;
-			}
-
-			if (!ret) {
-				return false;
-			}
-
-			A[j] = 0;
-		}
-
-		A[i] = 0;
-	}
-	return true;
-}
-
-int algebra_global::test_all_three_bit_patterns_binary(int da, int *A,
-		int dc, int *C,
-		int verbose_level)
-// returns true if division by C leaves a nonzero remainder for all two bit error patters
-{
-
-	//cout << "choosetwo" << endl;
-
-	int f_v = (verbose_level >= 1);
-
-	int i1, i2, i3;
-	int k;
-	int ret;
-	int B[da + dc];
-
-	if (f_v) {
-		cout << "testing polynomial: ";
-		for (k = dc; k >= 0; k--) {
-			cout << C[k];
-		}
-		cout << endl;
-	}
-
-	for (int h = 0; h < da; h++) {
-		A[h] = 0;
-	}
-
-	for (i1 = 0; i1 < da; i1++) {
-
-		A[i1] = 1;
-
-		for (i2 = i1 + 1; i2 < da; i2++) {
-
-
-			A[i2] = 1;
-
-			for (i3 = i2 + 1; i3 < da; i3++) {
-
-
-				A[i3] = 1;
-
-				for (int h = 0; h < dc; h++) {
-					B[h] = 0;
-				}
-				for (int h = 0; h < da; h++) {
-					B[dc + h] = A[h];
-				}
-
-				if (f_v) {
-					cout << "testing error pattern: ";
-					for (int h = dc + da - 1; h >= 0; h--) {
-						cout << B[h];
-					}
-				}
-
-
-
-				ret = remainder_is_nonzero_binary(da, B, dc, C);
-
-				if (f_v) {
-					cout << " : ";
-					for (int h = dc - 1; h >= 0; h--) {
-						cout << B[h];
-					}
-					cout << endl;
-				}
-
-				if (!ret) {
-					return false;
-				}
-
-				A[i3] = 0;
-			}
-			A[i2] = 0;
-		}
-
-		A[i1] = 0;
-	}
-	return true;
-}
-
-
-int algebra_global::remainder_is_nonzero(int da, int *A,
-		int db, int *B, finite_field *F)
-// returns true if the remainder of A after division by B is nonzero
-{
-
-	int i, j, k, a, mav;
-
-	for (i = da + db - 1; i >= db; i--) {
-
-		a = A[i];
-
-		if (a) {
-
-			mav = F->negate(F->inverse(a));
-
-			for (j = db, k = i; j >= 0; j--, k--) {
-
-				//A[k] = (A[k] + B[j]) % 2;
-				A[k] = F->add(A[k], F->mult(mav, B[j]));
-					//A[k] = subtraction(A[k], B[j], p);
-					//A[k]=(A[k]+2-B[j])%2;
-			}
-		}
-	}
-
-
-	for (int k = db - 1; k >= 0; k--) {
-		if (A[k]) {
-			return true;
-		}
-	}
-	return false;
-}
-
-
-int algebra_global::remainder_is_nonzero_binary(int da, int *A,
-		int db, int *B)
-// returns true if the remainder of A after division by B is nonzero
-{
-
-	int i, j, k, a;
-
-	for (i = da + db - 1; i >= db; i--) {
-
-		a = A[i];
-
-		if (a) {
-
-			//mav = F->negate(F->inverse(a));
-
-			for (j = db, k = i; j >= 0; j--, k--) {
-
-				A[k] = (A[k] + B[j]) % 2;
-				//A[k] = F->add(A[k], F->mult(mav, B[j]));
-					//A[k] = subtraction(A[k], B[j], p);
-					//A[k]=(A[k]+2-B[j])%2;
-			}
-		}
-	}
-
-
-	for (int k = db - 1; k >= 0; k--) {
-		if (A[k]) {
-			return true;
-		}
-	}
-	return false;
-}
-
 
 
 #if 0
@@ -2460,6 +1040,1327 @@ void algebra_global::power_mod_n(int a, int n, int verbose_level)
 		cout << "algebra_global::power_mod_n done" << endl;
 	}
 }
+
+void algebra_global::do_trace(finite_field *F, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int s, t;
+	int *T = NULL;
+	int *T0 = NULL;
+	int *T1 = NULL;
+	int nb_T0 = 0;
+	int nb_T1 = 0;
+
+
+	if (f_v) {
+		cout << "algebra_global::do_trace" << endl;
+	}
+
+
+	T = NEW_int(F->q);
+	T0 = NEW_int(F->q);
+	T1 = NEW_int(F->q);
+
+	for (s = 0; s < F->q; s++) {
+
+#if 0
+		int s2, /*s3,*/ s4, s8, s2p1, s2p1t7, s2p1t6, s2p1t4, f;
+
+		s2 = F->mult(s, s);
+		s2p1 = F->add(s2, 1);
+		s2p1t7 = F->power(s2p1, 7);
+		s2p1t6 = F->power(s2p1, 6);
+		s2p1t4 = F->power(s2p1, 4);
+		//s3 = F->power(s, 3);
+		s4 = F->power(s, 4);
+		s8 = F->power(s, 8);
+
+		f = F->add4(F->mult(s, s2p1t7), F->mult(s2, s2p1t6), F->mult(s4, s2p1t4), s8);
+
+		//f = F->mult(top, F->inverse(bot));
+		t = F->absolute_trace(f);
+#endif
+
+		t = F->absolute_trace(s);
+		T[s] = t;
+		if (t == 1) {
+			T1[nb_T1++] = s;
+		}
+		else {
+			T0[nb_T0++] = s;
+		}
+	}
+
+
+
+	cout << "Trace 0:" << endl;
+	Orbiter->Int_vec.print_fully(cout, T0, nb_T0);
+	cout << endl;
+
+	cout << "Trace 1:" << endl;
+	Orbiter->Int_vec.print_fully(cout, T1, nb_T1);
+	cout << endl;
+
+	char str[1000];
+	string fname_csv;
+	file_io Fio;
+
+	snprintf(str, 1000, "F_q%d_trace.csv", F->q);
+	fname_csv.assign(str);
+	Fio.int_matrix_write_csv(fname_csv, T, 1, F->q);
+	cout << "written file " << fname_csv << " of size "
+			<< Fio.file_size(fname_csv) << endl;
+
+
+	snprintf(str, 1000, "F_q%d_trace_0.csv", F->q);
+	fname_csv.assign(str);
+	Fio.int_vec_write_csv(T0, nb_T0,
+			fname_csv, "Trace_0");
+	cout << "written file " << fname_csv << " of size "
+			<< Fio.file_size(fname_csv) << endl;
+
+	snprintf(str, 1000, "F_q%d_trace_1.csv", F->q);
+	fname_csv.assign(str);
+	Fio.int_vec_write_csv(T1, nb_T1,
+			fname_csv, "Trace_1");
+	cout << "written file " << fname_csv << " of size "
+			<< Fio.file_size(fname_csv) << endl;
+
+	FREE_int(T);
+	FREE_int(T0);
+	FREE_int(T1);
+
+	if (f_v) {
+		cout << "algebra_global::do_trace done" << endl;
+	}
+}
+
+void algebra_global::do_norm(finite_field *F, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int s, t;
+	int *T0 = NULL;
+	int *T1 = NULL;
+	int nb_T0 = 0;
+	int nb_T1 = 0;
+
+	if (f_v) {
+		cout << "algebra_global::do_norm" << endl;
+	}
+
+	T0 = NEW_int(F->q);
+	T1 = NEW_int(F->q);
+
+	for (s = 0; s < F->q; s++) {
+		t = F->absolute_norm(s);
+		if (t == 1) {
+			T1[nb_T1++] = s;
+		}
+		else {
+			T0[nb_T0++] = s;
+		}
+	}
+
+	cout << "Norm 0:" << endl;
+	Orbiter->Int_vec.print_fully(cout, T0, nb_T0);
+	cout << endl;
+
+	cout << "Norm 1:" << endl;
+	Orbiter->Int_vec.print_fully(cout, T1, nb_T1);
+	cout << endl;
+
+
+	char str[1000];
+	string fname_csv;
+	file_io Fio;
+
+	snprintf(str, 1000, "F_q%d_norm_0.csv", F->q);
+	fname_csv.assign(str);
+	Fio.int_vec_write_csv(T0, nb_T0,
+			fname_csv, "Norm_0");
+	cout << "written file " << fname_csv << " of size " << Fio.file_size(fname_csv) << endl;
+
+	snprintf(str, 1000, "F_q%d_norm_1.csv", F->q);
+	fname_csv.assign(str);
+	Fio.int_vec_write_csv(T1, nb_T1,
+			fname_csv, "Norm_1");
+	cout << "written file " << fname_csv << " of size " << Fio.file_size(fname_csv) << endl;
+
+
+	if (f_v) {
+		cout << "algebra_global::do_norm done" << endl;
+	}
+}
+
+void algebra_global::do_cheat_sheet_GF(finite_field *F, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::do_cheat_sheet_GF q=" << F->q << endl;
+	}
+
+	char fname[1000];
+	char title[1000];
+	char author[1000];
+
+	snprintf(fname, 1000, "%s.tex", F->label.c_str());
+	snprintf(title, 1000, "Cheat Sheet $%s$", F->label_tex.c_str());
+	//sprintf(author, "");
+	author[0] = 0;
+
+
+
+	F->addition_table_save_csv(verbose_level);
+
+	F->multiplication_table_save_csv(verbose_level);
+
+	F->addition_table_reordered_save_csv(verbose_level);
+
+	F->multiplication_table_reordered_save_csv(verbose_level);
+
+
+	{
+		ofstream ost(fname);
+
+
+		latex_interface L;
+
+
+		L.head(ost, FALSE /* f_book*/, TRUE /* f_title */,
+			title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
+				TRUE /* f_12pt */,
+				TRUE /* f_enlarged_page */,
+				TRUE /* f_pagenumbers */,
+				NULL /* extra_praeamble */);
+
+
+		F->cheat_sheet(ost, verbose_level);
+
+		F->cheat_sheet_main_table(ost, verbose_level);
+
+		F->cheat_sheet_addition_table(ost, verbose_level);
+
+		F->cheat_sheet_multiplication_table(ost, verbose_level);
+
+		F->cheat_sheet_power_table(ost, TRUE, verbose_level);
+
+		F->cheat_sheet_power_table(ost, FALSE, verbose_level);
+
+
+
+
+
+		L.foot(ost);
+	}
+
+	file_io Fio;
+
+	cout << "written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+	if (f_v) {
+		cout << "algebra_global::do_cheat_sheet_GF q=" << F->q << " done" << endl;
+	}
+}
+
+
+
+
+
+
+void algebra_global::gl_random_matrix(finite_field *F, int k, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int *M;
+	int *M2;
+	unipoly_object char_poly;
+
+	if (f_v) {
+		cout << "algebra_global::gl_random_matrix" << endl;
+		}
+	//F.finite_field_init(q, 0 /*verbose_level*/);
+	M = NEW_int(k * k);
+	M2 = NEW_int(k * k);
+
+	F->Linear_algebra->random_invertible_matrix(M, k, verbose_level - 2);
+
+	cout << "Random invertible matrix:" << endl;
+	Orbiter->Int_vec.matrix_print(M, k, k);
+
+
+	{
+		unipoly_domain U(F);
+
+
+
+		U.create_object_by_rank(char_poly, 0, __FILE__, __LINE__, verbose_level);
+
+		U.characteristic_polynomial(M, k, char_poly, verbose_level - 2);
+
+		cout << "The characteristic polynomial is ";
+		U.print_object(char_poly, cout);
+		cout << endl;
+
+		U.substitute_matrix_in_polynomial(char_poly, M, M2, k, verbose_level);
+		cout << "After substitution, the matrix is " << endl;
+		Orbiter->Int_vec.matrix_print(M2, k, k);
+
+		U.delete_object(char_poly);
+
+	}
+	FREE_int(M);
+	FREE_int(M2);
+
+}
+
+
+
+
+void algebra_global::apply_Walsh_Hadamard_transform(finite_field *F,
+		std::string &fname_csv_in, int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::apply_Walsh_Hadamard_transform" << endl;
+	}
+
+
+	boolean_function_domain *BF;
+
+	BF = NEW_OBJECT(boolean_function_domain);
+
+	BF->init(n, verbose_level);
+
+
+	file_io Fio;
+	int *M;
+	int m, nb_cols;
+	int len;
+	string fname_csv_out;
+	string_tools ST;
+
+	fname_csv_out.assign(fname_csv_in);
+	ST.chop_off_extension(fname_csv_out);
+	fname_csv_out.append("_transformed.csv");
+
+	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
+	len = m * nb_cols;
+	if (len != BF->Q) {
+		cout << "algebra_global::apply_Walsh_Hadamard_transform len != BF->Q" << endl;
+		exit(1);
+	}
+	BF->raise(M, BF->F);
+
+	BF->apply_Walsh_transform(BF->F, BF->T);
+
+	cout << " : ";
+	Orbiter->Int_vec.print(cout, BF->T, BF->Q);
+	cout << endl;
+
+	if (EVEN(n)) {
+		if (BF->is_bent(BF->T)) {
+			cout << "is bent" << endl;
+		}
+		else {
+			cout << "is not bent" << endl;
+		}
+	}
+	else {
+		if (BF->is_near_bent(BF->T)) {
+			cout << "is near bent" << endl;
+		}
+		else {
+			cout << "is not near bent" << endl;
+		}
+
+	}
+	Fio.int_matrix_write_csv(fname_csv_out, BF->T, m, nb_cols);
+	cout << "written file " << fname_csv_out << " of size "
+			<< Fio.file_size(fname_csv_out) << endl;
+
+	FREE_int(M);
+	FREE_OBJECT(BF);
+
+	if (f_v) {
+		cout << "algebra_global::apply_Walsh_Hadamard_transform done" << endl;
+	}
+}
+
+void algebra_global::algebraic_normal_form(finite_field *F,
+		std::string &fname_csv_in, int n, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::algebraic_normal_form" << endl;
+	}
+
+
+	boolean_function_domain *BF;
+
+	BF = NEW_OBJECT(boolean_function_domain);
+
+	if (f_v) {
+		cout << "algebra_global::algebraic_normal_form before BF->init" << endl;
+	}
+	BF->init(n, verbose_level);
+	if (f_v) {
+		cout << "algebra_global::algebraic_normal_form after BF->init" << endl;
+	}
+
+
+	file_io Fio;
+	int *M;
+	int m, nb_cols;
+	int len;
+	string fname_csv_out;
+	string_tools ST;
+
+	fname_csv_out.assign(fname_csv_in);
+	ST.chop_off_extension(fname_csv_out);
+	fname_csv_out.append("_alg_normal_form.csv");
+
+	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
+	len = m * nb_cols;
+	if (len != BF->Q) {
+		cout << "algebra_global::algebraic_normal_form len != BF->Q" << endl;
+		exit(1);
+	}
+
+	int *coeff;
+	int nb_coeff;
+
+	nb_coeff = BF->Poly[n].get_nb_monomials();
+
+	coeff = NEW_int(nb_coeff);
+
+	if (f_v) {
+		cout << "algebra_global::algebraic_normal_form before BF->compute_polynomial_representation" << endl;
+	}
+	BF->compute_polynomial_representation(M, coeff, verbose_level);
+	if (f_v) {
+		cout << "algebra_global::algebraic_normal_form after BF->compute_polynomial_representation" << endl;
+	}
+
+	cout << "algebraic normal form:" << endl;
+	BF->Poly[n].print_equation(cout, coeff);
+	cout << endl;
+
+	cout << "algebraic normal form in tex:" << endl;
+	BF->Poly[n].print_equation_tex(cout, coeff);
+	cout << endl;
+
+	cout << "algebraic normal form in numerical form:" << endl;
+	BF->Poly[n].print_equation_numerical(cout, coeff);
+	cout << endl;
+
+
+
+	Fio.int_matrix_write_csv(fname_csv_out, coeff, 1, nb_coeff);
+	cout << "written file " << fname_csv_out << " of size "
+			<< Fio.file_size(fname_csv_out) << endl;
+
+	FREE_int(M);
+	FREE_OBJECT(BF);
+
+	if (f_v) {
+		cout << "algebra_global::algebraic_normal_form done" << endl;
+	}
+}
+
+void algebra_global::apply_trace_function(finite_field *F,
+		std::string &fname_csv_in, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::apply_trace_function" << endl;
+	}
+
+
+	file_io Fio;
+	int *M;
+	int m, nb_cols;
+	int len, i;
+	string fname_csv_out;
+	string_tools ST;
+
+	fname_csv_out.assign(fname_csv_in);
+	ST.chop_off_extension(fname_csv_out);
+	fname_csv_out.append("_trace.csv");
+
+	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
+	len = m * nb_cols;
+	for (i = 0; i < len; i++) {
+		M[i] = F->absolute_trace(M[i]);
+	}
+	Fio.int_matrix_write_csv(fname_csv_out, M, m, nb_cols);
+
+	FREE_int(M);
+
+	if (f_v) {
+		cout << "algebra_global::apply_trace_function done" << endl;
+	}
+}
+
+void algebra_global::apply_power_function(finite_field *F,
+		std::string &fname_csv_in, long int d, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::apply_power_function" << endl;
+	}
+
+
+	file_io Fio;
+	int *M;
+	int m, nb_cols;
+	int len, i;
+	string fname_csv_out;
+	string_tools ST;
+
+	fname_csv_out.assign(fname_csv_in);
+	ST.chop_off_extension(fname_csv_out);
+
+	char str[1000];
+
+	sprintf(str, "_power_%ld.csv", d);
+	fname_csv_out.append(str);
+
+	Fio.int_matrix_read_csv(fname_csv_in, M, m, nb_cols, verbose_level);
+	len = m * nb_cols;
+	for (i = 0; i < len; i++) {
+		M[i] = F->power(M[i], d);
+	}
+	Fio.int_matrix_write_csv(fname_csv_out, M, m, nb_cols);
+	cout << "written file " << fname_csv_out << " of size "
+			<< Fio.file_size(fname_csv_out) << endl;
+
+	FREE_int(M);
+
+	if (f_v) {
+		cout << "algebra_global::apply_power_function done" << endl;
+	}
+}
+
+void algebra_global::identity_function(finite_field *F,
+		std::string &fname_csv_out, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "algebra_global::identity_function" << endl;
+	}
+
+
+	file_io Fio;
+	int *M;
+	int i;
+
+	M = NEW_int(F->q);
+	for (i = 0; i < F->q; i++) {
+		M[i] = i;
+	}
+	Fio.int_matrix_write_csv(fname_csv_out, M, 1, F->q);
+	cout << "written file " << fname_csv_out << " of size "
+			<< Fio.file_size(fname_csv_out) << endl;
+
+	FREE_int(M);
+
+	if (f_v) {
+		cout << "algebra_global::identity_function done" << endl;
+	}
+}
+
+
+void algebra_global::Walsh_matrix(finite_field *F, int n, int *&W, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int Q;
+	int *v;
+	int *w;
+	int *W01;
+	int i, j, a;
+	geometry_global Gg;
+
+	if (f_v) {
+		cout << "algebra_global::Walsh_matrix" << endl;
+	}
+	v = NEW_int(n);
+	w = NEW_int(n);
+	Q = 1 << n;
+	W = NEW_int(Q * Q);
+	W01 = NEW_int(Q * Q);
+	for (i = 0; i < Q; i++) {
+		Gg.AG_element_unrank(2, v, 1, n, i);
+		for (j = 0; j < Q; j++) {
+			Gg.AG_element_unrank(2, w, 1, n, j);
+			a = F->Linear_algebra->dot_product(n, v, w);
+			if (a) {
+				W[i * Q + j] = -1;
+				W01[i * Q + j] = 1;
+			}
+			else {
+				W[i * Q + j] = 1;
+				W01[i * Q + j] = 0;
+			}
+		}
+	}
+	char str[1000];
+	string fname_csv;
+	file_io Fio;
+
+	snprintf(str, 1000, "Walsh_pm_%d.csv", n);
+	fname_csv.assign(str);
+	Fio.int_matrix_write_csv(fname_csv, W, Q, Q);
+	cout << "written file " << fname_csv << " of size "
+			<< Fio.file_size(fname_csv) << endl;
+
+
+	snprintf(str, 1000, "Walsh_01_%d.csv", n);
+	fname_csv.assign(str);
+	Fio.int_matrix_write_csv(fname_csv, W01, Q, Q);
+	cout << "written file " << fname_csv << " of size "
+			<< Fio.file_size(fname_csv) << endl;
+
+
+	FREE_int(v);
+	FREE_int(w);
+	FREE_int(W01);
+	if (f_v) {
+		cout << "algebra_global::Walsh_matrix done" << endl;
+	}
+}
+
+void algebra_global::Vandermonde_matrix(finite_field *F, int *&W, int *&W_inv, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int q;
+	int i, j, a;
+	geometry_global Gg;
+
+	if (f_v) {
+		cout << "algebra_global::Vandermonde_matrix" << endl;
+	}
+	q = F->q;
+	W = NEW_int(q * q);
+	W_inv = NEW_int(q * q);
+	for (i = 0; i < q; i++) {
+		a = 1;
+		W[i * q + 0] = 1;
+		for (j = 1; j < q; j++) {
+			a = F->mult(i, a);
+			W[i * q + j] = a;
+		}
+	}
+
+	if (f_v) {
+		cout << "algebra_global::Vandermonde_matrix before invert_matrix" << endl;
+	}
+	F->Linear_algebra->invert_matrix(W, W_inv, q, verbose_level);
+	if (f_v) {
+		cout << "algebra_global::Vandermonde_matrix after invert_matrix" << endl;
+	}
+
+	char str[1000];
+	string fname_csv;
+	file_io Fio;
+
+	snprintf(str, 1000, "Vandermonde_%d.csv", q);
+	fname_csv.assign(str);
+	Fio.int_matrix_write_csv(fname_csv, W, q, q);
+	cout << "written file " << fname_csv << " of size "
+			<< Fio.file_size(fname_csv) << endl;
+
+
+	snprintf(str, 1000, "Vandermonde_inv_%d.csv", q);
+	fname_csv.assign(str);
+	Fio.int_matrix_write_csv(fname_csv, W_inv, q, q);
+	cout << "written file " << fname_csv << " of size "
+			<< Fio.file_size(fname_csv) << endl;
+
+
+	if (f_v) {
+		cout << "algebra_global::Vandermonde_matrix done" << endl;
+	}
+}
+
+void algebra_global::search_APN(finite_field *F, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int q;
+	int *f;
+	int delta_min, nb_times;
+
+	if (f_v) {
+		cout << "algebra_global::search_APN" << endl;
+	}
+	q = F->q;
+	delta_min = INT_MAX;
+	nb_times = 0;
+	f = NEW_int(q);
+
+	std::vector<std::vector<int> > Solutions;
+
+	search_APN_recursion(F,
+			f,
+			0 /* depth */,
+			delta_min, nb_times, Solutions,
+			verbose_level);
+	cout << "nb_times = " << nb_times << endl;
+	FREE_int(f);
+
+	string fname;
+	char str[1000];
+	file_io Fio;
+
+	sprintf(str, "APN_functions_q%d.csv", F->q);
+
+	fname.assign(str);
+	Fio.vector_matrix_write_csv(fname, Solutions);
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+
+	if (f_v) {
+		cout << "algebra_global::search_APN done" << endl;
+	}
+}
+
+void algebra_global::search_APN_recursion(finite_field *F,
+		int *f, int depth, int &delta_min, int &nb_times,
+		std::vector<std::vector<int> > &Solutions, int verbose_level)
+{
+	if (depth == F->q) {
+		int delta;
+
+		delta = non_linearity(F, f, 0 /* verbose_level */);
+		if (delta < delta_min) {
+			delta_min = delta;
+			nb_times = 1;
+
+			Solutions.clear();
+
+			vector<int> S;
+			int i;
+
+			for (i = 0; i < F->q; i++) {
+				S.push_back(f[i]);
+			}
+			Solutions.push_back(S);
+
+			Orbiter->Int_vec.print(cout, f, F->q);
+			cout << " delta = " << delta << " nb_times=" << nb_times << endl;
+		}
+		else if (delta == delta_min) {
+			nb_times++;
+			int f_do_it;
+
+			if (nb_times > 100) {
+				if ((nb_times % 1000) == 0) {
+					f_do_it = TRUE;
+				}
+				else {
+					f_do_it = FALSE;
+				}
+			}
+			else {
+				f_do_it = TRUE;
+			}
+
+			vector<int> S;
+			int i;
+
+			for (i = 0; i < F->q; i++) {
+				S.push_back(f[i]);
+			}
+			Solutions.push_back(S);
+
+			if (f_do_it) {
+				Orbiter->Int_vec.print(cout, f, F->q);
+				cout << " delta = " << delta << " nb_times=" << nb_times << endl;
+			}
+		}
+		return;
+	}
+
+	int a;
+
+	for (a = 0; a < F->q; a++) {
+		f[depth]= a;
+		search_APN_recursion(F,
+				f, depth + 1, delta_min, nb_times, Solutions, verbose_level);
+	}
+}
+
+int algebra_global::non_linearity(finite_field *F, int *f, int verbose_level)
+// f[q]
+{
+	int f_v = (verbose_level >= 1);
+	int q;
+	int a, av, x, b, fx, fxpa, mfx, dy, delta;
+	int *nb_times_ab;
+
+	if (f_v) {
+		cout << "algebra_global::non_linearity" << endl;
+	}
+	q = F->q;
+	nb_times_ab = NEW_int(q * q);
+	Orbiter->Int_vec.zero(nb_times_ab, q * q);
+	for (x = 0; x < q; x++) {
+		fx = f[x];
+		mfx = F->negate(fx);
+		for (a = 1; a < q; a++) {
+			fxpa = f[F->add(x, a)];
+			av = F->inverse(a);
+			dy = F->add(fxpa, mfx);
+			b = F->mult(dy, av);
+			nb_times_ab[a * q + b]++;
+		}
+	}
+	delta = 0;
+	for (a = 1; a < q; a++) {
+		for (b = 0; b < q; b++) {
+			delta = MAXIMUM(delta, nb_times_ab[a * q + b]);
+		}
+	}
+	FREE_int(nb_times_ab);
+	return delta;
+}
+
+void algebra_global::O4_isomorphism_4to2(finite_field *F,
+		int *At, int *As, int &f_switch, int *B,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int a, b, c, d, e, f, g, h;
+	int ev, fv;
+	int P[4], Q[4], R[4], S[4];
+	int Rx, Ry, Sx, Sy;
+	int /*b11,*/ b12, b13, b14;
+	int /*b21,*/ b22, b23, b24;
+	int /*b31,*/ b32, b33, b34;
+	int /*b41,*/ b42, b43, b44;
+
+	if (f_v) {
+		cout << "algebra_global::O4_isomorphism_4to2" << endl;
+	}
+	//b11 = B[0 * 4 + 0];
+	b12 = B[0 * 4 + 1];
+	b13 = B[0 * 4 + 2];
+	b14 = B[0 * 4 + 3];
+	//b21 = B[1 * 4 + 0];
+	b22 = B[1 * 4 + 1];
+	b23 = B[1 * 4 + 2];
+	b24 = B[1 * 4 + 3];
+	//b31 = B[2 * 4 + 0];
+	b32 = B[2 * 4 + 1];
+	b33 = B[2 * 4 + 2];
+	b34 = B[2 * 4 + 3];
+	//b41 = B[3 * 4 + 0];
+	b42 = B[3 * 4 + 1];
+	b43 = B[3 * 4 + 2];
+	b44 = B[3 * 4 + 3];
+	O4_grid_coordinates_unrank(F, P[0], P[1], P[2], P[3],
+			0, 0, verbose_level);
+	if (f_vv) {
+		cout << "grid point (0,0) = ";
+		Orbiter->Int_vec.print(cout, P, 4);
+		cout << endl;
+	}
+	O4_grid_coordinates_unrank(F, Q[0], Q[1], Q[2], Q[3],
+			1, 0, verbose_level);
+	if (f_vv) {
+		cout << "grid point (1,0) = ";
+		Orbiter->Int_vec.print(cout, Q, 4);
+		cout << endl;
+	}
+	F->Linear_algebra->mult_vector_from_the_left(P, B, R, 4, 4);
+	F->Linear_algebra->mult_vector_from_the_left(Q, B, S, 4, 4);
+	O4_grid_coordinates_rank(F, R[0], R[1], R[2], R[3],
+			Rx, Ry, verbose_level);
+	O4_grid_coordinates_rank(F, S[0], S[1], S[2], S[3],
+			Sx, Sy, verbose_level);
+	if (f_vv) {
+		cout << "Rx=" << Rx << " Ry=" << Ry
+				<< " Sx=" << Sx << " Sy=" << Sy << endl;
+	}
+	if (Ry == Sy) {
+		f_switch = FALSE;
+	}
+	else {
+		f_switch = TRUE;
+	}
+	if (f_vv) {
+		cout << "f_switch=" << f_switch << endl;
+	}
+	if (f_switch) {
+		if (b22 == 0 && b24 == 0 && b32 == 0 && b34 == 0) {
+			a = 0;
+			b = 1;
+			f = b12;
+			h = b14;
+			e = b42;
+			g = b44;
+			if (e == 0) {
+				fv = F->inverse(f);
+				c = F->mult(fv, b33);
+				d = F->negate(F->mult(fv, b13));
+			}
+			else {
+				ev = F->inverse(e);
+				c = F->negate(F->mult(ev, b23));
+				d = F->negate(F->mult(ev, b43));
+			}
+		}
+		else {
+			a = 1;
+			e = b22;
+			g = b24;
+			f = F->negate(b32);
+			h = F->negate(b34);
+			if (e == 0) {
+				fv = F->inverse(f);
+				b = F->mult(fv, b12);
+				c = F->mult(fv, b33);
+				d = F->negate(F->mult(fv, b13));
+			}
+			else {
+				ev = F->inverse(e);
+				b = F->mult(ev, b42);
+				c = F->negate(F->mult(ev, b23));
+				d = F->negate(F->mult(ev, b43));
+			}
+		}
+	}
+	else {
+		// no switch
+		if (b22 == 0 && b24 == 0 && b42 == 0 && b44 == 0) {
+			a = 0;
+			b = 1;
+			f = b12;
+			h = b14;
+			e = F->negate(b32);
+			g = F->negate(b34);
+			if (e == 0) {
+				fv = F->inverse(f);
+				c = F->negate(F->mult(fv, b43));
+				d = F->negate(F->mult(fv, b13));
+			}
+			else {
+				ev = F->inverse(e);
+				c = F->negate(F->mult(ev, b23));
+				d = F->mult(ev, b33);
+			}
+		}
+		else {
+			a = 1;
+			e = b22;
+			g = b24;
+			f = b42;
+			h = b44;
+			if (e == 0) {
+				fv = F->inverse(f);
+				b = F->mult(fv, b12);
+				c = F->negate(F->mult(fv, b43));
+				d = F->negate(F->mult(fv, b13));
+			}
+			else {
+				ev = F->inverse(e);
+				b = F->negate(F->mult(ev, b32));
+				c = F->negate(F->mult(ev, b23));
+				d = F->mult(ev, b33);
+			}
+		}
+	}
+	if (f_vv) {
+		cout << "a=" << a << " b=" << b << " c=" << c << " d=" << d << endl;
+		cout << "e=" << e << " f=" << f << " g=" << g << " h=" << h << endl;
+	}
+	At[0] = d;
+	At[1] = b;
+	At[2] = c;
+	At[3] = a;
+	As[0] = h;
+	As[1] = f;
+	As[2] = g;
+	As[3] = e;
+	if (f_v) {
+		cout << "At:" << endl;
+		Orbiter->Int_vec.print_integer_matrix_width(cout, At, 2, 2, 2, F->log10_of_q);
+		cout << "As:" << endl;
+		Orbiter->Int_vec.print_integer_matrix_width(cout, As, 2, 2, 2, F->log10_of_q);
+	}
+
+}
+
+void algebra_global::O4_isomorphism_2to4(finite_field *F,
+		int *At, int *As, int f_switch, int *B)
+{
+	int a, b, c, d, e, f, g, h;
+
+	a = At[3];
+	b = At[1];
+	c = At[2];
+	d = At[0];
+	e = As[3];
+	f = As[1];
+	g = As[2];
+	h = As[0];
+	if (f_switch) {
+		B[0 * 4 + 0] = F->mult(h, d);
+		B[0 * 4 + 1] = F->mult(f, b);
+		B[0 * 4 + 2] = F->negate(F->mult(f, d));
+		B[0 * 4 + 3] = F->mult(h, b);
+		B[1 * 4 + 0] = F->mult(g, c);
+		B[1 * 4 + 1] = F->mult(e, a);
+		B[1 * 4 + 2] = F->negate(F->mult(e, c));
+		B[1 * 4 + 3] = F->mult(g, a);
+		B[2 * 4 + 0] = F->negate(F->mult(h, c));
+		B[2 * 4 + 1] = F->negate(F->mult(f, a));
+		B[2 * 4 + 2] = F->mult(f, c);
+		B[2 * 4 + 3] = F->negate(F->mult(h, a));
+		B[3 * 4 + 0] = F->mult(g, d);
+		B[3 * 4 + 1] = F->mult(e, b);
+		B[3 * 4 + 2] = F->negate(F->mult(e, d));
+		B[3 * 4 + 3] = F->mult(g, b);
+	}
+	else {
+		B[0 * 4 + 0] = F->mult(h, d);
+		B[0 * 4 + 1] = F->mult(f, b);
+		B[0 * 4 + 2] = F->negate(F->mult(f, d));
+		B[0 * 4 + 3] = F->mult(h, b);
+		B[1 * 4 + 0] = F->mult(g, c);
+		B[1 * 4 + 1] = F->mult(e, a);
+		B[1 * 4 + 2] = F->negate(F->mult(e, c));
+		B[1 * 4 + 3] = F->mult(g, a);
+		B[2 * 4 + 0] = F->negate(F->mult(g, d));
+		B[2 * 4 + 1] = F->negate(F->mult(e, b));
+		B[2 * 4 + 2] = F->mult(e, d);
+		B[2 * 4 + 3] = F->negate(F->mult(g, b));
+		B[3 * 4 + 0] = F->mult(h, c);
+		B[3 * 4 + 1] = F->mult(f, a);
+		B[3 * 4 + 2] = F->negate(F->mult(f, c));
+		B[3 * 4 + 3] = F->mult(h, a);
+	}
+}
+
+void algebra_global::O4_grid_coordinates_rank(finite_field *F,
+		int x1, int x2, int x3, int x4, int &grid_x, int &grid_y,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int a, b, c, d, av, e;
+	int v[2], w[2];
+
+	a = x1;
+	b = x4;
+	c = F->negate(x3);
+	d = x2;
+
+	if (a) {
+		if (a != 1) {
+			av = F->inverse(a);
+			b = F->mult(b, av);
+			c = F->mult(c, av);
+			d = F->mult(d, av);
+		}
+		v[0] = 1;
+		w[0] = 1;
+		v[1] = c;
+		w[1] = b;
+		e = F->mult(c, b);
+		if (e != d) {
+			cout << "algebra_global::O4_grid_coordinates_rank "
+					"e != d" << endl;
+			exit(1);
+		}
+	}
+	else if (b == 0) {
+		v[0] = 0;
+		v[1] = 1;
+		w[0] = c;
+		w[1] = d;
+	}
+	else {
+		if (c) {
+			cout << "a is zero, b and c are not" << endl;
+			exit(1);
+		}
+		w[0] = 0;
+		w[1] = 1;
+		v[0] = b;
+		v[1] = d;
+	}
+	F->PG_element_normalize_from_front(v, 1, 2);
+	F->PG_element_normalize_from_front(w, 1, 2);
+	if (f_v) {
+		Orbiter->Int_vec.print(cout, v, 2);
+		Orbiter->Int_vec.print(cout, w, 2);
+		cout << endl;
+	}
+
+	F->PG_element_rank_modified(v, 1, 2, grid_x);
+	F->PG_element_rank_modified(w, 1, 2, grid_y);
+}
+
+void algebra_global::O4_grid_coordinates_unrank(finite_field *F,
+		int &x1, int &x2, int &x3, int &x4,
+		int grid_x, int grid_y,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int a, b, c, d;
+	int v[2], w[2];
+
+	F->PG_element_unrank_modified(v, 1, 2, grid_x);
+	F->PG_element_unrank_modified(w, 1, 2, grid_y);
+	F->PG_element_normalize_from_front(v, 1, 2);
+	F->PG_element_normalize_from_front(w, 1, 2);
+	if (f_v) {
+		Orbiter->Int_vec.print(cout, v, 2);
+		Orbiter->Int_vec.print(cout, w, 2);
+		cout << endl;
+	}
+
+	a = F->mult(v[0], w[0]);
+	b = F->mult(v[0], w[1]);
+	c = F->mult(v[1], w[0]);
+	d = F->mult(v[1], w[1]);
+	x1 = a;
+	x2 = d;
+	x3 = F->negate(c);
+	x4 = b;
+}
+
+void algebra_global::O4_find_tangent_plane(finite_field *F,
+		int pt_x1, int pt_x2, int pt_x3, int pt_x4,
+		int *tangent_plane,
+		int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	//int A[4];
+	int C[3 * 4];
+	int size, x, y, z, xx, yy, zz, h, k;
+	int x1, x2, x3, x4;
+	int y1, y2, y3, y4;
+	int f_special = FALSE;
+	int f_complete = FALSE;
+	int base_cols[4];
+	int f_P = FALSE;
+	int rk, det;
+	int vec2[2];
+
+
+	if (f_v) {
+		cout << "algebra_global::O4_find_tangent_plane pt_x1=" << pt_x1
+				<< " pt_x2=" << pt_x2
+				<< " pt_x3=" << pt_x3
+				<< " pt_x4=" << pt_x4 << endl;
+	}
+	size = F->q + 1;
+#if 0
+	A[0] = pt_x1;
+	A[3] = pt_x2;
+	A[2] = negate(pt_x3);
+	A[1] = pt_x4;
+#endif
+
+	int *secants1;
+	int *secants2;
+	int nb_secants = 0;
+	int *complement;
+	int nb_complement = 0;
+
+	secants1 = NEW_int(size * size);
+	secants2 = NEW_int(size * size);
+	complement = NEW_int(size * size);
+	for (x = 0; x < size; x++) {
+		for (y = 0; y < size; y++) {
+			z = x * size + y;
+
+			//cout << "trying grid point (" << x << "," << y << ")" << endl;
+			//cout << "nb_secants=" << nb_secants << endl;
+			O4_grid_coordinates_unrank(F, x1, x2, x3, x4, x, y, 0);
+
+			//cout << "x1=" << x1 << " x2=" << x2
+			//<< " x3=" << x3 << " x4=" << x4 << endl;
+
+
+
+
+			for (k = 0; k < size; k++) {
+				F->PG_element_unrank_modified(vec2, 1, 2, k);
+				y1 = F->add(F->mult(pt_x1, vec2[0]), F->mult(x1, vec2[1]));
+				y2 = F->add(F->mult(pt_x2, vec2[0]), F->mult(x2, vec2[1]));
+				y3 = F->add(F->mult(pt_x3, vec2[0]), F->mult(x3, vec2[1]));
+				y4 = F->add(F->mult(pt_x4, vec2[0]), F->mult(x4, vec2[1]));
+				det = F->add(F->mult(y1, y2), F->mult(y3, y4));
+				if (det != 0) {
+					continue;
+				}
+				O4_grid_coordinates_rank(F, y1, y2, y3, y4, xx, yy, 0);
+				zz = xx * size + yy;
+				if (zz == z) {
+					continue;
+				}
+				C[0] = pt_x1;
+				C[1] = pt_x2;
+				C[2] = pt_x3;
+				C[3] = pt_x4;
+
+				C[4] = x1;
+				C[5] = x2;
+				C[6] = x3;
+				C[7] = x4;
+
+				C[8] = y1;
+				C[9] = y2;
+				C[10] = y3;
+				C[11] = y4;
+
+				rk = F->Linear_algebra->Gauss_int(C,
+						f_special, f_complete, base_cols,
+					f_P, NULL, 3, 4, 4, 0);
+				if (rk < 3) {
+					secants1[nb_secants] = z;
+					secants2[nb_secants] = zz;
+					nb_secants++;
+				}
+
+			}
+
+#if 0
+
+			for (xx = 0; xx < size; xx++) {
+				for (yy = 0; yy < size; yy++) {
+					zz = xx * size + yy;
+					if (zz == z)
+						continue;
+					O4_grid_coordinates_unrank(F, y1, y2, y3, y4, xx, yy, 0);
+					//cout << "y1=" << y1 << " y2=" << y2
+					//<< " y3=" << y3 << " y4=" << y4 << endl;
+					C[0] = pt_x1;
+					C[1] = pt_x2;
+					C[2] = pt_x3;
+					C[3] = pt_x4;
+
+					C[4] = x1;
+					C[5] = x2;
+					C[6] = x3;
+					C[7] = x4;
+
+					C[8] = y1;
+					C[9] = y2;
+					C[10] = y3;
+					C[11] = y4;
+
+					rk = F.Gauss_int(C, f_special, f_complete, base_cols,
+						f_P, NULL, 3, 4, 4, 0);
+					if (rk < 3) {
+						secants1[nb_secants] = z;
+						secants2[nb_secants] = zz;
+						nb_secants++;
+						}
+					}
+				}
+#endif
+
+
+		}
+	}
+	if (f_v) {
+		cout << "nb_secants=" << nb_secants << endl;
+		Orbiter->Int_vec.print(cout, secants1, nb_secants);
+		cout << endl;
+		Orbiter->Int_vec.print(cout, secants2, nb_secants);
+		cout << endl;
+	}
+	h = 0;
+	for (zz = 0; zz < size * size; zz++) {
+		if (secants1[h] > zz) {
+			complement[nb_complement++] = zz;
+		}
+		else {
+			h++;
+		}
+	}
+	if (f_v) {
+		cout << "complement = tangents:" << endl;
+		Orbiter->Int_vec.print(cout, complement, nb_complement);
+		cout << endl;
+	}
+
+	int *T;
+	T = NEW_int(4 * nb_complement);
+
+	for (h = 0; h < nb_complement; h++) {
+		z = complement[h];
+		x = z / size;
+		y = z % size;
+		if (f_v) {
+			cout << setw(3) << h << " : " << setw(4) << z
+					<< " : " << x << "," << y << " : ";
+		}
+		O4_grid_coordinates_unrank(F, y1, y2, y3, y4,
+				x, y, verbose_level);
+		if (f_v) {
+			cout << "y1=" << y1 << " y2=" << y2
+					<< " y3=" << y3 << " y4=" << y4 << endl;
+		}
+		T[h * 4 + 0] = y1;
+		T[h * 4 + 1] = y2;
+		T[h * 4 + 2] = y3;
+		T[h * 4 + 3] = y4;
+	}
+
+
+	rk = F->Linear_algebra->Gauss_int(T, f_special, f_complete, base_cols,
+		f_P, NULL, nb_complement, 4, 4, 0);
+	if (f_v) {
+		cout << "the rank of the tangent space is " << rk << endl;
+		cout << "basis:" << endl;
+		Orbiter->Int_vec.print_integer_matrix_width(cout, T, rk, 4, 4, F->log10_of_q);
+	}
+
+	if (rk != 3) {
+		cout << "rk = " << rk << " not equal to 3" << endl;
+		exit(1);
+	}
+	int i;
+	for (i = 0; i < 12; i++) {
+		tangent_plane[i] = T[i];
+	}
+	FREE_int(secants1);
+	FREE_int(secants2);
+	FREE_int(complement);
+	FREE_int(T);
+
+#if 0
+	for (h = 0; h < nb_secants; h++) {
+		z = secants1[h];
+		zz = secants2[h];
+		x = z / size;
+		y = z % size;
+		xx = zz / size;
+		yy = zz % size;
+		cout << "(" << x << "," << y << "),(" << xx
+				<< "," << yy << ")" << endl;
+		O4_grid_coordinates_unrank(F, x1, x2, x3, x4,
+				x, y, verbose_level);
+		cout << "x1=" << x1 << " x2=" << x2
+				<< " x3=" << x3 << " x4=" << x4 << endl;
+		O4_grid_coordinates_unrank(F, y1, y2, y3, y4, xx, yy, verbose_level);
+		cout << "y1=" << y1 << " y2=" << y2
+				<< " y3=" << y3 << " y4=" << y4 << endl;
+	}
+#endif
+}
+
+
 
 
 

@@ -89,6 +89,10 @@ finite_field_activity_description::finite_field_activity_description()
 	f_Walsh_matrix = FALSE;
 	Walsh_matrix_n = 0;
 
+	f_Vandermonde_matrix = FALSE;
+
+	f_search_APN_function = FALSE;
+
 	f_make_table_of_irreducible_polynomials = FALSE;
 	make_table_of_irreducible_polynomials_degree = 0;
 
@@ -451,6 +455,20 @@ int finite_field_activity_description::read_arguments(
 				cout << "-Walsh_matrix " << Walsh_matrix_n << endl;
 			}
 		}
+
+		else if (stringcmp(argv[i], "-Vandermonde_matrix") == 0) {
+			f_Vandermonde_matrix = TRUE;
+			if (f_v) {
+				cout << "-Vandermonde_matrix " << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-search_APN_function") == 0) {
+			f_search_APN_function = TRUE;
+			if (f_v) {
+				cout << "-search_APN_function " << endl;
+			}
+		}
+
 
 		else if (stringcmp(argv[i], "-make_table_of_irreducible_polynomials") == 0) {
 			f_make_table_of_irreducible_polynomials = TRUE;
@@ -922,6 +940,7 @@ int finite_field_activity_description::read_arguments(
 		else {
 			cout << "finite_field_activity_description::read_arguments "
 					"unrecognized option " << argv[i] << endl;
+			exit(1);
 		}
 	} // next i
 	if (f_v) {
@@ -1020,6 +1039,12 @@ void finite_field_activity_description::print()
 
 	if (f_Walsh_matrix) {
 		cout << "-Walsh_matrix " << Walsh_matrix_n << endl;
+	}
+	if (f_Vandermonde_matrix) {
+		cout << "-Vandermonde_matrix " << endl;
+	}
+	if (f_search_APN_function) {
+		cout << "-search_APN_function " << endl;
 	}
 
 	if (f_make_table_of_irreducible_polynomials) {

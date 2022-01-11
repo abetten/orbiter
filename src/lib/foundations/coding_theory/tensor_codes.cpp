@@ -345,9 +345,12 @@ void coding_theory_domain::create_matrix_H_subfield(
 	//int *C_inv;
 	int *H;
 	int *AA;
+	representation_theory_domain Rep;
 
 	q = f->q;
 
+
+	Rep.init(F, verbose_level);
 	// matrix C is zero:
 	H = NEW_int(m * n);
 	AA = NEW_int(m * m);
@@ -396,19 +399,19 @@ void coding_theory_domain::create_matrix_H_subfield(
 			2, 4, 1,
 			3, 2, beta,
 			3, 3, beta_q,
-			3, 4, F->beta_trinomial(q, beta, 1, 0, 0),
-			4, 2, F->beta_trinomial(q, beta, 0, 0, 2),
-			4, 3, F->beta_trinomial(q, beta, 0, 2, 0),
-			4, 4, F->beta_trinomial(q, beta, 2, 0, 0),
+			3, 4, Rep.beta_trinomial(q, beta, 1, 0, 0),
+			4, 2, Rep.beta_trinomial(q, beta, 0, 0, 2),
+			4, 3, Rep.beta_trinomial(q, beta, 0, 2, 0),
+			4, 4, Rep.beta_trinomial(q, beta, 2, 0, 0),
 			5, 5, 1,
 			5, 6, 1,
 			5, 7, 1,
-			6, 5, F->beta_trinomial(q, beta, 0, 1, 1),
-			6, 6, F->beta_trinomial(q, beta, 1, 1, 0),
-			6, 7, F->beta_trinomial(q, beta, 1, 0, 1),
-			7, 5, F->beta_trinomial(q, beta, 0, 2, 2),
-			7, 6, F->beta_trinomial(q, beta, 2, 2, 0),
-			7, 7, F->beta_trinomial(q, beta, 2, 0, 2),
+			6, 5, Rep.beta_trinomial(q, beta, 0, 1, 1),
+			6, 6, Rep.beta_trinomial(q, beta, 1, 1, 0),
+			6, 7, Rep.beta_trinomial(q, beta, 1, 0, 1),
+			7, 5, Rep.beta_trinomial(q, beta, 0, 2, 2),
+			7, 6, Rep.beta_trinomial(q, beta, 2, 2, 0),
+			7, 7, Rep.beta_trinomial(q, beta, 2, 0, 2),
 			};
 		for (k = 0; k < nb_C_coeffs; k++) {
 			i = C_coeffs[k * 3 + 0];

@@ -234,6 +234,7 @@ public:
 		int x1, int y1, int z1,
 		int x3, int y3, int z3,
 		int verbose_level);
+	int eulers_totient_function(int n, int verbose_level);
 
 };
 

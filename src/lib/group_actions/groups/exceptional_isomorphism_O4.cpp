@@ -93,6 +93,7 @@ void exceptional_isomorphism_O4::apply_2to4_embedded(
 	int mtx4x4[16];
 	int mtx5x5[25];
 	int *E1;
+	algebra_global Algebra;
 
 	if (f_v) {
 		cout << "exceptional_isomorphism_O4::apply_2to4_embedded" << endl;
@@ -106,7 +107,7 @@ void exceptional_isomorphism_O4::apply_2to4_embedded(
 		Orbiter->Int_vec.print_integer_matrix_width(cout, mtx2x2_S, 2, 2, 2, 3);
 		}
 
-	Fq->O4_isomorphism_2to4(mtx2x2_T, mtx2x2_S, f_switch, mtx4x4);
+	Algebra.O4_isomorphism_2to4(Fq, mtx2x2_T, mtx2x2_S, f_switch, mtx4x4);
 
 	A4->make_element(E1, mtx4x4, 0);
 	if (f_v) {
@@ -350,6 +351,7 @@ void exceptional_isomorphism_O4::apply_4_to_2(
 	int Data[16];
 	int M2a[4];
 	int M2b[4];
+	algebra_global Algebra;
 
 	if (f_v) {
 		cout << "exceptional_isomorphism_O4::apply_4_to_2" << endl;
@@ -364,7 +366,7 @@ void exceptional_isomorphism_O4::apply_4_to_2(
 		cout << "as 4 x 4:" << endl;
 		Orbiter->Int_vec.print_integer_matrix_width(cout, Data, 4, 4, 4, 3);
 		}
-	Fq->O4_isomorphism_4to2(M2a, M2b,
+	Algebra.O4_isomorphism_4to2(Fq, M2a, M2b,
 			f_switch, Data, 0 /*verbose_level*/);
 	A2->make_element(E2_a, M2a, 0);
 	A2->make_element(E2_b, M2b, 0);
@@ -387,6 +389,7 @@ void exceptional_isomorphism_O4::apply_2_to_4(
 {
 	int f_v = (verbose_level >= 1);
 	int Data[16];
+	algebra_global Algebra;
 
 	if (f_v) {
 		cout << "exceptional_isomorphism_O4::apply_2_to_4" << endl;
@@ -400,7 +403,7 @@ void exceptional_isomorphism_O4::apply_2_to_4(
 		A2->element_print_quick(E2_b, cout);
 		}
 
-	Fq->O4_isomorphism_2to4(
+	Algebra.O4_isomorphism_2to4(Fq,
 			E2_a, E2_b, f_switch, Data);
 
 	A4->make_element(E4, Data, 0);
@@ -418,9 +421,11 @@ void exceptional_isomorphism_O4::print_as_2x2(int *mtx4x4)
 {
 	int small[8], f_switch, r, order;
 	int *elt1;
+	algebra_global Algebra;
 
 	elt1 = NEW_int(A2->elt_size_in_int);
-	Fq->O4_isomorphism_4to2(small, small + 4,
+	Algebra.O4_isomorphism_4to2(Fq,
+			small, small + 4,
 			f_switch, mtx4x4, 0/*verbose_level*/);
 	//cout << "after isomorphism:" << endl;
 	//cout << "f_switch=" << f_switch << endl;

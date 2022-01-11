@@ -389,7 +389,7 @@ void knarr::points_and_lines(int verbose_level)
 			Orbiter->Int_vec.print_integer_matrix_width(cout, Basis, 3, 6, 6, F->log10_of_q);
 			cout << endl;
 			}
-		if (!F->is_totally_isotropic_wrt_symplectic_form(3, 6, Basis)) {
+		if (!F->Linear_algebra->is_totally_isotropic_wrt_symplectic_form(3, 6, Basis)) {
 			if (f_v4) {
 				cout << "is not totally isotropic" << endl;
 				}

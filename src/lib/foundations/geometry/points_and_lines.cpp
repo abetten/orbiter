@@ -195,7 +195,7 @@ void points_and_lines::print_lines_tex(std::ostream &ost)
 
 		P->Pluecker_coordinates(Lines[i], v6, 0 /* verbose_level */);
 
-		Rk[i] = P->F->Qplus_rank(v6, 1, 5, 0 /* verbose_level*/);
+		Rk[i] = P->F->Orthogonal_indexing->Qplus_rank(v6, 1, 5, 0 /* verbose_level*/);
 
 		ost << "={\\rm\\bf Pl}(" << v6[0] << "," << v6[1] << ","
 				<< v6[2] << "," << v6[3] << "," << v6[4]

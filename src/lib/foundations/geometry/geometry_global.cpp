@@ -817,10 +817,10 @@ void geometry_global::test_Orthogonal(int epsilon, int k, int q)
 	else if (epsilon == 1) {
 		}
 	else if (epsilon == -1) {
-		GFq.choose_anisotropic_form(c1, c2, c3, TRUE);
+		GFq.Linear_algebra->choose_anisotropic_form(c1, c2, c3, TRUE);
 		}
 	for (i = 0; i < nb; i++) {
-		GFq.Q_epsilon_unrank(v, stride, epsilon, k, c1, c2, c3, i, 0 /* verbose_level */);
+		GFq.Orthogonal_indexing->Q_epsilon_unrank(v, stride, epsilon, k, c1, c2, c3, i, 0 /* verbose_level */);
 
 #if 0
 		wt = 0;
@@ -832,10 +832,10 @@ void geometry_global::test_Orthogonal(int epsilon, int k, int q)
 		cout << i << " : ";
 		Orbiter->Int_vec.print(cout, v, len);
 		cout << " : ";
-		a = GFq.evaluate_quadratic_form(v, stride, epsilon, k,
+		a = GFq.Linear_algebra->evaluate_quadratic_form(v, stride, epsilon, k,
 				c1, c2, c3);
 		cout << a;
-		j = GFq.Q_epsilon_rank(v, stride, epsilon, k, c1, c2, c3, 0 /* verbose_level */);
+		j = GFq.Orthogonal_indexing->Q_epsilon_rank(v, stride, epsilon, k, c1, c2, c3, 0 /* verbose_level */);
 		cout << " : " << j;
 #if 0
 		if (wt == 1) {
@@ -871,13 +871,13 @@ void geometry_global::test_orthogonal(int n, int q)
 	cout << "\\Omega^+(" << 2 * n << "," << q << ") has " << nb
 			<< " singular points" << endl;
 	for (i = 0; i < nb; i++) {
-		GFq.Sbar_unrank(v, stride, n, i, 0 /* verbose_level */);
+		GFq.Orthogonal_indexing->Sbar_unrank(v, stride, n, i, 0 /* verbose_level */);
 		cout << i << " : ";
 		Orbiter->Int_vec.set_print(cout, v, 2 * n);
 		cout << " : ";
-		a = GFq.evaluate_hyperbolic_quadratic_form(v, stride, n);
+		a = GFq.Linear_algebra->evaluate_hyperbolic_quadratic_form(v, stride, n);
 		cout << a;
-		GFq.Sbar_rank(v, stride, n, j, 0 /* verbose_level */);
+		GFq.Orthogonal_indexing->Sbar_rank(v, stride, n, j, 0 /* verbose_level */);
 		cout << " : " << j << endl;
 		if (j != i) {
 			cout << "error" << endl;
@@ -1891,63 +1891,6 @@ void geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text(
 	}
 }
 
-void geometry_global::Walsh_matrix(finite_field *F, int n, int *&W, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int Q;
-	int *v;
-	int *w;
-	int *W01;
-	int i, j, a;
-
-	if (f_v) {
-		cout << "geometry_global::Walsh_matrix" << endl;
-	}
-	v = NEW_int(n);
-	w = NEW_int(n);
-	Q = 1 << n;
-	W = NEW_int(Q * Q);
-	W01 = NEW_int(Q * Q);
-	for (i = 0; i < Q; i++) {
-		AG_element_unrank(2, v, 1, n, i);
-		for (j = 0; j < Q; j++) {
-			AG_element_unrank(2, w, 1, n, j);
-			a = F->Linear_algebra->dot_product(n, v, w);
-			if (a) {
-				W[i * Q + j] = -1;
-				W01[i * Q + j] = 1;
-			}
-			else {
-				W[i * Q + j] = 1;
-				W01[i * Q + j] = 0;
-			}
-		}
-	}
-	char str[1000];
-	string fname_csv;
-	file_io Fio;
-
-	snprintf(str, 1000, "Walsh_%d.csv", n);
-	fname_csv.assign(str);
-	Fio.int_matrix_write_csv(fname_csv, W, Q, Q);
-	cout << "written file " << fname_csv << " of size "
-			<< Fio.file_size(fname_csv) << endl;
-
-
-	snprintf(str, 1000, "Walsh_01_%d.csv", n);
-	fname_csv.assign(str);
-	Fio.int_matrix_write_csv(fname_csv, W01, Q, Q);
-	cout << "written file " << fname_csv << " of size "
-			<< Fio.file_size(fname_csv) << endl;
-
-
-	FREE_int(v);
-	FREE_int(w);
-	FREE_int(W01);
-	if (f_v) {
-		cout << "geometry_global::Walsh_matrix done" << endl;
-	}
-}
 
 void geometry_global::do_cheat_sheet_PG(finite_field *F,
 		layered_graph_draw_options *O,
@@ -2288,6 +2231,50 @@ void geometry_global::latex_homogeneous_equation(finite_field *F, int degree, in
 	}
 
 }
+
+void geometry_global::create_BLT_point(finite_field *F,
+		int *v5, int a, int b, int c, int verbose_level)
+// creates the point (-b/2,-c,a,-(b^2/4-ac),1)
+// check if it satisfies x_0^2 + x_1x_2 + x_3x_4:
+// b^2/4 + (-c)*a + -(b^2/4-ac)
+// = b^2/4 -ac -b^2/4 + ac = 0
+{
+	int f_v = (verbose_level >= 1);
+	int v0, v1, v2, v3, v4;
+	int half, four, quarter, minus_one;
+
+	if (f_v) {
+		cout << "geometry_global::create_BLT_point" << endl;
+	}
+	four = 4 % F->p;
+	half = F->inverse(2);
+	quarter = F->inverse(four);
+	minus_one = F->negate(1);
+	if (f_v) {
+		cout << "geometry_global::create_BLT_point "
+				"four=" << four << endl;
+		cout << "geometry_global::create_BLT_point "
+				"half=" << half << endl;
+		cout << "geometry_global::create_BLT_point "
+				"quarter=" << quarter << endl;
+		cout << "geometry_global::create_BLT_point "
+				"minus_one=" << minus_one << endl;
+	}
+
+	v0 = F->mult(minus_one, F->mult(b, half));
+	v1 = F->mult(minus_one, c);
+	v2 = a;
+	v3 = F->mult(minus_one, F->add(
+			F->mult(F->mult(b, b), quarter), F->negate(F->mult(a, c))));
+	v4 = 1;
+	Orbiter->Int_vec.init5(v5, v0, v1, v2, v3, v4);
+	if (f_v) {
+		cout << "geometry_global::create_BLT_point done" << endl;
+	}
+}
+
+
+
 
 }}
 

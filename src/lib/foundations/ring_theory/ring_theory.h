@@ -462,6 +462,143 @@ public:
 			int verbose_level);
 };
 
+
+// #############################################################################
+// ring_theory_global.cpp
+// #############################################################################
+
+//! global functions related to ring theory
+
+
+class ring_theory_global {
+
+public:
+	ring_theory_global();
+	~ring_theory_global();
+	void write_code_for_division(
+			finite_field *F,
+			std::string &fname_code,
+			std::string &A_coeffs, std::string &B_coeffs,
+			int verbose_level);
+	void polynomial_division(
+			finite_field *F,
+			std::string &A_coeffs, std::string &B_coeffs, int verbose_level);
+	void extended_gcd_for_polynomials(
+			finite_field *F,
+			std::string &A_coeffs, std::string &B_coeffs, int verbose_level);
+	void polynomial_mult_mod(
+			finite_field *F,
+			std::string &A_coeffs, std::string &B_coeffs, std::string &M_coeffs,
+			int verbose_level);
+	void polynomial_find_roots(
+			finite_field *F,
+			std::string &A_coeffs,
+			int verbose_level);
+	void sift_polynomials(
+			finite_field *F,
+			long int rk0, long int rk1, int verbose_level);
+	void mult_polynomials(
+			finite_field *F,
+			long int rk0, long int rk1, int verbose_level);
+	void polynomial_division_with_report(
+			finite_field *F,
+			long int rk0, long int rk1, int verbose_level);
+	void polynomial_division_from_file_with_report(
+			finite_field *F,
+			std::string &input_file, long int rk1, int verbose_level);
+	void polynomial_division_from_file_all_k_error_patterns_with_report(
+			finite_field *F,
+			std::string &input_file, long int rk1, int k, int verbose_level);
+	void number_of_conditions_satisfied(
+			finite_field *F,
+			std::string &variety_label_txt,
+			std::string &variety_label_tex,
+			int variety_nb_vars, int variety_degree,
+			std::vector<std::string> &Variety_coeffs,
+			monomial_ordering_type Monomial_ordering_type,
+			std::string &number_of_conditions_satisfied_fname,
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+			int verbose_level);
+	// creates homogeneous_polynomial_domain
+	void create_intersection_of_zariski_open_sets(
+			finite_field *F,
+			std::string &variety_label_txt,
+			std::string &variety_label_tex,
+			int variety_nb_vars, int variety_degree,
+			std::vector<std::string> &Variety_coeffs,
+			monomial_ordering_type Monomial_ordering_type,
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+			int verbose_level);
+	// creates homogeneous_polynomial_domain
+	void create_projective_variety(
+			finite_field *F,
+			std::string &variety_label,
+			std::string &variety_label_tex,
+			int variety_nb_vars, int variety_degree,
+			std::string &variety_coeffs,
+			monomial_ordering_type Monomial_ordering_type,
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+			int verbose_level);
+	// creates homogeneous_polynomial_domain
+	void create_projective_curve(
+			finite_field *F,
+			std::string &variety_label_txt,
+			std::string &variety_label_tex,
+			int curve_nb_vars, int curve_degree,
+			std::string &curve_coeffs,
+			monomial_ordering_type Monomial_ordering_type,
+			std::string &label_txt,
+			std::string &label_tex,
+			int &nb_pts, long int *&Pts,
+			int verbose_level);
+	// creates homogeneous_polynomial_domain
+	void create_irreducible_polynomial(
+			finite_field *F,
+			unipoly_domain *Fq,
+			unipoly_object *&Beta, int n,
+			long int *cyclotomic_set, int cylotomic_set_size,
+			unipoly_object *&generator,
+			int verbose_level);
+	void compute_nth_roots_as_polynomials(
+			finite_field *F,
+			unipoly_domain *FpX,
+			unipoly_domain *Fq, unipoly_object *&Beta, int n1, int n2, int verbose_level);
+	void compute_powers(
+			finite_field *F,
+			unipoly_domain *Fq,
+			int n, int start_idx,
+			unipoly_object *&Beta, int verbose_level);
+	void make_all_irreducible_polynomials_of_degree_d(finite_field *F,
+			int d, std::vector<std::vector<int> > &Table,
+			int verbose_level);
+	int count_all_irreducible_polynomials_of_degree_d(finite_field *F,
+			int d, int verbose_level);
+	void do_make_table_of_irreducible_polynomials(finite_field *F,
+			int deg, int verbose_level);
+	void do_search_for_primitive_polynomial_in_range(
+			int p_min, int p_max,
+			int deg_min, int deg_max,
+			int verbose_level);
+	char *search_for_primitive_polynomial_of_given_degree(int p,
+		int degree, int verbose_level);
+	void search_for_primitive_polynomials(int p_min, int p_max,
+		int n_min, int n_max, int verbose_level);
+	void factor_cyclotomic(int n, int q, int d,
+		int *coeffs, int f_poly, std::string &poly, int verbose_level);
+	void oval_polynomial(
+			finite_field *F,
+		int *S, unipoly_domain &D, unipoly_object &poly,
+		int verbose_level);
+
+};
+
+
 // #############################################################################
 // table_of_irreducible_polynomials.cpp
 // #############################################################################

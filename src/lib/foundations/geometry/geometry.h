@@ -932,7 +932,6 @@ public:
 			std::string line1_from_text, std::string line2_from_text,
 			std::string line1_to_text, std::string line2_to_text,
 			int verbose_level);
-	void Walsh_matrix(finite_field *F, int n, int *&W, int verbose_level);
 	void do_cheat_sheet_PG(finite_field *F,
 			layered_graph_draw_options *O,
 			int n,
@@ -956,6 +955,12 @@ public:
 			std::string &symbol_txt,
 			std::string &symbol_tex,
 			int verbose_level);
+	void create_BLT_point(finite_field *F,
+			int *v5, int a, int b, int c, int verbose_level);
+		// creates the point (-b/2,-c,a,-(b^2/4-ac),1)
+		// check if it satisfies x_0^2 + x_1x_2 + x_3x_4:
+		// b^2/4 + (-c)*a + -(b^2/4-ac)
+		// = b^2/4 -ac -b^2/4 + ac = 0
 
 };
 

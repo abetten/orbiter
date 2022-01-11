@@ -128,8 +128,9 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 		cout << "nth_roots::init extension field created" << endl;
 	}
 
+	ring_theory_global R;
 
-	F->compute_nth_roots_as_polynomials(FpX, Fq, Beta, n, n, 0 /*verbose_level*/);
+	R.compute_nth_roots_as_polynomials(F, FpX, Fq, Beta, n, n, 0 /*verbose_level*/);
 
 
 
@@ -148,7 +149,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 	}
 
 
-	F->compute_nth_roots_as_polynomials(FpX,
+	R.compute_nth_roots_as_polynomials(F, FpX,
 			Fq, Fq_Elements, n, F->q - 1,
 			0 /*verbose_level*/);
 	if (f_v) {
@@ -189,7 +190,8 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 					<< i << " / " << Cyc->S->nb_sets << endl;
 		}
 
-		F->create_irreducible_polynomial(Fq,
+		R.create_irreducible_polynomial(F,
+				Fq,
 			Beta, n,
 			Cyc->S->Sets[i], Cyc->S->Set_size[i],
 			generator[i],
@@ -350,6 +352,7 @@ void nth_roots::compute_subfield(int subfield_degree, int *&field_basis, int ver
 	int i, j;
 	geometry_global Gg;
 	number_theory_domain NT;
+	ring_theory_global R;
 
 	p = F->p;
 	e = field_degree;
@@ -371,7 +374,7 @@ void nth_roots::compute_subfield(int subfield_degree, int *&field_basis, int ver
 	if (f_v) {
 		cout << "nth_roots::compute_subfield before F->compute_powers" << endl;
 	}
-	F->compute_powers(Fq,
+	R.compute_powers(F, Fq,
 			n, subgroup_index,
 			Beta, 0/*verbose_level*/);
 

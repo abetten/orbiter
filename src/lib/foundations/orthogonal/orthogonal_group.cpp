@@ -49,7 +49,7 @@ void orthogonal::Siegel_map_between_singular_points(int *T,
 	if (f_v) {
 		cout << "orthogonal::Siegel_map_between_singular_points" << endl;
 	}
-	F->Siegel_map_between_singular_points(T,
+	F->Linear_algebra->Siegel_map_between_singular_points(T,
 		rk_from, rk_to, root,
 		epsilon, n,
 		form_c1, form_c2, form_c3, Gram_matrix,
@@ -68,9 +68,9 @@ void orthogonal::Siegel_map_between_singular_points_hyperbolic(int *T,
 	if (f_v) {
 		cout << "orthogonal::Siegel_map_between_singular_points_hyperbolic" << endl;
 	}
-	F->Gram_matrix(
+	F->Linear_algebra->Gram_matrix(
 			1, 2 * m - 1, 0,0,0, Gram, verbose_level - 1);
-	F->Siegel_map_between_singular_points(T,
+	F->Linear_algebra->Siegel_map_between_singular_points(T,
 		rk_from, rk_to, root,
 		epsilon, 2 * m,
 		0, 0, 0, Gram,
@@ -194,8 +194,8 @@ void orthogonal::Siegel_Transformation3(int *T,
 		cout << endl;
 	}
 
-	a = F->evaluate_bilinear_form(B, B + n, n, Gram);
-	b = F->evaluate_bilinear_form(B, w, n, Gram);
+	a = F->Linear_algebra->evaluate_bilinear_form(B, B + n, n, Gram);
+	b = F->Linear_algebra->evaluate_bilinear_form(B, w, n, Gram);
 	av = F->inverse(a);
 	bv = F->inverse(b);
 	for (i = 0; i < n; i++) {
@@ -406,7 +406,7 @@ void orthogonal::create_random_Siegel_transformation(
 
 #endif
 
-		alpha = F->evaluate_bilinear_form(
+		alpha = F->Linear_algebra->evaluate_bilinear_form(
 				u, v, d, Gram_matrix);
 		if (alpha == 0) {
 			if (f_v) {
@@ -430,7 +430,7 @@ void orthogonal::create_random_Siegel_transformation(
 		cout << endl;
 		}
 
-	F->Siegel_Transformation(
+	F->Linear_algebra->Siegel_Transformation(
 			epsilon, d - 1,
 			form_c1, form_c2, form_c3,
 			Mtx, v, u, verbose_level - 1);
@@ -775,7 +775,7 @@ void orthogonal::make_Siegel_Transformation(int *M, int *v, int *u,
 	if (f_v) {
 		cout << "orthogonal::make_Siegel_Transformation" << endl;
 	}
-	Qv = F->evaluate_quadratic_form(
+	Qv = F->Linear_algebra->evaluate_quadratic_form(
 			v, 1 /*stride*/,
 			epsilon, n - 1,
 			form_c1, form_c2, form_c3);

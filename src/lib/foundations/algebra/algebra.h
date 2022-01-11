@@ -128,25 +128,7 @@ public:
 
 class algebra_global {
 public:
-	void make_all_irreducible_polynomials_of_degree_d(finite_field *F,
-			int d, std::vector<std::vector<int> > &Table,
-			int verbose_level);
-	int count_all_irreducible_polynomials_of_degree_d(finite_field *F,
-			int d, int verbose_level);
-	void do_make_table_of_irreducible_polynomials(finite_field *F,
-			int deg, int verbose_level);
-	void do_search_for_primitive_polynomial_in_range(
-			int p_min, int p_max,
-			int deg_min, int deg_max,
-			int verbose_level);
-	char *search_for_primitive_polynomial_of_given_degree(int p,
-		int degree, int verbose_level);
-	void search_for_primitive_polynomials(int p_min, int p_max,
-		int n_min, int n_max, int verbose_level);
-	void factor_cyclotomic(int n, int q, int d,
-		int *coeffs, int f_poly, std::string &poly, int verbose_level);
 	void count_subprimitive(int Q_max, int H_max);
-	int eulers_totient_function(int n, int verbose_level);
 	void formula_subprimitive(int d, int q,
 		longinteger_object &Rdq, int &g, int verbose_level);
 	void formula(int d, int q, longinteger_object &Rdq, int verbose_level);
@@ -180,32 +162,45 @@ public:
 	void do_equivalence_class_of_fractions(int N, int verbose_level);
 
 
-	void find_CRC_polynomials(finite_field *F,
-			int t, int da, int dc,
-			int verbose_level);
-	void search_for_CRC_polynomials(int t,
-			int da, int *A, int dc, int *C, int i, finite_field *F,
-			long int &nb_sol, std::vector<std::vector<int> > &Solutions,
-			int verbose_level);
-	void search_for_CRC_polynomials_binary(int t,
-			int da, int *A, int dc, int *C, int i,
-			long int &nb_sol, std::vector<std::vector<int> > &Solutions,
-			int verbose_level);
-	int test_all_two_bit_patterns(int da, int *A, int dc, int *C,
-			finite_field *F, int verbose_level);
-	int test_all_three_bit_patterns(int da, int *A, int dc, int *C,
-			finite_field *F, int verbose_level);
-	int test_all_two_bit_patterns_binary(int da, int *A, int dc, int *C,
-			int verbose_level);
-	int test_all_three_bit_patterns_binary(int da, int *A, int dc, int *C,
-			int verbose_level);
-	int remainder_is_nonzero(int da, int *A, int db, int *B, finite_field *F);
-	int remainder_is_nonzero_binary(int da, int *A, int db, int *B);
 
 
 
 	void order_of_q_mod_n(int q, int n_min, int n_max, int verbose_level);
 	void power_mod_n(int a, int n, int verbose_level);
+
+	void do_trace(finite_field *F, int verbose_level);
+	void do_norm(finite_field *F, int verbose_level);
+	void do_cheat_sheet_GF(finite_field *F, int verbose_level);
+	void gl_random_matrix(finite_field *F, int k, int verbose_level);
+
+	// functions with file based input:
+	void apply_Walsh_Hadamard_transform(finite_field *F, std::string &fname_csv_in, int n, int verbose_level);
+	void algebraic_normal_form(finite_field *F, std::string &fname_csv_in, int n, int verbose_level);
+	void apply_trace_function(finite_field *F, std::string &fname_csv_in, int verbose_level);
+	void apply_power_function(finite_field *F, std::string &fname_csv_in, long int d, int verbose_level);
+	void identity_function(finite_field *F, std::string &fname_csv_out, int verbose_level);
+	void Walsh_matrix(finite_field *F, int n, int *&W, int verbose_level);
+	void Vandermonde_matrix(finite_field *F, int *&W, int *&W_inv, int verbose_level);
+	void search_APN(finite_field *F, int verbose_level);
+	void search_APN_recursion(finite_field *F,
+			int *f, int depth, int &delta_min, int &nb_times,
+			std::vector<std::vector<int> > &Solutions, int verbose_level);
+	int non_linearity(finite_field *F, int *f, int verbose_level);
+
+	void O4_isomorphism_4to2(finite_field *F,
+		int *At, int *As, int &f_switch, int *B,
+		int verbose_level);
+	void O4_isomorphism_2to4(finite_field *F,
+		int *At, int *As, int f_switch, int *B);
+	void O4_grid_coordinates_rank(finite_field *F,
+		int x1, int x2, int x3, int x4,
+		int &grid_x, int &grid_y, int verbose_level);
+	void O4_grid_coordinates_unrank(finite_field *F,
+		int &x1, int &x2, int &x3, int &x4, int grid_x,
+		int grid_y, int verbose_level);
+	void O4_find_tangent_plane(finite_field *F,
+		int pt_x1, int pt_x2, int pt_x3, int pt_x4,
+		int *tangent_plane, int verbose_level);
 
 };
 
@@ -525,6 +520,10 @@ public:
 			int f_multiplication, int multiplication_order,
 			int &nb_gens, int &degree, int *&gens,
 			int &base_len, long int *&the_base, int verbose_level);
+	void PG_element_modified_not_in_subspace_perm(finite_field *F,
+			int n, int m,
+		long int *orbit, long int *orbit_inv,
+		int verbose_level);
 
 
 };
