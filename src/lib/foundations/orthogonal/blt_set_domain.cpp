@@ -494,7 +494,7 @@ void blt_set_domain::early_test_func(long int *S, int len,
 
 	if (f_v) {
 		cout << "blt_set_domain::early_test_func checking set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
@@ -661,7 +661,8 @@ int blt_set_domain::check_conditions(int len, long int *S, int verbose_level)
 
 	if (f_vv) {
 		cout << "checking set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
+		cout << endl;
 	}
 	if (!collinearity_test(S, len, verbose_level)) {
 		f_OK = FALSE;

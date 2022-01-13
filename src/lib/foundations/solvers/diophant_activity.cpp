@@ -106,11 +106,30 @@ void diophant_activity::perform_activity(diophant_activity_description *Descr, d
 			Dio->write_solutions(output_file, verbose_level);
 		}
 	}
+	else if (Descr->f_solve_DLX) {
+		//long int nb_backtrack_nodes;
+
+		cout << "solving with DLX" << endl;
+
+		Dio->solve_all_DLX(verbose_level - 2);
+
+		cout << "Found " << Dio->_resultanz << " solutions with "
+				<< Dio->nb_steps_betten << " backtrack steps" << endl;
+
+		if (TRUE) {
+			string output_file;
+
+			output_file.assign(Dio->label);
+			ST.replace_extension_with(output_file, ".sol");
+
+
+			Dio->write_solutions(output_file, verbose_level);
+		}
+	}
 	else if (Descr->f_draw_as_bitmap) {
 		string fname_base;
 
 		fname_base.assign(Descr->input_file);
-		//sprintf(fname_base, "%s", Descr->input_file);
 		ST.replace_extension_with(fname_base, "_drawing");
 		Dio->draw_as_bitmap(fname_base, TRUE, Descr->box_width, Descr->bit_depth,
 			verbose_level);
@@ -150,21 +169,12 @@ void diophant_activity::perform_activity(diophant_activity_description *Descr, d
 	}
 	else if (Descr->f_draw) {
 		string fname_base;
-#if 0
-		int xmax_in = ONE_MILLION;
-		int ymax_in = ONE_MILLION;
-		int xmax_out = ONE_MILLION;
-		int ymax_out = ONE_MILLION;
-#endif
 
 		fname_base.assign(Descr->input_file);
-		//sprintf(fname_base, "%s", Descr->input_file);
 		ST.replace_extension_with(fname_base, "_drawing");
-		//Dio->draw_it(fname_base, xmax_in, ymax_in, xmax_out, ymax_out);
 
 		Dio->draw_partitioned(fname_base,
 				Orbiter->draw_options,
-			//xmax_in, ymax_in, xmax_out, ymax_out,
 			FALSE, 0, 0,
 			verbose_level);
 	}
@@ -177,7 +187,6 @@ void diophant_activity::perform_activity(diophant_activity_description *Descr, d
 		file_io Fio;
 
 		fname2.assign(Descr->input_file);
-		//sprintf(fname2, "%s", Descr->input_file);
 		ST.replace_extension_with(fname2, "_red.diophant");
 
 		D2->save_in_general_format(fname2, verbose_level);

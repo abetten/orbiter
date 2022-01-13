@@ -497,7 +497,7 @@ void arc_generator::early_test_func(long int *S, int len,
 		
 	if (f_v) {
 		cout << "arc_generator::early_test_func checking set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
 		Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
@@ -1333,7 +1333,7 @@ void arc_generator_early_test_function(long int *S, int len,
 	
 	if (f_v) {
 		cout << "arc_generator_early_test_function for set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 	}
 	Gen->early_test_func(S, len, 

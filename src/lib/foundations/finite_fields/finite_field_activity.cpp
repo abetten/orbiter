@@ -255,6 +255,25 @@ void finite_field_activity::perform_activity(int verbose_level)
 			Orbiter->Int_vec.matrix_print(W, F->q, F->q);
 			cout << "Vandermonde inverse:" << endl;
 			Orbiter->Int_vec.matrix_print(W_inv, F->q, F->q);
+
+			latex_interface LI;
+
+			cout << "Vandermonde:" << endl;
+
+			cout << "$$" << endl;
+			cout << "\\left[" << endl;
+			LI.int_matrix_print_tex(cout, W, F->q, F->q);
+			cout << "\\right]" << endl;
+			cout << "$$" << endl;
+
+			cout << "Vandermonde inverse:" << endl;
+			cout << "$$" << endl;
+			cout << "\\left[" << endl;
+			LI.int_matrix_print_tex(cout, W_inv, F->q, F->q);
+			cout << "\\right]" << endl;
+			cout << "$$" << endl;
+
+
 		}
 		else {
 			cout << "too big to print" << endl;
@@ -757,10 +776,57 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 		Nth->init(F, Descr->nth_roots_n, verbose_level);
 
+		file_io Fio;
+		{
+			char str[1000];
+			string fname;
+
+			snprintf(str, 1000, "Nth_roots_q%d_n%d.tex", F->q, Descr->nth_roots_n);
+
+			fname.assign(str);
+
+
+			{
+				ofstream ost(fname);
+				number_theory_domain NT;
+
+				char title[1000];
+				char author[1000];
+
+				snprintf(title, 1000, "Nth roots");
+				//strcpy(author, "");
+				author[0] = 0;
+
+
+				latex_interface L;
+
+				L.head(ost,
+						FALSE /* f_book*/,
+						TRUE /* f_title */,
+						title, author,
+						FALSE /* f_toc */,
+						FALSE /* f_landscape */,
+						TRUE /* f_12pt */,
+						TRUE /* f_enlarged_page */,
+						TRUE /* f_pagenumbers */,
+						NULL /* extra_praeamble */);
+
+
+				Nth->report(ost, verbose_level);
+
+				L.foot(ost);
+
+
+			}
+
+			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+		}
 
 	}
 	else if (Descr->f_make_BCH_code) {
 
+#if 0
 		coding_theory_domain Codes;
 		nth_roots *Nth;
 		unipoly_object P;
@@ -808,7 +874,16 @@ void finite_field_activity::perform_activity(int verbose_level)
 				k, n, n, F->log10_of_q);
 #endif
 
+#else
+		create_BCH_code *C;
+
+		C = NEW_OBJECT(create_BCH_code);
+
+		C->init(F, Descr->make_BCH_code_n,
+				Descr->make_BCH_code_d, verbose_level);
+
 		file_io Fio;
+#if 0
 		{
 			char str[1000];
 			string fname;
@@ -826,11 +901,16 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 		}
+#endif
 		{
 			char str[1000];
 			string fname;
 
-			snprintf(str, 1000, "nth_roots_q%d_n%d.tex", F->q, n);
+			snprintf(str, 1000, "BCH_codes_q%d_n%d_d%d.tex",
+					F->q,
+					Descr->make_BCH_code_n,
+					Descr->make_BCH_code_d
+					);
 
 			fname.assign(str);
 
@@ -842,7 +922,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 				char title[1000];
 				char author[1000];
 
-				snprintf(title, 1000, "nth roots");
+				snprintf(title, 1000, "BCH codes");
 				//strcpy(author, "");
 				author[0] = 0;
 
@@ -861,7 +941,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 						NULL /* extra_praeamble */);
 
 
-				Nth->report(ost, verbose_level);
+				C->report(ost, verbose_level);
 
 				L.foot(ost);
 
@@ -871,6 +951,8 @@ void finite_field_activity::perform_activity(int verbose_level)
 			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 		}
+
+#endif
 
 	}
 	else if (Descr->f_make_BCH_code_and_encode) {

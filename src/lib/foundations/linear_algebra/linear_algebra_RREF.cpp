@@ -40,9 +40,9 @@ int linear_algebra::Gauss_int(int *A,
 	i = 0;
 	for (j = 0; j < n; j++) {
 		if (f_vv) {
-			cout << "j=" << j << endl;
+			cout << "searching for pivot element in column j=" << j << endl;
 		}
-		/* search for pivot element: */
+		// search for pivot element:
 		for (k = i; k < m; k++) {
 			if (A[k * n + j]) {
 				if (f_vv) {

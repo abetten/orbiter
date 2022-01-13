@@ -11,7 +11,8 @@ MODULES = \
 	diophant_create.o \
 	diophant_description.o \
 	diophant.o \
-	dlx.o \
+	dlx_problem_description.o \
+	dlx_solver.o \
 	mckay.o
 
 

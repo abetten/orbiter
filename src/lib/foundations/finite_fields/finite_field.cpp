@@ -104,13 +104,15 @@ void finite_field::init(finite_field_description *Descr, int verbose_level)
 		exit(1);
 	}
 
-	Linear_algebra = NEW_OBJECT(linear_algebra);
-	Linear_algebra->init(this, verbose_level);
-
-	Orthogonal_indexing = NEW_OBJECT(orthogonal_indexing);
-	Orthogonal_indexing->init(this, verbose_level);
-
 	if (Descr->f_override_polynomial) {
+
+
+		Linear_algebra = NEW_OBJECT(linear_algebra);
+		Linear_algebra->init(this, verbose_level);
+
+		Orthogonal_indexing = NEW_OBJECT(orthogonal_indexing);
+		Orthogonal_indexing->init(this, verbose_level);
+
 		if (f_v) {
 			cout << "finite_field::init override_polynomial=" << Descr->override_polynomial << endl;
 			cout << "finite_field::init before init_override_polynomial" << endl;
@@ -147,6 +149,16 @@ void finite_field::finite_field_init(int q, int f_without_tables, int verbose_le
 	if (f_v) {
 		cout << "finite_field::finite_field_init q=" << q << " verbose_level = " << verbose_level << endl;
 	}
+
+
+	Linear_algebra = NEW_OBJECT(linear_algebra);
+	Linear_algebra->init(this, verbose_level);
+
+	Orthogonal_indexing = NEW_OBJECT(orthogonal_indexing);
+	Orthogonal_indexing->init(this, verbose_level);
+
+
+
 	//nb_calls_to_finite_field_init++;
 	finite_field::q = q;
 	NT.factor_prime_power(q, p, e);
@@ -200,6 +212,7 @@ void finite_field::init_implementation(int f_without_tables, int verbose_level)
 	if (f_v) {
 		cout << "finite_field::init_implementation" << endl;
 	}
+
 
 	if (f_without_tables) {
 		if (f_v) {

@@ -2620,7 +2620,7 @@ void spread_early_test_func_callback(long int *S, int len,
 	
 	if (f_v) {
 		cout << "spread_early_test_func_callback for set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 	}
 	T->early_test_func(S, len, 

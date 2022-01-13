@@ -30,6 +30,8 @@ public:
 	int f_print;
 	int f_solve_mckay;
 	int f_solve_standard;
+	int f_solve_DLX;
+
 	int f_draw_as_bitmap;
 	int box_width;
 	int bit_depth; // 8 or 24
@@ -206,7 +208,7 @@ class diophant {
 public:
 	std::string label;
 	int m; // number of equations or inequalities
-	int n; // number of indeterminates
+	int n; // number of variables
 	int f_has_sum;
 	int sum; // constraint: sum(i=0..(n-1); x[i]) = sum 
 	int sum1;
@@ -291,7 +293,6 @@ public:
 	int solve_first(int verbose_level);
 	int solve_next();
 	int solve_first_mckay(int f_once, int verbose_level);
-	//void draw_solutions(std::string &fname_base, int verbose_level);
 	void write_solutions(std::string &fname, int verbose_level);
 	void read_solutions_from_file(std::string &fname_sol,
 		int verbose_level);
@@ -299,8 +300,7 @@ public:
 	void get_solutions_full_length(int *&Sol, int &nb_sol, 
 		int verbose_level);
 	void test_solution_full_length(int *sol, int verbose_level);
-	int solve_all_DLX(int f_write_tree, const char *fname_tree, 
-		int verbose_level);
+	int solve_all_DLX(int verbose_level);
 	int solve_all_DLX_with_RHS(int f_write_tree, const char *fname_tree, 
 		int verbose_level);
 	int solve_all_DLX_with_RHS_and_callback(int f_write_tree, 
@@ -366,12 +366,10 @@ public:
 	void draw_it(
 			std::string &fname_base,
 			layered_graph_draw_options *Draw_options,
-			//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 			int verbose_level);
 	void draw_partitioned(
 			std::string &fname_base,
 			layered_graph_draw_options *Draw_options,
-		//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 		int f_solution, int *solution, int solution_sz, 
 		int verbose_level);
 	int test_solution(int *sol, int len, int verbose_level);
@@ -400,59 +398,191 @@ void solve_diophant(int *Inc, int nb_rows, int nb_cols, int nb_needed,
 	int f_has_Rhs, int *Rhs, 
 	long int *&Solutions, int &nb_sol, long int &nb_backtrack, int &dt,
 	int f_DLX, 
-	//int f_draw_system, std::string &fname_system,
-	int f_write_tree, std::string &fname_tree,
 	int verbose_level);
 // allocates Solutions[nb_sol * target_size]
 // where target_size = starter_size + nb_needed
 
+// #############################################################################
+// dlx_problem_description.cpp
+// #############################################################################
+
+
+
+
+class dlx_problem_description {
+public:
+
+	int f_label_txt;
+	std::string label_txt;
+	int f_label_tex;
+	std::string label_tex;
+
+	int f_data_label;
+	std::string data_label;
+
+	int f_data_matrix;
+	int *data_matrix;
+	int data_matrix_m;
+	int data_matrix_n;
+
+	int f_write_solutions;
+	int f_write_tree;
+
+	int f_tracking_depth;
+	int tracking_depth;
+
+
+	dlx_problem_description();
+	~dlx_problem_description();
+	int read_arguments(
+		int argc, std::string *argv,
+		int verbose_level);
+	void print();
+
+};
+
+
 
 // #############################################################################
-// dlx.cpp
+// dlx_solver.cpp
 // #############################################################################
 
-extern int *DLX_Cur_col;
 
-void install_callback_solution_found(
-	void (*callback_solution_found)(int *solution, int len, int nb_sol, 
-		void *data),
-	void *callback_solution_found_data);
-void de_install_callback_solution_found();
-void DlxTest();
-void DlxTransposeAppendAndSolve(int *Data, int nb_rows, int nb_cols, 
-	int &nb_sol, int &nb_backtrack, 
-	int f_write_file, const char *solution_fname, 
-	int f_write_tree_file, const char *tree_fname, 
-	int verbose_level);
-void DlxTransposeAndSolveRHS(int *Data, int nb_rows, int nb_cols, 
-	int *RHS, int f_has_type, diophant_equation_type *type, 
-	int &nb_sol, int &nb_backtrack, 
-	int f_write_file, const char *solution_fname, 
-	int f_write_tree_file, const char *tree_fname, 
-	int verbose_level);
-void DlxAppendRowAndSolve(int *Data, int nb_rows, int nb_cols, 
-	int &nb_sol, int &nb_backtrack, 
-	int f_write_file, const char *solution_fname, 
-	int f_write_tree_file, const char *tree_fname, 
-	int verbose_level);
-void DlxAppendRowAndSolveRHS(int *Data, int nb_rows, int nb_cols, 
-	int *RHS, int f_has_type, diophant_equation_type *type, 
-	int &nb_sol, int &nb_backtrack, 
-	int f_write_file, const char *solution_fname, 
-	int f_write_tree_file, const char *tree_fname, 
-	int verbose_level);
-void DlxSolve(int *Data, int nb_rows, int nb_cols, 
-	int &nb_sol, int &nb_backtrack, 
-	int f_write_file, const char *solution_fname, 
-	int f_write_tree_file, const char *tree_fname, 
-	int verbose_level);
-void DlxSolve_with_RHS(int *Data, int nb_rows, int nb_cols, 
-	int *RHS, int f_has_type, diophant_equation_type *type, 
-	int &nb_sol, int &nb_backtrack, 
-	int f_write_file, const char *solution_fname, 
-	int f_write_tree_file, const char *tree_fname, 
-	int verbose_level);
-void DlxSearchRHS(int k, int verbose_level);
+
+
+class dlx_solver {
+public:
+
+	dlx_problem_description *Descr;
+
+	int *Input_data;
+	int nb_rows;
+	int nb_cols;
+
+	std::string solutions_fname;
+	std::ofstream *fp_sol;
+
+	std::string tree_fname;
+	int write_tree_cnt;
+
+	std::ofstream *fp_tree;
+
+
+	int nRow;
+	int nCol;
+
+	int f_has_RHS; // [nCol]
+	int *target_RHS; // [nCol]
+	int *current_RHS; // [nCol]
+	int *current_row; // [nCol]
+	int *current_row_save; // [sum_rhs]
+
+
+	// we allow three types of conditions:
+	// equations t_EQ
+	// inequalities t_LE
+	// zero or a fixed value t_ZOR
+
+	int f_type;
+	diophant_equation_type *type; // [nCol]
+	int *changed_type_columns; // [nCol]
+	int *nb_changed_type_columns; // [sum_rhs]
+	int nb_changed_type_columns_total;
+
+	int *Result; // [nRow]
+	int *Nb_choices; // [nRow]
+	int *Cur_choice; // [nRow]
+	int *Cur_col; // [nRow]
+	int *Nb_col_nodes; // [nCol]
+	int nb_sol;
+	int nb_backtrack_nodes;
+	dlx_node *Matrix; // [nRow * nCol]
+	dlx_node *Root;
+
+	int f_has_callback_solution_found;
+	void (*callback_solution_found)(
+			int *solution, int len, int nb_sol, void *data);
+	void *callback_solution_found_data;
+
+
+
+	dlx_solver();
+	~dlx_solver();
+	void init(
+			dlx_problem_description *Descr,
+			int verbose_level);
+	int dataLeft(int i);
+	int dataRight(int i);
+	int dataUp(int i);
+	int dataDown(int i);
+	void install_callback_solution_found(
+		void (*callback_solution_found)(
+				int *solution, int len, int nb_sol, void *data),
+		void *callback_solution_found_data);
+	void de_install_callback_solution_found();
+	void Test();
+	void TransposeAppendAndSolve(int *Data, int nb_rows, int nb_cols,
+		int verbose_level);
+	void TransposeAndSolveRHS(int *Data, int nb_rows, int nb_cols,
+		int *RHS, int f_has_type, diophant_equation_type *type,
+		int verbose_level);
+	void AppendRowAndSolve(int *Data, int nb_rows, int nb_cols,
+		int verbose_level);
+	void AppendRowAndSolveRHS(int *Data, int nb_rows, int nb_cols,
+		int *RHS, int f_has_type, diophant_equation_type *type,
+		int verbose_level);
+	void Solve(int verbose_level);
+	void Solve_with_RHS(int *RHS, int f_has_type,
+			diophant_equation_type *type,
+		int verbose_level);
+	void open_solution_file(int verbose_level);
+	void close_solution_file();
+	void open_tree_file(int verbose_level);
+	void close_tree_file();
+	void Create_RHS(int nb_cols, int *RHS, int f_has_type,
+			diophant_equation_type *type, int verbose_level);
+	void Delete_RHS();
+	void CreateMatrix(int *Data,
+			int nb_rows, int nb_cols, int verbose_level);
+	void DeleteMatrix();
+	dlx_node *get_column_header(int c);
+	dlx_node *ChooseColumnFancy();
+	dlx_node *ChooseColumn();
+	dlx_node *ChooseColumnFancyRHS();
+	dlx_node *ChooseColumnRHS();
+	void write_tree(int k);
+	void print_if_necessary(int k);
+	void process_solution(int k);
+	void count_nb_choices(int k, dlx_node *Column);
+	int IsDone();
+	int IsColumnDone(int c);
+	int IsColumnNotDone(int c);
+	void Search(int k);
+	void SearchRHS(int k, int verbose_level);
+	void Cover(dlx_node *ColNode);
+	void UnCover(dlx_node *ColNode);
+
+
+
+};
+
+//! internal class for the dancing links exact cover algorithm
+
+struct dlx_node {
+
+    dlx_node * Header;
+
+    dlx_node * Left;
+    dlx_node * Right;
+    dlx_node * Up;
+    dlx_node * Down;
+
+    int row; // row index
+    int col; // col index
+};
+
+
+
 
 
 
@@ -471,7 +601,6 @@ void DlxSearchRHS(int k, int verbose_level);
 
 
 namespace mckay {
-	// we use the MCKAY algorithm for now...
 
 
 	#include <stdio.h>

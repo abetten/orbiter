@@ -271,6 +271,7 @@ class vector_space;
 
 // coding_theory:
 class coding_theory_domain;
+class create_BCH_code;
 
 
 // combinatorics:
@@ -493,6 +494,10 @@ class diophant_activity;
 class diophant_create;
 class diophant_description;
 class diophant;
+class dlx_problem_description;
+class dlx_solver;
+struct dlx_node;
+typedef struct dlx_node *pdlx_node;
 
 // statistics:
 class tally_vector_data;

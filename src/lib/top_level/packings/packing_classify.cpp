@@ -850,7 +850,7 @@ void packing_early_test_function(long int *S, int len,
 
 	if (f_v) {
 		cout << "packing_early_test_function for set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 	}
 	a = S[len - 1];

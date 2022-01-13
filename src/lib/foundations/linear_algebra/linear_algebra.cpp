@@ -1402,10 +1402,21 @@ int linear_algebra::Gauss_easy_memory_given(int *A,
 
 int linear_algebra::Gauss_simple(int *A, int m, int n,
 		int *base_cols, int verbose_level)
+// A[m * n], base_cols[n]
 // returns the rank which is the number of entries in base_cols
 {
-	return Gauss_int(A, FALSE, TRUE, base_cols,
+	int f_v = (verbose_level >= 1);
+	int ret;
+
+	if (f_v) {
+		cout << "linear_algebra::Gauss_simple before Gauss_int" << endl;
+	}
+	ret = Gauss_int(A, FALSE, TRUE, base_cols,
 			FALSE, NULL, m, n, n, verbose_level);
+	if (f_v) {
+		cout << "linear_algebra::Gauss_simple after Gauss_int" << endl;
+	}
+	return ret;
 }
 
 void linear_algebra::kernel_columns(int n, int nb_base_cols,

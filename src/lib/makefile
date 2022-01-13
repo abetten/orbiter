@@ -17,6 +17,7 @@ MODULES= \
 		foundations/algebra/rank_checker.o \
 		foundations/algebra/vector_space.o \
 		foundations/coding_theory/coding_theory_domain.o \
+		foundations/coding_theory/create_BCH_code.o \
 		foundations/coding_theory/cyclic_codes.o \
 		foundations/coding_theory/tensor_codes.o \
 		foundations/coding_theory/mindist.o \
@@ -223,7 +224,8 @@ MODULES= \
 		foundations/solvers/diophant_create.o \
 		foundations/solvers/diophant_description.o \
 		foundations/solvers/diophant.o \
-		foundations/solvers/dlx.o \
+		foundations/solvers/dlx_problem_description.o \
+		foundations/solvers/dlx_solver.o \
 		foundations/solvers/mckay.o \
 		foundations/statistics/tally_vector_data.o \
 		foundations/statistics/tally.o \

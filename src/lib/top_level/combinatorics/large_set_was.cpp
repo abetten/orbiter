@@ -735,7 +735,7 @@ void large_set_was::normalizer_orbits_early_test_func(long int *S, int len,
 
 	if (f_v) {
 		cout << "large_set_was::normalizer_orbits_early_test_func checking set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
@@ -782,7 +782,7 @@ int large_set_was::normalizer_orbits_check_conditions(long int *S, int len, int 
 	if (f_v) {
 		cout << "large_set_was::normalizer_orbits_check_conditions "
 				"checking set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 		//cout << "offset=" << offset << endl;
 	}
@@ -832,7 +832,7 @@ void large_set_was_normalizer_orbits_early_test_func_callback(long int *S, int l
 
 	if (f_v) {
 		cout << "large_set_was_normalizer_orbits_early_test_func_callback for set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 	}
 	LSW->normalizer_orbits_early_test_func(S, len,

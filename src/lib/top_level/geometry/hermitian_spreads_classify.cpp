@@ -437,7 +437,7 @@ void hermitian_spreads_classify::early_test_func(long int *S, int len,
 
 	if (f_v) {
 		cout << "hermitian_spreads_classify::early_test_func checking set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
 		Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
@@ -484,7 +484,7 @@ void HS_early_test_func_callback(long int *S, int len,
 
 	if (f_v) {
 		cout << "HS_early_test_func for set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 	}
 	HS->early_test_func(S, len,

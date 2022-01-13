@@ -549,7 +549,7 @@ void classify_trihedral_pairs::early_test_func_type1(
 	if (f_v) {
 		cout << "classify_trihedral_pairs::early_test_func_type1 "
 				"checking set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 		cout << "good_candidates set of size "
 				<< nb_good_candidates << ":" << endl;
@@ -1308,7 +1308,7 @@ void classify_trihedral_pairs_early_test_function_type1(long int *S, int len,
 	if (f_v) {
 		cout << "classify_trihedral_pairs_early_test_function_type1 "
 				"for set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 	}
 	CT->early_test_func_type1(S, len, 
@@ -1332,7 +1332,7 @@ void classify_trihedral_pairs_early_test_function_type2(long int *S, int len,
 	if (f_v) {
 		cout << "classify_trihedral_pairs_early_test_function_type2 "
 				"for set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 	}
 	CT->early_test_func_type2(S, len, 

@@ -302,7 +302,7 @@ void tensor_classify::early_test_func(long int *S, int len,
 
 	if (f_v) {
 		cout << "tensor_classify::early_test_func checking set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
@@ -599,7 +599,7 @@ void wreath_product_rank_one_early_test_func_callback(long int *S, int len,
 
 	if (f_v) {
 		cout << "wreath_product_rank_one_early_test_func_callback for set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 	}
 	T->early_test_func(S, len,

@@ -259,6 +259,42 @@ public:
 
 };
 
+// #############################################################################
+// create_BCH_code.cpp:
+// #############################################################################
+
+//! to create a BCH code
+
+
+class create_BCH_code {
+public:
+
+	int n;
+	int d;
+	finite_field *F;
+
+	nth_roots *Nth;
+
+	unipoly_object *P;
+
+	int *Selection; // [Nth->Cyc->S->nb_sets]
+	int *Sel;  // [nb_sel]
+	int nb_sel;
+
+	int degree;
+	int k;
+	int *Genma; // [k * n]
+	int *generator_polynomial; // [degree + 1]
+
+
+
+	create_BCH_code();
+	~create_BCH_code();
+	void init(finite_field *F, int n, int d, int verbose_level);
+	void report(std::ostream &ost, int verbose_level);
+
+
+};
 
 
 }}

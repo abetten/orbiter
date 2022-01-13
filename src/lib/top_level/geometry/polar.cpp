@@ -1290,7 +1290,7 @@ void polar_callback_early_test_func(long int *S, int len,
 	
 	if (f_v) {
 		cout << "polar_callback_early_test_func for set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 		}
 	P->test_if_in_perp(S, len, 

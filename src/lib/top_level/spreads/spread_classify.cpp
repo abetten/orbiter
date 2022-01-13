@@ -704,7 +704,7 @@ void spread_classify::early_test_func(long int *S, int len,
 		
 	if (f_v) {
 		cout << "spread_classify::early_test_func checking set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
 		Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
@@ -809,7 +809,7 @@ int spread_classify::check_function(int len, long int *S, int verbose_level)
 		
 	if (f_v) {
 		cout << "spread_classify::check_function checking set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 	}
 	M1 = tmp_M1; // [kn]
@@ -886,7 +886,7 @@ int spread_classify::incremental_check_function(int len, long int *S, int verbos
 		
 	if (f_v) {
 		cout << "spread_classify::incremental_check_function checking set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 	}
 	if (len <= 1) {
@@ -1150,7 +1150,7 @@ void spread_lifting_early_test_function(long int *S, int len,
 	
 	if (f_v) {
 		cout << "spread_lifting_early_test_function for set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 	}
 	Spread->early_test_func(S, len,

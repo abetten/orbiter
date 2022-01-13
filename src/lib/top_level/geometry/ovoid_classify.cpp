@@ -339,7 +339,7 @@ void ovoid_classify::early_test_func(long int *S, int len,
 
 	if (f_v) {
 		cout << "ovoid_classify::early_test_func checking set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
@@ -870,7 +870,7 @@ void ovoid_classify_early_test_func_callback(long int *S, int len,
 
 	if (f_v) {
 		cout << "ovoid_classify_early_test_func_callback for set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 		}
 	Gen->early_test_func(S, len,

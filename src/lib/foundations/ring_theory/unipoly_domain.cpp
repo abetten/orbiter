@@ -604,7 +604,7 @@ void unipoly_domain::print_object_sparse(unipoly_object p, std::ostream &ost)
 				f_first = FALSE;
 			}
 			else {
-				cout << ",";
+				ost << ",";
 			}
 			ost << a << "," << i;
 		}

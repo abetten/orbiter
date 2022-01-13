@@ -282,7 +282,7 @@ int graph_classify::check_conditions(int len,
 	
 	if (f_v) {
 		cout << "graph_classify::check_conditions checking set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		}
 	if (Descr->f_regular && !check_regularity(S, len, verbose_level - 1)) {
 		f_not_regular = TRUE;
