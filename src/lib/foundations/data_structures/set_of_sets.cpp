@@ -710,12 +710,32 @@ void set_of_sets::print_table_latex_simple(std::ostream &ost)
 	int i;
 
 	//cout << "set of sets with " << nb_sets << " sets :" << endl;
+	ost << "\\noindent ";
 	for (i = 0; i < nb_sets; i++) {
 		//ost << "Set " << i << " has size " << Set_size[i] << " : ";
 		L.lint_set_print_tex_text_mode(ost, Sets[i], Set_size[i]);
 		//L.lint_set_print_tex(ost, Sets[i], Set_size[i]);
 		ost << "\\\\" << endl;
 		}
+	//cout << "end set of sets" << endl;
+}
+
+
+void set_of_sets::print_table_latex_simple_with_selection(std::ostream &ost, int *Selection, int nb_sel)
+{
+	latex_interface L;
+	int i, h;
+
+	//cout << "set of sets with " << nb_sets << " sets :" << endl;
+	ost << "\\noindent ";
+	for (h = 0; h < nb_sel; h++) {
+		i = Selection[h];
+		//ost << "Set " << i << " has size " << Set_size[i] << " : ";
+		L.lint_set_print_tex_text_mode(ost, Sets[i], Set_size[i]);
+		//L.lint_set_print_tex(ost, Sets[i], Set_size[i]);
+		ost << "\\\\" << endl;
+
+	}
 	//cout << "end set of sets" << endl;
 }
 

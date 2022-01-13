@@ -3025,7 +3025,8 @@ void coding_theory_domain::field_reduction(finite_field *FQ, finite_field *Fq,
 		Sub->print_embedding();
 	}
 
-	Orbiter->Int_vec.scan(genma_text, M, sz);
+	//Orbiter->Int_vec.scan(genma_text, M, sz);
+	Orbiter->get_int_vector_from_label(genma_text, M, sz, verbose_level);
 
 	if (sz != m * n) {
 		cout << "sz != m * n" << endl;

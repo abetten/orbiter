@@ -884,33 +884,6 @@ void algebra_global::do_equivalence_class_of_fractions(int N, int verbose_level)
 
 
 
-#if 0
-void algebra_global::code_weight_enumerator(finite_field *F, int *A, int m, int n, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int *weight_enumerator;
-	coding_theory_domain Code;
-	int i;
-
-	if (f_v) {
-		cout << "algebra_global::code_weight_enumerator" << endl;
-	}
-
-	Code.code_weight_enumerator(F, n, m /* k */,
-			A, // [k * n]
-			weight_enumerator, // [n + 1]
-			verbose_level);
-	cout << "The weight enumerator is:" << endl;
-	for (i = 0; i <= n; i++) {
-		cout << i << " : " << weight_enumerator[i] << endl;
-	}
-
-	if (f_v) {
-		cout << "algebra_global::code_weight_enumerator done" << endl;
-	}
-}
-#endif
-
 void algebra_global::order_of_q_mod_n(int q, int n_min, int n_max, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

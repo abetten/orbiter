@@ -1252,6 +1252,7 @@ void spreadsheet::join_with(spreadsheet *S2,
 	char *label2;
 	int tt1, tt2;
 	int f_need_to_add;
+	string_tools ST;
 
 
 	if (f_v) {
@@ -1283,7 +1284,7 @@ void spreadsheet::join_with(spreadsheet *S2,
 				}
 			//cout << "i1=" << i1 << " label="
 			//<< tokens[Table[i1 * nb_cols + by1]] << endl;
-			if (strcmp_with_or_without(
+			if (ST.strcmp_with_or_without(
 					tokens[Table[i1 * nb_cols + by1]], T2) == 0) {
 				break;
 				}
@@ -1320,7 +1321,7 @@ void spreadsheet::join_with(spreadsheet *S2,
 			if (t1 == -1) {
 				continue;
 				}
-			if (strcmp_with_or_without(tokens[t1], S2->tokens[t2]) == 0) {
+			if (ST.strcmp_with_or_without(tokens[t1], S2->tokens[t2]) == 0) {
 				break;
 				}
 			}
@@ -1365,7 +1366,7 @@ void spreadsheet::join_with(spreadsheet *S2,
 					}
 				//cout << "i1=" << i1 << " label="
 				//<< tokens[Table[i1 * nb_cols + by1]] << endl;
-				if (strcmp_with_or_without(
+				if (ST.strcmp_with_or_without(
 						tokens[Table[i1 * nb_cols + by1]], label2) == 0) {
 					break;
 					}
@@ -1391,7 +1392,7 @@ void spreadsheet::join_with(spreadsheet *S2,
 							<< tokens[tt1] << " vs "
 							<< S2->tokens[tt2] << endl;
 					}
-				if (strcmp_with_or_without(tokens[tt1],
+				if (ST.strcmp_with_or_without(tokens[tt1],
 						S2->tokens[tt2]) == 0) {
 					f_need_to_add = FALSE;
 					}

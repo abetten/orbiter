@@ -848,18 +848,28 @@ class nth_roots {
 public:
 
 	int n;
-	finite_field *F;
+	finite_field *F; // F_q where q = p^e
 	unipoly_object *Beta;
 	unipoly_object *Fq_Elements;
 
-	unipoly_object M;
-	finite_field *Fp;
+	unipoly_object Min_poly;
+		// Min_poly = irreducible polynomial over F->p of degree field_degree
+
+	finite_field *Fp; // the prime field F_p
 	unipoly_domain *FpX;
-	unipoly_domain *Fq;
+	unipoly_domain *Fq; // polynomial ring F_p modulo Min_poly
 	unipoly_domain *FX;
 
 	int m, r, field_degree;
-	longinteger_object *Qm1, *Index, *Subfield_Index;
+		// m is the order of q modulo n
+		// field_degree = e * m
+
+	longinteger_object *Qm, *Qm1, *Index, *Subfield_Index;
+		// Qm = q^m
+		// Qm1 = q^m - 1
+		// Index = Qm1 / n
+		// Subfield_Index = Qm1 / (q - 1)
+
 	cyclotomic_sets *Cyc;
 	unipoly_object **generator;
 
@@ -875,7 +885,8 @@ public:
 	nth_roots();
 	~nth_roots();
 	void init(finite_field *F, int n, int verbose_level);
-	void compute_subfield(int subfield_degree, int *&field_basis, int verbose_level);
+	void compute_subfield(int subfield_degree,
+			int *&field_basis, int verbose_level);
 	void report(std::ostream &ost, int verbose_level);
 
 };

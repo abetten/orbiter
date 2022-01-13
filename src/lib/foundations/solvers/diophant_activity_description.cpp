@@ -23,6 +23,8 @@ diophant_activity_description::diophant_activity_description()
 	f_print = FALSE;
 	f_solve_mckay = FALSE;
 	f_solve_standard = FALSE;
+	f_solve_DLX = FALSE;
+
 	f_draw_as_bitmap = FALSE;
 	box_width = 1;
 	bit_depth = 8;
@@ -83,6 +85,12 @@ int diophant_activity_description::read_arguments(
 			f_solve_standard = TRUE;
 			if (f_v) {
 				cout << "-solve_standard " << endl;
+			}
+		}
+		else if (stringcmp(argv[i], "-solve_DLX") == 0) {
+			f_solve_DLX = TRUE;
+			if (f_v) {
+				cout << "-solve_DLX " << endl;
 			}
 		}
 		else if (stringcmp(argv[i], "-draw_as_bitmap") == 0) {
@@ -161,6 +169,9 @@ void diophant_activity_description::print()
 	}
 	if (f_solve_standard) {
 		cout << "-solve_standard " << endl;
+	}
+	if (f_solve_DLX) {
+		cout << "-solve_DLX " << endl;
 	}
 	if (f_draw_as_bitmap) {
 		cout << "-draw_as_bitmap " << box_width << " " << bit_depth << endl;

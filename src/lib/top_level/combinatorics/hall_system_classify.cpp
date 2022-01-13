@@ -485,7 +485,7 @@ void hall_system_classify::early_test_func(long int *S, int len,
 
 	if (f_v) {
 		cout << "hall_system_classify::early_test_func checking set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
 		Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
@@ -634,7 +634,7 @@ void hall_system_early_test_function(long int *S, int len,
 
 	if (f_v) {
 		cout << "hall_system_early_test_function for set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 	}
 	H->early_test_func(S, len,

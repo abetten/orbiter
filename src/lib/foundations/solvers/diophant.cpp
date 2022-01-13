@@ -1195,21 +1195,19 @@ void diophant::test_solution_full_length(int *sol, int verbose_level)
 	}
 }
 
-int diophant::solve_all_DLX(int f_write_tree,
-		const char *fname_tree, int verbose_level)
+int diophant::solve_all_DLX(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "diophant::solve_all_DLX verbose_level="
 				<< verbose_level << endl;
-		}
-	install_callback_solution_found(
-		diophant_callback_solution_found,
-		this);
+	}
+	//install_callback_solution_found(diophant_callback_solution_found, this);
+
 	int *Inc;
 	int i, j;
-	int nb_sol, nb_backtrack;
+	//int nb_sol, nb_backtrack;
 
 	Inc = NEW_int(m * n);
 	for (i = 0; i < m; i++) {
@@ -1219,25 +1217,66 @@ int diophant::solve_all_DLX(int f_write_tree,
 	}
 
 	_resultanz = 0;
+
+	dlx_problem_description Descr;
+
+	Descr.f_label_txt = TRUE;
+	Descr.label_txt.assign(label);
+	Descr.f_label_tex = TRUE;
+	Descr.label_tex.assign(label);
+
+	Descr.f_data_matrix = TRUE;
+	Descr.data_matrix = Inc;
+	Descr.data_matrix_m = m;
+	Descr.data_matrix_n = n;
+
+	dlx_solver Solver;
+
+	if (f_v) {
+		cout << "diophant::solve_all_DLX before Solver.init" << endl;
+	}
+	Solver.init(&Descr, verbose_level);
+	if (f_v) {
+		cout << "diophant::solve_all_DLX after Solver.init" << endl;
+	}
+	Solver.install_callback_solution_found(diophant_callback_solution_found, this);
+
+
+	if (f_v) {
+		cout << "diophant::solve_all_DLX before Solver.Solve" << endl;
+	}
+	Solver.Solve(verbose_level);
+	if (f_v) {
+		cout << "diophant::solve_all_DLX after Solver.Solve" << endl;
+	}
+
 	
+#if 0
 	DlxTransposeAppendAndSolve(Inc, m, n, nb_sol, nb_backtrack, 
 		FALSE, "", 
-		f_write_tree, fname_tree, 
 		verbose_level - 1);
-	
+
 	nb_steps_betten = nb_backtrack;
+#endif
+
+	nb_steps_betten = Solver.nb_backtrack_nodes;
+	
+
 	FREE_int(Inc);
 	if (f_v) {
 		cout << "diophant::solve_all_DLX done found " << _resultanz
-			<< " solutions with " << nb_backtrack
+			<< " solutions with " << nb_steps_betten
 			<< " backtrack steps" << endl;
 	}
+
 	return _resultanz;
 }
 
 int diophant::solve_all_DLX_with_RHS(int f_write_tree,
 		const char *fname_tree, int verbose_level)
 {
+	cout << "diophant::solve_all_DLX_with_RHS disabled" << endl;
+#if 0
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 
@@ -1303,6 +1342,7 @@ int diophant::solve_all_DLX_with_RHS(int f_write_tree,
 			<< _resultanz << " solutions with " << nb_backtrack
 			<< " backtrack steps" << endl;
 	}
+#endif
 	return _resultanz;
 }
 
@@ -1312,6 +1352,9 @@ int diophant::solve_all_DLX_with_RHS_and_callback(
 			int len, int nb_sol, void *data),
 	int verbose_level)
 {
+	cout << "diophant::solve_all_DLX_with_RHS_and_callback disabled" << endl;
+
+#if 0
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 
@@ -1381,6 +1424,7 @@ int diophant::solve_all_DLX_with_RHS_and_callback(
 				<< _resultanz << " solutions with " << nb_backtrack
 				<< " backtrack steps" << endl;
 	}
+#endif
 	return _resultanz;
 }
 
@@ -3994,7 +4038,6 @@ void diophant::draw_as_bitmap(std::string &fname,
 void diophant::draw_it(
 		std::string &fname_base,
 		layered_graph_draw_options *Draw_options,
-		//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 		int verbose_level)
 {
 	int f_dots = FALSE;
@@ -4002,22 +4045,17 @@ void diophant::draw_it(
 	int f_bitmatrix = FALSE;
 	int f_row_grid = FALSE;
 	int f_col_grid = FALSE;
-	//double scale = 0.5;
-	//double line_width = 0.5;
 	graph_theory_domain Graph;
 
 
 	Graph.draw_bitmatrix(
 			fname_base,
 			Draw_options,
-			//fname_base,
 			f_dots,
 		f_partition, 0, NULL, 0, NULL, 
 		f_row_grid, f_col_grid, 
 		f_bitmatrix, NULL, A, 
 		m, n,
-		//xmax_in, ymax_in, xmax_out, ymax_out,
-		//scale, line_width,
 		FALSE, NULL,
 		verbose_level);
 }
@@ -4025,15 +4063,12 @@ void diophant::draw_it(
 void diophant::draw_partitioned(
 		std::string &fname_base,
 		layered_graph_draw_options *Draw_options,
-	//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 	int f_solution, int *solution, int solution_sz, 
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_dots = FALSE;
 	int f_bitmatrix = FALSE;
-	//double scale = 0.5;
-	//double line_width = 0.5;
 	int i, ii, j, jj;
 	combinatorics_domain Combi;
 	graph_theory_domain Graph;
@@ -4152,14 +4187,11 @@ void diophant::draw_partitioned(
 	Graph.draw_bitmatrix(
 			fname_base,
 			Draw_options,
-			//fname_base,
 			f_dots,
 		TRUE /* f_partition */, C.nb_types, part, col_part_size, part_col, 
 		f_row_grid, f_col_grid, 
 		f_bitmatrix, NULL,
 		A2, m, n,
-		//xmax_in, ymax_in, xmax_out, ymax_out,
-		//scale, line_width,
 		FALSE, NULL, verbose_level - 1);
 
 
@@ -4580,7 +4612,7 @@ void diophant_callback_solution_found(int *sol, int len,
 		cout << "D->_resultanz=" << D->_resultanz << endl;
 
 		for (i = 0; i < len; i++) {
-			cout << DLX_Cur_col[i] << "/" << sol[i];
+			cout << 0 /*DLX_Cur_col[i]*/ << "/" << sol[i];
 			if (i < len - 1) {
 				cout << ", ";
 			}
@@ -4623,14 +4655,10 @@ void solve_diophant(int *Inc,
 	int f_has_Rhs, int *Rhs, 
 	long int *&Solutions, int &nb_sol, long int &nb_backtrack, int &dt,
 	int f_DLX, 
-	//int f_draw_system, std::string &fname_system,
-	int f_write_tree, std::string &fname_tree,
 	int verbose_level)
 // allocates Solutions[nb_sol * nb_needed]
 {
 	int f_v = (verbose_level >= 1);
-	//int f_v4 = FALSE; //(verbose_level >= 2);
-	//int i, j;
 	diophant *Dio;
 	os_interface Os;
 	int t0 = Os.os_ticks();
@@ -4639,7 +4667,6 @@ void solve_diophant(int *Inc,
 		cout << "solve_diophant nb_rows=" << nb_rows << " nb_cols="
 			<< nb_cols << " f_has_Rhs=" << f_has_Rhs
 			<< " verbose_level=" << verbose_level << endl;
-		cout << "f_write_tree=" << f_write_tree << endl;
 		cout << "f_DLX=" << f_DLX << endl;
 		//int_matrix_print(Inc, nb_rows, nb_cols);
 		}
@@ -4657,29 +4684,12 @@ void solve_diophant(int *Inc,
 			0 /* verbose_level */);
 	}
 
-#if 0
-	if (f_draw_system) {
-		int xmax_in = 1000000;
-		int ymax_in = 1000000;
-		int xmax_out = 1000000;
-		int ymax_out = 1000000;
-		
-		if (f_v) {
-			cout << "solve_diophant drawing the system" << endl;
-		}
-		Dio->draw_it(fname_system, xmax_in, ymax_in, xmax_out, ymax_out, verbose_level - 1);
-		if (f_v) {
-			cout << "solve_diophant drawing the system done" << endl;
-		}
-	}
-#endif
-
 	if (FALSE /*f_v4*/) {
 		Dio->print();
 	}
 
 	if (f_DLX && !f_has_Rhs) {
-		Dio->solve_all_DLX(f_write_tree, fname_tree.c_str(), 0 /* verbose_level*/);
+		Dio->solve_all_DLX(0 /* verbose_level*/);
 		nb_backtrack = Dio->nb_steps_betten;
 	}
 	else {

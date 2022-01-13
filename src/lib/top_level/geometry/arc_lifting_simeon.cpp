@@ -177,7 +177,7 @@ void arc_lifting_simeon::early_test_func(long int *S, int len,
 
 	if (f_v) {
 		cout << "arc_lifting_simeon::early_test_func checking set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
@@ -511,7 +511,7 @@ void early_test_func_for_arc_callback(long int *S, int len,
 
 	if (f_v) {
 		cout << "early_test_func_for_arc_callback for set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 		}
 	Simeon->early_test_func(S, len,

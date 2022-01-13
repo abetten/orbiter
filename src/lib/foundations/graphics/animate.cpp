@@ -534,8 +534,10 @@ void animate::animate_one_round(
 					str[h] = 0;
 					}
 
+				string_tools ST;
+
 				if ((int) strlen(str) + Opt->round_text_sustain[i] > h &&
-						(int) strlen(str) && !is_all_whitespace(str)) {
+						(int) strlen(str) && !ST.is_all_whitespace(str)) {
 					int font_size = 36;
 					int stroke_width = 1;
 

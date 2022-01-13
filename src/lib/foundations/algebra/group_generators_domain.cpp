@@ -1283,9 +1283,9 @@ void group_generators_domain::projective_matrix_group_base_and_orbits(int n, fin
 		}
 
 		if (FALSE) {
-			print_set_lint(cout, degree, orbit[i]);
+			Orbiter->Lint_vec.print(cout, orbit[i], degree);
 			cout << endl;
-			print_set_lint(cout, degree, orbit_inv[i]);
+			Orbiter->Lint_vec.print(cout, orbit_inv[i], degree);
 			cout << endl;
 		}
 	}
@@ -1308,9 +1308,9 @@ void group_generators_domain::projective_matrix_group_base_and_orbits(int n, fin
 		}
 
 		if (FALSE) {
-			print_set_lint(cout, degree, orbit[i]);
+			Orbiter->Lint_vec.print(cout, orbit[i], degree);
 			cout << endl;
-			print_set_lint(cout, degree, orbit_inv[i]);
+			Orbiter->Lint_vec.print(cout, orbit_inv[i], degree);
 			cout << endl;
 		}
 		i++;
@@ -1335,9 +1335,9 @@ void group_generators_domain::projective_matrix_group_base_and_orbits(int n, fin
 		}
 
 		if (FALSE) {
-			print_set_lint(cout, degree, orbit[i]);
+			Orbiter->Lint_vec.print(cout, orbit[i], degree);
 			cout << endl;
-			print_set_lint(cout, degree, orbit_inv[i]);
+			Orbiter->Lint_vec.print(cout, orbit_inv[i], degree);
 			cout << endl;
 		}
 		i++;

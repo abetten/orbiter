@@ -722,7 +722,7 @@ void poset_classification_control_early_test_function_cliques(long int *S, int l
 
 	if (f_v) {
 		cout << "poset_classification_control_early_test_function_cliques for set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 	}
 

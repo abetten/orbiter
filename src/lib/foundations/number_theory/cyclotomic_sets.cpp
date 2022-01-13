@@ -151,6 +151,11 @@ void cyclotomic_sets::print_latex(std::ostream &ost)
 	S->print_table_latex_simple(ost);
 }
 
+void cyclotomic_sets::print_latex_with_selection(std::ostream &ost, int *Selection, int nb_sel)
+{
+	S->print_table_latex_simple_with_selection(ost, Selection, nb_sel);
+}
+
 
 }}
 

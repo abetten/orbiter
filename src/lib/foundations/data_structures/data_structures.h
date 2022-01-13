@@ -1044,6 +1044,7 @@ public:
 	void print_table();
 	void print_table_tex(std::ostream &ost);
 	void print_table_latex_simple(std::ostream &ost);
+	void print_table_latex_simple_with_selection(std::ostream &ost, int *Selection, int nb_sel);
 	void dualize(set_of_sets *&S, int verbose_level);
 	void remove_sets_of_given_size(int k, 
 		set_of_sets &S, int *&Idx, 
@@ -1469,6 +1470,9 @@ public:
 	void string_fix_escape_characters(std::string &str);
 	void remove_specific_character(std::string &str, char c);
 	void create_comma_separated_list(std::string &output, long int *input, int input_sz);
+	int is_all_whitespace(const char *str);
+	void text_to_three_double(std::string &text, double *d);
+	int strcmp_with_or_without(char *p, char *q);
 
 
 };

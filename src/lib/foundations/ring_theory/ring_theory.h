@@ -595,6 +595,8 @@ public:
 			finite_field *F,
 		int *S, unipoly_domain &D, unipoly_object &poly,
 		int verbose_level);
+	void print_longinteger_after_multiplying(std::ostream &ost,
+			int *factors, int len);
 
 };
 

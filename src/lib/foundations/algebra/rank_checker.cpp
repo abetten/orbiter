@@ -63,7 +63,7 @@ int rank_checker::check_rank(int len, long int *S, int verbose_level)
 	
 	if (f_v) {
 		cout << "rank_checker::check_rank: checking the set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 	}
 	// M1 will be used as a m x len matrix
@@ -221,7 +221,7 @@ int rank_checker::check_rank_last_two_are_fixed(
 	if (f_v) {
 		cout << "rank_checker::check_rank_last_two_are_fixed: "
 				"checking the set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 	}
 	// M1 will be used as a m x len matrix
@@ -311,7 +311,7 @@ int rank_checker::compute_rank_row_vectors(
 	
 	if (f_vv) {
 		cout << "rank_checker::compute_rank_row_vectors set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 	}
 	// M1 will be used as a len x n matrix

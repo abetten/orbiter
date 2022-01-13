@@ -43,7 +43,7 @@ public:
 	void RREF_demo(
 			finite_field *F,
 			int *A, int m, int n, int verbose_level);
-	void RREF_demo2(
+	void RREF_with_steps_latex(
 			finite_field *F,
 			std::ostream &ost, int *A, int m, int n, int verbose_level);
 

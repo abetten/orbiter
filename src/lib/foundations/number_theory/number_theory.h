@@ -39,6 +39,8 @@ public:
 	void init(finite_field *F, int n, int verbose_level);
 	void print();
 	void print_latex(std::ostream &ost);
+	void print_latex_with_selection(std::ostream &ost, int *Selection, int nb_sel);
+
 };
 
 

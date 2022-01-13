@@ -407,6 +407,10 @@ void linear_algebra_global::do_RREF(
 	A = NEW_int(n * n);
 	base_cols = NEW_int(n);
 	Orbiter->Int_vec.copy(M, A, m * n);
+	if (f_v) {
+		cout << "linear_algebra_global::do_RREF input matrix A:" << endl;
+		Orbiter->Int_vec.matrix_print(A, m, n);
+	}
 
 	rk = F->Linear_algebra->Gauss_int(A,
 		FALSE /* f_special */, TRUE /* f_complete */, base_cols,
@@ -518,11 +522,11 @@ void linear_algebra_global::RREF_demo(
 
 
 			if (f_v) {
-				cout << "linear_algebra_global::RREF_demo before report" << endl;
+				cout << "linear_algebra_global::RREF_demo before RREF_with_steps_latex" << endl;
 			}
-			RREF_demo2(F, ost, A, m, n, verbose_level);
+			RREF_with_steps_latex(F, ost, A, m, n, verbose_level);
 			if (f_v) {
-				cout << "linear_algebra_global::RREF_demo after report" << endl;
+				cout << "linear_algebra_global::RREF_demo after RREF_with_steps_latex" << endl;
 			}
 
 
@@ -541,7 +545,7 @@ void linear_algebra_global::RREF_demo(
 	}
 }
 
-void linear_algebra_global::RREF_demo2(
+void linear_algebra_global::RREF_with_steps_latex(
 		finite_field *F,
 		std::ostream &ost, int *A, int m, int n, int verbose_level)
 {
@@ -552,15 +556,15 @@ void linear_algebra_global::RREF_demo2(
 	int cnt = 0;
 
 	if (f_v) {
-		cout << "linear_algebra_global::RREF_demo2" << endl;
+		cout << "linear_algebra_global::RREF_with_steps_latex" << endl;
 	}
 
 
 	ost << "{\\bf \\Large" << endl;
 
 	ost << endl;
-	ost << "\\clearpage" << endl;
-	ost << "\\vspace*{\\fill}" << endl;
+	//ost << "\\clearpage" << endl;
+	//ost << "\\vspace*{\\fill}" << endl;
 	ost << endl;
 
 	ost << "\\noindent A matrix over the field ${\\mathbb F}_{" << F->q << "}$\\\\" << endl;
@@ -572,7 +576,7 @@ void linear_algebra_global::RREF_demo2(
 	cnt++;
 	if ((cnt % 3) == 0) {
 		ost << endl;
-		ost << "\\clearpage" << endl;
+		//ost << "\\clearpage" << endl;
 		ost << endl;
 	}
 
@@ -583,7 +587,7 @@ void linear_algebra_global::RREF_demo2(
 	while (TRUE) {
 		if (F->Linear_algebra->RREF_search_pivot(A, m, n,
 			i, j, base_cols, verbose_level)) {
-			ost << "\\noindent  i=" << i << " j=" << j << ", found pivot in column " << base_cols[i] << "\\\\" << endl;
+			ost << "\\noindent  Position $(i,j)=(" << i << "," << j << "),$ found pivot in column " << base_cols[i] << "\\\\" << endl;
 			ost << "$$" << endl;
 			ost << "\\left[" << endl;
 			Li.int_matrix_print_tex(ost, A, m, n);
@@ -592,8 +596,8 @@ void linear_algebra_global::RREF_demo2(
 			cnt++;
 			if ((cnt % 3) == 0) {
 				ost << endl;
-				ost << "\\clearpage" << endl;
-				ost << "\\vspace*{\\fill}" << endl;
+				//ost << "\\clearpage" << endl;
+				//ost << "\\vspace*{\\fill}" << endl;
 				ost << endl;
 			}
 
@@ -608,8 +612,8 @@ void linear_algebra_global::RREF_demo2(
 			cnt++;
 			if ((cnt % 3) == 0) {
 				ost << endl;
-				ost << "\\clearpage" << endl;
-				ost << "\\vspace*{\\fill}" << endl;
+				//ost << "\\clearpage" << endl;
+				//ost << "\\vspace*{\\fill}" << endl;
 				ost << endl;
 			}
 
@@ -624,21 +628,21 @@ void linear_algebra_global::RREF_demo2(
 			cnt++;
 			if ((cnt % 3) == 0) {
 				ost << endl;
-				ost << "\\clearpage" << endl;
-				ost << "\\vspace*{\\fill}" << endl;
+				//ost << "\\clearpage" << endl;
+				//ost << "\\vspace*{\\fill}" << endl;
 				ost << endl;
 			}
 
 		}
 		else {
 			rk = i;
-			ost << "Did not find pivot. The rank is " << rk << "\\\\" << endl;
+			ost << "Did not find pivot. The rank of the matrix is " << rk << ".\\\\" << endl;
 			break;
 		}
 	}
 	for (i = rk - 1; i >= 0; i--) {
 		F->Linear_algebra->RREF_elimination_above(A, m, n, i, base_cols, verbose_level);
-		ost << "\\noindent After elimination above pivot " << i << ":\\\\" << endl;
+		ost << "\\noindent After elimination above pivot " << i << " in position (" << i << "," << base_cols[i] << "):\\\\" << endl;
 		ost << "$$" << endl;
 		ost << "\\left[" << endl;
 		Li.int_matrix_print_tex(ost, A, m, n);
@@ -647,8 +651,8 @@ void linear_algebra_global::RREF_demo2(
 		cnt++;
 		if ((cnt % 3) == 0) {
 			ost << endl;
-			ost << "\\clearpage" << endl;
-			ost << "\\vspace*{\\fill}" << endl;
+			//ost << "\\clearpage" << endl;
+			//ost << "\\vspace*{\\fill}" << endl;
 			ost << endl;
 		}
 	}
@@ -662,7 +666,7 @@ void linear_algebra_global::RREF_demo2(
 	FREE_int(base_cols);
 
 	if (f_v) {
-		cout << "linear_algebra_global::RREF_demo2 done" << endl;
+		cout << "linear_algebra_global::RREF_with_steps_latex done" << endl;
 	}
 
 }

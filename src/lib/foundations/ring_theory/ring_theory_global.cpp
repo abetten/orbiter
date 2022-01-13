@@ -2787,6 +2787,16 @@ void ring_theory_global::oval_polynomial(
 	}
 }
 
+void ring_theory_global::print_longinteger_after_multiplying(
+		ostream &ost, int *factors, int len)
+{
+	longinteger_domain D;
+	longinteger_object a;
+
+	D.multiply_up(a, factors, len, 0 /* verbose_level */);
+	ost << a;
+}
+
 
 #if 0
 void finite_field::do_ideal(int n,

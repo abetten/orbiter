@@ -395,7 +395,7 @@ void diophant_create::init(
 		}
 		if (n1 != 2) {
 			cout << "reading RHS from file " << Descr->x_bounds_csv
-					<< ". Csv file must have exactly 2 columns." << endl;
+					<< ". The csv file must have exactly 2 columns." << endl;
 			exit(1);
 		}
 		for (j = 0; j < D->n; j++) {

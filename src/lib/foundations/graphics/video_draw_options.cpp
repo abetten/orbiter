@@ -157,6 +157,7 @@ int video_draw_options::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "video_draw_options::read_arguments" << endl;
@@ -192,7 +193,7 @@ int video_draw_options::read_arguments(
 			f_rotate = TRUE;
 			rotation_axis_type = 3;
 
-			text_to_three_double(argv[++i], rotation_axis_custom);
+			ST.text_to_three_double(argv[++i], rotation_axis_custom);
 			if (f_v) {
 				cout << "-rotate_about_custom_axis " << endl;
 			}
@@ -301,9 +302,9 @@ int video_draw_options::read_arguments(
 			numerics Num;
 
 
-			text_to_three_double(argv[++i], pan_from + nb_pan * 3);
-			text_to_three_double(argv[++i], pan_to + nb_pan * 3);
-			text_to_three_double(argv[++i], pan_center + nb_pan * 3);
+			ST.text_to_three_double(argv[++i], pan_from + nb_pan * 3);
+			ST.text_to_three_double(argv[++i], pan_to + nb_pan * 3);
+			ST.text_to_three_double(argv[++i], pan_center + nb_pan * 3);
 
 			if (f_v) {
 				cout << "video_draw_options::read_arguments -pan "
@@ -324,9 +325,9 @@ int video_draw_options::read_arguments(
 			numerics Num;
 
 
-			text_to_three_double(argv[++i], pan_from + nb_pan * 3);
-			text_to_three_double(argv[++i], pan_to + nb_pan * 3);
-			text_to_three_double(argv[++i], pan_center + nb_pan * 3);
+			ST.text_to_three_double(argv[++i], pan_from + nb_pan * 3);
+			ST.text_to_three_double(argv[++i], pan_to + nb_pan * 3);
+			ST.text_to_three_double(argv[++i], pan_center + nb_pan * 3);
 
 			if (f_v) {
 				cout << "-pan_reverse "
@@ -362,9 +363,9 @@ int video_draw_options::read_arguments(
 
 
 
-			text_to_three_double(argv[++i], camera_sky + nb_camera * 3);
-			text_to_three_double(argv[++i], camera_location + nb_camera * 3);
-			text_to_three_double(argv[++i], camera_look_at + nb_camera * 3);
+			ST.text_to_three_double(argv[++i], camera_sky + nb_camera * 3);
+			ST.text_to_three_double(argv[++i], camera_location + nb_camera * 3);
+			ST.text_to_three_double(argv[++i], camera_look_at + nb_camera * 3);
 
 			if (f_v) {
 				cout << "-camera "
@@ -480,7 +481,7 @@ int video_draw_options::read_arguments(
 			//look_at = argv[++i];
 			f_look_at = TRUE;
 
-			text_to_three_double(argv[++i], look_at);
+			ST.text_to_three_double(argv[++i], look_at);
 			if (f_v) {
 				cout << "-look_at "
 						<< look_at[0] << " " << look_at[1] << " " << look_at[2] << " " << endl;

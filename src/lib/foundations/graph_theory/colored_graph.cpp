@@ -2255,7 +2255,7 @@ void colored_graph::early_test_func_for_clique_search(
 
 	if (f_v) {
 		cout << "colored_graph::early_test_func_for_clique_search checking set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
@@ -2294,7 +2294,7 @@ void colored_graph::early_test_func_for_coclique_search(
 	if (f_v) {
 		cout << "colored_graph::early_test_func_for_"
 				"coclique_search checking set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
@@ -2335,7 +2335,7 @@ void colored_graph::early_test_func_for_path_and_cycle_search(
 	if (f_v) {
 		cout << "colored_graph::early_test_func_for_path_and_"
 				"cycle_search checking set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;

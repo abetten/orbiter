@@ -1016,4 +1016,80 @@ void string_tools::create_comma_separated_list(std::string &output, long int *in
 
 }
 
+
+int string_tools::is_all_whitespace(const char *str)
+{
+	int i, l;
+
+	l = strlen(str);
+	for (i = 0; i < l; i++) {
+		if (str[i] == ' ') {
+			continue;
+		}
+		if (str[i] == '\\') {
+			i++;
+			if (str[i] == 0) {
+				return TRUE;
+			}
+			if (str[i] == 'n') {
+				continue;
+			}
+		}
+		return FALSE;
+	}
+	return TRUE;
+}
+
+void string_tools::text_to_three_double(std::string &text, double *d)
+{
+	double *data;
+	int data_sz;
+	numerics Num;
+
+	Num.vec_scan(text.c_str(), data, data_sz);
+	if (data_sz != 3) {
+		cout << "string_tools::text_to_three_double "
+				"data_sz != 3, data_sz = " << data_sz << endl;
+		exit(1);
+	}
+	d[0] = data[0];
+	d[1] = data[1];
+	d[2] = data[2];
+	delete [] data;
+
+}
+
+int string_tools::strcmp_with_or_without(char *p, char *q)
+{
+	char *str1;
+	char *str2;
+	int ret;
+
+	if (p[0] == '"') {
+		str1 = NEW_char(strlen(p) + 1);
+		strcpy(str1, p);
+	}
+	else {
+		str1 = NEW_char(strlen(p) + 3);
+		strcpy(str1, "\"");
+		strcpy(str1 + strlen(str1), p);
+		strcpy(str1 + strlen(str1), "\"");
+	}
+	if (q[0] == '"') {
+		str2 = NEW_char(strlen(q) + 1);
+		strcpy(str2, q);
+	}
+	else {
+		str2 = NEW_char(strlen(q) + 3);
+		strcpy(str2, "\"");
+		strcpy(str2 + strlen(str2), q);
+		strcpy(str2 + strlen(str2), "\"");
+	}
+	ret = strcmp(str1, str2);
+	FREE_char(str1);
+	FREE_char(str2);
+	return ret;
+}
+
+
 }}

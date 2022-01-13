@@ -582,7 +582,7 @@ void classify_double_sixes::partial_ovoid_test_early(long int *S, int len,
 
 	if (f_v) {
 		cout << "classify_double_sixes::partial_ovoid_test_early checking set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;

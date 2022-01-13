@@ -1553,7 +1553,7 @@ void blt_set_classify_early_test_func_callback(long int *S, int len,
 
 	if (f_v) {
 		cout << "blt_set_early_test_func for set ";
-		print_set(cout, len, S);
+		Orbiter->Lint_vec.print(cout, S, len);
 		cout << endl;
 	}
 	BLT->Blt_set_domain->early_test_func(S, len,
