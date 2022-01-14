@@ -1091,5 +1091,66 @@ int string_tools::strcmp_with_or_without(char *p, char *q)
 	return ret;
 }
 
+int string_tools::starts_with_a_number(std::string &str)
+{
+	char c;
+
+	c = str.c_str()[0];
+	if (c >= '0' && c <= '9') {
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
+}
+
+int string_tools::stringcmp(std::string &str, const char *p)
+{
+	return strcmp(str.c_str(), p);
+}
+
+int string_tools::strtoi(std::string &str)
+{
+	int i;
+
+	i = atoi(str.c_str());
+	return i;
+}
+
+int string_tools::str2int(std::string &str)
+{
+	int i, res, l;
+
+	l = (int) str.length();
+	res = 0;
+	for (i = 0; i < l; i++) {
+		res = (res * 10) + (str[i] - 48);
+	}
+	return res;
+}
+
+long int string_tools::strtolint(std::string &str)
+{
+	long int i;
+
+	i = atol(str.c_str());
+	return i;
+}
+
+double string_tools::strtof(std::string &str)
+{
+	double f;
+
+	f = atof(str.c_str());
+	return f;
+}
+
+int string_tools_compare_strings(void *a, void *b, void *data)
+{
+	char *A = (char *) a;
+	char *B = (char *) b;
+	return strcmp(A, B);
+}
+
 
 }}

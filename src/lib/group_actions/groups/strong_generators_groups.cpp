@@ -2654,7 +2654,7 @@ void strong_generators::stabilizer_of_cubic_surface_from_catalogue(
 	int *data;
 	int nb_gens;
 	int data_size;
-	const char *ascii_target_go;
+	string ascii_target_go;
 	longinteger_object target_go;
 	knowledge_base K;
 	
@@ -2726,7 +2726,7 @@ void strong_generators::stabilizer_of_quartic_curve_from_catalogue(
 	int *data;
 	int nb_gens;
 	int data_size;
-	const char *ascii_target_go;
+	string ascii_target_go;
 	longinteger_object target_go;
 	knowledge_base K;
 
@@ -3014,7 +3014,7 @@ void strong_generators::BLT_set_from_catalogue_stabilizer(
 	int *data;
 	int nb_gens;
 	int data_size;
-	const char *ascii_target_go;
+	string ascii_target_go;
 	longinteger_object target_go;
 	int i;
 	knowledge_base K;
@@ -3092,7 +3092,7 @@ void strong_generators::stabilizer_of_spread_from_catalogue(
 	int *data;
 	int nb_gens;
 	int data_size;
-	const char *ascii_target_go;
+	string ascii_target_go;
 	longinteger_object target_go;
 	int i;
 	knowledge_base K;

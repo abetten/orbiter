@@ -60,60 +60,61 @@ int create_file_description::read_arguments(
 	int verbose_level)
 {
 	int i;
+	string_tools ST;
 
 	cout << "create_file_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
-		if (stringcmp(argv[i], "-file_mask") == 0) {
+		if (ST.stringcmp(argv[i], "-file_mask") == 0) {
 			f_file_mask = TRUE;
 			file_mask.assign(argv[++i]);
 			cout << "-file_mask " << file_mask << endl;
 		}
-		else if (stringcmp(argv[i], "-N") == 0) {
+		else if (ST.stringcmp(argv[i], "-N") == 0) {
 			f_N = TRUE;
-			N = strtoi(argv[++i]);
+			N = ST.strtoi(argv[++i]);
 			cout << "-N " << N << endl;
 		}
-		else if (stringcmp(argv[i], "-read_cases") == 0) {
+		else if (ST.stringcmp(argv[i], "-read_cases") == 0) {
 			f_read_cases = TRUE;
 			read_cases_fname.assign(argv[++i]);
 			cout << "-read_cases " << read_cases_fname << endl;
 		}
-		else if (stringcmp(argv[i], "-read_cases_text") == 0) {
+		else if (ST.stringcmp(argv[i], "-read_cases_text") == 0) {
 			f_read_cases_text = TRUE;
 			read_cases_fname.assign(argv[++i]);
-			read_cases_column_of_case = strtoi(argv[++i]);
-			read_cases_column_of_fname = strtoi(argv[++i]);
+			read_cases_column_of_case = ST.strtoi(argv[++i]);
+			read_cases_column_of_fname = ST.strtoi(argv[++i]);
 			cout << "-read_cases_text " << read_cases_fname << " "
 					<< read_cases_column_of_case << " "
 					<< read_cases_column_of_fname << endl;
 		}
-		else if (stringcmp(argv[i], "-line") == 0) {
+		else if (ST.stringcmp(argv[i], "-line") == 0) {
 			lines[nb_lines].assign(argv[++i]);
 			f_line_numeric[nb_lines] = FALSE;
 			cout << "-line " << lines[nb_lines] << endl;
 			nb_lines++;
 		}
-		else if (stringcmp(argv[i], "-line_numeric") == 0) {
+		else if (ST.stringcmp(argv[i], "-line_numeric") == 0) {
 			lines[nb_lines].assign(argv[++i]);
 			f_line_numeric[nb_lines] = TRUE;
 			cout << "-line_numeric " << lines[nb_lines] << endl;
 			nb_lines++;
 		}
-		else if (stringcmp(argv[i], "-final_line") == 0) {
+		else if (ST.stringcmp(argv[i], "-final_line") == 0) {
 			final_lines[nb_final_lines].assign(argv[++i]);
 			cout << "-final_line " << final_lines[nb_final_lines] << endl;
 			nb_final_lines++;
 		}
-		else if (stringcmp(argv[i], "-command") == 0) {
+		else if (ST.stringcmp(argv[i], "-command") == 0) {
 			f_command = TRUE;
 			command.assign(argv[++i]);
 			cout << "-command " << command << endl;
 		}
-		else if (stringcmp(argv[i], "-repeat") == 0) {
+		else if (ST.stringcmp(argv[i], "-repeat") == 0) {
 			f_repeat = TRUE;
-			repeat_N = strtoi(argv[++i]);
-			repeat_start = strtoi(argv[++i]);
-			repeat_increment = strtoi(argv[++i]);
+			repeat_N = ST.strtoi(argv[++i]);
+			repeat_start = ST.strtoi(argv[++i]);
+			repeat_increment = ST.strtoi(argv[++i]);
 			repeat_mask.assign(argv[++i]);
 			cout << "-repeat " << repeat_N
 					<< " " << repeat_start
@@ -121,18 +122,18 @@ int create_file_description::read_arguments(
 					<< " " << repeat_mask
 					<< endl;
 		}
-		else if (stringcmp(argv[i], "-split") == 0) {
+		else if (ST.stringcmp(argv[i], "-split") == 0) {
 			f_split = TRUE;
-			split_m = strtoi(argv[++i]);
+			split_m = ST.strtoi(argv[++i]);
 			cout << "-split " << split_m << endl;
 		}
-		else if (stringcmp(argv[i], "-tasks") == 0) {
+		else if (ST.stringcmp(argv[i], "-tasks") == 0) {
 			f_tasks = TRUE;
-			nb_tasks = strtoi(argv[++i]);
+			nb_tasks = ST.strtoi(argv[++i]);
 			tasks_line.assign(argv[++i]);
 			cout << "-tasks " << nb_tasks << " " << tasks_line << endl;
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
 		}

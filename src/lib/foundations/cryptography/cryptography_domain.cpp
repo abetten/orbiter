@@ -2768,13 +2768,14 @@ void cryptography_domain::all_square_roots_mod_n_by_exhaustive_search_lint(std::
 {
 	int f_v = (verbose_level >= 1);
 	long int i, a, n;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "cryptography_domain::all_square_roots_mod_n_by_exhaustive_search_lint" << endl;
 	}
 
-	a = strtoi(square_root_a);
-	n = strtoi(square_root_mod_n);
+	a = ST.strtoi(square_root_a);
+	n = ST.strtoi(square_root_mod_n);
 	for (i = 0; i < a; i++) {
 		if (((i * i) % n) == a) {
 			S.push_back(i);

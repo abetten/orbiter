@@ -46,15 +46,16 @@ int large_set_was_activity_description::read_arguments(int argc, std::string *ar
 	int verbose_level)
 {
 	int i;
+	string_tools ST;
 
 	cout << "large_set_was_activity_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
 
-		if (stringcmp(argv[i], "-normalizer_on_orbits_of_a_given_length") == 0) {
+		if (ST.stringcmp(argv[i], "-normalizer_on_orbits_of_a_given_length") == 0) {
 			f_normalizer_on_orbits_of_a_given_length = TRUE;
-			normalizer_on_orbits_of_a_given_length_length = strtoi(argv[++i]);
-			normalizer_on_orbits_of_a_given_length_nb_orbits = strtoi(argv[++i]);
+			normalizer_on_orbits_of_a_given_length_length = ST.strtoi(argv[++i]);
+			normalizer_on_orbits_of_a_given_length_nb_orbits = ST.strtoi(argv[++i]);
 
 			cout << "-normalizer_on_orbits_of_a_given_length reading poset_classification_control options" << endl;
 
@@ -73,34 +74,34 @@ int large_set_was_activity_description::read_arguments(int argc, std::string *ar
 					<< " " << normalizer_on_orbits_of_a_given_length_nb_orbits
 					<< endl;
 		}
-		else if (stringcmp(argv[i], "-create_graph_on_orbits_of_length") == 0) {
+		else if (ST.stringcmp(argv[i], "-create_graph_on_orbits_of_length") == 0) {
 			f_create_graph_on_orbits_of_length = TRUE;
 			create_graph_on_orbits_of_length_fname.assign(argv[++i]);
-			create_graph_on_orbits_of_length_length = strtoi(argv[++i]);
+			create_graph_on_orbits_of_length_length = ST.strtoi(argv[++i]);
 			cout << "-create_graph_on_orbits_of_length "
 					<< " " << create_graph_on_orbits_of_length_fname
 					<< " " << create_graph_on_orbits_of_length_length
 					<< endl;
 		}
-		else if (stringcmp(argv[i], "-create_graph_on_orbits_of_length_based_on_N_orbits") == 0) {
+		else if (ST.stringcmp(argv[i], "-create_graph_on_orbits_of_length_based_on_N_orbits") == 0) {
 			f_create_graph_on_orbits_of_length_based_on_N_orbits = TRUE;
 			create_graph_on_orbits_of_length_based_on_N_orbits_fname.assign(argv[++i]);
-			create_graph_on_orbits_of_length_based_on_N_orbits_length = strtoi(argv[++i]);
+			create_graph_on_orbits_of_length_based_on_N_orbits_length = ST.strtoi(argv[++i]);
 			cout << "-create_graph_on_orbits_of_length_based_on_N_orbits "
 					<< " " << create_graph_on_orbits_of_length_based_on_N_orbits_fname
 					<< " " << create_graph_on_orbits_of_length_based_on_N_orbits_length
 					<< endl;
 		}
-		else if (stringcmp(argv[i], "-read_solution_file") == 0) {
+		else if (ST.stringcmp(argv[i], "-read_solution_file") == 0) {
 			f_read_solution_file = TRUE;
-			read_solution_file_orbit_length = strtoi(argv[++i]);
+			read_solution_file_orbit_length = ST.strtoi(argv[++i]);
 			read_solution_file_name.assign(argv[++i]);
 			cout << "-read_solution_file "
 					<< read_solution_file_orbit_length
 					<< " " << read_solution_file_name
 					<< endl;
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			break;
 		}
 	} // next i

@@ -96,6 +96,7 @@ int linear_group_description::read_arguments(
 {
 	int f_v = (verbose_level > 1);
 	int i;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "linear_group_description::read_arguments" << endl;
@@ -105,8 +106,8 @@ int linear_group_description::read_arguments(
 
 		// the general linear groups:
 		// GL, GGL, SL, SSL
-		if (stringcmp(argv[i], "-GL") == 0) {
-			n = strtoi(argv[++i]);
+		if (ST.stringcmp(argv[i], "-GL") == 0) {
+			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_projective = FALSE;
 			f_general = TRUE;
@@ -117,8 +118,8 @@ int linear_group_description::read_arguments(
 				cout << "-GL " << n << " " << input_q << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-GGL") == 0) {
-			n = strtoi(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-GGL") == 0) {
+			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_projective = FALSE;
 			f_general = TRUE;
@@ -129,8 +130,8 @@ int linear_group_description::read_arguments(
 				cout << "-GGL " << n << " " << input_q << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-SL") == 0) {
-			n = strtoi(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-SL") == 0) {
+			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_projective = FALSE;
 			f_general = TRUE;
@@ -141,8 +142,8 @@ int linear_group_description::read_arguments(
 				cout << "-SL " << n << " " << input_q << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-SSL") == 0) {
-			n = strtoi(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-SSL") == 0) {
+			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_projective = FALSE;
 			f_general = TRUE;
@@ -157,8 +158,8 @@ int linear_group_description::read_arguments(
 
 		// the projective linear groups:
 		// PGL, PGGL, PSL, PSSL
-		else if (stringcmp(argv[i], "-PGL") == 0) {
-			n = strtoi(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-PGL") == 0) {
+			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_projective = TRUE;
 			f_general = FALSE;
@@ -169,8 +170,8 @@ int linear_group_description::read_arguments(
 				cout << "-PGL " << n << " " << input_q << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-PGGL") == 0) {
-			n = strtoi(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-PGGL") == 0) {
+			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_projective = TRUE;
 			f_general = FALSE;
@@ -181,8 +182,8 @@ int linear_group_description::read_arguments(
 				cout << "-PGGL " << n << " " << input_q << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-PSL") == 0) {
-			n = strtoi(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-PSL") == 0) {
+			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_projective = TRUE;
 			f_general = FALSE;
@@ -193,8 +194,8 @@ int linear_group_description::read_arguments(
 				cout << "-PSL " << n << " " << input_q << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-PSSL") == 0) {
-			n = strtoi(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-PSSL") == 0) {
+			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_projective = TRUE;
 			f_general = FALSE;
@@ -210,8 +211,8 @@ int linear_group_description::read_arguments(
 
 		// the affine groups:
 		// AGL, AGGL, ASL, ASSL
-		else if (stringcmp(argv[i], "-AGL") == 0) {
-			n = strtoi(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-AGL") == 0) {
+			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_projective = FALSE;
 			f_general = FALSE;
@@ -222,8 +223,8 @@ int linear_group_description::read_arguments(
 				cout << "-AGL " << n << " " << input_q << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-AGGL") == 0) {
-			n = strtoi(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-AGGL") == 0) {
+			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_projective = FALSE;
 			f_general = FALSE;
@@ -234,8 +235,8 @@ int linear_group_description::read_arguments(
 				cout << "-AGGL " << n << " " << input_q << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-ASL") == 0) {
-			n = strtoi(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-ASL") == 0) {
+			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_projective = FALSE;
 			f_general = FALSE;
@@ -246,8 +247,8 @@ int linear_group_description::read_arguments(
 				cout << "-ASL " << n << " " << input_q << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-ASSL") == 0) {
-			n = strtoi(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-ASSL") == 0) {
+			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_projective = FALSE;
 			f_general = FALSE;
@@ -258,18 +259,18 @@ int linear_group_description::read_arguments(
 				cout << "-ASSL " << n << " " << input_q << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-override_polynomial") == 0) {
+		else if (ST.stringcmp(argv[i], "-override_polynomial") == 0) {
 			f_override_polynomial = TRUE;
 			override_polynomial.assign(argv[++i]);
 			if (f_v) {
 				cout << "-override_polynomial" << override_polynomial << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-GL_d_q_wr_Sym_n") == 0) {
+		else if (ST.stringcmp(argv[i], "-GL_d_q_wr_Sym_n") == 0) {
 			f_GL_d_q_wr_Sym_n = TRUE;
-			GL_wreath_Sym_d = strtoi(argv[++i]);
+			GL_wreath_Sym_d = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
-			GL_wreath_Sym_n = strtoi(argv[++i]);
+			GL_wreath_Sym_n = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-GL_d_q_wr_Sym_n " << GL_wreath_Sym_d
 					<< " " << input_q << " " << GL_wreath_Sym_n << endl;
@@ -278,8 +279,8 @@ int linear_group_description::read_arguments(
 
 		// the orthogonal groups:
 		// PGO0, PGOp, PGOm
-		else if (stringcmp(argv[i], "-PGO") == 0) {
-			n = strtoi(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-PGO") == 0) {
+			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_orthogonal = TRUE;
 			f_semilinear = FALSE;
@@ -287,8 +288,8 @@ int linear_group_description::read_arguments(
 				cout << "-PGO " << n << " " << input_q << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-PGOp") == 0) {
-			n = strtoi(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-PGOp") == 0) {
+			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_orthogonal_p = TRUE;
 			f_semilinear = FALSE;
@@ -296,8 +297,8 @@ int linear_group_description::read_arguments(
 				cout << "-PGOp " << n << " " << input_q << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-PGOm") == 0) {
-			n = strtoi(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-PGOm") == 0) {
+			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_orthogonal_m = TRUE;
 			f_semilinear = FALSE;
@@ -305,8 +306,8 @@ int linear_group_description::read_arguments(
 				cout << "-PGOm " << n << " " << input_q << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-PGGO") == 0) {
-			n = strtoi(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-PGGO") == 0) {
+			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_orthogonal = TRUE;
 			f_semilinear = TRUE;
@@ -314,8 +315,8 @@ int linear_group_description::read_arguments(
 				cout << "-PGGO " << n << " " << input_q << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-PGGOp") == 0) {
-			n = strtoi(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-PGGOp") == 0) {
+			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_orthogonal_p = TRUE;
 			f_semilinear = TRUE;
@@ -323,8 +324,8 @@ int linear_group_description::read_arguments(
 				cout << "-PGGOp " << n << " " << input_q << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-PGGOm") == 0) {
-			n = strtoi(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-PGGOm") == 0) {
+			n = ST.strtoi(argv[++i]);
 			input_q.assign(argv[++i]);
 			f_orthogonal_m = TRUE;
 			f_semilinear = TRUE;
@@ -334,70 +335,70 @@ int linear_group_description::read_arguments(
 		}
 
 
-		else if (stringcmp(argv[i], "-wedge") == 0) {
+		else if (ST.stringcmp(argv[i], "-wedge") == 0) {
 			f_wedge_action = TRUE;
 			if (f_v) {
 				cout << "-wedge" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-wedge_detached") == 0) {
+		else if (ST.stringcmp(argv[i], "-wedge_detached") == 0) {
 			f_wedge_action_detached = TRUE;
 			if (f_v) {
 				cout << "-wedge_detached" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-PGL2OnConic") == 0) {
+		else if (ST.stringcmp(argv[i], "-PGL2OnConic") == 0) {
 			f_PGL2OnConic = TRUE;
 			if (f_v) {
 				cout << "-PGL2OnConic" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-monomial") == 0) {
+		else if (ST.stringcmp(argv[i], "-monomial") == 0) {
 			f_monomial_group = TRUE;
 			if (f_v) {
 				cout << "-monomial " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-diagonal") == 0) {
+		else if (ST.stringcmp(argv[i], "-diagonal") == 0) {
 			f_diagonal_group = TRUE;
 			if (f_v) {
 				cout << "-diagonal " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-null_polarity_group") == 0) {
+		else if (ST.stringcmp(argv[i], "-null_polarity_group") == 0) {
 			f_null_polarity_group = TRUE;
 			if (f_v) {
 				cout << "-null_polarity_group" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-symplectic_group") == 0) {
+		else if (ST.stringcmp(argv[i], "-symplectic_group") == 0) {
 			f_symplectic_group = TRUE;
 			if (f_v) {
 				cout << "-symplectic_group" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-singer") == 0) {
+		else if (ST.stringcmp(argv[i], "-singer") == 0) {
 			f_singer_group = TRUE;
-			singer_power = strtoi(argv[++i]);
+			singer_power = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-singer " << singer_power << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-singer_and_frobenius") == 0) {
+		else if (ST.stringcmp(argv[i], "-singer_and_frobenius") == 0) {
 			f_singer_group_and_frobenius = TRUE;
-			singer_power = strtoi(argv[++i]);
+			singer_power = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-f_singer_group_and_frobenius " << singer_power << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-subfield_structure_action") == 0) {
+		else if (ST.stringcmp(argv[i], "-subfield_structure_action") == 0) {
 			f_subfield_structure_action = TRUE;
-			s = strtoi(argv[++i]);
+			s = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-subfield_structure_action " << s << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-subgroup_from_file") == 0) {
+		else if (ST.stringcmp(argv[i], "-subgroup_from_file") == 0) {
 			f_subgroup_from_file = TRUE;
 			subgroup_fname.assign(argv[++i]);
 			subgroup_label.assign(argv[++i]);
@@ -406,78 +407,78 @@ int linear_group_description::read_arguments(
 					<< " " << subgroup_label << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-borel_upper") == 0) {
+		else if (ST.stringcmp(argv[i], "-borel_upper") == 0) {
 			f_borel_subgroup_upper = TRUE;
 			if (f_v) {
 				cout << "-borel_upper" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-borel_lower") == 0) {
+		else if (ST.stringcmp(argv[i], "-borel_lower") == 0) {
 			f_borel_subgroup_lower = TRUE;
 			if (f_v) {
 				cout << "-borel_lower" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-identity_group") == 0) {
+		else if (ST.stringcmp(argv[i], "-identity_group") == 0) {
 			f_identity_group = TRUE;
 			if (f_v) {
 				cout << "-identity_group" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-on_k_subspaces") == 0) {
+		else if (ST.stringcmp(argv[i], "-on_k_subspaces") == 0) {
 			f_on_k_subspaces = TRUE;
-			on_k_subspaces_k = strtoi(argv[++i]);
+			on_k_subspaces_k = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-on_k_subspaces " << on_k_subspaces_k << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-on_tensors") == 0) {
+		else if (ST.stringcmp(argv[i], "-on_tensors") == 0) {
 			f_on_tensors = TRUE;
 			if (f_v) {
 				cout << "-on_tensors " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-on_rank_one_tensors") == 0) {
+		else if (ST.stringcmp(argv[i], "-on_rank_one_tensors") == 0) {
 			f_on_rank_one_tensors = TRUE;
 			if (f_v) {
 				cout << "-on_rank_one_tensors " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-orthogonal") == 0) {
+		else if (ST.stringcmp(argv[i], "-orthogonal") == 0) {
 			f_orthogonal_group = TRUE;
-			orthogonal_group_epsilon = strtoi(argv[++i]);
+			orthogonal_group_epsilon = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-orthogonal " << orthogonal_group_epsilon << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-O") == 0) {
+		else if (ST.stringcmp(argv[i], "-O") == 0) {
 			f_orthogonal_group = TRUE;
 			orthogonal_group_epsilon = 0;
 			if (f_v) {
 				cout << "-O" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-O+") == 0 ||
-				stringcmp(argv[i], "-Oplus") == 0) {
+		else if (ST.stringcmp(argv[i], "-O+") == 0 ||
+				ST.stringcmp(argv[i], "-Oplus") == 0) {
 			f_orthogonal_group = TRUE;
 			orthogonal_group_epsilon = 1;
 			if (f_v) {
 				cout << "-O+" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-O-") == 0 ||
-				stringcmp(argv[i], "-Ominus") == 0) {
+		else if (ST.stringcmp(argv[i], "-O-") == 0 ||
+				ST.stringcmp(argv[i], "-Ominus") == 0) {
 			f_orthogonal_group = TRUE;
 			orthogonal_group_epsilon = -1;
 			if (f_v) {
 				cout << "-O-" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-subgroup_by_generators") == 0) {
+		else if (ST.stringcmp(argv[i], "-subgroup_by_generators") == 0) {
 			f_subgroup_by_generators = TRUE;
 			subgroup_label.assign(argv[++i]);
 			subgroup_order_text.assign(argv[++i]);
-			nb_subgroup_generators = strtoi(argv[++i]);
+			nb_subgroup_generators = ST.strtoi(argv[++i]);
 			subgroup_generators_label.assign(argv[++i]);
 
 			if (f_v) {
@@ -487,26 +488,26 @@ int linear_group_description::read_arguments(
 						<< endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-Janko1") == 0) {
+		else if (ST.stringcmp(argv[i], "-Janko1") == 0) {
 			f_Janko1 = TRUE;
 			if (f_v) {
 				cout << "-Janko1" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-restricted_action") == 0) {
+		else if (ST.stringcmp(argv[i], "-restricted_action") == 0) {
 			f_restricted_action = TRUE;
 			restricted_action_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-restricted_action " << restricted_action_text << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-export_magma") == 0) {
+		else if (ST.stringcmp(argv[i], "-export_magma") == 0) {
 			f_export_magma = TRUE;
 			if (f_v) {
 				cout << "-export_magma" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
 			}

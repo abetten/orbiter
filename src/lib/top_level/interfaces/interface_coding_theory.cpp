@@ -95,58 +95,60 @@ interface_coding_theory::interface_coding_theory()
 void interface_coding_theory::print_help(int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	if (stringcmp(argv[i], "-make_macwilliams_system") == 0) {
+	string_tools ST;
+
+	if (ST.stringcmp(argv[i], "-make_macwilliams_system") == 0) {
 		cout << "-make_macwilliams_system <int : q> <int : n> <int k>" << endl;
 	}
-	else if (stringcmp(argv[i], "-table_of_bounds") == 0) {
+	else if (ST.stringcmp(argv[i], "-table_of_bounds") == 0) {
 		cout << "-table_of_bounds <int : n_max> <int : q> " << endl;
 	}
-	else if (stringcmp(argv[i], "-make_bounds_for_d_given_n_and_k_and_q") == 0) {
+	else if (ST.stringcmp(argv[i], "-make_bounds_for_d_given_n_and_k_and_q") == 0) {
 		cout << "-make_bounds_for_d_given_n_and_k_and_q <int : n> <int k> <int : q> " << endl;
 	}
-	else if (stringcmp(argv[i], "-BCH") == 0) {
+	else if (ST.stringcmp(argv[i], "-BCH") == 0) {
 		cout << "-BCH <int : n> <int : q> <int t>" << endl;
 	}
-	else if (stringcmp(argv[i], "-BCH_dual") == 0) {
+	else if (ST.stringcmp(argv[i], "-BCH_dual") == 0) {
 		cout << "-BCH_dual <int : n> <int : q> <int t>" << endl;
 	}
-	else if (stringcmp(argv[i], "-Hamming_space_distance_matrix") == 0) {
+	else if (ST.stringcmp(argv[i], "-Hamming_space_distance_matrix") == 0) {
 		cout << "-Hamming_space_distance_matrix <int : n> <int : q>" << endl;
 	}
-	else if (stringcmp(argv[i], "-NTT") == 0) {
+	else if (ST.stringcmp(argv[i], "-NTT") == 0) {
 		cout << "-NTT <int : n> <int : q> <string : fname_code> " << endl;
 	}
-	else if (stringcmp(argv[i], "-general_code_binary") == 0) {
+	else if (ST.stringcmp(argv[i], "-general_code_binary") == 0) {
 		cout << "-general_code_binary <int : n> <string : set> " << endl;
 	}
-	else if (stringcmp(argv[i], "-code_diagram") == 0) {
+	else if (ST.stringcmp(argv[i], "-code_diagram") == 0) {
 		cout << "-code_diagram <string : label> <string : codewords> <int : n> " << endl;
 	}
-	else if (stringcmp(argv[i], "-code_diagram_from_file") == 0) {
+	else if (ST.stringcmp(argv[i], "-code_diagram_from_file") == 0) {
 		cout << "-code_diagram_from_file <string : label> <string : fname_codewords> <int : n> " << endl;
 	}
-	else if (stringcmp(argv[i], "-enhance") == 0) {
+	else if (ST.stringcmp(argv[i], "-enhance") == 0) {
 		cout << "-enhance <int : radius>" << endl;
 	}
-	else if (stringcmp(argv[i], "-metric_balls") == 0) {
+	else if (ST.stringcmp(argv[i], "-metric_balls") == 0) {
 		cout << "-metric_balls <int : radius_of_metric_ball> " << endl;
 	}
-	else if (stringcmp(argv[i], "-linear_code_through_basis") == 0) {
+	else if (ST.stringcmp(argv[i], "-linear_code_through_basis") == 0) {
 		cout << "-linear_code_through_basis <int : n> <string : set> " << endl;
 	}
-	else if (stringcmp(argv[i], "-linear_code_through_columns_of_parity_check_projectively") == 0) {
+	else if (ST.stringcmp(argv[i], "-linear_code_through_columns_of_parity_check_projectively") == 0) {
 		cout << "-linear_code_through_columns_of_parity_check <int : k> <string : set> " << endl;
 	}
-	else if (stringcmp(argv[i], "-linear_code_through_columns_of_parity_check") == 0) {
+	else if (ST.stringcmp(argv[i], "-linear_code_through_columns_of_parity_check") == 0) {
 		cout << "-linear_code_through_columns_of_parity_check <int : k> <string : set> " << endl;
 	}
-	else if (stringcmp(argv[i], "-long_code") == 0) {
+	else if (ST.stringcmp(argv[i], "-long_code") == 0) {
 		cout << "-long_code <int : n> <int : nb_generators=k> <string : generator_1> .. <string : generator_k>" << endl;
 	}
-	else if (stringcmp(argv[i], "-encode_text_5bits") == 0) {
+	else if (ST.stringcmp(argv[i], "-encode_text_5bits") == 0) {
 		cout << "-encode_text_5bits <string : text> <string : fname>" << endl;
 	}
-	else if (stringcmp(argv[i], "-field_induction") == 0) {
+	else if (ST.stringcmp(argv[i], "-field_induction") == 0) {
 		cout << "-field_induction <string : fname_in> <string : fname_out> <int : nb_bits>" << endl;
 	}
 }
@@ -155,6 +157,7 @@ int interface_coding_theory::recognize_keyword(int argc,
 		std::string *argv, int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	string_tools ST;
 
 	if (i >= argc) {
 		return false;
@@ -163,58 +166,58 @@ int interface_coding_theory::recognize_keyword(int argc,
 		cout << "interface_coding_theory::recognize_keyword argv[i]="
 				<< argv[i] << " i=" << i << " argc=" << argc << endl;
 	}
-	if (stringcmp(argv[i], "-make_macwilliams_system") == 0) {
+	if (ST.stringcmp(argv[i], "-make_macwilliams_system") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-table_of_bounds") == 0) {
+	else if (ST.stringcmp(argv[i], "-table_of_bounds") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-make_bounds_for_d_given_n_and_k_and_q") == 0) {
+	else if (ST.stringcmp(argv[i], "-make_bounds_for_d_given_n_and_k_and_q") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-BCH") == 0) {
+	else if (ST.stringcmp(argv[i], "-BCH") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-BCH_dual") == 0) {
+	else if (ST.stringcmp(argv[i], "-BCH_dual") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-Hamming_space_distance_matrix") == 0) {
+	else if (ST.stringcmp(argv[i], "-Hamming_space_distance_matrix") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-NTT") == 0) {
+	else if (ST.stringcmp(argv[i], "-NTT") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-general_code_binary") == 0) {
+	else if (ST.stringcmp(argv[i], "-general_code_binary") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-code_diagram") == 0) {
+	else if (ST.stringcmp(argv[i], "-code_diagram") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-code_diagram_from_file") == 0) {
+	else if (ST.stringcmp(argv[i], "-code_diagram_from_file") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-enhance") == 0) {
+	else if (ST.stringcmp(argv[i], "-enhance") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-metric_balls") == 0) {
+	else if (ST.stringcmp(argv[i], "-metric_balls") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-linear_code_through_basis") == 0) {
+	else if (ST.stringcmp(argv[i], "-linear_code_through_basis") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-linear_code_through_columns_of_parity_check_projectively") == 0) {
+	else if (ST.stringcmp(argv[i], "-linear_code_through_columns_of_parity_check_projectively") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-linear_code_through_columns_of_parity_check") == 0) {
+	else if (ST.stringcmp(argv[i], "-linear_code_through_columns_of_parity_check") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-long_code") == 0) {
+	else if (ST.stringcmp(argv[i], "-long_code") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-encode_text_5bits") == 0) {
+	else if (ST.stringcmp(argv[i], "-encode_text_5bits") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-field_induction") == 0) {
+	else if (ST.stringcmp(argv[i], "-field_induction") == 0) {
 		return true;
 	}
 	if (f_v) {
@@ -227,6 +230,7 @@ void interface_coding_theory::read_arguments(int argc,
 		std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	string_tools ST;
 
 	if (f_v) {
 		cout << "interface_coding_theory::read_arguments" << endl;
@@ -240,96 +244,96 @@ void interface_coding_theory::read_arguments(int argc,
 	}
 
 
-	if (stringcmp(argv[i], "-make_macwilliams_system") == 0) {
+	if (ST.stringcmp(argv[i], "-make_macwilliams_system") == 0) {
 		f_make_macwilliams_system = TRUE;
-		make_macwilliams_system_n = strtoi(argv[++i]);
-		make_macwilliams_system_k = strtoi(argv[++i]);
-		make_macwilliams_system_q = strtoi(argv[++i]);
+		make_macwilliams_system_n = ST.strtoi(argv[++i]);
+		make_macwilliams_system_k = ST.strtoi(argv[++i]);
+		make_macwilliams_system_q = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-make_macwilliams_system " << make_macwilliams_system_n << " " << make_macwilliams_system_k << " " << make_macwilliams_system_q << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-table_of_bounds") == 0) {
+	else if (ST.stringcmp(argv[i], "-table_of_bounds") == 0) {
 		f_table_of_bounds = TRUE;
-		table_of_bounds_n_max = strtoi(argv[++i]);
-		table_of_bounds_q = strtoi(argv[++i]);
+		table_of_bounds_n_max = ST.strtoi(argv[++i]);
+		table_of_bounds_q = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-table_of_bounds " << table_of_bounds_n_max
 					<< " " << table_of_bounds_q << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-make_bounds_for_d_given_n_and_k_and_q") == 0) {
+	else if (ST.stringcmp(argv[i], "-make_bounds_for_d_given_n_and_k_and_q") == 0) {
 		f_make_bounds_for_d_given_n_and_k_and_q = TRUE;
-		make_bounds_n = strtoi(argv[++i]);
-		make_bounds_k = strtoi(argv[++i]);
-		make_bounds_q = strtoi(argv[++i]);
+		make_bounds_n = ST.strtoi(argv[++i]);
+		make_bounds_k = ST.strtoi(argv[++i]);
+		make_bounds_q = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-make_bounds_for_d_given_n_and_k_and_q "
 					<< make_bounds_n << " " << make_bounds_k << " " << make_bounds_q << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-BCH") == 0) {
+	else if (ST.stringcmp(argv[i], "-BCH") == 0) {
 		f_BCH = TRUE;
-		BCH_n = strtoi(argv[++i]);
-		BCH_q = strtoi(argv[++i]);
-		BCH_t = strtoi(argv[++i]);
+		BCH_n = ST.strtoi(argv[++i]);
+		BCH_q = ST.strtoi(argv[++i]);
+		BCH_t = ST.strtoi(argv[++i]);
 		//BCH_b = atoi(argv[++i]);
 		if (f_v) {
 			cout << "-BCH " << BCH_n << " " << BCH_q << " " << BCH_t << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-BCH_dual") == 0) {
+	else if (ST.stringcmp(argv[i], "-BCH_dual") == 0) {
 		f_BCH_dual = TRUE;
-		BCH_n = strtoi(argv[++i]);
-		BCH_q = strtoi(argv[++i]);
-		BCH_t = strtoi(argv[++i]);
+		BCH_n = ST.strtoi(argv[++i]);
+		BCH_q = ST.strtoi(argv[++i]);
+		BCH_t = ST.strtoi(argv[++i]);
 		//BCH_b = atoi(argv[++i]);
 		if (f_v) {
 			cout << "-BCH " << BCH_n << " " << BCH_q << " " << BCH_t << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-Hamming_space_distance_matrix") == 0) {
+	else if (ST.stringcmp(argv[i], "-Hamming_space_distance_matrix") == 0) {
 		f_Hamming_space_distance_matrix = TRUE;
-		Hamming_space_n = strtoi(argv[++i]);
-		Hamming_space_q = strtoi(argv[++i]);
+		Hamming_space_n = ST.strtoi(argv[++i]);
+		Hamming_space_q = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-Hamming_space_distance_matrix " << Hamming_space_n << " " << Hamming_space_q << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-NTT") == 0) {
+	else if (ST.stringcmp(argv[i], "-NTT") == 0) {
 		f_NTT = TRUE;
-		NTT_n = strtoi(argv[++i]);
-		NTT_q = strtoi(argv[++i]);
+		NTT_n = ST.strtoi(argv[++i]);
+		NTT_q = ST.strtoi(argv[++i]);
 		ntt_fname_code.assign(argv[++i]);
 		if (f_v) {
 			cout << "-NTT " << NTT_n << " " << NTT_q << " " << ntt_fname_code << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-general_code_binary") == 0) {
+	else if (ST.stringcmp(argv[i], "-general_code_binary") == 0) {
 		f_general_code_binary = TRUE;
-		general_code_binary_n = strtoi(argv[++i]);
+		general_code_binary_n = ST.strtoi(argv[++i]);
 		general_code_binary_text.assign(argv[++i]);
 		if (f_v) {
 			cout << "-general_code_binary " << general_code_binary_n << " "
 					<< general_code_binary_text << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-code_diagram") == 0) {
+	else if (ST.stringcmp(argv[i], "-code_diagram") == 0) {
 		f_code_diagram = TRUE;
 		code_diagram_label.assign(argv[++i]);
 		code_diagram_codewords_text.assign(argv[++i]);
-		code_diagram_n = strtoi(argv[++i]);
+		code_diagram_n = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-code_diagram " << code_diagram_label
 					<< " " << code_diagram_codewords_text
 					<< " " << code_diagram_n << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-code_diagram_from_file") == 0) {
+	else if (ST.stringcmp(argv[i], "-code_diagram_from_file") == 0) {
 		f_code_diagram_from_file = TRUE;
 		code_diagram_label.assign(argv[++i]);
 		code_diagram_from_file_codewords_fname.assign(argv[++i]);
-		code_diagram_n = strtoi(argv[++i]);
+		code_diagram_n = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-code_diagram_from_file " << code_diagram_label
 					<< " " << code_diagram_from_file_codewords_fname
@@ -337,17 +341,17 @@ void interface_coding_theory::read_arguments(int argc,
 		}
 	}
 
-	else if (stringcmp(argv[i], "-enhance") == 0) {
+	else if (ST.stringcmp(argv[i], "-enhance") == 0) {
 		f_enhance = TRUE;
-		enhance_radius = strtoi(argv[++i]);
+		enhance_radius = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-enhance " << enhance_radius << endl;
 		}
 	}
 
-	else if (stringcmp(argv[i], "-metric_balls") == 0) {
+	else if (ST.stringcmp(argv[i], "-metric_balls") == 0) {
 		f_metric_balls = TRUE;
-		metric_ball_radius = strtoi(argv[++i]);
+		metric_ball_radius = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-metric_balls " << metric_ball_radius << endl;
 		}
@@ -355,9 +359,9 @@ void interface_coding_theory::read_arguments(int argc,
 
 
 
-	else if (stringcmp(argv[i], "-linear_code_through_basis") == 0) {
+	else if (ST.stringcmp(argv[i], "-linear_code_through_basis") == 0) {
 		f_linear_code_through_basis = TRUE;
-		linear_code_through_basis_n = strtoi(argv[++i]);
+		linear_code_through_basis_n = ST.strtoi(argv[++i]);
 		linear_code_through_basis_text.assign(argv[++i]);
 		if (f_v) {
 			cout << "-linear_code_through_basis " << linear_code_through_basis_n
@@ -365,9 +369,9 @@ void interface_coding_theory::read_arguments(int argc,
 		}
 	}
 
-	else if (stringcmp(argv[i], "-linear_code_through_columns_of_parity_check_projectively") == 0) {
+	else if (ST.stringcmp(argv[i], "-linear_code_through_columns_of_parity_check_projectively") == 0) {
 		f_linear_code_through_columns_of_parity_check_projectively = TRUE;
-		linear_code_through_columns_of_parity_check_k = strtoi(argv[++i]);
+		linear_code_through_columns_of_parity_check_k = ST.strtoi(argv[++i]);
 		linear_code_through_columns_of_parity_check_text.assign(argv[++i]);
 		if (f_v) {
 			cout << "-linear_code_through_columns_of_parity_check_projectively "
@@ -376,9 +380,9 @@ void interface_coding_theory::read_arguments(int argc,
 		}
 	}
 
-	else if (stringcmp(argv[i], "-linear_code_through_columns_of_parity_check") == 0) {
+	else if (ST.stringcmp(argv[i], "-linear_code_through_columns_of_parity_check") == 0) {
 		f_linear_code_through_columns_of_parity_check = TRUE;
-		linear_code_through_columns_of_parity_check_k = strtoi(argv[++i]);
+		linear_code_through_columns_of_parity_check_k = ST.strtoi(argv[++i]);
 		linear_code_through_columns_of_parity_check_text.assign(argv[++i]);
 		if (f_v) {
 			cout << "-linear_code_through_columns_of_parity_check "
@@ -387,12 +391,12 @@ void interface_coding_theory::read_arguments(int argc,
 		}
 	}
 
-	else if (stringcmp(argv[i], "-long_code") == 0) {
+	else if (ST.stringcmp(argv[i], "-long_code") == 0) {
 		f_long_code = TRUE;
-		long_code_n = strtoi(argv[++i]);
+		long_code_n = ST.strtoi(argv[++i]);
 
 		int n, h;
-		n = strtoi(argv[++i]);
+		n = ST.strtoi(argv[++i]);
 		for (h = 0; h < n; h++) {
 			string s;
 
@@ -452,7 +456,7 @@ void interface_coding_theory::read_arguments(int argc,
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-encode_text_5bits") == 0) {
+	else if (ST.stringcmp(argv[i], "-encode_text_5bits") == 0) {
 		f_encode_text_5bits = TRUE;
 		encode_text_5bits_input.assign(argv[++i]);
 		encode_text_5bits_fname.assign(argv[++i]);
@@ -461,11 +465,11 @@ void interface_coding_theory::read_arguments(int argc,
 					<< encode_text_5bits_fname << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-field_induction") == 0) {
+	else if (ST.stringcmp(argv[i], "-field_induction") == 0) {
 		f_field_induction = TRUE;
 		field_induction_fname_in.assign(argv[++i]);
 		field_induction_fname_out.assign(argv[++i]);
-		field_induction_nb_bits = strtoi(argv[++i]);
+		field_induction_nb_bits = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-field_induction " << field_induction_fname_in
 					<< " " << field_induction_fname_out

@@ -48,62 +48,63 @@ int cubic_surface_activity_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "cubic_surface_activity_description::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
 
-		if (stringcmp(argv[i], "-report") == 0) {
+		if (ST.stringcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			if (f_v) {
 				cout << "-report " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-report_with_group") == 0) {
+		else if (ST.stringcmp(argv[i], "-report_with_group") == 0) {
 			f_report_with_group = TRUE;
 			if (f_v) {
 				cout << "-report_with_group " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-export_points") == 0) {
+		else if (ST.stringcmp(argv[i], "-export_points") == 0) {
 			f_export_points = TRUE;
 			if (f_v) {
 				cout << "-export_points " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-clebsch") == 0) {
+		else if (ST.stringcmp(argv[i], "-clebsch") == 0) {
 			f_clebsch = TRUE;
 			if (f_v) {
 				cout << "-clebsch " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-codes") == 0) {
+		else if (ST.stringcmp(argv[i], "-codes") == 0) {
 			f_codes = TRUE;
 			if (f_v) {
 				cout << "-codes " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-all_quartic_curves") == 0) {
+		else if (ST.stringcmp(argv[i], "-all_quartic_curves") == 0) {
 			f_all_quartic_curves = TRUE;
 			if (f_v) {
 				cout << "-all_quartic_curves " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-export_all_quartic_curves") == 0) {
+		else if (ST.stringcmp(argv[i], "-export_all_quartic_curves") == 0) {
 			f_export_all_quartic_curves = TRUE;
 			if (f_v) {
 				cout << "-export_all_quartic_curves " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-export_tritangent_planes") == 0) {
+		else if (ST.stringcmp(argv[i], "-export_tritangent_planes") == 0) {
 			f_export_tritangent_planes = TRUE;
 			if (f_v) {
 				cout << "-export_tritangent_planes " << endl;
 			}
 		}
 
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
 			}

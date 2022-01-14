@@ -36,6 +36,7 @@ void function_polish::init(
 	double val;
 	int entry, len;
 	int i;
+	string_tools ST;
 
 
 	if (f_v) {
@@ -65,7 +66,7 @@ void function_polish::init(
 	for (i = 0; i < Descr->nb_constants; i++) {
 		double f;
 
-		f = strtof(Descr->const_values[i]);
+		f = ST.strtof(Descr->const_values[i]);
 		pair<string, double> P(Descr->const_names[i], f);
 		Constants.push_back(P);
 	}
@@ -81,7 +82,7 @@ void function_polish::init(
 
 		len++;
 
-		if (stringcmp(Descr->code[i], "push") == 0) {
+		if (ST.stringcmp(Descr->code[i], "push") == 0) {
 
 			string S(Descr->code[++i]);
 
@@ -122,7 +123,7 @@ void function_polish::init(
 				}
 			}
 		}
-		else if (stringcmp(Descr->code[i], "store") == 0) {
+		else if (ST.stringcmp(Descr->code[i], "store") == 0) {
 			int j;
 			string S(Descr->code[++i]);
 
@@ -141,34 +142,34 @@ void function_polish::init(
 				cout << "store command, cannot find variable with label " << S << endl;
 			}
 		}
-		else if (stringcmp(Descr->code[i], "mult") == 0) {
+		else if (ST.stringcmp(Descr->code[i], "mult") == 0) {
 			cmd.init_simple(5);
 			if (f_v) {
 				cout << "mult" << endl;
 			}
 		}
-		else if (stringcmp(Descr->code[i], "add") == 0) {
+		else if (ST.stringcmp(Descr->code[i], "add") == 0) {
 			cmd.init_simple(6);
 			if (f_v) {
 				cout << "add" << endl;
 			}
 		}
-		else if (stringcmp(Descr->code[i], "cos") == 0) {
+		else if (ST.stringcmp(Descr->code[i], "cos") == 0) {
 			cmd.init_simple(7);
 		}
-		else if (stringcmp(Descr->code[i], "sin") == 0) {
+		else if (ST.stringcmp(Descr->code[i], "sin") == 0) {
 			cmd.init_simple(8);
 			if (f_v) {
 				cout << "cos" << endl;
 			}
 		}
-		else if (stringcmp(Descr->code[i], "sqrt") == 0) {
+		else if (ST.stringcmp(Descr->code[i], "sqrt") == 0) {
 			cmd.init_simple(10);
 			if (f_v) {
 				cout << "sqrt" << endl;
 			}
 		}
-		else if (stringcmp(Descr->code[i], "return") == 0) {
+		else if (ST.stringcmp(Descr->code[i], "return") == 0) {
 			cmd.init_simple(9);
 			if (f_v) {
 				cout << "return" << endl;

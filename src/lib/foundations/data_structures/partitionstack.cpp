@@ -1801,12 +1801,13 @@ int partitionstack::hash_column_refinement_info(
 {
 	int cell, i, j, first, len, ancestor;
 	int h;
+	algorithms Algo;
 	
 	if (ht0 == ht) {
-		h = hashing(hash0, 1);
+		h = Algo.hashing(hash0, 1);
 	}
 	else {
-		h = hashing(hash0, 0);
+		h = Algo.hashing(hash0, 0);
 	}
 	
 	for (cell = 0; cell < ht0; cell++) {
@@ -1816,25 +1817,25 @@ int partitionstack::hash_column_refinement_info(
 		first = startCell[cell];
 		len = cellSize[cell];
 		
-		h = hashing(h, len);
+		h = Algo.hashing(h, len);
 		
 		j = pointList[first];
 		for (i = 0; i < depth; i++) {
-			h = hashing(h, data[j * depth + i]);
+			h = Algo.hashing(h, data[j * depth + i]);
 		}
 	}
 	for (cell = ht0; cell < ht; cell++) {
 		ancestor = parent_at_height(ht0, cell);
-		h = hashing(h, ancestor);
+		h = Algo.hashing(h, ancestor);
 		
 		first = startCell[cell];
 		len = cellSize[cell];
 		
-		h = hashing(h, len);
+		h = Algo.hashing(h, len);
 
 		j = pointList[first];
 		for (i = 0; i < depth; i++) {
-			h = hashing(h, data[j * depth + i]);
+			h = Algo.hashing(h, data[j * depth + i]);
 		}
 	}
 	return h;
@@ -1845,12 +1846,13 @@ int partitionstack::hash_row_refinement_info(int ht0,
 {
 	int cell, i, j, first, len, ancestor;
 	int h;
+	algorithms Algo;
 	
 	if (ht0 == ht) {
-		h = hashing(hash0, 1);
+		h = Algo.hashing(hash0, 1);
 	}
 	else {
-		h = hashing(hash0, 0);
+		h = Algo.hashing(hash0, 0);
 	}
 	for (cell = 0; cell < ht0; cell++) {
 		if (is_col_class(cell)) {
@@ -1859,25 +1861,25 @@ int partitionstack::hash_row_refinement_info(int ht0,
 		first = startCell[cell];
 		len = cellSize[cell];
 		
-		h = hashing(h, len);
+		h = Algo.hashing(h, len);
 		
 		j = pointList[first];
 		for (i = 0; i < depth; i++) {
-			h = hashing(h, data[j * depth + i]);
+			h = Algo.hashing(h, data[j * depth + i]);
 		}
 	}
 	for (cell = ht0; cell < ht; cell++) {
 		ancestor = parent_at_height(ht0, cell);
-		h = hashing(h, ancestor);
+		h = Algo.hashing(h, ancestor);
 		
 		first = startCell[cell];
 		len = cellSize[cell];
 		
-		h = hashing(h, len);
+		h = Algo.hashing(h, len);
 
 		j = pointList[first];
 		for (i = 0; i < depth; i++) {
-			h = hashing(h, data[j * depth + i]);
+			h = Algo.hashing(h, data[j * depth + i]);
 		}
 	}
 	return h;

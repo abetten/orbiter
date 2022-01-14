@@ -345,13 +345,14 @@ public:
 
 	void stabilizer_of_dual_hyperoval_representative(int k, 
 		int n, int no, vector_ge *&gens, 
-		const char *&stab_order, int verbose_level);
+		std::string &stab_order,
+		int verbose_level);
 	void stabilizer_of_spread_representative(int q,
-		int k, int no, vector_ge *&gens, const char *&stab_order, 
+		int k, int no, vector_ge *&gens, std::string &stab_order,
 		int verbose_level);
 	void stabilizer_of_quartic_curve_representative(
 			int q, int no,
-			vector_ge *&gens, const char *&stab_order,
+			vector_ge *&gens, std::string &stab_order,
 			int verbose_level);
 
 	void point_stabilizer_any_point(int &pt,

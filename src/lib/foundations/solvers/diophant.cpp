@@ -3723,6 +3723,7 @@ void diophant::read_xml(ifstream &f, char *label, int verbose_level)
 	bool brk;
 	int eqpos, l, M = 0, N = 0, F_has_sum = 0, Sum = 0, i, j, a;
 	char tmp[1000], c;
+	string_tools ST;
 
 
 	if (f_v) {
@@ -3754,25 +3755,25 @@ void diophant::read_xml(ifstream &f, char *label, int verbose_level)
 				label[l - 2] = 0;
 			}
 			else if (mapkey == "num_eqns") {
-				M = str2int(mapval);
+				M = ST.str2int(mapval);
 				if (f_v) {
 					cout << "diophant::read_xml num_eqns = " << M << endl;
 				}
 			}
 			else if (mapkey == "num_vars") {
-				N = str2int(mapval);
+				N = ST.str2int(mapval);
 				if (f_v) {
 					cout << "diophant::read_xml num_vars = " << N << endl;
 				}
 			}
 			else if (mapkey == "f_has_sum") {
-				F_has_sum = str2int(mapval);
+				F_has_sum = ST.str2int(mapval);
 				if (f_v) {
 					cout << "diophant::read_xml F_has_sum = " << F_has_sum << endl;
 				}
 			}
 			else if (mapkey == "sum") {
-				Sum = str2int(mapval);
+				Sum = ST.str2int(mapval);
 				if (f_v) {
 					cout << "diophant::read_xml Sum = " << Sum << endl;
 				}

@@ -6,6 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	algorithms.o \
 	bitmatrix.o \
 	bitvector.o \
 	classify_bitvectors.o \

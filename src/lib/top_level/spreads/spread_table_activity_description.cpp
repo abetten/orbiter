@@ -55,58 +55,59 @@ int spread_table_activity_description::read_arguments(
 	int verbose_level)
 {
 	int i;
+	string_tools ST;
 
 	cout << "spread_table_activity_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
 		cout << "spread_table_activity_description::read_arguments, next argument is " << argv[i] << endl;
 
-		if (stringcmp(argv[i], "-find_spread") == 0) {
+		if (ST.stringcmp(argv[i], "-find_spread") == 0) {
 			f_find_spread = TRUE;
 			find_spread_text.assign(argv[++i]);
 			cout << "-find_spread " << find_spread_text << endl;
 		}
-		else if (stringcmp(argv[i], "-find_spread_and_dualize") == 0) {
+		else if (ST.stringcmp(argv[i], "-find_spread_and_dualize") == 0) {
 			f_find_spread_and_dualize = TRUE;
 			find_spread_and_dualize_text.assign(argv[++i]);
 			cout << "-find_spread_and_dualize " << find_spread_and_dualize_text << endl;
 		}
-		else if (stringcmp(argv[i], "-dualize_packing") == 0) {
+		else if (ST.stringcmp(argv[i], "-dualize_packing") == 0) {
 			f_dualize_packing = TRUE;
 			dualize_packing_text.assign(argv[++i]);
 			cout << "-dualize_packing " << dualize_packing_text << endl;
 		}
-		else if (stringcmp(argv[i], "-print_spreads") == 0) {
+		else if (ST.stringcmp(argv[i], "-print_spreads") == 0) {
 			f_print_spreads = TRUE;
 			print_spreads_idx_text.assign(argv[++i]);
 			cout << "-print_spreads " << print_spreads_idx_text << endl;
 		}
-		else if (stringcmp(argv[i], "-export_spreads_to_csv") == 0) {
+		else if (ST.stringcmp(argv[i], "-export_spreads_to_csv") == 0) {
 			f_export_spreads_to_csv = TRUE;
 			export_spreads_to_csv_fname.assign(argv[++i]);
 			export_spreads_to_csv_idx_text.assign(argv[++i]);
 			cout << "-export_spreads_to_csv " << export_spreads_to_csv_fname
 					<< " " << export_spreads_to_csv_idx_text << endl;
 		}
-		else if (stringcmp(argv[i], "-find_spreads_containing_two_lines") == 0) {
+		else if (ST.stringcmp(argv[i], "-find_spreads_containing_two_lines") == 0) {
 			f_find_spreads_containing_two_lines = TRUE;
-			find_spreads_containing_two_lines_line1 = strtoi(argv[++i]);
-			find_spreads_containing_two_lines_line2 = strtoi(argv[++i]);
+			find_spreads_containing_two_lines_line1 = ST.strtoi(argv[++i]);
+			find_spreads_containing_two_lines_line2 = ST.strtoi(argv[++i]);
 			cout << "-find_spreads_containing_two_lines "
 					<< " " << find_spreads_containing_two_lines_line1
 					<< " " << find_spreads_containing_two_lines_line2
 					<< endl;
 		}
 
-		else if (stringcmp(argv[i], "-find_spreads_containing_one_line") == 0) {
+		else if (ST.stringcmp(argv[i], "-find_spreads_containing_one_line") == 0) {
 			f_find_spreads_containing_one_line = TRUE;
-			find_spreads_containing_one_line_line_idx = strtoi(argv[++i]);
+			find_spreads_containing_one_line_line_idx = ST.strtoi(argv[++i]);
 			cout << "-find_spreads_containing_one_line "
 					<< " " << find_spreads_containing_one_line_line_idx
 					<< endl;
 		}
 
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
 		}

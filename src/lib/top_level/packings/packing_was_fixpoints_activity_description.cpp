@@ -38,6 +38,7 @@ int packing_was_fixpoints_activity_description::read_arguments(
 	int verbose_level)
 {
 	int i;
+	string_tools ST;
 
 	cout << "packing_was_fixpoints_activity_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
@@ -45,22 +46,22 @@ int packing_was_fixpoints_activity_description::read_arguments(
 		cout << "packing_was_fixpoints_activity_description::read_arguments, next argument is " << argv[i] << endl;
 
 
-		if (stringcmp(argv[i], "-report") == 0) {
+		if (ST.stringcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			cout << "-report" << endl;
 		}
-		else if (stringcmp(argv[i], "-print_packing") == 0) {
+		else if (ST.stringcmp(argv[i], "-print_packing") == 0) {
 			f_print_packing = TRUE;
 			print_packing_text.assign(argv[++i]);
 			cout << "-print_packing" << print_packing_text << endl;
 		}
-		else if (stringcmp(argv[i], "-compare_files_of_packings") == 0) {
+		else if (ST.stringcmp(argv[i], "-compare_files_of_packings") == 0) {
 			f_compare_files_of_packings = TRUE;
 			compare_files_of_packings_fname1.assign(argv[++i]);
 			compare_files_of_packings_fname2.assign(argv[++i]);
 			cout << "-compare_files_of_packings" << compare_files_of_packings_fname1 << " " << compare_files_of_packings_fname2 << endl;
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
 		}

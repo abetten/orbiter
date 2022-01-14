@@ -762,47 +762,6 @@ public:
 
 
 
-// #############################################################################
-// util.cpp
-// #############################################################################
-
-
-
-
-
-int str2int(std::string &str);
-int my_atoi(char *str);
-long int my_atol(const char *str);
-int stringcmp(std::string &str, const char *p);
-int strtoi(std::string &str);
-long int strtolint(std::string &str);
-double strtof(std::string &str);
-int string_starts_with_a_number(std::string &str);
-
-
-
-void itoa(char *p, int len_of_p, int i);
-void char_swap(char *p, char *q, int len);
-
-
-void print_line_of_number_signs();
-void print_repeated_character(std::ostream &ost, char c, int n);
-void print_pointer_hex(std::ostream &ost, void *p);
-void print_hex_digit(std::ostream &ost, int digit);
-
-
-
-int compare_sets(int *set1, int *set2, int sz1, int sz2);
-int hashing(int hash0, int a);
-int hashing_fixed_width(int hash0, int a, int bit_length);
-void int_swap(int& x, int& y);
-void uchar_print_bitwise(std::ostream &ost, uchar u);
-void uchar_move(uchar *p, uchar *q, int len);
-uint32_t root_of_tree_uint32_t (uint32_t* S, uint32_t i);
-int util_compare_func(void *a, void *b, void *data);
-int compare_strings(void *a, void *b, void *data);
-
-
 
 }}
 

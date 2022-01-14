@@ -246,9 +246,10 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		long int p1;
 		long int p2;
 		long int rk;
+		string_tools ST;
 
-		p1 = strtolint(Descr->unrank_line_through_two_points_p1);
-		p2 = strtolint(Descr->unrank_line_through_two_points_p2);
+		p1 = ST.strtolint(Descr->unrank_line_through_two_points_p1);
+		p2 = ST.strtolint(Descr->unrank_line_through_two_points_p2);
 
 		if (f_v) {
 			cout << "point rank p1 = " << p1 << endl;

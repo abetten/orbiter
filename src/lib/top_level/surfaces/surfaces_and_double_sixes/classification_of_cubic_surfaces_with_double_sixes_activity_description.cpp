@@ -52,6 +52,7 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "classification_of_cubic_surfaces_with_double_sixes_activity_description::read_arguments" << endl;
@@ -60,7 +61,7 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 
 		cout << "classification_of_cubic_surfaces_with_double_sixes_activity_description::read_arguments, next argument is " << argv[i] << endl;
 
-		if (stringcmp(argv[i], "-report") == 0) {
+		if (ST.stringcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			report_options = NEW_OBJECT(poset_classification_report_options);
 			if (f_v) {
@@ -82,31 +83,31 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 				cout << "-report" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-identify_Eckardt") == 0) {
+		else if (ST.stringcmp(argv[i], "-identify_Eckardt") == 0) {
 			f_identify_Eckardt = TRUE;
 			if (f_v) {
 				cout << "-identify_Eckardt " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-identify_F13") == 0) {
+		else if (ST.stringcmp(argv[i], "-identify_F13") == 0) {
 			f_identify_F13 = TRUE;
 			if (f_v) {
 				cout << "-identify_F13 " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-identify_Bes") == 0) {
+		else if (ST.stringcmp(argv[i], "-identify_Bes") == 0) {
 			f_identify_Bes = TRUE;
 			if (f_v) {
 				cout << "-identify_Bes " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-identify_general_abcd") == 0) {
+		else if (ST.stringcmp(argv[i], "-identify_general_abcd") == 0) {
 			f_identify_general_abcd = TRUE;
 			if (f_v) {
 				cout << "-identify_general_abcd " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-isomorphism_testing") == 0) {
+		else if (ST.stringcmp(argv[i], "-isomorphism_testing") == 0) {
 			f_isomorphism_testing = TRUE;
 			if (f_v) {
 				cout << "-isomorphism_testing" << endl;
@@ -135,7 +136,7 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 				cout << "-isomorphism_testing " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-recognize") == 0) {
+		else if (ST.stringcmp(argv[i], "-recognize") == 0) {
 			f_recognize = TRUE;
 			if (f_v) {
 				cout << "-recognize reading description of surface" << endl;
@@ -154,13 +155,13 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 				cout << "-recognize " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-create_source_code") == 0) {
+		else if (ST.stringcmp(argv[i], "-create_source_code") == 0) {
 			f_create_source_code = TRUE;
 		}
-		else if (stringcmp(argv[i], "-sweep") == 0) {
+		else if (ST.stringcmp(argv[i], "-sweep") == 0) {
 			f_sweep = TRUE;
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "classification_of_cubic_surfaces_with_double_sixes_activity_description::read_arguments -end" << endl;
 			}

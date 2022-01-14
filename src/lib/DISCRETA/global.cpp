@@ -1726,6 +1726,7 @@ int Gauss_int(int *A, int f_special, int f_complete, int *base_cols,
 	int f_v = (verbose_level >= 1);
 	int rank, i, j, k, jj;
 	int pivot, pivot_inv = 0, a, b, c, z, f;
+	algorithms Algo;
 	
 	if (f_v) {
 		cout << "Gauss_int Gauss algorithm for matrix:" << endl;
@@ -1740,11 +1741,11 @@ int Gauss_int(int *A, int f_special, int f_complete, int *base_cols,
 				// pivot element found: 
 				if (k != i) {
 					for (jj = j; jj < n; jj++) {
-						int_swap(A[i * n + jj], A[k * n + jj]);
+						Algo.int_swap(A[i * n + jj], A[k * n + jj]);
 						}
 					if (f_P) {
 						for (jj = 0; jj < Pn; jj++) {
-							int_swap(P[i * Pn + jj], P[k * Pn + jj]);
+							Algo.int_swap(P[i * Pn + jj], P[k * Pn + jj]);
 							}
 						}
 					}

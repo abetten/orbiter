@@ -896,6 +896,8 @@ void orthogonal::plane_invariant(unusual_model *U,
 	number_theory_domain NT;
 	combinatorics_domain Combi;
 	sorting Sorting;
+	algorithms Algo;
+
 
 
 	q = F->q;
@@ -933,7 +935,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 			}
 		H = 0;
 		for (i = 0; i < level * n; i++) {
-			H = hashing_fixed_width(H, Mtx[i], log2_of_q);
+			H = Algo.hashing_fixed_width(H, Mtx[i], log2_of_q);
 			}
 		if (f_vvv) {
 			cout << "hash =" << setw(10) << H << endl;
@@ -1068,7 +1070,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 
 			H = 0;
 			for (ii = 0; ii < level * n; ii++) {
-				H = hashing_fixed_width(H, Mtx[ii], log2_of_q);
+				H = Algo.hashing_fixed_width(H, Mtx[ii], log2_of_q);
 				}
 			if (f_vvv) {
 				cout << "hash =" << setw(10) << H << endl;

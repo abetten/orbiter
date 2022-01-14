@@ -55,35 +55,36 @@ int design_create_description::read_arguments(int argc, std::string *argv,
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	string_tools ST;
 
 	cout << "design_create_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
-		if (stringcmp(argv[i], "-q") == 0) {
+		if (ST.stringcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
-			q = strtoi(argv[++i]);
+			q = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-q " << q << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-catalogue") == 0) {
+		else if (ST.stringcmp(argv[i], "-catalogue") == 0) {
 			f_catalogue = TRUE;
-			iso = strtoi(argv[++i]);
+			iso = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-catalogue " << iso << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-family") == 0) {
+		else if (ST.stringcmp(argv[i], "-family") == 0) {
 			f_family = TRUE;
 			family_name.assign(argv[++i]);
 			if (f_v) {
 				cout << "-family " << family_name << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-list_of_blocks") == 0) {
+		else if (ST.stringcmp(argv[i], "-list_of_blocks") == 0) {
 			f_list_of_blocks = TRUE;
-			list_of_blocks_v = strtoi(argv[++i]);
-			list_of_blocks_k = strtoi(argv[++i]);
+			list_of_blocks_v = ST.strtoi(argv[++i]);
+			list_of_blocks_k = ST.strtoi(argv[++i]);
 			list_of_blocks_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-list_of_blocks " << list_of_blocks_v
@@ -92,10 +93,10 @@ int design_create_description::read_arguments(int argc, std::string *argv,
 						<< endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-list_of_blocks_from_file") == 0) {
+		else if (ST.stringcmp(argv[i], "-list_of_blocks_from_file") == 0) {
 			f_list_of_blocks_from_file = TRUE;
-			list_of_blocks_v = strtoi(argv[++i]);
-			list_of_blocks_k = strtoi(argv[++i]);
+			list_of_blocks_v = ST.strtoi(argv[++i]);
+			list_of_blocks_k = ST.strtoi(argv[++i]);
 			list_of_blocks_from_file_fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "-list_of_blocks_from_file " << list_of_blocks_v
@@ -104,13 +105,13 @@ int design_create_description::read_arguments(int argc, std::string *argv,
 						<< endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-no_group") == 0) {
+		else if (ST.stringcmp(argv[i], "-no_group") == 0) {
 			f_no_group = TRUE;
 			if (f_v) {
 				cout << "-no_group " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			break;
 		}
 	} // next i

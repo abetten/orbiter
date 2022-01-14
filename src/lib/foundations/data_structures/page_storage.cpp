@@ -190,6 +190,7 @@ uchar *page_storage::s_i_and_allocate(long int i)
 {
 	uchar *p, *q;
 	int j;
+	algorithms Algo;
 	
 	long int page_idx = i & (page_length - 1);
 	long int page = i >> page_length_log;
@@ -249,7 +250,7 @@ uchar *page_storage::s_i_and_allocate(long int i)
 			}
 		cout << endl;
 		for (j = 0; j < 10; j++) {
-			uchar_print_bitwise(cout, q[word + j]);
+			Algo.uchar_print_bitwise(cout, q[word + j]);
 			cout << " ";
 			}
 		cout << endl;
@@ -381,6 +382,8 @@ void page_storage::check_allocation_table()
 {
 	long int page_idx = overall_length & (page_length - 1);
 	long int page = overall_length >> page_length_log;
+	algorithms Algo;
+
 	if (page >= page_ptr_used) {
 		cout << "check_allocation_table::s_i "
 				"page >= page_ptr_used" << endl;
@@ -403,7 +406,7 @@ void page_storage::check_allocation_table()
 				}
 			cout << endl;
 			for (j = 0; j < 10; j++) {
-				uchar_print_bitwise(cout,
+				Algo.uchar_print_bitwise(cout,
 						allocation_tables[page][word + j]);
 				cout << " ";
 				}
@@ -418,6 +421,7 @@ long int page_storage::store(uchar *elt)
 {
 	long int i, hdl;
 	uchar *p, *q;
+	algorithms Algo;
 	
 	if (nb_free_entries) {
 		long int nfe = next_free_entry;
@@ -425,7 +429,7 @@ long int page_storage::store(uchar *elt)
 		p = s_i_and_allocate(nfe);
 		long int next_next_free_entry;
 		
-		uchar_move(p, (uchar *) &next_next_free_entry, sizeof(long int));
+		Algo.uchar_move(p, (uchar *) &next_next_free_entry, sizeof(long int));
 		if (nb_free_entries > 1) {
 			if (next_next_free_entry < 0 ||
 					next_next_free_entry >= overall_length) {
@@ -443,7 +447,7 @@ long int page_storage::store(uchar *elt)
 			}
 		next_free_entry = next_next_free_entry;
 
-		uchar_move(elt, p, entry_size);
+		Algo.uchar_move(elt, p, entry_size);
 		nb_free_entries--;
 		hdl = nfe;
 #ifdef DEBUG_PAGE_STORAGE
@@ -501,7 +505,7 @@ long int page_storage::store(uchar *elt)
 				"overall_length = " << overall_length << endl;
 #endif		
 		p = s_i_and_allocate(overall_length);
-		uchar_move(elt, p, entry_size);
+		Algo.uchar_move(elt, p, entry_size);
 		//cout << "storing at " << p << endl;
 		//check_allocation_table();
 		hdl = overall_length++;
@@ -521,9 +525,10 @@ void page_storage::dispose(long int hdl)
 {
 #if 1
 	uchar *p = s_i_and_deallocate(hdl);
+	algorithms Algo;
 
 	long int next_next_free_entry = next_free_entry;
-	uchar_move((uchar *) &next_next_free_entry, p, sizeof(long int));
+	Algo.uchar_move((uchar *) &next_next_free_entry, p, sizeof(long int));
 	next_free_entry = hdl;
 	nb_free_entries++;
 	//check_free_list();
@@ -538,6 +543,7 @@ void page_storage::check_free_list()
 	long int nb = 0, nfe;
 	int f_allocated;
 	uchar *p;
+	algorithms Algo;
 	
 	if (nb_free_entries == 0)
 		return;
@@ -554,7 +560,7 @@ void page_storage::check_free_list()
 			print();
 			exit(1);
 			}
-		uchar_move(p, (uchar *) &nfe, sizeof(long int));
+		Algo.uchar_move(p, (uchar *) &nfe, sizeof(long int));
 		if (nfe == -1)
 			break;
 		}

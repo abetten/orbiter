@@ -108,62 +108,64 @@ interface_toolkit::interface_toolkit()
 void interface_toolkit::print_help(int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	if (stringcmp(argv[i], "-create_files") == 0) {
+	string_tools ST;
+
+	if (ST.stringcmp(argv[i], "-create_files") == 0) {
 		cout << "-create_files <description>" << endl;
 	}
-	else if (stringcmp(argv[i], "-csv_file_select_rows") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_select_rows") == 0) {
 		cout << "-cvs_file_select_rows <string : csv_file_name> <string : list of rows>" << endl;
 	}
-	else if (stringcmp(argv[i], "-csv_file_split_rows_modulo") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_split_rows_modulo") == 0) {
 		cout << "-csv_file_split_rows_modulo <string : csv_file_name> <int : n>" << endl;
 	}
-	else if (stringcmp(argv[i], "-csv_file_select_cols") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_select_cols") == 0) {
 		cout << "-cvs_file_select_cols <string : csv_file_name> <string : list of cols>" << endl;
 	}
-	else if (stringcmp(argv[i], "-csv_file_select_rows_and_cols") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_select_rows_and_cols") == 0) {
 		cout << "-csv_file_select_rows_and_cols <string : csv_file_name> <string : list of rows> <string : list of cols>" << endl;
 	}
-	else if (stringcmp(argv[i], "-csv_file_sort_each_row") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_sort_each_row") == 0) {
 		cout << "-csv_file_sort_each_row <string : input file>" << endl;
 	}
-	else if (stringcmp(argv[i], "-csv_file_join") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_join") == 0) {
 		cout << "-cvs_file_join <int : number of files> <string : input file1> <string : column label1> ..." << endl;
 	}
-	else if (stringcmp(argv[i], "-csv_file_concatenate") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_concatenate") == 0) {
 		cout << "-csv_file_concatenate <string : fname_out> <int : number of input files> <string : inout file1> ..." << endl;
 	}
-	else if (stringcmp(argv[i], "-csv_file_extract_column_to_txt") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_extract_column_to_txt") == 0) {
 		cout << "-csv_file_extract_column_to_txt <string : csv_fname> <string : col_label>" << endl;
 	}
-	else if (stringcmp(argv[i], "-csv_file_latex") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_latex") == 0) {
 		cout << "-cvs_file_latex <int : f_produce_header> <string : file_name>" << endl;
 	}
-	else if (stringcmp(argv[i], "-draw_matrix") == 0) {
+	else if (ST.stringcmp(argv[i], "-draw_matrix") == 0) {
 		cout << "-draw_matrix options -end" << endl;
 	}
-	else if (stringcmp(argv[i], "-reformat") == 0) {
+	else if (ST.stringcmp(argv[i], "-reformat") == 0) {
 		cout << "-reformat <string : fname_in> <string : fname_out> <int : new_width>" << endl;
 	}
-	else if (stringcmp(argv[i], "-split_by_values") == 0) {
+	else if (ST.stringcmp(argv[i], "-split_by_values") == 0) {
 		cout << "-split_by_values <string : fname_in>" << endl;
 	}
-	else if (stringcmp(argv[i], "-store_as_csv_file") == 0) {
+	else if (ST.stringcmp(argv[i], "-store_as_csv_file") == 0) {
 		cout << "-store_as_csv_file <string : fname> <int : m> "
 				"<int : n> <string : data> " << endl;
 	}
-	else if (stringcmp(argv[i], "-mv") == 0) {
+	else if (ST.stringcmp(argv[i], "-mv") == 0) {
 		cout << "-mv <string : from> <string : to> " << endl;
 	}
-	else if (stringcmp(argv[i], "-loop") == 0) {
+	else if (ST.stringcmp(argv[i], "-loop") == 0) {
 		cout << "-loop <string : variable> <string : logfile_mask> <int : from> <int : to> <int : step> <arguments> -loop_end" << endl;
 	}
-	else if (stringcmp(argv[i], "-plot_function") == 0) {
+	else if (ST.stringcmp(argv[i], "-plot_function") == 0) {
 		cout << "-plot_function <string : fname_csv>" << endl;
 	}
-	else if (stringcmp(argv[i], "-draw_projective_curve") == 0) {
+	else if (ST.stringcmp(argv[i], "-draw_projective_curve") == 0) {
 		cout << "-draw_projective_curve ..." << endl;
 	}
-	else if (stringcmp(argv[i], "-tree_draw") == 0) {
+	else if (ST.stringcmp(argv[i], "-tree_draw") == 0) {
 		cout << "-tree_draw <options> -end" << endl;
 	}
 }
@@ -171,64 +173,66 @@ void interface_toolkit::print_help(int argc,
 int interface_toolkit::recognize_keyword(int argc,
 		std::string *argv, int i, int verbose_level)
 {
+	string_tools ST;
+
 	if (i >= argc) {
 		return false;
 	}
-	if (stringcmp(argv[i], "-create_files") == 0) {
+	if (ST.stringcmp(argv[i], "-create_files") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-csv_file_select_rows") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_select_rows") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-csv_file_split_rows_modulo") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_split_rows_modulo") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-csv_file_select_cols") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_select_cols") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-csv_file_select_rows_and_cols") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_select_rows_and_cols") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-csv_file_sort_each_row") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_sort_each_row") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-csv_file_join") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_join") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-csv_file_concatenate") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_concatenate") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-csv_file_extract_column_to_txt") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_extract_column_to_txt") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-csv_file_latex") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_latex") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-draw_matrix") == 0) {
+	else if (ST.stringcmp(argv[i], "-draw_matrix") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-reformat") == 0) {
+	else if (ST.stringcmp(argv[i], "-reformat") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-split_by_values") == 0) {
+	else if (ST.stringcmp(argv[i], "-split_by_values") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-store_as_csv_file") == 0) {
+	else if (ST.stringcmp(argv[i], "-store_as_csv_file") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-mv") == 0) {
+	else if (ST.stringcmp(argv[i], "-mv") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-loop") == 0) {
+	else if (ST.stringcmp(argv[i], "-loop") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-plot_function") == 0) {
+	else if (ST.stringcmp(argv[i], "-plot_function") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-draw_projective_curve") == 0) {
+	else if (ST.stringcmp(argv[i], "-draw_projective_curve") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-tree_draw") == 0) {
+	else if (ST.stringcmp(argv[i], "-tree_draw") == 0) {
 		return true;
 	}
 	return false;
@@ -238,6 +242,7 @@ void interface_toolkit::read_arguments(int argc,
 		std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	string_tools ST;
 
 	if (f_v) {
 		cout << "interface_toolkit::read_arguments" << endl;
@@ -246,7 +251,7 @@ void interface_toolkit::read_arguments(int argc,
 	if (f_v) {
 		cout << "interface_toolkit::read_arguments the next argument is " << argv[i] << endl;
 	}
-	if (stringcmp(argv[i], "-create_files") == 0) {
+	if (ST.stringcmp(argv[i], "-create_files") == 0) {
 		f_create_files = TRUE;
 
 		if (f_v) {
@@ -268,7 +273,7 @@ void interface_toolkit::read_arguments(int argc,
 			cout << "-create_files " <<endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-csv_file_select_rows") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_select_rows") == 0) {
 		f_csv_file_select_rows = TRUE;
 		csv_file_select_rows_fname.assign(argv[++i]);
 		csv_file_select_rows_text.assign(argv[++i]);
@@ -277,16 +282,16 @@ void interface_toolkit::read_arguments(int argc,
 				<< " " << csv_file_select_rows_text << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-csv_file_split_rows_modulo") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_split_rows_modulo") == 0) {
 		f_csv_file_split_rows_modulo = TRUE;
 		csv_file_split_rows_modulo_fname.assign(argv[++i]);
-		csv_file_split_rows_modulo_n = strtoi(argv[++i]);
+		csv_file_split_rows_modulo_n = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-csv_file_split_rows_modulo " << csv_file_split_rows_modulo_fname
 				<< " " << csv_file_split_rows_modulo_n << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-csv_file_select_cols") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_select_cols") == 0) {
 		f_csv_file_select_cols = TRUE;
 		csv_file_select_cols_fname.assign(argv[++i]);
 		csv_file_select_cols_text.assign(argv[++i]);
@@ -295,7 +300,7 @@ void interface_toolkit::read_arguments(int argc,
 				<< " " << csv_file_select_cols_text << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-csv_file_select_rows_and_cols") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_select_rows_and_cols") == 0) {
 		f_csv_file_select_rows_and_cols = TRUE;
 		csv_file_select_rows_and_cols_fname.assign(argv[++i]);
 		csv_file_select_rows_and_cols_R_text.assign(argv[++i]);
@@ -308,7 +313,7 @@ void interface_toolkit::read_arguments(int argc,
 				<< endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-csv_file_sort_each_row") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_sort_each_row") == 0) {
 		f_csv_file_sort_each_row = TRUE;
 		csv_file_sort_each_row_fname.assign(argv[++i]);
 		if (f_v) {
@@ -317,12 +322,12 @@ void interface_toolkit::read_arguments(int argc,
 				<< endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-csv_file_join") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_join") == 0) {
 		string s;
 		int nb, j;
 
 		f_csv_file_join = TRUE;
-		nb = strtoi(argv[++i]);
+		nb = ST.strtoi(argv[++i]);
 		for (j = 0; j < nb; j++) {
 			s.assign(argv[++i]);
 			csv_file_join_fname.push_back(s);
@@ -337,13 +342,13 @@ void interface_toolkit::read_arguments(int argc,
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-csv_file_concatenate") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_concatenate") == 0) {
 		string s;
 		int nb, j;
 
 		f_csv_file_concatenate = TRUE;
 		csv_file_concatenate_fname_out.assign(argv[++i]);
-		nb = strtoi(argv[++i]);
+		nb = ST.strtoi(argv[++i]);
 		for (j = 0; j < nb; j++) {
 			s.assign(argv[++i]);
 			csv_file_concatenate_fname_in.push_back(s);
@@ -355,7 +360,7 @@ void interface_toolkit::read_arguments(int argc,
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-csv_file_extract_column_to_txt") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_extract_column_to_txt") == 0) {
 		f_csv_file_extract_column_to_txt = TRUE;
 		csv_file_extract_column_to_txt_fname.assign(argv[++i]);
 		csv_file_extract_column_to_txt_col_label.assign(argv[++i]);
@@ -364,15 +369,15 @@ void interface_toolkit::read_arguments(int argc,
 		}
 	}
 
-	else if (stringcmp(argv[i], "-csv_file_latex") == 0) {
+	else if (ST.stringcmp(argv[i], "-csv_file_latex") == 0) {
 		f_csv_file_latex = TRUE;
-		f_produce_latex_header = strtoi(argv[++i]);
+		f_produce_latex_header = ST.strtoi(argv[++i]);
 		csv_file_latex_fname.assign(argv[++i]);
 		if (f_v) {
 			cout << "-csv_file_latex " << f_produce_latex_header << " " << csv_file_latex_fname << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-draw_matrix") == 0) {
+	else if (ST.stringcmp(argv[i], "-draw_matrix") == 0) {
 		f_draw_matrix = TRUE;
 		Draw_bitmap_control = NEW_OBJECT(draw_bitmap_control);
 		if (f_v) {
@@ -390,29 +395,29 @@ void interface_toolkit::read_arguments(int argc,
 			Draw_bitmap_control->print();
 		}
 	}
-	else if (stringcmp(argv[i], "-reformat") == 0) {
+	else if (ST.stringcmp(argv[i], "-reformat") == 0) {
 		f_reformat = TRUE;
 		reformat_fname_in.assign(argv[++i]);
 		reformat_fname_out.assign(argv[++i]);
-		reformat_nb_cols = strtoi(argv[++i]);
+		reformat_nb_cols = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-reformat " << reformat_fname_in
 				<< " " << reformat_fname_out
 				<< " " << reformat_nb_cols << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-split_by_values") == 0) {
+	else if (ST.stringcmp(argv[i], "-split_by_values") == 0) {
 		f_split_by_values = TRUE;
 		split_by_values_fname_in.assign(argv[++i]);
 		if (f_v) {
 			cout << "-split_by_values " << split_by_values_fname_in << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-store_as_csv_file") == 0) {
+	else if (ST.stringcmp(argv[i], "-store_as_csv_file") == 0) {
 		f_store_as_csv_file = TRUE;
 		store_as_csv_file_fname.assign(argv[++i]);
-		store_as_csv_file_m = strtoi(argv[++i]);
-		store_as_csv_file_n = strtoi(argv[++i]);
+		store_as_csv_file_m = ST.strtoi(argv[++i]);
+		store_as_csv_file_n = ST.strtoi(argv[++i]);
 		store_as_csv_file_data.assign(argv[++i]);
 		if (f_v) {
 			cout << "-store_as_csv_file " << store_as_csv_file_fname
@@ -421,7 +426,7 @@ void interface_toolkit::read_arguments(int argc,
 				<< " " << store_as_csv_file_data << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-mv") == 0) {
+	else if (ST.stringcmp(argv[i], "-mv") == 0) {
 		f_mv = TRUE;
 		mv_a.assign(argv[++i]);
 		mv_b.assign(argv[++i]);
@@ -430,17 +435,17 @@ void interface_toolkit::read_arguments(int argc,
 				<< " " << mv_b << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-loop") == 0) {
+	else if (ST.stringcmp(argv[i], "-loop") == 0) {
 		f_loop = TRUE;
 		loop_start_idx = i + 5;
 		loop_variable.assign(argv[++i]);
-		loop_from = strtoi(argv[++i]);
-		loop_to = strtoi(argv[++i]);
-		loop_step = strtoi(argv[++i]);
+		loop_from = ST.strtoi(argv[++i]);
+		loop_to = ST.strtoi(argv[++i]);
+		loop_step = ST.strtoi(argv[++i]);
 		loop_argv = argv;
 
 		for (++i; i < argc; i++) {
-			if (stringcmp(argv[i], "-end_loop") == 0) {
+			if (ST.stringcmp(argv[i], "-end_loop") == 0) {
 				loop_end_idx = i;
 				break;
 			}
@@ -463,14 +468,14 @@ void interface_toolkit::read_arguments(int argc,
 			cout << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-plot_function") == 0) {
+	else if (ST.stringcmp(argv[i], "-plot_function") == 0) {
 		f_plot_function = TRUE;
 		plot_function_fname.assign(argv[++i]);
 		if (f_v) {
 			cout << "-plot_function " << plot_function_fname << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-draw_projective_curve") == 0) {
+	else if (ST.stringcmp(argv[i], "-draw_projective_curve") == 0) {
 		f_draw_projective_curve = TRUE;
 		Draw_projective_curve_description = NEW_OBJECT(draw_projective_curve_description);
 		if (f_v) {
@@ -488,7 +493,7 @@ void interface_toolkit::read_arguments(int argc,
 			Draw_projective_curve_description->print();
 		}
 	}
-	else if (stringcmp(argv[i], "-tree_draw") == 0) {
+	else if (ST.stringcmp(argv[i], "-tree_draw") == 0) {
 		f_tree_draw = TRUE;
 		Tree_draw_options = NEW_OBJECT(tree_draw_options);
 		if (f_v) {

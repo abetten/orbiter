@@ -157,7 +157,7 @@ void set_and_stabilizer::init_data(long int *data, int sz, int verbose_level)
 }
 
 void set_and_stabilizer::init_stab_from_data(int *data_gens, 
-	int data_gens_size, int nb_gens, const char *ascii_target_go, 
+	int data_gens_size, int nb_gens, std::string &ascii_target_go,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

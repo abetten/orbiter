@@ -36,6 +36,7 @@ MODULES= \
 		foundations/combinatorics/tdo_scheme_compute.o \
 		foundations/combinatorics/tdo_scheme_synthetic.o \
 		foundations/cryptography/cryptography_domain.o \
+		foundations/data_structures/algorithms.o \
 		foundations/data_structures/bitmatrix.o \
 		foundations/data_structures/bitvector.o \
 		foundations/data_structures/classify_bitvectors.o \
@@ -188,7 +189,6 @@ MODULES= \
 		foundations/io_and_os/os_interface.o \
 		foundations/io_and_os/override_double.o \
 		foundations/io_and_os/prepare_frames.o \
-		foundations/io_and_os/util.o \
 		foundations/linear_algebra/linear_algebra_global.o \
 		foundations/linear_algebra/linear_algebra_RREF.o \
 		foundations/linear_algebra/linear_algebra.o \

@@ -1115,8 +1115,9 @@ void surface_create::create_surface_by_rank(std::string &rank_text, int defining
 
 	int coeffs20[20];
 	long int rank;
+	string_tools ST;
 
-	rank = strtolint(rank_text);
+	rank = ST.strtolint(rank_text);
 
 	if (f_v) {
 		cout << "surface_create::create_surface_by_rank surface is given "

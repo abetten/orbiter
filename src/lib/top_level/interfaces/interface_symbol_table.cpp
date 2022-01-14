@@ -55,13 +55,15 @@ void interface_symbol_table::init(orbiter_top_level_session *Orbiter_top_level_s
 void interface_symbol_table::print_help(int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	if (stringcmp(argv[i], "-define") == 0) {
+	string_tools ST;
+
+	if (ST.stringcmp(argv[i], "-define") == 0) {
 		cout << "-define <string : label> description -end" << endl;
 	}
-	else if (stringcmp(argv[i], "-print_symbols") == 0) {
+	else if (ST.stringcmp(argv[i], "-print_symbols") == 0) {
 		cout << "-print_symbols" << endl;
 	}
-	else if (stringcmp(argv[i], "-with") == 0) {
+	else if (ST.stringcmp(argv[i], "-with") == 0) {
 		cout << "-with <string : label> *[ -and <string : label> ] -do ... -end" << endl;
 	}
 }
@@ -69,16 +71,18 @@ void interface_symbol_table::print_help(int argc,
 int interface_symbol_table::recognize_keyword(int argc,
 		std::string *argv, int i, int verbose_level)
 {
+	string_tools ST;
+
 	if (i >= argc) {
 		return false;
 	}
-	if (stringcmp(argv[i], "-define") == 0) {
+	if (ST.stringcmp(argv[i], "-define") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-print_symbols") == 0) {
+	else if (ST.stringcmp(argv[i], "-print_symbols") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-with") == 0) {
+	else if (ST.stringcmp(argv[i], "-with") == 0) {
 		return true;
 	}
 	return false;
@@ -89,6 +93,8 @@ void interface_symbol_table::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 
+	string_tools ST;
+
 	if (f_v) {
 		cout << "interface_symbol_table::read_arguments" << endl;
 	}
@@ -98,7 +104,7 @@ void interface_symbol_table::read_arguments(
 		cout << "interface_symbol_table::read_arguments the next argument is " << argv[i] << endl;
 	}
 
-	if (stringcmp(argv[i], "-define") == 0) {
+	if (ST.stringcmp(argv[i], "-define") == 0) {
 
 		f_define = TRUE;
 		Symbol_definition = NEW_OBJECT(symbol_definition);
@@ -127,7 +133,7 @@ void interface_symbol_table::read_arguments(
 #endif
 	}
 
-	else if (stringcmp(argv[i], "-print_symbols") == 0) {
+	else if (ST.stringcmp(argv[i], "-print_symbols") == 0) {
 		f_print_symbols = TRUE;
 		if (f_v) {
 			cout << "-print_symbols" << endl;
@@ -135,7 +141,7 @@ void interface_symbol_table::read_arguments(
 		i++;
 	}
 
-	else if (stringcmp(argv[i], "-with") == 0) {
+	else if (ST.stringcmp(argv[i], "-with") == 0) {
 		read_with(argc, argv, i, verbose_level);
 	}
 
@@ -161,19 +167,20 @@ void interface_symbol_table::read_with(
 
 	f_with = TRUE;
 	string s;
+	string_tools ST;
 
 	s.assign(argv[++i]);
 	with_labels.push_back(s);
 
 	while (TRUE) {
 		i++;
-		if (stringcmp(argv[i], "-and") == 0) {
+		if (ST.stringcmp(argv[i], "-and") == 0) {
 			string s;
 
 			s.assign(argv[++i]);
 			with_labels.push_back(s);
 		}
-		else if (stringcmp(argv[i], "-do") == 0) {
+		else if (ST.stringcmp(argv[i], "-do") == 0) {
 			i++;
 
 			f_activity = TRUE;

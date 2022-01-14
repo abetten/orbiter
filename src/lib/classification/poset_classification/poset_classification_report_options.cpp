@@ -41,28 +41,29 @@ int poset_classification_report_options::read_arguments(
 {
 	int i;
 	int f_v = (verbose_level >= 1);
+	string_tools ST;
 
 	if (f_v) {
 		cout << "poset_classification_report_options::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
 
-		if (stringcmp(argv[i], "-select_orbits_by_level") == 0) {
+		if (ST.stringcmp(argv[i], "-select_orbits_by_level") == 0) {
 			f_select_orbits_by_level = TRUE;
-			select_orbits_by_level_level = strtoi(argv[++i]);
+			select_orbits_by_level_level = ST.strtoi(argv[++i]);
 		}
-		else if (stringcmp(argv[i], "-select_orbits_by_stabilizer_order") == 0) {
+		else if (ST.stringcmp(argv[i], "-select_orbits_by_stabilizer_order") == 0) {
 			f_select_orbits_by_stabilizer_order = TRUE;
-			select_orbits_by_stabilizer_order_so = strtoi(argv[++i]);
+			select_orbits_by_stabilizer_order_so = ST.strtoi(argv[++i]);
 		}
-		else if (stringcmp(argv[i], "-select_orbits_by_stabilizer_order_multiple_of") == 0) {
+		else if (ST.stringcmp(argv[i], "-select_orbits_by_stabilizer_order_multiple_of") == 0) {
 			f_select_orbits_by_stabilizer_order_multiple_of = TRUE;
-			select_orbits_by_stabilizer_order_so_multiple_of = strtoi(argv[++i]);
+			select_orbits_by_stabilizer_order_so_multiple_of = ST.strtoi(argv[++i]);
 		}
-		else if (stringcmp(argv[i], "-include_projective_stabilizer") == 0) {
+		else if (ST.stringcmp(argv[i], "-include_projective_stabilizer") == 0) {
 			f_include_projective_stabilizer = TRUE;
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
 			}

@@ -54,19 +54,20 @@ int classification_of_objects_description::read_arguments(
 	int verbose_level)
 {
 	int i;
+	string_tools ST;
 
 	cout << "classification_of_objects_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
 		cout << "classification_of_objects_description::read_arguments, next argument is " << argv[i] << endl;
 
-		if (stringcmp(argv[i], "-label") == 0) {
+		if (ST.stringcmp(argv[i], "-label") == 0) {
 			f_label = TRUE;
 			label.assign(argv[++i]);
 			cout << "-label" << label << endl;
 		}
 
-		else if (stringcmp(argv[i], "-save_classification") == 0) {
+		else if (ST.stringcmp(argv[i], "-save_classification") == 0) {
 			f_save_classification = TRUE;
 			save_prefix.assign(argv[++i]);
 			cout << "-save_classification" << save_prefix << endl;
@@ -80,33 +81,33 @@ int classification_of_objects_description::read_arguments(
 		}
 #endif
 
-		else if (stringcmp(argv[i], "-max_TDO_depth") == 0) {
+		else if (ST.stringcmp(argv[i], "-max_TDO_depth") == 0) {
 			f_max_TDO_depth = TRUE;
-			max_TDO_depth = strtoi(argv[++i]);
+			max_TDO_depth = ST.strtoi(argv[++i]);
 			cout << "-max_TDO_depth " << max_TDO_depth << endl;
 		}
 
-		else if (stringcmp(argv[i], "-classification_prefix") == 0) {
+		else if (ST.stringcmp(argv[i], "-classification_prefix") == 0) {
 			f_classification_prefix = TRUE;
 			classification_prefix.assign(argv[++i]);
 			cout << "-classification_prefix " << classification_prefix << endl;
 		}
 
-		else if (stringcmp(argv[i], "-save_canonical_labeling") == 0) {
+		else if (ST.stringcmp(argv[i], "-save_canonical_labeling") == 0) {
 			f_save_canonical_labeling = TRUE;
 			cout << "-save_canonical_labeling " << endl;
 		}
 
-		else if (stringcmp(argv[i], "-save_ago") == 0) {
+		else if (ST.stringcmp(argv[i], "-save_ago") == 0) {
 			f_save_ago = TRUE;
 			cout << "-save_ago " << endl;
 		}
 
-		else if (stringcmp(argv[i], "-save_transversal") == 0) {
+		else if (ST.stringcmp(argv[i], "-save_transversal") == 0) {
 			f_save_transversal = TRUE;
 			cout << "-save_transversal " << endl;
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "projective_space_object_classifier_description::read_arguments -end" << endl;
 			break;
 		}

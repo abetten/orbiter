@@ -70,84 +70,85 @@ int geometry_builder_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "geometry_builder_description::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
-		if (stringcmp(argv[i], "-V") == 0) {
+		if (ST.stringcmp(argv[i], "-V") == 0) {
 			f_V = TRUE;
 			V_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-V " << V_text << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-B") == 0) {
+		else if (ST.stringcmp(argv[i], "-B") == 0) {
 			f_B = TRUE;
 			B_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-B " << B_text << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-TDO") == 0) {
+		else if (ST.stringcmp(argv[i], "-TDO") == 0) {
 			f_TDO = TRUE;
 			TDO_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-TDO " << TDO_text << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-fuse") == 0) {
+		else if (ST.stringcmp(argv[i], "-fuse") == 0) {
 			f_fuse = TRUE;
 			fuse_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-fuse " << fuse_text << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-girth") == 0) {
+		else if (ST.stringcmp(argv[i], "-girth") == 0) {
 			f_girth_test = TRUE;
-			girth = strtoi(argv[++i]);
+			girth = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-girth_test " << girth << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-lambda") == 0) {
+		else if (ST.stringcmp(argv[i], "-lambda") == 0) {
 			f_lambda = TRUE;
-			lambda = strtoi(argv[++i]);
+			lambda = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-lambda " << lambda << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-no_square_test") == 0) {
+		else if (ST.stringcmp(argv[i], "-no_square_test") == 0) {
 			f_find_square = FALSE;
 			if (f_v) {
 				cout << "-no_square_test " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-simple") == 0) {
+		else if (ST.stringcmp(argv[i], "-simple") == 0) {
 			f_simple = TRUE;
 			if (f_v) {
 				cout << "-simple " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-search_tree") == 0) {
+		else if (ST.stringcmp(argv[i], "-search_tree") == 0) {
 			f_search_tree = TRUE;
 			if (f_v) {
 				cout << "-search_tree " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-search_tree_flags") == 0) {
+		else if (ST.stringcmp(argv[i], "-search_tree_flags") == 0) {
 			f_search_tree_flags = TRUE;
 			if (f_v) {
 				cout << "-search_tree_flags " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-orderly") == 0) {
+		else if (ST.stringcmp(argv[i], "-orderly") == 0) {
 			f_orderly = TRUE;
 			if (f_v) {
 				cout << "-orderly " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-test") == 0) {
+		else if (ST.stringcmp(argv[i], "-test") == 0) {
 			string lines;
 			lines.assign(argv[++i]);
 			test_lines.push_back(lines);
@@ -155,7 +156,7 @@ int geometry_builder_description::read_arguments(
 				cout << "-test " << lines << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-test2") == 0) {
+		else if (ST.stringcmp(argv[i], "-test2") == 0) {
 			string lines;
 			lines.assign(argv[++i]);
 			test2_lines.push_back(lines);
@@ -163,32 +164,32 @@ int geometry_builder_description::read_arguments(
 				cout << "-test2 " << lines << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-split") == 0) {
+		else if (ST.stringcmp(argv[i], "-split") == 0) {
 			f_split = TRUE;
-			split_line = strtoi(argv[++i]);
-			split_remainder = strtoi(argv[++i]);
-			split_modulo = strtoi(argv[++i]);
+			split_line = ST.strtoi(argv[++i]);
+			split_remainder = ST.strtoi(argv[++i]);
+			split_modulo = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-split " << split_line << " "
 						<< split_remainder << " " << split_modulo << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-print_at_line") == 0) {
+		else if (ST.stringcmp(argv[i], "-print_at_line") == 0) {
 			int a;
-			a = strtoi(argv[++i]);
+			a = ST.strtoi(argv[++i]);
 			print_at_line.push_back(a);
 			if (f_v) {
 				cout << "-print_at_line " << a << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-fname_GEO") == 0) {
+		else if (ST.stringcmp(argv[i], "-fname_GEO") == 0) {
 			f_fname_GEO = TRUE;
 			fname_GEO.assign(argv[++i]);
 			if (f_v) {
 				cout << "-fname_GEO " << fname_GEO << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
 		}

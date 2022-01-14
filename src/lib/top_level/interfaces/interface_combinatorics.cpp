@@ -110,73 +110,75 @@ interface_combinatorics::interface_combinatorics()
 void interface_combinatorics::print_help(int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	if (stringcmp(argv[i], "-diophant") == 0) {
+	string_tools ST;
+
+	if (ST.stringcmp(argv[i], "-diophant") == 0) {
 		cout << "-diophant <description> " << endl;
 	}
-	else if (stringcmp(argv[i], "-diophant_activity") == 0) {
+	else if (ST.stringcmp(argv[i], "-diophant_activity") == 0) {
 		cout << "-diophant_activity <description> " << endl;
 	}
-	else if (stringcmp(argv[i], "-bent") == 0) {
+	else if (ST.stringcmp(argv[i], "-bent") == 0) {
 		cout << "-bent <int : n>" << endl;
 	}
-	else if (stringcmp(argv[i], "-random_permutation") == 0) {
+	else if (ST.stringcmp(argv[i], "-random_permutation") == 0) {
 		cout << "-random_permutation <ind : degree> <string : <fname_csv>" << endl;
 	}
-	else if (stringcmp(argv[i], "-read_poset_file") == 0) {
+	else if (ST.stringcmp(argv[i], "-read_poset_file") == 0) {
 		cout << "-read_poset_file <string : file_name>" << endl;
 	}
-	else if (stringcmp(argv[i], "-read_poset_file_with_grouping") == 0) {
+	else if (ST.stringcmp(argv[i], "-read_poset_file_with_grouping") == 0) {
 		cout << "-read_poset_file_with_grouping <string : file_name> <double : x_stretch>" << endl;
 	}
-	else if (stringcmp(argv[i], "-list_parameters_of_SRG") == 0) {
+	else if (ST.stringcmp(argv[i], "-list_parameters_of_SRG") == 0) {
 		cout << "-list_parameters_of_SRG <int : v_max>" << endl;
 	}
-	else if (stringcmp(argv[i], "-conjugacy_classes_Sym_n") == 0) {
+	else if (ST.stringcmp(argv[i], "-conjugacy_classes_Sym_n") == 0) {
 		cout << "-conjugacy_classes_Sym_n <int : n>" << endl;
 	}
-	else if (stringcmp(argv[i], "-tree_of_all_k_subsets") == 0) {
+	else if (ST.stringcmp(argv[i], "-tree_of_all_k_subsets") == 0) {
 		cout << "-tree_of_all_k_subsets <int : n> <int : k>" << endl;
 	}
-	else if (stringcmp(argv[i], "-Delandtsheer_Doyen") == 0) {
+	else if (ST.stringcmp(argv[i], "-Delandtsheer_Doyen") == 0) {
 			cout << "-Delandtsheer_Doyen <description>" << endl;
 	}
-	else if (stringcmp(argv[i], "-tdo_refinement") == 0) {
+	else if (ST.stringcmp(argv[i], "-tdo_refinement") == 0) {
 		cout << "-tdo_refinement <options>" << endl;
 	}
-	else if (stringcmp(argv[i], "-tdo_print") == 0) {
+	else if (ST.stringcmp(argv[i], "-tdo_print") == 0) {
 		cout << "-tdo_print <string : tdo-fname>" << endl;
 	}
-	else if (stringcmp(argv[i], "-convert_stack_to_tdo") == 0) {
+	else if (ST.stringcmp(argv[i], "-convert_stack_to_tdo") == 0) {
 		cout << "-convert_stack_to_tdo <string : stack_fname>" << endl;
 	}
-	else if (stringcmp(argv[i], "-maximal_arc_parameters") == 0) {
+	else if (ST.stringcmp(argv[i], "-maximal_arc_parameters") == 0) {
 		cout << "-maximal_arc_parameters <int : q > < int : r >" << endl;
 	}
-	else if (stringcmp(argv[i], "-arc_parameters") == 0) {
+	else if (ST.stringcmp(argv[i], "-arc_parameters") == 0) {
 		cout << "-arc_parameters <int : q > <int : s > < int : r >" << endl;
 	}
-	else if (stringcmp(argv[i], "-pentomino_puzzle") == 0) {
+	else if (ST.stringcmp(argv[i], "-pentomino_puzzle") == 0) {
 		cout << "-pentomino_puzzle" << endl;
 	}
-	else if (stringcmp(argv[i], "-regular_linear_space_classify") == 0) {
+	else if (ST.stringcmp(argv[i], "-regular_linear_space_classify") == 0) {
 		cout << "-regular_linear_space_classify <description>" << endl;
 	}
-	else if (stringcmp(argv[i], "-draw_layered_graph") == 0) {
+	else if (ST.stringcmp(argv[i], "-draw_layered_graph") == 0) {
 		cout << "-draw_layered_graph <string : fname> <layered_graph_options>" << endl;
 	}
-	else if (stringcmp(argv[i], "-read_solutions_and_tally") == 0) {
+	else if (ST.stringcmp(argv[i], "-read_solutions_and_tally") == 0) {
 		cout << "-read_solutions_and_tally <string : fname> <int :read_solutions_and_tally_sz>" << endl;
 	}
-	else if (stringcmp(argv[i], "-make_elementary_symmetric_functions") == 0) {
+	else if (ST.stringcmp(argv[i], "-make_elementary_symmetric_functions") == 0) {
 		cout << "-make_elementary_symmetric_functions <int : n> <int :k_max>" << endl;
 	}
-	else if (stringcmp(argv[i], "-Dedekind_numbers") == 0) {
+	else if (ST.stringcmp(argv[i], "-Dedekind_numbers") == 0) {
 		cout << "-Dedekind_numbers <int : n_min> <int : n_max> <int : q_min> <int : q_max>  " << endl;
 	}
-	else if (stringcmp(argv[i], "-rank_k_subset") == 0) {
+	else if (ST.stringcmp(argv[i], "-rank_k_subset") == 0) {
 		cout << "-rank_k_subset <int : n> <int : k> <string : text>  " << endl;
 	}
-	else if (stringcmp(argv[i], "-geometry_builder") == 0) {
+	else if (ST.stringcmp(argv[i], "-geometry_builder") == 0) {
 		cout << "-geometry_builder <description> -end" << endl;
 	}
 }
@@ -184,76 +186,77 @@ void interface_combinatorics::print_help(int argc,
 int interface_combinatorics::recognize_keyword(int argc,
 		std::string *argv, int i, int verbose_level)
 {
+	string_tools ST;
 	if (i >= argc) {
 		return false;
 	}
-	if (stringcmp(argv[i], "-diophant") == 0) {
+	if (ST.stringcmp(argv[i], "-diophant") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-diophant_activity") == 0) {
+	else if (ST.stringcmp(argv[i], "-diophant_activity") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-bent") == 0) {
+	else if (ST.stringcmp(argv[i], "-bent") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-random_permutation") == 0) {
+	else if (ST.stringcmp(argv[i], "-random_permutation") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-read_poset_file") == 0) {
+	else if (ST.stringcmp(argv[i], "-read_poset_file") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-read_poset_file_with_grouping") == 0) {
+	else if (ST.stringcmp(argv[i], "-read_poset_file_with_grouping") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-list_parameters_of_SRG") == 0) {
+	else if (ST.stringcmp(argv[i], "-list_parameters_of_SRG") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-conjugacy_classes_Sym_n") == 0) {
+	else if (ST.stringcmp(argv[i], "-conjugacy_classes_Sym_n") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-tree_of_all_k_subsets") == 0) {
+	else if (ST.stringcmp(argv[i], "-tree_of_all_k_subsets") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-Delandtsheer_Doyen") == 0) {
+	else if (ST.stringcmp(argv[i], "-Delandtsheer_Doyen") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-tdo_refinement") == 0) {
+	else if (ST.stringcmp(argv[i], "-tdo_refinement") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-tdo_print") == 0) {
+	else if (ST.stringcmp(argv[i], "-tdo_print") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-convert_stack_to_tdo") == 0) {
+	else if (ST.stringcmp(argv[i], "-convert_stack_to_tdo") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-maximal_arc_parameters") == 0) {
+	else if (ST.stringcmp(argv[i], "-maximal_arc_parameters") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-arc_parameters") == 0) {
+	else if (ST.stringcmp(argv[i], "-arc_parameters") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-pentomino_puzzle") == 0) {
+	else if (ST.stringcmp(argv[i], "-pentomino_puzzle") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-regular_linear_space_classify") == 0) {
+	else if (ST.stringcmp(argv[i], "-regular_linear_space_classify") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-draw_layered_graph") == 0) {
+	else if (ST.stringcmp(argv[i], "-draw_layered_graph") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-read_solutions_and_tally") == 0) {
+	else if (ST.stringcmp(argv[i], "-read_solutions_and_tally") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-make_elementary_symmetric_functions") == 0) {
+	else if (ST.stringcmp(argv[i], "-make_elementary_symmetric_functions") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-Dedekind_numbers") == 0) {
+	else if (ST.stringcmp(argv[i], "-Dedekind_numbers") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-rank_k_subset") == 0) {
+	else if (ST.stringcmp(argv[i], "-rank_k_subset") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-geometry_builder") == 0) {
+	else if (ST.stringcmp(argv[i], "-geometry_builder") == 0) {
 		return true;
 	}
 	return false;
@@ -263,6 +266,7 @@ void interface_combinatorics::read_arguments(int argc,
 		std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	string_tools ST;
 
 	if (f_v) {
 		cout << "interface_combinatorics::read_arguments" << endl;
@@ -273,7 +277,7 @@ void interface_combinatorics::read_arguments(int argc,
 		cout << "interface_combinatorics::read_arguments the next argument is " << argv[i] << endl;
 	}
 
-	if (stringcmp(argv[i], "-diophant") == 0) {
+	if (ST.stringcmp(argv[i], "-diophant") == 0) {
 		f_diophant = TRUE;
 		if (f_v) {
 			cout << "-diophant " << endl;
@@ -292,7 +296,7 @@ void interface_combinatorics::read_arguments(int argc,
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-diophant_activity") == 0) {
+	else if (ST.stringcmp(argv[i], "-diophant_activity") == 0) {
 		f_diophant_activity = TRUE;
 		if (f_v) {
 			cout << "-diophant_activity " << endl;
@@ -311,22 +315,22 @@ void interface_combinatorics::read_arguments(int argc,
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-bent") == 0) {
+	else if (ST.stringcmp(argv[i], "-bent") == 0) {
 		f_bent = TRUE;
-		bent_n = strtoi(argv[++i]);
+		bent_n = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-bent " << bent_n << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-random_permutation") == 0) {
+	else if (ST.stringcmp(argv[i], "-random_permutation") == 0) {
 		f_random_permutation = TRUE;
-		random_permutation_degree = strtoi(argv[++i]);
+		random_permutation_degree = ST.strtoi(argv[++i]);
 		random_permutation_fname_csv.assign(argv[++i]);
 		if (f_v) {
 			cout << "-random_permutation " << random_permutation_degree << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-read_poset_file") == 0) {
+	else if (ST.stringcmp(argv[i], "-read_poset_file") == 0) {
 		f_read_poset_file = TRUE;
 		f_grouping = FALSE;
 		read_poset_file_fname.assign(argv[++i]);
@@ -334,39 +338,39 @@ void interface_combinatorics::read_arguments(int argc,
 			cout << "-read_poset_file " << read_poset_file_fname << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-read_poset_file_with_grouping") == 0) {
+	else if (ST.stringcmp(argv[i], "-read_poset_file_with_grouping") == 0) {
 		f_read_poset_file = TRUE;
 		f_grouping = TRUE;
 		read_poset_file_fname.assign(argv[++i]);
-		grouping_x_stretch = strtof(argv[++i]);
+		grouping_x_stretch = ST.strtof(argv[++i]);
 		if (f_v) {
 			cout << "-read_poset_file_with_grouping "
 					<< read_poset_file_fname << " " << grouping_x_stretch << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-list_parameters_of_SRG") == 0) {
+	else if (ST.stringcmp(argv[i], "-list_parameters_of_SRG") == 0) {
 		f_list_parameters_of_SRG = TRUE;
-		list_parameters_of_SRG_v_max = strtoi(argv[++i]);
+		list_parameters_of_SRG_v_max = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-list_parameters_of_SRG " << list_parameters_of_SRG_v_max << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-conjugacy_classes_Sym_n") == 0) {
+	else if (ST.stringcmp(argv[i], "-conjugacy_classes_Sym_n") == 0) {
 		f_conjugacy_classes_Sym_n = TRUE;
-		conjugacy_classes_Sym_n_n = strtoi(argv[++i]);
+		conjugacy_classes_Sym_n_n = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-conjugacy_classes_Sym_n " << conjugacy_classes_Sym_n_n << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-tree_of_all_k_subsets") == 0) {
+	else if (ST.stringcmp(argv[i], "-tree_of_all_k_subsets") == 0) {
 		f_tree_of_all_k_subsets = TRUE;
-		tree_of_all_k_subsets_n = strtoi(argv[++i]);
-		tree_of_all_k_subsets_k = strtoi(argv[++i]);
+		tree_of_all_k_subsets_n = ST.strtoi(argv[++i]);
+		tree_of_all_k_subsets_k = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-tree_of_all_k_subsets " << tree_of_all_k_subsets_n << " " << tree_of_all_k_subsets_k << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-Delandtsheer_Doyen") == 0) {
+	else if (ST.stringcmp(argv[i], "-Delandtsheer_Doyen") == 0) {
 		f_Delandtsheer_Doyen = TRUE;
 		Delandtsheer_Doyen_description = NEW_OBJECT(delandtsheer_doyen_description);
 		i += Delandtsheer_Doyen_description->read_arguments(argc - (i - 1),
@@ -376,7 +380,7 @@ void interface_combinatorics::read_arguments(int argc,
 			cout << "-Delandtsheer_Doyen" << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-tdo_refinement") == 0) {
+	else if (ST.stringcmp(argv[i], "-tdo_refinement") == 0) {
 		f_tdo_refinement = TRUE;
 		if (f_v) {
 			cout << "-tdo_refinement " << endl;
@@ -394,34 +398,34 @@ void interface_combinatorics::read_arguments(int argc,
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-tdo_print") == 0) {
+	else if (ST.stringcmp(argv[i], "-tdo_print") == 0) {
 		f_tdo_print = TRUE;
 		tdo_print_fname.assign(argv[++i]);
 		if (f_v) {
 			cout << "-tdo_print " << tdo_print_fname << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-convert_stack_to_tdo") == 0) {
+	else if (ST.stringcmp(argv[i], "-convert_stack_to_tdo") == 0) {
 		f_convert_stack_to_tdo = TRUE;
 		stack_fname.assign(argv[++i]);
 		if (f_v) {
 			cout << "-convert_stack_to_tdo " << stack_fname << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-maximal_arc_parameters") == 0) {
+	else if (ST.stringcmp(argv[i], "-maximal_arc_parameters") == 0) {
 		f_maximal_arc_parameters = TRUE;
-		maximal_arc_parameters_q = strtoi(argv[++i]);
-		maximal_arc_parameters_r = strtoi(argv[++i]);
+		maximal_arc_parameters_q = ST.strtoi(argv[++i]);
+		maximal_arc_parameters_r = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-maximal_arc_parameters " << maximal_arc_parameters_q
 				<< " " << maximal_arc_parameters_r << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-arc_parameters") == 0) {
+	else if (ST.stringcmp(argv[i], "-arc_parameters") == 0) {
 		f_arc_parameters = TRUE;
-		arc_parameters_q = strtoi(argv[++i]);
-		arc_parameters_s = strtoi(argv[++i]);
-		arc_parameters_r = strtoi(argv[++i]);
+		arc_parameters_q = ST.strtoi(argv[++i]);
+		arc_parameters_s = ST.strtoi(argv[++i]);
+		arc_parameters_r = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-arc_parameters " << arc_parameters_q
 				<< " " << arc_parameters_s
@@ -429,13 +433,13 @@ void interface_combinatorics::read_arguments(int argc,
 				<< endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-pentomino_puzzle") == 0) {
+	else if (ST.stringcmp(argv[i], "-pentomino_puzzle") == 0) {
 		f_pentomino_puzzle = TRUE;
 		if (f_v) {
 			cout << "-pentomino_puzzle " << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-regular_linear_space_classify") == 0) {
+	else if (ST.stringcmp(argv[i], "-regular_linear_space_classify") == 0) {
 		f_regular_linear_space_classify = TRUE;
 
 		if (f_v) {
@@ -457,7 +461,7 @@ void interface_combinatorics::read_arguments(int argc,
 			cout << "-regular_linear_space_classify " <<endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-draw_layered_graph") == 0) {
+	else if (ST.stringcmp(argv[i], "-draw_layered_graph") == 0) {
 		f_draw_layered_graph = TRUE;
 		draw_layered_graph_fname.assign(argv[++i]);
 		if (f_v) {
@@ -476,31 +480,31 @@ void interface_combinatorics::read_arguments(int argc,
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-read_solutions_and_tally") == 0) {
+	else if (ST.stringcmp(argv[i], "-read_solutions_and_tally") == 0) {
 		f_read_solutions_and_tally = TRUE;
 		read_solutions_and_tally_fname.assign(argv[++i]);
-		read_solutions_and_tally_sz = strtoi(argv[++i]);
+		read_solutions_and_tally_sz = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-read_solutions_and_tally " << read_solutions_and_tally_fname
 				<< " " << read_solutions_and_tally_sz << endl;
 		}
 	}
 
-	else if (stringcmp(argv[i], "-make_elementary_symmetric_functions") == 0) {
+	else if (ST.stringcmp(argv[i], "-make_elementary_symmetric_functions") == 0) {
 		f_make_elementary_symmetric_functions = TRUE;
-		make_elementary_symmetric_functions_n = strtoi(argv[++i]);
-		make_elementary_symmetric_functions_k_max = strtoi(argv[++i]);
+		make_elementary_symmetric_functions_n = ST.strtoi(argv[++i]);
+		make_elementary_symmetric_functions_k_max = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-make_elementary_symmetric_functions " << make_elementary_symmetric_functions_n
 				<< " " << make_elementary_symmetric_functions_k_max << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-Dedekind_numbers") == 0) {
+	else if (ST.stringcmp(argv[i], "-Dedekind_numbers") == 0) {
 		f_Dedekind_numbers = TRUE;
-		Dedekind_n_min = strtoi(argv[++i]);
-		Dedekind_n_max = strtoi(argv[++i]);
-		Dedekind_q_min = strtoi(argv[++i]);
-		Dedekind_q_max = strtoi(argv[++i]);
+		Dedekind_n_min = ST.strtoi(argv[++i]);
+		Dedekind_n_max = ST.strtoi(argv[++i]);
+		Dedekind_q_min = ST.strtoi(argv[++i]);
+		Dedekind_q_max = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-Dedekind_numbers " << Dedekind_n_min
 				<< " " << Dedekind_n_max
@@ -509,10 +513,10 @@ void interface_combinatorics::read_arguments(int argc,
 				<< " " << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-rank_k_subset") == 0) {
+	else if (ST.stringcmp(argv[i], "-rank_k_subset") == 0) {
 		f_rank_k_subset = TRUE;
-		rank_k_subset_n = strtoi(argv[++i]);
-		rank_k_subset_k = strtoi(argv[++i]);
+		rank_k_subset_n = ST.strtoi(argv[++i]);
+		rank_k_subset_k = ST.strtoi(argv[++i]);
 		rank_k_subset_text.assign(argv[++i]);
 		if (f_v) {
 			cout << "-rank_k_subset " << rank_k_subset_n
@@ -521,7 +525,7 @@ void interface_combinatorics::read_arguments(int argc,
 				<< " " << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-geometry_builder") == 0) {
+	else if (ST.stringcmp(argv[i], "-geometry_builder") == 0) {
 		f_geometry_builder = TRUE;
 		if (f_v) {
 			cout << "-geometry_builder " << endl;

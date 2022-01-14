@@ -76,6 +76,7 @@ int syntax_tree_node_terminal::evaluate(std::map<std::string, std::string> &symb
 {
 	int f_v = (verbose_level >= 1);
 	int a;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "syntax_tree_node_terminal::evaluate" << endl;
@@ -90,7 +91,7 @@ int syntax_tree_node_terminal::evaluate(std::map<std::string, std::string> &symb
 	}
 	else if (f_text) {
 		//a = strtoi(value_text);
-		a = strtoi(symbol_table[value_text]);
+		a = ST.strtoi(symbol_table[value_text]);
 	}
 	else {
 		cout << "syntax_tree_node_terminal::evaluate unknown type" << endl;

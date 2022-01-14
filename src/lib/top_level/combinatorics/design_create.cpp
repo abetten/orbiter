@@ -79,6 +79,7 @@ void design_create::freeself()
 void design_create::init(design_create_description *Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	string_tools ST;
 
 	if (f_v) {
 		cout << "design_create::init" << endl;
@@ -102,7 +103,7 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 			cout << "design_create::init "
 					"family_name=" << Descr->family_name << endl;
 		}
-		if (stringcmp(Descr->family_name, "PG_2_q") == 0) {
+		if (ST.stringcmp(Descr->family_name, "PG_2_q") == 0) {
 			if (f_v) {
 				cout << "design_create::init PG(2," << q << ")" << endl;
 			}

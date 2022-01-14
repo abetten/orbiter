@@ -1333,9 +1333,10 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 		int *data;
 		int nb_gens;
 		int data_size;
-		const char *stab_order;
+		string stab_order;
 
-		int ago;
+		long int ago;
+		string_tools ST;
 
 		if (f_v) {
 			cout << "projective_space_with_action::table_of_quartic_curves "
@@ -1347,7 +1348,7 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 			cout << "projective_space_with_action::table_of_quartic_curves "
 					<< h << " / " << nb_quartic_curves << " stab_order=" << stab_order << endl;
 		}
-		ago = atoi(stab_order);
+		ago = ST.strtolint(stab_order);
 
 		if (ago > 0) {
 

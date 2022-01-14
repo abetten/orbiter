@@ -85,6 +85,7 @@ int diophant_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "diophant_description::read_arguments" << endl;
@@ -92,10 +93,10 @@ int diophant_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 
-		if (stringcmp(argv[i], "-maximal_arc") == 0) {
+		if (ST.stringcmp(argv[i], "-maximal_arc") == 0) {
 			f_maximal_arc = TRUE;
-			maximal_arc_sz = strtoi(argv[++i]);
-			maximal_arc_d = strtoi(argv[++i]);
+			maximal_arc_sz = ST.strtoi(argv[++i]);
+			maximal_arc_d = ST.strtoi(argv[++i]);
 			maximal_arc_secants_text.assign(argv[++i]);
 			external_lines_as_subset_of_secants_text.assign(argv[++i]);
 			if (f_v) {
@@ -104,26 +105,26 @@ int diophant_description::read_arguments(
 					<< " " << external_lines_as_subset_of_secants_text << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-label") == 0) {
+		else if (ST.stringcmp(argv[i], "-label") == 0) {
 			f_label = TRUE;
 			label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-label " << label << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-coefficient_matrix") == 0) {
+		else if (ST.stringcmp(argv[i], "-coefficient_matrix") == 0) {
 			f_coefficient_matrix = TRUE;
-			coefficient_matrix_m = strtoi(argv[++i]);
-			coefficient_matrix_n = strtoi(argv[++i]);
+			coefficient_matrix_m = ST.strtoi(argv[++i]);
+			coefficient_matrix_n = ST.strtoi(argv[++i]);
 			coefficient_matrix_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-coefficient_matrix " << coefficient_matrix_m << " "
 					<< coefficient_matrix_n << " " << coefficient_matrix_text << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-problem_of_Steiner_type") == 0) {
+		else if (ST.stringcmp(argv[i], "-problem_of_Steiner_type") == 0) {
 			f_problem_of_Steiner_type = TRUE;
-			problem_of_Steiner_type_nb_t_orbits = strtoi(argv[++i]);
+			problem_of_Steiner_type_nb_t_orbits = ST.strtoi(argv[++i]);
 			problem_of_Steiner_type_covering_matrix_fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "-problem_of_Steiner_type " << problem_of_Steiner_type_nb_t_orbits
@@ -131,84 +132,84 @@ int diophant_description::read_arguments(
 			}
 		}
 
-		else if (stringcmp(argv[i], "-coefficient_matrix_csv") == 0) {
+		else if (ST.stringcmp(argv[i], "-coefficient_matrix_csv") == 0) {
 			f_coefficient_matrix_csv = TRUE;
 			coefficient_matrix_csv.assign(argv[++i]);
 			if (f_v) {
 				cout << "-coefficient_matrix_csv " << coefficient_matrix_csv << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-RHS") == 0) {
+		else if (ST.stringcmp(argv[i], "-RHS") == 0) {
 			f_RHS = TRUE;
 			RHS_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-RHS " << RHS_text << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-RHS_csv") == 0) {
+		else if (ST.stringcmp(argv[i], "-RHS_csv") == 0) {
 			f_RHS_csv = TRUE;
 			RHS_csv_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-RHS_csv " << RHS_csv_text << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-RHS_constant") == 0) {
+		else if (ST.stringcmp(argv[i], "-RHS_constant") == 0) {
 			f_RHS_constant = TRUE;
 			RHS_constant_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-RHS_constant " << RHS_constant_text << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-x_max_global") == 0) {
+		else if (ST.stringcmp(argv[i], "-x_max_global") == 0) {
 			f_x_max_global = TRUE;
-			x_max_global = strtoi(argv[++i]);
+			x_max_global = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-x_max_global " << x_max_global << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-x_min_global") == 0) {
+		else if (ST.stringcmp(argv[i], "-x_min_global") == 0) {
 			f_x_min_global = TRUE;
-			x_min_global = strtoi(argv[++i]);
+			x_min_global = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-x_min_global " << x_min_global << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-x_bounds") == 0) {
+		else if (ST.stringcmp(argv[i], "-x_bounds") == 0) {
 			f_x_bounds = TRUE;
 			x_bounds_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-x_bounds " << x_bounds_text << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-x_bounds_csv") == 0) {
+		else if (ST.stringcmp(argv[i], "-x_bounds_csv") == 0) {
 			f_x_bounds_csv = TRUE;
 			x_bounds_csv.assign(argv[++i]);
 			if (f_v) {
 				cout << "-x_bounds_csv " << x_bounds_csv << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-has_sum") == 0) {
+		else if (ST.stringcmp(argv[i], "-has_sum") == 0) {
 			f_has_sum = TRUE;
-			has_sum = strtoi(argv[++i]);
+			has_sum = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-has_sum " << has_sum << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-q") == 0) {
+		else if (ST.stringcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
-			input_q = strtoi(argv[++i]);
+			input_q = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-q" << input_q << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-override_polynomial") == 0) {
+		else if (ST.stringcmp(argv[i], "-override_polynomial") == 0) {
 			f_override_polynomial = TRUE;
 			override_polynomial.assign(argv[++i]);
 			if (f_v) {
 				cout << "-override_polynomial" << override_polynomial << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
 			}

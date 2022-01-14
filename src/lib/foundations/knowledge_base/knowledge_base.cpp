@@ -277,11 +277,12 @@ long int *knowledge_base::quartic_curves_bitangents(int q, int i)
 }
 
 void knowledge_base::quartic_curves_stab_gens(int q, int i,
-		int *&data, int &nb_gens, int &data_size, const char *&stab_order)
+		int *&data, int &nb_gens, int &data_size, std::string &stab_order_str)
 {
 	int *Reps;
 	int nb, make_element_size;
 	int f, l;
+	const char *stab_order;
 
 	if (q == 9) {
 		Reps = quartic_curves_q9_stab_gens;
@@ -736,11 +737,12 @@ int *knowledge_base::cubic_surface_representative(int q, int i)
 }
 
 void knowledge_base::cubic_surface_stab_gens(int q, int i,
-		int *&data, int &nb_gens, int &data_size, const char *&stab_order)
+		int *&data, int &nb_gens, int &data_size, std::string &stab_order_str)
 {
 	int *Reps;
 	int nb, make_element_size;
 	int f, l;
+	const char *stab_order;
 	
 	if (q == 4) {
 		Reps = surface_4_stab_gens;
@@ -1080,6 +1082,7 @@ void knowledge_base::cubic_surface_stab_gens(int q, int i,
 	nb_gens = l;
 	data_size = make_element_size;
 	data = Reps + f * make_element_size;
+	stab_order_str.assign(stab_order);
 }
 
 int knowledge_base::cubic_surface_nb_Eckardt_points(int q, int i)
@@ -1554,11 +1557,12 @@ int *knowledge_base::hyperoval_representative(int q, int i)
 }
 
 void knowledge_base::hyperoval_gens(int q, int i,
-		int *&data, int &nb_gens, int &data_size, const char *&stab_order)
+		int *&data, int &nb_gens, int &data_size, std::string &stab_order_str)
 {
 	int *Reps;
 	int nb, make_element_size;
 	int f, l;
+	const char *stab_order;
 	
 	if (q == 8) {
 		Reps = arcs_8_10_stab_gens;
@@ -1602,6 +1606,7 @@ void knowledge_base::hyperoval_gens(int q, int i,
 	nb_gens = l;
 	data_size = make_element_size;
 	data = Reps + f * make_element_size;
+	stab_order_str.assign(stab_order);
 }
 
 
@@ -1666,11 +1671,12 @@ long int *knowledge_base::DH_representative(int k, int n, int i)
 }
 
 void knowledge_base::DH_stab_gens(int k, int n, int i,
-		int *&data, int &nb_gens, int &data_size, const char *&stab_order)
+		int *&data, int &nb_gens, int &data_size, std::string &stab_order_str)
 {
 	int *Reps;
 	int nb, make_element_size;
 	int f, l;
+	const char *stab_order;
 	
 	if (k == 4 && n == 7) {
 		Reps = DH_4_7_stab_gens;
@@ -1706,6 +1712,7 @@ void knowledge_base::DH_stab_gens(int k, int n, int i,
 	nb_gens = l;
 	data_size = make_element_size;
 	data = Reps + f * make_element_size;
+	stab_order_str.assign(stab_order);
 }
 
 
@@ -1805,11 +1812,12 @@ long int *knowledge_base::Spread_representative(int q, int k, int i, int &sz)
 }
 
 void knowledge_base::Spread_stab_gens(int q, int k, int i,
-		int *&data, int &nb_gens, int &data_size, const char *&stab_order)
+		int *&data, int &nb_gens, int &data_size, std::string &stab_order_str)
 {
 	int *Reps;
 	int nb, make_element_size;
 	int f, l;
+	const char *stab_order;
 	
 	if (q == 2 && k == 2) {
 		Reps = Spreads_2_2_stab_gens;
@@ -1877,6 +1885,7 @@ void knowledge_base::Spread_stab_gens(int q, int k, int i,
 	nb_gens = l;
 	data_size = make_element_size;
 	data = Reps + f * make_element_size;
+	stab_order_str.assign(stab_order);
 }
 
 
@@ -2117,11 +2126,12 @@ long int *knowledge_base::BLT_representative(int q, int no)
 }
 
 void knowledge_base::BLT_stab_gens(int q, int no,
-		int *&data, int &nb_gens, int &data_size, const char *&stab_order)
+		int *&data, int &nb_gens, int &data_size, std::string &stab_order_str)
 {
 	int *Reps;
 	int nb, make_element_size;
 	int f, l;
+	const char *stab_order;
 	
 	if (q == 3) {
 		Reps = BLT_3_stab_gens;
@@ -2333,6 +2343,7 @@ void knowledge_base::BLT_stab_gens(int q, int no,
 	nb_gens = l;
 	data_size = make_element_size;
 	data = Reps + f * make_element_size;
+	stab_order_str.assign(stab_order);
 }
 
 

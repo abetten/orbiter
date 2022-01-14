@@ -80,6 +80,7 @@ int combinatorial_object_activity_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "combinatorial_object_activity_description::read_arguments" << endl;
@@ -89,20 +90,20 @@ int combinatorial_object_activity_description::read_arguments(
 		// activities for COC:
 
 
-		if (stringcmp(argv[i], "-save") == 0) {
+		if (ST.stringcmp(argv[i], "-save") == 0) {
 			f_save = TRUE;
 			if (f_v) {
 				cout << "-save " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-save_as") == 0) {
+		else if (ST.stringcmp(argv[i], "-save_as") == 0) {
 			f_save_as = TRUE;
 			save_as_fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "-save_as " << save_as_fname << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-extract_subset") == 0) {
+		else if (ST.stringcmp(argv[i], "-extract_subset") == 0) {
 			f_extract_subset = TRUE;
 			extract_subset_set.assign(argv[++i]);
 			extract_subset_fname.assign(argv[++i]);
@@ -111,28 +112,28 @@ int combinatorial_object_activity_description::read_arguments(
 			}
 		}
 
-		else if (stringcmp(argv[i], "-line_type") == 0) {
+		else if (ST.stringcmp(argv[i], "-line_type") == 0) {
 			f_line_type = TRUE;
 			if (f_v) {
 				cout << "-line_type " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-conic_type") == 0) {
+		else if (ST.stringcmp(argv[i], "-conic_type") == 0) {
 			f_conic_type = TRUE;
-			conic_type_threshold = strtoi(argv[++i]);
+			conic_type_threshold = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-conic_type " << conic_type_threshold << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-non_conical_type") == 0) {
+		else if (ST.stringcmp(argv[i], "-non_conical_type") == 0) {
 			f_non_conical_type = TRUE;
 			if (f_v) {
 				cout << "-non_conical_type " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-ideal") == 0) {
+		else if (ST.stringcmp(argv[i], "-ideal") == 0) {
 			f_ideal = TRUE;
-			ideal_degree = strtoi(argv[++i]);
+			ideal_degree = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-ideal " << ideal_degree << endl;
 			}
@@ -140,7 +141,7 @@ int combinatorial_object_activity_description::read_arguments(
 
 		// activities for IS:
 
-		else if (stringcmp(argv[i], "-canonical_form_PG") == 0) {
+		else if (ST.stringcmp(argv[i], "-canonical_form_PG") == 0) {
 			f_canonical_form_PG = TRUE;
 			if (f_v) {
 				cout << "-canonical_form_PG, reading extra arguments" << endl;
@@ -161,7 +162,7 @@ int combinatorial_object_activity_description::read_arguments(
 			}
 		}
 
-		else if (stringcmp(argv[i], "-canonical_form") == 0) {
+		else if (ST.stringcmp(argv[i], "-canonical_form") == 0) {
 			f_canonical_form = TRUE;
 			if (f_v) {
 				cout << "-canonical_form, reading extra arguments" << endl;
@@ -179,30 +180,30 @@ int combinatorial_object_activity_description::read_arguments(
 				}
 			}
 		}
-		else if (stringcmp(argv[i], "-report") == 0) {
+		else if (ST.stringcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 
 			Classification_of_objects_report_options = NEW_OBJECT(classification_of_objects_report_options);
 			i += Classification_of_objects_report_options->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 		}
-		else if (stringcmp(argv[i], "-draw_incidence_matrices") == 0) {
+		else if (ST.stringcmp(argv[i], "-draw_incidence_matrices") == 0) {
 			f_draw_incidence_matrices = TRUE;
 			draw_incidence_matrices_prefix.assign(argv[++i]);
 
 		}
-		else if (stringcmp(argv[i], "-test_distinguishing_property") == 0) {
+		else if (ST.stringcmp(argv[i], "-test_distinguishing_property") == 0) {
 			f_test_distinguishing_property = TRUE;
 			test_distinguishing_property_graph.assign(argv[++i]);
 			cout << "-test_distinguishing_property " << test_distinguishing_property_graph << endl;
 		}
-		else if (stringcmp(argv[i], "-unpack_from_restricted_action") == 0) {
+		else if (ST.stringcmp(argv[i], "-unpack_from_restricted_action") == 0) {
 			f_unpack_from_restricted_action = TRUE;
 			unpack_from_restricted_action_prefix.assign(argv[++i]);
 			unpack_from_restricted_action_group_label.assign(argv[++i]);
 			cout << "-unpack_from_restricted_action " << unpack_from_restricted_action_prefix
 					<< " " << unpack_from_restricted_action_group_label << endl;
 		}
-		else if (stringcmp(argv[i], "-line_covering_type") == 0) {
+		else if (ST.stringcmp(argv[i], "-line_covering_type") == 0) {
 			f_line_covering_type = TRUE;
 			line_covering_type_prefix.assign(argv[++i]);
 			line_covering_type_projective_space.assign(argv[++i]);
@@ -213,7 +214,7 @@ int combinatorial_object_activity_description::read_arguments(
 					<< endl;
 		}
 
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
 			}

@@ -223,12 +223,13 @@ int group_theoretic_activity_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "group_theoretic_activity_description::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
-		if (stringcmp(argv[i], "-multiply") == 0) {
+		if (ST.stringcmp(argv[i], "-multiply") == 0) {
 			f_multiply = TRUE;
 			multiply_a.assign(argv[++i]);
 			multiply_b.assign(argv[++i]);
@@ -236,14 +237,14 @@ int group_theoretic_activity_description::read_arguments(
 				cout << "-multiply " << multiply_a << " " << multiply_b << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-inverse") == 0) {
+		else if (ST.stringcmp(argv[i], "-inverse") == 0) {
 			f_inverse = TRUE;
 			inverse_a.assign(argv[++i]);
 			if (f_v) {
 				cout << "-inverse " << inverse_a << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-raise_to_the_power") == 0) {
+		else if (ST.stringcmp(argv[i], "-raise_to_the_power") == 0) {
 			f_raise_to_the_power = TRUE;
 			raise_to_the_power_a_text.assign(argv[++i]);
 			raise_to_the_power_exponent_text.assign(argv[++i]);
@@ -253,25 +254,25 @@ int group_theoretic_activity_description::read_arguments(
 			}
 		}
 
-		else if (stringcmp(argv[i], "-export_orbiter") == 0) {
+		else if (ST.stringcmp(argv[i], "-export_orbiter") == 0) {
 			f_export_orbiter = TRUE;
 			if (f_v) {
 				cout << "-export_orbiter " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-export_gap") == 0) {
+		else if (ST.stringcmp(argv[i], "-export_gap") == 0) {
 			f_export_gap = TRUE;
 			if (f_v) {
 				cout << "-export_gap " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-export_magma") == 0) {
+		else if (ST.stringcmp(argv[i], "-export_magma") == 0) {
 			f_export_magma = TRUE;
 			if (f_v) {
 				cout << "-export_magma " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-canonical_image") == 0) {
+		else if (ST.stringcmp(argv[i], "-canonical_image") == 0) {
 			f_canonical_image = TRUE;
 			canonical_image_input_set.assign(argv[++i]);
 			if (f_v) {
@@ -279,18 +280,18 @@ int group_theoretic_activity_description::read_arguments(
 			}
 		}
 
-		else if (stringcmp(argv[i], "-search_element_of_order") == 0) {
+		else if (ST.stringcmp(argv[i], "-search_element_of_order") == 0) {
 			f_search_element_of_order = TRUE;
-			search_element_order = strtoi(argv[++i]);
+			search_element_order = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-search_element_of_order " << search_element_order << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-find_standard_generators") == 0) {
+		else if (ST.stringcmp(argv[i], "-find_standard_generators") == 0) {
 			f_find_standard_generators = TRUE;
-			find_standard_generators_order_a = strtoi(argv[++i]);
-			find_standard_generators_order_b = strtoi(argv[++i]);
-			find_standard_generators_order_ab = strtoi(argv[++i]);
+			find_standard_generators_order_a = ST.strtoi(argv[++i]);
+			find_standard_generators_order_b = ST.strtoi(argv[++i]);
+			find_standard_generators_order_ab = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-find_standard_generators " << find_standard_generators_order_a
 						<< " " << find_standard_generators_order_b
@@ -299,21 +300,21 @@ int group_theoretic_activity_description::read_arguments(
 			}
 		}
 
-		else if (stringcmp(argv[i], "-element_rank") == 0) {
+		else if (ST.stringcmp(argv[i], "-element_rank") == 0) {
 			f_element_rank = TRUE;
 			element_rank_data.assign(argv[++i]);
 			if (f_v) {
 				cout << "-element_rank " << element_rank_data << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-element_unrank") == 0) {
+		else if (ST.stringcmp(argv[i], "-element_unrank") == 0) {
 			f_element_unrank = TRUE;
 			element_unrank_data.assign(argv[++i]);
 			if (f_v) {
 				cout << "-element_unrank " << element_unrank_data << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-find_singer_cycle") == 0) {
+		else if (ST.stringcmp(argv[i], "-find_singer_cycle") == 0) {
 			f_find_singer_cycle = TRUE;
 			if (f_v) {
 				cout << "-find_singer_cycle " << endl;
@@ -323,7 +324,7 @@ int group_theoretic_activity_description::read_arguments(
 
 
 
-		else if (stringcmp(argv[i], "-poset_classification_control") == 0) {
+		else if (ST.stringcmp(argv[i], "-poset_classification_control") == 0) {
 			f_poset_classification_control = TRUE;
 			Control = NEW_OBJECT(poset_classification_control);
 			if (f_v) {
@@ -341,71 +342,71 @@ int group_theoretic_activity_description::read_arguments(
 				}
 			}
 		}
-		else if (stringcmp(argv[i], "-orbits_on_points") == 0) {
+		else if (ST.stringcmp(argv[i], "-orbits_on_points") == 0) {
 			f_orbits_on_points = TRUE;
 			if (f_v) {
 				cout << "-orbits_on_points" << endl;
 			}
 		}
 
-		else if (stringcmp(argv[i], "-orbits_on_subsets") == 0) {
+		else if (ST.stringcmp(argv[i], "-orbits_on_subsets") == 0) {
 			f_orbits_on_subsets = TRUE;
-			orbits_on_subsets_size = strtoi(argv[++i]);
+			orbits_on_subsets_size = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-orbits_on_subsets " << orbits_on_subsets_size << endl;
 			}
 		}
 
-		else if (stringcmp(argv[i], "-orbits_on_subspaces") == 0) {
+		else if (ST.stringcmp(argv[i], "-orbits_on_subspaces") == 0) {
 			f_orbits_on_subspaces = TRUE;
-			orbits_on_subspaces_depth = strtoi(argv[++i]);
+			orbits_on_subspaces_depth = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-orbits_on_subspaces " << orbits_on_subspaces_depth << endl;
 			}
 		}
 
-		else if (stringcmp(argv[i], "-export_trees") == 0) {
+		else if (ST.stringcmp(argv[i], "-export_trees") == 0) {
 			f_export_trees = TRUE;
 			if (f_v) {
 				cout << "-export_trees" << endl;
 			}
 		}
 
-		else if (stringcmp(argv[i], "-stabilizer") == 0) {
+		else if (ST.stringcmp(argv[i], "-stabilizer") == 0) {
 			f_stabilizer = TRUE;
 			if (f_v) {
 				cout << "-stabilizer" << endl;
 			}
 		}
 
-		else if (stringcmp(argv[i], "-stabilizer_of_orbit_rep") == 0) {
+		else if (ST.stringcmp(argv[i], "-stabilizer_of_orbit_rep") == 0) {
 			f_stabilizer_of_orbit_rep = TRUE;
-			stabilizer_of_orbit_rep_orbit_idx = strtoi(argv[++i]);
+			stabilizer_of_orbit_rep_orbit_idx = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-stabilizer_of_orbit_rep" << stabilizer_of_orbit_rep_orbit_idx << endl;
 			}
 		}
 
-		else if (stringcmp(argv[i], "-test_if_geometric") == 0) {
+		else if (ST.stringcmp(argv[i], "-test_if_geometric") == 0) {
 			f_test_if_geometric = TRUE;
-			test_if_geometric_depth = strtoi(argv[++i]);
+			test_if_geometric_depth = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-test_if_geometric" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-classes_based_on_normal_form") == 0) {
+		else if (ST.stringcmp(argv[i], "-classes_based_on_normal_form") == 0) {
 			f_classes_based_on_normal_form = TRUE;
 			if (f_v) {
 				cout << "-classes_based_on_normal_form" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-normalizer") == 0) {
+		else if (ST.stringcmp(argv[i], "-normalizer") == 0) {
 			f_normalizer = TRUE;
 			if (f_v) {
 				cout << "-normalizer" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-centralizer_of_element") == 0) {
+		else if (ST.stringcmp(argv[i], "-centralizer_of_element") == 0) {
 			f_centralizer_of_element = TRUE;
 			element_label.assign(argv[++i]);
 			element_description_text.assign(argv[++i]);
@@ -414,7 +415,7 @@ int group_theoretic_activity_description::read_arguments(
 						<< " " << element_description_text << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-conjugacy_class_of_element") == 0) {
+		else if (ST.stringcmp(argv[i], "-conjugacy_class_of_element") == 0) {
 			f_conjugacy_class_of_element = TRUE;
 			element_label.assign(argv[++i]);
 			element_description_text.assign(argv[++i]);
@@ -423,7 +424,7 @@ int group_theoretic_activity_description::read_arguments(
 						<< " " << element_description_text << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-orbits_on_group_elements_under_conjugation") == 0) {
+		else if (ST.stringcmp(argv[i], "-orbits_on_group_elements_under_conjugation") == 0) {
 			f_orbits_on_group_elements_under_conjugation = TRUE;
 			orbits_on_group_elements_under_conjugation_fname.assign(argv[++i]);
 			orbits_on_group_elements_under_conjugation_transporter_fname.assign(argv[++i]);
@@ -436,7 +437,7 @@ int group_theoretic_activity_description::read_arguments(
 		}
 
 
-		else if (stringcmp(argv[i], "-normalizer_of_cyclic_subgroup") == 0) {
+		else if (ST.stringcmp(argv[i], "-normalizer_of_cyclic_subgroup") == 0) {
 			f_normalizer_of_cyclic_subgroup = TRUE;
 			element_label.assign(argv[++i]);
 			element_description_text.assign(argv[++i]);
@@ -445,51 +446,51 @@ int group_theoretic_activity_description::read_arguments(
 						<< " " << element_description_text << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-find_subgroup") == 0) {
+		else if (ST.stringcmp(argv[i], "-find_subgroup") == 0) {
 			f_find_subgroup = TRUE;
-			find_subgroup_order = strtoi(argv[++i]);
+			find_subgroup_order = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-find_subgroup " << find_subgroup_order << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-report") == 0) {
+		else if (ST.stringcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			if (f_v) {
 				cout << "-report" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-sylow") == 0) {
+		else if (ST.stringcmp(argv[i], "-sylow") == 0) {
 			f_sylow = TRUE;
 			if (f_v) {
 				cout << "-sylow" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-group_table") == 0) {
+		else if (ST.stringcmp(argv[i], "-group_table") == 0) {
 			f_group_table = TRUE;
 			if (f_v) {
 				cout << "-group_table" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-classes") == 0) {
+		else if (ST.stringcmp(argv[i], "-classes") == 0) {
 			f_classes = TRUE;
 			if (f_v) {
 				cout << "-classes" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-f_draw_tree") == 0) {
+		else if (ST.stringcmp(argv[i], "-f_draw_tree") == 0) {
 			f_draw_tree = TRUE;
 			if (f_v) {
 				cout << "-f_draw_tree " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-orbit_of") == 0) {
+		else if (ST.stringcmp(argv[i], "-orbit_of") == 0) {
 			f_orbit_of = TRUE;
-			orbit_of_point_idx = strtoi(argv[++i]);
+			orbit_of_point_idx = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-orbit_of " << orbit_of_point_idx << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-orbit_of_set_from_file") == 0) {
+		else if (ST.stringcmp(argv[i], "-orbit_of_set_from_file") == 0) {
 			f_orbit_of_set_from_file = TRUE;
 			orbit_of_set_from_file_fname.assign(argv[++i]);
 			if (f_v) {
@@ -497,11 +498,11 @@ int group_theoretic_activity_description::read_arguments(
 						<< orbit_of_set_from_file_fname << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-orbits_on_set_system_from_file") == 0) {
+		else if (ST.stringcmp(argv[i], "-orbits_on_set_system_from_file") == 0) {
 			f_orbits_on_set_system_from_file = TRUE;
 			orbits_on_set_system_from_file_fname.assign(argv[++i]);
-			orbits_on_set_system_first_column = strtoi(argv[++i]);
-			orbits_on_set_system_number_of_columns = strtoi(argv[++i]);
+			orbits_on_set_system_first_column = ST.strtoi(argv[++i]);
+			orbits_on_set_system_number_of_columns = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-orbits_on_set_system_from_file"
 						<< orbits_on_set_system_from_file_fname
@@ -510,7 +511,7 @@ int group_theoretic_activity_description::read_arguments(
 			}
 		}
 
-		else if (stringcmp(argv[i], "-conjugacy_class_of") == 0) {
+		else if (ST.stringcmp(argv[i], "-conjugacy_class_of") == 0) {
 			f_conjugacy_class_of = TRUE;
 			conjugacy_class_of_data.assign(argv[++i]);
 			if (f_v) {
@@ -518,7 +519,7 @@ int group_theoretic_activity_description::read_arguments(
 			}
 		}
 
-		else if (stringcmp(argv[i], "-isomorphism_Klein_quadric") == 0) {
+		else if (ST.stringcmp(argv[i], "-isomorphism_Klein_quadric") == 0) {
 			f_isomorphism_Klein_quadric = TRUE;
 			isomorphism_Klein_quadric_fname.assign(argv[++i]);
 			if (f_v) {
@@ -526,26 +527,26 @@ int group_theoretic_activity_description::read_arguments(
 			}
 		}
 
-		else if (stringcmp(argv[i], "-print_elements") == 0) {
+		else if (ST.stringcmp(argv[i], "-print_elements") == 0) {
 			f_print_elements = TRUE;
 			if (f_v) {
 				cout << "-print_elements " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-print_elements_tex") == 0) {
+		else if (ST.stringcmp(argv[i], "-print_elements_tex") == 0) {
 			f_print_elements_tex = TRUE;
 			if (f_v) {
 				cout << "-print_elements_tex " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-save_elements_csv") == 0) {
+		else if (ST.stringcmp(argv[i], "-save_elements_csv") == 0) {
 			f_save_elements_csv = TRUE;
 			save_elements_csv_fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "-save_elements_csv " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-multiply_elements_csv_column_major_ordering") == 0) {
+		else if (ST.stringcmp(argv[i], "-multiply_elements_csv_column_major_ordering") == 0) {
 			f_multiply_elements_csv_column_major_ordering = TRUE;
 			multiply_elements_csv_column_major_ordering_fname1.assign(argv[++i]);
 			multiply_elements_csv_column_major_ordering_fname2.assign(argv[++i]);
@@ -558,7 +559,7 @@ int group_theoretic_activity_description::read_arguments(
 						<< endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-multiply_elements_csv_row_major_ordering") == 0) {
+		else if (ST.stringcmp(argv[i], "-multiply_elements_csv_row_major_ordering") == 0) {
 			f_multiply_elements_csv_row_major_ordering = TRUE;
 			multiply_elements_csv_row_major_ordering_fname1.assign(argv[++i]);
 			multiply_elements_csv_row_major_ordering_fname2.assign(argv[++i]);
@@ -571,7 +572,7 @@ int group_theoretic_activity_description::read_arguments(
 						<< endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-apply_elements_csv_to_set") == 0) {
+		else if (ST.stringcmp(argv[i], "-apply_elements_csv_to_set") == 0) {
 			f_apply_elements_csv_to_set = TRUE;
 			apply_elements_csv_to_set_fname1.assign(argv[++i]);
 			apply_elements_csv_to_set_fname2.assign(argv[++i]);
@@ -587,14 +588,14 @@ int group_theoretic_activity_description::read_arguments(
 
 
 
-		else if (stringcmp(argv[i], "-order_of_products") == 0) {
+		else if (ST.stringcmp(argv[i], "-order_of_products") == 0) {
 			f_order_of_products = TRUE;
 			order_of_products_elements.assign(argv[++i]);
 			if (f_v) {
 				cout << "-order_of_products " << order_of_products_elements << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-reverse_isomorphism_exterior_square") == 0) {
+		else if (ST.stringcmp(argv[i], "-reverse_isomorphism_exterior_square") == 0) {
 			f_reverse_isomorphism_exterior_square = TRUE;
 			if (f_v) {
 				cout << "-reverse_isomorphism_exterior_square " << endl;
@@ -607,10 +608,10 @@ int group_theoretic_activity_description::read_arguments(
 
 		// linear codes:
 
-		else if (stringcmp(argv[i], "-linear_codes") == 0) {
+		else if (ST.stringcmp(argv[i], "-linear_codes") == 0) {
 			f_linear_codes = TRUE;
-			linear_codes_minimum_distance = strtoi(argv[++i]);
-			linear_codes_target_size = strtoi(argv[++i]);
+			linear_codes_minimum_distance = ST.strtoi(argv[++i]);
+			linear_codes_target_size = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-linear_codes " << linear_codes_minimum_distance
 					<< " " << linear_codes_target_size << endl;
@@ -620,7 +621,7 @@ int group_theoretic_activity_description::read_arguments(
 
 
 
-		else if (stringcmp(argv[i], "-exact_cover") == 0) {
+		else if (ST.stringcmp(argv[i], "-exact_cover") == 0) {
 			f_exact_cover = TRUE;
 			ECA = NEW_OBJECT(exact_cover_arguments);
 			i += ECA->read_arguments(argc - (i + 1),
@@ -635,7 +636,7 @@ int group_theoretic_activity_description::read_arguments(
 				}
 			}
 		}
-		else if (stringcmp(argv[i], "-isomorph_arguments") == 0) {
+		else if (ST.stringcmp(argv[i], "-isomorph_arguments") == 0) {
 			f_isomorph_arguments = TRUE;
 			IA = NEW_OBJECT(isomorph_arguments);
 			i += IA->read_arguments(argc - (i + 1),
@@ -657,20 +658,20 @@ int group_theoretic_activity_description::read_arguments(
 
 
 
-		else if (stringcmp(argv[i], "-mindist") == 0) {
+		else if (ST.stringcmp(argv[i], "-mindist") == 0) {
 			f_mindist = TRUE;
-			mindist = strtoi(argv[++i]);
+			mindist = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-mindist" << mindist << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-self_orthogonal") == 0) {
+		else if (ST.stringcmp(argv[i], "-self_orthogonal") == 0) {
 			f_self_orthogonal = TRUE;
 			if (f_v) {
 				cout << "-self_orthogonal" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-doubly_even") == 0) {
+		else if (ST.stringcmp(argv[i], "-doubly_even") == 0) {
 			f_doubly_even = TRUE;
 			if (f_v) {
 				cout << "-doubly_even" << endl;
@@ -681,14 +682,14 @@ int group_theoretic_activity_description::read_arguments(
 
 		// tensors:
 
-		else if (stringcmp(argv[i], "-tensor_classify") == 0) {
+		else if (ST.stringcmp(argv[i], "-tensor_classify") == 0) {
 			f_tensor_classify = TRUE;
-			tensor_classify_depth = strtoi(argv[++i]);
+			tensor_classify_depth = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-tensor_classify " << tensor_classify_depth << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-tensor_permutations") == 0) {
+		else if (ST.stringcmp(argv[i], "-tensor_permutations") == 0) {
 			f_tensor_permutations = TRUE;
 			if (f_v) {
 				cout << "-tensor_permutations " << endl;
@@ -698,7 +699,7 @@ int group_theoretic_activity_description::read_arguments(
 
 		// ovoids:
 
-		else if (stringcmp(argv[i], "-classify_ovoids") == 0) {
+		else if (ST.stringcmp(argv[i], "-classify_ovoids") == 0) {
 			f_classify_ovoids = TRUE;
 			Ovoid_classify_description = NEW_OBJECT(ovoid_classify_description);
 			if (f_v) {
@@ -721,23 +722,23 @@ int group_theoretic_activity_description::read_arguments(
 
 
 		// other:
-		else if (stringcmp(argv[i], "-orbits_on_polynomials") == 0) {
+		else if (ST.stringcmp(argv[i], "-orbits_on_polynomials") == 0) {
 			f_orbits_on_polynomials = TRUE;
-			orbits_on_polynomials_degree = strtoi(argv[++i]);
+			orbits_on_polynomials_degree = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-orbits_on_polynomials " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-orbits_on_polynomials_draw_tree") == 0) {
+		else if (ST.stringcmp(argv[i], "-orbits_on_polynomials_draw_tree") == 0) {
 			f_orbits_on_polynomials_draw_tree = TRUE;
-			orbits_on_polynomials_draw_tree_idx = strtoi(argv[++i]);
+			orbits_on_polynomials_draw_tree_idx = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-orbits_on_polynomials_draw_tree " << orbits_on_polynomials_draw_tree_idx << endl;
 			}
 		}
 
 
-		else if (stringcmp(argv[i], "-recognize_orbits_on_polynomials") == 0) {
+		else if (ST.stringcmp(argv[i], "-recognize_orbits_on_polynomials") == 0) {
 			f_recognize_orbits_on_polynomials = TRUE;
 			recognize_orbits_on_polynomials_text.assign(argv[++i]);
 			if (f_v) {
@@ -746,17 +747,17 @@ int group_theoretic_activity_description::read_arguments(
 		}
 
 
-		else if (stringcmp(argv[i], "-representation_on_polynomials") == 0) {
+		else if (ST.stringcmp(argv[i], "-representation_on_polynomials") == 0) {
 			f_representation_on_polynomials = TRUE;
-			representation_on_polynomials_degree = strtoi(argv[++i]);
+			representation_on_polynomials_degree = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-representation_on_polynomials " << representation_on_polynomials_degree << endl;
 			}
 		}
 
-		else if (stringcmp(argv[i], "-Andre_Bruck_Bose_construction") == 0) {
+		else if (ST.stringcmp(argv[i], "-Andre_Bruck_Bose_construction") == 0) {
 			f_Andre_Bruck_Bose_construction = TRUE;
-			Andre_Bruck_Bose_construction_spread_no = strtoi(argv[++i]);
+			Andre_Bruck_Bose_construction_spread_no = ST.strtoi(argv[++i]);
 			Andre_Bruck_Bose_construction_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-Andre_Bruck_Bose_construction " << Andre_Bruck_Bose_construction_spread_no
@@ -765,7 +766,7 @@ int group_theoretic_activity_description::read_arguments(
 		}
 
 
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
 			}

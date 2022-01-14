@@ -55,29 +55,30 @@ int draw_bitmap_control::read_arguments(
 {
 	int i;
 	int f_v = (verbose_level >= 1);
+	string_tools ST;
 
 	if (f_v) {
 		cout << "draw_bitmap_control::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
 
-		if (stringcmp(argv[i], "-input_csv_file") == 0) {
+		if (ST.stringcmp(argv[i], "-input_csv_file") == 0) {
 			f_input_csv_file = TRUE;
 			input_csv_file_name.assign(argv[++i]);
 			if (f_v) {
 				cout << "-input_csv_file " << input_csv_file_name << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-secondary_input_csv_file") == 0) {
+		else if (ST.stringcmp(argv[i], "-secondary_input_csv_file") == 0) {
 			f_secondary_input_csv_file = TRUE;
 			secondary_input_csv_file_name.assign(argv[++i]);
 			if (f_v) {
 				cout << "-secondary_input_csv_file " << secondary_input_csv_file_name << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-partition") == 0) {
+		else if (ST.stringcmp(argv[i], "-partition") == 0) {
 			f_partition = TRUE;
-			part_width = strtoi(argv[++i]);
+			part_width = ST.strtoi(argv[++i]);
 			part_row.assign(argv[++i]);
 			part_col.assign(argv[++i]);
 			//Orbiter->Int_vec.scan(part_row, Row_parts, nb_row_parts);
@@ -86,26 +87,26 @@ int draw_bitmap_control::read_arguments(
 				cout << "-partition " << part_width << " " << part_row << " " << part_col << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-box_width") == 0) {
+		else if (ST.stringcmp(argv[i], "-box_width") == 0) {
 			f_box_width = TRUE;
-			box_width = strtoi(argv[++i]);
+			box_width = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-box_width " << box_width << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-bit_depth") == 0) {
-			bit_depth = strtoi(argv[++i]);
+		else if (ST.stringcmp(argv[i], "-bit_depth") == 0) {
+			bit_depth = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-bit_depth " << bit_depth << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-invert_colors") == 0) {
+		else if (ST.stringcmp(argv[i], "-invert_colors") == 0) {
 			f_invert_colors = TRUE;
 			if (f_v) {
 				cout << "-invert_colors " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
 		}

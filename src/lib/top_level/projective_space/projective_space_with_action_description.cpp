@@ -38,11 +38,12 @@ int projective_space_with_action_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i = 0;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "projective_space_with_action_description::read_arguments" << endl;
 	}
-	n = strtoi(argv[i++]);
+	n = ST.strtoi(argv[i++]);
 	if (f_v) {
 		cout << "n = " << n << endl;
 	}
@@ -53,7 +54,7 @@ int projective_space_with_action_description::read_arguments(
 	}
 	for (; i < argc; i++) {
 
-		if (stringcmp(argv[i], "-use_projectivity_subgroup") == 0) {
+		if (ST.stringcmp(argv[i], "-use_projectivity_subgroup") == 0) {
 			f_use_projectivity_subgroup = TRUE;
 			if (f_v) {
 				cout << "-f_use_projectivity_subgroup" << endl;
@@ -61,7 +62,7 @@ int projective_space_with_action_description::read_arguments(
 		}
 
 
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
 			}

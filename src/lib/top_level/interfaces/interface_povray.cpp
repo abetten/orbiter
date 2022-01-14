@@ -31,23 +31,27 @@ interface_povray::interface_povray()
 
 void interface_povray::print_help(int argc, std::string *argv, int i, int verbose_level)
 {
-	if (stringcmp(argv[i], "-povray") == 0) {
+	string_tools ST;
+
+	if (ST.stringcmp(argv[i], "-povray") == 0) {
 		cout << "-povray" << endl;
 	}
-	else if (stringcmp(argv[i], "-prepare_frames") == 0) {
+	else if (ST.stringcmp(argv[i], "-prepare_frames") == 0) {
 		cout << "-prepare_frames <description> -end" << endl;
 	}
 }
 
 int interface_povray::recognize_keyword(int argc, std::string *argv, int i, int verbose_level)
 {
+	string_tools ST;
+
 	if (i >= argc) {
 		return false;
 	}
-	if (stringcmp(argv[i], "-povray") == 0) {
+	if (ST.stringcmp(argv[i], "-povray") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-prepare_frames") == 0) {
+	else if (ST.stringcmp(argv[i], "-prepare_frames") == 0) {
 		return true;
 	}
 	return false;
@@ -56,6 +60,7 @@ int interface_povray::recognize_keyword(int argc, std::string *argv, int i, int 
 void interface_povray::read_arguments(int argc, std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	string_tools ST;
 
 	if (f_v) {
 		cout << "interface_povray::read_arguments" << endl;
@@ -64,7 +69,7 @@ void interface_povray::read_arguments(int argc, std::string *argv, int &i, int v
 	if (f_v) {
 		cout << "interface_povray::read_arguments the next argument is " << argv[i] << endl;
 	}
-	if (stringcmp(argv[i], "-povray") == 0) {
+	if (ST.stringcmp(argv[i], "-povray") == 0) {
 		f_povray = TRUE;
 		if (f_v) {
 			cout << "-povray " << endl;
@@ -82,7 +87,7 @@ void interface_povray::read_arguments(int argc, std::string *argv, int &i, int v
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-prepare_frames") == 0) {
+	else if (ST.stringcmp(argv[i], "-prepare_frames") == 0) {
 		f_prepare_frames = TRUE;
 		Prepare_frames = NEW_OBJECT(prepare_frames);
 		i += Prepare_frames->parse_arguments(argc - (i + 1), argv + i + 1, verbose_level);

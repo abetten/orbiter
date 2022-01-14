@@ -711,7 +711,7 @@ void spreadsheet::print_table_sorted(ostream &ost,
 		}
 	
 	Sorting.quicksort_array_with_perm(nb_rows - 1, (void **) labels, perm,
-		compare_strings, NULL /*void *data*/);
+		string_tools_compare_strings, NULL /*void *data*/);
 
 	
 	//cout << "Table:" << endl;
@@ -1164,21 +1164,22 @@ void spreadsheet::find_rows(int verbose_level)
 void spreadsheet::get_value_double_or_NA(int i, int j,
 		double &val, int &f_NA)
 {
-	char *str;
+	string str;
+	string_tools ST;
 
-	str = get_string(i, j);
+	get_string(str, i, j);
 	cout << "spreadsheet::get_value_double_or_NA str=" << str << endl;
-	if (strcmp(str, "NA") == 0) {
+	if (ST.stringcmp(str, "NA") == 0) {
 		val = 0;
 		f_NA = TRUE;
-		}
+	}
 	else {
 		val = get_double(i, j);
 		f_NA = FALSE;
-		}
-	FREE_char(str);
+	}
 }
 
+#if 0
 void spreadsheet::get_string_entry(std::string &entry, int i, int j)
 {
 	char *p;
@@ -1187,56 +1188,61 @@ void spreadsheet::get_string_entry(std::string &entry, int i, int j)
 	entry.assign(p);
 	FREE_char(p);
 }
+#endif
 
-char *spreadsheet::get_string(int i, int j)
-// the caller needs to free the returned pointer
+void spreadsheet::get_string(std::string &str, int i, int j)
 {
 	int t;
-	char *str;
-	char *s;
+	//char *str;
+	//char *s;
 	
 	t = Table[i * nb_cols + j];
 	//cout << "t=" << t << endl;
 	if (t == -1) {
-		s = NEW_char(1);
-		strcpy(s, "");
+		str.assign("");
+		//s = NEW_char(1);
+		//strcpy(s, "");
 		}
 	else {
-		str = NEW_char(strlen(tokens[t]) + 1);
+		//str = NEW_char(strlen(tokens[t]) + 1);
 		if (strlen(tokens[t]) >= 2 && tokens[t][0] == '"') {
-			strcpy(str, tokens[t] + 1);
-			str[strlen(str) - 1] = 0;
+			str.assign(tokens[t] + 1);
+			//strcpy(str, tokens[t] + 1);
+			//str[strlen(str) - 1] = 0;
 			}
 		else {
-			strcpy(str, tokens[t]);
+			str.assign(tokens[t]);
+			//strcpy(str, tokens[t]);
 			}
 
-		s = NEW_char(strlen(str) + 1);
-		strcpy(s, str);
-		FREE_char(str);
+		//s = NEW_char(strlen(str) + 1);
+		//strcpy(s, str);
+		//FREE_char(str);
 		}
-	return s;
+	//return s;
 }
 
-int spreadsheet::get_int(int i, int j)
+long int spreadsheet::get_int(int i, int j)
 {
-	char *p;
-	int a;
+	string str;
+	long int a;
+	string_tools ST;
 
-	p = get_string(i, j);
-	a = atoi(p);
-	FREE_char(p);
+	get_string(str, i, j);
+
+	a = ST.strtolint(str);
+
 	return a;
 }
 
 double spreadsheet::get_double(int i, int j)
 {
-	char *p;
+	string str;
 	double a;
+	string_tools ST;
 
-	p = get_string(i, j);
-	a = atof(p);
-	FREE_char(p);
+	get_string(str, i, j);
+	a = ST.strtof(str);
 	return a;
 }
 

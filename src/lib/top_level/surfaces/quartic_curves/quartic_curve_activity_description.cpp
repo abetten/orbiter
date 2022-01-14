@@ -40,27 +40,28 @@ int quartic_curve_activity_description::read_arguments(
 	int verbose_level)
 {
 	int i;
+	string_tools ST;
 
 	cout << "quartic_curve_activity_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
-		if (stringcmp(argv[i], "-report") == 0) {
+		if (ST.stringcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			cout << "-report " << endl;
 		}
-		else if (stringcmp(argv[i], "-report_with_group") == 0) {
+		else if (ST.stringcmp(argv[i], "-report_with_group") == 0) {
 			f_report_with_group = TRUE;
 			cout << "-report_with_group " << endl;
 		}
-		else if (stringcmp(argv[i], "-export_points") == 0) {
+		else if (ST.stringcmp(argv[i], "-export_points") == 0) {
 			f_export_points = TRUE;
 			cout << "-export_points " << endl;
 		}
-		else if (stringcmp(argv[i], "-create_surface") == 0) {
+		else if (ST.stringcmp(argv[i], "-create_surface") == 0) {
 			f_create_surface = TRUE;
 			cout << "-create_surface " << endl;
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
 		}

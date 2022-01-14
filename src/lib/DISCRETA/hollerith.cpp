@@ -138,7 +138,7 @@ void hollerith::append_i(int i)
 {
 	char str[1000];
 	
-	itoa(str, 1000, i);
+	sprintf(str, "%d", i);
 	append(str);
 }
 

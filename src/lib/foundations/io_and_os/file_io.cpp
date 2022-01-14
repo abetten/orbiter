@@ -1507,10 +1507,8 @@ void file_io::int_matrix_read_csv(std::string &fname,
 		M = NEW_int(m * n);
 		for (i = 0; i < m; i++) {
 			for (j = 0; j < n; j++) {
-				char *p;
-				p = S.get_string(i + 1, j + 1);
-				a = my_atoi(p);
-				FREE_char(p);
+
+				a = S.get_int(i + 1, j + 1);
 				M[i * n + j] = a;
 			}
 		}
@@ -1546,10 +1544,7 @@ void file_io::int_matrix_read_csv_no_border(std::string &fname,
 		M = NEW_int(m * n);
 		for (i = 0; i < m; i++) {
 			for (j = 0; j < n; j++) {
-				char *p;
-				p = S.get_string(i, j);
-				a = my_atoi(p);
-				FREE_char(p);
+				a = S.get_int(i, j);
 				M[i * n + j] = a;
 			}
 		}
@@ -1585,11 +1580,7 @@ void file_io::lint_matrix_read_csv(std::string &fname,
 		M = NEW_lint(m * n);
 		for (i = 0; i < m; i++) {
 			for (j = 0; j < n; j++) {
-				char *p;
-
-				p = S.get_string(i + 1, j + 1);
-				a = my_atol(p);
-				FREE_char(p);
+				a = S.get_int(i + 1, j + 1);
 				M[i * n + j] = a;
 			}
 		}
@@ -1627,10 +1618,7 @@ void file_io::double_matrix_read_csv(std::string &fname,
 		M = new double [m * n];
 		for (i = 0; i < m; i++) {
 			for (j = 0; j < n; j++) {
-				char *p;
-				p = S.get_string(i + 1, j + 1);
-				sscanf(p, "%lf", &d);
-				FREE_char(p);
+				d = S.get_double(i + 1, j + 1);
 				M[i * n + j] = d;
 			}
 		}
@@ -1679,18 +1667,17 @@ void file_io::read_column_and_parse(std::string &fname, std::string &col_label,
 
 		for (i = 0; i < nb_sets; i++) {
 
-			char *p;
+			string str;
 			long int *set;
 			int sz;
 
-			p = S.get_string(i + 1, idx);
+			S.get_string(str, i + 1, idx);
 
-			Orbiter->Lint_vec.scan(p, set, sz);
+			Orbiter->Lint_vec.scan(str, set, sz);
 
 			SoS->Sets[i] = set;
 			SoS->Set_size[i] = sz;
 
-			FREE_char(p);
 		}
 	}
 	if (f_v) {
@@ -3487,7 +3474,11 @@ void file_io::create_file(create_file_description *Descr, int verbose_level)
 						sprintf(str, Descr->lines[j].c_str(), c);
 					}
 					else {
-						sprintf(str, Descr->lines[j].c_str(), S.get_string(c, 0));
+						string s;
+
+						S.get_string(s, c, 0);
+
+						sprintf(str, Descr->lines[j].c_str(), s.c_str());
 					}
 					fix_escape_characters(str);
 					fp << str << endl;
@@ -3729,11 +3720,11 @@ void file_io::create_files_list_of_cases(spreadsheet *S,
 							if (((j - i) / Descr->N) % Descr->nb_tasks != t) {
 								continue;
 							}
-							char *entry;
+							string entry;
 							//int case_number;
 
 							//case_number = S->get_int(j + 1, Descr->read_cases_column_of_case);
-							entry = S->get_string(j + 1, Descr->read_cases_column_of_fname);
+							S->get_string(entry, j + 1, Descr->read_cases_column_of_fname);
 							fp << /* case_number << " " <<*/ entry;
 
 							if (j < nb_cases - Descr->N) {
@@ -3756,11 +3747,11 @@ void file_io::create_files_list_of_cases(spreadsheet *S,
 						if ((j % Descr->N) != i) {
 							continue;
 						}
-						char *entry;
+						string entry;
 						//int case_number;
 
 						//case_number = S->get_int(j + 1, Descr->read_cases_column_of_case);
-						entry = S->get_string(j + 1, Descr->read_cases_column_of_fname);
+						S->get_string(entry, j + 1, Descr->read_cases_column_of_fname);
 						fp <<  "\t\t" /*<< case_number << " "*/ << entry << " \\" << endl;
 #if 0
 						if (j < nb_cases - N) {
@@ -4112,7 +4103,7 @@ void file_io::do_csv_file_extract_column_to_txt(
 			long int *v;
 			int sz;
 
-			S->get_string_entry(entry, i, identifier_column);
+			S->get_string(entry, i, identifier_column);
 			Orbiter->Lint_vec.scan(entry, v, sz);
 			ost << sz;
 			for (j = 0; j < sz; j++) {

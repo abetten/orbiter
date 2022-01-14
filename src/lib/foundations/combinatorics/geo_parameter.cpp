@@ -421,7 +421,9 @@ int geo_parameter::input_mode_single(ifstream &aStream)
 	int i, j, l, val, eqpos;
 	bool brk;
 	string str, mapkey, mapval;
+	string_tools ST;
 	
+
 	mode = MODE_SINGLE;
 	brk = false;
 	label[0] = 0;
@@ -446,10 +448,10 @@ int geo_parameter::input_mode_single(ifstream &aStream)
 					decomposition_type = UNKNOWNTYPE;
 			}
 			else if (mapkey == "ptanz" || mapkey == "nb_V") {
-				nb_V = str2int(mapval);
+				nb_V = ST.str2int(mapval);
 			}
 			else if (mapkey == "btanz" || mapkey == "nb_B") {
-				nb_B = str2int(mapval);
+				nb_B = ST.str2int(mapval);
 			}
 			else if (mapkey == "fuse") {
 #if 0

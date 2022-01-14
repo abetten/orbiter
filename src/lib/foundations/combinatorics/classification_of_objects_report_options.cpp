@@ -48,64 +48,65 @@ int classification_of_objects_report_options::read_arguments(
 	int verbose_level)
 {
 	int i;
+	string_tools ST;
 
 	cout << "classification_of_objects_report_options::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
 		cout << "classification_of_objects_report_options::read_arguments, next argument is " << argv[i] << endl;
 
-		if (stringcmp(argv[i], "-prefix") == 0) {
+		if (ST.stringcmp(argv[i], "-prefix") == 0) {
 			f_prefix = TRUE;
 			prefix.assign(argv[++i]);
 			cout << "-prefix" << prefix << endl;
 		}
-		else if (stringcmp(argv[i], "-export_flag_orbits") == 0) {
+		else if (ST.stringcmp(argv[i], "-export_flag_orbits") == 0) {
 			f_export_flag_orbits = TRUE;
 			cout << "-export_flag_orbits" << endl;
 		}
-		else if (stringcmp(argv[i], "-dont_export_flag_orbits") == 0) {
+		else if (ST.stringcmp(argv[i], "-dont_export_flag_orbits") == 0) {
 			f_export_flag_orbits = FALSE;
 			cout << "-export_flag_orbits" << endl;
 		}
-		else if (stringcmp(argv[i], "-show_incidence_matrices") == 0) {
+		else if (ST.stringcmp(argv[i], "-show_incidence_matrices") == 0) {
 			f_show_incidence_matrices = TRUE;
 			cout << "-show_incidence_matrices" << endl;
 		}
-		else if (stringcmp(argv[i], "-dont_show_incidence_matrices") == 0) {
+		else if (ST.stringcmp(argv[i], "-dont_show_incidence_matrices") == 0) {
 			f_show_incidence_matrices = FALSE;
 			cout << "-dont_show_incidence_matrices" << endl;
 		}
-		else if (stringcmp(argv[i], "-show_TDA") == 0) {
+		else if (ST.stringcmp(argv[i], "-show_TDA") == 0) {
 			f_show_TDA = TRUE;
 			cout << "-show_TDA" << endl;
 		}
-		else if (stringcmp(argv[i], "-dont_show_TDA") == 0) {
+		else if (ST.stringcmp(argv[i], "-dont_show_TDA") == 0) {
 			f_show_TDA = FALSE;
 			cout << "-dont_show_TDA" << endl;
 		}
-		else if (stringcmp(argv[i], "-show_TDO") == 0) {
+		else if (ST.stringcmp(argv[i], "-show_TDO") == 0) {
 			f_show_TDO = TRUE;
 			cout << "-show_TDO" << endl;
 		}
-		else if (stringcmp(argv[i], "-dont_show_TDO") == 0) {
+		else if (ST.stringcmp(argv[i], "-dont_show_TDO") == 0) {
 			f_show_TDO = FALSE;
 			cout << "-dont_show_TDO" << endl;
 		}
-		else if (stringcmp(argv[i], "-export_group") == 0) {
+		else if (ST.stringcmp(argv[i], "-export_group") == 0) {
 			f_export_group = TRUE;
 			cout << "-export_group" << endl;
 		}
-		else if (stringcmp(argv[i], "-dont_export_group") == 0) {
+		else if (ST.stringcmp(argv[i], "-dont_export_group") == 0) {
 			f_export_group = FALSE;
 			cout << "-dont_export_group" << endl;
 		}
-		else if (stringcmp(argv[i], "-lex_least") == 0) {
+		else if (ST.stringcmp(argv[i], "-lex_least") == 0) {
 			f_lex_least = TRUE;
 			lex_least_geometry_builder.assign(argv[++i]);
 			cout << "-lex_least" << lex_least_geometry_builder << endl;
 		}
 
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "classification_of_objects_report_options::read_arguments -end" << endl;
 			break;
 		}
