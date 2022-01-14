@@ -451,7 +451,7 @@ public:
 	set_and_stabilizer *create_copy(int verbose_level);
 	void init_data(long int *data, int sz, int verbose_level);
 	void init_stab_from_data(int *data_gens, 
-		int data_gens_size, int nb_gens, const char *ascii_target_go, 
+		int data_gens_size, int nb_gens, std::string &ascii_target_go,
 		int verbose_level);
 	void init_stab_from_file(const char *fname_gens, 
 		int verbose_level);

@@ -718,11 +718,12 @@ void surface_domain::make_table_of_surfaces_detailed(
 			int *data;
 			int nb_gens;
 			int data_size;
-			const char *stab_order;
+			string stab_order;
 			long int ago;
+			string_tools ST;
 
 			K.cubic_surface_stab_gens(q, j, data, nb_gens, data_size, stab_order);
-			ago = my_atol(stab_order);
+			ago = ST.strtolint(stab_order);
 
 			Big_table[cur * 4 + 3] = ago;
 		}
@@ -764,7 +765,6 @@ void surface_domain::make_table_of_surfaces2(std::ostream &ost,
 	int *data;
 	int nb_gens;
 	int data_size;
-	const char *stab_order;
 	knowledge_base K;
 	file_io Fio;
 
@@ -931,6 +931,7 @@ void surface_domain::make_table_of_surfaces2(std::ostream &ost,
 				int *Ago;
 				int go;
 				int h, u, nb_total;
+				string_tools ST;
 
 				nb_total = K.cubic_surface_nb_reps(q);
 				Ago = NEW_int(nb_reps);
@@ -940,9 +941,12 @@ void surface_domain::make_table_of_surfaces2(std::ostream &ost,
 					if (nb_E != E[j]) {
 						continue;
 					}
+					string stab_order;
+
 					K.cubic_surface_stab_gens(q, h, data,
 							nb_gens, data_size, stab_order);
-					sscanf(stab_order, "%d", &go);
+
+					go = ST.strtolint(stab_order);
 					Ago[u++] = go;
 				}
 

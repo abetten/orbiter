@@ -603,7 +603,7 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(int spread_no,
 	int f_semilinear = FALSE;
 	int n, k, q;
 
-	const char *stab_order;
+	string stab_order;
 	longinteger_object stab_go;
 	int order_of_plane;
 	number_theory_domain NT;
@@ -646,7 +646,7 @@ void group_theoretic_activity::do_Andre_Bruck_Bose_construction(int spread_no,
 	An->stabilizer_of_spread_representative(q, k, spread_no,
 			gens, stab_order, verbose_level);
 
-	stab_go.create_from_base_10_string(stab_order, 0 /* verbose_level */);
+	stab_go.create_from_base_10_string(stab_order);
 
 	if (f_v) {
 		cout << "Spread stabilizer has order " << stab_go << endl;

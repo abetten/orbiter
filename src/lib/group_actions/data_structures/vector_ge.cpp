@@ -812,7 +812,7 @@ void vector_ge::read_column_csv(std::string &fname, action *A, int col_idx, int 
 		int *data;
 		int sz;
 
-		s.assign(S.get_string(i + 1, col_idx));
+		S.get_string(s, i + 1, col_idx);
 		Orbiter->Int_vec.scan(s, data, sz);
 		if (sz != me_sz) {
 			cout << "vector_ge::read_column_csv sz != me_sz" << endl;

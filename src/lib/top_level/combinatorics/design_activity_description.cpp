@@ -62,32 +62,21 @@ int design_activity_description::read_arguments(int argc, std::string *argv,
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "design_activity_description::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
 
-#if 0
-		if (stringcmp(argv[i], "-create_table") == 0) {
-			f_create_table = TRUE;
-			create_table_label.assign(argv[++i]);
-			create_table_group.assign(argv[++i]);
-			if (f_v) {
-				cout << "-create_table " << create_table_label
-						<< " " << create_table_group
-						<< endl;
-			}
-		}
-#endif
-		if (stringcmp(argv[i], "-load_table") == 0) {
+		if (ST.stringcmp(argv[i], "-load_table") == 0) {
 			f_load_table = TRUE;
 			load_table_label.assign(argv[++i]);
 			load_table_group.assign(argv[++i]);
 			load_table_H_label.assign(argv[++i]);
 			load_table_H_group_order.assign(argv[++i]);
 			load_table_H_gens.assign(argv[++i]);
-			load_table_selected_orbit_length = strtoi(argv[++i]);
+			load_table_selected_orbit_length = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-load_table " << load_table_label
 						<< " " << load_table_group
@@ -98,7 +87,7 @@ int design_activity_description::read_arguments(int argc, std::string *argv,
 						<< endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-canonical_form") == 0) {
+		else if (ST.stringcmp(argv[i], "-canonical_form") == 0) {
 			f_canonical_form = TRUE;
 			if (f_v) {
 				cout << "-canonical_form, reading extra arguments" << endl;
@@ -116,7 +105,7 @@ int design_activity_description::read_arguments(int argc, std::string *argv,
 				}
 			}
 		}
-		else if (stringcmp(argv[i], "-extract_solutions_by_index_csv") == 0) {
+		else if (ST.stringcmp(argv[i], "-extract_solutions_by_index_csv") == 0) {
 			f_extract_solutions_by_index_csv = TRUE;
 			extract_solutions_by_index_label.assign(argv[++i]);
 			extract_solutions_by_index_group.assign(argv[++i]);
@@ -133,7 +122,7 @@ int design_activity_description::read_arguments(int argc, std::string *argv,
 						<< endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-extract_solutions_by_index_txt") == 0) {
+		else if (ST.stringcmp(argv[i], "-extract_solutions_by_index_txt") == 0) {
 			f_extract_solutions_by_index_txt = TRUE;
 			extract_solutions_by_index_label.assign(argv[++i]);
 			extract_solutions_by_index_group.assign(argv[++i]);
@@ -150,32 +139,32 @@ int design_activity_description::read_arguments(int argc, std::string *argv,
 						<< endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-export_inc") == 0) {
+		else if (ST.stringcmp(argv[i], "-export_inc") == 0) {
 			f_export_inc = TRUE;
 			if (f_v) {
 				cout << "-export_inc " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-export_blocks") == 0) {
+		else if (ST.stringcmp(argv[i], "-export_blocks") == 0) {
 			f_export_blocks = TRUE;
 			if (f_v) {
 				cout << "-export_blocks " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-row_sums") == 0) {
+		else if (ST.stringcmp(argv[i], "-row_sums") == 0) {
 			f_row_sums = TRUE;
 			if (f_v) {
 				cout << "-row_sums " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-tactical_decomposition") == 0) {
+		else if (ST.stringcmp(argv[i], "-tactical_decomposition") == 0) {
 			f_tactical_decomposition = TRUE;
 			if (f_v) {
 				cout << "-tactical_decomposition " << endl;
 			}
 		}
 
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			break;
 		}
 	} // next i

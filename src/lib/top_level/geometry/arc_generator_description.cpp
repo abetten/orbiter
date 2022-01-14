@@ -51,6 +51,7 @@ int arc_generator_description::read_arguments(int argc, std::string *argv,
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	string_tools ST;
 
 
 	if (f_v) {
@@ -58,7 +59,7 @@ int arc_generator_description::read_arguments(int argc, std::string *argv,
 	}
 	for (i = 0; i < argc; i++) {
 
-		if (stringcmp(argv[i], "-poset_classification_control") == 0) {
+		if (ST.stringcmp(argv[i], "-poset_classification_control") == 0) {
 			f_poset_classification_control = TRUE;
 			Control = NEW_OBJECT(poset_classification_control);
 			if (f_v) {
@@ -76,46 +77,46 @@ int arc_generator_description::read_arguments(int argc, std::string *argv,
 				}
 			}
 		}
-		else if (stringcmp(argv[i], "-d") == 0) {
+		else if (ST.stringcmp(argv[i], "-d") == 0) {
 			f_d = TRUE;
-			d = strtoi(argv[++i]);
+			d = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-d " << d << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-target_size") == 0) {
+		else if (ST.stringcmp(argv[i], "-target_size") == 0) {
 			f_target_size = TRUE;
-			target_size = strtoi(argv[++i]);
+			target_size = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-target_size " << target_size << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-conic_test") == 0) {
+		else if (ST.stringcmp(argv[i], "-conic_test") == 0) {
 			f_conic_test = TRUE;
 			if (f_v) {
 				cout << "-conic_test " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-test_nb_Eckardt_points") == 0) {
+		else if (ST.stringcmp(argv[i], "-test_nb_Eckardt_points") == 0) {
 			f_test_nb_Eckardt_points = TRUE;
-			nb_E = strtoi(argv[++i]);
+			nb_E = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-test_nb_Eckardt_points " << nb_E << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-affine") == 0) {
+		else if (ST.stringcmp(argv[i], "-affine") == 0) {
 			f_affine = TRUE;
 			if (f_v) {
 				cout << "-affine " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-no_arc_testing") == 0) {
+		else if (ST.stringcmp(argv[i], "-no_arc_testing") == 0) {
 			f_no_arc_testing = TRUE;
 			if (f_v) {
 				cout << "-no_arc_testing " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-forbidden_point_set") == 0) {
+		else if (ST.stringcmp(argv[i], "-forbidden_point_set") == 0) {
 			f_has_forbidden_point_set = TRUE;
 			os_interface Os;
 
@@ -127,14 +128,14 @@ int arc_generator_description::read_arguments(int argc, std::string *argv,
 				cout << "-f_has_forbidden_point_set " << forbidden_point_set_string << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-override_group") == 0) {
+		else if (ST.stringcmp(argv[i], "-override_group") == 0) {
 			f_override_group = TRUE;
 			override_group_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-override_group " << override_group_label << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			break;
 		}
 		else {

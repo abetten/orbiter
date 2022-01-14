@@ -554,7 +554,7 @@ public:
 	int *data;
 	int nb_gens;
 	int data_size;
-	const char *stab_order;
+	std::string stab_order;
 
 	action *A;
 	action *A2;

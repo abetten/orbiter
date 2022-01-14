@@ -16,6 +16,33 @@
 namespace orbiter {
 namespace foundations {
 
+
+// #############################################################################
+// algorithms.cpp
+// #############################################################################
+
+
+
+//! catch all class for algorithms
+
+
+class algorithms {
+public:
+
+	algorithms();
+	~algorithms();
+	int hashing(int hash0, int a);
+	int hashing_fixed_width(int hash0, int a, int bit_length);
+	void uchar_print_bitwise(std::ostream &ost, uchar u);
+	void uchar_move(uchar *p, uchar *q, int len);
+	void int_swap(int& x, int& y);
+	void print_pointer_hex(std::ostream &ost, void *p);
+	void print_hex_digit(std::ostream &ost, int digit);
+	void print_repeated_character(std::ostream &ost, char c, int n);
+	uint32_t root_of_tree_uint32_t (uint32_t* S, uint32_t i);
+
+};
+
 // #############################################################################
 // bitmatrix.cpp
 // #############################################################################
@@ -1412,9 +1439,9 @@ public:
 		int verbose_level);
 	void find_rows(int verbose_level);
 	void get_value_double_or_NA(int i, int j, double &val, int &f_NA);
-	void get_string_entry(std::string &entry, int i, int j);
-	char *get_string(int i, int j);
-	int get_int(int i, int j);
+	//void get_string_entry(std::string &entry, int i, int j);
+	void get_string(std::string &str, int i, int j);
+	long int get_int(int i, int j);
 	double get_double(int i, int j);
 	void join_with(spreadsheet *S2, int by1, int by2, 
 		int verbose_level);
@@ -1473,9 +1500,17 @@ public:
 	int is_all_whitespace(const char *str);
 	void text_to_three_double(std::string &text, double *d);
 	int strcmp_with_or_without(char *p, char *q);
+	int starts_with_a_number(std::string &str);
+	int stringcmp(std::string &str, const char *p);
+	int strtoi(std::string &str);
+	int str2int(std::string &str);
+	long int strtolint(std::string &str);
+	double strtof(std::string &str);
 
 
 };
+
+int string_tools_compare_strings(void *a, void *b, void *data);
 
 
 

@@ -123,6 +123,7 @@ void symbol_definition::read_definition(
 		int argc, std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	string_tools ST;
 
 	if (f_v) {
 		cout << "symbol_definition::read_definition i=" << i << " argc=" << argc << endl;
@@ -140,7 +141,7 @@ void symbol_definition::read_definition(
 	if (f_v) {
 		cout << "-define " << define_label << endl;
 	}
-	if (stringcmp(argv[i], "-finite_field") == 0) {
+	if (ST.stringcmp(argv[i], "-finite_field") == 0) {
 		f_finite_field = TRUE;
 		Finite_field_description = NEW_OBJECT(finite_field_description);
 		if (f_v) {
@@ -160,7 +161,7 @@ void symbol_definition::read_definition(
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-projective_space") == 0) {
+	else if (ST.stringcmp(argv[i], "-projective_space") == 0) {
 		f_projective_space = TRUE;
 		Projective_space_with_action_description = NEW_OBJECT(projective_space_with_action_description);
 		if (f_v) {
@@ -180,7 +181,7 @@ void symbol_definition::read_definition(
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-orthogonal_space") == 0) {
+	else if (ST.stringcmp(argv[i], "-orthogonal_space") == 0) {
 		f_orthogonal_space = TRUE;
 		Orthogonal_space_with_action_description = NEW_OBJECT(orthogonal_space_with_action_description);
 		if (f_v) {
@@ -200,7 +201,7 @@ void symbol_definition::read_definition(
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-linear_group") == 0) {
+	else if (ST.stringcmp(argv[i], "-linear_group") == 0) {
 		f_linear_group = TRUE;
 		Linear_group_description = NEW_OBJECT(linear_group_description);
 		if (f_v) {
@@ -221,7 +222,7 @@ void symbol_definition::read_definition(
 		}
 	}
 
-	else if (stringcmp(argv[i], "-permutation_group") == 0) {
+	else if (ST.stringcmp(argv[i], "-permutation_group") == 0) {
 		f_permutation_group = TRUE;
 		Permutation_group_description = NEW_OBJECT(permutation_group_description);
 		if (f_v) {
@@ -242,7 +243,7 @@ void symbol_definition::read_definition(
 		}
 	}
 
-	else if (stringcmp(argv[i], "-modified_group") == 0) {
+	else if (ST.stringcmp(argv[i], "-modified_group") == 0) {
 		f_group_modification = TRUE;
 		Group_modification_description = NEW_OBJECT(group_modification_description);
 		if (f_v) {
@@ -263,7 +264,7 @@ void symbol_definition::read_definition(
 		}
 	}
 
-	else if (stringcmp(argv[i], "-formula") == 0) {
+	else if (ST.stringcmp(argv[i], "-formula") == 0) {
 		if (f_v) {
 			cout << "-formula" << endl;
 		}
@@ -283,7 +284,7 @@ void symbol_definition::read_definition(
 
 	}
 
-	else if (stringcmp(argv[i], "-geometric_object") == 0) {
+	else if (ST.stringcmp(argv[i], "-geometric_object") == 0) {
 		f_geometric_object = TRUE;
 
 		geometric_object_projective_space_label.assign(argv[++i]);
@@ -307,7 +308,7 @@ void symbol_definition::read_definition(
 	}
 
 
-	else if (stringcmp(argv[i], "-collection") == 0) {
+	else if (ST.stringcmp(argv[i], "-collection") == 0) {
 		if (f_v) {
 			cout << "-collection" << endl;
 		}
@@ -318,7 +319,7 @@ void symbol_definition::read_definition(
 		i++;
 
 	}
-	else if (stringcmp(argv[i], "-graph") == 0) {
+	else if (ST.stringcmp(argv[i], "-graph") == 0) {
 
 		f_graph = TRUE;
 		Create_graph_description = NEW_OBJECT(create_graph_description);
@@ -340,11 +341,11 @@ void symbol_definition::read_definition(
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-spread_table") == 0) {
+	else if (ST.stringcmp(argv[i], "-spread_table") == 0) {
 		f_spread_table = TRUE;
 
 		spread_table_label_PA.assign(argv[++i]);
-		dimension_of_spread_elements = strtoi(argv[++i]);
+		dimension_of_spread_elements = ST.strtoi(argv[++i]);
 		spread_selection_text.assign(argv[++i]);
 		spread_tables_prefix.assign(argv[++i]);
 
@@ -368,7 +369,7 @@ void symbol_definition::read_definition(
 					<< endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-packing_with_symmetry_assumption") == 0) {
+	else if (ST.stringcmp(argv[i], "-packing_with_symmetry_assumption") == 0) {
 		f_packing_was = TRUE;
 
 		packing_was_label_spread_table.assign(argv[++i]);
@@ -393,11 +394,11 @@ void symbol_definition::read_definition(
 					<< endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-packing_choose_fixed_points") == 0) {
+	else if (ST.stringcmp(argv[i], "-packing_choose_fixed_points") == 0) {
 		f_packing_was_choose_fixed_points = TRUE;
 
 		packing_with_assumed_symmetry_label.assign(argv[++i]);
-		packing_with_assumed_symmetry_choose_fixed_points_clique_size = strtoi(argv[++i]);
+		packing_with_assumed_symmetry_choose_fixed_points_clique_size = ST.strtoi(argv[++i]);
 
 		packing_with_assumed_symmetry_choose_fixed_points_control = NEW_OBJECT(poset_classification_control);
 		if (f_v) {
@@ -422,7 +423,7 @@ void symbol_definition::read_definition(
 			packing_with_assumed_symmetry_choose_fixed_points_control->print();
 		}
 	}
-	else if (stringcmp(argv[i], "-packing_long_orbits") == 0) {
+	else if (ST.stringcmp(argv[i], "-packing_long_orbits") == 0) {
 		f_packing_long_orbits = TRUE;
 
 		packing_long_orbits_choose_fixed_points_label.assign(argv[++i]);
@@ -448,7 +449,7 @@ void symbol_definition::read_definition(
 					<< endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-graph_classification") == 0) {
+	else if (ST.stringcmp(argv[i], "-graph_classification") == 0) {
 		f_graph_classification = TRUE;
 
 		Graph_classify_description = NEW_OBJECT(graph_classify_description);
@@ -471,7 +472,7 @@ void symbol_definition::read_definition(
 					<< endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-diophant") == 0) {
+	else if (ST.stringcmp(argv[i], "-diophant") == 0) {
 		f_diophant = TRUE;
 
 		Diophant_description = NEW_OBJECT(diophant_description);
@@ -494,7 +495,7 @@ void symbol_definition::read_definition(
 					<< endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-design") == 0) {
+	else if (ST.stringcmp(argv[i], "-design") == 0) {
 
 		f_design = TRUE;
 		Design_create_description = NEW_OBJECT(design_create_description);
@@ -516,7 +517,7 @@ void symbol_definition::read_definition(
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-design_table") == 0) {
+	else if (ST.stringcmp(argv[i], "-design_table") == 0) {
 		f_design_table = TRUE;
 
 		design_table_label_design.assign(argv[++i]);
@@ -536,7 +537,7 @@ void symbol_definition::read_definition(
 					<< endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-large_set_with_symmetry_assumption") == 0) {
+	else if (ST.stringcmp(argv[i], "-large_set_with_symmetry_assumption") == 0) {
 		f_large_set_was = TRUE;
 
 		large_set_was_label_design_table.assign(argv[++i]);
@@ -561,7 +562,7 @@ void symbol_definition::read_definition(
 					<< endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-set") == 0) {
+	else if (ST.stringcmp(argv[i], "-set") == 0) {
 		f_set = TRUE;
 
 
@@ -585,7 +586,7 @@ void symbol_definition::read_definition(
 			Set_builder_description->print();
 		}
 	}
-	else if (stringcmp(argv[i], "-vector") == 0) {
+	else if (ST.stringcmp(argv[i], "-vector") == 0) {
 		f_vector = TRUE;
 
 
@@ -609,7 +610,7 @@ void symbol_definition::read_definition(
 			Vector_builder_description->print();
 		}
 	}
-	else if (stringcmp(argv[i], "-combinatorial_objects") == 0) {
+	else if (ST.stringcmp(argv[i], "-combinatorial_objects") == 0) {
 		f_combinatorial_objects = TRUE;
 
 
@@ -633,7 +634,7 @@ void symbol_definition::read_definition(
 			Data_input_stream_description->print();
 		}
 	}
-	else if (stringcmp(argv[i], "-geometry_builder") == 0) {
+	else if (ST.stringcmp(argv[i], "-geometry_builder") == 0) {
 		f_geometry_builder = TRUE;
 
 
@@ -1052,11 +1053,12 @@ void symbol_definition::definition_of_projective_space(int verbose_level)
 		cout << "symbol_definition::definition_of_projective_space" << endl;
 	}
 	finite_field *F;
+	string_tools ST;
 
-	if (string_starts_with_a_number(Projective_space_with_action_description->input_q)) {
+	if (ST.starts_with_a_number(Projective_space_with_action_description->input_q)) {
 		int q;
 
-		q = strtoi(Projective_space_with_action_description->input_q);
+		q = ST.strtoi(Projective_space_with_action_description->input_q);
 		if (f_v) {
 			cout << "symbol_definition::definition_of_projective_space "
 					"creating the finite field of order " << q << endl;
@@ -1143,11 +1145,12 @@ void symbol_definition::definition_of_orthogonal_space(int verbose_level)
 		cout << "symbol_definition::definition_of_orthogonal_space" << endl;
 	}
 	finite_field *F;
+	string_tools ST;
 
-	if (string_starts_with_a_number(Orthogonal_space_with_action_description->input_q)) {
+	if (ST.starts_with_a_number(Orthogonal_space_with_action_description->input_q)) {
 		int q;
 
-		q = strtoi(Orthogonal_space_with_action_description->input_q);
+		q = ST.strtoi(Orthogonal_space_with_action_description->input_q);
 		if (f_v) {
 			cout << "symbol_definition::definition_of_orthogonal_space "
 					"creating finite field of order " << q << endl;
@@ -1219,11 +1222,12 @@ void symbol_definition::definition_of_linear_group(int verbose_level)
 	}
 
 	finite_field *F;
+	string_tools ST;
 
-	if (string_starts_with_a_number(Linear_group_description->input_q)) {
+	if (ST.starts_with_a_number(Linear_group_description->input_q)) {
 		int q;
 
-		q = strtoi(Linear_group_description->input_q);
+		q = ST.strtoi(Linear_group_description->input_q);
 		if (f_v) {
 			cout << "symbol_definition::definition "
 					"creating finite field of order " << q << endl;

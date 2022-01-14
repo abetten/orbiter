@@ -74,13 +74,14 @@ int orthogonal_space_activity_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "orthogonal_space_activity_description::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
 
-		if (stringcmp(argv[i], "-input") == 0) {
+		if (ST.stringcmp(argv[i], "-input") == 0) {
 			f_input = TRUE;
 			Data = NEW_OBJECT(data_input_stream_description);
 			if (f_v) {
@@ -97,7 +98,7 @@ int orthogonal_space_activity_description::read_arguments(
 				}
 			}
 		}
-		else if (stringcmp(argv[i], "-create_BLT_set") == 0) {
+		else if (ST.stringcmp(argv[i], "-create_BLT_set") == 0) {
 			f_create_BLT_set = TRUE;
 			BLT_Set_create_description = NEW_OBJECT(BLT_set_create_description);
 			if (f_v) {
@@ -114,9 +115,9 @@ int orthogonal_space_activity_description::read_arguments(
 				}
 			}
 		}
-		else if (stringcmp(argv[i], "-BLT_set_starter") == 0) {
+		else if (ST.stringcmp(argv[i], "-BLT_set_starter") == 0) {
 			f_BLT_set_starter = TRUE;
-			BLT_set_starter_size = strtoi(argv[++i]);
+			BLT_set_starter_size = ST.strtoi(argv[++i]);
 
 			BLT_set_starter_control = NEW_OBJECT(poset_classification_control);
 
@@ -134,29 +135,29 @@ int orthogonal_space_activity_description::read_arguments(
 				cout << "-BLT_set_starter " << BLT_set_starter_size << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-BLT_set_graphs") == 0) {
+		else if (ST.stringcmp(argv[i], "-BLT_set_graphs") == 0) {
 			f_BLT_set_graphs = TRUE;
-			BLT_set_graphs_starter_size = strtoi(argv[++i]);
-			BLT_set_graphs_r = strtoi(argv[++i]);
-			BLT_set_graphs_m = strtoi(argv[++i]);
+			BLT_set_graphs_starter_size = ST.strtoi(argv[++i]);
+			BLT_set_graphs_r = ST.strtoi(argv[++i]);
+			BLT_set_graphs_m = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-BLT_set_graphs " << BLT_set_graphs_starter_size << " " << BLT_set_graphs_r << " " << BLT_set_graphs_m << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-fname_base_out") == 0) {
+		else if (ST.stringcmp(argv[i], "-fname_base_out") == 0) {
 			f_fname_base_out = TRUE;
 			fname_base_out.assign(argv[++i]);
 			if (f_v) {
 				cout << "-fname_base_out " << fname_base_out << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-cheat_sheet_orthogonal") == 0) {
+		else if (ST.stringcmp(argv[i], "-cheat_sheet_orthogonal") == 0) {
 			f_cheat_sheet_orthogonal = TRUE;
 			if (f_v) {
 				cout << "-cheat_sheet_orthogonal "<< endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-unrank_line_through_two_points") == 0) {
+		else if (ST.stringcmp(argv[i], "-unrank_line_through_two_points") == 0) {
 			f_unrank_line_through_two_points = TRUE;
 			unrank_line_through_two_points_p1.assign(argv[++i]);
 			unrank_line_through_two_points_p2.assign(argv[++i]);
@@ -165,15 +166,15 @@ int orthogonal_space_activity_description::read_arguments(
 					<< " " << unrank_line_through_two_points_p2 << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-lines_on_point") == 0) {
+		else if (ST.stringcmp(argv[i], "-lines_on_point") == 0) {
 			f_lines_on_point = TRUE;
-			lines_on_point_rank = strtoi(argv[++i]);
+			lines_on_point_rank = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-lines_on_point " << lines_on_point_rank << endl;
 			}
 		}
 
-		else if (stringcmp(argv[i], "-perp") == 0) {
+		else if (ST.stringcmp(argv[i], "-perp") == 0) {
 			f_perp = TRUE;
 			perp_text.assign(argv[++i]);
 			if (f_v) {
@@ -181,11 +182,11 @@ int orthogonal_space_activity_description::read_arguments(
 			}
 		}
 
-		else if (stringcmp(argv[i], "-set_stabilizer") == 0) {
+		else if (ST.stringcmp(argv[i], "-set_stabilizer") == 0) {
 			f_set_stabilizer = TRUE;
-			set_stabilizer_intermediate_set_size = strtoi(argv[++i]);
+			set_stabilizer_intermediate_set_size = ST.strtoi(argv[++i]);
 			set_stabilizer_fname_mask.assign(argv[++i]);
-			set_stabilizer_nb = strtoi(argv[++i]);
+			set_stabilizer_nb = ST.strtoi(argv[++i]);
 			set_stabilizer_column_label.assign(argv[++i]);
 			set_stabilizer_fname_out.assign(argv[++i]);
 			if (f_v) {
@@ -198,14 +199,14 @@ int orthogonal_space_activity_description::read_arguments(
 						<< endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-export_point_line_incidence_matrix") == 0) {
+		else if (ST.stringcmp(argv[i], "-export_point_line_incidence_matrix") == 0) {
 			f_export_point_line_incidence_matrix = TRUE;
 			if (f_v) {
 				cout << "-export_point_line_incidence_matrix " << endl;
 			}
 		}
 
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
 			}

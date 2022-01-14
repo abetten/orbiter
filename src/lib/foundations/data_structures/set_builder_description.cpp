@@ -55,31 +55,32 @@ int set_builder_description::read_arguments(
 	int verbose_level)
 {
 	int i;
+	string_tools ST;
 
 	cout << "set_builder_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
-		if (stringcmp(argv[i], "-loop") == 0) {
+		if (ST.stringcmp(argv[i], "-loop") == 0) {
 			f_index_set_loop = TRUE;
-			index_set_loop_low = strtoi(argv[++i]);
-			index_set_loop_upper_bound = strtoi(argv[++i]);
-			index_set_loop_increment = strtoi(argv[++i]);
+			index_set_loop_low = ST.strtoi(argv[++i]);
+			index_set_loop_upper_bound = ST.strtoi(argv[++i]);
+			index_set_loop_increment = ST.strtoi(argv[++i]);
 			cout << "-loop " << index_set_loop_low << " "
 					<< index_set_loop_upper_bound << " "
 					<< index_set_loop_increment << endl;
 		}
-		else if (stringcmp(argv[i], "-affine_function") == 0) {
+		else if (ST.stringcmp(argv[i], "-affine_function") == 0) {
 			f_affine_function = TRUE;
-			affine_function_a = strtoi(argv[++i]);
-			affine_function_b = strtoi(argv[++i]);
+			affine_function_a = ST.strtoi(argv[++i]);
+			affine_function_b = ST.strtoi(argv[++i]);
 			cout << "-affine_function " << affine_function_a << " " << affine_function_b << endl;
 		}
-		else if (stringcmp(argv[i], "-clone_with_affine_function") == 0) {
+		else if (ST.stringcmp(argv[i], "-clone_with_affine_function") == 0) {
 			f_clone_with_affine_function = TRUE;
-			clone_with_affine_function_a = strtoi(argv[++i]);
-			clone_with_affine_function_b = strtoi(argv[++i]);
+			clone_with_affine_function_a = ST.strtoi(argv[++i]);
+			clone_with_affine_function_b = ST.strtoi(argv[++i]);
 			cout << "-clone_with_affine_function " << clone_with_affine_function_a << " " << clone_with_affine_function_b << endl;
 		}
-		else if (stringcmp(argv[i], "-set_builder") == 0) {
+		else if (ST.stringcmp(argv[i], "-set_builder") == 0) {
 			f_set_builder = TRUE;
 			Descr = NEW_OBJECT(set_builder_description);
 			cout << "reading -set_builder" << endl;
@@ -95,18 +96,18 @@ int set_builder_description::read_arguments(
 			cout << "-set_builder " << endl;
 			Descr->print();
 		}
-		else if (stringcmp(argv[i], "-here") == 0) {
+		else if (ST.stringcmp(argv[i], "-here") == 0) {
 			f_here = TRUE;
 			here_text.assign(argv[++i]);
 			cout << "-here " << here_text << endl;
 		}
-		else if (stringcmp(argv[i], "-file") == 0) {
+		else if (ST.stringcmp(argv[i], "-file") == 0) {
 			f_file = TRUE;
 			file_name.assign(argv[++i]);
 			cout << "-file " << file_name << endl;
 		}
 
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
 		}

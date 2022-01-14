@@ -30,6 +30,7 @@ int large_set_activity_description::read_arguments(int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;
+	string_tools ST;
 
 	cout << "large_set_activity_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
@@ -64,7 +65,7 @@ int large_set_activity_description::read_arguments(int argc, std::string *argv,
 					<< endl;
 		}
 #endif
-		if (stringcmp(argv[i], "-end") == 0) {
+		if (ST.stringcmp(argv[i], "-end") == 0) {
 			break;
 		}
 	} // next i

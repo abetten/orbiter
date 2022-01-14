@@ -803,9 +803,9 @@ void spread_tables::compute_dual_spreads(long int **Sets,
 		v[0] = spread_size /*+ 1*/;
 
 		if (Sorting.vec_search((void **)Sets,
-			util_compare_func, (void *) v,
-			nb_spreads, dual_spread, idx,
-			0 /* verbose_level */)) {
+				spread_table_compare_func, (void *) v,
+				nb_spreads, dual_spread, idx,
+				0 /* verbose_level */)) {
 			if (FALSE) {
 				cout << "spread_tables::compute_dual_spreads Dual "
 						"spread of spread " << i
@@ -1045,6 +1045,29 @@ void spread_tables::report_one_spread(std::ostream &ost, int a)
 		}
 	}
 }
+
+
+int spread_table_compare_func(void *a, void *b, void *data)
+// used in spread_table
+{
+	int *A = (int *)a;
+	int *B = (int *)b;
+	int *p = (int *) data;
+	int n = *p;
+	int i;
+
+	for (i = 0; i < n; i++) {
+		if (A[i] < B[i]) {
+			return 1;
+		}
+		if (A[i] > B[i]) {
+			return -1;
+		}
+	}
+	return 0;
+}
+
+
 
 
 }}

@@ -34,11 +34,12 @@ int graph_modification_description::check_and_parse_argument(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	string_tools ST;
 
 	if (f_v) {
 		cout << "graph_modification_description::check_and_parse_argument" << endl;
 	}
-	if (stringcmp(argv[i], "-complement") == 0) {
+	if (ST.stringcmp(argv[i], "-complement") == 0) {
 		f_complement = TRUE;
 		i++;
 		if (f_v) {
@@ -46,7 +47,7 @@ int graph_modification_description::check_and_parse_argument(
 		}
 		return TRUE;
 	}
-	else if (stringcmp(argv[i], "-distance_2") == 0) {
+	else if (ST.stringcmp(argv[i], "-distance_2") == 0) {
 		f_distance_2 = TRUE;
 		i++;
 		if (f_v) {
@@ -66,27 +67,28 @@ int graph_modification_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "graph_modification_description::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
 
-		if (stringcmp(argv[i], "-complement") == 0) {
+		if (ST.stringcmp(argv[i], "-complement") == 0) {
 			f_complement = TRUE;
 			if (f_v) {
 				cout << "-complement " << endl;
 			}
 		}
 
-		else if (stringcmp(argv[i], "-distance_2") == 0) {
+		else if (ST.stringcmp(argv[i], "-distance_2") == 0) {
 			f_distance_2 = TRUE;
 			if (f_v) {
 				cout << "-distance_2 " << endl;
 			}
 		}
 
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
 			}

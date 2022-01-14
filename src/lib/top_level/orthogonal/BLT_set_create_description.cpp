@@ -47,27 +47,28 @@ int BLT_set_create_description::read_arguments(int argc, std::string *argv,
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "BLT_set_create_description::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
 
-		if (stringcmp(argv[i], "-catalogue") == 0) {
+		if (ST.stringcmp(argv[i], "-catalogue") == 0) {
 			f_catalogue = TRUE;
-			iso = strtoi(argv[++i]);
+			iso = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-catalogue " << iso << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-family") == 0) {
+		else if (ST.stringcmp(argv[i], "-family") == 0) {
 			f_family = TRUE;
 			family_name.assign(argv[++i]);
 			if (f_v) {
 				cout << "-family " << family_name << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
 		}

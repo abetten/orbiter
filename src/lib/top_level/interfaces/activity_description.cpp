@@ -83,10 +83,11 @@ void activity_description::read_arguments(
 	if (f_v) {
 		cout << "activity_description::read_arguments" << endl;
 	}
+	string_tools ST;
 
 	activity_description::Sym = Sym;
 
-	if (stringcmp(argv[i], "-finite_field_activity") == 0) {
+	if (ST.stringcmp(argv[i], "-finite_field_activity") == 0) {
 		f_finite_field_activity = TRUE;
 		Finite_field_activity_description =
 				NEW_OBJECT(finite_field_activity_description);
@@ -107,7 +108,7 @@ void activity_description::read_arguments(
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-projective_space_activity") == 0) {
+	else if (ST.stringcmp(argv[i], "-projective_space_activity") == 0) {
 		f_projective_space_activity = TRUE;
 		Projective_space_activity_description =
 				NEW_OBJECT(projective_space_activity_description);
@@ -128,7 +129,7 @@ void activity_description::read_arguments(
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-orthogonal_space_activity") == 0) {
+	else if (ST.stringcmp(argv[i], "-orthogonal_space_activity") == 0) {
 		f_orthogonal_space_activity = TRUE;
 		Orthogonal_space_activity_description =
 				NEW_OBJECT(orthogonal_space_activity_description);
@@ -149,7 +150,7 @@ void activity_description::read_arguments(
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-group_theoretic_activity") == 0) {
+	else if (ST.stringcmp(argv[i], "-group_theoretic_activity") == 0) {
 		f_group_theoretic_activity = TRUE;
 		Group_theoretic_activity_description =
 				NEW_OBJECT(group_theoretic_activity_description);
@@ -170,7 +171,7 @@ void activity_description::read_arguments(
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-cubic_surface_activity") == 0) {
+	else if (ST.stringcmp(argv[i], "-cubic_surface_activity") == 0) {
 		f_cubic_surface_activity = TRUE;
 		Cubic_surface_activity_description =
 				NEW_OBJECT(cubic_surface_activity_description);
@@ -191,7 +192,7 @@ void activity_description::read_arguments(
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-quartic_curve_activity") == 0) {
+	else if (ST.stringcmp(argv[i], "-quartic_curve_activity") == 0) {
 		f_quartic_curve_activity = TRUE;
 		Quartic_curve_activity_description =
 				NEW_OBJECT(quartic_curve_activity_description);
@@ -212,7 +213,7 @@ void activity_description::read_arguments(
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-combinatorial_object_activity") == 0) {
+	else if (ST.stringcmp(argv[i], "-combinatorial_object_activity") == 0) {
 		f_combinatorial_object_activity = TRUE;
 		Combinatorial_object_activity_description =
 				NEW_OBJECT(combinatorial_object_activity_description);
@@ -233,7 +234,7 @@ void activity_description::read_arguments(
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-graph_theoretic_activity") == 0) {
+	else if (ST.stringcmp(argv[i], "-graph_theoretic_activity") == 0) {
 		f_graph_theoretic_activity = TRUE;
 		Graph_theoretic_activity_description =
 				NEW_OBJECT(graph_theoretic_activity_description);
@@ -254,7 +255,7 @@ void activity_description::read_arguments(
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-classification_of_cubic_surfaces_with_double_sixes_activity") == 0) {
+	else if (ST.stringcmp(argv[i], "-classification_of_cubic_surfaces_with_double_sixes_activity") == 0) {
 		f_classification_of_cubic_surfaces_with_double_sixes_activity = TRUE;
 		Classification_of_cubic_surfaces_with_double_sixes_activity_description =
 				NEW_OBJECT(classification_of_cubic_surfaces_with_double_sixes_activity_description);
@@ -275,7 +276,7 @@ void activity_description::read_arguments(
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-spread_table_activity") == 0) {
+	else if (ST.stringcmp(argv[i], "-spread_table_activity") == 0) {
 		f_spread_table_activity = TRUE;
 		Spread_table_activity_description =
 				NEW_OBJECT(spread_table_activity_description);
@@ -296,7 +297,7 @@ void activity_description::read_arguments(
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-packing_with_symmetry_assumption_activity") == 0) {
+	else if (ST.stringcmp(argv[i], "-packing_with_symmetry_assumption_activity") == 0) {
 		f_packing_with_symmetry_assumption_activity = TRUE;
 		Packing_was_activity_description =
 				NEW_OBJECT(packing_was_activity_description);
@@ -317,7 +318,7 @@ void activity_description::read_arguments(
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-packing_fixed_points_activity") == 0) {
+	else if (ST.stringcmp(argv[i], "-packing_fixed_points_activity") == 0) {
 		f_packing_fixed_points_activity = TRUE;
 		Packing_was_fixpoints_activity_description =
 				NEW_OBJECT(packing_was_fixpoints_activity_description);
@@ -338,7 +339,7 @@ void activity_description::read_arguments(
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-graph_classification_activity") == 0) {
+	else if (ST.stringcmp(argv[i], "-graph_classification_activity") == 0) {
 		f_graph_classification_activity = TRUE;
 		Graph_classification_activity_description =
 				NEW_OBJECT(graph_classification_activity_description);
@@ -359,7 +360,7 @@ void activity_description::read_arguments(
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-diophant_activity") == 0) {
+	else if (ST.stringcmp(argv[i], "-diophant_activity") == 0) {
 		f_diophant_activity = TRUE;
 		Diophant_activity_description =
 				NEW_OBJECT(diophant_activity_description);
@@ -380,7 +381,7 @@ void activity_description::read_arguments(
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-design_activity") == 0) {
+	else if (ST.stringcmp(argv[i], "-design_activity") == 0) {
 		f_design_activity = TRUE;
 		Design_activity_description =
 				NEW_OBJECT(design_activity_description);
@@ -401,7 +402,7 @@ void activity_description::read_arguments(
 			}
 		}
 	}
-	else if (stringcmp(argv[i], "-large_set_with_symmetry_assumption_activity") == 0) {
+	else if (ST.stringcmp(argv[i], "-large_set_with_symmetry_assumption_activity") == 0) {
 		f_large_set_was_activity = TRUE;
 		Large_set_was_activity_description =
 				NEW_OBJECT(large_set_was_activity_description);

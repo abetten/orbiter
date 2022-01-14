@@ -47,6 +47,7 @@ int tree_draw_options::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "tree_draw_options::read_arguments" << endl;
@@ -55,21 +56,21 @@ int tree_draw_options::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 
-		if (stringcmp(argv[i], "-file") == 0) {
+		if (ST.stringcmp(argv[i], "-file") == 0) {
 			f_file = TRUE;
 			file_name.assign(argv[++i]);
 			if (f_v) {
 				cout << "-file " << file_name << " " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-restrict") == 0) {
+		else if (ST.stringcmp(argv[i], "-restrict") == 0) {
 			f_restrict = TRUE;
-			restrict_excluded_color = strtoi(argv[++i]);
+			restrict_excluded_color = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-restrict " << restrict_excluded_color << " " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-select_path") == 0) {
+		else if (ST.stringcmp(argv[i], "-select_path") == 0) {
 			f_select_path = TRUE;
 			select_path_text.assign(argv[++i]);
 			if (f_v) {
@@ -77,7 +78,7 @@ int tree_draw_options::read_arguments(
 			}
 		}
 
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
 		}

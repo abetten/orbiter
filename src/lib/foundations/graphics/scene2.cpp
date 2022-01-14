@@ -338,8 +338,9 @@ void scene::clipping_by_cylinder(int line_idx, double r, ostream &ost)
 int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
+	string_tools ST;
 
-	if (stringcmp(argv[i], "-cubic_lex") == 0) {
+	if (ST.stringcmp(argv[i], "-cubic_lex") == 0) {
 		cout << "-cubic_lex" << endl;
 		string coeff_text;
 		double *coeff;
@@ -355,7 +356,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		cubic(coeff);
 		delete [] coeff;
 	}
-	else if (stringcmp(argv[i], "-cubic_orbiter") == 0) {
+	else if (ST.stringcmp(argv[i], "-cubic_orbiter") == 0) {
 		cout << "-cubic_orbiter" << endl;
 		string coeff_text;
 		double *coeff;
@@ -371,7 +372,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		cubic_in_orbiter_ordering(coeff);
 		delete [] coeff;
 	}
-	else if (stringcmp(argv[i], "-cubic_Goursat") == 0) {
+	else if (ST.stringcmp(argv[i], "-cubic_Goursat") == 0) {
 		cout << "-cubic_Goursat" << endl;
 		string coeff_text;
 		double *coeff;
@@ -387,7 +388,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		cubic_Goursat_ABC(coeff[0], coeff[1], coeff[2]);
 		delete [] coeff;
 	}
-	else if (stringcmp(argv[i], "-quadric_lex_10") == 0) {
+	else if (ST.stringcmp(argv[i], "-quadric_lex_10") == 0) {
 		cout << "-quadric_lex_10" << endl;
 		string coeff_text;
 		double *coeff;
@@ -403,7 +404,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		quadric(coeff);
 		delete [] coeff;
 	}
-	else if (stringcmp(argv[i], "-quartic_lex_35") == 0) {
+	else if (ST.stringcmp(argv[i], "-quartic_lex_35") == 0) {
 		cout << "-quartic_lex_35" << endl;
 		string coeff_text;
 		double *coeff;
@@ -419,7 +420,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		quartic(coeff);
 		delete [] coeff;
 	}
-	else if (stringcmp(argv[i], "-quintic_lex_56") == 0) {
+	else if (ST.stringcmp(argv[i], "-quintic_lex_56") == 0) {
 		cout << "-quintic_lex_56" << endl;
 		string coeff_text;
 		double *coeff;
@@ -435,7 +436,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		quintic(coeff);
 		delete [] coeff;
 	}
-	else if (stringcmp(argv[i], "-octic_lex_165") == 0) {
+	else if (ST.stringcmp(argv[i], "-octic_lex_165") == 0) {
 		cout << "-octic_lex_165" << endl;
 		string coeff_text;
 		double *coeff;
@@ -451,7 +452,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		octic(coeff);
 		delete [] coeff;
 	}
-	else if (stringcmp(argv[i], "-point") == 0) {
+	else if (ST.stringcmp(argv[i], "-point") == 0) {
 		cout << "-point" << endl;
 		string coeff_text;
 		double *coeff;
@@ -469,7 +470,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		cout << "created point " << idx << endl;
 		delete [] coeff;
 	}
-	else if (stringcmp(argv[i], "-point_list_from_csv_file") == 0) {
+	else if (ST.stringcmp(argv[i], "-point_list_from_csv_file") == 0) {
 		cout << "-point_list_from_csv_file" << endl;
 		string fname;
 		double *M;
@@ -502,7 +503,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		}
 		delete [] M;
 	}
-	else if (stringcmp(argv[i], "-line_through_two_points_recentered_from_csv_file") == 0) {
+	else if (ST.stringcmp(argv[i], "-line_through_two_points_recentered_from_csv_file") == 0) {
 		cout << "-line_through_two_points_recentered_from_csv_file" << endl;
 		string fname;
 		double *M;
@@ -525,7 +526,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		}
 		delete [] M;
 	}
-	else if (stringcmp(argv[i], "-line_through_two_points_from_csv_file") == 0) {
+	else if (ST.stringcmp(argv[i], "-line_through_two_points_from_csv_file") == 0) {
 		cout << "-line_through_two_points_from_csv_file" << endl;
 		string fname;
 		double *M;
@@ -547,7 +548,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		}
 		delete [] M;
 	}
-	else if (stringcmp(argv[i], "-point_as_intersection_of_two_lines") == 0) {
+	else if (ST.stringcmp(argv[i], "-point_as_intersection_of_two_lines") == 0) {
 		cout << "-point_as_intersection_of_two_lines" << endl;
 		string Idx_text;
 		int *Idx;
@@ -564,7 +565,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		point_as_intersection_of_two_lines(Idx[0], Idx[1]);
 		FREE_int(Idx);
 	}
-	else if (stringcmp(argv[i], "-edge") == 0) {
+	else if (ST.stringcmp(argv[i], "-edge") == 0) {
 		cout << "-edge" << endl;
 		string Idx_text;
 		int *Idx;
@@ -580,17 +581,17 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		edge(Idx[0], Idx[1]);
 		FREE_int(Idx);
 	}
-	else if (stringcmp(argv[i], "-label") == 0) {
+	else if (ST.stringcmp(argv[i], "-label") == 0) {
 		cout << "-label" << endl;
 		int pt_idx;
 		string text;
 		//numerics Numerics;
 
-		pt_idx = strtoi(argv[++i]);
+		pt_idx = ST.strtoi(argv[++i]);
 		text.assign(argv[++i]);
 		label(pt_idx, text);
 	}
-	else if (stringcmp(argv[i], "-triangular_face_given_by_three_lines") == 0) {
+	else if (ST.stringcmp(argv[i], "-triangular_face_given_by_three_lines") == 0) {
 		cout << "-triangular_face_given_by_three_lines" << endl;
 		string Idx_text;
 		int *Idx;
@@ -607,7 +608,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		triangle(Idx[0], Idx[1], Idx[2], 0 /* verbose_level */);
 		FREE_int(Idx);
 	}
-	else if (stringcmp(argv[i], "-face") == 0) {
+	else if (ST.stringcmp(argv[i], "-face") == 0) {
 		cout << "-face" << endl;
 		string Idx_text;
 		int *Idx;
@@ -619,7 +620,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		face(Idx, Idx_sz);
 		FREE_int(Idx);
 	}
-	else if (stringcmp(argv[i], "-quadric_through_three_skew_lines") == 0) {
+	else if (ST.stringcmp(argv[i], "-quadric_through_three_skew_lines") == 0) {
 		cout << "-quadric_through_three_skew_lines" << endl;
 		string Idx_text;
 		int *Idx;
@@ -636,7 +637,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		quadric_through_three_lines(Idx[0], Idx[1], Idx[2], 0 /* verbose_level */);
 		FREE_int(Idx);
 	}
-	else if (stringcmp(argv[i], "-plane_defined_by_three_points") == 0) {
+	else if (ST.stringcmp(argv[i], "-plane_defined_by_three_points") == 0) {
 		cout << "-plane_defined_by_three_points" << endl;
 		string Idx_text;
 		int *Idx;
@@ -653,7 +654,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		plane_through_three_points(Idx[0], Idx[1], Idx[2]);
 		FREE_int(Idx);
 	}
-	else if (stringcmp(argv[i], "-line_through_two_points_recentered") == 0) {
+	else if (ST.stringcmp(argv[i], "-line_through_two_points_recentered") == 0) {
 		cout << "-line_through_two_points_recentered" << endl;
 		string coeff_text;
 		double *coeff;
@@ -671,7 +672,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		line_after_recentering(coeff[0], coeff[1], coeff[2], coeff[3], coeff[4], coeff[5], 10);
 		delete [] coeff;
 	}
-	else if (stringcmp(argv[i], "-line_through_two_points") == 0) {
+	else if (ST.stringcmp(argv[i], "-line_through_two_points") == 0) {
 		cout << "-line_through_two_points" << endl;
 		string coeff_text;
 		double *coeff;
@@ -689,7 +690,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		//S->line_after_recentering(coeff[0], coeff[1], coeff[2], coeff[3], coeff[4], coeff[5], 10);
 		delete [] coeff;
 	}
-	else if (stringcmp(argv[i], "-line_through_two_existing_points") == 0) {
+	else if (ST.stringcmp(argv[i], "-line_through_two_existing_points") == 0) {
 		cout << "-line_through_two_existing_points" << endl;
 		string Idx_text;
 		int *Idx;
@@ -706,7 +707,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		line_through_two_points(Idx[0], Idx[1], 0 /* verbose_level */);
 		FREE_int(Idx);
 	}
-	else if (stringcmp(argv[i], "-line_through_point_with_direction") == 0) {
+	else if (ST.stringcmp(argv[i], "-line_through_point_with_direction") == 0) {
 		cout << "-line_through_point_with_direction" << endl;
 		string coeff_text;
 		double *coeff;
@@ -723,7 +724,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		line_after_recentering(coeff[0], coeff[1], coeff[2], coeff[0] + coeff[3], coeff[1] + coeff[4], coeff[2] + coeff[5], 10);
 		delete [] coeff;
 	}
-	else if (stringcmp(argv[i], "-plane_by_dual_coordinates") == 0) {
+	else if (ST.stringcmp(argv[i], "-plane_by_dual_coordinates") == 0) {
 		cout << "-plane_by_dual_coordinates" << endl;
 		string coeff_text;
 		double *coeff;
@@ -740,7 +741,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		plane_from_dual_coordinates(coeff);
 		delete [] coeff;
 	}
-	else if (stringcmp(argv[i], "-dodecahedron") == 0) {
+	else if (ST.stringcmp(argv[i], "-dodecahedron") == 0) {
 		cout << "-dodecahedron" << endl;
 
 		int first_pt_idx;
@@ -757,7 +758,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		// 12 faces
 
 	}
-	else if (stringcmp(argv[i], "-Hilbert_Cohn_Vossen_surface") == 0) {
+	else if (ST.stringcmp(argv[i], "-Hilbert_Cohn_Vossen_surface") == 0) {
 		cout << "-Hilbert_Cohn_Vossen_surface" << endl;
 
 		create_Hilbert_Cohn_Vossen_surface(verbose_level);
@@ -767,7 +768,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		// 27 lines
 
 	}
-	else if (stringcmp(argv[i], "-Clebsch_surface") == 0) {
+	else if (ST.stringcmp(argv[i], "-Clebsch_surface") == 0) {
 		cout << "-Clebsch_surface" << endl;
 
 		create_Clebsch_surface(verbose_level);
@@ -777,7 +778,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		// 7 Eckardt points
 
 	}
-	else if (stringcmp(argv[i], "-obj_file") == 0) {
+	else if (ST.stringcmp(argv[i], "-obj_file") == 0) {
 		cout << "-obj_file" << endl;
 		string fname;
 
@@ -795,8 +796,9 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	string_tools ST;
 
-	if (stringcmp(argv[i], "-group_of_things") == 0) {
+	if (ST.stringcmp(argv[i], "-group_of_things") == 0) {
 		cout << "-group_of_things" << endl;
 		string Idx_text;
 		int *Idx;
@@ -812,14 +814,14 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		FREE_int(Idx);
 		cout << "end of -group_of_things" << endl;
 	}
-	else if (stringcmp(argv[i], "-group_of_things_with_offset") == 0) {
+	else if (ST.stringcmp(argv[i], "-group_of_things_with_offset") == 0) {
 		cout << "-group_of_things" << endl;
 		string Idx_text;
 		int *Idx;
 		int Idx_sz;
 		int offset, h;
 
-		offset = strtoi(argv[++i]);
+		offset = ST.strtoi(argv[++i]);
 		Idx_text.assign(argv[++i]);
 		Orbiter->Int_vec.scan(Idx_text, Idx, Idx_sz);
 		for (h = 0; h < Idx_sz; h++) {
@@ -828,15 +830,15 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		add_a_group_of_things(Idx, Idx_sz, verbose_level);
 		FREE_int(Idx);
 	}
-	else if (stringcmp(argv[i], "-group_of_things_as_interval") == 0) {
+	else if (ST.stringcmp(argv[i], "-group_of_things_as_interval") == 0) {
 		cout << "-group_of_things_as_interval" << endl;
 		int start;
 		int len;
 		int h;
 		int *Idx;
 
-		start = strtoi(argv[++i]);
-		len = strtoi(argv[++i]);
+		start = ST.strtoi(argv[++i]);
+		len = ST.strtoi(argv[++i]);
 		Idx = NEW_int(len);
 		for (h = 0; h < len; h++) {
 			Idx[h] = start + h;
@@ -844,7 +846,7 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		add_a_group_of_things(Idx, len, verbose_level);
 		FREE_int(Idx);
 	}
-	else if (stringcmp(argv[i], "-group_of_things_as_interval_with_exceptions") == 0) {
+	else if (ST.stringcmp(argv[i], "-group_of_things_as_interval_with_exceptions") == 0) {
 		cout << "-group_of_things_as_interval_with_exceptions" << endl;
 		int start;
 		int len;
@@ -855,8 +857,8 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		int exceptions_sz;
 		sorting Sorting;
 
-		start = strtoi(argv[++i]);
-		len = strtoi(argv[++i]);
+		start = ST.strtoi(argv[++i]);
+		len = ST.strtoi(argv[++i]);
 		exceptions_text.assign(argv[++i]);
 
 		Orbiter->Int_vec.scan(exceptions_text, exceptions, exceptions_sz);
@@ -881,7 +883,7 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		add_a_group_of_things(Idx, len, verbose_level);
 		FREE_int(Idx);
 	}
-	else if (stringcmp(argv[i], "-group_of_all_points") == 0) {
+	else if (ST.stringcmp(argv[i], "-group_of_all_points") == 0) {
 		cout << "-group_of_all_points" << endl;
 		int *Idx;
 		int Idx_sz;
@@ -895,7 +897,7 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		add_a_group_of_things(Idx, Idx_sz, verbose_level);
 		FREE_int(Idx);
 	}
-	else if (stringcmp(argv[i], "-group_of_all_faces") == 0) {
+	else if (ST.stringcmp(argv[i], "-group_of_all_faces") == 0) {
 		cout << "-group_of_all_faces" << endl;
 		int *Idx;
 		int Idx_sz;
@@ -911,7 +913,7 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 				<< " consisting of " << Idx_sz << " faces" << endl;
 		FREE_int(Idx);
 	}
-	else if (stringcmp(argv[i], "-group_subset_at_random") == 0) {
+	else if (ST.stringcmp(argv[i], "-group_subset_at_random") == 0) {
 		cout << "-group_subset_at_random" << endl;
 		int group_idx;
 		double percentage;
@@ -922,8 +924,8 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		os_interface Os;
 		sorting Sorting;
 
-		group_idx = strtoi(argv[++i]);
-		percentage = strtoi(argv[++i]);
+		group_idx = ST.strtoi(argv[++i]);
+		percentage = ST.strtoi(argv[++i]);
 
 
 		sz_old = group_of_things[group_idx].size();
@@ -942,22 +944,22 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 
 		FREE_int(Selection);
 	}
-	else if (stringcmp(argv[i], "-create_regulus") == 0) {
+	else if (ST.stringcmp(argv[i], "-create_regulus") == 0) {
 		cout << "-create_regulus" << endl;
 		int idx, nb_lines;
 
-		idx = strtoi(argv[++i]);
-		nb_lines = strtoi(argv[++i]);
+		idx = ST.strtoi(argv[++i]);
+		nb_lines = ST.strtoi(argv[++i]);
 		create_regulus(idx, nb_lines, verbose_level);
 	}
-	else if (stringcmp(argv[i], "-spheres") == 0) {
+	else if (ST.stringcmp(argv[i], "-spheres") == 0) {
 		cout << "-spheres" << endl;
 		int group_idx;
 		double rad;
 		string properties;
 
-		group_idx = strtoi(argv[++i]);
-		rad = strtof(argv[++i]);
+		group_idx = ST.strtoi(argv[++i]);
+		rad = ST.strtof(argv[++i]);
 		properties.assign(argv[++i]);
 
 		drawable_set_of_objects D;
@@ -965,14 +967,14 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		D.init_spheres(group_idx, rad, properties, verbose_level);
 		Drawables.push_back(D);
 	}
-	else if (stringcmp(argv[i], "-cylinders") == 0) {
+	else if (ST.stringcmp(argv[i], "-cylinders") == 0) {
 		cout << "-cylinders" << endl;
 		int group_idx;
 		double rad;
 		string properties;
 
-		group_idx = strtoi(argv[++i]);
-		rad = strtof(argv[++i]);
+		group_idx = ST.strtoi(argv[++i]);
+		rad = ST.strtof(argv[++i]);
 		properties.assign(argv[++i]);
 
 		drawable_set_of_objects D;
@@ -980,14 +982,14 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		D.init_cylinders(group_idx, rad, properties, verbose_level);
 		Drawables.push_back(D);
 	}
-	else if (stringcmp(argv[i], "-prisms") == 0) {
+	else if (ST.stringcmp(argv[i], "-prisms") == 0) {
 		cout << "-prisms" << endl;
 		int group_idx;
 		double thickness;
 		string properties;
 
-		group_idx = strtoi(argv[++i]);
-		thickness = strtof(argv[++i]);
+		group_idx = ST.strtoi(argv[++i]);
+		thickness = ST.strtof(argv[++i]);
 		properties.assign(argv[++i]);
 
 		drawable_set_of_objects D;
@@ -995,13 +997,13 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		D.init_prisms(group_idx, thickness, properties, verbose_level);
 		Drawables.push_back(D);
 	}
-	else if (stringcmp(argv[i], "-planes") == 0) {
+	else if (ST.stringcmp(argv[i], "-planes") == 0) {
 		cout << "-planes" << endl;
 		int group_idx;
 		//double thickness;
 		string properties;
 
-		group_idx = strtoi(argv[++i]);
+		group_idx = ST.strtoi(argv[++i]);
 		//thickness = atof(argv[++i]);
 		properties.assign(argv[++i]);
 
@@ -1010,14 +1012,14 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		D.init_planes(group_idx, properties, verbose_level);
 		Drawables.push_back(D);
 	}
-	else if (stringcmp(argv[i], "-lines") == 0) {
+	else if (ST.stringcmp(argv[i], "-lines") == 0) {
 		cout << "-lines" << endl;
 		int group_idx;
 		double rad;
 		string properties;
 
-		group_idx = strtoi(argv[++i]);
-		rad = strtof(argv[++i]);
+		group_idx = ST.strtoi(argv[++i]);
+		rad = ST.strtof(argv[++i]);
 		properties.assign(argv[++i]);
 
 		drawable_set_of_objects D;
@@ -1025,13 +1027,13 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		D.init_lines(group_idx, rad, properties, verbose_level);
 		Drawables.push_back(D);
 	}
-	else if (stringcmp(argv[i], "-cubics") == 0) {
+	else if (ST.stringcmp(argv[i], "-cubics") == 0) {
 		cout << "-cubics" << endl;
 		int group_idx;
 		//double thickness;
 		string properties;
 
-		group_idx = strtoi(argv[++i]);
+		group_idx = ST.strtoi(argv[++i]);
 		//thickness = atof(argv[++i]);
 		properties.assign(argv[++i]);
 
@@ -1040,13 +1042,13 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		D.init_cubics(group_idx, properties, verbose_level);
 		Drawables.push_back(D);
 	}
-	else if (stringcmp(argv[i], "-quadrics") == 0) {
+	else if (ST.stringcmp(argv[i], "-quadrics") == 0) {
 		cout << "-quadrics" << endl;
 		int group_idx;
 		//double thickness;
 		string properties;
 
-		group_idx = strtoi(argv[++i]);
+		group_idx = ST.strtoi(argv[++i]);
 		//thickness = atof(argv[++i]);
 		properties.assign(argv[++i]);
 
@@ -1055,13 +1057,13 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		D.init_quadrics(group_idx, properties, verbose_level);
 		Drawables.push_back(D);
 	}
-	else if (stringcmp(argv[i], "-quartics") == 0) {
+	else if (ST.stringcmp(argv[i], "-quartics") == 0) {
 		cout << "-quartics" << endl;
 		int group_idx;
 		//double thickness;
 		string properties;
 
-		group_idx = strtoi(argv[++i]);
+		group_idx = ST.strtoi(argv[++i]);
 		//thickness = atof(argv[++i]);
 		properties.assign(argv[++i]);
 
@@ -1070,13 +1072,13 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		D.init_quartics(group_idx, properties, verbose_level);
 		Drawables.push_back(D);
 	}
-	else if (stringcmp(argv[i], "-quintics") == 0) {
+	else if (ST.stringcmp(argv[i], "-quintics") == 0) {
 		cout << "-quintics" << endl;
 		int group_idx;
 		//double thickness;
 		string properties;
 
-		group_idx = strtoi(argv[++i]);
+		group_idx = ST.strtoi(argv[++i]);
 		//thickness = atof(argv[++i]);
 		properties.assign(argv[++i]);
 
@@ -1085,13 +1087,13 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		D.init_quintics(group_idx, properties, verbose_level);
 		Drawables.push_back(D);
 	}
-	else if (stringcmp(argv[i], "-octics") == 0) {
+	else if (ST.stringcmp(argv[i], "-octics") == 0) {
 		cout << "-octics" << endl;
 		int group_idx;
 		//double thickness;
 		string properties;
 
-		group_idx = strtoi(argv[++i]);
+		group_idx = ST.strtoi(argv[++i]);
 		//thickness = atof(argv[++i]);
 		properties.assign(argv[++i]);
 
@@ -1100,16 +1102,16 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		D.init_octics(group_idx, properties, verbose_level);
 		Drawables.push_back(D);
 	}
-	else if (stringcmp(argv[i], "-texts") == 0) {
+	else if (ST.stringcmp(argv[i], "-texts") == 0) {
 		cout << "-texts" << endl;
 		int group_idx;
 		double thickness_half;
 		double scale;
 		string properties;
 
-		group_idx = strtoi(argv[++i]);
-		thickness_half = strtof(argv[++i]);
-		scale = strtof(argv[++i]);
+		group_idx = ST.strtoi(argv[++i]);
+		thickness_half = ST.strtof(argv[++i]);
+		scale = ST.strtof(argv[++i]);
 		properties.assign(argv[++i]);
 
 		drawable_set_of_objects D;
@@ -1117,7 +1119,7 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		D.init_labels(group_idx, thickness_half, scale, properties, verbose_level);
 		Drawables.push_back(D);
 	}
-	else if (stringcmp(argv[i], "-deformation_of_cubic_lex") == 0) {
+	else if (ST.stringcmp(argv[i], "-deformation_of_cubic_lex") == 0) {
 		cout << "-deformation_of_cubic_lex" << endl;
 		string coeff1_text;
 		string coeff2_text;
@@ -1128,10 +1130,10 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		int coeff_sz;
 		numerics Numerics;
 
-		nb_frames = strtoi(argv[++i]);
-		angle_start = strtof(argv[++i]);
-		angle_max = strtof(argv[++i]);
-		angle_min = strtof(argv[++i]);
+		nb_frames = ST.strtoi(argv[++i]);
+		angle_start = ST.strtof(argv[++i]);
+		angle_max = ST.strtof(argv[++i]);
+		angle_min = ST.strtof(argv[++i]);
 		coeff1_text.assign(argv[++i]);
 		Numerics.vec_scan(coeff1_text, coeff1, coeff_sz);
 		if (coeff_sz != 20) {
@@ -1153,11 +1155,11 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		delete [] coeff1;
 		delete [] coeff2;
 	}
-	else if (stringcmp(argv[i], "-group_is_animated") == 0) {
+	else if (ST.stringcmp(argv[i], "-group_is_animated") == 0) {
 		cout << "-group_is_animated" << endl;
 		int group_idx;
 
-		group_idx = strtoi(argv[++i]);
+		group_idx = ST.strtoi(argv[++i]);
 
 		//S->Drawables.push_back(D);
 
@@ -1176,6 +1178,7 @@ int scene::read_scene_objects(int argc, std::string *argv,
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "scene::read_scene_objects" << endl;
@@ -1188,7 +1191,7 @@ int scene::read_scene_objects(int argc, std::string *argv,
 		else if (scan2(argc, argv, i, verbose_level)) {
 
 		}
-		else if (stringcmp(argv[i], "-scene_objects_end") == 0) {
+		else if (ST.stringcmp(argv[i], "-scene_objects_end") == 0) {
 			cout << "-scene_object_end " << endl;
 			break;
 		}

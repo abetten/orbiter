@@ -38,19 +38,20 @@ int function_polish_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i, i0, h;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "function_polish_description::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
 
-		if (stringcmp(argv[i], "-const") == 0) {
+		if (ST.stringcmp(argv[i], "-const") == 0) {
 			if (f_v) {
 				cout << "-const" << endl;
 			}
 			i0 = i + 1;
 			for (++i; i < argc; i++) {
-				if (stringcmp(argv[i], "-const_end") == 0) {
+				if (ST.stringcmp(argv[i], "-const_end") == 0) {
 					break;
 				}
 			}
@@ -79,13 +80,13 @@ int function_polish_description::read_arguments(
 				exit(1);
 			}
 		}
-		else if (stringcmp(argv[i], "-var") == 0) {
+		else if (ST.stringcmp(argv[i], "-var") == 0) {
 			if (f_v) {
 				cout << "-var" << endl;
 			}
 			i0 = i + 1;
 			for (++i; i < argc; i++) {
-				if (stringcmp(argv[i], "-var_end") == 0) {
+				if (ST.stringcmp(argv[i], "-var_end") == 0) {
 					break;
 				}
 			}
@@ -111,13 +112,13 @@ int function_polish_description::read_arguments(
 				exit(1);
 			}
 		}
-		else if (stringcmp(argv[i], "-code") == 0) {
+		else if (ST.stringcmp(argv[i], "-code") == 0) {
 			if (f_v) {
 				cout << "-code" << endl;
 			}
 			i0 = i + 1;
 			for (++i; i < argc; i++) {
-				if (stringcmp(argv[i], "-code_end") == 0) {
+				if (ST.stringcmp(argv[i], "-code_end") == 0) {
 					break;
 				}
 			}
@@ -143,7 +144,7 @@ int function_polish_description::read_arguments(
 				exit(1);
 			}
 		}
-		else if (stringcmp(argv[i], "-function_end") == 0) {
+		else if (ST.stringcmp(argv[i], "-function_end") == 0) {
 			if (f_v) {
 				cout << "-function_end" << endl;
 			}

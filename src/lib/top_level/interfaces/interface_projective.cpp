@@ -66,28 +66,30 @@ interface_projective::interface_projective()
 void interface_projective::print_help(int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	if (stringcmp(argv[i], "-create_points_on_quartic") == 0) {
+	string_tools ST;
+
+	if (ST.stringcmp(argv[i], "-create_points_on_quartic") == 0) {
 		cout << "-create_points_on_quartic <double : desired_distance>" << endl;
 	}
-	else if (stringcmp(argv[i], "-create_points_on_parabola") == 0) {
+	else if (ST.stringcmp(argv[i], "-create_points_on_parabola") == 0) {
 		cout << "-create_points_on_parabola <double : desired_distance> <double : a> <double : b> <double : c>" << endl;
 	}
-	else if (stringcmp(argv[i], "-smooth_curve") == 0) {
+	else if (ST.stringcmp(argv[i], "-smooth_curve") == 0) {
 		cout << "-smooth_curve <string : label> <double : desired_distance> <int : N> <double : boundary> <double : t_min> <double : t_max> <function>" << endl;
 	}
-	else if (stringcmp(argv[i], "-create_spread") == 0) {
+	else if (ST.stringcmp(argv[i], "-create_spread") == 0) {
 		cout << "-create_spread <description>" << endl;
 	}
-	else if (stringcmp(argv[i], "-make_table_of_surfaces") == 0) {
+	else if (ST.stringcmp(argv[i], "-make_table_of_surfaces") == 0) {
 		cout << "-make_table_of_surfaces " << endl;
 	}
-	else if (stringcmp(argv[i], "-create_surface_reports") == 0) {
+	else if (ST.stringcmp(argv[i], "-create_surface_reports") == 0) {
 		cout << "-create_surface_reports <string : field orders>" << endl;
 	}
-	else if (stringcmp(argv[i], "-create_surface_atlas") == 0) {
+	else if (ST.stringcmp(argv[i], "-create_surface_atlas") == 0) {
 		cout << "-create_surface_atlas <int : q_max>" << endl;
 	}
-	else if (stringcmp(argv[i], "-create_dickson_atlas") == 0) {
+	else if (ST.stringcmp(argv[i], "-create_dickson_atlas") == 0) {
 		cout << "-create_dickson_atlas" << endl;
 	}
 }
@@ -97,31 +99,33 @@ void interface_projective::print_help(int argc,
 int interface_projective::recognize_keyword(int argc,
 		std::string *argv, int i, int verbose_level)
 {
+	string_tools ST;
+
 	if (i >= argc) {
 		return false;
 	}
-	if (stringcmp(argv[i], "-create_points_on_quartic") == 0) {
+	if (ST.stringcmp(argv[i], "-create_points_on_quartic") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-create_points_on_parabola") == 0) {
+	else if (ST.stringcmp(argv[i], "-create_points_on_parabola") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-smooth_curve") == 0) {
+	else if (ST.stringcmp(argv[i], "-smooth_curve") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-create_spread") == 0) {
+	else if (ST.stringcmp(argv[i], "-create_spread") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-make_table_of_surfaces") == 0) {
+	else if (ST.stringcmp(argv[i], "-make_table_of_surfaces") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-create_surface_reports") == 0) {
+	else if (ST.stringcmp(argv[i], "-create_surface_reports") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-create_surface_atlas") == 0) {
+	else if (ST.stringcmp(argv[i], "-create_surface_atlas") == 0) {
 		return true;
 	}
-	else if (stringcmp(argv[i], "-create_dickson_atlas") == 0) {
+	else if (ST.stringcmp(argv[i], "-create_dickson_atlas") == 0) {
 		return true;
 	}
 	return false;
@@ -131,6 +135,7 @@ void interface_projective::read_arguments(int argc,
 		std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	string_tools ST;
 
 	if (f_v) {
 		cout << "interface_projective::read_arguments" << endl;
@@ -138,34 +143,34 @@ void interface_projective::read_arguments(int argc,
 	if (f_v) {
 		cout << "interface_projective::read_arguments the next argument is " << argv[i] << endl;
 	}
-	if (stringcmp(argv[i], "-create_points_on_quartic") == 0) {
+	if (ST.stringcmp(argv[i], "-create_points_on_quartic") == 0) {
 		f_create_points_on_quartic = TRUE;
-		desired_distance = strtof(argv[++i]);
+		desired_distance = ST.strtof(argv[++i]);
 		if (f_v) {
 			cout << "-create_points_on_quartic " << desired_distance << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-create_points_on_parabola") == 0) {
+	else if (ST.stringcmp(argv[i], "-create_points_on_parabola") == 0) {
 		f_create_points_on_parabola = TRUE;
-		desired_distance = strtof(argv[++i]);
-		parabola_N = strtoi(argv[++i]);
-		parabola_a = strtof(argv[++i]);
-		parabola_b = strtof(argv[++i]);
-		parabola_c = strtof(argv[++i]);
+		desired_distance = ST.strtof(argv[++i]);
+		parabola_N = ST.strtoi(argv[++i]);
+		parabola_a = ST.strtof(argv[++i]);
+		parabola_b = ST.strtof(argv[++i]);
+		parabola_c = ST.strtof(argv[++i]);
 		if (f_v) {
 			cout << "-create_points_on_parabola " << desired_distance << " "
 				<< parabola_N << " " << parabola_a << " "
 				<< parabola_b << " " << parabola_c << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-smooth_curve") == 0) {
+	else if (ST.stringcmp(argv[i], "-smooth_curve") == 0) {
 		f_smooth_curve = TRUE;
 		smooth_curve_label.assign(argv[++i]);
-		desired_distance = strtof(argv[++i]);
-		smooth_curve_N = strtoi(argv[++i]);
-		smooth_curve_boundary = strtof(argv[++i]);
-		smooth_curve_t_min = strtof(argv[++i]);
-		smooth_curve_t_max = strtof(argv[++i]);
+		desired_distance = ST.strtof(argv[++i]);
+		smooth_curve_N = ST.strtoi(argv[++i]);
+		smooth_curve_boundary = ST.strtof(argv[++i]);
+		smooth_curve_t_min = ST.strtof(argv[++i]);
+		smooth_curve_t_max = ST.strtof(argv[++i]);
 
 		FP_descr = NEW_OBJECT(function_polish_description);
 
@@ -183,7 +188,7 @@ void interface_projective::read_arguments(int argc,
 				<< endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-create_spread") == 0) {
+	else if (ST.stringcmp(argv[i], "-create_spread") == 0) {
 		f_create_spread = TRUE;
 		if (f_v) {
 			cout << "-create_spread" << endl;
@@ -204,7 +209,7 @@ void interface_projective::read_arguments(int argc,
 			Spread_create_description->print();
 		}
 	}
-	else if (stringcmp(argv[i], "-transform") == 0) {
+	else if (ST.stringcmp(argv[i], "-transform") == 0) {
 
 		string s;
 
@@ -215,7 +220,7 @@ void interface_projective::read_arguments(int argc,
 			cout << "-transform " << transform_coeffs[transform_coeffs.size() - 1] << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-transform_inverse") == 0) {
+	else if (ST.stringcmp(argv[i], "-transform_inverse") == 0) {
 		string s;
 
 		s.assign(argv[++i]);
@@ -225,27 +230,27 @@ void interface_projective::read_arguments(int argc,
 			cout << "-transform_inverse " << transform_coeffs[transform_coeffs.size() - 1] << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-make_table_of_surfaces") == 0) {
+	else if (ST.stringcmp(argv[i], "-make_table_of_surfaces") == 0) {
 		f_make_table_of_surfaces = TRUE;
 		if (f_v) {
 			cout << "-make_table_of_surfaces" << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-create_surface_atlas") == 0) {
+	else if (ST.stringcmp(argv[i], "-create_surface_atlas") == 0) {
 		f_create_surface_atlas = TRUE;
-		create_surface_atlas_q_max = strtoi(argv[++i]);
+		create_surface_atlas_q_max = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-create_surface_atlas " << create_surface_atlas_q_max << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-create_surface_reports") == 0) {
+	else if (ST.stringcmp(argv[i], "-create_surface_reports") == 0) {
 		f_create_surface_reports = TRUE;
 		create_surface_reports_field_orders_text.assign(argv[++i]);
 		if (f_v) {
 			cout << "-create_surface_reports " << create_surface_reports_field_orders_text << endl;
 		}
 	}
-	else if (stringcmp(argv[i], "-create_dickson_atlas") == 0) {
+	else if (ST.stringcmp(argv[i], "-create_dickson_atlas") == 0) {
 		f_create_dickson_atlas = TRUE;
 		if (f_v) {
 			cout << "-create_dickson_atlas " << endl;

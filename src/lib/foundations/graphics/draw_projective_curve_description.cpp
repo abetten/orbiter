@@ -51,55 +51,56 @@ int draw_projective_curve_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "draw_projective_curve_description::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
 
-		if (stringcmp(argv[i], "-number") == 0) {
+		if (ST.stringcmp(argv[i], "-number") == 0) {
 			f_number = TRUE;
-			number = strtoi(argv[++i]);
+			number = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-number " << number << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-file") == 0) {
+		else if (ST.stringcmp(argv[i], "-file") == 0) {
 			f_file = TRUE;
 			fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "-file " << fname << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-animate") == 0) {
+		else if (ST.stringcmp(argv[i], "-animate") == 0) {
 			f_animate = TRUE;
-			animate_nb_of_steps = strtoi(argv[++i]);
+			animate_nb_of_steps = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-animate " << animate_nb_of_steps << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-animate_with_transition") == 0) {
+		else if (ST.stringcmp(argv[i], "-animate_with_transition") == 0) {
 			f_animate_with_transition = TRUE;
-			animate_nb_of_steps = strtoi(argv[++i]);
-			animate_transition_nb_of_steps = strtoi(argv[++i]);
+			animate_nb_of_steps = ST.strtoi(argv[++i]);
+			animate_transition_nb_of_steps = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-animate_with_transition " << animate_nb_of_steps
 						<< " " << animate_transition_nb_of_steps << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-title_page") == 0) {
+		else if (ST.stringcmp(argv[i], "-title_page") == 0) {
 			f_title_page = TRUE;
 			if (f_v) {
 				cout << "-title_page " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-trailer_page") == 0) {
+		else if (ST.stringcmp(argv[i], "-trailer_page") == 0) {
 			f_trailer_page = TRUE;
 			if (f_v) {
 				cout << "-trailer_page " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
 			}

@@ -51,6 +51,7 @@ int permutation_group_description::read_arguments(
 {
 	int f_v = (verbose_level > 1);
 	int i;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "permutation_group_description::read_arguments" << endl;
@@ -58,21 +59,21 @@ int permutation_group_description::read_arguments(
 	for (i = 0; i < argc; i++) {
 
 
-		if (stringcmp(argv[i], "-symmetric_group") == 0) {
-			degree = strtoi(argv[++i]);
+		if (ST.stringcmp(argv[i], "-symmetric_group") == 0) {
+			degree = ST.strtoi(argv[++i]);
 			type = symmetric_group_t;
 			if (f_v) {
 				cout << "-symmetric_group " << degree << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-bsgs") == 0) {
+		else if (ST.stringcmp(argv[i], "-bsgs") == 0) {
 			f_bsgs = TRUE;
 			bsgs_label.assign(argv[++i]);
 			bsgs_label_tex.assign(argv[++i]);
-			degree = strtoi(argv[++i]);
+			degree = ST.strtoi(argv[++i]);
 			bsgs_order_text.assign(argv[++i]);
 			bsgs_base.assign(argv[++i]);
-			bsgs_nb_generators = strtoi(argv[++i]);
+			bsgs_nb_generators = ST.strtoi(argv[++i]);
 			bsgs_generators.assign(argv[++i]);
 			type = bsgs_t;
 
@@ -88,11 +89,11 @@ int permutation_group_description::read_arguments(
 						<< endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-subgroup_by_generators") == 0) {
+		else if (ST.stringcmp(argv[i], "-subgroup_by_generators") == 0) {
 			f_subgroup_by_generators = TRUE;
 			subgroup_label.assign(argv[++i]);
 			subgroup_order_text.assign(argv[++i]);
-			nb_subgroup_generators = strtoi(argv[++i]);
+			nb_subgroup_generators = ST.strtoi(argv[++i]);
 			subgroup_generators_label.assign(argv[++i]);
 
 			if (f_v) {
@@ -102,7 +103,7 @@ int permutation_group_description::read_arguments(
 						<< endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
 			}

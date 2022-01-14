@@ -103,6 +103,7 @@ int create_graph_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "create_graph_description::read_arguments" << endl;
@@ -111,7 +112,7 @@ int create_graph_description::read_arguments(
 
 		graph_modification_description M;
 
-		if (stringcmp(argv[i], "-load") == 0) {
+		if (ST.stringcmp(argv[i], "-load") == 0) {
 			f_load = TRUE;
 			fname.assign(argv[++i]);
 			if (f_v) {
@@ -119,7 +120,7 @@ int create_graph_description::read_arguments(
 			}
 		}
 
-		else if (stringcmp(argv[i], "-load_csv_no_border") == 0) {
+		else if (ST.stringcmp(argv[i], "-load_csv_no_border") == 0) {
 			f_load_csv_no_border = TRUE;
 			fname.assign(argv[++i]);
 			if (f_v) {
@@ -127,7 +128,7 @@ int create_graph_description::read_arguments(
 			}
 		}
 
-		else if (stringcmp(argv[i], "-load_dimacs") == 0) {
+		else if (ST.stringcmp(argv[i], "-load_dimacs") == 0) {
 			f_load_dimacs = TRUE;
 			fname.assign(argv[++i]);
 			if (f_v) {
@@ -135,118 +136,118 @@ int create_graph_description::read_arguments(
 			}
 		}
 
-		else if (stringcmp(argv[i], "-edge_list") == 0) {
+		else if (ST.stringcmp(argv[i], "-edge_list") == 0) {
 			f_edge_list = TRUE;
-			n = strtoi(argv[++i]);
+			n = ST.strtoi(argv[++i]);
 			edge_list_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-edge_list " << n << " " << edge_list_text << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-edges_as_pairs") == 0) {
+		else if (ST.stringcmp(argv[i], "-edges_as_pairs") == 0) {
 			f_edges_as_pairs = TRUE;
-			n = strtoi(argv[++i]);
+			n = ST.strtoi(argv[++i]);
 			edges_as_pairs_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-edges_as_pairs " << n << " " << edges_as_pairs_text << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-cycle") == 0) {
+		else if (ST.stringcmp(argv[i], "-cycle") == 0) {
 			f_cycle = TRUE;
-			cycle_n = strtoi(argv[++i]);
+			cycle_n = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-cycle " << cycle_n << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-Hamming") == 0) {
+		else if (ST.stringcmp(argv[i], "-Hamming") == 0) {
 			f_Hamming = TRUE;
-			Hamming_n = strtoi(argv[++i]);
-			Hamming_q = strtoi(argv[++i]);
+			Hamming_n = ST.strtoi(argv[++i]);
+			Hamming_q = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-Hamming " << Hamming_n << " " << Hamming_q << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-Johnson") == 0) {
+		else if (ST.stringcmp(argv[i], "-Johnson") == 0) {
 			f_Johnson = TRUE;
-			Johnson_n = strtoi(argv[++i]);
-			Johnson_k = strtoi(argv[++i]);
-			Johnson_s = strtoi(argv[++i]);
+			Johnson_n = ST.strtoi(argv[++i]);
+			Johnson_k = ST.strtoi(argv[++i]);
+			Johnson_s = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-Johnson " << Johnson_n << " " << Johnson_k << " " << Johnson_s << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-Paley") == 0) {
+		else if (ST.stringcmp(argv[i], "-Paley") == 0) {
 			f_Paley = TRUE;
-			Paley_q = strtoi(argv[++i]);
+			Paley_q = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-Paley " << Paley_q << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-Sarnak") == 0) {
+		else if (ST.stringcmp(argv[i], "-Sarnak") == 0) {
 			f_Sarnak = TRUE;
-			Sarnak_p = strtoi(argv[++i]);
-			Sarnak_q = strtoi(argv[++i]);
+			Sarnak_p = ST.strtoi(argv[++i]);
+			Sarnak_q = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-Sarnak " << Sarnak_p << " " << Sarnak_q << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-Schlaefli") == 0) {
+		else if (ST.stringcmp(argv[i], "-Schlaefli") == 0) {
 			f_Schlaefli = TRUE;
-			Schlaefli_q = strtoi(argv[++i]);
+			Schlaefli_q = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-Schlaefli " << Schlaefli_q << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-Shrikhande") == 0) {
+		else if (ST.stringcmp(argv[i], "-Shrikhande") == 0) {
 			f_Shrikhande = TRUE;
 			if (f_v) {
 				cout << "-Shrikhande " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-Winnie_Li") == 0) {
+		else if (ST.stringcmp(argv[i], "-Winnie_Li") == 0) {
 			f_Winnie_Li = TRUE;
-			Winnie_Li_q = strtoi(argv[++i]);
-			Winnie_Li_index = strtoi(argv[++i]);
+			Winnie_Li_q = ST.strtoi(argv[++i]);
+			Winnie_Li_index = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-Winnie_Li " << Winnie_Li_q << " " << Winnie_Li_index << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-Grassmann") == 0) {
+		else if (ST.stringcmp(argv[i], "-Grassmann") == 0) {
 			f_Grassmann = TRUE;
-			Grassmann_n = strtoi(argv[++i]);
-			Grassmann_k = strtoi(argv[++i]);
-			Grassmann_q = strtoi(argv[++i]);
-			Grassmann_r = strtoi(argv[++i]);
+			Grassmann_n = ST.strtoi(argv[++i]);
+			Grassmann_k = ST.strtoi(argv[++i]);
+			Grassmann_q = ST.strtoi(argv[++i]);
+			Grassmann_r = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-Grassmann " << Grassmann_n << " " << Grassmann_k
 					<< " " << Grassmann_q << " " << Grassmann_r << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-coll_orthogonal") == 0) {
+		else if (ST.stringcmp(argv[i], "-coll_orthogonal") == 0) {
 			f_coll_orthogonal = TRUE;
-			coll_orthogonal_epsilon = strtoi(argv[++i]);
-			coll_orthogonal_d = strtoi(argv[++i]);
-			coll_orthogonal_q = strtoi(argv[++i]);
+			coll_orthogonal_epsilon = ST.strtoi(argv[++i]);
+			coll_orthogonal_d = ST.strtoi(argv[++i]);
+			coll_orthogonal_q = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-coll_orthogonal " << coll_orthogonal_epsilon
 					<< " " << coll_orthogonal_d
 					<< " " << coll_orthogonal_q << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-trihedral_pair_disjointness_graph") == 0) {
+		else if (ST.stringcmp(argv[i], "-trihedral_pair_disjointness_graph") == 0) {
 			f_trihedral_pair_disjointness_graph = TRUE;
 			if (f_v) {
 				cout << "-trihedral_pair_disjointness_graph " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-non_attacking_queens_graph") == 0) {
+		else if (ST.stringcmp(argv[i], "-non_attacking_queens_graph") == 0) {
 			f_non_attacking_queens_graph = TRUE;
-			non_attacking_queens_graph_n = strtoi(argv[++i]);
+			non_attacking_queens_graph_n = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-non_attacking_queens_graph " << non_attacking_queens_graph_n << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-subset") == 0) {
+		else if (ST.stringcmp(argv[i], "-subset") == 0) {
 			f_subset = TRUE;
 			subset_label.assign(argv[++i]);
 			subset_label_tex.assign(argv[++i]);
@@ -255,22 +256,22 @@ int create_graph_description::read_arguments(
 				cout << "-subset " << subset_label << " " << subset_label_tex << " " << subset_text << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-disjoint_sets_graph") == 0) {
+		else if (ST.stringcmp(argv[i], "-disjoint_sets_graph") == 0) {
 			f_disjoint_sets_graph = TRUE;
 			disjoint_sets_graph_fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "-disjoint_sets_graph " << disjoint_sets_graph_fname << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-orbital_graph") == 0) {
+		else if (ST.stringcmp(argv[i], "-orbital_graph") == 0) {
 			f_orbital_graph = TRUE;
 			orbital_graph_group.assign(argv[++i]);
-			orbital_graph_orbit_idx = strtoi(argv[++i]);
+			orbital_graph_orbit_idx = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-orbital_graph " << orbital_graph_group << " " << orbital_graph_orbit_idx << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-collinearity_graph") == 0) {
+		else if (ST.stringcmp(argv[i], "-collinearity_graph") == 0) {
 			f_collinearity_graph = TRUE;
 			collinearity_graph_matrix.assign(argv[++i]);
 			if (f_v) {
@@ -278,7 +279,7 @@ int create_graph_description::read_arguments(
 						<< collinearity_graph_matrix << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-chain_graph") == 0) {
+		else if (ST.stringcmp(argv[i], "-chain_graph") == 0) {
 			f_chain_graph = TRUE;
 			chain_graph_partition_1.assign(argv[++i]);
 			chain_graph_partition_2.assign(argv[++i]);
@@ -296,7 +297,7 @@ int create_graph_description::read_arguments(
 			Modifications.push_back(M);
 		}
 
-		if (stringcmp(argv[i], "-end") == 0) {
+		if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
 			}

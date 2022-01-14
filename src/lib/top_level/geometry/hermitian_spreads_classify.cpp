@@ -293,6 +293,7 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 void hermitian_spreads_classify::read_arguments(int argc, std::string *argv)
 {
 	int i;
+	string_tools ST;
 
 	Control = NEW_OBJECT(poset_classification_control);
 	Poset = NEW_OBJECT(poset_with_group_action);
@@ -307,7 +308,7 @@ void hermitian_spreads_classify::read_arguments(int argc, std::string *argv)
 
 
 	for (i = 0; i < argc; i++) {
-		if (stringcmp(argv[i], "-poset_classification_control") == 0) {
+		if (ST.stringcmp(argv[i], "-poset_classification_control") == 0) {
 			Control = NEW_OBJECT(poset_classification_control);
 			i += Control->read_arguments(argc - (i + 1),
 				argv + i + 1, 0 /*verbose_level*/);

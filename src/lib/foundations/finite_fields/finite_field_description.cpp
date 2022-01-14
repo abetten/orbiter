@@ -42,32 +42,33 @@ int finite_field_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "finite_field_description::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
-		if (stringcmp(argv[i], "-q") == 0) {
+		if (ST.stringcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
-			q = strtoi(argv[++i]);
+			q = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-q " << q << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-override_polynomial") == 0) {
+		else if (ST.stringcmp(argv[i], "-override_polynomial") == 0) {
 			f_override_polynomial = TRUE;
 			override_polynomial.assign(argv[++i]);
 			if (f_v) {
 				cout << "-override_polynomial " << override_polynomial << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-without_tables") == 0) {
+		else if (ST.stringcmp(argv[i], "-without_tables") == 0) {
 			f_without_tables = TRUE;
 			if (f_v) {
 				cout << "-without_tables " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
 			}

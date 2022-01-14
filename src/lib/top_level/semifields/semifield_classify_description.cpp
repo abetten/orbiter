@@ -52,39 +52,40 @@ int semifield_classify_description::read_arguments(
 	int verbose_level)
 {
 	int i;
+	string_tools ST;
 
 	cout << "semifield_classify_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
-		if (stringcmp(argv[i], "-order") == 0) {
+		if (ST.stringcmp(argv[i], "-order") == 0) {
 			f_order = TRUE;
-			order = strtoi(argv[++i]);
+			order = ST.strtoi(argv[++i]);
 			cout << "-order " << order << endl;
 		}
-		else if (stringcmp(argv[i], "-dim_over_kernel") == 0) {
+		else if (ST.stringcmp(argv[i], "-dim_over_kernel") == 0) {
 			f_dim_over_kernel = TRUE;
-			dim_over_kernel = strtoi(argv[++i]);
+			dim_over_kernel = ST.strtoi(argv[++i]);
 			cout << "-dim_over_kernel " << dim_over_kernel << endl;
 		}
-		else if (stringcmp(argv[i], "-prefix") == 0) {
+		else if (ST.stringcmp(argv[i], "-prefix") == 0) {
 			f_prefix = TRUE;
 			prefix.assign(argv[++i]);
 			cout << "-prefix " << prefix << endl;
 		}
-		else if (stringcmp(argv[i], "-orbits_light") == 0) {
+		else if (ST.stringcmp(argv[i], "-orbits_light") == 0) {
 			f_orbits_light = TRUE;
 			cout << "-orbits_light " << endl;
 		}
-		else if (stringcmp(argv[i], "-test_semifield") == 0) {
+		else if (ST.stringcmp(argv[i], "-test_semifield") == 0) {
 			f_test_semifield = TRUE;
 			test_semifield_data.assign(argv[++i]);
 			cout << "-test_semifield " << test_semifield_data << endl;
 		}
-		else if (stringcmp(argv[i], "-identify_semifield") == 0) {
+		else if (ST.stringcmp(argv[i], "-identify_semifield") == 0) {
 			f_identify_semifield = TRUE;
 			identify_semifield_data.assign(argv[++i]);
 			cout << "-identify_semifield " << identify_semifield_data << endl;
 		}
-		else if (stringcmp(argv[i], "-identify_semifields_from_file") == 0) {
+		else if (ST.stringcmp(argv[i], "-identify_semifields_from_file") == 0) {
 			f_identify_semifields_from_file = TRUE;
 			identify_semifields_from_file_fname.assign(argv[++i]);
 			cout << "-identify_semifields_from_file "
@@ -107,29 +108,29 @@ int semifield_classify_description::read_arguments(
 			cout << "-Data " << fname_Data << endl;
 		}
 #endif
-		else if (stringcmp(argv[i], "-load_classification") == 0) {
+		else if (ST.stringcmp(argv[i], "-load_classification") == 0) {
 			f_load_classification = TRUE;
 			cout << "-load_classification " << endl;
 		}
-		else if (stringcmp(argv[i], "-report") == 0) {
+		else if (ST.stringcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			cout << "-report " << endl;
 		}
-		else if (stringcmp(argv[i], "-decomposition_matrix_level_3") == 0) {
+		else if (ST.stringcmp(argv[i], "-decomposition_matrix_level_3") == 0) {
 			f_decomposition_matrix_level_3 = TRUE;
 			cout << "-decomposition_matrix_level_3 " << endl;
 		}
-		else if (stringcmp(argv[i], "-level_two_prefix") == 0) {
+		else if (ST.stringcmp(argv[i], "-level_two_prefix") == 0) {
 			f_level_two_prefix = TRUE;
 			level_two_prefix.assign(argv[++i]);
 			cout << "-level_two_prefix " << level_two_prefix << endl;
 		}
-		else if (stringcmp(argv[i], "-level_three_prefix") == 0) {
+		else if (ST.stringcmp(argv[i], "-level_three_prefix") == 0) {
 			f_level_three_prefix = TRUE;
 			level_three_prefix.assign(argv[++i]);
 			cout << "-level_three_prefix " << level_three_prefix << endl;
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
 		}

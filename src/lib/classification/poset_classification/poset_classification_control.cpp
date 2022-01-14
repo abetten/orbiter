@@ -118,34 +118,35 @@ int poset_classification_control::read_arguments(
 {
 	int i;
 	int f_v = (verbose_level >= 1);
+	string_tools ST;
 
 	if (f_v) {
 		cout << "poset_classification_control::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
 
-		if (stringcmp(argv[i], "-problem_label") == 0) {
+		if (ST.stringcmp(argv[i], "-problem_label") == 0) {
 			f_problem_label = TRUE;
 			problem_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-problem_label " << problem_label << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-path") == 0) {
+		else if (ST.stringcmp(argv[i], "-path") == 0) {
 			f_path = TRUE;
 			path.assign(argv[++i]);
 			if (f_v) {
 				cout << "-path " << path << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-depth") == 0) {
+		else if (ST.stringcmp(argv[i], "-depth") == 0) {
 			f_depth = TRUE;
-			depth = strtoi(argv[++i]);
+			depth = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-depth " << depth << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-draw_options") == 0) {
+		else if (ST.stringcmp(argv[i], "-draw_options") == 0) {
 			f_draw_options = TRUE;
 
 			draw_options = NEW_OBJECT(layered_graph_draw_options);
@@ -165,33 +166,33 @@ int poset_classification_control::read_arguments(
 			}
 			//cout << "-f_draw_options " << endl;
 		}
-		else if (stringcmp(argv[i], "-v") == 0) {
+		else if (ST.stringcmp(argv[i], "-v") == 0) {
 			i++;
-			poset_classification_control::verbose_level = strtoi(argv[i]);
+			poset_classification_control::verbose_level = ST.strtoi(argv[i]);
 			if (f_v) {
 				cout << "-v " << poset_classification_control::verbose_level << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-gv") == 0) {
+		else if (ST.stringcmp(argv[i], "-gv") == 0) {
 			i++;
-			verbose_level_group_theory = strtoi(argv[i]);
+			verbose_level_group_theory = ST.strtoi(argv[i]);
 			if (f_v) {
 				cout << "-gv " << verbose_level_group_theory << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-recover") == 0) {
+		else if (ST.stringcmp(argv[i], "-recover") == 0) {
 			f_recover = TRUE;
 			recover_fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "-recover " << recover_fname << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-extend") == 0) {
+		else if (ST.stringcmp(argv[i], "-extend") == 0) {
 			f_extend = TRUE;
-			extend_from = strtoi(argv[++i]);
-			extend_to = strtoi(argv[++i]);
-			extend_r = strtoi(argv[++i]);
-			extend_m = strtoi(argv[++i]);
+			extend_from = ST.strtoi(argv[++i]);
+			extend_to = ST.strtoi(argv[++i]);
+			extend_r = ST.strtoi(argv[++i]);
+			extend_m = ST.strtoi(argv[++i]);
 			extend_fname.assign(argv[++i]);
 			if (f_v) {
 				cout << "-extend from level " << extend_from
@@ -201,125 +202,125 @@ int poset_classification_control::read_arguments(
 					<< " from file " << extend_fname << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-lex") == 0) {
+		else if (ST.stringcmp(argv[i], "-lex") == 0) {
 			f_lex = TRUE;
 			if (f_v) {
 				cout << "-lex" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-w") == 0) {
+		else if (ST.stringcmp(argv[i], "-w") == 0) {
 			f_w = TRUE;
 			if (f_v) {
 				cout << "-w" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-W") == 0) {
+		else if (ST.stringcmp(argv[i], "-W") == 0) {
 			f_W = TRUE;
 			if (f_v) {
 				cout << "-W" << endl;
 			}
 		}
 
-		else if (stringcmp(argv[i], "-write_data_files") == 0) {
+		else if (ST.stringcmp(argv[i], "-write_data_files") == 0) {
 			f_write_data_files = TRUE;
 			if (f_v) {
 				cout << "-write_data_files" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-t") == 0) {
+		else if (ST.stringcmp(argv[i], "-t") == 0) {
 			f_t = TRUE;
 			if (f_v) {
 				cout << "-t" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-T") == 0) {
+		else if (ST.stringcmp(argv[i], "-T") == 0) {
 			f_T = TRUE;
 			if (f_v) {
 				cout << "-T" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-write_tree") == 0) {
+		else if (ST.stringcmp(argv[i], "-write_tree") == 0) {
 			f_write_tree = TRUE;
 			if (f_v) {
 				cout << "-write_tree" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-find_node_by_stabilizer_order") == 0) {
+		else if (ST.stringcmp(argv[i], "-find_node_by_stabilizer_order") == 0) {
 			f_find_node_by_stabilizer_order = TRUE;
-			find_node_by_stabilizer_order = strtoi(argv[++i]);
+			find_node_by_stabilizer_order = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-find_node_by_stabilizer_order " << find_node_by_stabilizer_order << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-draw_poset") == 0) {
+		else if (ST.stringcmp(argv[i], "-draw_poset") == 0) {
 			f_draw_poset = TRUE;
 			if (f_v) {
 				cout << "-draw_poset " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-draw_full_poset") == 0) {
+		else if (ST.stringcmp(argv[i], "-draw_full_poset") == 0) {
 			f_draw_full_poset = TRUE;
 			if (f_v) {
 				cout << "-draw_full_poset " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-plesken") == 0) {
+		else if (ST.stringcmp(argv[i], "-plesken") == 0) {
 			f_plesken = TRUE;
 			if (f_v) {
 				cout << "-plesken " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-print_data_structure") == 0) {
+		else if (ST.stringcmp(argv[i], "-print_data_structure") == 0) {
 			f_print_data_structure = TRUE;
 			if (f_v) {
 				cout << "-print_data_structure " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-list") == 0) {
+		else if (ST.stringcmp(argv[i], "-list") == 0) {
 			f_list = TRUE;
 			if (f_v) {
 				cout << "-list" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-list_all") == 0) {
+		else if (ST.stringcmp(argv[i], "-list_all") == 0) {
 			f_list_all = TRUE;
 			if (f_v) {
 				cout << "-list_all" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-table_of_nodes") == 0) {
+		else if (ST.stringcmp(argv[i], "-table_of_nodes") == 0) {
 			f_table_of_nodes = TRUE;
 			if (f_v) {
 				cout << "-table_of_nodes" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-make_relations_with_flag_orbits") == 0) {
+		else if (ST.stringcmp(argv[i], "-make_relations_with_flag_orbits") == 0) {
 			f_make_relations_with_flag_orbits = TRUE;
 			if (f_v) {
 				cout << "-make_relation_with_flag_orbits" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-Kramer_Mesner_matrix") == 0) {
+		else if (ST.stringcmp(argv[i], "-Kramer_Mesner_matrix") == 0) {
 			f_Kramer_Mesner_matrix = TRUE;
-			Kramer_Mesner_t = strtoi(argv[++i]);
-			Kramer_Mesner_k = strtoi(argv[++i]);
+			Kramer_Mesner_t = ST.strtoi(argv[++i]);
+			Kramer_Mesner_k = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-Kramer_Mesner_matrix " << Kramer_Mesner_t << " " << Kramer_Mesner_k << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-level_summary_csv") == 0) {
+		else if (ST.stringcmp(argv[i], "-level_summary_csv") == 0) {
 			f_level_summary_csv = TRUE;
 			if (f_v) {
 				cout << "-level_summary_csv" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-orbit_reps_csv") == 0) {
+		else if (ST.stringcmp(argv[i], "-orbit_reps_csv") == 0) {
 			f_orbit_reps_csv = TRUE;
 			if (f_v) {
 				cout << "-orbit_reps_csv" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-report") == 0) {
+		else if (ST.stringcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 
 			report_options = NEW_OBJECT(poset_classification_report_options);
@@ -342,44 +343,44 @@ int poset_classification_control::read_arguments(
 				cout << "-report" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-node_label_is_group_order") == 0) {
+		else if (ST.stringcmp(argv[i], "-node_label_is_group_order") == 0) {
 			f_node_label_is_group_order = TRUE;
 			if (f_v) {
 				cout << "-node_label_is_group_order" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-node_label_is_element") == 0) {
+		else if (ST.stringcmp(argv[i], "-node_label_is_element") == 0) {
 			f_node_label_is_element = TRUE;
 			if (f_v) {
 				cout << "-node_label_is_element" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-show_orbit_decomposition") == 0) {
+		else if (ST.stringcmp(argv[i], "-show_orbit_decomposition") == 0) {
 			f_show_orbit_decomposition = TRUE;
 			if (f_v) {
 				cout << "-show_orbit_decomposition" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-show_stab") == 0) {
+		else if (ST.stringcmp(argv[i], "-show_stab") == 0) {
 			f_show_stab = TRUE;
 			if (f_v) {
 				cout << "-show_stab" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-save_stab") == 0) {
+		else if (ST.stringcmp(argv[i], "-save_stab") == 0) {
 			f_save_stab = TRUE;
 			if (f_v) {
 				cout << "-save_stab" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-show_whole_orbits") == 0) {
+		else if (ST.stringcmp(argv[i], "-show_whole_orbits") == 0) {
 			f_show_whole_orbits = TRUE;
 			if (f_v) {
 				cout << "-show_whole_orbit" << endl;
 			}
 		}
 
-		else if (stringcmp(argv[i], "-recognize") == 0) {
+		else if (ST.stringcmp(argv[i], "-recognize") == 0) {
 
 			string s;
 
@@ -389,35 +390,35 @@ int poset_classification_control::read_arguments(
 				cout << "-recognize " << recognize[recognize.size() - 1] << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-export_schreier_trees") == 0) {
+		else if (ST.stringcmp(argv[i], "-export_schreier_trees") == 0) {
 			f_export_schreier_trees = TRUE;
 			if (f_v) {
 				cout << "-export_schreier_trees" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-draw_schreier_trees") == 0) {
+		else if (ST.stringcmp(argv[i], "-draw_schreier_trees") == 0) {
 			f_draw_schreier_trees = TRUE;
 			schreier_tree_prefix.assign(argv[++i]);
 			if (f_v) {
 				cout << "-draw_schreier_trees " << schreier_tree_prefix << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-test_multi_edge_in_decomposition_matrix") == 0) {
+		else if (ST.stringcmp(argv[i], "-test_multi_edge_in_decomposition_matrix") == 0) {
 			f_test_multi_edge_in_decomposition_matrix = TRUE;
 			if (f_v) {
 				cout << "-test_multi_edge_in_decomposition_matrix " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-preferred_choice") == 0) {
+		else if (ST.stringcmp(argv[i], "-preferred_choice") == 0) {
 
 			f_preferred_choice = TRUE;
 
 			int node, pt, pt_pref;
 			vector<int> v;
 
-			node = strtoi(argv[++i]);
-			pt = strtoi(argv[++i]);
-			pt_pref = strtoi(argv[++i]);
+			node = ST.strtoi(argv[++i]);
+			pt = ST.strtoi(argv[++i]);
+			pt_pref = ST.strtoi(argv[++i]);
 			v.push_back(node);
 			v.push_back(pt);
 			v.push_back(pt_pref);
@@ -427,7 +428,7 @@ int poset_classification_control::read_arguments(
 				cout << "-preferred_choice " << node << " " << pt << " " << pt_pref << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-clique_test") == 0) {
+		else if (ST.stringcmp(argv[i], "-clique_test") == 0) {
 			f_clique_test = TRUE;
 			clique_test_graph.assign(argv[++i]);
 			if (f_v) {
@@ -435,7 +436,7 @@ int poset_classification_control::read_arguments(
 			}
 		}
 
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
 			}

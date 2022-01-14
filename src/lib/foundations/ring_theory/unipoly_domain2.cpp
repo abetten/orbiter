@@ -97,6 +97,7 @@ void unipoly_domain::mult_easy_with_report(long int rk_a, long int rk_b, long in
 	unipoly_object a;
 	unipoly_object b;
 	unipoly_object c;
+	algorithms Algo;
 
 	if (f_v) {
 		cout << "unipoly_domain::mult_easy_with_report rk_a=" << rk_a << endl;
@@ -148,7 +149,7 @@ void unipoly_domain::mult_easy_with_report(long int rk_a, long int rk_b, long in
 	ost << " x ";
 	print_coeffs_top_down_assuming_one_character_per_digit(b, ost);
 	ost << endl;
-	print_repeated_character(ost, '=', m + 1 + 3 + n + 1);
+	Algo.print_repeated_character(ost, '=', m + 1 + 3 + n + 1);
 	ost << endl;
 	for (j = n; j >= 0; j--) {
 		if (f_v) {
@@ -157,12 +158,12 @@ void unipoly_domain::mult_easy_with_report(long int rk_a, long int rk_b, long in
 		if (B[j] == 0) {
 			continue;
 		}
-		print_repeated_character(ost, ' ', 4 + n - j);
+		Algo.print_repeated_character(ost, ' ', 4 + n - j);
 		print_coeffs_top_down_assuming_one_character_per_digit(a, ost);
 		ost << endl;
 	}
-	print_repeated_character(ost, ' ', 4);
-	print_repeated_character(ost, '=', m + 1 + n);
+	Algo.print_repeated_character(ost, ' ', 4);
+	Algo.print_repeated_character(ost, '=', m + 1 + n);
 	ost << endl;
 
 	if (f_v) {
@@ -188,14 +189,14 @@ void unipoly_domain::mult_easy_with_report(long int rk_a, long int rk_b, long in
 		}
 	}
 	c = (void *) rc;
-	print_repeated_character(ost, ' ', 4);
+	Algo.print_repeated_character(ost, ' ', 4);
 	print_coeffs_top_down_assuming_one_character_per_digit(c, ost);
 	ost << endl;
 	rk_c = rank(c);
 	if (f_v) {
 		cout << "unipoly_domain::mult_easy_with_report rk_c=" << rk_c << endl;
 	}
-	print_repeated_character(ost, ' ', 3);
+	Algo.print_repeated_character(ost, ' ', 3);
 	ost << "=" << setw(mn + 1) << rk_c << endl;
 	ost << endl;
 	ost << "\\end{verbatim}" << endl;
@@ -227,6 +228,7 @@ void unipoly_domain::division_with_remainder_from_file_with_report(
 	unipoly_object b;
 	unipoly_object q;
 	unipoly_object r;
+	algorithms Algo;
 
 
 	create_object_from_csv_file(
@@ -248,7 +250,7 @@ void unipoly_domain::division_with_remainder_from_file_with_report(
 	db = degree(b);
 
 	ost << "\\begin{verbatim}" << endl;
-	print_repeated_character(ost, ' ', db + 1 + 3);
+	Algo.print_repeated_character(ost, ' ', db + 1 + 3);
 	ost << input_fname << " / " << setw(db + 1) << rk_b << " = " << endl;
 
 
@@ -263,8 +265,8 @@ void unipoly_domain::division_with_remainder_from_file_with_report(
 	}
 	rk_q = rank(q);
 	rk_r = rank(r);
-	print_repeated_character(ost, ' ', db + 1 + 3);
-	print_repeated_character(ost, ' ', da - i - 2);
+	Algo.print_repeated_character(ost, ' ', db + 1 + 3);
+	Algo.print_repeated_character(ost, ' ', da - i - 2);
 	ost << "= " << setw(i + 1) << rk_r << endl;
 	ost << endl;
 	ost << "\\end{verbatim}" << endl;
@@ -418,6 +420,7 @@ void unipoly_domain::division_with_remainder_numerically_with_report(long int rk
 	unipoly_object b;
 	unipoly_object q;
 	unipoly_object r;
+	algorithms Algo;
 
 	create_object_by_rank(a, rk_a,
 				__FILE__, __LINE__, 0 /* verbose_level */);
@@ -435,7 +438,7 @@ void unipoly_domain::division_with_remainder_numerically_with_report(long int rk
 	db = degree(b);
 
 	ost << "\\begin{verbatim}" << endl;
-	print_repeated_character(ost, ' ', db + 1 + 3);
+	Algo.print_repeated_character(ost, ' ', db + 1 + 3);
 	ost << setw(da + 1) << rk_a << " / " << setw(db + 1) << rk_b << " = " << endl;
 
 
@@ -452,8 +455,8 @@ void unipoly_domain::division_with_remainder_numerically_with_report(long int rk
 	}
 	rk_q = rank(q);
 	rk_r = rank(r);
-	print_repeated_character(ost, ' ', db + 1 + 3);
-	print_repeated_character(ost, ' ', da - i - 2);
+	Algo.print_repeated_character(ost, ' ', db + 1 + 3);
+	Algo.print_repeated_character(ost, ' ', da - i - 2);
 	ost << "= " << setw(i + 1) << rk_r << endl;
 	ost << endl;
 	ost << "\\end{verbatim}" << endl;
@@ -530,9 +533,10 @@ void unipoly_domain::division_with_remainder_with_report(unipoly_object &a, unip
 		pivot_inv = F->inverse(pivot);
 
 		Orbiter->Int_vec.zero(Q, dq + 1);
+		algorithms Algo;
 
 		if (f_report) {
-			print_repeated_character(ost, ' ', db + 1 + 3);
+			Algo.print_repeated_character(ost, ' ', db + 1 + 3);
 			print_coeffs_top_down_assuming_one_character_per_digit(a, ost);
 			ost << " / ";
 			print_coeffs_top_down_assuming_one_character_per_digit(b, ost);
@@ -572,7 +576,7 @@ void unipoly_domain::division_with_remainder_with_report(unipoly_object &a, unip
 		q = rq;
 
 		if (f_report) {
-			print_repeated_character(ost, ' ', db + 1 + 3);
+			Algo.print_repeated_character(ost, ' ', db + 1 + 3);
 			print_coeffs_top_down_assuming_one_character_per_digit(q, ost);
 		}
 
@@ -581,8 +585,8 @@ void unipoly_domain::division_with_remainder_with_report(unipoly_object &a, unip
 
 		if (f_report) {
 			ost << endl;
-			print_repeated_character(ost, ' ', db + 1 + 3);
-			print_repeated_character(ost, '=', da + 1);
+			Algo.print_repeated_character(ost, ' ', db + 1 + 3);
+			Algo.print_repeated_character(ost, '=', da + 1);
 			ost << endl;
 		}
 
@@ -601,18 +605,19 @@ void unipoly_domain::division_with_remainder_with_report(unipoly_object &a, unip
 					ost << " | ";
 				}
 				else {
-					print_repeated_character(ost, ' ', db + 1 + 3);
+					algorithms Algo;
+					Algo.print_repeated_character(ost, ' ', db + 1 + 3);
 				}
-				print_repeated_character(ost, ' ', da - i);
+				Algo.print_repeated_character(ost, ' ', da - i);
 				print_coeffs_top_down_assuming_one_character_per_digit_with_degree_given(r, i, ost);
 				ost << endl;
-				print_repeated_character(ost, ' ', db + 1 + 3);
-				print_repeated_character(ost, ' ', da - i);
+				Algo.print_repeated_character(ost, ' ', db + 1 + 3);
+				Algo.print_repeated_character(ost, ' ', da - i);
 				print_coeffs_top_down_assuming_one_character_per_digit(b, ost);
 				ost << endl;
-				print_repeated_character(ost, ' ', db + 1 + 3);
-				print_repeated_character(ost, ' ', da - i);
-				print_repeated_character(ost, '=', db + 1);
+				Algo.print_repeated_character(ost, ' ', db + 1 + 3);
+				Algo.print_repeated_character(ost, ' ', da - i);
+				Algo.print_repeated_character(ost, '=', db + 1);
 				ost << endl;
 			}
 
@@ -646,8 +651,8 @@ void unipoly_domain::division_with_remainder_with_report(unipoly_object &a, unip
 			rr[0] = 0;
 		}
 		if (f_report) {
-			print_repeated_character(ost, ' ', db + 1 + 3);
-			print_repeated_character(ost, ' ', da - i);
+			Algo.print_repeated_character(ost, ' ', db + 1 + 3);
+			Algo.print_repeated_character(ost, ' ', da - i);
 			print_coeffs_top_down_assuming_one_character_per_digit_with_degree_given(r, i, ost);
 			ost << endl;
 		}

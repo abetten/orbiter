@@ -65,7 +65,7 @@ void BLT_set_create::init(
 {
 	int f_v = (verbose_level >= 1);
 	number_theory_domain NT;
-
+	string_tools ST;
 	
 	if (f_v) {
 		cout << "BLT_set_create::init" << endl;
@@ -89,7 +89,7 @@ void BLT_set_create::init(
 		char str_q[1000];
 		f_has_group = FALSE;
 
-		if (stringcmp(Descr->family_name, "Linear") == 0) {
+		if (ST.stringcmp(Descr->family_name, "Linear") == 0) {
 			if (f_v) {
 				cout << "BLT_set_create::init creating object of family Linear" << endl;
 			}
@@ -113,7 +113,7 @@ void BLT_set_create::init(
 
 		}
 
-		else if (stringcmp(Descr->family_name, "Fisher") == 0) {
+		else if (ST.stringcmp(Descr->family_name, "Fisher") == 0) {
 			if (f_v) {
 				cout << "BLT_set_create::init creating object of family Fisher" << endl;
 			}
@@ -137,7 +137,7 @@ void BLT_set_create::init(
 
 		}
 
-		else if (stringcmp(Descr->family_name, "Mondello") == 0) {
+		else if (ST.stringcmp(Descr->family_name, "Mondello") == 0) {
 			if (f_v) {
 				cout << "BLT_set_create::init creating object of family Mondello" << endl;
 			}
@@ -162,7 +162,7 @@ void BLT_set_create::init(
 		}
 
 
-		else if (stringcmp(Descr->family_name, "FTWKB") == 0) {
+		else if (ST.stringcmp(Descr->family_name, "FTWKB") == 0) {
 			if (f_v) {
 				cout << "BLT_set_create::init creating object of family FTWKB" << endl;
 			}
@@ -176,7 +176,7 @@ void BLT_set_create::init(
 			sprintf(str_q, "q%d", OA->Descr->F->q);
 
 		}
-		else if (stringcmp(Descr->family_name, "Kantor1") == 0) {
+		else if (ST.stringcmp(Descr->family_name, "Kantor1") == 0) {
 			if (f_v) {
 				cout << "BLT_set_create::init creating object of family Kantor1" << endl;
 			}
@@ -189,7 +189,7 @@ void BLT_set_create::init(
 			sprintf(str, "K1");
 			sprintf(str_q, "q%d", OA->Descr->F->q);
 		}
-		else if (stringcmp(Descr->family_name, "Kantor2") == 0) {
+		else if (ST.stringcmp(Descr->family_name, "Kantor2") == 0) {
 			if (f_v) {
 				cout << "BLT_set_create::init creating object of family Kantor2" << endl;
 			}
@@ -202,7 +202,7 @@ void BLT_set_create::init(
 			sprintf(str, "K2");
 			sprintf(str_q, "q%d", OA->Descr->F->q);
 		}
-		else if (stringcmp(Descr->family_name, "LP_37_72") == 0) {
+		else if (ST.stringcmp(Descr->family_name, "LP_37_72") == 0) {
 			if (f_v) {
 				cout << "BLT_set_create::init creating object LP_37_72" << endl;
 			}
@@ -211,7 +211,7 @@ void BLT_set_create::init(
 			sprintf(str, "LP_ago72");
 			sprintf(str_q, "q%d", OA->Descr->F->q);
 		}
-		else if (stringcmp(Descr->family_name, "LP_37_4a") == 0) {
+		else if (ST.stringcmp(Descr->family_name, "LP_37_4a") == 0) {
 			if (f_v) {
 				cout << "BLT_set_create::init creating object LP_37_4a" << endl;
 			}
@@ -220,7 +220,7 @@ void BLT_set_create::init(
 			sprintf(str, "LP_ago4a");
 			sprintf(str_q, "q%d", OA->Descr->F->q);
 		}
-		else if (stringcmp(Descr->family_name, "LP_37_4b") == 0) {
+		else if (ST.stringcmp(Descr->family_name, "LP_37_4b") == 0) {
 			if (f_v) {
 				cout << "BLT_set_create::init creating object LP_37_4b" << endl;
 			}
@@ -229,7 +229,7 @@ void BLT_set_create::init(
 			sprintf(str, "LP_ago4b");
 			sprintf(str_q, "q%d", OA->Descr->F->q);
 		}
-		else if (stringcmp(Descr->family_name, "LP_71") == 0) {
+		else if (ST.stringcmp(Descr->family_name, "LP_71") == 0) {
 			if (f_v) {
 				cout << "BLT_set_create::init creating object LP_71" << endl;
 			}

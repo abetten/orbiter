@@ -66,53 +66,54 @@ int graph_theoretic_activity_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "graph_theoretic_activity_description::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
-		if (stringcmp(argv[i], "-find_cliques") == 0) {
+		if (ST.stringcmp(argv[i], "-find_cliques") == 0) {
 			f_find_cliques = TRUE;
 			Clique_finder_control = NEW_OBJECT(clique_finder_control);
 			i += Clique_finder_control->parse_arguments(argc - i, argv + i);
 		}
-		else if (stringcmp(argv[i], "-export_magma") == 0) {
+		else if (ST.stringcmp(argv[i], "-export_magma") == 0) {
 			f_export_magma = TRUE;
 			if (f_v) {
 				cout << "-export_magma" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-export_maple") == 0) {
+		else if (ST.stringcmp(argv[i], "-export_maple") == 0) {
 			f_export_maple = TRUE;
 			if (f_v) {
 				cout << "-export_maple" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-export_csv") == 0) {
+		else if (ST.stringcmp(argv[i], "-export_csv") == 0) {
 			f_export_csv = TRUE;
 			if (f_v) {
 				cout << "-export_csv" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-export_graphviz") == 0) {
+		else if (ST.stringcmp(argv[i], "-export_graphviz") == 0) {
 			f_export_graphviz = TRUE;
 			if (f_v) {
 				cout << "-export_graphviz" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-print") == 0) {
+		else if (ST.stringcmp(argv[i], "-print") == 0) {
 			f_print = TRUE;
 			if (f_v) {
 				cout << "-print" << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-sort_by_colors") == 0) {
+		else if (ST.stringcmp(argv[i], "-sort_by_colors") == 0) {
 			f_sort_by_colors = TRUE;
 			if (f_v) {
 				cout << "-sort_by_colors " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-split") == 0) {
+		else if (ST.stringcmp(argv[i], "-split") == 0) {
 			f_split = TRUE;
 			split_input_fname.assign(argv[++i]);
 			split_by_file.assign(argv[++i]);
@@ -120,7 +121,7 @@ int graph_theoretic_activity_description::read_arguments(
 				cout << "-split " << split_input_fname << " " << split_by_file << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-split_by_starters") == 0) {
+		else if (ST.stringcmp(argv[i], "-split_by_starters") == 0) {
 			f_split_by_starters = TRUE;
 			split_by_starters_fname_reps.assign(argv[++i]);
 			split_by_starters_col_label.assign(argv[++i]);
@@ -128,7 +129,7 @@ int graph_theoretic_activity_description::read_arguments(
 				cout << "-split_by_starters " << split_by_starters_fname_reps << " " << split_by_starters_col_label << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-split_by_clique") == 0) {
+		else if (ST.stringcmp(argv[i], "-split_by_clique") == 0) {
 			f_split_by_clique = TRUE;
 			split_by_clique_label.assign(argv[++i]);
 			split_by_clique_set.assign(argv[++i]);
@@ -136,31 +137,31 @@ int graph_theoretic_activity_description::read_arguments(
 				cout << "-split_by_clique " << split_by_clique_label << " " << split_by_clique_set << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-save") == 0) {
+		else if (ST.stringcmp(argv[i], "-save") == 0) {
 			f_save = TRUE;
 			if (f_v) {
 				cout << "-save " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-automorphism_group") == 0) {
+		else if (ST.stringcmp(argv[i], "-automorphism_group") == 0) {
 			f_automorphism_group = TRUE;
 			if (f_v) {
 				cout << "-automorphism_group " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-properties") == 0) {
+		else if (ST.stringcmp(argv[i], "-properties") == 0) {
 			f_properties = TRUE;
 			if (f_v) {
 				cout << "-properties " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-eigenvalues") == 0) {
+		else if (ST.stringcmp(argv[i], "-eigenvalues") == 0) {
 			f_eigenvalues = TRUE;
 			if (f_v) {
 				cout << "-eigenvalues " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
 			}

@@ -73,22 +73,23 @@ int clique_finder_control::parse_arguments(
 		int argc, std::string *argv)
 {
 	int i;
+	string_tools ST;
 
 	cout << "clique_finder_control::parse_arguments" << endl;
 	for (i = 0; i < argc; i++) {
-		if (stringcmp(argv[i], "-rainbow") == 0) {
+		if (ST.stringcmp(argv[i], "-rainbow") == 0) {
 			f_rainbow = TRUE;
 			cout << "-rainbow " << endl;
 		}
-		else if (stringcmp(argv[i], "-target_size") == 0) {
+		else if (ST.stringcmp(argv[i], "-target_size") == 0) {
 			f_target_size = TRUE;
-			target_size = strtoi(argv[++i]);
+			target_size = ST.strtoi(argv[++i]);
 			cout << "-target_size " << target_size << endl;
 		}
-		else if (stringcmp(argv[i], "-weighted") == 0) {
+		else if (ST.stringcmp(argv[i], "-weighted") == 0) {
 			f_weighted = TRUE;
-			weights_total = strtoi(argv[++i]);
-			weights_offset = strtoi(argv[++i]);
+			weights_total = ST.strtoi(argv[++i]);
+			weights_offset = ST.strtoi(argv[++i]);
 			weights_string.assign(argv[++i]);
 			weights_bounds.assign(argv[++i]);
 			cout << "-weighted " << weights_total
@@ -97,44 +98,44 @@ int clique_finder_control::parse_arguments(
 					<< " " << weights_bounds
 					<< endl;
 		}
-		else if (stringcmp(argv[i], "-Sajeeb") == 0) {
+		else if (ST.stringcmp(argv[i], "-Sajeeb") == 0) {
 			f_Sajeeb = TRUE;
 			cout << "-Sajeeb " << endl;
 		}
-		else if (stringcmp(argv[i], "-nonrecursive") == 0) {
+		else if (ST.stringcmp(argv[i], "-nonrecursive") == 0) {
 			f_nonrecursive = TRUE;
 			cout << "-nonrecursive " << endl;
 		}
-		else if (stringcmp(argv[i], "-tree") == 0) {
+		else if (ST.stringcmp(argv[i], "-tree") == 0) {
 			f_tree = TRUE;
 			f_decision_nodes_only = FALSE;
 			fname_tree.assign(argv[++i]);
 			cout << "-tree " << fname_tree << endl;
 		}
-		else if (stringcmp(argv[i], "-tree_decision_nodes_only") == 0) {
+		else if (ST.stringcmp(argv[i], "-tree_decision_nodes_only") == 0) {
 			f_tree = TRUE;
 			f_decision_nodes_only = TRUE;
 			fname_tree.assign(argv[++i]);
 			cout << "-tree_decision_nodes_only " << fname_tree << endl;
 		}
-		else if (stringcmp(argv[i], "-output_file") == 0) {
+		else if (ST.stringcmp(argv[i], "-output_file") == 0) {
 			f_output_file = TRUE;
 			output_file.assign(argv[++i]);
 			cout << "-output_file " << output_file << endl;
 		}
-		else if (stringcmp(argv[i], "-output_solution_raw") == 0) {
+		else if (ST.stringcmp(argv[i], "-output_solution_raw") == 0) {
 			f_output_solution_raw = TRUE;
 			cout << "-output_solution_raw " << endl;
 		}
-		else if (stringcmp(argv[i], "-count_solutions_only") == 0) {
+		else if (ST.stringcmp(argv[i], "-count_solutions_only") == 0) {
 			f_store_solutions = FALSE;
 			cout << "-count_solutions_only " << endl;
 		}
-		else if (stringcmp(argv[i], "-restrictions") == 0) {
+		else if (ST.stringcmp(argv[i], "-restrictions") == 0) {
 			f_restrictions = TRUE;
 			int j;
 			for (j = 0; TRUE; j++) {
-				restrictions[j] = strtoi(argv[++i]);
+				restrictions[j] = ST.strtoi(argv[++i]);
 				if (restrictions[j] == -1) {
 					nb_restrictions = j / 3;
 					break;
@@ -149,7 +150,7 @@ int clique_finder_control::parse_arguments(
 			Orbiter->Int_vec.print(cout, restrictions, 3 * nb_restrictions);
 			cout << endl;
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			return i;
 		}

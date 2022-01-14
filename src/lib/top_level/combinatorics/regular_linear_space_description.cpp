@@ -56,36 +56,37 @@ int regular_linear_space_description::read_arguments(
 	int verbose_level)
 {
 	int i;
+	string_tools ST;
 
 	cout << "regular_linear_space_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
-		if (stringcmp(argv[i], "-m") == 0) {
+		if (ST.stringcmp(argv[i], "-m") == 0) {
 			f_m = TRUE;
-			m = strtoi(argv[++i]);
+			m = ST.strtoi(argv[++i]);
 			cout << "-m " << m << endl;
 		}
-		else if (stringcmp(argv[i], "-n") == 0) {
+		else if (ST.stringcmp(argv[i], "-n") == 0) {
 			f_n = TRUE;
-			n = strtoi(argv[++i]);
+			n = ST.strtoi(argv[++i]);
 			cout << "-n " << n << endl;
 		}
-		else if (stringcmp(argv[i], "-k") == 0) {
+		else if (ST.stringcmp(argv[i], "-k") == 0) {
 			f_k = TRUE;
-			k = strtoi(argv[++i]);
+			k = ST.strtoi(argv[++i]);
 			cout << "-k " << k << endl;
 		}
-		else if (stringcmp(argv[i], "-r") == 0) {
+		else if (ST.stringcmp(argv[i], "-r") == 0) {
 			f_r = TRUE;
-			r = strtoi(argv[++i]);
+			r = ST.strtoi(argv[++i]);
 			cout << "-r " << r << endl;
 		}
-		else if (stringcmp(argv[i], "-target_size") == 0) {
+		else if (ST.stringcmp(argv[i], "-target_size") == 0) {
 			f_target_size = TRUE;
-			target_size = strtoi(argv[++i]);
+			target_size = ST.strtoi(argv[++i]);
 			cout << "-target_size " << target_size << endl;
 		}
-		else if (stringcmp(argv[i], "-control") == 0) {
+		else if (ST.stringcmp(argv[i], "-control") == 0) {
 			f_has_control = TRUE;
 			Control = NEW_OBJECT(poset_classification_control);
 			i += Control->read_arguments(argc - (i + 1),
@@ -98,7 +99,7 @@ int regular_linear_space_description::read_arguments(
 				cout << "next argument is " << argv[i] << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
 		}

@@ -39,32 +39,33 @@ int graph_classification_activity_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "graph_classification_activity_description::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
-		if (stringcmp(argv[i], "-draw_level_graph") == 0) {
+		if (ST.stringcmp(argv[i], "-draw_level_graph") == 0) {
 			f_draw_level_graph = TRUE;
-			draw_level_graph_level = strtoi(argv[++i]);
+			draw_level_graph_level = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-draw_level_graph " << draw_level_graph_level << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-draw_graphs") == 0) {
+		else if (ST.stringcmp(argv[i], "-draw_graphs") == 0) {
 			f_draw_graphs = TRUE;
 			if (f_v) {
 				cout << "-draw_graphs " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-draw_graphs_at_level") == 0) {
+		else if (ST.stringcmp(argv[i], "-draw_graphs_at_level") == 0) {
 			f_draw_graphs_at_level = TRUE;
-			draw_graphs_at_level_level = strtoi(argv[++i]);
+			draw_graphs_at_level_level = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-draw_graphs_at_level " << draw_graphs_at_level_level << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-draw_options") == 0) {
+		else if (ST.stringcmp(argv[i], "-draw_options") == 0) {
 			f_draw_options = TRUE;
 
 			draw_options = NEW_OBJECT(layered_graph_draw_options);
@@ -84,7 +85,7 @@ int graph_classification_activity_description::read_arguments(
 				cout << "-f_draw_options " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
 			}

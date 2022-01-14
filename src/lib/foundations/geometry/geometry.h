@@ -2727,6 +2727,8 @@ public:
 
 };
 
+int spread_table_compare_func(void *a, void *b, void *data);
+
 
 
 // #############################################################################

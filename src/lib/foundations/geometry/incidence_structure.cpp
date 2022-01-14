@@ -895,7 +895,8 @@ int incidence_structure::compute_TDO(
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
-	
+	algorithms Algo;
+
 	ht1 = PStack.ht;
 	h2 = 0;
 	
@@ -915,7 +916,7 @@ int incidence_structure::compute_TDO(
 		}
 		if (remaining_depth) {
 			h1 = compute_TDO_step(PStack, ht0, verbose_level);
-			h2 = hashing(h1, h2);
+			h2 = Algo.hashing(h1, h2);
 			ht0 = ht1;
 			ht1 = PStack.ht;
 			remaining_depth--;
@@ -942,6 +943,7 @@ int incidence_structure::compute_TDO_step(
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
 	int f_is_row_class;
+	algorithms Algo;
 
 	ht1 = PStack.ht;
 	h2 = 0;
@@ -962,7 +964,7 @@ int incidence_structure::compute_TDO_step(
 		}
 		h1 = refine_column_partition(PStack, ht0, verbose_level - 3);
 		//cout << "h1=" << h1 << endl;
-		h2 = hashing(h1, h2);
+		h2 = Algo.hashing(h1, h2);
 		if (f_v) {
 			cout << "incidence_structure::compute_TDO_step after "
 					"refine_column_partition ht=" << PStack.ht << endl;
@@ -984,7 +986,7 @@ int incidence_structure::compute_TDO_step(
 		}
 		h1 = refine_row_partition(PStack, ht0, verbose_level - 3);
 		//cout << "h1=" << h1 << endl;
-		h2 = hashing(h1, h2);
+		h2 = Algo.hashing(h1, h2);
 		//cout << "h2=" << h2 << endl;
 		if (f_v) {
 			cout << "incidence_structure::compute_TDO_step after "

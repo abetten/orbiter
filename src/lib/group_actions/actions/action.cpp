@@ -2544,7 +2544,7 @@ void action::compute_orbits_on_points(schreier *&Sch,
 
 void action::stabilizer_of_dual_hyperoval_representative(
 		int k, int n, int no,
-		vector_ge *&gens, const char *&stab_order,
+		vector_ge *&gens, std::string &stab_order,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2577,7 +2577,7 @@ void action::stabilizer_of_dual_hyperoval_representative(
 
 void action::stabilizer_of_spread_representative(
 		int q, int k, int no,
-		vector_ge *&gens, const char *&stab_order,
+		vector_ge *&gens, std::string &stab_order,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2612,7 +2612,7 @@ void action::stabilizer_of_spread_representative(
 
 void action::stabilizer_of_quartic_curve_representative(
 		int q, int no,
-		vector_ge *&gens, const char *&stab_order,
+		vector_ge *&gens, std::string &stab_order,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3577,8 +3577,9 @@ void action::raise_to_the_power_based_on_text(std::string &data_A,
 	}
 
 	int exponent;
+	string_tools ST;
 
-	exponent = strtoi(exponent_text);
+	exponent = ST.strtoi(exponent_text);
 
 	int *Elt1;
 	int *Elt2;

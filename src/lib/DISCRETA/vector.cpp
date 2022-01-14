@@ -623,6 +623,7 @@ static void partition(Vector& v, int left, int right, int *middle)
 static void partition_with_logging(Vector& v, permutation& p, int left, int right, int *middle)
 {
 	int l, r, m, len, m1, res, pivot;
+	algorithms Algo;
 	
 	// pivot strategy: take the element in the middle: 
 	len = right + 1 - left;
@@ -630,7 +631,7 @@ static void partition_with_logging(Vector& v, permutation& p, int left, int righ
 	pivot = left;
 	if (m1) {
 		v[pivot].swap(v[left + m1]);
-		int_swap(p[pivot], p[left + m1]);
+		Algo.int_swap(p[pivot], p[left + m1]);
 		}
 	l = left;
 	r = right;
@@ -654,13 +655,13 @@ static void partition_with_logging(Vector& v, permutation& p, int left, int righ
 		// now v[l] > v[pivot] and v[r] <= v[pivot] 
 		if (l < r) {
 			v[l].swap(v[r]);
-			int_swap(p[l], p[r]);
+			Algo.int_swap(p[l], p[r]);
 			}
 		}
 	m = r;
 	if (left != m) {
 		v[left].swap(v[m]);
-		int_swap(p[left], p[m]);
+		Algo.int_swap(p[left], p[m]);
 		}
 	*middle = m;
 }

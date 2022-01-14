@@ -297,6 +297,7 @@ class cryptography_domain;
 
 
 // data_structures:
+class algorithms;
 class bitmatrix;
 class bitvector;
 class classify_bitvectors;

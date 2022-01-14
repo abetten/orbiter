@@ -48,13 +48,14 @@ int large_set_was_description::read_arguments(int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;
+	string_tools ST;
 
 
 
 	cout << "large_set_was_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
-		if (stringcmp(argv[i], "-H") == 0) {
+		if (ST.stringcmp(argv[i], "-H") == 0) {
 			f_H = TRUE;
 			H_go.assign(argv[++i]);
 			H_generators_text.assign(argv[++i]);
@@ -63,7 +64,7 @@ int large_set_was_description::read_arguments(int argc, std::string *argv,
 					<< endl;
 		}
 
-		else if (stringcmp(argv[i], "-N") == 0) {
+		else if (ST.stringcmp(argv[i], "-N") == 0) {
 			f_N = TRUE;
 			N_go.assign(argv[++i]);
 			N_generators_text.assign(argv[++i]);
@@ -71,22 +72,22 @@ int large_set_was_description::read_arguments(int argc, std::string *argv,
 					<< " " << N_generators_text
 					<< endl;
 		}
-		else if (stringcmp(argv[i], "-report") == 0) {
+		else if (ST.stringcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			cout << "-report " << endl;
 		}
-		else if (stringcmp(argv[i], "-prefix") == 0) {
+		else if (ST.stringcmp(argv[i], "-prefix") == 0) {
 			f_prefix = TRUE;
 			prefix.assign(argv[++i]);
 			cout << "-prefix " << prefix << endl;
 		}
-		else if (stringcmp(argv[i], "-selected_orbit_length") == 0) {
+		else if (ST.stringcmp(argv[i], "-selected_orbit_length") == 0) {
 			f_selected_orbit_length = TRUE;
-			selected_orbit_length = strtoi(argv[++i]);
+			selected_orbit_length = ST.strtoi(argv[++i]);
 			cout << "-selected_orbit_length " << selected_orbit_length << endl;
 		}
 
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			break;
 		}
 		else {

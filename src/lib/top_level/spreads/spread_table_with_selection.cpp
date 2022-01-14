@@ -635,7 +635,7 @@ void spread_table_with_selection::predict_spread_table_length(
 	for (no = 0; no < nb_iso_types_of_spreads; no++) {
 
 		vector_ge *gens;
-		const char *stab_order;
+		string stab_order;
 
 		A->stabilizer_of_spread_representative(q,
 				T->k /* dimension_of_spread_elements */, no, gens, stab_order,
@@ -665,9 +665,7 @@ void spread_table_with_selection::predict_spread_table_length(
 			spread_reps_idx[nb_spread_reps] = no;
 
 
-			stab_go.create_from_base_10_string(
-					stab_order,
-					0 /* verbose_level */);
+			stab_go.create_from_base_10_string(stab_order);
 			//Stab->group_order(stab_go);
 
 			spread_orbit_length[nb_spread_reps] = D.quotient_as_lint(go, stab_go);

@@ -79,41 +79,42 @@ int quartic_curve_create_description::read_arguments(int argc, std::string *argv
 	int verbose_level)
 {
 	int i;
+	string_tools ST;
 
 	cout << "quartic_curve_create_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
-		if (stringcmp(argv[i], "-q") == 0) {
+		if (ST.stringcmp(argv[i], "-q") == 0) {
 			f_q = TRUE;
-			q = strtoi(argv[++i]);
+			q = ST.strtoi(argv[++i]);
 			cout << "-q " << q << endl;
 		}
-		else if (stringcmp(argv[i], "-label_txt") == 0) {
+		else if (ST.stringcmp(argv[i], "-label_txt") == 0) {
 			f_label_txt = TRUE;
 			label_txt.assign(argv[++i]);
 			cout << "-label_txt " << label_txt << endl;
 		}
-		else if (stringcmp(argv[i], "-label_tex") == 0) {
+		else if (ST.stringcmp(argv[i], "-label_tex") == 0) {
 			f_label_tex = TRUE;
 			label_tex.assign(argv[++i]);
 			cout << "-label_tex " << label_tex << endl;
 		}
-		else if (stringcmp(argv[i], "-label_for_summary") == 0) {
+		else if (ST.stringcmp(argv[i], "-label_for_summary") == 0) {
 			f_label_for_summary = TRUE;
 			label_for_summary.assign(argv[++i]);
 			cout << "-label_for_summary " << label_for_summary << endl;
 		}
-		else if (stringcmp(argv[i], "-catalogue") == 0) {
+		else if (ST.stringcmp(argv[i], "-catalogue") == 0) {
 			f_catalogue = TRUE;
-			iso = strtoi(argv[++i]);
+			iso = ST.strtoi(argv[++i]);
 			cout << "-catalogue " << iso << endl;
 		}
-		else if (stringcmp(argv[i], "-by_coefficients") == 0) {
+		else if (ST.stringcmp(argv[i], "-by_coefficients") == 0) {
 			f_by_coefficients = TRUE;
 			coefficients_text.assign(argv[++i]);
 			cout << "-by_coefficients " << coefficients_text << endl;
 		}
-		else if (stringcmp(argv[i], "-by_equation") == 0) {
+		else if (ST.stringcmp(argv[i], "-by_equation") == 0) {
 			f_by_equation = TRUE;
 			equation_name_of_formula.assign(argv[++i]);
 			equation_name_of_formula_tex.assign(argv[++i]);
@@ -133,11 +134,11 @@ int quartic_curve_create_description::read_arguments(int argc, std::string *argv
 
 
 
-		else if (stringcmp(argv[i], "-override_group") == 0) {
+		else if (ST.stringcmp(argv[i], "-override_group") == 0) {
 			f_override_group = TRUE;
 
 			override_group_order.assign(argv[++i]);
-			override_group_nb_gens = strtoi(argv[++i]);
+			override_group_nb_gens = ST.strtoi(argv[++i]);
 			override_group_gens.assign(argv[++i]);
 
 			cout << "-override_group "
@@ -147,7 +148,7 @@ int quartic_curve_create_description::read_arguments(int argc, std::string *argv
 					<< endl;
 		}
 
-		else if (stringcmp(argv[i], "-transform") == 0) {
+		else if (ST.stringcmp(argv[i], "-transform") == 0) {
 
 			string s;
 
@@ -157,7 +158,7 @@ int quartic_curve_create_description::read_arguments(int argc, std::string *argv
 			cout << "-transform " << transform_coeffs[transform_coeffs.size() - 1]
 					<< " " << f_inverse_transform[transform_coeffs.size() - 1] << endl;
 		}
-		else if (stringcmp(argv[i], "-transform_inverse") == 0) {
+		else if (ST.stringcmp(argv[i], "-transform_inverse") == 0) {
 
 			string s;
 
@@ -167,7 +168,7 @@ int quartic_curve_create_description::read_arguments(int argc, std::string *argv
 			cout << "-transform_inverse " << transform_coeffs[transform_coeffs.size() - 1]
 					<< " " << f_inverse_transform[transform_coeffs.size() - 1] << endl;
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
 		}

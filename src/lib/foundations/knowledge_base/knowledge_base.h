@@ -35,36 +35,37 @@ public:
 	int *quartic_curves_representative(int q, int i);
 	long int *quartic_curves_bitangents(int q, int i);
 	void quartic_curves_stab_gens(int q, int i,
-			int *&data, int &nb_gens, int &data_size, const char *&stab_order);
+			int *&data, int &nb_gens,
+			int &data_size, std::string &stab_order_str);
 
 
 	int cubic_surface_nb_reps(int q);
 	int *cubic_surface_representative(int q, int i);
 	void cubic_surface_stab_gens(int q, int i, int *&data, int &nb_gens,
-		int &data_size, const char *&stab_order);
+		int &data_size, std::string &stab_order_str);
 	int cubic_surface_nb_Eckardt_points(int q, int i);
 	long int *cubic_surface_Lines(int q, int i);
 
 	int hyperoval_nb_reps(int q);
 	int *hyperoval_representative(int q, int i);
 	void hyperoval_gens(int q, int i, int *&data, int &nb_gens,
-		int &data_size, const char *&stab_order);
+		int &data_size, std::string &stab_order_str);
 
 
 	int DH_nb_reps(int k, int n);
 	long int *DH_representative(int k, int n, int i);
 	void DH_stab_gens(int k, int n, int i, int *&data, int &nb_gens,
-		int &data_size, const char *&stab_order);
+		int &data_size, std::string &stab_order_str);
 
 	int Spread_nb_reps(int q, int k);
 	long int *Spread_representative(int q, int k, int i, int &sz);
 	void Spread_stab_gens(int q, int k, int i, int *&data, int &nb_gens,
-		int &data_size, const char *&stab_order);
+		int &data_size, std::string &stab_order_str);
 
 	int BLT_nb_reps(int q);
 	long int *BLT_representative(int q, int no);
 	void BLT_stab_gens(int q, int no, int *&data, int &nb_gens,
-		int &data_size, const char *&stab_order);
+		int &data_size, std::string &stab_order_str);
 
 	const char *override_polynomial_subfield(int q);
 	const char *override_polynomial_extension_field(int q);

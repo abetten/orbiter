@@ -62,6 +62,7 @@ int vector_builder_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i = 0;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "vector_builder_description::read_arguments" << endl;
@@ -69,58 +70,58 @@ int vector_builder_description::read_arguments(
 		cout << "vector_builder_description::read_arguments argc = " << argc << endl;
 	}
 	for (i = 0; i < argc; i++) {
-		if (stringcmp(argv[i], "-field") == 0) {
+		if (ST.stringcmp(argv[i], "-field") == 0) {
 			f_field = TRUE;
 			field_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-field " << field_label << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-dense") == 0) {
+		else if (ST.stringcmp(argv[i], "-dense") == 0) {
 			f_dense = TRUE;
 			dense_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-dense " << dense_text << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-compact") == 0) {
+		else if (ST.stringcmp(argv[i], "-compact") == 0) {
 			f_compact = TRUE;
 			compact_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-compact " << compact_text << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-repeat") == 0) {
+		else if (ST.stringcmp(argv[i], "-repeat") == 0) {
 			f_repeat = TRUE;
 			repeat_text.assign(argv[++i]);
-			repeat_length = strtoi(argv[++i]);
+			repeat_length = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-repeat " << repeat_text << " " << repeat_length << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-format") == 0) {
+		else if (ST.stringcmp(argv[i], "-format") == 0) {
 			f_format = TRUE;
-			format_k = strtoi(argv[++i]);
+			format_k = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-format " << format_k << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-file") == 0) {
+		else if (ST.stringcmp(argv[i], "-file") == 0) {
 			f_file = TRUE;
 			file_name.assign(argv[++i]);
 			if (f_v) {
 				cout << "-file " << file_name << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-sparse") == 0) {
+		else if (ST.stringcmp(argv[i], "-sparse") == 0) {
 			f_sparse = TRUE;
-			sparse_len = strtoi(argv[++i]);
+			sparse_len = ST.strtoi(argv[++i]);
 			sparse_pairs.assign(argv[++i]);
 			if (f_v) {
 				cout << "-sparse " << sparse_len << " " << sparse_pairs << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-concatenate") == 0) {
+		else if (ST.stringcmp(argv[i], "-concatenate") == 0) {
 			string label;
 
 			label.assign(argv[++i]);
@@ -129,18 +130,18 @@ int vector_builder_description::read_arguments(
 				cout << "-concatenate " << label << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-loop") == 0) {
+		else if (ST.stringcmp(argv[i], "-loop") == 0) {
 			f_loop = TRUE;
-			loop_start = strtoi(argv[++i]);
-			loop_upper_bound = strtoi(argv[++i]);
-			loop_increment = strtoi(argv[++i]);
+			loop_start = ST.strtoi(argv[++i]);
+			loop_upper_bound = ST.strtoi(argv[++i]);
+			loop_increment = ST.strtoi(argv[++i]);
 			cout << "-loop "
 					<< loop_start << " "
 					<< loop_upper_bound << " "
 					<< loop_increment << endl;
 		}
 
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
 			}

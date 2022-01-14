@@ -386,6 +386,7 @@ void packing_was::init_regular_packing(int verbose_level)
 void packing_was::init_N(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
+	string_tools ST;
 
 	if (f_v) {
 		cout << "packing_was::init_N" << endl;
@@ -402,7 +403,7 @@ void packing_was::init_N(int verbose_level)
 					"creating the group" << endl;
 			}
 
-		if (P->q != strtoi(Descr->N_Descr->input_q)) {
+		if (P->q != ST.strtoi(Descr->N_Descr->input_q)) {
 			cout << "packing_was::init_N "
 					"q != N_Descr->input_q" << endl;
 			exit(1);

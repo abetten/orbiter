@@ -30,6 +30,7 @@ int data_input_stream_description::read_arguments(
 	int verbose_level)
 {
 	int i;
+	string_tools ST;
 
 	cout << "data_input_stream::read_arguments" << endl;
 	if (argc) {
@@ -37,7 +38,7 @@ int data_input_stream_description::read_arguments(
 	}
 	for (i = 0; i < argc; i++) {
 
-		if (stringcmp(argv[i], "-set_of_points") == 0) {
+		if (ST.stringcmp(argv[i], "-set_of_points") == 0) {
 
 			data_input_stream_description_element E;
 			string a;
@@ -49,7 +50,7 @@ int data_input_stream_description::read_arguments(
 			E.print();
 			nb_inputs++;
 		}
-		else if (stringcmp(argv[i], "-set_of_lines") == 0) {
+		else if (ST.stringcmp(argv[i], "-set_of_lines") == 0) {
 
 			data_input_stream_description_element E;
 			string a;
@@ -62,7 +63,7 @@ int data_input_stream_description::read_arguments(
 
 			nb_inputs++;
 		}
-		else if (stringcmp(argv[i], "-set_of_points_and_lines") == 0) {
+		else if (ST.stringcmp(argv[i], "-set_of_points_and_lines") == 0) {
 
 			data_input_stream_description_element E;
 			string a, b;
@@ -76,14 +77,14 @@ int data_input_stream_description::read_arguments(
 
 			nb_inputs++;
 		}
-		else if (stringcmp(argv[i], "-set_of_packing") == 0) {
+		else if (ST.stringcmp(argv[i], "-set_of_packing") == 0) {
 
 			data_input_stream_description_element E;
 			string a;
 			int q;
 
 			a.assign(argv[++i]);
-			q = strtoi(argv[++i]);
+			q = ST.strtoi(argv[++i]);
 
 			E.init_packing(a, q);
 			Input.push_back(E);
@@ -92,7 +93,7 @@ int data_input_stream_description::read_arguments(
 
 			nb_inputs++;
 		}
-		else if (stringcmp(argv[i], "-file_of_points") == 0) {
+		else if (ST.stringcmp(argv[i], "-file_of_points") == 0) {
 
 			data_input_stream_description_element E;
 			string a;
@@ -106,7 +107,7 @@ int data_input_stream_description::read_arguments(
 
 			nb_inputs++;
 		}
-		else if (stringcmp(argv[i], "-file_of_lines") == 0) {
+		else if (ST.stringcmp(argv[i], "-file_of_lines") == 0) {
 
 			data_input_stream_description_element E;
 			string a;
@@ -120,7 +121,7 @@ int data_input_stream_description::read_arguments(
 
 			nb_inputs++;
 		}
-		else if (stringcmp(argv[i], "-file_of_packings") == 0) {
+		else if (ST.stringcmp(argv[i], "-file_of_packings") == 0) {
 
 			data_input_stream_description_element E;
 			string a;
@@ -134,7 +135,7 @@ int data_input_stream_description::read_arguments(
 
 			nb_inputs++;
 		}
-		else if (stringcmp(argv[i],
+		else if (ST.stringcmp(argv[i],
 				"-file_of_packings_through_spread_table") == 0) {
 
 			data_input_stream_description_element E;
@@ -143,7 +144,7 @@ int data_input_stream_description::read_arguments(
 
 			a.assign(argv[++i]);
 			b.assign(argv[++i]);
-			q = strtoi(argv[++i]);
+			q = ST.strtoi(argv[++i]);
 
 			E.init_file_of_packings_through_spread_table(a, b, q);
 			Input.push_back(E);
@@ -152,7 +153,7 @@ int data_input_stream_description::read_arguments(
 
 			nb_inputs++;
 		}
-		else if (stringcmp(argv[i], "-file_of_point_set") == 0) {
+		else if (ST.stringcmp(argv[i], "-file_of_point_set") == 0) {
 
 			data_input_stream_description_element E;
 			string a;
@@ -166,17 +167,17 @@ int data_input_stream_description::read_arguments(
 
 			nb_inputs++;
 		}
-		else if (stringcmp(argv[i], "-file_of_designs") == 0) {
+		else if (ST.stringcmp(argv[i], "-file_of_designs") == 0) {
 
 			data_input_stream_description_element E;
 			std::string a;
 			int N_points, b, k, partition_class_size;
 
 			a.assign(argv[++i]);
-			N_points = strtoi(argv[++i]);
-			b = strtoi(argv[++i]);
-			k = strtoi(argv[++i]);
-			partition_class_size = strtoi(argv[++i]);
+			N_points = ST.strtoi(argv[++i]);
+			b = ST.strtoi(argv[++i]);
+			k = ST.strtoi(argv[++i]);
+			partition_class_size = ST.strtoi(argv[++i]);
 
 			E.init_file_of_designs(a,
 							N_points, b, k, partition_class_size);
@@ -186,16 +187,16 @@ int data_input_stream_description::read_arguments(
 
 			nb_inputs++;
 		}
-		else if (stringcmp(argv[i], "-file_of_incidence_geometries") == 0) {
+		else if (ST.stringcmp(argv[i], "-file_of_incidence_geometries") == 0) {
 
 			data_input_stream_description_element E;
 			std::string a;
 			int v, b, f;
 
 			a.assign(argv[++i]);
-			v = strtoi(argv[++i]);
-			b = strtoi(argv[++i]);
-			f = strtoi(argv[++i]);
+			v = ST.strtoi(argv[++i]);
+			b = ST.strtoi(argv[++i]);
+			f = ST.strtoi(argv[++i]);
 
 			E.init_file_of_incidence_geometries(a, v, b, f);
 			Input.push_back(E);
@@ -204,16 +205,16 @@ int data_input_stream_description::read_arguments(
 
 			nb_inputs++;
 		}
-		else if (stringcmp(argv[i], "-file_of_incidence_geometries_by_row_ranks") == 0) {
+		else if (ST.stringcmp(argv[i], "-file_of_incidence_geometries_by_row_ranks") == 0) {
 
 			data_input_stream_description_element E;
 			std::string a;
 			int v, b, r;
 
 			a.assign(argv[++i]);
-			v = strtoi(argv[++i]);
-			b = strtoi(argv[++i]);
-			r = strtoi(argv[++i]);
+			v = ST.strtoi(argv[++i]);
+			b = ST.strtoi(argv[++i]);
+			r = ST.strtoi(argv[++i]);
 
 			E.init_file_of_incidence_geometries_by_row_ranks(a, v, b, r);
 			Input.push_back(E);
@@ -222,16 +223,16 @@ int data_input_stream_description::read_arguments(
 
 			nb_inputs++;
 		}
-		else if (stringcmp(argv[i], "-incidence_geometry") == 0) {
+		else if (ST.stringcmp(argv[i], "-incidence_geometry") == 0) {
 
 			data_input_stream_description_element E;
 			std::string a;
 			int v, b, f;
 
 			a.assign(argv[++i]);
-			v = strtoi(argv[++i]);
-			b = strtoi(argv[++i]);
-			f = strtoi(argv[++i]);
+			v = ST.strtoi(argv[++i]);
+			b = ST.strtoi(argv[++i]);
+			f = ST.strtoi(argv[++i]);
 
 			E.init_incidence_geometry(a, v, b, f);
 			Input.push_back(E);
@@ -240,16 +241,16 @@ int data_input_stream_description::read_arguments(
 
 			nb_inputs++;
 		}
-		else if (stringcmp(argv[i], "-incidence_geometry_by_row_ranks") == 0) {
+		else if (ST.stringcmp(argv[i], "-incidence_geometry_by_row_ranks") == 0) {
 
 			data_input_stream_description_element E;
 			std::string a;
 			int v, b, r;
 
 			a.assign(argv[++i]);
-			v = strtoi(argv[++i]);
-			b = strtoi(argv[++i]);
-			r = strtoi(argv[++i]);
+			v = ST.strtoi(argv[++i]);
+			b = ST.strtoi(argv[++i]);
+			r = ST.strtoi(argv[++i]);
 
 			E.init_incidence_geometry_by_row_ranks(a, v, b, r);
 			Input.push_back(E);
@@ -258,7 +259,7 @@ int data_input_stream_description::read_arguments(
 
 			nb_inputs++;
 		}
-		else if (stringcmp(argv[i], "-from_parallel_search") == 0) {
+		else if (ST.stringcmp(argv[i], "-from_parallel_search") == 0) {
 
 			data_input_stream_description_element E;
 			string fname_mask;
@@ -266,7 +267,7 @@ int data_input_stream_description::read_arguments(
 			string cases_fname;
 
 			fname_mask.assign(argv[++i]);
-			nb_cases = strtoi(argv[++i]);
+			nb_cases = ST.strtoi(argv[++i]);
 			cases_fname.assign(argv[++i]);
 			E.init_from_parallel_search(fname_mask, nb_cases, cases_fname);
 			Input.push_back(E);
@@ -275,7 +276,7 @@ int data_input_stream_description::read_arguments(
 
 			nb_inputs++;
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			cout << "-end" << endl;
 			break;
 		}

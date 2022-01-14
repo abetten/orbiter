@@ -55,13 +55,14 @@ int packing_was_description::read_arguments(int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;
+	string_tools ST;
 
 
 
 	cout << "packing_was_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
 
-		if (stringcmp(argv[i], "-H") == 0) {
+		if (ST.stringcmp(argv[i], "-H") == 0) {
 			f_H = TRUE;
 			cout << "reading -H" << endl;
 			H_label.assign(argv[++i]);
@@ -78,7 +79,7 @@ int packing_was_description::read_arguments(int argc, std::string *argv,
 			}
 		}
 
-		else if (stringcmp(argv[i], "-N") == 0) {
+		else if (ST.stringcmp(argv[i], "-N") == 0) {
 			f_N = TRUE;
 			cout << "reading -N" << endl;
 			N_label.assign(argv[++i]);
@@ -95,13 +96,13 @@ int packing_was_description::read_arguments(int argc, std::string *argv,
 			}
 		}
 
-		else if (stringcmp(argv[i], "-fixp_clique_types_save_individually") == 0) {
+		else if (ST.stringcmp(argv[i], "-fixp_clique_types_save_individually") == 0) {
 			f_fixp_clique_types_save_individually = TRUE;
 			cout << "-fixp_clique_types_save_individually " << endl;
 		}
 
 
-		else if (stringcmp(argv[i], "-process_long_orbits") == 0) {
+		else if (ST.stringcmp(argv[i], "-process_long_orbits") == 0) {
 			f_process_long_orbits = TRUE;
 			Long_Orbits_Descr = NEW_OBJECT(packing_long_orbits_description);
 			cout << "-process_long_orbits " << endl;
@@ -119,19 +120,19 @@ int packing_was_description::read_arguments(int argc, std::string *argv,
 
 
 
-		else if (stringcmp(argv[i], "-spread_tables_prefix") == 0) {
+		else if (ST.stringcmp(argv[i], "-spread_tables_prefix") == 0) {
 			f_spread_tables_prefix = TRUE;
 			spread_tables_prefix.assign(argv[++i]);
 			cout << "-spread_tables_prefix "
 				<< spread_tables_prefix << endl;
 		}
 
-		else if (stringcmp(argv[i], "-report") == 0) {
+		else if (ST.stringcmp(argv[i], "-report") == 0) {
 			f_report = TRUE;
 			cout << "-report " << endl;
 		}
 
-		else if (stringcmp(argv[i], "-exact_cover") == 0) {
+		else if (ST.stringcmp(argv[i], "-exact_cover") == 0) {
 			f_exact_cover = TRUE;
 			ECA = NEW_OBJECT(exact_cover_arguments);
 			i += ECA->read_arguments(argc - (i + 1),
@@ -146,7 +147,7 @@ int packing_was_description::read_arguments(int argc, std::string *argv,
 			cout << "-exact_cover " << endl;
 		}
 
-		else if (stringcmp(argv[i], "-isomorph") == 0) {
+		else if (ST.stringcmp(argv[i], "-isomorph") == 0) {
 			f_isomorph = TRUE;
 			IA = NEW_OBJECT(isomorph_arguments);
 			i += IA->read_arguments(argc - (i + 1),
@@ -161,14 +162,14 @@ int packing_was_description::read_arguments(int argc, std::string *argv,
 			cout << "-isomorph " << endl;
 		}
 
-		else if (stringcmp(argv[i], "-regular_packing") == 0) {
+		else if (ST.stringcmp(argv[i], "-regular_packing") == 0) {
 			f_regular_packing = TRUE;
 			cout << "-regular_packing " << endl;
 		}
 
 
 
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			break;
 		}
 		else {

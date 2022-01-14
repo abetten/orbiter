@@ -36,20 +36,21 @@ int group_modification_description::read_arguments(
 {
 	int f_v = (verbose_level > 1);
 	int i;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "group_modification_description::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
 
-		if (stringcmp(argv[i], "-restricted_action") == 0) {
+		if (ST.stringcmp(argv[i], "-restricted_action") == 0) {
 			f_restricted_action = TRUE;
 			restricted_action_set_text.assign(argv[++i]);
 			if (f_v) {
 				cout << "-restricted_action " << restricted_action_set_text << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-from") == 0) {
+		else if (ST.stringcmp(argv[i], "-from") == 0) {
 			std::string from_text;
 			from_text.assign(argv[++i]);
 			from.push_back(from_text);
@@ -57,7 +58,7 @@ int group_modification_description::read_arguments(
 				cout << "-from " << from_text << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			if (f_v) {
 				cout << "-end" << endl;
 			}

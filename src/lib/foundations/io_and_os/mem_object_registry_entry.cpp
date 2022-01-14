@@ -188,8 +188,10 @@ int mem_object_registry_entry::size_of()
 
 void mem_object_registry_entry::print(int line)
 {
+	algorithms Algo;
+
 	cout << line << " : ";
-	print_pointer_hex(cout, pointer);
+	Algo.print_pointer_hex(cout, pointer);
 	cout << " : " << time_stamp << " : ";
 
 	print_type(cout);
@@ -206,8 +208,10 @@ void mem_object_registry_entry::print(int line)
 
 void mem_object_registry_entry::print_csv(ostream &ost, int line)
 {
+	algorithms Algo;
+
 	ost << line << ",";
-	print_pointer_hex(ost, pointer);
+	Algo.print_pointer_hex(ost, pointer);
 	ost << "," << time_stamp << ",";
 
 	print_type(ost);

@@ -1826,13 +1826,14 @@ void sorting::Heapsort_general_with_log(void *data, int *w, int len,
 	void *extra_data)
 {
 	int end;
+	algorithms Algo;
 
 	//cout << "Heapsort_general len=" << len << endl;
 	Heapsort_general_make_heap_with_log(data, w, len,
 			compare_func, swap_func, extra_data);
 	for (end = len - 1; end > 0; ) {
 		(*swap_func)(data, 0, end, extra_data);
-		int_swap(w[0], w[end]);
+		Algo.int_swap(w[0], w[end]);
 		//Heapsort_general_swap(v, 0, end);
 		end--;
 		Heapsort_general_sift_down_with_log(data, w, 0, end,
@@ -2216,6 +2217,7 @@ void sorting::Heapsort_general_sift_down_with_log(void *data, int *w, int start,
 	void *extra_data)
 {
 	int root, child, c;
+	algorithms Algo;
 
 	//cout << "Heapsort_general_sift_down " << start << " : " << end << endl;
 	root = start;
@@ -2232,7 +2234,7 @@ void sorting::Heapsort_general_sift_down_with_log(void *data, int *w, int start,
 		c = (*compare_func)(data, root, child, extra_data);
 		if (c < 0 /*v[root] < v[child] */) {
 			(*swap_func)(data, root, child, extra_data);
-			int_swap(w[root], w[child]);
+			Algo.int_swap(w[root], w[child]);
 			//Heapsort_swap(v, root, child, entry_size_in_chars);
 			root = child;
 		}

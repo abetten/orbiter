@@ -36,6 +36,7 @@ int ovoid_classify_description::read_arguments(int argc, std::string *argv,
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	string_tools ST;
 
 
 	if (f_v) {
@@ -43,22 +44,22 @@ int ovoid_classify_description::read_arguments(int argc, std::string *argv,
 	}
 	for (i = 0; i < argc; i++) {
 
-		if (stringcmp(argv[i], "-epsilon") == 0) {
+		if (ST.stringcmp(argv[i], "-epsilon") == 0) {
 			f_epsilon = TRUE;
-			epsilon = strtoi(argv[++i]);
+			epsilon = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-epsilon " << epsilon << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-d") == 0) {
+		else if (ST.stringcmp(argv[i], "-d") == 0) {
 			f_d = TRUE;
-			d = strtoi(argv[++i]);
+			d = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-d " << d << endl;
 			}
 		}
 
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			break;
 		}
 		else {

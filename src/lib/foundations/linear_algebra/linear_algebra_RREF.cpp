@@ -28,6 +28,7 @@ int linear_algebra::Gauss_int(int *A,
 	int f_vvv = FALSE; //(verbose_level >= 3);
 	int rank, i, j, k, jj;
 	int pivot, pivot_inv = 0, a, b, c, z, f;
+	algorithms Algo;
 
 	if (f_v) {
 		cout << "linear_algebra::Gauss_int" << endl;
@@ -52,11 +53,11 @@ int linear_algebra::Gauss_int(int *A,
 				// pivot element found:
 				if (k != i) {
 					for (jj = j; jj < n; jj++) {
-						int_swap(A[i * n + jj], A[k * n + jj]);
+						Algo.int_swap(A[i * n + jj], A[k * n + jj]);
 					}
 					if (f_P) {
 						for (jj = 0; jj < Pn; jj++) {
-							int_swap(P[i * Pn + jj], P[k * Pn + jj]);
+							Algo.int_swap(P[i * Pn + jj], P[k * Pn + jj]);
 						}
 					}
 				}
@@ -255,6 +256,7 @@ int linear_algebra::Gauss_int_with_pivot_strategy(int *A,
 	int f_vvv = FALSE; //(verbose_level >= 3);
 	int rank, i, j, k, jj;
 	int pivot, pivot_inv = 0, a, b, c, z, f, pi;
+	algorithms Algo;
 
 	if (f_v) {
 		cout << "linear_algebra::Gauss_int_with_pivot_strategy" << endl;
@@ -307,7 +309,7 @@ int linear_algebra::Gauss_int_with_pivot_strategy(int *A,
 		// pivot element found in row k, check if we need to swap rows:
 		if (k != i) {
 			for (jj = 0; jj < n; jj++) {
-				int_swap(A[i * n + jj], A[k * n + jj]);
+				Algo.int_swap(A[i * n + jj], A[k * n + jj]);
 			}
 		}
 
@@ -444,6 +446,7 @@ int linear_algebra::Gauss_int_with_given_pivots(int *A,
 	int f_vvv = FALSE; //(verbose_level >= 3);
 	int i, j, k, jj;
 	int pivot, pivot_inv = 0, a, b, c, z, f;
+	algorithms Algo;
 
 	if (f_v) {
 		cout << "linear_algebra::Gauss_int_with_given_pivots" << endl;
@@ -491,7 +494,7 @@ int linear_algebra::Gauss_int_with_given_pivots(int *A,
 		// pivot element found in row k, check if we need to swap rows:
 		if (k != i) {
 			for (jj = 0; jj < n; jj++) {
-				int_swap(A[i * n + jj], A[k * n + jj]);
+				Algo.int_swap(A[i * n + jj], A[k * n + jj]);
 			}
 		}
 
@@ -623,6 +626,7 @@ int linear_algebra::RREF_search_pivot(int *A, int m, int n,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int k, jj;
+	algorithms Algo;
 
 	if (f_v) {
 		cout << "linear_algebra::RREF_search_pivot" << endl;
@@ -646,7 +650,7 @@ int linear_algebra::RREF_search_pivot(int *A, int m, int n,
 				// pivot element found:
 				if (k != i) {
 					for (jj = j; jj < n; jj++) {
-						int_swap(A[i * n + jj], A[k * n + jj]);
+						Algo.int_swap(A[i * n + jj], A[k * n + jj]);
 					}
 				}
 				break;

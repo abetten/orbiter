@@ -2421,6 +2421,7 @@ void wreath_product::orbits_using_files_and_union_find(
 	long int i, b, h;
 	long int j, r, orbit_idx, rep;
 	long int nb_orbits = 0;
+	algorithms Algo;
 
 	//int mtx_n;
 
@@ -2539,8 +2540,8 @@ void wreath_product::orbits_using_files_and_union_find(
 			}
 			int u = i;
 			unsigned int t = T[i];
-			unsigned int r1 = root_of_tree_uint32_t(S, u);
-			unsigned int r2 = root_of_tree_uint32_t(S, t);
+			unsigned int r1 = Algo.root_of_tree_uint32_t(S, u);
+			unsigned int r2 = Algo.root_of_tree_uint32_t(S, t);
 
 			if (r1 != r2) {
 				if (r1 < r2) {
@@ -2596,7 +2597,7 @@ void wreath_product::orbits_using_files_and_union_find(
 		cout << "wreath_product::orbits_using_files_and_union_find Path compression:" << endl;
 	}
 	for (i = 0; i < degree_of_tensor_action; ++i) {
-		r = root_of_tree_uint32_t(S, i);
+		r = Algo.root_of_tree_uint32_t(S, i);
 		S[i] = r;
 	}
 	if (f_v) {

@@ -51,53 +51,54 @@ int dlx_problem_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	string_tools ST;
 
 	if (f_v) {
 		cout << "dlx_problem_description::read_arguments" << endl;
 	}
 	for (i = 0; i < argc; i++) {
 
-		if (stringcmp(argv[i], "-label_txt") == 0) {
+		if (ST.stringcmp(argv[i], "-label_txt") == 0) {
 			f_label_txt = TRUE;
 			label_txt.assign(argv[++i]);
 			if (f_v) {
 				cout << "-label_txt " << label_txt << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-label_tex") == 0) {
+		else if (ST.stringcmp(argv[i], "-label_tex") == 0) {
 			f_label_tex = TRUE;
 			label_tex.assign(argv[++i]);
 			if (f_v) {
 				cout << "-label_tex " << label_tex << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-data_label") == 0) {
+		else if (ST.stringcmp(argv[i], "-data_label") == 0) {
 			f_data_label = TRUE;
 			data_label.assign(argv[++i]);
 			if (f_v) {
 				cout << "-data_label " << data_label << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-write_solutions") == 0) {
+		else if (ST.stringcmp(argv[i], "-write_solutions") == 0) {
 			f_write_solutions = TRUE;
 			if (f_v) {
 				cout << "-write_solutions " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-write_tree") == 0) {
+		else if (ST.stringcmp(argv[i], "-write_tree") == 0) {
 			f_write_tree = TRUE;
 			if (f_v) {
 				cout << "-write_tree " << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-tracking_depth") == 0) {
+		else if (ST.stringcmp(argv[i], "-tracking_depth") == 0) {
 			f_tracking_depth = TRUE;
-			tracking_depth = strtoi(argv[++i]);
+			tracking_depth = ST.strtoi(argv[++i]);
 			if (f_v) {
 				cout << "-tracking_depth " << tracking_depth << endl;
 			}
 		}
-		else if (stringcmp(argv[i], "-end") == 0) {
+		else if (ST.stringcmp(argv[i], "-end") == 0) {
 			break;
 		}
 		else {

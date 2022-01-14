@@ -324,11 +324,13 @@ int os_interface::os_seconds_past_1970()
 void os_interface::get_string_from_command_line(std::string &p, int argc, std::string *argv,
 		int &i, int verbose_level)
 {
-	if (stringcmp(argv[i], "-long_string") == 0) {
+	string_tools ST;
+
+	if (ST.stringcmp(argv[i], "-long_string") == 0) {
 		i++;
 		p.assign("");
 		while (TRUE) {
-			if (stringcmp(argv[i], "-end_string") == 0) {
+			if (ST.stringcmp(argv[i], "-end_string") == 0) {
 				i++;
 				break;
 			}
