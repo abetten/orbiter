@@ -206,11 +206,6 @@ class interface_coding_theory {
 	int Hamming_space_n;
 	int Hamming_space_q;
 
-	int f_NTT;
-	int NTT_n;
-	int NTT_q;
-	std::string ntt_fname_code;
-
 	int f_general_code_binary;
 	int general_code_binary_n;
 	std::string general_code_binary_text;

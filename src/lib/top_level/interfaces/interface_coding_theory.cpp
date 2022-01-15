@@ -44,11 +44,6 @@ interface_coding_theory::interface_coding_theory()
 	Hamming_space_n = 0;
 	Hamming_space_q = 0;
 
-	f_NTT = FALSE;
-	NTT_n = 0;
-	NTT_q = 0;
-	//ntt_fname_code = NULL;
-
 	f_general_code_binary = FALSE;
 	general_code_binary_n = 0;
 	//std::string general_code_binary_text;
@@ -115,9 +110,6 @@ void interface_coding_theory::print_help(int argc,
 	else if (ST.stringcmp(argv[i], "-Hamming_space_distance_matrix") == 0) {
 		cout << "-Hamming_space_distance_matrix <int : n> <int : q>" << endl;
 	}
-	else if (ST.stringcmp(argv[i], "-NTT") == 0) {
-		cout << "-NTT <int : n> <int : q> <string : fname_code> " << endl;
-	}
 	else if (ST.stringcmp(argv[i], "-general_code_binary") == 0) {
 		cout << "-general_code_binary <int : n> <string : set> " << endl;
 	}
@@ -182,9 +174,6 @@ int interface_coding_theory::recognize_keyword(int argc,
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-Hamming_space_distance_matrix") == 0) {
-		return true;
-	}
-	else if (ST.stringcmp(argv[i], "-NTT") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-general_code_binary") == 0) {
@@ -298,15 +287,6 @@ void interface_coding_theory::read_arguments(int argc,
 		Hamming_space_q = ST.strtoi(argv[++i]);
 		if (f_v) {
 			cout << "-Hamming_space_distance_matrix " << Hamming_space_n << " " << Hamming_space_q << endl;
-		}
-	}
-	else if (ST.stringcmp(argv[i], "-NTT") == 0) {
-		f_NTT = TRUE;
-		NTT_n = ST.strtoi(argv[++i]);
-		NTT_q = ST.strtoi(argv[++i]);
-		ntt_fname_code.assign(argv[++i]);
-		if (f_v) {
-			cout << "-NTT " << NTT_n << " " << NTT_q << " " << ntt_fname_code << endl;
 		}
 	}
 	else if (ST.stringcmp(argv[i], "-general_code_binary") == 0) {
@@ -503,9 +483,6 @@ void interface_coding_theory::print()
 	if (f_Hamming_space_distance_matrix) {
 		cout << "-Hamming_space_distance_matrix " << Hamming_space_n << " " << Hamming_space_q << endl;
 	}
-	if (f_NTT) {
-		cout << "-NTT " << NTT_n << " " << NTT_q << " " << ntt_fname_code << endl;
-	}
 	if (f_general_code_binary) {
 		cout << "-general_code_binary " << general_code_binary_n << " "
 				<< general_code_binary_text << endl;
@@ -631,11 +608,6 @@ void interface_coding_theory::worker(int verbose_level)
 
 		Coding.make_Hamming_graph_and_write_file(Hamming_space_n, Hamming_space_q,
 				FALSE /* f_projective*/, verbose_level);
-	}
-	else if (f_NTT) {
-		number_theoretic_transform NTT;
-
-		NTT.init(ntt_fname_code, NTT_n, NTT_q, verbose_level);
 	}
 	else if (f_general_code_binary) {
 			long int *set;
