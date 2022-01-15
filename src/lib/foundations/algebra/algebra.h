@@ -141,7 +141,6 @@ public:
 	void test_unipoly();
 	void test_unipoly2();
 	int is_diagonal_matrix(int *A, int n);
-	const char *get_primitive_polynomial(int p, int e, int verbose_level);
 	void test_longinteger();
 	void test_longinteger2();
 	void test_longinteger3();
@@ -721,8 +720,6 @@ public:
 };
 
 
-void vector_space_unrank_point_callback(int *v, long int rk, void *data);
-long int vector_space_rank_point_callback(int *v, void *data);
 
 }}
 

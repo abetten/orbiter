@@ -290,9 +290,9 @@ void longinteger_domain::mult(
 	
 	if (f_v) {
 		cout << "longinteger_domain::mult a=";
-		longinteger_print_digits(a.rep(), a.len());
+		print_digits(a.rep(), a.len());
 		cout << "b=";
-		longinteger_print_digits(b.rep(), b.len());
+		print_digits(b.rep(), b.len());
 		cout << endl;
 	}
 	for (j = 0; j < b.len(); j++) {
@@ -322,13 +322,13 @@ void longinteger_domain::mult(
 	}
 	if (f_v) {
 		cout << "longinteger_domain::mult c=";
-		longinteger_print_digits(c.rep(), c.len());
+		print_digits(c.rep(), c.len());
 		cout << endl;
 	}
 	c.normalize();
 	if (f_v) {
 		cout << "longinteger_domain::mult after normalize, c=";
-		longinteger_print_digits(c.rep(), c.len());
+		print_digits(c.rep(), c.len());
 		cout << endl;
 	}
 }
@@ -1027,7 +1027,7 @@ void longinteger_domain::square_root(
 
 	if (f_v) {
 		cout << "longinteger_domain::square_root a=";
-		longinteger_print_digits(a.rep(), a.len());
+		print_digits(a.rep(), a.len());
 	}
 
 	for (i = len - 1; i >= 0; i--) {
@@ -1060,13 +1060,13 @@ void longinteger_domain::square_root(
 
 	if (f_v) {
 		cout << "longinteger_domain::square_root c=";
-		longinteger_print_digits(sqrt_a.rep(), sqrt_a.len());
+		print_digits(sqrt_a.rep(), sqrt_a.len());
 		cout << endl;
 	}
 	sqrt_a.normalize();
 	if (f_v) {
 		cout << "longinteger_domain::square_root after normalize, sqrt_a=";
-		longinteger_print_digits(sqrt_a.rep(), sqrt_a.len());
+		print_digits(sqrt_a.rep(), sqrt_a.len());
 		cout << endl;
 	}
 }
@@ -2146,13 +2146,7 @@ void longinteger_domain::square_root_floor(longinteger_object &a,
 
 
 
-
-//##############################################################################
-// global functions:
-//##############################################################################
-
-
-void longinteger_print_digits(char *rep, int len)
+void longinteger_domain::print_digits(char *rep, int len)
 {
 	for (int h = 0; h < len; h++) {
 		cout << (char)('0' + rep[h]) << " ";

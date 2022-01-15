@@ -468,7 +468,6 @@ void HS_early_test_func_callback(long int *S, int len,
 	long int *candidates, int nb_candidates,
 	long int *good_candidates, int &nb_good_candidates,
 	void *data, int verbose_level);
-int disjoint_sets(long int *v, long int *w, int len);
 void projective_space_init_line_action(projective_space *P,
 		action *A_points, action *&A_on_lines, int verbose_level);
 

@@ -17,6 +17,10 @@ namespace orbiter {
 namespace foundations {
 
 
+static void vector_space_unrank_point_callback(int *v, long int rk, void *data);
+static long int vector_space_rank_point_callback(int *v, void *data);
+
+
 vector_space::vector_space()
 {
 	null();
@@ -272,12 +276,13 @@ ret:
 	return r;
 }
 
+
 // #############################################################################
-// global functions:
+// static functions:
 // #############################################################################
 
 
-void vector_space_unrank_point_callback(int *v, long int rk, void *data)
+static void vector_space_unrank_point_callback(int *v, long int rk, void *data)
 {
 	vector_space *VS = (vector_space *) data;
 
@@ -285,7 +290,7 @@ void vector_space_unrank_point_callback(int *v, long int rk, void *data)
 
 }
 
-long int vector_space_rank_point_callback(int *v, void *data)
+static long int vector_space_rank_point_callback(int *v, void *data)
 {
 	vector_space *VS = (vector_space *) data;
 	long int rk;

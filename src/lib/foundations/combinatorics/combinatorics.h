@@ -109,8 +109,6 @@ public:
 		int verbose_level);
 };
 
-void brick_test(int q, int verbose_level);
-
 
 
 
@@ -475,7 +473,7 @@ public:
 };
 
 // combinatorics.cpp:
-long int callback_ij2k(long int i, long int j, int n);
+//long int callback_ij2k(long int i, long int j, int n);
 void combinatorics_domain_free_global_data();
 void combinatorics_domain_free_tab_q_binomials();
 

@@ -71,12 +71,26 @@ orbiter_session::orbiter_session()
 	nb_times_projective_space_created = 0;
 	nb_times_action_created = 0;
 	nb_calls_to_densenauty = 0;
+
+	global_mem_object_registry = NEW_OBJECT(mem_object_registry);
+
+	longinteger_f_print_scientific = FALSE;
+	syntax_tree_node_index = 0;
+
+
 }
 
 
 orbiter_session::~orbiter_session()
 {
-	Orbiter = NULL;
+	int verbose_level = 1;
+
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "orbiter_session::~orbiter_session" << endl;
+	}
+
 
 	cout << "nb_times_finite_field_created=" << nb_times_finite_field_created << endl;
 	cout << "nb_times_projective_space_created=" << nb_times_projective_space_created << endl;
@@ -85,6 +99,12 @@ orbiter_session::~orbiter_session()
 
 	if (Orbiter_symbol_table) {
 		FREE_OBJECT(Orbiter_symbol_table);
+	}
+
+	Orbiter = NULL;
+
+	if (f_v) {
+		cout << "orbiter_session::~orbiter_session done" << endl;
 	}
 }
 
@@ -655,5 +675,19 @@ vector_builder *orbiter_session::get_object_of_type_vector(std::string &label)
 
 
 }
+
+void orbiter_session::start_memory_debug()
+{
+	f_memory_debug = TRUE;
+	cout << "memory debugging started" << endl;
+}
+
+void orbiter_session::stop_memory_debug()
+{
+	f_memory_debug = FALSE;
+	cout << "memory debugging stopped" << endl;
+}
+
+
 }}
 

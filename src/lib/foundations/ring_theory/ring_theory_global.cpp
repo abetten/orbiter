@@ -2001,10 +2001,10 @@ void ring_theory_global::make_all_irreducible_polynomials_of_degree_d(
 
 	unipoly_domain FX(F);
 
-	const char *poly;
-	algebra_global Algebra;
+	string poly;
+	knowledge_base K;
 
-	poly = Algebra.get_primitive_polynomial(F->q, d, 0 /* verbose_level */);
+	K.get_primitive_polynomial(poly, F->q, d, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "ring_theory_global::make_all_irreducible_polynomials_of_degree_d "
@@ -2172,10 +2172,10 @@ int ring_theory_global::count_all_irreducible_polynomials_of_degree_d(
 
 	unipoly_domain FX(F);
 
-	const char *poly;
-	algebra_global Algebra;
+	string poly;
+	knowledge_base K;
 
-	poly = Algebra.get_primitive_polynomial(F->q, d, 0 /* verbose_level */);
+	K.get_primitive_polynomial(poly, F->q, d, 0 /* verbose_level */);
 
 	unipoly_object m;
 	unipoly_object g;
@@ -2531,7 +2531,7 @@ void ring_theory_global::search_for_primitive_polynomials(
 	number_theory_domain NT;
 
 
-	longinteger_f_print_scientific = FALSE;
+	Orbiter->longinteger_f_print_scientific = FALSE;
 
 
 	if (f_v) {

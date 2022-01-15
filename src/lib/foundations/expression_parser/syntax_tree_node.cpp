@@ -16,13 +16,12 @@ using namespace std;
 namespace orbiter {
 namespace foundations {
 
-int syntax_tree_node_index = 0;
 
 syntax_tree_node::syntax_tree_node()
 {
 	Tree = NULL;
-	idx = syntax_tree_node_index;
-	syntax_tree_node_index++;
+	idx = Orbiter->syntax_tree_node_index;
+	Orbiter->syntax_tree_node_index++;
 
 	f_terminal = false;
 	T = NULL;

@@ -107,9 +107,9 @@ void nauty_interface::nauty_interface_graph_bitvec(int v, bitvector *Bitvec,
 		EMPTYSET(row, m);
 	}
 	
-	for (i = 0; i < v; i++) {
-		for (j = i + 1; j < v; j++) {
-			k = callback_ij2k(i, j, v);
+	for (i = 0, k = 0; i < v; i++) {
+		for (j = i + 1; j < v; j++, k++) {
+			//k = callback_ij2k(i, j, v);
 			if (Bitvec->s_i(k)) {
 				row = GRAPHROW(g, i, m);
 				ADDELEMENT(row, j);

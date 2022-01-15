@@ -31,7 +31,6 @@ MODULES = \
 	sorting.o \
 	spreadsheet.o \
 	string_tools.o \
-	super_fast_hash.o \
 	vector_builder_description.o \
 	vector_builder.o \
 	vector_hashing.o 

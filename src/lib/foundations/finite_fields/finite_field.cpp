@@ -28,7 +28,7 @@ finite_field::finite_field()
 	//std::string symbol_for_print;
 
 
-	polynomial = NULL;
+	//polynomial = NULL;
 
 	//std::string label;
 	//std::string label_tex;
@@ -68,10 +68,11 @@ finite_field::~finite_field()
 		FREE_OBJECT(Iwo);
 	}
 
-
+#if 0
 	if (polynomial) {
 		FREE_char(polynomial);
 	}
+#endif
 	if (Linear_algebra) {
 		FREE_OBJECT(Linear_algebra);
 	}
@@ -166,9 +167,9 @@ void finite_field::finite_field_init(int q, int f_without_tables, int verbose_le
 	
 	if (e > 1) {
 		f_is_prime_field = FALSE;
-		algebra_global Algebra;
+		knowledge_base K;
 
-		poly.assign(Algebra.get_primitive_polynomial(p, e, verbose_level));
+		K.get_primitive_polynomial(poly, p, e, verbose_level);
 		if (f_v) {
 			cout << "finite_field::finite_field_init q=" << q << " before init_override_polynomial poly = " << poly << endl;
 		}
@@ -289,7 +290,6 @@ void finite_field::init_override_polynomial(int q,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	int l;
 	number_theory_domain NT;
 
 	if (f_v) {
@@ -310,10 +310,10 @@ void finite_field::init_override_polynomial(int q,
 
 	if (e > 1) {
 		f_is_prime_field = FALSE;
-		algebra_global Algebra;
+		knowledge_base K;
 
 		if (poly.length() == 0) {
-			my_poly.assign(Algebra.get_primitive_polynomial(p, e, verbose_level));
+			K.get_primitive_polynomial(my_poly, p, e, verbose_level);
 		}
 		else {
 			my_poly.assign(poly);
@@ -335,7 +335,7 @@ void finite_field::init_override_polynomial(int q,
 				"GF(" << q << ") = GF(" << p << "^" << e << ")";
 		if (e > 1) {
 			cout << ", polynomial = ";
-			print_minimum_polynomial(p, my_poly.c_str());
+			print_minimum_polynomial(p, my_poly);
 			cout << " = " << my_poly << endl;
 		}
 		else {
@@ -343,11 +343,11 @@ void finite_field::init_override_polynomial(int q,
 		}
 	}
 
-	
+#if 0
 	l = my_poly.length();
 	polynomial = NEW_char(l + 1);
 	strcpy(polynomial, my_poly.c_str());
-
+#endif
 
 	char str[1000];
 
@@ -440,7 +440,7 @@ long int finite_field::compute_subfield_polynomial(int order_subfield,
 	unipoly_domain FX(&GFp);
 	unipoly_object m;
 
-	FX.create_object_by_rank_string(m, polynomial, 0/*verbose_level*/);
+	FX.create_object_by_rank_string(m, my_poly, 0/*verbose_level*/);
 	unipoly_domain Fq(&GFp, m, verbose_level - 1);
 
 
@@ -607,7 +607,7 @@ void finite_field::compute_subfields(int verbose_level)
 	unipoly_domain FX(&GFp);
 	unipoly_object m;
 
-	FX.create_object_by_rank_string(m, polynomial, 0 /*verbose_level*/);
+	FX.create_object_by_rank_string(m, my_poly, 0 /*verbose_level*/);
 	unipoly_domain Fq(&GFp, m, verbose_level - 1);
 
 	//Fq.print_object(m, cout);
@@ -683,7 +683,7 @@ int finite_field::compute_order_of_element(int elt, int verbose_level)
 	unipoly_domain FX(&GFp);
 	unipoly_object m;
 
-	FX.create_object_by_rank_string(m, polynomial, verbose_level - 2);
+	FX.create_object_by_rank_string(m, my_poly, verbose_level - 2);
 	if (f_vv) {
 		cout << "m=";
 		FX.print_object(m, cout);

@@ -17,20 +17,26 @@ void free_global_data()
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "discreta_global free_global_data freeing global data" << endl;
+		cout << "discreta_global free_global_data" << endl;
 	}
 	//orthogonal_points_free_global_data();
 	combinatorics_domain_free_global_data();
 	combinatorics_domain_free_tab_q_binomials();
+	if (f_v) {
+		cout << "discreta_global free_global_data done" << endl;
+	}
 }
 
 void the_end(int t0)
 {
-	int verbose_level = 0;
+	int verbose_level = 1;
 	int f_v = (verbose_level >= 1);
 	file_io Fio;
 	os_interface Os;
 
+	if (f_v) {
+		 cout << "the_end" << endl;
+	}
 	if (f_v) {
 		cout << "***************** The End **********************" << endl;
 		//cout << "nb_calls_to_finite_field_init="
@@ -38,7 +44,10 @@ void the_end(int t0)
 	}
 	free_global_data();
 	if (f_v) {
-		if (f_memory_debug) {
+		 cout << "the_end after free_global_data" << endl;
+	}
+	if (f_v) {
+		if (Orbiter->f_memory_debug) {
 			//registry_dump();
 			//registry_dump_sorted();
 			}
@@ -54,6 +63,9 @@ void the_end(int t0)
 		mem_usage = Os.os_memory_usage();
 		fname.assign("memory_usage.csv");
 		Fio.int_matrix_write_csv(fname, &mem_usage, 1, 1);
+	}
+	if (f_v) {
+		 cout << "the_end done" << endl;
 	}
 }
 

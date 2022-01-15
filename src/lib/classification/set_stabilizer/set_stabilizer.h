@@ -18,6 +18,8 @@ namespace classification {
 // compute_stabilizer.cpp
 // ####################################################################################
 
+//! to compute the set-stabilizer
+
 class compute_stabilizer {
 
 public:

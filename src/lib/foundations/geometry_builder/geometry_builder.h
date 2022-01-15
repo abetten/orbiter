@@ -482,16 +482,6 @@ public:
 
 
 
-// globals.cpp:
-int tuple_cmp(int *a, int *b, int l);
-void print_theX(int *theX, int dim_n, int v, int b, int *R);
-void print_theX_pq(
-	int *theX, int dim_n, int v, int b, int *R,
-	cperm *pv, cperm *qv);
-void cperm_test(void);
-
-
-
 
 // #############################################################################
 // inc_encoding.cpp

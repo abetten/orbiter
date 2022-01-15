@@ -48,8 +48,8 @@ void spread_classify::print_isomorphism_type(isomorph *Iso,
 
 	//sprintf(fname_klein, "%s_%d_klein.tex", Iso->prefix, iso_cnt);
 	
-	int save_longinteger_f_print_scientific = longinteger_f_print_scientific;
-	longinteger_f_print_scientific = FALSE;
+	int save_longinteger_f_print_scientific = Orbiter->longinteger_f_print_scientific;
+	Orbiter->longinteger_f_print_scientific = FALSE;
 	{
 		ofstream file(fname);
 		latex_interface L;
@@ -73,7 +73,7 @@ void spread_classify::print_isomorphism_type(isomorph *Iso,
 	
 		L.foot(file);
 
-		longinteger_f_print_scientific = save_longinteger_f_print_scientific;
+		Orbiter->longinteger_f_print_scientific = save_longinteger_f_print_scientific;
 	}
 
 	file_io Fio;

@@ -30,7 +30,7 @@ void finite_field::report(std::ostream &ost, int verbose_level)
 
 }
 
-void finite_field::print_minimum_polynomial(int p, const char *polynomial)
+void finite_field::print_minimum_polynomial(int p, std::string &polynomial)
 {
 	finite_field GFp;
 
@@ -39,7 +39,7 @@ void finite_field::print_minimum_polynomial(int p, const char *polynomial)
 	unipoly_domain FX(&GFp);
 	unipoly_object m, n;
 
-	FX.create_object_by_rank_string(m, polynomial, 0);
+	FX.create_object_by_rank_string(m, my_poly, 0);
 	FX.create_object_by_rank_string(n, polynomial, 0);
 	{
 		unipoly_domain Fq(&GFp, m, 0 /* verbose_level */);
@@ -68,7 +68,7 @@ void finite_field::print_detailed(int f_add_mult_table)
 		//poly = get_primitive_polynomial(p, e, 0 /* verbose_level */);
 
 		cout << "polynomial = ";
-		print_minimum_polynomial(p, polynomial);
+		print_minimum_polynomial(p, my_poly);
 		cout << endl;
 		//cout << " = " << poly << endl;
 
@@ -76,7 +76,7 @@ void finite_field::print_detailed(int f_add_mult_table)
 			cout << "finite_field::print_detailed !f_has_table" << endl;
 			exit(1);
 		}
-		T->print_tables_extension_field(polynomial);
+		T->print_tables_extension_field(my_poly);
 	}
 	if (f_add_mult_table) {
 		if (!f_has_table) {
@@ -716,10 +716,10 @@ void finite_field::cheat_sheet_subfields(ostream &f, int verbose_level)
 		unipoly_object m;
 
 
-		FX.create_object_by_rank_string(m, polynomial, verbose_level - 2);
+		FX.create_object_by_rank_string(m, my_poly, verbose_level - 2);
 		f << "$";
 		FX.print_object(m, f);
-		f << "$ = " << polynomial << "\\\\" << endl;
+		f << "$ = " << my_poly << "\\\\" << endl;
 	}
 
 	f << "$Z_i = \\log_\\alpha (1 + \\alpha^i)$\\\\" << endl;
@@ -770,7 +770,7 @@ void finite_field::report_subfields(std::ostream &ost, int verbose_level)
 				unipoly_domain FX(&GFp);
 				unipoly_object m;
 
-				FX.create_object_by_rank_string(m, polynomial,
+				FX.create_object_by_rank_string(m, my_poly,
 						0/*verbose_level*/);
 				unipoly_domain Fq(&GFp, m, 0 /* verbose_level */);
 				unipoly_object elt;

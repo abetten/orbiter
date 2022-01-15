@@ -357,9 +357,9 @@ public:
 		int n, int q, int f_semilinear);
 	void square_root_floor(longinteger_object &a,
 			longinteger_object &x, int verbose_level);
-};
+	void print_digits(char *rep, int len);
 
-void longinteger_print_digits(char *rep, int len);
+};
 
 
 
@@ -368,7 +368,6 @@ void longinteger_print_digits(char *rep, int len);
 // longinteger_object.cpp:
 // #############################################################################
 
-extern int longinteger_f_print_scientific;
 
 //! a class to represent arbitrary precision integers
 
@@ -680,8 +679,8 @@ public:
 		longinteger_object &rank,
 		const char *file, int line,
 		int verbose_level);
-	void create_object_by_rank_string(unipoly_object &p,
-		const char *rk, int verbose_level);
+	void create_object_by_rank_string(
+		unipoly_object &p, std::string &rk, int verbose_level);
 	void create_Dickson_polynomial(unipoly_object &p, int *map);
 	void delete_object(unipoly_object &p);
 	void unrank(unipoly_object p, int rk);

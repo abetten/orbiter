@@ -226,7 +226,7 @@ void tree_node::place_xy(int left, int right, int ymax, int max_depth)
 	double dx;
 	
 	placement_x = (left + right) >> 1;
-	placement_y = tree_node_calc_y_coordinate(ymax, depth, max_depth);
+	placement_y = calc_y_coordinate(ymax, depth, max_depth);
 	w = weight;
 	width = right - left;
 	dx = (double) width / (double) (w - 1);
@@ -697,7 +697,7 @@ void tree_node::draw_sideways(mp_graphics &G, int f_circletext, int f_i,
 }
 
 
-int tree_node_calc_y_coordinate(int ymax, int l, int max_depth)
+int tree_node::calc_y_coordinate(int ymax, int l, int max_depth)
 {
 	int dy, y;
 	

@@ -446,11 +446,6 @@ public:
 
 };
 
-void interface_povray_draw_frame(
-	animate *Anim, int h, int nb_frames, int round,
-	double clipping_radius,
-	std::ostream &fp,
-	int verbose_level);
 
 
 // #############################################################################
@@ -1526,9 +1521,10 @@ public:
 	void draw_sideways(mp_graphics &G, int f_circletext, int f_i, 
 		int f_has_parent, int parent_x, int parent_y, 
 		int max_depth, int f_edge_labels);
+	int calc_y_coordinate(int ymax, int l, int max_depth);
+
 };
 
-int tree_node_calc_y_coordinate(int ymax, int l, int max_depth);
 
 // #############################################################################
 // video_draw_options.cpp:

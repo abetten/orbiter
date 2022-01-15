@@ -421,13 +421,14 @@ void tree::circle_center_and_radii(int xmax, int ymax,
 {
 	int l, dy;
 	double y;
+	tree_node N;
 
 	x0 = xmax * 0.5;
 	y0 = ymax * 0.5;
 	rad = NEW_int(max_depth + 1);
 	for (l = 0; l <= max_depth; l++) {
 		dy = (int)((double)ymax / (double)(max_depth + 1));
-		y = tree_node_calc_y_coordinate(ymax, l, max_depth);
+		y = N.calc_y_coordinate(ymax, l, max_depth);
 		y = ymax - y;
 		y -= dy * 0.5;
 		y /= ymax;

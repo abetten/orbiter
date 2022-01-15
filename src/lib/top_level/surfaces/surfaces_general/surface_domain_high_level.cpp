@@ -147,91 +147,6 @@ void surface_domain_high_level::do_sweep_4_27(
 }
 
 
-#if 0
-void surface_domain_high_level::do_create_surface(
-		projective_space_with_action *PA,
-		surface_create_description *Surface_Descr,
-		poset_classification_control *Control_six_arcs,
-		int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "surface_domain_high_level::do_create_surface" << endl;
-		cout << "surface_domain_high_level::do_create_surface verbose_level=" << verbose_level << endl;
-	}
-
-
-	//int q;
-	//finite_field *F;
-	//surface_domain *Surf;
-	surface_with_action *Surf_A;
-
-
-#if 0
-	if (f_v) {
-		cout << "surface_domain_high_level::do_create_surface before Surface_Descr->get_q" << endl;
-	}
-	q = Surface_Descr->get_q();
-	if (f_v) {
-		cout << "surface_domain_high_level::do_create_surface q = " << q << endl;
-	}
-
-
-	F = PA->F;
-	if (F->q != q) {
-		cout << "F->q != q" << endl;
-		exit(1);
-	}
-
-
-	if (f_v) {
-		cout << "surface_domain_high_level::do_create_surface before Surf->init" << endl;
-	}
-	Surf = NEW_OBJECT(surface_domain);
-	Surf->init(F, 0 /*verbose_level - 1*/);
-	if (f_v) {
-		cout << "surface_domain_high_level::do_create_surface after Surf->init" << endl;
-	}
-
-	Surf_A = NEW_OBJECT(surface_with_action);
-
-	if (f_v) {
-		cout << "surface_domain_high_level::do_create_surface before Surf_A->init" << endl;
-	}
-	Surf_A->init(Surf, PA, TRUE /* f_recoordinatize */, 0 /*verbose_level*/);
-	if (f_v) {
-		cout << "surface_domain_high_level::do_create_surface after Surf_A->init" << endl;
-	}
-#else
-	PA->setup_surface_with_action(
-			Surf_A,
-			verbose_level);
-
-	//Surf = Surf_A->Surf;
-
-#endif
-
-
-	if (f_v) {
-		cout << "surface_domain_high_level::do_create_surface before Surf_A->create_surface_and_do_report" << endl;
-	}
-	Surf_A->create_surface_and_do_report(
-				Surface_Descr,
-				TRUE, Control_six_arcs,
-				verbose_level);
-	if (f_v) {
-		cout << "surface_domain_high_level::do_create_surface after Surf_A->create_surface_and_do_report" << endl;
-	}
-
-
-
-	if (f_v) {
-		cout << "surface_domain_high_level::do_create_surface done" << endl;
-	}
-}
-#endif
-
 
 void surface_domain_high_level::classify_surfaces_with_double_sixes(
 		projective_space_with_action *PA,
@@ -327,32 +242,6 @@ void surface_domain_high_level::prepare_surface_classify_wedge(
 
 	Surf = Surf_A->Surf;
 
-#if 0
-	if (f_v) {
-		cout << "surface_domain_high_level::prepare_surface_classify_wedge before Surf->init" << endl;
-	}
-	Surf = NEW_OBJECT(surface_domain);
-	Surf->init(F, 0 /*verbose_level - 3*/);
-	if (f_v) {
-		cout << "surface_domain_high_level::prepare_surface_classify_wedge after Surf->init" << endl;
-	}
-
-
-	Surf_A = NEW_OBJECT(surface_with_action);
-
-
-	//int f_semilinear;
-
-	//f_semilinear = LG->A2->is_semilinear_matrix_group();
-
-	if (f_v) {
-		cout << "surface_domain_high_level::prepare_surface_classify_wedge before Surf_A->init" << endl;
-	}
-	Surf_A->init(Surf, PA, TRUE /* f_recoordinatize */, verbose_level - 1);
-	if (f_v) {
-		cout << "surface_domain_high_level::prepare_surface_classify_wedge after Surf_A->init" << endl;
-	}
-#endif
 
 
 	SCW = NEW_OBJECT(surface_classify_wedge);
@@ -1174,6 +1063,8 @@ void surface_domain_high_level::do_cubic_surface_properties(
 }
 
 
+//! numerical data for one cubic surface to be used in reports
+
 struct cubic_surface_data_set {
 
 	int orbit_idx;
@@ -1570,7 +1461,7 @@ void surface_domain_high_level::report_surfaces_by_lines(std::ostream &ost,
 
 
 
-
+//! data on a single cubic surface used to prepare the ATLAS of cubic surfaces
 
 struct table_surfaces_field_order {
 	int q;

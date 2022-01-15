@@ -14,7 +14,6 @@ MODULES = \
 		geometry_builder_description.o \
 		geometry_builder.o \
 		girth_test.o \
-		globals.o \
 		inc_encoding.o \
 		incidence.o \
 		test_semicanonical.o \

@@ -6,7 +6,7 @@
  */
 
 /**
- * This file returns the time in millieconds
+ * This file returns the time in milliseconds
  */
 
 #ifndef CHRONO_H

@@ -135,10 +135,10 @@ void linear_algebra_global::compute_normal_basis(
 
 	unipoly_domain FX(F);
 
-	const char *poly;
-	algebra_global Algebra;
+	string poly;
+	knowledge_base K;
 
-	poly = Algebra.get_primitive_polynomial(F->q, d, 0 /* verbose_level */);
+	K.get_primitive_polynomial(poly, F->q, d, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "linear_algebra_global::compute_normal_basis "

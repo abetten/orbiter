@@ -487,12 +487,12 @@ public:
 	void print_csv(std::ostream &ost, int line);
 };
 
-extern int f_memory_debug;
-extern int memory_debug_verbose_level;
-extern mem_object_registry global_mem_object_registry;
+//extern int f_memory_debug;
+//extern int memory_debug_verbose_level;
+//extern mem_object_registry global_mem_object_registry;
 
-void start_memory_debug();
-void stop_memory_debug();
+//void start_memory_debug();
+//void stop_memory_debug();
 
 
 // #############################################################################

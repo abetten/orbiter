@@ -16,7 +16,6 @@ namespace orbiter {
 namespace foundations {
 
 
-int longinteger_f_print_scientific = FALSE;
 
 longinteger_object::longinteger_object()
 {
@@ -37,7 +36,8 @@ void longinteger_object::freeself()
 	if (r) {
 		if (f_v) {
 			cout << "longinteger_object::freeself ";
-			longinteger_print_digits(rep(), len());
+			longinteger_domain D;
+			D.print_digits(rep(), len());
 			cout << endl;
 			//print(cout);
 		}
@@ -87,7 +87,8 @@ void longinteger_object::create(long int i, const char *file, int line)
 	if (f_v) {
 		cout << "longinteger_object::create "
 				"i=" << ii << " created ";
-		longinteger_print_digits(rep(), len());
+		longinteger_domain D;
+		D.print_digits(rep(), len());
 		cout << " with j=" << j << " digits" << endl;
 	}
 }
@@ -226,7 +227,8 @@ void longinteger_object::assign_to(longinteger_object &b)
 				"before b.freeself" << endl;
 		if (b.rep()) {
 			cout << "this is what we free: ";
-			longinteger_print_digits(b.rep(), b.len());
+			longinteger_domain D;
+			D.print_digits(b.rep(), b.len());
 			cout << endl;
 		}
 	}
@@ -243,7 +245,8 @@ void longinteger_object::assign_to(longinteger_object &b)
 	}
 	if (f_v) {
 		cout << "after assign: ";
-		longinteger_print_digits(b.rep(), b.len());
+		longinteger_domain D;
+		D.print_digits(b.rep(), b.len());
 		cout << endl;
 		cout << "longinteger_object::assign_to done" << endl;
 	}
@@ -282,7 +285,7 @@ ostream& longinteger_object::print(ostream& ost)
 			c = '0' + r[i];
 			ost << c;
 		}
-		if (longinteger_f_print_scientific) {
+		if (Orbiter->longinteger_f_print_scientific) {
 			if (l > 5) {
 				char c1, c2;
 

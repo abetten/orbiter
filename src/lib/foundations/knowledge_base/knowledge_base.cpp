@@ -2349,7 +2349,7 @@ void knowledge_base::BLT_stab_gens(int q, int no,
 
 
 
-const char *knowledge_base::override_polynomial_subfield(int q)
+void knowledge_base::override_polynomial_subfield(std::string &poly, int q)
 {
 	const char *override_poly = NULL;
 	int p, h;
@@ -2361,7 +2361,8 @@ const char *knowledge_base::override_polynomial_subfield(int q)
 		exit(1);
 		}
 	if (h == 1) {
-		return NULL;
+		poly.assign("");
+		return;
 		}
 	if (q == 8) {
 		override_poly = "13"; // Warning !!!
@@ -2387,7 +2388,9 @@ const char *knowledge_base::override_polynomial_subfield(int q)
 	if (override_poly == NULL) {
 		cout << "knowledge_base::override_polynomial_subfield, "
 				"do not have a polynomial for q=" << q << endl;
-		
+		exit(1);
+
+#if 0
 		int verbose_level = 2;
 		finite_field f, F;
 		int qq = q * q;
@@ -2404,14 +2407,13 @@ const char *knowledge_base::override_polynomial_subfield(int q)
 			F.compute_subfields(verbose_level);
 			//exit(1);
 			}
-
-
-		return NULL;
+#endif
+		//return NULL;
 		}
-	return override_poly;
+	poly.assign(override_poly);
 }
 
-const char *knowledge_base::override_polynomial_extension_field(int q)
+void knowledge_base::override_polynomial_extension_field(std::string &poly, int q)
 {
 	const char *override_poly = NULL;
 	int p, h;
@@ -2423,10 +2425,9 @@ const char *knowledge_base::override_polynomial_extension_field(int q)
 		exit(1);
 		}
 	if (h == 1) {
-		algebra_global Algebra;
-
-		return Algebra.get_primitive_polynomial(q, 2, 0/*verbose_level*/);
-		}
+		get_primitive_polynomial(poly, q, 2, 0/*verbose_level*/); // ToDo
+		return;
+	}
 #if 0
 	if (h == 1) {
 		return NULL;
@@ -2434,28 +2435,28 @@ const char *knowledge_base::override_polynomial_extension_field(int q)
 #endif
 	if (q == 9) {
 		override_poly = "110";
-		}
+	}
 	else if (q == 25) {
 		override_poly = "767";
-		}
+	}
 	else if (q == 27) {
 		override_poly = "974";
-		}
+	}
 	else if (q == 49) {
 		override_poly = "2754";
-		}
+	}
 	else if (q == 81) {
 		override_poly = "6590";
-		}
+	}
 	else if (q == 121) {
 		override_poly = "15985";
-		}
+	}
 	if (override_poly == NULL) {
 		cout << "knowledge_base::override_polynomial_extension_field, "
 				"do not have a polynomial for q=" << q << endl;
 		exit(1);
-		}
-	return override_poly;
+	}
+	poly.assign(override_poly);
 }
 
 #if 0

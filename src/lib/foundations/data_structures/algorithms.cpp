@@ -12,8 +12,16 @@
 
 using namespace std;
 
+
+
+//#include "pstdint.h" /* Replace with <stdint.h> if appropriate */
+#include <stdint.h>
+
+
 namespace orbiter {
 namespace foundations {
+
+
 
 
 algorithms::algorithms()
@@ -151,6 +159,131 @@ uint32_t algorithms::root_of_tree_uint32_t (uint32_t* S, uint32_t i)
 	}
 	return i;
 }
+
+void algorithms::solve_diophant(int *Inc,
+	int nb_rows, int nb_cols, int nb_needed,
+	int f_has_Rhs, int *Rhs,
+	long int *&Solutions, int &nb_sol, long int &nb_backtrack, int &dt,
+	int f_DLX,
+	int verbose_level)
+// allocates Solutions[nb_sol * nb_needed]
+{
+	int f_v = (verbose_level >= 1);
+	diophant *Dio;
+	os_interface Os;
+	int t0 = Os.os_ticks();
+
+	if (f_v) {
+		cout << "algorithms::solve_diophant nb_rows=" << nb_rows << " nb_cols="
+			<< nb_cols << " f_has_Rhs=" << f_has_Rhs
+			<< " verbose_level=" << verbose_level << endl;
+		cout << "f_DLX=" << f_DLX << endl;
+		//int_matrix_print(Inc, nb_rows, nb_cols);
+		}
+	Dio = NEW_OBJECT(diophant);
+
+	if (f_has_Rhs) {
+		Dio->init_problem_of_Steiner_type_with_RHS(nb_rows,
+			nb_cols, Inc, nb_needed,
+			Rhs,
+			0 /* verbose_level */);
+	}
+	else {
+		Dio->init_problem_of_Steiner_type(nb_rows,
+			nb_cols, Inc, nb_needed,
+			0 /* verbose_level */);
+	}
+
+	if (FALSE /*f_v4*/) {
+		Dio->print();
+	}
+
+	if (f_DLX && !f_has_Rhs) {
+		Dio->solve_all_DLX(0 /* verbose_level*/);
+		nb_backtrack = Dio->nb_steps_betten;
+	}
+	else {
+		Dio->solve_all_mckay(nb_backtrack, INT_MAX, verbose_level - 2);
+	}
+
+	nb_sol = Dio->_resultanz;
+	if (nb_sol) {
+		Dio->get_solutions(Solutions, nb_sol, 1 /* verbose_level */);
+		if (FALSE /*f_v4*/) {
+			cout << "Solutions:" << endl;
+			Orbiter->Lint_vec.matrix_print(Solutions, nb_sol, nb_needed);
+		}
+	}
+	else {
+		Solutions = NULL;
+	}
+	FREE_OBJECT(Dio);
+	int t1 = Os.os_ticks();
+	dt = t1 - t0;
+	if (f_v) {
+		cout << "algorithms::solve_diophant done nb_sol=" << nb_sol
+				<< " nb_backtrack=" << nb_backtrack << " dt=" << dt << endl;
+	}
+}
+
+#undef get16bits
+#if (defined(__GNUC__) && defined(__i386__)) || defined(__WATCOMC__) \
+  || defined(_MSC_VER) || defined (__BORLANDC__) || defined (__TURBOC__)
+#define get16bits(d) (*((const uint16_t *) (d)))
+#endif
+
+#if !defined (get16bits)
+#define get16bits(d) ((((uint32_t)(((const uint8_t *)(d))[1])) << 8)\
+                       +(uint32_t)(((const uint8_t *)(d))[0]) )
+#endif
+
+
+uint32_t algorithms::SuperFastHash (const char * data, int len)
+{
+uint32_t hash = len, tmp;
+int rem;
+
+    if (len <= 0 || data == 0) return 0;
+
+    rem = len & 3;
+    len >>= 2;
+
+    /* Main loop */
+    for (;len > 0; len--) {
+        hash  += get16bits (data);
+        tmp    = (get16bits (data+2) << 11) ^ hash;
+        hash   = (hash << 16) ^ tmp;
+        data  += 2*sizeof (uint16_t);
+        hash  += hash >> 11;
+    }
+
+    /* Handle end cases */
+    switch (rem) {
+        case 3: hash += get16bits (data);
+                hash ^= hash << 16;
+                hash ^= ((signed char)data[sizeof (uint16_t)]) << 18;
+                hash += hash >> 11;
+                break;
+        case 2: hash += get16bits (data);
+                hash ^= hash << 11;
+                hash += hash >> 17;
+                break;
+        case 1: hash += (signed char)*data;
+                hash ^= hash << 10;
+                hash += hash >> 1;
+    }
+
+    /* Force "avalanching" of final 127 bits */
+    hash ^= hash << 3;
+    hash += hash >> 5;
+    hash ^= hash << 4;
+    hash += hash >> 17;
+    hash ^= hash << 25;
+    hash += hash >> 6;
+
+    return hash;
+}
+
 
 
 }}

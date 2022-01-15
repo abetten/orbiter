@@ -522,10 +522,13 @@ void linear_algebra::choose_anisotropic_form(
 		c3 = F->negate(F->primitive_element());
 	}
 	else {
-		algebra_global Algebra;
+		knowledge_base K;
+		string poly;
+
+		K.get_primitive_polynomial(poly, F->q, 2, 0);
 
 		FX.create_object_by_rank_string(m,
-				Algebra.get_primitive_polynomial(F->q, 2, 0),
+				poly,
 				verbose_level);
 
 		//FX.create_object_by_rank_string(m,

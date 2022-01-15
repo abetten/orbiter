@@ -1358,8 +1358,10 @@ void buekenhout_metz::get_name(std::string &name)
 	name.assign(str);
 }
 
+#if 0
 int buekenhout_metz_check_good_points(int len,
 		int *S, void *data, int verbose_level)
+// used in buekenhout_metz::investigate_line_orbit
 {
 	int i, a, idx;
 	int f_v = FALSE;
@@ -1386,6 +1388,7 @@ int buekenhout_metz_check_good_points(int len,
 		}
 	return TRUE;
 }
+#endif
 
 }
 }

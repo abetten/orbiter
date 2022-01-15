@@ -385,12 +385,12 @@ void unipoly_domain::create_object_by_rank_longinteger(
 }
 
 void unipoly_domain::create_object_by_rank_string(
-	unipoly_object &p, const char *rk, int verbose_level)
+	unipoly_object &p, std::string &rk, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	longinteger_object rank;
 	
-	rank.create_from_base_10_string(rk, verbose_level);
+	rank.create_from_base_10_string(rk);
 	
 	create_object_by_rank_longinteger(p, rank, __FILE__, __LINE__, verbose_level);
 	if (f_v) {

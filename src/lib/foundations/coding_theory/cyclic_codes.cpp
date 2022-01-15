@@ -237,11 +237,19 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 	}
 	Fp.finite_field_init(p, FALSE /* f_without_tables */, verbose_level - 1);
 
-	algebra_global Algebra;
 	unipoly_domain FpX(&Fp);
-	FpX.create_object_by_rank_string(M,
-			Algebra.get_primitive_polynomial(p, field_degree, 0),
-			verbose_level - 2);
+	string field_poly;
+	knowledge_base K;
+
+	if (f_v) {
+		cout << "coding_theory_domain::make_cyclic_code before K.get_primitive_polynomial" << endl;
+	}
+	K.get_primitive_polynomial(field_poly, p, field_degree, 0);
+
+	if (f_v) {
+		cout << "coding_theory_domain::make_cyclic_code before FpX.create_object_by_rank_string" << endl;
+	}
+	FpX.create_object_by_rank_string(M, field_poly, verbose_level - 1);
 
 	if (f_v) {
 		cout << "coding_theory_domain::make_cyclic_code choosing the following irreducible "
@@ -779,14 +787,13 @@ void coding_theory_domain::BCH_generator_polynomial(
 		}
 	}
 
-	algebra_global Algebra;
+	string field_poly;
 	unipoly_object m, M, h1, h2;
+	knowledge_base K;
 
-	FX.create_object_by_rank_string(m,
-			Algebra.get_primitive_polynomial(p, e, 0), verbose_level - 2);
-
-	FX.create_object_by_rank_string(M,
-			Algebra.get_primitive_polynomial(p, e, 0), verbose_level - 2);
+	K.get_primitive_polynomial(field_poly, p, e, 0);
+	FX.create_object_by_rank_string(m, field_poly, verbose_level - 2);
+	FX.create_object_by_rank_string(M, field_poly, verbose_level - 2);
 
 	FX.create_object_by_rank(g, 1, __FILE__, __LINE__, verbose_level);
 	FX.create_object_by_rank(h1, 0, __FILE__, __LINE__, verbose_level);

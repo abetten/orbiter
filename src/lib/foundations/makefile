@@ -21,8 +21,8 @@ all: algebra \
 	graph_theory_nauty \
 	graphics \
 	io_and_os \
-	linear_algebra \
 	knowledge_base \
+	linear_algebra \
 	number_theory \
 	orthogonal \
 	ring_theory \
@@ -49,8 +49,8 @@ graph_theory : graph_theory2
 graph_theory_nauty : graph_theory_nauty2 
 graphics : graphics2 
 io_and_os : io_and_os2  
-linear_algebra : linear_algebra2  
 knowledge_base : knowledge_base2  
+linear_algebra : linear_algebra2  
 number_theory : number_theory2  
 orthogonal : orthogonal2  
 ring_theory : ring_theory2  
@@ -74,8 +74,8 @@ graph_theory2 : ; cd graph_theory; $(MAKE)
 graph_theory_nauty2 : ; cd graph_theory_nauty; $(MAKE)
 graphics2 : ; cd graphics; $(MAKE)
 io_and_os2 : ; cd io_and_os; $(MAKE)
-linear_algebra2 : ; cd linear_algebra; $(MAKE)
 knowledge_base2 : ; cd knowledge_base; $(MAKE)
+linear_algebra2 : ; cd linear_algebra; $(MAKE)
 number_theory2 : ; cd number_theory; $(MAKE)
 orthogonal2 : ; cd orthogonal; $(MAKE)
 ring_theory2 : ; cd ring_theory; $(MAKE)
@@ -100,8 +100,8 @@ clean:
 	cd graph_theory_nauty; $(MAKE) clean
 	cd graphics; $(MAKE) clean
 	cd io_and_os; $(MAKE) clean
-	cd linear_algebra; $(MAKE) clean
 	cd knowledge_base; $(MAKE) clean
+	cd linear_algebra; $(MAKE) clean
 	cd number_theory; $(MAKE) clean
 	cd orthogonal; $(MAKE) clean
 	cd ring_theory; $(MAKE) clean

@@ -67,7 +67,6 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 	}
 	longinteger_domain D;
 	number_theory_domain NT;
-	algebra_global Algebra;
 	coding_theory_domain Codes;
 	int i;
 
@@ -134,8 +133,12 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 
 	FpX->init_basic(Fp, verbose_level);
 
+	knowledge_base K;
+	string field_poly;
+
+	K.get_primitive_polynomial(field_poly, F->p, field_degree, 0);
 	FpX->create_object_by_rank_string(Min_poly,
-			Algebra.get_primitive_polynomial(F->p, field_degree, 0),
+			field_poly,
 			verbose_level - 2);
 
 

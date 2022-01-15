@@ -375,9 +375,6 @@ public:
 };
 
 
-int buekenhout_metz_check_good_points(int len, int *S, void *data, 
-	int verbose_level);
-
 
 
 // #############################################################################
@@ -1867,10 +1864,10 @@ public:
 		// returns the number of joinings from a point of
 		// col_cell1 to elements of col_cell2 within row_cell
 		// if that number exists, -1 otherwise
+	void get_MOLm(int *MOLS, int order, int m, int *&M);
 
 };
 
-void get_MOLm(int *MOLS, int order, int m, int *&M);
 
 
 
