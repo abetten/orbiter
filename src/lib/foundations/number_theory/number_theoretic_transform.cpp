@@ -27,6 +27,8 @@ number_theoretic_transform::number_theoretic_transform()
 	k = 0;
 	q = 0;
 
+	//std::string fname_code;
+
 	F = NULL;
 	N = NULL;
 
@@ -62,7 +64,7 @@ number_theoretic_transform::~number_theoretic_transform()
 {
 }
 
-void number_theoretic_transform::init(std::string &fname_code,
+void number_theoretic_transform::init(finite_field *F,
 		int k, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -82,11 +84,17 @@ void number_theoretic_transform::init(std::string &fname_code,
 
 	number_theoretic_transform::k = k;
 	number_theoretic_transform::q = q;
+	number_theoretic_transform::F = F;
+
+	fname_code.assign("NTT_");
+	char str[1000];
+
+	sprintf(str, "k%d_q%d.cpp", k, q);
+	fname_code.append(str);
 
 
-
-	F = NEW_OBJECT(finite_field);
-	F->finite_field_init(q, FALSE /* f_without_tables */, 0 /* verbose_level */);
+	//F = NEW_OBJECT(finite_field);
+	//F->finite_field_init(q, FALSE /* f_without_tables */, 0 /* verbose_level */);
 
 
 	minus_one = F->negate(1);
@@ -319,7 +327,7 @@ void number_theoretic_transform::init(std::string &fname_code,
 	cout << endl;
 
 	file_io Fio;
-	char str[1000];
+
 	string fname_F;
 	string fname_Fv;
 	string fname_G;
@@ -916,11 +924,14 @@ void number_theoretic_transform::write_code_header(std::ostream &ost, std::strin
 	ost << "using namespace std;" << endl;
 	ost << "using namespace orbiter;" << endl;
 	ost << endl;
-	ost << "void ntt" << N[k] << "_forward(int *input, int *output, finite_field *F);" << endl;
-	ost << "void ntt" << N[k] << "_backward(int *input, int *output, finite_field *F);" << endl;
+	ost << "void ntt" << k << "_forward(int *input, int *output, finite_field *F);" << endl;
+	ost << "void ntt" << k << "_backward(int *input, int *output, finite_field *F);" << endl;
 	ost << endl;
 	ost << "int main(int argc, char **argv)" << endl;
 	ost << "{" << endl;
+	ost << "\torbiter::top_level::orbiter_top_level_session Top_level_session;" << endl;
+	ost << "\torbiter::top_level::The_Orbiter_top_level_session = &Top_level_session;" << endl;
+	ost << "\torbiter::top_level::The_Orbiter_top_level_session->Orbiter_session = new orbiter_session;" << endl;
 	ost << "\tfinite_field *F;" << endl;
 	ost << "\tos_interface Os;" << endl;
 	ost << "\tint q = " << q << ";" << endl;
@@ -928,7 +939,7 @@ void number_theoretic_transform::write_code_header(std::ostream &ost, std::strin
 	ost << "\tint i;" << endl;
 	ost << "\t" << endl;
 	ost << "\tF = NEW_OBJECT(finite_field);" << endl;
-	ost << "\tF->init(q, 0 /*verbose_level*/);" << endl;
+	ost << "\tF->finite_field_init(q, FALSE /*f_without_tables*/, 0 /*verbose_level*/);" << endl;
 	ost << "\t" << endl;
 	ost << "\tint *input;" << endl;
 	ost << "\tint *output;" << endl;
@@ -940,13 +951,13 @@ void number_theoretic_transform::write_code_header(std::ostream &ost, std::strin
 	ost << "\t\tinput[i] = Os.random_integer(q);" << endl;
 	ost << "\t}" << endl;
 	ost << "\tcout << \"input:\" << endl;" << endl;
-	ost << "\tint_matrix_print(input, 1, n);" << endl;
+	ost << "\tOrbiter->Int_vec.matrix_print(input, 1, n);" << endl;
 	ost << "\tcout << endl;" << endl;
 	ost << "\t" << endl;
-	ost << "\tntt" << N[k] << "_forward(input, output, F);" << endl;
+	ost << "\tntt" << k << "_forward(input, output, F);" << endl;
 	ost << "\t" << endl;
 	ost << "\tcout << \"output:\" << endl;" << endl;
-	ost << "\tint_matrix_print(output, 1, n);" << endl;
+	ost << "\tOrbiter->Int_vec.matrix_print(output, 1, n);" << endl;
 	ost << "\tcout << endl;" << endl;
 	ost << "\t" << endl;
 	ost << "\tFREE_OBJECT(F);" << endl;

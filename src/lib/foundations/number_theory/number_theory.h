@@ -57,6 +57,8 @@ public:
 	int k;
 	int q;
 
+	std::string fname_code;
+
 	finite_field *F; // no ownership, do not destroy
 
 	int *N;
@@ -101,7 +103,8 @@ public:
 
 	number_theoretic_transform();
 	~number_theoretic_transform();
-	void init(std::string &fname_code, int k, int q, int verbose_level);
+	void init(finite_field *F,
+			int k, int q, int verbose_level);
 	void write_code(std::string &fname_code,
 			int verbose_level);
 	void write_code2(std::ostream &ost,

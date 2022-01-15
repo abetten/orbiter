@@ -276,6 +276,10 @@ public:
 	std::string make_BCH_code_and_encode_text;
 	std::string make_BCH_code_and_encode_fname;
 
+	int f_NTT;
+	int NTT_n;
+	int NTT_q;
+
 
 	finite_field_activity_description();
 	~finite_field_activity_description();

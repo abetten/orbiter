@@ -66,7 +66,7 @@ class combinatorial_object_activity_description {
 public:
 
 
-	// options that apply to COC = combinatorial_object_create
+	// options that apply to GOC = geometric_object_create
 
 	int f_save;
 

@@ -992,6 +992,13 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 
 	}
+	else if (Descr->f_NTT) {
+		number_theoretic_transform NTT;
+
+		NTT.init(F, Descr->NTT_n, Descr->NTT_q, verbose_level);
+
+	}
+
 
 
 

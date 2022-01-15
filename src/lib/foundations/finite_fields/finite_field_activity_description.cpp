@@ -257,6 +257,10 @@ finite_field_activity_description::finite_field_activity_description()
 	//std::string make_BCH_code_and_encode_text;
 	//std::string make_BCH_code_and_encode_fname;
 
+	f_NTT = FALSE;
+	NTT_n = 0;
+	NTT_q = 0;
+
 }
 
 
@@ -930,6 +934,16 @@ int finite_field_activity_description::read_arguments(
 						<< endl;
 			}
 		}
+		else if (ST.stringcmp(argv[i], "-NTT") == 0) {
+			f_NTT = TRUE;
+			NTT_n = ST.strtoi(argv[++i]);
+			NTT_q = ST.strtoi(argv[++i]);
+			if (f_v) {
+				cout << "-NTT " << NTT_n
+						<< " " << NTT_q
+						<< endl;
+			}
+		}
 
 
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -1278,6 +1292,11 @@ void finite_field_activity_description::print()
 				<< " " << make_BCH_code_d
 				<< " " << make_BCH_code_and_encode_text
 				<< " " << make_BCH_code_and_encode_fname
+				<< endl;
+	}
+	if (f_NTT) {
+		cout << "-NTT " << NTT_n
+				<< " " << NTT_q
 				<< endl;
 	}
 
