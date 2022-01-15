@@ -582,6 +582,7 @@ void page_storage::print_storage_used()
 		<< nb_free_entries << " entries currently empty" << endl;
 }
 
+#if 0
 void test_page_storage(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -604,6 +605,7 @@ void test_page_storage(int verbose_level)
 		cout << "test_page_storage done" << endl;
 	}
 }
+#endif
 
 }
 }

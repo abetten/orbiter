@@ -164,6 +164,7 @@ int brick_domain::rank_coordinates(int x1, int y1,
 	return rk;
 }
 
+#if 0
 void brick_test(int q, int verbose_level)
 {
 	brick_domain B;
@@ -194,6 +195,7 @@ void brick_test(int q, int verbose_level)
 		}
 	cout << "brick_test: OK" << endl;
 }
+#endif
 
 }
 }

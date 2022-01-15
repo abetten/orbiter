@@ -3647,13 +3647,14 @@ void combinatorics_domain::create_incidence_matrix_of_graph(int *Adj, int n,
 // global functions, for instance for nauty_interface.cpp:
 //##############################################################################
 
-
+#if 0
 long int callback_ij2k(long int i, long int j, int n)
 {
 	combinatorics_domain Combi;
 
 	return Combi.ij2k_lint(i, j, n);
 }
+#endif
 
 void combinatorics_domain_free_global_data()
 {

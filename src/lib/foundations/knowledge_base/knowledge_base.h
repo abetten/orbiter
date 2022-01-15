@@ -67,8 +67,8 @@ public:
 	void BLT_stab_gens(int q, int no, int *&data, int &nb_gens,
 		int &data_size, std::string &stab_order_str);
 
-	const char *override_polynomial_subfield(int q);
-	const char *override_polynomial_extension_field(int q);
+	void override_polynomial_subfield(std::string &poly, int q);
+	void override_polynomial_extension_field(std::string &poly, int q);
 
 	void get_projective_plane_list_of_lines(int *&list_of_lines,
 			int &order, int &nb_lines, int &line_size,
@@ -76,6 +76,9 @@ public:
 
 	int tensor_orbits_nb_reps(int n);
 	long int *tensor_orbits_rep(int n, int idx);
+
+	// finitefield_tables.cpp:
+	void get_primitive_polynomial(std::string &poly, int p, int e, int verbose_level);
 
 };
 

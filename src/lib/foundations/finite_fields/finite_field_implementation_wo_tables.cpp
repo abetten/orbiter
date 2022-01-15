@@ -83,7 +83,7 @@ void finite_field_implementation_wo_tables::init(finite_field *F, int verbose_le
 	if (f_v) {
 		cout << "finite_field_implementation_wo_tables::init before FX->create_object_by_rank_string" << endl;
 	}
-	FX->create_object_by_rank_string(m, F->polynomial, 0 /*verbose_level - 2*/);
+	FX->create_object_by_rank_string(m, F->my_poly, 0 /*verbose_level - 2*/);
 	if (f_v) {
 		cout << "finite_field_implementation_wo_tables::init m=";
 		FX->print_object(m, cout);

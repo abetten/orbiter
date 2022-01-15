@@ -245,7 +245,8 @@ void hermitian_spreads_classify::init(int n, int Q, int verbose_level)
 	}
 	for (i = 0; i < nb_secants; i++) {
 		for (j = i + 1; j < nb_secants; j++) {
-			if (disjoint_sets(Intersection_sets[i], Intersection_sets[j], sz)) {
+			if (Sorting.test_if_sets_are_disjoint_not_assuming_sorted(
+					Intersection_sets[i], Intersection_sets[j], sz)) {
 				Adj[i * nb_secants + j] = 1;
 				Adj[j * nb_secants + i] = 1;
 			}
@@ -497,19 +498,6 @@ void HS_early_test_func_callback(long int *S, int len,
 	}
 }
 
-int disjoint_sets(long int *v, long int *w, int len)
-{
-	int i, a, idx;
-	sorting Sorting;
-
-	for (i = 0; i < len; i++) {
-		a = v[i];
-		if (Sorting.lint_vec_search_linear(w, len, a, idx)) {
-			return FALSE;
-		}
-	}
-	return TRUE;
-}
 
 void projective_space_init_line_action(projective_space *P,
 		action *A_points, action *&A_on_lines, int verbose_level)

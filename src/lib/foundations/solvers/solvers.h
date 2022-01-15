@@ -392,21 +392,13 @@ public:
 
 };
 
-void diophant_callback_solution_found(int *sol, 
-	int len, int nb_sol, void *data);
-void solve_diophant(int *Inc, int nb_rows, int nb_cols, int nb_needed, 
-	int f_has_Rhs, int *Rhs, 
-	long int *&Solutions, int &nb_sol, long int &nb_backtrack, int &dt,
-	int f_DLX, 
-	int verbose_level);
-// allocates Solutions[nb_sol * target_size]
-// where target_size = starter_size + nb_needed
 
 // #############################################################################
 // dlx_problem_description.cpp
 // #############################################################################
 
 
+//! description of a problem instance for dancing links solver
 
 
 class dlx_problem_description {
@@ -447,6 +439,8 @@ public:
 // dlx_solver.cpp
 // #############################################################################
 
+
+//! Don Knuth's dancing links solver
 
 
 

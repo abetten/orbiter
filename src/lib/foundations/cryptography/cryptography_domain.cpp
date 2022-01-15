@@ -17,7 +17,7 @@ namespace orbiter {
 namespace foundations {
 
 
-double letter_probability[] = {
+static double letter_probability[] = {
 	0.082, // a
 	0.015, // b
 	0.028, // c

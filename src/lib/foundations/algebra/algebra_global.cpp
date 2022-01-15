@@ -518,54 +518,6 @@ int algebra_global::is_diagonal_matrix(int *A, int n)
 
 
 
-const char *algebra_global::get_primitive_polynomial(int p, int e, int verbose_level)
-{
-	int f_v = (verbose_level >= 1);
-	int idx;
-	//char *s;
-	sorting Sorting;
-
-	if (f_v) {
-		cout << "algebra_global::get_primitive_polynomial" << endl;
-	}
-
-	if (!Sorting.int_vec_search(finitefield_primes, finitefield_nb_primes, p, idx)) {
-			cout << "algebra_global::get_primitive_polynomial "
-					"I don't have prime " << p << " in the tables" << endl;
-		exit(1);
-
-#if 0
-		cout << "searching for a polynomial of degree " << e << endl;
-
-		algebra_global AG;
-
-		s = AG.search_for_primitive_polynomial_of_given_degree(p, e, verbose_level);
-		cout << "the search came up with a polynomial of degree " << e << ", coded as " << s << endl;
-		return s;
-#endif
-
-	}
-	if (e > finitefield_largest_degree_irreducible_polynomial[idx]) {
-		cout << "algebra_global::get_primitive_polynomial "
-				"I do not have a polynomial" << endl;
-		cout << "of that degree over that field" << endl;
-		cout << "requested: degree " << e << " polynomial over GF(" << p << ")" << endl;
-		exit(1);
-	}
-	const char *m = finitefield_primitive_polynomial[idx][e - 2];
-	if (strlen(m) == 0) {
-		cout << "algebra_global::get_primitive_polynomial "
-				"I do not have a polynomial" << endl;
-		cout << "of that degree over that field" << endl;
-		cout << "requested: degree " << e << " polynomial over GF(" << p << ")" << endl;
-		exit(1);
-	}
-	if (f_v) {
-		cout << "algebra_global::get_primitive_polynomial done" << endl;
-	}
-	return m;
-}
-
 void algebra_global::test_longinteger()
 {
 	longinteger_domain D;

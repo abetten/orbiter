@@ -2884,6 +2884,20 @@ int sorting::uchar_vec_compare(uchar *p, uchar *q, int len)
 	return 0;
 }
 
+int sorting::test_if_sets_are_disjoint_not_assuming_sorted(long int *v, long int *w, int len)
+{
+	int i, a, idx;
+	sorting Sorting;
+
+	for (i = 0; i < len; i++) {
+		a = v[i];
+		if (lint_vec_search_linear(w, len, a, idx)) {
+			return FALSE;
+		}
+	}
+	return TRUE;
+}
+
 
 
 

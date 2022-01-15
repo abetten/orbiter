@@ -177,7 +177,7 @@ void finite_field_implementation_by_tables::init(finite_field *F, int verbose_le
 		if (f_v) {
 			if (FALSE) {
 				if (F->e > 1) {
-					print_tables_extension_field(F->my_poly.c_str());
+					print_tables_extension_field(F->my_poly);
 				}
 				else {
 					F->print_tables();
@@ -341,7 +341,7 @@ void finite_field_implementation_by_tables::create_alpha_table_extension_field(i
 	unipoly_domain FX(&GFp);
 	unipoly_object m;
 
-	FX.create_object_by_rank_string(m, F->polynomial, 0 /*verbose_level - 2*/);
+	FX.create_object_by_rank_string(m, F->my_poly, 0 /*verbose_level - 2*/);
 	if (f_vv) {
 		cout << "m=";
 		FX.print_object(m, cout);
@@ -721,7 +721,7 @@ void finite_field_implementation_by_tables::init_absolute_trace_table(int verbos
 	}
 }
 
-void finite_field_implementation_by_tables::print_tables_extension_field(const char *poly)
+void finite_field_implementation_by_tables::print_tables_extension_field(std::string &poly)
 {
 	int i, a, b, c, l;
 	int verbose_level = 0;

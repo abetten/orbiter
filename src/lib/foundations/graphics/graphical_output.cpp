@@ -24,8 +24,15 @@ static int do_create_points_on_parabola_compute_point_function(double t,
 static int do_create_points_smooth_curve_compute_point_function(double t,
 		double *output, void *extra_data, int verbose_level);
 
-std::vector<int> get_color(int bit_depth, int max_value, int loopCount, int f_invert_colors, int verbose_level);
-void fillBitmap(BMP &image, int i, int j, std::vector<int> color);
+static std::vector<int> get_color(int bit_depth, int max_value, int loopCount, int f_invert_colors, int verbose_level);
+static void fillBitmap(BMP &image, int i, int j, std::vector<int> color);
+
+static void interface_povray_draw_frame(
+	animate *Anim, int h, int nb_frames, int round,
+	double clipping_radius,
+	std::ostream &fp,
+	int verbose_level);
+
 
 graphical_output::graphical_output()
 {
@@ -2062,7 +2069,7 @@ void graphical_output::animate_povray(
 }
 
 
-void interface_povray_draw_frame(
+static void interface_povray_draw_frame(
 	animate *Anim, int h, int nb_frames, int round,
 	double clipping_radius,
 	ostream &fp,

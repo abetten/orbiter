@@ -6,6 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	finite_field_tables.o \
 	knowledge_base.o
 
 

@@ -18,6 +18,8 @@ namespace orbiter {
 namespace foundations {
 
 
+
+
 points_and_lines::points_and_lines()
 {
 	P = NULL;

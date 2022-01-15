@@ -15,8 +15,11 @@ namespace foundations {
 
 
 
-void (*diophant_user_callback_solution_found)(int *sol, 
+static void (*diophant_user_callback_solution_found)(int *sol,
 	int len, int nb_sol, void *data) = NULL;
+
+static void diophant_callback_solution_found(int *sol,
+	int len, int nb_sol, void *data);
 
 
 diophant::diophant()
@@ -4594,7 +4597,7 @@ int diophant::solve_first_mckay_once_option(
 // #############################################################################
 
 
-void diophant_callback_solution_found(int *sol, int len,
+static void diophant_callback_solution_found(int *sol, int len,
 	int nb_sol, void *data)
 {
 	int f_v = FALSE;
@@ -4649,72 +4652,6 @@ void diophant_callback_solution_found(int *sol, int len,
 		(*diophant_user_callback_solution_found)(sol, len, nb_sol, data);
 	}
 	//D->test_if_the_last_solution_is_unique();
-}
-
-void solve_diophant(int *Inc,
-	int nb_rows, int nb_cols, int nb_needed,
-	int f_has_Rhs, int *Rhs, 
-	long int *&Solutions, int &nb_sol, long int &nb_backtrack, int &dt,
-	int f_DLX, 
-	int verbose_level)
-// allocates Solutions[nb_sol * nb_needed]
-{
-	int f_v = (verbose_level >= 1);
-	diophant *Dio;
-	os_interface Os;
-	int t0 = Os.os_ticks();
-
-	if (f_v) {
-		cout << "solve_diophant nb_rows=" << nb_rows << " nb_cols="
-			<< nb_cols << " f_has_Rhs=" << f_has_Rhs
-			<< " verbose_level=" << verbose_level << endl;
-		cout << "f_DLX=" << f_DLX << endl;
-		//int_matrix_print(Inc, nb_rows, nb_cols);
-		}
-	Dio = NEW_OBJECT(diophant);
-
-	if (f_has_Rhs) {
-		Dio->init_problem_of_Steiner_type_with_RHS(nb_rows, 
-			nb_cols, Inc, nb_needed, 
-			Rhs, 
-			0 /* verbose_level */);
-	}
-	else {
-		Dio->init_problem_of_Steiner_type(nb_rows, 
-			nb_cols, Inc, nb_needed, 
-			0 /* verbose_level */);
-	}
-
-	if (FALSE /*f_v4*/) {
-		Dio->print();
-	}
-
-	if (f_DLX && !f_has_Rhs) {
-		Dio->solve_all_DLX(0 /* verbose_level*/);
-		nb_backtrack = Dio->nb_steps_betten;
-	}
-	else {
-		Dio->solve_all_mckay(nb_backtrack, INT_MAX, verbose_level - 2);
-	}
-
-	nb_sol = Dio->_resultanz;
-	if (nb_sol) {
-		Dio->get_solutions(Solutions, nb_sol, 1 /* verbose_level */);
-		if (FALSE /*f_v4*/) {
-			cout << "Solutions:" << endl;
-			Orbiter->Lint_vec.matrix_print(Solutions, nb_sol, nb_needed);
-		}
-	}
-	else {
-		Solutions = NULL;
-	}
-	FREE_OBJECT(Dio);
-	int t1 = Os.os_ticks();
-	dt = t1 - t0;
-	if (f_v) {
-		cout << "solve_diophant done nb_sol=" << nb_sol
-				<< " nb_backtrack=" << nb_backtrack << " dt=" << dt << endl;
-	}
 }
 
 

@@ -61,7 +61,6 @@ MODULES= \
 		foundations/data_structures/sorting.o \
 		foundations/data_structures/spreadsheet.o \
 		foundations/data_structures/string_tools.o \
-		foundations/data_structures/super_fast_hash.o \
 		foundations/data_structures/vector_builder_description.o \
 		foundations/data_structures/vector_builder.o \
 		foundations/data_structures/vector_hashing.o \
@@ -80,7 +79,6 @@ MODULES= \
 		foundations/finite_fields/finite_field_implementation_wo_tables.o \
 		foundations/finite_fields/finite_field_io.o \
 		foundations/finite_fields/finite_field_projective.o \
-		foundations/finite_fields/finite_field_tables.o \
 		foundations/finite_fields/finite_field.o \
 		foundations/finite_fields/norm_tables.o \
 		foundations/finite_fields/nth_roots.o \
@@ -127,7 +125,6 @@ MODULES= \
 		foundations/geometry_builder/geometry_builder_description.o \
 		foundations/geometry_builder/geometry_builder.o \
 		foundations/geometry_builder/girth_test.o \
-		foundations/geometry_builder/globals.o \
 		foundations/geometry_builder/inc_encoding.o \
 		foundations/geometry_builder/incidence.o \
 		foundations/geometry_builder/iso_type.o \
@@ -195,6 +192,7 @@ MODULES= \
 		foundations/linear_algebra/linear_algebra2.o \
 		foundations/linear_algebra/linear_algebra3.o \
 		foundations/linear_algebra/representation_theory_domain.o \
+		foundations/knowledge_base/finite_field_tables.o \
 		foundations/knowledge_base/knowledge_base.o \
 		foundations/number_theory/cyclotomic_sets.o \
 		foundations/number_theory/number_theoretic_transform.o \

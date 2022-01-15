@@ -78,24 +78,27 @@ int data_structures_global::bitvector_s_i(uchar *bitvec, long int i)
 uint32_t data_structures_global::int_vec_hash(int *data, int len)
 {
 	uint32_t h;
+	algorithms Algo;
 
-	h = SuperFastHash ((const char *) data, (uint32_t) len * sizeof(int));
+	h = Algo.SuperFastHash ((const char *) data, (uint32_t) len * sizeof(int));
 	return h;
 }
 
 uint32_t data_structures_global::lint_vec_hash(long int *data, int len)
 {
 	uint32_t h;
+	algorithms Algo;
 
-	h = SuperFastHash ((const char *) data, (uint32_t) len * sizeof(long int));
+	h = Algo.SuperFastHash ((const char *) data, (uint32_t) len * sizeof(long int));
 	return h;
 }
 
 uint32_t data_structures_global::char_vec_hash(char *data, int len)
 {
 	uint32_t h;
+	algorithms Algo;
 
-	h = SuperFastHash ((const char *) data, (uint32_t) len);
+	h = Algo.SuperFastHash ((const char *) data, (uint32_t) len);
 	return h;
 }
 

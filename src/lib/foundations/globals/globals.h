@@ -385,6 +385,10 @@ public:
 	int_vec Int_vec;
 	lint_vec Lint_vec;
 
+	mem_object_registry *global_mem_object_registry;
+
+	int longinteger_f_print_scientific;
+	int syntax_tree_node_index;
 
 	orbiter_session();
 	~orbiter_session();
@@ -412,6 +416,8 @@ public:
 			long int *&the_set, int &set_size, int verbose_level);
 	void print_type(symbol_table_object_type t);
 	vector_builder *get_object_of_type_vector(std::string &label);
+	void start_memory_debug();
+	void stop_memory_debug();
 
 };
 

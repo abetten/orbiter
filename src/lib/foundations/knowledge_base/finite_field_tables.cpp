@@ -17,7 +17,7 @@ namespace orbiter {
 namespace foundations {
 
 
-int finitefield_primes[] = {
+static int finitefield_primes[] = {
 	2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 
 	17, 19, 23, 25, 27, 29, 31, 32, 37, 41, 
 	43, 47, 49, 53, 59, 61, 67, 71, 73, 79, 81, 83,
@@ -32,10 +32,10 @@ int finitefield_primes[] = {
 
 
 	};
-int finitefield_nb_primes = 
+static int finitefield_nb_primes =
 	sizeof(finitefield_primes) / sizeof(finitefield_primes[0]);
 
-int finitefield_largest_degree_irreducible_polynomial[] = {
+static int finitefield_largest_degree_irreducible_polynomial[] = {
 	60 /*2*/, 
 	42 /*3*/, 
 	30 /*4*/,
@@ -149,7 +149,7 @@ int finitefield_largest_degree_irreducible_polynomial[] = {
 	};
 
 
-const char *finitefield_primitive_polynomial[][100] = {
+static const char *finitefield_primitive_polynomial[][100] = {
 // over GF(2):
 {
 	"7", // X^2+X+1
@@ -953,6 +953,55 @@ const char *finitefield_primitive_polynomial[][100] = {
 "1700409", // X^{2} + 6X + 2
 },
 };
+
+void knowledge_base::get_primitive_polynomial(std::string &poly,
+		int p, int e, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int idx;
+	//char *s;
+	sorting Sorting;
+
+	if (f_v) {
+		cout << "knowledge_base::get_primitive_polynomial" << endl;
+	}
+
+	if (!Sorting.int_vec_search(finitefield_primes, finitefield_nb_primes, p, idx)) {
+			cout << "knowledge_base::get_primitive_polynomial "
+					"I don't have prime " << p << " in the tables" << endl;
+		exit(1);
+
+#if 0
+		cout << "searching for a polynomial of degree " << e << endl;
+
+		algebra_global AG;
+
+		s = AG.search_for_primitive_polynomial_of_given_degree(p, e, verbose_level);
+		cout << "the search came up with a polynomial of degree " << e << ", coded as " << s << endl;
+		return s;
+#endif
+
+	}
+	if (e > finitefield_largest_degree_irreducible_polynomial[idx]) {
+		cout << "knowledge_base::get_primitive_polynomial "
+				"I do not have a polynomial" << endl;
+		cout << "of that degree over that field" << endl;
+		cout << "requested: degree " << e << " polynomial over GF(" << p << ")" << endl;
+		exit(1);
+	}
+	const char *m = finitefield_primitive_polynomial[idx][e - 2];
+	if (strlen(m) == 0) {
+		cout << "knowledge_base::get_primitive_polynomial "
+				"I do not have a polynomial" << endl;
+		cout << "of that degree over that field" << endl;
+		cout << "requested: degree " << e << " polynomial over GF(" << p << ")" << endl;
+		exit(1);
+	}
+	poly.assign(m);
+	if (f_v) {
+		cout << "knowledge_base::get_primitive_polynomial done" << endl;
+	}
+}
 
 
 }}

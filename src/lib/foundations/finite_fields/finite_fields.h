@@ -367,7 +367,7 @@ public:
 	void init_quadratic_subfield(int verbose_level);
 	void init_frobenius_table(int verbose_level);
 	void init_absolute_trace_table(int verbose_level);
-	void print_tables_extension_field(const char *poly);
+	void print_tables_extension_field(std::string &poly);
 	int add(int i, int j);
 	int add_without_table(int i, int j);
 	int mult_verbose(int i, int j, int verbose_level);
@@ -489,7 +489,7 @@ public:
 	std::string label_tex;
 	std::string override_poly;
 	std::string my_poly;
-	char *polynomial;
+	//char *polynomial;
 		// the actual polynomial we consider
 		// as integer (in text form)
 	int f_is_prime_field;
@@ -721,7 +721,7 @@ public:
 	// #########################################################################
 
 	void report(std::ostream &ost, int verbose_level);
-	void print_minimum_polynomial(int p, const char *polynomial);
+	void print_minimum_polynomial(int p, std::string &polynomial);
 	void print();
 	void print_detailed(int f_add_mult_table);
 	void print_tables();
@@ -801,16 +801,6 @@ public:
 
 };
 
-
-
-// #############################################################################
-// finite_field_tables.cpp
-// #############################################################################
-
-extern int finitefield_primes[];
-extern int finitefield_nb_primes;
-extern int finitefield_largest_degree_irreducible_polynomial[];
-extern const char *finitefield_primitive_polynomial[][100];
 
 
 

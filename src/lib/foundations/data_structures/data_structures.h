@@ -40,6 +40,14 @@ public:
 	void print_hex_digit(std::ostream &ost, int digit);
 	void print_repeated_character(std::ostream &ost, char c, int n);
 	uint32_t root_of_tree_uint32_t (uint32_t* S, uint32_t i);
+	void solve_diophant(int *Inc,
+		int nb_rows, int nb_cols, int nb_needed,
+		int f_has_Rhs, int *Rhs,
+		long int *&Solutions, int &nb_sol, long int &nb_backtrack, int &dt,
+		int f_DLX,
+		int verbose_level);
+	// allocates Solutions[nb_sol * nb_needed]
+	uint32_t SuperFastHash (const char * data, int len);
 
 };
 
@@ -267,6 +275,9 @@ class data_file {
 // #############################################################################
 // data_input_stream_description_element.cpp:
 // #############################################################################
+
+
+//! describes one element in an input stream of combinatorial objects
 
 
 class data_input_stream_description_element {
@@ -741,7 +752,6 @@ public:
 
 };
 
-void test_page_storage(int verbose_level);
 
 
 // #############################################################################
@@ -1348,6 +1358,7 @@ public:
 	int test_if_sets_are_disjoint_assuming_sorted(int *set1, int *set2, int sz1, int sz2);
 	int test_if_sets_are_disjoint_assuming_sorted_lint(long int *set1, long int *set2, int sz1, int sz2);
 	int uchar_vec_compare(uchar *p, uchar *q, int len);
+	int test_if_sets_are_disjoint_not_assuming_sorted(long int *v, long int *w, int len);
 
 };
 
@@ -1512,13 +1523,6 @@ public:
 
 int string_tools_compare_strings(void *a, void *b, void *data);
 
-
-
-// #############################################################################
-// super_fast_hash.cpp
-// #############################################################################
-
-uint32_t SuperFastHash (const char * data, int len);
 
 
 

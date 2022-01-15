@@ -246,7 +246,7 @@ void mem_object_registry::dump_to_csv_file(const char *fname)
 int *mem_object_registry::allocate_int(long int n,
 		const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	int *p;
 	p = new int[n];
@@ -255,18 +255,18 @@ int *mem_object_registry::allocate_int(long int n,
 		cout << "mem_object_registry::allocate_int cur_time=" << cur_time << " int[n], "
 				"n=" << n << " file=" << file << " line=" << line << " p=" << p << endl;
 	}
-	if (f_memory_debug) {
+	if (Orbiter->f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_int, n, sizeof(int),
 				"", file, line,
-				memory_debug_verbose_level - 1);
+				Orbiter->memory_debug_verbose_level - 1);
 		}
 	return p;
 }
 
 void mem_object_registry::free_int(int *p, const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	if (f_v) {
 		cout << "mem_object_registry::free_int int[n], "
@@ -279,8 +279,8 @@ void mem_object_registry::free_int(int *p, const char *file, int line)
 				<< " line=" << line << endl;
 		return;
 		}
-	if (f_memory_debug) {
-		delete_from_registry(p, memory_debug_verbose_level - 1);
+	if (Orbiter->f_memory_debug) {
+		delete_from_registry(p, Orbiter->memory_debug_verbose_level - 1);
 	}
 	delete [] p;
 }
@@ -288,7 +288,7 @@ void mem_object_registry::free_int(int *p, const char *file, int line)
 long int *mem_object_registry::allocate_lint(long int n,
 		const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	long int *p;
 	p = new long int[n];
@@ -296,18 +296,18 @@ long int *mem_object_registry::allocate_lint(long int n,
 		cout << "mem_object_registry::allocate_lint cur_time=" << cur_time << " int[n], "
 				"n=" << n << " file=" << file << " line=" << line << " p=" << p << endl;
 	}
-	if (f_memory_debug) {
+	if (Orbiter->f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_lint, n, sizeof(int),
 				"", file, line,
-				memory_debug_verbose_level - 1);
+				Orbiter->memory_debug_verbose_level - 1);
 		}
 	return p;
 }
 
 void mem_object_registry::free_lint(long int *p, const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	if (f_v) {
 		cout << "mem_object_registry::free_lint int[n], "
@@ -320,8 +320,8 @@ void mem_object_registry::free_lint(long int *p, const char *file, int line)
 				<< " line=" << line << endl;
 		return;
 		}
-	if (f_memory_debug) {
-		delete_from_registry(p, memory_debug_verbose_level - 1);
+	if (Orbiter->f_memory_debug) {
+		delete_from_registry(p, Orbiter->memory_debug_verbose_level - 1);
 	}
 	delete [] p;
 }
@@ -329,7 +329,7 @@ void mem_object_registry::free_lint(long int *p, const char *file, int line)
 int **mem_object_registry::allocate_pint(long int n,
 		const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	int **p;
 	p = new pint[n];
@@ -337,11 +337,11 @@ int **mem_object_registry::allocate_pint(long int n,
 		cout << "mem_object_registry::allocate_pint cur_time=" << cur_time << " pint[n], "
 				"n=" << n << " file=" << file << " line=" << line << " p=" << p << endl;
 	}
-	if (f_memory_debug) {
+	if (Orbiter->f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_pint, n, sizeof(int *),
 				"", file, line,
-				memory_debug_verbose_level - 1);
+				Orbiter->memory_debug_verbose_level - 1);
 		}
 	return p;
 }
@@ -349,7 +349,7 @@ int **mem_object_registry::allocate_pint(long int n,
 void mem_object_registry::free_pint(int **p,
 		const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	if (f_v) {
 		cout << "mem_object_registry::free_pint pint[n], "
@@ -362,8 +362,8 @@ void mem_object_registry::free_pint(int **p,
 				<< " line=" << line << endl;
 		return;
 		}
-	if (f_memory_debug) {
-		delete_from_registry(p, memory_debug_verbose_level - 1);
+	if (Orbiter->f_memory_debug) {
+		delete_from_registry(p, Orbiter->memory_debug_verbose_level - 1);
 	}
 	delete [] p;
 }
@@ -371,7 +371,7 @@ void mem_object_registry::free_pint(int **p,
 long int **mem_object_registry::allocate_plint(long int n,
 		const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	long int **p;
 	p = new plint[n];
@@ -379,11 +379,11 @@ long int **mem_object_registry::allocate_plint(long int n,
 		cout << "mem_object_registry::allocate_plint cur_time=" << cur_time << " plint[n], "
 				"n=" << n << " file=" << file << " line=" << line << " p=" << p << endl;
 	}
-	if (f_memory_debug) {
+	if (Orbiter->f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_plint, n, sizeof(long int *),
 				"", file, line,
-				memory_debug_verbose_level - 1);
+				Orbiter->memory_debug_verbose_level - 1);
 		}
 	return p;
 }
@@ -391,7 +391,7 @@ long int **mem_object_registry::allocate_plint(long int n,
 void mem_object_registry::free_plint(long int **p,
 		const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	if (f_v) {
 		cout << "mem_object_registry::free_plint pint[n], "
@@ -404,8 +404,8 @@ void mem_object_registry::free_plint(long int **p,
 				<< " line=" << line << endl;
 		return;
 		}
-	if (f_memory_debug) {
-		delete_from_registry(p, memory_debug_verbose_level - 1);
+	if (Orbiter->f_memory_debug) {
+		delete_from_registry(p, Orbiter->memory_debug_verbose_level - 1);
 	}
 	delete [] p;
 }
@@ -413,7 +413,7 @@ void mem_object_registry::free_plint(long int **p,
 int ***mem_object_registry::allocate_ppint(long int n,
 		const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	int ***p;
 	p = new ppint[n];
@@ -421,18 +421,18 @@ int ***mem_object_registry::allocate_ppint(long int n,
 		cout << "mem_object_registry::allocate_ppint cur_time=" << cur_time << " ppint[n], "
 				"n=" << n << " file=" << file << " line=" << line << " p=" << p << endl;
 	}
-	if (f_memory_debug) {
+	if (Orbiter->f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_ppint, n, sizeof(int **),
 				"", file, line,
-				memory_debug_verbose_level - 1);
+				Orbiter->memory_debug_verbose_level - 1);
 		}
 	return p;
 }
 
 void mem_object_registry::free_ppint(int ***p, const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	if (f_v) {
 		cout << "mem_object_registry::free_ppint ppint[n], "
@@ -445,8 +445,8 @@ void mem_object_registry::free_ppint(int ***p, const char *file, int line)
 				<< " line=" << line << endl;
 		return;
 		}
-	if (f_memory_debug) {
-		delete_from_registry(p, memory_debug_verbose_level - 1);
+	if (Orbiter->f_memory_debug) {
+		delete_from_registry(p, Orbiter->memory_debug_verbose_level - 1);
 	}
 	delete [] p;
 }
@@ -454,7 +454,7 @@ void mem_object_registry::free_ppint(int ***p, const char *file, int line)
 long int ***mem_object_registry::allocate_pplint(long int n,
 		const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	long int ***p;
 	p = new pplint[n];
@@ -462,18 +462,18 @@ long int ***mem_object_registry::allocate_pplint(long int n,
 		cout << "mem_object_registry::allocate_ppint cur_time=" << cur_time << " pplint[n], "
 				"n=" << n << " file=" << file << " line=" << line << " p=" << p << endl;
 	}
-	if (f_memory_debug) {
+	if (Orbiter->f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_pplint, n, sizeof(int **),
 				"", file, line,
-				memory_debug_verbose_level - 1);
+				Orbiter->memory_debug_verbose_level - 1);
 		}
 	return p;
 }
 
 void mem_object_registry::free_pplint(long int ***p, const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	if (f_v) {
 		cout << "mem_object_registry::free_pplint ppint[n], "
@@ -486,8 +486,8 @@ void mem_object_registry::free_pplint(long int ***p, const char *file, int line)
 				<< " line=" << line << endl;
 		return;
 		}
-	if (f_memory_debug) {
-		delete_from_registry(p, memory_debug_verbose_level - 1);
+	if (Orbiter->f_memory_debug) {
+		delete_from_registry(p, Orbiter->memory_debug_verbose_level - 1);
 	}
 	delete [] p;
 }
@@ -495,7 +495,7 @@ void mem_object_registry::free_pplint(long int ***p, const char *file, int line)
 char *mem_object_registry::allocate_char(long int n,
 		const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	char *p;
 	p = new char[n];
@@ -503,18 +503,18 @@ char *mem_object_registry::allocate_char(long int n,
 		cout << "mem_object_registry::allocate_char cur_time=" << cur_time << " char[n], "
 				"n=" << n << " file=" << file << " line=" << line << " p=" << (int *) p << endl;
 	}
-	if (f_memory_debug) {
+	if (Orbiter->f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_char, n, sizeof(char),
 				"", file, line,
-				memory_debug_verbose_level - 1);
+				Orbiter->memory_debug_verbose_level - 1);
 		}
 	return p;
 }
 
 void mem_object_registry::free_char(char *p, const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	if (f_v) {
 		cout << "mem_object_registry::free_char char[n], "
@@ -527,8 +527,8 @@ void mem_object_registry::free_char(char *p, const char *file, int line)
 				<< " line=" << line << endl;
 		return;
 		}
-	if (f_memory_debug) {
-		delete_from_registry(p, memory_debug_verbose_level - 1);
+	if (Orbiter->f_memory_debug) {
+		delete_from_registry(p, Orbiter->memory_debug_verbose_level - 1);
 	}
 	delete [] p;
 }
@@ -536,7 +536,7 @@ void mem_object_registry::free_char(char *p, const char *file, int line)
 uchar *mem_object_registry::allocate_uchar(long int n,
 		const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	uchar *p;
 	p = new uchar[n];
@@ -544,11 +544,11 @@ uchar *mem_object_registry::allocate_uchar(long int n,
 		cout << "mem_object_registry::allocate_uchar cur_time=" << cur_time << " uchar[n], "
 				"n=" << n << " file=" << file << " line=" << line << " p=" << (int *) p << endl;
 	}
-	if (f_memory_debug) {
+	if (Orbiter->f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_uchar, n, sizeof(uchar),
 				"", file, line,
-				memory_debug_verbose_level - 1);
+				Orbiter->memory_debug_verbose_level - 1);
 		}
 	return p;
 }
@@ -556,7 +556,7 @@ uchar *mem_object_registry::allocate_uchar(long int n,
 void mem_object_registry::free_uchar(uchar *p,
 		const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	if (f_v) {
 		cout << "mem_object_registry::free_uchar uchar[n], "
@@ -569,8 +569,8 @@ void mem_object_registry::free_uchar(uchar *p,
 				<< " line=" << line << endl;
 		return;
 		}
-	if (f_memory_debug) {
-		delete_from_registry(p, memory_debug_verbose_level - 1);
+	if (Orbiter->f_memory_debug) {
+		delete_from_registry(p, Orbiter->memory_debug_verbose_level - 1);
 	}
 	delete [] p;
 }
@@ -578,7 +578,7 @@ void mem_object_registry::free_uchar(uchar *p,
 char **mem_object_registry::allocate_pchar(long int n,
 		const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	char **p;
 	p = new pchar[n];
@@ -586,11 +586,11 @@ char **mem_object_registry::allocate_pchar(long int n,
 		cout << "mem_object_registry::allocate_pchar cur_time=" << cur_time << " pchar[n], "
 				"n=" << n << " file=" << file << " line=" << line << " p=" << (int *) p << endl;
 	}
-	if (f_memory_debug) {
+	if (Orbiter->f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_pchar, n, sizeof(char *),
 				"", file, line,
-				memory_debug_verbose_level - 1);
+				Orbiter->memory_debug_verbose_level - 1);
 		}
 	return p;
 }
@@ -598,7 +598,7 @@ char **mem_object_registry::allocate_pchar(long int n,
 void mem_object_registry::free_pchar(char **p,
 		const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	if (f_v) {
 		cout << "mem_object_registry::free_pchar pchar[n], "
@@ -611,8 +611,8 @@ void mem_object_registry::free_pchar(char **p,
 				<< " line=" << line << endl;
 		return;
 		}
-	if (f_memory_debug) {
-		delete_from_registry(p, memory_debug_verbose_level - 1);
+	if (Orbiter->f_memory_debug) {
+		delete_from_registry(p, Orbiter->memory_debug_verbose_level - 1);
 	}
 	delete [] p;
 }
@@ -620,7 +620,7 @@ void mem_object_registry::free_pchar(char **p,
 uchar **mem_object_registry::allocate_puchar(long int n,
 		const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	uchar **p;
 	p = new puchar[n];
@@ -628,11 +628,11 @@ uchar **mem_object_registry::allocate_puchar(long int n,
 		cout << "mem_object_registry::allocate_puchar cur_time=" << cur_time << " puchar[n], "
 				"n=" << n << " file=" << file << " line=" << line << " p=" << (int *) p << endl;
 	}
-	if (f_memory_debug) {
+	if (Orbiter->f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_puchar, n, sizeof(char *),
 				"", file, line,
-				memory_debug_verbose_level - 1);
+				Orbiter->memory_debug_verbose_level - 1);
 		}
 	return p;
 }
@@ -640,7 +640,7 @@ uchar **mem_object_registry::allocate_puchar(long int n,
 void mem_object_registry::free_puchar(uchar **p,
 		const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	if (f_v) {
 		cout << "mem_object_registry::free_puchar puchar[n], "
@@ -653,8 +653,8 @@ void mem_object_registry::free_puchar(uchar **p,
 				<< " line=" << line << endl;
 		return;
 		}
-	if (f_memory_debug) {
-		delete_from_registry(p, memory_debug_verbose_level - 1);
+	if (Orbiter->f_memory_debug) {
+		delete_from_registry(p, Orbiter->memory_debug_verbose_level - 1);
 	}
 	delete [] p;
 }
@@ -662,7 +662,7 @@ void mem_object_registry::free_puchar(uchar **p,
 void **mem_object_registry::allocate_pvoid(long int n,
 		const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	void **p;
 	p = new pvoid[n];
@@ -670,11 +670,11 @@ void **mem_object_registry::allocate_pvoid(long int n,
 		cout << "mem_object_registry::allocate_pvoid cur_time=" << cur_time << " pvoid[n], "
 				"n=" << n << " file=" << file << " line=" << line << " p=" << p << endl;
 	}
-	if (f_memory_debug) {
+	if (Orbiter->f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_PVOID, n, sizeof(void *),
 				"", file, line,
-				memory_debug_verbose_level - 1);
+				Orbiter->memory_debug_verbose_level - 1);
 		}
 	return p;
 }
@@ -682,7 +682,7 @@ void **mem_object_registry::allocate_pvoid(long int n,
 void mem_object_registry::free_pvoid(void **p,
 		const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	if (f_v) {
 		cout << "mem_object_registry::free_pvoid pvoid[n], "
@@ -695,8 +695,8 @@ void mem_object_registry::free_pvoid(void **p,
 				<< " line=" << line << endl;
 		return;
 		}
-	if (f_memory_debug) {
-		delete_from_registry(p, memory_debug_verbose_level - 1);
+	if (Orbiter->f_memory_debug) {
+		delete_from_registry(p, Orbiter->memory_debug_verbose_level - 1);
 	}
 	delete [] p;
 }
@@ -705,17 +705,17 @@ void *mem_object_registry::allocate_OBJECTS(void *p,
 		long int n, std::size_t size_of,
 		const char *extra_type_info, const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	if (f_v) {
 		cout << "mem_object_registry::allocate_OBJECTS cur_time=" << cur_time << " char[n * size_of], "
 				"n=" << n << " file=" << file << " line=" << line << " p=" << p << endl;
 	}
-	if (f_memory_debug) {
+	if (Orbiter->f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_OBJECTS, n, (int) size_of,
 				extra_type_info, file, line,
-				memory_debug_verbose_level - 1);
+				Orbiter->memory_debug_verbose_level - 1);
 		}
 	return p;
 }
@@ -723,7 +723,7 @@ void *mem_object_registry::allocate_OBJECTS(void *p,
 void mem_object_registry::free_OBJECTS(void *p,
 		const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	if (f_v) {
 		cout << "mem_object_registry::free_OBJECTS char[n * size_of], "
@@ -736,8 +736,8 @@ void mem_object_registry::free_OBJECTS(void *p,
 				<< " line=" << line << endl;
 		return;
 		}
-	if (f_memory_debug) {
-		delete_from_registry(p, memory_debug_verbose_level - 1);
+	if (Orbiter->f_memory_debug) {
+		delete_from_registry(p, Orbiter->memory_debug_verbose_level - 1);
 	}
 	//delete [] p;
 }
@@ -745,17 +745,17 @@ void mem_object_registry::free_OBJECTS(void *p,
 void *mem_object_registry::allocate_OBJECT(void *p, std::size_t size_of,
 		const char *extra_type_info, const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	if (f_v) {
 		cout << "mem_object_registry::allocate_OBJECT cur_time=" << cur_time << " char[size_of], "
 				" file=" << file << " line=" << line << " p=" << p << endl;
 	}
-	if (f_memory_debug) {
+	if (Orbiter->f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_OBJECT, 1, (int) size_of,
 				extra_type_info, file, line,
-				memory_debug_verbose_level - 1);
+				Orbiter->memory_debug_verbose_level - 1);
 		}
 	return p;
 }
@@ -763,7 +763,7 @@ void *mem_object_registry::allocate_OBJECT(void *p, std::size_t size_of,
 void mem_object_registry::free_OBJECT(void *p,
 		const char *file, int line)
 {
-	int f_v = (memory_debug_verbose_level >= 1);
+	int f_v = (Orbiter->memory_debug_verbose_level >= 1);
 
 	if (f_v) {
 		cout << "mem_object_registry::free_OBJECT char[size_of], "
@@ -776,8 +776,8 @@ void mem_object_registry::free_OBJECT(void *p,
 				<< " line=" << line << endl;
 		return;
 		}
-	if (f_memory_debug) {
-		delete_from_registry(p, memory_debug_verbose_level - 1);
+	if (Orbiter->f_memory_debug) {
+		delete_from_registry(p, Orbiter->memory_debug_verbose_level - 1);
 	}
 	//delete [] p;
 }

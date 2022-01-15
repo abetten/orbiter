@@ -20,9 +20,6 @@ namespace foundations {
 
 
 
-int f_memory_debug = FALSE;
-int memory_debug_verbose_level = 0;
-mem_object_registry global_mem_object_registry;
 
 
 mem_object_registry_entry::mem_object_registry_entry()
@@ -232,17 +229,6 @@ void mem_object_registry_entry::print_csv(ostream &ost, int line)
 
 
 
-void start_memory_debug()
-{
-	f_memory_debug = TRUE;
-	cout << "memory debugging started" << endl;
-}
-
-void stop_memory_debug()
-{
-	f_memory_debug = FALSE;
-	cout << "memory debugging stopped" << endl;
-}
 
 
 }}

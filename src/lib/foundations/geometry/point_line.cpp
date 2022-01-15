@@ -1327,11 +1327,7 @@ int point_line::count_pairs_CCR_representative(partitionstack &P,
 }
 
 
-// #############################################################################
-// globals
-// #############################################################################
-
-void get_MOLm(int *MOLS, int order, int m, int *&M)
+void point_line::get_MOLm(int *MOLS, int order, int m, int *&M)
 {
 	int x, b, y, *mol = MOLS + m * order * order;
 	
