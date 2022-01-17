@@ -63,7 +63,7 @@ void hadamard_classify::init(int n, int f_draw,
 			}
 		}
 
-	Bitvec = NEW_OBJECT(bitvector);
+	Bitvec = NEW_OBJECT(data_structures::bitvector);
 	Bitvec->allocate(N2);
 	//bitvector_length = (N2 + 7) >> 3;
 
@@ -150,7 +150,7 @@ void hadamard_classify::init(int n, int f_draw,
 		int *color;
 
 		color = NEW_int(N);
-		Orbiter->Int_vec.zero(color, N);
+		Orbiter->Int_vec->zero(color, N);
 
 
 		CG->init(N, 1, 1, color, Bitvec, FALSE, label, label_tex, verbose_level);
@@ -177,7 +177,7 @@ void hadamard_classify::init(int n, int f_draw,
 	int *color;
 
 	color = NEW_int(N);
-	Orbiter->Int_vec.zero(color, N);
+	Orbiter->Int_vec->zero(color, N);
 
 	CG->init(N, 1, 1, color, Bitvec, FALSE, label, label_tex, verbose_level);
 
@@ -197,7 +197,7 @@ void hadamard_classify::init(int n, int f_draw,
 	int *color_graph;
 
 	color_graph = NEW_int(N * N);
-	Orbiter->Int_vec.zero(color_graph, N * N);
+	Orbiter->Int_vec->zero(color_graph, N * N);
 	k = 0;
 	cnt1 = 0;
 	for (i = 0; i < N; i++) {
@@ -225,7 +225,7 @@ void hadamard_classify::init(int n, int f_draw,
 
 	cout << "color graph:" << endl;
 	if (N < 30) {
-		Orbiter->Int_vec.matrix_print(color_graph, N, N);
+		Orbiter->Int_vec->matrix_print(color_graph, N, N);
 		}
 	else {
 		cout << "Too big to print" << endl;
@@ -367,7 +367,7 @@ void hadamard_classify::init(int n, int f_draw,
 	for (h = 0; h < nb_orbits; h++) {
 		gen->get_set_by_level(n, h, set);
 		cout << "Orbit " << h << " is the set ";
-		Orbiter->Lint_vec.print(cout, set, n);
+		Orbiter->Lint_vec->print(cout, set, n);
 		cout << endl;
 
 
@@ -392,7 +392,7 @@ void hadamard_classify::init(int n, int f_draw,
 				}
 			}
 		cout << "The Hadamard matrix " << h << " is:" << endl;
-		Orbiter->Int_vec.matrix_print(H, n, n);
+		Orbiter->Int_vec->matrix_print(H, n, n);
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < n; j++) {
 				a = H[i * n + j];
@@ -410,14 +410,14 @@ void hadamard_classify::init(int n, int f_draw,
 				}
 			}
 		cout << "The matrix H * H^t is:" << endl;
-		Orbiter->Int_vec.matrix_print(M, n, n);
+		Orbiter->Int_vec->matrix_print(M, n, n);
 		}
 }
 
 int hadamard_classify::clique_test(long int *set, int sz)
 {
 	long int i, j, a, b, idx;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	for (i = 0; i < n; i++) {
 		a = set[i];
@@ -447,15 +447,15 @@ void hadamard_classify::early_test_func(long int *S, int len,
 
 	if (f_v) {
 		cout << "hadamard_classify::early_test_func checking set ";
-		Orbiter->Lint_vec.print(cout, S, len);
+		Orbiter->Lint_vec->print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
-		Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
+		Orbiter->Lint_vec->print(cout, candidates, nb_candidates);
 		cout << endl;
 		}
 	if (len == 0) {
 		nb_good_candidates = nb_candidates;
-		Orbiter->Lint_vec.copy(candidates, good_candidates, nb_candidates);
+		Orbiter->Lint_vec->copy(candidates, good_candidates, nb_candidates);
 		return;
 		}
 
@@ -503,7 +503,7 @@ void hadamard_classify_early_test_function(long int *S, int len,
 
 	if (f_v) {
 		cout << "early_test_function for set ";
-		Orbiter->Lint_vec.print(cout, S, len);
+		Orbiter->Lint_vec->print(cout, S, len);
 		cout << endl;
 		}
 	H->early_test_func(S, len,

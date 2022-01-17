@@ -90,15 +90,15 @@ void arc_partition::init(
 			0 /* verbose_level */);
 
 
-	Orbiter->Lint_vec.complement(The_pair->data, arc_remainder, 6, 2);
+	Orbiter->Lint_vec->complement(The_pair->data, arc_remainder, 6, 2);
 	if (f_v) {
 		cout << "arc_partition::init "
 				"the pair is :";
-		Orbiter->Lint_vec.print(cout, The_pair->data, 2);
+		Orbiter->Lint_vec->print(cout, The_pair->data, 2);
 		cout << endl;
 		cout << "arc_partition::init "
 				"the remainder is :";
-		Orbiter->Lint_vec.print(cout, arc_remainder, 4);
+		Orbiter->Lint_vec->print(cout, arc_remainder, 4);
 		cout << endl;
 	}
 
@@ -143,7 +143,7 @@ void arc_partition::recognize(int *partition, int *transporter,
 {
 	int f_v = (verbose_level >= 1);
 	int partition_idx;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 
 	if (f_v) {

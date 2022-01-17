@@ -373,7 +373,7 @@ void representatives::read_representatives_and_stabilizers(
 				cout << endl;
 				}
 			cout << "transversal lengths:" << endl;
-			Orbiter->Int_vec.print(cout, tl, A->base_len());
+			Orbiter->Int_vec->print(cout, tl, A->base_len());
 			cout << endl;
 			}
 		Stab->init(A, verbose_level - 2);

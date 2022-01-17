@@ -153,7 +153,7 @@ void semifield_classify_with_substructure::init(
 		int i;
 
 		cout << "semifield_classify_with_substructure::init f_test_semifield" << endl;
-		Orbiter->Lint_vec.scan(Descr->test_semifield_data, data, data_len);
+		Orbiter->Lint_vec->scan(Descr->test_semifield_data, data, data_len);
 		cout << "input semifield:" << endl;
 		for (i = 0; i < data_len; i++) {
 			cout << i << " : " << data[i] << endl;
@@ -495,7 +495,7 @@ void semifield_classify_with_substructure::identify_semifield(int verbose_level)
 		long int *data = NULL;
 		int data_len = 0;
 		cout << "f_identify_semifield" << endl;
-		Orbiter->Lint_vec.scan(Descr->identify_semifield_data, data, data_len);
+		Orbiter->Lint_vec->scan(Descr->identify_semifield_data, data, data_len);
 		cout << "input semifield:" << endl;
 		for (i = 0; i < data_len; i++) {
 			cout << i << " : " << data[i] << endl;
@@ -516,7 +516,7 @@ void semifield_classify_with_substructure::identify_semifield(int verbose_level)
 					data, data_out,
 					verbose_level);
 
-			Orbiter->Lint_vec.print(cout, data_out, k);
+			Orbiter->Lint_vec->print(cout, data_out, k);
 			cout << endl;
 			for (i = 0; i < k; i++) {
 				Sub->SC->matrix_unrank(data_out[i], Sub->Basis1 + i * k2);
@@ -616,7 +616,7 @@ void semifield_classify_with_substructure::identify_semifields_from_file(
 
 		}
 		string fname;
-		string_tools ST;
+		data_structures::string_tools ST;
 
 		fname.assign(Descr->identify_semifields_from_file_fname);
 		ST.chop_off_extension(fname);
@@ -763,7 +763,7 @@ void semifield_classify_with_substructure::latex_report(
 			if (f_v) {
 				cout << "orbit " << orbit_idx << " / " << Semifields->nb_orbits << ":" << endl;
 			}
-			Orbiter->Lint_vec.copy(Semifields->Rep_ith(orbit_idx), Sub->data1, Sub->SC->k);
+			Orbiter->Lint_vec->copy(Semifields->Rep_ith(orbit_idx), Sub->data1, Sub->SC->k);
 
 			if (f_v) {
 				cout << "before Sub->all_two_dimensional_subspaces" << endl;
@@ -774,7 +774,7 @@ void semifield_classify_with_substructure::latex_report(
 				cout << "after Sub->all_two_dimensional_subspaces" << endl;
 			}
 
-			Orbiter->Int_vec.copy(Po2, PO2 + orbit_idx * Sub->N2, Sub->N2);
+			Orbiter->Int_vec->copy(Po2, PO2 + orbit_idx * Sub->N2, Sub->N2);
 			fp << "\\item" << endl;
 			fp << orbit_idx << " / " << Semifields->nb_orbits << endl;
 			fp << " has  type ";
@@ -1016,7 +1016,7 @@ void semifield_print_function_callback(ostream &ost, int orbit_idx,
 		a = R[j];
 		SC->matrix_unrank(a, SC->test_Basis);
 		ost << "$";
-		Orbiter->Int_vec.print(ost, SC->test_Basis, SC->k2);
+		Orbiter->Int_vec->print(ost, SC->test_Basis, SC->k2);
 		ost << "$";
 		ost << "\\\\" << endl;
 	}

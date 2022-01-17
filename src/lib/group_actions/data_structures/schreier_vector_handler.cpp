@@ -179,7 +179,7 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int hdl, pt_loc, pr, la, n;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "schreier_vector_handler::coset_rep_inv_recursion "
@@ -205,7 +205,7 @@ int schreier_vector_handler::coset_rep_inv_recursion(
 					"did not find pt" << endl;
 			cout << "pt = " << pt << endl;
 			cout << "vector of length " << n << endl;
-			Orbiter->Int_vec.print(cout, S->sv + 1, n);
+			Orbiter->Int_vec->print(cout, S->sv + 1, n);
 			cout << endl;
 			exit(1);
 			}
@@ -416,15 +416,15 @@ void schreier_vector_handler::sv_write_file(schreier_vector *Sv,
 		}
 }
 
-set_of_sets *schreier_vector_handler::get_orbits_as_set_of_sets(
+data_structures::set_of_sets *schreier_vector_handler::get_orbits_as_set_of_sets(
 		schreier_vector *Sv, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *orbit_reps;
 	int nb_orbits;
-	set_of_sets *SoS;
+	data_structures::set_of_sets *SoS;
 	int i, t;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "schreier_vector_handler::get_orbits_as_set_of_sets" << endl;
@@ -444,7 +444,7 @@ set_of_sets *schreier_vector_handler::get_orbits_as_set_of_sets(
 
 	Sv->count_number_of_orbits_and_get_orbit_reps(
 		orbit_reps, nb_orbits);
-	SoS = NEW_OBJECT(set_of_sets);
+	SoS = NEW_OBJECT(data_structures::set_of_sets);
 	int *prev;
 
 	prev = pts + n;

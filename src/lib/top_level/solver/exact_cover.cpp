@@ -460,7 +460,7 @@ void exact_cover::compute_liftings_new(int f_solve,
 							"solution " << i << " / " << nb_sol << endl;
 					}
 
-				Orbiter->Lint_vec.copy(starter, the_solution, starter_size);
+				Orbiter->Lint_vec->copy(starter, the_solution, starter_size);
 				for (j = 0; j < sol_length; j++) {
 					the_solution[starter_size + j] =
 							Solutions[i * sol_length + j];
@@ -648,13 +648,13 @@ void exact_cover::compute_liftings_single_case_new(int starter_case,
 
 		// R has: int *candidates; int nb_candidates;
 	
-	Orbiter->Lint_vec.copy(R->rep, starter, starter_size);
+	Orbiter->Lint_vec->copy(R->rep, starter, starter_size);
 
 	if (f_v) {
 		cout << "exact_cover::compute_liftings_single_case "
 				"case " << starter_case << " / " << starter_nb_cases
 				<< " stab_go = " << *R->stab_go << " starter = ";
-		Orbiter->Lint_vec.print(cout, starter, starter_size);
+		Orbiter->Lint_vec->print(cout, starter, starter_size);
 		cout << endl;
 		}
 

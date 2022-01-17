@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace combinatorics {
 
 
 
@@ -48,7 +49,7 @@ int classification_of_objects_report_options::read_arguments(
 	int verbose_level)
 {
 	int i;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	cout << "classification_of_objects_report_options::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
@@ -149,7 +150,7 @@ void classification_of_objects_report_options::print()
 }
 
 
-}}
+}}}
 
 
 

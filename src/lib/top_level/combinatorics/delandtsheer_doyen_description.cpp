@@ -99,7 +99,7 @@ int delandtsheer_doyen_description::read_arguments(
 	int verbose_level)
 {
 	int i, j;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	cout << "delandtsheer_doyen_description::read_arguments" << endl;
 
@@ -174,7 +174,7 @@ int delandtsheer_doyen_description::read_arguments(
 				//row_type_cur[j] = 0;
 				}
 			cout << "-R ";
-			Orbiter->Int_vec.print(cout, row_type + 1, nb_row_types);
+			Orbiter->Int_vec->print(cout, row_type + 1, nb_row_types);
 			cout << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-C") == 0) {
@@ -187,7 +187,7 @@ int delandtsheer_doyen_description::read_arguments(
 				//col_type_cur[j] = 0;
 				}
 			cout << "-C ";
-			Orbiter->Int_vec.print(cout, col_type + 1, nb_col_types);
+			Orbiter->Int_vec->print(cout, col_type + 1, nb_col_types);
 			cout << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-nb_orbits_on_blocks") == 0) {
@@ -341,12 +341,12 @@ void delandtsheer_doyen_description::print()
 	}
 	if (f_R) {
 		cout << "-R ";
-		Orbiter->Int_vec.print(cout, row_type + 1, nb_row_types);
+		Orbiter->Int_vec->print(cout, row_type + 1, nb_row_types);
 		cout << endl;
 	}
 	if (f_C) {
 		cout << "-C ";
-		Orbiter->Int_vec.print(cout, col_type + 1, nb_col_types);
+		Orbiter->Int_vec->print(cout, col_type + 1, nb_col_types);
 		cout << endl;
 	}
 	if (f_nb_orbits_on_blocks) {

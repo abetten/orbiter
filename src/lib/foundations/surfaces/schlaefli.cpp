@@ -269,7 +269,7 @@ void schlaefli::find_tritangent_planes_intersecting_in_a_line(
 	int f_v = (verbose_level >= 1);
 	int idx;
 	int three_lines[3];
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "schlaefli::find_tritangent_planes_intersecting_in_a_line" << endl;
@@ -301,7 +301,7 @@ void schlaefli::find_tritangent_planes_intersecting_in_a_line(
 void schlaefli::make_triads(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	int *Adj;
 	int i, j, h, u;
 
@@ -347,7 +347,7 @@ void schlaefli::make_triads(int verbose_level)
 void schlaefli::make_trihedral_pair_disjointness_graph(int *&Adj, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	int *T;
 	int i, j;
 
@@ -358,10 +358,10 @@ void schlaefli::make_trihedral_pair_disjointness_graph(int *&Adj, int verbose_le
 	Adj = NEW_int(nb_trihedral_pairs * nb_trihedral_pairs);
 	T = NEW_int(nb_trihedral_pairs * 9);
 	for (i = 0; i < nb_trihedral_pairs; i++) {
-		Orbiter->Int_vec.copy(Trihedral_pairs + i * 9, T + i * 9, 9);
+		Orbiter->Int_vec->copy(Trihedral_pairs + i * 9, T + i * 9, 9);
 		Sorting.int_vec_heapsort(T + i * 9, 9);
 	}
-	Orbiter->Int_vec.zero(Adj, nb_trihedral_pairs * nb_trihedral_pairs);
+	Orbiter->Int_vec->zero(Adj, nb_trihedral_pairs * nb_trihedral_pairs);
 	for (i = 0; i < nb_trihedral_pairs; i++) {
 		for (j = i + 1; j < nb_trihedral_pairs; j++) {
 			if (Sorting.int_vecs_are_disjoint(T + i * 9, 9, T + j * 9, 9)) {
@@ -400,7 +400,7 @@ void schlaefli::make_trihedral_pairs(int verbose_level)
 	int subset_complement[6];
 	int size_complement;
 	char label[1000];
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	latex_interface L;
 
 	if (f_v) {
@@ -495,8 +495,8 @@ void schlaefli::process_trihedral_pairs(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int subset[3];
 	int i, j, h, rk, a;
-	combinatorics_domain Combi;
-	sorting Sorting;
+	combinatorics::combinatorics_domain Combi;
+	data_structures::sorting Sorting;
 	latex_interface L;
 
 	if (f_v) {
@@ -592,7 +592,7 @@ int schlaefli::line_bi(int i)
 int schlaefli::line_cij(int i, int j)
 {
 	int a;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (i > j) {
 		return line_cij(j, i);
@@ -635,7 +635,7 @@ void schlaefli::index_of_line(int line, int &i, int &j)
 // returns i for a_i, i for b_i and (i,j) for c_ij
 {
 	int a;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (line < 6) { // ai
 		i = line;
@@ -741,8 +741,8 @@ void schlaefli::make_Tlmnp(int *T, int l, int m, int n, int p)
 	int complement[2];
 	int size_complement;
 	int r, s;
-	combinatorics_domain Combi;
-	sorting Sorting;
+	combinatorics::combinatorics_domain Combi;
+	data_structures::sorting Sorting;
 
 	subset[0] = l;
 	subset[1] = m;
@@ -849,7 +849,7 @@ int schlaefli::Eckardt_point_from_tritangent_plane(int *tritangent_plane)
 {
 	int a, b, c, rk;
 	eckardt_point E;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	Sorting.int_vec_heapsort(tritangent_plane, 3);
 	a = tritangent_plane[0];
@@ -878,8 +878,8 @@ void schlaefli::init_collinear_Eckardt_triples(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int t, i, rk, h;
 	int subset[3];
-	combinatorics_domain Combi;
-	sorting Sorting;
+	combinatorics::combinatorics_domain Combi;
+	data_structures::sorting Sorting;
 	latex_interface L;
 
 	if (f_v) {
@@ -922,8 +922,8 @@ void schlaefli::find_trihedral_pairs_from_collinear_triples_of_Eckardt_points(
 	int nCk, h, k, rk, idx, i, t_idx;
 	int subset[3];
 	int set[3];
-	combinatorics_domain Combi;
-	sorting Sorting;
+	combinatorics::combinatorics_domain Combi;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "schlaefli::find_trihedral_pairs_from_collinear_"
@@ -1040,7 +1040,7 @@ void schlaefli::find_trihedral_pairs_from_collinear_triples_of_Eckardt_points(
 
 	cout << "Found " << nb_T << " special trihedral pairs:" << endl;
 	cout << "T_idx: ";
-	Orbiter->Int_vec.print(cout, T_idx, nb_T);
+	Orbiter->Int_vec->print(cout, T_idx, nb_T);
 	cout << endl;
 	for (i = 0; i < nb_T; i++) {
 		cout << i << " / " << nb_T << " T_{"
@@ -1059,7 +1059,7 @@ void schlaefli::init_double_sixes(int verbose_level)
 	int i, j, k, ij, u, v, l, m, n, h, a, b, c;
 	int set[6];
 	int size_complement;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "schlaefli::init_double_sixes" << endl;
@@ -1175,8 +1175,8 @@ void schlaefli::create_half_double_sixes(int verbose_level)
 	int i, j, a, b, c, ij, v;
 	int set[6];
 	int size_complement;
-	combinatorics_domain Combi;
-	sorting Sorting;
+	combinatorics::combinatorics_domain Combi;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "schlaefli::create_half_double_sixes" << endl;
@@ -1185,7 +1185,7 @@ void schlaefli::create_half_double_sixes(int verbose_level)
 	Half_double_six_to_double_six = NEW_int(72);
 	Half_double_six_to_double_six_row = NEW_int(72);
 
-	Orbiter->Lint_vec.copy(Double_six, Half_double_sixes, 36 * 12);
+	Orbiter->Lint_vec->copy(Double_six, Half_double_sixes, 36 * 12);
 	for (i = 0; i < 36; i++) {
 		for (j = 0; j < 2; j++) {
 			Sorting.lint_vec_heapsort(
@@ -1247,11 +1247,11 @@ void schlaefli::create_half_double_sixes(int verbose_level)
 int schlaefli::find_half_double_six(long int *half_double_six)
 {
 	int i;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	Sorting.lint_vec_heapsort(half_double_six, 6);
 	for (i = 0; i < 72; i++) {
-		if (lint_vec_compare(half_double_six,
+		if (Sorting.lint_vec_compare(half_double_six,
 			Half_double_sixes + i * 6, 6) == 0) {
 			return i;
 		}
@@ -1265,7 +1265,7 @@ void schlaefli::ijklm2n(int i, int j, int k, int l, int m, int &n)
 {
 	int v[6];
 	int size_complement;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	v[0] = i;
 	v[1] = j;
@@ -1284,7 +1284,7 @@ void schlaefli::ijkl2mn(int i, int j, int k, int l, int &m, int &n)
 {
 	int v[6];
 	int size_complement;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	v[0] = i;
 	v[1] = j;
@@ -1303,13 +1303,13 @@ void schlaefli::ijk2lmn(int i, int j, int k, int &l, int &m, int &n)
 {
 	int v[6];
 	int size_complement;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	v[0] = i;
 	v[1] = j;
 	v[2] = k;
 	cout << "schlaefli::ijk2lmn v=";
-	Orbiter->Int_vec.print(cout, v, 3);
+	Orbiter->Int_vec->print(cout, v, 3);
 	cout << endl;
 	Combi.set_complement_safe(v, 3, v + 3, size_complement, 6);
 	if (size_complement != 3) {
@@ -1326,7 +1326,7 @@ void schlaefli::ij2klmn(int i, int j, int &k, int &l, int &m, int &n)
 {
 	int v[6];
 	int size_complement;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	v[0] = i;
 	v[1] = j;
@@ -1645,7 +1645,7 @@ void schlaefli::prepare_clebsch_map(int ds, int ds_row,
 {
 	int ij, i, j, k, l, m, n, size_complement;
 	int set[6];
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (ds == 0) {
 		if (ds_row == 0) {
@@ -1713,7 +1713,7 @@ void schlaefli::init_adjacency_matrix_of_lines(int verbose_level)
 	}
 
 	adjacency_matrix_of_lines = NEW_int(27 * 27);
-	Orbiter->Int_vec.zero(adjacency_matrix_of_lines, 27 * 27);
+	Orbiter->Int_vec->zero(adjacency_matrix_of_lines, 27 * 27);
 
 	// the ai lines:
 	for (i = 0; i < 6; i++) {
@@ -1825,11 +1825,11 @@ void schlaefli::init_incidence_matrix_of_lines_vs_tritangent_planes(int verbose_
 	}
 
 	incidence_lines_vs_tritangent_planes = NEW_int(27 * 45);
-	Orbiter->Int_vec.zero(incidence_lines_vs_tritangent_planes, 27 * 45);
+	Orbiter->Int_vec->zero(incidence_lines_vs_tritangent_planes, 27 * 45);
 
 
 	Lines_in_tritangent_planes = NEW_lint(45 * 3);
-	Orbiter->Lint_vec.zero(Lines_in_tritangent_planes, 45 * 3);
+	Orbiter->Lint_vec->zero(Lines_in_tritangent_planes, 45 * 3);
 
 	for (j = 0; j < nb_Eckardt_points; j++) {
 		eckardt_point *E;
@@ -2190,7 +2190,7 @@ void schlaefli::latex_table_of_double_sixes(std::ostream &ost)
 	//ost << "\\begin{multicols}{2}" << endl;
 	for (h = 0; h < 36; h++) {
 
-		Orbiter->Lint_vec.copy(Double_six + h * 12, D, 12);
+		Orbiter->Lint_vec->copy(Double_six + h * 12, D, 12);
 
 		ost << "$D_{" << h << "} = " << Double_six_label_tex[h] << endl;
 
@@ -2265,7 +2265,7 @@ void schlaefli::latex_half_double_six(std::ostream &ost, int idx)
 
 
 
-	Orbiter->Lint_vec.copy(Half_double_sixes + idx * 6, H, 6);
+	Orbiter->Lint_vec->copy(Half_double_sixes + idx * 6, H, 6);
 
 	ost << "H_{" << idx << "} = " << Half_double_six_label_tex[idx] << endl;
 
@@ -2347,7 +2347,7 @@ void schlaefli::latex_table_of_tritangent_planes(std::ostream &ost)
 
 void schlaefli::print_line(ostream &ost, int rk)
 {
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (rk < 6) {
 		ost << "a_" << rk + 1 << endl;
@@ -2637,8 +2637,8 @@ int schlaefli::identify_Eckardt_point(int line1, int line2, int line3, int verbo
 {
 	int f_v = (verbose_level >= 1);
 	int lines[3];
-	sorting Sorting;
-	combinatorics_domain Combi;
+	data_structures::sorting Sorting;
+	combinatorics::combinatorics_domain Combi;
 	int idx;
 
 	if (f_v) {

@@ -40,7 +40,7 @@ trace_result upstep_work::recognize(
 	int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 	int len = size - 1;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	if (f_v) {
 		print_level_extension_coset_info();
@@ -54,7 +54,7 @@ trace_result upstep_work::recognize(
 	
 	if (f_vv) {
 		print_level_extension_coset_info();
-		Orbiter->Lint_vec.print(cout, gen->get_set_i(0), len + 1);
+		Orbiter->Lint_vec->print(cout, gen->get_set_i(0), len + 1);
 		cout << endl;
 		if (gen->get_poset()->f_print_function) {
 			gen->get_poset()->invoke_print_function(cout, size, gen->get_set_i(0));
@@ -82,7 +82,7 @@ trace_result upstep_work::recognize(
 	}
 #endif
 	
-	Orbiter->Lint_vec.copy(gen->get_set_i(0), gen->get_set0(), size);
+	Orbiter->Lint_vec->copy(gen->get_set_i(0), gen->get_set0(), size);
 	Sorting.lint_vec_heapsort(gen->get_set0(), size - 1);
 		// important: we keep the last point separate
 	
@@ -145,7 +145,7 @@ trace_result upstep_work::recognize_recursion(
 			<< endl;
 		cout << "node=" << O->get_node() << " prev="
 				<< O->get_prev() << " pt=" << O->get_pt() << endl;
-		Orbiter->Lint_vec.set_print(cout, gen->get_set_i(lvl), size);
+		Orbiter->Lint_vec->set_print(cout, gen->get_set_i(lvl), size);
 		cout << endl;
 	}
 	if (current_node < path[lvl]) {
@@ -170,7 +170,7 @@ trace_result upstep_work::recognize_recursion(
 					"node and set inconsistent, "
 					"the node corresponds to" << endl;
 			O->store_set_to(gen, lvl - 1, gen->get_set3());
-			Orbiter->Lint_vec.set_print(cout, gen->get_set3(), lvl);
+			Orbiter->Lint_vec->set_print(cout, gen->get_set3(), lvl);
 			cout << endl;
 			exit(1);
 		}
@@ -285,14 +285,14 @@ trace_result upstep_work::recognize_recursion(
 		cout << "upstep_work::recognize_recursion "
 				"failure in find_extension_from_point" << endl;
 		cout << "the original set is" << endl;
-		Orbiter->Lint_vec.set_print(cout, gen->get_set_i(0), len + 1);
+		Orbiter->Lint_vec->set_print(cout, gen->get_set_i(0), len + 1);
 		cout << endl;
 		//if (gen->f_print_function) {
 			//(*gen->print_function)(cout, len + 1, gen->set[0],
 			// gen->print_function_data);
 			//}
 		cout << "the current set is" << endl;
-		Orbiter->Lint_vec.set_print(cout, gen->get_set_i(lvl + 1), len + 1);
+		Orbiter->Lint_vec->set_print(cout, gen->get_set_i(lvl + 1), len + 1);
 		cout << endl;
 		//if (gen->f_print_function) {
 			//(*gen->print_function)(cout, len + 1, gen->set[lvl + 1],
@@ -300,7 +300,7 @@ trace_result upstep_work::recognize_recursion(
 			//}
 		cout << "the node corresponds to" << endl;
 		O->store_set_to(gen, lvl - 1, gen->get_set3());
-		Orbiter->Lint_vec.set_print(cout, gen->get_set3(), lvl);
+		Orbiter->Lint_vec->set_print(cout, gen->get_set3(), lvl);
 		cout << endl;
 
 		cout << "lvl = " << lvl << endl;
@@ -646,14 +646,14 @@ trace_result upstep_work::handle_last_level(
 		cout << " extension node at level len, "
 				"this should not happen" << endl;
 		cout << "the original set is" << endl;
-		Orbiter->Lint_vec.set_print(cout, gen->get_set_i(0), lvl + 1);
+		Orbiter->Lint_vec->set_print(cout, gen->get_set_i(0), lvl + 1);
 		cout << endl;
 		cout << "the current set is" << endl;
-		Orbiter->Lint_vec.set_print(cout, gen->get_set_i(lvl + 1), lvl + 1);
+		Orbiter->Lint_vec->set_print(cout, gen->get_set_i(lvl + 1), lvl + 1);
 		cout << endl;
 		cout << "the node corresponds to" << endl;
 		O->store_set_to(gen, lvl - 1, gen->get_set3());
-		Orbiter->Lint_vec.set_print(cout, gen->get_set3(), lvl);
+		Orbiter->Lint_vec->set_print(cout, gen->get_set3(), lvl);
 		cout << endl;
 		exit(1);
 #else
@@ -682,7 +682,7 @@ trace_result upstep_work::start_over(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		print_level_extension_coset_info();
@@ -703,10 +703,10 @@ trace_result upstep_work::start_over(
 
 	Sorting.lint_vec_heapsort(gen->get_set_i(lvl + 1), size - 1);
 		// we keep the last point (i.e., the (len + 1)-th) extra
-	Orbiter->Lint_vec.copy(gen->get_set_i(lvl + 1), gen->get_set_i(0), size);
+	Orbiter->Lint_vec->copy(gen->get_set_i(lvl + 1), gen->get_set_i(0), size);
 
 	if (f_vv) {
-		Orbiter->Lint_vec.set_print(cout, gen->get_set_i(0), size);
+		Orbiter->Lint_vec->set_print(cout, gen->get_set_i(0), size);
 		cout << endl;
 	}
 	gen->get_A()->element_move(

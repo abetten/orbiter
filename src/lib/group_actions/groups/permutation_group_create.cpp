@@ -123,7 +123,7 @@ void permutation_group_create::permutation_group_init(
 
 		target_go.create_from_base_10_string(Descr->bsgs_order_text);
 
-		Orbiter->Lint_vec.scan(Descr->bsgs_base, given_base, given_base_length);
+		Orbiter->Lint_vec->scan(Descr->bsgs_base, given_base, given_base_length);
 
 
 		A_initial->init_permutation_group_from_generators(Descr->degree,

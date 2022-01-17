@@ -27,9 +27,9 @@ void character_table_burnside::do_it(int n, int verbose_level)
 		cout << "character_table_burnside::do_it" << endl;
 	}
 
-	a_domain *D;
+	algebra::a_domain *D;
 
-	D = NEW_OBJECT(a_domain);
+	D = NEW_OBJECT(algebra::a_domain);
 	D->init_integer_fractions(verbose_level);
 
 
@@ -111,7 +111,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 		class_size[i] = Sch->orbit_len[i];
 		}
 	cout << "class sizes : ";
-	Orbiter->Int_vec.print(cout, class_size, nb_classes);
+	Orbiter->Int_vec->print(cout, class_size, nb_classes);
 	cout << endl;
 
 
@@ -128,7 +128,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 
 	for (r = 0; r < nb_classes; r++) {
 		cout << "N_" << r << ":" << endl;
-		Orbiter->Int_vec.matrix_print(N + r * nb_classes * nb_classes, nb_classes, nb_classes);
+		Orbiter->Int_vec->matrix_print(N + r * nb_classes * nb_classes, nb_classes, nb_classes);
 		cout << endl;
 		}
 
@@ -172,7 +172,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 
 
 	cout << "We found " << nb_lambda << " integer roots, they are: " << endl;
-	Orbiter->Int_vec.print(cout, Lambda, nb_lambda);
+	Orbiter->Int_vec->print(cout, Lambda, nb_lambda);
 	cout << endl;
 	cout << "We found " << nb_mu << " distinct integer roots, they are: " << endl;
 	for (i = 0; i < nb_mu; i++) {
@@ -201,7 +201,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 
 
 	cout << "character degrees : ";
-	Orbiter->Int_vec.print(cout, character_degree, nb_classes);
+	Orbiter->Int_vec->print(cout, character_degree, nb_classes);
 	cout << endl;
 
 
@@ -212,8 +212,12 @@ void character_table_burnside::do_it(int n, int verbose_level)
 		character_degree, class_size,
 		character_table, verbose_level);
 
+
+
+
+
 	cout << "character table:" << endl;
-	Orbiter->Int_vec.matrix_print(character_table, nb_classes, nb_classes);
+	Orbiter->Int_vec->matrix_print(character_table, nb_classes, nb_classes);
 
 	int f_special = TRUE;
 	int **Gens;
@@ -240,20 +244,20 @@ void character_table_burnside::do_it(int n, int verbose_level)
 
 
 	cout << "Distribution table:" << endl;
-	Orbiter->Int_vec.matrix_print(Distribution + nb_classes, t_max, nb_classes);
+	Orbiter->Int_vec->matrix_print(Distribution + nb_classes, t_max, nb_classes);
 
 
 	for (i = 0; i < nb_classes; i++) {
 
 		cout << "character " << i << " / " << nb_classes << ":" << endl;
-		Orbiter->Int_vec.print(cout, character_table + i * nb_classes, nb_classes);
+		Orbiter->Int_vec->print(cout, character_table + i * nb_classes, nb_classes);
 		cout << endl;
 
 
 		int *S, a, t;
 
 		S = NEW_int(t_max + 1);
-		Orbiter->Int_vec.zero(S, t_max + 1);
+		Orbiter->Int_vec->zero(S, t_max + 1);
 
 		for (t = 0; t <= t_max; t++) {
 			S[t] = 0;
@@ -266,7 +270,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 				}
 			}
 		cout << "S=";
-		Orbiter->Int_vec.print(cout, S + 1, t_max);
+		Orbiter->Int_vec->print(cout, S + 1, t_max);
 		cout << endl;
 
 
@@ -304,7 +308,7 @@ void character_table_burnside::do_it(int n, int verbose_level)
 
 
 	cout << "character table:" << endl;
-	Orbiter->Int_vec.matrix_print(character_table, nb_classes, nb_classes);
+	Orbiter->Int_vec->matrix_print(character_table, nb_classes, nb_classes);
 
 
 	latex_interface L;
@@ -399,7 +403,8 @@ void character_table_burnside::create_matrix(discreta_matrix &M, int i, int *S, 
 }
 
 
-void character_table_burnside::compute_character_table(a_domain *D, int nb_classes, int *Omega,
+void character_table_burnside::compute_character_table(
+		algebra::a_domain *D, int nb_classes, int *Omega,
 	int *character_degree, int *class_size,
 	int *&character_table, int verbose_level)
 {
@@ -440,7 +445,8 @@ void character_table_burnside::compute_character_table(a_domain *D, int nb_class
 	}
 }
 
-void character_table_burnside::compute_character_degrees(a_domain *D,
+void character_table_burnside::compute_character_degrees(
+		algebra::a_domain *D,
 	int goi, int nb_classes, int *Omega, int *class_size,
 	int *&character_degree, int verbose_level)
 {
@@ -518,7 +524,8 @@ void character_table_burnside::compute_character_degrees(a_domain *D,
 		}
 }
 
-void character_table_burnside::compute_omega(a_domain *D, int *N0, int nb_classes,
+void character_table_burnside::compute_omega(
+		algebra::a_domain *D, int *N0, int nb_classes,
 		int *Mu, int nb_mu, int *&Omega, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -657,7 +664,7 @@ int character_table_burnside::compute_r0(int *N, int nb_classes, int verbose_lev
 
 			cout << "We found " << nb_lambda
 					<< " integer roots, they are: " << endl;
-			Orbiter->Int_vec.print(cout, Lambda, nb_lambda);
+			Orbiter->Int_vec->print(cout, Lambda, nb_lambda);
 			cout << endl;
 			cout << "We found " << nb_mu
 					<< " distinct integer roots, they are: " << endl;
@@ -696,7 +703,7 @@ void character_table_burnside::compute_multiplication_constants_center_of_group_
 		}
 
 	N = NEW_int(nb_classes * nb_classes * nb_classes);
-	Orbiter->Int_vec.zero(N, nb_classes * nb_classes * nb_classes);
+	Orbiter->Int_vec->zero(N, nb_classes * nb_classes * nb_classes);
 
 
 	for (r = 0; r < nb_classes; r++) {
@@ -759,7 +766,7 @@ void character_table_burnside::compute_Distribution_table(action *A, action_by_c
 
 	Choice = NEW_int(t_max);
 	Distribution = NEW_int((t_max + 1) * nb_classes);
-	Orbiter->Int_vec.zero(Distribution, (t_max + 1) * nb_classes);
+	Orbiter->Int_vec->zero(Distribution, (t_max + 1) * nb_classes);
 	Nb = NEW_int(t_max + 1);
 
 	for (t = 1; t <= t_max; t++) {
@@ -768,7 +775,7 @@ void character_table_burnside::compute_Distribution_table(action *A, action_by_c
 
 	if (f_v) {
 		cout << "Nb : ";
-		Orbiter->Int_vec.print(cout, Nb + 1, t_max);
+		Orbiter->Int_vec->print(cout, Nb + 1, t_max);
 		cout << endl;
 		}
 
@@ -779,7 +786,7 @@ void character_table_burnside::compute_Distribution_table(action *A, action_by_c
 
 			if (f_vvv) {
 				cout << "h=" << h << " Choice=";
-				Orbiter->Int_vec.print(cout, Choice, t);
+				Orbiter->Int_vec->print(cout, Choice, t);
 				cout << endl;
 				}
 
@@ -805,7 +812,7 @@ void character_table_burnside::compute_Distribution_table(action *A, action_by_c
 
 		if (f_v) {
 			cout << "after t=" << t << " Distribution:" << endl;
-			Orbiter->Int_vec.matrix_print(Distribution, t + 1, nb_classes);
+			Orbiter->Int_vec->matrix_print(Distribution, t + 1, nb_classes);
 			}
 		}
 
@@ -916,7 +923,7 @@ void character_table_burnside::integral_eigenvalues(int *M, int n,
 		}
 	if (f_v) {
 		cout << "coeffs : ";
-		Orbiter->Int_vec.print(cout, A, deg + 1);
+		Orbiter->Int_vec->print(cout, A, deg + 1);
 		cout << endl;
 		}
 
@@ -958,11 +965,11 @@ void character_table_burnside::integral_eigenvalues(int *M, int n,
 					exit(1);
 					}
 				}
-			Orbiter->Int_vec.copy(B, A, deg);
+			Orbiter->Int_vec->copy(B, A, deg);
 			deg--;
 			if (f_v) {
 				cout << "after dividing off, the polynomial is: ";
-				Orbiter->Int_vec.print(cout, A, deg + 1);
+				Orbiter->Int_vec->print(cout, A, deg + 1);
 				cout << endl;
 				}
 
@@ -973,13 +980,13 @@ void character_table_burnside::integral_eigenvalues(int *M, int n,
 
 	if (f_v) {
 		cout << "after dividing off integer roots, the polynomial is: ";
-		Orbiter->Int_vec.print(cout, A, deg + 1);
+		Orbiter->Int_vec->print(cout, A, deg + 1);
 		cout << endl;
 		}
 
 	if (f_v) {
 		cout << "We found " << nb_lambda << " integer roots, they are: " << endl;
-		Orbiter->Int_vec.print(cout, Lambda, nb_lambda);
+		Orbiter->Int_vec->print(cout, Lambda, nb_lambda);
 		cout << endl;
 		cout << "We found " << nb_mu << " distinct integer roots, they are: " << endl;
 		for (i = 0; i < nb_mu; i++) {

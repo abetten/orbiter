@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace coding_theory {
 
 void coding_theory_domain::make_BCH_code(int n, finite_field *F, int d,
 		nth_roots *&Nth, unipoly_object &P,
@@ -57,7 +58,7 @@ void coding_theory_domain::make_BCH_code(int n, finite_field *F, int d,
 
 	if (f_v) {
 		cout << "coding_theory_domain::make_BCH_code Sel=";
-		Orbiter->Int_vec.print(cout, Sel, nb_sel);
+		Orbiter->Int_vec->print(cout, Sel, nb_sel);
 		cout << endl;
 	}
 
@@ -464,7 +465,7 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 	}
 	generator_matrix_cyclic_code(n, degree, generator_subfield, Genma);
 	cout << "coding_theory_domain::make_cyclic_code generator matrix: " << endl;
-	Orbiter->Int_vec.print_integer_matrix_width(cout, Genma, n - degree, n, n, 3);
+	Orbiter->Int_vec->print_integer_matrix_width(cout, Genma, n - degree, n, n, 3);
 
 
 	{
@@ -538,7 +539,7 @@ void coding_theory_domain::generator_matrix_cyclic_code(int n,
 	int i, j;
 
 	M = NEW_int(k * n);
-	Orbiter->Int_vec.zero(M, k * n);
+	Orbiter->Int_vec->zero(M, k * n);
 	for (i = 0; i < k; i++) {
 		for (j = 0; j <= degree; j++) {
 			M[i * n + j + i] = generator_polynomial[j];
@@ -1039,7 +1040,7 @@ void coding_theory_domain::compute_generator_matrix(
 	}
 	if (f_v) {
 		cout << "coding_theory_domain::compute_generator_matrix generator matrix:" << endl;
-		Orbiter->Int_vec.print_integer_matrix(cout, genma, k, n);
+		Orbiter->Int_vec->print_integer_matrix(cout, genma, k, n);
 	}
 }
 
@@ -1075,7 +1076,7 @@ void coding_theory_domain::make_BCH_codes(int n, int q, int t, int b, int f_dual
 	fname_csv.append(".csv");
 
 	cout << "roots: ";
-	Orbiter->Int_vec.print(cout, roots, nb_roots);
+	Orbiter->Int_vec->print(cout, roots, nb_roots);
 	cout << endl;
 
 	coding_theory_domain Codes;
@@ -1096,7 +1097,8 @@ void coding_theory_domain::make_BCH_codes(int n, int q, int t, int b, int f_dual
 }
 
 
-}}
+}}}
+
 
 
 

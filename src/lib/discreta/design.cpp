@@ -4,7 +4,8 @@
 // 18.09.2000
 // moved from D2 to ORBI Nov 15, 2007
 
-#include "orbiter.h"
+#include "foundations/foundations.h"
+#include "discreta.h"
 
 using namespace std;
 
@@ -556,7 +557,7 @@ void design_parameter_database_read_design_txt(char *fname_design_txt,
 	char comment[BUFSIZE];
 	int t, v, k, lambda;
 	int btree_idx_id = 0;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	ifstream f(fname_design_txt);
 	if (!f) {

@@ -74,20 +74,20 @@ void object_with_canonical_form::print(ostream &ost)
 	cout << "set_as_string: " << set_as_string << endl;
 	if (type == t_PTS) {
 		ost << "set of points of size " << sz << ": ";
-		Orbiter->Lint_vec.print(ost, set, sz);
+		Orbiter->Lint_vec->print(ost, set, sz);
 		ost << endl;
 	}
 	else if (type == t_LNS) {
 		ost << "set of lines of size " << sz << ": ";
-		Orbiter->Lint_vec.print(ost, set, sz);
+		Orbiter->Lint_vec->print(ost, set, sz);
 		ost << endl;
 	}
 	else if (type == t_PNL) {
 		ost << "set of points of size " << sz
 				<< " and a set of lines of size " << sz2 << ": ";
-		Orbiter->Lint_vec.print(ost, set, sz);
+		Orbiter->Lint_vec->print(ost, set, sz);
 		ost << ", ";
-		Orbiter->Lint_vec.print(ost, set2, sz2);
+		Orbiter->Lint_vec->print(ost, set2, sz2);
 		ost << endl;
 	}
 	else if (type == t_PAC) {
@@ -120,7 +120,7 @@ void object_with_canonical_form::print_rows(std::ostream &ost,
 
 	if (f_show_incma) {
 
-		encoded_combinatorial_object *Enc;
+		combinatorics::encoded_combinatorial_object *Enc;
 
 		encode_incma(Enc, verbose_level);
 
@@ -151,7 +151,7 @@ void object_with_canonical_form::print_tex_detailed(std::ostream &ost,
 
 	if (f_show_incma) {
 
-		encoded_combinatorial_object *Enc;
+		combinatorics::encoded_combinatorial_object *Enc;
 
 		encode_incma(Enc, verbose_level);
 
@@ -174,22 +174,22 @@ void object_with_canonical_form::print_tex(ostream &ost)
 {
 	if (type == t_PTS) {
 		ost << "set of points of size " << sz << ": ";
-		Orbiter->Lint_vec.print(ost, set, sz);
+		Orbiter->Lint_vec->print(ost, set, sz);
 		ost << "\\\\" << endl;
 		//P->print_set_numerical(ost, set, sz);
 		P->print_set_of_points(ost, set, sz);
 	}
 	else if (type == t_LNS) {
 		ost << "set of lines of size " << sz << ": ";
-		Orbiter->Lint_vec.print(ost, set, sz);
+		Orbiter->Lint_vec->print(ost, set, sz);
 		ost << "\\\\" << endl;
 	}
 	else if (type == t_PNL) {
 		ost << "set of points of size " << sz << ": ";
-		Orbiter->Lint_vec.print(ost, set, sz);
+		Orbiter->Lint_vec->print(ost, set, sz);
 		ost << "\\\\" << endl;
 		ost << "and a set of lines of size " << sz2 << ": ";
-		Orbiter->Lint_vec.print(ost, set2, sz2);
+		Orbiter->Lint_vec->print(ost, set2, sz2);
 		ost << "\\\\" << endl;
 	}
 	else if (type == t_PAC) {
@@ -201,7 +201,7 @@ void object_with_canonical_form::print_tex(ostream &ost)
 		ost << "incidence structure: \\\\" << endl;
 		//SoS->print_table_tex(ost);
 		//ost << endl;
-		Orbiter->Lint_vec.print(ost, set, sz);
+		Orbiter->Lint_vec->print(ost, set, sz);
 		ost << "\\\\" << endl;
 #if 0
 		object_with_canonical_form::set = NEW_lint(data_sz);
@@ -220,7 +220,7 @@ void object_with_canonical_form::print_tex(ostream &ost)
 		int i;
 
 		for (i = 0; i < nb_designs; i++) {
-			Orbiter->Lint_vec.print(ost, set + i * design_sz, design_sz);
+			Orbiter->Lint_vec->print(ost, set + i * design_sz, design_sz);
 			ost << "\\\\" << endl;
 		}
 #if 0
@@ -271,7 +271,7 @@ void object_with_canonical_form::init_point_set(
 	//object_with_canonical_form::P = P;
 	type = t_PTS;
 	object_with_canonical_form::set = NEW_lint(sz);
-	Orbiter->Lint_vec.copy(set, object_with_canonical_form::set, sz);
+	Orbiter->Lint_vec->copy(set, object_with_canonical_form::set, sz);
 	object_with_canonical_form::sz = sz;
 	if (f_v) {
 		cout << "object_with_canonical_form::init_point_set done" << endl;
@@ -310,7 +310,7 @@ void object_with_canonical_form::init_line_set(
 	//object_with_canonical_form::P = P;
 	type = t_LNS;
 	object_with_canonical_form::set = NEW_lint(sz);
-	Orbiter->Lint_vec.copy(set, object_with_canonical_form::set, sz);
+	Orbiter->Lint_vec->copy(set, object_with_canonical_form::set, sz);
 	object_with_canonical_form::sz = sz;
 	if (f_v) {
 		cout << "object_with_canonical_form::init_line_set done" << endl;
@@ -329,7 +329,7 @@ void object_with_canonical_form::init_line_set_from_string(
 
 	type = t_LNS;
 
-	Orbiter->Lint_vec.scan(set_text, set, sz);
+	Orbiter->Lint_vec->scan(set_text, set, sz);
 
 	if (f_v) {
 		cout << "object_with_canonical_form::init_line_set_from_string done" << endl;
@@ -350,11 +350,11 @@ void object_with_canonical_form::init_points_and_lines(
 	type = t_PNL;
 
 	object_with_canonical_form::set = NEW_lint(sz);
-	Orbiter->Lint_vec.copy(set, object_with_canonical_form::set, sz);
+	Orbiter->Lint_vec->copy(set, object_with_canonical_form::set, sz);
 	object_with_canonical_form::sz = sz;
 
 	object_with_canonical_form::set2 = NEW_lint(sz2);
-	Orbiter->Lint_vec.copy(set2, object_with_canonical_form::set2, sz2);
+	Orbiter->Lint_vec->copy(set2, object_with_canonical_form::set2, sz2);
 	object_with_canonical_form::sz2 = sz2;
 
 	if (f_v) {
@@ -375,9 +375,9 @@ void object_with_canonical_form::init_points_and_lines_from_string(
 
 	type = t_PNL;
 
-	Orbiter->Lint_vec.scan(set_text, set, sz);
+	Orbiter->Lint_vec->scan(set_text, set, sz);
 
-	Orbiter->Lint_vec.scan(set2_text, set2, sz2);
+	Orbiter->Lint_vec->scan(set2_text, set2, sz2);
 
 	if (f_v) {
 		cout << "object_with_canonical_form::init_points_and_lines_from_string done" << endl;
@@ -404,7 +404,7 @@ void object_with_canonical_form::init_packing_from_set(
 			"sz != size_of_packing * size_of_spread" << endl;
 		exit(1);
 	}
-	SoS = NEW_OBJECT(set_of_sets);
+	SoS = NEW_OBJECT(data_structures::set_of_sets);
 
 	SoS->init_basic_constant_size(P->N_lines, 
 		size_of_packing /* nb_sets */, 
@@ -412,7 +412,7 @@ void object_with_canonical_form::init_packing_from_set(
 		0 /* verbose_level */);
 
 	for (i = 0; i < size_of_packing; i++) {
-		Orbiter->Lint_vec.copy(packing + i * size_of_spread,
+		Orbiter->Lint_vec->copy(packing + i * size_of_spread,
 				SoS->Sets[i], size_of_spread);
 	}
 #if 0
@@ -448,7 +448,7 @@ void object_with_canonical_form::init_packing_from_string(
 
 
 
-	Orbiter->Lint_vec.scan(packing_text, packing, sz);
+	Orbiter->Lint_vec->scan(packing_text, packing, sz);
 
 	size_of_spread = q * q + 1;
 	size_of_packing = q * q + q + 1;
@@ -458,7 +458,7 @@ void object_with_canonical_form::init_packing_from_string(
 			"sz != N_lines" << endl;
 		exit(1);
 	}
-	SoS = NEW_OBJECT(set_of_sets);
+	SoS = NEW_OBJECT(data_structures::set_of_sets);
 
 	SoS->init_basic_constant_size(N_lines,
 		size_of_packing /* nb_sets */,
@@ -466,7 +466,7 @@ void object_with_canonical_form::init_packing_from_string(
 		0 /* verbose_level */);
 
 	for (i = 0; i < size_of_packing; i++) {
-		Orbiter->Lint_vec.copy(packing + i * size_of_spread,
+		Orbiter->Lint_vec->copy(packing + i * size_of_spread,
 				SoS->Sets[i], size_of_spread);
 	}
 #if 0
@@ -485,7 +485,7 @@ void object_with_canonical_form::init_packing_from_string(
 }
 
 void object_with_canonical_form::init_packing_from_set_of_sets(
-		set_of_sets *SoS, int verbose_level)
+		data_structures::set_of_sets *SoS, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -531,7 +531,7 @@ void object_with_canonical_form::init_packing_from_spread_table(
 	}
 	N_lines = size_of_spread * size_of_packing;
 
-	SoS = NEW_OBJECT(set_of_sets);
+	SoS = NEW_OBJECT(data_structures::set_of_sets);
 
 	SoS->init_basic_constant_size(N_lines,
 		size_of_packing /* nb_sets */,
@@ -540,7 +540,7 @@ void object_with_canonical_form::init_packing_from_spread_table(
 
 	for (i = 0; i < size_of_packing; i++) {
 		a = data[i];
-		Orbiter->Lint_vec.copy(Spread_table + a * size_of_spread,
+		Orbiter->Lint_vec->copy(Spread_table + a * size_of_spread,
 				SoS->Sets[i], size_of_spread);
 	}
 	if (verbose_level >= 5) {
@@ -588,7 +588,7 @@ void object_with_canonical_form::init_incidence_geometry(
 	object_with_canonical_form::P = NULL;
 	type = t_INC;
 	object_with_canonical_form::set = NEW_lint(data_sz);
-	Orbiter->Lint_vec.copy(data, object_with_canonical_form::set, data_sz);
+	Orbiter->Lint_vec->copy(data, object_with_canonical_form::set, data_sz);
 	object_with_canonical_form::sz = data_sz;
 	object_with_canonical_form::v = v;
 	object_with_canonical_form::b = b;
@@ -642,7 +642,7 @@ void object_with_canonical_form::init_incidence_geometry_from_string(
 	long int *flags;
 	int data_sz;
 
-	Orbiter->Lint_vec.scan(data, flags, data_sz);
+	Orbiter->Lint_vec->scan(data, flags, data_sz);
 
 	if (nb_flags != data_sz) {
 		cout << "object_with_canonical_form::init_incidence_geometry_from_string nb_flags != data_sz" << endl;
@@ -650,7 +650,7 @@ void object_with_canonical_form::init_incidence_geometry_from_string(
 	object_with_canonical_form::P = NULL;
 	type = t_INC;
 	object_with_canonical_form::set = NEW_lint(data_sz);
-	Orbiter->Lint_vec.copy(flags, object_with_canonical_form::set, data_sz);
+	Orbiter->Lint_vec->copy(flags, object_with_canonical_form::set, data_sz);
 	object_with_canonical_form::sz = data_sz;
 	object_with_canonical_form::v = v;
 	object_with_canonical_form::b = b;
@@ -678,9 +678,9 @@ void object_with_canonical_form::init_incidence_geometry_from_string_of_row_rank
 	int data_sz;
 	int nb_flags;
 	int i, h, a;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
-	Orbiter->Lint_vec.scan(data, row_ranks, data_sz);
+	Orbiter->Lint_vec->scan(data, row_ranks, data_sz);
 
 	if (v != data_sz) {
 		cout << "object_with_canonical_form::init_incidence_geometry_from_string v != data_sz" << endl;
@@ -701,7 +701,7 @@ void object_with_canonical_form::init_incidence_geometry_from_string_of_row_rank
 	object_with_canonical_form::P = NULL;
 	type = t_INC;
 	object_with_canonical_form::set = NEW_lint(nb_flags);
-	Orbiter->Lint_vec.copy(flags, object_with_canonical_form::set, nb_flags);
+	Orbiter->Lint_vec->copy(flags, object_with_canonical_form::set, nb_flags);
 	object_with_canonical_form::sz = nb_flags;
 	object_with_canonical_form::v = v;
 	object_with_canonical_form::b = b;
@@ -733,7 +733,7 @@ void object_with_canonical_form::init_large_set(
 	object_with_canonical_form::P = NULL;
 	type = t_LS;
 	object_with_canonical_form::set = NEW_lint(data_sz);
-	Orbiter->Lint_vec.copy(data, object_with_canonical_form::set, data_sz);
+	Orbiter->Lint_vec->copy(data, object_with_canonical_form::set, data_sz);
 	object_with_canonical_form::sz = data_sz;
 	object_with_canonical_form::v = v;
 	object_with_canonical_form::b = data_sz;
@@ -757,7 +757,7 @@ void object_with_canonical_form::init_large_set_from_string(
 
 	type = t_LS;
 
-	Orbiter->Lint_vec.scan(data_text, set, sz);
+	Orbiter->Lint_vec->scan(data_text, set, sz);
 
 	object_with_canonical_form::v = v;
 	object_with_canonical_form::b = sz;
@@ -985,7 +985,7 @@ void object_with_canonical_form::encoding_size_incidence_geometry(
 
 void object_with_canonical_form::canonical_form_given_canonical_labeling(
 		int *canonical_labeling,
-		bitvector *&B,
+		data_structures::bitvector *&B,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -994,7 +994,7 @@ void object_with_canonical_form::canonical_form_given_canonical_labeling(
 		cout << "object_with_canonical_form::canonical_form_given_canonical_labeling" << endl;
 	}
 
-	encoded_combinatorial_object *Enc;
+	combinatorics::encoded_combinatorial_object *Enc;
 
 	encode_incma(Enc, verbose_level - 1);
 	if (f_v) {
@@ -1016,7 +1016,7 @@ void object_with_canonical_form::canonical_form_given_canonical_labeling(
 }
 
 void object_with_canonical_form::encode_incma(
-		encoded_combinatorial_object *&Enc,
+		combinatorics::encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1065,7 +1065,7 @@ void object_with_canonical_form::encode_incma(
 }
 
 void object_with_canonical_form::encode_point_set(
-		encoded_combinatorial_object *&Enc,
+		combinatorics::encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1081,7 +1081,7 @@ void object_with_canonical_form::encode_point_set(
 
 	if (f_v) {
 		cout << "object_with_canonical_form::encode_point_set set=";
-		Orbiter->Lint_vec.print(cout, set, sz);
+		Orbiter->Lint_vec->print(cout, set, sz);
 		cout << endl;
 	}
 	C->init_lint(set, sz, TRUE, 0);
@@ -1104,7 +1104,7 @@ void object_with_canonical_form::encode_point_set(
 	nb_rows = P->N_points + 1;
 	nb_cols = P->N_lines + C->second_nb_types;
 
-	Enc = NEW_OBJECT(encoded_combinatorial_object);
+	Enc = NEW_OBJECT(combinatorics::encoded_combinatorial_object);
 	Enc->init(nb_rows, nb_cols, verbose_level);
 
 	int N;
@@ -1182,7 +1182,7 @@ void object_with_canonical_form::encode_point_set(
 }
 
 void object_with_canonical_form::encode_line_set(
-		encoded_combinatorial_object *&Enc,
+		combinatorics::encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1201,7 +1201,7 @@ void object_with_canonical_form::encode_line_set(
 	
 	N = nb_rows + nb_cols;
 
-	Enc = NEW_OBJECT(encoded_combinatorial_object);
+	Enc = NEW_OBJECT(combinatorics::encoded_combinatorial_object);
 	Enc->init(nb_rows, nb_cols, verbose_level);
 
 	Enc->incidence_matrix_projective_space_top_left(P, verbose_level);
@@ -1236,7 +1236,7 @@ void object_with_canonical_form::encode_line_set(
 }
 
 void object_with_canonical_form::encode_points_and_lines(
-		encoded_combinatorial_object *&Enc,
+		combinatorics::encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1255,7 +1255,7 @@ void object_with_canonical_form::encode_points_and_lines(
 
 	N = nb_rows + nb_cols;
 
-	Enc = NEW_OBJECT(encoded_combinatorial_object);
+	Enc = NEW_OBJECT(combinatorics::encoded_combinatorial_object);
 	Enc->init(nb_rows, nb_cols, verbose_level);
 
 	Enc->incidence_matrix_projective_space_top_left(P, verbose_level);
@@ -1300,7 +1300,7 @@ void object_with_canonical_form::encode_points_and_lines(
 
 
 void object_with_canonical_form::encode_packing(
-		encoded_combinatorial_object *&Enc,
+		combinatorics::encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1320,7 +1320,7 @@ void object_with_canonical_form::encode_packing(
 	
 	N = nb_rows + nb_cols;
 
-	Enc = NEW_OBJECT(encoded_combinatorial_object);
+	Enc = NEW_OBJECT(combinatorics::encoded_combinatorial_object);
 	Enc->init(nb_rows, nb_cols, verbose_level);
 
 	Enc->incidence_matrix_projective_space_top_left(P, verbose_level);
@@ -1355,7 +1355,7 @@ void object_with_canonical_form::encode_packing(
 }
 
 void object_with_canonical_form::encode_large_set(
-		encoded_combinatorial_object *&Enc,
+		combinatorics::encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1380,11 +1380,11 @@ void object_with_canonical_form::encode_large_set(
 	N = nb_rows + nb_cols;
 	L = nb_rows * nb_cols;
 
-	Enc = NEW_OBJECT(encoded_combinatorial_object);
+	Enc = NEW_OBJECT(combinatorics::encoded_combinatorial_object);
 	Enc->init(nb_rows, nb_cols, verbose_level);
 
 
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	int *block;
 
@@ -1430,7 +1430,7 @@ void object_with_canonical_form::encode_large_set(
 }
 
 void object_with_canonical_form::encode_incidence_geometry(
-		encoded_combinatorial_object *&Enc,
+		combinatorics::encoded_combinatorial_object *&Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1450,7 +1450,7 @@ void object_with_canonical_form::encode_incidence_geometry(
 
 	N = nb_rows + nb_cols;
 
-	Enc = NEW_OBJECT(encoded_combinatorial_object);
+	Enc = NEW_OBJECT(combinatorics::encoded_combinatorial_object);
 	Enc->init(nb_rows, nb_cols, verbose_level);
 
 	for (i = 0; i < sz; i++) {
@@ -1467,7 +1467,7 @@ void object_with_canonical_form::encode_incidence_geometry(
 
 
 	if (f_partition) {
-		Orbiter->Int_vec.copy(partition, Enc->partition, N);
+		Orbiter->Int_vec->copy(partition, Enc->partition, N);
 	}
 	else {
 		Enc->partition[nb_rows - 1] = 0;
@@ -1486,9 +1486,9 @@ void object_with_canonical_form::encode_incidence_geometry(
 }
 
 void object_with_canonical_form::encode_incma_and_make_decomposition(
-		encoded_combinatorial_object *&Enc,
+		combinatorics::encoded_combinatorial_object *&Enc,
 		incidence_structure *&Inc,
-		partitionstack *&Stack,
+		data_structures::partitionstack *&Stack,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1537,7 +1537,7 @@ void object_with_canonical_form::encode_incma_and_make_decomposition(
 
 
 
-	Stack = NEW_OBJECT(partitionstack);
+	Stack = NEW_OBJECT(data_structures::partitionstack);
 	Stack->allocate(Enc->nb_rows + Enc->nb_cols, 0);
 	Stack->subset_continguous(Inc->nb_points(), Inc->nb_lines());
 	Stack->split_cell(0);
@@ -1700,7 +1700,7 @@ void object_with_canonical_form::encode_object_points(
 	}
 	encoding_sz = sz;
 	encoding = NEW_lint(sz);
-	Orbiter->Lint_vec.copy(set, encoding, sz);
+	Orbiter->Lint_vec->copy(set, encoding, sz);
 }
 
 void object_with_canonical_form::encode_object_lines(
@@ -1713,7 +1713,7 @@ void object_with_canonical_form::encode_object_lines(
 	}
 	encoding_sz = sz;
 	encoding = NEW_lint(sz);
-	Orbiter->Lint_vec.copy(set, encoding, sz);
+	Orbiter->Lint_vec->copy(set, encoding, sz);
 }
 
 void object_with_canonical_form::encode_object_points_and_lines(
@@ -1726,7 +1726,7 @@ void object_with_canonical_form::encode_object_points_and_lines(
 	}
 	encoding_sz = sz;
 	encoding = NEW_lint(sz);
-	Orbiter->Lint_vec.copy(set, encoding, sz);
+	Orbiter->Lint_vec->copy(set, encoding, sz);
 }
 
 void object_with_canonical_form::encode_object_packing(
@@ -1743,7 +1743,7 @@ void object_with_canonical_form::encode_object_packing(
 	encoding = NEW_lint(encoding_sz);
 	h = 0;
 	for (i = 0; i < SoS->nb_sets; i++) {
-		Orbiter->Lint_vec.copy(SoS->Sets[i], encoding + h, SoS->Set_size[i]);
+		Orbiter->Lint_vec->copy(SoS->Sets[i], encoding + h, SoS->Set_size[i]);
 		h += SoS->Set_size[i];
 	}
 	if (h != encoding_sz) {
@@ -1763,7 +1763,7 @@ void object_with_canonical_form::encode_object_incidence_geometry(
 	}
 	encoding_sz = sz;
 	encoding = NEW_lint(sz);
-	Orbiter->Lint_vec.copy(set, encoding, sz);
+	Orbiter->Lint_vec->copy(set, encoding, sz);
 }
 
 void object_with_canonical_form::encode_object_large_set(
@@ -1776,7 +1776,7 @@ void object_with_canonical_form::encode_object_large_set(
 	}
 	encoding_sz = sz;
 	encoding = NEW_lint(sz);
-	Orbiter->Lint_vec.copy(set, encoding, sz);
+	Orbiter->Lint_vec->copy(set, encoding, sz);
 }
 
 void object_with_canonical_form::klein(int verbose_level)
@@ -1900,8 +1900,8 @@ void object_with_canonical_form::klein(int verbose_level)
 }
 
 void object_with_canonical_form::run_nauty(
-		int f_compute_canonical_form, bitvector *&Canonical_form,
-		nauty_output *&NO,
+		int f_compute_canonical_form, data_structures::bitvector *&Canonical_form,
+		data_structures::nauty_output *&NO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1910,10 +1910,10 @@ void object_with_canonical_form::run_nauty(
 		cout << "object_with_canonical_form::run_nauty" << endl;
 	}
 	int L;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	file_io Fio;
 	nauty_interface Nau;
-	encoded_combinatorial_object *Enc;
+	combinatorics::encoded_combinatorial_object *Enc;
 
 	if (f_v) {
 		cout << "object_with_canonical_form::run_nauty" << endl;
@@ -1948,7 +1948,7 @@ void object_with_canonical_form::run_nauty(
 #endif
 
 
-	NO = NEW_OBJECT(nauty_output);
+	NO = NEW_OBJECT(data_structures::nauty_output);
 
 
 	L = Enc->nb_rows * Enc->nb_cols;
@@ -1977,7 +1977,7 @@ void object_with_canonical_form::run_nauty(
 		NO,
 		verbose_level - 3);
 
-	Orbiter->Int_vec.copy_to_lint(NO->Base, NO->Base_lint, NO->Base_length);
+	Orbiter->Int_vec->copy_to_lint(NO->Base, NO->Base_lint, NO->Base_length);
 
 	t1 = Os.os_ticks();
 	dt = t1 - t0;
@@ -2071,13 +2071,13 @@ void object_with_canonical_form::run_nauty(
 
 
 void object_with_canonical_form::canonical_labeling(
-		nauty_output *NO,
+		data_structures::nauty_output *NO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 
-	encoded_combinatorial_object *Enc;
+	combinatorics::encoded_combinatorial_object *Enc;
 	nauty_interface Nau;
 
 
@@ -2151,7 +2151,8 @@ void object_with_canonical_form::canonical_labeling(
 	}
 }
 
-void object_with_canonical_form::run_nauty_basic(nauty_output *&NO, int verbose_level)
+void object_with_canonical_form::run_nauty_basic(
+		data_structures::nauty_output *&NO, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -2175,7 +2176,7 @@ void object_with_canonical_form::run_nauty_basic(nauty_output *&NO, int verbose_
 		cout << "object_with_canonical_form::run_nauty_basic nb_cols=" << nb_cols << endl;
 	}
 
-	bitvector *Canonical_form;
+	data_structures::bitvector *Canonical_form;
 
 
 	if (f_v) {

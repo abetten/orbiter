@@ -125,7 +125,7 @@ void semifield_substructure::compute_cases(
 			<< " cases with more than one solution and with a "
 				"non-trivial group" << endl;
 		cout << "They are:" << endl;
-		Orbiter->Int_vec.matrix_print(Non_unique_cases_with_non_trivial_group,
+		Orbiter->Int_vec->matrix_print(Non_unique_cases_with_non_trivial_group,
 			nb_non_unique_cases_with_non_trivial_group / 10 + 1, 10);
 		}
 
@@ -211,8 +211,8 @@ void semifield_substructure::compute_orbits(
 		position = NEW_int(len);
 		orbit_idx = NEW_int(len);
 
-		Orbiter->Int_vec.zero(f_reached, len);
-		Orbiter->Int_vec.mone(position, len);
+		Orbiter->Int_vec->zero(f_reached, len);
+		Orbiter->Int_vec->mone(position, len);
 
 		int cnt, f;
 
@@ -237,7 +237,7 @@ void semifield_substructure::compute_orbits(
 					"semifield " << f << " / " << len << endl;
 				cout << "Orbit rep "
 					<< f << ":" << endl;
-				Orbiter->Lint_vec.print(cout, input_data, SC->k);
+				Orbiter->Lint_vec->print(cout, input_data, SC->k);
 				cout << endl;
 				}
 			if (FALSE) {
@@ -329,7 +329,7 @@ void semifield_substructure::compute_flag_orbits(int verbose_level)
 	int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
 	int o, idx, h, fst, g;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "semifield_substructure::compute_flag_orbits" << endl;
@@ -518,7 +518,7 @@ void semifield_substructure::do_classify(int verbose_level)
 
 
 	f_processed = NEW_int(nb_flag_orbits);
-	Orbiter->Int_vec.zero(f_processed, nb_flag_orbits);
+	Orbiter->Int_vec->zero(f_processed, nb_flag_orbits);
 	nb_processed = 0;
 
 
@@ -564,12 +564,12 @@ void semifield_substructure::do_classify(int verbose_level)
 		if (f_v) {
 			cout << "po=" << po << " so=" << so << endl;
 		}
-		Orbiter->Lint_vec.copy(
+		Orbiter->Lint_vec->copy(
 				Flag_orbits->Pt + f * Flag_orbits->pt_representation_sz,
 				data1, SC->k);
 		if (f_v) {
 			cout << "data1=";
-			Orbiter->Lint_vec.print(cout, data1, SC->k);
+			Orbiter->Lint_vec->print(cout, data1, SC->k);
 			cout << endl;
 		}
 
@@ -586,7 +586,7 @@ void semifield_substructure::do_classify(int verbose_level)
 		}
 		if (f_v) {
 			cout << "Basis1=" << endl;
-			Orbiter->Int_vec.matrix_print(Basis1, SC->k, SC->k2);
+			Orbiter->Int_vec->matrix_print(Basis1, SC->k, SC->k2);
 			SC->basis_print(Basis1, SC->k);
 		}
 		f_skip = FALSE;
@@ -597,7 +597,7 @@ void semifield_substructure::do_classify(int verbose_level)
 			cout << "flag orbit " << f << " / "
 					<< nb_flag_orbits
 					<< " 1st col of third matrix is = ";
-			Orbiter->Int_vec.print(cout, v3, SC->k);
+			Orbiter->Int_vec->print(cout, v3, SC->k);
 			cout << " which is not the (k-1)-th unit vector, "
 					"so we skip" << endl;
 			f_skip = TRUE;
@@ -734,7 +734,7 @@ void semifield_substructure::loop_over_all_subspaces(
 	int f_skip;
 	int trace_po;
 	int ret;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 
 #if 0
@@ -791,10 +791,10 @@ void semifield_substructure::loop_over_all_subspaces(
 
 		if (f_vvv) {
 			cout << "base change matrix B=" << endl;
-			Orbiter->Int_vec.matrix_print_bitwise(B, k, k);
+			Orbiter->Int_vec->matrix_print_bitwise(B, k, k);
 
 			cout << "Basis2 = B * Basis1 (before trace)=" << endl;
-			Orbiter->Int_vec.matrix_print_bitwise(Basis2, k, k2);
+			Orbiter->Int_vec->matrix_print_bitwise(Basis2, k, k2);
 			SC->basis_print(Basis2, k);
 		}
 
@@ -826,7 +826,7 @@ void semifield_substructure::loop_over_all_subspaces(
 			cout << "After trace, trace_po = "
 					<< trace_po << endl;
 			cout << "Basis2 (after trace)=" << endl;
-			Orbiter->Int_vec.matrix_print_bitwise(Basis2, k, k2);
+			Orbiter->Int_vec->matrix_print_bitwise(Basis2, k, k2);
 			SC->basis_print(Basis2, k);
 		}
 
@@ -868,7 +868,7 @@ void semifield_substructure::loop_over_all_subspaces(
 				0 /*verbose_level - 2*/);
 			if (f_vvv) {
 				cout << "Basis2 after RREF(2)=" << endl;
-				Orbiter->Int_vec.matrix_print_bitwise(Basis2, k, k2);
+				Orbiter->Int_vec->matrix_print_bitwise(Basis2, k, k2);
 				SC->basis_print(Basis2, k);
 			}
 
@@ -877,7 +877,7 @@ void semifield_substructure::loop_over_all_subspaces(
 			}
 			if (f_vvv) {
 				cout << "data2=";
-				Orbiter->Lint_vec.print(cout, data2, k);
+				Orbiter->Lint_vec->print(cout, data2, k);
 				cout << endl;
 			}
 
@@ -900,11 +900,11 @@ void semifield_substructure::loop_over_all_subspaces(
 
 				cout << "trace_po=" << trace_po << endl;
 				cout << "data2=";
-				Orbiter->Lint_vec.print(cout, data2, k);
+				Orbiter->Lint_vec->print(cout, data2, k);
 				cout << endl;
 
 				cout << "Basis2 after RREF(2)=" << endl;
-				Orbiter->Int_vec.matrix_print_bitwise(Basis2, k, k2);
+				Orbiter->Int_vec->matrix_print_bitwise(Basis2, k, k2);
 				SC->basis_print(Basis2, k);
 
 				exit(1);
@@ -1155,7 +1155,7 @@ void semifield_substructure::all_two_dimensional_subspaces(
 	int rk, i;
 	int k, k2;
 	int trace_po;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 
 
@@ -1199,10 +1199,10 @@ void semifield_substructure::all_two_dimensional_subspaces(
 
 		if (f_vvv) {
 			cout << "base change matrix B=" << endl;
-			Orbiter->Int_vec.matrix_print_bitwise(B, k, k);
+			Orbiter->Int_vec->matrix_print_bitwise(B, k, k);
 
 			cout << "Basis2 = B * Basis1 (before trace)=" << endl;
-			Orbiter->Int_vec.matrix_print_bitwise(Basis2, k, k2);
+			Orbiter->Int_vec->matrix_print_bitwise(Basis2, k, k2);
 			SC->basis_print(Basis2, k);
 		}
 
@@ -1250,7 +1250,7 @@ int semifield_substructure::identify(long int *data,
 	int f_skip;
 	//int trace_po;
 	int ret;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	int solution_idx;
 
 
@@ -1289,11 +1289,11 @@ int semifield_substructure::identify(long int *data,
 		if (f_vvv) {
 			cout << "semifield_substructure::identify "
 					"base change matrix B=" << endl;
-			Orbiter->Int_vec.matrix_print_bitwise(B, k, k);
+			Orbiter->Int_vec->matrix_print_bitwise(B, k, k);
 
 			cout << "semifield_substructure::identify "
 					"Basis2 = B * Basis1 (before trace)=" << endl;
-			Orbiter->Int_vec.matrix_print_bitwise(Basis2, k, k2);
+			Orbiter->Int_vec->matrix_print_bitwise(Basis2, k, k2);
 			SC->basis_print(Basis2, k);
 		}
 
@@ -1325,7 +1325,7 @@ int semifield_substructure::identify(long int *data,
 					<< trace_po << endl;
 			cout << "semifield_substructure::identify "
 					"Basis2 (after trace)=" << endl;
-			Orbiter->Int_vec.matrix_print_bitwise(Basis2, k, k2);
+			Orbiter->Int_vec->matrix_print_bitwise(Basis2, k, k2);
 			SC->basis_print(Basis2, k);
 		}
 
@@ -1368,7 +1368,7 @@ int semifield_substructure::identify(long int *data,
 			if (f_vvv) {
 				cout << "semifield_substructure::identify "
 						"Basis2 after RREF(2)=" << endl;
-				Orbiter->Int_vec.matrix_print_bitwise(Basis2, k, k2);
+				Orbiter->Int_vec->matrix_print_bitwise(Basis2, k, k2);
 				SC->basis_print(Basis2, k);
 			}
 
@@ -1377,7 +1377,7 @@ int semifield_substructure::identify(long int *data,
 			}
 			if (f_vvv) {
 				cout << "semifield_substructure::identify data2=";
-				Orbiter->Lint_vec.print(cout, data2, k);
+				Orbiter->Lint_vec->print(cout, data2, k);
 				cout << endl;
 			}
 
@@ -1397,12 +1397,12 @@ int semifield_substructure::identify(long int *data,
 				cout << "semifield_substructure::identify "
 						"trace_po=" << trace_po << endl;
 				cout << "semifield_substructure::identify data2=";
-				Orbiter->Lint_vec.print(cout, data2, k);
+				Orbiter->Lint_vec->print(cout, data2, k);
 				cout << endl;
 
 				cout << "semifield_substructure::identify "
 						"Basis2 after RREF(2)=" << endl;
-				Orbiter->Int_vec.matrix_print_bitwise(Basis2, k, k2);
+				Orbiter->Int_vec->matrix_print_bitwise(Basis2, k, k2);
 				SC->basis_print(Basis2, k);
 
 				return FALSE;
@@ -1536,7 +1536,7 @@ int semifield_substructure::find_semifield_in_table(
 {
 	int f_v = (verbose_level >= 1);
 	int fst, len, g;
-
+	data_structures::sorting Sorting;
 
 
 	if (f_v) {
@@ -1547,7 +1547,7 @@ int semifield_substructure::find_semifield_in_table(
 
 	if (f_v) {
 		cout << "searching for: ";
-		Orbiter->Lint_vec.print(cout, given_data, SC->k);
+		Orbiter->Lint_vec->print(cout, given_data, SC->k);
 		cout << endl;
 		}
 	fst = FstLen[2 * po + 0];
@@ -1564,7 +1564,7 @@ int semifield_substructure::find_semifield_in_table(
 		return FALSE;
 		}
 
-	if (lint_vec_compare(Data + fst * data_size + start_column,
+	if (Sorting.lint_vec_compare(Data + fst * data_size + start_column,
 			given_data, 3)) {
 		cout << "find_semifield_in_table the first three entries "
 				"of given_data do not match with what "
@@ -1573,7 +1573,7 @@ int semifield_substructure::find_semifield_in_table(
 	}
 
 	if (len == 1) {
-		if (lint_vec_compare(Data + fst * data_size + start_column,
+		if (Sorting.lint_vec_compare(Data + fst * data_size + start_column,
 				given_data, SC->k)) {
 			cout << "find_semifield_in_table len is 1 and the first six "
 				"entries of given_data do not match with what "
@@ -1584,7 +1584,7 @@ int semifield_substructure::find_semifield_in_table(
 	}
 	else {
 		for (g = 0; g < len; g++) {
-			if (lint_vec_compare(Data + (fst + g) * data_size + start_column,
+			if (Sorting.lint_vec_compare(Data + (fst + g) * data_size + start_column,
 					given_data, SC->k) == 0) {
 				idx = g;
 				break;
@@ -1595,11 +1595,11 @@ int semifield_substructure::find_semifield_in_table(
 					"semifield in the table" << endl;
 			for (g = 0; g < len; g++) {
 				cout << g << " : " << fst + g << " : ";
-				Orbiter->Lint_vec.print(cout,
+				Orbiter->Lint_vec->print(cout,
 						Data + (fst + g) * data_size + start_column,
 						SC->k);
 				cout << " : ";
-				cout << lint_vec_compare(
+				cout << Sorting.lint_vec_compare(
 						Data + (fst + g) * data_size + start_column,
 						given_data, SC->k);
 				cout << endl;

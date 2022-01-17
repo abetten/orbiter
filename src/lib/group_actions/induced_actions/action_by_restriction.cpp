@@ -70,7 +70,7 @@ void action_by_restriction::init_single_orbit_from_schreier_vector(
 		cout << "action_by_restriction::init_single_orbit_from_schreier_vector "
 				"after Schreier_vector->orbit_of_point pt=" << pt << endl;
 		cout << "orbit_elts = ";
-		Orbiter->Lint_vec.print(cout, orbit_elts, orbit_len);
+		Orbiter->Lint_vec->print(cout, orbit_elts, orbit_len);
 		cout << endl;
 	}
 
@@ -99,7 +99,7 @@ void action_by_restriction::init(int nb_points, long int *points,
 	int i;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "action_by_restriction::init nb_points="
@@ -107,7 +107,7 @@ void action_by_restriction::init(int nb_points, long int *points,
 		}
 	if (f_vv) {
 		cout << "action_by_restriction::init points=";
-		Orbiter->Lint_vec.print(cout, points, nb_points);
+		Orbiter->Lint_vec->print(cout, points, nb_points);
 		cout << endl;
 	}
 	action_by_restriction::nb_points = nb_points;
@@ -122,7 +122,7 @@ void action_by_restriction::init(int nb_points, long int *points,
 	Sorting.lint_vec_heapsort_with_log(points_sorted, perm_inv, nb_points);
 	if (f_vv) {
 		cout << "action_by_restriction::init points after sorting=";
-		Orbiter->Lint_vec.print(cout, points_sorted, nb_points);
+		Orbiter->Lint_vec->print(cout, points_sorted, nb_points);
 		cout << endl;
 	}
 	if (f_v) {
@@ -138,7 +138,7 @@ long int action_by_restriction::original_point(long int pt)
 long int action_by_restriction::restricted_point_idx(long int pt)
 {
 	int idx;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (!Sorting.lint_vec_search(points_sorted, nb_points, pt, idx, 0 /* verbose_level */)) {
 		cout << "action_by_restriction::restricted_point_idx fatal: "
@@ -156,7 +156,7 @@ long int action_by_restriction::compute_image(
 	long int b, c, h;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "action_by_restriction::compute_image i = " << i << endl;
@@ -195,7 +195,7 @@ long int action_by_restriction::compute_image(
 		cout << "image of " << points[i] << " is " << b << endl;
 		cout << "nb_points=" << nb_points << endl;
 		cout << "points=";
-		Orbiter->Lint_vec.print(cout, points, nb_points);
+		Orbiter->Lint_vec->print(cout, points, nb_points);
 		cout << endl;
 		cout << "points_sorted=" << endl;
 		for (h = 0; h < nb_points; h++) {

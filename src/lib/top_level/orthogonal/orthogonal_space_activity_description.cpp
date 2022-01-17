@@ -74,7 +74,7 @@ int orthogonal_space_activity_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "orthogonal_space_activity_description::read_arguments" << endl;
@@ -83,7 +83,7 @@ int orthogonal_space_activity_description::read_arguments(
 
 		if (ST.stringcmp(argv[i], "-input") == 0) {
 			f_input = TRUE;
-			Data = NEW_OBJECT(data_input_stream_description);
+			Data = NEW_OBJECT(data_structures::data_input_stream_description);
 			if (f_v) {
 				cout << "-input" << endl;
 			}

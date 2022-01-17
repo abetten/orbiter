@@ -471,7 +471,7 @@ void action::element_print_as_permutation_with_offset(
 	int f_max_cycle_length = FALSE;
 	int max_cycle_length = 50;
 	int f_orbit_structure = FALSE;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "action::element_print_as_permutation_with_offset "
@@ -538,7 +538,7 @@ void action::element_print_as_permutation_with_offset_and_max_cycle_length(
 	int f_print_cycles_of_length_one = FALSE;
 	int f_cycle_length = FALSE;
 	int f_max_cycle_length = TRUE;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	v = NEW_int(degree);
 	for (i = 0; i < degree; i++) {
@@ -569,7 +569,7 @@ int action::element_signum_of_permutation(void *elt)
 {
 	int *v;
 	int i, j, sgn;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	v = NEW_int(degree);
 	for (i = 0; i < degree; i++) {
@@ -592,7 +592,7 @@ void action::element_write_file_fp(int *Elt,
 	elt = element_rw_memory_object;
 	if (f_v) {
 		element_print(Elt, cout);
-		Orbiter->Int_vec.print(cout, Elt, elt_size_in_int);
+		Orbiter->Int_vec->print(cout, Elt, elt_size_in_int);
 		cout << endl;
 		}
 	element_pack(Elt, elt, FALSE);
@@ -612,7 +612,7 @@ void action::element_read_file_fp(int *Elt,
 	element_unpack(elt, Elt, FALSE);
 	if (f_v) {
 		element_print(Elt, cout);
-		Orbiter->Int_vec.print(cout, Elt, elt_size_in_int);
+		Orbiter->Int_vec->print(cout, Elt, elt_size_in_int);
 		cout << endl;
 		}
 }
@@ -841,7 +841,7 @@ void action::all_elements_save_csv(std::string &fname, int verbose_level)
 			element_code_for_make_element(Elt, data);
 
 			stringstream ss;
-			Orbiter->Int_vec.print_str_naked(ss, data, make_element_size);
+			Orbiter->Int_vec->print_str_naked(ss, data, make_element_size);
 			ost << i << ",\"" << ss.str() << "\"" << endl;
 		}
 		ost << "END" << endl;

@@ -77,7 +77,7 @@ public:
 
 	// nauty stuff:
 
-	classify_bitvectors *CB;
+	data_structures::classify_bitvectors *CB;
 	int canonical_labeling_len;
 	long int *alpha;
 	int *gamma;
@@ -166,7 +166,7 @@ public:
 	int nb_bitangents;
 
 	int nb_rows, nb_cols;
-	bitvector *Canonical_form;
+	data_structures::bitvector *Canonical_form;
 	long int *canonical_labeling;
 	int canonical_labeling_len;
 
@@ -346,7 +346,7 @@ public:
 	int f_canonical_form_of_code;
 	std::string canonical_form_of_code_label;
 	std::string canonical_form_of_code_generator_matrix;
-	classification_of_objects_description *Canonical_form_codes_Descr;
+	combinatorics::classification_of_objects_description *Canonical_form_codes_Descr;
 
 	int f_map;
 	std::string map_label;
@@ -694,9 +694,6 @@ public:
 	void init(finite_field *F, int n, int f_semilinear,
 		int f_init_incidence_structure, int verbose_level);
 	void init_group(int f_semilinear, int verbose_level);
-	void canonical_form(
-			classification_of_objects_description *Canonical_form_PG_Descr,
-			int verbose_level);
 	void canonical_labeling(
 		object_with_canonical_form *OiP,
 		int *canonical_labeling,
@@ -711,7 +708,7 @@ public:
 		int *Elt, std::ostream &ost, std::string &fname_base,
 		int verbose_level);
 	int process_object(
-		classify_bitvectors *CB,
+		data_structures::classify_bitvectors *CB,
 		object_with_canonical_form *OiP,
 		int f_save_incma_in_and_out, std::string &prefix,
 		int nb_objects_to_test,
@@ -744,7 +741,7 @@ public:
 	void canonical_form_of_code(
 			std::string &label,
 			int *genma, int m, int n,
-			classification_of_objects_description *Canonical_form_codes_Descr,
+			combinatorics::classification_of_objects_description *Canonical_form_codes_Descr,
 			int verbose_level);
 	void table_of_quartic_curves(int verbose_level);
 	void table_of_cubic_surfaces(int verbose_level);

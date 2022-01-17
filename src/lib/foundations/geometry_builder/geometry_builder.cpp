@@ -91,7 +91,7 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 		cout << "please use option -V to specify the row partition" << endl;
 		exit(1);
 	}
-	Orbiter->Int_vec.scan(Descr->V_text, v, v_len);
+	Orbiter->Int_vec->scan(Descr->V_text, v, v_len);
 	V = 0;
 	for (i = 0; i < v_len; i++) {
 		V += v[i];
@@ -101,7 +101,7 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 		cout << "please use option -B to specify the column partition" << endl;
 		exit(1);
 	}
-	Orbiter->Int_vec.scan(Descr->B_text, b, b_len);
+	Orbiter->Int_vec->scan(Descr->B_text, b, b_len);
 	B = 0;
 	for (i = 0; i < b_len; i++) {
 		B += b[i];
@@ -117,10 +117,10 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 		cout << "please use option -TDO to specify the TDO row-scheme" << endl;
 		exit(1);
 	}
-	Orbiter->Int_vec.scan(Descr->TDO_text, TDO, TDO_len);
+	Orbiter->Int_vec->scan(Descr->TDO_text, TDO, TDO_len);
 
 	if (Descr->f_fuse) {
-		Orbiter->Int_vec.scan(Descr->fuse_text, fuse, fuse_len);
+		Orbiter->Int_vec->scan(Descr->fuse_text, fuse, fuse_len);
 		int f;
 
 		f = 0;
@@ -237,7 +237,7 @@ void geometry_builder::init_description(geometry_builder_description *Descr,
 		int a, j;
 
 		//cout << "-test " << Descr->test_lines[i] << " " << Descr->test_flags[i] << endl;
-		Orbiter->Int_vec.scan(Descr->test2_lines[i], lines, lines_len);
+		Orbiter->Int_vec->scan(Descr->test2_lines[i], lines, lines_len);
 		//flags = true_false_string_numeric(Descr->test_flags[i].c_str());
 		for (j = 0; j < lines_len; j++) {
 			a = lines[j];

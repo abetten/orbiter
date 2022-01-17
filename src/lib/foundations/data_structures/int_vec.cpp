@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace data_structures {
 
 
 int_vec::int_vec()
@@ -1113,6 +1114,7 @@ void int_vec::transpose(int *M, int m, int n, int *Mt)
 }
 
 
-}}
+}}}
+
 
 

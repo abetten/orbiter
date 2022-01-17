@@ -373,13 +373,13 @@ public:
 		int f_solution, int *solution, int solution_sz, 
 		int verbose_level);
 	int test_solution(int *sol, int len, int verbose_level);
-	void get_columns(int *col, int nb_col, set_of_sets *&S, 
+	void get_columns(int *col, int nb_col, data_structures::set_of_sets *&S,
 		int verbose_level);
 	void test_solution_file(std::string &solution_file,
 		int verbose_level);
 	void analyze(int verbose_level);
 	int is_of_Steiner_type();
-	void make_clique_graph_adjacency_matrix(bitvector *&Adj,
+	void make_clique_graph_adjacency_matrix(data_structures::bitvector *&Adj,
 		int verbose_level);
 	void make_clique_graph(colored_graph *&CG, int verbose_level);
 	void make_clique_graph_and_save(std::string &clique_graph_fname,

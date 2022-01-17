@@ -109,7 +109,7 @@ void diophant_create::init(
 		int sz;
 		int i, j;
 
-		Orbiter->Int_vec.scan(Descr->coefficient_matrix_text, A, sz);
+		Orbiter->Int_vec->scan(Descr->coefficient_matrix_text, A, sz);
 
 		D = NEW_OBJECT(diophant);
 		D->open(Descr->coefficient_matrix_m, Descr->coefficient_matrix_n);
@@ -199,7 +199,7 @@ void diophant_create::init(
 			cout << "-RHS please specify the coefficient matrix first" << endl;
 			exit(1);
 		}
-		Orbiter->Int_vec.scan(Descr->RHS_text, RHS, sz);
+		Orbiter->Int_vec->scan(Descr->RHS_text, RHS, sz);
 		if (sz != 3 * D->m) {
 			cout << "number of values for RHS must be 3 times the number of rows of the system" << endl;
 			exit(1);
@@ -294,7 +294,7 @@ void diophant_create::init(
 			cout << "-RHS_constant please specify the coefficient matrix first" << endl;
 			exit(1);
 		}
-		Orbiter->Int_vec.scan(Descr->RHS_constant_text, RHS, sz);
+		Orbiter->Int_vec->scan(Descr->RHS_constant_text, RHS, sz);
 		if (sz != 3) {
 			cout << "sz != 3" << endl;
 			exit(1);
@@ -363,7 +363,7 @@ void diophant_create::init(
 		int sz;
 		int j;
 
-		Orbiter->Int_vec.scan(Descr->x_bounds_text, x_bounds, sz);
+		Orbiter->Int_vec->scan(Descr->x_bounds_text, x_bounds, sz);
 		if (sz != 2 * D->n) {
 			cout << "sz != 2 * D->n" << endl;
 			exit(1);

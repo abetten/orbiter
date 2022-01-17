@@ -62,7 +62,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		print_level_extension_info();
 		cout << "upstep_work::upstep_subspace_action "
 				"upstep in subspace action for set ";
-		Orbiter->Lint_vec.set_print(cout, gen->get_S(), size);
+		Orbiter->Lint_vec->set_print(cout, gen->get_S(), size);
 		cout << " verbose_level=" << verbose_level;
 		cout << " f_indicate_not_canonicals="
 				<< f_indicate_not_canonicals << endl;
@@ -124,7 +124,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		cout << "upstep_work::upstep_subspace_action "
 				"ambient space:" << endl;
 
-		Orbiter->Int_vec.print_integer_matrix_width(cout, ambient_space,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, ambient_space,
 				n, big_n, big_n, F->log10_of_q);
 
 		cout << "setting up grassmannian n=" << n
@@ -282,13 +282,13 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 					"unranking " << coset << ":" << endl;
 		}
 		G.unrank_lint(coset, 0 /*verbose_level - 5*/);
-		Orbiter->Int_vec.copy(G.M, base_change_matrix, k * n);
+		Orbiter->Int_vec->copy(G.M, base_change_matrix, k * n);
 
 		if (f_vvv) {
 			cout << "upstep_work::upstep_subspace_action "
 					"base_change_matrix (hyperplane part) for coset "
 					<< coset << ":" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout,
+			Orbiter->Int_vec->print_integer_matrix_width(cout,
 					base_change_matrix,
 					k, n, n, F->log10_of_q);
 		}
@@ -304,28 +304,28 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		}
 		if (f_v5) {
 			cout << "upstep_work::upstep_subspace_action base_cols:";
-			Orbiter->Int_vec.print(cout, base_cols, rk);
+			Orbiter->Int_vec->print(cout, base_cols, rk);
 			cout << " embedding:";
-			Orbiter->Int_vec.print(cout, embedding, n - rk);
+			Orbiter->Int_vec->print(cout, embedding, n - rk);
 			cout << endl;
 		}
 
 		// fill the matrix up and make it invertible:
-		Orbiter->Int_vec.zero(base_change_matrix + (n - 1) * n, n);
+		Orbiter->Int_vec->zero(base_change_matrix + (n - 1) * n, n);
 		base_change_matrix[(n - 1) * n + embedding[0]] = 1;
 
 		if (f_v5) {
 			cout << "upstep_work::upstep_subspace_action "
 					"extended base_change_matrix (hyperplane part) "
 					"for coset " << coset << ":" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout,
+			Orbiter->Int_vec->print_integer_matrix_width(cout,
 					base_change_matrix,
 					n, n, n, F->log10_of_q);
 		}
 		if (f_v5) {
 			cout << "upstep_work::upstep_subspace_action "
 					"AG->GE->M:" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout,
+			Orbiter->Int_vec->print_integer_matrix_width(cout,
 					AG->GE->M, n, big_n, big_n, F->log10_of_q);
 		}
 
@@ -348,7 +348,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		if (f_v5) {
 			cout << "upstep_work::upstep_subspace_action "
 					"changed_space for coset " << coset << ":" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout,
+			Orbiter->Int_vec->print_integer_matrix_width(cout,
 					changed_space,
 					n, big_n, big_n, F->log10_of_q);
 		}
@@ -361,7 +361,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 			cout << "upstep_work::upstep_subspace_action "
 					"changed_space for coset " << coset
 					<< " as rank vector: ";
-			Orbiter->Lint_vec.print(cout, gen->get_set_i(0), n);
+			Orbiter->Lint_vec->print(cout, gen->get_set_i(0), n);
 			cout << endl; 
 		}
 		
@@ -373,7 +373,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		if (f_vv) {
 			print_level_extension_coset_info();
 			cout << "upstep_work::upstep_subspace_action exchanged set: ";
-			Orbiter->Lint_vec.set_print(cout, gen->get_set_i(0), size);
+			Orbiter->Lint_vec->set_print(cout, gen->get_set_i(0), size);
 			cout << endl;
 			cout << "upstep_work::upstep_subspace_action "
 					"calling recognize" << endl;
@@ -520,7 +520,7 @@ int upstep_work::upstep_subspace_action(int verbose_level)
 		print_level_extension_info();
 		cout << "upstep_work::upstep_subspace_action "
 				"upstep orbit length for set ";
-		Orbiter->Lint_vec.set_print(cout, gen->get_S(), size);
+		Orbiter->Lint_vec->set_print(cout, gen->get_S(), size);
 		cout << " is " << up_orbit.orbit_len[0] << endl;
 	}
 

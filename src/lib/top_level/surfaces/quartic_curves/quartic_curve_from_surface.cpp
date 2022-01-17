@@ -147,7 +147,7 @@ void quartic_curve_from_surface::init(surface_object_with_action *SOA, int verbo
 void quartic_curve_from_surface::quartic(std::string &surface_prefix, int pt_orbit, int f_TDO, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	int i, a;
 
 	if (f_v) {
@@ -489,16 +489,16 @@ void quartic_curve_from_surface::compute_quartic(int pt_orbit,
 		if (f_v) {
 			cout << "quartic_curve_from_surface::compute_quartic "
 					"Basis8=" << endl;
-			Orbiter->Int_vec.matrix_print(Basis8, 2, 4);
+			Orbiter->Int_vec->matrix_print(Basis8, 2, 4);
 		}
 
 		for (j = 0; j < 2; j++) {
-			Orbiter->Int_vec.copy(Basis8 + j * 4 + 1, Basis6 + j * 3, 3);
+			Orbiter->Int_vec->copy(Basis8 + j * 4 + 1, Basis6 + j * 3, 3);
 		}
 		if (f_v) {
 			cout << "quartic_curve_from_surface::compute_quartic "
 					"Basis6=" << endl;
-			Orbiter->Int_vec.matrix_print(Basis6, 2, 3);
+			Orbiter->Int_vec->matrix_print(Basis6, 2, 3);
 		}
 		Bitangents[i] = SOA->Surf_A->PA->PA2->P->Grass_lines->rank_lint_here(Basis6, 0);
 		if (f_v) {
@@ -534,13 +534,13 @@ void quartic_curve_from_surface::compute_quartic(int pt_orbit,
 	SOA->Surf->unrank_plane(Basis12, plane_rk);
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_quartic Basis12=" << endl;
-		Orbiter->Int_vec.matrix_print(Basis12, 3, 4);
+		Orbiter->Int_vec->matrix_print(Basis12, 3, 4);
 	}
 	int Basis6[6];
 	int j;
 
 	for (j = 0; j < 2; j++) {
-		Orbiter->Int_vec.copy(Basis12 + (j + 1) * 4 + 1, Basis6 + j * 3, 3);
+		Orbiter->Int_vec->copy(Basis12 + (j + 1) * 4 + 1, Basis6 + j * 3, 3);
 	}
 	Bitangents[nb_lines] = SOA->Surf_A->PA->PA2->P->Grass_lines->rank_lint_here(Basis6, 0);
 	if (f_v) {
@@ -551,7 +551,7 @@ void quartic_curve_from_surface::compute_quartic(int pt_orbit,
 
 	if (f_v) {
 		cout << "quartic_curve_from_surface::compute_quartic Lines_nice = ";
-		Orbiter->Lint_vec.print(cout, Lines_nice, nb_lines);
+		Orbiter->Lint_vec->print(cout, Lines_nice, nb_lines);
 		cout << endl;
 	}
 
@@ -581,7 +581,7 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 	object_with_canonical_form *OiP = NULL;
 
 	int f_compute_canonical_form = FALSE;
-	bitvector *Canonical_form;
+	data_structures::bitvector *Canonical_form;
 
 
 	OiP = NEW_OBJECT(object_with_canonical_form);
@@ -616,9 +616,9 @@ void quartic_curve_from_surface::compute_stabilizer(int verbose_level)
 	}
 
 	nauty_interface_with_group Nau;
-	nauty_output *NO;
+	data_structures::nauty_output *NO;
 
-	NO = NEW_OBJECT(nauty_output);
+	NO = NEW_OBJECT(data_structures::nauty_output);
 
 	NO->allocate(nb_rows + nb_cols, 0 /* verbose_level */);
 
@@ -870,7 +870,7 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 		SOA->Surf->P2->unrank_point(v, Pts_on_curve[i]);
 		ost << i << " : $P_{" << i << "} = P_{"
 				<< Pts_on_curve[i] << "}=";
-		Orbiter->Int_vec.print_fully(ost, v, 3);
+		Orbiter->Int_vec->print_fully(ost, v, 3);
 		ost << "$\\\\" << endl;
 	}
 	ost << "\\end{multicols}" << endl;
@@ -902,7 +902,7 @@ void quartic_curve_from_surface::cheat_sheet_quartic_curve(
 
 
 	ost << "The curve has " << nb_bitangents << " bitangents, they are: ";
-	Orbiter->Lint_vec.print(ost, Bitangents, nb_bitangents);
+	Orbiter->Lint_vec->print(ost, Bitangents, nb_bitangents);
 	ost << "\\\\" << endl;
 
 

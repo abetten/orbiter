@@ -455,7 +455,7 @@ static long int induced_action_element_image_of(action &A,
 					"action_on_pairs_t" << endl;
 		}
 		action *sub;
-		combinatorics_domain Combi;
+		combinatorics::combinatorics_domain Combi;
 		long int i, j, u, v;
 		
 		sub = A.subaction;
@@ -475,7 +475,7 @@ static long int induced_action_element_image_of(action &A,
 					"action_on_ordered_pairs_t" << endl;
 		}
 		action *sub;
-		combinatorics_domain Combi;
+		combinatorics::combinatorics_domain Combi;
 		long int a2, b2, swap, swap2, i, j, tmp, u, v, u2, v2;
 		
 		sub = A.subaction;
@@ -573,7 +573,7 @@ static void induced_action_element_image_of_low_level(action &A,
 	if (f_v) {
 		cout << "induced_action_element_image_of_low_level "
 				"computing image of ";
-		Orbiter->Int_vec.print(cout, input, A.low_level_point_size);
+		Orbiter->Int_vec->print(cout, input, A.low_level_point_size);
 		cout << " in action " << A.label << endl;
 	}
 	if (A.type_G == action_by_right_multiplication_t) {
@@ -916,9 +916,9 @@ static void induced_action_element_image_of_low_level(action &A,
 	if (f_v) {
 		cout << "induced_action_element_image_of_low_level  done" << endl;
 		cout << "image of ";
-		Orbiter->Int_vec.print(cout, input, A.low_level_point_size);
+		Orbiter->Int_vec->print(cout, input, A.low_level_point_size);
 		cout << " in action " << A.label << " is ";
-		Orbiter->Int_vec.print(cout, output, A.low_level_point_size);
+		Orbiter->Int_vec->print(cout, output, A.low_level_point_size);
 		cout << endl;
 	}
 }
@@ -1317,7 +1317,7 @@ static void induced_action_element_print_latex_with_print_point_function(
 	int f_v = FALSE;
 	int *Elt = (int *) elt;
 	int i, j;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "induced_action_element_print_latex_with_print_point_function "
@@ -1523,7 +1523,7 @@ static void induced_action_print_point(action &A,
 			exit(1);
 		}
 		ost << a << "=";
-		Orbiter->Lint_vec.print(ost, AOS->sets[AOS->perm[a]], AOS->set_size);
+		Orbiter->Lint_vec->print(ost, AOS->sets[AOS->perm[a]], AOS->set_size);
 		ost << endl;
 		for (i = 0; i < AOS->set_size; i++) {
 			ost << "$$" << endl;
@@ -1586,7 +1586,7 @@ static void induced_action_print_point(action &A,
 	}
 	else if (A.type_G == action_on_pairs_t) {
 		action *sub;
-		combinatorics_domain Combi;
+		combinatorics::combinatorics_domain Combi;
 		int i, j;
 		
 		sub = A.subaction;
@@ -1600,7 +1600,7 @@ static void induced_action_print_point(action &A,
 	}
 	else if (A.type_G == action_on_ordered_pairs_t) {
 		action *sub;
-		combinatorics_domain Combi;
+		combinatorics::combinatorics_domain Combi;
 		int a2, swap, tmp, i, j;
 		
 		sub = A.subaction;

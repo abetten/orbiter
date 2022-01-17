@@ -69,7 +69,7 @@ void surface_clebsch_map::init(surface_object_with_action *SOA, int orbit_idx, i
 
 	if (f_v) {
 		cout << "The half double six is no " << hds << " : ";
-		Orbiter->Lint_vec.print(cout, SOA->Surf->Schlaefli->Half_double_sixes + hds * 6, 6);
+		Orbiter->Lint_vec->print(cout, SOA->Surf->Schlaefli->Half_double_sixes + hds * 6, 6);
 		cout << endl;
 	}
 
@@ -135,9 +135,9 @@ void surface_clebsch_map::init(surface_object_with_action *SOA, int orbit_idx, i
 		cout << "surface_clebsch_map::init "
 				"Clebsch map for lines " << Clebsch_map->line_idx[0] << ", "
 				<< Clebsch_map->line_idx[1] << " yields arc = ";
-		Orbiter->Lint_vec.print(cout, Clebsch_map->Arc, 6);
+		Orbiter->Lint_vec->print(cout, Clebsch_map->Arc, 6);
 		cout << " : blown up lines = ";
-		Orbiter->Lint_vec.print(cout, Clebsch_map->Blown_up_lines, 6);
+		Orbiter->Lint_vec->print(cout, Clebsch_map->Blown_up_lines, 6);
 		cout << endl;
 	}
 

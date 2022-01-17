@@ -197,7 +197,7 @@ void design_activity::do_extract_solutions_by_index(
 	int *prefix;
 	int prefix_sz;
 
-	Orbiter->Int_vec.scan(prefix_text, prefix, prefix_sz);
+	Orbiter->Int_vec->scan(prefix_text, prefix, prefix_sz);
 
 	file_io Fio;
 	int *Sol_idx;
@@ -222,11 +222,11 @@ void design_activity::do_extract_solutions_by_index(
 		sol_width += prefix_sz;
 	}
 	else {
-		set_of_sets *SoS;
+		data_structures::set_of_sets *SoS;
 		int underlying_set_size = 0;
 		int i, j;
 
-		SoS = NEW_OBJECT(set_of_sets);
+		SoS = NEW_OBJECT(data_structures::set_of_sets);
 		SoS->init_from_orbiter_file(underlying_set_size,
 				fname_in, verbose_level);
 		nb_sol = SoS->nb_sets;
@@ -438,7 +438,7 @@ void design_activity::do_load_table(
 	}
 }
 
-void design_activity::do_canonical_form(classification_of_objects_description *Canonical_form_Descr,
+void design_activity::do_canonical_form(combinatorics::classification_of_objects_description *Canonical_form_Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -448,7 +448,7 @@ void design_activity::do_canonical_form(classification_of_objects_description *C
 	}
 
 
-	classification_of_objects *OC;
+	combinatorics::classification_of_objects *OC;
 
 #if 0
 
@@ -496,7 +496,7 @@ void design_activity::do_export_inc(
 	fname.assign(DC->label_txt);
 	fname.append("_inc.txt");
 
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	int v = DC->degree;
 	int k = DC->k;
@@ -555,7 +555,7 @@ void design_activity::do_export_blocks(
 	fname.assign(DC->label_txt);
 	fname.append("_blocks_coded.csv");
 
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	int v = DC->degree;
 	int k = DC->k;
@@ -605,7 +605,7 @@ void design_activity::do_row_sums(
 	fname.assign(DC->label_txt);
 	fname.append("_inc.txt");
 
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	int v = DC->degree;
 	int k = DC->k;
@@ -662,7 +662,7 @@ void design_activity::do_tactical_decomposition(
 	fname.assign(DC->label_txt);
 	fname.append("_inc.txt");
 
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	int v = DC->degree;
 	int k = DC->k;
@@ -680,14 +680,14 @@ void design_activity::do_tactical_decomposition(
 
 	{
 		incidence_structure *Inc;
-		partitionstack *Stack;
+		data_structures::partitionstack *Stack;
 
 
 		Inc = NEW_OBJECT(incidence_structure);
 
 		Inc->init_by_matrix(v, b, M, 0 /* verbose_level */);
 
-		Stack = NEW_OBJECT(partitionstack);
+		Stack = NEW_OBJECT(data_structures::partitionstack);
 
 		Stack->allocate_with_two_classes(v + b, v, b, 0 /* verbose_level */);
 
@@ -737,8 +737,8 @@ void design_activity::do_tactical_decomposition(
 				cout, TRUE /* f_enter_math */,
 			f_print_subscripts, *Stack);
 
-		set_of_sets *Row_classes;
-		set_of_sets *Col_classes;
+		data_structures::set_of_sets *Row_classes;
+		data_structures::set_of_sets *Col_classes;
 
 		Stack->get_row_classes(Row_classes, verbose_level);
 		cout << "Row classes:\\\\" << endl;

@@ -218,7 +218,7 @@ public:
 			poset_classification_control *Control,
 			int verbose_level);
 	void compute_neighbors(int verbose_level);
-	void make_spreadsheet_of_neighbors(spreadsheet *&Sp,
+	void make_spreadsheet_of_neighbors(data_structures::spreadsheet *&Sp,
 		int verbose_level);
 	void classify_partial_ovoids(
 		int verbose_level);
@@ -232,7 +232,7 @@ public:
 		int verbose_level);
 	void test_orbits(int verbose_level);
 	void make_spreadsheet_of_fiveplusone_configurations(
-		spreadsheet *&Sp,
+			data_structures::spreadsheet *&Sp,
 		int verbose_level);
 	void identify_five_plus_one(long int *five_lines, long int transversal_line,
 		long int *five_lines_out_as_neighbors, int &orbit_index,

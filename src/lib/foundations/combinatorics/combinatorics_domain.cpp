@@ -10,6 +10,8 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace combinatorics {
+
 
 combinatorics_domain::combinatorics_domain()
 {
@@ -57,10 +59,10 @@ void combinatorics_domain::partition_dual(
 	if (f_v) {
 		cout << "partition_dual" << endl;
 		cout << "input: ";
-		Orbiter->Int_vec.print(cout, part, n);
+		Orbiter->Int_vec->print(cout, part, n);
 		cout << endl;
 	}
-	Orbiter->Int_vec.zero(dual_part, n);
+	Orbiter->Int_vec->zero(dual_part, n);
 	j = 0;
 	s = 0;
 	for (i = n; i >= 1; i--) {
@@ -90,7 +92,7 @@ void combinatorics_domain::partition_dual(
 	if (f_v) {
 		cout << "partition_dual" << endl;
 		cout << "output: ";
-		Orbiter->Int_vec.print(cout, dual_part, n);
+		Orbiter->Int_vec->print(cout, dual_part, n);
 		cout << endl;
 	}
 }
@@ -114,7 +116,7 @@ void combinatorics_domain::make_all_partitions_of_n(int n,
 	cnt = 0;
 	partition_first(v, n);
 	while (TRUE) {
-		Orbiter->Int_vec.copy(v, Table + cnt * n, n);
+		Orbiter->Int_vec->copy(v, Table + cnt * n, n);
 		cnt++;
 		if (!partition_next(v, n)) {
 			break;
@@ -158,7 +160,7 @@ int combinatorics_domain::count_all_partitions_of_n(int n)
 
 int combinatorics_domain::partition_first(int *v, int n)
 {
-	Orbiter->Int_vec.zero(v, n);
+	Orbiter->Int_vec->zero(v, n);
 	v[n - 1] = 1;
 	return TRUE;
 }
@@ -326,7 +328,7 @@ int combinatorics_domain::is_subset_of(int *A, int sz_A, int *B, int sz_B)
 	int *B2;
 	int i, idx;
 	int ret = FALSE;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	B2 = NEW_int(sz_B);
 	for (i = 0; i < sz_B; i++) {
@@ -347,12 +349,12 @@ done:
 int combinatorics_domain::set_find(int *elts, int size, int a)
 {
 	int idx;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	if (!Sorting.int_vec_search(elts, size, a, idx)) {
 		cout << "set_find fatal: did not find" << endl;
 		cout << "a=" << a << endl;
-		Orbiter->Int_vec.print(cout, elts, size);
+		Orbiter->Int_vec->print(cout, elts, size);
 		cout << endl;
 		exit(1);
 	}
@@ -405,10 +407,10 @@ void combinatorics_domain::set_complement_safe(
 {
 	int i, j;
 	int *subset2;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	subset2 = NEW_int(subset_size);
-	Orbiter->Int_vec.copy(subset, subset2, subset_size);
+	Orbiter->Int_vec->copy(subset, subset2, subset_size);
 	Sorting.int_vec_heapsort(subset2, subset_size);
 	
 	j = 0;
@@ -437,7 +439,7 @@ void combinatorics_domain::set_add_elements(
 void combinatorics_domain::set_add_element(int *elts, int &size, int a)
 {
 	int idx, i;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	if (Sorting.int_vec_search(elts, size, a, idx)) {
 		return;
@@ -463,7 +465,7 @@ void combinatorics_domain::set_delete_elements(int *elts, int &size,
 void combinatorics_domain::set_delete_element(int *elts, int &size, int a)
 {
 	int idx, i;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	if (!Sorting.int_vec_search(elts, size, a, idx)) {
 		return;
@@ -545,7 +547,7 @@ void combinatorics_domain::print_k_subsets_by_rank(ostream &ost, int v, int k)
 	for (i = 0; i < nb; i++) {
 		unrank_k_subset(i, set, v, k);
 		cout << i << " : ";
-		Orbiter->Int_vec.set_print(ost, set, k);
+		Orbiter->Int_vec->set_print(ost, set, k);
 		cout << endl;
 	}
 	FREE_int(set);
@@ -829,7 +831,7 @@ int combinatorics_domain::unordered_triple_pair_rank(
 	int a, b, u, rk;
 	int six[5];
 	int sz;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 
 	if (f_v) {
@@ -869,7 +871,7 @@ int combinatorics_domain::unordered_triple_pair_rank(
 
 	if (f_v) {
 		cout << "unordered_triple_pair_rank : b = " << b << " : ";
-		Orbiter->Int_vec.print(cout, six, sz);
+		Orbiter->Int_vec->print(cout, six, sz);
 		cout << endl;
 	}
 
@@ -886,7 +888,7 @@ int combinatorics_domain::unordered_triple_pair_rank(
 
 	if (f_v) {
 		cout << "unordered_triple_pair_rank : b = " << b << " : ";
-		Orbiter->Int_vec.print(cout, six, sz);
+		Orbiter->Int_vec->print(cout, six, sz);
 		cout << endl;
 	}
 
@@ -1616,10 +1618,10 @@ int combinatorics_domain::is_permutation(int *perm, long int n)
 {
 	int *perm2;
 	long int i;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	perm2 = NEW_int(n);
-	Orbiter->Int_vec.copy(perm, perm2, n);
+	Orbiter->Int_vec->copy(perm, perm2, n);
 	Sorting.int_vec_heapsort(perm2, n);
 	for (i = 0; i < n; i++) {
 		if (perm2[i] != i) {
@@ -1639,10 +1641,10 @@ int combinatorics_domain::is_permutation_lint(long int *perm, long int n)
 {
 	long int *perm2;
 	long int i;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	perm2 = NEW_lint(n);
-	Orbiter->Lint_vec.copy(perm, perm2, n);
+	Orbiter->Lint_vec->copy(perm, perm2, n);
 	Sorting.lint_vec_heapsort(perm2, n);
 	for (i = 0; i < n; i++) {
 		if (perm2[i] != i) {
@@ -1776,7 +1778,7 @@ int combinatorics_domain::philip_hall_test(
 		if (c < k) {
 			if (f_v) {
 				cout << "Hall test fails for " << k << "-set ";
-				Orbiter->Int_vec.set_print(cout, memo, k);
+				Orbiter->Int_vec->set_print(cout, memo, k);
 				cout << " c=" << c << " n=" << n << endl;
 			}
 			if (f_vv) {
@@ -1830,7 +1832,7 @@ int combinatorics_domain::philip_hall_test_dual(
 		if (c < k) {
 			if (f_v) {
 				cout << "Hall test fails for " << k << "-set ";
-				Orbiter->Int_vec.set_print(cout, memo, k);
+				Orbiter->Int_vec->set_print(cout, memo, k);
 				cout << " c=" << c << " n=" << n << endl;
 			}
 			if (f_vv) {
@@ -2186,9 +2188,9 @@ void combinatorics_domain::make_partitions(int n, int *Part, int cnt)
 
 	part = NEW_int(n + 1);
 
-	Orbiter->Int_vec.zero(part, n + 1);
+	Orbiter->Int_vec->zero(part, n + 1);
 	part[n] = 1;
-	Orbiter->Int_vec.copy(part + 1, Part + cnt1 * n, n);
+	Orbiter->Int_vec->copy(part + 1, Part + cnt1 * n, n);
 
 	cnt1 = 1;
 	while (TRUE) {
@@ -2196,7 +2198,7 @@ void combinatorics_domain::make_partitions(int n, int *Part, int cnt)
 		if (!next_partition(n, part)) {
 			break;
 		}
-		Orbiter->Int_vec.copy(part + 1, Part + cnt1 * n, n);
+		Orbiter->Int_vec->copy(part + 1, Part + cnt1 * n, n);
 		cnt1++;
 	}
 	if (cnt1 != cnt) {
@@ -2215,7 +2217,7 @@ int combinatorics_domain::count_partitions(int n)
 
 	part = NEW_int(n + 1);
 
-	Orbiter->Int_vec.zero(part, n + 1);
+	Orbiter->Int_vec->zero(part, n + 1);
 	part[n] = 1;
 
 
@@ -3180,7 +3182,7 @@ void combinatorics_domain::convert_stack_to_tdo(std::string &stack_fname, int ve
 	string fname;
 	string fname_out;
 	string label;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "combinatorics_domain::convert_stack_to_tdo" << endl;
@@ -3306,7 +3308,7 @@ void combinatorics_domain::do_read_poset_file(std::string &fname,
 // which was created by DISCRETA/sgls2.cpp
 {
 	int f_v = (verbose_level >= 1);
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "interface_combinatorics::do_read_poset_file" << endl;
@@ -3421,7 +3423,7 @@ void combinatorics_domain::compute_incidence_matrix(int v, int b, int k, long in
 
 	M = NEW_int(v * b);
 	B = NEW_int(v);
-	Orbiter->Int_vec.zero(M, v * b);
+	Orbiter->Int_vec->zero(M, v * b);
 	for (j = 0; j < b; j++) {
 		unrank_k_subset(Blocks_coded[j], B, v, k);
 		for (h = 0; h < k; h++) {
@@ -3447,7 +3449,7 @@ void combinatorics_domain::compute_blocks(int v, int b, int k, long int *Blocks_
 	int j;
 
 	Blocks = NEW_int(b * k);
-	Orbiter->Int_vec.zero(Blocks, b * k);
+	Orbiter->Int_vec->zero(Blocks, b * k);
 	for (j = 0; j < b; j++) {
 		unrank_k_subset(Blocks_coded[j], Blocks + j * k, v, k);
 	}
@@ -3481,14 +3483,14 @@ void combinatorics_domain::refine_the_partition(
 
 	{
 		incidence_structure *Inc;
-		partitionstack *Stack;
+		data_structures::partitionstack *Stack;
 
 
 		Inc = NEW_OBJECT(incidence_structure);
 
 		Inc->init_by_matrix(v, b, M, 0 /* verbose_level */);
 
-		Stack = NEW_OBJECT(partitionstack);
+		Stack = NEW_OBJECT(data_structures::partitionstack);
 
 		Stack->allocate_with_two_classes(v + b, v, b, 0 /* verbose_level */);
 
@@ -3540,8 +3542,8 @@ void combinatorics_domain::refine_the_partition(
 				f_print_subscripts, *Stack);
 		}
 
-		set_of_sets *Row_classes;
-		set_of_sets *Col_classes;
+		data_structures::set_of_sets *Row_classes;
+		data_structures::set_of_sets *Col_classes;
 
 		Stack->get_row_classes(Row_classes, verbose_level);
 		if (f_v) {
@@ -3626,7 +3628,7 @@ void combinatorics_domain::create_incidence_matrix_of_graph(int *Adj, int n,
 		}
 	}
 	M = NEW_int(n * nb_cols);
-	Orbiter->Int_vec.zero(M, n * nb_cols);
+	Orbiter->Int_vec->zero(M, n * nb_cols);
 	u = 0;
 	for (i = 0; i < n; i++) {
 		for (j = i + 1; j < n; j++) {
@@ -3705,7 +3707,8 @@ void combinatorics_domain_free_tab_q_binomials()
 
 
 
-}}
+}}}
+
 
 
 

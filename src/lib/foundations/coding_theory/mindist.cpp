@@ -12,6 +12,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace coding_theory {
 
 
 typedef struct mindist MINDIST;
@@ -750,7 +751,5 @@ static void vmmult(MINDIST *MD, int *v, int **mx, int *cv)
 	}
 }
 
-}
-}
-
+}}}
 

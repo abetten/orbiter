@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace data_structures {
 
 
 
@@ -384,7 +385,7 @@ void string_tools::scan_permutation_from_stream(std::istream & is,
 	int i, a_last, a, dig, ci;
 	char s[1000], c;
 	int si, largest_point = 0;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	cycle = NEW_int(l);
 	perm = NEW_int(l);
@@ -1153,4 +1154,4 @@ int string_tools_compare_strings(void *a, void *b, void *data)
 }
 
 
-}}
+}}}

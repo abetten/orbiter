@@ -31,7 +31,7 @@ interface_povray::interface_povray()
 
 void interface_povray::print_help(int argc, std::string *argv, int i, int verbose_level)
 {
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (ST.stringcmp(argv[i], "-povray") == 0) {
 		cout << "-povray" << endl;
@@ -43,7 +43,7 @@ void interface_povray::print_help(int argc, std::string *argv, int i, int verbos
 
 int interface_povray::recognize_keyword(int argc, std::string *argv, int i, int verbose_level)
 {
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (i >= argc) {
 		return false;
@@ -60,7 +60,7 @@ int interface_povray::recognize_keyword(int argc, std::string *argv, int i, int 
 void interface_povray::read_arguments(int argc, std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "interface_povray::read_arguments" << endl;

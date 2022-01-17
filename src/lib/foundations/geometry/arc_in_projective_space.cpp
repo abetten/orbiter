@@ -54,7 +54,7 @@ void arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_1(
 	int i, j, b, h, idx;
 	int L[3];
 	int v[3];
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (P->n != 2) {
 		cout << "arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_1 "
@@ -72,7 +72,7 @@ void arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_1(
 
 	if (f_v) {
 		cout << "frame: ";
-		Orbiter->Int_vec.print(cout, frame, 4);
+		Orbiter->Int_vec->print(cout, frame, 4);
 		cout << endl;
 	}
 
@@ -100,7 +100,7 @@ void arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_1(
 	}
 	if (f_v) {
 		cout << "there are " << size << " points on the three lines: ";
-		Orbiter->Lint_vec.print(cout, the_arc, size);
+		Orbiter->Lint_vec->print(cout, the_arc, size);
 		cout << endl;
 	}
 
@@ -124,7 +124,7 @@ void arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_1(
 	if (f_v) {
 		cout << "arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_1: after adding the rest of the "
 				"conic, there are " << size << " points on the arc: ";
-		Orbiter->Lint_vec.print(cout, the_arc, size);
+		Orbiter->Lint_vec->print(cout, the_arc, size);
 		cout << endl;
 	}
 }
@@ -138,7 +138,7 @@ void arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_2(
 	int i, j, b, h, idx;
 	int L[3];
 	int v[3];
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (P->n != 2) {
 		cout << "arc_in_projective_space::PG_2_8_create_conic_plus_"
@@ -156,7 +156,7 @@ void arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_2(
 
 	if (f_v) {
 		cout << "frame: ";
-		Orbiter->Int_vec.print(cout, frame, 4);
+		Orbiter->Int_vec->print(cout, frame, 4);
 		cout << endl;
 	}
 
@@ -184,7 +184,7 @@ void arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_2(
 	}
 	if (f_v) {
 		cout << "there are " << size << " points on the three lines: ";
-		Orbiter->Lint_vec.print(cout, the_arc, size);
+		Orbiter->Lint_vec->print(cout, the_arc, size);
 		cout << endl;
 	}
 
@@ -216,7 +216,7 @@ void arc_in_projective_space::PG_2_8_create_conic_plus_nucleus_arc_2(
 		cout << "arc_in_projective_space::PG_2_8_create_conic_plus_"
 				"nucleus_arc_2: after adding the rest of the conic, "
 				"there are " << size << " points on the arc: ";
-		Orbiter->Lint_vec.print(cout, the_arc, size);
+		Orbiter->Lint_vec->print(cout, the_arc, size);
 		cout << endl;
 	}
 }
@@ -237,7 +237,7 @@ void arc_in_projective_space::create_Maruta_Hamada_arc(
 	int i, j, b, h, idx;
 	long int L[4];
 	int v[3];
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (P->n != 2) {
 		cout << "arc_in_projective_space::create_Maruta_Hamada_arc "
@@ -257,7 +257,7 @@ void arc_in_projective_space::create_Maruta_Hamada_arc(
 	if (f_v) {
 		cout << "arc_in_projective_space::create_Maruta_Hamada_arc "
 				"points: ";
-		Orbiter->Int_vec.print(cout, points, 22);
+		Orbiter->Int_vec->print(cout, points, 22);
 		cout << endl;
 	}
 
@@ -268,7 +268,7 @@ void arc_in_projective_space::create_Maruta_Hamada_arc(
 
 	if (f_v) {
 		cout << "L:";
-		Orbiter->Lint_vec.print(cout, L, 4);
+		Orbiter->Lint_vec->print(cout, L, 4);
 		cout << endl;
 	}
 
@@ -280,7 +280,7 @@ void arc_in_projective_space::create_Maruta_Hamada_arc(
 					cout << "point " << b << " = ";
 					P->unrank_point(v, b);
 					P->F->PG_element_normalize_from_front(v, 1, 3);
-				Orbiter->Int_vec.print(cout, v, 3);
+				Orbiter->Int_vec->print(cout, v, 3);
 				cout << endl;
 			}
 			cout << endl;
@@ -303,7 +303,7 @@ void arc_in_projective_space::create_Maruta_Hamada_arc(
 	if (f_v) {
 		cout << "there are " << size
 				<< " points on the quadrilateral: ";
-		Orbiter->Lint_vec.print(cout, the_arc, size);
+		Orbiter->Lint_vec->print(cout, the_arc, size);
 		cout << endl;
 	}
 
@@ -341,7 +341,7 @@ void arc_in_projective_space::create_Maruta_Hamada_arc(
 		cout << "arc_in_projective_space::create_Maruta_Hamada_arc: "
 				"after adding the special point, there are "
 				<< size << " points on the arc: ";
-		Orbiter->Lint_vec.print(cout, the_arc, size);
+		Orbiter->Lint_vec->print(cout, the_arc, size);
 		cout << endl;
 	}
 
@@ -378,7 +378,7 @@ void arc_in_projective_space::create_Maruta_Hamada_arc2(
 	if (f_v) {
 		cout << "arc_in_projective_space::create_Maruta_Hamada_arc2 "
 				"points: ";
-		Orbiter->Int_vec.print(cout, points, 25);
+		Orbiter->Int_vec->print(cout, points, 25);
 		cout << endl;
 	}
 	for (i = 0; i < 9; i++) {
@@ -397,7 +397,7 @@ void arc_in_projective_space::create_Maruta_Hamada_arc2(
 	if (f_v) {
 		cout << "arc_in_projective_space::create_Maruta_Hamada_arc2: "
 				"there are " << size << " points on the arc: ";
-		Orbiter->Lint_vec.print(cout, the_arc, size);
+		Orbiter->Lint_vec->print(cout, the_arc, size);
 		cout << endl;
 	}
 }
@@ -411,7 +411,7 @@ void arc_in_projective_space::create_pasch_arc(
 	int points[5];
 	int i, j, b, h, idx;
 	int L[4];
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (P->n != 2) {
 		cout << "arc_in_projective_space::create_pasch_arc "
@@ -431,7 +431,7 @@ void arc_in_projective_space::create_pasch_arc(
 
 	if (f_v) {
 		cout << "arc_in_projective_space::create_pasch_arc() points: ";
-		Orbiter->Int_vec.print(cout, points, 5);
+		Orbiter->Int_vec->print(cout, points, 5);
 		cout << endl;
 	}
 
@@ -442,7 +442,7 @@ void arc_in_projective_space::create_pasch_arc(
 
 	if (f_v) {
 		cout << "L:";
-		Orbiter->Int_vec.print(cout, L, 4);
+		Orbiter->Int_vec->print(cout, L, 4);
 		cout << endl;
 	}
 
@@ -462,7 +462,7 @@ void arc_in_projective_space::create_pasch_arc(
 	}
 	if (f_v) {
 		cout << "there are " << size << " points on the pasch lines: ";
-		Orbiter->Lint_vec.print(cout, the_arc, size);
+		Orbiter->Lint_vec->print(cout, the_arc, size);
 		cout << endl;
 	}
 
@@ -485,7 +485,7 @@ void arc_in_projective_space::create_pasch_arc(
 		cout << "arc_in_projective_space::create_pasch_arc: after "
 				"adding the special point, there are "
 				<< size << " points on the arc: ";
-		Orbiter->Lint_vec.print(cout, the_arc, size);
+		Orbiter->Lint_vec->print(cout, the_arc, size);
 		cout << endl;
 	}
 }
@@ -500,7 +500,7 @@ void arc_in_projective_space::create_Cheon_arc(
 	int L[3];
 	int pencil[9];
 	int Pencil[21];
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (P->n != 2) {
 		cout << "arc_in_projective_space::create_Cheon_arc P->n != 2" << endl;
@@ -524,7 +524,7 @@ void arc_in_projective_space::create_Cheon_arc(
 
 	if (f_v) {
 		cout << "points: ";
-		Orbiter->Int_vec.print(cout, points, 5);
+		Orbiter->Int_vec->print(cout, points, 5);
 		cout << endl;
 	}
 
@@ -534,7 +534,7 @@ void arc_in_projective_space::create_Cheon_arc(
 
 	if (f_v) {
 		cout << "L:";
-		Orbiter->Int_vec.print(cout, L, 3);
+		Orbiter->Int_vec->print(cout, L, 3);
 		cout << endl;
 	}
 
@@ -556,7 +556,7 @@ void arc_in_projective_space::create_Cheon_arc(
 	if (f_v) {
 		cout << "arc_in_projective_space::create_Cheon_arc there are "
 				<< size << " points on the 3 lines: ";
-		Orbiter->Lint_vec.print(cout, the_arc, size);
+		Orbiter->Lint_vec->print(cout, the_arc, size);
 		cout << endl;
 	}
 
@@ -589,7 +589,7 @@ void arc_in_projective_space::create_Cheon_arc(
 	}
 	if (f_v) {
 		cout << "Pencil:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Pencil, 3, 7, 7, 4);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, Pencil, 3, 7, 7, 4);
 	}
 
 	for (i = 0; i < 7; i++) {
@@ -621,7 +621,7 @@ void arc_in_projective_space::create_Cheon_arc(
 	}
 	if (f_v) {
 		cout << "there are " << size << " points on the Cheon lines: ";
-		Orbiter->Lint_vec.print(cout, the_arc, size);
+		Orbiter->Lint_vec->print(cout, the_arc, size);
 		cout << endl;
 	}
 
@@ -663,7 +663,7 @@ void arc_in_projective_space::create_regular_hyperoval(
 	if (f_v) {
 		cout << "arc_in_projective_space::create_regular_hyperoval: "
 				"there are " << size << " points on the arc: ";
-		Orbiter->Lint_vec.print(cout, the_arc, size);
+		Orbiter->Lint_vec->print(cout, the_arc, size);
 		cout << endl;
 	}
 }
@@ -707,7 +707,7 @@ void arc_in_projective_space::create_translation_hyperoval(
 	if (f_v) {
 		cout << "arc_in_projective_space::create_translation_hyperoval: "
 				"there are " << size << " points on the arc: ";
-		Orbiter->Lint_vec.print(cout, the_arc, size);
+		Orbiter->Lint_vec->print(cout, the_arc, size);
 		cout << endl;
 	}
 	if (f_v) {
@@ -750,7 +750,7 @@ void arc_in_projective_space::create_Segre_hyperoval(
 	if (f_v) {
 		cout << "arc_in_projective_space::create_Segre_hyperoval: "
 				"there are " << size << " points on the arc: ";
-		Orbiter->Lint_vec.print(cout, the_arc, size);
+		Orbiter->Lint_vec->print(cout, the_arc, size);
 		cout << endl;
 	}
 }
@@ -825,7 +825,7 @@ void arc_in_projective_space::create_Payne_hyperoval(
 	if (f_v) {
 		cout << "arc_in_projective_space::create_Payne_hyperoval: "
 				"there are " << size << " points on the arc: ";
-		Orbiter->Lint_vec.print(cout, the_arc, size);
+		Orbiter->Lint_vec->print(cout, the_arc, size);
 		cout << endl;
 	}
 }
@@ -891,7 +891,7 @@ void arc_in_projective_space::create_Cherowitzo_hyperoval(
 	if (f_v) {
 		cout << "arc_in_projective_space::create_Cherowitzo_hyperoval: "
 				"there are " << size << " points on the arc: ";
-		Orbiter->Lint_vec.print(cout, the_arc, size);
+		Orbiter->Lint_vec->print(cout, the_arc, size);
 		cout << endl;
 	}
 }
@@ -947,7 +947,7 @@ void arc_in_projective_space::create_OKeefe_Penttila_hyperoval_32(
 	if (f_v) {
 		cout << "arc_in_projective_space::create_OKeefe_Penttila_hyperoval_32: "
 				"there are " << size << " points on the arc: ";
-		Orbiter->Lint_vec.print(cout, the_arc, size);
+		Orbiter->Lint_vec->print(cout, the_arc, size);
 		cout << endl;
 	}
 }
@@ -964,7 +964,7 @@ void arc_in_projective_space::arc_lifting_diophant(
 	int i, j, h, pt;
 	long int *free_points;
 	int nb_free_points;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "arc_in_projective_space::arc_lifting_diophant" << endl;
@@ -982,7 +982,7 @@ void arc_in_projective_space::arc_lifting_diophant(
 			line_type, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "line_type: ";
-		Orbiter->Int_vec.print_fully(cout, line_type, P->N_lines);
+		Orbiter->Int_vec->print_fully(cout, line_type, P->N_lines);
 		cout << endl;
 	}
 
@@ -1090,7 +1090,7 @@ void arc_in_projective_space::arc_with_given_set_of_s_lines_diophant(
 	int i, j, h, a, line;
 	long int *other_lines;
 	int nb_other_lines;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "arc_in_projective_space::arc_with_given_set_of_s_lines_diophant" << endl;
@@ -1218,8 +1218,8 @@ void arc_in_projective_space::arc_with_two_given_line_sets_diophant(
 	int i, j, h, a, line;
 	long int *other_lines;
 	int nb_other_lines;
-	combinatorics_domain Combi;
-	sorting Sorting;
+	combinatorics::combinatorics_domain Combi;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "arc_in_projective_space::arc_with_two_given_line_sets_diophant" << endl;
@@ -1227,8 +1227,8 @@ void arc_in_projective_space::arc_with_two_given_line_sets_diophant(
 
 	other_lines = NEW_lint(P->N_points);
 
-	Orbiter->Lint_vec.copy(s_lines, other_lines, nb_s_lines);
-	Orbiter->Lint_vec.copy(t_lines, other_lines + nb_s_lines, nb_t_lines);
+	Orbiter->Lint_vec->copy(s_lines, other_lines, nb_s_lines);
+	Orbiter->Lint_vec->copy(t_lines, other_lines + nb_s_lines, nb_t_lines);
 	Sorting.lint_vec_heapsort(other_lines, nb_s_lines + nb_t_lines);
 
 	Combi.set_complement_lint(other_lines, nb_s_lines + nb_t_lines,
@@ -1374,8 +1374,8 @@ void arc_in_projective_space::arc_with_three_given_line_sets_diophant(
 	int i, j, h, a, line;
 	long int *other_lines;
 	int nb_other_lines;
-	combinatorics_domain Combi;
-	sorting Sorting;
+	combinatorics::combinatorics_domain Combi;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "arc_in_projective_space::arc_with_three_given_line_sets_diophant" << endl;
@@ -1383,9 +1383,9 @@ void arc_in_projective_space::arc_with_three_given_line_sets_diophant(
 
 	other_lines = NEW_lint(P->N_points);
 
-	Orbiter->Lint_vec.copy(s_lines, other_lines, nb_s_lines);
-	Orbiter->Lint_vec.copy(t_lines, other_lines + nb_s_lines, nb_t_lines);
-	Orbiter->Lint_vec.copy(u_lines, other_lines + nb_s_lines + nb_t_lines, nb_u_lines);
+	Orbiter->Lint_vec->copy(s_lines, other_lines, nb_s_lines);
+	Orbiter->Lint_vec->copy(t_lines, other_lines + nb_s_lines, nb_t_lines);
+	Orbiter->Lint_vec->copy(u_lines, other_lines + nb_s_lines + nb_t_lines, nb_u_lines);
 	Sorting.lint_vec_heapsort(other_lines, nb_s_lines + nb_t_lines + nb_u_lines);
 
 	Combi.set_complement_lint(other_lines, nb_s_lines + nb_t_lines + nb_u_lines,
@@ -1554,8 +1554,8 @@ void arc_in_projective_space::maximal_arc_by_diophant(
 	int nb_external_lines;
 	int *other_lines;
 	int nb_other_lines;
-	combinatorics_domain Combi;
-	sorting Sorting;
+	combinatorics::combinatorics_domain Combi;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "arc_in_projective_space::maximal_arc_by_diophant" << endl;
@@ -1563,8 +1563,8 @@ void arc_in_projective_space::maximal_arc_by_diophant(
 
 	other_lines = NEW_int(P->N_lines);
 
-	Orbiter->Int_vec.scan(secant_lines_text, secant_lines, nb_secant_lines);
-	Orbiter->Int_vec.scan(external_lines_as_subset_of_secants_text, Idx, nb_external_lines);
+	Orbiter->Int_vec->scan(secant_lines_text, secant_lines, nb_secant_lines);
+	Orbiter->Int_vec->scan(external_lines_as_subset_of_secants_text, Idx, nb_external_lines);
 
 	Sorting.int_vec_heapsort(secant_lines, nb_secant_lines);
 
@@ -1611,7 +1611,7 @@ void arc_in_projective_space::maximal_arc_by_diophant(
 	pencil_idx = NEW_int(P->N_lines);
 	pencil_sub_idx = NEW_int(P->N_lines);
 	nb_times_hit = NEW_int(P->k);
-	Orbiter->Int_vec.zero(nb_times_hit, P->k);
+	Orbiter->Int_vec->zero(nb_times_hit, P->k);
 
 	pencil_idx[0] = -1;
 	for (i = 1; i < P->N_lines; i++) {
@@ -1785,7 +1785,7 @@ void arc_in_projective_space::arc_lifting1(
 	long int *the_set_in;
 	int set_size_in;
 
-	Orbiter->Lint_vec.scan(arc_input_set, the_set_in, set_size_in);
+	Orbiter->Lint_vec->scan(arc_input_set, the_set_in, set_size_in);
 
 	arc_with_given_set_of_s_lines_diophant(
 			the_set_in /*one_lines*/, set_size_in /* nb_one_lines */,
@@ -1877,17 +1877,17 @@ void arc_in_projective_space::arc_lifting2(
 	long int *t_lines;
 	int nb_t_lines;
 
-	Orbiter->Lint_vec.scan(t_lines_string, t_lines, nb_t_lines);
+	Orbiter->Lint_vec->scan(t_lines_string, t_lines, nb_t_lines);
 
 	cout << "The t-lines, t=" << arc_t << " are ";
-	Orbiter->Lint_vec.print(cout, t_lines, nb_t_lines);
+	Orbiter->Lint_vec->print(cout, t_lines, nb_t_lines);
 	cout << endl;
 
 
 	long int *the_set_in;
 	int set_size_in;
 
-	Orbiter->Lint_vec.scan(arc_input_set, the_set_in, set_size_in);
+	Orbiter->Lint_vec->scan(arc_input_set, the_set_in, set_size_in);
 
 
 	diophant *D = NULL;
@@ -1995,23 +1995,23 @@ void arc_in_projective_space::arc_lifting3(
 	int nb_u_lines;
 
 
-	Orbiter->Lint_vec.scan(t_lines_string, t_lines, nb_t_lines);
-	Orbiter->Lint_vec.scan(u_lines_string, u_lines, nb_u_lines);
+	Orbiter->Lint_vec->scan(t_lines_string, t_lines, nb_t_lines);
+	Orbiter->Lint_vec->scan(u_lines_string, u_lines, nb_u_lines);
 	//lint_vec_print(cout, t_lines, nb_t_lines);
 	//cout << endl;
 
 	cout << "The t-lines, t=" << arc_t << " are ";
-	Orbiter->Lint_vec.print(cout, t_lines, nb_t_lines);
+	Orbiter->Lint_vec->print(cout, t_lines, nb_t_lines);
 	cout << endl;
 	cout << "The u-lines, u=" << arc_u << " are ";
-	Orbiter->Lint_vec.print(cout, u_lines, nb_u_lines);
+	Orbiter->Lint_vec->print(cout, u_lines, nb_u_lines);
 	cout << endl;
 
 
 	long int *the_set_in;
 	int set_size_in;
 
-	Orbiter->Lint_vec.scan(arc_input_set, the_set_in, set_size_in);
+	Orbiter->Lint_vec->scan(arc_input_set, the_set_in, set_size_in);
 
 
 	arc_with_three_given_line_sets_diophant(
@@ -2097,7 +2097,7 @@ void arc_in_projective_space::create_hyperoval(
 	int n = 2;
 	int i, d;
 	int *v;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	char str[1000];
 	char str2[1000];
 
@@ -2165,7 +2165,7 @@ void arc_in_projective_space::create_hyperoval(
 			P->unrank_point(v, Pts[i]);
 			if (f_v) {
 				cout << setw(4) << i << " : ";
-				Orbiter->Int_vec.print(cout, v, d);
+				Orbiter->Int_vec->print(cout, v, d);
 				cout << endl;
 			}
 		}
@@ -2190,7 +2190,7 @@ void arc_in_projective_space::create_subiaco_oval(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	char str[1000];
 	char str2[1000];
 
@@ -2232,7 +2232,7 @@ void arc_in_projective_space::create_subiaco_oval(
 			P->unrank_point(v, Pts[i]);
 			if (f_v) {
 				cout << setw(4) << i << " : ";
-				Orbiter->Int_vec.print(cout, v, d);
+				Orbiter->Int_vec->print(cout, v, d);
 				cout << endl;
 			}
 		}
@@ -2256,7 +2256,7 @@ void arc_in_projective_space::create_subiaco_hyperoval(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	char str[1000];
 	char str2[1000];
 
@@ -2290,7 +2290,7 @@ void arc_in_projective_space::create_subiaco_hyperoval(
 			P->unrank_point(v, Pts[i]);
 			if (f_v) {
 				cout << setw(4) << i << " : ";
-				Orbiter->Int_vec.print(cout, v, d);
+				Orbiter->Int_vec->print(cout, v, d);
 				cout << endl;
 			}
 		}

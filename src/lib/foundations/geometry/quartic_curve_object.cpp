@@ -87,7 +87,7 @@ void quartic_curve_object::init_equation_but_no_bitangents(quartic_curve_domain 
 
 	if (f_v) {
 		cout << "quartic_curve_object::init_equation_but_no_bitangents" << endl;
-		Orbiter->Int_vec.print(cout, eqn15, 15);
+		Orbiter->Int_vec->print(cout, eqn15, 15);
 		cout << endl;
 	}
 
@@ -96,7 +96,7 @@ void quartic_curve_object::init_equation_but_no_bitangents(quartic_curve_domain 
 	q = F->q;
 
 	f_has_bitangents = FALSE;
-	Orbiter->Int_vec.copy(eqn15, quartic_curve_object::eqn15, 15);
+	Orbiter->Int_vec->copy(eqn15, quartic_curve_object::eqn15, 15);
 
 
 
@@ -135,10 +135,10 @@ void quartic_curve_object::init_equation_and_bitangents(quartic_curve_domain *Do
 	if (f_v) {
 		cout << "quartic_curve_object::init_equation_and_bitangents" << endl;
 		cout << "eqn15:";
-		Orbiter->Int_vec.print(cout, eqn15, 15);
+		Orbiter->Int_vec->print(cout, eqn15, 15);
 		cout << endl;
 		cout << "bitangents28:";
-		Orbiter->Lint_vec.print(cout, bitangents28, 28);
+		Orbiter->Lint_vec->print(cout, bitangents28, 28);
 		cout << endl;
 	}
 
@@ -147,8 +147,8 @@ void quartic_curve_object::init_equation_and_bitangents(quartic_curve_domain *Do
 	q = F->q;
 
 	f_has_bitangents = TRUE;
-	Orbiter->Int_vec.copy(eqn15, quartic_curve_object::eqn15, 15);
-	Orbiter->Lint_vec.copy(bitangents28, quartic_curve_object::bitangents28, 28);
+	Orbiter->Int_vec->copy(eqn15, quartic_curve_object::eqn15, 15);
+	Orbiter->Lint_vec->copy(bitangents28, quartic_curve_object::bitangents28, 28);
 
 
 
@@ -294,7 +294,7 @@ void quartic_curve_object::identify_lines(long int *lines, int nb_lines,
 {
 	int f_v = (verbose_level >= 1);
 	int i, idx;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "quartic_curve_object::identify_lines" << endl;
@@ -317,7 +317,7 @@ void quartic_curve_object::identify_lines(long int *lines, int nb_lines,
 
 int quartic_curve_object::find_point(long int P, int &idx)
 {
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (Sorting.lint_vec_search(Pts, nb_pts, P,
 			idx, 0 /* verbose_level */)) {

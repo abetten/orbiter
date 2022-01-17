@@ -56,7 +56,7 @@ void packing_classify::compute_klein_invariants(
 		if (f_vv) {
 			cout << "read representative of orbit " << orbit
 					<< " (id=" << id << ")" << endl;
-			Orbiter->Lint_vec.print(cout, the_packing, Iso->size);
+			Orbiter->Lint_vec->print(cout, the_packing, Iso->size);
 			cout << endl;
 		}
 		Spread_table_with_selection->Spread_tables->compute_list_of_lines_from_packing(list_of_lines,
@@ -64,7 +64,7 @@ void packing_classify::compute_klein_invariants(
 		if (f_v3) {
 			cout << "read representative of orbit " << orbit
 					<< " (id=" << id << ") list of lines:" << endl;
-			Orbiter->Lint_vec.matrix_print(list_of_lines,
+			Orbiter->Lint_vec->matrix_print(list_of_lines,
 					size_of_packing, spread_size);
 			cout << endl;
 		}
@@ -152,7 +152,7 @@ void packing_classify::compute_and_save_klein_invariants(std::string &prefix,
 		for (i = 0; i < nb_planes; i++) {
 			cout << setw(3) << i << " : " << R[i]
 				<< " : " << setw(5) << nb_pts_on_plane[i] << " : ";
-			Orbiter->Lint_vec.print(cout, Pts_on_plane[i], nb_pts_on_plane[i]);
+			Orbiter->Lint_vec->print(cout, Pts_on_plane[i], nb_pts_on_plane[i]);
 			cout << endl;
 		}
 #endif
@@ -334,7 +334,7 @@ void packing_classify::report_packings_by_ago(
 	invariants_packing *inv, tally &C_ago, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "packing_classify::report_packings_by_ago" << endl;
@@ -859,7 +859,7 @@ void packing_classify::report_extra_stuff(
 		int nb_lines;
 		int v[4];
 		int i, j, u;
-		combinatorics_domain Combi;
+		combinatorics::combinatorics_domain Combi;
 
 		nb_points = P3->N_points;
 		nb_lines = Combi.generalized_binomial(4, 2, q);
@@ -869,7 +869,7 @@ void packing_classify::report_extra_stuff(
 		for (i = 0; i < nb_points; i++) {
 			P3->unrank_point(v, i);
 			ost << "$P_{" << i << "}=";
-			Orbiter->Int_vec.print_fully(ost, v, 4);
+			Orbiter->Int_vec->print_fully(ost, v, 4);
 			ost << "$\\\\" << endl;
 		}
 		ost << endl;
@@ -910,7 +910,7 @@ void packing_classify::report_extra_stuff(
 
 		for (u = 0; u < Spread_table_with_selection->Spread_tables->nb_spreads; u++) {
 			ost << "Spread " << u << " is $";
-			Orbiter->Lint_vec.print_fully(ost,
+			Orbiter->Lint_vec->print_fully(ost,
 					Spread_table_with_selection->Spread_tables->spread_table + u * spread_size, spread_size);
 			ost << "$ isomorphism type "
 					<< Spread_table_with_selection->Spread_tables->spread_iso_type[u] << "\\\\" << endl;

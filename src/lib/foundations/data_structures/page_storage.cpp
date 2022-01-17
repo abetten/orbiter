@@ -11,6 +11,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace data_structures {
 
 
 page_storage::page_storage()
@@ -607,5 +608,5 @@ void test_page_storage(int verbose_level)
 }
 #endif
 
-}
-}
+}}}
+

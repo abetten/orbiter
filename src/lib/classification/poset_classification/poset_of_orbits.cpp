@@ -1266,7 +1266,7 @@ void poset_of_orbits::read_level_file(int level,
 		O = &root[I];
 
 		cout << setw(10) << i << " : ";
-		Orbiter->Lint_vec.print(cout, sets[i], level);
+		Orbiter->Lint_vec->print(cout, sets[i], level);
 		cout << endl;
 
 		J = PC->find_poset_orbit_node_for_set(level - 1,
@@ -1430,7 +1430,7 @@ void poset_of_orbits::write_orbit_reps_at_level(
 
 			string S;
 
-			Orbiter->Lint_vec.create_string_with_quotes(S, Data + i * lvl, lvl);
+			Orbiter->Lint_vec->create_string_with_quotes(S, Data + i * lvl, lvl);
 			f << "," << S << endl;
 		}
 		f << "END" << endl;
@@ -1578,7 +1578,7 @@ void poset_of_orbits::save_representatives_at_level_to_csv(std::string &fname, i
 			{
 				string str;
 				ost << ",";
-				Orbiter->Lint_vec.create_string_with_quotes(str, set, lvl);
+				Orbiter->Lint_vec->create_string_with_quotes(str, set, lvl);
 				ost << str;
 			}
 

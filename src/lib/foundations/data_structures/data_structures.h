@@ -15,6 +15,7 @@
 
 namespace orbiter {
 namespace foundations {
+namespace data_structures {
 
 
 // #############################################################################
@@ -1128,7 +1129,7 @@ public:
 		int verbose_level);
 	int number_of_eckardt_points(int verbose_level);
 	void get_eckardt_points(int *&E, int &nb_E, int verbose_level);
-	void evaluate_function_and_store(set_of_sets *&Function_values,
+	void evaluate_function_and_store(data_structures::set_of_sets *&Function_values,
 			int (*evaluate_function)(int a, int i, int j, void *evaluate_data, int verbose_level),
 			void *evaluate_data,
 			int verbose_level);
@@ -1359,6 +1360,8 @@ public:
 	int test_if_sets_are_disjoint_assuming_sorted_lint(long int *set1, long int *set2, int sz1, int sz2);
 	int uchar_vec_compare(uchar *p, uchar *q, int len);
 	int test_if_sets_are_disjoint_not_assuming_sorted(long int *v, long int *w, int len);
+	int int_vec_compare(int *p, int *q, int len);
+	int int_vec_compare_stride(int *p, int *q, int len, int stride);
 
 };
 
@@ -1421,8 +1424,10 @@ public:
 	void print_table(std::ostream &ost, int f_enclose_in_parentheses);
 	void print_table_latex_all_columns(std::ostream &ost,
 		int f_enclose_in_parentheses);
-	void print_table_latex(std::ostream &ost, int *f_column_select,
-		int f_enclose_in_parentheses);
+	void print_table_latex(std::ostream &ost,
+			int *f_column_select,
+			int f_enclose_in_parentheses,
+			int nb_lines_per_table);
 	void print_table_row(int row, int f_enclose_in_parentheses, 
 			std::ostream &ost);
 	void print_table_row_latex(int row, int *f_column_select, 
@@ -1641,7 +1646,8 @@ public:
 	void unrank(int rk, int *data);
 };
 
-}}
+}}}
+
 
 
 #endif /* ORBITER_SRC_LIB_FOUNDATIONS_DATA_STRUCTURES_DATA_STRUCTURES_H_ */

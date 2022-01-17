@@ -84,7 +84,7 @@ void semifield_trace::init(semifield_lifting *SL)
 	basis_tmp = NEW_int(k /* basis_sz */ * k2);
 	base_cols = NEW_int(k2);
 
-	R1 = NEW_OBJECT(gl_class_rep);
+	R1 = NEW_OBJECT(algebra::gl_class_rep);
 }
 
 void semifield_trace::trace_very_general(
@@ -125,7 +125,7 @@ void semifield_trace::trace_very_general(
 	// (0 I)
 	// where A is input_basis
 	// the resulting matrix will be put in transporter
-	Orbiter->Int_vec.zero(M1, n * n);
+	Orbiter->Int_vec->zero(M1, n * n);
 	for (i = 0; i < k; i++) {
 		for (j = 0; j < k; j++) {
 			M1[i * n + j] = input_basis[i * k + j];
@@ -138,9 +138,9 @@ void semifield_trace::trace_very_general(
 
 	if (f_vv) {
 		cout << "transformation matrix transporter=" << endl;
-		Orbiter->Int_vec.matrix_print(transporter, n, n);
+		Orbiter->Int_vec->matrix_print(transporter, n, n);
 		cout << "transformation matrix M1=" << endl;
-		Orbiter->Int_vec.matrix_print(M1, n, n);
+		Orbiter->Int_vec->matrix_print(M1, n, n);
 		}
 
 	// apply transporter to elements 0,...,basis_sz - 1 of input_basis
@@ -335,7 +335,7 @@ void semifield_trace::trace_very_general(
 	base_cols[1] = k;
 	if (f_vv) {
 		cout << "semifield_trace::trace_very_general base_cols=";
-		Orbiter->Int_vec.print(cout, base_cols, 2);
+		Orbiter->Int_vec->print(cout, base_cols, 2);
 		cout << endl;
 		}
 	for (i = 0; i < 2; i++) {
@@ -348,7 +348,7 @@ void semifield_trace::trace_very_general(
 	if (f_vv) {
 		cout << "semifield_trace::trace_very_general "
 				"reduced basis=" << endl;
-		Orbiter->Int_vec.matrix_print(input_basis, basis_sz, k2);
+		Orbiter->Int_vec->matrix_print(input_basis, basis_sz, k2);
 		cout << "Which is:" << endl;
 		SC->basis_print(input_basis, basis_sz);
 		}

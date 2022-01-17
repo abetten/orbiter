@@ -56,7 +56,7 @@ void semifield_downstep_node::init(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	//int f_vvv = (verbose_level >= 3);
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "semifield_downstep_node::init level=" << level
@@ -94,7 +94,7 @@ void semifield_downstep_node::init(
 
 	if (f_v) {
 		cout << "subspace_basis:" << endl;
-		Orbiter->Int_vec.matrix_print(subspace_basis, level, k2);
+		Orbiter->Int_vec->matrix_print(subspace_basis, level, k2);
 		//cout << "base_cols:" << endl;
 		//int_vec_print(cout, subspace_base_cols, level);
 		//cout << endl;
@@ -238,7 +238,7 @@ void semifield_downstep_node::init(
 int semifield_downstep_node::find_point(long int a)
 {
 	int idx;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (!Sorting.lint_vec_search(Candidates, nb_candidates,
 			a, idx, 0 /* verbose_level */)) {

@@ -115,7 +115,7 @@ void dlx_solver::init(
 		nb_rows = Descr->data_matrix_m;
 		nb_cols = Descr->data_matrix_n;
 		Input_data = NEW_int(nb_rows * nb_cols);
-		Orbiter->Int_vec.copy(Descr->data_matrix, Input_data, nb_rows * nb_cols);
+		Orbiter->Int_vec->copy(Descr->data_matrix, Input_data, nb_rows * nb_cols);
 	}
 	else {
 		cout << "dlx_solver::init please use option -data_label or use data_matrix" << endl;
@@ -1020,7 +1020,7 @@ void dlx_solver::SearchRHS(int k, int verbose_level)
 		// All header columns gone means we have a valid solution!
 		if (f_v) {
 			cout << "dlx_solver::SearchRHS k=" << k << " solution ";
-			Orbiter->Int_vec.print(cout, Result, k);
+			Orbiter->Int_vec->print(cout, Result, k);
 			cout << " found" << endl;
 		}
 
@@ -1127,7 +1127,7 @@ void dlx_solver::SearchRHS(int k, int verbose_level)
 			cout << "dlx_solver::SearchRHS k=" << k << " column " << c
 					<< " choice " << Cur_choice[k] << " / "
 					<< Nb_choices[k] << " which is ";
-			Orbiter->Int_vec.print(cout, Result, k + 1);
+			Orbiter->Int_vec->print(cout, Result, k + 1);
 			cout << endl;
 		}
 
@@ -1208,7 +1208,7 @@ void dlx_solver::SearchRHS(int k, int verbose_level)
 			cout << "dlx_solver::SearchRHS k=" << k << " column " << c
 					<< " choice " << Cur_choice[k] << " / "
 					<< Nb_choices[k] << " which is ";
-			Orbiter->Int_vec.print(cout, Result, k + 1);
+			Orbiter->Int_vec->print(cout, Result, k + 1);
 			cout << " recursing" << endl;
 		}
 
@@ -1220,7 +1220,7 @@ void dlx_solver::SearchRHS(int k, int verbose_level)
 			cout << "dlx_solver::SearchRHS k=" << k << " column " << c
 					<< " choice " << Cur_choice[k] << " / "
 					<< Nb_choices[k] << " which is ";
-			Orbiter->Int_vec.print(cout, Result, k + 1);
+			Orbiter->Int_vec->print(cout, Result, k + 1);
 			cout << " after recursion" << endl;
 		}
 

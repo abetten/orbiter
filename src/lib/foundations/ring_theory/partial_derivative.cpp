@@ -65,7 +65,7 @@ void partial_derivative::init(homogeneous_polynomial_domain *H,
 	partial_derivative::variable_idx = variable_idx;
 	v = NEW_int(H->get_nb_monomials());
 	mapping = NEW_int(H->get_nb_monomials() * Hd->get_nb_monomials());
-	Orbiter->Int_vec.zero(mapping, H->get_nb_monomials() * Hd->get_nb_monomials());
+	Orbiter->Int_vec->zero(mapping, H->get_nb_monomials() * Hd->get_nb_monomials());
 	if (Hd->degree != H->degree - 1) {
 		cout << "partial_derivative::init Hd->degree != H->degree - 1" << endl;
 		exit(1);

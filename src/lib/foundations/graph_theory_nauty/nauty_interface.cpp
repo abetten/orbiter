@@ -62,7 +62,7 @@ typedef unsigned char uchar;
 static void nauty_interface_allocate_data(int n);
 static void nauty_interface_free_data();
 static void nauty_interface_fill_nauty_output(int n,
-	nauty_output *NO,
+		data_structures::nauty_output *NO,
 	int verbose_level);
 #else
 #endif
@@ -71,10 +71,10 @@ static void nauty_interface_fill_nauty_output(int n,
 typedef unsigned char uchar;
 
 
-void nauty_interface::nauty_interface_graph_bitvec(int v, bitvector *Bitvec,
-		//int *labeling,
+void nauty_interface::nauty_interface_graph_bitvec(int v,
+		data_structures::bitvector *Bitvec,
 		int *partition,
-		nauty_output *NO,
+		data_structures::nauty_output *NO,
 		int verbose_level)
 {
 #if HAS_NAUTY
@@ -186,9 +186,8 @@ void nauty_interface::nauty_interface_graph_bitvec(int v, bitvector *Bitvec,
 
 
 void nauty_interface::nauty_interface_graph_int(int v, int *Adj,
-	//int *labeling,
 	int *partition,
-	nauty_output *NO,
+	data_structures::nauty_output *NO,
 	int verbose_level)
 {
 #if HAS_NAUTY
@@ -289,9 +288,8 @@ void nauty_interface::nauty_interface_graph_int(int v, int *Adj,
 
 
 void nauty_interface::nauty_interface_matrix_int(
-	encoded_combinatorial_object *Enc,
-	//int *labeling,
-	nauty_output *NO,
+		combinatorics::encoded_combinatorial_object *Enc,
+	data_structures::nauty_output *NO,
 	int verbose_level)
 {
 #if HAS_NAUTY
@@ -432,7 +430,7 @@ static void nauty_interface_free_data()
 
 
 static void nauty_interface_fill_nauty_output(int n,
-	nauty_output *NO,
+	data_structures::nauty_output *NO,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

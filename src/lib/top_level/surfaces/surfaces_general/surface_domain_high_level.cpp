@@ -811,7 +811,7 @@ void surface_domain_high_level::do_cubic_surface_properties(
 	surface_domain *Surf;
 	surface_with_action *Surf_A;
 	number_theory_domain NT;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	file_io Fio;
 
 
@@ -899,7 +899,7 @@ void surface_domain_high_level::do_cubic_surface_properties(
 		cout << "Rep=" << Rep[orbit_idx] << endl;
 		F0->PG_element_unrank_modified_lint(coeff20, 1, 20, Rep[orbit_idx]);
 		cout << "coeff20=";
-		Orbiter->Int_vec.print(cout, coeff20, 20);
+		Orbiter->Int_vec->print(cout, coeff20, 20);
 		cout << endl;
 
 		surface_create_description *Descr;
@@ -946,7 +946,7 @@ void surface_domain_high_level::do_cubic_surface_properties(
 			cout << "$$" << endl;
 
 			cout << "$$" << endl;
-			Orbiter->Int_vec.print(cout, SC->SO->eqn, 20);
+			Orbiter->Int_vec->print(cout, SC->SO->eqn, 20);
 			cout << endl;
 			cout << "$$" << endl;
 		}
@@ -995,7 +995,7 @@ void surface_domain_high_level::do_cubic_surface_properties(
 
 
 	string fname_data;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	fname_data.assign(fname_csv);
 	ST.chop_off_extension(fname_data);
@@ -1097,7 +1097,7 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 	surface_domain *Surf;
 	surface_with_action *Surf_A;
 	number_theory_domain NT;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	file_io Fio;
 
 
@@ -1180,7 +1180,7 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 
 	{
 		string fname_report;
-		string_tools ST;
+		data_structures::string_tools ST;
 
 		fname_report.assign(fname_csv);
 		ST.chop_off_extension(fname_report);
@@ -1501,7 +1501,7 @@ void surface_domain_high_level::do_create_surface_reports(std::string &field_ord
 	int *Q;
 	int nb_q;
 
-	Orbiter->Int_vec.scan(field_orders_text, Q, nb_q);
+	Orbiter->Int_vec->scan(field_orders_text, Q, nb_q);
 
 	int q;
 	int cur;
@@ -1619,7 +1619,7 @@ void surface_domain_high_level::do_create_surface_atlas(int q_max, int verbose_l
 
 
 	number_theory_domain NT;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	file_io Fio;
 
 
@@ -1837,7 +1837,7 @@ void surface_domain_high_level::do_create_surface_atlas(int q_max, int verbose_l
 								fname_report_tex,
 								verbose_level);
 
-						string_tools ST;
+						data_structures::string_tools ST;
 
 						fname_report_html.assign(fname_report_tex);
 						ST.chop_off_extension(fname_report_html);
@@ -1927,7 +1927,7 @@ void surface_domain_high_level::do_create_surface_atlas_q_e(int q_max,
 
 
 	number_theory_domain NT;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	file_io Fio;
 
 

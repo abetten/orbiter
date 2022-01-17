@@ -55,7 +55,7 @@ void interface_symbol_table::init(orbiter_top_level_session *Orbiter_top_level_s
 void interface_symbol_table::print_help(int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (ST.stringcmp(argv[i], "-define") == 0) {
 		cout << "-define <string : label> description -end" << endl;
@@ -71,7 +71,7 @@ void interface_symbol_table::print_help(int argc,
 int interface_symbol_table::recognize_keyword(int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (i >= argc) {
 		return false;
@@ -93,7 +93,7 @@ void interface_symbol_table::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "interface_symbol_table::read_arguments" << endl;
@@ -167,7 +167,7 @@ void interface_symbol_table::read_with(
 
 	f_with = TRUE;
 	string s;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	s.assign(argv[++i]);
 	with_labels.push_back(s);

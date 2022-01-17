@@ -40,7 +40,7 @@ void isomorph::iso_test_init2(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int i;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "isomorph::iso_test_init2" << endl;
@@ -81,8 +81,8 @@ void isomorph::probe(int flag_orbit, int subset_rk,
 	longinteger_object go;
 	long int data[1000];
 	int i, id;
-	combinatorics_domain Combi;
-	sorting Sorting;
+	combinatorics::combinatorics_domain Combi;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "isomorph::probe for flag orbit " << flag_orbit
@@ -116,7 +116,7 @@ void isomorph::probe(int flag_orbit, int subset_rk,
 	load_solution(id, data);
 	if (f_v) {
 		cout << "isomorph::probe flag orbit " << flag_orbit << " : ";
-		Orbiter->Lint_vec.print(cout, data, size);
+		Orbiter->Lint_vec->print(cout, data, size);
 		cout << endl;
 		}
 	
@@ -141,7 +141,7 @@ void isomorph::probe(int flag_orbit, int subset_rk,
 	if (f_v) {
 		cout << "isomorph::probe the subset with rank "
 				<< subset_rk  << " is ";
-		Orbiter->Int_vec.print(cout, subset, level);
+		Orbiter->Int_vec->print(cout, subset, level);
 		cout << endl;
 		cout << "size=" << size << endl;
 		cout << "level=" << level << endl;
@@ -156,7 +156,7 @@ void isomorph::probe(int flag_orbit, int subset_rk,
 
 	if (f_v) {
 		cout << "The rearranged set is ";
-		Orbiter->Lint_vec.print(cout, rearranged_set, size);
+		Orbiter->Lint_vec->print(cout, rearranged_set, size);
 		cout << endl;
 		}
 
@@ -314,7 +314,7 @@ void isomorph::write_classification_matrix(int verbose_level)
 	nb_cols = Reps->count;
 
 	Mtx = NEW_int(nb_rows * nb_cols);
-	Orbiter->Int_vec.zero(Mtx, nb_rows * nb_cols);
+	Orbiter->Int_vec->zero(Mtx, nb_rows * nb_cols);
 	starter_idx = NEW_int(nb_orbits);
 
 	for (i = 0; i < nb_starter; i++) {
@@ -331,7 +331,7 @@ void isomorph::write_classification_matrix(int verbose_level)
 
 	if (f_v) {
 		cout << "starter_idx=";
-		Orbiter->Int_vec.print(cout, starter_idx, nb_orbits);
+		Orbiter->Int_vec->print(cout, starter_idx, nb_orbits);
 		cout << endl;
 		}
 
@@ -344,7 +344,7 @@ void isomorph::write_classification_matrix(int verbose_level)
 	if (f_v) {
 		cout << "isomorph::write_classification_matrix" << endl;
 		cout << "The classification matrix is:" << endl;
-		Orbiter->Int_vec.matrix_print(Mtx, nb_rows, nb_cols);
+		Orbiter->Int_vec->matrix_print(Mtx, nb_rows, nb_cols);
 		}
 
 	FREE_int(Mtx);
@@ -550,7 +550,7 @@ void isomorph::compute_down_link(int *&down_link,
 
 	if (f_vv) {
 		cout << "down_link: ";
-		Orbiter->Int_vec.print(cout, down_link, nb_orbits);
+		Orbiter->Int_vec->print(cout, down_link, nb_orbits);
 		cout << endl;
 		}
 	if (f_v) {
@@ -570,7 +570,7 @@ void isomorph::do_iso_test(int t0, sims *&Stab,
 	int id;
 	long int data[1000];
 	int f_continue;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	
 	if (f_v) {
@@ -599,7 +599,7 @@ void isomorph::do_iso_test(int t0, sims *&Stab,
 	load_solution(id, data);
 	if (f_vv) {
 		cout << "isomorph::do_iso_test orbit_no = " << orbit_no << " : ";
-		Orbiter->Lint_vec.print(cout, data, size);
+		Orbiter->Lint_vec->print(cout, data, size);
 		cout << endl;
 		}
 	
@@ -729,8 +729,8 @@ int isomorph::next_subset(int t0,
 	int f_v6 = (verbose_level >= 6);
 	int f_is_minimal;
 	int i;
-	combinatorics_domain Combi;
-	sorting Sorting;
+	combinatorics::combinatorics_domain Combi;
+	data_structures::sorting Sorting;
 
 	f_continue = FALSE;
 	
@@ -769,7 +769,7 @@ int isomorph::next_subset(int t0,
 	if (f_vvv) {
 		cout << "iso_node " << iso_nodes << " found minimal subset no " 
 			<< cnt_minimal << ", rank = " << subset_rank << " : ";
-		Orbiter->Int_vec.set_print(cout, subset, level);
+		Orbiter->Int_vec->set_print(cout, subset, level);
 		cout << endl;
 		}
 	cnt_minimal++;
@@ -967,7 +967,7 @@ void isomorph::process_rearranged_set(
 			cout << "n e w transporter times old transporter inverse:" << endl;
 			A->element_print(tmp_Elt, cout);
 			cout << "subset: ";
-			Orbiter->Int_vec.print(cout, subset, level);
+			Orbiter->Int_vec->print(cout, subset, level);
 			cout << endl;
 
 			long int my_data[1000];
@@ -1014,7 +1014,7 @@ void isomorph::process_rearranged_set(
 int isomorph::is_minimal(int verbose_level)
 {
 	int rk, rk0;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	rk = Combi.rank_k_subset(subset, size, level);
 	rk0 = UF->ancestor(rk);
@@ -1049,7 +1049,7 @@ void isomorph::stabilizer_action_init(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int h, i, j;
 	int *Elt;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	nb_sets_reached = 0;
 	nb_is_minimal_called = 0;
@@ -1092,7 +1092,7 @@ void isomorph::stabilizer_action_add_generator(int *Elt, int verbose_level)
 	int f_vv = (verbose_level >= 2);
 	int **new_gens;
 	int h, i, j;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	AA->group_order(stabilizer_group_order);
 	if (f_v) {
@@ -1161,7 +1161,7 @@ void isomorph::print_statistics_iso_test(int t0, sims *Stab)
 	int t1, dt;
 	int nb, N;
 	double f1; //, f2;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	os_interface Os;
 
 	t1 = Os.os_ticks();
@@ -1186,7 +1186,7 @@ void isomorph::print_statistics_iso_test(int t0, sims *Stab)
 	f1 = ((double)nb / (double)N) * 100;
 	cout << "ancestors left = " << nb << " / " << N
 			<< " (" << f1 << "%): ";
-	Orbiter->Int_vec.set_print(cout, subset, level);
+	Orbiter->Int_vec->set_print(cout, subset, level);
 	cout << " current stabilizer order " << go 
 		<< " induced action order " << AA_go 
 		<< " nb_reps=" << Reps->nb_reps 
@@ -1239,7 +1239,7 @@ int isomorph::identify_database_is_open(long int *set,
 	//database DD1, DD2;
 	long int data0[1000];
 	int orbit_no0, id0, f;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "isomorph::identify_database_is_open" << endl;
@@ -1546,7 +1546,7 @@ void isomorph::induced_action_on_set(
 			}
 		if (FALSE /*f_v*/) {
 			cout << "isomorph::induced_action_on_set permutation: ";
-			Orbiter->Int_vec.print(cout, data1, size);
+			Orbiter->Int_vec->print(cout, data1, size);
 			cout << endl;
 			}
 		AA_perm->make_element(Elt1, data1, 0 /* verbose_level */);

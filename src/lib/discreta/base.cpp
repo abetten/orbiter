@@ -5,7 +5,8 @@
 // moved from D2 to ORBI Nov 15, 2007
 
 
-#include "orbiter.h"
+#include "foundations/foundations.h"
+#include "discreta.h"
 
 #undef BASE_SETTYPE_VERBOSE
 
@@ -244,7 +245,7 @@ void discreta_base::print_to_hollerith(hollerith& h)
 
 ostream& discreta_base::printobjectkind(ostream& ost)
 {
-	::printobjectkind(ost, s_kind());
+	orbiter::discreta::printobjectkind(ost, s_kind());
 	return ost;
 }
 
@@ -1488,7 +1489,7 @@ void discreta_base::load_ascii(istream & f)
 	int a;
 	unsigned int a1, a2;
 	char cc;
-	string_tools ST;
+	foundations::data_structures::string_tools ST;
 		
 	f.getline(buf, sizeof(buf));
 	p = buf;

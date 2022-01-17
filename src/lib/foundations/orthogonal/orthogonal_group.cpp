@@ -121,13 +121,13 @@ void orthogonal::Siegel_Transformation2(int *T,
 	unrank_point(To, 1, rk_to, verbose_level - 1);
 	if (f_vv) {
 		cout << "root: ";
-		Orbiter->Int_vec.print(cout, Root, n);
+		Orbiter->Int_vec->print(cout, Root, n);
 		cout << endl;
 		cout << "rk_from: ";
-		Orbiter->Int_vec.print(cout, From, n);
+		Orbiter->Int_vec->print(cout, From, n);
 		cout << endl;
 		cout << "rk_to: ";
-		Orbiter->Int_vec.print(cout, To, n);
+		Orbiter->Int_vec->print(cout, To, n);
 		cout << endl;
 		}
 
@@ -140,7 +140,7 @@ void orthogonal::Siegel_Transformation2(int *T,
 	FREE_int(Root);
 	if (f_vv) {
 		cout << "the Siegel transformation is:" << endl;
-		Orbiter->Int_vec.print_integer_matrix(cout, T, n, n);
+		Orbiter->Int_vec->print_integer_matrix(cout, T, n, n);
 	}
 	if (f_v) {
 		cout << "orthogonal::Siegel_Transformation2 done" << endl;
@@ -157,7 +157,7 @@ void orthogonal::Siegel_Transformation3(int *T,
 	int *Gram;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "orthogonal::Siegel_Transformation3" << endl;
@@ -184,13 +184,13 @@ void orthogonal::Siegel_Transformation3(int *T,
 	}
 	if (f_vv) {
 		cout << "root: ";
-		Orbiter->Int_vec.print(cout, B, n);
+		Orbiter->Int_vec->print(cout, B, n);
 		cout << endl;
 		cout << "from: ";
-		Orbiter->Int_vec.print(cout, B + n, n);
+		Orbiter->Int_vec->print(cout, B + n, n);
 		cout << endl;
 		cout << "to: ";
-		Orbiter->Int_vec.print(cout, w, n);
+		Orbiter->Int_vec->print(cout, w, n);
 		cout << endl;
 	}
 
@@ -210,35 +210,35 @@ void orthogonal::Siegel_Transformation3(int *T,
 
 	if (f_vv) {
 		cout << "before perp, the matrix B is:" << endl;
-		Orbiter->Int_vec.print_integer_matrix(cout, B, n, n);
+		Orbiter->Int_vec->print_integer_matrix(cout, B, n, n);
 	}
 	F->Linear_algebra->perp(n, 2, B, Gram, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the matrix B is:" << endl;
-		Orbiter->Int_vec.print_integer_matrix(cout, B, n, n);
+		Orbiter->Int_vec->print_integer_matrix(cout, B, n, n);
 	}
 	F->Linear_algebra->invert_matrix(B, Bv, n, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the matrix Bv is:" << endl;
-		Orbiter->Int_vec.print_integer_matrix(cout, B, n, n);
+		Orbiter->Int_vec->print_integer_matrix(cout, B, n, n);
 	}
 	F->Linear_algebra->mult_matrix_matrix(w, Bv, z, 1, n, n,
 			0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the coefficient vector z is:" << endl;
-		Orbiter->Int_vec.print_integer_matrix(cout, z, 1, n);
+		Orbiter->Int_vec->print_integer_matrix(cout, z, 1, n);
 	}
 	z[0] = 0;
 	z[1] = 0;
 	if (f_vv) {
 		cout << "the coefficient vector z is:" << endl;
-		Orbiter->Int_vec.print_integer_matrix(cout, z, 1, n);
+		Orbiter->Int_vec->print_integer_matrix(cout, z, 1, n);
 	}
 	F->Linear_algebra->mult_matrix_matrix(z, B, x, 1, n, n,
 			0 /* verbose_level */);
 	if (f_vv) {
 		cout << "the vector x is:" << endl;
-		Orbiter->Int_vec.print_integer_matrix(cout, x, 1, n);
+		Orbiter->Int_vec->print_integer_matrix(cout, x, 1, n);
 	}
 	minus_one = F->negate(1);
 	for (i = 0; i < n; i++) {
@@ -246,12 +246,12 @@ void orthogonal::Siegel_Transformation3(int *T,
 	}
 	if (f_vv) {
 		cout << "the vector -x is:" << endl;
-		Orbiter->Int_vec.print_integer_matrix(cout, x, 1, n);
+		Orbiter->Int_vec->print_integer_matrix(cout, x, 1, n);
 	}
 	make_Siegel_Transformation(T, x, B, n, Gram, FALSE);
 	if (f_vv) {
 		cout << "the Siegel transformation is:" << endl;
-		Orbiter->Int_vec.print_integer_matrix(cout, T, n, n);
+		Orbiter->Int_vec->print_integer_matrix(cout, T, n, n);
 	}
 	if (f_v) {
 		cout << "orthogonal::Siegel_Transformation3 done" << endl;
@@ -422,11 +422,11 @@ void orthogonal::create_random_Siegel_transformation(
 	}
 	if (f_vv) {
 		cout << "rk_u = " << rk_u << " : ";
-		Orbiter->Int_vec.print(cout, u, d);
+		Orbiter->Int_vec->print(cout, u, d);
 		cout << endl;
 		//cout << "rk_v = " << rk_v << " : ";
 		cout << "v=";
-		Orbiter->Int_vec.print(cout, v, d);
+		Orbiter->Int_vec->print(cout, v, d);
 		cout << endl;
 		}
 
@@ -440,11 +440,11 @@ void orthogonal::create_random_Siegel_transformation(
 		cout << "form_c2=" << form_c2 << endl;
 		cout << "form_c3=" << form_c3 << endl;
 		cout << "\\rho_{";
-		Orbiter->Int_vec.print(cout, u, d);
+		Orbiter->Int_vec->print(cout, u, d);
 		cout << ",";
-		Orbiter->Int_vec.print(cout, v, d);
+		Orbiter->Int_vec->print(cout, v, d);
 		cout << "}=" << endl;
-		Orbiter->Int_vec.matrix_print(Mtx, d, d);
+		Orbiter->Int_vec->matrix_print(Mtx, d, d);
 	}
 	FREE_int(u);
 	FREE_int(v);
@@ -610,6 +610,8 @@ void orthogonal::create_random_orthogonal_reflection(
 	int cnt;
 	int *z;
 	os_interface Os;
+	data_structures::sorting Sorting;
+
 
 	if (f_v) {
 		cout << "orthogonal::create_random_orthogonal_reflection" << endl;
@@ -651,7 +653,7 @@ void orthogonal::create_random_orthogonal_reflection(
 		if (f_v) {
 			cout << "orthogonal::create_random_orthogonal_reflection "
 					"trying ";
-			Orbiter->Int_vec.print(cout, z, d);
+			Orbiter->Int_vec->print(cout, z, d);
 			cout << endl;
 		}
 
@@ -670,7 +672,7 @@ void orthogonal::create_random_orthogonal_reflection(
 				"cnt=" << cnt
 				//"rk_z = " << rk_z
 				<< " alpha = " << alpha << " : ";
-		Orbiter->Int_vec.print(cout, z, d);
+		Orbiter->Int_vec->print(cout, z, d);
 		cout << endl;
 		}
 
@@ -704,14 +706,14 @@ void orthogonal::create_random_orthogonal_reflection(
 					"after transform_form_matrix" << endl;
 			}
 
-		if (int_vec_compare(Gram_matrix, new_Gram, d * d) != 0) {
+		if (Sorting.int_vec_compare(Gram_matrix, new_Gram, d * d) != 0) {
 			cout << "create_random_orthogonal_reflection "
 					"The Gram matrix is not preserved" << endl;
 			cout << "Gram matrix:" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout, Gram_matrix,
+			Orbiter->Int_vec->print_integer_matrix_width(cout, Gram_matrix,
 					d, d, d, F->log10_of_q);
 			cout << "transformed Gram matrix:" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout, new_Gram,
+			Orbiter->Int_vec->print_integer_matrix_width(cout, new_Gram,
 					d, d, d, F->log10_of_q);
 			exit(1);
 			}
@@ -753,7 +755,7 @@ void orthogonal::make_orthogonal_reflection(
 
 	if (f_vv) {
 		cout << "orthogonal::make_orthogonal_reflection created:" << endl;
-		Orbiter->Int_vec.print_integer_matrix(cout, M, n, n);
+		Orbiter->Int_vec->print_integer_matrix(cout, M, n, n);
 	}
 	if (f_v) {
 		cout << "orthogonal::make_orthogonal_reflection done" << endl;
@@ -819,10 +821,10 @@ void orthogonal::make_Siegel_Transformation(int *M, int *v, int *u,
 	}
 	if (f_vv) {
 		cout << "Siegel matrix:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M, n, n, n, 2);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M, n, n, n, 2);
 		F->Linear_algebra->transform_form_matrix(M, Gram, Gram2, n, 0 /* verbose_level */);
 		cout << "transformed Gram matrix:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Gram2, n, n, n, 2);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, Gram2, n, n, n, 2);
 		cout << endl;
 	}
 	if (f_v) {
@@ -855,19 +857,19 @@ void orthogonal::Siegel_move_forward_by_index(
 	if (f_vv) {
 		cout << "orthogonal::Siegel_move_forward_by_index" << endl;
 		cout << rk1 << " : ";
-		Orbiter->Int_vec.print(cout, Sv1, n);
+		Orbiter->Int_vec->print(cout, Sv1, n);
 		cout << endl;
 		cout << rk2 << " : ";
-		Orbiter->Int_vec.print(cout, Sv2, n);
+		Orbiter->Int_vec->print(cout, Sv2, n);
 		cout << endl;
 		}
 	Siegel_move_forward(Sv1, Sv2, v, w, verbose_level);
 	if (f_vv) {
 		cout << "orthogonal::Siegel_move_forward_by_index moving forward: ";
-		Orbiter->Int_vec.print(cout, v, n);
+		Orbiter->Int_vec->print(cout, v, n);
 		cout << endl;
 		cout << "            to: ";
-		Orbiter->Int_vec.print(cout, w, n);
+		Orbiter->Int_vec->print(cout, w, n);
 		cout << endl;
 		}
 	if (f_v) {
@@ -899,19 +901,19 @@ void orthogonal::Siegel_move_backward_by_index(
 	if (f_vv) {
 		cout << "orthogonal::Siegel_move_backward_by_index" << endl;
 		cout << rk1 << " : ";
-		Orbiter->Int_vec.print(cout, Sv1, n);
+		Orbiter->Int_vec->print(cout, Sv1, n);
 		cout << endl;
 		cout << rk2 << " : ";
-		Orbiter->Int_vec.print(cout, Sv2, n);
+		Orbiter->Int_vec->print(cout, Sv2, n);
 		cout << endl;
 		}
 	Siegel_move_backward(Sv1, Sv2, w, v, verbose_level);
 	if (f_vv) {
 		cout << "orthogonal::Siegel_move_backward_by_index moving backward: ";
-		Orbiter->Int_vec.print(cout, w, n);
+		Orbiter->Int_vec->print(cout, w, n);
 		cout << endl;
 		cout << "              to ";
-		Orbiter->Int_vec.print(cout, v, n);
+		Orbiter->Int_vec->print(cout, v, n);
 		cout << endl;
 		}
 	if (f_v) {
@@ -930,9 +932,9 @@ void orthogonal::Siegel_move_forward(
 		cout << "orthogonal::Siegel_move_forward" << endl;
 	}
 	if (f_vv) {
-		Orbiter->Int_vec.print(cout, v1, n);
+		Orbiter->Int_vec->print(cout, v1, n);
 		cout << endl;
-		Orbiter->Int_vec.print(cout, v2, n);
+		Orbiter->Int_vec->print(cout, v2, n);
 		cout << endl;
 		}
 	rk1_subspace = subspace->rank_point(v1, 1, verbose_level - 1);
@@ -959,10 +961,10 @@ void orthogonal::Siegel_move_forward(
 	v4[n - 1] = v3[n - 1];
 	if (f_vv) {
 		cout << "orthogonal::Siegel_move_forward moving: ";
-		Orbiter->Int_vec.print(cout, v3, n);
+		Orbiter->Int_vec->print(cout, v3, n);
 		cout << endl;
 		cout << "     to ";
-		Orbiter->Int_vec.print(cout, v4, n);
+		Orbiter->Int_vec->print(cout, v4, n);
 		cout << endl;
 		}
 	if (f_v) {
@@ -983,9 +985,9 @@ void orthogonal::Siegel_move_backward(
 		cout << "orthogonal::Siegel_move_backward" << endl;
 	}
 	if (f_vv) {
-		Orbiter->Int_vec.print(cout, v1, n);
+		Orbiter->Int_vec->print(cout, v1, n);
 		cout << endl;
-		Orbiter->Int_vec.print(cout, v2, n);
+		Orbiter->Int_vec->print(cout, v2, n);
 		cout << endl;
 		}
 	rk1_subspace = subspace->rank_point(v1, 1, verbose_level - 1);
@@ -1005,7 +1007,7 @@ void orthogonal::Siegel_move_backward(
 	if (f_vv) {
 		cout << "orthogonal::Siegel_move_backward root=" << root << endl;
 		cout << "orthogonal::Siegel_move_backward image, to be moved back: " << endl;
-		Orbiter->Int_vec.print(cout, v4, n);
+		Orbiter->Int_vec->print(cout, v4, n);
 		cout << endl;
 		}
 	subspace->Siegel_Transformation(T1,
@@ -1017,10 +1019,10 @@ void orthogonal::Siegel_move_backward(
 	v4[n - 1] = v3[n - 1];
 	if (f_vv) {
 		cout << "orthogonal::Siegel_move_backward moving: ";
-		Orbiter->Int_vec.print(cout, v3, n);
+		Orbiter->Int_vec->print(cout, v3, n);
 		cout << endl;
 		cout << "     to ";
-		Orbiter->Int_vec.print(cout, v4, n);
+		Orbiter->Int_vec->print(cout, v4, n);
 		cout << endl;
 		}
 	if (f_v) {
@@ -1141,13 +1143,13 @@ void orthogonal::test_Siegel(int index, int verbose_level)
 	rk1 = type_and_index_to_point_rk(5, 0, verbose_level);
 	cout << 0 << " : " << rk1 << " : ";
 	unrank_point(v1, 1, rk1, verbose_level - 1);
-	Orbiter->Int_vec.print(cout, v1, n);
+	Orbiter->Int_vec->print(cout, v1, n);
 	cout << endl;
 
 	rk2 = type_and_index_to_point_rk(5, index, verbose_level);
 	cout << index << " : " << rk2 << " : ";
 	unrank_point(v2, 1, rk2, verbose_level - 1);
-	Orbiter->Int_vec.print(cout, v2, n);
+	Orbiter->Int_vec->print(cout, v2, n);
 	cout << endl;
 
 	rk1_subspace = subspace->rank_point(v1, 1, verbose_level - 1);
@@ -1163,7 +1165,7 @@ void orthogonal::test_Siegel(int index, int verbose_level)
 	cout << "Siegel map takes 1st point to" << endl;
 	F->Linear_algebra->mult_matrix_matrix(v1, T1, v3, 1, n - 2, n - 2,
 			0 /* verbose_level */);
-	Orbiter->Int_vec.print(cout, v3, n - 2);
+	Orbiter->Int_vec->print(cout, v3, n - 2);
 	cout << endl;
 
 	cnt = 0;
@@ -1189,7 +1191,7 @@ void orthogonal::test_Siegel(int index, int verbose_level)
 
 		cout << "Siegel map takes 2nd point ";
 		cout << cnt << " : " << j << " : " << rk3 << " : ";
-		Orbiter->Int_vec.print(cout, v3, n);
+		Orbiter->Int_vec->print(cout, v3, n);
 		cout << " to ";
 		F->Linear_algebra->mult_matrix_matrix(v3, T1, v_tmp, 1, n - 2, n - 2,
 				0 /* verbose_level */);
@@ -1197,7 +1199,7 @@ void orthogonal::test_Siegel(int index, int verbose_level)
 
 		v_tmp[n - 2] = v3[n - 2];
 		v_tmp[n - 1] = v3[n - 1];
-		Orbiter->Int_vec.print(cout, v_tmp, n);
+		Orbiter->Int_vec->print(cout, v_tmp, n);
 
 
 		//cout << "find_minimal_point_on_line " << endl;

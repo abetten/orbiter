@@ -73,7 +73,7 @@ void mp_graphics::init(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "mp_graphics::init" << endl;
@@ -2830,14 +2830,14 @@ void mp_graphics::draw_graph(int x, int y,
 	int Py[2];
 	int rad = radius;
 	//int rad = (int)(dx * .05);
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	//cout << "draw_graph nb_V=" << nb_V << endl;
 
 	if (f_v) {
 		cout << "mp_graphics::draw_graph edges=";
 		//Orbiter->Int_vec.print(cout, Edges, nb_E);
-		Orbiter->Lint_vec.print(cout, Edges, nb_E);
+		Orbiter->Lint_vec->print(cout, Edges, nb_E);
 		cout << endl;
 	}
 
@@ -2884,7 +2884,7 @@ void mp_graphics::draw_graph_with_distinguished_edge(
 	int Px[2];
 	int Py[2];
 	int rad = (int)(dx * .05);
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "mp_graphics::draw_graph_with_distinguished_edge "
@@ -2935,7 +2935,7 @@ void mp_graphics::draw_graph_on_multiple_circles(int x, int y,
 	int Py[2];
 	int rad = (int)(dx * .05);
 	int nb_per_circle;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	cout << "mp_graphics::draw_graph_on_multiple_circles "
 			"nb_V=" << nb_V << endl;
@@ -3045,7 +3045,7 @@ void mp_graphics::draw_tournament(int x, int y,
 	int Py[3];
 	int rad = radius;
 	//int rad = (int)(dx * .05);
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "mp_graphics::draw_tournament nb_V=" << nb_V << endl;
@@ -3102,7 +3102,7 @@ void mp_graphics::draw_bitmatrix2(int f_dots,
 	int f_partition, int nb_row_parts, int *row_part_first,
 	int nb_col_parts, int *col_part_first,
 	int f_row_grid, int f_col_grid,
-	int f_bitmatrix, bitmatrix *Bitmatrix,
+	int f_bitmatrix, data_structures::bitmatrix *Bitmatrix,
 	int *M, int m, int n,
 	int f_has_labels, int *labels)
 {

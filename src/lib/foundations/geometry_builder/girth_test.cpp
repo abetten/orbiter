@@ -77,10 +77,10 @@ void girth_test::Floyd(int row, int verbose_level)
 		cout << "girth_test::Floyd" << endl;
 	}
 	if (row == 0) {
-		Orbiter->Int_vec.zero(D[0], V * V);
+		Orbiter->Int_vec->zero(D[0], V * V);
 	}
 	else {
-		Orbiter->Int_vec.copy(D[row - 1], D[row], V * V);
+		Orbiter->Int_vec->copy(D[row - 1], D[row], V * V);
 	}
 
 	// set all connected positions to 1
@@ -190,13 +190,13 @@ int girth_test::check_girth_condition(int i, int j_idx, int j, int verbose_level
 void girth_test::print_Si(int i)
 {
 	cout << "S[" << i << "]:" << endl;
-	Orbiter->Int_vec.matrix_print(S[i], V, V);
+	Orbiter->Int_vec->matrix_print(S[i], V, V);
 }
 
 void girth_test::print_Di(int i)
 {
 	cout << "D[" << i << "]:" << endl;
-	Orbiter->Int_vec.matrix_print(D[i], V, V);
+	Orbiter->Int_vec->matrix_print(D[i], V, V);
 }
 
 }}

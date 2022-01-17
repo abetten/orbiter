@@ -33,7 +33,6 @@ void plot_tools::draw_density(
 	int f_circle, int circle_at, int circle_rad, 
 	int f_mu, int f_sigma, int nb_standard_deviations, 
 	int f_v_grid, int v_grid, int f_h_grid, int h_grid, 
-	//int xmax, int ymax,
 	int offset_x,
 	int f_switch_x, int no, int f_embedded,
 	int verbose_level)
@@ -41,16 +40,13 @@ void plot_tools::draw_density(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int *set;
-	//int x_min = 0, x_max = 1000;
-	//int y_min = 0, y_max = 1000;
 	int factor_1000 = 1000;
 	string fname_full;
 	int i, prev;
 	int *outline_value;
 	int *outline_number;
 	int outline_sz = 0;
-	//int f_sideways = FALSE;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 
 	if (f_v) {
@@ -157,7 +153,6 @@ void plot_tools::draw_density_multiple_curves(
 	int f_title, const char *title, int out_of, 
 	const char *label_x, 
 	int f_v_grid, int v_grid, int f_h_grid, int h_grid, 
-	//int xmax, int ymax,
 	int offset_x, int f_switch_x,
 	int f_v_logarithmic, double log_base, int no, int f_embedded, 
 	int verbose_level)
@@ -165,8 +160,6 @@ void plot_tools::draw_density_multiple_curves(
 	int f_v = (verbose_level >= 1);
 	int f_v5 = (verbose_level >= 5);
 	int **Data2;
-	//int x_min = 0, x_max = 1000;
-	//int y_min = 0, y_max = 1000;
 	int factor_1000 = 1000;
 	string fname_full;
 	int i, prev;
@@ -174,8 +167,7 @@ void plot_tools::draw_density_multiple_curves(
 	int **outline_number;
 	int *outline_sz;
 	int curve;
-	//int f_sideways = FALSE;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 
 	if (f_v) {
@@ -322,7 +314,7 @@ void plot_tools::y_to_pt_on_curve(int y_in, int &x, int &y,
 {
 	int f_v = FALSE;
 	int idx, f_found;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	f_found = Sorting.int_vec_search(outline_value, outline_sz, y_in, idx);
 	if (f_found) {
@@ -751,10 +743,10 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 		int *reps;
 		int nb_reps;
 
-		Orbiter->Int_vec.scan(Descr->cyclotomic_sets_reps, reps, nb_reps);
+		Orbiter->Int_vec->scan(Descr->cyclotomic_sets_reps, reps, nb_reps);
 
 		cout << "cyclotomic sets of ";
-		Orbiter->Int_vec.print(cout, reps, nb_reps);
+		Orbiter->Int_vec->print(cout, reps, nb_reps);
 		cout << " modulo " << Descr->cyclotomic_sets_q << endl;
 
 		if (Descr->f_cyclotomic_sets_thickness) {

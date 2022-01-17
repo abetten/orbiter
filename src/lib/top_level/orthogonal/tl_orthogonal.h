@@ -241,7 +241,7 @@ class orthogonal_space_activity_description {
 public:
 
 	int f_input;
-	data_input_stream_description *Data;
+	data_structures::data_input_stream_description *Data;
 
 	int f_create_BLT_set;
 	BLT_set_create_description * BLT_Set_create_description;

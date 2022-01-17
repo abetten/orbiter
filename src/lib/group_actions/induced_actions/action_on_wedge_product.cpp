@@ -101,14 +101,14 @@ long int action_on_wedge_product::compute_image_int(
 	if (f_vv) {
 		cout << "action_on_wedge_product::compute_image_int "
 				"a = " << a << " wedge_v1 = ";
-		Orbiter->Int_vec.print(cout, wedge_v1, wedge_dimension);
+		Orbiter->Int_vec->print(cout, wedge_v1, wedge_dimension);
 		cout << endl;
 		}
 	
 	compute_image_int_low_level(A, Elt, wedge_v1, wedge_v2, verbose_level);
 	if (f_vv) {
 		cout << " v2=v1 * A=";
-		Orbiter->Int_vec.print(cout, wedge_v2, wedge_dimension);
+		Orbiter->Int_vec->print(cout, wedge_v2, wedge_dimension);
 		cout << endl;
 		}
 
@@ -134,7 +134,7 @@ int action_on_wedge_product::element_entry_ij(
 		action &A, int *Elt, int I, int J, int verbose_level)
 {
 	int i, j, k, l, w;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	Combi.k2ij(I, i, j, n);
 	Combi.k2ij(J, k, l, n);
@@ -176,14 +176,14 @@ void action_on_wedge_product::compute_image_int_low_level(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j, ij, k, l, kl, c, w, z, xkl;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "action_on_wedge_product::compute_image_int_low_level" << endl;
 		}
 	if (f_vv) {
 		cout << "wedge action: x=";
-		Orbiter->Int_vec.print(cout, x, wedge_dimension);
+		Orbiter->Int_vec->print(cout, x, wedge_dimension);
 		cout << endl;
 		}
 	// (i,j) = row index
@@ -231,7 +231,7 @@ void action_on_wedge_product::compute_image_int_low_level(
 		} // next i
 	if (f_vv) {
 		cout << "xA=";
-		Orbiter->Int_vec.print(cout, xA, wedge_dimension);
+		Orbiter->Int_vec->print(cout, xA, wedge_dimension);
 		cout << endl;
 		}
 	if (M->f_semilinear) {
@@ -241,7 +241,7 @@ void action_on_wedge_product::compute_image_int_low_level(
 			}
 		if (f_vv) {
 			cout << "after " << f << " field automorphisms: xA=";
-			Orbiter->Int_vec.print(cout, xA, wedge_dimension);
+			Orbiter->Int_vec->print(cout, xA, wedge_dimension);
 			cout << endl;
 			}
 		}

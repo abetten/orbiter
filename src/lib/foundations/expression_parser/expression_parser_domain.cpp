@@ -43,7 +43,7 @@ void expression_parser_domain::parse_and_evaluate(
 
 	expression_parser Parser;
 	syntax_tree *tree;
-	string_tools ST;
+	data_structures::string_tools ST;
 	int i;
 
 	tree = NEW_OBJECT(syntax_tree);
@@ -241,7 +241,7 @@ void expression_parser_domain::parse_and_evaluate(
 					cout << endl;
 				}
 				cout << "expression_parser_domain::parse_and_evaluate coefficient vector: ";
-				Orbiter->Int_vec.print(cout, Values, nb_monomials);
+				Orbiter->Int_vec->print(cout, Values, nb_monomials);
 				cout << endl;
 			}
 
@@ -421,7 +421,7 @@ int expression_parser_domain::evaluate_formula(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "expression_parser_domain::evaluate_formula" << endl;
@@ -545,7 +545,7 @@ int expression_parser_domain::evaluate_formula(
 			cout << endl;
 		}
 		cout << "expression_parser_domain::evaluate_formula coefficient vector: ";
-		Orbiter->Int_vec.print(cout, Values, nb_monomials);
+		Orbiter->Int_vec->print(cout, Values, nb_monomials);
 		cout << endl;
 
 

@@ -232,7 +232,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph(
 	int f_v = (verbose_level >= 1);
 	string my_prefix;
 	file_io Fio;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "packing_was_fixpoints::compute_cliques_on_fixpoint_graph "
@@ -439,7 +439,7 @@ void packing_was_fixpoints::compute_cliques_on_fixpoint_graph_from_scratch(
 			cout << "too big to print" << endl;
 		}
 		else {
-			Orbiter->Lint_vec.matrix_print(Cliques, nb_cliques, clique_size);
+			Orbiter->Lint_vec->matrix_print(Cliques, nb_cliques, clique_size);
 
 			fixpoint_clique_gen->print_representatives_at_level(clique_size);
 		}
@@ -534,7 +534,7 @@ void packing_was_fixpoints::print_packing(long int *packing, int sz, int verbose
 	}
 
 	cout << "packing: ";
-	Orbiter->Lint_vec.print(cout, packing, sz);
+	Orbiter->Lint_vec->print(cout, packing, sz);
 	cout << endl;
 
 	long int a;
@@ -555,10 +555,10 @@ void packing_was_fixpoints::print_packing(long int *packing, int sz, int verbose
 	}
 
 	cout << "Lines in the packing:" << endl;
-	Orbiter->Int_vec.matrix_print(Lines, sz, PW->P->spread_size);
+	Orbiter->Int_vec->matrix_print(Lines, sz, PW->P->spread_size);
 
 
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 
 	if (Combi.is_permutation(Lines, sz * PW->P->spread_size)) {
@@ -581,7 +581,7 @@ void packing_was_fixpoints::print_packing(long int *packing, int sz, int verbose
 	}
 
 	cout << "Orbit_number in the packing:" << endl;
-	Orbiter->Int_vec.matrix_print(Orbit_number, sz, PW->P->spread_size);
+	Orbiter->Int_vec->matrix_print(Orbit_number, sz, PW->P->spread_size);
 
 
 	for (i = 0; i < sz; i++) {
@@ -709,7 +709,7 @@ void packing_was_fixpoints::report2(ostream &ost, /*packing_long_orbits *L,*/ in
 
 
 		ost << "Orbit numbers: ";
-		Orbiter->Lint_vec.print(ost, Orbit_numbers, fixpoint_clique_size);
+		Orbiter->Lint_vec->print(ost, Orbit_numbers, fixpoint_clique_size);
 		ost << "\\\\" << endl;
 
 		ost << "Stabilizer:\\\\" << endl;

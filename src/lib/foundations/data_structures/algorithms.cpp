@@ -20,6 +20,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace data_structures {
 
 
 
@@ -211,7 +212,7 @@ void algorithms::solve_diophant(int *Inc,
 		Dio->get_solutions(Solutions, nb_sol, 1 /* verbose_level */);
 		if (FALSE /*f_v4*/) {
 			cout << "Solutions:" << endl;
-			Orbiter->Lint_vec.matrix_print(Solutions, nb_sol, nb_needed);
+			Orbiter->Lint_vec->matrix_print(Solutions, nb_sol, nb_needed);
 		}
 	}
 	else {
@@ -286,4 +287,5 @@ int rem;
 
 
 
-}}
+}}}
+

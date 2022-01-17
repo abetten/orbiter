@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace cryptography {
 
 
 static double letter_probability[] = {
@@ -725,7 +726,7 @@ void cryptography_domain::make_affine_sequence(int a, int c, int m, int verbose_
 		}
 	f_reached = NEW_int(m);
 	orbit = NEW_int(m);
-	Orbiter->Int_vec.zero(f_reached, m);
+	Orbiter->Int_vec->zero(f_reached, m);
 	cnt = 0;
 	for (x0 = 0; x0 < m; x0++) {
 		if (f_reached[x0]) {
@@ -747,7 +748,7 @@ void cryptography_domain::make_affine_sequence(int a, int c, int m, int verbose_
 			x = y;
 			}
 		cout << "orbit " << cnt << " of " << x0 << " has length " << len << " : ";
-		Orbiter->Int_vec.print(cout, orbit, len);
+		Orbiter->Int_vec->print(cout, orbit, len);
 		cout << endl;
 
 		make_2D_plot(orbit, len, cnt, m, a, c, verbose_level);
@@ -774,7 +775,7 @@ void cryptography_domain::make_2D_plot(
 	int h, x, y;
 
 	M = NEW_int(m * m);
-	Orbiter->Int_vec.zero(M, m * m);
+	Orbiter->Int_vec->zero(M, m * m);
 
 
 
@@ -930,7 +931,7 @@ void cryptography_domain::do_EC_Koblitz_encoding(finite_field *F,
 	os_interface Os;
 	number_theory_domain NT;
 
-	Orbiter->Int_vec.scan(pt_text, v, len);
+	Orbiter->Int_vec->scan(pt_text, v, len);
 	if (len != 2) {
 		cout << "point should have just two coordinates" << endl;
 		exit(1);
@@ -1233,7 +1234,7 @@ void cryptography_domain::do_EC_points(finite_field *F, std::string &label,
 		int *M;
 
 		M = NEW_int(F->q * F->q);
-		Orbiter->Int_vec.zero(M, F->q * F->q);
+		Orbiter->Int_vec->zero(M, F->q * F->q);
 
 
 		for (i = 0; i < (int) Pts.size(); i++) {
@@ -1264,7 +1265,7 @@ void cryptography_domain::do_EC_points(finite_field *F, std::string &label,
 		int cnt = 0;
 
 		M = NEW_int((int) Pts.size() * 2);
-		Orbiter->Int_vec.zero(M, (int) Pts.size() * 2);
+		Orbiter->Int_vec->zero(M, (int) Pts.size() * 2);
 
 
 		for (i = 0; i < (int) Pts.size(); i++) {
@@ -1331,7 +1332,7 @@ void cryptography_domain::do_EC_add(finite_field *F,
 	}
 	vector<vector<int>> Pts;
 
-	Orbiter->Int_vec.scan(pt1_text, v, len);
+	Orbiter->Int_vec->scan(pt1_text, v, len);
 	if (len != 2) {
 		cout << "point should have just two coordinates" << endl;
 		exit(1);
@@ -1341,7 +1342,7 @@ void cryptography_domain::do_EC_add(finite_field *F,
 	z1 = 1;
 	FREE_int(v);
 
-	Orbiter->Int_vec.scan(pt2_text, v, len);
+	Orbiter->Int_vec->scan(pt2_text, v, len);
 	if (len != 2) {
 		cout << "point should have just two coordinates" << endl;
 		exit(1);
@@ -1389,7 +1390,7 @@ void cryptography_domain::do_EC_cyclic_subgroup(finite_field *F,
 	vector<vector<int>> Pts;
 	int order;
 
-	Orbiter->Int_vec.scan(pt_text, v, len);
+	Orbiter->Int_vec->scan(pt_text, v, len);
 	if (len != 2) {
 		cout << "cryptography_domain::do_EC_cyclic_subgroup "
 				"point should have just two coordinates" << endl;
@@ -1447,7 +1448,7 @@ void cryptography_domain::do_EC_multiple_of(finite_field *F,
 		cout << "cryptography_domain::do_EC_multiple_of" << endl;
 	}
 
-	Orbiter->Int_vec.scan(pt_text, v, len);
+	Orbiter->Int_vec->scan(pt_text, v, len);
 	if (len != 2) {
 		cout << "cryptography_domain::do_EC_multiple_of "
 				"point should have just two coordinates" << endl;
@@ -1498,7 +1499,7 @@ void cryptography_domain::do_EC_discrete_log(finite_field *F,
 		cout << "cryptography_domain::do_EC_discrete_log" << endl;
 	}
 
-	Orbiter->Int_vec.scan(base_pt_text, v, len);
+	Orbiter->Int_vec->scan(base_pt_text, v, len);
 	if (len != 2) {
 		cout << "point should have just two coordinates" << endl;
 		exit(1);
@@ -1509,7 +1510,7 @@ void cryptography_domain::do_EC_discrete_log(finite_field *F,
 	FREE_int(v);
 
 
-	Orbiter->Int_vec.scan(pt_text, v, len);
+	Orbiter->Int_vec->scan(pt_text, v, len);
 	if (len == 2) {
 		x3 = v[0];
 		y3 = v[1];
@@ -1564,7 +1565,7 @@ void cryptography_domain::do_EC_baby_step_giant_step(finite_field *F, int EC_b, 
 	}
 
 
-	Orbiter->Int_vec.scan(EC_bsgs_G, v, len);
+	Orbiter->Int_vec->scan(EC_bsgs_G, v, len);
 	if (len != 2) {
 		cout << "point should have just two coordinates" << endl;
 		exit(1);
@@ -1580,7 +1581,7 @@ void cryptography_domain::do_EC_baby_step_giant_step(finite_field *F, int EC_b, 
 		cout << "cryptography_domain::do_EC_baby_step_giant_step n = " << n << endl;
 	}
 
-	Orbiter->Int_vec.scan(EC_bsgs_cipher_text, v, len);
+	Orbiter->Int_vec->scan(EC_bsgs_cipher_text, v, len);
 
 	int cipher_text_length = len >> 1;
 	int h, i;
@@ -1683,7 +1684,7 @@ void cryptography_domain::do_EC_baby_step_giant_step_decode(
 	}
 
 
-	Orbiter->Int_vec.scan(EC_bsgs_A, v, len);
+	Orbiter->Int_vec->scan(EC_bsgs_A, v, len);
 	if (len != 2) {
 		cout << "cryptography_domain::do_EC_baby_step_giant_step_decode "
 				"point should have just two coordinates" << endl;
@@ -1694,7 +1695,7 @@ void cryptography_domain::do_EC_baby_step_giant_step_decode(
 	Az = 1;
 	FREE_int(v);
 
-	Orbiter->Int_vec.scan(EC_bsgs_keys, keys, nb_keys);
+	Orbiter->Int_vec->scan(EC_bsgs_keys, keys, nb_keys);
 
 
 	n = (int) sqrt((double) EC_bsgs_N) + 1;
@@ -1703,7 +1704,7 @@ void cryptography_domain::do_EC_baby_step_giant_step_decode(
 		cout << "cryptography_domain::do_EC_baby_step_giant_step_decode n = " << n << endl;
 	}
 
-	Orbiter->Int_vec.scan(EC_bsgs_cipher_text, v, len);
+	Orbiter->Int_vec->scan(EC_bsgs_cipher_text, v, len);
 
 	int cipher_text_length = len >> 1;
 	int h;
@@ -1835,10 +1836,10 @@ void cryptography_domain::do_RSA(long int RSA_d, long int RSA_m, int RSA_block_s
 	if (f_v) {
 		cout << "cryptography_domain::do_RSA RSA_d=" << RSA_d << " RSA_m=" << RSA_m << endl;
 	}
-	Orbiter->Lint_vec.scan(RSA_text, data, data_sz);
+	Orbiter->Lint_vec->scan(RSA_text, data, data_sz);
 	if (f_v) {
 		cout << "text: ";
-		Orbiter->Lint_vec.print(cout, data, data_sz);
+		Orbiter->Lint_vec->print(cout, data, data_sz);
 		cout << endl;
 	}
 
@@ -1914,9 +1915,9 @@ void cryptography_domain::NTRU_encrypt(int N, int p, finite_field *Fq,
 	int *data_Msg;
 	int sz_H, sz_R, sz_Msg;
 
-	Orbiter->Int_vec.scan(H_coeffs, data_H, sz_H);
-	Orbiter->Int_vec.scan(R_coeffs, data_R, sz_R);
-	Orbiter->Int_vec.scan(Msg_coeffs, data_Msg, sz_Msg);
+	Orbiter->Int_vec->scan(H_coeffs, data_H, sz_H);
+	Orbiter->Int_vec->scan(R_coeffs, data_R, sz_R);
+	Orbiter->Int_vec->scan(Msg_coeffs, data_Msg, sz_Msg);
 
 	number_theory_domain NT;
 
@@ -2036,7 +2037,7 @@ void cryptography_domain::polynomial_center_lift(std::string &A_coeffs, finite_f
 	int *data_A;
 	int sz_A;
 
-	Orbiter->Int_vec.scan(A_coeffs, data_A, sz_A);
+	Orbiter->Int_vec->scan(A_coeffs, data_A, sz_A);
 
 	number_theory_domain NT;
 
@@ -2105,7 +2106,7 @@ void cryptography_domain::polynomial_reduce_mod_p(std::string &A_coeffs, finite_
 	int *data_A;
 	int sz_A;
 
-	Orbiter->Int_vec.scan(A_coeffs, data_A, sz_A);
+	Orbiter->Int_vec->scan(A_coeffs, data_A, sz_A);
 
 	number_theory_domain NT;
 
@@ -2768,7 +2769,7 @@ void cryptography_domain::all_square_roots_mod_n_by_exhaustive_search_lint(std::
 {
 	int f_v = (verbose_level >= 1);
 	long int i, a, n;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "cryptography_domain::all_square_roots_mod_n_by_exhaustive_search_lint" << endl;
@@ -2884,13 +2885,13 @@ void cryptography_domain::do_sift_smooth(int sift_smooth_from,
 	int sz;
 	int a, i, j, nb, p, idx, cnt;
 	number_theory_domain NT;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "do_sift_smooth" << endl;
 	}
 
-	Orbiter->Int_vec.scan(sift_smooth_factor_base, B, sz);
+	Orbiter->Int_vec->scan(sift_smooth_factor_base, B, sz);
 	Sorting.int_vec_heapsort(B, sz);
 
 	cnt = 0;
@@ -4378,5 +4379,6 @@ void cryptography_domain::RSA_setup(
 
 
 
-}}
+}}}
+
 

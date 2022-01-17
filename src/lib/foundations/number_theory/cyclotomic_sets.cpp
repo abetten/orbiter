@@ -77,7 +77,7 @@ void cyclotomic_sets::init(finite_field *F, int n, int verbose_level)
 	}
 
 
-	S = NEW_OBJECT(set_of_sets);
+	S = NEW_OBJECT(data_structures::set_of_sets);
 
 	if (f_v) {
 		cout << "cyclotomic_sets::init before S->init_simple" << endl;
@@ -130,7 +130,7 @@ void cyclotomic_sets::init(finite_field *F, int n, int verbose_level)
 		cout << "cyclotomic_sets::init cyclotomic sets are:" << endl;
 		S->print_table();
 		cout << "cyclotomic_sets::init Index:" << endl;
-		Orbiter->Int_vec.print(cout, Index, n);
+		Orbiter->Int_vec->print(cout, Index, n);
 		cout << endl;
 	}
 

@@ -587,12 +587,12 @@ void finite_field_implementation_by_tables::create_tables_extension_field(int ve
 void finite_field_implementation_by_tables::print_add_mult_tables(std::ostream &ost)
 {
 	ost << "addition table:" << endl;
-	Orbiter->Int_vec.print_integer_matrix_width(ost, add_table, F->q, F->q, F->q, F->log10_of_q + 1);
+	Orbiter->Int_vec->print_integer_matrix_width(ost, add_table, F->q, F->q, F->q, F->log10_of_q + 1);
 	ost << endl;
 
 
 	ost << "multiplication table:" << endl;
-	Orbiter->Int_vec.print_integer_matrix_width(ost, mult_table, F->q, F->q, F->q, F->log10_of_q + 1);
+	Orbiter->Int_vec->print_integer_matrix_width(ost, mult_table, F->q, F->q, F->q, F->log10_of_q + 1);
 	ost << endl;
 }
 
@@ -609,20 +609,20 @@ void finite_field_implementation_by_tables::print_add_mult_tables_in_C(std::stri
 
 		ost << "//addition, multiplication, inversion and negation table:" << endl;
 		ost << "int add_table[] = ";
-		Orbiter->Int_vec.print_integer_matrix_in_C_source(ost, add_table, F->q, F->q);
+		Orbiter->Int_vec->print_integer_matrix_in_C_source(ost, add_table, F->q, F->q);
 		ost << endl;
 
 
 		ost << "int mult_table[] = ";
-		Orbiter->Int_vec.print_integer_matrix_in_C_source(ost, mult_table, F->q, F->q);
+		Orbiter->Int_vec->print_integer_matrix_in_C_source(ost, mult_table, F->q, F->q);
 		ost << endl;
 
 		ost << "int inv_table[] = ";
-		Orbiter->Int_vec.print_integer_matrix_in_C_source(ost, inv_table, 1, F->q);
+		Orbiter->Int_vec->print_integer_matrix_in_C_source(ost, inv_table, 1, F->q);
 		ost << endl;
 
 		ost << "int neg_table[] = ";
-		Orbiter->Int_vec.print_integer_matrix_in_C_source(ost, negate_table, 1, F->q);
+		Orbiter->Int_vec->print_integer_matrix_in_C_source(ost, negate_table, 1, F->q);
 		ost << endl;
 	}
 
@@ -637,7 +637,7 @@ void finite_field_implementation_by_tables::init_quadratic_subfield(int verbose_
 		cout << "finite_field_implementation_by_tables::init_quadratic_subfield" << endl;
 	}
 	f_belongs_to_quadratic_subfield = NEW_int(F->q);
-	Orbiter->Int_vec.zero(f_belongs_to_quadratic_subfield, F->q);
+	Orbiter->Int_vec->zero(f_belongs_to_quadratic_subfield, F->q);
 
 	if (EVEN(F->e)) {
 		int i, a, b, idx, sqrt_q;

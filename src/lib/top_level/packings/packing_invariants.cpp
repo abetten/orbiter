@@ -85,7 +85,7 @@ void packing_invariants::init(packing_classify *P,
 			verbose_level - 2);
 	if (f_vv) {
 		cout << "list_of_lines:" << endl;
-		Orbiter->Lint_vec.matrix_print(list_of_lines,
+		Orbiter->Lint_vec->matrix_print(list_of_lines,
 				P->size_of_packing, P->spread_size);
 	}
 	f_has_klein = FALSE;
@@ -248,13 +248,13 @@ void packing_invariants::compute_decomposition(int verbose_level)
 		cout << "we will draw an incidence picture" << endl;
 		
 		incidence_structure *I;
-		partitionstack *Stack;
+		data_structures::partitionstack *Stack;
 		
 		I = NEW_OBJECT(incidence_structure);
 		I->init_by_matrix(total_nb_points,
 				total_nb_blocks, Inc,
 				0 /* verbose_level */);
-		Stack = NEW_OBJECT(partitionstack);
+		Stack = NEW_OBJECT(data_structures::partitionstack);
 		Stack->allocate(total_nb_points + total_nb_blocks,
 				0 /* verbose_level */);
 		Stack->subset_continguous(total_nb_points, total_nb_blocks);
@@ -300,7 +300,7 @@ void packing_invariants::compute_decomposition(int verbose_level)
 		I->init_by_matrix(total_nb_points,
 				total_nb_blocks, Inc,
 				0 /* verbose_level */);
-		Stack = NEW_OBJECT(partitionstack);
+		Stack = NEW_OBJECT(data_structures::partitionstack);
 		Stack->allocate(total_nb_points + total_nb_blocks,
 				0 /* verbose_level */);
 		Stack->subset_continguous(total_nb_points,

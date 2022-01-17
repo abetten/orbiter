@@ -55,11 +55,11 @@ void spread_table_activity::perform_activity(int verbose_level)
 		long int *spread_elts;
 		int sz;
 		int idx;
-		sorting Sorting;
+		data_structures::sorting Sorting;
 
 
 
-		Orbiter->Lint_vec.scan(Descr->find_spread_text, spread_elts, sz);
+		Orbiter->Lint_vec->scan(Descr->find_spread_text, spread_elts, sz);
 
 		if (sz != P->spread_size) {
 			cout << "the set does not have the right size" << endl;
@@ -81,11 +81,11 @@ void spread_table_activity::perform_activity(int verbose_level)
 		long int *spread_elts;
 		int sz;
 		int a, b;
-		sorting Sorting;
+		data_structures::sorting Sorting;
 
 
 
-		Orbiter->Lint_vec.scan(Descr->find_spread_and_dualize_text, spread_elts, sz);
+		Orbiter->Lint_vec->scan(Descr->find_spread_and_dualize_text, spread_elts, sz);
 
 		if (sz != P->spread_size) {
 			cout << "the set does not have the right size" << endl;
@@ -112,14 +112,14 @@ void spread_table_activity::perform_activity(int verbose_level)
 		int sz;
 		long int *dual_packing;
 		int a, b;
-		sorting Sorting;
+		data_structures::sorting Sorting;
 
 
 
-		Orbiter->Lint_vec.scan(Descr->dualize_packing_text, packing, sz);
+		Orbiter->Lint_vec->scan(Descr->dualize_packing_text, packing, sz);
 
 		cout << "The packing is : ";
-		Orbiter->Lint_vec.print(cout, packing, sz);
+		Orbiter->Lint_vec->print(cout, packing, sz);
 		cout << endl;
 
 		dual_packing = NEW_lint(sz);
@@ -130,7 +130,7 @@ void spread_table_activity::perform_activity(int verbose_level)
 		}
 
 		cout << "The dual packing is : ";
-		Orbiter->Lint_vec.print(cout, dual_packing, sz);
+		Orbiter->Lint_vec->print(cout, dual_packing, sz);
 		cout << endl;
 
 	}
@@ -140,7 +140,7 @@ void spread_table_activity::perform_activity(int verbose_level)
 		int *idx;
 		int nb;
 
-		Orbiter->Int_vec.scan(Descr->print_spreads_idx_text, idx, nb);
+		Orbiter->Int_vec->scan(Descr->print_spreads_idx_text, idx, nb);
 
 		cout << "before report_spreads" << endl;
 		report_spreads(idx, nb, verbose_level);
@@ -153,7 +153,7 @@ void spread_table_activity::perform_activity(int verbose_level)
 		int *idx;
 		int nb;
 
-		Orbiter->Int_vec.scan(Descr->export_spreads_to_csv_idx_text, idx, nb);
+		Orbiter->Int_vec->scan(Descr->export_spreads_to_csv_idx_text, idx, nb);
 
 		cout << "before export_spreads_to_csv" << endl;
 		export_spreads_to_csv(Descr->export_spreads_to_csv_fname, idx, nb, verbose_level);
@@ -193,7 +193,7 @@ void spread_table_activity::perform_activity(int verbose_level)
 		int *N;
 
 		N = NEW_int(P->P3->N_lines);
-		Orbiter->Int_vec.zero(N, P->P3->N_lines);
+		Orbiter->Int_vec->zero(N, P->P3->N_lines);
 
 		for (line2 = 0; line2 < P->P3->N_lines; line2++) {
 			if (line2 == line1) {
@@ -352,7 +352,7 @@ void spread_table_activity::report_spread2(std::ostream &ost, int spread_idx, in
 	spread_elts = P->Spread_table_with_selection->get_spread(spread_idx);
 
 	ost << "The spread " << spread_idx << " is:\\\\" << endl;
-	Orbiter->Lint_vec.print(ost, spread_elts, P->spread_size);
+	Orbiter->Lint_vec->print(ost, spread_elts, P->spread_size);
 	ost << "\\\\" << endl;
 
 	P->P3->Grass_lines->print_set_tex(ost, spread_elts, P->spread_size);

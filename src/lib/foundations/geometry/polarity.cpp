@@ -65,20 +65,20 @@ void polarity::init_standard_polarity(projective_space *P, int verbose_level)
 		}
 		if (f_vv) {
 			cout << "hyperplane " << i << ":" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout,
+			Orbiter->Int_vec->print_integer_matrix_width(cout,
 				A, n, d, d,
 				P->F->log10_of_q + 1);
 		}
 		P->F->Linear_algebra->perp_standard(d, n, A, 0);
 		if (FALSE) {
-			Orbiter->Int_vec.print_integer_matrix_width(cout,
+			Orbiter->Int_vec->print_integer_matrix_width(cout,
 				A, d, d, d,
 				P->F->log10_of_q + 1);
 		}
 		P->F->PG_element_rank_modified(A + n * d, 1, d, a);
 		if (f_vv) {
 			cout << "hyperplane " << i << " is perp of point ";
-			Orbiter->Int_vec.print(cout, A + n * d, d);
+			Orbiter->Int_vec->print(cout, A + n * d, d);
 			cout << " = " << a << endl;
 		}
 		Point_to_hyperplane[a] = i;
@@ -134,20 +134,20 @@ void polarity::init_general_polarity(projective_space *P, int *Mtx, int verbose_
 
 		if (f_vv) {
 			cout << "point " << i << " * Mtx = " << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout,
+			Orbiter->Int_vec->print_integer_matrix_width(cout,
 				A, 1, d, d,
 				P->F->log10_of_q + 1);
 		}
 		P->F->Linear_algebra->perp_standard(d, 1, A, 0);
 		if (FALSE) {
-			Orbiter->Int_vec.print_integer_matrix_width(cout,
+			Orbiter->Int_vec->print_integer_matrix_width(cout,
 				A, d, d, d,
 				P->F->log10_of_q + 1);
 		}
 		a = P->Grass_hyperplanes->rank_lint_here(A + d, 0 /*verbose_level - 4*/);
 		if (f_vv) {
 			cout << "hyperplane " << i << " is perp of point ";
-			Orbiter->Int_vec.print(cout, A + 2 * d, d);
+			Orbiter->Int_vec->print(cout, A + 2 * d, d);
 			cout << " = " << a << endl;
 		}
 		Point_to_hyperplane[i] = a;
@@ -182,7 +182,7 @@ void polarity::init_reversal_polarity(projective_space *P, int verbose_level)
 	d = n + 1;
 
 	Mtx = NEW_int(d * d);
-	Orbiter->Int_vec.zero(Mtx, d * d);
+	Orbiter->Int_vec->zero(Mtx, d * d);
 
 	for (i = 0; i < d; i++) {
 		Mtx[i * d + d - 1 - i] = 1;

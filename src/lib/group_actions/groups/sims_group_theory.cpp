@@ -31,7 +31,7 @@ void sims::random_element(int *elt, int verbose_level)
 	if (f_v) {
 		cout << "sims::random_element" << endl;
 		cout << "sims::random_element orbit_len=";
-		Orbiter->Int_vec.print(cout, orbit_len, A->base_len());
+		Orbiter->Int_vec->print(cout, orbit_len, A->base_len());
 		cout << endl;
 		//cout << "transversals:" << endl;
 		//print_transversals();
@@ -42,7 +42,7 @@ void sims::random_element(int *elt, int verbose_level)
 	if (f_v) {
 		cout << "sims::random_element" << endl;
 		cout << "path=";
-		Orbiter->Int_vec.print(cout, path, A->base_len());
+		Orbiter->Int_vec->print(cout, path, A->base_len());
 		cout << endl;
 		}
 	element_from_path(elt, verbose_level /*- 1 */);
@@ -178,7 +178,7 @@ int sims::transitive_extension_tolerant(schreier &O,
 		if (f_vv) {
 			cout << "sims::transitive_extension_tolerant "
 					"choosing random coset " << j << ", random element ";
-			Orbiter->Int_vec.print(cout, path, A->base_len());
+			Orbiter->Int_vec->print(cout, path, A->base_len());
 			cout << endl;
 			//A->element_print(Elt3, cout);
 			//cout << endl;
@@ -294,7 +294,7 @@ void sims::transitive_extension_using_coset_representatives(
 			cout << "sims::transitive_extension_using_coset_"
 					"representatives choosing random coset "
 					<< j << ", random element ";
-			Orbiter->Int_vec.print(cout, path, A->base_len());
+			Orbiter->Int_vec->print(cout, path, A->base_len());
 			cout << endl;
 			//A->element_print(Elt3, cout);
 			//cout << endl;
@@ -377,7 +377,7 @@ void sims::transitive_extension_using_generators(
 		if (f_vv) {
 			cout << "sims::transitive_extension_using_generators "
 					"choosing random coset " << j << ", random element ";
-			Orbiter->Int_vec.print(cout, path, A->base_len());
+			Orbiter->Int_vec->print(cout, path, A->base_len());
 			cout << endl;
 			//A->element_print(Elt3, cout);
 			//cout << endl;
@@ -830,7 +830,7 @@ void sims::conjugate(action *A,
 			old_G->random_element(A->Elt1, verbose_level - 1);
 			if (FALSE) {
 				cout << "sims::conjugate random element chosen, path = ";
-				Orbiter->Int_vec.print(cout, old_G->path, old_G->A->base_len());
+				Orbiter->Int_vec->print(cout, old_G->path, old_G->A->base_len());
 				cout << endl;
 			}
 			if (FALSE) {
@@ -1063,7 +1063,7 @@ void sims::table_of_group_elements_in_data_form(
 	Table = NEW_int(len * sz);
 	for (i = 0; i < len; i++) {
 		element_unrank_lint(i, Elt);
-		Orbiter->Int_vec.copy(Elt, Table + i * sz, sz);
+		Orbiter->Int_vec->copy(Elt, Table + i * sz, sz);
 		}
 	FREE_int(Elt);
 	if (f_v) {
@@ -1079,7 +1079,7 @@ void sims::regular_representation(int *Elt,
 	long int goi, i, j;
 	int *Elt1;
 	int *Elt2;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
@@ -1174,7 +1174,7 @@ void sims::center(vector_ge &gens,
 	if (f_v) {
 		cout << "sims::center center is of order "
 				<< nb_elements << ":" << endl;
-		Orbiter->Int_vec.print(cout, center_element_ranks, nb_elements);
+		Orbiter->Int_vec->print(cout, center_element_ranks, nb_elements);
 		cout << endl;
 		}
 	FREE_int(Elt1);
@@ -1239,7 +1239,7 @@ void sims::all_cosets(int *subset, int size,
 		}
 	if (f_v) {
 		cout << "sims::all_cosets finished" << endl;
-		Orbiter->Lint_vec.matrix_print_width(cout,
+		Orbiter->Lint_vec->matrix_print_width(cout,
 				all_cosets, nb_cosets, size, size, 2);
 		cout << endl;
 		}
@@ -1640,7 +1640,7 @@ void sims::create_Cayley_graph(vector_ge *gens,
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Adj = NEW_int(n * n);
-	Orbiter->Int_vec.zero(Adj, n * n);
+	Orbiter->Int_vec->zero(Adj, n * n);
 	for (i = 0; i < n; i++) {
 		element_unrank_lint(i, Elt1);
 		//cout << "i=" << i << endl;
@@ -1704,7 +1704,7 @@ void sims::create_group_table(int *&Table, long int &n,
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Elt3 = NEW_int(A->elt_size_in_int);
 	Table = NEW_int(n * n);
-	Orbiter->Int_vec.zero(Table, n * n);
+	Orbiter->Int_vec->zero(Table, n * n);
 	for (i = 0; i < n; i++) {
 		element_unrank_lint(i, Elt1);
 		//cout << "i=" << i << endl;
@@ -1798,10 +1798,10 @@ void sims::compute_conjugacy_classes(
 
 	if (f_v) {
 		cout << "class size : ";
-		Orbiter->Int_vec.print(cout, class_size, nb_classes);
+		Orbiter->Int_vec->print(cout, class_size, nb_classes);
 		cout << endl;
 		cout << "class rep : ";
-		Orbiter->Int_vec.print(cout, class_rep, nb_classes);
+		Orbiter->Int_vec->print(cout, class_rep, nb_classes);
 		cout << endl;
 	}
 
@@ -2000,7 +2000,7 @@ void sims::zuppo_list(
 	Elt1 = NEW_int(A->elt_size_in_int);
 	Elt2 = NEW_int(A->elt_size_in_int);
 	f_done = NEW_int(goi);
-	Orbiter->Int_vec.zero(f_done, goi);
+	Orbiter->Int_vec->zero(f_done, goi);
 	if (f_v) {
 		cout << "sims::zuppo_list group of order " << goi << endl;
 		}
@@ -2058,12 +2058,12 @@ void sims::dimino(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j, k, c, idx, new_coset_rep, nb_cosets;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "sims::dimino new_gen = " << new_gen << endl;
 		}
-	Orbiter->Int_vec.copy(subgroup, group, subgroup_sz);
+	Orbiter->Int_vec->copy(subgroup, group, subgroup_sz);
 	Sorting.int_vec_heapsort(group, subgroup_sz);
 	group_sz = subgroup_sz;
 
@@ -2134,7 +2134,7 @@ void sims::Cayley_graph(int *&Adj, int &sz, vector_ge *gens_S,
 	Elt2 = NEW_int(A->elt_size_in_int);
 	Adj = NEW_int(sz * sz);
 
-	Orbiter->Int_vec.zero(Adj, sz * sz);
+	Orbiter->Int_vec->zero(Adj, sz * sz);
 
 	if (f_v) {
 		cout << "Computing the Cayley graph:" << endl;

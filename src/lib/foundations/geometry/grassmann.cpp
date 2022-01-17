@@ -81,7 +81,7 @@ void grassmann::init(int n, int k, finite_field *F, int verbose_level)
 	grassmann::F = F;
 	q = F->q;
 
-	combinatorics_domain D;
+	combinatorics::combinatorics_domain D;
 
 	nCkq = NEW_OBJECT(longinteger_object);
 
@@ -112,7 +112,7 @@ void grassmann::init(int n, int k, finite_field *F, int verbose_level)
 long int grassmann::nb_of_subspaces(int verbose_level)
 {
 	long int nb;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	nb = Combi.generalized_binomial(n, k, q);
 	return nb;
@@ -245,7 +245,7 @@ void grassmann::print_set_tex_with_perp(ostream &ost, long int *v, int len)
 int grassmann::nb_points_covered(int verbose_level)
 {
 	int nb;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	nb = Combi.generalized_binomial(k, 1, q);
 	return nb;
@@ -268,12 +268,12 @@ void grassmann::points_covered(long int *the_points, int verbose_level)
 void grassmann::unrank_lint_here(int *Mtx, long int rk, int verbose_level)
 {
 	unrank_lint(rk, verbose_level);
-	Orbiter->Int_vec.copy(M, Mtx, k * n);
+	Orbiter->Int_vec->copy(M, Mtx, k * n);
 }
 
 long int grassmann::rank_lint_here(int *Mtx, int verbose_level)
 {
-	Orbiter->Int_vec.copy(Mtx, M, k * n);
+	Orbiter->Int_vec->copy(Mtx, M, k * n);
 	return rank_lint(verbose_level);
 }
 
@@ -286,7 +286,7 @@ void grassmann::unrank_embedded_subspace_lint(long int rk, int verbose_level)
 		cout << "grassmann::unrank_embedded_subspace_lint " << rk << endl;
 	}
 	unrank_lint(rk, verbose_level);
-	Orbiter->Int_vec.zero(M + k * n, (n - k) * n);
+	Orbiter->Int_vec->zero(M + k * n, (n - k) * n);
 	if (k == 0) {
 		F->Linear_algebra->identity_matrix(M, n);
 	}
@@ -323,7 +323,7 @@ void grassmann::unrank_embedded_subspace_lint_here(int *Basis, long int rk, int 
 		cout << "grassmann::unrank_embedded_subspace_int_here " << rk << endl;
 	}
 	unrank_lint_here(Basis, rk, verbose_level);
-	Orbiter->Int_vec.zero(Basis + k * n, (n - k) * n);
+	Orbiter->Int_vec->zero(Basis + k * n, (n - k) * n);
 	if (k == 0) {
 		F->Linear_algebra->identity_matrix(Basis, n);
 	}
@@ -347,7 +347,7 @@ void grassmann::unrank_lint(long int rk, int verbose_level)
 	long int Q, b, c, i, j;
 	number_theory_domain NT;
 	geometry_global Gg;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "grassmann::unrank_lint " << rk << endl;
@@ -356,7 +356,7 @@ void grassmann::unrank_lint(long int rk, int verbose_level)
 		return;
 	}
 	// null the first row:
-	Orbiter->Int_vec.zero(M, n);
+	Orbiter->Int_vec->zero(M, n);
 	
 	
 	// find out the value of h:
@@ -419,7 +419,7 @@ void grassmann::unrank_lint(long int rk, int verbose_level)
 	}
 	if (f_v) {
 		cout << "grassmann::unrank_lint coset " << b << " = ";
-		Orbiter->Int_vec.print(cout, coset, nb_free_cols);
+		Orbiter->Int_vec->print(cout, coset, nb_free_cols);
 		cout << endl;
 	}
 	
@@ -434,10 +434,10 @@ void grassmann::unrank_lint(long int rk, int verbose_level)
 	if (f_v) {
 		cout << "grassmann::unrank_lint calling "
 				"int_vec_complement n=" << n << " k=" << k << " : ";
-		Orbiter->Int_vec.print(cout, base_cols, k);
+		Orbiter->Int_vec->print(cout, base_cols, k);
 		cout << endl;
 	}
-	Orbiter->Int_vec.complement(base_cols, n, k);
+	Orbiter->Int_vec->complement(base_cols, n, k);
 	
 	// fill in the coset:
 	if (k == 1) {
@@ -469,12 +469,12 @@ void grassmann::unrank_lint(long int rk, int verbose_level)
 	}
 	if (f_v) {
 		cout << "grassmann::unrank_lint " << rk << ", we found the matrix" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
 		cout << "grassmann::unrank_lint base_cols = ";
-		Orbiter->Int_vec.print(cout, base_cols, k);
+		Orbiter->Int_vec->print(cout, base_cols, k);
 		cout << endl;
 		cout << "grassmann::unrank_lint complement = ";
-		Orbiter->Int_vec.print(cout, base_cols + k, n - k);
+		Orbiter->Int_vec->print(cout, base_cols + k, n - k);
 		cout << endl;
 	}
 	if (f_v) {
@@ -490,12 +490,12 @@ long int grassmann::rank_lint(int verbose_level)
 	long int Q, b, c, i, j;
 	number_theory_domain NT;
 	geometry_global Gg;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	r = 0;
 	if (f_v) {
 		cout << "grassmann::rank_lint " << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout,
+		Orbiter->Int_vec->print_integer_matrix_width(cout,
 				M, k, n, n, F->log10_of_q + 1);
 	}
 	if (k == 0) {
@@ -508,7 +508,7 @@ long int grassmann::rank_lint(int verbose_level)
 	
 	if (f_v) {
 		cout << "grassmann::rank_lint after Gauss:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout,
+		Orbiter->Int_vec->print_integer_matrix_width(cout,
 				M, k, n, n, F->log10_of_q + 1);
 	}
 	if (k1 != k) {
@@ -517,7 +517,7 @@ long int grassmann::rank_lint(int verbose_level)
 	}
 	if (f_v) {
 		cout << "grassmann::rank_lint base_cols: ";
-		Orbiter->Int_vec.print(cout, base_cols, k);
+		Orbiter->Int_vec->print(cout, base_cols, k);
 		cout << endl;
 	}
 	
@@ -525,13 +525,13 @@ long int grassmann::rank_lint(int verbose_level)
 	if (f_v) {
 		cout << "grassmann::rank_lint calling int_vec_complement n=" << n
 				<< " k=" << k << " : ";
-		Orbiter->Int_vec.print(cout, base_cols, k);
+		Orbiter->Int_vec->print(cout, base_cols, k);
 		cout << endl;
 	}
-	Orbiter->Int_vec.complement(base_cols, n, k);
+	Orbiter->Int_vec->complement(base_cols, n, k);
 	if (f_v) {
 		cout << "grassmann::rank_lint complement : ";
-		Orbiter->Int_vec.print(cout, base_cols + k, n - k);
+		Orbiter->Int_vec->print(cout, base_cols + k, n - k);
 		cout << endl;
 	}
 
@@ -592,7 +592,7 @@ long int grassmann::rank_lint(int verbose_level)
 	}
 	if (f_v) {
 		cout << "grassmann::rank_lint coset " << b << " = ";
-		Orbiter->Int_vec.print(cout, coset, nb_free_cols);
+		Orbiter->Int_vec->print(cout, coset, nb_free_cols);
 		cout << endl;
 	}
 
@@ -613,13 +613,13 @@ void grassmann::unrank_longinteger_here(int *Mtx,
 		longinteger_object &rk, int verbose_level)
 {
 	unrank_longinteger(rk, verbose_level);
-	Orbiter->Int_vec.copy(M, Mtx, k * n);
+	Orbiter->Int_vec->copy(M, Mtx, k * n);
 }
 
 void grassmann::rank_longinteger_here(int *Mtx,
 		longinteger_object &rk, int verbose_level)
 {
-	Orbiter->Int_vec.copy(Mtx, M, k * n);
+	Orbiter->Int_vec->copy(Mtx, M, k * n);
 	rank_longinteger(rk, verbose_level);
 }
 
@@ -629,7 +629,7 @@ void grassmann::unrank_longinteger(
 	int f_v = (verbose_level >= 1);
 	longinteger_object r, r1, a, A, mA, Q, b, c;
 	longinteger_domain D;
-	combinatorics_domain C;
+	combinatorics::combinatorics_domain C;
 	int i, j, h, nb_free_cols = 0;
 	geometry_global Gg;
 	
@@ -696,7 +696,7 @@ void grassmann::unrank_longinteger(
 	}
 	if (f_v) {
 		cout << "grassmann::unrank_longinteger coset " << b << " = ";
-		Orbiter->Int_vec.print(cout, coset, nb_free_cols);
+		Orbiter->Int_vec->print(cout, coset, nb_free_cols);
 		cout << endl;
 	}
 	
@@ -711,10 +711,10 @@ void grassmann::unrank_longinteger(
 	if (f_v) {
 		cout << "grassmann::unrank_longinteger calling "
 				"int_vec_complement n=" << n << " k=" << k << " : ";
-		Orbiter->Int_vec.print(cout, base_cols, k);
+		Orbiter->Int_vec->print(cout, base_cols, k);
 		cout << endl;
 	}
-	Orbiter->Int_vec.complement(base_cols, n, k);
+	Orbiter->Int_vec->complement(base_cols, n, k);
 	
 	// fill in the coset:
 	if (k == 1) {
@@ -747,12 +747,12 @@ void grassmann::unrank_longinteger(
 	if (f_v) {
 		cout << "unrank_longinteger " << rk
 				<< ", we found the matrix" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
 		cout << "grassmann::unrank_longinteger base_cols = ";
-		Orbiter->Int_vec.print(cout, base_cols, k);
+		Orbiter->Int_vec->print(cout, base_cols, k);
 		cout << endl;
 		cout << "grassmann::unrank_longinteger complement = ";
-		Orbiter->Int_vec.print(cout, base_cols + k, n - k);
+		Orbiter->Int_vec->print(cout, base_cols + k, n - k);
 		cout << endl;
 	}
 	if (f_v) {
@@ -766,14 +766,14 @@ void grassmann::rank_longinteger(longinteger_object &r,
 	int f_v = (verbose_level >= 1);
 	longinteger_object r1, a, A, Q, b, c, tmp1, tmp2;
 	longinteger_domain D;
-	combinatorics_domain C;
+	combinatorics::combinatorics_domain C;
 	int k1, nb_free_cols, h, i, j;
 	geometry_global Gg;
 	
 	r.create(0, __FILE__, __LINE__);
 	if (f_v) {
 		cout << "grassmann::rank_longinteger " << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
 	}
 	if (k == 0) {
 		return;
@@ -785,7 +785,7 @@ void grassmann::rank_longinteger(longinteger_object &r,
 	
 	if (f_v) {
 		cout << "grassmann::rank_longinteger after Gauss:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout,
+		Orbiter->Int_vec->print_integer_matrix_width(cout,
 				M, k, n, n, F->log10_of_q + 1);
 	}
 	if (k1 != k) {
@@ -794,20 +794,20 @@ void grassmann::rank_longinteger(longinteger_object &r,
 	}
 	if (f_v) {
 		cout << "grassmann::rank_longinteger base_cols: ";
-		Orbiter->Int_vec.print(cout, base_cols, k);
+		Orbiter->Int_vec->print(cout, base_cols, k);
 		cout << endl;
 	}
 	
 
 	if (f_v) {
 		cout << "grassmann::rank_longinteger calling int_vec_complement for ";
-		Orbiter->Int_vec.print(cout, base_cols, k);
+		Orbiter->Int_vec->print(cout, base_cols, k);
 		cout << endl;
 	}
-	Orbiter->Int_vec.complement(base_cols, n, k);
+	Orbiter->Int_vec->complement(base_cols, n, k);
 	if (f_v) {
 		cout << "yields: ";
-		Orbiter->Int_vec.print(cout, base_cols + k, n - k);
+		Orbiter->Int_vec->print(cout, base_cols + k, n - k);
 		cout << endl;
 	}
 
@@ -882,7 +882,7 @@ void grassmann::rank_longinteger(longinteger_object &r,
 		Gg.AG_element_rank_longinteger(q, coset, 1, nb_free_cols, b);
 		if (f_v) {
 			cout << "AG_element_rank_longinteger for coset ";
-			Orbiter->Int_vec.print(cout, coset, nb_free_cols);
+			Orbiter->Int_vec->print(cout, coset, nb_free_cols);
 			cout << " yields " << b << endl;
 		}
 	}
@@ -891,7 +891,7 @@ void grassmann::rank_longinteger(longinteger_object &r,
 	}
 	if (f_v) {
 		cout << "grassmann::rank_longinteger coset " << b << " = ";
-		Orbiter->Int_vec.print(cout, coset, nb_free_cols);
+		Orbiter->Int_vec->print(cout, coset, nb_free_cols);
 		cout << endl;
 	}
 
@@ -921,7 +921,7 @@ void grassmann::rank_longinteger(longinteger_object &r,
 
 void grassmann::print()
 {
-	Orbiter->Int_vec.print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
+	Orbiter->Int_vec->print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
 }
 
 int grassmann::dimension_of_join(long int rk1, long int rk2, int verbose_level)
@@ -955,7 +955,7 @@ void grassmann::unrank_lint_here_and_extend_basis(
 		cout << "grassmann::unrank_lint_here_and_extend_basis" << endl;
 	}
 	unrank_lint(rk, verbose_level);
-	Orbiter->Int_vec.copy(M, Mtx, k * n);
+	Orbiter->Int_vec->copy(M, Mtx, k * n);
 	base_cols = NEW_int(n);
 	embedding = base_cols + k;
 	r = F->Linear_algebra->base_cols_and_embedding(k, n, Mtx,
@@ -964,7 +964,7 @@ void grassmann::unrank_lint_here_and_extend_basis(
 		cout << "r != k" << endl;
 		exit(1);
 	}
-	Orbiter->Int_vec.zero(Mtx + k * n, (n - k) * n);
+	Orbiter->Int_vec->zero(Mtx + k * n, (n - k) * n);
 	for (i = 0; i < n - k; i++) {
 		Mtx[(k + i) * n + embedding[i]] = 1;
 	}
@@ -988,7 +988,7 @@ void grassmann::unrank_lint_here_and_compute_perp(
 		cout << "grassmann::unrank_int_here_and_compute_perp" << endl;
 		}
 	unrank_lint(rk, verbose_level);
-	Orbiter->Int_vec.copy(M, Mtx, k * n);
+	Orbiter->Int_vec->copy(M, Mtx, k * n);
 	base_cols = NEW_int(n);
 	//embedding = base_cols + k;
 	r = F->Linear_algebra->RREF_and_kernel(n, k, Mtx, 0 /* verbose_level */);
@@ -1028,7 +1028,7 @@ void grassmann::line_regulus_in_PG_3_q(
 	regulus = NEW_lint(regulus_size);
 	// the equation of the hyperboloid is x_0x_3-x_1x_2 = 0
 	for (u = 0; u < regulus_size; u++) {
-		Orbiter->Int_vec.zero(M, 8);
+		Orbiter->Int_vec->zero(M, 8);
 		if (u == 0) {
 
 			if (f_opposite) {
@@ -1072,14 +1072,14 @@ void grassmann::line_regulus_in_PG_3_q(
 		if (f_v3) {
 			cout << "grassmann::line_regulus_in_PG_3_q "
 					"regulus element " << u << ":" << endl;
-			Orbiter->Int_vec.matrix_print(M, 2, 4);
+			Orbiter->Int_vec->matrix_print(M, 2, 4);
 		}
 		regulus[u] = rank_lint_here(M, 0);
 
 	} // next u
 	if (f_vv) {
 		cout << "grassmann::line_regulus_in_PG_3_q regulus:" << endl;
-		Orbiter->Lint_vec.print(cout, regulus, regulus_size);
+		Orbiter->Lint_vec->print(cout, regulus, regulus_size);
 		cout << endl;
 	}
 	if (f_v) {
@@ -1115,19 +1115,19 @@ void grassmann::compute_dual_line_idx(int *&dual_line_idx,
 		if (f_vv) {
 			cout << "line " << a << " / " << nb_lines << ":" << endl;
 			cout << "line is generated by" << endl;
-			Orbiter->Int_vec.matrix_print(Basis, k, n);
+			Orbiter->Int_vec->matrix_print(Basis, k, n);
 		}
 		F->Linear_algebra->perp_standard(n, k, Basis, 0 /*verbose_level*/);
 		if (f_vv) {
 			cout << "after perp:" << endl;
-			Orbiter->Int_vec.matrix_print(Basis, n, n);
+			Orbiter->Int_vec->matrix_print(Basis, n, n);
 		}
 		b = rank_lint_here(Basis + k * n, 0/*verbose_level - 4*/);
 		if (f_vv) {
 			cout << "line " << a << " / " << nb_lines
 					<< " the dual is " << b << endl;
 			cout << "dual line is generated by" << endl;
-			Orbiter->Int_vec.matrix_print(Basis + k * n, k, n);
+			Orbiter->Int_vec->matrix_print(Basis + k * n, k, n);
 		}
 		dual_line_idx[a] = b;
 		if (b == a) {
@@ -1159,7 +1159,7 @@ void grassmann::compute_dual_spread(
 	Basis = M2;
 	if (f_v) {
 		cout << "grassmann::compute_dual_spread The spread is : ";
-		Orbiter->Int_vec.print(cout, spread, spread_size);
+		Orbiter->Int_vec->print(cout, spread, spread_size);
 		cout << endl;
 	}
 	for (i = 0; i < spread_size; i++) {
@@ -1168,24 +1168,24 @@ void grassmann::compute_dual_spread(
 		if (f_vv) {
 			cout << i << "-th Line has rank " << a
 					<< " and is generated by" << endl;
-			Orbiter->Int_vec.matrix_print(Basis, k, n);
+			Orbiter->Int_vec->matrix_print(Basis, k, n);
 		}
 		F->Linear_algebra->perp_standard(n, k, Basis, 0 /*verbose_level*/);
 		if (f_vv) {
 			cout << "after perp:" << endl;
-			Orbiter->Int_vec.matrix_print(Basis, n, n);
+			Orbiter->Int_vec->matrix_print(Basis, n, n);
 		}
 		b = rank_lint_here(Basis + k * n, 0/*verbose_level - 4*/);
 		if (f_vv) {
 			cout << i << "-th Line dual has rank " << b
 					<< " and is generated by" << endl;
-			Orbiter->Int_vec.matrix_print(Basis + k * n, k, n);
+			Orbiter->Int_vec->matrix_print(Basis + k * n, k, n);
 		}
 		dual_spread[i] = b;
 	}
 	if (f_v) {
 		cout << "grassmann::compute_dual_spread The dual spread is : ";
-		Orbiter->Int_vec.print(cout, dual_spread, spread_size);
+		Orbiter->Int_vec->print(cout, dual_spread, spread_size);
 		cout << endl;
 	}
 	
@@ -1226,7 +1226,7 @@ void grassmann::create_Schlaefli_graph(int *&Adj, int &sz, int verbose_level)
 	int v[2];
 	int w[4];
 	int *List;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 
 	M1 = NEW_int(k * n);
@@ -1258,7 +1258,7 @@ void grassmann::create_Schlaefli_graph(int *&Adj, int &sz, int verbose_level)
 
 
 	Adj = NEW_int(sz * sz);
-	Orbiter->Int_vec.zero(Adj, sz * sz);
+	Orbiter->Int_vec->zero(Adj, sz * sz);
 
 	for (i = 0; i < sz; i++) {
 		unrank_lint_here(M1, List[i], 0 /* verbose_level */);
@@ -1266,8 +1266,8 @@ void grassmann::create_Schlaefli_graph(int *&Adj, int &sz, int verbose_level)
 		for (j = i + 1; j < sz; j++) {
 			unrank_lint_here(M2, List[j], 0 /* verbose_level */);
 
-			Orbiter->Int_vec.copy(M1, M, k * n);
-			Orbiter->Int_vec.copy(M2, M + k * n, k * n);
+			Orbiter->Int_vec->copy(M1, M, k * n);
+			Orbiter->Int_vec->copy(M2, M + k * n, k * n);
 
 			rr = F->Linear_algebra->rank_of_rectangular_matrix(M, 2 * k, n, 0 /* verbose_level */);
 			if (rr == 2 * k) {
@@ -1302,13 +1302,13 @@ long int grassmann::make_special_element_zero(int verbose_level)
 
 	// make the element (I_k | 0).
 	// Let a be its rank
-	Orbiter->Int_vec.zero(M, k * n);
+	Orbiter->Int_vec->zero(M, k * n);
 	for (i = 0; i < k; i++) {
 		M[i * n + i] = 1;
 	}
 	if (f_v3) {
 		cout << "grassmann::make_special_element_zero M:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
 	}
 	a = rank_lint(0/*verbose_level - 4*/);
 	if (f_v3) {
@@ -1331,14 +1331,14 @@ long int grassmann::make_special_element_one(int verbose_level)
 
 	// make the element (I_k | I_k).
 	// Let a be its rank
-	Orbiter->Int_vec.zero(M, k * n);
+	Orbiter->Int_vec->zero(M, k * n);
 	for (i = 0; i < k; i++) {
 		M[i * n + i] = 1;
 		M[i * n + k + i] = 1;
 	}
 	if (f_v3) {
 		cout << "grassmann::make_special_element_one M:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
 	}
 	a = rank_lint(0/*verbose_level - 4*/);
 	if (f_v3) {
@@ -1361,13 +1361,13 @@ long int grassmann::make_special_element_infinity(int verbose_level)
 
 	// make the element (I_k | I_k).
 	// Let a be its rank
-	Orbiter->Int_vec.zero(M, k * n);
+	Orbiter->Int_vec->zero(M, k * n);
 	for (i = 0; i < k; i++) {
 		M[i * n + k + i] = 1;
 	}
 	if (f_v3) {
 		cout << "grassmann::make_special_element_infinity M:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
 	}
 	a = rank_lint(0/*verbose_level - 4*/);
 	if (f_v3) {

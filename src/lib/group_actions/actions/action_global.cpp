@@ -164,10 +164,10 @@ void action_global::make_generators_stabilizer_of_two_components(
 	minus_one = Fq->negate(1);
 	alpha = Fq->primitive_root();
 
-	Orbiter->Int_vec.zero(Zero, k * k);
-	Orbiter->Int_vec.zero(Id, k * k);
-	Orbiter->Int_vec.zero(Center, k * k);
-	Orbiter->Int_vec.zero(minusId, k * k);
+	Orbiter->Int_vec->zero(Zero, k * k);
+	Orbiter->Int_vec->zero(Id, k * k);
+	Orbiter->Int_vec->zero(Center, k * k);
+	Orbiter->Int_vec->zero(minusId, k * k);
 	for (i = 0; i < k; i++) {
 		Id[i * k + i] = 1;
 	}
@@ -203,16 +203,16 @@ void action_global::make_generators_stabilizer_of_two_components(
 
 		if (EVEN(h)) {
 			// Q := diag(P,Id)
-			Orbiter->Int_vec.matrix_make_block_matrix_2x2(Q, k, P, Zero, Zero, Id);
+			Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, P, Zero, Zero, Id);
 		}
 		else {
 			// Q := diag(Id,P)
-			Orbiter->Int_vec.matrix_make_block_matrix_2x2(Q, k, Id, Zero, Zero, P);
+			Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, Id, Zero, Zero, P);
 		}
 		if (Mtx->f_semilinear) {
 			Q[n * n] = P[k * k];
 		}
-		Orbiter->Int_vec.copy(Q, Data + idx * sz, sz);
+		Orbiter->Int_vec->copy(Q, Data + idx * sz, sz);
 		idx++;
 	}
 
@@ -227,19 +227,19 @@ void action_global::make_generators_stabilizer_of_two_components(
 #endif
 
 	// Q := matrix(Center,0,0,I):
-	Orbiter->Int_vec.matrix_make_block_matrix_2x2(Q, k, Center, Zero, Zero, Id);
+	Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, Center, Zero, Zero, Id);
 	if (Mtx->f_semilinear) {
 		Q[n * n] = 0;
 	}
-	Orbiter->Int_vec.copy(Q, Data + idx * sz, sz);
+	Orbiter->Int_vec->copy(Q, Data + idx * sz, sz);
 	idx++;
 
 	// Q := matrix(I,0,0,Center):
-	Orbiter->Int_vec.matrix_make_block_matrix_2x2(Q, k, Id, Zero, Zero, Center);
+	Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, Id, Zero, Zero, Center);
 	if (Mtx->f_semilinear) {
 		Q[n * n] = 0;
 	}
-	Orbiter->Int_vec.copy(Q, Data + idx * sz, sz);
+	Orbiter->Int_vec->copy(Q, Data + idx * sz, sz);
 	idx++;
 
 
@@ -313,9 +313,9 @@ void action_global::make_generators_stabilizer_of_three_components(
 	minus_one = Fq->negate(1);
 
 
-	Orbiter->Int_vec.zero(Zero, k * k);
-	Orbiter->Int_vec.zero(Id, k * k);
-	Orbiter->Int_vec.zero(minusId, k * k);
+	Orbiter->Int_vec->zero(Zero, k * k);
+	Orbiter->Int_vec->zero(Id, k * k);
+	Orbiter->Int_vec->zero(minusId, k * k);
 	for (i = 0; i < k; i++) {
 		Id[i * k + i] = 1;
 	}
@@ -347,28 +347,28 @@ void action_global::make_generators_stabilizer_of_three_components(
 		//P = gens_PGL_k->ith(h);
 
 		// Q := diag(P,P)
-		Orbiter->Int_vec.matrix_make_block_matrix_2x2(Q, k, P, Zero, Zero, P);
+		Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, P, Zero, Zero, P);
 		if (Mtx->f_semilinear) {
 			Q[n * n] = P[k * k];
 			}
-		Orbiter->Int_vec.copy(Q, Data + idx * sz, sz);
+		Orbiter->Int_vec->copy(Q, Data + idx * sz, sz);
 		idx++;
 	}
 
 	// Q := matrix(0,I,I,0):
-	Orbiter->Int_vec.matrix_make_block_matrix_2x2(Q, k, Zero, Id, Id, Zero);
+	Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, Zero, Id, Id, Zero);
 	if (Mtx->f_semilinear) {
 		Q[n * n] = 0;
 	}
-	Orbiter->Int_vec.copy(Q, Data + idx * sz, sz);
+	Orbiter->Int_vec->copy(Q, Data + idx * sz, sz);
 	idx++;
 
 	// Q := matrix(0,I,-I,-I):
-	Orbiter->Int_vec.matrix_make_block_matrix_2x2(Q, k, Zero, Id, minusId, minusId);
+	Orbiter->Int_vec->matrix_make_block_matrix_2x2(Q, k, Zero, Id, minusId, minusId);
 	if (Mtx->f_semilinear) {
 		Q[n * n] = 0;
 	}
-	Orbiter->Int_vec.copy(Q, Data + idx * sz, sz);
+	Orbiter->Int_vec->copy(Q, Data + idx * sz, sz);
 	idx++;
 
 
@@ -454,7 +454,7 @@ void action_global::compute_generators_GL_n_q(int *&Gens,
 	if (f_vv) {
 		for (h = 0; h < nb_gens; h++) {
 			cout << "Generator " << h << ":" << endl;
-			Orbiter->Int_vec.matrix_print(Gens + h * elt_size, n, n);
+			Orbiter->Int_vec->matrix_print(Gens + h * elt_size, n, n);
 		}
 		
 	}
@@ -549,7 +549,7 @@ void action_global::lift_generators(vector_ge *gens_in, vector_ge *&gens_out,
 		S->lift_matrix(EltQ, m, Mtx, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << "action_global::lift_generators lifted matrix:" << endl;
-			Orbiter->Int_vec.matrix_print(Mtx, n, n);
+			Orbiter->Int_vec->matrix_print(Mtx, n, n);
 			}
 		Aq->make_element(Eltq, Mtx, 0 /*verbose_level - 4 */);
 		if (f_vv) {
@@ -609,7 +609,7 @@ void action_global::retract_generators(vector_ge *gens_in,
 		S->retract_matrix(Eltq, n, Mtx, m, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << "action_global::retract_generators retracted matrix:" << endl;
-			Orbiter->Int_vec.matrix_print(Mtx, m, m);
+			Orbiter->Int_vec->matrix_print(Mtx, m, m);
 		}
 		AQ->make_element(EltQ, Mtx, 0 /*verbose_level - 4*/);
 		if (f_vv) {
@@ -817,7 +817,7 @@ void action_global::perm_print_cycles_sorted_by_length_offset(ostream &ost,
 	int nb_types;
 	int *type_first;
 	int *type_len;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	Sorting.int_vec_classify(S.nb_orbits, S.orbit_len, orbit_len_sorted,
 		sorting_perm, sorting_perm_inv, 
@@ -1035,8 +1035,8 @@ action *action_global::init_direct_product_group(
 	}
 
 
-	Orbiter->Lint_vec.copy(P->the_base, A->get_base(), A->base_len());
-	Orbiter->Int_vec.copy(P->the_transversal_length,
+	Orbiter->Lint_vec->copy(P->the_base, A->get_base(), A->base_len());
+	Orbiter->Int_vec->copy(P->the_transversal_length,
 			A->get_transversal_length(), A->base_len());
 
 	int *gens_data;
@@ -1131,7 +1131,7 @@ action *action_global::init_direct_product_group(
 
 void action_global::compute_decomposition_based_on_orbits(projective_space *P,
 		schreier *Sch1, schreier *Sch2,
-		incidence_structure *&Inc, partitionstack *&Stack, int verbose_level)
+		incidence_structure *&Inc, data_structures::partitionstack *&Stack, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -1139,12 +1139,12 @@ void action_global::compute_decomposition_based_on_orbits(projective_space *P,
 		cout << "action_global::compute_decomposition_based_on_orbits" << endl;
 	}
 
-	partitionstack *S1;
-	partitionstack *S2;
+	data_structures::partitionstack *S1;
+	data_structures::partitionstack *S2;
 
 
-	S1 = NEW_OBJECT(partitionstack);
-	S2 = NEW_OBJECT(partitionstack);
+	S1 = NEW_OBJECT(data_structures::partitionstack);
+	S2 = NEW_OBJECT(data_structures::partitionstack);
 
 	if (f_v) {
 		cout << "action_global::compute_decomposition_based_on_orbits "
@@ -1188,7 +1188,7 @@ void action_global::compute_decomposition_based_on_orbits(projective_space *P,
 
 void action_global::compute_decomposition_based_on_orbit_length(projective_space *P,
 		schreier *Sch1, schreier *Sch2,
-		incidence_structure *&Inc, partitionstack *&Stack, int verbose_level)
+		incidence_structure *&Inc, data_structures::partitionstack *&Stack, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

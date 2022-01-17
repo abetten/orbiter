@@ -275,7 +275,7 @@ public:
 	void all_point_orbits_from_single_generator(schreier &Schreier,
 			int *Elt,
 			int verbose_level);
-	void compute_stabilizer_orbits(partitionstack *&Staborbits, 
+	void compute_stabilizer_orbits(data_structures::partitionstack *&Staborbits,
 		int verbose_level);
 	int check_if_in_set_stabilizer(int *Elt, 
 		int size, long int *set,
@@ -509,7 +509,7 @@ public:
 		vector_ge *&nice_gens,
 		int verbose_level);
 	void init_permutation_group(int degree, int f_no_base, int verbose_level);
-	void init_permutation_group_from_nauty_output(nauty_output *NO,
+	void init_permutation_group_from_nauty_output(data_structures::nauty_output *NO,
 		int verbose_level);
 	void init_permutation_group_from_generators(int degree, 
 		int f_target_go, longinteger_object &target_go, 
@@ -714,7 +714,7 @@ public:
 		int *type, int type_len, 
 		int verbose_level);
 	void induced_action_on_bricks(action &old_action, 
-		brick_domain *B, int f_linear_action, 
+		combinatorics::brick_domain *B, int f_linear_action,
 		int verbose_level);
 	void induced_action_on_andre(action *An, 
 		action *An1, andre_construction *Andre, 
@@ -1023,10 +1023,10 @@ public:
 			int verbose_level);
 	void compute_decomposition_based_on_orbits(projective_space *P,
 			schreier *Sch1, schreier *Sch2,
-			incidence_structure *&Inc, partitionstack *&Stack, int verbose_level);
+			incidence_structure *&Inc, data_structures::partitionstack *&Stack, int verbose_level);
 	void compute_decomposition_based_on_orbit_length(projective_space *P,
 			schreier *Sch1, schreier *Sch2,
-			incidence_structure *&Inc, partitionstack *&Stack, int verbose_level);
+			incidence_structure *&Inc, data_structures::partitionstack *&Stack, int verbose_level);
 
 };
 
@@ -1124,16 +1124,16 @@ public:
 	action *create_automorphism_group_and_canonical_labeling_of_colored_graph_object(
 			colored_graph *CG, int *labeling, int verbose_level);
 	action *create_automorphism_group_and_canonical_labeling_of_colored_graph(
-		int n, int f_bitvec, bitvector *Bitvec, int *Adj,
+		int n, int f_bitvec, data_structures::bitvector *Bitvec, int *Adj,
 		int *vertex_colors,
 		int *labeling,
 		int verbose_level);
 	action *create_automorphism_group_of_graph_bitvec(
-		int n, bitvector *Bitvec,
+		int n, data_structures::bitvector *Bitvec,
 		int verbose_level);
 	action *create_automorphism_group_of_graph_with_partition_and_labeling(
 		int n,
-		int f_bitvector, bitvector *Bitvec, int *Adj,
+		int f_bitvector, data_structures::bitvector *Bitvec, int *Adj,
 		int nb_parts, int *parts,
 		int *labeling,
 		int verbose_level);
@@ -1144,7 +1144,7 @@ public:
 	// labeling[n]
 	void automorphism_group_as_permutation_group(
 			//strong_generators *&SG,
-			nauty_output *NO,
+			data_structures::nauty_output *NO,
 			action *&A_perm,
 			int verbose_level);
 	void reverse_engineer_linear_group_from_permutation_group(
@@ -1152,13 +1152,13 @@ public:
 			projective_space *P,
 			strong_generators *&SG,
 			action *&A_perm,
-			nauty_output *NO,
+			data_structures::nauty_output *NO,
 			int verbose_level);
 	strong_generators *set_stabilizer_of_object(
 		object_with_canonical_form *OwCF,
 		action *A_linear,
-		int f_compute_canonical_form, bitvector *&Canonical_form,
-		nauty_output *&NO,
+		int f_compute_canonical_form, data_structures::bitvector *&Canonical_form,
+		data_structures::nauty_output *&NO,
 		int verbose_level);
 
 };

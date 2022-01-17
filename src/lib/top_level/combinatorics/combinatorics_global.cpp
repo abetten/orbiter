@@ -576,7 +576,7 @@ void combinatorics_global::Hill_cap56(
 	for (i = 0; i < nb_lines; i++) {
 		Grass.unrank_longinteger(Rank_lines[i], 0/*verbose_level - 3*/);
 		cout << setw(5) << i << " : " << Rank_lines[i] << ":" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Grass.M, w, n, n, 2);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, Grass.M, w, n, n, 2);
 		}
 
 #endif
@@ -640,7 +640,7 @@ void combinatorics_global::Hill_cap56(
 		O->unrank_point(pt_coords + i * n, 1, i, 0);
 		}
 	cout << "point coordinates:" << endl;
-	Orbiter->Int_vec.print_integer_matrix_width(cout, pt_coords, nb_pts, n, n, 2);
+	Orbiter->Int_vec->print_integer_matrix_width(cout, pt_coords, nb_pts, n, n, 2);
 
 	cout << "evaluating quadratic form:" << endl;
 	for (i = 0; i < nb_pts; i++) {
@@ -653,7 +653,7 @@ void combinatorics_global::Hill_cap56(
 
 	int *Sets; // [max_sol * 56]
 	int max_sol = 100;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	Sets = NEW_int(max_sol * 56);
 
@@ -724,7 +724,7 @@ void combinatorics_global::Hill_cap56(
 									nb_sol++;
 									cout << "solution " << nb_sol << ", a set of size " << sz[8] << " : ";
 									cout << i1 << "," << i2 << "," << i3 << "," << i4 << "," << i5 << "," << i6 << "," << i7 << "," << i8 << endl;
-									Orbiter->Int_vec.print(cout, set, sz[8]);
+									Orbiter->Int_vec->print(cout, set, sz[8]);
 									cout << endl;
 
 
@@ -791,8 +791,8 @@ void combinatorics_global::append_orbit_and_adjust_size(schreier *Orb,
 
 
 void combinatorics_global::classify_objects_using_nauty(
-	data_input_stream_description *Data,
-	classify_bitvectors *CB,
+		data_structures::data_input_stream_description *Data,
+		data_structures::classify_bitvectors *CB,
 	std::string &output_fname,
 	int verbose_level)
 {
@@ -970,7 +970,7 @@ void combinatorics_global::classify_objects_using_nauty(
 
 
 
-void combinatorics_global::handle_input_file(classify_bitvectors *CB,
+void combinatorics_global::handle_input_file(data_structures::classify_bitvectors *CB,
 		int nb_objects_to_test, int t0,
 		std::string &fname, int input_file_idx, int nb_input_files,
 		int N_points, int design_b, int design_k, int partition_class_size,
@@ -990,13 +990,13 @@ void combinatorics_global::handle_input_file(classify_bitvectors *CB,
 		cout << "combinatorics_global::handle_input_file fname=" << fname << endl;
 	}
 
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	nck = Combi.int_n_choose_k(N_points, design_k);
 
-	set_of_sets *SoS;
+	data_structures::set_of_sets *SoS;
 
-	SoS = NEW_OBJECT(set_of_sets);
+	SoS = NEW_OBJECT(data_structures::set_of_sets);
 
 	if (f_v) {
 		cout << "N_points=" << N_points << endl;
@@ -1046,7 +1046,7 @@ void combinatorics_global::handle_input_file(classify_bitvectors *CB,
 		}
 
 		if (FALSE) {
-			Orbiter->Lint_vec.matrix_print(the_set_in, nb_classes, partition_class_size);
+			Orbiter->Lint_vec->matrix_print(the_set_in, nb_classes, partition_class_size);
 		}
 		if (f_vv || ((h % 1024) == 0)) {
 			cout << "combinatorics_global::handle_input_file "
@@ -1058,7 +1058,7 @@ void combinatorics_global::handle_input_file(classify_bitvectors *CB,
 		if (f_vvv) {
 			cout << "combinatorics_global::handle_input_file "
 					"The input set is:" << endl;
-			Orbiter->Lint_vec.print(cout, the_set_in, set_size_in);
+			Orbiter->Lint_vec->print(cout, the_set_in, set_size_in);
 			cout << endl;
 		}
 
@@ -1146,7 +1146,7 @@ void combinatorics_global::handle_input_file(classify_bitvectors *CB,
 		else {
 			if (f_v) {
 				cout << "combinatorics_global::handle_input_file new isomorphism type: ";
-				Orbiter->Lint_vec.print(cout, the_set_in, set_size_in);
+				Orbiter->Lint_vec->print(cout, the_set_in, set_size_in);
 				cout << endl;
 			}
 			vector<long int> rep;
@@ -1203,7 +1203,7 @@ void combinatorics_global::handle_input_file(classify_bitvectors *CB,
 
 
 void combinatorics_global::process_object(
-	classify_bitvectors *CB,
+		data_structures::classify_bitvectors *CB,
 	incidence_structure_with_group *IG,
 	incidence_structure *&Inc_out,
 	int nb_objects_to_test,

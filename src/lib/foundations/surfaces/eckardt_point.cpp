@@ -34,7 +34,7 @@ void eckardt_point::freeself()
 void eckardt_point::print()
 {
 	int t, i, j;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	if (len == 3) {
 		cout << "E_{";
@@ -59,7 +59,7 @@ void eckardt_point::print()
 void eckardt_point::latex(ostream &ost)
 {
 	int t, i, j;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	if (len == 3) {
 		ost << "E_{";
@@ -84,7 +84,7 @@ void eckardt_point::latex(ostream &ost)
 void eckardt_point::latex_index_only(ostream &ost)
 {
 	int t, i, j;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	if (len == 3) {
 		for (t = 0; t < 3; t++) {
@@ -107,7 +107,7 @@ void eckardt_point::latex_index_only(ostream &ost)
 void eckardt_point::latex_to_str(char *str)
 {
 	int t, i, j;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	str[0] = 0;
 	if (len == 3) {
@@ -133,7 +133,7 @@ void eckardt_point::latex_to_str(char *str)
 void eckardt_point::latex_to_str_without_E(char *str)
 {
 	int t, i, j;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	str[0] = 0;
 	if (len == 3) {
@@ -175,7 +175,7 @@ void eckardt_point::init3(int ij, int kl, int mn)
 
 void eckardt_point::init6(int i, int j, int k, int l, int m, int n)
 {
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	len = 3;
 	index[0] = Combi.ij2k(i, j, 6);
@@ -185,7 +185,7 @@ void eckardt_point::init6(int i, int j, int k, int l, int m, int n)
 
 void eckardt_point::init_by_rank(int rk)
 {
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (rk < 30) {
 		len = 2;
@@ -206,7 +206,7 @@ void eckardt_point::init_by_rank(int rk)
 
 void eckardt_point::three_lines(surface_domain *S, int *three_lines)
 {
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (len == 2) {
 		three_lines[0] = S->Schlaefli->line_ai(index[0]);
@@ -232,7 +232,7 @@ void eckardt_point::three_lines(surface_domain *S, int *three_lines)
 int eckardt_point::rank()
 {
 	int a;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	if (len == 2) {
 		a = Combi.ordered_pair_rank(index[0], index[1], 6);
@@ -256,7 +256,7 @@ int eckardt_point::rank()
 void eckardt_point::unrank(int rk,
 		int &i, int &j, int &k, int &l, int &m, int &n)
 {
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (rk < 30) {
 		len = 2;

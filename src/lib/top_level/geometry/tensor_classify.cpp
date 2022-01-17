@@ -302,17 +302,17 @@ void tensor_classify::early_test_func(long int *S, int len,
 
 	if (f_v) {
 		cout << "tensor_classify::early_test_func checking set ";
-		Orbiter->Lint_vec.print(cout, S, len);
+		Orbiter->Lint_vec->print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
-		Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
+		Orbiter->Lint_vec->print(cout, candidates, nb_candidates);
 		cout << endl;
 	}
 
 
 	if (len == 0) {
-		Orbiter->Lint_vec.copy(candidates, good_candidates, nb_candidates);
+		Orbiter->Lint_vec->copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
 	}
 	else {
@@ -513,7 +513,7 @@ void tensor_classify::report(int f_poset_classify, int poset_classify_depth,
 					data[i] = a;
 					fp << "\\\\" << endl;
 				}
-				sorting Sorting;
+				data_structures::sorting Sorting;
 
 				Sorting.lint_vec_heapsort(data, orbit_length);
 
@@ -575,13 +575,13 @@ void wreath_product_print_set(ostream &ost, int len, long int *S, void *data)
 
 	T = (tensor_classify *) data;
 	cout << "set: ";
-	Orbiter->Lint_vec.print(cout, S, len);
+	Orbiter->Lint_vec->print(cout, S, len);
 	cout << endl;
 	for (i = 0; i < len; i++) {
 		T->F->PG_element_unrank_modified(T->v,
 				1, T->vector_space_dimension, S[i]);
 		cout << S[i] << " : ";
-		Orbiter->Int_vec.print(cout, T->v, T->vector_space_dimension);
+		Orbiter->Int_vec->print(cout, T->v, T->vector_space_dimension);
 		cout << endl;
 	}
 }
@@ -599,7 +599,7 @@ void wreath_product_rank_one_early_test_func_callback(long int *S, int len,
 
 	if (f_v) {
 		cout << "wreath_product_rank_one_early_test_func_callback for set ";
-		Orbiter->Lint_vec.print(cout, S, len);
+		Orbiter->Lint_vec->print(cout, S, len);
 		cout << endl;
 	}
 	T->early_test_func(S, len,

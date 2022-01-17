@@ -3,10 +3,8 @@
 // Anton Betten
 // 7/31/09
 
-#include "orbiter.h"
-
-
-#include <stdlib.h> // for system
+#include "foundations/foundations.h"
+#include "discreta.h"
 
 
 using namespace std;
@@ -204,7 +202,7 @@ void page_table::init(int verbose_level)
 	if (f_v) {
 		cout << "page_table::init, verbose_level=" << verbose_level << endl;
 		}
-	btree_pages = new page_storage;
+	btree_pages = new data_structures::page_storage;
 	
 	int page_length_log = BTREE_PAGE_LENGTH_LOG;
 	

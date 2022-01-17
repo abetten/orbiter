@@ -15,6 +15,7 @@
 
 namespace orbiter {
 namespace foundations {
+namespace algebra {
 
 // #############################################################################
 // a_domain.cpp
@@ -165,7 +166,7 @@ public:
 
 
 	void order_of_q_mod_n(int q, int n_min, int n_max, int verbose_level);
-	void power_mod_n(int a, int n, int verbose_level);
+	void power_function_mod_n(int k, int n, int verbose_level);
 
 	void do_trace(finite_field *F, int verbose_level);
 	void do_norm(finite_field *F, int verbose_level);
@@ -251,90 +252,6 @@ public:
 };
 
 // #############################################################################
-// gl_classes.cpp
-// #############################################################################
-
-//! to list all conjugacy classes in GL(n,q)
-
-class gl_classes {
-public:
-	int k;
-	int q;
-	finite_field *F;
-	table_of_irreducible_polynomials *Table_of_polynomials;
-	int *Nb_part;
-	int **Partitions;
-	int *v, *w; // [k], used in choose_basis_for_rational_normal_form_block
-
-	gl_classes();
-	~gl_classes();
-	void null();
-	void freeself();
-	void init(int k, finite_field *F, int verbose_level);
-	int select_partition_first(int *Select, int *Select_partition, 
-		int verbose_level);
-	int select_partition_next(int *Select, int *Select_partition, 
-		int verbose_level);
-	int first(int *Select, int *Select_partition, int verbose_level);
-	int next(int *Select, int *Select_partition, int verbose_level);
-	void make_matrix_from_class_rep(int *Mtx, gl_class_rep *R, 
-		int verbose_level);
-	void make_matrix_in_rational_normal_form(
-			int *Mtx, int *Select, int *Select_Partition,
-			int verbose_level);
-	void centralizer_order_Kung_basic(int nb_irreds, 
-		int *poly_degree, int *poly_mult, int *partition_idx, 
-		longinteger_object &co, 
-		int verbose_level);
-	void centralizer_order_Kung(int *Select_polynomial, 
-		int *Select_partition, longinteger_object &co, 
-		int verbose_level);
-		// Computes the centralizer order of a matrix in GL(k,q) 
-		// according to Kung's formula~\cite{Kung81}.
-	void make_classes(gl_class_rep *&R, int &nb_classes, 
-		int f_no_eigenvalue_one, int verbose_level);
-	void identify_matrix(int *Mtx, gl_class_rep *R, int *Basis, 
-		int verbose_level);
-	void identify2(int *Mtx, unipoly_object &poly, int *Mult, 
-		int *Select_partition, int *Basis, int verbose_level);
-	void compute_generalized_kernels_for_each_block(
-		int *Mtx, int *Irreds, int nb_irreds,
-		int *Degree, int *Mult, matrix_block_data *Data,
-		int verbose_level);
-	void compute_generalized_kernels(matrix_block_data *Data, int *M2, 
-		int d, int b0, int m, int *poly_coeffs, int verbose_level);
-	int identify_partition(int *part, int m, int verbose_level);
-	void choose_basis_for_rational_normal_form(int *Mtx, 
-		matrix_block_data *Data, int nb_irreds, 
-		int *Basis, 
-		int verbose_level);
-	void choose_basis_for_rational_normal_form_block(int *Mtx, 
-		matrix_block_data *Data, 
-		int *Basis, int &b, 
-		int verbose_level);
-	void generators_for_centralizer(int *Mtx, gl_class_rep *R, 
-		int *Basis, int **&Gens, int &nb_gens, int &nb_alloc, 
-		int verbose_level);
-	void centralizer_generators(int *Mtx, unipoly_object &poly, 
-		int *Mult, int *Select_partition, 
-		int *Basis, int **&Gens, int &nb_gens, int &nb_alloc,  
-		int verbose_level);
-	void centralizer_generators_block(int *Mtx, matrix_block_data *Data, 
-		int nb_irreds, int h, 
-		int **&Gens, int &nb_gens, int &nb_alloc,  
-		int verbose_level);
-	int choose_basis_for_rational_normal_form_coset(int level1, 
-		int level2, int &coset, 
-		int *Mtx, matrix_block_data *Data, int &b, int *Basis, 
-		int verbose_level);
-	int find_class_rep(gl_class_rep *Reps, int nb_reps, 
-		gl_class_rep *R, int verbose_level);
-	void report(std::ostream &ost, int verbose_level);
-	void print_matrix_and_centralizer_order_latex(std::ostream &ost,
-		gl_class_rep *R);
-};
-
-// #############################################################################
 // gl_class_rep.cpp
 // #############################################################################
 
@@ -342,7 +259,7 @@ public:
 
 class gl_class_rep {
 public:
-	int_matrix *type_coding;
+	data_structures::int_matrix *type_coding;
 	longinteger_object *centralizer_order;
 	longinteger_object *class_length;
 
@@ -529,6 +446,92 @@ public:
 
 
 // #############################################################################
+// gl_classes.cpp
+// #############################################################################
+
+//! to list all conjugacy classes in GL(n,q)
+
+class gl_classes {
+public:
+	int k;
+	int q;
+	finite_field *F;
+	table_of_irreducible_polynomials *Table_of_polynomials;
+	int *Nb_part;
+	int **Partitions;
+	int *v, *w; // [k], used in choose_basis_for_rational_normal_form_block
+
+	gl_classes();
+	~gl_classes();
+	void null();
+	void freeself();
+	void init(int k, finite_field *F, int verbose_level);
+	int select_partition_first(int *Select, int *Select_partition,
+		int verbose_level);
+	int select_partition_next(int *Select, int *Select_partition,
+		int verbose_level);
+	int first(int *Select, int *Select_partition, int verbose_level);
+	int next(int *Select, int *Select_partition, int verbose_level);
+	void make_matrix_from_class_rep(int *Mtx, gl_class_rep *R,
+		int verbose_level);
+	void make_matrix_in_rational_normal_form(
+			int *Mtx, int *Select, int *Select_Partition,
+			int verbose_level);
+	void centralizer_order_Kung_basic(int nb_irreds,
+		int *poly_degree, int *poly_mult, int *partition_idx,
+		longinteger_object &co,
+		int verbose_level);
+	void centralizer_order_Kung(int *Select_polynomial,
+		int *Select_partition, longinteger_object &co,
+		int verbose_level);
+		// Computes the centralizer order of a matrix in GL(k,q)
+		// according to Kung's formula~\cite{Kung81}.
+	void make_classes(gl_class_rep *&R, int &nb_classes,
+		int f_no_eigenvalue_one, int verbose_level);
+	void identify_matrix(int *Mtx, gl_class_rep *R, int *Basis,
+		int verbose_level);
+	void identify2(int *Mtx, unipoly_object &poly, int *Mult,
+		int *Select_partition, int *Basis, int verbose_level);
+	void compute_generalized_kernels_for_each_block(
+		int *Mtx, int *Irreds, int nb_irreds,
+		int *Degree, int *Mult, matrix_block_data *Data,
+		int verbose_level);
+	void compute_generalized_kernels(matrix_block_data *Data, int *M2,
+		int d, int b0, int m, int *poly_coeffs, int verbose_level);
+	int identify_partition(int *part, int m, int verbose_level);
+	void choose_basis_for_rational_normal_form(int *Mtx,
+		matrix_block_data *Data, int nb_irreds,
+		int *Basis,
+		int verbose_level);
+	void choose_basis_for_rational_normal_form_block(int *Mtx,
+		matrix_block_data *Data,
+		int *Basis, int &b,
+		int verbose_level);
+	void generators_for_centralizer(int *Mtx, gl_class_rep *R,
+		int *Basis, int **&Gens, int &nb_gens, int &nb_alloc,
+		int verbose_level);
+	void centralizer_generators(int *Mtx, unipoly_object &poly,
+		int *Mult, int *Select_partition,
+		int *Basis, int **&Gens, int &nb_gens, int &nb_alloc,
+		int verbose_level);
+	void centralizer_generators_block(int *Mtx, matrix_block_data *Data,
+		int nb_irreds, int h,
+		int **&Gens, int &nb_gens, int &nb_alloc,
+		int verbose_level);
+	int choose_basis_for_rational_normal_form_coset(int level1,
+		int level2, int &coset,
+		int *Mtx, matrix_block_data *Data, int &b, int *Basis,
+		int verbose_level);
+	int find_class_rep(gl_class_rep *Reps, int nb_reps,
+		gl_class_rep *R, int verbose_level);
+	void report(std::ostream &ost, int verbose_level);
+	void print_matrix_and_centralizer_order_latex(std::ostream &ost,
+		gl_class_rep *R);
+};
+
+
+
+// #############################################################################
 // heisenberg.cpp
 // #############################################################################
 
@@ -584,7 +587,7 @@ public:
 	int b0;
 	int b1;
 
-	int_matrix *K;
+	data_structures::int_matrix *K;
 	int cnt;
 	int *dual_part;
 	int *part;
@@ -721,7 +724,7 @@ public:
 
 
 
-}}
+}}}
 
 
 #endif /* ORBITER_SRC_LIB_FOUNDATIONS_ALGEBRA_AND_NUMBER_THEORY_H_ */

@@ -11,6 +11,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace combinatorics {
 
 
 
@@ -197,7 +198,6 @@ void brick_test(int q, int verbose_level)
 }
 #endif
 
-}
-}
+}}}
 
 

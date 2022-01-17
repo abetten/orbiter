@@ -166,7 +166,7 @@ void top_level_geometry_global::report_decomposition_by_group(
 
 	{
 		incidence_structure *Inc;
-		partitionstack *Stack;
+		data_structures::partitionstack *Stack;
 
 		action_global AG;
 
@@ -238,7 +238,7 @@ void top_level_geometry_global::report_decomposition_by_group(
 
 	{
 		incidence_structure *Inc;
-		partitionstack *Stack;
+		data_structures::partitionstack *Stack;
 
 		action_global AG;
 
@@ -325,9 +325,9 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 	schreier *Sch1;
 	schreier *Sch2;
 	incidence_structure *Inc;
-	partitionstack *Stack;
-	partitionstack S1;
-	partitionstack S2;
+	data_structures::partitionstack *Stack;
+	data_structures::partitionstack S1;
+	data_structures::partitionstack S2;
 
 	Sch1 = NEW_OBJECT(schreier);
 	Sch2 = NEW_OBJECT(schreier);
@@ -395,7 +395,7 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 	set = NEW_int(PA->A_on_lines->degree);
 	for (i = 1; i < S2.ht; i++) {
 		sz = S2.cellSize[i];
-		Orbiter->Int_vec.copy(S2.pointList + S2.startCell[i], set, sz);
+		Orbiter->Int_vec->copy(S2.pointList + S2.startCell[i], set, sz);
 		for (j = 0; j < sz; j++) {
 			set[j] += PA->A->degree;
 		}
@@ -443,7 +443,7 @@ void top_level_geometry_global::report_decomposition_by_single_automorphism(
 				int *v, *w;
 				std::vector<int> Orb1_subgroup;
 				std::vector<int> Orb2_subgroup;
-				combinatorics_domain Combi;
+				combinatorics::combinatorics_domain Combi;
 
 				v = NEW_int(Orb1.size());
 				w = NEW_int(Orb1.size());

@@ -95,7 +95,7 @@ void surface_create_by_arc_lifting::init(int arc_idx,
 		cout << "surface_create_by_arc_lifting::init extending arc "
 				<< arc_idx << " / "
 				<< SCA->Six_arcs->nb_arcs_not_on_conic << " : Arc6 = ";
-		Orbiter->Lint_vec.print(cout, Arc6, 6);
+		Orbiter->Lint_vec->print(cout, Arc6, 6);
 		cout << endl;
 	}
 

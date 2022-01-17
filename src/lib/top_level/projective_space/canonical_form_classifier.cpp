@@ -75,7 +75,7 @@ void canonical_form_classifier::count_nb_objects_to_test(int verbose_level)
 		sprintf(str, Descr->fname_mask.c_str(), cnt);
 		fname.assign(str);
 
-		spreadsheet S;
+		data_structures::spreadsheet S;
 
 		S.read_spreadsheet(fname, verbose_level);
 
@@ -204,7 +204,7 @@ void canonical_form_classifier::classify(canonical_form_classifier_description *
 	cout << "canonical forms:" << endl;
 	for (i = 0; i < nb_objects_to_test; i++) {
 		cout << setw(2) << i << " : ";
-		Orbiter->Int_vec.print(cout, Canonical_forms + i * Poly_ring->get_nb_monomials(), Poly_ring->get_nb_monomials());
+		Orbiter->Int_vec->print(cout, Canonical_forms + i * Poly_ring->get_nb_monomials(), Poly_ring->get_nb_monomials());
 		cout << " : " << Goi[i] << endl;
 	}
 
@@ -221,7 +221,7 @@ void canonical_form_classifier::classify(canonical_form_classifier_description *
 
 
 	cout << "transversal:" << endl;
-	Orbiter->Int_vec.print(cout, transversal, nb_types);
+	Orbiter->Int_vec->print(cout, transversal, nb_types);
 	cout << endl;
 
 	//Classification_of_quartic_curves->print();
@@ -231,13 +231,13 @@ void canonical_form_classifier::classify(canonical_form_classifier_description *
 		//h = int_vec_hash(Reps + i * data_set_sz, data_set_sz);
 
 		cout << i << " : " << Classification_of_quartic_curves->Frequency[i] << " x ";
-		Orbiter->Int_vec.print(cout,
+		Orbiter->Int_vec->print(cout,
 				Classification_of_quartic_curves->Reps + i * Classification_of_quartic_curves->data_set_sz,
 				Classification_of_quartic_curves->data_set_sz);
 		cout << " : ";
 		j = Classification_of_quartic_curves->sorting_perm_inv[Classification_of_quartic_curves->type_first[i]];
 		cout << Goi[j] << " : ";
-		Orbiter->Int_vec.print(cout,
+		Orbiter->Int_vec->print(cout,
 				Classification_of_quartic_curves->sorting_perm_inv + Classification_of_quartic_curves->type_first[i],
 				Classification_of_quartic_curves->Frequency[i]);
 		cout << endl;
@@ -294,7 +294,7 @@ void canonical_form_classifier::classify_nauty(int verbose_level)
 	}
 
 
-	CB = NEW_OBJECT(classify_bitvectors);
+	CB = NEW_OBJECT(data_structures::classify_bitvectors);
 
 
 
@@ -391,7 +391,7 @@ void canonical_form_classifier::main_loop(int verbose_level)
 		sprintf(str, Descr->fname_mask.c_str(), cnt);
 		fname.assign(str);
 
-		spreadsheet S;
+		data_structures::spreadsheet S;
 
 		S.read_spreadsheet(fname, verbose_level);
 
@@ -444,7 +444,7 @@ void canonical_form_classifier::main_loop(int verbose_level)
 			}
 			bitangents_txt.assign(S.tokens[t]);
 
-			string_tools ST;
+			data_structures::string_tools ST;
 
 			ST.remove_specific_character(eqn_txt, '\"');
 			ST.remove_specific_character(pts_txt, '\"');
@@ -454,17 +454,17 @@ void canonical_form_classifier::main_loop(int verbose_level)
 				cout << "row = " << row << " eqn=" << eqn_txt << " pts_txt=" << pts_txt << " =" << bitangents_txt << endl;
 			}
 
-			Orbiter->Int_vec.scan(eqn_txt, eqn, sz);
-			Orbiter->Lint_vec.scan(pts_txt, pts, nb_pts);
-			Orbiter->Lint_vec.scan(bitangents_txt, bitangents, nb_bitangents);
+			Orbiter->Int_vec->scan(eqn_txt, eqn, sz);
+			Orbiter->Lint_vec->scan(pts_txt, pts, nb_pts);
+			Orbiter->Lint_vec->scan(bitangents_txt, bitangents, nb_bitangents);
 
 			if (FALSE) {
 				cout << "row = " << row << " eqn=";
-				Orbiter->Int_vec.print(cout, eqn, sz);
+				Orbiter->Int_vec->print(cout, eqn, sz);
 				cout << " pts=";
-				Orbiter->Lint_vec.print(cout, pts, nb_pts);
+				Orbiter->Lint_vec->print(cout, pts, nb_pts);
 				cout << " bitangents=";
-				Orbiter->Lint_vec.print(cout, bitangents, nb_bitangents);
+				Orbiter->Lint_vec->print(cout, bitangents, nb_bitangents);
 				cout << endl;
 			}
 
@@ -494,7 +494,7 @@ void canonical_form_classifier::main_loop(int verbose_level)
 						transporter_to_canonical_form,
 						verbose_level);
 
-				Orbiter->Int_vec.copy(canonical_equation,
+				Orbiter->Int_vec->copy(canonical_equation,
 						Canonical_forms + counter * Poly_ring->get_nb_monomials(),
 						Poly_ring->get_nb_monomials());
 
@@ -539,7 +539,7 @@ void canonical_form_classifier::main_loop(int verbose_level)
 							verbose_level);
 
 					CFS_table[counter] = CFS;
-					Orbiter->Int_vec.copy(CFS->canonical_equation,
+					Orbiter->Int_vec->copy(CFS->canonical_equation,
 							Canonical_forms + counter * Poly_ring->get_nb_monomials(),
 							Poly_ring->get_nb_monomials());
 					Goi[counter] = go_eqn.as_lint();
@@ -558,7 +558,7 @@ void canonical_form_classifier::main_loop(int verbose_level)
 					}
 
 					CFS_table[counter] = NULL;
-					Orbiter->Int_vec.zero(
+					Orbiter->Int_vec->zero(
 							Canonical_forms + counter * Poly_ring->get_nb_monomials(),
 							Poly_ring->get_nb_monomials());
 					Goi[counter] = -1;
@@ -889,7 +889,7 @@ void canonical_form_classifier::write_canonical_forms_csv(
 	//int f_vv = (verbose_level >= 2);
 	std::string fname;
 	int i, j;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	int nb_orbits;
 	int nb_monomials;
@@ -938,31 +938,31 @@ void canonical_form_classifier::write_canonical_forms_csv(
 
 			{
 				string str;
-				Orbiter->Int_vec.create_string_with_quotes(str, CFS_table[i]->eqn, nb_monomials);
+				Orbiter->Int_vec->create_string_with_quotes(str, CFS_table[i]->eqn, nb_monomials);
 				ost << str;
 			}
 			ost << ",";
 			{
 				string str;
-				Orbiter->Lint_vec.create_string_with_quotes(str, CFS_table[i]->pts, CFS_table[i]->nb_pts);
+				Orbiter->Lint_vec->create_string_with_quotes(str, CFS_table[i]->pts, CFS_table[i]->nb_pts);
 				ost << str;
 			}
 			ost << ",";
 			{
 				string str;
-				Orbiter->Lint_vec.create_string_with_quotes(str, CFS_table[i]->bitangents, CFS_table[i]->nb_bitangents);
+				Orbiter->Lint_vec->create_string_with_quotes(str, CFS_table[i]->bitangents, CFS_table[i]->nb_bitangents);
 				ost << str;
 			}
 			ost << ",";
 			{
 				string str;
-				Orbiter->Int_vec.create_string_with_quotes(str, CFS_table[i]->transporter_to_canonical_form, A->make_element_size);
+				Orbiter->Int_vec->create_string_with_quotes(str, CFS_table[i]->transporter_to_canonical_form, A->make_element_size);
 				ost << str;
 			}
 			ost << ",";
 			{
 				string str;
-				Orbiter->Int_vec.create_string_with_quotes(str, CFS_table[i]->canonical_equation, nb_monomials);
+				Orbiter->Int_vec->create_string_with_quotes(str, CFS_table[i]->canonical_equation, nb_monomials);
 				ost << str;
 			}
 			ost << ",";
@@ -981,7 +981,7 @@ void canonical_form_classifier::write_canonical_forms_csv(
 
 			{
 				string str;
-				Orbiter->Lint_vec.create_string_with_quotes(str, Pts_canonical, CFS_table[i]->nb_pts);
+				Orbiter->Lint_vec->create_string_with_quotes(str, Pts_canonical, CFS_table[i]->nb_pts);
 				ost << str;
 			}
 			ost << ",";
@@ -1000,7 +1000,7 @@ void canonical_form_classifier::write_canonical_forms_csv(
 
 			{
 				string str;
-				Orbiter->Lint_vec.create_string_with_quotes(str, bitangents_canonical, CFS_table[i]->nb_bitangents);
+				Orbiter->Lint_vec->create_string_with_quotes(str, bitangents_canonical, CFS_table[i]->nb_bitangents);
 				ost << str;
 			}
 			ost << ",";
@@ -1011,7 +1011,7 @@ void canonical_form_classifier::write_canonical_forms_csv(
 
 			{
 				string str;
-				Orbiter->Int_vec.create_string_with_quotes(str, gens->tl, A->base_len());
+				Orbiter->Int_vec->create_string_with_quotes(str, gens->tl, A->base_len());
 				ost << str;
 			}
 			ost << ",";
@@ -1430,7 +1430,7 @@ void canonical_form_classifier::report2(std::ostream &ost, std::string &fname_ba
 
 	//long int *Table;
 
-	spreadsheet S;
+	data_structures::spreadsheet S;
 
 	S.init_empty_table(nb_objects_to_test + 1, nb_cols);
 
@@ -1483,7 +1483,7 @@ void canonical_form_classifier::report2(std::ostream &ost, std::string &fname_ba
 
 			string str;
 
-			Orbiter->Int_vec.create_string_with_quotes(str, CFS_table[i]->SubSt->orbit_frequencies, SubC->nb_orbits);
+			Orbiter->Int_vec->create_string_with_quotes(str, CFS_table[i]->SubSt->orbit_frequencies, SubC->nb_orbits);
 
 			S.fill_entry_with_text(j, 5, str);
 

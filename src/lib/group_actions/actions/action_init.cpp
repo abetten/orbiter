@@ -589,7 +589,7 @@ void action::init_matrix_group_strong_generators_builtin(
 	}
 	if (M->f_projective) {
 
-		group_generators_domain GGD;
+		algebra::group_generators_domain GGD;
 
 		GGD.strong_generators_for_projective_linear_group(n, F,
 			M->f_semilinear, 
@@ -598,7 +598,7 @@ void action::init_matrix_group_strong_generators_builtin(
 	}
 	else if (M->f_affine) {
 
-		group_generators_domain GGD;
+		algebra::group_generators_domain GGD;
 
 		GGD.strong_generators_for_affine_linear_group(n, F,
 			M->f_semilinear, 
@@ -607,7 +607,7 @@ void action::init_matrix_group_strong_generators_builtin(
 	}
 	else if (M->f_general_linear) {
 
-		group_generators_domain GGD;
+		algebra::group_generators_domain GGD;
 
 		GGD.strong_generators_for_general_linear_group(n, F,
 			M->f_semilinear, 
@@ -739,7 +739,7 @@ void action::init_permutation_group(int degree, int f_no_base, int verbose_level
 	
 }
 
-void action::init_permutation_group_from_nauty_output(nauty_output *NO,
+void action::init_permutation_group_from_nauty_output(data_structures::nauty_output *NO,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -779,7 +779,7 @@ void action::init_permutation_group_from_generators(int degree,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	char str[1000];
 	
 	if (f_v) {
@@ -843,7 +843,7 @@ void action::init_permutation_group_from_generators(int degree,
 			cout << "action::init_permutation_group_from_generators "
 					"calling allocate_base_data" << endl;
 			cout << "given_base:";
-			Orbiter->Lint_vec.print(cout, given_base, given_base_length);
+			Orbiter->Lint_vec->print(cout, given_base, given_base_length);
 			cout << " of length " << given_base_length << endl;
 		}
 		Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
@@ -966,7 +966,7 @@ void action::init_affine_group(int n, int q,
 	F.finite_field_init(q, FALSE /* f_without_tables */, verbose_level - 1);
 	
 	
-	group_generators_domain GGD;
+	algebra::group_generators_domain GGD;
 
 
 	GGD.affine_generators(n, &F, f_translations,
@@ -1337,8 +1337,8 @@ void action::init_wreath_product_group(int nb_factors, int n,
 				"base_len=" << base_len() << endl;
 	}
 
-	Orbiter->Lint_vec.copy(W->the_base, get_base(), base_len());
-	Orbiter->Int_vec.copy(W->the_transversal_length,
+	Orbiter->Lint_vec->copy(W->the_base, get_base(), base_len());
+	Orbiter->Int_vec->copy(W->the_transversal_length,
 			get_transversal_length(), base_len());
 
 	int *gens_data;
@@ -1499,8 +1499,8 @@ void action::init_permutation_representation(action *A_original,
 					"base_len=" << base_len() << endl;
 		}
 
-		Orbiter->Lint_vec.copy(W->the_base, get_base(), base_len());
-		Orbiter->Int_vec.copy(W->the_transversal_length,
+		Orbiter->Lint_vec->copy(W->the_base, get_base(), base_len());
+		Orbiter->Int_vec->copy(W->the_transversal_length,
 				get_transversal_length(), base_len());
 
 		sprintf(str1, "_induced%d_prev", degree);
@@ -1612,7 +1612,7 @@ void action::init_orthogonal_group_with_O(orthogonal *O,
 	action *A;
 	action_on_orthogonal *AO;
 	int q = O->F->q;
-	group_generators_domain GG;
+	algebra::group_generators_domain GG;
 
 	if (f_v) {
 		cout << "action::init_orthogonal_group_with_O "
@@ -1796,7 +1796,7 @@ void action::init_BLT(finite_field *F, int f_basis,
 	if (f_v) {
 		cout << "action::init_BLT computing lex least base done" << endl;
 		cout << "base: ";
-		Orbiter->Lint_vec.print(cout, get_base(), base_len());
+		Orbiter->Lint_vec->print(cout, get_base(), base_len());
 		cout << endl;
 	}
 
@@ -1871,7 +1871,7 @@ void action::init_group_from_strong_generators(
 	if (f_vv) {
 		cout << "action::init_group_from_strong_generators "
 				"calling allocate_base_data, initial base:";
-		Orbiter->Int_vec.print(cout, given_base, given_base_length);
+		Orbiter->Int_vec->print(cout, given_base, given_base_length);
 		cout << " of length " << given_base_length << endl;
 	}
 	Stabilizer_chain = NEW_OBJECT(stabilizer_chain_base_data);
@@ -2113,7 +2113,7 @@ sims *action::create_sims_for_centralizer_of_matrix(
 	matrix_group *M;
 	finite_field *F;
 	int d, q, i;
-	gl_classes *C;
+	algebra::gl_classes *C;
 
 	if (f_v) {
 		cout << "action::create_sims_for_centralizer_of_matrix" << endl;
@@ -2145,7 +2145,7 @@ sims *action::create_sims_for_centralizer_of_matrix(
 		cout << "action::create_sims_for_centralizer_of_matrix "
 				"d = " << d << " q = " << q << endl;
 		cout << "Mtx=" << endl;
-		Orbiter->Int_vec.matrix_print(Mtx, d, d);
+		Orbiter->Int_vec->matrix_print(Mtx, d, d);
 	}
 
 	//gl_classes C;
@@ -2182,9 +2182,9 @@ sims *action::create_sims_for_centralizer_of_matrix(
 
 	Elt = NEW_int(elt_size_in_int);
 
-	gl_class_rep *R1;
+	algebra::gl_class_rep *R1;
 
-	R1 = NEW_OBJECT(gl_class_rep);
+	R1 = NEW_OBJECT(algebra::gl_class_rep);
 
 	int *Basis;
 	int **Gens;
@@ -2205,7 +2205,7 @@ sims *action::create_sims_for_centralizer_of_matrix(
 	if (f_v) {
 		cout << "action::create_sims_for_centralizer_of_matrix "
 				"Basis=" << endl;
-		Orbiter->Int_vec.matrix_print(Basis, d, d);
+		Orbiter->Int_vec->matrix_print(Basis, d, d);
 		cout << "create_sims_for_centralizer_of_matrix "
 				"We found " << nb_gens << " centralizing matrices" << endl;
 	}
@@ -2215,7 +2215,7 @@ sims *action::create_sims_for_centralizer_of_matrix(
 				"Gens=" << endl;
 		for (i = 0; i < nb_gens; i++) {
 			cout << "Gen " << i << " / " << nb_gens << " is:" << endl;
-			Orbiter->Int_vec.matrix_print(Gens[i], d, d);
+			Orbiter->Int_vec->matrix_print(Gens[i], d, d);
 		}
 	}
 
@@ -2224,9 +2224,9 @@ sims *action::create_sims_for_centralizer_of_matrix(
 				0/*verbose_level*/)) {
 			cout << "The matrices do not commute" << endl;
 			cout << "Mtx=" << endl;
-			Orbiter->Int_vec.matrix_print(Mtx, d, d);
+			Orbiter->Int_vec->matrix_print(Mtx, d, d);
 			cout << "Gens[i]=" << endl;
-			Orbiter->Int_vec.matrix_print(Gens[i], d, d);
+			Orbiter->Int_vec->matrix_print(Gens[i], d, d);
 			exit(1);
 		}
 	}
@@ -2236,7 +2236,7 @@ sims *action::create_sims_for_centralizer_of_matrix(
 	if (f_v) {
 		cout << "The type of the matrix under "
 				"consideration is:" << endl;
-		Orbiter->Int_vec.matrix_print(R1->type_coding->M,
+		Orbiter->Int_vec->matrix_print(R1->type_coding->M,
 				R1->type_coding->m, R1->type_coding->n);
 	}
 

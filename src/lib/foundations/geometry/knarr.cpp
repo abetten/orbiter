@@ -148,7 +148,7 @@ void knarr::init(finite_field *F, int BLT_no, int verbose_level)
 	int f_vv = (verbose_level >= 2);
 	int i, a;
 	knowledge_base K;
-	combinatorics_domain C;
+	combinatorics::combinatorics_domain C;
 	
 	knarr::F = F;
 	knarr::q = F->q;
@@ -210,7 +210,7 @@ void knarr::init(finite_field *F, int BLT_no, int verbose_level)
 			cout << setw(4) << i << " : " << setw(4) << a << " : "
 					<< setw(5) << W->Lines[a] << ":" << endl;
 			W->P3->unrank_line(Basis, W->Lines[a]);
-			Orbiter->Int_vec.print_integer_matrix_width(cout, Basis, 2, 4, 4, F->log10_of_q);
+			Orbiter->Int_vec->print_integer_matrix_width(cout, Basis, 2, 4, 4, F->log10_of_q);
 			cout << endl;
 			}
 		}
@@ -233,11 +233,11 @@ void knarr::points_and_lines(int verbose_level)
 		cout << "knarr::points_and_lines" << endl;
 		}
 	
-	type_i_points = NEW_OBJECT(fancy_set);
-	type_ii_points = NEW_OBJECT(fancy_set);
-	type_iii_points = NEW_OBJECT(fancy_set);
-	type_a_lines = NEW_OBJECT(fancy_set);
-	type_b_lines = NEW_OBJECT(fancy_set);
+	type_i_points = NEW_OBJECT(data_structures::fancy_set);
+	type_ii_points = NEW_OBJECT(data_structures::fancy_set);
+	type_iii_points = NEW_OBJECT(data_structures::fancy_set);
+	type_a_lines = NEW_OBJECT(data_structures::fancy_set);
+	type_b_lines = NEW_OBJECT(data_structures::fancy_set);
 
 
 
@@ -285,12 +285,12 @@ void knarr::points_and_lines(int verbose_level)
 		if (f_vvv) {
 			cout << "BLT line " << h << " which is "
 					<< W->Lines[a] << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout, Basis, 2, 4, 4,
+			Orbiter->Int_vec->print_integer_matrix_width(cout, Basis, 2, 4, 4,
 					F->log10_of_q);
 			cout << endl;
 			}
 
-		Orbiter->Int_vec.zero(Basis2, 3 * 6);
+		Orbiter->Int_vec->zero(Basis2, 3 * 6);
 		Basis2[0] = 1;
 		for (i = 0; i < 2; i++) {
 			for (j = 0; j < 4; j++) {
@@ -299,13 +299,13 @@ void knarr::points_and_lines(int verbose_level)
 			}
 		if (f_v4) {
 			cout << "embedded:" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout, Basis2, 3, 6, 6,
+			Orbiter->Int_vec->print_integer_matrix_width(cout, Basis2, 3, 6, 6,
 					F->log10_of_q);
 			cout << endl;
 			}
 
 
-		Orbiter->Int_vec.copy(Basis2, G63->M, 3 * 6);
+		Orbiter->Int_vec->copy(Basis2, G63->M, 3 * 6);
 
 		i = G63->rank_lint(0);
 		if (f_v4) {
@@ -326,15 +326,15 @@ void knarr::points_and_lines(int verbose_level)
 
 		for (jj = 0; jj < Gre->degree; jj++) {
 			Gre->unrank_lint(subspace_basis, jj, 0);
-			Orbiter->Int_vec.copy(subspace_basis, P5->Grass_lines->M, 2 * 6);
+			Orbiter->Int_vec->copy(subspace_basis, P5->Grass_lines->M, 2 * 6);
 			j = P5->Grass_lines->rank_lint(0);
 			if (f_v4) {
 				cout << "Subspace " << jj << " has a basis:" << endl;
-				Orbiter->Int_vec.print_integer_matrix_width(cout, subspace_basis,
+				Orbiter->Int_vec->print_integer_matrix_width(cout, subspace_basis,
 						2, 6, 6, F->log10_of_q);
 				cout << "and has rank " << j << endl;
 				}
-			Orbiter->Int_vec.zero(subspace_basis + 2 * 6, 6);
+			Orbiter->Int_vec->zero(subspace_basis + 2 * 6, 6);
 			subspace_basis[2 * 6 + 0] = 1;
 			rk = F->Linear_algebra->Gauss_easy(subspace_basis, 3, 6);
 			if (rk <= 2) {
@@ -386,7 +386,7 @@ void knarr::points_and_lines(int verbose_level)
 		if (f_v4) {
 			cout << "Subspace i=" << i << " / "
 					<< six_choose_three_q_int << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout, Basis, 3, 6, 6, F->log10_of_q);
+			Orbiter->Int_vec->print_integer_matrix_width(cout, Basis, 3, 6, 6, F->log10_of_q);
 			cout << endl;
 			}
 		if (!F->Linear_algebra->is_totally_isotropic_wrt_symplectic_form(3, 6, Basis)) {
@@ -452,7 +452,7 @@ void knarr::points_and_lines(int verbose_level)
 		Basis_intersection[2 * 6 + 5] = 0;
 
 
-		Orbiter->Int_vec.copy(Basis_intersection, G63->M, 3 * 6);
+		Orbiter->Int_vec->copy(Basis_intersection, G63->M, 3 * 6);
 		j = G63->rank_lint(0);
 		
 		if (type_b_lines->is_contained(j)) {
@@ -461,14 +461,14 @@ void knarr::points_and_lines(int verbose_level)
 			if (f_v4) {
 				cout << "Subspace i=" << i << " is totally "
 						"isotropic and does not contain P." << endl;
-				Orbiter->Int_vec.print_integer_matrix_width(cout,
+				Orbiter->Int_vec->print_integer_matrix_width(cout,
 						Basis, 3, 6, 6, F->log10_of_q);
 				cout << endl;
 
 
 				cout << "dim_intersection=" << dim_intersection << endl;
 				cout << "Intersection:" << endl;
-				Orbiter->Int_vec.print_integer_matrix_width(cout,
+				Orbiter->Int_vec->print_integer_matrix_width(cout,
 						Basis_intersection, dim_intersection,
 						6, 6, F->log10_of_q);
 				cout << endl;
@@ -476,7 +476,7 @@ void knarr::points_and_lines(int verbose_level)
 				cout << "Added P" << endl;
 
 				cout << "looking at" << endl;
-				Orbiter->Int_vec.print_integer_matrix_width(cout,
+				Orbiter->Int_vec->print_integer_matrix_width(cout,
 						Basis_intersection, 3, 6, 6,
 						F->log10_of_q);
 				cout << endl;
@@ -531,7 +531,7 @@ void knarr::points_and_lines(int verbose_level)
 				cout << "cnt = " << cnt << " Subspace i=" << i
 						<< " is totally isotropic and does "
 								"not contain P." << endl;
-				Orbiter->Int_vec.print_integer_matrix_width(cout, Basis,
+				Orbiter->Int_vec->print_integer_matrix_width(cout, Basis,
 						3, 6, 6, F->log10_of_q);
 				cout << endl;
 				cnt++;
@@ -566,7 +566,7 @@ void knarr::incidence_matrix(int *&Inc,
 	cout << "Computing the incidence matrix..." << endl;
 	
 	Inc = NEW_int(nb_points * nb_lines);
-	Orbiter->Int_vec.zero(Inc, nb_points * nb_lines);
+	Orbiter->Int_vec->zero(Inc, nb_points * nb_lines);
 	
 	for (I = 0; I < 3; I++) {
 		if (I == 0) {
@@ -605,7 +605,7 @@ void knarr::incidence_matrix(int *&Inc,
 				cout << "I=" << I << " i=" << i;
 				cout << " a=" << a << " row=" << row << endl;
 				cout << "Basis_U:" << endl;
-				Orbiter->Int_vec.print_integer_matrix_width(cout,
+				Orbiter->Int_vec->print_integer_matrix_width(cout,
 						Basis_U, dim_U, 6, 6, F->log10_of_q);
 				cout << endl;
 				}
@@ -637,7 +637,7 @@ void knarr::incidence_matrix(int *&Inc,
 						cout << "J=" << J << " j=" << j; 
 						cout << " b=" << b << " col=" << col << endl;
 						cout << "Basis_V:" << endl;
-						Orbiter->Int_vec.print_integer_matrix_width(cout,
+						Orbiter->Int_vec->print_integer_matrix_width(cout,
 								Basis_V, dim_V, 6, 6, F->log10_of_q);
 						cout << endl;
 						}

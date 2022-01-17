@@ -103,7 +103,7 @@ void graphical_output::draw_layered_graph_from_file(std::string &fname,
 
 
 	string fname_out;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	fname_out.assign(fname);
 	ST.chop_off_extension(fname_out);
@@ -757,17 +757,17 @@ void graphical_output::draw_bitmap(draw_bitmap_control *C, int verbose_level)
 		Orbiter->get_vector_from_label(C->part_col, Col_parts, nb_col_parts, 0 /* verbose_level*/);
 
 		cout << "row_part: ";
-		Orbiter->Int_vec.print(cout, Row_parts, nb_row_parts);
+		Orbiter->Int_vec->print(cout, Row_parts, nb_row_parts);
 		cout << endl;
 		cout << "col_part: ";
-		Orbiter->Int_vec.print(cout, Col_parts, nb_col_parts);
+		Orbiter->Int_vec->print(cout, Col_parts, nb_col_parts);
 		cout << endl;
 	}
 	int i;
 	int max_value;
-	string_tools ST;
+	data_structures::string_tools ST;
 
-	max_value = Orbiter->Int_vec.maximum(C->M, C->m * C->n);
+	max_value = Orbiter->Int_vec->maximum(C->M, C->m * C->n);
 	cout << "max_value=" << max_value << endl;
 
 	//max_value += 5;
@@ -1926,7 +1926,7 @@ void graphical_output::tree_draw(tree_draw_options *Tree_draw_options, int verbo
 		}
 #endif
 
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	fname2.assign(Tree_draw_options->file_name);
 	ST.chop_off_extension(fname2);
@@ -2020,10 +2020,10 @@ void graphical_output::animate_povray(
 			int *rounds;
 			int nb_rounds;
 
-			Orbiter->Int_vec.scan(Povray_job_description->rounds_as_string, rounds, nb_rounds);
+			Orbiter->Int_vec->scan(Povray_job_description->rounds_as_string, rounds, nb_rounds);
 
 			cout << "Doing the following " << nb_rounds << " rounds: ";
-			Orbiter->Int_vec.print(cout, rounds, nb_rounds);
+			Orbiter->Int_vec->print(cout, rounds, nb_rounds);
 			cout << endl;
 
 			int r, this_round;

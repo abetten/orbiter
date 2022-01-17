@@ -101,7 +101,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 
 
 	canonical_form_substructure::bitangents = NEW_lint(nb_bitangents);
-	Orbiter->Lint_vec.copy(bitangents, canonical_form_substructure::bitangents, nb_bitangents);
+	Orbiter->Lint_vec->copy(bitangents, canonical_form_substructure::bitangents, nb_bitangents);
 	canonical_form_substructure::nb_bitangents = nb_bitangents;
 	canonical_form_substructure::canonical_equation = NEW_int(Canonical_form_classifier->Poly_ring->get_nb_monomials());
 	canonical_form_substructure::transporter_to_canonical_form = NEW_int(Canonical_form_classifier->Descr->PA->A->elt_size_in_int);
@@ -118,9 +118,9 @@ void canonical_form_substructure::classify_curve_with_substructure(
 	if (f_v) {
 		cout << "fname_case_out = " << fname_case_out << endl;
 		cout << "row = " << row << " eqn=";
-		Orbiter->Int_vec.print(cout, eqn, sz);
+		Orbiter->Int_vec->print(cout, eqn, sz);
 		cout << " pts=";
-		Orbiter->Lint_vec.print(cout, pts, nb_pts);
+		Orbiter->Lint_vec->print(cout, pts, nb_pts);
 		cout << endl;
 
 		Canonical_form_classifier->Poly_ring->print_equation_tex(cout, eqn);
@@ -170,7 +170,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 	if (FALSE) {
 		cout << "canonical_form_substructure::classify_curve_with_substructure after handle_orbit" << endl;
 		cout << "canonical point set: ";
-		Orbiter->Lint_vec.print(cout, canonical_pts, nb_pts);
+		Orbiter->Lint_vec->print(cout, canonical_pts, nb_pts);
 		longinteger_object go;
 
 		Gens_stabilizer_original_set->group_order(go);
@@ -186,7 +186,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 	if (FALSE) {
 		cout << "canonical_form_substructure::classify_curve_with_substructure after handle_orbit" << endl;
 		cout << "canonical point set: ";
-		Orbiter->Lint_vec.print(cout, canonical_pts, nb_pts);
+		Orbiter->Lint_vec->print(cout, canonical_pts, nb_pts);
 		longinteger_object go;
 
 		Gens_stabilizer_canonical_form->group_order(go);
@@ -205,7 +205,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 
 	if (f_v) {
 		cout << "canonical_form_substructure::classify_curve_with_substructure canonical point set: ";
-		Orbiter->Lint_vec.print(cout, canonical_pts, nb_pts);
+		Orbiter->Lint_vec->print(cout, canonical_pts, nb_pts);
 		cout << "_{" << go << "}" << endl;
 		cout << endl;
 	}
@@ -275,7 +275,7 @@ void canonical_form_substructure::classify_curve_with_substructure(
 
 	if (f_v) {
 		cout << "canonical_form_substructure::classify_curve_with_substructure canonical equation: ";
-		Orbiter->Int_vec.print(cout, canonical_equation,
+		Orbiter->Int_vec->print(cout, canonical_equation,
 				Canonical_form_classifier->Poly_ring->get_nb_monomials());
 		cout << "_{" << go_eqn << "}" << endl;
 		cout << endl;

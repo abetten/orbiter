@@ -69,12 +69,12 @@ void isomorph_read_statistic_files(
 
 		// Row,Case_nb,Nb_sol,Nb_backtrack,Nb_col,Dt,Dt_in_sec
 	
-		spreadsheet *S;
+		data_structures::spreadsheet *S;
 		int i, h, Case_nb, Nb_sol, Nb_backtrack, Nb_col, Dt, Dt_in_sec;
 		int case_nb, nb_sol, nb_backtrack, nb_col, dt, dt_in_sec;
 		int *Stats;
 	
-		S = NEW_OBJECTS(spreadsheet, nb_files);
+		S = NEW_OBJECTS(data_structures::spreadsheet, nb_files);
 		for (i = 0; i < nb_files; i++) {
 			cout << "reading file " << fname[i] << ":" << endl;
 			S[i].read_spreadsheet(fname[i], 0 /* verbose_level */);
@@ -84,7 +84,7 @@ void isomorph_read_statistic_files(
 				<< " starter cases" << endl;
 
 		Stats = NEW_int(6 * Iso.nb_starter);
-		Orbiter->Int_vec.zero(Stats, 6 * Iso.nb_starter);
+		Orbiter->Int_vec->zero(Stats, 6 * Iso.nb_starter);
 		for (i = 0; i < Iso.nb_starter; i++) {
 			Stats[i * 6 + 0] = -1;
 			}
@@ -152,7 +152,7 @@ void isomorph_read_statistic_files(
 		h = 0;
 		for (i = 0; i < Iso.nb_starter; i++) {
 			if (Stats[i * 6 + 1]) {
-				Orbiter->Int_vec.copy(Stats + 6 * i, Stats_short + 6 * h, 6);
+				Orbiter->Int_vec->copy(Stats + 6 * i, Stats_short + 6 * h, 6);
 				Stats_short[h * 6 + 0] = i;
 				h++;
 				}
@@ -816,7 +816,7 @@ void isomorph_testing(
 		if (FALSE) {
 			cout << "read representative of orbit " << orbit
 					<< " (id=" << id << ")" << endl;
-			Orbiter->Lint_vec.print(cout, data1, Iso.size);
+			Orbiter->Lint_vec->print(cout, data1, Iso.size);
 			cout << endl;
 			}
 
@@ -971,7 +971,7 @@ void isomorph_identify(
 		if (f_v) {
 			cout << "isomorph_identify read file " << fname[i] << endl;
 			cout << "the_set = ";
-			Orbiter->Lint_vec.print(cout, the_set, set_size);
+			Orbiter->Lint_vec->print(cout, the_set, set_size);
 			cout << endl;
 			}
 
@@ -1083,13 +1083,13 @@ void isomorph_identify_table(
 
 	for (i = 0; i < nb_rows; i++) {
 	
-		Orbiter->Lint_vec.copy(Table + i * set_size, the_set, set_size);
+		Orbiter->Lint_vec->copy(Table + i * set_size, the_set, set_size);
 		
 		if (f_v) {
 			cout << "isomorph_identify_table "
 					"Identifying set no " << i << endl;
 			cout << "the_set = ";
-			Orbiter->Lint_vec.print(cout, the_set, set_size);
+			Orbiter->Lint_vec->print(cout, the_set, set_size);
 			cout << endl;
 			}
 
@@ -1353,8 +1353,8 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 	int f_vvv = (verbose_level >= 3);
 	int id, rep, first; //, c;
 	long int data[1000];
-	combinatorics_domain Combi;
-	sorting Sorting;
+	combinatorics::combinatorics_domain Combi;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "isomorph_compute_down_orbits_for_isomorphism_type "
@@ -1391,7 +1391,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 		
 	if (f_vv) {
 		cout << "data after induced_action_on_set:" << endl;
-		Orbiter->Lint_vec.print(cout, data, Iso->size);
+		Orbiter->Lint_vec->print(cout, data, Iso->size);
 		cout << endl;
 		}
 		
@@ -1441,7 +1441,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 
 		if (f_vvv) {
 			cout << "Orbit reps: nb_orbits=" << nb_orbits << endl;
-			Orbiter->Lint_vec.matrix_print(orbit_reps, nb_orbits, Iso->level);
+			Orbiter->Lint_vec->matrix_print(orbit_reps, nb_orbits, Iso->level);
 			}
 
 		if (f_vv) {
@@ -1468,7 +1468,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 				cout << "iso type " << orbit << " / " << Iso->Reps->count
 						<< " down_orbit " << u << " / "
 						<< nb_orbits << ":" << endl;
-				Orbiter->Lint_vec.print(cout, orbit_reps + u * Iso->level, Iso->level);
+				Orbiter->Lint_vec->print(cout, orbit_reps + u * Iso->level, Iso->level);
 				cout << endl;
 				}
 

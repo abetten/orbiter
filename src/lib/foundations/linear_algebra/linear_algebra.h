@@ -193,7 +193,7 @@ public:
 		int *base_cols, int *kernel_cols);
 	void matrix_get_kernel_as_int_matrix(int *M, int m, int n,
 		int *base_cols, int nb_base_cols,
-		int_matrix *kernel, int verbose_level);
+		data_structures::int_matrix *kernel, int verbose_level);
 	void matrix_get_kernel(int *M, int m, int n,
 		int *base_cols, int nb_base_cols,
 		int &kernel_m, int &kernel_n, int *kernel, int verbose_level);
@@ -313,14 +313,18 @@ public:
 	void adjust_basis(int *V, int *U, int n, int k, int d,
 		int verbose_level);
 	void choose_vector_in_here_but_not_in_here_column_spaces(
-		int_matrix *V, int_matrix *W, int *v, int verbose_level);
+		data_structures::int_matrix *V, data_structures::int_matrix *W,
+		int *v, int verbose_level);
 	void choose_vector_in_here_but_not_in_here_or_here_column_spaces(
-		int_matrix *V, int_matrix *W1, int_matrix *W2, int *v,
+			data_structures::int_matrix *V, data_structures::int_matrix *W1,
+			data_structures::int_matrix *W2, int *v,
 		int verbose_level);
 	int
 	choose_vector_in_here_but_not_in_here_or_here_column_spaces_coset(
 		int &coset,
-		int_matrix *V, int_matrix *W1, int_matrix *W2, int *v,
+		data_structures::int_matrix *V,
+		data_structures::int_matrix *W1,
+		data_structures::int_matrix *W2, int *v,
 		int verbose_level);
 	void vector_add_apply(int *v, int *w, int c, int n);
 	void vector_add_apply_with_stride(int *v, int *w, int stride,

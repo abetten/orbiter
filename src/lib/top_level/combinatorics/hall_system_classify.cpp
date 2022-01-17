@@ -114,7 +114,7 @@ void hall_system_classify::init(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "hall_system_classify::init" << endl;
@@ -159,7 +159,7 @@ void hall_system_classify::init(
 		}
 		unrank_triple(triples + i * 3, i);
 		if (f_v) {
-			Orbiter->Lint_vec.print(cout, triples + i * 3, 3);
+			Orbiter->Lint_vec->print(cout, triples + i * 3, 3);
 			cout << endl;
 		}
 		Sorting.lint_vec_heapsort(triples + i * 3, 3);
@@ -167,7 +167,7 @@ void hall_system_classify::init(
 	if (f_v) {
 		cout << "sorted:" << endl;
 		for (i = 0; i < N; i++) {
-			Orbiter->Lint_vec.print(cout, triples + i * 3, 3);
+			Orbiter->Lint_vec->print(cout, triples + i * 3, 3);
 			cout << endl;
 		}
 	}
@@ -433,7 +433,7 @@ void hall_system_classify::unrank_triple(long int *T, int rk)
 	int a, b, i;
 	int set[3];
 	int binary[3];
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	b = rk % 8;
 	a = rk / 8;
@@ -453,7 +453,7 @@ void hall_system_classify::unrank_triple_pair(long int *T1, long int *T2, int rk
 	int a, b, i;
 	int set[3];
 	int binary[3];
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	b = rk % 8;
 	a = rk / 8;
@@ -481,20 +481,20 @@ void hall_system_classify::early_test_func(long int *S, int len,
 	int orb, f, l, t, h;
 	long int T[3];
 	int f_OK;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "hall_system_classify::early_test_func checking set ";
-		Orbiter->Lint_vec.print(cout, S, len);
+		Orbiter->Lint_vec->print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
-		Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
+		Orbiter->Lint_vec->print(cout, candidates, nb_candidates);
 		cout << endl;
 	}
 
 
-	Orbiter->Int_vec.zero(row_sum, nm1);
-	Orbiter->Int_vec.zero(pair_covering, nb_pairs2);
+	Orbiter->Int_vec->zero(row_sum, nm1);
+	Orbiter->Int_vec->zero(pair_covering, nb_pairs2);
 
 
 	for (i = 0; i < len; i++) {
@@ -519,10 +519,10 @@ void hall_system_classify::early_test_func(long int *S, int len,
 		cout << "hall_system::early_test_func "
 				"pair_covering before testing:" << endl;
 		cout << "row_sum: " << endl;
-		Orbiter->Int_vec.print(cout, row_sum, nm1);
+		Orbiter->Int_vec->print(cout, row_sum, nm1);
 		cout << endl;
 		cout << "pair_covering: " << endl;
-		Orbiter->Int_vec.print(cout, pair_covering, nb_pairs2);
+		Orbiter->Int_vec->print(cout, pair_covering, nb_pairs2);
 		cout << endl;
 	}
 
@@ -543,7 +543,7 @@ void hall_system_classify::early_test_func(long int *S, int len,
 			for (h = 0; h < l; h++ ) {
 				t = Orbits_on_triples->orbit[f + h];
 				unrank_triple(T, t);
-				Orbiter->Lint_vec.print(cout, T, 3);
+				Orbiter->Lint_vec->print(cout, T, 3);
 				cout << ", ";
 			}
 			cout << endl;
@@ -634,7 +634,7 @@ void hall_system_early_test_function(long int *S, int len,
 
 	if (f_v) {
 		cout << "hall_system_early_test_function for set ";
-		Orbiter->Lint_vec.print(cout, S, len);
+		Orbiter->Lint_vec->print(cout, S, len);
 		cout << endl;
 	}
 	H->early_test_func(S, len,

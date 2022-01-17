@@ -15,6 +15,8 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace data_structures {
+
 
 data_input_stream::data_input_stream()
 {
@@ -216,7 +218,7 @@ int data_input_stream::count_number_of_objects_to_test(int verbose_level)
 			{
 				set_of_sets *SoS;
 				int nck;
-				combinatorics_domain Combi;
+				combinatorics::combinatorics_domain Combi;
 
 				nck = Combi.int_n_choose_k(Descr->Input[input_idx].input_data1, Descr->Input[input_idx].input_data3);
 				SoS = NEW_OBJECT(set_of_sets);
@@ -885,7 +887,7 @@ void data_input_stream::read_objects(int verbose_level)
 
 				if (f_v) {
 					cout << "case " << c << " / " << nb_cases << " prefix=";
-					Orbiter->Lint_vec.print(cout, Reps->Sets[c], prefix_sz);
+					Orbiter->Lint_vec->print(cout, Reps->Sets[c], prefix_sz);
 				}
 
 				char str[1000];
@@ -930,8 +932,8 @@ void data_input_stream::read_objects(int verbose_level)
 						object_with_canonical_form *OwCF;
 
 
-						Orbiter->Lint_vec.copy(Reps->Sets[c], set, prefix_sz);
-						Orbiter->Lint_vec.copy(Sol_idx + i * sol_width, set + prefix_sz, sol_width);
+						Orbiter->Lint_vec->copy(Reps->Sets[c], set, prefix_sz);
+						Orbiter->Lint_vec->copy(Sol_idx + i * sol_width, set + prefix_sz, sol_width);
 
 						OwCF = NEW_OBJECT(object_with_canonical_form);
 
@@ -967,4 +969,5 @@ void data_input_stream::read_objects(int verbose_level)
 
 }
 
-}}
+}}}
+

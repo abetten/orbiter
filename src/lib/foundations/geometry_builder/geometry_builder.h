@@ -622,7 +622,7 @@ public:
 
 	std::string fname;
 
-	classify_using_canonical_forms *Canonical_forms;
+	data_structures::classify_using_canonical_forms *Canonical_forms;
 
 	int f_print_mod;
 	int print_mod;

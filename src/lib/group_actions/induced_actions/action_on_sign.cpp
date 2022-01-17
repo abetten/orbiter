@@ -62,7 +62,7 @@ long int action_on_sign::compute_image(int *Elt,
 {
 	int f_v = (verbose_level >= 1);
 	long int u, v, sgn, j;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "action_on_sign::compute_image "

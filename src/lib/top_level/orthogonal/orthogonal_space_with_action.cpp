@@ -167,7 +167,7 @@ void orthogonal_space_with_action::init_group(int verbose_level)
 		cout << "orthogonal_space_with_action::init_group computing "
 				"lex-least base done" << endl;
 		cout << "orthogonal_space_with_action::init_group base: ";
-		Orbiter->Lint_vec.print(cout, A->get_base(), A->base_len());
+		Orbiter->Lint_vec->print(cout, A->get_base(), A->base_len());
 		cout << endl;
 	}
 

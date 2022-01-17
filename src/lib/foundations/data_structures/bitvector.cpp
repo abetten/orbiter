@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace data_structures {
 
 
 bitvector::bitvector()
@@ -143,5 +144,7 @@ void bitvector::print()
 	}
 	cout << endl;
 }
-}}
+
+}}}
+
 

@@ -52,7 +52,7 @@ int classification_of_cubic_surfaces_with_double_sixes_activity_description::rea
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "classification_of_cubic_surfaces_with_double_sixes_activity_description::read_arguments" << endl;

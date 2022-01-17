@@ -34,7 +34,7 @@ int graph_modification_description::check_and_parse_argument(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "graph_modification_description::check_and_parse_argument" << endl;
@@ -67,7 +67,7 @@ int graph_modification_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "graph_modification_description::read_arguments" << endl;

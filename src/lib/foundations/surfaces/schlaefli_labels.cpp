@@ -64,7 +64,7 @@ void schlaefli_labels::init(int verbose_level)
 
 	Sets = NEW_lint(30 * 2);
 	M = NEW_int(6 * 6);
-	Orbiter->Int_vec.zero(M, 6 * 6);
+	Orbiter->Int_vec->zero(M, 6 * 6);
 
 	h = 0;
 	for (i = 0; i < 6; i++) {

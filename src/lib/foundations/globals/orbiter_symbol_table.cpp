@@ -32,7 +32,7 @@ orbiter_symbol_table::~orbiter_symbol_table()
 int orbiter_symbol_table::find_symbol(std::string &str)
 {
 	int i;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	for (i = 0; i < Table.size(); i++) {
 		if (ST.stringcmp(str, Table[i].label.c_str()) == 0) {

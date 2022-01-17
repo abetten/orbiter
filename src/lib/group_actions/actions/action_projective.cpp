@@ -44,7 +44,7 @@ strong_generators *action::set_stabilizer_in_projective_space(
 	OwCF->P = P;
 
 	int nb_rows, nb_cols;
-	bitvector *Canonical_form = NULL;
+	data_structures::bitvector *Canonical_form = NULL;
 
 	OwCF->encoding_size(
 			nb_rows, nb_cols,
@@ -53,10 +53,10 @@ strong_generators *action::set_stabilizer_in_projective_space(
 
 
 	strong_generators *SG;
-	nauty_output *NO;
+	data_structures::nauty_output *NO;
 
 
-	NO = NEW_OBJECT(nauty_output);
+	NO = NEW_OBJECT(data_structures::nauty_output);
 	NO->allocate(nb_rows + nb_cols, 0 /* verbose_level */);
 
 	if (f_v) {
@@ -156,7 +156,7 @@ void action::report_fixed_objects_in_P3(ostream &ost,
 		F->PG_element_unrank_modified(v, 1, 4, i);
 		if (j == i) {
 			ost << i << " : ";
-			Orbiter->Int_vec.print(ost, v, 4);
+			Orbiter->Int_vec->print(ost, v, 4);
 			ost << "\\\\" << endl;
 			cnt++;
 		}

@@ -27,7 +27,7 @@ void isomorph::init_solutions(int **Solutions, int *Nb_sol,
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int i;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "isomorph::init_solutions "
@@ -138,7 +138,7 @@ void isomorph::count_solutions_from_clique_finder_case_by_case(
 	solution_first = NEW_int(nb_starter + 1);
 	solution_len = NEW_int(nb_starter);
 
-	Orbiter->Int_vec.zero(solution_len, nb_starter);
+	Orbiter->Int_vec->zero(solution_len, nb_starter);
 	N = 0;
 	for (i = 0; i < nb_files; i++) {
 		int nb_solutions;
@@ -281,7 +281,7 @@ void isomorph::read_solutions_from_clique_finder_case_by_case(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	file_io Fio;
 
 	int i, no = 0;
@@ -383,7 +383,7 @@ void isomorph::read_solutions_from_clique_finder(
 	int i, no = 0;
 	//int *data;
 	int print_mod = 1000;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	file_io Fio;
 
 	
@@ -421,7 +421,7 @@ void isomorph::read_solutions_from_clique_finder(
 		int nb_solutions_total;
 		string fname_summary;
 		//char extension[1000];
-		string_tools ST;
+		data_structures::string_tools ST;
 
 		fname_summary.assign(fname[i]);
 		ST.chop_off_extension_if_present(fname_summary, ".txt");
@@ -513,7 +513,7 @@ void isomorph::add_solutions_to_database(int *Solutions,
 	int f_vvv = (verbose_level >= 3);
 	int u, v;
 	long int *data;
-	data_structures_global Data;
+	data_structures::data_structures_global Data;
 	
 	if (f_v) {
 		cout << "isomorph::add_solutions_to_database "
@@ -581,10 +581,10 @@ void isomorph::build_up_database(int nb_files,
 	int print_mod = 1000;
 	uint_4 datref;
 	int nb_fail = 0;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	file_io Fio;
-	data_structures_global Data;
-	string_tools ST;
+	data_structures::data_structures_global Data;
+	data_structures::string_tools ST;
 	
 	if (f_v) {
 		cout << "isomorph::build_up_database "
@@ -679,7 +679,7 @@ void isomorph::build_up_database(int nb_files,
 					}
 				else {
 					cout << nb_total << " : " << data[0] << " : ";
-					Orbiter->Lint_vec.print(cout, data + 1, size);
+					Orbiter->Lint_vec->print(cout, data + 1, size);
 					cout << endl;
 					}
 				}
@@ -951,7 +951,7 @@ void isomorph::count_solutions(int nb_files, std::string *fname,
 		cout << "isomorph::count_solutions "
 				"after count_solutions2" << endl;
 		cout << "case_len: ";
-		Orbiter->Int_vec.print(cout, solution_len, nb_starter);
+		Orbiter->Int_vec->print(cout, solution_len, nb_starter);
 		cout << endl;
 		}
 	cout << "total computing time for the search : ";
@@ -1172,7 +1172,7 @@ void isomorph::count_solutions2(int nb_files, std::string *fname,
 	char str[1000];
 	int nb_fail = 0;
 	file_io Fio;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "count_solutions2: reading " << nb_files << " files" << endl;
@@ -1309,7 +1309,7 @@ void isomorph::write_solution_first_and_len()
 
 void isomorph::read_solution_first_and_len()
 {
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	file_io Fio;
 
 	cout << "isomorph::read_solution_first_and_len "
@@ -1449,7 +1449,7 @@ void isomorph::read_hash_and_datref_file(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 5);
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "isomorph::read_hash_and_datref_file" << endl;
@@ -1560,7 +1560,7 @@ void isomorph::read_orbit_data(int verbose_level)
 // and computed orbit_perm_inv[N]
 {
 	int f_v = (verbose_level >= 1);
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	ifstream f(fname_staborbits);
 	int i, a;
@@ -1657,7 +1657,7 @@ void isomorph::print_isomorphism_types(int f_select,
 		load_solution(id, data);
 		cout << "isomorphism type " << i << " : " << j << " : "
 				<< id << " : ";
-		Orbiter->Lint_vec.print(cout, data, size);
+		Orbiter->Lint_vec->print(cout, data, size);
 		cout << endl;
 #if 0
 		for (j = 0; j < size; j++) {
@@ -1694,7 +1694,7 @@ void isomorph::print_isomorphism_types(int f_select,
 		cout << "Computed all orbits on the set, found "
 				<< Orb.nb_orbits << " orbits" << endl;
 		cout << "orbit lengths: ";
-		Orbiter->Int_vec.print(cout, Orb.orbit_len, Orb.nb_orbits);
+		Orbiter->Int_vec->print(cout, Orb.orbit_len, Orb.nb_orbits);
 		cout << endl;
 	
 		if (print_set_function) {
@@ -1733,7 +1733,7 @@ void isomorph::induced_action_on_set_and_kernel(
 		cout << "isomorph::induced_action_on_set_and_kernel "
 				"calling induced_action_by_restriction" << endl;
 		cout << "set: ";
-		Orbiter->Lint_vec.print(cout, set, size);
+		Orbiter->Lint_vec->print(cout, set, size);
 		cout << endl;
 		}
 
@@ -1828,7 +1828,7 @@ void isomorph::induced_action_on_set_and_kernel(
 	
 		file << "The kernel has $" << Orb.nb_orbits
 				<< "$ orbits on the quadric.\\\\" << endl;
-		Orbiter->Int_vec.distribution(Orb.orbit_len, Orb.nb_orbits,
+		Orbiter->Int_vec->distribution(Orb.orbit_len, Orb.nb_orbits,
 				val, mult, len);
 		file << "The orbit length are $[";
 		for (i = len - 1; i >= 0; i--) {
@@ -1903,7 +1903,7 @@ void isomorph::read_event_file(const char *event_file_name,
 			nb_completed_cases, completed_cases, verbose_level);
 	cout << "file " << event_file_name << " holds "
 			<< nb_completed_cases << " completed cases: ";
-	Orbiter->Int_vec.print(cout, completed_cases, nb_completed_cases);
+	Orbiter->Int_vec->print(cout, completed_cases, nb_completed_cases);
 	cout << endl;
 	for (i = 0; i < nb_completed_cases; i++) {
 		event_file_read_case(event_file_name,
@@ -1922,7 +1922,7 @@ void isomorph::skip_through_event_file(
 	char token[1000];
 	int l, j, case_no;
 	char *p_buf;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	cout << "isomorph::skip_through_event_file" << endl;
 
@@ -1978,7 +1978,7 @@ void isomorph::skip_through_event_file1(ifstream &f,
 	char *p_buf;
 	char token[1000];
 	char buf[MY_BUFSIZE];
-	string_tools ST;
+	data_structures::string_tools ST;
 
 
 	while (TRUE) {
@@ -2080,7 +2080,7 @@ void isomorph::event_file_completed_cases(
 	char token[1000];
 	ifstream f(event_file_name);
 	char buf[MY_BUFSIZE];
-	string_tools ST;
+	data_structures::string_tools ST;
 	
 	nb_completed_cases = 0;
 	while (TRUE) {
@@ -2121,7 +2121,7 @@ void isomorph::event_file_read_case(
 	char token[1000];
 	char buf[MY_BUFSIZE];
 	ifstream f(event_file_name);
-	string_tools ST;
+	data_structures::string_tools ST;
 	
 	while (TRUE) {
 
@@ -2165,7 +2165,7 @@ void isomorph::event_file_read_case1(ifstream &f,
 	char *p_buf;
 	char token[1000];
 	char buf[MY_BUFSIZE];
-	string_tools ST;
+	data_structures::string_tools ST;
 
 
 	while (TRUE) {
@@ -2233,8 +2233,8 @@ int isomorph::next_subset_play_back(int &subset_rank,
 	char token[1000];
 	char buf[MY_BUFSIZE];
 	int rank;
-	combinatorics_domain Combi;
-	string_tools ST;
+	combinatorics::combinatorics_domain Combi;
+	data_structures::string_tools ST;
 		
 	f_eof = FALSE;
 	if (play_back_file->eof()) {

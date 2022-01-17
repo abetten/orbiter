@@ -61,7 +61,7 @@ void flag_orbits_incidence_structure::init(object_with_properties *OwP,
 
 	flag_orbits_incidence_structure::OwP = OwP;
 
-	encoded_combinatorial_object *Enc;
+	combinatorics::encoded_combinatorial_object *Enc;
 
 
 	if (f_v) {
@@ -102,7 +102,7 @@ void flag_orbits_incidence_structure::init(object_with_properties *OwP,
 	if (f_v) {
 		cout << "flag_orbits_incidence_structure::init "
 				"Flag_table:" << endl;
-		Orbiter->Lint_vec.matrix_print(Flag_table, nb_flags, 2);
+		Orbiter->Lint_vec->matrix_print(Flag_table, nb_flags, 2);
 	}
 
 	if (f_v) {

@@ -173,7 +173,7 @@ public:
 	void double_matrix_read_csv(std::string &fname, double *&M,
 		int &m, int &n, int verbose_level);
 	void read_column_and_parse(std::string &fname, std::string &col_label,
-		set_of_sets *&SoS, int verbose_level);
+			data_structures::set_of_sets *&SoS, int verbose_level);
 	void int_matrix_write_cas_friendly(std::string &fname, int *M, int m, int n);
 	void int_matrix_write_text(std::string &fname,
 		int *M, int m, int n);
@@ -256,7 +256,7 @@ public:
 	void fix_escape_characters(char *str);
 	void create_files(create_file_description *Descr,
 		int verbose_level);
-	void create_files_list_of_cases(spreadsheet *S,
+	void create_files_list_of_cases(data_structures::spreadsheet *S,
 			create_file_description *Descr, int verbose_level);
 	int number_of_vertices_in_colored_graph(std::string &fname, int verbose_level);
 	void do_csv_file_select_rows(std::string &fname,
@@ -282,6 +282,7 @@ public:
 			std::vector<std::string> &fname, std::string &fname_out, int verbose_level);
 	void do_csv_file_latex(std::string &fname,
 			int f_produce_latex_header,
+			int nb_lines_per_table,
 			int verbose_level);
 	void read_solutions_and_tally(std::string &fname, int sz, int verbose_level);
 	void save_fibration(std::vector<std::vector<std::pair<int, int> > > &Fibration,
@@ -486,13 +487,6 @@ public:
 	void print(int line);
 	void print_csv(std::ostream &ost, int line);
 };
-
-//extern int f_memory_debug;
-//extern int memory_debug_verbose_level;
-//extern mem_object_registry global_mem_object_registry;
-
-//void start_memory_debug();
-//void stop_memory_debug();
 
 
 // #############################################################################
@@ -736,7 +730,7 @@ public:
 // #############################################################################
 
 
-//! to prepare the frames of a video
+//! to prepare files using a unified file naming scheme
 
 class prepare_frames {
 public:

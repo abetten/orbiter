@@ -240,7 +240,7 @@ void any_group::isomorphism_Klein_quadric(std::string &fname, int verbose_level)
 			0,0,0,1,4,2,
 	};
 	int Bv[36];
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 #if 0
 	for (i = 0; i < 6; i++) {
@@ -278,7 +278,7 @@ void any_group::isomorphism_Klein_quadric(std::string &fname, int verbose_level)
 
 		if (f_vv) {
 			cout << "Exterior square:" << endl;
-			Orbiter->Int_vec.matrix_print(An2, 6, 6);
+			Orbiter->Int_vec->matrix_print(An2, 6, 6);
 			cout << endl;
 		}
 
@@ -286,7 +286,7 @@ void any_group::isomorphism_Klein_quadric(std::string &fname, int verbose_level)
 			F->Linear_algebra->mult_vector_from_the_left(Basis2 + j * 6, An2, v, 6, 6);
 					// v[m], A[m][n], vA[n]
 			F->wedge_to_klein(v /* W */, w /*K*/);
-			Orbiter->Int_vec.copy(w, C + j * 6, 6);
+			Orbiter->Int_vec->copy(w, C + j * 6, 6);
 		}
 
 		int Gram[] = {
@@ -304,14 +304,14 @@ void any_group::isomorphism_Klein_quadric(std::string &fname, int verbose_level)
 
 		if (f_vv) {
 			cout << "Transformed Gram matrix:" << endl;
-			Orbiter->Int_vec.matrix_print(new_Gram, 6, 6);
+			Orbiter->Int_vec->matrix_print(new_Gram, 6, 6);
 			cout << endl;
 		}
 
 
 		if (f_vv) {
 			cout << "orthogonal matrix :" << endl;
-			Orbiter->Int_vec.matrix_print(C, 6, 6);
+			Orbiter->Int_vec->matrix_print(C, 6, 6);
 			cout << endl;
 		}
 
@@ -322,7 +322,7 @@ void any_group::isomorphism_Klein_quadric(std::string &fname, int verbose_level)
 
 		if (f_vv) {
 			cout << "orthogonal matrix in the special form:" << endl;
-			Orbiter->Int_vec.matrix_print(E, 6, 6);
+			Orbiter->Int_vec->matrix_print(E, 6, 6);
 			cout << endl;
 		}
 
@@ -341,7 +341,7 @@ void any_group::isomorphism_Klein_quadric(std::string &fname, int verbose_level)
 
 		if (f_vv) {
 			cout << "Transformed special Gram matrix:" << endl;
-			Orbiter->Int_vec.matrix_print(new_special_Gram, 6, 6);
+			Orbiter->Int_vec->matrix_print(new_special_Gram, 6, 6);
 			cout << endl;
 		}
 
@@ -350,7 +350,7 @@ void any_group::isomorphism_Klein_quadric(std::string &fname, int verbose_level)
 		c = Sorting.integer_vec_compare(E, Target, 36);
 		if (c == 0) {
 			cout << "We found it! i=" << i << " element = ";
-			Orbiter->Int_vec.print(cout, M + i * A->make_element_size, A->make_element_size);
+			Orbiter->Int_vec->print(cout, M + i * A->make_element_size, A->make_element_size);
 			cout << endl;
 
 			cout << "Element :" << endl;
@@ -358,15 +358,15 @@ void any_group::isomorphism_Klein_quadric(std::string &fname, int verbose_level)
 			cout << endl;
 
 			cout << "exterior square :" << endl;
-			Orbiter->Int_vec.matrix_print(An2, 6, 6);
+			Orbiter->Int_vec->matrix_print(An2, 6, 6);
 			cout << endl;
 
 			cout << "orthogonal matrix :" << endl;
-			Orbiter->Int_vec.matrix_print(C, 6, 6);
+			Orbiter->Int_vec->matrix_print(C, 6, 6);
 			cout << endl;
 
 			cout << "orthogonal matrix in the special form:" << endl;
-			Orbiter->Int_vec.matrix_print(E, 6, 6);
+			Orbiter->Int_vec->matrix_print(E, 6, 6);
 			cout << endl;
 
 			//exit(1);
@@ -614,7 +614,7 @@ int any_group::subspace_orbits_test_set(
 
 	if (f_v) {
 		cout << "Testing set ";
-		Orbiter->Lint_vec.print(cout, S, len);
+		Orbiter->Lint_vec->print(cout, S, len);
 		cout << endl;
 		cout << "LG->n=" << LG->n << endl;
 	}
@@ -630,7 +630,7 @@ int any_group::subspace_orbits_test_set(
 
 	if (f_vv) {
 		cout << "coordinate matrix:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout,
+		Orbiter->Int_vec->print_integer_matrix_width(cout,
 				orbits_on_subspaces_M, len, n, n, F->log10_of_q);
 	}
 

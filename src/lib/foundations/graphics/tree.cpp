@@ -52,7 +52,7 @@ void tree::init(tree_draw_options *Tree_draw_options,
 	int color;
 	string dummy;
 	string label;
-	string_tools ST;
+	data_structures::string_tools ST;
 	
 	nb_nodes = 0;
 	buf = NEW_char(BUFSIZE_TREE);
@@ -379,12 +379,12 @@ void tree::draw_preprocess(std::string &fname,
 
 		f_node_select = NEW_int(nb_nodes);
 
-		Orbiter->Int_vec.zero(f_node_select, nb_nodes);
-		Orbiter->Int_vec.scan(Tree_draw_options->select_path_text, my_path, sz);
+		Orbiter->Int_vec->zero(f_node_select, nb_nodes);
+		Orbiter->Int_vec->scan(Tree_draw_options->select_path_text, my_path, sz);
 
 		if (f_v) {
 			cout << "tree::draw_preprocess my_path = ";
-			Orbiter->Int_vec.print(cout, my_path, sz);
+			Orbiter->Int_vec->print(cout, my_path, sz);
 			cout << endl;
 		}
 
@@ -393,7 +393,7 @@ void tree::draw_preprocess(std::string &fname,
 			root->find_node(DFS_rk, my_path, sz, verbose_level);
 			if (f_v) {
 				cout << "tree::draw_preprocess my_path = ";
-				Orbiter->Int_vec.print(cout, my_path, sz);
+				Orbiter->Int_vec->print(cout, my_path, sz);
 				cout << " rk=" << DFS_rk << endl;
 			}
 			f_node_select[DFS_rk] = TRUE;

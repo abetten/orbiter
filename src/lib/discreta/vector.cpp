@@ -4,7 +4,8 @@
 // 18.12.1998
 // moved from D2 to ORBI Nov 15, 2007
 
-#include "orbiter.h"
+#include "foundations/foundations.h"
+#include "discreta.h"
 
 #undef VECTOR_COPY_VERBOSE
 #undef VECTOR_CHANGE_KIND_VERBOSE
@@ -623,7 +624,7 @@ static void partition(Vector& v, int left, int right, int *middle)
 static void partition_with_logging(Vector& v, permutation& p, int left, int right, int *middle)
 {
 	int l, r, m, len, m1, res, pivot;
-	algorithms Algo;
+	data_structures::algorithms Algo;
 	
 	// pivot strategy: take the element in the middle: 
 	len = right + 1 - left;

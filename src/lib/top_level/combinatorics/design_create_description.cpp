@@ -55,7 +55,7 @@ int design_create_description::read_arguments(int argc, std::string *argv,
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	cout << "design_create_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {

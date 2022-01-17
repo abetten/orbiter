@@ -118,7 +118,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 
 	if (verbose_level > 5) {
 		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form Incma:" << endl;
-		Orbiter->Int_vec.matrix_print_tight(Inc->M, Inc->nb_rows, Inc->nb_cols);
+		Orbiter->Int_vec->matrix_print_tight(Inc->M, Inc->nb_rows, Inc->nb_cols);
 	}
 
 	//canonical_labeling = NEW_int(nb_rows + nb_cols);
@@ -156,7 +156,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 
 	//can_labeling = NEW_int(N);
 
-	encoded_combinatorial_object Enc;
+	combinatorics::encoded_combinatorial_object Enc;
 #if 0
 		int *Incma;
 		int nb_rows;
@@ -169,9 +169,9 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 	Enc.nb_cols = Inc->nb_cols;
 	Enc.partition = partition;
 
-	nauty_output *NO;
+	data_structures::nauty_output *NO;
 
-	NO = NEW_OBJECT(nauty_output);
+	NO = NEW_OBJECT(data_structures::nauty_output);
 	NO->allocate(N, verbose_level);
 
 	Nau.nauty_interface_matrix_int(
@@ -189,7 +189,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 	}
 	//FREE_int(can_labeling);
 
-	Orbiter->Int_vec.copy_to_lint(NO->Base, NO->Base_lint, NO->Base_length);
+	Orbiter->Int_vec->copy_to_lint(NO->Base, NO->Base_lint, NO->Base_length);
 
 	if (f_v) {
 		cout << "incidence_structure_with_group::set_stabilizer_and_canonical_form "
@@ -199,7 +199,7 @@ void incidence_structure_with_group::set_stabilizer_and_canonical_form(
 	if (verbose_level > 5) {
 		int h;
 		int degree = N;
-		combinatorics_domain Combi;
+		combinatorics::combinatorics_domain Combi;
 
 		for (h = 0; h < NO->Aut_counter; h++) {
 			cout << "aut generator " << h << " / "

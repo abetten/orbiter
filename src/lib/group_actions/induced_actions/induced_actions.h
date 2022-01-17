@@ -236,7 +236,7 @@ class action_on_bricks {
 public:
 
 	action *A;
-	brick_domain *B;
+	combinatorics::brick_domain *B;
 	int degree;
 	int f_linear_action;
 
@@ -244,7 +244,7 @@ public:
 	~action_on_bricks();
 	void null();
 	void free();
-	void init(action *A, brick_domain *B, int f_linear_action, 
+	void init(action *A, combinatorics::brick_domain *B, int f_linear_action,
 		int verbose_level);
 	long int compute_image(int *Elt, long int i,
 		int verbose_level);
@@ -353,7 +353,7 @@ public:
 
 class action_on_factor_space {
 public:
-	vector_space *VS;
+	algebra::vector_space *VS;
 
 
 	// VS->dimension = length of vectors in large space
@@ -418,12 +418,12 @@ public:
 	void null();
 	void free();
 	void init_light(
-		vector_space *VS,
+		algebra::vector_space *VS,
 		action &A_base, action &A,
 		long int *subspace_basis_ranks, int subspace_basis_size,
 		int verbose_level);
 	void init_by_rank_table_mode(
-		vector_space *VS,
+			algebra::vector_space *VS,
 		action &A_base, action &A,
 		long int *subspace_basis_ranks, int subspace_basis_size,
 		long int *point_list, int nb_points,
@@ -435,12 +435,12 @@ public:
 			long int *point_list, int nb_points,
 			int verbose_level);
 	void init_by_rank(
-		vector_space *VS,
+			algebra::vector_space *VS,
 		action &A_base, action &A,
 		long int *subspace_basis_ranks, int subspace_basis_size,
 		int f_compute_tables, int verbose_level);
 	void init_from_coordinate_vectors(
-		vector_space *VS,
+			algebra::vector_space *VS,
 		action &A_base, action &A,
 		int *subspace_basis, int subspace_basis_size, 
 		int f_compute_tables, int verbose_level);
@@ -982,7 +982,7 @@ public:
 	uchar *elt1, *elt2, *elt3;
 		// temporary storage, used in element_store()
 
-	page_storage *Elts;
+	data_structures::page_storage *Elts;
 	
 	product_action();
 	~product_action();

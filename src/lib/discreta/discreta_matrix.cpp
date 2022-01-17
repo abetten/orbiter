@@ -12,9 +12,9 @@
 // renamed from matrix to discreta_matrix to avoid conflicts with ginac
 // Dec 9, 2019
 
-#include "orbiter.h"
+#include "foundations/foundations.h"
+#include "discreta.h"
 
-//#include "partition_backtrack.h"
 
 using namespace std;
 
@@ -1834,7 +1834,7 @@ void discreta_matrix::binomial(int n_min, int n_max,
 	m_mn(m, n);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
-			::Binomial(n_min + i, k_min + j, s_ij(i, j));
+			orbiter::discreta::Binomial(n_min + i, k_min + j, s_ij(i, j));
 			}
 		}
 }
@@ -1850,7 +1850,7 @@ void discreta_matrix::stirling_second(int n_min, int n_max,
 	m_mn(m, n);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
-			::stirling_second(n_min + i,
+			orbiter::discreta::stirling_second(n_min + i,
 					k_min + j, f_ordered, s_ij(i, j), f_v);
 			}
 		}
@@ -1867,7 +1867,7 @@ void discreta_matrix::stirling_first(int n_min, int n_max,
 	m_mn(m, n);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
-			::stirling_first(n_min + i, k_min + j,
+			orbiter::discreta::stirling_first(n_min + i, k_min + j,
 					f_signless, s_ij(i, j), f_v);
 			}
 		}
@@ -1883,7 +1883,7 @@ void discreta_matrix::binomial(int n_min, int n_max,
 	m_mn(m, n);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
-			::Binomial(n_min + i, k_min + j, s_ij(i, j));
+			orbiter::discreta::Binomial(n_min + i, k_min + j, s_ij(i, j));
 			if (f_inverse && ODD(n_min + i + k_min + j))
 				s_ij(i, j).negate();			
 			}

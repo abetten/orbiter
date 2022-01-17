@@ -30,7 +30,7 @@ packings_global::~packings_global()
 void packings_global::merge_packings(
 		std::string *fnames, int nb_files,
 		std::string &file_of_spreads,
-		classify_bitvectors *&CB,
+		data_structures::classify_bitvectors *&CB,
 		int verbose_level)
 {
 #if 0
@@ -336,7 +336,7 @@ void packings_global::select_packings(
 		spread_tables *Spread_tables,
 		int f_self_polar,
 		int f_ago, int select_ago,
-		classify_bitvectors *&CB,
+		data_structures::classify_bitvectors *&CB,
 		int verbose_level)
 {
 #if 0
@@ -734,7 +734,7 @@ void packings_global::select_packings_self_dual(
 		std::string &file_of_spreads_original,
 		int f_split, int split_r, int split_m,
 		spread_tables *Spread_tables,
-		classify_bitvectors *&CB,
+		data_structures::classify_bitvectors *&CB,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

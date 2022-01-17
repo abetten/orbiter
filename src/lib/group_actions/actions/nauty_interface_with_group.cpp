@@ -84,18 +84,18 @@ action *nauty_interface_with_group::create_automorphism_group_and_canonical_labe
 }
 
 action *nauty_interface_with_group::create_automorphism_group_and_canonical_labeling_of_colored_graph(
-	int n, int f_bitvec, bitvector *Bitvec, int *Adj,
+	int n, int f_bitvec, data_structures::bitvector *Bitvec, int *Adj,
 	int *vertex_colors,
 	int *labeling,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	action *A;
-	bitvector *Adj1;
+	data_structures::bitvector *Adj1;
 	int *parts;
 	int nb_parts;
 	int i, j, k, n1, N, f_on = 0, c, nb_edges;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "nauty_interface_with_group::create_automorphism_group_"
@@ -123,7 +123,7 @@ action *nauty_interface_with_group::create_automorphism_group_and_canonical_labe
 	}
 
 	N = (n1 * (n1 - 1)) >> 1;
-	Adj1 = NEW_OBJECT(bitvector);
+	Adj1 = NEW_OBJECT(data_structures::bitvector);
 	Adj1->allocate(N);
 
 	nb_edges = 0;
@@ -205,7 +205,7 @@ action *nauty_interface_with_group::create_automorphism_group_and_canonical_labe
 }
 
 action *nauty_interface_with_group::create_automorphism_group_of_graph_bitvec(
-	int n, bitvector *Bitvec,
+	int n, data_structures::bitvector *Bitvec,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -231,7 +231,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph_bitvec(
 
 action *nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling(
 	int n,
-	int f_bitvector, bitvector *Bitvec, int *Adj,
+	int f_bitvector, data_structures::bitvector *Bitvec, int *Adj,
 	int nb_parts, int *parts,
 	int *labeling,
 	int verbose_level)
@@ -242,10 +242,10 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph_with_part
 	int *partitions;
 	int i, u, a;
 	nauty_interface Nau;
-	nauty_output *NO;
+	data_structures::nauty_output *NO;
 
 
-	NO = NEW_OBJECT(nauty_output);
+	NO = NEW_OBJECT(data_structures::nauty_output);
 
 	NO->N = n;
 
@@ -309,7 +309,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph_with_part
 					"partition_and_labeling: "
 					"The group order is = " << *NO->Ago << " = ";
 			//cout << "transversal length: ";
-			Orbiter->Int_vec.print(cout, NO->Transversal_length, NO->Base_length);
+			Orbiter->Int_vec->print(cout, NO->Transversal_length, NO->Base_length);
 			cout << endl;
 			NO->print_stats();
 		}
@@ -335,7 +335,7 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph_with_part
 
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: "
 				"Base:" << endl;
-		Orbiter->Int_vec.print(cout, NO->Base, NO->Base_length);
+		Orbiter->Int_vec->print(cout, NO->Base, NO->Base_length);
 		cout << endl;
 
 		cout << "nauty_interface_with_group::create_automorphism_group_of_graph_with_partition_and_labeling: "
@@ -390,10 +390,10 @@ action *nauty_interface_with_group::create_automorphism_group_of_graph(
 	int *partition;
 	int i;
 	nauty_interface Nau;
-	nauty_output *NO;
+	data_structures::nauty_output *NO;
 
 
-	NO = NEW_OBJECT(nauty_output);
+	NO = NEW_OBJECT(data_structures::nauty_output);
 
 	NO->N = n;
 
@@ -477,10 +477,10 @@ action *nauty_interface_with_group::create_automorphism_group_and_canonical_labe
 	//longinteger_object Ago;
 	int i;
 	nauty_interface Nau;
-	nauty_output *NO;
+	data_structures::nauty_output *NO;
 
 
-	NO = NEW_OBJECT(nauty_output);
+	NO = NEW_OBJECT(data_structures::nauty_output);
 
 	NO->N = n;
 
@@ -1207,8 +1207,7 @@ void nauty_interface_with_group::add_configuration_graph(ofstream &g,
 
 
 void nauty_interface_with_group::automorphism_group_as_permutation_group(
-		//strong_generators *&SG,
-		nauty_output *NO,
+		data_structures::nauty_output *NO,
 		action *&A_perm,
 		int verbose_level)
 {
@@ -1252,7 +1251,7 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 		projective_space *P,
 		strong_generators *&SG,
 		action *&A_perm,
-		nauty_output *NO,
+		data_structures::nauty_output *NO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1484,8 +1483,8 @@ void nauty_interface_with_group::reverse_engineer_linear_group_from_permutation_
 strong_generators *nauty_interface_with_group::set_stabilizer_of_object(
 	object_with_canonical_form *OwCF,
 	action *A_linear,
-	int f_compute_canonical_form, bitvector *&Canonical_form,
-	nauty_output *&NO,
+	int f_compute_canonical_form, data_structures::bitvector *&Canonical_form,
+	data_structures::nauty_output *&NO,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

@@ -108,7 +108,7 @@ void quartic_curve_activity::perform_activity(int verbose_level)
 
 		if (f_v) {
 			cout << "quartic_curve_activity::perform_activity eqn20 = ";
-			Orbiter->Int_vec.print(cout, eqn20, 20);
+			Orbiter->Int_vec->print(cout, eqn20, 20);
 			cout << endl;
 
 			int i;

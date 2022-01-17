@@ -490,7 +490,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 
 	if (f_v) {
@@ -552,7 +552,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 					"orbit on pairs "
 					<< orbit_on_pairs_idx << " / "
 					<< nb_orbits_on_pairs << " pair \\{";
-			Orbiter->Lint_vec.print(cout, pair_orbit->data, 2);
+			Orbiter->Lint_vec->print(cout, pair_orbit->data, 2);
 			cout << "\\}_{" << pair_orbit->group_order_as_lint() << "}" << endl;
 		}
 
@@ -598,12 +598,12 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 
 			// prepare the flag
 			// copy the arc:
-			Orbiter->Lint_vec.copy(The_arc->data, Flag + 0, 6);
+			Orbiter->Lint_vec->copy(The_arc->data, Flag + 0, 6);
 			// copy orb and the pair:
 			Flag[6] = orbit_on_pairs_idx;
 			p0 = pair_orbit->data[0];
 			p1 = pair_orbit->data[1];
-			Orbiter->Lint_vec.copy(pair_orbit->data, Flag + 7, 2);
+			Orbiter->Lint_vec->copy(pair_orbit->data, Flag + 7, 2);
 			Flag[9] = orbit_on_partition_idx;
 			Flag[10] = partition_rk;
 
@@ -616,7 +616,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 			if (f_vv) {
 				cout << "surfaces_arc_lifting::downstep_one_arc The partition is: ";
 				for (h = 0; h < 2; h++) {
-					Orbiter->Int_vec.print(cout, part + h * 2, 2);
+					Orbiter->Int_vec->print(cout, part + h * 2, 2);
 				}
 				cout << endl;
 			}
@@ -661,7 +661,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 			if (f_v) {
 				cout << "surfaces_arc_lifting::downstep_one_arc "
 						"the arc is: ";
-				Orbiter->Lint_vec.print(cout, The_arc->data, 6);
+				Orbiter->Lint_vec->print(cout, The_arc->data, 6);
 				cout << endl;
 			}
 			Surf->F->PG_elements_embed(The_arc->data, Arc6, 6, 3, 4, v4);
@@ -669,7 +669,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 			if (f_v) {
 				cout << "surfaces_arc_lifting::downstep_one_arc "
 						"after embedding, the arc is: ";
-				Orbiter->Lint_vec.print(cout, Arc6, 6);
+				Orbiter->Lint_vec->print(cout, Arc6, 6);
 				cout << endl;
 			}
 
@@ -681,7 +681,7 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 			if (f_v) {
 				cout << "surfaces_arc_lifting::downstep_one_arc "
 						"the rearranged arcs is: ";
-				Orbiter->Lint_vec.print(cout, Arc6_rearranged, 6);
+				Orbiter->Lint_vec->print(cout, Arc6_rearranged, 6);
 				cout << endl;
 			}
 
@@ -712,14 +712,14 @@ void surfaces_arc_lifting::downstep_one_arc(int arc_idx,
 				cout << "surfaces_arc_lifting::downstep_one_arc "
 						"after Surf->do_arc_lifting_with_two_lines" << endl;
 				cout << "coeff20: ";
-				Orbiter->Int_vec.print(cout, coeff20, 20);
+				Orbiter->Int_vec->print(cout, coeff20, 20);
 				cout << endl;
 				cout << "lines27: ";
-				Orbiter->Lint_vec.print(cout, lines27, 27);
+				Orbiter->Lint_vec->print(cout, lines27, 27);
 				cout << endl;
 			}
-			Orbiter->Int_vec.copy_to_lint(coeff20, Flag + 13, 20);
-			Orbiter->Lint_vec.copy(lines27, Flag + 33, 27);
+			Orbiter->Int_vec->copy_to_lint(coeff20, Flag + 13, 20);
+			Orbiter->Lint_vec->copy(lines27, Flag + 33, 27);
 
 
 			long int arc_stab_order;
@@ -1083,7 +1083,7 @@ void surfaces_arc_lifting::report_flag_orbits(ostream &ost, int verbose_level)
 void surfaces_arc_lifting::report_flag_orbits_in_detail(ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "surfaces_arc_lifting::report_flag_orbits_in_detail" << endl;
@@ -1164,7 +1164,7 @@ void surfaces_arc_lifting::report_flag_orbits_in_detail(ostream &ost, int verbos
 
 		ost << "\\end{align*}" << endl;
 		ost << "$$" << endl;
-		Orbiter->Lint_vec.print(ost, Flag + 13, 20);
+		Orbiter->Lint_vec->print(ost, Flag + 13, 20);
 		ost << "$$" << endl;
 
 
@@ -1227,7 +1227,7 @@ void surfaces_arc_lifting::report_flag_orbits_in_detail(ostream &ost, int verbos
 				<< ", and corresponds to the partition $";
 		Combi.set_partition_4_into_2_unrank(orbit_rep, part);
 		for (h = 0; h < 2; h++) {
-			Orbiter->Int_vec.print(ost, part + h * 2, 2);
+			Orbiter->Int_vec->print(ost, part + h * 2, 2);
 		}
 		ost << "$\\\\" << endl;
 

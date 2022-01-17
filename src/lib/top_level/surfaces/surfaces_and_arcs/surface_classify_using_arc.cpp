@@ -168,8 +168,8 @@ void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pa
 			Six_arcs->nb_arcs_not_on_conic);
 	Arc_identify_nb = NEW_int(Six_arcs->nb_arcs_not_on_conic);
 
-	Orbiter->Int_vec.zero(f_deleted, Six_arcs->nb_arcs_not_on_conic);
-	Orbiter->Int_vec.zero(Arc_identify_nb, Six_arcs->nb_arcs_not_on_conic);
+	Orbiter->Int_vec->zero(f_deleted, Six_arcs->nb_arcs_not_on_conic);
+	Orbiter->Int_vec->zero(Arc_identify_nb, Six_arcs->nb_arcs_not_on_conic);
 
 	transporter = NEW_int(Surf_A->A->elt_size_in_int);
 
@@ -227,7 +227,7 @@ void surface_classify_using_arc::classify_surfaces_through_arcs_and_trihedral_pa
 	int a;
 
 	Decomp = NEW_int(Six_arcs->nb_arcs_not_on_conic * nb_surfaces);
-	Orbiter->Int_vec.zero(Decomp, Six_arcs->nb_arcs_not_on_conic * nb_surfaces);
+	Orbiter->Int_vec->zero(Decomp, Six_arcs->nb_arcs_not_on_conic * nb_surfaces);
 	for (i = 0; i < nb_surfaces; i++) {
 		for (j = 0; j < Arc_identify_nb[i]; j++) {
 			a = Arc_identify[i * Six_arcs->nb_arcs_not_on_conic + j];
@@ -345,7 +345,7 @@ void surface_classify_using_arc::report2(ostream &ost,
 
 
 		ost << "Surface $" << surface_idx << "$ is associated with the following arcs: $";
-		Orbiter->Int_vec.print(ost,
+		Orbiter->Int_vec->print(ost,
 			Arc_identify + surface_idx * Six_arcs->nb_arcs_not_on_conic,
 			Arc_identify_nb[surface_idx]);
 		ost << "$\\\\" << endl;
@@ -427,7 +427,7 @@ void surface_classify_using_arc::report2(ostream &ost,
 
 		ost << "The following " << Arc_identify_nb[surface_idx]
 			<< " arcs are involved with surface " <<   nb_surfaces << ": $";
-		Orbiter->Int_vec.print(ost,
+		Orbiter->Int_vec->print(ost,
 			Arc_identify + surface_idx * Six_arcs->nb_arcs_not_on_conic,
 			Arc_identify_nb[surface_idx]);
 		ost << "$\\\\" << endl;
@@ -463,7 +463,7 @@ void surface_classify_using_arc::report2(ostream &ost,
 
 		ost << "The following " << Arc_identify_nb[surface_idx]
 			<< " arcs are involved with surface " <<   nb_surfaces << ": $";
-		Orbiter->Int_vec.print(ost,
+		Orbiter->Int_vec->print(ost,
 			Arc_identify + surface_idx * Six_arcs->nb_arcs_not_on_conic,
 			Arc_identify_nb[surface_idx]);
 		ost << "$\\\\" << endl;

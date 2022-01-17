@@ -11,6 +11,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace combinatorics {
 
 
 tdo_data::tdo_data()
@@ -599,5 +600,5 @@ void tdo_data::solve_second_system(int verbose_level,
 }
 
 
-}
-}
+}}}
+

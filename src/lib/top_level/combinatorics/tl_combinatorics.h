@@ -25,7 +25,7 @@ class boolean_function_classify {
 
 public:
 
-	boolean_function_domain *BF;
+	combinatorics::boolean_function_domain *BF;
 
 	// group stuff:
 	action *A;
@@ -40,7 +40,7 @@ public:
 	boolean_function_classify();
 	~boolean_function_classify();
 
-	void init_group(boolean_function_domain *BF, int verbose_level);
+	void init_group(combinatorics::boolean_function_domain *BF, int verbose_level);
 	void search_for_bent_functions(int verbose_level);
 
 };
@@ -94,13 +94,13 @@ public:
 	std::string canonical_form_PG_PG_label;
 	int f_canonical_form_PG_has_PA;
 	projective_space_with_action *Canonical_form_PG_PA;
-	classification_of_objects_description *Canonical_form_PG_Descr;
+	combinatorics::classification_of_objects_description *Canonical_form_PG_Descr;
 
 	int f_canonical_form;
-	classification_of_objects_description *Canonical_form_Descr;
+	combinatorics::classification_of_objects_description *Canonical_form_Descr;
 
 	int f_report;
-	classification_of_objects_report_options *Classification_of_objects_report_options;
+	combinatorics::classification_of_objects_report_options *Classification_of_objects_report_options;
 
 	int f_draw_incidence_matrices;
 	std::string draw_incidence_matrices_prefix;
@@ -142,7 +142,7 @@ public:
 	geometric_object_create *GOC;
 
 	int f_has_IS;
-	data_input_stream *IS;
+	data_structures::data_input_stream *IS;
 
 
 	combinatorial_object_activity();
@@ -151,7 +151,7 @@ public:
 			geometric_object_create *GOC,
 			int verbose_level);
 	void init_input_stream(combinatorial_object_activity_description *Descr,
-			data_input_stream *IS,
+			data_structures::data_input_stream *IS,
 			int verbose_level);
 	void perform_activity(int verbose_level);
 	void perform_activity_GOC(int verbose_level);
@@ -160,50 +160,50 @@ public:
 			int f_extract, long int *extract_idx_set, int extract_size,
 			int verbose_level);
 	void post_process_classification(
-			classification_of_objects *CO,
+			combinatorics::classification_of_objects *CO,
 			object_with_properties *&OwP,
 			int f_projective_space, projective_space_with_action *PA,
 			std::string &prefix,
 			int verbose_level);
-	void classification_report(classification_of_objects *CO,
+	void classification_report(combinatorics::classification_of_objects *CO,
 			object_with_properties *OwP, int verbose_level);
 	void latex_report(
-			classification_of_objects_report_options *Report_options,
-			classification_of_objects *CO,
+			combinatorics::classification_of_objects_report_options *Report_options,
+			combinatorics::classification_of_objects *CO,
 			object_with_properties *OwP,
 			int verbose_level);
 	void report_all_isomorphism_types(
 			std::ostream &fp,
-			classification_of_objects_report_options *Report_options,
-			classification_of_objects *CO,
+			combinatorics::classification_of_objects_report_options *Report_options,
+			combinatorics::classification_of_objects *CO,
 			object_with_properties *OwP,
 			int verbose_level);
 	void report_isomorphism_type(
 			std::ostream &fp,
-			classification_of_objects_report_options *Report_options,
-			classification_of_objects *CO,
+			combinatorics::classification_of_objects_report_options *Report_options,
+			combinatorics::classification_of_objects *CO,
 			object_with_properties *OwP,
 			int i, int verbose_level);
 	void report_object(std::ostream &fp,
-			classification_of_objects_report_options *Report_options,
-			classification_of_objects *CO,
+			combinatorics::classification_of_objects_report_options *Report_options,
+			combinatorics::classification_of_objects *CO,
 			object_with_properties *OwP,
 			int object_idx,
 			int verbose_level);
 	void draw_incidence_matrices(
 			std::string &prefix,
-			data_input_stream *IS,
+			data_structures::data_input_stream *IS,
 			int verbose_level);
 	void unpack_from_restricted_action(
 			std::string &prefix,
 			std::string &group_label,
-			data_input_stream *IS,
+			data_structures::data_input_stream *IS,
 			int verbose_level);
 	void line_covering_type(
 			std::string &prefix,
 			std::string &projective_space_label,
 			std::string &lines,
-			data_input_stream *IS,
+			data_structures::data_input_stream *IS,
 			int verbose_level);
 
 };
@@ -242,18 +242,18 @@ public:
 		int verbose_level);
 	void append_orbit_and_adjust_size(schreier *Orb, int idx, int *set, int &sz);
 	void classify_objects_using_nauty(
-		data_input_stream_description *Data,
-		classify_bitvectors *CB,
+			data_structures::data_input_stream_description *Data,
+			data_structures::classify_bitvectors *CB,
 		std::string &output_fname,
 		int verbose_level);
-	void handle_input_file(classify_bitvectors *CB,
+	void handle_input_file(data_structures::classify_bitvectors *CB,
 			int nb_objects_to_test, int t0,
 			std::string &fname, int input_file_idx, int nb_input_files,
 			int N_points, int design_b, int design_k, int partition_class_size,
 			long int *Ago, std::vector<std::vector<long int> > &Reps,
 			int verbose_level);
 	void process_object(
-		classify_bitvectors *CB,
+			data_structures::classify_bitvectors *CB,
 		incidence_structure_with_group *IG,
 		incidence_structure *&Inc_out,
 		int nb_objects_to_test,
@@ -517,7 +517,7 @@ public:
 
 
 	int f_canonical_form;
-	classification_of_objects_description *Canonical_form_Descr;
+	combinatorics::classification_of_objects_description *Canonical_form_Descr;
 
 	int f_extract_solutions_by_index_csv;
 	int f_extract_solutions_by_index_txt;
@@ -582,7 +582,7 @@ public:
 			std::string &H_generators_data,
 			int selected_orbit_length,
 			int verbose_level);
-	void do_canonical_form(classification_of_objects_description *Canonical_form_Descr,
+	void do_canonical_form(combinatorics::classification_of_objects_description *Canonical_form_Descr,
 			int verbose_level);
 	void do_export_inc(
 			design_create *DC,
@@ -782,7 +782,7 @@ public:
 	int n;
 	int q;
 	finite_field *F;
-	heisenberg *H;
+	algebra::heisenberg *H;
 	int *Table;
 	int *Table_abv;
 	int *gens;
@@ -920,7 +920,7 @@ class hadamard_classify {
 public:
 	int n;
 	int N, N2;
-	bitvector *Bitvec;
+	data_structures::bitvector *Bitvec;
 	colored_graph *CG;
 
 	action *A;
@@ -1132,7 +1132,7 @@ public:
 		//		0 /* verbose_level */);
 
 
-	bitvector *Bitvec;
+	data_structures::bitvector *Bitvec;
 	int *degree;
 
 	poset_classification_control *Control;
@@ -1412,7 +1412,7 @@ public:
 
 	std::string label;
 
-	nauty_output *NO;
+	data_structures::nauty_output *NO;
 
 	int f_projective_space;
 	projective_space_with_action *PA;
@@ -1420,7 +1420,7 @@ public:
 
 	action *A_perm;
 
-	tdo_scheme_compute *TDO;
+	combinatorics::tdo_scheme_compute *TDO;
 
 	flag_orbits_incidence_structure *Flags; // if !f_projective_space
 	flag_orbits_incidence_structure *Anti_Flags; // if !f_projective_space
@@ -1428,7 +1428,7 @@ public:
 	object_with_properties();
 	~object_with_properties();
 	void init(object_with_canonical_form *OwCF,
-			nauty_output *NO,
+			data_structures::nauty_output *NO,
 			int f_projective_space, projective_space_with_action *PA,
 			int max_TDO_depth,
 			std::string &label,
@@ -1437,16 +1437,16 @@ public:
 	void lift_generators_to_matrix_group(int verbose_level);
 	void init_object_in_projective_space(
 			object_with_canonical_form *OwCF,
-			nauty_output *NO,
+			data_structures::nauty_output *NO,
 			projective_space_with_action *PA,
 			std::string &label,
 			int verbose_level);
 	void latex_report(std::ostream &ost,
-			classification_of_objects_report_options *Report_options,
+			combinatorics::classification_of_objects_report_options *Report_options,
 			int verbose_level);
 	void compute_TDO(int max_TDO_depth, int verbose_level);
 	void print_TDO(std::ostream &ost,
-			classification_of_objects_report_options *Report_options);
+			combinatorics::classification_of_objects_report_options *Report_options);
 	void export_TDA_with_flag_orbits(std::ostream &ost,
 			schreier *Sch,
 			int verbose_level);
@@ -1598,7 +1598,7 @@ public:
 	action *A_on_points;
 	action *A_on_lines;
 	strong_generators * gens;
-	partitionstack *Stack;
+	data_structures::partitionstack *Stack;
 	schreier *Sch;
 	schreier *Sch_points;
 	schreier *Sch_lines;

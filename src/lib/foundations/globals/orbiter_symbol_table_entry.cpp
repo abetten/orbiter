@@ -251,7 +251,7 @@ void orbiter_symbol_table_entry::init_collection(std::string &label,
 	type = t_object;
 	object_type = t_collection;
 
-	string_tools ST;
+	data_structures::string_tools ST;
 	const char *p = list_of_objects.c_str();
 	char str[1000];
 
@@ -504,7 +504,7 @@ void orbiter_symbol_table_entry::init_vector(std::string &label,
 }
 
 void orbiter_symbol_table_entry::init_combinatorial_objects(std::string &label,
-		data_input_stream *IS, int verbose_level)
+		data_structures::data_input_stream *IS, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 
@@ -543,7 +543,7 @@ void orbiter_symbol_table_entry::init_geometry_builder_object(std::string &label
 void orbiter_symbol_table_entry::print()
 {
 	if (type == t_intvec) {
-		Orbiter->Int_vec.print(cout, vec, vec_len);
+		Orbiter->Int_vec->print(cout, vec, vec_len);
 		cout << endl;
 	}
 	else if (type == t_object) {

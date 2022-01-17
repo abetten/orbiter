@@ -460,6 +460,128 @@ int number_theory_domain::i_power_j(int i, int j)
 	return r;
 }
 
+
+void number_theory_domain::do_eulerfunction_interval(long int n_min, long int n_max, int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	long int a, n, i;
+	long int *T;
+	int t0, t1, dt;
+	os_interface Os;
+	file_io Fio;
+	char str[1000];
+
+	t0 = Os.os_ticks();
+	if (f_v) {
+		cout << "number_theory_domain::do_eulerfunction_interval n_min=" << n_min << " n_max=" << n_max << endl;
+	}
+
+	std::vector<std::pair<long int, long int>> Table;
+
+	for (n = n_min; n <= n_max; n++) {
+
+
+		std::pair<long int, long int> P;
+
+		a = euler_function(n);
+		if (f_v) {
+			cout << "eulerfunction of " << n << " is " << a << endl;
+		}
+
+		P.first = n;
+		P.second = a;
+
+		Table.push_back(P);
+
+	}
+	T = NEW_lint(2 * Table.size());
+	for (i = 0; i < Table.size(); i++) {
+		T[2 * i + 0] = Table[i].first;
+		T[2 * i + 1] = Table[i].second;
+	}
+	sprintf(str, "table_eulerfunction_%ld_%ld.csv", n_min, n_max);
+	string fname;
+
+	fname.assign(str);
+
+	string *Headers;
+
+	Headers = new string[2];
+	Headers[0].assign("N");
+	Headers[1].assign("PHI");
+
+	Fio.lint_matrix_write_csv_override_headers(fname, Headers, T, Table.size(), 2);
+
+	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
+
+	delete [] Headers;
+
+	t1 = Os.os_ticks();
+	dt = t1 - t0;
+	cout << "time: ";
+	Os.time_check_delta(cout, dt);
+	cout << endl;
+	if (f_v) {
+		cout << "number_theory_domain::do_eulerfunction_interval done" << endl;
+	}
+}
+
+
+
+
+long int number_theory_domain::euler_function(long int n)
+//Computes Eulers $\varphi$-function for $n$.
+//Uses the prime factorization of $n$. before: eulerfunc
+{
+	int *primes;
+	int *exponents;
+	int len;
+	long int i, k, p1, e1;
+
+	len = factor_int(n, primes, exponents);
+
+	k = 1;
+	for (i = 0; i < len; i++) {
+		p1 = primes[i];
+		e1 = exponents[i];
+		if (e1 > 1) {
+			k *= i_power_j(p1, e1 - 1);
+		}
+		k *= (p1 - 1);
+	}
+	FREE_int(primes);
+	FREE_int(exponents);
+	return k;
+}
+
+long int number_theory_domain::moebius_function(long int n)
+//Computes the Moebius $\mu$-function for $n$.
+//Uses the prime factorization of $n$.
+{
+	int *primes;
+	int *exponents;
+	int len;
+	long int i;
+
+	len = factor_int(n, primes, exponents);
+
+	for (i = 0; i < len; i++) {
+		if (exponents[i] > 1) {
+			return 0;
+		}
+	}
+	FREE_int(primes);
+	FREE_int(exponents);
+	if (EVEN(len)) {
+		return 1;
+	}
+	else {
+		return -1;
+	}
+}
+
+
+
 long int number_theory_domain::order_mod_p(long int a, long int p)
 //Computes the order of $a$ mod $p$, i.~e. the smallest $k$ 
 //s.~th. $a^k \equiv 1$ mod $p$.
@@ -1560,58 +1682,6 @@ void number_theory_domain::print_longfactorization(int nb_primes,
 	}
 }
 
-long int number_theory_domain::euler_function(long int n)
-//Computes Eulers $\varphi$-function for $n$.
-//Uses the prime factorization of $n$. before: eulerfunc
-{
-	int *primes;
-	int *exponents;
-	int len;
-	long int i, k, p1, e1;
-			
-	len = factor_int(n, primes, exponents);
-	
-	k = 1;
-	for (i = 0; i < len; i++) {
-		p1 = primes[i];
-		e1 = exponents[i];
-		if (e1 > 1) {
-			k *= i_power_j(p1, e1 - 1);
-		}
-		k *= (p1 - 1);
-	}
-	FREE_int(primes);
-	FREE_int(exponents);
-	return k;
-}
-
-long int number_theory_domain::moebius_function(long int n)
-//Computes the Moebius $\mu$-function for $n$.
-//Uses the prime factorization of $n$.
-{
-	int *primes;
-	int *exponents;
-	int len;
-	long int i;
-
-	len = factor_int(n, primes, exponents);
-
-	for (i = 0; i < len; i++) {
-		if (exponents[i] > 1) {
-			return 0;
-		}
-	}
-	FREE_int(primes);
-	FREE_int(exponents);
-	if (EVEN(len)) {
-		return 1;
-	}
-	else {
-		return -1;
-	}
-}
-
-
 
 void number_theory_domain::int_add_fractions(int at, int ab,
 		int bt, int bb, int &ct, int &cb,
@@ -1794,7 +1864,7 @@ void number_theory_domain::do_babystep_giantstep(
 	long int gn, gmn, hgmn;
 	long int i, r;
 	number_theory_domain NT;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "number_theory_domain::do_babystep_giantstep "
@@ -1836,8 +1906,8 @@ void number_theory_domain::do_babystep_giantstep(
 		Table1[i] = NT.mult_mod(Table1[i - 1], g, p);
 		Table2[i] = NT.mult_mod(Table2[i - 1], gmn, p);
 	}
-	Orbiter->Lint_vec.copy(Table1, data, n);
-	Orbiter->Lint_vec.copy(Table2, data + n, n);
+	Orbiter->Lint_vec->copy(Table1, data, n);
+	Orbiter->Lint_vec->copy(Table2, data + n, n);
 	Sorting.lint_vec_heapsort(data, 2 * n);
 	if (f_v) {
 		cout << "duplicates:" << endl;

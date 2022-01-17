@@ -768,7 +768,7 @@ void vector_ge::save_csv(std::string &fname, int verbose_level)
 			A->element_code_for_make_element(Elt, data);
 
 			stringstream ss;
-			Orbiter->Int_vec.print_str_naked(ss, data, A->make_element_size);
+			Orbiter->Int_vec->print_str_naked(ss, data, A->make_element_size);
 			ost << i << ",\"" << ss.str() << "\"" << endl;
 		}
 		ost << "END" << endl;
@@ -789,7 +789,7 @@ void vector_ge::read_column_csv(std::string &fname, action *A, int col_idx, int 
 	}
 
 	file_io Fio;
-	spreadsheet S;
+	data_structures::spreadsheet S;
 	int n, i, me_sz;
 
 
@@ -813,7 +813,7 @@ void vector_ge::read_column_csv(std::string &fname, action *A, int col_idx, int 
 		int sz;
 
 		S.get_string(s, i + 1, col_idx);
-		Orbiter->Int_vec.scan(s, data, sz);
+		Orbiter->Int_vec->scan(s, data, sz);
 		if (sz != me_sz) {
 			cout << "vector_ge::read_column_csv sz != me_sz" << endl;
 			cout << "vector_ge::read_column_csv sz = " << sz << endl;
@@ -841,11 +841,11 @@ void vector_ge::extract_subset_of_elements_by_rank_text_vector(
 	int *v;
 	int len;
 
-	Orbiter->Int_vec.scan(rank_vector_text, v, len);
+	Orbiter->Int_vec->scan(rank_vector_text, v, len);
 	if (f_v) {
 		cout << "vector_ge::extract_subset_of_elements_"
 				"by_rank_text_vector after scanning: ";
-		Orbiter->Int_vec.print(cout, v, len);
+		Orbiter->Int_vec->print(cout, v, len);
 		cout << endl;
 	}
 	extract_subset_of_elements_by_rank(v, len, S, verbose_level);
@@ -984,10 +984,10 @@ void vector_ge::reverse_isomorphism_exterior_square(int verbose_level)
 		cout << "generator " << i << " / " << len << ":" << endl;
 
 		cout << "before:" << endl;
-		Orbiter->Int_vec.matrix_print(ith(i), 6, 6);
+		Orbiter->Int_vec->matrix_print(ith(i), 6, 6);
 
 		cout << "after:" << endl;
-		Orbiter->Int_vec.matrix_print(A4, 4, 4);
+		Orbiter->Int_vec->matrix_print(A4, 4, 4);
 	}
 
 	FREE_OBJECT(K);

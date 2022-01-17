@@ -456,7 +456,7 @@ void action::read_conjugacy_classes_and_normalizers_from_MAGMA(
 		}
 		if (f_v) {
 			cout << "perms:" << endl;
-			Orbiter->Int_vec.matrix_print(perms, nb_classes, degree);
+			Orbiter->Int_vec->matrix_print(perms, nb_classes, degree);
 		}
 		for (i = 0; i < nb_classes * degree; i++) {
 			perms[i]--;
@@ -1201,7 +1201,7 @@ void action::read_conjugacy_classes_and_normalizers(
 	cout << "The group has order " << go << endl;
 
 	string fname_latex;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	fname_latex.assign(fname);
 
@@ -1489,7 +1489,7 @@ void action::read_and_report_conjugacy_classes_and_normalizers(ostream &ost,
 	cout << "The group has order " << go << endl;
 
 	string fname_latex;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	fname_latex.assign(fname);
 

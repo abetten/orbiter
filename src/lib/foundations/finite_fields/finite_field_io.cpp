@@ -1273,7 +1273,7 @@ void finite_field::display_table_of_projective_points2(
 	for (i = 0; i < nb_pts; i++) {
 		PG_element_unrank_modified_lint(coords, 1, len, Pts[i]);
 		ost << i << " & " << Pts[i] << " & ";
-		Orbiter->Int_vec.print(ost, coords, len);
+		Orbiter->Int_vec->print(ost, coords, len);
 		ost << "\\\\" << endl;
 		if (((i + 1) % 30) == 0) {
 			ost << "\\hline" << endl;
@@ -1306,7 +1306,7 @@ void finite_field::display_table_of_projective_points_easy(
 	ost << "\\hline" << endl;
 	for (i = 0; i < nb_pts; i++) {
 		PG_element_unrank_modified_lint(coords, 1, len, Pts[i]);
-		Orbiter->Int_vec.print(ost, coords, len);
+		Orbiter->Int_vec->print(ost, coords, len);
 		ost << "\\\\" << endl;
 		if (((i + 1) % 30) == 0) {
 			ost << "\\hline" << endl;
@@ -1331,7 +1331,7 @@ void finite_field::export_magma(int d, long int *Pts, int nb_pts, std::string &f
 	string fname2;
 	int *v;
 	int h, i, a, b;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	v = NEW_int(d);
 	fname2.assign(fname);
@@ -1385,7 +1385,7 @@ void finite_field::export_gap(int d, long int *Pts, int nb_pts, std::string &fna
 	string fname2;
 	int *v;
 	int h, i, a, b;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	v = NEW_int(d);
 	fname2.assign(fname);

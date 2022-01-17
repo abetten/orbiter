@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace data_structures {
 
 
 spreadsheet::spreadsheet()
@@ -485,26 +486,46 @@ void spreadsheet::print_table_latex_all_columns(
 }
 
 void spreadsheet::print_table_latex(ostream &ost,
-		int *f_column_select, int f_enclose_in_parentheses)
+		int *f_column_select, int f_enclose_in_parentheses,
+		int nb_lines_per_table)
 {
-	int i, j;
+	int I, i, j;
+	int nb_r;
 	
+
+	nb_r = nb_rows - 1; // take away one because of header
+
 	//cout << "Table:" << endl;
-	ost << "\\begin{tabular}{|";
-	for (j = 0; j < nb_cols; j++) {
-		if (f_column_select[j]) {
-			ost << "r|";
-			//ost << "p{3cm}|";
+	for (I = 0; I < (nb_r + nb_lines_per_table - 1) / nb_lines_per_table; I++) {
+		ost << "\\begin{tabular}[t]{|";
+		for (j = 0; j < nb_cols; j++) {
+			if (f_column_select[j]) {
+				ost << "r|";
+				//ost << "p{3cm}|";
 			}
 		}
-	ost << "}" << endl;
-	ost << "\\hline" << endl;
-	for (i = 0; i < nb_rows; i++) {
-		print_table_row_latex(i,
-				f_column_select, f_enclose_in_parentheses, ost);
+		ost << "}" << endl;
 		ost << "\\hline" << endl;
+
+		print_table_row_latex(0,
+				f_column_select,
+				f_enclose_in_parentheses,
+				ost);
+		ost << "\\hline" << endl;
+		ost << "\\hline" << endl;
+
+
+		for (i = 0; i < nb_lines_per_table; i++) {
+			if (1 + I * nb_lines_per_table + i < nb_rows) {
+				print_table_row_latex(1 + I * nb_lines_per_table + i,
+						f_column_select,
+						f_enclose_in_parentheses,
+						ost);
+				ost << "\\hline" << endl;
+			}
 		}
-	ost << "\\end{tabular}" << endl;
+		ost << "\\end{tabular}" << endl;
+	}
 }
 
 void spreadsheet::print_table_row(int row,
@@ -1506,7 +1527,6 @@ void spreadsheet::patch_with(spreadsheet *S2, char *join_by)
 
 
 
-}
-}
+}}}
 
 

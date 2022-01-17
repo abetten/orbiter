@@ -361,26 +361,26 @@ MODULES= \
 		classification/set_stabilizer/stabilizer_orbits_and_types.o \
 		classification/set_stabilizer/substructure_classifier.o \
 		classification/set_stabilizer/substructure_stats_and_selection.o \
-		DISCRETA/base.o \
-		DISCRETA/bt_key.o \
-		DISCRETA/btree.o \
-		DISCRETA/database.o \
-		DISCRETA/design.o \
-		DISCRETA/design_parameter.o \
-		DISCRETA/design_parameter_source.o \
-		DISCRETA/discreta_global.o \
-		DISCRETA/discreta_matrix.o \
-		DISCRETA/domain.o \
-		DISCRETA/global.o \
-		DISCRETA/hollerith.o \
-		DISCRETA/integer.o \
-		DISCRETA/longinteger.o \
-		DISCRETA/memory.o \
-		DISCRETA/number_partition.o \
-		DISCRETA/page_table.o \
-		DISCRETA/permutation.o \
-		DISCRETA/unipoly.o \
-		DISCRETA/vector.o \
+		discreta/base.o \
+		discreta/bt_key.o \
+		discreta/btree.o \
+		discreta/database.o \
+		discreta/design.o \
+		discreta/design_parameter.o \
+		discreta/design_parameter_source.o \
+		discreta/discreta_global.o \
+		discreta/discreta_matrix.o \
+		discreta/domain.o \
+		discreta/global.o \
+		discreta/hollerith.o \
+		discreta/integer.o \
+		discreta/longinteger.o \
+		discreta/memory.o \
+		discreta/number_partition.o \
+		discreta/page_table.o \
+		discreta/permutation.o \
+		discreta/unipoly.o \
+		discreta/vector.o \
 		top_level/algebra_and_number_theory/algebra_global_with_action.o \
 		top_level/algebra_and_number_theory/any_group_linear.o \
 		top_level/algebra_and_number_theory/any_group.o \
@@ -559,7 +559,7 @@ all:
 	cd foundations; $(MAKE)
 	cd group_actions; $(MAKE)
 	cd classification; $(MAKE)
-	cd DISCRETA; $(MAKE)
+	cd discreta; $(MAKE)
 	cd top_level; $(MAKE)
 	ar ruvs liborbiter.a $(MODULES)
 
@@ -568,7 +568,7 @@ clean:
 	cd foundations; $(MAKE) clean
 	cd group_actions; $(MAKE) clean
 	cd classification; $(MAKE) clean
-	cd DISCRETA; $(MAKE) clean
+	cd discreta; $(MAKE) clean
 	cd top_level; $(MAKE) clean
 	- rm *.o *.a 
 

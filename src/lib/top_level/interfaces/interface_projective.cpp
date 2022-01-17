@@ -66,7 +66,7 @@ interface_projective::interface_projective()
 void interface_projective::print_help(int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (ST.stringcmp(argv[i], "-create_points_on_quartic") == 0) {
 		cout << "-create_points_on_quartic <double : desired_distance>" << endl;
@@ -99,7 +99,7 @@ void interface_projective::print_help(int argc,
 int interface_projective::recognize_keyword(int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (i >= argc) {
 		return false;
@@ -135,7 +135,7 @@ void interface_projective::read_arguments(int argc,
 		std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "interface_projective::read_arguments" << endl;

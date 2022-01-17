@@ -237,7 +237,7 @@ public:
 		// [total_nb_points * total_nb_blocks]
 
 	incidence_structure *I;
-	partitionstack *Stack;
+	data_structures::partitionstack *Stack;
 	std::string fname_incidence_pic;
 	std::string fname_row_scheme;
 	std::string fname_col_scheme;
@@ -320,7 +320,7 @@ public:
 	long int *fixpoint_clique_orbit_numbers;
 	strong_generators *fixpoint_clique_stabilizer_gens;
 	long int *fixpoint_clique;
-	set_of_sets *Filtered_orbits;
+	data_structures::set_of_sets *Filtered_orbits;
 
 	std::string fname_graph;
 	std::string fname_solutions;
@@ -673,7 +673,7 @@ public:
 		// induced_action_on_orbits(A_on_reduced_spreads,
 		// reduced_spread_orbits_under_H)
 
-	set_of_sets *Orbit_invariant;
+	data_structures::set_of_sets *Orbit_invariant;
 		// the values of Spread_type_reduced->type[spread_idx]
 		// for the spreads in one orbit.
 		// Since it is an orbit invariant,
@@ -783,7 +783,7 @@ public:
 	void merge_packings(
 			std::string *fnames, int nb_files,
 			std::string &file_of_spreads,
-			classify_bitvectors *&CB,
+			data_structures::classify_bitvectors *&CB,
 			int verbose_level);
 	void select_packings(
 			std::string &fname,
@@ -791,14 +791,14 @@ public:
 			spread_tables *Spread_tables,
 			int f_self_polar,
 			int f_ago, int select_ago,
-			classify_bitvectors *&CB,
+			data_structures::classify_bitvectors *&CB,
 			int verbose_level);
 	void select_packings_self_dual(
 			std::string &fname,
 			std::string &file_of_spreads_original,
 			int f_split, int split_r, int split_m,
 			spread_tables *Spread_tables,
-			classify_bitvectors *&CB,
+			data_structures::classify_bitvectors *&CB,
 			int verbose_level);
 
 };

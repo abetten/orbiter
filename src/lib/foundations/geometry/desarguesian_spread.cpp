@@ -163,7 +163,7 @@ void desarguesian_spread::calculate_spread_elements(
 			}
 		FQ->PG_element_unrank_modified(v, 1, m, h);
 		if (f_vv) {
-			Orbiter->Int_vec.print(cout, v, m);
+			Orbiter->Int_vec->print(cout, v, m);
 			cout << endl;
 			}
 		for (i = 0; i < s; i++) {
@@ -195,11 +195,11 @@ void desarguesian_spread::calculate_spread_elements(
 			}
 		if (f_vv) {
 			cout << "basis element " << h << " / " << N << ":" << endl;
-			Orbiter->Int_vec.print(cout, v, m);
+			Orbiter->Int_vec->print(cout, v, m);
 			cout << endl;
-			Orbiter->Int_vec.matrix_print(z, s, n);
+			Orbiter->Int_vec->matrix_print(z, s, n);
 			}
-		Orbiter->Int_vec.copy(z,
+		Orbiter->Int_vec->copy(z,
 			Spread_elements + h * spread_element_size,
 			spread_element_size);
 
@@ -233,9 +233,9 @@ void desarguesian_spread::calculate_spread_elements(
 			}
 		if (f_vv) {
 			cout << "basis element " << h << " / " << N << ":" << endl;
-			Orbiter->Int_vec.matrix_print(Spread_elt_basis, s, n);
+			Orbiter->Int_vec->matrix_print(Spread_elt_basis, s, n);
 			cout << "Consists of the following points:" << endl;
-			Orbiter->Int_vec.print(cout,
+			Orbiter->Int_vec->print(cout,
 				List_of_points + h * nb_points_per_spread_element,
 				nb_points_per_spread_element);
 			cout << endl;
@@ -305,7 +305,7 @@ void desarguesian_spread::compute_shadow(
 
 	if (f_vv) {
 		cout << "Intersection_dimensions:";
-		Orbiter->Int_vec.print(cout, Intersection_dimensions, N);
+		Orbiter->Int_vec->print(cout, Intersection_dimensions, N);
 		cout << endl;
 		}
 	
@@ -364,7 +364,7 @@ void desarguesian_spread::compute_linear_set(int *Basis, int basis_sz,
 	if (f_v) {
 		cout << "desarguesian_spread::compute_linear_set "
 				"The linear set is: ";
-		Orbiter->Lint_vec.print(cout, the_linear_set, the_linear_set_sz);
+		Orbiter->Lint_vec->print(cout, the_linear_set, the_linear_set_sz);
 		cout << endl;
 		}
 
@@ -384,7 +384,7 @@ void desarguesian_spread::print_spread_element_table_tex(std::ostream &ost)
 	for (a = 0; a < N; a++) {
 		FQ->PG_element_unrank_modified(v, 1, m, a);
 		ost << "$";
-		Orbiter->Int_vec.print(ost, v, m);
+		Orbiter->Int_vec->print(ost, v, m);
 		ost << "$";
 		ost << " & ";
 		ost << "$";
@@ -423,7 +423,7 @@ void desarguesian_spread::print_spread_elements_tex(std::ostream &ost)
 		ost << a << " / " << N << ":";
 		FQ->PG_element_unrank_modified(v, 1, m, a);
 		ost << "$";
-		Orbiter->Int_vec.print(ost, v, m);
+		Orbiter->Int_vec->print(ost, v, m);
 		ost << "=";
 		ost << "\\left[" << endl;
 		ost << "\\begin{array}{*{" << n << "}{c}}" << endl;
@@ -444,7 +444,7 @@ void desarguesian_spread::print_spread_elements_tex(std::ostream &ost)
 		}
 	ost << "\\end{multicols}" << endl;
 	ost << "Spread elements by rank: ";
-	Orbiter->Lint_vec.print(ost, Rk, N);
+	Orbiter->Lint_vec->print(ost, Rk, N);
 	ost << "\\\\" << endl;
 	FREE_int(v);
 }
@@ -469,7 +469,7 @@ void desarguesian_spread::print_linear_set_element_tex(long int a, int sz)
 	v = NEW_int(m);
 	FQ->PG_element_unrank_modified(v, 1, m, a);
 	cout << "D_{";
-	Orbiter->Int_vec.print(cout, v, m);
+	Orbiter->Int_vec->print(cout, v, m);
 	cout << "}";
 
 	FREE_int(v);

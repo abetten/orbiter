@@ -1258,6 +1258,7 @@ void numerics::substitute_quadric_linear(
 	int v[4];
 	number_theory_domain NT;
 	geometry_global Gg;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "substitute_quadric_linear" << endl;
@@ -1267,13 +1268,13 @@ void numerics::substitute_quadric_linear(
 
 	for (i = 0; i < nb_affine; i++) {
 		Gg.AG_element_unrank(n /* q */, A, 1, degree, i);
-		Orbiter->Int_vec.zero(v, n);
+		Orbiter->Int_vec->zero(v, n);
 		for (j = 0; j < degree; j++) {
 			a = A[j];
 			v[a]++;
 			}
 		for (idx = 0; idx < 10; idx++) {
-			if (int_vec_compare(v, Variables + idx * 2, 2) == 0) {
+			if (Sorting.int_vec_compare(v, Variables + idx * 2, 2) == 0) {
 				break;
 				}
 			}
@@ -1400,6 +1401,7 @@ void numerics::substitute_cubic_linear_using_povray_ordering(
 	int v[4];
 	number_theory_domain NT;
 	geometry_global Gg;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "numerics::substitute_cubic_linear_using_povray_ordering" << endl;
@@ -1410,10 +1412,10 @@ void numerics::substitute_cubic_linear_using_povray_ordering(
 
 	if (FALSE) {
 		cout << "Variables:" << endl;
-		Orbiter->Int_vec.matrix_print(Variables, 20, 3);
+		Orbiter->Int_vec->matrix_print(Variables, 20, 3);
 		}
 	Monomials = NEW_int(nb_monomials * n);
-	Orbiter->Int_vec.zero(Monomials, nb_monomials * n);
+	Orbiter->Int_vec->zero(Monomials, nb_monomials * n);
 	for (i = 0; i < nb_monomials; i++) {
 		for (j = 0; j < degree; j++) {
 			a = Variables[i * degree + j];
@@ -1422,27 +1424,27 @@ void numerics::substitute_cubic_linear_using_povray_ordering(
 		}
 	if (FALSE) {
 		cout << "Monomials:" << endl;
-		Orbiter->Int_vec.matrix_print(Monomials, nb_monomials, n);
+		Orbiter->Int_vec->matrix_print(Monomials, nb_monomials, n);
 		}
 
 	for (i = 0; i < nb_affine; i++) {
 		Gg.AG_element_unrank(n /* q */, A, 1, degree, i);
-		Orbiter->Int_vec.zero(v, n);
+		Orbiter->Int_vec->zero(v, n);
 		for (j = 0; j < degree; j++) {
 			a = A[j];
 			v[a]++;
 			}
 		for (idx = 0; idx < nb_monomials; idx++) {
-			if (int_vec_compare(v, Monomials + idx * n, n) == 0) {
+			if (Sorting.int_vec_compare(v, Monomials + idx * n, n) == 0) {
 				break;
 				}
 			}
 		if (idx == nb_monomials) {
 			cout << "could not determine Affine_to_monomial" << endl;
 			cout << "Monomials:" << endl;
-			Orbiter->Int_vec.matrix_print(Monomials, nb_monomials, n);
+			Orbiter->Int_vec->matrix_print(Monomials, nb_monomials, n);
 			cout << "v=";
-			Orbiter->Int_vec.print(cout, v, n);
+			Orbiter->Int_vec->print(cout, v, n);
 			exit(1);
 			}
 		Affine_to_monomial[i] = idx;	
@@ -1450,7 +1452,7 @@ void numerics::substitute_cubic_linear_using_povray_ordering(
 
 	if (FALSE) {
 		cout << "Affine_to_monomial:";
-		Orbiter->Int_vec.print(cout, Affine_to_monomial, nb_affine);
+		Orbiter->Int_vec->print(cout, Affine_to_monomial, nb_affine);
 		cout << endl;
 		}
 
@@ -1605,6 +1607,7 @@ void numerics::substitute_quartic_linear_using_povray_ordering(
 	int v[4];
 	number_theory_domain NT;
 	geometry_global Gg;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "numerics::substitute_quartic_linear_using_povray_ordering" << endl;
@@ -1615,10 +1618,10 @@ void numerics::substitute_quartic_linear_using_povray_ordering(
 
 	if (FALSE) {
 		cout << "Variables:" << endl;
-		Orbiter->Int_vec.matrix_print(Variables, 35, 4);
+		Orbiter->Int_vec->matrix_print(Variables, 35, 4);
 		}
 	Monomials = NEW_int(nb_monomials * n);
-	Orbiter->Int_vec.zero(Monomials, nb_monomials * n);
+	Orbiter->Int_vec->zero(Monomials, nb_monomials * n);
 	for (i = 0; i < nb_monomials; i++) {
 		for (j = 0; j < degree; j++) {
 			a = Variables[i * degree + j];
@@ -1627,27 +1630,27 @@ void numerics::substitute_quartic_linear_using_povray_ordering(
 		}
 	if (FALSE) {
 		cout << "Monomials:" << endl;
-		Orbiter->Int_vec.matrix_print(Monomials, nb_monomials, n);
+		Orbiter->Int_vec->matrix_print(Monomials, nb_monomials, n);
 		}
 
 	for (i = 0; i < nb_affine; i++) {
 		Gg.AG_element_unrank(n /* q */, A, 1, degree, i);
-		Orbiter->Int_vec.zero(v, n);
+		Orbiter->Int_vec->zero(v, n);
 		for (j = 0; j < degree; j++) {
 			a = A[j];
 			v[a]++;
 			}
 		for (idx = 0; idx < nb_monomials; idx++) {
-			if (int_vec_compare(v, Monomials + idx * n, n) == 0) {
+			if (Sorting.int_vec_compare(v, Monomials + idx * n, n) == 0) {
 				break;
 				}
 			}
 		if (idx == nb_monomials) {
 			cout << "could not determine Affine_to_monomial" << endl;
 			cout << "Monomials:" << endl;
-			Orbiter->Int_vec.matrix_print(Monomials, nb_monomials, n);
+			Orbiter->Int_vec->matrix_print(Monomials, nb_monomials, n);
 			cout << "v=";
-			Orbiter->Int_vec.print(cout, v, n);
+			Orbiter->Int_vec->print(cout, v, n);
 			exit(1);
 			}
 		Affine_to_monomial[i] = idx;
@@ -1655,7 +1658,7 @@ void numerics::substitute_quartic_linear_using_povray_ordering(
 
 	if (FALSE) {
 		cout << "Affine_to_monomial:";
-		Orbiter->Int_vec.print(cout, Affine_to_monomial, nb_affine);
+		Orbiter->Int_vec->print(cout, Affine_to_monomial, nb_affine);
 		cout << endl;
 		}
 
@@ -2706,7 +2709,7 @@ double numerics::bernoulli(double p, int n, int k)
 {
 	double q, P, Q, PQ, c;
 	int nCk;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	q = 1. - p;
 	P = power_of(p, k);

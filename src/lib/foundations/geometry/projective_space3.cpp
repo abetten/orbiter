@@ -68,7 +68,7 @@ int projective_space::reverse_engineer_semilinear_map(
 				v1[h] = 0;
 			}
 		}
-		Orbiter->Int_vec.copy(v1, v1_save, d);
+		Orbiter->Int_vec->copy(v1, v1_save, d);
 		i = rank_point(v1);
 			// Now, the value of i should be equal to e.
 		//j = element_image_of(i, Elt, 0);
@@ -82,12 +82,12 @@ int projective_space::reverse_engineer_semilinear_map(
 #endif
 
 
-		Orbiter->Int_vec.copy(v2, Mtx + e * d, d);
+		Orbiter->Int_vec->copy(v2, Mtx + e * d, d);
 	}
 
 	if (f_vv) {
 		cout << "Mtx (before scaling):" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Mtx, d, d, d, F->log10_of_q);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, Mtx, d, d, d, F->log10_of_q);
 		cout << endl;
 	}
 
@@ -100,7 +100,7 @@ int projective_space::reverse_engineer_semilinear_map(
 	for (h = 0; h < d; h++) {
 		v1[h] = 1;
 	}
-	Orbiter->Int_vec.copy(v1, v1_save, d);
+	Orbiter->Int_vec->copy(v1, v1_save, d);
 	i = rank_point(v1);
 	//j = element_image_of(i, Elt, 0);
 	j = Elt[i];
@@ -126,7 +126,7 @@ int projective_space::reverse_engineer_semilinear_map(
 	}
 	if (f_vv) {
 		cout << "linear system:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, system,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, system,
 				d, d + 1, d + 1, F->log10_of_q);
 		cout << endl;
 	}
@@ -137,7 +137,7 @@ int projective_space::reverse_engineer_semilinear_map(
 	}
 	if (f_vv) {
 		cout << "after Gauss_simple:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, system,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, system,
 				d, d + 1, d + 1, F->log10_of_q);
 		cout << endl;
 	}
@@ -155,7 +155,7 @@ int projective_space::reverse_engineer_semilinear_map(
 
 	if (f_vv) {
 		cout << "Mtx (after scaling):" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Mtx, d, d, d, F->log10_of_q);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, Mtx, d, d, d, F->log10_of_q);
 		cout << endl;
 	}
 
@@ -184,7 +184,7 @@ int projective_space::reverse_engineer_semilinear_map(
 				v1[h] = 0;
 			}
 		}
-		Orbiter->Int_vec.copy(v1, v1_save, d);
+		Orbiter->Int_vec->copy(v1, v1_save, d);
 		i = rank_point(v1);
 		//j = element_image_of(i, Elt, 0);
 		j = Elt[i];
@@ -216,7 +216,7 @@ int projective_space::reverse_engineer_semilinear_map(
 		}
 		if (f_vv) {
 			cout << "after Gauss_simple:" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout,
+			Orbiter->Int_vec->print_integer_matrix_width(cout,
 					system, 2, 3, 3, F->log10_of_q);
 			cout << endl;
 		}
@@ -230,7 +230,7 @@ int projective_space::reverse_engineer_semilinear_map(
 		}
 		if (f_vv) {
 			cout << "after scaling the last column:" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout,
+			Orbiter->Int_vec->print_integer_matrix_width(cout,
 					system, 2, 3, 3, F->log10_of_q);
 			cout << endl;
 		}
@@ -277,7 +277,7 @@ int projective_space::reverse_engineer_semilinear_map(
 		cout << "projective_space::reverse_engineer_semilinear_map "
 				"we found the following map" << endl;
 		cout << "Mtx:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout,
+		Orbiter->Int_vec->print_integer_matrix_width(cout,
 				Mtx, d, d, d, F->log10_of_q);
 		cout << endl;
 		cout << "frobenius = " << frobenius << endl;
@@ -340,7 +340,7 @@ void projective_space::create_ovoid(
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			Orbiter->Int_vec.print(cout, v, d);
+			Orbiter->Int_vec->print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
 		}
 	}
@@ -421,7 +421,7 @@ void projective_space::create_cuspidal_cubic(
 		Pts[i] = a;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			Orbiter->Int_vec.print(cout, v, d);
+			Orbiter->Int_vec->print(cout, v, d);
 			cout << " : " << setw(5) << a << endl;
 		}
 	}
@@ -539,7 +539,7 @@ void projective_space::create_twisted_cubic(
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			Orbiter->Int_vec.print(cout, v, d);
+			Orbiter->Int_vec->print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
 		}
 	}
@@ -610,7 +610,7 @@ void projective_space::create_elliptic_curve(
 		Pts[i] = a;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			Orbiter->Int_vec.print(cout, E->T + i * d, d);
+			Orbiter->Int_vec->print(cout, E->T + i * d, d);
 			cout << " : " << setw(5) << a << endl;
 		}
 	}
@@ -679,7 +679,7 @@ void projective_space::create_unital_XXq_YZq_ZYq(
 		unrank_point(v, rk);
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			Orbiter->Int_vec.print(cout, v, d);
+			Orbiter->Int_vec->print(cout, v, d);
 			cout << " : " << setw(5) << rk << endl;
 		}
 	}
@@ -759,7 +759,7 @@ void projective_space::create_hyperplane(
 			Pts[nb_pts++] = i;
 			if (f_v) {
 				cout << setw(4) << nb_pts - 1 << " : ";
-				Orbiter->Int_vec.print(cout, v2, d);
+				Orbiter->Int_vec->print(cout, v2, d);
 				cout << " : " << setw(5) << i << endl;
 			}
 		}

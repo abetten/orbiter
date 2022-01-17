@@ -147,7 +147,7 @@ void translation_plane_via_andre_model::init(
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init "
 				"spread_elements_numeric:" << endl;
-		Orbiter->Lint_vec.print(cout, spread_elements_numeric,
+		Orbiter->Lint_vec->print(cout, spread_elements_numeric,
 				NT.i_power_j(q, k) + 1);
 		cout << endl;
 	}
@@ -191,7 +191,7 @@ void translation_plane_via_andre_model::init(
 		if (f_v10) {
 			cout << "translation_plane_via_andre_model::init "
 					"Line_" << j << "=";
-			Orbiter->Int_vec.print(cout, pts_on_line, Andre->order + 1);
+			Orbiter->Int_vec->print(cout, pts_on_line, Andre->order + 1);
 			cout << endl;
 		}
 		for (h = 0; h < Andre->order + 1; h++) {
@@ -726,7 +726,7 @@ int translation_plane_via_andre_model::check_arc(
 	if (f_vv) {
 		cout << "translation_plane_via_andre_model::"
 				"check_arc the set is";
-		Orbiter->Lint_vec.print(cout, S, len);
+		Orbiter->Lint_vec->print(cout, S, len);
 		cout << endl;
 	}
 	for (i = 0; i < len; i++) {
@@ -781,7 +781,7 @@ int translation_plane_via_andre_model::check_subplane(
 	if (f_vv) {
 		cout << "translation_plane_via_andre_model::"
 				"check_subplane the set is";
-		Orbiter->Lint_vec.print(cout, S, len);
+		Orbiter->Lint_vec->print(cout, S, len);
 		cout << endl;
 	}
 
@@ -887,7 +887,7 @@ int translation_plane_via_andre_model::check_if_quadrangle_defines_a_subplane(
 	}
 	if (f_vv) {
 		cout << "translation_plane_via_andre_model::check_if_quadrangle_defines_a_subplane the set is";
-		Orbiter->Lint_vec.print(cout, S, 4);
+		Orbiter->Lint_vec->print(cout, S, 4);
 		cout << endl;
 	}
 	h = 0;
@@ -1032,7 +1032,7 @@ int translation_plane_via_andre_model_check_arc(
 	if (f_v) {
 		cout << "translation_plane_via_andre_model_check_arc "
 				"checking set ";
-		Orbiter->Lint_vec.print(cout, S, len);
+		Orbiter->Lint_vec->print(cout, S, len);
 		cout << endl;
 	}
 	f_OK = TP->check_arc(S, len, 0 /*verbose_level - 1*/);
@@ -1061,7 +1061,7 @@ int translation_plane_via_andre_model_check_subplane(
 	
 	if (f_v) {
 		cout << "translation_plane_via_andre_model_check_subplane checking set ";
-		Orbiter->Lint_vec.print(cout, S, len);
+		Orbiter->Lint_vec->print(cout, S, len);
 		cout << endl;
 	}
 	f_OK = TP->check_subplane(S, len, verbose_level - 1);

@@ -284,7 +284,7 @@ void poset_classification::report_orbits_summary(std::ostream &ost,
 
 			get_set_by_level(level, i, rep);
 
-			Orbiter->Lint_vec.print_to_str_naked(str, rep, level);
+			Orbiter->Lint_vec->print_to_str_naked(str, rep, level);
 
 			if (f_vv) {
 				cout << "poset_classification::report_orbits_summary set: '" << str << "'" << endl;

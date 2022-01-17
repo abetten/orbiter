@@ -176,7 +176,7 @@ void orbit_based_testing::early_test_func_by_using_group(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "orbit_based_testing::early_test_func_by_using_group" << endl;
@@ -184,7 +184,7 @@ void orbit_based_testing::early_test_func_by_using_group(
 
 	if (f_vv) {
 		cout << "S=";
-		Orbiter->Lint_vec.print(cout, S, len);
+		Orbiter->Lint_vec->print(cout, S, len);
 		cout << " testing " << nb_candidates << " candidates" << endl;
 		//int_vec_print(cout, candidates, nb_candidates);
 		//cout << endl;
@@ -195,7 +195,7 @@ void orbit_based_testing::early_test_func_by_using_group(
 				"len >= max_depth" << endl;
 		exit(1);
 	}
-	Orbiter->Lint_vec.copy(S, local_S, len);
+	Orbiter->Lint_vec->copy(S, local_S, len);
 
 
 	int i, j, node, f, l, nb_good_orbits;

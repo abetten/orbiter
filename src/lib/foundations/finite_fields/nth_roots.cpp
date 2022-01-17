@@ -67,7 +67,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 	}
 	longinteger_domain D;
 	number_theory_domain NT;
-	coding_theory_domain Codes;
+	coding_theory::coding_theory_domain Codes;
 	int i;
 
 
@@ -242,7 +242,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 		for (i = 0; i < Cyc->S->nb_sets; i++) {
 			cout << i << " : ";
 
-			Orbiter->Lint_vec.print(cout, Cyc->S->Sets[i], Cyc->S->Set_size[i]);
+			Orbiter->Lint_vec->print(cout, Cyc->S->Sets[i], Cyc->S->Set_size[i]);
 
 			cout << " : ";
 
@@ -255,7 +255,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 
 	if (f_v) {
 		cout << "nth_roots::init Index" << endl;
-		Orbiter->Int_vec.print(cout, Cyc->Index, n);
+		Orbiter->Int_vec->print(cout, Cyc->Index, n);
 		cout << endl;
 	}
 
@@ -275,7 +275,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 
 	if (f_v) {
 		cout << "nth_roots::init subfield_basis=" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, subfield_basis,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, subfield_basis,
 				subfield_degree, field_degree, field_degree, Fp->log10_of_q);
 	}
 
@@ -290,7 +290,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 	for (i = 0; i < Cyc->S->nb_sets; i++) {
 		cout << i << " : ";
 
-		Orbiter->Lint_vec.print(cout, Cyc->S->Sets[i], Cyc->S->Set_size[i]);
+		Orbiter->Lint_vec->print(cout, Cyc->S->Sets[i], Cyc->S->Set_size[i]);
 
 		cout << " : ";
 
@@ -397,7 +397,7 @@ void nth_roots::compute_subfield(int subfield_degree, int *&field_basis, int ver
 		cout << "nth_roots::compute_subfield subfield_degree=" << subfield_degree << endl;
 	}
 	M = NEW_int(e * (subfield_degree + 1));
-	Orbiter->Int_vec.zero(M, e * (subfield_degree + 1));
+	Orbiter->Int_vec->zero(M, e * (subfield_degree + 1));
 
 	K = NEW_int(e);
 	base_cols = NEW_int(e);
@@ -462,7 +462,7 @@ void nth_roots::compute_subfield(int subfield_degree, int *&field_basis, int ver
 	}
 	if (f_v) {
 		cout << "nth_roots::compute_subfield field_basis=" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, field_basis,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, field_basis,
 				subfield_degree, e, e, Fp->log10_of_q);
 	}
 
@@ -471,7 +471,7 @@ void nth_roots::compute_subfield(int subfield_degree, int *&field_basis, int ver
 #if 1
 	if (f_v) {
 		cout << "nth_roots::compute_subfield M=" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M,
 			e, subfield_degree + 1, subfield_degree + 1, Fp->log10_of_q);
 	}
 	if (f_v) {
@@ -485,7 +485,7 @@ void nth_roots::compute_subfield(int subfield_degree, int *&field_basis, int ver
 			verbose_level);
 	if (f_v) {
 		cout << "nth_roots::compute_subfield after Gauss=" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M,
 			e, subfield_degree + 1, subfield_degree + 1, Fp->log10_of_q);
 		cout << "rk=" << rk << endl;
 	}
@@ -524,7 +524,7 @@ void nth_roots::compute_subfield(int subfield_degree, int *&field_basis, int ver
 
 	if (f_v) {
 		cout << "nth_roots::compute_subfield the relation is " << endl;
-		Orbiter->Int_vec.print(cout, K, subfield_degree + 1);
+		Orbiter->Int_vec->print(cout, K, subfield_degree + 1);
 		cout << endl;
 	}
 
@@ -561,7 +561,7 @@ void nth_roots::report(std::ostream &ost, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int i;
 	string label;
-	coding_theory_domain Codes;
+	coding_theory::coding_theory_domain Codes;
 	latex_interface Li;
 
 	if (f_v) {
@@ -640,7 +640,7 @@ void nth_roots::report(std::ostream &ost, int verbose_level)
 
 		ost << " & ";
 
-		Orbiter->Lint_vec.print(ost, Cyc->S->Sets[i], Cyc->S->Set_size[i]);
+		Orbiter->Lint_vec->print(ost, Cyc->S->Sets[i], Cyc->S->Set_size[i]);
 
 		ost << " & ";
 

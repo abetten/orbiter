@@ -423,7 +423,7 @@ void poset_classification::generate_history(int level, int verbose_level)
 
 				int f;
 				int po, so;
-				sorting Sorting;
+				data_structures::sorting Sorting;
 
 				fp << "static int " << problem_label << "_lvl_" << lvl << "_flag_orbit_type[] = { " << endl << "\t";
 				for (f = 0; f < total_number_flag_orbits; f++) {

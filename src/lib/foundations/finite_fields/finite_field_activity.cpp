@@ -59,7 +59,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	if (Descr->f_cheat_sheet_GF) {
 
-		algebra_global Algebra;
+		algebra::algebra_global Algebra;
 
 		Algebra.do_cheat_sheet_GF(F, verbose_level);
 	}
@@ -158,7 +158,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_weight_enumerator) {
 
-		coding_theory_domain Codes;
+		coding_theory::coding_theory_domain Codes;
 
 		int *v;
 		int m, n;
@@ -177,7 +177,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_Walsh_Hadamard_transform) {
 
-		algebra_global Algebra;
+		algebra::algebra_global Algebra;
 
 		Algebra.apply_Walsh_Hadamard_transform(F,
 				Descr->Walsh_Hadamard_transform_fname_csv_in,
@@ -187,7 +187,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_algebraic_normal_form) {
 
-		algebra_global Algebra;
+		algebra::algebra_global Algebra;
 
 		Algebra.algebraic_normal_form(F,
 				Descr->algebraic_normal_form_fname_csv_in,
@@ -197,7 +197,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_apply_trace_function) {
 
-		algebra_global Algebra;
+		algebra::algebra_global Algebra;
 
 		Algebra.apply_trace_function(F,
 				Descr->apply_trace_function_fname_csv_in, verbose_level);
@@ -205,7 +205,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_apply_power_function) {
 
-		algebra_global Algebra;
+		algebra::algebra_global Algebra;
 
 		Algebra.apply_power_function(F,
 				Descr->apply_power_function_fname_csv_in,
@@ -215,7 +215,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_identity_function) {
 
-		algebra_global Algebra;
+		algebra::algebra_global Algebra;
 
 		Algebra.identity_function(F,
 				Descr->identity_function_fname_csv_out, verbose_level);
@@ -224,19 +224,19 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_trace) {
 
-		algebra_global Algebra;
+		algebra::algebra_global Algebra;
 
 		Algebra.do_trace(F, verbose_level);
 	}
 	else if (Descr->f_norm) {
 
-		algebra_global Algebra;
+		algebra::algebra_global Algebra;
 
 		Algebra.do_norm(F, verbose_level);
 	}
 	else if (Descr->f_Walsh_matrix) {
 
-		algebra_global Algebra;
+		algebra::algebra_global Algebra;
 		int *W = NULL;
 
 		Algebra.Walsh_matrix(F, Descr->Walsh_matrix_n, W, verbose_level);
@@ -244,7 +244,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_Vandermonde_matrix) {
 
-		algebra_global Algebra;
+		algebra::algebra_global Algebra;
 		int *W = NULL;
 		int *W_inv = NULL;
 
@@ -252,9 +252,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 		if (F->q < 33) {
 			cout << "Vandermonde:" << endl;
-			Orbiter->Int_vec.matrix_print(W, F->q, F->q);
+			Orbiter->Int_vec->matrix_print(W, F->q, F->q);
 			cout << "Vandermonde inverse:" << endl;
-			Orbiter->Int_vec.matrix_print(W_inv, F->q, F->q);
+			Orbiter->Int_vec->matrix_print(W_inv, F->q, F->q);
 
 			latex_interface LI;
 
@@ -284,7 +284,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_search_APN_function) {
 
-		algebra_global Algebra;
+		algebra::algebra_global Algebra;
 
 		Algebra.search_APN(F, verbose_level);
 
@@ -304,48 +304,48 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_EC_Koblitz_encoding) {
 
-		cryptography_domain Crypto;
+		cryptography::cryptography_domain Crypto;
 
 		Crypto.do_EC_Koblitz_encoding(F, Descr->EC_b, Descr->EC_c,
 				Descr->EC_s, Descr->EC_pt_text, Descr->EC_message, verbose_level);
 	}
 	else if (Descr->f_EC_points) {
 
-		cryptography_domain Crypto;
+		cryptography::cryptography_domain Crypto;
 
 		Crypto.do_EC_points(F, Descr->EC_label, Descr->EC_b, Descr->EC_c, verbose_level);
 	}
 	else if (Descr->f_EC_add) {
 
-		cryptography_domain Crypto;
+		cryptography::cryptography_domain Crypto;
 
 		Crypto.do_EC_add(F, Descr->EC_b, Descr->EC_c,
 				Descr->EC_pt1_text, Descr->EC_pt2_text, verbose_level);
 	}
 	else if (Descr->f_EC_cyclic_subgroup) {
 
-		cryptography_domain Crypto;
+		cryptography::cryptography_domain Crypto;
 
 		Crypto.do_EC_cyclic_subgroup(F, Descr->EC_b, Descr->EC_c,
 				Descr->EC_pt_text, verbose_level);
 	}
 	else if (Descr->f_EC_multiple_of) {
 
-		cryptography_domain Crypto;
+		cryptography::cryptography_domain Crypto;
 
 		Crypto.do_EC_multiple_of(F, Descr->EC_b, Descr->EC_c,
 				Descr->EC_pt_text, Descr->EC_multiple_of_n, verbose_level);
 	}
 	else if (Descr->f_EC_discrete_log) {
 
-		cryptography_domain Crypto;
+		cryptography::cryptography_domain Crypto;
 
 		Crypto.do_EC_discrete_log(F, Descr->EC_b, Descr->EC_c, Descr->EC_pt_text,
 				Descr->EC_discrete_log_pt_text, verbose_level);
 	}
 	else if (Descr->f_EC_baby_step_giant_step) {
 
-		cryptography_domain Crypto;
+		cryptography::cryptography_domain Crypto;
 
 		Crypto.do_EC_baby_step_giant_step(F, Descr->EC_b, Descr->EC_c,
 				Descr->EC_bsgs_G, Descr->EC_bsgs_N, Descr->EC_bsgs_cipher_text,
@@ -353,7 +353,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_EC_baby_step_giant_step_decode) {
 
-		cryptography_domain Crypto;
+		cryptography::cryptography_domain Crypto;
 
 		Crypto.do_EC_baby_step_giant_step_decode(F, Descr->EC_b, Descr->EC_c,
 				Descr->EC_bsgs_A, Descr->EC_bsgs_N,
@@ -362,7 +362,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_NTRU_encrypt) {
 
-		cryptography_domain Crypto;
+		cryptography::cryptography_domain Crypto;
 
 		Crypto.NTRU_encrypt(Descr->NTRU_encrypt_N, Descr->NTRU_encrypt_p, F,
 				Descr->NTRU_encrypt_H, Descr->NTRU_encrypt_R,
@@ -371,14 +371,14 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_polynomial_center_lift) {
 
-		cryptography_domain Crypto;
+		cryptography::cryptography_domain Crypto;
 
 		Crypto.polynomial_center_lift(Descr->polynomial_center_lift_A, F,
 				verbose_level);
 	}
 	else if (Descr->f_polynomial_reduce_mod_p) {
 
-		cryptography_domain Crypto;
+		cryptography::cryptography_domain Crypto;
 
 		Crypto.polynomial_reduce_mod_p(Descr->polynomial_reduce_mod_p_A, F,
 				verbose_level);
@@ -428,7 +428,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_find_CRC_polynomials) {
 
-		coding_theory_domain Coding;
+		coding_theory::coding_theory_domain Coding;
 
 		Coding.find_CRC_polynomials(F,
 				Descr->find_CRC_polynomials_nb_errors,
@@ -586,7 +586,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_field_reduction) {
 
-		coding_theory_domain Coding;
+		coding_theory::coding_theory_domain Coding;
 		finite_field *Fq;
 
 		Fq = NEW_OBJECT(finite_field);
@@ -758,7 +758,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 		cout << "before generator_matrix_cyclic_code" << endl;
 
-		coding_theory_domain Coding;
+		coding_theory::coding_theory_domain Coding;
 
 		Coding.generator_matrix_cyclic_code(F,
 				Descr->generator_matrix_cyclic_code_n,
@@ -875,9 +875,9 @@ void finite_field_activity::perform_activity(int verbose_level)
 #endif
 
 #else
-		create_BCH_code *C;
+		coding_theory::create_BCH_code *C;
 
-		C = NEW_OBJECT(create_BCH_code);
+		C = NEW_OBJECT(coding_theory::create_BCH_code);
 
 		C->init(F, Descr->make_BCH_code_n,
 				Descr->make_BCH_code_d, verbose_level);
@@ -957,7 +957,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_make_BCH_code_and_encode) {
 
-		coding_theory_domain Codes;
+		coding_theory::coding_theory_domain Codes;
 		nth_roots *Nth;
 		unipoly_object P;
 

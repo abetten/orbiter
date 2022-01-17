@@ -224,7 +224,7 @@ void del_pezzo_surface_of_degree_two_object::print_equation(std::ostream &ost)
 
 	Dom->print_equation_with_line_breaks_tex(ost, Coefficient_vector);
 
-	Orbiter->Int_vec.print(ost, Coefficient_vector, 15);
+	Orbiter->Int_vec->print(ost, Coefficient_vector, 15);
 	ost << "\\\\" << endl;
 
 	long int rk;

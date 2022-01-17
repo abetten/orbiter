@@ -337,7 +337,7 @@ static void perm_group_element_mult(action &A,
 	int *AA = (int *) a;
 	int *BB = (int *) b;
 	int *AB = (int *) ab;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "perm_group_element_mult degree=" << G.degree << endl;

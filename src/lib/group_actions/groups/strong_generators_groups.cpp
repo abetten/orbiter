@@ -482,7 +482,7 @@ void strong_generators::generators_for_the_monomial_group(
 	D.multiply_up(target_go, go_factored, 3 * n + 1, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "group order factored: ";
-		Orbiter->Int_vec.print(cout, go_factored, 3 * n + 1);
+		Orbiter->Int_vec->print(cout, go_factored, 3 * n + 1);
 		cout << endl;
 		cout << "target_go=" << target_go << endl;
 	}
@@ -501,7 +501,7 @@ void strong_generators::generators_for_the_monomial_group(
 		}
 		F->Linear_algebra->identity_matrix(data, n);
 		if (Mtx->f_affine) {
-			Orbiter->Int_vec.zero(data + n * n, n);
+			Orbiter->Int_vec->zero(data + n * n, n);
 		}
 
 		if (h < n - 1) {
@@ -535,7 +535,7 @@ void strong_generators::generators_for_the_monomial_group(
 					"generator " << h << " / "
 					<< nb_gens << ", before A->make_element" << endl;
 			cout << "data = ";
-			Orbiter->Int_vec.print(cout, data, Mtx->elt_size_int_half);
+			Orbiter->Int_vec->print(cout, data, Mtx->elt_size_int_half);
 			cout << endl;
 			cout << "in action " << A->label << endl;
 		}
@@ -661,7 +661,7 @@ void strong_generators::generators_for_the_diagonal_group(action *A,
 	D.multiply_up(target_go, go_factored, n + 1, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "group order factored: ";
-		Orbiter->Int_vec.print(cout, go_factored, n + 1);
+		Orbiter->Int_vec->print(cout, go_factored, n + 1);
 		cout << endl;
 		cout << "target_go=" << target_go << endl;
 	}
@@ -779,7 +779,7 @@ void strong_generators::generators_for_the_singer_cycle(
 	D.multiply_up_lint(target_go, go_factored, 1, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "group order factored: ";
-		Orbiter->Lint_vec.print(cout, go_factored, 1);
+		Orbiter->Lint_vec->print(cout, go_factored, 1);
 		cout << endl;
 		cout << "target_go=" << target_go << endl;
 	}
@@ -822,7 +822,7 @@ void strong_generators::generators_for_the_singer_cycle(
 			cout << endl;
 		}
 	
-		Orbiter->Int_vec.zero(data, n * n);
+		Orbiter->Int_vec->zero(data, n * n);
 	
 		// create upper diagonal:
 		for (i = 0; i < n - 1; i++) {
@@ -867,7 +867,7 @@ void strong_generators::generators_for_the_singer_cycle(
 	}
 	if (f_v) {
 		cout << "group order factored: ";
-		Orbiter->Lint_vec.print(cout, go_factored, 1);
+		Orbiter->Lint_vec->print(cout, go_factored, 1);
 		cout << endl;
 		cout << "target_go=" << target_go << endl;
 	}
@@ -958,7 +958,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 	D.multiply_up_lint(target_go, go_factored, 2, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "group order factored: ";
-		Orbiter->Lint_vec.print(cout, go_factored, 2);
+		Orbiter->Lint_vec->print(cout, go_factored, 2);
 		cout << endl;
 		cout << "target_go=" << target_go << endl;
 		}
@@ -991,7 +991,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 		}
 		FX.get_a_primitive_polynomial(m, n, verbose_level - 1);
 
-		Orbiter->Int_vec.zero(data1, n * n);
+		Orbiter->Int_vec->zero(data1, n * n);
 
 		// create upper diagonal:
 		for (i = 0; i < n - 1; i++) {
@@ -1011,7 +1011,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 			data1[n * n] = 0;
 		}
 
-		Orbiter->Int_vec.zero(data2, n * n);
+		Orbiter->Int_vec->zero(data2, n * n);
 
 		FX.Frobenius_matrix_by_rows(data2, m,
 				verbose_level);
@@ -1054,7 +1054,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 	}
 	if (f_v) {
 		cout << "group order factored: ";
-		Orbiter->Lint_vec.print(cout, go_factored, 1);
+		Orbiter->Lint_vec->print(cout, go_factored, 1);
 		cout << endl;
 		cout << "target_go=" << target_go << endl;
 	}
@@ -1113,9 +1113,9 @@ void strong_generators::generators_for_the_null_polarity_group(
 		cout << "n=" << n << " q=" << q << endl;
 	}
 
-	null_polarity_generator *N;
+	algebra::null_polarity_generator *N;
 
-	N = NEW_OBJECT(null_polarity_generator);
+	N = NEW_OBJECT(algebra::null_polarity_generator);
 
 
 	if (f_v) {
@@ -1159,9 +1159,9 @@ void strong_generators::generators_for_symplectic_group(
 		cout << "n=" << n << " q=" << q << endl;
 	}
 
-	generators_symplectic_group *N;
+	algebra::generators_symplectic_group *N;
 
-	N = NEW_OBJECT(generators_symplectic_group);
+	N = NEW_OBJECT(algebra::generators_symplectic_group);
 
 
 	if (f_v) {
@@ -1188,7 +1188,7 @@ void strong_generators::generators_for_symplectic_group(
 	}
 	if (f_v) {
 		cout << "strong_generators::generators_for_symplectic_group t_len=";
-		Orbiter->Int_vec.print(cout, t_len, A->base_len());
+		Orbiter->Int_vec->print(cout, t_len, A->base_len());
 		cout << endl;
 	}
 
@@ -1274,7 +1274,7 @@ void strong_generators::init_centralizer_of_matrix_general_linear(
 	new_gens->allocate(SG1->gens->len + 1, verbose_level - 2);
 	data = NEW_int(n * n + n + 1);
 	for (i = 0; i < SG1->gens->len; i++) {
-		Orbiter->Int_vec.copy(SG1->gens->ith(i), data, n * n);
+		Orbiter->Int_vec->copy(SG1->gens->ith(i), data, n * n);
 		if (M->f_semilinear) {
 			data[n * n] = SG1->gens->ith(i)[n * n];
 			}
@@ -1427,7 +1427,7 @@ void strong_generators::field_reduction(
 		S->lift_matrix(EltQ, m, Mtx, 0 /* verbose_level */);
 		if (f_v) {
 			cout << "lifted matrix:" << endl;
-			Orbiter->Int_vec.matrix_print(Mtx, n, n);
+			Orbiter->Int_vec->matrix_print(Mtx, n, n);
 		}
 		Aq->make_element(Eltq, Mtx, verbose_level - 1);
 		if (f_v) {
@@ -1544,7 +1544,7 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 		}
 
 		M1 = M + cnt * sz;
-		Orbiter->Int_vec.zero(M1, n1 * n1);
+		Orbiter->Int_vec->zero(M1, n1 * n1);
 		for (i = 0; i < n1; i++) {
 			M1[i * n1 + i] = 1;
 		}
@@ -1569,7 +1569,7 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 				"the second kind:" << endl;
 	}
 	M1 = M + cnt * sz;
-	Orbiter->Int_vec.zero(M1, n1 * n1);
+	Orbiter->Int_vec->zero(M1, n1 * n1);
 	for (i = 0; i < n1; i++) {
 		if (i < n1 - 1) {
 			M1[i * n1 + i] = alpha;
@@ -1593,7 +1593,7 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 	for (h = 0; h < n; h++) {
 		for (u = 0; u < F->e; u++, cnt++) {
 			M1 = M + cnt * sz;
-			Orbiter->Int_vec.zero(M1, n1 * n1);
+			Orbiter->Int_vec->zero(M1, n1 * n1);
 			for (i = 0; i < n1; i++) {
 				M1[i * n1 + i] = 1;
 			}
@@ -1618,7 +1618,7 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 		if (f_v) {
 			cout << "strong_generators::generators_for_translation_plane_in_andre_model generator " << h << " / "
 					<< nb_gens << endl;
-			Orbiter->Int_vec.matrix_print(M1, n1, n1);
+			Orbiter->Int_vec->matrix_print(M1, n1, n1);
 			//cout << endl;
 		}
 		A_PGL_n1_q->make_element(my_gens->ith(h), M1, 0 /* verbose_level */);
@@ -1884,7 +1884,7 @@ void strong_generators::regulus_stabilizer(action *A_PGL_n_q,
 		if (f_vv) {
 			cout << "strong_generators::regulus_stabilizer "
 					"h = " << h << " before make_element:" << endl;
-			Orbiter->Int_vec.matrix_print(Q, n, n);
+			Orbiter->Int_vec->matrix_print(Q, n, n);
 			if (Mtx->f_semilinear) {
 				cout << "strong_generators::regulus_stabilizer "
 						"semilinear part = " << Q[n * n] << endl;
@@ -2301,7 +2301,7 @@ void strong_generators::generators_for_parabolic_subgroup(
 	}
 
 
-	group_generators_domain GGD;
+	algebra::group_generators_domain GGD;
 
 	GGD.generators_for_parabolic_subgroup(n, F,
 		Mtx->f_semilinear, k, 
@@ -2323,7 +2323,7 @@ void strong_generators::generators_for_parabolic_subgroup(
 
 	longinteger_object go1, nCk, target_go;
 	longinteger_domain D;
-	combinatorics_domain C;
+	combinatorics::combinatorics_domain C;
 
 
 	D.group_order_PGL(go1, n, q, Mtx->f_semilinear);
@@ -2405,7 +2405,7 @@ strong_generators::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 				"for_stabilizer_of_three_collinear_points_in_PGL4" << endl;
 	}
 
-	group_generators_domain GGD;
+	algebra::group_generators_domain GGD;
 
 	GGD.generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 		Mtx->f_semilinear, F,
@@ -2507,7 +2507,7 @@ void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
 				"before generators_for_stabilizer_of_triangle_in_PGL4" << endl;
 	}
 
-	group_generators_domain GGD;
+	algebra::group_generators_domain GGD;
 
 	GGD.generators_for_stabilizer_of_triangle_in_PGL4(
 		Mtx->f_semilinear, F,
@@ -2741,7 +2741,7 @@ void strong_generators::stabilizer_of_quartic_curve_from_catalogue(
 
 	if (f_v) {
 		cout << "data:" << endl;
-		Orbiter->Int_vec.matrix_print(data, nb_gens, data_size);
+		Orbiter->Int_vec->matrix_print(data, nb_gens, data_size);
 	}
 
 	vector_ge *gens;
@@ -3195,7 +3195,7 @@ void strong_generators::stabilizer_of_pencil_of_conics(
 
 	gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
-		Orbiter->Int_vec.zero(data, data_size);
+		Orbiter->Int_vec->zero(data, data_size);
 		if (i == 0) {
 			// diag(t, 1/t, 1)
 			data[0] = alpha;
@@ -3292,7 +3292,7 @@ void strong_generators::Janko1(
 
 	gens->allocate(nb_gens, verbose_level - 2);
 	for (i = 0; i < nb_gens; i++) {
-		Orbiter->Int_vec.zero(data, data_size);
+		Orbiter->Int_vec->zero(data, data_size);
 		if (i == 0) {
 			for (j = 0; j < 7; j++) {
 				if (j < 7 - 1) {
@@ -3360,7 +3360,7 @@ void strong_generators::Hall_reflection(
 	int nb_perms;
 	int *perms;
 	vector_ge *gens;
-	group_generators_domain GG;
+	algebra::group_generators_domain GG;
 
 	if (f_v) {
 		cout << "strong_generators::Hall_reflection" << endl;
@@ -3457,7 +3457,7 @@ void strong_generators::normalizer_of_a_Hall_reflection(
 	int nb_perms;
 	int *perms;
 	vector_ge *gens;
-	group_generators_domain GG;
+	algebra::group_generators_domain GG;
 
 	if (f_v) {
 		cout << "strong_generators::normalizer_of_a_Hall_reflection" << endl;
@@ -3707,7 +3707,7 @@ void strong_generators::exterior_square(
 		cout << "strong_generators::exterior_square n = " << n << endl;
 	}
 
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	n2 = Combi.binomial2(n);
 
@@ -3748,7 +3748,7 @@ void strong_generators::exterior_square(
 					<< " before P->exterior_square" << endl;
 			}
 
-		Orbiter->Int_vec.zero(An2, n2 * n2 + 1);
+		Orbiter->Int_vec->zero(An2, n2 * n2 + 1);
 		F->Linear_algebra->exterior_square(SG_original->gens->ith(i), An2, n, verbose_level - 2);
 
 		An2[n2 * n2] = frobenius;
@@ -3857,7 +3857,7 @@ void strong_generators::diagonally_repeat(
 	gens->allocate(l, verbose_level - 2);
 	for (h = 0; h < l; h++) {
 		Elt = gens->ith(h);
-		Orbiter->Int_vec.zero(M, n * n);
+		Orbiter->Int_vec->zero(M, n * n);
 		for (i = 0; i < k; i++) {
 			for (j = 0; j < k; j++) {
 				a = Elt[i * k + j];

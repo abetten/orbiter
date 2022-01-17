@@ -960,7 +960,7 @@ void knowledge_base::get_primitive_polynomial(std::string &poly,
 	int f_v = (verbose_level >= 1);
 	int idx;
 	//char *s;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "knowledge_base::get_primitive_polynomial" << endl;

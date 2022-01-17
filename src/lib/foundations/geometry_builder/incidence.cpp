@@ -178,7 +178,7 @@ void incidence::print_pairs(int v)
 			M[i1 * v + i2] = a;
 		}
 	}
-	Orbiter->Int_vec.matrix_print(M, v, v);
+	Orbiter->Int_vec->matrix_print(M, v, v);
 	FREE_int(M);
 }
 
@@ -364,7 +364,7 @@ void incidence::compute_blocks(long int *&Blocks, int *&K, int v, long int *theI
 	int i, j, s, b, h;
 	long int a;
 	int *Incma;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	b = Encoding->b;
 
@@ -406,7 +406,7 @@ void incidence::compute_blocks_ranked(long int *&Blocks, int v, long int *theInc
 	long int a;
 	int *Incma;
 	int *block;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	b = Encoding->b;
 	Incma = NEW_int(v * b);
@@ -454,7 +454,7 @@ int incidence::compute_k(int v, long int *theInc)
 	long int a;
 	int *Incma;
 	int *block;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	b = Encoding->b;
 	Incma = NEW_int(v * b);
@@ -498,7 +498,7 @@ int incidence::is_block_tactical(int v, long int *theInc)
 	long int a;
 	int *Incma;
 	int *block;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	b = Encoding->b;
 	Incma = NEW_int(v * b);

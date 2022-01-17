@@ -97,7 +97,7 @@ void unipoly_domain::mult_easy_with_report(long int rk_a, long int rk_b, long in
 	unipoly_object a;
 	unipoly_object b;
 	unipoly_object c;
-	algorithms Algo;
+	data_structures::algorithms Algo;
 
 	if (f_v) {
 		cout << "unipoly_domain::mult_easy_with_report rk_a=" << rk_a << endl;
@@ -228,7 +228,7 @@ void unipoly_domain::division_with_remainder_from_file_with_report(
 	unipoly_object b;
 	unipoly_object q;
 	unipoly_object r;
-	algorithms Algo;
+	data_structures::algorithms Algo;
 
 
 	create_object_from_csv_file(
@@ -288,7 +288,7 @@ void unipoly_domain::division_with_remainder_from_file_all_k_bit_error_patterns(
 	if (f_v) {
 		cout << "unipoly_domain::division_with_remainder_from_file_all_k_bit_error_patterns" << endl;
 	}
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 
 	unipoly_object a;
@@ -334,7 +334,7 @@ void unipoly_domain::division_with_remainder_from_file_all_k_bit_error_patterns(
 	ost << endl;
 
 	for (h = 0; h < N; h++) {
-		Orbiter->Int_vec.zero(set, k);
+		Orbiter->Int_vec->zero(set, k);
 		Combi.unrank_k_subset(h, set, n, k);
 
 
@@ -420,7 +420,7 @@ void unipoly_domain::division_with_remainder_numerically_with_report(long int rk
 	unipoly_object b;
 	unipoly_object q;
 	unipoly_object r;
-	algorithms Algo;
+	data_structures::algorithms Algo;
 
 	create_object_by_rank(a, rk_a,
 				__FILE__, __LINE__, 0 /* verbose_level */);
@@ -532,8 +532,8 @@ void unipoly_domain::division_with_remainder_with_report(unipoly_object &a, unip
 		pivot = B[db];
 		pivot_inv = F->inverse(pivot);
 
-		Orbiter->Int_vec.zero(Q, dq + 1);
-		algorithms Algo;
+		Orbiter->Int_vec->zero(Q, dq + 1);
+		data_structures::algorithms Algo;
 
 		if (f_report) {
 			Algo.print_repeated_character(ost, ' ', db + 1 + 3);
@@ -605,7 +605,7 @@ void unipoly_domain::division_with_remainder_with_report(unipoly_object &a, unip
 					ost << " | ";
 				}
 				else {
-					algorithms Algo;
+					data_structures::algorithms Algo;
 					Algo.print_repeated_character(ost, ' ', db + 1 + 3);
 				}
 				Algo.print_repeated_character(ost, ' ', da - i);

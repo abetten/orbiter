@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace data_structures {
 
 
 classify_using_canonical_forms::classify_using_canonical_forms()
@@ -241,5 +242,6 @@ void classify_using_canonical_forms::add_object(object_with_canonical_form *OwCF
 }
 
 
-}}
+}}}
+
 

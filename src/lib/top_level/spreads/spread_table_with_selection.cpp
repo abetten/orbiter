@@ -92,10 +92,10 @@ void spread_table_with_selection::init(spread_classify *T,
 	}
 
 	if (f_select_spread) {
-		Orbiter->Int_vec.scan(select_spread_text.c_str(), select_spread, select_spread_nb);
+		Orbiter->Int_vec->scan(select_spread_text.c_str(), select_spread, select_spread_nb);
 		if (f_v) {
 			cout << "select_spread = ";
-			Orbiter->Int_vec.print(cout, select_spread, select_spread_nb);
+			Orbiter->Int_vec->print(cout, select_spread, select_spread_nb);
 			cout << endl;
 		}
 	}
@@ -127,7 +127,7 @@ void spread_table_with_selection::init(spread_classify *T,
 	if (f_select_spread) {
 		cout << "spread_table_with_selection::init selected spreads are "
 				"from the following orbits: ";
-		Orbiter->Int_vec.print(cout,
+		Orbiter->Int_vec->print(cout,
 				select_spread,
 				select_spread_nb);
 		cout << endl;
@@ -251,7 +251,7 @@ void spread_table_with_selection::compute_spread_table_from_scratch(int verbose_
 	int *Len;
 	int *isomorphism_type_of_spread;
 	long int *Spread_table;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 
 	nb_spreads = Spread_tables->nb_spreads;
@@ -320,7 +320,7 @@ void spread_table_with_selection::compute_spread_table_from_scratch(int verbose_
 
 	Spread_table = NEW_lint(nb_spreads * spread_size);
 	for (i = 0; i < nb_spreads; i++) {
-		Orbiter->Lint_vec.copy(Sets[i], Spread_table + i * spread_size, spread_size);
+		Orbiter->Lint_vec->copy(Sets[i], Spread_table + i * spread_size, spread_size);
 	}
 
 	if (f_v) {
@@ -503,7 +503,7 @@ int spread_table_with_selection::test_if_packing_is_self_dual(int *packing, int 
 	int f_v = (verbose_level >= 1);
 	int ret = FALSE;
 	int i, a, b;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "spread_table_with_selection::test_if_packing_is_self_dual" << endl;
@@ -520,7 +520,7 @@ int spread_table_with_selection::test_if_packing_is_self_dual(int *packing, int 
 		dual_packing[i] = b;
 	}
 	Sorting.int_vec_heapsort(dual_packing, size_of_packing);
-	if (int_vec_compare(sorted_packing, dual_packing, size_of_packing) == 0) {
+	if (Sorting.int_vec_compare(sorted_packing, dual_packing, size_of_packing) == 0) {
 		ret = TRUE;
 	}
 
@@ -605,7 +605,7 @@ void spread_table_with_selection::predict_spread_table_length(
 	longinteger_object go, stab_go;
 	longinteger_domain D;
 	knowledge_base K;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "spread_table_with_selection::predict_spread_table_length" << endl;
@@ -657,7 +657,7 @@ void spread_table_with_selection::predict_spread_table_length(
 			int sz;
 
 			rep = K.Spread_representative(q, T->k /* dimension_of_spread_elements*/, no, sz);
-			Orbiter->Lint_vec.copy(rep,
+			Orbiter->Lint_vec->copy(rep,
 					spread_reps + nb_spread_reps * spread_size,
 					spread_size);
 
@@ -705,7 +705,7 @@ void spread_table_with_selection::make_spread_table(
 	int f_v = (verbose_level >= 1);
 	int i, j;
 	int nb_spreads1;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "spread_table_with_selection::make_spread_table nb_spread_reps = " << nb_spread_reps << endl;
@@ -759,7 +759,7 @@ void spread_table_with_selection::make_spread_table(
 
 			Sets[nb_spreads1] = NEW_lint(spread_size);
 
-			Orbiter->Lint_vec.copy(SetOrb[i].Sets[j], Sets[nb_spreads1], spread_size);
+			Orbiter->Lint_vec->copy(SetOrb[i].Sets[j], Sets[nb_spreads1], spread_size);
 
 			Prev[nb_spreads1] = First[i] + SetOrb[i].Extra[j * 2 + 0];
 			Label[nb_spreads1] = SetOrb[i].Extra[j * 2 + 1];
@@ -808,7 +808,7 @@ void spread_table_with_selection::make_spread_table(
 				"The labeled spreads are:" << endl;
 		for (i = 0; i < total_nb_of_spreads; i++) {
 			cout << i << " : ";
-			Orbiter->Lint_vec.print(cout, Sets[i], spread_size /* + 1*/);
+			Orbiter->Lint_vec->print(cout, Sets[i], spread_size /* + 1*/);
 			cout << endl;
 			}
 		}
@@ -953,7 +953,7 @@ void spread_table_with_selection::compute_adjacency_matrix(int verbose_level)
 int spread_table_with_selection::is_adjacent(int i, int j)
 {
 	int k;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (i == j) {
 		return FALSE;
@@ -997,8 +997,9 @@ int spread_table_with_selection_compare_func(void *data, int i, int j, void *ext
 	spread_table_with_selection *S = (spread_table_with_selection *) extra_data;
 	long int **Sets = (long int **) data;
 	int ret;
+	data_structures::sorting Sorting;
 
-	ret = lint_vec_compare(Sets[i], Sets[j], S->spread_size);
+	ret = Sorting.lint_vec_compare(Sets[i], Sets[j], S->spread_size);
 	return ret;
 }
 

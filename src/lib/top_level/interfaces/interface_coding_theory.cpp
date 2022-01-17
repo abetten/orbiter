@@ -90,7 +90,7 @@ interface_coding_theory::interface_coding_theory()
 void interface_coding_theory::print_help(int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (ST.stringcmp(argv[i], "-make_macwilliams_system") == 0) {
 		cout << "-make_macwilliams_system <int : q> <int : n> <int k>" << endl;
@@ -149,7 +149,7 @@ int interface_coding_theory::recognize_keyword(int argc,
 		std::string *argv, int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (i >= argc) {
 		return false;
@@ -219,7 +219,7 @@ void interface_coding_theory::read_arguments(int argc,
 		std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "interface_coding_theory::read_arguments" << endl;
@@ -556,19 +556,19 @@ void interface_coding_theory::worker(int verbose_level)
 
 	if (f_make_macwilliams_system) {
 
-		coding_theory_domain Coding;
+		coding_theory::coding_theory_domain Coding;
 
 		Coding.do_make_macwilliams_system(make_macwilliams_system_q, make_macwilliams_system_n, make_macwilliams_system_k, verbose_level);
 	}
 	else if (f_table_of_bounds) {
 
-		coding_theory_domain Coding;
+		coding_theory::coding_theory_domain Coding;
 
 		Coding.make_table_of_bounds(table_of_bounds_n_max, table_of_bounds_q, verbose_level);
 	}
 	else if (f_make_bounds_for_d_given_n_and_k_and_q) {
 
-		coding_theory_domain Coding;
+		coding_theory::coding_theory_domain Coding;
 		int d_GV;
 		int d_singleton;
 		int d_hamming;
@@ -592,19 +592,19 @@ void interface_coding_theory::worker(int verbose_level)
 	}
 	else if (f_BCH) {
 
-		coding_theory_domain Coding;
+		coding_theory::coding_theory_domain Coding;
 
 		Coding.make_BCH_codes(BCH_n, BCH_q, BCH_t, 1, FALSE, verbose_level);
 	}
 	else if (f_BCH_dual) {
 
-		coding_theory_domain Coding;
+		coding_theory::coding_theory_domain Coding;
 
 		Coding.make_BCH_codes(BCH_n, BCH_q, BCH_t, 1, TRUE, verbose_level);
 	}
 	else if (f_Hamming_space_distance_matrix) {
 
-		coding_theory_domain Coding;
+		coding_theory::coding_theory_domain Coding;
 
 		Coding.make_Hamming_graph_and_write_file(Hamming_space_n, Hamming_space_q,
 				FALSE /* f_projective*/, verbose_level);
@@ -614,10 +614,10 @@ void interface_coding_theory::worker(int verbose_level)
 			int sz;
 			int f_embellish = FALSE;
 
-			coding_theory_domain Codes;
+			coding_theory::coding_theory_domain Codes;
 
 
-			Orbiter->Lint_vec.scan(general_code_binary_text, set, sz);
+			Orbiter->Lint_vec->scan(general_code_binary_text, set, sz);
 
 			Codes.investigate_code(set, sz, general_code_binary_n, f_embellish, verbose_level);
 
@@ -629,10 +629,10 @@ void interface_coding_theory::worker(int verbose_level)
 			long int *codewords;
 			int nb_words;
 
-			coding_theory_domain Codes;
+			coding_theory::coding_theory_domain Codes;
 
 
-			Orbiter->Lint_vec.scan(code_diagram_codewords_text, codewords, nb_words);
+			Orbiter->Lint_vec->scan(code_diagram_codewords_text, codewords, nb_words);
 
 
 
@@ -649,7 +649,7 @@ void interface_coding_theory::worker(int verbose_level)
 			int m, nb_words;
 			file_io Fio;
 
-			coding_theory_domain Codes;
+			coding_theory::coding_theory_domain Codes;
 
 
 			Fio.lint_matrix_read_csv(code_diagram_from_file_codewords_fname, codewords, m, nb_words, verbose_level);
@@ -668,10 +668,10 @@ void interface_coding_theory::worker(int verbose_level)
 			long int *codewords;
 			int nb_words;
 
-			coding_theory_domain Codes;
+			coding_theory::coding_theory_domain Codes;
 
 
-			Orbiter->Lint_vec.scan(code_diagram_codewords_text, codewords, nb_words);
+			Orbiter->Lint_vec->scan(code_diagram_codewords_text, codewords, nb_words);
 
 
 
@@ -688,7 +688,7 @@ void interface_coding_theory::worker(int verbose_level)
 			int sz;
 			int f_embellish = FALSE;
 
-			coding_theory_domain Codes;
+			coding_theory::coding_theory_domain Codes;
 
 
 			//Orbiter->Lint_vec.scan(linear_code_through_basis_text, set, sz);
@@ -708,7 +708,7 @@ void interface_coding_theory::worker(int verbose_level)
 			long int *set;
 			int n;
 
-			coding_theory_domain Codes;
+			coding_theory::coding_theory_domain Codes;
 
 
 			//Orbiter->Lint_vec.scan(linear_code_through_columns_of_parity_check_text, set, n);
@@ -728,7 +728,7 @@ void interface_coding_theory::worker(int verbose_level)
 			long int *set;
 			int n;
 
-			coding_theory_domain Codes;
+			coding_theory::coding_theory_domain Codes;
 
 
 			//Orbiter->Lint_vec.scan(linear_code_through_columns_of_parity_check_text, set, n);
@@ -744,7 +744,7 @@ void interface_coding_theory::worker(int verbose_level)
 	}
 
 	else if (f_long_code) {
-			coding_theory_domain Codes;
+		coding_theory::coding_theory_domain Codes;
 			string dummy;
 
 			Codes.do_long_code(
@@ -756,7 +756,7 @@ void interface_coding_theory::worker(int verbose_level)
 
 	}
 	else if (f_encode_text_5bits) {
-		coding_theory_domain Codes;
+		coding_theory::coding_theory_domain Codes;
 
 		Codes.encode_text_5bits(encode_text_5bits_input,
 				encode_text_5bits_fname,
@@ -764,7 +764,7 @@ void interface_coding_theory::worker(int verbose_level)
 
 	}
 	else if (f_field_induction) {
-		coding_theory_domain Codes;
+		coding_theory::coding_theory_domain Codes;
 
 		Codes.field_induction(field_induction_fname_in,
 				field_induction_fname_out,

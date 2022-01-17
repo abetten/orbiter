@@ -12,6 +12,7 @@
 
 namespace orbiter {
 namespace foundations {
+namespace cryptography {
 
 
 
@@ -208,7 +209,8 @@ public:
 
 };
 
-}}
+}}}
+
 
 
 #endif /* SRC_LIB_FOUNDATIONS_CRYPTOGRAPHY_CRYPTOGRAPHY_H_ */

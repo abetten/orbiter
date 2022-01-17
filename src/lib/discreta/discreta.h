@@ -21,12 +21,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-using namespace orbiter::classification;
+using namespace orbiter;
+using namespace orbiter::foundations;
 
 
 namespace orbiter {
 
-//! legacy project DISCRETA provides typed objects
+//! legacy project discreta provides typed objects
 
 namespace discreta {
 
@@ -336,7 +337,7 @@ void int_vector_realloc(int *&p, int old_length, int new_length);
 void int_vector_shorten(int *&p, int new_length);
 void int_matrix_realloc(int *&p, int old_m, int new_m, int old_n, int new_n);
 int code_is_irreducible(int k, int nmk, int idx_zero, int *M);
-void fine_tune(finite_field *F, int *mtxD, int verbose_level);
+void fine_tune(foundations::finite_field *F, int *mtxD, int verbose_level);
 
 
 /************************************* base ********************************/
@@ -407,7 +408,7 @@ class discreta_base
 	discreta_matrix& as_matrix() { return *(discreta_matrix *)this; }
 	unipoly& as_unipoly() { return *(unipoly *)this; }
 	memory& as_memory() { return *(memory *)this; }
-	action& as_action() { return *(action *)this; }
+	//action& as_action() { return *(action *)this; }
 	hollerith& as_hollerith() { return *(hollerith *)this; }
 	bt_key& as_bt_key() { return *(bt_key *)this; }
 	database& as_database() { return *(database *)this; }
@@ -1368,16 +1369,16 @@ class domain {
 		//pc_presentation *the_pres;
 		unipoly *the_factor_poly;
 		domain *the_sub_domain;
-		finite_field *F;
+		foundations::finite_field *F;
 	
 	public:
 		domain(int p);
-		domain(finite_field *F);
+		domain(foundations::finite_field *F);
 	domain(unipoly *factor_poly, domain *sub_domain);
 	//domain(pc_presentation *pres);
 	
 	domain_type type();
-	finite_field *get_F();
+	foundations::finite_field *get_F();
 	int order_int();
 	int order_subfield_int();
 	int characteristic();
@@ -1850,7 +1851,7 @@ typedef page_table *ppage_table;
 
 class page_table {
 public:
-	page_storage *btree_pages;
+	foundations::data_structures::page_storage *btree_pages;
 	int btree_page_registry_length;
 	int btree_page_registry_allocated_length;
 	btree_page_registry_key_pair *btree_table;

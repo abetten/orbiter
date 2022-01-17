@@ -41,7 +41,7 @@ int poset_classification_report_options::read_arguments(
 {
 	int i;
 	int f_v = (verbose_level >= 1);
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "poset_classification_report_options::read_arguments" << endl;

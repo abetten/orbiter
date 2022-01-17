@@ -15,6 +15,8 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace data_structures {
+
 
 data_input_stream_description_element::data_input_stream_description_element()
 {
@@ -273,4 +275,5 @@ void data_input_stream_description_element::init_from_parallel_search(std::strin
 }
 
 
-}}
+}}}
+

@@ -110,7 +110,7 @@ interface_combinatorics::interface_combinatorics()
 void interface_combinatorics::print_help(int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (ST.stringcmp(argv[i], "-diophant") == 0) {
 		cout << "-diophant <description> " << endl;
@@ -186,7 +186,7 @@ void interface_combinatorics::print_help(int argc,
 int interface_combinatorics::recognize_keyword(int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	string_tools ST;
+	data_structures::string_tools ST;
 	if (i >= argc) {
 		return false;
 	}
@@ -266,7 +266,7 @@ void interface_combinatorics::read_arguments(int argc,
 		std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "interface_combinatorics::read_arguments" << endl;
@@ -385,7 +385,7 @@ void interface_combinatorics::read_arguments(int argc,
 		if (f_v) {
 			cout << "-tdo_refinement " << endl;
 		}
-		Tdo_refinement_descr = NEW_OBJECT(tdo_refinement_description);
+		Tdo_refinement_descr = NEW_OBJECT(combinatorics::tdo_refinement_description);
 		i += Tdo_refinement_descr->read_arguments(argc - (i + 1),
 				argv + i + 1, verbose_level);
 		if (f_v) {
@@ -665,14 +665,14 @@ void interface_combinatorics::worker(int verbose_level)
 	}
 	else if (f_random_permutation) {
 
-		combinatorics_domain Combi;
+		combinatorics::combinatorics_domain Combi;
 
 		Combi.create_random_permutation(random_permutation_degree,
 				random_permutation_fname_csv, verbose_level);
 	}
 	else if (f_read_poset_file) {
 
-		combinatorics_domain Combi;
+		combinatorics::combinatorics_domain Combi;
 
 		Combi.do_read_poset_file(read_poset_file_fname,
 				f_grouping, grouping_x_stretch,
@@ -690,7 +690,7 @@ void interface_combinatorics::worker(int verbose_level)
 	}
 	else if (f_tree_of_all_k_subsets) {
 
-		combinatorics_domain Combi;
+		combinatorics::combinatorics_domain Combi;
 
 		Combi.do_make_tree_of_all_k_subsets(tree_of_all_k_subsets_n, tree_of_all_k_subsets_k, verbose_level);
 	}
@@ -700,32 +700,32 @@ void interface_combinatorics::worker(int verbose_level)
 	}
 	else if (f_tdo_refinement) {
 
-		combinatorics_domain Combi;
+		combinatorics::combinatorics_domain Combi;
 
 		Combi.do_tdo_refinement(Tdo_refinement_descr, verbose_level);
 	}
 	else if (f_tdo_print) {
 
-		combinatorics_domain Combi;
+		combinatorics::combinatorics_domain Combi;
 
 		Combi.do_tdo_print(tdo_print_fname, verbose_level);
 	}
 	else if (f_convert_stack_to_tdo) {
 
-		combinatorics_domain Combi;
+		combinatorics::combinatorics_domain Combi;
 
 		Combi.convert_stack_to_tdo(stack_fname, verbose_level);
 	}
 	else if (f_maximal_arc_parameters) {
 
-		combinatorics_domain Combi;
+		combinatorics::combinatorics_domain Combi;
 
 		Combi.do_parameters_maximal_arc(maximal_arc_parameters_q,
 				maximal_arc_parameters_r, verbose_level);
 	}
 	else if (f_arc_parameters) {
 
-		combinatorics_domain Combi;
+		combinatorics::combinatorics_domain Combi;
 
 		Combi.do_parameters_arc(arc_parameters_q,
 				arc_parameters_s, arc_parameters_r, verbose_level);
@@ -733,9 +733,9 @@ void interface_combinatorics::worker(int verbose_level)
 	else if (f_pentomino_puzzle) {
 		cout << "pentomino_puzzle " <<endl;
 
-		pentomino_puzzle *P;
+		combinatorics::pentomino_puzzle *P;
 
-		P = NEW_OBJECT(pentomino_puzzle);
+		P = NEW_OBJECT(combinatorics::pentomino_puzzle);
 
 		P->main(verbose_level);
 
@@ -776,7 +776,7 @@ void interface_combinatorics::worker(int verbose_level)
 	}
 	else if (f_make_elementary_symmetric_functions) {
 
-		combinatorics_domain Combi;
+		combinatorics::combinatorics_domain Combi;
 
 		Combi.make_elementary_symmetric_functions(make_elementary_symmetric_functions_n,
 				make_elementary_symmetric_functions_k_max, verbose_level);
@@ -784,7 +784,7 @@ void interface_combinatorics::worker(int verbose_level)
 	}
 	else if (f_Dedekind_numbers) {
 
-		combinatorics_domain Combi;
+		combinatorics::combinatorics_domain Combi;
 
 		Combi.Dedekind_numbers(
 				Dedekind_n_min, Dedekind_n_max, Dedekind_q_min, Dedekind_q_max,
@@ -794,7 +794,7 @@ void interface_combinatorics::worker(int verbose_level)
 
 	else if (f_rank_k_subset) {
 
-		combinatorics_domain Combi;
+		combinatorics::combinatorics_domain Combi;
 
 
 		int *set;
@@ -802,7 +802,7 @@ void interface_combinatorics::worker(int verbose_level)
 		int i, j, r, N;
 		int *Rk;
 
-		Orbiter->Int_vec.scan(rank_k_subset_text, set, sz);
+		Orbiter->Int_vec->scan(rank_k_subset_text, set, sz);
 
 		N = (sz + rank_k_subset_k - 1) / rank_k_subset_k;
 		Rk = NEW_int(N);
@@ -814,7 +814,7 @@ void interface_combinatorics::worker(int verbose_level)
 			r = Combi.rank_k_subset(set + i, rank_k_subset_n, rank_k_subset_k);
 
 			cout << "The rank of ";
-			Orbiter->Int_vec.print(cout, set + i, rank_k_subset_k);
+			Orbiter->Int_vec->print(cout, set + i, rank_k_subset_k);
 			cout << " is " << r << endl;
 			Rk[j] = r;
 
@@ -823,15 +823,15 @@ void interface_combinatorics::worker(int verbose_level)
 		}
 
 		cout << "the ranks of all subsets are: ";
-		Orbiter->Int_vec.print(cout, Rk, N);
+		Orbiter->Int_vec->print(cout, Rk, N);
 		cout << endl;
 
-		sorting Sorting;
+		data_structures::sorting Sorting;
 
 		Sorting.int_vec_heapsort(Rk, N);
 
 		cout << "the sorted ranks of all subsets are: ";
-		Orbiter->Int_vec.print(cout, Rk, N);
+		Orbiter->Int_vec->print(cout, Rk, N);
 		cout << endl;
 
 	}
@@ -906,9 +906,9 @@ void interface_combinatorics::do_bent(int n, int verbose_level)
 	}
 
 	{
-		boolean_function_domain *BF;
+		combinatorics::boolean_function_domain *BF;
 
-		BF = NEW_OBJECT(boolean_function_domain);
+		BF = NEW_OBJECT(combinatorics::boolean_function_domain);
 
 		if (f_v) {
 			cout << "interface_combinatorics::do_bent before BF->init" << endl;
@@ -960,8 +960,8 @@ void interface_combinatorics::do_conjugacy_classes_Sym_n(int n, int verbose_leve
 	int cnt;
 	longinteger_object class_size, S, F, A;
 	longinteger_domain D;
-	combinatorics_domain C;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain C;
+	combinatorics::combinatorics_domain Combi;
 
 	cnt = Combi.count_partitions(n);
 
@@ -976,7 +976,7 @@ void interface_combinatorics::do_conjugacy_classes_Sym_n(int n, int verbose_leve
 	cout << "The conjugacy classes in Sym_" << n << " are:" << endl;
 	for (i = 0; i < cnt; i++) {
 		cout << i << " : ";
-		Orbiter->Int_vec.print(cout, Parts + i * n, n);
+		Orbiter->Int_vec->print(cout, Parts + i * n, n);
 		cout << " : ";
 
 		C.size_of_conjugacy_class_in_sym_n(class_size, n, Parts + i * n);

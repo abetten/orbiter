@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebra {
 
 
 
@@ -35,7 +36,7 @@ void group_generators_domain::generators_symmetric_group(int deg,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "group_generators_domain::generators_symmetric_group" << endl;
@@ -72,7 +73,7 @@ void group_generators_domain::generators_cyclic_group(int deg,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i = 0, j;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "group_generators_domain::generators_cyclic_group" << endl;
@@ -108,7 +109,7 @@ void group_generators_domain::generators_dihedral_group(int deg,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i = 0, j, d2;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "group_generators_domain::generators_dihedral_group" << endl;
@@ -152,7 +153,7 @@ void group_generators_domain::generators_dihedral_involution(int deg,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i = 0, j, d2;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "group_generators_domain::generators_dihedral_involution" << endl;
@@ -192,7 +193,7 @@ void group_generators_domain::generators_identity_group(int deg,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i = 0, j;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "group_generators_domain::generators_identity_group" << endl;
@@ -231,7 +232,7 @@ void group_generators_domain::generators_Hall_reflection(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "group_generators_domain::generators_Hall_reflection" << endl;
@@ -269,7 +270,7 @@ void group_generators_domain::generators_Hall_reflection_normalizer_group(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, h;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "group_generators_domain::generators_Hall_reflection_normalizer_group" << endl;
@@ -367,7 +368,7 @@ void group_generators_domain::generators_Bn_group(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "group_generators_domain::generators_Bn_group" << endl;
@@ -417,7 +418,7 @@ void group_generators_domain::generators_direct_product(
 	int f_vv = (verbose_level >= 2);
 	int i, k = 0;
 	int *id1, *id2;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "group_generators_domain::generators_direct_product" << endl;
@@ -462,7 +463,7 @@ void group_generators_domain::generators_concatenate(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, k = 0;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "group_generators_domain::generators_concatenate" << endl;
@@ -1251,7 +1252,7 @@ void group_generators_domain::projective_matrix_group_base_and_orbits(int n, fin
 	if (f_v) {
 		cout << "group_generators_domain::projective_matrix_group_base_and_orbits "
 				"transversal_length: ";
-		Orbiter->Int_vec.print(cout, transversal_length, base_len);
+		Orbiter->Int_vec->print(cout, transversal_length, base_len);
 		cout << endl;
 	}
 	if (f_semilinear) {
@@ -1283,9 +1284,9 @@ void group_generators_domain::projective_matrix_group_base_and_orbits(int n, fin
 		}
 
 		if (FALSE) {
-			Orbiter->Lint_vec.print(cout, orbit[i], degree);
+			Orbiter->Lint_vec->print(cout, orbit[i], degree);
 			cout << endl;
-			Orbiter->Lint_vec.print(cout, orbit_inv[i], degree);
+			Orbiter->Lint_vec->print(cout, orbit_inv[i], degree);
 			cout << endl;
 		}
 	}
@@ -1308,9 +1309,9 @@ void group_generators_domain::projective_matrix_group_base_and_orbits(int n, fin
 		}
 
 		if (FALSE) {
-			Orbiter->Lint_vec.print(cout, orbit[i], degree);
+			Orbiter->Lint_vec->print(cout, orbit[i], degree);
 			cout << endl;
-			Orbiter->Lint_vec.print(cout, orbit_inv[i], degree);
+			Orbiter->Lint_vec->print(cout, orbit_inv[i], degree);
 			cout << endl;
 		}
 		i++;
@@ -1335,9 +1336,9 @@ void group_generators_domain::projective_matrix_group_base_and_orbits(int n, fin
 		}
 
 		if (FALSE) {
-			Orbiter->Lint_vec.print(cout, orbit[i], degree);
+			Orbiter->Lint_vec->print(cout, orbit[i], degree);
 			cout << endl;
-			Orbiter->Lint_vec.print(cout, orbit_inv[i], degree);
+			Orbiter->Lint_vec->print(cout, orbit_inv[i], degree);
 			cout << endl;
 		}
 		i++;
@@ -1351,11 +1352,11 @@ void group_generators_domain::projective_matrix_group_base_and_orbits(int n, fin
 	}
 	if (f_vv) {
 		cout << "group_generators_domain::projective_matrix_group_base_and_orbits base: ";
-		Orbiter->Lint_vec.print(cout, base, base_len);
+		Orbiter->Lint_vec->print(cout, base, base_len);
 		cout << endl;
 		cout << "projective_matrix_group_base_and_orbits "
 				"transversal_length: ";
-		Orbiter->Int_vec.print(cout, transversal_length, base_len);
+		Orbiter->Int_vec->print(cout, transversal_length, base_len);
 		cout << endl;
 	}
 	if (f_v) {
@@ -1418,11 +1419,11 @@ void group_generators_domain::projective_matrix_group_base_and_transversal_lengt
 	}
 	if (f_v) {
 		cout << "group_generators_domain::projective_matrix_group_base_and_transversal_length base: ";
-		Orbiter->Lint_vec.print(cout, base, base_len);
+		Orbiter->Lint_vec->print(cout, base, base_len);
 		cout << endl;
 		cout << "finite_field::projective_matrix_group_base_and_transversal_length "
 				"transversal_length: ";
-		Orbiter->Int_vec.print(cout, transversal_length, base_len);
+		Orbiter->Int_vec->print(cout, transversal_length, base_len);
 		cout << endl;
 	}
 	if (f_v) {
@@ -1466,11 +1467,11 @@ void group_generators_domain::affine_matrix_group_base_and_transversal_length(in
 	}
 	if (f_vv) {
 		cout << "group_generators_domain::affine_matrix_group_base_and_transversal_length base: ";
-		Orbiter->Lint_vec.print(cout, base, base_len);
+		Orbiter->Lint_vec->print(cout, base, base_len);
 		cout << endl;
 		cout << "finite_field::affine_matrix_group_base_and_transversal_length "
 				"transversal_length: ";
-		Orbiter->Int_vec.print(cout, transversal_length, base_len);
+		Orbiter->Int_vec->print(cout, transversal_length, base_len);
 		cout << endl;
 	}
 	if (f_v) {
@@ -1515,11 +1516,11 @@ void group_generators_domain::general_linear_matrix_group_base_and_transversal_l
 	if (f_vv) {
 		cout << "group_generators_domain::general_linear_matrix_group_base_and_"
 				"transversal_length base: ";
-		Orbiter->Lint_vec.print(cout, base, base_len);
+		Orbiter->Lint_vec->print(cout, base, base_len);
 		cout << endl;
 		cout << "group_generators_domain::general_linear_matrix_group_base_and_"
 				"transversal_length transversal_length: ";
-		Orbiter->Int_vec.print(cout, transversal_length, base_len);
+		Orbiter->Int_vec->print(cout, transversal_length, base_len);
 		cout << endl;
 	}
 	if (f_v) {
@@ -1565,7 +1566,7 @@ void group_generators_domain::strong_generators_for_projective_linear_group(
 	if (f_semilinear) {
 		F->Linear_algebra->identity_matrix(M, n);
 		M[n * n] = 1;
-		Orbiter->Int_vec.copy(M, data + cur * size, size);
+		Orbiter->Int_vec->copy(M, data + cur * size, size);
 		cur++;
 	}
 
@@ -1582,7 +1583,7 @@ void group_generators_domain::strong_generators_for_projective_linear_group(
 			if (f_semilinear) {
 				M[n * n] = 0;
 			}
-			Orbiter->Int_vec.copy(M, data + cur * size, size);
+			Orbiter->Int_vec->copy(M, data + cur * size, size);
 			cur++;
 		}
 	}
@@ -1599,7 +1600,7 @@ void group_generators_domain::strong_generators_for_projective_linear_group(
 			if (f_semilinear) {
 				M[n * n] = 0;
 			}
-			Orbiter->Int_vec.copy(M, data + cur * size, size);
+			Orbiter->Int_vec->copy(M, data + cur * size, size);
 			cur++;
 		}
 	}
@@ -1617,7 +1618,7 @@ void group_generators_domain::strong_generators_for_projective_linear_group(
 		if (f_semilinear) {
 			M[n * n] = 0;
 		}
-		Orbiter->Int_vec.copy(M, data + cur * size, size);
+		Orbiter->Int_vec->copy(M, data + cur * size, size);
 		cur++;
 	}
 
@@ -1671,7 +1672,7 @@ void group_generators_domain::strong_generators_for_affine_linear_group(
 
 	cur = 0;
 	if (f_semilinear) {
-		Orbiter->Int_vec.zero(data + cur * size, size);
+		Orbiter->Int_vec->zero(data + cur * size, size);
 		F->Linear_algebra->identity_matrix(data + cur * size, n);
 		data[cur * size + n * n + n] = 1;
 		cur++;
@@ -1684,7 +1685,7 @@ void group_generators_domain::strong_generators_for_affine_linear_group(
 					"(e=" << F->e << "):" << endl;
 		}
 		for (u = 0; u < F->e; u++) {
-			Orbiter->Int_vec.zero(data + cur * size, size);
+			Orbiter->Int_vec->zero(data + cur * size, size);
 			F->Linear_algebra->identity_matrix(data + cur * size, n);
 
 			data[cur * size + (n - 1) * n + h] = NT.i_power_j(F->p, u);
@@ -1702,7 +1703,7 @@ void group_generators_domain::strong_generators_for_affine_linear_group(
 			cout << "generators for primitive element "
 					"on the last diagonal:" << endl;
 		}
-		Orbiter->Int_vec.zero(data + cur * size, size);
+		Orbiter->Int_vec->zero(data + cur * size, size);
 		F->Linear_algebra->identity_matrix(data + cur * size, n);
 
 		data[cur * size + h * n + h] = F->primitive_root();
@@ -1718,7 +1719,7 @@ void group_generators_domain::strong_generators_for_affine_linear_group(
 		if (f_vv) {
 			cout << "generators for swaps along the diagonal:" << endl;
 		}
-		Orbiter->Int_vec.zero(data + cur * size, size);
+		Orbiter->Int_vec->zero(data + cur * size, size);
 		F->Linear_algebra->identity_matrix(data + cur * size, n);
 		data[cur * size + h * n + h] = 0;
 		data[cur * size + h * n + h + 1] = 1;
@@ -1733,7 +1734,7 @@ void group_generators_domain::strong_generators_for_affine_linear_group(
 	// the translations:
 	for (h = 0; h < n; h++) {
 		for (u = 0; u < F->e; u++) {
-			Orbiter->Int_vec.zero(data + cur * size, size);
+			Orbiter->Int_vec->zero(data + cur * size, size);
 			F->Linear_algebra->identity_matrix(data + cur * size, n);
 
 			data[cur * size + n * n + h] = NT.i_power_j(F->p, u);
@@ -1789,7 +1790,7 @@ void group_generators_domain::strong_generators_for_general_linear_group(
 
 	cur = 0;
 	if (f_semilinear) {
-		Orbiter->Int_vec.zero(data + cur * size, size);
+		Orbiter->Int_vec->zero(data + cur * size, size);
 		F->Linear_algebra->identity_matrix(data + cur * size, n);
 		data[cur * size + n * n] = 1;
 		cur++;
@@ -1802,7 +1803,7 @@ void group_generators_domain::strong_generators_for_general_linear_group(
 					"(e=" << F->e << "):" << endl;
 		}
 		for (u = 0; u < F->e; u++) {
-			Orbiter->Int_vec.zero(data + cur * size, size);
+			Orbiter->Int_vec->zero(data + cur * size, size);
 			F->Linear_algebra->identity_matrix(data + cur * size, n);
 
 			data[cur * size + (n - 1) * n + h] = NT.i_power_j(F->p, u);
@@ -1820,7 +1821,7 @@ void group_generators_domain::strong_generators_for_general_linear_group(
 			cout << "generators for primitive element "
 					"on the last diagonal:" << endl;
 		}
-		Orbiter->Int_vec.zero(data + cur * size, size);
+		Orbiter->Int_vec->zero(data + cur * size, size);
 		F->Linear_algebra->identity_matrix(data + cur * size, n);
 
 		data[cur * size + h * n + h] = F->primitive_root();
@@ -1836,7 +1837,7 @@ void group_generators_domain::strong_generators_for_general_linear_group(
 		if (f_vv) {
 			cout << "generators for swaps along the diagonal:" << endl;
 		}
-		Orbiter->Int_vec.zero(data + cur * size, size);
+		Orbiter->Int_vec->zero(data + cur * size, size);
 		F->Linear_algebra->identity_matrix(data + cur * size, n);
 		data[cur * size + h * n + h] = 0;
 		data[cur * size + h * n + h + 1] = 1;
@@ -1935,7 +1936,7 @@ void group_generators_domain::generators_for_parabolic_subgroup(
 	if (f_semilinear) {
 		F->Linear_algebra->identity_matrix(M, n);
 		M[n * n] = 1;
-		Orbiter->Int_vec.copy(M, data + cur * size, size);
+		Orbiter->Int_vec->copy(M, data + cur * size, size);
 		cur++;
 	}
 
@@ -1952,7 +1953,7 @@ void group_generators_domain::generators_for_parabolic_subgroup(
 			if (f_semilinear) {
 				M[n * n] = 0;
 			}
-			Orbiter->Int_vec.copy(M, data + cur * size, size);
+			Orbiter->Int_vec->copy(M, data + cur * size, size);
 			cur++;
 		}
 	}
@@ -1969,7 +1970,7 @@ void group_generators_domain::generators_for_parabolic_subgroup(
 			if (f_semilinear) {
 				M[n * n] = 0;
 			}
-			Orbiter->Int_vec.copy(M, data + cur * size, size);
+			Orbiter->Int_vec->copy(M, data + cur * size, size);
 			cur++;
 		}
 	}
@@ -1982,7 +1983,7 @@ void group_generators_domain::generators_for_parabolic_subgroup(
 			if (f_semilinear) {
 				M[n * n] = 0;
 			}
-			Orbiter->Int_vec.copy(M, data + cur * size, size);
+			Orbiter->Int_vec->copy(M, data + cur * size, size);
 			cur++;
 		}
 	}
@@ -2000,7 +2001,7 @@ void group_generators_domain::generators_for_parabolic_subgroup(
 				if (f_semilinear) {
 					M[n * n] = 0;
 				}
-				Orbiter->Int_vec.copy(M, data + cur * size, size);
+				Orbiter->Int_vec->copy(M, data + cur * size, size);
 				cur++;
 			}
 		}
@@ -2020,7 +2021,7 @@ void group_generators_domain::generators_for_parabolic_subgroup(
 		if (f_semilinear) {
 			M[n * n] = 0;
 		}
-		Orbiter->Int_vec.copy(M, data + cur * size, size);
+		Orbiter->Int_vec->copy(M, data + cur * size, size);
 		cur++;
 	}
 	for (h = k - 2; h >= 0; h--) {
@@ -2032,7 +2033,7 @@ void group_generators_domain::generators_for_parabolic_subgroup(
 		if (f_semilinear) {
 			M[n * n] = 0;
 		}
-		Orbiter->Int_vec.copy(M, data + cur * size, size);
+		Orbiter->Int_vec->copy(M, data + cur * size, size);
 		cur++;
 	}
 
@@ -2096,7 +2097,7 @@ void group_generators_domain::generators_for_stabilizer_of_three_collinear_point
 	if (f_semilinear) {
 		F->Linear_algebra->identity_matrix(M, n);
 		M[n * n] = 1;
-		Orbiter->Int_vec.copy(M, data + cur * size, size);
+		Orbiter->Int_vec->copy(M, data + cur * size, size);
 		cur++;
 	}
 
@@ -2113,7 +2114,7 @@ void group_generators_domain::generators_for_stabilizer_of_three_collinear_point
 	if (f_semilinear) {
 		M[n * n] = 0;
 	}
-	Orbiter->Int_vec.copy(M, data + cur * size, size);
+	Orbiter->Int_vec->copy(M, data + cur * size, size);
 	cur++;
 	F->Linear_algebra->identity_matrix(M, n);
 	M[0 * 4 + 0] = 0;
@@ -2123,7 +2124,7 @@ void group_generators_domain::generators_for_stabilizer_of_three_collinear_point
 	if (f_semilinear) {
 		M[n * n] = 0;
 	}
-	Orbiter->Int_vec.copy(M, data + cur * size, size);
+	Orbiter->Int_vec->copy(M, data + cur * size, size);
 	cur++;
 	F->Linear_algebra->identity_matrix(M, n);
 	M[0 * 4 + 0] = F->primitive_root();
@@ -2133,7 +2134,7 @@ void group_generators_domain::generators_for_stabilizer_of_three_collinear_point
 	if (f_semilinear) {
 		M[n * n] = 0;
 	}
-	Orbiter->Int_vec.copy(M, data + cur * size, size);
+	Orbiter->Int_vec->copy(M, data + cur * size, size);
 	cur++;
 
 	// scalars in bottom right:
@@ -2142,7 +2143,7 @@ void group_generators_domain::generators_for_stabilizer_of_three_collinear_point
 	if (f_semilinear) {
 		M[n * n] = 0;
 	}
-	Orbiter->Int_vec.copy(M, data + cur * size, size);
+	Orbiter->Int_vec->copy(M, data + cur * size, size);
 	cur++;
 
 	// lower left block:
@@ -2154,7 +2155,7 @@ void group_generators_domain::generators_for_stabilizer_of_three_collinear_point
 				if (f_semilinear) {
 					M[n * n] = 0;
 				}
-				Orbiter->Int_vec.copy(M, data + cur * size, size);
+				Orbiter->Int_vec->copy(M, data + cur * size, size);
 				cur++;
 			}
 		}
@@ -2169,7 +2170,7 @@ void group_generators_domain::generators_for_stabilizer_of_three_collinear_point
 	if (f_semilinear) {
 		M[n * n] = 0;
 	}
-	Orbiter->Int_vec.copy(M, data + cur * size, size);
+	Orbiter->Int_vec->copy(M, data + cur * size, size);
 	cur++;
 
 	// PGL2 in lower right, bottom row
@@ -2179,7 +2180,7 @@ void group_generators_domain::generators_for_stabilizer_of_three_collinear_point
 		if (f_semilinear) {
 			M[n * n] = 0;
 		}
-		Orbiter->Int_vec.copy(M, data + cur * size, size);
+		Orbiter->Int_vec->copy(M, data + cur * size, size);
 		cur++;
 	}
 
@@ -2243,7 +2244,7 @@ void group_generators_domain::generators_for_stabilizer_of_triangle_in_PGL4(
 	if (f_semilinear) {
 		F->Linear_algebra->identity_matrix(M, n);
 		M[n * n] = 1;
-		Orbiter->Int_vec.copy(M, data + cur * size, size);
+		Orbiter->Int_vec->copy(M, data + cur * size, size);
 		cur++;
 	}
 
@@ -2260,7 +2261,7 @@ void group_generators_domain::generators_for_stabilizer_of_triangle_in_PGL4(
 	if (f_semilinear) {
 		M[n * n] = 0;
 	}
-	Orbiter->Int_vec.copy(M, data + cur * size, size);
+	Orbiter->Int_vec->copy(M, data + cur * size, size);
 	cur++;
 	F->Linear_algebra->identity_matrix(M, n);
 	M[0 * 4 + 0] = 0;
@@ -2272,7 +2273,7 @@ void group_generators_domain::generators_for_stabilizer_of_triangle_in_PGL4(
 	if (f_semilinear) {
 		M[n * n] = 0;
 	}
-	Orbiter->Int_vec.copy(M, data + cur * size, size);
+	Orbiter->Int_vec->copy(M, data + cur * size, size);
 	cur++;
 
 	// scalars in top left block:
@@ -2281,21 +2282,21 @@ void group_generators_domain::generators_for_stabilizer_of_triangle_in_PGL4(
 	if (f_semilinear) {
 		M[n * n] = 0;
 	}
-	Orbiter->Int_vec.copy(M, data + cur * size, size);
+	Orbiter->Int_vec->copy(M, data + cur * size, size);
 	cur++;
 	F->Linear_algebra->identity_matrix(M, n);
 	M[1 * 4 + 1] = F->primitive_root();
 	if (f_semilinear) {
 		M[n * n] = 0;
 	}
-	Orbiter->Int_vec.copy(M, data + cur * size, size);
+	Orbiter->Int_vec->copy(M, data + cur * size, size);
 	cur++;
 	F->Linear_algebra->identity_matrix(M, n);
 	M[2 * 4 + 2] = F->primitive_root();
 	if (f_semilinear) {
 		M[n * n] = 0;
 	}
-	Orbiter->Int_vec.copy(M, data + cur * size, size);
+	Orbiter->Int_vec->copy(M, data + cur * size, size);
 	cur++;
 
 	// scalars bottom right
@@ -2304,7 +2305,7 @@ void group_generators_domain::generators_for_stabilizer_of_triangle_in_PGL4(
 	if (f_semilinear) {
 		M[n * n] = 0;
 	}
-	Orbiter->Int_vec.copy(M, data + cur * size, size);
+	Orbiter->Int_vec->copy(M, data + cur * size, size);
 	cur++;
 
 	// lower left block
@@ -2315,7 +2316,7 @@ void group_generators_domain::generators_for_stabilizer_of_triangle_in_PGL4(
 			if (f_semilinear) {
 				M[n * n] = 0;
 			}
-			Orbiter->Int_vec.copy(M, data + cur * size, size);
+			Orbiter->Int_vec->copy(M, data + cur * size, size);
 			cur++;
 		}
 	}
@@ -2417,7 +2418,7 @@ void group_generators_domain::builtin_transversal_rep_GLnq(int *A,
 
 	if (f_vv) {
 		cout << "group_generators_domain::transversal_rep_GLnq[" << i << "][" << j << "] = \n";
-		Orbiter->Int_vec.print_integer_matrix(cout, A, n, n);
+		Orbiter->Int_vec->print_integer_matrix(cout, A, n, n);
 	}
 }
 
@@ -2652,6 +2653,6 @@ void group_generators_domain::PG_element_modified_not_in_subspace_perm(finite_fi
 
 
 
-}
-}
+}}}
+
 

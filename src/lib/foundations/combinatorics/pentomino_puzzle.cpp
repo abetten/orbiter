@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace combinatorics {
 
 
 
@@ -62,15 +63,15 @@ void pentomino_puzzle::main(int verbose_level)
 	D->get_solutions(Sol, nb_sol, verbose_level);
 
 
-	set_of_sets *L;
+	data_structures::set_of_sets *L;
 	int l;
 
-	L = NEW_OBJECT(set_of_sets);
+	L = NEW_OBJECT(data_structures::set_of_sets);
 	L->init_basic_constant_size(nb_vars,
 		nb_sol, sol_length, 0 /* verbose_level */);
 
 	for (l = 0; l < nb_sol; l++) {
-		Orbiter->Lint_vec.copy(Sol + l * sol_length, L->Sets[l], sol_length);
+		Orbiter->Lint_vec->copy(Sol + l * sol_length, L->Sets[l], sol_length);
 		}
 
 	L->sort_all(0);
@@ -123,7 +124,7 @@ void pentomino_puzzle::main(int verbose_level)
 
 		cout << "Solution " << l << " : ";
 #if 1
-		Orbiter->Lint_vec.print(cout, L->Sets[l], sol_length);
+		Orbiter->Lint_vec->print(cout, L->Sets[l], sol_length);
 		cout << "\\\\" << endl;
 #endif
 
@@ -172,7 +173,7 @@ void pentomino_puzzle::main(int verbose_level)
 		i = orbit[f];
 #if 1
 		cout << "Representative of orbit " << o << " is solution " << i << " : ";
-		Orbiter->Lint_vec.print(cout, L->Sets[i], sol_length);
+		Orbiter->Lint_vec->print(cout, L->Sets[i], sol_length);
 		cout << "\\\\" << endl;
 #endif
 
@@ -233,7 +234,7 @@ void pentomino_puzzle::main(int verbose_level)
 
 #if 1
 		cout << p << " / " << nb_orbits_without_I << " Representative of orbit " << o << " is solution " << i << " : ";
-		Orbiter->Lint_vec.print(cout, L->Sets[i], sol_length);
+		Orbiter->Lint_vec->print(cout, L->Sets[i], sol_length);
 		cout << "\\\\" << endl;
 #endif
 
@@ -467,7 +468,7 @@ void pentomino_puzzle::decode_assembly(long int *set)
 	int i, h = 0, r = 0, t = 0, tt, x, y, rr;
 
 	cout << "Set ";
-	Orbiter->Lint_vec.print(cout, set, 5);
+	Orbiter->Lint_vec->print(cout, set, 5);
 	cout << endl;
 
 	for (i = 0; i < 5; i++) {
@@ -557,7 +558,7 @@ void pentomino_puzzle::draw_it(ostream &ost, long int *sol)
 	ost << "\\end{tikzpicture}" << endl;
 }
 
-void pentomino_puzzle::compute_image_function(set_of_sets *S,
+void pentomino_puzzle::compute_image_function(data_structures::set_of_sets *S,
 		int elt_idx,
 		int gen_idx, int &idx_of_image, int verbose_level)
 // implements a rotation by 90 degree:
@@ -568,7 +569,7 @@ void pentomino_puzzle::compute_image_function(set_of_sets *S,
 	long int *set1;
 	long int *set2;
 	int sz, i, a, b, h, r, t, idx;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	set1 = S->Sets[elt_idx];
 	sz = S->Set_size[elt_idx];
@@ -578,7 +579,7 @@ void pentomino_puzzle::compute_image_function(set_of_sets *S,
 	if (f_v) {
 		cout << "compute_image_function "
 				"computing image of solution " << elt_idx << " = ";
-		Orbiter->Lint_vec.print(cout, set1, sz);
+		Orbiter->Lint_vec->print(cout, set1, sz);
 		cout << " under generator " << gen_idx << endl;
 		}
 
@@ -611,14 +612,14 @@ void pentomino_puzzle::compute_image_function(set_of_sets *S,
 			this /* void *data_for_compare */,
 		S->nb_sets, set2, idx, 0 /*verbose_level*/)) {
 		cout << "compute_image_function cannot find image" << endl;
-		Orbiter->Lint_vec.print(cout, set2, sz);
+		Orbiter->Lint_vec->print(cout, set2, sz);
 		cout << endl;
 		exit(1);
 		}
 	idx_of_image = idx;
 	if (f_v) {
 		cout << "compute_image_function image is ";
-		Orbiter->Lint_vec.print(cout, set2, sz);
+		Orbiter->Lint_vec->print(cout, set2, sz);
 		cout << " which is solution " << idx_of_image << endl;
 		}
 	FREE_lint(set2);
@@ -628,7 +629,7 @@ void pentomino_puzzle::compute_image_function(set_of_sets *S,
 void pentomino_puzzle::turn_piece(int &h, int &r, int &t, int verbose_level)
 {
 	int tx, ty, txx = 0, tyy = 0, tt;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	tt = T[h][t];
 	tx = tt % 5;
@@ -666,7 +667,7 @@ void pentomino_puzzle::flip_piece(int &h, int &r, int &t, int verbose_level)
 	//int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 	int tx, ty, txx = 0, tyy = 0, tt;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "flip_piece" << endl;
@@ -1143,7 +1144,7 @@ void pentomino_puzzle::make_coefficient_matrix(diophant *D)
 }
 
 
-void pentomino_puzzle_compute_image_function(set_of_sets *S,
+void pentomino_puzzle_compute_image_function(data_structures::set_of_sets *S,
 		void *compute_image_data, int elt_idx,
 		int gen_idx, int &idx_of_image, int verbose_level)
 {
@@ -1156,11 +1157,12 @@ void pentomino_puzzle_compute_image_function(set_of_sets *S,
 int pentomino_puzzle_compare_func(void *vec, void *a, int b, void *data_for_compare)
 {
 	//pentomino_puzzle *PP = (pentomino_puzzle *) data_for_compare;
-	set_of_sets *S = (set_of_sets *) vec;
+	data_structures::set_of_sets *S = (data_structures::set_of_sets *) vec;
 	int sz, c;
+	data_structures::sorting Sorting;
 
 	sz = S->Set_size[b];
-	c = lint_vec_compare((long int *) a, S->Sets[b], sz);
+	c = Sorting.lint_vec_compare((long int *) a, S->Sets[b], sz);
 #if 0
 	cout << "compare ";
 	int_vec_print(cout, (int *) a, sz);
@@ -1172,5 +1174,6 @@ int pentomino_puzzle_compare_func(void *vec, void *a, int b, void *data_for_comp
 }
 
 
-}}
+}}}
+
 

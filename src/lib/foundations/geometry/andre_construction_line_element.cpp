@@ -98,7 +98,7 @@ void andre_construction_line_element::unrank(
 		coset_idx = line_rank % Andre->order;
 		parallel_class_idx = line_rank / Andre->order;
 		Gg.AG_element_unrank(q, coset, 1, n - k, coset_idx);
-		Orbiter->Int_vec.copy(
+		Orbiter->Int_vec->copy(
 			Andre->spread_elements_genma + parallel_class_idx * k * n,
 			coordinates, k * n);
 		for (i = 0; i < n - k; i++) {
@@ -127,8 +127,8 @@ int andre_construction_line_element::rank(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int i, j, a, rk, idx;
 	geometry_global Gg;
-	combinatorics_domain Combi;
-	sorting Sorting;
+	combinatorics::combinatorics_domain Combi;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "andre_construction_line_element::rank" << endl;

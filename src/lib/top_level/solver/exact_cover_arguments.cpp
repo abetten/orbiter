@@ -67,7 +67,7 @@ int exact_cover_arguments::read_arguments(int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	for (i = 1; i < argc; i++) {
 		if (ST.stringcmp(argv[i], "-starter_size") == 0) {

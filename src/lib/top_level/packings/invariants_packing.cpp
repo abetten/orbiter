@@ -101,7 +101,7 @@ void invariants_packing::init(isomorph *Iso,
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int orbit, i;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "invariants_packing::init" << endl;
@@ -150,7 +150,7 @@ void invariants_packing::init(isomorph *Iso,
 
 
 	Spread_type_of_packing = NEW_int(Iso->Reps->count * P->Spread_table_with_selection->nb_iso_types_of_spreads);
-	Orbiter->Int_vec.zero(Spread_type_of_packing, Iso->Reps->count * P->Spread_table_with_selection->nb_iso_types_of_spreads);
+	Orbiter->Int_vec->zero(Spread_type_of_packing, Iso->Reps->count * P->Spread_table_with_selection->nb_iso_types_of_spreads);
 	
 	// compute Spread_type_of_packing:
 
@@ -224,7 +224,7 @@ void invariants_packing::init(isomorph *Iso,
 				"We found " << Classify->nb_types
 				<< " types of packings" << endl;
 		for (i = 0; i < Classify->nb_types; i++) {
-			Orbiter->Int_vec.print(cout,
+			Orbiter->Int_vec->print(cout,
 					Classify->Reps_in_lex_order[i],
 					P->Spread_table_with_selection->nb_iso_types_of_spreads);
 			cout << " : " << Classify->Frequency_in_lex_order[i] << endl;
@@ -271,7 +271,7 @@ void invariants_packing::compute_dual_packings(
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int orbit, i;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "invariants_packing::compute_dual_packings" << endl;
@@ -381,7 +381,7 @@ void invariants_packing::make_table(
 			sprintf(str, "ids_of_all_type_%d.csv", i);
 		}
 		fname.assign(str);
-		Orbiter->Int_vec.print(ost, Classify->Reps + i * P->Spread_table_with_selection->nb_iso_types_of_spreads,
+		Orbiter->Int_vec->print(ost, Classify->Reps + i * P->Spread_table_with_selection->nb_iso_types_of_spreads,
 				P->Spread_table_with_selection->nb_iso_types_of_spreads);
 		ost << " & ";
 		// ost << Frequency[i] << " & ";

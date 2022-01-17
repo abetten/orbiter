@@ -70,7 +70,7 @@ void tactical_decomposition::init(int nb_rows, int nb_cols,
 	nb_blocks = nb_cols;
 	tactical_decomposition::Inc = Inc;
 
-	Stack = NEW_OBJECT(partitionstack);
+	Stack = NEW_OBJECT(data_structures::partitionstack);
 	Stack->allocate(set_size + nb_blocks, 0 /* verbose_level */);
 	Stack->subset_continguous(set_size, nb_blocks);
 	Stack->split_cell(0 /* verbose_level */);

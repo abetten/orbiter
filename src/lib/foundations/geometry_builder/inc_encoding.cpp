@@ -72,7 +72,7 @@ long int inc_encoding::rank_row(int row)
 	int *S;
 	int k, i;
 	long int rk;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	S = NEW_int(dim_n);
 
@@ -252,7 +252,7 @@ void inc_encoding::print_partitioned_override_theX(
 		}
 
 		{
-			combinatorics_domain Combi;
+			combinatorics::combinatorics_domain Combi;
 			int *S;
 			int row, k, ii;
 			long int rk;

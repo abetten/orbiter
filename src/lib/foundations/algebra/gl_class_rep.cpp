@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebra {
 
 
 
@@ -52,7 +53,7 @@ void gl_class_rep::init(int nb_irred, int *Select_polynomial,
 			l++;
 		}
 	}
-	type_coding = NEW_OBJECT(int_matrix);
+	type_coding = NEW_OBJECT(data_structures::int_matrix);
 
 	type_coding->allocate(l, 3);
 	l = 0;
@@ -146,5 +147,6 @@ void gl_class_rep::centralizer_order_Kung(gl_classes *C,
 	}
 }
 
-}}
+}}}
+
 

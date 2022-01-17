@@ -457,7 +457,7 @@ void orthogonal::init(int epsilon, int n,
 	if (f_v) {
 		print_schemes();
 		cout << "orthogonal::init Gram matrix:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout,
+		Orbiter->Int_vec->print_integer_matrix_width(cout,
 				Gram_matrix, n, n, n, F->log10_of_q + 1);
 	}
 	if (FALSE) {
@@ -465,7 +465,7 @@ void orthogonal::init(int epsilon, int n,
 			F->Orthogonal_indexing->Q_epsilon_unrank(v1, 1, epsilon, n - 1,
 					form_c1, form_c2, form_c3, i, verbose_level);
 			cout << i << " : ";
-			Orbiter->Int_vec.print(cout, v1, n);
+			Orbiter->Int_vec->print(cout, v1, n);
 			j = F->Orthogonal_indexing->Q_epsilon_rank(v1, 1, epsilon, n - 1,
 					form_c1, form_c2, form_c3, verbose_level);
 			cout << " : " << j << endl;
@@ -557,27 +557,27 @@ void orthogonal::init_form_and_Gram_matrix(int verbose_level)
 		cout << "orthogonal::init_form_and_Gram_matrix after Poly->init" << endl;
 	}
 	the_quadratic_form = NEW_int(Poly->get_nb_monomials());
-	Orbiter->Int_vec.zero(the_quadratic_form, Poly->get_nb_monomials());
+	Orbiter->Int_vec->zero(the_quadratic_form, Poly->get_nb_monomials());
 
 	the_monomial = NEW_int(n);
-	Orbiter->Int_vec.zero(the_monomial, n);
+	Orbiter->Int_vec->zero(the_monomial, n);
 
 	if (epsilon == -1) {
 		F->Linear_algebra->choose_anisotropic_form(
 				form_c1, form_c2, form_c3, verbose_level);
 
-		Orbiter->Int_vec.zero(the_monomial, n);
+		Orbiter->Int_vec->zero(the_monomial, n);
 		the_monomial[n - 2] = 2;
 		idx = Poly->index_of_monomial(the_monomial);
 		the_quadratic_form[idx] = F->add(the_quadratic_form[idx], form_c1);
 
-		Orbiter->Int_vec.zero(the_monomial, n);
+		Orbiter->Int_vec->zero(the_monomial, n);
 		the_monomial[n - 2] = 1;
 		the_monomial[n - 1] = 1;
 		idx = Poly->index_of_monomial(the_monomial);
 		the_quadratic_form[idx] = F->add(the_quadratic_form[idx], form_c2);
 
-		Orbiter->Int_vec.zero(the_monomial, n);
+		Orbiter->Int_vec->zero(the_monomial, n);
 		the_monomial[n - 1] = 2;
 		idx = Poly->index_of_monomial(the_monomial);
 		the_quadratic_form[idx] = F->add(the_quadratic_form[idx], form_c3);
@@ -585,7 +585,7 @@ void orthogonal::init_form_and_Gram_matrix(int verbose_level)
 	}
 	else if (epsilon == 0) {
 
-		Orbiter->Int_vec.zero(the_monomial, n);
+		Orbiter->Int_vec->zero(the_monomial, n);
 		the_monomial[0] = 2;
 		idx = Poly->index_of_monomial(the_monomial);
 		the_quadratic_form[idx] = F->add(the_quadratic_form[idx], form_c1);
@@ -606,7 +606,7 @@ void orthogonal::init_form_and_Gram_matrix(int verbose_level)
 		j = 2 * i;
 		u = offset + j;
 
-		Orbiter->Int_vec.zero(the_monomial, n);
+		Orbiter->Int_vec->zero(the_monomial, n);
 		the_monomial[u] = 1;
 		the_monomial[u + 1] = 1;
 		idx = Poly->index_of_monomial(the_monomial);
@@ -1481,10 +1481,10 @@ void orthogonal::points_on_line(long int pi, long int pj,
 	if (f_vv) {
 		cout << "orthogonal::points_on_line" << endl;
 		cout << "v1=";
-		Orbiter->Int_vec.print(cout, v1, n);
+		Orbiter->Int_vec->print(cout, v1, n);
 		cout << endl;
 		cout << "v2=";
-		Orbiter->Int_vec.print(cout, v2, n);
+		Orbiter->Int_vec->print(cout, v2, n);
 		cout << endl;
 	}
 	for (t = 0; t <= q; t++) {
@@ -1496,15 +1496,15 @@ void orthogonal::points_on_line(long int pi, long int pj,
 		}
 		if (f_vv) {
 			cout << "orthogonal::points_on_line t=" << t << " ";
-			Orbiter->Int_vec.print(cout, coeff, 2);
+			Orbiter->Int_vec->print(cout, coeff, 2);
 			cout << " v3=";
-			Orbiter->Int_vec.print(cout, v3, n);
+			Orbiter->Int_vec->print(cout, v3, n);
 			cout << endl;
 		}
 		normalize_point(v3, 1);
 		if (f_vv) {
 			cout << "orthogonal::points_on_line normalized:";
-			Orbiter->Int_vec.print(cout, v3, n);
+			Orbiter->Int_vec->print(cout, v3, n);
 			cout << endl;
 		}
 		line[t] = rank_point(v3, 1, verbose_level - 1);
@@ -1536,10 +1536,10 @@ void orthogonal::points_on_line_by_coordinates(
 	if (f_vv) {
 		cout << "orthogonal::points_on_line_by_coordinates" << endl;
 		cout << "v1=";
-		Orbiter->Int_vec.print(cout, v1, n);
+		Orbiter->Int_vec->print(cout, v1, n);
 		cout << endl;
 		cout << "v2=";
-		Orbiter->Int_vec.print(cout, v2, n);
+		Orbiter->Int_vec->print(cout, v2, n);
 		cout << endl;
 	}
 	for (t = 0; t <= q; t++) {
@@ -1551,7 +1551,7 @@ void orthogonal::points_on_line_by_coordinates(
 		}
 		if (f_vv) {
 			cout << "orthogonal::points_on_line_by_coordinates v3=";
-			Orbiter->Int_vec.print(cout, v3, n);
+			Orbiter->Int_vec->print(cout, v3, n);
 			cout << endl;
 		}
 		normalize_point(v3, 1);
@@ -1598,7 +1598,7 @@ void orthogonal::lines_on_point(long int pt,
 				0 /* verbose_level */);
 		}
 	else {
-		Orbiter->Int_vec.copy(lines_on_point_coords1, lines_on_point_coords2, alpha * n);
+		Orbiter->Int_vec->copy(lines_on_point_coords1, lines_on_point_coords2, alpha * n);
 		}
 	for (i = 0; i < alpha; i++) {
 		line_pencil_point_ranks[i] = rank_point(
@@ -1607,7 +1607,7 @@ void orthogonal::lines_on_point(long int pt,
 	if (f_vv) {
 		cout << "orthogonal::lines_on_point line pencil (point ranks) "
 				"on point " << pt << " : ";
-		Orbiter->Lint_vec.print(cout, line_pencil_point_ranks, alpha);
+		Orbiter->Lint_vec->print(cout, line_pencil_point_ranks, alpha);
 		cout << endl;
 		}
 	if (f_v) {
@@ -1649,7 +1649,7 @@ void orthogonal::lines_on_point_by_line_rank(long int pt,
 	int f_vv = (verbose_level >= 2);
 	int t, i;
 	long int rk, rk1, root1, root2, pt2;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "orthogonal::lines_on_point_by_line_rank verbose_level = " << verbose_level << " pt=" << pt << " pt_P=" << pt_P << endl;
@@ -1672,7 +1672,7 @@ void orthogonal::lines_on_point_by_line_rank(long int pt,
 		if (f_vv) {
 			cout << "orthogonal::lines_on_point_by_line_rank "
 					"i=" << i << " / " << alpha << " has coordinates: ";
-			Orbiter->Int_vec.print(cout, lines_on_point_coords1 + i * n, n);
+			Orbiter->Int_vec->print(cout, lines_on_point_coords1 + i * n, n);
 			cout << endl;
 		}
 	}
@@ -1696,7 +1696,7 @@ void orthogonal::lines_on_point_by_line_rank(long int pt,
 		}
 		if (f_v) {
 			cout << "orthogonal::lines_on_point_by_line_rank applying:" << endl;
-			Orbiter->Int_vec.matrix_print(T3, n, n);
+			Orbiter->Int_vec->matrix_print(T3, n, n);
 		}
 		F->Linear_algebra->mult_matrix_matrix(lines_on_point_coords1,
 				T3, lines_on_point_coords2, alpha, n, n,
@@ -1707,7 +1707,7 @@ void orthogonal::lines_on_point_by_line_rank(long int pt,
 			cout << "orthogonal::lines_on_point_by_line_rank pt == pt_P, "
 					"no need to apply transformation" << endl;
 		}
-		Orbiter->Int_vec.copy(lines_on_point_coords1, lines_on_point_coords2, alpha * n);
+		Orbiter->Int_vec->copy(lines_on_point_coords1, lines_on_point_coords2, alpha * n);
 		}
 	if (f_v) {
 		cout << "orthogonal::lines_on_point_by_line_rank "
@@ -1732,7 +1732,7 @@ void orthogonal::lines_on_point_by_line_rank(long int pt,
 	Sorting.lint_vec_quicksort_increasingly(line_pencil_line_ranks, alpha);
 	if (f_vv) {
 		cout << "line pencil on point " << pt << " by line rank : ";
-		Orbiter->Lint_vec.print(cout, line_pencil_line_ranks, alpha);
+		Orbiter->Lint_vec->print(cout, line_pencil_line_ranks, alpha);
 		cout << endl;
 		}
 	if (f_v) {
@@ -1741,7 +1741,7 @@ void orthogonal::lines_on_point_by_line_rank(long int pt,
 }
 
 void orthogonal::make_initial_partition(
-		partitionstack &S, int verbose_level)
+		data_structures::partitionstack &S, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 2);
@@ -1812,7 +1812,7 @@ void orthogonal::point_to_line_map(int size,
 	line_pencil_line_ranks = NEW_lint(alpha);
 	
 	line_vector = NEW_int(nb_lines);
-	Orbiter->Int_vec.zero(line_vector, nb_lines);
+	Orbiter->Int_vec->zero(line_vector, nb_lines);
 	
 	for (i = 0; i < size; i++) {
 		lines_on_point_by_line_rank(
@@ -2005,7 +2005,7 @@ void orthogonal::perp(long int pt,
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
 	int i, j;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "orthogonal::perp verbose_level=" << verbose_level << " pt=" << pt << endl;
@@ -2023,7 +2023,7 @@ void orthogonal::perp(long int pt,
 		for (i = 0; i < alpha; i++) {
 			cout << i << " : " << line_pencil[i] << endl;
 		}
-		Orbiter->Lint_vec.matrix_print(line_pencil, (alpha + 9)/ 10, 10);
+		Orbiter->Lint_vec->matrix_print(line_pencil, (alpha + 9)/ 10, 10);
 		//int_vec_print(cout, line_pencil, alpha);
 		//cout << endl;
 	}
@@ -2045,13 +2045,13 @@ void orthogonal::perp(long int pt,
 						<< " : " << Perp1[i * (q + 1) + j] << endl;
 			}
 		}
-		Orbiter->Lint_vec.matrix_print(Perp1, alpha, q + 1);
+		Orbiter->Lint_vec->matrix_print(Perp1, alpha, q + 1);
 	}
 
 	Sorting.lint_vec_heapsort(Perp1, alpha * (q + 1));
 	if (FALSE) {
 		cout << "orthogonal::perp after sorting:" << endl;
-		Orbiter->Lint_vec.print(cout, Perp1, alpha * (q + 1));
+		Orbiter->Lint_vec->print(cout, Perp1, alpha * (q + 1));
 		cout << endl;
 	}
 
@@ -2066,11 +2066,11 @@ void orthogonal::perp(long int pt,
 	if (FALSE) {
 		cout << "orthogonal::perp after removing "
 				"pt and sorting:" << endl;
-		Orbiter->Lint_vec.print(cout, Perp1, sz);
+		Orbiter->Lint_vec->print(cout, Perp1, sz);
 		cout << endl;
 		cout << "sz=" << sz << endl;
 	}
-	Orbiter->Lint_vec.copy(Perp1, Perp_without_pt, sz);
+	Orbiter->Lint_vec->copy(Perp1, Perp_without_pt, sz);
 
 	if (f_v) {
 		cout << "orthogonal::perp done" << endl;
@@ -2085,7 +2085,7 @@ void orthogonal::perp_of_two_points(long int pt1, long int pt2,
 	long int *Perp2;
 	long int *Perp3;
 	int sz1, sz2;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "orthogonal::perp_of_two_points "
@@ -2097,7 +2097,7 @@ void orthogonal::perp_of_two_points(long int pt1, long int pt2,
 	perp(pt1, Perp1, sz1, 0 /*verbose_level*/);
 	perp(pt2, Perp2, sz2, 0 /*verbose_level*/);
 	Sorting.vec_intersect(Perp1, sz1, Perp2, sz2, Perp3, sz);
-	Orbiter->Lint_vec.copy(Perp3, Perp, sz);
+	Orbiter->Lint_vec->copy(Perp3, Perp, sz);
 	FREE_lint(Perp1);
 	FREE_lint(Perp2);
 	FREE_lint(Perp3);
@@ -2119,12 +2119,12 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 	}
 	if (f_vv) {
 		cout << "pts=";
-		Orbiter->Lint_vec.print(cout, pts, nb_pts);
+		Orbiter->Lint_vec->print(cout, pts, nb_pts);
 		cout << endl;
 		for (i = 0; i < nb_pts; i++) {
 			unrank_point(v1, 1, pts[i], 0 /* verbose_level*/);
 			cout << i << " : " << pts[i] << " : ";
-			Orbiter->Int_vec.print(cout, v1, n);
+			Orbiter->Int_vec->print(cout, v1, n);
 			cout << endl;
 		}
 	}
@@ -2139,7 +2139,7 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 	long int *Intersection2 = NULL;
 	int sz2;
 	int sz0, perp_sz = 0;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 
 	if (f_v) {
@@ -2165,7 +2165,7 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 			cout << "orthogonal::perp_of_k_points perp of pt "
 					<< i << " / " << nb_pts << " has size "
 					<< perp_sz << " and is equal to ";
-			Orbiter->Lint_vec.print(cout, Perp_without_pt[i], perp_sz);
+			Orbiter->Lint_vec->print(cout, Perp_without_pt[i], perp_sz);
 			cout << endl;
 			}
 		if (perp_sz != sz0) {
@@ -2189,7 +2189,7 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 	if (f_v) {
 		cout << "orthogonal::perp_of_k_points intersection of "
 				"P[0] and P[1] has size " << sz1 << " : ";
-		Orbiter->Lint_vec.print_fully(cout, Intersection1, sz1);
+		Orbiter->Lint_vec->print_fully(cout, Intersection1, sz1);
 		cout << endl;
 		}
 	for (i = 2; i < nb_pts; i++) {
@@ -2202,7 +2202,7 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 		if (f_v) {
 			cout << "orthogonal::perp_of_k_points intersection "
 					"with P[" << i << "] has size " << sz2 << " : ";
-			Orbiter->Lint_vec.print_fully(cout, Intersection2, sz2);
+			Orbiter->Lint_vec->print_fully(cout, Intersection2, sz2);
 			cout << endl;
 			}
 
@@ -2219,7 +2219,7 @@ void orthogonal::perp_of_k_points(long int *pts, int nb_pts,
 
 
 	Perp = NEW_lint(sz1);
-	Orbiter->Lint_vec.copy(Intersection1, Perp, sz1);
+	Orbiter->Lint_vec->copy(Intersection1, Perp, sz1);
 	sz = sz1;
 
 

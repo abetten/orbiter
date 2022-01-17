@@ -165,7 +165,7 @@ void cayley_graph_search::init_group2(int verbose_level)
 	f_has_order2 = NEW_int(go);
 	f_subgroup = NEW_int(go);
 
-	Orbiter->Int_vec.zero(f_subgroup, go);
+	Orbiter->Int_vec->zero(f_subgroup, go);
 
 	if (level == 4) {
 		if (group == 2 || group == 3 || group == 5) {
@@ -518,7 +518,7 @@ void cayley_graph_search::init_group_level_4(int verbose_level)
 			"(1,2)(3,4)(5,6)(7,8)(9,10)(11,12)",
 			"(5,6)(7,8)(9,10)(11,12)"
 			};
-		string_tools ST;
+		data_structures::string_tools ST;
 
 		gens->allocate(5, verbose_level - 2);
 
@@ -733,7 +733,7 @@ int cayley_graph_search::incremental_check_func(
 
 	if (f_v) {
 		cout << "checking set ";
-		Orbiter->Lint_vec.print(cout, S, len);
+		Orbiter->Lint_vec->print(cout, S, len);
 		cout << " (incrementally)";
 		}
 	if (len) {

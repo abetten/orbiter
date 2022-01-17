@@ -102,7 +102,7 @@ void strong_generators::init_from_sims(sims *S, int verbose_level)
 		cout << "strong_generators::init_from_sims after "
 				"S->extract_strong_generators_in_order" << endl;
 		cout << "strong_generators::init_from_sims tl=";
-		Orbiter->Int_vec.print(cout, tl, A->base_len());
+		Orbiter->Int_vec->print(cout, tl, A->base_len());
 		cout << endl;
 	}
 	if (f_v) {
@@ -173,7 +173,7 @@ void strong_generators::init_copy(strong_generators *S,
 	A = S->A;
 	tl = NEW_int(A->base_len());
 	//cout << "strong_generators::init_copy before int_vec_copy" << endl;
-	Orbiter->Int_vec.copy(S->tl, tl, A->base_len());
+	Orbiter->Int_vec->copy(S->tl, tl, A->base_len());
 	gens = NEW_OBJECT(vector_ge);
 	gens->init(A, verbose_level - 2);
 	gens->allocate(S->gens->len, verbose_level - 2);
@@ -335,7 +335,7 @@ void strong_generators::init_from_data(action *A, int *data,
 		nb_elements, elt_size, verbose_level);
 
 	tl = NEW_int(A->base_len());
-	Orbiter->Int_vec.copy(transversal_length, tl, A->base_len());
+	Orbiter->Int_vec->copy(transversal_length, tl, A->base_len());
 
 	if (f_v) {
 		cout << "strong_generators::init_from_data done" << endl;
@@ -466,9 +466,9 @@ void strong_generators::init_from_data_with_go(
 	int gens_data_sz;
 	int nb_elements;
 
-	Orbiter->Int_vec.scan(generators_data, gens_data, gens_data_sz);
+	Orbiter->Int_vec->scan(generators_data, gens_data, gens_data_sz);
 	cout << "gens_data = ";
-	Orbiter->Int_vec.print(cout, gens_data, gens_data_sz);
+	Orbiter->Int_vec->print(cout, gens_data, gens_data_sz);
 	cout << endl;
 	cout << "go_text = " << go_text << endl;
 
@@ -900,11 +900,11 @@ void strong_generators::switch_to_subgroup(
 	//S = create_sims(0 /* verbose_level */);
 	
 
-	Orbiter->Int_vec.scan(rank_vector_text, subgroup_gens_idx, nb_subgroup_gens);
+	Orbiter->Int_vec->scan(rank_vector_text, subgroup_gens_idx, nb_subgroup_gens);
 	if (f_v) {
 		cout << "strong_generators::switch_to_subgroup "
 				"after scanning: ";
-		Orbiter->Int_vec.print(cout, subgroup_gens_idx, nb_subgroup_gens);
+		Orbiter->Int_vec->print(cout, subgroup_gens_idx, nb_subgroup_gens);
 		cout << endl;
 	}
 
@@ -1377,7 +1377,7 @@ void strong_generators::print_generators(std::ostream &ost)
 	group_order(go);
 	ost << "Strong generators for a group of order "
 			<< go << " tl=";
-	Orbiter->Int_vec.print(cout, tl, A->base_len());
+	Orbiter->Int_vec->print(cout, tl, A->base_len());
 	ost << endl;
 
 	for (i = 0; i < gens->len; i++) {
@@ -1472,7 +1472,7 @@ void strong_generators::print_generators_in_source_code()
 	group_order(go);
 	cout << "Strong generators for a group of "
 			"order " << go << " tl=";
-	Orbiter->Int_vec.print(cout, tl, A->base_len());
+	Orbiter->Int_vec->print(cout, tl, A->base_len());
 	cout << endl;
 	A->print_base();
 	for (i = 0; i < gens->len; i++) {
@@ -1512,7 +1512,7 @@ void strong_generators::print_generators_even_odd()
 
 	group_order(go);
 	cout << "Strong generators for a group of order " << go << " tl=";
-	Orbiter->Int_vec.print(cout, tl, A->base_len());
+	Orbiter->Int_vec->print(cout, tl, A->base_len());
 	cout << endl;
 	for (i = 0; i < gens->len; i++) {
 		cout << "Generator " << i << " / " << gens->len << " is:" << endl;
@@ -1659,11 +1659,11 @@ void strong_generators::canonical_image_GAP(std::string &input_set_text, std::os
 
 	long int *set;
 	int sz;
-	string_tools ST;
+	data_structures::string_tools ST;
 	std::string output;
 
 
-	Orbiter->Lint_vec.scan(input_set_text, set, sz);
+	Orbiter->Lint_vec->scan(input_set_text, set, sz);
 
 	// add one because GAP is 1-based:
 	for (i = 0; i < sz; i++) {
@@ -1883,7 +1883,7 @@ void strong_generators::print_elements_ost(std::ostream &ost)
 	group_order(go);
 	S = create_sims(0 /*verbose_level */);
 	ost << "Group elements for a group of order " << go << " tl=";
-	Orbiter->Int_vec.print(ost, tl, A->base_len());
+	Orbiter->Int_vec->print(ost, tl, A->base_len());
 	ost << "\\\\" << endl;
 	for (i = 0; i < go.as_lint(); i++) {
 		S->element_unrank_lint(i, Elt, 0 /* verbose_level */);
@@ -1907,7 +1907,7 @@ void strong_generators::print_elements_with_special_orthogonal_action_ost(std::o
 	group_order(go);
 	S = create_sims(0 /*verbose_level */);
 	ost << "Group elements for a group of order " << go << " tl=";
-	Orbiter->Int_vec.print(ost, tl, A->base_len());
+	Orbiter->Int_vec->print(ost, tl, A->base_len());
 	ost << "\\\\" << endl;
 	for (i = 0; i < go.as_lint(); i++) {
 		S->element_unrank_lint(i, Elt, 0 /* verbose_level */);
@@ -1942,7 +1942,7 @@ void strong_generators::print_elements_with_given_action(std::ostream &ost, acti
 	group_order(go);
 	S = create_sims(0 /*verbose_level */);
 	ost << "Group elements for a group of order " << go << " tl=";
-	Orbiter->Int_vec.print(ost, tl, A->base_len());
+	Orbiter->Int_vec->print(ost, tl, A->base_len());
 	ost << "\\\\" << endl;
 	for (i = 0; i < go.as_lint(); i++) {
 		S->element_unrank_lint(i, Elt, 0 /* verbose_level */);
@@ -1974,7 +1974,7 @@ void strong_generators::print_elements_latex_ost(std::ostream &ost)
 	group_order(go);
 	S = create_sims(0 /*verbose_level */);
 	ost << "Group elements for a group of order " << go << " tl=";
-	Orbiter->Int_vec.print(ost, tl, A->base_len());
+	Orbiter->Int_vec->print(ost, tl, A->base_len());
 	ost << "\\\\" << endl;
 	m = MINIMUM(go.as_int(), 100);
 	if (m < go.as_int()) {
@@ -2015,7 +2015,7 @@ void strong_generators::print_elements_latex_ost_with_print_point_function(
 	cycle_type = NEW_int(A_given->degree);
 	S = create_sims(0 /*verbose_level */);
 	ost << "Group elements for a group of order " << go << " tl=";
-	Orbiter->Int_vec.print(ost, tl, A->base_len());
+	Orbiter->Int_vec->print(ost, tl, A->base_len());
 	ost << "\\\\" << endl;
 	m = MINIMUM(go.as_int(), 500);
 	if (m < go.as_int()) {
@@ -2039,7 +2039,7 @@ void strong_generators::print_elements_latex_ost_with_print_point_function(
 		ost << "The element has order " << order << ".\\\\" << endl;
 		S->compute_all_powers(i, order, power_elt, 0 /*verbose_level*/);
 		ost << "The powers are: ";
-		Orbiter->Int_vec.print(ost, power_elt, order);
+		Orbiter->Int_vec->print(ost, power_elt, order);
 		ost << ".\\\\" << endl;
 		nb_fix_points[i] = cycle_type[0];
 		ost << "The element has " << nb_fix_points[i] << " fix points.\\\\" << endl;
@@ -2309,8 +2309,7 @@ void strong_generators::orbits_light(action *A_given,
 {
 	int f_v = (verbose_level >= 1);	
 	int f_vv = FALSE; //(verbose_level >= 2);	
-	bitvector *Has_been_reached;
-	//uchar *reached;
+	data_structures::bitvector *Has_been_reached;
 	int Orbit_allocated;
 	int Orbit_len;
 	int *Orbit;
@@ -2321,7 +2320,7 @@ void strong_generators::orbits_light(action *A_given,
 	int Orbit_reps_allocated;
 	int nb_reached;
 	int *Generator_idx;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "strong_generators::orbits_light "
@@ -2345,7 +2344,7 @@ void strong_generators::orbits_light(action *A_given,
 	for (pt = 0; pt < A_given->degree; pt++) {
 		Generator_idx[pt] = -1;
 	}
-	Has_been_reached = NEW_OBJECT(bitvector);
+	Has_been_reached = NEW_OBJECT(data_structures::bitvector);
 	Has_been_reached->allocate(A_given->degree);
 
 	nb_reached = 0;
@@ -2363,7 +2362,7 @@ void strong_generators::orbits_light(action *A_given,
 	}
 
 	Nb_per_generator = NEW_int(nb_gens);
-	Orbiter->Int_vec.zero(Nb_per_generator, nb_gens);
+	Orbiter->Int_vec->zero(Nb_per_generator, nb_gens);
 	Pts_per_generator = NEW_pint(nb_gens);
 
 	for (pt = 0; pt < A_given->degree; pt++) {
@@ -2429,7 +2428,7 @@ void strong_generators::orbits_light(action *A_given,
 
 					if (f_vv) {
 						cout << "current orbit: ";
-						Orbiter->Int_vec.print(cout, Orbit, Orbit_len);
+						Orbiter->Int_vec->print(cout, Orbit, Orbit_len);
 						cout << endl;
 					}
 
@@ -2459,7 +2458,7 @@ void strong_generators::orbits_light(action *A_given,
 
 					if (f_vv) {
 						cout << "current Queue: ";
-						Orbiter->Int_vec.print(cout, Q, Q_len);
+						Orbiter->Int_vec->print(cout, Q, Q_len);
 						cout << endl;
 					}
 
@@ -3521,7 +3520,7 @@ void strong_generators::get_gens_data(int *&data, int &sz, int verbose_level)
 	sz = gens->len * A->make_element_size;
 	data = NEW_int(sz);
 	for (i = 0; i < gens->len; i++) {
-		Orbiter->Int_vec.copy(gens->ith(i), data + i * A->make_element_size, A->make_element_size);
+		Orbiter->Int_vec->copy(gens->ith(i), data + i * A->make_element_size, A->make_element_size);
 	}
 	if (f_v) {
 		cout << "strong_generators::get_gens_data done" << endl;
@@ -3541,7 +3540,7 @@ void strong_generators::get_gens_data_as_string_with_quotes(std::string &str, in
 	get_gens_data(data, sz, verbose_level);
 
 
-	Orbiter->Int_vec.create_string_with_quotes(str, data, sz);
+	Orbiter->Int_vec->create_string_with_quotes(str, data, sz);
 
 	if (f_v) {
 		cout << "strong_generators::get_gens_data_as_string_with_quotes done" << endl;
