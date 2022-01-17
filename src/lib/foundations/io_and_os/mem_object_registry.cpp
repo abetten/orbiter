@@ -938,7 +938,7 @@ void mem_object_registry::delete_from_registry(void *pointer, int verbose_level)
 void mem_object_registry::sort_by_size(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "mem_object_registry::sort_by_size" << endl;
@@ -965,7 +965,7 @@ void mem_object_registry::sort_by_location_and_get_frequency(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "mem_object_registry::sort_by_location_and_get_frequency" << endl;
@@ -1011,7 +1011,7 @@ void mem_object_registry::sort_by_location_and_get_frequency(
 	perm_inv = new int[nb_types];
 	frequency = new int[nb_types];
 
-	Orbiter->Int_vec.copy(type_len, frequency, nb_types);
+	Orbiter->Int_vec->copy(type_len, frequency, nb_types);
 
 	Sorting.int_vec_sorting_permutation(frequency, nb_types,
 			perm, perm_inv, FALSE /* f_increasingly */);
@@ -1055,7 +1055,7 @@ void mem_object_registry::sort_by_location_and_get_frequency(
 void mem_object_registry::sort_by_type(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "mem_object_registry::sort_by_type" << endl;
@@ -1085,7 +1085,7 @@ void mem_object_registry::sort_by_type(int verbose_level)
 void mem_object_registry::sort_by_location(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "mem_object_registry::sort_by_location" << endl;

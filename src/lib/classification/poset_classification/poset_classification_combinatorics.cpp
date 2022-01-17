@@ -176,20 +176,20 @@ int poset_classification::count_incidences_up(int lvl1, int po1,
 
 	if (f_vv) {
 		cout << "set1=";
-		Orbiter->Lint_vec.print(cout, set1, lvl1);
+		Orbiter->Lint_vec->print(cout, set1, lvl1);
 		cout << endl;
 	}
 
 	for (i = 0; i < ol; i++) {
 
-		Orbiter->Lint_vec.copy(set1, set, lvl1);
+		Orbiter->Lint_vec->copy(set1, set, lvl1);
 
 
 		orbit_element_unrank(lvl2, po2, i, set2, 0 /* verbose_level */);
 
 		if (f_vv) {
 			cout << "set2 " << i << " / " << ol << "=";
-			Orbiter->Lint_vec.print(cout, set2, lvl2);
+			Orbiter->Lint_vec->print(cout, set2, lvl2);
 			cout << endl;
 		}
 
@@ -250,20 +250,20 @@ int poset_classification::count_incidences_down(
 
 	if (f_vv) {
 		cout << "set2=";
-		Orbiter->Lint_vec.print(cout, set2, lvl2);
+		Orbiter->Lint_vec->print(cout, set2, lvl2);
 		cout << endl;
 	}
 
 	for (i = 0; i < ol; i++) {
 
-		Orbiter->Lint_vec.copy(set2, set, lvl2);
+		Orbiter->Lint_vec->copy(set2, set, lvl2);
 
 
 		orbit_element_unrank(lvl1, po1, i, set1, 0 /* verbose_level */);
 
 		if (f_vv) {
 			cout << "set1 " << i << " / " << ol << "=";
-			Orbiter->Lint_vec.print(cout, set1, lvl1);
+			Orbiter->Lint_vec->print(cout, set1, lvl1);
 			cout << endl;
 		}
 
@@ -600,7 +600,7 @@ void poset_classification::Mtk_via_Mtr_Mrk(int t, int r, int k,
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, h, a, b, c, s = 0;
-	combinatorics_domain C;
+	combinatorics::combinatorics_domain C;
 
 	if (f_v) {
 		cout << "poset_classification::Mtk_via_Mtr_Mrk t = " << t << ", r = "

@@ -112,7 +112,7 @@ action *poset_classification::get_A2()
 	return Poset->A2;
 }
 
-vector_space *poset_classification::get_VS()
+algebra::vector_space *poset_classification::get_VS()
 {
 	return Poset->VS;
 }
@@ -210,17 +210,17 @@ int poset_classification::poset_structure_is_contained(
 	int f_vv = (verbose_level >= 2);
 	int f_contained;
 	int i, rk1, rk2;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "poset_structure_is_contained" << endl;
 	}
 	if (f_vv) {
 		cout << "set1: ";
-		Orbiter->Lint_vec.print(cout, set1, sz1);
+		Orbiter->Lint_vec->print(cout, set1, sz1);
 		cout << " ; ";
 		cout << "set2: ";
-		Orbiter->Lint_vec.print(cout, set2, sz2);
+		Orbiter->Lint_vec->print(cout, set2, sz2);
 		cout << endl;
 	}
 	if (sz1 > sz2) {
@@ -254,7 +254,7 @@ int poset_classification::poset_structure_is_contained(
 						"rk2 != sz2" << endl;
 				exit(1);
 			}
-			Orbiter->Int_vec.copy(B1,
+			Orbiter->Int_vec->copy(B1,
 					B2 + sz2 * dim,
 					sz1 * dim);
 			rk2 = Poset->VS->F->Linear_algebra->Gauss_easy(B2, sz1 + sz2, dim);
@@ -404,7 +404,7 @@ int poset_classification::find_poset_orbit_node_for_set(
 	
 	if (f_v) {
 		cout << "poset_classification::find_poset_orbit_node_for_set ";
-		Orbiter->Lint_vec.print(cout, set, len);
+		Orbiter->Lint_vec->print(cout, set, len);
 		cout << endl;
 	}
 	if (f_base_case) {
@@ -451,7 +451,7 @@ int poset_classification::find_poset_orbit_node_for_set(
 		if (f_tolerant) {
 			if (f_v) {
 				cout << "poset_classification::find_poset_orbit_node_for_set ";
-				Orbiter->Lint_vec.print(cout, set, len);
+				Orbiter->Lint_vec->print(cout, set, len);
 				cout << " extension not found, "
 						"we are tolerant, returnning -1" << endl;
 			}
@@ -481,7 +481,7 @@ int poset_classification::find_poset_orbit_node_for_set_basic(
 		cout << "poset_classification::"
 				"find_poset_orbit_node_for_set_basic "
 				"looking for set ";
-		Orbiter->Lint_vec.print(cout, set, len);
+		Orbiter->Lint_vec->print(cout, set, len);
 		cout << endl;
 		cout << "node=" << node << endl;
 		cout << "from=" << from << endl;
@@ -518,7 +518,7 @@ int poset_classification::find_poset_orbit_node_for_set_basic(
 				cout << "poset_classification::"
 						"find_poset_orbit_node_for_set_basic "
 						"failure in find_extension_from_point" << endl;
-				Orbiter->Lint_vec.print(cout, set, len);
+				Orbiter->Lint_vec->print(cout, set, len);
 				cout << endl;
 				cout << "node=" << node << endl;
 				cout << "from=" << from << endl;
@@ -547,7 +547,7 @@ int poset_classification::find_poset_orbit_node_for_set_basic(
 			cout << "poset_classification::"
 					"find_poset_orbit_node_for_set_basic "
 					"looking for set ";
-			Orbiter->Lint_vec.print(cout, set, len);
+			Orbiter->Lint_vec->print(cout, set, len);
 			cout << endl;
 			cout << "node=" << node << endl;
 			cout << "from=" << from << endl;
@@ -904,7 +904,7 @@ void poset_classification::find_node_by_stabilizer_order(
 					<< level << endl;
 			get_set(Poo->first_node_at_level(level) + i,
 					set, level);
-			Orbiter->Lint_vec.print(cout, set, level);
+			Orbiter->Lint_vec->print(cout, set, level);
 			cout << endl;
 			
 			strong_generators *Strong_gens;
@@ -1114,7 +1114,7 @@ void poset_classification::orbit_element_unrank(
 	FREE_int(Elt2);
 	if (f_v) {
 		cout << "poset_classification::orbit_element_unrank ";
-		Orbiter->Lint_vec.print(cout, set, depth);
+		Orbiter->Lint_vec->print(cout, set, depth);
 		cout << endl;
 	}
 }
@@ -1135,7 +1135,7 @@ void poset_classification::orbit_element_rank(
 	if (f_v) {
 		cout << "poset_classification::orbit_element_rank "
 				"depth=" << depth << " ";
-		Orbiter->Lint_vec.print(cout, set, depth);
+		Orbiter->Lint_vec->print(cout, set, depth);
 		cout << endl;
 	}
 
@@ -1218,7 +1218,7 @@ void poset_classification::coset_unrank(
 	if (f_v) {
 		cout << "the set representing orbit " << orbit_idx 
 			<< " at level " << depth << " is ";
-		Orbiter->Lint_vec.print(cout, the_set, depth);
+		Orbiter->Lint_vec->print(cout, the_set, depth);
 		cout << endl;
 	}
 	
@@ -1274,7 +1274,7 @@ long int poset_classification::coset_rank(
 	if (f_v) {
 		cout << "the set representing orbit " << orbit_idx 
 			<< " at level " << depth << " is ";
-		Orbiter->Lint_vec.print(cout, the_set, depth);
+		Orbiter->Lint_vec->print(cout, the_set, depth);
 		cout << endl;
 	}
 	
@@ -1491,7 +1491,7 @@ void poset_classification::list_whole_orbit(
 			<< ") at depth " << depth << " has length " << Len << " : ";
 
 	get_set_by_level(depth, orbit_idx, set);
-	Orbiter->Lint_vec.print(cout, set, depth);
+	Orbiter->Lint_vec->print(cout, set, depth);
 	cout << "_" << go << " ";
 
 	//print_lex_rank(set, depth);
@@ -1560,7 +1560,7 @@ void poset_classification::list_whole_orbit(
 				orbit_element_unrank(depth, orbit_idx,
 						rank, set, 0 /* verbose_level */);
 				cout << setw(5) << rank << " : ";
-				Orbiter->Lint_vec.set_print(cout, set, depth);
+				Orbiter->Lint_vec->set_print(cout, set, depth);
 				cout << endl;
 			}
 			if (max_len < len) {
@@ -1635,7 +1635,7 @@ void poset_classification::map_to_canonical_k_subset(
 	int *Elt1;
 	int i; //, j, k;
 	int reduced_set_size;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	our_set = NEW_int(set_size);
 	subset = NEW_lint(set_size);
@@ -1648,7 +1648,7 @@ void poset_classification::map_to_canonical_k_subset(
 			our_set, set_size, subset_size);
 	if (f_v) {
 		cout << "poset_classification::map_to_canonical_k_subset our_set=";
-		Orbiter->Int_vec.print(cout, our_set, set_size);
+		Orbiter->Int_vec->print(cout, our_set, set_size);
 		cout << endl;
 	}
 #if 0
@@ -1673,7 +1673,7 @@ void poset_classification::map_to_canonical_k_subset(
 	}
 	if (f_v) {
 		cout << "poset_classification::map_to_canonical_k_subset subset=";
-		Orbiter->Lint_vec.print(cout, subset, set_size);
+		Orbiter->Lint_vec->print(cout, subset, set_size);
 		cout << endl;
 	}
 	
@@ -1703,7 +1703,7 @@ void poset_classification::map_to_canonical_k_subset(
 				"map_to_canonical_k_subset "
 				"after trace_set local_idx=" << local_idx << endl;
 		cout << "poset_classification::map_to_canonical_k_subset canonical_subset=";
-		Orbiter->Lint_vec.print(cout, canonical_subset, set_size);
+		Orbiter->Lint_vec->print(cout, canonical_subset, set_size);
 		cout << endl;
 	}
 
@@ -1721,7 +1721,7 @@ void poset_classification::map_to_canonical_k_subset(
 	if (f_v) {
 		cout << "poset_classification::"
 				"map_to_canonical_k_subset reduced set = ";
-		Orbiter->Lint_vec.print(cout, reduced_set, reduced_set_size);
+		Orbiter->Lint_vec->print(cout, reduced_set, reduced_set_size);
 		cout << endl;
 	}
 	FREE_int(Elt1);
@@ -1823,7 +1823,7 @@ void poset_classification::find_interesting_k_subsets(
 	if (f_v) {
 		cout << "interesting set of size "
 				<< nb_interesting_sets << " : ";
-		Orbiter->Int_vec.print(cout, interesting_sets, nb_interesting_sets);
+		Orbiter->Int_vec->print(cout, interesting_sets, nb_interesting_sets);
 		cout << endl;
 	}
 
@@ -1882,7 +1882,7 @@ void poset_classification::trace_all_k_subsets_and_compute_frequencies(
 
 	nb_orbits = nb_orbits_at_level(k);
 	orbit_frequencies = NEW_int(nb_orbits);
-	Orbiter->Int_vec.zero(orbit_frequencies, nb_orbits);
+	Orbiter->Int_vec->zero(orbit_frequencies, nb_orbits);
 
 	for (i = 0; i < nCk; i++) {
 		a = isotype[i];
@@ -1907,7 +1907,7 @@ void poset_classification::trace_all_k_subsets(
 	int *Elt;
 	long int subset_rk, local_idx, i;
 	//int f_implicit_fusion = TRUE;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	nCk = Combi.int_n_choose_k(n, k);
 	if (f_v) {
@@ -1923,7 +1923,7 @@ void poset_classification::trace_all_k_subsets(
 	canonical_subset = NEW_lint(k);
 	isotype = NEW_int(nCk);
 	
-	Orbiter->Int_vec.zero(isotype, nCk);
+	Orbiter->Int_vec->zero(isotype, nCk);
 
 	Combi.first_k_subset(index_set, n, k);
 	subset_rk = 0;
@@ -1935,18 +1935,18 @@ void poset_classification::trace_all_k_subsets(
 				<< " testing set " << subset_rk << " / " << nCk 
 				<< " = " << 100. * (double) subset_rk /
 				(double) nCk << " % : ";
-			Orbiter->Int_vec.print(cout, index_set, k);
+			Orbiter->Int_vec->print(cout, index_set, k);
 			cout << endl;
 		}
 		for (i = 0; i < k; i++) {
 			subset[i] = the_set[index_set[i]];
 		}
-		Orbiter->Lint_vec.copy(subset, set[0], k);
+		Orbiter->Lint_vec->copy(subset, set[0], k);
 
 		if (FALSE /*f_v2*/) {
 			cout << "poset_classification::trace_all_k_subsets "
 					"corresponding to set ";
-			Orbiter->Lint_vec.print(cout, subset, k);
+			Orbiter->Lint_vec->print(cout, subset, k);
 			cout << endl;
 		}
 		Poset->A->element_one(transporter->ith(0), 0);

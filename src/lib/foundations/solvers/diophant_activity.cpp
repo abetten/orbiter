@@ -38,7 +38,7 @@ void diophant_activity::init_from_file(diophant_activity_description *Descr,
 	}
 
 	diophant_activity::Descr = Descr;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (!Descr->f_input_file) {
 		cout << "diophant_activity::init_from_file please use option -q <q>" << endl;
@@ -62,7 +62,7 @@ void diophant_activity::perform_activity(diophant_activity_description *Descr, d
 	}
 
 	diophant_activity::Descr = Descr;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 
 	if (Descr->f_solve_mckay) {

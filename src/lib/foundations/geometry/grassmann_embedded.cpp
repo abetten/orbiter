@@ -82,8 +82,8 @@ void grassmann_embedded::init(int big_n, int n,
 	int i, j, rk, idx;
 	longinteger_object deg;
 	//longinteger_domain D;
-	combinatorics_domain C;
-	sorting Sorting;
+	combinatorics::combinatorics_domain C;
+	data_structures::sorting Sorting;
 	
 	grassmann_embedded::big_n = big_n;
 	grassmann_embedded::G = G;
@@ -125,7 +125,7 @@ void grassmann_embedded::init(int big_n, int n,
 	if (f_vv) {
 		cout << "grassmann_embedded::init subspace basis "
 				"before Gauss reduction:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout,
+		Orbiter->Int_vec->print_integer_matrix_width(cout,
 				grassmann_embedded::M, n, big_n, big_n,
 				F->log10_of_q);
 	}
@@ -140,15 +140,15 @@ void grassmann_embedded::init(int big_n, int n,
 	if (f_vv) {
 		cout << "grassmann_embedded::init subspace "
 				"basis after reduction:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M_Gauss, n,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M_Gauss, n,
 				big_n, big_n, F->log10_of_q);
 		cout << "grassmann_embedded::init transform:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout,
+		Orbiter->Int_vec->print_integer_matrix_width(cout,
 				transform, n, n, n, F->log10_of_q);
 	}
 	if (f_v) {
 		cout << "base_cols:" << endl;
-		Orbiter->Int_vec.print(cout, base_cols, rk);
+		Orbiter->Int_vec->print(cout, base_cols, rk);
 		cout << endl;
 	}
 	if (rk != n) {
@@ -171,7 +171,7 @@ void grassmann_embedded::init(int big_n, int n,
 	}
 	if (f_v) {
 		cout << "embedding: ";
-		Orbiter->Int_vec.print(cout, embedding, big_n - n);
+		Orbiter->Int_vec->print(cout, embedding, big_n - n);
 		cout << endl;
 	}
 	C.q_binomial(deg, n, k, q, 0);
@@ -194,13 +194,13 @@ void grassmann_embedded::unrank_embedded_lint(
 	if (f_v) {
 		cout << "grassmann_embedded::unrank_embedded_int "
 				"coefficient matrix:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout,
+		Orbiter->Int_vec->print_integer_matrix_width(cout,
 			G->M, n /* not k */, n, n, F->log10_of_q);
 	}
 	if (f_v) {
 		cout << "grassmann_embedded::unrank_embedded_int "
 				"subspace_basis:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout,
+		Orbiter->Int_vec->print_integer_matrix_width(cout,
 				M, n, big_n, big_n, F->log10_of_q);
 	}
 	F->Linear_algebra->mult_matrix_matrix(G->M, M,
@@ -209,7 +209,7 @@ void grassmann_embedded::unrank_embedded_lint(
 	if (f_v) {
 		cout << "grassmann_embedded::unrank_embedded_int "
 				"subspace_basis:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout,
+		Orbiter->Int_vec->print_integer_matrix_width(cout,
 				subspace_basis_with_embedding, n /* not k */,
 				big_n, big_n, F->log10_of_q);
 	}
@@ -250,13 +250,13 @@ void grassmann_embedded::unrank_lint(
 	if (f_v) {
 		cout << "grassmann_embedded::unrank_lint "
 			"coefficient matrix:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout,
+		Orbiter->Int_vec->print_integer_matrix_width(cout,
 			G->M, k, n, n, F->log10_of_q);
 	}
 	if (f_v) {
 		cout << "grassmann_embedded::rank_lint "
 			"subspace_basis:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout,
+		Orbiter->Int_vec->print_integer_matrix_width(cout,
 			M, n, big_n, big_n, F->log10_of_q);
 	}
 	F->Linear_algebra->mult_matrix_matrix(G->M, M,
@@ -265,7 +265,7 @@ void grassmann_embedded::unrank_lint(
 	if (f_v) {
 		cout << "grassmann_embedded::unrank_lint "
 			"subspace_basis:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout,
+		Orbiter->Int_vec->print_integer_matrix_width(cout,
 				subspace_basis, k, big_n, big_n,
 				F->log10_of_q);
 	}
@@ -277,11 +277,12 @@ long int grassmann_embedded::rank_lint(
 {
 	int f_v = (verbose_level >= 1);
 	long int rk, i, j, a;
+	data_structures::sorting Sorting;
 
 
 	if (f_v) {
 		cout << "grassmann_embedded::rank_lint" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout,
+		Orbiter->Int_vec->print_integer_matrix_width(cout,
 				subspace_basis, k, big_n, big_n, F->log10_of_q);
 	}
 	for (i = 0; i < k; i++) {
@@ -294,7 +295,7 @@ long int grassmann_embedded::rank_lint(
 
 	if (f_v) {
 		cout << "grassmann_embedded::rank_lint tmp_M1:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout,
+		Orbiter->Int_vec->print_integer_matrix_width(cout,
 				tmp_M1, k, n, n, F->log10_of_q);
 	}
 	F->Linear_algebra->mult_matrix_matrix(tmp_M1, transform, tmp_M2, k, n, n,
@@ -307,7 +308,7 @@ long int grassmann_embedded::rank_lint(
 
 	if (f_v) {
 		cout << "grassmann_embedded::rank_lint tmp_M2:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout,
+		Orbiter->Int_vec->print_integer_matrix_width(cout,
 				tmp_M2, k, n, n, F->log10_of_q);
 	}
 
@@ -322,24 +323,24 @@ long int grassmann_embedded::rank_lint(
 		if (f_v) {
 			cout << "grassmann_embedded::rank_lint i=" << i
 					<< " Tmp2=" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout,
+			Orbiter->Int_vec->print_integer_matrix_width(cout,
 					Tmp2, 1, big_n, big_n, F->log10_of_q);
 		}
-		if (int_vec_compare(subspace_basis + i * big_n, Tmp2, big_n)) {
+		if (Sorting.int_vec_compare(subspace_basis + i * big_n, Tmp2, big_n)) {
 			cout << "grassmann_embedded::rank_lint fatal: "
 					"the i-th vector is not in the space" << endl;
 			cout << "i=" << i << endl;
 			cout << "subspace:" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout,
+			Orbiter->Int_vec->print_integer_matrix_width(cout,
 					subspace_basis, k, big_n, big_n, F->log10_of_q);
 			cout << "space:" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout,
+			Orbiter->Int_vec->print_integer_matrix_width(cout,
 					M, n, big_n, big_n, F->log10_of_q);
 			cout << "Tmp1:" << endl;
-			Orbiter->Int_vec.print(cout, Tmp1, n);
+			Orbiter->Int_vec->print(cout, Tmp1, n);
 			cout << endl;
 			cout << "Tmp2:" << endl;
-			Orbiter->Int_vec.print(cout, Tmp2, big_n);
+			Orbiter->Int_vec->print(cout, Tmp2, big_n);
 			cout << endl;
 			exit(1);
 		}
@@ -350,7 +351,7 @@ long int grassmann_embedded::rank_lint(
 	if (f_v) {
 		cout << "grassmann_embedded::rank_lint "
 				"coefficient matrix:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout,
+		Orbiter->Int_vec->print_integer_matrix_width(cout,
 				G->M, k, n, n, F->log10_of_q);
 	}
 	rk = G->rank_lint(verbose_level);

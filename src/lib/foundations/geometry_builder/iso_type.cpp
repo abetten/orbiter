@@ -84,7 +84,7 @@ void iso_type::init(gen_geo *gg,
 				<< endl;
 	}
 
-	Canonical_forms = NEW_OBJECT(classify_using_canonical_forms);
+	Canonical_forms = NEW_OBJECT(data_structures::classify_using_canonical_forms);
 
 	if (f_v) {
 		cout << "iso_type::init done" << endl;

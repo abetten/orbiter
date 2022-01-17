@@ -99,7 +99,7 @@ void linear_algebra_global::Berlekamp_matrix(
 
 	if (f_v) {
 		cout << "B=" << endl;
-		Orbiter->Int_vec.matrix_print(B, da, da);
+		Orbiter->Int_vec->matrix_print(B, da, da);
 		cout << endl;
 	}
 
@@ -148,7 +148,7 @@ void linear_algebra_global::compute_normal_basis(
 	unipoly_object m;
 	unipoly_object g;
 	unipoly_object minpol;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 
 	FX.create_object_by_rank_string(m, poly, 0 /* verbose_level */);
@@ -177,7 +177,7 @@ void linear_algebra_global::compute_normal_basis(
 	if (f_v) {
 		cout << "linear_algebra_global::compute_normal_basis "
 				"Frobenius_matrix = " << endl;
-		Orbiter->Int_vec.matrix_print(Frobenius, d, d);
+		Orbiter->Int_vec->matrix_print(Frobenius, d, d);
 		cout << endl;
 	}
 
@@ -191,7 +191,7 @@ void linear_algebra_global::compute_normal_basis(
 	if (f_v) {
 		cout << "linear_algebra_global::compute_normal_basis "
 				"Normal_basis = " << endl;
-		Orbiter->Int_vec.matrix_print(Normal_basis, d, d);
+		Orbiter->Int_vec->matrix_print(Normal_basis, d, d);
 		cout << endl;
 	}
 
@@ -221,7 +221,7 @@ void linear_algebra_global::do_nullspace(
 
 	A = NEW_int(n * n);
 	base_cols = NEW_int(n);
-	Orbiter->Int_vec.copy(M, A, m * n);
+	Orbiter->Int_vec->copy(M, A, m * n);
 
 	if (f_v) {
 		cout << "linear_algebra_global::do_nullspace before Linear_algebra->perp_standard" << endl;
@@ -236,7 +236,7 @@ void linear_algebra_global::do_nullspace(
 
 	if (f_v) {
 		cout << "linear_algebra_global::do_nullspace after perp_standard:" << endl;
-		Orbiter->Int_vec.matrix_print(A, n, n);
+		Orbiter->Int_vec->matrix_print(A, n, n);
 		cout << "rk=" << rk << endl;
 	}
 
@@ -248,11 +248,11 @@ void linear_algebra_global::do_nullspace(
 
 	if (f_v) {
 		cout << "linear_algebra_global::do_nullspace after RREF" << endl;
-		Orbiter->Int_vec.matrix_print(A + rk * n, rk1, n);
+		Orbiter->Int_vec->matrix_print(A + rk * n, rk1, n);
 		cout << "rank of nullspace = " << rk1 << endl;
 
 		cout << "linear_algebra_global::do_nullspace coefficients:" << endl;
-		Orbiter->Int_vec.print_fully(cout, A + rk * n, rk1 * n);
+		Orbiter->Int_vec->print_fully(cout, A + rk * n, rk1 * n);
 		cout << endl;
 
 		cout << "$$" << endl;
@@ -272,7 +272,7 @@ void linear_algebra_global::do_nullspace(
 
 		if (f_v) {
 			cout << "linear_algebra_global::do_nullspace after normalize from the left:" << endl;
-			Orbiter->Int_vec.matrix_print(A, n, n);
+			Orbiter->Int_vec->matrix_print(A, n, n);
 			cout << "rk=" << rk << endl;
 
 			cout << "$$" << endl;
@@ -293,7 +293,7 @@ void linear_algebra_global::do_nullspace(
 
 		if (f_v) {
 			cout << "linear_algebra_global::do_nullspace after normalize from the right:" << endl;
-			Orbiter->Int_vec.matrix_print(A, n, n);
+			Orbiter->Int_vec->matrix_print(A, n, n);
 			cout << "rk=" << rk << endl;
 
 			cout << "$$" << endl;
@@ -406,10 +406,10 @@ void linear_algebra_global::do_RREF(
 
 	A = NEW_int(n * n);
 	base_cols = NEW_int(n);
-	Orbiter->Int_vec.copy(M, A, m * n);
+	Orbiter->Int_vec->copy(M, A, m * n);
 	if (f_v) {
 		cout << "linear_algebra_global::do_RREF input matrix A:" << endl;
-		Orbiter->Int_vec.matrix_print(A, m, n);
+		Orbiter->Int_vec->matrix_print(A, m, n);
 	}
 
 	rk = F->Linear_algebra->Gauss_int(A,
@@ -420,11 +420,11 @@ void linear_algebra_global::do_RREF(
 
 	if (f_v) {
 		cout << "linear_algebra_global::do_RREF after RREF:" << endl;
-		Orbiter->Int_vec.matrix_print(A, rk, n);
+		Orbiter->Int_vec->matrix_print(A, rk, n);
 		cout << "rk=" << rk << endl;
 
 		cout << "coefficients:" << endl;
-		Orbiter->Int_vec.print(cout, A, rk * n);
+		Orbiter->Int_vec->print(cout, A, rk * n);
 		cout << endl;
 
 		cout << "$$" << endl;
@@ -446,7 +446,7 @@ void linear_algebra_global::do_RREF(
 
 		if (f_v) {
 			cout << "after normalize from the left:" << endl;
-			Orbiter->Int_vec.matrix_print(A, rk, n);
+			Orbiter->Int_vec->matrix_print(A, rk, n);
 			cout << "rk=" << rk << endl;
 		}
 	}
@@ -461,13 +461,13 @@ void linear_algebra_global::do_RREF(
 
 		if (f_v) {
 			cout << "after normalize from the right:" << endl;
-			Orbiter->Int_vec.matrix_print(A, rk, n);
+			Orbiter->Int_vec->matrix_print(A, rk, n);
 			cout << "rk=" << rk << endl;
 		}
 	}
 
 
-	Orbiter->Int_vec.copy(M, A, m * n);
+	Orbiter->Int_vec->copy(M, A, m * n);
 
 	RREF_demo(F, A, m, n, verbose_level);
 
@@ -657,7 +657,7 @@ void linear_algebra_global::RREF_with_steps_latex(
 		}
 	}
 
-	Orbiter->Int_vec.print_fully(ost, A, m * n);
+	Orbiter->Int_vec->print_fully(ost, A, m * n);
 	ost << "\\\\" << endl;
 
 

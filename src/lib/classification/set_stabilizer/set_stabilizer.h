@@ -294,7 +294,7 @@ public:
 	tally *T;
 
 
-	set_of_sets *SoS;
+	data_structures::set_of_sets *SoS;
 	int *types;
 	int nb_types;
 	int selected_type;

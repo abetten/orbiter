@@ -289,13 +289,14 @@ public:
 	void create_matrix(discreta_matrix &M, int i, int *S, int nb_classes,
 		int *character_degree, int *class_size,
 		int verbose_level);
-	void compute_character_table(a_domain *D, int nb_classes, int *Omega,
+	void compute_character_table(
+			algebra::a_domain *D, int nb_classes, int *Omega,
 		int *character_degree, int *class_size,
 		int *&character_table, int verbose_level);
-	void compute_character_degrees(a_domain *D,
+	void compute_character_degrees(algebra::a_domain *D,
 		int goi, int nb_classes, int *Omega, int *class_size,
 		int *&character_degree, int verbose_level);
-	void compute_omega(a_domain *D, int *N0, int nb_classes,
+	void compute_omega(algebra::a_domain *D, int *N0, int nb_classes,
 			int *Mu, int nb_mu, int *&Omega, int verbose_level);
 	int compute_r0(int *N, int nb_classes, int verbose_level);
 	void compute_multiplication_constants_center_of_group_ring(action *A,
@@ -715,7 +716,7 @@ public:
 	// local data for orbits on subspaces:
 	poset_with_group_action *orbits_on_subspaces_Poset;
 	poset_classification *orbits_on_subspaces_PC;
-	vector_space *orbits_on_subspaces_VS;
+	algebra::vector_space *orbits_on_subspaces_VS;
 	int *orbits_on_subspaces_M;
 	int *orbits_on_subspaces_base_cols;
 
@@ -765,15 +766,15 @@ public:
 	int nb_classes;
 	int *class_size;
 	int *class_rep;
-	a_domain *D;
+	algebra::a_domain *D;
 
 	int l1, l2;
 	int *row_parts;
 	int *col_parts;
 	int *Tableau;
 
-	set_of_sets *Row_partition;
-	set_of_sets *Col_partition;
+	data_structures::set_of_sets *Row_partition;
+	data_structures::set_of_sets *Col_partition;
 
 	vector_ge *gens1, *gens2;
 	sims *S1, *S2;

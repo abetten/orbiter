@@ -81,10 +81,10 @@ void packing_long_orbits::init(packing_was_fixpoints *PWF,
 #endif
 
 	if (Descr->f_mixed_orbits) {
-		Orbiter->Int_vec.scan(Descr->mixed_orbits_length_text, Orbit_lengths, nb_orbit_lengths);
+		Orbiter->Int_vec->scan(Descr->mixed_orbits_length_text, Orbit_lengths, nb_orbit_lengths);
 		if (f_v) {
 			cout << "packing_long_orbits::init Orbit_lengths=";
-			Orbiter->Int_vec.print(cout, Orbit_lengths, nb_orbit_lengths);
+			Orbiter->Int_vec->print(cout, Orbit_lengths, nb_orbit_lengths);
 			cout << endl;
 		}
 	}
@@ -238,7 +238,7 @@ void packing_long_orbits::list_of_cases_from_file(int verbose_level)
 	int total = 0;
 
 	Nb = NEW_int(m);
-	Orbiter->Int_vec.zero(Nb, m);
+	Orbiter->Int_vec->zero(Nb, m);
 
 	std::vector<std::vector<std::vector<int> > > Packings_by_case;
 
@@ -314,7 +314,7 @@ void packing_long_orbits::list_of_cases_from_file(int verbose_level)
 	}
 
 	std::string fname_out;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	fname_out.assign(Descr->list_of_cases_from_file_fname);
 	ST.replace_extension_with(fname_out, "_count.csv");
@@ -497,12 +497,12 @@ void packing_long_orbits::filter_orbits(int verbose_level)
 	}
 	if (f_v) {
 		cout << "packing_long_orbits::filter_orbits fixpoint_clique=";
-		Orbiter->Lint_vec.print(cout, fixpoint_clique, fixpoint_clique_size);
+		Orbiter->Lint_vec->print(cout, fixpoint_clique, fixpoint_clique_size);
 		cout << endl;
 	}
 
 
-	set_of_sets *Input;
+	data_structures::set_of_sets *Input;
 
 	Input = PWF->PW->reduced_spread_orbits_under_H->Orbits_classified;
 
@@ -511,14 +511,14 @@ void packing_long_orbits::filter_orbits(int verbose_level)
 		Filtered_orbits = NULL;
 	}
 
-	Filtered_orbits = NEW_OBJECT(set_of_sets);
+	Filtered_orbits = NEW_OBJECT(data_structures::set_of_sets);
 
 	Filtered_orbits->init_basic(
 			Input->underlying_set_size,
 			Input->nb_sets,
 			Input->Set_size, 0 /* verbose_level */);
 
-	Orbiter->Lint_vec.zero(Filtered_orbits->Set_size, Input->nb_sets);
+	Orbiter->Lint_vec->zero(Filtered_orbits->Set_size, Input->nb_sets);
 
 	for (t = 0; t < Input->nb_sets; t++) {
 		if (t == fixpoints_idx) {
@@ -547,7 +547,7 @@ void packing_long_orbits::filter_orbits(int verbose_level)
 
 			if (FALSE) {
 				cout << "packing_long_orbits::filter_orbits t=" << t << " i=" << i << " b=" << b << " orbit=";
-				Orbiter->Lint_vec.print(cout, set, len1);
+				Orbiter->Lint_vec->print(cout, set, len1);
 				cout << endl;
 			}
 			if (PWF->PW->test_if_pair_of_sets_of_reduced_spreads_are_adjacent(
@@ -766,7 +766,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 			if (f_v) {
 				cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
 						"reading solution " << sol_idx << " / " << nb_solutions << ", clique = ";
-				Orbiter->Int_vec.print(cout, clique, solution_size);
+				Orbiter->Int_vec->print(cout, clique, solution_size);
 				cout << endl;
 			}
 
@@ -827,7 +827,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 			if (f_v) {
 				cout << "packing_long_orbits::create_graph_on_remaining_long_orbits "
 						"reading solution " << sol_idx << " / " << nb_solutions << " packing = ";
-				Orbiter->Lint_vec.print(cout, packing, PWF->PW->P->size_of_packing);
+				Orbiter->Lint_vec->print(cout, packing, PWF->PW->P->size_of_packing);
 				cout << endl;
 			}
 
@@ -836,7 +836,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 				exit(1);
 			}
 
-			Orbiter->Lint_vec.copy(packing, Packings_table + sol_idx * PWF->PW->P->size_of_packing, PWF->PW->P->size_of_packing);
+			Orbiter->Lint_vec->copy(packing, Packings_table + sol_idx * PWF->PW->P->size_of_packing, PWF->PW->P->size_of_packing);
 
 
 #if 0
@@ -863,7 +863,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 					"before PWF->PW->A_on_reduced_spreads->create_induced_action_on_sets" << endl;
 			cout << "PWF->PW->A_on_reduced_spreads->degree=" << PWF->PW->A_on_reduced_spreads->degree << endl;
 			cout << "Packings_table:" << endl;
-			Orbiter->Lint_vec.matrix_print(Packings_table, nb_solutions, PWF->PW->P->size_of_packing);
+			Orbiter->Lint_vec->matrix_print(Packings_table, nb_solutions, PWF->PW->P->size_of_packing);
 		}
 
 		Ar_On_Packings = PWF->PW->A_on_reduced_spreads->create_induced_action_on_sets(nb_solutions,
@@ -888,7 +888,7 @@ void packing_long_orbits::create_graph_on_remaining_long_orbits(
 
 		int *iso_type;
 		iso_type = NEW_int(Orbits->nb_orbits * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads);
-		Orbiter->Int_vec.zero(iso_type, Orbits->nb_orbits * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads);
+		Orbiter->Int_vec->zero(iso_type, Orbits->nb_orbits * PWF->PW->Spread_tables_reduced->nb_iso_types_of_spreads);
 
 		int idx, j;
 

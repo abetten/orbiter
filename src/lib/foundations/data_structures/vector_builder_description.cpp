@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace data_structures {
 
 
 vector_builder_description::vector_builder_description()
@@ -199,6 +200,6 @@ void vector_builder_description::print()
 }
 
 
-}}
+}}}
 
 

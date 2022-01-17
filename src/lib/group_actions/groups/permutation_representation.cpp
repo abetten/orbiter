@@ -94,7 +94,7 @@ void permutation_representation::init(action *A_original,
 	char_per_elt = A_original->coded_elt_size_in_char + char_per_elt;
 	elt1 = (uchar *) NEW_char(char_per_elt);
 
-	PS = NEW_OBJECT(page_storage);
+	PS = NEW_OBJECT(data_structures::page_storage);
 	PS->init(char_per_elt /* entry_size */,
 			10 /* page_length_log */, verbose_level);
 
@@ -102,7 +102,7 @@ void permutation_representation::init(action *A_original,
 
 	Elts = NEW_int(nb_gens * elt_size_int);
 	for (i = 0; i < nb_gens; i++) {
-		Orbiter->Int_vec.copy(gens->ith(i), Elts + i * elt_size_int, A_original->elt_size_in_int);
+		Orbiter->Int_vec->copy(gens->ith(i), Elts + i * elt_size_int, A_original->elt_size_in_int);
 		for (j = 0; j < degree; j++) {
 			Elts[i * elt_size_int + perm_offset + j] = Perms[j * nb_gens + i];
 		}
@@ -163,7 +163,7 @@ void permutation_representation::element_mult(int *A, int *B, int *AB,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "permutation_representation::element_mult" << endl;
@@ -182,7 +182,7 @@ void permutation_representation::element_move(int *A, int *B, int verbose_level)
 	if (f_v) {
 		cout << "permutation_representation::element_move" << endl;
 	}
-	Orbiter->Int_vec.copy(A, B, elt_size_int);
+	Orbiter->Int_vec->copy(A, B, elt_size_int);
 	if (f_v) {
 		cout << "permutation_representation::element_move done" << endl;
 	}
@@ -191,7 +191,7 @@ void permutation_representation::element_move(int *A, int *B, int verbose_level)
 void permutation_representation::element_invert(int *A, int *Av, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "permutation_representation::element_invert" << endl;

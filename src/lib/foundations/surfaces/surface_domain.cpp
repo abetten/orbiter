@@ -770,7 +770,7 @@ void surface_domain::substitute_semilinear(
 
 void surface_domain::list_starter_configurations(
 	long int *Lines, int nb_lines,
-	set_of_sets *line_intersections, int *&Table, int &N, 
+	data_structures::set_of_sets *line_intersections, int *&Table, int &N,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -779,7 +779,7 @@ void surface_domain::list_starter_configurations(
 	long int S3[6];
 	int N1, nCk, h;
 	int i, j, r;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "surface_domain::list_starter_configurations" << endl;
@@ -846,14 +846,14 @@ void surface_domain::list_starter_configurations(
 
 void surface_domain::create_starter_configuration(
 	int line_idx, int subset_idx, 
-	set_of_sets *line_neighbors, long int *Lines, long int *S,
+	data_structures::set_of_sets *line_neighbors, long int *Lines, long int *S,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int subset[5];
 	int subset2[5];
 	int h; //, nCk;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "surface_domain::create_starter_configuration" << endl;
@@ -959,7 +959,7 @@ void surface_domain::klein_to_wedge_vec(
 void surface_domain::save_lines_in_three_kinds(std::string &fname_csv,
 	long int *Lines_wedge, long int *Lines, long int *Lines_klein, int nb_lines)
 {
-	spreadsheet *Sp;
+	data_structures::spreadsheet *Sp;
 	
 	make_spreadsheet_of_lines_in_three_kinds(Sp, 
 		Lines_wedge, Lines, Lines_klein, nb_lines,
@@ -996,7 +996,7 @@ int surface_domain::build_surface_from_double_six_and_count_Eckardt_points(long 
 	if (f_v) {
 		cout << "surface_domain::build_surface_from_double_six_and_count_Eckardt_points "
 				"coeffs20:" << endl;
-		Orbiter->Int_vec.print(cout, coeffs20, 20);
+		Orbiter->Int_vec->print(cout, coeffs20, 20);
 		cout << endl;
 
 		Poly3_4->print_equation(cout, coeffs20);
@@ -1004,7 +1004,7 @@ int surface_domain::build_surface_from_double_six_and_count_Eckardt_points(long 
 	}
 
 
-	Orbiter->Lint_vec.copy(double_six, Lines27, 12);
+	Orbiter->Lint_vec->copy(double_six, Lines27, 12);
 
 
 	if (f_v) {

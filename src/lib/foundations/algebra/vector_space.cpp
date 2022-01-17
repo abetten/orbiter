@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebra {
 
 
 static void vector_space_unrank_point_callback(int *v, long int rk, void *data);
@@ -197,11 +198,11 @@ int vector_space::compare_subspaces_ranked(
 	unrank_basis(M2, set2, k);
 	if (f_v) {
 		cout << "matrix1:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M1, k,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M1, k,
 				dimension, dimension,
 				F->log10_of_q);
 		cout << "matrix2:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M2, k,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M2, k,
 				dimension, dimension,
 				F->log10_of_q);
 		}
@@ -215,20 +216,20 @@ int vector_space::compare_subspaces_ranked(
 		cout << "vector_space::compare_subspaces_ranked "
 				"after Gauss" << endl;
 		cout << "matrix1:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M1, k,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M1, k,
 				dimension, dimension,
 				F->log10_of_q);
 		cout << "rank1=" << rk1 << endl;
 		cout << "base_cols1: ";
-		Orbiter->Int_vec.print(cout, base_cols, rk1);
+		Orbiter->Int_vec->print(cout, base_cols, rk1);
 		cout << endl;
 		cout << "matrix2:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M2, k,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M2, k,
 				dimension, dimension,
 				F->log10_of_q);
 		cout << "rank2=" << rk2 << endl;
 		cout << "base_cols2: ";
-		Orbiter->Int_vec.print(cout, base_cols2, rk2);
+		Orbiter->Int_vec->print(cout, base_cols2, rk2);
 		cout << endl;
 		}
 	if (rk1 != rk2) {
@@ -300,6 +301,7 @@ static long int vector_space_rank_point_callback(int *v, void *data)
 
 }
 
-}}
+}}}
+
 
 

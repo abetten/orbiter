@@ -86,7 +86,7 @@ void action_on_grassmannian::init(action &A,
 {
 	int f_v = (verbose_level >= 1);
 	longinteger_object go;
-	combinatorics_domain C;
+	combinatorics::combinatorics_domain C;
 	
 	if (f_v) {
 		cout << "action_on_grassmannian::init" << endl;
@@ -165,7 +165,7 @@ void action_on_grassmannian::init_embedding(int big_n,
 		cout << "action_on_grassmannian::init_embedding" << endl;
 		cout << "big_n=" << big_n << endl;
 		cout << "ambient space:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, ambient_space,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, ambient_space,
 				n, big_n, big_n, F->log10_of_q);
 		}
 	action_on_grassmannian::big_n = big_n;
@@ -222,7 +222,7 @@ void action_on_grassmannian::compute_image_longinteger(
 	G->unrank_longinteger(i, 0/*verbose_level - 1*/);
 	if (f_vv) {
 		cout << "after G->unrank_longinteger" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, G->M,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, G->M,
 				G->k, G->n, G->n, F->log10_of_q);
 		}
 	for (h = 0; h < k; h++) {
@@ -240,11 +240,11 @@ void action_on_grassmannian::compute_image_longinteger(
 #endif
 	if (f_vv) {
 		cout << "after element_image_of_low_level" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M1,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M1,
 				G->k, G->n, G->n, F->log10_of_q);
 		}
 	
-	Orbiter->Int_vec.copy(M1, G->M, k * n);
+	Orbiter->Int_vec->copy(M1, G->M, k * n);
 	G->rank_longinteger(j, 0/*verbose_level - 1*/);
 	if (f_v) {
 		cout << "action_on_grassmannian::compute_image_longinteger "
@@ -283,7 +283,7 @@ long int action_on_grassmannian::compute_image_int_ordinary(
 	if (f_vv) {
 		cout << "action_on_grassmannian::compute_image_int_ordinary "
 				"after G->unrank_int" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, G->M,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, G->M,
 				G->k, G->n, G->n, 2/* M->GFq->log10_of_q*/);
 		}
 	for (h = 0; h < k; h++) {
@@ -299,7 +299,7 @@ long int action_on_grassmannian::compute_image_int_ordinary(
 		}
 #endif
 	
-	Orbiter->Int_vec.copy(M1, G->M, k * n);
+	Orbiter->Int_vec->copy(M1, G->M, k * n);
 	j = G->rank_lint(verbose_level - 1);
 	if (f_v) {
 		cout << "action_on_grassmannian::compute_image_int_ordinary "
@@ -327,7 +327,7 @@ long int action_on_grassmannian::compute_image_int_embedded(
 				"subspace_basis:" << endl;
 		cout << "k=" << k << endl;
 		cout << "big_n=" << big_n << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, subspace_basis,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, subspace_basis,
 				k, big_n, big_n, F->log10_of_q);
 		}
 	for (h = 0; h < k; h++) {
@@ -361,7 +361,7 @@ long int action_on_grassmannian::compute_image_int_embedded(
 	if (f_vv) {
 		cout << "action_on_grassmannian::compute_image_int_embedded "
 				"subspace_basis after the action:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, subspace_basis2,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, subspace_basis2,
 				k, big_n, big_n, F->log10_of_q);
 		}
 	j = GE->rank_lint(subspace_basis2,

@@ -140,11 +140,11 @@ long int action_on_spread_set::compute_image_int(int *Elt,
 	if (f_vv) {
 		cout << "action_on_spread_set::compute_image_int "
 				"after unrank_point" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout,
+		Orbiter->Int_vec->print_integer_matrix_width(cout,
 				subspace1, k, n, n, F->log10_of_q);
 		cout << "action_on_spread_set::compute_image_int "
 				"group element:" << endl;
-		Orbiter->Int_vec.matrix_print(Elt, n, n);
+		Orbiter->Int_vec->matrix_print(Elt, n, n);
 		}
 
 	for (i = 0; i < k; i++) {
@@ -155,7 +155,7 @@ long int action_on_spread_set::compute_image_int(int *Elt,
 	if (f_vv) {
 		cout << "action_on_spread_set::compute_image_int "
 				"after applying group element" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout,
+		Orbiter->Int_vec->print_integer_matrix_width(cout,
 				subspace2, k, n, n, F->log10_of_q);
 		}
 
@@ -174,7 +174,7 @@ void action_on_spread_set::matrix_to_subspace(
 {
 	int i, j;
 	
-	Orbiter->Int_vec.zero(subspace, k * n);
+	Orbiter->Int_vec->zero(subspace, k * n);
 	for (i = 0; i < k; i++) {
 		subspace[i * n + i] = 1;
 		for (j = 0; j < k; j++) {
@@ -224,7 +224,7 @@ void action_on_spread_set::unrank_point(
 				"rk = " << rk << endl;
 		}
 	G_PGL_k_q->element_unrank_lint(rk, Elt1);
-	Orbiter->Int_vec.copy(Elt1, mtx, k * k);
+	Orbiter->Int_vec->copy(Elt1, mtx, k * k);
 	if (f_v) {
 		cout << "action_on_spread_set::unrank_point done" << endl;
 		}
@@ -262,10 +262,10 @@ void action_on_spread_set::compute_image_low_level(
 	if (f_vv) {
 		cout << "action_on_spread_set::compute_image_low_level "
 				"input=" << endl;
-		Orbiter->Int_vec.matrix_print(input, k, k);
+		Orbiter->Int_vec->matrix_print(input, k, k);
 		cout << "action_on_spread_set::compute_image_low_level "
 				"matrix=" << endl;
-		Orbiter->Int_vec.matrix_print(Elt, n, n);
+		Orbiter->Int_vec->matrix_print(Elt, n, n);
 		}
 
 	matrix_to_subspace(input, subspace1, verbose_level- 1);
@@ -281,7 +281,7 @@ void action_on_spread_set::compute_image_low_level(
 	if (f_vv) {
 		cout << "action_on_spread_set::compute_image_low_level "
 				"after mult=" << endl;
-		Orbiter->Int_vec.matrix_print(subspace2, k, n);
+		Orbiter->Int_vec->matrix_print(subspace2, k, n);
 		}
 
 	subspace_to_matrix(subspace2, output, verbose_level - 1);
@@ -289,7 +289,7 @@ void action_on_spread_set::compute_image_low_level(
 	if (f_vv) {
 		cout << "action_on_spread_set::compute_image_low_level "
 				"output=" << endl;
-		Orbiter->Int_vec.matrix_print(output, k, k);
+		Orbiter->Int_vec->matrix_print(output, k, k);
 		}
 
 	if (f_v) {

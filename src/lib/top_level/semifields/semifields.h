@@ -313,12 +313,12 @@ public:
 	action *A_PGLk; // PGL(k,q)
 	matrix_group *M;
 	finite_field *F;
-	gl_classes *C;
+	algebra::gl_classes *C;
 	int *desired_pivots; // [k]
 
 
 	// Level one:
-	gl_class_rep *R; // [nb_classes]
+	algebra::gl_class_rep *R; // [nb_classes]
 		// conjugacy class reps,
 		// allocated and computed in C->make_classes,
 		// which is called from downstep()
@@ -404,7 +404,7 @@ public:
 	int *M1;
 	int *Basis1, *Basis2;
 
-	gl_class_rep *R1, *R2;
+	algebra::gl_class_rep *R1, *R2;
 
 	long int **Candidates;
 		// candidates for the generator matrix,
@@ -457,7 +457,7 @@ public:
 		long int *Candidates, int Nb_candidates, int orbit,
 		int verbose_level);
 	void read_candidates_at_level_two_by_type(
-			set_of_sets_lint *&Candidates_by_type, int orbit,
+			data_structures::set_of_sets_lint *&Candidates_by_type, int orbit,
 			int verbose_level);
 	void get_basis_and_pivots(int po,
 			int *basis, int *pivots, int verbose_level);
@@ -533,7 +533,7 @@ public:
 	int *base_cols;
 	int *M1;
 	int *Basis;
-	gl_class_rep *R1;
+	algebra::gl_class_rep *R1;
 
 
 
@@ -621,7 +621,8 @@ public:
 	int candidate_testing(
 		int orbit,
 		int *last_mtx, int window_bottom, int window_size,
-		set_of_sets_lint *C_in, set_of_sets_lint *C_out,
+		data_structures::set_of_sets_lint *C_in,
+		data_structures::set_of_sets_lint *C_out,
 		long int *Tmp1, long int *Tmp2,
 		int verbose_level);
 	void level_three_get_a1_a2_a3(
@@ -846,7 +847,7 @@ public:
 	int *Basis;
 	int *basis_tmp;
 	int *base_cols;
-	gl_class_rep *R1;
+	algebra::gl_class_rep *R1;
 
 	semifield_trace();
 	~semifield_trace();

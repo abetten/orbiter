@@ -73,7 +73,7 @@ int clique_finder_control::parse_arguments(
 		int argc, std::string *argv)
 {
 	int i;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	cout << "clique_finder_control::parse_arguments" << endl;
 	for (i = 0; i < argc; i++) {
@@ -147,7 +147,7 @@ int clique_finder_control::parse_arguments(
 				}
 			}
 			cout << "-restrictions ";
-			Orbiter->Int_vec.print(cout, restrictions, 3 * nb_restrictions);
+			Orbiter->Int_vec->print(cout, restrictions, 3 * nb_restrictions);
 			cout << endl;
 		}
 		else if (ST.stringcmp(argv[i], "-end") == 0) {
@@ -203,7 +203,7 @@ void clique_finder_control::print()
 	}
 	else if (f_restrictions) {
 		cout << "-restrictions ";
-		Orbiter->Int_vec.print(cout, restrictions, 3 * nb_restrictions);
+		Orbiter->Int_vec->print(cout, restrictions, 3 * nb_restrictions);
 		cout << endl;
 	}
 }

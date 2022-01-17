@@ -121,10 +121,10 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 			0 /* verbose_level */);
 
 	if (f_v) {
-		Orbiter->Int_vec.matrix_print(Plane, 3, 4);
+		Orbiter->Int_vec->matrix_print(Plane, 3, 4);
 		cout << "surface_with_action::arc_lifting_and_classify "
 				"base_cols: ";
-		Orbiter->Int_vec.print(cout, base_cols, 3);
+		Orbiter->Int_vec->print(cout, base_cols, 3);
 		cout << endl;
 	}
 
@@ -136,7 +136,7 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 		cout << "The half double six is no " << hds
 				<< "$ = " << Surf->Schlaefli->Half_double_six_label_tex[hds]
 				<< "$ : $";
-		Orbiter->Lint_vec.print(cout, Surf->Schlaefli->Half_double_sixes + hds * 6, 6);
+		Orbiter->Lint_vec->print(cout, Surf->Schlaefli->Half_double_sixes + hds * 6, 6);
 		cout << " = \\{" << endl;
 		for (h = 0; h < 6; h++) {
 			cout << Surf->Schlaefli->Labels->Line_label_tex[
@@ -172,7 +172,7 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify "
 					"which is ";
-			Orbiter->Int_vec.print(cout, v, 4);
+			Orbiter->Int_vec->print(cout, v, 4);
 			cout << endl;
 		}
 		F->Linear_algebra->reduce_mod_subspace_and_get_coefficient_vector(
@@ -182,7 +182,7 @@ void clebsch_map::init_half_double_six(surface_object *SO,
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify "
 					"local coefficients ";
-			Orbiter->Int_vec.print(cout, coefficients, 3);
+			Orbiter->Int_vec->print(cout, coefficients, 3);
 			cout << endl;
 		}
 		intersection_points_local[u] = Surf->P2->rank_point(coefficients);
@@ -274,16 +274,16 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 			0 /* verbose_level */);
 	if (f_v) {
 		cout << "Plane rank " << plane_rk_global << " :" << endl;
-		Orbiter->Int_vec.matrix_print(Plane, 3, 4);
+		Orbiter->Int_vec->matrix_print(Plane, 3, 4);
 	}
 
 	F->Linear_algebra->RREF_and_kernel(4, 3, Plane, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "Plane (3 basis vectors and dual coordinates):" << endl;
-		Orbiter->Int_vec.matrix_print(Plane, 4, 4);
+		Orbiter->Int_vec->matrix_print(Plane, 4, 4);
 		cout << "base_cols: ";
-		Orbiter->Int_vec.print(cout, base_cols, r);
+		Orbiter->Int_vec->print(cout, base_cols, r);
 		cout << endl;
 	}
 
@@ -296,7 +296,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 	if (f_v) {
 		cout << "Line a = " << Surf->Schlaefli->Labels->Line_label_tex[line_idx[0]]
 			<< " = " << SO->Lines[line_idx[0]] << ":" << endl;
-		Orbiter->Int_vec.matrix_print(Line_a, 2, 4);
+		Orbiter->Int_vec->matrix_print(Line_a, 2, 4);
 	}
 	for (i = 0; i < 2; i++) {
 		if (F->Linear_algebra->dot_product(4, Line_a + i * 4, Plane + 3 * 4)) {
@@ -315,7 +315,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 	if (f_v) {
 		cout << "Line b = " << Surf->Schlaefli->Labels->Line_label_tex[line_idx[1]]
 			<< " = " << SO->Lines[line_idx[1]] << ":" << endl;
-		Orbiter->Int_vec.matrix_print(Line_b, 2, 4);
+		Orbiter->Int_vec->matrix_print(Line_b, 2, 4);
 	}
 	for (i = 0; i < 2; i++) {
 		if (F->Linear_algebra->dot_product(4, Line_b + i * 4, Plane + 3 * 4)) {
@@ -334,18 +334,18 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 
 		Surf->unrank_point(v, pt);
 
-		Orbiter->Int_vec.zero(Image_coeff + h * 4, 4);
+		Orbiter->Int_vec->zero(Image_coeff + h * 4, 4);
 		if (f_v) {
 			cout << "clebsch_map::compute_Clebsch_map_down_worker "
 					"pt " << h << " / " << SO->nb_pts << " is " << pt << " = ";
-			Orbiter->Int_vec.print(cout, v, 4);
+			Orbiter->Int_vec->print(cout, v, 4);
 			cout << ":" << endl;
 		}
 
 		// make sure the points do not lie on either line_a or line_b
 		// because the map is undefined there:
-		Orbiter->Int_vec.copy(Line_a, M, 2 * 4);
-		Orbiter->Int_vec.copy(v, M + 2 * 4, 4);
+		Orbiter->Int_vec->copy(Line_a, M, 2 * 4);
+		Orbiter->Int_vec->copy(v, M + 2 * 4, 4);
 		if (F->Linear_algebra->Gauss_easy(M, 3, 4) == 2) {
 			if (f_vv) {
 				cout << "The point is on line_a" << endl;
@@ -353,8 +353,8 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 			Image_rk[h] = -1;
 			continue;
 		}
-		Orbiter->Int_vec.copy(Line_b, M, 2 * 4);
-		Orbiter->Int_vec.copy(v, M + 2 * 4, 4);
+		Orbiter->Int_vec->copy(Line_b, M, 2 * 4);
+		Orbiter->Int_vec->copy(v, M + 2 * 4, 4);
 		if (F->Linear_algebra->Gauss_easy(M, 3, 4) == 2) {
 			if (f_vv) {
 				cout << "The point is on line_b" << endl;
@@ -366,34 +366,34 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 		// The point is good:
 
 		// Compute the first plane in dual coordinates:
-		Orbiter->Int_vec.copy(Line_a, M, 2 * 4);
-		Orbiter->Int_vec.copy(v, M + 2 * 4, 4);
+		Orbiter->Int_vec->copy(Line_a, M, 2 * 4);
+		Orbiter->Int_vec->copy(v, M + 2 * 4, 4);
 		F->Linear_algebra->RREF_and_kernel(4, 3, M, 0 /* verbose_level */);
-		Orbiter->Int_vec.copy(M + 3 * 4, Dual_planes, 4);
+		Orbiter->Int_vec->copy(M + 3 * 4, Dual_planes, 4);
 		if (f_vv) {
 			cout << "clebsch_map::compute_Clebsch_map_down_worker First plane in dual coordinates: ";
-			Orbiter->Int_vec.print(cout, M + 3 * 4, 4);
+			Orbiter->Int_vec->print(cout, M + 3 * 4, 4);
 			cout << endl;
 		}
 
 		// Compute the second plane in dual coordinates:
-		Orbiter->Int_vec.copy(Line_b, M, 2 * 4);
-		Orbiter->Int_vec.copy(v, M + 2 * 4, 4);
+		Orbiter->Int_vec->copy(Line_b, M, 2 * 4);
+		Orbiter->Int_vec->copy(v, M + 2 * 4, 4);
 		F->Linear_algebra->RREF_and_kernel(4, 3, M, 0 /* verbose_level */);
-		Orbiter->Int_vec.copy(M + 3 * 4, Dual_planes + 4, 4);
+		Orbiter->Int_vec->copy(M + 3 * 4, Dual_planes + 4, 4);
 		if (f_vv) {
 			cout << "clebsch_map::compute_Clebsch_map_down_worker Second plane in dual coordinates: ";
-			Orbiter->Int_vec.print(cout, M + 3 * 4, 4);
+			Orbiter->Int_vec->print(cout, M + 3 * 4, 4);
 			cout << endl;
 		}
 
 
 		// The third plane is the image
 		// plane, given by dual coordinates:
-		Orbiter->Int_vec.copy(Plane + 3 * 4, Dual_planes + 8, 4);
+		Orbiter->Int_vec->copy(Plane + 3 * 4, Dual_planes + 8, 4);
 		if (f_vv) {
 			cout << "clebsch_map::compute_Clebsch_map_down_worker Dual coordinates for all three planes: " << endl;
-			Orbiter->Int_vec.matrix_print(Dual_planes, 3, 4);
+			Orbiter->Int_vec->matrix_print(Dual_planes, 3, 4);
 			cout << endl;
 		}
 
@@ -401,7 +401,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 				Dual_planes, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << "clebsch_map::compute_Clebsch_map_down_worker Dual coordinates and perp: " << endl;
-			Orbiter->Int_vec.matrix_print(Dual_planes, 4, 4);
+			Orbiter->Int_vec->matrix_print(Dual_planes, 4, 4);
 			cout << endl;
 			cout << "clebsch_map::compute_Clebsch_map_down_worker matrix of dual coordinates has rank " << r << endl;
 		}
@@ -417,10 +417,10 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 		F->PG_element_normalize(Dual_planes + 12, 1, 4);
 		if (f_vv) {
 			cout << "clebsch_map::compute_Clebsch_map_down_worker intersection point normalized: ";
-			Orbiter->Int_vec.print(cout, Dual_planes + 12, 4);
+			Orbiter->Int_vec->print(cout, Dual_planes + 12, 4);
 			cout << endl;
 		}
-		Orbiter->Int_vec.copy(Dual_planes + 12, Image_coeff + h * 4, 4);
+		Orbiter->Int_vec->copy(Dual_planes + 12, Image_coeff + h * 4, 4);
 
 		// compute local coordinates of the image point:
 		F->Linear_algebra->reduce_mod_subspace_and_get_coefficient_vector(
@@ -431,7 +431,7 @@ int clebsch_map::compute_Clebsch_map_down_worker(
 		if (f_vv) {
 			cout << "clebsch_map::compute_Clebsch_map_down_worker pt " << h << " / " << SO->nb_pts
 				<< " is " << pt << " : image = ";
-			Orbiter->Int_vec.print(cout, Image_coeff + h * 4, 4);
+			Orbiter->Int_vec->print(cout, Image_coeff + h * 4, 4);
 			cout << " image = " << Image_rk[h] << endl;
 		}
 	}
@@ -691,7 +691,7 @@ void clebsch_map::report(std::ostream &ost, int verbose_level)
 
 	ost << "The half double six is no " << hds << "$ = "
 			<< Surf->Schlaefli->Half_double_six_label_tex[hds] << "$ : $";
-	Orbiter->Lint_vec.print(ost, Surf->Schlaefli->Half_double_sixes + hds * 6, 6);
+	Orbiter->Lint_vec->print(ost, Surf->Schlaefli->Half_double_sixes + hds * 6, 6);
 	ost << " = \\{" << endl;
 	for (h = 0; h < 6; h++) {
 		ost << Surf->Schlaefli->Labels->Line_label_tex[Surf->Schlaefli->Half_double_sixes[hds * 6 + h]];
@@ -730,7 +730,7 @@ void clebsch_map::report(std::ostream &ost, int verbose_level)
 		<< "$ yields arc = $";
 	L.lint_set_print_tex(ost, Arc, 6);
 	ost << "$ : blown up lines = ";
-	Orbiter->Lint_vec.print(ost, Blown_up_lines, 6);
+	Orbiter->Lint_vec->print(ost, Blown_up_lines, 6);
 	ost << "\\\\" << endl;
 
 	SO->SOP->clebsch_map_latex(ost, Clebsch_map, Clebsch_coeff);

@@ -112,11 +112,11 @@ void del_pezzo_surface_of_degree_two_domain::enumerate_points(int *coeff,
 
 		if (f_v) {
 			cout << a << " : ";
-			Orbiter->Int_vec.print(cout, v3, 3);
+			Orbiter->Int_vec->print(cout, v3, 3);
 			cout << " : " << a << " : ";
 		}
 
-		Orbiter->Int_vec.copy(v3, v4, 3);
+		Orbiter->Int_vec->copy(v3, v4, 3);
 
 		if (a == 0) {
 			v4[3] = 0;
@@ -137,7 +137,7 @@ void del_pezzo_surface_of_degree_two_domain::enumerate_points(int *coeff,
 				 cout << nb_roots << " points" << endl;
 			}
 			for (i = 0; i < nb_roots; i++) {
-				Orbiter->Int_vec.copy(v3, v4, 3);
+				Orbiter->Int_vec->copy(v3, v4, 3);
 				v4[3] = roots[i];
 				rk_pt = P->rank_point(v4);
 

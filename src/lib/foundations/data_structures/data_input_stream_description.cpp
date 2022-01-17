@@ -13,6 +13,8 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace data_structures {
+
 
 data_input_stream_description::data_input_stream_description()
 {
@@ -307,5 +309,6 @@ void data_input_stream_description::print_item(int i)
 
 
 
-}}
+}}}
+
 

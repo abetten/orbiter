@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace data_structures {
 
 
 vector_builder::vector_builder()
@@ -51,7 +52,7 @@ void vector_builder::init(vector_builder_description *Descr,
 		if (f_v) {
 			cout << "vector_builder::init -dense" << endl;
 		}
-		Orbiter->Int_vec.scan(Descr->dense_text, v, len);
+		Orbiter->Int_vec->scan(Descr->dense_text, v, len);
 
 		if (Descr->f_format) {
 			f_has_k = TRUE;
@@ -99,10 +100,10 @@ void vector_builder::init(vector_builder_description *Descr,
 		int sz;
 		int i;
 
-		Orbiter->Int_vec.scan(Descr->repeat_text, w, sz);
+		Orbiter->Int_vec->scan(Descr->repeat_text, w, sz);
 		if (f_v) {
 			cout << "vector_builder::init repeat pattern: ";
-			Orbiter->Int_vec.print(cout, w, sz);
+			Orbiter->Int_vec->print(cout, w, sz);
 			cout << endl;
 		}
 
@@ -142,11 +143,11 @@ void vector_builder::init(vector_builder_description *Descr,
 		int i, idx;
 		int c;
 
-		Orbiter->Int_vec.scan(Descr->sparse_pairs, pairs, sz);
+		Orbiter->Int_vec->scan(Descr->sparse_pairs, pairs, sz);
 
 		len = Descr->sparse_len;
 		v = NEW_int(len);
-		Orbiter->Int_vec.zero(v, len);
+		Orbiter->Int_vec->zero(v, len);
 		nb_pairs = sz >> 1;
 		for (i = 0; i < nb_pairs; i++) {
 			c = pairs[2 * i + 0];
@@ -183,7 +184,7 @@ void vector_builder::init(vector_builder_description *Descr,
 			vector_builder *VB;
 
 			VB = Orbiter->get_object_of_type_vector(Descr->concatenate_list[i]);
-			Orbiter->Int_vec.copy(VB->v, v + j, VB->len);
+			Orbiter->Int_vec->copy(VB->v, v + j, VB->len);
 			j += VB->len;
 		}
 
@@ -235,11 +236,11 @@ void vector_builder::init(vector_builder_description *Descr,
 
 	if (f_v) {
 		cout << "vector_builder::init created vector of length " << len << endl;
-		Orbiter->Int_vec.print(cout, v, len);
+		Orbiter->Int_vec->print(cout, v, len);
 		cout << endl;
 		if (f_has_k) {
 			cout << "also seen as matrix of size  " << k << " x " << len / k << endl;
-			Orbiter->Int_vec.matrix_print(v, k, len / k);
+			Orbiter->Int_vec->matrix_print(v, k, len / k);
 			cout << endl;
 
 		}
@@ -254,7 +255,7 @@ void vector_builder::init(vector_builder_description *Descr,
 
 
 
-}}
+}}}
 
 
 

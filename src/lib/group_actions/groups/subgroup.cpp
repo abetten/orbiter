@@ -63,7 +63,7 @@ void subgroup::init_from_sims(sims *S, sims *Sub,
 	int f_v = (verbose_level >= 1);
 	int *Elt;
 	long int i, rk;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "subgroup::init_from_sims" << endl;
@@ -97,23 +97,23 @@ void subgroup::init(int *Elements,
 	subgroup::gens = NEW_int(nb_gens);
 	subgroup::group_order = group_order;
 	subgroup::nb_gens = nb_gens;
-	Orbiter->Int_vec.copy(Elements, subgroup::Elements, group_order);
-	Orbiter->Int_vec.copy(gens, subgroup::gens, nb_gens);
+	Orbiter->Int_vec->copy(Elements, subgroup::Elements, group_order);
+	Orbiter->Int_vec->copy(gens, subgroup::gens, nb_gens);
 }
 
 void subgroup::print()
 {
 	cout << "group of order " << group_order << " : ";
-	Orbiter->Int_vec.print(cout, Elements, group_order);
+	Orbiter->Int_vec->print(cout, Elements, group_order);
 	cout << " gens: ";
-	Orbiter->Int_vec.print(cout, gens, nb_gens);
+	Orbiter->Int_vec->print(cout, gens, nb_gens);
 	cout << endl;
 }
 
 int subgroup::contains_this_element(int elt)
 {
 	int idx;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	if (Sorting.int_vec_search(Elements, group_order, elt, idx)) {
 		return TRUE;

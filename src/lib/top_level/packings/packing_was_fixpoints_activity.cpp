@@ -76,7 +76,7 @@ void packing_was_fixpoints_activity::perform_activity(int verbose_level)
 		long int *packing;
 		int sz;
 
-		Orbiter->Lint_vec.scan(Descr->print_packing_text, packing, sz);
+		Orbiter->Lint_vec->scan(Descr->print_packing_text, packing, sz);
 
 		PWF->print_packing(packing, sz, verbose_level);
 
@@ -113,7 +113,7 @@ void packing_was_fixpoints_activity::perform_activity(int verbose_level)
 		len1 = m1 * n1;
 		len2 = m2 * n2;
 
-		sorting Sorting;
+		data_structures::sorting Sorting;
 
 		Sorting.int_vec_sort_and_remove_duplicates(M1, len1);
 		Sorting.int_vec_sort_and_remove_duplicates(M2, len2);
@@ -128,7 +128,7 @@ void packing_was_fixpoints_activity::perform_activity(int verbose_level)
 
 
 		cout << "The intersection has size " << len3 << ":" << endl;
-		Orbiter->Int_vec.print(cout, v3, len3);
+		Orbiter->Int_vec->print(cout, v3, len3);
 		cout << endl;
 
 

@@ -448,7 +448,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 			cout << "poset_classification::post_processing preparing level spreadsheet" << endl;
 		}
 		{
-			spreadsheet *Sp;
+			data_structures::spreadsheet *Sp;
 			make_spreadsheet_of_level_info(Sp, actual_size, verbose_level);
 			string fname_csv;
 			char str[1000];
@@ -470,7 +470,7 @@ void poset_classification::post_processing(int actual_size, int verbose_level)
 			cout << "poset_classification::post_processing preparing orbit spreadsheet" << endl;
 		}
 		{
-			spreadsheet *Sp;
+			data_structures::spreadsheet *Sp;
 			make_spreadsheet_of_orbit_reps(Sp, actual_size);
 			string fname_csv;
 			char str[1000];
@@ -720,9 +720,9 @@ void poset_classification::recognize(std::string &set_to_recognize,
 	int *Elt_transporter_inv;
 
 	cout << "recognize " << h << " / " << nb_to_recognize << endl;
-	Orbiter->Lint_vec.scan(set_to_recognize, recognize_set, recognize_set_sz);
+	Orbiter->Lint_vec->scan(set_to_recognize, recognize_set, recognize_set_sz);
 	cout << "input set = " << h << " / " << nb_to_recognize << " : ";
-	Orbiter->Lint_vec.print(cout, recognize_set, recognize_set_sz);
+	Orbiter->Lint_vec->print(cout, recognize_set, recognize_set_sz);
 	cout << endl;
 
 	canonical_set = NEW_lint(recognize_set_sz);
@@ -747,7 +747,7 @@ void poset_classification::recognize(std::string &set_to_recognize,
 
 	cout << "recognize " << h << " / " << nb_to_recognize << endl;
 	cout << "canonical set = ";
-	Orbiter->Lint_vec.print(cout, canonical_set, recognize_set_sz);
+	Orbiter->Lint_vec->print(cout, canonical_set, recognize_set_sz);
 	cout << endl;
 	cout << "is orbit " << orb << endl;
 	cout << "recognize " << h << " / " << nb_to_recognize << endl;
@@ -932,7 +932,7 @@ void poset_classification::compute_flag_orbits(int size,
 				if (FALSE) {
 					int *live_points = Poo->get_node(prev)->live_points();
 					cout << "The live points are : ";
-					Orbiter->Int_vec.print(cout, live_points, nb);
+					Orbiter->Int_vec->print(cout, live_points, nb);
 				}
 				cout << endl;
 				}

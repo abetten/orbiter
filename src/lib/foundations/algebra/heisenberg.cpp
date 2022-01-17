@@ -12,6 +12,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebra {
 
 
 heisenberg::heisenberg()
@@ -222,7 +223,5 @@ void heisenberg::generating_set(int *&gens, int &nb_gens, int verbose_level)
 		}
 }
 
-}
-}
-
+}}}
 

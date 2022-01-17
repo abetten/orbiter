@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebra {
 
 
 gl_classes::gl_classes()
@@ -67,7 +68,7 @@ void gl_classes::init(int k, finite_field *F, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int d;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "gl_classes::init" << endl;
@@ -106,7 +107,7 @@ void gl_classes::init(int k, finite_field *F, int verbose_level)
 	if (f_v) {
 		cout << "gl_classes k = " << k
 				<< " q = " << q << " Nb_part = ";
-		Orbiter->Int_vec.print(cout, Nb_part + 1, k);
+		Orbiter->Int_vec->print(cout, Nb_part + 1, k);
 		cout << endl;
 		}
 
@@ -127,7 +128,7 @@ int gl_classes::select_partition_first(int *Select,
 	if (f_v) {
 		cout << "gl_classes::select_partition_first" << endl;
 		}
-	Orbiter->Int_vec.zero(Select_partition, Table_of_polynomials->nb_irred);
+	Orbiter->Int_vec->zero(Select_partition, Table_of_polynomials->nb_irred);
 	return TRUE;
 }
 
@@ -213,8 +214,8 @@ void gl_classes::make_matrix_from_class_rep(int *Mtx,
 	}
 	Select = NEW_int(Table_of_polynomials->nb_irred);
 	Select_Partition = NEW_int(Table_of_polynomials->nb_irred);
-	Orbiter->Int_vec.zero(Select, Table_of_polynomials->nb_irred);
-	Orbiter->Int_vec.zero(Select_Partition, Table_of_polynomials->nb_irred);
+	Orbiter->Int_vec->zero(Select, Table_of_polynomials->nb_irred);
+	Orbiter->Int_vec->zero(Select_Partition, Table_of_polynomials->nb_irred);
 
 	for (i = 0; i < R->type_coding->m; i++) {
 		a = R->type_coding->s_ij(i, 0);
@@ -254,18 +255,18 @@ void gl_classes::make_matrix_in_rational_normal_form(
 	if (f_v) {
 		cout << "gl_classes::make_matrix_in_rational_normal_form" << endl;
 		cout << "Select=";
-		Orbiter->Int_vec.print(cout, Select, Table_of_polynomials->nb_irred);
+		Orbiter->Int_vec->print(cout, Select, Table_of_polynomials->nb_irred);
 		cout << endl;
 		cout << "Select_Partition=";
-		Orbiter->Int_vec.print(cout, Select_Partition, Table_of_polynomials->nb_irred);
+		Orbiter->Int_vec->print(cout, Select_Partition, Table_of_polynomials->nb_irred);
 		cout << endl;
 		cout << "Degree=";
-		Orbiter->Int_vec.print(cout, Table_of_polynomials->Degree,
+		Orbiter->Int_vec->print(cout, Table_of_polynomials->Degree,
 				Table_of_polynomials->nb_irred);
 		cout << endl;
 		}
 
-	Orbiter->Int_vec.zero(Mtx, k * k);
+	Orbiter->Int_vec->zero(Mtx, k * k);
 	m_one = F->negate(1);
 
 	// take care of the irreducible polynomial blocks first:
@@ -355,7 +356,7 @@ void gl_classes::centralizer_order_Kung_basic(int nb_irreds,
 	int a, m, d, p, i, j, b, mue_i, aa, bb, cc;
 	int *part;
 	number_theory_domain NT;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "gl_classes::centralizer_order_Kung_basic" << endl;
@@ -422,7 +423,7 @@ void gl_classes::centralizer_order_Kung(
 	int a, m, d, p, i, j, b, mue_i, aa, bb, cc;
 	int *part;
 	number_theory_domain NT;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	co.create(1, __FILE__, __LINE__);
 	for (a = Table_of_polynomials->nb_irred - 1; a >= 0; a--) {
@@ -479,7 +480,7 @@ void gl_classes::make_classes(gl_class_rep *&R, int &nb_classes,
 	longinteger_object go, co, f, g, cl, r, sum;
 	longinteger_domain D;
 	number_theory_domain NT;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "gl_classes::make_classes "
@@ -531,7 +532,7 @@ void gl_classes::make_classes(gl_class_rep *&R, int &nb_classes,
 
 		if (f_vv) {
 			cout << "gl_classes::make_classes The class " << cnt << " is:" << endl;
-			Orbiter->Int_vec.print(cout, Select_polynomial,
+			Orbiter->Int_vec->print(cout, Select_polynomial,
 					Table_of_polynomials->nb_irred);
 			cout << " : ";
 
@@ -560,7 +561,7 @@ void gl_classes::make_classes(gl_class_rep *&R, int &nb_classes,
 
 		if (f_vv) {
 			cout << "gl_classes::make_classes Representative:" << endl;
-			Orbiter->Int_vec.matrix_print(Mtx, k, k);
+			Orbiter->Int_vec->matrix_print(Mtx, k, k);
 		}
 
 
@@ -619,7 +620,7 @@ loop1:
 
 		if (f_vv) {
 			cout << "gl_classes::make_classes The class " << cnt << " is:" << endl;
-			Orbiter->Int_vec.print(cout, Select_polynomial,
+			Orbiter->Int_vec->print(cout, Select_polynomial,
 					Table_of_polynomials->nb_irred);
 			cout << " : ";
 			int f_first = TRUE;
@@ -652,7 +653,7 @@ loop1:
 
 		if (f_vv) {
 			cout << "gl_classes::make_classes Representative:" << endl;
-			Orbiter->Int_vec.matrix_print(Mtx, k, k);
+			Orbiter->Int_vec->matrix_print(Mtx, k, k);
 		}
 
 
@@ -719,7 +720,7 @@ void gl_classes::identify_matrix(int *Mtx,
 	if (f_v) {
 		cout << "gl_classes::identify_matrix "
 				"input matrix=" << endl;
-		Orbiter->Int_vec.matrix_print(Mtx, k, k);
+		Orbiter->Int_vec->matrix_print(Mtx, k, k);
 		}
 
 	M2 = NEW_int(k * k);
@@ -754,7 +755,7 @@ void gl_classes::identify_matrix(int *Mtx,
 	if (f_v) {
 		cout << "gl_classes::identify_matrix "
 				"After substitution, the matrix is " << endl;
-		Orbiter->Int_vec.matrix_print(M2, k, k);
+		Orbiter->Int_vec->matrix_print(M2, k, k);
 		}
 
 
@@ -771,7 +772,7 @@ void gl_classes::identify_matrix(int *Mtx,
 
 	if (f_v) {
 		cout << "gl_classes::identify_matrix factorization: ";
-		Orbiter->Int_vec.print(cout, Mult, Table_of_polynomials->nb_irred);
+		Orbiter->Int_vec->print(cout, Mult, Table_of_polynomials->nb_irred);
 		cout << endl;
 		}
 
@@ -806,7 +807,7 @@ void gl_classes::identify_matrix(int *Mtx,
 
 	if (f_v) {
 		cout << "gl_classes::identify_matrix B^-1 * A * B = " << endl;
-		Orbiter->Int_vec.matrix_print(M3, k, k);
+		Orbiter->Int_vec->matrix_print(M3, k, k);
 		cout << endl;
 		}
 
@@ -841,7 +842,7 @@ void gl_classes::identify2(int *Mtx, unipoly_object &poly,
 		cout << "gl_classes::identify2 k = " << k << " q = " << q << endl;
 		}
 
-	nb_irreds = Orbiter->Int_vec.count_number_of_nonzero_entries(
+	nb_irreds = Orbiter->Int_vec->count_number_of_nonzero_entries(
 			Mult, Table_of_polynomials->nb_irred);
 
 	// nb_irreds is the number of distinct irreducible factors
@@ -871,7 +872,7 @@ void gl_classes::identify2(int *Mtx, unipoly_object &poly,
 	if (f_v) {
 		cout << "gl_classes::identify2 "
 				"k = " << k << " q = " << q << " Irreds: ";
-		Orbiter->Int_vec.print(cout, Irreds, nb_irreds);
+		Orbiter->Int_vec->print(cout, Irreds, nb_irreds);
 		cout << endl;
 		}
 
@@ -898,7 +899,7 @@ void gl_classes::identify2(int *Mtx, unipoly_object &poly,
 				"after compute_generalized_kernels_for_each_block" << endl;
 		}
 
-	Orbiter->Int_vec.zero(Select_partition, nb_irreds);
+	Orbiter->Int_vec->zero(Select_partition, nb_irreds);
 	for (i = 0; i < nb_irreds; i++) {
 		Select_partition[Irreds[i]] = Data[i].part_idx;
 		}
@@ -922,7 +923,7 @@ void gl_classes::identify2(int *Mtx, unipoly_object &poly,
 	if (f_vv) {
 		cout << "gl_classes::identify2 "
 				"transformation matrix = " << endl;
-		Orbiter->Int_vec.matrix_print(Basis, k, k);
+		Orbiter->Int_vec->matrix_print(Basis, k, k);
 		cout << endl;
 		}
 
@@ -986,7 +987,7 @@ void gl_classes::compute_generalized_kernels_for_each_block(
 		if (f_vv) {
 			cout << "gl_classes::compute_generalized_kernels_for_each_block "
 					"matrix substituted into polynomial = " << endl;
-			Orbiter->Int_vec.matrix_print(M2, k, k);
+			Orbiter->Int_vec->matrix_print(M2, k, k);
 			cout << endl;
 			}
 
@@ -1026,7 +1027,7 @@ void gl_classes::compute_generalized_kernels(
 	int cnt, c, rank;
 	int *M3, *M4;
 	int *base_cols;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "gl_classes::compute_generalized_kernels" << endl;
@@ -1043,18 +1044,18 @@ void gl_classes::compute_generalized_kernels(
 	Data->b0 = b0;
 	Data->b1 = b0 + d * m;
 
-	Orbiter->Int_vec.copy(M2, M3, k * k);
-	Orbiter->Int_vec.zero(Data->dual_part, k);
+	Orbiter->Int_vec->copy(M2, M3, k * k);
+	Orbiter->Int_vec->zero(Data->dual_part, k);
 
 	for (cnt = 1; cnt <= k; cnt++) {
 
 		if (f_vv) {
 			cout << "gl_classes::compute_generalized_kernels "
 					"cnt = " << cnt << " computing kernel of:" << endl;
-			Orbiter->Int_vec.matrix_print(M3, k, k);
+			Orbiter->Int_vec->matrix_print(M3, k, k);
 			cout << endl;
 			}
-		Orbiter->Int_vec.copy(M3, M4, k * k);
+		Orbiter->Int_vec->copy(M3, M4, k * k);
 
 		rank = F->Linear_algebra->Gauss_simple(M4, k, k, base_cols, 0 /*verbose_level*/);
 
@@ -1064,7 +1065,7 @@ void gl_classes::compute_generalized_kernels(
 		if (f_vv) {
 			cout << "gl_classes::compute_generalized_kernels "
 					"kernel = " << endl;
-			Orbiter->Int_vec.matrix_print(Data->K[cnt].M,
+			Orbiter->Int_vec->matrix_print(Data->K[cnt].M,
 					Data->K[cnt].m, Data->K[cnt].n);
 			cout << endl;
 			}
@@ -1080,7 +1081,7 @@ void gl_classes::compute_generalized_kernels(
 			}
 
 		F->Linear_algebra->mult_matrix_matrix(M3, M2, M4, k, k, k, 0 /* verbose_level */);
-		Orbiter->Int_vec.copy(M4, M3, k * k);
+		Orbiter->Int_vec->copy(M4, M3, k * k);
 
 		}
 
@@ -1125,13 +1126,14 @@ int gl_classes::identify_partition(int *part, int m, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "gl_classes::identify_partition" << endl;
 		}
 	for (i = 0; i < Nb_part[m]; i++) {
 		//cout << "i=" << i << endl;
-		if (int_vec_compare(Partitions[m] + i * m, part, m) == 0) {
+		if (Sorting.int_vec_compare(Partitions[m] + i * m, part, m) == 0) {
 			break;
 			}
 		}
@@ -1139,10 +1141,10 @@ int gl_classes::identify_partition(int *part, int m, int verbose_level)
 		cout << "gl_classes::identify_partition "
 				"did not find partition" << endl;
 		cout << "looking for:" << endl;
-		Orbiter->Int_vec.print(cout, part, m);
+		Orbiter->Int_vec->print(cout, part, m);
 		cout << endl;
 		cout << "in:" << endl;
-		Orbiter->Int_vec.matrix_print(Partitions[m], Nb_part[m], m);
+		Orbiter->Int_vec->matrix_print(Partitions[m], Nb_part[m], m);
 		exit(1);
 		}
 	if (f_v) {
@@ -1166,11 +1168,11 @@ void gl_classes::choose_basis_for_rational_normal_form(
 	if (f_vv) {
 		cout << "gl_classes::choose_basis_for_rational_normal_form "
 				"Mtx=" << endl;
-		Orbiter->Int_vec.matrix_print(Mtx, k, k);
+		Orbiter->Int_vec->matrix_print(Mtx, k, k);
 		cout << endl;
 		}
 	b = 0;
-	Orbiter->Int_vec.zero(Basis, k * k);
+	Orbiter->Int_vec->zero(Basis, k * k);
 		
 	for (h = 0; h < nb_irreds; h++) {
 		if (f_vv) {
@@ -1238,9 +1240,9 @@ void gl_classes::choose_basis_for_rational_normal_form_block(
 				cout << "f=" << f << " af=" << af << " e=" << e << endl;
 				}
 
-			int_matrix *Forbidden_subspace;
+			data_structures::int_matrix *Forbidden_subspace;
 		
-			Forbidden_subspace = NEW_OBJECT(int_matrix);
+			Forbidden_subspace = NEW_OBJECT(data_structures::int_matrix);
 
 			Forbidden_subspace->allocate(k, b - B0);
 
@@ -1257,9 +1259,9 @@ void gl_classes::choose_basis_for_rational_normal_form_block(
 						v, verbose_level - 1);
 				}
 			else {
-				int_matrix *Dummy_subspace;
+				data_structures::int_matrix *Dummy_subspace;
 					
-				Dummy_subspace = NEW_OBJECT(int_matrix);
+				Dummy_subspace = NEW_OBJECT(data_structures::int_matrix);
 
 				Dummy_subspace->allocate(k, 0);
 					
@@ -1274,7 +1276,7 @@ void gl_classes::choose_basis_for_rational_normal_form_block(
 				
 			if (f_v) {
 				cout << "chosing vector v=";
-				Orbiter->Int_vec.print(cout, v, k);
+				Orbiter->Int_vec->print(cout, v, k);
 				cout << endl;
 				}
 			for (c = 0; c < f; c++) {
@@ -1292,16 +1294,16 @@ void gl_classes::choose_basis_for_rational_normal_form_block(
 						}
 					if (f_v) {
 						cout << "Basis=" << endl;
-						Orbiter->Int_vec.matrix_print(Basis, k, k);
+						Orbiter->Int_vec->matrix_print(Basis, k, k);
 						}
 					b++;
 					F->Linear_algebra->mult_vector_from_the_right(Mtx, v, w, k, k);
 					if (f_v) {
 						cout << "forced vector w=";
-						Orbiter->Int_vec.print(cout, w, k);
+						Orbiter->Int_vec->print(cout, w, k);
 						cout << endl;
 						}
-					Orbiter->Int_vec.copy(w, v, k);
+					Orbiter->Int_vec->copy(w, v, k);
 
 					if (g == Data->d - 1) {
 						for (ii = 0; ii < Data->d; ii++) {
@@ -1318,7 +1320,7 @@ void gl_classes::choose_basis_for_rational_normal_form_block(
 			if (f_v) {
 				cout << "gl_classes::choose_basis_for_rational_normal_"
 						"form_block Basis = " << endl;
-				Orbiter->Int_vec.matrix_print(Basis, k, k);
+				Orbiter->Int_vec->matrix_print(Basis, k, k);
 				cout << endl;
 				}
 			} // next e
@@ -1356,7 +1358,7 @@ void gl_classes::generators_for_centralizer(
 		}
 	if (f_vv) {
 		cout << "gl_classes::generators_for_centralizer " << endl;
-		Orbiter->Int_vec.matrix_print(Mtx, k, k);
+		Orbiter->Int_vec->matrix_print(Mtx, k, k);
 		}
 
 	M2 = NEW_int(k * k);
@@ -1387,7 +1389,7 @@ void gl_classes::generators_for_centralizer(
 	if (f_vv) {
 		cout << "gl_classes::generators_for_centralizer "
 				"After substitution, the matrix is " << endl;
-		Orbiter->Int_vec.matrix_print(M2, k, k);
+		Orbiter->Int_vec->matrix_print(M2, k, k);
 		}
 
 
@@ -1404,7 +1406,7 @@ void gl_classes::generators_for_centralizer(
 
 	if (f_v) {
 		cout << "gl_classes::generators_for_centralizer factorization: ";
-		Orbiter->Int_vec.print(cout, Mult, Table_of_polynomials->nb_irred);
+		Orbiter->Int_vec->print(cout, Mult, Table_of_polynomials->nb_irred);
 		cout << endl;
 		}
 
@@ -1437,7 +1439,7 @@ void gl_classes::generators_for_centralizer(
 		for (i = 0; i < nb_gens; i++) {
 			cout << "transformation matrix " << i << " / "
 					<< nb_gens << " is" << endl;
-			Orbiter->Int_vec.matrix_print(Gens[i], k, k);
+			Orbiter->Int_vec->matrix_print(Gens[i], k, k);
 			}
 		}
 
@@ -1446,7 +1448,7 @@ void gl_classes::generators_for_centralizer(
 				0 /* verbose_level */);
 		F->Linear_algebra->mult_matrix_matrix(Basis, Basis_inv, M2, k, k, k,
 				0 /* verbose_level */);
-		Orbiter->Int_vec.copy(M2, Gens[i], k * k);
+		Orbiter->Int_vec->copy(M2, Gens[i], k * k);
 		}
 
 	if (f_vv) {
@@ -1455,7 +1457,7 @@ void gl_classes::generators_for_centralizer(
 		int i;
 		for (i = 0; i < nb_gens; i++) {
 			cout << "generator " << i << " / " << nb_gens << " is" << endl;
-			Orbiter->Int_vec.matrix_print(Gens[i], k, k);
+			Orbiter->Int_vec->matrix_print(Gens[i], k, k);
 			}
 		}
 
@@ -1475,7 +1477,7 @@ void gl_classes::generators_for_centralizer(
 	if (f_vv) {
 		cout << "gl_classes::generators_for_centralizer "
 				"B^-1 * A * B = " << endl;
-		Orbiter->Int_vec.matrix_print(M3, k, k);
+		Orbiter->Int_vec->matrix_print(M3, k, k);
 		cout << endl;
 		}
 
@@ -1513,7 +1515,7 @@ void gl_classes::centralizer_generators(int *Mtx,
 				"k = " << k << " q = " << q << endl;
 		}
 
-	nb_irreds = Orbiter->Int_vec.count_number_of_nonzero_entries(
+	nb_irreds = Orbiter->Int_vec->count_number_of_nonzero_entries(
 			Mult, Table_of_polynomials->nb_irred);
 
 	Irreds = NEW_int(nb_irreds);
@@ -1533,7 +1535,7 @@ void gl_classes::centralizer_generators(int *Mtx,
 	if (f_v) {
 		cout << "gl_classes::centralizer_generators "
 				"k = " << k << " q = " << q << " Irreds: ";
-		Orbiter->Int_vec.print(cout, Irreds, nb_irreds);
+		Orbiter->Int_vec->print(cout, Irreds, nb_irreds);
 		cout << endl;
 		}
 
@@ -1556,7 +1558,7 @@ void gl_classes::centralizer_generators(int *Mtx,
 			verbose_level);
 
 
-	Orbiter->Int_vec.zero(Select_partition, nb_irreds);
+	Orbiter->Int_vec->zero(Select_partition, nb_irreds);
 	for (i = 0; i < nb_irreds; i++) {
 		Select_partition[Irreds[i]] = Data[i].part_idx;
 		}
@@ -1648,7 +1650,7 @@ void gl_classes::centralizer_generators_block(int *Mtx,
 			coset = 0;
 			while (TRUE) {
 
-				Orbiter->Int_vec.zero(Basis, k * k);
+				Orbiter->Int_vec->zero(Basis, k * k);
 
 
 
@@ -1700,7 +1702,7 @@ void gl_classes::centralizer_generators_block(int *Mtx,
 							"h = " << h << " level1 = " << level1
 							<< " level2=" << level2 << " / " << af
 							<< " chosen matrix:" << endl;
-					Orbiter->Int_vec.matrix_print(Basis, k, k);
+					Orbiter->Int_vec->matrix_print(Basis, k, k);
 					}
 
 
@@ -1717,7 +1719,7 @@ void gl_classes::centralizer_generators_block(int *Mtx,
 					nb_alloc = nb_alloc_new;
 					}
 				Gens[nb_gens] = NEW_int(k * k);
-				Orbiter->Int_vec.copy(Basis, Gens[nb_gens], k * k);
+				Orbiter->Int_vec->copy(Basis, Gens[nb_gens], k * k);
 				nb_gens++;
 
 
@@ -1769,9 +1771,9 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 				cout << "f=" << f << " af=" << af << " e=" << e << endl;
 				}
 
-			int_matrix *Forbidden_subspace;
+			data_structures::int_matrix *Forbidden_subspace;
 		
-			Forbidden_subspace = NEW_OBJECT(int_matrix);
+			Forbidden_subspace = NEW_OBJECT(data_structures::int_matrix);
 
 			Forbidden_subspace->allocate(k, b - B0);
 
@@ -1798,9 +1800,9 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 					}
 				}
 			else {
-				int_matrix *Dummy_subspace;
+				data_structures::int_matrix *Dummy_subspace;
 					
-				Dummy_subspace = NEW_OBJECT(int_matrix);
+				Dummy_subspace = NEW_OBJECT(data_structures::int_matrix);
 
 				Dummy_subspace->allocate(k, 0);
 					
@@ -1837,7 +1839,7 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 				}
 			if (f_vv) {
 				cout << "chosing vector v=";
-				Orbiter->Int_vec.print(cout, v, k);
+				Orbiter->Int_vec->print(cout, v, k);
 				cout << endl;
 				}
 			for (c = 0; c < f; c++) {
@@ -1856,10 +1858,10 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 					F->Linear_algebra->mult_vector_from_the_right(Mtx, v, w, k, k);
 					if (f_vv) {
 						cout << "forced vector w=";
-						Orbiter->Int_vec.print(cout, w, k);
+						Orbiter->Int_vec->print(cout, w, k);
 						cout << endl;
 						}
-					Orbiter->Int_vec.copy(w, v, k);
+					Orbiter->Int_vec->copy(w, v, k);
 
 					if (g == Data->d - 1) {
 						for (ii = 0; ii < Data->d; ii++) {
@@ -1874,7 +1876,7 @@ int gl_classes::choose_basis_for_rational_normal_form_coset(
 			if (f_vv) {
 				cout << "gl_classes::choose_basis_for_rational_normal_"
 						"form_coset Basis = " << endl;
-				Orbiter->Int_vec.matrix_print(Basis, k, k);
+				Orbiter->Int_vec->matrix_print(Basis, k, k);
 				cout << endl;
 				}
 			} // next e
@@ -1897,6 +1899,7 @@ int gl_classes::find_class_rep(gl_class_rep *Reps,
 {
 	int f_v = (verbose_level >= 1);
 	int m, i;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "gl_classes::find_class_rep" << endl;
@@ -1906,7 +1909,7 @@ int gl_classes::find_class_rep(gl_class_rep *Reps,
 		if (Reps[i].type_coding->m != m) {
 			continue;
 			}
-		if (int_vec_compare(Reps[i].type_coding->M,
+		if (Sorting.int_vec_compare(Reps[i].type_coding->M,
 				R->type_coding->M, m * 3) == 0) {
 			break;
 			}
@@ -2009,8 +2012,8 @@ void gl_classes::print_matrix_and_centralizer_order_latex(
 
 	Select_polynomial = NEW_int(Table_of_polynomials->nb_irred);
 	Select_Partition = NEW_int(Table_of_polynomials->nb_irred);
-	Orbiter->Int_vec.zero(Select_polynomial, Table_of_polynomials->nb_irred);
-	Orbiter->Int_vec.zero(Select_Partition, Table_of_polynomials->nb_irred);
+	Orbiter->Int_vec->zero(Select_polynomial, Table_of_polynomials->nb_irred);
+	Orbiter->Int_vec->zero(Select_Partition, Table_of_polynomials->nb_irred);
 
 	for (i = 0; i < R->type_coding->m; i++) {
 		a = R->type_coding->s_ij(i, 0);
@@ -2071,6 +2074,7 @@ void gl_classes::print_matrix_and_centralizer_order_latex(
 
 
 
-}}
+}}}
+
 
 

@@ -70,7 +70,7 @@ int geometry_builder_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "geometry_builder_description::read_arguments" << endl;

@@ -12,6 +12,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace data_structures {
 
 
 fancy_set::fancy_set()
@@ -68,7 +69,7 @@ void fancy_set::init_with_set(int n, int k, int *subset, int verbose_level)
 	if (f_v) {
 		cout << "fancy_set::init_with_set n=" << n << " k=" << k << endl;
 		cout << "set=";
-		Orbiter->Int_vec.set_print(cout, subset, k);
+		Orbiter->Int_vec->set_print(cout, subset, k);
 		cout << endl;
 		}
 	init(n, verbose_level - 1);
@@ -250,7 +251,7 @@ void fancy_set::sort()
 	
 int fancy_set::compare_lexicographically(fancy_set *second_set)
 {
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	sort();
 	second_set->sort();
@@ -318,8 +319,7 @@ void fancy_set::save(std::string &fname, int verbose_level)
 	}
 }
 
-}
-}
+}}}
 
 
 

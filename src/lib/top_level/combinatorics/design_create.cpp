@@ -79,7 +79,7 @@ void design_create::freeself()
 void design_create::init(design_create_description *Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "design_create::init" << endl;
@@ -147,7 +147,7 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 
 		degree = Descr->list_of_blocks_v;
 		k = Descr->list_of_blocks_k;
-		Orbiter->Lint_vec.scan(Descr->list_of_blocks_text, set, sz);
+		Orbiter->Lint_vec->scan(Descr->list_of_blocks_text, set, sz);
 
 		char str[1000];
 
@@ -243,7 +243,7 @@ void design_create::init(design_create_description *Descr, int verbose_level)
 
 	if (f_v) {
 		cout << "design_create::init set = ";
-		Orbiter->Lint_vec.print(cout, set, sz);
+		Orbiter->Lint_vec->print(cout, set, sz);
 		cout << endl;
 	}
 
@@ -271,8 +271,8 @@ void design_create::create_design_PG_2_q(finite_field *F,
 		cout << "design_create::create_design_PG_2_q" << endl;
 	}
 
-	combinatorics_domain Combi;
-	sorting Sorting;
+	combinatorics::combinatorics_domain Combi;
+	data_structures::sorting Sorting;
 	int j;
 	int f_semilinear;
 	//int *block;
@@ -298,19 +298,19 @@ void design_create::create_design_PG_2_q(finite_field *F,
 	sz = P->N_lines;
 	set = NEW_lint(sz);
 	for (j = 0; j < sz; j++) {
-		Orbiter->Int_vec.copy(P->Implementation->Lines + j * k, block, k);
+		Orbiter->Int_vec->copy(P->Implementation->Lines + j * k, block, k);
 		Sorting.int_vec_heapsort(block, k);
 		set[j] = Combi.rank_k_subset(block, P->N_points, k);
 		if (f_v) {
 			cout << "block " << j << " / " << sz << " : ";
-			Orbiter->Int_vec.print(cout, block, k);
+			Orbiter->Int_vec->print(cout, block, k);
 			cout << " : " << set[j] << endl;
 		}
 	}
 	Sorting.lint_vec_heapsort(set, sz);
 	if (f_v) {
 		cout << "design : ";
-		Orbiter->Lint_vec.print(cout, set, sz);
+		Orbiter->Lint_vec->print(cout, set, sz);
 		cout << endl;
 	}
 
@@ -352,12 +352,12 @@ void design_create::unrank_block_in_PG_2_q(int *block,
 		cout << "design_create::unrank_block_in_PG_2_q rk=" << rk
 				<< " P->N_points=" << P->N_points << " k=" << k << endl;
 	}
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	Combi.unrank_k_subset(rk, block, P->N_points, k);
 	if (f_v) {
 		cout << "design_create::unrank_block_in_PG_2_q block = ";
-		Orbiter->Int_vec.print(cout, block, k);
+		Orbiter->Int_vec->print(cout, block, k);
 		cout << endl;
 	}
 	if (f_v) {
@@ -374,8 +374,8 @@ int design_create::rank_block_in_PG_2_q(int *block,
 	if (f_v) {
 		cout << "design_create::rank_block_in_PG_2_q" << endl;
 	}
-	combinatorics_domain Combi;
-	sorting Sorting;
+	combinatorics::combinatorics_domain Combi;
+	data_structures::sorting Sorting;
 
 	Sorting.int_vec_heapsort(block, k);
 	rk = Combi.rank_k_subset(block, P->N_points, k);
@@ -388,7 +388,7 @@ int design_create::rank_block_in_PG_2_q(int *block,
 int design_create::get_nb_colors_as_two_design(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	int nb_c;
 
 	if (f_v) {
@@ -409,7 +409,7 @@ int design_create::get_color_as_two_design_assume_sorted(long int *design, int v
 	if (f_v) {
 		cout << "design_create::get_color_as_two_design_assume_sorted" << endl;
 	}
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	Combi.unrank_k_subset(design[0], block, P->N_points, k);
 	if (block[0] != 0) {

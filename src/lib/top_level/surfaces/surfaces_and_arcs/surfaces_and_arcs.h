@@ -720,7 +720,7 @@ public:
 
 	int Iso_type_as_double_triplet[120];
 	tally *Double_triplet_type_distribution;
-	set_of_sets *Double_triplet_types;
+	data_structures::set_of_sets *Double_triplet_types;
 	int *Double_triplet_type_values;
 	int nb_double_triplet_types;
 

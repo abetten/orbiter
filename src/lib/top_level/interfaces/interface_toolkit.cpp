@@ -108,7 +108,7 @@ interface_toolkit::interface_toolkit()
 void interface_toolkit::print_help(int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (ST.stringcmp(argv[i], "-create_files") == 0) {
 		cout << "-create_files <description>" << endl;
@@ -173,7 +173,7 @@ void interface_toolkit::print_help(int argc,
 int interface_toolkit::recognize_keyword(int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (i >= argc) {
 		return false;
@@ -242,7 +242,7 @@ void interface_toolkit::read_arguments(int argc,
 		std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "interface_toolkit::read_arguments" << endl;
@@ -688,8 +688,12 @@ void interface_toolkit::worker(int verbose_level)
 	else if (f_csv_file_latex) {
 
 		file_io Fio;
+		int nb_lines_per_table = 25;
 
-		Fio.do_csv_file_latex(csv_file_latex_fname, f_produce_latex_header, verbose_level);
+		Fio.do_csv_file_latex(csv_file_latex_fname,
+				f_produce_latex_header,
+				nb_lines_per_table,
+				verbose_level);
 	}
 	else if (f_draw_matrix) {
 		graphical_output GO;
@@ -710,8 +714,8 @@ void interface_toolkit::worker(int verbose_level)
 		len = m * n;
 		m2 = (len + reformat_nb_cols - 1) / reformat_nb_cols;
 		M2 = NEW_int(m2 * reformat_nb_cols);
-		Orbiter->Int_vec.zero(M2, m2 * reformat_nb_cols);
-		Orbiter->Int_vec.copy(M, M2, len);
+		Orbiter->Int_vec->zero(M2, m2 * reformat_nb_cols);
+		Orbiter->Int_vec->copy(M, M2, len);
 		Fio.int_matrix_write_csv(reformat_fname_out, M2, m2, reformat_nb_cols);
 		cout << "Written file " << reformat_fname_out << " of size " << Fio.file_size(reformat_fname_out) << endl;
 	}
@@ -732,11 +736,11 @@ void interface_toolkit::worker(int verbose_level)
 
 		M2 = NEW_int(len);
 		for (t = 0; t < T.nb_types; t++) {
-			Orbiter->Int_vec.zero(M2, len);
+			Orbiter->Int_vec->zero(M2, len);
 			a = T.data_sorted[T.type_first[t]];
 			string fname;
 			char str[1000];
-			string_tools ST;
+			data_structures::string_tools ST;
 
 			fname.assign(split_by_values_fname_in);
 			ST.chop_off_extension(fname);
@@ -759,7 +763,7 @@ void interface_toolkit::worker(int verbose_level)
 		cout << "f_store_as_csv_file" << endl;
 		cout << "data=" << store_as_csv_file_data << endl;
 
-		Orbiter->Lint_vec.scan(store_as_csv_file_data, D, sz);
+		Orbiter->Lint_vec->scan(store_as_csv_file_data, D, sz);
 		if (sz != store_as_csv_file_m * store_as_csv_file_n) {
 			cout << "sz != store_as_csv_file_m * store_as_csv_file_n" << endl;
 			cout << "sz = " << sz << endl;
@@ -828,7 +832,7 @@ void interface_toolkit::worker(int verbose_level)
 	}
 	else if (f_plot_function) {
 		file_io Fio;
-		string_tools ST;
+		data_structures::string_tools ST;
 		int *T;
 		int *M;
 		int m1, n1, n, x, y;
@@ -839,7 +843,7 @@ void interface_toolkit::worker(int verbose_level)
 		n = m1 * n1;
 
 		M = NEW_int(n * n);
-		Orbiter->Int_vec.zero(M, n * n);
+		Orbiter->Int_vec->zero(M, n * n);
 
 
 		for (x = 0; x < n; x++) {

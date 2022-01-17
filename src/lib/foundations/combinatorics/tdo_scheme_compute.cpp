@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace combinatorics {
 
 
 tdo_scheme_compute::tdo_scheme_compute()
@@ -116,5 +117,7 @@ void tdo_scheme_compute::print_schemes(std::ostream &ost)
 
 
 }
-}}
+
+
+}}}
 

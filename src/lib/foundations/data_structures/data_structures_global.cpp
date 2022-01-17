@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace data_structures {
 
 data_structures_global::data_structures_global()
 {
@@ -136,5 +137,6 @@ int data_structures_global::lint_vec_hash_after_sorting(long int *data, int len)
 
 
 
-}}
+}}}
+
 

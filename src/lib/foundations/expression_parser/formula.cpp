@@ -64,7 +64,7 @@ void formula::init(std::string &label, std::string &label_tex,
 	formula::formula_text.assign(formula_text);
 
 	expression_parser Parser;
-	string_tools ST;
+	data_structures::string_tools ST;
 	//syntax_tree *tree;
 	int i;
 
@@ -274,7 +274,7 @@ void formula::evaluate(homogeneous_polynomial_domain *Poly,
 		cout << "formula::evaluate" << endl;
 	}
 
-	string_tools ST;
+	data_structures::string_tools ST;
 	const char *p = evaluate_text.c_str();
 	char str[1000];
 
@@ -344,7 +344,7 @@ void formula::evaluate(homogeneous_polynomial_domain *Poly,
 		cout << endl;
 	}
 	cout << "coefficient vector: ";
-	Orbiter->Int_vec.print(cout, Values, Poly->get_nb_monomials());
+	Orbiter->Int_vec->print(cout, Values, Poly->get_nb_monomials());
 	cout << endl;
 
 

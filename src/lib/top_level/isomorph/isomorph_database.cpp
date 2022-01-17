@@ -339,7 +339,7 @@ int isomorph::find_extension_search_interval(long int *set,
 {
 	long int *data = find_extension_set1;
 	int i, id = 0;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	for (i = 0; i < len; i++) {
 		if (f_btree_idx) {
@@ -355,7 +355,7 @@ int isomorph::find_extension_search_interval(long int *set,
 			load_solution(id, data);
 			}
 		Sorting.lint_vec_heapsort(data + level, size - level);
-		if (lint_vec_compare(set + level, data + level, size - level) == 0) {
+		if (Sorting.lint_vec_compare(set + level, data + level, size - level) == 0) {
 			break;
 			}
 		}
@@ -374,7 +374,7 @@ int isomorph::find_extension_easy_old(long int *set,
 {
 	int f_v = (verbose_level >= 1);
 	int first, len, ret;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "isomorph::find_extension_easy_old" << endl;
@@ -405,7 +405,7 @@ int isomorph::find_extension_easy_new(long int *set,
 	//int f_vv = FALSE; // (verbose_level >= 2);
 	int ret;
 	int f_found, first, idx2, len;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "isomorph::find_extension_easy_new" << endl;
@@ -413,7 +413,7 @@ int isomorph::find_extension_easy_new(long int *set,
 	Sorting.lint_vec_heapsort(set + level, size - level);
 	
 	int h;
-	data_structures_global Data;
+	data_structures::data_structures_global Data;
 
 	h = Data.lint_vec_hash_after_sorting(set, size);
 	if (f_v) {
@@ -620,7 +620,7 @@ void isomorph::create_level_database(int level, int verbose_level)
 	long int set1[1000];
 	long int set2[1000];
 	//char *elt;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "isomorph::create_level_database "
@@ -660,7 +660,7 @@ void isomorph::create_level_database(int level, int verbose_level)
 				cout << "isomorph::create_level_database level "
 						<< level << " i=" << i << " / " << nb_nodes
 						<< " set=";
-				Orbiter->Lint_vec.print(cout, set1, level);
+				Orbiter->Lint_vec->print(cout, set1, level);
 				cout << endl;
 				}
 
@@ -742,9 +742,9 @@ void isomorph::create_level_database(int level, int verbose_level)
 
 					if (f_vv /*f_vv && (i % print_mod) == 0*/) {
 						cout << "mapping ";
-						Orbiter->Lint_vec.print(cout, set1, level + 1);
+						Orbiter->Lint_vec->print(cout, set1, level + 1);
 						cout << " to ";
-						Orbiter->Lint_vec.print(cout, set2, level + 1);
+						Orbiter->Lint_vec->print(cout, set2, level + 1);
 						cout << endl;
 					}
 		
@@ -998,7 +998,7 @@ void isomorph::load_strong_generators_database(int cur_level,
 		}
 	if (f_vv) {
 		cout << "isomorph::load_strong_generators_database set: ";
-		Orbiter->Int_vec.print(cout, set, cur_level);
+		Orbiter->Int_vec->print(cout, set, cur_level);
 		cout << endl;
 		}
 	int nb_strong_generators;

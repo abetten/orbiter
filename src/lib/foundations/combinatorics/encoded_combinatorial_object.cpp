@@ -15,6 +15,8 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace combinatorics {
+
 
 encoded_combinatorial_object::encoded_combinatorial_object()
 {
@@ -55,7 +57,7 @@ void encoded_combinatorial_object::init(int nb_rows, int nb_cols, int verbose_le
 	Incma = NEW_int(L);
 	partition = NEW_int(canonical_labeling_len);
 
-	Orbiter->Int_vec.zero(Incma, L);
+	Orbiter->Int_vec->zero(Incma, L);
 	for (i = 0; i < canonical_labeling_len; i++) {
 		partition[i] = 1;
 	}
@@ -67,7 +69,7 @@ void encoded_combinatorial_object::init(int nb_rows, int nb_cols, int verbose_le
 
 
 void encoded_combinatorial_object::init_canonical_form(encoded_combinatorial_object *Enc,
-		nauty_output *NO, int verbose_level)
+		data_structures::nauty_output *NO, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int L;
@@ -84,7 +86,7 @@ void encoded_combinatorial_object::init_canonical_form(encoded_combinatorial_obj
 
 	canonical_labeling_len = nb_rows + nb_cols;
 	partition = NEW_int(canonical_labeling_len);
-	Orbiter->Int_vec.copy(Enc->partition, partition, canonical_labeling_len);
+	Orbiter->Int_vec->copy(Enc->partition, partition, canonical_labeling_len);
 
 	if (f_v) {
 		cout << "encoded_combinatorial_object::init_canonical_form done" << endl;
@@ -93,7 +95,7 @@ void encoded_combinatorial_object::init_canonical_form(encoded_combinatorial_obj
 
 void encoded_combinatorial_object::print_incma()
 {
-	Orbiter->Int_vec.matrix_print_tight(Incma, nb_rows, nb_cols);
+	Orbiter->Int_vec->matrix_print_tight(Incma, nb_rows, nb_cols);
 
 }
 
@@ -135,7 +137,7 @@ void encoded_combinatorial_object::compute_canonical_incma(int *canonical_labeli
 	}
 }
 
-void encoded_combinatorial_object::compute_canonical_form(bitvector *&Canonical_form,
+void encoded_combinatorial_object::compute_canonical_form(data_structures::bitvector *&Canonical_form,
 		int *canonical_labeling, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -153,7 +155,7 @@ void encoded_combinatorial_object::compute_canonical_form(bitvector *&Canonical_
 			Incma_out, verbose_level);
 
 
-	Canonical_form = NEW_OBJECT(bitvector);
+	Canonical_form = NEW_OBJECT(data_structures::bitvector);
 	Canonical_form->allocate(L);
 	for (i = 0; i < nb_rows; i++) {
 		for (j = 0; j < nb_cols; j++) {
@@ -190,7 +192,7 @@ void encoded_combinatorial_object::incidence_matrix_projective_space_top_left(pr
 }
 
 void encoded_combinatorial_object::canonical_form_given_canonical_labeling(int *canonical_labeling,
-		bitvector *&B,
+		data_structures::bitvector *&B,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -322,7 +324,7 @@ void encoded_combinatorial_object::latex_incma(std::ostream &ost,
 	}
 	if (f_v) {
 		cout << "encoded_combinatorial_object::latex_incma Vi=";
-		Orbiter->Int_vec.print(cout, Vi, V);
+		Orbiter->Int_vec->print(cout, Vi, V);
 		cout << endl;
 	}
 	j0 = 0;
@@ -334,7 +336,7 @@ void encoded_combinatorial_object::latex_incma(std::ostream &ost,
 	}
 	if (f_v) {
 		cout << "encoded_combinatorial_object::latex_incma Bj=";
-		Orbiter->Int_vec.print(cout, Bj, B);
+		Orbiter->Int_vec->print(cout, Bj, B);
 		cout << endl;
 	}
 
@@ -465,12 +467,12 @@ void encoded_combinatorial_object::latex_TDA(std::ostream &ost,
 
 	if (f_v) {
 		cout << "encoded_combinatorial_object::latex_TDA Vi=";
-		Orbiter->Int_vec.print(cout, Vi, V);
+		Orbiter->Int_vec->print(cout, Vi, V);
 		cout << endl;
 	}
 	if (f_v) {
 		cout << "encoded_combinatorial_object::latex_TDA Bj=";
-		Orbiter->Int_vec.print(cout, Bj, B);
+		Orbiter->Int_vec->print(cout, Bj, B);
 		cout << endl;
 	}
 
@@ -478,7 +480,7 @@ void encoded_combinatorial_object::latex_TDA(std::ostream &ost,
 	int i0, j0;
 
 	Inc2 = NEW_int(nb_rows * nb_cols);
-	Orbiter->Int_vec.zero(Inc2, nb_rows * nb_cols);
+	Orbiter->Int_vec->zero(Inc2, nb_rows * nb_cols);
 
 	for (i = 0; i < nb_rows; i++) {
 		i0 = orbit[i];
@@ -556,12 +558,12 @@ void encoded_combinatorial_object::latex_TDA_with_labels(std::ostream &ost,
 
 	if (f_v) {
 		cout << "encoded_combinatorial_object::latex_TDA_with_labels Vi=";
-		Orbiter->Int_vec.print(cout, Vi, V);
+		Orbiter->Int_vec->print(cout, Vi, V);
 		cout << endl;
 	}
 	if (f_v) {
 		cout << "encoded_combinatorial_object::latex_TDA_with_labels Bj=";
-		Orbiter->Int_vec.print(cout, Bj, B);
+		Orbiter->Int_vec->print(cout, Bj, B);
 		cout << endl;
 	}
 
@@ -569,7 +571,7 @@ void encoded_combinatorial_object::latex_TDA_with_labels(std::ostream &ost,
 	int i0, j0;
 
 	Inc2 = NEW_int(nb_rows * nb_cols);
-	Orbiter->Int_vec.zero(Inc2, nb_rows * nb_cols);
+	Orbiter->Int_vec->zero(Inc2, nb_rows * nb_cols);
 
 	for (i = 0; i < nb_rows; i++) {
 		i0 = orbit[i];
@@ -644,7 +646,7 @@ void encoded_combinatorial_object::latex_TDA_with_labels(std::ostream &ost,
 
 
 void encoded_combinatorial_object::latex_canonical_form(std::ostream &ost,
-		nauty_output *NO,
+		data_structures::nauty_output *NO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -686,12 +688,12 @@ void encoded_combinatorial_object::latex_canonical_form(std::ostream &ost,
 
 	if (f_v) {
 		cout << "encoded_combinatorial_object::latex_canonical_form Vi=";
-		Orbiter->Int_vec.print(cout, Vi, V);
+		Orbiter->Int_vec->print(cout, Vi, V);
 		cout << endl;
 	}
 	if (f_v) {
 		cout << "encoded_combinatorial_object::latex_canonical_form Bj=";
-		Orbiter->Int_vec.print(cout, Bj, B);
+		Orbiter->Int_vec->print(cout, Bj, B);
 		cout << endl;
 	}
 
@@ -699,7 +701,7 @@ void encoded_combinatorial_object::latex_canonical_form(std::ostream &ost,
 	int i0, j0;
 
 	Inc2 = NEW_int(nb_rows * nb_cols);
-	Orbiter->Int_vec.zero(Inc2, nb_rows * nb_cols);
+	Orbiter->Int_vec->zero(Inc2, nb_rows * nb_cols);
 
 	for (i = 0; i < nb_rows; i++) {
 		i0 = NO->canonical_labeling[i];
@@ -770,12 +772,12 @@ void encoded_combinatorial_object::latex_canonical_form(std::ostream &ost,
 }
 
 void encoded_combinatorial_object::apply_canonical_labling(int *&Inc2,
-		nauty_output *NO)
+		data_structures::nauty_output *NO)
 {
 	int i, j, i0, j0;
 
 	Inc2 = NEW_int(nb_rows * nb_cols);
-	Orbiter->Int_vec.zero(Inc2, nb_rows * nb_cols);
+	Orbiter->Int_vec->zero(Inc2, nb_rows * nb_cols);
 
 	for (i = 0; i < nb_rows; i++) {
 		i0 = NO->canonical_labeling[i];
@@ -791,7 +793,7 @@ void encoded_combinatorial_object::apply_canonical_labling(int *&Inc2,
 
 void encoded_combinatorial_object::apply_canonical_labling_and_get_flags(int *&Inc2,
 		int *&Flags, int &nb_flags,
-		nauty_output *NO)
+		data_structures::nauty_output *NO)
 {
 	int i, j;
 
@@ -809,7 +811,7 @@ void encoded_combinatorial_object::apply_canonical_labling_and_get_flags(int *&I
 }
 
 void encoded_combinatorial_object::latex_canonical_form_with_labels(std::ostream &ost,
-		nauty_output *NO,
+		data_structures::nauty_output *NO,
 		std::string *row_labels,
 		std::string *col_labels,
 		int verbose_level)
@@ -853,12 +855,12 @@ void encoded_combinatorial_object::latex_canonical_form_with_labels(std::ostream
 
 	if (f_v) {
 		cout << "encoded_combinatorial_object::latex_canonical_form Vi=";
-		Orbiter->Int_vec.print(cout, Vi, V);
+		Orbiter->Int_vec->print(cout, Vi, V);
 		cout << endl;
 	}
 	if (f_v) {
 		cout << "encoded_combinatorial_object::latex_canonical_form Bj=";
-		Orbiter->Int_vec.print(cout, Bj, B);
+		Orbiter->Int_vec->print(cout, Bj, B);
 		cout << endl;
 	}
 
@@ -866,7 +868,7 @@ void encoded_combinatorial_object::latex_canonical_form_with_labels(std::ostream
 	int i0, j0;
 
 	Inc2 = NEW_int(nb_rows * nb_cols);
-	Orbiter->Int_vec.zero(Inc2, nb_rows * nb_cols);
+	Orbiter->Int_vec->zero(Inc2, nb_rows * nb_cols);
 
 	for (i = 0; i < nb_rows; i++) {
 		i0 = NO->canonical_labeling[i];
@@ -892,7 +894,7 @@ void encoded_combinatorial_object::latex_canonical_form_with_labels(std::ostream
 		}
 	}
 	if (nb_flags < 100) {
-		Orbiter->Int_vec.print(ost, Flags, nb_flags);
+		Orbiter->Int_vec->print(ost, Flags, nb_flags);
 	}
 	else {
 		ost << "too many to print." << endl;
@@ -939,4 +941,5 @@ void encoded_combinatorial_object::latex_canonical_form_with_labels(std::ostream
 
 
 
-}}
+}}}
+

@@ -126,7 +126,7 @@ int tree_node::find_node(int &DFS_rk, int *path, int sz, int verbose_level)
 	if (f_v) {
 		cout << "tree_node::find_node ";
 		cout << "my_path = ";
-		Orbiter->Int_vec.print(cout, path, sz);
+		Orbiter->Int_vec->print(cout, path, sz);
 		cout << " value=" << value << endl;
 	}
 	int i;
@@ -158,7 +158,7 @@ int tree_node::find_node_and_path(std::vector<int> &Rk, int *path, int sz, int v
 	if (f_v) {
 		cout << "tree_node::find_node_and_path ";
 		cout << "my_path = ";
-		Orbiter->Int_vec.print(cout, path, sz);
+		Orbiter->Int_vec->print(cout, path, sz);
 		cout << " value=" << value << endl;
 	}
 	int i;
@@ -276,7 +276,7 @@ void tree_node::add_node(int l,
 	
 	if (f_v) {
 		cout << "tree_node::add_node depth=" << depth << " : ";
-		Orbiter->Int_vec.print(cout, path, l);
+		Orbiter->Int_vec->print(cout, path, l);
 		cout << endl;
 	}
 	if (l == 0) {

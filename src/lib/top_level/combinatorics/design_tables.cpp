@@ -131,8 +131,8 @@ void design_tables::create_table(int verbose_level)
 
 	long int **Sets;
 	int i;
-	sorting Sorting;
-	combinatorics_domain Combi;
+	data_structures::sorting Sorting;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "design_tables::init" << endl;
@@ -143,7 +143,7 @@ void design_tables::create_table(int verbose_level)
 	for (i = 0; i < nb_designs; i++) {
 
 		Sets[i] = NEW_lint(design_size);
-		Orbiter->Lint_vec.copy(SetOrb->Sets[i], Sets[i], design_size);
+		Orbiter->Lint_vec->copy(SetOrb->Sets[i], Sets[i], design_size);
 	}
 
 	if (f_v) {
@@ -163,7 +163,7 @@ void design_tables::create_table(int verbose_level)
 
 	the_table = NEW_lint(nb_designs * design_size);
 	for (i = 0; i < nb_designs; i++) {
-		Orbiter->Lint_vec.copy(Sets[i], the_table + i * design_size, design_size);
+		Orbiter->Lint_vec->copy(Sets[i], the_table + i * design_size, design_size);
 	}
 
 	if (f_v) {
@@ -173,7 +173,7 @@ void design_tables::create_table(int verbose_level)
 	if (nb_designs < 100) {
 		for (i = 0; i < nb_designs; i++) {
 			cout << i << " : ";
-			Orbiter->Lint_vec.print(cout, the_table + i * design_size, design_size);
+			Orbiter->Lint_vec->print(cout, the_table + i * design_size, design_size);
 			cout << endl;
 		}
 	}
@@ -269,7 +269,7 @@ void design_tables::extract_solutions_by_index(
 		k = 0;
 		for (j = 0; j < Index_width; j++, k += design_size) {
 			idx = Index[i * Index_width + j];
-			Orbiter->Lint_vec.copy(the_table + idx * design_size,
+			Orbiter->Lint_vec->copy(the_table + idx * design_size,
 					Sol + i * N + j * design_size,
 					design_size);
 		}
@@ -313,7 +313,7 @@ void design_tables::make_reduced_design_table(
 			}
 		}
 		if (j == set_sz) {
-			Orbiter->Lint_vec.copy(the_table + i * design_size,
+			Orbiter->Lint_vec->copy(the_table + i * design_size,
 					reduced_table + nb_reduced_designs * design_size, design_size);
 			reduced_table_idx[nb_reduced_designs] = i;
 			nb_reduced_designs++;
@@ -462,7 +462,7 @@ void design_tables::load(int verbose_level)
 int design_tables::test_if_designs_are_disjoint(int i, int j)
 {
 	long int *p1, *p2;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	p1 = the_table + i * design_size;
 	p2 = the_table + j * design_size;
@@ -481,7 +481,7 @@ int design_tables::test_set_within_itself(long int *set_of_designs_by_index, int
 	int i, j, a, b;
 	long int *p1;
 	long int *p2;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	for (i = 0; i < set_size; i++) {
 		a = set_of_designs_by_index[i];
@@ -505,7 +505,7 @@ int design_tables::test_between_two_sets(
 	int i, j, a, b;
 	long int *p1;
 	long int *p2;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	for (i = 0; i < set_size1; i++) {
 		a = set_of_designs_by_index1[i];
@@ -531,8 +531,9 @@ int design_tables_compare_func(void *data, int i, int j, void *extra_data)
 	design_tables *D = (design_tables *) extra_data;
 	int **Sets = (int **) data;
 	int ret;
+	data_structures::sorting Sorting;
 
-	ret = int_vec_compare(Sets[i], Sets[j], D->design_size);
+	ret = Sorting.int_vec_compare(Sets[i], Sets[j], D->design_size);
 	return ret;
 }
 

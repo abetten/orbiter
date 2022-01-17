@@ -44,7 +44,7 @@ int prepare_frames::parse_arguments(int argc, std::string *argv, int verbose_lev
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "prepare_frames::parse_arguments" << endl;

@@ -678,7 +678,7 @@ void ring_theory_global::polynomial_find_roots(
 	int *data_A;
 	int sz_A;
 
-	Orbiter->Int_vec.scan(A_coeffs, data_A, sz_A);
+	Orbiter->Int_vec->scan(A_coeffs, data_A, sz_A);
 
 	number_theory_domain NT;
 
@@ -1101,7 +1101,7 @@ void ring_theory_global::polynomial_division_from_file_all_k_error_patterns_with
 
 			long int *rk_q, *rk_r;
 			int N, n, h;
-			combinatorics_domain Combi;
+			combinatorics::combinatorics_domain Combi;
 
 			int *set;
 
@@ -1118,7 +1118,7 @@ void ring_theory_global::polynomial_division_from_file_all_k_error_patterns_with
 			for (h = 0; h < N; h++) {
 				Combi.unrank_k_subset(h, set, n, k);
 				ost << h << " : ";
-				Orbiter->Int_vec.print(ost, set, k);
+				Orbiter->Int_vec->print(ost, set, k);
 				ost << " : ";
 				ost << rk_r[h] << "\\\\" << endl;
 			}
@@ -1179,7 +1179,7 @@ void ring_theory_global::number_of_conditions_satisfied(
 	int *Cnt;
 
 	Cnt = NEW_int(nb_pts);
-	Orbiter->Int_vec.zero(Cnt, nb_pts);
+	Orbiter->Int_vec->zero(Cnt, nb_pts);
 
 
 	homogeneous_polynomial_domain *HPD;
@@ -1221,7 +1221,7 @@ void ring_theory_global::number_of_conditions_satisfied(
 		if (f_v) {
 			cout << "ring_theory_global::number_of_conditions_satisfied "
 					"h=" << h << " / " << Variety_coeffs.size() << " coeff:";
-			Orbiter->Int_vec.print(cout, coeff, HPD->get_nb_monomials());
+			Orbiter->Int_vec->print(cout, coeff, HPD->get_nb_monomials());
 			cout << endl;
 		}
 
@@ -1326,7 +1326,7 @@ void ring_theory_global::create_intersection_of_zariski_open_sets(
 	int sz1;
 	long int *Pts2;
 	int sz2;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	HPD = NEW_OBJECT(homogeneous_polynomial_domain);
 
@@ -1355,7 +1355,7 @@ void ring_theory_global::create_intersection_of_zariski_open_sets(
 		if (f_v) {
 			cout << "ring_theory_global::create_intersection_of_zariski_open_sets "
 					"h=" << h << " / " << Variety_coeffs.size() << " coeff:";
-			Orbiter->Int_vec.print(cout, coeff, HPD->get_nb_monomials());
+			Orbiter->Int_vec->print(cout, coeff, HPD->get_nb_monomials());
 			cout << endl;
 		}
 
@@ -1394,7 +1394,7 @@ void ring_theory_global::create_intersection_of_zariski_open_sets(
 					Pts2[sz2++] = a;
 				}
 			}
-			Orbiter->Lint_vec.copy(Pts2, Pts1, sz2);
+			Orbiter->Lint_vec->copy(Pts2, Pts1, sz2);
 			sz1 = sz2;
 		}
 		if (f_v) {
@@ -1406,7 +1406,7 @@ void ring_theory_global::create_intersection_of_zariski_open_sets(
 
 	nb_pts = sz1;
 	Pts = NEW_lint(sz1);
-	Orbiter->Lint_vec.copy(Pts1, Pts, sz1);
+	Orbiter->Lint_vec->copy(Pts1, Pts, sz1);
 
 	F->display_table_of_projective_points(
 			cout, Pts, nb_pts, variety_nb_vars);
@@ -1471,7 +1471,7 @@ void ring_theory_global::create_projective_variety(
 	}
 	if (f_v) {
 		cout << "ring_theory_global::create_projective_variety coeff:";
-		Orbiter->Int_vec.print(cout, coeff, HPD->get_nb_monomials());
+		Orbiter->Int_vec->print(cout, coeff, HPD->get_nb_monomials());
 		cout << endl;
 	}
 
@@ -1539,7 +1539,7 @@ void ring_theory_global::create_projective_curve(
 	HPD->print_monomial_ordering(cout);
 
 	coeff = NEW_int(HPD->get_nb_monomials());
-	Orbiter->Int_vec.zero(coeff, HPD->get_nb_monomials());
+	Orbiter->Int_vec->zero(coeff, HPD->get_nb_monomials());
 
 	label_txt.assign(variety_label_txt);
 	label_tex.assign(variety_label_tex);
@@ -1548,7 +1548,7 @@ void ring_theory_global::create_projective_curve(
 	int *v;
 	int v2[2];
 
-	Orbiter->Int_vec.scan(curve_coeffs.c_str(), coeffs, len);
+	Orbiter->Int_vec->scan(curve_coeffs.c_str(), coeffs, len);
 	if (len != curve_degree + 1) {
 		cout << "ring_theory_global::create_projective_curve "
 				"len != curve_degree + 1" << endl;
@@ -1573,7 +1573,7 @@ void ring_theory_global::create_projective_curve(
 		Pts[i] = c;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			Orbiter->Int_vec.print(cout, v, curve_nb_vars);
+			Orbiter->Int_vec->print(cout, v, curve_nb_vars);
 			cout << " : " << setw(5) << c << endl;
 		}
 	}
@@ -1611,7 +1611,7 @@ void ring_theory_global::create_irreducible_polynomial(
 
 	int degree = cylotomic_set_size;
 
-	coding_theory_domain Codes;
+	coding_theory::coding_theory_domain Codes;
 
 	generator = NEW_OBJECTS(unipoly_object, degree + 2);
 	unipoly_object *tmp = NEW_OBJECTS(unipoly_object, degree + 1);
@@ -2014,7 +2014,7 @@ void ring_theory_global::make_all_irreducible_polynomials_of_degree_d(
 	unipoly_object m;
 	unipoly_object g;
 	unipoly_object minpol;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 
 	FX.create_object_by_rank_string(m, poly, 0 /* verbose_level */);
@@ -2047,7 +2047,7 @@ void ring_theory_global::make_all_irreducible_polynomials_of_degree_d(
 	if (f_v) {
 		cout << "ring_theory_global::make_all_irreducible_polynomials_of_degree_d "
 				"Frobenius_matrix = " << endl;
-		Orbiter->Int_vec.matrix_print(Frobenius, d, d);
+		Orbiter->Int_vec->matrix_print(Frobenius, d, d);
 		cout << endl;
 	}
 
@@ -2060,7 +2060,7 @@ void ring_theory_global::make_all_irreducible_polynomials_of_degree_d(
 	if (f_v) {
 		cout << "ring_theory_global::make_all_irreducible_polynomials_of_degree_d "
 				"Normal_basis = " << endl;
-		Orbiter->Int_vec.matrix_print(Normal_basis, d, d);
+		Orbiter->Int_vec->matrix_print(Normal_basis, d, d);
 		cout << endl;
 	}
 
@@ -2071,7 +2071,7 @@ void ring_theory_global::make_all_irreducible_polynomials_of_degree_d(
 		if (f_vv) {
 			cout << "ring_theory_global::make_all_irreducible_polynomials_of_degree_d "
 					"regular word " << cnt << " : v = ";
-			Orbiter->Int_vec.print(cout, v, d);
+			Orbiter->Int_vec->print(cout, v, d);
 			cout << endl;
 		}
 
@@ -2079,7 +2079,7 @@ void ring_theory_global::make_all_irreducible_polynomials_of_degree_d(
 		if (f_vv) {
 			cout << "ring_theory_global::make_all_irreducible_polynomials_of_degree_d "
 					"regular word " << cnt << " : w = ";
-			Orbiter->Int_vec.print(cout, w, d);
+			Orbiter->Int_vec->print(cout, w, d);
 			cout << endl;
 		}
 
@@ -2094,7 +2094,7 @@ void ring_theory_global::make_all_irreducible_polynomials_of_degree_d(
 		if (f_vv) {
 			cout << "ring_theory_global::make_all_irreducible_polynomials_of_degree_d "
 					"regular word " << cnt << " : v = ";
-			Orbiter->Int_vec.print(cout, v, d);
+			Orbiter->Int_vec->print(cout, v, d);
 			cout << " irreducible polynomial = ";
 			FX.print_object(minpol, cout);
 			cout << endl;
@@ -2149,7 +2149,7 @@ int ring_theory_global::count_all_irreducible_polynomials_of_degree_d(
 	int i;
 	int cnt;
 	number_theory_domain NT;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "ring_theory_global::count_all_irreducible_polynomials_of_degree_d "
@@ -2210,7 +2210,7 @@ int ring_theory_global::count_all_irreducible_polynomials_of_degree_d(
 	if (f_v) {
 		cout << "ring_theory_global::count_all_irreducible_polynomials_of_degree_d "
 				"Frobenius_matrix = " << endl;
-		Orbiter->Int_vec.matrix_print(Frobenius, d, d);
+		Orbiter->Int_vec->matrix_print(Frobenius, d, d);
 		cout << endl;
 	}
 
@@ -2230,7 +2230,7 @@ int ring_theory_global::count_all_irreducible_polynomials_of_degree_d(
 	if (f_v) {
 		cout << "ring_theory_global::count_all_irreducible_polynomials_of_degree_d "
 				"Normal_basis = " << endl;
-		Orbiter->Int_vec.matrix_print(Normal_basis, d, d);
+		Orbiter->Int_vec->matrix_print(Normal_basis, d, d);
 		cout << endl;
 	}
 
@@ -2240,7 +2240,7 @@ int ring_theory_global::count_all_irreducible_polynomials_of_degree_d(
 		if (f_vv) {
 			cout << "ring_theory_global::count_all_irreducible_polynomials_of_degree_d "
 					"regular word " << cnt << " : v = ";
-			Orbiter->Int_vec.print(cout, v, d);
+			Orbiter->Int_vec->print(cout, v, d);
 			cout << endl;
 		}
 
@@ -2248,7 +2248,7 @@ int ring_theory_global::count_all_irreducible_polynomials_of_degree_d(
 		if (f_vv) {
 			cout << "ring_theory_global::count_all_irreducible_polynomials_of_degree_d "
 					"regular word " << cnt << " : w = ";
-			Orbiter->Int_vec.print(cout, w, d);
+			Orbiter->Int_vec->print(cout, w, d);
 			cout << endl;
 		}
 
@@ -2263,7 +2263,7 @@ int ring_theory_global::count_all_irreducible_polynomials_of_degree_d(
 		if (f_vv) {
 			cout << "ring_theory_global::count_all_irreducible_polynomials_of_degree_d "
 					"regular word " << cnt << " : v = ";
-			Orbiter->Int_vec.print(cout, v, d);
+			Orbiter->Int_vec->print(cout, v, d);
 			cout << " irreducible polynomial = ";
 			FX.print_object(minpol, cout);
 			cout << endl;
@@ -2336,7 +2336,7 @@ void ring_theory_global::do_make_table_of_irreducible_polynomials(finite_field *
 	cout << "The " << nb << " irreducible polynomials of "
 			"degree " << deg << " over F_" << F->q << " are:" << endl;
 
-	Orbiter->Int_vec.vec_print(Table);
+	Orbiter->Int_vec->vec_print(Table);
 
 
 	int *T;
@@ -2696,7 +2696,7 @@ void ring_theory_global::factor_cyclotomic(int n, int q, int d,
 
 	longinteger_domain D;
 	longinteger_object C, N, A, B, G, U, V;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	for (c = 0; c < n; c++) {
 		if (NT.gcd_lint(c, n) != 1)

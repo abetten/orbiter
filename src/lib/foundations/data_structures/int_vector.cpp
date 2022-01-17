@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace data_structures {
 
 
 int_vector::int_vector()
@@ -56,7 +57,7 @@ void int_vector::allocate_and_init(int len, long int *V)
 	M = NEW_lint(len);
 	m = len;
 	alloc_length = len;
-	Orbiter->Lint_vec.copy(V, M, len);
+	Orbiter->Lint_vec->copy(V, M, len);
 }
 
 void int_vector::allocate_and_init_int(int len, int *V)
@@ -120,12 +121,12 @@ int &int_vector::length()
 
 void int_vector::print(ostream &ost)
 {
-	Orbiter->Lint_vec.print(ost, M, m);
+	Orbiter->Lint_vec->print(ost, M, m);
 }
 
 void int_vector::zero()
 {
-	Orbiter->Lint_vec.zero(M, m);
+	Orbiter->Lint_vec->zero(M, m);
 }
 
 int int_vector::search(int a, int &idx)
@@ -154,7 +155,7 @@ void int_vector::make_space()
 		new_alloc_length = 1;
 		}
 	M1 = NEW_lint(new_alloc_length);
-	Orbiter->Lint_vec.copy(M, M1, m);
+	Orbiter->Lint_vec->copy(M, M1, m);
 	if (M) {
 		FREE_lint(M);
 		}
@@ -231,16 +232,16 @@ uint32_t int_vector::hash()
 
 int int_vector::minimum()
 {
-	return Orbiter->Lint_vec.minimum(M, m);
+	return Orbiter->Lint_vec->minimum(M, m);
 }
 
 int int_vector::maximum()
 {
-	return Orbiter->Lint_vec.maximum(M, m);
+	return Orbiter->Lint_vec->maximum(M, m);
 }
 
 
 
 
-}}
+}}}
 

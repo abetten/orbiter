@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace coding_theory {
 
 
 coding_theory_domain::coding_theory_domain()
@@ -37,7 +38,7 @@ void coding_theory_domain::make_mac_williams_equations(longinteger_object *&M,
 {
 	int f_v = (verbose_level >= 1);
 	int i, j;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "coding_theory_domain::make_mac_williams_equations" << endl;
@@ -211,7 +212,7 @@ void coding_theory_domain::make_gilbert_varshamov_code(
 
 	set = NEW_lint(n);
 	f_forbidden = NEW_int(P->N_points);
-	Orbiter->Int_vec.zero(f_forbidden, P->N_points);
+	Orbiter->Int_vec->zero(f_forbidden, P->N_points);
 
 	make_gilbert_varshamov_code_recursion(P, n, d, set, f_forbidden, 0 /*level*/, verbose_level);
 
@@ -219,7 +220,7 @@ void coding_theory_domain::make_gilbert_varshamov_code(
 
 	cout << "coding_theory_domain::make_gilbert_varshamov_code found "
 			"the following parity check matrix as projective set: ";
-	Orbiter->Lint_vec.print(cout, set, n);
+	Orbiter->Lint_vec->print(cout, set, n);
 	cout << endl;
 
 	int *genma;
@@ -235,20 +236,20 @@ void coding_theory_domain::make_gilbert_varshamov_code(
 			verbose_level);
 
 	cout << "coding_theory_domain::make_gilbert_varshamov_code parity check matrix:" << endl;
-	Orbiter->Int_vec.matrix_print_ost(cout, genma, P->n + 1, n);
+	Orbiter->Int_vec->matrix_print_ost(cout, genma, P->n + 1, n);
 
 	cout << "coding_theory_domain::make_gilbert_varshamov_code parity check matrix:" << endl;
-	Orbiter->Int_vec.print_fully(cout, genma, nmk * n);
+	Orbiter->Int_vec->print_fully(cout, genma, nmk * n);
 	cout << endl;
 
 	P->F->Linear_algebra->RREF_and_kernel(n, nmk, genma, 0 /* verbose_level */);
 
 	cout << "coding_theory_domain::make_gilbert_varshamov_code generator matrix:" << endl;
-	Orbiter->Int_vec.matrix_print_ost(cout, genma + nmk * n, k, n);
+	Orbiter->Int_vec->matrix_print_ost(cout, genma + nmk * n, k, n);
 
 
 	cout << "coding_theory_domain::make_gilbert_varshamov_code generator matrix:" << endl;
-	Orbiter->Int_vec.print_fully(cout, genma + nmk * n, k * n);
+	Orbiter->Int_vec->print_fully(cout, genma + nmk * n, k * n);
 	cout << endl;
 
 
@@ -272,7 +273,7 @@ void coding_theory_domain::make_gilbert_varshamov_code_recursion(
 	if (f_v) {
 		cout << "coding_theory_domain::make_gilbert_varshamov_code level = " << level << endl;
 		cout << "coding_theory_domain::make_gilbert_varshamov_code set = ";
-		Orbiter->Lint_vec.print(cout, set, level);
+		Orbiter->Lint_vec->print(cout, set, level);
 		cout << endl;
 	}
 
@@ -303,7 +304,7 @@ void coding_theory_domain::make_gilbert_varshamov_code_recursion(
 
 	vector<int> add_set;
 	int nmk;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	int cnt;
 
 	nmk = P->n + 1;
@@ -339,13 +340,13 @@ void coding_theory_domain::make_gilbert_varshamov_code_recursion(
 				cout << "coding_theory_domain::make_gilbert_varshamov_code "
 						"N_" << i << " = " << N << endl;
 				cout << "set = ";
-				Orbiter->Lint_vec.print(cout, set, level + 1);
+				Orbiter->Lint_vec->print(cout, set, level + 1);
 				cout << endl;
 				cout << "looping over all subsets of size " << i << ":" << endl;
 			}
 			for (h = 0; h < N; h++) {
 				Combi.unrank_k_subset(h, subset, level, i);
-				Orbiter->Int_vec.zero(v3, nmk);
+				Orbiter->Int_vec->zero(v3, nmk);
 				for (u = 0; u < i; u++) {
 					c = subset[u];
 					e = set[c];
@@ -361,9 +362,9 @@ void coding_theory_domain::make_gilbert_varshamov_code_recursion(
 				f = P->rank_point(v3);
 				if (f_v) {
 					cout << "h=" << h << " / " << N << " : ";
-					Orbiter->Int_vec.print(cout, subset, i);
+					Orbiter->Int_vec->print(cout, subset, i);
 					cout << " : ";
-					Orbiter->Int_vec.print(cout, v3, nmk);
+					Orbiter->Int_vec->print(cout, v3, nmk);
 					cout << " : " << f;
 				}
 				if (!f_forbidden[f]) {
@@ -413,7 +414,7 @@ int coding_theory_domain::gilbert_varshamov_lower_bound_for_d(int n, int k, int 
 {
 	int f_v = (verbose_level >= 1);
 	longinteger_domain D;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	int i, d;
 	longinteger_object qnmk, qm1, qm1_power, S, s, a, b;
 
@@ -469,7 +470,7 @@ int coding_theory_domain::hamming_bound_for_d(
 	int e, d, t;
 	longinteger_object qnmk, qm1, qm1_power, B, s, a, b;
 	longinteger_domain D;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 
 	if (f_v) {
@@ -810,7 +811,7 @@ int coding_theory_domain::code_minimum_distance(finite_field *F, int n, int k,
 		cout << "coding_theory_domain::code_minimum_distance" << endl;
 	}
 	weight_enumerator = NEW_int(n + 1);
-	Orbiter->Int_vec.zero(weight_enumerator, n + 1);
+	Orbiter->Int_vec->zero(weight_enumerator, n + 1);
 
 	code_weight_enumerator_fast(F, n, k,
 		code, // [k * n]
@@ -891,7 +892,7 @@ void coding_theory_domain::code_projective_weight_enumerator(finite_field *F,
 	msg = NEW_int(k);
 	word = NEW_int(n);
 
-	Orbiter->Int_vec.zero(weight_enumerator, n + 1);
+	Orbiter->Int_vec->zero(weight_enumerator, n + 1);
 
 	for (h = 0; h < N; h++) {
 		if (f_v && (h % ONE_MILLION) == 0) {
@@ -963,7 +964,7 @@ void coding_theory_domain::code_weight_enumerator(finite_field *F,
 	msg = NEW_int(k);
 	word = NEW_int(n);
 
-	Orbiter->Int_vec.zero(weight_enumerator, n + 1);
+	Orbiter->Int_vec->zero(weight_enumerator, n + 1);
 
 	for (h = 0; h < N; h++) {
 		if ((h % ONE_MILLION) == 0) {
@@ -1038,7 +1039,7 @@ void coding_theory_domain::code_weight_enumerator_fast(finite_field *F,
 	word = NEW_int(n);
 
 
-	Orbiter->Int_vec.zero(weight_enumerator, n + 1);
+	Orbiter->Int_vec->zero(weight_enumerator, n + 1);
 
 	for (h = 0; h < N; h++) {
 		if (((h % ONE_MILLION) == 0) && h) {
@@ -1070,9 +1071,9 @@ void coding_theory_domain::code_weight_enumerator_fast(finite_field *F,
 		weight_enumerator[wt]++;
 		if (f_vv) {
 			cout << h << " / " << N << " msg: ";
-			Orbiter->Int_vec.print(cout, msg, k);
+			Orbiter->Int_vec->print(cout, msg, k);
 			cout << " codeword ";
-			Orbiter->Int_vec.print(cout, word, n);
+			Orbiter->Int_vec->print(cout, word, n);
 			cout << " weight " << wt << endl;
 		}
 	}
@@ -1154,7 +1155,7 @@ void coding_theory_domain::code_projective_weights(finite_field *F,
 
 void coding_theory_domain::mac_williams_equations(longinteger_object *&M, int n, int k, int q)
 {
-	combinatorics_domain D;
+	combinatorics::combinatorics_domain D;
 	int i, j;
 
 	M = NEW_OBJECTS(longinteger_object, (n + 1) * (n + 1));
@@ -1224,11 +1225,11 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 	A = NEW_int(n * n);
 	base_cols = NEW_int(n);
 	weight_enumerator = NEW_int(n + 1);
-	Orbiter->Int_vec.copy(M, A, m * n);
+	Orbiter->Int_vec->copy(M, A, m * n);
 
 	if (f_v) {
 		cout << "coding_theory_domain::do_weight_enumerator input matrix:" << endl;
-		Orbiter->Int_vec.matrix_print(A, m, n);
+		Orbiter->Int_vec->matrix_print(A, m, n);
 
 		cout << "$$" << endl;
 		cout << "\\left[" << endl;
@@ -1246,7 +1247,7 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 
 	if (f_v) {
 		cout << "coding_theory_domain::do_weight_enumerator after RREF:" << endl;
-		Orbiter->Int_vec.matrix_print(A, rk, n);
+		Orbiter->Int_vec->matrix_print(A, rk, n);
 		cout << "rk=" << rk << endl;
 
 
@@ -1258,7 +1259,7 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 
 
 		cout << "coding_theory_domain::do_weight_enumerator coefficients:" << endl;
-		Orbiter->Int_vec.print(cout, A, rk * n);
+		Orbiter->Int_vec->print(cout, A, rk * n);
 		cout << endl;
 	}
 
@@ -1366,7 +1367,7 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 		cout << endl;
 
 		cout << "weight enumerator:" << endl;
-		Orbiter->Int_vec.print_fully(cout, weight_enumerator, n + 1);
+		Orbiter->Int_vec->print_fully(cout, weight_enumerator, n + 1);
 		cout << endl;
 
 	}
@@ -1383,7 +1384,7 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 
 		if (f_v) {
 			cout << "coding_theory_domain::do_weight_enumerator after normalize from the left:" << endl;
-			Orbiter->Int_vec.matrix_print(A, rk, n);
+			Orbiter->Int_vec->matrix_print(A, rk, n);
 			cout << "rk=" << rk << endl;
 		}
 	}
@@ -1399,7 +1400,7 @@ void coding_theory_domain::do_weight_enumerator(finite_field *F,
 
 		if (f_v) {
 			cout << "coding_theory_domain::do_weight_enumerator after normalize from the right:" << endl;
-			Orbiter->Int_vec.matrix_print(A, rk, n);
+			Orbiter->Int_vec->matrix_print(A, rk, n);
 			cout << "coding_theory_domain::do_weight_enumerator rk=" << rk << endl;
 		}
 	}
@@ -1442,7 +1443,7 @@ void coding_theory_domain::do_linear_code_through_basis(
 	}
 
 	cout << "genma:" << endl;
-	Orbiter->Int_vec.matrix_print(genma, k, n);
+	Orbiter->Int_vec->matrix_print(genma, k, n);
 
 	sz = 1 << k;
 	set = NEW_lint(sz);
@@ -1459,15 +1460,15 @@ void coding_theory_domain::do_linear_code_through_basis(
 		set[i] = Gg.AG_element_rank(2, code_word, 1, n);
 
 		cout << i << " : ";
-		Orbiter->Int_vec.print(cout, word, k);
+		Orbiter->Int_vec->print(cout, word, k);
 		cout << " : ";
-		Orbiter->Int_vec.print(cout, code_word, n);
+		Orbiter->Int_vec->print(cout, code_word, n);
 		cout << " : " << set[i] << endl;
 	}
 
 
 	cout << "Codewords : ";
-	Orbiter->Lint_vec.print(cout, set, sz);
+	Orbiter->Lint_vec->print(cout, set, sz);
 	cout << endl;
 
 
@@ -1505,7 +1506,7 @@ void coding_theory_domain::do_linear_code_through_basis(
 			ost << "$$" << endl;
 			ost << "Codewords: ";
 			ost << "$";
-			Orbiter->Lint_vec.print(ost, set, sz);
+			Orbiter->Lint_vec->print(ost, set, sz);
 			ost << "$\\\\";
 			ost << endl;
 
@@ -1588,7 +1589,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check_projec
 		}
 	}
 	cout << "genma:" << endl;
-	Orbiter->Int_vec.matrix_print(genma, k, n);
+	Orbiter->Int_vec->matrix_print(genma, k, n);
 
 
 	number_theory_domain NT;
@@ -1604,15 +1605,15 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check_projec
 		set[i] = Gg.AG_element_rank(2, code_word, 1, n);
 
 		cout << i << " : ";
-		Orbiter->Int_vec.print(cout, word, k);
+		Orbiter->Int_vec->print(cout, word, k);
 		cout << " : ";
-		Orbiter->Int_vec.print(cout, code_word, n);
+		Orbiter->Int_vec->print(cout, code_word, n);
 		cout << " : " << set[i] << endl;
 	}
 
 
 	cout << "Codewords : ";
-	Orbiter->Lint_vec.print_fully(cout, set, N);
+	Orbiter->Lint_vec->print_fully(cout, set, N);
 	cout << endl;
 
 	char str[1000];
@@ -1722,7 +1723,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check(
 		}
 	}
 	cout << "genma:" << endl;
-	Orbiter->Int_vec.matrix_print(genma, k, n);
+	Orbiter->Int_vec->matrix_print(genma, k, n);
 
 
 	number_theory_domain NT;
@@ -1738,15 +1739,15 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check(
 		set[i] = Gg.AG_element_rank(2, code_word, 1, n);
 
 		cout << i << " : ";
-		Orbiter->Int_vec.print(cout, word, k);
+		Orbiter->Int_vec->print(cout, word, k);
 		cout << " : ";
-		Orbiter->Int_vec.print(cout, code_word, n);
+		Orbiter->Int_vec->print(cout, code_word, n);
 		cout << " : " << set[i] << endl;
 	}
 
 
 	cout << "Codewords : ";
-	Orbiter->Lint_vec.print_fully(cout, set, N);
+	Orbiter->Lint_vec->print_fully(cout, set, N);
 	cout << endl;
 
 	char str[1000];
@@ -1849,9 +1850,9 @@ void coding_theory_domain::do_polynomial(
 	int i, j, b, idx;
 	monomial_ordering_type Monomial_ordering_type = t_PART;
 
-	Orbiter->Lint_vec.scan(polynomial_text, poly_monomials, poly_monomials_sz);
+	Orbiter->Lint_vec->scan(polynomial_text, poly_monomials, poly_monomials_sz);
 	cout << "polynomial after scan: ";
-	Orbiter->Lint_vec.print(cout, poly_monomials, poly_monomials_sz);
+	Orbiter->Lint_vec->print(cout, poly_monomials, poly_monomials_sz);
 	cout << endl;
 
 	Poly = NEW_OBJECT(homogeneous_polynomial_domain);
@@ -1866,10 +1867,10 @@ void coding_theory_domain::do_polynomial(
 	mon = NEW_int(polynomial_nb_vars);
 	coeff = NEW_int(Poly->get_nb_monomials());
 
-	Orbiter->Int_vec.zero(coeff, Poly->get_nb_monomials());
+	Orbiter->Int_vec->zero(coeff, Poly->get_nb_monomials());
 
 	for (i = 0; i < poly_monomials_sz; i++) {
-		Orbiter->Int_vec.zero(mon, polynomial_nb_vars);
+		Orbiter->Int_vec->zero(mon, polynomial_nb_vars);
 		a = poly_monomials[i];
 		j = 0;
 		while (a) {
@@ -1892,7 +1893,7 @@ void coding_theory_domain::do_polynomial(
 	long int *set;
 	int set_sz = 0;
 	geometry_global Gg;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	v = NEW_int(polynomial_nb_vars);
 	f = NEW_int(Poly->get_P()->N_points);
@@ -1904,7 +1905,7 @@ void coding_theory_domain::do_polynomial(
 	for (h = 0; h < Poly->get_P()->N_points; h++) {
 		Poly->unrank_point(v, h);
 		cout << h << " : ";
-		Orbiter->Int_vec.print(cout, v, polynomial_nb_vars);
+		Orbiter->Int_vec->print(cout, v, polynomial_nb_vars);
 		cout << " : " << f[h] << endl;
 		if (f[h] == 1 && v[polynomial_nb_vars - 1] == 1) {
 			a = Gg.AG_element_rank(2, v, 1, polynomial_nb_vars - 1);
@@ -1916,7 +1917,7 @@ void coding_theory_domain::do_polynomial(
 	Sorting.lint_vec_heapsort(set, set_sz);
 
 	cout << "We found a set of size " << set_sz << " : " << endl;
-	Orbiter->Lint_vec.print_fully(cout, set, set_sz);
+	Orbiter->Lint_vec->print_fully(cout, set, set_sz);
 	cout << endl;
 
 	investigate_code(set, set_sz, n, f_embellish, verbose_level);
@@ -1963,23 +1964,23 @@ void coding_theory_domain::do_sylvester_hadamard(int n,
 
 	F = NEW_OBJECT(finite_field);
 	F->finite_field_init(3, FALSE /* f_without_tables */, 0);
-	Orbiter->Int_vec.copy(H2, M1, 4);
+	Orbiter->Int_vec->copy(H2, M1, 4);
 	sz = 2;
 	for (i = 0; i < nb_factors; i++) {
 
 		cout << "M1=" << endl;
-		Orbiter->Int_vec.matrix_print(M1, sz, sz);
+		Orbiter->Int_vec->matrix_print(M1, sz, sz);
 
 		F->Linear_algebra->Kronecker_product_square_but_arbitrary(
 				M1, H2,
 				sz, 2, M2, sz1,
 				verbose_level);
-		Orbiter->Int_vec.copy(M2, M1, sz1 * sz1);
+		Orbiter->Int_vec->copy(M2, M1, sz1 * sz1);
 
 		sz = sz1;
 	}
 	cout << "Sylvester type Hadamard matrix:" << endl;
-	Orbiter->Int_vec.matrix_print(M1, sz, sz);
+	Orbiter->Int_vec->matrix_print(M1, sz, sz);
 	for (i = 0; i < sz; i++) {
 		for (j = 0; j < sz; j++) {
 			a = M1[i * sz + j];
@@ -1996,7 +1997,7 @@ void coding_theory_domain::do_sylvester_hadamard(int n,
 		}
 	}
 	cout << "Sylvester type Hadamard code:" << endl;
-	Orbiter->Int_vec.matrix_print(M1, 2 * sz, sz);
+	Orbiter->Int_vec->matrix_print(M1, 2 * sz, sz);
 
 
 	long int *set;
@@ -2038,7 +2039,7 @@ void coding_theory_domain::code_diagram(
 		cout << "coding_theory_domain::code_diagram" << endl;
 		cout << "n=" << n << endl;
 		cout << "set:" << endl;
-		Orbiter->Lint_vec.print(cout, Words, nb_words);
+		Orbiter->Lint_vec->print(cout, Words, nb_words);
 		cout << endl;
 	}
 
@@ -2057,8 +2058,8 @@ void coding_theory_domain::code_diagram(
 	M = NEW_int(nb_rows * nb_cols);
 
 
-	Orbiter->Int_vec.zero(M1, nb_rows * nb_cols);
-	Orbiter->Int_vec.zero(M2, nb_rows * nb_cols);
+	Orbiter->Int_vec->zero(M1, nb_rows * nb_cols);
+	Orbiter->Int_vec->zero(M2, nb_rows * nb_cols);
 	//Orbiter->Int_vec.zero(M3, nb_rows * nb_cols);
 	for (h = 0; h < nb_rows * nb_cols; h++) {
 		M3[h] = n + 1;
@@ -2078,7 +2079,7 @@ void coding_theory_domain::code_diagram(
 
 
 	cout << "placing codewords" << endl;
-	Orbiter->Int_vec.zero(M, nb_rows * nb_cols);
+	Orbiter->Int_vec->zero(M, nb_rows * nb_cols);
 	for (h = 0; h < nb_words; h++) {
 		convert_to_binary(n, Words[h], v);
 		cout << "codeword " << h + 1 << " = " << setw(5) << Words[h];
@@ -2116,7 +2117,7 @@ void coding_theory_domain::code_diagram(
 			cout << endl;
 			place_binary(Words[h], i, j);
 			for (u = 1; u <= radius_of_metric_ball; u++) {
-				combinatorics_domain Combi;
+				combinatorics::combinatorics_domain Combi;
 
 				N = Combi.int_n_choose_k(n, u);
 				for (t = 0; t < N; t++) {
@@ -2150,7 +2151,7 @@ void coding_theory_domain::code_diagram(
 	set_of_errors = NEW_int(n);
 
 	Dist_from_code_enumerator = NEW_int(n + 1);
-	Orbiter->Int_vec.zero(Dist_from_code_enumerator, n + 1);
+	Orbiter->Int_vec->zero(Dist_from_code_enumerator, n + 1);
 
 	for (d = 0; d < n; d++) {
 		cout << "computing words of distance " << d + 1 << " from the code" << endl;
@@ -2301,7 +2302,7 @@ void coding_theory_domain::investigate_code(long int *Words,
 		cout << "coding_theory_domain::investigate_code" << endl;
 		cout << "n=" << n << endl;
 		cout << "set:" << endl;
-		Orbiter->Lint_vec.print(cout, Words, nb_words);
+		Orbiter->Lint_vec->print(cout, Words, nb_words);
 		cout << endl;
 	}
 
@@ -2319,8 +2320,8 @@ void coding_theory_domain::investigate_code(long int *Words,
 	M = NEW_int(nb_rows * nb_cols);
 
 
-	Orbiter->Int_vec.zero(M1, nb_rows * nb_cols);
-	Orbiter->Int_vec.zero(M2, nb_rows * nb_cols);
+	Orbiter->Int_vec->zero(M1, nb_rows * nb_cols);
+	Orbiter->Int_vec->zero(M2, nb_rows * nb_cols);
 
 
 	N = 1 << n;
@@ -2361,7 +2362,7 @@ void coding_theory_domain::investigate_code(long int *Words,
 
 
 		cout << "placing codewords" << endl;
-		Orbiter->Int_vec.zero(M, nb_rows * nb_cols);
+		Orbiter->Int_vec->zero(M, nb_rows * nb_cols);
 		for (h = 0; h < nb_words; h++) {
 			convert_to_binary(n, Words[h], v);
 			cout << "codeword " << h + 1 << " = " << setw(5) << Words[h];
@@ -2388,7 +2389,7 @@ void coding_theory_domain::investigate_code(long int *Words,
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 
 	cout << "M2:" << endl;
-	Orbiter->Int_vec.matrix_print(M2, nb_rows, nb_cols);
+	Orbiter->Int_vec->matrix_print(M2, nb_rows, nb_cols);
 
 	{
 		char str[1000];
@@ -2426,12 +2427,12 @@ void coding_theory_domain::investigate_code(long int *Words,
 #endif
 
 
-	boolean_function_domain *BF;
+	combinatorics::boolean_function_domain *BF;
 	int *coeff;
 	int *f;
 	int *g;
 
-	BF = NEW_OBJECT(boolean_function_domain);
+	BF = NEW_OBJECT(combinatorics::boolean_function_domain);
 
 
 	cout << "before BF->init, n=" << n << endl;
@@ -2442,7 +2443,7 @@ void coding_theory_domain::investigate_code(long int *Words,
 	f = NEW_int(N);
 	g = NEW_int(N);
 
-	Orbiter->Int_vec.zero(f, N);
+	Orbiter->Int_vec->zero(f, N);
 	for (h = 0; h < nb_words; h++) {
 		f[Words[h]] = 1;
 	}
@@ -2522,7 +2523,7 @@ void coding_theory_domain::do_long_code(
 
 	k = long_code_generators_text.size();
 	genma = NEW_int(k * n);
-	Orbiter->Int_vec.zero(genma, k * n);
+	Orbiter->Int_vec->zero(genma, k * n);
 	for (i = 0; i < k; i++) {
 		long int *set;
 		int sz;
@@ -2538,7 +2539,7 @@ void coding_theory_domain::do_long_code(
 	}
 
 	cout << "genma:" << endl;
-	Orbiter->Int_vec.matrix_print(genma, k, n);
+	Orbiter->Int_vec->matrix_print(genma, k, n);
 
 	{
 		char str[1000];
@@ -2582,14 +2583,14 @@ void coding_theory_domain::do_long_code(
 	F->finite_field_init(2, FALSE /* f_without_tables */, 0);
 
 	Wt = NEW_int(sz);
-	Orbiter->Int_vec.zero(Wt, sz);
+	Orbiter->Int_vec->zero(Wt, sz);
 
 	for (i = 0; i < sz; i++) {
 		Gg.AG_element_unrank(2, message, 1, k, i);
 		F->Linear_algebra->mult_matrix_matrix(message, genma,
 				code_word, 1, k, n, 0 /* verbose_level*/);
 
-		Orbiter->Int_vec.zero(M, nb_rows * nb_cols);
+		Orbiter->Int_vec->zero(M, nb_rows * nb_cols);
 		wt = 0;
 		for (h = 0; h < n; h++) {
 			if (code_word[h]) {
@@ -2630,12 +2631,12 @@ void coding_theory_domain::do_long_code(
 	}
 
 
-	boolean_function_domain *BF;
+	combinatorics::boolean_function_domain *BF;
 	int *f;
 	int *g;
 	int ln;
 
-	BF = NEW_OBJECT(boolean_function_domain);
+	BF = NEW_OBJECT(combinatorics::boolean_function_domain);
 
 
 	ln = log2(n);
@@ -2656,12 +2657,12 @@ void coding_theory_domain::do_long_code(
 		int *word;
 
 
-		Orbiter->Lint_vec.scan(nearest_codeword_text,
+		Orbiter->Lint_vec->scan(nearest_codeword_text,
 				nearest_codeword_set, nearest_codeword_sz);
 
 
 		word = NEW_int(n);
-		Orbiter->Int_vec.zero(word, n);
+		Orbiter->Int_vec->zero(word, n);
 		for (j = 0; j < nearest_codeword_sz; j++) {
 			word[nearest_codeword_set[j]] = 1;
 		}
@@ -2675,7 +2676,7 @@ void coding_theory_domain::do_long_code(
 		}
 
 		BF->apply_Walsh_transform(f, g);
-		Orbiter->Int_vec.zero(M, nb_rows * nb_cols);
+		Orbiter->Int_vec->zero(M, nb_rows * nb_cols);
 		for (h = 0; h < n; h++) {
 			place_binary(h, r, c);
 			M[r * nb_cols + c] = g[h];
@@ -2691,7 +2692,7 @@ void coding_theory_domain::do_long_code(
 			cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
 		}
 
-		Orbiter->Int_vec.zero(M, nb_rows * nb_cols);
+		Orbiter->Int_vec->zero(M, nb_rows * nb_cols);
 		for (h = 0; h < n; h++) {
 			if (word[h]) {
 				place_binary(h, r, c);
@@ -2847,7 +2848,7 @@ void coding_theory_domain::do_it(int n, int r, int a, int c, int seed, int verbo
 	v = NEW_int(n);
 	W = NEW_int(r);
 	M = NEW_int(nb_rows * nb_cols);
-	Orbiter->Int_vec.zero(M, nb_rows * nb_cols);
+	Orbiter->Int_vec->zero(M, nb_rows * nb_cols);
 
 	s = seed;
 	for (h = 0; h < r; h++) {
@@ -2862,7 +2863,7 @@ void coding_theory_domain::do_it(int n, int r, int a, int c, int seed, int verbo
 		s = (a * s + c) % N;
 	}
 
-	Orbiter->Int_vec.matrix_print(M, nb_rows, nb_cols);
+	Orbiter->Int_vec->matrix_print(M, nb_rows, nb_cols);
 
 	L.print_integer_matrix_tex(cout, M, nb_rows, nb_cols);
 
@@ -3077,7 +3078,7 @@ void coding_theory_domain::field_reduction(finite_field *FQ, finite_field *Fq,
 			ost << "\\right]" << endl;
 			ost << "$$" << endl;
 
-			Orbiter->Int_vec.print_fully(ost, M2, m * Sub->s * Sub->s * n);
+			Orbiter->Int_vec->print_fully(ost, M2, m * Sub->s * Sub->s * n);
 			ost << "\\\\" << endl;
 
 
@@ -3202,7 +3203,7 @@ void coding_theory_domain::CRC_encode_text(nth_roots *Nth, unipoly_object &CRC_p
 
 	for (I = 0; I * nb_rows * nb_cols < len; I++) {
 
-		Orbiter->Int_vec.zero(information, nb_rows * nb_cols);
+		Orbiter->Int_vec->zero(information, nb_rows * nb_cols);
 
 		for (j = 0; j < nb_rows * nb_cols; j++) {
 			h = I * nb_rows * nb_cols + j;
@@ -3216,7 +3217,7 @@ void coding_theory_domain::CRC_encode_text(nth_roots *Nth, unipoly_object &CRC_p
 		file_io Fio;
 		string fname_base;
 		string fname_out;
-		string_tools String;
+		data_structures::string_tools String;
 		char str[1000];
 
 
@@ -3272,9 +3273,9 @@ void coding_theory_domain::CRC_encode_text(nth_roots *Nth, unipoly_object &CRC_p
 		Fio.int_matrix_write_csv(fname_out, row_parity, 1, nb_rows);
 		cout << "Written file " << fname_out << " of size " << Fio.file_size(fname_out) << endl;
 
-		Orbiter->Int_vec.copy(information, information_and_parity, nb_rows * nb_cols);
-		Orbiter->Int_vec.copy(row_parity, information_and_parity + nb_rows * nb_cols, nb_rows);
-		Orbiter->Int_vec.copy(col_parity, information_and_parity + nb_rows * nb_cols + nb_rows, nb_cols);
+		Orbiter->Int_vec->copy(information, information_and_parity, nb_rows * nb_cols);
+		Orbiter->Int_vec->copy(row_parity, information_and_parity + nb_rows * nb_cols, nb_rows);
+		Orbiter->Int_vec->copy(col_parity, information_and_parity + nb_rows * nb_cols + nb_rows, nb_cols);
 
 
 		fname_out.assign(fname_base);
@@ -3324,7 +3325,7 @@ void coding_theory_domain::CRC_encode_text(nth_roots *Nth, unipoly_object &CRC_p
 		Nth->FX->print_object(R, cout);
 		cout << endl;
 
-		Orbiter->Int_vec.copy(information_and_parity_Fq, codeword_Fq + degree, IPq);
+		Orbiter->Int_vec->copy(information_and_parity_Fq, codeword_Fq + degree, IPq);
 		for (i = 0; i < degree; i++) {
 			a = Nth->FX->s_i(R, i);
 			codeword_Fq[i] = a;
@@ -3479,22 +3480,22 @@ void coding_theory_domain::generator_matrix_cyclic_code(finite_field *F,
 	long int rk;
 	long int *Rk;
 
-	Orbiter->Int_vec.scan(poly_coeffs, coeffs, sz);
+	Orbiter->Int_vec->scan(poly_coeffs, coeffs, sz);
 	d = sz - 1;
 	k = n - d;
 
 	M = NEW_int(k * n);
-	Orbiter->Int_vec.zero(M, k * n);
+	Orbiter->Int_vec->zero(M, k * n);
 	for (i = 0; i < k; i++) {
-		Orbiter->Int_vec.copy(coeffs, M + i * n + i, d + 1);
+		Orbiter->Int_vec->copy(coeffs, M + i * n + i, d + 1);
 	}
 
 	cout << "generator matrix:" << endl;
-	Orbiter->Int_vec.matrix_print(M, k, n);
+	Orbiter->Int_vec->matrix_print(M, k, n);
 
 
 	cout << "generator matrix:" << endl;
-	Orbiter->Int_vec.print_fully(cout, M, k * n);
+	Orbiter->Int_vec->print_fully(cout, M, k * n);
 	cout << endl;
 
 	v = NEW_int(k);
@@ -3509,7 +3510,7 @@ void coding_theory_domain::generator_matrix_cyclic_code(finite_field *F,
 	}
 
 	cout << "generator matrix in projective points:" << endl;
-	Orbiter->Lint_vec.print_fully(cout, Rk, n);
+	Orbiter->Lint_vec->print_fully(cout, Rk, n);
 	cout << endl;
 
 	if (f_v) {
@@ -4119,5 +4120,6 @@ int coding_theory_domain::remainder_is_nonzero_binary(int da, int *A,
 
 
 
-}}
+}}}
+
 

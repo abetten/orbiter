@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace combinatorics {
 
 
 tdo_scheme_synthetic::tdo_scheme_synthetic()
@@ -286,11 +287,11 @@ void tdo_scheme_synthetic::init_partition_stack(int verbose_level)
 	}
 	if (f_vvv) {
 		cout << "init_partition_stack: m=" << m << " n=" << n << endl;
-		Orbiter->Int_vec.print(cout, part, part_length + 1);
+		Orbiter->Int_vec->print(cout, part, part_length + 1);
 		cout << endl;
 	}
 	
-	P = NEW_OBJECT(partitionstack);
+	P = NEW_OBJECT(data_structures::partitionstack);
 	P->allocate(m + n, 0 /* verbose_level */);
 	//PB.init_partition_backtrack_basic(m, n, verbose_level - 10);
 	if (f_vvv) {
@@ -720,7 +721,7 @@ void tdo_scheme_synthetic::get_row_or_col_scheme(int h, int l, int verbose_level
 }
 
 void tdo_scheme_synthetic::get_column_split_partition(int verbose_level,
-		partitionstack &P)
+		data_structures::partitionstack &P)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -767,7 +768,7 @@ void tdo_scheme_synthetic::get_column_split_partition(int verbose_level,
 		}
 		if (FALSE) {
 			cout << "non descendants of " << i << "/" << ci << " : ";
-			Orbiter->Int_vec.set_print(cout, P.subset, P.subset_size);
+			Orbiter->Int_vec->set_print(cout, P.subset, P.subset_size);
 			cout << endl;
 		}
 		if (P.subset_size > 0) {
@@ -787,7 +788,7 @@ void tdo_scheme_synthetic::get_column_split_partition(int verbose_level,
 }
 
 void tdo_scheme_synthetic::get_row_split_partition(int verbose_level,
-	partitionstack &P)
+		data_structures::partitionstack &P)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
@@ -839,7 +840,7 @@ void tdo_scheme_synthetic::get_row_split_partition(int verbose_level,
 		}
 		if (FALSE) {
 			cout << "non descendants of " << i << "/" << ci << " : ";
-			Orbiter->Int_vec.set_print(cout, P.subset, P.subset_size);
+			Orbiter->Int_vec->set_print(cout, P.subset, P.subset_size);
 			cout << endl;
 		}
 		if (P.subset_size > 0) {
@@ -1185,7 +1186,7 @@ int tdo_scheme_synthetic::count_nb_inc_from_extra_row_scheme(int verbose_level)
 	return nb_inc;
 }
 
-int tdo_scheme_synthetic::geometric_test_for_row_scheme(partitionstack &P,
+int tdo_scheme_synthetic::geometric_test_for_row_scheme(data_structures::partitionstack &P,
 	int *point_types, int nb_point_types, int point_type_len, 
 	int *distributions, int nb_distributions, 
 	int f_omit1, int omit1, int verbose_level)
@@ -1232,7 +1233,7 @@ int tdo_scheme_synthetic::geometric_test_for_row_scheme(partitionstack &P,
 		if (f_vvvv) {
 			cout << "geometric_test_for_row_scheme: testing distribution " 
 				<< cnt << " / " << nb_distributions << " : ";
-			Orbiter->Int_vec.print(cout,
+			Orbiter->Int_vec->print(cout,
 				distributions + cnt * nb_point_types,
 				nb_point_types);
 			cout << endl;
@@ -1242,7 +1243,7 @@ int tdo_scheme_synthetic::geometric_test_for_row_scheme(partitionstack &P,
 					d = distributions[cnt *
 						nb_point_types + non_zero_blocks[i]];
 					cout << setw(3) << i << " : " << setw(3) << d << " x ";
-					Orbiter->Int_vec.print(cout,
+					Orbiter->Int_vec->print(cout,
 						point_types + non_zero_blocks[i] * point_type_len,
 						point_type_len);
 					cout << endl;
@@ -1270,7 +1271,7 @@ int tdo_scheme_synthetic::geometric_test_for_row_scheme(partitionstack &P,
 										  non_zero_blocks[i]];
 						cout << setw(3) << i << " : "
 							<< setw(3) << d << " x ";
-						Orbiter->Int_vec.print(cout,
+						Orbiter->Int_vec->print(cout,
 							point_types + non_zero_blocks[i] * point_type_len,
 							point_type_len);
 						cout << endl;						
@@ -1302,7 +1303,7 @@ int tdo_scheme_synthetic::geometric_test_for_row_scheme(partitionstack &P,
 			<< new_nb_distributions << ", i.e. Eliminated " 
 			<< nb_distributions - new_nb_distributions << " cases" << endl;
 		cout << "# of ruled out by test of order ";
-		Orbiter->Int_vec.print(cout, ruled_out_by, nb_point_types + 1);
+		Orbiter->Int_vec->print(cout, ruled_out_by, nb_point_types + 1);
 		cout << endl;
 		//cout << "nb ruled out by first order test  = "
 		//<< nb_ruled_out_by_order1 << endl;
@@ -1478,7 +1479,7 @@ int tdo_scheme_synthetic::test_row_distribution(
 #endif
 
 int tdo_scheme_synthetic::geometric_test_for_row_scheme_level_s(
-	partitionstack &P, int s,
+		data_structures::partitionstack &P, int s,
 	int *point_types, int nb_point_types, int point_type_len, 
 	int *distribution, 
 	int *non_zero_blocks, int nb_non_zero_blocks, 
@@ -1531,7 +1532,7 @@ int tdo_scheme_synthetic::geometric_test_for_row_scheme_level_s(
 				if (f_v) {
 					cout << "tdo_scheme_synthetic::geometric_test_for_row_scheme_"
 						"level_s s=" << s << " failure in point type ";
-					Orbiter->Int_vec.print(cout, set, s);
+					Orbiter->Int_vec->print(cout, set, s);
 					cout << endl;
 					cout << "max=" << max << endl;
 					cout << "J=" << J << endl;
@@ -1555,7 +1556,7 @@ int tdo_scheme_synthetic::geometric_test_for_row_scheme_level_s(
 
 int tdo_scheme_synthetic::refine_rows(int verbose_level,
 	int f_use_mckay, int f_once, 
-	partitionstack &P, 
+	data_structures::partitionstack &P,
 	int *&point_types, int &nb_point_types, int &point_type_len, 
 	int *&distributions, int &nb_distributions, 
 	int &cnt_second_system, solution_file_data *Sol,
@@ -1933,7 +1934,8 @@ int tdo_scheme_synthetic::refine_rows_easy(int verbose_level,
 	return TRUE;
 }
 
-int tdo_scheme_synthetic::refine_rows_hard(partitionstack &P, int verbose_level,
+int tdo_scheme_synthetic::refine_rows_hard(
+		data_structures::partitionstack &P, int verbose_level,
 	int f_use_mckay, int f_once, 
 	int *&point_types, int &nb_point_types, int &point_type_len,  
 	int *&distributions, int &nb_distributions, 
@@ -2036,7 +2038,7 @@ int tdo_scheme_synthetic::refine_rows_hard(partitionstack &P, int verbose_level,
 		if (f_vv) {
 			cout << "tdo_scheme_synthetic::refine_rows_hard r = " << r << ", found " << nb_sol
 					<< " refined point types:" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout,
+			Orbiter->Int_vec->print_integer_matrix_width(cout,
 				point_types + T.types_first[r] * point_type_len,
 				nb_sol, point_type_len, point_type_len, 3);
 		}
@@ -2063,7 +2065,7 @@ int tdo_scheme_synthetic::refine_rows_hard(partitionstack &P, int verbose_level,
 		if (f_vv) {
 			cout << "tdo_scheme_synthetic::refine_rows_hard r = " << r << ", found " << nb_sol
 					<< " refined point types:" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout,
+			Orbiter->Int_vec->print_integer_matrix_width(cout,
 				point_types + T.types_first[r] * point_type_len,
 				nb_sol, point_type_len, point_type_len, 3);
 		}
@@ -2120,7 +2122,7 @@ int tdo_scheme_synthetic::refine_rows_hard(partitionstack &P, int verbose_level,
 	if (f_vv) {
 		cout << "tdo_scheme_synthetic::refine_rows_hard altogether, we found " << nb_point_types
 				<< " refined point types:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, point_types,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, point_types,
 			nb_point_types, point_type_len, point_type_len, 3);
 	}
 	
@@ -2250,7 +2252,7 @@ int tdo_scheme_synthetic::refine_rows_hard(partitionstack &P, int verbose_level,
 	return TRUE;
 }
 
-void tdo_scheme_synthetic::row_refinement_L1_L2(partitionstack &P,
+void tdo_scheme_synthetic::row_refinement_L1_L2(data_structures::partitionstack &P,
 	int f_omit, int omit,
 	int &L1, int &L2, int verbose_level)
 {
@@ -2277,7 +2279,7 @@ void tdo_scheme_synthetic::row_refinement_L1_L2(partitionstack &P,
 }
 
 int tdo_scheme_synthetic::tdo_rows_setup_first_system(int verbose_level,
-	tdo_data &T, int r, partitionstack &P, 
+	tdo_data &T, int r, data_structures::partitionstack &P,
 	int f_omit, int omit, 
 	int *&point_types, int &nb_point_types)
 {
@@ -2430,7 +2432,7 @@ int tdo_scheme_synthetic::tdo_rows_setup_first_system(int verbose_level,
 }
 
 int tdo_scheme_synthetic::tdo_rows_setup_second_system(int verbose_level,
-	tdo_data &T, partitionstack &P, 
+	tdo_data &T, data_structures::partitionstack &P,
 	int f_omit, int omit,
 	int f_use_packing_numbers,
 	int f_dual_is_linear_space,
@@ -2563,7 +2565,7 @@ int tdo_scheme_synthetic::tdo_rows_setup_second_system(int verbose_level,
 
 int tdo_scheme_synthetic::tdo_rows_setup_second_system_eqns_joining(
 	int verbose_level,
-	tdo_data &T, partitionstack &P, 
+	tdo_data &T, data_structures::partitionstack &P,
 	int f_omit, int omit, int f_dual_is_linear_space, 
 	int *point_types, int nb_point_types, 
 	int eqn_offset)
@@ -2724,7 +2726,7 @@ int tdo_scheme_synthetic::tdo_rows_setup_second_system_eqns_joining(
 
 int tdo_scheme_synthetic::tdo_rows_setup_second_system_eqns_counting(
 	int verbose_level,
-	tdo_data &T, partitionstack &P, 
+	tdo_data &T, data_structures::partitionstack &P,
 	int f_omit, int omit, 
 	int *point_types, int nb_point_types, 
 	int eqn_offset)
@@ -2795,7 +2797,7 @@ int tdo_scheme_synthetic::tdo_rows_setup_second_system_eqns_counting(
 
 int tdo_scheme_synthetic::tdo_rows_setup_second_system_eqns_packing(
 	int verbose_level,
-	tdo_data &T, partitionstack &P, 
+	tdo_data &T, data_structures::partitionstack &P,
 	int f_omit, int omit, 
 	int *point_types, int nb_point_types,
 	int eqn_start, int &nb_eqns_used)
@@ -2887,7 +2889,7 @@ int tdo_scheme_synthetic::tdo_rows_setup_second_system_eqns_packing(
 // #############################################################################
 
 int tdo_scheme_synthetic::refine_columns(int verbose_level,
-	int f_once, partitionstack &P,
+	int f_once, data_structures::partitionstack &P,
 	int *&line_types, int &nb_line_types, int &line_type_len, 
 	int *&distributions, int &nb_distributions, 
 	int &cnt_second_system, solution_file_data *Sol, 
@@ -2968,7 +2970,8 @@ int tdo_scheme_synthetic::refine_columns(int verbose_level,
 	return ret;
 }
 
-int tdo_scheme_synthetic::refine_cols_hard(partitionstack &P,
+int tdo_scheme_synthetic::refine_cols_hard(
+		data_structures::partitionstack &P,
 	int verbose_level, int f_once,
 	int *&line_types, int &nb_line_types, int &line_type_len,  
 	int *&distributions, int &nb_distributions, 
@@ -3110,7 +3113,7 @@ int tdo_scheme_synthetic::refine_cols_hard(partitionstack &P,
 						<< " refined line types" << endl;
 			}
 			if (f_vv) {
-				Orbiter->Int_vec.print_integer_matrix_width(cout,
+				Orbiter->Int_vec->print_integer_matrix_width(cout,
 					line_types + T.types_first[r] * L2, nb_sol, L2, L2, 2);
 			}
 			nb_sol1 = 0;
@@ -3164,7 +3167,7 @@ int tdo_scheme_synthetic::refine_cols_hard(partitionstack &P,
 			}
 
 			if (f_vv) {
-				Orbiter->Int_vec.print_integer_matrix_width(cout,
+				Orbiter->Int_vec->print_integer_matrix_width(cout,
 					line_types + T.types_first[r] * L2, nb_sol, L2, L2, 2);
 			}
 			if (nb_sol == 0) {
@@ -3202,7 +3205,7 @@ int tdo_scheme_synthetic::refine_cols_hard(partitionstack &P,
 			}
 		}
 		if (f_vv) {
-			Orbiter->Int_vec.print_integer_matrix_width(cout, line_types,
+			Orbiter->Int_vec->print_integer_matrix_width(cout, line_types,
 					nb_line_types, line_type_len, line_type_len, 3);
 		}
 
@@ -3317,7 +3320,7 @@ int tdo_scheme_synthetic::refine_cols_hard(partitionstack &P,
 		if (f_v) {
 			cout << "tdo_scheme_synthetic::refine_cols_hard "
 					"The distributions are:" << endl;
-			Orbiter->Int_vec.matrix_print(distributions, nb_distributions, nb_line_types);
+			Orbiter->Int_vec->matrix_print(distributions, nb_distributions, nb_line_types);
 		}
 
 #if 0
@@ -3363,7 +3366,8 @@ int tdo_scheme_synthetic::refine_cols_hard(partitionstack &P,
 }
 
 void tdo_scheme_synthetic::column_refinement_L1_L2(
-	partitionstack &P, int f_omit, int omit,
+		data_structures::partitionstack &P,
+		int f_omit, int omit,
 	int &L1, int &L2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3387,7 +3391,8 @@ void tdo_scheme_synthetic::column_refinement_L1_L2(
 }
 
 int tdo_scheme_synthetic::tdo_columns_setup_first_system(int verbose_level,
-	tdo_data &T, int r, partitionstack &P, 
+	tdo_data &T, int r,
+	data_structures::partitionstack &P,
 	int f_omit, int omit, 
 	int *&line_types, int &nb_line_types)
 {
@@ -3533,7 +3538,8 @@ int tdo_scheme_synthetic::tdo_columns_setup_first_system(int verbose_level,
 
 int tdo_scheme_synthetic::tdo_columns_setup_second_system(
 	int verbose_level,
-	tdo_data &T, partitionstack &P, 
+	tdo_data &T,
+	data_structures::partitionstack &P,
 	int f_omit, int omit,  
 	int f_use_packing_numbers, 
 	int *&line_types, int &nb_line_types)
@@ -3654,7 +3660,8 @@ int tdo_scheme_synthetic::tdo_columns_setup_second_system(
 
 int tdo_scheme_synthetic::tdo_columns_setup_second_system_eqns_joining(
 	int verbose_level,
-	tdo_data &T, partitionstack &P, 
+	tdo_data &T,
+	data_structures::partitionstack &P,
 	int f_omit, int omit, 
 	int *line_types, int nb_line_types,
 	int eqn_start)
@@ -3766,7 +3773,8 @@ int tdo_scheme_synthetic::tdo_columns_setup_second_system_eqns_joining(
 
 void tdo_scheme_synthetic::tdo_columns_setup_second_system_eqns_counting(
 	int verbose_level,
-	tdo_data &T, partitionstack &P, 
+	tdo_data &T,
+	data_structures::partitionstack &P,
 	int f_omit, int omit, 
 	int *line_types, int nb_line_types,
 	int eqn_start)
@@ -3853,7 +3861,8 @@ void tdo_scheme_synthetic::tdo_columns_setup_second_system_eqns_counting(
 
 int tdo_scheme_synthetic::tdo_columns_setup_second_system_eqns_upper_bound(
 	int verbose_level,
-	tdo_data &T, partitionstack &P, 
+	tdo_data &T,
+	data_structures::partitionstack &P,
 	int f_omit, int omit, 
 	int *line_types, int nb_line_types,
 	int eqn_start, int &nb_eqns_used)
@@ -3952,7 +3961,7 @@ int tdo_scheme_synthetic::td3_refine_rows(int verbose_level,
 	int R, /*l1,*/ l2, r;
 	int nb_eqns, nb_vars = 0;
 	int point_types_allocated;
-	partitionstack P;
+	data_structures::partitionstack P;
 	int lambda2;
 	int nb_points;
 	int nb_sol;
@@ -4089,7 +4098,8 @@ int tdo_scheme_synthetic::td3_refine_rows(int verbose_level,
 
 int tdo_scheme_synthetic::td3_rows_setup_first_system(int verbose_level,
 	int lambda3, int block_size, int lambda2,
-	tdo_data &T, int r, partitionstack &P,
+	tdo_data &T, int r,
+	data_structures::partitionstack &P,
 	int &nb_vars, int &nb_eqns,
 	int *&point_types, int &nb_point_types)
 {
@@ -4450,7 +4460,7 @@ int tdo_scheme_synthetic::td3_refine_columns(int verbose_level, int f_once,
 	int f_vvv = (verbose_level >= 3);
 	int R, /*l1,*/ l2, r, nb_eqns, nb_vars = 0;
 	int line_types_allocated;
-	partitionstack P;
+	data_structures::partitionstack P;
 	int lambda2;
 	int nb_points;
 	int nb_sol;
@@ -4567,7 +4577,8 @@ int tdo_scheme_synthetic::td3_refine_columns(int verbose_level, int f_once,
 
 int tdo_scheme_synthetic::td3_columns_setup_first_system(int verbose_level,
 	int lambda3, int block_size, int lambda2,
-	tdo_data &T, int r, partitionstack &P,
+	tdo_data &T, int r,
+	data_structures::partitionstack &P,
 	int &nb_vars,int &nb_eqns,
 	int *&line_types, int &nb_line_types)
 {
@@ -5362,4 +5373,5 @@ int tdo_scheme_synthetic::td3_columns_lambda3_joining_triples_1_1_1(
 }
 
 
-}}
+}}}
+

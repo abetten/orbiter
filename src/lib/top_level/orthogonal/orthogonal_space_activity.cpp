@@ -246,7 +246,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		long int p1;
 		long int p2;
 		long int rk;
-		string_tools ST;
+		data_structures::string_tools ST;
 
 		p1 = ST.strtolint(Descr->unrank_line_through_two_points_p1);
 		p2 = ST.strtolint(Descr->unrank_line_through_two_points_p2);
@@ -288,7 +288,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		if (TRUE) {
 			cout << "There are " << OA->O->alpha << " lines on point = "
 					<< Descr->lines_on_point_rank << ". They are: ";
-			Orbiter->Lint_vec.print_fully(cout, line_pencil_line_ranks, OA->O->alpha);
+			Orbiter->Lint_vec->print_fully(cout, line_pencil_line_ranks, OA->O->alpha);
 			cout << endl;
 		}
 
@@ -307,11 +307,11 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		long int *pts;
 		int nb_pts;
 
-		Orbiter->Lint_vec.scan(Descr->perp_text.c_str(), pts, nb_pts);
+		Orbiter->Lint_vec->scan(Descr->perp_text.c_str(), pts, nb_pts);
 
 		if (f_v) {
 			cout << "Computing the common perp of the set ";
-			Orbiter->Lint_vec.print(cout, pts, nb_pts);
+			Orbiter->Lint_vec->print(cout, pts, nb_pts);
 			cout << endl;
 		}
 
@@ -322,7 +322,7 @@ void orthogonal_space_activity::perform_activity(int verbose_level)
 		OA->O->perp_of_k_points(pts, nb_pts, Perp, sz, verbose_level);
 
 		cout << "The common perp of the set has size " << sz << " and is ";
-		Orbiter->Lint_vec.print_fully(cout, Perp, sz);
+		Orbiter->Lint_vec->print_fully(cout, Perp, sz);
 		cout << endl;
 
 		FREE_lint(Perp);

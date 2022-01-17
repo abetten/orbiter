@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace data_structures {
 
 
 set_builder::set_builder()
@@ -125,7 +126,7 @@ void set_builder::init(set_builder_description *Descr,
 		long int *Index_set;
 		int Index_set_sz;
 
-		Orbiter->Lint_vec.scan(Descr->here_text, Index_set, Index_set_sz);
+		Orbiter->Lint_vec->scan(Descr->here_text, Index_set, Index_set_sz);
 
 		int i, cnt;
 		long int x, y;
@@ -172,7 +173,7 @@ void set_builder::init(set_builder_description *Descr,
 	}
 	if (f_v) {
 		cout << "set_builder::init created set of size " << sz << endl;
-		Orbiter->Lint_vec.print(cout, set, sz);
+		Orbiter->Lint_vec->print(cout, set, sz);
 		cout << endl;
 	}
 
@@ -205,5 +206,6 @@ long int set_builder::clone_with_affine_function(long int x)
 }
 
 
-}}
+}}}
+
 

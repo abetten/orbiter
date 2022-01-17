@@ -166,7 +166,7 @@ void six_arcs_not_on_a_conic::init(
 		if (f_v && (h % 10000) == 0) {
 			cout << "six_arcs_not_on_a_conic::init "
 					"testing arc " << h << " / " << nb_orbits << " : ";
-			Orbiter->Lint_vec.print(cout, Arc6, 6);
+			Orbiter->Lint_vec->print(cout, Arc6, 6);
 			cout << endl;
 		}
 
@@ -220,7 +220,7 @@ void six_arcs_not_on_a_conic::recognize(long int *arc6, int *transporter,
 {
 	int f_v = (verbose_level >= 1);
 	int orbit_at_level;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "six_arcs_not_on_a_conic::recognize" << endl;

@@ -17,6 +17,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace data_structures {
 
 
 data_file::data_file()
@@ -148,6 +149,6 @@ void data_file::read_candidates(std::string &candidates_fname,
 		}	
 }
 
-}
-}
+}}}
+
 

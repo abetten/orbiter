@@ -108,7 +108,7 @@ void orbit_type_repository::init(
 	orbit_type_repository::goi = goi;
 
 	int i, f; //, l;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	orbit_type_size = (goi + 1) * goi;
 	Type_repository = NEW_lint(nb_sets * orbit_type_size);
@@ -131,11 +131,11 @@ void orbit_type_repository::init(
 				"before Heapsort_general" << endl;
 		cout << "Type_repository:" << endl;
 		if (nb_sets < 10) {
-			Orbiter->Lint_vec.matrix_print(Type_repository, nb_sets, orbit_type_size);
+			Orbiter->Lint_vec->matrix_print(Type_repository, nb_sets, orbit_type_size);
 		}
 		else {
 			cout << "too many to print" << endl;
-			Orbiter->Lint_vec.matrix_print(Type_repository, 100, orbit_type_size);
+			Orbiter->Lint_vec->matrix_print(Type_repository, 100, orbit_type_size);
 		}
 	}
 
@@ -149,11 +149,11 @@ void orbit_type_repository::init(
 				"after Heapsort_general" << endl;
 		cout << "Sorted Type_repository:" << endl;
 		if (nb_sets < 10) {
-			Orbiter->Lint_vec.matrix_print(Type_repository, nb_sets, orbit_type_size);
+			Orbiter->Lint_vec->matrix_print(Type_repository, nb_sets, orbit_type_size);
 		}
 		else {
 			cout << "too many to print" << endl;
-			Orbiter->Lint_vec.matrix_print(Type_repository, 100, orbit_type_size);
+			Orbiter->Lint_vec->matrix_print(Type_repository, 100, orbit_type_size);
 		}
 	}
 	nb_types = 0;
@@ -181,7 +181,7 @@ void orbit_type_repository::init(
 	for (i = 0; i < nb_types; i++) {
 		f = type_first[i];
 		//l = type_len[i];
-		Orbiter->Lint_vec.copy(Type_repository + f * orbit_type_size,
+		Orbiter->Lint_vec->copy(Type_repository + f * orbit_type_size,
 				Type_representatives + i * orbit_type_size, orbit_type_size);
 	}
 
@@ -191,7 +191,7 @@ void orbit_type_repository::init(
 				"The types are:" << endl;
 		for (i = 0; i < nb_types; i++) {
 			cout << i << " : ";
-			Orbiter->Lint_vec.print(cout, Type_representatives + i * orbit_type_size, orbit_type_size);
+			Orbiter->Lint_vec->print(cout, Type_representatives + i * orbit_type_size, orbit_type_size);
 			cout << endl;
 		}
 	}
@@ -206,7 +206,7 @@ void orbit_type_repository::init(
 		if (FALSE) {
 			if (i < 10) {
 				cout << "type[" << i << "]=";
-				Orbiter->Lint_vec.print(cout, Type_repository + i * orbit_type_size, orbit_type_size);
+				Orbiter->Lint_vec->print(cout, Type_repository + i * orbit_type_size, orbit_type_size);
 				cout << endl;
 			}
 		}
@@ -240,7 +240,7 @@ void orbit_type_repository::init(
 			cout << "i=" << i << endl;
 			//lint_matrix_print(Type_repository, nb_sets, orbit_type_size);
 			cout << "searching for ";
-			Orbiter->Lint_vec.print(cout, Type_repository + i * orbit_type_size, orbit_type_size);
+			Orbiter->Lint_vec->print(cout, Type_repository + i * orbit_type_size, orbit_type_size);
 			cout << endl;
 			exit(1);
 		}
@@ -426,7 +426,7 @@ void orbit_type_repository::report_one_type(ostream &ost, int type_idx, int verb
 
 						By_orbit_number.init(v, len, FALSE, 0);
 
-						set_of_sets *SoS;
+						data_structures::set_of_sets *SoS;
 						int *types;
 						int nb_types;
 						int u;
@@ -483,8 +483,9 @@ static int orbit_type_repository_compare_types(void *data,
 	orbit_type_repository *OTR = (orbit_type_repository *) extra_data;
 	long int *Types = (long int *) data;
 	int len = OTR->orbit_type_size;
+	data_structures::sorting Sorting;
 
-	return lint_vec_compare(Types + i * len, Types + j * len, len);
+	return Sorting.lint_vec_compare(Types + i * len, Types + j * len, len);
 }
 
 
@@ -494,8 +495,9 @@ static int orbit_type_repository_compare_type_with(void *data,
 	orbit_type_repository *OTR = (orbit_type_repository *) extra_data;
 	long int *Types = (long int *) data;
 	int len = OTR->orbit_type_size;
+	data_structures::sorting Sorting;
 
-	return lint_vec_compare(Types + i * len, (long int *) type, len);
+	return Sorting.lint_vec_compare(Types + i * len, (long int *) type, len);
 }
 
 

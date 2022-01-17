@@ -55,7 +55,7 @@ int draw_bitmap_control::read_arguments(
 {
 	int i;
 	int f_v = (verbose_level >= 1);
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "draw_bitmap_control::read_arguments" << endl;

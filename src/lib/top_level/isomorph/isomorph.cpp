@@ -473,7 +473,7 @@ void isomorph::init_starter_number(int verbose_level)
 		}
 	if (f_v) {
 		cout << "starter_number:" << endl;
-		Orbiter->Int_vec.print(cout, starter_number, N);
+		Orbiter->Int_vec->print(cout, starter_number, N);
 		cout << endl;
 		}
 }
@@ -485,7 +485,7 @@ void isomorph::list_solutions_by_starter()
 	long int data[1000];
 	long int data2[1000];
 	int verbose_level = 0;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	setup_and_open_solution_database(verbose_level - 1);
 	
@@ -511,9 +511,9 @@ void isomorph::list_solutions_by_starter()
 				Sorting.lint_vec_heapsort(data2, size);
 				cout << i << " : " << j << " : "
 						<< idx << " : " << id << endl;
-				Orbiter->Lint_vec.print(cout, data, size);
+				Orbiter->Lint_vec->print(cout, data, size);
 				cout << endl;
-				Orbiter->Lint_vec.print(cout, data2, size);
+				Orbiter->Lint_vec->print(cout, data2, size);
 				cout << endl;
 				}
 			pos += len;
@@ -530,7 +530,7 @@ void isomorph::list_solutions_by_orbit()
 	long int data[1000];
 	long int data2[1000];
 	int verbose_level = 0;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	setup_and_open_solution_database(verbose_level - 1);
 
@@ -548,9 +548,9 @@ void isomorph::list_solutions_by_orbit()
 				}
 			Sorting.lint_vec_heapsort(data2, size);
 			cout << j << " : " << idx << " : " << id << endl;
-			Orbiter->Lint_vec.print(cout, data, size);
+			Orbiter->Lint_vec->print(cout, data, size);
 			cout << endl;
-			Orbiter->Lint_vec.print(cout, data2, size);
+			Orbiter->Lint_vec->print(cout, data2, size);
 			cout << endl;
 			}
 		}
@@ -835,7 +835,7 @@ void isomorph::orbits_of_stabilizer_case(int the_case,
 	schreier *Schreier;
 	long int *sets;
 	int h, p, prev, b, hdl;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 			
 	sets = NEW_lint(l * size);
 	S = NEW_OBJECT(sims);
@@ -884,13 +884,13 @@ void isomorph::orbits_of_stabilizer_case(int the_case,
 		load_solution(f + j, sets + j * size);
 		if (FALSE && f_vv) {
 			cout << "solution " << j << "        : ";
-			Orbiter->Lint_vec.print(cout, sets + j * size, size);
+			Orbiter->Lint_vec->print(cout, sets + j * size, size);
 			cout << endl;
 			}
 		Sorting.lint_vec_heapsort(sets + j * size, size);
 		if (FALSE && f_vv) {
 			cout << "solution " << j << " sorted : ";
-			Orbiter->Lint_vec.print(cout, sets + j * size, size);
+			Orbiter->Lint_vec->print(cout, sets + j * size, size);
 			cout << endl;
 			}
 		}
@@ -1116,7 +1116,7 @@ void isomorph::test_identify_solution(int verbose_level)
 	int perm[1000];
 	int i, k;
 	int *transporter;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	os_interface Os;
 
 	transporter = NEW_int(A->elt_size_in_int);
@@ -1181,7 +1181,7 @@ void isomorph::compute_stabilizer(sims *&Stab,
 	long int *sets;
 	int j, first, f, l, c, first_orbit_this_case, orb_no;
 	longinteger_object go, so, so1;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "isomorph::compute_stabilizer "
@@ -1251,12 +1251,12 @@ void isomorph::compute_stabilizer(sims *&Stab,
 		cout << "isomorph::compute_stabilizer "
 				"The " << l << " solutions are:" << endl;
 		if (l < 20) {
-			Orbiter->Lint_vec.matrix_print(sets, l, size);
+			Orbiter->Lint_vec->matrix_print(sets, l, size);
 			}
 		else {
 			cout << "isomorph::compute_stabilizer "
 					"Too big to print, we print only 20" << endl;
-			Orbiter->Lint_vec.matrix_print(sets, 20, size);
+			Orbiter->Lint_vec->matrix_print(sets, 20, size);
 			}
 		}
 
@@ -1443,7 +1443,7 @@ void isomorph::test_edges(int verbose_level)
 			}
 		}
 	cout << "subset: ";
-	Orbiter->Int_vec.print(cout, subset, level);
+	Orbiter->Int_vec->print(cout, subset, level);
 	cout << endl;
 
 	FREE_int(transporter1);
@@ -1462,7 +1462,7 @@ int isomorph::test_edge(int n1,
 	int r, r0, id, id0;
 	long int data1[1000];
 	long int data2[1000];
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 
 
@@ -1600,8 +1600,8 @@ void isomorph::test_hash(int verbose_level)
 	long int data[1000];
 	int id, case_nb, f, l, i;
 	int *H;
-	sorting Sorting;
-	data_structures_global Data;
+	data_structures::sorting Sorting;
+	data_structures::data_structures_global Data;
 
 
 	if (f_v) {

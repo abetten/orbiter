@@ -548,7 +548,7 @@ void large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits(std::stri
 					"fname = " << fname << endl;
 			cout << "large_set_was::create_graph_on_orbits_of_length_based_on_N_orbits, "
 					"extracted set = ";
-			Orbiter->Lint_vec.print(cout, extracted_set, extracted_set_size);
+			Orbiter->Lint_vec->print(cout, extracted_set, extracted_set_size);
 			cout << endl;
 		}
 
@@ -623,7 +623,7 @@ void large_set_was::read_solution_file(
 			verbose_level);
 	cout << "Read the following solutions from file:" << endl;
 	if (nb_solutions < 100) {
-		Orbiter->Int_vec.matrix_print(Solutions, nb_solutions, solution_size);
+		Orbiter->Int_vec->matrix_print(Solutions, nb_solutions, solution_size);
 	}
 	else {
 		cout << "too large to print" << endl;
@@ -643,7 +643,7 @@ void large_set_was::read_solution_file(
 	nb_large_sets = nb_solutions;
 	Large_sets = NEW_lint(nb_solutions * sz);
 	for (i = 0; i < nb_solutions; i++) {
-		Orbiter->Lint_vec.copy(starter_set, Large_sets + i * sz, starter_set_sz);
+		Orbiter->Lint_vec->copy(starter_set, Large_sets + i * sz, starter_set_sz);
 		for (j = 0; j < solution_size; j++) {
 #if 0
 			a = Solutions[i * solution_size + j];
@@ -672,7 +672,7 @@ void large_set_was::read_solution_file(
 	{
 		file_io Fio;
 		string fname_out;
-		string_tools ST;
+		data_structures::string_tools ST;
 
 		fname_out.assign(solution_file_name);
 		ST.replace_extension_with(fname_out, "_packings_design_indices.csv");
@@ -682,7 +682,7 @@ void large_set_was::read_solution_file(
 	}
 	Sz = sz * LS->design_size;
 
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	Packings_explicit = NEW_lint(nb_solutions * Sz);
 	for (i = 0; i < nb_solutions; i++) {
@@ -706,7 +706,7 @@ void large_set_was::read_solution_file(
 	{
 		file_io Fio;
 		string fname_out;
-		string_tools ST;
+		data_structures::string_tools ST;
 
 		fname_out.assign(solution_file_name);
 		ST.replace_extension_with(fname_out, "_packings_explicit.csv");
@@ -735,17 +735,17 @@ void large_set_was::normalizer_orbits_early_test_func(long int *S, int len,
 
 	if (f_v) {
 		cout << "large_set_was::normalizer_orbits_early_test_func checking set ";
-		Orbiter->Lint_vec.print(cout, S, len);
+		Orbiter->Lint_vec->print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
-		Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
+		Orbiter->Lint_vec->print(cout, candidates, nb_candidates);
 		cout << endl;
 	}
 
 
 	if (len == 0) {
-		Orbiter->Lint_vec.copy(candidates, good_candidates, nb_candidates);
+		Orbiter->Lint_vec->copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
 	}
 	else {
@@ -777,12 +777,12 @@ int large_set_was::normalizer_orbits_check_conditions(long int *S, int len, int 
 	int f_v = (verbose_level >= 1);
 	int idx, i;
 	long int a, b;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "large_set_was::normalizer_orbits_check_conditions "
 				"checking set ";
-		Orbiter->Lint_vec.print(cout, S, len);
+		Orbiter->Lint_vec->print(cout, S, len);
 		cout << endl;
 		//cout << "offset=" << offset << endl;
 	}
@@ -832,7 +832,7 @@ void large_set_was_normalizer_orbits_early_test_func_callback(long int *S, int l
 
 	if (f_v) {
 		cout << "large_set_was_normalizer_orbits_early_test_func_callback for set ";
-		Orbiter->Lint_vec.print(cout, S, len);
+		Orbiter->Lint_vec->print(cout, S, len);
 		cout << endl;
 	}
 	LSW->normalizer_orbits_early_test_func(S, len,

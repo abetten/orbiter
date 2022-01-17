@@ -94,7 +94,7 @@ void projective_space_implementation::init(projective_space *P, int verbose_leve
 			cout << "projective_space_implementation::init "
 					"allocating Incidence (bitvector)" << endl;
 		}
-		Bitmatrix = NEW_OBJECT(bitmatrix);
+		Bitmatrix = NEW_OBJECT(data_structures::bitmatrix);
 		Bitmatrix->init(N_points, N_lines, verbose_level);
 	}
 	else {
@@ -175,7 +175,7 @@ void projective_space_implementation::init(projective_space *P, int verbose_leve
 					"allocating Line_intersection" << endl;
 		}
 		Line_intersection = NEW_int((long int) N_lines * (long int) N_lines);
-		Orbiter->Int_vec.zero(Line_through_two_points, (long int) N_points * (long int) N_points);
+		Orbiter->Int_vec->zero(Line_through_two_points, (long int) N_points * (long int) N_points);
 		for (i = 0; i < (long int) N_lines * (long int) N_lines; i++) {
 			Line_intersection[i] = -1;
 		}
@@ -198,13 +198,13 @@ void projective_space_implementation::init(projective_space *P, int verbose_leve
 		for (i = 0; i < N_points; i++) {
 			P->F->PG_element_unrank_modified(v, 1, n + 1, i);
 			cout << "point " << i << " : ";
-			Orbiter->Int_vec.print(cout, v, n + 1);
+			Orbiter->Int_vec->print(cout, v, n + 1);
 			cout << " = ";
 			P->F->int_vec_print_field_elements(cout, v, n + 1);
 
 			P->F->PG_element_normalize_from_front(v, 1, n + 1);
 			cout << " = ";
-			Orbiter->Int_vec.print(cout, v, n + 1);
+			Orbiter->Int_vec->print(cout, v, n + 1);
 
 
 			cout << " = ";
@@ -243,7 +243,7 @@ void projective_space_implementation::init(projective_space *P, int verbose_leve
 		int *R;
 
 		R = NEW_int(N_points);
-		Orbiter->Int_vec.zero(R, N_points);
+		Orbiter->Int_vec->zero(R, N_points);
 
 		for (i = 0; i < N_lines; i++) {
 #if 0
@@ -254,7 +254,7 @@ void projective_space_implementation::init(projective_space *P, int verbose_leve
 #endif
 			P->Grass_lines->unrank_lint(i, 0/*verbose_level - 4*/);
 			if (FALSE) {
-				Orbiter->Int_vec.print_integer_matrix_width(cout,
+				Orbiter->Int_vec->print_integer_matrix_width(cout,
 						P->Grass_lines->M, 2, n + 1, n + 1,
 						P->F->log10_of_q + 1);
 			}
@@ -292,13 +292,13 @@ void projective_space_implementation::init(projective_space *P, int verbose_leve
 			}
 			if (f_vv) {
 				cout << "line " << i << ":" << endl;
-				Orbiter->Int_vec.print_integer_matrix_width(cout,
+				Orbiter->Int_vec->print_integer_matrix_width(cout,
 						P->Grass_lines->M, 2, n + 1, n + 1,
 						P->F->log10_of_q + 1);
 
 				if (Lines) {
 					cout << "points on line " << i << " : ";
-					Orbiter->Int_vec.print(cout, Lines + i * k, k);
+					Orbiter->Int_vec->print(cout, Lines + i * k, k);
 					cout << endl;
 				}
 			}
@@ -355,9 +355,9 @@ void projective_space_implementation::init(projective_space *P, int verbose_leve
 		//cout << "incidence matrix:" << endl;
 		//print_integer_matrix_width(cout, Incidence, N_points, N_lines, N_lines, 1);
 		cout << "projective_space::init_incidence_structure Lines:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Lines, N_lines, k, k, 3);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, Lines, N_lines, k, k, 3);
 		cout << "projective_space::init_incidence_structure Lines_on_point:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Lines_on_point, N_points, r, r, 3);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, Lines_on_point, N_points, r, r, 3);
 	}
 
 

@@ -237,7 +237,7 @@ int schreier_vector::determine_depth_recursion(
 	int *depth, int *ancestor, int pos)
 {
 	int pt, pt_loc, d;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	pt = prev[pos];
 	if (pt == -1) {
@@ -252,7 +252,7 @@ int schreier_vector::determine_depth_recursion(
 				"fatal: did not find pt" << endl;
 		cout << "pt = " << pt << endl;
 		cout << "vector of length " << n << endl;
-		Orbiter->Int_vec.print(cout, pts, n);
+		Orbiter->Int_vec->print(cout, pts, n);
 		cout << endl;
 		cout << "i : pts[i] : prev[i] : depth[i] : ancestor[i]" << endl;
 		for (i = 0; i < n; i++) {
@@ -301,7 +301,7 @@ void schreier_vector::relabel_points(
 
 	int nb_old_orbit_reps = 0, idx, j;
 	int *old_orbit_reps = NULL;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "schreier_vector::relabel_points" << endl;
@@ -384,7 +384,7 @@ void schreier_vector::relabel_points(
 			}
 		}
 		Sorting.int_vec_heapsort(old_orbit_reps, nb_old_orbit_reps);
-		Orbiter->Int_vec.print(cout, old_orbit_reps, nb_old_orbit_reps);
+		Orbiter->Int_vec->print(cout, old_orbit_reps, nb_old_orbit_reps);
 		cout << endl;
 		cout << "schreier_vector::relabel_points "
 				"There are " << nb_old_orbit_reps
@@ -556,7 +556,7 @@ void schreier_vector::orbit_stats(
 	int *pts;
 	int *depth;
 	int *ancestor;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 
 	n = sv[0];
@@ -568,7 +568,7 @@ void schreier_vector::orbit_stats(
 		orbit_reps = NEW_int(nb_orbits);
 		orbit_length = NEW_int(nb_orbits);
 		total_depth = NEW_int(nb_orbits);
-		Orbiter->Int_vec.copy(pts, orbit_reps, nb_orbits);
+		Orbiter->Int_vec->copy(pts, orbit_reps, nb_orbits);
 		for (i = 0; i < nb_orbits; i++) {
 			orbit_length[i] = 1;
 			total_depth[i] = 1;
@@ -666,7 +666,7 @@ void schreier_vector::orbit_of_point(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int f_vvv = (verbose_level >= 3);
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "schreier_vector::orbit_of_point "
@@ -763,7 +763,7 @@ void schreier_vector::orbit_of_point(
 	if (f_vv) {
 		cout << "schreier_vector::orbit_of_point "
 				"the points in the orbit are: ";
-		Orbiter->Lint_vec.print(cout, orbit_elts, orbit_len);
+		Orbiter->Lint_vec->print(cout, orbit_elts, orbit_len);
 		cout << endl;
 	}
 
@@ -853,7 +853,7 @@ void schreier_vector::init_shallow_schreier_forest(schreier *S,
 	int n;
 	int *point_list;
 	int *svec;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "schreier_vector::init_shallow_schreier_forest" << endl;
@@ -864,7 +864,7 @@ void schreier_vector::init_shallow_schreier_forest(schreier *S,
 	if (f_trivial_group) {
 		svec = NEW_int(n + 1);
 		svec[0] = n;
-		Orbiter->Int_vec.copy(point_list, svec + 1, n);
+		Orbiter->Int_vec->copy(point_list, svec + 1, n);
 	}
 	else {
 		int orbit_idx;
@@ -878,7 +878,7 @@ void schreier_vector::init_shallow_schreier_forest(schreier *S,
 		points = svec + 1;
 		prev = points + n;
 		label = prev + n;
-		Orbiter->Int_vec.copy(point_list, svec + 1, n);
+		Orbiter->Int_vec->copy(point_list, svec + 1, n);
 
 		f_has_local_generators = TRUE;
 		local_gens = NEW_OBJECT(vector_ge);
@@ -985,7 +985,7 @@ void schreier_vector::export_tree_as_layered_graph(
 	int *points;
 	int orbit_len;
 	int idx_of_root_node;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "schreier_vector::export_tree_as_layered_graph" << endl;
@@ -1031,7 +1031,7 @@ void schreier_vector::export_tree_as_layered_graph(
 						<< orbit_prev[j] << " : " << orbit_depth[j] << endl;
 			}
 			cout << "orbit_depth:";
-			Orbiter->Int_vec.print(cout, orbit_depth, len);
+			Orbiter->Int_vec->print(cout, orbit_depth, len);
 			cout << endl;
 		}
 	}
@@ -1049,8 +1049,8 @@ void schreier_vector::export_tree_as_layered_graph(
 	//C.init(depth, len, FALSE, 0);
 	Nb = NEW_int(nb_layers);
 	Nb1 = NEW_int(nb_layers);
-	Orbiter->Int_vec.zero(Nb, nb_layers);
-	Orbiter->Int_vec.zero(Nb1, nb_layers);
+	Orbiter->Int_vec->zero(Nb, nb_layers);
+	Orbiter->Int_vec->zero(Nb1, nb_layers);
 	for (j = 0; j < len; j++) {
 		l = orbit_depth[j];
 		horizontal_position[j] = Nb[l];
@@ -1077,7 +1077,7 @@ void schreier_vector::export_tree_as_layered_graph(
 		cout << "number of nodes at depth:" << endl;
 		for (i = 0; i <= max_depth; i++) {
 			cout << i << " : " << Nb[i] << " : ";
-			Orbiter->Int_vec.print(cout, Node[i], Nb[i]);
+			Orbiter->Int_vec->print(cout, Node[i], Nb[i]);
 			cout << endl;
 		}
 	}
@@ -1188,7 +1188,7 @@ void schreier_vector::trace_back(int pt, int &depth)
 	int pr, n, pos;
 	int *points;
 	int *prev;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	n = sv[0];
 	points = sv + 1;

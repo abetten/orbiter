@@ -382,8 +382,8 @@ public:
 	long int nb_times_action_created;
 	long int nb_calls_to_densenauty;
 
-	int_vec Int_vec;
-	lint_vec Lint_vec;
+	data_structures::int_vec *Int_vec;
+	data_structures::lint_vec *Lint_vec;
 
 	mem_object_registry *global_mem_object_registry;
 
@@ -415,7 +415,7 @@ public:
 	void get_lint_vec(std::string &label,
 			long int *&the_set, int &set_size, int verbose_level);
 	void print_type(symbol_table_object_type t);
-	vector_builder *get_object_of_type_vector(std::string &label);
+	data_structures::vector_builder *get_object_of_type_vector(std::string &label);
 	void start_memory_debug();
 	void stop_memory_debug();
 
@@ -505,7 +505,7 @@ public:
 	void init_vector(std::string &label,
 			void *VB, int verbose_level);
 	void init_combinatorial_objects(std::string &label,
-			data_input_stream *IS, int verbose_level);
+			data_structures::data_input_stream *IS, int verbose_level);
 	void init_geometry_builder_object(std::string &label,
 			geometry_builder *GB, int verbose_level);
 	void print();

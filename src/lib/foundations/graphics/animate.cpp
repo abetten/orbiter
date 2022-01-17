@@ -302,7 +302,7 @@ void animate::animate_one_round(
 		char fname_pov[1000];
 		char fname_png[1000];
 		char povray_opts[1000];
-		string_tools ST;
+		data_structures::string_tools ST;
 
 
 		povray_opts[0] = 0;
@@ -534,7 +534,7 @@ void animate::animate_one_round(
 					str[h] = 0;
 					}
 
-				string_tools ST;
+				data_structures::string_tools ST;
 
 				if ((int) strlen(str) + Opt->round_text_sustain[i] > h &&
 						(int) strlen(str) && !ST.is_all_whitespace(str)) {
@@ -634,7 +634,7 @@ void animate::animate_one_round(
 					if (!Opt->latex_f_label_has_been_prepared[i]) {
 
 						char str[1000];
-						string_tools ST;
+						data_structures::string_tools ST;
 
 
 						cout << "creating latex label " << i << endl;
@@ -1814,8 +1814,8 @@ void animate::draw_frame_Hilbert(
 		int rk;
 		int faces[4];
 		int set[3];
-		combinatorics_domain Combi;
-		sorting Sorting;
+		combinatorics::combinatorics_domain Combi;
+		data_structures::sorting Sorting;
 
 		int *cur_orbit_rep = orbit_reps + 2 * 3;
 
@@ -1831,7 +1831,7 @@ void animate::draw_frame_Hilbert(
 			faces[1 + i] = 10 + rk;
 		}
 		cout << "faces=";
-		Orbiter->Int_vec.print(cout, faces, 4);
+		Orbiter->Int_vec->print(cout, faces, 4);
 		cout << endl;
 		S->draw_faces_with_selection(faces, 4,
 				0.01, Pov->color_pink, fp);

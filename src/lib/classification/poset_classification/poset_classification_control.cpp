@@ -118,7 +118,7 @@ int poset_classification_control::read_arguments(
 {
 	int i;
 	int f_v = (verbose_level >= 1);
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "poset_classification_control::read_arguments" << endl;
@@ -723,7 +723,7 @@ void poset_classification_control_early_test_function_cliques(long int *S, int l
 
 	if (f_v) {
 		cout << "poset_classification_control_early_test_function_cliques for set ";
-		Orbiter->Lint_vec.print(cout, S, len);
+		Orbiter->Lint_vec->print(cout, S, len);
 		cout << endl;
 	}
 

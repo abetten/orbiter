@@ -79,7 +79,7 @@ int quartic_curve_create_description::read_arguments(int argc, std::string *argv
 	int verbose_level)
 {
 	int i;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	cout << "quartic_curve_create_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {

@@ -48,7 +48,7 @@ void representation_theory_domain::representing_matrix8_R(int *A,
 {
 	//int i;
 
-	Orbiter->Int_vec.zero(A, 64);
+	Orbiter->Int_vec->zero(A, 64);
 
 	A[0 * 8 + 0] = m_term(q, d, d, d);
 	A[0 * 8 + 1] = m_term(q, c, c, c);
@@ -136,7 +136,7 @@ void representation_theory_domain::representing_matrix9_R(int *A,
 	int q2 = q + 2;
 
 
-	Orbiter->Int_vec.zero(A, 81);
+	Orbiter->Int_vec->zero(A, 81);
 
 	A[0 * 9 + 0] = term1(d,tq2);
 	A[0 * 9 + 1] = term2(c,d,q1,q1);
@@ -571,7 +571,7 @@ void representation_theory_domain::representing_matrix8_V(int *A, int beta)
 	delta1 = inverse(T3(add(beta_21, negate(beta_12))));
 	delta2 = inverse(T3(add(beta_123, negate(beta_132))));
 
-	Orbiter->Int_vec.zero(A, 64);
+	Orbiter->Int_vec->zero(A, 64);
 
 	A[0 * 8 + 0] = 1;
 	A[1 * 8 + 1] = 1;
@@ -634,7 +634,7 @@ void representation_theory_domain::representing_matrix9b(int *A, int beta)
 	//cout << "nTgamma=" << nTgamma << endl;
 	//cout << "Tbetagamma=" << Tbetagamma << endl;
 
-	Orbiter->Int_vec.zero(A, 81);
+	Orbiter->Int_vec->zero(A, 81);
 
 	// changed to n e w base:
 	// attention, now transposed!
@@ -795,7 +795,7 @@ void representation_theory_domain::representing_matrix8b(int *A, int beta)
 	cout << "delta=" << delta << endl;
 	cout << "omega=" << omega << endl;
 
-	Orbiter->Int_vec.zero(A, 64);
+	Orbiter->Int_vec->zero(A, 64);
 
 	A[0 * 8 + 0] = 1;
 	A[7 * 8 + 7] = 1;

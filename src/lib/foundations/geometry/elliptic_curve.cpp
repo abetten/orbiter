@@ -334,7 +334,7 @@ void elliptic_curve::save_incidence_matrix(std::string &fname,
 		cout << "elliptic_curve::save_incidence_matrix" << endl;
 	}
 	M = NEW_int(q * q);
-	Orbiter->Int_vec.zero(M, q * q);
+	Orbiter->Int_vec->zero(M, q * q);
 	for (i = 0; i < nb; i++) {
 		x = T[i * 3 + 0];
 		y = T[i * 3 + 1];
@@ -738,7 +738,7 @@ void elliptic_curve::print_addition_table()
 {
 	latex_interface L;
 
-	Orbiter->Int_vec.matrix_print(A, nb, nb);
+	Orbiter->Int_vec->matrix_print(A, nb, nb);
 	L.int_matrix_print_tex(cout, A, nb, nb);
 }
 

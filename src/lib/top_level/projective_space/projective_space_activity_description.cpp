@@ -218,7 +218,7 @@ int projective_space_activity_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "projective_space_activity_description::read_arguments" << endl;
@@ -304,7 +304,7 @@ int projective_space_activity_description::read_arguments(
 			canonical_form_of_code_label.assign(argv[++i]);
 			canonical_form_of_code_generator_matrix.assign(argv[++i]);
 
-			Canonical_form_codes_Descr = NEW_OBJECT(classification_of_objects_description);
+			Canonical_form_codes_Descr = NEW_OBJECT(combinatorics::classification_of_objects_description);
 
 			i += Canonical_form_codes_Descr->read_arguments(argc - (i + 1), argv + i + 1, verbose_level);
 			if (f_v) {

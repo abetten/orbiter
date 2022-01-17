@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace algebra {
 
 
 
@@ -54,10 +55,10 @@ void matrix_block_data::freeself()
 
 void matrix_block_data::allocate(int k)
 {
-	K = NEW_OBJECTS(int_matrix, k);
+	K = NEW_OBJECTS(data_structures::int_matrix, k);
 	dual_part = NEW_int(k);
 	part = NEW_int(k);
 }
 
 
-}}
+}}}

@@ -418,7 +418,7 @@ void geometric_object_create::init(geometric_object_description *Descr,
 
 	else if (Descr->f_set) {
 
-		Orbiter->Lint_vec.scan(Descr->set_text, Pts, nb_pts);
+		Orbiter->Lint_vec->scan(Descr->set_text, Pts, nb_pts);
 
 	}
 	else {
@@ -429,7 +429,7 @@ void geometric_object_create::init(geometric_object_description *Descr,
 
 	if (f_v) {
 		cout << "geometric_object_create::init created a set of size " << nb_pts << endl;
-		Orbiter->Lint_vec.print_fully(cout, Pts, nb_pts);
+		Orbiter->Lint_vec->print_fully(cout, Pts, nb_pts);
 		cout << endl;
 
 		//lint_vec_print(cout, Pts, nb_pts);

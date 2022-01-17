@@ -14,6 +14,7 @@
 
 namespace orbiter {
 namespace foundations {
+namespace coding_theory {
 
 
 // #############################################################################
@@ -297,7 +298,8 @@ public:
 };
 
 
-}}
+}}}
+
 
 
 #endif /* ORBITER_SRC_LIB_FOUNDATIONS_CODING_THEORY_CODING_THEORY_H_ */

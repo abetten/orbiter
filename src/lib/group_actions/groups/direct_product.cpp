@@ -190,12 +190,12 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 	if (f_v) {
 		cout << "direct_product::init "
 				"base_for_component1 = ";
-		Orbiter->Lint_vec.print(cout, base_for_component1,
+		Orbiter->Lint_vec->print(cout, base_for_component1,
 				base_len_in_component1);
 		cout << endl;
 		cout << "direct_product::init "
 				"tl_for_component1 = ";
-		Orbiter->Int_vec.print(cout, tl_for_component1,
+		Orbiter->Int_vec->print(cout, tl_for_component1,
 				base_len_in_component1);
 		cout << endl;
 	}
@@ -210,14 +210,14 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 
 	if (f_v) {
 		cout << "direct_product::init base_for_component2 = ";
-		Orbiter->Lint_vec.print(cout, base_for_component2, base_len_in_component2);
+		Orbiter->Lint_vec->print(cout, base_for_component2, base_len_in_component2);
 		cout << endl;
 		cout << "direct_product::init tl_for_component2 = ";
-		Orbiter->Int_vec.print(cout, tl_for_component2, base_len_in_component2);
+		Orbiter->Int_vec->print(cout, tl_for_component2, base_len_in_component2);
 		cout << endl;
 	}
 
-	Elts = NEW_OBJECT(page_storage);
+	Elts = NEW_OBJECT(data_structures::page_storage);
 	Elts->init(char_per_elt /* entry_size */,
 			10 /* page_length_log */, verbose_level);
 
@@ -232,10 +232,10 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 	}
 	if (f_v) {
 		cout << "direct_product::init the_base = ";
-		Orbiter->Lint_vec.print(cout, the_base, base_length);
+		Orbiter->Lint_vec->print(cout, the_base, base_length);
 		cout << endl;
 		cout << "direct_product::init the_transversal_length = ";
-		Orbiter->Int_vec.print(cout, the_transversal_length, base_length);
+		Orbiter->Int_vec->print(cout, the_transversal_length, base_length);
 		cout << endl;
 	}
 
@@ -366,7 +366,7 @@ void direct_product::element_move(int *A, int *B, int verbose_level)
 	if (f_v) {
 		cout << "direct_product::element_move" << endl;
 	}
-	Orbiter->Int_vec.copy(A, B, elt_size_int);
+	Orbiter->Int_vec->copy(A, B, elt_size_int);
 	if (f_v) {
 		cout << "direct_product::element_move done" << endl;
 	}
@@ -440,7 +440,7 @@ void direct_product::put_digit(uchar *elt, int f, int i, int d)
 	int h0 = 0;
 	int h, h1, a;
 	int nb_bits = 0;
-	data_structures_global D;
+	data_structures::data_structures_global D;
 
 	if (f == 0) {
 		nb_bits = bits_per_digit1;
@@ -469,7 +469,7 @@ int direct_product::get_digit(uchar *elt, int f, int i)
 	int h0 = 0;
 	int h, h1, a, d;
 	int nb_bits = 0;
-	data_structures_global D;
+	data_structures::data_structures_global D;
 
 	if (f == 0) {
 		nb_bits = bits_per_digit1;
@@ -501,7 +501,7 @@ void direct_product::make_element(int *Elt, int *data, int verbose_level)
 		}
 	if (f_v) {
 		cout << "direct_product::make_element data:" << endl;
-		Orbiter->Int_vec.print(cout, data, make_element_size);
+		Orbiter->Int_vec->print(cout, data, make_element_size);
 		cout << endl;
 	}
 	M1->make_element(Elt + offset_i(0),
@@ -627,26 +627,26 @@ void direct_product::make_strong_generators_data(int *&data,
 	h = 0;
 	// generators for the second component:
 	for (g = 0; g < GL2_nb_gens; g++) {
-		Orbiter->Int_vec.zero(dat, size);
+		Orbiter->Int_vec->zero(dat, size);
 		F1->Linear_algebra->identity_matrix(
 					dat,
 					dimension_of_matrix_group1);
-		Orbiter->Int_vec.copy(GL2_data + g * GL2_size,
+		Orbiter->Int_vec->copy(GL2_data + g * GL2_size,
 					dat + M1->make_element_size,
 					GL2_size);
-		Orbiter->Int_vec.copy(dat, data + h * size, size);
+		Orbiter->Int_vec->copy(dat, data + h * size, size);
 		h++;
 	}
 	// generators for the first component:
 	for (g = 0; g < GL1_nb_gens; g++) {
-		Orbiter->Int_vec.zero(dat, size);
-		Orbiter->Int_vec.copy(GL1_data + g * GL1_size,
+		Orbiter->Int_vec->zero(dat, size);
+		Orbiter->Int_vec->copy(GL1_data + g * GL1_size,
 					dat + 0,
 					GL1_size);
 		F2->Linear_algebra->identity_matrix(
 					dat + M1->make_element_size,
 					dimension_of_matrix_group2);
-		Orbiter->Int_vec.copy(dat, data + h * size, size);
+		Orbiter->Int_vec->copy(dat, data + h * size, size);
 		h++;
 	}
 	if (h != nb_gens) {

@@ -157,7 +157,7 @@ void clique_finder::free()
 void clique_finder::init(clique_finder_control *Control,
 		std::string &label, int n,
 		int f_has_adj_list, int *adj_list_coded,
-		int f_has_bitvector, bitvector *Bitvec_adjacency,
+		int f_has_bitvector, data_structures::bitvector *Bitvec_adjacency,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -213,10 +213,10 @@ void clique_finder::init(clique_finder_control *Control,
 	level_m = NEW_int(Control->target_size);
 	current_clique = NEW_int(Control->target_size);
 
-	Orbiter->Int_vec.zero(level_counter, Control->target_size);
-	Orbiter->Int_vec.zero(f_level_mod, Control->target_size);
-	Orbiter->Int_vec.zero(level_r, Control->target_size);
-	Orbiter->Int_vec.zero(level_m, Control->target_size);
+	Orbiter->Int_vec->zero(level_counter, Control->target_size);
+	Orbiter->Int_vec->zero(f_level_mod, Control->target_size);
+	Orbiter->Int_vec->zero(level_r, Control->target_size);
+	Orbiter->Int_vec->zero(level_m, Control->target_size);
 
 
 	for (i = 0; i < n; i++) {
@@ -268,14 +268,14 @@ void clique_finder::init_restrictions(int *restrictions,
 void clique_finder::init_point_labels(int *pt_labels)
 {
 	point_labels = NEW_int(n);
-	Orbiter->Int_vec.copy(pt_labels, point_labels, n);
+	Orbiter->Int_vec->copy(pt_labels, point_labels, n);
 }
 
 void clique_finder::init_suspicious_points(int nb, int *point_list)
 {
 	int i, j, idx;
 	int *point_list_ordered;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	point_list_ordered = NEW_int(nb);
 	for (i = 0; i < nb; i++) {
@@ -576,7 +576,7 @@ void clique_finder::backtrack_search(int depth, int verbose_level)
 			// If we don't have a find_candidates callback,
 			// we take all the points into consideration:
 
-			Orbiter->Int_vec.copy(pt_list, candidates + depth * n, nb_points[depth]);
+			Orbiter->Int_vec->copy(pt_list, candidates + depth * n, nb_points[depth]);
 			nb_candidates[depth] = nb_points[depth];
 		}
 	}
@@ -1526,7 +1526,7 @@ void clique_finder::log_position_and_choice(int depth,
 	cout << " nb_sol=" << solutions.size() << " ";
 	if (FALSE) {
 		cout << " clique ";
-		Orbiter->Int_vec.set_print(cout, current_clique, depth);
+		Orbiter->Int_vec->set_print(cout, current_clique, depth);
 	}
 }
 
@@ -1537,7 +1537,7 @@ void clique_finder::log_position(int depth,
 	log_choice(depth);
 	if (FALSE) {
 		cout << " clique ";
-		Orbiter->Int_vec.set_print(cout, current_clique, depth);
+		Orbiter->Int_vec->set_print(cout, current_clique, depth);
 	}
 }
 
@@ -1559,7 +1559,7 @@ void clique_finder::log_choice(int depth)
 
 void clique_finder::swap_point(int idx1, int idx2)
 {
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	Sorting.int_vec_swap_points(pt_list, pt_list_inv, idx1, idx2);
 }
@@ -1703,7 +1703,7 @@ int clique_finder::s_ij(int i, int j)
 {
 	long int k;
 	int aij;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (i < 0 || i >= n) {
 		cout << "clique_finder::s_ij addressing error, i = "

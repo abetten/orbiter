@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace data_structures {
 
 
 int_matrix::int_matrix()
@@ -56,7 +57,7 @@ void int_matrix::allocate_and_init(int m, int n, int *Mtx)
 	M = NEW_int(m * n);
 	int_matrix::m = m;
 	int_matrix::n = n;
-	Orbiter->Int_vec.copy(Mtx, M, m * n);
+	Orbiter->Int_vec->copy(Mtx, M, m * n);
 }
 
 int &int_matrix::s_ij(int i, int j)
@@ -76,9 +77,8 @@ int &int_matrix::s_n()
 
 void int_matrix::print()
 {
-	Orbiter->Int_vec.matrix_print(M, m, n);
+	Orbiter->Int_vec->matrix_print(M, m, n);
 }
 
-}
-}
+}}}
 

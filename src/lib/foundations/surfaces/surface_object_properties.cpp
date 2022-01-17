@@ -303,7 +303,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vvv = (verbose_level >= 3);
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	latex_interface L;
 
 	if (f_v) {
@@ -400,11 +400,11 @@ void surface_object_properties::compute_properties(int verbose_level)
 	}
 	if (f_vvv) {
 		cout << "surface_object::compute_properties Eckardt_points_index=";
-		Orbiter->Int_vec.print(cout, Eckardt_points_index, nb_Eckardt_points);
+		Orbiter->Int_vec->print(cout, Eckardt_points_index, nb_Eckardt_points);
 		cout << endl;
 	}
 	Eckardt_points = NEW_lint(nb_Eckardt_points);
-	Orbiter->Int_vec.apply_lint(Eckardt_points_index, SO->Pts,
+	Orbiter->Int_vec->apply_lint(Eckardt_points_index, SO->Pts,
 		Eckardt_points, nb_Eckardt_points);
 	if (f_v) {
 		cout << "surface_object::compute_properties computing Eckardt points done, we found "
@@ -412,7 +412,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 	}
 	if (f_vvv) {
 		cout << "surface_object::compute_properties Eckardt_points=";
-		Orbiter->Lint_vec.print(cout, Eckardt_points, nb_Eckardt_points);
+		Orbiter->Lint_vec->print(cout, Eckardt_points, nb_Eckardt_points);
 		cout << endl;
 	}
 
@@ -439,7 +439,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 			Eckardt_points_schlaefli_labels[p] = idx;
 		}
 		Eckardt_point_bitvector_in_Schlaefli_labeling = NEW_int(45);
-		Orbiter->Int_vec.zero(Eckardt_point_bitvector_in_Schlaefli_labeling, 45);
+		Orbiter->Int_vec->zero(Eckardt_point_bitvector_in_Schlaefli_labeling, 45);
 		for (p = 0; p < nb_Eckardt_points; p++) {
 			idx = Eckardt_points_schlaefli_labels[p];
 			Eckardt_point_bitvector_in_Schlaefli_labeling[idx] = TRUE;
@@ -473,11 +473,11 @@ void surface_object_properties::compute_properties(int verbose_level)
 	}
 	if (f_vvv) {
 		cout << "Double_points_index=";
-		Orbiter->Int_vec.print(cout, Double_points_index, nb_Double_points);
+		Orbiter->Int_vec->print(cout, Double_points_index, nb_Double_points);
 		cout << endl;
 	}
 	Double_points = NEW_lint(nb_Double_points);
-	Orbiter->Int_vec.apply_lint(Double_points_index, SO->Pts,
+	Orbiter->Int_vec->apply_lint(Double_points_index, SO->Pts,
 		Double_points, nb_Double_points);
 	if (f_v) {
 		cout << "computing Double points done, we found "
@@ -485,7 +485,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 	}
 	if (f_vvv) {
 		cout << "Double_points=";
-		Orbiter->Lint_vec.print(cout, Double_points, nb_Double_points);
+		Orbiter->Lint_vec->print(cout, Double_points, nb_Double_points);
 		cout << endl;
 	}
 
@@ -507,11 +507,11 @@ void surface_object_properties::compute_properties(int verbose_level)
 	}
 	if (f_vvv) {
 		cout << "Single_points_index=";
-		Orbiter->Int_vec.print(cout, Single_points_index, nb_Single_points);
+		Orbiter->Int_vec->print(cout, Single_points_index, nb_Single_points);
 		cout << endl;
 	}
 	Single_points = NEW_lint(nb_Single_points);
-	Orbiter->Int_vec.apply_lint(Single_points_index, SO->Pts,
+	Orbiter->Int_vec->apply_lint(Single_points_index, SO->Pts,
 			Single_points, nb_Single_points);
 	if (f_v) {
 		cout << "computing Single points done, we found "
@@ -519,7 +519,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 	}
 	if (f_vvv) {
 		cout << "Single_points=";
-		Orbiter->Lint_vec.print(cout, Single_points, nb_Single_points);
+		Orbiter->Lint_vec->print(cout, Single_points, nb_Single_points);
 		cout << endl;
 	}
 
@@ -533,7 +533,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 
 
 	Pts_not_on_lines = NEW_lint(SO->nb_pts);
-	Orbiter->Lint_vec.copy(SO->Pts, Pts_not_on_lines, SO->nb_pts);
+	Orbiter->Lint_vec->copy(SO->Pts, Pts_not_on_lines, SO->nb_pts);
 	nb_pts_not_on_lines = SO->nb_pts;
 
 	int i, j, a, b, idx, h;
@@ -584,7 +584,7 @@ void surface_object_properties::compute_properties(int verbose_level)
 	{
 		tally T_planes;
 		int *H_planes;
-		sorting Sorting;
+		data_structures::sorting Sorting;
 
 		T_planes.init(Eckardt_points_plane_type, SO->Surf->P->Nb_subspaces[2], FALSE, 0);
 
@@ -636,7 +636,7 @@ void surface_object_properties::compute_axes(int verbose_level)
 			}
 			if (h == 3) {
 				Axes_index[nb_axes] = 2 * t + i;
-				Orbiter->Lint_vec.copy(SO->Surf->Schlaefli->Trihedral_to_Eckardt + t * 6 + i * 3,
+				Orbiter->Lint_vec->copy(SO->Surf->Schlaefli->Trihedral_to_Eckardt + t * 6 + i * 3,
 						Axes_Eckardt_points + nb_axes * 3, 3);
 				nb_axes++;
 			}
@@ -717,7 +717,7 @@ void surface_object_properties::compute_singular_points_and_tangent_planes(int v
 		if (f_vv) {
 			cout << "surface_object_properties::compute_singular_points_and_tangent_planes "
 					"v=";
-			Orbiter->Int_vec.print(cout, v, 4);
+			Orbiter->Int_vec->print(cout, v, 4);
 			cout << endl;
 		}
 		for (i = 0; i < nb_eqns; i++) {
@@ -728,7 +728,7 @@ void surface_object_properties::compute_singular_points_and_tangent_planes(int v
 			if (FALSE) {
 				cout << "surface_object_properties::compute_singular_points_and_tangent_planes "
 						"gradient " << i << " = ";
-				Orbiter->Int_vec.print(cout,
+				Orbiter->Int_vec->print(cout,
 						gradient + i * SO->Surf->Poly2_4->get_nb_monomials(),
 						SO->Surf->Poly2_4->get_nb_monomials());
 				cout << endl;
@@ -763,7 +763,7 @@ void surface_object_properties::compute_singular_points_and_tangent_planes(int v
 		}
 	}
 
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	int nb_tangent_planes;
 
 	nb_tangent_planes = nb_non_singular_pts;
@@ -847,7 +847,7 @@ void surface_object_properties::compute_adjacency_matrix_of_line_intersection_gr
 				"matrix_of_line_intersection_graph" << endl;
 	}
 
-	Line_neighbors = NEW_OBJECT(set_of_sets);
+	Line_neighbors = NEW_OBJECT(data_structures::set_of_sets);
 	Line_neighbors->init_from_adjacency_matrix(SO->nb_lines,
 		Adj_line_intersection_graph, 0 /* verbose_level*/);
 
@@ -1559,7 +1559,7 @@ void surface_object_properties::print_adjacency_matrix_with_intersection_points(
 void surface_object_properties::print_neighbor_sets(std::ostream &ost)
 {
 	int i, j, h, p;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	//ost << "\\clearpage" << endl;
 	ost << "Neighbor sets in the line intersection graph:\\\\" << endl;
@@ -1779,7 +1779,7 @@ void surface_object_properties::print_single_tritangent_plane(std::ostream &ost,
 	ost << "dual pt rank = $" << b << "$ ";
 	SO->F->PG_element_unrank_modified(v4, 1, 4, b);
 	ost << "$=";
-	Orbiter->Int_vec.print(ost, v4, 4);
+	Orbiter->Int_vec->print(ost, v4, 4);
 	ost << "$.\\\\" << endl;
 
 }
@@ -1848,7 +1848,7 @@ void surface_object_properties::print_lines_with_points_on_them(std::ostream &os
 					pt = pts_on_lines->Sets[i][j];
 					ost << j << " : " << pt << " : ";
 					SO->Surf->unrank_point(w, SO->Pts[pt]);
-					Orbiter->Int_vec.print(ost, w, 4);
+					Orbiter->Int_vec->print(ost, w, 4);
 					ost << " : ";
 					if (tangent_plane_rank_global[pt] == -1) {
 						ost << " is singular\\\\" << endl;
@@ -1883,7 +1883,7 @@ void surface_object_properties::print_equation(std::ostream &ost)
 #else
 	SO->Surf->print_equation_with_line_breaks_tex(ost, SO->eqn);
 #endif
-	Orbiter->Int_vec.print(ost, SO->eqn, 20);
+	Orbiter->Int_vec->print(ost, SO->eqn, 20);
 	ost << "\\\\" << endl;
 
 	long int rk;
@@ -2145,7 +2145,7 @@ void surface_object_properties::print_Hesse_planes(std::ostream &ost)
 	ost << "\\subsection*{Hesse planes}" << endl;
 	ost << "Number of Hesse planes: " << nb_Hesse_planes << "\\\\" << endl;
 	ost << "Set of Hesse planes: ";
-	Orbiter->Lint_vec.print(ost, Hesse_planes, nb_Hesse_planes);
+	Orbiter->Lint_vec->print(ost, Hesse_planes, nb_Hesse_planes);
 	ost << "\\\\" << endl;
 
 	SO->Surf->Gr3->print_set_tex(ost, Hesse_planes, nb_Hesse_planes);
@@ -2376,7 +2376,7 @@ void surface_object_properties::print_double_points(std::ostream &ost)
 				//ost << "P_{" << p << "} = ";
 				ost << "$P_{" << SO->Pts[p] << "}";
 				ost << " = ";
-				Orbiter->Int_vec.print_fully(ost, v, 4);
+				Orbiter->Int_vec->print_fully(ost, v, 4);
 
 
 				if (SO->nb_lines == 27) {
@@ -2439,7 +2439,7 @@ void surface_object_properties::print_single_points(std::ostream &ost)
 			p = Single_points_index[i];
 			a = lines_on_point->Sets[p][0];
 			ost << "$P_{" << Single_points[i] << "}=";
-			Orbiter->Int_vec.print_fully(ost, v, 4);
+			Orbiter->Int_vec->print_fully(ost, v, 4);
 			ost << "$";
 			if (SO->nb_lines == 27) {
 				ost << " lies on line $" << SO->Surf->Schlaefli->Labels->Line_label_tex[a] << "$";
@@ -2513,11 +2513,11 @@ void surface_object_properties::print_all_points_on_surface(std::ostream &ost)
 		for (i = 0; i < SO->nb_pts; i++) {
 			SO->Surf->unrank_point(v, SO->Pts[i]);
 			ost << i << " : $P_{" << SO->Pts[i] << "}=";
-			Orbiter->Int_vec.print_fully(ost, v, 4);
+			Orbiter->Int_vec->print_fully(ost, v, 4);
 			ost << "$\\\\" << endl;
 			}
 		ost << "\\end{multicols}" << endl;
-		Orbiter->Lint_vec.print_fully(ost, SO->Pts, SO->nb_pts);
+		Orbiter->Lint_vec->print_fully(ost, SO->Pts, SO->nb_pts);
 		ost << "\\\\" << endl;
 	}
 	else {
@@ -2584,7 +2584,7 @@ void surface_object_properties::print_points_on_surface_but_not_on_a_line(std::o
 		for (i = 0; i < nb_pts_not_on_lines; i++) {
 			SO->Surf->unrank_point(v, Pts_not_on_lines[i]);
 			ost << i << " : $P_{" << Pts_not_on_lines[i] << "}=";
-			Orbiter->Int_vec.print_fully(ost, v, 4);
+			Orbiter->Int_vec->print_fully(ost, v, 4);
 			ost << "$\\\\" << endl;
 			}
 		ost << "\\end{multicols}" << endl;
@@ -2926,7 +2926,7 @@ void surface_object_properties::make_equation_in_trihedral_form(int t_idx,
 		G_planes + 4, G_planes + 8,
 		eqn_G, FALSE /* verbose_level */);
 
-	Orbiter->Int_vec.copy(eqn_G, eqn_G2, 20);
+	Orbiter->Int_vec->copy(eqn_G, eqn_G2, 20);
 	SO->F->Linear_algebra->scalar_multiply_vector_in_place(lambda, eqn_G2, 20);
 	SO->F->Linear_algebra->add_vector(eqn_F, eqn_G2, equation, 20);
 	SO->F->PG_element_normalize(equation, 1, 20);
@@ -3086,7 +3086,7 @@ void surface_object_properties::clebsch_map_latex(std::ostream &ost,
 		ost << " & ";
 		a = SO->Pts[i];
 		SO->Surf->unrank_point(v, a);
-		Orbiter->Int_vec.print(ost, v, 4);
+		Orbiter->Int_vec->print(ost, v, 4);
 		ost << " & ";
 
 		for (j = 0; j < lines_on_point->Set_size[i]; j++) {
@@ -3100,7 +3100,7 @@ void surface_object_properties::clebsch_map_latex(std::ostream &ost,
 
 
 		if (Clebsch_map[i] >= 0) {
-			Orbiter->Int_vec.print(ost, Clebsch_coeff + i * 4, 4);
+			Orbiter->Int_vec->print(ost, Clebsch_coeff + i * 4, 4);
 		}
 		else {
 			ost << "\\mbox{undef}";
@@ -3108,7 +3108,7 @@ void surface_object_properties::clebsch_map_latex(std::ostream &ost,
 		ost << " & ";
 		if (Clebsch_map[i] >= 0) {
 			SO->Surf->P2->unrank_point(w, Clebsch_map[i]);
-			Orbiter->Int_vec.print(ost, w, 3);
+			Orbiter->Int_vec->print(ost, w, 3);
 		}
 		else {
 			ost << "\\mbox{undef}";
@@ -3252,7 +3252,7 @@ void surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P
 		cout << "surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P" << endl;
 	}
 	f_deleted = NEW_int(nb_pts_not_on_lines);
-	Orbiter->Int_vec.zero(f_deleted, nb_pts_not_on_lines);
+	Orbiter->Int_vec->zero(f_deleted, nb_pts_not_on_lines);
 
 	P = SO->Pts[P_idx];
 	for (i = 0; i < nb_pts_not_on_lines; i++) {
@@ -3271,7 +3271,7 @@ void surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P
 			SO->F->PG_element_unrank_modified(v, 1, 2, j);
 			if (f_vv) {
 				cout << "surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P v=" << endl;
-				Orbiter->Int_vec.print(cout, v, 2);
+				Orbiter->Int_vec->print(cout, v, 2);
 				cout << endl;
 			}
 
@@ -3279,7 +3279,7 @@ void surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P
 					0 /* verbose_level */);
 			if (f_vv) {
 				cout << "surface_object_properties::compute_reduced_set_of_points_not_on_lines_wrt_P w=" << endl;
-				Orbiter->Int_vec.print(cout, w, 4);
+				Orbiter->Int_vec->print(cout, w, 4);
 				cout << endl;
 			}
 

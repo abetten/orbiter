@@ -105,7 +105,7 @@ void orbit_of_sets::compute(int verbose_level)
 	long int *new_set;
 	long int *Q;
 	int Q_len;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "orbit_of_sets::compute" << endl;
@@ -117,7 +117,7 @@ void orbit_of_sets::compute(int verbose_level)
 	Sets = NEW_plint(allocation_length);
 	Extra = NEW_int(allocation_length * 2);
 	Sets[0] = NEW_lint(sz);
-	Orbiter->Lint_vec.copy(set, Sets[0], sz);
+	Orbiter->Lint_vec->copy(set, Sets[0], sz);
 	position_of_original_set = 0;
 	Sorting.lint_vec_heapsort(Sets[0], sz);
 
@@ -126,7 +126,7 @@ void orbit_of_sets::compute(int verbose_level)
 
 
 	uint32_t h;
-	data_structures_global Data;
+	data_structures::data_structures_global Data;
 
 	h = Data.lint_vec_hash(Sets[0], sz);
 	Hashing.insert(pair<uint32_t, int>(h, 0));
@@ -139,7 +139,7 @@ void orbit_of_sets::compute(int verbose_level)
 		if (f_vv) {
 			cout << "Q_len = " << Q_len << " : used_length="
 					<< used_length << " : ";
-			Orbiter->Lint_vec.print(cout, Q, Q_len);
+			Orbiter->Lint_vec->print(cout, Q, Q_len);
 			cout << endl;
 		}
 		cur = Q[0];
@@ -147,7 +147,7 @@ void orbit_of_sets::compute(int verbose_level)
 			Q[i - 1] = Q[i];
 		}
 		Q_len--;
-		Orbiter->Lint_vec.copy(Sets[cur], cur_set, sz);
+		Orbiter->Lint_vec->copy(Sets[cur], cur_set, sz);
 
 		for (j = 0; j < gens->len; j++) {
 			if (f_vv) {
@@ -168,7 +168,7 @@ void orbit_of_sets::compute(int verbose_level)
 		    f_found = FALSE;
 		    for (itr = itr1; itr != itr2; ++itr) {
 		        pos = itr->second;
-		        if (lint_vec_compare(new_set, Sets[pos], sz) == 0) {
+		        if (Sorting.lint_vec_compare(new_set, Sets[pos], sz) == 0) {
 		        	f_found = TRUE;
 		        	break;
 		        }
@@ -197,7 +197,7 @@ void orbit_of_sets::compute(int verbose_level)
 						cout << "reallocate Extra" << endl;
 					}
 					Extra2 = NEW_int(al2 * 2);
-					Orbiter->Int_vec.copy(Extra, Extra2, allocation_length * 2);
+					Orbiter->Int_vec->copy(Extra, Extra2, allocation_length * 2);
 					FREE_int(Extra);
 					Extra = Extra2;
 
@@ -206,7 +206,7 @@ void orbit_of_sets::compute(int verbose_level)
 						cout << "reallocate Q2" << endl;
 					}
 					Q2 = NEW_lint(al2);
-					Orbiter->Lint_vec.copy(Q, Q2, Q_len);
+					Orbiter->Lint_vec->copy(Q, Q2, Q_len);
 					FREE_lint(Q);
 					Q = Q2;
 
@@ -218,7 +218,7 @@ void orbit_of_sets::compute(int verbose_level)
 				}
 
 				Sets[used_length] = NEW_lint(sz);
-				Orbiter->Lint_vec.copy(new_set, Sets[used_length], sz);
+				Orbiter->Lint_vec->copy(new_set, Sets[used_length], sz);
 				Extra[used_length * 2 + 0] = cur;
 				Extra[used_length * 2 + 1] = j;
 				used_length++;
@@ -305,7 +305,7 @@ void orbit_of_sets::dump_tables_of_hash_values()
     map<uint32_t, int>::iterator itr;
     int pos;
     uint32_t h;
-    data_structures_global Data;
+    data_structures::data_structures_global Data;
 
     int cnt;
 
@@ -351,7 +351,7 @@ void orbit_of_sets::get_table_of_orbits_and_hash_values(long int *&Table,
 	int f_v = (verbose_level >= 1);
 	int i, j;
 	uint32_t h;
-	data_structures_global Data;
+	data_structures::data_structures_global Data;
 
 	set_size = sz + 1;
 	orbit_length = used_length;

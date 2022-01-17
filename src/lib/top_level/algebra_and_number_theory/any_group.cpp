@@ -373,7 +373,7 @@ void any_group::create_group_table(int verbose_level)
 	fname.append("_group_table.csv");
 
 	cout << "The group table is:" << endl;
-	Orbiter->Int_vec.matrix_print(Table, n, n, 2);
+	Orbiter->Int_vec->matrix_print(Table, n, n, 2);
 
 	Fio.int_matrix_write_csv(fname, Table, n, n);
 	cout << "Written file " << fname << " of size " << Fio.file_size(fname) << endl;
@@ -795,7 +795,7 @@ void any_group::order_of_products_of_elements(
 	int *elements;
 	int nb_elements;
 
-	Orbiter->Int_vec.scan(Elements_text, elements, nb_elements);
+	Orbiter->Int_vec->scan(Elements_text, elements, nb_elements);
 
 
 	string fname;
@@ -951,10 +951,10 @@ void any_group::apply_elements_to_set_csv(std::string &fname1, std::string &fnam
 	int *set_image_int;
 	int sz;
 	int *Rk;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 
-	Orbiter->Lint_vec.scan(set_text, set, sz);
+	Orbiter->Lint_vec->scan(set_text, set, sz);
 
 	V1.read_column_csv(fname1, A, 1 /* col_idx */, verbose_level);
 	n1 = V1.len;
@@ -978,7 +978,7 @@ void any_group::apply_elements_to_set_csv(std::string &fname1, std::string &fnam
 		Rk[i] = Combi.rank_k_subset(set_image_int, A->degree, sz);
 
 		cout << i << " : ";
-		Orbiter->Lint_vec.print(cout, set_image, sz);
+		Orbiter->Lint_vec->print(cout, set_image, sz);
 		cout << i << " : ";
 		cout << Rk[i];
 		cout << endl;
@@ -987,7 +987,7 @@ void any_group::apply_elements_to_set_csv(std::string &fname1, std::string &fnam
 
 
 	cout << "Image sets by rank: ";
-	Orbiter->Int_vec.print_fully(cout, Rk, n1);
+	Orbiter->Int_vec->print_fully(cout, Rk, n1);
 	cout << endl;
 
 
@@ -1361,13 +1361,13 @@ void any_group::orbits_on_set_system_from_file(std::string &fname_csv,
 			first = Sch->orbit_first[i];
 			a = Sch->orbit[first + 0];
 			cout << a << " : ";
-			Orbiter->Lint_vec.print(cout, Table + a * set_size, set_size);
+			Orbiter->Lint_vec->print(cout, Table + a * set_size, set_size);
 			cout << endl;
 			//Sch->print_and_list_orbit_tex(i, ost);
 		}
 	}
 	string fname;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	fname.assign(fname_csv);
 	ST.chop_off_extension(fname);
@@ -1417,7 +1417,7 @@ void any_group::orbits_on_set_from_file(std::string &fname_csv, int verbose_leve
 
 
 	string label_set;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	label_set.assign(fname_csv);
 	ST.chop_off_extension(label_set);
@@ -1785,11 +1785,11 @@ void any_group::do_conjugacy_class_of_element(
 
 	int *data, sz;
 
-	Orbiter->Int_vec.scan(elt_text, data, sz);
+	Orbiter->Int_vec->scan(elt_text, data, sz);
 
 	if (f_v) {
 		cout << "computing conjugacy class of ";
-		Orbiter->Int_vec.print(cout, data, sz);
+		Orbiter->Int_vec->print(cout, data, sz);
 		cout << endl;
 	}
 
@@ -1834,7 +1834,7 @@ void any_group::do_conjugacy_class_of_element(
 		cout << "computing conjugacy class of " << endl;
 		A->element_print_latex(Elt, cout);
 		cout << "which is the set ";
-		Orbiter->Lint_vec.print(cout, the_set, set_size);
+		Orbiter->Lint_vec->print(cout, the_set, set_size);
 		cout << endl;
 	}
 
@@ -2009,7 +2009,7 @@ void any_group::do_orbits_on_group_elements_under_conjugation(
 
 			if (FALSE) {
 				cout << i << " : ";
-				Orbiter->Int_vec.print(cout, M + i * n, n);
+				Orbiter->Int_vec->print(cout, M + i * n, n);
 				cout << endl;
 			}
 
@@ -2042,7 +2042,7 @@ void any_group::do_orbits_on_group_elements_under_conjugation(
 
 			if (FALSE) {
 				cout << i << " : ";
-				Orbiter->Int_vec.print(cout, M + i * n, n);
+				Orbiter->Int_vec->print(cout, M + i * n, n);
 				cout << endl;
 			}
 
@@ -2062,7 +2062,7 @@ void any_group::do_orbits_on_group_elements_under_conjugation(
 
 	if (f_v) {
 		cout << "computing conjugacy classes on the set " << endl;
-		Orbiter->Lint_vec.print(cout, the_ranks, m);
+		Orbiter->Lint_vec->print(cout, the_ranks, m);
 		cout << endl;
 	}
 

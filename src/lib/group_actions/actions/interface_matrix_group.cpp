@@ -150,7 +150,7 @@ static void matrix_group_element_image_of_low_level(action &A,
 	if (f_v) {
 		cout << "matrix_group_element_image_of_low_level "
 				"computing image of ";
-		Orbiter->Int_vec.print(cout, input, A.low_level_point_size);
+		Orbiter->Int_vec->print(cout, input, A.low_level_point_size);
 		cout << " in action " << A.label << endl;
 		}
 	G.action_from_the_right_all_types(input,
@@ -159,9 +159,9 @@ static void matrix_group_element_image_of_low_level(action &A,
 
 	if (f_v) {
 		cout << "matrix_group_element_image_of_low_level ";
-		Orbiter->Int_vec.print(cout, input, A.low_level_point_size);
+		Orbiter->Int_vec->print(cout, input, A.low_level_point_size);
 		cout << " -> ";
-		Orbiter->Int_vec.print(cout, output, A.low_level_point_size);
+		Orbiter->Int_vec->print(cout, output, A.low_level_point_size);
 		cout << endl;
 		}
 }
@@ -569,7 +569,7 @@ static void matrix_group_element_print_as_permutation(action &A,
 	int f_v = FALSE;
 	int *Elt = (int *) elt;
 	int i, j;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "matrix_group_element_print_as_permutation "
@@ -595,7 +595,7 @@ static void matrix_group_element_print_verbose(action &A,
 {
 	matrix_group &G = *A.G.matrix_grp;
 	int *Elt = (int *) elt;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	G.GL_print_easy(Elt, ost);
 	ost << "\n";
@@ -641,7 +641,7 @@ static void matrix_group_print_point(action &A, long int a, ostream &ost)
 		cout << "matrix_group_print_point unknown group type" << endl;
 		exit(1);
 		}
-	Orbiter->Int_vec.print(ost, G->v1, G->n);
+	Orbiter->Int_vec->print(ost, G->v1, G->n);
 }
 
 static void matrix_group_unrank_point(action &A, long int rk, int *v)

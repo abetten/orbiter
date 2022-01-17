@@ -38,7 +38,7 @@ int function_polish_description::read_arguments(
 {
 	int f_v = (verbose_level >= 1);
 	int i, i0, h;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "function_polish_description::read_arguments" << endl;

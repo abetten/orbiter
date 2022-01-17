@@ -65,7 +65,7 @@ void norm_tables::init(unusual_model &U, int verbose_level)
 {
 	int qq = U.FQ->q;
 	int i, f, l, j, a, b, c, jj;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	norm_table = NEW_int(qq);
 	for (i = 1; i < qq; i++) {
@@ -101,7 +101,7 @@ int norm_tables::choose_an_element_of_given_norm(
 		int norm, int verbose_level)
 {
 	int idx, f, gamma;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	Sorting.int_vec_search(the_type, nb_types, norm, idx);
 	f = type_first[idx];

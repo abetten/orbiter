@@ -57,7 +57,7 @@ void combinatorial_object_activity::init(combinatorial_object_activity_descripti
 
 void combinatorial_object_activity::init_input_stream(
 		combinatorial_object_activity_description *Descr,
-		data_input_stream *IS,
+		data_structures::data_input_stream *IS,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -246,7 +246,7 @@ void combinatorial_object_activity::perform_activity_GOC(int verbose_level)
 		cout << "looping over all generators of the ideal:" << endl;
 		for (h = 0; h < ns; h++) {
 			cout << "generator " << h << " / " << ns << " is ";
-			Orbiter->Int_vec.print(cout, Kernel + h * HPD->get_nb_monomials(), HPD->get_nb_monomials());
+			Orbiter->Int_vec->print(cout, Kernel + h * HPD->get_nb_monomials(), HPD->get_nb_monomials());
 			cout << " : " << endl;
 
 			vector<long int> Points;
@@ -264,7 +264,7 @@ void combinatorial_object_activity::perform_activity_GOC(int verbose_level)
 
 			cout << "We found " << nb_pts << " points on the generator of the ideal" << endl;
 			cout << "They are : ";
-			Orbiter->Lint_vec.print(cout, Pts, nb_pts);
+			Orbiter->Lint_vec->print(cout, Pts, nb_pts);
 			cout << endl;
 			HPD->get_P()->print_set_numerical(cout, Pts, nb_pts);
 
@@ -349,9 +349,9 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 			PA = (projective_space_with_action *) Orbiter->get_object(idx);
 		}
 
-		classification_of_objects *CO;
+		combinatorics::classification_of_objects *CO;
 
-		CO = NEW_OBJECT(classification_of_objects);
+		CO = NEW_OBJECT(combinatorics::classification_of_objects);
 
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_IS before CO->do_the_work" << endl;
@@ -408,9 +408,9 @@ void combinatorial_object_activity::perform_activity_IS(int verbose_level)
 
 
 
-		classification_of_objects *CO;
+		combinatorics::classification_of_objects *CO;
 
-		CO = NEW_OBJECT(classification_of_objects);
+		CO = NEW_OBJECT(combinatorics::classification_of_objects);
 
 		if (f_v) {
 			cout << "combinatorial_object_activity::perform_activity_IS before CO->do_the_work" << endl;
@@ -671,7 +671,7 @@ void combinatorial_object_activity::do_save(std::string &save_as_fname,
 
 		OwCF = (object_with_canonical_form *) IS->Objects[input_idx];
 
-		Orbiter->Lint_vec.copy(OwCF->set, Sets + input_idx * sz, sz);
+		Orbiter->Lint_vec->copy(OwCF->set, Sets + input_idx * sz, sz);
 	}
 
 	cout << "The combined number of objects is " << N << endl;
@@ -687,7 +687,7 @@ void combinatorial_object_activity::do_save(std::string &save_as_fname,
 		Sets2 = NEW_lint(extract_size * sz);
 		for (h = 0; h < extract_size; h++) {
 			i = extract_idx_set[h];
-			Orbiter->Lint_vec.copy(Sets + i * sz, Sets2 + h * sz, sz);
+			Orbiter->Lint_vec->copy(Sets + i * sz, Sets2 + h * sz, sz);
 		}
 		FREE_lint(Sets);
 		Sets = Sets2;
@@ -715,7 +715,7 @@ void combinatorial_object_activity::do_save(std::string &save_as_fname,
 }
 
 void combinatorial_object_activity::post_process_classification(
-		classification_of_objects *CO,
+		combinatorics::classification_of_objects *CO,
 		object_with_properties *&OwP,
 		int f_projective_space, projective_space_with_action *PA,
 		std::string &prefix,
@@ -763,7 +763,7 @@ void combinatorial_object_activity::post_process_classification(
 }
 
 void combinatorial_object_activity::classification_report(
-		classification_of_objects *CO,
+		combinatorics::classification_of_objects *CO,
 		object_with_properties *OwP,
 		int verbose_level)
 {
@@ -773,7 +773,7 @@ void combinatorial_object_activity::classification_report(
 		cout << "combinatorial_object_activity::classification_report" << endl;
 	}
 
-	classification_of_objects_report_options *Report_options;
+	combinatorics::classification_of_objects_report_options *Report_options;
 
 	if (CO->Descr->f_classification_prefix == FALSE) {
 		cout << "please use option -classification_prefix <prefix> to set the "
@@ -798,8 +798,8 @@ void combinatorial_object_activity::classification_report(
 }
 
 void combinatorial_object_activity::latex_report(
-		classification_of_objects_report_options *Report_options,
-		classification_of_objects *CO,
+		combinatorics::classification_of_objects_report_options *Report_options,
+		combinatorics::classification_of_objects *CO,
 		object_with_properties *OwP,
 		int verbose_level)
 {
@@ -865,8 +865,8 @@ void combinatorial_object_activity::latex_report(
 
 void combinatorial_object_activity::report_all_isomorphism_types(
 		std::ostream &fp,
-		classification_of_objects_report_options *Report_options,
-		classification_of_objects *CO,
+		combinatorics::classification_of_objects_report_options *Report_options,
+		combinatorics::classification_of_objects *CO,
 		object_with_properties *OwP,
 		int verbose_level)
 {
@@ -889,7 +889,7 @@ void combinatorial_object_activity::report_all_isomorphism_types(
 			<< CO->CB->Type_mult[i] << " times: \\\\" << endl;
 
 		{
-			sorting Sorting;
+			data_structures::sorting Sorting;
 			int *Input_objects;
 			int nb_input_objects;
 			CO->CB->C_type_of->get_class_by_value(Input_objects,
@@ -936,8 +936,8 @@ void combinatorial_object_activity::report_all_isomorphism_types(
 
 void combinatorial_object_activity::report_isomorphism_type(
 		std::ostream &fp,
-		classification_of_objects_report_options *Report_options,
-		classification_of_objects *CO,
+		combinatorics::classification_of_objects_report_options *Report_options,
+		combinatorics::classification_of_objects *CO,
 		object_with_properties *OwP,
 		int i, int verbose_level)
 {
@@ -1003,8 +1003,8 @@ void combinatorial_object_activity::report_isomorphism_type(
 }
 
 void combinatorial_object_activity::report_object(std::ostream &fp,
-		classification_of_objects_report_options *Report_options,
-		classification_of_objects *CO,
+		combinatorics::classification_of_objects_report_options *Report_options,
+		combinatorics::classification_of_objects *CO,
 		object_with_properties *OwP,
 		int object_idx,
 		int verbose_level)
@@ -1042,7 +1042,7 @@ void combinatorial_object_activity::report_object(std::ostream &fp,
 
 void combinatorial_object_activity::draw_incidence_matrices(
 		std::string &prefix,
-		data_input_stream *IS,
+		data_structures::data_input_stream *IS,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1093,7 +1093,7 @@ void combinatorial_object_activity::draw_incidence_matrices(
 			OwCF = (object_with_canonical_form *) IS->Objects[i];
 
 
-			encoded_combinatorial_object *Enc;
+			combinatorics::encoded_combinatorial_object *Enc;
 
 			OwCF->encode_incma(Enc, verbose_level);
 
@@ -1125,7 +1125,7 @@ void combinatorial_object_activity::draw_incidence_matrices(
 void combinatorial_object_activity::unpack_from_restricted_action(
 		std::string &prefix,
 		std::string &group_label,
-		data_input_stream *IS,
+		data_structures::data_input_stream *IS,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1235,7 +1235,7 @@ void combinatorial_object_activity::line_covering_type(
 		std::string &prefix,
 		std::string &projective_space_label,
 		std::string &lines,
-		data_input_stream *IS,
+		data_structures::data_input_stream *IS,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

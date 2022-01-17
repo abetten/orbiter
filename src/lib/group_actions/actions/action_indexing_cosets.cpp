@@ -25,7 +25,7 @@ void action::coset_unrank(sims *G, sims *U,
 	longinteger_object G0_order, G_order;
 	longinteger_object U_order, index, rem, a, b, c, d, Uk_order;
 	schreier G_orb, U_orb;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "action::coset_unrank rank=" << rank << endl;
@@ -131,7 +131,7 @@ void action::coset_unrank(sims *G, sims *U,
 
 	if (f_v) {
 		cout << "orbit of length " << orbit_len << ":";
-		Orbiter->Int_vec.print(cout, orbit, orbit_len);
+		Orbiter->Int_vec->print(cout, orbit, orbit_len);
 		cout << endl;
 		}
 
@@ -293,7 +293,7 @@ long int action::coset_rank(sims *G, sims *U, int *Elt, int verbose_level)
 	longinteger_domain D;
 	longinteger_object G0_order, G_order, U_order, index, rem, a, b, c, d, Uk_order;
 	schreier G_orb, U_orb;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "##################################" << endl;
@@ -395,7 +395,7 @@ long int action::coset_rank(sims *G, sims *U, int *Elt, int verbose_level)
 
 	if (f_v) {
 		cout << "G-orbit of length " << orbit_len << ":";
-		Orbiter->Int_vec.print(cout, orbit, orbit_len);
+		Orbiter->Int_vec->print(cout, orbit, orbit_len);
 		cout << endl;
 		}
 

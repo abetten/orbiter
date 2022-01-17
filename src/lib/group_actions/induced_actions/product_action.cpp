@@ -88,7 +88,7 @@ void product_action::init(action *A1, action *A2,
 	elt3 = NEW_uchar(coded_elt_size_in_char);
 
 
-	Elts = NEW_OBJECT(page_storage);
+	Elts = NEW_OBJECT(data_structures::page_storage);
 	if (f_vv) {
 		cout << "matrix_group::init_linear calling Elts->init" << endl;
 		}

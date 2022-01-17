@@ -386,7 +386,7 @@ void packing_was::init_regular_packing(int verbose_level)
 void packing_was::init_N(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "packing_was::init_N" << endl;
@@ -1236,10 +1236,10 @@ void packing_was::create_graph_on_mixed_orbits_and_save_to_file(
 	int *Orbit_lengths;
 	int nb_orbit_lengths;
 
-	Orbiter->Int_vec.scan(orbit_lengths_text, Orbit_lengths, nb_orbit_lengths);
+	Orbiter->Int_vec->scan(orbit_lengths_text, Orbit_lengths, nb_orbit_lengths);
 	if (f_v) {
 		cout << "packing_was::create_graph_on_mixed_orbits_and_save_to_file orbit_lengths: ";
-		Orbiter->Int_vec.print(cout, Orbit_lengths, nb_orbit_lengths);
+		Orbiter->Int_vec->print(cout, Orbit_lengths, nb_orbit_lengths);
 		cout << endl;
 	}
 
@@ -1275,7 +1275,7 @@ void packing_was::create_graph_on_mixed_orbits_and_save_to_file(
 
 	if (f_v) {
 		cout << "packing_was::create_graph_on_mixed_orbits_and_save_to_file Type_idx: ";
-		Orbiter->Int_vec.print(cout, Type_idx, nb_orbit_lengths);
+		Orbiter->Int_vec->print(cout, Type_idx, nb_orbit_lengths);
 		cout << endl;
 	}
 
@@ -1794,7 +1794,7 @@ void packing_was::get_spreads_in_reduced_orbits_by_type(int type_idx,
 	cout << "Type " << type_idx << " has " << nb_spreads << " spreads:\\\\" << endl;
 
 	spreads_in_reduced_orbits_by_type = NEW_lint(nb_spreads);
-	Orbiter->Lint_vec.zero(spreads_in_reduced_orbits_by_type, nb_spreads);
+	Orbiter->Lint_vec->zero(spreads_in_reduced_orbits_by_type, nb_spreads);
 
 
 
@@ -2173,7 +2173,7 @@ void packing_was_print_function(std::ostream &ost, long int a, void *data)
 	P->Line_orbits_under_H->get_orbit_number_and_position(b, orbit_idx2, orbit_pos2, verbose_level);
 	ost << "=(" << orbit_idx1 << "," << orbit_pos1 << ")" << endl;
 	ost << "dual=";
-	Orbiter->Int_vec.print(ost, Mtx + 8, 8);
+	Orbiter->Int_vec->print(ost, Mtx + 8, 8);
 	ost << "=(" << orbit_idx2 << "," << orbit_pos2 << ")" << endl;
 }
 

@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace combinatorics {
 
 
 
@@ -81,7 +82,7 @@ void classification_of_objects::do_the_work(
 		classification_of_objects_description *Descr,
 		int f_projective_space,
 		projective_space *P,
-		data_input_stream *IS,
+		data_structures::data_input_stream *IS,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -98,7 +99,7 @@ void classification_of_objects::do_the_work(
 
 	//int i;
 
-	CB = NEW_OBJECT(classify_bitvectors);
+	CB = NEW_OBJECT(data_structures::classify_bitvectors);
 
 
 
@@ -161,7 +162,7 @@ void classification_of_objects::classify_objects_using_nauty(
 
 	OWCF_transversal = (object_with_canonical_form **) NEW_pvoid(IS->Objects.size());
 
-	NO_transversal = (nauty_output **) NEW_pvoid(IS->Objects.size());
+	NO_transversal = (data_structures::nauty_output **) NEW_pvoid(IS->Objects.size());
 
 
 	nb_orbits = 0;
@@ -189,7 +190,7 @@ void classification_of_objects::classify_objects_using_nauty(
 		}
 
 
-		nauty_output *NO;
+		data_structures::nauty_output *NO;
 
 		process_any_object(OwCF,
 					input_idx,
@@ -324,7 +325,7 @@ void classification_of_objects::save_automorphism_group_order(int verbose_level)
 	}
 	string ago_fname;
 	file_io Fio;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (Descr->f_label) {
 		ago_fname.assign(Descr->label);
@@ -353,7 +354,7 @@ void classification_of_objects::save_transversal(int verbose_level)
 	}
 	string fname;
 	file_io Fio;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (Descr->f_label) {
 		fname.assign(Descr->label);
@@ -374,7 +375,7 @@ void classification_of_objects::save_transversal(int verbose_level)
 }
 
 void classification_of_objects::process_any_object(object_with_canonical_form *OwCF,
-		int input_idx, long int &ago, int &f_reject, nauty_output *&NO,
+		int input_idx, long int &ago, int &f_reject, data_structures::nauty_output *&NO,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -478,7 +479,7 @@ int classification_of_objects::process_object(
 	//strong_generators *&SG, action *&A_perm,
 	long int &ago,
 	int &iso_idx_if_found,
-	nauty_output *&NO,
+	data_structures::nauty_output *&NO,
 	int verbose_level)
 // returns f_found, which is TRUE if the object is rejected
 {
@@ -490,7 +491,7 @@ int classification_of_objects::process_object(
 	}
 
 
-	bitvector *Canonical_form;
+	data_structures::bitvector *Canonical_form;
 
 
 	if (f_projective_space) {
@@ -809,7 +810,7 @@ void classification_of_objects::report_summary_of_orbits(
 	col_part_len[0] = width;
 
 	Table = NEW_int(CB->nb_types * width);
-	Orbiter->Int_vec.zero(Table, CB->nb_types * width);
+	Orbiter->Int_vec->zero(Table, CB->nb_types * width);
 
 	row_labels = NEW_int(CB->nb_types);
 	col_labels = NEW_int(width);
@@ -890,7 +891,7 @@ void classification_of_objects::report_all_isomorphism_types(
 			<< CB->Type_mult[i] << " times: \\\\" << endl;
 
 		{
-			sorting Sorting;
+			data_structures::sorting Sorting;
 			int *Input_objects;
 			int nb_input_objects;
 			CB->C_type_of->get_class_by_value(Input_objects,
@@ -1026,11 +1027,11 @@ void print_summary_table_entry(int *Table,
 		int m, int n, int i, int j, int val, std::string &output, void *data)
 {
 	int f_v = TRUE;
-	classify_bitvectors *CB;
+	data_structures::classify_bitvectors *CB;
 	//object_in_projective_space_with_action *OiPA;
 	//void *extra_data;
 	int h;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	char str[1000];
 
 	if (f_v) {
@@ -1139,5 +1140,6 @@ void print_summary_table_entry(int *Table,
 
 
 
-}}
+}}}
+
 

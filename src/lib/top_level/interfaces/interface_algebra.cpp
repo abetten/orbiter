@@ -44,6 +44,10 @@ interface_algebra::interface_algebra()
 	order_of_q_mod_n_n_min = 0;
 	order_of_q_mod_n_n_max = 0;
 
+	f_eulerfunction_interval = FALSE;
+	eulerfunction_interval_n_min = 0;
+	eulerfunction_interval_n_max = 0;
+
 	f_young_symmetrizer = FALSE;
 	young_symmetrizer_n = 0;
 
@@ -53,9 +57,9 @@ interface_algebra::interface_algebra()
 	f_draw_mod_n = FALSE;
 	Draw_mod_n_description = NULL;
 
-	f_power_mod_n = FALSE;
-	power_mod_n_a = 0;
-	power_mod_n_n = 0;
+	f_power_function_mod_n = FALSE;
+	power_function_mod_n_k = 0;
+	power_function_mod_n_n = 0;
 
 
 	f_all_rational_normal_forms = FALSE;
@@ -76,7 +80,7 @@ interface_algebra::interface_algebra()
 void interface_algebra::print_help(int argc,
 		std::string *argv, int i, int verbose_level)
 {
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (ST.stringcmp(argv[i], "-count_subprimitive") == 0) {
 		cout << "-count_subprimitive <int : Q_max> <int : H_max>" << endl;
@@ -96,6 +100,9 @@ void interface_algebra::print_help(int argc,
 	else if (ST.stringcmp(argv[i], "-order_of_q_mod_n") == 0) {
 		cout << "-order_of_q_mod_n <int : q> <int : n_min> <int : n_max>  " << endl;
 	}
+	else if (ST.stringcmp(argv[i], "-eulerfunction_interval") == 0) {
+		cout << "-eulerfunction_interval <int : n_min> <int : n_max>  " << endl;
+	}
 	else if (ST.stringcmp(argv[i], "-young_symmetrizer") == 0) {
 		cout << "-young_symmetrizer  " << endl;
 	}
@@ -105,8 +112,8 @@ void interface_algebra::print_help(int argc,
 	else if (ST.stringcmp(argv[i], "-draw_mod_n") == 0) {
 		cout << "-draw_mod_n descr -end" << endl;
 	}
-	else if (ST.stringcmp(argv[i], "-power_mod_n") == 0) {
-		cout << "-power_mod_n <int : a> <int : n>" << endl;
+	else if (ST.stringcmp(argv[i], "-power_function_mod_n") == 0) {
+		cout << "-power_function_mod_n <int : a> <int : n>" << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-all_rational_normal_forms") == 0) {
 		cout << "-all_rational_normal_forms <string : finite_field_label> <int : degree>" << endl;
@@ -124,7 +131,7 @@ int interface_algebra::recognize_keyword(int argc,
 		std::string *argv, int i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "interface_algebra::recognize_keyword" << endl;
@@ -150,6 +157,9 @@ int interface_algebra::recognize_keyword(int argc,
 	else if (ST.stringcmp(argv[i], "-order_of_q_mod_n") == 0) {
 		return true;
 	}
+	else if (ST.stringcmp(argv[i], "-eulerfunction_interval") == 0) {
+		return true;
+	}
 	else if (ST.stringcmp(argv[i], "-young_symmetrizer") == 0) {
 		return true;
 	}
@@ -159,7 +169,7 @@ int interface_algebra::recognize_keyword(int argc,
 	else if (ST.stringcmp(argv[i], "-draw_mod_n") == 0) {
 		return true;
 	}
-	else if (ST.stringcmp(argv[i], "-power_mod_n") == 0) {
+	else if (ST.stringcmp(argv[i], "-power_function_mod_n") == 0) {
 		return true;
 	}
 	else if (ST.stringcmp(argv[i], "-all_rational_normal_forms") == 0) {
@@ -182,7 +192,7 @@ void interface_algebra::read_arguments(int argc,
 		std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "interface_algebra::read_arguments" << endl;
@@ -240,6 +250,15 @@ void interface_algebra::read_arguments(int argc,
 				<< " " << order_of_q_mod_n_n_max << " " << endl;
 	}
 
+	else if (ST.stringcmp(argv[i], "-eulerfunction_interval") == 0) {
+		f_eulerfunction_interval = TRUE;
+		eulerfunction_interval_n_min = ST.strtoi(argv[++i]);
+		eulerfunction_interval_n_max = ST.strtoi(argv[++i]);
+		cout << "-eulerfunction_interval "
+				<< " " << eulerfunction_interval_n_min
+				<< " " << eulerfunction_interval_n_max << " " << endl;
+	}
+
 
 
 	else if (ST.stringcmp(argv[i], "-young_symmetrizer") == 0) {
@@ -267,13 +286,13 @@ void interface_algebra::read_arguments(int argc,
 		}
 		cout << "-draw_mod_n " << endl;
 	}
-	else if (ST.stringcmp(argv[i], "-power_mod_n") == 0) {
-		f_power_mod_n = TRUE;
-		power_mod_n_a = ST.strtoi(argv[++i]);
-		power_mod_n_n = ST.strtoi(argv[++i]);
+	else if (ST.stringcmp(argv[i], "-power_function_mod_n") == 0) {
+		f_power_function_mod_n = TRUE;
+		power_function_mod_n_k = ST.strtoi(argv[++i]);
+		power_function_mod_n_n = ST.strtoi(argv[++i]);
 		cout << "-power_mod_n " << " "
-				<< power_mod_n_a << " "
-				<< power_mod_n_n << endl;
+				<< power_function_mod_n_k << " "
+				<< power_function_mod_n_n << endl;
 	}
 	else if (ST.stringcmp(argv[i], "-all_rational_normal_forms") == 0) {
 		f_all_rational_normal_forms = TRUE;
@@ -345,6 +364,11 @@ void interface_algebra::print()
 				<< " " << order_of_q_mod_n_n_max << " " << endl;
 	}
 
+	if (f_eulerfunction_interval) {
+		cout << "-eulerfunction_interval "
+				<< " " << eulerfunction_interval_n_min
+				<< " " << eulerfunction_interval_n_max << " " << endl;
+	}
 
 	if (f_young_symmetrizer) {
 		cout << "-young_symmetrizer " << " " << young_symmetrizer_n << endl;
@@ -356,8 +380,8 @@ void interface_algebra::print()
 		cout << "-draw_mod_n " << endl;
 		Draw_mod_n_description->print();
 	}
-	if (f_power_mod_n) {
-		cout << "-power_mod_n " << " " << power_mod_n_a << " " << power_mod_n_n << endl;
+	if (f_power_function_mod_n) {
+		cout << "-power_function_mod_n " << " " << power_function_mod_n_k << " " << power_function_mod_n_n << endl;
 	}
 
 	if (f_all_rational_normal_forms) {
@@ -402,7 +426,7 @@ void interface_algebra::worker(int verbose_level)
 
 	else if (f_count_subprimitive) {
 
-		algebra_global Algebra;
+		algebra::algebra_global Algebra;
 
 		Algebra.count_subprimitive(count_subprimitive_Q_max,
 				count_subprimitive_H_max);
@@ -410,7 +434,7 @@ void interface_algebra::worker(int verbose_level)
 
 	else if (f_equivalence_class_of_fractions) {
 
-		algebra_global Algebra;
+		algebra::algebra_global Algebra;
 
 		Algebra.do_equivalence_class_of_fractions(equivalence_class_of_fractions_N,
 				verbose_level);
@@ -427,13 +451,24 @@ void interface_algebra::worker(int verbose_level)
 
 	else if (f_order_of_q_mod_n) {
 
-		algebra_global Algebra;
+		algebra::algebra_global Algebra;
 
 		Algebra.order_of_q_mod_n(
 				order_of_q_mod_n_q, order_of_q_mod_n_n_min, order_of_q_mod_n_n_max,
 				verbose_level);
 
 	}
+
+	else if (f_eulerfunction_interval) {
+
+		number_theory_domain NT;
+
+		NT.do_eulerfunction_interval(
+				eulerfunction_interval_n_min, eulerfunction_interval_n_max,
+				verbose_level);
+
+	}
+
 
 	else if (f_young_symmetrizer) {
 		algebra_global_with_action Algebra;
@@ -462,12 +497,12 @@ void interface_algebra::worker(int verbose_level)
 				verbose_level);
 	}
 
-	else if (f_power_mod_n) {
+	else if (f_power_function_mod_n) {
 
-		algebra_global Algebra;
+		algebra::algebra_global Algebra;
 
-		Algebra.power_mod_n(
-				power_mod_n_a, power_mod_n_n,
+		Algebra.power_function_mod_n(
+				power_function_mod_n_k, power_function_mod_n_n,
 				verbose_level);
 
 	}
@@ -505,7 +540,7 @@ void interface_algebra::worker(int verbose_level)
 
 		F = (finite_field *) The_Orbiter_top_level_session->get_object(idx);
 
-		Orbiter->Int_vec.scan(eigenstuff_coeffs, data, sz);
+		Orbiter->Int_vec->scan(eigenstuff_coeffs, data, sz);
 
 		if (sz != eigenstuff_n * eigenstuff_n) {
 			cout << "sz != eigenstuff_n * eigenstuff_n" << endl;

@@ -185,7 +185,7 @@ int mem_object_registry_entry::size_of()
 
 void mem_object_registry_entry::print(int line)
 {
-	algorithms Algo;
+	data_structures::algorithms Algo;
 
 	cout << line << " : ";
 	Algo.print_pointer_hex(cout, pointer);
@@ -205,7 +205,7 @@ void mem_object_registry_entry::print(int line)
 
 void mem_object_registry_entry::print_csv(ostream &ost, int line)
 {
-	algorithms Algo;
+	data_structures::algorithms Algo;
 
 	ost << line << ",";
 	Algo.print_pointer_hex(ost, pointer);

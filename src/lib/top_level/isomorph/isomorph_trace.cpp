@@ -43,7 +43,7 @@ int isomorph::identify_solution_relaxed(long int *set, int *transporter,
 		//cout << "verbose_level=" << verbose_level << endl;
 		}
 	
-	Orbiter->Lint_vec.copy(set, canonical_set, size);
+	Orbiter->Lint_vec->copy(set, canonical_set, size);
 	A->element_one(transporter, FALSE);
 
 	while (TRUE) { 
@@ -75,7 +75,7 @@ int isomorph::identify_solution_relaxed(long int *set, int *transporter,
 			cout << endl;
 			//cout << "case_nb = " << case_nb << " : ";
 			cout << "canonical_set:" << endl;
-			Orbiter->Lint_vec.print(cout, canonical_set, size);
+			Orbiter->Lint_vec->print(cout, canonical_set, size);
 			cout << endl;
 			for (i = 0; i < size; i++) {
 				cout << setw(5) << i << " : " << setw(6)
@@ -132,9 +132,9 @@ int isomorph::identify_solution_relaxed(long int *set, int *transporter,
 			size, set, data, verbose_level - 2)) {
 		cout << "isomorph::identify_solution_relaxed, "
 				"check fails, stop" << endl;
-		Orbiter->Lint_vec.print(cout, set, size);
+		Orbiter->Lint_vec->print(cout, set, size);
 		cout << endl;
-		Orbiter->Lint_vec.print(cout, data, size);
+		Orbiter->Lint_vec->print(cout, data, size);
 		cout << endl;
 		exit(1);
 		}
@@ -197,7 +197,7 @@ int isomorph::identify_solution(long int *set,
 		//cout << "verbose_level=" << verbose_level << endl;
 		}
 	
-	Orbiter->Lint_vec.copy(set, canonical_set, size);
+	Orbiter->Lint_vec->copy(set, canonical_set, size);
 	A->element_one(transporter, FALSE);
 
 	while (TRUE) {
@@ -284,9 +284,9 @@ int isomorph::identify_solution(long int *set,
 			data, verbose_level - 2)) {
 		cout << "isomorph::identify_solution, "
 				"check fails, stop" << endl;
-		Orbiter->Lint_vec.print(cout, set, size);
+		Orbiter->Lint_vec->print(cout, set, size);
 		cout << endl;
-		Orbiter->Lint_vec.print(cout, data, size);
+		Orbiter->Lint_vec->print(cout, data, size);
 		cout << endl;
 		exit(1);
 		}
@@ -401,12 +401,12 @@ void isomorph::make_set_smaller(int case_nb_local,
 	int i, j;
 	long int n, m, a, b;
 	//int set1[1000];
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "iso_node " << iso_nodes
 				<< " isomorph::make_set_smaller: " << endl;
-		Orbiter->Lint_vec.print(cout, set, size);
+		Orbiter->Lint_vec->print(cout, set, size);
 		cout << endl;
 		}
 	nb_times_make_set_smaller_called++;
@@ -426,7 +426,7 @@ void isomorph::make_set_smaller(int case_nb_local,
 
 
 	a = set[level - 1];
-	m = Orbiter->Lint_vec.minimum(set + level, size - level);
+	m = Orbiter->Lint_vec->minimum(set + level, size - level);
 	if (m < a) {
 		if (f_vv) {
 			cout << "iso_node " << iso_nodes
@@ -443,7 +443,7 @@ void isomorph::make_set_smaller(int case_nb_local,
 		if (f_vv) {
 			cout << "iso_node " << iso_nodes
 				<< "isomorph::make_set_smaller the reordered set is ";
-			Orbiter->Lint_vec.print(cout, set, size);
+			Orbiter->Lint_vec->print(cout, set, size);
 			cout << endl;
 			}
 		return;
@@ -454,14 +454,14 @@ void isomorph::make_set_smaller(int case_nb_local,
 		b = A->least_image_of_point(gens, a, Elt1, verbose_level - 1);
 		if (b < m) {
 			A->map_a_set_and_reorder(set, image_set, size, Elt1, 0);
-			Orbiter->Lint_vec.copy(image_set, set, size);
+			Orbiter->Lint_vec->copy(image_set, set, size);
 			A->element_mult(transporter, Elt1, Elt2, FALSE);
 			A->element_move(Elt2, transporter, FALSE);
 			if (f_vv) {
 				cout << "iso_node " << iso_nodes
 					<< "isomorph::make_set_smaller "
 					"the set is made smaller: " << endl;
-				Orbiter->Lint_vec.print(cout, set, size);
+				Orbiter->Lint_vec->print(cout, set, size);
 				cout << endl;
 				}
 			return;
@@ -472,7 +472,7 @@ void isomorph::make_set_smaller(int case_nb_local,
 			"error, something is wrong" << endl;
 	cout << "isomorph::make_set_smaller no stabilizer element maps "
 			"any element to something smaller" << endl;
-	Orbiter->Lint_vec.print(cout, set, size);
+	Orbiter->Lint_vec->print(cout, set, size);
 	cout << endl;
 	cout << "j : set[j] : least image" << endl;
 	for (j = 0; j < size; j++) {
@@ -510,9 +510,9 @@ void isomorph::make_set_smaller(int case_nb_local,
 		id = f + i;
 		load_solution(id, data);
 		Sorting.lint_vec_heapsort(data + level, size - level);
-		c = lint_vec_compare(set + level, data + level, size - level);
+		c = Sorting.lint_vec_compare(set + level, data + level, size - level);
 		cout << setw(4) << id << " : compare = " << c << " : ";
-		Orbiter->Lint_vec.print(cout, data, size);
+		Orbiter->Lint_vec->print(cout, data, size);
 		cout << endl;
 		}
 	exit(1);
@@ -532,7 +532,7 @@ int isomorph::trace_set_recursion(
 	int f_vv = (verbose_level >= 2);
 	long int pt, pt0;
 	int ret;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	f_failure_to_find_point = FALSE;
 	if (f_v) {
@@ -555,7 +555,7 @@ int isomorph::trace_set_recursion(
 			transporter, next_transporter, 
 			0 /*verbose_level */);
 
-		Orbiter->Lint_vec.copy(next_set, canonical_set, size);
+		Orbiter->Lint_vec->copy(next_set, canonical_set, size);
 
 		if (f_vv) {
 			cout << "iso_node "
@@ -564,7 +564,7 @@ int isomorph::trace_set_recursion(
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
 			cout << "after trace_starter" << endl;
-			Orbiter->Lint_vec.print(cout, canonical_set, size);
+			Orbiter->Lint_vec->print(cout, canonical_set, size);
 			cout << endl;
 			}
 
@@ -832,7 +832,7 @@ int isomorph::trace_next_point_database(
 		print_node_global(cur_level, cur_node_global);
 		cout << " : ";
 		cout << "set: ";
-		Orbiter->Lint_vec.print(cout, set, cur_level);
+		Orbiter->Lint_vec->print(cout, set, cur_level);
 		cout << endl;
 		}
 	int nb_strong_generators;
@@ -1031,7 +1031,7 @@ int isomorph::handle_extension_database(int cur_level,
 	int i, pt0, pt, /*orbit_len,*/ t = 0, d = 0;
 	int pos, ref, nb_strong_generators, nb_extensions;
 	int nb_fusion, next_node_global;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 
 	if (f_v) {
@@ -1166,7 +1166,7 @@ int isomorph::handle_extension_database(int cur_level,
 				<< " cur_node_global = " << cur_node_global << " : " 
 				<< " current_extension = " << i 
 				<< " : after sorting the initial part : ";
-			Orbiter->Lint_vec.print(cout, canonical_set, size);
+			Orbiter->Lint_vec->print(cout, canonical_set, size);
 			cout << endl;
 			}
 		next_node_global = gen->find_poset_orbit_node_for_set(cur_level + 1,
@@ -1206,7 +1206,7 @@ int isomorph::handle_extension_oracle(int cur_level,
 	int f_vv = (verbose_level >= 2);
 	poset_orbit_node *O = gen->get_node(cur_node_global);
 	int pt0, current_extension, t, d, next_node_global;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	f_failure_to_find_point = FALSE;
 	if (f_v) {
@@ -1308,7 +1308,7 @@ int isomorph::handle_extension_oracle(int cur_level,
 			print_node_global(cur_level, cur_node_global);
 			cout << " : ";
 			cout << "fusion element has been applied";
-			Orbiter->Lint_vec.print(cout, canonical_set, size);
+			Orbiter->Lint_vec->print(cout, canonical_set, size);
 			cout << endl;
 			}
 
@@ -1322,7 +1322,7 @@ int isomorph::handle_extension_oracle(int cur_level,
 			cout << " : ";
 			cout << " current_extension = " << current_extension 
 				<< " : after sorting the initial part ";
-			Orbiter->Lint_vec.print(cout, canonical_set, size);
+			Orbiter->Lint_vec->print(cout, canonical_set, size);
 			cout << endl;
 			cout << "iso_node " << iso_nodes
 					<< " isomorph::handle_extension_oracle "
@@ -1396,7 +1396,7 @@ void isomorph::apply_isomorphism_database(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "iso_node " << iso_nodes
@@ -1419,7 +1419,7 @@ void isomorph::apply_isomorphism_database(
 	gen->get_A()->element_mult(Elt_transporter,
 			gen->get_Elt1(), apply_fusion_Elt1, FALSE);
 
-	Orbiter->Lint_vec.copy(apply_fusion_tmp_set1, canonical_set, size);
+	Orbiter->Lint_vec->copy(apply_fusion_tmp_set1, canonical_set, size);
 	gen->get_A()->element_move(apply_fusion_Elt1,
 			Elt_transporter, FALSE);
 
@@ -1432,7 +1432,7 @@ void isomorph::apply_isomorphism_oracle(
 {
 	int f_v = (verbose_level >= 1);
 	poset_orbit_node *O = gen->get_node(cur_node_global);
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "iso_node " << iso_nodes
@@ -1453,7 +1453,7 @@ void isomorph::apply_isomorphism_oracle(
 	gen->get_A()->element_mult(Elt_transporter,
 			gen->get_Elt1(), apply_fusion_Elt1, FALSE);
 
-	Orbiter->Lint_vec.copy(apply_fusion_tmp_set1, canonical_set, size);
+	Orbiter->Lint_vec->copy(apply_fusion_tmp_set1, canonical_set, size);
 	gen->get_A()->element_move(apply_fusion_Elt1,
 			Elt_transporter, FALSE);
 

@@ -168,7 +168,7 @@ void schreier::init_images_only(int nb_images,
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "schreier::init_images_only" << endl;
@@ -183,7 +183,7 @@ void schreier::init_images_only(int nb_images,
 			cout << "schreier::init_images_only allocating images[i], i=" << i << endl;
 		}
 		schreier::images[i] = NEW_int(2 * degree);
-		Orbiter->Int_vec.copy(images + i * degree, schreier::images[i], degree);
+		Orbiter->Int_vec->copy(images + i * degree, schreier::images[i], degree);
 		Combi.perm_inverse(schreier::images[i], schreier::images[i] + degree, degree);
 	}
 	allocate_tables();
@@ -224,7 +224,7 @@ void schreier::init_images_recycle(int nb_images,
 		}
 		else {
 			if (old_images[i]) {
-				Orbiter->Int_vec.copy(old_images[i], images[i], 2 * degree);
+				Orbiter->Int_vec->copy(old_images[i], images[i], 2 * degree);
 			}
 			else {
 				for (j = 0; j < 2 * degree; j++) {
@@ -265,7 +265,7 @@ void schreier::init_images_recycle(int nb_images,
 		}
 		images[i] = NEW_int(2 * degree);
 		if (old_images[i]) {
-			Orbiter->Int_vec.copy(old_images[i], images[i], 2 * degree);
+			Orbiter->Int_vec->copy(old_images[i], images[i], 2 * degree);
 		}
 		else {
 			for (j = 0; j < 2 * degree; j++) {
@@ -343,7 +343,7 @@ void schreier::init2()
 
 void schreier::initialize_tables()
 {
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	long int i;
 	
 	nb_orbits = 0;
@@ -1105,7 +1105,7 @@ void schreier::compute_all_point_orbits_with_preferred_labels(
 	int pt, pt_loc, cur, a, i;
 	int f_v = (verbose_level >= 1);
 	int *labels, *perm, *perm_inv;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "schreier::compute_all_point_orbits_with_"
@@ -1406,7 +1406,7 @@ void schreier::compute_point_orbit_with_limited_depth(
 				<< " in action " << A->label << endl;
 	}
 	depth = NEW_int(A->degree);
-	Orbiter->Int_vec.zero(depth, A->degree);
+	Orbiter->Int_vec->zero(depth, A->degree);
 	pt_loc = orbit_inv[pt];
 	cur = orbit_first[nb_orbits];
 	if (pt_loc < cur) {
@@ -2066,7 +2066,7 @@ void schreier::orbits_on_invariant_subset(int len, int *subset,
 }
 
 void schreier::get_orbit_partition_of_points_and_lines(
-	partitionstack &S, int verbose_level)
+		data_structures::partitionstack &S, int verbose_level)
 {
 	int first_column_element, pos, first_column_orbit, i, j, f, l, a;
 	int f_v = (verbose_level >= 1);
@@ -2107,7 +2107,7 @@ void schreier::get_orbit_partition_of_points_and_lines(
 	}
 }
 
-void schreier::get_orbit_partition(partitionstack &S, 
+void schreier::get_orbit_partition(data_structures::partitionstack &S,
 	int verbose_level)
 {
 	int pos, i, j, f, l, a;
@@ -2614,7 +2614,7 @@ void schreier::compute_orbit_statistic(int *set, int set_size,
 	if (f_v) {
 		cout << "schreier::compute_orbit_statistic" << endl;
 	}
-	Orbiter->Int_vec.zero(orbit_count, nb_orbits);
+	Orbiter->Int_vec->zero(orbit_count, nb_orbits);
 	for (i = 0; i < set_size; i++) {
 		a = set[i];
 		o = orbit_number(a);
@@ -2635,7 +2635,7 @@ void schreier::compute_orbit_statistic_lint(long int *set, int set_size,
 	if (f_v) {
 		cout << "schreier::compute_orbit_statistic_lint" << endl;
 	}
-	Orbiter->Int_vec.zero(orbit_count, nb_orbits);
+	Orbiter->Int_vec->zero(orbit_count, nb_orbits);
 	for (i = 0; i < set_size; i++) {
 		a = set[i];
 		o = orbit_number(a);
@@ -2648,7 +2648,7 @@ void schreier::compute_orbit_statistic_lint(long int *set, int set_size,
 
 
 void schreier::orbits_as_set_of_sets(
-		set_of_sets *&S, int verbose_level)
+		data_structures::set_of_sets *&S, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *Sz;
@@ -2657,7 +2657,7 @@ void schreier::orbits_as_set_of_sets(
 	if (f_v) {
 		cout << "schreier::orbits_as_set_of_sets" << endl;
 	}
-	S = NEW_OBJECT(set_of_sets);
+	S = NEW_OBJECT(data_structures::set_of_sets);
 	Sz = NEW_int(nb_orbits);
 	for (i = 0; i < nb_orbits; i++) {
 		l = orbit_len[i];
@@ -2739,7 +2739,7 @@ void schreier::elements_in_orbit_of(int pt,
 	idx = orbit_number(pt);
 	f = orbit_first[idx];
 	nb = orbit_len[idx];
-	Orbiter->Int_vec.copy(orbit + f, orb, nb);
+	Orbiter->Int_vec->copy(orbit + f, orb, nb);
 	if (f_v) {
 		cout << "schreier::elements_in_orbit_of done" << endl;
 	}
@@ -2772,7 +2772,7 @@ void schreier::get_orbit_lengths_once_each(
 {
 	int *val, *mult, len;	
 	
-	Orbiter->Int_vec.distribution(orbit_len, nb_orbits, val, mult, len);
+	Orbiter->Int_vec->distribution(orbit_len, nb_orbits, val, mult, len);
 	//int_distribution_print(ost, val, mult, len);
 	//ost << endl;
 	
@@ -2780,7 +2780,7 @@ void schreier::get_orbit_lengths_once_each(
 
 	orbit_lengths = NEW_int(nb_orbit_lengths);
 
-	Orbiter->Int_vec.copy(val, orbit_lengths, nb_orbit_lengths);
+	Orbiter->Int_vec->copy(val, orbit_lengths, nb_orbit_lengths);
 
 	FREE_int(val);
 	FREE_int(mult);
@@ -2791,7 +2791,7 @@ int schreier::orbit_number(int pt)
 {
 	int pos;
 	int idx;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	pos = orbit_inv[pt];
 	if (Sorting.int_vec_search(orbit_first, nb_orbits, pos, idx)) {
@@ -2820,7 +2820,7 @@ void schreier::get_orbit_number_and_position(int pt, int &orbit_idx, int &orbit_
 {
 	int f_v = (verbose_level >= 1);
 	int pos;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "schreier::get_orbit_number_and_position" << endl;
@@ -2867,7 +2867,7 @@ void schreier::get_orbit_decomposition_scheme_of_graph(
 				"scheme_of_graph" << endl;
 	}
 	Decomp_scheme = NEW_int(nb_orbits * nb_orbits);
-	Orbiter->Int_vec.zero(Decomp_scheme, nb_orbits * nb_orbits);
+	Orbiter->Int_vec->zero(Decomp_scheme, nb_orbits * nb_orbits);
 	for (I = 0; I < nb_orbits; I++) {
 		f1 = orbit_first[I];
 		l1 = orbit_len[I];
@@ -2915,7 +2915,7 @@ void schreier::get_orbit_decomposition_scheme_of_graph(
 	}
 	if (f_v) {
 		cout << "Decomp_scheme = " << endl;
-		Orbiter->Int_vec.matrix_print(Decomp_scheme, nb_orbits, nb_orbits);
+		Orbiter->Int_vec->matrix_print(Decomp_scheme, nb_orbits, nb_orbits);
 	}
 	if (f_v) {
 		cout << "schreier::get_orbit_decomposition_"
@@ -2929,7 +2929,7 @@ void schreier::create_point_list_sorted(
 		int *&point_list, int &point_list_length)
 {
 	int i, j, k, f, l, ff, p;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	point_list_length = 0;
 	for (k = 0; k < nb_orbits; k++) {
@@ -3338,7 +3338,7 @@ void schreier::compute_orbit_invariant(int *&orbit_invariant,
 
 void schreier::print_TDA(std::ostream &ost,
 		object_with_canonical_form *OwCF,
-		classification_of_objects_report_options *Report_options,
+		combinatorics::classification_of_objects_report_options *Report_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -3350,7 +3350,7 @@ void schreier::print_TDA(std::ostream &ost,
 	//print_tex(ost);
 
 	if (Report_options->f_show_incidence_matrices) {
-		encoded_combinatorial_object *Enc;
+		combinatorics::encoded_combinatorial_object *Enc;
 
 		OwCF->encode_incma(Enc, verbose_level);
 
@@ -3365,7 +3365,7 @@ void schreier::print_TDA(std::ostream &ost,
 	}
 }
 
-void schreier::latex_TDA(std::ostream &ost, encoded_combinatorial_object *Enc,
+void schreier::latex_TDA(std::ostream &ost, combinatorics::encoded_combinatorial_object *Enc,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);

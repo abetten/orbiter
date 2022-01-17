@@ -190,7 +190,7 @@ void tally::init_lint(long int *data,
 void tally::sort_and_classify()
 {
 	int i;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	for (i = 0; i < data_length; i++) {
 		data_sorted[i] = data[i];
@@ -210,7 +210,7 @@ void tally::sort_and_classify()
 void tally::sort_and_classify_second()
 {
 	int i;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	for (i = 0; i < nb_types; i++) {
 		second_data_sorted[i] = type_len[i];
@@ -275,7 +275,7 @@ void tally::print_tex_no_lf(int f_backwards)
 
 void tally::print_first(int f_backwards)
 {
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	Sorting.int_vec_print_types(cout, f_backwards, data_sorted,
 		nb_types, type_first, type_len);
@@ -285,7 +285,7 @@ void tally::print_first(int f_backwards)
 void tally::print_second(int f_backwards)
 {
 	if (f_second) {
-		sorting Sorting;
+		data_structures::sorting Sorting;
 
 		Sorting.int_vec_print_types(cout, f_backwards, second_data_sorted,
 			second_nb_types, second_type_first, second_type_len);
@@ -296,7 +296,7 @@ void tally::print_second(int f_backwards)
 
 void tally::print_first_tex(int f_backwards)
 {
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	cout << "(";
 	Sorting.int_vec_print_types_naked_tex_we_are_in_math_mode(cout, f_backwards, data_sorted,
@@ -308,7 +308,7 @@ void tally::print_first_tex(int f_backwards)
 void tally::print_second_tex(int f_backwards)
 {
 	if (f_second) {
-		sorting Sorting;
+		data_structures::sorting Sorting;
 
 		cout << "(";
 		Sorting.int_vec_print_types_naked_tex_we_are_in_math_mode(cout, f_backwards, second_data_sorted,
@@ -320,7 +320,7 @@ void tally::print_second_tex(int f_backwards)
 
 void tally::print_file(ostream &ost, int f_backwards)
 {
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_second) {
 		Sorting.int_vec_print_types_naked(ost, f_backwards, second_data_sorted,
@@ -336,7 +336,7 @@ void tally::print_file(ostream &ost, int f_backwards)
 
 void tally::print_file_tex(ostream &ost, int f_backwards)
 {
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_second) {
 		//ost << "(";
@@ -356,7 +356,7 @@ void tally::print_file_tex(ostream &ost, int f_backwards)
 
 void tally::print_file_tex_we_are_in_math_mode(ostream &ost, int f_backwards)
 {
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_second) {
 		//ost << "(";
@@ -376,7 +376,7 @@ void tally::print_file_tex_we_are_in_math_mode(ostream &ost, int f_backwards)
 
 void tally::print_naked_stringstream(stringstream &sstr, int f_backwards)
 {
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_second) {
 		Sorting.int_vec_print_types_naked_stringstream(
@@ -395,7 +395,7 @@ void tally::print_naked_stringstream(stringstream &sstr, int f_backwards)
 
 void tally::print_naked(int f_backwards)
 {
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_second) {
 		Sorting.int_vec_print_types_naked(cout, f_backwards, second_data_sorted,
@@ -698,18 +698,18 @@ void tally::get_class_by_value_lint(
 	//exit(1);
 }
 
-set_of_sets *tally::get_set_partition_and_types(
+data_structures::set_of_sets *tally::get_set_partition_and_types(
 		int *&types, int &nb_types, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	set_of_sets *SoS;
+	data_structures::set_of_sets *SoS;
 	int i, j, f, l;
 
 	if (f_v) {
 		cout << "tally::get_set_partition_and_types" << endl;
 		}
 
-	SoS = NEW_OBJECT(set_of_sets);
+	SoS = NEW_OBJECT(data_structures::set_of_sets);
 	SoS->init_basic_with_Sz_in_int(data_length /* underlying_set_size */,
 			tally::nb_types, type_len, 0 /* verbose_level */);
 	nb_types = tally::nb_types;

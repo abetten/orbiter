@@ -30,40 +30,18 @@ class nauty_interface {
 
 public:
 
-	void nauty_interface_graph_bitvec(int v, bitvector *Bitvec,
-		//int *labeling,
+	void nauty_interface_graph_bitvec(int v,
+			data_structures::bitvector *Bitvec,
 		int *partition,
-		nauty_output *NO,
+		data_structures::nauty_output *NO,
 		int verbose_level);
 	void nauty_interface_graph_int(int v, int *Adj,
-		//int *labeling,
 		int *partition,
-		nauty_output *NO,
+		data_structures::nauty_output *NO,
 		int verbose_level);
-#if 0
-	void nauty_interface_int(int v, int b, int *X, int nb_inc,
-		int *labeling, int *partition,
-		int *Aut, int &Aut_counter,
-		int *Base, int &Base_length,
-		int *Transversal_length, longinteger_object &Ago);
-	void nauty_interface_low_level(int v, int b, int *X, int nb_inc,
-		int *labeling, int *partition,
-		int *Aut, int &Aut_counter,
-		int *Base, int &Base_length,
-		int *Transversal_length, longinteger_object &Ago);
-	void nauty_interface_matrix(int *M, int v, int b,
-		int *labeling, int *partition,
-		int *Aut, int &Aut_counter,
-		int *Base, int &Base_length,
-		int *Transversal_length, longinteger_object &Ago);
-#endif
 	void nauty_interface_matrix_int(
-		encoded_combinatorial_object *Enc,
-		//int *labeling,
-		nauty_output *NO,
-		//int *Aut, int &Aut_counter,
-		//int *Base, int &Base_length,
-		//int *Transversal_length, longinteger_object &Ago,
+		combinatorics::encoded_combinatorial_object *Enc,
+		data_structures::nauty_output *NO,
 		int verbose_level);
 
 

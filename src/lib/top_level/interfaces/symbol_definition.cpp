@@ -123,7 +123,7 @@ void symbol_definition::read_definition(
 		int argc, std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "symbol_definition::read_definition i=" << i << " argc=" << argc << endl;
@@ -566,7 +566,7 @@ void symbol_definition::read_definition(
 		f_set = TRUE;
 
 
-		Set_builder_description = NEW_OBJECT(set_builder_description);
+		Set_builder_description = NEW_OBJECT(data_structures::set_builder_description);
 		if (f_v) {
 			cout << "reading -set" << endl;
 		}
@@ -590,7 +590,7 @@ void symbol_definition::read_definition(
 		f_vector = TRUE;
 
 
-		Vector_builder_description = NEW_OBJECT(vector_builder_description);
+		Vector_builder_description = NEW_OBJECT(data_structures::vector_builder_description);
 		if (f_v) {
 			cout << "reading -vector" << endl;
 		}
@@ -614,7 +614,7 @@ void symbol_definition::read_definition(
 		f_combinatorial_objects = TRUE;
 
 
-		Data_input_stream_description = NEW_OBJECT(data_input_stream_description);
+		Data_input_stream_description = NEW_OBJECT(data_structures::data_input_stream_description);
 		if (f_v) {
 			cout << "reading -combinatorial_objects" << endl;
 		}
@@ -1053,7 +1053,7 @@ void symbol_definition::definition_of_projective_space(int verbose_level)
 		cout << "symbol_definition::definition_of_projective_space" << endl;
 	}
 	finite_field *F;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (ST.starts_with_a_number(Projective_space_with_action_description->input_q)) {
 		int q;
@@ -1145,7 +1145,7 @@ void symbol_definition::definition_of_orthogonal_space(int verbose_level)
 		cout << "symbol_definition::definition_of_orthogonal_space" << endl;
 	}
 	finite_field *F;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (ST.starts_with_a_number(Orthogonal_space_with_action_description->input_q)) {
 		int q;
@@ -1222,7 +1222,7 @@ void symbol_definition::definition_of_linear_group(int verbose_level)
 	}
 
 	finite_field *F;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (ST.starts_with_a_number(Linear_group_description->input_q)) {
 		int q;
@@ -2089,9 +2089,9 @@ void symbol_definition::definition_of_set(int verbose_level)
 	}
 
 
-	set_builder *SB;
+	data_structures::set_builder *SB;
 
-	SB = NEW_OBJECT(set_builder);
+	SB = NEW_OBJECT(data_structures::set_builder);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_set before SB->init" << endl;
@@ -2152,9 +2152,9 @@ void symbol_definition::definition_of_vector(int verbose_level)
 	}
 
 
-	vector_builder *VB;
+	data_structures::vector_builder *VB;
 
-	VB = NEW_OBJECT(vector_builder);
+	VB = NEW_OBJECT(data_structures::vector_builder);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_vector before VB->init" << endl;
@@ -2192,9 +2192,9 @@ void symbol_definition::definition_of_combinatorial_object(int verbose_level)
 		cout << "symbol_definition::definition_of_combinatorial_object" << endl;
 	}
 
-	data_input_stream *IS;
+	data_structures::data_input_stream *IS;
 
-	IS = NEW_OBJECT(data_input_stream);
+	IS = NEW_OBJECT(data_structures::data_input_stream);
 
 	if (f_v) {
 		cout << "symbol_definition::definition_of_combinatorial_object before IS->init" << endl;

@@ -118,7 +118,7 @@ void W3q::init(finite_field *F, int verbose_level)
 		P3->unrank_line(Basis, Lines[h]);
 		if (f_vv) {
 			cout << "Line " << h << " is " << Lines[h] << ":" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout,
+			Orbiter->Int_vec->print_integer_matrix_width(cout,
 					Basis, 2, 4, 4, F->log10_of_q);
 			cout << endl;
 		}
@@ -127,7 +127,7 @@ void W3q::init(finite_field *F, int verbose_level)
 
 		if (f_vvv) {
 			cout << "v5=";
-			Orbiter->Int_vec.print(cout, v5, 5);
+			Orbiter->Int_vec->print(cout, v5, 5);
 			cout << endl;
 		}
 		
@@ -178,7 +178,7 @@ void W3q::print_lines()
 		cout << setw(4) << h << " : ";
 		cout << setw(4) << Lines[h] << " : " << endl;
 		P3->unrank_line(Basis, Lines[h]);
-		Orbiter->Int_vec.matrix_print(Basis, 2, 4);
+		Orbiter->Int_vec->matrix_print(Basis, 2, 4);
 		cout << endl;
 	}
 }
@@ -218,12 +218,12 @@ void W3q::print_by_lines()
 		cout << setw(4) << Q4_rk[h] << " : ";
 		cout << setw(4) << Line_idx[h] << " : ";
 		P3->unrank_line(Basis, Lines[h]);
-		Orbiter->Int_vec.print(cout, Basis, 4);
+		Orbiter->Int_vec->print(cout, Basis, 4);
 		cout << " : ";
-		Orbiter->Int_vec.print(cout, Basis + 4, 4);
+		Orbiter->Int_vec->print(cout, Basis + 4, 4);
 		Q4->unrank_point(v5, 1, Q4_rk[h], 0);
 		cout << " : ";
-		Orbiter->Int_vec.print(cout, v5, 5);
+		Orbiter->Int_vec->print(cout, v5, 5);
 		cout << endl;
 	}
 }
@@ -240,12 +240,12 @@ void W3q::print_by_points()
 		cout << setw(4) << Line_idx[h] << " : ";
 		cout << setw(4) << Lines[Line_idx[h]] << " : ";
 		P3->unrank_line(Basis, Lines[Line_idx[h]]);
-		Orbiter->Int_vec.print(cout, Basis, 4);
+		Orbiter->Int_vec->print(cout, Basis, 4);
 		cout << " : ";
-		Orbiter->Int_vec.print(cout, Basis + 4, 4);
+		Orbiter->Int_vec->print(cout, Basis + 4, 4);
 		Q4->unrank_point(v5, 1, h, 0);
 		cout << " : ";
-		Orbiter->Int_vec.print(cout, v5, 5);
+		Orbiter->Int_vec->print(cout, v5, 5);
 		cout << endl;
 	}
 }
@@ -253,7 +253,7 @@ void W3q::print_by_points()
 int W3q::find_line(int line)
 {
 	int idx;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (!Sorting.int_vec_search(Lines, nb_lines, line, idx)) {
 		cout << "W3q::find_line could not find the line" << endl;

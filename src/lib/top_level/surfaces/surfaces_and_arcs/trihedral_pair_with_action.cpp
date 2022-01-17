@@ -372,7 +372,7 @@ void trihedral_pair_with_action::loop_over_trihedral_pairs(
 	//long int Nine_lines[9];
 	//long int *v;
 	//int sz;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "trihedral_pair_with_action::loop_over_trihedral_pairs" << endl;
@@ -431,7 +431,7 @@ void trihedral_pair_with_action::loop_over_trihedral_pairs(
 			cout << " lies in the orbit:" << endl;
 		}
 
-		Orbiter->Lint_vec.copy(AL->Web->Dual_point_ranks + i * 6, planes6, 6);
+		Orbiter->Lint_vec->copy(AL->Web->Dual_point_ranks + i * 6, planes6, 6);
 
 #if 0
 		Surf->compute_nine_lines_by_dual_point_ranks(
@@ -558,12 +558,12 @@ void trihedral_pair_with_action::loop_over_trihedral_pairs(
 			if (f_v) {
 				cout << "trihedral_pair_with_action::loop_over_trihedral_pairs "
 						"The transformed equation is:" << endl;
-				Orbiter->Int_vec.print(cout, coeff_out, 20);
+				Orbiter->Int_vec->print(cout, coeff_out, 20);
 				cout << endl;
 			}
 
 
-			if (int_vec_compare(coeff_out, AL->the_equation, 20) == 0) {
+			if (Sorting.int_vec_compare(coeff_out, AL->the_equation, 20) == 0) {
 				if (f_v) {
 					cout << "trihedral_pair_with_action::loop_over_trihedral_pairs "
 							"trihedral pair " << i << " / " << AL->Web->nb_T
@@ -646,18 +646,18 @@ void trihedral_pair_with_action::create_the_six_plane_equations(int t_idx, int v
 	}
 
 
-	Orbiter->Lint_vec.copy(AL->Surf->Schlaefli->Trihedral_to_Eckardt + t_idx * 6,
+	Orbiter->Lint_vec->copy(AL->Surf->Schlaefli->Trihedral_to_Eckardt + t_idx * 6,
 			AL->Web->row_col_Eckardt_points, 6);
 
 	for (i = 0; i < 6; i++) {
-		Orbiter->Int_vec.copy(AL->Web->Tritangent_plane_equations + AL->Web->row_col_Eckardt_points[i] * 4,
+		Orbiter->Int_vec->copy(AL->Web->Tritangent_plane_equations + AL->Web->row_col_Eckardt_points[i] * 4,
 				The_six_plane_equations + i * 4, 4);
 	}
 
 	if (f_v) {
 		cout << "trihedral_pair_with_action::create_the_six_plane_equations" << endl;
 		cout << "The_six_plane_equations=" << endl;
-		Orbiter->Int_vec.matrix_print(The_six_plane_equations, 6, 4);
+		Orbiter->Int_vec->matrix_print(The_six_plane_equations, 6, 4);
 	}
 
 	for (i = 0; i < 6; i++) {
@@ -701,7 +701,7 @@ void trihedral_pair_with_action::create_surface_from_trihedral_pair_and_arc(
 		verbose_level);
 
 
-	Orbiter->Int_vec.copy(The_surface_equations + lambda_rk * 20, AL->the_equation, 20);
+	Orbiter->Int_vec->copy(The_surface_equations + lambda_rk * 20, AL->the_equation, 20);
 
 	if (f_v) {
 		cout << "trihedral_pair_with_action::create_surface_from_trihedral_pair_and_arc done" << endl;
@@ -821,13 +821,13 @@ void trihedral_pair_with_action::create_clebsch_system(int verbose_level)
 		cout << "trihedral_pair_with_action::create_clebsch_system" << endl;
 	}
 
-	Orbiter->Int_vec.copy(The_six_plane_equations, F_plane, 12);
-	Orbiter->Int_vec.copy(The_six_plane_equations + 12, G_plane, 12);
+	Orbiter->Int_vec->copy(The_six_plane_equations, F_plane, 12);
+	Orbiter->Int_vec->copy(The_six_plane_equations + 12, G_plane, 12);
 	if (f_v) {
 		cout << "F_planes:" << endl;
-		Orbiter->Int_vec.matrix_print(F_plane, 3, 4);
+		Orbiter->Int_vec->matrix_print(F_plane, 3, 4);
 		cout << "G_planes:" << endl;
-		Orbiter->Int_vec.matrix_print(G_plane, 3, 4);
+		Orbiter->Int_vec->matrix_print(G_plane, 3, 4);
 	}
 
 	AL->Surf->compute_nine_lines(F_plane, G_plane, nine_lines, 0 /* verbose_level */);
@@ -835,7 +835,7 @@ void trihedral_pair_with_action::create_clebsch_system(int verbose_level)
 	if (f_v) {
 		cout << "trihedral_pair_with_action::create_clebsch_system" << endl;
 		cout << "The nine lines are: ";
-		Orbiter->Lint_vec.print(cout, nine_lines, 9);
+		Orbiter->Lint_vec->print(cout, nine_lines, 9);
 		cout << endl;
 	}
 
@@ -877,7 +877,7 @@ void trihedral_pair_with_action::compute_iso_types_as_double_triplets(int verbos
 			cout << ":" << endl;
 		}
 
-		Orbiter->Lint_vec.copy(AL->Web->Dual_point_ranks + i * 6, planes6, 6);
+		Orbiter->Lint_vec->copy(AL->Web->Dual_point_ranks + i * 6, planes6, 6);
 		AL->Surf_A->Classify_trihedral_pairs->identify_trihedral_pair(
 			planes6,
 			transporter,
@@ -901,7 +901,7 @@ void trihedral_pair_with_action::compute_iso_types_as_double_triplets(int verbos
 	Double_triplet_type_distribution = NEW_OBJECT(tally);
 
 	Double_triplet_type_distribution->init(Iso_type_as_double_triplet, 120, FALSE, 0);
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	Double_triplet_types = Double_triplet_type_distribution->get_set_partition_and_types(
 			Double_triplet_type_values,
@@ -943,19 +943,19 @@ void trihedral_pair_with_action::print_equations()
 	cout << "lambda = " << lambda << endl;
 	cout << "lambda_rk = " << lambda_rk << endl;
 	cout << "The six plane equations:" << endl;
-	Orbiter->Int_vec.matrix_print(The_six_plane_equations, 6, 4);
+	Orbiter->Int_vec->matrix_print(The_six_plane_equations, 6, 4);
 	cout << endl;
 	cout << "The q+1 surface equations in the pencil:" << endl;
-	Orbiter->Int_vec.matrix_print(The_surface_equations, AL->q + 1, 20);
+	Orbiter->Int_vec->matrix_print(The_surface_equations, AL->q + 1, 20);
 	cout << endl;
 
 	cout << "The surface equation corresponding to "
 			"lambda = " << lambda << " which is equation "
 			"number " << lambda_rk << ":" << endl;
-	Orbiter->Int_vec.print(cout, The_surface_equations + lambda_rk * 20, 20);
+	Orbiter->Int_vec->print(cout, The_surface_equations + lambda_rk * 20, 20);
 	cout << endl;
 	cout << "the_equation:" << endl;
-	Orbiter->Int_vec.print(cout, AL->the_equation, 20);
+	Orbiter->Int_vec->print(cout, AL->the_equation, 20);
 	cout << endl;
 }
 
@@ -1297,7 +1297,7 @@ void trihedral_pair_with_action::report(ostream &ost, int verbose_level)
 	int coeffs2[20];
 
 	coeffs = The_surface_equations + lambda_rk * 20;
-	Orbiter->Int_vec.copy(coeffs, coeffs2, 20);
+	Orbiter->Int_vec->copy(coeffs, coeffs2, 20);
 	AL->F->PG_element_normalize_from_front(coeffs2, 1, 20);
 
 	ost << "\\bigskip" << endl;
@@ -1421,7 +1421,7 @@ void trihedral_pair_with_action::report_iso_type_as_double_triplets(ostream &ost
 		ost << "type value " << Double_triplet_type_values[i]
 				<< " appears " << Double_triplet_types->Set_size[i]
 				<< " times for these trihedral pairs: ";
-		Orbiter->Lint_vec.print(ost, Double_triplet_types->Sets[i], Double_triplet_types->Set_size[i]);
+		Orbiter->Lint_vec->print(ost, Double_triplet_types->Sets[i], Double_triplet_types->Set_size[i]);
 		ost << "\\\\" << endl;
 	}
 

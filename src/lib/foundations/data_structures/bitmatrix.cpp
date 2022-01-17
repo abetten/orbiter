@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace data_structures {
 
 
 bitmatrix::bitmatrix()
@@ -109,7 +110,7 @@ void bitmatrix::rank_PG_elements_in_columns(
 	}
 	if (f_vv) {
 		cout << "perm=";
-		Orbiter->Int_vec.print(cout, perms, m);
+		Orbiter->Int_vec->print(cout, perms, m);
 		cout << endl;
 	}
 	v = NEW_int(m);
@@ -272,4 +273,5 @@ void bitmatrix::mult_int_matrix_from_the_left(int *A, int Am, int An,
 
 
 
-}}
+}}}
+

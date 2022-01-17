@@ -532,7 +532,7 @@ public:
 	spread_tables *Spread_tables;
 	int *tmp_isomorphism_type_of_spread; // for packing_swap_func
 
-	bitvector *Bitvec;
+	data_structures::bitvector *Bitvec;
 
 	action *A_on_spreads;
 
@@ -627,7 +627,7 @@ public:
 	strong_generators *strong_gens;
 
 	incidence_structure *Inc;
-	partitionstack *Stack;
+	data_structures::partitionstack *Stack;
 
 	poset_classification_control *Control;
 	poset_with_group_action *Poset;

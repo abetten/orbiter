@@ -36,7 +36,7 @@ void function_polish::init(
 	double val;
 	int entry, len;
 	int i;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 
 	if (f_v) {

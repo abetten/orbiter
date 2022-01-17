@@ -22,7 +22,7 @@ int poset_orbit_node::apply_isomorphism(poset_classification *gen,
 	int f_v = (verbose_level >= 1);
 	int next_node;
 	long int *set;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "poset_orbit_node::apply_isomorphism" << endl;
@@ -47,7 +47,7 @@ int poset_orbit_node::apply_isomorphism(poset_classification *gen,
 			gen->get_A2()->element_print_as_permutation(gen->get_Elt1(), cout);
 			}
 		cout << "to the set ";
-		Orbiter->Lint_vec.print(cout, gen->get_set_i(lvl + 1), len + 1);
+		Orbiter->Lint_vec->print(cout, gen->get_set_i(lvl + 1), len + 1);
 		cout << endl;
 		}
 	gen->get_A2()->map_a_set(
@@ -57,7 +57,7 @@ int poset_orbit_node::apply_isomorphism(poset_classification *gen,
 			gen->get_Elt1(), 0);
 	if (f_v) {
 		cout << "poset_orbit_node::apply_isomorphism the set becomes: ";
-		Orbiter->Lint_vec.print(cout, set, len + 1);
+		Orbiter->Lint_vec->print(cout, set, len + 1);
 		cout << endl;
 		}
 
@@ -65,7 +65,7 @@ int poset_orbit_node::apply_isomorphism(poset_classification *gen,
 			gen->get_transporter()->ith(lvl + 1),
 			gen->get_Elt1(), gen->get_Elt2(), 0);
 	if (f_v) {
-		Orbiter->Lint_vec.print(cout,
+		Orbiter->Lint_vec->print(cout,
 				gen->get_set_i(lvl + 1), len + 1);
 		cout << endl;
 		}
@@ -78,18 +78,18 @@ int poset_orbit_node::apply_isomorphism(poset_classification *gen,
 				lvl + 1,
 				verbose_level - 1);
 
-		Orbiter->Lint_vec.copy(set, gen->get_set_i(lvl + 1), len + 1);
+		Orbiter->Lint_vec->copy(set, gen->get_set_i(lvl + 1), len + 1);
 		}
 	else {
 		Sorting.lint_vec_heapsort(set, lvl + 1);
-		Orbiter->Lint_vec.copy(set, gen->get_set_i(lvl + 1), len + 1);
+		Orbiter->Lint_vec->copy(set, gen->get_set_i(lvl + 1), len + 1);
 		if (f_v) {
 			cout << "poset_orbit_node::apply_isomorphism after sorting: ";
 			}
 		if (f_v) {
 			cout << "poset_orbit_node::apply_isomorphism "
 					"calling find_poset_orbit_node_for_set: ";
-			Orbiter->Lint_vec.print(cout, gen->get_set_i(lvl + 1), lvl + 1);
+			Orbiter->Lint_vec->print(cout, gen->get_set_i(lvl + 1), lvl + 1);
 			cout << endl;
 			}
 		next_node = gen->find_poset_orbit_node_for_set(
@@ -101,7 +101,7 @@ int poset_orbit_node::apply_isomorphism(poset_classification *gen,
 	//FREE_int(set);
 	if (f_v) {
 		cout << "poset_orbit_node::apply_isomorphism the set ";
-		Orbiter->Lint_vec.print(cout, gen->get_set_i(lvl + 1), lvl + 1);
+		Orbiter->Lint_vec->print(cout, gen->get_set_i(lvl + 1), lvl + 1);
 		cout << " is node " << next_node << endl;
 		}
 	return next_node;
@@ -121,7 +121,7 @@ void poset_orbit_node::install_fusion_node(
 	int f_v = (verbose_level >= 1);
 	//int f_v10 = (verbose_level >= 10);
 	int hdl, cmp;	
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "poset_orbit_node::install_fusion_node "
@@ -196,7 +196,7 @@ void poset_orbit_node::install_fusion_node(
 				<< E[current_extension].get_data1() /*my_node*/
 				<< "/" << E[current_extension].get_data2() /*my_extension*/
 				<< " : ";
-		Orbiter->Lint_vec.print(cout, gen->get_set0(), lvl + 1);
+		Orbiter->Lint_vec->print(cout, gen->get_set0(), lvl + 1);
 		cout << endl;
 #if 0
 		if (current_node == 9 && pt0 == 39371) {
@@ -236,7 +236,7 @@ void poset_orbit_node::install_fusion_node(
 
 	if (f_v) {
 		cout << "poset_orbit_node::install_fusion_node set1=";
-		Orbiter->Lint_vec.print(cout, gen->get_set1(), lvl + 1);
+		Orbiter->Lint_vec->print(cout, gen->get_set1(), lvl + 1);
 		cout << endl;
 		cout << "Elt1=" << endl;
 		gen->get_A()->element_print_quick(gen->get_Elt1(), cout);
@@ -250,7 +250,7 @@ void poset_orbit_node::install_fusion_node(
 	if (f_v) {
 		cout << "poset_orbit_node::install_fusion_node "
 				"after map_a_set set3=";
-		Orbiter->Lint_vec.print(cout, gen->get_set3(), lvl + 1);
+		Orbiter->Lint_vec->print(cout, gen->get_set3(), lvl + 1);
 		cout << endl;
 	}
 
@@ -268,7 +268,7 @@ void poset_orbit_node::install_fusion_node(
 		}
 	else {
 		Sorting.lint_vec_heapsort(gen->get_set3(), lvl);
-		cmp = lint_vec_compare(gen->get_set3(), gen->get_set0(), lvl + 1);
+		cmp = Sorting.lint_vec_compare(gen->get_set3(), gen->get_set0(), lvl + 1);
 		}
 
 
@@ -276,27 +276,27 @@ void poset_orbit_node::install_fusion_node(
 		cout << "poset_orbit_node::install_fusion_node "
 				"something is wrong" << endl;
 		cout << "comparing ";
-		Orbiter->Lint_vec.print(cout, gen->get_set3(), lvl + 1);
+		Orbiter->Lint_vec->print(cout, gen->get_set3(), lvl + 1);
 		cout << " with ";
-		Orbiter->Lint_vec.set_print(cout, gen->get_set0(), lvl + 1);
+		Orbiter->Lint_vec->set_print(cout, gen->get_set0(), lvl + 1);
 		cout << endl;
 		if (gen->get_poset()->f_subspace_lattice) {
 			int *v;
 			int i;
 
 			v = NEW_int(gen->get_VS()->dimension);
-			Orbiter->Lint_vec.set_print(cout, gen->get_set3(), lvl + 1);
+			Orbiter->Lint_vec->set_print(cout, gen->get_set3(), lvl + 1);
 			cout << " is " << endl;
 			for (i = 0; i < lvl + 1; i++) {
 				gen->unrank_point(v, gen->get_set3()[i]);
-				Orbiter->Int_vec.print(cout, v, gen->get_VS()->dimension);
+				Orbiter->Int_vec->print(cout, v, gen->get_VS()->dimension);
 				cout << endl;
 				}
-			Orbiter->Lint_vec.set_print(cout, gen->get_set0(), lvl + 1);
+			Orbiter->Lint_vec->set_print(cout, gen->get_set0(), lvl + 1);
 			cout << " is " << endl;
 			for (i = 0; i < lvl + 1; i++) {
 				gen->unrank_point(v, gen->get_set0()[i]);
-				Orbiter->Int_vec.print(cout, v, gen->get_VS()->dimension);
+				Orbiter->Int_vec->print(cout, v, gen->get_VS()->dimension);
 				cout << endl;
 				}
 
@@ -407,7 +407,7 @@ int poset_orbit_node::trace_next_point_in_place(
 		cout << "poset_orbit_node::trace_next_point_in_place, "
 				"after trace_next_point" << endl;
 		}
-	Orbiter->Lint_vec.copy(tmp_set, cur_set, size);
+	Orbiter->Lint_vec->copy(tmp_set, cur_set, size);
 	gen->get_A()->element_move(tmp_transporter,
 			cur_transporter, 0);
 	if (f_v) {
@@ -430,7 +430,7 @@ void poset_orbit_node::trace_starter(
 	if (f_v) {
 		cout << "poset_orbit_node::trace_starter" << endl;
 		cout << "set:" << endl;
-		Orbiter->Lint_vec.print(cout, cur_set, size);
+		Orbiter->Lint_vec->print(cout, cur_set, size);
 		cout << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		}
@@ -458,7 +458,7 @@ void poset_orbit_node::trace_starter(
 
 	if (f_v) {
 		cout << "after canonize:" << endl;
-		Orbiter->Lint_vec.print(cout, next_set, size);
+		Orbiter->Lint_vec->print(cout, next_set, size);
 		cout << endl;
 		}
 	if (f_v) {
@@ -561,7 +561,7 @@ int poset_orbit_node::trace_next_point(
 					"we apply no element and copy the set "
 					"and the transporter over:" << endl;
 			}
-		Orbiter->Lint_vec.copy(cur_set, next_set, size);
+		Orbiter->Lint_vec->copy(cur_set, next_set, size);
 		gen->get_A2()->element_move(cur_transporter, next_transporter, FALSE);
 		}
 	else {
@@ -576,11 +576,11 @@ int poset_orbit_node::trace_next_point(
 				cout << endl;
 				}
 			cout << "cur_set: ";
-			Orbiter->Lint_vec.print(cout, cur_set, size);
+			Orbiter->Lint_vec->print(cout, cur_set, size);
 			cout << endl;
 			}
 		
-		Orbiter->Lint_vec.copy(cur_set, next_set, lvl);
+		Orbiter->Lint_vec->copy(cur_set, next_set, lvl);
 		next_set[lvl] = pt0;
 		for (i = lvl + 1; i < size; i++) {
 			if (f_v) {
@@ -604,7 +604,7 @@ int poset_orbit_node::trace_next_point(
 			}
 		if (f_v) {
 			cout << "poset_orbit_node::trace_next_point next_set: ";
-			Orbiter->Lint_vec.print(cout, next_set, size);
+			Orbiter->Lint_vec->print(cout, next_set, size);
 			cout << endl;
 			}
 
@@ -638,7 +638,7 @@ int poset_orbit_node::trace_next_point(
 		cout << "poset_orbit_node::trace_next_point lvl = " << lvl
 			<< " mapping " << the_point << "->" << pt0
 			<< " done, the set becomes ";
-		Orbiter->Lint_vec.set_print(cout, next_set, size);
+		Orbiter->Lint_vec->set_print(cout, next_set, size);
 		cout << endl;
 
 		if (gen->get_poset()->f_print_function && f_vv) {

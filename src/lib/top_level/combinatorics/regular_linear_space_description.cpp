@@ -56,7 +56,7 @@ int regular_linear_space_description::read_arguments(
 	int verbose_level)
 {
 	int i;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	cout << "regular_linear_space_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {

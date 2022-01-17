@@ -34,7 +34,7 @@ void magma_interface::write_permutation_group(std::string &fname_base,
 {
 	string fname;
 	int i;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	file_io Fio;
 
 	fname.assign(fname_base);
@@ -65,7 +65,7 @@ void magma_interface::normalizer_in_Sym_n(
 	string fname_magma;
 	string fname_output;
 	int i;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	file_io Fio;
 
 	fname_magma.assign(fname_base);
@@ -174,7 +174,7 @@ void magma_interface::orbit_of_matrix_group_on_vector(
 	string fname_magma;
 	string fname_output;
 	int i, j;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	file_io Fio;
 
 	fname_magma.assign(fname_base);
@@ -257,7 +257,7 @@ void magma_interface::orbit_of_matrix_group_on_subspaces(
 	string fname_magma;
 	string fname_output;
 	int i, j;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	file_io Fio;
 
 	fname_magma.assign(fname_base);

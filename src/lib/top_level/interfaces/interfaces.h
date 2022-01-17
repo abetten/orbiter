@@ -135,6 +135,10 @@ class interface_algebra {
 	int order_of_q_mod_n_n_min;
 	int order_of_q_mod_n_n_max;
 
+	int f_eulerfunction_interval;
+	int eulerfunction_interval_n_min;
+	int eulerfunction_interval_n_max;
+
 	int f_young_symmetrizer;
 	int young_symmetrizer_n;
 	int f_young_symmetrizer_sym_4;
@@ -142,9 +146,9 @@ class interface_algebra {
 	int f_draw_mod_n;
 	draw_mod_n_description *Draw_mod_n_description;
 
-	int f_power_mod_n;
-	int power_mod_n_a;
-	int power_mod_n_n;
+	int f_power_function_mod_n;
+	int power_function_mod_n_k;
+	int power_function_mod_n_n;
 
 	int f_all_rational_normal_forms;
 	std::string all_rational_normal_forms_finite_field_label;
@@ -303,7 +307,7 @@ class interface_combinatorics {
 	delandtsheer_doyen_description *Delandtsheer_Doyen_description;
 
 	int f_tdo_refinement;
-	tdo_refinement_description *Tdo_refinement_descr;
+	combinatorics::tdo_refinement_description *Tdo_refinement_descr;
 
 	int f_tdo_print;
 	std::string tdo_print_fname;
@@ -923,13 +927,13 @@ public:
 	large_set_was_description *large_set_was_descr;
 
 	int f_set;
-	set_builder_description *Set_builder_description;
+	data_structures::set_builder_description *Set_builder_description;
 
 	int f_vector;
-	vector_builder_description *Vector_builder_description;
+	data_structures::vector_builder_description *Vector_builder_description;
 
 	int f_combinatorial_objects;
-	data_input_stream_description *Data_input_stream_description;
+	data_structures::data_input_stream_description *Data_input_stream_description;
 
 	int f_geometry_builder;
 	geometry_builder_description *Geometry_builder_description;

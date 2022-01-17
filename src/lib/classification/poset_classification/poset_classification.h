@@ -436,7 +436,7 @@ public:
 	poset_classification_control *get_control();
 	action *get_A();
 	action *get_A2();
-	vector_space *get_VS();
+	algebra::vector_space *get_VS();
 	schreier_vector_handler *get_schreier_vector_handler();
 	int has_base_case();
 	int has_invariant_subset_for_root_node();
@@ -833,9 +833,11 @@ public:
 	void make_fname_lvl_reps_file(std::string &fname,
 			std::string &fname_base, int lvl);
 	void log_current_node(std::ostream &f, int size);
-	void make_spreadsheet_of_orbit_reps(spreadsheet *&Sp, 
+	void make_spreadsheet_of_orbit_reps(
+			data_structures::spreadsheet *&Sp,
 		int max_depth);
-	void make_spreadsheet_of_level_info(spreadsheet *&Sp, 
+	void make_spreadsheet_of_level_info(
+			data_structures::spreadsheet *&Sp,
 		int max_depth, int verbose_level);
 	void create_schreier_tree_fname_mask_base(
 			std::string &fname_mask);
@@ -1606,7 +1608,7 @@ public:
 	int n;
 
 	int f_subspace_lattice;
-	vector_space *VS;
+	algebra::vector_space *VS;
 
 	action *A; // the action in which the group is given
 	action *A2; // the action in which we do the search
@@ -1630,7 +1632,7 @@ public:
 			int verbose_level);
 	void init_subspace_lattice(action *A, action *A2,
 			strong_generators *Strong_gens,
-			vector_space *VS,
+			algebra::vector_space *VS,
 			int verbose_level);
 	void init(poset_description *description,
 		action *A, // the action in which the group is given

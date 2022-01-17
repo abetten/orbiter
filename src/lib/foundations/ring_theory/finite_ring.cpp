@@ -214,11 +214,11 @@ int finite_ring::Gauss_int(int *A, int f_special,
 	int f_vvv = (verbose_level >= 3);
 	int rank, i, j, k, jj;
 	int pivot, pivot_inv = 0, a, b, c, z, f;
-	algorithms Algo;
+	data_structures::algorithms Algo;
 	
 	if (f_v) {
 		cout << "finite_ring::Gauss_int Gauss algorithm for matrix:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, 5);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, A, m, n, n, 5);
 		//print_tables();
 		}
 	i = 0;
@@ -285,11 +285,11 @@ int finite_ring::Gauss_int(int *A, int f_special,
 					<< " made to one: " << A[i * n + j] << endl;
 				}
 			if (f_vvv) {
-				Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, 5);
+				Orbiter->Int_vec->print_integer_matrix_width(cout, A, m, n, n, 5);
 				}
 			if (f_vv) {
 				cout << "made pivot to one:" << endl;
-				Orbiter->Int_vec.print(cout, A + i * n, n);
+				Orbiter->Int_vec->print(cout, A + i * n, n);
 				cout << endl;
 				}
 			}
@@ -328,7 +328,7 @@ int finite_ring::Gauss_int(int *A, int f_special,
 				}
 			if (f_vv) {
 				cout << "after eliminating row " << k << ":" << endl;
-				Orbiter->Int_vec.print(cout, A + k * n, n);
+				Orbiter->Int_vec->print(cout, A + k * n, n);
 				cout << endl;
 				}
 			if (f_P) {
@@ -346,17 +346,17 @@ int finite_ring::Gauss_int(int *A, int f_special,
 				}
 			if (FALSE) {
 				cout << "A=" << endl;
-				Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, 5);
+				Orbiter->Int_vec->print_integer_matrix_width(cout, A, m, n, n, 5);
 				}
 			}
 		i++;
 		if (f_vv) {
 			cout << "A=" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, 5);
+			Orbiter->Int_vec->print_integer_matrix_width(cout, A, m, n, n, 5);
 			//print_integer_matrix(cout, A, m, n);
 			if (f_P) {
 				cout << "P=" << endl;
-				Orbiter->Int_vec.print_integer_matrix(cout, P, m, Pn);
+				Orbiter->Int_vec->print_integer_matrix(cout, P, m, Pn);
 				}
 			}
 		} // next j 
@@ -412,7 +412,7 @@ int finite_ring::Gauss_int(int *A, int f_special,
 		}
 	if (f_v) { 
 		cout << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, 5);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, A, m, n, n, 5);
 		//print_integer_matrix(cout, A, rank, n);
 		cout << "the rank is " << rank << endl;
 		}
@@ -528,7 +528,7 @@ int finite_ring::PHG_element_rank(
 	}
 	if (f_v) {
 		cout << "w=";
-		Orbiter->Int_vec.print(cout, w, len - 1);
+		Orbiter->Int_vec->print(cout, w, len - 1);
 		cout << endl;
 	}
 	r1 = Gg.AG_element_rank(get_e(), w, 1, len - 1);
@@ -573,7 +573,7 @@ void finite_ring::PHG_element_unrank(
 
 	if (f_v) {
 		cout << "w=";
-		Orbiter->Int_vec.print(cout, w, len - 1);
+		Orbiter->Int_vec->print(cout, w, len - 1);
 		cout << endl;
 	}
 

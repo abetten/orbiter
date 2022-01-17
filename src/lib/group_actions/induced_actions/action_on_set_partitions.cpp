@@ -92,8 +92,8 @@ long int action_on_set_partitions::compute_image(
 {
 	int f_v = (verbose_level >= 1);
 	int i, b;
-	combinatorics_domain Combi;
-	sorting Sorting;
+	combinatorics::combinatorics_domain Combi;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "action_on_set_partitions::compute_image "

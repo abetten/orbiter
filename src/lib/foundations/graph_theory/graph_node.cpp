@@ -118,7 +118,7 @@ void graph_node::add_vec_data(long int *v, int len)
 {
 	vec_data = NEW_lint(len);
 	vec_data_len = len;
-	Orbiter->Lint_vec.copy(v, vec_data, len);
+	Orbiter->Lint_vec->copy(v, vec_data, len);
 	f_has_vec_data = TRUE;
 }
 
@@ -355,7 +355,7 @@ void graph_node::register_child(layered_graph *G,
 		int *child_id_new;
 
 		child_id_new = NEW_int(nb_children_allocated);
-		Orbiter->Int_vec.copy(child_id, child_id_new, nb_children);
+		Orbiter->Int_vec->copy(child_id, child_id_new, nb_children);
 		FREE_int(child_id);
 		child_id = child_id_new;
 		}

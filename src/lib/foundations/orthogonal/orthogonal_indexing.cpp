@@ -327,7 +327,7 @@ long int orthogonal_indexing::Qminus_rank(int *v,
 			cout << "c1=" << c1 << endl;
 			cout << "c2=" << c2 << endl;
 			cout << "c3=" << c3 << endl;
-			Orbiter->Int_vec.print(cout, v, k + 1);
+			Orbiter->Int_vec->print(cout, v, k + 1);
 			cout << endl;
 			exit(1);
 		}
@@ -992,7 +992,7 @@ void orthogonal_indexing::Sbar_rank(int *v, int stride, int n, long int &a, int 
 	if (f_v) {
 		cout << "orthogonal_indexing::Sbar_rank: ";
 		if (stride == 1) {
-			Orbiter->Int_vec.print(cout, v, 2 * n);
+			Orbiter->Int_vec->print(cout, v, 2 * n);
 			cout << endl;
 		}
 	}
@@ -1010,7 +1010,7 @@ void orthogonal_indexing::Sbar_rank(int *v, int stride, int n, long int &a, int 
 			cout << "orthogonal_indexing::Sbar_rank "
 					"error in Sbar_rank n = 1 bad vector" << endl;
 			if (stride == 1) {
-				Orbiter->Int_vec.print(cout, v, 2);
+				Orbiter->Int_vec->print(cout, v, 2);
 				}
 			exit(1);
 			}

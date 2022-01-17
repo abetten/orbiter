@@ -65,7 +65,7 @@ void arc_basic::Segre_hyperoval(
 
 	Pts = NEW_lint(N);
 	Mtx = NEW_int(N * 3);
-	Orbiter->Int_vec.zero(Mtx, N * 3);
+	Orbiter->Int_vec->zero(Mtx, N * 3);
 	for (t = 0; t < F->q; t++) {
 		t6 = F->power(t, 6);
 		Mtx[t * 3 + 0] = 1;
@@ -135,7 +135,7 @@ void arc_basic::GlynnI_hyperoval(
 
 	Pts = NEW_lint(N);
 	Mtx = NEW_int(N * 3);
-	Orbiter->Int_vec.zero(Mtx, N * 3);
+	Orbiter->Int_vec->zero(Mtx, N * 3);
 	for (t = 0; t < F->q; t++) {
 		te = F->power(t, exponent);
 		Mtx[t * 3 + 0] = 1;
@@ -205,7 +205,7 @@ void arc_basic::GlynnII_hyperoval(
 
 	Pts = NEW_lint(N);
 	Mtx = NEW_int(N * 3);
-	Orbiter->Int_vec.zero(Mtx, N * 3);
+	Orbiter->Int_vec->zero(Mtx, N * 3);
 	for (t = 0; t < F->q; t++) {
 		te = F->power(t, exponent);
 		Mtx[t * 3 + 0] = 1;
@@ -267,7 +267,7 @@ void arc_basic::Subiaco_oval(
 	}
 	Pts = NEW_lint(N);
 	Mtx = NEW_int(N * 3);
-	Orbiter->Int_vec.zero(Mtx, N * 3);
+	Orbiter->Int_vec->zero(Mtx, N * 3);
 	for (t = 0; t < F->q; t++) {
 		t2 = F->mult(t, t);
 		t3 = F->mult(t2, t);
@@ -364,7 +364,7 @@ void arc_basic::Subiaco_hyperoval(
 
 	Pts = NEW_lint(N);
 	Mtx = NEW_int(N * 3);
-	Orbiter->Int_vec.zero(Mtx, N * 3);
+	Orbiter->Int_vec->zero(Mtx, N * 3);
 	for (t = 0; t < F->q; t++) {
 		t2 = F->mult(t, t);
 		t3 = F->mult(t2, t);
@@ -601,7 +601,7 @@ void arc_basic::LunelliSce(int *pts18, int verbose_level)
 	if (f_v) {
 		cout << "the size of the LinelliSce hyperoval is " << sz << endl;
 		cout << "the LinelliSce hyperoval is:" << endl;
-		Orbiter->Int_vec.print(cout, pts18, sz);
+		Orbiter->Int_vec->print(cout, pts18, sz);
 		cout << endl;
 	}
 

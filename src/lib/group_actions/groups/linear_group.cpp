@@ -316,7 +316,7 @@ void linear_group::linear_group_init(
 		if (f_v) {
 			cout << "linear_group::linear_group_init "
 					"gens of size " << sz << ":" << endl;
-			Orbiter->Int_vec.print(cout, gens, sz);
+			Orbiter->Int_vec->print(cout, gens, sz);
 			cout << endl;
 		}
 
@@ -521,7 +521,7 @@ void linear_group::linear_group_init(
 		if (f_v) {
 			cout << "linear_group::linear_group_init "
 					"computing restricted action on set of size " << nb_points << endl;
-			Orbiter->Lint_vec.print(cout, points, nb_points);
+			Orbiter->Lint_vec->print(cout, points, nb_points);
 			cout << endl;
 		}
 
@@ -713,7 +713,7 @@ void linear_group::init_wedge_action_detached(int verbose_level)
 	vector_ge *secondary_nice_gens;
 	int n2;
 
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	n2 = Combi.binomial2(n);
 
@@ -1468,7 +1468,7 @@ void linear_group::report(std::ostream &ost,
 			H->create_group_table(Table, n, verbose_level);
 
 			cout << "linear_group::report The group table is:" << endl;
-			Orbiter->Int_vec.matrix_print(Table, n, n, 2);
+			Orbiter->Int_vec->matrix_print(Table, n, n, 2);
 
 			fname_group_table.assign(label);
 			fname_group_table.append("_group_table.csv");

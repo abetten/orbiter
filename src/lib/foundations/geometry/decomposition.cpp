@@ -62,7 +62,7 @@ void decomposition::freeself()
 
 void decomposition::init_inc_and_stack(
 		incidence_structure *Inc,
-		partitionstack *Stack,
+		data_structures::partitionstack *Stack,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -115,7 +115,7 @@ void decomposition::setup_default_partition(int verbose_level)
 		cout << "decomposition::setup_default_partition "
 				"after I->init_by_matrix" << endl;
 	}
-	Stack = NEW_OBJECT(partitionstack);
+	Stack = NEW_OBJECT(data_structures::partitionstack);
 	Stack->allocate(nb_points + nb_blocks,
 			0 /* verbose_level */);
 	Stack->subset_continguous(nb_points, nb_blocks);

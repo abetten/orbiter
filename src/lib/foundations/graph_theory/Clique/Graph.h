@@ -122,7 +122,7 @@ public:
      * The following function sets the edges in the graph from the bitvector
      * adjacency. 'vl' is the verbose level.
      */
-    __forceinline__ void set_edge_from_bitvector_adjacency(orbiter::foundations::bitvector *Bitvec, int vl=0) {
+    __forceinline__ void set_edge_from_bitvector_adjacency(orbiter::foundations::data_structures::bitvector *Bitvec, int vl=0) {
         if (vl - 2) printf("%s: %d: set_edge_from_bitvector_adjacency\n", __FILE__, __LINE__);
         const size_t nThreads = std::thread::hardware_concurrency();
         const size_t n = this->nb_vertices;

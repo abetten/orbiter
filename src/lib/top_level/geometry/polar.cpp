@@ -208,7 +208,7 @@ void polar::init2(int depth, int verbose_level)
 			f_do_it_anyway_even_for_big_degree, 
 			f_print_cycles_of_length_one);
 		}
-	VS = NEW_OBJECT(vector_space);
+	VS = NEW_OBJECT(algebra::vector_space);
 
 	VS->init(F, n /* dimension */,
 			verbose_level - 1);
@@ -332,7 +332,7 @@ void polar::compute_cosets(int depth, int orbit_idx, int verbose_level)
 	if (f_v) {
 		cout << "the set representing orbit " << orbit_idx 
 			<< " at level " << depth << " is ";
-		Orbiter->Lint_vec.print(cout, the_set1, depth);
+		Orbiter->Lint_vec->print(cout, the_set1, depth);
 		cout << endl;
 		}
 	for (i = 0; i < k; i++) {
@@ -341,7 +341,7 @@ void polar::compute_cosets(int depth, int orbit_idx, int verbose_level)
 		}
 	if (f_vv) {
 		cout << "corresponding to the subspace with basis:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M1, k, n, n, F->log10_of_q);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M1, k, n, n, F->log10_of_q);
 		}
 
 	grassmann Grass;
@@ -384,7 +384,7 @@ void polar::compute_cosets(int depth, int orbit_idx, int verbose_level)
 		if (f_vv) {
 			cout << "basis of subspace that is the image "
 					"under this element:" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout, M2, k, n, n, F->log10_of_q);
+			Orbiter->Int_vec->print_integer_matrix_width(cout, M2, k, n, n, F->log10_of_q);
 			}
 		for (i = 0; i < k * n; i++) {
 			Grass.M[i] = M2[i];
@@ -474,7 +474,7 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 	if (f_v) {
 		cout << "the set representing orbit " << orbit_idx 
 			<< " at level " << depth << " is ";
-		Orbiter->Lint_vec.print(cout, the_set1, depth);
+		Orbiter->Lint_vec->print(cout, the_set1, depth);
 		cout << endl;
 		}
 	for (i = 0; i < k; i++) {
@@ -484,7 +484,7 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 
 	if (f_v) {
 		cout << "corresponding to the subspace with basis:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M1, k, n, n, F->log10_of_q);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M1, k, n, n, F->log10_of_q);
 		}
 
 	grassmann Grass;
@@ -531,7 +531,7 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 		
 		if (f_vv) {
 			cout << "subspace " << c << ":" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout, M2, k, n, n, F->log10_of_q);
+			Orbiter->Int_vec->print_integer_matrix_width(cout, M2, k, n, n, F->log10_of_q);
 			}
 
 		
@@ -580,7 +580,7 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 
 	if (f_vv) {
 		cout << "adjacency matrix:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Adj,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, Adj,
 				index_int, index_int, index_int, 1);
 		}
 
@@ -628,7 +628,7 @@ void polar::dual_polar_graph(int depth, int orbit_idx,
 	if (f_vv) {
 		cout << "Incidence matrix:" << index_int
 				<< " x " << nb_e << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Inc,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, Inc,
 				index_int, nb_e, nb_e, 1);
 		}
 
@@ -850,7 +850,7 @@ void polar::test_if_in_perp(long int *S, int len,
 
 	if (f_v) {
 		cout << "polar::test_if_in_perp done for ";
-		Orbiter->Lint_vec.set_print(cout, S, len);
+		Orbiter->Lint_vec->set_print(cout, S, len);
 		cout << endl;
 		}
 	if (len == 0) {
@@ -869,7 +869,7 @@ void polar::test_if_in_perp(long int *S, int len,
 		O->unrank_point(tmp_M + 1 * n, 1, c, 0);
 		if (f_vv) {
 			cout << "candidate " << i << " = " << c << ":" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout,
+			Orbiter->Int_vec->print_integer_matrix_width(cout,
 					tmp_M, 2, n, n, F->log10_of_q);
 			}
 		f = O->evaluate_bilinear_form(tmp_M + 0 * n, tmp_M + 1 * n, 1);
@@ -884,13 +884,13 @@ void polar::test_if_in_perp(long int *S, int len,
 	
 	if (f_v) {
 		cout << "polar::test_if_in_perp done for ";
-		Orbiter->Lint_vec.set_print(cout, S, len);
+		Orbiter->Lint_vec->set_print(cout, S, len);
 		cout << "; # of candidates reduced from " << nb_candidates
 				<< " to " << nb_good_candidates << endl;
 		}
 	if (f_vv) {
 		cout << "good candidates: ";
-		Orbiter->Lint_vec.print(cout, good_candidates, nb_good_candidates);
+		Orbiter->Lint_vec->print(cout, good_candidates, nb_good_candidates);
 		cout << endl;
 		}
 }
@@ -913,15 +913,15 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 	int *tmp_candidates;
 	int nb_tmp_candidates;
 	geometry_global Gg;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "polar::test_if_closed_under_cosets for ";
-		Orbiter->Int_vec.set_print(cout, S, len);
+		Orbiter->Int_vec->set_print(cout, S, len);
 		cout << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		cout << "candidates: ";
-		Orbiter->Int_vec.print(cout, candidates, nb_candidates);
+		Orbiter->Int_vec->print(cout, candidates, nb_candidates);
 		cout << endl;
 		}
 	if (len == 0) {
@@ -951,10 +951,10 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 		}
 	if (f_v) {
 		cout << "the basis is ";
-		Orbiter->Int_vec.print(cout, S, len);
+		Orbiter->Int_vec->print(cout, S, len);
 		cout << endl;
 		cout << "corresponding to the vectors:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M, len, n, n, F->log10_of_q);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M, len, n, n, F->log10_of_q);
 		cout << "nb=" << nb << endl;
 		}
 	if (len >= 2) {
@@ -964,7 +964,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 			}
 		if (f_v) {
 			cout << "the list of points N0:" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout, N0, nb0, n, n, F->log10_of_q);
+			Orbiter->Int_vec->print_integer_matrix_width(cout, N0, nb0, n, n, F->log10_of_q);
 			}
 		}
 	for (i = 0; i < nb; i++) {
@@ -973,7 +973,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 		}
 	if (f_v) {
 		cout << "the list of points N:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, N, nb, n, n, F->log10_of_q);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, N, nb, n, n, F->log10_of_q);
 		}
 	if (len >= 2) {
 		// the expand step:
@@ -990,7 +990,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 			O->unrank_point(v, 1, c, 0);
 			if (f_v) {
 				cout << "i=" << i;
-				Orbiter->Int_vec.print(cout, v, n);
+				Orbiter->Int_vec->print(cout, v, n);
 				cout << endl;
 				}
 			for (j = 0; j < nb0; j++) {
@@ -1000,7 +1000,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 						}
 					if (f_v) {
 						cout << "j=" << j << " y=" << y << " : w=";
-						Orbiter->Int_vec.print(cout, w, n);
+						Orbiter->Int_vec->print(cout, w, n);
 						cout << endl;
 						}
 					d = O->rank_point(w, 1, 0);
@@ -1013,14 +1013,14 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 			} // next i
 		if (f_v) {
 			cout << "expanded candidate set:" << endl;
-			Orbiter->Int_vec.print(cout,
+			Orbiter->Int_vec->print(cout,
 					candidates_expanded, nb_candidates_expanded);
 			cout << endl;
 			}
 		Sorting.int_vec_heapsort(candidates_expanded, nb_candidates_expanded);
 		if (f_v) {
 			cout << "expanded candidate set after sort:" << endl;
-			Orbiter->Int_vec.print(cout, candidates_expanded, nb_candidates_expanded);
+			Orbiter->Int_vec->print(cout, candidates_expanded, nb_candidates_expanded);
 			cout << endl;
 			}
 		}
@@ -1043,7 +1043,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 		O->unrank_point(v, 1, c, 0);
 		if (f_v) {
 			cout << "i=" << i;
-			Orbiter->Int_vec.print(cout, v, n);
+			Orbiter->Int_vec->print(cout, v, n);
 			cout << endl;
 			}
 		f_OK = TRUE;
@@ -1054,7 +1054,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 					}
 				if (f_v) {
 					cout << "j=" << j << " y=" << y << " : w=";
-					Orbiter->Int_vec.print(cout, w, n);
+					Orbiter->Int_vec->print(cout, w, n);
 					cout << endl;
 					}
 				d = O->rank_point(w, 1, 0);
@@ -1080,7 +1080,7 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 		}
 	if (f_v) {
 		cout << "tmp_candidates:" << endl;
-		Orbiter->Int_vec.print(cout, tmp_candidates, nb_tmp_candidates);
+		Orbiter->Int_vec->print(cout, tmp_candidates, nb_tmp_candidates);
 		cout << endl;
 		}
 
@@ -1095,13 +1095,13 @@ void polar::test_if_closed_under_cosets(int *S, int len,
 	
 	if (f_v) {
 		cout << "polar::test_if_closed_under_cosets for ";
-		Orbiter->Int_vec.set_print(cout, S, len);
+		Orbiter->Int_vec->set_print(cout, S, len);
 		cout << "; # of candidates reduced from "
 			<< nb_candidates << " to " << nb_good_candidates << endl;
 		}
 	if (f_vv) {
 		cout << "good candidates: ";
-		Orbiter->Int_vec.print(cout, good_candidates, nb_good_candidates);
+		Orbiter->Int_vec->print(cout, good_candidates, nb_good_candidates);
 		cout << endl;
 		}
 	FREE_int(M);
@@ -1187,19 +1187,19 @@ void polar::list_whole_orbit(int depth,
 			}
 		orbit_element_unrank(orbit_idx, j, set, 0/*verbose_level*/);
 		cout << setw(4) << j << " : ";
-		Orbiter->Lint_vec.print(cout, set, depth);
+		Orbiter->Lint_vec->print(cout, set, depth);
 		cout << endl;
 			
 		for (h = 0; h < depth; h++) {
 			unrank_point(M1 + h * n, set[h]);
 			}
 		cout << "corresponding to the subspace with basis:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M1, k, n, n, F->log10_of_q);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M1, k, n, n, F->log10_of_q);
 			
 		F->Linear_algebra->Gauss_simple(M1, depth, n, base_cols, 0/* verbose_level*/);
 
 		cout << "basis in echelon form:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M1, k, n, n, F->log10_of_q);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M1, k, n, n, F->log10_of_q);
 		
 
 
@@ -1290,7 +1290,7 @@ void polar_callback_early_test_func(long int *S, int len,
 	
 	if (f_v) {
 		cout << "polar_callback_early_test_func for set ";
-		Orbiter->Lint_vec.print(cout, S, len);
+		Orbiter->Lint_vec->print(cout, S, len);
 		cout << endl;
 		}
 	P->test_if_in_perp(S, len, 

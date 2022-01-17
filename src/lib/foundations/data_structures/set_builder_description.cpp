@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace data_structures {
 
 
 set_builder_description::set_builder_description()
@@ -149,7 +150,7 @@ void set_builder_description::print()
 
 
 
-}}
+}}}
 
 
 

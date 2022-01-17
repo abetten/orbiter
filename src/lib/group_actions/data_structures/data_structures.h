@@ -111,7 +111,7 @@ public:
 	int *partition;
 
 	int f_has_canonical_form;
-	bitvector *canonical_form;
+	data_structures::bitvector *canonical_form;
 
 	int f_has_canonical_labeling;
 	long int *canonical_labeling;  // [nb_rows + nb_cols]
@@ -343,7 +343,7 @@ public:
 			std::ifstream &fp, int verbose_level);
 	void sv_write_file(schreier_vector *Sv,
 			std::ofstream &fp, int verbose_level);
-	set_of_sets *get_orbits_as_set_of_sets(schreier_vector *Sv,
+	data_structures::set_of_sets *get_orbits_as_set_of_sets(schreier_vector *Sv,
 			int verbose_level);
 
 };

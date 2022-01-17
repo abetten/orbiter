@@ -76,7 +76,7 @@ int syntax_tree_node_terminal::evaluate(std::map<std::string, std::string> &symb
 {
 	int f_v = (verbose_level >= 1);
 	int a;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "syntax_tree_node_terminal::evaluate" << endl;

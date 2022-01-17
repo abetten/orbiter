@@ -229,7 +229,7 @@ void graph_theory_domain::save_colored_graph(std::string &fname,
 		int nb_vertices, int nb_colors, int nb_colors_per_vertex,
 		long int *points, int *point_color,
 		long int *data, int data_sz,
-		bitvector *Bitvec,
+		data_structures::bitvector *Bitvec,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -297,7 +297,7 @@ void graph_theory_domain::load_colored_graph(std::string &fname,
 		int &nb_vertices, int &nb_colors, int &nb_colors_per_vertex,
 		long int *&vertex_labels, int *&vertex_colors, long int *&user_data,
 		int &user_data_size,
-		bitvector *&Bitvec,
+		data_structures::bitvector *&Bitvec,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -316,7 +316,7 @@ void graph_theory_domain::load_colored_graph(std::string &fname,
 
 	{
 		ifstream fp(fname, ios::binary);
-		sorting Sorting;
+		data_structures::sorting Sorting;
 
 		fp.read((char *) &a, sizeof(int));
 		if (a == -1) {
@@ -394,7 +394,7 @@ void graph_theory_domain::load_colored_graph(std::string &fname,
 				for (j = 1; j < nb_colors_per_vertex; j++) {
 					if (vertex_colors[i * nb_colors_per_vertex + j - 1] == vertex_colors[i * nb_colors_per_vertex + j]) {
 						cout << "graph_theory_domain::load_colored_graph repeated color for vertex " << i << " : " << endl;
-						Orbiter->Int_vec.print(cout, vertex_colors + i * nb_colors_per_vertex, nb_colors_per_vertex);
+						Orbiter->Int_vec->print(cout, vertex_colors + i * nb_colors_per_vertex, nb_colors_per_vertex);
 						cout << endl;
 						exit(1);
 					}
@@ -468,7 +468,7 @@ void graph_theory_domain::load_colored_graph(std::string &fname,
 		if (f_v) {
 			cout << "graph_theory_domain::load_colored_graph before allocating bitvector_adjacency" << endl;
 			}
-		Bitvec = NEW_OBJECT(bitvector);
+		Bitvec = NEW_OBJECT(data_structures::bitvector);
 		Bitvec->allocate(L);
 		//bitvector_adjacency = NEW_uchar(bitvector_length);
 		fp.read((char *) Bitvec->get_data(), Bitvec->get_allocated_length());
@@ -522,7 +522,7 @@ int graph_theory_domain::is_association_scheme(int *color_graph, int n,
 
 	if (f_vv) {
 		cout << "colors (the 0-th color is the diagonal color): ";
-		Orbiter->Int_vec.print(cout, colors, nb_colors);
+		Orbiter->Int_vec->print(cout, colors, nb_colors);
 		cout << endl;
 	}
 
@@ -531,7 +531,7 @@ int graph_theory_domain::is_association_scheme(int *color_graph, int n,
 	int pijk, pijk1, u, v, w, u0 = 0, v0 = 0;
 
 	Pijk = NEW_int(C * C * C);
-	Orbiter->Int_vec.zero(Pijk, C * C * C);
+	Orbiter->Int_vec->zero(Pijk, C * C * C);
 	for (k = 0; k < C; k++) {
 		for (i = 0; i < C; i++) {
 			for (j = 0; j < C; j++) {
@@ -634,7 +634,7 @@ void graph_theory_domain::print_Pijk(int *Pijk, int nb_colors) {
 			}
 		}
 		cout << "P^{(" << k << ")}=(p_{i,j," << k << "})_{i,j}:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Mtx, C, C, C, 3);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, Mtx, C, C, C, 3);
 		FREE_int(Mtx);
 	}
 }
@@ -651,14 +651,14 @@ void graph_theory_domain::compute_decomposition_of_graph_wrt_partition(
 		cout << "compute_decomposition_of_graph_wrt_partition" << endl;
 		cout << "The partition is:" << endl;
 		cout << "first = ";
-		Orbiter->Int_vec.print(cout, first, nb_parts);
+		Orbiter->Int_vec->print(cout, first, nb_parts);
 		cout << endl;
 		cout << "len = ";
-		Orbiter->Int_vec.print(cout, len, nb_parts);
+		Orbiter->Int_vec->print(cout, len, nb_parts);
 		cout << endl;
 	}
 	R = NEW_int(nb_parts * nb_parts);
-	Orbiter->Int_vec.zero(R, nb_parts * nb_parts);
+	Orbiter->Int_vec->zero(R, nb_parts * nb_parts);
 	for (I = 0; I < nb_parts; I++) {
 		f1 = first[I];
 		l1 = len[I];
@@ -701,10 +701,8 @@ void graph_theory_domain::draw_bitmatrix(
 		int f_dots,
 		int f_partition, int nb_row_parts, int *row_part_first,
 		int nb_col_parts, int *col_part_first, int f_row_grid, int f_col_grid,
-		int f_bitmatrix, bitmatrix *Bitmatrix,
+		int f_bitmatrix, data_structures::bitmatrix *Bitmatrix,
 		int *M, int m, int n,
-		//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
-		//double scale, double line_width,
 		int f_has_labels, int *labels,
 		int verbose_level)
 {
@@ -862,7 +860,7 @@ void graph_theory_domain::make_cycle_graph(int *&Adj, int &N,
 
 
 	Adj = NEW_int(N * N);
-	Orbiter->Int_vec.zero(Adj, N * N);
+	Orbiter->Int_vec->zero(Adj, N * N);
 
 	for (i = 0; i < N; i++) {
 		j = (i + 1) % N;
@@ -889,7 +887,7 @@ void graph_theory_domain::make_Hamming_graph(int *&Adj, int &N,
 	}
 	geometry_global GG;
 	number_theory_domain NT;
-	coding_theory_domain Coding;
+	coding_theory::coding_theory_domain Coding;
 	int *v1;
 	int *v2;
 	int *v3;
@@ -899,7 +897,7 @@ void graph_theory_domain::make_Hamming_graph(int *&Adj, int &N,
 
 
 	Adj = NEW_int(N * N);
-	Orbiter->Int_vec.zero(Adj, N * N);
+	Orbiter->Int_vec->zero(Adj, N * N);
 
 	v1 = NEW_int(n);
 	v2 = NEW_int(n);
@@ -937,8 +935,8 @@ void graph_theory_domain::make_Johnson_graph(int *&Adj, int &N,
 	if (f_v) {
 		cout << "graph_theory_domain::make_Johnson_graph" << endl;
 	}
-	combinatorics_domain Combi;
-	sorting Sorting;
+	combinatorics::combinatorics_domain Combi;
+	data_structures::sorting Sorting;
 	int *set1;
 	int *set2;
 	int *set3;
@@ -948,7 +946,7 @@ void graph_theory_domain::make_Johnson_graph(int *&Adj, int &N,
 
 
 	Adj = NEW_int(N * N);
-	Orbiter->Int_vec.zero(Adj, N * N);
+	Orbiter->Int_vec->zero(Adj, N * N);
 
 	set1 = NEW_int(k);
 	set2 = NEW_int(k);
@@ -1002,7 +1000,7 @@ void graph_theory_domain::make_Paley_graph(int *&Adj, int &N,
 	F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
 
 	f_is_square = NEW_int(q);
-	Orbiter->Int_vec.zero(f_is_square, q);
+	Orbiter->Int_vec->zero(f_is_square, q);
 
 	for (i = 0; i < q; i++) {
 		j = F->mult(i, i);
@@ -1010,7 +1008,7 @@ void graph_theory_domain::make_Paley_graph(int *&Adj, int &N,
 	}
 
 	Adj = NEW_int(q * q);
-	Orbiter->Int_vec.zero(Adj, q * q);
+	Orbiter->Int_vec->zero(Adj, q * q);
 
 	for (i = 0; i < q; i++) {
 		for (j = i + 1; j < q; j++) {
@@ -1132,7 +1130,7 @@ void graph_theory_domain::make_Winnie_Li_graph(int *&Adj, int &N,
 	if (f_v) {
 		cout << "graph_theory_domain::make_Winnie_Li_graph "
 				"found " << k << " norm-one elements:" << endl;
-		Orbiter->Int_vec.print(cout, N1, k);
+		Orbiter->Int_vec->print(cout, N1, k);
 		cout << endl;
 	}
 
@@ -1174,7 +1172,7 @@ void graph_theory_domain::make_Grassmann_graph(int *&Adj, int &N,
 	int *M1; // [k * n]
 	int *M2; // [k * n]
 	int *M; // [2 * k * n]
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	F = NEW_OBJECT(finite_field);
 	F->finite_field_init(q, FALSE /* f_without_tables */, verbose_level);
@@ -1190,7 +1188,7 @@ void graph_theory_domain::make_Grassmann_graph(int *&Adj, int &N,
 	M = NEW_int(2 * k * n);
 
 	Adj = NEW_int(N * N);
-	Orbiter->Int_vec.zero(Adj, N * N);
+	Orbiter->Int_vec->zero(Adj, N * N);
 
 	for (i = 0; i < N; i++) {
 
@@ -1200,8 +1198,8 @@ void graph_theory_domain::make_Grassmann_graph(int *&Adj, int &N,
 
 			Gr->unrank_lint_here(M2, j, 0 /* verbose_level */);
 
-			Orbiter->Int_vec.copy(M1, M, k * n);
-			Orbiter->Int_vec.copy(M2, M + k * n, k * n);
+			Orbiter->Int_vec->copy(M1, M, k * n);
+			Orbiter->Int_vec->copy(M2, M + k * n, k * n);
 
 			rr = F->Linear_algebra->rank_of_rectangular_matrix(M, 2 * k, n, 0 /* verbose_level */);
 			if (rr == r) {
@@ -1278,7 +1276,7 @@ void graph_theory_domain::make_orthogonal_collinearity_graph(int *&Adj, int &N,
 	if (f_v) {
 		cout << "graph_theory_domain::make_orthogonal_collinearity_graph "
 				"Gram matrix" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Gram, d, d, d, 2);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, Gram, d, d, d, 2);
 	}
 
 #if 0
@@ -1355,7 +1353,7 @@ void graph_theory_domain::make_non_attacking_queens_graph(int *&Adj, int &N,
 
 
 	Adj = NEW_int(N * N);
-	Orbiter->Int_vec.zero(Adj, N * N);
+	Orbiter->Int_vec->zero(Adj, N * N);
 
 
 	for (n1 = 0; n1 < N; n1++) {
@@ -1404,7 +1402,7 @@ void graph_theory_domain::make_disjoint_sets_graph(int *&Adj, int &N,
 
 
 	int i, j;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	N = m;
 
@@ -1413,7 +1411,7 @@ void graph_theory_domain::make_disjoint_sets_graph(int *&Adj, int &N,
 	}
 
 	Adj = NEW_int(N * N);
-	Orbiter->Int_vec.zero(Adj, N * N);
+	Orbiter->Int_vec->zero(Adj, N * N);
 
 
 	for (i = 0; i < N; i++) {
@@ -1438,7 +1436,7 @@ void graph_theory_domain::make_disjoint_sets_graph(int *&Adj, int &N,
 void graph_theory_domain::compute_adjacency_matrix(
 		int *Table, int nb_sets, int set_size,
 		std::string &prefix_for_graph,
-		bitvector *&B,
+		data_structures::bitvector *&B,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1454,7 +1452,7 @@ void graph_theory_domain::compute_adjacency_matrix(
 	}
 	N2_100 = (N2 / 100) + 1;
 
-	B = NEW_OBJECT(bitvector);
+	B = NEW_OBJECT(data_structures::bitvector);
 
 	B->allocate(N2);
 
@@ -1526,7 +1524,7 @@ void graph_theory_domain::compute_adjacency_matrix(
 		int *color;
 
 		color = NEW_int(nb_sets);
-		Orbiter->Int_vec.zero(color, nb_sets);
+		Orbiter->Int_vec->zero(color, nb_sets);
 
 		CG->init(nb_sets, 1 /* nb_colors */, 1 /* nb_colors_per_vertex */,
 				color, B,
@@ -1558,7 +1556,7 @@ void graph_theory_domain::make_graph_of_disjoint_sets_from_rows_of_matrix(
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "graph_theory_domain::make_graph_of_disjoint_sets_from_rows_of_matrix" << endl;

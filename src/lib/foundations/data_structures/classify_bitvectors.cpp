@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace data_structures {
 
 
 classify_bitvectors::classify_bitvectors()
@@ -226,7 +227,7 @@ void classify_bitvectors::finalize(int verbose_level)
 
 	if (f_v) {
 		cout << "classify_bitvectors::finalize type_of=";
-		Orbiter->Int_vec.print(cout, type_of, N);
+		Orbiter->Int_vec->print(cout, type_of, N);
 		cout << endl;
 	}
 	C_type_of->init(type_of, N, FALSE, 0);
@@ -367,14 +368,14 @@ void classify_bitvectors::save(
 			if (i == 0) {
 				sz = encoding_sz;
 				Reps = NEW_lint(nb_types * sz);
-				Orbiter->Lint_vec.copy(encoding, Reps, sz);
+				Orbiter->Lint_vec->copy(encoding, Reps, sz);
 			}
 			else {
 				if (encoding_sz != sz) {
 					cout << "encoding_sz != sz" << endl;
 					exit(1);
 				}
-				Orbiter->Lint_vec.copy(encoding, Reps + i * sz, sz);
+				Orbiter->Lint_vec->copy(encoding, Reps + i * sz, sz);
 			}
 			FREE_lint(encoding);
 		}
@@ -435,6 +436,7 @@ int compare_func_for_bitvectors(void *a, void *b, void *data)
 	return 0;
 }
 
-}}
+}}}
+
 
 

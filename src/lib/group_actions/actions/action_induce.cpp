@@ -1975,7 +1975,7 @@ void action::induced_action_on_pairs(
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_pairs" << endl;
@@ -2278,7 +2278,7 @@ void action::induced_action_on_flags(action *old_action,
 }
 
 void action::induced_action_on_bricks(action &old_action,
-	brick_domain *B, int f_linear_action,
+		combinatorics::brick_domain *B, int f_linear_action,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -2774,7 +2774,7 @@ void action::induce(action *old_action, sims *old_G,
 		cout << "subaction->base_len = " << subaction->base_len() << endl;
 		if (base_of_choice_len) {
 			cout << "base of choice:" << endl;
-			Orbiter->Lint_vec.print(cout, base_of_choice, base_of_choice_len);
+			Orbiter->Lint_vec->print(cout, base_of_choice, base_of_choice_len);
 			cout << endl;
 		}
 		else {
@@ -2997,7 +2997,7 @@ void action::lex_least_base_in_place(int verbose_level)
 		if (f_changed) {
 			cout << "The base has changed !!!" << endl;
 			cout << "old base: ";
-			Orbiter->Lint_vec.print(cout, old_base, old_base_len);
+			Orbiter->Lint_vec->print(cout, old_base, old_base_len);
 			cout << endl;
 			cout << "new base: ";
 			//int_vec_print(cout, Stabilizer_chain->base, base_len());
@@ -3213,7 +3213,7 @@ void action::base_change(action *old_action,
 	
 	if (f_v) {
 		cout << "action::base_change to the following set:" << endl;
-		Orbiter->Lint_vec.print(cout, set, size);
+		Orbiter->Lint_vec->print(cout, set, size);
 		cout << endl;
 	}
 	if (!old_action->f_has_sims) {

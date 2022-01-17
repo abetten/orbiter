@@ -46,7 +46,7 @@ void poset_description::read_arguments_from_string(
 	int argc;
 	char **argv;
 	int i;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "poset_description::read_arguments_from_string" << endl;

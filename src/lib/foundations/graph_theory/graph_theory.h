@@ -136,7 +136,7 @@ public:
 	int f_has_adj_list;
 	int *adj_list_coded;
 	int f_has_bitvector;
-	bitvector *Bitvec_adjacency;
+	data_structures::bitvector *Bitvec_adjacency;
 
 	int f_has_row_by_row_adjacency_matrix;
 	char **row_by_row_adjacency_matrix; // [n][n]
@@ -202,7 +202,7 @@ public:
 	void init(clique_finder_control *Control,
 			std::string &label, int n,
 			int f_has_adj_list, int *adj_list_coded,
-			int f_has_bitvector, bitvector *Bitvec_adjacency,
+			int f_has_bitvector, data_structures::bitvector *Bitvec_adjacency,
 			int verbose_level);
 	void init_restrictions(int *restrictions, int verbose_level);
 	void init_point_labels(int *pt_labels);
@@ -275,7 +275,7 @@ public:
 	long int *user_data; // [user_data_size]
 
 	int f_ownership_of_bitvec;
-	bitvector *Bitvec;
+	data_structures::bitvector *Bitvec;
 
 	int f_has_list_of_edges;
 	int nb_edges;
@@ -304,15 +304,17 @@ public:
 	void print_points_and_colors();
 	void print_adjacency_list();
 	void init(int nb_points, int nb_colors, int nb_colors_per_vertex,
-		int *colors, bitvector *Bitvec, int f_ownership_of_bitvec,
+		int *colors, data_structures::bitvector *Bitvec,
+		int f_ownership_of_bitvec,
 		std::string &label, std::string &label_tex,
 		int verbose_level);
 	void init_with_point_labels(int nb_points, int nb_colors, int nb_colors_per_vertex,
-		int *colors, bitvector *Bitvec, int f_ownership_of_bitvec,
+		int *colors, data_structures::bitvector *Bitvec,
+		int f_ownership_of_bitvec,
 		long int *point_labels,
 		std::string &label, std::string &label_tex,
 		int verbose_level);
-	void init_no_colors(int nb_points, bitvector *Bitvec,
+	void init_no_colors(int nb_points, data_structures::bitvector *Bitvec,
 		int f_ownership_of_bitvec, 
 		std::string &label, std::string &label_tex,
 		int verbose_level);
@@ -337,56 +339,42 @@ public:
 	void draw_on_circle(
 			std::string &fname,
 			layered_graph_draw_options *Draw_options,
-			//std::string &fname,
-		//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
-		//int f_radius, double radius,
-		//int f_labels, int f_embedded, int f_sideways,
-		//double tikz_global_scale, double tikz_global_line_width,
 		int verbose_level);
 	void draw_on_circle_2(
 		mp_graphics &G,
 		layered_graph_draw_options *Draw_options);
-	void create_bitmatrix(bitmatrix *&Bitmatrix,
+	void create_bitmatrix(data_structures::bitmatrix *&Bitmatrix,
 		int verbose_level);
 	void draw(
 			std::string &fname,
 			layered_graph_draw_options *Draw_options,
-			//std::string &fname,
-		//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
-		//double scale, double line_width,
 		int verbose_level);
 	void draw_Levi(
 			std::string &fname,
 			layered_graph_draw_options *Draw_options,
-			//std::string &fname,
-		//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 		int f_partition, int nb_row_parts, int *row_part_first, 
 		int nb_col_parts, int *col_part_first, 
 		int m, int n, int f_draw_labels, 
-		//double scale, double line_width,
 		int verbose_level);
 	void draw_with_a_given_partition(
 			std::string &fname,
 			layered_graph_draw_options *Draw_options,
-			//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 			int *parts, int nb_parts,
-			//double scale, double line_width,
 			int verbose_level);
 	void draw_partitioned(
 			std::string &fname,
 			layered_graph_draw_options *Draw_options,
-		//std::string &fname,
-		//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
 		int f_labels,
-		//double scale, double line_width,
 		int verbose_level);
 	colored_graph *compute_neighborhood_subgraph(
 		int pt,
-		fancy_set *&vertex_subset, fancy_set *&color_subset,
+		data_structures::fancy_set *&vertex_subset,
+		data_structures::fancy_set *&color_subset,
 		int verbose_level);
 	colored_graph *compute_neighborhood_subgraph_based_on_subset(
 		long int *subset, int subset_sz,
-		fancy_set *&vertex_subset, fancy_set *&color_subset,
+		data_structures::fancy_set *&vertex_subset,
+		data_structures::fancy_set *&color_subset,
 		int verbose_level);
 	void export_to_magma(std::string &fname, int verbose_level);
 	void export_to_maple(std::string &fname, int verbose_level);
@@ -601,13 +589,13 @@ public:
 			int nb_vertices, int nb_colors, int nb_colors_per_vertex,
 			long int *points, int *point_color,
 			long int *data, int data_sz,
-			bitvector *Bitvec,
+			data_structures::bitvector *Bitvec,
 			int verbose_level);
 	void load_colored_graph(std::string &fname,
 			int &nb_vertices, int &nb_colors, int &nb_colors_per_vertex,
 			long int *&vertex_labels, int *&vertex_colors, long int *&user_data,
 			int &user_data_size,
-			bitvector *&Bitvec,
+			data_structures::bitvector *&Bitvec,
 			int verbose_level);
 	int is_association_scheme(int *color_graph, int n, int *&Pijk,
 		int *&colors, int &nb_colors, int verbose_level);
@@ -620,10 +608,8 @@ public:
 			int f_dots,
 			int f_partition, int nb_row_parts, int *row_part_first,
 			int nb_col_parts, int *col_part_first, int f_row_grid, int f_col_grid,
-			int f_bitmatrix, bitmatrix *Bitmatrix,
+			int f_bitmatrix, data_structures::bitmatrix *Bitmatrix,
 			int *M, int m, int n,
-			//int xmax_in, int ymax_in, int xmax_out, int ymax_out,
-			//double scale, double line_width,
 			int f_has_labels, int *labels,
 			int verbose_level);
 	void list_parameters_of_SRG(int v_max, int verbose_level);
@@ -650,7 +636,7 @@ public:
 	void compute_adjacency_matrix(
 			int *Table, int nb_sets, int set_size,
 			std::string &prefix_for_graph,
-			bitvector *&B,
+			data_structures::bitvector *&B,
 			int verbose_level);
 	void make_graph_of_disjoint_sets_from_rows_of_matrix(
 		int *M, int m, int n,

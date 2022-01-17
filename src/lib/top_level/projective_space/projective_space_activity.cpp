@@ -387,7 +387,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_make_gilbert_varshamov_code) {
 
-		coding_theory_domain Coding;
+		coding_theory::coding_theory_domain Coding;
 
 		Coding.make_gilbert_varshamov_code(
 				Descr->make_gilbert_varshamov_code_n,
@@ -592,7 +592,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 		long int *the_set_out;
 		int set_size_out;
 
-		Orbiter->Lint_vec.scan(Descr->dualize_input_set, the_set_in, set_size_in);
+		Orbiter->Lint_vec->scan(Descr->dualize_input_set, the_set_in, set_size_in);
 
 		int i;
 		long int a;
@@ -605,7 +605,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 		}
 
 		cout << "output set:" << endl;
-		Orbiter->Lint_vec.print(cout, the_set_out, set_size_in);
+		Orbiter->Lint_vec->print(cout, the_set_out, set_size_in);
 		cout << endl;
 
 		// only if n = 2:
@@ -625,7 +625,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 		long int *the_set_out;
 		int set_size_out;
 
-		Orbiter->Lint_vec.scan(Descr->dualize_input_set, the_set_in, set_size_in);
+		Orbiter->Lint_vec->scan(Descr->dualize_input_set, the_set_in, set_size_in);
 
 		int i;
 		long int a;
@@ -638,7 +638,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 		}
 
 		cout << "output set:" << endl;
-		Orbiter->Lint_vec.print(cout, the_set_out, set_size_in);
+		Orbiter->Lint_vec->print(cout, the_set_out, set_size_in);
 		cout << endl;
 
 		FREE_lint(the_set_in);
@@ -654,7 +654,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 		long int *the_set_out;
 		int set_size_out;
 
-		Orbiter->Lint_vec.scan(Descr->dualize_input_set, the_set_in, set_size_in);
+		Orbiter->Lint_vec->scan(Descr->dualize_input_set, the_set_in, set_size_in);
 
 		int i;
 		long int a;
@@ -670,7 +670,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 		}
 
 		cout << "output set:" << endl;
-		Orbiter->Lint_vec.print(cout, the_set_out, set_size_in);
+		Orbiter->Lint_vec->print(cout, the_set_out, set_size_in);
 		cout << endl;
 
 		FREE_lint(the_set_in);
@@ -727,7 +727,7 @@ void projective_space_activity::perform_activity(int verbose_level)
 			// assumes that line_pencil[q + 1] has been allocated
 
 		cout << "line_pencil: ";
-		Orbiter->Lint_vec.print(cout, line_pencil, q + 1);
+		Orbiter->Lint_vec->print(cout, line_pencil, q + 1);
 		cout << endl;
 
 		if (f_v) {

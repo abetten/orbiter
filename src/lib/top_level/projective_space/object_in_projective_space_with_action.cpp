@@ -110,7 +110,7 @@ void object_in_projective_space_with_action::report(std::ostream &fp,
 	longinteger_object go;
 
 
-	bitvector *Canonical_form;
+	data_structures::bitvector *Canonical_form;
 
 	int nb_r, nb_c;
 
@@ -124,9 +124,9 @@ void object_in_projective_space_with_action::report(std::ostream &fp,
 	}
 
 	nauty_interface_with_group Nau;
-	nauty_output *NO;
+	data_structures::nauty_output *NO;
 
-	NO = NEW_OBJECT(nauty_output);
+	NO = NEW_OBJECT(data_structures::nauty_output);
 	NO->allocate(nb_r + nb_c, verbose_level);
 
 	SG = Nau.set_stabilizer_of_object(
@@ -258,9 +258,9 @@ void object_in_projective_space_with_action::report(std::ostream &fp,
 #endif
 
 
-	encoded_combinatorial_object *Enc;
+	combinatorics::encoded_combinatorial_object *Enc;
 	incidence_structure *Inc;
-	partitionstack *Stack;
+	data_structures::partitionstack *Stack;
 
 
 	OwCF->encode_incma_and_make_decomposition(

@@ -44,7 +44,7 @@ void linear_algebra::init(finite_field *F, int verbose_level)
 void linear_algebra::copy_matrix(int *A, int *B, int ma, int na)
 {
 
-	Orbiter->Int_vec.copy(A, B, ma * na);
+	Orbiter->Int_vec->copy(A, B, ma * na);
 }
 
 void linear_algebra::reverse_matrix(int *A, int *B, int m, int n)
@@ -97,7 +97,7 @@ int linear_algebra::is_identity_matrix(int *A, int n)
 
 int linear_algebra::is_diagonal_matrix(int *A, int n)
 {
-	algebra_global Algebra;
+	algebra::algebra_global Algebra;
 
 	return Algebra.is_diagonal_matrix(A, n);
 }
@@ -189,9 +189,9 @@ void linear_algebra::mult_matrix_matrix(
 	}
 	if (f_vv) {
 		cout << "A=" << endl;
-		Orbiter->Int_vec.matrix_print(A, m, n);
+		Orbiter->Int_vec->matrix_print(A, m, n);
 		cout << "B=" << endl;
-		Orbiter->Int_vec.matrix_print(B, n, o);
+		Orbiter->Int_vec->matrix_print(B, n, o);
 	}
 	F->nb_calls_to_mult_matrix_matrix++;
 	for (i = 0; i < m; i++) {
@@ -220,7 +220,7 @@ void linear_algebra::semilinear_matrix_mult(int *A, int *B, int *AB, int n)
 	f1 = A[n * n];
 	f2 = B[n * n];
 	f1inv = NT.mod(-f1, F->e);
-	Orbiter->Int_vec.copy(B, B2, n * n);
+	Orbiter->Int_vec->copy(B, B2, n * n);
 	vector_frobenius_power_in_place(B2, n * n, f1inv);
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < n; j++) {
@@ -265,7 +265,7 @@ void linear_algebra::semilinear_matrix_mult_memory_given(
 		cout << "linear_algebra::semilinear_matrix_mult_memory_given f1inv=" << f1inv << endl;
 	}
 
-	Orbiter->Int_vec.copy(B, B2, n * n);
+	Orbiter->Int_vec->copy(B, B2, n * n);
 	vector_frobenius_power_in_place(B2, n * n, f1inv);
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < n; j++) {
@@ -309,29 +309,29 @@ void linear_algebra::matrix_mult_affine(int *A, int *B, int *AB,
 	b3 = AB + n * n;
 	if (f_vv) {
 		cout << "A1=" << endl;
-		Orbiter->Int_vec.matrix_print(A1, n, n);
+		Orbiter->Int_vec->matrix_print(A1, n, n);
 		cout << "b1=" << endl;
-		Orbiter->Int_vec.matrix_print(b1, 1, n);
+		Orbiter->Int_vec->matrix_print(b1, 1, n);
 		cout << "A2=" << endl;
-		Orbiter->Int_vec.matrix_print(A2, n, n);
+		Orbiter->Int_vec->matrix_print(A2, n, n);
 		cout << "b2=" << endl;
-		Orbiter->Int_vec.matrix_print(b2, 1, n);
+		Orbiter->Int_vec->matrix_print(b2, 1, n);
 	}
 
 	mult_matrix_matrix(A1, A2, A3, n, n, n, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "A3=" << endl;
-		Orbiter->Int_vec.matrix_print(A3, n, n);
+		Orbiter->Int_vec->matrix_print(A3, n, n);
 	}
 	mult_matrix_matrix(b1, A2, b3, 1, n, n, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "b3=" << endl;
-		Orbiter->Int_vec.matrix_print(b3, 1, n);
+		Orbiter->Int_vec->matrix_print(b3, 1, n);
 	}
 	add_vector(b3, b2, b3, n);
 	if (f_vv) {
 		cout << "b3 after adding b2=" << endl;
-		Orbiter->Int_vec.matrix_print(b3, 1, n);
+		Orbiter->Int_vec->matrix_print(b3, 1, n);
 	}
 
 	if (f_v) {
@@ -361,7 +361,7 @@ void linear_algebra::semilinear_matrix_mult_affine(
 	f12 = NT.mod(f1 + f2, F->e);
 	f1inv = NT.mod(F->e - f1, F->e);
 
-	Orbiter->Int_vec.copy(A2, T, n * n);
+	Orbiter->Int_vec->copy(A2, T, n * n);
 	vector_frobenius_power_in_place(T, n * n, f1inv);
 	mult_matrix_matrix(A1, T, A3, n, n, n, 0 /* verbose_level */);
 	//vector_frobenius_power_in_place(A2, n * n, f1);
@@ -389,11 +389,11 @@ int linear_algebra::matrix_determinant(int *A, int n, int verbose_level)
 	}
 	if (f_vv) {
 		cout << "linear_algebra::matrix_determinant determinant of " << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, A, n, n, n, 2);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, A, n, n, n, 2);
 	}
 	Tmp = NEW_int(n * n);
 	Tmp1 = NEW_int(n * n);
-	Orbiter->Int_vec.copy(A, Tmp, n * n);
+	Orbiter->Int_vec->copy(A, Tmp, n * n);
 
 	// search for nonzero element in the first column:
 	for (i = 0; i < n; i++) {
@@ -433,7 +433,7 @@ int linear_algebra::matrix_determinant(int *A, int n, int verbose_level)
 	}
 	if (f_vv) {
 		cout << "linear_algebra::matrix_determinant after Gauss " << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Tmp, n, n, n, 2);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, Tmp, n, n, n, 2);
 		cout << "linear_algebra::matrix_determinant det= " << det << endl;
 	}
 
@@ -446,7 +446,7 @@ int linear_algebra::matrix_determinant(int *A, int n, int verbose_level)
 	}
 	if (f_vv) {
 		cout << "linear_algebra::matrix_determinant computing determinant of " << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Tmp1, n - 1, n - 1, n - 1, 2);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, Tmp1, n - 1, n - 1, n - 1, 2);
 	}
 	det1 = matrix_determinant(Tmp1, n - 1, 0/*verbose_level*/);
 	if (f_vv) {
@@ -565,7 +565,7 @@ void linear_algebra::matrix_invert(int *A, int *Tmp, int *Tmp_basecols,
 		cout << "linear_algebra::matrix_invert" << endl;
 	}
 	if (f_vv) {
-		Orbiter->Int_vec.print_integer_matrix_width(cout, A, n, n, n, F->log10_of_q + 1);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, A, n, n, n, F->log10_of_q + 1);
 	}
 	copy_matrix(A, Tmp, n, n);
 	identity_matrix(Ainv, n);
@@ -575,15 +575,15 @@ void linear_algebra::matrix_invert(int *A, int *Tmp, int *Tmp_basecols,
 	if (rk < n) {
 		cout << "linear_algebra::matrix_invert not invertible" << endl;
 		cout << "input matrix:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, A, n, n, n, F->log10_of_q + 1);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, A, n, n, n, F->log10_of_q + 1);
 		cout << "Tmp matrix:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Tmp, n, n, n, F->log10_of_q + 1);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, Tmp, n, n, n, F->log10_of_q + 1);
 		cout << "rk=" << rk << endl;
 		exit(1);
 	}
 	if (f_vv) {
 		cout << "the inverse is" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Ainv, n, n, n, F->log10_of_q + 1);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, Ainv, n, n, n, F->log10_of_q + 1);
 	}
 	if (f_v) {
 		cout << "linear_algebra::matrix_invert done" << endl;
@@ -605,7 +605,7 @@ void linear_algebra::semilinear_matrix_invert(int *A,
 		cout << "linear_algebra::semilinear_matrix_invert" << endl;
 	}
 	if (f_vv) {
-		Orbiter->Int_vec.print_integer_matrix_width(cout, A, n, n, n, F->log10_of_q + 1);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, A, n, n, n, F->log10_of_q + 1);
 		cout << "frobenius: " << A[n * n] << endl;
 	}
 	matrix_invert(A, Tmp, Tmp_basecols, Ainv, n, verbose_level - 1);
@@ -615,7 +615,7 @@ void linear_algebra::semilinear_matrix_invert(int *A,
 	Ainv[n * n] = finv;
 	if (f_vv) {
 		cout << "the inverse is" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Ainv, n, n, n, F->log10_of_q + 1);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, Ainv, n, n, n, F->log10_of_q + 1);
 		cout << "frobenius: " << Ainv[n * n] << endl;
 	}
 	if (f_v) {
@@ -639,9 +639,9 @@ void linear_algebra::semilinear_matrix_invert_affine(int *A,
 		cout << "linear_algebra::semilinear_matrix_invert_affine" << endl;
 	}
 	if (f_vv) {
-		Orbiter->Int_vec.print_integer_matrix_width(cout, A, n, n, n, F->log10_of_q + 1);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, A, n, n, n, F->log10_of_q + 1);
 		cout << "b: ";
-		Orbiter->Int_vec.print(cout, A + n * n, n);
+		Orbiter->Int_vec->print(cout, A + n * n, n);
 		cout << " frobenius: " << A[n * n + n] << endl;
 	}
 	b1 = A + n * n;
@@ -660,9 +660,9 @@ void linear_algebra::semilinear_matrix_invert_affine(int *A,
 	Ainv[n * n + n] = finv;
 	if (f_vv) {
 		cout << "the inverse is" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Ainv, n, n, n, F->log10_of_q + 1);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, Ainv, n, n, n, F->log10_of_q + 1);
 		cout << "b: ";
-		Orbiter->Int_vec.print(cout, Ainv + n * n, n);
+		Orbiter->Int_vec->print(cout, Ainv + n * n, n);
 		cout << " frobenius: " << Ainv[n * n + n] << endl;
 	}
 	if (f_v) {
@@ -685,9 +685,9 @@ void linear_algebra::matrix_invert_affine(int *A,
 		cout << "linear_algebra::matrix_invert_affine" << endl;
 	}
 	if (f_vv) {
-		Orbiter->Int_vec.print_integer_matrix_width(cout, A, n, n, n, F->log10_of_q + 1);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, A, n, n, n, F->log10_of_q + 1);
 		cout << "b: ";
-		Orbiter->Int_vec.print(cout, A + n * n, n);
+		Orbiter->Int_vec->print(cout, A + n * n, n);
 		cout << endl;
 	}
 	b1 = A + n * n;
@@ -700,9 +700,9 @@ void linear_algebra::matrix_invert_affine(int *A,
 
 	if (f_vv) {
 		cout << "the inverse is" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Ainv, n, n, n, F->log10_of_q + 1);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, Ainv, n, n, n, F->log10_of_q + 1);
 		cout << "b: ";
-		Orbiter->Int_vec.print(cout, Ainv + n * n, n);
+		Orbiter->Int_vec->print(cout, Ainv + n * n, n);
 		cout << endl;
 	}
 	if (f_v) {
@@ -993,7 +993,7 @@ void linear_algebra::invert_matrix_memory_given(int *A, int *A_inv, int n,
 			A_inv[i * n + j] = a;
 		}
 	}
-	Orbiter->Int_vec.copy(A, A_tmp, n * n);
+	Orbiter->Int_vec->copy(A, A_tmp, n * n);
 
 	rk = Gauss_int(A_tmp,
 			FALSE /* f_special */,
@@ -1066,14 +1066,14 @@ int linear_algebra::rank_of_matrix_memory_given(int *A,
 	if (f_v) {
 		cout << "linear_algebra::rank_of_matrix_memory_given" << endl;
 	}
-	Orbiter->Int_vec.copy(A, B, m * m);
+	Orbiter->Int_vec->copy(A, B, m * m);
 	rk = Gauss_int(B, FALSE, FALSE, base_cols, FALSE,
 			NULL, m, m, m, 0 /* verbose_level */);
 	if (FALSE) {
 		cout << "the matrix ";
 		if (f_vv) {
 			cout << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, m, m, 2);
+			Orbiter->Int_vec->print_integer_matrix_width(cout, A, m, m, m, 2);
 		}
 		cout << "has rank " << rk << endl;
 	}
@@ -1120,7 +1120,7 @@ int linear_algebra::rank_of_rectangular_matrix_memory_given(
 	}
 	//B = NEW_int(m * n);
 	//base_cols = NEW_int(n);
-	Orbiter->Int_vec.copy(A, B, m * n);
+	Orbiter->Int_vec->copy(A, B, m * n);
 	rk = Gauss_int(B, FALSE, FALSE, base_cols, FALSE,
 			NULL, m, n, n, 0 /* verbose_level */);
 
@@ -1128,7 +1128,7 @@ int linear_algebra::rank_of_rectangular_matrix_memory_given(
 		cout << "the matrix ";
 		if (f_vv) {
 			cout << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, 2);
+			Orbiter->Int_vec->print_integer_matrix_width(cout, A, m, n, n, 2);
 		}
 		cout << "has rank " << rk << endl;
 	}
@@ -1150,14 +1150,14 @@ int linear_algebra::rank_and_basecols(int *A, int m,
 		cout << "linear_algebra::rank_and_basecols" << endl;
 	}
 	B = NEW_int(m * m);
-	Orbiter->Int_vec.copy(A, B, m * m);
+	Orbiter->Int_vec->copy(A, B, m * m);
 	rk = Gauss_int(B, FALSE, FALSE, base_cols, FALSE,
 			NULL, m, m, m, 0 /* verbose_level */);
 	if (FALSE) {
 		cout << "the matrix ";
 		if (f_vv) {
 			cout << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, m, m, 2);
+			Orbiter->Int_vec->print_integer_matrix_width(cout, A, m, m, m, 2);
 		}
 		cout << "has rank " << rk << endl;
 	}
@@ -1182,9 +1182,9 @@ void linear_algebra::Gauss_step(int *v1, int *v2,
 	}
 	if (f_vv) {
 		cout << "before:" << endl;
-		Orbiter->Int_vec.print(cout, v1, len);
+		Orbiter->Int_vec->print(cout, v1, len);
 		cout << endl;
-		Orbiter->Int_vec.print(cout, v2, len);
+		Orbiter->Int_vec->print(cout, v2, len);
 		cout << endl;
 		cout << "pivot column " << idx << endl;
 	}
@@ -1208,9 +1208,9 @@ void linear_algebra::Gauss_step(int *v1, int *v2,
 after:
 	if (f_vv) {
 		cout << "linear_algebra::Gauss_step after:" << endl;
-		Orbiter->Int_vec.print(cout, v1, len);
+		Orbiter->Int_vec->print(cout, v1, len);
 		cout << endl;
-		Orbiter->Int_vec.print(cout, v2, len);
+		Orbiter->Int_vec->print(cout, v2, len);
 		cout << endl;
 	}
 	if (f_v) {
@@ -1232,9 +1232,9 @@ void linear_algebra::Gauss_step_make_pivot_one(int *v1, int *v2,
 	}
 	if (f_vv) {
 		cout << "before:" << endl;
-		Orbiter->Int_vec.print(cout, v1, len);
+		Orbiter->Int_vec->print(cout, v1, len);
 		cout << endl;
-		Orbiter->Int_vec.print(cout, v2, len);
+		Orbiter->Int_vec->print(cout, v2, len);
 		cout << endl;
 		cout << "pivot column " << idx << endl;
 	}
@@ -1269,9 +1269,9 @@ after:
 	}
 	if (f_vv) {
 		cout << "linear_algebra::Gauss_step_make_pivot_one after:" << endl;
-		Orbiter->Int_vec.print(cout, v1, len);
+		Orbiter->Int_vec->print(cout, v1, len);
 		cout << endl;
-		Orbiter->Int_vec.print(cout, v2, len);
+		Orbiter->Int_vec->print(cout, v2, len);
 		cout << endl;
 	}
 	if (f_v) {
@@ -1298,14 +1298,14 @@ void linear_algebra::extend_basis(int m, int n, int *Basis,
 	}
 	if (f_vv) {
 		cout << "matrix:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Basis, m, n, n, F->log10_of_q);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, Basis, m, n, n, F->log10_of_q);
 	}
-	Orbiter->Int_vec.zero(Basis + m * n, (n - m) * n);
+	Orbiter->Int_vec->zero(Basis + m * n, (n - m) * n);
 	B = NEW_int(n * n);
 	base_cols = NEW_int(n);
 	embedding = NEW_int(n);
-	Orbiter->Int_vec.zero(B, n * n);
-	Orbiter->Int_vec.copy(Basis, B, m * n);
+	Orbiter->Int_vec->zero(B, n * n);
+	Orbiter->Int_vec->copy(Basis, B, m * n);
 	rk = base_cols_and_embedding(m, n, B,
 		base_cols, embedding, verbose_level);
 	if (rk != m) {
@@ -1335,17 +1335,17 @@ int linear_algebra::base_cols_and_embedding(int m, int n, int *A,
 	int f_vv = FALSE; //(verbose_level >= 2);
 	int *B;
 	int i, j, rk, idx;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "linear_algebra::base_cols_and_embedding" << endl;
 	}
 	if (f_vv) {
 		cout << "matrix A:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, n, n, F->log10_of_q);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, A, m, n, n, F->log10_of_q);
 	}
 	B = NEW_int(m * n);
-	Orbiter->Int_vec.copy(A, B, m * n);
+	Orbiter->Int_vec->copy(A, B, m * n);
 	rk = Gauss_simple(B, m, n, base_cols, verbose_level - 3);
 	j = 0;
 	for (i = 0; i < n; i++) {
@@ -1364,10 +1364,10 @@ int linear_algebra::base_cols_and_embedding(int m, int n, int *A,
 		cout << "linear_algebra::base_cols_and_embedding" << endl;
 		cout << "rk=" << rk << endl;
 		cout << "base_cols:" << endl;
-		Orbiter->Int_vec.print(cout, base_cols, rk);
+		Orbiter->Int_vec->print(cout, base_cols, rk);
 		cout << endl;
 		cout << "embedding:" << endl;
-		Orbiter->Int_vec.print(cout, embedding, n - rk);
+		Orbiter->Int_vec->print(cout, embedding, n - rk);
 		cout << endl;
 	}
 	FREE_int(B);
@@ -1422,7 +1422,7 @@ int linear_algebra::Gauss_simple(int *A, int m, int n,
 void linear_algebra::kernel_columns(int n, int nb_base_cols,
 		int *base_cols, int *kernel_cols)
 {
-	Orbiter->Int_vec.complement(base_cols, kernel_cols, n, nb_base_cols);
+	Orbiter->Int_vec->complement(base_cols, kernel_cols, n, nb_base_cols);
 #if 0
 	int i, j, k;
 
@@ -1439,7 +1439,7 @@ void linear_algebra::kernel_columns(int n, int nb_base_cols,
 
 void linear_algebra::matrix_get_kernel_as_int_matrix(int *M,
 	int m, int n, int *base_cols, int nb_base_cols,
-	int_matrix *kernel, int verbose_level)
+	data_structures::int_matrix *kernel, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int *K;
@@ -1625,7 +1625,7 @@ int linear_algebra::RREF_and_kernel(int n, int k,
 	B = NEW_int(m * n);
 	K = NEW_int(n * n);
 	base_cols = NEW_int(n);
-	Orbiter->Int_vec.copy(A, B, k * n);
+	Orbiter->Int_vec->copy(A, B, k * n);
 	//mult_matrix_matrix(A, Gram, B, k, n, n);
 	if (f_v) {
 		cout << "linear_algebra::RREF_and_kernel before Gauss_int" << endl;
@@ -1637,7 +1637,7 @@ int linear_algebra::RREF_and_kernel(int n, int k,
 		cout << "linear_algebra::RREF_and_kernel after Gauss_int, "
 				"rank = " << nb_base_cols << endl;
 	}
-	Orbiter->Int_vec.copy(B, A, nb_base_cols * n);
+	Orbiter->Int_vec->copy(B, A, nb_base_cols * n);
 	if (f_v) {
 		cout << "linear_algebra::RREF_and_kernel "
 				"before matrix_get_kernel" << endl;
@@ -1706,11 +1706,11 @@ int linear_algebra::perp_standard_with_temporary_data(
 	//K = NEW_int(n * n);
 	//base_cols = NEW_int(n);
 
-	Orbiter->Int_vec.copy(A, B, k * n);
+	Orbiter->Int_vec->copy(A, B, k * n);
 	if (f_v) {
 		cout << "linear_algebra::perp_standard_temporary_data" << endl;
 		cout << "B=" << endl;
-		Orbiter->Int_vec.matrix_print(B, k, n);
+		Orbiter->Int_vec->matrix_print(B, k, n);
 		cout << "finite_field::perp_standard_temporary_data before Gauss_int" << endl;
 	}
 	nb_base_cols = Gauss_int(B,
@@ -1729,7 +1729,7 @@ int linear_algebra::perp_standard_with_temporary_data(
 		cout << "kernel_n = " << kernel_n << endl;
 	}
 
-	Orbiter->Int_vec.copy(B, A, nb_base_cols * n);
+	Orbiter->Int_vec->copy(B, A, nb_base_cols * n);
 
 	for (j = 0; j < kernel_n; j++) {
 		for (i = 0; i < n; i++) {
@@ -1739,7 +1739,7 @@ int linear_algebra::perp_standard_with_temporary_data(
 	if (f_v) {
 		cout << "linear_algebra::perp_standard_temporary_data" << endl;
 		cout << "A=" << endl;
-		Orbiter->Int_vec.matrix_print(A, n, n);
+		Orbiter->Int_vec->matrix_print(A, n, n);
 	}
 	//cout << "perp_standard, kernel is a "
 	// << kernel_m << " by " << kernel_n << " matrix" << endl;
@@ -1767,17 +1767,17 @@ int linear_algebra::intersect_subspaces(int n, int k1,
 	B1 = NEW_int(n * n);
 	K = NEW_int(n * n);
 	base_cols = NEW_int(n);
-	Orbiter->Int_vec.copy(A, AA, k1 * n);
-	Orbiter->Int_vec.copy(B, BB, k2 * n);
+	Orbiter->Int_vec->copy(A, AA, k1 * n);
+	Orbiter->Int_vec->copy(B, BB, k2 * n);
 	if (f_v) {
 		cout << "linear_algebra::intersect_subspaces AA=" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, AA, k1, n, n, 2);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, AA, k1, n, n, 2);
 	}
 	r1 = perp_standard_with_temporary_data(n, k1,
 			AA, B1, K, base_cols, 0);
 	if (f_v) {
 		cout << "linear_algebra::intersect_subspaces AA=" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, AA, n, n, n, 2);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, AA, n, n, n, 2);
 	}
 	if (r1 != k1) {
 		cout << "linear_algebra::intersect_subspaces not a base, "
@@ -1788,12 +1788,12 @@ int linear_algebra::intersect_subspaces(int n, int k1,
 	}
 	if (f_v) {
 		cout << "linear_algebra::intersect_subspaces BB=" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, BB, k2, n, n, 2);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, BB, k2, n, n, 2);
 	}
 	r2 = perp_standard_with_temporary_data(n, k2, BB, B1, K, base_cols, 0);
 	if (f_v) {
 		cout << "linear_algebra::intersect_subspaces BB=" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, BB, n, n, n, 2);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, BB, n, n, n, 2);
 	}
 	if (r2 != k2) {
 		cout << "linear_algebra::intersect_subspaces not a base, "
@@ -1804,12 +1804,12 @@ int linear_algebra::intersect_subspaces(int n, int k1,
 	}
 	CC = NEW_int((3 * n) * n);
 
-	Orbiter->Int_vec.copy(AA + k1 * n, CC, (n - k1) * n);
-	Orbiter->Int_vec.copy(BB + k2 * n, CC + (n - k1) * n, (n - k2) * n);
+	Orbiter->Int_vec->copy(AA + k1 * n, CC, (n - k1) * n);
+	Orbiter->Int_vec->copy(BB + k2 * n, CC + (n - k1) * n, (n - k2) * n);
 	k3 = (n - k1) + (n - k2);
 	if (f_v) {
 		cout << "linear_algebra::intersect_subspaces CC=" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, CC, k3, n, n, 2);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, CC, k3, n, n, 2);
 		cout << "k3=" << k3 << endl;
 	}
 
@@ -1817,7 +1817,7 @@ int linear_algebra::intersect_subspaces(int n, int k1,
 	k3 = Gauss_easy(CC, k3, n);
 
 	r3 = perp_standard_with_temporary_data(n, k3, CC, B1, K, base_cols, 0);
-	Orbiter->Int_vec.copy(CC + k3 * n, intersection, (n - r3) * n);
+	Orbiter->Int_vec->copy(CC + k3 * n, intersection, (n - r3) * n);
 
 	FREE_int(AA);
 	FREE_int(BB);
@@ -1909,6 +1909,7 @@ void linear_algebra::projective_action_on_columns_from_the_left(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int *AM, i, j;
+	data_structures::sorting Sorting;
 
 	AM = NEW_int(m * n);
 
@@ -1917,12 +1918,12 @@ void linear_algebra::projective_action_on_columns_from_the_left(
 	}
 	if (f_vv) {
 		cout << "A:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, A, m, m, m, 2);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, A, m, m, m, 2);
 	}
 	mult_matrix_matrix(A, M, AM, m, m, n, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "M:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M, m, n, n, 2);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M, m, n, n, 2);
 		//cout << "A * M:" << endl;
 		//print_integer_matrix_width(cout, AM, m, n, n, 2);
 	}
@@ -1933,13 +1934,13 @@ void linear_algebra::projective_action_on_columns_from_the_left(
 	}
 	if (f_vv) {
 		cout << "A*M:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, AM, m, n, n, 2);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, AM, m, n, n, 2);
 	}
 
 	for (i = 0; i < n; i++) {
 		perm[i] = -1;
 		for (j = 0; j < n; j++) {
-			if (int_vec_compare_stride(AM + i, M + j,
+			if (Sorting.int_vec_compare_stride(AM + i, M + j,
 					m /* len */, n /* stride */) == 0) {
 				perm[i] = j;
 				break;
@@ -1950,15 +1951,15 @@ void linear_algebra::projective_action_on_columns_from_the_left(
 					"from_the_left could not find image" << endl;
 			cout << "i=" << i << endl;
 			cout << "M:" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout, M, m, n, n, 2);
+			Orbiter->Int_vec->print_integer_matrix_width(cout, M, m, n, n, 2);
 			cout << "A * M:" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout, AM, m, n, n, 2);
+			Orbiter->Int_vec->print_integer_matrix_width(cout, AM, m, n, n, 2);
 			exit(1);
 		}
 	}
 	if (f_v) {
 		//cout << "column permutation: ";
-		combinatorics_domain Combi;
+		combinatorics::combinatorics_domain Combi;
 
 		Combi.perm_print_with_cycle_length(cout, perm, n);
 		cout << endl;
@@ -2036,12 +2037,12 @@ void linear_algebra::find_singular_vector_brute_force(int n,
 				form_i, form_j, form_coeff, v1);
 		if (f_v) {
 			cout << "v1=";
-			Orbiter->Int_vec.print(cout, v1, n);
+			Orbiter->Int_vec->print(cout, v1, n);
 			cout << endl;
 			cout << "form value a=" << a << endl;
 		}
 		if (a == 0) {
-			Orbiter->Int_vec.copy(v1, vec, n);
+			Orbiter->Int_vec->copy(v1, vec, n);
 			goto finish;
 		}
 	}
@@ -2083,18 +2084,18 @@ void linear_algebra::find_singular_vector(int n, int form_nb_terms,
 			form_i, form_j, form_coeff, v1);
 	if (f_vv) {
 		cout << "v1=";
-		Orbiter->Int_vec.print(cout, v1, n);
+		Orbiter->Int_vec->print(cout, v1, n);
 		cout << endl;
 		cout << "form value a=" << a << endl;
 	}
 	if (a == 0) {
-		Orbiter->Int_vec.copy(v1, vec, n);
+		Orbiter->Int_vec->copy(v1, vec, n);
 		goto finish;
 	}
 	perp(n, 1, v1, Gram, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "v1 perp:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, v1 + n, n - 1, n, n, 2);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, v1 + n, n - 1, n, n, 2);
 	}
 	Gg.AG_element_unrank(F->q, v2_coords, 1, n - 1, 1);
 	mult_matrix_matrix(v2_coords, v1 + n, v2, 1, n - 1, n,
@@ -2103,24 +2104,24 @@ void linear_algebra::find_singular_vector(int n, int form_nb_terms,
 			form_i, form_j, form_coeff, v2);
 	if (f_vv) {
 		cout << "vector v2=";
-		Orbiter->Int_vec.print(cout, v2, n);
+		Orbiter->Int_vec->print(cout, v2, n);
 		cout << endl;
 		cout << "form value b=" << b << endl;
 	}
 	if (b == 0) {
-		Orbiter->Int_vec.copy(v2, vec, n);
+		Orbiter->Int_vec->copy(v2, vec, n);
 		goto finish;
 	}
 	perp(n, 1, v2, Gram, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "v2 perp:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, v2 + n, n - 1, n, n, 2);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, v2 + n, n - 1, n, n, 2);
 	}
 	r3 = intersect_subspaces(n, n - 1, v1 + n, n - 1, v2 + n,
 		k3, intersection, verbose_level);
 	if (f_vv) {
 		cout << "intersection has dimension " << r3 << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, intersection, r3, n, n, 2);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, intersection, r3, n, n, 2);
 	}
 	if (r3 != n - 2) {
 		cout << "r3 = " << r3 << " should be " << n - 2 << endl;
@@ -2133,12 +2134,12 @@ void linear_algebra::find_singular_vector(int n, int form_nb_terms,
 			form_i, form_j, form_coeff, v3);
 	if (f_vv) {
 		cout << "v3=";
-		Orbiter->Int_vec.print(cout, v3, n);
+		Orbiter->Int_vec->print(cout, v3, n);
 		cout << endl;
 		cout << "form value c=" << c << endl;
 	}
 	if (c == 0) {
-		Orbiter->Int_vec.copy(v3, vec, n);
+		Orbiter->Int_vec->copy(v3, vec, n);
 		goto finish;
 	}
 	if (f_vv) {
@@ -2159,7 +2160,7 @@ void linear_algebra::find_singular_vector(int n, int form_nb_terms,
 	}
 	if (f_vv) {
 		cout << "singular vector vec=";
-		Orbiter->Int_vec.print(cout, vec, n);
+		Orbiter->Int_vec->print(cout, vec, n);
 		cout << endl;
 	}
 	d = evaluate_quadratic_form(n, form_nb_terms,
@@ -2167,7 +2168,7 @@ void linear_algebra::find_singular_vector(int n, int form_nb_terms,
 	if (d) {
 		cout << "is non-singular, error! d=" << d << endl;
 		cout << "singular vector vec=";
-		Orbiter->Int_vec.print(cout, vec, n);
+		Orbiter->Int_vec->print(cout, vec, n);
 		cout << endl;
 		exit(1);
 	}
@@ -2201,19 +2202,19 @@ void linear_algebra::complete_hyperbolic_pair(
 	}
 	if (f_vv) {
 		cout << "vec1=";
-		Orbiter->Int_vec.print(cout, vec1, n);
+		Orbiter->Int_vec->print(cout, vec1, n);
 		cout << endl;
 		cout << "Gram=" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, Gram, 4, 4, 4, 2);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, Gram, 4, 4, 4, 2);
 	}
 	mult_matrix_matrix(vec1, Gram, v0, 1, n, n,
 			0 /* verbose_level */);
 	if (f_vv) {
 		cout << "v0=";
-		Orbiter->Int_vec.print(cout, v0, n);
+		Orbiter->Int_vec->print(cout, v0, n);
 		cout << endl;
 	}
-	Orbiter->Int_vec.zero(v1, n);
+	Orbiter->Int_vec->zero(v1, n);
 	for (i = n - 1; i >= 0; i--) {
 		if (v0[i]) {
 			v1[i] = 1;
@@ -2264,7 +2265,7 @@ void linear_algebra::complete_hyperbolic_pair(
 	}
 	if (f_vv) {
 		cout << "normalized ";
-		Orbiter->Int_vec.print(cout, v1, n);
+		Orbiter->Int_vec->print(cout, v1, n);
 		cout << endl;
 	}
 	b = evaluate_quadratic_form(n, form_nb_terms,
@@ -2276,7 +2277,7 @@ void linear_algebra::complete_hyperbolic_pair(
 	if (f_vv) {
 		cout << "linear_algebra::complete_hyperbolic_pair" << endl;
 		cout << "vec2=";
-		Orbiter->Int_vec.print(cout, vec2, n);
+		Orbiter->Int_vec->print(cout, vec2, n);
 		cout << endl;
 	}
 	c = dot_product(n, v0, vec2);
@@ -2284,10 +2285,10 @@ void linear_algebra::complete_hyperbolic_pair(
 		cout << "dot product is not 1, error" << endl;
 		cout << "c=" << c << endl;
 		cout << "vec1=";
-		Orbiter->Int_vec.print(cout, vec1, n);
+		Orbiter->Int_vec->print(cout, vec1, n);
 		cout << endl;
 		cout << "vec2=";
-		Orbiter->Int_vec.print(cout, vec2, n);
+		Orbiter->Int_vec->print(cout, vec2, n);
 		cout << endl;
 	}
 	FREE_int(v0);
@@ -2321,7 +2322,7 @@ void linear_algebra::find_hyperbolic_pair(int n, int form_nb_terms,
 	if (f_vv) {
 		cout << "linear_algebra::find_hyperbolic_pair, "
 				"found singular vector" << endl;
-		Orbiter->Int_vec.print(cout, vec1, n);
+		Orbiter->Int_vec->print(cout, vec1, n);
 		cout << endl;
 		cout << "calling complete_hyperbolic_pair" << endl;
 	}
@@ -2349,7 +2350,7 @@ void linear_algebra::restrict_quadratic_form_list_coding(
 	}
 	C = NEW_int(n * n);
 	D = NEW_int(k * k);
-	Orbiter->Int_vec.zero(C, n * n);
+	Orbiter->Int_vec->zero(C, n * n);
 	for (h = 0; h < form_nb_terms; h++) {
 		i = form_i[h];
 		j = form_j[h];
@@ -2359,13 +2360,13 @@ void linear_algebra::restrict_quadratic_form_list_coding(
 	if (f_vv) {
 		cout << "linear_algebra::restrict_quadratic_form_list_coding "
 				"C=" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, C, n, n, n, 2);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, C, n, n, n, 2);
 	}
 	restrict_quadratic_form(k, n, basis, C, D, verbose_level - 1);
 	if (f_vv) {
 		cout << "linear_algebra::restrict_quadratic_form_list_coding "
 				"D=" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, D, k, k, k, 2);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, D, k, k, k, 2);
 	}
 	restricted_form_nb_terms = 0;
 	restricted_form_i = NEW_int(k * k);
@@ -2403,9 +2404,9 @@ void linear_algebra::restrict_quadratic_form(int k, int n,
 	}
 	if (f_vv) {
 		cout << "linear_algebra::restrict_quadratic_form" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, C, n, n, n, 2);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, C, n, n, n, 2);
 	}
-	Orbiter->Int_vec.zero(D, k * k);
+	Orbiter->Int_vec->zero(D, k * k);
 	for (lambda = 0; lambda < k; lambda++) {
 		for (mu = 0; mu < k; mu++) {
 			d = 0;
@@ -2426,7 +2427,7 @@ void linear_algebra::restrict_quadratic_form(int k, int n,
 		}
 	}
 	if (f_vv) {
-		Orbiter->Int_vec.print_integer_matrix_width(cout, D, k, k, k, 2);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, D, k, k, k, 2);
 	}
 	if (f_v) {
 		cout << "linear_algebra::restrict_quadratic_form" << endl;
@@ -2455,10 +2456,10 @@ int linear_algebra::compare_subspaces_ranked(
 	if (f_vv) {
 		cout << "linear_algebra::compare_subspaces_ranked" << endl;
 		cout << "set1: ";
-		Orbiter->Int_vec.print(cout, set1, size);
+		Orbiter->Int_vec->print(cout, set1, size);
 		cout << endl;
 		cout << "set2: ";
-		Orbiter->Int_vec.print(cout, set2, size);
+		Orbiter->Int_vec->print(cout, set2, size);
 		cout << endl;
 	}
 	M1 = NEW_int(size * vector_space_dimension);
@@ -2475,10 +2476,10 @@ int linear_algebra::compare_subspaces_ranked(
 	}
 	if (f_vv) {
 		cout << "matrix1:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M1, size,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M1, size,
 			vector_space_dimension, vector_space_dimension, F->log10_of_q);
 		cout << "matrix2:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M2, size,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M2, size,
 			vector_space_dimension, vector_space_dimension, F->log10_of_q);
 	}
 	rk1 = Gauss_simple(M1, size, vector_space_dimension,
@@ -2488,18 +2489,18 @@ int linear_algebra::compare_subspaces_ranked(
 	if (f_vv) {
 		cout << "after Gauss" << endl;
 		cout << "matrix1:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M1, size,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M1, size,
 				vector_space_dimension, vector_space_dimension, F->log10_of_q);
 		cout << "rank1=" << rk1 << endl;
 		cout << "base_cols1: ";
-		Orbiter->Int_vec.print(cout, base_cols1, rk1);
+		Orbiter->Int_vec->print(cout, base_cols1, rk1);
 		cout << endl;
 		cout << "matrix2:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M2, size,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M2, size,
 				vector_space_dimension, vector_space_dimension, F->log10_of_q);
 		cout << "rank2=" << rk2 << endl;
 		cout << "base_cols2: ";
-		Orbiter->Int_vec.print(cout, base_cols2, rk2);
+		Orbiter->Int_vec->print(cout, base_cols2, rk2);
 		cout << endl;
 	}
 	if (rk1 != rk2) {
@@ -2572,10 +2573,10 @@ int linear_algebra::compare_subspaces_ranked_with_unrank_function(
 	if (f_vv) {
 		cout << "linear_algebra::compare_subspaces_ranked_with_unrank_function" << endl;
 		cout << "set1: ";
-		Orbiter->Int_vec.print(cout, set1, size);
+		Orbiter->Int_vec->print(cout, set1, size);
 		cout << endl;
 		cout << "set2: ";
-		Orbiter->Int_vec.print(cout, set2, size);
+		Orbiter->Int_vec->print(cout, set2, size);
 		cout << endl;
 	}
 	M1 = NEW_int(size * vector_space_dimension);
@@ -2596,11 +2597,11 @@ int linear_algebra::compare_subspaces_ranked_with_unrank_function(
 	}
 	if (f_vv) {
 		cout << "matrix1:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M1, size,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M1, size,
 				vector_space_dimension, vector_space_dimension,
 				F->log10_of_q);
 		cout << "matrix2:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M2, size,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M2, size,
 				vector_space_dimension, vector_space_dimension,
 				F->log10_of_q);
 	}
@@ -2613,20 +2614,20 @@ int linear_algebra::compare_subspaces_ranked_with_unrank_function(
 	if (f_vv) {
 		cout << "after Gauss" << endl;
 		cout << "matrix1:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M1, size,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M1, size,
 				vector_space_dimension, vector_space_dimension,
 				F->log10_of_q);
 		cout << "rank1=" << rk1 << endl;
 		cout << "base_cols1: ";
-		Orbiter->Int_vec.print(cout, base_cols1, rk1);
+		Orbiter->Int_vec->print(cout, base_cols1, rk1);
 		cout << endl;
 		cout << "matrix2:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M2, size,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M2, size,
 				vector_space_dimension, vector_space_dimension,
 				F->log10_of_q);
 		cout << "rank2=" << rk2 << endl;
 		cout << "base_cols2: ";
-		Orbiter->Int_vec.print(cout, base_cols2, rk2);
+		Orbiter->Int_vec->print(cout, base_cols2, rk2);
 		cout << endl;
 	}
 	if (rk1 != rk2) {
@@ -2694,7 +2695,7 @@ int linear_algebra::Gauss_canonical_form_ranked(
 	if (f_vv) {
 		cout << "linear_algebra::Gauss_canonical_form_ranked" << endl;
 		cout << "set1: ";
-		Orbiter->Int_vec.print(cout, set1, size);
+		Orbiter->Int_vec->print(cout, set1, size);
 		cout << endl;
 	}
 	M = NEW_int(size * vector_space_dimension);
@@ -2707,7 +2708,7 @@ int linear_algebra::Gauss_canonical_form_ranked(
 	}
 	if (f_vv) {
 		cout << "matrix:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M, size,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M, size,
 			vector_space_dimension, vector_space_dimension,
 			F->log10_of_q);
 	}
@@ -2717,12 +2718,12 @@ int linear_algebra::Gauss_canonical_form_ranked(
 	if (f_vv) {
 		cout << "after Gauss" << endl;
 		cout << "matrix:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M, size,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M, size,
 				vector_space_dimension, vector_space_dimension,
 				F->log10_of_q);
 		cout << "rank=" << rk << endl;
 		cout << "base_cols: ";
-		Orbiter->Int_vec.print(cout, base_cols, rk);
+		Orbiter->Int_vec->print(cout, base_cols, rk);
 		cout << endl;
 	}
 
@@ -2768,7 +2769,7 @@ int linear_algebra::lexleast_canonical_form_ranked(
 	int rk;
 	number_theory_domain NT;
 	geometry_global Gg;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "linear_algebra::lexleast_canonical_form_ranked" << endl;
@@ -2776,7 +2777,7 @@ int linear_algebra::lexleast_canonical_form_ranked(
 	if (f_vv) {
 		cout << "linear_algebra::lexleast_canonical_form_ranked" << endl;
 		cout << "set1: ";
-		Orbiter->Int_vec.print(cout, set1, size);
+		Orbiter->Int_vec->print(cout, set1, size);
 		cout << endl;
 	}
 	tmp = NEW_int(vector_space_dimension);
@@ -2788,7 +2789,7 @@ int linear_algebra::lexleast_canonical_form_ranked(
 	}
 	if (f_vv) {
 		cout << "matrix:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M1, size,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M1, size,
 				vector_space_dimension, vector_space_dimension,
 				F->log10_of_q);
 	}
@@ -2800,12 +2801,12 @@ int linear_algebra::lexleast_canonical_form_ranked(
 	if (f_vv) {
 		cout << "after Gauss" << endl;
 		cout << "matrix:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M1, size,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M1, size,
 				vector_space_dimension, vector_space_dimension,
 				F->log10_of_q);
 		cout << "rank=" << rk << endl;
 		cout << "base_cols: ";
-		Orbiter->Int_vec.print(cout, base_cols, rk);
+		Orbiter->Int_vec->print(cout, base_cols, rk);
 		cout << endl;
 	}
 	N = NT.i_power_j(F->q, rk);
@@ -2840,17 +2841,17 @@ int linear_algebra::lexleast_canonical_form_ranked(
 	}
 	if (f_vv) {
 		cout << "expanded matrix with all elements in the space:" << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M2, N,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M2, N,
 				vector_space_dimension, vector_space_dimension,
 				F->log10_of_q);
 		cout << "list_of_ranks:" << endl;
-		Orbiter->Int_vec.print(cout, list_of_ranks, N);
+		Orbiter->Int_vec->print(cout, list_of_ranks, N);
 		cout << endl;
 		cout << "list_of_ranks_PG:" << endl;
-		Orbiter->Int_vec.print(cout, list_of_ranks_PG, N);
+		Orbiter->Int_vec->print(cout, list_of_ranks_PG, N);
 		cout << endl;
 		cout << "list_of_ranks_PG_sorted:" << endl;
-		Orbiter->Int_vec.print(cout, list_of_ranks_PG_sorted, size_list);
+		Orbiter->Int_vec->print(cout, list_of_ranks_PG_sorted, size_list);
 		cout << endl;
 	}
 	f_allowed = NEW_int(size_list);
@@ -2863,10 +2864,10 @@ int linear_algebra::lexleast_canonical_form_ranked(
 		if (f_vv) {
 			cout << "step " << i << " ";
 			cout << " list_of_ranks_PG_sorted=";
-			Orbiter->Int_vec.print(cout, list_of_ranks_PG_sorted, size_list);
+			Orbiter->Int_vec->print(cout, list_of_ranks_PG_sorted, size_list);
 			cout << " ";
 			cout << "f_allowed=";
-			Orbiter->Int_vec.print(cout, f_allowed, size_list);
+			Orbiter->Int_vec->print(cout, f_allowed, size_list);
 			cout << endl;
 		}
 		for (a = 0; a < size_list; a++) {
@@ -2885,7 +2886,7 @@ int linear_algebra::lexleast_canonical_form_ranked(
 		if (f_vv) {
 			cout << "step " << i
 					<< " basis_vector=" << basis_vectors[i] << " : ";
-			Orbiter->Int_vec.print(cout, M1 + i * vector_space_dimension,
+			Orbiter->Int_vec->print(cout, M1 + i * vector_space_dimension,
 					vector_space_dimension);
 			cout << " sz=" << sz << " Sz=" << Sz << endl;
 		}
@@ -2902,7 +2903,7 @@ int linear_algebra::lexleast_canonical_form_ranked(
 			Gg.AG_element_unrank(F->q, v, 1, i + 1, j);
 			if (f_vv) {
 				cout << "j=" << j << " v=";
-				Orbiter->Int_vec.print(cout, v, i + 1);
+				Orbiter->Int_vec->print(cout, v, i + 1);
 				cout << endl;
 			}
 #if 0
@@ -2920,7 +2921,7 @@ int linear_algebra::lexleast_canonical_form_ranked(
 					0 /* verbose_level */);
 			if (f_vv) {
 				cout << " tmp=";
-				Orbiter->Int_vec.print(cout, tmp, vector_space_dimension);
+				Orbiter->Int_vec->print(cout, tmp, vector_space_dimension);
 				cout << endl;
 			}
 			F->PG_element_rank_modified(tmp, 1,
@@ -2942,12 +2943,12 @@ int linear_algebra::lexleast_canonical_form_ranked(
 	}
 	if (f_vv) {
 		cout << "basis_vectors by rank: ";
-		Orbiter->Int_vec.print(cout, basis_vectors, rk);
+		Orbiter->Int_vec->print(cout, basis_vectors, rk);
 		cout << endl;
 	}
 	if (f_vv) {
 		cout << "basis_vectors by coordinates: " << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, M1, size,
+		Orbiter->Int_vec->print_integer_matrix_width(cout, M1, size,
 				vector_space_dimension, vector_space_dimension,
 				F->log10_of_q);
 		cout << endl;
@@ -2959,7 +2960,7 @@ int linear_algebra::lexleast_canonical_form_ranked(
 	}
 	if (f_vv) {
 		cout << "basis_vectors by rank again (double check): ";
-		Orbiter->Int_vec.print(cout, set2, rk);
+		Orbiter->Int_vec->print(cout, set2, rk);
 		cout << endl;
 	}
 
@@ -2994,11 +2995,11 @@ void linear_algebra::exterior_square(int *An, int *An2, int n, int verbose_level
 	int aki, alj, akj, ali;
 	int u, v, w;
 	int n2;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "linear_algebra::exterior_square input matrix:" << endl;
-		Orbiter->Int_vec.matrix_print(An, n, n);
+		Orbiter->Int_vec->matrix_print(An, n, n);
 	}
 
 
@@ -3042,7 +3043,7 @@ void linear_algebra::exterior_square(int *An, int *An2, int n, int verbose_level
 
 	if (f_v) {
 		cout << "linear_algebra::exterior_square output matrix:" << endl;
-		Orbiter->Int_vec.matrix_print(An2, n2, n2);
+		Orbiter->Int_vec->matrix_print(An2, n2, n2);
 	}
 
 	if (f_v) {

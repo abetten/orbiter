@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace combinatorics {
 
 
 tdo_refinement::tdo_refinement()
@@ -88,7 +89,7 @@ void tdo_refinement::main_loop(int verbose_level)
 	}
 	ifstream f(Descr->fname_in);
 	char str[1000];
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	fname.assign(Descr->fname_in);
 	//strcpy(str, Descr->fname_in);
@@ -192,7 +193,7 @@ void tdo_refinement::do_it(ofstream &g, int verbose_level)
 	int f_vvv = (verbose_level >= 3);
 
 	tdo_scheme_synthetic G;
-	partitionstack P;
+	data_structures::partitionstack P;
 
 	if (f_v) {
 		cout << "tdo_refinement::do_it "
@@ -264,7 +265,7 @@ void tdo_refinement::do_it(ofstream &g, int verbose_level)
 
 void tdo_refinement::do_row_refinement(
 	ofstream &g, tdo_scheme_synthetic &G,
-	partitionstack &P,
+	data_structures::partitionstack &P,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -359,7 +360,7 @@ void tdo_refinement::do_row_refinement(
 
 void tdo_refinement::do_col_refinement(
 		ofstream &g, tdo_scheme_synthetic &G,
-	partitionstack &P, int verbose_level)
+		data_structures::partitionstack &P, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	//int f_vv = (verbose_level >= 2);
@@ -792,7 +793,7 @@ int tdo_refinement::do_column_refinement(
 				cout << "s=" << s << endl;
 				cout << "l=" << l << endl;
 				cout << "a=" << a << endl;
-				Orbiter->Int_vec.print(cout, distributions + t * nb_line_types, nb_line_types);
+				Orbiter->Int_vec->print(cout, distributions + t * nb_line_types, nb_line_types);
 				cout << endl;
 				exit(1);
 			}
@@ -1036,7 +1037,7 @@ void distribution_reverse_sorting(int f_increasing,
 	int i, j;
 	int *D;
 	int **P;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	D = NEW_int(nb_distributions * nb_types);
 	P = NEW_pint(nb_distributions);
@@ -1072,6 +1073,7 @@ void distribution_reverse_sorting(int f_increasing,
 }
 
 
-}}
+}}}
+
 
 

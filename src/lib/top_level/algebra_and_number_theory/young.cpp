@@ -202,7 +202,7 @@ void young::init(int n, int verbose_level)
 
 
 
-	D = NEW_OBJECT(a_domain);
+	D = NEW_OBJECT(algebra::a_domain);
 	D->init_integer_fractions(verbose_level);
 
 	if (f_v) {
@@ -254,7 +254,7 @@ void young::create_module(int *h_alpha,
 
 	if (FALSE) {
 		cout << "M1=" << endl;
-		Orbiter->Int_vec.matrix_print(M1, goi, sz);
+		Orbiter->Int_vec->matrix_print(M1, goi, sz);
 		}
 
 	for (i = 0; i < goi * sz; i++) {
@@ -287,7 +287,7 @@ void young::create_module(int *h_alpha,
 
 	if (f_v) {
 		cout << "base_cols=" << endl;
-		Orbiter->Int_vec.print(cout, base_cols, rk);
+		Orbiter->Int_vec->print(cout, base_cols, rk);
 		cout << endl;
 		}
 
@@ -518,7 +518,7 @@ void young::young_symmetrizer(int *row_parts, int nb_row_parts,
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, j, a, b, h;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "young::young_symmetrizer" << endl;
@@ -548,10 +548,10 @@ void young::young_symmetrizer(int *row_parts, int nb_row_parts,
 
 	if (f_v) {
 		cout << "row_part: ";
-		Orbiter->Int_vec.print(cout, row_parts, l1);
+		Orbiter->Int_vec->print(cout, row_parts, l1);
 		cout << endl;
 		cout << "col_part: ";
-		Orbiter->Int_vec.print(cout, col_parts, l2);
+		Orbiter->Int_vec->print(cout, col_parts, l2);
 		cout << endl;
 		}
 
@@ -570,8 +570,8 @@ void young::young_symmetrizer(int *row_parts, int nb_row_parts,
 		}
 
 
-	Row_partition = NEW_OBJECT(set_of_sets);
-	Col_partition = NEW_OBJECT(set_of_sets);
+	Row_partition = NEW_OBJECT(data_structures::set_of_sets);
+	Col_partition = NEW_OBJECT(data_structures::set_of_sets);
 
 	Row_partition->init_basic_with_Sz_in_int(n, l1, row_parts, 0 /* verbose_level*/);
 	for (i = 0; i < l1; i++) {
@@ -639,8 +639,8 @@ void young::young_symmetrizer(int *row_parts, int nb_row_parts,
 		}
 
 
-	Orbiter->Int_vec.zero(elt1, goi);
-	Orbiter->Int_vec.zero(elt2, goi);
+	Orbiter->Int_vec->zero(elt1, goi);
+	Orbiter->Int_vec->zero(elt2, goi);
 
 
 	// Unrank the element in the row-stabilizer subgroup,
@@ -698,7 +698,7 @@ void young::compute_generators(int &go1, int &go2, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a, h;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "young::compute_generators" << endl;
@@ -979,7 +979,7 @@ void young::group_ring_element_print(action *A, sims *S, int *elt)
 	long int goi;
 
 	goi = S->group_order_lint();
-	Orbiter->Int_vec.print(cout, elt, goi);
+	Orbiter->Int_vec->print(cout, elt, goi);
 }
 
 void young::group_ring_element_copy(action *A, sims *S,
@@ -988,7 +988,7 @@ void young::group_ring_element_copy(action *A, sims *S,
 	long int goi;
 
 	goi = S->group_order_lint();
-	Orbiter->Int_vec.copy(elt_from, elt_to, goi);
+	Orbiter->Int_vec->copy(elt_from, elt_to, goi);
 }
 
 void young::group_ring_element_zero(action *A, sims *S, int *elt)
@@ -996,7 +996,7 @@ void young::group_ring_element_zero(action *A, sims *S, int *elt)
 	long int goi;
 
 	goi = S->group_order_lint();
-	Orbiter->Int_vec.zero(elt, goi);
+	Orbiter->Int_vec->zero(elt, goi);
 }
 
 void young::group_ring_element_mult(action *A,
@@ -1007,7 +1007,7 @@ void young::group_ring_element_mult(action *A,
 	int a, b, c;
 
 	goi = S->group_order_lint();
-	Orbiter->Int_vec.zero(elt3, goi);
+	Orbiter->Int_vec->zero(elt3, goi);
 	for (i = 0; i < goi; i++) {
 		a = elt1[i];
 		for (j = 0; j < goi; j++) {

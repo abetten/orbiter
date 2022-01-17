@@ -4,7 +4,8 @@
 // 10.11.1999
 // moved from D2 to ORBI Nov 15, 2007
 
-#include "orbiter.h"
+#include "foundations/foundations.h"
+#include "discreta.h"
 
 using namespace std;
 
@@ -331,7 +332,7 @@ void permutation::scan(istream & is, int verbose_level)
 	int i, a_last, a, dig, ci;
 	char s[10000], c;
 	int si, largest_point = 0;
-	string_tools ST;
+	data_structures::string_tools ST;
 	
 	//l = s_l();
 	perm.m_l(l);
@@ -743,7 +744,7 @@ void permutation::induce2(permutation & b)
 {
 	int n;
 	int i, j, k, i1, j1, k1, m;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	n = s_l();
 	m = (n * (n - 1)) >> 1;

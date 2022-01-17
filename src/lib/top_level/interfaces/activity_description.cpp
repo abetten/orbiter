@@ -83,7 +83,7 @@ void activity_description::read_arguments(
 	if (f_v) {
 		cout << "activity_description::read_arguments" << endl;
 	}
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	activity_description::Sym = Sym;
 
@@ -1009,9 +1009,9 @@ void activity_description::do_combinatorial_object_activity(int verbose_level)
 		}
 	}
 	else if (t == t_combinatorial_objects) {
-		data_input_stream *IS;
+		data_structures::data_input_stream *IS;
 
-		IS = (data_input_stream *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
+		IS = (data_structures::data_input_stream *) Sym->Orbiter_top_level_session->get_object(Idx[0]);
 		{
 			combinatorial_object_activity Activity;
 

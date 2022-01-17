@@ -16,6 +16,7 @@
 
 namespace orbiter {
 namespace foundations {
+namespace combinatorics {
 
 
 // #############################################################################
@@ -217,10 +218,10 @@ public:
 	//projective_space_with_action *PA;
 	projective_space *P;
 
-	data_input_stream *IS;
+	data_structures::data_input_stream *IS;
 
 
-	classify_bitvectors *CB;
+	data_structures::classify_bitvectors *CB;
 
 	long int *Ago; // [IS->nb_objects_to_test]
 	int *F_reject; // [IS->nb_objects_to_test]
@@ -236,7 +237,7 @@ public:
 
 	object_with_canonical_form **OWCF_transversal; // [nb_orbits]
 
-	nauty_output **NO_transversal; // [nb_orbits]
+	data_structures::nauty_output **NO_transversal; // [nb_orbits]
 
 
 	tally *T_Ago;
@@ -248,20 +249,20 @@ public:
 	void do_the_work(classification_of_objects_description *Descr,
 			int f_projective_space,
 			projective_space *P,
-			data_input_stream *IS,
+			data_structures::data_input_stream *IS,
 			int verbose_level);
 	void classify_objects_using_nauty(
 		int verbose_level);
 	void save_automorphism_group_order(int verbose_level);
 	void save_transversal(int verbose_level);
 	void process_any_object(object_with_canonical_form *OwCF,
-			int input_idx, long int &ago, int &f_reject, nauty_output *&NO,
+			int input_idx, long int &ago, int &f_reject, data_structures::nauty_output *&NO,
 			int verbose_level);
 	int process_object(
 		object_with_canonical_form *OwCF,
 		long int &ago,
 		int &iso_idx_if_found,
-		nauty_output *&NO,
+		data_structures::nauty_output *&NO,
 		int verbose_level);
 	// returns f_found, which is TRUE if the object is already in the list
 	void report_summary_of_orbits(
@@ -501,16 +502,16 @@ public:
 	~encoded_combinatorial_object();
 	void init(int nb_rows, int nb_cols, int verbose_level);
 	void init_canonical_form(encoded_combinatorial_object *Enc,
-			nauty_output *NO, int verbose_level);
+			data_structures::nauty_output *NO, int verbose_level);
 	void print_incma();
 	void print_partition();
 	void compute_canonical_incma(int *canonical_labeling,
 			int *&Incma_out, int verbose_level);
-	void compute_canonical_form(bitvector *&Canonical_form,
+	void compute_canonical_form(data_structures::bitvector *&Canonical_form,
 			int *canonical_labeling, int verbose_level);
 	void incidence_matrix_projective_space_top_left(projective_space *P, int verbose_level);
 	void canonical_form_given_canonical_labeling(int *canonical_labeling,
-			bitvector *&B,
+			data_structures::bitvector *&B,
 			int verbose_level);
 	void latex_set_system_by_columns(std::ostream &ost,
 			int verbose_level);
@@ -524,15 +525,15 @@ public:
 			int nb_orbits, int *orbit_first, int *orbit_len, int *orbit,
 			int verbose_level);
 	void latex_canonical_form(std::ostream &ost,
-			nauty_output *NO,
+			data_structures::nauty_output *NO,
 			int verbose_level);
 	void apply_canonical_labling(int *&Inc2,
-			nauty_output *NO);
+			data_structures::nauty_output *NO);
 	void apply_canonical_labling_and_get_flags(int *&Inc2,
 			int *&Flags, int &nb_flags,
-			nauty_output *NO);
+			data_structures::nauty_output *NO);
 	void latex_canonical_form_with_labels(std::ostream &ost,
-			nauty_output *NO,
+			data_structures::nauty_output *NO,
 			std::string *row_labels,
 			std::string *col_labels,
 			int verbose_level);
@@ -683,7 +684,7 @@ class pentomino_puzzle {
 	// R[h][r] and T[h][t].
 	int code_piece(int h, int r, int t);
 	void draw_it(std::ostream &ost, long int *sol);
-	void compute_image_function(set_of_sets *S,
+	void compute_image_function(data_structures::set_of_sets *S,
 			int elt_idx,
 			int gen_idx, int &idx_of_image, int verbose_level);
 	void turn_piece(int &h, int &r, int &t, int verbose_level);
@@ -696,7 +697,7 @@ class pentomino_puzzle {
 };
 
 
-void pentomino_puzzle_compute_image_function(set_of_sets *S,
+void pentomino_puzzle_compute_image_function(data_structures::set_of_sets *S,
 		void *compute_image_data, int elt_idx,
 		int gen_idx, int &idx_of_image, int verbose_level);
 int pentomino_puzzle_compare_func(void *vec, void *a, int b, void *data_for_compare);
@@ -834,10 +835,10 @@ class tdo_refinement {
 	void main_loop(int verbose_level);
 	void do_it(std::ofstream &g, int verbose_level);
 	void do_row_refinement(std::ofstream &g,
-			tdo_scheme_synthetic &G, partitionstack &P,
+			tdo_scheme_synthetic &G, data_structures::partitionstack &P,
 			int verbose_level);
 	void do_col_refinement(std::ofstream &g,
-			tdo_scheme_synthetic &G, partitionstack &P,
+			tdo_scheme_synthetic &G, data_structures::partitionstack &P,
 			int verbose_level);
 	void do_all_row_refinements(std::string &label_in, std::ofstream &g,
 			tdo_scheme_synthetic &G,
@@ -935,7 +936,7 @@ public:
 
 	//partition_backtrack PB;
 
-	partitionstack *P;
+	data_structures::partitionstack *P;
 
 	int part_length;
 	int *part;
@@ -992,8 +993,8 @@ public:
 	void free_partition(int h);
 	void complete_partition_info(int h, int verbose_level);
 	void get_row_or_col_scheme(int h, int l, int verbose_level);
-	void get_column_split_partition(int verbose_level, partitionstack &P);
-	void get_row_split_partition(int verbose_level, partitionstack &P);
+	void get_column_split_partition(int verbose_level, data_structures::partitionstack &P);
+	void get_row_split_partition(int verbose_level, data_structures::partitionstack &P);
 	void print_all_schemes();
 	void print_scheme(int h, int verbose_level);
 	void print_scheme_tex(std::ostream &ost, int h);
@@ -1005,11 +1006,12 @@ public:
 	int count_nb_inc_from_extra_row_scheme(int verbose_level);
 
 
-	int geometric_test_for_row_scheme(partitionstack &P,
+	int geometric_test_for_row_scheme(data_structures::partitionstack &P,
 		int *point_types, int nb_point_types, int point_type_len,
 		int *distributions, int nb_distributions,
 		int f_omit1, int omit1, int verbose_level);
-	int geometric_test_for_row_scheme_level_s(partitionstack &P, int s,
+	int geometric_test_for_row_scheme_level_s(
+			data_structures::partitionstack &P, int s,
 		int *point_types, int nb_point_types, int point_type_len,
 		int *distribution,
 		int *non_zero_blocks, int nb_non_zero_blocks,
@@ -1019,7 +1021,7 @@ public:
 
 	int refine_rows(int verbose_level,
 		int f_use_mckay, int f_once,
-		partitionstack &P,
+		data_structures::partitionstack &P,
 		int *&point_types, int &nb_point_types, int &point_type_len,
 		int *&distributions, int &nb_distributions,
 		int &cnt_second_system, solution_file_data *Sol,
@@ -1031,42 +1033,43 @@ public:
 		int *&point_types, int &nb_point_types, int &point_type_len,
 		int *&distributions, int &nb_distributions,
 		int &cnt_second_system);
-	int refine_rows_hard(partitionstack &P, int verbose_level,
+	int refine_rows_hard(data_structures::partitionstack &P, int verbose_level,
 		int f_use_mckay, int f_once,
 		int *&point_types, int &nb_point_types, int &point_type_len,
 		int *&distributions, int &nb_distributions,
 		int &cnt_second_system,
 		int f_omit1, int omit1, int f_omit, int omit,
 		int f_use_packing_numbers, int f_dual_is_linear_space);
-	void row_refinement_L1_L2(partitionstack &P, int f_omit, int omit,
+	void row_refinement_L1_L2(data_structures::partitionstack &P, int f_omit, int omit,
 		int &L1, int &L2, int verbose_level);
 	int tdo_rows_setup_first_system(int verbose_level,
-		tdo_data &T, int r, partitionstack &P,
+		tdo_data &T, int r, data_structures::partitionstack &P,
 		int f_omit, int omit,
 		int *&point_types, int &nb_point_types);
 	int tdo_rows_setup_second_system(int verbose_level,
-		tdo_data &T, partitionstack &P,
+		tdo_data &T, data_structures::partitionstack &P,
 		int f_omit, int omit,
 		int f_use_packing_numbers,
 		int f_dual_is_linear_space,
 		int *&point_types, int &nb_point_types);
 	int tdo_rows_setup_second_system_eqns_joining(int verbose_level,
-		tdo_data &T, partitionstack &P,
+		tdo_data &T, data_structures::partitionstack &P,
 		int f_omit, int omit, int f_dual_is_linear_space,
 		int *point_types, int nb_point_types,
 		int eqn_offset);
 	int tdo_rows_setup_second_system_eqns_counting(int verbose_level,
-		tdo_data &T, partitionstack &P,
+		tdo_data &T, data_structures::partitionstack &P,
 		int f_omit, int omit,
 		int *point_types, int nb_point_types,
 		int eqn_offset);
 	int tdo_rows_setup_second_system_eqns_packing(int verbose_level,
-		tdo_data &T, partitionstack &P,
+		tdo_data &T, data_structures::partitionstack &P,
 		int f_omit, int omit,
 		int *point_types, int nb_point_types,
 		int eqn_start, int &nb_eqns_used);
 
-	int refine_columns(int verbose_level, int f_once, partitionstack &P,
+	int refine_columns(int verbose_level, int f_once,
+			data_structures::partitionstack &P,
 		int *&line_types, int &nb_line_types, int &line_type_len,
 		int *&distributions, int &nb_distributions,
 		int &cnt_second_system, solution_file_data *Sol,
@@ -1074,7 +1077,8 @@ public:
 		int f_D1_upper_bound_x0, int D1_upper_bound_x0,
 		int f_use_mckay_solver,
 		int f_use_packing_numbers);
-	int refine_cols_hard(partitionstack &P,
+	int refine_cols_hard(
+			data_structures::partitionstack &P,
 		int verbose_level, int f_once,
 		int *&line_types, int &nb_line_types, int &line_type_len,
 		int *&distributions, int &nb_distributions,
@@ -1083,30 +1087,35 @@ public:
 		int f_D1_upper_bound_x0, int D1_upper_bound_x0,
 		int f_use_mckay_solver,
 		int f_use_packing_numbers);
-	void column_refinement_L1_L2(partitionstack &P,
+	void column_refinement_L1_L2(data_structures::partitionstack &P,
 		int f_omit, int omit,
 		int &L1, int &L2, int verbose_level);
 	int tdo_columns_setup_first_system(int verbose_level,
-		tdo_data &T, int r, partitionstack &P,
+		tdo_data &T, int r,
+		data_structures::partitionstack &P,
 		int f_omit, int omit,
 		int *&line_types, int &nb_line_types);
 	int tdo_columns_setup_second_system(int verbose_level,
-		tdo_data &T, partitionstack &P,
+		tdo_data &T,
+		data_structures::partitionstack &P,
 		int f_omit, int omit,
 		int f_use_packing_numbers,
 		int *&line_types, int &nb_line_types);
 	int tdo_columns_setup_second_system_eqns_joining(int verbose_level,
-		tdo_data &T, partitionstack &P,
+		tdo_data &T,
+		data_structures::partitionstack &P,
 		int f_omit, int omit,
 		int *line_types, int nb_line_types,
 		int eqn_start);
 	void tdo_columns_setup_second_system_eqns_counting(int verbose_level,
-		tdo_data &T, partitionstack &P,
+		tdo_data &T,
+		data_structures::partitionstack &P,
 		int f_omit, int omit,
 		int *line_types, int nb_line_types,
 		int eqn_start);
 	int tdo_columns_setup_second_system_eqns_upper_bound(int verbose_level,
-		tdo_data &T, partitionstack &P,
+		tdo_data &T,
+		data_structures::partitionstack &P,
 		int f_omit, int omit,
 		int *line_types, int nb_line_types,
 		int eqn_start, int &nb_eqns_used);
@@ -1118,7 +1127,8 @@ public:
 		int *&distributions, int &nb_distributions);
 	int td3_rows_setup_first_system(int verbose_level,
 		int lambda3, int block_size, int lambda2,
-		tdo_data &T, int r, partitionstack &P,
+		tdo_data &T, int r,
+		data_structures::partitionstack &P,
 		int &nb_vars,int &nb_eqns,
 		int *&point_types, int &nb_point_types);
 	int td3_rows_setup_second_system(int verbose_level,
@@ -1138,7 +1148,8 @@ public:
 		int *&distributions, int &nb_distributions);
 	int td3_columns_setup_first_system(int verbose_level,
 		int lambda3, int block_size, int lambda2,
-		tdo_data &T, int r, partitionstack &P,
+		tdo_data &T, int r,
+		data_structures::partitionstack &P,
 		int &nb_vars, int &nb_eqns,
 		int *&line_types, int &nb_line_types);
 	int td3_columns_setup_second_system(int verbose_level,
@@ -1187,7 +1198,8 @@ public:
 
 
 
-}}
+}}}
+
 
 
 #endif /* ORBITER_SRC_LIB_FOUNDATIONS_COMBINATORICS_COMBINATORICS_H_ */

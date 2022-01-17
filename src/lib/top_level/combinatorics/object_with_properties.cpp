@@ -54,7 +54,7 @@ object_with_properties::~object_with_properties()
 
 
 void object_with_properties::init(object_with_canonical_form *OwCF,
-		nauty_output *NO,
+		data_structures::nauty_output *NO,
 		int f_projective_space, projective_space_with_action *PA,
 		int max_TDO_depth,
 		std::string &label,
@@ -210,7 +210,7 @@ void object_with_properties::lift_generators_to_matrix_group(int verbose_level)
 
 void object_with_properties::init_object_in_projective_space(
 		object_with_canonical_form *OwCF,
-		nauty_output *NO,
+		data_structures::nauty_output *NO,
 		projective_space_with_action *PA,
 		std::string &label,
 		int verbose_level)
@@ -255,7 +255,7 @@ void object_with_properties::init_object_in_projective_space(
 }
 
 void object_with_properties::latex_report(std::ostream &ost,
-		classification_of_objects_report_options *Report_options,
+		combinatorics::classification_of_objects_report_options *Report_options,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -351,13 +351,13 @@ void object_with_properties::latex_report(std::ostream &ost,
 	}
 
 	ost << "Canonical labeling:\\\\" << endl;
-	encoded_combinatorial_object *Enc;
-	encoded_combinatorial_object *Enc2;
+	combinatorics::encoded_combinatorial_object *Enc;
+	combinatorics::encoded_combinatorial_object *Enc2;
 
 	OwCF->encode_incma(Enc, verbose_level);
 
 
-	Enc2 = NEW_OBJECT(encoded_combinatorial_object);
+	Enc2 = NEW_OBJECT(combinatorics::encoded_combinatorial_object);
 
 	Enc2->init_canonical_form(Enc, NO, verbose_level);
 
@@ -448,8 +448,8 @@ void object_with_properties::latex_report(std::ostream &ost,
 
 		geometry_builder *GB;
 		int f_found;
-		nauty_output *NO;
-		bitvector *Canonical_form;
+		data_structures::nauty_output *NO;
+		data_structures::bitvector *Canonical_form;
 
 		GB = (geometry_builder *) Orbiter->get_object(idx);
 
@@ -511,13 +511,13 @@ void object_with_properties::latex_report(std::ostream &ost,
 
 void object_with_properties::compute_TDO(int max_TDO_depth, int verbose_level)
 {
-	encoded_combinatorial_object *Enc;
+	combinatorics::encoded_combinatorial_object *Enc;
 
 	OwCF->encode_incma(Enc, verbose_level);
 
 
 
-	TDO = NEW_OBJECT(tdo_scheme_compute);
+	TDO = NEW_OBJECT(combinatorics::tdo_scheme_compute);
 
 	TDO->init(Enc, max_TDO_depth, verbose_level);
 
@@ -529,7 +529,7 @@ void object_with_properties::compute_TDO(int max_TDO_depth, int verbose_level)
 }
 
 void object_with_properties::print_TDO(std::ostream &ost,
-		classification_of_objects_report_options *Report_options)
+		combinatorics::classification_of_objects_report_options *Report_options)
 {
 
 	TDO->print_schemes(ost);
@@ -546,7 +546,7 @@ void object_with_properties::export_TDA_with_flag_orbits(std::ostream &ost,
 		cout << "object_with_properties::export_TDA_with_flag_orbits" << endl;
 	}
 
-	encoded_combinatorial_object *Enc;
+	combinatorics::encoded_combinatorial_object *Enc;
 
 	OwCF->encode_incma(Enc, verbose_level);
 
@@ -561,7 +561,7 @@ void object_with_properties::export_TDA_with_flag_orbits(std::ostream &ost,
 
 	Inc2 = NEW_int(Enc->nb_rows * Enc->nb_cols);
 	Inc_flag_orbits = NEW_int(Enc->nb_rows * Enc->nb_cols);
-	Orbiter->Int_vec.zero(Inc2, Enc->nb_rows * Enc->nb_cols);
+	Orbiter->Int_vec->zero(Inc2, Enc->nb_rows * Enc->nb_cols);
 
 	nb_orbits_on_flags = Flags->Orb->Sch->nb_orbits;
 
@@ -626,7 +626,7 @@ void object_with_properties::export_INP_with_flag_orbits(std::ostream &ost,
 		cout << "object_with_properties::export_INP_with_flag_orbits" << endl;
 	}
 
-	encoded_combinatorial_object *Enc;
+	combinatorics::encoded_combinatorial_object *Enc;
 
 	OwCF->encode_incma(Enc, verbose_level);
 
@@ -641,7 +641,7 @@ void object_with_properties::export_INP_with_flag_orbits(std::ostream &ost,
 
 	Inc2 = NEW_int(Enc->nb_rows * Enc->nb_cols);
 	Inc_flag_orbits = NEW_int(Enc->nb_rows * Enc->nb_cols);
-	Orbiter->Int_vec.zero(Inc2, Enc->nb_rows * Enc->nb_cols);
+	Orbiter->Int_vec->zero(Inc2, Enc->nb_rows * Enc->nb_cols);
 
 	nb_orbits_on_flags = Flags->Orb->Sch->nb_orbits;
 

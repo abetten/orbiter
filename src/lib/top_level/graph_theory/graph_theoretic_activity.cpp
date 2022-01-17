@@ -57,7 +57,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 	if (f_v) {
 		cout << "graph_theoretic_activity::perform_activity, CG->label=" << CG->label << endl;
 	}
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (Descr->f_find_cliques) {
 		if (f_v) {
@@ -205,7 +205,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 		long int *Split;
 		int m, n;
 		int a, c;
-		string_tools ST;
+		data_structures::string_tools ST;
 
 
 		Fio.lint_matrix_read_csv(Descr->split_by_file, Split, m, n, verbose_level - 2);
@@ -216,8 +216,8 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 			a = Split[2 * c + 0];
 
 			colored_graph *Subgraph;
-			fancy_set *color_subset;
-			fancy_set *vertex_subset;
+			data_structures::fancy_set *color_subset;
+			data_structures::fancy_set *vertex_subset;
 
 			Subgraph = CG->compute_neighborhood_subgraph(a,
 					vertex_subset, color_subset,
@@ -241,7 +241,7 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 		cout << "splitting by file " << Descr->split_by_starters_fname_reps
 				<< " column " << Descr->split_by_starters_col_label << endl;
 		file_io Fio;
-		set_of_sets *Reps;
+		data_structures::set_of_sets *Reps;
 		//string_tools ST;
 		int c;
 
@@ -258,8 +258,8 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 			cout << "splitting case " << c << " / " << Reps->nb_sets << ":" << endl;
 
 			colored_graph *Subgraph;
-			fancy_set *color_subset;
-			fancy_set *vertex_subset;
+			data_structures::fancy_set *color_subset;
+			data_structures::fancy_set *vertex_subset;
 
 
 			Subgraph = CG->compute_neighborhood_subgraph_based_on_subset(
@@ -287,11 +287,11 @@ void graph_theoretic_activity::perform_activity(int verbose_level)
 		long int *set;
 		int sz;
 
-		Orbiter->Lint_vec.scan(Descr->split_by_clique_set, set, sz);
+		Orbiter->Lint_vec->scan(Descr->split_by_clique_set, set, sz);
 
 		colored_graph *Subgraph;
-		fancy_set *color_subset;
-		fancy_set *vertex_subset;
+		data_structures::fancy_set *color_subset;
+		data_structures::fancy_set *vertex_subset;
 
 
 		Subgraph = CG->compute_neighborhood_subgraph_based_on_subset(

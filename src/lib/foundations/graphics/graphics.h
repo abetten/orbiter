@@ -774,7 +774,7 @@ public:
 		int f_partition, int nb_row_parts, int *row_part_first,
 		int nb_col_parts, int *col_part_first,
 		int f_row_grid, int f_col_grid,
-		int f_bitmatrix, bitmatrix *Bitmatrix, int *M,
+		int f_bitmatrix, data_structures::bitmatrix *Bitmatrix, int *M,
 		int m, int n,
 		int f_has_labels, int *labels);
 

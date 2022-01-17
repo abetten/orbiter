@@ -558,7 +558,7 @@ void poset_orbit_node::schreier_forest(
 			if (f_v4) {
 				cout << " : ";
 				if (n < 100) {
-					Orbiter->Lint_vec.print(cout, subset, n);
+					Orbiter->Lint_vec->print(cout, subset, n);
 				}
 				else {
 					cout << "too large to print";
@@ -588,7 +588,7 @@ void poset_orbit_node::schreier_forest(
 			gen->print_level_info(lvl, node);
 			cout << " : poset_orbit_node::schreier_forest live points after downstep_apply_early_test: "
 					"number=" << nb_candidates;
-			Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
+			Orbiter->Lint_vec->print(cout, candidates, nb_candidates);
 			cout << " reduced from a set of size " << nb_candidates << endl;
 #if 0
 			if (f_v4) {
@@ -1063,7 +1063,7 @@ int poset_orbit_node::downstep_get_invariant_subset(
 	int f_vv = (verbose_level >= 2);
 	int ret = FALSE;
 	int i;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 
 	n = -1;

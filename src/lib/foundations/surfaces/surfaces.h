@@ -687,10 +687,10 @@ public:
 	void substitute_semilinear(int *coeff_in, int *coeff_out,
 		int f_semilinear, int frob, int *Mtx_inv, int verbose_level);
 	void list_starter_configurations(long int *Lines, int nb_lines,
-		set_of_sets *line_intersections, int *&Table, int &N,
+			data_structures::set_of_sets *line_intersections, int *&Table, int &N,
 		int verbose_level);
 	void create_starter_configuration(int line_idx, int subset_idx,
-		set_of_sets *line_neighbors, long int *Lines, long int *S,
+			data_structures::set_of_sets *line_neighbors, long int *Lines, long int *S,
 		int verbose_level);
 	void wedge_to_klein(int *W, int *K);
 	void klein_to_wedge(int *K, int *W);
@@ -804,7 +804,7 @@ public:
 			long int *Pts_on_surface,
 			int nb_points_on_surface,
 			long int *Lines, int nb_lines,
-			set_of_sets *&pts_on_lines,
+			data_structures::set_of_sets *&pts_on_lines,
 			int *&f_is_on_line,
 			int verbose_level);
 	int compute_rank_of_any_four(
@@ -819,7 +819,7 @@ public:
 	void rearrange_lines_according_to_starter_configuration(
 		long int *Lines, long int *New_lines,
 		int line_idx, int subset_idx, int *Adj,
-		set_of_sets *line_intersections, int verbose_level);
+		data_structures::set_of_sets *line_intersections, int verbose_level);
 	int intersection_of_four_lines_but_not_b6(int *Adj,
 		int *four_lines_idx, int b6, int verbose_level);
 	int intersection_of_five_lines(int *Adj, int *five_lines_idx,
@@ -846,7 +846,7 @@ public:
 	void print_equation_with_line_breaks_tex(std::ostream &ost, int *coeffs);
 	void print_equation_tex_lint(std::ostream &ost, long int *coeffs);
 	void latex_double_six(std::ostream &ost, long int *double_six);
-	void make_spreadsheet_of_lines_in_three_kinds(spreadsheet *&Sp,
+	void make_spreadsheet_of_lines_in_three_kinds(data_structures::spreadsheet *&Sp,
 		long int *Wedge_rk, long int *Line_rk, long int *Klein_rk, int nb_lines,
 		int verbose_level);
 	void print_equation_in_trihedral_form(std::ostream &ost,
@@ -918,12 +918,12 @@ public:
 	surface_object *SO;
 
 
-	set_of_sets *pts_on_lines;
+	data_structures::set_of_sets *pts_on_lines;
 		// points are stored as indices into Pts[]
 	int *f_is_on_line; // [SO->nb_pts]
 
 
-	set_of_sets *lines_on_point;
+	data_structures::set_of_sets *lines_on_point;
 	tally *Type_pts_on_lines;
 	tally *Type_lines_on_point;
 
@@ -976,7 +976,7 @@ public:
 	int *Dual_point_ranks; // [nb_trihedral_pairs * 6]
 
 	int *Adj_line_intersection_graph; // [SO->nb_lines * SO->nb_lines]
-	set_of_sets *Line_neighbors;
+	data_structures::set_of_sets *Line_neighbors;
 	int *Line_intersection_pt; // [SO->nb_lines * SO->nb_lines]
 	int *Line_intersection_pt_idx; // [SO->nb_lines * SO->nb_lines]
 

@@ -85,7 +85,7 @@ int layered_graph_draw_options::read_arguments(
 {
 	int i;
 	int f_v = (verbose_level >= 1);
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "layered_graph_draw_options::read_arguments" << endl;
@@ -230,10 +230,10 @@ int layered_graph_draw_options::read_arguments(
 		else if (ST.stringcmp(argv[i], "-select_layers") == 0) {
 			f_select_layers = TRUE;
 			select_layers.assign(argv[++i]);
-			Orbiter->Int_vec.scan(select_layers, layer_select, nb_layer_select);
+			Orbiter->Int_vec->scan(select_layers, layer_select, nb_layer_select);
 			if (f_v) {
 				cout << "-select_layers ";
-				Orbiter->Int_vec.print(cout, layer_select, nb_layer_select);
+				Orbiter->Int_vec->print(cout, layer_select, nb_layer_select);
 				cout << endl;
 			}
 		}
@@ -331,7 +331,7 @@ void layered_graph_draw_options::print()
 	}
 	if (nb_layer_select) {
 		cout << "layer_select=";
-		Orbiter->Int_vec.print(cout, layer_select, nb_layer_select);
+		Orbiter->Int_vec->print(cout, layer_select, nb_layer_select);
 		cout << endl;
 	}
 	if (f_paths_in_between) {

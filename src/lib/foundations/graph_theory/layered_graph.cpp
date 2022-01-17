@@ -375,7 +375,7 @@ void layered_graph::draw_with_options(std::string &fname,
 		int yoffset = 0;
 		int own_id;
 		numerics Num;
-		sorting Sorting;
+		data_structures::sorting Sorting;
 	
 		rad_x_twice = O->rad >> 3;
 		rad_y_twice = O->rad >> 3;
@@ -1123,7 +1123,7 @@ void layered_graph::find_all_paths_between(int layer1, int node1, int layer2, in
 	for (i = 0; i < All_Paths.size(); i++) {
 		cout << "path " << i << " is: ";
 
-		Orbiter->Int_vec.print(cout, All_Paths[i]);
+		Orbiter->Int_vec->print(cout, All_Paths[i]);
 
 		cout << "\\\\" << endl;
 
@@ -1159,7 +1159,7 @@ void layered_graph::find_all_paths_between_recursion(
 	N->find_all_parents(this, All_Parents, verbose_level);
 	if (f_v) {
 		cout << "layered_graph::find_all_paths_between_recursion All_Parents=";
-		Orbiter->Int_vec.print(cout, All_Parents);
+		Orbiter->Int_vec->print(cout, All_Parents);
 		cout << endl;
 	}
 
@@ -1280,7 +1280,7 @@ void layered_graph::make_subset_lattice(int n, int depth, int f_tree,
 	int *set1;
 	int *set2;
 	number_theory_domain NT;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "layered_graph::make_subset_lattice n=" << n << endl;
@@ -1318,7 +1318,7 @@ void layered_graph::make_subset_lattice(int n, int depth, int f_tree,
 			int a, j, j0;
 			if (f_depth_first) {
 				cout << "k=" << k << " r=" << r << " set=";
-				Orbiter->Int_vec.print(cout, set1, k);
+				Orbiter->Int_vec->print(cout, set1, k);
 				cout << endl;
 				a = 0;
 				for (i = k - 1; i >= 0; i--) {
@@ -1365,7 +1365,7 @@ void layered_graph::make_subset_lattice(int n, int depth, int f_tree,
 
 			if (f_tree) {
 				for (a = k - 1; a >= k - 1; a--) {
-					Orbiter->Int_vec.copy(set1, set2, k);
+					Orbiter->Int_vec->copy(set1, set2, k);
 					for (b = a; b < k - 1; b++) {
 						set2[b] = set2[b + 1];
 						}
@@ -1375,7 +1375,7 @@ void layered_graph::make_subset_lattice(int n, int depth, int f_tree,
 				}
 			else {
 				for (a = k - 1; a >= 0; a--) {
-					Orbiter->Int_vec.copy(set1, set2, k);
+					Orbiter->Int_vec->copy(set1, set2, k);
 					for (b = a; b < k - 1; b++) {
 						set2[b] = set2[b + 1];
 						}

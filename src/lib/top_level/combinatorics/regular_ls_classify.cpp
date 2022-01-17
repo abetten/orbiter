@@ -261,18 +261,18 @@ void regular_ls_classify::early_test_func(long int *S, int len,
 	int f_vv = (verbose_level >= 2);
 	int i, j, a, b, p;
 	int f_OK;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "regular_ls_classify::early_test_func checking set ";
-		Orbiter->Lint_vec.print(cout, S, len);
+		Orbiter->Lint_vec->print(cout, S, len);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
-		Orbiter->Lint_vec.print(cout, candidates, nb_candidates);
+		Orbiter->Lint_vec->print(cout, candidates, nb_candidates);
 		cout << endl;
 	}
-	Orbiter->Int_vec.zero(pairs, m2);
-	Orbiter->Int_vec.zero(row_sum, Descr->m);
+	Orbiter->Int_vec->zero(pairs, m2);
+	Orbiter->Int_vec->zero(row_sum, Descr->m);
 	//int_vec_copy(initial_pair_covering, pairs, m2);
 
 #if 0
@@ -297,7 +297,7 @@ void regular_ls_classify::early_test_func(long int *S, int len,
 	}
 	if (f_vv) {
 		cout << "pairs after adding in the chosen sets, pairs=" << endl;
-		Orbiter->Int_vec.print(cout, pairs, m2);
+		Orbiter->Int_vec->print(cout, pairs, m2);
 		cout << endl;
 	}
 	
@@ -318,7 +318,7 @@ void regular_ls_classify::early_test_func(long int *S, int len,
 		if (f_vv) {
 			cout << "Testing candidate " << j << " = "
 					<< candidates[j] << " = ";
-			Orbiter->Int_vec.print(cout, v1, Descr->k);
+			Orbiter->Int_vec->print(cout, v1, Descr->k);
 			cout << endl;
 		}
 		for (a = 0; a < Descr->k; a++) {
@@ -371,7 +371,7 @@ void regular_ls_classify::lifting_prepare_function_new(
 	int i, a, h1, h2, p, idx;
 	int nb_needed;
 	int nb_open_rows, nb_open_pairs;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "regular_ls_classify::lifting_prepare_function_new "
@@ -383,8 +383,8 @@ void regular_ls_classify::lifting_prepare_function_new(
 
 
 	//int_vec_copy(initial_pair_covering, pairs, m2);
-	Orbiter->Int_vec.zero(pairs, m2);
-	Orbiter->Int_vec.zero(row_sum, Descr->m);
+	Orbiter->Int_vec->zero(pairs, m2);
+	Orbiter->Int_vec->zero(row_sum, Descr->m);
 
 #if 0
 	if (f_vv) {
@@ -407,7 +407,7 @@ void regular_ls_classify::lifting_prepare_function_new(
 	}
 
 	nb_open_rows = 0;
-	Orbiter->Int_vec.mone(open_row_idx, Descr->m);
+	Orbiter->Int_vec->mone(open_row_idx, Descr->m);
 	for (i = 0; i < Descr->m; i++) {
 		if (row_sum[i] < Descr->r) {
 			open_rows[nb_open_rows] = i;
@@ -417,7 +417,7 @@ void regular_ls_classify::lifting_prepare_function_new(
 	}
 
 	nb_open_pairs = 0;
-	Orbiter->Int_vec.mone(open_pair_idx, m2);
+	Orbiter->Int_vec->mone(open_pair_idx, m2);
 
 	for (i = 0; i < m2; i++) {
 		if (pairs[i] == FALSE) {
@@ -431,7 +431,7 @@ void regular_ls_classify::lifting_prepare_function_new(
 	col_labels = NEW_lint(nb_candidates);
 
 
-	Orbiter->Lint_vec.copy(candidates, col_labels, nb_candidates);
+	Orbiter->Lint_vec->copy(candidates, col_labels, nb_candidates);
 
 	if (E->f_lex) {
 		E->lexorder_test(col_labels, nb_candidates, Strong_gens->gens, 
@@ -540,7 +540,7 @@ void regular_ls_classify_early_test_function(long int *S, int len,
 	
 	if (f_v) {
 		cout << "regular_ls_classify_early_test_function for set ";
-		Orbiter->Lint_vec.print(cout, S, len);
+		Orbiter->Lint_vec->print(cout, S, len);
 		cout << endl;
 	}
 	Gen->early_test_func(S, len, 

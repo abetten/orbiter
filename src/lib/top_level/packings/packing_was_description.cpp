@@ -55,7 +55,7 @@ int packing_was_description::read_arguments(int argc, std::string *argv,
 	int verbose_level)
 {
 	int i;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 
 

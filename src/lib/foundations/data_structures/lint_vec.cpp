@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace data_structures {
 
 
 lint_vec::lint_vec()
@@ -546,5 +547,6 @@ void lint_vec::create_string_with_quotes(std::string &str, long int *v, int len)
 }
 
 
-}}
+}}}
+
 

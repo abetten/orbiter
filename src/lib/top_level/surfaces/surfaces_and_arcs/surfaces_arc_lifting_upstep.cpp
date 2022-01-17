@@ -84,7 +84,7 @@ void surfaces_arc_lifting_upstep::init(surfaces_arc_lifting *Lift, int verbose_l
 	surfaces_arc_lifting_upstep::Lift = Lift;
 
 	f_processed = NEW_int(Lift->Flag_orbits->nb_flag_orbits);
-	Orbiter->Int_vec.zero(f_processed, Lift->Flag_orbits->nb_flag_orbits);
+	Orbiter->Int_vec->zero(f_processed, Lift->Flag_orbits->nb_flag_orbits);
 	nb_processed = 0;
 
 	pt_representation_sz = 6 + 1 + 2 + 1 + 1 + 2 + 20 + 27;
@@ -200,11 +200,11 @@ void surfaces_arc_lifting_upstep::process_flag_orbit(int verbose_level)
 		cout << "Flag_orbits->pt_representation_sz != pt_representation_sz" << endl;
 		exit(1);
 	}
-	Orbiter->Lint_vec.copy(Lift->Flag_orbits->Pt + f * pt_representation_sz,
+	Orbiter->Lint_vec->copy(Lift->Flag_orbits->Pt + f * pt_representation_sz,
 			Flag_representation, pt_representation_sz);
 
-	Orbiter->Lint_vec.copy_to_int(Flag_representation + 13, eqn20, 20);
-	Orbiter->Lint_vec.copy(Flag_representation + 33, Lines, 27);
+	Orbiter->Lint_vec->copy_to_int(Flag_representation + 13, eqn20, 20);
+	Orbiter->Lint_vec->copy(Flag_representation + 33, Lines, 27);
 
 
 
@@ -301,7 +301,7 @@ void surfaces_arc_lifting_upstep::compute_stabilizer(surfaces_arc_lifting_defini
 
 	if (f_vvv) {
 		cout << "surfaces_arc_lifting_upstep::compute_stabilizer Lines:";
-		Orbiter->Lint_vec.print(cout, Lines, 27);
+		Orbiter->Lint_vec->print(cout, Lines, 27);
 		cout << endl;
 	}
 	D->Flag_stab_gens = Lift->Flag_orbits->Flag_orbit_node[f].gens->create_copy();
@@ -337,8 +337,8 @@ void surfaces_arc_lifting_upstep::compute_stabilizer(surfaces_arc_lifting_defini
 					"after process_tritangent_plane" << endl;
 		}
 
-		Orbiter->Int_vec.copy(three_lines_idx, D->three_lines_idx + tritangent_plane_idx * 3, 3);
-		Orbiter->Lint_vec.copy(three_lines, D->three_lines + tritangent_plane_idx * 3, 3);
+		Orbiter->Int_vec->copy(three_lines_idx, D->three_lines_idx + tritangent_plane_idx * 3, 3);
+		Orbiter->Lint_vec->copy(three_lines, D->three_lines + tritangent_plane_idx * 3, 3);
 
 		for (seventytwo_case_idx = 0; seventytwo_case_idx < 72; seventytwo_case_idx++) {
 			D->Seventytwo[tritangent_plane_idx * 72 + seventytwo_case_idx] = Seventytwo[seventytwo_case_idx];
@@ -463,9 +463,9 @@ void surfaces_arc_lifting_upstep::process_tritangent_plane(
 				<< ", upstep "
 				"tritangent_plane_idx=" << tritangent_plane_idx << " / 45 "
 				"three_lines_idx=";
-		Orbiter->Int_vec.print(cout, three_lines_idx, 3);
+		Orbiter->Int_vec->print(cout, three_lines_idx, 3);
 		cout << " three_lines=";
-		Orbiter->Lint_vec.print(cout, three_lines, 3);
+		Orbiter->Lint_vec->print(cout, three_lines, 3);
 		cout << endl;
 	}
 

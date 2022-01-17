@@ -17,6 +17,8 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace combinatorics {
+
 
 tdo_refinement_description::tdo_refinement_description()
 {
@@ -61,7 +63,7 @@ tdo_refinement_description::~tdo_refinement_description()
 int tdo_refinement_description::read_arguments(int argc, std::string *argv, int verbose_level)
 {
 	int i;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	Sol = NEW_OBJECT(solution_file_data);
 	Sol->nb_solution_files = 0;
@@ -229,5 +231,6 @@ void tdo_refinement_description::print()
 
 
 
-}}
+}}}
+
 

@@ -70,7 +70,7 @@ public:
 	long int *the_base;
 	int *the_transversal_length;
 
-	page_storage *Elts;
+	data_structures::page_storage *Elts;
 
 	direct_product();
 	~direct_product();
@@ -362,7 +362,7 @@ public:
 	finite_field *GFq;
 	void *data;
 
-	gl_classes *C; // added Dec 2, 2013
+	algebra::gl_classes *C; // added Dec 2, 2013
 
 	
 	// temporary variables, do not use!
@@ -382,7 +382,7 @@ public:
 	uchar *elt1, *elt2, *elt3;
 		// temporary storage, used in element_store()
 	
-	page_storage *Elts;
+	data_structures::page_storage *Elts;
 	
 
 	matrix_group();
@@ -500,7 +500,7 @@ public:
 	std::string fname_csv;
 
 	tally *Classify_orbits_by_length;
-	set_of_sets *Orbits_classified;
+	data_structures::set_of_sets *Orbits_classified;
 
 	int *Orbits_classified_length; // [Orbits_classified_nb_types]
 	int Orbits_classified_nb_types;
@@ -529,7 +529,7 @@ public:
 	void compute_compact_type(long int *orbit_type, long int goi,
 			long int *&compact_type, long int *&row_labels, long int *&col_labels, int &m, int &n);
 	void report_orbit_lengths(std::ostream &ost);
-	void print_orbits_based_on_filtered_orbits(std::ostream &ost, set_of_sets *Filtered_orbits);
+	void print_orbits_based_on_filtered_orbits(std::ostream &ost, data_structures::set_of_sets *Filtered_orbits);
 	void classify_orbits_by_length(int verbose_level);
 	void report_classified_orbit_lengths(std::ostream &ost);
 	void report_classified_orbits_by_lengths(std::ostream &ost);
@@ -599,7 +599,7 @@ public:
 		int f_has_user_data, long int *user_data, int user_data_size,
 		int (*test_function)(long int *orbit1, int orbit_length1, long int *orbit2, int orbit_length2, void *data),
 		void *test_function_data,
-		set_of_sets *my_orbits_classified,
+		data_structures::set_of_sets *my_orbits_classified,
 		int verbose_level);
 	void create_weighted_graph_on_orbits(
 		colored_graph *&CG,
@@ -610,10 +610,10 @@ public:
 		int f_has_user_data, long int *user_data, int user_data_size,
 		int (*test_function)(long int *orbit1, int orbit_length1, long int *orbit2, int orbit_length2, void *data),
 		void *test_function_data,
-		set_of_sets *my_orbits_classified,
+		data_structures::set_of_sets *my_orbits_classified,
 		int verbose_level);
 	void compute_orbit_invariant_after_classification(
-			set_of_sets *&Orbit_invariant,
+			data_structures::set_of_sets *&Orbit_invariant,
 			int (*evaluate_orbit_invariant_function)(int a, int i, int j, void *evaluate_data, int verbose_level),
 			void *evaluate_data, int verbose_level);
 	void get_orbit_number_and_position(long int a, int &orbit_idx, int &orbit_pos, int verbose_level);
@@ -732,7 +732,7 @@ public:
 	int *Eltrk1, *Eltrk2, *Eltrk3;
 		// used in store / retrieve
 	
-	page_storage *Elts;
+	data_structures::page_storage *Elts;
 
 	permutation_representation_domain();
 	~permutation_representation_domain();
@@ -798,7 +798,7 @@ public:
 	std::string label;
 	std::string label_tex;
 
-	page_storage *PS;
+	data_structures::page_storage *PS;
 
 	int *Elts;
 		// [nb_gens * elt_size_int], the generators in the induced action
@@ -980,8 +980,8 @@ public:
 	void orbits_on_invariant_subset(int len, int *subset, 
 		int &nb_orbits_on_subset, int *&orbit_perm, int *&orbit_perm_inv);
 	void get_orbit_partition_of_points_and_lines(
-		partitionstack &S, int verbose_level);
-	void get_orbit_partition(partitionstack &S, 
+			data_structures::partitionstack &S, int verbose_level);
+	void get_orbit_partition(data_structures::partitionstack &S,
 		int verbose_level);
 	void get_orbit_in_order(std::vector<int> &Orb,
 		int orbit_idx, int verbose_level);
@@ -1015,7 +1015,7 @@ public:
 		int *orbit_count, int verbose_level);
 	void compute_orbit_statistic_lint(long int *set, int set_size,
 		int *orbit_count, int verbose_level);
-	void orbits_as_set_of_sets(set_of_sets *&S, int verbose_level);
+	void orbits_as_set_of_sets(data_structures::set_of_sets *&S, int verbose_level);
 	void get_orbit_reps(int *&Reps, int &nb_reps, int verbose_level);
 	int find_shortest_orbit_if_unique(int &idx);
 	void elements_in_orbit_of(int pt, int *orb, int &nb, 
@@ -1049,9 +1049,9 @@ public:
 			void *compute_orbit_invariant_data,
 			int verbose_level);
 	void print_TDA(std::ostream &ost, object_with_canonical_form *OwCF,
-			classification_of_objects_report_options *Report_options,
+			combinatorics::classification_of_objects_report_options *Report_options,
 			int verbose_level);
-	void latex_TDA(std::ostream &ost, encoded_combinatorial_object *Enc,
+	void latex_TDA(std::ostream &ost, combinatorics::encoded_combinatorial_object *Enc,
 			int verbose_level);
 
 	// schreier_io.cpp:
@@ -2141,7 +2141,7 @@ public:
 	long int *the_base;
 	int *the_transversal_length;
 
-	page_storage *Elts;
+	data_structures::page_storage *Elts;
 
 	uint32_t *rank_one_tensors; // [nb_rank_one_tensors]
 	long int *rank_one_tensors_in_PG; // [nb_rank_one_tensors]

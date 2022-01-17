@@ -32,7 +32,7 @@ public:
 	int qm;
 
 	int *Index;
-	set_of_sets *S;
+	data_structures::set_of_sets *S;
 
 	cyclotomic_sets();
 	~cyclotomic_sets();
@@ -153,6 +153,9 @@ public:
 	long int i_power_j_lint_safe(int i, int j, int verbose_level);
 	long int i_power_j_lint(long int i, long int j);
 	int i_power_j(int i, int j);
+	void do_eulerfunction_interval(long int n_min, long int n_max, int verbose_level);
+	long int euler_function(long int n);
+	long int moebius_function(long int n);
 	long int order_mod_p(long int a, long int p);
 	int int_log2(int n);
 	int int_log10(int n);
@@ -188,8 +191,6 @@ public:
 	void print_factorization(int nb_primes, int *primes, int *exponents);
 	void print_longfactorization(int nb_primes,
 		longinteger_object *primes, int *exponents);
-	long int euler_function(long int n);
-	long int moebius_function(long int n);
 	void int_add_fractions(int at, int ab, int bt, int bb,
 		int &ct, int &cb, int verbose_level);
 	void int_mult_fractions(int at, int ab, int bt, int bb,
@@ -209,7 +210,8 @@ public:
 	void sieve_primes(std::vector<int> &v,
 			int from, int to, int limit, int verbose_level);
 	int nb_primes(int n);
-	void cyclotomic_set(std::vector<int> &cyclotomic_set, int a, int q, int n, int verbose_level);
+	void cyclotomic_set(std::vector<int> &cyclotomic_set,
+			int a, int q, int n, int verbose_level);
 	void elliptic_curve_addition(finite_field *F,
 			int b, int c,
 		int x1, int x2, int x3,

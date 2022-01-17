@@ -45,7 +45,7 @@ void action_on_k_subsets::init(action *A,
 {
 	int f_v = (verbose_level >= 1);
 	int n;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	if (f_v) {
 		cout << "action_on_k_subsets::init k=" << k << endl;
@@ -69,8 +69,8 @@ long int action_on_k_subsets::compute_image(
 	long int u, a, b, j;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	combinatorics_domain Combi;
-	sorting Sorting;
+	combinatorics::combinatorics_domain Combi;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "action_on_k_subsets::compute_image "
@@ -91,9 +91,9 @@ long int action_on_k_subsets::compute_image(
 	j = Combi.rank_k_subset(set2, A->degree, k);
 	if (f_vv) {
 		cout << "set " << i << " = ";
-		Orbiter->Int_vec.print(cout, set1, k);
+		Orbiter->Int_vec->print(cout, set1, k);
 		cout << " maps to ";
-		Orbiter->Int_vec.print(cout, set2, k);
+		Orbiter->Int_vec->print(cout, set2, k);
 		cout << " = " << j << endl;
 		}
 	if (j < 0 || j >= degree) {

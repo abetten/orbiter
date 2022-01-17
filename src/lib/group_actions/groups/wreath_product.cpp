@@ -193,7 +193,7 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 	int f_v = (verbose_level >= 1);
 	int i;
 	number_theory_domain NT;
-	group_generators_domain GG;
+	algebra::group_generators_domain GG;
 
 	if (f_v) {
 		cout << "wreath_product::init_tensor_wreath_product" << endl;
@@ -334,7 +334,7 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 	tl_for_component = NEW_int(base_len_in_component);
 
 
-	group_generators_domain GGD;
+	algebra::group_generators_domain GGD;
 
 
 	GGD.general_linear_matrix_group_base_and_transversal_length(
@@ -346,15 +346,15 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 	if (f_v) {
 		cout << "wreath_product::init_tensor_wreath_product "
 				"base_for_component = ";
-		Orbiter->Lint_vec.print(cout, base_for_component, base_len_in_component);
+		Orbiter->Lint_vec->print(cout, base_for_component, base_len_in_component);
 		cout << endl;
 		cout << "wreath_product::init_tensor_wreath_product "
 				"tl_for_component = ";
-		Orbiter->Int_vec.print(cout, tl_for_component, base_len_in_component);
+		Orbiter->Int_vec->print(cout, tl_for_component, base_len_in_component);
 		cout << endl;
 	}
 
-	Elts = NEW_OBJECT(page_storage);
+	Elts = NEW_OBJECT(data_structures::page_storage);
 	Elts->init(char_per_elt /* entry_size */,
 			10 /* page_length_log */, verbose_level);
 
@@ -370,11 +370,11 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 	if (f_v) {
 		cout << "wreath_product::init_tensor_wreath_product "
 				"the_base = ";
-		Orbiter->Lint_vec.print(cout, the_base, base_length);
+		Orbiter->Lint_vec->print(cout, the_base, base_length);
 		cout << endl;
 		cout << "wreath_product::init_tensor_wreath_product "
 				"the_transversal_length = ";
-		Orbiter->Int_vec.print(cout, the_transversal_length, base_length);
+		Orbiter->Int_vec->print(cout, the_transversal_length, base_length);
 		cout << endl;
 	}
 
@@ -496,14 +496,14 @@ long int wreath_product::element_image_of(int *Elt, long int a, int verbose_leve
 			if (f_v) {
 				cout << "wreath_product::element_image_of "
 						"u = ";
-				Orbiter->Int_vec.print(cout, u, dimension_of_tensor_action);
+				Orbiter->Int_vec->print(cout, u, dimension_of_tensor_action);
 				cout << endl;
 			}
 			create_matrix(Elt, A3, 0 /* verbose_level */);
 			if (f_v) {
 				cout << "wreath_product::element_image_of "
 						"A3 = " << endl;
-				Orbiter->Int_vec.matrix_print(A3,
+				Orbiter->Int_vec->matrix_print(A3,
 						dimension_of_tensor_action,
 						dimension_of_tensor_action);
 			}
@@ -513,14 +513,14 @@ long int wreath_product::element_image_of(int *Elt, long int a, int verbose_leve
 			if (f_v) {
 				cout << "wreath_product::element_image_of "
 						"v = ";
-				Orbiter->Int_vec.print(cout, v, dimension_of_tensor_action);
+				Orbiter->Int_vec->print(cout, v, dimension_of_tensor_action);
 				cout << endl;
 			}
 			apply_permutation(Elt, v, w, verbose_level);
 			if (f_v) {
 				cout << "wreath_product::element_image_of "
 						"w = ";
-				Orbiter->Int_vec.print(cout, w, dimension_of_tensor_action);
+				Orbiter->Int_vec->print(cout, w, dimension_of_tensor_action);
 				cout << endl;
 			}
 			F->PG_element_rank_modified_lint(w, 1,
@@ -557,14 +557,14 @@ void wreath_product::element_image_of_low_level(int *Elt,
 	if (f_v) {
 		cout << "wreath_product::element_image_of_low_level "
 				"input = ";
-		Orbiter->Int_vec.print(cout, input, dimension_of_tensor_action);
+		Orbiter->Int_vec->print(cout, input, dimension_of_tensor_action);
 		cout << endl;
 	}
 	create_matrix(Elt, A3, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "wreath_product::element_image_of_low_level "
 				"A3 = " << endl;
-		Orbiter->Int_vec.matrix_print(A3,
+		Orbiter->Int_vec->matrix_print(A3,
 				dimension_of_tensor_action,
 				dimension_of_tensor_action);
 	}
@@ -574,14 +574,14 @@ void wreath_product::element_image_of_low_level(int *Elt,
 	if (f_v) {
 		cout << "wreath_product::element_image_of_low_level "
 				"v = ";
-		Orbiter->Int_vec.print(cout, v, dimension_of_tensor_action);
+		Orbiter->Int_vec->print(cout, v, dimension_of_tensor_action);
 		cout << endl;
 	}
 	apply_permutation(Elt, v, output, verbose_level - 1);
 	if (f_v) {
 		cout << "wreath_product::element_image_of_low_level "
 				"output = ";
-		Orbiter->Int_vec.print(cout, output, dimension_of_tensor_action);
+		Orbiter->Int_vec->print(cout, output, dimension_of_tensor_action);
 		cout << endl;
 	}
 	if (f_v) {
@@ -627,7 +627,7 @@ void wreath_product::element_mult(int *A, int *B, int *AB,
 {
 	int f_v = (verbose_level >= 1);
 	int f, g;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "wreath_product::element_mult" << endl;
@@ -652,7 +652,7 @@ void wreath_product::element_move(int *A, int *B, int verbose_level)
 	if (f_v) {
 		cout << "wreath_product::element_move" << endl;
 	}
-	Orbiter->Int_vec.copy(A, B, elt_size_int);
+	Orbiter->Int_vec->copy(A, B, elt_size_int);
 
 #if 0
 	if (f_v) {
@@ -669,7 +669,7 @@ void wreath_product::element_invert(int *A, int *Av, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f, g;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "wreath_product::element_invert" << endl;
@@ -715,22 +715,22 @@ void wreath_product::apply_permutation(int *Elt,
 	}
 	if (f_v) {
 		cout << "wreath_product::apply_permutation perm=";
-		Orbiter->Int_vec.print(cout, Elt, nb_factors);
+		Orbiter->Int_vec->print(cout, Elt, nb_factors);
 		cout << endl;
 	}
 	if (f_v) {
 		cout << "wreath_product::apply_permutation v_in=";
-		Orbiter->Int_vec.print(cout, v_in, dimension_of_tensor_action);
+		Orbiter->Int_vec->print(cout, v_in, dimension_of_tensor_action);
 		cout << endl;
 	}
-	Orbiter->Int_vec.zero(v_out, dimension_of_tensor_action);
+	Orbiter->Int_vec->zero(v_out, dimension_of_tensor_action);
 
 	//perm_inverse(Elt, tmp_perm1, nb_factors);
 
 	compute_induced_permutation(Elt, induced_perm);
 	if (f_v) {
 		cout << "wreath_product::apply_permutation induced_perm=";
-		Orbiter->Int_vec.print(cout, induced_perm, dimension_of_tensor_action);
+		Orbiter->Int_vec->print(cout, induced_perm, dimension_of_tensor_action);
 		cout << endl;
 	}
 
@@ -751,7 +751,7 @@ void wreath_product::apply_permutation(int *Elt,
 	}
 	if (f_v) {
 		cout << "wreath_product::apply_permutation v_out=";
-		Orbiter->Int_vec.print(cout, v_out, dimension_of_tensor_action);
+		Orbiter->Int_vec->print(cout, v_out, dimension_of_tensor_action);
 		cout << endl;
 	}
 	if (f_v) {
@@ -774,7 +774,7 @@ void wreath_product::create_matrix(int *Elt, int *A, int verbose_level)
 	}
 	for (f = 0; f < nb_factors; f++) {
 		if (f == 0) {
-			Orbiter->Int_vec.copy(Elt + offset_i(f), A1,
+			Orbiter->Int_vec->copy(Elt + offset_i(f), A1,
 					dimension_of_matrix_group * dimension_of_matrix_group);
 			N = dimension_of_matrix_group;
 		}
@@ -783,15 +783,15 @@ void wreath_product::create_matrix(int *Elt, int *A, int verbose_level)
 					A1, Elt + offset_i(f),
 					mtx_size[f - 1], dimension_of_matrix_group,
 					A2, N, 0 /* verbose_level */);
-			Orbiter->Int_vec.copy(A2, A1, N * N);
+			Orbiter->Int_vec->copy(A2, A1, N * N);
 		}
 		if (f_v) {
 			cout << "wreath_product::create_matrix "
 					"after step " << f << ":" << endl;
-			Orbiter->Int_vec.matrix_print(A1, N, N);
+			Orbiter->Int_vec->matrix_print(A1, N, N);
 		}
 	}
-	Orbiter->Int_vec.copy(A1, A,
+	Orbiter->Int_vec->copy(A1, A,
 			dimension_of_tensor_action * dimension_of_tensor_action);
 	if (f_v) {
 		cout << "wreath_product::create_matrix done" << endl;
@@ -838,7 +838,7 @@ void wreath_product::element_unpack(uchar *elt, int *Elt)
 
 void wreath_product::put_digit(uchar *elt, int f, int i, int j, int d)
 {
-	data_structures_global D;
+	data_structures::data_structures_global D;
 	int h0 = (int) (f * dimension_of_matrix_group * dimension_of_matrix_group +
 			(i * dimension_of_matrix_group + j)) * bits_per_digit;
 	int h, h1, a;
@@ -859,7 +859,7 @@ void wreath_product::put_digit(uchar *elt, int f, int i, int j, int d)
 
 int wreath_product::get_digit(uchar *elt, int f, int i, int j)
 {
-	data_structures_global D;
+	data_structures::data_structures_global D;
 	int h0 = (int) (f * dimension_of_matrix_group * dimension_of_matrix_group +
 			(i * dimension_of_matrix_group + j)) * bits_per_digit;
 	int h, h1, a, d;
@@ -915,7 +915,7 @@ void wreath_product::make_element(int *Elt, int *data, int verbose_level)
 		}
 	if (f_v) {
 		cout << "wreath_product::make_element data:" << endl;
-		Orbiter->Int_vec.print(cout, data, make_element_size);
+		Orbiter->Int_vec->print(cout, data, make_element_size);
 		cout << endl;
 	}
 	for (f = 0; f < nb_factors; f++) {
@@ -971,7 +971,7 @@ void wreath_product::element_print_easy(int *Elt, ostream &ost)
 void wreath_product::element_print_latex(int *Elt, ostream &ost)
 {
 	int f;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	ost << "\\left(";
 	for (f = 0; f < nb_factors; f++) {
@@ -1048,7 +1048,7 @@ void wreath_product::make_strong_generators_data(int *&data,
 	int GL_nb_gens;
 	int h, k, f, g;
 	int *dat;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "wreath_product::make_strong_generators_data" << endl;
@@ -1058,7 +1058,7 @@ void wreath_product::make_strong_generators_data(int *&data,
 				"before strong_generators_for_general_linear_group" << endl;
 	}
 
-	group_generators_domain GGD;
+	algebra::group_generators_domain GGD;
 
 
 	GGD.strong_generators_for_general_linear_group(
@@ -1084,7 +1084,7 @@ void wreath_product::make_strong_generators_data(int *&data,
 			Combi.perm_identity(dat, nb_factors);
 			for (k = 0; k < nb_factors; k++) {
 				if (k == f) {
-					Orbiter->Int_vec.copy(GL_data + g * GL_size,
+					Orbiter->Int_vec->copy(GL_data + g * GL_size,
 							dat + nb_factors + k * M->elt_size_int_half,
 							GL_size);
 				}
@@ -1094,7 +1094,7 @@ void wreath_product::make_strong_generators_data(int *&data,
 							dimension_of_matrix_group);
 				}
 			}
-			Orbiter->Int_vec.copy(dat, data + h * size, size);
+			Orbiter->Int_vec->copy(dat, data + h * size, size);
 			h++;
 		}
 	}
@@ -1106,7 +1106,7 @@ void wreath_product::make_strong_generators_data(int *&data,
 			F->Linear_algebra->identity_matrix(dat + nb_factors + f * M->elt_size_int_half,
 					dimension_of_matrix_group);
 		}
-		Orbiter->Int_vec.copy(dat, data + h * size, size);
+		Orbiter->Int_vec->copy(dat, data + h * size, size);
 		h++;
 	}
 #endif
@@ -1125,7 +1125,7 @@ void wreath_product::report_rank_one_tensors(
 	verbose_level = 1;
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	number_theory_domain NT;
 	geometry_global Gg;
 	latex_interface L;
@@ -1194,7 +1194,7 @@ void wreath_product::report_rank_one_tensors(
 				dimension_of_matrix_group);
 
 		ost << " & " << endl;
-		Orbiter->Int_vec.print(ost, Proj, nb_factors);
+		Orbiter->Int_vec->print(ost, Proj, nb_factors);
 		ost << " & " << endl;
 
 		ost << "\\left[" << endl;
@@ -1213,7 +1213,7 @@ void wreath_product::report_rank_one_tensors(
 			cout << endl;
 		}
 
-		Orbiter->Int_vec.zero(T, dimension_of_tensor_action);
+		Orbiter->Int_vec->zero(T, dimension_of_tensor_action);
 		for (j = 0; j < dimension_of_tensor_action; j++) {
 			Gg.AG_element_unrank(dimension_of_matrix_group, coords, 1, nb_factors, j);
 			a = 1;
@@ -1315,7 +1315,7 @@ void wreath_product::create_all_rank_one_tensors(
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 5);
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	number_theory_domain NT;
 	geometry_global Gg;
 	int *coords;
@@ -1392,9 +1392,9 @@ void wreath_product::create_all_rank_one_tensors(
 	for (i = 0; i < nb_rank_one_tensors; i++) {
 		rank_one_tensors_in_PG[i] = affine_rank_to_PG_rank(rank_one_tensors[i]);
 	}
-	Orbiter->Lint_vec.copy(rank_one_tensors_in_PG, rank_one_tensors_in_PG_sorted, nb_rank_one_tensors);
+	Orbiter->Lint_vec->copy(rank_one_tensors_in_PG, rank_one_tensors_in_PG_sorted, nb_rank_one_tensors);
 
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	Sorting.lint_vec_heapsort(rank_one_tensors_in_PG_sorted, nb_rank_one_tensors);
 
@@ -1427,7 +1427,7 @@ void wreath_product::tensor_affine_unrank(int *tensor, uint32_t rk)
 	uint32_t b;
 	int i;
 
-	Orbiter->Int_vec.zero(tensor, dimension_of_tensor_action);
+	Orbiter->Int_vec->zero(tensor, dimension_of_tensor_action);
 
 	b = rk;
 	for (i = 0; i < dimension_of_tensor_action; i++) {
@@ -1758,7 +1758,7 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 		}
 
 		tally C;
-		set_of_sets *SoS;
+		data_structures::set_of_sets *SoS;
 		int *types;
 		int nb_types;
 
@@ -1857,7 +1857,7 @@ void wreath_product::compute_tensor_ranks(char *&TR, uint32_t *&Prev, int verbos
 		}
 
 		tally C;
-		set_of_sets *SoS;
+		data_structures::set_of_sets *SoS;
 		int *types;
 		int nb_types;
 
@@ -2014,7 +2014,7 @@ void wreath_product::compute_permutations_and_write_to_file(
 
 		if (f_v) {
 			cout << "wreath_product::compute_permutations_and_write_to_file matrix:" << endl;
-			Orbiter->Int_vec.matrix_print(generator_stack + h * mtx_n2, mtx_n, mtx_n);
+			Orbiter->Int_vec->matrix_print(generator_stack + h * mtx_n2, mtx_n, mtx_n);
 		}
 		generators_transposed[h] = NEW_int(mtx_n2);
 
@@ -2027,7 +2027,7 @@ void wreath_product::compute_permutations_and_write_to_file(
 
 	if (f_v) {
 		cout << "wreath_product::compute_permutations_and_write_to_file generator_stack:" << endl;
-		Orbiter->Int_vec.matrix_print(generator_stack, SG->gens->len, mtx_n * mtx_n);
+		Orbiter->Int_vec->matrix_print(generator_stack, SG->gens->len, mtx_n * mtx_n);
 	}
 
 #if 0
@@ -2038,7 +2038,7 @@ void wreath_product::compute_permutations_and_write_to_file(
 #endif
 	if (f_v) {
 		cout << "wreath_product::compute_permutations_and_write_to_file perms:" << endl;
-		Orbiter->Int_vec.matrix_print(perms, SG->gens->len, mtx_n);
+		Orbiter->Int_vec->matrix_print(perms, SG->gens->len, mtx_n);
 		cout << "mtx_n=" << mtx_n << endl;
 		cout << "SG->gens->len * mtx_n=" << SG->gens->len * mtx_n << endl;
 	}
@@ -2155,9 +2155,9 @@ void wreath_product::compute_permutations_and_write_to_file(
 
 		//linalg::Matrix<char> M  (l, mtx_n);
 
-		bitmatrix *M;
+		data_structures::bitmatrix *M;
 
-		M = NEW_OBJECT(bitmatrix);
+		M = NEW_OBJECT(data_structures::bitmatrix);
 		M->init(mtx_n, l, 0 /*verbose_level*/);
 
 		if (f_v) {
@@ -2193,9 +2193,9 @@ void wreath_product::compute_permutations_and_write_to_file(
 
 		//linalg::Matrix<char> MN (l, mtx_n);
 
-		bitmatrix *NM;
+		data_structures::bitmatrix *NM;
 
-		NM = NEW_OBJECT(bitmatrix);
+		NM = NEW_OBJECT(data_structures::bitmatrix);
 		NM->init(mtx_n, l, 0 /*verbose_level*/);
 
 
@@ -2421,7 +2421,7 @@ void wreath_product::orbits_using_files_and_union_find(
 	long int i, b, h;
 	long int j, r, orbit_idx, rep;
 	long int nb_orbits = 0;
-	algorithms Algo;
+	data_structures::algorithms Algo;
 
 	//int mtx_n;
 
@@ -2695,7 +2695,7 @@ void wreath_product::orbits_restricted(
 	}
 
 	file_io Fio;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	//int mtx_n;
 	long int *Set;
@@ -2877,7 +2877,7 @@ void wreath_product::orbits_restricted(
 					tensor_PG_unrank(v, x);
 					s = tensor_affine_rank(v);
 					cout << "tensor=";
-					Orbiter->Int_vec.print(cout, v, dimension_of_tensor_action);
+					Orbiter->Int_vec->print(cout, v, dimension_of_tensor_action);
 					cout << endl;
 					cout << "affine rank s=" << s << endl;
 
@@ -2885,7 +2885,7 @@ void wreath_product::orbits_restricted(
 					tensor_PG_unrank(v, y);
 					s = tensor_affine_rank(v);
 					cout << "tensor=";
-					Orbiter->Int_vec.print(cout, v, dimension_of_tensor_action);
+					Orbiter->Int_vec->print(cout, v, dimension_of_tensor_action);
 					cout << endl;
 					cout << "affine rank s=" << s << endl;
 
@@ -2900,7 +2900,7 @@ void wreath_product::orbits_restricted(
 	} // next h
 
 	string fname;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	fname.assign(orbits_restricted_fname);
 	ST.chop_off_extension(fname);
@@ -2930,7 +2930,7 @@ void wreath_product::orbits_restricted_compute(
 	}
 
 	file_io Fio;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	long int *Set;
 	long int *Set_in_PG;
@@ -2974,7 +2974,7 @@ void wreath_product::orbits_restricted_compute(
 
 
 	string fname;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	int *Perms;
 	int perms_m, perms_n;
@@ -3060,7 +3060,7 @@ void wreath_product::orbits_restricted_compute(
 	Sch->print_orbit_lengths_tex(cout);
 	Sch->print_and_list_orbits_tex(cout);
 
-	set_of_sets *Orbits;
+	data_structures::set_of_sets *Orbits;
 	Sch->orbits_as_set_of_sets(Orbits, verbose_level);
 
 	A->group_order(go);
@@ -3099,7 +3099,7 @@ void wreath_product::orbits_restricted_compute(
 		if (f_v) {
 			cout << "orbit representative is " << orb_rep << " = " << orbit_rep_in_PG << " = " << orbit_rep_in_PG_uint << endl;
 			cout << "tensor: ";
-			Orbiter->Int_vec.print(cout, tensor, dimension_of_tensor_action);
+			Orbiter->Int_vec->print(cout, tensor, dimension_of_tensor_action);
 			cout << endl;
 		}
 		sims *Stab;

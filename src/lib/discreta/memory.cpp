@@ -4,7 +4,8 @@
 // 04.04.2000
 // moved from D2 to ORBI Nov 15, 2007
 
-#include "orbiter.h"
+#include "foundations/foundations.h"
+#include "discreta.h"
 
 using namespace std;
 

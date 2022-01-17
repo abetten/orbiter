@@ -520,7 +520,7 @@ public:
 
 	action *A_PGLQ; // PGL(m,Q)
 
-	vector_space *VS;
+	algebra::vector_space *VS;
 	poset_classification_control *Control1;
 	poset_with_group_action *Poset1;
 	poset_classification *Gen;
@@ -760,7 +760,7 @@ public:
 	int *tmp_M; // [n * n]
 	int *base_cols; // [n]
 
-	vector_space *VS;
+	algebra::vector_space *VS;
 	poset_classification_control *Control;
 	poset_with_group_action *Poset;
 	poset_classification *Gen;
@@ -839,12 +839,12 @@ public:
 	poset_with_group_action *Poset;
 	poset_classification *gen;
 
-	fancy_set *Line_intersections; // [Inc->nb_cols]
+	data_structures::fancy_set *Line_intersections; // [Inc->nb_cols]
 	long int *blocking_set;
 	int blocking_set_len;
 	int *sz; // [Inc->nb_cols]
 	
-	fancy_set *active_set;
+	data_structures::fancy_set *active_set;
 	int *sz_active_set; // [Inc->nb_cols + 1]
 
 	std::deque<std::vector<int> > solutions;
@@ -952,7 +952,7 @@ public:
 	strong_generators *SG;
 	longinteger_object go;
 	wreath_product *W;
-	vector_space *VS;
+	algebra::vector_space *VS;
 	poset_classification_control *Control;
 	poset_with_group_action *Poset;
 	poset_classification *Gen;

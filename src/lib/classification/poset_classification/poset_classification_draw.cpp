@@ -422,7 +422,7 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 	long int set1[100];
 	char str[1000];
 	int rad = 200 >> 3;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	
 	Px = NEW_int(nb_nodes);
 	Py = NEW_int(nb_nodes);
@@ -530,7 +530,7 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 					if (f_vvv) {
 						cout << "fusion node i=" << i
 								<< " j=" << j << " set = ";
-						Orbiter->Lint_vec.print(cout, set0, depth + 1);
+						Orbiter->Lint_vec->print(cout, set0, depth + 1);
 						cout << endl;
 					}
 				
@@ -542,7 +542,7 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 				
 					if (f_vvv) {
 						cout << "mapping the set to = ";
-						Orbiter->Lint_vec.print(cout, set1, depth + 1);
+						Orbiter->Lint_vec->print(cout, set1, depth + 1);
 						cout << endl;
 					}
 
@@ -946,7 +946,7 @@ void poset_classification::make_flag_orbits_on_relations(
 	long int *set2;
 	int f_contained;
 	//longinteger_domain D;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "poset_classification::make_flag_orbits_on_relations" << endl;
@@ -1009,7 +1009,7 @@ void poset_classification::make_flag_orbits_on_relations(
 			cout << "poset_classification::make_flag_orbits_on_relations allocating F" << endl;
 		}
 		F = NEW_int(Nb_elements[lvl] * Nb_elements[lvl + 1]);
-		Orbiter->Int_vec.zero(F, Nb_elements[lvl] * Nb_elements[lvl + 1]);
+		Orbiter->Int_vec->zero(F, Nb_elements[lvl] * Nb_elements[lvl + 1]);
 
 		fname.assign(fname_prefix);
 		sprintf(str, "_depth_%d.csv", lvl);
@@ -1087,7 +1087,7 @@ void poset_classification::make_flag_orbits_on_relations(
 						<< " po=" << po << " / " << nb_orbits_at_level(lvl)
 						<< " so=" << so << " / " << Poo->node_get_nb_of_extensions(n1)
 						<< " downorbits = ";
-				Orbiter->Int_vec.print(cout, Down_orbits, nb_down_orbits);
+				Orbiter->Int_vec->print(cout, Down_orbits, nb_down_orbits);
 				cout << endl;
 			}
 
@@ -1096,7 +1096,7 @@ void poset_classification::make_flag_orbits_on_relations(
 				cout << "poset_classification::make_flag_orbits_on_relations adding edges "
 						"lvl=" << lvl << " po=" << po
 						<< " so=" << so << " unique downorbits = ";
-				Orbiter->Int_vec.print(cout, Down_orbits, nb_down_orbits);
+				Orbiter->Int_vec->print(cout, Down_orbits, nb_down_orbits);
 				cout << endl;
 			}
 
@@ -1127,7 +1127,7 @@ void poset_classification::make_flag_orbits_on_relations(
 							0 /* verbose_level */);
 					if (f_v5) {
 						cout << "set1=";
-						Orbiter->Lint_vec.print(cout, set1, lvl);
+						Orbiter->Lint_vec->print(cout, set1, lvl);
 						cout << endl;
 					}
 
@@ -1141,7 +1141,7 @@ void poset_classification::make_flag_orbits_on_relations(
 								0 /* verbose_level */);
 						if (f_v5) {
 							cout << "set2=";
-							Orbiter->Lint_vec.print(cout, set2, lvl + 1);
+							Orbiter->Lint_vec->print(cout, set2, lvl + 1);
 							cout << endl;
 						}
 
@@ -1156,15 +1156,15 @@ void poset_classification::make_flag_orbits_on_relations(
 									<< " el1=" << el1 << " el2=" << el2
 									<< endl;
 							cout << "set1=";
-							Orbiter->Lint_vec.print(cout, set1, lvl);
+							Orbiter->Lint_vec->print(cout, set1, lvl);
 							cout << endl;
 							cout << "set2=";
-							Orbiter->Lint_vec.print(cout, set2, lvl + 1);
+							Orbiter->Lint_vec->print(cout, set2, lvl + 1);
 							cout << endl;
 						}
 
 
-						Orbiter->Lint_vec.copy(set1, set, lvl);
+						Orbiter->Lint_vec->copy(set1, set, lvl);
 
 						//f_contained = int_vec_sort_and_test_if_contained(
 						// set, lvl, set2, lvl + 1);
@@ -1263,7 +1263,7 @@ void poset_classification::make_full_poset_graph(
 	long int *set2;
 	int f_contained;
 	//longinteger_domain D;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "poset_classification::make_full_poset_graph" << endl;
@@ -1397,7 +1397,7 @@ void poset_classification::make_full_poset_graph(
 				cout << "poset_classification::make_full_poset_graph adding edges "
 						"lvl=" << lvl << " po=" << po
 						<< " so=" << so << " downorbits = ";
-				Orbiter->Int_vec.print(cout, Down_orbits, nb_down_orbits);
+				Orbiter->Int_vec->print(cout, Down_orbits, nb_down_orbits);
 				cout << endl;
 			}
 
@@ -1406,7 +1406,7 @@ void poset_classification::make_full_poset_graph(
 				cout << "poset_classification::make_full_poset_graph adding edges "
 						"lvl=" << lvl << " po=" << po
 						<< " so=" << so << " unique downorbits = ";
-				Orbiter->Int_vec.print(cout, Down_orbits, nb_down_orbits);
+				Orbiter->Int_vec->print(cout, Down_orbits, nb_down_orbits);
 				cout << endl;
 			}
 
@@ -1435,7 +1435,7 @@ void poset_classification::make_full_poset_graph(
 							0 /* verbose_level */);
 					if (f_vv) {
 						cout << "set1=";
-						Orbiter->Lint_vec.print(cout, set1, lvl);
+						Orbiter->Lint_vec->print(cout, set1, lvl);
 						cout << endl;
 					}
 
@@ -1449,7 +1449,7 @@ void poset_classification::make_full_poset_graph(
 								0 /* verbose_level */);
 						if (f_vv) {
 							cout << "set2=";
-							Orbiter->Lint_vec.print(cout, set2, lvl + 1);
+							Orbiter->Lint_vec->print(cout, set2, lvl + 1);
 							cout << endl;
 						}
 
@@ -1464,15 +1464,15 @@ void poset_classification::make_full_poset_graph(
 									<< " el1=" << el1 << " el2=" << el2
 									<< endl;
 							cout << "set1=";
-							Orbiter->Lint_vec.print(cout, set1, lvl);
+							Orbiter->Lint_vec->print(cout, set1, lvl);
 							cout << endl;
 							cout << "set2=";
-							Orbiter->Lint_vec.print(cout, set2, lvl + 1);
+							Orbiter->Lint_vec->print(cout, set2, lvl + 1);
 							cout << endl;
 						}
 						
 
-						Orbiter->Lint_vec.copy(set1, set, lvl);
+						Orbiter->Lint_vec->copy(set1, set, lvl);
 
 						//f_contained = int_vec_sort_and_test_if_contained(
 						// set, lvl, set2, lvl + 1);
@@ -1543,7 +1543,7 @@ void poset_classification::make_full_poset_graph(
 						0 /* verbose_level */);
 				if (f_vv) {
 					cout << "set1=";
-					Orbiter->Lint_vec.print(cout, set1, lvl);
+					Orbiter->Lint_vec->print(cout, set1, lvl);
 					cout << endl;
 				}
 
@@ -2061,7 +2061,7 @@ void poset_classification::make_level_graph(int depth,
 				"before LG->init" << endl;
 		cout << "nb_layers=" << nb_layers << endl;
 		cout << "Nb=";
-		Orbiter->Int_vec.print(cout, Nb, 4);
+		Orbiter->Int_vec->print(cout, Nb, 4);
 		cout << endl;
 	}
 	LG->add_data1(data1, 0/*verbose_level*/);
@@ -2297,7 +2297,7 @@ void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
 				"before LG->init" << endl;
 		cout << "nb_layers=" << nb_layers << endl;
 		cout << "Nb=";
-		Orbiter->Int_vec.print(cout, Nb, nb_layers);
+		Orbiter->Int_vec->print(cout, Nb, nb_layers);
 		cout << endl;
 	}
 	LG->add_data1(data1, 0/*verbose_level*/);
@@ -2581,7 +2581,7 @@ void poset_classification::print_data_structure_tex(int depth, int verbose_level
 
 				fp << lvl << " & " << po << " & ";
 
-				Orbiter->Lint_vec.print(fp, set, lvl);
+				Orbiter->Lint_vec->print(fp, set, lvl);
 
 				fp << " & " << go << "\\\\" << endl;
 				

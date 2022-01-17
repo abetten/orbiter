@@ -251,77 +251,91 @@ namespace foundations {
 
 
 
+namespace algebra {
 
-// algebra:
-class a_domain;
-class algebra_global;
-class generators_symplectic_group;
-class gl_class_rep;
-class gl_classes;
-class group_generators_domain;
-class heisenberg;
-class matrix_block_data;
-class null_polarity_generator;
-class rank_checker;
-class vector_space;
+	// algebra:
+	class a_domain;
+	class algebra_global;
+	class generators_symplectic_group;
+	class gl_class_rep;
+	class gl_classes;
+	class group_generators_domain;
+	class heisenberg;
+	class matrix_block_data;
+	class null_polarity_generator;
+	class rank_checker;
+	class vector_space;
 
-
-
-
-
-// coding_theory:
-class coding_theory_domain;
-class create_BCH_code;
+}
 
 
-// combinatorics:
-class boolean_function_domain;
-class brick_domain;
-class classification_of_objects_description;
-class classification_of_objects_report_options;
-class classification_of_objects;
-class combinatorics_domain;
-class encoded_combinatorial_object;
-class geo_parameter;
-class pentomino_puzzle;
-class tdo_data;
-class tdo_refinement_description;
-class tdo_refinement;
-class tdo_scheme_compute;
-class tdo_scheme_synthetic;
-struct solution_file_data;
+namespace coding_theory {
+
+	// coding_theory:
+	class coding_theory_domain;
+	class create_BCH_code;
+
+}
+
+namespace combinatorics {
+
+	// combinatorics:
+	class boolean_function_domain;
+	class brick_domain;
+	class classification_of_objects_description;
+	class classification_of_objects_report_options;
+	class classification_of_objects;
+	class combinatorics_domain;
+	class encoded_combinatorial_object;
+	class geo_parameter;
+	class pentomino_puzzle;
+	class tdo_data;
+	class tdo_refinement_description;
+	class tdo_refinement;
+	class tdo_scheme_compute;
+	class tdo_scheme_synthetic;
+	struct solution_file_data;
+
+}
+
+namespace cryptography {
+
+	// cryptography
+	class cryptography_domain;
+
+}
 
 
-// cryptography
-class cryptography_domain;
+namespace data_structures {
 
+	// data_structures:
+	class algorithms;
+	class bitmatrix;
+	class bitvector;
+	class classify_bitvectors;
+	class classify_using_canonical_forms;
+	class data_file;
+	class data_input_stream_description;
+	class data_input_stream;
+	class data_structures_global;
+	class fancy_set;
+	class int_matrix;
+	class int_vec;
+	class int_vector;
+	class lint_vec;
+	class nauty_output;
+	class page_storage;
+	class partitionstack;
+	class set_builder_description;
+	class set_builder;
+	class set_of_sets_lint;
+	class set_of_sets;
+	class sorting;
+	class spreadsheet;
+	class string_tools;
+	class vector_hashing;
 
-// data_structures:
-class algorithms;
-class bitmatrix;
-class bitvector;
-class classify_bitvectors;
-class classify_using_canonical_forms;
-class data_file;
-class data_input_stream_description;
-class data_input_stream;
-class data_structures_global;
-class fancy_set;
-class int_matrix;
-class int_vec;
-class int_vector;
-class lint_vec;
-class nauty_output;
-class page_storage;
-class partitionstack;
-class set_builder_description;
-class set_builder;
-class set_of_sets_lint;
-class set_of_sets;
-class sorting;
-class spreadsheet;
-class string_tools;
-class vector_hashing;
+}
 
 
 // expression_parser:

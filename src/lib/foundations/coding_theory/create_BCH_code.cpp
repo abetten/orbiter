@@ -15,6 +15,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace coding_theory {
 
 create_BCH_code::create_BCH_code()
 {
@@ -82,7 +83,7 @@ void create_BCH_code::init(finite_field *F, int n, int d, int verbose_level)
 
 	if (f_v) {
 		cout << "coding_theory_domain::make_BCH_code Sel=";
-		Orbiter->Int_vec.print(cout, Sel, nb_sel);
+		Orbiter->Int_vec->print(cout, Sel, nb_sel);
 		cout << endl;
 	}
 
@@ -197,6 +198,7 @@ void create_BCH_code::report(std::ostream &ost, int verbose_level)
 	}
 }
 
-}}
+}}}
+
 
 

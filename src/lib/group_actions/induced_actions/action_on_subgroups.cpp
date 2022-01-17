@@ -65,8 +65,8 @@ void action_on_subgroups::init(action *A, sims *S, int nb_subgroups,
 	int i;
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 5);
-	combinatorics_domain Combi;
-	sorting Sorting;
+	combinatorics::combinatorics_domain Combi;
+	data_structures::sorting Sorting;
 	
 	if (f_v) {
 		cout << "action_on_subgroups::init "
@@ -91,11 +91,11 @@ void action_on_subgroups::init(action *A, sims *S, int nb_subgroups,
 		}
 	for (i = 0; i < nb_subgroups; i++) {
 		sets[i] = NEW_int(subgroup_order);
-		Orbiter->Int_vec.copy(Subgroups[i]->Elements, sets[i], subgroup_order);
+		Orbiter->Int_vec->copy(Subgroups[i]->Elements, sets[i], subgroup_order);
 		Sorting.int_vec_quicksort_increasingly(sets[i], subgroup_order);
 		if (f_vv) {
 			cout << "set " << setw(3) << i << " is ";
-			Orbiter->Int_vec.print(cout, sets[i], subgroup_order);
+			Orbiter->Int_vec->print(cout, sets[i], subgroup_order);
 			cout << endl;
 			}
 		}
@@ -142,7 +142,7 @@ long int action_on_subgroups::compute_image(
 	int f_vv = (verbose_level >= 2);
 	long int res, j, b, aa, s, t;
 	int idx;
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "action_on_subgroups::compute_image "
@@ -168,7 +168,7 @@ long int action_on_subgroups::compute_image(
 		}
 	if (f_vv) {
 		cout << "sets[perm[a]]:" << endl;
-		Orbiter->Int_vec.print(cout, sets[aa], subgroup_order);
+		Orbiter->Int_vec->print(cout, sets[aa], subgroup_order);
 		cout << endl;
 		for (j = 0; j < subgroup_order; j++) {
 			cout << j << " : " << sets[aa][j] << " : " << endl;
@@ -194,7 +194,7 @@ long int action_on_subgroups::compute_image(
 #endif
 	if (f_vv) {
 		cout << "after map_a_set_and_reorder:" << endl;
-		Orbiter->Int_vec.print(cout, image_set, subgroup_order);
+		Orbiter->Int_vec->print(cout, image_set, subgroup_order);
 		cout << endl;
 		for (j = 0; j < subgroup_order; j++) {
 			cout << j << " : " << image_set[j] << " : " << endl;
@@ -222,14 +222,14 @@ long int action_on_subgroups::compute_image(
 		cout << "a=" << a << endl;
 		cout << "perm[a]=" << aa << endl;
 		cout << "sets[perm[a]]:" << endl;
-		Orbiter->Int_vec.print_fully(cout, sets[aa], subgroup_order);
+		Orbiter->Int_vec->print_fully(cout, sets[aa], subgroup_order);
 		cout << endl;
 		cout << "image_set:" << endl;
-		Orbiter->Int_vec.print_fully(cout, image_set, subgroup_order);
+		Orbiter->Int_vec->print_fully(cout, image_set, subgroup_order);
 		cout << endl;
 		for (u = 0; u < nb_subgroups; u++) {
 			cout << u << " : ";
-			Orbiter->Int_vec.print(cout, sets[u], subgroup_order);
+			Orbiter->Int_vec->print(cout, sets[u], subgroup_order);
 			cout << endl;
 			}
 		for (u = 0; u < subgroup_order; u++) {
@@ -269,8 +269,9 @@ int action_on_subgroups_compare(void *a, void *b, void *data)
 	int *A = (int *)a;
 	int *B = (int *)b;
 	int c;
+	data_structures::sorting Sorting;
 	
-	c = int_vec_compare(A, B, AOS->subgroup_order);
+	c = Sorting.int_vec_compare(A, B, AOS->subgroup_order);
 	return c;
 }
 
@@ -280,8 +281,9 @@ int action_on_subgroups_compare_inverted(void *a, void *b, void *data)
 	int *A = (int *)a;
 	int *B = (int *)b;
 	int c;
+	data_structures::sorting Sorting;
 	
-	c = int_vec_compare(B, A, AOS->subgroup_order);
+	c = Sorting.int_vec_compare(B, A, AOS->subgroup_order);
 	return c;
 }
 

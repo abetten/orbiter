@@ -47,8 +47,8 @@ int finite_field::test_if_vectors_are_projectively_equal(int *v1, int *v2, int l
 	cout << endl;
 #endif
 
-	Orbiter->Int_vec.copy(v1, w1, len);
-	Orbiter->Int_vec.copy(v2, w2, len);
+	Orbiter->Int_vec->copy(v1, w1, len);
+	Orbiter->Int_vec->copy(v2, w2, len);
 	PG_element_normalize(w1, 1, len);
 	PG_element_normalize(w2, 1, len);
 
@@ -139,7 +139,7 @@ long int finite_field::PG_element_embed(
 {
 	long int a;
 	PG_element_unrank_modified_lint(v, 1, old_length, rk);
-	Orbiter->Int_vec.zero(v + old_length, new_length - old_length);
+	Orbiter->Int_vec->zero(v + old_length, new_length - old_length);
 	PG_element_rank_modified_lint(v, 1, new_length, a);
 	return a;
 }
@@ -805,7 +805,7 @@ void finite_field::all_PG_elements_in_subspace(
 	int *word;
 	int i;
 	long int a;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "finite_field::all_PG_elements_in_subspace" << endl;
@@ -819,13 +819,13 @@ void finite_field::all_PG_elements_in_subspace(
 		PG_element_unrank_modified(message, 1, k, i);
 		if (f_vv) {
 			cout << "message " << i << " / " << nb_points << " is ";
-			Orbiter->Int_vec.print(cout, message, k);
+			Orbiter->Int_vec->print(cout, message, k);
 			cout << endl;
 		}
 		Linear_algebra->mult_vector_from_the_left(message, genma, word, k, n);
 		if (f_vv) {
 			cout << "yields word ";
-			Orbiter->Int_vec.print(cout, word, n);
+			Orbiter->Int_vec->print(cout, word, n);
 			cout << endl;
 		}
 		PG_element_rank_modified_lint(word, 1, n, a);
@@ -852,7 +852,7 @@ void finite_field::all_PG_elements_in_subspace_array_is_given(
 	int *message;
 	int *word;
 	int i, j;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "finite_field::all_PG_elements_in_subspace_array_is_given" << endl;
@@ -866,13 +866,13 @@ void finite_field::all_PG_elements_in_subspace_array_is_given(
 		PG_element_unrank_modified(message, 1, k, i);
 		if (f_vv) {
 			cout << "message " << i << " / " << nb_points << " is ";
-			Orbiter->Int_vec.print(cout, message, k);
+			Orbiter->Int_vec->print(cout, message, k);
 			cout << endl;
 		}
 		Linear_algebra->mult_vector_from_the_left(message, genma, word, k, n);
 		if (f_vv) {
 			cout << "yields word ";
-			Orbiter->Int_vec.print(cout, word, n);
+			Orbiter->Int_vec->print(cout, word, n);
 			cout << endl;
 		}
 		PG_element_rank_modified(word, 1, n, j);
@@ -983,7 +983,7 @@ void finite_field::do_cone_over(int n,
 	cnt = 0;
 
 	// create the vertex:
-	Orbiter->Int_vec.zero(v, d);
+	Orbiter->Int_vec->zero(v, d);
 	v[d - 1] = 1;
 	//b = P2->rank_point(v);
 	PG_element_rank_modified_lint(v, 1, n + 2, b);
@@ -1068,11 +1068,11 @@ void finite_field::do_blocking_set_family_3(int n,
 	int nb, pt, sz;
 	int i, j;
 	int basis[6];
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
-	fancy_set *S;
+	data_structures::fancy_set *S;
 
-	S = NEW_OBJECT(fancy_set);
+	S = NEW_OBJECT(data_structures::fancy_set);
 
 	S->init(P->N_lines, 0);
 	S->k = 0;
@@ -1109,7 +1109,7 @@ void finite_field::do_blocking_set_family_3(int n,
 			exit(1);
 		}
 		P->unrank_line(basis, diag_line);
-		Orbiter->Int_vec.matrix_print(basis, 2, 3);
+		Orbiter->Int_vec->matrix_print(basis, 2, 3);
 		nb = 0;
 		for (i = 0; i < set_size; i++) {
 			pt = set_in[i];
@@ -1197,7 +1197,7 @@ void finite_field::do_blocking_set_family_3(int n,
 
 	cout << "we created a blocking set of lines of "
 			"size " << S->k << ":" << endl;
-	Orbiter->Lint_vec.print(cout, S->set, S->k);
+	Orbiter->Lint_vec->print(cout, S->set, S->k);
 	cout << endl;
 
 
@@ -1374,7 +1374,7 @@ void finite_field::create_BLT_from_database(int f_embedded,
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : " << setw(4) << BLT[i] << " : ";
-			Orbiter->Int_vec.print(cout, v, d);
+			Orbiter->Int_vec->print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
 		}
 	}
@@ -1453,7 +1453,7 @@ void finite_field::create_orthogonal(int epsilon, int n,
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			Orbiter->Int_vec.print(cout, v, d);
+			Orbiter->Int_vec->print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
 		}
 	}
@@ -1470,7 +1470,7 @@ void finite_field::create_orthogonal(int epsilon, int n,
 	char str[1000];
 	char str2[1000];
 
-	algebra_global AG;
+	algebra::algebra_global AG;
 
 	sprintf(str, "Q%s_%d_%d.txt", AG.plus_minus_letter(epsilon), n, q);
 	sprintf(str2, "Q%s\\_%d\\_%d.txt", AG.plus_minus_letter(epsilon), n, q);
@@ -1518,7 +1518,7 @@ void finite_field::create_hermitian(int n,
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			Orbiter->Int_vec.print(cout, v, d);
+			Orbiter->Int_vec->print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
 		}
 	}
@@ -1564,7 +1564,7 @@ void finite_field::create_ttp_code(finite_field *Fq,
 	int m, n;
 	int f_elements_exponential = TRUE;
 	string symbol_for_print_subfield;
-	coding_theory_domain Codes;
+	coding_theory::coding_theory_domain Codes;
 
 	if (f_v) {
 		cout << "finite_field::create_ttp_code" << endl;
@@ -1583,7 +1583,7 @@ void finite_field::create_ttp_code(finite_field *Fq,
 		cout << "H_subfield:" << endl;
 		cout << "m=" << m << endl;
 		cout << "n=" << n << endl;
-		Orbiter->Int_vec.print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
+		Orbiter->Int_vec->print_integer_matrix_width(cout, H_subfield, m, n, n, 2);
 		//f.latex_matrix(cout, f_elements_exponential,
 		//symbol_for_print_subfield, H_subfield, m, n);
 	}
@@ -1618,7 +1618,7 @@ void finite_field::create_ttp_code(finite_field *Fq,
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			Orbiter->Int_vec.print(cout, v, d);
+			Orbiter->Int_vec->print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
 		}
 	}
@@ -1717,7 +1717,7 @@ void finite_field::create_segre_variety(int a, int b,
 			Pts[nb_pts++] = rk;
 			if (f_v) {
 				cout << setw(4) << nb_pts - 1 << " : " << endl;
-				Orbiter->Int_vec.matrix_print(v3, a + 1, b + 1);
+				Orbiter->Int_vec->matrix_print(v3, a + 1, b + 1);
 				cout << " : " << setw(5) << rk << endl;
 			}
 		}
@@ -1829,7 +1829,7 @@ void finite_field::do_andre(finite_field *Fq,
 		P2->unrank_point(v, the_set_in[i]);
 		PG_element_normalize(v, 1, 3);
 		if (f_vv) {
-			Orbiter->Int_vec.print(cout, v, 3);
+			Orbiter->Int_vec->print(cout, v, 3);
 			cout << " becomes ";
 		}
 
@@ -1866,9 +1866,9 @@ void finite_field::do_andre(finite_field *Fq,
 			}
 			if (FALSE) {
 				cout << "w1=";
-				Orbiter->Int_vec.print(cout, w1, 4);
+				Orbiter->Int_vec->print(cout, w1, 4);
 				cout << "w2=";
-				Orbiter->Int_vec.print(cout, w2, 4);
+				Orbiter->Int_vec->print(cout, w2, 4);
 				cout << endl;
 			}
 
@@ -1882,7 +1882,7 @@ void finite_field::do_andre(finite_field *Fq,
 				Fq->PG_element_unrank_modified(v2, 1, 2, h);
 				if (FALSE) {
 					cout << "v2=";
-					Orbiter->Int_vec.print(cout, v2, 2);
+					Orbiter->Int_vec->print(cout, v2, 2);
 					cout << " : ";
 				}
 				for (k = 0; k < 4; k++) {
@@ -1892,7 +1892,7 @@ void finite_field::do_andre(finite_field *Fq,
 				w3[4] = 0;
 				if (f_vv) {
 					cout << " ";
-					Orbiter->Int_vec.print(cout, w3, 5);
+					Orbiter->Int_vec->print(cout, w3, 5);
 				}
 				a = P4->rank_point(w3);
 				if (f_vv) {
@@ -1918,7 +1918,7 @@ void finite_field::do_andre(finite_field *Fq,
 			w1[4] = 1;
 			if (f_vv) {
 				//cout << "w1=";
-				Orbiter->Int_vec.print(cout, w1, 5);
+				Orbiter->Int_vec->print(cout, w1, 5);
 			}
 			a = P4->rank_point(w1);
 			if (f_vv) {
@@ -1933,7 +1933,7 @@ void finite_field::do_andre(finite_field *Fq,
 			a = the_set_out[i];
 			P4->unrank_point(w1, a);
 			cout << setw(3) << i << " : " << setw(5) << a << " : ";
-			Orbiter->Int_vec.print(cout, w1, 5);
+			Orbiter->Int_vec->print(cout, w1, 5);
 			cout << endl;
 		}
 	}
@@ -2082,8 +2082,8 @@ void finite_field::simeon(int n, int len, long int *S, int s, int verbose_level)
 	int *U1;
 	int nb_A, nb_U;
 	int a, u, ac, i, d, idx, mtx_rank;
-	combinatorics_domain Combi;
-	sorting Sorting;
+	combinatorics::combinatorics_domain Combi;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "finite_field::simeon s=" << s << endl;
@@ -2108,7 +2108,7 @@ void finite_field::simeon(int n, int len, long int *S, int s, int verbose_level)
 	C = NEW_int(k - 1);
 	T = NEW_int(k * k);
 
-	Orbiter->Int_vec.zero(M, nb_rows * nb_cols);
+	Orbiter->Int_vec->zero(M, nb_rows * nb_cols);
 
 
 	// unrank all points of the arc:
@@ -2145,7 +2145,7 @@ void finite_field::simeon(int n, int len, long int *S, int s, int verbose_level)
 		}
 		if (f_vv) {
 			cout << "Ac=";
-			Orbiter->Int_vec.print(cout, Ac, ac);
+			Orbiter->Int_vec->print(cout, Ac, ac);
 			cout << endl;
 		}
 
@@ -2158,7 +2158,7 @@ void finite_field::simeon(int n, int len, long int *S, int s, int verbose_level)
 			}
 			if (f_vv) {
 				cout << "U1=";
-				Orbiter->Int_vec.print(cout, U1, k - 1);
+				Orbiter->Int_vec->print(cout, U1, k - 1);
 				cout << endl;
 			}
 
@@ -2171,7 +2171,7 @@ void finite_field::simeon(int n, int len, long int *S, int s, int verbose_level)
 				Combi.unrank_k_subset(col, C, len, k - 1);
 				if (f_vv) {
 					cout << "C: ";
-					Orbiter->Int_vec.print(cout, C, k - 1);
+					Orbiter->Int_vec->print(cout, C, k - 1);
 					cout << endl;
 				}
 
@@ -2292,7 +2292,7 @@ void finite_field::isomorphism_to_special_orthogonal(int *A4, int *A6, int verbo
 			0,0,0,2,0,4,
 	};
 	int Bv[36];
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	for (i = 0; i < 6; i++) {
 		klein_to_wedge(Basis1 + i * 6, Basis2 + i * 6);
@@ -2308,7 +2308,7 @@ void finite_field::isomorphism_to_special_orthogonal(int *A4, int *A6, int verbo
 	if (f_vv) {
 		cout << "finite_field::isomorphism_to_special_orthogonal "
 				"exterior_square :" << endl;
-		Orbiter->Int_vec.matrix_print(An2, 6, 6);
+		Orbiter->Int_vec->matrix_print(An2, 6, 6);
 		cout << endl;
 	}
 
@@ -2317,14 +2317,14 @@ void finite_field::isomorphism_to_special_orthogonal(int *A4, int *A6, int verbo
 		Linear_algebra->mult_vector_from_the_left(Basis2 + j * 6, An2, v, 6, 6);
 				// v[m], A[m][n], vA[n]
 		wedge_to_klein(v, w);
-		Orbiter->Int_vec.copy(w, C + j * 6, 6);
+		Orbiter->Int_vec->copy(w, C + j * 6, 6);
 	}
 
 
 	if (f_vv) {
 		cout << "finite_field::isomorphism_to_special_orthogonal "
 				"orthogonal matrix :" << endl;
-		Orbiter->Int_vec.matrix_print(C, 6, 6);
+		Orbiter->Int_vec->matrix_print(C, 6, 6);
 		cout << endl;
 	}
 
@@ -2336,7 +2336,7 @@ void finite_field::isomorphism_to_special_orthogonal(int *A4, int *A6, int verbo
 	if (f_vv) {
 		cout << "finite_field::isomorphism_to_special_orthogonal "
 				"orthogonal matrix in the special form:" << endl;
-		Orbiter->Int_vec.matrix_print(A6, 6, 6);
+		Orbiter->Int_vec->matrix_print(A6, 6, 6);
 		cout << endl;
 	}
 

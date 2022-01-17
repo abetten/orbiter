@@ -814,15 +814,15 @@ void large_set_early_test_function(long int *S, int len,
 	large_set_classify *LS = (large_set_classify *) data;
 	int f_v = (verbose_level >= 1);
 	int i, k, a, b;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	if (f_v) {
 		cout << "large_set_early_test_function for set ";
-		Orbiter->Lint_vec.print(cout, S, len);
+		Orbiter->Lint_vec->print(cout, S, len);
 		cout << endl;
 	}
 	if (len == 0) {
-		Orbiter->Lint_vec.copy(candidates, good_candidates, nb_candidates);
+		Orbiter->Lint_vec->copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
 	}
 	else {

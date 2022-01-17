@@ -81,7 +81,7 @@ void poset_with_group_action::init_subset_lattice(action *A, action *A2,
 
 void poset_with_group_action::init_subspace_lattice(action *A, action *A2,
 		strong_generators *Strong_gens,
-		vector_space *VS,
+		algebra::vector_space *VS,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -124,7 +124,7 @@ void poset_with_group_action::init(
 	f_subset_lattice = description->f_subset_lattice;
 	n = A2->degree;
 	f_subspace_lattice = description->f_subspace_lattice;
-	VS = NEW_OBJECT(vector_space);
+	VS = NEW_OBJECT(algebra::vector_space);
 	matrix_group *mtx;
 	finite_field *F;
 	mtx = A->get_matrix_group();
@@ -173,12 +173,12 @@ void poset_with_group_action::add_independence_condition(
 				<< independence_value << endl;
 	}
 
-	rank_checker *rc;
+	algebra::rank_checker *rc;
 	matrix_group *mtx;
 
 	mtx = A->get_matrix_group();
 
-	rc = NEW_OBJECT(rank_checker);
+	rc = NEW_OBJECT(algebra::rank_checker);
 	if (f_v) {
 		cout << "poset_with_group_action::add_independence_condition before "
 				"rc->init" << endl;
@@ -340,7 +340,7 @@ void poset_with_group_action::early_test_func(
 		}
 	}
 	else {
-		Orbiter->Lint_vec.copy(candidates, good_candidates, nb_candidates);
+		Orbiter->Lint_vec->copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
 	}
 	if (f_v) {
@@ -496,9 +496,9 @@ int callback_test_independence_condition(orbit_based_testing *Obt,
 	if (f_v) {
 		cout << "callback_test_independence_condition" << endl;
 	}
-	rank_checker *rc;
+	algebra::rank_checker *rc;
 
-	rc = (rank_checker *) data;
+	rc = (algebra::rank_checker *) data;
 	if (rc->check_rank_last_two_are_fixed(len,
 		S, verbose_level - 1)) {
 		return TRUE;

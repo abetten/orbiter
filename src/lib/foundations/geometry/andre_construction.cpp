@@ -76,8 +76,8 @@ void andre_construction::init(finite_field *F,
 	int f_v = (verbose_level >= 1);
 	int i, j, a;
 	number_theory_domain NT;
-	combinatorics_domain Combi;
-	sorting Sorting;
+	combinatorics::combinatorics_domain Combi;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "andre_construction::init" << endl;
@@ -156,12 +156,12 @@ void andre_construction::init(finite_field *F,
 			}
 		cout << "andre_construction::init spread element " << i
 				<< " is " << spread_elements_numeric[i] << ":" << endl;
-		Orbiter->Int_vec.matrix_print(spread_elements_genma + i * k * n, k, n);
+		Orbiter->Int_vec->matrix_print(spread_elements_genma + i * k * n, k, n);
 		cout << "pivot: ";
-		Orbiter->Int_vec.print(cout, pivot + i * k, k);
+		Orbiter->Int_vec->print(cout, pivot + i * k, k);
 		cout << endl;
 		cout << "non_pivot: ";
-		Orbiter->Int_vec.print(cout, non_pivot + i * (n - k), n - k);
+		Orbiter->Int_vec->print(cout, non_pivot + i * (n - k), n - k);
 		cout << endl;
 		}
 	if (f_v) {

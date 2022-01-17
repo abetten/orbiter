@@ -324,7 +324,7 @@ int os_interface::os_seconds_past_1970()
 void os_interface::get_string_from_command_line(std::string &p, int argc, std::string *argv,
 		int &i, int verbose_level)
 {
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (ST.stringcmp(argv[i], "-long_string") == 0) {
 		i++;

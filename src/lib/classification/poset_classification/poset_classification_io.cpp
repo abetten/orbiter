@@ -1216,7 +1216,7 @@ void poset_classification::log_current_node(ostream &f, int size)
 
 
 void poset_classification::make_spreadsheet_of_orbit_reps(
-		spreadsheet *&Sp, int max_depth)
+		data_structures::spreadsheet *&Sp, int max_depth)
 {
 	int Nb_orbits, nb_orbits, i, level, first;
 	pchar *Text_level;
@@ -1258,7 +1258,7 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 			strcpy(Text_node[first + i], str);
 
 			get_set_by_level(level, i, rep);
-			Orbiter->Lint_vec.print_to_str(str, rep, level);
+			Orbiter->Lint_vec->print_to_str(str, rep, level);
 			Text_orbit_reps[first + i] = NEW_char(strlen(str) + 1);
 			strcpy(Text_orbit_reps[first + i], str);
 			
@@ -1284,7 +1284,7 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 			strcpy(Text_schreier_vector_length[first + i], str);
 			}
 		}
-	Sp = NEW_OBJECT(spreadsheet);
+	Sp = NEW_OBJECT(data_structures::spreadsheet);
 	Sp->init_empty_table(Nb_orbits + 1, 7);
 	Sp->fill_column_with_row_index(0, "Line");
 	Sp->fill_column_with_text(1, (const char **)
@@ -1335,7 +1335,7 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 }
 
 void poset_classification::make_spreadsheet_of_level_info(
-		spreadsheet *&Sp, int max_depth,
+		data_structures::spreadsheet *&Sp, int max_depth,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1350,7 +1350,7 @@ void poset_classification::make_spreadsheet_of_level_info(
 		orbit_length_sum, orbit_length_total;
 	longinteger_object a, a_total;
 	longinteger_domain D;
-	combinatorics_domain C;
+	combinatorics::combinatorics_domain C;
 	int schreier_vector_length_int;
 	longinteger_object schreier_vector_length,
 		schreier_vector_length_sum, schreier_vector_length_total;
@@ -1480,7 +1480,7 @@ void poset_classification::make_spreadsheet_of_level_info(
 	strcpy(Text_binomial[level], str);
 
 
-	Sp = NEW_OBJECT(spreadsheet);
+	Sp = NEW_OBJECT(data_structures::spreadsheet);
 	Sp->init_empty_table(nb_rows + 1, 6);
 	Sp->fill_column_with_row_index(0, "Line");
 	Sp->fill_column_with_text(1, (const char **) Text_label, "Level");

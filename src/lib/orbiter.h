@@ -15,7 +15,7 @@
 #include "foundations/foundations.h"
 #include "group_actions/group_actions.h"
 #include "classification/classification.h"
-#include "DISCRETA/discreta.h"
+#include "discreta/discreta.h"
 #include "top_level/top_level.h"
 
 #endif

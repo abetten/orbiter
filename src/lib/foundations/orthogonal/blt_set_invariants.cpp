@@ -96,7 +96,7 @@ void blt_set_invariants::init(blt_set_domain *D, long int *the_set,
 	set_size = D->q + 1;
 	the_set_in_orthogonal = NEW_lint(set_size);
 	the_set_in_PG = NEW_lint(set_size);
-	Orbiter->Lint_vec.copy(the_set, the_set_in_orthogonal, set_size);
+	Orbiter->Lint_vec->copy(the_set, the_set_in_orthogonal, set_size);
 
 	for (i = 0; i < set_size; i++) {
 		D->O->unrank_point(v5, 1, the_set[i], 0 /* verbose_level */);
@@ -126,9 +126,9 @@ void blt_set_invariants::compute(int verbose_level)
 
 	longinteger_object *R;
 
-	Sos = NEW_OBJECT(set_of_sets);
-	Sos2 = NEW_OBJECT(set_of_sets);
-	Sos3 = NEW_OBJECT(set_of_sets);
+	Sos = NEW_OBJECT(data_structures::set_of_sets);
+	Sos2 = NEW_OBJECT(data_structures::set_of_sets);
+	Sos3 = NEW_OBJECT(data_structures::set_of_sets);
 	D2 = NEW_OBJECT(decomposition);
 	D3 = NEW_OBJECT(decomposition);
 
@@ -199,7 +199,7 @@ void blt_set_invariants::compute(int verbose_level)
 void blt_set_invariants::latex(std::ostream &ost, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	sorting Sorting;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "blt_set_invariants::latex" << endl;
@@ -355,7 +355,7 @@ void blt_set_invariants::latex(std::ostream &ost, int verbose_level)
 		//f << "\\left[" << endl;
 		//f << "\\begin{array}{c}" << endl;
 		ost << "P_{" << i /*data[i]*/ << "}=";
-		Orbiter->Int_vec.print(ost, v5, 5);
+		Orbiter->Int_vec->print(ost, v5, 5);
 #if 0
 		for (u = 0; u < 5; u++) {
 			for (v = 0; v < n; v++) {

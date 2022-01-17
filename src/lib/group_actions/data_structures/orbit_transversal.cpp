@@ -137,7 +137,7 @@ void orbit_transversal::read_from_file(
 				Aut_ascii[i], 0 /* verbose_level */);
 		
 		set = NEW_lint(Set_sizes[i]);
-		Orbiter->Lint_vec.copy(Sets[i], set, Set_sizes[i]);
+		Orbiter->Lint_vec->copy(Sets[i], set, Set_sizes[i]);
 		Reps[i].init_everything(A, A2, set, Set_sizes[i], 
 			gens, 0 /* verbose_level */);
 
@@ -216,7 +216,7 @@ void orbit_transversal::read_from_file_one_case_only(
 			Aut_ascii[i], 0 /* verbose_level */);
 
 	set = NEW_lint(Set_sizes[i]);
-	Orbiter->Lint_vec.copy(Sets[i], set, Set_sizes[i]);
+	Orbiter->Lint_vec->copy(Sets[i], set, Set_sizes[i]);
 	Reps[i].init_everything(A, A2, set, Set_sizes[i],
 		gens, 0 /* verbose_level */);
 
@@ -320,7 +320,7 @@ void orbit_transversal::print_table_latex(
 				Reps[i].Strong_gens->group_order(go);
 
 				f << i << " & ";
-				Orbiter->Lint_vec.print(f, Reps[i].data, Reps[i].sz);
+				Orbiter->Lint_vec->print(f, Reps[i].data, Reps[i].sz);
 				f << " & " << go;
 				if (f_has_callback) {
 					f << " & ";

@@ -291,7 +291,7 @@ void geometry_global::make_Gram_matrix_from_list_coded_quadratic_form(
 {
 	int k, i, j, c;
 
-	Orbiter->Int_vec.zero(Gram, n * n);
+	Orbiter->Int_vec->zero(Gram, n * n);
 	for (k = 0; k < nb_terms; k++) {
 		i = form_i[k];
 		j = form_j[k];
@@ -338,7 +338,7 @@ void geometry_global::determine_conic(int q, std::string &override_poly,
 	if (f_v) {
 		cout << "determine_conic q=" << q << endl;
 		cout << "input_pts: ";
-		Orbiter->Lint_vec.print(cout, input_pts, nb_pts);
+		Orbiter->Lint_vec->print(cout, input_pts, nb_pts);
 		cout << endl;
 		}
 	F.init_override_polynomial(q, override_poly, FALSE /* f_without_tables */, verbose_level);
@@ -359,7 +359,7 @@ void geometry_global::determine_conic(int q, std::string &override_poly,
 
 	if (f_v) {
 		cout << "determine_conic the six coefficients are ";
-		Orbiter->Int_vec.print(cout, six_coeffs, 6);
+		Orbiter->Int_vec->print(cout, six_coeffs, 6);
 		cout << endl;
 		}
 
@@ -371,12 +371,12 @@ void geometry_global::determine_conic(int q, std::string &override_poly,
 			points, nb_points, verbose_level - 2);
 	if (f_v) {
 		cout << "the " << nb_points << " conic points are: ";
-		Orbiter->Lint_vec.print(cout, points, nb_points);
+		Orbiter->Lint_vec->print(cout, points, nb_points);
 		cout << endl;
 		for (i = 0; i < nb_points; i++) {
 			P->unrank_point(v, points[i]);
 			cout << i << " : " << points[i] << " : ";
-			Orbiter->Int_vec.print(cout, v, 3);
+			Orbiter->Int_vec->print(cout, v, 3);
 			cout << endl;
 			}
 		}
@@ -395,13 +395,13 @@ int geometry_global::test_if_arc(finite_field *Fq, int *pt_coords,
 	int *Mtx;
 	int ret = FALSE;
 	int i, j, a, rk;
-	combinatorics_domain Combi;
-	sorting Sorting;
+	combinatorics::combinatorics_domain Combi;
+	data_structures::sorting Sorting;
 
 
 	if (f_v) {
 		cout << "test_if_arc testing set" << endl;
-		Orbiter->Int_vec.print(cout, set, set_sz);
+		Orbiter->Int_vec->print(cout, set, set_sz);
 		cout << endl;
 		}
 	Mtx = NEW_int(3 * k);
@@ -414,7 +414,7 @@ int geometry_global::test_if_arc(finite_field *Fq, int *pt_coords,
 		Sorting.int_vec_heapsort(subset1, 3);
 		if (f_vv) {
 			cout << "testing subset ";
-			Orbiter->Int_vec.print(cout, subset1, 3);
+			Orbiter->Int_vec->print(cout, subset1, 3);
 			cout << endl;
 			}
 
@@ -426,7 +426,7 @@ int geometry_global::test_if_arc(finite_field *Fq, int *pt_coords,
 			}
 		if (f_vv) {
 			cout << "matrix:" << endl;
-			Orbiter->Int_vec.print_integer_matrix_width(cout, Mtx, 3, k, k, 1);
+			Orbiter->Int_vec->print_integer_matrix_width(cout, Mtx, 3, k, k, 1);
 			}
 		rk = Fq->Linear_algebra->Gauss_easy(Mtx, 3, k);
 		if (rk < 3) {
@@ -499,7 +499,7 @@ void geometry_global::create_Buekenhout_Metz(
 		BM->P2->unrank_point(v, rk);
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			Orbiter->Int_vec.print(cout, v, d);
+			Orbiter->Int_vec->print(cout, v, d);
 			cout << " : " << setw(5) << rk << endl;
 			}
 		}
@@ -830,7 +830,7 @@ void geometry_global::test_Orthogonal(int epsilon, int k, int q)
 			}
 #endif
 		cout << i << " : ";
-		Orbiter->Int_vec.print(cout, v, len);
+		Orbiter->Int_vec->print(cout, v, len);
 		cout << " : ";
 		a = GFq.Linear_algebra->evaluate_quadratic_form(v, stride, epsilon, k,
 				c1, c2, c3);
@@ -873,7 +873,7 @@ void geometry_global::test_orthogonal(int n, int q)
 	for (i = 0; i < nb; i++) {
 		GFq.Orthogonal_indexing->Sbar_unrank(v, stride, n, i, 0 /* verbose_level */);
 		cout << i << " : ";
-		Orbiter->Int_vec.set_print(cout, v, 2 * n);
+		Orbiter->Int_vec->set_print(cout, v, 2 * n);
 		cout << " : ";
 		a = GFq.Linear_algebra->evaluate_hyperbolic_quadratic_form(v, stride, n);
 		cout << a;
@@ -1436,7 +1436,7 @@ void geometry_global::do_inverse_isomorphism_klein_quadric(finite_field *F,
 	int *A6;
 	int sz;
 
-	Orbiter->Int_vec.scan(inverse_isomorphism_klein_quadric_matrix_A6.c_str(), A6, sz);
+	Orbiter->Int_vec->scan(inverse_isomorphism_klein_quadric_matrix_A6.c_str(), A6, sz);
 	if (sz != 36) {
 		cout << "geometry_global::do_inverse_isomorphism_klein_quadric "
 				"The input matrix must be of size 6x6" << endl;
@@ -1445,7 +1445,7 @@ void geometry_global::do_inverse_isomorphism_klein_quadric(finite_field *F,
 
 
 	cout << "A6:" << endl;
-	Orbiter->Int_vec.matrix_print(A6, 6, 6);
+	Orbiter->Int_vec->matrix_print(A6, 6, 6);
 
 	klein_correspondence *Klein;
 	orthogonal *O;
@@ -1461,7 +1461,7 @@ void geometry_global::do_inverse_isomorphism_klein_quadric(finite_field *F,
 	Klein->reverse_isomorphism(A6, A4, verbose_level);
 
 	cout << "A4:" << endl;
-	Orbiter->Int_vec.matrix_print(A4, 4, 4);
+	Orbiter->Int_vec->matrix_print(A4, 4, 4);
 
 	FREE_OBJECT(Klein);
 	FREE_OBJECT(O);
@@ -1484,14 +1484,14 @@ void geometry_global::do_rank_point_in_PG(finite_field *F, int n,
 	int *coeff;
 	int sz;
 
-	Orbiter->Int_vec.scan(coeff_text, coeff, sz);
+	Orbiter->Int_vec->scan(coeff_text, coeff, sz);
 	if (sz != n + 1) {
 		cout << "geometry_global::do_rank_point_in_PG sz != n + 1" << endl;
 		exit(1);
 	}
 	if (f_v) {
 		cout << "geometry_global::do_rank_point_in_PG coeff: ";
-		Orbiter->Int_vec.print(cout, coeff, sz);
+		Orbiter->Int_vec->print(cout, coeff, sz);
 		cout << endl;
 	}
 
@@ -1502,7 +1502,7 @@ void geometry_global::do_rank_point_in_PG(finite_field *F, int n,
 
 	if (f_v) {
 		cout << "geometry_global::do_rank_point_in_PG coeff: ";
-		Orbiter->Int_vec.print(cout, coeff, sz);
+		Orbiter->Int_vec->print(cout, coeff, sz);
 		cout << " has rank " << a << endl;
 	}
 
@@ -1527,9 +1527,9 @@ void geometry_global::do_rank_point_in_PG_given_as_pairs(finite_field *F, int n,
 		int sz, sz2;
 		int i, a, b;
 
-		Orbiter->Int_vec.scan(coeff_text, coeff_pairs, sz);
+		Orbiter->Int_vec->scan(coeff_text, coeff_pairs, sz);
 		coeff = NEW_int(n + 1);
-		Orbiter->Int_vec.zero(coeff, n + 1);
+		Orbiter->Int_vec->zero(coeff, n + 1);
 
 		sz2 = sz >> 1;
 
@@ -1556,7 +1556,7 @@ void geometry_global::do_rank_point_in_PG_given_as_pairs(finite_field *F, int n,
 		}
 		if (f_v) {
 			cout << "geometry_global::do_rank_point_in_PG_given_as_pairs coeff: ";
-			Orbiter->Int_vec.print(cout, coeff, n + 1);
+			Orbiter->Int_vec->print(cout, coeff, n + 1);
 			cout << endl;
 		}
 		FREE_int(coeff_pairs);
@@ -1569,7 +1569,7 @@ void geometry_global::do_rank_point_in_PG_given_as_pairs(finite_field *F, int n,
 
 	if (f_v) {
 		cout << "geometry_global::do_rank_point_in_PG_given_as_pairs coeff: ";
-		Orbiter->Int_vec.print(cout, coeff, n + 1);
+		Orbiter->Int_vec->print(cout, coeff, n + 1);
 		cout << " has rank " << a << endl;
 	}
 
@@ -1596,13 +1596,13 @@ void geometry_global::do_intersection_of_two_lines(finite_field *F,
 		cout << "geometry_global::do_intersection_of_two_lines" << endl;
 	}
 
-	Orbiter->Int_vec.scan(line_1_basis, Line1, len);
+	Orbiter->Int_vec->scan(line_1_basis, Line1, len);
 	if (len != 8) {
 		cout << "geometry_global::do_intersection_of_two_lines len != 8" << endl;
 		cout << "received " << len << endl;
 		exit(1);
 	}
-	Orbiter->Int_vec.scan(line_2_basis, Line2, len);
+	Orbiter->Int_vec->scan(line_2_basis, Line2, len);
 	if (len != 8) {
 		cout << "geometry_global::do_intersection_of_two_lines len != 8" << endl;
 		cout << "received " << len << endl;
@@ -1613,7 +1613,7 @@ void geometry_global::do_intersection_of_two_lines(finite_field *F,
 	C = NEW_int(16);
 
 	// Line 1
-	Orbiter->Int_vec.copy(Line1, A, 8);
+	Orbiter->Int_vec->copy(Line1, A, 8);
 	rk = F->Linear_algebra->perp_standard(4, 2, A, verbose_level);
 	if (rk != 2) {
 		cout << "geometry_global::do_intersection_of_two_lines rk != 2" << endl;
@@ -1622,7 +1622,7 @@ void geometry_global::do_intersection_of_two_lines(finite_field *F,
 	}
 
 	// Line 2
-	Orbiter->Int_vec.copy(Line2, B, 8);
+	Orbiter->Int_vec->copy(Line2, B, 8);
 	rk = F->Linear_algebra->perp_standard(4, 2, B, verbose_level);
 	if (rk != 2) {
 		cout << "geometry_global::do_intersection_of_two_lines rk != 2" << endl;
@@ -1631,8 +1631,8 @@ void geometry_global::do_intersection_of_two_lines(finite_field *F,
 	}
 
 
-	Orbiter->Int_vec.copy(A + 8, C, 8);
-	Orbiter->Int_vec.copy(B + 8, C + 8, 8);
+	Orbiter->Int_vec->copy(A + 8, C, 8);
+	Orbiter->Int_vec->copy(B + 8, C + 8, 8);
 	rk = F->Linear_algebra->perp_standard(4, 4, C, verbose_level);
 	if (rk != 3) {
 		cout << "geometry_global::do_intersection_of_two_lines rk != 3" << endl;
@@ -1648,7 +1648,7 @@ void geometry_global::do_intersection_of_two_lines(finite_field *F,
 		}
 
 		cout << "geometry_global::do_intersection_of_two_lines after normalize from the left:" << endl;
-		Orbiter->Int_vec.matrix_print(C + 12, 1, 4);
+		Orbiter->Int_vec->matrix_print(C + 12, 1, 4);
 		cout << "rk=" << rk << endl;
 
 	}
@@ -1661,7 +1661,7 @@ void geometry_global::do_intersection_of_two_lines(finite_field *F,
 		}
 
 		cout << "geometry_global::do_intersection_of_two_lines after normalize from the right:" << endl;
-		Orbiter->Int_vec.matrix_print(C + 12, 1, 4);
+		Orbiter->Int_vec->matrix_print(C + 12, 1, 4);
 		cout << "rk=" << rk << endl;
 
 	}
@@ -1698,19 +1698,19 @@ void geometry_global::do_transversal(finite_field *F,
 		cout << "geometry_global::do_transversal" << endl;
 	}
 
-	Orbiter->Int_vec.scan(line_1_basis, Line1, len);
+	Orbiter->Int_vec->scan(line_1_basis, Line1, len);
 	if (len != 8) {
 		cout << "geometry_global::do_transversal len != 8" << endl;
 		cout << "received " << len << endl;
 		exit(1);
 	}
-	Orbiter->Int_vec.scan(line_2_basis, Line2, len);
+	Orbiter->Int_vec->scan(line_2_basis, Line2, len);
 	if (len != 8) {
 		cout << "geometry_global::do_transversal len != 8" << endl;
 		cout << "received " << len << endl;
 		exit(1);
 	}
-	Orbiter->Int_vec.scan(point, Pt, len);
+	Orbiter->Int_vec->scan(point, Pt, len);
 	if (len != 4) {
 		cout << "geometry_global::do_transversal len != 4" << endl;
 		cout << "received " << len << endl;
@@ -1720,26 +1720,26 @@ void geometry_global::do_transversal(finite_field *F,
 	B = NEW_int(16);
 
 	// Line 1
-	Orbiter->Int_vec.copy(Line1, A, 8);
-	Orbiter->Int_vec.copy(Pt, A + 8, 4);
+	Orbiter->Int_vec->copy(Line1, A, 8);
+	Orbiter->Int_vec->copy(Pt, A + 8, 4);
 	rk = F->Linear_algebra->perp_standard(4, 3, A, verbose_level);
 	if (rk != 3) {
 		cout << "geometry_global::do_transversal rk != 3" << endl;
 		cout << "rk= " << rk << endl;
 		exit(1);
 	}
-	Orbiter->Int_vec.copy(A + 12, B, 4);
+	Orbiter->Int_vec->copy(A + 12, B, 4);
 
 	// Line 2
-	Orbiter->Int_vec.copy(Line2, A, 8);
-	Orbiter->Int_vec.copy(Pt, A + 8, 4);
+	Orbiter->Int_vec->copy(Line2, A, 8);
+	Orbiter->Int_vec->copy(Pt, A + 8, 4);
 	rk = F->Linear_algebra->perp_standard(4, 3, A, verbose_level);
 	if (rk != 3) {
 		cout << "geometry_global::do_transversal rk != 3" << endl;
 		cout << "rk= " << rk << endl;
 		exit(1);
 	}
-	Orbiter->Int_vec.copy(A + 12, B + 4, 4);
+	Orbiter->Int_vec->copy(A + 12, B + 4, 4);
 
 	// B
 	rk = F->Linear_algebra->perp_standard(4, 2, B, verbose_level);
@@ -1756,7 +1756,7 @@ void geometry_global::do_transversal(finite_field *F,
 		}
 
 		cout << "geometry_global::do_transversal after normalize from the left:" << endl;
-		Orbiter->Int_vec.matrix_print(B + 8, 2, 4);
+		Orbiter->Int_vec->matrix_print(B + 8, 2, 4);
 		cout << "rk=" << rk << endl;
 
 	}
@@ -1769,7 +1769,7 @@ void geometry_global::do_transversal(finite_field *F,
 		}
 
 		cout << "geometry_global::do_transversal after normalize from the right:" << endl;
-		Orbiter->Int_vec.matrix_print(B + 8, 2, 4);
+		Orbiter->Int_vec->matrix_print(B + 8, 2, 4);
 		cout << "rk=" << rk << endl;
 
 	}
@@ -1812,7 +1812,7 @@ void geometry_global::do_move_two_lines_in_hyperplane_stabilizer(
 			verbose_level);
 
 	cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer A4=" << endl;
-	Orbiter->Int_vec.matrix_print(A4, 4, 4);
+	Orbiter->Int_vec->matrix_print(A4, 4, 4);
 
 	if (f_v) {
 		cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer done" << endl;
@@ -1845,22 +1845,22 @@ void geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text(
 	int *line2_to_data;
 	int sz;
 
-	Orbiter->Int_vec.scan(line1_from_text.c_str(), line1_from_data, sz);
+	Orbiter->Int_vec->scan(line1_from_text.c_str(), line1_from_data, sz);
 	if (sz != 8) {
 		cout << "line1_from_text must contain exactly 8 integers" << endl;
 		exit(1);
 	}
-	Orbiter->Int_vec.scan(line2_from_text.c_str(), line2_from_data, sz);
+	Orbiter->Int_vec->scan(line2_from_text.c_str(), line2_from_data, sz);
 	if (sz != 8) {
 		cout << "line2_from_text must contain exactly 8 integers" << endl;
 		exit(1);
 	}
-	Orbiter->Int_vec.scan(line1_to_text.c_str(), line1_to_data, sz);
+	Orbiter->Int_vec->scan(line1_to_text.c_str(), line1_to_data, sz);
 	if (sz != 8) {
 		cout << "line1_to_text must contain exactly 8 integers" << endl;
 		exit(1);
 	}
-	Orbiter->Int_vec.scan(line2_to_text.c_str(), line2_to_data, sz);
+	Orbiter->Int_vec->scan(line2_to_text.c_str(), line2_to_data, sz);
 	if (sz != 8) {
 		cout << "line2_to_text must contain exactly 8 integers" << endl;
 		exit(1);
@@ -1884,7 +1884,7 @@ void geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text(
 			verbose_level);
 
 	cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text A4=" << endl;
-	Orbiter->Int_vec.matrix_print(A4, 4, 4);
+	Orbiter->Int_vec->matrix_print(A4, 4, 4);
 
 	if (f_v) {
 		cout << "geometry_global::do_move_two_lines_in_hyperplane_stabilizer_text done" << endl;
@@ -2063,7 +2063,7 @@ void geometry_global::do_create_desarguesian_spread(finite_field *FQ, finite_fie
 
 	if (f_v) {
 		cout << "Field-basis: ";
-		Orbiter->Int_vec.print(cout, SubS->Basis, s);
+		Orbiter->Int_vec->print(cout, SubS->Basis, s);
 		cout << endl;
 	}
 
@@ -2102,13 +2102,13 @@ void geometry_global::create_decomposition_of_projective_plane(std::string &fnam
 	}
 	{
 		incidence_structure *I;
-		partitionstack *Stack;
+		data_structures::partitionstack *Stack;
 		int depth = INT_MAX;
 
 		I = NEW_OBJECT(incidence_structure);
 		I->init_projective_space(P, verbose_level);
 
-		Stack = NEW_OBJECT(partitionstack);
+		Stack = NEW_OBJECT(data_structures::partitionstack);
 		Stack->allocate(I->nb_rows + I->nb_cols, 0 /* verbose_level */);
 		Stack->subset_continguous(I->nb_rows, I->nb_cols);
 		Stack->split_cell(0 /* verbose_level */);
@@ -2201,7 +2201,7 @@ void geometry_global::latex_homogeneous_equation(finite_field *F, int degree, in
 	int sz;
 	homogeneous_polynomial_domain *Poly;
 
-	Orbiter->Int_vec.scan(equation_text, eqn, sz);
+	Orbiter->Int_vec->scan(equation_text, eqn, sz);
 	Poly = NEW_OBJECT(homogeneous_polynomial_domain);
 
 	if (f_v) {
@@ -2267,7 +2267,7 @@ void geometry_global::create_BLT_point(finite_field *F,
 	v3 = F->mult(minus_one, F->add(
 			F->mult(F->mult(b, b), quarter), F->negate(F->mult(a, c))));
 	v4 = 1;
-	Orbiter->Int_vec.init5(v5, v0, v1, v2, v3, v4);
+	Orbiter->Int_vec->init5(v5, v0, v1, v2, v3, v4);
 	if (f_v) {
 		cout << "geometry_global::create_BLT_point done" << endl;
 	}

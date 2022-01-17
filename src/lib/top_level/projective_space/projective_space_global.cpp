@@ -286,7 +286,7 @@ void projective_space_global::conic_type(
 	long int *Pts;
 	int nb_pts;
 
-	Orbiter->Lint_vec.scan(set_text, Pts, nb_pts);
+	Orbiter->Lint_vec->scan(set_text, Pts, nb_pts);
 
 
 	if (f_v) {
@@ -319,7 +319,7 @@ void projective_space_global::do_lift_skew_hexagon(
 	int *Pluecker_coords;
 	int sz;
 
-	Orbiter->Int_vec.scan(text, Pluecker_coords, sz);
+	Orbiter->Int_vec->scan(text, Pluecker_coords, sz);
 
 	long int *Pts;
 	int nb_pts;
@@ -333,7 +333,7 @@ void projective_space_global::do_lift_skew_hexagon(
 
 	if (f_v) {
 		cout << "Pluecker coordinates of lines:" << endl;
-		Orbiter->Int_vec.matrix_print(Pluecker_coords, nb_pts, 6);
+		Orbiter->Int_vec->matrix_print(Pluecker_coords, nb_pts, 6);
 	}
 
 	surface_domain *Surf;
@@ -382,7 +382,7 @@ void projective_space_global::do_lift_skew_hexagon(
 
 	if (f_v) {
 		cout << "lines:" << endl;
-		Orbiter->Lint_vec.print(cout, Pts, 6);
+		Orbiter->Lint_vec->print(cout, Pts, 6);
 		cout << endl;
 	}
 
@@ -437,7 +437,7 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 	int *Polarity36;
 	int sz1;
 
-	Orbiter->Int_vec.scan(polarity_36, Polarity36, sz1);
+	Orbiter->Int_vec->scan(polarity_36, Polarity36, sz1);
 
 	if (sz1 != 36) {
 		cout << "projective_space_global::do_lift_skew_hexagon_with_polarity I need exactly 36 coefficients for the polarity" << endl;
@@ -482,7 +482,7 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 	int alpha, beta;
 	int i, j;
 
-	Orbiter->Int_vec.zero(Pluecker_coords, 36);
+	Orbiter->Int_vec->zero(Pluecker_coords, 36);
 	// a1 = 1,0,0,0,0,0
 	Pluecker_coords[0] = 1;
 
@@ -515,7 +515,7 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 
 			if (f_v) {
 				cout << "Pluecker coordinates of lines:" << endl;
-				Orbiter->Int_vec.matrix_print(Pluecker_coords, nb_pts, 6);
+				Orbiter->Int_vec->matrix_print(Pluecker_coords, nb_pts, 6);
 			}
 
 
@@ -535,7 +535,7 @@ void projective_space_global::do_lift_skew_hexagon_with_polarity(
 
 			if (f_v) {
 				cout << "lines:" << endl;
-				Orbiter->Lint_vec.print(cout, Pts, 6);
+				Orbiter->Lint_vec->print(cout, Pts, 6);
 				cout << endl;
 			}
 

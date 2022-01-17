@@ -190,7 +190,7 @@ void orbits_on_polynomials::init(
 
 
 		cout << "orbits_on_polynomials::init recognition:" << endl;
-		Orbiter->Lint_vec.scan(recognize_text, Rank, len);
+		Orbiter->Lint_vec->scan(recognize_text, Rank, len);
 
 		Idx = NEW_int(len);
 
@@ -243,7 +243,7 @@ void orbits_on_polynomials::compute_points(int verbose_level)
 		T->Reps[i].Strong_gens->group_order(go);
 
 		cout << i << " : ";
-		Orbiter->Lint_vec.print(cout, T->Reps[i].data, T->Reps[i].sz);
+		Orbiter->Lint_vec->print(cout, T->Reps[i].data, T->Reps[i].sz);
 		cout << " : ";
 		cout << go;
 
@@ -379,7 +379,7 @@ void orbits_on_polynomials::report(int verbose_level)
 			T_nb_pts.get_class_by_value(Idx, len, a, 0 /*verbose_level*/);
 
 
-			sorting Sorting;
+			data_structures::sorting Sorting;
 
 			Sorting.int_vec_heapsort(Idx, l);
 
@@ -394,7 +394,7 @@ void orbits_on_polynomials::report(int verbose_level)
 				T->Reps[i].Strong_gens->group_order(go);
 
 				ost << i << " : ";
-				Orbiter->Lint_vec.print(ost, T->Reps[i].data, T->Reps[i].sz);
+				Orbiter->Lint_vec->print(ost, T->Reps[i].data, T->Reps[i].sz);
 				ost << " : ";
 				ost << go;
 
@@ -542,7 +542,7 @@ void orbits_on_polynomials::report_detailed_list(std::ostream &ost,
 			ost << "number of points = " << nb_pts << "\\\\" << endl;
 
 			ost << "$";
-			Orbiter->Int_vec.print(ost, coeff, HPD->get_nb_monomials());
+			Orbiter->Int_vec->print(ost, coeff, HPD->get_nb_monomials());
 			ost << " = ";
 			HPD->print_equation(ost, coeff);
 			ost << "$\\\\" << endl;
@@ -550,7 +550,7 @@ void orbits_on_polynomials::report_detailed_list(std::ostream &ost,
 
 			cout << "We found " << nb_pts << " points in the variety" << endl;
 			cout << "They are : ";
-			Orbiter->Lint_vec.print(cout, Pts, nb_pts);
+			Orbiter->Lint_vec->print(cout, Pts, nb_pts);
 			cout << endl;
 			HPD->get_P()->print_set_numerical(cout, Pts, nb_pts);
 
@@ -563,7 +563,7 @@ void orbits_on_polynomials::report_detailed_list(std::ostream &ost,
 			ost << "The line type is: ";
 
 			stringstream sstr;
-			Orbiter->Int_vec.print_classified_str(sstr,
+			Orbiter->Int_vec->print_classified_str(sstr,
 					line_type, HPD->get_P()->N_lines, TRUE /* f_backwards*/);
 			string s = sstr.str();
 			ost << "$" << s << "$\\\\" << endl;

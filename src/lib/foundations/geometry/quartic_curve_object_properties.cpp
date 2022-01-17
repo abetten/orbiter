@@ -316,7 +316,7 @@ void quartic_curve_object_properties::print_equation(std::ostream &ost)
 	ost << "$$" << endl;
 
 	ost << "$$" << endl;
-	Orbiter->Int_vec.print(ost, QO->eqn15, 15);
+	Orbiter->Int_vec->print(ost, QO->eqn15, 15);
 	ost << "$$" << endl;
 
 #if 0
@@ -347,7 +347,7 @@ void quartic_curve_object_properties::print_gradient(std::ostream &ost)
 		ost << "$$" << endl;
 
 		ost << "$$" << endl;
-		Orbiter->Int_vec.print(ost, gradient + i * QO->Dom->Poly3_3->get_nb_monomials(), QO->Dom->Poly3_3->get_nb_monomials());
+		Orbiter->Int_vec->print(ost, gradient + i * QO->Dom->Poly3_3->get_nb_monomials(), QO->Dom->Poly3_3->get_nb_monomials());
 		ost << "$$" << endl;
 	}
 
@@ -513,12 +513,12 @@ void quartic_curve_object_properties::print_all_points(std::ostream &ost)
 		for (i = 0; i < QO->nb_pts; i++) {
 			QO->Dom->unrank_point(v, QO->Pts[i]);
 			ost << i << " : $P_{" << QO->Pts[i] << "}=";
-			Orbiter->Int_vec.print_fully(ost, v, 3);
+			Orbiter->Int_vec->print_fully(ost, v, 3);
 			ost << "$\\\\" << endl;
 			}
 		ost << "\\end{multicols}" << endl;
 		ost << "The points by rank are: " << endl;
-		Orbiter->Lint_vec.print_fully(ost, QO->Pts, QO->nb_pts);
+		Orbiter->Lint_vec->print_fully(ost, QO->Pts, QO->nb_pts);
 		ost << "\\\\" << endl;
 
 
@@ -540,7 +540,7 @@ void quartic_curve_object_properties::print_all_points(std::ostream &ost)
 			a = Kovalevski_point_idx[i];
 			QO->Dom->unrank_point(v, Kovalevski_points[i]);
 			ost << i << " : $P_{" << Kovalevski_points[i] << "}=";
-			Orbiter->Int_vec.print_fully(ost, v, 3);
+			Orbiter->Int_vec->print_fully(ost, v, 3);
 
 			ost << " = ";
 
@@ -558,7 +558,7 @@ void quartic_curve_object_properties::print_all_points(std::ostream &ost)
 		FREE_OBJECT(Labels);
 
 		ost << "The Kovalevski points by rank are: " << endl;
-		Orbiter->Lint_vec.print_fully(ost, Kovalevski_points, nb_Kovalevski);
+		Orbiter->Lint_vec->print_fully(ost, Kovalevski_points, nb_Kovalevski);
 		ost << "\\\\" << endl;
 
 		ost << "The points off the curve are: \\\\" << endl;
@@ -567,11 +567,11 @@ void quartic_curve_object_properties::print_all_points(std::ostream &ost)
 		for (i = 0; i < nb_pts_off; i++) {
 			QO->Dom->unrank_point(v, Pts_off[i]);
 			ost << i << " : $P_{" << Pts_off[i] << "}=";
-			Orbiter->Int_vec.print_fully(ost, v, 3);
+			Orbiter->Int_vec->print_fully(ost, v, 3);
 			ost << "$\\\\" << endl;
 			}
 		ost << "\\end{multicols}" << endl;
-		Orbiter->Lint_vec.print_fully(ost, Pts_off, nb_pts_off);
+		Orbiter->Lint_vec->print_fully(ost, Pts_off, nb_pts_off);
 		ost << "\\\\" << endl;
 
 	}
@@ -591,7 +591,7 @@ void quartic_curve_object_properties::print_bitangents(std::ostream &ost)
 }
 
 void quartic_curve_object_properties::print_lines_with_points_on_them(std::ostream &ost,
-		long int *Lines, int nb_lines, set_of_sets *SoS)
+		long int *Lines, int nb_lines, data_structures::set_of_sets *SoS)
 {
 	int i, j, h;
 	int verbose_level = 1;
@@ -639,9 +639,9 @@ void quartic_curve_object_properties::print_lines_with_points_on_them(std::ostre
 			QO->Dom->unrank_point(w, QO->Pts[a]);
 			ost << "P_{" << QO->Pts[a] << "}";
 			ost << "=\\bP";
-			Orbiter->Int_vec.print(ost, w, 3);
+			Orbiter->Int_vec->print(ost, w, 3);
 
-			Orbiter->Int_vec.copy(QO->Dom->P->Grass_lines->M, Basis, 6);
+			Orbiter->Int_vec->copy(QO->Dom->P->Grass_lines->M, Basis, 6);
 
 			QO->Dom->F->Linear_algebra->adjust_basis(Basis, w,
 					3 /* n */, 2 /* k */, 1 /* d */, verbose_level);
@@ -668,7 +668,7 @@ void quartic_curve_object_properties::print_lines_with_points_on_them(std::ostre
 	}
 	//ost << "\\end{multicols}" << endl;
 	ost << "Rank of lines: ";
-	Orbiter->Lint_vec.print(ost, Lines, nb_lines);
+	Orbiter->Lint_vec->print(ost, Lines, nb_lines);
 	ost << "\\\\" << endl;
 
 }
@@ -760,7 +760,7 @@ void quartic_curve_object_properties::points_on_curve_on_lines(int verbose_level
 		cout << "quartic_curve_object_properties::points_on_curve_on_lines !QO->f_has_bitangents" << endl;
 		exit(1);
 	}
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 
 	Pts_off = NEW_lint(QO->Dom->P->N_points);
@@ -966,7 +966,7 @@ void quartic_curve_object_properties::report_bitangent_line_type(std::ostream &o
 
 			ost << "Off point " << i << " = $P_{" << a << "} = ";
 
-			Orbiter->Int_vec.print(ost, v, 3);
+			Orbiter->Int_vec->print(ost, v, 3);
 
 			ost << "$ lies on " << lines_on_points_off->Set_size[i] << " bisecants : ";
 			L.lint_set_print_tex(ost, lines_on_points_off->Sets[i], lines_on_points_off->Set_size[i]);
@@ -1044,7 +1044,7 @@ void quartic_curve_object_properties::compute_singular_points_and_tangent_lines(
 		if (f_vv) {
 			cout << "quartic_curve_object_properties::compute_singular_points_and_tangent_lines "
 					"v=";
-			Orbiter->Int_vec.print(cout, v, 4);
+			Orbiter->Int_vec->print(cout, v, 4);
 			cout << endl;
 		}
 		for (i = 0; i < nb_eqns; i++) {
@@ -1055,7 +1055,7 @@ void quartic_curve_object_properties::compute_singular_points_and_tangent_lines(
 			if (FALSE) {
 				cout << "quartic_curve_object_properties::compute_singular_points_and_tangent_lines "
 						"gradient " << i << " = ";
-				Orbiter->Int_vec.print(cout,
+				Orbiter->Int_vec->print(cout,
 						gradient + i * QO->Dom->Poly3_3->get_nb_monomials(),
 						QO->Dom->Poly3_3->get_nb_monomials());
 				cout << endl;
@@ -1090,7 +1090,7 @@ void quartic_curve_object_properties::compute_singular_points_and_tangent_lines(
 		}
 	}
 
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	int nb_tangent_lines;
 
 	nb_tangent_lines = nb_non_singular_pts;

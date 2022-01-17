@@ -338,7 +338,7 @@ void scene::clipping_by_cylinder(int line_idx, double r, ostream &ost)
 int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 {
 	//int f_v = (verbose_level >= 1);
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (ST.stringcmp(argv[i], "-cubic_lex") == 0) {
 		cout << "-cubic_lex" << endl;
@@ -556,7 +556,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		//numerics Numerics;
 
 		Idx_text.assign(argv[++i]);
-		Orbiter->Int_vec.scan(Idx_text, Idx, Idx_sz);
+		Orbiter->Int_vec->scan(Idx_text, Idx, Idx_sz);
 		if (Idx_sz != 2) {
 			cout << "For -point_as_intersection_of_two_lines, "
 					"the number of indices must be 2; is " << Idx_sz << endl;
@@ -573,7 +573,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		//numerics Numerics;
 
 		Idx_text.assign(argv[++i]);
-		Orbiter->Int_vec.scan(Idx_text, Idx, Idx_sz);
+		Orbiter->Int_vec->scan(Idx_text, Idx, Idx_sz);
 		if (Idx_sz != 2) {
 			cout << "For -edge, the number of indices must be 2; is " << Idx_sz << endl;
 			exit(1);
@@ -599,7 +599,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		//numerics Numerics;
 
 		Idx_text.assign(argv[++i]);
-		Orbiter->Int_vec.scan(Idx_text, Idx, Idx_sz);
+		Orbiter->Int_vec->scan(Idx_text, Idx, Idx_sz);
 		if (Idx_sz != 3) {
 			cout << "For -triangular_face_given_by_three_lines, "
 					"the number of indices must be 3; is " << Idx_sz << endl;
@@ -616,7 +616,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		//numerics Numerics;
 
 		Idx_text.assign(argv[++i]);
-		Orbiter->Int_vec.scan(Idx_text, Idx, Idx_sz);
+		Orbiter->Int_vec->scan(Idx_text, Idx, Idx_sz);
 		face(Idx, Idx_sz);
 		FREE_int(Idx);
 	}
@@ -628,7 +628,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		//numerics Numerics;
 
 		Idx_text.assign(argv[++i]);
-		Orbiter->Int_vec.scan(Idx_text, Idx, Idx_sz);
+		Orbiter->Int_vec->scan(Idx_text, Idx, Idx_sz);
 		if (Idx_sz != 3) {
 			cout << "For -quadric_through_three_skew_lines, "
 					"the number of indices must be 3; is " << Idx_sz << endl;
@@ -645,7 +645,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		//numerics Numerics;
 
 		Idx_text.assign(argv[++i]);
-		Orbiter->Int_vec.scan(Idx_text, Idx, Idx_sz);
+		Orbiter->Int_vec->scan(Idx_text, Idx, Idx_sz);
 		if (Idx_sz != 3) {
 			cout << "For -plane_defined_by_three_points, "
 					"the number of indices must be 3; is " << Idx_sz << endl;
@@ -698,7 +698,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 		//numerics Numerics;
 
 		Idx_text.assign(argv[++i]);
-		Orbiter->Int_vec.scan(Idx_text, Idx, Idx_sz);
+		Orbiter->Int_vec->scan(Idx_text, Idx, Idx_sz);
 		if (Idx_sz != 2) {
 			cout << "For -line_through_two_existing_points, "
 					"the number of indices must be 2; is " << Idx_sz << endl;
@@ -796,7 +796,7 @@ int scene::scan1(int argc, std::string *argv, int &i, int verbose_level)
 int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (ST.stringcmp(argv[i], "-group_of_things") == 0) {
 		cout << "-group_of_things" << endl;
@@ -806,9 +806,9 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 
 		Idx_text.assign(argv[++i]);
 		cout << "group: " << Idx_text << endl;
-		Orbiter->Int_vec.scan(Idx_text, Idx, Idx_sz);
+		Orbiter->Int_vec->scan(Idx_text, Idx, Idx_sz);
 		cout << "group: ";
-		Orbiter->Int_vec.print(cout, Idx, Idx_sz);
+		Orbiter->Int_vec->print(cout, Idx, Idx_sz);
 		cout << endl;
 		add_a_group_of_things(Idx, Idx_sz, verbose_level);
 		FREE_int(Idx);
@@ -823,7 +823,7 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 
 		offset = ST.strtoi(argv[++i]);
 		Idx_text.assign(argv[++i]);
-		Orbiter->Int_vec.scan(Idx_text, Idx, Idx_sz);
+		Orbiter->Int_vec->scan(Idx_text, Idx, Idx_sz);
 		for (h = 0; h < Idx_sz; h++) {
 			Idx[h] += offset;
 		}
@@ -855,13 +855,13 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		int *Idx;
 		int *exceptions;
 		int exceptions_sz;
-		sorting Sorting;
+		data_structures::sorting Sorting;
 
 		start = ST.strtoi(argv[++i]);
 		len = ST.strtoi(argv[++i]);
 		exceptions_text.assign(argv[++i]);
 
-		Orbiter->Int_vec.scan(exceptions_text, exceptions, exceptions_sz);
+		Orbiter->Int_vec->scan(exceptions_text, exceptions, exceptions_sz);
 
 		Idx = NEW_int(len);
 		for (h = 0; h < len; h++) {
@@ -922,7 +922,7 @@ int scene::scan2(int argc, std::string *argv, int &i, int verbose_level)
 		int sz;
 		int j, r;
 		os_interface Os;
-		sorting Sorting;
+		data_structures::sorting Sorting;
 
 		group_idx = ST.strtoi(argv[++i]);
 		percentage = ST.strtoi(argv[++i]);
@@ -1178,7 +1178,7 @@ int scene::read_scene_objects(int argc, std::string *argv,
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	if (f_v) {
 		cout << "scene::read_scene_objects" << endl;

@@ -54,7 +54,7 @@ int main(int argc, const char **argv)
 
 
 	std::string *Argv;
-	string_tools ST;
+	data_structures::string_tools ST;
 
 	cout << "argc=" << argc << endl;
 

@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace data_structures {
 
 
 nauty_output::nauty_output()
@@ -164,4 +165,5 @@ int nauty_output::belong_to_the_same_orbit(int a, int b, int verbose_level)
 
 
 
-}}
+}}}
+

@@ -271,7 +271,7 @@ void projective_space_with_action::canonical_form(
 #endif
 
 void projective_space_with_action::canonical_labeling(
-	object_with_canonical_form *OiP,
+		object_with_canonical_form *OiP,
 	int *canonical_labeling,
 	int verbose_level)
 {
@@ -293,9 +293,9 @@ void projective_space_with_action::canonical_labeling(
 			nb_rows, nb_cols,
 			0 /* verbose_level */);
 
-	nauty_output *NO;
+	data_structures::nauty_output *NO;
 
-	NO = NEW_OBJECT(nauty_output);
+	NO = NEW_OBJECT(data_structures::nauty_output);
 	NO->allocate(nb_rows + nb_cols, 0 /* verbose_level */);
 
 
@@ -366,7 +366,7 @@ void projective_space_with_action::report_fixed_points_lines_and_planes(
 		F->PG_element_unrank_modified(v, 1, 4, i);
 		if (j == i) {
 			ost << i << " : ";
-			Orbiter->Int_vec.print(ost, v, 4);
+			Orbiter->Int_vec->print(ost, v, 4);
 			ost << "\\\\" << endl;
 			cnt++;
 		}
@@ -733,7 +733,7 @@ void projective_space_with_action::map(formula *Formula,
 
 	if (f_v) {
 		cout << "projective_space_with_action::map coefficient vector:" << endl;
-		Orbiter->Int_vec.print(cout, Coefficient_vector, nb_monomials);
+		Orbiter->Int_vec->print(cout, Coefficient_vector, nb_monomials);
 		cout << endl;
 	}
 
@@ -854,7 +854,7 @@ void projective_space_with_action::analyze_del_Pezzo_surface(formula *Formula,
 
 	if (f_v) {
 		cout << "projective_space_with_action::analyze_del_Pezzo_surface coefficient vector:" << endl;
-		Orbiter->Int_vec.print(cout, Coefficient_vector, nb_monomials);
+		Orbiter->Int_vec->print(cout, Coefficient_vector, nb_monomials);
 		cout << endl;
 	}
 
@@ -1144,7 +1144,7 @@ void projective_space_with_action::create_quartic_curve(
 void projective_space_with_action::canonical_form_of_code(
 		std::string &label,
 		int *genma, int m, int n,
-		classification_of_objects_description *Canonical_form_codes_Descr,
+		combinatorics::classification_of_objects_description *Canonical_form_codes_Descr,
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -1158,7 +1158,7 @@ void projective_space_with_action::canonical_form_of_code(
 
 	if (f_v) {
 		cout << "Generator matrix: " << endl;
-		Orbiter->Int_vec.matrix_print(genma, m, n);
+		Orbiter->Int_vec->matrix_print(genma, m, n);
 		cout << endl;
 	}
 	v = NEW_int(m);
@@ -1170,7 +1170,7 @@ void projective_space_with_action::canonical_form_of_code(
 		if (f_v) {
 			cout << "projective_space_with_action::canonical_form_of_code "
 					"before PA->P->rank_point" << endl;
-			Orbiter->Int_vec.print(cout, v, m);
+			Orbiter->Int_vec->print(cout, v, m);
 			cout << endl;
 		}
 		if (P == NULL) {
@@ -1181,11 +1181,11 @@ void projective_space_with_action::canonical_form_of_code(
 	}
 	if (f_v) {
 		cout << "projective_space_with_action::canonical_form_of_code set=";
-		Orbiter->Lint_vec.print(cout, set, n);
+		Orbiter->Lint_vec->print(cout, set, n);
 		cout << endl;
 	}
 
-	string_tools ST;
+	data_structures::string_tools ST;
 	string points_as_string;
 
 	ST.create_comma_separated_list(points_as_string, set, n);
@@ -1194,14 +1194,14 @@ void projective_space_with_action::canonical_form_of_code(
 				"points_as_string=" << points_as_string << endl;
 	}
 
-	data_input_stream_description ISD;
-	data_input_stream_description_element E;
+	data_structures::data_input_stream_description ISD;
+	data_structures::data_input_stream_description_element E;
 
 	E.init_set_of_points(points_as_string);
 	ISD.Input.push_back(E);
 	ISD.nb_inputs++;
 
-	data_input_stream IS;
+	data_structures::data_input_stream IS;
 
 	IS.init(&ISD, verbose_level);
 
@@ -1250,7 +1250,7 @@ void projective_space_with_action::canonical_form_of_code(
 	COAD.Canonical_form_PG_Descr = Canonical_form_codes_Descr;
 
 	COAD.f_report = TRUE;
-	COAD.Classification_of_objects_report_options = NEW_OBJECT(classification_of_objects_report_options);
+	COAD.Classification_of_objects_report_options = NEW_OBJECT(combinatorics::classification_of_objects_report_options);
 	COAD.Classification_of_objects_report_options->f_prefix = TRUE;
 	COAD.Classification_of_objects_report_options->prefix.assign(COAD.Canonical_form_PG_Descr->label);
 	COAD.Classification_of_objects_report_options->f_export_flag_orbits = TRUE;
@@ -1336,7 +1336,7 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 		string stab_order;
 
 		long int ago;
-		string_tools ST;
+		data_structures::string_tools ST;
 
 		if (f_v) {
 			cout << "projective_space_with_action::table_of_quartic_curves "
@@ -1420,13 +1420,13 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 				{
 					string str;
 					f << ",";
-					Orbiter->Int_vec.create_string_with_quotes(str, QC[i]->QO->QP->line_type_distribution, 3);
+					Orbiter->Int_vec->create_string_with_quotes(str, QC[i]->QO->QP->line_type_distribution, 3);
 					f << str;
 				}
 				{
 					string str;
 					f << ",";
-					Orbiter->Int_vec.create_string_with_quotes(str, QC[i]->QO->eqn15, 15);
+					Orbiter->Int_vec->create_string_with_quotes(str, QC[i]->QO->eqn15, 15);
 					f << str;
 				}
 
@@ -1444,13 +1444,13 @@ void projective_space_with_action::table_of_quartic_curves(int verbose_level)
 				{
 					string str;
 					f << ",";
-					Orbiter->Lint_vec.create_string_with_quotes(str, QC[i]->QO->Pts, QC[i]->QO->nb_pts);
+					Orbiter->Lint_vec->create_string_with_quotes(str, QC[i]->QO->Pts, QC[i]->QO->nb_pts);
 					f << str;
 				}
 				{
 					string str;
 					f << ",";
-					Orbiter->Lint_vec.create_string_with_quotes(str, QC[i]->QO->bitangents28, 28);
+					Orbiter->Lint_vec->create_string_with_quotes(str, QC[i]->QO->bitangents28, 28);
 					f << str;
 				}
 			}
@@ -1538,9 +1538,9 @@ void projective_space_with_action::conic_type(
 	cout << "We found the following conics:" << endl;
 	for (h = 0; h < len; h++) {
 		cout << h << " : " << nb_pts_on_conic[h] << " : ";
-		Orbiter->Int_vec.print(cout, Conic_eqn[h], 6);
+		Orbiter->Int_vec->print(cout, Conic_eqn[h], 6);
 		cout << " : ";
-		Orbiter->Lint_vec.print(cout, Pts_on_conic[h], nb_pts_on_conic[h]);
+		Orbiter->Lint_vec->print(cout, Pts_on_conic[h], nb_pts_on_conic[h]);
 		cout << endl;
 	}
 
@@ -1583,7 +1583,7 @@ void projective_space_with_action::conic_type(
 	}
 
 	Conic_line_intersection_sz = NEW_int(len * 55);
-	Orbiter->Int_vec.zero(Conic_line_intersection_sz, len * 55);
+	Orbiter->Int_vec->zero(Conic_line_intersection_sz, len * 55);
 
 	for (h = 0; h < len; h++) {
 		for (u = 0; u < 55; u++) {
@@ -1596,17 +1596,17 @@ void projective_space_with_action::conic_type(
 		}
 	}
 
-	sorting Sorting;
+	data_structures::sorting Sorting;
 	int idx;
 
 	cout << "We found the following conics and their intersections with the 55 bisecants:" << endl;
 	for (h = 0; h < len; h++) {
 		cout << h << " : " << nb_pts_on_conic[h] << " : ";
-		Orbiter->Int_vec.print(cout, Conic_eqn[h], 6);
+		Orbiter->Int_vec->print(cout, Conic_eqn[h], 6);
 		cout << " : ";
-		Orbiter->Int_vec.print_fully(cout, Conic_line_intersection_sz + h * 55, 55);
+		Orbiter->Int_vec->print_fully(cout, Conic_line_intersection_sz + h * 55, 55);
 		cout << " : ";
-		Orbiter->Lint_vec.print(cout, Pts_on_conic[h], nb_pts_on_conic[h]);
+		Orbiter->Lint_vec->print(cout, Pts_on_conic[h], nb_pts_on_conic[h]);
 		cout << " : ";
 		cout << endl;
 	}
@@ -1615,14 +1615,14 @@ void projective_space_with_action::conic_type(
 		cout << "line " << u << " : ";
 		int str[55];
 
-		Orbiter->Int_vec.zero(str, 55);
+		Orbiter->Int_vec->zero(str, 55);
 		for (v = 0; v < nb_pts; v++) {
 			pt = Pts[v];
 			if (Sorting.lint_vec_search_linear(pts_on_line + u * nb_pts_per_line, nb_pts_per_line, pt, idx)) {
 				str[v] = 1;
 			}
 		}
-		Orbiter->Int_vec.print_fully(cout, str, 55);
+		Orbiter->Int_vec->print_fully(cout, str, 55);
 		cout << endl;
 	}
 
@@ -2011,8 +2011,9 @@ int table_of_sets_compare_func(void *data, int i,
 	long int *p = (long int *) extra_data;
 	long int len = p[0];
 	int ret;
+	data_structures::sorting Sorting;
 
-	ret = lint_vec_compare(Data + i * len, (long int *) search_object, len);
+	ret = Sorting.lint_vec_compare(Data + i * len, (long int *) search_object, len);
 	return ret;
 }
 

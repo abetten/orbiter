@@ -211,7 +211,7 @@ void decomposition_with_fuse::init_tdo_line(int fuse_idx, int tdo_line,
 	if (f_v) {
 		cout << "decomposition_with_fuse::init_tdo_line tdo_line=" << tdo_line << endl;
 		cout << "r=";
-		Orbiter->Int_vec.print(cout, r, gg->GB->b_len);
+		Orbiter->Int_vec->print(cout, r, gg->GB->b_len);
 		cout << endl;
 	}
 	if (tdo_line >= gg->GB->v_len) {
@@ -486,11 +486,11 @@ void decomposition_with_fuse::init_partition(int verbose_level)
 
 	if (f_v) {
 		cout << "row_partition: ";
-		Orbiter->Int_vec.print(cout, row_partition, gg->GB->V);
+		Orbiter->Int_vec->print(cout, row_partition, gg->GB->V);
 		cout << endl;
 
 		cout << "col_partition: ";
-		Orbiter->Int_vec.print(cout, col_partition, gg->GB->B);
+		Orbiter->Int_vec->print(cout, col_partition, gg->GB->B);
 		cout << endl;
 	}
 
@@ -498,15 +498,15 @@ void decomposition_with_fuse::init_partition(int verbose_level)
 
 	for (i = 0; i <= gg->GB->V; i++) {
 		Partition[i] = NEW_int(i + gg->GB->B);
-		Orbiter->Int_vec.copy(row_partition, Partition[i], i);
+		Orbiter->Int_vec->copy(row_partition, Partition[i], i);
 		if (i) {
 			Partition[i][i - 1] = 0;
 		}
-		Orbiter->Int_vec.copy(col_partition, Partition[i] + i, gg->GB->B);
+		Orbiter->Int_vec->copy(col_partition, Partition[i] + i, gg->GB->B);
 
 		if (f_v) {
 			cout << "Partition[" << i << "]: ";
-			Orbiter->Int_vec.print(cout, Partition[i], i + gg->GB->B);
+			Orbiter->Int_vec->print(cout, Partition[i], i + gg->GB->B);
 			cout << endl;
 		}
 	}
@@ -515,18 +515,18 @@ void decomposition_with_fuse::init_partition(int verbose_level)
 
 	for (i = 0; i <= gg->GB->V; i++) {
 		Partition_fixing_last[i] = NEW_int(i + gg->GB->B);
-		Orbiter->Int_vec.copy(row_partition, Partition_fixing_last[i], i);
+		Orbiter->Int_vec->copy(row_partition, Partition_fixing_last[i], i);
 		if (i) {
 			Partition_fixing_last[i][i - 1] = 0;
 		}
 		if (i >= 2) {
 			Partition_fixing_last[i][i - 2] = 0;
 		}
-		Orbiter->Int_vec.copy(col_partition, Partition_fixing_last[i] + i, gg->GB->B);
+		Orbiter->Int_vec->copy(col_partition, Partition_fixing_last[i] + i, gg->GB->B);
 
 		if (f_v) {
 			cout << "Partition_fixing_last[" << i << "]: ";
-			Orbiter->Int_vec.print(cout, Partition_fixing_last[i], i + gg->GB->B);
+			Orbiter->Int_vec->print(cout, Partition_fixing_last[i], i + gg->GB->B);
 			cout << endl;
 		}
 	}

@@ -65,7 +65,7 @@ void BLT_set_create::init(
 {
 	int f_v = (verbose_level >= 1);
 	number_theory_domain NT;
-	string_tools ST;
+	data_structures::string_tools ST;
 	
 	if (f_v) {
 		cout << "BLT_set_create::init" << endl;
@@ -272,7 +272,7 @@ void BLT_set_create::init(
 		}
 
 		set = NEW_lint(OA->Descr->F->q + 1);
-		Orbiter->Lint_vec.copy(K.BLT_representative(OA->Descr->F->q, Descr->iso), set, OA->Descr->F->q + 1);
+		Orbiter->Lint_vec->copy(K.BLT_representative(OA->Descr->F->q, Descr->iso), set, OA->Descr->F->q + 1);
 
 		Sg = NEW_OBJECT(strong_generators);
 
@@ -321,7 +321,7 @@ void BLT_set_create::init(
 
 	if (f_v) {
 		cout << "BLT_set_create::init set = ";
-		Orbiter->Lint_vec.print(cout, set, OA->Descr->F->q + 1);
+		Orbiter->Lint_vec->print(cout, set, OA->Descr->F->q + 1);
 		cout << endl;
 	}
 
@@ -459,7 +459,7 @@ void BLT_set_create::print_set_of_points(std::ostream &ost, long int *Pts, int n
 				OA->O->unrank_point(v, 1, Pts[I * 40 + h], 0 /* verbose_level */);
 
 				ost << I * 40 + h << " & " << Pts[I * 40 + h] << " & ";
-				Orbiter->Int_vec.print(ost, v, n + 1);
+				Orbiter->Int_vec->print(ost, v, n + 1);
 				ost << "\\\\" << endl;
 			}
 		}
@@ -497,7 +497,7 @@ void BLT_set_create::print_set_of_points_with_ABC(std::ostream &ost, long int *P
 				c = ABC[3 * (I * 40 + h) + 2];
 
 				ost << I * 40 + h << " & " << Pts[I * 40 + h] << " & ";
-				Orbiter->Int_vec.print(ost, v, n + 1);
+				Orbiter->Int_vec->print(ost, v, n + 1);
 				ost << " & ";
 				ost << "(";
 				ost << a;

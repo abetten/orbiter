@@ -66,7 +66,7 @@ void orbits_on_subspaces::init(group_theoretic_activity *GTA,
 	orbits_on_subspaces_M = NEW_int(n * n);
 	orbits_on_subspaces_base_cols = NEW_int(n);
 
-	orbits_on_subspaces_VS = NEW_OBJECT(vector_space);
+	orbits_on_subspaces_VS = NEW_OBJECT(algebra::vector_space);
 	orbits_on_subspaces_VS->init(GTA->AG->LG->F, n /* dimension */, verbose_level - 1);
 	orbits_on_subspaces_VS->init_rank_functions(
 			orbits_on_subspaces_rank_point_func,

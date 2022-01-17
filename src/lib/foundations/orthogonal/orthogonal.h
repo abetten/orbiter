@@ -51,7 +51,7 @@ public:
 		int verbose_level);
 	void compute_adjacency_list_fast(int first_point_of_starter,
 		long int *points, int nb_points, int *point_color,
-		bitvector *&Bitvec,
+		data_structures::bitvector *&Bitvec,
 		int verbose_level);
 	void compute_colors(int orbit_at_level,
 		long int *starter, int starter_sz,
@@ -103,9 +103,9 @@ public:
 	int *intersection_matrix;
 	int nb_planes;
 
-	set_of_sets *Sos;
-	set_of_sets *Sos2;
-	set_of_sets *Sos3;
+	data_structures::set_of_sets *Sos;
+	data_structures::set_of_sets *Sos2;
+	data_structures::set_of_sets *Sos3;
 
 	decomposition *D2;
 	decomposition *D3;
@@ -322,7 +322,7 @@ public:
 			int *line_pencil_line_ranks, int verbose_level);
 	void lines_on_point_by_line_rank(long int pt,
 		long int *line_pencil_line_ranks, int verbose_level);
-	void make_initial_partition(partitionstack &S,
+	void make_initial_partition(data_structures::partitionstack &S,
 		int verbose_level);
 	void point_to_line_map(int size,
 		long int *point_ranks, int *&line_vector,

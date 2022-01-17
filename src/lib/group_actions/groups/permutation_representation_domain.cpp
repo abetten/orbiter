@@ -87,7 +87,7 @@ void permutation_representation_domain::allocate()
 	Eltrk2 = NEW_int(elt_size_int);
 	Eltrk3 = NEW_int(elt_size_int);
 
-	Elts = NEW_OBJECT(page_storage);
+	Elts = NEW_OBJECT(data_structures::page_storage);
 }
 
 void permutation_representation_domain::init_product_action(int m, int n,
@@ -274,7 +274,7 @@ void permutation_representation_domain::init_with_base(int degree,
 
 	if (f_v) {
 		cout << "base: ";
-		Orbiter->Lint_vec.print(cout, A.get_base(), A.base_len());
+		Orbiter->Lint_vec->print(cout, A.get_base(), A.base_len());
 		cout << endl;
 		//cout << "transversal_length: ";
 		//print_set(cout, A.base_len, A.transversal_length);
@@ -341,7 +341,7 @@ int permutation_representation_domain::is_one(int *Elt)
 
 void permutation_representation_domain::mult(int *A, int *B, int *AB)
 {
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	//cout << "in perm_group::mult()" << endl;
 	Combi.perm_mult(A, B, AB, degree);
@@ -360,7 +360,7 @@ void permutation_representation_domain::copy(int *A, int *B)
 
 void permutation_representation_domain::invert(int *A, int *Ainv)
 {
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	Combi.perm_inverse(A, Ainv, degree);
 }
@@ -395,7 +395,7 @@ void permutation_representation_domain::pack(int *Elt, uchar *elt)
 
 void permutation_representation_domain::print(int *Elt, ostream &ost)
 {
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	//cout << "perm_group::print before perm_print" << endl;
 	Combi.perm_print(ost, Elt, degree);
@@ -408,7 +408,7 @@ void permutation_representation_domain::print_with_print_point_function(int *Elt
 		void (*point_label)(std::stringstream &sstr, long int pt, void *data),
 		void *point_label_data)
 {
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 
 	//cout << "perm_group::print before perm_print" << endl;
 	Combi.perm_print_with_print_point_function(ost, Elt, degree, point_label, point_label_data);
@@ -418,7 +418,7 @@ void permutation_representation_domain::print_with_print_point_function(int *Elt
 
 void permutation_representation_domain::code_for_make_element(int *Elt, int *data)
 {
-	Orbiter->Int_vec.copy(Elt, data, degree);
+	Orbiter->Int_vec->copy(Elt, data, degree);
 }
 
 void permutation_representation_domain::print_for_make_element(int *Elt, ostream &ost)
@@ -446,7 +446,7 @@ void permutation_representation_domain::print_with_action(action *A, int *Elt, o
 	//ost << endl;
 	int i, bi, a;
 	int x1, y1, x2, y2; // if in product action
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 	if (A->base_len() < A->degree) {
 		for (i = 0; i < A->base_len(); i++) {
@@ -499,7 +499,7 @@ void permutation_representation_domain::make_element(int *Elt, int *data, int ve
 	int f_vv = (verbose_level >= 2);
 	int i, a;
 	int *my_data;
-	combinatorics_domain Combi;
+	combinatorics::combinatorics_domain Combi;
 	
 
 	if (f_v) {
@@ -507,7 +507,7 @@ void permutation_representation_domain::make_element(int *Elt, int *data, int ve
 	}
 	if (f_vv) {
 		cout << "data: ";
-		Orbiter->Int_vec.print(cout, data, elt_size_int);
+		Orbiter->Int_vec->print(cout, data, elt_size_int);
 		cout << endl;
 	}
 

@@ -44,13 +44,13 @@ void orbit_node::init(classification_step *C, int orbit_index,
 	if (f_v) {
 		cout << "orbit_node::init "
 				"orbit_index=" << orbit_index << " rep=";
-		Orbiter->Lint_vec.print(cout, Rep, C->representation_sz);
+		Orbiter->Lint_vec->print(cout, Rep, C->representation_sz);
 		cout << endl;
 	}
 	orbit_node::C = C;
 	orbit_node::orbit_index = orbit_index;
 	orbit_node::gens = gens;
-	Orbiter->Lint_vec.copy(Rep,
+	Orbiter->Lint_vec->copy(Rep,
 			C->Rep + orbit_index * C->representation_sz,
 			C->representation_sz);
 	orbit_node::extra_data = extra_data;
