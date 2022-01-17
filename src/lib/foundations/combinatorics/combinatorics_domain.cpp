@@ -3645,35 +3645,23 @@ void combinatorics_domain::create_incidence_matrix_of_graph(int *Adj, int n,
 }
 
 
-//##############################################################################
-// global functions, for instance for nauty_interface.cpp:
-//##############################################################################
 
-#if 0
-long int callback_ij2k(long int i, long int j, int n)
-{
-	combinatorics_domain Combi;
-
-	return Combi.ij2k_lint(i, j, n);
-}
-#endif
-
-void combinatorics_domain_free_global_data()
+void combinatorics_domain::free_global_data()
 {
 	int verbose_level = 0;
 	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "combinatorics_domain_free_global_data" << endl;
+		cout << "combinatorics_domain::free_global_data" << endl;
 	}
 	if (tab_binomials) {
 		if (f_v) {
-			cout << "combinatorics_domain_free_global_data before "
+			cout << "combinatorics_domain::free_global_data before "
 					"FREE_OBJECTS(tab_binomials)" << endl;
 		}
 		FREE_OBJECTS(tab_binomials);
 		if (f_v) {
-			cout << "combinatorics_domain_free_global_data after "
+			cout << "combinatorics_domain::free_global_data after "
 					"FREE_OBJECTS(tab_binomials)" << endl;
 		}
 		tab_binomials = NULL;
@@ -3681,23 +3669,23 @@ void combinatorics_domain_free_global_data()
 		}
 	if (tab_q_binomials) {
 		if (f_v) {
-			cout << "combinatorics_domain_free_global_data before "
+			cout << "combinatorics_domain::free_global_data before "
 					"FREE_OBJECTS(tab_q_binomials)" << endl;
 		}
 		FREE_OBJECTS(tab_q_binomials);
 		if (f_v) {
-			cout << "combinatorics_domain_free_global_data after "
+			cout << "combinatorics_domain::free_global_data after "
 					"FREE_OBJECTS(tab_q_binomials)" << endl;
 		}
 		tab_q_binomials = NULL;
 		tab_q_binomials_size = 0;
 		}
 	if (f_v) {
-		cout << "combinatorics_domain_free_global_data done" << endl;
+		cout << "combinatorics_domain::free_global_data done" << endl;
 	}
 }
 
-void combinatorics_domain_free_tab_q_binomials()
+void combinatorics_domain::free_tab_q_binomials()
 {
 	if (tab_q_binomials) {
 		FREE_OBJECTS(tab_q_binomials);

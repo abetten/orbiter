@@ -8,3 +8,8 @@ clean: ;
 
 install: ;
 	cd src; $(MAKE) install
+
+	
+html:
+	cp makefile_doxygen ~/public_html/orbiter/html
+	

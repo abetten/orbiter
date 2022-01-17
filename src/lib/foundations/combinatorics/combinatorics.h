@@ -286,8 +286,6 @@ public:
 };
 
 
-void print_summary_table_entry(int *Table,
-		int m, int n, int i, int j, int val, std::string &output, void *data);
 
 
 
@@ -470,13 +468,11 @@ public:
 	void create_incidence_matrix_of_graph(int *Adj, int n,
 			int *&M, int &nb_rows, int &nb_cols,
 			int verbose_level);
+	void free_global_data();
+	void free_tab_q_binomials();
 
 };
 
-// combinatorics.cpp:
-//long int callback_ij2k(long int i, long int j, int n);
-void combinatorics_domain_free_global_data();
-void combinatorics_domain_free_tab_q_binomials();
 
 
 
@@ -626,14 +622,12 @@ public:
 		int verbose_level);
 	void copy(geo_parameter &GP2);
 	void print_schemes();
+	int tdo_scheme_get_row_class_length_fused(tdo_scheme_synthetic &G,
+			int h, int class_first, int class_len);
+	int tdo_scheme_get_col_class_length_fused(tdo_scheme_synthetic &G,
+			int h, int class_first, int class_len);
 };
 
-void int_vec_classify(int *v, int len,
-		int *class_first, int *class_len, int &nb_classes);
-int tdo_scheme_get_row_class_length_fused(tdo_scheme_synthetic &G,
-		int h, int class_first, int class_len);
-int tdo_scheme_get_col_class_length_fused(tdo_scheme_synthetic &G,
-		int h, int class_first, int class_len);
 
 
 // #############################################################################
@@ -697,10 +691,6 @@ class pentomino_puzzle {
 };
 
 
-void pentomino_puzzle_compute_image_function(data_structures::set_of_sets *S,
-		void *compute_image_data, int elt_idx,
-		int gen_idx, int &idx_of_image, int verbose_level);
-int pentomino_puzzle_compare_func(void *vec, void *a, int b, void *data_for_compare);
 
 
 
@@ -866,14 +856,6 @@ class tdo_refinement {
 		// refinement gave a tactical decomposition
 };
 
-void print_distribution(std::ostream &ost,
-	int *types, int nb_types, int type_len,
-	int *distributions, int nb_distributions);
-int compare_func_int_vec(void *a, void *b, void *data);
-int compare_func_int_vec_inverse(void *a, void *b, void *data);
-void distribution_reverse_sorting(int f_increasing,
-	int *types, int nb_types, int type_len,
-	int *distributions, int nb_distributions);
 
 
 // #############################################################################

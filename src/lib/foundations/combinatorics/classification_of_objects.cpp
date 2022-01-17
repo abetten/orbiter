@@ -18,6 +18,8 @@ namespace foundations {
 namespace combinatorics {
 
 
+static void print_summary_table_entry(int *Table,
+		int m, int n, int i, int j, int val, std::string &output, void *data);
 
 
 classification_of_objects::classification_of_objects()
@@ -1023,7 +1025,7 @@ void classification_of_objects::report_object(std::ostream &fp,
 
 
 
-void print_summary_table_entry(int *Table,
+static void print_summary_table_entry(int *Table,
 		int m, int n, int i, int j, int val, std::string &output, void *data)
 {
 	int f_v = TRUE;

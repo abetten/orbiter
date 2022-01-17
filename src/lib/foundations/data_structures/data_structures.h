@@ -191,7 +191,6 @@ public:
 
 };
 
-int compare_func_for_bitvectors(void *a, void *b, void *data);
 
 
 
@@ -761,7 +760,7 @@ public:
 
 
 
-//! partitionstack for set partitions following Jeffrey Leon
+//! data structure for set partitions following Jeffrey Leon
 
 
 class partitionstack {
@@ -1136,8 +1135,6 @@ public:
 	int find_smallest_class();
 };
 
-int set_of_sets_compare_func(void *data, int i, int j, void *extra_data);
-void set_of_sets_swap_func(void *data, int i, int j, void *extra_data);
 
 
 // #############################################################################
@@ -1219,7 +1216,6 @@ public:
 		int (*compare_func)(void *a, void *b, void *data), void *data);
 	void quicksort_array_with_perm(int len, void **v, int *perm,
 		int (*compare_func)(void *a, void *b, void *data), void *data);
-	//void int_vec_sort(int len, int *p);
 	int vec_search(void **v, int (*compare_func)(void *a, void *b, void *data),
 		void *data_for_compare,
 		int len, void *a, int &idx, int verbose_level);
@@ -1362,18 +1358,11 @@ public:
 	int test_if_sets_are_disjoint_not_assuming_sorted(long int *v, long int *w, int len);
 	int int_vec_compare(int *p, int *q, int len);
 	int int_vec_compare_stride(int *p, int *q, int len, int stride);
+	void sorted_vec_get_first_and_length(int *v, int len,
+			int *class_first, int *class_len, int &nb_classes);
+	// we assume that the vector v is sorted.
 
 };
-
-int int_compare_increasingly(void *a, void *b, void *data);
-int int_compare_decreasingly(void *a, void *b, void *data);
-int compare_increasingly_int(int a, int b);
-int compare_decreasingly_int(int a, int b);
-int compare_increasingly_lint(long int a, long int b);
-int compare_decreasingly_lint(long int a, long int b);
-int int_vec_compare(int *p, int *q, int len);
-int lint_vec_compare(long int *p, long int *q, int len);
-int int_vec_compare_stride(int *p, int *q, int len, int stride);
 
 
 // #############################################################################

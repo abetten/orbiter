@@ -21,8 +21,10 @@ void free_global_data()
 		cout << "discreta_global free_global_data" << endl;
 	}
 	//orthogonal_points_free_global_data();
-	combinatorics::combinatorics_domain_free_global_data();
-	combinatorics::combinatorics_domain_free_tab_q_binomials();
+	combinatorics::combinatorics_domain Combi;
+
+	Combi.free_global_data();
+	Combi.free_tab_q_binomials();
 	if (f_v) {
 		cout << "discreta_global free_global_data done" << endl;
 	}
