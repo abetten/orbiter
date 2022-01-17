@@ -10,24 +10,25 @@ Please find the user's guide here:
 https://www.math.colostate.edu/~betten/orbiter/users_guide.pdf
 
 
-Please find the programmer's guide here:
+There are two programmer's guides. 
+
+One is a pdf file:
+
 
 
 https://www.math.colostate.edu/~betten/orbiter/orbiter_programmers_guide.pdf
 
 
+One is a html page:
+
+
+https://www.math.colostate.edu/~betten/orbiter/html/index.html
+
+
 
 Requirements:
-terminal application (for instance SuperShell in Windows, Terminal on Macintosh)
+Windows uses can use Windows subsystem linux to install Orbiter.
 
-
-a) if you decide to compile Orbiter and install it locally:
-C++ development and standard library
-make
-
-
-b) if you want to run Orbiter through docker:
-docker
 
 
 Optional:
@@ -42,7 +43,7 @@ for how to use Orbiter as a library in C++ code.
 
 
 Anton Betten
-Sept 26, 2021
+Jan 17, 2022
 
 
 
