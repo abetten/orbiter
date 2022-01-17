@@ -1,37 +1,38 @@
-chmod -R ugo+r *
-chmod o+x search
-chmod o+x d0
-chmod o+x d1
-chmod o+x d2
-chmod o+x d3
-chmod o+x d4
-chmod o+x d5
-chmod o+x d6
-chmod o+x d7
-chmod o+x d8
-chmod o+x d9
-chmod o+x da
-chmod o+x db
-chmod o+x dc
-chmod o+x dd
-chmod o+x de
-chmod o+x df
-cd d0; chmod go+x *
-cd d1; chmod go+x *
-cd d2; chmod go+x *
-cd d3; chmod go+x *
-cd d4; chmod go+x *
-cd d5; chmod go+x *
-cd d6; chmod go+x *
-cd d7; chmod go+x *
-cd d8; chmod go+x *
-cd d9; chmod go+x *
-cd da; chmod go+x *
-cd db; chmod go+x *
-cd dc; chmod go+x *
-cd dd; chmod go+x *
-cd de; chmod go+x *
-cd df; chmod go+x *
+all:
+	chmod -R ugo+r *
+	chmod o+x search
+	chmod o+x d0
+	chmod o+x d1
+	chmod o+x d2
+	chmod o+x d3
+	chmod o+x d4
+	chmod o+x d5
+	chmod o+x d6
+	chmod o+x d7
+	chmod o+x d8
+	chmod o+x d9
+	chmod o+x da
+	chmod o+x db
+	chmod o+x dc
+	chmod o+x dd
+	chmod o+x de
+	chmod o+x df
+	cd d0; chmod go+x *
+	cd d1; chmod go+x *
+	cd d2; chmod go+x *
+	cd d3; chmod go+x *
+	cd d4; chmod go+x *
+	cd d5; chmod go+x *
+	cd d6; chmod go+x *
+	cd d7; chmod go+x *
+	cd d8; chmod go+x *
+	cd d9; chmod go+x *
+	cd da; chmod go+x *
+	cd db; chmod go+x *
+	cd dc; chmod go+x *
+	cd dd; chmod go+x *
+	cd de; chmod go+x *
+	cd df; chmod go+x *
 
 
 
