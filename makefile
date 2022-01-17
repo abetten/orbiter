@@ -11,5 +11,5 @@ install: ;
 
 	
 html:
-	cp makefile_doxygen ~/public_html/orbiter/html
-	
+	cp makefile_doxygen ~/public_html/orbiter/html/makefile
+	chmod go+x ~/public_html/orbiter/html
