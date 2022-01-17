@@ -16,6 +16,9 @@ namespace foundations {
 namespace data_structures {
 
 
+static int compare_func_for_bitvectors(void *a, void *b, void *data);
+
+
 classify_bitvectors::classify_bitvectors()
 {
 	null();
@@ -416,7 +419,7 @@ void classify_bitvectors::save(
 	}
 }
 
-int compare_func_for_bitvectors(void *a, void *b, void *data)
+static int compare_func_for_bitvectors(void *a, void *b, void *data)
 {
 	classify_bitvectors *CB = (classify_bitvectors *) data;
 	uchar *A = (uchar *) a;

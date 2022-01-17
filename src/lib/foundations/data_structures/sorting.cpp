@@ -29,6 +29,11 @@ static void quicksort(void **v, int *perm,
 	int (*compare_func)(void *a, void *b, void *data), void *data,
 	int left, int right);
 
+static int compare_increasingly_int(int a, int b);
+static int compare_decreasingly_int(int a, int b);
+static int compare_increasingly_lint(long int a, long int b);
+static int compare_decreasingly_lint(long int a, long int b);
+
 
 sorting::sorting()
 {
@@ -2590,21 +2595,6 @@ void sorting::schreier_vector_tree(
 		cout << "sorting::schreier_vector_tree after LG->create_spanning_tree" << endl;
 	}
 
-#if 0
-	int xmax = 300000;
-	int ymax = 300000;
-	int x_max = 10000;
-	int y_max = 10000;
-	int rad = 300;
-	int f_circle = TRUE;
-	int f_corners = FALSE;
-	int f_nodes_empty = FALSE;
-	int f_show_level_info = FALSE;
-	int f_label_edges = FALSE;
-	int f_rotated = FALSE;
-	double scale = .45;
-	double line_width = 1.5;
-#endif
 
 	string fname;
 
@@ -2612,20 +2602,6 @@ void sorting::schreier_vector_tree(
 	fname.append(".layered_graph");
 
 
-#if 0
-
-	layered_graph_draw_options O;
-
-	O.init(xmax, ymax, x_max, y_max, rad,
-		f_circle, f_corners, f_nodes_empty,
-		FALSE, 0, NULL,
-		FALSE, NULL,
-		FALSE, NULL,
-		FALSE, NULL,
-		f_show_level_info, f_embedded, f_sideways, f_label_edges,
-		f_rotated,
-		scale, line_width);
-#endif
 
 	LG->write_file(fname, 0 /*verbose_level*/);
 	LG->draw_with_options(fname_base, LG_Draw_options,
@@ -2925,6 +2901,28 @@ int sorting::int_vec_compare_stride(int *p, int *q, int len, int stride)
 	return 0;
 }
 
+void sorting::sorted_vec_get_first_and_length(int *v, int len,
+		int *class_first, int *class_len, int &nb_classes)
+// we assume that the vector v is sorted.
+{
+	int i;
+
+	nb_classes = 0;
+	class_first[0] = 0;
+	class_len[0] = 1;
+	for (i = 1; i < len; i++) {
+		if (v[i] == v[i - 1]) {
+			class_len[nb_classes]++;
+		}
+		else {
+			nb_classes++;
+			class_first[nb_classes] =
+					class_first[nb_classes - 1] + class_len[nb_classes - 1];
+			class_len[nb_classes] = 1;
+		}
+	}
+	nb_classes++;
+}
 
 //##############################################################################
 // global functions:
@@ -3114,32 +3112,7 @@ static void quicksort(void **v, int *perm,
 		}
 }
 
-
-int int_compare_increasingly(void *a, void *b, void *data)
-{
-	int *A = (int *)a;
-	int *B = (int *)b;
-
-	if (*A > *B)
-		return 1;
-	if (*A < *B)
-		return -1;
-	return 0;
-}
-
-int int_compare_decreasingly(void *a, void *b, void *data)
-{
-	int *A = (int *)a;
-	int *B = (int *)b;
-
-	if (*A > *B)
-		return -1;
-	if (*A < *B)
-		return 1;
-	return 0;
-}
-
-int compare_increasingly_int(int a, int b)
+static int compare_increasingly_int(int a, int b)
 {
 	if (a < b)
 		return -1;
@@ -3148,7 +3121,7 @@ int compare_increasingly_int(int a, int b)
 	return 0;
 }
 
-int compare_decreasingly_int(int a, int b)
+static int compare_decreasingly_int(int a, int b)
 {
 	if (a > b)
 		return -1;
@@ -3157,7 +3130,7 @@ int compare_decreasingly_int(int a, int b)
 	return 0;
 }
 
-int compare_increasingly_lint(long int a, long int b)
+static int compare_increasingly_lint(long int a, long int b)
 {
 	if (a < b)
 		return -1;
@@ -3166,7 +3139,7 @@ int compare_increasingly_lint(long int a, long int b)
 	return 0;
 }
 
-int compare_decreasingly_lint(long int a, long int b)
+static int compare_decreasingly_lint(long int a, long int b)
 {
 	if (a > b)
 		return -1;
@@ -3174,46 +3147,6 @@ int compare_decreasingly_lint(long int a, long int b)
 		return 1;
 	return 0;
 }
-
-int int_vec_compare(int *p, int *q, int len)
-{
-	int i;
-
-	for (i = 0; i < len; i++) {
-		if (p[i] < q[i])
-			return -1;
-		if (p[i] > q[i])
-			return 1;
-		}
-	return 0;
-}
-
-int lint_vec_compare(long int *p, long int *q, int len)
-{
-	int i;
-
-	for (i = 0; i < len; i++) {
-		if (p[i] < q[i])
-			return -1;
-		if (p[i] > q[i])
-			return 1;
-		}
-	return 0;
-}
-
-int int_vec_compare_stride(int *p, int *q, int len, int stride)
-{
-	int i;
-
-	for (i = 0; i < len; i++) {
-		if (p[i * stride] < q[i * stride])
-			return -1;
-		if (p[i * stride] > q[i * stride])
-			return 1;
-		}
-	return 0;
-}
-
 
 
 

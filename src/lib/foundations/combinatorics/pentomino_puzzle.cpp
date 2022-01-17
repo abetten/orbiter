@@ -16,6 +16,10 @@ namespace orbiter {
 namespace foundations {
 namespace combinatorics {
 
+static void pentomino_puzzle_compute_image_function(data_structures::set_of_sets *S,
+		void *compute_image_data, int elt_idx,
+		int gen_idx, int &idx_of_image, int verbose_level);
+static int pentomino_puzzle_compare_func(void *vec, void *a, int b, void *data_for_compare);
 
 
 void pentomino_puzzle::main(int verbose_level)
@@ -1144,7 +1148,7 @@ void pentomino_puzzle::make_coefficient_matrix(diophant *D)
 }
 
 
-void pentomino_puzzle_compute_image_function(data_structures::set_of_sets *S,
+static void pentomino_puzzle_compute_image_function(data_structures::set_of_sets *S,
 		void *compute_image_data, int elt_idx,
 		int gen_idx, int &idx_of_image, int verbose_level)
 {
@@ -1154,7 +1158,7 @@ void pentomino_puzzle_compute_image_function(data_structures::set_of_sets *S,
 			gen_idx, idx_of_image, verbose_level);
 }
 
-int pentomino_puzzle_compare_func(void *vec, void *a, int b, void *data_for_compare)
+static int pentomino_puzzle_compare_func(void *vec, void *a, int b, void *data_for_compare)
 {
 	//pentomino_puzzle *PP = (pentomino_puzzle *) data_for_compare;
 	data_structures::set_of_sets *S = (data_structures::set_of_sets *) vec;

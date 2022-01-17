@@ -847,6 +847,7 @@ void geo_parameter::convert_single_to_stack_fuse_simple_pt(
 	//int f_vv = (verbose_level >= 2);
 	int I, u, l, i, j, a, sum, s, M, c, e, h, c1, c2, f;
 	tdo_scheme_synthetic G;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "geo_parameter::convert_single_to_stack_fuse_simple_pt" << endl;
@@ -876,24 +877,8 @@ void geo_parameter::convert_single_to_stack_fuse_simple_pt(
 	class_relabel[0] = 0;
 	class_relabel[nb_V] = 1;
 
-	int_vec_classify(fuse, nb_V, class_first, class_len, nb_classes);
+	Sorting.sorted_vec_get_first_and_length(fuse, nb_V, class_first, class_len, nb_classes);
 
-#if 0
-	class_first[0] = 0;
-	class_len[0] = 1;
-	for (i = 1; i < nb_V; i++) {
-		if (fuse[i] == fuse[i - 1]) {
-			class_len[nb_classes]++;
-			}
-		else {
-			nb_classes++;
-			class_first[nb_classes] =
-				class_first[nb_classes - 1] + class_len[nb_classes - 1];
-			class_len[nb_classes] = 1;
-			}
-		}
-	nb_classes++;
-#endif
 
 	prev_scheme = NEW_int(nb_classes * nb_B);
 	for (I = 0; I < nb_classes; I++) {
@@ -1063,6 +1048,7 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 	//int f_vv = (verbose_level >= 2);
 	int J, u, l, i, j, a, sum, s, L, M, c, e, h, c1, c2, f;
 	tdo_scheme_synthetic G;
+	data_structures::sorting Sorting;
 
 	if (f_v) {
 		cout << "geo_parameter::convert_single_to_stack_fuse_simple_bt" << endl;
@@ -1090,25 +1076,8 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 	class_relabel[0] = 0;
 	class_relabel[nb_V] = 1;
 
-	int_vec_classify(fuse, nb_B, class_first, class_len, nb_classes);
+	Sorting.sorted_vec_get_first_and_length(fuse, nb_B, class_first, class_len, nb_classes);
 
-#if 0
-	class_first[0] = 0;
-	class_len[0] = 1;
-	for (i = 1; i < nb_B; i++) {
-		if (fuse[i] == fuse[i - 1]) {
-			class_len[nb_classes]++;
-		}
-		else {
-			nb_classes++;
-			class_first[nb_classes] =
-					class_first[nb_classes - 1] +
-					class_len[nb_classes - 1];
-			class_len[nb_classes] = 1;
-		}
-	}
-	nb_classes++;
-#endif
 	prev_scheme = NEW_int(nb_V * nb_classes);
 	for (J = 0; J < nb_classes; J++) {
 		block_length[J] = tdo_scheme_get_col_class_length_fused(G, h, 
@@ -1274,51 +1243,10 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 }
 
 
-void int_vec_classify(int *v, int len,
-		int *class_first, int *class_len, int &nb_classes)
-{
-	int i;
-	
-	nb_classes = 0;
-	class_first[0] = 0;
-	class_len[0] = 1;
-	for (i = 1; i < len; i++) {
-		if (v[i] == v[i - 1]) {
-			class_len[nb_classes]++;
-		}
-		else {
-			nb_classes++;
-			class_first[nb_classes] =
-					class_first[nb_classes - 1] + class_len[nb_classes - 1];
-			class_len[nb_classes] = 1;
-		}
-	}
-	nb_classes++;
-}
 
-int tdo_scheme_get_row_class_length_fused(tdo_scheme_synthetic &G,
-		int h, int class_first, int class_len)
-{
-	int L, u;
-	
-	L = 0;
-	for (u = 0; u < class_len; u++) {
-		L += G.row_classes_len[h][class_first + u];
-	}
-	return L;
-}
 
-int tdo_scheme_get_col_class_length_fused(tdo_scheme_synthetic &G,
-		int h, int class_first, int class_len)
-{
-	int L, u;
-	
-	L = 0;
-	for (u = 0; u < class_len; u++) {
-		L += G.col_classes_len[h][class_first + u];
-	}
-	return L;
-}
+
+
 
 void geo_parameter::convert_single_to_stack_fuse_double_pt(
 		int verbose_level)
@@ -1328,6 +1256,7 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 	int I, u, l, i, j, ii, jj, a, sum, s, M, c, e, h, c1, c2, f, d;
 	int fuse_block_first[2], fuse_block_len[2];
 	int *the_fuse[2];
+	data_structures::sorting Sorting;
 	
 	tdo_scheme_synthetic G;
 
@@ -1384,7 +1313,7 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 		class_len[d] = NEW_int(nb_V);
 		block_length[d] = NEW_int(nb_V);
 
-		int_vec_classify(the_fuse[d], nb_V,
+		Sorting.sorted_vec_get_first_and_length(the_fuse[d], nb_V,
 				class_first[d], class_len[d], nb_classes[d]);
 		for (I = 0; I < nb_classes[d]; I++) {
 			block_length[d][I] =
@@ -1962,6 +1891,35 @@ void geo_parameter::print_schemes()
 			"TDO.print_all_schemes" << endl;
 #endif
 }
+
+
+
+int geo_parameter::tdo_scheme_get_row_class_length_fused(tdo_scheme_synthetic &G,
+		int h, int class_first, int class_len)
+{
+	int L, u;
+
+	L = 0;
+	for (u = 0; u < class_len; u++) {
+		L += G.row_classes_len[h][class_first + u];
+	}
+	return L;
+}
+
+int geo_parameter::tdo_scheme_get_col_class_length_fused(tdo_scheme_synthetic &G,
+		int h, int class_first, int class_len)
+{
+	int L, u;
+
+	L = 0;
+	for (u = 0; u < class_len; u++) {
+		L += G.col_classes_len[h][class_first + u];
+	}
+	return L;
+}
+
+
+
 
 }}}
 

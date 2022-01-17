@@ -14,6 +14,10 @@ namespace orbiter {
 namespace foundations {
 namespace data_structures {
 
+static int set_of_sets_compare_func(void *data, int i, int j, void *extra_data);
+static void set_of_sets_swap_func(void *data, int i, int j, void *extra_data);
+
+
 
 set_of_sets::set_of_sets()
 {
@@ -1686,9 +1690,10 @@ int set_of_sets::find_smallest_class()
 // #############################################################################
 
 
-int set_of_sets_compare_func(void *data, int i, int j, void *extra_data)
+static int set_of_sets_compare_func(void *data, int i, int j, void *extra_data)
 {
 	set_of_sets *S = (set_of_sets *) data;
+	sorting Sorting;
 	int c;
 
 	if (S->Set_size[i] != S->Set_size[j]) {
@@ -1696,11 +1701,11 @@ int set_of_sets_compare_func(void *data, int i, int j, void *extra_data)
 				"must have the same size" << endl;
 		exit(1);
 		}
-	c = lint_vec_compare(S->Sets[i], S->Sets[j], S->Set_size[i]);
+	c = Sorting.lint_vec_compare(S->Sets[i], S->Sets[j], S->Set_size[i]);
 	return c;
 }
 
-void set_of_sets_swap_func(void *data, int i, int j, void *extra_data)
+static void set_of_sets_swap_func(void *data, int i, int j, void *extra_data)
 {
 	set_of_sets *S = (set_of_sets *) data;
 	long int *p;

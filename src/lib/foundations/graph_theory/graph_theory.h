@@ -398,11 +398,6 @@ public:
 			long int *good_candidates, int &nb_good_candidates,
 		int verbose_level);
 	int is_cycle(int nb_e, long int *edges, int verbose_level);
-#if 0
-	void draw_it(std::string &fname_base,
-		int xmax_in, int ymax_in, int xmax_out, int ymax_out, 
-		double scale, double line_width, int verbose_level);
-#endif
 	void all_cliques(
 			clique_finder_control *Control,
 			std::string &graph_label, int verbose_level);

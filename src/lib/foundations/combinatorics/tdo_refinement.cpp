@@ -18,6 +18,16 @@ namespace foundations {
 namespace combinatorics {
 
 
+static void print_distribution(std::ostream &ost,
+	int *types, int nb_types, int type_len,
+	int *distributions, int nb_distributions);
+static int compare_func_int_vec(void *a, void *b, void *data);
+static int compare_func_int_vec_inverse(void *a, void *b, void *data);
+static void distribution_reverse_sorting(int f_increasing,
+	int *types, int nb_types, int type_len,
+	int *distributions, int nb_distributions);
+
+
 tdo_refinement::tdo_refinement()
 {
 	Descr = NULL;
@@ -919,7 +929,7 @@ int tdo_refinement::do_column_refinement(
 // global stuff:
 
 
-void print_distribution(ostream &ost,
+static void print_distribution(ostream &ost,
 	int *types, int nb_types, int type_len,
 	int *distributions, int nb_distributions)
 {
@@ -992,7 +1002,7 @@ void print_distribution(ostream &ost,
 }
 
 
-int compare_func_int_vec(void *a, void *b, void *data)
+int static compare_func_int_vec(void *a, void *b, void *data)
 {
 	int *p = (int *)a;
 	int *q = (int *)b;
@@ -1011,7 +1021,7 @@ int compare_func_int_vec(void *a, void *b, void *data)
 	return 0;
 }
 
-int compare_func_int_vec_inverse(void *a, void *b, void *data)
+int static compare_func_int_vec_inverse(void *a, void *b, void *data)
 {
 	int *p = (int *)a;
 	int *q = (int *)b;
@@ -1030,7 +1040,7 @@ int compare_func_int_vec_inverse(void *a, void *b, void *data)
 	return 0;
 }
 
-void distribution_reverse_sorting(int f_increasing,
+static void distribution_reverse_sorting(int f_increasing,
 	int *types, int nb_types, int type_len,
 	int *distributions, int nb_distributions)
 {

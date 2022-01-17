@@ -18,6 +18,9 @@ namespace orbiter {
 namespace foundations {
 
 
+static int spread_table_compare_func(void *a, void *b, void *data);
+
+
 spread_tables::spread_tables()
 {
 	q = 0;
@@ -1047,7 +1050,7 @@ void spread_tables::report_one_spread(std::ostream &ost, int a)
 }
 
 
-int spread_table_compare_func(void *a, void *b, void *data)
+static int spread_table_compare_func(void *a, void *b, void *data)
 // used in spread_table
 {
 	int *A = (int *)a;
