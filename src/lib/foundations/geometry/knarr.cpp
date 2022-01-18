@@ -225,7 +225,7 @@ void knarr::points_and_lines(int verbose_level)
 	int f_v4 = (verbose_level >= 4);
 
 	int i, j, a, c, jj, h, hh, rk, u;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 
 

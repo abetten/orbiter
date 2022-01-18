@@ -66,7 +66,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 		cout << "nth_roots::init n=" << n << endl;
 	}
 	ring_theory::longinteger_domain D;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	coding_theory::coding_theory_domain Codes;
 	int i;
 
@@ -198,7 +198,7 @@ void nth_roots::init(finite_field *F, int n, int verbose_level)
 	}
 
 
-	Cyc = NEW_OBJECT(cyclotomic_sets);
+	Cyc = NEW_OBJECT(number_theory::cyclotomic_sets);
 
 	if (f_v) {
 		cout << "nth_roots::init before Cyc->init" << endl;
@@ -386,7 +386,7 @@ void nth_roots::compute_subfield(int subfield_degree, int *&field_basis, int ver
 	int p, e, q1, subgroup_index;
 	int i, j;
 	geometry_global Gg;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	ring_theory::ring_theory_global R;
 
 	p = F->p;

@@ -710,7 +710,7 @@ void incidence_structure::save_row_by_row_file(char *fname)
 {
     int i, j; //, nb_inc;
     int w;
-	number_theory_domain NT;
+    number_theory::number_theory_domain NT;
 
 	//nb_inc = get_nb_inc();
 	
@@ -2561,7 +2561,7 @@ void incidence_structure::print_partitioned(
 	int I, i, cell, l;
 	int width;
 	int mn;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	mn = nb_points() * nb_lines();
 	

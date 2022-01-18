@@ -1989,7 +1989,7 @@ void sims::zuppo_list(
 	int *Elt1;
 	int *Elt2;
 	int *f_done;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "sims::zuppo_list" << endl;

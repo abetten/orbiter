@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace geometry_builder {
 
 
 
@@ -271,5 +272,5 @@ void geometry_builder_description::print()
 
 
 
-}}
+}}}
 

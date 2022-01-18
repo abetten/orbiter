@@ -345,7 +345,7 @@ void grassmann::unrank_lint(long int rk, int verbose_level)
 	long int r, h, a = 1, A;
 	int nb_free_cols = 0;
 	long int Q, b, c, i, j;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 	combinatorics::combinatorics_domain Combi;
 	
@@ -488,7 +488,7 @@ long int grassmann::rank_lint(int verbose_level)
 	long int k1, r, h, a, A;
 	int nb_free_cols;
 	long int Q, b, c, i, j;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 	combinatorics::combinatorics_domain Combi;
 	

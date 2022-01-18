@@ -627,7 +627,7 @@ void group_generators_domain::order_PO_epsilon(
 {
 	int f_v = (verbose_level >= 1);
 	int m;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 
 	if (f_v) {
@@ -1440,7 +1440,7 @@ void group_generators_domain::affine_matrix_group_base_and_transversal_length(in
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, c;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 
 	if (f_v) {
@@ -1489,7 +1489,7 @@ void group_generators_domain::general_linear_matrix_group_base_and_transversal_l
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int i, c;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 
 	if (f_v) {
@@ -1539,7 +1539,7 @@ void group_generators_domain::strong_generators_for_projective_linear_group(
 	int f_vv = (verbose_level >= 2);
 	int h, u, cur;
 	int *M;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "group_generators_domain::strong_generators_for_projective_linear_group" << endl;
@@ -1645,7 +1645,7 @@ void group_generators_domain::strong_generators_for_affine_linear_group(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int h, u, cur;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "group_generators_domain::strong_generators_for_affine_linear_group" << endl;
@@ -1764,7 +1764,7 @@ void group_generators_domain::strong_generators_for_general_linear_group(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int h, u, cur;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "group_generators_domain::strong_generators_for_general_linear_group" << endl;
@@ -1870,7 +1870,7 @@ void group_generators_domain::generators_for_parabolic_subgroup(
 	int f_vv = (verbose_level >= 2);
 	int h, g, u, cur;
 	int *M;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "group_generators_domain::generators_for_parabolic_subgroup" << endl;
@@ -2061,7 +2061,7 @@ void group_generators_domain::generators_for_stabilizer_of_three_collinear_point
 	int u, cur, i, j;
 	int *M;
 	int n = 4;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "group_generators_domain::generators_for_stabilizer_of_three_collinear_"
@@ -2213,7 +2213,7 @@ void group_generators_domain::generators_for_stabilizer_of_triangle_in_PGL4(
 	int u, cur, j;
 	int *M;
 	int n = 4;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "group_generators_domain::generators_for_stabilizer_of_triangle_in_PGL4" << endl;
@@ -2433,7 +2433,7 @@ void group_generators_domain::affine_translation(int n, finite_field *F,
 	int f_v = (verbose_level >= 1);
 	long int i, j, l, a;
 	int *v;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 
 	if (f_v) {

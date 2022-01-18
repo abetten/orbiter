@@ -89,7 +89,7 @@ void cryptography_domain::affine_decipher(std::string &ctext, std::string &ptext
 {
 	int x1, x2, y1, y2, dy, dx, i;
 	int a, b, a0, av, c, g, dxv, n, gg;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (guess.length() != 4) {
 		cout << "guess must be 4 characters long!" << endl;
@@ -323,7 +323,7 @@ int cryptography_domain::kasiski_test(std::string &ctext, int threshold)
 	int *candidates, nb_candidates, *Nb_candidates;
 	int *f_taken;
 	int g = 0, g1;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	l = ctext.length();
 	candidates = new int[l];
@@ -719,7 +719,7 @@ void cryptography_domain::make_affine_sequence(int a, int c, int m, int verbose_
 	int *f_reached;
 	int *orbit;
 	int x0, x, y, len, cnt;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "make_affine_sequence a=" << a << " c=" << c << " m=" << m << endl;
@@ -929,7 +929,7 @@ void cryptography_domain::do_EC_Koblitz_encoding(finite_field *F,
 	int msRx, msRy, msRz;
 	int m, k, plain;
 	os_interface Os;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	Orbiter->Int_vec->scan(pt_text, v, len);
 	if (len != 2) {
@@ -1215,7 +1215,7 @@ void cryptography_domain::do_EC_points(finite_field *F, std::string &label,
 			{
 			vector<vector<int>> Multiples;
 			int order;
-			number_theory_domain NT;
+			number_theory::number_theory_domain NT;
 
 			NT.elliptic_curve_all_point_multiples(F,
 					EC_b, EC_c, order,
@@ -1324,7 +1324,7 @@ void cryptography_domain::do_EC_add(finite_field *F,
 	int x3, y3, z3;
 	int *v;
 	int len;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	//sscanf(p1, "(%d,%d,%d)", &x1, &y1, &z1);
 
 	if (f_v) {
@@ -1381,7 +1381,7 @@ void cryptography_domain::do_EC_cyclic_subgroup(finite_field *F,
 	int x1, y1, z1;
 	int *v;
 	int len, i;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	//sscanf(p1, "(%d,%d,%d)", &x1, &y1, &z1);
 
 	if (f_v) {
@@ -1442,7 +1442,7 @@ void cryptography_domain::do_EC_multiple_of(finite_field *F,
 	int x3, y3, z3;
 	int *v;
 	int len;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "cryptography_domain::do_EC_multiple_of" << endl;
@@ -1493,7 +1493,7 @@ void cryptography_domain::do_EC_discrete_log(finite_field *F,
 	int *v;
 	int len;
 	int n;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "cryptography_domain::do_EC_discrete_log" << endl;
@@ -1558,7 +1558,7 @@ void cryptography_domain::do_EC_baby_step_giant_step(finite_field *F, int EC_b, 
 	int *v;
 	int len;
 	int n;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "cryptography_domain::do_EC_baby_step_giant_step" << endl;
@@ -1672,7 +1672,7 @@ void cryptography_domain::do_EC_baby_step_giant_step_decode(
 	int *keys;
 	int nb_keys;
 	int u, plain;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "cryptography_domain::do_EC_baby_step_giant_step_decode" << endl;
@@ -1919,7 +1919,7 @@ void cryptography_domain::NTRU_encrypt(int N, int p, finite_field *Fq,
 	Orbiter->Int_vec->scan(R_coeffs, data_R, sz_R);
 	Orbiter->Int_vec->scan(Msg_coeffs, data_Msg, sz_Msg);
 
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 
 
@@ -2039,7 +2039,7 @@ void cryptography_domain::polynomial_center_lift(std::string &A_coeffs, finite_f
 
 	Orbiter->Int_vec->scan(A_coeffs, data_A, sz_A);
 
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 
 
@@ -2108,7 +2108,7 @@ void cryptography_domain::polynomial_reduce_mod_p(std::string &A_coeffs, finite_
 
 	Orbiter->Int_vec->scan(A_coeffs, data_A, sz_A);
 
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 
 
@@ -2168,7 +2168,7 @@ void cryptography_domain::do_jacobi(int jacobi_top, int jacobi_bottom, int verbo
 			NULL /* extra_praeamble */);
 
 
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	ring_theory::longinteger_domain D;
 
 	ring_theory::longinteger_object A, B;
@@ -2220,7 +2220,7 @@ void cryptography_domain::do_solovay_strassen(int p, int a, int verbose_level)
 			NULL /* extra_praeamble */);
 
 
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	//longinteger_domain D;
 
 	ring_theory::longinteger_object P, A;
@@ -2658,7 +2658,7 @@ void cryptography_domain::quadratic_sieve(int n,
 	vector<int> small_factors, primes, primes_log2, R1, R2;
 	ring_theory::longinteger_object M, sqrtM;
 	ring_theory::longinteger_domain D;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	int f_found_small_factor = FALSE;
 	int small_factor;
 	int i;
@@ -2884,7 +2884,7 @@ void cryptography_domain::do_sift_smooth(int sift_smooth_from,
 	int *B;
 	int sz;
 	int a, i, j, nb, p, idx, cnt;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	data_structures::sorting Sorting;
 
 	if (f_v) {
@@ -2927,7 +2927,7 @@ void cryptography_domain::do_sift_smooth(int sift_smooth_from,
 void cryptography_domain::do_discrete_log(long int y, long int a, long int p, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	int t0, t1, dt;
 	os_interface Os;
 
@@ -2968,7 +2968,7 @@ void cryptography_domain::do_discrete_log(long int y, long int a, long int p, in
 
 void cryptography_domain::do_primitive_root(long int p, int verbose_level)
 {
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	long int a;
 	int t0, t1, dt;
 	os_interface Os;
@@ -2988,7 +2988,7 @@ void cryptography_domain::do_primitive_root(long int p, int verbose_level)
 
 void cryptography_domain::do_primitive_root_longinteger(ring_theory::longinteger_object &p, int verbose_level)
 {
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	long int a;
 	int t0, t1, dt;
 	os_interface Os;
@@ -3010,7 +3010,7 @@ void cryptography_domain::do_primitive_root_longinteger(ring_theory::longinteger
 void cryptography_domain::do_smallest_primitive_root(long int p, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	long int a;
 	int t0, t1, dt;
 	os_interface Os;
@@ -3037,7 +3037,7 @@ void cryptography_domain::do_smallest_primitive_root(long int p, int verbose_lev
 void cryptography_domain::do_smallest_primitive_root_interval(long int p_min, long int p_max, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	long int a, p, i;
 	long int *T;
 	int t0, t1, dt;
@@ -3097,7 +3097,7 @@ void cryptography_domain::do_smallest_primitive_root_interval(long int p_min, lo
 void cryptography_domain::do_number_of_primitive_roots_interval(long int p_min, long int p_max, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	long int a, p, i;
 	long int *T;
 	int t0, t1, dt;
@@ -3157,7 +3157,7 @@ void cryptography_domain::do_number_of_primitive_roots_interval(long int p_min, 
 
 void cryptography_domain::do_inverse_mod(long int a, long int n, int verbose_level)
 {
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	long int b;
 	int t0, t1, dt;
 	os_interface Os;
@@ -4115,7 +4115,7 @@ int cryptography_domain::miller_rabin_test_with_latex_key(ostream &ost,
 
 		if (iteration < 5) {
 			int small_prime;
-			number_theory_domain NT;
+			number_theory::number_theory_domain NT;
 
 			small_prime = NT.get_prime_from_table(iteration);
 			a.create(small_prime, __FILE__, __LINE__);

@@ -256,7 +256,7 @@ void finite_field_implementation_by_tables::create_alpha_table_prime_field(int v
 	int f_v = (verbose_level >= 1);
 	int f_vv = FALSE; //(verbose_level >= 2);
 	int i, a;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "finite_field_implementation_by_tables::create_alpha_table_prime_field, "
@@ -641,7 +641,7 @@ void finite_field_implementation_by_tables::init_quadratic_subfield(int verbose_
 
 	if (EVEN(F->e)) {
 		int i, a, b, idx, sqrt_q;
-		number_theory_domain NT;
+		number_theory::number_theory_domain NT;
 
 
 		f_has_quadratic_subfield = TRUE;

@@ -244,7 +244,7 @@ int calc_redinv(int t, int v, int k, int delta_lambda, int &c,
 		int &T, int &V, int &K, int &Delta_lambda)
 {
 	long int vt, kt, g, v1, k1, gg;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	if (t == k)
 		return FALSE;
@@ -277,7 +277,7 @@ int calc_resinv(int t, int v, int k, int delta_lambda, int &c,
 		int &T, int &V, int &K, int &Delta_lambda)
 {
 	long int a, b, g;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	if (t == k)
 		return FALSE;

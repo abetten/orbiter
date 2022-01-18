@@ -333,7 +333,7 @@ void factor_integer(int n, Vector& primes, Vector& exponents)
 //the vector exponents holds the $e_i$.
 {
 	int d, last_prime = 2, l;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	if (n == 0) {
 		cout << "factor_integer n == 0" << endl;
@@ -467,7 +467,7 @@ int nb_primes(int n)
 {
 	int i = 0;
 	int d;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	if (n < 0)
 		n = -n;
@@ -500,7 +500,7 @@ int Euler(int n)
 {
 	Vector p, e;
 	int i, k, p1, e1, l;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	factor_integer(n, p, e);
 	k = 1;
@@ -632,7 +632,7 @@ int sqrt_mod_involved(int a, int p, int verbose_level)
 	longinteger P, m1;
 	longinteger A, X, a2, a4, b, X2;
 	int round;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "sqrt_mod_involved" << endl;
@@ -2038,7 +2038,7 @@ void fine_tune(finite_field *F, int *mtxD, int verbose_level)
 	int f_vv = (verbose_level >= 2);
 	int i;
 	int q = F->q;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "fine_tune: tuning matrix:" << endl;

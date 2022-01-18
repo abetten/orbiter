@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace geometry_builder {
 
 
 decomposition_with_fuse::decomposition_with_fuse()
@@ -540,5 +541,6 @@ void decomposition_with_fuse::init_partition(int verbose_level)
 
 
 
-}}
+}}}
+
 

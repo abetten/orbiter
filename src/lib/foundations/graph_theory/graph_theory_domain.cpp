@@ -757,7 +757,7 @@ void graph_theory_domain::list_parameters_of_SRG(int v_max, int verbose_level)
 	int v, v2, k, lambda, mu, cnt = 0;
 	int top, top2, bottom, b, tb;
 	int i, f, g, r, s;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	for (v = 2; v <= v_max; v++) {
 		v2 = v >> 1;
@@ -888,7 +888,7 @@ void graph_theory_domain::make_Hamming_graph(int *&Adj, int &N,
 		cout << "graph_theory_domain::make_Hamming_graph" << endl;
 	}
 	geometry_global GG;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	coding_theory::coding_theory_domain Coding;
 	int *v1;
 	int *v2;
@@ -1074,7 +1074,7 @@ void graph_theory_domain::make_Winnie_Li_graph(int *&Adj, int &N,
 	finite_field *F;
 	int i, j, h, u, p, k, co_index, q1, relative_norm;
 	int *N1;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 
 	F = NEW_OBJECT(finite_field);

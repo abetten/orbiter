@@ -32,7 +32,7 @@ void surface_study::init(finite_field *F, int nb, int verbose_level)
 
 
 	int i;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	knowledge_base K;
 
 

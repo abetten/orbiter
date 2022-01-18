@@ -394,20 +394,23 @@ class spread_tables;
 class W3q;
 
 
-// geometry_builder:
-class cperm;
-class decomposition_with_fuse;
-class gen_geo_conf;
-class gen_geo;
-class geometric_backtrack_search;
-class geometry_builder_description;
-class geometry_builder;
-class girth_test;
-class inc_encoding;
-class incidence;
-class iso_type;
-class test_semicanonical;
+namespace geometry_builder {
 
+	// geometry_builder:
+	class cperm;
+	class decomposition_with_fuse;
+	class gen_geo_conf;
+	class gen_geo;
+	class geometric_backtrack_search;
+	class geometry_builder_description;
+	class geometry_builder;
+	class girth_test;
+	class inc_encoding;
+	class incidence;
+	class iso_type;
+	class test_semicanonical;
+
+}
 
 // globals:
 class function_command;
@@ -479,15 +482,22 @@ class prepare_frames;
 class knowledge_base;
 
 
-// linear_algebra:
-class linear_algebra;
-class representation_theory_domain;
+namespace linear_algebra {
 
-// number_theory:
-class cyclotomic_sets;
-class number_theoretic_transform;
-class number_theory_domain;
+	// linear_algebra:
+	class linear_algebra;
+	class representation_theory_domain;
 
+}
+
+namespace number_theory {
+
+	// number_theory:
+	class cyclotomic_sets;
+	class number_theoretic_transform;
+	class number_theory_domain;
+
+}
 
 // orthogonal:
 class blt_set_domain;

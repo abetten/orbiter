@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace geometry_builder {
 
 
 
@@ -828,7 +829,7 @@ void gen_geo::print_override_theX(std::ostream &ost, int *theX, int v, int v_cut
 
 
 
-}}
+}}}
 
 
 

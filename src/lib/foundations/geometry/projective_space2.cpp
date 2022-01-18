@@ -140,7 +140,7 @@ int projective_space::determine_hermitian_form_in_plane(
 	int i, x, y, z, xq, yq, zq, rk;
 	int Q, q, little_e;
 	int kernel_m, kernel_n;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "projective_space::determine_hermitian_form_in_plane" << endl;

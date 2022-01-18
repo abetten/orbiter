@@ -893,7 +893,7 @@ void orthogonal::plane_invariant(unusual_model *U,
 	int cnt;
 	int i;
 	int q;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	combinatorics::combinatorics_domain Combi;
 	data_structures::sorting Sorting;
 	data_structures::algorithms Algo;

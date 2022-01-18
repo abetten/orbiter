@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace linear_algebra {
 
 
 
@@ -236,7 +237,7 @@ void representation_theory_domain::representing_matrix9_U(int *A,
 {
 	int beta_q, delta, gamma;
 	int r, q, q1,q2,tq, tq1; //, tq2;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (!F->f_has_table) {
 		cout << "representation_theory_domain::representing_matrix9_U !F->f_has_table" << endl;
@@ -359,7 +360,7 @@ void representation_theory_domain::representing_matrix8_U(int *A, int a, int b, 
 	int gamma3, gamma4, gamma5, gamma6, gamma7, gamma8;
 	int *eta, *M1, *B1;
 	int *zeta, *M2, *B2;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 
 
@@ -551,7 +552,7 @@ void representation_theory_domain::representing_matrix8_V(int *A, int beta)
 	int delta1, delta2;
 	int beta_21, beta_12, beta_123, beta_132;
 	int r, q, i, j;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 
 
@@ -780,7 +781,7 @@ A[7 * 8 + 7] = N3(a);
 void representation_theory_domain::representing_matrix8b(int *A, int beta)
 {
 	int r, q, delta, omega; //, i;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	r = F->e / 3;
 	if (F->e != 3 * r) {
@@ -1058,5 +1059,5 @@ int representation_theory_domain::N3(int a)
 	return F->N3(a);
 }
 
-}}
+}}}
 

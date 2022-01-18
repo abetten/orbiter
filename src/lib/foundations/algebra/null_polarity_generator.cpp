@@ -79,7 +79,7 @@ void null_polarity_generator::init(finite_field *F, int n, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 
 	if (f_v) {

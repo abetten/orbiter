@@ -16,6 +16,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace number_theory {
 
 
 static void ntt4_forward(int *input, int *output, finite_field *F);
@@ -1608,4 +1609,5 @@ static void ntt4_backward(int *input, int *output, finite_field *F)
 
 
 
-}}
+}}}
+

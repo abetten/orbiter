@@ -509,7 +509,7 @@ void matrix_group::compute_elt_size(int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "matrix_group::compute_elt_size" << endl;
@@ -1021,7 +1021,7 @@ void matrix_group::substitute_surface_equation(int *Elt,
 		cout << "matrix_group::substitute_surface_equation" << endl;
 	}
 	if (f_semilinear) {
-		number_theory_domain NT;
+		number_theory::number_theory_domain NT;
 		int me;
 
 		me = NT.int_negate(Elt[n * n], GFq->e);

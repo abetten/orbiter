@@ -15,6 +15,8 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace geometry_builder {
+
 
 inc_encoding::inc_encoding()
 {
@@ -455,5 +457,6 @@ void inc_encoding::apply_permutation(incidence *inc, int v,
 
 
 
-}}
+}}}
+
 

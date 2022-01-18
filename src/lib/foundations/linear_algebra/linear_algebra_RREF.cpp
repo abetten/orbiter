@@ -14,6 +14,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace linear_algebra {
 
 
 int linear_algebra::Gauss_int(int *A,
@@ -789,5 +790,5 @@ void linear_algebra::RREF_elimination_above(int *A, int m, int n,
 }
 
 
-}}
+}}}
 

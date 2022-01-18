@@ -13,6 +13,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace number_theory {
 
 
 cyclotomic_sets::cyclotomic_sets()
@@ -157,7 +158,7 @@ void cyclotomic_sets::print_latex_with_selection(std::ostream &ost, int *Selecti
 }
 
 
-}}
+}}}
 
 
 

@@ -82,7 +82,7 @@ void hjelmslev::init(ring_theory::finite_ring *R,
 
 long int hjelmslev::number_of_submodules()
 {
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	return n_choose_k_p * NT.i_power_j_lint(R->get_p(), (R->get_e() - 1) * k * (n - k));
 }
 

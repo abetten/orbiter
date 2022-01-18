@@ -100,7 +100,7 @@ void ovoid_classify::init(ovoid_classify_description *Descr,
 
 	//int f_semilinear;
 	//int f_basis = TRUE;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 
 	ovoid_classify::Descr = Descr;

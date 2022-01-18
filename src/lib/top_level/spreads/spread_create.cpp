@@ -53,7 +53,7 @@ void spread_create::freeself()
 void spread_create::init(spread_create_description *Descr, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	
 	if (f_v) {

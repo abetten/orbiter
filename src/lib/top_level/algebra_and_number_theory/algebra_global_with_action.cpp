@@ -1953,7 +1953,7 @@ void algebra_global_with_action::do_eigenstuff(finite_field *F,
 	int i, j, k, a, h;
 	//unipoly_domain U;
 	//unipoly_object char_poly;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "algebra_global_with_action::do_eigenstuff" << endl;
@@ -2167,7 +2167,7 @@ void algebra_global_with_action::A5_in_PSL_(int q, int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int p, f;
 	discreta_matrix A, B, D; //, B1, B2, C, D, A2, A3, A4;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 
 	NT.factor_prime_power(q, p, f);
@@ -3880,7 +3880,7 @@ void algebra_global_with_action::find_singer_cycle(any_group *Any_group,
 	int *Elt;
 	ring_theory::longinteger_object go;
 	int i, d, q, cnt, ord, order;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (!A1->is_matrix_group()) {
 		cout << "group_theoretic_activity::find_singer_cycle needs matrix group" << endl;

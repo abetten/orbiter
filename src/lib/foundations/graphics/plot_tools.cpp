@@ -632,7 +632,7 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 	if (Descr->f_inverse) {
 		//finite_field *F;
 		long int a, b, g, u, v;
-		number_theory_domain NT;
+		number_theory::number_theory_domain NT;
 
 		//F = NEW_OBJECT(finite_field);
 		//F->init(q);
@@ -670,7 +670,7 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 	if (Descr->f_additive_inverse) {
 		//finite_field *F;
 		long int a, b; //, g, u, v;
-		number_theory_domain NT;
+		number_theory::number_theory_domain NT;
 
 		//F = NEW_OBJECT(finite_field);
 		//F->init(q);
@@ -700,7 +700,7 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 	if (Descr->f_power_cycle) {
 		//finite_field *F;
 		long int a1, a, b; //, g, u, v;
-		number_theory_domain NT;
+		number_theory::number_theory_domain NT;
 
 		cout << "f_power_cycle base = " << Descr->power_cycle_base << endl;
 
@@ -739,7 +739,7 @@ void plot_tools::draw_mod_n_work(mp_graphics &G,
 	if (Descr->f_cyclotomic_sets) {
 
 
-		number_theory_domain NT;
+		number_theory::number_theory_domain NT;
 		int *reps;
 		int nb_reps;
 

@@ -57,14 +57,14 @@ long int geometry_global::nb_PG_elements_not_in_subspace(int n, int m, int q)
 long int geometry_global::nb_AG_elements(int n, int q)
 // $q^n$
 {
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	return NT.i_power_j_lint(q, n);
 }
 
 long int geometry_global::nb_affine_lines(int n, int q)
 {
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	long int qnp1, qn, q2, a, b, denom, res;
 
 	qnp1 = NT.i_power_j_lint(q, n + 1);
@@ -538,7 +538,7 @@ long int geometry_global::count_N1(int n, int q)
 long int geometry_global::count_T1(int epsilon, int n, int q)
 // n = Witt index
 {
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (n < 0) {
 		//cout << "count_T1 n is negative. n=" << n << endl;
@@ -561,7 +561,7 @@ long int geometry_global::count_T1(int epsilon, int n, int q)
 
 long int geometry_global::count_T2(int n, int q)
 {
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (n <= 0) {
 		return 0;

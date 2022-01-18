@@ -192,7 +192,7 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 {
 	int f_v = (verbose_level >= 1);
 	int i;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	algebra::group_generators_domain GG;
 
 	if (f_v) {
@@ -1126,7 +1126,7 @@ void wreath_product::report_rank_one_tensors(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	combinatorics::combinatorics_domain Combi;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 	latex_interface L;
 	int *coords;
@@ -1316,7 +1316,7 @@ void wreath_product::create_all_rank_one_tensors(
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 5);
 	combinatorics::combinatorics_domain Combi;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 	int *coords;
 	int *Proj;

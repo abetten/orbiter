@@ -176,7 +176,7 @@ void semifield_classify::init(
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_object go;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "semifield_classify::init" << endl;
@@ -469,7 +469,7 @@ void semifield_classify::report(std::ostream &ost, int level,
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_object go;
 	int i;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "semifield_classify::report level = " << level << endl;
@@ -869,7 +869,7 @@ void semifield_classify::early_test_func(long int *S, int len,
 	int *M;
 	int *v, *w;
 	int i, j, N, r;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 
 	if (f_v) {
@@ -970,7 +970,7 @@ int semifield_classify::test_candidate(
 	int *w;
 	int *base_cols;
 	int N, h, i, j, a, b, c, r;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 
 	if (f_v) {
@@ -1064,7 +1064,7 @@ int semifield_classify::test_partial_semifield(
 	int *base_cols;
 	int *v;
 	int *w;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 
 	if (f_v) {
@@ -1129,7 +1129,7 @@ void semifield_classify::test_rank_unrank()
 {
 	int *Mtx;
 	int r1, r2;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	Mtx = NEW_int(k2);
 	for (r1 = 0; r1 < NT.i_power_j(q, k2); r1++) {
@@ -1321,7 +1321,7 @@ void semifield_classify::candidates_classify_by_first_column(
 	int *Tmp_sz;
 	int h, u, i, t, w;
 	long int a;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 
 

@@ -2353,7 +2353,7 @@ void knowledge_base::override_polynomial_subfield(std::string &poly, int q)
 {
 	const char *override_poly = NULL;
 	int p, h;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	if (!NT.is_prime_power(q, p, h)) {
 		cout << "knowledge_base::override_polynomial_subfield "
@@ -2417,7 +2417,7 @@ void knowledge_base::override_polynomial_extension_field(std::string &poly, int 
 {
 	const char *override_poly = NULL;
 	int p, h;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	if (!NT.is_prime_power(q, p, h)) {
 		cout << "knowledge_base::override_polynomial_extension_field "

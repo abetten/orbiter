@@ -229,7 +229,7 @@ void surface_domain_high_level::prepare_surface_classify_wedge(
 		int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "surface_domain_high_level::prepare_surface_classify_wedge" << endl;
@@ -347,7 +347,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_two_lines(
 
 	surface_with_action *Surf_A;
 	surface_domain *Surf;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 
 
@@ -443,7 +443,7 @@ void surface_domain_high_level::do_classify_surfaces_through_arcs_and_trihedral_
 
 	surface_with_action *Surf_A;
 	surface_domain *Surf;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 
 
@@ -810,7 +810,7 @@ void surface_domain_high_level::do_cubic_surface_properties(
 	finite_field *F;
 	surface_domain *Surf;
 	surface_with_action *Surf_A;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	data_structures::sorting Sorting;
 	file_io Fio;
 
@@ -1096,7 +1096,7 @@ void surface_domain_high_level::do_cubic_surface_properties_analyze(
 	finite_field *F;
 	surface_domain *Surf;
 	surface_with_action *Surf_A;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	data_structures::sorting Sorting;
 	file_io Fio;
 
@@ -1494,7 +1494,7 @@ void surface_domain_high_level::do_create_surface_reports(std::string &field_ord
 	}
 
 	knowledge_base K;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	file_io Fio;
 
 
@@ -1618,7 +1618,7 @@ void surface_domain_high_level::do_create_surface_atlas(int q_max, int verbose_l
 	knowledge_base K;
 
 
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	data_structures::sorting Sorting;
 	file_io Fio;
 
@@ -1926,7 +1926,7 @@ void surface_domain_high_level::do_create_surface_atlas_q_e(int q_max,
 	knowledge_base K;
 
 
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	data_structures::sorting Sorting;
 	file_io Fio;
 

@@ -1569,7 +1569,7 @@ int diophant::solve_first_betten(int verbose_level)
 	int f_v = (verbose_level >= 1);
 	int f_vv = (verbose_level >= 2);
 	int k, total_max;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	os_interface Os;
 
 	if (!f_has_sum) {

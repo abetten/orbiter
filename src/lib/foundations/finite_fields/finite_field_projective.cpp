@@ -1266,7 +1266,7 @@ void finite_field::create_Baer_substructure(int n,
 	int *v;
 	int d = n + 1;
 	int i, j, a, b, index, f_is_in_subfield;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	//Q = q * q;
 	P2 = NEW_OBJECT(projective_space);

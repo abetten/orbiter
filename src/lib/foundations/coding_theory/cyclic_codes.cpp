@@ -108,7 +108,7 @@ void coding_theory_domain::make_cyclic_code(int n, int q, int t,
 	int p, e, m, r, i;
 	ring_theory::longinteger_object Qm1, Index;
 	ring_theory::longinteger_domain D;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	file_io Fio;
 
 	NT.factor_prime_power(q, p, e);
@@ -752,7 +752,7 @@ void coding_theory_domain::BCH_generator_polynomial(
 	int e, i, j, r;
 	ring_theory::longinteger_object q, b, m1, qm1;
 	ring_theory::longinteger_domain D;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "coding_theory_domain::BCH_generator_polynomial "
@@ -1058,7 +1058,7 @@ void coding_theory_domain::make_BCH_codes(int n, int q, int t, int b, int f_dual
 	char fname[1000];
 	std::string fname_txt;
 	std::string fname_csv;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	int *roots;
 	int nb_roots;
 	int i, j;

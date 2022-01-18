@@ -1756,7 +1756,7 @@ void action::init_BLT(finite_field *F, int f_basis,
 	int f_vv = (verbose_level >= 2);
 	int p, hh, epsilon, n;
 	int f_semilinear = FALSE;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "action::init_BLT q=" << F->q

@@ -39,7 +39,7 @@ void action_on_determinant::init(action &A,
 {
 	int f_v = (verbose_level >= 1);
 	ring_theory::longinteger_object go;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "action_on_determinant::init" << endl;

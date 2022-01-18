@@ -403,7 +403,7 @@ void strong_generators::generators_for_the_monomial_group(
 	vector_ge *my_gens;
 	int *data;
 	int i, h, hh, h1, j, a, b, nb_gens;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_monomial_group "
@@ -749,7 +749,7 @@ void strong_generators::generators_for_the_singer_cycle(
 	//vector_ge *my_gens;
 	int *data;
 	int i;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 	
 	if (f_v) {
@@ -926,7 +926,7 @@ void strong_generators::generators_for_the_singer_cycle_and_the_Frobenius(
 	int *data1;
 	int *data2;
 	int i;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 
 	if (f_v) {
@@ -1327,7 +1327,7 @@ void strong_generators::field_reduction(
 	int *EltQ;
 	int *Eltq;
 	int *Mtx;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "strong_generators::field_reduction" << endl;
@@ -2384,7 +2384,7 @@ strong_generators::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 	int *data;
 	int size;
 	int nb_gens;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "strong_generators::generators_for_stabilizer_of_three_collinear_points_in_PGL4" << endl;
@@ -2486,7 +2486,7 @@ void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
 	int *data;
 	int size;
 	int nb_gens;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "strong_generators::generators_for_stabilizer_of_triangle_in_PGL4" << endl;
@@ -3169,7 +3169,7 @@ void strong_generators::stabilizer_of_pencil_of_conics(
 	}
 
 	ring_theory::longinteger_object target_go;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	int i;
 
 	if (f_v) {
@@ -3269,7 +3269,7 @@ void strong_generators::Janko1(
 		exit(1);
 	}
 	ring_theory::longinteger_object target_go;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	int i;
 
 

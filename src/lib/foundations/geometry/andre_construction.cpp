@@ -75,7 +75,7 @@ void andre_construction::init(finite_field *F,
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	combinatorics::combinatorics_domain Combi;
 	data_structures::sorting Sorting;
 

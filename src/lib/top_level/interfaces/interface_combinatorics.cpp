@@ -530,7 +530,7 @@ void interface_combinatorics::read_arguments(int argc,
 		if (f_v) {
 			cout << "-geometry_builder " << endl;
 		}
-		Geometry_builder_description = NEW_OBJECT(geometry_builder_description);
+		Geometry_builder_description = NEW_OBJECT(geometry_builder::geometry_builder_description);
 		i += Geometry_builder_description->read_arguments(argc - (i + 1),
 			argv + i + 1, verbose_level);
 
@@ -840,9 +840,9 @@ void interface_combinatorics::worker(int verbose_level)
 			cout << "interface_combinatorics::worker -geometry_builder" << endl;
 		}
 
-		geometry_builder *GB;
+		geometry_builder::geometry_builder *GB;
 
-		GB = NEW_OBJECT(geometry_builder);
+		GB = NEW_OBJECT(geometry_builder::geometry_builder);
 
 		GB->init_description(Geometry_builder_description, verbose_level);
 

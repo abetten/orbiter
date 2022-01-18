@@ -593,7 +593,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(
 		int u, t, ff, ll, v, k, di, dj;
 		int i, j;
 		int nb_good, nb_bad;
-		number_theory_domain NT;
+		number_theory::number_theory_domain NT;
 		geometry_global Gg;
 
 		N = NT.i_power_j(2, nb_pairs_of_long_orbits);

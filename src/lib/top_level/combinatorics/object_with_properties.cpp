@@ -446,12 +446,12 @@ void object_with_properties::latex_report(std::ostream &ost,
 			exit(1);
 		}
 
-		geometry_builder *GB;
+		geometry_builder::geometry_builder *GB;
 		int f_found;
 		data_structures::nauty_output *NO;
 		data_structures::bitvector *Canonical_form;
 
-		GB = (geometry_builder *) Orbiter->get_object(idx);
+		GB = (geometry_builder::geometry_builder *) Orbiter->get_object(idx);
 
 
 		if (f_v) {

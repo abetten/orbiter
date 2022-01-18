@@ -456,7 +456,7 @@ void combinatorics_global::Hill_cap56(
 	action *A;
 	action *An;
 	finite_field *F;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 	os_interface Os;
 

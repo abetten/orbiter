@@ -63,7 +63,7 @@ void finite_ring::init(int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "finite_ring::init q=" << q << endl;

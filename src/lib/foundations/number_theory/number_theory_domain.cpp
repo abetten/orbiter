@@ -10,6 +10,7 @@ using namespace std;
 
 namespace orbiter {
 namespace foundations {
+namespace number_theory {
 
 
 //                         The First 1,000 Primes
@@ -2528,7 +2529,6 @@ int number_theory_domain::eulers_totient_function(int n, int verbose_level)
 }
 
 
-}
-}
+}}}
 
 

@@ -55,7 +55,7 @@ void longinteger_object::create(long int i, const char *file, int line)
 {
 	long int ii, j, dj;
 	int f_v = FALSE;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	ii = i;
 	freeself();

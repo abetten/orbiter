@@ -1081,7 +1081,7 @@ int longinteger_domain::square_root_mod(int a, int p, int verbose_level)
 	longinteger_object P;
 	longinteger_object A, X, a2, a4, b, X2, Four, Two, mOne;
 	int round;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "longinteger_domain::square_root_mod" << endl;
@@ -1393,7 +1393,7 @@ void longinteger_domain::create_Fermat(longinteger_object &F, int n)
 void longinteger_domain::Dedekind_number(longinteger_object &Dnq, int n, int q, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 	longinteger_object A, S, B;
 
@@ -1613,7 +1613,7 @@ void longinteger_domain::factor_into_longintegers(
 	longinteger_domain D;
 	long int p, last_prime = 0;
 	int i;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "longinteger_domain::factor_into_longintegers factoring " << a << endl;
@@ -1714,7 +1714,7 @@ void longinteger_domain::factor(longinteger_object &a,
 	int f_v = (verbose_level >= 1);
 	longinteger_object n, q;
 	int p, last_prime = 2, i, r;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "factoring " << a << endl;
@@ -2054,7 +2054,7 @@ void longinteger_domain::group_order_PGL(
 	long int *x;
 	int i, l;
 	int p, e;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	NT.factor_prime_power(q, p, e);
 	l = n;

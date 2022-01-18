@@ -25,7 +25,7 @@ int point_line::is_desarguesian_plane(int verbose_level)
 	int slope, b, x, f_slope, f_b, f_x;
 	int f_found_quadrangle = FALSE;
 	int aa;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	
 	if (f_v) {
 		cout << "is_desarguesian_plane plane_order ="

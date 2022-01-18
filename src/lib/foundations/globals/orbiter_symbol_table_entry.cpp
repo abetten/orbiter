@@ -521,7 +521,7 @@ void orbiter_symbol_table_entry::init_combinatorial_objects(std::string &label,
 }
 
 void orbiter_symbol_table_entry::init_geometry_builder_object(std::string &label,
-		geometry_builder *GB, int verbose_level)
+		geometry_builder::geometry_builder *GB, int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
 

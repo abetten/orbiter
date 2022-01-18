@@ -88,7 +88,7 @@ void blt_set_domain::init(orthogonal *O,
 	int verbose_level)
 {
 	int f_v = (verbose_level >= 1);
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	if (f_v) {
 		cout << "blt_set_domain::init" << endl;

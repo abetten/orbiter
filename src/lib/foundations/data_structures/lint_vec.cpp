@@ -177,7 +177,7 @@ int lint_vec::matrix_max_log_of_entries(long int *p, int m, int n)
 {
 	int i, j;
 	long a, w = 1, w1;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {

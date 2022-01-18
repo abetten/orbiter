@@ -962,7 +962,7 @@ void action::write_set_of_elements_latex_file(std::string &fname, std::string &t
 {
 	{
 		ofstream ost(fname);
-		number_theory_domain NT;
+		number_theory::number_theory_domain NT;
 
 		char c_title[1000];
 		char author[1000];

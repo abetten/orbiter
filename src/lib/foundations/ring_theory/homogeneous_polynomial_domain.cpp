@@ -305,7 +305,7 @@ void homogeneous_polynomial_domain::make_monomials(
 {
 	int f_v = (verbose_level >= 1);
 	int i, j, a, h, idx, t;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 	combinatorics::combinatorics_domain Combi;
 
@@ -1440,7 +1440,7 @@ void homogeneous_polynomial_domain::substitute_line(
 	int *V;
 	int *Mtx;
 	int my_nb_affine, wt;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 
 
@@ -1936,7 +1936,7 @@ int *homogeneous_polynomial_domain::read_from_string_coefficient_pairs(std::stri
 	}
 
 	int *coeff;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	coeff = NEW_int(get_nb_monomials());
 
@@ -1989,7 +1989,7 @@ int *homogeneous_polynomial_domain::read_from_string_coefficient_vector(std::str
 	}
 
 	int *coeff;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	coeff = NEW_int(get_nb_monomials());
 

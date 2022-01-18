@@ -310,7 +310,7 @@ void elliptic_curve::addition(
 		cout << endl;
 	}
 
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	NT.elliptic_curve_addition(F, b, c,
 			x1, y1, z1,

@@ -100,7 +100,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_Berlekamp_matrix) {
 
-		linear_algebra_global LA;
+		linear_algebra::linear_algebra_global LA;
 
 		LA.Berlekamp_matrix(F,
 				Descr->Berlekamp_matrix_coeffs, verbose_level);
@@ -108,7 +108,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_normal_basis) {
 
-		linear_algebra_global LA;
+		linear_algebra::linear_algebra_global LA;
 
 		LA.compute_normal_basis(F,
 				Descr->normal_basis_d, verbose_level);
@@ -125,7 +125,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_nullspace) {
 
-		linear_algebra_global LA;
+		linear_algebra::linear_algebra_global LA;
 		int *v;
 		int m, n;
 
@@ -141,7 +141,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 	}
 	else if (Descr->f_RREF) {
 
-		linear_algebra_global LA;
+		linear_algebra::linear_algebra_global LA;
 		int *v;
 		int m, n;
 
@@ -490,7 +490,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	else if (Descr->f_RREF_random_matrix) {
 
-		linear_algebra_global LA;
+		linear_algebra::linear_algebra_global LA;
 		int *A;
 		int m, n;
 		int i;
@@ -788,7 +788,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 			{
 				ofstream ost(fname);
-				number_theory_domain NT;
+				number_theory::number_theory_domain NT;
 
 				char title[1000];
 				char author[1000];
@@ -917,7 +917,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 			{
 				ofstream ost(fname);
-				number_theory_domain NT;
+				number_theory::number_theory_domain NT;
 
 				char title[1000];
 				char author[1000];
@@ -993,7 +993,7 @@ void finite_field_activity::perform_activity(int verbose_level)
 
 	}
 	else if (Descr->f_NTT) {
-		number_theoretic_transform NTT;
+		number_theory::number_theoretic_transform NTT;
 
 		NTT.init(F, Descr->NTT_n, Descr->NTT_q, verbose_level);
 

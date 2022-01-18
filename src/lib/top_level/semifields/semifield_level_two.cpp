@@ -1536,7 +1536,7 @@ void semifield_level_two::compute_candidates_at_level_two_case(
 	int *base_cols;
 	int N, N1, v[2], j, h, b1, b2;
 	long int r;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 	data_structures::sorting Sorting;
 
@@ -2049,7 +2049,7 @@ void semifield_level_two::read_candidates_at_level_two_by_type(
 	int Nb_sets;
 	int /*window_bottom,*/ window_size;
 	int h;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	file_io Fio;
 
 	//window_bottom = k - 1;

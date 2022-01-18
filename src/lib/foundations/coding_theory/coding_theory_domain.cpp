@@ -1592,7 +1592,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check_projec
 	Orbiter->Int_vec->matrix_print(genma, k, n);
 
 
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	long int *set;
 	long int N;
 
@@ -1726,7 +1726,7 @@ void coding_theory_domain::do_linear_code_through_columns_of_parity_check(
 	Orbiter->Int_vec->matrix_print(genma, k, n);
 
 
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	long int *set;
 	long int N;
 
@@ -1946,7 +1946,7 @@ void coding_theory_domain::do_sylvester_hadamard(int n,
 	int *M1;
 	int *M2;
 	int H2[4] = {1,1,1,2};
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 	geometry_global Gg;
 
 	nb_factors = NT.int_log2(m);
@@ -2900,7 +2900,7 @@ void coding_theory_domain::dimensions_N(int N, int &nb_rows, int &nb_cols)
 {
 	int i, j;
 	long int a, b;
-	number_theory_domain NT;
+	number_theory::number_theory_domain NT;
 
 	a = NT.int_log2(N);
 	b = 1 << a;
